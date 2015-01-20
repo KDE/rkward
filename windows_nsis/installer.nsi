@@ -155,7 +155,7 @@ Function WelcomeCreate
 	${NSD_CreateLabel} 0 0 100% 20u "Welcome to the RKWard on Windows installer."
 	${NSD_CreateLabel} 0 21u 100% 32u "RKWard on Windows is still young, and installation is a bit cumbersome, but we'll talk you through the needed steps.$\r$\nNote that you need to install R and KDE _before_ you can install RKWard.$\r$\nPlease DO read these instructions, first:"
 
-	!insertmacro MakeExternalLink 62u "READ ME: Installing RKWard on Windows" "http://p.sf.net/rkward/windows"
+	!insertmacro MakeExternalLink 62u "READ ME: Installing RKWard on Windows" "http://rkward.kde.org/windows"
 
 	${NSD_CreateLabel} 0 86u 100% 16u "These links to R and KDE, may also be helpful:"
 	!insertmacro MakeExternalLink 102u "Download R installer" ${R_DOWNLOAD_URL}

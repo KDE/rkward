@@ -103,7 +103,7 @@ void RKErrorDialog::reportBug (QWidget* parent_widget, const QString& message_in
 	dialog->setMainWidget (vbox);
 	QLabel *label = new QLabel (i18n ("<p><b>Where should I report bugs or wishes?</b></p><p>Please submit your bug reports or wishes at <a href=\"%1\">%1</a> or send email to <a href=\"mailto:%2\">%2</a>.</p>"
 							"<p><b>What information should I provide?</b></p><p>Please copy the information shown below, and fill in the details to the questions.</p>"
-							, QString ("http://p.sf.net/rkward/bugs"), QString ("rkward-devel@kde.org")), vbox);
+							, QString ("http://rkward.kde.org/bugs"), QString ("rkward-devel@kde.org")), vbox);
 	label->setWordWrap (true);
 	label->setOpenExternalLinks (true);
 	QTextEdit *details = new QTextEdit (vbox);
