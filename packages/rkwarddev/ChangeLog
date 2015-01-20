@@ -1,6 +1,6 @@
 ChangeLog for package rkwarddev
 
-changes in version 0.07-1 (2015-01-13)
+changes in version 0.07-1 (2015-01-20)
 fixed:
   - rk.XML.optionset() does now allow to re-use objects defined in the same
     function call (i.e., refer to optioncolumns in the logic section)
@@ -45,6 +45,7 @@ added:
     rk.XML.vars() to also accept "duplicates"
   - new argument "var" in rk.paste.JS() to define whether the JS keyword
     "var" should be used or omitted for rk.JS.var objects
+  - rk.XML.matrix() now also accepts the arguments "min_rows" and "min_columns"
 changed:
   - function i18n() was changed to be used in JavaScript generation only;
     this breaks code using the function introduced with 0.06-4, but that was to

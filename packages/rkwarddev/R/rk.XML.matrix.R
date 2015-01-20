@@ -30,15 +30,17 @@
 #'    smallest representable value.
 #' @param max Maximum acceptable value (if \code{type} is "integer" or "real"). Defaults to the
 #'    largest representable value.
+#' @param min_rows Minimum number of rows, matrix will refuse shrink below this size.
+#' @param min_columns Minimum number of columns, matrix will refuse shrink below this size.
 #' @param allow_missings Logical, whether missing (empty) values are allowed in the matrix
 #'    (if \code{type} is "string").
 #' @param allow_user_resize_columns Logical, if \code{TRUE}, the user can add columns by typing
 #'    on the rightmost (inactive) cells.
 #' @param allow_user_resize_rows Logical, if \code{TRUE}, the user can add rows by typing on the
 #'    bottommost (inactive) cells.
-#' @param fixed_width Logical, force the GUI element to stay at its initial width. Do not use in
-#'    combindation with matrices, where the number of columns may change in any way.
-#'    Useful, esp. when creating a vector input element (rows="1").
+#' @param fixed_width Logical, assume the column count will not change. The last (or typically only)
+#'    column will be stretched to take up the available width. Do not use in combination with matrices,
+#'    where the number of columns may change in any way. Useful, esp. when creating a vector input element (rows="1").
 #' @param fixed_height Logical, force the GUI element to stay at its initial height. Do not use in
 #'    combindation with matrices, where the number of rows may change in any way.
 #'    Useful, esp. when creating a vector input element (columns="1").
@@ -63,7 +65,7 @@
 #' @examples
 #' test.matrix <- rk.XML.matrix("A matrix")
 
-rk.XML.matrix <- function(label, mode="real", rows=2, columns=2, min=NULL, max=NULL,
+rk.XML.matrix <- function(label, mode="real", rows=2, columns=2, min=NULL, max=NULL, min_rows=0, min_columns=0,
   allow_missings=FALSE, allow_user_resize_columns=TRUE,
   allow_user_resize_rows=TRUE, fixed_width=FALSE, fixed_height=FALSE,
   horiz_headers=NULL, vert_headers=NULL, id.name="auto", help=NULL, component=rk.get.comp(), i18n=NULL){
@@ -102,12 +104,18 @@ rk.XML.matrix <- function(label, mode="real", rows=2, columns=2, min=NULL, max=N
       attr.list[["rows"]] <- rows
     } else {}
   } else {}
+  if(min_rows != 0){
+      attr.list[["min_rows"]] <- min_rows
+  } else {}
 
   if(!isTRUE(allow_user_resize_columns)){
     attr.list[["allow_user_resize_columns"]] <- "false"
     if(columns != 2){
       attr.list[["columns"]] <- columns
     } else {}
+  } else {}
+  if(min_columns != 0){
+      attr.list[["min_columns"]] <- min_columns
   } else {}
 
   if(isTRUE(fixed_width)){
