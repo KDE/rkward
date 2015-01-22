@@ -50,6 +50,7 @@ as Authors, publish date, the abstract, and Keywords -->
 <year>2012</year>
 <year>2013</year>
 <year>2014</year>
+<year>2015</year>
 <holder>Thomas Friedrichsmeier</holder>
 </copyright>
 <!-- Translators: put here the copyright notice of the translation -->
@@ -57,7 +58,7 @@ as Authors, publish date, the abstract, and Keywords -->
      and in the FDL itself on how to use it. -->
 <legalnotice>&FDLNotice;</legalnotice>
 
-<date>2014-12-18</date>
+<date>2015-01-22</date>
 <releaseinfo>0.6.300</releaseinfo>
 
 <abstract>
@@ -3324,7 +3325,9 @@ Child-elements:
 
 <varlistentry>
 <term>&lt;set&gt;</term>
-<listitem><para>Set a property to a fixed value (of course, if you additionally connect the property to some other property, the value does not remain fixed). For instance, if you embed a plugin, but want to hide some of its elements, you might set the visibility property of those elements to false. Useful esp. for embedded/embedding plugins. Attributes:
+<listitem><para>Set a property to a fixed value (of course, if you additionally connect the property to some other property, the value does not remain fixed). For instance, if you embed a plugin, but want to hide some of its elements, you might set the visibility property of those elements to false. Useful esp. for embedded/embedding plugins. Note: If there are several &lt;set&gt; elements
+for a single <parameter>id</parameter>, the latest one to be defined takes precendence. This will sometimes be useful to rely on when using &lt;include&gt;d parts.
+Attributes:
 	<variablelist>
 	<varlistentry>
 	<term><parameter>id</parameter></term>
