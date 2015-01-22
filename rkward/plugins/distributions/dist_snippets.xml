@@ -5,9 +5,12 @@
 		<convert id="do_q" mode="equals" sources="mode.string" standard="q"/>
 
 		<connect client="lower.enabled" governor="do_d.not"/>
-		<connect client="logp.enabled" governor="do_d.not"/>
+		<connect client="logp.visible" governor="do_d.not"/>
+		<connect client="logd.visible" governor="do_d"/>
 		<connect client="q.visible" governor="do_q.not"/>
 		<connect client="p.visible" governor="do_q"/>
+
+		<set id="ui_note.visible" to="false"/>
 	</snippet>
 	<snippet id="dialog_layout">
 		<dropdown id="mode" label="Mode">
@@ -18,9 +21,10 @@
 			<row>
 				<frame>
 					<column>
-						<matrix columns="1" allow_user_resize_columns="false" min_rows="1" required="true" mode="real" fixed_width="true" min="0" id="q" label="Vector of quantiles"/>
-						<matrix columns="1" allow_user_resize_columns="false" min_rows="1" required="true" mode="real" fixed_width="true" id="p" label="Vector of probabilities"/>
-						<checkbox id="logp" label="log probabilities" />
+						<matrix columns="1" allow_user_resize_columns="false" required="true" mode="real" fixed_width="true" min="0" id="q" label="Specify Quantiles (optional)"/>
+						<matrix columns="1" allow_user_resize_columns="false" required="true" mode="real" fixed_width="true" id="p" label="Specify Probabilities (optional)"/>
+						<checkbox id="logp" label="Logarithmic probabilities" />
+						<checkbox id="logd" label="Logarithmic densities" />
 						<checkbox id="lower" label="Lower tail" checked="true" />
 						<stretch/>
 					</column>
@@ -32,6 +36,6 @@
 					</column>
 				</frame>
 			</row>
-			<insert snippet="ui_note"/>
+			<text id="ui_note"/>
 	</snippet>
 </document>

@@ -27,11 +27,10 @@
 		<component type="standard" id="jb_test" file="tests/jb_test.xml" label="Jarque-Bera Normality Test" />
 
 		<!-- distributions -->
-		<component type="standard" id="beta_quantiles" file="beta_quantiles.xml" label="Beta quantiles" />
-		<component type="standard" id="beta_probabilities" file="beta_probabilities.xml" label="Beta probabilities" />
+		<component type="standard" id="beta_probabilities" file="beta.xml" label="Beta probabilities" />
 		<component type="standard" id="plot_beta_distribution" file="plot_beta_distribution.xml" label="Plot Beta distribution" />
 
-		<component type="standard" id="binomial_calculator" file="binomial.xml" label="Binomial probabilities, quantiles, densities" />
+		<component type="standard" id="binomial_probabilities" file="binomial.xml" label="Binomial probabilities, quantiles, densities" />
 		<component type="standard" id="plot_binomial_distribution" file="plot_binomial_distribution.xml" label="Plot binomial distribution" />
 
 		<component type="standard" id="cauchy_quantiles" file="cauchy_quantiles.xml" label="Cauchy quantiles" />
@@ -140,8 +139,7 @@
 			</menu>
 			<menu id="univariate_continuous_distributions" label="Univariate continuous distributions">
 				<menu id="beta_distribution" label="Beta">
-					<entry component="beta_quantiles" label="Beta quantiles"/>
-					<entry component="beta_probabilities" label="Beta probabilities"/>
+					<entry component="beta_probabilities" label="Beta probabilities, quantiles, densities"/>
 					<entry component="plot_beta_clt" label="Beta CLT"/>
 					<entry component="plot_beta_distribution" label="Plot Beta distribution"/>
 				</menu>
@@ -223,7 +221,7 @@
 
 			<menu id="univariate_discrete_distributions" label="Univariate discrete distributions">
 				<menu id="binomial_distribution" label="Binomial">
-					<entry component="binomial_calculator" label="Binomial probabilities, quantiles, densities"/>
+					<entry component="binomial_probabilities" label="Binomial probabilities, quantiles, densities"/>
 					<entry component="plot_binomial_clt" label="Binomial CLT"/>
 					<entry component="plot_binomial_distribution" label="Plot binomial distribution"/>
 				</menu>

@@ -4,13 +4,14 @@
 	<help file="binomial.rkh" />
 	<logic>
 		<insert snippet="dialog_logic"/>
+		<set id="ui_note.visible" to="true"/>
+		<set id="ui_note.text" to="Note: For the binomial distribution, quantiles can be interpreted as number of successes in the given number of trials."/>
 	</logic>
 	<snippets>
 		<snippet id="dist_options">
-			<spinbox default_precision="2" type="integer" initial="1" id="size" min="1" label="Binomial trials"/>
+			<spinbox type="integer" initial="10" id="size" min="1" label="Binomial trials"/>
 			<spinbox default_precision="2" type="real" initial="0.5" id="prob" min="0" max="1" label="Probability of success"/>
 		</snippet>
-		<snippet id="ui_note"><text>Note: For the binomial distribution, quantiles can be interpreted as number of successes in the given number of trials.</text></snippet>
 		<include file="dist_snippets.xml"/>
 	</snippets>
 	<dialog label="Binomial probabilities, quantiles, densities" >
