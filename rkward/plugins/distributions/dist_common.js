@@ -4,6 +4,23 @@ var dist;
 var invar;
 var outvar;
 
+function initDistSpecifics (title, stem, params, range, continuous) {
+	var dist = new Object ();
+	var header = new Header (title);
+	var par = "";
+	for (var i = 0; i < params.length; ++i) {
+		header.addFromUI (params[i]);
+		par += ', ' + params[i] + '=' + getString (params[i]);
+	}
+	dist["header"] = header;
+	dist["params"] = par;
+	dist["funstem"] = stem;
+	dist["min"] = Number (range[0]);
+	dist["max"] = Number (range[1]);
+	dist["cont"] = continuous;
+	return dist;
+}
+
 function calculate () {
 	mode = getString ("mode");
 	dist = getDistSpecifics ();
@@ -31,15 +48,15 @@ function calculate () {
 		var max_auto_sequence_length = 20;
 
 		if (invar == 'q') {
-			var maxquant = dist["max_quantile"];
-			if (typeof (maxquant) != 'undefined') {
-				if (maxquant <= max_auto_sequence_length) {
-					values = '0:' + String (maxquant);
+			if (!dist["cont"]) {
+				var span = dist["max"] - dist["min"];
+				if (span <= max_auto_sequence_length) {
+					values = String (dist["min"]) + ':' + String (dist["max"]);
 				} else {
-					values = 'seq.int (0, ' + String (maxquant) + ', by=' + String (Math.ceil (maxquant / max_auto_sequence_length)) + ')';
+					values = 'seq.int (' + String (dist["min"]) + ', ' + String (dist["max"]) + ', by=' + String (Math.ceil (span / max_auto_sequence_length)) + ')';
 				}
 			} else {
-				values = 'seq (0, 1, length.out=' + String (max_auto_sequence_length+1) + ')';
+				values = 'seq (' + String (dist["min"]) + ', ' + String (dist["max"]) + ', length.out=' + String (max_auto_sequence_length+1) + ')';
 			}
 		} else {    // invar == 'p'
 			if (logpd) {

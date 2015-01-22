@@ -1,16 +1,14 @@
 <!DOCTYPE rkhelp>
 <document>
+	<snippets>
+		<include file="dist_help_snippets.xml"/>
+	</snippets>
 	<summary>
 		Provides a calculator for probabilities, quantiles, and densities in the binonmial distribution.
 
 		Note: For the binomial distribution, quantiles can be interpreted as number of successes in the given number of trials.
 	</summary>
-	<usage>
-		Select the desired mode of operation, then specify the values of interest.
-	</usage>
-	<snippets>
-		<include file="dist_help_snippets.xml"/>
-	</snippets>
+	<insert snippet="dialog_usage"/>
 	<settings>
 		<insert snippet="dialog_settings"/>
 		<setting id="size">Number of binomial trials</setting>

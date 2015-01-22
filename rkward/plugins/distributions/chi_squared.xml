@@ -1,0 +1,18 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="chi_squared.js" />
+	<help file="chi_squared.rkh" />
+	<logic>
+		<insert snippet="dialog_logic"/>
+	</logic>
+	<snippets>
+		<snippet id="dist_options">
+			<spinbox default_precision="2" type="real" initial="1" id="df" min="0" label="Degrees of Freedom"/>
+			<spinbox default_precision="2" type="real" initial="0" id="ncp" min="0" label="non-centrality parameter"/>
+		</snippet>
+		<include file="dist_snippets.xml"/>
+	</snippets>
+	<dialog label="Chi-squared distribution calculator" >
+		<insert snippet="dialog_layout"/>
+	</dialog>
+</document>

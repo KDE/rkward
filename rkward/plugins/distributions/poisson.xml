@@ -1,0 +1,17 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="poisson.js" />
+	<help file="poisson.rkh" />
+	<logic>
+		<insert snippet="dialog_logic"/>
+	</logic>
+	<snippets>
+		<snippet id="dist_options">
+			<spinbox default_precision="2" type="real" min="0" initial="1" id="lambda" label="Lambda"/>
+		</snippet>
+		<include file="dist_snippets.xml"/>
+	</snippets>
+	<dialog label="Poisson distribution calculator" >
+		<insert snippet="dialog_layout"/>
+	</dialog>
+</document>

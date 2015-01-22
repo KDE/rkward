@@ -1,6 +1,7 @@
 <!DOCTYPE rkplugin>
 <document>
 	<code file="beta.js" />
+	<help file="beta.rkh" />
 	<logic>
 		<insert snippet="dialog_logic"/>
 	</logic>
@@ -12,7 +13,7 @@
 		</snippet>
 		<include file="dist_snippets.xml"/>
 	</snippets>
-	<dialog label="Beta probabilities, quantiles, densities" >
+	<dialog label="Beta distribution calculator" >
 		<insert snippet="dialog_layout"/>
 	</dialog>
 </document>

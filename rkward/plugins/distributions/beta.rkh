@@ -1,0 +1,22 @@
+<!DOCTYPE rkhelp>
+<document>
+	<snippets>
+		<include file="dist_help_snippets.xml"/>
+	</snippets>
+	<summary>
+		Provides a calculator for probabilities, quantiles, and densities in the Beta distribution.
+	</summary>
+	<insert snippet="dialog_usage"/>
+	<settings>
+		<insert snippet="dialog_settings"/>
+		<setting id="shape1">Parameter of the Beta distribution</setting>
+		<setting id="shape2">Parameter of the Beta distribution</setting>
+		<setting id="ncp">Non-centrality parameter</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/Beta"/></li>
+			<li><link href="rkward://component/rkward/plot_beta_distribution"/></li>
+		</ul>
+	</related>
+</document>

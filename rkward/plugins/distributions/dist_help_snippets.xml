@@ -9,4 +9,7 @@
 		<setting id="lower">If checked (the default) probabilities are P[X ≤ x]. Otherwise (upper tail) probabilities are P[X &gt; x]</setting>
 		<caption title="Distribution specific settings"/>
 	</snippet>
+	<snippet id="dialog_usage">
+		<usage>Select the desired mode of operation, then specify the values of interest. The input values (quantiles or probabilies) can be left empty, in which case a short sequence of evenly spaced values will be filled in, automatically.</usage>
+	</snippet>
 </document>
