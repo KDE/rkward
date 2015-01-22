@@ -193,10 +193,11 @@
 			cat ("</tr>\n")
 	
 			if (is.data.frame (x)) {
+				x <- as.data.frame (lapply (x, format), stringsAsFactors=FALSE)
 				for (row in 1:dim (x)[1]) {
 					cat ("<tr>")
 					for (col in 1:dim (x)[2]) {
-						cat ("<td>", format (x[row, col]), "</td>", sep="")
+						cat ("<td>", x[row, col], "</td>", sep="")
 					}
 					cat ("</tr>\n")
 				}
