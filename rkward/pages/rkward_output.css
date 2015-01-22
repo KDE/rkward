@@ -24,6 +24,11 @@ table {
 	border-spacing: 0px;
 }
 
+td {
+	padding-left: .5em;
+	padding-right: .5em;
+}
+
 /* TOC menu */
 .RKTOC {
 	background-color: #eeeeff;
