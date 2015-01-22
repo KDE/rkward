@@ -535,6 +535,11 @@ This is a guide to writing plugins for &rkward;.
 			After reading this chapter, have a look at the <link linkend="rkwarddev"><application>rkwarddev</application> package</link> as well. It provides some &r; functions to create JavaScript code commonly used in &rkward;. It can also autodetect variables used in a plugin XML file and create basic JavaScript code from that for you to start with.
 		</para>
 	</tip>
+	<note>
+		<para>
+			Plugin .js files are assumed to be UTF-8 encoded. Be sure to check you editor's encoding, if using any non-ascii characters.
+		</para>
+	</note>
 	<para>
 		For the two variable t-test, the <filename>code.js</filename> file looks as follows (with comments in between):
 	</para>
