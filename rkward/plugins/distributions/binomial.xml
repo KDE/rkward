@@ -4,8 +4,9 @@
 	<help file="binomial.rkh" />
 	<logic>
 		<insert snippet="dialog_logic"/>
-		<set id="ui_note.visible" to="true"/>
-		<set id="ui_note.text" to="Note: For the binomial distribution, quantiles can be interpreted as number of successes in the given number of trials."/>
+		<script><![CDATA[
+			gui.setValue ("ui_note.text", i18n (noquote ("Quantiles can be interpreted as number of successes in the given number of trials.")));
+		]]></script>
 	</logic>
 	<snippets>
 		<snippet id="dist_options">

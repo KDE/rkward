@@ -4,10 +4,13 @@
 	<help file="negative_binomial.rkh" />
 	<logic>
 		<insert snippet="dialog_logic"/>
+		<script><![CDATA[
+			gui.setValue ("ui_note.text", i18n (noquote ("Quantiles represents the number of failures in a sequence of Bernoulli trials before the target number of successes is reached.")));
+		]]></script>
 	</logic>
 	<snippets>
 		<snippet id="dist_options">
-			<spinbox type="integer" min="0" initial="1" id="size" label="Target for number of successful trials"/>
+			<spinbox type="integer" min="0" initial="5" id="size" label="Target for number of successful trials"/>
 			<spinbox default_precision="2" type="real" min="0" initial="0.5" max="1" id="prob" label="Probability of success in each trial"/>
 		</snippet>
 		<include file="dist_snippets.xml"/>

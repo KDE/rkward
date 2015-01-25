@@ -1,22 +1,11 @@
 include ("dist_common.js");
 
+function preprocess () {
+	echo ('require (FAdist)\n');
+}
+
 function getDistSpecifics () {
-	return initDistSpecifics (i18n ('Gumbel distribution'), 'weibull', ["shape", "scale"]);
+	var scale = Number (getString ("scale"));
+	var location = Number (getString ("location"));
+	return initDistSpecifics (i18n ('Gumbel distribution'), 'gumbel', ["location", "scale"], [Math.floor (-2*scale+location), Math.ceil (5*scale+location)], continuous);
 }
-
-error!
-
-// globals
-var q;
-
-function calculate () {
-	q = "c (" + getString ("q").replace (/[, ]+/g, ", ") + ")";
-
-	echo ('result <- (pweibull (q = exp(' + q + '), shape = ' + getValue ("shape") + ', scale = ' + getValue ("scale") + ', ' + getValue ("tail") + ', ' + getValue("logp") + '))\n');
-}
-
-function printout () {
-	echo ('rk.header ("Gumbel probability", list ("Vector of quantiles", "' + q + '", "Shape", "' + getValue ("shape") + '", "Scale", "' + getValue ("scale") + '", "Tail", "' + getValue ("tail") + '", "Probabilities p are given as", "' + getValue ("logp") + '"))\n');
-	echo ('rk.results (result, titles="Gumbel probabilities")\n');
-}
-

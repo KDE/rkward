@@ -1,5 +1,5 @@
 include ("dist_common.js");
 
 function getDistSpecifics () {
-	return initDistSpecifics (i18n ('Log Normal distribution'), 'lnorm', ["meanlog", "sdlog"]);
+	return initDistSpecifics (i18n ('Log Normal distribution'), 'lnorm', ["meanlog", "sdlog"], [0, undefined], continuous);
 }

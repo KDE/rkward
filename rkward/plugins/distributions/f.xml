@@ -7,9 +7,9 @@
 	</logic>
 	<snippets>
 		<snippet id="dist_options">
-			<spinbox default_precision="2" type="real" initial="1" id="df1" min="0" label="Numerator degree of Freedom"/>
-			<spinbox default_precision="2" type="real" initial="1" id="df2" min="0" label="Denominator degree of Freedom"/>
-			<spinbox default_precision="2" type="real" initial="0" id="ncp" min="0" label="non-centrality parameter"/>
+			<spinbox default_precision="1" type="real" initial="1" id="df1" min="0" label="Numerator degrees of Freedom"/>
+			<spinbox default_precision="1" type="real" initial="10" id="df2" min="0" label="Denominator degrees of Freedom"/>
+			<spinbox default_precision="1" type="real" initial="0" id="ncp" min="0" label="non-centrality parameter"/>
 		</snippet>
 		<include file="dist_snippets.xml"/>
 	</snippets>

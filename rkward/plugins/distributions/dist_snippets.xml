@@ -10,7 +10,8 @@
 		<connect client="q.visible" governor="do_q.not"/>
 		<connect client="p.visible" governor="do_q"/>
 
-		<set id="ui_note.visible" to="false"/>
+		<convert id="have_ui_note" mode="notequals" sources="ui_note.text" standard=""/>
+		<connect client="ui_note.visible" governor="have_ui_note"/>
 	</snippet>
 	<snippet id="dialog_layout">
 		<dropdown id="mode" label="Mode">

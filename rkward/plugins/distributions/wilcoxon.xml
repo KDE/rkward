@@ -4,6 +4,8 @@
 	<help file="wilcoxon.rkh" />
 	<logic>
 		<insert snippet="dialog_logic"/>
+		<set id="ui_note.visible" to="true"/>
+		<set id="ui_note.text" to="Quantiles correspond to the value of the Wilcoxon Rank Sum statistic, i.e. the number of pairs from sample x and y, for which y[j] is not greater than x[i]."/>
 	</logic>
 	<snippets>
 		<snippet id="dist_options">

@@ -1,0 +1,22 @@
+<!DOCTYPE rkhelp>
+<document>
+	<snippets>
+		<include file="dist_help_snippets.xml"/>
+	</snippets>
+	<summary>
+		Provides a calculator for probabilities, quantiles, and densities in the Geometric distribution.
+
+		Quantiles in the geometric distribution represent the number of failures in a sequence of Bernoulli trials before the first success.
+	</summary>
+	<insert snippet="dialog_usage"/>
+	<settings>
+		<insert snippet="dialog_settings"/>
+		<setting id="prob">Probability of success in each trial. Note that this setting is <b>not</b> affected by the "log probabilities" setting, i.e. always specify the plain probability,</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/Geometric"/></li>
+			<li><link href="rkward://component/rkward/plot_geom_distribution"/></li>
+		</ul>
+	</related>
+</document>

@@ -4,7 +4,11 @@ var dist;
 var invar;
 var outvar;
 
-function initDistSpecifics (title, stem, params, range, continuous) {
+const continuous = 1;
+const discrete = 2;
+
+// NOTE: range 
+function initDistSpecifics (title, stem, params, range, type) {
 	var dist = new Object ();
 	var header = new Header (title);
 	var par = "";
@@ -15,9 +19,9 @@ function initDistSpecifics (title, stem, params, range, continuous) {
 	dist["header"] = header;
 	dist["params"] = par;
 	dist["funstem"] = stem;
-	dist["min"] = Number (range[0]);
-	dist["max"] = Number (range[1]);
-	dist["cont"] = continuous;
+	dist["min"] = range[0];
+	dist["max"] = range[1];
+	dist["cont"] = (type == continuous);
 	return dist;
 }
 
@@ -45,24 +49,28 @@ function calculate () {
 	if (mode == "q") values = getList ("p.0");
 	else values = getList ("q.0");
 	if (values.length < 1) {
+		// NOTE: making this an even number is somewhat important. Otherwise, the middle number will be something very close to (but not quite) 0 in many cases,
+		//       resulting in very ugly number formatting
 		var max_auto_sequence_length = 20;
 
 		if (invar == 'q') {
 			if (!dist["cont"]) {
-				var span = dist["max"] - dist["min"];
+				var span = Number (dist["max"]) - Number (dist["min"]) - 1;
 				if (span <= max_auto_sequence_length) {
 					values = String (dist["min"]) + ':' + String (dist["max"]);
 				} else {
 					values = 'seq.int (' + String (dist["min"]) + ', ' + String (dist["max"]) + ', by=' + String (Math.ceil (span / max_auto_sequence_length)) + ')';
 				}
 			} else {
-				values = 'seq (' + String (dist["min"]) + ', ' + String (dist["max"]) + ', length.out=' + String (max_auto_sequence_length+1) + ')';
+				if (dist["min"] === undefined) dist["min"] = 'q' + dist["funstem"] + ' (.01' + dist["params"] + ')';
+				if (dist["max"] === undefined) dist["max"] = 'q' + dist["funstem"] + ' (.99' + dist["params"] + ')';
+				values = 'seq (' + String (dist["min"]) + ', ' + String (dist["max"]) + ', length.out=' + String (max_auto_sequence_length) + ')';
 			}
 		} else {    // invar == 'p'
 			if (logpd) {
 				values = '-' + String (max_auto_sequence_length) + ':0';
 			} else {
-				values = 'seq (0, 1, length.out=' + String (max_auto_sequence_length+1) + ')';
+				values = 'seq (0, 1, length.out=' + String (max_auto_sequence_length) + ')';
 			}
 		}
 	} else {

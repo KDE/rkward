@@ -4,6 +4,9 @@
 	<help file="geom.rkh" />
 	<logic>
 		<insert snippet="dialog_logic"/>
+		<script><![CDATA[
+			gui.setValue ("ui_note.text", i18n (noquote ("Quantiles represent the number of failures in a sequence of Bernoulli trials before the first success.")));
+		]]></script>
 	</logic>
 	<snippets>
 		<snippet id="dist_options">

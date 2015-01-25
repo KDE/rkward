@@ -1,5 +1,7 @@
 include ("dist_common.js");
 
 function getDistSpecifics () {
-	return initDistSpecifics (i18n ('Uniform distribution'), 'unif', ["min", "max"]);
+	var min = Number (getString ("min"));
+	var max = Number (getString ("max"));
+	return initDistSpecifics (i18n ('Uniform distribution'), 'unif', ["min", "max"], [min, max], continuous);
 }

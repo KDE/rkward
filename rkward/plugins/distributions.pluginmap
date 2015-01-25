@@ -38,7 +38,7 @@
 		<component type="standard" id="chi_squared_probabilities" file="chi_squared.xml" label="Chi-squared distribution calculator" />
 		<component type="standard" id="plot_chi_squared_distribution" file="plot_chi_squared_distribution.xml" label="Plot Chi-squared distribution" />
 
-		<component type="standard" id="exponential_probabilities" file="exponential.xml" label="Exponential probabilities" />
+		<component type="standard" id="exponential_probabilities" file="exponential.xml" label="Exponential distribution calculator" />
 		<component type="standard" id="plot_exponential_distribution" file="plot_exponential_distribution.xml" label="Plot Exponential distribution" />
 
 		<component type="standard" id="f_probabilities" file="f.xml" label="F distribution calculator" />

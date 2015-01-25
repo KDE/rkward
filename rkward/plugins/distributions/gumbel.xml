@@ -7,8 +7,8 @@
 	</logic>
 	<snippets>
 		<snippet id="dist_options">
-			<spinbox default_precision="2" type="real" min="0" initial="1" id="shape" label="Shape"/>
-			<spinbox default_precision="2" type="real" min="1" initial="1" id="scale" label="Scale"/>
+			<spinbox default_precision="1" type="real" min="0" initial="0" id="location" label="Location"/>
+			<spinbox default_precision="1" type="real" initial="1" id="scale" label="Scale"/>
 		</snippet>
 		<include file="dist_snippets.xml"/>
 	</snippets>
