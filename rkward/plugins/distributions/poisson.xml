@@ -5,13 +5,12 @@
 	<logic>
 		<insert snippet="dialog_logic"/>
 		<script><![CDATA[
-			gui.setValue ("ui_note.text", i18n (noquote ("Quantiles represents the number of events observed in a fixed number of trials (or a fixed period of time), where lamda is the expected (mean) number of such events.")));
+			gui.setValue ("ui_note.text", i18n (noquote ("Quantiles represents the number of events observed in a specified region (e.g. a fixed number of trials, or a fixed period of time), where λ (lambda) is the expected (mean) number of such events.")));
 		]]></script>
-
 	</logic>
 	<snippets>
 		<snippet id="dist_options">
-			<spinbox default_precision="1" type="real" min="0" initial="1" id="lambda" label="Lambda"/>
+			<spinbox default_precision="1" type="real" min="0" initial="1" id="lambda" label="λ (Lambda)"/>
 		</snippet>
 		<include file="dist_snippets.xml"/>
 	</snippets>

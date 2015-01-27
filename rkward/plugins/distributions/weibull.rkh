@@ -1,0 +1,21 @@
+<!DOCTYPE rkhelp>
+<document>
+	<snippets>
+		<include file="dist_help_snippets.xml"/>
+	</snippets>
+	<summary>
+		Provides a calculator for probabilities, quantiles, and densities in the Weibull distribution.
+	</summary>
+	<insert snippet="dialog_usage"/>
+	<settings>
+		<insert snippet="dialog_settings"/>
+		<setting id="shape">Shape parameter (k).</setting>
+		<setting id="scale">Scale parameter (λ).</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/Weibull"/></li>
+			<li><link href="rkward://component/rkward/plot_weibull_distribution"/></li>
+		</ul>
+	</related>
+</document>

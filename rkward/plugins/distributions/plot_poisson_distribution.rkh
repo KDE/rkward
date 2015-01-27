@@ -19,6 +19,7 @@ Density and distribution function plots for the Poisson distribution.
 
 	<related>
 		<ul>
+			<li><link href="rkward://component/poisson_probabilities"/></li>
 			<li><link href="rkward://rhelp/Poisson"/></li>
 			<li><link href="rkward://component/plot_options"/></li>
 			<li><link href="rkward://rhelp/curve"/></li>

@@ -7,9 +7,8 @@
 	</logic>
 	<snippets>
 		<snippet id="dist_options">
-			<spinbox min="1" type="integer" initial="2" id="nmeans" label="Sample size for range"/>
-			<spinbox default_precision="1" initial="5" id="df" label="Degrees of freedom for s"/>
-			<spinbox type="integer" initial="1" min="0" id="nranges" label="Number of groups whose maximum range is considered"/>
+			<spinbox min="2" type="integer" initial="5" id="nmeans" label="Number of observations"/>
+			<spinbox default_precision="1" initial="5" id="df" label="Degrees of freedom for standard deviation estimate"/>
 		</snippet>
 		<include file="dist_snippets.xml"/>
 	</snippets>

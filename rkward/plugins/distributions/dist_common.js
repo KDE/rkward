@@ -67,6 +67,7 @@ function calculate () {
 				values = 'seq (' + String (dist["min"]) + ', ' + String (dist["max"]) + ', length.out=' + String (max_auto_sequence_length) + ')';
 			}
 		} else {    // invar == 'p'
+			max_auto_sequence_length += 1;   // here, an uneven number is preferrable for divisibility of steps by 2
 			if (logpd) {
 				values = '-' + String (max_auto_sequence_length) + ':0';
 			} else {

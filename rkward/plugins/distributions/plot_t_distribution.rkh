@@ -19,6 +19,7 @@ Density and distribution function plots for the t distribution.
 	</settings>
 	<related>
 		<ul>
+			<li><link href="rkward://component/t_probabilities"/></li>
 			<li><link href="rkward://rhelp/TDist"/></li>
 			<li><link href="rkward://component/plot_options"/></li>
 			<li><link href="rkward://rhelp/curve"/></li>
