@@ -144,6 +144,7 @@ if [[ $WIPEINST ]] ; then
       sudo rm "${libsymlink}"
     fi
   done
+  exit 0
 fi
 
 # prepare for a clean installation, remove all cached sources
