@@ -1,5 +1,6 @@
 - Reworked distribution calculator plugins
-- Added power analysis plugin (already existed as separate plugin)  - TODO: add automated tests
+- Added power analysis plugin (already existed as separate plugin)
+  - TODO: add automated tests
 - Assume plugin .js files to be in utf-8 encoding; this allows using non-ascii characters in the generated code
 - <matrix> element gains options min_rows and min_columns, and the details of fixed_width="true" have been improved
 - Fixed: <valueslot>s were quirky with respect to showing as invalid
