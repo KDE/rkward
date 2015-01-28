@@ -3,12 +3,12 @@
 
 PortSystem          1.0
 PortGroup           kde4 1.1
-fetch.type          svn
+fetch.type          git
 name                rkward-devel
-version             0.6.2-svn
-svn.url             http://svn.code.sf.net/p/rkward/code/trunk
+version             0.6.3-git
+git.url             http://anongit.kde.org/rkward.git
 #svn.revision        4494
-worksrcdir          trunk/rkward
+worksrcdir          rkward
 
 conflicts           rkward
 categories          kde kde4 math science
@@ -22,7 +22,7 @@ long_description    RKWard aims to become an easy to use, transparent frontend t
                     for statistical computation and graphics. Besides a convenient GUI for the most important \
                     statistical functions, future versions will also provide seamless integration with an office-suite.
 
-homepage            http://rkward.kde.org
+homepage            https://rkward.kde.org
 
 depends_lib         port:kdelibs4 \
                     port:kate \

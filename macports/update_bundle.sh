@@ -43,7 +43,8 @@ declare -a EXCLPKG=(audio_lame audio_libmodplug audio_libopus \
 # to see the dependency tree of ports, run
 # sudo port rdeps rkward-devel
 
-SVNREPO=http://svn.code.sf.net/p/rkward/code/trunk
+#SVNREPO=http://svn.code.sf.net/p/rkward/code/trunk
+GITREPO=http://anongit.kde.org/rkward.git
 OLDWD=$(pwd)
 
 if [[ $1 == "" ]] ; then
@@ -231,7 +232,9 @@ if [[ $COPYMDMD ]] ; then
   # get version information of installed ports
   PORTVERS=$(port list $PTARGET | sed -e "s/.*@//;s/[[:space:]].*//")
   if [[ $DEVEL ]] ; then
-    TARGETVERS=${PORTVERS}$(svn info "$SVNREPO" | grep "^Revision:" | sed "s/[^[:digit:]]*//")
+    # we moved to git
+    # TARGETVERS=${PORTVERS}$(svn info "$SVNREPO" | grep "^Revision:" | sed "s/[^[:digit:]]*//")
+    TARGETVERS=${PORTVERS}$(git ls-remote http://anongit.kde.org/rkward | grep HEAD$ | cut -c 1-7)
   else
     TARGETVERS=$PORTVERS
   fi

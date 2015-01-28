@@ -4,7 +4,7 @@
 PortSystem          1.0
 PortGroup           kde4 1.1
 name                rkward
-version             0.6.2
+version             0.6.3
 #patchfiles          patch-rkward-rbackend-rkstructuregetter.cpp.diff
 worksrcdir          ${name}-${version}
 
@@ -22,13 +22,15 @@ long_description    RKWard aims to become an easy to use, transparent frontend t
 
 homepage            http://rkward.kde.org
 
-master_sites        sourceforge:rkward
+# FIXME:
+master_sites        kde:rkward
 
 depends_lib         port:kdelibs4 \
                     port:kate \
                     port:okular \
                     port:R
 
+# FIXME:
 checksums           rmd160 a15116209a28676db4ce1bd1f9a4b31f5be345c8 \
                     sha256 3534e58a6246f2be18e6158cf486ecfef6531fee4f0060d7ea1955a823b5add6
 
@@ -52,7 +54,9 @@ configure.post_args ..
 build.dir           ${worksrcpath}/build
 
 livecheck.type      regex
+# FIXME:
 livecheck.url       http://sourceforge.net/projects/${name}/files/Current_Stable_Releases/
+# FIXME:
 livecheck.regex     "${name}-(\\d+\\.\\d+\\.\\d+)\\.tar"
 
 pre-pkg {
