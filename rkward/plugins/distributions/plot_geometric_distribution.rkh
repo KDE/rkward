@@ -19,6 +19,7 @@ Density and distribution function plots for the Geometric distribution.
 
 	<related>
 		<ul>
+			<li><link href="rkward://component/geom_probabilities"/></li>
 			<li><link href="rkward://rhelp/Geometric"/></li>
 			<li><link href="rkward://component/plot_options"/></li>
 			<li><link href="rkward://rhelp/curve"/></li>

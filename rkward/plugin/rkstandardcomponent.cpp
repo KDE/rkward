@@ -710,11 +710,6 @@ void RKComponentBuilder::parseLogic (const QDomElement &element, XMLHelper &xml,
 		addConnection (xml.getStringAttribute (*it, "client", "#noid#", DL_WARNING), QString::null, xml.getStringAttribute (*it, "governor", "#noid#", DL_WARNING), QString::null, xml.getBoolAttribute (*it, "reconcile", false, DL_INFO), element);
 	}
 
-	// find initialize elements
-	children = xml.getChildElements (element, "set", DL_INFO);
-	for (it = children.constBegin (); it != children.constEnd (); ++it) {
-		initial_values.insert (xml.getStringAttribute (*it, "id", "#noid#", DL_WARNING), xml.getStringAttribute (*it, "to", "false", DL_WARNING));
-	}
 	children = xml.getChildElements (element, "dependency_check", DL_INFO);
 	for (it = children.constBegin (); it != children.constEnd (); ++it) {
 		RKComponentPropertyBool *dep = new RKComponentPropertyBool (component (), false);
@@ -736,7 +731,13 @@ void RKComponentBuilder::parseLogic (const QDomElement &element, XMLHelper &xml,
 		if (!dummy.isNull ()) {
 			initial_values.insert (id, dummy);
 		}
-		// TODO add more options
+	}
+
+	// find initialize elements
+	children = xml.getChildElements (element, "set", DL_INFO);
+	for (it = children.constBegin (); it != children.constEnd (); ++it) {
+		// NOTE: It is by design that if there are several initializations for a single id, the latest one takes precedence. Useful in some cases of inclusion.
+		initial_values.insert (xml.getStringAttribute (*it, "id", "#noid#", DL_WARNING), xml.getStringAttribute (*it, "to", "false", DL_WARNING));
 	}
 
 	// find convert elements

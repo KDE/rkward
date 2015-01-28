@@ -1,0 +1,19 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="tukey.js" />
+	<help file="tukey.rkh" />
+	<logic>
+		<insert snippet="dialog_logic"/>
+		<set id="mode.d.enabled" to="false"/>
+	</logic>
+	<snippets>
+		<snippet id="dist_options">
+			<spinbox min="2" type="integer" initial="5" id="nmeans" label="Number of observations"/>
+			<spinbox default_precision="1" initial="5" id="df" label="Degrees of freedom for standard deviation estimate"/>
+		</snippet>
+		<include file="dist_snippets.xml"/>
+	</snippets>
+	<dialog label="Studentized Range (Tukey) distribution calculator" >
+		<insert snippet="dialog_layout"/>
+	</dialog>
+</document>

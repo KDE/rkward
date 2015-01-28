@@ -1,10 +1,26 @@
-<h1>Negative Binomial probability</h1>
+<h1>Negative Binomial distribution</h1>
 <h2>Parameters</h2>
-<ul><li>Vector of quantiles: c (0.95)</li>
-<li>Size: 3</li>
-<li>Probability of success in each trial: 0.50</li>
-<li>Tail: lower.tail=TRUE</li>
-<li>Probabilities p are given as: log.p = TRUE</li>
+<ul><li>Target number of successful trials: 5</li>
+<li>Probability of success in each trial: 0.5</li>
+<li>Tail: Lower tail: P[X ≤ x]</li>
 </ul>
 DATE<br />
-<h3>Negative Binomial probabilities: -2.0794</h3>
+<table border="1">
+<tr><td>Quantile</td><td>Probability</td></tr>
+<tr><td> 0</td><td>0.03125</td></tr>
+<tr><td> 1</td><td>0.10938</td></tr>
+<tr><td> 2</td><td>0.22656</td></tr>
+<tr><td> 3</td><td>0.36328</td></tr>
+<tr><td> 4</td><td>0.50000</td></tr>
+<tr><td> 5</td><td>0.62305</td></tr>
+<tr><td> 6</td><td>0.72559</td></tr>
+<tr><td> 7</td><td>0.80615</td></tr>
+<tr><td> 8</td><td>0.86658</td></tr>
+<tr><td> 9</td><td>0.91022</td></tr>
+<tr><td>10</td><td>0.94077</td></tr>
+<tr><td>11</td><td>0.96159</td></tr>
+<tr><td>12</td><td>0.97548</td></tr>
+<tr><td>13</td><td>0.98456</td></tr>
+<tr><td>14</td><td>0.99039</td></tr>
+<tr><td>15</td><td>0.99409</td></tr>
+</table>

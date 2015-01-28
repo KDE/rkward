@@ -1,0 +1,21 @@
+<!DOCTYPE rkhelp>
+<document>
+	<snippets>
+		<include file="dist_help_snippets.xml"/>
+	</snippets>
+	<summary>
+		Provides a calculator for probabilities, quantiles, and densities in the <i>t</i> distribution.
+	</summary>
+	<insert snippet="dialog_usage"/>
+	<settings>
+		<insert snippet="dialog_settings"/>
+		<setting id="df">Degrees of freedom.</setting>
+		<setting id="ncp">Non-centrality parameter.</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/TDist"/></li>
+			<li><link href="rkward://component/rkward/plot_t_distribution"/></li>
+		</ul>
+	</related>
+</document>

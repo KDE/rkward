@@ -1,19 +1,30 @@
-<h1>Chi-squared probability</h1>
+<h1>Chi-squared distribution</h1>
 <h2>Parameters</h2>
-<ul><li>Vector of quantiles: c (0.97, 0.65)</li>
-<li>Degrees of Freedom: 3.00</li>
-<li>non-centrality parameter: 0.05</li>
-<li>Tail: lower.tail=TRUE</li>
-<li>Probabilities p are given as: log.p = FALSE</li>
+<ul><li>Degrees of Freedom: 1.00</li>
+<li>non-centrality parameter: 0.00</li>
+<li>Tail: Lower tail: P[X ≤ x]</li>
 </ul>
 DATE<br />
-<h3>Chi-squared probabilities: 0.18762 0.11261</h3><h1>Chi-squared probability</h1>
-<h2>Parameters</h2>
-<ul><li>Vector of quantiles: c (1)</li>
-<li>Degrees of Freedom: 1.01</li>
-<li>non-centrality parameter: 0.02</li>
-<li>Tail: lower.tail=FALSE</li>
-<li>Probabilities p are given as: log.p = TRUE</li>
-</ul>
-DATE<br />
-<h3>Chi-squared probabilities: -1.1229</h3>
+<table border="1">
+<tr><td>Quantile</td><td>Probability</td></tr>
+<tr><td>0.00000</td><td>0.00000</td></tr>
+<tr><td>0.26316</td><td>0.39204</td></tr>
+<tr><td>0.52632</td><td>0.53184</td></tr>
+<tr><td>0.78947</td><td>0.62574</td></tr>
+<tr><td>1.05263</td><td>0.69510</td></tr>
+<tr><td>1.31579</td><td>0.74865</td></tr>
+<tr><td>1.57895</td><td>0.79109</td></tr>
+<tr><td>1.84211</td><td>0.82530</td></tr>
+<tr><td>2.10526</td><td>0.85321</td></tr>
+<tr><td>2.36842</td><td>0.87619</td></tr>
+<tr><td>2.63158</td><td>0.89524</td></tr>
+<tr><td>2.89474</td><td>0.91113</td></tr>
+<tr><td>3.15789</td><td>0.92444</td></tr>
+<tr><td>3.42105</td><td>0.93563</td></tr>
+<tr><td>3.68421</td><td>0.94507</td></tr>
+<tr><td>3.94737</td><td>0.95306</td></tr>
+<tr><td>4.21053</td><td>0.95983</td></tr>
+<tr><td>4.47368</td><td>0.96558</td></tr>
+<tr><td>4.73684</td><td>0.97048</td></tr>
+<tr><td>5.00000</td><td>0.97465</td></tr>
+</table>

@@ -1,0 +1,22 @@
+<!DOCTYPE rkhelp>
+<document>
+	<snippets>
+		<include file="dist_help_snippets.xml"/>
+	</snippets>
+	<summary>
+		Provides a calculator for probabilities, quantiles, and densities in the gamma distribution.
+	</summary>
+	<insert snippet="dialog_usage"/>
+	<settings>
+		<insert snippet="dialog_settings"/>
+		<setting id="shape">Shape parameter (k)</setting>
+		<setting id="rate">Rate parameter β (inverse of scale parameter)</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://component/rkward/exponential_probabilities"/> (a special case of the gamma distribution with shape=1)</li>
+			<li><link href="rkward://rhelp/GammaDist">R help on Gamma Distribution functions</link></li>
+			<li><link href="rkward://component/rkward/plot_gamma_distribution"/></li>
+		</ul>
+	</related>
+</document>

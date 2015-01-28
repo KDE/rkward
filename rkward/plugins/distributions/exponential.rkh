@@ -1,0 +1,21 @@
+<!DOCTYPE rkhelp>
+<document>
+	<snippets>
+		<include file="dist_help_snippets.xml"/>
+	</snippets>
+	<summary>
+		Provides a calculator for probabilities, quantiles, and densities in the Exponential distribution.
+	</summary>
+	<insert snippet="dialog_usage"/>
+	<settings>
+		<insert snippet="dialog_settings"/>
+		<setting id="rate">Rate parameter λ (1/mean)</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://component/rkward/gamma_probabilities"/> (of which the exponential distribution is a special case)</li>
+			<li><link href="rkward://rhelp/Exponential"/></li>
+			<li><link href="rkward://component/rkward/plot_exponential_distribution"/></li>
+		</ul>
+	</related>
+</document>

@@ -13,13 +13,14 @@ Density and distribution function plots for the Binomial distribution.
 	<settings>
 		<insert snippet="density_help"/>
 		<insert snippet="discont_range_help"/>
-		<setting id="size">See R reference on Binomial distribution.</setting>
-		<setting id="prob">See R reference on Binomial distribution.</setting>
+		<setting id="size">Number of binomial trials</setting>
+		<setting id="prob">Probability of success in each trial</setting>
 		<insert snippet="common_options_help"/>
 	</settings>
 
 	<related>
 		<ul>
+			<li><link href="rkward://component/binomial_probabilities"/></li>
 			<li><link href="rkward://rhelp/Binomial"/></li>
 			<li><link href="rkward://component/plot_options"/></li>
 			<li><link href="rkward://rhelp/curve"/></li>

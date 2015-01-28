@@ -1,10 +1,30 @@
-<h1>Logistic probability</h1>
+<h1>Logistic distribution</h1>
 <h2>Parameters</h2>
-<ul><li>Vector of quantiles: c (0.95)</li>
-<li>Location: 1.04</li>
-<li>Scale: 1.00</li>
-<li>Tail: lower.tail=TRUE</li>
-<li>Probabilities p are given as: log.p = TRUE</li>
+<ul><li>Location: 0.0</li>
+<li>Scale: 1.0</li>
+<li>Tail: Lower tail: P[X ≤ x]</li>
 </ul>
 DATE<br />
-<h3>Logistic probabilities: -0.73916</h3>
+<table border="1">
+<tr><td>Quantile</td><td>Probability</td></tr>
+<tr><td>-5.00000</td><td>0.0066929</td></tr>
+<tr><td>-4.47368</td><td>0.0112766</td></tr>
+<tr><td>-3.94737</td><td>0.0189398</td></tr>
+<tr><td>-3.42105</td><td>0.0316440</td></tr>
+<tr><td>-2.89474</td><td>0.0524144</td></tr>
+<tr><td>-2.36842</td><td>0.0856127</td></tr>
+<tr><td>-1.84211</td><td>0.1368025</td></tr>
+<tr><td>-1.31579</td><td>0.2115197</td></tr>
+<tr><td>-0.78947</td><td>0.3122817</td></tr>
+<tr><td>-0.26316</td><td>0.4345876</td></tr>
+<tr><td> 0.26316</td><td>0.5654124</td></tr>
+<tr><td> 0.78947</td><td>0.6877183</td></tr>
+<tr><td> 1.31579</td><td>0.7884803</td></tr>
+<tr><td> 1.84211</td><td>0.8631975</td></tr>
+<tr><td> 2.36842</td><td>0.9143873</td></tr>
+<tr><td> 2.89474</td><td>0.9475856</td></tr>
+<tr><td> 3.42105</td><td>0.9683560</td></tr>
+<tr><td> 3.94737</td><td>0.9810602</td></tr>
+<tr><td> 4.47368</td><td>0.9887234</td></tr>
+<tr><td> 5.00000</td><td>0.9933071</td></tr>
+</table>

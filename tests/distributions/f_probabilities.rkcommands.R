@@ -1,7 +1,11 @@
 local({
 ## Compute
-result <- (pf (q = c (.1, .2), df1 = 1.02, df2 = 1.11,  ncp = 0.02, lower.tail=TRUE, log.p = FALSE))
+q <- seq (0, qf (.99, df1=1.0, df2=10.0, ncp=0.0), length.out=20)
+p <- pf (q, df1=1.0, df2=10.0, ncp=0.0)
 ## Print result
-rk.header ("F probability", list ("Vector of quantiles", "c (.1, .2)", "Numerator degrees of freedom", "1.02", "Denominator degrees of freedom", "1.11", "non-centrality parameter", "0.02", "Tail", "lower.tail=TRUE", "Probabilities p are given as", "log.p = FALSE"));
-rk.results (result, titles="F probabilities")
+rk.header ("F distribution", parameters=list("Numerator degrees of Freedom"="1.0",
+	"Denominator degrees of Freedom"="10.0",
+	"non-centrality parameter"="0.0",
+	"Tail"="Lower tail: P[X ≤ x]"))
+rk.results (data.frame ("Quantile"=q, "Probability"=p, check.names=FALSE))
 })

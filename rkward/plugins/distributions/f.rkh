@@ -1,0 +1,22 @@
+<!DOCTYPE rkhelp>
+<document>
+	<snippets>
+		<include file="dist_help_snippets.xml"/>
+	</snippets>
+	<summary>
+		Provides a calculator for probabilities, quantiles, and densities in the F distribution.
+	</summary>
+	<insert snippet="dialog_usage"/>
+	<settings>
+		<insert snippet="dialog_settings"/>
+		<setting id="df1">Numerator degrees of freedom</setting>
+		<setting id="df2">Denominator degrees of freedom</setting>
+		<setting id="ncp">Non-centrality parameter</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/Fdist"/></li>
+			<li><link href="rkward://component/rkward/plot_f_distribution"/></li>
+		</ul>
+	</related>
+</document>

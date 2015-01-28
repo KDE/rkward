@@ -1,7 +1,10 @@
 local({
 ## Compute
-result <- (punif (q = c (0.95), min = 0.00, max = 1.00, lower.tail=TRUE, log.p = FALSE))
+q <- seq (0, 1, length.out=20)
+p <- punif (q, min=0.00, max=1.00)
 ## Print result
-rk.header ("Uniform probability", list ("Vector of quantiles", "c (0.95)", "Lower limits of the distribution", "0.00", "Upper limits of the distribution", "1.00", "Tail", "lower.tail=TRUE", "Probabilities p are given as", "log.p = FALSE"))
-rk.results (result, titles="Uniform probabilities")
+rk.header ("Uniform distribution", parameters=list("Lower limit of the distribution"="0.00",
+	"Upper limit of the distribution"="1.00",
+	"Tail"="Lower tail: P[X ≤ x]"))
+rk.results (data.frame ("Quantile"=q, "Probability"=p, check.names=FALSE))
 })

@@ -1,21 +1,213 @@
-<h1>Beta probability</h1>
+<h1>Beta distribution</h1>
 <h2>Parameters</h2>
-<ul><li>Vector of quantiles: c (0.95)</li>
-<li>Shape 1: 1.00</li>
-<li>Shape 2: 1.00</li>
-<li>non-centrality parameter (ncp): 0.00</li>
-<li>Tail: lower.tail=TRUE</li>
-<li>Probabilities p are given as: log.p = FALSE</li>
+<ul><li>Shape 1: 1.0</li>
+<li>Shape 2: 1.0</li>
+<li>non-centrality parameter (ncp): 0.0</li>
+<li>Tail: Lower tail: P[X ≤ x]</li>
 </ul>
 DATE<br />
-<h3>Beta probability: 0.95</h3><h1>Beta probability</h1>
+<table border="1">
+<tr><td>Quantile</td><td>Probability</td></tr>
+<tr><td>0.000000</td><td>0.000000</td></tr>
+<tr><td>0.052632</td><td>0.052632</td></tr>
+<tr><td>0.105263</td><td>0.105263</td></tr>
+<tr><td>0.157895</td><td>0.157895</td></tr>
+<tr><td>0.210526</td><td>0.210526</td></tr>
+<tr><td>0.263158</td><td>0.263158</td></tr>
+<tr><td>0.315789</td><td>0.315789</td></tr>
+<tr><td>0.368421</td><td>0.368421</td></tr>
+<tr><td>0.421053</td><td>0.421053</td></tr>
+<tr><td>0.473684</td><td>0.473684</td></tr>
+<tr><td>0.526316</td><td>0.526316</td></tr>
+<tr><td>0.578947</td><td>0.578947</td></tr>
+<tr><td>0.631579</td><td>0.631579</td></tr>
+<tr><td>0.684211</td><td>0.684211</td></tr>
+<tr><td>0.736842</td><td>0.736842</td></tr>
+<tr><td>0.789474</td><td>0.789474</td></tr>
+<tr><td>0.842105</td><td>0.842105</td></tr>
+<tr><td>0.894737</td><td>0.894737</td></tr>
+<tr><td>0.947368</td><td>0.947368</td></tr>
+<tr><td>1.000000</td><td>1.000000</td></tr>
+</table>
+<h1>Beta distribution</h1>
 <h2>Parameters</h2>
-<ul><li>Vector of quantiles: c (0.96)</li>
-<li>Shape 1: 1.01</li>
-<li>Shape 2: 1.01</li>
-<li>non-centrality parameter (ncp): 0.02</li>
-<li>Tail: lower.tail=FALSE</li>
-<li>Probabilities p are given as: log.p = TRUE</li>
+<ul><li>Shape 1: 1.0</li>
+<li>Shape 2: 1.0</li>
+<li>non-centrality parameter (ncp): 0.0</li>
+<li>Tail: Upper tail: P[X > x]</li>
 </ul>
 DATE<br />
-<h3>Beta probability: -3.2317</h3>
+<table border="1">
+<tr><td>Quantile</td><td>log (Probability)</td></tr>
+<tr><td>0.000000</td><td> 0.000000</td></tr>
+<tr><td>0.052632</td><td>-0.054067</td></tr>
+<tr><td>0.105263</td><td>-0.111226</td></tr>
+<tr><td>0.157895</td><td>-0.171850</td></tr>
+<tr><td>0.210526</td><td>-0.236389</td></tr>
+<tr><td>0.263158</td><td>-0.305382</td></tr>
+<tr><td>0.315789</td><td>-0.379490</td></tr>
+<tr><td>0.368421</td><td>-0.459532</td></tr>
+<tr><td>0.421053</td><td>-0.546544</td></tr>
+<tr><td>0.473684</td><td>-0.641854</td></tr>
+<tr><td>0.526316</td><td>-0.747214</td></tr>
+<tr><td>0.578947</td><td>-0.864997</td></tr>
+<tr><td>0.631579</td><td>-0.998529</td></tr>
+<tr><td>0.684211</td><td>-1.152680</td></tr>
+<tr><td>0.736842</td><td>-1.335001</td></tr>
+<tr><td>0.789474</td><td>-1.558145</td></tr>
+<tr><td>0.842105</td><td>-1.845827</td></tr>
+<tr><td>0.894737</td><td>-2.251292</td></tr>
+<tr><td>0.947368</td><td>-2.944439</td></tr>
+<tr><td>1.000000</td><td>     -Inf</td></tr>
+</table>
+<h1>Beta distribution</h1>
+<h2>Parameters</h2>
+<ul><li>Shape 1: 2.0</li>
+<li>Shape 2: 1.0</li>
+<li>non-centrality parameter (ncp): 0.0</li>
+</ul>
+DATE<br />
+<table border="1">
+<tr><td>Quantile</td><td>log (Density)</td></tr>
+<tr><td>0.000000</td><td>     -Inf</td></tr>
+<tr><td>0.052632</td><td>-2.251292</td></tr>
+<tr><td>0.105263</td><td>-1.558145</td></tr>
+<tr><td>0.157895</td><td>-1.152680</td></tr>
+<tr><td>0.210526</td><td>-0.864997</td></tr>
+<tr><td>0.263158</td><td>-0.641854</td></tr>
+<tr><td>0.315789</td><td>-0.459532</td></tr>
+<tr><td>0.368421</td><td>-0.305382</td></tr>
+<tr><td>0.421053</td><td>-0.171850</td></tr>
+<tr><td>0.473684</td><td>-0.054067</td></tr>
+<tr><td>0.526316</td><td> 0.051293</td></tr>
+<tr><td>0.578947</td><td> 0.146603</td></tr>
+<tr><td>0.631579</td><td> 0.233615</td></tr>
+<tr><td>0.684211</td><td> 0.313658</td></tr>
+<tr><td>0.736842</td><td> 0.387766</td></tr>
+<tr><td>0.789474</td><td> 0.456758</td></tr>
+<tr><td>0.842105</td><td> 0.521297</td></tr>
+<tr><td>0.894737</td><td> 0.581922</td></tr>
+<tr><td>0.947368</td><td> 0.639080</td></tr>
+<tr><td>1.000000</td><td> 0.693147</td></tr>
+</table>
+<h1>Beta distribution</h1>
+<h2>Parameters</h2>
+<ul><li>Shape 1: 1.0</li>
+<li>Shape 2: 2.0</li>
+<li>non-centrality parameter (ncp): 0.0</li>
+</ul>
+DATE<br />
+<table border="1">
+<tr><td>Quantile</td><td>Density</td></tr>
+<tr><td>0.000000</td><td>2.00000</td></tr>
+<tr><td>0.052632</td><td>1.89474</td></tr>
+<tr><td>0.105263</td><td>1.78947</td></tr>
+<tr><td>0.157895</td><td>1.68421</td></tr>
+<tr><td>0.210526</td><td>1.57895</td></tr>
+<tr><td>0.263158</td><td>1.47368</td></tr>
+<tr><td>0.315789</td><td>1.36842</td></tr>
+<tr><td>0.368421</td><td>1.26316</td></tr>
+<tr><td>0.421053</td><td>1.15789</td></tr>
+<tr><td>0.473684</td><td>1.05263</td></tr>
+<tr><td>0.526316</td><td>0.94737</td></tr>
+<tr><td>0.578947</td><td>0.84211</td></tr>
+<tr><td>0.631579</td><td>0.73684</td></tr>
+<tr><td>0.684211</td><td>0.63158</td></tr>
+<tr><td>0.736842</td><td>0.52632</td></tr>
+<tr><td>0.789474</td><td>0.42105</td></tr>
+<tr><td>0.842105</td><td>0.31579</td></tr>
+<tr><td>0.894737</td><td>0.21053</td></tr>
+<tr><td>0.947368</td><td>0.10526</td></tr>
+<tr><td>1.000000</td><td>0.00000</td></tr>
+</table>
+<h1>Beta distribution</h1>
+<h2>Parameters</h2>
+<ul><li>Shape 1: 1.0</li>
+<li>Shape 2: 2.0</li>
+<li>non-centrality parameter (ncp): 0.0</li>
+<li>Tail: Lower tail: P[X ≤ x]</li>
+</ul>
+DATE<br />
+<table border="1">
+<tr><td>log (Probability)</td><td>Quantile</td></tr>
+<tr><td>-21</td><td>3.7913e-10</td></tr>
+<tr><td>-20</td><td>1.0306e-09</td></tr>
+<tr><td>-19</td><td>2.8014e-09</td></tr>
+<tr><td>-18</td><td>7.6150e-09</td></tr>
+<tr><td>-17</td><td>2.0700e-08</td></tr>
+<tr><td>-16</td><td>5.6268e-08</td></tr>
+<tr><td>-15</td><td>1.5295e-07</td></tr>
+<tr><td>-14</td><td>4.1576e-07</td></tr>
+<tr><td>-13</td><td>1.1302e-06</td></tr>
+<tr><td>-12</td><td>3.0721e-06</td></tr>
+<tr><td>-11</td><td>8.3509e-06</td></tr>
+<tr><td>-10</td><td>2.2700e-05</td></tr>
+<tr><td> -9</td><td>6.1707e-05</td></tr>
+<tr><td> -8</td><td>1.6775e-04</td></tr>
+<tr><td> -7</td><td>4.5604e-04</td></tr>
+<tr><td> -6</td><td>1.2401e-03</td></tr>
+<tr><td> -5</td><td>3.3747e-03</td></tr>
+<tr><td> -4</td><td>9.2001e-03</td></tr>
+<tr><td> -3</td><td>2.5211e-02</td></tr>
+<tr><td> -2</td><td>7.0127e-02</td></tr>
+<tr><td> -1</td><td>2.0494e-01</td></tr>
+<tr><td>  0</td><td>1.0000e+00</td></tr>
+</table>
+<h1>Beta distribution</h1>
+<h2>Parameters</h2>
+<ul><li>Shape 1: 1.0</li>
+<li>Shape 2: 2.0</li>
+<li>non-centrality parameter (ncp): 0.0</li>
+<li>Tail: Lower tail: P[X ≤ x]</li>
+</ul>
+DATE<br />
+<table border="1">
+<tr><td>Probability</td><td>Quantile</td></tr>
+<tr><td>0.00</td><td>0.000000</td></tr>
+<tr><td>0.05</td><td>0.025321</td></tr>
+<tr><td>0.10</td><td>0.051317</td></tr>
+<tr><td>0.15</td><td>0.078046</td></tr>
+<tr><td>0.20</td><td>0.105573</td></tr>
+<tr><td>0.25</td><td>0.133975</td></tr>
+<tr><td>0.30</td><td>0.163340</td></tr>
+<tr><td>0.35</td><td>0.193774</td></tr>
+<tr><td>0.40</td><td>0.225403</td></tr>
+<tr><td>0.45</td><td>0.258380</td></tr>
+<tr><td>0.50</td><td>0.292893</td></tr>
+<tr><td>0.55</td><td>0.329180</td></tr>
+<tr><td>0.60</td><td>0.367544</td></tr>
+<tr><td>0.65</td><td>0.408392</td></tr>
+<tr><td>0.70</td><td>0.452277</td></tr>
+<tr><td>0.75</td><td>0.500000</td></tr>
+<tr><td>0.80</td><td>0.552786</td></tr>
+<tr><td>0.85</td><td>0.612702</td></tr>
+<tr><td>0.90</td><td>0.683772</td></tr>
+<tr><td>0.95</td><td>0.776393</td></tr>
+<tr><td>1.00</td><td>1.000000</td></tr>
+</table>
+<h1>Beta distribution</h1>
+<h2>Parameters</h2>
+<ul><li>Shape 1: 1.0</li>
+<li>Shape 2: 2.0</li>
+<li>non-centrality parameter (ncp): 0.0</li>
+<li>Tail: Lower tail: P[X ≤ x]</li>
+</ul>
+DATE<br />
+<table border="1">
+<tr><td>Probability</td><td>Quantile</td></tr>
+<tr><td>0.1</td><td>0.051317</td></tr>
+<tr><td>0.2</td><td>0.105573</td></tr>
+<tr><td>0.3</td><td>0.163340</td></tr>
+</table>
+<h1>Beta distribution</h1>
+<h2>Parameters</h2>
+<ul><li>Shape 1: 1.0</li>
+<li>Shape 2: 2.0</li>
+<li>non-centrality parameter (ncp): 0.0</li>
+<li>Tail: Lower tail: P[X ≤ x]</li>
+</ul>
+DATE<br />
+<table border="1">
+<tr><td>Quantile</td><td>Probability</td></tr>
+<tr><td>1</td><td>1</td></tr>
+</table>

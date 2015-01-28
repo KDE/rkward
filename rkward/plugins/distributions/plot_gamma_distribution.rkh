@@ -20,6 +20,7 @@ Density and distribution function plots for the Gamma distribution.
 
 	<related>
 		<ul>
+			<li><link href="rkward://component/gamma_probabilities"/></li>
 			<li><link href="rkward://rhelp/GammaDist"/></li>
 			<li><link href="rkward://component/plot_options"/></li>
 			<li><link href="rkward://rhelp/curve"/></li>

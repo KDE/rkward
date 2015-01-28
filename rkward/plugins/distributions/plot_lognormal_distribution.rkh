@@ -20,6 +20,7 @@ Density and distribution function plots for the Lognormal distribution.
 
 	<related>
 		<ul>
+			<li><link href="rkward://component/log_normal_probabilities"/></li>
 			<li><link href="rkward://rhelp/Lognormal"/></li>
 			<li><link href="rkward://component/plot_options"/></li>
 			<li><link href="rkward://rhelp/curve"/></li>

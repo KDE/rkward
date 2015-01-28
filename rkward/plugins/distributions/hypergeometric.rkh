@@ -1,0 +1,24 @@
+<!DOCTYPE rkhelp>
+<document>
+	<snippets>
+		<include file="dist_help_snippets.xml"/>
+	</snippets>
+	<summary>
+		Provides a calculator for probabilities, quantiles, and densities in the Hypergeometric distribution.
+
+		Quantiles represent the number of white balls drawn in k draws without replacement from an urn containing m white and n black balls.
+	</summary>
+	<insert snippet="dialog_usage"/>
+	<settings>
+		<insert snippet="dialog_settings"/>
+		<setting id="m">m (Number of white balls in the urn)</setting>
+		<setting id="n">n (Number of black balls in the urn)</setting>
+		<setting id="k">k (Number of draws from the urn)</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/Hypergeometric"/></li>
+			<li><link href="rkward://component/rkward/plot_hypergeometric_distribution"/></li>
+		</ul>
+	</related>
+</document>

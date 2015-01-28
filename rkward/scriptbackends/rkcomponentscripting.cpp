@@ -2,7 +2,7 @@
                           rkcomponentscripting  -  description
                              -------------------
     begin                : Thu Jun 17 2010
-    copyright            : (C) 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2010, 2015 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -103,7 +103,7 @@ void RKComponentScriptingProxy::include (const QString& filename) {
 		return;
 	}
 
-	evaluate (file.readAll());
+	evaluate (QString::fromUtf8 (file.readAll()));
 	handleScriptError (_filename);
 }
 

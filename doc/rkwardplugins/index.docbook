@@ -50,6 +50,7 @@ as Authors, publish date, the abstract, and Keywords -->
 <year>2012</year>
 <year>2013</year>
 <year>2014</year>
+<year>2015</year>
 <holder>Thomas Friedrichsmeier</holder>
 </copyright>
 <!-- Translators: put here the copyright notice of the translation -->
@@ -57,7 +58,7 @@ as Authors, publish date, the abstract, and Keywords -->
      and in the FDL itself on how to use it. -->
 <legalnotice>&FDLNotice;</legalnotice>
 
-<date>2014-12-18</date>
+<date>2015-01-22</date>
 <releaseinfo>0.6.300</releaseinfo>
 
 <abstract>
@@ -535,6 +536,11 @@ This is a guide to writing plugins for &rkward;.
 			After reading this chapter, have a look at the <link linkend="rkwarddev"><application>rkwarddev</application> package</link> as well. It provides some &r; functions to create JavaScript code commonly used in &rkward;. It can also autodetect variables used in a plugin XML file and create basic JavaScript code from that for you to start with.
 		</para>
 	</tip>
+	<note>
+		<para>
+			Plugin .js files are assumed to be UTF-8 encoded. Be sure to check you editor's encoding, if using any non-ascii characters.
+		</para>
+	</note>
 	<para>
 		For the two variable t-test, the <filename>code.js</filename> file looks as follows (with comments in between):
 	</para>
@@ -3319,7 +3325,9 @@ Child-elements:
 
 <varlistentry>
 <term>&lt;set&gt;</term>
-<listitem><para>Set a property to a fixed value (of course, if you additionally connect the property to some other property, the value does not remain fixed). For instance, if you embed a plugin, but want to hide some of its elements, you might set the visibility property of those elements to false. Useful esp. for embedded/embedding plugins. Attributes:
+<listitem><para>Set a property to a fixed value (of course, if you additionally connect the property to some other property, the value does not remain fixed). For instance, if you embed a plugin, but want to hide some of its elements, you might set the visibility property of those elements to false. Useful esp. for embedded/embedding plugins. Note: If there are several &lt;set&gt; elements
+for a single <parameter>id</parameter>, the latest one to be defined takes precendence. This will sometimes be useful to rely on when using &lt;include&gt;d parts.
+Attributes:
 	<variablelist>
 	<varlistentry>
 	<term><parameter>id</parameter></term>

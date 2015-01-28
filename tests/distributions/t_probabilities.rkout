@@ -1,10 +1,30 @@
-<h1>t probability</h1>
+<h1>t distribution</h1>
 <h2>Parameters</h2>
-<ul><li>Vector of quantiles: c (0.95)</li>
-<li>Degrees of Freedom: 1.00</li>
-<li>non-centrality parameter: 0.00</li>
-<li>Tail: lower.tail=TRUE</li>
-<li>Probabilities p are given as: log.p = FALSE</li>
+<ul><li>Degrees of Freedom: 10.0</li>
+<li>non-centrality parameter: 0.0</li>
+<li>Tail: Lower tail: P[X ≤ x]</li>
 </ul>
 DATE<br />
-<h3>t probabilities: 0.74184</h3>
+<table border="1">
+<tr><td>Quantile</td><td>Probability</td></tr>
+<tr><td>-2.76377</td><td>0.010000</td></tr>
+<tr><td>-2.47285</td><td>0.016472</td></tr>
+<tr><td>-2.18192</td><td>0.027035</td></tr>
+<tr><td>-1.89100</td><td>0.043959</td></tr>
+<tr><td>-1.60008</td><td>0.070332</td></tr>
+<tr><td>-1.30915</td><td>0.109882</td></tr>
+<tr><td>-1.01823</td><td>0.166285</td></tr>
+<tr><td>-0.72731</td><td>0.241859</td></tr>
+<tr><td>-0.43638</td><td>0.335914</td></tr>
+<tr><td>-0.14546</td><td>0.443618</td></tr>
+<tr><td> 0.14546</td><td>0.556382</td></tr>
+<tr><td> 0.43638</td><td>0.664086</td></tr>
+<tr><td> 0.72731</td><td>0.758141</td></tr>
+<tr><td> 1.01823</td><td>0.833715</td></tr>
+<tr><td> 1.30915</td><td>0.890118</td></tr>
+<tr><td> 1.60008</td><td>0.929668</td></tr>
+<tr><td> 1.89100</td><td>0.956041</td></tr>
+<tr><td> 2.18192</td><td>0.972965</td></tr>
+<tr><td> 2.47285</td><td>0.983528</td></tr>
+<tr><td> 2.76377</td><td>0.990000</td></tr>
+</table>

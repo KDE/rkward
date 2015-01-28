@@ -1,9 +1,20 @@
-<h1>Geometric probability</h1>
+<h1>Geometric distribution</h1>
 <h2>Parameters</h2>
-<ul><li>Vector of quantiles: c (0.95)</li>
-<li>Probability of success in each trial: 0.50</li>
-<li>Tail: lower.tail=TRUE</li>
-<li>Probabilities p are given as: log.p = FALSE</li>
+<ul><li>probability of success in each trial: 0.50</li>
+<li>Tail: Lower tail: P[X ≤ x]</li>
 </ul>
 DATE<br />
-<h3>Geometric probabilities: 0.5</h3>
+<table border="1">
+<tr><td>Quantile</td><td>Probability</td></tr>
+<tr><td> 0</td><td>0.50000</td></tr>
+<tr><td> 1</td><td>0.75000</td></tr>
+<tr><td> 2</td><td>0.87500</td></tr>
+<tr><td> 3</td><td>0.93750</td></tr>
+<tr><td> 4</td><td>0.96875</td></tr>
+<tr><td> 5</td><td>0.98438</td></tr>
+<tr><td> 6</td><td>0.99219</td></tr>
+<tr><td> 7</td><td>0.99609</td></tr>
+<tr><td> 8</td><td>0.99805</td></tr>
+<tr><td> 9</td><td>0.99902</td></tr>
+<tr><td>10</td><td>0.99951</td></tr>
+</table>

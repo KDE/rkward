@@ -1,7 +1,11 @@
 local({
 ## Compute
-result <- (phyper (q = c (0, 1, 2, 3, 4, 5), m = 5, n = 4, k = 4, lower.tail=FALSE, log.p = FALSE))
+q <- 0:10
+p <- phyper (q, m=10, n=10, k=5)
 ## Print result
-rk.header ("Hypergeometric probability", list ("Vector of quantiles", "c (0, 1, 2, 3, 4, 5)", "Number of white balls in the urn", "5", "Number of black balls in the urn", "4", "Number of balls drawn from the urn", "4", "Tail", "lower.tail=FALSE", "Probabilities p are given as", "log.p = FALSE"))
-rk.results (result, titles="Hypergeometric probabilities")
+rk.header ("Hypergeometric distribution", parameters=list("m (Number of white balls in the urn)"="10",
+	"n (Number of black balls in the urn)"="10",
+	"k (Number of balls drawn from the urn)"="5",
+	"Tail"="Lower tail: P[X ≤ x]"))
+rk.results (data.frame ("Quantile"=q, "Probability"=p, check.names=FALSE))
 })

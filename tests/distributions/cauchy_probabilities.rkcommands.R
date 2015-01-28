@@ -1,14 +1,10 @@
 local({
 ## Compute
-result <- (pcauchy (q = c (0.95), location = 0.03, scale = 1.02, lower.tail=TRUE, log.p = FALSE))
+q <- seq (qcauchy (.01, location=0.00, scale=1.00), qcauchy (.99, location=0.00, scale=1.00), length.out=20)
+p <- pcauchy (q, location=0.00, scale=1.00)
 ## Print result
-rk.header ("Cauchy probabilities", list ("Vector of quantiles", "c (0.95)", "Location", "0.03", "Scale", "1.02", "Tail", "lower.tail=TRUE", "Probabilities p are given as", "log.p = FALSE"))
-rk.results (result, titles="Cauchy probabilities")
-})
-local({
-## Compute
-result <- (pcauchy (q = c (0.95), location = -0.02, scale = 1.03, lower.tail=FALSE, log.p = TRUE))
-## Print result
-rk.header ("Cauchy probabilities", list ("Vector of quantiles", "c (0.95)", "Location", "-0.02", "Scale", "1.03", "Tail", "lower.tail=FALSE", "Probabilities p are given as", "log.p = TRUE"))
-rk.results (result, titles="Cauchy probabilities")
+rk.header ("Cauchy distribution", parameters=list("Location"="0.00",
+	"Scale"="1.00",
+	"Tail"="Lower tail: P[X ≤ x]"))
+rk.results (data.frame ("Quantile"=q, "Probability"=p, check.names=FALSE))
 })

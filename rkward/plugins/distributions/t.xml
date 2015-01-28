@@ -1,0 +1,18 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="t.js" />
+	<help file="t.rkh" />
+	<logic>
+		<insert snippet="dialog_logic"/>
+	</logic>
+	<snippets>
+		<snippet id="dist_options">
+			<spinbox default_precision="1" type="real" initial="10" id="df" min="0" label="Degrees of Freedom"/>
+			<spinbox default_precision="1" type="real" initial="0" id="ncp" min="0" label="non-centrality parameter"/>
+		</snippet>
+		<include file="dist_snippets.xml"/>
+	</snippets>
+	<dialog label="t distribution calculator" >
+		<insert snippet="dialog_layout"/>
+	</dialog>
+</document>

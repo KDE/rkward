@@ -1,11 +1,31 @@
-<h1>F probability</h1>
+<h1>F distribution</h1>
 <h2>Parameters</h2>
-<ul><li>Vector of quantiles: c (.1, .2)</li>
-<li>Numerator degrees of freedom: 1.02</li>
-<li>Denominator degrees of freedom: 1.11</li>
-<li>non-centrality parameter: 0.02</li>
-<li>Tail: lower.tail=TRUE</li>
-<li>Probabilities p are given as: log.p = FALSE</li>
+<ul><li>Numerator degrees of Freedom: 1.0</li>
+<li>Denominator degrees of Freedom: 10.0</li>
+<li>non-centrality parameter: 0.0</li>
+<li>Tail: Lower tail: P[X ≤ x]</li>
 </ul>
 DATE<br />
-<h3>F probabilities: 0.19324 0.26733</h3>
+<table border="1">
+<tr><td>Quantile</td><td>Probability</td></tr>
+<tr><td> 0.00000</td><td>0.00000</td></tr>
+<tr><td> 0.52865</td><td>0.51615</td></tr>
+<tr><td> 1.05729</td><td>0.67194</td></tr>
+<tr><td> 1.58594</td><td>0.76349</td></tr>
+<tr><td> 2.11459</td><td>0.82344</td></tr>
+<tr><td> 2.64323</td><td>0.86495</td></tr>
+<tr><td> 3.17188</td><td>0.89474</td></tr>
+<tr><td> 3.70053</td><td>0.91670</td></tr>
+<tr><td> 4.22917</td><td>0.93322</td></tr>
+<tr><td> 4.75782</td><td>0.94587</td></tr>
+<tr><td> 5.28647</td><td>0.95569</td></tr>
+<tr><td> 5.81511</td><td>0.96341</td></tr>
+<tr><td> 6.34376</td><td>0.96954</td></tr>
+<tr><td> 6.87241</td><td>0.97447</td></tr>
+<tr><td> 7.40106</td><td>0.97846</td></tr>
+<tr><td> 7.92970</td><td>0.98171</td></tr>
+<tr><td> 8.45835</td><td>0.98439</td></tr>
+<tr><td> 8.98700</td><td>0.98661</td></tr>
+<tr><td> 9.51564</td><td>0.98845</td></tr>
+<tr><td>10.04429</td><td>0.99000</td></tr>
+</table>

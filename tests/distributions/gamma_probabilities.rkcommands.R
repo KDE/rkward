@@ -1,7 +1,10 @@
 local({
 ## Compute
-result <- (pgamma (q = c (0.95), shape = 1.00, rate = 1.00, lower.tail=TRUE, log.p = FALSE))
+q <- seq (0, qgamma (.99, shape=1.0, rate=1.0), length.out=20)
+p <- pgamma (q, shape=1.0, rate=1.0)
 ## Print result
-rk.header ("Gamma probability", list ("Vector of quantiles", "c (0.95)", "Shape", "1.00", "Rate", "1.00", "Tail", "lower.tail=TRUE", "Probabilities p are given as", "log.p = FALSE"))
-rk.results (result, titles="Gamma probabilities")
+rk.header ("Gamma distribution", parameters=list("Shape"="1.0",
+	"Rate"="1.0",
+	"Tail"="Lower tail: P[X ≤ x]"))
+rk.results (data.frame ("Quantile"=q, "Probability"=p, check.names=FALSE))
 })

@@ -1,10 +1,30 @@
-<h1>Uniform probability</h1>
+<h1>Uniform distribution</h1>
 <h2>Parameters</h2>
-<ul><li>Vector of quantiles: c (0.95)</li>
-<li>Lower limits of the distribution: 0.00</li>
-<li>Upper limits of the distribution: 1.00</li>
-<li>Tail: lower.tail=TRUE</li>
-<li>Probabilities p are given as: log.p = FALSE</li>
+<ul><li>Lower limit of the distribution: 0.00</li>
+<li>Upper limit of the distribution: 1.00</li>
+<li>Tail: Lower tail: P[X ≤ x]</li>
 </ul>
 DATE<br />
-<h3>Uniform probabilities: 0.95</h3>
+<table border="1">
+<tr><td>Quantile</td><td>Probability</td></tr>
+<tr><td>0.000000</td><td>0.000000</td></tr>
+<tr><td>0.052632</td><td>0.052632</td></tr>
+<tr><td>0.105263</td><td>0.105263</td></tr>
+<tr><td>0.157895</td><td>0.157895</td></tr>
+<tr><td>0.210526</td><td>0.210526</td></tr>
+<tr><td>0.263158</td><td>0.263158</td></tr>
+<tr><td>0.315789</td><td>0.315789</td></tr>
+<tr><td>0.368421</td><td>0.368421</td></tr>
+<tr><td>0.421053</td><td>0.421053</td></tr>
+<tr><td>0.473684</td><td>0.473684</td></tr>
+<tr><td>0.526316</td><td>0.526316</td></tr>
+<tr><td>0.578947</td><td>0.578947</td></tr>
+<tr><td>0.631579</td><td>0.631579</td></tr>
+<tr><td>0.684211</td><td>0.684211</td></tr>
+<tr><td>0.736842</td><td>0.736842</td></tr>
+<tr><td>0.789474</td><td>0.789474</td></tr>
+<tr><td>0.842105</td><td>0.842105</td></tr>
+<tr><td>0.894737</td><td>0.894737</td></tr>
+<tr><td>0.947368</td><td>0.947368</td></tr>
+<tr><td>1.000000</td><td>1.000000</td></tr>
+</table>

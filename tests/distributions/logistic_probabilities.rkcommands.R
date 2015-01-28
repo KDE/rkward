@@ -1,7 +1,10 @@
 local({
 ## Compute
-result <- (plogis (q = c (0.95), location = 1.04, scale = 1.00, lower.tail=TRUE, log.p = TRUE))
+q <- seq (-5, 5, length.out=20)
+p <- plogis (q, location=0.0, scale=1.0)
 ## Print result
-rk.header ("Logistic probability", list ("Vector of quantiles", "c (0.95)", "Location", "1.04", "Scale", "1.00", "Tail", "lower.tail=TRUE", "Probabilities p are given as", "log.p = TRUE"))
-rk.results (result, titles="Logistic probabilities")
+rk.header ("Logistic distribution", parameters=list("Location"="0.0",
+	"Scale"="1.0",
+	"Tail"="Lower tail: P[X ≤ x]"))
+rk.results (data.frame ("Quantile"=q, "Probability"=p, check.names=FALSE))
 })

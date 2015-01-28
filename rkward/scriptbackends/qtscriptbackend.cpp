@@ -2,7 +2,7 @@
                           qtscriptbackend  -  description
                              -------------------
     begin                : Mon Sep 28 2009
-    copyright            : (C) 2009, 2010, 2012, 2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2009, 2010, 2012, 2014, 2015 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -265,7 +265,7 @@ bool QtScriptBackendThread::includeFile (const QString &filename) {
 
 	// evaluate in global context
 	engine.currentContext ()->setActivationObject (engine.globalObject ());
-	QScriptValue result = engine.evaluate (file.readAll(), _filename);
+	QScriptValue result = engine.evaluate (QString::fromUtf8 (file.readAll ()), _filename);
 
 	if (scriptError ()) return false;
 
@@ -347,7 +347,7 @@ namespace RKPrecompiledQtScripts {
 			if (!file.open (QIODevice::ReadOnly | QIODevice::Text)) {
 				return false;
 			}
-			compiled_includes.insert (scriptfile, QScriptProgram (file.readAll (), scriptfile));
+			compiled_includes.insert (scriptfile, QScriptProgram (QString::fromUtf8 (file.readAll ()), scriptfile));
 			file.close ();
 		} else {
 			RK_DEBUG (PHP, DL_DEBUG, "Script file %s is already compiled", qPrintable (scriptfile));

@@ -1,10 +1,30 @@
-<h1>Normal probability</h1>
+<h1>Normal distribution</h1>
 <h2>Parameters</h2>
-<ul><li>Vector of quantiles: c (0.95)</li>
-<li>mu: 0.00</li>
-<li>sigma: 1.00</li>
-<li>Tail: lower.tail=TRUE</li>
-<li>Probabilities p are given as: log.p = FALSE</li>
+<ul><li>mu (mean): 0.00</li>
+<li>sigma (standard deviation): 1.00</li>
+<li>Tail: Lower tail: P[X ≤ x]</li>
 </ul>
 DATE<br />
-<h3>Normal probabilities: 0.82894</h3>
+<table border="1">
+<tr><td>Quantile</td><td>Probability</td></tr>
+<tr><td>-4.00000</td><td>3.1671e-05</td></tr>
+<tr><td>-3.57895</td><td>1.7249e-04</td></tr>
+<tr><td>-3.15789</td><td>7.9456e-04</td></tr>
+<tr><td>-2.73684</td><td>3.1016e-03</td></tr>
+<tr><td>-2.31579</td><td>1.0285e-02</td></tr>
+<tr><td>-1.89474</td><td>2.9064e-02</td></tr>
+<tr><td>-1.47368</td><td>7.0283e-02</td></tr>
+<tr><td>-1.05263</td><td>1.4625e-01</td></tr>
+<tr><td>-0.63158</td><td>2.6383e-01</td></tr>
+<tr><td>-0.21053</td><td>4.1663e-01</td></tr>
+<tr><td> 0.21053</td><td>5.8337e-01</td></tr>
+<tr><td> 0.63158</td><td>7.3617e-01</td></tr>
+<tr><td> 1.05263</td><td>8.5375e-01</td></tr>
+<tr><td> 1.47368</td><td>9.2972e-01</td></tr>
+<tr><td> 1.89474</td><td>9.7094e-01</td></tr>
+<tr><td> 2.31579</td><td>9.8972e-01</td></tr>
+<tr><td> 2.73684</td><td>9.9690e-01</td></tr>
+<tr><td> 3.15789</td><td>9.9921e-01</td></tr>
+<tr><td> 3.57895</td><td>9.9983e-01</td></tr>
+<tr><td> 4.00000</td><td>9.9997e-01</td></tr>
+</table>

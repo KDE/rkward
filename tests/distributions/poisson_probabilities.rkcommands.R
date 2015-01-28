@@ -1,7 +1,9 @@
 local({
 ## Compute
-result <- (ppois (q = c (0.95), lambda = 1.07, lower.tail=TRUE, log.p = TRUE))
+q <- 0:5
+p <- ppois (q, lambda=1.0)
 ## Print result
-rk.header ("Poisson probability", list ("Vector of quantiles", "c (0.95)", "Lambda", "1.07", "Tail", "lower.tail=TRUE", "Probabilities p are given as", "log.p = TRUE"))
-rk.results (result, titles="Poisson probabilities")
+rk.header ("Poisson distribution", parameters=list("λ (Lambda)"="1.0",
+	"Tail"="Lower tail: P[X ≤ x]"))
+rk.results (data.frame ("Quantile"=q, "Probability"=p, check.names=FALSE))
 })

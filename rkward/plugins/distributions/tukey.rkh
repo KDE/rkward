@@ -1,0 +1,23 @@
+<!DOCTYPE rkhelp>
+<document>
+	<snippets>
+		<include file="dist_help_snippets.xml"/>
+	</snippets>
+	<summary>
+		Provides a calculator for probabilities, quantiles in the Standardized Range (Tukey) distribution. Calculating densities is not supported by this plugin.
+
+		Quantiles are the ratio between the observed range in the given number of observations, and the standard deviation estimate (based on given number of degrees of freedom) of an independent sample.
+	</summary>
+	<insert snippet="dialog_usage"/>
+	<settings>
+		<insert snippet="dialog_settings"/>
+		<setting id="nmeans">Number of independent observations whose range to consider.</setting>
+		<setting id="df">Degrees of freedom for the (independent sample) estimate of standard deviation.</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/Tukey"/></li>
+			<li><link href="rkward://component/rkward/plot_tukey_distribution"/></li>
+		</ul>
+	</related>
+</document>

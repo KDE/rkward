@@ -18,6 +18,7 @@ Density and distribution function plots for the Exponential distribution.
 	</settings>
 	<related>
 		<ul>
+			<li><link href="rkward://component/exponential_probabilities"/></li>
 			<li><link href="rkward://rhelp/Exponential"/></li>
 			<li><link href="rkward://component/plot_options"/></li>
 			<li><link href="rkward://rhelp/curve"/></li>

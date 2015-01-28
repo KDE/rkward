@@ -1,19 +1,30 @@
-<h1>Cauchy probabilities</h1>
+<h1>Cauchy distribution</h1>
 <h2>Parameters</h2>
-<ul><li>Vector of quantiles: c (0.95)</li>
-<li>Location: 0.03</li>
-<li>Scale: 1.02</li>
-<li>Tail: lower.tail=TRUE</li>
-<li>Probabilities p are given as: log.p = FALSE</li>
+<ul><li>Location: 0.00</li>
+<li>Scale: 1.00</li>
+<li>Tail: Lower tail: P[X ≤ x]</li>
 </ul>
 DATE<br />
-<h3>Cauchy probabilities: 0.73361</h3><h1>Cauchy probabilities</h1>
-<h2>Parameters</h2>
-<ul><li>Vector of quantiles: c (0.95)</li>
-<li>Location: -0.02</li>
-<li>Scale: 1.03</li>
-<li>Tail: lower.tail=FALSE</li>
-<li>Probabilities p are given as: log.p = TRUE</li>
-</ul>
-DATE<br />
-<h3>Cauchy probabilities: -1.3488</h3>
+<table border="1">
+<tr><td>Quantile</td><td>Probability</td></tr>
+<tr><td>-31.8205</td><td>0.010000</td></tr>
+<tr><td>-28.4710</td><td>0.011176</td></tr>
+<tr><td>-25.1215</td><td>0.012664</td></tr>
+<tr><td>-21.7719</td><td>0.014610</td></tr>
+<tr><td>-18.4224</td><td>0.017261</td></tr>
+<tr><td>-15.0729</td><td>0.021087</td></tr>
+<tr><td>-11.7233</td><td>0.027086</td></tr>
+<tr><td> -8.3738</td><td>0.037833</td></tr>
+<tr><td> -5.0243</td><td>0.062537</td></tr>
+<tr><td> -1.6748</td><td>0.171341</td></tr>
+<tr><td>  1.6748</td><td>0.828659</td></tr>
+<tr><td>  5.0243</td><td>0.937463</td></tr>
+<tr><td>  8.3738</td><td>0.962167</td></tr>
+<tr><td> 11.7233</td><td>0.972914</td></tr>
+<tr><td> 15.0729</td><td>0.978913</td></tr>
+<tr><td> 18.4224</td><td>0.982739</td></tr>
+<tr><td> 21.7719</td><td>0.985390</td></tr>
+<tr><td> 25.1215</td><td>0.987336</td></tr>
+<tr><td> 28.4710</td><td>0.988824</td></tr>
+<tr><td> 31.8205</td><td>0.990000</td></tr>
+</table>
