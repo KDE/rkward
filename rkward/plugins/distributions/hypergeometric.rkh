@@ -18,7 +18,7 @@
 	<related>
 		<ul>
 			<li><link href="rkward://rhelp/Hypergeometric"/></li>
-			<li><link href="rkward://component/rkward/plot_hypergeom_distribution"/></li>
+			<li><link href="rkward://component/rkward/plot_hypergeometric_distribution"/></li>
 		</ul>
 	</related>
 </document>

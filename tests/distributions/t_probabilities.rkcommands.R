@@ -1,7 +1,10 @@
 local({
 ## Compute
-result <- (pt (q = c (0.95), df = 1.00, ncp = 0.00, lower.tail=TRUE, log.p = FALSE))
+q <- seq (qt (.01, df=10.0, ncp=0.0), qt (.99, df=10.0, ncp=0.0), length.out=20)
+p <- pt (q, df=10.0, ncp=0.0)
 ## Print result
-rk.header ("t probability", list ("Vector of quantiles", "c (0.95)", "Degrees of Freedom", "1.00", "non-centrality parameter", "0.00", "Tail", "lower.tail=TRUE", "Probabilities p are given as", "log.p = FALSE"));
-rk.results (result, titles="t probabilities")
+rk.header ("t distribution", parameters=list("Degrees of Freedom"="10.0",
+	"non-centrality parameter"="0.0",
+	"Tail"="Lower tail: P[X ≤ x]"))
+rk.results (data.frame ("Quantile"=q, "Probability"=p, check.names=FALSE))
 })

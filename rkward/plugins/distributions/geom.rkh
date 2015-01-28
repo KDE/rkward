@@ -16,7 +16,7 @@
 	<related>
 		<ul>
 			<li><link href="rkward://rhelp/Geometric"/></li>
-			<li><link href="rkward://component/rkward/plot_geom_distribution"/></li>
+			<li><link href="rkward://component/rkward/plot_geometric_distribution"/></li>
 		</ul>
 	</related>
 </document>

@@ -7,7 +7,7 @@
 	</logic>
 	<snippets>
 		<snippet id="dist_options">
-			<spinbox default_precision="1" type="real" min="0" initial="1" id="rate" label="Rates"/>
+			<spinbox default_precision="1" type="real" min="0" initial="1" id="rate" label="Rate"/>
 		</snippet>
 		<include file="dist_snippets.xml"/>
 	</snippets>

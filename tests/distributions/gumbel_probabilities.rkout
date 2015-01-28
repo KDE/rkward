@@ -1,10 +1,30 @@
-<h1>Gumbel probability</h1>
+<h1>Gumbel distribution</h1>
 <h2>Parameters</h2>
-<ul><li>Vector of quantiles: c (0.95)</li>
-<li>Shape: 1.03</li>
-<li>Scale: 1.04</li>
-<li>Tail: lower.tail=TRUE</li>
-<li>Probabilities p are given as: log.p = FALSE</li>
+<ul><li>Location: 0.0</li>
+<li>Scale: 1.0</li>
+<li>Tail: Lower tail: P[X ≤ x]</li>
 </ul>
 DATE<br />
-<h3>Gumbel probabilities: 0.92232</h3>
+<table border="1">
+<tr><td>Quantile</td><td>Probability</td></tr>
+<tr><td>-2.00000</td><td>0.00061798</td></tr>
+<tr><td>-1.63158</td><td>0.00602439</td></tr>
+<tr><td>-1.26316</td><td>0.02911296</td></tr>
+<tr><td>-0.89474</td><td>0.08657953</td></tr>
+<tr><td>-0.52632</td><td>0.18402483</td></tr>
+<tr><td>-0.15789</td><td>0.31004342</td></tr>
+<tr><td> 0.21053</td><td>0.44478790</td></tr>
+<tr><td> 0.57895</td><td>0.57093036</td></tr>
+<tr><td> 0.94737</td><td>0.67857511</td></tr>
+<tr><td> 1.31579</td><td>0.76470705</td></tr>
+<tr><td> 1.68421</td><td>0.83061333</td></tr>
+<tr><td> 2.05263</td><td>0.87950452</td></tr>
+<tr><td> 2.42105</td><td>0.91500288</td></tr>
+<tr><td> 2.78947</td><td>0.94039663</td></tr>
+<tr><td> 3.15789</td><td>0.95837594</td></tr>
+<tr><td> 3.52632</td><td>0.97101527</td></tr>
+<tr><td> 3.89474</td><td>0.97985691</td></tr>
+<tr><td> 4.26316</td><td>0.98602085</td></tr>
+<tr><td> 4.63158</td><td>0.99030791</td></tr>
+<tr><td> 5.00000</td><td>0.99328470</td></tr>
+</table>

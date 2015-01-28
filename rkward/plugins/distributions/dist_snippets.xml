@@ -16,7 +16,7 @@
 	<snippet id="dialog_layout">
 		<dropdown id="mode" label="Mode">
 			<option value="p" label="Calculate probabilities for given quantiles"/>
-			<option value="d" label="Calculate densities at given quantiles"/>
+			<option value="d" id="d" label="Calculate densities at given quantiles"/>
 			<option value="q" label="Calculate quantiles for given probabilities"/>
 		</dropdown>
 			<row>

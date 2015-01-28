@@ -4,6 +4,7 @@
 	<help file="tukey.rkh" />
 	<logic>
 		<insert snippet="dialog_logic"/>
+		<set id="mode.d.enabled" to="false"/>
 	</logic>
 	<snippets>
 		<snippet id="dist_options">

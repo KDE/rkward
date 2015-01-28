@@ -17,6 +17,7 @@
 	<related>
 		<ul>
 			<li><link href="rkward://rhelp/Binomial"/></li>
+			<li><link href="rkward://component/rkward/plot_binomial_distribution"/></li>
 		</ul>
 	</related>
 </document>

@@ -1,7 +1,10 @@
 local({
 ## Compute
-result <- (pbinom (q = c (0.95, 2), size = 3, prob = 0.50, lower.tail=TRUE, log.p = FALSE))
+q <- 0:10
+p <- pbinom (q, size=10, prob=0.50)
 ## Print result
-rk.header ("Binomial tail probability", list ("Vector of quantiles", "c (0.95, 2)", "Binomial trials", "3", "Probability of success", "0.50", "Tail", "lower.tail=TRUE", "Probabilities p are given as", "log.p = FALSE"));
-rk.results (result, titles="Binomial tail probabilities")
+rk.header ("Binomial distribution", parameters=list("Binomial trials"="10",
+	"Probability of success"="0.50",
+	"Tail"="Lower tail: P[X ≤ x]"))
+rk.results (data.frame ("Quantile"=q, "Probability"=p, check.names=FALSE))
 })

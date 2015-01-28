@@ -1,11 +1,30 @@
-<h1>Studentized Range probability</h1>
+<h1>Studentized Range (Tukey) distribution</h1>
 <h2>Parameters</h2>
-<ul><li>Vector of quantiles: c (0.95)</li>
-<li>Sample size for range: 2</li>
-<li>Degrees of freedom for s: 5</li>
-<li>Number of groups whose maximum range is considered: 1</li>
-<li>Tail: lower.tail=TRUE</li>
-<li>Probabilities p are given as: log.p = FALSE</li>
+<ul><li>Number of observations: 5</li>
+<li>Degrees of freedom for standard deviation estimate: 5.0</li>
+<li>Tail: Lower tail: P[X ≤ x]</li>
 </ul>
 DATE<br />
-<h3>Studentized Range probabilities: 0.46848</h3>
+<table border="1">
+<tr><td>Quantile</td><td>Probability</td></tr>
+<tr><td>0.00000</td><td>0.000000</td></tr>
+<tr><td>0.44324</td><td>0.002822</td></tr>
+<tr><td>0.88647</td><td>0.035938</td></tr>
+<tr><td>1.32971</td><td>0.129714</td></tr>
+<tr><td>1.77295</td><td>0.273181</td></tr>
+<tr><td>2.21618</td><td>0.430559</td></tr>
+<tr><td>2.65942</td><td>0.572803</td></tr>
+<tr><td>3.10266</td><td>0.687482</td></tr>
+<tr><td>3.54589</td><td>0.774014</td></tr>
+<tr><td>3.98913</td><td>0.836968</td></tr>
+<tr><td>4.43237</td><td>0.881957</td></tr>
+<tr><td>4.87560</td><td>0.913905</td></tr>
+<tr><td>5.31884</td><td>0.936613</td></tr>
+<tr><td>5.76208</td><td>0.952840</td></tr>
+<tr><td>6.20531</td><td>0.964527</td></tr>
+<tr><td>6.64855</td><td>0.973024</td></tr>
+<tr><td>7.09179</td><td>0.979265</td></tr>
+<tr><td>7.53502</td><td>0.983897</td></tr>
+<tr><td>7.97826</td><td>0.987369</td></tr>
+<tr><td>8.42149</td><td>0.990000</td></tr>
+</table>

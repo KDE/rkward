@@ -1,10 +1,30 @@
-<h1>Log Normal probability</h1>
+<h1>Log Normal distribution</h1>
 <h2>Parameters</h2>
-<ul><li>Vector of quantiles: c (0.95)</li>
-<li>meanlog: 0.00</li>
-<li>sdlog: 1.00</li>
-<li>Tail: lower.tail=TRUE</li>
-<li>Probabilities p are given as: log.p = FALSE</li>
+<ul><li>meanlog (mean on log scale): 0.0</li>
+<li>sdlog (standard deviation on log scale): 1.0</li>
+<li>Tail: Lower tail: P[X ≤ x]</li>
 </ul>
 DATE<br />
-<h3>Log Normal probabilities: 0.47955</h3>
+<table border="1">
+<tr><td>Quantile</td><td>Probability</td></tr>
+<tr><td> 0.00000</td><td>0.00000</td></tr>
+<tr><td> 0.53897</td><td>0.26826</td></tr>
+<tr><td> 1.07794</td><td>0.52991</td></tr>
+<tr><td> 1.61692</td><td>0.68457</td></tr>
+<tr><td> 2.15589</td><td>0.77882</td></tr>
+<tr><td> 2.69486</td><td>0.83924</td></tr>
+<tr><td> 3.23383</td><td>0.87974</td></tr>
+<tr><td> 3.77281</td><td>0.90788</td></tr>
+<tr><td> 4.31178</td><td>0.92804</td></tr>
+<tr><td> 4.85075</td><td>0.94285</td></tr>
+<tr><td> 5.38972</td><td>0.95396</td></tr>
+<tr><td> 5.92870</td><td>0.96245</td></tr>
+<tr><td> 6.46767</td><td>0.96904</td></tr>
+<tr><td> 7.00664</td><td>0.97422</td></tr>
+<tr><td> 7.54561</td><td>0.97836</td></tr>
+<tr><td> 8.08458</td><td>0.98169</td></tr>
+<tr><td> 8.62356</td><td>0.98440</td></tr>
+<tr><td> 9.16253</td><td>0.98662</td></tr>
+<tr><td> 9.70150</td><td>0.98847</td></tr>
+<tr><td>10.24047</td><td>0.99000</td></tr>
+</table>

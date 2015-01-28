@@ -1,10 +1,30 @@
-<h1>Weibull probability</h1>
+<h1>Weilbull distribution</h1>
 <h2>Parameters</h2>
-<ul><li>Vector of quantiles: c (0.95)</li>
-<li>Shape: 1.00</li>
-<li>Scale: 1.00</li>
-<li>Tail: lower.tail=TRUE</li>
-<li>Probabilities p are given as: log.p = FALSE</li>
+<ul><li>Shape: 1.0</li>
+<li>Scale: 1.0</li>
+<li>Tail: Lower tail: P[X ≤ x]</li>
 </ul>
 DATE<br />
-<h3>Weibull probabilities: 0.61326</h3>
+<table border="1">
+<tr><td>Quantile</td><td>Probability</td></tr>
+<tr><td>0.00000</td><td>0.00000</td></tr>
+<tr><td>0.24238</td><td>0.21524</td></tr>
+<tr><td>0.48475</td><td>0.38415</td></tr>
+<tr><td>0.72713</td><td>0.51671</td></tr>
+<tr><td>0.96951</td><td>0.62073</td></tr>
+<tr><td>1.21189</td><td>0.70236</td></tr>
+<tr><td>1.45426</td><td>0.76643</td></tr>
+<tr><td>1.69664</td><td>0.81670</td></tr>
+<tr><td>1.93902</td><td>0.85616</td></tr>
+<tr><td>2.18140</td><td>0.88712</td></tr>
+<tr><td>2.42377</td><td>0.91141</td></tr>
+<tr><td>2.66615</td><td>0.93048</td></tr>
+<tr><td>2.90853</td><td>0.94544</td></tr>
+<tr><td>3.15091</td><td>0.95719</td></tr>
+<tr><td>3.39328</td><td>0.96640</td></tr>
+<tr><td>3.63566</td><td>0.97363</td></tr>
+<tr><td>3.87804</td><td>0.97931</td></tr>
+<tr><td>4.12042</td><td>0.98376</td></tr>
+<tr><td>4.36279</td><td>0.98726</td></tr>
+<tr><td>4.60517</td><td>0.99000</td></tr>
+</table>

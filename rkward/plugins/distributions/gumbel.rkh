@@ -14,8 +14,8 @@
 	</settings>
 	<related>
 		<ul>
-			<li><link href="rkward://rhelp/pgumgel">R help on the gumbel distribution functions from package FAdist</li>
-			<li><link href="rkward://component/rkward/plot_gumbel_distribution"/></li>
+			<li><link href="rkward://rhelp/pgumgel">R help on the gumbel distribution functions from package FAdist</link></li>
+			<!--			<li><link href="rkward://component/rkward/plot_gumbel_distribution"/></li> -->
 		</ul>
 	</related>
 </document>

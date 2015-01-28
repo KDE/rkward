@@ -4,7 +4,7 @@
 		<include file="dist_help_snippets.xml"/>
 	</snippets>
 	<summary>
-		Provides a calculator for probabilities, quantiles, and densities in the Standardized Range (Tukey) distribution.
+		Provides a calculator for probabilities, quantiles in the Standardized Range (Tukey) distribution. Calculating densities is not supported by this plugin.
 
 		Quantiles are the ratio between the observed range in the given number of observations, and the standard deviation estimate (based on given number of degrees of freedom) of an independent sample.
 	</summary>

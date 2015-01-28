@@ -1,7 +1,10 @@
 local({
 ## Compute
-result <- (ptukey (q = c (0.95), nmeans = 2, df = 5, nranges = 1, lower.tail=TRUE, log.p = FALSE))
+q <- seq (0, qtukey (.99, nmeans=5, df=5.0), length.out=20)
+p <- ptukey (q, nmeans=5, df=5.0)
 ## Print result
-rk.header ("Studentized Range probability", list ("Vector of quantiles", "c (0.95)", "Sample size for range", "2", "Degrees of freedom for s", "5", "Number of groups whose maximum range is considered", "1", "Tail", "lower.tail=TRUE", "Probabilities p are given as", "log.p = FALSE"));
-rk.results (result, titles="Studentized Range probabilities")
+rk.header ("Studentized Range (Tukey) distribution", parameters=list("Number of observations"="5",
+	"Degrees of freedom for standard deviation estimate"="5.0",
+	"Tail"="Lower tail: P[X ≤ x]"))
+rk.results (data.frame ("Quantile"=q, "Probability"=p, check.names=FALSE))
 })

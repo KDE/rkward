@@ -7,8 +7,8 @@
 	</logic>
 	<snippets>
 		<snippet id="dist_options">
-			<spinbox default_precision="1" type="real" initial="0" id="meanlog" label="meanlog (mean of the distribution on the log scale)"/>
-			<spinbox default_precision="1" type="real" min="0.000001" initial="1" id="sdlog" label="sdlog (standard deviation of the distribution on the log scale)"/>
+			<spinbox default_precision="1" type="real" initial="0" id="meanlog" label="meanlog (mean on log scale)"/>
+			<spinbox default_precision="1" type="real" min="0.000001" initial="1" id="sdlog" label="sdlog (standard deviation on log scale)"/>
 		</snippet>
 		<include file="dist_snippets.xml"/>
 	</snippets>
