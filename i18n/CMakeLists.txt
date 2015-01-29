@@ -51,7 +51,7 @@ ELSE(NOT GETTEXT_MSGFMT_EXECUTABLE)
 ${CMAKE_CURRENT_SOURCE_DIR}/po/ was not found. This probably means that you are building from the development repository, and have not fetched translations. This is ok, if you want to run RKWard in English, only. Otherwise, to fetch translations, either
    scripts/import_translations.py XX
 where (XX is your language code, such as \"de\"; optionally specify several codes separated by spaces). In some cases (esp., if you want to build all existing translations), it is much faster to use:
-   git clone git://anongit.kde.org/scratch/tfry/rkward-po-export
+   git clone git://anongit.kde.org/scratch/tfry/rkward-po-export i18n/po
 ------")
 	ENDIF(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/po/")
 ENDIF(NOT GETTEXT_MSGFMT_EXECUTABLE)
