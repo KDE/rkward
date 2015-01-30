@@ -4,8 +4,8 @@
 <li>Lower quantile: 0.00</li>
 <li>Upper quantile: 10.00</li>
 <li>Rate: 1.00</li>
-<li>Scale: normal</li>
-<li>Tail: Upper</li>
+<li>Tail: Upper tail: P[X > x]</li>
+<li>Logarithmic: no</li>
 <li>Function: pexp</li>
 </ul>
 DATE<br />

@@ -1,12 +1,12 @@
 <h1>Hypergeometric distribution function</h1>
 <h2>Parameters</h2>
 <ul><li>Lower quantile: 0</li>
-<li>Upper quantile: 12</li>
-<li>Number of white balls: 12</li>
-<li>Number of black balls: 12</li>
-<li>Number of balls drawn: 15</li>
-<li>Scale: normal</li>
-<li>Tail: Lower</li>
+<li>Upper quantile (at most k): 12</li>
+<li>Number of white balls (m): 12</li>
+<li>Number of black balls (n): 12</li>
+<li>Number of balls drawn (k): 15</li>
+<li>Tail: Lower tail: P[X ≤ x]</li>
+<li>Logarithmic: no</li>
 <li>Function: phyper</li>
 </ul>
 DATE<br />

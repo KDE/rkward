@@ -1,6 +1,10 @@
 local({
 ## Print result
-rk.header ("Geometric density function", list ("Lower quantile", "0", "Upper quantile", "12", "Probability of success on each trial", "0.50", "Scale", "normal", "Function", "dgeom"));
+rk.header ("Geometric density function", parameters=list("Lower quantile"="0",
+	"Upper quantile"="12",
+	"Probability of success on each trial"="0.50",
+	"Logarithmic"="no",
+	"Function"="dgeom"))
 
 rk.graph.on ()
 try ({

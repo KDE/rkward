@@ -1,6 +1,12 @@
 local({
 ## Print result
-rk.header ("Normal density function", list ("Number of Observations", "100", "Lower quantile", "-3.29", "Upper quantile", "3.29", "Mean", "0.00", "Standard Deviation", "1.00", "Scale", "normal", "Function", "dnorm"));
+rk.header ("Normal density function", parameters=list("Number of Observations"="100",
+	"Lower quantile"="-3.29",
+	"Upper quantile"="3.29",
+	"Mean"="0.00",
+	"Standard deviation"="1.00",
+	"Logarithmic"="no",
+	"Function"="dnorm"))
 
 rk.graph.on ()
 try ({

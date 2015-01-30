@@ -1,6 +1,13 @@
 local({
 ## Print result
-rk.header ("Student t distribution function", list ("Number of Observations", "100", "Minimum", "-12.924", "Maximum", "12.924", "Degrees of freedom", "1.00", "Non-centrality", "0.00", "Scale", "normal", "Tail","Lower", "Function", "pt"));
+rk.header ("Student t distribution function", parameters=list("Number of Observations"="100",
+	"Lower quantile"="-12.924",
+	"Upper quantile"="12.924",
+	"Degrees of freedom"="1.00",
+	"Non-centrality parameter"="0.00",
+	"Tail"="Lower tail: P[X ≤ x]",
+	"Logarithmic"="no",
+	"Function"="pt"))
 
 rk.graph.on ()
 try ({

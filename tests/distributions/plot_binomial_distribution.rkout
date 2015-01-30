@@ -4,7 +4,7 @@
 <li>Upper quantile: 12</li>
 <li>Number of trials: 12</li>
 <li>Probability of success on each trial: 0.50</li>
-<li>Scale: normal</li>
+<li>Logarithmic: no</li>
 <li>Function: dbinom</li>
 </ul>
 DATE<br />

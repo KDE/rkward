@@ -1,6 +1,10 @@
 local({
 ## Print result
-rk.header ("Poisson density function", list ("Lower quantile", "0", "Upper quantile", "12", "Mean", "5.00", "Scale", "normal", "Function", "dpois"));
+rk.header ("Poisson density function", parameters=list("Lower quantile"="0",
+	"Upper quantile"="12",
+	"Mean"="5.00",
+	"Logarithmic"="no",
+	"Function"="dpois"))
 
 rk.graph.on ()
 try ({

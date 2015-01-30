@@ -4,9 +4,10 @@ var options;
 include ('plot_dist_common.js');
 
 function getParameters () {
-	options['mean'] = getValue ("mean");
+	options['args'] = ', lambda=' + getString ("mean");
 	getDiscontRangeParameters();
 
+	options['distname'] = i18nc ("Poisson distribution", noquote ("Poisson"));
 	if (options['is_density']) {
 		options['fun'] = "dpois";
 	} else {
@@ -14,11 +15,7 @@ function getParameters () {
 	}
 }
 
-function doHeader () {
-	echo ('rk.header ("Poisson ' + options['label'] + ' function", list ("Lower quantile", "' + options['min'] + '", "Upper quantile", "' + options['max'] + '", "Mean", "' + options['mean'] + '"' + options['log_label'] + options['tail_label'] + ', "Function", "' + options['fun'] + '"));' + "\n");
+function addParamsToHeader (header) {
+	header.addFromUI ("mean");
+	return header;
 }
-
-function doFunCall () {
-	echo (options['fun'] + '(x, lambda=' + options['mean'] + options['log_option'] + options['tail_option'] + ')');
-}
-

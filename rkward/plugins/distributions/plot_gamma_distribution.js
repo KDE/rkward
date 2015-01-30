@@ -4,10 +4,10 @@ var options;
 include ('plot_dist_common.js');
 
 function getParameters () {
-	options['shape'] = getValue ("shape");
-	options['rate'] = getValue ("rate");
+	options['args'] = ', shape=' + getString ("shape") + ', rate=' + getString ("rate");
 	getContRangeParameters ();
 
+	options['distname'] = i18nc ("Gamma distribution", noquote ("Gamma"));
 	if (options['is_density']) {
 		options['fun'] = "dgamma";
 	} else {
@@ -15,11 +15,8 @@ function getParameters () {
 	}
 }
 
-function doHeader () {
-	echo ('rk.header ("Gamma ' + options['label'] + ' function", list ("Number of Observations", "' + options['n'] + '", "Lower quantile", "' + options['min'] + '", "Upper quantile", "' + options['max'] + '", "Shape", "' + options['shape'] + '", "Rate", "' + options['rate'] + '"' + options['log_label'] + options['tail_label'] + ', "Function", "' + options['fun'] + '"));' + "\n");
+function addParamsToHeader (header) {
+	header.addFromUI ("shape");
+	header.addFromUI ("rate");
+	return header;
 }
-
-function doFunCall () {
-	echo (options['fun'] + '(x, shape=' + options['shape'] + ', rate=' + options['rate'] + options['log_option'] + options['tail_option'] + ')');
-}
-

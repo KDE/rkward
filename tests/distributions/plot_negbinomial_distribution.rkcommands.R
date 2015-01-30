@@ -1,6 +1,11 @@
 local({
 ## Print result
-rk.header ("Negative Binomial density function", list ("Lower quantile", "0", "Upper quantile", "24", "Target for number of successful trials", "12", "Probability of success in each trial", "0.75", "Scale", "normal", "Function", "dnbinom"));
+rk.header ("Negative Binomial density function", parameters=list("Lower quantile"="0",
+	"Upper quantile"="24",
+	"Target number of successful trials"="12",
+	"Probability of success on each trial"="0.75",
+	"Logarithmic"="no",
+	"Function"="dnbinom"))
 
 rk.graph.on ()
 try ({

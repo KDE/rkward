@@ -4,11 +4,10 @@ var options;
 include ('plot_dist_common.js');
 
 function getParameters () {
-	options['n_val'] = getValue ("n_val");
-	options['m'] = getValue ("m");
-	options['k'] = getValue ("k");
+	options['args'] = ', m=' + getString ("m") + ', n=' + getString ("n_val") + ', k=' + getString ("k");
 	getDiscontRangeParameters();
 
+	options['distname'] = i18nc ("Hypergeometric distribution", noquote ("Hypergeometric"));
 	if (options['is_density']) {
 		options['fun'] = "dhyper";
 	} else {
@@ -16,11 +15,9 @@ function getParameters () {
 	}
 }
 
-function doHeader () {
-	echo ('rk.header ("Hypergeometric ' + options['label'] + ' function", list ("Lower quantile", "' + options['min'] + '", "Upper quantile", "' + options['max'] + '", "Number of white balls", "' + options['m'] + '", "Number of black balls", "' + options['n_val'] + '", "Number of balls drawn", "' + options['k'] + '"' + options['log_label'] + options['tail_label'] + ', "Function", "' + options['fun'] + '"));' + "\n");
+function addParamsToHeader (header) {
+	header.addFromUI ("m");
+	header.addFromUI ("n_val");
+	header.addFromUI ("k");
+	return header;
 }
-
-function doFunCall () {
-	echo (options['fun'] + '(x, m=' + options['m'] + ', n=' + options['n_val'] + ', k=' + options['k'] + options['log_option'] + options['tail_option'] + ')');
-}
-

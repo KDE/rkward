@@ -4,10 +4,10 @@ var options;
 include ('plot_dist_common.js');
 
 function getParameters () {
-	options['mean'] = getValue ("mean");
-	options['sd'] = getValue ("sd");
+	options['args'] = ', mean=' + getString ("mean") + ', sd=' + getString ("sd");
 	getContRangeParameters ();
 
+	options['distname'] = i18nc ("Normal distribution", noquote ("Normal"));
 	if (options['is_density']) {
 		options['fun'] = "dnorm";
 	} else {
@@ -15,11 +15,8 @@ function getParameters () {
 	}
 }
 
-function doHeader () {
-	echo ('rk.header ("Normal ' + options['label'] + ' function", list ("Number of Observations", "' + options['n'] + '", "Lower quantile", "' + options['min'] + '", "Upper quantile", "' + options['max'] + '", "Mean", "' + options['mean'] + '", "Standard Deviation", "' + options['sd'] + '"' + options['log_label'] + options['tail_label'] + ', "Function", "' + options['fun'] + '"));' + "\n");
+function addParamsToHeader (header) {
+	header.addFromUI ("mean");
+	header.addFromUI ("sd");
+	return header;
 }
-
-function doFunCall () {
-	echo (options['fun'] + '(x, mean=' + options['mean'] + ', sd=' + options['sd'] + options['log_option'] + options['tail_option'] + ')');
-}
-

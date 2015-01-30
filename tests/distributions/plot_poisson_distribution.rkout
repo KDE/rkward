@@ -3,7 +3,7 @@
 <ul><li>Lower quantile: 0</li>
 <li>Upper quantile: 12</li>
 <li>Mean: 5.00</li>
-<li>Scale: normal</li>
+<li>Logarithmic: no</li>
 <li>Function: dpois</li>
 </ul>
 DATE<br />

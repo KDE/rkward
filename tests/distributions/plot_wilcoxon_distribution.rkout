@@ -1,10 +1,10 @@
-<h1>Binomial density function</h1>
+<h1>Wilcoxon Rank Sum density function</h1>
 <h2>Parameters</h2>
 <ul><li>Lower quantile: 0</li>
-<li>Upper quantile: 24</li>
-<li>First sample size: 4</li>
-<li>Second sample size: 6</li>
-<li>Scale: normal</li>
+<li>Upper quantile (at most m*n): 24</li>
+<li>Number of Observations in first sample (m): 4</li>
+<li>Number of Observations in second sample (n): 6</li>
+<li>Logarithmic: no</li>
 <li>Function: dwilcox</li>
 </ul>
 DATE<br />

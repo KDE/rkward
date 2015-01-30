@@ -5,7 +5,7 @@
 <li>Upper quantile: 3.29</li>
 <li>Location: 0.00</li>
 <li>Scale: 1.00</li>
-<li>Scale: normal</li>
+<li>Logarithmic: no</li>
 <li>Function: dcauchy</li>
 </ul>
 DATE<br />

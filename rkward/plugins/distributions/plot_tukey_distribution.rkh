@@ -13,9 +13,8 @@ Distribution function plot for the Studentized Range (Tukey) distribution.
 	<settings>
 		<setting id="function">Only the distribution function can be plotted for the Tukey distribution.</setting>
 		<insert snippet="cont_range_help"/>
-		<setting id="nmeans">See R reference on Tukey distribution.</setting>
-		<setting id="df">See R reference on Tukey distribution.</setting>
-		<setting id="nranges">See R reference on Tukey distribution.</setting>
+		<setting id="nmeans">Number of independent observations whose range to consider.</setting>
+		<setting id="df">Degrees of freedom for the (independent sample) estimate of standard deviation.</setting>
 		<insert snippet="common_options_help"/>
 	</settings>
 

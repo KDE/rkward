@@ -4,8 +4,8 @@
 <li>Lower quantile: -3.29</li>
 <li>Upper quantile: 3.29</li>
 <li>Mean: 0.00</li>
-<li>Standard Deviation: 1.00</li>
-<li>Scale: normal</li>
+<li>Standard deviation: 1.00</li>
+<li>Logarithmic: no</li>
 <li>Function: dnorm</li>
 </ul>
 DATE<br />

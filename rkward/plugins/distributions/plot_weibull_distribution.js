@@ -4,10 +4,10 @@ var options;
 include ('plot_dist_common.js');
 
 function getParameters () {
-	options['scale'] = getValue ("scale");
-	options['shape'] = getValue ("shape");
+	options['args'] = ', shape=' + getString ("shape") + ', scale=' + getString ("scale");
 	getContRangeParameters ();
 
+	options['distname'] = i18nc ("Weibull distribution", noquote ("Weibull"));
 	if (options['is_density']) {
 		options['fun'] = "dweibull";
 	} else {
@@ -15,11 +15,8 @@ function getParameters () {
 	}
 }
 
-function doHeader () {
-	echo ('rk.header ("Weibull ' + options['label'] + ' function", list ("Number of Observations", "' + options['n'] + '", "Lower quantile", "' + options['min'] + '", "Upper quantile", "' + options['max'] + '", "Shape", "' + options['shape'] + '", "Scale", "' + options['scale'] + '"' + options['log_label'] + options['tail_label'] + ', "Function", "' + options['fun'] + '"));' + "\n");
+function addParamsToHeader (header) {
+	header.addFromUI ("shape");
+	header.addFromUI ("scale");
+	return header;
 }
-
-function doFunCall () {
-	echo (options['fun'] + '(x, shape=' + options['shape'] + ', scale=' + options['scale'] + options['log_option'] + options['tail_option'] + ')');
-}
-

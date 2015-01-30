@@ -4,9 +4,10 @@ var options;
 include ('plot_dist_common.js');
 
 function getParameters () {
-	options['rate'] = getValue ("rate");
+	options['args'] = ', rate=' + getString ("rate");
 	getContRangeParameters ();
 
+	options['distname'] = i18nc ("Exponential distribution", noquote ("Exponential"));
 	if (options['is_density']) {
 		options['fun'] = "dexp";
 	} else {
@@ -14,11 +15,7 @@ function getParameters () {
 	}
 }
 
-function doHeader () {
-	echo ('rk.header ("Exponential ' + options['label'] + ' function", list ("Number of Observations", "' + options['n'] + '", "Lower quantile", "' + options['min'] + '", "Upper quantile", "' + options['max'] + '", "Rate", "' + options['rate'] + '"' + options['log_label'] + options['tail_label'] + ', "Function", "' + options['fun'] + '"));' + "\n");
+function addParamsToHeader (header) {
+	header.addFromUI ("rate");
+	return header;
 }
-
-function doFunCall () {
-	echo (options['fun'] + '(x, rate=' + options['rate'] + options['log_option'] + options['tail_option'] + ')');
-}
-

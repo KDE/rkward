@@ -4,10 +4,10 @@ var options;
 include ('plot_dist_common.js');
 
 function getParameters () {
-	options['nm'] = getValue ("nm");
-	options['nn'] = getValue ("nn");
+	options['args'] = ', m=' + getString ("nm") + ', n=' + getString ("nn");
 	getDiscontRangeParameters();
 
+	options['distname'] = i18nc ("Wilcoxon Rank Sum distribution", noquote ("Wilcoxon Rank Sum"));
 	if (options['is_density']) {
 		options['fun'] = "dwilcox";
 	} else {
@@ -15,11 +15,8 @@ function getParameters () {
 	}
 }
 
-function doHeader () {
-	echo ('rk.header ("Binomial ' + options['label'] + ' function", list ("Lower quantile", "' + options['min'] + '", "Upper quantile", "' + options['max'] + '", "First sample size", "' + options['nm'] + '", "Second sample size", "' + options['nn'] + '"' + options['log_label'] + options['tail_label'] + ', "Function", "' + options['fun'] + '"));' + "\n");
+function addParamsToHeader (header) {
+	header.addFromUI ("nm");
+	header.addFromUI ("nn");
+	return header;
 }
-
-function doFunCall () {
-	echo (options['fun'] + '(x, m=' + options['nm'] + ', n=' + options['nn'] + options['log_option'] + options['tail_option'] + ')');
-}
-

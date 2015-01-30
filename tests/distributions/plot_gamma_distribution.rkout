@@ -4,8 +4,8 @@
 <li>Lower quantile: 0.01</li>
 <li>Upper quantile: 4.60</li>
 <li>Shape: 1.61</li>
-<li>Rate: 0.87</li>
-<li>Scale: normal</li>
+<li>Rate (lambda) or 1/Scale: 0.87</li>
+<li>Logarithmic: no</li>
 <li>Function: dgamma</li>
 </ul>
 DATE<br />

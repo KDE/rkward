@@ -5,8 +5,8 @@
 <li>Upper quantile: 25.00</li>
 <li>Numerator degrees of freedom: 5.00</li>
 <li>Denominator degrees of freedom: 5.00</li>
-<li>Non-centrality: 0</li>
-<li>Scale: logarithmic</li>
+<li>Non-centrality parameter: 0</li>
+<li>Logarithmic: yes</li>
 <li>Function: df</li>
 </ul>
 DATE<br />

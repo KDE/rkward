@@ -1,6 +1,13 @@
 local({
 ## Print result
-rk.header ("F density function", list ("Number of Observations", "100", "Lower quantile", "0.001", "Upper quantile", "25.00", "Numerator degrees of freedom", "5.00", "Denominator degrees of freedom", "5.00", "Non-centrality", "0", "Scale", "logarithmic", "Function", "df"));
+rk.header ("F density function", parameters=list("Number of Observations"="100",
+	"Lower quantile"="0.001",
+	"Upper quantile"="25.00",
+	"Numerator degrees of freedom"="5.00",
+	"Denominator degrees of freedom"="5.00",
+	"Non-centrality parameter"="0",
+	"Logarithmic"="yes",
+	"Function"="df"))
 
 rk.graph.on ()
 try ({
