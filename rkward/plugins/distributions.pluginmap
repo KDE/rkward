@@ -1,6 +1,6 @@
 <!DOCTYPE rkpluginmap>
 
-<document base_prefix="distributions/" namespace="rkward" id="distributions">
+<document base_prefix="distributions/" namespace="rkward" id="distributions" po_id="distributions">
 	<include file="pluginmap_meta.inc"/>
 	<about
 		name="Distributions"

@@ -100,7 +100,7 @@ def parseFile (filename):
   f.close ()
 
   try:
-    return minidom.parseString (content)
+    return minidom.parseString (content.encode ('utf-8'))
   except:
     sys.stderr.write ("ERROR: Failed to parse file " + filename + "\n")
     raise
@@ -145,6 +145,10 @@ def writeouti18n (call):
   outfile.write (call + "\n")
 
 def quote (text):
+  try:
+     text = text.decode ('utf-8', 'ignore')
+  except:
+     print ("Python has trouble decoding this text: " + text)
   text = HTMLParser.HTMLParser ().unescape (text)	# unescape character entities, Qt does so while parsing the xml
   return "\"" + text.replace ("\\", "\\\\").replace ("\"", "\\\"") + "\""
 
