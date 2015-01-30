@@ -15,7 +15,9 @@
 	<logic>
 		<insert snippet="clt_logic"/>
 		<set id="dist_stepfun.default_dopoints" to="false" />
-		<set id="plotoptions.default_main" to="&quot;F&quot;"/>
+		<script><![CDATA[
+			gui.setValue ("plotoptions.default_main", i18n ("F"));
+		]]></script>
 	</logic>
 	<dialog label="Central Limit Theorem: F to Normal" >
 		<insert snippet="clt_layout"/>

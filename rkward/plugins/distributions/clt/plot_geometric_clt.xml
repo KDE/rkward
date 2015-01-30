@@ -13,7 +13,9 @@
 	<logic>
 		<insert snippet="clt_logic"/>
 		<set id="dist_stepfun.default_verticals" to="false" />
-		<set id="plotoptions.default_main" to="&quot;Geometric&quot;"/>
+		<script><![CDATA[
+			gui.setValue ("plotoptions.default_main", i18n ("Geometric"));
+		]]></script>
 	</logic>
 	<dialog label="Central Limit Theorem: Geometric to Normal" >
 		<insert snippet="clt_layout"/>

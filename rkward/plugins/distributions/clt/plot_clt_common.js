@@ -21,11 +21,11 @@ function doPrintout (full) {
 	var drawnorm = getValue ("drawnorm");
 
 
-	echo ('# parameters:\n');
+	comment ('parameters:');
 	doParameters (); // get the parameters from xml file and store them R varaibles
 
 	if (scalenorm || drawnorm) {
-		echo ('# mean and variances of the distribution of sample averages:\n');
+		comment ('mean and variances of the distribution of sample averages:');
 		doExpVar (); // calculate the expectation and varaince of the distribution of smaple averages
 	}
 
@@ -52,26 +52,26 @@ function doPrintout (full) {
 	var yLim = ""; // initialise the ylim option
 
 
-	echo ('# generate the entire data:\n');
+	comment ('generate the entire data:');
 	doGenerateData (); // generate the random samples
 
 
-	echo ('# get the sample averages:\n');
+	comment ('get the sample averages:');
 	echo ('avg <- colMeans(data);\n');
 
 	if (scalenorm) {
-		echo ('# normalise the variables:\n');
+		comment ('normalise the variables:');
 		echo ('avg <- (avg - avg.exp)/sqrt(avg.var);\n');
 	}
 	if (drawnorm) {
-		echo ('# generate random normal samples:\n');
+		comment ('generate random normal samples:');
 		echo ('normX <- seq(from=min(avg), to=max(avg), length=' + nDist + ');\n');
 		echo ('normY <- ' + normFun + ' (normX' + normMuSigma_tag + ');\n');
 	}
 	if (fun == "hist") {
 		echo ('dist.hist <- hist(avg, plot=FALSE' + histcalcoptions + ');\n');
 		if (drawnorm) {
-			echo ('# calculate the ylims appropriately:\n');
+			comment ('calculate the ylims appropriately:');
 			echo ('ylim <- c(0,max(c(dist.hist$density, normY)));\n');
 			yLim = ', ylim=ylim';
 		}
