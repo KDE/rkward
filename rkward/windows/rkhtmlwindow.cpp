@@ -2,7 +2,7 @@
                           rkhtmlwindow  -  description
                              -------------------
     begin                : Wed Oct 12 2005
-    copyright            : (C) 2005-2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2005-2015 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -508,6 +508,7 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 		chandle = componentPathToHandle (url.path ());
 		if (!chandle) return false;
 	}
+
 	XMLHelper component_xml (for_component ? chandle->getFilename () : QString (), for_component ? chandle->messageCatalog () : 0);
 	QString help_file_name;
 	QDomElement element;
@@ -535,6 +536,12 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 	XMLHelper help_xml (help_file_name, catalog);
 	QDomElement help_doc_element = help_xml.openXMLFile (DL_ERROR);
 	if (help_doc_element.isNull () && (!for_component)) return false;
+
+	HTMLRendererState state;
+	state.component_xml = &component_xml;
+	state.help_xml = &help_xml;
+	state.component_doc_element = component_doc_element;
+	state.help_doc_element = help_doc_element;
 
 	// initialize output, and set title
 	beginWritingHTML (url);
@@ -572,13 +579,13 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 	element = help_xml.getChildElement (help_doc_element, "summary", DL_INFO);
 	if (!element.isNull ()) {
 		writeHTML (startSection ("summary", i18n ("Summary"), QString (), &anchors, &anchornames));
-		writeHTML (renderHelpFragment (element, &help_xml));
+		writeHTML (renderHelpFragment (element, state));
 	}
 
 	element = help_xml.getChildElement (help_doc_element, "usage", DL_INFO);
 	if (!element.isNull ()) {
 		writeHTML (startSection ("usage", i18n ("Usage"), QString (), &anchors, &anchornames));
-		writeHTML (renderHelpFragment (element, &help_xml));
+		writeHTML (renderHelpFragment (element, state));
 	}
 
 	XMLChildList section_elements = help_xml.getChildElements (help_doc_element, "section", DL_INFO);
@@ -587,7 +594,7 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 		QString shorttitle = help_xml.i18nStringAttribute (*it, "shorttitle", QString (), DL_DEBUG);
 		QString id = help_xml.getStringAttribute (*it, "id", QString (), DL_WARNING);
 		writeHTML (startSection (id, title, shorttitle, &anchors, &anchornames));
-		writeHTML (renderHelpFragment (*it, &help_xml));
+		writeHTML (renderHelpFragment (*it, state));
 	}
 
 	// the section "settings" is the most complicated, as the labels of the individual GUI items has to be fetched from the component description. Of course it is only meaningful for component help, and not rendered for top level help pages.
@@ -600,19 +607,13 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 				if ((*it).tagName () == "setting") {
 					QString id = help_xml.getStringAttribute (*it, "id", QString (), DL_WARNING);
 					QString title = help_xml.i18nStringAttribute (*it, "title", QString (), DL_INFO);
-					if (title.isEmpty ()) {
-						QDomElement source_element = component_xml.findElementWithAttribute (component_doc_element, "id", id, true, DL_WARNING);
-						if (source_element.isNull ()) RK_DEBUG (PLUGIN, DL_ERROR, "No such UI element: %s", qPrintable (id));
-						title = component_xml.i18nStringAttribute (source_element, "label", i18n ("Unnamed GUI element"), DL_WARNING);
-					}
+					if (title.isEmpty ()) title = resolveLabel (id, state);
 					writeHTML ("<h4>" + title + "</h4>");
-					writeHTML (renderHelpFragment (*it, &help_xml));
+					writeHTML (renderHelpFragment (*it, state));
 				} else if ((*it).tagName () == "caption") {
 					QString id = help_xml.getStringAttribute (*it, "id", QString (), DL_WARNING);
 					QString title = help_xml.i18nStringAttribute (*it, "title", QString (), DL_INFO);
-					QDomElement source_element = component_xml.findElementWithAttribute (component_doc_element, "id", id, true, DL_WARNING);
-					if (source_element.isNull ()) RK_DEBUG (PLUGIN, DL_ERROR, "No such UI element: %s", qPrintable (id));
-					title = component_xml.i18nStringAttribute (source_element, "label", title, DL_WARNING);
+					if (title.isEmpty ()) title = resolveLabel (id, state);
 					writeHTML ("<h3>" + title + "</h3>");
 				} else {
 					help_xml.displayError (&(*it), "Tag not allowed, here", DL_WARNING);
@@ -625,14 +626,14 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 	element = help_xml.getChildElement (help_doc_element, "related", DL_INFO);
 	if (!element.isNull ()) {
 		writeHTML (startSection ("related", i18n ("Related functions and pages"), QString (), &anchors, &anchornames));
-		writeHTML (renderHelpFragment (element, &help_xml));
+		writeHTML (renderHelpFragment (element, state));
 	}
 
 	// "technical" section
 	element = help_xml.getChildElement (help_doc_element, "technical", DL_INFO);
 	if (!element.isNull ()) {
 		writeHTML (startSection ("technical", i18n ("Technical details"), QString (), &anchors, &anchornames));
-		writeHTML (renderHelpFragment (element, &help_xml));
+		writeHTML (renderHelpFragment (element, state));
 	}
 
 	if (for_component) {
@@ -680,12 +681,22 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 	return (true);
 }
 
-QString RKHTMLWindow::renderHelpFragment (QDomElement &fragment, const XMLHelper *xml) {
+QString RKHTMLWindow::resolveLabel (const QString& id, const RKHTMLWindow::HTMLRendererState& state) const {
 	RK_TRACE (APP);
 
-	QString text = xml->i18nElementText (fragment, true, DL_WARNING);
+	QDomElement source_element = state.component_xml->findElementWithAttribute (state.component_doc_element, "id", id, true, DL_WARNING);
+	if (source_element.isNull ()) {
+		RK_DEBUG (PLUGIN, DL_ERROR, "No such UI element: %s", qPrintable (id));
+	}
+	return (state.component_xml->i18nStringAttribute (source_element, "label", i18n ("Unnamed GUI element"), DL_WARNING));
+}
 
-	// Can't resolve links based on the already parsed dom-tree, because they can be inside string to be translated.
+QString RKHTMLWindow::renderHelpFragment (QDomElement &fragment, const HTMLRendererState &state) {
+	RK_TRACE (APP);
+
+	QString text = state.help_xml->i18nElementText (fragment, true, DL_WARNING);
+
+	// Can't resolve links and references based on the already parsed dom-tree, because they can be inside string to be translated.
 	// I.e. resolving links before doing i18n will cause i18n-lookup to fail
 	int pos = 0;
 	int npos;
@@ -712,6 +723,26 @@ QString RKHTMLWindow::renderHelpFragment (QDomElement &fragment, const XMLHelper
 		pos = end;
 	}
 	ret += text.mid (pos);
+
+	if (state.component_xml) {
+		text = ret;
+		ret.clear ();
+		pos = 0;
+		while ((npos = text.indexOf ("<label ", pos)) >= 0) {
+			ret += text.mid (pos, npos - pos);
+
+			QString id;
+			int id_start = text.indexOf ("id=\"", npos + 6);
+			if (id_start >= 0) {
+				id_start += 4;
+				int id_end = text.indexOf ("\"", id_start);
+				id = text.mid (id_start, id_end - id_start);
+				pos = text.indexOf ("/>", id_end) + 2;
+			}
+			ret += resolveLabel (id, state);
+		}
+		ret += text.mid (pos);
+	}
 
 	RK_DEBUG (APP, DL_DEBUG, "%s", qPrintable (ret));
 	return ret;

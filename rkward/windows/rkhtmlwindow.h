@@ -2,7 +2,7 @@
                           rkhtmlwindow  -  description
                              -------------------
     begin                : Wed Oct 12 2005
-    copyright            : (C) 2005, 2006, 2007, 2009, 2011, 2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009, 2011, 2014, 2015 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -137,7 +137,14 @@ private:
 
 	// for dealing with rkward://[page|component]-pages
 	bool renderRKHelp (const KUrl &url);
-	QString renderHelpFragment (QDomElement &fragment, const XMLHelper *xml);
+	struct HTMLRendererState {
+		XMLHelper *help_xml;
+		XMLHelper *component_xml;
+		QDomElement help_doc_element;
+		QDomElement component_doc_element;
+	};
+	QString renderHelpFragment (QDomElement &fragment, const HTMLRendererState &state);
+	QString resolveLabel (const QString &id, const HTMLRendererState &state) const;
 	QString prepareHelpLink (const QString &href, const QString &text);
 	QString componentPathToId (QString path);
 	RKComponentHandle *componentPathToHandle (QString path);

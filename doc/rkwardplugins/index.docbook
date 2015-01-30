@@ -2530,7 +2530,17 @@ local({
 <variablelist>
 <varlistentry>
 <term>String properties</term>
-<listitem><para>The most simple type of property, used to simply hold a piece of text. It does not provide any modifiers. If you attempt to fetch modified values from the JS template, it will return the usual value, and a warning will be written to the terminal you're running rkward from.</para></listitem>
+<listitem><para>The most simple type of property, used to simply hold a piece of text. Modifiers:
+	<variablelist>
+	<varlistentry>
+	<term>No modifier ("")</term>
+	<listitem><para>The string as defined / set.</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>quoted</term>
+	<listitem><para>The string in quoted form (suitable for passing to R as character).</para></listitem>
+	</varlistentry>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>Boolean properties</term>
@@ -3319,6 +3329,21 @@ Child-elements:
 	<varlistentry>
 	<term><parameter>default</parameter></term>
 	<listitem><para>The default string value of the new property, i.e. the value used, if the property is not connected to an outside property (optional, defaults to an empty string)</para></listitem>
+	</varlistentry>
+	</variablelist></para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>&lt;i18n&gt;</term>
+<listitem><para>Creates a new (string) property that is supposed to be provide an i18n'ed label. Attributes:
+	<variablelist>
+	<varlistentry>
+	<term><parameter>id</parameter></term>
+	<listitem><para>The ID of the new property (required)</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term><parameter>label</parameter></term>
+	<listitem><para>The label. This will be translated. (required)</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
@@ -4220,6 +4245,16 @@ Child elements:
 	<varlistentry>
 	<term>href</term>
 	<listitem><para>The target url. Note that several rkward specific URLs are available. See <link linkend="pluginhelp">section on writing help pages</link> for details.</para></listitem>
+	</varlistentry>
+	</variablelist></para></listitem>
+</varlistentry>
+<varlistentry>
+<term>&lt;label&gt;</term>
+<listitem><para>Inserts the value of a UI label. Can be used in any of the sections described above.
+	<variablelist>
+	<varlistentry>
+	<term>id</term>
+	<listitem><para>The id of the element in the plugin, of which to copy the <replaceable>label</replaceable>-attribute.</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>

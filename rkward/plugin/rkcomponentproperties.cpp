@@ -2,7 +2,7 @@
                           rkcomponentproperties  -  description
                              -------------------
     begin                : Fri Nov 25 2005
-    copyright            : (C) 2005, 2006, 2007, 2008, 2009, 2011, 2012, 2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2008, 2009, 2011, 2012, 2014, 2015 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -113,11 +113,11 @@ RKComponentPropertyBase::~RKComponentPropertyBase () {
 
 QVariant RKComponentPropertyBase::value (const QString &modifier) {
 	RK_TRACE (PLUGIN);
-	if (!modifier.isEmpty ()) {
-		warnModifierNotRecognized (modifier);
-		return QString ();
-	}
-	return _value;
+	if (modifier.isEmpty ()) return _value;
+	if (modifier == "quoted") return RObject::rQuote (_value);
+	// else
+	warnModifierNotRecognized (modifier);
+	return QString ();
 }
 
 bool RKComponentPropertyBase::setValue (const QString &string) {

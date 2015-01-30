@@ -740,6 +740,16 @@ void RKComponentBuilder::parseLogic (const QDomElement &element, XMLHelper &xml,
 		initial_values.insert (xml.getStringAttribute (*it, "id", "#noid#", DL_WARNING), xml.getStringAttribute (*it, "to", "false", DL_WARNING));
 	}
 
+	// i18n'ed strings
+	children = xml.getChildElements (element, "i18n", DL_INFO);
+	for (it = children.constBegin (); it != children.constEnd (); ++it) {
+		QString id = xml.getStringAttribute (*it, "id", "#noid#", DL_WARNING);
+		RKComponentPropertyBase *prop = new RKComponentPropertyBase (component (), false);
+		component ()->addChild (id, prop);
+		prop->setInternal (true);
+		initial_values.insert (id, xml.i18nStringAttribute (*it, "label", QString (), DL_WARNING));
+	}
+
 	// find convert elements
 	QMap<RKComponentPropertyBase*, QStringList> switch_convert_sources;
 	children = xml.getChildElements (element, "convert", DL_INFO);
