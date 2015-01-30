@@ -2,6 +2,6 @@
 DATE<br />
 <table border="1">
 <tr><td>Variable Name</td><td>Length</td><td>NAs</td><td>Statistic</td><td>p-value</td></tr>
-<tr><td>shape</td><td>48</td><td>0</td><td>W = 0.90372</td><td>0.0014382</td></tr>
-<tr><td>perm</td><td>48</td><td>0</td><td>W = 0.81467</td><td>1.2468e-05</td></tr>
+<tr><td>shape</td><td>48</td><td>0</td><td>W = 0.90372</td><td>1.4382e-03</td></tr>
+<tr><td>perm </td><td>48</td><td>0</td><td>W = 0.81467</td><td>1.2468e-05</td></tr>
 </table>
