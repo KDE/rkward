@@ -702,117 +702,96 @@ void RKComponentBuilder::parseLogic (const QDomElement &element, XMLHelper &xml,
 
 	if (element.isNull ()) return;
 
-	// find connect elements
-	XMLChildList children = xml.getChildElements (element, "connect", DL_INFO);
-
-	XMLChildList::const_iterator it;
-	for (it = children.constBegin (); it != children.constEnd (); ++it) {
-		addConnection (xml.getStringAttribute (*it, "client", "#noid#", DL_WARNING), QString::null, xml.getStringAttribute (*it, "governor", "#noid#", DL_WARNING), QString::null, xml.getBoolAttribute (*it, "reconcile", false, DL_INFO), element);
-	}
-
-	children = xml.getChildElements (element, "dependency_check", DL_INFO);
-	for (it = children.constBegin (); it != children.constEnd (); ++it) {
-		RKComponentPropertyBool *dep = new RKComponentPropertyBool (component (), false);
-		dep->setInternal (true);
-		dep->setBoolValue (RKComponentDependency::isRKWardVersionCompatible (*it) && RKComponentDependency::isRVersionCompatible (*it));
-		component ()->addChild (xml.getStringAttribute (*it, "id", "#noid#", DL_WARNING), dep);
-	}
-
-	// find outside elements
-	children = xml.getChildElements (element, "external", DL_INFO);
-	for (it = children.constBegin (); it != children.constEnd (); ++it) {
-		QString id = xml.getStringAttribute (*it, "id", "#noid#", DL_WARNING);
-		RKComponentPropertyBase *prop = new RKComponentPropertyBase (component (), xml.getBoolAttribute (*it, "required", false, DL_INFO));
-		component ()->addChild (id, prop);
-		prop->setInternal (true);
-		component ()->connect (prop, SIGNAL (valueChanged(RKComponentPropertyBase*)), component (), SLOT (outsideValueChanged(RKComponentPropertyBase*)));
-
-		QString dummy = xml.getStringAttribute (*it, "default", QString::null, DL_INFO);
-		if (!dummy.isNull ()) {
-			initial_values.insert (id, dummy);
-		}
-	}
-
-	// find initialize elements
-	children = xml.getChildElements (element, "set", DL_INFO);
-	for (it = children.constBegin (); it != children.constEnd (); ++it) {
-		// NOTE: It is by design that if there are several initializations for a single id, the latest one takes precedence. Useful in some cases of inclusion.
-		initial_values.insert (xml.getStringAttribute (*it, "id", "#noid#", DL_WARNING), xml.getStringAttribute (*it, "to", "false", DL_WARNING));
-	}
-
-	// i18n'ed strings
-	children = xml.getChildElements (element, "i18n", DL_INFO);
-	for (it = children.constBegin (); it != children.constEnd (); ++it) {
-		QString id = xml.getStringAttribute (*it, "id", "#noid#", DL_WARNING);
-		RKComponentPropertyBase *prop = new RKComponentPropertyBase (component (), false);
-		component ()->addChild (id, prop);
-		prop->setInternal (true);
-		initial_values.insert (id, xml.i18nStringAttribute (*it, "label", QString (), DL_WARNING));
-	}
-
-	// find convert elements
 	QMap<RKComponentPropertyBase*, QStringList> switch_convert_sources;
-	children = xml.getChildElements (element, "convert", DL_INFO);
-	for (it = children.constBegin (); it != children.constEnd (); ++it) {
-		RKComponentPropertyConvert *convert = new RKComponentPropertyConvert (component ());
-		convert->setInternal (true);
-		QString id = xml.getStringAttribute (*it, "id", "#noid#", DL_WARNING);
-		int mode = xml.getMultiChoiceAttribute (*it, "mode", convert->convertModeOptionString (), 0, DL_WARNING);
-		convert->setMode ((RKComponentPropertyConvert::ConvertMode) mode);
-		if ((mode == RKComponentPropertyConvert::Equals) || (mode == RKComponentPropertyConvert::NotEquals)) {
-			convert->setStandard (xml.getStringAttribute (*it, "standard", QString::null, DL_WARNING));
-		} else if (mode == RKComponentPropertyConvert::Range) {
-			convert->setRange (xml.getDoubleAttribute (*it, "min", -FLT_MAX, DL_INFO), xml.getDoubleAttribute (*it, "max", FLT_MAX, DL_INFO));
-		}
-		switch_convert_sources.insert (convert, xml.getStringAttribute (*it, "sources", QString::null, DL_WARNING).split (';'));
-		convert->setRequireTrue (xml.getBoolAttribute (*it, "require_true", false, DL_INFO));
-		component ()->addChild (id, convert);
-	}
 
-	// find switch elements
-	children = xml.getChildElements (element, "switch", DL_INFO);
-	for (it = children.constBegin (); it != children.constEnd (); ++it) {
-		QDomElement t = xml.getChildElement (*it, "true", DL_INFO);
-		QDomElement f = xml.getChildElement (*it, "false", DL_INFO);
-		if (t.isNull () != f.isNull ()) {
-			xml.displayError (&(*it), "One of <true> / <false> was provided for boolean <switch>, but not the other. Skipping switch.", DL_ERROR);
-			continue;
-		}
+	const XMLChildList children = xml.getChildElements (element, QString::null, DL_ERROR);
+	for (int i = 0; i < children.size (); ++i) {
+		const QDomElement &cel = children[i];
+		const QString tagName = cel.tagName ();
+		if (tagName == QLatin1String ("connect")) {
+			addConnection (xml.getStringAttribute (cel, "client", "#noid#", DL_WARNING), QString (), xml.getStringAttribute (cel, "governor", "#noid#", DL_WARNING), QString (), xml.getBoolAttribute (cel, "reconcile", false, DL_INFO), element);
+		} else if (tagName == QLatin1String ("dependency_check")) {
+			RKComponentPropertyBool *dep = new RKComponentPropertyBool (component (), false);
+			dep->setInternal (true);
+			dep->setBoolValue (RKComponentDependency::isRKWardVersionCompatible (cel) && RKComponentDependency::isRVersionCompatible (cel));
+			component ()->addChild (xml.getStringAttribute (cel, "id", "#noid#", DL_WARNING), dep);
+		} else if (tagName == QLatin1String ("external")) {
+			QString id = xml.getStringAttribute (cel, "id", "#noid#", DL_WARNING);
+			RKComponentPropertyBase *prop = new RKComponentPropertyBase (component (), xml.getBoolAttribute (cel, "required", false, DL_INFO));
+			component ()->addChild (id, prop);
+			prop->setInternal (true);
+			component ()->connect (prop, SIGNAL (valueChanged(RKComponentPropertyBase*)), component (), SLOT (outsideValueChanged(RKComponentPropertyBase*)));
 
-		XMLChildList case_elems = xml.getChildElements (*it, "case", DL_INFO);
-		QDomElement default_elem = xml.getChildElement (*it, "default", DL_INFO);
-		if (!default_elem.isNull ()) case_elems.append (default_elem);
-
-		if (t.isNull ()) {
-			if (case_elems.isEmpty ()) {
-				xml.displayError (&(*it), "Neither <true> / <false> nor <case> / <default> were provided. Skipping switch.", DL_ERROR);
+			QString dummy = xml.getStringAttribute (cel, "default", QString (), DL_INFO);
+			if (!dummy.isNull ()) {
+				initial_values.insert (id, dummy);
+			}
+		} else if (tagName == QLatin1String ("set")) {
+			// NOTE: It is by design that if there are several initializations for a single id, the latest one takes precedence. Useful in some cases of inclusion.
+			initial_values.insert (xml.getStringAttribute (cel, "id", "#noid#", DL_WARNING), xml.getStringAttribute (cel, "to", "false", DL_WARNING));
+		} else if (tagName == QLatin1String ("i18n")) {
+			QString id = xml.getStringAttribute (cel, "id", "#noid#", DL_WARNING);
+			RKComponentPropertyBase *prop = new RKComponentPropertyBase (component (), false);
+			component ()->addChild (id, prop);
+			prop->setInternal (true);
+			initial_values.insert (id, xml.i18nStringAttribute (cel, "label", QString (), DL_WARNING));
+		} else if (tagName == QLatin1String ("convert")) {
+			RKComponentPropertyConvert *convert = new RKComponentPropertyConvert (component ());
+			convert->setInternal (true);
+			QString id = xml.getStringAttribute (cel, "id", "#noid#", DL_WARNING);
+			int mode = xml.getMultiChoiceAttribute (cel, "mode", convert->convertModeOptionString (), 0, DL_WARNING);
+			convert->setMode ((RKComponentPropertyConvert::ConvertMode) mode);
+			if ((mode == RKComponentPropertyConvert::Equals) || (mode == RKComponentPropertyConvert::NotEquals)) {
+				convert->setStandard (xml.getStringAttribute (cel, "standard", QString (), DL_WARNING));
+			} else if (mode == RKComponentPropertyConvert::Range) {
+				convert->setRange (xml.getDoubleAttribute (cel, "min", -FLT_MAX, DL_INFO), xml.getDoubleAttribute (cel, "max", FLT_MAX, DL_INFO));
+			}
+			switch_convert_sources.insert (convert, xml.getStringAttribute (cel, "sources", QString (), DL_WARNING).split (';'));
+			convert->setRequireTrue (xml.getBoolAttribute (cel, "require_true", false, DL_INFO));
+			component ()->addChild (id, convert);
+		} else if (tagName == QLatin1String ("switch")) {
+			QDomElement t = xml.getChildElement (cel, "true", DL_INFO);
+			QDomElement f = xml.getChildElement (cel, "false", DL_INFO);
+			if (t.isNull () != f.isNull ()) {
+				xml.displayError (&(cel), "One of <true> / <false> was provided for boolean <switch>, but not the other. Skipping switch.", DL_ERROR);
 				continue;
 			}
-		} else {
-			if (!case_elems.isEmpty ()) {
-				xml.displayError (&(*it), "One <true> / <false> *or* <case> / <default> may be provided a <switch>. Proceeding with boolean switch.", DL_ERROR);
-				case_elems.clear ();
+
+			XMLChildList case_elems = xml.getChildElements (cel, "case", DL_INFO);
+			QDomElement default_elem = xml.getChildElement (cel, "default", DL_INFO);
+			if (!default_elem.isNull ()) case_elems.append (default_elem);
+
+			if (t.isNull ()) {
+				if (case_elems.isEmpty ()) {
+					xml.displayError (&cel, "Neither <true> / <false> nor <case> / <default> were provided. Skipping switch.", DL_ERROR);
+					continue;
+				}
+			} else {
+				if (!case_elems.isEmpty ()) {
+					xml.displayError (&cel, "One <true> / <false> *or* <case> / <default> may be provided a <switch>. Proceeding with boolean switch.", DL_ERROR);
+					case_elems.clear ();
+				}
+				case_elems.append (f);
+				case_elems.append (t);
 			}
-			case_elems.append (f);
-			case_elems.append (t);
+
+			QStringList def_strings;
+			QStringList standards;
+			QStringList sources;
+			sources.append (xml.getStringAttribute (cel, "condition", QString (), DL_ERROR));	// store condition prop as first "source"
+
+			for (XMLChildList::const_iterator cit = case_elems.constBegin (); cit != case_elems.constEnd (); ++cit) {
+				def_strings.append (xml.getStringAttribute (*cit, "fixed_value", QString (), DL_INFO));
+				sources.append (xml.getStringAttribute (*cit, "dynamic_value", QString (), DL_INFO));
+				if ((*cit).tagName () == "case") standards.append (xml.getStringAttribute (*cit, "standard", QString (), DL_WARNING));
+			}
+
+			QString id = xml.getStringAttribute (cel, "id", "#noid#", DL_WARNING);
+			RKComponentPropertySwitch *switchel = new RKComponentPropertySwitch (component (), def_strings, standards);
+			switchel->setInternal (true);
+			switch_convert_sources.insert (switchel, sources);
+			component ()->addChild (id, switchel);
 		}
-
-		QStringList def_strings;
-		QStringList standards;
-		QStringList sources;
-		sources.append (xml.getStringAttribute (*it, "condition", QString (), DL_ERROR));	// store condition prop as first "source"
-
-		for (XMLChildList::const_iterator cit = case_elems.constBegin (); cit != case_elems.constEnd (); ++cit) {
-			def_strings.append (xml.getStringAttribute (*cit, "fixed_value", QString (), DL_INFO));
-			sources.append (xml.getStringAttribute (*cit, "dynamic_value", QString (), DL_INFO));
-			if ((*cit).tagName () == "case") standards.append (xml.getStringAttribute (*cit, "standard", QString (), DL_WARNING));
-		}
-
-		QString id = xml.getStringAttribute (*it, "id", "#noid#", DL_WARNING);
-		RKComponentPropertySwitch *switchel = new RKComponentPropertySwitch (component (), def_strings, standards);
-		switchel->setInternal (true);
-		switch_convert_sources.insert (switchel, sources);
-		component ()->addChild (id, switchel);
 	}
 
 	// resolve source properties for switch and convert elements, *after* all properties have been created
