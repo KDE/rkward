@@ -13,11 +13,20 @@ links where to find the most recent, and authoritative version of each .po file.
 
 If you have any questions or concerns about the process, please contact us on the rkward-devel mailing list.
 
-If all you want is a quick way to pull translations from KDE l10n, use ../scripts/SCRIPT_TO_BE_WRITTEN (only
-in our git repository, not in source releases).
+If all you want is a quick way to pull translations from KDE l10n, use one of:
+* scripts/import_translations.py [xx]
+  (where the optional parameter xx is your language code, such as "de"; script to be found in our git
+  repository, only, not in source releases).
+* git clone git://anongit.kde.org/scratch/tfry/rkward-po-export i18n/po
+  (this is much faster in case you want to fetch/build _all_ translations)
 
 === Developers ===
 
-- Synchronize translations from KDE l10n to git using ../scripts/SCRIPT_TO_BE_WRITTEN .
+- Synchronize translations from KDE l10n to git like this:
+  1. Clone (or update) the existing translation export repo:
+     > git clone git://anongit.kde.org/scratch/tfry/rkward-po-export i18n/po
+  2. Run
+     > scripts/import_translations.py
+     (without language arg) to fetch updates
+  3. git commit & push in the export repo.
 - For dealing with plugin messages, read the i18n-chapter in "Introduction to writing plugins for RKWard".
-
