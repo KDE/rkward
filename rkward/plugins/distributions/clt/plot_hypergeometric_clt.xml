@@ -15,9 +15,7 @@
 	<logic>
 		<insert snippet="clt_logic"/>
 		<set id="dist_stepfun.default_verticals" to="false" />
-		<script><![CDATA[
-			gui.setValue ("plotoptions.default_main", i18n ("Hypergeometric"));
-		]]></script>
+		<i18n id="dist_name" label="Hypergeometric" i18n_context="Distribution name"/>
 	</logic>
 	<dialog label="Central Limit Theorem: Hypergeometric to Normal" >
 		<insert snippet="clt_layout"/>

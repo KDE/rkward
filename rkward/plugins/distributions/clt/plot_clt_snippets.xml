@@ -6,7 +6,9 @@
 		<set id="plotoptions.allow_type" to="false"/>
 		<set id="plotoptions.allow_grid" to="true"/>
 		<set id="plotoptions.allow_ylim" to="false"/>
-		<set id="plotoptions.default_xlab" to="&quot;Sample Averages&quot;"/>
+		<i18n id="sample_avgs_label" label="Sample Averages"/>
+		<connect client="plotoptions.default_xlab" governor="sample_avgs_label.quoted"/>
+		<connect client="plotoptions.default_main" governor="dist_name.quoted"/>
 		
 		<set id="normlinecol.default_color" to="red" />
 		

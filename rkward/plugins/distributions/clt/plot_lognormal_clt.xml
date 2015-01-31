@@ -14,9 +14,7 @@
 	<logic>
 		<insert snippet="clt_logic"/>
 		<set id="dist_stepfun.default_dopoints" to="false" />
-		<script><![CDATA[
-			gui.setValue ("plotoptions.default_main", i18n ("Lognormal"));
-		]]></script>
+		<i18n id="dist_name" label="Lognormal" i18n_context="Distribution name"/>
 	</logic>
 	<dialog label="Central Limit Theorem: Lognormal to Normal" >
 		<insert snippet="clt_layout"/>

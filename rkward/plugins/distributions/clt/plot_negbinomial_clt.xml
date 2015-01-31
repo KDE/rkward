@@ -26,9 +26,7 @@
 	<logic>
 		<insert snippet="clt_logic"/>
 		<set id="dist_stepfun.default_verticals" to="false" />
-		<script><![CDATA[
-			gui.setValue ("plotoptions.default_main", i18n ("Negative Binomial"));
-		]]></script>
+		<i18n id="dist_name" label="Negative Binomial" i18n_context="Distribution name"/>
 
 		<convert id="useprob" mode="equals" sources="param.string" standard="pprob" />
 		<connect client="prob.enabled" governor="useprob" />
