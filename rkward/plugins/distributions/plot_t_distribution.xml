@@ -6,9 +6,8 @@
 		<insert snippet="common_logic"/>
 	</logic>
 	<snippets>
-		<include file="plot_dist_common_snippets.xml"/>
 		<snippet id="range_options">
-			<spinbox type="integer" id="n" initial="100" min="1" label="Number of Observations" />
+			<insert snippet="num_observations"/>
 			<frame label="Range" >
 				<spinbox default_precision="2" type="real" id="min" initial="-12.924" label="Lower quantile" />
 				<spinbox default_precision="2" type="real" id="max" initial="12.924" label="Upper quantile" />
@@ -20,6 +19,7 @@
 				<spinbox default_precision="2" type="real" id="ncp" initial="0" label="Non-centrality parameter" />
 			</frame>
 		</snippet>
+		<include file="plot_dist_common_snippets.xml"/>
 	</snippets>
 	<dialog label="Plot Student T probabilities" >
 		<insert snippet="dialog_layout"/>

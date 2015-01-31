@@ -7,7 +7,7 @@
 	</logic>
 	<snippets>
 		<snippet id="range_options">
-			<spinbox type="integer" id="n" initial="100" min="1" label="Number of Observations" />
+			<insert snippet="num_observations"/>
 			<frame label="Range" >
 				<spinbox default_precision="2" type="real" id="min" min="0" initial="0.30" label="Lower quantile" />
 				<spinbox default_precision="2" type="real" id="max" min="0" initial="24.10" label="Upper quantile" />

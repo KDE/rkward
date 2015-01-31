@@ -10,7 +10,7 @@
 	<settings>
 		<insert snippet="dialog_settings"/>
 		<setting id="mean">Mean.</setting>
-		<setting id="prob">Standard deviation.</setting>
+		<setting id="sd">Standard deviation.</setting>
 	</settings>
 	<related>
 		<ul>
