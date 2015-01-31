@@ -1,5 +1,11 @@
 <!DOCTYPE rkpluginmap>
 
-<document base_prefix="" namespace="rkward">
-	<require file="RKWardPluginSkeleton.pluginmap" />
+<document 
+  base_prefix=""
+  namespace="CreateRKWardpluginskeleton"
+  id="CreateRKWardpluginskeleton_rkward"
+  po_id="CreateRKWardpluginskeleton_rkward"
+  priority="medium"
+>
+	<include file="RKWardPluginSkeleton.pluginmap" />
 </document>

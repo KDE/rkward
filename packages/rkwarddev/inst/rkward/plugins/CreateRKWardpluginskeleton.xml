@@ -30,20 +30,44 @@
 						</row>
 					</frame>
 					<frame label="Plugin author" id="frm_Plugnthr">
-						<row id="row_cGGFFEEGGF">
-							<column id="clm_inptGGFFEE">
-								<input label="Given name" id="inp_Givennam" required="true" />
-								<input label="Family name" id="inp_Familynm" required="true" />
-								<input label="E-mail" id="inp_Email" required="true" />
-								<stretch />
-							</column>
-							<column id="clm_frmlAAAAMM">
-								<frame label="Author roles" id="frm_Authrrls">
-									<checkbox id="chc_Author" label="Author" value="true" checked="true" />
-									<checkbox id="chc_Maintanr" label="Maintainer" value="true" checked="true" />
-									<stretch />
-								</frame>
-							</column>
+						<row id="row_oPPPPGGFFE">
+							<optionset id="ost_fPPPPGGFFE">
+								<logic>
+									<connect governor="chc_Maintanr.state" client="inp_Email.required" />
+								</logic>
+								<content>
+									<optiondisplay />
+									<frame label="Package authors" id="frm_Pckgthrs">
+										<row id="row_fPPGGFFEEG">
+											<frame label="Package author" id="frm_Packgthr">
+												<row id="row_cGGFFEEGGF">
+													<column id="clm_inptGGFFEE">
+														<input label="Given name" id="inp_Givennam" required="true" />
+														<input label="Family name" id="inp_Familynm" required="true" />
+														<input label="E-mail" id="inp_Email" />
+														<stretch />
+													</column>
+													<column id="clm_frRRAAMMCC">
+														<frame label="Roles" id="frm_Roles">
+															<checkbox id="chc_Author" label="Author" value="true" checked="true" />
+															<checkbox id="chc_Maintanr" label="Maintainer" value="true" checked="true" />
+															<checkbox id="chc_Contrbtr" label="Contributor" value="true" />
+															<stretch />
+														</frame>
+													</column>
+												</row>
+											</frame>
+										</row>
+										<stretch />
+									</frame>
+								</content>
+								<optioncolumn id="ocl_inpGvnnmtx" connect="inp_Givennam.text" label="Given name" />
+								<optioncolumn id="ocl_inpFmlynmt" connect="inp_Familynm.text" label="Family name" />
+								<optioncolumn id="ocl_inpEmaltxt" connect="inp_Email.text" label="E-mail" />
+								<optioncolumn id="ocl_chcAthrstt" connect="chc_Author.state" label="Author" />
+								<optioncolumn id="ocl_chcMntnrst" connect="chc_Maintanr.state" label="Maintainer" />
+								<optioncolumn id="ocl_chcCntrbtr" connect="chc_Contrbtr.state" label="Contributor" />
+							</optionset>
 						</row>
 					</frame>
 				</column>

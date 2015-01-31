@@ -40,6 +40,8 @@
 			A category for your plugin. This infromation is currently ignored by RKWard.
 		</setting>
 		<caption id="frm_Plugnthr" />
+		<caption id="frm_Pckgthrs" />
+		<caption id="frm_Packgthr" />
 		<setting id="inp_Givennam">
 			First name of the package author.
 		</setting>
@@ -49,12 +51,15 @@
 		<setting id="inp_Email">
 			The authors e-mail address, important for bug reports and receiving a myriad of thank yous...
 		</setting>
-		<caption id="frm_Authrrls" />
+		<caption id="frm_Roles" />
 		<setting id="chc_Author">
-			Check this if you are the author of the plugin code.
+			Check this if this person is the author of the plugin code.
 		</setting>
 		<setting id="chc_Maintanr">
-			Check this if you maintain the plugin package.
+			Check this if this person maintains the plugin package.
+		</setting>
+		<setting id="chc_Contrbtr">
+			Check this if this person is a contributor to the plugin code (e.g., translations).
 		</setting>
 		<caption id="tab_Cretptns" />
 		<caption id="frm_rDTEMPDIRD" />
@@ -117,14 +122,6 @@
 		</setting>
 		<setting id="inp_Repostry">
 			The repository to download R packages from required to run this plugin.
-		</setting>
-		<setting id="ost_fDRDRPPRRP.ocl_inpPckgtxt">
-		</setting>
-		<setting id="ost_fDRDRPPRRP.ocl_inpmintext">
-		</setting>
-		<setting id="ost_fDRDRPPRRP.ocl_inpmaxtext">
-		</setting>
-		<setting id="ost_fDRDRPPRRP.ocl_inpRpstryt">
 		</setting>
 		<caption id="tab_Helppage" />
 		<caption id="frm_Wrthlpfl" />

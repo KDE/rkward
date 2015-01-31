@@ -34,6 +34,7 @@ function preprocess(){
 
 function calculate(){
 	// read in variables from dialog
+
 	var inpPluginnm = getString("inp_Pluginnm");
 	var inpLicense = getString("inp_License");
 	var inpShrtdscr = getString("inp_Shrtdscr");
@@ -44,16 +45,13 @@ function calculate(){
 	var inpGivennam = getString("inp_Givennam");
 	var inpFamilynm = getString("inp_Familynm");
 	var inpEmail = getString("inp_Email");
-	var chcAuthor = getBoolean("chc_Author");
-	var chcMaintanr = getBoolean("chc_Maintanr");
+	var ocolOclInpGvnnmtx = getList("ost_fPPPPGGFFE.ocl_inpGvnnmtx");
+	var ocolOclInpFmlynmt = getList("ost_fPPPPGGFFE.ocl_inpFmlynmt");
+	var ocolOclInpEmaltxt = getList("ost_fPPPPGGFFE.ocl_inpEmaltxt");
+	var ocolOclChcAthrstt = getList("ost_fPPPPGGFFE.ocl_chcAthrstt");
+	var ocolOclChcMntnrst = getList("ost_fPPPPGGFFE.ocl_chcMntnrst");
+	var ocolOclChcCntrbtr = getList("ost_fPPPPGGFFE.ocl_chcCntrbtr");
 	var brwDTEMPDIR = getString("brw_DTEMPDIR");
-	var chcOvrwrtxs = getBoolean("chc_Ovrwrtxs");
-	var chcAddwzrds = getBoolean("chc_Addwzrds");
-	var chcIncldplg = getBoolean("chc_Incldplg");
-	var chcOpnflsfr = getBoolean("chc_Opnflsfr");
-	var chcAddplRKW = getBoolean("chc_AddplRKW");
-	var chcShwthplg = getBoolean("chc_Shwthplg");
-	var chcGsRKW060 = getBoolean("chc_GsRKW060");
 	var drpPlcntpmn = getString("drp_Plcntpmn");
 	var inpNmnmnplg = getString("inp_Nmnmnplg");
 	var inpRKWardmn = getString("inp_RKWardmn");
@@ -70,62 +68,20 @@ function calculate(){
 	var ocolOclInpRpstryt = getList("ost_fDRDRPPRRP.ocl_inpRpstryt");
 	var inpSummary = getString("inp_Summary");
 	var inpUsage = getString("inp_Usage");
+	var chcAuthor = getBoolean("chc_Author.state");
+	var chcMaintanr = getBoolean("chc_Maintanr.state");
+	var chcContrbtr = getBoolean("chc_Contrbtr.state");
+	var chcOvrwrtxs = getBoolean("chc_Ovrwrtxs.state");
+	var chcAddwzrds = getBoolean("chc_Addwzrds.state");
+	var chcIncldplg = getBoolean("chc_Incldplg.state");
+	var chcOpnflsfr = getBoolean("chc_Opnflsfr.state");
+	var chcAddplRKW = getBoolean("chc_AddplRKW.state");
+	var chcShwthplg = getBoolean("chc_Shwthplg.state");
+	var chcGsRKW060 = getBoolean("chc_GsRKW060.state");
 	var frmDfndpndnChecked = getBoolean("frm_Dfndpndn.checked");
 	var frmWrthlpflChecked = getBoolean("frm_Wrthlpfl.checked");
 
 	// the R code to be evaluated
-	// define the array arrOptAuthorRole for values of R option "role"
-	var arrOptAuthorRole = new Array();
-		if(chcAuthor) {
-			arrOptAuthorRole.push("\"aut\"");
-		} else {
-			arrOptAuthorRole.push();
-		}
-		if(chcMaintanr) {
-			arrOptAuthorRole.push("\"cre\"");
-		} else {
-			arrOptAuthorRole.push();
-		}
-	// clean array arrOptAuthorRole from empty strings
-	arrOptAuthorRole = arrOptAuthorRole.filter(String);
-	// set the actual variable optAuthorRole with all values for R option "role"
-	if(arrOptAuthorRole.length > 0) {
-		var optAuthorRole = "role=c(" + arrOptAuthorRole.join(", ") + ")";
-	} else {
-		var optAuthorRole = "";
-	}
-
-	// define the array arrOptAuthor for values of R option "author"
-	var arrOptAuthor = new Array();
-		if(inpGivennam) {
-			arrOptAuthor.push("given=\"" + inpGivennam + "\"");
-		} else {
-			arrOptAuthor.push();
-		}
-		if(inpFamilynm) {
-			arrOptAuthor.push("family=\"" + inpFamilynm + "\"");
-		} else {
-			arrOptAuthor.push();
-		}
-		if(inpEmail) {
-			arrOptAuthor.push("email=\"" + inpEmail + "\"");
-		} else {
-			arrOptAuthor.push();
-		}
-		if(optAuthorRole) {
-			arrOptAuthor.push(optAuthorRole);
-		} else {
-			arrOptAuthor.push();
-		}
-	// clean array arrOptAuthor from empty strings
-	arrOptAuthor = arrOptAuthor.filter(String);
-	// set the actual variable optAuthor with all values for R option "author"
-	if(arrOptAuthor.length > 0) {
-		var optAuthor = ",\n\tauthor=person(" + arrOptAuthor.join(", ") + ")";
-	} else {
-		var optAuthor = "";
-	}
-
 	// define the array arrOptAbout for values of R option "about"
 	var arrOptAbout = new Array();
 		if(inpShrtdscr) {
@@ -269,7 +225,59 @@ function calculate(){
 	if(inpPluginnm) {
 		echo("\n\tname=\"" + inpPluginnm + "\"");
 	}
-	echo(optAuthor);
+	var ocolOclInpGvnnmtx = getList("ost_fPPPPGGFFE.ocl_inpGvnnmtx");
+	var ocolOclInpFmlynmt = getList("ost_fPPPPGGFFE.ocl_inpFmlynmt");
+	var ocolOclInpEmaltxt = getList("ost_fPPPPGGFFE.ocl_inpEmaltxt");
+	var ocolOclChcAthrstt = getList("ost_fPPPPGGFFE.ocl_chcAthrstt");
+	var ocolOclChcMntnrst = getList("ost_fPPPPGGFFE.ocl_chcMntnrst");
+	var ocolOclChcCntrbtr = getList("ost_fPPPPGGFFE.ocl_chcCntrbtr");
+	if(ocolOclInpGvnnmtx != "") {
+		echo("\tauthor=\"c(\n\t\t\t");
+	for (var i = 0; i < ocolOclInpGvnnmtx.length; ++i){
+		// define the array arrOptAuthorRole for values of R option "role"
+		var arrOptAuthorRole = new Array();
+				if(ocolOclChcAthrstt[i] == 1) {
+						arrOptAuthorRole.push("\\\"aut\\\"");
+				} else {
+						arrOptAuthorRole.push();
+				}
+				if(ocolOclChcMntnrst[i] == 1) {
+						arrOptAuthorRole.push("\\\"cre\\\"");
+				} else {
+						arrOptAuthorRole.push();
+				}
+				if(ocolOclChcCntrbtr[i] == 1) {
+						arrOptAuthorRole.push("\\\"ctb\\\"");
+				} else {
+						arrOptAuthorRole.push();
+				}
+		// clean array arrOptAuthorRole from empty strings
+		arrOptAuthorRole = arrOptAuthorRole.filter(String);
+		// set the actual variable optAuthorRole with all values for R option "role"
+		if(arrOptAuthorRole.length > 0) {
+				var optAuthorRole = "role=c(" + arrOptAuthorRole.join(", ") + ")";
+		} else {
+				var optAuthorRole = "";
+		}
+
+		echo("person(");
+		echo("given=\\\"" + ocolOclInpGvnnmtx[i] + "\\\"");
+		if(ocolOclInpFmlynmt[i]) {
+				echo(", family=\\\"" + ocolOclInpFmlynmt[i] + "\\\"");
+		}
+		if(ocolOclInpEmaltxt[i]) {
+				echo(", email=\\\"" + ocolOclInpEmaltxt[i] + "\\\"");
+		}
+		if(optAuthorRole) {
+				echo(", " + optAuthorRole);
+		}
+		echo(")");
+		if(i + 1 < ocolOclInpGvnnmtx.length) {
+			echo(",\n\t\t\t");
+		}
+	}
+	echo("\n\t\t)\",\n");
+	}
 	echo(optAbout);
 	echo("\n)\n\n");
 	if(frmDfndpndnChecked && (optDependencies || ocolOclInpPckgtxt)) {
