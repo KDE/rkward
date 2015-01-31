@@ -1,9 +1,9 @@
 <h1>Correlation Matrix Plot</h1>
 <h2>Parameters</h2>
-<ul><li>Method: pearson</li>
-<li>Exclusion: pairwise.complete.obs</li>
-<li>Precision: 3 digits</li>
-<li>Scale text: TRUE</li>
+<ul><li>Method: Pearson</li>
+<li>Exclude missing values: pairwise</li>
+<li>Precision (digits): 3</li>
+<li>Scale text: yes</li>
 </ul>
 DATE<br />
 <img src="graph.png" width="480" height="480"><br>

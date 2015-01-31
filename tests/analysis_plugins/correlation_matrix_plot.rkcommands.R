@@ -23,7 +23,10 @@ cor.graph <- function(x) {
 ## Print result
 data <- data.frame (rock)
 
-rk.header ("Correlation Matrix Plot", parameters=list ("Method", "pearson", "Exclusion", "pairwise.complete.obs", "Precision", "3 digits", "Scale text", "TRUE"))
+rk.header ("Correlation Matrix Plot", parameters=list("Method"="Pearson",
+	"Exclude missing values"="pairwise",
+	"Precision (digits)"="3",
+	"Scale text"="yes"))
 
 rk.graph.on ()
 try ({

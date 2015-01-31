@@ -14,8 +14,8 @@ DATE<br />
 <br />
 <table border="1">
 <tr><td>n \ p</td><td>test50x</td><td>test50y</td><td>test50z</td></tr>
-<tr><td>test50x</td><td>NA</td><td>0</td><td>0</td></tr>
-<tr><td>test50y</td><td>50</td><td>NA</td><td>0</td></tr>
+<tr><td>test50x</td><td>NA</td><td> 0</td><td> 0</td></tr>
+<tr><td>test50y</td><td>50</td><td>NA</td><td> 0</td></tr>
 <tr><td>test50z</td><td>50</td><td>50</td><td>NA</td></tr>
 </table>
 <h1>Correlation Matrix</h1>
@@ -26,8 +26,8 @@ DATE<br />
 DATE<br />
 <table border="1">
 <tr><td>Coefficient</td><td>test10y</td><td>test10a</td></tr>
-<tr><td>test10y</td><td>NA</td><td>0.60718</td></tr>
-<tr><td>test10a</td><td>0.60718</td><td>NA</td></tr>
+<tr><td>test10y</td><td>     NA</td><td>0.60718</td></tr>
+<tr><td>test10a</td><td>0.60718</td><td>     NA</td></tr>
 </table>
 <h1>Correlation Matrix</h1>
 <h2>Parameters</h2>
@@ -37,6 +37,6 @@ DATE<br />
 DATE<br />
 <table border="1">
 <tr><td>Coefficient</td><td>weight</td><td>height</td></tr>
-<tr><td>weight</td><td>1</td><td>0.99549</td></tr>
-<tr><td>height</td><td>0.99549</td><td>1</td></tr>
+<tr><td>weight</td><td>1.00000</td><td>0.99549</td></tr>
+<tr><td>height</td><td>0.99549</td><td>1.00000</td></tr>
 </table>

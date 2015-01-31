@@ -41,9 +41,9 @@ DATE<br />
 <br />
 <table border="1">
 <tr><td></td><td>tension = L</td><td>tension = M</td><td>tension = H</td></tr>
-<tr><td>tension = L</td><td>18</td><td>0</td><td>0</td></tr>
-<tr><td>tension = M</td><td>0</td><td>18</td><td>0</td></tr>
-<tr><td>tension = H</td><td>0</td><td>0</td><td>18</td></tr>
+<tr><td>tension = L</td><td>18</td><td> 0</td><td> 0</td></tr>
+<tr><td>tension = M</td><td> 0</td><td>18</td><td> 0</td></tr>
+<tr><td>tension = H</td><td> 0</td><td> 0</td><td>18</td></tr>
 </table>
 <h2>Pearson's Chi Square Test for Crosstabs</h2>
 <h3>Parameters</h3>

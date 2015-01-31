@@ -6,10 +6,10 @@
 DATE<br />
 <table border="1">
 <tr><td></td><td>Parameters</td></tr>
-<tr><td>n</td><td>30</td></tr>
-<tr><td>d</td><td>0.3</td></tr>
-<tr><td>sig.level</td><td>0.05</td></tr>
-<tr><td>power</td><td>0.20785</td></tr>
+<tr><td>n        </td><td>30.00000</td></tr>
+<tr><td>d        </td><td> 0.30000</td></tr>
+<tr><td>sig.level</td><td> 0.05000</td></tr>
+<tr><td>power    </td><td> 0.20785</td></tr>
 </table>
 
 <p class='character'><strong>Note:</strong>  n is number in *each* group</p>
@@ -27,11 +27,11 @@ DATE<br />
 DATE<br />
 <table border="1">
 <tr><td></td><td>Parameters</td></tr>
-<tr><td>n1</td><td>27</td></tr>
-<tr><td>n2</td><td>33</td></tr>
-<tr><td>d</td><td>0.3</td></tr>
-<tr><td>sig.level</td><td>0.05</td></tr>
-<tr><td>power</td><td>0.20624</td></tr>
+<tr><td>n1       </td><td>27.00000</td></tr>
+<tr><td>n2       </td><td>33.00000</td></tr>
+<tr><td>d        </td><td> 0.30000</td></tr>
+<tr><td>sig.level</td><td> 0.05000</td></tr>
+<tr><td>power    </td><td> 0.20624</td></tr>
 </table>
 
 <p class='character'>Interpretation of effect size <strong>d</strong> (according to Cohen):</p>
@@ -47,10 +47,10 @@ DATE<br />
 DATE<br />
 <table border="1">
 <tr><td></td><td>Parameters</td></tr>
-<tr><td>n</td><td>86.875</td></tr>
-<tr><td>r</td><td>0.3</td></tr>
-<tr><td>sig.level</td><td>0.05</td></tr>
-<tr><td>power</td><td>0.81</td></tr>
+<tr><td>n        </td><td>86.875</td></tr>
+<tr><td>r        </td><td> 0.300</td></tr>
+<tr><td>sig.level</td><td> 0.050</td></tr>
+<tr><td>power    </td><td> 0.810</td></tr>
 </table>
 
 <p class='character'>Interpretation of effect size <strong>r</strong> (according to Cohen):</p>
@@ -65,11 +65,11 @@ DATE<br />
 DATE<br />
 <table border="1">
 <tr><td></td><td>Parameters</td></tr>
-<tr><td>w</td><td>0.3</td></tr>
-<tr><td>N</td><td>30</td></tr>
-<tr><td>df</td><td>32</td></tr>
-<tr><td>sig.level</td><td>0.71662</td></tr>
-<tr><td>power</td><td>0.81</td></tr>
+<tr><td>w        </td><td> 0.30000</td></tr>
+<tr><td>N        </td><td>30.00000</td></tr>
+<tr><td>df       </td><td>32.00000</td></tr>
+<tr><td>sig.level</td><td> 0.71662</td></tr>
+<tr><td>power    </td><td> 0.81000</td></tr>
 </table>
 
 <p class='character'><strong>Note:</strong>  N is the number of observations</p>
@@ -87,10 +87,10 @@ DATE<br />
 DATE<br />
 <table border="1">
 <tr><td></td><td>Parameters</td></tr>
-<tr><td>h</td><td>0.3</td></tr>
-<tr><td>n</td><td>30</td></tr>
-<tr><td>sig.level</td><td>0.38821</td></tr>
-<tr><td>power</td><td>0.81</td></tr>
+<tr><td>h        </td><td> 0.30000</td></tr>
+<tr><td>n        </td><td>30.00000</td></tr>
+<tr><td>sig.level</td><td> 0.38821</td></tr>
+<tr><td>power    </td><td> 0.81000</td></tr>
 </table>
 
 <p class='character'><strong>Note:</strong>  same sample sizes</p>
@@ -108,10 +108,10 @@ DATE<br />
 DATE<br />
 <table border="1">
 <tr><td></td><td>Parameters</td></tr>
-<tr><td>d</td><td>0.3</td></tr>
-<tr><td>n</td><td>30</td></tr>
-<tr><td>sig.level</td><td>0.40906</td></tr>
-<tr><td>power</td><td>0.8</td></tr>
+<tr><td>d        </td><td> 0.30000</td></tr>
+<tr><td>n        </td><td>30.00000</td></tr>
+<tr><td>sig.level</td><td> 0.40906</td></tr>
+<tr><td>power    </td><td> 0.80000</td></tr>
 </table>
 
 <p class='character'>Interpretation of effect size <strong>d</strong> (according to Cohen):</p>
@@ -126,11 +126,11 @@ DATE<br />
 DATE<br />
 <table border="1">
 <tr><td></td><td>Parameters</td></tr>
-<tr><td>u</td><td>3.4454</td></tr>
-<tr><td>v</td><td>30</td></tr>
-<tr><td>f2</td><td>0.3</td></tr>
-<tr><td>sig.level</td><td>0.1</td></tr>
-<tr><td>power</td><td>0.8</td></tr>
+<tr><td>u        </td><td> 3.4454</td></tr>
+<tr><td>v        </td><td>30.0000</td></tr>
+<tr><td>f2       </td><td> 0.3000</td></tr>
+<tr><td>sig.level</td><td> 0.1000</td></tr>
+<tr><td>power    </td><td> 0.8000</td></tr>
 </table>
 
 <p class='character'>Interpretation of effect size <strong>f<sup>2</sup></strong> (according to Cohen):</p>

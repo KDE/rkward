@@ -6,5 +6,5 @@ DATE<br />
 <table border="1">
 <tr><td>Variable Name</td><td>Minimum values</td><td>Maximum values</td></tr>
 <tr><td>test10x</td><td>101 102</td><td>110 109 108</td></tr>
-<tr><td>height</td><td>58 59</td><td>72 71 70</td></tr>
+<tr><td>height </td><td>58 59  </td><td>72 71 70   </td></tr>
 </table>
