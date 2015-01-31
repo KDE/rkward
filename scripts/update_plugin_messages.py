@@ -266,6 +266,15 @@ def getElementLabelsRecursive (elem):
       ret.update (getElementLabelsRecursive (ce))
   return ret
 
+def getAllElementLabels (xmldoc, filename):
+  ret = getElementLabelsRecursive (xmldoc)
+  includes = xmldoc.getElementsByTagName ("include")
+  for inc in includes:
+    subfile = os.path.join (os.path.dirname (filename), inc.getAttribute ("file"))
+    subdoc = parseFile (subfile)
+    ret.update (getAllElementLabels (subdoc, subfile))
+  return ret
+
 # It really is sort of lame to have to parse JS and extract i18n-calls, when xgettext could do it. But that would not
 # - allow us to add info on which plugin this belongs to
 # - list the i18n strings from the JS file in sequence with the i18n strings from the XML parts of the same plugin
@@ -455,11 +464,8 @@ def handleSubFile (filename, fetch_ids = False, is_include=False):
     infile["infile"] = filename
     infile["file_prefix"] = xmldoc.documentElement.getAttribute ("base_prefix")
     infile["caption"] = getFileCaption (xmldoc.documentElement, oldinfile["caption"])
-    if (fetch_ids or is_include):
-      if (is_include):
-        infile["id_labels"].update (getElementLabelsRecursive (xmldoc.documentElement).items ())
-      else:
-        infile["id_labels"] = getElementLabelsRecursive (xmldoc.documentElement)
+    if (fetch_ids):
+      infile["id_labels"] = getAllElementLabels (xmldoc.documentElement, filename)
     handleNode (xmldoc.documentElement)
     infile = oldinfile
 
