@@ -85,6 +85,8 @@ for lang in LANGUAGES:
                     if not prev_was_comment:
                         of.write ("#: translation_export.do_not_modify_here:0\n")
                         prev_was_comment = True
+                elif (line.startswith ("#,")):
+                    of.write (line)
                 else:
                     continue
             else:
