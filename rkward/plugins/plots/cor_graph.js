@@ -48,7 +48,7 @@ function doPrintout (full) {
 	if (full) {
 		echo ('rk.graph.off ()\n');
 		echo ('\n');
-		echo ('rk.print(' + i18n ("Legend:") + '\\t\'***\': p &lt; 0.001 -- \'**\': p &lt; 0.01 -- \'*\': p &lt; 0.05 -- \'.\'\': p &lt; 0.1")\n');
+		echo ('rk.print('+ quote (i18n (noquote ("Legend:")) + '\\t\'***\': p &lt; 0.001 -- \'**\': p &lt; 0.01 -- \'*\': p &lt; 0.05 -- \'.\'\': p &lt; 0.1') + ')\n');
 	}
 }
 
