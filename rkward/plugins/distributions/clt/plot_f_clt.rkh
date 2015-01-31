@@ -1,7 +1,6 @@
 <!DOCTYPE rkhelp>
 <document>
 	<snippets>
-		<snippet id="dist_name"><span>F</span></snippet>
 		<snippet id="dist_related">
 			<li><link href="rkward://component/plot_f_distribution"/></li>
 			<li><link href="rkward://rhelp/FDist"/></li>

@@ -1,7 +1,6 @@
 <!DOCTYPE rkhelp>
 <document>
 	<snippets>
-		<snippet id="dist_name"><span>Normal</span></snippet>
 		<snippet id="dist_related">
 			<li><link href="rkward://component/plot_normal_distribution"/></li>
 		</snippet>

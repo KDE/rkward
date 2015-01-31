@@ -1,7 +1,6 @@
 <!DOCTYPE rkhelp>
 <document>
 	<snippets>
-		<snippet id="dist_name"><span>Wilcoxon</span></snippet>
 		<snippet id="dist_related">
 			<li><link href="rkward://component/plot_wilcoxon_distribution"/></li>
 			<li><link href="rkward://rhelp/Wilcoxon"/></li>
