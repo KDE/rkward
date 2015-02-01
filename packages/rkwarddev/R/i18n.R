@@ -53,7 +53,8 @@ i18n <- function(msgid, ..., context=NULL, plural=NULL, newline=""){
   if(length(placeholders) > 0){
     # do some sanitiy checks here -- is there a placeholder in the strings for each dots value?
     # grep valid placeholders out of the messages
-    msgSplit <- unique(unlist(strsplit(paste(msgid, plural), "[[:space:]]+")))
+    msgCleaned <- gsub("([^%[:digit:]]{2,})", " ", paste(msgid, plural))
+    msgSplit <- unique(unlist(strsplit(msgCleaned, "[[:space:]]+")))
     msgPlHd <- msgSplit[grep("%[[:digit:]]", msgSplit)]
     # which placeholders are needed?
     plHdNeeded <- paste0("%", 1:length(placeholders))
