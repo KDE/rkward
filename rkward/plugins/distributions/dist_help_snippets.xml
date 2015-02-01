@@ -3,7 +3,7 @@
 		<caption title="Generic settings"/>
 		<setting id="mode">Specify the quantity to be calculated (probabilities, densities, or quantiles), and the quantity given (probabilities or quantiles)</setting>
 		<setting id="q">When calculating densities or probabilities, specify one or more quantiles. If this setting is left empty, a sequence of evenly spaced quantiles will be used, instead.</setting>
-		<setting id="p">When calculating quantiles, specify one or more probabilities, optionally logarithmic (see below). If this setting is left empty, a sequence sequence of evenly spaced (log) probabilities will be used, instead.</setting>
+		<setting id="p">When calculating quantiles, specify one or more probabilities, optionally logarithmic (see below). If this setting is left empty, a sequence of evenly spaced (log) probabilities will be used, instead.</setting>
 		<setting id="logp">When calculating probabilities, return these as log (p). When specifying probabilities, these are supplied as log (p).</setting>
 		<setting id="logd">When calculating densities, return these as log (d).</setting>
 		<setting id="lower">If checked (the default) probabilities are P[X ≤ x]. Otherwise (upper tail) probabilities are P[X &gt; x]</setting>

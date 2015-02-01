@@ -5,7 +5,7 @@
 	<logic>
 		<insert snippet="dialog_logic"/>
 		<script><![CDATA[
-			gui.setValue ("ui_note.text", i18n (noquote ("Quantiles represents the number of failures in a sequence of Bernoulli trials before the target number of successes is reached.")));
+			gui.setValue ("ui_note.text", i18n (noquote ("Quantiles represent the number of failures in a sequence of Bernoulli trials before the target number of successes is reached.")));
 		]]></script>
 	</logic>
 	<snippets>

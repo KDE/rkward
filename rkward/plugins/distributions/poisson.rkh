@@ -6,7 +6,7 @@
 	<summary>
 		Provides a calculator for probabilities, quantiles, and densities in the Poisson distribution.
 
-		Quantiles represents the number of events observed in a specified region (e.g. a fixed number of trials, or a fixed period of time), where λ (lambda) is the expected (mean) number of such events.
+		Quantiles represent the number of events observed in a specified region (e.g. a fixed number of trials, or a fixed period of time), where λ (lambda) is the expected (mean) number of such events.
 	</summary>
 	<insert snippet="dialog_usage"/>
 	<settings>
