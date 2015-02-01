@@ -23,10 +23,9 @@
 #' @param id.name Character string, a unique ID for this plugin element.
 #'    If \code{"auto"}, an ID will be generated automatically from \code{text}.
 #'    If \code{NULL}, no ID will be given.
-#' @param i18n Either a character string or a named list with the optional element \code{context},
-#'    to give some \code{i18n_context}
-#'    information for this node. If set to \code{FALSE}, the attribute \code{label} will be renamed into 
-#'    \code{noi18n_label}.
+#' @param i18n Either a character string or a named list with the optional elements \code{context}
+#'    or \code{comment}, to give some \code{i18n_context} information for this node. If set to \code{FALSE},
+#'    the attribute \code{label} will be renamed into \code{noi18n_label}.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
@@ -55,13 +54,17 @@ rk.XML.text <- function(text, type="normal", id.name="auto", i18n=NULL){
   # preserve markup in the text
   if(grepl("<(.*)>", text)){
     textAsTree <- parseXMLTree(text, object=TRUE)
-    node <- XMLNode("text",
-        .children=slot(textAsTree, "children"),
-        attrs=attr.list)
+    node <- check.i18n(
+      i18n=i18n,
+      node=XMLNode("text", .children=slot(textAsTree, "children"), attrs=attr.list),
+      comment=TRUE
+    )
   } else {
-    node <- XMLNode("text",
-        text,
-        attrs=attr.list)
+    node <- check.i18n(
+      i18n=i18n,
+      node=XMLNode("text", text, attrs=attr.list),
+      comment=TRUE
+    )
   }
 
   return(node)

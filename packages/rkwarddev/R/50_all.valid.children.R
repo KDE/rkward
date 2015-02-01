@@ -16,7 +16,7 @@ all.valid.children <- list(
     "text", "valueselector", "valueslot", "varselector", "varslot", "!--"),
   dropdown=c("option", "!--"),
   hierarchy=c("menu", "!--"),
-  logic=c("connect", "convert", "dependency_check", "external", "include", "insert",
+  logic=c("connect", "convert", "dependency_check", "external", "i18n", "include", "insert",
     "script", "set", "switch", "!--"),
   menu=c("entry", "menu", "!--"),
   optionset=c("content", "logic", "optioncolumn", "!--"),

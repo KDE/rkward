@@ -26,10 +26,9 @@
 #'    If \code{"auto"} and a label was provided, an ID will be generated automatically from the label
 #'    if presen, otherwise from the objects in the frame.
 #'    If \code{NULL}, no ID will be given.
-#' @param i18n Either a character string or a named list with the optional element \code{context},
-#'    to give some \code{i18n_context}
-#'    information for this node. If set to \code{FALSE}, the attribute \code{label} will be renamed into 
-#'    \code{noi18n_label}.
+#' @param i18n Either a character string or a named list with the optional elements \code{context}
+#'    or \code{comment}, to give some \code{i18n_context} information for this node. If set to \code{FALSE},
+#'    the attribute \code{label} will be renamed into \code{noi18n_label}.
 #' @return An object of class \code{XiMpLe.node}.
 #' @seealso
 #'    \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
@@ -69,11 +68,12 @@ rk.XML.frame <- function(..., label=NULL, checkable=FALSE, chk=TRUE, id.name="au
 
   # check for additional i18n info; if FALSE, "label" will be renamed to "noi18n_label"
   attr.list <- check.i18n(i18n=i18n, attrs=attr.list)
+  
+  node <- check.i18n(
+    i18n=i18n,
+    node=XMLNode("frame", attrs=attr.list, .children=child.list(nodes, empty=FALSE)),
+    comment=TRUE
+  )
 
-  frame <- XMLNode("frame",
-      attrs=attr.list,
-      .children=child.list(nodes, empty=FALSE)
-    )
-
-  return(frame)
+  return(node)
 }

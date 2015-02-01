@@ -5,7 +5,7 @@ all.valid.modifiers <- list(
   "required", "true", "false", "not", "numeric", "preprocess", "calculate", "printout", "preview"),
   browser=c("selection"),
   checkbox=c("state", "state.not", "state.numeric"),
-  dropdown=c("string", "number"),
+  dropdown=c("string", "string.quoted", "number"),
 # removed embed, can be all sorts of stuff, see e.g. generic plot options
 #  embed=c("code"),
 # for the same reason external is not listed here
@@ -16,9 +16,9 @@ all.valid.modifiers <- list(
   option=c("enabled"),
   optionset=c("row_count", "current_row", "optioncolumn_ids"),
   preview=c("state", "state.not", "state.numeric"),
-  radio=c("string", "number"),
+  radio=c("string", "string.quoted", "number"),
   saveobject=c("selection", "parent", "objectname", "active"),
-  select=c("string", "number"),
+  select=c("string", "string.quoted", "number"),
   spinbox=c("int", "real"),
   text=c("text"),
   valueselector=c("available", "selected", "root"),

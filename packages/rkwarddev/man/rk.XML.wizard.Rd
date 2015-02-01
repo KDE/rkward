@@ -15,11 +15,10 @@ rk.XML.wizard(..., label = NULL, recommended = FALSE, i18n = NULL)
       whether the wizard should be the recommended interface (unless the user has configured
 RKWard to default to a specific interface).}
 
-\item{i18n}{Either a character string or a named list with the optional element \code{context},
-to give some \code{i18n_context}
-information for this node. If set to \code{FALSE},
-      the attribute \code{label} will be renamed into
-\code{noi18n_label}.}
+\item{i18n}{Either a character string or a named list with the optional elements \code{context}
+or \code{comment},
+      to give some \code{i18n_context} information for this node. If set to \code{FALSE},
+the attribute \code{label} will be renamed into \code{noi18n_label}.}
 }
 \value{
 An object of class \code{XiMpLe.node}.

@@ -25,10 +25,9 @@
 #' @param short Character string, short title for the menu for links to this section.
 #' @param id.name Character string, a unique ID for this element.
 #'    If \code{"auto"}, an ID will be generated automatically from the \code{title} value.
-#' @param i18n Either a character string or a named list with the optional element \code{context},
-#'    to give some \code{i18n_context}
-#'    information for this node. If set to \code{FALSE}, the attribute \code{title} will be renamed into 
-#'    \code{noi18n_title}.
+#' @param i18n Either a character string or a named list with the optional elements \code{context}
+#'    or \code{comment}, to give some \code{i18n_context} information for this node.
+#'    If set to \code{FALSE}, the attribute \code{title} will be renamed into \code{noi18n_title}.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
@@ -60,7 +59,11 @@ rk.rkh.section <- function(title, text=NULL, short=NULL, id.name="auto", i18n=NU
   # check for additional i18n info; if FALSE, "title" will be renamed to "noi18n_title"
   attr.list <- check.i18n(i18n=i18n, attrs=attr.list)
 
-  node <- XMLNode("section", text, attrs=attr.list)
+  node <- check.i18n(
+    i18n=i18n,
+    node=XMLNode("section", text, attrs=attr.list),
+    comment=TRUE
+  )
 
   return(node)
 }

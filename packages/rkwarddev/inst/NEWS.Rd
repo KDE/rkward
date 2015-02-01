@@ -52,6 +52,8 @@
         \code{"var"} should be used or omitted for rk.JS.var objects
       \item \code{rk.XML.matrix()} now also accepts the arguments \code{"min_rows"} and
         \code{"min_columns"}
+      \item <dropdown>, <radio> and <select> have gained \code{"string.quoted"} as
+        a valid property/modifier
     }
   }
   \subsection{changed}{
@@ -81,6 +83,7 @@
         top level child node of plugin XML code, with a warning
       \item \code{rk.plugin.skeleton()} has a new logical switch called \code{"internal"}, to set
         some defaults for plugins to be distributed with RKWard itself
+      \item the \code{"pluginmap"} argument of \code{rk.plugin.skeleton()} now also accepts \code{"namespace"}
     }
   }
   \subsection{removed}{

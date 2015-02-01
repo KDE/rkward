@@ -32,10 +32,9 @@
 #'    If \code{"auto"}, an ID will be generated automatically from the label. Otherwise, if \code{...} is a list,
 #'    \code{id.name} must have the same length and will be set in the same order to the menu levels.
 #'    Used to place the menu in the global menu hierarchy.
-#' @param i18n Either a character string or a named list with the optional element \code{context},
-#'    to give some \code{i18n_context}
-#'    information for this node. If set to \code{FALSE}, the attribute \code{label} will be renamed into 
-#'    \code{noi18n_label}.
+#' @param i18n Either a character string or a named list with the optional elements \code{context}
+#'    or \code{comment}, to give some \code{i18n_context} information for this node. If set to \code{FALSE},
+#'    the attribute \code{label} will be renamed into \code{noi18n_label}.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
@@ -124,10 +123,11 @@ rk.XML.menu <- function(label, ..., index=-1, id.name="auto", i18n=NULL){
   # check for additional i18n info; if FALSE, "label" will be renamed to "noi18n_label"
   attr.list <- check.i18n(i18n=i18n, attrs=attr.list)
 
-  node <- XMLNode("menu",
-      attrs=attr.list,
-      .children=child.list(nodes)
-    )
+  node <- check.i18n(
+    i18n=i18n,
+    node=XMLNode("menu", attrs=attr.list, .children=child.list(nodes)),
+    comment=TRUE
+  )
 
   return(node)
 }

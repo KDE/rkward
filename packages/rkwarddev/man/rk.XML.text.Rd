@@ -15,11 +15,10 @@ rk.XML.text(text, type = "normal", id.name = "auto", i18n = NULL)
 If \code{"auto"}, an ID will be generated automatically from \code{text}.
 If \code{NULL}, no ID will be given.}
 
-\item{i18n}{Either a character string or a named list with the optional element \code{context},
-to give some \code{i18n_context}
-information for this node. If set to \code{FALSE},
-      the attribute \code{label} will be renamed into
-\code{noi18n_label}.}
+\item{i18n}{Either a character string or a named list with the optional elements \code{context}
+or \code{comment},
+      to give some \code{i18n_context} information for this node. If set to \code{FALSE},
+the attribute \code{label} will be renamed into \code{noi18n_label}.}
 }
 \value{
 An object of class \code{XiMpLe.node}.

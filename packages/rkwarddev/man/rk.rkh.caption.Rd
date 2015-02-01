@@ -13,11 +13,8 @@ or an object of class \code{XiMpLe.node} (whose \code{id} will be extracted and 
 \item{title}{Character string, title to be displayed. If \code{NULL}, the \code{label}
 of the element will be shown.}
 
-\item{i18n}{Either a character string or a named list with the optional element \code{context},
-to give some \code{i18n_context}
-information for this node. If set to \code{FALSE},
-      the attribute \code{title} will be renamed into
-\code{noi18n_title}.}
+\item{i18n}{Either a character string or a named list with the optional elements \code{context}
+or \code{comment}, to give some \code{i18n_context} information for this node.}
 }
 \value{
 An object of class \code{XiMpLe.node}.

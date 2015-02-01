@@ -26,10 +26,9 @@
 #'    for this particular option (see \code{i18n}). Objects generated with \code{\link[rkwarddev:rk.XML.option]{rk.XML.option}}
 #'    are accepted as well.
 #' @param id.name Character vector, unique ID for this element.
-#' @param i18n Either a character string or a named list with the optional element \code{context},
-#'    to give some \code{i18n_context}
-#'    information for this node. If set to \code{FALSE}, the attribute \code{label} will be renamed into 
-#'    \code{noi18n_label}.
+#' @param i18n Either a character string or a named list with the optional elements \code{context}
+#'    or \code{comment}, to give some \code{i18n_context} information for this node. If set to \code{FALSE},
+#'    the attribute \code{label} will be renamed into \code{noi18n_label}.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
@@ -66,9 +65,10 @@ rk.XML.valueselector <- function(label=NULL, options=list(label=c(val=NULL, chk=
   # check for additional i18n info; if FALSE, "label" will be renamed to "noi18n_label"
   attr.list <- check.i18n(i18n=i18n, attrs=attr.list)
 
-  node <- XMLNode("valueselector",
-    attrs=attr.list,
-    .children=child.list(vs.options, empty=FALSE)
+  node <- check.i18n(
+    i18n=i18n,
+    node=XMLNode("valueselector", attrs=attr.list, .children=child.list(vs.options, empty=FALSE)),
+    comment=TRUE
   )
 
   return(node)

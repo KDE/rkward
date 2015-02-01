@@ -30,10 +30,9 @@
 #' @param component Character string, name of the component this node belongs to. Only needed if you
 #'    want to use the scan features for automatic help file generation; needs \code{help} to be set
 #'    accordingly, too!
-#' @param i18n Either a character string or a named list with the optional element \code{context},
-#'    to give some \code{i18n_context}
-#'    information for this node. If set to \code{FALSE}, the attribute \code{label} will be renamed into 
-#'    \code{noi18n_label}.
+#' @param i18n Either a character string or a named list with the optional elements \code{context}
+#'    or \code{comment}, to give some \code{i18n_context} information for this node. If set to \code{FALSE},
+#'    the attribute \code{label} will be renamed into \code{noi18n_label}.
 #' @return An object of class \code{XiMpLe.node}.
 #' @note There's also a simple wrapper function \code{rk.XML.checkbox}.
 #' @export
@@ -64,12 +63,12 @@ rk.XML.cbox <- function(label, value="true", un.value=NULL, chk=FALSE, id.name="
   # check for additional i18n info; if FALSE, "label" will be renamed to "noi18n_label"
   attr.list <- check.i18n(i18n=i18n, attrs=attr.list)
 
-  checkbox <- check.i18n(i18n=i18n, node=XMLNode("checkbox", attrs=attr.list), comment=TRUE)
+  node <- check.i18n(i18n=i18n, node=XMLNode("checkbox", attrs=attr.list), comment=TRUE)
 
   # check for .rkh content
   rk.set.rkh.prompter(component=component, id=id, help=help)
   
-  return(checkbox)
+  return(node)
 }
 
 ## wrapper for name scheme consistency

@@ -47,6 +47,10 @@ added:
     "var" should be used or omitted for rk.JS.var objects
   - rk.XML.matrix() now also accepts the arguments "min_rows" and
     "min_columns"
+  - <dropdown>, <radio> and <select> have gained "string.quoted" as
+    a valid property/modifier
+  - new function rk.XML.i18n() to define translatable labels in logic sections
+  - new function rk.rkh.label() for extracting labels from plugin elements
 changed:
   - function i18n() was changed to be used in JavaScript generation only;
     this breaks code using the function introduced with 0.06-4, but that was to
