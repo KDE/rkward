@@ -13,7 +13,7 @@
 						<spinbox default_precision="1" type="real" id="mu" initial="4" min="0.01" label="Mean (mu)" />
 					</column>
 					<column>
-						<radio id="param" label="Type of Parameterization" >
+						<radio id="param" label="Type of Parametrization" >
 							<option value="pprob" label="Success probability" />
 							<option value="pmu" label="Mean (mu)" />
 						</radio>

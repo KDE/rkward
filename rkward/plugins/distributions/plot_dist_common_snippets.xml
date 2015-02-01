@@ -39,7 +39,7 @@
 	</snippet>
 	<snippet id="general_usage_help">
 		<usage>
-			Choose appropriate values for the various parameters of the distribution and select the type of function. The "Submit" button will export the plot to the "Output" window. To dynamically visualise the plot check the "Preview" box.
+			Choose appropriate values for the various parameters of the distribution and select the type of function. The "Submit" button will export the plot to the "Output" window. To dynamically visualize the plot check the "Preview" box.
 		</usage>
 	</snippet>
 	<snippet id="density_help">
