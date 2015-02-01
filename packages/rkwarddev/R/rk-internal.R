@@ -111,6 +111,18 @@ indent <- function(level, by="\t"){
 } ## end function indent()
 
 
+## function rk.noquote()
+# use noquote() in a slightly different manner:
+# if "text" is a noquote object, returns "noquote(\"text\")"
+rk.noquote <- function(text){
+  if(inherits(text, "noquote")){
+    return(paste0("noquote(", qp(paste0(text)), ")"))
+  } else {
+    return(text)
+  }
+} ## end function rk.noquote()
+
+
 ## function checkCreateFiles()
 # used by rk.plugin.skeleton()
 checkCreateFiles <- function(file.name, ow, action=NULL){

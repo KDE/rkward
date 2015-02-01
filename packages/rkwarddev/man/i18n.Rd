@@ -7,8 +7,10 @@
 i18n(msgid, ..., context = NULL, plural = NULL, newline = "")
 }
 \arguments{
-\item{msgid}{Character string, the message to be translated (if applicable,
-      its singular form).}
+\item{msgid}{Either a character string, the message to be translated (if applicable,
+      its singular form),
+or an object of class \code{\link[noquote]{noquote}},
+      which will be pasted as a \code{noquote()} function call.}
 
 \item{...}{Either character string which will be pasted unquoted to be used in conjunctions with
 placeholders in msgid,
@@ -34,5 +36,7 @@ will return one of \code{i18n()}, \code{i18nc()}, \code{i18np()}, or \code{i18nc
 \examples{
 i18n("Select data")
 i18n("Comparing a single pair", "n_pairs", plural="Comparing \%1 distinct pairs")
+
+echo(i18n(noquote("A string I'll quote, later")))
 }
 

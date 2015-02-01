@@ -22,7 +22,8 @@
 #' your JavaScript portions in R. Depending on the provided values for its arguments,
 #' will return one of \code{i18n()}, \code{i18nc()}, \code{i18np()}, or \code{i18ncp()}.
 #' 
-#' @param msgid Character string, the message to be translated (if applicable, its singular form).
+#' @param msgid Either a character string, the message to be translated (if applicable, its singular form),
+#'    or an object of class \code{\link[noquote]{noquote}}, which will be pasted as a \code{noquote()} function call.
 #' @param ... Either character string which will be pasted unquoted to be used in conjunctions with
 #'    placeholders in msgid, or XiMpLe.node objects of which the JavaScript variable name will be
 #'    used.
@@ -35,6 +36,8 @@
 #' @examples
 #' i18n("Select data")
 #' i18n("Comparing a single pair", "n_pairs", plural="Comparing %1 distinct pairs")
+#' 
+#' echo(i18n(noquote("A string I'll quote, later")))
 
 i18n <- function(msgid, ..., context=NULL, plural=NULL, newline=""){
   placeholders <- list(...)
@@ -50,10 +53,13 @@ i18n <- function(msgid, ..., context=NULL, plural=NULL, newline=""){
     pluralQuoted <- paste0(", ", qp(plural))
   } else {}
  
+  # deal with noquoted strings, by "misusing" the noquote() function from R base
+  msgid.nq <- rk.noquote(msgid)
+
   if(length(placeholders) > 0){
     # do some sanitiy checks here -- is there a placeholder in the strings for each dots value?
     # grep valid placeholders out of the messages
-    msgCleaned <- gsub("([^%[:digit:]]{2,})", " ", paste(msgid, plural))
+    msgCleaned <- gsub("([^%[:digit:]]{2,})", " ", paste(msgid.nq, plural))
     msgSplit <- unique(unlist(strsplit(msgCleaned, "[[:space:]]+")))
     msgPlHd <- msgSplit[grep("%[[:digit:]]", msgSplit)]
     # which placeholders are needed?
@@ -69,11 +75,17 @@ i18n <- function(msgid, ..., context=NULL, plural=NULL, newline=""){
     placeholderString <- paste0(", ", paste0(sapply(placeholders, function(ph){id(ph, js=TRUE)}), collapse=", "))
   } else {}
   
+  if(identical(msgid, msgid.nq)){
+    msgid.value <- qp(msgid)
+  } else {
+    # message is already quoted
+    msgid.value <- msgid.nq
+  }
   result <- new("rk.JS.i18n",
     value=paste0(
       JSfunction, "(",
       context,
-      qp(msgid),
+      msgid.value,
       pluralQuoted,
       placeholderString,
       ")",
