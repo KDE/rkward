@@ -10,6 +10,20 @@ New features in R 3.1.0 to make use of / support:
 Simple stuff to do soon:
 	- RKConsole: Show a notice (with "don't show again"-box, of course) when first using Ctrl+C shortcut
 
+i18n-Thoughts:
+  + Notes:
+    - Is it a problem to sync KDE_LANG and LANGUAGE? Should that also be set for the backend?
+    - Lifetime of RKMessageCatalogs? Should probably be destructable, at least when reloading pluginmaps. Should be possible to implement in a sane ways 
+      using QSharedPointer magic.
+    - Don't forget to write documentation
+      - Also general documentation for JS-functions is missing!
+    - What should be the policy regarding installing translations (80% criterion)
+    - i18n'ed plugins vs. automated tests
+      - Sure, we can run automated tests under C locale. But it would be nice to have an additional check that translations don't cause
+        any obvious problems.
+        - At least we could check for errors
+        - Perhaps a special diff of the generated R commands, where all quoted strings and comments are stripped?
+
 Bugs outside RKWard:
 	- KDE 4
 		- why is the icon style only honored for mainToolBar (in KXMLGUIBuilder)? It looks like this is done on purpose, but why???
