@@ -1,6 +1,6 @@
 ChangeLog for package rkwarddev
 
-changes in version 0.07-1 (2015-01-20)
+changes in version 0.07-1 (2015-02-01)
 fixed:
   - rk.XML.optionset() does now allow to re-use objects defined in the same
     function call (i.e., refer to optioncolumns in the logic section)
@@ -45,7 +45,8 @@ added:
     rk.XML.vars() to also accept "duplicates"
   - new argument "var" in rk.paste.JS() to define whether the JS keyword
     "var" should be used or omitted for rk.JS.var objects
-  - rk.XML.matrix() now also accepts the arguments "min_rows" and "min_columns"
+  - rk.XML.matrix() now also accepts the arguments "min_rows" and
+    "min_columns"
 changed:
   - function i18n() was changed to be used in JavaScript generation only;
     this breaks code using the function introduced with 0.06-4, but that was to
@@ -68,8 +69,11 @@ changed:
     remove quotes you added for rkwarddev >= 0.05-0
   - updated the generation of author and maintainer fileds in DESCRIPTIONs
     made by rk.plugin.skeleton(), borrowing get.authors() from roxyPackage
-  - rk.plugin.component() will now also move <dependencies> from <about>
-    to a top level child node of plugin XML code, with a warning
+  - rk.plugin.component() will now also move <dependencies> from <about> to a
+    top level child node of plugin XML code, with a warning
+  - rk.plugin.skeleton() has a new logical switch called "internal", to set
+    some defaults for plugins to be distributed with RKWard itself
+  - the "pluginmap" argument of rk.plugin.skeleton() now also accepts "namespace"
 removed:
   - the functions rk.set.language() rk.get.language() were no longer useful
     and therefore removed

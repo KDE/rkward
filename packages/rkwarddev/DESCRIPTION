@@ -8,16 +8,15 @@ Depends:
 Suggests:
     testthat
 Enhances: rkward
-Description: Provides functions to create plugin skeletons and XML
-    structures for RKWard.
+Description: Provides functions to create plugin skeletons and XML structures
+    for RKWard.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyLoad: yes
 URL: http://rkward.sourceforge.net
-Authors@R: c(person(given="m.eik", family="michalke",
-    email="meik.michalke@hhu.de", role=c("aut", "cre")))
+Authors@R: c(person(given="m.eik", family="michalke", email="meik.michalke@hhu.de", role=c("aut", "cre")))
 Version: 0.07-1
-Date: 2015-01-13
+Date: 2015-02-01
 Collate:
     '00_class_01_rk.JS.arr.R'
     '00_class_02_rk.JS.var.R'

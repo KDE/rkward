@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.07-1 (2015-01-13)}{
+\section{Changes in rkwarddev version 0.07-1 (2015-02-01)}{
   \subsection{fixed}{
     \itemize{
       \item \code{rk.XML.optionset()} does now allow to re-use objects defined in the same
@@ -50,6 +50,8 @@
         \code{rk.XML.vars()} to also accept \code{"duplicates"}
       \item new argument \code{"var"} in \code{rk.paste.JS()} to define whether the JS keyword
         \code{"var"} should be used or omitted for rk.JS.var objects
+      \item \code{rk.XML.matrix()} now also accepts the arguments \code{"min_rows"} and
+        \code{"min_columns"}
     }
   }
   \subsection{changed}{
@@ -75,8 +77,10 @@
         remove quotes you added for rkwarddev >= 0.05-0
       \item updated the generation of author and maintainer fileds in DESCRIPTIONs
         made by \code{rk.plugin.skeleton()}, borrowing \code{get.authors()} from roxyPackage
-      \item \code{rk.plugin.component()} will now also move <dependencies> from <about>
-        to a top level child node of plugin XML code, with a warning
+      \item \code{rk.plugin.component()} will now also move <dependencies> from <about> to a
+        top level child node of plugin XML code, with a warning
+      \item \code{rk.plugin.skeleton()} has a new logical switch called \code{"internal"}, to set
+        some defaults for plugins to be distributed with RKWard itself
     }
   }
   \subsection{removed}{
