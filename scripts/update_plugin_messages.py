@@ -148,7 +148,7 @@ def quote (text):
   try:
      text = text.decode ('utf-8', 'ignore')
   except:
-     print ("Python has trouble decoding this text: " + text)
+     print ("Python has trouble decoding this text: " + text.encode('utf-8'))
   text = HTMLParser.HTMLParser ().unescape (text)	# unescape character entities, Qt does so while parsing the xml
   return "\"" + text.replace ("\\", "\\\\").replace ("\"", "\\\"") + "\""
 
