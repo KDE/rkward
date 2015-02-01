@@ -20,7 +20,7 @@ function printout () {
 	echo ('rk.header (' + i18n ("Unidimensionality check (%1)", getValue("x")) + ')\n');
 	echo ('rk.print (' + i18n ("Call:") + ')\n');
 	echo ('rk.print.literal (deparse(unidim.res$call, width.cutoff=500))\n');
-	echo ('rk.header (' + i18n ("Matrix of tertachoric correlations:") + ', level=4)\n');
+	echo ('rk.header (' + i18n ("Matrix of tetrachoric correlations:") + ', level=4)\n');
 	echo ('rk.print (unidim.res$Rho)\n');
 	echo ('rk.header (' + i18n ("Unidimensionality Check using Modified Parallel Analysis:") + ', level=4)\n');
 	echo ('rk.print (' + i18n ("Alternative hypothesis: <em>The second eigenvalue of the observed data is substantially larger than the second eigenvalue of data under the assumed IRT model</em>") + ')\n');
