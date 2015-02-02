@@ -10,23 +10,24 @@ function preprocess(){
 
 function calculate(){
 	// read in variables from dialog
-	var drpPwrStat = getValue("drp_pwr_stat");
-	var spnNmbrfgrp = getValue("spn_Nmbrfgrp");
-	var drpPwrType = getValue("drp_pwr_type");
-	var drpPwrProptype = getValue("drp_pwr_proptype");
-	var drpPwrHypothesis = getValue("drp_pwr_hypothesis");
-	var radEffctEta = getValue("rad_effct_eta");
-	var radPwrParam = getValue("rad_pwr_param");
-	var spnPower = getValue("spn_Power");
-	var pwrSpinDf = getValue("pwr_spin_df");
-	var pwrSpinDfu = getValue("pwr_spin_dfu");
-	var pwrSpinDfv = getValue("pwr_spin_dfv");
-	var pwrSpinSample0 = getValue("pwr_spin_sample0");
-	var pwrSpinSample1 = getValue("pwr_spin_sample1");
-	var pwrSpinSample2 = getValue("pwr_spin_sample2");
-	var spnEffectsz = getValue("spn_Effectsz");
-	var spnSgnfcncl = getValue("spn_Sgnfcncl");
-	var svbSvrsltst = getValue("svb_Svrsltst");
+
+	var drpPwrStat = getString("drp_pwr_stat");
+	var spnNmbrfgrp = getString("spn_Nmbrfgrp");
+	var drpPwrType = getString("drp_pwr_type");
+	var drpPwrProptype = getString("drp_pwr_proptype");
+	var drpPwrHypothesis = getString("drp_pwr_hypothesis");
+	var radEffctEta = getString("rad_effct_eta");
+	var radPwrParam = getString("rad_pwr_param");
+	var spnPower = getString("spn_Power");
+	var pwrSpinDf = getString("pwr_spin_df");
+	var pwrSpinDfu = getString("pwr_spin_dfu");
+	var pwrSpinDfv = getString("pwr_spin_dfv");
+	var pwrSpinSample0 = getString("pwr_spin_sample0");
+	var pwrSpinSample1 = getString("pwr_spin_sample1");
+	var pwrSpinSample2 = getString("pwr_spin_sample2");
+	var spnEffectsz = getString("spn_Effectsz");
+	var spnSgnfcncl = getString("spn_Sgnfcncl");
+	var svbSvrsltst = getString("svb_Svrsltst");
 
 	// the R code to be evaluated
 	echo("\tpwr.result <- try(\n\t\t");
@@ -73,7 +74,8 @@ function calculate(){
 		if(radEffctEta == "f") {
 			echo(",\n\t\t\tf=" + spnEffectsz);
 		} else {
-			echo(",\n\t\t\tf=sqrt(" + spnEffectsz + "/(1-" + spnEffectsz + ")) # calculate f from eta squared");
+			echo(",\n\t\t\tf=sqrt(" + spnEffectsz + "/(1-" + spnEffectsz + "))");
+	comment("calculate f from eta squared", "\t");
 		}
 	}
 	}
@@ -170,24 +172,32 @@ function printout(){
 
 	var drpPwrStat = getValue("drp_pwr_stat");
 	var radPwrParam = getValue("rad_pwr_param");
-	echo("\t# Catch errors due to unsuitable data\n" + "\tif(class(pwr.result) == \"try-error\"){\n" + "\t\trk.print(\"Power analysis not possible with the data you provided\")\n" + "\t\treturn()\n\t}\n\n" + "\t# Prepare printout\n" + "\tnote <- pwr.result[[\"note\"]]\n" + "\tparameters <- list(\"Target measure\"=\"" + radPwrParam + "\")\n" + "\tif(!is.null(pwr.result[[\"alternative\"]])){\n\t\tparameters[[\"alternative\"]] <- pwr.result[[\"alternative\"]]\n\t}\n\n" + "\trk.header(pwr.result[[\"method\"]], parameters=parameters)\n" + "\tpwr.result[c(\"method\", \"note\", \"alternative\")] <- NULL\n" + "\tpwr.result <- as.data.frame(unlist(pwr.result))\n" + "\tcolnames(pwr.result) <- \"Parameters\"\n\n" + "\trk.results(pwr.result)\n" + "\tif(!is.null(note)){\n\t\trk.print(paste(\"<strong>Note:</strong> \", note))\n\t}\n\n");
+	comment("Catch errors due to unsuitable data", "\t");
+	echo("\tif(class(pwr.result) == \"try-error\"){\n" + "\t\trk.print(" + i18n("Power analysis not possible with the data you provided") + ")\n" + "\t\treturn()\n\t}\n\n");
+	comment("Prepare printout", "\t");
+	echo("\tnote <- pwr.result[[\"note\"]]\n");
+	header = new Header ().addFromUI ("rad_pwr_param");
+
+	echo("\tparameters <- list(");
+	echo (header.extractParameters ());
+	echo(")\n" + "\tif(!is.null(pwr.result[[\"alternative\"]])){\n\t\tparameters[[" + i18n("alternative") + "]] <- pwr.result[[\"alternative\"]]\n\t}\n\n" + "\trk.header(pwr.result[[\"method\"]], parameters=parameters)\n" + "\tpwr.result[c(\"method\", \"note\", \"alternative\")] <- NULL\n" + "\tpwr.result <- as.data.frame(unlist(pwr.result))\n" + "\tcolnames(pwr.result) <- " + i18n("Parameters") + "\n\n" + "\trk.results(pwr.result)\n" + "\tif(!is.null(note)){\n\t\trk.print(paste(" + i18n("<strong>Note:</strong>") + ", note))\n\t}\n\n");
 	if(drpPwrStat == "pwr.t.test" | drpPwrStat == "pwr.norm.test") {
-		echo("\trk.print(\"Interpretation of effect size <strong>d</strong> (according to Cohen):\")\n" + "\trk.results(data.frame(small=0.2, medium=0.5, large=0.8))\n");
+		echo("\trk.print(" + i18nc("Argument is name of statistic, e.g. 'r'", "Interpretation of effect size <strong>%1</strong> (according to Cohen):", "d") + ")\n" + "\trk.results(data.frame(" + i18nc("effect size", "small") + "=0.2, " + i18nc("effect size", "medium") + "=0.5, " + i18nc("effect size", "large") + "=0.8))\n");
 	}
 	if(drpPwrStat == "pwr.r.test") {
-		echo("\trk.print(\"Interpretation of effect size <strong>r</strong> (according to Cohen):\")\n" + "\trk.results(data.frame(small=0.1, medium=0.3, large=0.5))\n");
+		echo("\trk.print(" + i18nc("Argument is name of statistic, e.g. 'r'", "Interpretation of effect size <strong>%1</strong> (according to Cohen):", "r") + ")\n" + "\trk.results(data.frame(" + i18nc("effect size", "small") + "=0.1, " + i18nc("effect size", "medium") + "=0.3, " + i18nc("effect size", "large") + "=0.5))\n");
 	}
 	if(drpPwrStat == "pwr.f2.test") {
-		echo("\trk.print(\"Interpretation of effect size <strong>f<sup>2</sup></strong> (according to Cohen):\")\n" + "\trk.results(data.frame(small=0.02, medium=0.15, large=0.35))\n");
+		echo("\trk.print(" + i18nc("Argument is name of statistic, e.g. 'r'", "Interpretation of effect size <strong>%1</strong> (according to Cohen):", "f<sup>2</sup>") + ")\n" + "\trk.results(data.frame(" + i18nc("effect size", "small") + "=0.02, " + i18nc("effect size", "medium") + "=0.15, " + i18nc("effect size", "large") + "=0.35))\n");
 	}
 	if(drpPwrStat == "pwr.anova.test") {
-		echo("\trk.print(\"Interpretation of effect size <strong>f</strong> (according to Cohen):\")\n" + "\trk.results(data.frame(small=0.1, medium=0.25, large=0.4))\n");
+		echo("\trk.print(" + i18nc("Argument is name of statistic, e.g. 'r'", "Interpretation of effect size <strong>%1</strong> (according to Cohen):", "f") + ")\n" + "\trk.results(data.frame(" + i18nc("effect size", "small") + "=0.1, " + i18nc("effect size", "medium") + "=0.25, " + i18nc("effect size", "large") + "=0.4))\n");
 	}
 	if(drpPwrStat == "pwr.chisq.test") {
-		echo("\trk.print(\"Interpretation of effect size <strong>w</strong> (according to Cohen):\")\n" + "\trk.results(data.frame(small=0.1, medium=0.3, large=0.5))\n");
+		echo("\trk.print(" + i18nc("Argument is name of statistic, e.g. 'r'", "Interpretation of effect size <strong>%1</strong> (according to Cohen):", "w") + ")\n" + "\trk.results(data.frame(" + i18nc("effect size", "small") + "=0.1, " + i18nc("effect size", "medium") + "=0.3, " + i18nc("effect size", "large") + "=0.5))\n");
 	}
 	if(drpPwrStat == "pwr.p.test") {
-		echo("\trk.print(\"Interpretation of effect size <strong>h</strong> (according to Cohen):\")\n" + "\trk.results(data.frame(small=0.2, medium=0.5, large=0.8))\n");
+		echo("\trk.print(" + i18nc("Argument is name of statistic, e.g. 'r'", "Interpretation of effect size <strong>%1</strong> (according to Cohen):", "h") + ")\n" + "\trk.results(data.frame(" + i18nc("effect size", "small") + "=0.2, " + i18nc("effect size", "medium") + "=0.5, " + i18nc("effect size", "large") + "=0.8))\n");
 	}
 	//// save result object
 	// read in saveobject variables

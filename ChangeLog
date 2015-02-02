@@ -1,9 +1,11 @@
+TODO 0.6.3:
+  - dirselectors on Windows
+  - talk to kde-18n-doc
 - New element <i18n> for use in plugins' logic section: Provides a translatable string property
 - New element <label> for use in plugin help pages: Copies the label-attribute of the given element into the text
 - New string property modifier "quoted" to make it easier to quote dynamic strings inside plugins
 - Reworked distribution calculator plugins
 - Added power analysis plugin (already existed as separate plugin)
-  - TODO: add automated tests
 - Assume plugin .js files to be in utf-8 encoding; this allows using non-ascii characters in the generated code
 - <matrix> element gains options min_rows and min_columns, and the details of fixed_width="true" have been improved
 - Fixed: <valueslot>s were quirky with respect to showing as invalid

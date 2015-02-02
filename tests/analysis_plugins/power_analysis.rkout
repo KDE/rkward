@@ -1,6 +1,6 @@
 <h1>Two-sample t test power calculation</h1>
 <h2>Parameters</h2>
-<ul><li>Target measure: Power</li>
+<ul><li>Parameter to determine: Power of test</li>
 <li>alternative: two.sided</li>
 </ul>
 DATE<br />
@@ -12,7 +12,7 @@ DATE<br />
 <tr><td>power    </td><td> 0.20785</td></tr>
 </table>
 
-<p class='character'><strong>Note:</strong>  n is number in *each* group</p>
+<p class='character'><strong>Note:</strong> n is number in *each* group</p>
 
 <p class='character'>Interpretation of effect size <strong>d</strong> (according to Cohen):</p>
 <table border="1">
@@ -21,7 +21,7 @@ DATE<br />
 </table>
 <h1>t test power calculation</h1>
 <h2>Parameters</h2>
-<ul><li>Target measure: Power</li>
+<ul><li>Parameter to determine: Power of test</li>
 <li>alternative: two.sided</li>
 </ul>
 DATE<br />
@@ -41,7 +41,7 @@ DATE<br />
 </table>
 <h1>approximate correlation power calculation (arctangh transformation)</h1>
 <h2>Parameters</h2>
-<ul><li>Target measure: Sample size</li>
+<ul><li>Parameter to determine: Sample size</li>
 <li>alternative: two.sided</li>
 </ul>
 DATE<br />
@@ -60,7 +60,7 @@ DATE<br />
 </table>
 <h1>Chi squared power calculation</h1>
 <h2>Parameters</h2>
-<ul><li>Target measure: Significance level</li>
+<ul><li>Parameter to determine: Significance level</li>
 </ul>
 DATE<br />
 <table border="1">
@@ -72,7 +72,7 @@ DATE<br />
 <tr><td>power    </td><td> 0.81000</td></tr>
 </table>
 
-<p class='character'><strong>Note:</strong>  N is the number of observations</p>
+<p class='character'><strong>Note:</strong> N is the number of observations</p>
 
 <p class='character'>Interpretation of effect size <strong>w</strong> (according to Cohen):</p>
 <table border="1">
@@ -81,7 +81,7 @@ DATE<br />
 </table>
 <h1>Difference of proportion power calculation for binomial distribution (arcsine transformation)</h1>
 <h2>Parameters</h2>
-<ul><li>Target measure: Significance level</li>
+<ul><li>Parameter to determine: Significance level</li>
 <li>alternative: greater</li>
 </ul>
 DATE<br />
@@ -93,7 +93,7 @@ DATE<br />
 <tr><td>power    </td><td> 0.81000</td></tr>
 </table>
 
-<p class='character'><strong>Note:</strong>  same sample sizes</p>
+<p class='character'><strong>Note:</strong> same sample sizes</p>
 
 <p class='character'>Interpretation of effect size <strong>h</strong> (according to Cohen):</p>
 <table border="1">
@@ -102,7 +102,7 @@ DATE<br />
 </table>
 <h1>Mean power calculation for normal distribution with known variance</h1>
 <h2>Parameters</h2>
-<ul><li>Target measure: Significance level</li>
+<ul><li>Parameter to determine: Significance level</li>
 <li>alternative: two.sided</li>
 </ul>
 DATE<br />
@@ -121,7 +121,7 @@ DATE<br />
 </table>
 <h1>Multiple regression power calculation</h1>
 <h2>Parameters</h2>
-<ul><li>Target measure: Parameter count</li>
+<ul><li>Parameter to determine: Parameter count</li>
 </ul>
 DATE<br />
 <table border="1">

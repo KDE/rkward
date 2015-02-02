@@ -4,6 +4,12 @@
 			perhaps don't make changes here, but in the rkwarddev script instead! -->
 	<code file="Poweranalysis.js" />
 	<help file="Poweranalysis.rkh" />
+	<!-- <dependencies>
+			</dependencies> -->
+	<about name="Power analysis" shortinfo="RKWard GUI to perform power analysis and sample size estimation." longinfo="RKWard GUI to perform power analysis and sample size estimation." version="0.02-1" releasedate="2015-02-02" url="http://rkward.kde.org" license="GPL (&gt;= 3)">
+		<author given="Meik" family="Michalke" email="meik.michalke@hhu.de" role="aut, cre" />
+		<author given="Thomas" family="Friedrichsmeier" email="thomas.friedrichsmeier@ruhr-uni-bochum.de" role="ctb" />
+	</about>
 	<logic>
 		<convert id="pwr_lgc_power" sources="rad_pwr_param.string" mode="equals" standard="Power" />
 		<convert id="pwr_lgc_sample" sources="rad_pwr_param.string" mode="equals" standard="Sample size" />

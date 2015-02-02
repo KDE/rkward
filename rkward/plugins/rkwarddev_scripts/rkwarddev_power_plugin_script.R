@@ -4,14 +4,12 @@
 # *EXCEPT* for the last call, see below.
 
 require(rkwarddev)
-rkwarddev.required("0.06-5")
+rkwarddev.required("0.07-1")
 
 local({
 # set the output directory to overwrite the actual plugin
 output.dir <- tempdir()
 overwrite <- TRUE
-# if you set guess.getters to TRUE, the resulting code will need RKWard >= 0.6.0
-guess.getter <- FALSE
 
 about.info <- rk.XML.about(
   name="rk.power",
@@ -20,10 +18,10 @@ about.info <- rk.XML.about(
       email="meik.michalke@hhu.de", role=c("aut","cre")),
     person(given="Thomas", family="Friedrichsmeier", email="thomas.friedrichsmeier@ruhr-uni-bochum.de", role=c("ctb"))),
   about=list(desc="RKWard GUI to perform power analysis and sample size estimation.",
-    version="0.01-3", url="http://rkward.kde.org")
+    version="0.02-1", url="http://rkward.kde.org")
   )
 dependencies.info <- rk.XML.dependencies(
-  dependencies=list(rkward.min=ifelse(isTRUE(guess.getter), "0.6.0", "0.5.6"),
+  dependencies=list(rkward.min="0.6.3",
   package=list(c(name="pwr")))
 )
 
@@ -356,7 +354,7 @@ pwr.js.calc <- rk.paste.JS(
       ite(id(pwr.parameter.rad, " != \"Effect size\""),
         ite(id(pwr.effect.etasq.rad, " == \"f\""),
           echo(",\n\t\t\tf=", pwr.input.effect),
-          echo(",\n\t\t\tf=sqrt(", pwr.input.effect,"/(1-", pwr.input.effect,")) # calculate f from eta squared")
+          rk.paste.JS (echo(",\n\t\t\tf=sqrt(", pwr.input.effect,"/(1-", pwr.input.effect,"))"), R.comment ("calculate f from eta squared"))
         )
       )
     )
@@ -461,47 +459,54 @@ pwr.js.calc <- rk.paste.JS(
   echo("\n\t\t)\n\t)\n\n")
 )
 
+helper.make.effect.size.legend <- function (indicator, small, medium, large) {
+   indicator <- dQuote (indicator)
+   rk.paste.JS (echo(
+      "\trk.print(", i18n ("Interpretation of effect size <strong>%1</strong> (according to Cohen):", indicator, context="Argument is name of statistic, e.g. 'r'"), ")\n",
+      "\trk.results(data.frame(", i18n ("small", context="effect size"), paste0 ("=", small, ", "),
+                                  i18n ("medium", context="effect size"), paste0 ("=", medium, ", "),
+                                  i18n ("large", context="effect size"), paste0 ("=", large, "))\n"))
+   )
+}
+
 pwr.js.print <- rk.paste.JS(
   rk.JS.vars(list(pwr.stat.drop, pwr.parameter.rad)),
+  R.comment ("Catch errors due to unsuitable data"),
   echo(
-    "\t# Catch errors due to unsuitable data\n",
     "\tif(class(pwr.result) == \"try-error\"){\n",
-    "\t\trk.print(\"Power analysis not possible with the data you provided\")\n",
-    "\t\treturn()\n\t}\n\n",
-    "\t# Prepare printout\n",
-    "\tnote <- pwr.result[[\"note\"]]\n",
-    "\tparameters <- list(\"Target measure\"=\"", pwr.parameter.rad, "\")\n",
-    "\tif(!is.null(pwr.result[[\"alternative\"]])){\n\t\tparameters[[\"alternative\"]] <- pwr.result[[\"alternative\"]]\n\t}\n\n",
+    "\t\trk.print(", i18n ("Power analysis not possible with the data you provided"), ")\n",
+    "\t\treturn()\n\t}\n\n"),
+  R.comment ("Prepare printout"),
+  echo ("\tnote <- pwr.result[[\"note\"]]\n"),
+  id ("header = new Header ().addFromUI (\"", pwr.parameter.rad, "\");\n", js=FALSE),
+  echo ("\tparameters <- list("),
+  "echo (header.extractParameters ());",
+  echo (")\n",
+    "\tif(!is.null(pwr.result[[\"alternative\"]])){\n\t\tparameters[[", i18n ("alternative"), "]] <- pwr.result[[\"alternative\"]]\n\t}\n\n",
     "\trk.header(pwr.result[[\"method\"]], parameters=parameters)\n",
     "\tpwr.result[c(\"method\", \"note\", \"alternative\")] <- NULL\n",
     "\tpwr.result <- as.data.frame(unlist(pwr.result))\n",
-    "\tcolnames(pwr.result) <- \"Parameters\"\n\n",
+    "\tcolnames(pwr.result) <- ", i18n ("Parameters"), "\n\n",
     "\trk.results(pwr.result)\n",
-    "\tif(!is.null(note)){\n\t\trk.print(paste(\"<strong>Note:</strong> \", note))\n\t}\n\n"
+    "\tif(!is.null(note)){\n\t\trk.print(paste(", i18n ("<strong>Note:</strong>"), ", note))\n\t}\n\n"
   ),
   ite(id(pwr.stat.drop, " == \"pwr.t.test\" | ", pwr.stat.drop, " == \"pwr.norm.test\""),
-    echo("\trk.print(\"Interpretation of effect size <strong>d</strong> (according to Cohen):\")\n",
-      "\trk.results(data.frame(small=0.2, medium=0.5, large=0.8))\n")
+    helper.make.effect.size.legend ("d", "0.2", "0.5", "0.8")
   ),
   ite(id(pwr.stat.drop, " == \"pwr.r.test\""),
-    echo("\trk.print(\"Interpretation of effect size <strong>r</strong> (according to Cohen):\")\n",
-      "\trk.results(data.frame(small=0.1, medium=0.3, large=0.5))\n")
+    helper.make.effect.size.legend ("r", "0.1", "0.3", "0.5")
   ),
   ite(id(pwr.stat.drop, " == \"pwr.f2.test\""),
-    echo("\trk.print(\"Interpretation of effect size <strong>f<sup>2</sup></strong> (according to Cohen):\")\n",
-      "\trk.results(data.frame(small=0.02, medium=0.15, large=0.35))\n")
+    helper.make.effect.size.legend ("f<sup>2</sup>", "0.02", "0.15", "0.35")
   ),
   ite(id(pwr.stat.drop, " == \"pwr.anova.test\""),
-    echo("\trk.print(\"Interpretation of effect size <strong>f</strong> (according to Cohen):\")\n",
-      "\trk.results(data.frame(small=0.1, medium=0.25, large=0.4))\n")
+    helper.make.effect.size.legend ("f", "0.1", "0.25", "0.4")
   ),
   ite(id(pwr.stat.drop, " == \"pwr.chisq.test\""),
-    echo("\trk.print(\"Interpretation of effect size <strong>w</strong> (according to Cohen):\")\n",
-      "\trk.results(data.frame(small=0.1, medium=0.3, large=0.5))\n")
+    helper.make.effect.size.legend ("w", "0.1", "0.3", "0.5")
   ),
   ite(id(pwr.stat.drop, " == \"pwr.p.test\""),
-    echo("\trk.print(\"Interpretation of effect size <strong>h</strong> (according to Cohen):\")\n",
-      "\trk.results(data.frame(small=0.2, medium=0.5, large=0.8))\n")
+    helper.make.effect.size.legend ("h", "0.2", "0.5", "0.8")
   )
 )
 
@@ -530,7 +535,7 @@ pwr.rkh.related <- rk.rkh.related(rk.rkh.link ("pwr", text="Description of the R
 pwr.plugin.dir <<- rk.plugin.skeleton(
   about.info,
   path=output.dir,
-  guess.getter=guess.getter,
+  guess.getter=TRUE,
   xml=list(
       dialog=pwr.full.dialog,
       logic=lgc.sect.pwr
@@ -553,5 +558,6 @@ pwr.plugin.dir <<- rk.plugin.skeleton(
 # edit=TRUE,
   load=TRUE,
 # show=TRUE,
-  hints=FALSE)
+  hints=FALSE,
+  internal=TRUE)
 })

@@ -18,7 +18,7 @@ require(pwr)
 
 	# Prepare printout
 	note <- pwr.result[["note"]]
-	parameters <- list("Target measure"="Power")
+	parameters <- list("Parameter to determine"="Power of test")
 	if(!is.null(pwr.result[["alternative"]])){
 		parameters[["alternative"]] <- pwr.result[["alternative"]]
 	}
@@ -30,11 +30,11 @@ require(pwr)
 
 	rk.results(pwr.result)
 	if(!is.null(note)){
-		rk.print(paste("<strong>Note:</strong> ", note))
+		rk.print(paste("<strong>Note:</strong>", note))
 	}
 
 	rk.print("Interpretation of effect size <strong>d</strong> (according to Cohen):")
-	rk.results(data.frame(small=0.2, medium=0.5, large=0.8))
+	rk.results(data.frame("small"=0.2, "medium"=0.5, "large"=0.8))
 })
 local({
 ## Prepare
@@ -57,7 +57,7 @@ require(pwr)
 
 	# Prepare printout
 	note <- pwr.result[["note"]]
-	parameters <- list("Target measure"="Power")
+	parameters <- list("Parameter to determine"="Power of test")
 	if(!is.null(pwr.result[["alternative"]])){
 		parameters[["alternative"]] <- pwr.result[["alternative"]]
 	}
@@ -69,11 +69,11 @@ require(pwr)
 
 	rk.results(pwr.result)
 	if(!is.null(note)){
-		rk.print(paste("<strong>Note:</strong> ", note))
+		rk.print(paste("<strong>Note:</strong>", note))
 	}
 
 	rk.print("Interpretation of effect size <strong>d</strong> (according to Cohen):")
-	rk.results(data.frame(small=0.2, medium=0.5, large=0.8))
+	rk.results(data.frame("small"=0.2, "medium"=0.5, "large"=0.8))
 })
 local({
 ## Prepare
@@ -95,7 +95,7 @@ require(pwr)
 
 	# Prepare printout
 	note <- pwr.result[["note"]]
-	parameters <- list("Target measure"="Sample size")
+	parameters <- list("Parameter to determine"="Sample size")
 	if(!is.null(pwr.result[["alternative"]])){
 		parameters[["alternative"]] <- pwr.result[["alternative"]]
 	}
@@ -107,11 +107,11 @@ require(pwr)
 
 	rk.results(pwr.result)
 	if(!is.null(note)){
-		rk.print(paste("<strong>Note:</strong> ", note))
+		rk.print(paste("<strong>Note:</strong>", note))
 	}
 
 	rk.print("Interpretation of effect size <strong>r</strong> (according to Cohen):")
-	rk.results(data.frame(small=0.1, medium=0.3, large=0.5))
+	rk.results(data.frame("small"=0.1, "medium"=0.3, "large"=0.5))
 })
 local({
 ## Prepare
@@ -136,7 +136,7 @@ require(pwr)
 
 	# Prepare printout
 	note <- pwr.result[["note"]]
-	parameters <- list("Target measure"="Significance level")
+	parameters <- list("Parameter to determine"="Significance level")
 	if(!is.null(pwr.result[["alternative"]])){
 		parameters[["alternative"]] <- pwr.result[["alternative"]]
 	}
@@ -148,11 +148,11 @@ require(pwr)
 
 	rk.results(pwr.result)
 	if(!is.null(note)){
-		rk.print(paste("<strong>Note:</strong> ", note))
+		rk.print(paste("<strong>Note:</strong>", note))
 	}
 
 	rk.print("Interpretation of effect size <strong>w</strong> (according to Cohen):")
-	rk.results(data.frame(small=0.1, medium=0.3, large=0.5))
+	rk.results(data.frame("small"=0.1, "medium"=0.3, "large"=0.5))
 })
 local({
 ## Prepare
@@ -177,7 +177,7 @@ require(pwr)
 
 	# Prepare printout
 	note <- pwr.result[["note"]]
-	parameters <- list("Target measure"="Significance level")
+	parameters <- list("Parameter to determine"="Significance level")
 	if(!is.null(pwr.result[["alternative"]])){
 		parameters[["alternative"]] <- pwr.result[["alternative"]]
 	}
@@ -189,11 +189,11 @@ require(pwr)
 
 	rk.results(pwr.result)
 	if(!is.null(note)){
-		rk.print(paste("<strong>Note:</strong> ", note))
+		rk.print(paste("<strong>Note:</strong>", note))
 	}
 
 	rk.print("Interpretation of effect size <strong>h</strong> (according to Cohen):")
-	rk.results(data.frame(small=0.2, medium=0.5, large=0.8))
+	rk.results(data.frame("small"=0.2, "medium"=0.5, "large"=0.8))
 })
 local({
 ## Prepare
@@ -217,7 +217,7 @@ require(pwr)
 
 	# Prepare printout
 	note <- pwr.result[["note"]]
-	parameters <- list("Target measure"="Significance level")
+	parameters <- list("Parameter to determine"="Significance level")
 	if(!is.null(pwr.result[["alternative"]])){
 		parameters[["alternative"]] <- pwr.result[["alternative"]]
 	}
@@ -229,11 +229,11 @@ require(pwr)
 
 	rk.results(pwr.result)
 	if(!is.null(note)){
-		rk.print(paste("<strong>Note:</strong> ", note))
+		rk.print(paste("<strong>Note:</strong>", note))
 	}
 
 	rk.print("Interpretation of effect size <strong>d</strong> (according to Cohen):")
-	rk.results(data.frame(small=0.2, medium=0.5, large=0.8))
+	rk.results(data.frame("small"=0.2, "medium"=0.5, "large"=0.8))
 })
 local({
 ## Prepare
@@ -257,7 +257,7 @@ require(pwr)
 
 	# Prepare printout
 	note <- pwr.result[["note"]]
-	parameters <- list("Target measure"="Parameter count")
+	parameters <- list("Parameter to determine"="Parameter count")
 	if(!is.null(pwr.result[["alternative"]])){
 		parameters[["alternative"]] <- pwr.result[["alternative"]]
 	}
@@ -269,9 +269,9 @@ require(pwr)
 
 	rk.results(pwr.result)
 	if(!is.null(note)){
-		rk.print(paste("<strong>Note:</strong> ", note))
+		rk.print(paste("<strong>Note:</strong>", note))
 	}
 
 	rk.print("Interpretation of effect size <strong>f<sup>2</sup></strong> (according to Cohen):")
-	rk.results(data.frame(small=0.02, medium=0.15, large=0.35))
+	rk.results(data.frame("small"=0.02, "medium"=0.15, "large"=0.35))
 })
