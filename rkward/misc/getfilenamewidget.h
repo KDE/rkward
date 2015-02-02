@@ -2,7 +2,7 @@
                           getfilenamewidget  -  description
                              -------------------
     begin                : Tue Aug 24 2004
-    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2015 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -48,6 +48,10 @@ public slots:
 	void locationEditChanged (const QString &);
 signals:
 	void locationChanged ();
+#ifdef Q_WS_WIN
+private slots:
+	void hackOverrideDirDialog ();
+#endif
 private:
 	KUrlRequester *edit;
 };

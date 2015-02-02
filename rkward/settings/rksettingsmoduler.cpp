@@ -2,7 +2,7 @@
                           rksettingsmoduler  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004-2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2015 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -416,7 +416,12 @@ void RKSettingsModuleRPackages::settingChanged () {
 
 void RKSettingsModuleRPackages::addLibLoc (QStringList *string_list) {
 	RK_TRACE (SETTINGS);
+#ifdef Q_WS_WIN
+	// TODO: Hang on Windows when trying to select any dir using KFileDialog::getExistingDirectory (). KDE 4.10
+	QString new_string = QFileDialog::getExistingDirectory (this, i18n ("Add R Library Directory"));
+#else
 	QString new_string = KFileDialog::getExistingDirectory (KUrl (), this, i18n ("Add R Library Directory"));
+#endif
 	if (!new_string.isEmpty ()) {
 		(*string_list).append (new_string);
 	}

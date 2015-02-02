@@ -2,7 +2,7 @@
                           getfilenamewidget  -  description
                              -------------------
     begin                : Tue Aug 24 2004
-    copyright            : (C) 2004, 2007, 2009, 2010, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2009, 2010, 2012, 2015 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -18,6 +18,7 @@
 
 #include <qlabel.h>
 #include <QVBoxLayout>
+#include <QFileDialog>
 
 #include <klocale.h>
 #include <klineedit.h>
@@ -42,6 +43,12 @@ GetFileNameWidget::GetFileNameWidget (QWidget *parent, FileType mode, bool only_
 	KFile::Modes mode_flags;
 	if (mode == ExistingDirectory) {
 		mode_flags = KFile::Directory | KFile::ExistingOnly;
+#ifdef Q_WS_WIN
+		// TODO: Hang on Windows when trying to select any dir (also in KFileDialog::getExistingDirectory ()). KDE 4.10
+		// this hack works around this, by using QFileDialog::getExistingDirectory ().
+		edit->button ()->disconnect (SIGNAL (clicked()));
+		connect (edit->button (), SIGNAL (clicked()), this, SLOT(hackOverrideDirDialog()));
+#endif
 	} else if (mode == ExistingFile) {
 		mode_flags = KFile::File | KFile::ExistingOnly;
 	} else if (mode == SaveFile) {
@@ -72,6 +79,17 @@ void GetFileNameWidget::setLocation (const QString &new_location) {
 
 	if (edit->text () != new_location) edit->setUrl (new_location);
 }
+
+#ifdef Q_WS_WIN
+void GetFileNameWidget::hackOverrideDirDialog () {
+	RK_TRACE (MISC);
+	QUrl res = QFileDialog::getExistingDirectory (this, edit->windowTitle (), edit->startDir ().toLocalFile ());
+	if (res.isValid ()) {
+		edit->setUrl (res);
+		emit (locationChanged ());
+	}
+}
+#endif
 
 void GetFileNameWidget::locationEditChanged (const QString &) {
 	RK_TRACE (MISC);
