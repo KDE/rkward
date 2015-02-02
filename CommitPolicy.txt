@@ -1,0 +1,48 @@
+Committing to the RKWard repository
+===================================
+
+This is a very short guideline, primarily for those who have KDE developer access, and are wondering whether, and how to commit to the RKWard repository, directly.
+
+If you do not have KDE developer access, contact us on the mailing list (rkward-devel@kde.org), or submit patches via reviewboard (see below).
+
+Library dependencies
+====================
+
+It is important to note that RKWard makes a point of _not_ requiring the latest KDE / QT libraries. If you want to use the latest and greatest, be sure to use #ifdef's, and make a best
+effort to support features for older versions of libraries, too. For the moment, in the KDE 4 versions of RKWard, we're trying to support Unbutu 10.04, meaning:
+
+Oldest library versions to support:
+* Qt: 4.6.2
+* KDE: 4.4.2
+* R: 2.10.1
+
+With the upcoming port to KF5, allowable dependencies will be increased, considerably. Thus, if your feature really needs something newer, don't despair, but commit to work-branch, for now.
+
+Branches and policies
+=====================
+
+* master: 
+  Most development happens in master. For the time being master is always open for commits, although you are encouraged to develop more elaborate new features in a separate branch.
+* releases/*
+  These branches are more restricted. In general you should:
+  * not add any new features (only fixes) to these
+  * monitor the mailing list for any (string) freezes in these branches, before doing any work, there
+  * also add your commit to master (and add it there, first), unless it is really specific to the release-branch
+* work/*
+  For longer, experimental, or disruptive work, consider creating a branch named "work/feature_description". Do let us know, when the feature is merged (or discarded), and the branch can be removed.
+
+Testing
+=======
+
+Only some of RKWard (mostly: the plugins) is currently covered by automated tests. To run these, use
+  make plugintests
+More elaborate documentation is available at https://rkward.kde.org/Automated_Plugin_Testing . Running tests is particularly important when making changes to the "plugin" and "plugins"
+subdirectories.
+
+Note that there are some false positives or unstable tests (failing in some locales, for instance). Check the diffs to find out, exactly how the test failed, or run tests before
+and after your changes. If in any doubt, ask on the mailing list rkward-devel@kde.org .
+
+Review
+======
+
+There is no strict policy on code reviews. It is never wrong to ask for review on git.reviewboard.kde.org, though. Always select group "rkward".
