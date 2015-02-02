@@ -31,6 +31,9 @@
 #include <QGridLayout>
 #include <QPushButton>
 #include <QTextEdit>
+#ifdef Q_WS_WIN
+#	include <QFileDialog>
+#endif
 
 #include "rksettingsmodulegeneral.h"
 #include "../core/robject.h"
@@ -417,8 +420,14 @@ void RKSettingsModuleRPackages::settingChanged () {
 void RKSettingsModuleRPackages::addLibLoc (QStringList *string_list) {
 	RK_TRACE (SETTINGS);
 #ifdef Q_WS_WIN
-	// TODO: Hang on Windows when trying to select any dir using KFileDialog::getExistingDirectory (). KDE 4.10
-	QString new_string = QFileDialog::getExistingDirectory (this, i18n ("Add R Library Directory"));
+	// TODO: Hang on Windows when trying to select any dir using (K|Q)FileDialog::getExistingDirectory (). KDE 4.10
+	QFileDialog dummy (this, i18n ("Add R Library Directory"));
+	dummy.setFileMode (QFileDialog::Directory);
+	dummy.setOptions (QFileDialog::ShowDirsOnly);
+	QString new_string;
+	if (dummy.exec ()) {
+		new_string = dummy.selectedFiles ().value (0);
+	}
 #else
 	QString new_string = KFileDialog::getExistingDirectory (KUrl (), this, i18n ("Add R Library Directory"));
 #endif

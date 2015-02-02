@@ -83,9 +83,13 @@ void GetFileNameWidget::setLocation (const QString &new_location) {
 #ifdef Q_WS_WIN
 void GetFileNameWidget::hackOverrideDirDialog () {
 	RK_TRACE (MISC);
-	QUrl res = QFileDialog::getExistingDirectory (this, edit->windowTitle (), edit->startDir ().toLocalFile ());
-	if (res.isValid ()) {
-		edit->setUrl (res);
+
+	// TODO: Hang on Windows when trying to select any dir using (K|Q)FileDialog::getExistingDirectory (). KDE 4.10
+	QFileDialog dummy (this, edit->windowTitle (), edit->startDir ().toLocalFile ());
+	dummy.setFileMode (QFileDialog::Directory);
+	dummy.setOptions (QFileDialog::ShowDirsOnly);
+	if (dummy.exec ()) {
+		edit->setUrl (dummy.selectedFiles ().value (0));
 		emit (locationChanged ());
 	}
 }
