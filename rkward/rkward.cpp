@@ -284,7 +284,7 @@ void RKWardMainWindow::initPlugins (const QStringList &automatically_added) {
 
 	QStringList all_maps = RKSettingsModulePlugins::pluginMaps ();
 	if (all_maps.isEmpty()) {
-		KMessageBox::information (0, i18n ("Plugins are needed: you may manage these through \"Settings->Configure RKWard\".\n"), i18n ("No active plugin maps"));
+		KMessageBox::information (0, i18n ("Plugins are needed: you may manage these through \"Settings->Manage R package and plugins\".\n"), i18n ("No active plugin maps"));
 		return;
 	}
 
