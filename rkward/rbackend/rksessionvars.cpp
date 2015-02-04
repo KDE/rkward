@@ -90,7 +90,7 @@ quint32 RKSessionVars::parseVersionString (const QString &version, QString *suff
 			}
 		}
 	}
-	if (opos < (version.size () - 1)) {
+	if (opos <= (version.size () - 1)) {
 		if (suffix) *suffix = version.mid (opos);
 		else RK_DEBUG (MISC, DL_WARNING, "Non numeric portion ('%s') of version specification '%s' will be ignored.", qPrintable (version.mid (opos)), qPrintable (version));
 	}
