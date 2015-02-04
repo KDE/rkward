@@ -51,13 +51,15 @@
 #' @param priority Character string, the priority attribute of the \code{<document>} node. Must be either "hidden", "low", "medium", or "high",
 #'    defaults to "medium".
 #' @param id.name Character string, a unique ID for this plugin element. If \code{"auto"}, an ID will be generated automatically from \code{name}.
+#' @param require.defaults Logical, if \code{TRUE}, \code{<require map="rkward::menu" />} and \code{<require  map="rkward::embedded" />} will be added
+#'    by default, which ensures that the menu structure and embeddable plugins are loaded. It shouldn't hurt to set this.
 #' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 
 rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
   require=NULL, x11.context=NULL, import.context=NULL, clean.name=TRUE, hints=FALSE, gen.info=TRUE,
-  dependencies=NULL, namespace=name, priority="medium", id.name="auto"){
+  dependencies=NULL, namespace=name, priority="medium", id.name="auto", require.defaults=TRUE){
   name.orig <- name
   if(isTRUE(clean.name)){
     # to besure, remove all non-character symbols from name
@@ -109,6 +111,12 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
   } else {}
 
   ## require section
+  if(isTRUE(require.defaults)){
+    if(is.null(require)){
+      
+    } else {
+    }
+  } else {}
   if(!is.null(require)){
     # check if this is *really* require nodes
     for(this.child in child.list(require)){
@@ -124,11 +132,16 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
         }
       }
   } else {
-    if(isTRUE(hints)){
+    if(!isTRUE(require.defaults) & isTRUE(hints)){
       require.XML <- XMLNode("!--", rk.XML.require("path/file.pluginmap"))
       all.children[[length(all.children)+1]] <- require.XML
     } else {}
   }
+  # check defaults
+  if(isTRUE(require.defaults)){
+    all.children[[length(all.children)+1]] <- rk.XML.require(map="rkward::menu")
+    all.children[[length(all.children)+1]] <- rk.XML.require(map="rkward::embedded")
+  } else {}
 
   ## components section
   if(!is.null(components)){

@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.07-1 (2015-02-01)}{
+\section{Changes in rkwarddev version 0.07-1 (2015-02-04)}{
   \subsection{fixed}{
     \itemize{
       \item \code{rk.XML.optionset()} does now allow to re-use objects defined in the same
@@ -34,6 +34,8 @@
         \code{rk.XML.varslot()}.
       \item \code{rk.XML.pluginmap()} now adds a \code{"po_id"} attribute to pluginmaps, necessary
         for i18n
+      \item new attribute \code{"require.defaults"} in \code{rk.XML.pluginmap()} to add
+        rkward::menu and rkward::embedded as requirements
       \item new attribute \code{"i18n"} added to several XML functions; it takes a list with
         the named arguments \code{"comment"} or \code{"context"} to either produce an i18n
         comment node or an \code{"i18n_context"} attribute
@@ -54,6 +56,8 @@
         \code{"min_columns"}
       \item <dropdown>, <radio> and <select> have gained \code{"string.quoted"} as
         a valid property/modifier
+      \item new function \code{rk.XML.i18n()} to define translatable labels in logic sections
+      \item new function \code{rk.rkh.label()} for extracting labels from plugin elements
     }
   }
   \subsection{changed}{

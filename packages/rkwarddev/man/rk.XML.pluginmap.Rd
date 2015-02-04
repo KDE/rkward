@@ -8,7 +8,7 @@ rk.XML.pluginmap(name, about = NULL, components, hierarchy = "test",
   require = NULL, x11.context = NULL, import.context = NULL,
   clean.name = TRUE, hints = FALSE, gen.info = TRUE,
   dependencies = NULL, namespace = name, priority = "medium",
-  id.name = "auto")
+  id.name = "auto", require.defaults = TRUE)
 }
 \arguments{
 \item{name}{Character string, name of the plugin.}
@@ -69,6 +69,11 @@ defaults to "medium".}
 
 \item{id.name}{Character string, a unique ID for this plugin element. If \code{"auto"},
       an ID will be generated automatically from \code{name}.}
+
+\item{require.defaults}{Logical, if \code{TRUE},
+      \code{<require map="rkward::menu" />} and \code{<require  map="rkward::embedded" />} will be added
+by default,
+      which ensures that the menu structure and embeddable plugins are loaded. It shouldn't hurt to set this.}
 }
 \value{
 An object of class \code{XiMpLe.node}.
