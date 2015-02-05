@@ -1,5 +1,4 @@
-TODO 0.6.3:
-  - talk to kde-18n-doc
+--- Version 0.6.3 - XXXXXXXXXXX
 - Fixed: Hang when trying to select existing directories in file selectors on Windows
 - New element <i18n> for use in plugins' logic section: Provides a translatable string property
 - New element <label> for use in plugin help pages: Copies the label-attribute of the given element into the text
@@ -16,7 +15,6 @@ TODO 0.6.3:
 - Allow to override plugins from a different pluginmap (the plugin with the highest specified version is used)
 - Fixed: Error when using fix() or trace(...edit=TRUE) with default settings on some systems
 - When the RKWard installation has moved on disk, try to adjust stored .pluginmaps paths, accordingly
-  - TODO: Actually test this on Windows
 - Fixed: Freezes when using RKWard-functionality (such as the RK()-device) from tcl/tk (e.g. Rcmdr)
 - Allow opening RKWard's plugin files (with correct highlighting), and other text files
 - More robust control over placement of plugins within a menu
