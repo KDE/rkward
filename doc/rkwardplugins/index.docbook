@@ -426,10 +426,10 @@ This is a guide to writing plugins for &rkward;.
 	</para>
 	<programlisting>
 			&lt;tab label="Options"&gt;
-				&lt;check box id="varequal" label="assume equal variances" value=", var.equal=TRUE"/&gt;
+				&lt;checkbox id="varequal" label="assume equal variances" value=", var.equal=TRUE"/&gt;
 	</programlisting>
 	<para>
-		By default elements will be placed top-to-bottom like in a <command>&lt;column&gt;</command>. Since that is what we want here, we don't have to explicitly state a <command>&lt;row&gt;</command> or <command>&lt;column&gt;</command> layout. The first element we define is a check box. Just like the <command>&lt;radio&gt;</command><command>&lt;option&gt;</command>s, the check box has a <parameter>label</parameter> and a <parameter>value</parameter>. The <parameter>value</parameter> is what gets returned, if the check box is checked. Of course the check box also needs an <parameter>id</parameter>.
+		By default elements will be placed top-to-bottom like in a <command>&lt;column&gt;</command>. Since that is what we want here, we don't have to explicitly state a <command>&lt;row&gt;</command> or <command>&lt;column&gt;</command> layout. The first element we define is a checkbox. Just like the <command>&lt;radio&gt;</command><command>&lt;option&gt;</command>s, the checkbox has a <parameter>label</parameter> and a <parameter>value</parameter>. The <parameter>value</parameter> is what gets returned, if the check box is checked. Of course the checkbox also needs an <parameter>id</parameter>.
 	</para>
 	<programlisting>
 				&lt;frame label="Confidence Interval" id="frame_conf_int"&gt;
@@ -438,15 +438,15 @@ This is a guide to writing plugins for &rkward;.
 		Here's yet another layout element: In order to signal that the two elements below  belong together, we draw a <command>&lt;frame&gt;</command> (box). That frame may have a <parameter>label</parameter> (caption). Since the frame is just a passive layout element, it does not need an <parameter>id</parameter>, we still define one here, as we'll refer to it later, when defining an additional wizard interface.
 	</para>
 	<programlisting>
-					&lt;check box id="confint" label="print confidence interval" value="1" checked="true"/&gt;
+					&lt;checkbox id="confint" label="print confidence interval" value="1" checked="true"/&gt;
 					&lt;spinbox type="real" id="conflevel" label="confidence level" min="0" max="1" initial="0.95"/&gt;
 				&lt;/frame&gt;
 	</programlisting>
 	<para>
-		Inside the <command>&lt;frame&gt;</command> we place another <command>&lt;check box&gt;</command> (using <parameter>checked=</parameter><replaceable>"true"</replaceable>, we signal that check box should be checked by default), and a <command>&lt;spinbox&gt;</command>. The spinbox allows the user to select a value between <replaceable>"min"</replaceable> and <replaceable>"max"</replaceable> with the default/initial value <replaceable>"0.95"</replaceable>. Setting the <parameter>type</parameter> to <replaceable>"real"</replaceable> signals that real numbers are accepted as opposed to <parameter>type=</parameter><replaceable>"integer"</replaceable> which would accept integers only.
+		Inside the <command>&lt;frame&gt;</command> we place another <command>&lt;checkbox&gt;</command> (using <parameter>checked=</parameter><replaceable>"true"</replaceable>, we signal that check box should be checked by default), and a <command>&lt;spinbox&gt;</command>. The spinbox allows the user to select a value between <replaceable>"min"</replaceable> and <replaceable>"max"</replaceable> with the default/initial value <replaceable>"0.95"</replaceable>. Setting the <parameter>type</parameter> to <replaceable>"real"</replaceable> signals that real numbers are accepted as opposed to <parameter>type=</parameter><replaceable>"integer"</replaceable> which would accept integers only.
 	</para>
 	<note><para>
-		It is also possible, and often preferable, to make the <command>&lt;frame&gt;</command> itself checkable, instead of adding a <command>&lt;check box&gt;</command> inside. See the reference for details. This is not done here, for illustrational purposes.
+		It is also possible, and often preferable, to make the <command>&lt;frame&gt;</command> itself checkable, instead of adding a <command>&lt;checkbox&gt;</command> inside. See the reference for details. This is not done here, for illustrational purposes.
 	</para></note>
 	<programlisting>
 			&lt;/tab&gt;
@@ -513,12 +513,12 @@ This is a guide to writing plugins for &rkward;.
 	</para>
 	
 	<sect2 id="radio_vs_checkbox_vs_dropdown">
-		<title>&lt;radio&gt; vs. &lt;check box&gt; vs. &lt;dropdown&gt;</title>
+		<title>&lt;radio&gt; vs. &lt;checkbox&gt; vs. &lt;dropdown&gt;</title>
 		<para>
-			The three elements <command>&lt;radio&gt;</command>, <command>&lt;check box&gt;</command>, <command>&lt;dropdown&gt;</command>, all serve a similar function: To select one out of several options. Obviously, a check box only allows to chose between two options: checked or not checked, so you cannot use it, if there are more than two options to chose from. But when to use which of the elements? Some rules of thumb:
+			The three elements <command>&lt;radio&gt;</command>, <command>&lt;checkbox&gt;</command>, <command>&lt;dropdown&gt;</command>, all serve a similar function: To select one out of several options. Obviously, a check box only allows to choose between two options: checked or not checked, so you cannot use it, if there are more than two options to chose from. But when to use which of the elements? Some rules of thumb:
 		</para>
 		<para>
-			If you find yourself creating a <command>&lt;radio&gt;</command> or <command>&lt;dropdown&gt;</command> with only two options, ask yourself, whether the question is essentially a yes / no type of question. E.g. a choice between <quote>adjust results</quote> and <quote>do not adjust results</quote>, or between <quote>remove missing values</quote> and <quote>keep missing values</quote>. In this case a <command>&lt;check box&gt;</command> is the best choice: It uses little space, will have the least words of labels, and is easiest to read for the user. There are very few situations where you should chose a <command>&lt;radio&gt;</command> over a <command>&lt;check box&gt;</command>, when there are only two options. An example of that might be: <quote>Method of calculation: 'pearson'/'spearman'</quote>. Here, more methods might be thinkable, and they don't really form a pair of opposites.
+			If you find yourself creating a <command>&lt;radio&gt;</command> or <command>&lt;dropdown&gt;</command> with only two options, ask yourself, whether the question is essentially a yes / no type of question. E.g. a choice between <quote>adjust results</quote> and <quote>do not adjust results</quote>, or between <quote>remove missing values</quote> and <quote>keep missing values</quote>. In this case a <command>&lt;checkbox&gt;</command> is the best choice: It uses little space, will have the least words of labels, and is easiest to read for the user. There are very few situations where you should chose a <command>&lt;radio&gt;</command> over a <command>&lt;checkbox&gt;</command>, when there are only two options. An example of that might be: <quote>Method of calculation: 'pearson'/'spearman'</quote>. Here, more methods might be thinkable, and they don't really form a pair of opposites.
 		</para>
 		<para>
 			Chosing between a <command>&lt;radio&gt;</command> and a <command>&lt;dropdown&gt;</command> is mostly a question of space. The <command>&lt;dropdown&gt;</command> has the advantage of using little space, even if there are a lot of options to chose from. On the other hand, a <command>&lt;radio&gt;</command> has the advantage of making all possible choices visible to the user at once, without clicking on the dropdown arrow. Generally, if there are six or more options to chose from, a <command>&lt;dropdown&gt;</command> is preferable. If there are five or less options, a <command>&lt;radio&gt;</command> is the better choice.
@@ -571,7 +571,7 @@ function calculate () {
 res &lt;- t.test (
 		</screen>
 		<para>
-			as plain text. Next we need to fill in the value, the user selected as the first variable. We fetch this using <function>getString ("x")</function>, and append it to the string to be <quote>echoed</quote>. This prints out the value of the GUI-element with <parameter>id=</parameter><replaceable>"x"</replaceable>: our first <command>&lt;check box&gt;</command>. Next, we append a ', ', and do the same to fetch the value of the element <replaceable>"y"</replaceable> - the second <command>&lt;check box&gt;</command>. For the hypothesis (the <command>&lt;radio&gt;</command> group), and the equal variances <command>&lt;check box&gt;</command>, the procedure is very similar.
+			as plain text. Next we need to fill in the value, the user selected as the first variable. We fetch this using <function>getString ("x")</function>, and append it to the string to be <quote>echoed</quote>. This prints out the value of the GUI-element with <parameter>id=</parameter><replaceable>"x"</replaceable>: our first <command>&lt;checkbox&gt;</command>. Next, we append a ', ', and do the same to fetch the value of the element <replaceable>"y"</replaceable> - the second <command>&lt;checkbox&gt;</command>. For the hypothesis (the <command>&lt;radio&gt;</command> group), and the equal variances <command>&lt;checkbox&gt;</command>, the procedure is very similar.
 		</para>
 		<para>
 			Note that instead of concatenating the output snippets with <quote>+</quote>, you can also use several <function>echo()</function> statments. Everything is printed on a single line. To produce a line break in the generated code, insert a <replaceable>"\n"</replaceable> in the echoed string. In theory, you can even produce many lines with a single echo-statement, but please keep it to one line (or less) of generated code per <function>echo()</function>.
@@ -675,7 +675,7 @@ if (my.rotation &gt; wobble.rotation.limit (x)) {
 	<sect2 id="policysimplicity">
 	<title>Dealing with complex options</title>
 		<para>
-			Many plugins can do more than one thing. For instance, the <quote>Descriptive Statistics</quote> plugin can compute mean, range, sum, product, median, length, &etc; However, typically the user will only chose to have some of those calculations performed. In this case, please try to keep the generated code as simple as possible. It should only contain portions relevant to the options that are actually selected. To achieve this, here is an example of a common design patterns as you would use it (in JS; here, "domean", "domedian", and "dosd" would be &lt;check box&gt; elements):
+			Many plugins can do more than one thing. For instance, the <quote>Descriptive Statistics</quote> plugin can compute mean, range, sum, product, median, length, &etc; However, typically the user will only chose to have some of those calculations performed. In this case, please try to keep the generated code as simple as possible. It should only contain portions relevant to the options that are actually selected. To achieve this, here is an example of a common design patterns as you would use it (in JS; here, "domean", "domedian", and "dosd" would be &lt;checkbox&gt; elements):
 		</para>
 		<programlisting>
 function calculate () {
@@ -1888,8 +1888,8 @@ x	&lt;/components ...&gt;
 			an <replaceable>i18n_context</replaceable> like this:
 		</para>
 		<programlisting>
-&lt;check box id="scale" label="Scale" i18n_context="Show the scale"/&gt;
-&lt;check box id="scale" label="Scale" i18n_context="Scale the plot"/&gt;
+&lt;checkbox id="scale" label="Scale" i18n_context="Show the scale"/&gt;
+&lt;checkbox id="scale" label="Scale" i18n_context="Scale the plot"/&gt;
 		</programlisting>
 		<para>
 			Providing <replaceable>i18n_context</replaceable> will cause the two strings to be translated separately. Otherwise they would share a single translation. In addition, the context
@@ -2263,7 +2263,7 @@ standards for each defined suite.
 <chapter id="rkwarddev">
 	<title>Plugin development with the <application>rkwarddev</application> package</title>
 	<sect1 id="rkdev_overview"><title>Overview</title>
-		<para>Writing external plugins involves writing files in three languages (XML, JavaScript and R) and the creation of a standardized hierarchy of directories. To make this a lot easier for willing plugin developers, we're providing the <application>rkwarddev</application> package. It provides a number of simple &r; functions to create the XML code for all dialog elements like tabbooks, check boxes, dropdownlists or filebrowsers, as well as functions to create JavaScript code and &rkward; help files to start with. The function <function>rk.plugin.skeleton()</function> creates the expected directory tree and all necessary files where they are supposed to be.</para>
+		<para>Writing external plugins involves writing files in three languages (XML, JavaScript and R) and the creation of a standardized hierarchy of directories. To make this a lot easier for willing plugin developers, we're providing the <application>rkwarddev</application> package. It provides a number of simple &r; functions to create the XML code for all dialog elements like tabbooks, checkboxes, dropdownlists or filebrowsers, as well as functions to create JavaScript code and &rkward; help files to start with. The function <function>rk.plugin.skeleton()</function> creates the expected directory tree and all necessary files where they are supposed to be.</para>
 		<para>This package is not installed by default, but has to be installed manually from <ulink url="http://files.kde.org/rkward/R/">&rkward;'s own repository</ulink>. You can either do that by using the GUI interface (<menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure packages</guimenuitem></menuchoice>), or from any running &r; session:</para>
 		<programlisting>
 		install.packages("rkwarddev", repos="http://files.kde.org/rkward/R")
@@ -2331,7 +2331,7 @@ basic.settings &lt;- rk.XML.row(variables, rk.XML.col(var.x, var.y, test.hypothe
 			&lt;option label="First is greater" value="greater" /&gt;
 			&lt;option label="Second is greater" value="less" /&gt;
 		&lt;/radio&gt;
-		&lt;check box id="chc_Pardsmpl" label="Paired sample" value="1" value_unchecked="0" /&gt;
+		&lt;checkbox id="chc_Pardsmpl" label="Paired sample" value="1" value_unchecked="0" /&gt;
 	&lt;/column&gt;
 &lt;/row&gt;
 		</programlisting>
@@ -2546,7 +2546,7 @@ local({
 </varlistentry>
 <varlistentry>
 <term>Boolean properties</term>
-<listitem><para>Properties that can either be on or off, true or false. For instance the properties created by &lt;convert&gt;-tags, also the property accompanying a &lt;check box&gt; (see below). The following values will be returned according to the given modifier:
+<listitem><para>Properties that can either be on or off, true or false. For instance the properties created by &lt;convert&gt;-tags, also the property accompanying a &lt;checkbox&gt; (see below). The following values will be returned according to the given modifier:
 	<variablelist>
 	<varlistentry>
 	<term>No modifier ("")</term>
@@ -2554,7 +2554,7 @@ local({
 	</varlistentry>
 	<varlistentry>
 	<term>"labeled"</term>
-	<listitem><para>Returns the string "true" when true, "false", when false, or whichever custom strings have been specified (typically in a &lt;check box&gt;).</para></listitem>
+	<listitem><para>Returns the string "true" when true, "false", when false, or whichever custom strings have been specified (typically in a &lt;checkbox&gt;).</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>"true"</term>
@@ -2993,7 +2993,7 @@ have an "id" of their own, but see below. Attributes:
 </varlistentry>
 
 <varlistentry>
-<term>&lt;check box&gt;</term>
+<term>&lt;checkbox&gt;</term>
 <listitem><para>Defines a check box, &ie; a single option that can either be set to on or off. Attributes:
 	<variablelist>
 	<varlistentry>
@@ -3622,12 +3622,12 @@ Child elements &lt;true&gt;, &lt;false&gt;, &lt;case&gt;, and &lt;default&gt; ta
 </varlistentry>
 
 <varlistentry>
-<term>&lt;check box&gt;</term>
+<term>&lt;checkbox&gt;</term>
 <listitem><para>Default property is "state.labeled", which means that the values specified by the <parameter>value</parameter>, and <parameter>value_unchecked</parameter>-attributes are returned, <emphasis>not</emphasis> the displayed label of the check box.
 	<variablelist>
 	<varlistentry>
 	<term>state</term>
-	<listitem><para>State of the check box (on or off). Note that useful modifiers of this property (as of all boolean properties) are "not" and "labeled" (see <link linkend="propertytypes">types of properties</link>). However, often it is most useful to connect to the property with no modifier, &ie; "<emphasis>check box_id</emphasis>.state", which will return the state of the check box in a format suitable for use in an if statement (0 or 1). (boolean)</para></listitem>
+	<listitem><para>State of the check box (on or off). Note that useful modifiers of this property (as of all boolean properties) are "not" and "labeled" (see <link linkend="propertytypes">types of properties</link>). However, often it is most useful to connect to the property with no modifier, &ie; "<emphasis>checkbox_id</emphasis>.state", which will return the state of the check box in a format suitable for use in an if statement (0 or 1). (boolean)</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
@@ -3834,7 +3834,7 @@ different types, using modifiers may lead to errors. For <replaceable>fixed_valu
   <entry>Plots->Barplot, most other plotting plugins</entry>
 </row>
 <row>
-  <entry>rkward::plot_color_choser</entry>
+  <entry>rkward::color_chooser</entry>
   <entry>embedded.pluginmap</entry>
   <entry>Very simple plugin for specifying a color. Current implementation provides a list of color names. Future implementations may provide
          more elaborate color picking.</entry>
@@ -3871,7 +3871,7 @@ different types, using modifiers may lead to errors. For <replaceable>fixed_valu
   <entry>Plots->Barplot</entry>
 </row>
 <row>
-  <entry>rkward::x11_grid</entry>
+  <entry>rkward::grid</entry>
   <entry>embedded.pluginmap</entry>
   <entry>Add grid to a plot</entry>
   <entry>In an existing plot window: Edit->Draw grid.</entry>
@@ -3901,7 +3901,7 @@ different types, using modifiers may lead to errors. For <replaceable>fixed_valu
 	<variablelist>
 	<varlistentry>
 	<term>base_prefix</term>
-	<listitem><para>Filenames specified in the &pluginmap; file are assumed to be relative to the directory of the &pluginmap; file + the prefix you specify here. Useful, esp., if all your components are located below a single subdirectory.	</para></listitem>
+	<listitem><para>Filenames specified in the &pluginmap; file are assumed to be relative to the directory of the &pluginmap; file + the prefix you specify here. Useful, esp., if all your components are located below a single subdirectory.</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>namespace</term>
