@@ -344,6 +344,11 @@ QString XMLHelper::i18nElementText (const QDomElement &element, bool with_paragr
 		QString para = paras[i].simplified ();
 		if (!para.isEmpty ()) {
 			if (!ret.isEmpty ()) ret.append ("\n");
+			// Oh, crap. Fix up after some differences between python message extraction and qt's.
+			para.replace ("<li> <", "<li><");
+			para.replace ("br> <", "br><");
+			para.replace ("> </li>", "></li>");
+			para.replace ("&amp;", "&");
 			QString text = context.isNull () ? catalog->translate (para) : catalog->translate (context, para);
 			if (with_paragraphs) ret += "<p>" + text + "</p>";
 			else ret += text;
