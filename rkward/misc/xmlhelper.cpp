@@ -247,9 +247,13 @@ QString XMLHelper::i18nStringAttribute (const QDomElement& element, const QStrin
 		displayError (&element, i18n ("'%1'-attribute not given. Assuming '%2'", name, def), debug_level);
 		return def;
 	}
+
+	QString attr = element.attribute (name);
+	if (attr.isEmpty ()) return attr;	// Do not translate empty strings!
+
 	const QString context = element.attribute ("i18n_context", QString ());
-	if (!context.isNull ()) return (catalog->translate (context, element.attribute (name)));
-	return (catalog->translate (element.attribute (name)));
+	if (!context.isNull ()) return (catalog->translate (context, attr));
+	return (catalog->translate (attr));
 }
 
 int XMLHelper::getMultiChoiceAttribute (const QDomElement &element, const QString &name, const QString &values, int def, int debug_level) {
