@@ -326,7 +326,8 @@ QString translateChunk (const QString &chunk, const QString &context, bool add_p
 
 	for (int i = 0; i < paras.count (); ++i) {
 		QString para = paras[i].simplified ();
-		if (!para.isEmpty ()) {
+		if (para.isEmpty ()) ret.append (QChar (' '));
+		else {
 			if (!ret.isEmpty ()) ret.append ("\n");
 			// Oh, crap. Fix up after some differences between python message extraction and qt's.
 			para.replace ("<li> <", "<li><");

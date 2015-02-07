@@ -45,6 +45,8 @@ MSGFMT = os.getenv ('MSGFMT', "msgfmt --check")
 
 # list of tag-names the content of which to extract in full (including, possibly, HTML-tags, within)
 text_containers = ['section', 'text', 'related', 'title', 'summary', 'usage', 'technical', 'setting']
+# (HTML)-elements on which to split translation units within a text_container
+text_splitting_elements = ['p', 'ul', 'ol', 'li']
 # Elements that refer to a different (labelled) element by id
 referring_elements = ['setting', 'caption']
 # Map of elements to attributes to extract, and default context info
@@ -170,9 +172,19 @@ def normalize (text):
   
 # get everything inside the element as text. Might include further xml tags.
 def getFullText (element):
+  childnodes = element.childNodes
+  ## Skip over anything containing only a <link href="rkward://"/> and nothing else; a somewhat important special case ("Related"-section)
+  ## NOTE: The second attribute, here, is the LINE_DUMMY_ATTR , hence checking for cn.attributes.length == 2
+  if (childnodes.length == 1):
+    cn = childnodes.item (0)
+    if (not cn.hasChildNodes()) and (cn.nodeType == cn.ELEMENT_NODE) and (cn.tagName == "link") and (cn.attributes.length == 2) and (cn.getAttribute ("href").startswith ("rkward://")):
+      return ""
+
   rc = []
-  for cn in element.childNodes:
-    if cn.nodeType != cn.COMMENT_NODE:
+  for cn in childnodes:
+    if (cn.nodeType == cn.ELEMENT_NODE) and (cn.tagName in text_splitting_elements):
+      rc.append ("\n\n" + getFullText (cn) + "\n\n")
+    elif cn.nodeType != cn.COMMENT_NODE:
       rc.append(stripLineDummy (cn.toxml ("utf-8")))
   return ''.join (rc).strip ().replace ("&amp;", "&")
 
@@ -229,6 +241,7 @@ def handleNode (node):
     elif (node.tagName in text_containers):
       textchunks = getFullText (node).split ("\n\n")
       for chunk in textchunks:
+        chunk = chunk.strip ()
         if (chunk != ""):
           outfile.write (getI18nComment (node))
           writeouti18n ("i18n (" + quote (normalize (chunk)) + ");")
