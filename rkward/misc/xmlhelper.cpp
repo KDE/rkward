@@ -319,30 +319,15 @@ bool XMLHelper::getBoolAttribute (const QDomElement &element, const QString &nam
 	return def;
 }
 
-QString XMLHelper::i18nElementText (const QDomElement &element, bool with_paragraphs, int debug_level) const {
-	RK_TRACE (XML);
-
-	QString ret;
-	QTextStream stream (&ret);
-
-	if (!element.isNull()) {
-		QTextStream stream (&ret, QIODevice::WriteOnly);
-		for (QDomNode node = element.firstChild (); !node.isNull (); node = node.nextSibling ()) {
-			node.save (stream, 0);
-		}
-	} else {
-		displayError (&element, i18n ("Trying to retrieve contents of invalid element"), debug_level);
-		return QString ();
-	}
-
-	QString context = element.attribute ("i18n_context", QString ());
-
+QString translateChunk (const QString &chunk, const QString &context, bool add_paragraphs, const RKMessageCatalog *catalog) {
 	// if (!with_paragraphs), text should better not contain double newlines. We treat all the same, though, just as the message extraction script does.
-	QStringList paras = ret.split ("\n\n");
-	ret.clear ();
+	QStringList paras = chunk.split ("\n\n");
+	QString ret;
+
 	for (int i = 0; i < paras.count (); ++i) {
 		QString para = paras[i].simplified ();
-		if (!para.isEmpty ()) {
+		if (para.isEmpty ()) ret.append (QChar (' '));
+		else {
 			if (!ret.isEmpty ()) ret.append ("\n");
 			// Oh, crap. Fix up after some differences between python message extraction and qt's.
 			para.replace ("<li> <", "<li><");
@@ -350,10 +335,49 @@ QString XMLHelper::i18nElementText (const QDomElement &element, bool with_paragr
 			para.replace ("> </li>", "></li>");
 			para.replace ("&amp;", "&");
 			QString text = context.isNull () ? catalog->translate (para) : catalog->translate (context, para);
-			if (with_paragraphs) ret += "<p>" + text + "</p>";
+			if (add_paragraphs) ret += "<p>" + text + "</p>";
 			else ret += text;
 		}
 	}
+
+	return ret;
+}
+
+QString XMLHelper::i18nElementText (const QDomElement &element, bool with_paragraphs, int debug_level) const {
+	RK_TRACE (XML);
+
+	if (element.isNull ()) {
+		displayError (&element, i18n ("Trying to retrieve contents of invalid element"), debug_level);
+		return QString ();
+	}
+
+	QString ret;
+	QString context = element.attribute ("i18n_context", QString ());
+	QString buffer;
+	QTextStream stream (&buffer, QIODevice::WriteOnly);
+	for (QDomNode node = element.firstChild (); !node.isNull (); node = node.nextSibling ()) {
+		QDomElement e = node.toElement ();
+		if (!e.isNull ()) {
+			if (e.tagName () == QLatin1String ("ul") || e.tagName () == QLatin1String ("ol") || e.tagName () == QLatin1String ("li") || e.tagName () == QLatin1String ("p")) { // split translation units on these elements
+				// split before
+				ret.append (translateChunk (buffer, context, with_paragraphs, catalog));
+				buffer.clear ();
+
+				// serialize the tag with all its attributes but not the children.
+				e.cloneNode (false).save (stream, 0);   // will write: <TAG[ attributes]/>
+				buffer = buffer.left (buffer.lastIndexOf ('/')) + QChar ('>');
+				buffer.append (i18nElementText (e, false, debug_level));
+				buffer.append ("</" + e.tagName () + QChar ('>'));
+
+				// split after
+				ret.append (buffer);
+				buffer.clear ();
+				continue;
+			}
+		}
+		node.save (stream, 0);
+	}
+	ret.append (translateChunk (buffer, context, with_paragraphs, catalog));
 
 	return ret;
 }
