@@ -5,7 +5,7 @@
 	<about
 		name="Data Import and Export"
 		shortinfo="Plugins for reading and writing data in various formats. Part of the official RKWard distribution"
-		version="0.6.3"
+		version="0.6.4"
 		license="GPL"
 		url="http://rkward.kde.org">
 		<insert snippet="author_rkward_team"/>

@@ -5,7 +5,7 @@
 	<about
 		name="Plugins under development"
 		shortinfo="Plugins that are under development, experimental, or meant for testing, only. Part of the official RKWard distribution"
-		version="0.6.3"
+		version="0.6.4"
 		license="GPL"
 		url="http://rkward.kde.org">
 		<insert snippet="author_rkward_team"/>

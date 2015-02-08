@@ -5,7 +5,7 @@
 	<about
 		name="Embedded plugins"
 		shortinfo="Not for direct use: Utility plugins that can be included by other plugins. Part of the official RKWard distribution"
-		version="0.6.3"
+		version="0.6.4"
 		license="GPL"
 		url="http://rkward.kde.org">
 		<insert snippet="author_rkward_team"/>
