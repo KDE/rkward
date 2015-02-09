@@ -76,6 +76,12 @@ subport rkward-binary {
 
 post-extract {
         file mkdir ${worksrcpath}/build
+        # need to fetch the plugin translations first
+        if [file exists ${worksrcpath}/i18n/po] {
+            system "cd ${worksrcpath}/i18n/po && git pull --rebase"
+        } else {
+            system "cd ${worksrcpath}/i18n && git clone http://anongit.kde.org/scratch/tfry/rkward-po-export po"
+        }
 }
 
 configure.dir       ${worksrcpath}/build
