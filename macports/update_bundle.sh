@@ -235,7 +235,33 @@ if [[ $COPYMDMD ]] ; then
   if [[ $DEVEL ]] ; then
     # we moved to git
     # TARGETVERS=${PORTVERS}$(svn info "$SVNREPO" | grep "^Revision:" | sed "s/[^[:digit:]]*//")
-    TARGETVERS=${PORTVERS}$(git ls-remote http://anongit.kde.org/rkward | grep HEAD$ | cut -c 1-7)
+    # 
+    # this one-liner would give us the latest commit hash, but no date -- bad for humans and sorting:
+    # TARGETVERS=${PORTVERS}$(git ls-remote http://anongit.kde.org/rkward master | cut -c 1-7)
+    # 
+    # so here's something a little more elaborate...
+    if [[ $(hostname) == "RKWard-iMac.local" ]] ; then
+      TEMPFILE=$(mktemp /tmp/git_rev.XXXXXX || exit 1)
+    else
+      TEMPFILE=$(mktemp || exit 1)
+    fi
+    if ! [[ $(which wget) == "" ]] ; then
+      wget -q -O "${TEMPFILE}" "http://quickgit.kde.org/?p=rkward.git" || exit 1
+      GOTQUICKGIT=true
+    elif ! [[ $(which curl) == "" ]] ; then
+      curl -s -o "${TEMPFILE}" "http://quickgit.kde.org/?p=rkward.git" || exit 1
+      GOTQUICKGIT=true
+    else
+      echo "neither wget nor curl can be found, only commit has can be used!"
+      TARGETVERS=${PORTVERS}-git$(git ls-remote http://anongit.kde.org/rkward master | cut -c 1-7)
+      GOTQUICKGIT=false
+    fi
+    if [[ ${GOTQUICKGIT} ]] ; then
+      CHANGEDATE=$(grep "last change.*<time datetime=" "${TEMPFILE}" | sed "s/.*datetime=\"\(.*\)+00:00.*/\1/g" | sed "s/[^[:digit:]]//g")
+      LASTCOMMIT=$(grep -m1 "<td class=\"monospace\">[[:alnum:]]\{7\}" "${TEMPFILE}" | sed "s#.*<td class=\"monospace\">\(.*\)</td>.*#\1#")
+      TARGETVERS="${PORTVERS}-git${CHANGEDATE}~${LASTCOMMIT}"
+    fi
+    rm "${TEMPFILE}"
   else
     TARGETVERS=$PORTVERS
   fi
