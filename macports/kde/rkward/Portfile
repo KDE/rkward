@@ -3,8 +3,11 @@
 
 PortSystem          1.0
 PortGroup           kde4 1.1
+fetch.type          git
 name                rkward
 version             0.6.3
+git.url             http://anongit.kde.org/rkward.git
+git.branch          releases/0.6.3
 #patchfiles          patch-rkward-rbackend-rkstructuregetter.cpp.diff
 worksrcdir          ${name}-${version}
 
@@ -22,8 +25,9 @@ long_description    RKWard aims to become an easy to use, transparent frontend t
 
 homepage            http://rkward.kde.org
 
-# FIXME:
-master_sites        kde:rkward
+# maybe in the near future?
+#master_sites        kde:rkward
+master_sites        http://sourceforge.net/projects/rkward/files/Current_Stable_Releases
 
 depends_lib         port:kdelibs4 \
                     port:kate \
@@ -31,8 +35,8 @@ depends_lib         port:kdelibs4 \
                     port:R
 
 # FIXME:
-checksums           rmd160 a15116209a28676db4ce1bd1f9a4b31f5be345c8 \
-                    sha256 3534e58a6246f2be18e6158cf486ecfef6531fee4f0060d7ea1955a823b5add6
+#checksums           rmd160 a15116209a28676db4ce1bd1f9a4b31f5be345c8 \
+#                    sha256 3534e58a6246f2be18e6158cf486ecfef6531fee4f0060d7ea1955a823b5add6
 
 post-extract {
         file mkdir ${worksrcpath}/build

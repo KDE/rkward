@@ -5,9 +5,8 @@ PortSystem          1.0
 PortGroup           kde4 1.1
 fetch.type          git
 name                rkward-devel
-version             0.6.3-git
+version             0.6.4-git
 git.url             http://anongit.kde.org/rkward.git
-#svn.revision        4494
 worksrcdir          rkward
 
 conflicts           rkward
@@ -59,10 +58,9 @@ subport rkward-binary {
         configure.args-delete \
                -DR_EXECUTABLE=${frameworks_dir}/R.framework/Resources/R \
                -DRKVERSION_NUMBER=${version}
-        version             0.6.2
-        svn.url             http://svn.code.sf.net/p/rkward/code/branches/release_branches/rkward_${version}
-        svn.revision        4940
-        worksrcdir          rkward_${version}
+        version             0.6.3
+        git.url             http://anongit.kde.org/rkward.git
+        git.branch          releases/0.6.3
         depends_lib-delete   port:R
         configure.compiler   llvm-gcc-4.2
         configure.args-append \
