@@ -83,6 +83,7 @@ while getopts ":DdbflLprmscxXF:" OPT; do
        PNSUFFX="${PNSUFFX}-debug" >&2 ;;
     b) BINARY=TRUE >&2
        PTARGET=${PTARGET}-binary >&2
+       WORKDIR="/opt/ports/kde/rkward-devel/work" >&2
        PNSUFFX="${PNSUFFX}-binary" >&2 ;;
     F) FRESHMCP=TRUE >&2
        MCPVERS=$OPTARG >&2 ;;
