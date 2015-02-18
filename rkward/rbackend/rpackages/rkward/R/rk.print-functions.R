@@ -48,7 +48,7 @@
 #'   they are plain row numbers.
 #' @return \code{rk.describe.alternatives} returns a string while all other
 #'   functions return \code{NULL}, invisibly.
-#' @author Thomas Friedrichsmeier \email{rkward-devel@@lists.sourceforge.net}
+#' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
 #' @seealso \code{\link{HTML}}, \code{\link{rk.get.output.html.file}},
 #'   \code{\link{rk.get.description}}, \code{\link{rk.call.plugin}},
 #'   \url{rkward://page/rkward_output}

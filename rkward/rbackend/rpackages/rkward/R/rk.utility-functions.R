@@ -25,7 +25,7 @@
 #' 
 #' \code{rk.select.CRAN.mirror} returns the URL of the chosen mirror, as a
 #'   string.
-#' @author Thomas Friedrichsmeier \email{rkward-devel@@lists.sourceforge.net}
+#' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
 #' @keywords attribute misc utilities
 #' @rdname rk.misc
 #' @examples
@@ -107,7 +107,7 @@
 #'
 #' @return a character vector of packages which are really old
 #'
-#' @author Thomas Friedrichsmeier \email{rkward-devel@@lists.sourceforge.net}
+#' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
 #' @keywords attribute misc utilities
 #' @rdname rk.old.packages
 #' @examples

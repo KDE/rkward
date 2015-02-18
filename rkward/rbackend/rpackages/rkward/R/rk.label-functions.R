@@ -38,7 +38,7 @@
 #' @param is.substitute a logical (not NA). See Details.
 #' @return \code{rk.set.label} returns the result of the evaluation of "setting
 #'   the label" while the others return a character vector.
-#' @author Thomas Friedrichsmeier \email{rkward-devel@@lists.sourceforge.net}
+#' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
 #' @keywords utilities
 #' @rdname rk.label
 #' @examples

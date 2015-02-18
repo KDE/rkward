@@ -24,7 +24,7 @@
 #' @param close.windows a logical; whether current windows should be closed
 #'   before restoring.
 #' @return Both functions return \code{NULL}.
-#' @author Thomas Friedrichsmeier \email{rkward-devel@@lists.sourceforge.net}
+#' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
 #' @seealso \url{rkward://page/rkward_for_r_users}, \link{rk.get.workspace.url}
 #' @keywords utilities
 #' @rdname rk.workplace

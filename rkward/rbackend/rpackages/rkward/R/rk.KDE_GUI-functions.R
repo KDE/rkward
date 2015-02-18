@@ -37,7 +37,7 @@
 #'   \bold{No}, and \code{NULL} for \bold{Cancel} actions.
 #' 
 #' \code{rk.select.list} returns the value of \code{\link{select.list}}.
-#' @author Thomas Friedrichsmeier \email{rkward-devel@@lists.sourceforge.net}
+#' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
 #' @seealso \code{\link{system}}, \code{\link{select.list}}
 #' @keywords utilities
 #' @rdname rk.show.messages

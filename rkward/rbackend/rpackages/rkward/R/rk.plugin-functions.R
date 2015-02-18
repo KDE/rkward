@@ -36,7 +36,7 @@
 #'   an error.
 #' @return \code{rk.call.plugin} returns \code{TRUE} invisibly.
 #' 
-#' @author Thomas Friedrichsmeier \email{rkward-devel@@lists.sourceforge.net}
+#' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
 #' @seealso \code{\link{rk.results}}, \url{rkward://page/rkward_output}
 #' @keywords utilities
 #' @examples
@@ -103,7 +103,7 @@
 #'              plugin (e.g. after modifying the dialog), as plugins are not kept in memory after closing.
 #'              Any currently opened plugins are not affected by this function. 
 #'
-#' @author Thomas Friedrichsmeier \email{rkward-devel@@lists.sourceforge.net}
+#' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
 #' @seealso \code{\link{rk.call.plugin}}, @seealso \code{\link{rkwarddev::rk.plugin.skeleton}}
 #' @keywords utilities
 #'
@@ -149,7 +149,7 @@
 #'              In this case, make sure to do all changes in \bold{one} call to \code{rk.set.plugin.status},
 #'              rather than many separate calls.
 #'
-#' @author Thomas Friedrichsmeier \email{rkward-devel@@lists.sourceforge.net}
+#' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
 #' @keywords utilities
 #'
 #' @seealso \code{\link{rk.call.plugin}} for invoking a plugin, programatically

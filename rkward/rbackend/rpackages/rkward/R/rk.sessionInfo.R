@@ -9,7 +9,7 @@
 #' 
 #' @return Returns the object created by \code{sessionInfo()}, invisibly. Note
 #'   that this includes only the information on the R portion of the session.
-#' @author Thomas Friedrichsmeier \email{rkward-devel@@lists.sourceforge.net}
+#' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
 #' @seealso \code{\link{sessionInfo}}
 #' @keywords utilities misc
 #' @export

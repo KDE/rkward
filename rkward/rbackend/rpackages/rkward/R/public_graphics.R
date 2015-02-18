@@ -17,7 +17,7 @@
 #' \bold{Warning}: It is advised to use \code{rk.graph.off} and \bold{not} \code{dev.off} to close the device opened by
 #' \code{rk.graph.on}. \code{dev.print(device = rk.graph.on)} is a \bold{wrong} usage for this "device," and will result in errors.
 #' 
-#' @author Thomas Friedrichsmeier \email{rkward-devel@@lists.sourceforge.net}
+#' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
 #' 
 #' @seealso \link{rk.results} \link{rk.print} \link{rk.get.output.html.file} \link{dev.off} \link{svg} \link{png} \link{jpg}
 #'
@@ -235,7 +235,7 @@
 #' 
 #' @param ... arguments are passed to \code{\link{postscript}}
 #' @return Returns the name of the underlying temporary file, invisibly.
-#' @author Thomas Friedrichsmeier \email{rkward-devel@@lists.sourceforge.net}
+#' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
 #' @seealso \code{\link{postscript}}, \code{\link{dev.print}},
 #'   \code{\link{rk.graph.on}}
 #' @keywords utilities device

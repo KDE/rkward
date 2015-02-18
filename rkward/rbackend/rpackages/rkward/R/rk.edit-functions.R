@@ -27,7 +27,7 @@
 #'   deleted after closing.
 #' @return All functions described on this page return \code{NULL},
 #'   unconditionally.
-#' @author Thomas Friedrichsmeier \email{rkward-devel@@lists.sourceforge.net}
+#' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
 #' @seealso \code{\link{edit}}, \code{\link{file.edit}},
 #'   \code{\link{file.show}}, \code{\link{browseURL}}
 #' @keywords utilities IO

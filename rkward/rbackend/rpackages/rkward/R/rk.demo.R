@@ -9,7 +9,7 @@
 #'   currently loaded packages are searched.
 #' @param lib.loc Library locations.
 #' @return Return \code{NULL}, unconditionally.
-#' @author Thomas Friedrichsmeier \email{rkward-devel@@lists.sourceforge.net}
+#' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
 #' @seealso \code{\link{rk.edit.files}}, \code{\link{rk.show.files}},
 #'   \code{\link{demo}}
 #' @keywords utilities IO
