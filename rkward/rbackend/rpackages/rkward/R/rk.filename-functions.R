@@ -34,7 +34,7 @@
 #' @return \code{rk.get.tempfile.name}, \code{rk.get.output.html.file}, and
 #'   \code{rk.get.workspace.url} return a string while
 #'   \code{rk.set.output.html.file} returns \code{NULL}.
-#' @author Thomas Friedrichsmeier \email{rkward-devel@@lists.sourceforge.net}
+#' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
 #' @seealso \url{rkward://page/rkward_output}, \link{tempfile}, \link{file},
 #'   \link{rk.print}
 #' @keywords utilities IO

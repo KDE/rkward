@@ -17,7 +17,7 @@
 #' @aliases rk.sync rk.sync.global
 #' @param x any R object to sync
 #' @return \code{NULL}, invisibly.
-#' @author Thomas Friedrichsmeier \email{rkward-devel@@lists.sourceforge.net}
+#' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
 #' @seealso \url{rkward://page/rkward_workspace_browser}
 #' @keywords utilities misc
 #' @rdname rk.sync

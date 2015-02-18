@@ -23,7 +23,7 @@
 #' @param copy.formals logical; whether to copy the \code{\link{formals}} from
 #'   the original function.
 #' @return Returns \code{NULL}, invisibly, unconditionally.
-#' @author Thomas Friedrichsmeier \email{rkward-devel@@lists.sourceforge.net}
+#' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
 #' @seealso \code{\link{assignInNamespace}}, \code{\link{debug}}
 #' @keywords utilities IO
 #' @export
