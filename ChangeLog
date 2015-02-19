@@ -1,5 +1,3 @@
-Next release TODO:
-- Properly fix normalization of markup within messages between python / qt.
 
 --- Version 0.6.3 - XXXXXXXXXXX
 - Fixed: Hang when trying to select existing directories in file selectors on Windows
