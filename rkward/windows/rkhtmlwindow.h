@@ -26,7 +26,6 @@
 #include "../windows/rkmdiwindow.h"
 
 class KHTMLPart;
-class KTemporaryFile;
 class KActionCollection;
 class KRecentFilesAction;
 class QAction;
@@ -135,26 +134,6 @@ private:
 
 	void fileDoesNotExistMessage ();
 
-	// for dealing with rkward://[page|component]-pages
-	bool renderRKHelp (const KUrl &url);
-	struct HTMLRendererState {
-		XMLHelper *help_xml;
-		XMLHelper *component_xml;
-		QDomElement help_doc_element;
-		QDomElement component_doc_element;
-	};
-	QString renderHelpFragment (QDomElement &fragment, const HTMLRendererState &state);
-	QString resolveLabel (const QString &id, const HTMLRendererState &state) const;
-	QString prepareHelpLink (const QString &href, const QString &text);
-	QString componentPathToId (QString path);
-	RKComponentHandle *componentPathToHandle (QString path);
-	QString startSection (const QString &name, const QString &title, const QString &shorttitle, QStringList *anchors, QStringList *anchor_names);
-
-	void beginWritingHTML (const KUrl &url);
-	void writeHTML (const QString &string);
-	KTemporaryFile* html_write_file;
-	void endWritingHTML ();
-
 	void saveBrowserState (QByteArray *state);
 	void restoreBrowserState (QByteArray *state);
 };
@@ -167,9 +146,26 @@ private:
 class RKHelpRenderer {
 public:
 /** ctor */
-	RKHelpRenderer () {};
+	RKHelpRenderer (QString *_buffer) { buffer = _buffer; help_xml = 0; component_xml = 0; };
 /** destructor */
 	~RKHelpRenderer () {};
+
+	XMLHelper *help_xml;
+	XMLHelper *component_xml;
+	QDomElement help_doc_element;
+	QDomElement component_doc_element;
+
+	// for dealing with rkward://[page|component]-pages
+	bool renderRKHelp (const KUrl &url);
+	QString renderHelpFragment (QDomElement &fragment);
+	QString resolveLabel (const QString &id) const;
+	QString prepareHelpLink (const QString &href, const QString &text);
+	QString componentPathToId (QString path);
+	RKComponentHandle *componentPathToHandle (QString path);
+	QString startSection (const QString &name, const QString &title, const QString &shorttitle, QStringList *anchors, QStringList *anchor_names);
+
+	QString *buffer;
+	void writeHTML (const QString &string);
 };
 
 #include <QMultiHash>
