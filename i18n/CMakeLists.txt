@@ -5,9 +5,11 @@ MACRO(RKHandlePO _PO_FILES)
 		LIST(LENGTH _nameParts _namePartsCount)
 		LIST(GET _nameParts 0 _poid)
 		LIST(GET _nameParts 1 _lang) # Remainder of _nameParts should be "po"
-		IF(NOT _poid STREQUAL "rkward")
+		IF(NOT ${_poid} STREQUAL "rkward")
 			SET(ACCEPT_INCOMPLETE_PO "-DACCEPT_INCOMPLETE_PO=1")
-		ENDIF(NOT _poid STREQUAL "rkward")
+		ELSE(NOT ${_poid} STREQUAL "rkward")
+			SET(ACCEPT_INCOMPLETE_PO "")
+		ENDIF(NOT ${_poid} STREQUAL "rkward")
 
 		SET(_gmoFile ${CMAKE_CURRENT_BINARY_DIR}/${_poid}.${_lang}.gmo)
 
@@ -21,11 +23,11 @@ MACRO(RKHandlePO _PO_FILES)
 			DEPENDS ${_poFile})
 		LIST(APPEND active_translations ${_stampFile})
 
-		IF(_poid STREQUAL "rkward")
+		IF(${_poid} STREQUAL "rkward")
 			INSTALL(FILES ${_gmoFile} DESTINATION ${LOCALE_INSTALL_DIR}/${_lang}/LC_MESSAGES/ RENAME rkward.mo OPTIONAL)
-		ELSE(_poid STREQUAL "rkward")
+		ELSE(${_poid} STREQUAL "rkward")
 			INSTALL(FILES ${_gmoFile} DESTINATION ${DATA_INSTALL_DIR}/rkward/po/${_lang}/LC_MESSAGES/ RENAME ${_poid}.mo OPTIONAL)
-		ENDIF(_poid STREQUAL "rkward")
+		ENDIF(${_poid} STREQUAL "rkward")
 	ENDFOREACH(_poFile ${_PO_FILES})
 ENDMACRO(RKHandlePO)
 
