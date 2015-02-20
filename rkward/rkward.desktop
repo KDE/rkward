@@ -27,7 +27,7 @@ Comment[sv]=Grafiskt användargränssnitt för R-projektet
 Comment[uk]=Графічний інтерфейс проекту R
 Comment[x-test]=xxGUI for the R-projectxx
 Icon=rkward
-Exec=STARTUP_ID_COPY=${DESKTOP_STARTUP_ID} rkward -caption "%c" %i
+Exec=STARTUP_ID_COPY="${DESKTOP_STARTUP_ID}" rkward -caption "%c" %i
 Terminal=false
 Type=Application
 X-DocPath=rkward/index.html
