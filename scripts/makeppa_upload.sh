@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## begin: These may need adjusting!
-TARGETS="precise lucid trusty raring"
+TARGETS="utopic precise lucid trusty"
 AUTHOR="Thomas Friedrichsmeier <tfry@users.sourceforge.net>"
 ## end: These may need adjusting!
 
