@@ -19,34 +19,47 @@
 #define RKHTMLWINDOW_H
 
 #include <kurl.h>
-#include <kparts/browserextension.h>
-#include <kxmlguiclient.h>
+#include <kparts/part.h>
 #include <kio/jobclasses.h>
+
+#include <QWebPage>
 
 #include "../windows/rkmdiwindow.h"
 
-class KHTMLPart;
 class KActionCollection;
 class KRecentFilesAction;
 class QAction;
 class QDomElement;
 class RKComponentHandle;
 class XMLHelper;
+class RKHTMLWindowPart;
+class QWebView;
+class KTemporaryFile;
+
+class RKWebPage : public QWebPage {
+	Q_OBJECT
+public:
+	RKWebPage (QObject* parent) : QWebPage (parent) {};
+signals:
+	void pageInternalNavigation (const QUrl& url);
+protected:
+/** reimplemented to always emit linkClicked() for pages that need special handling (importantly, rkward://-urls). */
+	bool acceptNavigationRequest (QWebFrame* frame, const QNetworkRequest& request, NavigationType type) { return true; }; // TODO
+};
 
 /**
 	\brief Show html files.
 
-This class wraps a khtml part.
+Provide a window for viewing HTML pages.
 
-It is used as a base for several purposes: Display R-help (in HTML format), display generic HTML, display RKWard output. Do not use this class directly. Use the derived classes instead.
+It is used as a base for several purposes: Display R-help (in HTML format), display RKWard help pages, display generic HTML, display RKWard output.
 
 @author Pierre Ecochard
 */
-class RKHTMLWindow : public RKMDIWindow, public KXMLGUIClient {
+class RKHTMLWindow : public RKMDIWindow {
 	Q_OBJECT
 public:
 	enum WindowMode {
-		Undefined,
 		HTMLHelpWindow,
 		HTMLOutputWindow
 	};
@@ -64,20 +77,17 @@ public:
  */
 	static bool handleRKWardURL (const KUrl &url, RKHTMLWindow *window=0);
 	void openRKHPage (const KUrl &url);
-/** initialize all actions */
-	void initActions ();
 
 	bool isModified ();
 /** Return current url */
 	KUrl url ();
 /** Return current url in a restorable way, i.e. for help pages, abstract the session specific part of the path */
 	KUrl restorableUrl ();
-	void doGotoAnchor (const QString &anchor_name);
 
 	WindowMode mode () { return window_mode; };
 public slots:
 /** this is used for browsing only. Use openURL instead, when calling from outside. */
-	void slotOpenUrl (const KUrl & url, const KParts::OpenUrlArguments &, const KParts::BrowserArguments &);
+	void slotOpenUrl (const KUrl & url);
 	void slotPrint ();
 	void slotForward ();
 	void slotBack ();
@@ -87,34 +97,53 @@ public slots:
 	void flushOutput ();
 /** Reload current page.*/
 	void refresh ();
-/** apply our customizations to the khtmlpart GUI */
-	void fixupPartGUI ();
 private slots:
 /** This slot is called when the new page has finished loading. Sets scroll position to scroll_position */
 	void loadDone ();
-	void doGotoAnchorNow ();
 	void mimeTypeDetermined (KIO::Job*, const QString& type);
 	void internalNavigation ();
-protected:
-/** Here we store the state of the part before refresh. Used to scroll to the same position after a reload */
-	QByteArray saved_state;
-/** the part doing all the real work */
-	KParts::ReadOnlyPart * renderingpart;
+private:
+	QWebView* view;
 /** In case the part is a khtmlpart: A ready-cast pointer to that. 0 otherwise (if a webkit part is in use) */
-	KHTMLPart *khtmlpart;
+	RKHTMLWindowPart *part;
 /** update caption according to given URL */
 	virtual void updateCaption (const KUrl &url);
 /** called from openURL. Takes care of updating caption, and updating back/forward actions, if available */
 	void changeURL (const KUrl &url);
-private:
+
 	struct VisitedLocation {
 		KUrl url;
-		QByteArray state;
+		QPoint scroll_position;
 	};
 	QList<VisitedLocation> url_history;
 	void openLocationFromHistory (VisitedLocation &loc);
 	int current_history_position;
 	bool url_change_is_from_history;	// dirty!!!
+
+	KUrl current_url;
+	KTemporaryFile *current_cache_file;
+
+	WindowMode window_mode;
+	void useMode (WindowMode);
+
+	void fileDoesNotExistMessage ();
+
+	void saveBrowserState (VisitedLocation *state);
+	void restoreBrowserState (VisitedLocation *state);
+};
+
+class RKHTMLWindowPart : public KParts::Part {
+	Q_OBJECT
+public:
+	RKHTMLWindowPart (RKHTMLWindow *window);
+	~RKHTMLWindowPart () {};
+
+	void setOutputWindowSkin ();
+	void setHelpWindowSkin ();
+	void initActions ();
+private:
+	friend class RKHTMLWindow;
+	RKHTMLWindow *window;
 
 	// general actions
 	QAction *run_selection;
@@ -126,16 +155,17 @@ private:
 	QAction *back;
 	QAction *forward;
 
-	QString goto_anchor_name;
-	KUrl current_url;
-
-	WindowMode window_mode;
-	void useMode (WindowMode);
-
-	void fileDoesNotExistMessage ();
-
-	void saveBrowserState (QByteArray *state);
-	void restoreBrowserState (QByteArray *state);
+// TODO: Most of these won't need a pointer. This is sort of a todo-list of actions to implement
+	QAction* zoom_in;
+	QAction* zoom_out;
+	QAction* save_page;
+	QAction* find;
+	QAction* findAhead;      // shortcut '/'
+	QAction* find_next;
+	QAction* find_previous;
+	QAction* copy;
+	QAction* select_all;
+	// needed? QAction* encoding;
 };
 
 /**
@@ -146,7 +176,7 @@ private:
 class RKHelpRenderer {
 public:
 /** ctor */
-	RKHelpRenderer (QString *_buffer) { buffer = _buffer; help_xml = 0; component_xml = 0; };
+	RKHelpRenderer (QIODevice *_device) { device = _device; help_xml = 0; component_xml = 0; };
 /** destructor */
 	~RKHelpRenderer () {};
 
@@ -164,7 +194,7 @@ public:
 	RKComponentHandle *componentPathToHandle (QString path);
 	QString startSection (const QString &name, const QString &title, const QString &shorttitle, QStringList *anchors, QStringList *anchor_names);
 
-	QString *buffer;
+	QIODevice *device;
 	void writeHTML (const QString &string);
 };
 

@@ -31,6 +31,7 @@
 
 #include <QFileInfo>
 #include <QCryptographicHash>
+#include <QKeyEvent>
 
 #include "detachedwindowcontainer.h"
 #include "rkcommandeditorwindow.h"
