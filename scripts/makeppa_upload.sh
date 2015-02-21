@@ -20,7 +20,7 @@ else
 	PPAIDS="rkward-devel rkward-devel-cran"
 	PPAVERSIONSTRING=".0rkward.devel"
 	# first create source snapshot
-	VERSION=`${BASEDIR}/scripts/getversion.sh ${2}`
+	VERSION=`${BASEDIR}/scripts/getversion.sh ${1}`
 	${BASEDIR}/scripts/makedist.sh $VERSION
 fi
 
