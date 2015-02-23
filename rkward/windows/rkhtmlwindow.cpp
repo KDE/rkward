@@ -29,6 +29,7 @@
 #include <kio/job.h>
 #include <kservice.h>
 #include <ktemporaryfile.h>
+#include <kwebview.h>
 
 #include <qfileinfo.h>
 #include <qwidget.h>
@@ -37,7 +38,7 @@
 #include <qdir.h>
 #include <QHBoxLayout>
 #include <QHostInfo>
-#include <QWebView>
+#include <QNetworkRequest>
 #include <QWebFrame>
 #include <QPrintDialog>
 
@@ -61,6 +62,49 @@
 #include "../windows/rkworkplaceview.h"
 #include "../debug.h"
 
+RKWebPage::RKWebPage (RKHTMLWindow* window): KWebPage (window, KIOIntegration | KPartsIntegration) {
+	RK_TRACE (APP);
+	RKWebPage::window = window;
+	new_window = false;
+	direct_load = false;
+}
+
+bool RKWebPage::acceptNavigationRequest (QWebFrame* frame, const QNetworkRequest& request, QWebPage::NavigationType type) {
+	Q_UNUSED (type);
+
+	RK_TRACE (APP);
+	// TODO: Debug level
+	RK_DEBUG (APP, DL_WARNING, "Navigation request to %s", qPrintable (request.url ().toString ()));
+	if (direct_load && (frame == mainFrame ())) {
+		direct_load = false;
+		return true;
+	}
+
+	if (new_window) {
+		frame = 0;
+		new_window = false;
+	}
+	if (!frame) {
+		RKWorkplace::mainWorkplace ()->openAnyUrl (request.url ());
+		return false;
+	}
+
+	window->openURL (request.url ());
+	return false;
+}
+
+void RKWebPage::load (const QUrl& url) {
+	RK_TRACE (APP);
+	direct_load = true;
+	mainFrame ()->load (url);
+}
+
+QWebPage* RKWebPage::createWindow (QWebPage::WebWindowType) {
+	RK_TRACE (APP);
+	new_window = true;         // Don't actually create the window, until we know which URL we're talking about.
+	return (this);
+}
+
 RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (parent, RKMDIWindow::HelpWindow) {
 	RK_TRACE (APP);
 
@@ -68,8 +112,8 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 
 	QVBoxLayout* layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
-	view = new QWebView (this);
-	RKWebPage *page = new RKWebPage (this);
+	view = new KWebView (this, false);
+	page = new RKWebPage (this);
 	view->setPage (page);
 	layout->addWidget (view);
 	part = new RKHTMLWindowPart (this);
@@ -77,12 +121,12 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 	part->initActions ();
 
 	initializeActivationSignals ();
-// TODO	renderingpart->setSelectable (true);
+	part->setSelectable (true);
 	setFocusProxy (view);
 	view->setFocusPolicy (Qt::StrongFocus);
 
 	// We have to connect this in order to allow browsing.
-	connect (page, SIGNAL (linkClicked (QUrl)), this, SLOT (slotOpenUrl(KUrl)));
+	connect (page, SIGNAL (linkClicked (QUrl)), this, SLOT (slotOpenUrl(QUrl)));
 	connect (page, SIGNAL (pageInternalNavigation (QUrl)), this, SLOT (internalNavigation()));
 
 	current_history_position = -1;
@@ -193,16 +237,14 @@ void RKHTMLWindow::openRKHPage (const KUrl& url) {
 	if ((url.host () == "component") || (url.host () == "page")) {
 		useMode (HTMLHelpWindow);
 
-		delete current_cache_file;
-		current_cache_file = new KTemporaryFile ();
-		current_cache_file->open ();
+		startNewCacheFile ();
 		RKHelpRenderer render (current_cache_file);
 		ok = render.renderRKHelp (url);
 		current_cache_file->close ();
 
 		KUrl cache_url = KUrl::fromLocalFile (current_cache_file->fileName ());
 		cache_url.setFragment (url.fragment ());
-		view->load (cache_url);
+		page->load (cache_url);
 	} else if (url.host ().toUpper () == "RHELPBASE") {	// NOTE: QUrl () may lowercase the host part, internally
 		KUrl fixed_url = KUrl (RKSettingsModuleR::helpBaseUrl ());
 		fixed_url.setPath (url.path ());
@@ -264,7 +306,7 @@ bool RKHTMLWindow::openURL (const KUrl &url) {
 		QFileInfo out_file (url.toLocalFile ());
 		bool ok = out_file.exists();
 		if (ok)  {
-			view->load (url);
+			page->load (url);
 		} else {
 			fileDoesNotExistMessage ();
 		}
@@ -273,7 +315,7 @@ bool RKHTMLWindow::openURL (const KUrl &url) {
 
 	if (url_change_is_from_history || url.protocol ().toLower ().startsWith ("help")) {	// handle help pages, and any page that we have previously handled (from history)
 		changeURL (url);
-		view->load (url);
+		page->load (url);
 		return true;
 	}
 
@@ -303,7 +345,7 @@ void RKHTMLWindow::mimeTypeDetermined (KIO::Job* job, const QString& type) {
 	tj->putOnHold ();
 	if (type == "text/html") {
 		changeURL (url);
-		view->load (url);
+		page->load (url);
 	} else {
 		RKWorkplace::mainWorkplace ()->openAnyUrl (url, type);
 	}
@@ -355,7 +397,7 @@ void RKHTMLWindow::updateCaption (const KUrl &url) {
 }
 
 // TODO: handle request for new window / tab
-void RKHTMLWindow::slotOpenUrl (const KUrl & url) {
+void RKHTMLWindow::slotOpenUrl (const QUrl& url) {
 	RK_TRACE (APP);
 
 	openURL (url);
@@ -399,22 +441,26 @@ void RKHTMLWindow::useMode (WindowMode new_mode) {
 	window_mode = new_mode;
 }
 
+void RKHTMLWindow::startNewCacheFile () {
+	delete current_cache_file;
+	current_cache_file = new KTemporaryFile ();
+	current_cache_file->setSuffix (".html");
+	current_cache_file->open ();
+}
+
 void RKHTMLWindow::fileDoesNotExistMessage () {
 	RK_TRACE (APP);
 
-	delete current_cache_file;
-	current_cache_file = new KTemporaryFile ();
-	current_cache_file->open ();
+	startNewCacheFile ();
 	if (window_mode == HTMLOutputWindow) {
 		current_cache_file->write (i18n ("<HTML><BODY><H1>RKWard output file could not be found</H1>\n</BODY></HTML>").toUtf8 ());
 	} else {
 		current_cache_file->write (QString ("<html><body><h1>" + i18n ("Page does not exist or is broken") + "</h1></body></html>").toUtf8 ());
 	}
-	
 	current_cache_file->close ();
 
 	KUrl cache_url = KUrl::fromLocalFile (current_cache_file->fileName ());
-	view->load (cache_url);
+	page->load (cache_url);
 }
 
 void RKHTMLWindow::flushOutput () {
@@ -454,6 +500,7 @@ RKHTMLWindowPart::RKHTMLWindowPart (RKHTMLWindow* window) : KParts::Part (window
 	RK_TRACE (APP);
 	setComponentData (KGlobal::mainComponent ());
 	RKHTMLWindowPart::window = window;
+	setWidget (window);
 }
 
 void RKHTMLWindowPart::initActions () {

@@ -21,8 +21,8 @@
 #include <kurl.h>
 #include <kparts/part.h>
 #include <kio/jobclasses.h>
+#include <kwebpage.h>
 
-#include <QWebPage>
 
 #include "../windows/rkmdiwindow.h"
 
@@ -33,18 +33,25 @@ class QDomElement;
 class RKComponentHandle;
 class XMLHelper;
 class RKHTMLWindowPart;
-class QWebView;
+class KWebView;
 class KTemporaryFile;
+class RKHTMLWindow;
 
-class RKWebPage : public QWebPage {
+class RKWebPage : public KWebPage {
 	Q_OBJECT
 public:
-	RKWebPage (QObject* parent) : QWebPage (parent) {};
+	RKWebPage (RKHTMLWindow* window);
+	void load (const QUrl& url);
 signals:
 	void pageInternalNavigation (const QUrl& url);
 protected:
 /** reimplemented to always emit linkClicked() for pages that need special handling (importantly, rkward://-urls). */
-	bool acceptNavigationRequest (QWebFrame* frame, const QNetworkRequest& request, NavigationType type) { return true; }; // TODO
+	bool acceptNavigationRequest (QWebFrame* frame, const QNetworkRequest& request, NavigationType type);
+	QWebPage* createWindow (WebWindowType type);
+private:
+	RKHTMLWindow *window;
+	bool new_window;
+	bool direct_load;
 };
 
 /**
@@ -87,7 +94,7 @@ public:
 	WindowMode mode () { return window_mode; };
 public slots:
 /** this is used for browsing only. Use openURL instead, when calling from outside. */
-	void slotOpenUrl (const KUrl & url);
+	void slotOpenUrl (const QUrl& url);
 	void slotPrint ();
 	void slotForward ();
 	void slotBack ();
@@ -103,7 +110,8 @@ private slots:
 	void mimeTypeDetermined (KIO::Job*, const QString& type);
 	void internalNavigation ();
 private:
-	QWebView* view;
+	KWebView* view;
+	RKWebPage* page;
 /** In case the part is a khtmlpart: A ready-cast pointer to that. 0 otherwise (if a webkit part is in use) */
 	RKHTMLWindowPart *part;
 /** update caption according to given URL */
@@ -121,6 +129,7 @@ private:
 	bool url_change_is_from_history;	// dirty!!!
 
 	KUrl current_url;
+	void startNewCacheFile ();
 	KTemporaryFile *current_cache_file;
 
 	WindowMode window_mode;
