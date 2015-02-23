@@ -2,6 +2,7 @@
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="text/r">
     <comment>R source file</comment>
+    <comment xml:lang="bs">R izvorna datoteka</comment>
     <comment xml:lang="ca">Fitxer de codi font en R</comment>
     <comment xml:lang="cs">Zdrojový soubor R</comment>
     <comment xml:lang="de">R-Quelldatei</comment>
@@ -23,6 +24,7 @@
   </mime-type>
   <mime-type type="application/rdata">
     <comment>R data/workspace file</comment>
+    <comment xml:lang="bs">R datoteka s podacima/radnim prostorom</comment>
     <comment xml:lang="ca">Fitxer de les dades/espai de treball del R</comment>
     <comment xml:lang="cs">Soubor pracovní plochy/dat R</comment>
     <comment xml:lang="es">Archivo de datos o de espacio de trabajo de R</comment>
