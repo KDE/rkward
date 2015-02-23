@@ -1,11 +1,16 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward_helpwindow" version="54">
+<kpartgui name="rkward_helpwindow" version="640">
 	<MenuBar>
 		<Menu name="file"><text>&amp;File</text>
 			<Action name="print_help"/>
+			<Action name="save"/>
 		</Menu>
 		<Menu name="edit"><text>&amp;Edit</text>
 			<Action name="copy"/>
+		</Menu>
+		<Menu name="view"><text>&amp;View</text>
+			<Action name="zoom_in"/>
+			<Action name="zoom_out"/>
 		</Menu>
 	</MenuBar>
 	<ToolBar fullWidth="true" name="mdiToolBar">

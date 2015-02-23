@@ -47,6 +47,7 @@ signals:
 protected:
 /** reimplemented to always emit linkClicked() for pages that need special handling (importantly, rkward://-urls). */
 	bool acceptNavigationRequest (QWebFrame* frame, const QNetworkRequest& request, NavigationType type);
+/** reimplemented to schedule new window creation for the next page to load */
 	QWebPage* createWindow (WebWindowType type);
 private:
 	RKHTMLWindow *window;
@@ -93,9 +94,9 @@ public:
 
 	WindowMode mode () { return window_mode; };
 public slots:
-/** this is used for browsing only. Use openURL instead, when calling from outside. */
-	void slotOpenUrl (const QUrl& url);
 	void slotPrint ();
+	void slotSave ();
+	void saveRequested (const QNetworkRequest& request);
 	void slotForward ();
 	void slotBack ();
 	void selectionChanged ();
@@ -104,12 +105,15 @@ public slots:
 	void flushOutput ();
 /** Reload current page.*/
 	void refresh ();
+	void zoomIn ();
+	void zoomOut ();
 private slots:
-/** This slot is called when the new page has finished loading. Sets scroll position to scroll_position */
-	void loadDone ();
+	void scrollToBottom ();
 	void mimeTypeDetermined (KIO::Job*, const QString& type);
-	void internalNavigation ();
+	void internalNavigation (const QUrl& new_url);
+	void makeContextMenu (const QPoint& pos);
 private:
+friend class RKHTMLWindowPart;
 	KWebView* view;
 	RKWebPage* page;
 /** In case the part is a khtmlpart: A ready-cast pointer to that. 0 otherwise (if a webkit part is in use) */
@@ -151,7 +155,7 @@ public:
 	void setHelpWindowSkin ();
 	void initActions ();
 private:
-	friend class RKHTMLWindow;
+friend class RKHTMLWindow;
 	RKHTMLWindow *window;
 
 	// general actions
@@ -163,18 +167,7 @@ private:
 	// actions in help window mode
 	QAction *back;
 	QAction *forward;
-
-// TODO: Most of these won't need a pointer. This is sort of a todo-list of actions to implement
-	QAction* zoom_in;
-	QAction* zoom_out;
 	QAction* save_page;
-	QAction* find;
-	QAction* findAhead;      // shortcut '/'
-	QAction* find_next;
-	QAction* find_previous;
-	QAction* copy;
-	QAction* select_all;
-	// needed? QAction* encoding;
 };
 
 /**

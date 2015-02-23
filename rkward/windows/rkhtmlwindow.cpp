@@ -41,6 +41,7 @@
 #include <QNetworkRequest>
 #include <QWebFrame>
 #include <QPrintDialog>
+#include <QMenu>
 
 #include "../rkglobals.h"
 #include "../rbackend/rinterface.h"
@@ -89,6 +90,12 @@ bool RKWebPage::acceptNavigationRequest (QWebFrame* frame, const QNetworkRequest
 		return false;
 	}
 
+	if (KUrl (mainFrame ()->url ()).equals (request.url (), KUrl::CompareWithoutFragment | KUrl::CompareWithoutTrailingSlash)) {
+		RK_DEBUG (APP, DL_DEBUG, "Page internal navigation request from %s to %s", qPrintable (mainFrame ()->url ().toString ()), qPrintable (request.url ().toString ()));
+		emit (pageInternalNavigation (request.url ()));
+		return true;
+	}
+
 	window->openURL (request.url ());
 	return false;
 }
@@ -115,6 +122,7 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 	view = new KWebView (this, false);
 	page = new RKWebPage (this);
 	view->setPage (page);
+	view->setContextMenuPolicy (Qt::CustomContextMenu);
 	layout->addWidget (view);
 	part = new RKHTMLWindowPart (this);
 	setPart (part);
@@ -122,12 +130,14 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 
 	initializeActivationSignals ();
 	part->setSelectable (true);
+	setFocusPolicy (Qt::StrongFocus);
 	setFocusProxy (view);
-	view->setFocusPolicy (Qt::StrongFocus);
 
 	// We have to connect this in order to allow browsing.
-	connect (page, SIGNAL (linkClicked (QUrl)), this, SLOT (slotOpenUrl(QUrl)));
-	connect (page, SIGNAL (pageInternalNavigation (QUrl)), this, SLOT (internalNavigation()));
+	connect (page, SIGNAL (pageInternalNavigation(QUrl)), this, SLOT (internalNavigation(QUrl)));
+	connect (page, SIGNAL (downloadRequested(QNetworkRequest)), this, SLOT (saveRequested(QNetworkRequest)));
+	connect (page, SIGNAL (printRequested(QWebFrame*)), this, SLOT(slotPrint ()));
+	connect (view, SIGNAL (customContextMenuRequested(QPoint)), this, SLOT(makeContextMenu(QPoint)));
 
 	current_history_position = -1;
 	url_change_is_from_history = false;
@@ -154,6 +164,15 @@ KUrl RKHTMLWindow::restorableUrl () {
 bool RKHTMLWindow::isModified () {
 	RK_TRACE (APP);
 	return false;
+}
+
+void RKHTMLWindow::makeContextMenu (const QPoint& pos) {
+	RK_TRACE (APP);
+
+	QMenu *menu = page->createStandardContextMenu ();
+	menu->addAction (part->run_selection);
+	menu->exec (view->mapToGlobal (pos));
+	delete (menu);
 }
 
 void RKHTMLWindow::selectionChanged () {
@@ -187,6 +206,18 @@ void RKHTMLWindow::slotPrint () {
 		view->print (dlg->printer ());
 	}
 	delete dlg;
+}
+
+void RKHTMLWindow::slotSave () {
+	RK_TRACE (APP);
+
+	page->downloadUrl (page->mainFrame ()->url ());
+}
+
+void RKHTMLWindow::saveRequested (const QNetworkRequest& request) {
+	RK_TRACE (APP);
+
+	page->downloadUrl (request.url ());
 }
 
 void RKHTMLWindow::openLocationFromHistory (VisitedLocation &loc) {
@@ -351,17 +382,11 @@ void RKHTMLWindow::mimeTypeDetermined (KIO::Job* job, const QString& type) {
 	}
 }
 
-void RKHTMLWindow::internalNavigation () {
+void RKHTMLWindow::internalNavigation (const QUrl& new_url) {
 	RK_TRACE (APP);
 
-	// TODO: handle this type of navigation via openRKHPage (), instead?
-	KUrl real_url = view->url ();
-	if (current_cache_file && real_url.isLocalFile ()) {
-		KUrl cache_url = KUrl::fromLocalFile (current_cache_file->fileName ());
-		QString fragment = real_url.fragment ();
-		real_url = current_url;
-		real_url.setFragment (fragment);
-	}
+	KUrl real_url = current_url;    // Note: This could be something quite different from new_url: a temp file for rkward://-urls. We know the base part of the URL has not actually changed, when this gets called, though.
+	real_url.setFragment (new_url.fragment ());
 
 	changeURL (real_url);
 }
@@ -396,29 +421,28 @@ void RKHTMLWindow::updateCaption (const KUrl &url) {
 	else setCaption (url.fileName ());
 }
 
-// TODO: handle request for new window / tab
-void RKHTMLWindow::slotOpenUrl (const QUrl& url) {
-	RK_TRACE (APP);
-
-	openURL (url);
-}
-
 void RKHTMLWindow::refresh () {
 	RK_TRACE (APP);
 
-// TODO: does this restore scroll position?
 	view->reload ();
 }
 
-void RKHTMLWindow::loadDone () {
+void RKHTMLWindow::scrollToBottom () {
 	RK_TRACE (APP);
 
-// TODO: does this work?
-	if (window_mode == HTMLOutputWindow) {	// scroll to bottom
-		view->page ()->mainFrame ()->setScrollBarValue (Qt::Vertical, view->page ()->mainFrame ()->scrollBarMaximum (Qt::Vertical));
-	}
+	RK_ASSERT (window_mode == HTMLOutputWindow);
+	view->page ()->mainFrame ()->setScrollBarValue (Qt::Vertical, view->page ()->mainFrame ()->scrollBarMaximum (Qt::Vertical));
 }
 
+void RKHTMLWindow::zoomIn () {
+	RK_TRACE (APP);
+	view->setZoomFactor (view->zoomFactor () * 1.1);
+}
+
+void RKHTMLWindow::zoomOut () {
+	RK_TRACE (APP);
+	view->setZoomFactor (view->zoomFactor () / 1.1);
+}
 void RKHTMLWindow::useMode (WindowMode new_mode) {
 	RK_TRACE (APP);
 
@@ -429,12 +453,16 @@ void RKHTMLWindow::useMode (WindowMode new_mode) {
 		setWindowIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowOutput));
 		part->setOutputWindowSkin ();
 		setMetaInfo (i18n ("Output Window"), "rkward://page/rkward_output", RKSettings::PageOutput);
+		connect (page, SIGNAL(loadFinished(bool)), this, SLOT(scrollToBottom()));
+//	TODO: This would be an interesting extension, but how to deal with concurrent edits?
+//		page->setContentEditable (true);
 	} else {
 		RK_ASSERT (new_mode == HTMLHelpWindow);
 
 		type = RKMDIWindow::HelpWindow | RKMDIWindow::DocumentWindow;
 		setWindowIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowHelp));
 		part->setHelpWindowSkin ();
+		disconnect (page, SIGNAL(loadFinished(bool)), this, SLOT(scrollToBottom()));
 	}
 
 	updateCaption (current_url);
@@ -506,37 +534,55 @@ RKHTMLWindowPart::RKHTMLWindowPart (RKHTMLWindow* window) : KParts::Part (window
 void RKHTMLWindowPart::initActions () {
 	RK_TRACE (APP);
 
-	// TODO!!!
+	// We keep our own history.
+	window->page->action (QWebPage::Back)->setVisible (false);
+	window->page->action (QWebPage::Forward)->setVisible (false);
+	// For now we won't bother with this one: Does not behave well, in particular (but not only) WRT to rkward://-links
+	window->page->action (QWebPage::DownloadLinkToDisk)->setVisible (false);
+
 	// common actions
-	actionCollection ()->addAction (KStandardAction::Copy, "copy", this, SLOT (copy()));
+	actionCollection ()->addAction (KStandardAction::Copy, "copy", window->view->pageAction (QWebPage::Copy), SLOT (trigger()));
 
-	print = actionCollection ()->addAction (KStandardAction::Print, "print_html", this, SLOT (slotPrint()));
-	save_page = actionCollection ()->addAction (KStandardAction::Print, "save_page", this, SLOT (slotPrint()));
+	print = actionCollection ()->addAction (KStandardAction::Print, "print_help", window, SLOT (slotPrint()));
+	save_page = actionCollection ()->addAction (KStandardAction::Save, "save", window, SLOT (slotSave()));
 
-	run_selection = RKStandardActions::runCurrent (window, this, SLOT (runSelection()));
+	run_selection = RKStandardActions::runCurrent (window, window, SLOT (runSelection()));
 
 	// help window actions
-	back = actionCollection ()->addAction (KStandardAction::Back, "help_back", this, SLOT (slotBack()));
+	back = actionCollection ()->addAction (KStandardAction::Back, "help_back", window, SLOT (slotBack()));
 	back->setEnabled (false);
 
-	forward = actionCollection ()->addAction (KStandardAction::Forward, "help_forward", this, SLOT (slotForward()));
+	forward = actionCollection ()->addAction (KStandardAction::Forward, "help_forward", window, SLOT (slotForward()));
 	forward->setEnabled (false);
 
 	// output window actions
-	outputFlush = actionCollection ()->addAction ("output_flush", this, SLOT (flushOutput()));
+	outputFlush = actionCollection ()->addAction ("output_flush", window, SLOT (flushOutput()));
 	outputFlush->setText (i18n ("&Flush Output"));
 	outputFlush->setIcon (KIcon ("edit-delete"));
 
-	outputRefresh = actionCollection ()->addAction ("output_refresh", this, SLOT (refresh()));
+	outputRefresh = actionCollection ()->addAction ("output_refresh", window->page->action (QWebPage::ReloadAndBypassCache), SLOT (trigger()));
 	outputRefresh->setText (i18n ("&Refresh Output"));
 	outputRefresh->setIcon (KIcon ("view-refresh"));
+
+	QAction* zoom_in = actionCollection ()->addAction ("zoom_in", new KAction (KIcon ("zoom-in"), i18n ("Zoom In"), this));
+	connect (zoom_in, SIGNAL(triggered(bool)), window, SLOT (zoomIn()));
+	QAction* zoom_out = actionCollection ()->addAction ("zoom_out", new KAction (KIcon ("zoom-out"), i18n ("Zoom Out"), this));
+	connect (zoom_out, SIGNAL(triggered(bool)), window, SLOT (zoomOut()));
+
+	// TODO!!!
+	QAction* find;
+	QAction* findAhead;      // shortcut '/'
+	QAction* find_next;
+	QAction* find_previous;
+	QAction* select_all;
+	// needed? QAction* encoding;
 }
 
 void RKHTMLWindowPart::setOutputWindowSkin () {
 	RK_TRACE (APP);
 
 	print->setText (i18n ("Print output"));
-	save_page->setText (i18n ("Export page as HTML"));
+	save_page->setText (i18n ("Save Output as HTML"));
 	setXMLFile ("rkoutputwindow.rc");
 	run_selection->setVisible (false);
 }
@@ -545,7 +591,7 @@ void RKHTMLWindowPart::setHelpWindowSkin () {
 	RK_TRACE (APP);
 
 	print->setText (i18n ("Print page"));
-	save_page->setText (i18n ("Save Output as HTML"));
+	save_page->setText (i18n ("Export page as HTML"));
 	setXMLFile ("rkhelpwindow.rc");
 	run_selection->setVisible (true);
 }
