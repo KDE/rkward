@@ -68,6 +68,7 @@ class RKHTMLWindow : public RKMDIWindow {
 	Q_OBJECT
 public:
 	enum WindowMode {
+		Undefined,
 		HTMLHelpWindow,
 		HTMLOutputWindow
 	};
@@ -107,6 +108,7 @@ public slots:
 	void refresh ();
 	void zoomIn ();
 	void zoomOut ();
+	void setTextEncoding (QTextCodec* encoding);
 private slots:
 	void scrollToBottom ();
 	void mimeTypeDetermined (KIO::Job*, const QString& type);

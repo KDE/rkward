@@ -30,6 +30,7 @@
 #include <kservice.h>
 #include <ktemporaryfile.h>
 #include <kwebview.h>
+#include <kcodecaction.h>
 
 #include <qfileinfo.h>
 #include <qwidget.h>
@@ -42,6 +43,7 @@
 #include <QWebFrame>
 #include <QPrintDialog>
 #include <QMenu>
+#include <QTextCodec>
 
 #include "../rkglobals.h"
 #include "../rbackend/rinterface.h"
@@ -74,8 +76,7 @@ bool RKWebPage::acceptNavigationRequest (QWebFrame* frame, const QNetworkRequest
 	Q_UNUSED (type);
 
 	RK_TRACE (APP);
-	// TODO: Debug level
-	RK_DEBUG (APP, DL_WARNING, "Navigation request to %s", qPrintable (request.url ().toString ()));
+	RK_DEBUG (APP, DL_DEBUG, "Navigation request to %s", qPrintable (request.url ().toString ()));
 	if (direct_load && (frame == mainFrame ())) {
 		direct_load = false;
 		return true;
@@ -142,6 +143,7 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 	current_history_position = -1;
 	url_change_is_from_history = false;
 
+	window_mode = Undefined;
 	useMode (mode);
 
 	// needed to enable / disable the run selection action
@@ -302,7 +304,12 @@ bool RKHTMLWindow::handleRKWardURL (const KUrl &url, RKHTMLWindow *window) {
 		} else {
 			if (url.host () == "rhelp") {
 				// TODO: find a nice solution to render this in the current window
-				RKHelpSearchWindow::mainHelpSearch ()->getFunctionHelp (url.path ().mid (1));
+				QStringList spec = url.path ().mid (1).split ('/');
+				QString function, package, type;
+				if (!spec.isEmpty ()) function = spec.takeLast ();
+				if (!spec.isEmpty ()) package = spec.takeLast ();
+				if (!spec.isEmpty ()) type = spec.takeLast ();
+				RKHelpSearchWindow::mainHelpSearch ()->getFunctionHelp (function, package, type);
 				return true;
 			}
 
@@ -443,6 +450,14 @@ void RKHTMLWindow::zoomOut () {
 	RK_TRACE (APP);
 	view->setZoomFactor (view->zoomFactor () / 1.1);
 }
+
+void RKHTMLWindow::setTextEncoding (QTextCodec* encoding) {
+	RK_TRACE (APP);
+
+	page->settings ()->setDefaultTextEncoding (encoding->name ());
+	view->reload ();
+}
+
 void RKHTMLWindow::useMode (WindowMode new_mode) {
 	RK_TRACE (APP);
 
@@ -542,9 +557,19 @@ void RKHTMLWindowPart::initActions () {
 
 	// common actions
 	actionCollection ()->addAction (KStandardAction::Copy, "copy", window->view->pageAction (QWebPage::Copy), SLOT (trigger()));
+	QAction* zoom_in = actionCollection ()->addAction ("zoom_in", new KAction (KIcon ("zoom-in"), i18n ("Zoom In"), this));
+	connect (zoom_in, SIGNAL(triggered(bool)), window, SLOT (zoomIn()));
+	QAction* zoom_out = actionCollection ()->addAction ("zoom_out", new KAction (KIcon ("zoom-out"), i18n ("Zoom Out"), this));
+	connect (zoom_out, SIGNAL(triggered(bool)), window, SLOT (zoomOut()));
+	QAction* select_all = actionCollection ()->addAction (KStandardAction::SelectAll, "select_all", window->view->pageAction (QWebPage::SelectAll), SLOT (trigger()));
+	// unfortunately, this will only affect the default encoding, not necessarily the "real" encoding
+	KCodecAction *encoding = new KCodecAction (KIcon ("character-set"), i18n ("Default &Encoding"), this, true);
+	encoding->setStatusTip (i18n ("Set the encoding to assume in case no explicit encoding has been set in the page or in the HTTP headers."));
+	actionCollection ()->addAction ("view_encoding", encoding);
+	connect (encoding, SIGNAL (triggered(QTextCodec*)), window, SLOT (setTextEncoding(QTextCodec*)));
 
-	print = actionCollection ()->addAction (KStandardAction::Print, "print_help", window, SLOT (slotPrint()));
-	save_page = actionCollection ()->addAction (KStandardAction::Save, "save", window, SLOT (slotSave()));
+	print = actionCollection ()->addAction (KStandardAction::Print, "print_html", window, SLOT (slotPrint()));
+	save_page = actionCollection ()->addAction (KStandardAction::Save, "save_html", window, SLOT (slotSave()));
 
 	run_selection = RKStandardActions::runCurrent (window, window, SLOT (runSelection()));
 
@@ -564,19 +589,12 @@ void RKHTMLWindowPart::initActions () {
 	outputRefresh->setText (i18n ("&Refresh Output"));
 	outputRefresh->setIcon (KIcon ("view-refresh"));
 
-	QAction* zoom_in = actionCollection ()->addAction ("zoom_in", new KAction (KIcon ("zoom-in"), i18n ("Zoom In"), this));
-	connect (zoom_in, SIGNAL(triggered(bool)), window, SLOT (zoomIn()));
-	QAction* zoom_out = actionCollection ()->addAction ("zoom_out", new KAction (KIcon ("zoom-out"), i18n ("Zoom Out"), this));
-	connect (zoom_out, SIGNAL(triggered(bool)), window, SLOT (zoomOut()));
-
 	// TODO!!!
 	QAction* find;
 	QAction* findAhead;      // shortcut '/'
 	QAction* find_next;
 	QAction* find_previous;
-	QAction* select_all;
-	// needed? QAction* encoding;
-}
+
 
 void RKHTMLWindowPart::setOutputWindowSkin () {
 	RK_TRACE (APP);
@@ -653,7 +671,8 @@ bool RKHelpRenderer::renderRKHelp (const KUrl &url) {
 		element = help_xml->getChildElement (help_doc_element, "title", DL_WARNING);
 		page_title = help_xml->i18nElementText (element, false, DL_WARNING);
 	}
-	writeHTML ("<html><head><title>" + page_title + "</title><link rel=\"stylesheet\" type=\"text/css\" href=\"" + css_filename + "\"></head>\n<body><div id=\"main\">\n<h1>" + page_title + "</h1>\n");
+	writeHTML ("<html><head><title>" + page_title + "</title><link rel=\"stylesheet\" type=\"text/css\" href=\"" + css_filename + "\">"
+	           "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"></head>\n<body><div id=\"main\">\n<h1>" + page_title + "</h1>\n");
 
 	if (help_doc_element.isNull ()) {
 		RK_ASSERT (for_component);
