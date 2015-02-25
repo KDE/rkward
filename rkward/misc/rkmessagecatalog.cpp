@@ -34,7 +34,7 @@ RKMessageCatalog::RKMessageCatalog (const QString &name, const QString& path) {
 
 	catalog_name = QFile::encodeName (name);
 	char *res = bindtextdomain (catalog_name, QFile::encodeName (path));
-	RK_DO (qDebug ("Opening catalog %s, expected at %s, found at %s", qPrintable (name), qPrintable (path), res), MISC, DL_WARNING);
+	RK_DEBUG (MISC, DL_DEBUG, "Opening catalog %s, expected at %s, found at %s", qPrintable (name), qPrintable (path), res);
 	bind_textdomain_codeset (catalog_name, "UTF-8");
 }
 
