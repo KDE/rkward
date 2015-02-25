@@ -117,6 +117,7 @@ bool RKFindBar::isOptionSet (const RKFindBar::FindOptions option) const {
 
 void RKFindBar::searchChanged () {
 	RK_TRACE (APP);
+	term_edit->lineEdit ()->setPalette (regular_palette);
 	term_edit->lineEdit ()->setFocus ();
 	if (default_actions.contains (FindAsYouType) && default_actions[FindAsYouType]->isChecked ()) forward ();
 }
@@ -137,8 +138,7 @@ void RKFindBar::doSearch (bool backward) {
 	bool found = false;
 	QString term = term_edit->currentText ();
 	findRequest (term, backward, this, &found);
-	if (found || term.isEmpty ()) term_edit->lineEdit ()->setPalette (regular_palette);
-	else term_edit->lineEdit ()->setPalette (nomatch_palette);
+	if (!(found || term.isEmpty ())) term_edit->lineEdit ()->setPalette (nomatch_palette);
 }
 
 void RKFindBar::activate () {
