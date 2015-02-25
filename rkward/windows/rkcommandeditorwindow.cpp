@@ -460,7 +460,7 @@ void RKCommandEditorWindow::doAutoSave () {
 	KUrl backup_autosave_url;
 	if (previous_autosave_url.isValid ()) {
 		backup_autosave_url = previous_autosave_url;
-		backup_autosave_url.setFileName (backup_autosave_url.fileName () + "~");
+		backup_autosave_url.setFileName (backup_autosave_url.fileName () + '~');
 		if (previous_autosave_url.isLocalFile ()) {
 			QFile::remove (backup_autosave_url.toLocalFile ());
 			QFile::copy (previous_autosave_url.toLocalFile (), backup_autosave_url.toLocalFile ());
@@ -1172,7 +1172,7 @@ QString RKCommandHighlighter::commandToHTML (const QString r_command, Highlighti
 	if (!iface) return (QString ("<pre>") + r_command + "</pre>");
 
 	doc->setText (r_command);
-	if (r_command.endsWith ("\n")) doc->removeLine (doc->lines () - 1);
+	if (r_command.endsWith ('\n')) doc->removeLine (doc->lines () - 1);
 	setHighlighting (doc, mode);
 	QString ret;
 
@@ -1216,7 +1216,7 @@ QString RKCommandHighlighter::commandToHTML (const QString r_command, Highlighti
 					ret.append (opening.arg ("output_normal"));
 					previous_chunk = Output;
 				}
-				ret.append (Qt::escape (line) + "\n");	// don't copy output "highlighting". It is set using CSS, instead
+				ret.append (Qt::escape (line) + '\n');	// don't copy output "highlighting". It is set using CSS, instead
 				continue;
 			}
 		}

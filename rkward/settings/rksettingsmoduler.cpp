@@ -267,7 +267,7 @@ QStringList RKSettingsModuleR::makeRRunTimeOptionCommands () {
 	else list.append ("options (editor=\"" + options_editor + "\")\n");
 	if (options_pager == builtin_editor) list.append ("options (pager=rk.show.files)\n");
 	else list.append ("options (pager=\"" + options_pager + "\")\n");
-	if (!options_further.isEmpty ()) list.append (options_further + "\n");
+	if (!options_further.isEmpty ()) list.append (options_further + '\n');
 #ifdef Q_WS_WIN
 	list.append (QString ("setInternet2 (") + (options_internet2 ? "TRUE)\n" : "FALSE)\n"));
 #endif

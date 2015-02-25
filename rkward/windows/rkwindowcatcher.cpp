@@ -445,7 +445,7 @@ void RKCaughtX11Window::setFixedSizeManual () {
 void RKCaughtX11Window::activateDevice () {
 	RK_TRACE (MISC);
 
-	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")", RCommand::App, i18n ("Activate graphics device number %1", device_number), error_dialog);
+	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ')', RCommand::App, i18n ("Activate graphics device number %1", device_number), error_dialog);
 }
 
 void RKCaughtX11Window::copyDeviceToOutput () {
@@ -459,7 +459,7 @@ void RKCaughtX11Window::printDevice () {
 
 	QString printer_device;
 	if (RKSettingsModuleGraphics::kdePrintingEnabled ()) printer_device = "rk.printer.device";
-	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\ndev.print (" + printer_device + ")", RCommand::App, i18n ("Print contents of graphics device number %1", device_number), error_dialog);
+	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\ndev.print (" + printer_device + ')', RCommand::App, i18n ("Print contents of graphics device number %1", device_number), error_dialog);
 }
 
 void RKCaughtX11Window::copyDeviceToRObject () {
@@ -494,7 +494,7 @@ void RKCaughtX11Window::copyDeviceToRObject () {
 void RKCaughtX11Window::duplicateDevice () {
 	RK_TRACE (MISC);
 
-	RKGlobals::rInterface ()->issueCommand ("rk.duplicate.device (" + QString::number (device_number) + ")", RCommand::App, i18n ("Duplicate graphics device number %1", device_number), error_dialog);
+	RKGlobals::rInterface ()->issueCommand ("rk.duplicate.device (" + QString::number (device_number) + ')', RCommand::App, i18n ("Duplicate graphics device number %1", device_number), error_dialog);
 }
 
 void RKCaughtX11Window::nextPlot () {
@@ -560,7 +560,7 @@ void RKCaughtX11Window::clearHistory () {
 void RKCaughtX11Window::showPlotInfo () {
 	RK_TRACE (MISC);
 
-	RKGlobals::rInterface ()->issueCommand ("rk.show.plot.info (" + QString::number (device_number) + ")", RCommand::App, i18n ("Plot properties (device number %1)", device_number), error_dialog);
+	RKGlobals::rInterface ()->issueCommand ("rk.show.plot.info (" + QString::number (device_number) + ')', RCommand::App, i18n ("Plot properties (device number %1)", device_number), error_dialog);
 }
 
 void RKCaughtX11Window::updateHistoryActions (int history_length, int position, const QStringList &labels) {

@@ -88,7 +88,7 @@ QStringList RObjectList::detachPackages (const QStringList &packages, RCommandCh
 		}
 	}
 	for (int i = 0; i < remove.size (); ++i) {
-		RCommand *command = new RCommand ("detach (" + rQuote (remove[i]) + ")", RCommand::App | RCommand::ObjectListUpdate);
+		RCommand *command = new RCommand ("detach (" + rQuote (remove[i]) + ')', RCommand::App | RCommand::ObjectListUpdate);
 
 		if (control) control->addRCommand (command);
 		RKGlobals::rInterface()->issueCommand (command, chain);

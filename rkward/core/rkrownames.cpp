@@ -65,7 +65,7 @@ void RKRowNames::beginEdit () {
 QString RKRowNames::getFullName () const {
 //	RK_TRACE (OBJECTS);
 
-	return ("row.names (" + parent->getFullName () + ")");
+	return ("row.names (" + parent->getFullName () + ')');
 }
 
 void RKRowNames::writeData (int from_row, int to_row, RCommandChain *chain) {

@@ -133,7 +133,7 @@ void DetachedWindowContainer::slotSetStatusBarText (const QString &text) {
 	RK_TRACE (APP);
 
 	QString ntext = text.trimmed ();
-	ntext.replace ("<qt>", "");	// WORKAROUND: what the ?!? is going on? The KTHMLPart seems to post such messages.
+	ntext.replace ("<qt>", QString ());	// WORKAROUND: what the ?!? is going on? The KTHMLPart seems to post such messages.
 
 	statusBar ()->showMessage (ntext);
 	statusBar ()->show ();

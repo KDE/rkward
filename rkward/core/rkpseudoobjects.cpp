@@ -35,7 +35,7 @@ RSlotsPseudoObject::~RSlotsPseudoObject () {
 QString RSlotsPseudoObject::getFullName () const {
 	RK_TRACE (OBJECTS);
 
-	return (".rk.get.slots (" + parent->getFullName () + ")");
+	return (".rk.get.slots (" + parent->getFullName () + ')');
 }
 
 QString RSlotsPseudoObject::makeChildName (const QString &short_child_name, bool) const {
@@ -43,7 +43,7 @@ QString RSlotsPseudoObject::makeChildName (const QString &short_child_name, bool
 
 	QString safe_name = short_child_name;
 	if (irregularShortName (safe_name)) safe_name = rQuote (short_child_name);
-	return (parent->getFullName () + "@" + safe_name);
+	return (parent->getFullName () + '@' + safe_name);
 }
 
 RKNamespaceObject::RKNamespaceObject (REnvironmentObject* package, const QString name) : REnvironmentObject (package, name.isNull () ? "NAMESPACE" : name) {
@@ -61,7 +61,7 @@ RKNamespaceObject::~RKNamespaceObject () {
 
 QString RKNamespaceObject::getFullName () const {
 	RK_TRACE (OBJECTS);
-	return ("asNamespace (" + rQuote (namespace_name) + ")");
+	return ("asNamespace (" + rQuote (namespace_name) + ')');
 }
 
 QString RKNamespaceObject::makeChildName (const QString& short_child_name, bool) const {
@@ -99,7 +99,7 @@ QString RKOrphanNamespacesObject::getFullName () const {
 
 QString RKOrphanNamespacesObject::makeChildName (const QString& short_child_name, bool) const {
 	RK_TRACE (OBJECTS);
-	return ("asNamespace (" + rQuote (short_child_name) + ")");
+	return ("asNamespace (" + rQuote (short_child_name) + ')');
 }
 
 QString RKOrphanNamespacesObject::makeChildBaseName (const QString& short_child_name) const {

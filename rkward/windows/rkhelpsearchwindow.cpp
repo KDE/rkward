@@ -199,7 +199,7 @@ void RKHelpSearchWindow::slotFindButtonClicked () {
 
 	QString fields = fieldsList->itemData (fieldsList->currentIndex ()).toString ();
 
-	QString s = ".rk.get.search.results (" + RObject::rQuote (field->currentText ()) + ", agrep=" + agrep + ", ignore.case=" + ignoreCase + package + ", fields=" + fields +")";
+	QString s = ".rk.get.search.results (" + RObject::rQuote (field->currentText ()) + ", agrep=" + agrep + ", ignore.case=" + ignoreCase + package + ", fields=" + fields + ')';
 	
 	RKGlobals::rInterface ()->issueCommand (s, RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, HELP_SEARCH, 0);
 	setEnabled (false);
@@ -255,7 +255,7 @@ void RKHelpSearchWindow::rCommandDone (RCommand *command) {
 		setEnabled(true);
 	} else if (command->getFlags () == GET_HELP) {
 		if (command->failed ()) {
-			KMessageBox::sorry (this, i18n ("No help found on '%1'. Maybe the corresponding package is not installed/loaded, or maybe you mistyped the command. Try using Help->Search R Help for more options.", command->command ().section ("\"", 1, 1)), i18n ("No help found"));
+			KMessageBox::sorry (this, i18n ("No help found on '%1'. Maybe the corresponding package is not installed/loaded, or maybe you mistyped the command. Try using Help->Search R Help for more options.", command->command ().section ('\"', 1, 1)), i18n ("No help found"));
 		}
 	} else {
 		RK_ASSERT (false);

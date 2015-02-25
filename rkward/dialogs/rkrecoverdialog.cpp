@@ -84,7 +84,7 @@ QString RKRecoverDialog::saveFileFor (const QString& recovery_file) {
 	QString new_name;
 	for (int i = 0; i < 100; ++i) {	// If we just had more than 100 crashes per minutes, you'll excuse another small bug, at this point
 		QString num;
-		if (i > 0) num = "_" + QString::number (i+1);
+		if (i > 0) num = '_' + QString::number (i+1);
 		new_name = dir.absoluteFilePath ("recovered_workspace_" + mtime.toString ("yyyy-MM-dd_hh:mm") + num + ".RData");
 		if (!QFileInfo (new_name).exists ()) break;
 	}

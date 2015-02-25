@@ -137,6 +137,6 @@ void RKDebugMessageWindowWidget::newMessage (const int flags, const int level, c
 	}
 	message_viewer->setTextColor (Qt::black);
 
-	message_viewer->insertPlainText (message + "\n");
+	message_viewer->insertPlainText (message + '\n');
 }
 

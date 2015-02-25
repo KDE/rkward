@@ -412,7 +412,7 @@ QStringList RKFormula::getUiLabelPair () const {
 
 	QStringList ret (label_string);
 	QString m = stripAccelerators (type_selector->checkedButton ()->text ());
-	if (model_type == Custom) m.append (" " + model->value ().toString ());
+	if (model_type == Custom) m.append (' ' + model->value ().toString ());
 	ret.append (m);
 	return ret;
 }

@@ -619,7 +619,7 @@ void RKWorkplace::saveWorkplace (RCommandChain *chain) {
 // standard KConfig format.
 	if (RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace) return;
 
-	RKGlobals::rInterface ()->issueCommand ("rk.save.workplace(description=" + RObject::rQuote (makeWorkplaceDescription().join ("\n")) + ")", RCommand::App, i18n ("Save Workplace layout"), 0, 0, chain);
+	RKGlobals::rInterface ()->issueCommand ("rk.save.workplace(description=" + RObject::rQuote (makeWorkplaceDescription().join ("\n")) + ')', RCommand::App, i18n ("Save Workplace layout"), 0, 0, chain);
 }
 
 void RKWorkplace::restoreWorkplace (RCommandChain *chain, bool merge) {

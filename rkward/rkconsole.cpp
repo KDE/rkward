@@ -368,7 +368,7 @@ QString RKConsole::provideContext (int line_rev) {
 	QString ret;
 	if (line_rev == 0) ret = currentEditingLine ().left (currentCursorPositionInCommand ()); 
 	else if (!incomplete_command.isEmpty ()) {
-		QStringList lines = incomplete_command.split ("\n");
+		QStringList lines = incomplete_command.split ('\n');
 		if (lines.size () > line_rev) {
 			ret = lines[lines.size () - line_rev - 1];
 		}
@@ -458,7 +458,7 @@ void RKConsole::doTabCompletion () {
 	QString current_symbol = current_line.mid (word_start, word_end - word_start);
 
 	// as a very simple heuristic: If the current symbol starts with a quote, we should probably attempt file name completion, instead of symbol name completion
-	if (current_symbol.startsWith ("\"") || current_symbol.startsWith ("\'") || current_symbol.startsWith ("`")) {
+	if (current_symbol.startsWith ('\"') || current_symbol.startsWith ('\'') || current_symbol.startsWith ('`')) {
 		KUrlCompletion comp (KUrlCompletion::FileCompletion);
 		comp.setDir (QDir::currentPath ());
 		comp.makeCompletion (current_symbol.mid (1));
@@ -792,7 +792,7 @@ void RKConsole::userSaveHistory (const KUrl &_url) {
 
 	KTemporaryFile tempfile;
 	tempfile.open ();
-	tempfile.write (QString (commandHistory ().join ("\n") + "\n").toLocal8Bit ().data ());
+	tempfile.write (QString (commandHistory ().join ("\n") + '\n').toLocal8Bit ().data ());
 	tempfile.close ();
 
 	KIO::NetAccess::upload (tempfile.fileName (), url, this);
@@ -803,7 +803,7 @@ QString RKConsole::cleanSelection (const QString &origin) {
 
 	QString ret;
 	ret.reserve (origin.length ());
-	QStringList lines = origin.split ("\n");
+	QStringList lines = origin.split ('\n');
 	foreach (QString line, lines) {
 		if (line.startsWith (nprefix)) {
 			ret.append (line.mid (nprefix.length ()));
@@ -825,7 +825,7 @@ void RKConsole::copyCommands () {
 	if (!sel.isValid ()) return;
 
 	// we use this somewhat cumbersome (and inefficient) approach as it should also be correct in case of blockwise selections
-	QStringList command_lines = view->selectionText ().split ("\n");
+	QStringList command_lines = view->selectionText ().split ('\n');
 	int i = 0;
 	for (int l = sel.start ().line (); l <= sel.end ().line (); ++l) {
 		QString line = doc->line (l);

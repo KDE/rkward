@@ -179,9 +179,9 @@ int main (int argc, char *argv[]) {
 	if (kde4_config_exe.isNull ()) kde4_config_exe = findExeAtPath ("kde4-config", QDir (app.applicationDirPath ()).filePath ("KDE/bin"));
 	if (kde4_config_exe.isNull ()) {
 #ifdef Q_WS_WIN
-	QStringList syspath = QString (qgetenv ("PATH")).split (";");
+	QStringList syspath = QString (qgetenv ("PATH")).split (';');
 #else
-	QStringList syspath = QString (qgetenv ("PATH")).split (":");
+	QStringList syspath = QString (qgetenv ("PATH")).split (':');
 #endif
 		for (int i = 0; i < syspath.size (); ++i) {
 			kde4_config_exe = findExeAtPath ("kde4-config", syspath[i]);
@@ -199,7 +199,7 @@ int main (int argc, char *argv[]) {
 	QString kde_dir_safe_path = quoteCommand (kde_dir.path ());
 #ifdef Q_WS_WIN
 	QString kdeinit4_exe = findExeAtPath ("kdeinit4", kde_dir.path ());
-	qputenv ("PATH", QString (kde_dir_safe_path + ";" + qgetenv ("PATH")).toLocal8Bit ());
+	qputenv ("PATH", QString (kde_dir_safe_path + ';' + qgetenv ("PATH")).toLocal8Bit ());
 	if (debug_level > 3) qDebug ("Adding %s to the system path", qPrintable (kde_dir_safe_path));
 #endif
 	// important if RKWard is not in KDEPREFIX/bin but e.g. KDEPREFIX/lib/libexec

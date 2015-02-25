@@ -99,7 +99,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 
 		while (child_map.contains (id)) {
 			RK_DEBUG (PLUGIN, DL_ERROR, "optionset already contains a property named %s. Renaming to _%s", qPrintable (id), qPrintable (id));
-			id = "_" + id;
+			id = '_' + id;
 		}
 
 		ColumnInfo col_inf;
@@ -313,7 +313,7 @@ void RKOptionSet::serializationPropertyChanged (RKComponentPropertyBase* propert
 
 	QList<RowInfo> new_rows;
 	int row = 0;
-	QStringList items = fetchStringValue (property).split ("\n");
+	QStringList items = fetchStringValue (property).split ('\n');
 	bool keys_missing = (keycolumn != 0);
 	for (int i = 0; i < items.size (); ++i) {
 		const QString &item = items[i];

@@ -83,11 +83,11 @@ RKComponentBase* RKAbstractOptionSelector::lookupComponent (const QString &ident
 
 	if (identifier.isEmpty ()) return this;
 
-	QString name = identifier.section (".", 0, 0);
+	QString name = identifier.section ('.', 0, 0);
 	if (named_options.contains (name)) {
 		Option *opt = named_options[name];
 
-		QString mod = identifier.section (".", 1);
+		QString mod = identifier.section ('.', 1);
 		if (mod != "enabled") {
 			RK_DEBUG (PLUGIN, DL_DEBUG, "options do not have property '%s'", mod.toLatin1().data ());
 			return this;

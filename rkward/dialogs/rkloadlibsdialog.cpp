@@ -390,7 +390,7 @@ void RKLoadLibsDialog::processExited (int exitCode, QProcess::ExitStatus exitSta
 	RK_TRACE (DIALOGS);
 
 	if (exitCode || (exitStatus != QProcess::NormalExit)) {
-		installationError ("\n" + i18n ("Installation process died with exit code %1", exitCode));
+		installationError ('\n' + i18n ("Installation process died with exit code %1", exitCode));
 	}
 
 	emit (installationComplete ());
@@ -722,7 +722,7 @@ void InstallPackagesWidget::filterChanged () {
 	RK_TRACE (DIALOGS);
 
 	QString f = filter_edit->text ();
-	if (f.isEmpty ()) f = "*";
+	if (f.isEmpty ()) f = '*';
 	else {
 		if (!f.startsWith ('^')) f.prepend ('*');
 		if (!f.endsWith ('$')) f.append ('*');

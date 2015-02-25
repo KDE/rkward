@@ -96,7 +96,7 @@ void RKVariable::setVarType (RObject::RDataType new_type, bool sync) {
 			else if (new_type == RObject::DataNumeric) command += "as.numeric";
 			else if (new_type == RObject::DataLogical) command += "as.logical";
 			else if (new_type == RObject::DataFactor) command += "as.factor";
-			command += ")";
+			command += ')';
 			RKGlobals::rInterface ()->issueCommand (command, RCommand::App | RCommand::Sync, QString::null);
 			if (new_type == RObject::DataFactor) updateValueLabels ();	// as.factor resets the "levels"-attribute!
 
@@ -369,14 +369,14 @@ void RKVariable::writeInvalidFields (QList<int> rows, RCommandChain *chain) {
 
 	if (!set.isEmpty ()) {
 		set = "set=c(" + set + "), ";
-		values = "values=c(" + values + ")";
+		values = "values=c(" + values + ')';
 	}
 	if (!clear.isEmpty ()) {
-		clear = "clear=c(" + clear + ")";
+		clear = "clear=c(" + clear + ')';
 		if (!values.isEmpty ()) values.append (",");
 	}
 
-	RKGlobals::rInterface ()->issueCommand (".rk.set.invalid.fields (" + getFullName () + ", " + set + values + clear + ")", RCommand::App | RCommand::Sync, QString (), 0,0, chain);
+	RKGlobals::rInterface ()->issueCommand (".rk.set.invalid.fields (" + getFullName () + ", " + set + values + clear + ')', RCommand::App | RCommand::Sync, QString (), 0,0, chain);
 
 	if (data->previously_valid != data->invalid_fields.isEmpty ()) {
 		data->previously_valid = data->invalid_fields.isEmpty ();
@@ -770,7 +770,7 @@ void RKVariable::writeValueLabels (RCommandChain *chain) const {
 		level_string = "NULL";
 	}
 
-	RKGlobals::rInterface ()->issueCommand (".rk.set.levels (" + getFullName () + ", " + level_string + ")", RCommand::App | RCommand::Sync, QString::null, 0, 0, chain);
+	RKGlobals::rInterface ()->issueCommand (".rk.set.levels (" + getFullName () + ", " + level_string + ')', RCommand::App | RCommand::Sync, QString::null, 0, 0, chain);
 }
 
 QString RKVariable::getValueLabelString () const {
@@ -875,7 +875,7 @@ RKVariable::FormattingOptions RKVariable::parseFormattingOptionsString (const QS
 	formatting_options.precision = 0;
 	bool empty = true;
 
-	QStringList list = string.split ("#", QString::SkipEmptyParts);
+	QStringList list = string.split ('#', QString::SkipEmptyParts);
 	QString option, parameter;
 	for (QStringList::const_iterator it = list.constBegin (); it != list.constEnd (); ++it) {
 		option = (*it).section (':', 0, 0);

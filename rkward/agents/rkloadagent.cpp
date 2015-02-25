@@ -79,7 +79,7 @@ void RKLoadAgent::rCommandDone (RCommand *command) {
 			RKWorkplace::mainWorkplace ()->restoreWorkplace (0, _merge);
 			if (RKSettingsModuleGeneral::cdToWorkspaceOnLoad ()) {
 				if (RKWorkplace::mainWorkplace ()->workspaceURL ().isLocalFile ()) {
-					RKGlobals::rInterface ()->issueCommand ("setwd (" + RObject::rQuote (RKWorkplace::mainWorkplace ()->workspaceURL ().directory ()) + ")", RCommand::App);
+					RKGlobals::rInterface ()->issueCommand ("setwd (" + RObject::rQuote (RKWorkplace::mainWorkplace ()->workspaceURL ().directory ()) + ')', RCommand::App);
 				}
 			}
 			RKGlobals::rInterface ()->issueCommand (QString (), RCommand::EmptyCommand | RCommand::App, QString (), this, WORKSPACE_LOAD_COMPLETE_COMMAND);

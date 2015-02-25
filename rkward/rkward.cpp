@@ -822,7 +822,7 @@ void RKWardMainWindow::slotSetStatusBarText (const QString &text) {
 
 //KDE4: still needed?
 	QString ntext = text.trimmed ();
-	ntext.replace ("<qt>", "");	// WORKAROUND: what the ?!? is going on? The KTHMLPart seems to post such messages.
+	ntext.replace ("<qt>", QString ());	// WORKAROUND: what the ?!? is going on? The KTHMLPart seems to post such messages.
 	if (ntext.isEmpty ()) {
 		statusBar ()->clearMessage ();
 	} else {

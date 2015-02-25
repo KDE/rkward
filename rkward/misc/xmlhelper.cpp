@@ -129,7 +129,7 @@ QDomElement XMLHelper::resolveSnippets (QDomElement &from_doc) {
 	for (XMLChildList::const_iterator it = refs.constBegin (); it != refs.constEnd (); ++it) {
 		QDomElement ref = *it;
 		QString id = getStringAttribute (ref, "snippet", QString::null, DL_ERROR);
-		displayError (&ref, "resolving snippet '" + id + "'", DL_DEBUG, DL_DEBUG);
+		displayError (&ref, "resolving snippet '" + id + '\'', DL_DEBUG, DL_DEBUG);
 
 		// resolve the reference
 		QDomElement snippet;
@@ -140,7 +140,7 @@ QDomElement XMLHelper::resolveSnippets (QDomElement &from_doc) {
 			}
 		}
 		if (snippet.isNull ()) {
-			displayError (&ref, "no such snippet '" + id + "'", DL_ERROR, DL_ERROR);
+			displayError (&ref, "no such snippet '" + id + '\'', DL_ERROR, DL_ERROR);
 		}
 
 		// now insert it.

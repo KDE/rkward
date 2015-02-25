@@ -134,7 +134,7 @@ void SimpleBackend::finishCall (const QString &conditions) {
 	QString conds = conditions;
 	int repl = current_values.count();
 	for (int i = repl; i > 0; --i) {
-		QString placeholder = "%" + QString::number (i);
+		QString placeholder = '%' + QString::number (i);
 		QString replacement = current_values[i-1].toString ();
 		conds.replace (placeholder, replacement);
 	}

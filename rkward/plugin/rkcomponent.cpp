@@ -31,12 +31,12 @@ RKComponentBase* RKComponentBase::lookupComponent (const QString &identifier, QS
 	if (identifier.isEmpty ()) return this;
 	RK_DEBUG (PLUGIN, DL_DEBUG, "looking up '%s'", identifier.toLatin1 ().data ());
 
-	RKComponentBase *child = child_map.value (identifier.section (".", 0, 0));
+	RKComponentBase *child = child_map.value (identifier.section ('.', 0, 0));
 	if (!child) {	// if we do not have such a child, return this (and set remainder)
 		*remainder = identifier;
 		return this;
 	} else {	// else do recursive lookup
-		return child->lookupComponent (identifier.section (".", 1), remainder);
+		return child->lookupComponent (identifier.section ('.', 1), remainder);
 	}
 }
 
@@ -109,7 +109,7 @@ QString RKComponentBase::valueMapToString (const PropertyValueMap &map) {
 	QString out;
 	for (PropertyValueMap::const_iterator it = map.constBegin (); it != map.constEnd (); ++it) {
 		if (!out.isEmpty ()) out.append ("\n");
-		out.append (RKCommonFunctions::escape (it.key () + "=" + it.value ()));
+		out.append (RKCommonFunctions::escape (it.key () + '=' + it.value ()));
 	}
 	return out;
 }

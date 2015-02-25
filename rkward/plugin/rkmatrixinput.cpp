@@ -125,7 +125,7 @@ QVariant RKMatrixInput::value (const QString& modifier) {
 	if (modifier.isEmpty () || (modifier == "cbind")) {
 		QStringList ret;
 		for (int i = 0; i < column_count->intValue (); ++i) {
-			ret.append ("\tc (" + makeColumnString (i, ", ") + ")");
+			ret.append ("\tc (" + makeColumnString (i, ", ") + ')');
 		}
 		return QString ("cbind (\n" + ret.join (",\n") + "\n)");
 	}

@@ -101,7 +101,7 @@ void RKComponentGUIXML::resolveComponentLabelsAndSortMenu (Menu *menu, const QSt
 					component_menus.insert (entry->id, menu_path);
 				}
 			} else {
-				resolveComponentLabelsAndSortMenu (static_cast<Menu*> (entry), menu_path.isEmpty () ? entry->label : menu_path + "\t" + entry->label);
+				resolveComponentLabelsAndSortMenu (static_cast<Menu*> (entry), menu_path.isEmpty () ? entry->label : menu_path + '\t' + entry->label);
 			}
 		}
 		qSort (group->entries.begin (), group->entries.end (), compareMenuEntries);

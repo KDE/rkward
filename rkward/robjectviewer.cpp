@@ -314,7 +314,7 @@ void RObjectStructureWidget::update () {
 
 	RObjectViewerWidget::update ();
 
-	RCommand *command = new RCommand ("str(" + _object->getFullName () + ")", RCommand::App, QString (), this);
+	RCommand *command = new RCommand ("str(" + _object->getFullName () + ')', RCommand::App, QString (), this);
 	RKGlobals::rInterface ()->issueCommand (command, 0);
 }
 

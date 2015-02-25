@@ -97,7 +97,7 @@ void RKGraphicsDevice::updateNow () {
 void RKGraphicsDevice::checkSize() {
 	RK_TRACE (GRAPHICS_DEVICE);
 	if (view->size () != area.size ()) {
-		RKGlobals::rInterface ()->issueCommand (new RCommand ("rkward:::RK.resize (" + QString::number (devices.key (this) + 1) + ")", RCommand::PriorityCommand));
+		RKGlobals::rInterface ()->issueCommand (new RCommand ("rkward:::RK.resize (" + QString::number (devices.key (this) + 1) + ')', RCommand::PriorityCommand));
 	}
 }
 

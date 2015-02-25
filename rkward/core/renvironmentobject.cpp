@@ -57,7 +57,7 @@ QString REnvironmentObject::getFullName () const {
 	RK_TRACE (OBJECTS);
 
 	if (type & GlobalEnv) return name;	// .GlobalEnv
-	if (type & ToplevelEnv) return ("as.environment (" + rQuote (name) + ")");
+	if (type & ToplevelEnv) return ("as.environment (" + rQuote (name) + ')');
 	return parent->makeChildName (name, type & Misplaced);
 }
 
@@ -72,7 +72,7 @@ QString REnvironmentObject::makeChildName (const QString &short_child_name, bool
 	} else safe_name = short_child_name;
 
 	if (type & GlobalEnv) {		// don't print as ".GlobalEnv$something" unless childname needs fixing
-		if (irregular) return (getShortName () + "$" + safe_name);
+		if (irregular) return (getShortName () + '$' + safe_name);
 		return (safe_name);
 	}
 	if (type & ToplevelEnv) {

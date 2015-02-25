@@ -55,7 +55,7 @@ RKComponentAboutData::RKComponentAboutData (const QDomElement& e, XMLHelper &xml
 		RKComponentAuthor author;
 		author.name = xml.i18nStringAttribute (ae, "name", QString (), DL_INFO);
 		if (author.name.isEmpty ()) {
-			author.name = xml.i18nStringAttribute (ae, "given", QString (), DL_WARNING) + " " + xml.i18nStringAttribute (ae, "family", QString (), DL_WARNING);
+			author.name = xml.i18nStringAttribute (ae, "given", QString (), DL_WARNING) + ' ' + xml.i18nStringAttribute (ae, "family", QString (), DL_WARNING);
 			
 		}
 		if (author.name.isEmpty ()) xml.displayError (&ae, "No author name specified", DL_WARNING);
@@ -81,8 +81,8 @@ QString RKComponentAboutData::toHtml () const {
 	RK_TRACE (PLUGIN);
 
 	QString ret = "<p><b>" + name + "</b>";
-	if (!version.isEmpty ()) ret.append (" " + version);
-	if (!releasedate.isEmpty ()) ret.append (" (" + releasedate + ")");
+	if (!version.isEmpty ()) ret.append (' ' + version);
+	if (!releasedate.isEmpty ()) ret.append (" (" + releasedate + ')');
 	if (!shortinfo.isEmpty ()) ret.append (":</p>\n<p>" + shortinfo);
 	ret.append ("</p>\n");
 	if (!url.isEmpty ()) ret.append ("URL: <a href=\"" + url + "\">" + url + "</a></p>\n<p>");
@@ -94,8 +94,8 @@ QString RKComponentAboutData::toHtml () const {
 		for (int i = 0; i < authors.size (); ++i) {
 			RKComponentAuthor a = authors[i];
 			ret.append ("<li>" + a.name);
-			if (!a.email.isEmpty ()) ret.append (" (" + a.email + ")");
-			if (!a.url.isEmpty ()) ret.append (" (" + a.url + ")");
+			if (!a.email.isEmpty ()) ret.append (" (" + a.email + ')');
+			if (!a.url.isEmpty ()) ret.append (" (" + a.url + ')');
 			if (!a.roles.isEmpty ()) ret.append ("<br/><i>" + i18nc ("Author roles (contributor, etc.)", "Roles") + "</i>: " + a.roles);
 		}
 		ret.append ("</ul></p>");
@@ -223,7 +223,7 @@ QString RKComponentDependency::depsToHtml (const QList <RKComponentDependency>& 
 			if (dep.type == RKWardPluginmap) ret.append (i18n ("RKWard plugin map"));
 			else ret.append (i18n ("R package"));
 			ret.append (" \"" + dep.package + "\"");
-			if (!dep.source_info.isEmpty ()) ret.append (" (" + dep.source_info + ")");
+			if (!dep.source_info.isEmpty ()) ret.append (" (" + dep.source_info + ')');
 		}
 		if (dep.min_version > 0) ret.append (" &gt;= " + numericVersionToString (dep.min_version));
 		if (dep.max_version < 0xFFFFFFFF) ret.append (" &lt;= " + numericVersionToString (dep.max_version));
