@@ -8,6 +8,10 @@
 		<Menu name="edit"><text>&amp;Edit</text>
 			<Action name="copy"/>
 			<Separator/>
+			<Action name="find"/>
+			<Action name="find_next"/>
+			<Action name="find_previous"/>
+			<Separator/>
 			<Action name="select_all"/>
 		</Menu>
 		<Menu name="view"><text>&amp;View</text>

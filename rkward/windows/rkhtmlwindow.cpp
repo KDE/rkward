@@ -60,6 +60,7 @@
 #include "../misc/rkxmlguisyncer.h"
 #include "../misc/rkprogresscontrol.h"
 #include "../misc/rkmessagecatalog.h"
+#include "../misc/rkfindbar.h"
 #include "../plugin/rkcomponentmap.h"
 #include "../windows/rkworkplace.h"
 #include "../windows/rkworkplaceview.h"
@@ -124,11 +125,16 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 	page = new RKWebPage (this);
 	view->setPage (page);
 	view->setContextMenuPolicy (Qt::CustomContextMenu);
-	layout->addWidget (view);
+	layout->addWidget (view, 1);
+	findbar = new RKFindBar (this);
+	layout->addWidget (findbar);
+	findbar->hide ();
+	connect (findbar, SIGNAL(findRequest(QString,bool,const RKFindBar*,bool*)), this, SLOT(findRequest(QString,bool,const RKFindBar*,bool*)));
+	bool have_highlight = false;
+
 	part = new RKHTMLWindowPart (this);
 	setPart (part);
 	part->initActions ();
-
 	initializeActivationSignals ();
 	part->setSelectable (true);
 	setFocusPolicy (Qt::StrongFocus);
@@ -196,6 +202,22 @@ void RKHTMLWindow::runSelection () {
 	RK_TRACE (APP);
 
 	RKConsole::pipeUserCommand (view->selectedText ());
+}
+
+void RKHTMLWindow::findRequest (const QString& text, bool backwards, const RKFindBar* findbar, bool* found) {
+	RK_TRACE (APP);
+
+	QWebPage::FindFlags flags = QWebPage::FindWrapsAroundDocument;
+	if (backwards) flags |= QWebPage::FindBackward;
+	bool highlight = findbar->isOptionSet (RKFindBar::HighlightAll);
+	if (highlight) flags |= QWebPage::HighlightAllOccurrences;
+	if (findbar->isOptionSet (RKFindBar::MatchCase)) flags |= QWebPage::FindCaseSensitively;
+
+	// clear previous highlight, if any
+	if (have_highlight) page->findText (QString (), QWebPage::HighlightAllOccurrences);
+
+	*found = page->findText (text, flags);
+	have_highlight = found && highlight;
 }
 
 void RKHTMLWindow::slotPrint () {
@@ -561,7 +583,7 @@ void RKHTMLWindowPart::initActions () {
 	connect (zoom_in, SIGNAL(triggered(bool)), window, SLOT (zoomIn()));
 	QAction* zoom_out = actionCollection ()->addAction ("zoom_out", new KAction (KIcon ("zoom-out"), i18n ("Zoom Out"), this));
 	connect (zoom_out, SIGNAL(triggered(bool)), window, SLOT (zoomOut()));
-	QAction* select_all = actionCollection ()->addAction (KStandardAction::SelectAll, "select_all", window->view->pageAction (QWebPage::SelectAll), SLOT (trigger()));
+	actionCollection ()->addAction (KStandardAction::SelectAll, "select_all", window->view->pageAction (QWebPage::SelectAll), SLOT (trigger()));
 	// unfortunately, this will only affect the default encoding, not necessarily the "real" encoding
 	KCodecAction *encoding = new KCodecAction (KIcon ("character-set"), i18n ("Default &Encoding"), this, true);
 	encoding->setStatusTip (i18n ("Set the encoding to assume in case no explicit encoding has been set in the page or in the HTTP headers."));
@@ -589,12 +611,13 @@ void RKHTMLWindowPart::initActions () {
 	outputRefresh->setText (i18n ("&Refresh Output"));
 	outputRefresh->setIcon (KIcon ("view-refresh"));
 
-	// TODO!!!
-	QAction* find;
-	QAction* findAhead;      // shortcut '/'
-	QAction* find_next;
-	QAction* find_previous;
-
+	actionCollection ()->addAction (KStandardAction::Find, "find", window->findbar, SLOT (activate()));
+	KAction* findAhead = actionCollection ()->addAction ("find_ahead", new KAction (i18n ("Find as you type"), this));
+	findAhead->setShortcut ('/');
+	connect (findAhead, SIGNAL (triggered(bool)), window->findbar, SLOT (activate()));
+	actionCollection ()->addAction (KStandardAction::FindNext, "find_next", window->findbar, SLOT (forward()));;
+	actionCollection ()->addAction (KStandardAction::FindPrev, "find_previous", window->findbar, SLOT (backward()));;;
+}
 
 void RKHTMLWindowPart::setOutputWindowSkin () {
 	RK_TRACE (APP);

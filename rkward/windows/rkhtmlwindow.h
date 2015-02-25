@@ -36,6 +36,7 @@ class RKHTMLWindowPart;
 class KWebView;
 class KTemporaryFile;
 class RKHTMLWindow;
+class RKFindBar;
 
 class RKWebPage : public KWebPage {
 	Q_OBJECT
@@ -114,10 +115,13 @@ private slots:
 	void mimeTypeDetermined (KIO::Job*, const QString& type);
 	void internalNavigation (const QUrl& new_url);
 	void makeContextMenu (const QPoint& pos);
+	void findRequest (const QString& text, bool backwards, const RKFindBar *findbar, bool* found);
 private:
 friend class RKHTMLWindowPart;
 	KWebView* view;
 	RKWebPage* page;
+	RKFindBar* findbar;
+	bool have_highlight;
 /** In case the part is a khtmlpart: A ready-cast pointer to that. 0 otherwise (if a webkit part is in use) */
 	RKHTMLWindowPart *part;
 /** update caption according to given URL */

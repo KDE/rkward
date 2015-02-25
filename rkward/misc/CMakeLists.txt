@@ -25,6 +25,7 @@ SET(misc_STAT_SRCS
    editformatdialog.cpp
    rkmessagecatalog.cpp
    rkdbusapi.cpp
+   rkfindbar.cpp
    )
 
 QT4_AUTOMOC(${misc_STAT_SRCS})
