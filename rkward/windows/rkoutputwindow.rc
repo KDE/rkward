@@ -1,15 +1,25 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward_outputwindow" version="54">
+<kpartgui name="rkward_outputwindow" version="640">
 	<MenuBar>
 		<Menu name="file"><text>&amp;File</text>
-			<Action name="print_output"/>
+			<Action name="print_html"/>
+			<Action name="save_html"/>
 		</Menu>
 		<Menu name="edit"><text>&amp;Edit</text>
 			<Action name="copy"/>
 			<Separator/>
+			<Action name="find"/>
+			<Action name="find_next"/>
+			<Action name="find_previous"/>
+			<Separator/>
+			<Action name="select_all"/>
+			<Separator/>
 			<Action name="output_flush"/>
 		</Menu>
 		<Menu name="view"><text>&amp;View</text>
+			<Action name="zoom_in"/>
+			<Action name="zoom_out"/>
+			<Action name="view_encoding"/>
 			<Separator/>
 			<Action name="output_refresh"/>
 		</Menu>

@@ -29,6 +29,8 @@
 #include <kio/job.h>
 #include <kservice.h>
 #include <ktemporaryfile.h>
+#include <kwebview.h>
+#include <kcodecaction.h>
 
 #include <qfileinfo.h>
 #include <qwidget.h>
@@ -37,6 +39,11 @@
 #include <qdir.h>
 #include <QHBoxLayout>
 #include <QHostInfo>
+#include <QNetworkRequest>
+#include <QWebFrame>
+#include <QPrintDialog>
+#include <QMenu>
+#include <QTextCodec>
 
 #include "../rkglobals.h"
 #include "../rbackend/rinterface.h"
@@ -53,77 +60,107 @@
 #include "../misc/rkxmlguisyncer.h"
 #include "../misc/rkprogresscontrol.h"
 #include "../misc/rkmessagecatalog.h"
+#include "../misc/rkfindbar.h"
 #include "../plugin/rkcomponentmap.h"
 #include "../windows/rkworkplace.h"
 #include "../windows/rkworkplaceview.h"
 #include "../debug.h"
 
+RKWebPage::RKWebPage (RKHTMLWindow* window): KWebPage (window, KIOIntegration | KPartsIntegration) {
+	RK_TRACE (APP);
+	RKWebPage::window = window;
+	new_window = false;
+	direct_load = false;
+}
+
+bool RKWebPage::acceptNavigationRequest (QWebFrame* frame, const QNetworkRequest& request, QWebPage::NavigationType type) {
+	Q_UNUSED (type);
+
+	RK_TRACE (APP);
+	RK_DEBUG (APP, DL_DEBUG, "Navigation request to %s", qPrintable (request.url ().toString ()));
+	if (direct_load && (frame == mainFrame ())) {
+		direct_load = false;
+		return true;
+	}
+
+	if (new_window) {
+		frame = 0;
+		new_window = false;
+	}
+	if (!frame) {
+		RKWorkplace::mainWorkplace ()->openAnyUrl (request.url ());
+		return false;
+	}
+
+	if (KUrl (mainFrame ()->url ()).equals (request.url (), KUrl::CompareWithoutFragment | KUrl::CompareWithoutTrailingSlash)) {
+		RK_DEBUG (APP, DL_DEBUG, "Page internal navigation request from %s to %s", qPrintable (mainFrame ()->url ().toString ()), qPrintable (request.url ().toString ()));
+		emit (pageInternalNavigation (request.url ()));
+		return true;
+	}
+
+	window->openURL (request.url ());
+	return false;
+}
+
+void RKWebPage::load (const QUrl& url) {
+	RK_TRACE (APP);
+	direct_load = true;
+	mainFrame ()->load (url);
+}
+
+QWebPage* RKWebPage::createWindow (QWebPage::WebWindowType) {
+	RK_TRACE (APP);
+	new_window = true;         // Don't actually create the window, until we know which URL we're talking about.
+	return (this);
+}
+
 RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (parent, RKMDIWindow::HelpWindow) {
 	RK_TRACE (APP);
-	setComponentData (KGlobal::mainComponent ());
 
-	html_write_file = 0;
-	renderingpart = 0;
-	khtmlpart = 0;
-/*	KService::Ptr service = KService::serviceByDesktopPath ("kwebkitpart.desktop");
-	if (service) renderingpart = service->createInstance<KParts::ReadOnlyPart> (this);
-	if (!renderingpart) { */
-		khtmlpart = new KHTMLPart (this, 0, KHTMLPart::BrowserViewGUI);
-		renderingpart = khtmlpart;
-//	}
+	current_cache_file = 0;
 
-	setPart (renderingpart);
-	fixupPartGUI ();
-// WORKAROUND for annoying kdelibs bug in KDE 4.6: https://sourceforge.net/tracker/?func=detail&atid=459007&aid=3310106&group_id=50231
-// NOTE: Fixed in KDE 4.7. See http://git.reviewboard.kde.org/r/101491/
-	QAction *action = renderingpart->action ("findAheadText");
-	if (action) action->setShortcutContext (Qt::WidgetWithChildrenShortcut);
-// WORKAROUND end
+	QVBoxLayout* layout = new QVBoxLayout (this);
+	layout->setContentsMargins (0, 0, 0, 0);
+	view = new KWebView (this, false);
+	page = new RKWebPage (this);
+	view->setPage (page);
+	view->setContextMenuPolicy (Qt::CustomContextMenu);
+	layout->addWidget (view, 1);
+	findbar = new RKFindBar (this);
+	layout->addWidget (findbar);
+	findbar->hide ();
+	connect (findbar, SIGNAL(findRequest(QString,bool,const RKFindBar*,bool*)), this, SLOT(findRequest(QString,bool,const RKFindBar*,bool*)));
+	bool have_highlight = false;
+
+	part = new RKHTMLWindowPart (this);
+	setPart (part);
+	part->initActions ();
 	initializeActivationSignals ();
-	RKXMLGUISyncer::self()->registerChangeListener (renderingpart, this, SLOT (fixupPartGUI()));
-	renderingpart->setSelectable (true);
-	setFocusProxy (renderingpart->widget ());
-	renderingpart->widget ()->setFocusPolicy (Qt::StrongFocus);
-	
-	renderingpart->widget ()->setSizePolicy (QSizePolicy::Expanding, QSizePolicy::Expanding);
-	QHBoxLayout *pLayout = new QHBoxLayout (this);
-	pLayout->setContentsMargins (0, 0, 0, 0);
-	pLayout->addWidget (renderingpart->widget ());
+	part->setSelectable (true);
+	setFocusPolicy (Qt::StrongFocus);
+	setFocusProxy (view);
 
 	// We have to connect this in order to allow browsing.
-	connect (renderingpart->browserExtension (), SIGNAL (openUrlRequestDelayed(KUrl,KParts::OpenUrlArguments,KParts::BrowserArguments)), this, SLOT (slotOpenUrl(KUrl,KParts::OpenUrlArguments,KParts::BrowserArguments)));
-	connect (renderingpart, SIGNAL (completed()), this, SLOT (loadDone()));
-	connect (renderingpart->browserExtension (), SIGNAL (openUrlNotify()), this, SLOT (internalNavigation()));	// to catch internal navigation on a page
+	connect (page, SIGNAL (pageInternalNavigation(QUrl)), this, SLOT (internalNavigation(QUrl)));
+	connect (page, SIGNAL (downloadRequested(QNetworkRequest)), this, SLOT (saveRequested(QNetworkRequest)));
+	connect (page, SIGNAL (printRequested(QWebFrame*)), this, SLOT(slotPrint ()));
+	connect (view, SIGNAL (customContextMenuRequested(QPoint)), this, SLOT(makeContextMenu(QPoint)));
 
 	current_history_position = -1;
 	url_change_is_from_history = false;
 
-	initActions ();
 	window_mode = Undefined;
 	useMode (mode);
+
+	// needed to enable / disable the run selection action
+	connect (view, SIGNAL (selectionChanged()), this, SLOT (selectionChanged()));
+	selectionChanged ();
 }
 
 RKHTMLWindow::~RKHTMLWindow () {
 	RK_TRACE (APP);
 
-// WORKAROUND for annoying kdelibs bug (KDE 4.0 up to at least KDE 4.6): Status bar icons added by plugins typically do not get deleted in case the KParts::StatusBarExtension
-// has already been deleted, first. See http://www.mail-archive.com/rkward-devel@lists.sourceforge.net/msg01345.html . Therefore, delete the plugins, explicitely, while the
-// StatusBarExtension is still alive...
-	QList<KParts::Plugin*> plugins = KParts::Plugin::pluginObjects (renderingpart);
-	foreach (KParts::Plugin *plugin, plugins) {
-		delete plugin;
-	}
-// I hope this does not come back to bite us one day... If it does, here's a safer variant, which simply hides the problem (the way it is hidden in konqueror, among others):
-// 	RKWardMainWindow::getMain ()->partManager ()->setActivePart (0);
-// WORKAROUND end
-	delete renderingpart;
-}
-
-void RKHTMLWindow::fixupPartGUI () {
-	RK_TRACE (APP);
-
-	// strip down the khtmlpart's GUI. remove some stuff we definitely don't need.
-	RKCommonFunctions::removeContainers (renderingpart, QString ("tools,security,extraToolBar,saveBackground,saveFrame,printFrame,kget_menu").split (','), true);
+	delete current_cache_file;
 }
 
 KUrl RKHTMLWindow::restorableUrl () {
@@ -137,71 +174,74 @@ bool RKHTMLWindow::isModified () {
 	return false;
 }
 
-void RKHTMLWindow::initActions () {
+void RKHTMLWindow::makeContextMenu (const QPoint& pos) {
 	RK_TRACE (APP);
 
-	// common actions
-	actionCollection ()->addAction (KStandardAction::Copy, "copy", renderingpart->browserExtension (), SLOT (copy()));
-
-	print = actionCollection ()->addAction (KStandardAction::Print, "print_html", this, SLOT (slotPrint()));
-
-	run_selection = RKStandardActions::runCurrent (this, this, SLOT (runSelection()));
-
-		// needed to enable / disable the run selection action
-	connect (renderingpart, SIGNAL (selectionChanged()), this, SLOT (selectionChanged()));
-	selectionChanged ();
-
-	// help window actions
-	back = actionCollection ()->addAction (KStandardAction::Back, "help_back", this, SLOT (slotBack()));
-	back->setEnabled (false);
-
-	forward = actionCollection ()->addAction (KStandardAction::Forward, "help_forward", this, SLOT (slotForward()));
-	forward->setEnabled (false);
-
-	// output window actions
-	outputFlush = actionCollection ()->addAction ("output_flush", this, SLOT (flushOutput()));
-	outputFlush->setText (i18n ("&Flush Output"));
-	outputFlush->setIcon (KIcon ("edit-delete"));
-
-	outputRefresh = actionCollection ()->addAction ("output_refresh", this, SLOT (refresh()));
-	outputRefresh->setText (i18n ("&Refresh Output"));
-	outputRefresh->setIcon (KIcon ("view-refresh"));
+	QMenu *menu = page->createStandardContextMenu ();
+	menu->addAction (part->run_selection);
+	menu->exec (view->mapToGlobal (pos));
+	delete (menu);
 }
 
 void RKHTMLWindow::selectionChanged () {
 	RK_TRACE (APP);
 
-	if (!run_selection) {
+	if (!(part && part->run_selection)) {
 		RK_ASSERT (false);
 		return;
 	}
 
-	run_selection->setEnabled (khtmlpart->hasSelection ());
+#if QT_VERSION >= 0x040800
+	part->run_selection->setEnabled (view->hasSelection ());
+#else
+	part->run_selection->setEnabled (!view->selectedText ().isEmpty ());
+#endif
 }
 
 void RKHTMLWindow::runSelection () {
 	RK_TRACE (APP);
 
-	RKConsole::pipeUserCommand (khtmlpart->selectedText ());
+	RKConsole::pipeUserCommand (view->selectedText ());
 }
 
-void RKHTMLWindow::doGotoAnchor (const QString &anchor_name) {
+void RKHTMLWindow::findRequest (const QString& text, bool backwards, const RKFindBar* findbar, bool* found) {
 	RK_TRACE (APP);
 
-	goto_anchor_name = anchor_name;
-	QTimer::singleShot (0, this, SLOT (doGotoAnchorNow()));
-}
+	QWebPage::FindFlags flags = QWebPage::FindWrapsAroundDocument;
+	if (backwards) flags |= QWebPage::FindBackward;
+	bool highlight = findbar->isOptionSet (RKFindBar::HighlightAll);
+	if (highlight) flags |= QWebPage::HighlightAllOccurrences;
+	if (findbar->isOptionSet (RKFindBar::MatchCase)) flags |= QWebPage::FindCaseSensitively;
 
-void RKHTMLWindow::doGotoAnchorNow () {
-	RK_TRACE (APP);
+	// clear previous highlight, if any
+	if (have_highlight) page->findText (QString (), QWebPage::HighlightAllOccurrences);
 
-	if (khtmlpart) khtmlpart->gotoAnchor (goto_anchor_name);
+	*found = page->findText (text, flags);
+	have_highlight = found && highlight;
 }
 
 void RKHTMLWindow::slotPrint () {
 	RK_TRACE (APP);
 
-	khtmlpart->view ()->print ();
+	// NOTE: taken from kwebkitpart, with small mods
+	// Make it non-modal, in case a redirection deletes the part
+	QPointer<QPrintDialog> dlg (new QPrintDialog (view));
+	if (dlg->exec () == QPrintDialog::Accepted) {
+		view->print (dlg->printer ());
+	}
+	delete dlg;
+}
+
+void RKHTMLWindow::slotSave () {
+	RK_TRACE (APP);
+
+	page->downloadUrl (page->mainFrame ()->url ());
+}
+
+void RKHTMLWindow::saveRequested (const QNetworkRequest& request) {
+	RK_TRACE (APP);
+
+	page->downloadUrl (request.url ());
 }
 
 void RKHTMLWindow::openLocationFromHistory (VisitedLocation &loc) {
@@ -211,17 +251,17 @@ void RKHTMLWindow::openLocationFromHistory (VisitedLocation &loc) {
 	int history_last = url_history.count () - 1;
 	RK_ASSERT (current_history_position >= 0);
 	RK_ASSERT (current_history_position <= history_last);
-	if (loc.url == renderingpart->url ()) {
-		restoreBrowserState (&(loc.state));
+	if (loc.url == current_url) {
+		restoreBrowserState (&loc);
 	} else {
 		url_change_is_from_history = true;
-		openURL (loc.url);
-		restoreBrowserState (&(loc.state));
+		openURL (loc.url);            // TODO: merge into restoreBrowserState()?
+		restoreBrowserState (&loc);
 		url_change_is_from_history = false;
 	}
 
-	back->setEnabled (current_history_position > 0);
-	forward->setEnabled (current_history_position < history_last);
+	part->back->setEnabled (current_history_position > 0);
+	part->forward->setEnabled (current_history_position < history_last);
 }
 
 void RKHTMLWindow::slotForward () {
@@ -236,7 +276,7 @@ void RKHTMLWindow::slotBack () {
 
 	// if going back from the end of the history, save that position, first.
 	if (current_history_position >= (url_history.count () - 1)) {
-		changeURL (renderingpart->url ());
+		changeURL (current_url);
 		--current_history_position;
 	}
 	--current_history_position;
@@ -249,10 +289,17 @@ void RKHTMLWindow::openRKHPage (const KUrl& url) {
 	RK_ASSERT (url.protocol () == "rkward");
 	changeURL (url);
 	bool ok = false;
-	if (url.host () == "component") {
-		ok = renderRKHelp (url);
-	} else if (url.host () == "page") {
-		ok = renderRKHelp (url);
+	if ((url.host () == "component") || (url.host () == "page")) {
+		useMode (HTMLHelpWindow);
+
+		startNewCacheFile ();
+		RKHelpRenderer render (current_cache_file);
+		ok = render.renderRKHelp (url);
+		current_cache_file->close ();
+
+		KUrl cache_url = KUrl::fromLocalFile (current_cache_file->fileName ());
+		cache_url.setFragment (url.fragment ());
+		page->load (cache_url);
 	} else if (url.host ().toUpper () == "RHELPBASE") {	// NOTE: QUrl () may lowercase the host part, internally
 		KUrl fixed_url = KUrl (RKSettingsModuleR::helpBaseUrl ());
 		fixed_url.setPath (url.path ());
@@ -279,7 +326,12 @@ bool RKHTMLWindow::handleRKWardURL (const KUrl &url, RKHTMLWindow *window) {
 		} else {
 			if (url.host () == "rhelp") {
 				// TODO: find a nice solution to render this in the current window
-				RKHelpSearchWindow::mainHelpSearch ()->getFunctionHelp (url.path ().mid (1));
+				QStringList spec = url.path ().mid (1).split ('/');
+				QString function, package, type;
+				if (!spec.isEmpty ()) function = spec.takeLast ();
+				if (!spec.isEmpty ()) package = spec.takeLast ();
+				if (!spec.isEmpty ()) type = spec.takeLast ();
+				RKHelpSearchWindow::mainHelpSearch ()->getFunctionHelp (function, package, type);
 				return true;
 			}
 
@@ -314,7 +366,7 @@ bool RKHTMLWindow::openURL (const KUrl &url) {
 		QFileInfo out_file (url.toLocalFile ());
 		bool ok = out_file.exists();
 		if (ok)  {
-			renderingpart->openUrl (url);
+			page->load (url);
 		} else {
 			fileDoesNotExistMessage ();
 		}
@@ -323,7 +375,7 @@ bool RKHTMLWindow::openURL (const KUrl &url) {
 
 	if (url_change_is_from_history || url.protocol ().toLower ().startsWith ("help")) {	// handle help pages, and any page that we have previously handled (from history)
 		changeURL (url);
-		renderingpart->openUrl (url);
+		page->load (url);
 		return true;
 	}
 
@@ -353,19 +405,23 @@ void RKHTMLWindow::mimeTypeDetermined (KIO::Job* job, const QString& type) {
 	tj->putOnHold ();
 	if (type == "text/html") {
 		changeURL (url);
-		renderingpart->openUrl (url);
+		page->load (url);
 	} else {
 		RKWorkplace::mainWorkplace ()->openAnyUrl (url, type);
 	}
 }
 
-void RKHTMLWindow::internalNavigation () {
+void RKHTMLWindow::internalNavigation (const QUrl& new_url) {
 	RK_TRACE (APP);
 
-	changeURL (renderingpart->url ());
+	KUrl real_url = current_url;    // Note: This could be something quite different from new_url: a temp file for rkward://-urls. We know the base part of the URL has not actually changed, when this gets called, though.
+	real_url.setFragment (new_url.fragment ());
+
+	changeURL (real_url);
 }
 
 void RKHTMLWindow::changeURL (const KUrl &url) {
+	KUrl prev_url = current_url;
 	current_url = url;
 	updateCaption (url);
 
@@ -375,14 +431,14 @@ void RKHTMLWindow::changeURL (const KUrl &url) {
 				url_history = url_history.mid (0, current_history_position);
 
 				VisitedLocation loc;
-				loc.url = renderingpart->url ();
-				saveBrowserState (&loc.state);
+				loc.url = prev_url;
+				saveBrowserState (&loc);
 				url_history.append (loc);
 			}
 
 			++current_history_position;
- 			back->setEnabled (current_history_position > 0);
-			forward->setEnabled (false);
+ 			part->back->setEnabled (current_history_position > 0);
+			part->forward->setEnabled (false);
 		}
 	}
 }
@@ -394,83 +450,82 @@ void RKHTMLWindow::updateCaption (const KUrl &url) {
 	else setCaption (url.fileName ());
 }
 
-void RKHTMLWindow::slotOpenUrl (const KUrl & url, const KParts::OpenUrlArguments &, const KParts::BrowserArguments &) {
-	RK_TRACE (APP);
-
-	openURL (url);
-}
-
 void RKHTMLWindow::refresh () {
 	RK_TRACE (APP);
 
-	KParts::OpenUrlArguments args;
-	args.setReload (true);		// this forces the next openURL to reload all images
-	renderingpart->setArguments (args);
-	saveBrowserState (&saved_state);
-	openURL (current_url);
+	view->reload ();
 }
 
-void RKHTMLWindow::loadDone () {
+void RKHTMLWindow::scrollToBottom () {
 	RK_TRACE (APP);
 
-	if (window_mode == HTMLOutputWindow) {	// scroll to bottom
-		khtmlpart->view ()->setContentsPos (0, khtmlpart->view ()->contentsHeight ());
-	} else {	// scroll to previous pos
-		restoreBrowserState (&saved_state);
-		saved_state.clear ();
-	}
+	RK_ASSERT (window_mode == HTMLOutputWindow);
+	view->page ()->mainFrame ()->setScrollBarValue (Qt::Vertical, view->page ()->mainFrame ()->scrollBarMaximum (Qt::Vertical));
+}
+
+void RKHTMLWindow::zoomIn () {
+	RK_TRACE (APP);
+	view->setZoomFactor (view->zoomFactor () * 1.1);
+}
+
+void RKHTMLWindow::zoomOut () {
+	RK_TRACE (APP);
+	view->setZoomFactor (view->zoomFactor () / 1.1);
+}
+
+void RKHTMLWindow::setTextEncoding (QTextCodec* encoding) {
+	RK_TRACE (APP);
+
+	page->settings ()->setDefaultTextEncoding (encoding->name ());
+	view->reload ();
 }
 
 void RKHTMLWindow::useMode (WindowMode new_mode) {
 	RK_TRACE (APP);
 
-	RK_ASSERT (new_mode != Undefined);
 	if (window_mode == new_mode) return;
 
 	if (new_mode == HTMLOutputWindow) {
 		type = RKMDIWindow::OutputWindow | RKMDIWindow::DocumentWindow;
 		setWindowIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowOutput));
-
-		print->setText (i18n ("Print output"));
-		QAction *action = renderingpart->action ("saveDocument");
-		if (action) action->setText (i18n ("Export page as HTML"));
-		else RK_ASSERT (false);		// we should know about this
-
-		setXMLFile ("rkoutputwindow.rc");
+		part->setOutputWindowSkin ();
 		setMetaInfo (i18n ("Output Window"), "rkward://page/rkward_output", RKSettings::PageOutput);
-		run_selection->setVisible (false);
+		connect (page, SIGNAL(loadFinished(bool)), this, SLOT(scrollToBottom()));
+//	TODO: This would be an interesting extension, but how to deal with concurrent edits?
+//		page->setContentEditable (true);
 	} else {
 		RK_ASSERT (new_mode == HTMLHelpWindow);
 
 		type = RKMDIWindow::HelpWindow | RKMDIWindow::DocumentWindow;
 		setWindowIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowHelp));
-
-		print->setText (i18n ("Print page"));
-		QAction *action = renderingpart->action ("saveDocument");
-		if (action) action->setText (i18n ("Save Output as HTML"));
-		else RK_ASSERT (false);		// we should know about this
-
-		setXMLFile ("rkhelpwindow.rc");
-		run_selection->setVisible (true);
+		part->setHelpWindowSkin ();
+		disconnect (page, SIGNAL(loadFinished(bool)), this, SLOT(scrollToBottom()));
 	}
-
-	if (parentClient ()) renderingpart->removeChildClient (this);
-	renderingpart->insertChildClient (this);
 
 	updateCaption (current_url);
 	window_mode = new_mode;
 }
 
+void RKHTMLWindow::startNewCacheFile () {
+	delete current_cache_file;
+	current_cache_file = new KTemporaryFile ();
+	current_cache_file->setSuffix (".html");
+	current_cache_file->open ();
+}
+
 void RKHTMLWindow::fileDoesNotExistMessage () {
 	RK_TRACE (APP);
 
-	beginWritingHTML (KUrl ());
+	startNewCacheFile ();
 	if (window_mode == HTMLOutputWindow) {
-		writeHTML (i18n ("<HTML><BODY><H1>RKWard output file could not be found</H1>\n</BODY></HTML>"));
+		current_cache_file->write (i18n ("<HTML><BODY><H1>RKWard output file could not be found</H1>\n</BODY></HTML>").toUtf8 ());
 	} else {
-		writeHTML ("<html><body><h1>" + i18n ("Page does not exist or is broken") + "</h1></body></html>");
+		current_cache_file->write (QString ("<html><body><h1>" + i18n ("Page does not exist or is broken") + "</h1></body></html>").toUtf8 ());
 	}
-	endWritingHTML ();
+	current_cache_file->close ();
+
+	KUrl cache_url = KUrl::fromLocalFile (current_cache_file->fileName ());
+	page->load (cache_url);
 }
 
 void RKHTMLWindow::flushOutput () {
@@ -488,15 +543,110 @@ void RKHTMLWindow::flushOutput () {
 	}
 }
 
-bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
+void RKHTMLWindow::saveBrowserState (VisitedLocation* state) {
+	RK_TRACE (APP);
+
+	if (view && view->page () && view->page ()->mainFrame ()) {
+		state->scroll_position = view->page ()->mainFrame ()->scrollPosition ();
+	} else {
+		state->scroll_position = QPoint ();
+	}
+}
+
+void RKHTMLWindow::restoreBrowserState (VisitedLocation* state) {
+	RK_TRACE (APP);
+
+	if (state->scroll_position.isNull ()) return;
+	RK_ASSERT (view && view->page () && view->page ()->mainFrame ());
+	view->page ()->mainFrame ()->setScrollPosition (state->scroll_position);
+}
+
+RKHTMLWindowPart::RKHTMLWindowPart (RKHTMLWindow* window) : KParts::Part (window) {
+	RK_TRACE (APP);
+	setComponentData (KGlobal::mainComponent ());
+	RKHTMLWindowPart::window = window;
+	setWidget (window);
+}
+
+void RKHTMLWindowPart::initActions () {
+	RK_TRACE (APP);
+
+	// We keep our own history.
+	window->page->action (QWebPage::Back)->setVisible (false);
+	window->page->action (QWebPage::Forward)->setVisible (false);
+	// For now we won't bother with this one: Does not behave well, in particular (but not only) WRT to rkward://-links
+	window->page->action (QWebPage::DownloadLinkToDisk)->setVisible (false);
+
+	// common actions
+	actionCollection ()->addAction (KStandardAction::Copy, "copy", window->view->pageAction (QWebPage::Copy), SLOT (trigger()));
+	QAction* zoom_in = actionCollection ()->addAction ("zoom_in", new KAction (KIcon ("zoom-in"), i18n ("Zoom In"), this));
+	connect (zoom_in, SIGNAL(triggered(bool)), window, SLOT (zoomIn()));
+	QAction* zoom_out = actionCollection ()->addAction ("zoom_out", new KAction (KIcon ("zoom-out"), i18n ("Zoom Out"), this));
+	connect (zoom_out, SIGNAL(triggered(bool)), window, SLOT (zoomOut()));
+	actionCollection ()->addAction (KStandardAction::SelectAll, "select_all", window->view->pageAction (QWebPage::SelectAll), SLOT (trigger()));
+	// unfortunately, this will only affect the default encoding, not necessarily the "real" encoding
+	KCodecAction *encoding = new KCodecAction (KIcon ("character-set"), i18n ("Default &Encoding"), this, true);
+	encoding->setStatusTip (i18n ("Set the encoding to assume in case no explicit encoding has been set in the page or in the HTTP headers."));
+	actionCollection ()->addAction ("view_encoding", encoding);
+	connect (encoding, SIGNAL (triggered(QTextCodec*)), window, SLOT (setTextEncoding(QTextCodec*)));
+
+	print = actionCollection ()->addAction (KStandardAction::Print, "print_html", window, SLOT (slotPrint()));
+	save_page = actionCollection ()->addAction (KStandardAction::Save, "save_html", window, SLOT (slotSave()));
+
+	run_selection = RKStandardActions::runCurrent (window, window, SLOT (runSelection()));
+
+	// help window actions
+	back = actionCollection ()->addAction (KStandardAction::Back, "help_back", window, SLOT (slotBack()));
+	back->setEnabled (false);
+
+	forward = actionCollection ()->addAction (KStandardAction::Forward, "help_forward", window, SLOT (slotForward()));
+	forward->setEnabled (false);
+
+	// output window actions
+	outputFlush = actionCollection ()->addAction ("output_flush", window, SLOT (flushOutput()));
+	outputFlush->setText (i18n ("&Flush Output"));
+	outputFlush->setIcon (KIcon ("edit-delete"));
+
+	outputRefresh = actionCollection ()->addAction ("output_refresh", window->page->action (QWebPage::ReloadAndBypassCache), SLOT (trigger()));
+	outputRefresh->setText (i18n ("&Refresh Output"));
+	outputRefresh->setIcon (KIcon ("view-refresh"));
+
+	actionCollection ()->addAction (KStandardAction::Find, "find", window->findbar, SLOT (activate()));
+	KAction* findAhead = actionCollection ()->addAction ("find_ahead", new KAction (i18n ("Find as you type"), this));
+	findAhead->setShortcut ('/');
+	connect (findAhead, SIGNAL (triggered(bool)), window->findbar, SLOT (activate()));
+	actionCollection ()->addAction (KStandardAction::FindNext, "find_next", window->findbar, SLOT (forward()));;
+	actionCollection ()->addAction (KStandardAction::FindPrev, "find_previous", window->findbar, SLOT (backward()));;;
+}
+
+void RKHTMLWindowPart::setOutputWindowSkin () {
+	RK_TRACE (APP);
+
+	print->setText (i18n ("Print output"));
+	save_page->setText (i18n ("Save Output as HTML"));
+	setXMLFile ("rkoutputwindow.rc");
+	run_selection->setVisible (false);
+}
+
+void RKHTMLWindowPart::setHelpWindowSkin () {
+	RK_TRACE (APP);
+
+	print->setText (i18n ("Print page"));
+	save_page->setText (i18n ("Export page as HTML"));
+	setXMLFile ("rkhelpwindow.rc");
+	run_selection->setVisible (true);
+}
+
+//////////////////////////////////////////
+//////////////////////////////////////////
+
+bool RKHelpRenderer::renderRKHelp (const KUrl &url) {
 	RK_TRACE (APP);
 
 	if (url.protocol () != "rkward") {
 		RK_ASSERT (false);
 		return (false);
 	}
-
-	useMode (HTMLHelpWindow);
 
 	bool for_component = false;		// is this a help page for a component, or a top-level help page?
 	if (url.host () == "component") for_component = true;
@@ -509,20 +659,19 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 		if (!chandle) return false;
 	}
 
-	XMLHelper component_xml (for_component ? chandle->getFilename () : QString (), for_component ? chandle->messageCatalog () : 0);
+	component_xml = new XMLHelper (for_component ? chandle->getFilename () : QString (), for_component ? chandle->messageCatalog () : 0);
 	QString help_file_name;
 	QDomElement element;
-	QDomElement component_doc_element;
 	QString help_base_dir = RKCommonFunctions::getRKWardDataDir () + "pages/";
 	QString css_filename = QUrl::fromLocalFile (help_base_dir + "rkward_help.css").toString ();
 
 	// determine help file, and prepare
 	if (for_component) {
-		component_doc_element = component_xml.openXMLFile (DL_ERROR);
+		component_doc_element = component_xml->openXMLFile (DL_ERROR);
 		if (component_doc_element.isNull ()) return false;
-		element = component_xml.getChildElement (component_doc_element, "help", DL_ERROR);
+		element = component_xml->getChildElement (component_doc_element, "help", DL_ERROR);
 		if (!element.isNull ()) {
-			help_file_name = component_xml.getStringAttribute (element, "file", QString::null, DL_ERROR);
+			help_file_name = component_xml->getStringAttribute (element, "file", QString::null, DL_ERROR);
 			if (!help_file_name.isEmpty ()) help_file_name = QFileInfo (chandle->getFilename ()).absoluteDir ().filePath (help_file_name);
 		}
 	} else {
@@ -531,28 +680,22 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 	RK_DEBUG (APP, DL_DEBUG, "rendering help page for local file %s", help_file_name.toLatin1().data());
 
 	// open help file
-	const RKMessageCatalog *catalog = component_xml.messageCatalog ();
+	const RKMessageCatalog *catalog = component_xml->messageCatalog ();
 	if (!for_component) catalog = RKMessageCatalog::getCatalog ("rkward__pages", RKCommonFunctions::getRKWardDataDir () + "po/");
-	XMLHelper help_xml (help_file_name, catalog);
-	QDomElement help_doc_element = help_xml.openXMLFile (DL_ERROR);
+	help_xml = new XMLHelper (help_file_name, catalog);
+	help_doc_element = help_xml->openXMLFile (DL_ERROR);
 	if (help_doc_element.isNull () && (!for_component)) return false;
 
-	HTMLRendererState state;
-	state.component_xml = &component_xml;
-	state.help_xml = &help_xml;
-	state.component_doc_element = component_doc_element;
-	state.help_doc_element = help_doc_element;
-
 	// initialize output, and set title
-	beginWritingHTML (url);
 	QString page_title (i18n ("No Title"));
 	if (for_component) {
 		page_title = chandle->getLabel ();
 	} else {
-		element = help_xml.getChildElement (help_doc_element, "title", DL_WARNING);
-		page_title = help_xml.i18nElementText (element, false, DL_WARNING);
+		element = help_xml->getChildElement (help_doc_element, "title", DL_WARNING);
+		page_title = help_xml->i18nElementText (element, false, DL_WARNING);
 	}
-	writeHTML ("<html><head><title>" + page_title + "</title><link rel=\"stylesheet\" type=\"text/css\" href=\"" + css_filename + "\"></head>\n<body><div id=\"main\">\n<h1>" + page_title + "</h1>\n");
+	writeHTML ("<html><head><title>" + page_title + "</title><link rel=\"stylesheet\" type=\"text/css\" href=\"" + css_filename + "\">"
+	           "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"></head>\n<body><div id=\"main\">\n<h1>" + page_title + "</h1>\n");
 
 	if (help_doc_element.isNull ()) {
 		RK_ASSERT (for_component);
@@ -566,7 +709,7 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 
 	// fix all elements containing an "src" attribute
 	QDir base_path (QFileInfo (help_file_name).absolutePath());
-	XMLChildList src_elements = help_xml.findElementsWithAttribute (help_doc_element, "src", QString (), true, DL_DEBUG);
+	XMLChildList src_elements = help_xml->findElementsWithAttribute (help_doc_element, "src", QString (), true, DL_DEBUG);
 	for (XMLChildList::iterator it = src_elements.begin (); it != src_elements.end (); ++it) {
 		QString src = (*it).attribute ("src");
 		if (KUrl::isRelativeUrl (src)) {
@@ -576,64 +719,64 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 	}
 
 	// render the sections
-	element = help_xml.getChildElement (help_doc_element, "summary", DL_INFO);
+	element = help_xml->getChildElement (help_doc_element, "summary", DL_INFO);
 	if (!element.isNull ()) {
 		writeHTML (startSection ("summary", i18n ("Summary"), QString (), &anchors, &anchornames));
-		writeHTML (renderHelpFragment (element, state));
+		writeHTML (renderHelpFragment (element));
 	}
 
-	element = help_xml.getChildElement (help_doc_element, "usage", DL_INFO);
+	element = help_xml->getChildElement (help_doc_element, "usage", DL_INFO);
 	if (!element.isNull ()) {
 		writeHTML (startSection ("usage", i18n ("Usage"), QString (), &anchors, &anchornames));
-		writeHTML (renderHelpFragment (element, state));
+		writeHTML (renderHelpFragment (element));
 	}
 
-	XMLChildList section_elements = help_xml.getChildElements (help_doc_element, "section", DL_INFO);
+	XMLChildList section_elements = help_xml->getChildElements (help_doc_element, "section", DL_INFO);
 	for (XMLChildList::iterator it = section_elements.begin (); it != section_elements.end (); ++it) {
-		QString title = help_xml.i18nStringAttribute (*it, "title", QString (), DL_WARNING);
-		QString shorttitle = help_xml.i18nStringAttribute (*it, "shorttitle", QString (), DL_DEBUG);
-		QString id = help_xml.getStringAttribute (*it, "id", QString (), DL_WARNING);
+		QString title = help_xml->i18nStringAttribute (*it, "title", QString (), DL_WARNING);
+		QString shorttitle = help_xml->i18nStringAttribute (*it, "shorttitle", QString (), DL_DEBUG);
+		QString id = help_xml->getStringAttribute (*it, "id", QString (), DL_WARNING);
 		writeHTML (startSection (id, title, shorttitle, &anchors, &anchornames));
-		writeHTML (renderHelpFragment (*it, state));
+		writeHTML (renderHelpFragment (*it));
 	}
 
 	// the section "settings" is the most complicated, as the labels of the individual GUI items has to be fetched from the component description. Of course it is only meaningful for component help, and not rendered for top level help pages.
 	if (for_component) {
-		element = help_xml.getChildElement (help_doc_element, "settings", DL_INFO);
+		element = help_xml->getChildElement (help_doc_element, "settings", DL_INFO);
 		if (!element.isNull ()) {
 			writeHTML (startSection ("settings", i18n ("GUI settings"), QString (), &anchors, &anchornames));
-			XMLChildList setting_elements = help_xml.getChildElements (element, QString (), DL_WARNING);
+			XMLChildList setting_elements = help_xml->getChildElements (element, QString (), DL_WARNING);
 			for (XMLChildList::iterator it = setting_elements.begin (); it != setting_elements.end (); ++it) {
 				if ((*it).tagName () == "setting") {
-					QString id = help_xml.getStringAttribute (*it, "id", QString (), DL_WARNING);
-					QString title = help_xml.i18nStringAttribute (*it, "title", QString (), DL_INFO);
-					if (title.isEmpty ()) title = resolveLabel (id, state);
+					QString id = help_xml->getStringAttribute (*it, "id", QString (), DL_WARNING);
+					QString title = help_xml->i18nStringAttribute (*it, "title", QString (), DL_INFO);
+					if (title.isEmpty ()) title = resolveLabel (id);
 					writeHTML ("<h4>" + title + "</h4>");
-					writeHTML (renderHelpFragment (*it, state));
+					writeHTML (renderHelpFragment (*it));
 				} else if ((*it).tagName () == "caption") {
-					QString id = help_xml.getStringAttribute (*it, "id", QString (), DL_WARNING);
-					QString title = help_xml.i18nStringAttribute (*it, "title", QString (), DL_INFO);
-					if (title.isEmpty ()) title = resolveLabel (id, state);
+					QString id = help_xml->getStringAttribute (*it, "id", QString (), DL_WARNING);
+					QString title = help_xml->i18nStringAttribute (*it, "title", QString (), DL_INFO);
+					if (title.isEmpty ()) title = resolveLabel (id);
 					writeHTML ("<h3>" + title + "</h3>");
 				} else {
-					help_xml.displayError (&(*it), "Tag not allowed, here", DL_WARNING);
+					help_xml->displayError (&(*it), "Tag not allowed, here", DL_WARNING);
 				}
 			}
 		}
 	}
 
 	// "related" section
-	element = help_xml.getChildElement (help_doc_element, "related", DL_INFO);
+	element = help_xml->getChildElement (help_doc_element, "related", DL_INFO);
 	if (!element.isNull ()) {
 		writeHTML (startSection ("related", i18n ("Related functions and pages"), QString (), &anchors, &anchornames));
-		writeHTML (renderHelpFragment (element, state));
+		writeHTML (renderHelpFragment (element));
 	}
 
 	// "technical" section
-	element = help_xml.getChildElement (help_doc_element, "technical", DL_INFO);
+	element = help_xml->getChildElement (help_doc_element, "technical", DL_INFO);
 	if (!element.isNull ()) {
 		writeHTML (startSection ("technical", i18n ("Technical details"), QString (), &anchors, &anchornames));
-		writeHTML (renderHelpFragment (element, state));
+		writeHTML (renderHelpFragment (element));
 	}
 
 	if (for_component) {
@@ -650,7 +793,7 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 	if (for_component) {
 		about = chandle->getAboutData ();
 	} else {
-		about = RKComponentAboutData (help_xml.getChildElement (help_doc_element, "about", DL_INFO), help_xml);
+		about = RKComponentAboutData (help_xml->getChildElement (help_doc_element, "about", DL_INFO), *help_xml);
 	}
 	if (about.valid) {
 		writeHTML (startSection ("about", i18n ("About"), QString (), &anchors, &anchornames));
@@ -671,30 +814,24 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 	}
 	writeHTML ("</div><div id=\"navigation\">" + navigation + "</div>");
 	writeHTML ("</body></html>\n");
-	endWritingHTML ();
-
-	QString ref = url.ref ();
-	if (!ref.isEmpty ()) {
-		doGotoAnchor (ref);
-	}
 
 	return (true);
 }
 
-QString RKHTMLWindow::resolveLabel (const QString& id, const RKHTMLWindow::HTMLRendererState& state) const {
+QString RKHelpRenderer::resolveLabel (const QString& id) const {
 	RK_TRACE (APP);
 
-	QDomElement source_element = state.component_xml->findElementWithAttribute (state.component_doc_element, "id", id, true, DL_WARNING);
+	QDomElement source_element = component_xml->findElementWithAttribute (component_doc_element, "id", id, true, DL_WARNING);
 	if (source_element.isNull ()) {
 		RK_DEBUG (PLUGIN, DL_ERROR, "No such UI element: %s", qPrintable (id));
 	}
-	return (state.component_xml->i18nStringAttribute (source_element, "label", i18n ("Unnamed GUI element"), DL_WARNING));
+	return (component_xml->i18nStringAttribute (source_element, "label", i18n ("Unnamed GUI element"), DL_WARNING));
 }
 
-QString RKHTMLWindow::renderHelpFragment (QDomElement &fragment, const HTMLRendererState &state) {
+QString RKHelpRenderer::renderHelpFragment (QDomElement &fragment) {
 	RK_TRACE (APP);
 
-	QString text = state.help_xml->i18nElementText (fragment, true, DL_WARNING);
+	QString text = help_xml->i18nElementText (fragment, true, DL_WARNING);
 
 	// Can't resolve links and references based on the already parsed dom-tree, because they can be inside string to be translated.
 	// I.e. resolving links before doing i18n will cause i18n-lookup to fail
@@ -724,7 +861,7 @@ QString RKHTMLWindow::renderHelpFragment (QDomElement &fragment, const HTMLRende
 	}
 	ret += text.mid (pos);
 
-	if (state.component_xml) {
+	if (component_xml) {
 		text = ret;
 		ret.clear ();
 		pos = 0;
@@ -739,7 +876,7 @@ QString RKHTMLWindow::renderHelpFragment (QDomElement &fragment, const HTMLRende
 				id = text.mid (id_start, id_end - id_start);
 				pos = text.indexOf ("/>", id_end) + 2;
 			}
-			ret += resolveLabel (id, state);
+			ret += resolveLabel (id);
 		}
 		ret += text.mid (pos);
 	}
@@ -748,7 +885,7 @@ QString RKHTMLWindow::renderHelpFragment (QDomElement &fragment, const HTMLRende
 	return ret;
 }
 
-QString RKHTMLWindow::prepareHelpLink (const QString &href, const QString &text) {
+QString RKHelpRenderer::prepareHelpLink (const QString &href, const QString &text) {
 	RK_TRACE (APP);
 
 	QString ret = "<a href=\"" + href + "\">";
@@ -782,7 +919,7 @@ QString RKHTMLWindow::prepareHelpLink (const QString &href, const QString &text)
 	return (ret + "</a>");
 }
 
-QString RKHTMLWindow::componentPathToId (QString path) {
+QString RKHelpRenderer::componentPathToId (QString path) {
 	RK_TRACE (APP);
 
 	QStringList path_segments = path.split ('/', QString::SkipEmptyParts);
@@ -794,13 +931,13 @@ QString RKHTMLWindow::componentPathToId (QString path) {
 	return (path_segments.join ("::"));
 }
 
-RKComponentHandle *RKHTMLWindow::componentPathToHandle (QString path) {
+RKComponentHandle *RKHelpRenderer::componentPathToHandle (QString path) {
 	RK_TRACE (APP);
 
 	return (RKComponentMap::getComponentHandle (componentPathToId (path)));
 }
 
-QString RKHTMLWindow::startSection (const QString &name, const QString &title, const QString &shorttitle, QStringList *anchors, QStringList *anchor_names) {
+QString RKHelpRenderer::startSection (const QString &name, const QString &title, const QString &shorttitle, QStringList *anchors, QStringList *anchor_names) {
 	QString ret = "<a name=\"" + name + "\">";
 	ret.append ("<h2>" + title + "</h2>\n");
 	anchors->append (name);
@@ -809,65 +946,11 @@ QString RKHTMLWindow::startSection (const QString &name, const QString &title, c
 	return (ret);
 }
 
-void RKHTMLWindow::beginWritingHTML (const KUrl& url) {
+void RKHelpRenderer::writeHTML (const QString& string) {
 	RK_TRACE (APP);
 
-	if (khtmlpart) khtmlpart->begin (url);
-/*	else {
-		// renderingpart->openStream ("text/html", url);       // Nope, not supported by kwebkitpart (at least in KDE 4.9.5)
-		delete html_write_file;
-		html_write_file = new KTemporaryFile ();
-		html_write_file->setSuffix (".html");
-		html_write_file->open ();
-	} */
+	device->write (string.toUtf8 ());
 }
-
-void RKHTMLWindow::writeHTML (const QString& string) {
-	RK_TRACE (APP);
-
-	if (khtmlpart) khtmlpart->write (string);
-/*	else {
-		RK_ASSERT (html_write_file);
-		html_write_file->write (string.toUtf8 ());
-	} */
-}
-
-void RKHTMLWindow::endWritingHTML() {
-	RK_TRACE (APP);
-
-	if (khtmlpart) khtmlpart->end ();
-/*	else {
-		html_write_file->close ();
-		renderingpart->openUrl (KUrl::fromLocalFile (html_write_file->fileName ()));
-	}*/
-}
-
-void RKHTMLWindow::saveBrowserState (QByteArray* state) {
-	RK_TRACE (APP);
-
-	KParts::BrowserExtension *bext = renderingpart->browserExtension ();
-	if (!bext) {
-		RK_ASSERT (bext);
-		return;
-	}
-	state->clear ();
-	QDataStream dummy (state, QIODevice::WriteOnly);
-	bext->saveState (dummy);
-}
-
-void RKHTMLWindow::restoreBrowserState (QByteArray* state) {
-	RK_TRACE (APP);
-
-	if (state->isEmpty()) return;
-	KParts::BrowserExtension *bext = renderingpart->browserExtension ();
-	if (!bext) {
-		RK_ASSERT (bext);
-		return;
-	}
-	QDataStream dummy (state, QIODevice::ReadOnly);
-	bext->restoreState (dummy);
-}
-
 
 /////////////////////////////////////
 /////////////////////////////////////
