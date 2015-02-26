@@ -302,7 +302,7 @@ void RKToolWindowBar::contextMenuEvent (QContextMenuEvent* event) {
 	RK_TRACE (APP);
 
 	KMenu menu (this);
-	foreach (RKToolWindowList::ToolWindowRepresentation rep, RKToolWindowList::registeredToolWindows ()) {
+	foreach (const RKToolWindowList::ToolWindowRepresentation& rep, RKToolWindowList::registeredToolWindows ()) {
 		QAction *a = menu.addAction (rep.window->windowIcon (), rep.window->shortCaption ());
 		a->setCheckable (true);
 		a->setChecked (rep.window->tool_window_bar == this);

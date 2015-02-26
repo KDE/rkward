@@ -479,7 +479,7 @@ QString RKSettingsModuleRPackages::libLocsCommand () {
 	QString command = ".libPaths (unique (c (";
 	bool first = true;
 	QStringList ll = libraryLocations ();
-	foreach (const QString libloc, ll) {
+	foreach (const QString& libloc, ll) {
 		if (first) first = false;
 		else command.append (", ");
 		command.append (RObject::rQuote (libloc));

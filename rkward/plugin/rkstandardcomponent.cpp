@@ -511,8 +511,6 @@ void RKStandardComponent::addComponentToCurrentPage (RKComponent *component) {
 
 /////////////////////////////////////// RKComponentBuilder /////////////////////////////////////////
 
-#include "rkcomponentmap.h"
-
 #include <qpushbutton.h>
 
 RKComponentBuilder::RKComponentBuilder (RKComponent *parent_component, const QDomElement &document_element) {

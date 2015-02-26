@@ -38,7 +38,7 @@ RKFindBar::RKFindBar (QWidget* parent, bool custom) : QWidget (parent) {
 	QToolButton* close_button = new QToolButton (this);
 	close_button->setIcon (KIcon ("dialog-close"));
 	close_button->setAutoRaise (true);   // makes it flat
-	connect (close_button, SIGNAL (clicked ()), this, SLOT (hide ()));
+	connect (close_button, SIGNAL (clicked()), this, SLOT (hide()));
 	mlayout->addWidget (close_button);
 
 	QHBoxLayout* slayout = new QHBoxLayout ();

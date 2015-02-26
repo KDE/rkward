@@ -216,7 +216,7 @@ bool RKSettingsModuleCommandEditor::matchesScriptFileFilter (const QString &file
 	RK_TRACE (SETTINGS);
 
 	const QStringList exts = script_file_filter.split (' ');
-	foreach (const QString ext, exts) {
+	foreach (const QString& ext, exts) {
 		QRegExp reg (ext, Qt::CaseInsensitive, QRegExp::Wildcard);
 		if (reg.exactMatch (filename)) return true;
 	}

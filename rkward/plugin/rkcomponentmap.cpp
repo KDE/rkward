@@ -774,8 +774,6 @@ void RKComponentMap::setPluginStatus (const QStringList& ids, const QStringList&
 ///########################### END RKComponentMap ###############################
 ///########################### BEGIN RKComponentHandle ############################
 
-#include "rkstandardcomponent.h"
-
 RKComponentHandle::RKComponentHandle (RKPluginMapFile *pluginmap, const QString &rel_filename, const QString &label) {
 	RK_TRACE (PLUGIN);
 

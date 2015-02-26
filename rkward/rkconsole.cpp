@@ -804,7 +804,7 @@ QString RKConsole::cleanSelection (const QString &origin) {
 	QString ret;
 	ret.reserve (origin.length ());
 	QStringList lines = origin.split ('\n');
-	foreach (QString line, lines) {
+	foreach (const QString& line, lines) {
 		if (line.startsWith (nprefix)) {
 			ret.append (line.mid (nprefix.length ()));
 		} else if (line.startsWith (iprefix)) {

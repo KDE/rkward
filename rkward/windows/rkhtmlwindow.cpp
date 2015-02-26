@@ -143,7 +143,7 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 	// We have to connect this in order to allow browsing.
 	connect (page, SIGNAL (pageInternalNavigation(QUrl)), this, SLOT (internalNavigation(QUrl)));
 	connect (page, SIGNAL (downloadRequested(QNetworkRequest)), this, SLOT (saveRequested(QNetworkRequest)));
-	connect (page, SIGNAL (printRequested(QWebFrame*)), this, SLOT(slotPrint ()));
+	connect (page, SIGNAL (printRequested(QWebFrame*)), this, SLOT(slotPrint()));
 	connect (view, SIGNAL (customContextMenuRequested(QPoint)), this, SLOT(makeContextMenu(QPoint)));
 
 	current_history_position = -1;

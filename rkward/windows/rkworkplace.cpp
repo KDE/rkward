@@ -222,7 +222,7 @@ void RKWorkplace::addWindow (RKMDIWindow *window, bool attached) {
 void RKWorkplace::placeToolWindows() {
 	RK_TRACE (APP);
 
-	foreach (const RKToolWindowList::ToolWindowRepresentation rep, RKToolWindowList::registeredToolWindows ()) {
+	foreach (const RKToolWindowList::ToolWindowRepresentation& rep, RKToolWindowList::registeredToolWindows ()) {
 		placeInToolWindowBar (rep.window, rep.default_placement);
 		getHistory ()->popLastWindow (rep.window);	// windows send a spurious activation signal triggered from KPartsManager::addPart(), so we pop them, again
 	}

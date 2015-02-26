@@ -102,7 +102,6 @@ private:
 };
 
 /** code completion model for RKCommandEditorWindow */
-#include <kdeversion.h>
 #if KDE_VERSION_MAJOR != 4
 #	error Adjust the versioning hack below!
 #endif
