@@ -58,13 +58,13 @@ RKFindBar::RKFindBar (QWidget* parent, bool custom) : QWidget (parent) {
 	QToolButton* backward_button = new QToolButton (this);
 	backward_button->setArrowType (Qt::UpArrow);
 	backward_button->setContentsMargins (0, 0, 0, 0);
-	RKCommonFunctions::setTips (i18n ("Search backwards (previous occurence of search term"), backward_button);
+	RKCommonFunctions::setTips (i18n ("Search backwards (previous occurrence of search term)"), backward_button);
 	connect (backward_button, SIGNAL (clicked()), this, SLOT(backward()));
 	slayout->addWidget (backward_button);
 	QToolButton* forward_button = new QToolButton (this);
 	forward_button->setArrowType (Qt::DownArrow);
 	forward_button->setContentsMargins (0, 0, 0, 0);
-	RKCommonFunctions::setTips (i18n ("Search forward (next occurence of search term"), forward_button);
+	RKCommonFunctions::setTips (i18n ("Search forward (next occurrence of search term)"), forward_button);
 	connect (forward_button, SIGNAL (clicked()), this, SLOT(forward()));
 	slayout->addWidget (forward_button);
 
