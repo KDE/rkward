@@ -1,3 +1,10 @@
+rkward (0.6.3z+0.6.4+devel1-1) unstable; urgency=low
+  * new upstream release
+  * now uses QtWebKit module, adjust build-depends, accordingly (in a way that is
+    backwards compatible with Ubuntu Lucid)
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Thu, 26 Feb 2015 10:30:00 +0100
+
 rkward (0.6.2z+0.6.3+devel1-1) unstable; urgency=low
   * new upstream release
   * Ajdust to move of homepage to rkward.kde.org, and vcs to git.kde.org
