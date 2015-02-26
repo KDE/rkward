@@ -2,7 +2,7 @@ Source: rkward
 Section: math
 Priority: optional
 Maintainer: Thomas Friedrichsmeier <tfry@users.sourceforge.net>
-Build-Depends: debhelper (>= 6.0.0), kdelibs5-dev, cmake, r-base-dev (>= 2.8.0), libx11-dev, libqtwebkit-dev
+Build-Depends: debhelper (>= 6.0.0), kdelibs5-dev, cmake, r-base-dev (>= 2.8.0), libx11-dev, libqtwebkit-dev | libqt4-dev (<< 4:4.7)
 Standards-Version: 3.9.6
 Homepage: http://rkward.kde.org
 Vcs-Browser: http://quickgit.kde.org/?p=rkward.git&a=tree&f=debian
