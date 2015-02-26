@@ -35,7 +35,7 @@ class RKRowNames;
 @author Thomas Friedrichsmeier */
 class RKVarEditModelBase : public QAbstractTableModel {
 public:
-	RKVarEditModelBase (QObject *parent) : QAbstractTableModel (parent) {};
+	explicit RKVarEditModelBase (QObject *parent) : QAbstractTableModel (parent) {};
 	virtual ~RKVarEditModelBase () {};
 
 	virtual RKTextMatrix getTextMatrix (const QItemSelectionRange& range) const = 0;
@@ -53,7 +53,7 @@ public:
 class RKVarEditModel : public RKVarEditModelBase, public RObjectListener {
 	Q_OBJECT
 public:
-	RKVarEditModel (QObject *parent);
+	explicit RKVarEditModel (QObject *parent);
 	~RKVarEditModel ();
 
 	/** set the editor that is using this model. This is useful to find out, e.g. which window should be raised, when calling "Edit" on an object represented in this data-model. Also, the editor will be notified, if all objects in the model have been removed. */

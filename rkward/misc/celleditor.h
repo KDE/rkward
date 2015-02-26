@@ -39,7 +39,7 @@ focus.
 class CellEditor : public QLineEdit {
 Q_OBJECT
 public:
-	CellEditor (QWidget* parent);
+	explicit CellEditor (QWidget* parent);
 	~CellEditor ();
 
 	void setValueLabels (const RObject::ValueLabels& labels);

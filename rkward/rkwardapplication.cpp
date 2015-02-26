@@ -22,7 +22,9 @@
 #ifdef Q_WS_WIN
 #	include <windows.h>
 #elif defined Q_WS_MAC
-#	warning "Graph window capturing is not supported on Mac OS native, yet. Consider using X11."
+#	ifdef __GNUC__
+#		warning "Graph window capturing is not supported on Mac OS native, yet. Consider using X11."
+#	endif
 #else
 #	include <X11/X.h>
 #	include <X11/Xlib.h>

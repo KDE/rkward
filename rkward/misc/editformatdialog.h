@@ -57,7 +57,7 @@ private:
 class EditFormatDialogProxy : public QWidget {
 	Q_OBJECT
 public:
-	EditFormatDialogProxy (QWidget* parent);
+	explicit EditFormatDialogProxy (QWidget* parent);
 	~EditFormatDialogProxy ();
 
 	void initialize (const RKVariable::FormattingOptions& options, const QString& varname);

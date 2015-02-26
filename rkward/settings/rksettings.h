@@ -86,7 +86,7 @@ update themselves on certain changed settings should connect to those signals. *
 class RKSettingsTracker : public QObject {
 	Q_OBJECT
 public:
-	RKSettingsTracker (QObject *parent);
+	explicit RKSettingsTracker (QObject *parent);
 	~RKSettingsTracker ();
 
 	void signalSettingsChange (RKSettings::SettingsPage page);

@@ -24,7 +24,7 @@
 This object is special in that it exists during editing, only. It is not represented in the RObjectList. */
 class RKRowNames : public RKVariable {
 public:
-	RKRowNames (RContainerObject *parent);
+	explicit RKRowNames (RContainerObject *parent);
 	~RKRowNames ();
 
 	QString getFullName () const;

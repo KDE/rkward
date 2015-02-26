@@ -410,7 +410,7 @@ class RKComponentPropertyConvert : public RKComponentPropertyBool {
 	Q_OBJECT
 public:
 /** constructor. Note that this property *requires* an RKComponent as parent (the one at the top of all the source properties) */
-	RKComponentPropertyConvert (RKComponent *parent);
+	explicit RKComponentPropertyConvert (RKComponent *parent);
 	~RKComponentPropertyConvert ();
 	int type () { return PropertyConvert; };
 

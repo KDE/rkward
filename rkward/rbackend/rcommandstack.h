@@ -74,7 +74,7 @@ friend class RCommandStackModel;
 class RCommandStackModel : public QAbstractItemModel {
 	Q_OBJECT
 public:
-	RCommandStackModel (QObject *parent);
+	explicit RCommandStackModel (QObject *parent);
 	~RCommandStackModel ();
 
 	/** implements QAbstractItemModel::index() */

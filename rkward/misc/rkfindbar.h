@@ -28,7 +28,7 @@ class QHBoxLayout;
 class RKFindBar : public QWidget {
 	Q_OBJECT
 public:
-	RKFindBar (QWidget *parent, bool custom=false);
+	explicit RKFindBar (QWidget *parent, bool custom=false);
 	~RKFindBar ();
 
 	enum FindOptions {

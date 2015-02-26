@@ -50,7 +50,7 @@ friend class RKWardMainWindow;
 class RKCallstackViewerWidget : public QWidget {
 	Q_OBJECT
 public:
-	RKCallstackViewerWidget (QWidget *parent);
+	explicit RKCallstackViewerWidget (QWidget *parent);
 	~RKCallstackViewerWidget ();
 
 	void updateState ();

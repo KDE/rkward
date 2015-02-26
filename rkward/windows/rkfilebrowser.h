@@ -57,7 +57,7 @@ TODO: KDE4: check whether there is a ready widget for this. Much of the implemen
 class RKFileBrowserWidget : public KVBox {
 	Q_OBJECT
 public:
-	RKFileBrowserWidget (QWidget *widget);
+	explicit RKFileBrowserWidget (QWidget *widget);
 	~RKFileBrowserWidget ();
 
 	void setURL (const QString &url);

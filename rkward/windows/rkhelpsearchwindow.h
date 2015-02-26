@@ -75,7 +75,7 @@ friend class RKWardMainWindow;
 @author Thomas Friedrichsmeier */
 class RKHelpSearchResultsModel : public QAbstractTableModel {
 public:
-	RKHelpSearchResultsModel (QObject *parent);
+	explicit RKHelpSearchResultsModel (QObject *parent);
 	~RKHelpSearchResultsModel ();
 
 /** Set the results. The model will assume ownership of the results */

@@ -27,7 +27,7 @@ class RData;
 /** Low level helper class for getting the structure of R objects (.rk.get.structure). */
 class RKStructureGetter {
 public:
-	RKStructureGetter (bool keep_evalled_promises);
+	explicit RKStructureGetter (bool keep_evalled_promises);
 	~RKStructureGetter ();
 
 	RData *getStructure (SEXP toplevel, SEXP name, SEXP envlevel, SEXP namespacename);

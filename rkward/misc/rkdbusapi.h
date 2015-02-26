@@ -26,7 +26,7 @@ class RKDBusAPI : public QObject {
 	Q_OBJECT
 public:
 /** Creates an object (should be a singleton) to relay incoming DBus calls, and registers it on the session bus. */
-	RKDBusAPI (QObject *parent);
+	explicit RKDBusAPI (QObject *parent);
 	~RKDBusAPI () {};
 public slots:
 	Q_SCRIPTABLE void openAnyUrl (const QStringList &urls);

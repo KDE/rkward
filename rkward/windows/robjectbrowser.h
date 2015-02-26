@@ -64,7 +64,7 @@ Provides most of the functionality of RObjectBrowser
 class RObjectBrowserInternal : public QWidget {
 Q_OBJECT
 public:
-	RObjectBrowserInternal (QWidget *parent);
+	explicit RObjectBrowserInternal (QWidget *parent);
 	~RObjectBrowserInternal ();
 private slots:
 	void updateButtonClicked ();

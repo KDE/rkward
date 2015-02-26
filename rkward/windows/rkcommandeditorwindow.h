@@ -128,7 +128,7 @@ public:
 class RKCodeCompletionModel : public KTextEditor::CodeCompletionModel {
 #endif
 public:
-	RKCodeCompletionModel (RKCommandEditorWindow* parent);
+	explicit RKCodeCompletionModel (RKCommandEditorWindow* parent);
 	~RKCodeCompletionModel ();
 
 	void updateCompletionList (const QString& symbol);
@@ -160,7 +160,7 @@ class RKCommandEditorWindow : public RKMDIWindow, public RKScriptContextProvider
 public:
 /** constructor
 @param use_r_highlighting Initialize the view to use R syntax highlighting. Use, if you're going to edit an R syntax file */
-	RKCommandEditorWindow (QWidget *parent = 0, bool use_r_highlighting=true, bool use_codehinting=true);
+	explicit RKCommandEditorWindow (QWidget *parent = 0, bool use_r_highlighting=true, bool use_codehinting=true);
 /** destructor */
 	~RKCommandEditorWindow ();
 /** open given URL. 

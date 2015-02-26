@@ -115,7 +115,7 @@ To be used in RKLoadLibsDialog
 class LoadUnloadWidget : public QWidget, public RCommandReceiver {
 Q_OBJECT
 public:
-	LoadUnloadWidget (RKLoadLibsDialog *dialog);
+	explicit LoadUnloadWidget (RKLoadLibsDialog *dialog);
 	
 	~LoadUnloadWidget ();
 signals:
@@ -150,7 +150,7 @@ private:
 class RKRPackageInstallationStatus : public QAbstractItemModel {
 	Q_OBJECT
 public:
-	RKRPackageInstallationStatus (QObject* parent);
+	explicit RKRPackageInstallationStatus (QObject* parent);
 	~RKRPackageInstallationStatus ();
 
 	void initialize (RCommandChain *chain);
@@ -221,7 +221,7 @@ private:
 
 class RKRPackageInstallationStatusSortFilterModel : public QSortFilterProxyModel {
 public:
-	RKRPackageInstallationStatusSortFilterModel (QObject* parent = 0);
+	explicit RKRPackageInstallationStatusSortFilterModel (QObject* parent = 0);
 	~RKRPackageInstallationStatusSortFilterModel ();
 	void setRKWardOnly (bool only);
 protected:
@@ -239,7 +239,7 @@ To be used in RKLoadLibsDialog.
 class InstallPackagesWidget : public QWidget {
 Q_OBJECT
 public:
-	InstallPackagesWidget (RKLoadLibsDialog *dialog);
+	explicit InstallPackagesWidget (RKLoadLibsDialog *dialog);
 	
 	~InstallPackagesWidget ();
 	void trySelectPackage (const QString &package_name);
@@ -274,7 +274,7 @@ Simple helper class for RKLoadLibsDialog to allow selection of installation para
 class PackageInstallParamsWidget : public QWidget {
 Q_OBJECT
 public:
-	PackageInstallParamsWidget (QWidget *parent);
+	explicit PackageInstallParamsWidget (QWidget *parent);
 	
 	~PackageInstallParamsWidget ();
 
@@ -293,7 +293,7 @@ private:
 class RKPluginMapSelectionWidget : public QWidget {
 Q_OBJECT
 public:
-	RKPluginMapSelectionWidget (RKLoadLibsDialog *dialog);
+	explicit RKPluginMapSelectionWidget (RKLoadLibsDialog *dialog);
 	virtual ~RKPluginMapSelectionWidget ();
 public slots:
 	void ok ();

@@ -68,7 +68,7 @@ private:
 class RKTableView : public QTableView {
 	Q_OBJECT
 public:
-	RKTableView (QWidget *parent);
+	explicit RKTableView (QWidget *parent);
 	virtual ~RKTableView ();
 
 	virtual int trueRows () const { return apparentRows () + trailing_rows; };

@@ -28,7 +28,7 @@ class RCommandProxy;
 
 class RKRBackendProtocolFrontend : public QObject {
 public:
-	RKRBackendProtocolFrontend (RInterface* parent);
+	explicit RKRBackendProtocolFrontend (RInterface* parent);
 	~RKRBackendProtocolFrontend ();
 
 	static void setRequestCompleted (RBackendRequest *request);

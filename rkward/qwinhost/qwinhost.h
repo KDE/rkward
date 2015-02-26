@@ -74,7 +74,7 @@ class QT_QTWINMIGRATE_EXPORT QWinHost : public QWidget
 {
     Q_OBJECT
 public:
-    QWinHost(QWidget *parent = 0, Qt::WFlags f = 0);
+    explicit QWinHost(QWidget *parent = 0, Qt::WFlags f = 0);
     ~QWinHost();
 
     void setWindow(HWND);

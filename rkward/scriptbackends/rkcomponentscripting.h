@@ -37,7 +37,7 @@ ScriptBackend is designed to operate in a separate thread, and may merge a bunch
 class RKComponentScriptingProxy : public QObject {
 Q_OBJECT
 public:
-	RKComponentScriptingProxy (RKComponent *component);
+	explicit RKComponentScriptingProxy (RKComponent *component);
 	~RKComponentScriptingProxy ();
 
 	void initialize (const QString& file, const QString& command);

@@ -41,7 +41,7 @@ class RKFindBar;
 class RKWebPage : public KWebPage {
 	Q_OBJECT
 public:
-	RKWebPage (RKHTMLWindow* window);
+	explicit RKWebPage (RKHTMLWindow* window);
 	void load (const QUrl& url);
 signals:
 	void pageInternalNavigation (const QUrl& url);
@@ -76,7 +76,7 @@ public:
 
 /** constructor. 
 @param parent parent QWidget, usually RKGlobals::rkApp () or similar */
-	RKHTMLWindow (QWidget *parent, WindowMode mode=HTMLHelpWindow);
+	explicit RKHTMLWindow (QWidget *parent, WindowMode mode=HTMLHelpWindow);
 /** destructor */
 	~RKHTMLWindow ();
 /** open given URL. Returns false, if the URL is not an existing local file. Loading a non-local URL may succeed, even if this returns false! */
@@ -154,7 +154,7 @@ friend class RKHTMLWindowPart;
 class RKHTMLWindowPart : public KParts::Part {
 	Q_OBJECT
 public:
-	RKHTMLWindowPart (RKHTMLWindow *window);
+	explicit RKHTMLWindowPart (RKHTMLWindow *window);
 	~RKHTMLWindowPart () {};
 
 	void setOutputWindowSkin ();
@@ -184,7 +184,7 @@ friend class RKHTMLWindow;
 class RKHelpRenderer {
 public:
 /** ctor */
-	RKHelpRenderer (QIODevice *_device) { device = _device; help_xml = 0; component_xml = 0; };
+	explicit RKHelpRenderer (QIODevice *_device) { device = _device; help_xml = 0; component_xml = 0; };
 /** destructor */
 	~RKHelpRenderer () {};
 

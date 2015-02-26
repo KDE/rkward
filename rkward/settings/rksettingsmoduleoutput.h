@@ -35,7 +35,7 @@ and a widget to configure the settings.
 class RKCarbonCopySettings : public QWidget {
 	Q_OBJECT
 public:
-	RKCarbonCopySettings (QWidget* parent);
+	explicit RKCarbonCopySettings (QWidget* parent);
 	~RKCarbonCopySettings ();
 
 	static void saveSettings (KConfig *config);

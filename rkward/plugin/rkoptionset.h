@@ -139,7 +139,7 @@ class RKOptionSetDisplayModel : QAbstractTableModel {
 	Q_OBJECT
 private:
 friend class RKOptionSet;
-	RKOptionSetDisplayModel (RKOptionSet* parent);
+	explicit RKOptionSetDisplayModel (RKOptionSet* parent);
 	virtual ~RKOptionSetDisplayModel ();
 	int rowCount (const QModelIndex & parent = QModelIndex()) const;
 	int columnCount (const QModelIndex & parent = QModelIndex()) const;

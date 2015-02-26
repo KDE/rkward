@@ -93,7 +93,7 @@ Simple proxy / wrapper to allow using a modal EditLabelsDialog in a QTableView
 class EditLabelsDialogProxy : public QWidget {
 	Q_OBJECT
 public:
-	EditLabelsDialogProxy (QWidget* parent);
+	explicit EditLabelsDialogProxy (QWidget* parent);
 	~EditLabelsDialogProxy ();
 
 	void initialize (const RObject::ValueLabels& labels, const QString& varname);

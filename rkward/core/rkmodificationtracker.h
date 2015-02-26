@@ -117,8 +117,7 @@ This class takes care of propagating object-modifications to all editors/variabl
 */
 class RKModificationTracker : public RKObjectListModel {
 public:
-	RKModificationTracker (QObject *parent);
-
+	explicit RKModificationTracker (QObject *parent);
 	~RKModificationTracker ();
 	
 /** the given object should be removed (either it was removed in the R-workspace, or the user requests removal of the object in an editor or the RObjectList). First, if the object is being edited somewhere, the user will get a chance to object to the removal. If the user does not object, the RKModificationTracker will remove the object and notify all interested listeners that the object really was removed. When calling from the RObjectList, you will likely set removed_in_workspace to true, to signal that the object-data is already gone in the workspace. */

@@ -35,7 +35,7 @@ class RKVarEditModelBase;
 class TwinTableMember : public RKTableView {
 	Q_OBJECT
 public: 
-	TwinTableMember (QWidget *parent);
+	explicit TwinTableMember (QWidget *parent);
 	~TwinTableMember ();
 	TwinTableMember *getTwin () { return twin; };
 /** ends editing. Actually it's just a simple wrapper around QTable::endEdit () */

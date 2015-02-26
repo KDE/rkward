@@ -78,7 +78,7 @@ friend class RKWardMainWindow;
 class RKCommandLogView : public QTextEdit {
 	Q_OBJECT
 public:
-	RKCommandLogView (RKCommandLog *parent);
+	explicit RKCommandLogView (RKCommandLog *parent);
 	~RKCommandLogView ();
 public slots:
 	void selectAll ();

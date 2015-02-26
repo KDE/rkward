@@ -44,7 +44,7 @@ class RKGraphicsDevice;
 class RKMDIWindowHistory : public QObject {
 	Q_OBJECT
 public:
-	RKMDIWindowHistory (QObject *parent);
+	explicit RKMDIWindowHistory (QObject *parent);
 	~RKMDIWindowHistory ();
 
 	void removeWindow (RKMDIWindow *window);

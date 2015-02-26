@@ -437,7 +437,9 @@ void RKWardMainWindow::initActions() {
 
 #ifdef Q_WS_WIN
 	// TODO: find the cause and fix it! http://sourceforge.net/tracker/?func=detail&aid=2848341&group_id=50231&atid=459007
-#	warning TODO: import data dialog is disabled on windows due to bug in kdelibs
+#	ifdef __GNUC__
+#		warning TODO: import data dialog is disabled on windows due to bug in kdelibs
+#	endif
 #else
 	action = actionCollection ()->addAction ("import_data", this, SLOT (importData()));
 	action->setText (i18n ("Import Data"));
@@ -771,7 +773,9 @@ void RKWardMainWindow::askOpenWorkspace (const KUrl &url) {
 	if (lurl.isEmpty ()) {
 #ifdef Q_WS_WIN
 	// getOpenUrl(KUrl("kfiledialog:///<rfiles>"), ...) causes a hang on windows (KDElibs 4.2.3).
-#	warning Track this bug down and/or report it
+#	ifdef __GNUC__
+#		warning Track this bug down and/or report it
+#	endif
 		lurl = KFileDialog::getOpenUrl (KUrl (), i18n("%1|R Workspace Files (%1)\n*|All files", RKSettingsModuleGeneral::workspaceFilenameFilter ()), this, i18n("Select workspace to open..."));
 #else
 		lurl = KFileDialog::getOpenUrl (KUrl ("kfiledialog:///<rfiles>"), i18n("%1|R Workspace Files (%1)\n*|All files", RKSettingsModuleGeneral::workspaceFilenameFilter ()), this, i18n("Select workspace to open..."));
@@ -907,7 +911,9 @@ void RKWardMainWindow::slotOpenCommandEditor () {
 
 #ifdef Q_WS_WIN
 	// getOpenUrls(KUrl("kfiledialog:///<rfiles>"), ...) causes a hang on windows (KDElibs 4.2.3).
-#	warning Track this bug down and/or report it
+#	ifdef __GNUC__
+#		warning Track this bug down and/or report it
+#	endif
 	res = KEncodingFileDialog::getOpenUrlsAndEncoding (QString (), QString (), QString ("%1|R Script Files (%1)\n*|All Files (*)").arg (RKSettingsModuleCommandEditor::scriptFileFilter ()), this, i18n ("Open script file(s)"));
 #else
 	res = KEncodingFileDialog::getOpenUrlsAndEncoding (QString (), "kfiledialog:///<rfiles>", QString ("%1|R Script Files (%1)\n*|All Files (*)").arg (RKSettingsModuleCommandEditor::scriptFileFilter ()), this, i18n ("Open script file(s)"));

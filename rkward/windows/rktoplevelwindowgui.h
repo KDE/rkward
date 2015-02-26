@@ -30,7 +30,7 @@ class KAction;
 class RKTopLevelWindowGUI : public QObject, public KXMLGUIClient {
 	Q_OBJECT
 public:
-	RKTopLevelWindowGUI (KXmlGuiWindow *for_window);
+	explicit RKTopLevelWindowGUI (KXmlGuiWindow *for_window);
 	~RKTopLevelWindowGUI ();
 public slots:
 	// windows menu

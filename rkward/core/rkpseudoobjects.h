@@ -32,7 +32,7 @@ This class represents a "pseudo" list of the S4 slots of the corresponding paren
 */
 class RSlotsPseudoObject : public RContainerObject {
 public:
-	RSlotsPseudoObject (RObject *parent);
+	explicit RSlotsPseudoObject (RObject *parent);
 	~RSlotsPseudoObject ();
 
 	QString getFullName () const;
@@ -48,7 +48,7 @@ rather call it a "special" object, instead).
 */
 class RKNamespaceObject : public REnvironmentObject {
 public:
-	RKNamespaceObject (REnvironmentObject* package, const QString name = QString ());
+	explicit RKNamespaceObject (REnvironmentObject* package, const QString name = QString ());
 	~RKNamespaceObject ();
 
 	QString getFullName () const;
@@ -72,7 +72,7 @@ It exists only once, as a direct child of the RObjectList.
 */
 class RKOrphanNamespacesObject : public REnvironmentObject {
 public:
-	RKOrphanNamespacesObject (RObjectList *parent);
+	explicit RKOrphanNamespacesObject (RObjectList *parent);
 	~RKOrphanNamespacesObject ();
 
 	QString getFullName () const;

@@ -50,7 +50,7 @@ friend class RKWardMainWindow;
 */
 class RKDebugMessageWindowWidget : public QWidget {
 public:
-	RKDebugMessageWindowWidget (QWidget *parent);
+	explicit RKDebugMessageWindowWidget (QWidget *parent);
 	~RKDebugMessageWindowWidget ();
 
 	void newMessage (const int flags, const int level, const QString &message);

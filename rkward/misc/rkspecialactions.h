@@ -26,7 +26,7 @@
 class RKPasteSpecialAction : public KPasteTextAction {
 	Q_OBJECT
 public:
-	RKPasteSpecialAction (QObject* parent);
+	explicit RKPasteSpecialAction (QObject* parent);
 	~RKPasteSpecialAction ();
 public slots:
 /** The actual workhorse of the action. */
@@ -47,7 +47,7 @@ class QCheckBox;
 class RKPasteSpecialDialog : public KDialog {
 	Q_OBJECT
 public:
-	RKPasteSpecialDialog (QWidget* parent);
+	explicit RKPasteSpecialDialog (QWidget* parent);
 	~RKPasteSpecialDialog ();
 
 	enum Dimensionality {

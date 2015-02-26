@@ -28,7 +28,7 @@ class RBackendRequest;
 class RKDebugHandler : public QObject {
 	Q_OBJECT
 public:
-	RKDebugHandler (QObject *parent);
+	explicit RKDebugHandler (QObject *parent);
 	~RKDebugHandler ();
 
 	static RKDebugHandler *instance () { return _instance; };

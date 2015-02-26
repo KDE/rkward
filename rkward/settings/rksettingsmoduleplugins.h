@@ -111,7 +111,7 @@ friend class RKPluginMapSelectionWidget;
 class RKSettingsModulePluginsModel : public QAbstractTableModel {
 	Q_OBJECT
 public:
-	RKSettingsModulePluginsModel (QObject* parent);
+	explicit RKSettingsModulePluginsModel (QObject* parent);
 	virtual ~RKSettingsModulePluginsModel ();
 /** (re-)initialize the model */
 	void init (const RKSettingsModulePlugins::PluginMapList &known_plugin_maps);

@@ -33,7 +33,7 @@
 class RKXMLGUISyncerNotifier : public QObject {
 Q_OBJECT
 public:
-	RKXMLGUISyncerNotifier (QObject *parent) : QObject (parent) {};
+	explicit RKXMLGUISyncerNotifier (QObject *parent) : QObject (parent) {};
 	~RKXMLGUISyncerNotifier () {};
 
 	void emitChangeSignal (KXMLGUIClient *client) { changed (client); };
