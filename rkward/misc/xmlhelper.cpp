@@ -66,7 +66,7 @@ QDomElement XMLHelper::openXMLFile (int debug_level, bool with_includes, bool wi
 			// resolve the file to include
 			QDomElement el = *it;
 
-			QString inc_filename = getStringAttribute (el, "file", QString::null, DL_ERROR);
+			QString inc_filename = getStringAttribute (el, "file", QString (), DL_ERROR);
 			QDir base = QFileInfo (filename).absoluteDir ();
 			inc_filename = base.filePath (inc_filename);
 
@@ -95,7 +95,7 @@ void XMLHelper::replaceWithChildren (QDomNode *replaced, const QDomElement &repl
 	RK_ASSERT (replaced);
 
 	QDomNode parent = replaced->parentNode ();
-	XMLChildList replacement_children = getChildElements (replacement_parent, QString::null, DL_WARNING);
+	XMLChildList replacement_children = getChildElements (replacement_parent, QString (), DL_WARNING);
 	for (XMLChildList::const_iterator it = replacement_children.constBegin (); it != replacement_children.constEnd (); ++it) {
 		parent.insertBefore (*it, *replaced);
 	}
@@ -128,13 +128,13 @@ QDomElement XMLHelper::resolveSnippets (QDomElement &from_doc) {
 
 	for (XMLChildList::const_iterator it = refs.constBegin (); it != refs.constEnd (); ++it) {
 		QDomElement ref = *it;
-		QString id = getStringAttribute (ref, "snippet", QString::null, DL_ERROR);
+		QString id = getStringAttribute (ref, "snippet", QString (), DL_ERROR);
 		displayError (&ref, "resolving snippet '" + id + '\'', DL_DEBUG, DL_DEBUG);
 
 		// resolve the reference
 		QDomElement snippet;
 		for (XMLChildList::const_iterator it = snippets.constBegin(); it != snippets.constEnd (); ++it) {
-			if (getStringAttribute (*it, "id", QString::null, DL_ERROR) == id) {
+			if (getStringAttribute (*it, "id", QString (), DL_ERROR) == id) {
 				snippet = *it;
 				break;
 			}

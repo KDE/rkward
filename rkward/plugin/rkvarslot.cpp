@@ -48,7 +48,7 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 		g_layout->addWidget (label, 0, 2);
 	}
 
-	select = new QPushButton (QString::null, this);
+	select = new QPushButton (QString (), this);
 	setSelectButton (false);
 	connect (select, SIGNAL (clicked()), this, SLOT (selectPressed()));
 	g_layout->addWidget (select, 1, 0);
@@ -101,7 +101,7 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 	if (mode == Varslot) {
 		// initialize filters
 		static_cast<RKComponentPropertyRObjects*> (available)->setClassFilter (xml->getStringAttribute (element, "classes", QString (), DL_INFO).split (' ', QString::SkipEmptyParts));
-		static_cast<RKComponentPropertyRObjects*> (available)->setTypeFilter (xml->getStringAttribute (element, "types", QString::null, DL_INFO).split (' ', QString::SkipEmptyParts));
+		static_cast<RKComponentPropertyRObjects*> (available)->setTypeFilter (xml->getStringAttribute (element, "types", QString (), DL_INFO).split (' ', QString::SkipEmptyParts));
 		static_cast<RKComponentPropertyRObjects*> (available)->setDimensionFilter (xml->getIntAttribute (element, "num_dimensions", 0, DL_INFO), xml->getIntAttribute (element, "min_length", 0, DL_INFO), xml->getIntAttribute (element, "max_length", INT_MAX, DL_INFO));
 	}
 	available->setStripDuplicates (!xml->getBoolAttribute (element, "allow_duplicates", false, DL_INFO));

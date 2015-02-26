@@ -15,8 +15,8 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef R_EMBED_H
-#define R_EMBED_H
+#ifndef RKRBACKEND_H
+#define RKRBACKEND_H
 
 #include <stddef.h>
 

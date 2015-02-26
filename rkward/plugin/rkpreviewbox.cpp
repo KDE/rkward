@@ -58,7 +58,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	connect (toggle_preview_box, SIGNAL (stateChanged(int)), this, SLOT (changedState(int)));
 
 	// status lable
-	status_label = new QLabel (QString::null, this);
+	status_label = new QLabel (QString (), this);
 	vbox->addWidget (status_label);
 
 	// find and connect to code property of the parent

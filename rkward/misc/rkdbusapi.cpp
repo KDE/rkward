@@ -17,7 +17,7 @@
 
 #include "rkdbusapi.h"
 
-#include <QtDBus>
+#include <QDBusConnection>
 #include <kwindowsystem.h>
 #include "../windows/rkworkplace.h"
 #include "../rkward.h"

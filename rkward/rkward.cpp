@@ -812,7 +812,7 @@ void RKWardMainWindow::addWorkspaceUrl (const KUrl &url) {
 	RK_TRACE (APP);
 
 	if (!url.isEmpty ()) fileOpenRecentWorkspace->addUrl (url);
-	setCaption (QString::null);	// trigger update of caption
+	setCaption (QString ());	// trigger update of caption
 }
 
 void RKWardMainWindow::updateCWD () {

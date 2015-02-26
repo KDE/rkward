@@ -15,8 +15,8 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef RKCOMPONETPROPERTIES_H
-#define RKCOMPONETPROPERTIES_H
+#ifndef RKCOMPONENTPROPERTIES_H
+#define RKCOMPONENTPROPERTIES_H
 
 #include <qobject.h>
 
@@ -54,7 +54,7 @@ public:
 /** connect this property to a governor property (given as argument). If reconcile_requirements, the requirements of both properties are reconciled to the least common denominator. The dependent property will be notified on all changes made in the governing property, so it can update its value. 
 Generally with few exceptions, you can only connect to properties that are either of the same class as this property, or of an extended class. Maybe in the future we will add some sophisticated converters allowing to connect vastly different types of properties in a meaningful way.
 If you specify a modifier, only the sub-value indicated by the modifier will be retrieved from the governing property on governorValueChanged. In this case reconcile_requirements is ignored. */
-	virtual void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString::null, bool reconcile_requirements=true);
+	virtual void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString (), bool reconcile_requirements=true);
 signals:
 /** property has changed its value. Any connected RKComponentPropertys/RKComponents should update their state
 @param property A pointer to the changed property for easy reference */
@@ -84,7 +84,7 @@ public:
 /** @returns true, if the property holds the maximum number of items (or more) */
 	bool atMaxLength () const { return (max_num_items && (max_num_items <= listLength ())); };
 /** reimplemented from RKComponentPropertyBase to actually reconcile requirements with other list properties */
-	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString::null, bool reconcile_requirements=true);
+	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString (), bool reconcile_requirements=true);
 /** If set to true, duplicate values are dropped, silently */
 	void setStripDuplicates (bool strip) { strip_duplicates = strip; };
 	virtual void removeAt (int index) = 0;
@@ -206,7 +206,7 @@ public:
 /** reimplemented from RKComponentPropertyBase to test whether conversion to int value is possible according to current settings (is a number, and within limits min and max) */
 	bool isStringValid (const QString &string);
 /** reimplemented from RKComponentPropertyBase to actually reconcile requirements with other numeric slots */
-	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString::null, bool reconcile_requirements=true);
+	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString (), bool reconcile_requirements=true);
 /** reimplemented from RKComponentPropertyBase to use special handling for int and double properties (ints are copied directly, doubles are rounded) */
 	void governorValueChanged (RKComponentPropertyBase *property);
 /** RTTI */
@@ -255,7 +255,7 @@ public:
 /** reimplemented from RKComponentPropertyBase to test whether conversion to int value is possible according to current settings (is a number, and within limits min and max) */
 	bool isStringValid (const QString &string);
 /** reimplemented from RKComponentPropertyBase to actually reconcile requirements with other numeric slots */
-	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString::null, bool reconcile_requirements=true);
+	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString (), bool reconcile_requirements=true);
 /** reimplemented from RKComponentPropertyBase to use special handling for int and double properties (ints and doubles are copied directly) */
 	void governorValueChanged (RKComponentPropertyBase *property);
 /** RTTI */
@@ -315,7 +315,7 @@ public:
 /** Get current list of objects. Do not modify this list! It is the very same list, the property uses internally!
 @returns an empty list if no valid object is selected */
 	RObject::ObjectList objectList ();
-/** reimplemented from RKComponentPropertyBase. Modifier "label" returns label(s). Modifier "shortname" returns short name(s). Modifier QString::null returns full name. If no object is set, returns an empty string / variant */
+/** reimplemented from RKComponentPropertyBase. Modifier "label" returns label(s). Modifier "shortname" returns short name(s). Modifier QString () returns full name. If no object is set, returns an empty string / variant */
 	QVariant value (const QString &modifier=QString ());
 /** reimplemented from RKComponentPropertyBase to convert to RObject with current constraints
 @returns false if no such object(s) could be found or the object(s) are invalid */
@@ -328,7 +328,7 @@ public:
 /** RTTI */
 	int type () { return PropertyRObjects; };
 /** reimplemented from RKComponentPropertyBase to actually reconcile requirements with other object properties */
-	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString::null, bool reconcile_requirements=true);
+	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString (), bool reconcile_requirements=true);
 /** reimplemented from RKComponentPropertyBase to use special handling for object properties */
 	void governorValueChanged (RKComponentPropertyBase *property);
 	void removeAt (int index);
@@ -382,7 +382,7 @@ public:
 	QVariant value (const QString &modifier=QString ());
 
 /** set the preprocess code.
-@param code The code to set. If this is QString::null, the property is seen to lack preprocess code and hence is not valid (see isValid ()). In contrast, empty strings are seen as valid */
+@param code The code to set. If this is QString (), the property is seen to lack preprocess code and hence is not valid (see isValid ()). In contrast, empty strings are seen as valid */
 	void setPreprocess (const QString &code) { preprocess_code = code; emit (valueChanged (this)); };
 /** see setPreprocess () */
 	void setCalculate (const QString &code) { calculate_code = code; emit (valueChanged (this)); };
@@ -440,7 +440,7 @@ public:
 /** string represenation of the options in ConvertMode. For use in XMLHelper::getMultiChoiceAttribute */
 	static QString convertModeOptionString () { return ("equals;notequals;range;and;or"); };
 /** reimplemented to do raise a warning, and do nothing else. */
-	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString::null, bool reconcile_requirements=true);
+	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString (), bool reconcile_requirements=true);
 /** reimplemented to do raise a warning, and do nothing else. */
 	bool setValue (const QString &value);
 public slots:
@@ -474,7 +474,7 @@ public:
 /** set the sources, i.e. the properties to operate on */
 	void setSources (const QString &condition_prop, const QStringList &value_props);
 /** reimplemented to do raise a warning, and do nothing else. */
-	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString::null, bool reconcile_requirements=true);
+	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString (), bool reconcile_requirements=true);
 /** reimplemented to do raise a warning, and do nothing else. */
 	bool setValue (const QString &value);
 

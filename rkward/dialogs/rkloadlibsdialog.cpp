@@ -519,8 +519,8 @@ void LoadUnloadWidget::updateInstalledPackages () {
 	installed_view->clear ();
 	loaded_view->clear ();
 
-	RKGlobals::rInterface ()->issueCommand (".rk.get.installed.packages ()", RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString::null, this, GET_INSTALLED_PACKAGES, parent->chain);
-	RKGlobals::rInterface ()->issueCommand (".packages ()", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, GET_LOADED_PACKAGES, parent->chain);
+	RKGlobals::rInterface ()->issueCommand (".rk.get.installed.packages ()", RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString (), this, GET_INSTALLED_PACKAGES, parent->chain);
+	RKGlobals::rInterface ()->issueCommand (".packages ()", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString (), this, GET_LOADED_PACKAGES, parent->chain);
 }
 
 void LoadUnloadWidget::loadButtonClicked () {

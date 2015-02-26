@@ -65,7 +65,7 @@ RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *pare
 
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 
-	files_choser = new GetFileNameWidget (this, GetFileNameWidget::ExistingDirectory, true, i18n ("Directory where rkward may store files (*)"), QString::null, new_files_path);
+	files_choser = new GetFileNameWidget (this, GetFileNameWidget::ExistingDirectory, true, i18n ("Directory where rkward may store files (*)"), QString (), new_files_path);
 	connect (files_choser, SIGNAL (locationChanged()), this, SLOT (settingChanged()));
 	main_vbox->addWidget (files_choser);
 

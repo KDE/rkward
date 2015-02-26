@@ -112,7 +112,7 @@ void REnvironmentObject::updateFromR (RCommandChain *chain) {
 	if (type & GlobalEnv) options = ", envlevel=-1";	// in the .GlobalEnv recurse one more level
 	if (type & PackageEnv) options.append (", namespacename=" + rQuote (packageName ()));
 
-	RCommand *command = new RCommand (".rk.get.structure (" + getFullName () + ", " + rQuote (getShortName ()) + options + ')', RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString::null, this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
+	RCommand *command = new RCommand (".rk.get.structure (" + getFullName () + ", " + rQuote (getShortName ()) + options + ')', RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString (), this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, chain);
 
 	type |= Updating;

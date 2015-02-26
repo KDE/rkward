@@ -107,10 +107,10 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 		backend = new QtScriptBackend (dummy, xml->messageCatalog ());
 	} else {
 		SimpleBackend *back = new SimpleBackend ();
-		back->setPreprocessTemplate (xml->getStringAttribute (element, "preprocess", QString::null, DL_INFO));
-		back->setPrintoutTemplate (xml->getStringAttribute (element, "printout", QString::null, DL_INFO));
-		back->setCalculateTemplate (xml->getStringAttribute (element, "calculate", QString::null, DL_INFO));
-		back->setPreviewTemplate (xml->getStringAttribute (element, "preview", QString::null, DL_INFO));
+		back->setPreprocessTemplate (xml->getStringAttribute (element, "preprocess", QString (), DL_INFO));
+		back->setPrintoutTemplate (xml->getStringAttribute (element, "printout", QString (), DL_INFO));
+		back->setCalculateTemplate (xml->getStringAttribute (element, "calculate", QString (), DL_INFO));
+		back->setPreviewTemplate (xml->getStringAttribute (element, "preview", QString (), DL_INFO));
 		backend = back;
 	}
 	connect (backend, SIGNAL (idle()), this, SLOT (backendIdle()));
@@ -564,13 +564,13 @@ QDomElement RKComponentBuilder::doElementCopy (const QString id, XMLHelper &xml,
 void RKComponentBuilder::buildElement (const QDomElement &element, XMLHelper &xml, QWidget *parent_widget, bool allow_pages) {
 	RK_TRACE (PLUGIN);
 
-	XMLChildList children = xml.getChildElements (element, QString::null, DL_ERROR);
+	XMLChildList children = xml.getChildElements (element, QString (), DL_ERROR);
 	
 	XMLChildList::const_iterator it;
 	for (it = children.constBegin (); it != children.constEnd (); ++it) {
 		RKComponent *widget = 0;
 		QDomElement e = *it;		// shorthand
-		QString id = xml.getStringAttribute (e, "id", QString::null, DL_INFO);
+		QString id = xml.getStringAttribute (e, "id", QString (), DL_INFO);
 
 		if (e.tagName () == QLatin1String ("copy")) {
 			e = doElementCopy (id, xml, e);
@@ -614,7 +614,7 @@ void RKComponentBuilder::buildElement (const QDomElement &element, XMLHelper &xm
 				if (tab_e.tagName () == QLatin1String ("tab")) {
 					RKTabPage *tabpage = new RKTabPage (tab_e, component (), tabbook);
 					buildElement (tab_e, xml, tabpage->getPage (), false);
-					QString tab_id = xml.getStringAttribute (tab_e, "id", QString::null, DL_INFO);
+					QString tab_id = xml.getStringAttribute (tab_e, "id", QString (), DL_INFO);
 					if (!tab_id.isNull ()) {
 						parent->addChild (tab_id, tabpage);
 					}
@@ -654,7 +654,7 @@ void RKComponentBuilder::buildElement (const QDomElement &element, XMLHelper &xm
 		} else if (e.tagName () == QLatin1String ("saveobject")) {
 			widget = new RKPluginSaveObject (e, component (), parent_widget);
 		} else if (e.tagName () == QLatin1String ("embed")) {
-			QString component_id = xml.getStringAttribute (e, "component", QString::null, DL_ERROR);
+			QString component_id = xml.getStringAttribute (e, "component", QString (), DL_ERROR);
 			RKComponentHandle *handle = RKComponentMap::getComponentHandle (component_id);
 			if (handle) {
 				if (xml.getBoolAttribute (e, "as_button", false, DL_INFO)) {
@@ -702,7 +702,7 @@ void RKComponentBuilder::parseLogic (const QDomElement &element, XMLHelper &xml,
 
 	QMap<RKComponentPropertyBase*, QStringList> switch_convert_sources;
 
-	const XMLChildList children = xml.getChildElements (element, QString::null, DL_ERROR);
+	const XMLChildList children = xml.getChildElements (element, QString (), DL_ERROR);
 	for (int i = 0; i < children.size (); ++i) {
 		const QDomElement &cel = children[i];
 		const QString tagName = cel.tagName ();

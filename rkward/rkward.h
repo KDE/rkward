@@ -101,8 +101,8 @@ public slots:
 	void slotCancelAllCommands ();
 	void configureCarbonCopy ();
 	void slotSetStatusBarText (const QString &text);
-/** Basically a shortcut to slotSetStatusBarText (QString::null). Needed as a slot without parameters. */
-	void slotSetStatusReady () { slotSetStatusBarText (QString::null); };
+/** Basically a shortcut to slotSetStatusBarText (QString ()). Needed as a slot without parameters. */
+	void slotSetStatusReady () { slotSetStatusBarText (QString ()); };
 
 /** configures RKward-settings */
 	void slotConfigure ();

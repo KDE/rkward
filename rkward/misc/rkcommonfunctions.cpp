@@ -102,7 +102,7 @@ namespace RKCommonFunctions {
 	}
 
 	QString getCurrentSymbol (const QString &context_line, int cursor_pos, bool strict) {
-		if (context_line.isEmpty ()) return (QString::null);
+		if (context_line.isEmpty ()) return (QString ());
 
 		int current_word_start;
 		int current_word_end;

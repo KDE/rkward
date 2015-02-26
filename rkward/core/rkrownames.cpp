@@ -72,7 +72,7 @@ void RKRowNames::writeData (int from_row, int to_row, RCommandChain *chain) {
 	RK_TRACE (OBJECTS);
 
 	if (isSequential ()) {
-		RKGlobals::rInterface ()->issueCommand (getFullName () + " <- NULL", RCommand::App | RCommand::Sync, QString::null, 0,0, chain);
+		RKGlobals::rInterface ()->issueCommand (getFullName () + " <- NULL", RCommand::App | RCommand::Sync, QString (), 0,0, chain);
 	} else {
 		// unfortunately, we always need to write the whole data, as row.names<- does not support indexing.
 		QString data_string = "c (";
@@ -84,7 +84,7 @@ void RKRowNames::writeData (int from_row, int to_row, RCommandChain *chain) {
 			}
 		}
 		data_string.append (")");
-		RKGlobals::rInterface ()->issueCommand (getFullName () + " <- " + data_string, RCommand::App | RCommand::Sync, QString::null, 0, 0, chain);
+		RKGlobals::rInterface ()->issueCommand (getFullName () + " <- " + data_string, RCommand::App | RCommand::Sync, QString (), 0, 0, chain);
 	}
 
 	ChangeSet *set = new ChangeSet;

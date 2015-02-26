@@ -96,7 +96,7 @@ void RKContextHandler::invokeComponent (RKComponentHandle *handle) {
 				continue;
 			}
 
-			static_cast<RKComponentPropertyBase *> (client)->connectToGovernor (static_cast<RKComponentPropertyBase *> (it.value ()), QString::null, false);
+			static_cast<RKComponentPropertyBase *> (client)->connectToGovernor (static_cast<RKComponentPropertyBase *> (it.value ()), QString (), false);
 		}
 	}
 }

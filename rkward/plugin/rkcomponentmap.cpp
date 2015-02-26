@@ -576,7 +576,7 @@ RKPluginMapParseResult RKComponentMap::addPluginMap (const QString& plugin_map_f
 		return ret;
 	}
 
-	QString prefix = QFileInfo (plugin_map_file_abs).absolutePath() + '/' + xml.getStringAttribute (document_element, "base_prefix", QString::null, DL_INFO);
+	QString prefix = QFileInfo (plugin_map_file_abs).absolutePath() + '/' + xml.getStringAttribute (document_element, "base_prefix", QString (), DL_INFO);
 	QString cnamespace = xml.getStringAttribute (document_element, "namespace", "rkward", DL_INFO) + "::";
 
 	RKPluginMapFile* pluginmap_file_desc = new RKPluginMapFile (QFileInfo (plugin_map_file).absoluteFilePath (), prefix, xml.messageCatalog ());
@@ -637,7 +637,7 @@ RKPluginMapParseResult RKComponentMap::addPluginMap (const QString& plugin_map_f
 	QSet<QString> depfailed_local_components;
 
 	for (XMLChildList::const_iterator it=list.begin (); it != list.end (); ++it) {
-		QString id = cnamespace + xml.getStringAttribute((*it), "id", QString::null, DL_WARNING);
+		QString id = cnamespace + xml.getStringAttribute((*it), "id", QString (), DL_WARNING);
 
 		// check dependencies, first
 		QDomElement cdependencies = xml.getChildElement (*it, "dependencies", DL_INFO);
@@ -685,7 +685,7 @@ RKPluginMapParseResult RKComponentMap::addPluginMap (const QString& plugin_map_f
 	// step 4: create and register contexts
 	list = xml.getChildElements (document_element, "context", DL_INFO);
 	for (XMLChildList::const_iterator it=list.constBegin (); it != list.constEnd (); ++it) {
-		QString id = xml.getStringAttribute (*it, "id", QString::null, DL_ERROR);
+		QString id = xml.getStringAttribute (*it, "id", QString (), DL_ERROR);
 
 		RKComponentGUIXML *context = contexts.value (id);
 		if (!context) {

@@ -33,10 +33,10 @@ RKEditObjectAgent::RKEditObjectAgent (const QStringList &object_names, RCommandC
 	RKEditObjectAgent::object_names = object_names;
 
 	// first issue an empty command to trigger an update of the object list
-	RKGlobals::rInterface ()->issueCommand (new RCommand (QString::null, RCommand::EmptyCommand | RCommand::ObjectListUpdate, QString::null, this), chain);
+	RKGlobals::rInterface ()->issueCommand (new RCommand (QString (), RCommand::EmptyCommand | RCommand::ObjectListUpdate, QString (), this), chain);
 
 	// now add another empty command to find out, when the update is complete
-	RCommand *command = new RCommand (QString::null, RCommand::EmptyCommand, QString::null, this);
+	RCommand *command = new RCommand (QString (), RCommand::EmptyCommand, QString (), this);
 	done_command_id = command->id ();
 	RKGlobals::rInterface ()->issueCommand (command, chain);
 }

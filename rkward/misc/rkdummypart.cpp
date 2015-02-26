@@ -15,9 +15,9 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <kapplication.h>
-
 #include "rkdummypart.h"
+
+#include <kglobal.h>
 
 #include "../debug.h"
 

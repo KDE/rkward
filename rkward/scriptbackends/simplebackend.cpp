@@ -46,25 +46,25 @@ void SimpleBackend::destroy () {
 void SimpleBackend::preprocess (int flags) {
 	RK_TRACE (PHP);
 
-	callFunction (QString::null, flags, Preprocess);
+	callFunction (QString (), flags, Preprocess);
 }
 
 void SimpleBackend::calculate (int flags) {
 	RK_TRACE (PHP);
 
-	callFunction (QString::null, flags, Calculate);
+	callFunction (QString (), flags, Calculate);
 }
 
 void SimpleBackend::printout (int flags) {
 	RK_TRACE (PHP);
 
-	callFunction (QString::null, flags, Printout);
+	callFunction (QString (), flags, Printout);
 }
 
 void SimpleBackend::preview (int flags) {
 	RK_TRACE (PHP);
 
-	callFunction (QString::null, flags, Preview);
+	callFunction (QString (), flags, Preview);
 }
 
 void SimpleBackend::writeData (const QVariant &data) {

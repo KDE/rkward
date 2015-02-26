@@ -240,7 +240,7 @@ void RKSettingsModuleR::applyChanges () {
 // apply run time options in R
 	QStringList commands = makeRRunTimeOptionCommands ();
 	for (QStringList::const_iterator it = commands.begin (); it != commands.end (); ++it) {
-		RKGlobals::rInterface ()->issueCommand (*it, RCommand::App, QString::null, 0, 0, commandChain ());
+		RKGlobals::rInterface ()->issueCommand (*it, RCommand::App, QString (), 0, 0, commandChain ());
 	}
 }
 
@@ -438,7 +438,7 @@ void RKSettingsModuleRPackages::addLibLoc (QStringList *string_list) {
 
 void RKSettingsModuleRPackages::addRepository (QStringList *string_list) {
 	RK_TRACE (SETTINGS);
-	QString new_string = KInputDialog::getText (i18n ("Add repository"), i18n ("Add URL of new repository"), QString::null, 0, this);
+	QString new_string = KInputDialog::getText (i18n ("Add repository"), i18n ("Add URL of new repository"), QString (), 0, this);
 	(*string_list).append (new_string);
 }
 
@@ -546,7 +546,7 @@ void RKSettingsModuleRPackages::applyChanges () {
 // apply options in R
 	QStringList commands = makeRRunTimeOptionCommands ();
 	for (QStringList::const_iterator it = commands.begin (); it != commands.end (); ++it) {
-		RKGlobals::rInterface ()->issueCommand (*it, RCommand::App, QString::null, 0, 0, commandChain ());
+		RKGlobals::rInterface ()->issueCommand (*it, RCommand::App, QString (), 0, 0, commandChain ());
 	}
 }
 

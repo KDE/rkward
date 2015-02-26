@@ -46,13 +46,13 @@ void ScriptBackend::callFunction (const QString &function, int flags, int type) 
 
 	if (code_property) {
 		if (type == Preprocess) {
-			code_property->setPreprocess (QString::null);
+			code_property->setPreprocess (QString ());
 		} else if (type == Calculate) {
-			code_property->setCalculate (QString::null);
+			code_property->setCalculate (QString ());
 		} else if (type == Printout) {
-			code_property->setPrintout (QString::null);
+			code_property->setPrintout (QString ());
 		} else if (type == Preview) {
-			code_property->setPreview (QString::null);
+			code_property->setPreview (QString ());
 		}
 		invalidateCalls (type);
 	}

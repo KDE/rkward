@@ -73,7 +73,7 @@ RKInput::RKInput (const QDomElement &element, RKComponent *parent_component, QWi
 
 	// initialize
 	updating = false;
-	// DO NOT replace "" with QString::null, here! it is important, that this is actually an empty string, not a null string.
+	// DO NOT replace "" with QString (), here! it is important, that this is actually an empty string, not a null string.
 	text->setValue (xml->getStringAttribute (element, "initial", "", DL_INFO));
 }
 

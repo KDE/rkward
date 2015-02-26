@@ -201,7 +201,7 @@ void RKHelpSearchWindow::slotFindButtonClicked () {
 
 	QString s = ".rk.get.search.results (" + RObject::rQuote (field->currentText ()) + ", agrep=" + agrep + ", ignore.case=" + ignoreCase + package + ", fields=" + fields + ')';
 	
-	RKGlobals::rInterface ()->issueCommand (s, RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, HELP_SEARCH, 0);
+	RKGlobals::rInterface ()->issueCommand (s, RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString (), this, HELP_SEARCH, 0);
 	setEnabled (false);
 	field->addItem (field->currentText ());
 }

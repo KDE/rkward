@@ -31,7 +31,7 @@ RKCheckBox::RKCheckBox (const QDomElement &element, RKComponent *parent_componen
 	XMLHelper *xml = parent_component->xmlHelper ();
 
 	// create and add property
-	addChild ("state", state = new RKComponentPropertyBool (this, true, xml->getBoolAttribute (element, "checked", false, DL_INFO), xml->getStringAttribute (element, "value", "1", DL_INFO), xml->getStringAttribute (element, "value_unchecked", QString::null, DL_INFO)));
+	addChild ("state", state = new RKComponentPropertyBool (this, true, xml->getBoolAttribute (element, "checked", false, DL_INFO), xml->getStringAttribute (element, "value", "1", DL_INFO), xml->getStringAttribute (element, "value_unchecked", QString (), DL_INFO)));
 	connect (state, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (changedState(RKComponentPropertyBase*)));
 
 	// create checkbox

@@ -50,7 +50,7 @@ RKSaveAgent::RKSaveAgent (KUrl url, bool save_file_as, DoneAction when_done, KUr
 	
 	RKWorkplace::mainWorkplace ()->setWorkspaceURL (save_url, true);
 	RKWorkplace::mainWorkplace ()->saveWorkplace (save_chain);
-	RKGlobals::rInterface ()->issueCommand (new RCommand ("save.image (\"" + save_url.toLocalFile () + "\")", RCommand::App, QString::null, this), save_chain);
+	RKGlobals::rInterface ()->issueCommand (new RCommand ("save.image (\"" + save_url.toLocalFile () + "\")", RCommand::App, QString (), this), save_chain);
 }
 
 RKSaveAgent::~RKSaveAgent () {
@@ -83,7 +83,7 @@ void RKSaveAgent::rCommandDone (RCommand *command) {
 
 		if (res == KMessageBox::Yes) {
 			if (askURL ()) {
-				RKGlobals::rInterface ()->issueCommand (new RCommand ("save.image (\"" + save_url.toLocalFile () + "\")", RCommand::App, QString::null, this), save_chain);
+				RKGlobals::rInterface ()->issueCommand (new RCommand ("save.image (\"" + save_url.toLocalFile () + "\")", RCommand::App, QString (), this), save_chain);
 				return;
 			}
 		} else if (res == KMessageBox::No) {

@@ -100,7 +100,7 @@ bool RKSettingsModuleObjectBrowser::isPackageBlacklisted (const QString &package
 
 void RKSettingsModuleObjectBrowser::addBlackList (QStringList *string_list) {
 	RK_TRACE (SETTINGS);
-	QString new_string = KInputDialog::getText (i18n ("Add exclusion"), i18n ("Add the name of the package that no structure should be fetched for"), QString::null, 0, this);
+	QString new_string = KInputDialog::getText (i18n ("Add exclusion"), i18n ("Add the name of the package that no structure should be fetched for"), QString (), 0, this);
 	(*string_list).append (new_string);
 }
 

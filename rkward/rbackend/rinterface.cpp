@@ -748,9 +748,9 @@ void RInterface::processHistoricalSubstackRequest (const QStringList &calllist) 
 			QString lib_name = calllist[1];
 			KMessageBox::information (0, i18n ("The R-backend has indicated that in order to carry out the current task it needs the package '%1', which is not currently installed. We will open the package-management tool, and there you can try to locate and install the needed package.", lib_name), i18n ("Require package '%1'", lib_name));
 			RKLoadLibsDialog::showInstallPackagesModal (0, in_chain, lib_name);
-			issueCommand (".rk.set.reply (\"\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
+			issueCommand (".rk.set.reply (\"\")", RCommand::App | RCommand::Sync, QString (), 0, 0, in_chain);
 		} else {
-			issueCommand (".rk.set.reply (\"Too few arguments in call to require.\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
+			issueCommand (".rk.set.reply (\"Too few arguments in call to require.\")", RCommand::App | RCommand::Sync, QString (), 0, 0, in_chain);
 		}
 	} else if (call == "doPlugin") {
 		if (calllist.count () >= 3) {
@@ -764,13 +764,13 @@ void RInterface::processHistoricalSubstackRequest (const QStringList &calllist) 
 			if (!message.isEmpty ()) {
 				QString type = "warning";
 				if (!ok) type = "error";
-				issueCommand (".rk.set.reply (list (type=\"" + type + "\", message=\"" + RKCommonFunctions::escape (message) + "\"))", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
+				issueCommand (".rk.set.reply (list (type=\"" + type + "\", message=\"" + RKCommonFunctions::escape (message) + "\"))", RCommand::App | RCommand::Sync, QString (), 0, 0, in_chain);
 			}
 		} else {
 			RK_ASSERT (false);
 		}
 	} else {
-		issueCommand ("stop (\"Unrecognized call '" + call + "'. Ignoring\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
+		issueCommand ("stop (\"Unrecognized call '" + call + "'. Ignoring\")", RCommand::App | RCommand::Sync, QString (), 0, 0, in_chain);
 	}
 	
 	closeChain (in_chain);

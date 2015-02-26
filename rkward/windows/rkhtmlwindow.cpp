@@ -671,7 +671,7 @@ bool RKHelpRenderer::renderRKHelp (const KUrl &url) {
 		if (component_doc_element.isNull ()) return false;
 		element = component_xml->getChildElement (component_doc_element, "help", DL_ERROR);
 		if (!element.isNull ()) {
-			help_file_name = component_xml->getStringAttribute (element, "file", QString::null, DL_ERROR);
+			help_file_name = component_xml->getStringAttribute (element, "file", QString (), DL_ERROR);
 			if (!help_file_name.isEmpty ()) help_file_name = QFileInfo (chandle->getFilename ()).absoluteDir ().filePath (help_file_name);
 		}
 	} else {

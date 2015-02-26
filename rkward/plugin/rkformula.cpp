@@ -90,11 +90,11 @@ RKFormula::RKFormula (const QDomElement &element, RKComponent *parent_component,
 	
 	QVBoxLayout *model_vbox = new QVBoxLayout ();
 	model_hbox->addLayout (model_vbox);
-	add_button = new QPushButton (QString::null, custom_model_widget);
+	add_button = new QPushButton (QString (), custom_model_widget);
 	add_button->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionAddRight));
 	connect (add_button, SIGNAL (clicked()), this, SLOT (addButtonClicked()));
 	model_vbox->addWidget (add_button);
-	remove_button = new QPushButton (QString::null, custom_model_widget);
+	remove_button = new QPushButton (QString (), custom_model_widget);
 	remove_button->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRemoveLeft));
 	connect (remove_button, SIGNAL (clicked()), this, SLOT (removeButtonClicked()));
 	model_vbox->addWidget (remove_button);

@@ -312,10 +312,10 @@ void RKStandardComponentWizard::createWizard (bool switchable) {
 	if (enslaved) cancel_button->hide ();
 	help_button = new QPushButton (i18n ("Help"), this);
 	main_grid->addWidget (help_button, 2, 1, Qt::AlignLeft);
-	prev_button = new QPushButton (QString::null, this);
+	prev_button = new QPushButton (QString (), this);
 	prev_button->setEnabled (false);
 	main_grid->addWidget (prev_button, 2, 2, Qt::AlignRight);
-	next_button = new QPushButton (QString::null, this);
+	next_button = new QPushButton (QString (), this);
 	main_grid->addWidget (next_button, 2, 3, Qt::AlignRight);
 	connect (next_button, SIGNAL (clicked()), this, SLOT (next()));
 	connect (prev_button, SIGNAL (clicked()), this, SLOT (prev()));

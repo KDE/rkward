@@ -339,7 +339,7 @@ RKComponentBase* RKComponentPropertyBool::lookupComponent (const QString &identi
 		negated->setInverted (true);
 		negated->setInternal (true);
 		negated->connectToGovernor (this);
-		*remainder = QString::null;		// reset
+		*remainder = QString ();		// reset
 		addChild ("not", negated);		// so subsequent lookups will not recreate the negated property
 		return (negated->lookupComponent (identifier.section ('.', 1), remainder));
 	}
