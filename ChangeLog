@@ -1,3 +1,5 @@
+- Add context menu to HTML viewer window, including the ability to open links in a new window
+- Remove dependency on KHMTLPart
 
 --- Version 0.6.3 - XXXXXXXXXXX
 - Fixed: Hang when trying to select existing directories in file selectors on Windows
