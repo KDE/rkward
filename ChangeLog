@@ -1,4 +1,4 @@
---- Version 0.6.3 - XXXXXXXXXXX
+--- Version 0.6.3 - Mar-07-2015
 - Fixed: Hang when trying to select existing directories in file selectors on Windows
 - New element <i18n> for use in plugins' logic section: Provides a translatable string property
 - New element <label> for use in plugin help pages: Copies the label-attribute of the given element into the text

@@ -1,8 +1,8 @@
-rkward (0.6.2z+0.6.3+devel1-1) unstable; urgency=low
+rkward (0.6.3-1) unstable; urgency=low
   * new upstream release
   * Ajdust to move of homepage to rkward.kde.org, and vcs to git.kde.org
 
- -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Tue, 21 Oct 2014 13:30:00 +0100
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Sat, 07 Mar 2015 13:30:00 +0100
 
 rkward (0.6.2~rc1-2) unstable; urgency=low
 
