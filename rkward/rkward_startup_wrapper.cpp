@@ -299,7 +299,11 @@ int main (int argc, char *argv[]) {
 	if (debug_level > 2) qDebug ("Starting frontend: %s %s", qPrintable (r_exe), qPrintable (call_args.join (" ")));
 
 	InteractiveProcess proc;
+#ifdef Q_WS_WIN
+	proc.setProcessChannelMode (debugger_args.isEmpty () ? QProcess::MergedChannels : QProcess::ForwardedChannels);   // ForwardedChannels causes console window to pop up!
+#else
 	proc.setProcessChannelMode (QProcess::ForwardedChannels);
+#endif
 	proc.start (quoteCommand (r_exe), call_args);
 	bool ok = proc.waitForFinished (-1);
 	if (proc.exitCode () || !ok) {
