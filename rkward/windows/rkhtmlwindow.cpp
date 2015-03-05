@@ -31,6 +31,7 @@
 #include <ktemporaryfile.h>
 #include <kwebview.h>
 #include <kcodecaction.h>
+#include <kglobalsettings.h>
 
 #include <qfileinfo.h>
 #include <qwidget.h>
@@ -71,6 +72,8 @@ RKWebPage::RKWebPage (RKHTMLWindow* window): KWebPage (window, KIOIntegration | 
 	RKWebPage::window = window;
 	new_window = false;
 	direct_load = false;
+	settings ()->setFontFamily (QWebSettings::StandardFont, KGlobalSettings::generalFont ().family ());
+	settings ()->setFontFamily (QWebSettings::FixedFont, KGlobalSettings::fixedFont ().family ());
 }
 
 bool RKWebPage::acceptNavigationRequest (QWebFrame* frame, const QNetworkRequest& request, QWebPage::NavigationType type) {
@@ -130,7 +133,7 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 	layout->addWidget (findbar);
 	findbar->hide ();
 	connect (findbar, SIGNAL(findRequest(QString,bool,const RKFindBar*,bool*)), this, SLOT(findRequest(QString,bool,const RKFindBar*,bool*)));
-	bool have_highlight = false;
+	have_highlight = false;
 
 	part = new RKHTMLWindowPart (this);
 	setPart (part);
