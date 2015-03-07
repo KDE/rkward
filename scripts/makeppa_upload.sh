@@ -14,16 +14,17 @@ if [ "${1}" == "--stable" ]; then
 	shift
 	PPAIDS="rkward-stable rkward-stable-cran"
 	PPAVERSIONSTRING=".1rkward.stable"
-	# do not re-create tarball
 	VERSION=`${BASEDIR}/scripts/getversion.sh ${2}`
 else
 	PPAIDS="rkward-devel rkward-devel-cran"
 	PPAVERSIONSTRING=".0rkward.devel"
-	# first create source snapshot
 	VERSION=`${BASEDIR}/scripts/getversion.sh ${1}`
-	${BASEDIR}/scripts/makedist.sh $VERSION
 fi
 
+if [ ! -f "${BASEDIR}/rkward-$VERSION.tar.gz" ]; then
+  echo "${BASEDIR}/rkward-$VERSION.tar.gz not found. Run makedist.sh, first."
+  exit 1
+fi
 cp ${BASEDIR}/rkward-$VERSION.tar.gz $PPATEMPDIR/rkward_$VERSION.orig.tar.gz
 
 function doSourceUpload {

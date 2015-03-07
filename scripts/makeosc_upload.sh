@@ -7,8 +7,12 @@ OSCREPOS="home:tfry-suse:rkward-devel"
 cd `dirname $0`/..
 BASEDIR=`pwd`
 VERSION=`${BASEDIR}/scripts/getversion.sh ${1}`
+if [ ! -f "${BASEDIR}/rkward-$VERSION.tar.gz" ]; then
+  echo "${BASEDIR}/rkward-$VERSION.tar.gz not found. Run makedist.sh, first."
+  exit 1
+fi
 # RPM does not accept dashes in the version name...
-VERSION=`echo -n ${VERSION} | sed -e 's/-/_/g'`
+RPMVERSION=`echo -n ${VERSION} | sed -e 's/-/_/g'`
 OSCTEMPDIR=${BASEDIR}/osctemp
 rm -rf ${OSCTEMPDIR}
 mkdir ${OSCTEMPDIR}
@@ -19,13 +23,12 @@ osc co ${OSCREPOS}
 cd ${OSCREPOS}/rkward
 osc remove *.tar.gz
 
-# create source snapshot
+# copy source snapshot
 cd ${BASEDIR}
-${BASEDIR}/scripts/makedist.sh $VERSION
-cp ${BASEDIR}/rkward-$VERSION.tar.gz $OSCTEMPDIR/${OSCREPOS}/rkward/rkward-$VERSION.tar.gz
-osc add $OSCTEMPDIR/${OSCREPOS}/rkward/rkward-$VERSION.tar.gz
+cp ${BASEDIR}/rkward-$VERSION.tar.gz $OSCTEMPDIR/${OSCREPOS}/rkward/rkward-$RPMVERSION.tar.gz
+osc add $OSCTEMPDIR/${OSCREPOS}/rkward/rkward-$RPMVERSION.tar.gz
 
 cd $OSCTEMPDIR/${OSCREPOS}/rkward/
-sed -i rkward.spec -e "s/Version:.*$/Version:        ${VERSION}/"
-osc commit -m "New development snapshot: ${VERSION}"
+sed -i rkward.spec -e "s/Version:.*$/Version:        ${RPMVERSION}/"
+osc commit -m "New development snapshot: ${RPMVERSION}"
 

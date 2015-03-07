@@ -11,10 +11,10 @@ if [ -z "`head -n 1 ${BASEDIR}/debian/changelog | grep "rkward (${VERSION}-"`" ]
   exit 1
 fi
 
-# create source snapshot
+# check for source snapshot
 if [ ! -f ${BASEDIR}/rkward-$VERSION.tar.gz ]; then
-  cd ${BASEDIR}
-  ${BASEDIR}/scripts/makedist.sh $VERSION
+  echo "${BASEDIR}/rkward-$VERSION.tar.gz not found. Run makedist.sh, first."
+  exit 1
 fi
 
 cp ${BASEDIR}/rkward-$VERSION.tar.gz $DEBTEMPDIR/rkward_$VERSION.orig.tar.gz
