@@ -1,23 +1,22 @@
 Package: rkwarddev
 Type: Package
 Title: A collection of tools for RKWard plugin development
-Author: m.eik michalke
+Author: m.eik michalke [aut, cre]
 Maintainer: m.eik michalke <meik.michalke@hhu.de>
 Depends:
     R (>= 2.9.0),methods,XiMpLe (>= 0.03-21),rkward (>= 0.5.7)
 Suggests:
     testthat
 Enhances: rkward
-Description: Provides functions to create plugin skeletons and XML
-    structures for RKWard.
+Description: Provides functions to create plugin skeletons and XML structures
+    for RKWard.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyLoad: yes
 URL: http://rkward.sourceforge.net
-Authors@R: c(person(given="m.eik", family="michalke",
-    email="meik.michalke@hhu.de", role=c("aut", "cre")))
+Authors@R: c(person(given="m.eik", family="michalke", email="meik.michalke@hhu.de", role=c("aut", "cre")))
 Version: 0.07-1
-Date: 2015-02-04
+Date: 2015-03-13
 Collate:
     '00_class_01_rk.JS.arr.R'
     '00_class_02_rk.JS.var.R'

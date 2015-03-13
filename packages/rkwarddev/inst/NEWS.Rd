@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.07-1 (2015-02-04)}{
+\section{Changes in rkwarddev version 0.07-1 (2015-03-13)}{
   \subsection{fixed}{
     \itemize{
       \item \code{rk.XML.optionset()} does now allow to re-use objects defined in the same
@@ -24,6 +24,7 @@
       \item \code{rk.plugin.component()} called \code{XMLAttrs()} with too many arguments
       \item \code{rk.XML.values()} and \code{rk.XML.vars()} do now handle all combinations of
         \code{"horiz"} and \code{"add.nodes"} properly
+      \item fixed wrong link to \code{rk.plugin.skeleton()} in documentation of \code{rk.XML.pluginmap()}
     }
   }
   \subsection{added}{
@@ -54,8 +55,8 @@
         \code{"var"} should be used or omitted for rk.JS.var objects
       \item \code{rk.XML.matrix()} now also accepts the arguments \code{"min_rows"} and
         \code{"min_columns"}
-      \item <dropdown>, <radio> and <select> have gained \code{"string.quoted"} as
-        a valid property/modifier
+      \item <dropdown>, <radio> and <select> have gained \code{"string.quoted"} as a valid
+        property/modifier
       \item new function \code{rk.XML.i18n()} to define translatable labels in logic sections
       \item new function \code{rk.rkh.label()} for extracting labels from plugin elements
     }
@@ -87,7 +88,8 @@
         top level child node of plugin XML code, with a warning
       \item \code{rk.plugin.skeleton()} has a new logical switch called \code{"internal"}, to set
         some defaults for plugins to be distributed with RKWard itself
-      \item the \code{"pluginmap"} argument of \code{rk.plugin.skeleton()} now also accepts \code{"namespace"}
+      \item the \code{"pluginmap"} argument of \code{rk.plugin.skeleton()} now also accepts
+        \code{"namespace"}
     }
   }
   \subsection{removed}{

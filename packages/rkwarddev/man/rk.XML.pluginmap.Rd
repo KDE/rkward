@@ -60,7 +60,7 @@ See \code{\link[rkwarddev:rk.XML.dependencies]{rk.XML.dependencies}} for details
 
 \item{namespace}{Character string, the namespace attribute of the \code{<document>} node,
       defaults to the plugin name (which you probably shouldn't touch...).
-RKWard's internal plugins should use the namespace \code{rkward}. This is taken care of by \code{\link[rkwarddev::rk.plugin.skeleton]{rk.plugin.skeleton}}
+RKWard's internal plugins should use the namespace \code{rkward}. This is taken care of by \code{\link[rkwarddev:rk.plugin.skeleton]{rk.plugin.skeleton}}
 if you set \code{internal=TRUE}.}
 
 \item{priority}{Character string,

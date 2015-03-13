@@ -338,6 +338,16 @@ test_that("rk.XML.hierarchy", {
     )
 })
 
+test_that("rk.XML.i18n", {
+    thisNode <- rk.XML.i18n(
+        label="an i18n label"
+    )
+    load("XML_test_standards.RData")
+    expect_that(
+        thisNode, equals(XML_test_standards[["i18n"]])
+    )
+})
+
 test_that("rk.XML.include", {
     thisNode <- rk.XML.include(
         "../include_file.xml"

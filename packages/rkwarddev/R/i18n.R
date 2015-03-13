@@ -23,7 +23,7 @@
 #' will return one of \code{i18n()}, \code{i18nc()}, \code{i18np()}, or \code{i18ncp()}.
 #' 
 #' @param msgid Either a character string, the message to be translated (if applicable, its singular form),
-#'    or an object of class \code{\link[noquote]{noquote}}, which will be pasted as a \code{noquote()} function call.
+#'    or an object of class \code{\link[base:noquote]{noquote}}, which will be pasted as a \code{noquote()} function call.
 #' @param ... Either character string which will be pasted unquoted to be used in conjunctions with
 #'    placeholders in msgid, or XiMpLe.node objects of which the JavaScript variable name will be
 #'    used.

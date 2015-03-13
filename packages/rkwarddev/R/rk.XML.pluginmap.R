@@ -46,7 +46,7 @@
 #' @param dependencies An object of class \code{XiMpLe.node} to be pasted as the \code{<dependencies>} section,
 #'    See \code{\link[rkwarddev:rk.XML.dependencies]{rk.XML.dependencies}} for details. Skipped if \code{NULL}.
 #' @param namespace Character string, the namespace attribute of the \code{<document>} node, defaults to the plugin name (which you probably shouldn't touch...).
-#'    RKWard's internal plugins should use the namespace \code{rkward}. This is taken care of by \code{\link[rkwarddev::rk.plugin.skeleton]{rk.plugin.skeleton}}
+#'    RKWard's internal plugins should use the namespace \code{rkward}. This is taken care of by \code{\link[rkwarddev:rk.plugin.skeleton]{rk.plugin.skeleton}}
 #'    if you set \code{internal=TRUE}.
 #' @param priority Character string, the priority attribute of the \code{<document>} node. Must be either "hidden", "low", "medium", or "high",
 #'    defaults to "medium".

@@ -34,7 +34,7 @@
 
 rk.rkh.label <- function(id, i18n=NULL){
   # check for additional i18n info
-  attr.list <- check.i18n(i18n=i18n, attrs=list(id=id))
+  attr.list <- check.i18n(i18n=i18n, attrs=list(id=check.ID(id)))
 
   node <- check.i18n(
     i18n=i18n,

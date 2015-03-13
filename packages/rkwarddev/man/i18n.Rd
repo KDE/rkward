@@ -9,7 +9,7 @@ i18n(msgid, ..., context = NULL, plural = NULL, newline = "")
 \arguments{
 \item{msgid}{Either a character string, the message to be translated (if applicable,
       its singular form),
-or an object of class \code{\link[noquote]{noquote}},
+or an object of class \code{\link[base:noquote]{noquote}},
       which will be pasted as a \code{noquote()} function call.}
 
 \item{...}{Either character string which will be pasted unquoted to be used in conjunctions with

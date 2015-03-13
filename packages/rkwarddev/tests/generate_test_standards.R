@@ -173,6 +173,9 @@ XMLTestNodes <- function(file=NULL, compress="xz", compression_level=-9){
             )
         )
     )
+    i18n <- rk.XML.i18n(
+      label="an i18n label"
+    )
     include <- rk.XML.include(
         "../include_file.xml"
     )
@@ -519,6 +522,8 @@ XMLTestNodes <- function(file=NULL, compress="xz", compression_level=-9){
 #    )
 #     rk.rkh.doc <- rk.rkh.doc(
 #    )
+#     rk.rkh.label(
+#    )
 #     rk.rkh.link <- rk.rkh.link(
 #    )
 #     rk.rkh.related <- rk.rkh.related(
@@ -574,6 +579,7 @@ XMLTestNodes <- function(file=NULL, compress="xz", compression_level=-9){
         frame=frame,
         help=help,
         hierarchy=hierarchy,
+        i18n=i18n,
         include=include,
         input=input,
         insert=insert,
