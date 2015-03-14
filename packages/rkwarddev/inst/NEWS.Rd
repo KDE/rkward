@@ -1,6 +1,13 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
+\section{Changes in rkwarddev version 0.07-2 (2015-03-14)}{
+  \subsection{fixed}{
+    \itemize{
+      \item replaced the outdated links to sourceforge with our new KDE URL
+    }
+  }
+}
 \section{Changes in rkwarddev version 0.07-1 (2015-03-13)}{
   \subsection{fixed}{
     \itemize{
@@ -24,7 +31,8 @@
       \item \code{rk.plugin.component()} called \code{XMLAttrs()} with too many arguments
       \item \code{rk.XML.values()} and \code{rk.XML.vars()} do now handle all combinations of
         \code{"horiz"} and \code{"add.nodes"} properly
-      \item fixed wrong link to \code{rk.plugin.skeleton()} in documentation of \code{rk.XML.pluginmap()}
+      \item fixed wrong link to \code{rk.plugin.skeleton()} in documentation of
+        \code{rk.XML.pluginmap()}
     }
   }
   \subsection{added}{
