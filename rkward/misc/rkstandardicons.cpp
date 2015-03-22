@@ -94,7 +94,7 @@ void RKStandardIcons::initIcons () {
 	// windows
 	icons[WindowDataFrameEditor] = icons[ObjectDataFrame];
 	icons[WindowCommandEditor] = KIcon ("text-x-makefile");	// this may not be the most obvious choice, but it is not quite as awfully close to the data.frame editor icons as most other text icons
-	icons[WindowOutput] = KIcon ("xclipboard");
+	icons[WindowOutput] = KIcon ("applications-education");
 	icons[WindowHelp] = KIcon ("help-contents");
 	icons[WindowX11] = KIcon ("x");
 	icons[WindowObject] = KIcon ("zoom-original");
