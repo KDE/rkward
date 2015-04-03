@@ -2,6 +2,7 @@
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="text/r">
     <comment>R source file</comment>
+    <comment xml:lang="ast">Ficheru de recursu R</comment>
     <comment xml:lang="bs">R izvorna datoteka</comment>
     <comment xml:lang="ca">Fitxer de codi font en R</comment>
     <comment xml:lang="cs">Zdrojový soubor R</comment>
