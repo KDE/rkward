@@ -2,7 +2,7 @@
                           rkcommandeditorwindow  -  description
                              -------------------
     begin                : Mon Aug 30 2004
-    copyright            : (C) 2004-2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2015 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -639,6 +639,7 @@ void RKCommandEditorWindow::tryCompletion () {
 	int start;
 	int end;
 	RKCommonFunctions::getCurrentSymbolOffset (current_line, cursor_pos, false, &start, &end);
+	if (end > cursor_pos) return;   // Only hint when at the end of a word/symbol: https://mail.kde.org/pipermail/rkward-devel/2015-April/004122.html
 
 	KTextEditor::Range range = KTextEditor::Range (para, start, para, end);
 	QString word;
