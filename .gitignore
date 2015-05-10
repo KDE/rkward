@@ -13,4 +13,6 @@ tests/make_plugintests.txt
 i18n/po/
 # General purpose temp directory for scripts
 scripts/tmp/
-
+# More (legacy) temp dirs
+osctemp/
+ppatemp/

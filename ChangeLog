@@ -1,3 +1,4 @@
+- Do not invoke symbol name completion while in the middle (not end) of a word
 - Add context menu to HTML viewer window, including the ability to open links in a new window
 - Remove dependency on KHMTLPart
 
