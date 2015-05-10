@@ -1,4 +1,4 @@
 {
   "phabricator.uri" : "https://phabricator.kde.org/",
-  "history.immutable" : "true"
+  "history.immutable" : true
 }
