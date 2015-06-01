@@ -73,11 +73,11 @@ ADD_CUSTOM_COMMAND (OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/rkward.ico"
 ADD_EXECUTABLE (rkward rkward_startup_wrapper.cpp rkward_windows_icon.rc rkward.ico)
 # NOTE: These definitions are needed for the wrapper, only.
 # We should switch with to target_compile_definitions once we require CMAKE 2.6+
-add_definitions ("-DR_EXECUTABLE=\\\"${R_EXECUTABLE}\\\"")
-add_definitions ("-DINSTALL_PATH=\\\"${CMAKE_INSTALL_PREFIX}\\\"")
-add_definitions ("-DR_LIBS=\\\"${R_LIBDIR}\\\"")
-add_definitions ("-DRKWARD_FRONTEND_LOCATION=\\\"${RKWARD_FRONTEND_LOCATION}\\\"")
-TARGET_LINK_LIBRARIES(rkward Qt5::Gui Qt5::Core Qt5::DBus)
+add_definitions (-DR_EXECUTABLE="${R_EXECUTABLE}")
+add_definitions (-DINSTALL_PATH="${CMAKE_INSTALL_PREFIX}")
+add_definitions (-DR_LIBS="${R_LIBDIR}")
+add_definitions (-DRKWARD_FRONTEND_LOCATION="${RKWARD_FRONTEND_LOCATION}")
+TARGET_LINK_LIBRARIES(rkward Qt5::Gui Qt5::Core Qt5::DBus Qt5::Widgets)
 
 ADD_DEPENDENCIES(rkward.frontend rkward)
 

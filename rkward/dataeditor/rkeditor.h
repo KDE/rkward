@@ -17,7 +17,7 @@
 #ifndef RKEDITOR_H
 #define RKEDITOR_H
 
-#include <qwidget.h>
+#include <QWidget>
 
 #include "../core/robject.h"
 
