@@ -43,9 +43,6 @@ SET(RKWard_Sources
 	rkwardapplication.cpp
 )
 
-# auto-gen sources
-#QT4_AUTOMOC(${RKWard_Sources})	# not needed here, as KDE4_ADD_EXECUTABLE mocs the sources in this dir.
-
 # somehow the needed libdirs for R do not get passed down automatically
 GET_DIRECTORY_PROPERTY(R_SHAREDLIBDIR DIRECTORY rbackend LINK_DIRECTORIES)
 LINK_DIRECTORIES(${R_SHAREDLIBDIR})

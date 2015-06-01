@@ -13,8 +13,6 @@ SET(dialogs_STAT_SRCS
    rkerrordialog.cpp
    )
 
-QT4_AUTOMOC(${dialogs_STAT_SRCS})
-
 ADD_LIBRARY(dialogs STATIC ${dialogs_STAT_SRCS})
 
 

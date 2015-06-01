@@ -13,6 +13,4 @@ SET(agents_STAT_SRCS
    showedittextfileagent.cpp
    )
 
-QT4_AUTOMOC(${agents_STAT_SRCS})
-
 ADD_LIBRARY(agents STATIC ${agents_STAT_SRCS})

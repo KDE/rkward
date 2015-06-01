@@ -31,8 +31,6 @@ SET(plugin_STAT_SRCS
    rkvalueselector.cpp
    )
 
-QT4_AUTOMOC(${plugin_STAT_SRCS})
-
 ADD_LIBRARY(plugin STATIC ${plugin_STAT_SRCS})
 
 

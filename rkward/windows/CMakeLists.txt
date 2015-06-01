@@ -23,8 +23,6 @@ SET(windows_STAT_SRCS
 	rkdebugmessagewindow.cpp
 )
 
-QT4_AUTOMOC(${windows_STAT_SRCS})
-
 ADD_LIBRARY(windows STATIC ${windows_STAT_SRCS})
 
 

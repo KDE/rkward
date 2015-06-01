@@ -15,8 +15,6 @@ SET(core_STAT_SRCS
    rkpseudoobjects.cpp
    )
 
-QT4_AUTOMOC(${core_STAT_SRCS})
-
 ADD_LIBRARY(core STATIC ${core_STAT_SRCS})
 
 

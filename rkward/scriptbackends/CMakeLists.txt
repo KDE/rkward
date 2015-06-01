@@ -11,8 +11,6 @@ SET(scriptbackends_STAT_SRCS
    rkcomponentscripting.cpp
    )
 
-QT4_AUTOMOC(${scriptbackends_STAT_SRCS})
-
 ADD_LIBRARY(scriptbackends STATIC ${scriptbackends_STAT_SRCS})
 
 

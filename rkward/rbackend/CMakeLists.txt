@@ -43,7 +43,6 @@ SET (
 	rkfrontendtransmitter.cpp
 	rktransmitter.cpp
 )
-QT4_AUTOMOC(${rbackend_FRONTEND_SRCS})
 ADD_LIBRARY(rbackend STATIC ${rbackend_FRONTEND_SRCS})
 TARGET_LINK_LIBRARIES(rbackend rkgraphicsdevice.frontend)
 
@@ -54,7 +53,6 @@ SET (
 	rkbackendtransmitter.cpp
 	rktransmitter.cpp
 )
-QT4_AUTOMOC(${rbackend_BACKEND_SRCS})
 ADD_DEFINITIONS (-DRKWARD_SPLIT_PROCESS)
 LINK_DIRECTORIES(${R_SHAREDLIBDIR})
 ADD_EXECUTABLE(rkward.rbackend ${rbackend_BACKEND_SRCS})

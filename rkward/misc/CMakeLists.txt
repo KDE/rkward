@@ -28,8 +28,6 @@ SET(misc_STAT_SRCS
    rkfindbar.cpp
    )
 
-QT4_AUTOMOC(${misc_STAT_SRCS})
-
 ADD_LIBRARY(misc STATIC ${misc_STAT_SRCS})
 
 

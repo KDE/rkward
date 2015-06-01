@@ -12,8 +12,6 @@ SET(dataeditor_STAT_SRCS
    rktextmatrix.cpp
    )
 
-QT4_AUTOMOC(${dataeditor_STAT_SRCS})
-
 ADD_LIBRARY(dataeditor STATIC ${dataeditor_STAT_SRCS})
 
 

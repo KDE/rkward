@@ -13,8 +13,6 @@ SET (
 	rkgraphicsdevice.cpp
 )
 
-QT4_AUTOMOC(${rkgraphicsdevice_frontend_SRCS})
 ADD_LIBRARY(rkgraphicsdevice.frontend STATIC ${rkgraphicsdevice_frontend_SRCS})
 
-QT4_AUTOMOC(${rkgraphicsdevice_backend_SRCS})
 ADD_LIBRARY(rkgraphicsdevice.backend STATIC ${rkgraphicsdevice_backend_SRCS})

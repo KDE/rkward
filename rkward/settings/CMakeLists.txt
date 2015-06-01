@@ -18,8 +18,6 @@ SET(settings_STAT_SRCS
    rksettingsmoduledebug.cpp
    )
 
-QT4_AUTOMOC(${settings_STAT_SRCS})
-
 IF (WIN32 OR USE_BINARY_PACKAGES)
 	SET_PROPERTY (
 		SOURCE rksettingsmoduler.cpp
