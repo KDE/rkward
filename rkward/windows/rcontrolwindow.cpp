@@ -154,4 +154,3 @@ void RControlWindow::configureButtonClicked () {
 	RKSettings::configureSettings (RKSettings::PageR, this);
 }
 
-#include "rcontrolwindow.moc"

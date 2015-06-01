@@ -96,4 +96,3 @@ void RKLoadAgent::rCommandDone (RCommand *command) {
 	}
 }
 
-#include "rkloadagent.moc"

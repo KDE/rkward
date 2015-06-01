@@ -120,4 +120,3 @@ KUrl RKRecoverDialog::checkRecoverCrashedWorkspace () {
 	return KUrl ();
 }
 
-#include "rkrecoverdialog.moc"

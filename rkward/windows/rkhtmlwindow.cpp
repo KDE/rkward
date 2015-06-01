@@ -1079,4 +1079,3 @@ void RKOutputWindowManager::windowDestroyed (QObject *window) {
 	}
 }
 
-#include "rkhtmlwindow.moc"

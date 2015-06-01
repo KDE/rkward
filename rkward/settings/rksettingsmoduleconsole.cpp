@@ -178,4 +178,3 @@ QString RKSettingsModuleConsole::caption () {
 	return (i18n ("Console"));
 }
 
-#include "rksettingsmoduleconsole.moc"

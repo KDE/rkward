@@ -155,4 +155,3 @@ void DetachedWindowContainer::closeEvent (QCloseEvent *e) {
 	}
 }
 
-#include "detachedwindowcontainer.moc"

@@ -74,4 +74,3 @@ void RKVarSelector::objectSelectionChanged () {
 	RK_DEBUG (PLUGIN, DL_DEBUG, "selected in varselector: %s", qPrintable (fetchStringValue (selected)));
 }
 
-#include "rkvarselector.moc"

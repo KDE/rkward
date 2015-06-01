@@ -139,4 +139,3 @@ QStringList RKSessionVars::frontendSessionInfo () {
 	return lines;
 }
 
-#include "rksessionvars.moc"

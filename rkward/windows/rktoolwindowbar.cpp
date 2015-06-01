@@ -351,4 +351,3 @@ void RKToolWindowBar::addRemoveToolWindow (QAction *action) {
 	}
 }
 
-#include "rktoolwindowbar.moc"

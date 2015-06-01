@@ -194,4 +194,3 @@ QStringList RKValueSelector::getUiLabelPair () const {
 	return ret;
 }
 
-#include "rkvalueselector.moc"

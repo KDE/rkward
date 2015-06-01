@@ -275,4 +275,3 @@ QString RKSettingsModuleWatch::caption () {
 	return (i18n ("Command log"));
 }
 
-#include "rksettingsmodulewatch.moc"

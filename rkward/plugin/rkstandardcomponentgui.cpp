@@ -547,4 +547,3 @@ int RKStandardComponentStack::nextVisiblePage () {
 	return next_page;
 }
 
-#include "rkstandardcomponentgui.moc"

@@ -318,4 +318,3 @@ void RObjectStructureWidget::update () {
 	RKGlobals::rInterface ()->issueCommand (command, 0);
 }
 
-#include "robjectviewer.moc"

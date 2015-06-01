@@ -62,4 +62,3 @@ void RKDBusAPI::openAnyUrl(const QStringList& urls) {
 	RKWardMainWindow::getMain ()->setMergeLoads (false);
 }
 
-#include "rkdbusapi.moc"

@@ -198,4 +198,3 @@ void RKFrontendTransmitter::handleTransmissionError (const QString &message) {
 	exit ();
 }
 
-#include "rkfrontendtransmitter.moc"

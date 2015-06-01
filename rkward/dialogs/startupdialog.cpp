@@ -205,4 +205,3 @@ StartupDialog::StartupDialogResult StartupDialog::getStartupAction (QWidget *par
 	return result;
 }
 
-#include "startupdialog.moc"

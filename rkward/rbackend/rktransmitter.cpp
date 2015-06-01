@@ -273,4 +273,3 @@ void RKAbstractTransmitter::disconnected () {
 	handleTransmissionError ("Connection closed unexpectedly. Last error was: " + connection->errorString ());
 }
 
-#include "rktransmitter.moc"

@@ -164,4 +164,3 @@ QStringList RKInput::getUiLabelPair () const {
 	return ret;
 }
 
-#include "rkinput.moc"

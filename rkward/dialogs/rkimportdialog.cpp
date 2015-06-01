@@ -129,4 +129,3 @@ void RKImportDialog::reject () {
 	deleteLater ();
 }
 
-#include "rkimportdialog.moc"

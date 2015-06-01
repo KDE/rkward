@@ -202,4 +202,3 @@ int RKAbstractOptionSelector::findOption (const QString &option_string) {
 	return -1;
 }
 
-#include "rkabstractoptionselector.moc"

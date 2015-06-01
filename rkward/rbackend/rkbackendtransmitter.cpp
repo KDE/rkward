@@ -141,4 +141,3 @@ void RKRBackendTransmitter::handleTransmissionError (const QString &message) {
 	RKRBackend::tryToDoEmergencySave ();
 }
 
-#include "rkbackendtransmitter.moc"

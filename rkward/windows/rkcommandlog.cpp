@@ -307,4 +307,3 @@ void RKCommandLogPart::doPopupMenu (const QPoint &pos) {
 	run_selection->setEnabled (true);
 }
 
-#include "rkcommandlog.moc"

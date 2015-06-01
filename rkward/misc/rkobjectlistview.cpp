@@ -347,4 +347,3 @@ void RKObjectListViewSettings::settingToggled (QAction* which) {
 	setSetting (static_cast<Settings> (setting), which->isChecked ());
 }
 
-#include "rkobjectlistview.moc"

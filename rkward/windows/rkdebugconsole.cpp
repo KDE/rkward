@@ -173,4 +173,3 @@ bool RKDebugConsole::close (bool also_delete) {
 	return RKMDIWindow::close (also_delete);
 }
 
-#include "rkdebugconsole.moc"

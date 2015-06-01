@@ -208,4 +208,3 @@ void RKPreviewBox::updateStatusLabel () {
 	}
 }
 
-#include "rkpreviewbox.moc"

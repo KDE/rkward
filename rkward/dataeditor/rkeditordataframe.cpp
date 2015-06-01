@@ -131,4 +131,3 @@ void RKEditorDataFrame::restoreObject (RObject *object) {
 	datamodel->restoreObject (object, 0);
 }
 
-#include "rkeditordataframe.moc"

@@ -1016,4 +1016,3 @@ void RKConsolePart::showPopupMenu (const QPoint &pos) {
 	menu->exec (pos);
 }
 
-#include "rkconsole.moc"

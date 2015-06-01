@@ -371,4 +371,3 @@ void RKObjectListViewSettingsWidget::boxChanged (bool) {
 	}
 }
 
-#include "robjectbrowser.moc"

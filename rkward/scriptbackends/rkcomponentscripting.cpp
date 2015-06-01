@@ -328,4 +328,3 @@ QString RKComponentScriptingProxy::getObjectChild (const QString &name) {
 	return (QString ());
 }
 
-#include "rkcomponentscripting.moc"

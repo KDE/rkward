@@ -382,4 +382,3 @@ void RCommandStackModel::itemChange (RCommandChain* item) {
 	emit (dataChanged (item_index, item_index));
 }
 
-#include "rcommandstack.moc"

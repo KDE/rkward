@@ -1437,4 +1437,3 @@ void RKComponentPropertySwitch::setSources (const QString& _condition_prop, cons
 	}
 }
 
-#include "rkcomponentproperties.moc"

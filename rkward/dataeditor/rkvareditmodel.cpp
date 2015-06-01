@@ -1002,4 +1002,3 @@ void RKVarEditDataFrameModel::restoreObject (RObject* object, RCommandChain* cha
 }
 
 
-#include "rkvareditmodel.moc"

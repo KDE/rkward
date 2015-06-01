@@ -146,4 +146,3 @@ QStringList RKPluginSpinBox::getUiLabelPair () const {
 	return ret;
 }
 
-#include "rkpluginspinbox.moc"

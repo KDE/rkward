@@ -270,4 +270,3 @@ void EditLabelsDialogProxy::dialogDone (int result) {
 }
 
 
-#include "editlabelsdialog.moc"

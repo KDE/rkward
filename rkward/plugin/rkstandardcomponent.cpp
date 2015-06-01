@@ -861,4 +861,3 @@ void RKComponentBuilder::makeConnections () {
 }
 
 
-#include "rkstandardcomponent.moc"

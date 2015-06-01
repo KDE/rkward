@@ -225,4 +225,3 @@ void RKSettingsTracker::signalSettingsChange (RKSettings::SettingsPage page) {
 	emit (settingsChanged (page));
 }
 
-#include "rksettings.moc"

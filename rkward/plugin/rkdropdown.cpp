@@ -96,4 +96,3 @@ QStringList RKDropDown::getUiLabelPair () const {
 	return ret;
 }
 
-#include "rkdropdown.moc"

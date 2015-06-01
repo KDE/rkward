@@ -87,4 +87,3 @@ QStringList RKSelectListDialog::doSelect (QWidget *parent, const QString &captio
 	return (list);
 }
 
-#include "rkselectlistdialog.moc"

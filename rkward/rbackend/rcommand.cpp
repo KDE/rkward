@@ -227,4 +227,3 @@ QString RCommand::rQuote (const QString &quoted) {
 	return RObject::rQuote (quoted);
 }
 
-#include "rcommand.moc"

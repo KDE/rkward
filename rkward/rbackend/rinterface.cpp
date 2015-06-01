@@ -879,4 +879,3 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 	RKRBackendProtocolFrontend::setRequestCompleted (request);
 }
 
-#include "rinterface.moc"

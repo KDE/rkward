@@ -417,4 +417,3 @@ QStringList RKFormula::getUiLabelPair () const {
 	return ret;
 }
 
-#include "rkformula.moc"

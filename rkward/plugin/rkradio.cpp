@@ -86,4 +86,3 @@ QStringList RKRadio::getUiLabelPair () const {
 	return ret;
 }
 
-#include "rkradio.moc"

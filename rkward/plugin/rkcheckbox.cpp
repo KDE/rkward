@@ -76,4 +76,3 @@ QStringList RKCheckBox::getUiLabelPair () const {
 	return ret;
 }
 
-#include "rkcheckbox.moc"

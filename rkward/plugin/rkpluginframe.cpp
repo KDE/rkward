@@ -94,4 +94,3 @@ void RKPluginFrame::checkedChanged (bool new_state) {
 	changed ();
 }
 
-#include "rkpluginframe.moc"

@@ -191,4 +191,3 @@ void RKSpinBox::setIntMode (int min, int max, int initial) {
 	setValue (0);
 }
 
-#include "rkspinbox.moc"

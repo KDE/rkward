@@ -721,6 +721,5 @@ RKCaughtX11WindowPart::~RKCaughtX11WindowPart () {
 	RK_TRACE (MISC);
 }
 
-#include "rkwindowcatcher.moc"
 
 #endif // DISABLE_RKWINDOWCATCHER

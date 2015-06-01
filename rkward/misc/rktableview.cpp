@@ -272,4 +272,3 @@ void RKItemDelegate::editorDone (QWidget* editor, RKItemDelegate::EditorDoneReas
 	locked_for_modal_editor = false;
 }
 
-#include "rktableview.moc"

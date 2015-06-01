@@ -274,4 +274,3 @@ QStringList RKSettingsModuleGraphics::makeRRunTimeOptionCommands () {
 	return (list);
 }
 
-#include "rksettingsmodulegraphics.moc"

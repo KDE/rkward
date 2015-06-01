@@ -388,4 +388,3 @@ void RKGraphicsDeviceFrontendTransmitter::newPageConfirmDone (bool accepted) {
 	streamer.writeOutBuffer ();
 }
 
-#include "rkgraphicsdevice_frontendtransmitter.moc"

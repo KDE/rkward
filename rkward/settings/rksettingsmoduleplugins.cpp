@@ -583,4 +583,3 @@ const RKSettingsModulePluginsModel::PluginMapMetaInfo& RKSettingsModulePluginsMo
 	return (plugin_map_dynamic_info[pluginmapfile]);
 }
 
-#include "rksettingsmoduleplugins.moc"

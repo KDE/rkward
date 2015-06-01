@@ -362,4 +362,3 @@ namespace RKPrecompiledQtScripts {
 }
 #endif
 
-#include "qtscriptbackend.moc"

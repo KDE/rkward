@@ -879,4 +879,3 @@ void RKOptionSetDisplayModel::triggerReset() {
 }
 
 
-#include "rkoptionset.moc"

@@ -349,4 +349,3 @@ QVariant RKHelpSearchResultsModel::headerData (int section, Qt::Orientation orie
 	return QVariant ();
 }
 
-#include "rkhelpsearchwindow.moc"

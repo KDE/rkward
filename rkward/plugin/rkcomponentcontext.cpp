@@ -101,4 +101,3 @@ void RKContextHandler::invokeComponent (RKComponentHandle *handle) {
 	}
 }
 
-#include "rkcomponentcontext.moc"

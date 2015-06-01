@@ -451,4 +451,3 @@ QString RKComponent::stripAccelerators (const QString& in) {
 	return ret;
 }
 
-#include "rkcomponent.moc"

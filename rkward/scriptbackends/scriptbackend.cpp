@@ -115,4 +115,3 @@ void ScriptBackend::commandFinished (const QString &output) {
 }
 
 
-#include "scriptbackend.moc"

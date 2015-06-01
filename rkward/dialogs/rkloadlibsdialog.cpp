@@ -1268,4 +1268,3 @@ void RKPluginMapSelectionWidget::ok () {
 	deleteLater ();
 }
 
-#include "rkloadlibsdialog.moc"

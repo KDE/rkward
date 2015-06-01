@@ -544,4 +544,3 @@ bool RKMatrixInputModel::setData (const QModelIndex& index, const QVariant& valu
 	return true;
 }
 
-#include "rkmatrixinput.moc"

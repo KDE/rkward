@@ -234,4 +234,3 @@ QStringList RKVarSlot::getUiLabelPair () const {
 	return ret;
 }
 
-#include "rkvarslot.moc"

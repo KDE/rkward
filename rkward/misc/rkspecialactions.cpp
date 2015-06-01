@@ -250,4 +250,3 @@ QString RKPasteSpecialDialog::prepString (const QString& src) const {
 	return src;
 }
 
-#include "rkspecialactions.moc"

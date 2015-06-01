@@ -1295,4 +1295,3 @@ void RKCommandHighlighter::copyLinesToOutput (KTextEditor::View *view, Highlight
 	}
 }
 
-#include "rkcommandeditorwindow.moc"

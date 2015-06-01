@@ -157,4 +157,3 @@ void RKFindBar::activateWithFindAsYouType () {
 }
 
 
-#include "rkfindbar.moc"

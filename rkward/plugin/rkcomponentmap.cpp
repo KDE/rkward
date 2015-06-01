@@ -861,4 +861,3 @@ RKComponentAboutData RKComponentHandle::getAboutData () {
 
 ///########################### END RKComponentHandle ###############################
 
-#include "rkcomponentmap.moc"

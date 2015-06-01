@@ -73,4 +73,3 @@ void RKJobSequence::jobDone (KJob* job) {
 	nextJob ();
 }
 
-#include "rkjobsequence.moc"

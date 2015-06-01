@@ -911,5 +911,4 @@ void RKMDIWindowHistory::popLastWindow (RKMDIWindow* match) {
 	updateSwitcher ();
 }
 
-#include "rkworkplace.moc"
 

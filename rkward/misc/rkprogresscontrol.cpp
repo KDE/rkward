@@ -323,4 +323,3 @@ void RKProgressControlDialog::closeEvent (QCloseEvent *e) {
 	}
 }
 
-#include "rkprogresscontrol.moc"

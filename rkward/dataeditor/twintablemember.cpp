@@ -171,4 +171,3 @@ void TwinTableMember::handleContextMenuRequest (const QPoint& pos) {
 	}
 }
 
-#include "twintablemember.moc"

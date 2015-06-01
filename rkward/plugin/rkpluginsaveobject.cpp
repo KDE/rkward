@@ -139,4 +139,3 @@ QStringList RKPluginSaveObject::getUiLabelPair () const {
 	return ret;
 }
 
-#include "rkpluginsaveobject.moc"

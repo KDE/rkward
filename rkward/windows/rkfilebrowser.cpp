@@ -216,4 +216,3 @@ void RKFileBrowserWidget::fileActivated (const KFileItem& item) {
 	RKWorkplace::mainWorkplace ()->openAnyUrl (item.url ());
 }
 
-#include "rkfilebrowser.moc"

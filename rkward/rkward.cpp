@@ -934,4 +934,3 @@ void RKWardMainWindow::setCaption (const QString &) {
 	KParts::MainWindow::setCaption (wcaption);
 }
 
-#include "rkward.moc"

@@ -91,4 +91,3 @@ void RKPrintAgent::printPostscript (const QString &file, bool delete_file) {
 	}
 }
 
-#include "rkprintagent.moc"

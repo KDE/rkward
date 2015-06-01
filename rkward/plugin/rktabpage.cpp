@@ -75,4 +75,3 @@ void RKTabPage::visibleEnabledChanged (RKComponentPropertyBase *property) {
 	}
 }
 
-#include "rktabpage.moc"

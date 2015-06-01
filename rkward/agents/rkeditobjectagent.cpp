@@ -62,4 +62,3 @@ void RKEditObjectAgent::rCommandDone (RCommand *command) {
 	}
 }
 
-#include "rkeditobjectagent.moc"

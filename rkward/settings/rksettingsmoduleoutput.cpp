@@ -288,4 +288,3 @@ QStringList RKSettingsModuleOutput::makeRRunTimeOptionCommands () {
 	return (list);
 }
 
-#include "rksettingsmoduleoutput.moc"

@@ -223,4 +223,3 @@ bool RKSettingsModuleCommandEditor::matchesScriptFileFilter (const QString &file
 	return false;
 }
 
-#include "rksettingsmodulecommandeditor.moc"

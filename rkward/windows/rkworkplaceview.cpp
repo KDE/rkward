@@ -269,4 +269,3 @@ void RKWorkplaceView::currentPageChanged (int) {
 }
 
 
-#include "rkworkplaceview.moc"

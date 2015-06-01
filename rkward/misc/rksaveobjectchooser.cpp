@@ -203,4 +203,3 @@ QString RKSaveObjectChooser::currentBaseName () const {
 	return name_edit->text ();
 }
 
-#include "rksaveobjectchooser.moc"

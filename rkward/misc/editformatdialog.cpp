@@ -145,4 +145,3 @@ void EditFormatDialogProxy::dialogDone (int result) {
 	dialog = 0;
 }
 
-#include "editformatdialog.moc"

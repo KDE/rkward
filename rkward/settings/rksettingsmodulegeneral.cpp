@@ -298,4 +298,3 @@ QString RKSettingsModuleGeneral::checkAdjustLoadedPath (const QString& localpath
 	return localpath;
 }
 
-#include "rksettingsmodulegeneral.moc"

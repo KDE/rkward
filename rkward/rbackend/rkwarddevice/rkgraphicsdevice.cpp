@@ -462,4 +462,3 @@ void RKGraphicsDevice::stopInteraction () {
 	interaction_opcode = -1;
 }
 
-#include "rkgraphicsdevice.moc"

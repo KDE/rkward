@@ -113,4 +113,3 @@ bool CellEditor::eventFilter (QObject* object, QEvent* e) {
 	return false;
 }
 
-#include "celleditor.moc"

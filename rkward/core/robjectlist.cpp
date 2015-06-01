@@ -309,5 +309,4 @@ REnvironmentObject *RObjectList::getGlobalEnv () {
 	return envobj;
 }
 
-#include "robjectlist.moc"
 

@@ -319,4 +319,3 @@ void RKMDIWindow::showWindowSettings () {
 }
 
 
-#include "rkmdiwindow.moc"

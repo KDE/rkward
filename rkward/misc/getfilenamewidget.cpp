@@ -113,4 +113,3 @@ void GetFileNameWidget::setBackgroundColor (const QColor & color) {
 	edit->lineEdit ()->setPalette (palette);
 }
 
-#include "getfilenamewidget.moc"

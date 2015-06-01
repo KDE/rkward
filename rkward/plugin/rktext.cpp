@@ -78,4 +78,3 @@ void RKText::textChanged (RKComponentPropertyBase *) {
 	changed ();
 }
 
-#include "rktext.moc"

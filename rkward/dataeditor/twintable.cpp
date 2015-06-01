@@ -482,4 +482,3 @@ void TwinTable::showRownames (bool show) {
 	datamodel->lockHeader (!show);
 }
 
-#include "twintable.moc"

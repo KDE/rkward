@@ -212,4 +212,3 @@ void RKMultiStringSelectorV2::anyModelDataChange () {
 	emit (listChanged ());
 }
 
-#include "multistringselector.moc"

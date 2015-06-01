@@ -141,4 +141,3 @@ void RKSettingsModuleDebug::loadSettings (KConfig *) {
 	// left empty on purpose
 }
 
-#include "rksettingsmoduledebug.moc"

@@ -167,4 +167,3 @@ void RKSettingsModuleObjectBrowser::listChanged () {
 	change ();
 }
 
-#include "rksettingsmoduleobjectbrowser.moc"

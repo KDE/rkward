@@ -121,4 +121,3 @@ QStringList RKPluginBrowser::getUiLabelPair () const {
 	return ret;
 }
 
-#include "rkpluginbrowser.moc"

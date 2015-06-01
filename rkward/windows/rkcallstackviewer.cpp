@@ -160,4 +160,3 @@ void RKCallstackViewerWidget::frameChanged (int frame_number) {
 	}
 }
 
-#include "rkcallstackviewer.moc"

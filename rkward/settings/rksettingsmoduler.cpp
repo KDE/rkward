@@ -601,4 +601,3 @@ void RKSettingsModuleRPackages::loadSettings (KConfig *config) {
 #endif
 }
 
-#include "rksettingsmoduler.moc"

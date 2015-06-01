@@ -78,4 +78,3 @@ void RKQuitAgent::rCommandDone (RCommand *) {
 }
 
 
-#include "rkquitagent.moc"

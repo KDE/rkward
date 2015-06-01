@@ -212,4 +212,3 @@ void RKTopLevelWindowGUI::previousWindow () {
 	RKWorkplace::getHistory ()->prev (prev_action, next_action);
 }
 
-#include "rktoplevelwindowgui.moc"
