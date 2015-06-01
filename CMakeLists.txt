@@ -13,6 +13,7 @@ SET(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR})
 INCLUDE(KDEInstallDirs)
 INCLUDE(KDECMakeSettings)
 INCLUDE(KDECompilerSettings)
+include(ECMInstallIcons)
 INCLUDE(FeatureSummary)
 
 FIND_PACKAGE(Qt5 5.2 CONFIG REQUIRED COMPONENTS Widgets Xml Network WebKit)
