@@ -2,7 +2,7 @@
                           rkvarslot.cpp  -  description
                              -------------------
     begin                : Thu Nov 7 2002
-    copyright            : (C) 2002-2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2002-2015 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -56,7 +56,7 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 
 	list = new QTreeWidget (this);
 	list->setSelectionMode (QAbstractItemView::ExtendedSelection);
-	list->setHeaderLabels (QStringList () << " " << i18n ("Name"));
+	list->setHeaderLabels (QStringList () << i18n ("Name"));
 	list->setSortingEnabled (false);
 	list->setUniformRowHeights (true);
 	list->setRootIsDecorated (false);
@@ -92,7 +92,6 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 		list->getContentsMargins (&left, &top, &right, &bottom);
 		list->setFixedHeight (list->visualItemRect (&dummy).height () + 2*list->visualItemRect (&dummy).top () + top + bottom);
 		list->header ()->setStretchLastSection (true);
-		list->hideColumn (0);
 		list->setHorizontalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
 		list->setVerticalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
 		g_layout->setRowStretch (3, 1);		// so the label does not get separated from the view
@@ -154,17 +153,16 @@ void RKVarSlot::availablePropertyChanged (RKComponentPropertyBase *) {
 	int len = available->listLength ();
 	for (int i = 0; i < len; ++i) {
 		QTreeWidgetItem *new_item = new QTreeWidgetItem (list);
-		new_item->setText (0, QString::number (i + 1));
 
 		if (mode == Valueslot) {
-			new_item->setText (1, static_cast<RKComponentPropertyStringList*> (available)->valueAt (i));
+			new_item->setText (0, static_cast<RKComponentPropertyStringList*> (available)->valueAt (i));
 		} else {
 			RObject *object = static_cast<RKComponentPropertyRObjects*> (available)->objectAt (i);
-			new_item->setText (1, object->getShortName ());
+			new_item->setText (0, object->getShortName ());
 			QString probs = static_cast<RKComponentPropertyRObjects*> (available)->objectProblems (i);
 			if (!probs.isEmpty ()) {
-				new_item->setToolTip (1, i18n ("<p>This object is not allowed, here, for the following reason(s):</p>") + probs);
-				new_item->setIcon (1, RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteVar));
+				new_item->setToolTip (0, i18n ("<p>This object is not allowed, here, for the following reason(s):</p>") + probs);
+				new_item->setIcon (0, RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteVar));
 			}
 		}
 	}
