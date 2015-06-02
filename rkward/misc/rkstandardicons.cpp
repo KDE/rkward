@@ -2,7 +2,7 @@
                           rkstandardicons  -  description
                              -------------------
     begin                : Wed Oct 24 2007
-    copyright            : (C) 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2009, 2010, 2011, 2015 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -75,6 +75,9 @@ void RKStandardIcons::initIcons () {
 
 	icons[ActionDetachWindow] = KIcon ("view-fullscreen");
 	icons[ActionAttachWindow] = KIcon ("view-restore");
+
+	icons[ActionLock] = KIcon ("object-locked");
+	icons[ActionUnlock] = KIcon ("object-unlocked");
 
 	// objects
 	icons[ObjectList] = QIcon (rkward_icon_base + "list.png");
