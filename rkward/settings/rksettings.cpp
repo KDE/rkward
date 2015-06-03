@@ -68,8 +68,9 @@ RKSettings::RKSettings (QWidget *parent) : KPageDialog (parent) {
 	RK_TRACE (SETTINGS);
 
 	setFaceType (KPageDialog::Tree);
-	setCaption (i18n ("Settings"));
-	setButtons (KDialog::Ok | KDialog::Apply | KDialog::Cancel | KDialog::Help);
+	setWindowTitle (i18n ("Settings"));
+	buttonBox ()->setStandardButtons (QDialogButtonBox::Ok | QDialogButtonBox::Apply | QDialogButtonBox::Cancel | QDialogButtonBox::Help);
+	// KF5 TODO: connect buttons
 	enableButtonApply (false);
 
 	setAttribute (Qt::WA_DeleteOnClose, true);
