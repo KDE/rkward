@@ -1,3 +1,4 @@
+- For multi-item varslots and valueslots, use separate buttons for adding / removing items
 - Don't show (useless) index number in mutli-value varslots and valueslots
 - Make the option to disable / enable editing more visible (in the data editor's toolbar)
 - Do not invoke symbol name completion while in the middle (not end) of a word
