@@ -417,7 +417,7 @@ void RKWardMainWindow::initToolViewsAndR () {
 
 void RKWardMainWindow::initActions() {  
 	RK_TRACE (APP);
-	KAction *action;
+	QAction *action;
 
 	// TODO: is there a way to insert actions between standard actions without having to give all standard actions custom ids?
 	new_data_frame = actionCollection ()->addAction ("new_data_frame", this, SLOT (slotNewDataFrame()));
@@ -521,7 +521,7 @@ void RKWardMainWindow::initActions() {
 	open_any_action->addAction (fileOpen);
 	open_any_action->addAction (fileOpenRecent);
 	open_any_action->addSeparator ();
-	proxy_import = new KAction (i18n ("Import"), this);
+	proxy_import = new QAction (i18n ("Import"), this);
 	open_any_action->addAction (proxy_import);
 
 	KActionMenu* new_any_action = new KActionMenu (KIcon ("document-new"), i18n ("Create..."), this);
@@ -535,7 +535,7 @@ void RKWardMainWindow::initActions() {
 	save_any_action->setDelayed (false);
 	actionCollection ()->addAction ("save_any", save_any_action);
 
-	proxy_export = new KAction (i18n ("Export"), this);
+	proxy_export = new QAction (i18n ("Export"), this);
 	save_any_action->addAction (fileSaveWorkspace);
 	save_any_action->addAction (fileSaveWorkspaceAs);
 	save_any_action->addSeparator ();

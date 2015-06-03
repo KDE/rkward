@@ -42,7 +42,7 @@ class QEvent;
 class QCloseEvent;
 class QFrame;
 class QLabel;
-class KAction;
+class QAction;
 class QAction;
 class KActionMenu;
 class RKCommandEditorWindow;
@@ -268,9 +268,9 @@ private:
 #endif
 		bool active;
 		KTextEditor::Attribute::Ptr attribute;
-		KAction* mark;
-		KAction* unmark;
-		KAction* run;
+		QAction* mark;
+		QAction* unmark;
+		QAction* run;
 	};
 	QVector<BlockRecord> block_records;
 	void initBlocks ();
@@ -283,12 +283,12 @@ private:
 	KActionMenu* actionmenu_unmark_block;
 	KActionMenu* actionmenu_run_block;
 
-	KAction* action_run_all;
-	KAction* action_run_current;
+	QAction* action_run_all;
+	QAction* action_run_current;
 
-	KAction* action_setwd_to_script;
+	QAction* action_setwd_to_script;
 
-	KAction* action_help_function;
+	QAction* action_help_function;
 
 	KUrl previous_autosave_url;
 	QTimer* autosave_timer;

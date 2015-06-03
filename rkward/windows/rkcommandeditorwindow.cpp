@@ -41,7 +41,7 @@
 #include <kmenu.h>
 #include <kmessagebox.h>
 #include <kfiledialog.h>
-#include <kaction.h>
+#include <QAction>
 #include <kstandardaction.h>
 #include <klibloader.h>
 #include <kactioncollection.h>
@@ -214,7 +214,7 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	action_run_all = RKStandardActions::runAll (this, this, SLOT (runAll()));
 	action_run_current = RKStandardActions::runCurrent (this, this, SLOT (runCurrent()), true);
 	// NOTE: enter_and_submit is not currently added to the menu
-	KAction *action = ac->addAction ("enter_and_submit", this, SLOT (enterAndSubmit()));
+	QAction *action = ac->addAction ("enter_and_submit", this, SLOT (enterAndSubmit()));
 	action->setText (i18n ("Insert line break and run"));
 	action->setShortcuts (KShortcut (Qt::AltModifier + Qt::Key_Return, Qt::AltModifier + Qt::Key_Enter));
 

@@ -18,7 +18,7 @@
 #ifndef RKSTANDARDACTIONS_H
 #define RKSTANDARDACTIONS_H
 
-class KAction;
+class QAction;
 class QString;
 class QObject;
 class RKMDIWindow;
@@ -27,15 +27,15 @@ class RKMDIWindow;
 
 @author Thomas Friedrichsmeier */
 namespace RKStandardActions {
-	KAction *copyLinesToOutput (RKMDIWindow *window, const QObject *receiver=0, const char *member=0);
+	QAction *copyLinesToOutput (RKMDIWindow *window, const QObject *receiver=0, const char *member=0);
 /** Allows special pasting modes for script windows.
 @param member needs to have the signature void fun (const QString&). */
-	KAction* pasteSpecial (RKMDIWindow *window, const QObject *receiver=0, const char *member=0);
+	QAction* pasteSpecial (RKMDIWindow *window, const QObject *receiver=0, const char *member=0);
 
-	KAction* runCurrent (RKMDIWindow *window, const QObject *receiver=0, const char *member=0, bool current_or_line=false);
-	KAction* runAll (RKMDIWindow *window, const QObject *receiver=0, const char *member=0);
+	QAction* runCurrent (RKMDIWindow *window, const QObject *receiver=0, const char *member=0, bool current_or_line=false);
+	QAction* runAll (RKMDIWindow *window, const QObject *receiver=0, const char *member=0);
 
-	KAction* functionHelp (RKMDIWindow *window, const QObject *receiver=0, const char *member=0);
+	QAction* functionHelp (RKMDIWindow *window, const QObject *receiver=0, const char *member=0);
 };
 
 #endif

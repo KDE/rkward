@@ -17,7 +17,7 @@
 
 #include "rkcomponentcontext.h"
 
-#include <kaction.h>
+#include <QAction>
 #include <kactioncollection.h>
 
 #include "rkstandardcomponent.h"

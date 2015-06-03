@@ -90,7 +90,7 @@ protected:
 
 #include <kparts/part.h>
 
-class KAction;
+class QAction;
 
 /** Provides a part interface for the RKCommandLog */
 class RKCommandLogPart : public KParts::Part {

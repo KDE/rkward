@@ -86,7 +86,7 @@ private:
 
 class RKCaughtX11WindowPart;
 class KToggleAction;
-class KAction;
+class QAction;
 class KSelectAction;
 class QXEmbedCopy;
 class QScrollArea;
@@ -191,16 +191,16 @@ private:
 
 	bool dynamic_size;
 	KToggleAction *dynamic_size_action;
-	KAction *plot_prev_action;
-	KAction *plot_next_action;
-	KAction *plot_first_action;
-	KAction *plot_last_action;
-	KAction *plot_force_append_action;
-	KAction *plot_remove_action;
-	KAction *plot_clear_history_action;
-	KAction *plot_properties_action;
+	QAction *plot_prev_action;
+	QAction *plot_next_action;
+	QAction *plot_first_action;
+	QAction *plot_last_action;
+	QAction *plot_force_append_action;
+	QAction *plot_remove_action;
+	QAction *plot_clear_history_action;
+	QAction *plot_properties_action;
 	KSelectAction *plot_list_action;
-	KAction *stop_interaction;
+	QAction *stop_interaction;
 
 	KPassivePopup* status_popup;
 	RCommand* status_change_command;

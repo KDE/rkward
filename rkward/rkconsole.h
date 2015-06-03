@@ -31,7 +31,7 @@
 class QEvent;
 class QKeyEvent;
 class QStringList;
-class KAction;
+class QAction;
 class RCommand;
 class KActionCollection;
 class RKConsolePart;
@@ -135,12 +135,12 @@ friend class RKConsolePart;
 
 	bool tab_key_pressed_before;
 
-	KAction* context_help_action;
-	KAction* run_selection_action;
-	KAction* interrupt_command_action;
-	KAction* copy_commands_action;
-	KAction* copy_literal_action;
-	KAction* paste_action;
+	QAction* context_help_action;
+	QAction* run_selection_action;
+	QAction* interrupt_command_action;
+	QAction* copy_commands_action;
+	QAction* copy_literal_action;
+	QAction* paste_action;
 
 	KActionCollection *kate_edit_actions;
 	void triggerEditAction (QString name);

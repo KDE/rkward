@@ -18,7 +18,7 @@
 
 #include <klocale.h>
 #include <kdialog.h>
-#include <kaction.h>
+#include <QAction>
 #include <kactioncollection.h>
 #include <kvbox.h>
 

@@ -19,7 +19,7 @@
 #define RKWARD_H
 
 #include <kapplication.h>
-#include <kaction.h>
+#include <QAction>
 #include <kurl.h>
 #include <kparts/mainwindow.h>
 
@@ -144,31 +144,31 @@ private:
 	QLabel* statusbar_ready;
 	KParts::PartManager *part_manager;
 
-	// KAction pointers to enable/disable actions
-	KAction* fileOpen;
+	// QAction pointers to enable/disable actions
+	QAction* fileOpen;
 	KRecentFilesAction* fileOpenRecent;
 	
-	KAction* fileOpenWorkspace;
+	QAction* fileOpenWorkspace;
 	KRecentFilesAction* fileOpenRecentWorkspace;
-	KAction* fileSaveWorkspace;
-	KAction* fileSaveWorkspaceAs;
-	KAction* fileQuit;
-	KAction* interrupt_all_commands;
-	KAction* close_all_editors;
-	KAction* new_data_frame;
-	KAction* new_command_editor;
+	QAction* fileSaveWorkspace;
+	QAction* fileSaveWorkspaceAs;
+	QAction* fileQuit;
+	QAction* interrupt_all_commands;
+	QAction* close_all_editors;
+	QAction* new_data_frame;
+	QAction* new_command_editor;
 
-	KAction* window_close_all;
-	KAction* window_detach;
+	QAction* window_close_all;
+	QAction* window_detach;
 	
-	KAction* configure;
+	QAction* configure;
 
 	/** used so that if the menu is empty, there is a note in it, explaining that fact */
-	KAction* edit_menu_dummy;
+	QAction* edit_menu_dummy;
 	/** used so that if the menu is empty, there is a note in it, explaining that fact */
-	KAction* view_menu_dummy;
+	QAction* view_menu_dummy;
 
-	KAction* proxy_export, *proxy_import;
+	QAction* proxy_export, *proxy_import;
 	KActionMenu* save_any_action;
 	QAction* save_actions_plug_point;
 	QList<QPointer <QAction> > plugged_save_actions;

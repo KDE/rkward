@@ -21,7 +21,7 @@
 #include <klocale.h>
 #include <kshortcut.h>
 #include <kactioncollection.h>
-#include <kaction.h>
+#include <QAction>
 #include <kicon.h>
 #include <kdeversion.h>
 #include <kacceleratormanager.h>
@@ -80,11 +80,11 @@ RKWorkplaceView::~RKWorkplaceView () {
 void RKWorkplaceView::initActions (KActionCollection *ac, const char *id_left, const char *id_right) {
 	RK_TRACE (APP);
 
-	action_page_left = (KAction*) ac->addAction (id_left, this, SLOT (pageLeft()));
+	action_page_left = (QAction *) ac->addAction (id_left, this, SLOT (pageLeft()));
 	action_page_left->setText (i18n ("Window Left"));
 	action_page_left->setShortcut (KShortcut (Qt::ControlModifier + Qt::Key_Less, Qt::ControlModifier + Qt::Key_Comma));
 
-	action_page_right = (KAction*) ac->addAction (id_right, this, SLOT (pageRight()));
+	action_page_right = (QAction *) ac->addAction (id_right, this, SLOT (pageRight()));
 	action_page_right->setText (i18n ("Window Right"));
 	action_page_right->setShortcut (KShortcut (Qt::ControlModifier + Qt::Key_Greater, Qt::ControlModifier + Qt::Key_Period));
 

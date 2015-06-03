@@ -33,7 +33,7 @@ class RCommandChain;
 class RKWorkplaceView;
 class RKEditor;
 class KActionCollection;
-class KAction;
+class QAction;
 class RKToolWindowBar;
 class RKMDIWindowHistoryWidget;
 class RKGraphicsDevice;
@@ -51,8 +51,8 @@ public:
 /** pops the last window from the list, if it matches the given pointer */
 	void popLastWindow (RKMDIWindow *match);
 	RKMDIWindow *previousDocumentWindow ();
-	void next (KAction *prev_action, KAction *next_action);
-	void prev (KAction *prev_action, KAction *next_action);
+	void next (QAction *prev_action, QAction *next_action);
+	void prev (QAction *prev_action, QAction *next_action);
 public slots:
 	void windowActivated (RKMDIWindow *window);
 private slots:
@@ -61,7 +61,7 @@ private:
 	void updateSwitcher ();
 	QList<RKMDIWindow *> recent_windows;
 	RKMDIWindowHistoryWidget *switcher;
-	RKMDIWindowHistoryWidget *getSwitcher (KAction *prev_action, KAction *next_action);
+	RKMDIWindowHistoryWidget *getSwitcher (QAction *prev_action, QAction *next_action);
 };
 
 /** This class (only one instance will probably be around) keeps track of which windows are opened in the workplace, which are detached, etc. Also it is responsible for creating and manipulating those windows.

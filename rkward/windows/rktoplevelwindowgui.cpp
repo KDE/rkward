@@ -82,7 +82,7 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI (KXmlGuiWindow *for_window) : QObject (
 	next_action->setIcon (QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/window_forward.png"));
 	next_action->setShortcut (Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_Tab);
 
-	KAction *action;
+	QAction *action;
 	foreach (const RKToolWindowList::ToolWindowRepresentation& rep, RKToolWindowList::registeredToolWindows ()) {
 		action = actionCollection ()->addAction ("window_show_" + rep.id, this, SLOT (toggleToolView()));
 		action->setText (i18n ("Show/Hide %1", rep.window->shortCaption ()));

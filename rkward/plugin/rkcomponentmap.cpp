@@ -717,7 +717,7 @@ void RKComponentMap::addedEntry (const QString &id, RKComponentHandle *handle) {
 	RK_TRACE (PLUGIN);
 
 	handle->setAccessible (true);
-	KAction *action = actionCollection ()->addAction (id, this, SLOT (activateComponent()));
+	QAction *action = actionCollection ()->addAction (id, this, SLOT (activateComponent()));
 	action->setText (handle->getLabel ());
 	action->setShortcutConfigurable (true);
 }

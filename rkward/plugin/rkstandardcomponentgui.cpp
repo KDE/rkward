@@ -18,7 +18,7 @@
 #include "rkstandardcomponentgui.h"
 
 #include <klocale.h>
-#include <kaction.h>
+#include <QAction>
 #include <kactioncollection.h>
 #include <kurl.h>
 #include <kvbox.h>

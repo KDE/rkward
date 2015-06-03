@@ -30,7 +30,7 @@
 #include <QVBoxLayout>
 
 #include <klocale.h>
-#include <kaction.h>
+#include <QAction>
 #include <kactioncollection.h>
 #include <kconfig.h>
 #include <kapplication.h>
@@ -169,7 +169,7 @@ QAction* RKConsole::addProxyAction (const QString& actionName, const QString& la
 	}
 
 	if (found) {
-		QAction* ret = new KAction (getPart ());
+		QAction* ret = new QAction (getPart ());
 		if (label.isEmpty ()) ret->setText (found->text ());
 		else ret->setText (label);
 		ret->setIcon (found->icon ());
@@ -922,7 +922,7 @@ void RKConsole::initializeActions (KActionCollection *ac) {
 	addProxyAction ("view_inc_font_sizes");
 	addProxyAction ("view_dec_font_sizes");
 
-	KAction *action = ac->addAction ("loadhistory", this, SLOT (userLoadHistory()));
+	QAction *action = ac->addAction ("loadhistory", this, SLOT (userLoadHistory()));
 	action->setText (i18n ("Import command history..."));
 	action = ac->addAction ("savehistory", this, SLOT (userSaveHistory()));
 	action->setText (i18n ("Export command history..."));

@@ -651,19 +651,19 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KPart
 	action = actionCollection ()->addAction ("plot_prev", window, SLOT (previousPlot()));
  	action->setText (i18n ("Previous plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveLeft));
-	window->plot_prev_action = (KAction*) action;
+	window->plot_prev_action = (QAction *) action;
 	action = actionCollection ()->addAction ("plot_first", window, SLOT (firstPlot()));
  	action->setText (i18n ("First plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveFirst));
-	window->plot_first_action = (KAction*) action;
+	window->plot_first_action = (QAction *) action;
 	action = actionCollection ()->addAction ("plot_next", window, SLOT (nextPlot()));
  	action->setText (i18n ("Next plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveRight));
-	window->plot_next_action = (KAction*) action;
+	window->plot_next_action = (QAction *) action;
 	action = actionCollection ()->addAction ("plot_last", window, SLOT (lastPlot()));
  	action->setText (i18n ("Last plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveLast));
-	window->plot_last_action = (KAction*) action;
+	window->plot_last_action = (QAction *) action;
 	action = window->plot_list_action = new KSelectAction (i18n ("Go to plot"), 0);
 	window->plot_list_action->setToolBarMode (KSelectAction::MenuMode);
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionListPlots));
@@ -673,19 +673,19 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KPart
 	action = actionCollection ()->addAction ("plot_force_append", window, SLOT (forceAppendCurrentPlot()));
  	action->setText (i18n ("Append this plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionSnapshot));
-	window->plot_force_append_action = (KAction*) action;
+	window->plot_force_append_action = (QAction *) action;
 	action = actionCollection ()->addAction ("plot_remove", window, SLOT (removeCurrentPlot()));
  	action->setText (i18n ("Remove this plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRemovePlot));
-	window->plot_remove_action = (KAction*) action;
+	window->plot_remove_action = (QAction *) action;
 
 	action = actionCollection ()->addAction ("plot_clear_history", window, SLOT (clearHistory()));
-	window->plot_clear_history_action = (KAction*) action;
+	window->plot_clear_history_action = (QAction *) action;
  	action->setText (i18n ("Clear history"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionClear));
 
 	action = actionCollection ()->addAction ("plot_properties", window, SLOT (showPlotInfo()));
-	window->plot_properties_action = (KAction*) action;
+	window->plot_properties_action = (QAction *) action;
 	action->setText (i18n ("Plot properties"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDocumentInfo));
 

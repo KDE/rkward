@@ -47,7 +47,7 @@ protected:
 	RKContextHandler (QObject *parent, const QDomDocument &gui_xml, const QString &id);
 /** desctructor. Should be called automatically, as this is QObject */
 	~RKContextHandler ();
-/** add a KAction to the context. To be called from RKContext::makeContextHandler(). */
+/** add a QAction to the context. To be called from RKContext::makeContextHandler(). */
 	void addAction (const QString &id, RKComponentHandle *handle);
 private slots:
 /** slot to handle plugin activation */

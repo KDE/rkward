@@ -836,14 +836,14 @@ void RKMDIWindowHistory::windowActivated (RKMDIWindow *window) {
 	updateSwitcher ();
 }
 
-void RKMDIWindowHistory::next (KAction* prev_action, KAction *next_action) {
+void RKMDIWindowHistory::next (QAction* prev_action, QAction *next_action) {
 	RK_TRACE (APP);
 
 	if (recent_windows.isEmpty ()) return;
 	getSwitcher (prev_action, next_action)->next ();
 }
 
-void RKMDIWindowHistory::prev (KAction* prev_action, KAction *next_action) {
+void RKMDIWindowHistory::prev (QAction* prev_action, QAction *next_action) {
 	RK_TRACE (APP);
 
 	if (recent_windows.isEmpty ()) return;
@@ -872,7 +872,7 @@ void RKMDIWindowHistory::removeWindow (RKMDIWindow *window) {
 	updateSwitcher ();
 }
 
-RKMDIWindowHistoryWidget* RKMDIWindowHistory::getSwitcher (KAction* prev_action, KAction *next_action) {
+RKMDIWindowHistoryWidget* RKMDIWindowHistory::getSwitcher (QAction* prev_action, QAction *next_action) {
 	RK_TRACE (APP);
 
 	if (switcher) return switcher;

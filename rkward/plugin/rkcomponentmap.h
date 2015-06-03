@@ -161,7 +161,7 @@ protected:
 /** reset the xml file */
 	void clearGUIDescription ();
 
-/** an entry was added to the menu(s) somewhere. Reimplement, if you want to e.g. create a KAction for this */
+/** an entry was added to the menu(s) somewhere. Reimplement, if you want to e.g. create a QAction for this */
 	virtual void addedEntry (const QString & /* id */, RKComponentHandle * /* handle */) {};
 
 /** The generated XML GUI description in KDEs ui.rc format */

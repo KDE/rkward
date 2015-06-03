@@ -264,7 +264,7 @@ void RKCommandLogView::selectAll () {
 /////////////////////// BEGIN RKCommandLogPart ////////////////////////
 
 #include <kxmlguifactory.h>
-#include <kaction.h>
+#include <QAction>
 
 RKCommandLogPart::RKCommandLogPart (RKCommandLog *for_log) : KParts::Part (0) {
 	RK_TRACE (APP);

@@ -19,7 +19,7 @@
 
 #include <klocale.h>
 #include <kactioncollection.h>
-#include <kaction.h>
+#include <QAction>
 
 #include "rkstandardicons.h"
 #include "rkspecialactions.h"
@@ -27,28 +27,28 @@
 
 #include "../debug.h"
 
-KAction* RKStandardActions::copyLinesToOutput (RKMDIWindow *window, const QObject *receiver, const char *member) {
+QAction* RKStandardActions::copyLinesToOutput (RKMDIWindow *window, const QObject *receiver, const char *member) {
 	RK_TRACE (MISC);
 
-	KAction* ret = window->standardActionCollection ()->addAction ("copy_lines_to_output", receiver, member);
+	QAction* ret = window->standardActionCollection ()->addAction ("copy_lines_to_output", receiver, member);
 	ret->setText (i18n ("Copy lines to output"));
 	return ret;
 }
 
-KAction* RKStandardActions::pasteSpecial (RKMDIWindow *window, const QObject *receiver, const char *member) {
+QAction* RKStandardActions::pasteSpecial (RKMDIWindow *window, const QObject *receiver, const char *member) {
 	RK_TRACE (MISC);
 
-	KAction* ret = new RKPasteSpecialAction (window->standardActionCollection ());
+	QAction* ret = new RKPasteSpecialAction (window->standardActionCollection ());
 	window->standardActionCollection ()->addAction ("paste_special", ret);
 	ret->connect (ret, SIGNAL (pasteText(QString)), receiver, member);
 	ret->setShortcut (Qt::ShiftModifier + Qt::ControlModifier + Qt::Key_V);
 	return ret;
 }
 
-KAction* RKStandardActions::runCurrent (RKMDIWindow *window, const QObject *receiver, const char *member, bool current_or_line) {
+QAction* RKStandardActions::runCurrent (RKMDIWindow *window, const QObject *receiver, const char *member, bool current_or_line) {
 	RK_TRACE (MISC);
 
-	KAction* ret = window->standardActionCollection ()->addAction ("run_current", receiver, member);
+	QAction* ret = window->standardActionCollection ()->addAction ("run_current", receiver, member);
 	if (current_or_line) {
 		ret->setText (i18n ("Run line / selection"));
 		ret->setStatusTip (i18n ("Runs the current selection (if any) or the current line (if there is no selection)"));
@@ -61,20 +61,20 @@ KAction* RKStandardActions::runCurrent (RKMDIWindow *window, const QObject *rece
 	return ret;
 }
 
-KAction* RKStandardActions::runAll (RKMDIWindow *window, const QObject *receiver, const char *member) {
+QAction* RKStandardActions::runAll (RKMDIWindow *window, const QObject *receiver, const char *member) {
 	RK_TRACE (MISC);
 
-	KAction* ret = window->standardActionCollection ()->addAction ("run_all", receiver, member);
+	QAction* ret = window->standardActionCollection ()->addAction ("run_all", receiver, member);
 	ret->setText (i18n ("Run all"));
 	ret->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRunAll));
 	ret->setShortcut (KShortcut (Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_Return, Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_Enter));
 	return ret;
 }
 
-KAction* RKStandardActions::functionHelp (RKMDIWindow *window, const QObject *receiver, const char *member) {
+QAction* RKStandardActions::functionHelp (RKMDIWindow *window, const QObject *receiver, const char *member) {
 	RK_TRACE (MISC);
 
-	KAction* ret = window->standardActionCollection ()->addAction ("function_reference", receiver, member);
+	QAction* ret = window->standardActionCollection ()->addAction ("function_reference", receiver, member);
 	ret->setText (i18n ("&Function reference"));
 	ret->setShortcut (Qt::Key_F2);
 	return ret;

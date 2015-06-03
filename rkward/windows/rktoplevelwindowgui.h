@@ -24,7 +24,7 @@
 
 class KXmlGuiWindow;
 class RKMDIWindow;
-class KAction;
+class QAction;
 
 /** represents the common portions of the GUI for top level windows: The help menu, and the windows menu */
 class RKTopLevelWindowGUI : public QObject, public KXMLGUIClient {
@@ -64,8 +64,8 @@ private slots:
 	void nextWindow ();
 private:
 	KXmlGuiWindow *for_window;
-	KAction *prev_action;
-	KAction *next_action;
+	QAction *prev_action;
+	QAction *next_action;
 	void toggleToolView (RKMDIWindow *tool_window);
 };
 

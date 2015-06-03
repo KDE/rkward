@@ -21,7 +21,7 @@
 #include <ktabwidget.h>
 
 class RKMDIWindow;
-class KAction;
+class QAction;
 class KActionCollection;
 
 /** This is mostly a KTabWidget with some extras such as updating the caption, a context menu, etc.
@@ -82,8 +82,8 @@ private slots:
 private:
 	void updateActions ();
 
-	KAction *action_page_left;
-	KAction *action_page_right;
+	QAction *action_page_left;
+	QAction *action_page_right;
 };
 
 #endif

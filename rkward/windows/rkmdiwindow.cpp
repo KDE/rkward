@@ -27,7 +27,7 @@
 #include <kxmlguifactory.h>
 #include <kactioncollection.h>
 #include <klocale.h>
-#include <kaction.h>
+#include <QAction>
 
 #include "rkworkplace.h"
 #include "rkworkplaceview.h"
@@ -295,11 +295,11 @@ void RKMDIWindow::setMetaInfo (const QString& _generic_window_name, const QStrin
 	settings_page = _settings_page;
 
 	if (!help_url.isEmpty ()) {
-		KAction *action = standardActionCollection ()->addAction ("window_help", this, SLOT (showWindowHelp()));
+		QAction *action = standardActionCollection ()->addAction ("window_help", this, SLOT (showWindowHelp()));
 		action->setText (i18n ("Help on %1", generic_window_name));
 	}
 	if (settings_page != RKSettings::NoPage) {
-		KAction *action = standardActionCollection ()->addAction ("window_configure", this, SLOT (showWindowSettings()));
+		QAction *action = standardActionCollection ()->addAction ("window_configure", this, SLOT (showWindowSettings()));
 		action->setText (i18n ("Configure %1", generic_window_name));
 	}
 }

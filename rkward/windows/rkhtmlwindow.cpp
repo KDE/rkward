@@ -582,9 +582,9 @@ void RKHTMLWindowPart::initActions () {
 
 	// common actions
 	actionCollection ()->addAction (KStandardAction::Copy, "copy", window->view->pageAction (QWebPage::Copy), SLOT (trigger()));
-	QAction* zoom_in = actionCollection ()->addAction ("zoom_in", new KAction (KIcon ("zoom-in"), i18n ("Zoom In"), this));
+	QAction* zoom_in = actionCollection ()->addAction ("zoom_in", new QAction (KIcon ("zoom-in"), i18n ("Zoom In"), this));
 	connect (zoom_in, SIGNAL(triggered(bool)), window, SLOT (zoomIn()));
-	QAction* zoom_out = actionCollection ()->addAction ("zoom_out", new KAction (KIcon ("zoom-out"), i18n ("Zoom Out"), this));
+	QAction* zoom_out = actionCollection ()->addAction ("zoom_out", new QAction (KIcon ("zoom-out"), i18n ("Zoom Out"), this));
 	connect (zoom_out, SIGNAL(triggered(bool)), window, SLOT (zoomOut()));
 	actionCollection ()->addAction (KStandardAction::SelectAll, "select_all", window->view->pageAction (QWebPage::SelectAll), SLOT (trigger()));
 	// unfortunately, this will only affect the default encoding, not necessarily the "real" encoding
@@ -615,7 +615,7 @@ void RKHTMLWindowPart::initActions () {
 	outputRefresh->setIcon (KIcon ("view-refresh"));
 
 	actionCollection ()->addAction (KStandardAction::Find, "find", window->findbar, SLOT (activate()));
-	KAction* findAhead = actionCollection ()->addAction ("find_ahead", new KAction (i18n ("Find as you type"), this));
+	QAction* findAhead = actionCollection ()->addAction ("find_ahead", new QAction (i18n ("Find as you type"), this));
 	findAhead->setShortcut ('/');
 	connect (findAhead, SIGNAL (triggered(bool)), window->findbar, SLOT (activate()));
 	actionCollection ()->addAction (KStandardAction::FindNext, "find_next", window->findbar, SLOT (forward()));;
