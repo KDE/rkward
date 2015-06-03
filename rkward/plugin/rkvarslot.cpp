@@ -2,7 +2,7 @@
                           rkvarslot.cpp  -  description
                              -------------------
     begin                : Thu Nov 7 2002
-    copyright            : (C) 2002-2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2002-2015 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -23,6 +23,7 @@
 #include <QHeaderView>
 #include <qstringlist.h>
 #include <QGridLayout>
+#include <QVBoxLayout>
 
 #include <klocale.h>
 
@@ -48,15 +49,22 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 		g_layout->addWidget (label, 0, 2);
 	}
 
-	select = new QPushButton (QString (), this);
-	setSelectButton (false);
-	connect (select, SIGNAL (clicked()), this, SLOT (selectPressed()));
-	g_layout->addWidget (select, 1, 0);
+	QVBoxLayout *button_layout = new QVBoxLayout ();
+	select_button = new QPushButton (QString (), this);
+	select_button->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionAddRight));
+	connect (select_button, SIGNAL (clicked()), this, SLOT (selectPressed()));
+	button_layout->addWidget (select_button);
+	remove_button = new QPushButton (QString (), this);
+	remove_button->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRemoveLeft));
+	connect (remove_button, SIGNAL (clicked()), this, SLOT (removePressed()));
+	button_layout->addWidget (remove_button);
+	button_layout->addStretch ();
+	g_layout->addLayout (button_layout, 1, 0);
 	g_layout->addItem (new QSpacerItem (5, 0), 0, 1);
 
 	list = new QTreeWidget (this);
 	list->setSelectionMode (QAbstractItemView::ExtendedSelection);
-	list->setHeaderLabels (QStringList () << " " << i18n ("Name"));
+	list->setHeaderLabels (QStringList () << i18n ("Name"));
 	list->setSortingEnabled (false);
 	list->setUniformRowHeights (true);
 	list->setRootIsDecorated (false);
@@ -92,7 +100,6 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 		list->getContentsMargins (&left, &top, &right, &bottom);
 		list->setFixedHeight (list->visualItemRect (&dummy).height () + 2*list->visualItemRect (&dummy).top () + top + bottom);
 		list->header ()->setStretchLastSection (true);
-		list->hideColumn (0);
 		list->setHorizontalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
 		list->setVerticalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
 		g_layout->setRowStretch (3, 1);		// so the label does not get separated from the view
@@ -108,21 +115,11 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 	setRequired (xml->getBoolAttribute (element, "required", false, DL_INFO));
 
 	connect (available, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (availablePropertyChanged(RKComponentPropertyBase*)));
-	availablePropertyChanged (available);		// initialize
+	availablePropertyChanged (available);	// initialize
 }
 
 RKVarSlot::~RKVarSlot (){
 	RK_TRACE (PLUGIN);
-}
-
-void RKVarSlot::setSelectButton (bool add) {
-	if (add) {
-		select->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionAddRight));
-		add_mode = true;
-	} else {
-		select->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRemoveLeft));
-		add_mode = false;
-	}
 }
 
 void RKVarSlot::listSelectionChanged () {
@@ -139,7 +136,11 @@ void RKVarSlot::listSelectionChanged () {
 		static_cast<RKComponentPropertyRObjects*> (selected)->setObjectList (sellist);
 	}
 
-	setSelectButton (((!multi) || (selrows.isEmpty ())) && (!available->atMaxLength ()));
+	if (multi) remove_button->setEnabled (!selrows.isEmpty ());
+	else {
+		select_button->setVisible (available->listLength () == 0);
+		remove_button->setVisible (available->listLength () > 0);
+	}
 }
 
 void RKVarSlot::availablePropertyChanged (RKComponentPropertyBase *) {
@@ -154,17 +155,16 @@ void RKVarSlot::availablePropertyChanged (RKComponentPropertyBase *) {
 	int len = available->listLength ();
 	for (int i = 0; i < len; ++i) {
 		QTreeWidgetItem *new_item = new QTreeWidgetItem (list);
-		new_item->setText (0, QString::number (i + 1));
 
 		if (mode == Valueslot) {
-			new_item->setText (1, static_cast<RKComponentPropertyStringList*> (available)->valueAt (i));
+			new_item->setText (0, static_cast<RKComponentPropertyStringList*> (available)->valueAt (i));
 		} else {
 			RObject *object = static_cast<RKComponentPropertyRObjects*> (available)->objectAt (i);
-			new_item->setText (1, object->getShortName ());
+			new_item->setText (0, object->getShortName ());
 			QString probs = static_cast<RKComponentPropertyRObjects*> (available)->objectProblems (i);
 			if (!probs.isEmpty ()) {
-				new_item->setToolTip (1, i18n ("<p>This object is not allowed, here, for the following reason(s):</p>") + probs);
-				new_item->setIcon (1, RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteVar));
+				new_item->setToolTip (0, i18n ("<p>This object is not allowed, here, for the following reason(s):</p>") + probs);
+				new_item->setIcon (0, RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteVar));
 			}
 		}
 	}
@@ -192,14 +192,13 @@ void RKVarSlot::updateLook () {
 	list->setPalette(palette);
 }
 
-void RKVarSlot::selectPressed () {
+void RKVarSlot::addOrRemove (bool add) {
 	RK_TRACE (PLUGIN);
-
-	RK_DEBUG (PLUGIN, DL_DEBUG, "select press in varslot: mode %d, source %s, selected %s", add_mode, qPrintable (fetchStringValue (source)), qPrintable (fetchStringValue (selected)));
+	RK_DEBUG (PLUGIN, DL_DEBUG, "select press in varslot: mode %d, source %s, selected %s", add, qPrintable (fetchStringValue (source)), qPrintable (fetchStringValue (selected)));
 
 	updating = true;
 	// first update the properties
-	if (add_mode) {
+	if (add) {
 		if (!multi) available->setValueList (QStringList ());  // replace
 		int len = source->listLength ();
 		for (int i = 0; i < len; ++i) {
@@ -224,6 +223,16 @@ void RKVarSlot::selectPressed () {
 	}
 	updating = false;
 	availablePropertyChanged (available);
+}
+
+void RKVarSlot::selectPressed () {
+	RK_TRACE (PLUGIN);
+	addOrRemove (true);
+}
+
+void RKVarSlot::removePressed () {
+	RK_TRACE (PLUGIN);
+	addOrRemove (false);
 }
 
 QStringList RKVarSlot::getUiLabelPair () const {

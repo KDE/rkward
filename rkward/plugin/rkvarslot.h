@@ -2,7 +2,7 @@
                           rkvarslot.h  -  description
                              -------------------
     begin                : Thu Nov 7 2002
-    copyright            : (C) 2002 - 2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2002 - 2015 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -49,20 +49,19 @@ public:
 public slots:
 /** Called when the select-button is pressed */
 	void selectPressed ();
+	void removePressed ();
 	void listSelectionChanged ();
 	void availablePropertyChanged (RKComponentPropertyBase *);
 protected:
 /** Calls updateLook (), when enabledness changes */
 	void enabledChange (bool old) { updateLook (); QWidget::enabledChange (old); };
 private:
+	void addOrRemove (bool add);
 	enum {
 		Varslot,
 		Valueslot
 	} mode;
-/** change the select button to left/right / add/remove
-@param add if true, button shows arrow right, or signifies more values would be added. Else the other way around */
-	void setSelectButton (bool add);
-	bool add_mode;
+
 	bool multi;
 	bool updating;
 	QString label_string;
@@ -75,7 +74,8 @@ private:
 	RKComponentPropertyAbstractList *selected;
 
 	QTreeWidget *list;
-	QPushButton *select;
+	QPushButton *select_button;
+	QPushButton *remove_button;
 };
 
 #endif

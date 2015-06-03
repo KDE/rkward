@@ -2,7 +2,7 @@
                           twintable.h  -  description
                              -------------------
     begin                : Tue Oct 29 2002
-    copyright            : (C) 2002, 2006, 2007, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006, 2007, 2010, 2015 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -98,6 +98,8 @@ protected:
 	QAction* action_delete_row;
 	QAction* action_delete_rows;
 	QAction* action_enable_editing;
+	QAction* action_tb_lock_editing;
+	QAction* action_tb_unlock_editing;
 	QAction* action_show_rownames;
 	QAction* editCut;
 	QAction* editCopy;

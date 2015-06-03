@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkeditordataframepart" version="54">
+<kpartgui name="rkeditordataframepart" version="64">
 	<MenuBar>
 		<Menu name="edit"><text>&amp;Edit</text>
 			<Action name="cut"/>
@@ -44,5 +44,8 @@
 		<Separator/>
 		<Action name="paste_to_selection"/>
 		<Action name="paste_to_table"/>
+		<Separator/>
+		<Action name="lock_editing"/>
+		<Action name="unlock_editing"/>
 	</ToolBar>
 </kpartgui>

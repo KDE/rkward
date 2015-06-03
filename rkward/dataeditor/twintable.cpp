@@ -2,7 +2,7 @@
                           twintable.cpp  -  description
                              -------------------
     begin                : Tue Oct 29 2002
-    copyright            : (C) 2002, 2006, 2007, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006, 2007, 2010, 2015 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -22,6 +22,7 @@
 #include <kactioncollection.h>
 #include <kxmlguifactory.h>
 #include <kmessagebox.h>
+#include <ktoggleaction.h>
 
 #include <qvariant.h>
 #include <qsplitter.h>
@@ -130,12 +131,27 @@ void TwinTable::initActions () {
 	action_delete_rows->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteRow));
 
 	// global actions
-	action_enable_editing = actionCollection ()->addAction ("enable_editing", this, SLOT (enableEditing(bool)));
-	action_enable_editing->setText ("Enable editing");
-	action_enable_editing->setCheckable (true);
 	action_show_rownames = actionCollection ()->addAction ("show_rownames", this, SLOT (showRownames(bool)));
 	action_show_rownames->setText ("Show / Edit row names");
 	action_show_rownames->setCheckable (true);
+	action_enable_editing = actionCollection ()->addAction ("enable_editing", this, SLOT (enableEditing(bool)));
+	action_enable_editing->setText ("Enable editing");
+	action_enable_editing->setCheckable (true);
+	// these actually do the same thing, but are designed to work well in the toolbar
+	QActionGroup *lockactions = new QActionGroup (this);
+	lockactions->setExclusive (true);
+	action_tb_lock_editing = new KToggleAction (i18nc ("verb: switch to read-only state. Make this short.", "Lock"), this);
+	action_tb_lock_editing->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionLock));
+	action_tb_lock_editing->setActionGroup (lockactions);
+	action_tb_lock_editing->setStatusTip (i18n ("Disable editing (to prevent accidental modification of data)"));
+	actionCollection ()->addAction ("lock_editing", action_tb_lock_editing);
+	action_tb_unlock_editing = new KToggleAction (i18nc ("verb: switch to read-write state. Make this short.", "Unlock"), this);
+	action_tb_unlock_editing->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionUnlock));
+	action_tb_unlock_editing->setActionGroup (lockactions);
+	action_tb_unlock_editing->setStatusTip (i18n ("Enable editing"));
+	actionCollection ()->addAction ("unlock_editing", action_tb_unlock_editing);
+	connect (action_tb_unlock_editing, SIGNAL (toggled(bool)), this, SLOT (enableEditing(bool)));
+	// NOTE: No need to connect lock_editing, too, as they are radio-exclusive
 
 	// add all edit-actions to a group, so they can be enabled/disabled easily
 	edit_actions = new QActionGroup (this);
@@ -469,6 +485,7 @@ void TwinTable::enableEditing (bool on) {
 
 	edit_actions->setEnabled (rw);
 	action_enable_editing->setChecked (rw);
+	action_tb_unlock_editing->setChecked (rw);
 
 	if (main_object) objectMetaChanged (main_object);	// update_caption;
 }
