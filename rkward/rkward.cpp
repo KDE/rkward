@@ -435,6 +435,8 @@ void RKWardMainWindow::initActions() {
 	fileOpenRecent = static_cast<KRecentFilesAction*> (actionCollection ()->addAction (KStandardAction::OpenRecent, "file_open_recenty", this, SLOT(slotOpenCommandEditor(KUrl))));
 	fileOpenRecent->setText (i18n ("Open Recent R Script File"));
 
+#if 0
+	// TODO: Fix import dialog and re-enable it: https://mail.kde.org/pipermail/rkward-devel/2015-June/004156.html
 #ifdef Q_WS_WIN
 	// TODO: find the cause and fix it! http://sourceforge.net/tracker/?func=detail&aid=2848341&group_id=50231&atid=459007
 #	ifdef __GNUC__
@@ -444,6 +446,7 @@ void RKWardMainWindow::initActions() {
 	action = actionCollection ()->addAction ("import_data", this, SLOT (importData()));
 	action->setText (i18n ("Import Data"));
 	action->setStatusTip (i18n ("Import data from a variety of file formats"));
+#endif
 #endif
 
 	fileOpenWorkspace = actionCollection ()->addAction (KStandardAction::Open, "file_openx", this, SLOT(slotFileOpenWorkspace()));
