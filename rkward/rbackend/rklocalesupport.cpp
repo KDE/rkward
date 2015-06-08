@@ -21,7 +21,7 @@
 #include <QByteArray>
 
 #ifndef Q_WS_WIN
-	// see https://sourceforge.net/tracker/?func=detail&atid=459009&aid=1698809&group_id=50231
+	// see http://sourceforge.net/p/rkward/patches/4/
 	// seems to be needed for GCC 4.3 as well.
 #	include <langinfo.h>
 #endif

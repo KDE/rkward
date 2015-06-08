@@ -143,7 +143,7 @@ void RKFileBrowserWidget::contextMenuHook(const KFileItem& item, QMenu* menu) {
 	dummy.append (item);
 	fi_actions->setItemListProperties (KFileItemListProperties (dummy));
 
-	// some versions of KDE appear to re-use the actions, others don't, and yet other are just plain broken (see this thread: http://www.mail-archive.com/rkward-devel@lists.sourceforge.net/msg01279.html)
+	// some versions of KDE appear to re-use the actions, others don't, and yet other are just plain broken (see this thread: https://mail.kde.org/pipermail/rkward-devel/2011-March/002770.html)
 	// Therefore, we remove all actions, explicitly, each time the menu is shown, then add them again.
 	QList<QAction*> menu_actions = menu->actions ();
 	foreach (QAction* act, menu_actions) if (added_service_actions.contains (act)) menu->removeAction (act);

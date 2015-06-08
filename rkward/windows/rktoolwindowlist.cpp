@@ -36,7 +36,7 @@ void RKToolWindowList::registerToolWindow (RKMDIWindow *window, const QString &i
 	tr.id = id;
 	tr.default_placement = default_placement;
 #ifdef Q_WS_MAC
-	// HACK: Workaround for shortcut conflict issue: http://www.mail-archive.com/rkward-devel@lists.sourceforge.net/msg01659.html
+	// HACK: Workaround for shortcut conflict issue: https://mail.kde.org/pipermail/rkward-devel/2011-December/003153.html
 	if (default_shortcut & Qt::AltModifier) default_shortcut |= Qt::ControlModifier;
 #endif
 	tr.default_shortcut = default_shortcut;

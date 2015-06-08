@@ -75,4 +75,4 @@ Automated tests
 
 A series of automated functionality tests can be run unsing 'make plugintests' *after* completing the installation. Unfortunately, these tests are rather prone to false alarms, and thus end users are not currently encouraged to run the tests. However, esp. developers, and packagers patching the sources should run 'make plugintests' after doing their changes. For failed tests, please take some time trying to understand, exactly how the test failed. Often it's just a harmless difference in rounding or formatting of output.
 
-If you see a genuine test failure, unrelated to your patches, please report this to rkward-devel AT lists DOT sourceforge DOT net, including details on your installed versions of KDE, R, and RKWard.
+If you see a genuine test failure, unrelated to your patches, please report this to rkward-devel AT kde DOT org, including details on your installed versions of KDE, R, and RKWard.

@@ -145,7 +145,7 @@ void RKStandardComponentGUI::showEvent (QShowEvent *e) {
 
 	QWidget::showEvent (e);
 
-	// HACK: Workaround for this issue (caused by a mysterious Qt bug, apparently): http://www.mail-archive.com/rkward-devel@lists.sourceforge.net/msg01340.html
+	// HACK: Workaround for this issue (caused by a mysterious Qt bug, apparently): https://mail.kde.org/pipermail/rkward-devel/2011-June/002831.html
 	QSize min = minimumSize ();
 	if ((min.width () < 50) || (min.height () < 50)) min = sizeHint ();
 	setMinimumSize (min.expandedTo (QSize (50, 50)));

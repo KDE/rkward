@@ -981,7 +981,7 @@ void RKConsole::contextMenuEvent (QContextMenuEvent * event) {
 void RKConsole::activate (bool with_focus) {
 	RK_TRACE (APP);
 
-	// see http://www.mail-archive.com/rkward-devel@lists.sourceforge.net/msg00933.html
+	// see https://mail.kde.org/pipermail/rkward-devel/2010-September/002422.html
 	if (with_focus) view->removeSelection ();
 	RKMDIWindow::activate (with_focus);
 }

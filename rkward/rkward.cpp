@@ -438,7 +438,7 @@ void RKWardMainWindow::initActions() {
 #if 0
 	// TODO: Fix import dialog and re-enable it: https://mail.kde.org/pipermail/rkward-devel/2015-June/004156.html
 #ifdef Q_WS_WIN
-	// TODO: find the cause and fix it! http://sourceforge.net/tracker/?func=detail&aid=2848341&group_id=50231&atid=459007
+	// TODO: find the cause and fix it! http://sourceforge.net/p/rkward/bugs/54/
 #	ifdef __GNUC__
 #		warning TODO: import data dialog is disabled on windows due to bug in kdelibs
 #	endif

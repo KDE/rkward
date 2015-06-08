@@ -39,7 +39,6 @@ Bugs:
 		- Produce lots and lots of output -> watch mem usage grow
 		- Probably the RKConsole is to blame (run outside console -> no significant increase)
 			- Maybe the kate-part needs to be reset (syntax parse tree) every once in a while?
-	- rnorm () and friends auto-print value only once. R_Visible is 0 on subsequent calls (what in the world is going on, here?)
 	- RKEditorDataFrame:
 		- sometimes the current cell indicator (the box around the current cell) gets lost.
 			- Navigation and editing is still fine
@@ -51,12 +50,10 @@ Bugs:
 			- 2. before the edit has been synced to the backend, a different command touches the data
 			- The editor should keep track of which / how many synchronisation commands are still outstanding.
 			- If an edited object was touched while sync commands are still outstanding, complain and let the user handle the situation
-	- Quitting via q() in the R console will often lead to a segfault during shutdown
 	- options ("pager") is currently broken in RKWard. May not be a problem, but we offer a GUI to configure it in Settings->Configure RKWard...
 
 Compilation / technical
 	- Incorporate FreeBSD patches http://www.freshports.org/math/rkward/files.php?message_id=200609172111.k8HLBiob081349@repoman.freebsd.org
-	- cleanup DISABLE_RKWINDOWCATCHER (either get rid of it, or do it right)
 	- eventually the whole RData-structure should be made to use QList-types
 
 R backend:
@@ -116,16 +113,8 @@ UI-stuff
 		- optionally keep a file log!
 	- find out how to save toolbar states properly in parts-GUI
 		- also setting the toolbar state for all windows with that toolbar
-	- David's usability items
 	- from Ralf:
 		- show first few values of vectors/scalars in tool-tip in workspace browser
-	- Debugging functionality
-		- ideally the whole thing: setting breakpoints, etc.
-		- realistically, maybe we can override browser () or do_browser with something nicer
-	- Preview of plots
-		- Maybe use a button (along the submit / close / etc. buttons instead)?
-		- The preview window should be a specialized RKCaughtWindow
-			- It should show info on state (up to date / updating / error / etc).
 	- Graphics Device List window
 		- (see http://sourceforge.net/mailarchive/message.php?msg_id=37825223)
 		- par (no.readonly=TRUE) and par () to fetch available parameters and determine read-only state
@@ -133,18 +122,13 @@ UI-stuff
 		- access to graphics device plugins
 	- Help system
 		- find a good way to open R help pages in the same window
-		- open link in new tab, etc.
 	- Working directory
 		- show current wd in <browser>, somewhere
 	- Settings UI:
-		- see http://sourceforge.net/mailarchive/forum.php?thread_name=200703230304.43023.kapatp%40gmail.com&forum_name=rkward-devel
+		- see https://mail.kde.org/pipermail/rkward-devel/2007-March/001139.html
 		- R-Backend-Settings:
 			- the options should gain a "use default" checkbox to cope with changing R option defaults
 			- tooltips for the options on "R-Backend" tab about the internal R-function call
-	- UI geometry:
-		- see https://sourceforge.net/mailarchive/forum.php?thread_name=200704181922.07780.michellang%40gmail.com&forum_name=rkward-devel
-		- save size/proportions of R script file, R console, Workspace browser...
-		- save attach/detach status of the windows
 	- project/session handling: files, workspace, current working directory.
 	- file system browser tab
 		- a way to inline pdf/ps/jpg/png files like in KDevelop?
@@ -163,13 +147,9 @@ Internal stuff:
 		- does locale switching / detection work? Does Qt have something, yet?
 	- Handling fonts:
 		- http://sourceforge.net/mailarchive/forum.php?thread_id=31631211&forum_id=12970
-	- Look at package odfWeave, and find out, how to use this
-		- replace remaining direct HTML fragments in plugins with wrapper calls
-	- should we override bindingIsActive()?
 	RKVariable:
 		- True Support for Logicals
 		- In the current design, RKVariable would not handle storage mode changes from outside well at all
-		- use QIntDict instead of string-map for value-labels / factor levels? Qt4: QHash
 	RCommandReceiver:
 		- add virtual rCommandStarted () function, so receivers can find out, when their command becomes active
 	REmbedInternal:
@@ -189,14 +169,12 @@ Internal stuff:
 	- RThread:
 		- Detection of commands that run for a suspiciously long time
 			- Show "do you want to cancel ..." option after configurable amount of time
-	- use R_DirtyImage to determine, whether workspace needs to be saved
 	- Object editing / modification tracking:
 		- functions to set double/int/string-vectors directly. Use in paste-operations
 	- error-handling/raising in .rk.do.call
 	- I've changed the simple RInterface::issueCommand (QString, ...) command to return a pointer to the RCommand created. This will allow for lots of small cleanups. Do them.
 		- well, on second thought, it might be better to rely more on RCommand::id () instead of pointers. Why? The id is unique (until integer overflow). The pointer may be reused after a delete -> potential problem when trying to cancel command which is actually already deleted (and potentially other cases)
 		- let's set this back for a while
-	- give informative feedback on syntax errors (line numbers, etc.)!
 	- .rk.get.available.packages ()
 		- use external (file) storage for cache to save mem
 	- Always save workplace layout to a file, never to config. Even for the "global" option.
@@ -204,7 +182,6 @@ Internal stuff:
 		- in the documentation we call the return value of value() the "default property". Why not simply define a "default property" for each component, instead of reimplementing value()?
 
 General code:
-	- use constBegin (), constEnd ()
 	- get rid of all the superflous dependencies: http://lists.debian.org/debian-devel/2005/12/msg00439.html
 	- remove classes/files:
 		- RKGlobals
@@ -215,10 +192,6 @@ General code:
 R plugins:
 	- distribution plugins (probabilities and quantiles)
 		- probably all these could use an option "Store result (to name) / Print result / print and store"
-		- when changing this, they should first be changed to use common base functionality:
-			- the tail, log, and print options would be in a single embedded plugin
-			- a common PHP file would be included that generates uniform code (a small set of options would be needed to define the parts that are different across distributions)
-			- something similar should be done for the plots
 	- plugin help files:
 		- It would be nice to add the <id="..."> fetaure like <settings id=".."> in the technical section too. Also may be add something like <tag=".."> for the tags or variable which can be in italics, grey color.
 		- Find a way to make help searchable, preferentially within the R help search window
@@ -241,10 +214,6 @@ R plugins:
 		- use smart sorting, esp. of generated string
 		- add labels, add "up to level" option
 		- add constant term option
-	- multi-object option group:
-		- provide the set of enclosed options for each of the selected variables
-		- will provide dynamic properties based on which variables are selected in the source
-		- how to determine default values?
 
 API documentation:
 	- add page containing a rough overview of general architecture
@@ -258,64 +227,3 @@ Configuration:
 		- disable html help
 	- new dataeditor options:
 		- see comments on RKEditorDataFrame
-
-
-################## Some internal notes below ##############
-
-################## menu structure file/workspace ###########
-File
-	New
-		Dataset
-		Script File
-	Open R Script File
-	Open Recent (Script File)
-	Save/Load R Objects
-		Save
-			...
-		Load
-			...
-	Save
-	Save As
-	Reload
-	Print
-	Quit
-
-Workspace
-	Open Workspace
-	Open Recent (Workspace)
-	Save Workspace
-	Save Workspace As
-	Configure Packages (redundant)
-
-How should this be changed? Maybe:
-
-File
-	New
-		Dataset
-		Script File
-	Open R Script File
-	Open Recent (Script File)
-	Open Workspace
-	Open Recent (Workspace)
-	Import (previously Load R Objects)
-	Export (previously Save R Objects)
-	Save
-	Save As
-	Save Workspace
-	Save Workspace As
-	Reload
-	Print
-	Quit
-
-
-################## cryptic notes ######################
-
-translation of plugins and help files (no, this is not good, yet. Not modular, order gets messed up, context information is lacking. We need a dedicated simple parser that will understand the files it deals with, and extracts the strings with relevant context info).
-in Makefil.am:
-# experimental: extract all messages. Probably it would make sense to split this up, however, perhaps per .pluginmap, or per directory!
-messages:
-	extractrc `find . -name \*.rkh` --tag=title --tag=summary --tag=usage --tag=section --tag=related --tag=technical > messages.cpp
-	extractattr `find . -name \*.rkh` --attr=section,title --attr=section,shorttitle >> messages.cpp
-	extractattr `find . -name \*.pluginmap` --attr=component,label --attr=menu,label --attr=entry,label >> messages.cpp
-	extractrc `find . -name \*.xml` --tag=text >> messages.cpp
-	extractattr `find . -name \*.xml` --attr=dialog,label --attr=wizard,label --attr=tab,label --attr=page,label --attr=frame,label --attr=varselector,label --attr=varslot,label --attr=radio,label --attr=dropdown,label --attr=option,label --attr=checkbox,label --attr=spinbox,label --attr=browser,label --attr=saveobject,label --attr=formula,label >> messages.cpp
