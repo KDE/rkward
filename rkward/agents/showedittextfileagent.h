@@ -3,7 +3,7 @@
                              -------------------
     begin                : Tue Sep 13 2005
     copyright            : (C) 2005, 2010 by Thomas Friedrichsmeier
-    email                : tfry@users.sourceforge.net
+    email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
 /***************************************************************************

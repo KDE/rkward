@@ -25,7 +25,7 @@ as Authors, publish date, the abstract, and Keywords -->
 <firstname>Thomas</firstname>
 <surname>Friedrichsmeier</surname>
 <affiliation>
-<address><email>rkward-devel AT lists DOT sourceforge DOT net</email></address>
+<address><email>rkward-devel AT kde DOT org</email></address>
 </affiliation>
 </author>
 
@@ -33,7 +33,7 @@ as Authors, publish date, the abstract, and Keywords -->
 <firstname>Meik</firstname>
 <surname>Michalke</surname>
 <affiliation>
-<address><email>rkward-devel AT lists DOT sourceforge DOT net</email></address>
+<address><email>rkward-devel AT kde DOT org</email></address>
 </affiliation>
 </author>
 <!-- Additional authors go here -->
