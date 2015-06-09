@@ -3,7 +3,7 @@
                              -------------------
     begin                : Thu Aug 19 2004
     copyright            : (C) 2004, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
-    email                : tfry@users.sourceforge.net
+    email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
 /***************************************************************************
@@ -981,7 +981,7 @@ void RKConsole::contextMenuEvent (QContextMenuEvent * event) {
 void RKConsole::activate (bool with_focus) {
 	RK_TRACE (APP);
 
-	// see http://www.mail-archive.com/rkward-devel@lists.sourceforge.net/msg00933.html
+	// see https://mail.kde.org/pipermail/rkward-devel/2010-September/002422.html
 	if (with_focus) view->removeSelection ();
 	RKMDIWindow::activate (with_focus);
 }

@@ -3,7 +3,7 @@
                              -------------------
     begin                : Wed Apr 11 2007
     copyright            : (C) 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
-    email                : tfry@users.sourceforge.net
+    email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
 /***************************************************************************
@@ -394,7 +394,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 		} else if (do_cont) {
 			RK_DEBUG (RBACKEND, DL_DEBUG, "recurse into list %s", name.toLatin1().data ());
 			// fewer elements than names() can happen, although I doubt it is supposed to happen.
-			// see http://sourceforge.net/tracker/?func=detail&aid=3002439&group_id=50231&atid=459007
+			// see http://sourceforge.net/p/rkward/bugs/67/
 			bool may_be_special = Rf_length (value) < childcount;
 			if (Rf_isList (value) && (!may_be_special)) {		// old style list
 				for (int i = 0; i < childcount; ++i) {

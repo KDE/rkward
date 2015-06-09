@@ -3,7 +3,7 @@
                              -------------------
     begin                : Tue Sep 26 2006
     copyright            : (C) 2006, 2007, 2008, 2009, 2010, 2011 by Thomas Friedrichsmeier
-    email                : tfry@users.sourceforge.net
+    email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
 /***************************************************************************
@@ -273,7 +273,7 @@ void RKMDIWindow::enterEvent (QEvent *event) {
 	if (!isActive ()) {
 		if (RKSettingsModuleGeneral::mdiFocusPolicy () == RKSettingsModuleGeneral::RKMDIFocusFollowsMouse) {
 			if (!QApplication::activePopupWidget ()) {
-				// see https://sourceforge.net/tracker/?func=detail&atid=459007&aid=3327985&group_id=50231
+				// see http://sourceforge.net/p/rkward/bugs/90/
 				// enter events may be delivered while a popup-menu (in a different window) is executing. If we activate in this case, the popup-menu might get deleted
 				// while still handling events. Similar problems seem to occur, when the popup menu has just finished (by the user selecting an action) and this results
 				// in the mouse entering this widget. To prevent crashes in this second case, we delay the activation until the next iteration of the event loop.

@@ -3,7 +3,7 @@
                              -------------------
     begin                : Tue Aug 31 2004
     copyright            : (C) 2004-2013 by Thomas Friedrichsmeier
-    email                : tfry@users.sourceforge.net
+    email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
 /***************************************************************************
@@ -63,7 +63,7 @@ bool RKModificationTracker::removeObject (RObject *object, RKEditor *editor, boo
 
 	if (!object->isPseudoObject ()) {
 		if (removed_in_workspace) {
-			if (ed && (ed->getObject () == object)) {	// NOTE: do not allow restoring of columns in a data.frame this way. See http://www.mail-archive.com/rkward-devel@lists.sourceforge.net/msg01731.html and replies.
+			if (ed && (ed->getObject () == object)) {	// NOTE: do not allow restoring of columns in a data.frame this way. See https://mail.kde.org/pipermail/rkward-devel/2012-March/003225.html and replies.
 				if (KMessageBox::questionYesNo (0, i18n ("The object '%1' was removed from workspace or changed to a different type of object, but is currently opened for editing. Do you want to restore it?", object->getFullName ()), i18n ("Restore object?")) == KMessageBox::Yes) {
 					ed->restoreObject (object);
 					/* TODO: It would make a lot of sense to allow restoring to a different name, and possibly different location. This may need some thinking. Probably something like:

@@ -3,7 +3,7 @@
                              -------------------
     begin                : Tue Aug 24 2004
     copyright            : (C) 2004, 2007, 2009 by Thomas Friedrichsmeier
-    email                : tfry@users.sourceforge.net
+    email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
 /***************************************************************************
@@ -129,7 +129,7 @@ void RObjectViewer::initDescription (bool notify) {
 	if (!_object) return;
 
 	setCaption (i18n("Object Viewer: %1", _object->getShortName ()));
-	// make the description use less height. Trying to specify <nobr>s, here, is no good idea (see https://sourceforge.net/tracker/?func=detail&atid=459007&aid=2859182&group_id=50231)
+	// make the description use less height. Trying to specify <nobr>s, here, is no good idea (see http://sourceforge.net/p/rkward/bugs/55/)
 	description_label->setText (_object->getObjectDescription ().replace ("<br>", "&nbsp; &nbsp; "));
 	if (notify) {
 		QString reason = i18n ("The object was changed. You may want to click \"Update\"");
