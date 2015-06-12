@@ -59,6 +59,7 @@ private slots:
 /** When keys in the key column change, all other columns have to be updated, accordingly. */
 	void handleKeycolumnUpdate ();
 protected:
+friend class RKOptionSetDelegate;
 	void fetchPropertyValuesRecursive (PropertyValueMap *list, bool include_top_level=false, const QString &prefix=QString (), bool include_inactive_elements=false) const;
 friend class RKOptionSetDisplayModel;
 	int rowCount () const { return row_count->intValue (); };
@@ -126,6 +127,12 @@ friend class RKOptionSetDisplayModel;
 	int min_rows_if_any;
 	int max_rows;
 
+	enum ExperimentalMode {
+		Regular,
+		Detached,
+		Tabbed
+	} exp_mode;
+
 	bool updating;
 /** Sets the contents from the values in given row */
 	void setContentsForRow (int row);
@@ -151,6 +158,18 @@ friend class RKOptionSet;
 	RKOptionSet *set;
 private slots:
 	void doResetNow ();
+};
+
+#include <QItemDelegate>
+
+class RKOptionSetDelegate : public QItemDelegate {
+	Q_OBJECT
+public:
+	RKOptionSetDelegate (RKOptionSet *parent);
+	void paint (QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+	bool editorEvent (QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index);
+private:
+	RKOptionSet *set;
 };
 
 #endif

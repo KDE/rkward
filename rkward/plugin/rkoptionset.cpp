@@ -47,11 +47,12 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	min_rows = xml->getIntAttribute (element, "min_rows", 0, DL_INFO);
 	min_rows_if_any = xml->getIntAttribute (element, "min_rows_if_any", 1, DL_INFO);
 	max_rows = xml->getIntAttribute (element, "max_rows", INT_MAX, DL_INFO);
+	exp_mode = (ExperimentalMode) xml->getMultiChoiceAttribute (element, "exp_mode", "regular;detached;tabbed", 1, DL_INFO);
 
 	// build UI framework
 	QVBoxLayout *layout = new QVBoxLayout (this);
-	switcher = new QStackedWidget (this);
-	layout->addWidget (switcher);
+	switcher = new QStackedWidget (exp_mode == Detached ? 0 : this);
+	if (exp_mode != Detached) layout->addWidget (switcher);
 	user_area = new KVBox (this);
 	switcher->addWidget (user_area);
 	updating_notice = new QLabel (i18n ("Updating status, please wait"), this);
@@ -200,7 +201,7 @@ void RKOptionSet::fetchDefaults () {
 RKComponent *RKOptionSet::createDisplay (bool show_index, QWidget *parent) {
 	RK_TRACE (PLUGIN);
 
-	RKComponent* dummy = new RKComponent (this, parent);
+	RKComponent* dummy = new RKComponent (this, exp_mode == Regular ? parent : parentWidget ());
 	QVBoxLayout *layout = new QVBoxLayout (dummy);
 	layout->setContentsMargins (0, 0, 0, 0);
 	KHBox *box = new KHBox (dummy);
@@ -212,6 +213,7 @@ RKComponent *RKOptionSet::createDisplay (bool show_index, QWidget *parent) {
 		display = new QTreeView (box);
 		display_show_index = show_index;
 		model = new RKOptionSetDisplayModel (this);
+		if (exp_mode == Detached) display->setItemDelegate (new RKOptionSetDelegate (this));
 	}
 
 	display_buttons = new KHBox (dummy);
@@ -722,6 +724,8 @@ void RKOptionSet::setContentsForRow (int row) {
 		applyContentsFromExternalColumn (col, row);
 	}
 	contents_container->enablednessProperty ()->setBoolValue (row >= 0);
+
+	if (exp_mode == Detached) switcher->show ();
 }
 
 void RKOptionSet::storeRowSerialization (int row) {
@@ -876,6 +880,31 @@ void RKOptionSetDisplayModel::triggerReset() {
 		emit (layoutAboutToBeChanged ());
 		reset_timer.start ();
 	}
+}
+
+#include <QApplication>
+RKOptionSetDelegate::RKOptionSetDelegate (RKOptionSet* parent) : QItemDelegate (parent) {
+	set = parent;
+}
+
+void RKOptionSetDelegate::paint (QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const {
+	if (index.column () == 0) {
+		QStyleOptionButton button;
+		button.rect = option.rect;
+		button.text = i18n ("Edit");
+		button.state = QStyle::State_Enabled;
+		QApplication::style()->drawControl( QStyle::CE_PushButton, &button, painter);
+	} else {
+		QItemDelegate::paint (painter, option, index);
+	}
+}
+
+bool RKOptionSetDelegate::editorEvent(QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option, const QModelIndex& index) {
+	if (event->type() == QEvent::MouseButtonRelease) {
+		set->setContentsForRow (index.row ());
+//		return true;
+	}
+	return QItemDelegate::editorEvent (event, model, option, index);
 }
 
 
