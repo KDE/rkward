@@ -28,7 +28,7 @@
 #' @slot funct Character string, name of an R function call.
 #' @slot quote Logical, should values be quoted?
 #' @slot option Character string, name of the option to set.
-#' @slot optsep Character string, separates previous options from the one defined by the array.
+#' @slot opt.sep Character string, separates previous options from the one defined by the array.
 #' @keywords Classes
 #' @rdname rk.JS.arr-class
 #' @export
