@@ -862,7 +862,8 @@ paste.JS.ite <- function(object, level=1, indent.by="\t", recurse=FALSE, empty.e
 
 
 ## function paste.JS.array()
-paste.JS.array <- function(object, level=2, indent.by="\t", funct=NULL){
+# opt.sep: the separator that comes *before* the option that is set, in the resulting code
+paste.JS.array <- function(object, level=2, indent.by="\t", funct=NULL, opt.sep=NULL){
   stopifnot(inherits(object, "rk.JS.arr"))
   # check indentation
   main.indent <- indent(level, by=indent.by)
@@ -883,6 +884,12 @@ paste.JS.array <- function(object, level=2, indent.by="\t", funct=NULL){
     funct.start <- paste0(funct, "(")
     funct.end <- ")"
   }
+  if(is.null(opt.sep)){
+    opt.sep <- slot(object, "opt.sep")
+    if(is.null(opt.sep)){
+      opt.sep <- ", "
+    } else {}
+  } else {}
   
   JS.array <- paste0(
     main.indent, "// define the array ", arr.name, " for values of R option \"", option, "\"\n",
@@ -895,7 +902,7 @@ paste.JS.array <- function(object, level=2, indent.by="\t", funct=NULL){
     ifelse(identical(option, ""), "", paste0(" for R option \"", option)),
     ifelse(identical(funct, ""), "\"", paste0("=", funct, "()\"")), "\n",
     main.indent, "if(", arr.name, ".length > 0) {\n",
-    scnd.indent, "var ", opt.name, " = \", ",
+    scnd.indent, "var ", opt.name, " = \"", opt.sep,
     ifelse(identical(option, ""), "", paste0(option, "=")),
     ifelse(isTRUE(quote),
       paste0(funct.start, "\\\"\" + ", arr.name, ".join(\"\\\", \\\"\") + \"\\\"",funct.end,"\";\n"),

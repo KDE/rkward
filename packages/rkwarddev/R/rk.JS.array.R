@@ -31,6 +31,7 @@
 #' @param var.prefix A character string. sets a global string to be used as a prefix for the JS variable names.
 #' @param quote Logical, if \code{TRUE}, the values will be quoted in the resulting R code (might be neccessary
 #'    for character values).
+#' @param opt.sep Character string, will be printed in the resulting R code before the option name.
 #' @return An object of class \code{rk.JS.arr}.
 #' @export
 #' @seealso \code{\link[rkwarddev:rk.paste.JS]{rk.paste.JS}},
@@ -47,7 +48,7 @@
 #' # combine them into one list of options via JavaScript
 #' rk.JS.array("run.tests", variables=list(checkA, checkB, checkC), funct="list")
 
-rk.JS.array <- function(option, variables=list(), funct="c", var.prefix=NULL, quote=FALSE){
+rk.JS.array <- function(option, variables=list(), funct="c", var.prefix=NULL, quote=FALSE, opt.sep=", "){
   arr.name <- camelCode(c("arr", option))
   opt.name <- camelCode(c("opt", option))
 
@@ -62,7 +63,8 @@ rk.JS.array <- function(option, variables=list(), funct="c", var.prefix=NULL, qu
           })),
     funct=funct,
     quote=quote,
-    option=option
+    option=option,
+    opt.sep=opt.sep
   )
 
   return(JS.array)

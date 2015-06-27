@@ -28,6 +28,7 @@
 #' @slot funct Character string, name of an R function call.
 #' @slot quote Logical, should values be quoted?
 #' @slot option Character string, name of the option to set.
+#' @slot optsep Character string, separates previous options from the one defined by the array.
 #' @keywords Classes
 #' @rdname rk.JS.arr-class
 #' @export
@@ -40,7 +41,8 @@ setClass("rk.JS.arr",
     variables="vector",
     funct="character",
     quote="logical",
-    option="character"
+    option="character",
+    opt.sep="character"
   ),
   prototype(
     arr.name=character(),
@@ -49,6 +51,7 @@ setClass("rk.JS.arr",
     variables=c(),
     funct="c",
     quote=FALSE,
-    option=character()
+    option=character(),
+    option=", "
   )
 )

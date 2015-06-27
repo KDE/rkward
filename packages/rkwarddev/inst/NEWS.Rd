@@ -1,6 +1,15 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
+\section{Changes in rkwarddev version 0.07-3 (2015-06-27)}{
+  \subsection{added}{
+    \itemize{
+      \item new slot \code{"opt.sep"} in class rk.JS.arr and new option \code{"opt.sep"} in \code{rk.paste.JS()}
+        and \code{rk.JS.array()} for array objects, to manipulate the character string
+        separating the previous options from the ones defined in the array
+    }
+  }
+}
 \section{Changes in rkwarddev version 0.07-2 (2015-03-14)}{
   \subsection{fixed}{
     \itemize{
