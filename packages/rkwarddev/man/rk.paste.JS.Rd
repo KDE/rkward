@@ -59,8 +59,9 @@ and the JS keyword "var" will be omitted.}
 there is no \code{else} statement defined,
       which is considered to enhance code readability by some.}
 
-\item{opt.sep}{For \code{rk.JS.arr} objects only: Character string,
-      will be printed in the resulting R code before the option name.}
+\item{opt.sep}{For \code{rk.JS.arr} and \code{rk.JS.opt} objects only: Character string,
+      will be printed in the resulting R code
+before the option name.}
 }
 \value{
 A character string.

@@ -32,6 +32,7 @@
 #'    Only used if \code{array=TRUE}.
 #' @param array Logical, if \code{TRUE} will generate the options as an array, otherwise in one
 #'    concatenated character string (probably only useful for mandatory options).
+#' @param opt.sep Character string, will be printed in the resulting R code before the option name.
 #' @return An object of class \code{rk.JS.opt}, use \code{\link[rkwarddev:rk.paste.JS]{rk.paste.JS}}
 #'    on that.
 #' @seealso
@@ -48,7 +49,7 @@
 #'   ite(checkB, "fast=TRUE")
 #' )
 
-rk.JS.options <- function(var, ..., collapse=", ", option=NULL, funct=NULL, array=TRUE){
+rk.JS.options <- function(var, ..., collapse=", ", option=NULL, funct=NULL, array=TRUE, opt.sep=", "){
   all.opts <- list(...)
 
   if(is.null(option)){
@@ -64,7 +65,9 @@ rk.JS.options <- function(var, ..., collapse=", ", option=NULL, funct=NULL, arra
     collapse=collapse,
     ifs=all.opts,
     array=array,
-    funct=funct)
+    funct=funct,
+    opt.sep=opt.sep
+  )
 
   return(result)
 }

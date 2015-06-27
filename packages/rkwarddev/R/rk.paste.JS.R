@@ -44,7 +44,8 @@
 #'    and the JS keyword "var" will be omitted.
 #' @param empty.e For \code{rk.JS.ite} objects only: Logical, if \code{TRUE} will force to add empty \code{else \{\}} brackets when
 #'    there is no \code{else} statement defined, which is considered to enhance code readability by some.
-#' @param opt.sep For \code{rk.JS.arr} objects only: Character string, will be printed in the resulting R code before the option name.
+#' @param opt.sep For \code{rk.JS.arr} and \code{rk.JS.opt} objects only: Character string, will be printed in the resulting R code
+#'    before the option name.
 #' @return A character string.
 #' @include 00_class_01_rk.JS.arr.R
 #' @include 00_class_03_rk.JS.ite.R
@@ -80,7 +81,8 @@ rk.paste.JS <- function(..., level=2, indent.by="\t", funct=NULL, array=NULL,
       # done by an internal function, to ease handling of recursions
       result <- paste.JS.array(this.object, level=level, indent.by=indent.by, funct=funct, opt.sep=opt.sep)
     } else if(inherits(this.object, "rk.JS.opt")){
-      result <- paste.JS.options(this.object, level=level, indent.by=indent.by, array=array, funct=funct)
+      result <- paste.JS.options(this.object, level=level, indent.by=indent.by, array=array, funct=funct,
+        opt.sep=opt.sep)
     } else if(inherits(this.object, "rk.JS.oset")){
       result <- paste.JS.optionsset(this.object, level=level, indent.by=indent.by)
     } else if(inherits(this.object, "rk.JS.var")){

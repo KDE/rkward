@@ -25,6 +25,9 @@ type of class manually.
 
 \item{\code{funct}}{Character string,
       name of the R function to be called to combine the options.}
+
+\item{\code{opt.sep}}{Character string,
+      separates previous options from the one defined here.}
 }}
 \keyword{Classes}
 

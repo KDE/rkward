@@ -52,6 +52,6 @@ setClass("rk.JS.arr",
     funct="c",
     quote=FALSE,
     option=character(),
-    option=", "
+    opt.sep=", "
   )
 )
