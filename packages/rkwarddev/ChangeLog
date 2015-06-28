@@ -1,10 +1,13 @@
 ChangeLog for package rkwarddev
 
-changes in version 0.07-3 (2015-06-27)
+changes in version 0.07-3 (2015-06-28)
+fixed:
+  - rk.JS.header() now produces usable level options
 added:
-  - new slot "opt.sep" in class rk.JS.arr and new option "opt.sep" in rk.paste.JS()
-    and rk.JS.array() for array objects, to manipulate the character string
-    separating the previous options from the ones defined in the array
+  - new slot "opt.sep" in classes rk.JS.arr and rk.JS.opt, as well as new
+    option "opt.sep" in rk.paste.JS(), rk.JS.array() and rk.JS.options(), to
+    manipulate the character string separating the previous options from the ones
+    defined by these objects
 
 changes in version 0.07-2 (2015-03-14)
 fixed:

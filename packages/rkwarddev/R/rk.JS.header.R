@@ -72,13 +72,12 @@ rk.JS.header <- function(title, ..., level=NULL, guess.getter=FALSE, .add=list()
     addToHeaderChar <- paste0(".", addToHeaderChar)
   } else {}
 
-  if(!is.null(level)){
-    addToHeaderChar <- paste0(addToHeaderChar, ".level(", level, ")")
-  } else {} 
-
   result <- paste0(
     "new Header(",
     force.i18n(title),
+    if(!is.null(level)){
+      paste0(", ", level)
+    },
     ")",
     addToHeaderChar,
     ".print();\n"

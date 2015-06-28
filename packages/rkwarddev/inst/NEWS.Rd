@@ -1,12 +1,18 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.07-3 (2015-06-27)}{
+\section{Changes in rkwarddev version 0.07-3 (2015-06-28)}{
+  \subsection{fixed}{
+    \itemize{
+      \item \code{rk.JS.header()} now produces usable level options
+    }
+  }
   \subsection{added}{
     \itemize{
-      \item new slot \code{"opt.sep"} in class rk.JS.arr and new option \code{"opt.sep"} in \code{rk.paste.JS()}
-        and \code{rk.JS.array()} for array objects, to manipulate the character string
-        separating the previous options from the ones defined in the array
+      \item new slot \code{"opt.sep"} in classes rk.JS.arr and rk.JS.opt, as well as new
+        option \code{"opt.sep"} in \code{rk.paste.JS()}, \code{rk.JS.array()} and \code{rk.JS.options()}, to
+        manipulate the character string separating the previous options from the ones
+        defined by these objects
     }
   }
 }
