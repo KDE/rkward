@@ -1,7 +1,14 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.07-3 (2015-06-28)}{
+\section{Changes in rkwarddev version 0.07-4 (2015-06-29)}{
+  \subsection{unreleased}{
+    \itemize{
+      \item this version is under development
+    }
+  }
+}
+\section{Changes in rkwarddev version 0.07-3 (2015-06-29)}{
   \subsection{fixed}{
     \itemize{
       \item \code{rk.JS.header()} now produces usable level options
