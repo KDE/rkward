@@ -4,6 +4,7 @@ protocol=rkward
 Description=A protocol for RKWard's run again links
 Description[bs]=Protokol za RKWard's pokreće ponovo veze
 Description[ca]=Un protocol pels enllaços «torna a executar» del RKWard
+Description[es]=Un protocolo para los enlaces «Ejecutar de nuevo» de RKWard
 Description[fi]=RKWardin suorita uudelleen -linkkien yhteyskäytäntö
 Description[gl]=Un protocolo para ligazóns de executar de novo RKWard.
 Description[nl]=Een protocol voor het opnieuw uitvoeren van RKWard koppelingen
