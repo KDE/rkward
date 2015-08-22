@@ -40,7 +40,6 @@ configure.args-append \
 subport rkward-devel-binary {
         conflicts-append rkward-devel rkward-binary
         depends_lib-delete   port:R
-        configure.compiler   llvm-gcc-4.2
         configure.args-delete \
                -DR_EXECUTABLE=${frameworks_dir}/R.framework/Resources/R
         configure.args-append \
@@ -62,7 +61,6 @@ subport rkward-binary {
         git.url             http://anongit.kde.org/rkward.git
         git.branch          releases/0.6.3
         depends_lib-delete   port:R
-        configure.compiler   llvm-gcc-4.2
         configure.args-append \
                -DRKVERSION_NUMBER=${version} \
                -DUSE_BINARY_PACKAGES=1 \
