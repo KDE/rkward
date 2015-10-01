@@ -72,7 +72,7 @@
 				</dropdown>
 				<frame>
           <row>
-            <checkbox id="header" value="TRUE" value_unchecked="FALSE" checked="false" label="Column names in first row"/>
+            <checkbox id="header" value="TRUE" value_unchecked="FALSE" checked="false" label="Use first row as column names"/>
           </row>
 					<row>
 						<column>
@@ -98,10 +98,8 @@
 					</row>
 				</frame>
 				<frame>
-					<row>
-						<saveobject id="name" initial="my.csv.data" label="Object to save to"/>
-						<checkbox id="doedit" value="1" value_unchecked="0" label="Edit Object" checked="true" />
-					</row>
+					<saveobject id="name" initial="my.csv.data" label="Object to save to"/>
+					<checkbox id="doedit" value="1" value_unchecked="0" label="Open imported data for editing" checked="true" />
 				</frame>
 			</tab>
 			<tab id="tab_rows" label="Rows and Columns" >
@@ -122,16 +120,17 @@
 					<column>
 						<frame label="Column Specifications">
 							<radio id="colname" label="Column names" >
-								<option value="" label="Default" />
+								<option value="" label="Automatic" />
 								<option value="custoCol" label="Use a character vector" />
 							</radio>
 							<input id="colnames" label="Vector of column names (quoted)" required="true"/>
-						<checkbox id="flush" label="Skip any further fields" value=", flush=TRUE" value_unchecked="" />
+							<checkbox id="flush" label="Skip trailing fields" value=", flush=TRUE" value_unchecked="" />
 							<radio id="colclass" label="Classes of columns" >
-								<option value="" label="Default" />
+								<option value="" label="Automatic" />
 								<option value="custoClass" label="Use a character vector" />
 							</radio>
 							<input id="custoClasses" label="Vector of column classes (quoted)" required="true"/>
+							<stretch/>
 						</frame>
 					</column>
 				</row>
