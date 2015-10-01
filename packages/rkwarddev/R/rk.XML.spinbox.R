@@ -75,7 +75,7 @@ rk.XML.spinbox <- function(label, min=NULL, max=NULL, initial=0, real=TRUE, prec
   } else {}
   if(max.precision != 8){
     check.type(max.precision, "numeric", "max.precision")
-    attr.list[["max.precision"]] <- as.numeric(max.precision)
+    attr.list[["max_precision"]] <- as.numeric(max.precision)
   } else {}
 
   # check for additional i18n info; if FALSE, "label" will be renamed to "noi18n_label"
