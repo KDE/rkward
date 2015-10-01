@@ -25,6 +25,7 @@
 #include <QTimer>
 #include <QSet>
 
+class RKTabSlide;
 class QTreeView;
 class QPushButton;
 class RKOptionSetDisplayModel;
@@ -119,6 +120,7 @@ friend class RKOptionSetDisplayModel;
 	QStackedWidget *switcher;
 	QWidget *updating_notice;
 	QWidget *user_area;
+	RKTabSlide *tabslide;
 	void updateUnfinishedRows ();
 	int return_to_row;
 	QTimer update_timer;
