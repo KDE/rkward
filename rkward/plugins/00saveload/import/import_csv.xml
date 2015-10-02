@@ -10,7 +10,7 @@
 			var preset_csv2  = { header: 1, sep: "';'",   dec: "','", quote: "'\\\"'",  commentchar: "",  fill: 1 };
 			var preset_tsv   = { header: 1, sep: "'\\t'", dec: "'.'", quote: "'\\\"'",  commentchar: "",  fill: 1 };
 			var preset_tsv2  = { header: 1, sep: "'\\t'", dec: "','", quote: "'\\\"'",  commentchar: "",  fill: 1 };
-			var preset_table = { header: 1, sep: "",      dec: "','", quote: "'\"\\''", commentchar: "#", fill: 1 };
+			var preset_table = { header: 0, sep: "",      dec: "'.'", quote: "'\"\\''", commentchar: "#", fill: 0 };
 
 			// Update controls, when a predefined format has been selected
 			gui.addChangeCommand ("quick.string", "updateFromPresets ()");
