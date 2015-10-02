@@ -278,7 +278,7 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 			if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::NoUserCommand) {
 				RCommandProxy *command = RKRBackend::this_pointer->fetchNextCommand ();
 				if (!command) {
-#ifdef Q_OS_WINDOWS
+#ifdef Q_OS_WIN
 					// Can't easily override R_CleanUp on Windows, so we're calling it manually, here, then force exit
 					if (RKRBackend::this_pointer->killed == RKRBackend::ExitNow) RCleanUp (SA_NOSAVE, 0, 0);
 					else RCleanUp (SA_SUICIDE, 1, 0);
