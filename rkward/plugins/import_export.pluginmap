@@ -53,8 +53,7 @@
 			<menu id="export" label="Export">
 				<entry component="save_r" />
 				<entry component="save_variables" />
-        <entry component="save_table" />
-        <entry component="save_csv" />
+                                <entry component="save_csv" />
 				<entry component="save_skeleton" />
 			</menu>
 		</menu>
