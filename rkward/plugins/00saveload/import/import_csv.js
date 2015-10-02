@@ -1,6 +1,7 @@
 function calculate () {
 	var tableOptions = "";
 	var quick = getValue ("quick");
+	if (quick == "custom") quick = "table";   // Difference only relevant in UI
 	if (quick == "table") {
 		var dec = getValue ("dec");
 		if (dec == "other") dec = quote (getValue ("custom_dec"));

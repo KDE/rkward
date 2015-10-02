@@ -1,3 +1,4 @@
+- Some usability refinements to "Import CVS" plugin
 - Disabled the "Import Data"-dialog, as it was considered too confusing. The individual importers are still available from the menu, separately.
 - For multi-item varslots and valueslots, use separate buttons for adding / removing items
 - Don't show (useless) index number in mutli-value varslots and valueslots

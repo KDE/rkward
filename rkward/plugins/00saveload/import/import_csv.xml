@@ -3,49 +3,84 @@
 	<code file="import_csv.js"/>
 	<help file="import_csv.rkh"/>
 	<logic>
+		<script><![CDATA[
+			var updating = false;
+			// Predefined formats
+			var preset_csv   = { header: 1, sep: "','",   dec: "'.'", quote: "'\\\"'",  commentchar: "",  fill: 1 };
+			var preset_csv2  = { header: 1, sep: "';'",   dec: "','", quote: "'\\\"'",  commentchar: "",  fill: 1 };
+			var preset_tsv   = { header: 1, sep: "'\\t'", dec: "'.'", quote: "'\\\"'",  commentchar: "",  fill: 1 };
+			var preset_tsv2  = { header: 1, sep: "'\\t'", dec: "','", quote: "'\\\"'",  commentchar: "",  fill: 1 };
+			var preset_table = { header: 1, sep: "",      dec: "','", quote: "'\"\\''", commentchar: "#", fill: 1 };
+
+			// Update controls, when a predefined format has been selected
+			gui.addChangeCommand ("quick.string", "updateFromPresets ()");
+			updateFromPresets = function () {
+				if (updating) return;
+
+				var quick = gui.getValue ("quick.string");
+				if (quick == "custom") return;
+
+				var preset;
+				if (quick == "csv") preset = preset_csv;
+				else if (quick == "csv2") preset = preset_csv2;
+				else if (quick == "delim") preset = preset_tsv;
+				else if (quick == "delim2") preset = preset_tsv2;
+				else if (quick == "table") preset = preset_table;
+
+				updating = true;
+
+				gui.setValue ("header.state", preset.header);
+				gui.setValue ("sep.string", preset.sep);
+				gui.setValue ("dec.string", preset.dec);
+				gui.setValue ("quote.string", preset.quote);
+				gui.setValue ("commentchar.text", preset.commentchar);
+				gui.setValue ("fill.state", preset.fill);
+
+				updating = false;
+			}
+
+			// Update "quick" selector, when settings match a predefined format
+			gui.addChangeCommand ("header.state", "updateFromSettings ()");
+			gui.addChangeCommand ("sep.string", "updateFromSettings ()");
+			gui.addChangeCommand ("dec.string", "updateFromSettings ()");
+			gui.addChangeCommand ("quote.string", "updateFromSettings ()");
+			gui.addChangeCommand ("commentchar.text", "updateFromSettings ()");
+			gui.addChangeCommand ("fill.state", "updateFromSettings ()");
+
+			updateFromSettings = function () {
+				if (updating) return;
+				updating = true;
+
+				if (settingsMatch (preset_csv)) gui.setValue ("quick.string", "csv");
+				else if (settingsMatch (preset_csv2)) gui.setValue ("quick.string", "csv2");
+				else if (settingsMatch (preset_tsv)) gui.setValue ("quick.string", "delim");
+				else if (settingsMatch (preset_tsv2)) gui.setValue ("quick.string", "delim2");
+				else if (settingsMatch (preset_table)) gui.setValue ("quick.string", "table");
+				else gui.setValue ("quick.string", "custom");
+
+				updating = false;
+			}
+			
+			settingsMatch = function (preset) {
+				if (gui.getValue ("header.state") != preset.header) return false;
+				if (gui.getValue ("sep.string") != preset.sep) return false;
+				if (gui.getValue ("dec.string") != preset.dec) return false;
+				if (gui.getValue ("quote.string") != preset.quote) return false;
+				if (gui.getValue ("commentchar.text") != preset.commentchar) return false;
+				if (gui.getValue ("fill.state") != preset.fill) return false;
+				return true;
+			}
+
+			updateFromPresets ();
+		]]></script>
+		  
 		<external id="filename" />
 		<connect governor="filename" client="file.selection"/>
 
-		<convert id="quickNone" mode="equals" sources="quick.string" standard="table" />
-		<convert id="quickCSV" mode="equals" sources="quick.string" standard="csv" />
-		<convert id="quickCSV2" mode="equals" sources="quick.string" standard="csv2" />
-		<convert id="quickTAB" mode="equals" sources="quick.string" standard="delim" />
-		<convert id="quickTAB2" mode="equals" sources="quick.string" standard="delim2" />
-		<convert id="quickCC2TT2" mode="notequals" sources="quick.string" standard="table" />
-		
-		<connect client="header.enabled" governor="quickNone" />
-		<connect client="header.state" governor="quickCC2TT2" />
-		<connect client="fill.state" governor="quickCC2TT2" />
-		<connect client="commentchar.enabled" governor="quickNone" />
-		<connect client="fill.enabled" governor="quickNone" />
-		
-		<convert id="quickNCT" mode="or" sources="quickNone;quickCSV;quickTAB"/>
-		<connect client="dec.decPeriod.enabled" governor="quickNCT" />
-		<convert id="quickNC2T2" mode="or" sources="quickNone;quickCSV2;quickTAB2"/>
-		<connect client="dec.decComma.enabled" governor="quickNC2T2" />
-		<connect client="dec.decOther.enabled" governor="quickNone" />
-		
-		<convert id="customdec" mode="equals" sources="dec.string" standard="other" />
-		<connect client="custom_dec.enabled" governor="customdec" />
-		
-		<convert id="quickNTT2" mode="or" sources="quickNone;quickTAB;quickTAB2"/>
-		<connect client="sep.sepTab.enabled" governor="quickNTT2" />
-		
-		<convert id="quickNC2" mode="or" sources="quickNone;quickCSV2"/>
-		<connect client="sep.sepSemiC.enabled" governor="quickNC2" />
-		<convert id="quickNC" mode="or" sources="quickNone;quickCSV"/>
-		<connect client="sep.sepComma.enabled" governor="quickNC" />
-		<connect client="sep.sepSpace.enabled" governor="quickNone" />
-		<connect client="sep.sepOther.enabled" governor="quickNone" />
-		
 		<convert id="customsep" mode="equals" sources="sep.string" standard="other" />
 		<connect client="custom_sep.enabled" governor="customsep" />
-		
-		<connect client="quote.quoteSingQ.enabled" governor="quickNone" />
-		<connect client="quote.quoteDoubQSingQ.enabled" governor="quickNone" />
-		<connect client="quote.quoteNone.enabled" governor="quickNone" />
-		<connect client="quote.quoteOther.enabled" governor="quickNone" />
-		
+		<convert id="customdec" mode="equals" sources="dec.string" standard="other" />
+		<connect client="custom_dec.enabled" governor="customdec" />
 		<convert id="customquote" mode="equals" sources="quote.string" standard="other" />
 		<connect client="custom_quote.enabled" governor="customquote" />
 
@@ -68,28 +103,30 @@
 					<option value="csv2" label="Semicolon separated values, comma as decimal separator (CSV2)" />
 					<option value="delim" label="Tab separated values (TAB)" />
 					<option value="delim2" label="Tab separated values, comma as decimal separator (TAB2)" />
-					<option value="table" label="Custom"/>
+					<option value="table" label="read.table() default (whitespace separated values)" />
+					<option value="custom" label="Custom"/>
 				</dropdown>
 				<frame>
-          <row>
-            <checkbox id="header" value="TRUE" value_unchecked="FALSE" checked="false" label="Use first row as column names"/>
-          </row>
+					<checkbox id="header" value="TRUE" value_unchecked="FALSE" checked="false" label="Use first row as column names"/>
+				</frame>
+				<frame>
 					<row>
 						<column>
 							<radio id="dec" label="Decimal point character" >
-								<option id="decPeriod" value="'.'" label="'.' (Period)" />
-								<option id="decComma" value="','" label="',' (Comma)" />
-								<option id="decOther" value="other" label="Other (specify below)" />
+								<option value="'.'" label="'.' (Period)" />
+								<option value="','" label="',' (Comma)" />
+								<option value="other" label="Other (specify below)" />
 							</radio>
-              <stretch />
+							<stretch />
 							<input id="custom_dec" label="Specify decimal point character" required="true"/>
 						</column>
 						<column>
 							<radio id="sep" label="Field separator character" >
-								<option id="sepTab" value="'\t'" label="Tab" />
-								<option id="sepSemiC" value="';'" label="';' (Semicolon)" />
-								<option id="sepComma" value="','" label="',' (Comma)" />
-								<option id="sepSpace" value="' '" label="Space" />
+								<option value="'\t'" label="Tab" />
+								<option value="';'" label="';' (Semicolon)" />
+								<option value="','" label="',' (Comma)" />
+								<option value="' '" label="Single space" />
+								<option value="" label="Any whitespace" />
 								<option id="sepOther" value="other" label="Other (specify below)" />
 							</radio>
               <stretch />
@@ -146,11 +183,11 @@
 						<option value=", stringsAsFactors=FALSE" label="Do not convert" />
 					</radio>
 					<radio id="quote" label="String delimiter" >
-						<option id="quoteDoubQ" value="'\&quot;'" label="&quot; only" />
-						<option id="quoteSingQ" value="'\''" label="' only" />
-						<option id="quoteDoubQSingQ" value="'&quot;\''" label="&quot; and '" checked="true"/>
-						<option id="quoteNone" value="''" label="None / disabled" />
-						<option id="quoteOther" value="other" label="Other (specify below)" />
+						<option value="'\&quot;'" label="&quot; only" />
+						<option value="'\''" label="' only" />
+						<option value="'&quot;\''" label="&quot; and '" checked="true"/>
+						<option value="''" label="None / disabled" />
+						<option value="other" label="Other (specify below)" />
 					</radio>
 					<input id="custom_quote" label="Specify quoting character(s)" required="true"/>
 				</column>
