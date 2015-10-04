@@ -32,16 +32,20 @@
 	<tabbook>
 		<tab label="Variable(s)" id="tab_variables">
 			<row>
-				<varselector id="vars" />
 				<column>
 					<radio id="data_mode" label="Data format">
 						<option value="separate_vars" label="Separate variables" checked="true"/>
 						<option value="grouped_outcome" label="Single (grouped) variable"/>
 					</radio>
-					<varslot multi="true" type="numeric" source="vars" id="x" label="Variable(s):" required="true"/>
-					<varslot type="numeric" source="vars" id="outcome" label="Outcome variable:" required="true"/>
-					<varslot multi="true" source="vars" id="groups" label="Group variable(s):" required="true"/>
-					<spinbox type="integer" id="dodges" label="Dodged groups" min="0" initial="0"/>
+					<row>
+						<varselector id="vars" />
+						<column>
+							<varslot multi="true" type="numeric" source="vars" id="x" label="Variable(s):" required="true"/>
+							<varslot type="numeric" source="vars" id="outcome" label="Outcome variable:" required="true"/>
+							<varslot multi="true" source="vars" id="groups" label="Group variable(s):" required="true"/>
+							<spinbox type="integer" id="dodges" label="Dodged groups" min="0" initial="0"/>
+						</column>
+					</row>
 				</column>
 				<column>
 					<frame label="Labels">
