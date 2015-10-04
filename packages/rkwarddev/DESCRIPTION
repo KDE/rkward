@@ -1,6 +1,6 @@
 Package: rkwarddev
 Type: Package
-Title: A collection of tools for RKWard plugin development
+Title: A Collection of Tools for RKWard Plugin Development
 Author: m.eik michalke [aut, cre]
 Maintainer: m.eik michalke <meik.michalke@hhu.de>
 Depends:
@@ -16,7 +16,7 @@ LazyLoad: yes
 URL: https://rkward.kde.org
 Authors@R: c(person(given="m.eik", family="michalke", email="meik.michalke@hhu.de", role=c("aut", "cre")))
 Version: 0.07-4
-Date: 2015-06-29
+Date: 2015-10-04
 Collate:
     '00_class_01_rk.JS.arr.R'
     '00_class_02_rk.JS.var.R'
@@ -27,6 +27,7 @@ Collate:
     'rk.XML.plugin.R'
     'rk.JS.doc.R'
     '00_class_06_rk.plug.comp.R'
+    '01_methods_01_plugin2script.R'
     '50_all.valid.children.R'
     '50_all.valid.modifiers.R'
     '60_JS.getters.default.R'

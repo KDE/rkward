@@ -1,10 +1,21 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.07-4 (2015-06-29)}{
+\section{Changes in rkwarddev version 0.07-4 (2015-10-04)}{
   \subsection{unreleased}{
     \itemize{
       \item this version is under development
+    }
+  }
+  \subsection{fixed}{
+    \itemize{
+      \item attribute \code{"max_precision"} in <spinbox> was misspelled
+    }
+  }
+  \subsection{added}{
+    \itemize{
+      \item new methods \code{plugin2script()} to try to translate raw plugin XML
+        into working rkwarddev script calls
     }
   }
 }
