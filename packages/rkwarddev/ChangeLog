@@ -1,10 +1,12 @@
 ChangeLog for package rkwarddev
 
-changes in version 0.07-4 (2015-10-04)
+changes in version 0.07-4 (2015-10-06)
 unreleased:
   - this version is under development
 fixed:
   - attribute "max_precision" in <spinbox> was misspelled
+  - rk.XML.connect() still handled modifiers for "governor" wrong if it wasn't
+    a XiMpLe node
 added:
   - new methods plugin2script() to try to translate raw plugin XML
     into working rkwarddev script calls

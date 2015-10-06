@@ -71,7 +71,9 @@ rk.XML.connect <- function(governor, client, get="state", set="enabled", not=FAL
       } else {}
     } else {}
   } else {
-    modif.validity("all", modifier=get)
+    if(modif.validity("all", modifier=get)){
+      governor.id <- paste(governor.id, get, sep=".")
+    } else {}
   }
   if(isTRUE(not)){
     governor.id <- paste(governor.id, "not", sep=".")
