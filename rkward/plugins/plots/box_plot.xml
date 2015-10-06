@@ -41,7 +41,7 @@
 						<varselector id="vars" />
 						<column>
 							<varslot multi="true" type="numeric" source="vars" id="x" label="Variable(s):" required="true"/>
-							<varslot type="numeric" source="vars" id="outcome" label="Outcome variable:" required="true"/>
+							<varslot types="numeric" source="vars" id="outcome" label="Outcome variable:" required="true"/>
 							<varslot multi="true" source="vars" id="groups" label="Group variable(s):" required="true"/>
 							<spinbox type="integer" id="dodges" label="Dodged groups" min="0" initial="0"/>
 						</column>

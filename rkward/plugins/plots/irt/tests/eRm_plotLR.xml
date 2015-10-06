@@ -21,7 +21,7 @@
         <row id="row_vars">
           <varselector id="vars" />
           <column>
-            <varslot type="numeric" id="x" classes="Rm" source="vars" required="true" label="Choose fitted model to test (plot):"/>
+            <varslot types="numeric" id="x" classes="Rm" source="vars" required="true" label="Choose fitted model to test (plot):"/>
             <text>Only objects of class Rm are valid!</text>
             <stretch />
             <radio id="rad_splitcr" label="Split criterion for subject raw scores">
@@ -30,7 +30,7 @@
               <option label="Full raw score split" value="all.r" />
               <option label="Use vector to define groups" value="vector" />
             </radio>
-            <varslot type="numeric" id="splitvector" source="vars" label="Select grouping vector:"/>
+            <varslot types="numeric" id="splitvector" source="vars" label="Select grouping vector:"/>
             <text>Can be numeric, character or a factor</text>
             <preview id="preview"/>
           </column>

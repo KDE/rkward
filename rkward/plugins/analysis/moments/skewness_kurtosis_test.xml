@@ -11,7 +11,7 @@
 					</column>
 					<column>
 						<frame>
-							<varslot type="numeric" multi="true" id="x" source="vars" required="true" label="variable(s):"/>
+							<varslot types="numeric" multi="true" id="x" source="vars" required="true" label="variable(s):"/>
 						</frame>
 						<stretch/>
 					</column>

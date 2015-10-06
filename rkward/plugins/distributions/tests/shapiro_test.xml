@@ -9,7 +9,7 @@
 						<varselector id="vars"/>
 					</column>
 					<column>
-						<varslot type="numeric" multi="true" id="x" source="vars" required="true" label="variable(s):" min_length="3" max_length="5000"/>
+						<varslot types="numeric" multi="true" id="x" source="vars" required="true" label="variable(s):" min_length="3" max_length="5000"/>
 						<text>
 							Note: Objects must have between 3 and 5000 values
 						</text>

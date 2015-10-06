@@ -22,14 +22,14 @@
         <row id="manifest_resp_row">
           <varselector id="vars" />
           <column>
-            <varslot type="numeric" id="x" classes="data.frame matrix" source="vars" required="true" label="Matrix of manifest variables:"/>
+            <varslot types="numeric" id="x" classes="data.frame matrix" source="vars" required="true" label="Matrix of manifest variables:"/>
             <spinbox id="mpoints" label="Number of measurement points" type="integer" initial="1" min="1" size="small" />
             <stretch />
             <radio label="Group contrasts" id="groups">
               <option label="All subjects belong to one group" value="1" checked="true" />
               <option label="Compute group contrasts" value="contrasts" />
             </radio>
-            <varslot type="numeric" id="group_vec" source="vars" label="Use this group vector:"/>
+            <varslot types="numeric" id="group_vec" source="vars" label="Use this group vector:"/>
             <saveobject id="save_name" checkable="true" checked="true" label="Save results in workspace" initial="estimates.lpcm"/>
           </column>
         </row>
@@ -42,13 +42,13 @@
               <option label="Compute automatically" value="auto" checked="true" />
               <option label="Use own design matrix" value="matrix" />
             </radio>
-            <varslot type="numeric" id="design_mtx" classes="data.frame matrix" source="vars2" label="Design matrix:"/>
+            <varslot types="numeric" id="design_mtx" classes="data.frame matrix" source="vars2" label="Design matrix:"/>
             <stretch />
             <radio label="Eta start values" id="etastart">
               <option label="Use 0-vector" value="NULL" checked="true" />
               <option label="Use own vector of eta start values" value="startval" />
             </radio>
-            <varslot type="numeric" id="etastart_vec" source="vars2" label="Vector of start values:"/>
+            <varslot types="numeric" id="etastart_vec" source="vars2" label="Vector of start values:"/>
             <frame label="Misc options">
               <checkbox id="stderr" label="Compute standard error" checked="true" value="se" />
               <checkbox id="sumnull" label="Normalize parameters to sum-0" checked="true" value="sum0" />

@@ -9,7 +9,7 @@
 				<row>
 					<varselector id="vars"/>
 					<column>
-						<varslot type="numeric" id="x" multi="true" source="vars" required="true" label="variable(s):"/>
+						<varslot types="numeric" id="x" multi="true" source="vars" required="true" label="variable(s):"/>
 						<radio id="null" label="null hypothesis">
 							<option label="Level" value="Level"/>
 							<option label="Trend" value="Trend"/>

@@ -7,7 +7,7 @@
 		<row>
 			<varselector id="vars"/>
 			<column>
-				<varslot type="numeric" id="x" source="vars" required="true" label="samples" multi="true" min_vars="2"/>
+				<varslot types="numeric" id="x" source="vars" required="true" label="samples" multi="true" min_vars="2"/>
 			</column>
 		</row>
 	</dialog>

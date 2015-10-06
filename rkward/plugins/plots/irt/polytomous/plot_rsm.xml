@@ -9,7 +9,7 @@
         <row id="row_vars">
           <varselector id="vars" />
           <column>
-            <varslot type="numeric" id="x" classes="Rm" source="vars" required="true" label="Choose fitted model to plot:"/>
+            <varslot types="numeric" id="x" classes="Rm" source="vars" required="true" label="Choose fitted model to plot:"/>
             <text>Only objects of class Rm are valid!</text>
             <stretch />
             <preview id="preview"/>

@@ -9,7 +9,7 @@
 				<row>
 					<varselector id="vars"/>
 					<column>
-						<varslot type="numeric" min_vars="1" multi="true" id="x" source="vars" required="true" label="variable(s):"/>
+						<varslot types="numeric" min_vars="1" multi="true" id="x" source="vars" required="true" label="variable(s):"/>
 						<preview id="preview"/>
 					</column>
 				</row>

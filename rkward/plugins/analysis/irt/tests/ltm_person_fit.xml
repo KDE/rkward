@@ -18,7 +18,7 @@
         <row id="row_vars">
           <varselector id="vars" />
           <column>
-            <varslot type="numeric" id="x" classes="rasch tpm ltm" source="vars" required="true" label="Choose fitted model to examine:"/>
+            <varslot types="numeric" id="x" classes="rasch tpm ltm" source="vars" required="true" label="Choose fitted model to examine:"/>
             <text>Only objects of class ltm, rasch and tpm are valid!</text>
             <stretch />
             <radio id="rad_hypot" label="Alternative hypothesis to test">
@@ -37,7 +37,7 @@
               <option label="Compute for observed response pattern" value="observed" checked="true" />
               <option label="Compute for given response pattern" value="resp_matrix" />
             </radio>
-            <varslot type="numeric" id="mtx_resppat" source="vars2" label="Select matrix or data.frame with pattern to use:"/>
+            <varslot types="numeric" id="mtx_resppat" source="vars2" label="Select matrix or data.frame with pattern to use:"/>
             <radio id="rad_pvalue" label="p value assumptions">
               <option label="Assume standard normal distribution" value="normal" checked="true" />
               <option label="Use Monte Carlo procedure to approximate distribution" value="montecarlo" />
