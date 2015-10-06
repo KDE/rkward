@@ -102,6 +102,46 @@ setMethod("plugin2script",
 
 ## internal functions and objects
 
+## function p2s.checkModifiers()
+# takes an attribute value (character string) and checks whether it has a valid modifier suffix.
+# returns a list with named elements:
+#  - has.mod: logical value, TRUE if a modifier was found
+#  - id: the actual ID value
+#  - mod: the appended modifier (omitting ".not" if check.not=TRUE)
+#  - not: logical value if ".not" was appended if check.not=TRUE
+p2s.checkModifiers <- function(value, check.not=TRUE){
+  result <- list(has.mod=FALSE, id="", mod="", not="FALSE")
+  split.value <- unlist(strsplit(gsub("\"", "", value), "\\."))
+  if(length(split.value) > 3){
+    # hm, wouldn't know how this could happen, but let's just return it as-is
+    result[["has.mod"]] <- TRUE
+    result[["id"]] <- paste0("\"", split.value[1], "\"")
+    result[["mod"]] <- paste0("\"", paste0(split.value[-1], collapse="."), "\"")
+    warning(paste0("bogus modifier found: \"", value, "\"!"))
+  } else {
+    # check if the modifier is valid
+    modif.validity("all", paste0(split.value[-1], collapse="."))
+    if(length(split.value) == 3){
+      result[["has.mod"]] <- TRUE
+      result[["id"]] <- paste0("\"", split.value[1], "\"")
+      if(identical(tolower(split.value[3]), "not")){
+        result[["mod"]] <- paste0("\"", split.value[2], "\"")
+        result[["not"]] <- "TRUE"
+      } else {
+        result[["mod"]] <- paste0(split.value[-1], collapse=".")
+      }
+    } else if(length(split.value) == 2){
+      result[["has.mod"]] <- TRUE
+      result[["id"]] <- paste0("\"", split.value[1], "\"")
+      result[["mod"]] <- paste0("\"", split.value[2], "\"")
+    } else {
+      result[["id"]] <- paste0("\"", value, "\"")
+    }
+  }
+  return(result)
+} ## end function p2s.checkModifiers()
+
+
 ## function p2s.extractAttributes()
 # translates node attributes into function options
 # called by p2s()
@@ -135,6 +175,22 @@ p2s.extractAttributes <- function(nodeName, nodeAttrs, rkwdevAttributes, rkwdevL
       return(thisOption)
     }
   ))
+
+  # possible modifiers in the attributes?
+  if(nodeName %in% "connect"){
+    modGovernor <- p2s.checkModifiers(rkwdevOptions["governor"])
+    modClient <- p2s.checkModifiers(rkwdevOptions["client"], check.not=FALSE)
+    if(isTRUE(modGovernor[["has.mod"]])){
+      rkwdevOptions["governor"] <- modGovernor[["id"]]
+      rkwdevOptions["get"] <- modGovernor[["mod"]]
+      rkwdevOptions["not"] <- modGovernor[["not"]]
+    } else {}
+    if(isTRUE(modClient[["has.mod"]])){
+      rkwdevOptions["client"] <- modClient[["id"]]
+      rkwdevOptions["set"] <- modClient[["mod"]]
+    } else {}
+  } else {}
+
   return(rkwdevOptions)
 } ## end function p2s.extractAttributes()
 
@@ -228,7 +284,7 @@ p2s.checkTabIDs <- function(node){
 ## function p2s()
 # this is the main work horse, going through nested XML nodes recursively
 # called by the actual methods
-p2s <- function(node, indent=TRUE, level=1, prefix="rkdev"){
+p2s <- function(node, indent=TRUE, level=1, prefix="rkdev", drop.defaults=TRUE){
   nodeName <- XMLName(node)
   nodeAttrs <- XMLAttrs(node)
   # fail if we don't know this node type
@@ -257,6 +313,11 @@ p2s <- function(node, indent=TRUE, level=1, prefix="rkdev"){
   } else {
     recursive <- FALSE
   }
+  if("modifiers" %in% names(FONA[[nodeName]])){
+    checkModifiers <- TRUE
+  } else {
+    checkModifiers <- FALSE
+  }
   if("text" %in% names(FONA[[nodeName]])){
     rkwdevText <- FONA[[nodeName]][["text"]]
     checkText <- TRUE
@@ -279,6 +340,7 @@ p2s <- function(node, indent=TRUE, level=1, prefix="rkdev"){
       rkwdevOptions[[rkwdevText]] <- paste0("\"", nodeChildren, "\"", collapse=" ")
     } else {}
   } else {}
+
   # get the child nodes
   if(isTRUE(recursive)){
     nodeChildren <- XMLChildren(node)
@@ -324,6 +386,19 @@ p2s <- function(node, indent=TRUE, level=1, prefix="rkdev"){
     } else {}
   } else {}
 
+  # check for default values and drop them
+  if(isTRUE(drop.defaults)){
+    defaults <- formals(rkwdevFunction)
+    # bring formals into same format as rkwdevOptions
+    defaults[sapply(defaults, is.character)] <- paste0("\"", defaults[sapply(defaults, is.character)], "\"")
+    defaults <- sapply(defaults, as.character)
+    for (thisOption in names(rkwdevOptions)){
+      if(identical(rkwdevOptions[[thisOption]], defaults[[thisOption]])){
+        rkwdevOptions <- rkwdevOptions[!names(rkwdevOptions) %in% thisOption]
+      }
+    }
+  } else {}
+
   # bring options in optimized order
   rkwdevOptions <- rkwdevOptions[order(sapply(names(rkwdevOptions), function(thisOpt){which(names(rkwdevAttributes) %in% thisOpt)}))]
 
@@ -334,15 +409,27 @@ p2s <- function(node, indent=TRUE, level=1, prefix="rkdev"){
     ind.char <- " "
     ind.start <- ind.end <- ""
   }
+  # write into an object, but only if the node has an ID value,
+  # because otherwise we can assume that it is not referenced anywhere else
+  nodeID <- id(node, js=FALSE)
+  if(!identical(nodeID, "NULL")){
+    rkObject <- paste0(prefix, ".", nodeName, ".", id(node, js=FALSE), " <- ")
+  } else {
+    rkObject <- ""
+  }
   
-  result <- paste0(
-    prefix, ".", nodeName, ".", id(node, js=FALSE), " <- ", rkwdevFunction, "(",
-      ind.start, paste0(names(rkwdevOptions), "=", rkwdevOptions, collapse=paste0(",", ind.char)),
-      ind.end,
-    ")"
-  )
-  # remove "...=", if present
-  result <- gsub("\\.\\.\\.=", "", result)
+  if(length(rkwdevOptions) > 0){
+    result <- paste0(
+      rkObject, rkwdevFunction, "(",
+        ind.start, paste0(names(rkwdevOptions), "=", rkwdevOptions, collapse=paste0(",", ind.char)),
+        ind.end,
+      ")"
+    )
+    # remove "...=", if present
+    result <- gsub("\\.\\.\\.=", "", result)
+  } else {
+    result <- paste0(rkwdevFunction, "()")
+  }
 
   return(result)
 } ## end function p2s()
@@ -366,7 +453,11 @@ p2s <- function(node, indent=TRUE, level=1, prefix="rkdev"){
 #     ),
 #     logical=c(
 #       "<attribute name that needs translation from character to logical>"
+#     ),
+#     modifiers=c(
+#       "<attribute name that could contain a modifier>"
 #     )
+
 # the name stands for function/option/node/attribute
 # 
 # tests needed:
@@ -376,7 +467,6 @@ p2s <- function(node, indent=TRUE, level=1, prefix="rkdev"){
 # - rk.rkh.doc()
 # - rk.XML.about()
 # - children (dependencies) in rk.XML.component()
-# - get/set/not in rk.XML.connect()
 # - standards/min/max/mode etc. in rk.XML.convert()
 # - children in rk.XML.dependencies()
 # - children in rk.XML.dependency_check()
@@ -540,12 +630,13 @@ FONA <- list(
     opt=c(
       governor="governor",
       client="client",
-#       get="get",
-#       set="set",
-#       not="not",
+      get="get",     # these three
+      set="set",     # are needed
+      not="not",     # for ordering purposes
       reconcile="reconcile"
     ),
-    logical=c("reconcile")
+    logical=c("reconcile"),
+    modifiers=c("governor", "client")
   ),
   "context"=list(
     funct="rk.XML.context",
