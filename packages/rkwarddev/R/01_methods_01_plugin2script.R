@@ -313,11 +313,6 @@ p2s <- function(node, indent=TRUE, level=1, prefix="rkdev", drop.defaults=TRUE){
   } else {
     recursive <- FALSE
   }
-  if("modifiers" %in% names(FONA[[nodeName]])){
-    checkModifiers <- TRUE
-  } else {
-    checkModifiers <- FALSE
-  }
   if("text" %in% names(FONA[[nodeName]])){
     rkwdevText <- FONA[[nodeName]][["text"]]
     checkText <- TRUE
