@@ -78,7 +78,11 @@ rk.XML.switch <- function(condition, cases, modifier=NULL, id.name="auto"){
     if(modif.validity(condition, modifier=modifier)){
       condition.id <- paste(condition.id, modifier, sep=".")
     } else {}
-  } else {}
+  } else {
+    if(modif.validity("all", modifier=modifier)){
+      condition.id <- paste(condition.id, modifier, sep=".")
+    } else {}
+  }
 
   if(identical(id.name, "auto")){
     attr.list <- list(condition=condition.id, id=auto.ids(condition.id, prefix=ID.prefix("switch")))

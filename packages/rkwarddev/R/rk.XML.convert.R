@@ -89,15 +89,19 @@ rk.XML.convert <- function(sources, mode=c(), required=FALSE, id.name="auto"){
   src.names <- names(sources)
   if(!is.null(src.names)){
     # check these names if they're valid modifiers here
-    invalid.names <- !src.names %in% unique(unlist(all.valid.modifiers))
-    if(any(invalid.names)){
-      warning(paste0("Some of the modifier names you provided are invalid and were ignored: ",
-        paste(src.names[invalid.names], collapse=", ")))
-        src.names[invalid.names] <- ""
-    } else {}
-    sources <- as.character(sapply(1:length(src.names), function(src.no){
-        this.modif <- src.names[src.no]
-        valid.modif <- modif.validity(source=sources[[src.no]], modifier=this.modif, bool=FALSE)
+    sane.src.names <- c()
+    for (thisName in src.names){
+      sane.src.names <- c(sane.src.names, modif.validity(source="all", modifier=thisName, bool=FALSE))
+    }
+    src.names <- sane.src.names
+    sources <- as.character(sapply(1:length(sane.src.names), function(src.no){
+        this.modif <- sane.src.names[src.no]
+        this.source <- sources[[src.no]]
+        if(is.XiMpLe.node(this.source)){
+          valid.modif <- modif.validity(source=this.source, modifier=this.modif, bool=FALSE)
+        } else {
+          valid.modif <- modif.validity(source="all", modifier=this.modif, bool=FALSE)
+        }
         if(nchar(valid.modif) > 0){
           new.value <- paste(check.ID(sources[[src.no]], search.environment=TRUE), this.modif, sep=".")
         } else {
