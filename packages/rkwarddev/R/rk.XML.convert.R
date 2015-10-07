@@ -93,7 +93,6 @@ rk.XML.convert <- function(sources, mode=c(), required=FALSE, id.name="auto"){
     for (thisName in src.names){
       sane.src.names <- c(sane.src.names, modif.validity(source="all", modifier=thisName, bool=FALSE))
     }
-    src.names <- sane.src.names
     sources <- as.character(sapply(1:length(sane.src.names), function(src.no){
         this.modif <- sane.src.names[src.no]
         this.source <- sources[[src.no]]
