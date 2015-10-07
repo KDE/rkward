@@ -109,7 +109,7 @@ setMethod("plugin2script",
 #  - id: the actual ID value
 #  - mod: the appended modifier (omitting ".not" if check.not=TRUE)
 #  - not: logical value if ".not" was appended if check.not=TRUE
-p2s.checkModifiers <- function(value, check.not=TRUE){
+p2s.checkModifiers <- function(value, check.not=FALSE){
   result <- list(has.mod=FALSE, id="", mod="", not="FALSE")
   split.value <- unlist(strsplit(gsub("\"", "", value), "\\."))
   if(length(split.value) > 3){
@@ -178,8 +178,8 @@ p2s.extractAttributes <- function(nodeName, nodeAttrs, rkwdevAttributes, rkwdevL
 
   # possible modifiers in the attributes?
   if(nodeName %in% "connect"){
-    modGovernor <- p2s.checkModifiers(rkwdevOptions["governor"])
-    modClient <- p2s.checkModifiers(rkwdevOptions["client"], check.not=FALSE)
+    modGovernor <- p2s.checkModifiers(rkwdevOptions["governor"], check.not=TRUE)
+    modClient <- p2s.checkModifiers(rkwdevOptions["client"])
     if(isTRUE(modGovernor[["has.mod"]])){
       rkwdevOptions["governor"] <- modGovernor[["id"]]
       rkwdevOptions["get"] <- modGovernor[["mod"]]
@@ -188,6 +188,43 @@ p2s.extractAttributes <- function(nodeName, nodeAttrs, rkwdevAttributes, rkwdevL
     if(isTRUE(modClient[["has.mod"]])){
       rkwdevOptions["client"] <- modClient[["id"]]
       rkwdevOptions["set"] <- modClient[["mod"]]
+    } else {}
+  } else {}
+  if(nodeName %in% "convert"){
+    # <convert id="lgc_foobarbr" sources="foo.string;bar.state" mode="notequals" standard="bar" />
+    # rk.XML.convert(list(string="foo", state="bar"), mode=c(notequals="bar"))
+    # we need to split the sources first, might be multiple
+    splitSources <- gsub("[[:space:]\"]", "", unlist(strsplit(rkwdevOptions["sources"], ";")))
+    splitSources <- sapply(
+      splitSources,
+      function(thisSource) {
+        modSrc <- p2s.checkModifiers(thisSource)
+        if(isTRUE(modSrc[["has.mod"]])){
+          return(paste0(gsub("\"", "", modSrc[["mod"]]), "=", modSrc[["id"]]))
+        } else {
+          return(modSrc[["id"]])
+        }
+      }
+    )
+    rkwdevOptions["sources"] <- paste0("list(", paste0(splitSources, collapse=", "), ")")
+    # now get the mode option right
+    if("standard" %in% names(rkwdevOptions)){
+      rkwdevOptions["mode"] <- paste0("c(", gsub("\"", "", rkwdevOptions["mode"]), "=", rkwdevOptions["standard"], ")")
+      rkwdevOptions <- rkwdevOptions[!names(rkwdevOptions) %in% "standard"]
+    }
+  } else {}
+  if(nodeName %in% "set"){
+    modID <- p2s.checkModifiers(rkwdevOptions["id"])
+    if(isTRUE(modID[["has.mod"]])){
+      rkwdevOptions["id"] <- modID[["id"]]
+      rkwdevOptions["set"] <- modID[["mod"]]
+    } else {}
+  } else {}
+  if(nodeName %in% "switch"){
+    modCondition <- p2s.checkModifiers(rkwdevOptions["condition"])
+    if(isTRUE(modCondition[["has.mod"]])){
+      rkwdevOptions["condition"] <- modCondition[["id"]]
+      rkwdevOptions["modifier"] <- modCondition[["mod"]]
     } else {}
   } else {}
 
@@ -319,6 +356,12 @@ p2s <- function(node, indent=TRUE, level=1, prefix="rkdev", drop.defaults=TRUE){
   } else {
     checkText <- FALSE
   }
+  if("noi18n" %in% names(FONA[[nodeName]])){
+    rkwdevNoi18n <- FONA[[nodeName]][["noi18n"]]
+    checkNoi18n <- TRUE
+  } else {
+    checkNoi18n <- FALSE
+  }
 
   rkwdevOptions <- p2s.extractAttributes(
     nodeName=nodeName,
@@ -342,56 +385,87 @@ p2s <- function(node, indent=TRUE, level=1, prefix="rkdev", drop.defaults=TRUE){
     if(length(nodeChildren) > 0){
       # some nodes need special treatment, because they take option children as named lists
       if(nodeName %in% c("dropdown", "radio", "select", "valueselector")){
-        rkwdevChildnodes <- sapply(nodeChildren,
-            function(thisChild){
-              return(p2s.checkOption(node=thisChild, level=level+2, indent=indent))
-            }
-          )
+        rkwdevChildnodes <- sapply(
+          nodeChildren,
+          function(thisChild){
+            return(p2s.checkOption(node=thisChild, level=level+2, indent=indent))
+          }
+        )
         rkwdevOptions[[rkwdevChildren]] <- paste0("list(\n", paste0(rep("  ", level+1), collapse=""),
             paste0(rkwdevChildnodes, paste0(rep("  ", level-1), collapse=""),
               collapse=paste0(",\n", paste0(rep("  ", level+1), collapse=""))), 
           "\n", paste0(rep("  ", level), collapse=""), ")")
+      } else if(nodeName %in% c("switch")){
+        allCases <- sapply(
+          nodeChildren,
+          function(thisChild){
+            return(p2s(node=thisChild, indent=indent, level=level+2))
+          }
+        )
+        rkwdevOptions[["cases"]] <- paste0(
+          "list(",
+          paste0(
+            "\n", paste0(rep("  ", level+1), collapse=""),
+            sapply(nodeChildren, XMLName), "=", allCases,
+            collapse=","
+          ),
+          "\n", paste0(rep("  ", level), collapse=""), ")"
+        )
       } else if(nodeName %in% c("tabbook")){
-        rkwdevChildnodes <- sapply(nodeChildren,
-            function(thisChild){
-              return(p2s.checkTabs(node=thisChild, level=level+1, indent=indent))
-            }
-          )
+        rkwdevChildnodes <- sapply(
+          nodeChildren,
+          function(thisChild){
+            return(p2s.checkTabs(node=thisChild, level=level+1, indent=indent))
+          }
+        )
         rkwdevOptions[[rkwdevChildren]] <- paste0("list(\n", paste0(rep("  ", level+1), collapse=""),
             paste0(rkwdevChildnodes, paste0(rep("  ", level-1), collapse=""),
               collapse=paste0(",\n", paste0(rep("  ", level+1), collapse=""))), 
           "\n", paste0(rep("  ", level), collapse=""), ")")
         if("id.name" %in% names(rkwdevOptions)){
-          rkwdevTabIDs <- sapply(nodeChildren,
-              function(thisChild){
-                return(p2s.checkTabIDs(thisChild))
-              }
-            )
+          rkwdevTabIDs <- sapply(
+            nodeChildren,
+            function(thisChild){
+              return(p2s.checkTabIDs(thisChild))
+            }
+          )
           rkwdevOptions[["id.name"]] <- paste0("c(", rkwdevOptions[["id.name"]], ", \"", paste0(rkwdevTabIDs, collapse="\", \""), "\")")
         } else {}
       } else {
-        rkwdevChildnodes <- sapply(nodeChildren,
-            function(thisChild){
-              return(p2s(node=thisChild, indent=indent, level=level+1))
-            }
-          )
+        rkwdevChildnodes <- sapply(
+          nodeChildren,
+          function(thisChild){
+            return(p2s(node=thisChild, indent=indent, level=level+1))
+          }
+        )
         rkwdevOptions[[rkwdevChildren]] <- paste0(rkwdevChildnodes,
           collapse=paste0(",\n", paste0(rep("  ", level), collapse="")))
       }
     } else {}
   } else {}
 
+  if(isTRUE(checkNoi18n)){
+    # clean up non-i18n options
+    if(rkwdevNoi18n %in% names(rkwdevOptions)){
+      rkwdevOptions[["i18n"]] <- "FALSE"
+      rkwdevOptions[[gsub("noi18n_", "", rkwdevNoi18n)]] <- rkwdevOptions[[rkwdevNoi18n]]
+      rkwdevOptions <- rkwdevOptions[!names(rkwdevOptions) %in% rkwdevNoi18n]
+    } else {}
+  } else {}
+
   # check for default values and drop them
   if(isTRUE(drop.defaults)){
     defaults <- formals(rkwdevFunction)
-    # bring formals into same format as rkwdevOptions
-    defaults[sapply(defaults, is.character)] <- paste0("\"", defaults[sapply(defaults, is.character)], "\"")
-    defaults <- sapply(defaults, as.character)
-    for (thisOption in names(rkwdevOptions)){
-      if(identical(rkwdevOptions[[thisOption]], defaults[[thisOption]])){
-        rkwdevOptions <- rkwdevOptions[!names(rkwdevOptions) %in% thisOption]
+    if(!is.null(defaults)){
+      # bring formals into same format as rkwdevOptions
+      defaults[sapply(defaults, is.character)] <- paste0("\"", defaults[sapply(defaults, is.character)], "\"")
+      defaults <- sapply(defaults, as.character)
+      for (thisOption in names(rkwdevOptions)){
+        if(identical(rkwdevOptions[[thisOption]], defaults[[thisOption]])){
+          rkwdevOptions <- rkwdevOptions[!names(rkwdevOptions) %in% thisOption]
+        }
       }
-    }
+    } else {}
   } else {}
 
   # bring options in optimized order
@@ -459,39 +533,46 @@ p2s <- function(node, indent=TRUE, level=1, prefix="rkdev", drop.defaults=TRUE){
 # - rk.rkh.related()
 # 
 # unsolved functions (or parts of them):
+# - text in rk.comment()
+# - text in rk.i18n.comment()
 # - rk.rkh.doc()
 # - rk.XML.about()
-# - children (dependencies) in rk.XML.component()
-# - standards/min/max/mode etc. in rk.XML.convert()
 # - children in rk.XML.dependencies()
 # - children in rk.XML.dependency_check()
 # - modifier in rk.XML.optioncolumn()
 # - a lot of rk.XML.optionset()...
 # - children in rk.XML.plugin()
 # - children in rk.XML.pluginmap()
-# - set in rk.XML.set()
-# - cases & modifier in rk.XML.switch()
 # - rk.XML.values()
 # - rk.XML.vars()
 FONA <- list(
+  "!--"=list(
+    funct="rk.comment",
+    opt=c(
+      text="text"   # needs special treatment; also check for "i18n:" prefix for rk.i18n.comment()
+    )
+  ),
   "caption"=list(
     funct="rk.rkh.caption",
     opt=c(
       id="id",
-      title="title"
+      title="title",
+      i18n="i18n_context"
     )
   ),
   "label"=list(
     funct="rk.rkh.label",
     opt=c(
-      id="id"
+      id="id",
+      i18n="i18n_context"
     )
   ),
   "link"=list(
     funct="rk.rkh.link",
     opt=c(
       href="href",
-      text="text"
+      text="text",
+      i18n="i18n_context"
     ),
     text="text"
   ),
@@ -499,7 +580,8 @@ FONA <- list(
     funct="rk.rkh.related",
     opt=c(
       "..."="...",
-      text="text"
+      text="text",
+      i18n="i18n_context"
     ),
     text="text",
     children="..."
@@ -510,8 +592,11 @@ FONA <- list(
       title="title",
       text="text",
       short="short_title",
-      id.name="id"
+      id.name="id",
+      i18n="i18n_context",
+      noi18n_title="noi18n_title"
     ),
+    noi18n="noi18n_title",
     text="text"
   ),
   "setting"=list(
@@ -519,8 +604,11 @@ FONA <- list(
     opt=c(
       id="id",
       text="text",
-      title="title"
+      title="title",
+      i18n="i18n_context",
+      noi18n_title="noi18n_title"
     ),
+    noi18n="noi18n_title",
     text="text"
   ),
   "settings"=list(
@@ -532,26 +620,32 @@ FONA <- list(
   ),
   "summary"=list(
     funct="rk.rkh.summary",
+    opt=c(
+      i18n="i18n_context"
+    ),
     text="text"
   ),
   "technical"=list(
     funct="rk.rkh.technical",
     opt=c(
-      text="text"
+      text="text",
+      i18n="i18n_context"
     ),
     text="text"
   ),
   "title"=list(
     funct="rk.rkh.title",
     opt=c(
-      text="text"
+      text="text",
+      i18n="i18n_context"
     ),
     text="text"
   ),
   "usage"=list(
     funct="rk.rkh.usage",
     opt=c(
-      text="text"
+      text="text",
+      i18n="i18n_context"
     ),
     text="text"
   ),
@@ -560,8 +654,11 @@ FONA <- list(
     opt=c(
       id="id",
       value="value",
-      label="label"
-    )
+      label="label",
+      i18n="i18n_context",
+      noi18n_label="noi18n_label"
+    ),
+    noi18n="noi18n_label"
   ),
   "browser"=list(
     funct="rk.XML.browser",
@@ -572,10 +669,21 @@ FONA <- list(
       urls="allow_urls",
       filter="filter",
       required="required",
-      id.name="id"
+      id.name="id",
+      i18n="i18n_context",
+      noi18n_label="noi18n_label"
     ),
+    noi18n="noi18n_label",
     split="filter",
     logical=c("required", "allow_urls")
+  ),
+  "case"=list(
+    funct="list",     # doesn't have a function of its own, is a child of rk.XML.switch()
+    opt=c(
+      standard="standard",
+      fixed_value="fixed_value",
+      dynamic_value="dynamic_value"
+    )
   ),
   "checkbox"=list(
     funct="rk.XML.cbox",
@@ -584,8 +692,11 @@ FONA <- list(
       value="value",
       un.value="value_unchecked",
       chk="checked",
-      id.name="id"
+      id.name="id",
+      i18n="i18n_context",
+      noi18n_label="noi18n_label"
     ),
+    noi18n="noi18n_label",
     logical=c("checked")
   ),
   "code"=list(
@@ -608,10 +719,13 @@ FONA <- list(
       label="label",
       file="file",
       id.name="id",
-      type="type"
+      type="type",
+      dependencies="dependencies",
+      i18n="i18n_context",
+      noi18n_label="noi18n_label"
     ),
-    children="..."
-#      dependencies="dependencies"
+    noi18n="noi18n_label",
+    children="dependencies"
   ),
   "components"=list(
     funct="rk.XML.components",
@@ -650,6 +764,7 @@ FONA <- list(
       id.name="id",
       standard="standard"
     ),
+    modifiers=c("sources"),
     logical=c("required")
   ),
   "copy"=list(
@@ -659,9 +774,30 @@ FONA <- list(
       as="as"
     )
   ),
+  "default"=list(
+    funct="list",     # doesn't have a function of its own, is a child of rk.XML.switch()
+    opt=c(
+      standard="standard",
+      fixed_value="fixed_value",
+      dynamic_value="dynamic_value"
+    )
+  ),
+# <dependencies rkward_min_version="0.5.3" rkward_max_version="" R_min_version="2.10" R_max_version="">
+#   <package name="heisenberg" min="0.11-2" max="" repository="http://rforge.r-project.org" />
+#   <package name="DreamsOfPi" min="0.2" max="" repository="" />
+#   <pluginmap name="heisenberg.pluginmap" url="http://eternalwondermaths.example.org/hsb" />
+# </dependencies>
   "dependencies"=list(
     funct="rk.XML.dependencies",
-    children="..."
+    opt=c(
+      rkward.min="rkward_min_version",
+      rkward.max="rkward_max_version",
+      R.min="R_min_version",
+      R.max="R_max_version",
+      package="package",
+      pluginmap="pluginmap"
+    ),
+    children=c("package", "pluginmap")
   ),
   "dependency_check"=list(
     funct="rk.XML.dependency_check",
@@ -675,8 +811,11 @@ FONA <- list(
     opt=c(
       "..."="...",
       label="label",
-      recommended="recommended"
+      recommended="recommended",
+      i18n="i18n_context",
+      noi18n_label="noi18n_label"
     ),
+    noi18n="noi18n_label",
     children="...",
     logical=c("recommended")
   ),
@@ -685,9 +824,12 @@ FONA <- list(
     opt=c(
       label="label",
       options="options",
-      id.name="id"
+      id.name="id",
+      i18n="i18n_context",
+      noi18n_label="noi18n_label"
     ),
-   children="options"
+    noi18n="noi18n_label",
+    children="options"
   ),
   "embed"=list(
     funct="rk.XML.embed",
@@ -695,8 +837,11 @@ FONA <- list(
       component="component",
       button="as_button",
       label="label",
-      id.name="id"
+      id.name="id",
+      i18n="i18n_context",
+      noi18n_label="noi18n_label"
     ),
+    noi18n="noi18n_label",
     logical=c("as_button")
   ),
   "entry"=list(
@@ -711,6 +856,13 @@ FONA <- list(
     opt=c(
       id="id",
       default="default"
+    )
+  ),
+  "false"=list(
+    funct="list",     # doesn't have a function of its own, is a child of rk.XML.switch()
+    opt=c(
+      fixed_value="fixed_value",
+      dynamic_value="dynamic_value"
     )
   ),
   "formula"=list(
@@ -728,8 +880,11 @@ FONA <- list(
       label="label",
       checkable="checkable",
       chk="checked",
-      id.name="id"
+      id.name="id",
+      i18n="i18n_context",
+      noi18n_label="noi18n_label"
     ),
+    noi18n="noi18n_label",
     children="...",
     logical=c("checkable", "checked")
   ),
@@ -750,8 +905,11 @@ FONA <- list(
     funct="rk.XML.i18n",
     opt=c(
       label="label",
-      id.name="id"
-    )
+      id.name="id",
+      i18n="i18n_context",
+      noi18n_label="noi18n_label"
+    ),
+    noi18n="noi18n_label"
   ),
   "include"=list(
     funct="rk.XML.include",
@@ -766,8 +924,11 @@ FONA <- list(
       initial="initial",
       size="size",
       required="required",
-      id.name="id"
+      id.name="id",
+      i18n="i18n_context",
+      noi18n_label="noi18n_label"
     ),
+    noi18n="noi18n_label",
     logical=c("required")
   ),
   "insert"=list(
@@ -801,8 +962,11 @@ FONA <- list(
       fixed_height="fixed_height",
       horiz_headers="horiz_headers",
       vert_headers="vert_headers",
-      id.name="id"
+      id.name="id",
+      i18n="i18n_context",
+      noi18n_label="noi18n_label"
     ),
+    noi18n="noi18n_label",
     logical=c("allow_missings", "allow_user_resize_columns", "allow_user_resize_rows", "fixed_width", "fixed_height")
   ),
   "menu"=list(
@@ -811,8 +975,11 @@ FONA <- list(
       label="label",
       "..."="...",
       index="index",
-      id.name="id"
+      id.name="id",
+      i18n="i18n_context",
+      noi18n_label="noi18n_label"
     ),
+    noi18n="noi18n_label",
     children="..."
   ),
   "option"=list(
@@ -821,8 +988,11 @@ FONA <- list(
       label="label",
       val="value",
       chk="checked",
-      id.name="id"
+      id.name="id",
+      i18n="i18n_context",
+      noi18n_label="noi18n_label"
     ),
+    noi18n="noi18n_label",
     logical=c("checked")
   ),
   "optioncolumn"=list(
@@ -833,8 +1003,11 @@ FONA <- list(
       label="label",
       external="external",
       default="default",
-      id.name="id"
+      id.name="id",
+      i18n="i18n_context",
+      noi18n_label="noi18n_label"
     ),
+    noi18n="noi18n_label",
     logical=c("external")
   ),
   "optiondisplay"=list(
@@ -860,6 +1033,15 @@ FONA <- list(
     ),
     children="..."
   ),
+  "package"=list(
+    funct="c", # has no function of its own, used in rk.XML.dependencies()
+    opt=c(
+      name="name",
+      min="min",
+      max="max",
+      repository="repository"
+    )
+  ),
   "page"=list(
     funct="rk.XML.page",
     opt=c(
@@ -870,25 +1052,39 @@ FONA <- list(
   ),
   "plugin"=list(
     funct="rk.XML.plugin",
+    opt=c(
+      i18n="i18n_context",
+      noi18n_label="noi18n_label"
+    ),
+    noi18n="noi18n_label",
     children="..."
   ),
   "pluginmap"=list(
-    funct="rk.XML.pluginmap",
-    children="..."
+    funct="c", # has no function of its own, used in rk.XML.dependencies()
+    opt=c(
+      name="name",
+      url="url"
+    )
   ),
   "preview"=list(
     funct="rk.XML.preview",
     opt=c(
-      label="label"
-    )
+      label="label",
+      i18n="i18n_context",
+      noi18n_label="noi18n_label"
+    ),
+    noi18n="noi18n_label"
   ),
   "radio"=list(
     funct="rk.XML.radio",
     opt=c(
       label="label",
       options="options",
-      id.name="id"
+      id.name="id",
+      i18n="i18n_context",
+      noi18n_label="noi18n_label"
     ),
+    noi18n="noi18n_label",
     children="options"
   ),
   "require"=list(
@@ -914,8 +1110,11 @@ FONA <- list(
       checkable="checkable",
       initial="initial",
       required="required",
-      id.name="id"
+      id.name="id",
+      i18n="i18n_context",
+      noi18n_label="noi18n_label"
     ),
+    noi18n="noi18n_label",
     logical=c("checked", "checkable", "required")
   ),
   "select"=list(
@@ -923,17 +1122,22 @@ FONA <- list(
     opt=c(
       label="label",
       options="options",
-      id.name="id"
+      id.name="id",
+      i18n="i18n_context",
+      noi18n_label="noi18n_label"
     ),
+    noi18n="noi18n_label",
     children="options"
   ),
   "set"=list(
     funct="rk.XML.set",
     opt=c(
       id="id",
-#       set="set",
+      set="set",
       to="to"
-    )
+    ),
+    modifiers=c("set"),
+    logical=c("to")
   ),
   "snippet"=list(
     funct="rk.XML.snippet",
@@ -960,8 +1164,11 @@ FONA <- list(
       real="type",              ## need special treatment
       precision="precision",
       max.precision="max_precision", 
-      id.name="id"
-    )
+      id.name="id",
+      i18n="i18n_context",
+      noi18n_label="noi18n_label"
+    ),
+    noi18n="noi18n_label"
   ),
   "stretch"=list(
     funct="rk.XML.stretch"
@@ -970,19 +1177,23 @@ FONA <- list(
     funct="rk.XML.switch",
     opt=c(
       condition="condition",
-#      cases, 
-#      modifier=NULL,
+      cases="cases",
+      modifier="modifier",
       id.name="id"
     ),
-    children="..."
+    children=c("cases"),
+    modifiers=c("condition")
   ),
   "tabbook"=list(
     funct="rk.XML.tabbook",
     opt=c(
       label="label",
       tabs="tabs",
-      id.name="id"
+      id.name="id",
+      i18n="i18n_context",
+      noi18n_label="noi18n_label"
     ),
+    noi18n="noi18n_label",
     children="tabs"
   ),
   "text"=list(
@@ -990,9 +1201,17 @@ FONA <- list(
     opt=c(
       text="text",
       type="type",
-      id.name="id"
+      id.name="id",
+      i18n="i18n_context"
     ),
     text="text"
+  ),
+  "true"=list(
+    funct="list",     # doesn't have a function of its own, is a child of rk.XML.switch()
+    opt=c(
+      fixed_value="fixed_value",
+      dynamic_value="dynamic_value"
+    )
   ),
   "values"=list(
     funct="rk.XML.values",
@@ -1001,8 +1220,11 @@ FONA <- list(
 ## values <- function(label, slot.text, options=list(label=c(val=NULL, chk=FALSE, i18n=NULL)),
 ##     required=FALSE, multi=FALSE, duplicates=FALSE, min=1, any=1, max=0,
 ##     horiz=TRUE, add.nodes=NULL, frame.label=NULL
-      id.name="id"
+      id.name="id",
+      i18n="i18n_context",
+      noi18n_label="noi18n_label"
     ),
+    noi18n="noi18n_label",
 #     children="...",
     logical=c()
   ),
@@ -1011,8 +1233,11 @@ FONA <- list(
     opt=c(
       label="label",
       options="options",
-      id.name="id"
-  ),
+      id.name="id",
+      i18n="i18n_context",
+      noi18n_label="noi18n_label"
+    ),
+    noi18n="noi18n_label",
     children="options",
     logical=c()
   ),
@@ -1028,8 +1253,11 @@ FONA <- list(
       min="min_vars",
       any="min_vars_if_any",
       max="max_vars",
-      id.name="id"
+      id.name="id",
+      i18n="i18n_context",
+      noi18n_label="noi18n_label"
     ),
+    noi18n="noi18n_label",
     logical=c("required", "multi", "allow_duplicates")
   ),
   "vars"=list(
@@ -1048,8 +1276,11 @@ FONA <- list(
     funct="rk.XML.varselector",
     opt=c(
       label="label",
-      id.name="id"
-    )
+      id.name="id",
+      i18n="i18n_context",
+      noi18n_label="noi18n_label"
+    ),
+    noi18n="noi18n_label"
   ),
   "varslot"=list(
     funct="rk.XML.varslot",
@@ -1068,8 +1299,11 @@ FONA <- list(
       max.len="max_length",
       classes="classes",
       types="types",
-      id.name="id"
+      id.name="id",
+      i18n="i18n_context",
+      noi18n_label="noi18n_label"
     ),
+    noi18n="noi18n_label",
     logical=c("required", "multi", "allow_duplicates"),
     split=c("classes", "types")
   ),
@@ -1078,8 +1312,11 @@ FONA <- list(
     opt=c(
       "..."="...",
       label="label",
-      recommended="recommended"
+      recommended="recommended",
+      i18n="i18n_context",
+      noi18n_label="noi18n_label"
     ),
+    noi18n="noi18n_label",
     children="...",
     logical=c("recommended")
   )
