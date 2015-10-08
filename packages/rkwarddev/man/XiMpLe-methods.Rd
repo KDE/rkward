@@ -5,6 +5,8 @@
 \alias{plugin2script}
 \alias{plugin2script,XiMpLe.doc-method}
 \alias{plugin2script,XiMpLe.node-method}
+\alias{plugin2script,character-method}
+\alias{plugin2script,connection-method}
 \title{Generate script code from XML objects}
 \usage{
 plugin2script(obj)
@@ -12,6 +14,15 @@ plugin2script(obj)
 \S4method{plugin2script}{XiMpLe.doc}(obj)
 
 \S4method{plugin2script}{XiMpLe.node}(obj)
+
+\S4method{plugin2script}{character}(obj)
+
+\S4method{plugin2script}{connection}(obj)
+}
+\arguments{
+\item{obj}{Either a character vector (path to a plugin XML file to parse), a connection,
+      an already
+parsed XML tree (class \code{XiMpLe.doc}) or a single \code{XiMpLe.node} object.}
 }
 \value{
 Either a character vector (if \code{obj} is a single XML node)
@@ -29,10 +40,13 @@ into \code{rkwarddev} scripts. The generated output should not be used as-is,
 properly into a useful script.
 
 You can either use a full XML document (read with \code{\link[XiMpLe:parseXMLTree]{parseXMLTree}})
-or single (also nested) XiMpLe XML nodes.
+or single (also nested) XiMpLe XML nodes. If you provide a character string,
+      it is assumed to be
+the full path to a document to be parsed with \code{parseXMLTree} and then analysed. Connections
+are also accepted.
 }
 \note{
-The methods will probably fail, especially with highly complex plugins. Try to break these
+The methods might fail, especially with highly complex plugins. Try to break these
 into sensible chunks and try those speparately. Sometimes,
       slightly changing the input file
 might also do the trick to get some usable results.

@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.07-4 (2015-10-04)}{
+\section{Changes in rkwarddev version 0.07-4 (2015-10-08)}{
   \subsection{unreleased}{
     \itemize{
       \item this version is under development
@@ -10,12 +10,16 @@
   \subsection{fixed}{
     \itemize{
       \item attribute \code{"max_precision"} in <spinbox> was misspelled
+      \item \code{rk.XML.connect()} still handled modifiers for \code{"governor"} wrong if it
+        wasn't a XiMpLe node
+      \item also fixed how \code{rk.XML.convert()} and \code{rk.XML.switch()} were handling
+        modifier checking
     }
   }
   \subsection{added}{
     \itemize{
-      \item new methods \code{plugin2script()} to try to translate raw plugin XML
-        into working rkwarddev script calls
+      \item new methods \code{plugin2script()} to try to translate raw plugin XML into
+        working rkwarddev script calls
     }
   }
 }

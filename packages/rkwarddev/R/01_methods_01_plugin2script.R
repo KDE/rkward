@@ -25,12 +25,16 @@
 #' properly into a useful script.
 #' 
 #' You can either use a full XML document (read with \code{\link[XiMpLe:parseXMLTree]{parseXMLTree}})
-#' or single (also nested) XiMpLe XML nodes.
+#' or single (also nested) XiMpLe XML nodes. If you provide a character string, it is assumed to be
+#' the full path to a document to be parsed with \code{parseXMLTree} and then analysed. Connections
+#' are also accepted.
 #' 
-#' @note The methods will probably fail, especially with highly complex plugins. Try to break these
+#' @note The methods might fail, especially with highly complex plugins. Try to break these
 #' into sensible chunks and try those speparately. Sometimes, slightly changing the input file
 #' might also do the trick to get some usable results.
 #'
+#' @param obj Either a character vector (path to a plugin XML file to parse), a connection, an already
+#'    parsed XML tree (class \code{XiMpLe.doc}) or a single \code{XiMpLe.node} object.
 #' @export
 #' @docType methods
 #' @return Either a character vector (if \code{obj} is a single XML node)
@@ -99,6 +103,31 @@ setMethod("plugin2script",
   }
 )
 
+#' @export
+#' @docType methods
+#' @rdname XiMpLe-methods
+#' @aliases plugin2script,character-method
+#' @import XiMpLe
+setMethod("plugin2script",
+  signature(obj="character"),
+  function(obj) {
+    XML.tree <- parseXMLTree(obj)
+    return(plugin2script(XML.tree))
+  }
+)
+
+#' @export
+#' @docType methods
+#' @rdname XiMpLe-methods
+#' @aliases plugin2script,connection-method
+#' @import XiMpLe
+setMethod("plugin2script",
+  signature(obj="connection"),
+  function(obj) {
+    XML.tree <- parseXMLTree(obj)
+    return(plugin2script(XML.tree))
+  }
+)
 
 ## internal functions and objects
 
@@ -375,6 +404,8 @@ p2s <- function(node, indent=TRUE, level=1, prefix="rkdev", drop.defaults=TRUE){
   if(isTRUE(checkText)){
     nodeChildren <- XMLValue(XMLChildren(node)[[1]])
     if(inherits(nodeChildren, "character")){
+      # do some escaping
+      nodeChildren <- gsub("([^\\\\])\"" , "\\1\\\\\\\"", nodeChildren, perl=TRUE)
       rkwdevOptions[[rkwdevText]] <- paste0("\"", nodeChildren, "\"", collapse=" ")
     } else {}
   } else {}
