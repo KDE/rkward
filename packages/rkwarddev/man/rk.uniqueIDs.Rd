@@ -4,7 +4,7 @@
 \alias{rk.uniqueIDs}
 \title{Check plugin dialogs for duplicate IDs}
 \usage{
-rk.uniqueIDs(obj, bool = FALSE, warning = TRUE)
+rk.uniqueIDs(obj, bool = FALSE, warning = TRUE, ignore = c("copy"))
 }
 \arguments{
 \item{obj}{An XML object of class XiMpLe.node or XiMpLe.doc.}
@@ -13,6 +13,9 @@ rk.uniqueIDs(obj, bool = FALSE, warning = TRUE)
 
 \item{warning}{Logical, if \code{TRUE} will throw a warning if duplicates were found,
 listing the findings.}
+
+\item{ignore}{Character vector, node names that should generally be ignored because
+they duplicate IDs by design.}
 }
 \value{
 A vector with duplicate IDs, if any were found.

@@ -26,11 +26,15 @@
 #' @param bool Logical, if \code{TRUE} this function will return a logical value.
 #' @param warning Logical, if \code{TRUE} will throw a warning if duplicates were found,
 #'    listing the findings.
+#' @param ignore Character vector, node names that should generally be ignored because
+#'    they duplicate IDs by design.
 #' @return A vector with duplicate IDs, if any were found.
 #'    If \code{bool=TRUE} returns a logical value.
 
-rk.uniqueIDs <- function(obj, bool=FALSE, warning=TRUE){
+rk.uniqueIDs <- function(obj, bool=FALSE, warning=TRUE, ignore=c("copy")){
   allIDs <- XMLScanDeep(obj, find="id", search="attributes")
+  # ignore nodes
+  allIDs <- allIDs[!names(allIDs) %in% ignore]
   duplicateIDs <- duplicated(allIDs)
   if(any(duplicateIDs)){
     # ok, let's get 'em

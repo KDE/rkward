@@ -26,8 +26,8 @@ parsed XML tree (class \code{XiMpLe.doc}) or a single \code{XiMpLe.node} object.
 }
 \value{
 Either a character vector (if \code{obj} is a single XML node)
-   or a list of character vectors named \code{"logic"},
-      \code{"dialog"} and \code{"wizard"}
+   or a list of character vectors named \code{"logic"}, \code{"dialog"},
+      and \code{"wizard"},
    (if \code{obj} is a full XML document).
 }
 \description{

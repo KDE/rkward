@@ -14,12 +14,15 @@
         wasn't a XiMpLe node
       \item also fixed how \code{rk.XML.convert()} and \code{rk.XML.switch()} were handling
         modifier checking
+      \item some fixes to the skeleton GUI and demo script
     }
   }
   \subsection{added}{
     \itemize{
       \item new methods \code{plugin2script()} to try to translate raw plugin XML into
         working rkwarddev script calls
+      \item new option \code{"ignore"} enables \code{rk.uniqueIDs()} to not check nodes for
+        duplicates (e.g., <copy>)
     }
   }
 }
