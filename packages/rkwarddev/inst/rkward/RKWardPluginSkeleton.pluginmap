@@ -17,7 +17,7 @@
 		shortinfo="GUI interface to create RKWard plugin skeletons"
 		longinfo="GUI interface to create RKWard plugin skeletons"
 		version="0.06-5"
-		releasedate="2015-01-30"
+		releasedate="2015-10-08"
 		url="http://rkward.kde.org"
 		license="GPL (&gt;= 3)"
 	>
@@ -28,6 +28,12 @@
 			role="aut, cre"
 		 />
 	</about>
+	<require 
+		map="rkward::menu"
+	 />
+	<require 
+		map="rkward::embedded"
+	 />
 	<components>
 		<component 
 			id="cmp_CrtRKWrdplgnskltnCrtRKWrd"

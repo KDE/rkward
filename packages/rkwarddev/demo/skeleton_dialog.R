@@ -269,17 +269,17 @@ js.opt.skel.pluginmap <- rk.JS.options("optPluginmap",
     qp("name=\"", pl.name, "\"")
   ),
   ite(pl.hier,  qp("hierarchy=\"", pl.hier, "\"")),
-  funct="list", option="pluginmap", collapse="")
+  funct="list", option="pluginmap", collapse="", opt.sep="")
 js.opt.skeleton <- rk.JS.options("optSkeleton",
   ite(pl.wiz, qp("\n\tprovides=c(\"logic\", \"dialog\", \"wizard\")"), qp("\n\t#provides=c(\"logic\", \"dialog\")")),
   ite(js.opt.skel.pluginmap,
     qp("\n\t", js.opt.skel.pluginmap),
     qp("\n\t#pluginmap=list(name=\"\", hierarchy=\"\", require=\"\")")
   ),
-  ite(id(js.frm.dep.opts, " && (", js.opt.about.dep, " || ", dep.optioncol.pckg.name, ")"),
-    qp("\n\tdependencies=plugin.dependencies"),
-    qp("\n\t#dependencies=plugin.dependencies")
-  ),
+#   ite(id(js.frm.dep.opts, " && (", js.opt.about.dep, " || ", dep.optioncol.pckg.name, ")"),
+#     qp("\n\tdependencies=plugin.dependencies"),
+#     qp("\n\t#dependencies=plugin.dependencies")
+#   ),
   ite(pl.tests, qp("\n\ttests=TRUE"), qp("\n\ttests=FALSE")),
   ite(pl.edit, qp("\n\tedit=TRUE"), qp("\n\tedit=FALSE")),
   ite(pl.add, qp("\n\tload=TRUE"), qp("\n\tload=FALSE")),
@@ -310,22 +310,22 @@ JS.calculate <- rk.paste.JS(
     rk.JS.optionset(oset.authors, vars=TRUE, guess.getter=TRUE),
     ite(id(optioncol.aut.given, " != \"\""),
       rk.paste.JS(
-        echo("\tauthor=\"c(\n\t\t\t"),
+        echo("\tauthor=c(\n\t\t\t"),
         rk.JS.optionset(oset.authors,
           js.oset.authors.role <- rk.JS.options("optAuthorRole",
-            ite(id(optioncol.aut.auth, " == 1"), qp("\\\"aut\\\"")),
-            ite(id(optioncol.aut.maint, " == 1"), qp("\\\"cre\\\"")),
-            ite(id(optioncol.aut.cntr, " == 1"), qp("\\\"ctb\\\"")),
+            ite(id(optioncol.aut.auth, " == 1"), qp("\"aut\"")),
+            ite(id(optioncol.aut.maint, " == 1"), qp("\"cre\"")),
+            ite(id(optioncol.aut.cntr, " == 1"), qp("\"ctb\"")),
             funct="c", option="role", collapse=""),
           echo("person("),
-          echo("given=\\\"", optioncol.aut.given, "\\\""),
-          ite(optioncol.aut.family, echo(", family=\\\"", optioncol.aut.family, "\\\"")),
-          ite(optioncol.aut.email, echo(", email=\\\"", optioncol.aut.email, "\\\"")),
-          ite(js.oset.authors.role, echo(", ", js.oset.authors.role)),
+          echo("given=\"", optioncol.aut.given, "\""),
+          ite(optioncol.aut.family, echo(", family=\"", optioncol.aut.family, "\"")),
+          ite(optioncol.aut.email, echo(", email=\"", optioncol.aut.email, "\"")),
+          ite(js.oset.authors.role, echo(js.oset.authors.role)),
           echo(")"),
           collapse=",\\n\\t\\t\\t"
         ),
-        echo("\n\t\t)\",\n")
+        echo("\n\t\t),\n")
       )
     ),
     echo(js.opt.about.about),
@@ -370,7 +370,11 @@ JS.calculate <- rk.paste.JS(
     "#############\n",
     "# this is where things get serious, that is, here all of the above is put together into one plugin\n",
     "plugin.dir <- rk.plugin.skeleton(\n\tabout=about.plugin,"),
-  ite(id(js.frm.dep.opts, " && ", js.opt.about.dep), echo("\n\tdependencies=plugin.dependencies,")),
+  ite(
+    id(js.frm.dep.opts, " && ", js.opt.about.dep),
+    echo("\n\tdependencies=plugin.dependencies,"),
+    echo("\n\t#dependencies=plugin.dependencies,")
+  ),
   echo("\n\tpath=output.dir,",
     "\n\tguess.getter=guess.getter,",
     "\n\tscan=c(\"var\", \"saveobj\", \"settings\"),",
