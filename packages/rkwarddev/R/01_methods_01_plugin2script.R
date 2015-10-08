@@ -38,7 +38,8 @@
 #' @export
 #' @docType methods
 #' @return Either a character vector (if \code{obj} is a single XML node)
-#'    or a list of character vectors named \code{"logic"}, \code{"dialog"} and \code{"wizard"}
+#'    or a list of character vectors named \code{"logic"}, \code{"dialog"}, and \code{"wizard"},
+#    \code{"summary"}, \code{"usage"}, \code{"settings"}, \code{"related"} and \code{"technical"}.
 #'    (if \code{obj} is a full XML document).
 #' @rdname XiMpLe-methods
 #' @examples
@@ -80,11 +81,21 @@ setMethod("plugin2script",
     secLogic <- XMLScan(obj, "logic")
     secDialog <- XMLScan(obj, "dialog")
     secWizard <- XMLScan(obj, "wizard")
+#     secSummary <- XMLScan(obj, "summary")
+#     secUsage <- XMLScan(obj, "usage")
+#     secSettings <- XMLScan(obj, "settings")
+#     secRelated <- XMLScan(obj, "related")
+#     secTechnical <- XMLScan(obj, "technical")
     
     result <- list(
       logic=ifelse(is.null(secLogic), "", p2s(secLogic)),
       dialog=ifelse(is.null(secDialog), "", p2s(secDialog)),
       wizard=ifelse(is.null(secWizard), "", p2s(secWizard))
+#       summary=ifelse(is.null(secSummary), "", p2s(secSummary)),
+#       usage=ifelse(is.null(secUsage), "", p2s(secUsage)),
+#       settings=ifelse(is.null(secSettings), "", p2s(secSettings)),
+#       related=ifelse(is.null(secRelated), "", p2s(secRelated)),
+#       technical=ifelse(is.null(secTechnical), "", p2s(secTechnical))
     )
 
     return(result)
@@ -241,6 +252,13 @@ p2s.extractAttributes <- function(nodeName, nodeAttrs, rkwdevAttributes, rkwdevL
       rkwdevOptions["mode"] <- paste0("c(", gsub("\"", "", rkwdevOptions["mode"]), "=", rkwdevOptions["standard"], ")")
       rkwdevOptions <- rkwdevOptions[!names(rkwdevOptions) %in% "standard"]
     }
+  } else {}
+  if(nodeName %in% "optioncolumn"){
+    modConnect <- p2s.checkModifiers(rkwdevOptions["connect"])
+    if(isTRUE(modConnect[["has.mod"]])){
+      rkwdevOptions["connect"] <- modConnect[["id"]]
+      rkwdevOptions["modifier"] <- modConnect[["mod"]]
+    } else {}
   } else {}
   if(nodeName %in% "set"){
     modID <- p2s.checkModifiers(rkwdevOptions["id"])
@@ -405,7 +423,9 @@ p2s <- function(node, indent=TRUE, level=1, prefix="rkdev", drop.defaults=TRUE){
     nodeChildren <- XMLValue(XMLChildren(node)[[1]])
     if(inherits(nodeChildren, "character")){
       # do some escaping
-      nodeChildren <- gsub("([^\\\\])\"" , "\\1\\\\\\\"", nodeChildren, perl=TRUE)
+      nodeChildren <- gsub("<" , "&lt;", nodeChildren)
+      nodeChildren <- gsub(">" , "&gt;", nodeChildren)
+      nodeChildren <- gsub("([^\\\\])\"" , "\\1&quot;", nodeChildren, perl=TRUE)
       rkwdevOptions[[rkwdevText]] <- paste0("\"", nodeChildren, "\"", collapse=" ")
     } else {}
   } else {}
@@ -423,8 +443,7 @@ p2s <- function(node, indent=TRUE, level=1, prefix="rkdev", drop.defaults=TRUE){
           }
         )
         rkwdevOptions[[rkwdevChildren]] <- paste0("list(\n", paste0(rep("  ", level+1), collapse=""),
-            paste0(rkwdevChildnodes, paste0(rep("  ", level-1), collapse=""),
-              collapse=paste0(",\n", paste0(rep("  ", level+1), collapse=""))), 
+            paste0(rkwdevChildnodes, collapse=paste0(",\n", paste0(rep("  ", level+1), collapse=""))), 
           "\n", paste0(rep("  ", level), collapse=""), ")")
       } else if(nodeName %in% c("switch")){
         allCases <- sapply(
@@ -482,6 +501,22 @@ p2s <- function(node, indent=TRUE, level=1, prefix="rkdev", drop.defaults=TRUE){
       rkwdevOptions[[gsub("noi18n_", "", rkwdevNoi18n)]] <- rkwdevOptions[[rkwdevNoi18n]]
       rkwdevOptions <- rkwdevOptions[!names(rkwdevOptions) %in% rkwdevNoi18n]
     } else {}
+  } else {}
+  
+  # deal with comment nodes
+  if("!--" %in% nodeName){
+    # in theory, the value can be both in the value slot and in a child node's value slot
+    txtNode1 <- XMLValue(XMLChildren(node)[[1]])
+    txtNode2 <- XMLValue(node)
+    if(length(txtNode2) > 0 & !identical(txtNode2, "")){
+      txtNode1 <- paste(txtNode1, txtNode2)
+    } else {}
+    # check if this is an i18n comment
+    if(grepl("^i18n:", txtNode1)){
+      rkwdevFunction <- "rk.i18n.comment"
+      txtNode1 <- gsub("^i18n:[[:space:]]*", "", txtNode1)
+    } else {}
+    rkwdevOptions[["text"]] <- paste0("\"", txtNode1, "\"", collapse=" ")
   } else {}
 
   # check for default values and drop them
@@ -564,13 +599,10 @@ p2s <- function(node, indent=TRUE, level=1, prefix="rkdev", drop.defaults=TRUE){
 # - rk.rkh.related()
 # 
 # unsolved functions (or parts of them):
-# - text in rk.comment()
-# - text in rk.i18n.comment()
 # - rk.rkh.doc()
 # - rk.XML.about()
 # - children in rk.XML.dependencies()
 # - children in rk.XML.dependency_check()
-# - modifier in rk.XML.optioncolumn()
 # - a lot of rk.XML.optionset()...
 # - children in rk.XML.plugin()
 # - children in rk.XML.pluginmap()
@@ -1030,7 +1062,7 @@ FONA <- list(
     funct="rk.XML.optioncolumn",
     opt=c(
       connect="connect",
-#       modifier=NULL,
+      modifier="modifier",
       label="label",
       external="external",
       default="default",
@@ -1039,7 +1071,8 @@ FONA <- list(
       noi18n_label="noi18n_label"
     ),
     noi18n="noi18n_label",
-    logical=c("external")
+    modifiers="connect",
+    logical="external"
   ),
   "optiondisplay"=list(
     funct="rk.XML.optiondisplay",
