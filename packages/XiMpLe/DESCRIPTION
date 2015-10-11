@@ -1,28 +1,25 @@
 Package: XiMpLe
 Type: Package
-Title: A simple XML tree parser and generator
-Author: Meik Michalke
+Title: A Simple XML Tree Parser and Generator
+Author: Meik Michalke [aut, cre]
 Maintainer: Meik Michalke <meik.michalke@hhu.de>
 Depends:
     R (>= 2.9.0),methods
 Suggests:
     testthat
-Enhances: rkward
 Description: This package provides a simple XML tree parser/generator. It
     includes functions to read XML files into R objects, get information out of
-    and into nodes, and write R objects back to XML code.  It's not as powerful
-    as the XML package and doesn't aim to be, but for simple XML handling it
-    could be useful.  It was originally programmed for the R GUI and IDE
-    RKWard, to make plugin development easier. You can install RKWard from
-    http://rkward.kde.org.
+    and into nodes, and write R objects back to XML code. It's not as powerful as
+    the 'XML' package and doesn't aim to be, but for simple XML handling it could
+    be useful. It was originally developed for the R GUI and IDE RKWard (https://
+    rkward.kde.org), to make plugin development easier.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyLoad: yes
 URL: http://reaktanz.de/?c=hacking&s=XiMpLe
-Authors@R: c(person(given="Meik", family="Michalke",
-    email="meik.michalke@hhu.de", role=c("aut", "cre")))
+Authors@R: c(person(given="Meik", family="Michalke", email="meik.michalke@hhu.de", role=c("aut", "cre")))
 Version: 0.03-23
-Date: 2014-12-14
+Date: 2015-10-11
 Collate:
     '00_class_01_XiMpLe.node.R'
     '00_class_02_XiMpLe.doc.R'

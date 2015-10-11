@@ -504,7 +504,7 @@ setMethod("XMLScan<-",
 
 #' @param find Character, name of element to scan for.
 #' @param search Character, name of the slot to scan, one of \code{"attributes"},
-#'    \code{"name"}, \code{"children"}, or \code{"value"} for nodes.
+#'    \code{"name"}, or \code{"value"} for nodes.
 #' @rdname XMLGetters-methods
 #' @docType methods
 #' @export
@@ -517,13 +517,28 @@ recursiveScan <- function(robj, rfind, rsearch, recResult=list(), result, envID=
       recursiveScan(robj=this.child, rfind=rfind, rsearch=rsearch, recResult=recResult, result=result, envID=envID)
     }))
   } else if(is.XiMpLe.node(robj)){
-    attrs <- XMLAttrs(robj)[[rfind]]
-    if(!is.null(attrs)){
-      attrResult <- as.list(result)
+    foundThis <- NULL
+    if(identical(rsearch, "attributes")){
+      foundThis <- XMLAttrs(robj)[[rfind]]
+    } else if(identical(rsearch, "name")){
+      objName <- XMLName(robj)
+      if(identical(objName, rfind)){
+        foundThis <- objName
+      } else {}
+    } else if(identical(rsearch, "value")){
+      objValue <- XMLValue(robj)
+      if(identical(objValue, rfind)){
+        foundThis <- objValue
+      } else {}
+    } else {
+      stop(simpleError("Only \"attributes\", \"name\" or \"value\" are valid for search!"))
+    }
+    if(!is.null(foundThis)){
+      thisResult <- as.list(result)
       nodeName <- XMLName(robj)
-      attrResult[[envID]] <- append(attrResult[[envID]], attrs)
-      names(attrResult[[envID]])[length(attrResult[[envID]])] <- nodeName
-      list2env(attrResult, envir=result)
+      thisResult[[envID]] <- append(thisResult[[envID]], foundThis)
+      names(thisResult[[envID]])[length(thisResult[[envID]])] <- nodeName
+      list2env(thisResult, envir=result)
     } else {}
     recResult <- append(recResult, lapply(robj@children, function(this.child){
       recursiveScan(robj=this.child, rfind=rfind, rsearch=rsearch, recResult=recResult, result=result, envID=envID)
