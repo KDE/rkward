@@ -51,10 +51,15 @@ rk.JS.header <- function(title, ..., level=NULL, guess.getter=FALSE, .add=list()
         functionName <- headerNames[[this.add]]
         content <- addToHeader[[this.add]]
         if(identical(functionName, "addFromUI")){
-          stopifnot(length(content) == 1)
+          if(length(content) != 1){
+            stop(simpleError("rk.JS.header: \"addFromUI\" must have exactly one value. please use several elements of the same name if needed!"))
+          } else {}
           content <- paste0("\"", id(content, js=FALSE), "\"")
         } else if(identical(functionName, "add")){
           stopifnot(length(content) == 2)
+          if(length(content) != 2){
+            stop(simpleError("rk.JS.header: \"add\" must have exactly two values. please use several elements of the same name if needed!"))
+          } else {}
           if(is.character(content[[2]])){
             value <- paste0("\"", content[[2]], "\"")
           } else if(is.XiMpLe.node(content[[2]])){
