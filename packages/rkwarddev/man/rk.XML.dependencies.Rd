@@ -18,16 +18,18 @@ rk.XML.dependencies(dependencies = NULL, package = NULL, pluginmap = NULL,
 
 \item{package}{A list of named character vectors, each with these elements:
 \describe{
-  \item{name}{Name of a package this plugin depends on (optional)}
+  \item{name}{Name of a package this plugin depends on (required)}
   \item{min}{Minimum version of the package (optional)}
   \item{max}{Maximum version of the package (optional)}
-  \item{repository}{Repository to download the package (optional)}
+  \item{repository}{Repository to download the package (optional, recommended)}
 }}
 
 \item{pluginmap}{A named list with these elements:
 \describe{
-  \item{name}{Identifier of a pluginmap this plugin depends on (optional)}
-  \item{url}{URL to get the pluginmap (optional)}
+  \item{name}{Identifier of a pluginmap this plugin depends on (required)}
+  \item{min}{Minimum version of the pluginmap (optional)}
+  \item{max}{Maximum version of the pluginmap (optional)}
+  \item{url}{URL to get the pluginmap (required)}
 }}
 
 \item{hints}{Logical, if \code{TRUE},

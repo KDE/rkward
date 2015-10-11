@@ -30,15 +30,17 @@
 #'    }
 #' @param package A list of named character vectors, each with these elements:
 #'    \describe{
-#'      \item{name}{Name of a package this plugin depends on (optional)}
+#'      \item{name}{Name of a package this plugin depends on (required)}
 #'      \item{min}{Minimum version of the package (optional)}
 #'      \item{max}{Maximum version of the package (optional)}
-#'      \item{repository}{Repository to download the package (optional)}
+#'      \item{repository}{Repository to download the package (optional, recommended)}
 #'    }
 #' @param pluginmap A named list with these elements:
 #'    \describe{
-#'      \item{name}{Identifier of a pluginmap this plugin depends on (optional)}
-#'      \item{url}{URL to get the pluginmap (optional)}
+#'      \item{name}{Identifier of a pluginmap this plugin depends on (required)}
+#'      \item{min}{Minimum version of the pluginmap (optional)}
+#'      \item{max}{Maximum version of the pluginmap (optional)}
+#'      \item{url}{URL to get the pluginmap (required)}
 #'    }
 #' @param hints Logical, if \code{TRUE}, \code{NULL} values will be replaced with example text.
 #' @export
@@ -83,6 +85,11 @@ rk.XML.dependencies <- function(dependencies=NULL, package=NULL, pluginmap=NULL,
   } else {
     xml.package <- sapply(package, function(this.package){
         pck.options <- names(this.package)
+        if(!"name" %in% pck.options){
+          stop(simpleError(
+            paste0("Missing but mandatory information to define package dependencies:\n  \"name\"")
+          ))
+        } else {}
         pck.attributes <- list(name=this.package[["name"]])
         for (this.option in c("min", "max","repository" )){
           if(this.option %in% pck.options){
@@ -112,13 +119,30 @@ rk.XML.dependencies <- function(dependencies=NULL, package=NULL, pluginmap=NULL,
     }
   } else {
     xml.pluginmap <- sapply(pluginmap, function(this.pluginmap){
-        result <- XMLNode("pluginmap",
-          attrs=list(
-            name=this.pluginmap[["name"]],
-            url=this.pluginmap[["url"]]
+        plm.options <- names(this.pluginmap)
+        # check for missing attributes
+        mandatory.options <- c("name", "url")
+        missing.options <- !mandatory.options %in% plm.options
+        if(any(missing.options)){
+          stop(simpleError(
+            paste0("Missing but mandatory information to define pluginmap dependencies:\n  \"",
+              paste0(mandatory.options[missing.options], collapse="\", \""), "\""
+            )
           ))
+        } else {}
+        plm.attributes <- list(
+          name=this.pluginmap[["name"]],
+          url=this.pluginmap[["url"]]
+        )
+        if("min" %in% plm.options){
+          plm.attributes[["min_version"]] <- this.pluginmap[["min"]]
+        } else {}
+        if("rkward.max" %in% plm.options){
+          plm.attributes[["max_version"]] <- this.pluginmap[["max"]]
+        } else {}
+        result <- XMLNode("pluginmap", attrs=plm.attributes)
         return(result)
-      })
+    })
   }
 
   ## dependencies
