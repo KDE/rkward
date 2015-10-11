@@ -9,20 +9,37 @@
 \alias{plugin2script,connection-method}
 \title{Generate script code from XML objects}
 \usage{
-plugin2script(obj)
+plugin2script(obj, prefix = "rkdev", indent = TRUE, level = 1,
+  drop.defaults = TRUE)
 
-\S4method{plugin2script}{XiMpLe.doc}(obj)
+\S4method{plugin2script}{XiMpLe.doc}(obj, prefix = "rkdev", indent = TRUE,
+  level = 1, drop.defaults = TRUE)
 
-\S4method{plugin2script}{XiMpLe.node}(obj)
+\S4method{plugin2script}{XiMpLe.node}(obj, prefix = "rkdev", indent = TRUE,
+  level = 1, drop.defaults = TRUE)
 
-\S4method{plugin2script}{character}(obj)
+\S4method{plugin2script}{character}(obj, prefix = "rkdev", indent = TRUE,
+  level = 1, drop.defaults = TRUE)
 
-\S4method{plugin2script}{connection}(obj)
+\S4method{plugin2script}{connection}(obj, prefix = "rkdev", indent = TRUE,
+  level = 1, drop.defaults = TRUE)
 }
 \arguments{
 \item{obj}{Either a character vector (path to a plugin XML file to parse), a connection,
       an already
 parsed XML tree (class \code{XiMpLe.doc}) or a single \code{XiMpLe.node} object.}
+
+\item{prefix}{Character string,
+      used as the prefix for the object names used in the script.}
+
+\item{indent}{Logical, whether the script code should be indented properly.}
+
+\item{level}{Integer number, the starting leven of indentation.}
+
+\item{drop.defaults}{Logical,
+      whether to check for the default options in function calls. If the
+parsed and translated XML code resulted in default options,
+      they are omitted in the resulting script.}
 }
 \value{
 Either a character vector (if \code{obj} is a single XML node)

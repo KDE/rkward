@@ -35,6 +35,11 @@
 #'
 #' @param obj Either a character vector (path to a plugin XML file to parse), a connection, an already
 #'    parsed XML tree (class \code{XiMpLe.doc}) or a single \code{XiMpLe.node} object.
+#' @param prefix Character string, used as the prefix for the object names used in the script.
+#' @param indent Logical, whether the script code should be indented properly.
+#' @param level  Integer number, the starting leven of indentation. 
+#' @param drop.defaults Logical, whether to check for the default options in function calls. If the
+#'    parsed and translated XML code resulted in default options, they are omitted in the resulting script.
 #' @export
 #' @docType methods
 #' @return Either a character vector (if \code{obj} is a single XML node)
@@ -67,7 +72,12 @@
 #' # XML and the newly generated one are identical
 #' eval(parse(text=rkwarddevScript))
 #' identical(rkdev.row.row_clmndc1212, test.checkboxes)
-setGeneric("plugin2script", function(obj){standardGeneric("plugin2script")})
+setGeneric(
+  "plugin2script",
+  function(obj, prefix="rkdev", indent=TRUE, level=1, drop.defaults=TRUE){
+    standardGeneric("plugin2script")
+  }
+)
 
 #' @export
 #' @docType methods
@@ -76,7 +86,7 @@ setGeneric("plugin2script", function(obj){standardGeneric("plugin2script")})
 #' @import XiMpLe
 setMethod("plugin2script",
   signature(obj="XiMpLe.doc"),
-  function(obj) {
+  function(obj, prefix="rkdev", indent=TRUE, level=1, drop.defaults=TRUE) {
     # search for logic, dialog and wizard sections
     secLogic <- XMLScan(obj, "logic")
     secDialog <- XMLScan(obj, "dialog")
@@ -86,16 +96,17 @@ setMethod("plugin2script",
 #     secSettings <- XMLScan(obj, "settings")
 #     secRelated <- XMLScan(obj, "related")
 #     secTechnical <- XMLScan(obj, "technical")
+#     secTechnical <- XMLScan(obj, "technical")
     
     result <- list(
-      logic=ifelse(is.null(secLogic), "", p2s(secLogic)),
-      dialog=ifelse(is.null(secDialog), "", p2s(secDialog)),
-      wizard=ifelse(is.null(secWizard), "", p2s(secWizard))
-#       summary=ifelse(is.null(secSummary), "", p2s(secSummary)),
-#       usage=ifelse(is.null(secUsage), "", p2s(secUsage)),
-#       settings=ifelse(is.null(secSettings), "", p2s(secSettings)),
-#       related=ifelse(is.null(secRelated), "", p2s(secRelated)),
-#       technical=ifelse(is.null(secTechnical), "", p2s(secTechnical))
+      logic=ifelse(is.null(secLogic), "", p2s(node=secLogic, indent=indent, level=level, prefix=prefix, drop.defaults=drop.defaults)),
+      dialog=ifelse(is.null(secDialog), "", p2s(node=secDialog, indent=indent, level=level, prefix=prefix, drop.defaults=drop.defaults)),
+      wizard=ifelse(is.null(secWizard), "", p2s(node=secWizard, indent=indent, level=level, prefix=prefix, drop.defaults=drop.defaults))
+#       summary=ifelse(is.null(secSummary), "", p2s(node=secSummary, indent=indent, level=level, prefix=prefix, drop.defaults=drop.defaults)),
+#       usage=ifelse(is.null(secUsage), "", p2s(node=secUsage, indent=indent, level=level, prefix=prefix, drop.defaults=drop.defaults)),
+#       settings=ifelse(is.null(secSettings), "", p2s(node=secSettings, indent=indent, level=level, prefix=prefix, drop.defaults=drop.defaults)),
+#       related=ifelse(is.null(secRelated), "", p2s(node=secRelated, indent=indent, level=level, prefix=prefix, drop.defaults=drop.defaults)),
+#       technical=ifelse(is.null(secTechnical), "", p2s(node=secTechnical, indent=indent, level=level, prefix=prefix, drop.defaults=drop.defaults))
     )
 
     return(result)
@@ -109,8 +120,8 @@ setMethod("plugin2script",
 #' @import XiMpLe
 setMethod("plugin2script",
   signature(obj="XiMpLe.node"),
-  function(obj) {
-    return(p2s(obj))
+  function(obj, prefix="rkdev", indent=TRUE, level=1, drop.defaults=TRUE) {
+    return(p2s(node=obj, indent=indent, level=level, prefix=prefix, drop.defaults=drop.defaults))
   }
 )
 
@@ -121,9 +132,17 @@ setMethod("plugin2script",
 #' @import XiMpLe
 setMethod("plugin2script",
   signature(obj="character"),
-  function(obj) {
+  function(obj, prefix="rkdev", indent=TRUE, level=1, drop.defaults=TRUE) {
     XML.tree <- parseXMLTree(obj)
-    return(plugin2script(XML.tree))
+    return(
+      plugin2script(
+        obj=XML.tree,
+        prefix=prefix,
+        indent=indent,
+        level=level,
+        drop.defaults=drop.defaults
+      )
+    )
   }
 )
 
@@ -134,9 +153,17 @@ setMethod("plugin2script",
 #' @import XiMpLe
 setMethod("plugin2script",
   signature(obj="connection"),
-  function(obj) {
+  function(obj, prefix="rkdev", indent=TRUE, level=1, drop.defaults=TRUE) {
     XML.tree <- parseXMLTree(obj)
-    return(plugin2script(XML.tree))
+    return(
+      plugin2script(
+        obj=XML.tree,
+        prefix=prefix,
+        indent=indent,
+        level=level,
+        drop.defaults=drop.defaults
+      )
+    )
   }
 )
 
@@ -449,7 +476,7 @@ p2s <- function(node, indent=TRUE, level=1, prefix="rkdev", drop.defaults=TRUE){
         allCases <- sapply(
           nodeChildren,
           function(thisChild){
-            return(p2s(node=thisChild, indent=indent, level=level+2))
+            return(p2s(node=thisChild, indent=indent, level=level+2, prefix=prefix, drop.defaults=drop.defaults))
           }
         )
         rkwdevOptions[["cases"]] <- paste0(
@@ -485,7 +512,7 @@ p2s <- function(node, indent=TRUE, level=1, prefix="rkdev", drop.defaults=TRUE){
         rkwdevChildnodes <- sapply(
           nodeChildren,
           function(thisChild){
-            return(p2s(node=thisChild, indent=indent, level=level+1))
+            return(p2s(node=thisChild, indent=indent, level=level+1, prefix=prefix, drop.defaults=drop.defaults))
           }
         )
         rkwdevOptions[[rkwdevChildren]] <- paste0(rkwdevChildnodes,
