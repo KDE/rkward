@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.07-4 (2015-10-08)}{
+\section{Changes in rkwarddev version 0.07-4 (2015-10-11)}{
   \subsection{unreleased}{
     \itemize{
       \item this version is under development
@@ -14,6 +14,8 @@
         wasn't a XiMpLe node
       \item also fixed how \code{rk.XML.convert()} and \code{rk.XML.switch()} were handling
         modifier checking
+      \item \code{rk.XML.dependencies()} didn't know about min/max versions of pluginmaps
+        (fixed in \code{rk.XML.about()} as well)
       \item some fixes to the skeleton GUI and demo script
     }
   }

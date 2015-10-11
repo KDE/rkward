@@ -1,6 +1,6 @@
 ChangeLog for package rkwarddev
 
-changes in version 0.07-4 (2015-10-08)
+changes in version 0.07-4 (2015-10-11)
 unreleased:
   - this version is under development
 fixed:
@@ -9,12 +9,17 @@ fixed:
     wasn't a XiMpLe node
   - also fixed how rk.XML.convert() and rk.XML.switch() were handling
     modifier checking
+  - rk.XML.dependencies() didn't know about min/max versions of pluginmaps
+    (fixed in rk.XML.about() as well)
   - some fixes to the skeleton GUI and demo script
 added:
   - new methods plugin2script() to try to translate raw plugin XML into
     working rkwarddev script calls
   - new option "ignore" enables rk.uniqueIDs() to not check nodes for
     duplicates (e.g., <copy>)
+changed:
+  - improved error handling in rk.JS.header(), error messages are more
+    informative now
 
 changes in version 0.07-3 (2015-06-29)
 fixed:
