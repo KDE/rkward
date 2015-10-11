@@ -32,27 +32,49 @@
 #'    If \code{bool=TRUE} returns a logical value.
 
 rk.uniqueIDs <- function(obj, bool=FALSE, warning=TRUE, ignore=c("copy")){
-  allIDs <- XMLScanDeep(obj, find="id", search="attributes")
-  # ignore nodes
-  allIDs <- allIDs[!names(allIDs) %in% ignore]
-  duplicateIDs <- duplicated(allIDs)
-  if(any(duplicateIDs)){
-    # ok, let's get 'em
-    invalidIDs <- unique(allIDs[duplicateIDs])
-    result <- allIDs[allIDs %in% invalidIDs]
-    if(isTRUE(warning)){
-      warning(paste0("Duplicate IDs were found:\n  ", paste0(names(result), ": ", result, collapse="\n  ")), call.=FALSE)
-    } else {}
+  # plugins probably use identical IDs in <dialog> and <wizard> sections
+  # so we first check without the <wizard> section separately, then
+  # without the <dialog>
+  haveDialog <- XMLScan(obj, name="dialog")
+  haveWizard <- XMLScan(obj, name="wizard")
+  if(all(!is.null(haveDialog), !is.null(haveWizard))){
+    noWizard <- noDialog <- obj
+    XMLScan(noWizard, name="wizard") <- NULL
+    XMLScan(noDialog, name="dialog") <- NULL
+    allResults <- lapply(
+      list(noWizard, noDialog),
+      function(thisPart){
+        rk.uniqueIDs(obj=thisPart, bool=bool, warning=warning, ignore=ignore)
+      }
+    )
     if(isTRUE(bool)){
-      return(FALSE)
+      return(all(allResults))
     } else {
-      return(result)
+      return(unlist(allResults))
     }
   } else {
-    if(isTRUE(bool)){
-      return(TRUE)
+    allIDs <- XMLScanDeep(obj, find="id", search="attributes")
+    # ignore nodes
+    allIDs <- allIDs[!names(allIDs) %in% ignore]
+    duplicateIDs <- duplicated(allIDs)
+    if(any(duplicateIDs)){
+      # ok, let's get 'em
+      invalidIDs <- unique(allIDs[duplicateIDs])
+      result <- allIDs[allIDs %in% invalidIDs]
+      if(isTRUE(warning)){
+        warning(paste0("Duplicate IDs were found:\n  ", paste0(names(result), ": ", result, collapse="\n  ")), call.=FALSE)
+      } else {}
+      if(isTRUE(bool)){
+        return(FALSE)
+      } else {
+        return(result)
+      }
     } else {
-      return(invisible(NULL))
+      if(isTRUE(bool)){
+        return(TRUE)
+      } else {
+        return(invisible(NULL))
+      }
     }
   }
 }
