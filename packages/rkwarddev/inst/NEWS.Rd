@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.07-4 (2015-10-11)}{
+\section{Changes in rkwarddev version 0.07-4 (2015-10-19)}{
   \subsection{unreleased}{
     \itemize{
       \item this version is under development
@@ -25,6 +25,14 @@
         working rkwarddev script calls
       \item new option \code{"ignore"} enables \code{rk.uniqueIDs()} to not check nodes for
         duplicates (e.g., <copy>)
+      \item new option \code{".objects"} in \code{id()} and \code{qp()}, to provide objects as a list
+    }
+  }
+  \subsection{changed}{
+    \itemize{
+      \item improved error handling in \code{rk.JS.header()}, error messages are more
+        informative now
+      \item \code{rk.uniqueIDs()} now checks \code{"dialog"} and \code{"wizard"} sections separately
     }
   }
 }

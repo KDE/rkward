@@ -4,12 +4,15 @@
 \alias{qp}
 \title{Replace XiMpLe.node objects with their ID value}
 \usage{
-qp(...)
+qp(..., .objects = list(...))
 }
 \arguments{
 \item{...}{One or several character strings and/or \code{XiMpLe.node} objects with plugin nodes,
 and/or objects of classes \code{rk.JS.arr} or \code{rk.JS.opt},
       simply separated by comma.}
+
+\item{.objects}{Alternative way of specifying objects,
+      if you already have them as a list.}
 }
 \value{
 A character string.

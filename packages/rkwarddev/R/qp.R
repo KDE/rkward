@@ -23,6 +23,7 @@
 #' 
 #' @param ... One or several character strings and/or \code{XiMpLe.node} objects with plugin nodes,
 #'   and/or objects of classes \code{rk.JS.arr} or \code{rk.JS.opt}, simply separated by comma.
+#' @param .objects Alternative way of specifying objects, if you already have them as a list.
 #' @return A character string.
 #' @export
 #' @seealso \code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}},
@@ -36,7 +37,7 @@
 #' cbox1 <- rk.XML.cbox(label="foo", value="foo1", id.name="CheckboxFoo.ID")
 #' qp("The variable name is: ", cbox1, "!")
 
-qp <- function(...){
-  result <- id(..., quote=TRUE, collapse=" + ", js=TRUE)
+qp <- function(..., .objects=list(...)){
+  result <- id(quote=TRUE, collapse=" + ", js=TRUE, .objects=.objects)
   return(result)
 }

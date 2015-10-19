@@ -31,6 +31,7 @@
 #' @param collapse Character string, defining if and how the individual elements should be glued together.
 #' @param js Logical, if \code{TRUE} returns JavaScript varaible names for \code{XiMpLe.node} objects.
 #'    Otherwise their actual ID is returned.
+#' @param .objects Alternative way of specifying objects, if you already have them as a list.
 #' @return A character string.
 #' @export
 #' @seealso \code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}},
@@ -44,9 +45,8 @@
 #' cbox1 <- rk.XML.cbox(label="foo", value="foo1", id.name="CheckboxFoo.ID")
 #' id("The variable name is: ", cbox1, "!")
 
-id <- function(..., quote=FALSE, collapse="", js=TRUE){
-  full.content <- list(...)
-  ID.content <- sapply(full.content, function(this.part){
+id <- function(..., quote=FALSE, collapse="", js=TRUE, .objects=list(...)){
+  ID.content <- sapply(.objects, function(this.part){
       # if this is a plot options object, by default only paste the printout slot
       # and discard the rest
       this.part <- stripCont(this.part, get="printout")

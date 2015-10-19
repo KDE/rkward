@@ -4,7 +4,7 @@
 \alias{id}
 \title{Replace XiMpLe.node objects with their ID value}
 \usage{
-id(..., quote = FALSE, collapse = "", js = TRUE)
+id(..., quote = FALSE, collapse = "", js = TRUE, .objects = list(...))
 }
 \arguments{
 \item{...}{One or several character strings and/or \code{XiMpLe.node} objects with plugin nodes,
@@ -21,6 +21,9 @@ written to files, e.g. by \code{cat}.}
 \item{js}{Logical,
       if \code{TRUE} returns JavaScript varaible names for \code{XiMpLe.node} objects.
 Otherwise their actual ID is returned.}
+
+\item{.objects}{Alternative way of specifying objects,
+      if you already have them as a list.}
 }
 \value{
 A character string.
