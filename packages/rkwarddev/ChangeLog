@@ -18,6 +18,8 @@ added:
   - new option "ignore" enables rk.uniqueIDs() to not check nodes for
     duplicates (e.g., <copy>)
   - new option ".objects" in id() and qp(), to provide objects as a list
+  - new option "quoteOperators" in id() makes it possible to use several operators
+    without quoting, id() will detect and quote them for you
 changed:
   - improved error handling in rk.JS.header(), error messages are more
     informative now

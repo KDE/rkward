@@ -37,7 +37,7 @@
 #' cbox1 <- rk.XML.cbox(label="foo", value="foo1", id.name="CheckboxFoo.ID")
 #' qp("The variable name is: ", cbox1, "!")
 
-qp <- function(..., .objects=list(...)){
+qp <- function(..., .objects=eval(substitute(alist(...)))){
   result <- id(quote=TRUE, collapse=" + ", js=TRUE, .objects=.objects)
   return(result)
 }

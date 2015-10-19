@@ -26,6 +26,8 @@
       \item new option \code{"ignore"} enables \code{rk.uniqueIDs()} to not check nodes for
         duplicates (e.g., <copy>)
       \item new option \code{".objects"} in \code{id()} and \code{qp()}, to provide objects as a list
+      \item new option \code{"quoteOperators"} in \code{id()} makes it possible to use several operators
+        without quoting, \code{id()} will detect and quote them for you
     }
   }
   \subsection{changed}{

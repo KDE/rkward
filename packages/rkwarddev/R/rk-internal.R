@@ -1424,3 +1424,60 @@ check.JS.lines <- function(relevant.tags, single.tags, add.abbrev, js, indent.by
   } else {}
   return(result)
 } ## end function check.JS.lines()
+
+
+## JS.operators
+# a complilation of operators we would like to fetch from R calls and 
+# substitute with character equivalents for JS code
+JS.operators <- c(
+  "+", "-", "*", "/", "%",
+  "++", "--", "=", "+=", "-=", "*=", "/=", "%=",
+  "==", "===", "!=", "!==", ">", "<", ">=", "<=",
+  "!", "||", "&&"
+) ## end JS.operators
+
+
+## function replaceJSOperators
+# takes arbitrary R code and tries to replace R operators with character strings.
+# makes it possible to use these operators in calls like id() without the need
+# for quoting them
+replaceJSOperators <- function(..., call="id"){
+  dotlist <- eval(substitute(alist(...)))
+  dotlist <- lapply(
+    dotlist,
+    function(thisItem){
+      # operators like ">" or "|" are represented as call objects
+      # with the operator as first argument (name).
+      # there can also be calls nested in calls so we need to test this recursively
+      if(inherits(thisItem, "call")){
+        # break the 
+        callList <- unlist(thisItem)
+        if(as.character(callList[[1]]) %in% JS.operators){
+          result <- list(
+            if(is.call(callList[[2]])){
+              do.call("replaceJSOperators", list(callList[[2]]))
+            } else if(is.character(callList[[2]])){
+              paste0("\"", callList[[2]], "\"")
+            } else {
+              do.call(call, list(callList[[2]]))
+            },
+            paste0(" ", as.character(callList[[1]]), " "),
+            if(is.call(callList[[3]])){
+              do.call("replaceJSOperators", list(callList[[3]]))
+            } else if(is.character(callList[[3]])){
+              paste0("\"", callList[[3]], "\"")
+            } else {
+              do.call(call, list(callList[[3]]))
+            }
+          )
+          return(paste0(unlist(result), collapse=""))
+        } else {
+          return(thisItem)
+        }
+      } else {
+        return(thisItem)
+      }
+    }
+  )
+  return(unlist(dotlist))
+} ## end function replaceJSOperators
