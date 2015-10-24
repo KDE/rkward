@@ -1435,7 +1435,7 @@ JS.operators <- c(
   "==", "===", "!=", "!==", ">", "<", ">=", "<=",
   "!", "||", "&&"
 ) ## end JS.operators
-
+# currently not working: "%", "++", "--", "=", "+=", "-=", "*=", "/=", "%=", "===", "!==", "!"
 
 ## function replaceJSOperators
 # takes arbitrary R code and tries to replace R operators with character strings.

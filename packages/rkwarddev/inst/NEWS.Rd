@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.07-4 (2015-10-19)}{
+\section{Changes in rkwarddev version 0.07-4 (2015-10-24)}{
   \subsection{unreleased}{
     \itemize{
       \item this version is under development
@@ -25,9 +25,9 @@
         working rkwarddev script calls
       \item new option \code{"ignore"} enables \code{rk.uniqueIDs()} to not check nodes for
         duplicates (e.g., <copy>)
-      \item new option \code{".objects"} in \code{id()} and \code{qp()}, to provide objects as a list
-      \item new option \code{"quoteOperators"} in \code{id()} makes it possible to use several operators
-        without quoting, \code{id()} will detect and quote them for you
+      \item new wrapper function \code{jo()} for \code{id()} makes it possible to use several
+        operators without quoting, it will detect and quote them for you
+      \item new option \code{".objects"} in \code{id()} to provide objects as a list
     }
   }
   \subsection{changed}{

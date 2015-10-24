@@ -26,14 +26,11 @@
 #' 
 #' @param ... One or several character strings and/or \code{XiMpLe.node} objects with plugin nodes,
 #'   and/or objects of classes \code{rk.JS.arr}, \code{rk.JS.opt} or \code{rk.JS.var}, simply separated by comma.
-#' @param quote Logical, it the character strings should be deparsed, so they come out "as-is" when
+#' @param quote Logical, if the character strings should be deparsed, so they come out "as-is" when
 #'    written to files, e.g. by \code{cat}.
 #' @param collapse Character string, defining if and how the individual elements should be glued together.
 #' @param js Logical, if \code{TRUE} returns JavaScript varaible names for \code{XiMpLe.node} objects.
 #'    Otherwise their actual ID is returned.
-#' @param quoteOperators Logical, if \code{TRUE} operators like \code{">="} or \code{"!="} that
-#'    are valid for JavaScript code can be used without quoting and will be replaced by \code{id}
-#'    automatically.
 #' @param .objects Alternative way of specifying objects, if you already have them as a list.
 #' @return A character string.
 #' @export
@@ -48,12 +45,8 @@
 #' cbox1 <- rk.XML.cbox(label="foo", value="foo1", id.name="CheckboxFoo.ID")
 #' id("The variable name is: ", cbox1, "!")
 
-id <- function(..., quote=FALSE, collapse="", js=TRUE, quoteOperators=TRUE, .objects=eval(substitute(alist(...)))){
+id <- function(..., quote=FALSE, collapse="", js=TRUE, .objects=list(...)){
   ID.content <- sapply(.objects, function(this.part){
-      # get the object, not just a name from eval(substitute(alist(...)))
-      if (inherits(this.part, "name")){
-        this.part <- eval(this.part)
-      } else {}
       # if this is a plot options object, by default only paste the printout slot
       # and discard the rest
       this.part <- stripCont(this.part, get="printout")
@@ -93,10 +86,6 @@ id <- function(..., quote=FALSE, collapse="", js=TRUE, quoteOperators=TRUE, .obj
       } else if(inherits(this.part, "rk.JS.i18n")){
         # strip all semicolons from i18n calls
         node.id <- slot(this.part, "value")
-        return(node.id)
-      } else if(inherits(this.part, "call") & isTRUE(quoteOperators)){
-        # replace JS operators
-        node.id <- do.call("replaceJSOperators", args=list(this.part))
         return(node.id)
       } else {
         if(isTRUE(quote)){

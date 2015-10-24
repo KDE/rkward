@@ -16,7 +16,7 @@ LazyLoad: yes
 URL: https://rkward.kde.org
 Authors@R: c(person(given="m.eik", family="michalke", email="meik.michalke@hhu.de", role=c("aut", "cre")))
 Version: 0.07-4
-Date: 2015-10-19
+Date: 2015-10-24
 Collate:
     '00_class_01_rk.JS.arr.R'
     '00_class_02_rk.JS.var.R'
@@ -36,6 +36,7 @@ Collate:
     'i18n.R'
     'id.R'
     'ite.R'
+    'jo.R'
     'join.R'
     'qp.R'
     'rk.comment.R'

@@ -1,6 +1,6 @@
 ChangeLog for package rkwarddev
 
-changes in version 0.07-4 (2015-10-19)
+changes in version 0.07-4 (2015-10-24)
 unreleased:
   - this version is under development
 fixed:
@@ -17,9 +17,9 @@ added:
     working rkwarddev script calls
   - new option "ignore" enables rk.uniqueIDs() to not check nodes for
     duplicates (e.g., <copy>)
-  - new option ".objects" in id() and qp(), to provide objects as a list
-  - new option "quoteOperators" in id() makes it possible to use several operators
-    without quoting, id() will detect and quote them for you
+  - new wrapper function jo() for id() makes it possible to use several
+    operators without quoting, it will detect and quote them for you
+  - new option ".objects" in id() to provide objects as a list
 changed:
   - improved error handling in rk.JS.header(), error messages are more
     informative now

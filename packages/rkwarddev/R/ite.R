@@ -60,8 +60,8 @@ ite <- function(ifjs, thenjs, elsejs=NULL){
     } else {}
   }
   result <- new("rk.JS.ite",
-    ifJS=do.call("id", args=list(ifjs, js=TRUE)),
-    thenJS=do.call("id", args=list(thenjs, js=TRUE)),
+    ifJS=id(ifjs, js=TRUE),
+    thenJS=id(thenjs, js=TRUE),
     thenifJS=thenifJS,
     elseJS=elsejs,
     elifJS=elifJS

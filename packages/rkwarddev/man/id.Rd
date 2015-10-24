@@ -4,15 +4,14 @@
 \alias{id}
 \title{Replace XiMpLe.node objects with their ID value}
 \usage{
-id(..., quote = FALSE, collapse = "", js = TRUE, quoteOperators = TRUE,
-  .objects = list(...))
+id(..., quote = FALSE, collapse = "", js = TRUE, .objects = list(...))
 }
 \arguments{
 \item{...}{One or several character strings and/or \code{XiMpLe.node} objects with plugin nodes,
 and/or objects of classes \code{rk.JS.arr}, \code{rk.JS.opt} or \code{rk.JS.var},
       simply separated by comma.}
 
-\item{quote}{Logical, it the character strings should be deparsed,
+\item{quote}{Logical, if the character strings should be deparsed,
       so they come out "as-is" when
 written to files, e.g. by \code{cat}.}
 
@@ -22,11 +21,6 @@ written to files, e.g. by \code{cat}.}
 \item{js}{Logical,
       if \code{TRUE} returns JavaScript varaible names for \code{XiMpLe.node} objects.
 Otherwise their actual ID is returned.}
-
-\item{quoteOperators}{Logical,
-      if \code{TRUE} operators like \code{">="} or \code{"!="} that
-are valid for JavaScript code can be used without quoting and will be replaced by \code{id}
-automatically.}
 
 \item{.objects}{Alternative way of specifying objects,
       if you already have them as a list.}
