@@ -10,19 +10,19 @@
 \title{Generate script code from XML objects}
 \usage{
 plugin2script(obj, prefix = "rkdev", indent = TRUE, level = 1,
-  drop.defaults = TRUE)
+  drop.defaults = TRUE, node.names = TRUE, collapse = ".")
 
 \S4method{plugin2script}{XiMpLe.doc}(obj, prefix = "rkdev", indent = TRUE,
-  level = 1, drop.defaults = TRUE)
+  level = 1, drop.defaults = TRUE, node.names = TRUE, collapse = ".")
 
 \S4method{plugin2script}{XiMpLe.node}(obj, prefix = "rkdev", indent = TRUE,
-  level = 1, drop.defaults = TRUE)
+  level = 1, drop.defaults = TRUE, node.names = TRUE, collapse = ".")
 
 \S4method{plugin2script}{character}(obj, prefix = "rkdev", indent = TRUE,
-  level = 1, drop.defaults = TRUE)
+  level = 1, drop.defaults = TRUE, node.names = TRUE, collapse = ".")
 
 \S4method{plugin2script}{connection}(obj, prefix = "rkdev", indent = TRUE,
-  level = 1, drop.defaults = TRUE)
+  level = 1, drop.defaults = TRUE, node.names = TRUE, collapse = ".")
 }
 \arguments{
 \item{obj}{Either a character vector (path to a plugin XML file to parse), a connection,
@@ -30,7 +30,8 @@ plugin2script(obj, prefix = "rkdev", indent = TRUE, level = 1,
 parsed XML tree (class \code{XiMpLe.doc}) or a single \code{XiMpLe.node} object.}
 
 \item{prefix}{Character string,
-      used as the prefix for the object names used in the script.}
+      used as the prefix for the object names used in the script. Set to \code{""}
+to disable the prefix.}
 
 \item{indent}{Logical, whether the script code should be indented properly.}
 
@@ -40,6 +41,12 @@ parsed XML tree (class \code{XiMpLe.doc}) or a single \code{XiMpLe.node} object.
       whether to check for the default options in function calls. If the
 parsed and translated XML code resulted in default options,
       they are omitted in the resulting script.}
+
+\item{node.names}{Logical,
+      whether the node names should become part of the generated R object names.}
+
+\item{collapse}{Character string,
+      used to collapse the parts of the generated R object names.}
 }
 \value{
 Either a character vector (if \code{obj} is a single XML node)

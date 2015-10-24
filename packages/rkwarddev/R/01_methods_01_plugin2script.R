@@ -35,11 +35,14 @@
 #'
 #' @param obj Either a character vector (path to a plugin XML file to parse), a connection, an already
 #'    parsed XML tree (class \code{XiMpLe.doc}) or a single \code{XiMpLe.node} object.
-#' @param prefix Character string, used as the prefix for the object names used in the script.
+#' @param prefix Character string, used as the prefix for the object names used in the script. Set to \code{""}
+#'    to disable the prefix.
 #' @param indent Logical, whether the script code should be indented properly.
 #' @param level  Integer number, the starting leven of indentation. 
 #' @param drop.defaults Logical, whether to check for the default options in function calls. If the
 #'    parsed and translated XML code resulted in default options, they are omitted in the resulting script.
+#' @param node.names Logical, whether the node names should become part of the generated R object names.
+#' @param collapse Character string, used to collapse the parts of the generated R object names.
 #' @export
 #' @docType methods
 #' @return Either a character vector (if \code{obj} is a single XML node)
@@ -74,7 +77,7 @@
 #' identical(rkdev.row.row_clmndc1212, test.checkboxes)
 setGeneric(
   "plugin2script",
-  function(obj, prefix="rkdev", indent=TRUE, level=1, drop.defaults=TRUE){
+  function(obj, prefix="rkdev", indent=TRUE, level=1, drop.defaults=TRUE, node.names=TRUE, collapse="."){
     standardGeneric("plugin2script")
   }
 )
@@ -86,7 +89,7 @@ setGeneric(
 #' @import XiMpLe
 setMethod("plugin2script",
   signature(obj="XiMpLe.doc"),
-  function(obj, prefix="rkdev", indent=TRUE, level=1, drop.defaults=TRUE) {
+  function(obj, prefix="rkdev", indent=TRUE, level=1, drop.defaults=TRUE, node.names=TRUE, collapse=".") {
     # search for logic, dialog and wizard sections
     secLogic <- XMLScan(obj, "logic")
     secDialog <- XMLScan(obj, "dialog")
@@ -99,14 +102,23 @@ setMethod("plugin2script",
 #     secTechnical <- XMLScan(obj, "technical")
     
     result <- list(
-      logic=ifelse(is.null(secLogic), "", p2s(node=secLogic, indent=indent, level=level, prefix=prefix, drop.defaults=drop.defaults)),
-      dialog=ifelse(is.null(secDialog), "", p2s(node=secDialog, indent=indent, level=level, prefix=prefix, drop.defaults=drop.defaults)),
-      wizard=ifelse(is.null(secWizard), "", p2s(node=secWizard, indent=indent, level=level, prefix=prefix, drop.defaults=drop.defaults))
-#       summary=ifelse(is.null(secSummary), "", p2s(node=secSummary, indent=indent, level=level, prefix=prefix, drop.defaults=drop.defaults)),
-#       usage=ifelse(is.null(secUsage), "", p2s(node=secUsage, indent=indent, level=level, prefix=prefix, drop.defaults=drop.defaults)),
-#       settings=ifelse(is.null(secSettings), "", p2s(node=secSettings, indent=indent, level=level, prefix=prefix, drop.defaults=drop.defaults)),
-#       related=ifelse(is.null(secRelated), "", p2s(node=secRelated, indent=indent, level=level, prefix=prefix, drop.defaults=drop.defaults)),
-#       technical=ifelse(is.null(secTechnical), "", p2s(node=secTechnical, indent=indent, level=level, prefix=prefix, drop.defaults=drop.defaults))
+      logic=ifelse(
+        is.null(secLogic),
+        "",
+        p2s(node=secLogic, indent=indent, level=level, prefix=prefix, drop.defaults=drop.defaults, node.names=node.names, collapse=collapse)),
+      dialog=ifelse(
+        is.null(secDialog),
+        "",
+        p2s(node=secDialog, indent=indent, level=level, prefix=prefix, drop.defaults=drop.defaults, node.names=node.names, collapse=collapse)),
+      wizard=ifelse(
+        is.null(secWizard),
+        "",
+        p2s(node=secWizard, indent=indent, level=level, prefix=prefix, drop.defaults=drop.defaults, node.names=node.names, collapse=collapse))
+#       summary=ifelse(is.null(secSummary), "", p2s(node=secSummary, indent=indent, level=level, prefix=prefix, drop.defaults=drop.defaults, node.names=node.names, collapse=collapse)),
+#       usage=ifelse(is.null(secUsage), "", p2s(node=secUsage, indent=indent, level=level, prefix=prefix, drop.defaults=drop.defaults, node.names=node.names, collapse=collapse)),
+#       settings=ifelse(is.null(secSettings), "", p2s(node=secSettings, indent=indent, level=level, prefix=prefix, drop.defaults=drop.defaults, node.names=node.names, collapse=collapse)),
+#       related=ifelse(is.null(secRelated), "", p2s(node=secRelated, indent=indent, level=level, prefix=prefix, drop.defaults=drop.defaults, node.names=node.names, collapse=collapse)),
+#       technical=ifelse(is.null(secTechnical), "", p2s(node=secTechnical, indent=indent, level=level, prefix=prefix, drop.defaults=drop.defaults, node.names=node.names, collapse=collapse))
     )
 
     return(result)
@@ -120,8 +132,8 @@ setMethod("plugin2script",
 #' @import XiMpLe
 setMethod("plugin2script",
   signature(obj="XiMpLe.node"),
-  function(obj, prefix="rkdev", indent=TRUE, level=1, drop.defaults=TRUE) {
-    return(p2s(node=obj, indent=indent, level=level, prefix=prefix, drop.defaults=drop.defaults))
+  function(obj, prefix="rkdev", indent=TRUE, level=1, drop.defaults=TRUE, node.names=TRUE, collapse=".") {
+    return(p2s(node=obj, indent=indent, level=level, prefix=prefix, drop.defaults=drop.defaults, node.names=node.names, collapse=collapse))
   }
 )
 
@@ -132,7 +144,7 @@ setMethod("plugin2script",
 #' @import XiMpLe
 setMethod("plugin2script",
   signature(obj="character"),
-  function(obj, prefix="rkdev", indent=TRUE, level=1, drop.defaults=TRUE) {
+  function(obj, prefix="rkdev", indent=TRUE, level=1, drop.defaults=TRUE, node.names=TRUE, collapse=".") {
     XML.tree <- parseXMLTree(obj)
     return(
       plugin2script(
@@ -140,7 +152,9 @@ setMethod("plugin2script",
         prefix=prefix,
         indent=indent,
         level=level,
-        drop.defaults=drop.defaults
+        drop.defaults=drop.defaults,
+        node.names=node.names,
+        collapse=collapse
       )
     )
   }
@@ -153,7 +167,7 @@ setMethod("plugin2script",
 #' @import XiMpLe
 setMethod("plugin2script",
   signature(obj="connection"),
-  function(obj, prefix="rkdev", indent=TRUE, level=1, drop.defaults=TRUE) {
+  function(obj, prefix="rkdev", indent=TRUE, level=1, drop.defaults=TRUE, node.names=TRUE, collapse=".") {
     XML.tree <- parseXMLTree(obj)
     return(
       plugin2script(
@@ -161,7 +175,9 @@ setMethod("plugin2script",
         prefix=prefix,
         indent=indent,
         level=level,
-        drop.defaults=drop.defaults
+        drop.defaults=drop.defaults,
+        node.names=node.names,
+        collapse=collapse
       )
     )
   }
@@ -395,7 +411,7 @@ p2s.checkTabIDs <- function(node){
 ## function p2s()
 # this is the main work horse, going through nested XML nodes recursively
 # called by the actual methods
-p2s <- function(node, indent=TRUE, level=1, prefix="rkdev", drop.defaults=TRUE){
+p2s <- function(node, indent=TRUE, level=1, prefix="rkdev", drop.defaults=TRUE, node.names=TRUE, collapse="."){
   nodeName <- XMLName(node)
   nodeAttrs <- XMLAttrs(node)
   # fail if we don't know this node type
@@ -476,7 +492,15 @@ p2s <- function(node, indent=TRUE, level=1, prefix="rkdev", drop.defaults=TRUE){
         allCases <- sapply(
           nodeChildren,
           function(thisChild){
-            return(p2s(node=thisChild, indent=indent, level=level+2, prefix=prefix, drop.defaults=drop.defaults))
+            return(p2s(
+              node=thisChild,
+              indent=indent,
+              level=level+2,
+              prefix=prefix,
+              drop.defaults=drop.defaults,
+              node.names=node.names,
+              collapse=collapse
+            ))
           }
         )
         rkwdevOptions[["cases"]] <- paste0(
@@ -512,7 +536,15 @@ p2s <- function(node, indent=TRUE, level=1, prefix="rkdev", drop.defaults=TRUE){
         rkwdevChildnodes <- sapply(
           nodeChildren,
           function(thisChild){
-            return(p2s(node=thisChild, indent=indent, level=level+1, prefix=prefix, drop.defaults=drop.defaults))
+            return(p2s(
+              node=thisChild,
+              indent=indent,
+              level=level+1,
+              prefix=prefix,
+              drop.defaults=drop.defaults,
+              node.names=node.names,
+              collapse=collapse
+            ))
           }
         )
         rkwdevOptions[[rkwdevChildren]] <- paste0(rkwdevChildnodes,
@@ -575,7 +607,13 @@ p2s <- function(node, indent=TRUE, level=1, prefix="rkdev", drop.defaults=TRUE){
   # because otherwise we can assume that it is not referenced anywhere else
   nodeID <- id(node, js=FALSE)
   if(!identical(nodeID, "NULL")){
-    rkObject <- paste0(prefix, ".", nodeName, ".", id(node, js=FALSE), " <- ")
+    rkObject <- paste0(nodeID, " <- ")
+    if(isTRUE(node.names)){
+      rkObject <- paste0(nodeName, collapse, rkObject)
+    } else {}
+    if(!identical(prefix, "")){
+      rkObject <- paste0(prefix, collapse, rkObject)
+    } else {}
   } else {
     rkObject <- ""
   }
