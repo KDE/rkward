@@ -604,7 +604,7 @@ get.authors <- function(description, maintainer=TRUE, contributor=FALSE, copyrig
 ## function check.ID()
 # - node: a XiMpLe.node to search for an ID
 # - search.environment: if TRUE, the internal environment is searched for the ID
-#     as well; a use case for this is IDs of oprions, which need their parent IDs as well;
+#     as well; a use case for this is IDs of options, which need their parent IDs as well;
 #     see get.optionIDs() below
 # - env.get: the ID type to fetch from the environment, if search.environment=TRUE
 check.ID <- function(node, search.environment=FALSE, env.get="XML"){
@@ -1209,6 +1209,7 @@ dependenciesCompatWrapper <- function(dependencies, about, hints=FALSE){
   return(results)
 } ## end function dependenciesCompatWrapper()
 
+
 ## function get.rk.env()
 # generic function to query the internal environment and declare a desired object, if not present yet
 get.rk.env <- function(name, value=list()){
@@ -1436,6 +1437,7 @@ JS.operators <- c(
   "!", "||", "&&"
 ) ## end JS.operators
 # currently not working: "%", "++", "--", "=", "+=", "-=", "*=", "/=", "%=", "===", "!==", "!"
+
 
 ## function replaceJSOperators
 # takes arbitrary R code and tries to replace R operators with character strings.

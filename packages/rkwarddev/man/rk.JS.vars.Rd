@@ -6,7 +6,7 @@
 \usage{
 rk.JS.vars(..., var.prefix = NULL, modifiers = NULL, default = FALSE,
   join = "", check.modifiers = TRUE, getter = "getValue",
-  guess.getter = FALSE)
+  guess.getter = FALSE, object.name = FALSE)
 }
 \arguments{
 \item{...}{Either one or more character strings (the names of the variables to define),
@@ -40,6 +40,14 @@ useful alternatives. For backwards compatibility,
 \item{guess.getter}{Logical,
       if \code{TRUE} try to get a good default getter function for JavaScript
 variable values.}
+
+\item{object.name}{Logical,
+      if \code{TRUE} the JS variable name will roughly match the R object name. If the
+object name contains dots,
+      they will be removed and the JS name printed in camel code instead. Use this option
+with great caution and do not combine it with \code{\link[rkwarddev:rk.JS.scan]{rk.JS.scan}},
+      as it will likely result
+in unusable code. \code{rk.JS.scan} examines XML nodes and therefore does not know any R object names.}
 }
 \value{
 An object of class \code{rk.JS.var}.

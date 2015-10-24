@@ -28,6 +28,7 @@
       \item new wrapper function \code{jo()} for \code{id()} makes it possible to use several
         operators without quoting, it will detect and quote them for you
       \item new option \code{".objects"} in \code{id()} to provide objects as a list
+      \item new option \code{"rk.JS.vars"} to maje JS varaibles match the name of the original R object
     }
   }
   \subsection{changed}{
