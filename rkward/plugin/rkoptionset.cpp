@@ -29,7 +29,7 @@
 
 #include "rkstandardcomponent.h"
 #include "../misc/rkcommonfunctions.h"
-#include "../misc/rktabslide.h"
+#include "../misc/rkaccordiontable.h"
 #include "../misc/rkstandardicons.h"
 #include "../misc/xmlhelper.h"
 
@@ -48,7 +48,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	min_rows = xml->getIntAttribute (element, "min_rows", 0, DL_INFO);
 	min_rows_if_any = xml->getIntAttribute (element, "min_rows_if_any", 1, DL_INFO);
 	max_rows = xml->getIntAttribute (element, "max_rows", INT_MAX, DL_INFO);
-	exp_mode = (ExperimentalMode) xml->getMultiChoiceAttribute (element, "exp_mode", "regular;detached;tabbed", 2, DL_INFO);
+	exp_mode = (ExperimentalMode) xml->getMultiChoiceAttribute (element, "exp_mode", "regular;detached;accordion", 2, DL_INFO);
 
 	// build UI framework
 	QVBoxLayout *layout = new QVBoxLayout (this);
@@ -56,7 +56,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	if (exp_mode != Detached) layout->addWidget (switcher);
 	user_area = new KVBox (this);
 	switcher->addWidget (user_area);
-	if (exp_mode == Tabbed) tabslide = new RKTabSlide (user_area);
+	if (exp_mode == Accordion) accordion = new RKAccordionTable (user_area);
 	updating_notice = new QLabel (i18n ("Updating status, please wait"), this);
 	switcher->addWidget (updating_notice);
 	update_timer.setInterval (0);
@@ -80,10 +80,10 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	// first build the contents, as we will need to refer to the elements inside, later
 	model = 0;
 	display = 0;	// will be created from the builder, on demand -> createDisplay ()
-	contents_container = new RKComponent (this, exp_mode == Tabbed ? tabslide->contentArea () : user_area);
+	contents_container = new RKComponent (this, exp_mode == RKOptionSet::Accordion ? accordion->defaultWidget () : user_area);
 	QDomElement content_element = xml->getChildElement (element, "content", DL_ERROR);
 	RKComponentBuilder *builder = new RKComponentBuilder (contents_container, content_element);
-	builder->buildElement (content_element, *xml, exp_mode == Tabbed ? tabslide->contentArea () : user_area, false);	// NOTE that parent widget != parent component, here, by intention. The point is that the display should not be disabled along with the contents
+	builder->buildElement (content_element, *xml, exp_mode == Accordion ? accordion->defaultWidget () : user_area, false);	// NOTE that parent widget != parent component, here, by intention. The point is that the display should not be disabled along with the contents
 	builder->parseLogic (xml->getChildElement (element, "logic", DL_INFO), *xml, false);
 	builder->makeConnections ();
 	addChild ("contents", contents_container);
@@ -216,7 +216,7 @@ RKComponent *RKOptionSet::createDisplay (bool show_index, QWidget *parent) {
 		display_show_index = show_index;
 		model = new RKOptionSetDisplayModel (this);
 		if (exp_mode == Detached) display->setItemDelegate (new RKOptionSetDelegate (this));
-		if (exp_mode == Tabbed) tabslide->tabBar ()->setModel (model);
+		if (exp_mode == Accordion) accordion->setModel (model);
 	}
 
 	display_buttons = new KHBox (dummy);

@@ -26,7 +26,7 @@ SET(misc_STAT_SRCS
    rkmessagecatalog.cpp
    rkdbusapi.cpp
    rkfindbar.cpp
-   rktabslide.cpp
+   rkaccordiontable.cpp
    )
 
 QT4_AUTOMOC(${misc_STAT_SRCS})

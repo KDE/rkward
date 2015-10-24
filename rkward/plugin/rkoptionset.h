@@ -25,7 +25,7 @@
 #include <QTimer>
 #include <QSet>
 
-class RKTabSlide;
+class RKAccordionTable;
 class QTreeView;
 class QPushButton;
 class RKOptionSetDisplayModel;
@@ -120,7 +120,7 @@ friend class RKOptionSetDisplayModel;
 	QStackedWidget *switcher;
 	QWidget *updating_notice;
 	QWidget *user_area;
-	RKTabSlide *tabslide;
+	RKAccordionTable *accordion;
 	void updateUnfinishedRows ();
 	int return_to_row;
 	QTimer update_timer;
@@ -132,7 +132,7 @@ friend class RKOptionSetDisplayModel;
 	enum ExperimentalMode {
 		Regular,
 		Detached,
-		Tabbed
+		Accordion
 	} exp_mode;
 
 	bool updating;
