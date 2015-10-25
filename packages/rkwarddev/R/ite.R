@@ -18,7 +18,7 @@
 
 #' Generate JavaScript if/then/else constructs
 #' 
-#' @param ifjs Either a character string to be placed in the brackets if an \code{if()} statement,
+#' @param ifjs Either a character string to be placed in the brackets of an \code{if()} statement,
 #'    or an object of class \code{XiMpLe.node}. \code{rk.JS.arr} or \code{rk.JS.opt} (whose identifier will be used).
 #' @param thenjs Either a character string, the code to be executed in case the \code{if()} statement is true,
 #'    or an object of class \code{XiMpLe.node}. \code{rk.JS.arr} or \code{rk.JS.opt} (whose identifier will be used).
