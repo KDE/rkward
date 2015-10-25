@@ -35,7 +35,7 @@
 #' @param false Logical or character, the value the option should, only used get if \code{ifelse=TRUE} as well.
 #'    E.g., if \code{false=FALSE} then the option will be set to \code{FALSE} if the box is not checked,
 #'    or in case \code{not=TRUE}, if the box is checked.
-#' @param opt A character string, naming the R option o be set. If \code{NULL}, the XML ID of the checkbox node
+#' @param opt A character string, naming the R option to be set. If \code{NULL}, the XML ID of the checkbox node
 #'    will be used.
 #' @param prefix A character string, what should be pasted before the actual option string. Default is a
 #'    comma and a newline.
