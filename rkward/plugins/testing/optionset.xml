@@ -19,7 +19,7 @@
 		</text>
 		<tabbook>
 			<tab label="Manual set">
-				<optionset id="mset">
+				<optionset id="mset" exp_mode="accordion">
 					<content>
 						<frame>
 							<optiondisplay index="true"/>

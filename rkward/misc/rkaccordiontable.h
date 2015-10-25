@@ -19,12 +19,12 @@
 #define RKACCORDIONTABLE_H
 
 #include <QWidget>
-#include <QTableView>
-#include <QAbstractProxyModel>
+#include <QTreeView>
 
 class QAbstractItemModel;
+class QAbstractProxyModel;
 
-class RKAccordionTable : public QTableView {
+class RKAccordionTable : public QTreeView {
 	Q_OBJECT
 public:
 	RKAccordionTable (QWidget *parent);
@@ -33,10 +33,11 @@ public:
 	QWidget *defaultWidget () const { return default_widget; };
 
 	void setModel (QAbstractItemModel *model);
+public slots:
+	void rowExpanded (QModelIndex row);
 protected:
 	void currentChanged (const QModelIndex& current, const QModelIndex& previous);   // reimplemented to adjust selection / activate correct row
 	void resizeEvent (QResizeEvent* event);                                          // reimplemented to make the current content widget stretch / shrink
-	void rowsAboutToBeRemoved (const QModelIndex& parent, int start, int end);       // reimplemented to switch to a different row, if current row is about to be removed
 private:
 	QWidget *default_widget;
 	QAbstractProxyModel *pmodel;

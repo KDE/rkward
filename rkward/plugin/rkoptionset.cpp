@@ -176,6 +176,8 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 		if (display_show_index) display->resizeColumnToContents (0);
 		else display->setColumnHidden (0, true);
 		display->setModel (model);
+		if (exp_mode == Detached) display->setItemDelegate (new RKOptionSetDelegate (this));
+		if (exp_mode == Accordion) accordion->setModel (model);
 		display->setSelectionBehavior (QAbstractItemView::SelectRows);
 		display->setSelectionMode (QAbstractItemView::SingleSelection);
 		connect (display->selectionModel (), SIGNAL (selectionChanged(QItemSelection,QItemSelection)), this, SLOT (currentRowChanged()));
@@ -215,8 +217,6 @@ RKComponent *RKOptionSet::createDisplay (bool show_index, QWidget *parent) {
 		display = new QTreeView (box);
 		display_show_index = show_index;
 		model = new RKOptionSetDisplayModel (this);
-		if (exp_mode == Detached) display->setItemDelegate (new RKOptionSetDelegate (this));
-		if (exp_mode == Accordion) accordion->setModel (model);
 	}
 
 	display_buttons = new KHBox (dummy);
