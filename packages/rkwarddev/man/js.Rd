@@ -4,12 +4,14 @@
 \alias{js}
 \title{R to JavaScript translation}
 \usage{
-js(...)
+js(..., level = 2)
 }
 \arguments{
 \item{...}{One or several character strings and/or \code{XiMpLe.node} objects with plugin nodes,
 and/or objects of classes \code{rk.JS.arr} or \code{rk.JS.opt}, simply separated by comma.
 JavaScript operators and \code{if} conditions will be kept as-is.}
+
+\item{level}{Integer value, first indetation level.}
 }
 \value{
 A character string.
@@ -36,7 +38,7 @@ These are currently unsupported and still need to be quoted: \%, ++, --, =, +=, 
 \examples{
 # an example checkbox XML node
 cbox1 <- rk.XML.cbox(label="foo", value="foo1", id.name="CheckboxFoo.ID")
-ite(jo(cbox1 == "foo1"), echo("gotcha!"))
+rk.pasteJS(js(if(cbox1 == "foo1") { echo("gotcha!") }))
 }
 \seealso{
 \code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}},

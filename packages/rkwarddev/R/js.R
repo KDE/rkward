@@ -34,6 +34,7 @@
 #' @param ... One or several character strings and/or \code{XiMpLe.node} objects with plugin nodes,
 #'   and/or objects of classes \code{rk.JS.arr} or \code{rk.JS.opt}, simply separated by comma.
 #'   JavaScript operators and \code{if} conditions will be kept as-is.
+#' @param level Integer value, first indetation level.
 #' @return A character string.
 #' @export
 #' @seealso \code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}},
@@ -45,9 +46,9 @@
 #' @examples
 #' # an example checkbox XML node
 #' cbox1 <- rk.XML.cbox(label="foo", value="foo1", id.name="CheckboxFoo.ID")
-#' ite(jo(cbox1 == "foo1"), echo("gotcha!"))
+#' rk.pasteJS(js(if(cbox1 == "foo1") { echo("gotcha!") }))
 
-js <- function(..., level=1, paste.id=TRUE){
+js <- function(..., level=2){
   full.content <- eval(substitute(alist(...)))
   ID.content <- lapply(
     full.content,
@@ -57,39 +58,16 @@ js <- function(..., level=1, paste.id=TRUE){
         this.part <- eval(this.part)
       } else {}
       if(is.call(this.part)){
-        message(paste0("call: ", this.part))
-        if(inherits(full.content[[1]], "if")){
-          # the if condition
-          cond.if   <- do.call("js", args=list(full.content[[1]][[2]], level=level+1))
-          cond.then <- do.call("js", args=list(uncurl(full.content[[1]][[3]]), level=level+1, paste.id=FALSE))
-          try.else <- NULL
-          cond.else <- tryCatch(
-            try.else <- do.call("js", args=list(uncurl(full.content[[1]][[4]]), level=level+1, paste.id=FALSE)),
-            error=function(e) NULL,
-            finally=try.else
-          )
-          iteObject <- ite(
-            ifjs=cond.if,
-            thenjs=cond.then,
-            elsejs=cond.else 
-          )
-          if(isTRUE(paste.id)){
-            return(rk.paste.JS(iteObject, level=level))
-          } else {
-            return(iteObject)
-          }
-        } else {
-          # replace JS operators
-          return(do.call("replaceJSOperators", args=list(this.part)))
-        }
+        # recursively check for if conditions
+        if(inherits(this.part, "if")){
+          this.part <- replaceJSIf(this.part, level=level)
+        } else {}
+        # replace JS operators
+        return(do.call("replaceJSOperators", args=list(this.part)))
       } else {
         return(this.part)
       }
     }
   )
-  if(isTRUE(paste.id)){
-    return(id(js=TRUE, .objects=ID.content))
-  } else {
-    return(unlist(ID.content))
-  }
+  return(id(js=TRUE, .objects=ID.content))
 }

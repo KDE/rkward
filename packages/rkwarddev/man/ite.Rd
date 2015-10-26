@@ -23,7 +23,8 @@ You can also give another object of class \code{rk.JS.ite}.}
 An object of class \code{rk.JS.ite}
 }
 \description{
-Generate JavaScript if/then/else constructs
+This function is very similar to \code{\link[base:ifelse]{ifelse}}. If you would like to use if conditions
+directly, have a look at the \code{\link[rkwarddev:js]{js}} wrapper instead.
 }
 \examples{
 # first create an example checkbox XML node
@@ -32,7 +33,8 @@ cbox1 <- rk.XML.cbox(label="foo", value="foo1", id.name="CheckboxFoo.ID")
 ite(cbox1, echo("bar <- \\"", cbox1, "\\""), echo("bar <- NULL"))
 }
 \seealso{
-\code{\link[rkwarddev:rk.paste.JS]{rk.paste.JS}},
+\code{\link[rkwarddev:js]{js}},
+   \code{\link[rkwarddev:rk.paste.JS]{rk.paste.JS}},
    \code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}},
    \code{\link[rkwarddev:rk.JS.array]{rk.JS.array}},
    \code{\link[rkwarddev:rk.JS.options]{rk.JS.options}},

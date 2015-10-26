@@ -1474,7 +1474,7 @@ replaceJSOperators <- function(..., call="id"){
           )
           return(paste0(unlist(result), collapse=""))
         } else {
-          return(thisItem)
+          return(eval(thisItem))
         }
       } else {
         return(thisItem)
@@ -1491,12 +1491,49 @@ replaceJSOperators <- function(..., call="id"){
 uncurl <- function(cond, level=1){
   if(!is.null(cond)){
     if(identical(as.character(cond[[1]]), "{")){
-    message("{")
-      cond <- do.call("js", args=list(cond[[2]], level=level+1))
+      cond <- do.call("js", args=list(cond[[2]], level=level))
     } else {
-    message("no {")
-      cond <- do.call("js", args=list(cond, level=level+1))
+      cond <- do.call("js", args=list(cond, level=level))
     }
   } else {}
   return(cond)
 } ## end function uncurl()
+
+
+## function replaceJSIf
+replaceJSIf <- function(cond, level=1, paste=TRUE){
+  if(inherits(cond, "if")){
+    # if condition -- should be save to give to js()
+    cond.if   <- do.call("js", args=list(cond[[2]], level=level))
+    # then do -- could be nested with another if condition
+    if(inherits(cond[[3]], "if")){
+      cond.then <- replaceJSIf(cond[[3]], level=level+1, paste=FALSE)
+    } else {
+      cond.then <- do.call("js", args=list(uncurl(cond[[3]], level=level+1), level=level))
+    }
+    # else do -- could be missing or yet another if condition
+    try.else <- NULL
+    cond.else <- tryCatch(
+      if(inherits(cond[[4]], "if")){
+        try.else <- replaceJSIf(cond[[4]], level=level+1, paste=FALSE)
+      } else {
+        try.else <- do.call("js", args=list(uncurl(cond[[4]], level=level+1), level=level))
+      },
+      error=function(e) NULL,
+      finally=try.else
+    )
+    iteObject <- ite(
+      ifjs=cond.if,
+      thenjs=cond.then,
+      elsejs=cond.else 
+    )
+    if(isTRUE(paste)){
+      return(rk.paste.JS(iteObject, level=level))
+    } else {
+      return(iteObject)
+    }
+  } else {
+    cond <- do.call("js", args=list(cond, level=level))
+    return(cond)
+  }
+}
