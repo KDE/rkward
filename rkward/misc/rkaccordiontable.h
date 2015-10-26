@@ -33,12 +33,21 @@ public:
 	QWidget *defaultWidget () const { return default_widget; };
 
 	void setModel (QAbstractItemModel *model);
+	void setShowAddRemoveButtons (bool show) {
+		show_add_remove_buttons = show;
+	}
+
+	QSize minimumSizeHint () const;                                                  // reimplemented to assure a proper size for the content
 public slots:
 	void rowExpanded (QModelIndex row);
+	void rowClicked (QModelIndex row);
+	void updateWidget ();
+signals:
+	void activated (int row);
 protected:
-	void currentChanged (const QModelIndex& current, const QModelIndex& previous);   // reimplemented to adjust selection / activate correct row
 	void resizeEvent (QResizeEvent* event);                                          // reimplemented to make the current content widget stretch / shrink
 private:
+	bool show_add_remove_buttons;
 	QWidget *default_widget;
 	QAbstractProxyModel *pmodel;
 };

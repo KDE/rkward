@@ -55,6 +55,7 @@ private slots:
 	void addRow ();
 	void removeRow ();
 	void currentRowChanged ();
+	void currentRowChanged (int row);
 	void fetchDefaults ();
 	void slotUpdateUnfinishedRows ();
 /** When keys in the key column change, all other columns have to be updated, accordingly. */

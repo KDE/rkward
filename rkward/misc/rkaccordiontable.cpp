@@ -20,7 +20,14 @@
 #include <QPointer>
 #include <QVBoxLayout>
 #include <QAbstractProxyModel>
+#include <QToolButton>
+#include <QHBoxLayout>
+
 #include <kvbox.h>
+#include <klocale.h>
+
+#include "rkcommonfunctions.h"
+#include "rkstandardicons.h"
 
 #include "../debug.h"
 
@@ -86,9 +93,10 @@ public:
 
 	void setSourceModel (QAbstractItemModel* source_model) {
 		/* More than these would be needed for a proper proxy of any model, but in our case, we only have to support the RKOptionsetDisplayModel */
-		connect (source_model, SIGNAL (rowsInserted(const QModelIndex&,int,int)), this, SLOT (rowsInserted(QModelIndex,int,int)));
-		connect (source_model, SIGNAL (rowsRemoved(const QModelIndex&,int,int)), this, SLOT (rowsRemoved(QModelIndex,int,int)));
-		connect (source_model, SIGNAL (layoutChanged()), this, SLOT (relayLayoutChange()));
+		connect (source_model, SIGNAL (rowsInserted(const QModelIndex&,int,int)), this, SLOT (r_rowsInserted(QModelIndex,int,int)));
+		connect (source_model, SIGNAL (rowsRemoved(const QModelIndex&,int,int)), this, SLOT (r_rowsRemoved(QModelIndex,int,int)));
+		connect (source_model, SIGNAL (dataChanged(QModelIndex,QModelIndex)), this, SLOT (r_dataChanged(QModelIndex,QModelIndex)));
+		connect (source_model, SIGNAL (layoutChanged()), this, SLOT (r_layoutChanged()));
 		QAbstractProxyModel::setSourceModel (source_model);
 	}
 
@@ -98,26 +106,28 @@ public:
 
 	static const quint32 real_item_id = 0xFFFFFFFF;
 public slots:
-	void rowsInserted (const QModelIndex& parent, int start, int end) {
+	void r_rowsInserted (const QModelIndex& parent, int start, int end) {
 		RK_TRACE (MISC);
 		RK_ASSERT (!parent.isValid ());
 
 		beginInsertRows (mapFromSource (parent), start, end);
 		endInsertRows ();
 	}
-	void rowsRemoved (const QModelIndex& parent, int start, int end) {
+	void r_rowsRemoved (const QModelIndex& parent, int start, int end) {
 		RK_TRACE (MISC);
 		RK_ASSERT (!parent.isValid ());
 
 		beginRemoveRows (mapFromSource (parent), start, end);
 		endRemoveRows ();
 	}
-	void relayLayoutChange () {
+	void r_dataChanged (const QModelIndex& from, const QModelIndex& to) {
+		emit (dataChanged (mapFromSource (from), mapFromSource (to)));
+	}
+	void r_layoutChanged () {
  		RK_DEBUG (MISC, DL_ERROR, "reset");
 		emit (layoutChanged());
 	}
 };
-
 
 /** Protects the given child widget from deletion */
 class RKWidgetGuard : public QWidget {
@@ -145,16 +155,21 @@ private:
 	QWidget *fallback_parent;
 };
 
-#include <QLabel>
+#include <QScrollBar>
+#include <QHeaderView>
 RKAccordionTable::RKAccordionTable (QWidget* parent) : QTreeView (parent) {
 	RK_TRACE (MISC);
 
+	show_add_remove_buttons = false;
 	default_widget = new KVBox;
-	new QLabel ("This is the content\nExcept it's just a dummy!!!!!!!!!!!!!!!", default_widget);
-	setSelectionBehavior (SelectRows);
-	setSelectionMode (SingleSelection);
+	setSelectionMode (NoSelection);
+	setIndentation (0);
+	setExpandsOnDoubleClick (false);   // we expand on single click, instead
+	setSizePolicy (QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+	setViewportMargins (20, 0, 0, 0);
 	pmodel = new RKAccordionDummyModel (this);
 	connect (this, SIGNAL (expanded(QModelIndex)), this, SLOT (rowExpanded(QModelIndex)));
+	connect (this, SIGNAL (clicked(QModelIndex)), this, SLOT (rowClicked(QModelIndex)));
 }
 
 RKAccordionTable::~RKAccordionTable () {
@@ -163,14 +178,21 @@ RKAccordionTable::~RKAccordionTable () {
 	delete default_widget;
 }
 
-void RKAccordionTable::currentChanged (const QModelIndex& current, const QModelIndex& previous) {
+QSize RKAccordionTable::minimumSizeHint () const {
 	RK_TRACE (MISC);
-	RK_ASSERT (current.isValid ());
-	Q_UNUSED (previous);
-// TODO: needed?
-	return;
-	if (!isExpanded (current)) {
-		expand (current);
+
+	QSize min = default_widget->minimumSize ();
+	min.setHeight (min.height () + horizontalScrollBar ()->minimumSizeHint ().height () + sizeHintForRow (0) * 4);
+	min.setWidth (qMax (min.width (), QTreeView::minimumSizeHint ().width ()));
+	return min;
+}
+
+void RKAccordionTable::rowClicked (QModelIndex row) {
+	RK_TRACE (MISC);
+
+	row = model ()->index (row.row (), 0, row.parent ());   // Fix up index to point to column 0, or isExpanded() will always return false
+	if (!row.parent ().isValid ()) {
+		setExpanded (row, !isExpanded (row));
 	}
 }
 
@@ -178,10 +200,46 @@ void RKAccordionTable::rowExpanded (QModelIndex row) {
 	RK_TRACE (MISC);
 
 	for (int i = 0; i < model ()->rowCount (); ++i) {
-		if (i != row.row ()) setExpanded (model ()->index (i, 0), false);
+		if (i != row.row ()) {
+			setIndexWidget (model ()->index (0, 0, model ()->index (i, 0)), 0);
+			setExpanded (model ()->index (i, 0), false);
+		}
 	}
 	setFirstColumnSpanned (0, row, true);
 	setIndexWidget (model ()->index (0, 0, row), new RKWidgetGuard (0, default_widget, this));
+	setCurrentIndex (row);
+	emit (activated (row.row ()));
+}
+
+void RKAccordionTable::updateWidget () {
+	RK_TRACE (MISC);
+
+	bool seen_expanded = false;
+	for (int i = 0; i < model ()->rowCount (); ++i) {
+		QModelIndex row = model ()->index (i, 0);
+		if (isExpanded (row) && !seen_expanded) {
+			rowExpanded (row);
+			seen_expanded = true;
+		}
+
+		if (show_add_remove_buttons && (indexWidget (row) == 0)) {
+			QWidget *display_buttons = new QWidget;
+			QHBoxLayout *layout = new QHBoxLayout (display_buttons);
+			layout->setContentsMargins (0, 0, 0, 0);
+			layout->setSpacing (0);
+			QToolButton *add_button = new QToolButton (display_buttons);
+			add_button->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionInsertRow));
+			RKCommonFunctions::setTips (i18n ("Add a row / element"), add_button);
+			QToolButton *remove_button = new QToolButton (display_buttons);
+			remove_button->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteRow));
+			RKCommonFunctions::setTips (i18n ("Remove a row / element"), remove_button);
+			layout->addWidget (add_button);
+			layout->addWidget (remove_button);
+			setIndexWidget (row, display_buttons);
+		}
+	}
+
+	if (show_add_remove_buttons) header ()->setResizeMode (0, QHeaderView::ResizeToContents);
 }
 
 void RKAccordionTable::setModel (QAbstractItemModel* model) {
@@ -189,6 +247,9 @@ void RKAccordionTable::setModel (QAbstractItemModel* model) {
 
 	pmodel->setSourceModel (model);
 	QTreeView::setModel (pmodel);
+	connect (pmodel, SIGNAL (layoutChanged()), this, SLOT (updateWidget()));
+	connect (pmodel, SIGNAL (rowsInserted(const QModelIndex&,int,int)), this, SLOT (updateWidget()));
+	connect (pmodel, SIGNAL (rowsRemoved(const QModelIndex&,int,int)), this, SLOT (updateWidget()));
 
 	if (pmodel->rowCount () > 0) expand (pmodel->index (0, 0));
 }
@@ -199,8 +260,11 @@ void RKAccordionTable::resizeEvent (QResizeEvent* event) {
 }
 
 // TODO
-// - add buttons to each row
+// - add buttons to each row (in correct size)
 // - handle resize
+// - fix initial size
+// - margins
+// - handle row insertions / removals correctly
 // KF5 TODO: remove:
 #include "rkaccordiontable.moc"
 #include "rkaccordiontablemodel_moc.cpp"

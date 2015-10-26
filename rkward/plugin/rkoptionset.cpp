@@ -56,7 +56,10 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	if (exp_mode != Detached) layout->addWidget (switcher);
 	user_area = new KVBox (this);
 	switcher->addWidget (user_area);
-	if (exp_mode == Accordion) accordion = new RKAccordionTable (user_area);
+	if (exp_mode == Accordion) {
+		accordion = new RKAccordionTable (user_area);
+		connect (accordion, SIGNAL(activated(int)), this, SLOT(currentRowChanged(int)));
+	}
 	updating_notice = new QLabel (i18n ("Updating status, please wait"), this);
 	switcher->addWidget (updating_notice);
 	update_timer.setInterval (0);
@@ -188,6 +191,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 			connect (remove_button, SIGNAL (clicked()), this, SLOT (removeRow()));
 		}
 	}
+	if (!keycolumn && (exp_mode == Accordion)) accordion->setShowAddRemoveButtons (true);
 }
 
 RKOptionSet::~RKOptionSet () {
@@ -759,8 +763,13 @@ void RKOptionSet::currentRowChanged () {
 	RK_TRACE (PLUGIN);
 
 	RK_ASSERT (display);
-	int r = getCurrentRowFromDisplay (display);
-	if (active_row != r) current_row->setIntValue (r);
+	currentRowChanged (getCurrentRowFromDisplay (display));
+}
+
+void RKOptionSet::currentRowChanged (int row) {
+	RK_TRACE (PLUGIN);
+
+	if (active_row != row) current_row->setIntValue (row);
 	// --> currentRowPropertyChanged ()
 }
 
