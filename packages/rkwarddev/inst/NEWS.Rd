@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.07-4 (2015-10-24)}{
+\section{Changes in rkwarddev version 0.07-4 (2015-10-26)}{
   \subsection{unreleased}{
     \itemize{
       \item this version is under development
@@ -28,7 +28,8 @@
       \item new wrapper function \code{jo()} for \code{id()} makes it possible to use several
         operators without quoting, it will detect and quote them for you
       \item new option \code{".objects"} in \code{id()} to provide objects as a list
-      \item new option \code{"rk.JS.vars"} to maje JS varaibles match the name of the original R object
+      \item new option \code{"rk.JS.vars"} to maje JS varaibles match the name of the
+        original R object
     }
   }
   \subsection{changed}{

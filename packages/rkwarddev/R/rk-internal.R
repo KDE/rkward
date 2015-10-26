@@ -1483,3 +1483,20 @@ replaceJSOperators <- function(..., call="id"){
   )
   return(unlist(dotlist))
 } ## end function replaceJSOperators
+
+
+## function uncurl()
+# used by js() to fetch calls from then/else segments of if conditions,
+# omitting curly brackets that would get in the way with ite()
+uncurl <- function(cond, level=1){
+  if(!is.null(cond)){
+    if(identical(as.character(cond[[1]]), "{")){
+    message("{")
+      cond <- do.call("js", args=list(cond[[2]], level=level+1))
+    } else {
+    message("no {")
+      cond <- do.call("js", args=list(cond, level=level+1))
+    }
+  } else {}
+  return(cond)
+} ## end function uncurl()

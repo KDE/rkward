@@ -7,7 +7,7 @@
 ite(ifjs, thenjs, elsejs = NULL)
 }
 \arguments{
-\item{ifjs}{Either a character string to be placed in the brackets if an \code{if()} statement,
+\item{ifjs}{Either a character string to be placed in the brackets of an \code{if()} statement,
 or an object of class \code{XiMpLe.node}. \code{rk.JS.arr} or \code{rk.JS.opt} (whose identifier will be used).}
 
 \item{thenjs}{Either a character string,
