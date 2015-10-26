@@ -16,18 +16,16 @@
 # along with rkwarddev.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#' Keep operators when replace XiMpLe.nodes with ID value
+#' R to JavaScript translation
 #' 
 #' This function is a wrapper for \code{\link[rkwarddev:id]{id}} similar to \code{\link[rkwarddev:qp]{qp}}
 #' that uses \code{eval(substitute(alist(...)))} to preserve the value of \code{...} as-is to be able to
-#' keep operators like \code{">="} or \code{"!="} unevaluated in the resulting output. This can be used to
-#' in "if" clauses, e.g. with \code{\link[rkwarddev:ite]{ite}}, so you don't have to quote half of it.
+#' both keep operators like \code{">="} or \code{"!="} unevaluated in the resulting output, as well as translating
+#' \code{if/else} clauses from R to JavaScript.
 #' 
 #' Normally, \code{id} would simply evaluate the condition and then return the result of that evaluation, which
 #' most of the time is not what you want. With this function, you can test conditions in usual R syntax, yet
-#' the operators will end up pasted in the result.
-#' 
-#' The abbreviation stands for "JavaScript operators".
+#' the operators and \code{if/else} clauses will end up pasted in the result.
 #' 
 #' The following operators are supported: +, -, *, /, ==, !=, >, <, >=, <=, || and &&
 #' 
@@ -35,7 +33,8 @@
 #'
 #' @param ... One or several character strings and/or \code{XiMpLe.node} objects with plugin nodes,
 #'   and/or objects of classes \code{rk.JS.arr} or \code{rk.JS.opt}, simply separated by comma.
-#'   JavaScript operators will be kept as-is.
+#'   JavaScript operators and \code{if} conditions will be kept as-is.
+#' @param level Integer value, first indetation level.
 #' @return A character string.
 #' @export
 #' @seealso \code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}},
@@ -47,11 +46,11 @@
 #' @examples
 #' # an example checkbox XML node
 #' cbox1 <- rk.XML.cbox(label="foo", value="foo1", id.name="CheckboxFoo.ID")
-#' ite(jo(cbox1 == "foo1"), echo("gotcha!"))
+#' rk.pasteJS(js(if(cbox1 == "foo1") { echo("gotcha!") }))
 
-jo <- function(...){
+js <- function(..., level=2){
   full.content <- eval(substitute(alist(...)))
-  ID.content <- sapply(
+  ID.content <- lapply(
     full.content,
     function(this.part){
       # get the object, not just a name from eval(substitute(alist(...)))
@@ -59,6 +58,10 @@ jo <- function(...){
         this.part <- eval(this.part)
       } else {}
       if(is.call(this.part)){
+        # recursively check for if conditions
+        if(inherits(this.part, "if")){
+          this.part <- replaceJSIf(this.part, level=level)
+        } else {}
         # replace JS operators
         return(do.call("replaceJSOperators", args=list(this.part)))
       } else {

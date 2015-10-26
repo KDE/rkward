@@ -34,7 +34,7 @@ E.g.,
       if \code{false=FALSE} then the option will be set to \code{FALSE} if the box is not checked,
 or in case \code{not=TRUE}, if the box is checked.}
 
-\item{opt}{A character string, naming the R option o be set. If \code{NULL},
+\item{opt}{A character string, naming the R option to be set. If \code{NULL},
       the XML ID of the checkbox node
 will be used.}
 
