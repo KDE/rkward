@@ -52,7 +52,9 @@ private slots:
 	void columnPropertyChanged (RKComponentPropertyBase *property);
 	void currentRowPropertyChanged (RKComponentPropertyBase *property);
 	void serializationPropertyChanged (RKComponentPropertyBase *property);
+	void addRow (int where);
 	void addRow ();
+	void removeRow (int which);
 	void removeRow ();
 	void currentRowChanged ();
 	void currentRowChanged (int row);

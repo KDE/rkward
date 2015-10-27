@@ -58,7 +58,9 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	switcher->addWidget (user_area);
 	if (exp_mode == Accordion) {
 		accordion = new RKAccordionTable (user_area);
-		connect (accordion, SIGNAL(activated(int)), this, SLOT(currentRowChanged(int)));
+		connect (accordion, SIGNAL (activated(int)), this, SLOT(currentRowChanged(int)));
+		connect (accordion, SIGNAL (addRow(int)), this, SLOT(addRow(int)));
+		connect (accordion, SIGNAL (removeRow(int)), this, SLOT(removeRow(int)));
 	}
 	updating_notice = new QLabel (i18n ("Updating status, please wait"), this);
 	switcher->addWidget (updating_notice);
@@ -83,10 +85,10 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	// first build the contents, as we will need to refer to the elements inside, later
 	model = 0;
 	display = 0;	// will be created from the builder, on demand -> createDisplay ()
-	contents_container = new RKComponent (this, exp_mode == RKOptionSet::Accordion ? accordion->defaultWidget () : user_area);
+	contents_container = new RKComponent (this, exp_mode == RKOptionSet::Accordion ? accordion->editorWidget () : user_area);
 	QDomElement content_element = xml->getChildElement (element, "content", DL_ERROR);
 	RKComponentBuilder *builder = new RKComponentBuilder (contents_container, content_element);
-	builder->buildElement (content_element, *xml, exp_mode == Accordion ? accordion->defaultWidget () : user_area, false);	// NOTE that parent widget != parent component, here, by intention. The point is that the display should not be disabled along with the contents
+	builder->buildElement (content_element, *xml, exp_mode == Accordion ? accordion->editorWidget () : user_area, false);	// NOTE that parent widget != parent component, here, by intention. The point is that the display should not be disabled along with the contents
 	builder->parseLogic (xml->getChildElement (element, "logic", DL_INFO), *xml, false);
 	builder->makeConnections ();
 	addChild ("contents", contents_container);
@@ -180,7 +182,6 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 		else display->setColumnHidden (0, true);
 		display->setModel (model);
 		if (exp_mode == Detached) display->setItemDelegate (new RKOptionSetDelegate (this));
-		if (exp_mode == Accordion) accordion->setModel (model);
 		display->setSelectionBehavior (QAbstractItemView::SelectRows);
 		display->setSelectionMode (QAbstractItemView::SingleSelection);
 		connect (display->selectionModel (), SIGNAL (selectionChanged(QItemSelection,QItemSelection)), this, SLOT (currentRowChanged()));
@@ -192,6 +193,10 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 		}
 	}
 	if (!keycolumn && (exp_mode == Accordion)) accordion->setShowAddRemoveButtons (true);
+	if (exp_mode == Accordion) {
+		accordion->setModel (model);
+		if (display) display->hide ();
+	}
 }
 
 RKOptionSet::~RKOptionSet () {
@@ -202,7 +207,7 @@ void RKOptionSet::fetchDefaults () {
 	RK_TRACE (PLUGIN);
 	RK_ASSERT (default_row_state.isEmpty ());
 	contents_container->fetchPropertyValuesRecursive (&default_row_state, false, QString (), true);
-	if (min_rows && !keycolumn && (rowCount () <= 0)) addRow ();
+	if (min_rows && !keycolumn && (rowCount () <= 0)) addRow (rowCount ());
 	contents_container->enablednessProperty ()->setBoolValue (rowCount () > 0);	// no current row; Do this *after* fetching default values, however. Otherwise most values will *not* be read, as the element is disabled
 }
 
@@ -416,14 +421,19 @@ void RKOptionSet::updateUnfinishedRows () {
 	RK_ASSERT (false);	// This would mean, we did not find any unfinished row, even though we tested for n_unfinished_rows, above.
 }
 
+// TODO: removeMe
 void RKOptionSet::addRow () {
+	RK_TRACE (PLUGIN);
+	addRow (active_row >= 0 ? active_row + 1 : rowCount ());	// append feels more natural than insert, here
+}
+
+void RKOptionSet::addRow (int row) {
 	RK_TRACE (PLUGIN);
 
 	storeRowSerialization (active_row);
 
-	int row = active_row + 1;	// append feels more natural than insert, here
 	int nrows = rowCount ();
-	if (row <= 0) row = nrows;
+	if (row < 0) row = nrows;
 	RK_ASSERT (!keycolumn);
 
 	if (display) model->beginInsertRows (QModelIndex (), row, row);
@@ -455,10 +465,15 @@ void RKOptionSet::addRow () {
 	changed ();
 }
 
+// TODO: removeMe
 void RKOptionSet::removeRow () {
 	RK_TRACE (PLUGIN);
+	removeRow (active_row);
+}
 
-	int row = active_row;
+void RKOptionSet::removeRow (int row) {
+	RK_TRACE (PLUGIN);
+
 	int nrows = rowCount ();
 	if (row < 0) {
 		RK_ASSERT (false);
@@ -756,6 +771,11 @@ void RKOptionSet::updateCurrentRowInDisplay () {
 	if (active_row < 0) display->selectionModel ()->clearSelection ();
 	else {
 		display->selectionModel ()->select (display->model ()->index (active_row, 0), QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+	}
+
+	if (exp_mode == Accordion) {
+		if (active_row < 0) accordion->collapseAll ();
+		else accordion->activateRow (active_row);
 	}
 }
 

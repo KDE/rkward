@@ -30,25 +30,33 @@ public:
 	RKAccordionTable (QWidget *parent);
 	~RKAccordionTable ();
 
-	QWidget *defaultWidget () const { return default_widget; };
+	QWidget *editorWidget () const { return editor_widget; };
 
 	void setModel (QAbstractItemModel *model);
 	void setShowAddRemoveButtons (bool show) {
 		show_add_remove_buttons = show;
 	}
 
-	QSize minimumSizeHint () const;                                                  // reimplemented to assure a proper size for the content
+	QSize sizeHint () const;                                                  // reimplemented to assure a proper size for the content
 public slots:
 	void rowExpanded (QModelIndex row);
 	void rowClicked (QModelIndex row);
 	void updateWidget ();
+	void addClicked ();
+	void removeClicked ();
+	void activateRow (int row);
 signals:
 	void activated (int row);
+	void addRow (int where);
+	void removeRow (int which);
 protected:
 	void resizeEvent (QResizeEvent* event);                                          // reimplemented to make the current content widget stretch / shrink
 private:
+	QSize sizeHintWithoutEditor () const;
+	int rowOfButton (QObject *button) const;
 	bool show_add_remove_buttons;
-	QWidget *default_widget;
+	QWidget *editor_widget;
+	QWidget *editor_widget_container;
 	QAbstractProxyModel *pmodel;
 };
 

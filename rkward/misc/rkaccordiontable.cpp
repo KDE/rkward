@@ -140,6 +140,7 @@ public:
 		RKWidgetGuard::fallback_parent = fallback_parent;
 
 		QVBoxLayout *layout = new QVBoxLayout (this);
+		layout->setContentsMargins (0, 0, 0, 0);
 		guarded->setParent (this);
 		layout->addWidget (guarded);
 	}
@@ -161,7 +162,15 @@ RKAccordionTable::RKAccordionTable (QWidget* parent) : QTreeView (parent) {
 	RK_TRACE (MISC);
 
 	show_add_remove_buttons = false;
-	default_widget = new KVBox;
+
+	// This may seem like excessive wrapping. The point is to be able to manipulate the editor_widget_container's sizeHint(), while
+	// keeping the editor_widget's sizeHint() intact.
+	editor_widget_container = new QWidget ();
+	QHBoxLayout *layout = new QHBoxLayout (editor_widget_container);
+	layout->setContentsMargins (0, 0, 0, 0);
+	editor_widget = new KVBox (editor_widget_container);
+	layout->addWidget (editor_widget);
+
 	setSelectionMode (NoSelection);
 	setIndentation (0);
 	setExpandsOnDoubleClick (false);   // we expand on single click, instead
@@ -175,16 +184,57 @@ RKAccordionTable::RKAccordionTable (QWidget* parent) : QTreeView (parent) {
 RKAccordionTable::~RKAccordionTable () {
 	RK_TRACE (MISC);
 
-	delete default_widget;
+	delete editor_widget;
 }
 
-QSize RKAccordionTable::minimumSizeHint () const {
+QSize RKAccordionTable::sizeHintWithoutEditor () const {
 	RK_TRACE (MISC);
 
-	QSize min = default_widget->minimumSize ();
-	min.setHeight (min.height () + horizontalScrollBar ()->minimumSizeHint ().height () + sizeHintForRow (0) * 4);
-	min.setWidth (qMax (min.width (), QTreeView::minimumSizeHint ().width ()));
+	return (QSize (minimumSizeHint ().width (), horizontalScrollBar ()->minimumSizeHint ().height () + sizeHintForRow (0) * 4));
+}
+
+QSize RKAccordionTable::sizeHint () const {
+	RK_TRACE (MISC);
+
+	QSize swoe = sizeHintWithoutEditor ();
+	QSize min = editor_widget->sizeHint ();
+	min.setHeight (min.height () + swoe.height ());
+	min.setWidth (qMax (min.width (), swoe.width ()));
 	return min;
+}
+
+void RKAccordionTable::resizeEvent (QResizeEvent* event) {
+	RK_TRACE (MISC);
+
+	QSize esh = editor_widget->sizeHint ();
+	int available_height = height () - sizeHintWithoutEditor ().height ();
+	int extra_height = available_height - esh.height ();
+	editor_widget_container->setMinimumHeight (esh.height () + qMax (0, 2 * (extra_height / 3)));
+	editor_widget_container->setMaximumWidth (width ());
+
+	QTreeView::resizeEvent (event);
+
+	// NOTE: For Qt 4.8.6, an expanded editor row will _not_ be updated, automatically.
+	// We have to force this by hiding / unhiding it.
+	QModelIndex expanded;
+	for (int i = 0; i < model ()->rowCount (); ++i) {
+		if (isExpanded (model ()->index (i, 0))) {
+			expanded = model ()->index (i, 0);
+			break;
+		}
+	}
+	if (expanded.isValid ()) {
+		setUpdatesEnabled (false);
+		setRowHidden (0, expanded, true);
+		setRowHidden (0, expanded, false);
+		setUpdatesEnabled (true);
+	}
+}
+
+void RKAccordionTable::activateRow (int row) {
+	RK_TRACE (MISC);
+
+	setExpanded (model ()->index (row, 0), true);
 }
 
 void RKAccordionTable::rowClicked (QModelIndex row) {
@@ -206,8 +256,10 @@ void RKAccordionTable::rowExpanded (QModelIndex row) {
 		}
 	}
 	setFirstColumnSpanned (0, row, true);
-	setIndexWidget (model ()->index (0, 0, row), new RKWidgetGuard (0, default_widget, this));
+	setIndexWidget (model ()->index (0, 0, row), new RKWidgetGuard (0, editor_widget_container, this));
 	setCurrentIndex (row);
+	scrollTo (row, EnsureVisible);                          // yes, we want both scrolls: We want the header row above the widget, if possible at all,
+	scrollTo (model ()->index (0, 0, row), EnsureVisible);  // but of course, having the header row visible without the widget is not enough...
 	emit (activated (row.row ()));
 }
 
@@ -227,19 +279,64 @@ void RKAccordionTable::updateWidget () {
 			QHBoxLayout *layout = new QHBoxLayout (display_buttons);
 			layout->setContentsMargins (0, 0, 0, 0);
 			layout->setSpacing (0);
+
 			QToolButton *add_button = new QToolButton (display_buttons);
+			connect (add_button, SIGNAL (clicked(bool)), this, SLOT (addClicked()));
 			add_button->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionInsertRow));
 			RKCommonFunctions::setTips (i18n ("Add a row / element"), add_button);
+			layout->addWidget (add_button);
+
 			QToolButton *remove_button = new QToolButton (display_buttons);
+			connect (remove_button, SIGNAL (clicked(bool)), this, SLOT (removeClicked()));
 			remove_button->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteRow));
 			RKCommonFunctions::setTips (i18n ("Remove a row / element"), remove_button);
-			layout->addWidget (add_button);
 			layout->addWidget (remove_button);
+
 			setIndexWidget (row, display_buttons);
 		}
 	}
 
 	if (show_add_remove_buttons) header ()->setResizeMode (0, QHeaderView::ResizeToContents);
+}
+
+int RKAccordionTable::rowOfButton (QObject* button) const {
+	RK_TRACE (MISC);
+
+	if (!button) return -1;
+
+	// we rely on the fact that the buttons in use, here, are encapsulaped in a parent widget, which is set as indexWidget()
+	QObject* button_parent = button->parent ();
+	for (int i = model ()->rowCount () - 1; i >= 0; --i) {
+		QModelIndex row = model ()->index (i, 0);
+		if (button_parent == indexWidget (row)) {
+			return i;
+		}
+	}
+	RK_ASSERT (false);
+	return -1;
+}
+
+
+void RKAccordionTable::addClicked () {
+	RK_TRACE (MISC);
+
+	int row = rowOfButton (sender ());
+	if (row < 0) {
+		RK_ASSERT (row >= 0);
+		return;
+	}
+	emit (addRow (row));
+}
+
+void RKAccordionTable::removeClicked () {
+	RK_TRACE (MISC);
+
+	int row = rowOfButton (sender ());
+	if (row < 0) {
+		RK_ASSERT (row >= 0);
+		return;
+	}
+	emit (removeRow (row));
 }
 
 void RKAccordionTable::setModel (QAbstractItemModel* model) {
@@ -252,19 +349,17 @@ void RKAccordionTable::setModel (QAbstractItemModel* model) {
 	connect (pmodel, SIGNAL (rowsRemoved(const QModelIndex&,int,int)), this, SLOT (updateWidget()));
 
 	if (pmodel->rowCount () > 0) expand (pmodel->index (0, 0));
+
+	updateGeometry ();   // TODO: Not so clean to call this, here. But at this point we know the display_widget has been constructed, too
 }
 
-void RKAccordionTable::resizeEvent (QResizeEvent* event) {
-	// TODO
-	QTreeView::resizeEvent (event);
-}
 
 // TODO
-// - add buttons to each row (in correct size)
-// - handle resize
-// - fix initial size
-// - margins
-// - handle row insertions / removals correctly
+// - insertion when now row is available, yet
+// - expand / collapse indicator?
+// - drag-reordering?
+//   - will this make per-item add buttons obsolete?
+
 // KF5 TODO: remove:
 #include "rkaccordiontable.moc"
 #include "rkaccordiontablemodel_moc.cpp"
