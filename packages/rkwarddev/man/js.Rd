@@ -21,7 +21,7 @@ This function is a wrapper for \code{\link[rkwarddev:id]{id}} similar to \code{\
 that uses \code{eval(substitute(alist(...)))} to preserve the value of \code{...} as-is to be able to
 both keep operators like \code{">="} or \code{"!="} unevaluated in the resulting output,
       as well as translating
-\code{if/else} clauses from R to JavaScript.
+\code{if/else} clauses and \code{for} loops from R to JavaScript.
 }
 \details{
 Normally,
@@ -29,6 +29,13 @@ Normally,
 most of the time is not what you want. With this function,
       you can test conditions in usual R syntax, yet
 the operators and \code{if/else} clauses will end up pasted in the result.
+
+Using \code{for} loops is a bit more delicate,
+      as they are very differently constructed in JavaScript. As
+a workaround,
+      \code{js} will define an array and a counter variable with randomly generated names, fill
+the array with the values you provided and iterate through the array. It will keep the iterator variable
+name you used in the original R loop, so you can use it inside the loop body.
 
 The following operators are supported: +, -, *, /, ==, !=, >, <, >=, <=, || and &&
 

@@ -21,11 +21,16 @@
 #' This function is a wrapper for \code{\link[rkwarddev:id]{id}} similar to \code{\link[rkwarddev:qp]{qp}}
 #' that uses \code{eval(substitute(alist(...)))} to preserve the value of \code{...} as-is to be able to
 #' both keep operators like \code{">="} or \code{"!="} unevaluated in the resulting output, as well as translating
-#' \code{if/else} clauses from R to JavaScript.
+#' \code{if/else} clauses and \code{for} loops from R to JavaScript.
 #' 
 #' Normally, \code{id} would simply evaluate the condition and then return the result of that evaluation, which
 #' most of the time is not what you want. With this function, you can test conditions in usual R syntax, yet
 #' the operators and \code{if/else} clauses will end up pasted in the result.
+#' 
+#' Using \code{for} loops is a bit more delicate, as they are very differently constructed in JavaScript. As
+#' a workaround, \code{js} will define an array and a counter variable with randomly generated names, fill
+#' the array with the values you provided and iterate through the array. It will keep the iterator variable
+#' name you used in the original R loop, so you can use it inside the loop body.
 #' 
 #' The following operators are supported: +, -, *, /, ==, !=, >, <, >=, <=, || and &&
 #' 
@@ -61,6 +66,9 @@ js <- function(..., level=2){
         # recursively check for if conditions
         if(inherits(this.part, "if")){
           this.part <- replaceJSIf(this.part, level=level)
+        } else {}
+        if(inherits(this.part, "for")){
+          this.part <- replaceJSFor(this.part, level=level)
         } else {}
         # replace JS operators
         return(do.call("replaceJSOperators", args=list(this.part)))

@@ -1545,4 +1545,34 @@ replaceJSIf <- function(cond, level=1, paste=TRUE){
     cond <- do.call("js", args=list(cond, level=level))
     return(cond)
   }
-}
+} ## end function replaceJSIf
+
+
+## function replaceJSFor
+replaceJSFor <- function(loop, level=1){
+  if(inherits(loop, "for")){
+    # for loops must be handled differently, we need to create an array
+    # first and then interate through the array to imitate ho R does this
+    # 
+    # also, the array and iterator variables must not be named like any
+    # of the given variables/objects. therefore, we will use some randomly
+    # generated character strings for those
+    arrayName <- paste0("a", paste0(sample(c(letters,LETTERS,0:9), 5, replace=TRUE), collapse=""))
+    iterName <- paste0("i", paste0(sample(c(letters,LETTERS,0:9), 5, replace=TRUE), collapse=""))
+    loop <- paste(
+      paste0(paste0(rep("\t", level-1), collapse=""), "// the following array variable has a randomly generated name"),
+      paste0("var ", arrayName, " = new Array();"),
+      paste0(arrayName, ".push(", do.call("js", args=list(loop[[3]], level=level)), ");"),
+      "// the counter variable also has a randomly generated name",
+      paste0("for (var ", as.character(loop[[2]]), "=", arrayName, "[0], ", iterName, "=0; ",
+        iterName, " < ", arrayName, ".length; ",
+        iterName, "++, ", as.character(loop[[2]]), "=", arrayName, "[", iterName, "]) {"),
+      paste0(paste0(rep("\t", level-1), collapse=""), do.call("js", args=list(uncurl(loop[[4]], level=level+1), level=level))),
+      "}\n",
+      sep=paste0("\n", paste0(rep("\t", level-1), collapse=""))
+    )
+  } else {
+    loop <- do.call("js", args=list(loop, level=level))
+    return(loop)
+  }
+} ## end function replaceJSFor
