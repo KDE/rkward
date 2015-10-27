@@ -1490,8 +1490,18 @@ replaceJSOperators <- function(..., call="id"){
 # omitting curly brackets that would get in the way with ite()
 uncurl <- function(cond, level=1){
   if(!is.null(cond)){
+    cond.list <- as.list(cond)
+    # NOTE: is it better to check for the bracket or lenght > 1?
     if(identical(as.character(cond[[1]]), "{")){
-      cond <- do.call("js", args=list(cond[[2]], level=level))
+      cond <- paste0(
+        sapply(
+          2:length(cond.list),
+          function(this.cond.num){
+            do.call("js", args=list(cond[[this.cond.num]], level=level))
+          }
+        ),
+        collapse=paste0("\n", paste0(rep("\t", level-1), collapse=""))
+      )
     } else {
       cond <- do.call("js", args=list(cond, level=level))
     }
@@ -1512,16 +1522,15 @@ replaceJSIf <- function(cond, level=1, paste=TRUE){
       cond.then <- do.call("js", args=list(uncurl(cond[[3]], level=level+1), level=level))
     }
     # else do -- could be missing or yet another if condition
-    try.else <- NULL
-    cond.else <- tryCatch(
+    cond.else <- NULL
+    if(length(as.list(cond)) > 3){
       if(inherits(cond[[4]], "if")){
-        try.else <- replaceJSIf(cond[[4]], level=level+1, paste=FALSE)
+        cond.else <- replaceJSIf(cond[[4]], level=level+1, paste=FALSE)
       } else {
-        try.else <- do.call("js", args=list(uncurl(cond[[4]], level=level+1), level=level))
-      },
-      error=function(e) NULL,
-      finally=try.else
-    )
+        cond.else <- do.call("js", args=list(uncurl(cond[[4]], level=level+1), level=level))
+      }
+    } else {}
+
     iteObject <- ite(
       ifjs=cond.if,
       thenjs=cond.then,
