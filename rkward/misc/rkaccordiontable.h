@@ -21,8 +21,7 @@
 #include <QWidget>
 #include <QTreeView>
 
-class QAbstractItemModel;
-class QAbstractProxyModel;
+class RKAccordionDummyModel;
 
 class RKAccordionTable : public QTreeView {
 	Q_OBJECT
@@ -57,7 +56,7 @@ private:
 	bool show_add_remove_buttons;
 	QWidget *editor_widget;
 	QWidget *editor_widget_container;
-	QAbstractProxyModel *pmodel;
+	RKAccordionDummyModel *pmodel;
 };
 
 #endif

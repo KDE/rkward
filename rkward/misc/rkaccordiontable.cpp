@@ -22,6 +22,7 @@
 #include <QAbstractProxyModel>
 #include <QToolButton>
 #include <QHBoxLayout>
+#include <QLabel>
 
 #include <kvbox.h>
 #include <klocale.h>
@@ -37,21 +38,35 @@
 class RKAccordionDummyModel : public QAbstractProxyModel {
 	Q_OBJECT
 public:
-	RKAccordionDummyModel (QObject *parent) : QAbstractProxyModel (parent) {};
+	RKAccordionDummyModel (QObject *parent) : QAbstractProxyModel (parent) {
+		add_leading_columns = 1;
+		strip_leading_columns = 0;
+		add_trailing_rows = 1;
+	};
 
 	QModelIndex mapFromSource (const QModelIndex& sindex) const {
 		if (!sindex.isValid ()) return QModelIndex ();
 		// we're using Source row as "Internal ID", here. This _would_ fall on our feet when removing rows, _if_ we'd actually
 		// have to be able to map the dummy rows back to their real parents.
-		return (createIndex (sindex.row (), sindex.column (), real_item_id));
+		return (createIndex (sindex.row (), mapColumnFromSource (sindex.column ()), real_item_id));
+	}
+
+	inline int mapColumnFromSource (int column) const {
+		return qMax (0, column + add_leading_columns - strip_leading_columns);
+	}
+
+	inline int mapColumnToSource (int column) const {
+		return qMax (0, column - add_leading_columns + strip_leading_columns);
 	}
 
 	QModelIndex mapToSource (const QModelIndex& pindex) const {
 		if (!pindex.isValid ()) return QModelIndex ();
-		if (pindex.internalId () != real_item_id) {
-			return sourceModel ()->index (pindex.internalId (), pindex.column ());
+		if (pindex.internalId () == real_item_id) {
+			return sourceModel ()->index (pindex.row (), mapColumnToSource (pindex.column ()));
+		} else if (pindex.internalId () == trailing_item_id) {
+			return QModelIndex ();
 		} else {
-			return sourceModel ()->index (pindex.row (), pindex.column ());
+			return sourceModel ()->index (pindex.internalId (), 0);
 		}
 	}
 
@@ -60,10 +75,10 @@ public:
 		return QAbstractProxyModel::flags (index);
 	}
 
-	int rowCount (const QModelIndex& parent) const {
+	int rowCount (const QModelIndex& parent = QModelIndex ()) const {
 		if (isFake (parent)) return 0;
 		if (parent.isValid ()) return 1;
-		return sourceModel ()->rowCount (mapToSource (parent));
+		return sourceModel ()->rowCount (mapToSource (parent)) + add_trailing_rows;
 	}
 
     QVariant data(const QModelIndex& proxyIndex, int role = Qt::DisplayRole) const {
@@ -71,23 +86,32 @@ public:
 		return QAbstractProxyModel::data (proxyIndex, role);
 	}
 
+	QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const {
+		if ((orientation == Qt::Horizontal) && (section < add_leading_columns) && (role == Qt::DisplayRole)) return QVariant ();
+		return QAbstractProxyModel::headerData (section, orientation, role);
+	}
+
 	bool hasChildren (const QModelIndex& parent) const {
 		return (!isFake (parent));
 	}
 
-	int columnCount (const QModelIndex& parent) const {
+	int columnCount (const QModelIndex& parent = QModelIndex ()) const {
 		if (isFake (parent)) return 1;
-		return sourceModel ()->columnCount (mapToSource (parent));
+		return mapColumnFromSource (sourceModel ()->columnCount (mapToSource (parent)));
 	}
 
-	QModelIndex index (int row, int column, const QModelIndex& parent) const {
-		if (!parent.isValid ()) return createIndex (row, column, real_item_id);
+	QModelIndex index (int row, int column, const QModelIndex& parent = QModelIndex ()) const {
+		if (!parent.isValid ()) {
+			if (row == sourceModel ()->rowCount ()) return createIndex (row, column, trailing_item_id);
+			return createIndex (row, column, real_item_id);
+		}
 		RK_ASSERT (parent.internalId () == real_item_id);
 		return createIndex (row, column, parent.row ());
 	}
 
 	QModelIndex parent (const QModelIndex& child) const {
 		if (child.internalId () == real_item_id) return QModelIndex ();
+		else if (child.internalId () == trailing_item_id) return QModelIndex ();
 		return createIndex (child.internalId (), 0, real_item_id);
 	}
 
@@ -105,6 +129,10 @@ public:
 	}
 
 	static const quint32 real_item_id = 0xFFFFFFFF;
+	static const quint32 trailing_item_id = 0xFFFFFFFE;
+	int add_leading_columns;
+	int strip_leading_columns;
+	int add_trailing_rows;
 public slots:
 	void r_rowsInserted (const QModelIndex& parent, int start, int end) {
 		RK_TRACE (MISC);
@@ -173,10 +201,11 @@ RKAccordionTable::RKAccordionTable (QWidget* parent) : QTreeView (parent) {
 
 	setSelectionMode (NoSelection);
 	setIndentation (0);
+	setRootIsDecorated (false);
 	setExpandsOnDoubleClick (false);   // we expand on single click, instead
 	setSizePolicy (QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 	setViewportMargins (20, 0, 0, 0);
-	pmodel = new RKAccordionDummyModel (this);
+	pmodel = new RKAccordionDummyModel (0);
 	connect (this, SIGNAL (expanded(QModelIndex)), this, SLOT (rowExpanded(QModelIndex)));
 	connect (this, SIGNAL (clicked(QModelIndex)), this, SLOT (rowClicked(QModelIndex)));
 }
@@ -184,7 +213,11 @@ RKAccordionTable::RKAccordionTable (QWidget* parent) : QTreeView (parent) {
 RKAccordionTable::~RKAccordionTable () {
 	RK_TRACE (MISC);
 
-	delete editor_widget;
+	// Qt 4.8.6: The model must _not_ be a child of this view, and must _not_ be deleted along with it, or else there will be a crash
+	// on destruction _if_ (and only if) there are any trailing dummy rows. (Inside QAbstractItemModelPrivate::removePersistentIndexData())
+	// No, I do not understand this, yes, this is worrysome, but no idea, what could be the actual cause.
+	pmodel->deleteLater ();
+	delete editor_widget_container;
 }
 
 QSize RKAccordionTable::sizeHintWithoutEditor () const {
@@ -286,17 +319,26 @@ void RKAccordionTable::updateWidget () {
 			RKCommonFunctions::setTips (i18n ("Add a row / element"), add_button);
 			layout->addWidget (add_button);
 
-			QToolButton *remove_button = new QToolButton (display_buttons);
-			connect (remove_button, SIGNAL (clicked(bool)), this, SLOT (removeClicked()));
-			remove_button->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteRow));
-			RKCommonFunctions::setTips (i18n ("Remove a row / element"), remove_button);
-			layout->addWidget (remove_button);
+			if (i < (model ()->rowCount () - 1)) {
+				QToolButton *remove_button = new QToolButton (display_buttons);
+				connect (remove_button, SIGNAL (clicked(bool)), this, SLOT (removeClicked()));
+				remove_button->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteRow));
+				RKCommonFunctions::setTips (i18n ("Remove this row / element"), remove_button);
+				layout->addWidget (remove_button);
+			} else {
+				QLabel *label = new QLabel (i18n ("Click to add new row / element"), display_buttons);
+				layout->addWidget (label);
+				setFirstColumnSpanned (i, QModelIndex (), true);
+			}
 
 			setIndexWidget (row, display_buttons);
+
+			if (i == 0) {
+				header ()->resizeSection (0, 2*rowHeight (row));
+				header ()->setResizeMode (0, QHeaderView::Fixed);
+			}
 		}
 	}
-
-	if (show_add_remove_buttons) header ()->setResizeMode (0, QHeaderView::ResizeToContents);
 }
 
 int RKAccordionTable::rowOfButton (QObject* button) const {
@@ -350,15 +392,18 @@ void RKAccordionTable::setModel (QAbstractItemModel* model) {
 
 	if (pmodel->rowCount () > 0) expand (pmodel->index (0, 0));
 
+	updateWidget ();
 	updateGeometry ();   // TODO: Not so clean to call this, here. But at this point we know the display_widget has been constructed, too
 }
 
 
 // TODO
 // - insertion when now row is available, yet
+// - index column, and sets without manual add / remove
 // - expand / collapse indicator?
 // - drag-reordering?
 //   - will this make per-item add buttons obsolete?
+// - improve scrolling behavior
 
 // KF5 TODO: remove:
 #include "rkaccordiontable.moc"
