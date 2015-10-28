@@ -1474,7 +1474,12 @@ replaceJSOperators <- function(..., call="id"){
           )
           return(paste0(unlist(result), collapse=""))
         } else {
-          return(eval(thisItem))
+          thisItem <- eval(thisItem)
+          # R vectors don't make much sense, collapse them for JS
+          if(is.vector(thisItem)){
+            thisItem <- paste0(thisItem, collapse=", ")
+          } else {}
+          return(thisItem)
         }
       } else {
         return(thisItem)
@@ -1560,10 +1565,9 @@ replaceJSFor <- function(loop, level=1){
     arrayName <- paste0("a", paste0(sample(c(letters,LETTERS,0:9), 5, replace=TRUE), collapse=""))
     iterName <- paste0("i", paste0(sample(c(letters,LETTERS,0:9), 5, replace=TRUE), collapse=""))
     loop <- paste(
-      paste0(paste0(rep("\t", level-1), collapse=""), "// the following array variable has a randomly generated name"),
+      paste0(paste0(rep("\t", level-1), collapse=""), "// the variable names \"", arrayName, "\" and \"", iterName, "\" were randomly generated"),
       paste0("var ", arrayName, " = new Array();"),
       paste0(arrayName, ".push(", do.call("js", args=list(loop[[3]], level=level)), ");"),
-      "// the counter variable also has a randomly generated name",
       paste0("for (var ", as.character(loop[[2]]), "=", arrayName, "[0], ", iterName, "=0; ",
         iterName, " < ", arrayName, ".length; ",
         iterName, "++, ", as.character(loop[[2]]), "=", arrayName, "[", iterName, "]) {"),

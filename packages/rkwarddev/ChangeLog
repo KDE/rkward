@@ -1,6 +1,6 @@
 ChangeLog for package rkwarddev
 
-changes in version 0.07-4 (2015-10-27)
+changes in version 0.07-4 (2015-10-28)
 unreleased:
   - this version is under development
 fixed:
@@ -18,9 +18,8 @@ added:
   - new option "ignore" enables rk.uniqueIDs() to not check nodes for
     duplicates (e.g., <copy>)
   - new wrapper function js() for id() makes it possible to use several
-    operators without quoting, preserve "if" conditions and "for" loops,
-    which all will be translated to JavaScript equivalents without the
-    need for quoting
+    operators without quoting, preserve "if" conditions and "for" loops, which all
+    will be translated to JavaScript equivalents without the need for quoting
   - new option ".objects" in id() to provide objects as a list
   - new option "rk.JS.vars" to make JS variables match the name of the
     original R object

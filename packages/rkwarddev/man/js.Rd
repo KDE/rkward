@@ -34,8 +34,11 @@ Using \code{for} loops is a bit more delicate,
       as they are very differently constructed in JavaScript. As
 a workaround,
       \code{js} will define an array and a counter variable with randomly generated names, fill
-the array with the values you provided and iterate through the array. It will keep the iterator variable
-name you used in the original R loop, so you can use it inside the loop body.
+the array with the values you provided and iterate through the array. In order to keep the iterator variable
+name you used in the original R loop, so you can use it inside the loop body,
+      you will have to define it before
+the \code{js} call with a substitution of itself (see examples). Otherwise,
+      you will get an "object not found" error.
 
 The following operators are supported: +, -, *, /, ==, !=, >, <, >=, <=, || and &&
 
@@ -45,7 +48,22 @@ These are currently unsupported and still need to be quoted: \%, ++, --, =, +=, 
 \examples{
 # an example checkbox XML node
 cbox1 <- rk.XML.cbox(label="foo", value="foo1", id.name="CheckboxFoo.ID")
-rk.pasteJS(js(if(cbox1 == "foo1") { echo("gotcha!") }))
+cat(rk.paste.JS(js(
+  if(cbox1 == "foo1") {
+    echo("gotcha!")
+  } else {
+    echo("nothing!")
+  }
+)))
+
+# let's try preserving a for loop
+# to use iterator variable i, we must initialize it first
+i <- substitute(i)  # DON'T FORGET THIS!
+cat(rk.paste.JS(js(
+  for (i in 1:10) {
+    echo(i)
+  }
+)))
 }
 \seealso{
 \code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}},
