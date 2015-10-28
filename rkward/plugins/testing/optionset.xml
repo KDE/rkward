@@ -38,6 +38,26 @@
 					<optioncolumn id="summary" label="Summary" connect="summary.text"/>
 				</optionset>
 			</tab>
+			<tab label="Manual set B">
+				<optionset id="msetb" exp_mode="detached">
+					<content>
+						<frame>
+							<optiondisplay index="true"/>
+							<row>
+								<varselector id="vars"/>
+								<column>
+									<varslot type="numeric" id="mx" source="vars" required="true" label="Pick an object"/>	<!-- NOTE: requiredness does not work, correctly, yet -->
+									<input id="summary" label="Enter a summary" size="large" initial="I am the default"/>
+									<stretch/>
+								</column>
+							</row>
+						</frame>
+					</content>
+					<optioncolumn id="object" connect="mx.available"/>
+					<optioncolumn id="objshort" label="Object" connect="mx.available.shortname"/>
+					<optioncolumn id="summary" label="Summary" connect="summary.text"/>
+				</optionset>
+			</tab>
 			<tab label="Connected driven set">
 				<text>This option set is connected to the set on the first tab.</text>
 				<optionset id="cset" keycolumn="object">
