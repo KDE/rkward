@@ -193,8 +193,8 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 			connect (remove_button, SIGNAL (clicked()), this, SLOT (removeRow()));
 		}
 	}
-	if (!keycolumn && (exp_mode == Accordion)) accordion->setShowAddRemoveButtons (true);
 	if (exp_mode == Accordion) {
+		accordion->setShowAddRemoveButtons (!keycolumn);
 		accordion->setModel (model);
 		if (display) display->hide ();
 	}

@@ -237,10 +237,19 @@ RKAccordionTable::~RKAccordionTable () {
 	delete editor_widget_container;
 }
 
+void RKAccordionTable::setShowAddRemoveButtons (bool show) {
+	RK_TRACE (MISC);
+	show_add_remove_buttons = show;
+	pmodel->add_leading_columns = show;
+	pmodel->add_trailing_rows = show;
+}
+
 QSize RKAccordionTable::sizeHintWithoutEditor () const {
 	RK_TRACE (MISC);
 
-	return (QSize (minimumSizeHint ().width (), horizontalScrollBar ()->minimumSizeHint ().height () + sizeHintForRow (0) * 4));
+	// NOTE: This is not totally correct, but seems to be, roughly. indexRowSizeHint() works (of sorts), even if there is no row in the model
+	// while sizeHintForRow(0) does not.
+	return (QSize (minimumSizeHint ().width (), horizontalScrollBar ()->sizeHint ().height () + indexRowSizeHint (model ()->index (0, 0)) * 4));
 }
 
 QSize RKAccordionTable::sizeHint () const {
@@ -418,7 +427,6 @@ void RKAccordionTable::setModel (QAbstractItemModel* model) {
 
 
 // TODO
-// - insertion when now row is available, yet
 // - index column, and sets without manual add / remove
 // - expand / collapse indicator?
 // - drag-reordering?

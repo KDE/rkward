@@ -32,9 +32,7 @@ public:
 	QWidget *editorWidget () const { return editor_widget; };
 
 	void setModel (QAbstractItemModel *model);
-	void setShowAddRemoveButtons (bool show) {
-		show_add_remove_buttons = show;
-	}
+	void setShowAddRemoveButtons (bool show);
 
 	QSize sizeHint () const;                                                  // reimplemented to assure a proper size for the content
 public slots:
