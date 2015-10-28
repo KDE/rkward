@@ -72,7 +72,7 @@ public:
 
 	Qt::ItemFlags flags (const QModelIndex& index) const {
 		if (isFake (index)) return (Qt::NoItemFlags);
-		return QAbstractProxyModel::flags (index);
+		return (QAbstractProxyModel::flags (index));
 	}
 
 	int rowCount (const QModelIndex& parent = QModelIndex ()) const {
@@ -81,9 +81,21 @@ public:
 		return sourceModel ()->rowCount (mapToSource (parent)) + add_trailing_rows;
 	}
 
-    QVariant data(const QModelIndex& proxyIndex, int role = Qt::DisplayRole) const {
+    QVariant data (const QModelIndex& proxyIndex, int role = Qt::DisplayRole) const {
 		if (isFake (proxyIndex)) return QVariant ();
 		return QAbstractProxyModel::data (proxyIndex, role);
+	}
+
+	bool dropMimeData (const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) {
+		// Ok, I don't understand why exactly, but something goes wrong while mapping this back to the source model. So we help it a bit:
+		Q_UNUSED (column);
+
+		if (isFake (parent)) {
+			RK_ASSERT (false);
+			return false;
+		}
+		if (parent.isValid ()) row = parent.row ();
+		return sourceModel ()->dropMimeData (data, action, row, 0, QModelIndex ());
 	}
 
 	QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const {
@@ -105,7 +117,7 @@ public:
 			if (row == sourceModel ()->rowCount ()) return createIndex (row, column, trailing_item_id);
 			return createIndex (row, column, real_item_id);
 		}
-		RK_ASSERT (parent.internalId () == real_item_id);
+		RK_ASSERT (parent.internalId () >= trailing_item_id);
 		return createIndex (row, column, parent.row ());
 	}
 
@@ -199,7 +211,12 @@ RKAccordionTable::RKAccordionTable (QWidget* parent) : QTreeView (parent) {
 	editor_widget = new KVBox (editor_widget_container);
 	layout->addWidget (editor_widget);
 
-	setSelectionMode (NoSelection);
+	setSelectionMode (SingleSelection);
+	setDragEnabled (true);
+	setAcceptDrops (true);
+	setDragDropMode (InternalMove);
+	setDropIndicatorShown (false);
+	setDragDropOverwriteMode (false);
 	setIndentation (0);
 	setRootIsDecorated (false);
 	setExpandsOnDoubleClick (false);   // we expand on single click, instead
@@ -274,8 +291,12 @@ void RKAccordionTable::rowClicked (QModelIndex row) {
 	RK_TRACE (MISC);
 
 	row = model ()->index (row.row (), 0, row.parent ());   // Fix up index to point to column 0, or isExpanded() will always return false
-	if (!row.parent ().isValid ()) {
-		setExpanded (row, !isExpanded (row));
+	if (isExpanded (row)) {
+		setExpanded (row, false);
+	} else {
+		if (!row.parent ().isValid ()) {
+			emit (activated (row.row ()));
+		}
 	}
 }
 
@@ -293,7 +314,6 @@ void RKAccordionTable::rowExpanded (QModelIndex row) {
 	setCurrentIndex (row);
 	scrollTo (row, EnsureVisible);                          // yes, we want both scrolls: We want the header row above the widget, if possible at all,
 	scrollTo (model ()->index (0, 0, row), EnsureVisible);  // but of course, having the header row visible without the widget is not enough...
-	emit (activated (row.row ()));
 }
 
 void RKAccordionTable::updateWidget () {

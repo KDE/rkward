@@ -7,6 +7,7 @@ function calculate () {
 	echo ("row_count <- " + getValue ("set.row_count") + "\n");
 	echo ("current_row <- " + getValue ("set.current_row") + "\n");
 	echo ("set.contents.enabled <- " + getValue ("set.contents.enabled") + "\n");
+	echo (getList ("mset.summary").join (",") + "\n");
 
 	var codeprops = getList ("set.plotoption_printout");
 	for (i = 0; i < codeprops.length; ++i) {

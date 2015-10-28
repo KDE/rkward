@@ -70,6 +70,7 @@ friend class RKOptionSetDisplayModel;
 	void setRowState (int row, bool finished, bool valid);
 	void storeRowSerialization (int row);
 	void applyContentsFromExternalColumn (RKComponentPropertyStringList* column, int row);
+	void moveRow (int old_index, int new_index);
 
 	RKComponentPropertyInt *current_row;
 	RKComponentPropertyInt *row_count;
@@ -161,6 +162,12 @@ friend class RKOptionSet;
 	QTimer reset_timer;
 	QStringList column_labels;
 	RKOptionSet *set;
+
+	QMimeData* mimeData (const QModelIndexList& indexes) const;
+	QStringList mimeTypes () const;
+	bool dropMimeData (const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent);
+	Qt::ItemFlags flags (const QModelIndex& index) const;
+	Qt::DropActions supportedDropActions () const;
 private slots:
 	void doResetNow ();
 };

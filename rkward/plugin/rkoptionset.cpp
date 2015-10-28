@@ -23,6 +23,7 @@
 #include <QPushButton>
 #include <QStackedWidget>
 #include <QLabel>
+#include <QMimeData>
 
 #include <klocale.h>
 #include <kvbox.h>
@@ -429,9 +430,9 @@ void RKOptionSet::addRow () {
 
 void RKOptionSet::addRow (int row) {
 	RK_TRACE (PLUGIN);
-
+RK_DEBUG (MISC, DL_ERROR, "current row is now %d, %d", current_row->intValue (), active_row);
 	storeRowSerialization (active_row);
-
+RK_DEBUG (MISC, DL_ERROR, "current row is nows %d, %d", current_row->intValue (), active_row);
 	int nrows = rowCount ();
 	if (row < 0) row = nrows;
 	RK_ASSERT (!keycolumn);
@@ -456,7 +457,6 @@ void RKOptionSet::addRow (int row) {
 	rows.insert (row, ri);
 	++n_unfinished_rows;
 	++n_invalid_rows;
-
 	row_count->setIntValue (nrows + 1);
 	current_row->setIntValue (active_row = row);
 	setContentsForRow (active_row);
@@ -504,6 +504,31 @@ void RKOptionSet::removeRow (int row) {
 	current_row->setIntValue (active_row = row);
 	setContentsForRow (row);
 	if (display) model->endRemoveRows ();
+
+	changed ();
+}
+
+void RKOptionSet::moveRow (int old_index, int new_index) {
+	RK_TRACE (PLUGIN);
+
+	int nrows = rowCount ();
+	if (old_index < 0 || old_index >= nrows) {
+		RK_ASSERT (false);
+		return;
+	}
+
+	if (new_index < 0 || new_index > nrows) {
+		new_index = nrows;
+	}
+
+	storeRowSerialization (active_row);
+	PropertyValueMap backup = rows[old_index].full_row_map;
+	removeRow (old_index);
+	if (new_index > old_index) new_index -= 1;
+	addRow (new_index);
+	rows[new_index].full_row_map = backup;
+	setContentsForRow (new_index);
+	updateCurrentRowInDisplay ();
 
 	changed ();
 }
@@ -789,7 +814,7 @@ void RKOptionSet::currentRowChanged () {
 void RKOptionSet::currentRowChanged (int row) {
 	RK_TRACE (PLUGIN);
 
-	if (active_row != row) current_row->setIntValue (row);
+	current_row->setIntValue (row);
 	// --> currentRowPropertyChanged ()
 }
 
@@ -836,6 +861,7 @@ RKOptionSetDisplayModel::RKOptionSetDisplayModel (RKOptionSet* parent) : QAbstra
 	connect (&reset_timer, SIGNAL (timeout()), this, SLOT (doResetNow()));
 	reset_timer.setInterval (0);
 	reset_timer.setSingleShot (true);
+	setSupportedDragActions (Qt::MoveAction);
 }
 
 RKOptionSetDisplayModel::~RKOptionSetDisplayModel () {
@@ -912,6 +938,37 @@ void RKOptionSetDisplayModel::triggerReset() {
 		emit (layoutAboutToBeChanged ());
 		reset_timer.start ();
 	}
+}
+
+QString optionsetdisplaymodel_mt ("application/x-rkaccordiontableitem");
+QStringList RKOptionSetDisplayModel::mimeTypes () const {
+	return QStringList (optionsetdisplaymodel_mt);
+}
+
+QMimeData* RKOptionSetDisplayModel::mimeData (const QModelIndexList& indexes) const {
+	RK_ASSERT (indexes.length () >= 1);
+	QMimeData *ret = new QMimeData ();
+	ret->setData (optionsetdisplaymodel_mt, QByteArray (QString::number (indexes.first ().row ()).toAscii ()));
+	return (ret);
+}
+
+bool RKOptionSetDisplayModel::dropMimeData (const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) {
+	Q_UNUSED (column);
+	if (action == Qt::IgnoreAction) return true;
+	if (action == Qt::MoveAction) {
+		if (parent.isValid ()) return false;
+		int srow = QString::fromAscii (data->data (optionsetdisplaymodel_mt)).toInt ();
+		set->moveRow (srow, row);
+	}
+	return false;
+}
+
+Qt::ItemFlags RKOptionSetDisplayModel::flags (const QModelIndex& index) const {
+	return QAbstractItemModel::flags (index) | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
+}
+
+Qt::DropActions RKOptionSetDisplayModel::supportedDropActions () const {
+    return Qt::MoveAction;
 }
 
 #include <QApplication>
