@@ -1,3 +1,4 @@
+- Try harder to honor system locale settings
 - Remove obsolete "Export tabular data" plugin (superceded by "Export Table / CSV")
 - Some usability refinements to "Import CVS" plugin
 - Disabled the "Import Data"-dialog, as it was considered too confusing. The individual importers are still available from the menu, separately.
