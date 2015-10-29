@@ -430,9 +430,9 @@ void RKOptionSet::addRow () {
 
 void RKOptionSet::addRow (int row) {
 	RK_TRACE (PLUGIN);
-RK_DEBUG (MISC, DL_ERROR, "current row is now %d, %d", current_row->intValue (), active_row);
+
 	storeRowSerialization (active_row);
-RK_DEBUG (MISC, DL_ERROR, "current row is nows %d, %d", current_row->intValue (), active_row);
+
 	int nrows = rowCount ();
 	if (row < 0) row = nrows;
 	RK_ASSERT (!keycolumn);
@@ -461,6 +461,8 @@ RK_DEBUG (MISC, DL_ERROR, "current row is nows %d, %d", current_row->intValue ()
 	current_row->setIntValue (active_row = row);
 	setContentsForRow (active_row);
 	if (display) model->endInsertRows ();
+
+	current_row->setIntValue (row);  // Setting this _again_, as the view might have messed with it following endInsertRows ()
 
 	changed ();
 }
@@ -505,6 +507,8 @@ void RKOptionSet::removeRow (int row) {
 	setContentsForRow (row);
 	if (display) model->endRemoveRows ();
 
+	current_row->setIntValue (row);  // Setting this _again_, as the view might have messed with it following endRemoveRows ()
+
 	changed ();
 }
 
@@ -528,7 +532,6 @@ void RKOptionSet::moveRow (int old_index, int new_index) {
 	addRow (new_index);
 	rows[new_index].full_row_map = backup;
 	setContentsForRow (new_index);
-	updateCurrentRowInDisplay ();
 
 	changed ();
 }
@@ -814,7 +817,7 @@ void RKOptionSet::currentRowChanged () {
 void RKOptionSet::currentRowChanged (int row) {
 	RK_TRACE (PLUGIN);
 
-	current_row->setIntValue (row);
+	if (active_row != row) current_row->setIntValue (row);
 	// --> currentRowPropertyChanged ()
 }
 

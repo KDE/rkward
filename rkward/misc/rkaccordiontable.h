@@ -48,6 +48,8 @@ signals:
 	void removeRow (int which);
 protected:
 	void resizeEvent (QResizeEvent* event);                                          // reimplemented to make the current content widget stretch / shrink
+	void currentChanged (const QModelIndex& current, const QModelIndex& previous);
+	void mousePressEvent (QMouseEvent* event);
 private:
 	QSize sizeHintWithoutEditor () const;
 	int rowOfButton (QObject *button) const;
@@ -55,6 +57,7 @@ private:
 	QWidget *editor_widget;
 	QWidget *editor_widget_container;
 	RKAccordionDummyModel *pmodel;
+	bool handling_a_click;
 };
 
 #endif

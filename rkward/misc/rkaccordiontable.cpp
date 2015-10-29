@@ -18,6 +18,7 @@
 #include "rkaccordiontable.h"
 
 #include <QPointer>
+#include <QTimer>
 #include <QVBoxLayout>
 #include <QAbstractProxyModel>
 #include <QToolButton>
@@ -40,7 +41,8 @@ class RKAccordionDummyModel : public QAbstractProxyModel {
 public:
 	RKAccordionDummyModel (QObject *parent) : QAbstractProxyModel (parent) {
 		add_leading_columns = 1;
-		strip_leading_columns = 0;
+#warning TODO: make configurable
+		strip_leading_columns = 1;
 		add_trailing_rows = 1;
 	};
 
@@ -71,7 +73,10 @@ public:
 	}
 
 	Qt::ItemFlags flags (const QModelIndex& index) const {
-		if (isFake (index)) return (Qt::NoItemFlags);
+		if (isFake (index)) {
+			if (index.internalId () == trailing_item_id) return (Qt::ItemIsEnabled);
+			return (Qt::NoItemFlags);
+		}
 		return (QAbstractProxyModel::flags (index));
 	}
 
@@ -82,7 +87,20 @@ public:
 	}
 
     QVariant data (const QModelIndex& proxyIndex, int role = Qt::DisplayRole) const {
-		if (isFake (proxyIndex)) return QVariant ();
+		if (isFake (proxyIndex)) {
+			if (proxyIndex.internalId () == trailing_item_id) {
+				if (role == Qt::DisplayRole) {
+					return i18n ("Click to add new row");
+				} else if (role == Qt::FontRole) {
+					QFont font;
+					font.setItalic (true);
+					return font;
+				} else if (role == Qt::DecorationRole) {
+					return RKStandardIcons::getIcon (RKStandardIcons::ActionInsertRow);
+				}
+			}
+			return QVariant ();
+		}
 		return QAbstractProxyModel::data (proxyIndex, role);
 	}
 
@@ -202,6 +220,7 @@ RKAccordionTable::RKAccordionTable (QWidget* parent) : QTreeView (parent) {
 	RK_TRACE (MISC);
 
 	show_add_remove_buttons = false;
+	handling_a_click = false;
 
 	// This may seem like excessive wrapping. The point is to be able to manipulate the editor_widget_container's sizeHint(), while
 	// keeping the editor_widget's sizeHint() intact.
@@ -220,6 +239,7 @@ RKAccordionTable::RKAccordionTable (QWidget* parent) : QTreeView (parent) {
 	setIndentation (0);
 	setRootIsDecorated (false);
 	setExpandsOnDoubleClick (false);   // we expand on single click, instead
+	setItemsExpandable (false);        // custom handling
 	setSizePolicy (QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 	setViewportMargins (20, 0, 0, 0);
 	pmodel = new RKAccordionDummyModel (0);
@@ -247,9 +267,9 @@ void RKAccordionTable::setShowAddRemoveButtons (bool show) {
 QSize RKAccordionTable::sizeHintWithoutEditor () const {
 	RK_TRACE (MISC);
 
-	// NOTE: This is not totally correct, but seems to be, roughly. indexRowSizeHint() works (of sorts), even if there is no row in the model
-	// while sizeHintForRow(0) does not.
-	return (QSize (minimumSizeHint ().width (), horizontalScrollBar ()->sizeHint ().height () + indexRowSizeHint (model ()->index (0, 0)) * 4));
+	// NOTE: This is not totally correct, but seems to be, roughly. We can't use sizeHintForRow(0) for height calcuation, as the model may be empty
+	// (for "driven" optionsets.
+	return (QSize (minimumSizeHint ().width (), horizontalScrollBar ()->sizeHint ().height () + QFontMetrics (QFont ()).lineSpacing () * 4));
 }
 
 QSize RKAccordionTable::sizeHint () const {
@@ -296,16 +316,48 @@ void RKAccordionTable::activateRow (int row) {
 	setExpanded (model ()->index (row, 0), true);
 }
 
+// Gaaah! currentIndexChanged() (on click) seems to be called _before_ rowClick ().
+// But we _have to_ expand items activated via currentChanged() (could have been keyboard, too), and we _have to_
+// expand items on click, if they are not expanded (as it could be the already-current-item), but we _must _not_
+// collapse the item we have just expanded from currentChanged().
+// To make things worse, rowClicked () is called with a delay (probably when Qt is sure it wasn't a double click),
+// so a simple "swallow any click in this event cycle" is not enough.
+// Solution, if mouse was clicked, prevent currentChanged() from handling anything.
+void RKAccordionTable::mousePressEvent (QMouseEvent* event) {
+	handling_a_click = true;
+	QTreeView::mousePressEvent (event);
+	handling_a_click = false;
+}
+
 void RKAccordionTable::rowClicked (QModelIndex row) {
 	RK_TRACE (MISC);
 
 	row = model ()->index (row.row (), 0, row.parent ());   // Fix up index to point to column 0, or isExpanded() will always return false
-	if (isExpanded (row)) {
+	if (isExpanded (row) && currentIndex ().row () == row.row ()) {
 		setExpanded (row, false);
 	} else {
-		if (!row.parent ().isValid ()) {
-			emit (activated (row.row ()));
+		if (!pmodel->isFake (row)) {
+			if (currentIndex ().row () == row.row ()) {
+				setExpanded (row, true);
+			}
+			// Expanding of rows, when current has changed is handled in currenChanged(), only.
 		}
+	}
+	if (!row.parent ().isValid ()) {
+		if (row.row () >= pmodel->rowCount () - pmodel->add_trailing_rows) {
+			emit (addRow (row.row ()));
+		}
+	}
+}
+
+void RKAccordionTable::currentChanged (const QModelIndex& current, const QModelIndex& previous) {
+	RK_TRACE (MISC);
+	Q_UNUSED (previous);
+
+	if (handling_a_click) return;
+	if (!pmodel->isFake (current)) {
+		setExpanded (current, true);
+		emit (activated (current.row ()));
 	}
 }
 
@@ -336,7 +388,7 @@ void RKAccordionTable::updateWidget () {
 			seen_expanded = true;
 		}
 
-		if (show_add_remove_buttons && (indexWidget (row) == 0)) {
+		if (show_add_remove_buttons && (indexWidget (row) == 0) && (i < pmodel->rowCount () - pmodel->add_trailing_rows)) {
 			QWidget *display_buttons = new QWidget;
 			QHBoxLayout *layout = new QHBoxLayout (display_buttons);
 			layout->setContentsMargins (0, 0, 0, 0);
@@ -348,17 +400,11 @@ void RKAccordionTable::updateWidget () {
 			RKCommonFunctions::setTips (i18n ("Add a row / element"), add_button);
 			layout->addWidget (add_button);
 
-			if (i < (model ()->rowCount () - 1)) {
-				QToolButton *remove_button = new QToolButton (display_buttons);
-				connect (remove_button, SIGNAL (clicked(bool)), this, SLOT (removeClicked()));
-				remove_button->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteRow));
-				RKCommonFunctions::setTips (i18n ("Remove this row / element"), remove_button);
-				layout->addWidget (remove_button);
-			} else {
-				QLabel *label = new QLabel (i18n ("Click to add new row / element"), display_buttons);
-				layout->addWidget (label);
-				setFirstColumnSpanned (i, QModelIndex (), true);
-			}
+			QToolButton *remove_button = new QToolButton (display_buttons);
+			connect (remove_button, SIGNAL (clicked(bool)), this, SLOT (removeClicked()));
+			remove_button->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteRow));
+			RKCommonFunctions::setTips (i18n ("Remove this row / element"), remove_button);
+			layout->addWidget (remove_button);
 
 			setIndexWidget (row, display_buttons);
 
@@ -367,6 +413,10 @@ void RKAccordionTable::updateWidget () {
 				header ()->setResizeMode (0, QHeaderView::Fixed);
 			}
 		}
+	}
+
+	if (pmodel->add_trailing_rows) {
+		setFirstColumnSpanned (pmodel->rowCount () - pmodel->add_trailing_rows, QModelIndex (), true);
 	}
 }
 
