@@ -39,7 +39,6 @@ public slots:
 	void rowExpanded (QModelIndex row);
 	void rowClicked (QModelIndex row);
 	void updateWidget ();
-	void addClicked ();
 	void removeClicked ();
 	void activateRow (int row);
 signals:

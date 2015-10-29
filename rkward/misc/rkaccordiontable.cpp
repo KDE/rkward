@@ -40,7 +40,7 @@ class RKAccordionDummyModel : public QAbstractProxyModel {
 	Q_OBJECT
 public:
 	RKAccordionDummyModel (QObject *parent) : QAbstractProxyModel (parent) {
-		add_leading_columns = 1;
+		add_trailing_columns = 1;
 #warning TODO: make configurable
 		strip_leading_columns = 1;
 		add_trailing_rows = 1;
@@ -54,11 +54,15 @@ public:
 	}
 
 	inline int mapColumnFromSource (int column) const {
-		return qMax (0, column + add_leading_columns - strip_leading_columns);
+		return qMax (0, column - strip_leading_columns);
 	}
 
 	inline int mapColumnToSource (int column) const {
-		return qMax (0, column - add_leading_columns + strip_leading_columns);
+		return qMin (sourceModel ()->columnCount () - 1, column + strip_leading_columns);
+	}
+
+	inline bool isTrailingColumn (int column) const {
+		return (column >= mapColumnFromSource (sourceModel ()->columnCount ()));
 	}
 
 	QModelIndex mapToSource (const QModelIndex& pindex) const {
@@ -101,6 +105,7 @@ public:
 			}
 			return QVariant ();
 		}
+		if (isTrailingColumn (proxyIndex.column ()) && (role == Qt::DisplayRole)) return QVariant ();
 		return QAbstractProxyModel::data (proxyIndex, role);
 	}
 
@@ -117,7 +122,7 @@ public:
 	}
 
 	QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const {
-		if ((orientation == Qt::Horizontal) && (section < add_leading_columns) && (role == Qt::DisplayRole)) return QVariant ();
+		if ((orientation == Qt::Horizontal) && isTrailingColumn (section) && (role == Qt::DisplayRole)) return QVariant ();
 		return QAbstractProxyModel::headerData (section, orientation, role);
 	}
 
@@ -127,7 +132,7 @@ public:
 
 	int columnCount (const QModelIndex& parent = QModelIndex ()) const {
 		if (isFake (parent)) return 1;
-		return mapColumnFromSource (sourceModel ()->columnCount (mapToSource (parent)));
+		return mapColumnFromSource (sourceModel ()->columnCount (mapToSource (parent))) + add_trailing_columns;
 	}
 
 	QModelIndex index (int row, int column, const QModelIndex& parent = QModelIndex ()) const {
@@ -160,7 +165,7 @@ public:
 
 	static const quint32 real_item_id = 0xFFFFFFFF;
 	static const quint32 trailing_item_id = 0xFFFFFFFE;
-	int add_leading_columns;
+	int add_trailing_columns;
 	int strip_leading_columns;
 	int add_trailing_rows;
 public slots:
@@ -260,7 +265,7 @@ RKAccordionTable::~RKAccordionTable () {
 void RKAccordionTable::setShowAddRemoveButtons (bool show) {
 	RK_TRACE (MISC);
 	show_add_remove_buttons = show;
-	pmodel->add_leading_columns = show;
+	pmodel->add_trailing_columns = show;
 	pmodel->add_trailing_rows = show;
 }
 
@@ -388,29 +393,29 @@ void RKAccordionTable::updateWidget () {
 			seen_expanded = true;
 		}
 
-		if (show_add_remove_buttons && (indexWidget (row) == 0) && (i < pmodel->rowCount () - pmodel->add_trailing_rows)) {
-			QWidget *display_buttons = new QWidget;
-			QHBoxLayout *layout = new QHBoxLayout (display_buttons);
-			layout->setContentsMargins (0, 0, 0, 0);
-			layout->setSpacing (0);
+		if (show_add_remove_buttons && !pmodel->isFake (row)) {
+			QModelIndex button_index = model ()->index (i, model ()->columnCount () - 1);
+			if (!indexWidget (button_index)) {
+				QWidget *display_buttons = new QWidget;
+				QHBoxLayout *layout = new QHBoxLayout (display_buttons);
+				layout->setContentsMargins (0, 0, 0, 0);
+				layout->setSpacing (0);
 
-			QToolButton *add_button = new QToolButton (display_buttons);
-			connect (add_button, SIGNAL (clicked(bool)), this, SLOT (addClicked()));
-			add_button->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionInsertRow));
-			RKCommonFunctions::setTips (i18n ("Add a row / element"), add_button);
-			layout->addWidget (add_button);
+				QToolButton *remove_button = new QToolButton (display_buttons);
+				remove_button->setAutoRaise (true);
+				connect (remove_button, SIGNAL (clicked(bool)), this, SLOT (removeClicked()));
+				remove_button->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteRow));
+				RKCommonFunctions::setTips (i18n ("Remove this row / element"), remove_button);
+				layout->addWidget (remove_button);
 
-			QToolButton *remove_button = new QToolButton (display_buttons);
-			connect (remove_button, SIGNAL (clicked(bool)), this, SLOT (removeClicked()));
-			remove_button->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteRow));
-			RKCommonFunctions::setTips (i18n ("Remove this row / element"), remove_button);
-			layout->addWidget (remove_button);
+				setIndexWidget (button_index, display_buttons);
 
-			setIndexWidget (row, display_buttons);
-
-			if (i == 0) {
-				header ()->resizeSection (0, 2*rowHeight (row));
-				header ()->setResizeMode (0, QHeaderView::Fixed);
+				if (i == 0) {
+					header ()->setStretchLastSection (false);  // we stretch the second to last, instead
+					header ()->resizeSection (button_index.column (), rowHeight (row));
+					header ()->setResizeMode (button_index.column (), QHeaderView::Fixed);
+					header ()->setResizeMode (button_index.column () - 1, QHeaderView::Stretch);
+				}
 			}
 		}
 	}
@@ -435,18 +440,6 @@ int RKAccordionTable::rowOfButton (QObject* button) const {
 	}
 	RK_ASSERT (false);
 	return -1;
-}
-
-
-void RKAccordionTable::addClicked () {
-	RK_TRACE (MISC);
-
-	int row = rowOfButton (sender ());
-	if (row < 0) {
-		RK_ASSERT (row >= 0);
-		return;
-	}
-	emit (addRow (row));
 }
 
 void RKAccordionTable::removeClicked () {
