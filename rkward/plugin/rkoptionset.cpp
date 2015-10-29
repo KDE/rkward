@@ -45,24 +45,23 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	updating = false;
 	last_known_status = Processing;
 	n_invalid_rows = n_unfinished_rows = 0;
+	display_show_index = false;
 
 	min_rows = xml->getIntAttribute (element, "min_rows", 0, DL_INFO);
 	min_rows_if_any = xml->getIntAttribute (element, "min_rows_if_any", 1, DL_INFO);
 	max_rows = xml->getIntAttribute (element, "max_rows", INT_MAX, DL_INFO);
-	exp_mode = (ExperimentalMode) xml->getMultiChoiceAttribute (element, "exp_mode", "regular;detached;accordion", 2, DL_INFO);
 
 	// build UI framework
 	QVBoxLayout *layout = new QVBoxLayout (this);
-	switcher = new QStackedWidget (exp_mode == Detached ? 0 : this);
-	if (exp_mode != Detached) layout->addWidget (switcher);
-	user_area = new KVBox (this);
-	switcher->addWidget (user_area);
-	if (exp_mode == Accordion) {
-		accordion = new RKAccordionTable (user_area);
-		connect (accordion, SIGNAL (activated(int)), this, SLOT(currentRowChanged(int)));
-		connect (accordion, SIGNAL (addRow(int)), this, SLOT(addRow(int)));
-		connect (accordion, SIGNAL (removeRow(int)), this, SLOT(removeRow(int)));
-	}
+	switcher = new QStackedWidget (this);
+	layout->addWidget (switcher);
+	accordion = new RKAccordionTable (this);
+	switcher->addWidget (accordion);
+
+	connect (accordion, SIGNAL (activated(int)), this, SLOT(currentRowChanged(int)));
+	connect (accordion, SIGNAL (addRow(int)), this, SLOT(addRow(int)));
+	connect (accordion, SIGNAL (removeRow(int)), this, SLOT(removeRow(int)));
+
 	updating_notice = new QLabel (i18n ("Updating status, please wait"), this);
 	switcher->addWidget (updating_notice);
 	update_timer.setInterval (0);
@@ -84,12 +83,11 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	connect (current_row, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (currentRowPropertyChanged(RKComponentPropertyBase*)));
 
 	// first build the contents, as we will need to refer to the elements inside, later
-	model = 0;
-	display = 0;	// will be created from the builder, on demand -> createDisplay ()
-	contents_container = new RKComponent (this, exp_mode == RKOptionSet::Accordion ? accordion->editorWidget () : user_area);
+	model = new RKOptionSetDisplayModel (this);
+	contents_container = new RKComponent (this, accordion->editorWidget ());
 	QDomElement content_element = xml->getChildElement (element, "content", DL_ERROR);
 	RKComponentBuilder *builder = new RKComponentBuilder (contents_container, content_element);
-	builder->buildElement (content_element, *xml, exp_mode == Accordion ? accordion->editorWidget () : user_area, false);	// NOTE that parent widget != parent component, here, by intention. The point is that the display should not be disabled along with the contents
+	builder->buildElement (content_element, *xml, accordion->editorWidget (), false);	// NOTE that parent widget != parent component, here, by intention. The point is that the display should not be disabled along with the contents
 	builder->parseLogic (xml->getChildElement (element, "logic", DL_INFO), *xml, false);
 	builder->makeConnections ();
 	addChild ("contents", contents_container);
@@ -174,30 +172,9 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 		}
 	}
 
-	if (display) {		// may or may not have been created
-		model->column_labels = visible_column_labels;
-		display->setItemsExpandable (false);
-		display->setRootIsDecorated (false);
-		display->setAlternatingRowColors (true);
-		if (display_show_index) display->resizeColumnToContents (0);
-		else display->setColumnHidden (0, true);
-		display->setModel (model);
-		if (exp_mode == Detached) display->setItemDelegate (new RKOptionSetDelegate (this));
-		display->setSelectionBehavior (QAbstractItemView::SelectRows);
-		display->setSelectionMode (QAbstractItemView::SingleSelection);
-		connect (display->selectionModel (), SIGNAL (selectionChanged(QItemSelection,QItemSelection)), this, SLOT (currentRowChanged()));
-
-		if (keycolumn) display_buttons->setVisible (false);
-		else {
-			connect (add_button, SIGNAL (clicked()), this, SLOT (addRow()));
-			connect (remove_button, SIGNAL (clicked()), this, SLOT (removeRow()));
-		}
-	}
-	if (exp_mode == Accordion) {
-		accordion->setShowAddRemoveButtons (!keycolumn);
-		accordion->setModel (model);
-		if (display) display->hide ();
-	}
+	model->column_labels = visible_column_labels;
+	accordion->setShowAddRemoveButtons (!keycolumn);
+	accordion->setModel (model);
 }
 
 RKOptionSet::~RKOptionSet () {
@@ -210,33 +187,6 @@ void RKOptionSet::fetchDefaults () {
 	contents_container->fetchPropertyValuesRecursive (&default_row_state, false, QString (), true);
 	if (min_rows && !keycolumn && (rowCount () <= 0)) addRow (rowCount ());
 	contents_container->enablednessProperty ()->setBoolValue (rowCount () > 0);	// no current row; Do this *after* fetching default values, however. Otherwise most values will *not* be read, as the element is disabled
-}
-
-RKComponent *RKOptionSet::createDisplay (bool show_index, QWidget *parent) {
-	RK_TRACE (PLUGIN);
-
-	RKComponent* dummy = new RKComponent (this, exp_mode == Regular ? parent : parentWidget ());
-	QVBoxLayout *layout = new QVBoxLayout (dummy);
-	layout->setContentsMargins (0, 0, 0, 0);
-	KHBox *box = new KHBox (dummy);
-	layout->addWidget (box);
-
-	if (display) {
-		RK_DEBUG (PLUGIN, DL_ERROR, "cannot create more than one optiondisplay per optionset");
-	} else {
-		display = new QTreeView (box);
-		display_show_index = show_index;
-		model = new RKOptionSetDisplayModel (this);
-	}
-
-	display_buttons = new KHBox (dummy);
-	layout->addWidget (display_buttons);
-	add_button = new QPushButton (RKStandardIcons::getIcon (RKStandardIcons::ActionInsertRow), QString (), display_buttons);
-	RKCommonFunctions::setTips (i18n ("Add a row / element"), add_button);
-	remove_button = new QPushButton (RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteRow), QString (), display_buttons);
-	RKCommonFunctions::setTips (i18n ("Remove a row / element"), remove_button);
-
-	return (dummy);
 }
 
 QString serializeList (const QStringList &list) {
@@ -404,7 +354,7 @@ void RKOptionSet::updateUnfinishedRows () {
 	if (!n_unfinished_rows) {	// done
 		if (switcher->currentWidget () != updating_notice) return;
 		current_row->setIntValue (return_to_row);
-		switcher->setCurrentWidget (user_area);
+		switcher->setCurrentWidget (accordion);
 		return;
 	}
 
@@ -437,7 +387,7 @@ void RKOptionSet::addRow (int row) {
 	if (row < 0) row = nrows;
 	RK_ASSERT (!keycolumn);
 
-	if (display) model->beginInsertRows (QModelIndex (), row, row);
+	model->beginInsertRows (QModelIndex (), row, row);
 	// adjust values
 	updating = true;
 	QMap<RKComponentPropertyStringList *, ColumnInfo>::iterator it = column_map.begin ();
@@ -460,7 +410,7 @@ void RKOptionSet::addRow (int row) {
 	row_count->setIntValue (nrows + 1);
 	current_row->setIntValue (active_row = row);
 	setContentsForRow (active_row);
-	if (display) model->endInsertRows ();
+	model->endInsertRows ();
 
 	current_row->setIntValue (row);  // Setting this _again_, as the view might have messed with it following endInsertRows ()
 
@@ -483,7 +433,7 @@ void RKOptionSet::removeRow (int row) {
 	}
 	RK_ASSERT (!keycolumn);
 
-	if (display) model->beginRemoveRows (QModelIndex (), row, row);
+	model->beginRemoveRows (QModelIndex (), row, row);
 	updating = true;
 	// adjust values
 	QMap<RKComponentPropertyStringList *, ColumnInfo>::iterator it = column_map.begin ();
@@ -505,7 +455,7 @@ void RKOptionSet::removeRow (int row) {
 	row_count->setIntValue (nrows - 1);
 	current_row->setIntValue (active_row = row);
 	setContentsForRow (row);
-	if (display) model->endRemoveRows ();
+	model->endRemoveRows ();
 
 	current_row->setIntValue (row);  // Setting this _again_, as the view might have messed with it following endRemoveRows ()
 
@@ -774,8 +724,6 @@ void RKOptionSet::setContentsForRow (int row) {
 		applyContentsFromExternalColumn (col, row);
 	}
 	contents_container->enablednessProperty ()->setBoolValue (row >= 0);
-
-	if (exp_mode == Detached) switcher->show ();
 }
 
 void RKOptionSet::storeRowSerialization (int row) {
@@ -787,31 +735,11 @@ void RKOptionSet::storeRowSerialization (int row) {
 	contents_container->fetchPropertyValuesRecursive (&(rows[row].full_row_map));
 }
 
-int getCurrentRowFromDisplay (QTreeView* display) {
-	if (!(display && display->selectionModel () && display->model ())) return - 1;	// can happen during initialization
-	QModelIndexList l = display->selectionModel ()->selectedRows ();
-	if (l.isEmpty ()) return -1;
-	return (l[0].row ());
-}
-
 void RKOptionSet::updateCurrentRowInDisplay () {
-	if (!(display && display->selectionModel () && display->model ())) return;	// can happen during initialization
-	if (active_row < 0) display->selectionModel ()->clearSelection ();
-	else {
-		display->selectionModel ()->select (display->model ()->index (active_row, 0), QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
-	}
+	if (!(accordion && model)) return;	// can happen during initialization
 
-	if (exp_mode == Accordion) {
-		if (active_row < 0) accordion->collapseAll ();
-		else accordion->activateRow (active_row);
-	}
-}
-
-void RKOptionSet::currentRowChanged () {
-	RK_TRACE (PLUGIN);
-
-	RK_ASSERT (display);
-	currentRowChanged (getCurrentRowFromDisplay (display));
+	if (active_row < 0) accordion->collapseAll ();
+	else accordion->activateRow (active_row);
 }
 
 void RKOptionSet::currentRowChanged (int row) {
@@ -973,31 +901,5 @@ Qt::ItemFlags RKOptionSetDisplayModel::flags (const QModelIndex& index) const {
 Qt::DropActions RKOptionSetDisplayModel::supportedDropActions () const {
     return Qt::MoveAction;
 }
-
-#include <QApplication>
-RKOptionSetDelegate::RKOptionSetDelegate (RKOptionSet* parent) : QItemDelegate (parent) {
-	set = parent;
-}
-
-void RKOptionSetDelegate::paint (QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const {
-	if (index.column () == 0) {
-		QStyleOptionButton button;
-		button.rect = option.rect;
-		button.text = i18n ("Edit");
-		button.state = QStyle::State_Enabled;
-		QApplication::style ()->drawControl (QStyle::CE_PushButton, &button, painter);
-	} else {
-		QItemDelegate::paint (painter, option, index);
-	}
-}
-
-bool RKOptionSetDelegate::editorEvent(QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option, const QModelIndex& index) {
-	if (event->type() == QEvent::MouseButtonRelease) {
-		set->setContentsForRow (index.row ());
-//		return true;
-	}
-	return QItemDelegate::editorEvent (event, model, option, index);
-}
-
 
 #include "rkoptionset.moc"

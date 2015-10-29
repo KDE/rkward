@@ -41,7 +41,7 @@ public:
 	RKOptionSet (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
 	~RKOptionSet ();
 	int type () { return ComponentOptionSet; };
-	RKComponent *createDisplay (bool show_index, QWidget *parent);
+	void setDisplayShowIndex (bool show_index) { display_show_index = show_index; };
 	bool isValid ();
 	/** reimplemented from RKComponent */
 	ComponentStatus recursiveStatus ();
@@ -56,7 +56,6 @@ private slots:
 	void addRow ();
 	void removeRow (int which);
 	void removeRow ();
-	void currentRowChanged ();
 	void currentRowChanged (int row);
 	void fetchDefaults ();
 	void slotUpdateUnfinishedRows ();
@@ -112,19 +111,14 @@ friend class RKOptionSetDisplayModel;
 	QHash<QString, PropertyValueMap> former_row_states;
 
 	RKComponent *contents_container;
-	QWidget *display_buttons;
-	QPushButton *remove_button;
-	QPushButton *add_button;
 	bool display_show_index;
 	ComponentStatus last_known_status;
 
 	RKOptionSetDisplayModel* model;
-	QTreeView *display;
+	RKAccordionTable *accordion;
 
 	QStackedWidget *switcher;
 	QWidget *updating_notice;
-	QWidget *user_area;
-	RKAccordionTable *accordion;
 	void updateUnfinishedRows ();
 	int return_to_row;
 	QTimer update_timer;
@@ -132,12 +126,6 @@ friend class RKOptionSetDisplayModel;
 	int min_rows;
 	int min_rows_if_any;
 	int max_rows;
-
-	enum ExperimentalMode {
-		Regular,
-		Detached,
-		Accordion
-	} exp_mode;
 
 	bool updating;
 /** Sets the contents from the values in given row */
@@ -170,18 +158,6 @@ friend class RKOptionSet;
 	Qt::DropActions supportedDropActions () const;
 private slots:
 	void doResetNow ();
-};
-
-#include <QItemDelegate>
-
-class RKOptionSetDelegate : public QItemDelegate {
-	Q_OBJECT
-public:
-	RKOptionSetDelegate (RKOptionSet *parent);
-	void paint (QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
-	bool editorEvent (QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index);
-private:
-	RKOptionSet *set;
 };
 
 #endif

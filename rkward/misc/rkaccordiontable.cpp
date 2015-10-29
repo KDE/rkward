@@ -477,7 +477,7 @@ void RKAccordionTable::setModel (QAbstractItemModel* model) {
 
 
 // TODO
-// - index column, and sets without manual add / remove
+// - index column, RKOptionSet::display_show_index
 // - expand / collapse indicator?
 // - drag-reordering?
 //   - will this make per-item add buttons obsolete?

@@ -676,7 +676,7 @@ void RKComponentBuilder::buildElement (const QDomElement &element, XMLHelper &xm
 		} else if (e.tagName () == QLatin1String ("optiondisplay")) {
 			RKComponent *set = component ()->parentComponent ();
 			if (set->type () == RKComponentBase::ComponentOptionSet) {
-				widget = static_cast<RKOptionSet *> (set)->createDisplay (xml.getBoolAttribute (e, "index", true, DL_INFO), parent_widget);
+				static_cast<RKOptionSet *> (set)->setDisplayShowIndex (xml.getBoolAttribute (e, "index", false, DL_INFO));
 			} else {
 				xml.displayError (&e, QString ("optiondisplay element is not allowed outside of an optionset"), DL_ERROR);
 			}
