@@ -1554,6 +1554,25 @@ replaceJSIf <- function(cond, level=1, paste=TRUE){
 
 
 ## function replaceJSFor
+# this function is currently not publicly announced, but is available through the js() function
+# 
+#<documentation> 
+# Using \code{for} loops is a bit more delicate, as they are very differently constructed in JavaScript. As
+# a workaround, \code{js} will define an array and a counter variable with randomly generated names, fill
+# the array with the values you provided and iterate through the array. In order to keep the iterator variable
+# name you used in the original R loop, so you can use it inside the loop body, you will have to define it before
+# the \code{js} call with a substitution of itself (see examples). Otherwise, you will get an "object not found" error.
+#
+# example:
+# # let's try preserving a for loop
+# # to use iterator variable i, we must initialize it first
+# i <- substitute(i)  # DON'T FORGET THIS!
+# cat(rk.paste.JS(js(
+#   for (i in 1:10) {
+#     echo(i)
+#   }
+# )))
+#</documentation> 
 replaceJSFor <- function(loop, level=1){
   if(inherits(loop, "for")){
     # for loops must be handled differently, we need to create an array

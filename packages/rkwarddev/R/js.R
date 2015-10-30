@@ -21,17 +21,11 @@
 #' This function is a wrapper for \code{\link[rkwarddev:id]{id}} similar to \code{\link[rkwarddev:qp]{qp}}
 #' that uses \code{eval(substitute(alist(...)))} to preserve the value of \code{...} as-is to be able to
 #' both keep operators like \code{">="} or \code{"!="} unevaluated in the resulting output, as well as translating
-#' \code{if/else} clauses and \code{for} loops from R to JavaScript.
+#' \code{if/else} clauses from R to JavaScript.
 #' 
 #' Normally, \code{id} would simply evaluate the condition and then return the result of that evaluation, which
 #' most of the time is not what you want. With this function, you can test conditions in usual R syntax, yet
 #' the operators and \code{if/else} clauses will end up pasted in the result.
-#' 
-#' Using \code{for} loops is a bit more delicate, as they are very differently constructed in JavaScript. As
-#' a workaround, \code{js} will define an array and a counter variable with randomly generated names, fill
-#' the array with the values you provided and iterate through the array. In order to keep the iterator variable
-#' name you used in the original R loop, so you can use it inside the loop body, you will have to define it before
-#' the \code{js} call with a substitution of itself (see examples). Otherwise, you will get an "object not found" error.
 #' 
 #' The following operators are supported: +, -, *, /, ==, !=, >, <, >=, <=, || and &&
 #' 
@@ -57,15 +51,6 @@
 #'     echo("gotcha!")
 #'   } else {
 #'     echo("nothing!")
-#'   }
-#' )))
-#' 
-#' # let's try preserving a for loop
-#' # to use iterator variable i, we must initialize it first
-#' i <- substitute(i)  # DON'T FORGET THIS!
-#' cat(rk.paste.JS(js(
-#'   for (i in 1:10) {
-#'     echo(i)
 #'   }
 #' )))
 

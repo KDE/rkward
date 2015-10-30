@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.07-4 (2015-10-28)}{
+\section{Changes in rkwarddev version 0.07-4 (2015-10-30)}{
   \subsection{unreleased}{
     \itemize{
       \item this version is under development
@@ -27,7 +27,9 @@
         duplicates (e.g., <copy>)
       \item new wrapper function \code{js()} for \code{id()} makes it possible to use several
         operators without quoting, preserve \code{"if"} conditions and \code{"for"} loops, which all
-        will be translated to JavaScript equivalents without the need for quoting
+        will be translated to JavaScript equivalents without the need for quoting.
+        however, the \code{"for"} loop code is not publicly documented and remains a
+        proof of concept kind of thing for now
       \item new option \code{".objects"} in \code{id()} to provide objects as a list
       \item new option \code{"rk.JS.vars"} to make JS variables match the name of the
         original R object
