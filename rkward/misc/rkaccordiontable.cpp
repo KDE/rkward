@@ -41,8 +41,6 @@ class RKAccordionDummyModel : public QAbstractProxyModel {
 public:
 	RKAccordionDummyModel (QObject *parent) : QAbstractProxyModel (parent) {
 		add_trailing_columns = 1;
-#warning TODO: make configurable
-		strip_leading_columns = 1;
 		add_trailing_rows = 1;
 	};
 
@@ -54,11 +52,11 @@ public:
 	}
 
 	inline int mapColumnFromSource (int column) const {
-		return qMax (0, column - strip_leading_columns);
+		return qMax (0, column);
 	}
 
 	inline int mapColumnToSource (int column) const {
-		return qMin (sourceModel ()->columnCount () - 1, column + strip_leading_columns);
+		return qMin (sourceModel ()->columnCount () - 1, column);
 	}
 
 	inline bool isTrailingColumn (int column) const {
@@ -166,7 +164,6 @@ public:
 	static const quint32 real_item_id = 0xFFFFFFFF;
 	static const quint32 trailing_item_id = 0xFFFFFFFE;
 	int add_trailing_columns;
-	int strip_leading_columns;
 	int add_trailing_rows;
 public slots:
 	void r_rowsInserted (const QModelIndex& parent, int start, int end) {

@@ -41,7 +41,6 @@ public:
 	RKOptionSet (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
 	~RKOptionSet ();
 	int type () { return ComponentOptionSet; };
-	void setDisplayShowIndex (bool show_index) { display_show_index = show_index; };
 	bool isValid ();
 	/** reimplemented from RKComponent */
 	ComponentStatus recursiveStatus ();
@@ -111,7 +110,6 @@ friend class RKOptionSetDisplayModel;
 	QHash<QString, PropertyValueMap> former_row_states;
 
 	RKComponent *contents_container;
-	bool display_show_index;
 	ComponentStatus last_known_status;
 
 	RKOptionSetDisplayModel* model;

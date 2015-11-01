@@ -45,7 +45,6 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	updating = false;
 	last_known_status = Processing;
 	n_invalid_rows = n_unfinished_rows = 0;
-	display_show_index = false;
 
 	min_rows = xml->getIntAttribute (element, "min_rows", 0, DL_INFO);
 	min_rows_if_any = xml->getIntAttribute (element, "min_rows_if_any", 1, DL_INFO);
@@ -53,6 +52,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 
 	// build UI framework
 	QVBoxLayout *layout = new QVBoxLayout (this);
+	layout->setContentsMargins (0, 0, 0, 0);
 	switcher = new QStackedWidget (this);
 	layout->addWidget (switcher);
 	accordion = new RKAccordionTable (this);
@@ -96,7 +96,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	// create columns
 	XMLChildList options = xml->getChildElements (element, "optioncolumn", DL_WARNING);
 
-	QStringList visible_column_labels ("#");	// Optionally hidden first row for index
+	QStringList visible_column_labels;
 	for (int i = 0; i < options.size (); ++i) {
 		const QDomElement &e = options.at (i);
 		QString id = xml->getStringAttribute (e, "id", QString (), DL_ERROR);
@@ -815,8 +815,7 @@ QVariant RKOptionSetDisplayModel::data (const QModelIndex& index, int role) cons
 	int column = index.column ();
 
 	if (role == Qt::DisplayRole) {
-		if (column == 0) return QVariant (QString::number (row + 1));
-		RKComponentPropertyStringList *p = set->visible_columns.value (column - 1);
+		RKComponentPropertyStringList *p = set->visible_columns.value (column);
 		if (p) {
 			return QVariant (p->valueAt (row));
 		} else {

@@ -1,3 +1,4 @@
+- Complete rework of <optionset> UI for better usability
 - Try harder to honor system locale settings
 - Remove obsolete "Export tabular data" plugin (superceded by "Export Table / CSV")
 - Some usability refinements to "Import CVS" plugin
