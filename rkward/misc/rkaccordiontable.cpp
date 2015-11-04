@@ -184,7 +184,6 @@ public slots:
 		emit (dataChanged (mapFromSource (from), mapFromSource (to)));
 	}
 	void r_layoutChanged () {
- 		RK_DEBUG (MISC, DL_ERROR, "reset");
 		emit (layoutChanged());
 	}
 };
@@ -235,11 +234,7 @@ public:
 				RK_ASSERT (false);
 				return;
 			}
-			if (table->isExpanded (index)) {
-				v4->icon = expanded;
-			} else {
-				v4->icon = collapsed;
-			}
+			v4->icon = table->isExpanded (index) ? expanded : collapsed;
 			v4->features |= QStyleOptionViewItemV2::HasDecoration;
 		}
 	}
@@ -277,15 +272,12 @@ RKAccordionTable::RKAccordionTable (QWidget* parent) : QTreeView (parent) {
 	setExpandsOnDoubleClick (false);   // we expand on single click, instead
 	setItemsExpandable (false);        // custom handling
 	setSizePolicy (QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-	setViewportMargins (20, 0, 0, 0);
-/*	QPalette pal = palette ();
-	pal.setBrush (QPalette::Highlight, pal.window ());
-	pal.setBrush (QPalette::HighlightedText, pal.windowText ());
-	setPalette (pal); */
+
 	pmodel = new RKAccordionDummyModel (0);
 	RKAccordionDelegate* delegate = new RKAccordionDelegate (this);
 	delegate->pmodel = pmodel;
 	setItemDelegateForColumn (0, delegate);
+
 	connect (this, SIGNAL (expanded(QModelIndex)), this, SLOT (rowExpanded(QModelIndex)));
 	connect (this, SIGNAL (clicked(QModelIndex)), this, SLOT (rowClicked(QModelIndex)));
 }
@@ -308,7 +300,6 @@ void RKAccordionTable::drawRow (QPainter* painter, const QStyleOptionViewItem& o
 	} else {
 		QTreeView::drawRow (painter, option, index);
 		if (isExpanded (index)) {
-//		if (index.row () != 0) {
 			painter->drawLine (option.rect.topLeft (), option.rect.topRight ());
 		}
 	}
@@ -520,14 +511,6 @@ void RKAccordionTable::setModel (QAbstractItemModel* model) {
 	updateWidget ();
 	updateGeometry ();   // TODO: Not so clean to call this, here. But at this point we know the display_widget has been constructed, too
 }
-
-
-// TODO
-// - index column, RKOptionSet::display_show_index
-// - expand / collapse indicator?
-// - drag-reordering?
-//   - will this make per-item add buttons obsolete?
-// - improve scrolling behavior
 
 // KF5 TODO: remove:
 #include "rkaccordiontable.moc"
