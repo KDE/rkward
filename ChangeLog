@@ -1,3 +1,4 @@
+- Fix some minor toolbar glitches
 - Complete rework of <optionset> UI for better usability
 - Try harder to honor system locale settings
 - Remove obsolete "Export tabular data" plugin (superceded by "Export Table / CSV")

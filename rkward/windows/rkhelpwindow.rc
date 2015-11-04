@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward_helpwindow" version="640">
+<kpartgui name="rkward_helpwindow" version="641">
 	<MenuBar>
 		<Menu name="file"><text>&amp;File</text>
 			<Action name="print_html"/>
@@ -20,7 +20,7 @@
 			<Action name="view_encoding"/>
 		</Menu>
 	</MenuBar>
-	<ToolBar fullWidth="true" name="mdiToolBar">
+	<ToolBar fullWidth="true" name="mainToolBar">
 		<Action name="help_back" group="pretoolbar_actions_merge"/>
 		<Action name="help_forward" group="pretoolbar_actions_merge"/>
 		<Separator group="pretoolbar_actions_merge"/>

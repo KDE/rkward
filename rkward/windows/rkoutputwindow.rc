@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward_outputwindow" version="640">
+<kpartgui name="rkward_outputwindow" version="641">
 	<MenuBar>
 		<Menu name="file"><text>&amp;File</text>
 			<Action name="print_html"/>
@@ -24,7 +24,7 @@
 			<Action name="output_refresh"/>
 		</Menu>
 	</MenuBar>
-	<ToolBar fullWidth="true" name="mdiToolBar">
+	<ToolBar fullWidth="true" name="mainToolBar">
 		<Action name="output_flush"/>
 		<Action name="output_refresh"/>
 	</ToolBar>

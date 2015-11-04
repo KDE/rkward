@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward_commandeditor" version="54">
+<kpartgui name="rkward_commandeditor" version="640">
 	<MenuBar>
 		<Menu name="edit"><text>&amp;Edit</text>
 			<Menu name="tools" group="edit_first_merge"><text>&amp;Tools Move</text>
@@ -18,8 +18,7 @@
 		</Menu>
 	</MenuBar>
 
-	<ToolBar fullWidth="true" name="mdiToolBar">
-		<Separator group="posttoolbar_actions_merge"/>
+	<ToolBar fullWidth="true" name="mainToolBar">
 		<Action name="run_block" group="posttoolbar_actions_merge"/>
 		<Action name="setwd_to_script" group="posttoolbar_actions_merge"/>
 	</ToolBar>

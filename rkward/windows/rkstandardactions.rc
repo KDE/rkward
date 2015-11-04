@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward_standardactions" version="620">
+<kpartgui name="rkward_standardactions" version="640">
 <!-- What is this for, wouldn't it be easier to just inline these actions in the parts where they
      end up? Yes, but then they would be separate actions, internally, and each could be assigned
      a shortcut of its own. This is needed to tie them all together. -->
@@ -24,7 +24,7 @@
 			<Action name="window_configure"/>
 		</Menu>
 	</MenuBar>
-	<ToolBar fullWidth="true" name="mdiToolBar">
+	<ToolBar fullWidth="true" name="mainToolBar">
 		<Action name="run_line" group="toolbar_actions_merge"/>
 		<Action name="run_selection" group="toolbar_actions_merge"/>
 		<Action name="run_all" group="toolbar_actions_merge"/>
