@@ -59,7 +59,7 @@ public:
 		return qMin (sourceModel ()->columnCount () - 1, column);
 	}
 
-	inline bool isTrailingColumn (int column) const {
+	inline bool isFakeColumn (int column) const {
 		return (column >= mapColumnFromSource (sourceModel ()->columnCount ()));
 	}
 
@@ -103,7 +103,7 @@ public:
 			}
 			return QVariant ();
 		}
-		if (isTrailingColumn (proxyIndex.column ()) && (role == Qt::DisplayRole)) return QVariant ();
+		if (isFakeColumn (proxyIndex.column ()) && (role == Qt::DisplayRole)) return QVariant ();
 		return QAbstractProxyModel::data (proxyIndex, role);
 	}
 
@@ -120,7 +120,7 @@ public:
 	}
 
 	QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const {
-		if ((orientation == Qt::Horizontal) && isTrailingColumn (section) && (role == Qt::DisplayRole)) return QVariant ();
+		if ((orientation == Qt::Horizontal) && isFakeColumn (section) && (role == Qt::DisplayRole)) return QVariant ();
 		return QAbstractProxyModel::headerData (section, orientation, role);
 	}
 
@@ -216,6 +216,39 @@ private:
 	QWidget *fallback_parent;
 };
 
+#include <QStyledItemDelegate>
+#include <QPainter>
+#include <kicon.h>
+/** Responsible for drawing expand / collapse indicators in first column */
+class RKAccordionDelegate : public QStyledItemDelegate {
+public:
+	RKAccordionDelegate (RKAccordionTable* parent) : QStyledItemDelegate (parent) {
+		table = parent;
+		expanded = KIcon ("arrow-up");
+		collapsed = KIcon ("arrow-down");
+	}
+	void initStyleOption (QStyleOptionViewItem* option, const QModelIndex& index) const {
+		QStyledItemDelegate::initStyleOption (option, index);
+		if (!pmodel->isFake (index)) {
+			QStyleOptionViewItemV4 *v4 = qstyleoption_cast<QStyleOptionViewItemV4 *> (option);
+			if (!v4) {
+				RK_ASSERT (false);
+				return;
+			}
+			if (table->isExpanded (index)) {
+				v4->icon = expanded;
+			} else {
+				v4->icon = collapsed;
+			}
+			v4->features |= QStyleOptionViewItemV2::HasDecoration;
+		}
+	}
+	RKAccordionDummyModel *pmodel;
+	RKAccordionTable* table;
+	KIcon expanded;
+	KIcon collapsed;
+};
+
 #include <QPainter>
 #include <QScrollBar>
 #include <QHeaderView>
@@ -250,6 +283,9 @@ RKAccordionTable::RKAccordionTable (QWidget* parent) : QTreeView (parent) {
 	pal.setBrush (QPalette::HighlightedText, pal.windowText ());
 	setPalette (pal); */
 	pmodel = new RKAccordionDummyModel (0);
+	RKAccordionDelegate* delegate = new RKAccordionDelegate (this);
+	delegate->pmodel = pmodel;
+	setItemDelegateForColumn (0, delegate);
 	connect (this, SIGNAL (expanded(QModelIndex)), this, SLOT (rowExpanded(QModelIndex)));
 	connect (this, SIGNAL (clicked(QModelIndex)), this, SLOT (rowClicked(QModelIndex)));
 }
@@ -385,10 +421,11 @@ void RKAccordionTable::currentChanged (const QModelIndex& current, const QModelI
 void RKAccordionTable::rowExpanded (QModelIndex row) {
 	RK_TRACE (MISC);
 
-	for (int i = 0; i < model ()->rowCount (); ++i) {
+	for (int i = 0; i < pmodel->rowCount () - pmodel->add_trailing_rows; ++i) {
+		QModelIndex _row = model ()->index (i, 0);
 		if (i != row.row ()) {
-			setIndexWidget (model ()->index (0, 0, model ()->index (i, 0)), 0);
-			setExpanded (model ()->index (i, 0), false);
+			setIndexWidget (model ()->index (0, 0, _row), 0);
+			setExpanded (_row, false);
 		}
 	}
 	setFirstColumnSpanned (0, row, true);
@@ -402,14 +439,14 @@ void RKAccordionTable::updateWidget () {
 	RK_TRACE (MISC);
 
 	bool seen_expanded = false;
-	for (int i = 0; i < model ()->rowCount (); ++i) {
+	for (int i = 0; i < pmodel->rowCount () - pmodel->add_trailing_rows; ++i) {
 		QModelIndex row = model ()->index (i, 0);
 		if (isExpanded (row) && !seen_expanded) {
 			rowExpanded (row);
 			seen_expanded = true;
 		}
 
-		if (show_add_remove_buttons && !pmodel->isFake (row)) {
+		if (show_add_remove_buttons) {
 			QModelIndex button_index = model ()->index (i, model ()->columnCount () - 1);
 			if (!indexWidget (button_index)) {
 				QWidget *display_buttons = new QWidget;
