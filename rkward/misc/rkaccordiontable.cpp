@@ -216,6 +216,7 @@ private:
 	QWidget *fallback_parent;
 };
 
+#include <QPainter>
 #include <QScrollBar>
 #include <QHeaderView>
 RKAccordionTable::RKAccordionTable (QWidget* parent) : QTreeView (parent) {
@@ -244,6 +245,10 @@ RKAccordionTable::RKAccordionTable (QWidget* parent) : QTreeView (parent) {
 	setItemsExpandable (false);        // custom handling
 	setSizePolicy (QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 	setViewportMargins (20, 0, 0, 0);
+/*	QPalette pal = palette ();
+	pal.setBrush (QPalette::Highlight, pal.window ());
+	pal.setBrush (QPalette::HighlightedText, pal.windowText ());
+	setPalette (pal); */
 	pmodel = new RKAccordionDummyModel (0);
 	connect (this, SIGNAL (expanded(QModelIndex)), this, SLOT (rowExpanded(QModelIndex)));
 	connect (this, SIGNAL (clicked(QModelIndex)), this, SLOT (rowClicked(QModelIndex)));
@@ -257,6 +262,20 @@ RKAccordionTable::~RKAccordionTable () {
 	// No, I do not understand this, yes, this is worrysome, but no idea, what could be the actual cause.
 	pmodel->deleteLater ();
 	delete editor_widget_container;
+}
+
+void RKAccordionTable::drawRow (QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const {
+	if (index.parent ().isValid ()) {    // must be the editor widget
+		painter->fillRect (option.rect, palette ().background ());  // fill to paper over any padding around the widget (whereever it comes from)
+		QTreeView::drawRow (painter, option, index);
+		painter->drawLine (option.rect.bottomLeft (), option.rect.bottomRight ());
+	} else {
+		QTreeView::drawRow (painter, option, index);
+		if (isExpanded (index)) {
+//		if (index.row () != 0) {
+			painter->drawLine (option.rect.topLeft (), option.rect.topRight ());
+		}
+	}
 }
 
 void RKAccordionTable::setShowAddRemoveButtons (bool show) {
@@ -430,7 +449,7 @@ int RKAccordionTable::rowOfButton (QObject* button) const {
 	// we rely on the fact that the buttons in use, here, are encapsulaped in a parent widget, which is set as indexWidget()
 	QObject* button_parent = button->parent ();
 	for (int i = model ()->rowCount () - 1; i >= 0; --i) {
-		QModelIndex row = model ()->index (i, 0);
+		QModelIndex row = model ()->index (i, model ()->columnCount () - 1);
 		if (button_parent == indexWidget (row)) {
 			return i;
 		}

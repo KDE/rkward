@@ -21,17 +21,14 @@
 			<tab label="Manual set">
 				<optionset id="mset" exp_mode="accordion">
 					<content>
-						<frame>
-							<optiondisplay index="true"/>
-							<row>
-								<varselector id="vars"/>
-								<column>
-									<varslot type="numeric" id="mx" source="vars" required="true" label="Pick an object"/>	<!-- NOTE: requiredness does not work, correctly, yet -->
-									<input id="summary" label="Enter a summary" size="large" initial="I am the default"/>
-									<stretch/>
-								</column>
-							</row>
-						</frame>
+						<row>
+							<varselector id="vars"/>
+							<column>
+								<varslot type="numeric" id="mx" source="vars" required="true" label="Pick an object"/>	<!-- NOTE: requiredness does not work, correctly, yet -->
+								<input id="summary" label="Enter a summary" size="large" initial="I am the default"/>
+								<stretch/>
+							</column>
+						</row>
 					</content>
 					<optioncolumn id="object" connect="mx.available"/>
 					<optioncolumn id="objshort" label="Object" connect="mx.available.shortname"/>

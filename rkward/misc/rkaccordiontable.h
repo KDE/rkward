@@ -49,6 +49,7 @@ protected:
 	void resizeEvent (QResizeEvent* event);                                          // reimplemented to make the current content widget stretch / shrink
 	void currentChanged (const QModelIndex& current, const QModelIndex& previous);
 	void mousePressEvent (QMouseEvent* event);
+	void drawRow (QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
 private:
 	QSize sizeHintWithoutEditor () const;
 	int rowOfButton (QObject *button) const;
