@@ -269,6 +269,7 @@ RKAccordionTable::RKAccordionTable (QWidget* parent) : QTreeView (parent) {
 	setDragDropOverwriteMode (false);
 	setIndentation (0);
 	setRootIsDecorated (false);
+	setAlternatingRowColors (true);
 	setExpandsOnDoubleClick (false);   // we expand on single click, instead
 	setItemsExpandable (false);        // custom handling
 	setSizePolicy (QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
