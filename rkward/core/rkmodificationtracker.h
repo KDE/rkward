@@ -71,7 +71,11 @@ private:
 	int num_watched_objects;
 };
 
-/** An item model for the RObjectList . Technically this is the base class for RKModificationTracker. The two could be merged, fully, but this way, it's a little easier to see what belongs where, logically. */
+/** An item model for the RObjectList . Technically this is the base class for RKModificationTracker. The two could be merged, fully, but this way, it's a little easier to see what belongs where, logically.
+
+ The object item model is mostly organized exactly like the tree of R objects rooted at RObjectList::getObjectList(). One small difference is that
+ in the item model .GlobalEnv is one child of the root, and the other loaded environments are contained in a sibling to this.
+*/
 class RKObjectListModel : public QAbstractItemModel {
 public:
 	enum Column {

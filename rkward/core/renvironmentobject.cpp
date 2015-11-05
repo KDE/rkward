@@ -2,7 +2,7 @@
                           renvironmentobject  -  description
                              -------------------
     begin                : Wed Sep 27 2006
-    copyright            : (C) 2006, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2009, 2010, 2011, 2015 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -35,11 +35,12 @@ REnvironmentObject::REnvironmentObject (RContainerObject *parent, const QString 
 	type = Environment;
 	if (parent == RObjectList::getObjectList ()) {
 		type |= ToplevelEnv;
-		if (name == ".GlobalEnv") {
-			type |= GlobalEnv;
-		} else if (name.contains (':')) {
+		if (name.contains (':')) {
 			type |= PackageEnv;
 		}
+	} else if (parent == 0) {
+		RK_ASSERT (name == ".GlobalEnv");
+		type |= ToplevelEnv | GlobalEnv;
 	}
 }
 

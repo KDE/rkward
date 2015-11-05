@@ -2,7 +2,7 @@
                           rkobjectlistview  -  description
                              -------------------
     begin                : Wed Sep 1 2004
-    copyright            : (C) 2004-2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2015 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -66,17 +66,12 @@ void RKObjectListView::setObjectCurrent (RObject *object, bool only_if_none_curr
 void RKObjectListView::setRootObject (RObject *root) {
 	RK_TRACE (APP);
 
-	if (!root) return;
 	root_object = root;
-	if (root == RObjectList::getObjectList () && !settings->getSetting (RKObjectListViewSettings::ShowObjectsAllEnvironments)) root = RObjectList::getGlobalEnv ();
+	if (!root && !settings->getSetting (RKObjectListViewSettings::ShowObjectsAllEnvironments)) root = RObjectList::getGlobalEnv ();
 	QModelIndex index = settings->mapFromSource (RKGlobals::tracker ()->indexFor (root));
-	if (index.isValid ()) {
-		if (index != rootIndex ()) {
-			setRootIndex (index);
-			resizeColumnToContents (0);
-		}
-	} else {
-		RK_ASSERT (false);
+	if (index != rootIndex ()) {
+		setRootIndex (index);
+		settingsChanged ();    // Updates column sizes. Note: Recurses into this function, but with index == rootIndex()
 	}
 }
 
@@ -132,7 +127,6 @@ void RKObjectListView::initialize () {
 	setModel (settings);
 
 	QModelIndex genv = settings->mapFromSource (RKGlobals::tracker ()->indexFor (RObjectList::getGlobalEnv ()));
-	setRootObject (RObjectList::getObjectList ());
 	setExpanded (genv, true);
 	setMinimumHeight (rowHeight (genv) * 5);
 	settingsChanged ();
@@ -161,6 +155,10 @@ void RKObjectListView::settingsChanged () {
 	RK_TRACE (APP);
 
 	setRootObject (root_object);
+	if (!root_object) {
+		setFirstColumnSpanned (0, QModelIndex (), true);
+		setFirstColumnSpanned (1, QModelIndex (), true);
+	}
 	resizeColumnToContents (0);
 }
 
