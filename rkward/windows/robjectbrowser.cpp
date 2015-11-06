@@ -2,7 +2,7 @@
                           robjectbrowser  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006, 2007, 2008, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2004 - 2015 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -303,10 +303,6 @@ RKObjectListViewSettingsWidget::RKObjectListViewSettingsWidget (RKObjectListView
 	connect (functions, SIGNAL(clicked(bool)), this, SLOT(modeChanged(bool)));
 	layout->addLayout (hbox);
 
-	all_envirs = new QCheckBox (i18n ("Show All Environments"), this);
-	connect (all_envirs, SIGNAL (clicked(bool)), this, SLOT (boxChanged(bool)));
-	layout->addWidget (all_envirs);
-
 	hidden_objects = new QCheckBox (i18n ("Show Hidden Objects"), this);
 	connect (hidden_objects, SIGNAL (clicked(bool)), this, SLOT (boxChanged(bool)));
 	layout->addWidget (hidden_objects);
@@ -321,7 +317,6 @@ RKObjectListViewSettingsWidget::~RKObjectListViewSettingsWidget () {
 void RKObjectListViewSettingsWidget::settingsChanged () {
 	RK_TRACE (APP);
 
-	all_envirs->setChecked (settings->getSetting (RKObjectListViewSettings::ShowObjectsAllEnvironments));
 	hidden_objects->setChecked (settings->getSetting (RKObjectListViewSettings::ShowObjectsHidden));
 
 	bool functions_shown = settings->getSetting (RKObjectListViewSettings::ShowObjectsFunction);
@@ -364,9 +359,7 @@ void RKObjectListViewSettingsWidget::modeChanged (bool) {
 void RKObjectListViewSettingsWidget::boxChanged (bool) {
 	RK_TRACE (APP);
 
-	if (sender () == all_envirs) {
-		settings->setSetting (RKObjectListViewSettings::ShowObjectsAllEnvironments, all_envirs->isChecked ());
-	} else {
+	if (sender () == hidden_objects) {
 		settings->setSetting (RKObjectListViewSettings::ShowObjectsHidden, hidden_objects->isChecked ());
 	}
 }

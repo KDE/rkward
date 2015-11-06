@@ -2,7 +2,7 @@
                           rksettingsmodule  -  description
                              -------------------
     begin                : Fri Apr 22 2005
-    copyright            : (C) 2005 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2015 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -30,6 +30,7 @@
 #include "../rkglobals.h"
 #include "../misc/multistringselector.h"
 #include "rksettings.h"
+#include "rksettingsmodulegeneral.h"
 #include "../debug.h"
 
 // static
@@ -39,7 +40,9 @@ QStringList RKSettingsModuleObjectBrowser::getstructure_blacklist;
 RKSettingsModuleObjectBrowser::RKSettingsModuleObjectBrowser (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
 
-	checkboxes = new QCheckBox*[RKObjectListViewSettings::SettingsCount];
+	for (int i = 0; i < RKObjectListViewSettings::SettingsCount; ++i) {
+		checkboxes[i] = 0;
+	}
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
 
@@ -47,15 +50,6 @@ RKSettingsModuleObjectBrowser::RKSettingsModuleObjectBrowser (RKSettings *gui, Q
 
 	checkboxes[RKObjectListViewSettings::ShowObjectsHidden] = new QCheckBox (i18n ("Show hidden objects"), this);
 	layout->addWidget (checkboxes[RKObjectListViewSettings::ShowObjectsHidden]);
-	checkboxes[RKObjectListViewSettings::ShowObjectsAllEnvironments] = new QCheckBox (i18n ("Show all environments"), this);
-	layout->addWidget (checkboxes[RKObjectListViewSettings::ShowObjectsAllEnvironments]);
-	layout->addSpacing (2*RKGlobals::spacingHint ());
-	checkboxes[RKObjectListViewSettings::ShowObjectsContainer] = new QCheckBox (i18n ("Show objects with children"), this);
-	layout->addWidget (checkboxes[RKObjectListViewSettings::ShowObjectsContainer]);
-	checkboxes[RKObjectListViewSettings::ShowObjectsFunction] = new QCheckBox (i18n ("Show functions"), this);
-	layout->addWidget (checkboxes[RKObjectListViewSettings::ShowObjectsFunction]);
-	checkboxes[RKObjectListViewSettings::ShowObjectsVariable] = new QCheckBox (i18n ("Show variables"), this);
-	layout->addWidget (checkboxes[RKObjectListViewSettings::ShowObjectsVariable]);
 
 	layout->addSpacing (2*RKGlobals::spacingHint ());
 
@@ -71,6 +65,7 @@ RKSettingsModuleObjectBrowser::RKSettingsModuleObjectBrowser (RKSettings *gui, Q
 	layout->addStretch ();
 
 	for (int i = 0; i < RKObjectListViewSettings::SettingsCount; ++i) {
+		if (!checkboxes[i]) continue;   // We don't provide checkboxes for all settings in this list
 		checkboxes[i]->setChecked (settings[i]);
 		connect (checkboxes[i], SIGNAL (stateChanged(int)), this, SLOT (boxChanged(int)));
 	}
@@ -108,7 +103,7 @@ void RKSettingsModuleObjectBrowser::applyChanges () {
 	RK_TRACE (SETTINGS);
 
 	for (int i = 0; i < RKObjectListViewSettings::SettingsCount; ++i) {
-		settings[i] = checkboxes[i]->isChecked ();
+		if (checkboxes[i]) settings[i] = checkboxes[i]->isChecked ();
 	}
 	getstructure_blacklist = blacklist_choser->getValues();
 }
@@ -129,10 +124,6 @@ void RKSettingsModuleObjectBrowser::saveSettings (KConfig *config) {
 
 	KConfigGroup cg = config->group ("Object Browser");
 	cg.writeEntry ("show hidden vars", settings[RKObjectListViewSettings::ShowObjectsHidden]);
-	cg.writeEntry ("show all environments", settings[RKObjectListViewSettings::ShowObjectsAllEnvironments]);
-	cg.writeEntry ("show container objects", settings[RKObjectListViewSettings::ShowObjectsContainer]);
-	cg.writeEntry ("show function objects", settings[RKObjectListViewSettings::ShowObjectsFunction]);
-	cg.writeEntry ("show variable objects", settings[RKObjectListViewSettings::ShowObjectsVariable]);
 	cg.writeEntry ("show label field", settings[RKObjectListViewSettings::ShowFieldsLabel]);
 	cg.writeEntry ("show type field", settings[RKObjectListViewSettings::ShowFieldsType]);
 	cg.writeEntry ("show class field", settings[RKObjectListViewSettings::ShowFieldsClass]);
@@ -145,11 +136,13 @@ void RKSettingsModuleObjectBrowser::loadSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
 	KConfigGroup cg = config->group ("Object Browser");
+	// The following are _not_ actually configurable defaults in RKWard 0.6.4. These settings here simply serve to define the static default.
+	settings[RKObjectListViewSettings::ShowObjectsAllEnvironments] = true;
+	settings[RKObjectListViewSettings::ShowObjectsVariable] = true;
+	settings[RKObjectListViewSettings::ShowObjectsContainer] = true;
+	settings[RKObjectListViewSettings::ShowObjectsFunction] = true;
+	// These defaults _are_ configurable
 	settings[RKObjectListViewSettings::ShowObjectsHidden] = cg.readEntry ("show hidden vars", false);
-	settings[RKObjectListViewSettings::ShowObjectsAllEnvironments] = cg.readEntry ("show all environments", false);
-	settings[RKObjectListViewSettings::ShowObjectsContainer] = cg.readEntry ("show container objects", true);
-	settings[RKObjectListViewSettings::ShowObjectsFunction] = cg.readEntry ("show function objects", true);
-	settings[RKObjectListViewSettings::ShowObjectsVariable] = cg.readEntry ("show variable objects", true);
 	settings[RKObjectListViewSettings::ShowFieldsLabel] = cg.readEntry ("show label field", true);
 	settings[RKObjectListViewSettings::ShowFieldsType] = cg.readEntry ("show type field", true);
 	settings[RKObjectListViewSettings::ShowFieldsClass] = cg.readEntry ("show class field", true);

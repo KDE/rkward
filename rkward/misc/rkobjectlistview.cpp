@@ -231,18 +231,17 @@ RKObjectListViewSettings::RKObjectListViewSettings (QObject* parent) : QSortFilt
 
 	action_group = new QActionGroup (this);
 	action_group->setExclusive (false);
-	actions[ShowObjectsAllEnvironments] = new QAction (i18n ("All Environments"), action_group);
-	actions[ShowObjectsContainer] = new QAction (i18n ("Objects with children"), action_group);
-	actions[ShowObjectsVariable] = new QAction (i18n ("Variables"), action_group);
-	actions[ShowObjectsFunction] = new QAction (i18n ("Functions"), action_group);
-	actions[ShowObjectsHidden] = new QAction (i18n ("Hidden Objects"), action_group);
-	actions[ShowFieldsType] = new QAction (i18n ("Type"), action_group);
-	actions[ShowFieldsLabel] = new QAction (i18n ("Label"), action_group);
-	actions[ShowFieldsClass] = new QAction (i18n ("Class"), action_group);
+	settings[ShowObjectsAllEnvironments].action = new QAction (i18n ("All Environments"), action_group);
+	settings[ShowObjectsContainer].action = new QAction (i18n ("Objects with children"), action_group);
+	settings[ShowObjectsVariable].action = new QAction (i18n ("Variables"), action_group);
+	settings[ShowObjectsFunction].action = new QAction (i18n ("Functions"), action_group);
+	settings[ShowObjectsHidden].action = new QAction (i18n ("Hidden Objects"), action_group);
+	settings[ShowFieldsType].action = new QAction (i18n ("Type"), action_group);
+	settings[ShowFieldsLabel].action = new QAction (i18n ("Label"), action_group);
+	settings[ShowFieldsClass].action = new QAction (i18n ("Class"), action_group);
 
 	for (int i = 0; i < SettingsCount; ++i) {
-		actions[i]->setCheckable (true);
-		settings_default[i] = true;
+		settings[i].action->setCheckable (true);
 	}
 
 	createContextMenus ();
@@ -261,8 +260,8 @@ RKObjectListViewSettings::~RKObjectListViewSettings () {
 void RKObjectListViewSettings::setSetting (Settings setting, bool to) {
 	RK_TRACE (APP);
 
-	settings[setting] = to;
-	settings_default[setting] = false;
+	settings[setting].state = to;
+	settings[setting].is_at_default = false;
 
 	updateSelf ();
 }
@@ -271,9 +270,9 @@ bool RKObjectListViewSettings::filterAcceptsColumn (int source_column, const QMo
 	RK_TRACE (APP);
 
 	if (source_column == RKObjectListModel::NameColumn) return true;
-	if (source_column == RKObjectListModel::LabelColumn) return (settings[ShowFieldsLabel]);
-	if (source_column == RKObjectListModel::TypeColumn) return (settings[ShowFieldsType]);
-	if (source_column == RKObjectListModel::ClassColumn) return (settings[ShowFieldsClass]);
+	if (source_column == RKObjectListModel::LabelColumn) return (settings[ShowFieldsLabel].state);
+	if (source_column == RKObjectListModel::TypeColumn) return (settings[ShowFieldsType].state);
+	if (source_column == RKObjectListModel::ClassColumn) return (settings[ShowFieldsClass].state);
 
 	RK_ASSERT (false);
 	return false;
@@ -292,7 +291,7 @@ bool RKObjectListViewSettings::filterAcceptsRow (int source_row, const QModelInd
 	// always show global env and search path
 	if (!object->parentObject ()) return true;
 
-	if (!settings[ShowObjectsHidden]) {
+	if (!settings[ShowObjectsHidden].state) {
 		if (object->getShortName ().startsWith ('.')) return false;
 		if (object == reinterpret_cast<RObject*> (RObjectList::getObjectList ()->orphanNamespacesObject ())) return false;
 	}
@@ -300,13 +299,13 @@ bool RKObjectListViewSettings::filterAcceptsRow (int source_row, const QModelInd
 	bool base_filter = QSortFilterProxyModel::filterAcceptsRow (source_row, source_parent);
 
 	if (object->isType (RObject::ToplevelEnv)) {
-		return (base_filter && settings[ShowObjectsAllEnvironments]);
+		return (base_filter && settings[ShowObjectsAllEnvironments].state);
 	} else if (object->isType (RObject::Function)) {
-		return (base_filter && settings[ShowObjectsFunction]);
+		return (base_filter && settings[ShowObjectsFunction].state);
 	} else if (object->isType (RObject::Container)) {
-		return (base_filter && settings[ShowObjectsContainer]);
+		return (base_filter && settings[ShowObjectsContainer].state);
 	} else if (object->isVariable ()) {
-		return (base_filter && settings[ShowObjectsVariable]);
+		return (base_filter && settings[ShowObjectsVariable].state);
 	}
 
 	return base_filter;
@@ -341,17 +340,17 @@ void RKObjectListViewSettings::createContextMenus () {
 	RK_TRACE (APP);
 
 	show_objects_menu = new QMenu (i18n ("Show Objects"), 0);
-	show_objects_menu->addAction (actions[ShowObjectsAllEnvironments]);
-	show_objects_menu->addAction (actions[ShowObjectsContainer]);
-	show_objects_menu->addAction (actions[ShowObjectsVariable]);
-	show_objects_menu->addAction (actions[ShowObjectsFunction]);
+	show_objects_menu->addAction (settings[ShowObjectsAllEnvironments].action);
+	show_objects_menu->addAction (settings[ShowObjectsContainer].action);
+	show_objects_menu->addAction (settings[ShowObjectsVariable].action);
+	show_objects_menu->addAction (settings[ShowObjectsFunction].action);
 	show_objects_menu->addSeparator ();
-	show_objects_menu->addAction (actions[ShowObjectsHidden]);
+	show_objects_menu->addAction (settings[ShowObjectsHidden].action);
 
 	show_fields_menu = new QMenu (i18n ("Show Fields"), 0);
-	show_fields_menu->addAction (actions[ShowFieldsType]);
-	show_fields_menu->addAction (actions[ShowFieldsLabel]);
-	show_fields_menu->addAction (actions[ShowFieldsClass]);
+	show_fields_menu->addAction (settings[ShowFieldsType].action);
+	show_fields_menu->addAction (settings[ShowFieldsLabel].action);
+	show_fields_menu->addAction (settings[ShowFieldsClass].action);
 
 	connect (action_group, SIGNAL (triggered(QAction*)), this, SLOT(settingToggled(QAction*)));
 	updateSelf ();
@@ -366,7 +365,7 @@ void RKObjectListViewSettings::updateSelf () {
 void RKObjectListViewSettings::updateSelfNow () {
 	RK_TRACE (APP);
 
-	for (int i = 0; i < SettingsCount; ++i) actions[i]->setChecked (settings[i]);
+	for (int i = 0; i < SettingsCount; ++i) settings[i].action->setChecked (settings[i].state);
 
 	invalidateFilter ();
 
@@ -379,8 +378,8 @@ void RKObjectListViewSettings::globalSettingsChanged (RKSettings::SettingsPage p
 	RK_TRACE (APP);
 
 	for (int i = 0; i < SettingsCount; ++i) {
-		if (settings_default[i]) {	// should only default settings be copied?
-			settings[i] = RKSettingsModuleObjectBrowser::isSettingActive ((Settings) i);
+		if (settings[i].is_at_default) {     // Only settings that have been left at their default are copied
+			settings[i].state = RKSettingsModuleObjectBrowser::isSettingActive ((Settings) i);
 		}
 	}
 
@@ -392,7 +391,7 @@ void RKObjectListViewSettings::settingToggled (QAction* which) {
 
 	int setting = -1;
 	for (int i = 0; i < SettingsCount; ++i) {
-		if (actions[i] == which) {
+		if (settings[i].action == which) {
 			setting = i;
 			break;
 		}

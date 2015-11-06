@@ -100,11 +100,11 @@ public:
 		ShowFieldsType,
 		ShowFieldsClass,
 		ShowFieldsLabel,
-		SettingsCount=ShowFieldsLabel + 1
+		SettingsCount
 	};
 
 	void setSetting (Settings setting, bool to);
-	bool getSetting (Settings setting) const { return settings[setting]; };
+	bool getSetting (Settings setting) const { return settings[setting].state; };
 
 	QMenu *showObjectsMenu () const { return show_objects_menu; };
 	QMenu *showFieldsMenu () const { return show_fields_menu; };
@@ -119,9 +119,13 @@ protected:
 	bool filterAcceptsColumn (int source_column, const QModelIndex& source_parent) const;
 	bool lessThan (const QModelIndex& left, const QModelIndex& right) const;
 private:
-	bool settings[SettingsCount];
-	bool settings_default[SettingsCount];
-	QAction* actions[SettingsCount];
+	struct Setting {
+		Setting () : is_at_default (true) {};
+		QAction *action;
+		bool is_at_default;
+		bool state;
+	};
+	Setting settings[SettingsCount];
 	QActionGroup* action_group;
 
 	void createContextMenus ();

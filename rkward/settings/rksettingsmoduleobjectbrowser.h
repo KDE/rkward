@@ -62,7 +62,7 @@ private:
 	MultiStringSelector *blacklist_choser;
 	static QStringList getstructure_blacklist;
 
-	QCheckBox **checkboxes;
+	QCheckBox *checkboxes[RKObjectListViewSettings::SettingsCount];
 	static bool settings[RKObjectListViewSettings::SettingsCount];
 };
 

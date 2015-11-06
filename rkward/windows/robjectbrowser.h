@@ -2,7 +2,7 @@
                           robjectbrowser  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2004 - 2015 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -123,7 +123,6 @@ private:
 	QRadioButton *all;
 	QRadioButton *nonfunctions;
 	QRadioButton *functions;
-	QCheckBox *all_envirs;
 	QCheckBox *hidden_objects;
 	RKObjectListViewSettings *settings;
 };
