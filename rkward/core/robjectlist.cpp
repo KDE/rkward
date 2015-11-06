@@ -51,6 +51,7 @@ RObjectList::RObjectList () : RContainerObject (0, QString ()) {
 	//update_timer->start (AUTO_UPDATE_INTERVAL, true);
 	
 	type = RObject::Workspace;
+	name = "search()";
 	
 	update_chain = 0;
 
@@ -68,6 +69,10 @@ RObjectList::~RObjectList () {
 	RK_TRACE (OBJECTS);
 	delete orphan_namespaces;
 	delete globalenv;
+}
+
+QString RObjectList::getObjectDescription () const {
+	return i18n ("This section contains environments that are not part of <i>.GlobalEnv</i> / your \"workspace\". Most importantly, this includes loaded packages, but also objects added to R's <i>search()<i>-path using <i>attach()</i>.");
 }
 
 QStringList RObjectList::detachPackages (const QStringList &packages, RCommandChain *chain, RKProgressControl* control) {
@@ -161,31 +166,31 @@ void RObjectList::rCommandDone (RCommand *command) {
 	}
 }
 
-void RObjectList::updateEnvironments (const QStringList &env_names, bool force_globalenv_update) {
+void RObjectList::updateEnvironments (const QStringList &_env_names, bool force_globalenv_update) {
 	RK_TRACE (OBJECTS);
 
 	RObjectMap newchildmap;
+	QStringList env_names = _env_names;
+	if (!env_names.isEmpty ()) {
+		QString dummy = env_names.takeFirst ();
+		RK_ASSERT (dummy == ".GlobalEnv");
+		if (force_globalenv_update) {
+			// for now, we only update the .GlobalEnv. All others we assume to be static
+			getGlobalEnv ()->updateFromR (update_chain);
+		}
+	} else {
+		RK_ASSERT (!env_names.isEmpty ());
+	}
 
 	// find which items are new, and copy the old ones
 	for (int i = 0; i < env_names.count (); ++i) {
 		QString name = env_names[i];
 
-		RObject *obj;
-		if (i == 0) {
-			RK_ASSERT (name == ".GlobalEnv");
-			obj = globalenv;
-		} else {
-			obj = findChildByName (name);
-		}
+		RObject *obj = findChildByName (name);
 		if (obj && (i > 0) && (env_names.lastIndexOf (name, i-1) > -1)) {		// duplicate environment names can happen (e.g. if a data.frame is attached multiple times)
 			obj = 0;	// only copy the old item once
 		}
-		if (obj) {
-			// for now, we only update the .GlobalEnv. All others we assume to be static
-			if (obj->isType (GlobalEnv) && force_globalenv_update) {
-				obj->updateFromR (update_chain);
-			}
-		} else {
+		if (!obj) {
 			obj = createTopLevelEnvironment (name);
 			RKGlobals::tracker ()->beginAddObject (obj, this, i);
 			childmap.insert (i, obj);

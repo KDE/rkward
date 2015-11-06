@@ -67,6 +67,7 @@ public:
 	QStringList detachPackages (const QStringList &packages, RCommandChain *chain = 0, RKProgressControl *control = 0);
 	/** A pseudo object containing as children all loaded namespaces which do not belong to a package on the search path */
 	RKOrphanNamespacesObject* orphanNamespacesObject () const { return orphan_namespaces; };
+	QString getObjectDescription () const;
 public slots:
 	void timeout ();
 signals:
