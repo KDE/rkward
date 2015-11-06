@@ -21,30 +21,85 @@
 #include <QContextMenuEvent>
 #include <QMenu>
 #include <QTimer>
+#include <QStyledItemDelegate>
 
 #include "../rkglobals.h"
 #include "../core/robjectlist.h"
 #include "../core/renvironmentobject.h"
 #include "../core/rkmodificationtracker.h"
+#include "rkstandardicons.h"
 #include "../settings/rksettingsmoduleobjectbrowser.h"
 
 #include "../debug.h"
+
+/** Responsible for drawing the root level items "My Objects" and "Other Environments" */
+class RKObjectListViewRootDelegate : public QStyledItemDelegate {
+public:
+	RKObjectListViewRootDelegate (RKObjectListView* parent) : QStyledItemDelegate (parent) {
+		tree = parent;
+		expanded = RKStandardIcons::getIcon (RKStandardIcons::ActionCollapseUp);
+		collapsed = RKStandardIcons::getIcon (RKStandardIcons::ActionExpandDown);
+	}
+	void initStyleOption (QStyleOptionViewItem* option, const QModelIndex& index) const {
+		QStyledItemDelegate::initStyleOption (option, index);
+		if (!index.parent ().isValid ()) {
+			QStyleOptionViewItemV4 *v4 = qstyleoption_cast<QStyleOptionViewItemV4 *> (option);
+			if (!v4) {
+				RK_ASSERT (false);
+				return;
+			}
+			v4->icon = tree->isExpanded (index) ? expanded : collapsed;
+			//v4->decorationPosition = QStyleOptionViewItemV4::Right;  // easily gets out of the picture, thus using left-align
+			v4->features |= QStyleOptionViewItemV2::HasDecoration;
+
+			RObject* object = static_cast<RObject*> (tree->settings->mapToSource (index).internalPointer ());
+			v4->font.setBold (true);
+			v4->backgroundBrush = tree->palette ().mid ();
+			if (object == RObjectList::getObjectList ()) {
+				v4->text = i18n ("Other Environments");
+			} else {
+				if (tree->model ()->hasChildren (index)) v4->text = i18n ("My Workspace");
+				else v4->text = i18n ("My Workspace (no objects matching filter)");
+			}
+		}
+	}
+	RKObjectListView* tree;
+	QIcon expanded;
+	QIcon collapsed;
+};
 
 RKObjectListView::RKObjectListView (QWidget *parent) : QTreeView (parent) {
 	RK_TRACE (APP);
 
 	root_object = 0;
+	rkdelegate = new RKObjectListViewRootDelegate (this);
 	settings = new RKObjectListViewSettings (this);
 	setSortingEnabled (true);
+	sortByColumn (0, Qt::AscendingOrder);
 
 	menu = new QMenu (this);
 	menu->addMenu (settings->showObjectsMenu ());
 	menu->addMenu (settings->showFieldsMenu ());
 	menu->addAction (i18n ("Configure Defaults"), this, SLOT (popupConfigure()));
+
+	connect (this, SIGNAL(clicked(QModelIndex)), this, SLOT(itemClicked(QModelIndex)));
 }
 
 RKObjectListView::~RKObjectListView () {
 	RK_TRACE (APP);
+}
+
+void RKObjectListView::itemClicked (const QModelIndex& index) {
+	RK_TRACE (APP);
+
+	if (!index.parent ().isValid ()) {  // root level (pseudo) items expand on click
+		QModelIndex fixed_index = model ()->index (index.row (), 0, index.parent ());;
+		if (!isExpanded (fixed_index)) {
+			expand (fixed_index);
+			resizeColumnToContents (0);
+		}
+		else collapse (fixed_index);
+	}
 }
 
 void RKObjectListView::setObjectCurrent (RObject *object, bool only_if_none_current) {
@@ -73,6 +128,7 @@ void RKObjectListView::setRootObject (RObject *root) {
 		setRootIndex (index);
 		settingsChanged ();    // Updates column sizes. Note: Recurses into this function, but with index == rootIndex()
 	}
+	setRootIsDecorated (index.isValid ());
 }
 
 RObject* RKObjectListView::objectAtIndex (const QModelIndex& index) const {
@@ -101,8 +157,6 @@ RObject::ObjectList RKObjectListView::selectedObjects () const {
 	return list;
 }
 
-// KDE4 TODO: does this really need to be virtual?
-//virtual 
 void RKObjectListView::popupConfigure () {
 	RK_TRACE (APP);
 	RKSettings::configureSettings (RKSettings::PageObjectBrowser, this);
@@ -157,7 +211,9 @@ void RKObjectListView::settingsChanged () {
 	setRootObject (root_object);
 	if (!root_object) {
 		setFirstColumnSpanned (0, QModelIndex (), true);
+		setItemDelegateForRow (0, rkdelegate);
 		setFirstColumnSpanned (1, QModelIndex (), true);
+		setItemDelegateForRow (1, rkdelegate);
 	}
 	resizeColumnToContents (0);
 }
@@ -233,8 +289,8 @@ bool RKObjectListViewSettings::filterAcceptsRow (int source_row, const QModelInd
 	object = object->findChildByObjectModelIndex (source_row);
 	RK_ASSERT (object);
 
-	// always show the global env
-	if (object->isType (RObject::GlobalEnv)) return true;
+	// always show global env and search path
+	if (!object->parentObject ()) return true;
 
 	if (!settings[ShowObjectsHidden]) {
 		if (object->getShortName ().startsWith ('.')) return false;
@@ -273,6 +329,10 @@ bool RKObjectListViewSettings::lessThan (const QModelIndex& left, const QModelIn
 		return (left_parent->getObjectModelIndexOf (left_object) < right_parent->getObjectModelIndexOf (right_object));
 	} else if (left_object->isPseudoObject ()) return false;
 	else if (right_object->isPseudoObject ()) return true;
+	else if (!left.parent ().isValid ()) {
+		// For the two root items, _always_ sort .GlobalEnv on top, irrespective of sort order
+		return ((static_cast<RObject*> (left.internalPointer ()) == RObjectList::getGlobalEnv ()) == (sortOrder () == Qt::AscendingOrder));
+	}
 
 	return (QSortFilterProxyModel::lessThan (left, right));
 }

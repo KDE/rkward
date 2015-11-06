@@ -197,7 +197,7 @@ public:
 	static RDataType textToType (const QString &text);
 /** Returns the given string in quotes, taking care of escaping quotation marks inside the string. */
 	static QString rQuote (const QString &string);
-/** Returns a pretty description of the object, and its most important properties. TODO should this be virtual or not? I suppose, it's a close call. For now, we do all work here with casts */
+/** Returns a pretty description of the object, and its most important properties. */
 	virtual QString getObjectDescription () const;
 /** Parses an object path (such as package::name[["a"]]$b@slot) into its components, returning them as a list (in this case 'package', '::' 'name', '$', 'a', '$', 'b', '@', 'slot'). */
 	static QStringList parseObjectPath (const QString &path);

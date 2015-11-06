@@ -217,14 +217,13 @@ private:
 
 #include <QStyledItemDelegate>
 #include <QPainter>
-#include <kicon.h>
 /** Responsible for drawing expand / collapse indicators in first column */
 class RKAccordionDelegate : public QStyledItemDelegate {
 public:
 	RKAccordionDelegate (RKAccordionTable* parent) : QStyledItemDelegate (parent) {
 		table = parent;
-		expanded = KIcon ("arrow-up");
-		collapsed = KIcon ("arrow-down");
+		expanded = RKStandardIcons::getIcon (RKStandardIcons::ActionCollapseUp);
+		collapsed = RKStandardIcons::getIcon (RKStandardIcons::ActionExpandDown);
 	}
 	void initStyleOption (QStyleOptionViewItem* option, const QModelIndex& index) const {
 		QStyledItemDelegate::initStyleOption (option, index);
@@ -240,8 +239,8 @@ public:
 	}
 	RKAccordionDummyModel *pmodel;
 	RKAccordionTable* table;
-	KIcon expanded;
-	KIcon collapsed;
+	QIcon expanded;
+	QIcon collapsed;
 };
 
 #include <QPainter>

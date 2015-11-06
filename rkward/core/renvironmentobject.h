@@ -2,7 +2,7 @@
                           renvironmentobject  -  description
                              -------------------
     begin                : Wed Sep 27 2006
-    copyright            : (C) 2006, 2009, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2009, 2011, 2015 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -42,6 +42,7 @@ public:
 /** reimplemented from RContainerObject: If this is an environment var, call RContainerObject::writeMetaData (). Else, do nothing. An environment has no meta data. */
 	void writeMetaData (RCommandChain *chain);
 	QString packageName () const;
+	QString getObjectDescription () const;
 protected:
 	bool updateStructure (RData *new_data);
 /// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"

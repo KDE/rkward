@@ -48,6 +48,13 @@ REnvironmentObject::~REnvironmentObject () {
 	RK_TRACE (OBJECTS);
 }
 
+QString REnvironmentObject::getObjectDescription () const {
+	if (isType (GlobalEnv)) {
+		return i18n ("This section contains data in your \"workspace\". This is data that you created or imported, in contrast to data contained in a loaded R package. Technically, this corresponds to the <i>.GlobalEnv</i> environment.");
+	}
+	return RContainerObject::getObjectDescription ();
+}
+
 QString REnvironmentObject::packageName () const {
 	RK_ASSERT (isType (PackageEnv));
 	if (!isType (PackageEnv)) RK_DEBUG (OBJECTS, DL_WARNING, "%s", qPrintable (name));
