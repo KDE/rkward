@@ -2,7 +2,7 @@
                           rkobjectlistview  -  description
                              -------------------
     begin                : Wed Sep 1 2004
-    copyright            : (C) 2004, 2006, 2007, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2015 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -70,15 +70,16 @@ public slots:
 	void updateStarted ();
 	void selectionChanged (const QItemSelection & selected, const QItemSelection & deselected);
 	void settingsChanged ();
-
-	virtual void popupConfigure ();
+	void popupConfigure ();
+	void itemClicked (const QModelIndex& index);
 protected:
 	void contextMenuEvent (QContextMenuEvent* event);
 private:
 	QMenu *menu;
 	RObject *menu_object;
 	RObject *root_object;
-
+friend class RKObjectListViewRootDelegate;
+	QAbstractItemDelegate *rkdelegate;
 	RKObjectListViewSettings *settings;
 };
 

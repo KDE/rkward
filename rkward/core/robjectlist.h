@@ -2,7 +2,7 @@
                           robjectlist  -  description
                              -------------------
     begin                : Wed Aug 18 2004
-    copyright            : (C) 2004-2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2015 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -60,13 +60,14 @@ public:
 	REnvironmentObject* findPackage (const QString &namespacename) const;
 
 	static RObjectList *getObjectList () { return object_list; };
-	static REnvironmentObject *getGlobalEnv ();
+	static REnvironmentObject *getGlobalEnv () { return object_list->globalenv; };
 
 	/** detach the given list of packages (if the packages are loaded, and safe to remove)
 	@returns a list of error messages (usually empty) */
 	QStringList detachPackages (const QStringList &packages, RCommandChain *chain = 0, RKProgressControl *control = 0);
 	/** A pseudo object containing as children all loaded namespaces which do not belong to a package on the search path */
 	RKOrphanNamespacesObject* orphanNamespacesObject () const { return orphan_namespaces; };
+	QString getObjectDescription () const;
 public slots:
 	void timeout ();
 signals:
@@ -98,6 +99,7 @@ private:
 
 	REnvironmentObject *createTopLevelEnvironment (const QString &name);
 
+	REnvironmentObject *globalenv;
 	static RObjectList *object_list;
 };
 
