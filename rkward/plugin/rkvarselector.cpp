@@ -63,7 +63,6 @@ void RKVarSelector::rootChanged () {
 	RK_TRACE (PLUGIN);
 
 	RObject* object = root->objectValue ();
-	if (!object) object = RObjectList::getObjectList ();
 	list_view->setRootObject (object);
 }
 
