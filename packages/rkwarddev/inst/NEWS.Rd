@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.07-4 (2015-10-30)}{
+\section{Changes in rkwarddev version 0.07-4 (2015-11-07)}{
   \subsection{unreleased}{
     \itemize{
       \item this version is under development
@@ -40,6 +40,7 @@
       \item improved error handling in \code{rk.JS.header()}, error messages are more
         informative now
       \item \code{rk.uniqueIDs()} now checks \code{"dialog"} and \code{"wizard"} sections separately
+      \item updated the vignette with information on \code{js()} and how to add help pages
     }
   }
 }
