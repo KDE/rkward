@@ -4,7 +4,7 @@
 \alias{js}
 \title{R to JavaScript translation}
 \usage{
-js(..., level = 2)
+js(..., level = 2, linebreaks = FALSE)
 }
 \arguments{
 \item{...}{One or several character strings and/or \code{XiMpLe.node} objects with plugin nodes,
@@ -12,6 +12,8 @@ and/or objects of classes \code{rk.JS.arr} or \code{rk.JS.opt}, simply separated
 JavaScript operators and \code{if} conditions will be kept as-is.}
 
 \item{level}{Integer value, first indetation level.}
+
+\item{linebreaks}{Logical, should there be line breaks between the elements in this call?}
 }
 \value{
 A character string.

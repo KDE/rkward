@@ -35,6 +35,7 @@
 #'   and/or objects of classes \code{rk.JS.arr} or \code{rk.JS.opt}, simply separated by comma.
 #'   JavaScript operators and \code{if} conditions will be kept as-is.
 #' @param level Integer value, first indetation level.
+#' @param linebreaks Logical, should there be line breaks between the elements in this call?
 #' @return A character string.
 #' @export
 #' @seealso \code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}},
@@ -54,8 +55,15 @@
 #'   }
 #' )))
 
-js <- function(..., level=2){
+js <- function(..., level=2, linebreaks=FALSE){
   full.content <- eval(substitute(alist(...)))
+
+  if(isTRUE(linebreaks)){
+    collapse <- paste0("\n", paste0(rep("\t", max(0, level-1)), collapse=""))
+  } else {
+    collapse <- ""
+  }
+  
   ID.content <- lapply(
     full.content,
     function(this.part){
@@ -80,5 +88,5 @@ js <- function(..., level=2){
       }
     }
   )
-  return(id(js=TRUE, .objects=ID.content))
+  return(id(js=TRUE, collapse=collapse, .objects=ID.content))
 }
