@@ -1511,17 +1511,22 @@ replaceJSOperators <- function(..., call="id"){
 uncurl <- function(cond, level=1){
   if(!is.null(cond)){
     cond.list <- as.list(cond)
-    # NOTE: is it better to check for the bracket or lenght > 1?
+    # first check for the bracket
     if(identical(as.character(cond[[1]]), "{")){
-      cond <- paste0(
-        sapply(
-          2:length(cond.list),
-          function(this.cond.num){
-            do.call("js", args=list(cond[[this.cond.num]], level=level))
-          }
-        ),
-        collapse=paste0("\n", paste0(rep("\t", level-1), collapse=""))
-      )
+      # now make sure the bracket isn't empty
+      if(length(cond) > 1){
+        cond <- paste0(
+          sapply(
+            2:length(cond.list),
+            function(this.cond.num){
+              do.call("js", args=list(cond[[this.cond.num]], level=level))
+            }
+          ),
+          collapse=paste0("\n", paste0(rep("\t", level-1), collapse=""))
+        )
+      } else {
+        cond <- ""
+      }
     } else {
       cond <- do.call("js", args=list(cond, level=level))
     }
