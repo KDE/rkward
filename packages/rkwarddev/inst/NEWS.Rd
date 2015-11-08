@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.07-4 (2015-11-07)}{
+\section{Changes in rkwarddev version 0.07-4 (2015-11-08)}{
   \subsection{unreleased}{
     \itemize{
       \item this version is under development
