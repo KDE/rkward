@@ -61,7 +61,9 @@ js <- function(..., level=2){
     function(this.part){
       # get the object, not just a name from eval(substitute(alist(...)))
       if (is.name(this.part)){
-        this.part <- eval(this.part)
+        # also, if this gets called inside a local() call, make sure we fetch
+        # the referenced object at all
+        this.part <- dynGet(as.character(this.part), ifnotfound=get(as.character(this.part)))
       } else {}
       if(is.call(this.part)){
         # recursively check for if conditions

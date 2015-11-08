@@ -1452,7 +1452,6 @@ replaceJSOperators <- function(..., call="id"){
       # with the operator as first argument (name).
       # there can also be calls nested in calls so we need to test this recursively
       if(inherits(thisItem, "call")){
-        # break the 
         callList <- unlist(thisItem)
         if(as.character(callList[[1]]) %in% JS.operators){
           result <- list(
@@ -1460,6 +1459,10 @@ replaceJSOperators <- function(..., call="id"){
               do.call("replaceJSOperators", list(callList[[2]]))
             } else if(is.character(callList[[2]])){
               paste0("\"", callList[[2]], "\"")
+            } else if(is.name(callList[[2]])){
+              # if this gets called inside a local() call, make sure we fetch the referenced object at all
+              fetchedObject1 <- dynGet(as.character(callList[[2]]), ifnotfound=get(as.character(callList[[2]])))
+              do.call(call, list(fetchedObject1))
             } else {
               do.call(call, list(callList[[2]]))
             },
@@ -1468,12 +1471,24 @@ replaceJSOperators <- function(..., call="id"){
               do.call("replaceJSOperators", list(callList[[3]]))
             } else if(is.character(callList[[3]])){
               paste0("\"", callList[[3]], "\"")
+            } else if(is.name(callList[[2]])){
+              # same as fetchedObject1 above
+              fetchedObject2 <- dynGet(as.character(callList[[3]]), ifnotfound=get(as.character(callList[[3]])))
+              do.call(call, list(fetchedObject2))
             } else {
               do.call(call, list(callList[[3]]))
             }
           )
           return(paste0(unlist(result), collapse=""))
         } else {
+          # replace object names with the actual objects for evaluation
+          if(length(thisItem) > 1){
+            for (itemParts in 2:length(thisItem)){
+              if(is.name(thisItem[[itemParts]])){
+                thisItem[[itemParts]] <- dynGet(as.character(thisItem[[itemParts]]), ifnotfound=get(as.character(thisItem[[itemParts]])))
+              } else {}
+            }
+          } else {}
           thisItem <- eval(thisItem)
           # R vectors don't make much sense, collapse them for JS
           if(is.vector(thisItem)){
