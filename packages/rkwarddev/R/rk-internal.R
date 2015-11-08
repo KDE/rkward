@@ -1471,7 +1471,7 @@ replaceJSOperators <- function(..., call="id"){
               do.call("replaceJSOperators", list(callList[[3]]))
             } else if(is.character(callList[[3]])){
               paste0("\"", callList[[3]], "\"")
-            } else if(is.name(callList[[2]])){
+            } else if(is.name(callList[[3]])){
               # same as fetchedObject1 above
               fetchedObject2 <- dynGet(as.character(callList[[3]]), ifnotfound=get(as.character(callList[[3]])))
               do.call(call, list(fetchedObject2))
