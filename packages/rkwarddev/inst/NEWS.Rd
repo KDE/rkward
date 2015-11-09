@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.07-4 (2015-11-08)}{
+\section{Changes in rkwarddev version 0.07-4 (2015-11-09)}{
   \subsection{unreleased}{
     \itemize{
       \item this version is under development
@@ -17,6 +17,8 @@
       \item \code{rk.XML.dependencies()} didn't know about min/max versions of pluginmaps
         (fixed in \code{rk.XML.about()} as well)
       \item some fixes to the skeleton GUI and demo script
+      \item prevent internal function \code{indent()} from losing it over negative values
+      \item indentation of \code{rk.paste.JS.graph()} was incorrect
     }
   }
   \subsection{added}{

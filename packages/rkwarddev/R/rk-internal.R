@@ -107,7 +107,7 @@ trim <- function(char){
 ## function indent()
 # will create tabs to format the output
 indent <- function(level, by="\t"){
-  paste(rep(by, level-1), collapse="")
+  paste(rep(by, max(0, level-1)), collapse="")
 } ## end function indent()
 
 
@@ -1508,7 +1508,7 @@ replaceJSOperators <- function(..., call="id"){
 ## function uncurl()
 # used by js() to fetch calls from then/else segments of if conditions,
 # omitting curly brackets that would get in the way with ite()
-uncurl <- function(cond, level=1){
+uncurl <- function(cond, level=1, indent.by="\t"){
   if(!is.null(cond)){
     cond.list <- as.list(cond)
     # first check for the bracket
@@ -1519,16 +1519,16 @@ uncurl <- function(cond, level=1){
           sapply(
             2:length(cond.list),
             function(this.cond.num){
-              do.call("js", args=list(cond[[this.cond.num]], level=level))
+              do.call("js", args=list(cond[[this.cond.num]], level=level, by=indent.by))
             }
           ),
-          collapse=paste0("\n", paste0(rep("\t", level-1), collapse=""))
+          collapse=paste0("\n", indent(level=level, by=indent.by))
         )
       } else {
         cond <- ""
       }
     } else {
-      cond <- do.call("js", args=list(cond, level=level))
+      cond <- do.call("js", args=list(cond, level=level, by=indent.by))
     }
   } else {}
   return(cond)
@@ -1536,23 +1536,50 @@ uncurl <- function(cond, level=1){
 
 
 ## function replaceJSIf
-replaceJSIf <- function(cond, level=1, paste=TRUE){
+replaceJSIf <- function(cond, level=1, paste=TRUE, indent.by="\t", empty.e=FALSE){
   if(inherits(cond, "if")){
     # if condition -- should be save to give to js()
-    cond.if   <- do.call("js", args=list(cond[[2]], level=level))
+    cond.if   <- do.call(
+      "js",
+      args=list(
+        cond[[2]],
+        level=level,
+        indent.by=indent.by,
+        linebreaks=FALSE,
+        empty.e=empty.e
+      )
+    )
     # then do -- could be nested with another if condition
     if(inherits(cond[[3]], "if")){
-      cond.then <- replaceJSIf(cond[[3]], level=level+1, paste=FALSE)
+      cond.then <- replaceJSIf(cond[[3]], level=level+1, paste=FALSE, indent.by=indent.by, empty.e=empty.e)
     } else {
-      cond.then <- do.call("js", args=list(uncurl(cond[[3]], level=level+1), level=level))
+      cond.then <- do.call(
+        "js",
+        args=list(
+          uncurl(cond[[3]], level=level+1, indent.by=indent.by),
+          level=level,
+          indent.by=indent.by,
+          linebreaks=FALSE,
+          empty.e=empty.e
+        )
+      )
     }
     # else do -- could be missing or yet another if condition
     cond.else <- NULL
     if(length(as.list(cond)) > 3){
       if(inherits(cond[[4]], "if")){
-        cond.else <- replaceJSIf(cond[[4]], level=level+1, paste=FALSE)
+        cond.else <- replaceJSIf(cond[[4]], level=level+1, paste=FALSE, indent.by=indent.by, empty.e=empty.e)
       } else {
-        cond.else <- do.call("js", args=list(uncurl(cond[[4]], level=level+1), level=level))
+        cond.else <- do.call(
+          "js",
+          args=list(
+            uncurl(cond[[4]], level=level+1, indent.by=indent.by),
+            level=level,
+            indent.by=indent.by,
+            linebreaks=FALSE,
+            empty.e=empty.e
+          )
+        )
       }
     } else {}
 
@@ -1562,12 +1589,16 @@ replaceJSIf <- function(cond, level=1, paste=TRUE){
       elsejs=cond.else 
     )
     if(isTRUE(paste)){
-      return(rk.paste.JS(iteObject, level=level))
+      # the pasted result needs to be trimmed, because js() adds indentation itself
+      return(trim(rk.paste.JS(iteObject, level=level, indent.by=indent.by, empty.e=empty.e)))
     } else {
       return(iteObject)
     }
   } else {
-    cond <- do.call("js", args=list(cond, level=level))
+    cond <- do.call(
+      "js",
+      args=list(cond, level=level, indent.by=indent.by, linebreaks=FALSE, empty.e=empty.e)
+    )
     return(cond)
   }
 } ## end function replaceJSIf
@@ -1593,7 +1624,7 @@ replaceJSIf <- function(cond, level=1, paste=TRUE){
 #   }
 # )))
 #</documentation> 
-replaceJSFor <- function(loop, level=1){
+replaceJSFor <- function(loop, level=1, indent.by="\t"){
   if(inherits(loop, "for")){
     # for loops must be handled differently, we need to create an array
     # first and then interate through the array to imitate ho R does this
@@ -1604,18 +1635,28 @@ replaceJSFor <- function(loop, level=1){
     arrayName <- paste0("a", paste0(sample(c(letters,LETTERS,0:9), 5, replace=TRUE), collapse=""))
     iterName <- paste0("i", paste0(sample(c(letters,LETTERS,0:9), 5, replace=TRUE), collapse=""))
     loop <- paste(
-      paste0(paste0(rep("\t", level-1), collapse=""), "// the variable names \"", arrayName, "\" and \"", iterName, "\" were randomly generated"),
+      paste0(indent(level=level, by=indent.by), "// the variable names \"", arrayName, "\" and \"", iterName, "\" were randomly generated"),
       paste0("var ", arrayName, " = new Array();"),
-      paste0(arrayName, ".push(", do.call("js", args=list(loop[[3]], level=level)), ");"),
+      paste0(arrayName, ".push(", do.call("js", args=list(loop[[3]], level=level, indent.by=indent.by)), ");"),
       paste0("for (var ", as.character(loop[[2]]), "=", arrayName, "[0], ", iterName, "=0; ",
         iterName, " < ", arrayName, ".length; ",
         iterName, "++, ", as.character(loop[[2]]), "=", arrayName, "[", iterName, "]) {"),
-      paste0(paste0(rep("\t", level-1), collapse=""), do.call("js", args=list(uncurl(loop[[4]], level=level+1), level=level))),
+      paste0(
+        indent(level=level, by=indent.by),
+        do.call(
+          "js",
+          args=list(
+            uncurl(loop[[4]], level=level+1, indent.by=indent.by),
+            level=level,
+            indent.by=indent.by
+          )
+        )
+      ),
       "}\n",
-      sep=paste0("\n", paste0(rep("\t", level-1), collapse=""))
+      sep=paste0("\n", indent(level=level, by=indent.by))
     )
   } else {
-    loop <- do.call("js", args=list(loop, level=level))
+    loop <- do.call("js", args=list(loop, level=level, indent.by=indent.by))
     return(loop)
   }
 } ## end function replaceJSFor
