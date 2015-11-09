@@ -35,7 +35,10 @@
 #'   and/or objects of classes \code{rk.JS.arr} or \code{rk.JS.opt}, simply separated by comma.
 #'   JavaScript operators and \code{if} conditions will be kept as-is.
 #' @param level Integer value, first indetation level.
+#' @param indent.by A character string defining the indentation string to use.
 #' @param linebreaks Logical, should there be line breaks between the elements in this call?
+#' @param empty.e For \code{if} conditions only: Logical, if \code{TRUE} will force to add empty \code{else \{\}} brackets when
+#'    there is no \code{else} statement defined, which is considered to enhance code readability by some.
 #' @return A character string.
 #' @export
 #' @seealso \code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}},
@@ -55,11 +58,11 @@
 #'   }
 #' )))
 
-js <- function(..., level=2, linebreaks=FALSE){
+js <- function(..., level=2, indent.by="\t", linebreaks=FALSE, empty.e=FALSE){
   full.content <- eval(substitute(alist(...)))
 
   if(isTRUE(linebreaks)){
-    collapse <- paste0("\n", paste0(rep("\t", max(0, level-1)), collapse=""))
+    collapse <- paste0("\n", indent(level=level, by=indent.by))
   } else {
     collapse <- ""
   }
@@ -76,19 +79,19 @@ js <- function(..., level=2, linebreaks=FALSE){
       if(is.call(this.part)){
         # recursively check for if conditions
         if(inherits(this.part, "if")){
-          this.part <- replaceJSIf(this.part, level=level)
+          this.part <- replaceJSIf(this.part, level=level, indent.by=indent.by, empty.e=empty.e)
         } else {}
         if(inherits(this.part, "for")){
-          this.part <- replaceJSFor(this.part, level=level)
+          this.part <- replaceJSFor(this.part, level=level, indent.by=indent.by)
         } else {}
         if(identical(this.part[[1]], "rk.comment")){
-          return(rk.paste.JS(eval(this.part), level=level))
+          return(rk.paste.JS(eval(this.part), level=level, indent.by=indent.by, empty.e=empty.e))
         } else {}
         # replace JS operators
         return(do.call("replaceJSOperators", args=list(this.part)))
       } else if(is.XiMpLe.node(this.part)){
         if(XMLName(this.part) == "!--"){
-          return(rk.paste.JS(this.part, level=level))
+          return(rk.paste.JS(this.part, level=level, indent.by=indent.by, empty.e=empty.e))
         } else {
           return(this.part)
         }

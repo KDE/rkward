@@ -4,7 +4,8 @@
 \alias{js}
 \title{R to JavaScript translation}
 \usage{
-js(..., level = 2, linebreaks = FALSE)
+js(..., level = 2, indent.by = "\\t", linebreaks = FALSE,
+  empty.e = FALSE)
 }
 \arguments{
 \item{...}{One or several character strings and/or \code{XiMpLe.node} objects with plugin nodes,
@@ -13,7 +14,14 @@ JavaScript operators and \code{if} conditions will be kept as-is.}
 
 \item{level}{Integer value, first indetation level.}
 
+\item{indent.by}{A character string defining the indentation string to use.}
+
 \item{linebreaks}{Logical, should there be line breaks between the elements in this call?}
+
+\item{empty.e}{For \code{if} conditions only: Logical,
+      if \code{TRUE} will force to add empty \code{else \{\}} brackets when
+there is no \code{else} statement defined,
+      which is considered to enhance code readability by some.}
 }
 \value{
 A character string.
