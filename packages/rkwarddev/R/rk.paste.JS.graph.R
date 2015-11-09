@@ -80,17 +80,18 @@ rk.paste.JS.graph <- function(..., plotOpts=NULL, printoutObj=NULL, level=2, ind
         } else {
           warning("rk.paste.JS.graph: you're using plot options, but 'printoutObj' is empty, is that intended?")
         },
-        js.po.calculate
+        js.po.calculate,
+        level=level+1
       )
     } else {},
-    level=level, indent.by=indent.by, empty.e=empty.e
+    level=max(0, level-1), indent.by=indent.by, empty.e=empty.e
   )
 
   # graph.on() & begin try()
   js.prnt <- paste(js.prnt, rk.paste.JS(
     ite("full", echo("rk.graph.on()\n")),
     echo("\ttry({\n"),
-    level=level, indent.by=indent.by, empty.e=empty.e
+    level=level+1, indent.by=indent.by, empty.e=empty.e
   ), sep="\n\n")
 
   # plot options: preprocess
@@ -98,17 +99,21 @@ rk.paste.JS.graph <- function(..., plotOpts=NULL, printoutObj=NULL, level=2, ind
     if(!is.null(plotOpts)){
       rk.paste.JS(
         rk.comment("insert any option-setting code that should be run before the actual plotting commands:"),
-        id("\t\tprintIndentedUnlessEmpty(\"", plotOptsIndent, "\", ", js.po.preprocess, ", \"\\n\", \"\");")
+        id(paste0(
+          paste0(rep("\t", level+1),collapse=""),
+          "printIndentedUnlessEmpty(\""), plotOptsIndent, "\", ", js.po.preprocess, ", \"\\n\", \"\");"
+        ),
+        level=level+1
       )
     } else {},
-    level=level, indent.by=indent.by, empty.e=empty.e
+    level=level+1, indent.by=indent.by, empty.e=empty.e
   ), sep="\n\n")
 
   # here comes the plot
   js.prnt <- paste(js.prnt, rk.paste.JS(
     rk.comment("the actual plot:"),
     rk.paste.JS(..., level=level, indent.by=indent.by, empty.e=empty.e),
-    level=level, indent.by=indent.by, empty.e=empty.e
+    level=level+1, indent.by=indent.by, empty.e=empty.e
   ), sep="\n\n")
 
   # plot options: postprocess
@@ -116,17 +121,21 @@ rk.paste.JS.graph <- function(..., plotOpts=NULL, printoutObj=NULL, level=2, ind
     if(!is.null(plotOpts)){
       rk.paste.JS(
         rk.comment("insert any option-setting code that should be run after the actual plot:"),
-        id("\t\tprintIndentedUnlessEmpty(\"", plotOptsIndent, "\", ", js.po.calculate, ", \"\\n\", \"\");")
+        id(paste0(
+          paste0(rep("\t", level+1),collapse=""),
+          "printIndentedUnlessEmpty(\""), plotOptsIndent, "\", ", js.po.calculate, ", \"\\n\", \"\");"
+        ),
+        level=level+1
       )
     } else {},
-    level=level, indent.by=indent.by, empty.e=empty.e
+    level=level+1, indent.by=indent.by, empty.e=empty.e
   ), sep="\n\n")
 
   # end try() & graph.off()
   js.prnt <- paste(js.prnt, rk.paste.JS(
     echo("\n\t})\n"),
     ite("full", echo("rk.graph.off()\n")),
-    level=level, indent.by=indent.by, empty.e=empty.e
+    level=level+1, indent.by=indent.by, empty.e=empty.e
   ), sep="\n\n")
 
   return(js.prnt)

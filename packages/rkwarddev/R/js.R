@@ -81,8 +81,17 @@ js <- function(..., level=2, linebreaks=FALSE){
         if(inherits(this.part, "for")){
           this.part <- replaceJSFor(this.part, level=level)
         } else {}
+        if(identical(this.part[[1]], "rk.comment")){
+          return(rk.paste.JS(eval(this.part), level=level))
+        } else {}
         # replace JS operators
         return(do.call("replaceJSOperators", args=list(this.part)))
+      } else if(is.XiMpLe.node(this.part)){
+        if(XMLName(this.part) == "!--"){
+          return(rk.paste.JS(this.part, level=level))
+        } else {
+          return(this.part)
+        }
       } else {
         return(this.part)
       }
