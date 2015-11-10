@@ -1,6 +1,6 @@
 ChangeLog for package rkwarddev
 
-changes in version 0.07-4 (2015-11-09)
+changes in version 0.07-4 (2015-11-10)
 unreleased:
   - this version is under development
 fixed:
@@ -27,11 +27,17 @@ added:
   - new option ".objects" in id() to provide objects as a list
   - new option "rk.JS.vars" to make JS variables match the name of the
     original R object
+  - new function idq() to print quoted IDs of XML nodes for use in JavaScript
+    sections
+  - new function modifiers() to make checking for valid mdifiers of a given
+    node easier
 changed:
   - improved error handling in rk.JS.header(), error messages are more
     informative now
   - rk.uniqueIDs() now checks "dialog" and "wizard" sections separately
   - updated the vignette with information on js() and how to add help pages
+  - internal function modif.validity() now calls modifiers() to give more
+    useful feedback
 
 changes in version 0.07-3 (2015-06-29)
 fixed:

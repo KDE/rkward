@@ -1,4 +1,4 @@
-# Copyright 2010-2014 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2010-2015 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package rkwarddev.
 #
@@ -21,7 +21,7 @@
 #' If you define a \code{XiMpLe.node} object as \code{governor} which is not a \code{<convert>} node
 #' and \code{not=FALSE}, the function will automatically append  to its \code{id}.
 #' 
-#' @note To get a list of the implemented modifiers in this package, call \code{rkwarddev:::all.valid.modifiers}.
+#' @note To get a list of the implemented modifiers in this package see \code{\link[rkwarddev:modifiers]{modifiers}}.
 #'
 #' @param governor Either a character string (the \code{id} of the property whose state should control
 #'    the \code{client}), or an object of class \code{XiMpLe.node} (whose \code{id} will be extracted
@@ -43,6 +43,7 @@
 #'    \code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}},
 #'    \code{\link[rkwarddev:rk.XML.set]{rk.XML.set}},
 #'    \code{\link[rkwarddev:rk.XML.switch]{rk.XML.switch}},
+#'    \code{\link[rkwarddev:modifiers]{modifiers}},
 #'    and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' test.connect <- rk.XML.connect(governor="lgc_foobar", client="frame_bar")

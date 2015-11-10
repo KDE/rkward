@@ -1,4 +1,4 @@
-# Copyright 2010-2014 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2010-2015 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package rkwarddev.
 #
@@ -18,7 +18,7 @@
 
 #' Define variables in JavaScript code
 #' 
-#' @note To get a list of the implemented modifiers in this package, call \code{rkwarddev:::all.valid.modifiers}.
+#' @note To get a list of the implemented modifiers in this package see \code{\link[rkwarddev:modifiers]{modifiers}}.
 #'
 #' @param ... Either one or more character strings (the names of the variables to define),
 #'    or objects of class \code{XiMpLe.node} with plugin XML nodes (whose ID will be extracted and used).
@@ -45,6 +45,7 @@
 #' @seealso \code{\link[rkwarddev:rk.JS.array]{rk.JS.array}},
 #'    \code{\link[rkwarddev:echo]{echo}},
 #'    \code{\link[rkwarddev:id]{id}},
+#'    \code{\link[rkwarddev:modifiers]{modifiers}},
 #'    and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' # create three checkboxes

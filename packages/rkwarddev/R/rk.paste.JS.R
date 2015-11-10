@@ -1,4 +1,4 @@
-# Copyright 2010-2014 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2010-2015 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package rkwarddev.
 #
@@ -18,7 +18,7 @@
 
 #' Paste JavaScript objects and character strings
 #'
-#' @note To get a list of the implemented modifiers in this package, call \code{rkwarddev:::all.valid.modifiers}.
+#' @note To get a list of the implemented modifiers in this package see \code{\link[rkwarddev:modifiers]{modifiers}}.
 #'
 #' @param ... Objects of class \code{rk.JS.ite}, \code{rk.JS.arr}, \code{rk.JS.opt}, \code{rk.JS.oset} or character.
 #'    Another special case is XiMpLe nodes created by \code{rk.comment()}, which will be turned
@@ -60,6 +60,7 @@
 #'    \code{\link[rkwarddev:rk.JS.optionset]{rk.JS.optionset}},
 #'    \code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}},
 #'    \code{\link[rkwarddev:ite]{ite}},
+#'    \code{\link[rkwarddev:modifiers]{modifiers}},
 #'    and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @export
 

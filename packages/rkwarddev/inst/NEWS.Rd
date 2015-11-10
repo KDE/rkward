@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.07-4 (2015-11-09)}{
+\section{Changes in rkwarddev version 0.07-4 (2015-11-10)}{
   \subsection{unreleased}{
     \itemize{
       \item this version is under development
@@ -35,6 +35,10 @@
       \item new option \code{".objects"} in \code{id()} to provide objects as a list
       \item new option \code{"rk.JS.vars"} to make JS variables match the name of the
         original R object
+      \item new function \code{idq()} to print quoted IDs of XML nodes for use in JavaScript
+        sections
+      \item new function \code{modifiers()} to make checking for valid mdifiers of a given
+        node easier
     }
   }
   \subsection{changed}{
@@ -43,6 +47,8 @@
         informative now
       \item \code{rk.uniqueIDs()} now checks \code{"dialog"} and \code{"wizard"} sections separately
       \item updated the vignette with information on \code{js()} and how to add help pages
+      \item internal function \code{modif.validity()} now calls \code{modifiers()} to give more
+        useful feedback
     }
   }
 }

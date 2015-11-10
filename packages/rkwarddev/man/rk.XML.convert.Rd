@@ -45,8 +45,7 @@ If \code{sources} holds \code{XiMpLe.node} objects,
       the validity of modifiers is automatically checked for that tag.
 }
 \note{
-To get a list of the implemented modifiers for \code{sources} in this package,
-      call \code{rkwarddev:::all.valid.modifiers}.
+To get a list of the implemented modifiers for \code{sources} in this package see \code{\link[rkwarddev:modifiers]{modifiers}}.
 }
 \examples{
 test.convert <- rk.XML.convert(list(string="foo"), mode=c(notequals="bar"))
@@ -58,6 +57,7 @@ cat(pasteXML(test.convert))
    \code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}},
    \code{\link[rkwarddev:rk.XML.set]{rk.XML.set}},
    \code{\link[rkwarddev:rk.XML.switch]{rk.XML.switch}},
+   \code{\link[rkwarddev:modifiers]{modifiers}},
    and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 }
 

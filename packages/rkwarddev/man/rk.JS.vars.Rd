@@ -56,8 +56,7 @@ An object of class \code{rk.JS.var}.
 Define variables in JavaScript code
 }
 \note{
-To get a list of the implemented modifiers in this package,
-      call \code{rkwarddev:::all.valid.modifiers}.
+To get a list of the implemented modifiers in this package see \code{\link[rkwarddev:modifiers]{modifiers}}.
 }
 \examples{
 # create three checkboxes
@@ -71,6 +70,7 @@ cat(rk.paste.JS(rk.JS.vars(list(checkA, checkB, checkC))))
 \code{\link[rkwarddev:rk.JS.array]{rk.JS.array}},
    \code{\link[rkwarddev:echo]{echo}},
    \code{\link[rkwarddev:id]{id}},
+   \code{\link[rkwarddev:modifiers]{modifiers}},
    and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 }
 

@@ -70,8 +70,7 @@ A character string.
 Paste JavaScript objects and character strings
 }
 \note{
-To get a list of the implemented modifiers in this package,
-      call \code{rkwarddev:::all.valid.modifiers}.
+To get a list of the implemented modifiers in this package see \code{\link[rkwarddev:modifiers]{modifiers}}.
 }
 \seealso{
 \code{\link[rkwarddev:rk.JS.array]{rk.JS.array}},
@@ -79,6 +78,7 @@ To get a list of the implemented modifiers in this package,
    \code{\link[rkwarddev:rk.JS.optionset]{rk.JS.optionset}},
    \code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}},
    \code{\link[rkwarddev:ite]{ite}},
+   \code{\link[rkwarddev:modifiers]{modifiers}},
    and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 }
 

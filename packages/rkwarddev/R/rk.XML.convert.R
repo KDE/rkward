@@ -1,4 +1,4 @@
-# Copyright 2010-2014 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2010-2015 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package rkwarddev.
 #
@@ -20,7 +20,7 @@
 #'
 #' If \code{sources} holds \code{XiMpLe.node} objects, the validity of modifiers is automatically checked for that tag.
 #'
-#' @note To get a list of the implemented modifiers for \code{sources} in this package, call \code{rkwarddev:::all.valid.modifiers}.
+#' @note To get a list of the implemented modifiers for \code{sources} in this package see \code{\link[rkwarddev:modifiers]{modifiers}}.
 #'
 #' @param sources A list with at least one value, either resembling the \code{id} of
 #'    an existing element to be queried as a character string, or a previously defined object
@@ -54,6 +54,7 @@
 #'    \code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}},
 #'    \code{\link[rkwarddev:rk.XML.set]{rk.XML.set}},
 #'    \code{\link[rkwarddev:rk.XML.switch]{rk.XML.switch}},
+#'    \code{\link[rkwarddev:modifiers]{modifiers}},
 #'    and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' test.convert <- rk.XML.convert(list(string="foo"), mode=c(notequals="bar"))
