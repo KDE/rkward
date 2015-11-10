@@ -7,7 +7,7 @@
 rk.JS.doc(require = c(), variables = NULL, globals = NULL,
   results.header = NULL, header.add = list(), preprocess = NULL,
   calculate = NULL, printout = NULL, doPrintout = NULL,
-  load.silencer = NULL, gen.info = TRUE, indent.by = "\\t",
+  load.silencer = NULL, gen.info = TRUE, indent.by = rk.get.indent(),
   guess.getter = FALSE)
 }
 \arguments{

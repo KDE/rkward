@@ -1,4 +1,4 @@
-# Copyright 2010-2014 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2010-2015 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package rkwarddev.
 #
@@ -166,7 +166,7 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
   overwrite=FALSE, tests=TRUE, lazyLoad=TRUE,
   create=c("pmap", "xml", "js", "rkh", "desc", "clog"), suggest.required=TRUE,
   components=list(), dependencies=NULL, edit=FALSE, load=FALSE, show=FALSE, gen.info=TRUE,
-  hints=TRUE, indent.by="\t", internal=FALSE){
+  hints=TRUE, indent.by=rk.get.indent(), internal=FALSE){
 
   if(is.XiMpLe.node(about)){
     # check about and dependencies

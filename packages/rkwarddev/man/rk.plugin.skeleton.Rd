@@ -10,8 +10,8 @@ rk.plugin.skeleton(about, path = tempdir(), provides = c("logic", "dialog"),
   overwrite = FALSE, tests = TRUE, lazyLoad = TRUE, create = c("pmap",
   "xml", "js", "rkh", "desc", "clog"), suggest.required = TRUE,
   components = list(), dependencies = NULL, edit = FALSE, load = FALSE,
-  show = FALSE, gen.info = TRUE, hints = TRUE, indent.by = "\\t",
-  internal = FALSE)
+  show = FALSE, gen.info = TRUE, hints = TRUE,
+  indent.by = rk.get.indent(), internal = FALSE)
 }
 \arguments{
 \item{about}{Either an object of class \code{XiMpLe.node} with descriptive information on the plugin and its authors

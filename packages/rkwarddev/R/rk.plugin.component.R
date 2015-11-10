@@ -1,4 +1,4 @@
-# Copyright 2010-2014 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2010-2015 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package rkwarddev.
 #
@@ -92,7 +92,7 @@
 rk.plugin.component <- function(about, xml=list(), js=list(), rkh=list(),
   provides=c("logic", "dialog"), scan=c("var", "saveobj", "settings"), guess.getter=FALSE,
   hierarchy="test", include=NULL, create=c("xml", "js", "rkh"), dependencies=NULL,
-  hints=TRUE, gen.info=TRUE, indent.by="\t"){
+  hints=TRUE, gen.info=TRUE, indent.by=rk.get.indent()){
 
   if(is.XiMpLe.node(about)){
     # check about and dependencies

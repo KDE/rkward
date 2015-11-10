@@ -4,7 +4,8 @@
 \alias{R.comment}
 \title{Create R comment with JavaScript in RKWard plugin code}
 \usage{
-R.comment(..., indent.by = "\\\\t", level = 2, newline = "")
+R.comment(..., indent.by = rk.get.indent(escape = TRUE), level = 2,
+  newline = "")
 }
 \arguments{
 \item{...}{Character strings to form a comment.}

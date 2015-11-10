@@ -4,7 +4,7 @@
 \alias{js}
 \title{R to JavaScript translation}
 \usage{
-js(..., level = 2, indent.by = "\\t", linebreaks = FALSE,
+js(..., level = 2, indent.by = rk.get.indent(), linebreaks = FALSE,
   empty.e = FALSE)
 }
 \arguments{

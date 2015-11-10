@@ -4,7 +4,7 @@
 \alias{rk.paste.JS}
 \title{Paste JavaScript objects and character strings}
 \usage{
-rk.paste.JS(..., level = 2, indent.by = "\\t", funct = NULL,
+rk.paste.JS(..., level = 2, indent.by = rk.get.indent(), funct = NULL,
   array = NULL, var.prefix = NULL, modifiers = NULL, default = NULL,
   join = NULL, getter = NULL, var = TRUE, empty.e = FALSE,
   opt.sep = NULL)

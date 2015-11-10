@@ -53,7 +53,7 @@
 #' cbox1 <- rk.XML.cbox(label="foo", value="foo1", id.name="foo_option")
 #' tf(cbox1)
 
-tf <- function(cbox, true=TRUE, not=FALSE, ifelse=FALSE, false=FALSE, opt=NULL, prefix=",\n", level=3, indent.by="\t"){
+tf <- function(cbox, true=TRUE, not=FALSE, ifelse=FALSE, false=FALSE, opt=NULL, prefix=",\n", level=3, indent.by=rk.get.indent()){
 
   # check if we're given a checkbox, alright...
   valid.parent(parent="checkbox", node=cbox, warn=FALSE, see="rk.XML.cbox", arg.name="cbox")

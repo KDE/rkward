@@ -19,7 +19,7 @@
 #' @include rk.comment.R
 #' @import XiMpLe rkward
 
-# set up an internal environment, e.g. for prompter settings
+# set up an internal environment, e.g. for prompter settings or indentation
 .rkdev.env <- new.env()
 
 # internal functions for the rk.* functions
@@ -106,7 +106,7 @@ trim <- function(char){
 
 ## function indent()
 # will create tabs to format the output
-indent <- function(level, by="\t"){
+indent <- function(level, by=rk.get.indent()){
   paste(rep(by, max(0, level-1)), collapse="")
 } ## end function indent()
 
@@ -679,7 +679,7 @@ modif.validity <- function(source, modifier, ignore.empty=TRUE, warn.only=TRUE, 
     if(isTRUE(warn.only)){
       warning(paste0("Some modifier you provided is invalid for '", tag.name, "' and was ignored: \"",
         paste(modifier[invalid.modif], collapse="\", \""), "\"\n\n",
-        "Known modifiers for '", tag.name, "' nodes are:\n\t\"", paste0(unlist(modifiers(obj=tag.name)[[tag.name]]), collapse="\", \""), "\"\n\n",
+        "Known modifiers for '", tag.name, "' nodes are:\n  \"", paste0(unlist(modifiers(obj=tag.name)[[tag.name]]), collapse="\", \""), "\"\n\n",
         "For a list of all valid modifiers call modifiers(\"", tag.name, "\")"), call.=FALSE)
       if(isTRUE(bool)){
         return(!invalid.modif)
@@ -814,7 +814,7 @@ clean.name <- function(name, message=TRUE){
 
 
 ## function paste.JS.ite()
-paste.JS.ite <- function(object, level=1, indent.by="\t", recurse=FALSE, empty.e=FALSE){
+paste.JS.ite <- function(object, level=1, indent.by=rk.get.indent(), recurse=FALSE, empty.e=FALSE){
   stopifnot(inherits(object, "rk.JS.ite"))
   # check indentation
   main.indent <- indent(level, by=indent.by)
@@ -864,7 +864,7 @@ paste.JS.ite <- function(object, level=1, indent.by="\t", recurse=FALSE, empty.e
 
 ## function paste.JS.array()
 # opt.sep: the separator that comes *before* the option that is set, in the resulting code
-paste.JS.array <- function(object, level=2, indent.by="\t", funct=NULL, opt.sep=NULL){
+paste.JS.array <- function(object, level=2, indent.by=rk.get.indent(), funct=NULL, opt.sep=NULL){
   stopifnot(inherits(object, "rk.JS.arr"))
   # check indentation
   main.indent <- indent(level, by=indent.by)
@@ -919,7 +919,7 @@ paste.JS.array <- function(object, level=2, indent.by="\t", funct=NULL, opt.sep=
 
 ## function paste.JS.options()
 # opt.sep: the separator that comes *before* the option that is set, in the resulting code
-paste.JS.options <- function(object, level=2, indent.by="\t", array=NULL, funct=NULL, opt.sep=NULL){
+paste.JS.options <- function(object, level=2, indent.by=rk.get.indent(), array=NULL, funct=NULL, opt.sep=NULL){
   stopifnot(inherits(object, "rk.JS.opt"))
   # check indentation
   main.indent <- indent(level, by=indent.by)
@@ -1018,7 +1018,7 @@ paste.JS.options <- function(object, level=2, indent.by="\t", array=NULL, funct=
 #   important for "checkbox", which has "state" as default modifier, but using the checkbox object will not
 #   notice this. works only for the first modifier given.
 # var: if FALSE, the variable is assumed to be already defined (globally?) and "var " will be omitted
-paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifiers=NULL, default=NULL, append.modifier=NULL,
+paste.JS.var <- function(object, level=2, indent.by=rk.get.indent(), JS.prefix=NULL, modifiers=NULL, default=NULL, append.modifier=NULL,
   join=NULL, getter=NULL, names.only=FALSE, check.modifiers=FALSE, var=TRUE){
   # paste several objects
   results <- unlist(sapply(slot(object, "vars"), function(this.obj){
@@ -1119,7 +1119,7 @@ paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifi
 
 
 ## function paste.JS.optionsset()
-paste.JS.optionsset <- function(object, level=2, indent.by="\t"){
+paste.JS.optionsset <- function(object, level=2, indent.by=rk.get.indent()){
   stopifnot(inherits(object, "rk.JS.oset"))
   # check indentation
   main.indent <- indent(level, by=indent.by)
@@ -1509,7 +1509,7 @@ replaceJSOperators <- function(..., call="id"){
 ## function uncurl()
 # used by js() to fetch calls from then/else segments of if conditions,
 # omitting curly brackets that would get in the way with ite()
-uncurl <- function(cond, level=1, indent.by="\t"){
+uncurl <- function(cond, level=1, indent.by=rk.get.indent()){
   if(!is.null(cond)){
     cond.list <- as.list(cond)
     # first check for the bracket
@@ -1537,7 +1537,7 @@ uncurl <- function(cond, level=1, indent.by="\t"){
 
 
 ## function replaceJSIf
-replaceJSIf <- function(cond, level=1, paste=TRUE, indent.by="\t", empty.e=FALSE){
+replaceJSIf <- function(cond, level=1, paste=TRUE, indent.by=rk.get.indent(), empty.e=FALSE){
   if(inherits(cond, "if")){
     # if condition -- should be save to give to js()
     cond.if   <- do.call(
@@ -1625,7 +1625,7 @@ replaceJSIf <- function(cond, level=1, paste=TRUE, indent.by="\t", empty.e=FALSE
 #   }
 # )))
 #</documentation> 
-replaceJSFor <- function(loop, level=1, indent.by="\t"){
+replaceJSFor <- function(loop, level=1, indent.by=rk.get.indent()){
   if(inherits(loop, "for")){
     # for loops must be handled differently, we need to create an array
     # first and then interate through the array to imitate ho R does this

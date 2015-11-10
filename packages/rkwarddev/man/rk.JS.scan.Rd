@@ -5,7 +5,7 @@
 \title{Create JavaScript variables from plugin XML}
 \usage{
 rk.JS.scan(pXML, js = TRUE, add.abbrev = FALSE, guess.getter = FALSE,
-  indent.by = "\\t")
+  indent.by = rk.get.indent())
 }
 \arguments{
 \item{pXML}{Either an object of class \code{XiMpLe.doc} or \code{XiMpLe.node},

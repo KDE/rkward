@@ -5,7 +5,7 @@
 \title{Replace checkbox XML objects with JavaScript code}
 \usage{
 tf(cbox, true = TRUE, not = FALSE, ifelse = FALSE, false = FALSE,
-  opt = NULL, prefix = ",\\n", level = 3, indent.by = "\\t")
+  opt = NULL, prefix = ",\\n", level = 3, indent.by = rk.get.indent())
 }
 \arguments{
 \item{cbox}{An object of class \code{XiMpLe.node} containing a \code{<checkbox>} node,

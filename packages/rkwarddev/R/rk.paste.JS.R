@@ -64,7 +64,7 @@
 #'    and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @export
 
-rk.paste.JS <- function(..., level=2, indent.by="\t", funct=NULL, array=NULL,
+rk.paste.JS <- function(..., level=2, indent.by=rk.get.indent(), funct=NULL, array=NULL,
   var.prefix=NULL, modifiers=NULL, default=NULL, join=NULL, getter=NULL, var=TRUE, empty.e=FALSE,
   opt.sep=NULL){
   stopifnot(level > 0)

@@ -31,6 +31,8 @@ added:
     sections
   - new function modifiers() to make checking for valid mdifiers of a given
     node easier
+  - new functions rk.get.indent() and rk.set.indent() to globally set indentation
+    string
 changed:
   - improved error handling in rk.JS.header(), error messages are more
     informative now
@@ -38,6 +40,8 @@ changed:
   - updated the vignette with information on js() and how to add help pages
   - internal function modif.validity() now calls modifiers() to give more
     useful feedback
+  - all functions offering "intent.by" as an option now fetch the default value
+    by calling rk.get.indent()
 
 changes in version 0.07-3 (2015-06-29)
 fixed:
