@@ -1,5 +1,5 @@
 ## list with valid modifiers
-# used by -- at least -- modif.validity()
+# used by -- at least -- modif.validity() and modifiers()
 all.valid.modifiers <- list(
   all=c("", "visible", "visible.not", "visible.numeric", "enabled", "enabled.not", "enabled.numeric",
   "required", "true", "false", "not", "numeric", "preprocess", "calculate", "printout", "preview"),
