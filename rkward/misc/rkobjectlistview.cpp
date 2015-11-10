@@ -17,17 +17,24 @@
 #include "rkobjectlistview.h"
 
 #include <klocale.h>
+#include <kfilterproxysearchline.h>
 
 #include <QContextMenuEvent>
 #include <QMenu>
 #include <QTimer>
 #include <QStyledItemDelegate>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QPushButton>
+#include <QGroupBox>
+#include <QCheckBox>
 
 #include "../rkglobals.h"
 #include "../core/robjectlist.h"
 #include "../core/renvironmentobject.h"
 #include "../core/rkmodificationtracker.h"
 #include "rkstandardicons.h"
+#include "rkcommonfunctions.h"
 #include "../settings/rksettingsmoduleobjectbrowser.h"
 
 #include "../debug.h"
@@ -220,21 +227,23 @@ void RKObjectListView::settingsChanged () {
 
 //////////////////// RKObjectListViewSettings //////////////////////////
 
-RKObjectListViewSettings::RKObjectListViewSettings (QObject* parent) : QSortFilterProxyModel (parent) {
+RKObjectListViewSettings::RKObjectListViewSettings (QObject* parent) : KRecursiveFilterProxyModel (parent) {
 	RK_TRACE (APP);
 
 	update_timer = new QTimer (this);
 	update_timer->setSingleShot (true);
 	connect (update_timer, SIGNAL(timeout()), this, SLOT(updateSelfNow()));
 
+	filter_widget = 0;
+	show_containers = show_functions = show_variables = true;
+	filter_on_class = filter_on_label = filter_on_name = true;
+	show_hidden_objects = RKSettingsModuleObjectBrowser::isSettingActive (ShowObjectsHidden);
+
 	connect (RKSettings::tracker (), SIGNAL (settingsChanged(RKSettings::SettingsPage)), this, SLOT (globalSettingsChanged(RKSettings::SettingsPage)));
 
 	action_group = new QActionGroup (this);
 	action_group->setExclusive (false);
 	settings[ShowObjectsAllEnvironments].action = new QAction (i18n ("All Environments"), action_group);
-	settings[ShowObjectsContainer].action = new QAction (i18n ("Objects with children"), action_group);
-	settings[ShowObjectsVariable].action = new QAction (i18n ("Variables"), action_group);
-	settings[ShowObjectsFunction].action = new QAction (i18n ("Functions"), action_group);
 	settings[ShowObjectsHidden].action = new QAction (i18n ("Hidden Objects"), action_group);
 	settings[ShowFieldsType].action = new QAction (i18n ("Type"), action_group);
 	settings[ShowFieldsLabel].action = new QAction (i18n ("Label"), action_group);
@@ -255,6 +264,96 @@ RKObjectListViewSettings::~RKObjectListViewSettings () {
 
 	delete show_fields_menu;
 	delete show_objects_menu;
+}
+
+QWidget* RKObjectListViewSettings::filterWidget (QWidget *parent) {
+	RK_TRACE (APP);
+
+	if (filter_widget) return filter_widget;
+
+	filter_widget = new QWidget (parent);
+
+	QVBoxLayout *layout = new QVBoxLayout (filter_widget);
+	layout->setContentsMargins (0, 0, 0, 0);
+	QHBoxLayout* hlayout = new QHBoxLayout ();
+	hlayout->setContentsMargins (0, 0, 0, 0);
+	layout->addLayout (hlayout);
+
+	KFilterProxySearchLine* sline = new KFilterProxySearchLine (filter_widget);
+	sline->setProxy (this);
+	hlayout->addWidget (sline);
+	QPushButton* expander = new QPushButton (filter_widget);
+	expander->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionExpandDown));
+	expander->setCheckable (true);
+	hlayout->addWidget (expander);
+
+	filter_widget_expansion = new QWidget (filter_widget);
+	layout->addWidget (filter_widget_expansion);
+	connect (expander, SIGNAL (toggled(bool)), filter_widget_expansion, SLOT (setShown(bool)));
+	filter_widget_expansion->hide ();
+	QVBoxLayout *elayout = new QVBoxLayout (filter_widget_expansion);
+	elayout->setContentsMargins (0, 0, 0, 0);
+
+	QGroupBox *box = new QGroupBox (i18nc ("Fields==columns in tree view", "Fields to search in"), filter_widget_expansion);
+	elayout->addWidget (box);
+	QHBoxLayout *boxlayout = new QHBoxLayout (box);
+	filter_on_name_box = new QCheckBox (i18n ("Name"));
+	boxlayout->addWidget (filter_on_name_box);
+	filter_on_label_box = new QCheckBox (i18n ("Label"));
+	boxlayout->addWidget (filter_on_label_box);
+	filter_on_class_box = new QCheckBox (i18n ("Class"));
+	boxlayout->addWidget (filter_on_class_box);
+
+	connect (filter_on_name_box, SIGNAL(clicked(bool)), this, SLOT (filterSettingsChanged()));
+	connect (filter_on_label_box, SIGNAL(clicked(bool)), this, SLOT (filterSettingsChanged()));
+	connect (filter_on_class_box, SIGNAL(clicked(bool)), this, SLOT (filterSettingsChanged()));
+
+	show_functions_box = new QCheckBox (i18n ("Show Functions"));
+	RKCommonFunctions::setTips (i18n ("Uncheck this to exclude functions from the list"), show_functions_box);
+	elayout->addWidget (show_functions_box);
+	show_variables_box = new QCheckBox (i18n ("Show Vectors"));
+	RKCommonFunctions::setTips (i18n ("Uncheck this to exclude vectors (i.e. most types of data objects) from the list"), show_variables_box);
+	elayout->addWidget (show_variables_box);
+	show_containers_box = new QCheckBox (i18n ("Show Containers"));
+	RKCommonFunctions::setTips (i18n ("Uncheck this to exclude \"container\"-objects such as <i>list</i>s or <i>environment</i>s from the list. Note that containers will continue to be show, if they contain child objects matching the filter settings."), show_containers_box);
+	elayout->addWidget (show_containers_box);
+
+	connect (show_functions_box, SIGNAL(clicked(bool)), this, SLOT (filterSettingsChanged()));
+	connect (show_variables_box, SIGNAL(clicked(bool)), this, SLOT (filterSettingsChanged()));
+	connect (show_containers_box, SIGNAL(clicked(bool)), this, SLOT (filterSettingsChanged()));
+
+	hidden_objects_box = new QCheckBox (i18n ("Show Hidden Objects"));
+	connect (hidden_objects_box, SIGNAL (clicked(bool)), this, SLOT (filterSettingsChanged()));
+	layout->addWidget (hidden_objects_box);
+
+	filter_on_name_box->setChecked (filter_on_name);
+	filter_on_label_box->setChecked (filter_on_label);
+	filter_on_class_box->setChecked (filter_on_class);
+	show_functions_box->setChecked (show_functions);
+	show_variables_box->setChecked (show_variables);
+	show_containers_box->setChecked (show_containers);
+	hidden_objects_box->setChecked (show_hidden_objects);
+
+	return filter_widget;
+}
+
+void RKObjectListViewSettings::filterSettingsChanged () {
+	RK_TRACE (APP);
+
+	if (!filter_widget) {
+		RK_ASSERT (filter_widget);
+		return;
+	}
+
+	filter_on_name = filter_on_name_box->isChecked ();
+	filter_on_label = filter_on_label_box->isChecked ();
+	filter_on_class = filter_on_class_box->isChecked ();
+	show_functions = show_functions_box->isChecked ();
+	show_variables = show_variables_box->isChecked ();
+	show_containers = show_containers_box->isChecked ();
+	show_hidden_objects = hidden_objects_box->isChecked ();
+#warning TODO: It is also a QAction, currently.
+	updateSelf ();
 }
 
 void RKObjectListViewSettings::setSetting (Settings setting, bool to) {
@@ -278,7 +377,7 @@ bool RKObjectListViewSettings::filterAcceptsColumn (int source_column, const QMo
 	return false;
 }
 
-bool RKObjectListViewSettings::filterAcceptsRow (int source_row, const QModelIndex& source_parent) const {
+bool RKObjectListViewSettings::acceptRow (int source_row, const QModelIndex& source_parent) const {
 	RK_TRACE (APP);
 
 	// always show the root item
@@ -291,24 +390,25 @@ bool RKObjectListViewSettings::filterAcceptsRow (int source_row, const QModelInd
 	// always show global env and search path
 	if (!object->parentObject ()) return true;
 
-	if (!settings[ShowObjectsHidden].state) {
+	if (!show_hidden_objects) {
 		if (object->getShortName ().startsWith ('.')) return false;
 		if (object == reinterpret_cast<RObject*> (RObjectList::getObjectList ()->orphanNamespacesObject ())) return false;
 	}
 
-	bool base_filter = QSortFilterProxyModel::filterAcceptsRow (source_row, source_parent);
+	if (!show_functions && object->isType (RObject::Function)) return false;
+	if (!show_containers && object->isType (RObject::Container | RObject::Environment)) return false;
+	if (!show_variables && object->isVariable ()) return false;
 
-	if (object->isType (RObject::ToplevelEnv)) {
-		return (base_filter && settings[ShowObjectsAllEnvironments].state);
-	} else if (object->isType (RObject::Function)) {
-		return (base_filter && settings[ShowObjectsFunction].state);
-	} else if (object->isType (RObject::Container)) {
-		return (base_filter && settings[ShowObjectsContainer].state);
-	} else if (object->isVariable ()) {
-		return (base_filter && settings[ShowObjectsVariable].state);
+	if (filter_on_name && object->getShortName ().contains (filterRegExp ())) return true;
+	if (filter_on_label && object->getLabel ().contains (filterRegExp ())) return true;
+	if (filter_on_class) {
+		QStringList cnames = object->classNames ();
+		for (int i = cnames.length () - 1; i >= 0; --i) {
+			if (cnames[i].contains (filterRegExp ())) return true;
+		}
 	}
 
-	return base_filter;
+	return false;
 }
 
 bool RKObjectListViewSettings::lessThan (const QModelIndex& left, const QModelIndex& right) const {
@@ -341,9 +441,6 @@ void RKObjectListViewSettings::createContextMenus () {
 
 	show_objects_menu = new QMenu (i18n ("Show Objects"), 0);
 	show_objects_menu->addAction (settings[ShowObjectsAllEnvironments].action);
-	show_objects_menu->addAction (settings[ShowObjectsContainer].action);
-	show_objects_menu->addAction (settings[ShowObjectsVariable].action);
-	show_objects_menu->addAction (settings[ShowObjectsFunction].action);
 	show_objects_menu->addSeparator ();
 	show_objects_menu->addAction (settings[ShowObjectsHidden].action);
 

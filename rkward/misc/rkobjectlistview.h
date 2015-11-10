@@ -18,7 +18,8 @@
 #define RKOBJECTLISTVIEW_H
 
 #include <QTreeView>
-#include <QSortFilterProxyModel>
+
+#include <krecursivefilterproxymodel.h>
 
 #include "../settings/rksettings.h"
 #include "../core/robject.h"
@@ -28,6 +29,7 @@ class RKListViewItem;
 class RKObjectListViewSettings;
 class QActionGroup;
 class QTimer;
+class QCheckBox;
 
 /**
 This class provides the common functionality for the tree views in the RObjectBrowser and RKVarselector(s). The caps it (will) provide are: keeping the list up to date and emitting change-signals when appropriate, filtering for certain types of objects, sorting, mapping items to objects. Maybe some GUI-stuff like popup-menus should also be added to this class?
@@ -84,7 +86,7 @@ friend class RKObjectListViewRootDelegate;
 };
 
 /** Does filtering for an RKObjectListView. Should probably be renamed to RKObjectListViewFilter */
-class RKObjectListViewSettings : public QSortFilterProxyModel {
+class RKObjectListViewSettings : public KRecursiveFilterProxyModel {
 	Q_OBJECT
 public:
 /** ctor. copies the default settings from RKSettingsModuleObjectBrowser */ 
@@ -92,10 +94,7 @@ public:
 	~RKObjectListViewSettings ();
 
 	enum Settings {
-		ShowObjectsVariable=0,
 		ShowObjectsAllEnvironments,
-		ShowObjectsFunction,
-		ShowObjectsContainer,
 		ShowObjectsHidden,
 		ShowFieldsType,
 		ShowFieldsClass,
@@ -108,14 +107,17 @@ public:
 
 	QMenu *showObjectsMenu () const { return show_objects_menu; };
 	QMenu *showFieldsMenu () const { return show_fields_menu; };
+
+	QWidget* filterWidget (QWidget *parent);
 signals:
 	void settingsChanged ();
 public slots:
 	void globalSettingsChanged (RKSettings::SettingsPage);
+	void filterSettingsChanged ();
 	void settingToggled (QAction* which);
 	void updateSelfNow ();
 protected:
-	bool filterAcceptsRow (int source_row, const QModelIndex& source_parent) const;
+	bool acceptRow (int source_row, const QModelIndex& source_parent) const;
 	bool filterAcceptsColumn (int source_column, const QModelIndex& source_parent) const;
 	bool lessThan (const QModelIndex& left, const QModelIndex& right) const;
 private:
@@ -133,6 +135,23 @@ private:
 
 	QMenu *show_objects_menu;
 	QMenu *show_fields_menu;
+
+	QWidget *filter_widget;
+	QWidget *filter_widget_expansion;
+	QCheckBox* filter_on_name_box;
+	QCheckBox* filter_on_label_box;
+	QCheckBox* filter_on_class_box;
+	bool filter_on_name;
+	bool filter_on_label;
+	bool filter_on_class;
+	QCheckBox* show_variables_box;
+	QCheckBox* show_containers_box;
+	QCheckBox* show_functions_box;
+	bool show_variables;
+	bool show_containers;
+	bool show_functions;
+	QCheckBox* hidden_objects_box;
+	bool show_hidden_objects;
 
 	QTimer *update_timer;
 };

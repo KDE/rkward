@@ -137,10 +137,8 @@ void RKSettingsModuleObjectBrowser::loadSettings (KConfig *config) {
 
 	KConfigGroup cg = config->group ("Object Browser");
 	// The following are _not_ actually configurable defaults in RKWard 0.6.4. These settings here simply serve to define the static default.
+	// TODO: That is just plain wrong. Move them to RObjectListViewSettings, exclusively.
 	settings[RKObjectListViewSettings::ShowObjectsAllEnvironments] = true;
-	settings[RKObjectListViewSettings::ShowObjectsVariable] = true;
-	settings[RKObjectListViewSettings::ShowObjectsContainer] = true;
-	settings[RKObjectListViewSettings::ShowObjectsFunction] = true;
 	// These defaults _are_ configurable
 	settings[RKObjectListViewSettings::ShowObjectsHidden] = cg.readEntry ("show hidden vars", false);
 	settings[RKObjectListViewSettings::ShowFieldsLabel] = cg.readEntry ("show label field", true);

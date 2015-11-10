@@ -18,13 +18,9 @@
 
 #include <qlayout.h>
 #include <qpushbutton.h>
-#include <qcheckbox.h>
-#include <qradiobutton.h>
-#include <QHBoxLayout>
 #include <QFocusEvent>
 #include <QVBoxLayout>
 #include <QMenu>
-#include <QButtonGroup>
 
 #include <klocale.h>
 #include <kinputdialog.h>
@@ -40,6 +36,7 @@
 #include "../rbackend/rinterface.h"
 #include "../misc/rkobjectlistview.h"
 #include "../misc/rkdummypart.h"
+#include "../misc/rkstandardicons.h"
 #include "rkworkplace.h"
 #include "../dataeditor/rkeditor.h"
 
@@ -111,7 +108,7 @@ RObjectBrowserInternal::RObjectBrowserInternal (QWidget *parent) : QWidget (pare
 	vbox->setContentsMargins (0, 0, 0, 0);
 
 	list_view = new RKObjectListView (this);
-	vbox->addWidget (new RKObjectListViewSettingsWidget (list_view->getSettings (), this));
+	vbox->addWidget (list_view->getSettings ()->filterWidget (this));
 	vbox->addWidget (list_view);
 
 	update_button = new QPushButton (i18n ("Update"), this);
@@ -275,92 +272,6 @@ void RObjectBrowserInternal::doubleClicked (const QModelIndex& index) {
 	} else {
 		RKWorkplace::mainWorkplace ()->flushAllData ();
 		RKWorkplace::mainWorkplace ()->newObjectViewer (object);
-	}
-}
-
-
-//////////////////// RKObjectListViewSettingsWidget //////////////////////////
-RKObjectListViewSettingsWidget::RKObjectListViewSettingsWidget (RKObjectListViewSettings *settings, QWidget *parent) : QWidget (parent) {
-	RK_TRACE (APP);
-
-	RKObjectListViewSettingsWidget::settings = settings;
-	connect (settings, SIGNAL (settingsChanged()), this, SLOT (settingsChanged()));
-
-	QVBoxLayout *layout = new QVBoxLayout (this);
-	layout->setContentsMargins (0, 0, 0, 0);
-
-	QButtonGroup *group = new QButtonGroup (this);
-	QHBoxLayout *hbox = new QHBoxLayout ();
-	hbox->setContentsMargins (0, 0, 0, 0);
-	group->addButton (all = new QRadioButton (i18n ("All"), this));
-	group->addButton (nonfunctions = new QRadioButton (i18n ("Non-Functions"), this));
-	group->addButton (functions = new QRadioButton (i18n ("Functions"), this));
-	hbox->addWidget (all);
-	hbox->addWidget (nonfunctions);
-	hbox->addWidget (functions);
-	connect (all, SIGNAL(clicked(bool)), this, SLOT(modeChanged(bool)));
-	connect (nonfunctions, SIGNAL(clicked(bool)), this, SLOT(modeChanged(bool)));
-	connect (functions, SIGNAL(clicked(bool)), this, SLOT(modeChanged(bool)));
-	layout->addLayout (hbox);
-
-	hidden_objects = new QCheckBox (i18n ("Show Hidden Objects"), this);
-	connect (hidden_objects, SIGNAL (clicked(bool)), this, SLOT (boxChanged(bool)));
-	layout->addWidget (hidden_objects);
-
-	settingsChanged ();
-}
-
-RKObjectListViewSettingsWidget::~RKObjectListViewSettingsWidget () {
-	RK_TRACE (APP);
-}
-
-void RKObjectListViewSettingsWidget::settingsChanged () {
-	RK_TRACE (APP);
-
-	hidden_objects->setChecked (settings->getSetting (RKObjectListViewSettings::ShowObjectsHidden));
-
-	bool functions_shown = settings->getSetting (RKObjectListViewSettings::ShowObjectsFunction);
-	bool vars_shown = settings->getSetting (RKObjectListViewSettings::ShowObjectsVariable);
-	bool containers_shown = settings->getSetting (RKObjectListViewSettings::ShowObjectsContainer);
-
-	if (functions_shown && vars_shown && containers_shown) {
-		all->setChecked (true);
-	} else if (vars_shown && containers_shown) {
-		nonfunctions->setChecked (true);
-	} else if (functions_shown && (!(vars_shown || containers_shown))) {
-		functions->setChecked (true);
-	} else {
-		all->setChecked (false);
-		nonfunctions->setChecked (false);
-		functions->setChecked (false);
-	}
-}
-
-void RKObjectListViewSettingsWidget::modeChanged (bool) {
-	RK_TRACE (APP);
-
-	if (all->isChecked ()) {
-		settings->setSetting (RKObjectListViewSettings::ShowObjectsFunction, true);
-		settings->setSetting (RKObjectListViewSettings::ShowObjectsVariable, true);
-		settings->setSetting (RKObjectListViewSettings::ShowObjectsContainer, true);
-	} else if (functions->isChecked ()) {
-		settings->setSetting (RKObjectListViewSettings::ShowObjectsFunction, true);
-		settings->setSetting (RKObjectListViewSettings::ShowObjectsVariable, false);
-		settings->setSetting (RKObjectListViewSettings::ShowObjectsContainer, false);
-	} else if (nonfunctions->isChecked ()) {
-		settings->setSetting (RKObjectListViewSettings::ShowObjectsFunction, false);
-		settings->setSetting (RKObjectListViewSettings::ShowObjectsVariable, true);
-		settings->setSetting (RKObjectListViewSettings::ShowObjectsContainer, true);
-	} else {
-		RK_ASSERT (false);
-	}
-}
-
-void RKObjectListViewSettingsWidget::boxChanged (bool) {
-	RK_TRACE (APP);
-
-	if (sender () == hidden_objects) {
-		settings->setSetting (RKObjectListViewSettings::ShowObjectsHidden, hidden_objects->isChecked ());
 	}
 }
 
