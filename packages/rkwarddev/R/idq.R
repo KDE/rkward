@@ -17,7 +17,7 @@
 
 #' Get a quoted element ID
 #' 
-#' This is actually a convenience wrapper for \code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}}
+#' This is actually a convenience wrapper for \code{\link[rkwarddev:id]{id}}
 #' and returns the XML ID of XiMpLe nodes in quoted format, optionally with an attached modifier.
 #' 
 #' You can use this function to write almost literal JavaScript code, but still be able to extract IDs from
@@ -30,23 +30,23 @@
 #' @param modifiers A character vector with modifiers you'd like to apply to the XML node property.
 #' @param check.modifiers Logical, if \code{TRUE} the given modifiers will be checked for validity. Should only be
 #'    turned off if you know what you're doing.
+#' @param js Logical, if \code{TRUE} returns JavaScript varaible names for \code{XiMpLe.node} objects.
+#'    Otherwise their actual ID is returned.
+#' @param quote Character string to be used for quoting.
 #' @return A character string.
 #' @export
-#' @expamples
+#' @examples
 #' myCheckbox <- rk.XML.cbox("Check for action")
 #' rk.paste.JS(id("var x = getBoolean(", idq(myCheckbox, modifiers="state"), ");"))
 
-idq <- function(obj, modifiers=NULL, check.modifiers=TRUE, quote="\""){
-  # first give the object to rk.JS.vars(), as this already does all the modifier checking magic etc.
-  # rk.JS.vars() should return the variable object in the vars slot as a one item list
-  varObj <- slot(rk.JS.vars(obj, modifiers=modifiers, check.modifiers=check.modifiers), "vars")[[1]]
-  obj.XML.var <- slot(varObj, "XML.var")
-  obj.modifiers <- slot(varObj, "modifiers")
-  
-  result <- paste0(quote, slot(varObj, "XML.var"))
+idq <- function(obj, modifiers=NULL, check.modifiers=TRUE, js=TRUE, quote="\""){
+  result <- paste0(quote, id(obj, js=js))
 
-  if(length(obj.modifiers) > 0){
-    result <- paste0(result, ".", paste0(unlist(obj.modifiers), collapse="."), quote)
+  if(length(modifiers) > 0){
+    if(isTRUE(check.modifiers)){
+      modifiers <- modif.validity(source=obj, modifier=modifiers, bool=FALSE)
+    } else {}
+    result <- paste0(result, ".", paste0(unlist(modifiers), collapse="."), quote)
   } else {
     result <- paste0(result, quote)
   }

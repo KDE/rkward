@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.07-4 (2015-11-10)}{
+\section{Changes in rkwarddev version 0.07-4 (2015-11-11)}{
   \subsection{unreleased}{
     \itemize{
       \item this version is under development
@@ -39,8 +39,8 @@
         sections
       \item new function \code{modifiers()} to make checking for valid mdifiers of a given
         node easier
-      \item new functions \code{rk.get.indent()} and \code{rk.set.indent()} to globally set indentation
-        string
+      \item new functions \code{rk.get.indent()} and \code{rk.set.indent()} to globally set
+        indentation string
     }
   }
   \subsection{changed}{
@@ -51,8 +51,9 @@
       \item updated the vignette with information on \code{js()} and how to add help pages
       \item internal function \code{modif.validity()} now calls \code{modifiers()} to give more
         useful feedback
-      \item all functions offering \code{"intent.by"} as an option now fetch the default value
-        by calling \code{rk.get.indent()}
+      \item all functions offering \code{"intent.by"} as an option now fetch the default
+        value by calling \code{rk.get.indent()}
+      \item removed trailing newline in \code{rk.JS.header()} output
     }
   }
 }

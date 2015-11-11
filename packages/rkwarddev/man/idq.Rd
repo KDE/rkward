@@ -4,7 +4,8 @@
 \alias{idq}
 \title{Get a quoted element ID}
 \usage{
-idq(obj, modifiers = NULL, check.modifiers = TRUE, quote = "\\"")
+idq(obj, modifiers = NULL, check.modifiers = TRUE, js = TRUE,
+  quote = "\\"")
 }
 \arguments{
 \item{obj}{An object of class \code{XiMpLe.node} containig an ID to extract.}
@@ -14,12 +15,18 @@ idq(obj, modifiers = NULL, check.modifiers = TRUE, quote = "\\"")
 \item{check.modifiers}{Logical,
       if \code{TRUE} the given modifiers will be checked for validity. Should only be
 turned off if you know what you're doing.}
+
+\item{js}{Logical,
+      if \code{TRUE} returns JavaScript varaible names for \code{XiMpLe.node} objects.
+Otherwise their actual ID is returned.}
+
+\item{quote}{Character string to be used for quoting.}
 }
 \value{
 A character string.
 }
 \description{
-This is actually a convenience wrapper for \code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}}
+This is actually a convenience wrapper for \code{\link[rkwarddev:id]{id}}
 and returns the XML ID of XiMpLe nodes in quoted format,
       optionally with an attached modifier.
 }
@@ -31,5 +38,9 @@ generated R objects.
 \note{
 You should always nest this function inside an \code{\link[rkwarddev:id]{id}} call (or a similar wrapper)
   to prevent \code{rk.paste.JS} from appending newline characters -- see the example section.
+}
+\examples{
+myCheckbox <- rk.XML.cbox("Check for action")
+rk.paste.JS(id("var x = getBoolean(", idq(myCheckbox, modifiers="state"), ");"))
 }
 

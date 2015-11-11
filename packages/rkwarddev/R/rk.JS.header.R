@@ -85,7 +85,7 @@ rk.JS.header <- function(title, ..., level=NULL, guess.getter=FALSE, .add=list()
     },
     ")",
     addToHeaderChar,
-    ".print();\n"
+    ".print();"
   )
 
   return(result)

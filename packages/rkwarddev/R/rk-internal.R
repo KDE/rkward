@@ -641,6 +641,7 @@ check.ID <- function(node, search.environment=FALSE, env.get="XML"){
 ## function modif.validity()
 # checks if a modifier is valid for an XML node, if source is XiMpLe.node
 # if bool=FALSE, returns the modifier or ""
+# modifier can take multiple modifiers at once
 modif.validity <- function(source, modifier, ignore.empty=TRUE, warn.only=TRUE, bool=TRUE){
   if(identical(modifier, "") & isTRUE(ignore.empty)){
     if(isTRUE(bool)){
