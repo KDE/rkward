@@ -28,6 +28,7 @@
 #include <QPushButton>
 #include <QGroupBox>
 #include <QCheckBox>
+#include <QComboBox>
 
 #include "../rkglobals.h"
 #include "../core/robjectlist.h"
@@ -227,7 +228,7 @@ void RKObjectListView::settingsChanged () {
 
 //////////////////// RKObjectListViewSettings //////////////////////////
 
-RKObjectListViewSettings::RKObjectListViewSettings (QObject* parent) : KRecursiveFilterProxyModel (parent) {
+RKObjectListViewSettings::RKObjectListViewSettings (QObject* parent) : QSortFilterProxyModel (parent) {
 	RK_TRACE (APP);
 
 	update_timer = new QTimer (this);
@@ -235,8 +236,9 @@ RKObjectListViewSettings::RKObjectListViewSettings (QObject* parent) : KRecursiv
 	connect (update_timer, SIGNAL(timeout()), this, SLOT(updateSelfNow()));
 
 	filter_widget = 0;
-	show_containers = show_functions = show_variables = true;
+	hide_functions = hide_non_functions = false;
 	filter_on_class = filter_on_label = filter_on_name = true;
+	depth_limit = 1;
 	show_hidden_objects = RKSettingsModuleObjectBrowser::isSettingActive (ShowObjectsHidden);
 
 	connect (RKSettings::tracker (), SIGNAL (settingsChanged(RKSettings::SettingsPage)), this, SLOT (globalSettingsChanged(RKSettings::SettingsPage)));
@@ -296,43 +298,51 @@ QWidget* RKObjectListViewSettings::filterWidget (QWidget *parent) {
 
 	QGroupBox *box = new QGroupBox (i18nc ("Fields==columns in tree view", "Fields to search in"), filter_widget_expansion);
 	elayout->addWidget (box);
-	QHBoxLayout *boxlayout = new QHBoxLayout (box);
+	QVBoxLayout *boxvlayout = new QVBoxLayout (box);
+	QHBoxLayout *boxhlayout = new QHBoxLayout ();
+	boxvlayout->addLayout (boxhlayout);
+	boxhlayout->setContentsMargins (0, 0, 0, 0);
 	filter_on_name_box = new QCheckBox (i18n ("Name"));
-	boxlayout->addWidget (filter_on_name_box);
+	boxhlayout->addWidget (filter_on_name_box);
 	filter_on_label_box = new QCheckBox (i18n ("Label"));
-	boxlayout->addWidget (filter_on_label_box);
+	boxhlayout->addWidget (filter_on_label_box);
 	filter_on_class_box = new QCheckBox (i18n ("Class"));
-	boxlayout->addWidget (filter_on_class_box);
-
-	connect (filter_on_name_box, SIGNAL(clicked(bool)), this, SLOT (filterSettingsChanged()));
-	connect (filter_on_label_box, SIGNAL(clicked(bool)), this, SLOT (filterSettingsChanged()));
-	connect (filter_on_class_box, SIGNAL(clicked(bool)), this, SLOT (filterSettingsChanged()));
-
-	show_functions_box = new QCheckBox (i18n ("Show Functions"));
-	RKCommonFunctions::setTips (i18n ("Uncheck this to exclude functions from the list"), show_functions_box);
-	elayout->addWidget (show_functions_box);
-	show_variables_box = new QCheckBox (i18n ("Show Vectors"));
-	RKCommonFunctions::setTips (i18n ("Uncheck this to exclude vectors (i.e. most types of data objects) from the list"), show_variables_box);
-	elayout->addWidget (show_variables_box);
-	show_containers_box = new QCheckBox (i18n ("Show Containers"));
-	RKCommonFunctions::setTips (i18n ("Uncheck this to exclude \"container\"-objects such as <i>list</i>s or <i>environment</i>s from the list. Note that containers will continue to be show, if they contain child objects matching the filter settings."), show_containers_box);
-	elayout->addWidget (show_containers_box);
-
-	connect (show_functions_box, SIGNAL(clicked(bool)), this, SLOT (filterSettingsChanged()));
-	connect (show_variables_box, SIGNAL(clicked(bool)), this, SLOT (filterSettingsChanged()));
-	connect (show_containers_box, SIGNAL(clicked(bool)), this, SLOT (filterSettingsChanged()));
-
-	hidden_objects_box = new QCheckBox (i18n ("Show Hidden Objects"));
-	connect (hidden_objects_box, SIGNAL (clicked(bool)), this, SLOT (filterSettingsChanged()));
-	layout->addWidget (hidden_objects_box);
+	boxhlayout->addWidget (filter_on_class_box);
 
 	filter_on_name_box->setChecked (filter_on_name);
 	filter_on_label_box->setChecked (filter_on_label);
 	filter_on_class_box->setChecked (filter_on_class);
-	show_functions_box->setChecked (show_functions);
-	show_variables_box->setChecked (show_variables);
-	show_containers_box->setChecked (show_containers);
+	connect (filter_on_name_box, SIGNAL(clicked(bool)), this, SLOT (filterSettingsChanged()));
+	connect (filter_on_label_box, SIGNAL(clicked(bool)), this, SLOT (filterSettingsChanged()));
+	connect (filter_on_class_box, SIGNAL(clicked(bool)), this, SLOT (filterSettingsChanged()));
+
+	depth_box = new QComboBox ();
+	depth_box->addItem (i18n ("Top level objects, only"));
+	depth_box->addItem (i18n ("Top level objects, and direct children"));
+	RKCommonFunctions::setTips (i18n ("Depth of search in the object tree.<ul>"
+	                                      "<li><i>%1</i> means looking for matches in objects that are on the search path, only (in <i>.GlobalEnv</i> or a loaded package)</li>"
+	                                      "<li><i>%2</i> includes direct child objects. In this case, the list will show matching objects on the search path, <i>and</i> objects on the search path that hold matching child objects.</li>", depth_box->itemText (0), depth_box->itemText (1)), depth_box);
+	boxvlayout->addWidget (depth_box);
+
+	depth_box->setCurrentIndex (depth_limit);
+	connect (depth_box, SIGNAL (currentIndexChanged(QString)), this, SLOT (filterSettingsChanged()));
+
+	type_box = new QComboBox ();
+	type_box->addItem (i18n ("Show all objects"));
+	type_box->addItem (i18n ("Show functions, only"));
+	type_box->addItem (i18n ("Show objects excluding functions"));
+	RKCommonFunctions::setTips (i18n ("When looking for a particular function, you may want to exclude 'data' objects, and vice versa. This control allows you to limit the list to objects that are not (or do not contain) functions, or to those that are (or contain) functions."), type_box);
+	elayout->addWidget (type_box);
+
+	if (hide_functions) type_box->setCurrentIndex (2);
+	else if (hide_non_functions) type_box->setCurrentIndex (1);
+	else type_box->setCurrentIndex (0);
+	connect (type_box, SIGNAL (currentIndexChanged(QString)), this, SLOT (filterSettingsChanged()));
+
+	hidden_objects_box = new QCheckBox (i18n ("Show Hidden Objects"));
 	hidden_objects_box->setChecked (show_hidden_objects);
+	connect (hidden_objects_box, SIGNAL (clicked(bool)), this, SLOT (filterSettingsChanged()));
+	layout->addWidget (hidden_objects_box);
 
 	return filter_widget;
 }
@@ -348,9 +358,9 @@ void RKObjectListViewSettings::filterSettingsChanged () {
 	filter_on_name = filter_on_name_box->isChecked ();
 	filter_on_label = filter_on_label_box->isChecked ();
 	filter_on_class = filter_on_class_box->isChecked ();
-	show_functions = show_functions_box->isChecked ();
-	show_variables = show_variables_box->isChecked ();
-	show_containers = show_containers_box->isChecked ();
+	depth_limit = depth_box->currentIndex ();
+	hide_functions = type_box->currentIndex () == 2;
+	hide_non_functions = type_box->currentIndex () == 1;
 	show_hidden_objects = hidden_objects_box->isChecked ();
 #warning TODO: It is also a QAction, currently.
 	updateSelf ();
@@ -377,28 +387,61 @@ bool RKObjectListViewSettings::filterAcceptsColumn (int source_column, const QMo
 	return false;
 }
 
+bool RKObjectListViewSettings::filterAcceptsRow (int source_row, const QModelIndex& source_parent) const {
+//	RK_TRACE (APP);
+
+	// So I tried to use a KRecursiveFilterProxyModel, but
+	// a) we don't really want recursion to the full depth. Thus limiting it, here.
+	// b) While we don't handle insertions / removals of source indices in the presence of a filter, correctly, with KRecursiveFilterProxyModel
+	//    I got crashes on this (arguably with the depth-limit in place)
+	if (acceptRow (source_row, source_parent)) return true;
+
+	RObject *parent = static_cast<RObject*> (source_parent.internalPointer ());
+	if (!parent) {
+		RK_ASSERT (parent);    // should have been accepted, above
+		return true;
+	}
+	RObject *object = parent->findChildByObjectModelIndex (source_row);
+	if (!object) {
+		RK_ASSERT (object);    // should have been accepted, above
+		RK_DEBUG (APP, DL_ERROR, "row %d of %d in %s", source_row, sourceModel ()->rowCount (source_parent), qPrintable (parent->getShortName ()));
+		return false;
+	}
+
+	if (object->isType (RObject::ToplevelEnv | RObject::Workspace) || ((depth_limit > 0) && parent->isType (RObject::ToplevelEnv | RObject::Workspace))) {
+		QModelIndex source_index = sourceModel ()->index (source_row, 0, source_parent);
+		for (int row = 0, rows = sourceModel()->rowCount (source_index); row < rows; ++row) {
+			if (filterAcceptsRow (row, source_index)) return true;
+		}
+	}
+
+	return false;
+}
+
 bool RKObjectListViewSettings::acceptRow (int source_row, const QModelIndex& source_parent) const {
-	RK_TRACE (APP);
+//	RK_TRACE (APP);
 
 	// always show the root item
 	if (!source_parent.isValid ()) return true;
 
 	RObject* object = static_cast<RObject*> (source_parent.internalPointer ());
+	// always show global env and search path
+	if (!object) return true;
+	if (!object->findChildByObjectModelIndex (source_row)) {
+		return true;
+	}
 	object = object->findChildByObjectModelIndex (source_row);
 	RK_ASSERT (object);
-
-	// always show global env and search path
-	if (!object->parentObject ()) return true;
 
 	if (!show_hidden_objects) {
 		if (object->getShortName ().startsWith ('.')) return false;
 		if (object == reinterpret_cast<RObject*> (RObjectList::getObjectList ()->orphanNamespacesObject ())) return false;
 	}
 
-	if (!show_functions && object->isType (RObject::Function)) return false;
-	if (!show_containers && object->isType (RObject::Container | RObject::Environment)) return false;
-	if (!show_variables && object->isVariable ()) return false;
+	if (hide_functions && object->isType (RObject::Function)) return false;
+	if (hide_non_functions && !object->isType (RObject::Function)) return false;
 
+	if (filterRegExp ().isEmpty ()) return true;
 	if (filter_on_name && object->getShortName ().contains (filterRegExp ())) return true;
 	if (filter_on_label && object->getLabel ().contains (filterRegExp ())) return true;
 	if (filter_on_class) {
