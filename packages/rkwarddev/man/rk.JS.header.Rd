@@ -15,7 +15,8 @@ nested in an i18n() call.}
 or \code{addFromUI} -- note that you can use multiple entries with the same name here. Entries named
 \code{add} must be vectors of legth 2, the first being the caption (character),
       the second its value (either
-character or a XiMpLe node from the dialog). Entries named \code{addFromUI} must have exactly one value
+character or a XiMpLe node from the dialog); if the second value is named \code{noquote} or \code{nq},
+the JS output will be nested inside \code{noquote()}. Entries named \code{addFromUI} must have exactly one value
 specifying the GUI element to query (either character or a XiMpLe node from the dialog).}
 
 \item{level}{Integer, if not \code{NULL} will be added as the header level.}
@@ -36,5 +37,13 @@ Generate JavaScript header object
 \examples{
 my.cbox <- rk.XML.cbox("This is a test")
 rk.JS.header("Test results", addFromUI=my.cbox)
+
+# let's assume we create an R object called "results"
+# in the plugin dialog, this is how you could fetch
+# portions of it to be added as a parameter in the output
+rk.JS.header(
+  "Test results",
+  add=c("Significance level", noquote="results[[\\\\\\"alpha\\\\\\"]]")
+)
 }
 

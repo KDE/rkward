@@ -41,6 +41,8 @@
         node easier
       \item new functions \code{rk.get.indent()} and \code{rk.set.indent()} to globally set
         indentation string
+      \item in \code{rk.JS.header()}, the second value provided by \code{"add"} can now be named
+        \code{"noquote"} to have it nested in the JS \code{noquote()} function
     }
   }
   \subsection{changed}{

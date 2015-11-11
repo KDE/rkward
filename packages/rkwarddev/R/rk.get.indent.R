@@ -16,7 +16,7 @@
 # along with rkwarddev.  If not, see <http://www.gnu.org/licenses/>.
 
 #' @rdname rk.set.indent
-#' @param escape Logical, if set to \code{TRUE} each occurring "\t" will be escaped by an additional "\".
+#' @param escape Logical, if set to \code{TRUE} each occurring "\\t" will be escaped by an additional "\\".
 #' @export
 rk.get.indent <- function(escape=FALSE){
   indent.by <- get.rk.env("indent.by", value="\t")

@@ -33,6 +33,8 @@ added:
     node easier
   - new functions rk.get.indent() and rk.set.indent() to globally set
     indentation string
+  - in rk.JS.header(), the second value provided by "add" can now be named
+    "noquote" to have it nested in the JS noquote() function
 changed:
   - improved error handling in rk.JS.header(), error messages are more
     informative now
