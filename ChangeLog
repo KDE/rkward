@@ -1,3 +1,4 @@
+- Separate globalenv() and other environments in the search path more clearly in workspace browser
 - Fix some minor toolbar glitches
 - Complete rework of <optionset> UI for better usability
 - Try harder to honor system locale settings

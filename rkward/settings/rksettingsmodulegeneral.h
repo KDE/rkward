@@ -2,7 +2,7 @@
                           rksettingsmodulegeneral  -  description
                              -------------------
     begin                : Fri Jul 30 2004
-    copyright            : (C) 2004-2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2015 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -88,6 +88,7 @@ public:
 		RKWardConfig_0_5_7,
 		RKWardConfig_0_6_1,
 		RKWardConfig_0_6_3,
+		RKWardConfig_0_6_4,
 		RKWardConfig_Next,		/**< add new configuration versions above / before this entry */
 		RKWardConfig_Latest = RKWardConfig_Next - 1
 	};

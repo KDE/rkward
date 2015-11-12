@@ -2,7 +2,7 @@
                           rksettingsmodule  -  description
                              -------------------
     begin                : Fri Apr 22 2005
-    copyright            : (C) 2005 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2015 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -48,7 +48,10 @@ public:
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
 
-	static bool isSettingActive (RKObjectListViewSettings::Settings setting);
+	static bool isDefaultForWorkspace (RKObjectListViewSettings::PersistentSettings setting) { return workspace_settings[setting]; };
+	static bool isDefaultForVarselector (RKObjectListViewSettings::PersistentSettings setting) { return varselector_settings[setting]; };
+	static void setDefaultForWorkspace (RKObjectListViewSettings::PersistentSettings setting, bool state);
+	static void setDefaultForVarselector (RKObjectListViewSettings::PersistentSettings setting, bool state);
 
 	static bool isPackageBlacklisted (const QString &package_name);
 
@@ -62,8 +65,8 @@ private:
 	MultiStringSelector *blacklist_choser;
 	static QStringList getstructure_blacklist;
 
-	QCheckBox **checkboxes;
-	static bool settings[RKObjectListViewSettings::SettingsCount];
+	static bool workspace_settings[RKObjectListViewSettings::SettingsCount];
+	static bool varselector_settings[RKObjectListViewSettings::SettingsCount];
 };
 
 #endif
