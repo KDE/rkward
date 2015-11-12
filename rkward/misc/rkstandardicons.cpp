@@ -44,6 +44,7 @@ void RKStandardIcons::initIcons () {
 	icons[ActionCDToScript] = KIcon ("folder-txt");
 
 	icons[ActionConfigurePackages] = KIcon ("utilities-file-archiver");
+	icons[ActionSearch] = KIcon ("edit-find");
 
 	icons[ActionDeleteRow] = KIcon ("edit-delete");
 	icons[ActionInsertRow] = KIcon ("list-add");

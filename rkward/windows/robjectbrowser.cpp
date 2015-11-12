@@ -107,7 +107,7 @@ RObjectBrowserInternal::RObjectBrowserInternal (QWidget *parent) : QWidget (pare
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
 
-	list_view = new RKObjectListView (this);
+	list_view = new RKObjectListView (true, this);
 	vbox->addWidget (list_view->getSettings ()->filterWidget (this));
 	vbox->addWidget (list_view);
 

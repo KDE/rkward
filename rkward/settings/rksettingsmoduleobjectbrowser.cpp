@@ -34,41 +34,18 @@
 #include "../debug.h"
 
 // static
-bool RKSettingsModuleObjectBrowser::settings[RKObjectListViewSettings::SettingsCount];
+bool RKSettingsModuleObjectBrowser::workspace_settings[RKObjectListViewSettings::SettingsCount];
+bool RKSettingsModuleObjectBrowser::varselector_settings[RKObjectListViewSettings::SettingsCount];
 QStringList RKSettingsModuleObjectBrowser::getstructure_blacklist;
 
 RKSettingsModuleObjectBrowser::RKSettingsModuleObjectBrowser (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
 
-	for (int i = 0; i < RKObjectListViewSettings::SettingsCount; ++i) {
-		checkboxes[i] = 0;
-	}
-
 	QVBoxLayout *layout = new QVBoxLayout (this);
 
-	layout->addWidget (new QLabel (i18n ("Which objects should be shown by default?"), this));
-
-	checkboxes[RKObjectListViewSettings::ShowObjectsHidden] = new QCheckBox (i18n ("Show hidden objects"), this);
-	layout->addWidget (checkboxes[RKObjectListViewSettings::ShowObjectsHidden]);
-
-	layout->addSpacing (2*RKGlobals::spacingHint ());
-
-	layout->addWidget (new QLabel (i18n ("Which columns should be shown by default?"), this));
-
-	checkboxes[RKObjectListViewSettings::ShowFieldsLabel] = new QCheckBox (i18n ("Label field"), this);
-	layout->addWidget (checkboxes[RKObjectListViewSettings::ShowFieldsLabel]);
-	checkboxes[RKObjectListViewSettings::ShowFieldsType] = new QCheckBox (i18n ("Type field"), this);
-	layout->addWidget (checkboxes[RKObjectListViewSettings::ShowFieldsType]);
-	checkboxes[RKObjectListViewSettings::ShowFieldsClass] = new QCheckBox (i18n ("Class field"), this);
-	layout->addWidget (checkboxes[RKObjectListViewSettings::ShowFieldsClass]);
-
-	layout->addStretch ();
-
-	for (int i = 0; i < RKObjectListViewSettings::SettingsCount; ++i) {
-		if (!checkboxes[i]) continue;   // We don't provide checkboxes for all settings in this list
-		checkboxes[i]->setChecked (settings[i]);
-		connect (checkboxes[i], SIGNAL (stateChanged(int)), this, SLOT (boxChanged(int)));
-	}
+	// Note: Up to RKWard 0.6.3, this settings module had a lot of additional checkboxes. Since 0.6.4, most settings are stored, implictily,
+	//       i.e. the Workspace Browser tool window "remembers" its latest settings (and so does the Varselector, separately). This modules
+	//       is still responsible to storing / loading settings.
 
 	blacklist_choser = new MultiStringSelector (i18n ("Never fetch the structure of these packages:"), this);
 	blacklist_choser->setValues (getstructure_blacklist);
@@ -82,9 +59,15 @@ RKSettingsModuleObjectBrowser::~RKSettingsModuleObjectBrowser () {
 }
 
 //static
-bool RKSettingsModuleObjectBrowser::isSettingActive (RKObjectListViewSettings::Settings setting) {
+void RKSettingsModuleObjectBrowser::setDefaultForWorkspace (RKObjectListViewSettings::PersistentSettings setting, bool state) {
 	RK_TRACE (SETTINGS);
-	return settings[setting];
+	workspace_settings[setting] = state;
+}
+
+//static
+void RKSettingsModuleObjectBrowser::setDefaultForVarselector (RKObjectListViewSettings::PersistentSettings setting, bool state) {
+	RK_TRACE (SETTINGS);
+	varselector_settings[setting] = state;
 }
 
 //static
@@ -102,9 +85,6 @@ void RKSettingsModuleObjectBrowser::addBlackList (QStringList *string_list) {
 void RKSettingsModuleObjectBrowser::applyChanges () {
 	RK_TRACE (SETTINGS);
 
-	for (int i = 0; i < RKObjectListViewSettings::SettingsCount; ++i) {
-		if (checkboxes[i]) settings[i] = checkboxes[i]->isChecked ();
-	}
 	getstructure_blacklist = blacklist_choser->getValues();
 }
 
@@ -118,17 +98,31 @@ QString RKSettingsModuleObjectBrowser::caption () {
 	return (i18n ("Workspace"));
 }
 
+void writeSettings (KConfigGroup &cg, bool *settings) {
+	cg.writeEntry ("show hidden vars", settings[RKObjectListViewSettings::ShowObjectsHidden]);
+	cg.writeEntry ("show label field", settings[RKObjectListViewSettings::ShowFieldsLabel]);
+	cg.writeEntry ("show type field", settings[RKObjectListViewSettings::ShowFieldsType]);
+	cg.writeEntry ("show class field", settings[RKObjectListViewSettings::ShowFieldsClass]);
+}
+
 //static
 void RKSettingsModuleObjectBrowser::saveSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
 	KConfigGroup cg = config->group ("Object Browser");
-	cg.writeEntry ("show hidden vars", settings[RKObjectListViewSettings::ShowObjectsHidden]);
-	cg.writeEntry ("show label field", settings[RKObjectListViewSettings::ShowFieldsLabel]);
-	cg.writeEntry ("show type field", settings[RKObjectListViewSettings::ShowFieldsType]);
-	cg.writeEntry ("show class field", settings[RKObjectListViewSettings::ShowFieldsClass]);
-
 	cg.writeEntry ("package blacklist", getstructure_blacklist);
+
+	KConfigGroup toolgroup = cg.group ("Tool window");
+	writeSettings (toolgroup, workspace_settings);
+	KConfigGroup varselgroup = cg.group ("Varselector");
+	writeSettings (varselgroup, varselector_settings);
+}
+
+void readSettings (const KConfigGroup &cg, bool *settings) {
+	settings[RKObjectListViewSettings::ShowObjectsHidden] = cg.readEntry ("show hidden vars", false);
+	settings[RKObjectListViewSettings::ShowFieldsLabel] = cg.readEntry ("show label field", true);
+	settings[RKObjectListViewSettings::ShowFieldsType] = cg.readEntry ("show type field", true);
+	settings[RKObjectListViewSettings::ShowFieldsClass] = cg.readEntry ("show class field", true);
 }
 
 //static
@@ -136,16 +130,10 @@ void RKSettingsModuleObjectBrowser::loadSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
 	KConfigGroup cg = config->group ("Object Browser");
-	// The following are _not_ actually configurable defaults in RKWard 0.6.4. These settings here simply serve to define the static default.
-	// TODO: That is just plain wrong. Move them to RObjectListViewSettings, exclusively.
-	settings[RKObjectListViewSettings::ShowObjectsAllEnvironments] = true;
-	// These defaults _are_ configurable
-	settings[RKObjectListViewSettings::ShowObjectsHidden] = cg.readEntry ("show hidden vars", false);
-	settings[RKObjectListViewSettings::ShowFieldsLabel] = cg.readEntry ("show label field", true);
-	settings[RKObjectListViewSettings::ShowFieldsType] = cg.readEntry ("show type field", true);
-	settings[RKObjectListViewSettings::ShowFieldsClass] = cg.readEntry ("show class field", true);
-
 	getstructure_blacklist = cg.readEntry ("package blacklist", QStringList ("GO"));
+
+	readSettings (cg.group ("Tool window"), workspace_settings);
+	readSettings (cg.group ("Varselector"), varselector_settings);
 }
 
 void RKSettingsModuleObjectBrowser::boxChanged (int) {

@@ -26,7 +26,6 @@
 class QMenu;
 class RKListViewItem;
 class RKObjectListViewSettings;
-class QActionGroup;
 class QTimer;
 class QCheckBox;
 class QComboBox;
@@ -39,8 +38,7 @@ This class provides the common functionality for the tree views in the RObjectBr
 class RKObjectListView : public QTreeView {
 	Q_OBJECT
 public:
-	explicit RKObjectListView (QWidget *parent);
-	
+	explicit RKObjectListView (bool toolwindow, QWidget *parent);
 	~RKObjectListView ();
 
 /** This function returns a pointer to the context menu of the RKObjectListView. It is provided so you can add your own items.
@@ -72,7 +70,6 @@ public slots:
 	void updateStarted ();
 	void selectionChanged (const QItemSelection & selected, const QItemSelection & deselected);
 	void settingsChanged ();
-	void popupConfigure ();
 	void itemClicked (const QModelIndex& index);
 protected:
 	void contextMenuEvent (QContextMenuEvent* event);
@@ -90,11 +87,11 @@ class RKObjectListViewSettings : public QSortFilterProxyModel {
 	Q_OBJECT
 public:
 /** ctor. copies the default settings from RKSettingsModuleObjectBrowser */ 
-	explicit RKObjectListViewSettings (QObject* parent=0);
+	explicit RKObjectListViewSettings (bool toolwindow, QObject* parent=0);
 	~RKObjectListViewSettings ();
 
-	enum Settings {
-		ShowObjectsAllEnvironments,
+/** enum of @em persistent settings. There are more settings than these, but those will not be stored */
+	enum PersistentSettings {
 		ShowObjectsHidden,
 		ShowFieldsType,
 		ShowFieldsClass,
@@ -102,19 +99,13 @@ public:
 		SettingsCount
 	};
 
-	void setSetting (Settings setting, bool to);
-	bool getSetting (Settings setting) const { return settings[setting].state; };
-
-	QMenu *showObjectsMenu () const { return show_objects_menu; };
-	QMenu *showFieldsMenu () const { return show_fields_menu; };
+	void addSettingsToMenu (QMenu* menu, QAction* before);
 
 	QWidget* filterWidget (QWidget *parent);
 signals:
 	void settingsChanged ();
 public slots:
-	void globalSettingsChanged (RKSettings::SettingsPage);
 	void filterSettingsChanged ();
-	void settingToggled (QAction* which);
 	void updateSelfNow ();
 protected:
 	bool filterAcceptsRow (int source_row, const QModelIndex& source_parent) const;
@@ -122,20 +113,10 @@ protected:
 	bool filterAcceptsColumn (int source_column, const QModelIndex& source_parent) const;
 	bool lessThan (const QModelIndex& left, const QModelIndex& right) const;
 private:
-	struct Setting {
-		Setting () : is_at_default (true) {};
-		QAction *action;
-		bool is_at_default;
-		bool state;
-	};
-	Setting settings[SettingsCount];
-	QActionGroup* action_group;
+	QAction* persistent_settings_actions[SettingsCount];
+	bool persistent_settings[SettingsCount];
 
-	void createContextMenus ();
 	void updateSelf ();
-
-	QMenu *show_objects_menu;
-	QMenu *show_fields_menu;
 
 	QWidget *filter_widget;
 	QWidget *filter_widget_expansion;
@@ -150,8 +131,8 @@ private:
 	QComboBox* type_box;
 	bool hide_functions;
 	bool hide_non_functions;
-	QCheckBox* hidden_objects_box;
-	bool show_hidden_objects;
+
+	bool is_tool_window;
 
 	QTimer *update_timer;
 };

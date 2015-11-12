@@ -76,19 +76,17 @@ public:
 	QIcon collapsed;
 };
 
-RKObjectListView::RKObjectListView (QWidget *parent) : QTreeView (parent) {
+RKObjectListView::RKObjectListView (bool toolwindow, QWidget *parent) : QTreeView (parent) {
 	RK_TRACE (APP);
 
 	root_object = 0;
 	rkdelegate = new RKObjectListViewRootDelegate (this);
-	settings = new RKObjectListViewSettings (this);
+	settings = new RKObjectListViewSettings (toolwindow, this);
 	setSortingEnabled (true);
 	sortByColumn (0, Qt::AscendingOrder);
 
 	menu = new QMenu (this);
-	menu->addMenu (settings->showObjectsMenu ());
-	menu->addMenu (settings->showFieldsMenu ());
-	menu->addAction (i18n ("Configure Defaults"), this, SLOT (popupConfigure()));
+	settings->addSettingsToMenu (menu, 0);
 
 	connect (this, SIGNAL(clicked(QModelIndex)), this, SLOT(itemClicked(QModelIndex)));
 }
@@ -130,7 +128,6 @@ void RKObjectListView::setRootObject (RObject *root) {
 	RK_TRACE (APP);
 
 	root_object = root;
-	if (!root && !settings->getSetting (RKObjectListViewSettings::ShowObjectsAllEnvironments)) root = RObjectList::getGlobalEnv ();
 	QModelIndex index = settings->mapFromSource (RKGlobals::tracker ()->indexFor (root));
 	if (index != rootIndex ()) {
 		setRootIndex (index);
@@ -163,11 +160,6 @@ RObject::ObjectList RKObjectListView::selectedObjects () const {
 		list.append (static_cast<RObject*> (index.internalPointer ()));
 	}
 	return list;
-}
-
-void RKObjectListView::popupConfigure () {
-	RK_TRACE (APP);
-	RKSettings::configureSettings (RKSettings::PageObjectBrowser, this);
 }
 
 void RKObjectListView::contextMenuEvent (QContextMenuEvent* event) {
@@ -228,8 +220,10 @@ void RKObjectListView::settingsChanged () {
 
 //////////////////// RKObjectListViewSettings //////////////////////////
 
-RKObjectListViewSettings::RKObjectListViewSettings (QObject* parent) : QSortFilterProxyModel (parent) {
+RKObjectListViewSettings::RKObjectListViewSettings (bool tool_window, QObject* parent) : QSortFilterProxyModel (parent) {
 	RK_TRACE (APP);
+
+	is_tool_window = tool_window;
 
 	update_timer = new QTimer (this);
 	update_timer->setSingleShot (true);
@@ -239,33 +233,23 @@ RKObjectListViewSettings::RKObjectListViewSettings (QObject* parent) : QSortFilt
 	hide_functions = hide_non_functions = false;
 	filter_on_class = filter_on_label = filter_on_name = true;
 	depth_limit = 1;
-	show_hidden_objects = RKSettingsModuleObjectBrowser::isSettingActive (ShowObjectsHidden);
 
-	connect (RKSettings::tracker (), SIGNAL (settingsChanged(RKSettings::SettingsPage)), this, SLOT (globalSettingsChanged(RKSettings::SettingsPage)));
-
-	action_group = new QActionGroup (this);
-	action_group->setExclusive (false);
-	settings[ShowObjectsAllEnvironments].action = new QAction (i18n ("All Environments"), action_group);
-	settings[ShowObjectsHidden].action = new QAction (i18n ("Hidden Objects"), action_group);
-	settings[ShowFieldsType].action = new QAction (i18n ("Type"), action_group);
-	settings[ShowFieldsLabel].action = new QAction (i18n ("Label"), action_group);
-	settings[ShowFieldsClass].action = new QAction (i18n ("Class"), action_group);
+	persistent_settings_actions[ShowObjectsHidden] = new QAction (i18n ("Show Hidden Objects"), this);
+	persistent_settings_actions[ShowFieldsType] = new QAction (i18n ("Type"), this);
+	persistent_settings_actions[ShowFieldsLabel] = new QAction (i18n ("Label"), this);
+	persistent_settings_actions[ShowFieldsClass] = new QAction (i18n ("Class"), this);
 
 	for (int i = 0; i < SettingsCount; ++i) {
-		settings[i].action->setCheckable (true);
+		if (is_tool_window) persistent_settings[i] = RKSettingsModuleObjectBrowser::isDefaultForWorkspace ((PersistentSettings) i);
+		else persistent_settings[i] = RKSettingsModuleObjectBrowser::isDefaultForVarselector ((PersistentSettings) i);
+		persistent_settings_actions[i]->setCheckable (true);
+		persistent_settings_actions[i]->setChecked (persistent_settings[i]);
+		connect (persistent_settings_actions[i], SIGNAL (toggled(bool)), this, SLOT(filterSettingsChanged ()));
 	}
-
-	createContextMenus ();
-
-	// initialize the settings states
-	globalSettingsChanged (RKSettings::PageObjectBrowser);
 }
 
 RKObjectListViewSettings::~RKObjectListViewSettings () {
 	RK_TRACE (APP);
-
-	delete show_fields_menu;
-	delete show_objects_menu;
 }
 
 QWidget* RKObjectListViewSettings::filterWidget (QWidget *parent) {
@@ -339,9 +323,10 @@ QWidget* RKObjectListViewSettings::filterWidget (QWidget *parent) {
 	else type_box->setCurrentIndex (0);
 	connect (type_box, SIGNAL (currentIndexChanged(QString)), this, SLOT (filterSettingsChanged()));
 
-	hidden_objects_box = new QCheckBox (i18n ("Show Hidden Objects"));
-	hidden_objects_box->setChecked (show_hidden_objects);
-	connect (hidden_objects_box, SIGNAL (clicked(bool)), this, SLOT (filterSettingsChanged()));
+	QCheckBox* hidden_objects_box = new QCheckBox (i18n ("Show Hidden Objects"));
+	hidden_objects_box->setChecked (persistent_settings[ShowObjectsHidden]);
+	connect (hidden_objects_box, SIGNAL (clicked(bool)), persistent_settings_actions[ShowObjectsHidden], SLOT (setChecked(bool)));
+	connect (persistent_settings_actions[ShowObjectsHidden], SIGNAL (triggered(bool)), hidden_objects_box, SLOT (setChecked(bool)));
 	layout->addWidget (hidden_objects_box);
 
 	return filter_widget;
@@ -350,27 +335,20 @@ QWidget* RKObjectListViewSettings::filterWidget (QWidget *parent) {
 void RKObjectListViewSettings::filterSettingsChanged () {
 	RK_TRACE (APP);
 
-	if (!filter_widget) {
-		RK_ASSERT (filter_widget);
-		return;
+	if (filter_widget) {
+		filter_on_name = filter_on_name_box->isChecked ();
+		filter_on_label = filter_on_label_box->isChecked ();
+		filter_on_class = filter_on_class_box->isChecked ();
+		depth_limit = depth_box->currentIndex ();
+		hide_functions = type_box->currentIndex () == 2;
+		hide_non_functions = type_box->currentIndex () == 1;
 	}
 
-	filter_on_name = filter_on_name_box->isChecked ();
-	filter_on_label = filter_on_label_box->isChecked ();
-	filter_on_class = filter_on_class_box->isChecked ();
-	depth_limit = depth_box->currentIndex ();
-	hide_functions = type_box->currentIndex () == 2;
-	hide_non_functions = type_box->currentIndex () == 1;
-	show_hidden_objects = hidden_objects_box->isChecked ();
-#warning TODO: It is also a QAction, currently.
-	updateSelf ();
-}
-
-void RKObjectListViewSettings::setSetting (Settings setting, bool to) {
-	RK_TRACE (APP);
-
-	settings[setting].state = to;
-	settings[setting].is_at_default = false;
+	for (int i = 0; i < SettingsCount; ++i) {
+		persistent_settings[i] = persistent_settings_actions[i]->isChecked ();
+		if (is_tool_window) RKSettingsModuleObjectBrowser::setDefaultForWorkspace ((PersistentSettings) i, persistent_settings[i]);
+		else RKSettingsModuleObjectBrowser::setDefaultForVarselector ((PersistentSettings) i, persistent_settings[i]);
+	}
 
 	updateSelf ();
 }
@@ -379,9 +357,9 @@ bool RKObjectListViewSettings::filterAcceptsColumn (int source_column, const QMo
 	RK_TRACE (APP);
 
 	if (source_column == RKObjectListModel::NameColumn) return true;
-	if (source_column == RKObjectListModel::LabelColumn) return (settings[ShowFieldsLabel].state);
-	if (source_column == RKObjectListModel::TypeColumn) return (settings[ShowFieldsType].state);
-	if (source_column == RKObjectListModel::ClassColumn) return (settings[ShowFieldsClass].state);
+	if (source_column == RKObjectListModel::LabelColumn) return (persistent_settings[ShowFieldsLabel]);
+	if (source_column == RKObjectListModel::TypeColumn) return (persistent_settings[ShowFieldsType]);
+	if (source_column == RKObjectListModel::ClassColumn) return (persistent_settings[ShowFieldsClass]);
 
 	RK_ASSERT (false);
 	return false;
@@ -433,7 +411,7 @@ bool RKObjectListViewSettings::acceptRow (int source_row, const QModelIndex& sou
 	object = object->findChildByObjectModelIndex (source_row);
 	RK_ASSERT (object);
 
-	if (!show_hidden_objects) {
+	if (!persistent_settings[ShowObjectsHidden]) {
 		if (object->getShortName ().startsWith ('.')) return false;
 		if (object == reinterpret_cast<RObject*> (RObjectList::getObjectList ()->orphanNamespacesObject ())) return false;
 	}
@@ -479,20 +457,17 @@ bool RKObjectListViewSettings::lessThan (const QModelIndex& left, const QModelIn
 	return (QSortFilterProxyModel::lessThan (left, right));
 }
 
-void RKObjectListViewSettings::createContextMenus () {
+void RKObjectListViewSettings::addSettingsToMenu (QMenu* menu, QAction* before) {
 	RK_TRACE (APP);
 
-	show_objects_menu = new QMenu (i18n ("Show Objects"), 0);
-	show_objects_menu->addAction (settings[ShowObjectsAllEnvironments].action);
-	show_objects_menu->addSeparator ();
-	show_objects_menu->addAction (settings[ShowObjectsHidden].action);
+	menu->insertAction (before, persistent_settings_actions[ShowObjectsHidden]);
 
-	show_fields_menu = new QMenu (i18n ("Show Fields"), 0);
-	show_fields_menu->addAction (settings[ShowFieldsType].action);
-	show_fields_menu->addAction (settings[ShowFieldsLabel].action);
-	show_fields_menu->addAction (settings[ShowFieldsClass].action);
+	QMenu *show_fields_menu = new QMenu (i18n ("Show Fields"), menu);
+	show_fields_menu->addAction (persistent_settings_actions[ShowFieldsType]);
+	show_fields_menu->addAction (persistent_settings_actions[ShowFieldsLabel]);
+	show_fields_menu->addAction (persistent_settings_actions[ShowFieldsClass]);
+	menu->insertMenu (before, show_fields_menu);
 
-	connect (action_group, SIGNAL (triggered(QAction*)), this, SLOT(settingToggled(QAction*)));
 	updateSelf ();
 }
 
@@ -505,43 +480,9 @@ void RKObjectListViewSettings::updateSelf () {
 void RKObjectListViewSettings::updateSelfNow () {
 	RK_TRACE (APP);
 
-	for (int i = 0; i < SettingsCount; ++i) settings[i].action->setChecked (settings[i].state);
-
 	invalidateFilter ();
 
 	emit (settingsChanged ());
-}
-
-void RKObjectListViewSettings::globalSettingsChanged (RKSettings::SettingsPage page) {
-	if (page != RKSettings::PageObjectBrowser) return;
-
-	RK_TRACE (APP);
-
-	for (int i = 0; i < SettingsCount; ++i) {
-		if (settings[i].is_at_default) {     // Only settings that have been left at their default are copied
-			settings[i].state = RKSettingsModuleObjectBrowser::isSettingActive ((Settings) i);
-		}
-	}
-
-	updateSelf ();
-}
-
-void RKObjectListViewSettings::settingToggled (QAction* which) {
-	RK_TRACE (APP);
-
-	int setting = -1;
-	for (int i = 0; i < SettingsCount; ++i) {
-		if (settings[i].action == which) {
-			setting = i;
-			break;
-		}
-	}
-	if (setting < 0) {
-		RK_ASSERT (false);
-		return;
-	}
-
-	setSetting (static_cast<Settings> (setting), which->isChecked ());
 }
 
 #include "rkobjectlistview.moc"
