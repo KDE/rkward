@@ -2164,6 +2164,12 @@ user (selection from a list of values shown next to this element) --&gt;
 					plugin_name.js
 					plugin_name.rkh
 					...
+				po/
+					ll/
+						LC_MESSAGES/
+							rkward__plugin_name_rkward.mo
+					rkward__plugin_name_rkward.ll.po
+					rkward__plugin_name_rkward.pot
 				tests/
 					testsuite_name/
 						RKTestStandards.sometest_name.rkcommands.R
@@ -2180,12 +2186,12 @@ user (selection from a list of values shown next to this element) --&gt;
 		</programlisting>
 		<note>
 			<para>
-				In this example, all occasions of <token>plugin_name</token>, <token>testsuite_name</token> and <token>sometest_name</token> are to be replaced with their correct names, accordingly.
+				In this example, all occasions of <token>plugin_name</token>, <token>testsuite_name</token> and <token>sometest_name</token> are to be replaced with their correct names, accordingly. Also, <token>ll</token> is a placeholder for a language abbreviation (e.g., <quote>de</quote>, <quote>en</quote> or <quote>es</quote>).
 			</para>
 		</note>
 		<tip>
 			<para>
-				You don't have to create this file hierarchy by hand. If you use the function <function>rk.plugin.skeleton()</function> from the <link linkend="rkwarddev"><application>rkwarddev</application> package</link>, it will automatically create all necessary files and directories for you.
+				You don't have to create this file hierarchy by hand. If you use the function <function>rk.plugin.skeleton()</function> from the <link linkend="rkwarddev"><application>rkwarddev</application> package</link>, it will automatically create all necessary files and directories for you, except the <filename>po</filename> directory which is created and managed by the <link linkend="i18n_workflow">translation script</link>.
 			</para>
 		</tip>
 		<sect3 id="basic_plugin_components">
@@ -2288,6 +2294,11 @@ var.x &lt;- rk.XML.varslot("compare", source=variables, types="number", required
 var.y &lt;- rk.XML.varslot("against", source=variables, types="number", required=TRUE)
 		</programlisting>
 		<para>In order to recreate the example code to the point, you'd have to set all ID values manually. But since the package shall make our lives easier, from now on we will no longer care about that.</para>
+		<tip>
+			<para>
+				<application>rkwarddev</application> is capable of a lot of automation to help you build your plugins. However, it might be preferable to not use it to its full extend. If your goal is to produce code that is not only working but can also be easily read and compared to your generator script by a human being, you should consider to always set useful IDs with <parameter>id.name</parameter>. Naming your R objects identical to these IDs will also help in getting script code that is easy to understand.
+			</para>
+		</tip>
 		<para>If you want to see how the XML code of the defined element looks like if you exported it to a file, you can just call the object by its name. So, if you now called <quote>var.x</quote> in your &r; session, you should see something like this:</para>
 		<programlisting>
 &lt;varslot id="vrsl_compare" label="compare" source="vars" types="number" required="true" /&gt;
@@ -2379,10 +2390,21 @@ full.wizard &lt;- rk.XML.wizard(
 		<programlisting>
 JS.calc &lt;- rk.paste.JS(
 	echo("res &lt;- t.test (x=", var.x, ", y=", var.y, ", hypothesis=\"", test.hypothesis, "\""),
-	ite(id(check.paired), echo(", paired=TRUE")),
-	ite(id("!", check.paired, " &amp;&amp; ", check.eqvar), echo(", var.equal=TRUE")),
-	ite(id(conf.level, " != \"0.95\""), echo(", conf.level=", conf.level)),
-	echo(")\n"), level=2)
+	js(
+		if(check.paired){
+			echo(", paired=TRUE")
+		},
+		if(id("!", check.paired, "  &amp;&amp; ", check.eqvar)){
+			echo(", var.equal=TRUE")
+		},
+		if(conf.level != "0.95"){
+			echo(", conf.level=", conf.level)
+		},
+		linebreaks=TRUE
+	),
+	echo(")\n"),
+	level=2
+)
 
 JS.print &lt;- rk.paste.JS(echo("rk.print (res)\n"), level=2)
 		</programlisting>
@@ -2489,9 +2511,18 @@ local({
 
 	JS.calc &lt;- rk.paste.JS(
 		echo("res &lt;- t.test (x=", var.x, ", y=", var.y, ", hypothesis=\"", test.hypothesis, "\""),
-		ite(id(check.paired), echo(", paired=TRUE")),
-		ite(id("!", check.paired, " &amp;&amp; ", check.eqvar), echo(", var.equal=TRUE")),
-		ite(id(conf.level, " != \"0.95\""), echo(", conf.level=", conf.level)),
+		js(
+			if(check.paired){
+			echo(", paired=TRUE")
+			},
+			if(id("!", check.paired, "  &amp;&amp; ", check.eqvar)){
+			echo(", var.equal=TRUE")
+			},
+			if(conf.level != "0.95"){
+			echo(", conf.level=", conf.level)
+			},
+			linebreaks=TRUE
+		),
 		echo(")\n"), level=2)
 
 	JS.print &lt;- rk.paste.JS(echo("rk.print (res)\n"), level=2)
