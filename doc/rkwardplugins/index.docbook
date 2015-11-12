@@ -2046,7 +2046,7 @@ user (selection from a list of values shown next to this element) --&gt;
 					<replaceable>xx</replaceable> is the language code, again).</para></listitem>
 			<listitem><para>You should also include the non-compiled translation (&ie; <command>rkward__<replaceable>POID</replaceable>.<replaceable>xx</replaceable>.po</command>) in
 					your distribution, in the "po" subdirectory.</para></listitem>
-			<listitem><para>For any update of your plugin, run <command>python scripts/extract_plugin_messages.py /path/to/my.pluginmap</command> to update the .pot file, but also the
+      <listitem><para>For any update of your plugin, run <command>python scripts/update_plugin_messages.py /path/to/my.pluginmap</command> to update the .pot file, but also the
 					existing .po-files, and the compiled message catalogs.</para></listitem>
 		</itemizedlist>
 	</sect1>
