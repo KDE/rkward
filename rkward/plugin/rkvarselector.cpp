@@ -36,6 +36,8 @@
 RKVarSelector::RKVarSelector (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
 	RK_TRACE (PLUGIN);
 
+	XMLHelper *xml = parent_component->xmlHelper ();
+
 // TODO: read filter settings
 	addChild ("selected", selected = new RKComponentPropertyRObjects (this, false));
 	selected->setInternal (true);
@@ -46,7 +48,7 @@ RKVarSelector::RKVarSelector (const QDomElement &element, RKComponent *parent_co
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
 	
-	QLabel *label = new QLabel (element.attribute ("label", i18n ("Select Variable(s)")), this);
+	QLabel *label = new QLabel (xml->i18nStringAttribute (element, "label", i18n ("Select Variable(s)"), DL_INFO), this);
 	vbox->addWidget (label);
 
 	// TODO: Or should these actions be moved to RKObjectListView, non-tool-window-mode?

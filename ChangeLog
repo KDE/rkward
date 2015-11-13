@@ -1,3 +1,4 @@
+- Workspace browser gains functionality to search / filter objects by name
 - Separate globalenv() and other environments in the search path more clearly in workspace browser
 - Fix some minor toolbar glitches
 - Complete rework of <optionset> UI for better usability
