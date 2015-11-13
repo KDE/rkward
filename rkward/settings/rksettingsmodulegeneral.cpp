@@ -254,7 +254,7 @@ void RKSettingsModuleGeneral::loadSettings (KConfig *config) {
 	initial_dir_specification = checkAdjustLoadedPath (cg.readEntry ("initial dir spec", QString ()));
 
 	cg = config->group ("Logfiles");
-	files_path = new_files_path = checkAdjustLoadedPath (cg.readEntry ("logfile dir", QDir ().homePath () + "/.rkward/"));
+	files_path = new_files_path = checkAdjustLoadedPath (cg.readEntry ("logfile dir", QString (QDir ().homePath () + "/.rkward/")));
 
 	cg = config->group ("Workplace");
 	workplace_save_mode = (WorkplaceSaveMode) cg.readEntry ("save mode", (int) SaveWorkplaceWithWorkspace);

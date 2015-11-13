@@ -440,11 +440,11 @@ QVariant RKSettingsModulePluginsModel::data (const QModelIndex& index, int role)
 	const RKSettingsModulePlugins::PluginMapStoredInfo &inf = plugin_maps[index.row ()];
 
 	if (role == Qt::BackgroundRole) {
-		if (inf.broken_in_this_version) return Qt::red;
-		if (inf.quirky_in_this_version) return Qt::yellow;
+		if (inf.broken_in_this_version) return QColor (Qt::red);
+		if (inf.quirky_in_this_version) return QColor (Qt::yellow);
 		return (QVariant ());
 	} else if (role == Qt::ForegroundRole) {
-		if (inf.priority < RKSettingsModulePlugins::PriorityLow) return Qt::gray;
+		if (inf.priority < RKSettingsModulePlugins::PriorityLow) return QColor (Qt::gray);
 	} else if (role == Qt::ToolTipRole) {
 		const PluginMapMetaInfo &meta = const_cast<RKSettingsModulePluginsModel*> (this)->getPluginMapMetaInfo (inf.filename);
 		QString desc = meta.about->toHtml ();

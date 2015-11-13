@@ -166,4 +166,3 @@ void RKXMLGUISyncerPrivate::guiFactoryDestroyed (QObject *object) {
 	affected_factories.remove (static_cast<KXMLGUIFactory*>(object));
 }
 
-#include "rkxmlguisyncer_p.moc"

@@ -810,10 +810,11 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 			dialog_type = KMessageBox::Information;
 			if (!request->synchronous) {	// non-modal dialogs are not supported out of the box by KMessageBox;
 				KDialog* dialog = new KDialog ();
-				KMessageBox::createKMessageBox (dialog, QMessageBox::Information, message, QStringList (), QString (), 0, KMessageBox::Notify | KMessageBox::NoExec);
+				QDialogButtonBox *buttonBox = new QDialogButtonBox (dialog);
+				buttonBox->setStandardButtons (QDialogButtonBox::Ok);
+				KMessageBox::createKMessageBox (dialog, buttonBox, QMessageBox::Information, message, QStringList (), QString (), 0, KMessageBox::Notify | KMessageBox::NoExec);
 				dialog->setWindowTitle (caption);
 				dialog->setAttribute (Qt::WA_DeleteOnClose);
-				dialog->setButtons (KDialog::Ok);
 				dialog->show();
 
 				RKRBackendProtocolFrontend::setRequestCompleted (request);

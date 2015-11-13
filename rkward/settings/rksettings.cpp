@@ -16,7 +16,7 @@
  ***************************************************************************/
 #include "rksettings.h"
 
-#include <qlayout.h>
+#include <QPushButton>
 
 #include <klocale.h>
 #include <kapplication.h>
@@ -71,7 +71,7 @@ RKSettings::RKSettings (QWidget *parent) : KPageDialog (parent) {
 	setWindowTitle (i18n ("Settings"));
 	buttonBox ()->setStandardButtons (QDialogButtonBox::Ok | QDialogButtonBox::Apply | QDialogButtonBox::Cancel | QDialogButtonBox::Help);
 	// KF5 TODO: connect buttons
-	enableButtonApply (false);
+	button (QDialogButtonBox::Apply)->setEnabled (false);
 
 	setAttribute (Qt::WA_DeleteOnClose, true);
 
@@ -133,7 +133,7 @@ void RKSettings::pageChange (KPageWidgetItem *current, KPageWidgetItem *) {
 	} else {
 		has_help = !(new_module->helpURL ().isEmpty ());
 	}
-	enableButton (KDialog::Help, has_help);
+	button (QDialogButtonBox::Help)->setEnabled (has_help);
 }
 
 void RKSettings::slotButtonClicked (int button) {
@@ -172,12 +172,12 @@ void RKSettings::applyAll () {
 			tracker ()->signalSettingsChange (it.key ());
 		}
 	}
-	enableButtonApply (false);
+	button (QDialogButtonBox::Apply)->setEnabled (false);
 }
 
 void RKSettings::enableApply () {
 	RK_TRACE (SETTINGS);
-	enableButtonApply (true);
+	button (QDialogButtonBox::Apply)->setEnabled (true);
 }
 
 void RKSettings::loadSettings (KConfig *config) {

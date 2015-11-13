@@ -27,13 +27,10 @@
 #include <ktexteditor/document.h>
 #include <ktexteditor/codecompletionmodel.h>
 #include <ktexteditor/codecompletioninterface.h>
-#if KDE_IS_VERSION(4,5,0)
-#	include <ktexteditor/movingrange.h>
-#	include <ktexteditor/movinginterface.h>
-#else
-#	include <ktexteditor/smartrange.h>
-#	include <ktexteditor/smartinterface.h>
-#endif
+#include <ktexteditor/codecompletionmodelcontrollerinterface.h>
+#include <ktexteditor/movingrange.h>
+#include <ktexteditor/movinginterface.h>
+
 #include <kurl.h>
 
 #include "../windows/rkmdiwindow.h"
@@ -102,38 +99,20 @@ private:
 };
 
 /** code completion model for RKCommandEditorWindow */
-#if KDE_VERSION_MAJOR != 4
-#	error Adjust the versioning hack below!
-#endif
-// Unfortunately, MOC is not smart enough to understand the KDE_IS_VERSION macro
-#if KDE_VERSION_MINOR >= 2
-#	include <ktexteditor/codecompletionmodelcontrollerinterface.h>
-#	if KDE_VERSION_MINOR >= 5
-class RKCodeCompletionModel : public KTextEditor::CodeCompletionModel, public KTextEditor::CodeCompletionModelControllerInterface3 {
-	Q_OBJECT
-	Q_INTERFACES(KTextEditor::CodeCompletionModelControllerInterface3)
-public:
-	KTextEditor::Range completionRange (KTextEditor::View *view, const KTextEditor::Cursor &position);
-	QString filterString (KTextEditor::View *, const KTextEditor::Range &, const KTextEditor::Cursor &) { return QString (); };
-#	else
 class RKCodeCompletionModel : public KTextEditor::CodeCompletionModel, public KTextEditor::CodeCompletionModelControllerInterface {
 	Q_OBJECT
 	Q_INTERFACES(KTextEditor::CodeCompletionModelControllerInterface)
 public:
-	KTextEditor::Range completionRange (KTextEditor::View *view, const KTextEditor::Cursor &position);
-	QString filterString (KTextEditor::View *, const KTextEditor::SmartRange &, const KTextEditor::Cursor &) { return QString (); };
-#	endif
-#else
-class RKCodeCompletionModel : public KTextEditor::CodeCompletionModel {
-#endif
-public:
 	explicit RKCodeCompletionModel (RKCommandEditorWindow* parent);
 	~RKCodeCompletionModel ();
 
+	KTextEditor::Range completionRange (KTextEditor::View *view, const KTextEditor::Cursor &position) override;
+	QString filterString (KTextEditor::View *, const KTextEditor::Range &, const KTextEditor::Cursor &) override { return QString (); };
+
 	void updateCompletionList (const QString& symbol);
-	void completionInvoked (KTextEditor::View *, const KTextEditor::Range &, InvocationType);
-	void executeCompletionItem (KTextEditor::Document *document, const KTextEditor::Range &word, int row) const;
-	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const;
+	void completionInvoked (KTextEditor::View *, const KTextEditor::Range &, InvocationType) override;
+	void executeCompletionItem (KTextEditor::View *view, const KTextEditor::Range &word, const QModelIndex &index) const override;
+	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const override;
 
 	bool isEmpty () const { return names.isEmpty (); };
 private:
@@ -248,11 +227,7 @@ private:
 	KTextEditor::Document *m_doc;
 	KTextEditor::View *m_view;
 	KTextEditor::CodeCompletionInterface *cc_iface;
-#if KDE_IS_VERSION(4,5,0)
 	KTextEditor::MovingInterface *smart_iface;
-#else
-	KTextEditor::SmartInterface *smart_iface;
-#endif
 	RKFunctionArgHinter *hinter;
 	RKCodeCompletionModel *completion_model;
 

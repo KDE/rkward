@@ -14,3 +14,4 @@ SET(agents_STAT_SRCS
    )
 
 ADD_LIBRARY(agents STATIC ${agents_STAT_SRCS})
+TARGET_LINK_LIBRARIES(agents Qt5::Widgets KF5::KDELibs4Support)

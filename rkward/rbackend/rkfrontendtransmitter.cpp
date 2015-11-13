@@ -24,6 +24,7 @@
 #include "../rkglobals.h"
 
 #include <klocale.h>
+#include <kglobal.h>
 #include <krandom.h>
 #include <kstandarddirs.h>
 #include <QCoreApplication>
@@ -80,7 +81,7 @@ void RKFrontendTransmitter::run () {
 	QStringList env = QProcess::systemEnvironment ();
 	int index = env.indexOf (QRegExp("^LANGUAGE=.*", Qt::CaseInsensitive));
 	if (index >= 0) env.removeAt (index);
-	env.append ("LANGUAGE=" + KGlobal::locale ()->language ());
+	env.append ("LANGUAGE=" + QLocale ().name ().section ('_', 0, 0));
 	backend->setEnvironment (env);
 
 	QStringList args;
@@ -88,7 +89,7 @@ void RKFrontendTransmitter::run () {
 	args.append ("--server-name=" + server->fullServerName ());
 	args.append ("--rkd-server-name=" + rkd_transmitter->serverName ());
 	args.append ("--data-dir=" + RKSettingsModuleGeneral::filesPath ());
-	args.append ("--locale-dir=" + KGlobal::dirs()->findResourceDir ("locale", KGlobal::locale ()->language () + "/LC_MESSAGES/rkward.mo"));
+	args.append ("--locale-dir=" + KGlobal::dirs()->findResourceDir ("locale", QLocale ().name ().section ('_', 0, 0) + "/LC_MESSAGES/rkward.mo"));
 	connect (backend, SIGNAL (finished(int,QProcess::ExitStatus)), this, SLOT (backendExit(int)));
 	QString backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath ());
 	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "/rbackend");	// for running directly from the build-dir

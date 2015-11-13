@@ -26,7 +26,6 @@
 #include <ktemporaryfile.h>
 #include <kstandarddirs.h>
 
-#include <QLibraryInfo>
 #include <QSysInfo>
 
 #include "../debug.h"
@@ -124,7 +123,7 @@ QStringList RKSessionVars::frontendSessionInfo () {
 	lines.append ("RKWard version: " RKWARD_VERSION);
 	lines.append ("KDE version (runtime): " + QString (KDE::versionString ()));
 	lines.append ("KDE version (compile time): " KDE_VERSION_STRING);
-	lines.append ("Qt build key: " + QLibraryInfo::buildKey ());
+	lines.append (QString ("Qt version (runtime): ") + qVersion ());
 #if defined Q_WS_WIN
 	lines.append ("Windows runtime version (refer to QSysInfo documentation to translate code into human readable form): 0x" + QString::number (QSysInfo::windowsVersion (), 16));
 #elif defined Q_WS_MAC
