@@ -2186,7 +2186,7 @@ user (selection from a list of values shown next to this element) --&gt;
 		</programlisting>
 		<note>
 			<para>
-				In this example, all occasions of <token>plugin_name</token>, <token>testsuite_name</token> and <token>sometest_name</token> are to be replaced with their correct names, accordingly. Also, <token>ll</token> is a placeholder for a language abbreviation (e.g., <quote>de</quote>, <quote>en</quote> or <quote>es</quote>).
+				In this example, all occasions of <token>plugin_name</token>, <token>testsuite_name</token> and <token>sometest_name</token> are to be replaced with their correct names, accordingly. Also, <token>ll</token> is a placeholder for a language abbreviation (&eg;, <quote>de</quote>, <quote>en</quote> or <quote>es</quote>).
 			</para>
 		</note>
 		<tip>
