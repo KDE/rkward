@@ -28,6 +28,7 @@
 #' @slot ifs A list with objects of class rk.JS.ite.
 #' @slot array Logical, whether to use an array for options.
 #' @slot funct Character string, name of the R function to be called to combine the options.
+#' @slot opt.sep Character string, separates previous options from the one defined here.
 #' @keywords Classes
 #' @rdname rk.JS.opt-class
 #' @export
@@ -39,7 +40,8 @@ setClass("rk.JS.opt",
     collapse="character",
     ifs="list",
     array="logical",
-    funct="character"
+    funct="character",
+    opt.sep="character"
   ),
   prototype(
     var.name=character(),
@@ -47,7 +49,8 @@ setClass("rk.JS.opt",
     collapse=character(),
     ifs=list(),
     array=NULL,
-    funct=character()
+    funct=character(),
+    opt.sep=", "
   )
 )
 

@@ -105,9 +105,8 @@ void RKSaveObjectChooser::selectRootObject () {
 	KVBox *page = new KVBox (dialog);
 	dialog->setMainWidget (page);
 
-	RKObjectListView* list_view = new RKObjectListView (page);
+	RKObjectListView* list_view = new RKObjectListView (false, page);
 	list_view->setSelectionMode (QAbstractItemView::SingleSelection);
-	list_view->getSettings ()->setSetting (RKObjectListViewSettings::ShowObjectsAllEnvironments, false);
 	list_view->initialize ();
 	list_view->setObjectCurrent (root_object);
 	connect (list_view, SIGNAL (doubleClicked(QModelIndex)), dialog, SLOT (accept()));

@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward_x11window" version="620">
+<kpartgui name="rkward_x11window" version="640">
 	<MenuBar>
 		<Menu name="device"><text>&amp;Device</text>
 			<Action name="device_activate"/>
@@ -38,7 +38,7 @@
 		</Menu>
 		<Merge/>
 	</MenuBar>
-	<ToolBar name="mdiToolBar">
+	<ToolBar name="mainToolBar">
 		<Action name="device_copy_to_output"/>
 		<Separator/>
 		<Action name="plot_list"/>

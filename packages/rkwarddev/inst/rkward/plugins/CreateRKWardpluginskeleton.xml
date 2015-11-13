@@ -4,6 +4,8 @@
 			perhaps don't make changes here, but in the rkwarddev script instead! -->
 	<code file="CreateRKWardpluginskeleton.js" />
 	<help file="CreateRKWardpluginskeleton.rkh" />
+	<!-- <dependencies>
+			</dependencies> -->
 	<logic>
 		<connect governor="frm_Dfndpndn.checked" client="frm_DpndsRKW.enabled" />
 		<connect governor="frm_Dfndpndn.checked" client="frm_DpndsnRv.enabled" />

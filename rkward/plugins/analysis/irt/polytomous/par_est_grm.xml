@@ -16,7 +16,7 @@
         <row id="manifest_resp_row">
           <varselector id="vars" />
           <column>
-            <varslot type="numeric" id="x" classes="data.frame matrix" source="vars" required="true" label="Matrix of manifest variables:"/>
+            <varslot types="numeric" id="x" classes="data.frame matrix" source="vars" required="true" label="Matrix of manifest variables:"/>
             <stretch />
             <saveobject id="save_name" checkable="true" checked="true" label="Save results in workspace" initial="estimates.grm"/>
           </column>
@@ -35,7 +35,7 @@
               <option label="Use random start values" value="random" />
               <option label="Use own list of start values" value="list" />
             </radio>
-            <varslot type="numeric" id="startval_lst" source="vars2" label="List of start values:"/>
+            <varslot types="numeric" id="startval_lst" source="vars2" label="List of start values:"/>
             <frame label="Misc options">
               <checkbox id="hessian" label="Compute Hessian matrix" value="hessian" />
               <checkbox id="naaction" label="Use only complete cases" value="na.exclude" />

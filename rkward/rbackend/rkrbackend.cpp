@@ -20,7 +20,6 @@
 #ifdef Q_WS_WIN
 #	include <winsock2.h>
 #	include <windows.h>
-#	include <locale.h>
 #	undef ERROR 	// clashes with R
 #	define Win32	// needed for R includes
 #else
@@ -54,6 +53,7 @@ void* RKRBackend::default_global_context = 0;
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
+#include <locale.h>
 
 extern "C" {
 #define R_INTERFACE_PTRS 1
@@ -278,7 +278,7 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 			if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::NoUserCommand) {
 				RCommandProxy *command = RKRBackend::this_pointer->fetchNextCommand ();
 				if (!command) {
-#ifdef Q_OS_WINDOWS
+#ifdef Q_OS_WIN
 					// Can't easily override R_CleanUp on Windows, so we're calling it manually, here, then force exit
 					if (RKRBackend::this_pointer->killed == RKRBackend::ExitNow) RCleanUp (SA_NOSAVE, 0, 0);
 					else RCleanUp (SA_SUICIDE, 1, 0);
@@ -1014,9 +1014,7 @@ bool RKRBackend::startR () {
 	R_Interactive = (Rboolean) TRUE;
 #endif
 
-#ifdef Q_WS_WIN
-	setlocale (LC_NUMERIC, "C");	// something appears to mess with the locale on Windows. R will not work correctly without LC_NUMERIC=C
-#endif
+	setlocale (LC_NUMERIC, "C");	// Under some conditions something appears to mess with the locale. R will not work correctly without LC_NUMERIC=C
 
 	RBackendRequest req (false, RBackendRequest::SetParamsFromBackend);
 	req.params["na_real"] = NA_REAL;	// may not be initialized before setup_Rmainloop!

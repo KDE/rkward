@@ -2,7 +2,7 @@
                           robjectbrowser  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2004 - 2015 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -25,8 +25,6 @@
 class RKObjectListView;
 class RKObjectListViewSettings;
 class QPushButton;
-class QRadioButton;
-class QCheckBox;
 class RObject;
 class RObjectBrowserInternal;
 class KVBox;
@@ -101,31 +99,6 @@ private:
 
 	QPushButton *update_button;
 	RKObjectListView *list_view;
-};
-
-/** This class provides a widget to switch quickly between the most important RKObjectListViewSettings */
-class RKObjectListViewSettingsWidget : public QWidget {
-	Q_OBJECT
-public:
-	RKObjectListViewSettingsWidget (RKObjectListViewSettings *settings, QWidget *parent);
-	~RKObjectListViewSettingsWidget ();
-
-	enum Modes {
-		All = 0,
-		NonFunctions = 1,
-		Functions = 2
-	};
-public slots:
-	void settingsChanged ();
-	void modeChanged (bool);
-	void boxChanged (bool);
-private:
-	QRadioButton *all;
-	QRadioButton *nonfunctions;
-	QRadioButton *functions;
-	QCheckBox *all_envirs;
-	QCheckBox *hidden_objects;
-	RKObjectListViewSettings *settings;
 };
 
 #endif

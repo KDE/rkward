@@ -59,7 +59,7 @@
 #' @export
 
 rk.JS.doc <- function(require=c(), variables=NULL, globals=NULL, results.header=NULL, header.add=list(),
-  preprocess=NULL, calculate=NULL, printout=NULL, doPrintout=NULL, load.silencer=NULL, gen.info=TRUE, indent.by="\t",
+  preprocess=NULL, calculate=NULL, printout=NULL, doPrintout=NULL, load.silencer=NULL, gen.info=TRUE, indent.by=rk.get.indent(),
   guess.getter=FALSE){
   # variable to determine whether to add setGlobalVars() to preprocess() later
   addSetGlobalVars <- FALSE

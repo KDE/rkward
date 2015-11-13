@@ -25,6 +25,7 @@
 #include <QTimer>
 #include <QSet>
 
+class RKAccordionTable;
 class QTreeView;
 class QPushButton;
 class RKOptionSetDisplayModel;
@@ -40,7 +41,6 @@ public:
 	RKOptionSet (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
 	~RKOptionSet ();
 	int type () { return ComponentOptionSet; };
-	RKComponent *createDisplay (bool show_index, QWidget *parent);
 	bool isValid ();
 	/** reimplemented from RKComponent */
 	ComponentStatus recursiveStatus ();
@@ -51,20 +51,24 @@ private slots:
 	void columnPropertyChanged (RKComponentPropertyBase *property);
 	void currentRowPropertyChanged (RKComponentPropertyBase *property);
 	void serializationPropertyChanged (RKComponentPropertyBase *property);
+	void addRow (int where);
 	void addRow ();
+	void removeRow (int which);
 	void removeRow ();
-	void currentRowChanged ();
+	void currentRowChanged (int row);
 	void fetchDefaults ();
 	void slotUpdateUnfinishedRows ();
 /** When keys in the key column change, all other columns have to be updated, accordingly. */
 	void handleKeycolumnUpdate ();
 protected:
+friend class RKOptionSetDelegate;
 	void fetchPropertyValuesRecursive (PropertyValueMap *list, bool include_top_level=false, const QString &prefix=QString (), bool include_inactive_elements=false) const;
 friend class RKOptionSetDisplayModel;
 	int rowCount () const { return row_count->intValue (); };
 	void setRowState (int row, bool finished, bool valid);
 	void storeRowSerialization (int row);
 	void applyContentsFromExternalColumn (RKComponentPropertyStringList* column, int row);
+	void moveRow (int old_index, int new_index);
 
 	RKComponentPropertyInt *current_row;
 	RKComponentPropertyInt *row_count;
@@ -106,18 +110,13 @@ friend class RKOptionSetDisplayModel;
 	QHash<QString, PropertyValueMap> former_row_states;
 
 	RKComponent *contents_container;
-	QWidget *display_buttons;
-	QPushButton *remove_button;
-	QPushButton *add_button;
-	bool display_show_index;
 	ComponentStatus last_known_status;
 
 	RKOptionSetDisplayModel* model;
-	QTreeView *display;
+	RKAccordionTable *accordion;
 
 	QStackedWidget *switcher;
 	QWidget *updating_notice;
-	QWidget *user_area;
 	void updateUnfinishedRows ();
 	int return_to_row;
 	QTimer update_timer;
@@ -149,6 +148,12 @@ friend class RKOptionSet;
 	QTimer reset_timer;
 	QStringList column_labels;
 	RKOptionSet *set;
+
+	QMimeData* mimeData (const QModelIndexList& indexes) const;
+	QStringList mimeTypes () const;
+	bool dropMimeData (const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent);
+	Qt::ItemFlags flags (const QModelIndex& index) const;
+	Qt::DropActions supportedDropActions () const;
 private slots:
 	void doResetNow ();
 };

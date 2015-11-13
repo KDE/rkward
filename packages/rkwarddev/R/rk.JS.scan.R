@@ -32,7 +32,7 @@
 #' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @export
 
-rk.JS.scan <- function(pXML, js=TRUE, add.abbrev=FALSE, guess.getter=FALSE, indent.by="\t"){
+rk.JS.scan <- function(pXML, js=TRUE, add.abbrev=FALSE, guess.getter=FALSE, indent.by=rk.get.indent()){
 
   # these are tags to scan normally, no special treatment
   JS.relevant.tags.default <- c("browser", "dropdown", "input", "matrix", "optioncolumn",

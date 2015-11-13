@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkeditordataframepart" version="64">
+<kpartgui name="rkeditordataframepart" version="640">
 	<MenuBar>
 		<Menu name="edit"><text>&amp;Edit</text>
 			<Action name="cut"/>
@@ -37,7 +37,7 @@
 		<Action name="show_rownames"/>
 		<Action name="enable_editing"/>
 	</Menu>
-	<ToolBar fullWidth="true" name="mdiToolBar">
+	<ToolBar fullWidth="true" name="mainToolBar">
 		<Action name="cut"/>
 		<Action name="copy"/>
 		<Action name="paste"/>

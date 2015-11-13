@@ -26,6 +26,7 @@ SET(misc_STAT_SRCS
    rkmessagecatalog.cpp
    rkdbusapi.cpp
    rkfindbar.cpp
+   rkaccordiontable.cpp
    )
 
 ADD_LIBRARY(misc STATIC ${misc_STAT_SRCS})

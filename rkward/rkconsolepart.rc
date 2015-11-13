@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward_console" version="560">
+<kpartgui name="rkward_console" version="640">
 	<MenuBar>
 		<Menu name="file"><text>&amp;File</text>
 			<Separator />
@@ -36,7 +36,7 @@ but avoids the total derangement of the edit menu over time.
 			<Action name="interrupt" group="postrun_actions_merge"/>
 		</Menu>
 	</MenuBar>
-	<ToolBar fullWidth="true" name="mdiToolBar">
+	<ToolBar fullWidth="true" name="mainToolBar">
 		<Action name="interrupt" group="postrun_actions_merge"/>
 	</ToolBar>
 	<Menu name="rkconsole_context_menu">

@@ -2,7 +2,7 @@
                           robjectlist  -  description
                              -------------------
     begin                : Wed Aug 18 2004
-    copyright            : (C) 2004-2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2015 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -51,23 +51,28 @@ RObjectList::RObjectList () : RContainerObject (0, QString ()) {
 	//update_timer->start (AUTO_UPDATE_INTERVAL, true);
 	
 	type = RObject::Workspace;
+	name = "search()";
 	
 	update_chain = 0;
 
-	RObject *globalenv = createTopLevelEnvironment (".GlobalEnv");
-	RKGlobals::tracker ()->beginAddObject (globalenv, this, 0);	// 1 == first child after GlobalEnv
-	childmap.insert (0, globalenv);
-	RKGlobals::tracker ()->endAddObject (globalenv, this, 0);
+	globalenv = new REnvironmentObject (0, ".GlobalEnv");
+	globalenv->updateFromR (update_chain);
 
+   // TODO: Do we really need tracker notification at this stage?
 	RKOrphanNamespacesObject *obj = new RKOrphanNamespacesObject (this);
-	RKGlobals::tracker ()->beginAddObject (obj, this, 1);	// 1 == first child after GlobalEnv
+	RKGlobals::tracker ()->beginAddObject (obj, this, 0);      // first child after GlobalEnv
 	orphan_namespaces = obj;
-	RKGlobals::tracker ()->endAddObject (obj, this, 1);
+	RKGlobals::tracker ()->endAddObject (obj, this, 0);
 }
 
 RObjectList::~RObjectList () {
 	RK_TRACE (OBJECTS);
 	delete orphan_namespaces;
+	delete globalenv;
+}
+
+QString RObjectList::getObjectDescription () const {
+	return i18n ("This section contains environments that are not part of <i>.GlobalEnv</i> / your \"workspace\". Most importantly, this includes loaded packages, but also objects added to R's <i>search()<i>-path using <i>attach()</i>.");
 }
 
 QStringList RObjectList::detachPackages (const QStringList &packages, RCommandChain *chain, RKProgressControl* control) {
@@ -161,25 +166,31 @@ void RObjectList::rCommandDone (RCommand *command) {
 	}
 }
 
-void RObjectList::updateEnvironments (const QStringList &env_names, bool force_globalenv_update) {
+void RObjectList::updateEnvironments (const QStringList &_env_names, bool force_globalenv_update) {
 	RK_TRACE (OBJECTS);
 
 	RObjectMap newchildmap;
+	QStringList env_names = _env_names;
+	if (!env_names.isEmpty ()) {
+		QString dummy = env_names.takeFirst ();
+		RK_ASSERT (dummy == ".GlobalEnv");
+		if (force_globalenv_update) {
+			// for now, we only update the .GlobalEnv. All others we assume to be static
+			getGlobalEnv ()->updateFromR (update_chain);
+		}
+	} else {
+		RK_ASSERT (!env_names.isEmpty ());
+	}
 
 	// find which items are new, and copy the old ones
 	for (int i = 0; i < env_names.count (); ++i) {
 		QString name = env_names[i];
 
-		RObject* obj = findChildByName (name);
+		RObject *obj = findChildByName (name);
 		if (obj && (i > 0) && (env_names.lastIndexOf (name, i-1) > -1)) {		// duplicate environment names can happen (e.g. if a data.frame is attached multiple times)
 			obj = 0;	// only copy the old item once
 		}
-		if (obj) {
-			// for now, we only update the .GlobalEnv. All others we assume to be static
-			if (obj->isType (GlobalEnv) && force_globalenv_update) {
-				obj->updateFromR (update_chain);
-			}
-		} else {
+		if (!obj) {
 			obj = createTopLevelEnvironment (name);
 			RKGlobals::tracker ()->beginAddObject (obj, this, i);
 			childmap.insert (i, obj);
@@ -247,8 +258,10 @@ RObject *RObjectList::findObjects (const QStringList &path, RObjectSearchMap *ma
 	}
 
 	// no namespace given. Search all environments for matches
+	RObject *found = getGlobalEnv ()->findObjects (path, matches, "$");
+	if (found && !matches) return found;
 	for (int i = 0; i < childmap.size (); ++i) {
-		RObject *found = childmap[i]->findObjects (path, matches, "$");
+		found = childmap[i]->findObjects (path, matches, "$");
 		if (found && !matches) return found;
 	}
 	return 0;
@@ -257,7 +270,7 @@ RObject *RObjectList::findObjects (const QStringList &path, RObjectSearchMap *ma
 REnvironmentObject* RObjectList::findPackage (const QString &namespacename) const {
 	RK_TRACE (OBJECTS);
 
-	for (int i = childmap.size () - 1; i >= 1; --i) {	// NOTE: childmap[0] is the .GlobalEnv
+	for (int i = childmap.size () - 1; i >= 0; --i) {
 		RObject* child = childmap[i];
 		if (!child->isType (PackageEnv)) continue;	// Skip Autoloads
 		REnvironmentObject* env = static_cast<REnvironmentObject *> (child);
@@ -292,21 +305,6 @@ QString RObjectList::removeChildCommand (RObject *object) const {
 	RK_TRACE (OBJECTS);
 
 	return ("remove (" + object->getFullName () + ')');
-}
-
-//static
-REnvironmentObject *RObjectList::getGlobalEnv () {
-	RK_TRACE (OBJECTS);
-
-	RObjectList *list = getObjectList ();
-	RK_ASSERT (list);
-
-	RK_ASSERT (!list->isEmpty ());
-	REnvironmentObject *envobj = static_cast<REnvironmentObject*> (list->childmap[0]);
-	RK_ASSERT (envobj);
-	RK_ASSERT (envobj->isType (RObject::GlobalEnv));
-
-	return envobj;
 }
 
 

@@ -1,4 +1,4 @@
-# Copyright 2010-2014 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2010-2015 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package rkwarddev.
 #
@@ -55,9 +55,9 @@
 #'  plotOpts=tmp.plot.options)
 #'
 #' cat(js.prnt)
-rk.paste.JS.graph <- function(..., plotOpts=NULL, printoutObj=NULL, level=2, indent.by="\t", empty.e=FALSE){
+rk.paste.JS.graph <- function(..., plotOpts=NULL, printoutObj=NULL, level=2, indent.by=rk.get.indent(), empty.e=FALSE){
 
-  plotOptsIndent <- paste(rep("\\t", level), collapse="")
+  plotOptsIndent <- paste(rep(rk.get.indent(escape=TRUE), level), collapse="")
 
   # define variables
   js.prnt <- rk.paste.JS(
@@ -72,7 +72,7 @@ rk.paste.JS.graph <- function(..., plotOpts=NULL, printoutObj=NULL, level=2, ind
         js.po.preprocess <- rk.JS.vars(plotOpts, modifiers="code.preprocess", check.modifiers=FALSE)
         js.po.calculate <- rk.JS.vars(plotOpts, modifiers="code.calculate", check.modifiers=FALSE)
       }
-      rk.paste.JS(
+      trim(rk.paste.JS(
         rk.comment("in case there are generic plot options defined:"),
         js.po.preprocess,
         if(!is.null(printoutObj)){
@@ -80,8 +80,9 @@ rk.paste.JS.graph <- function(..., plotOpts=NULL, printoutObj=NULL, level=2, ind
         } else {
           warning("rk.paste.JS.graph: you're using plot options, but 'printoutObj' is empty, is that intended?")
         },
-        js.po.calculate
-      )
+        js.po.calculate,
+        level=level
+      ))
     } else {},
     level=level, indent.by=indent.by, empty.e=empty.e
   )
@@ -89,7 +90,7 @@ rk.paste.JS.graph <- function(..., plotOpts=NULL, printoutObj=NULL, level=2, ind
   # graph.on() & begin try()
   js.prnt <- paste(js.prnt, rk.paste.JS(
     ite("full", echo("rk.graph.on()\n")),
-    echo("\ttry({\n"),
+    echo(paste0(indent(level=level, by=indent.by), "try({\n")),
     level=level, indent.by=indent.by, empty.e=empty.e
   ), sep="\n\n")
 
@@ -98,7 +99,11 @@ rk.paste.JS.graph <- function(..., plotOpts=NULL, printoutObj=NULL, level=2, ind
     if(!is.null(plotOpts)){
       rk.paste.JS(
         rk.comment("insert any option-setting code that should be run before the actual plotting commands:"),
-        id("\t\tprintIndentedUnlessEmpty(\"", plotOptsIndent, "\", ", js.po.preprocess, ", \"\\n\", \"\");")
+        id(paste0(
+          indent(level=level, by=indent.by),
+          "printIndentedUnlessEmpty(\""), plotOptsIndent, "\", ", js.po.preprocess, ", \"\\n\", \"\");"
+        ),
+        level=level
       )
     } else {},
     level=level, indent.by=indent.by, empty.e=empty.e
@@ -116,7 +121,11 @@ rk.paste.JS.graph <- function(..., plotOpts=NULL, printoutObj=NULL, level=2, ind
     if(!is.null(plotOpts)){
       rk.paste.JS(
         rk.comment("insert any option-setting code that should be run after the actual plot:"),
-        id("\t\tprintIndentedUnlessEmpty(\"", plotOptsIndent, "\", ", js.po.calculate, ", \"\\n\", \"\");")
+        id(paste0(
+          indent(level=level, by=indent.by), 
+          "printIndentedUnlessEmpty(\""), plotOptsIndent, "\", ", js.po.calculate, ", \"\\n\", \"\");"
+        ),
+        level=level
       )
     } else {},
     level=level, indent.by=indent.by, empty.e=empty.e
@@ -124,7 +133,7 @@ rk.paste.JS.graph <- function(..., plotOpts=NULL, printoutObj=NULL, level=2, ind
 
   # end try() & graph.off()
   js.prnt <- paste(js.prnt, rk.paste.JS(
-    echo("\n\t})\n"),
+    echo(paste0("\n",indent(level=level, by=indent.by),"})\n")),
     ite("full", echo("rk.graph.off()\n")),
     level=level, indent.by=indent.by, empty.e=empty.e
   ), sep="\n\n")

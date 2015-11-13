@@ -17,7 +17,7 @@
         <row id="row_vars">
           <varselector id="vars" />
           <column>
-            <varslot type="numeric" id="x" classes="Rm" source="vars" required="true" label="Choose fitted model to test:"/>
+            <varslot types="numeric" id="x" classes="Rm" source="vars" required="true" label="Choose fitted model to test:"/>
             <text>Only objects of class Rm are valid!</text>
             <stretch />
           </column>
@@ -32,7 +32,7 @@
               <option label="Mean" value="mean" />
               <option label="Use dichotomous vector to define groups" value="vector" />
             </radio>
-            <varslot type="numeric" id="splitvector" source="vars2" label="Select grouping vector:"/>
+            <varslot types="numeric" id="splitvector" source="vars2" label="Select grouping vector:"/>
             <frame id="optimizer" label="Optimizer">
             <dropdown  id="drop_optimizer" label="Used optimizer:">
 	      <option label="nlm()" value="nlm" checked="true" />

@@ -19,14 +19,31 @@
 		</text>
 		<tabbook>
 			<tab label="Manual set">
-				<optionset id="mset">
+				<optionset id="mset" exp_mode="accordion">
+					<content>
+						<row>
+							<varselector id="vars"/>
+							<column>
+								<varslot type="numeric" id="mx" source="vars" required="true" label="Pick an object"/>	<!-- NOTE: requiredness does not work, correctly, yet -->
+								<input id="summary" label="Enter a summary" size="large" initial="I am the default"/>
+								<stretch/>
+							</column>
+						</row>
+					</content>
+					<optioncolumn id="object" connect="mx.available"/>
+					<optioncolumn id="objshort" label="Object" connect="mx.available.shortname"/>
+					<optioncolumn id="summary" label="Summary" connect="summary.text"/>
+				</optionset>
+			</tab>
+			<tab label="Manual set B">
+				<optionset id="msetb" exp_mode="detached">
 					<content>
 						<frame>
 							<optiondisplay index="true"/>
 							<row>
 								<varselector id="vars"/>
 								<column>
-									<varslot type="numeric" id="mx" source="vars" required="true" label="Pick an object"/>	<!-- NOTE: requiredness does not work, correctly, yet -->
+									<varslot types="numeric" id="mx" source="vars" required="true" label="Pick an object"/>	<!-- NOTE: requiredness does not work, correctly, yet -->
 									<input id="summary" label="Enter a summary" size="large" initial="I am the default"/>
 									<stretch/>
 								</column>
@@ -56,7 +73,7 @@
 				<text>First, select some objects, here (it doesn't matter, what you pick).</text>
 				<row>
 					<varselector id="vars"/>
-					<varslot type="numeric" id="x" source="vars" required="false" label="variables" multi="true"/>
+					<varslot types="numeric" id="x" source="vars" required="false" label="variables" multi="true"/>
 				</row>
 				<text><p>&nbsp;</p><p>Next, see how the controls allow you to specify "Comments" for each object.</p></text>
 				<row>

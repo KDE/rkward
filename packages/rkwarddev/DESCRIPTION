@@ -1,6 +1,6 @@
 Package: rkwarddev
 Type: Package
-Title: A collection of tools for RKWard plugin development
+Title: A Collection of Tools for RKWard Plugin Development
 Author: m.eik michalke [aut, cre]
 Maintainer: m.eik michalke <meik.michalke@hhu.de>
 Depends:
@@ -15,8 +15,9 @@ Encoding: UTF-8
 LazyLoad: yes
 URL: https://rkward.kde.org
 Authors@R: c(person(given="m.eik", family="michalke", email="meik.michalke@hhu.de", role=c("aut", "cre")))
-Version: 0.07-2
-Date: 2015-03-14
+Version: 0.07-4
+Date: 2015-11-11
+RoxygenNote: 5.0.0
 Collate:
     '00_class_01_rk.JS.arr.R'
     '00_class_02_rk.JS.var.R'
@@ -24,9 +25,10 @@ Collate:
     '00_class_04_rk.JS.opt.R'
     '00_class_05_rk.JS.oset.R'
     'rk.rkh.doc.R'
-    'rk.XML.plugin.R'
     'rk.JS.doc.R'
+    'rk.XML.plugin.R'
     '00_class_06_rk.plug.comp.R'
+    '01_methods_01_plugin2script.R'
     '50_all.valid.children.R'
     '50_all.valid.modifiers.R'
     '60_JS.getters.default.R'
@@ -34,8 +36,11 @@ Collate:
     'echo.R'
     'i18n.R'
     'id.R'
+    'idq.R'
     'ite.R'
     'join.R'
+    'js.R'
+    'modifiers.R'
     'qp.R'
     'rk.comment.R'
     'rk-internal.R'
@@ -105,6 +110,7 @@ Collate:
     'rk.XML.wizard.R'
     'rk.build.plugin.R'
     'rk.get.comp.R'
+    'rk.get.indent.R'
     'rk.get.rkh.prompter.R'
     'rk.i18n.comment.R'
     'rk.paste.JS.R'
@@ -125,6 +131,7 @@ Collate:
     'rk.rkh.title.R'
     'rk.rkh.usage.R'
     'rk.set.comp.R'
+    'rk.set.indent.R'
     'rk.set.rkh.prompter.R'
     'rk.testsuite.doc.R'
     'rk.uniqueIDs.R'

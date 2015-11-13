@@ -23,12 +23,14 @@
 #include <QPushButton>
 #include <QStackedWidget>
 #include <QLabel>
+#include <QMimeData>
 
 #include <klocale.h>
 #include <kvbox.h>
 
 #include "rkstandardcomponent.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkaccordiontable.h"
 #include "../misc/rkstandardicons.h"
 #include "../misc/xmlhelper.h"
 
@@ -50,10 +52,16 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 
 	// build UI framework
 	QVBoxLayout *layout = new QVBoxLayout (this);
+	layout->setContentsMargins (0, 0, 0, 0);
 	switcher = new QStackedWidget (this);
 	layout->addWidget (switcher);
-	user_area = new KVBox (this);
-	switcher->addWidget (user_area);
+	accordion = new RKAccordionTable (this);
+	switcher->addWidget (accordion);
+
+	connect (accordion, SIGNAL (activated(int)), this, SLOT(currentRowChanged(int)));
+	connect (accordion, SIGNAL (addRow(int)), this, SLOT(addRow(int)));
+	connect (accordion, SIGNAL (removeRow(int)), this, SLOT(removeRow(int)));
+
 	updating_notice = new QLabel (i18n ("Updating status, please wait"), this);
 	switcher->addWidget (updating_notice);
 	update_timer.setInterval (0);
@@ -75,12 +83,11 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	connect (current_row, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (currentRowPropertyChanged(RKComponentPropertyBase*)));
 
 	// first build the contents, as we will need to refer to the elements inside, later
-	model = 0;
-	display = 0;	// will be created from the builder, on demand -> createDisplay ()
-	contents_container = new RKComponent (this, user_area);
+	model = new RKOptionSetDisplayModel (this);
+	contents_container = new RKComponent (this, accordion->editorWidget ());
 	QDomElement content_element = xml->getChildElement (element, "content", DL_ERROR);
 	RKComponentBuilder *builder = new RKComponentBuilder (contents_container, content_element);
-	builder->buildElement (content_element, *xml, user_area, false);	// NOTE that parent widget != parent component, here, by intention. The point is that the display should not be disabled along with the contents
+	builder->buildElement (content_element, *xml, accordion->editorWidget (), false);	// NOTE that parent widget != parent component, here, by intention. The point is that the display should not be disabled along with the contents
 	builder->parseLogic (xml->getChildElement (element, "logic", DL_INFO), *xml, false);
 	builder->makeConnections ();
 	addChild ("contents", contents_container);
@@ -89,7 +96,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	// create columns
 	XMLChildList options = xml->getChildElements (element, "optioncolumn", DL_WARNING);
 
-	QStringList visible_column_labels ("#");	// Optionally hidden first row for index
+	QStringList visible_column_labels;
 	for (int i = 0; i < options.size (); ++i) {
 		const QDomElement &e = options.at (i);
 		QString id = xml->getStringAttribute (e, "id", QString (), DL_ERROR);
@@ -165,24 +172,9 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 		}
 	}
 
-	if (display) {		// may or may not have been created
-		model->column_labels = visible_column_labels;
-		display->setItemsExpandable (false);
-		display->setRootIsDecorated (false);
-		display->setAlternatingRowColors (true);
-		if (display_show_index) display->resizeColumnToContents (0);
-		else display->setColumnHidden (0, true);
-		display->setModel (model);
-		display->setSelectionBehavior (QAbstractItemView::SelectRows);
-		display->setSelectionMode (QAbstractItemView::SingleSelection);
-		connect (display->selectionModel (), SIGNAL (selectionChanged(QItemSelection,QItemSelection)), this, SLOT (currentRowChanged()));
-
-		if (keycolumn) display_buttons->setVisible (false);
-		else {
-			connect (add_button, SIGNAL (clicked()), this, SLOT (addRow()));
-			connect (remove_button, SIGNAL (clicked()), this, SLOT (removeRow()));
-		}
-	}
+	model->column_labels = visible_column_labels;
+	accordion->setShowAddRemoveButtons (!keycolumn);
+	accordion->setModel (model);
 }
 
 RKOptionSet::~RKOptionSet () {
@@ -193,35 +185,8 @@ void RKOptionSet::fetchDefaults () {
 	RK_TRACE (PLUGIN);
 	RK_ASSERT (default_row_state.isEmpty ());
 	contents_container->fetchPropertyValuesRecursive (&default_row_state, false, QString (), true);
-	if (min_rows && !keycolumn && (rowCount () <= 0)) addRow ();
+	if (min_rows && !keycolumn && (rowCount () <= 0)) addRow (rowCount ());
 	contents_container->enablednessProperty ()->setBoolValue (rowCount () > 0);	// no current row; Do this *after* fetching default values, however. Otherwise most values will *not* be read, as the element is disabled
-}
-
-RKComponent *RKOptionSet::createDisplay (bool show_index, QWidget *parent) {
-	RK_TRACE (PLUGIN);
-
-	RKComponent* dummy = new RKComponent (this, parent);
-	QVBoxLayout *layout = new QVBoxLayout (dummy);
-	layout->setContentsMargins (0, 0, 0, 0);
-	KHBox *box = new KHBox (dummy);
-	layout->addWidget (box);
-
-	if (display) {
-		RK_DEBUG (PLUGIN, DL_ERROR, "cannot create more than one optiondisplay per optionset");
-	} else {
-		display = new QTreeView (box);
-		display_show_index = show_index;
-		model = new RKOptionSetDisplayModel (this);
-	}
-
-	display_buttons = new KHBox (dummy);
-	layout->addWidget (display_buttons);
-	add_button = new QPushButton (RKStandardIcons::getIcon (RKStandardIcons::ActionInsertRow), QString (), display_buttons);
-	RKCommonFunctions::setTips (i18n ("Add a row / element"), add_button);
-	remove_button = new QPushButton (RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteRow), QString (), display_buttons);
-	RKCommonFunctions::setTips (i18n ("Remove a row / element"), remove_button);
-
-	return (dummy);
 }
 
 QString serializeList (const QStringList &list) {
@@ -389,7 +354,7 @@ void RKOptionSet::updateUnfinishedRows () {
 	if (!n_unfinished_rows) {	// done
 		if (switcher->currentWidget () != updating_notice) return;
 		current_row->setIntValue (return_to_row);
-		switcher->setCurrentWidget (user_area);
+		switcher->setCurrentWidget (accordion);
 		return;
 	}
 
@@ -407,17 +372,22 @@ void RKOptionSet::updateUnfinishedRows () {
 	RK_ASSERT (false);	// This would mean, we did not find any unfinished row, even though we tested for n_unfinished_rows, above.
 }
 
+// TODO: removeMe
 void RKOptionSet::addRow () {
+	RK_TRACE (PLUGIN);
+	addRow (active_row >= 0 ? active_row + 1 : rowCount ());	// append feels more natural than insert, here
+}
+
+void RKOptionSet::addRow (int row) {
 	RK_TRACE (PLUGIN);
 
 	storeRowSerialization (active_row);
 
-	int row = active_row + 1;	// append feels more natural than insert, here
 	int nrows = rowCount ();
-	if (row <= 0) row = nrows;
+	if (row < 0) row = nrows;
 	RK_ASSERT (!keycolumn);
 
-	if (display) model->beginInsertRows (QModelIndex (), row, row);
+	model->beginInsertRows (QModelIndex (), row, row);
 	// adjust values
 	updating = true;
 	QMap<RKComponentPropertyStringList *, ColumnInfo>::iterator it = column_map.begin ();
@@ -437,19 +407,25 @@ void RKOptionSet::addRow () {
 	rows.insert (row, ri);
 	++n_unfinished_rows;
 	++n_invalid_rows;
-
 	row_count->setIntValue (nrows + 1);
 	current_row->setIntValue (active_row = row);
 	setContentsForRow (active_row);
-	if (display) model->endInsertRows ();
+	model->endInsertRows ();
+
+	current_row->setIntValue (row);  // Setting this _again_, as the view might have messed with it following endInsertRows ()
 
 	changed ();
 }
 
+// TODO: removeMe
 void RKOptionSet::removeRow () {
 	RK_TRACE (PLUGIN);
+	removeRow (active_row);
+}
 
-	int row = active_row;
+void RKOptionSet::removeRow (int row) {
+	RK_TRACE (PLUGIN);
+
 	int nrows = rowCount ();
 	if (row < 0) {
 		RK_ASSERT (false);
@@ -457,7 +433,7 @@ void RKOptionSet::removeRow () {
 	}
 	RK_ASSERT (!keycolumn);
 
-	if (display) model->beginRemoveRows (QModelIndex (), row, row);
+	model->beginRemoveRows (QModelIndex (), row, row);
 	updating = true;
 	// adjust values
 	QMap<RKComponentPropertyStringList *, ColumnInfo>::iterator it = column_map.begin ();
@@ -479,7 +455,33 @@ void RKOptionSet::removeRow () {
 	row_count->setIntValue (nrows - 1);
 	current_row->setIntValue (active_row = row);
 	setContentsForRow (row);
-	if (display) model->endRemoveRows ();
+	model->endRemoveRows ();
+
+	current_row->setIntValue (row);  // Setting this _again_, as the view might have messed with it following endRemoveRows ()
+
+	changed ();
+}
+
+void RKOptionSet::moveRow (int old_index, int new_index) {
+	RK_TRACE (PLUGIN);
+
+	int nrows = rowCount ();
+	if (old_index < 0 || old_index >= nrows) {
+		RK_ASSERT (false);
+		return;
+	}
+
+	if (new_index < 0 || new_index > nrows) {
+		new_index = nrows;
+	}
+
+	storeRowSerialization (active_row);
+	PropertyValueMap backup = rows[old_index].full_row_map;
+	removeRow (old_index);
+	if (new_index > old_index) new_index -= 1;
+	addRow (new_index);
+	rows[new_index].full_row_map = backup;
+	setContentsForRow (new_index);
 
 	changed ();
 }
@@ -733,27 +735,17 @@ void RKOptionSet::storeRowSerialization (int row) {
 	contents_container->fetchPropertyValuesRecursive (&(rows[row].full_row_map));
 }
 
-int getCurrentRowFromDisplay (QTreeView* display) {
-	if (!(display && display->selectionModel () && display->model ())) return - 1;	// can happen during initialization
-	QModelIndexList l = display->selectionModel ()->selectedRows ();
-	if (l.isEmpty ()) return -1;
-	return (l[0].row ());
-}
-
 void RKOptionSet::updateCurrentRowInDisplay () {
-	if (!(display && display->selectionModel () && display->model ())) return;	// can happen during initialization
-	if (active_row < 0) display->selectionModel ()->clearSelection ();
-	else {
-		display->selectionModel ()->select (display->model ()->index (active_row, 0), QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
-	}
+	if (!(accordion && model)) return;	// can happen during initialization
+
+	if (active_row < 0) accordion->collapseAll ();
+	else accordion->activateRow (active_row);
 }
 
-void RKOptionSet::currentRowChanged () {
+void RKOptionSet::currentRowChanged (int row) {
 	RK_TRACE (PLUGIN);
 
-	RK_ASSERT (display);
-	int r = getCurrentRowFromDisplay (display);
-	if (active_row != r) current_row->setIntValue (r);
+	if (active_row != row) current_row->setIntValue (row);
 	// --> currentRowPropertyChanged ()
 }
 
@@ -800,6 +792,7 @@ RKOptionSetDisplayModel::RKOptionSetDisplayModel (RKOptionSet* parent) : QAbstra
 	connect (&reset_timer, SIGNAL (timeout()), this, SLOT (doResetNow()));
 	reset_timer.setInterval (0);
 	reset_timer.setSingleShot (true);
+	setSupportedDragActions (Qt::MoveAction);
 }
 
 RKOptionSetDisplayModel::~RKOptionSetDisplayModel () {
@@ -822,8 +815,7 @@ QVariant RKOptionSetDisplayModel::data (const QModelIndex& index, int role) cons
 	int column = index.column ();
 
 	if (role == Qt::DisplayRole) {
-		if (column == 0) return QVariant (QString::number (row + 1));
-		RKComponentPropertyStringList *p = set->visible_columns.value (column - 1);
+		RKComponentPropertyStringList *p = set->visible_columns.value (column);
 		if (p) {
 			return QVariant (p->valueAt (row));
 		} else {
@@ -878,4 +870,34 @@ void RKOptionSetDisplayModel::triggerReset() {
 	}
 }
 
+QString optionsetdisplaymodel_mt ("application/x-rkaccordiontableitem");
+QStringList RKOptionSetDisplayModel::mimeTypes () const {
+	return QStringList (optionsetdisplaymodel_mt);
+}
+
+QMimeData* RKOptionSetDisplayModel::mimeData (const QModelIndexList& indexes) const {
+	RK_ASSERT (indexes.length () >= 1);
+	QMimeData *ret = new QMimeData ();
+	ret->setData (optionsetdisplaymodel_mt, QByteArray (QString::number (indexes.first ().row ()).toAscii ()));
+	return (ret);
+}
+
+bool RKOptionSetDisplayModel::dropMimeData (const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) {
+	Q_UNUSED (column);
+	if (action == Qt::IgnoreAction) return true;
+	if (action == Qt::MoveAction) {
+		if (parent.isValid ()) return false;
+		int srow = QString::fromAscii (data->data (optionsetdisplaymodel_mt)).toInt ();
+		set->moveRow (srow, row);
+	}
+	return false;
+}
+
+Qt::ItemFlags RKOptionSetDisplayModel::flags (const QModelIndex& index) const {
+	return QAbstractItemModel::flags (index) | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
+}
+
+Qt::DropActions RKOptionSetDisplayModel::supportedDropActions () const {
+    return Qt::MoveAction;
+}
 

@@ -44,6 +44,7 @@ public:
 		ActionCDToScript,
 
 		ActionConfigurePackages,
+		ActionSearch,
 
 		ActionDeleteRow,
 		ActionInsertRow,
@@ -62,6 +63,9 @@ public:
 		ActionMoveLast,
 		ActionMoveUp,
 		ActionMoveDown,
+
+		ActionExpandDown,
+		ActionCollapseUp,
 
 		ActionDocumentInfo,
 		ActionFlagGreen,

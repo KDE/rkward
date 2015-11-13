@@ -674,12 +674,8 @@ void RKComponentBuilder::buildElement (const QDomElement &element, XMLHelper &xm
 		} else if (e.tagName () == QLatin1String ("optionset")) {
 			widget = new RKOptionSet (e, component (), parent_widget);
 		} else if (e.tagName () == QLatin1String ("optiondisplay")) {
-			RKComponent *set = component ()->parentComponent ();
-			if (set->type () == RKComponentBase::ComponentOptionSet) {
-				widget = static_cast<RKOptionSet *> (set)->createDisplay (xml.getBoolAttribute (e, "index", true, DL_INFO), parent_widget);
-			} else {
-				xml.displayError (&e, QString ("optiondisplay element is not allowed outside of an optionset"), DL_ERROR);
-			}
+			// TODO: Remove after grace period. Last release to support optiondisplay: 0.6.3
+			xml.displayError (&e, QString ("<optiondisplay> element is obsolete. Ignoring."), DL_WARNING);
 /*		} else if (e.tagName () == QLatin1String ("scriptable")) {
  * TODO: We used to have some purely experimental code, here, to support fully custom elements (scripted via Kross->Forms). We will want 
  * to have something like that, eventually. After porting to KF5, Qt5, and thus dropping legacy support, the natural way to add this will

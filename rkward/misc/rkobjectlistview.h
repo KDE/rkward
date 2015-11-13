@@ -2,7 +2,7 @@
                           rkobjectlistview  -  description
                              -------------------
     begin                : Wed Sep 1 2004
-    copyright            : (C) 2004, 2006, 2007, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2015 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -26,8 +26,9 @@
 class QMenu;
 class RKListViewItem;
 class RKObjectListViewSettings;
-class QActionGroup;
 class QTimer;
+class QCheckBox;
+class QComboBox;
 
 /**
 This class provides the common functionality for the tree views in the RObjectBrowser and RKVarselector(s). The caps it (will) provide are: keeping the list up to date and emitting change-signals when appropriate, filtering for certain types of objects, sorting, mapping items to objects. Maybe some GUI-stuff like popup-menus should also be added to this class?
@@ -37,8 +38,7 @@ This class provides the common functionality for the tree views in the RObjectBr
 class RKObjectListView : public QTreeView {
 	Q_OBJECT
 public:
-	explicit RKObjectListView (QWidget *parent);
-	
+	explicit RKObjectListView (bool toolwindow, QWidget *parent);
 	~RKObjectListView ();
 
 /** This function returns a pointer to the context menu of the RKObjectListView. It is provided so you can add your own items.
@@ -70,15 +70,15 @@ public slots:
 	void updateStarted ();
 	void selectionChanged (const QItemSelection & selected, const QItemSelection & deselected);
 	void settingsChanged ();
-
-	virtual void popupConfigure ();
+	void itemClicked (const QModelIndex& index);
 protected:
 	void contextMenuEvent (QContextMenuEvent* event);
 private:
 	QMenu *menu;
 	RObject *menu_object;
 	RObject *root_object;
-
+friend class RKObjectListViewRootDelegate;
+	QAbstractItemDelegate *rkdelegate;
 	RKObjectListViewSettings *settings;
 };
 
@@ -87,47 +87,52 @@ class RKObjectListViewSettings : public QSortFilterProxyModel {
 	Q_OBJECT
 public:
 /** ctor. copies the default settings from RKSettingsModuleObjectBrowser */ 
-	explicit RKObjectListViewSettings (QObject* parent=0);
+	explicit RKObjectListViewSettings (bool toolwindow, QObject* parent=0);
 	~RKObjectListViewSettings ();
 
-	enum Settings {
-		ShowObjectsVariable=0,
-		ShowObjectsAllEnvironments,
-		ShowObjectsFunction,
-		ShowObjectsContainer,
+/** enum of @em persistent settings. There are more settings than these, but those will not be stored */
+	enum PersistentSettings {
 		ShowObjectsHidden,
 		ShowFieldsType,
 		ShowFieldsClass,
 		ShowFieldsLabel,
-		SettingsCount=ShowFieldsLabel + 1
+		SettingsCount
 	};
 
-	void setSetting (Settings setting, bool to);
-	bool getSetting (Settings setting) const { return settings[setting]; };
+	void addSettingsToMenu (QMenu* menu, QAction* before);
 
-	QMenu *showObjectsMenu () const { return show_objects_menu; };
-	QMenu *showFieldsMenu () const { return show_fields_menu; };
+	QWidget* filterWidget (QWidget *parent);
 signals:
 	void settingsChanged ();
 public slots:
-	void globalSettingsChanged (RKSettings::SettingsPage);
-	void settingToggled (QAction* which);
+	void filterSettingsChanged ();
 	void updateSelfNow ();
 protected:
 	bool filterAcceptsRow (int source_row, const QModelIndex& source_parent) const;
+	bool acceptRow (int source_row, const QModelIndex& source_parent) const;
 	bool filterAcceptsColumn (int source_column, const QModelIndex& source_parent) const;
 	bool lessThan (const QModelIndex& left, const QModelIndex& right) const;
 private:
-	bool settings[SettingsCount];
-	bool settings_default[SettingsCount];
-	QAction* actions[SettingsCount];
-	QActionGroup* action_group;
+	QAction* persistent_settings_actions[SettingsCount];
+	bool persistent_settings[SettingsCount];
 
-	void createContextMenus ();
 	void updateSelf ();
 
-	QMenu *show_objects_menu;
-	QMenu *show_fields_menu;
+	QWidget *filter_widget;
+	QWidget *filter_widget_expansion;
+	QCheckBox* filter_on_name_box;
+	QCheckBox* filter_on_label_box;
+	QCheckBox* filter_on_class_box;
+	bool filter_on_name;
+	bool filter_on_label;
+	bool filter_on_class;
+	QComboBox* depth_box;
+	int depth_limit;
+	QComboBox* type_box;
+	bool hide_functions;
+	bool hide_non_functions;
+
+	bool is_tool_window;
 
 	QTimer *update_timer;
 };

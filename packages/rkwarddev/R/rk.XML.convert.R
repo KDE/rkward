@@ -1,4 +1,4 @@
-# Copyright 2010-2014 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2010-2015 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package rkwarddev.
 #
@@ -20,7 +20,7 @@
 #'
 #' If \code{sources} holds \code{XiMpLe.node} objects, the validity of modifiers is automatically checked for that tag.
 #'
-#' @note To get a list of the implemented modifiers for \code{sources} in this package, call \code{rkwarddev:::all.valid.modifiers}.
+#' @note To get a list of the implemented modifiers for \code{sources} in this package see \code{\link[rkwarddev:modifiers]{modifiers}}.
 #'
 #' @param sources A list with at least one value, either resembling the \code{id} of
 #'    an existing element to be queried as a character string, or a previously defined object
@@ -54,6 +54,7 @@
 #'    \code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}},
 #'    \code{\link[rkwarddev:rk.XML.set]{rk.XML.set}},
 #'    \code{\link[rkwarddev:rk.XML.switch]{rk.XML.switch}},
+#'    \code{\link[rkwarddev:modifiers]{modifiers}},
 #'    and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' test.convert <- rk.XML.convert(list(string="foo"), mode=c(notequals="bar"))
@@ -89,15 +90,18 @@ rk.XML.convert <- function(sources, mode=c(), required=FALSE, id.name="auto"){
   src.names <- names(sources)
   if(!is.null(src.names)){
     # check these names if they're valid modifiers here
-    invalid.names <- !src.names %in% unique(unlist(all.valid.modifiers))
-    if(any(invalid.names)){
-      warning(paste0("Some of the modifier names you provided are invalid and were ignored: ",
-        paste(src.names[invalid.names], collapse=", ")))
-        src.names[invalid.names] <- ""
-    } else {}
-    sources <- as.character(sapply(1:length(src.names), function(src.no){
-        this.modif <- src.names[src.no]
-        valid.modif <- modif.validity(source=sources[[src.no]], modifier=this.modif, bool=FALSE)
+    sane.src.names <- c()
+    for (thisName in src.names){
+      sane.src.names <- c(sane.src.names, modif.validity(source="all", modifier=thisName, bool=FALSE))
+    }
+    sources <- as.character(sapply(1:length(sane.src.names), function(src.no){
+        this.modif <- sane.src.names[src.no]
+        this.source <- sources[[src.no]]
+        if(is.XiMpLe.node(this.source)){
+          valid.modif <- modif.validity(source=this.source, modifier=this.modif, bool=FALSE)
+        } else {
+          valid.modif <- modif.validity(source="all", modifier=this.modif, bool=FALSE)
+        }
         if(nchar(valid.modif) > 0){
           new.value <- paste(check.ID(sources[[src.no]], search.environment=TRUE), this.modif, sep=".")
         } else {

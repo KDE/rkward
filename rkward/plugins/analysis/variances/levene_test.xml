@@ -7,8 +7,8 @@
 		<row>
 			<varselector id="vars"/>
 			<column>
-				<varslot type="numeric" id="y" source="vars" required="true" label="response variable"/>
-				<varslot type="factor" id="group" source="vars" required="true" label="groups"/>
+				<varslot types="numeric" id="y" source="vars" required="true" label="response variable"/>
+				<varslot types="factor" id="group" source="vars" required="true" label="groups"/>
 			</column>
 		</row>
 	</dialog>

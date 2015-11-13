@@ -1,6 +1,79 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
+\section{Changes in rkwarddev version 0.07-4 (2015-11-11)}{
+  \subsection{unreleased}{
+    \itemize{
+      \item this version is under development
+    }
+  }
+  \subsection{fixed}{
+    \itemize{
+      \item attribute \code{"max_precision"} in <spinbox> was misspelled
+      \item \code{rk.XML.connect()} still handled modifiers for \code{"governor"} wrong if it
+        wasn't a XiMpLe node
+      \item also fixed how \code{rk.XML.convert()} and \code{rk.XML.switch()} were handling
+        modifier checking
+      \item \code{rk.XML.dependencies()} didn't know about min/max versions of pluginmaps
+        (fixed in \code{rk.XML.about()} as well)
+      \item some fixes to the skeleton GUI and demo script
+      \item prevent internal function \code{indent()} from losing it over negative values
+      \item indentation of \code{rk.paste.JS.graph()} was incorrect
+    }
+  }
+  \subsection{added}{
+    \itemize{
+      \item new methods \code{plugin2script()} to try to translate raw plugin XML into
+        working rkwarddev script calls
+      \item new option \code{"ignore"} enables \code{rk.uniqueIDs()} to not check nodes for
+        duplicates (e.g., <copy>)
+      \item new wrapper function \code{js()} for \code{id()} makes it possible to use several
+        operators without quoting, preserve \code{"if"} conditions and \code{"for"} loops, which all
+        will be translated to JavaScript equivalents without the need for quoting.
+        however, the \code{"for"} loop code is not publicly documented and remains a
+        proof of concept kind of thing for now
+      \item new option \code{".objects"} in \code{id()} to provide objects as a list
+      \item new option \code{"rk.JS.vars"} to make JS variables match the name of the
+        original R object
+      \item new function \code{idq()} to print quoted IDs of XML nodes for use in JavaScript
+        sections
+      \item new function \code{modifiers()} to make checking for valid mdifiers of a given
+        node easier
+      \item new functions \code{rk.get.indent()} and \code{rk.set.indent()} to globally set
+        indentation string
+      \item in \code{rk.JS.header()}, the second value provided by \code{"add"} can now be named
+        \code{"noquote"} to have it nested in the JS \code{noquote()} function
+    }
+  }
+  \subsection{changed}{
+    \itemize{
+      \item improved error handling in \code{rk.JS.header()}, error messages are more
+        informative now
+      \item \code{rk.uniqueIDs()} now checks \code{"dialog"} and \code{"wizard"} sections separately
+      \item updated the vignette with information on \code{js()} and how to add help pages
+      \item internal function \code{modif.validity()} now calls \code{modifiers()} to give more
+        useful feedback
+      \item all functions offering \code{"intent.by"} as an option now fetch the default
+        value by calling \code{rk.get.indent()}
+      \item removed trailing newline in \code{rk.JS.header()} output
+    }
+  }
+}
+\section{Changes in rkwarddev version 0.07-3 (2015-06-29)}{
+  \subsection{fixed}{
+    \itemize{
+      \item \code{rk.JS.header()} now produces usable level options
+    }
+  }
+  \subsection{added}{
+    \itemize{
+      \item new slot \code{"opt.sep"} in classes rk.JS.arr and rk.JS.opt, as well as new
+        option \code{"opt.sep"} in \code{rk.paste.JS()}, \code{rk.JS.array()} and \code{rk.JS.options()}, to
+        manipulate the character string separating the previous options from the ones
+        defined by these objects
+    }
+  }
+}
 \section{Changes in rkwarddev version 0.07-2 (2015-03-14)}{
   \subsection{fixed}{
     \itemize{

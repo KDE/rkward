@@ -1,0 +1,38 @@
+- For code archeology -
+
+This file keeps a list of URLS to be found in the code (typically in comments) that are no longer valid, and - if known - where to find them, today.
+
+- Still working, soon to be obsolete -
+
+http://sourceforge.net/p/rkward/bugs/129/
+http://sourceforge.net/p/rkward/bugs/122/
+http://sourceforge.net/p/rkward/bugs/90/
+http://sourceforge.net/p/rkward/bugs/88/
+http://sourceforge.net/p/rkward/bugs/67/
+http://sourceforge.net/p/rkward/bugs/55/
+http://sourceforge.net/p/rkward/bugs/54/
+http://sourceforge.net/p/rkward/bugs/51/
+http://sourceforge.net/p/rkward/bugs/29/
+http://sourceforge.net/p/rkward/patches/4/
+
+- Outdated, but with a known new url -
+
+http://sourceforge.net/tracker/?func=detail&aid=2033636&group_id=50231&atid=459007    ->     http://sourceforge.net/p/rkward/bugs/29/
+http://sourceforge.net/tracker/?func=detail&aid=2848341&group_id=50231&atid=459007    ->     http://sourceforge.net/p/rkward/bugs/54/
+http://sourceforge.net/tracker/?func=detail&aid=3002439&group_id=50231&atid=459007    ->     http://sourceforge.net/p/rkward/bugs/67/
+http://sourceforge.net/tracker/?func=detail&atid=459007&aid=2828002&group_id=50231    ->     http://sourceforge.net/p/rkward/bugs/51/
+http://sourceforge.net/tracker/?group_id=50231&atid=459007                            ->     https://rkward.kde.org/bugs
+https://sourceforge.net/tracker/?func=detail&atid=459007&aid=2859182&group_id=50231    ->     http://sourceforge.net/p/rkward/bugs/55/
+https://sourceforge.net/tracker/?func=detail&atid=459007&aid=3310106&group_id=50231    ->     http://sourceforge.net/p/rkward/bugs/88/
+https://sourceforge.net/tracker/?func=detail&atid=459007&aid=3327985&group_id=50231    ->     http://sourceforge.net/p/rkward/bugs/90/
+https://sourceforge.net/tracker/?func=detail&atid=459007&aid=3564769&group_id=50231    ->     http://sourceforge.net/p/rkward/bugs/122/
+https://sourceforge.net/tracker/?func=detail&atid=459009&aid=1698809&group_id=50231    ->     http://sourceforge.net/p/rkward/patches/4/
+https://sourceforge.net/tracker/index.php?func=detail&aid=1878594&group_id=50231&atid=459007    ->     http://sourceforge.net/p/rkward/bugs/21/
+http://sourceforge.net/mailarchive/forum.php?thread_name=200703230304.43023.kapatp%40gmail.com&forum_name=rkward-devel   ->     https://mail.kde.org/pipermail/rkward-devel/2007-March/001139.html
+https://sourceforge.net/mailarchive/forum.php?thread_name=200704181922.07780.michellang%40gmail.com&forum_name=rkward-devel    ->    https://mail.kde.org/pipermail/rkward-devel/2007-April/001239.html
+
+- Lost -
+
+https://sourceforge.net/mailarchive/forum.php?thread_id=31463482&forum_id=12970
+https://sourceforge.net/mailarchive/forum.php?thread_id=31671703&forum_id=12970
+http://sourceforge.net/mailarchive/forum.php?thread_id=31631211&forum_id=12970

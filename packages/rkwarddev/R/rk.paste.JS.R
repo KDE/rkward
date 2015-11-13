@@ -1,4 +1,4 @@
-# Copyright 2010-2014 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2010-2015 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package rkwarddev.
 #
@@ -18,7 +18,7 @@
 
 #' Paste JavaScript objects and character strings
 #'
-#' @note To get a list of the implemented modifiers in this package, call \code{rkwarddev:::all.valid.modifiers}.
+#' @note To get a list of the implemented modifiers in this package see \code{\link[rkwarddev:modifiers]{modifiers}}.
 #'
 #' @param ... Objects of class \code{rk.JS.ite}, \code{rk.JS.arr}, \code{rk.JS.opt}, \code{rk.JS.oset} or character.
 #'    Another special case is XiMpLe nodes created by \code{rk.comment()}, which will be turned
@@ -44,6 +44,8 @@
 #'    and the JS keyword "var" will be omitted.
 #' @param empty.e For \code{rk.JS.ite} objects only: Logical, if \code{TRUE} will force to add empty \code{else \{\}} brackets when
 #'    there is no \code{else} statement defined, which is considered to enhance code readability by some.
+#' @param opt.sep For \code{rk.JS.arr} and \code{rk.JS.opt} objects only: Character string, will be printed in the resulting R code
+#'    before the option name.
 #' @return A character string.
 #' @include 00_class_01_rk.JS.arr.R
 #' @include 00_class_03_rk.JS.ite.R
@@ -58,11 +60,13 @@
 #'    \code{\link[rkwarddev:rk.JS.optionset]{rk.JS.optionset}},
 #'    \code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}},
 #'    \code{\link[rkwarddev:ite]{ite}},
+#'    \code{\link[rkwarddev:modifiers]{modifiers}},
 #'    and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @export
 
-rk.paste.JS <- function(..., level=2, indent.by="\t", funct=NULL, array=NULL,
-  var.prefix=NULL, modifiers=NULL, default=NULL, join=NULL, getter=NULL, var=TRUE, empty.e=FALSE){
+rk.paste.JS <- function(..., level=2, indent.by=rk.get.indent(), funct=NULL, array=NULL,
+  var.prefix=NULL, modifiers=NULL, default=NULL, join=NULL, getter=NULL, var=TRUE, empty.e=FALSE,
+  opt.sep=NULL){
   stopifnot(level > 0)
   all.objects <- list(...)
 
@@ -76,9 +80,10 @@ rk.paste.JS <- function(..., level=2, indent.by="\t", funct=NULL, array=NULL,
       result <- paste.JS.ite(this.object, level=level, indent.by=indent.by, empty.e=empty.e)
     } else if(inherits(this.object, "rk.JS.arr")){
       # done by an internal function, to ease handling of recursions
-      result <- paste.JS.array(this.object, level=level, indent.by=indent.by, funct=funct)
+      result <- paste.JS.array(this.object, level=level, indent.by=indent.by, funct=funct, opt.sep=opt.sep)
     } else if(inherits(this.object, "rk.JS.opt")){
-      result <- paste.JS.options(this.object, level=level, indent.by=indent.by, array=array, funct=funct)
+      result <- paste.JS.options(this.object, level=level, indent.by=indent.by, array=array, funct=funct,
+        opt.sep=opt.sep)
     } else if(inherits(this.object, "rk.JS.oset")){
       result <- paste.JS.optionsset(this.object, level=level, indent.by=indent.by)
     } else if(inherits(this.object, "rk.JS.var")){

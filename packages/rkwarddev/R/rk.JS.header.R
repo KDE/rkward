@@ -22,7 +22,8 @@
 #' @param ... An optional number of additional info to add to the header. Each entry must be named \code{add}
 #'    or \code{addFromUI} -- note that you can use multiple entries with the same name here. Entries named
 #'    \code{add} must be vectors of legth 2, the first being the caption (character), the second its value (either
-#'    character or a XiMpLe node from the dialog). Entries named \code{addFromUI} must have exactly one value
+#'    character or a XiMpLe node from the dialog); if the second value is named \code{noquote} or \code{nq},
+#'    the JS output will be nested inside \code{noquote()}. Entries named \code{addFromUI} must have exactly one value
 #'    specifying the GUI element to query (either character or a XiMpLe node from the dialog).
 #' @param level Integer, if not \code{NULL} will be added as the header level.
 #' @param guess.getter Locigal, if \code{TRUE} try to get a good default getter function for JavaScript
@@ -33,6 +34,14 @@
 #' @examples
 #' my.cbox <- rk.XML.cbox("This is a test")
 #' rk.JS.header("Test results", addFromUI=my.cbox)
+#' 
+#' # let's assume we create an R object called "results"
+#' # in the plugin dialog, this is how you could fetch
+#' # portions of it to be added as a parameter in the output
+#' rk.JS.header(
+#'   "Test results",
+#'   add=c("Significance level", noquote="results[[\\\"alpha\\\"]]")
+#' )
 
 rk.JS.header <- function(title, ..., level=NULL, guess.getter=FALSE, .add=list()){
   addToHeaderChar <- addLevel <- NULL
@@ -51,12 +60,21 @@ rk.JS.header <- function(title, ..., level=NULL, guess.getter=FALSE, .add=list()
         functionName <- headerNames[[this.add]]
         content <- addToHeader[[this.add]]
         if(identical(functionName, "addFromUI")){
-          stopifnot(length(content) == 1)
+          if(length(content) != 1){
+            stop(simpleError("rk.JS.header: \"addFromUI\" must have exactly one value. please use several elements of the same name if needed!"))
+          } else {}
           content <- paste0("\"", id(content, js=FALSE), "\"")
         } else if(identical(functionName, "add")){
           stopifnot(length(content) == 2)
+          if(length(content) != 2){
+            stop(simpleError("rk.JS.header: \"add\" must have exactly two values. please use several elements of the same name if needed!"))
+          } else {}
           if(is.character(content[[2]])){
-            value <- paste0("\"", content[[2]], "\"")
+            if(names(content)[[2]] %in% c("nq","noquote")){
+              value <- paste0("noquote(\"", content[[2]], "\")")
+            } else {
+              value <- paste0("\"", content[[2]], "\"")
+            }
           } else if(is.XiMpLe.node(content[[2]])){
             JS.var.value <- rk.JS.vars(content[[2]], guess.getter=guess.getter)
             value <- paste0(slot(JS.var.value, "getter"), "(\"", id(content[[2]], js=FALSE), "\")")
@@ -72,16 +90,15 @@ rk.JS.header <- function(title, ..., level=NULL, guess.getter=FALSE, .add=list()
     addToHeaderChar <- paste0(".", addToHeaderChar)
   } else {}
 
-  if(!is.null(level)){
-    addToHeaderChar <- paste0(addToHeaderChar, ".level(", level, ")")
-  } else {} 
-
   result <- paste0(
     "new Header(",
     force.i18n(title),
+    if(!is.null(level)){
+      paste0(", ", level)
+    },
     ")",
     addToHeaderChar,
-    ".print();\n"
+    ".print();"
   )
 
   return(result)

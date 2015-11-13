@@ -2,7 +2,7 @@
                           rkmodificationtracker  -  description
                              -------------------
     begin                : Tue Aug 31 2004
-    copyright            : (C) 2004-2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2015 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -24,6 +24,7 @@
 #include "../dataeditor/rkvareditmodel.h"
 #include "rcontainerobject.h"
 #include "robjectlist.h"
+#include "renvironmentobject.h"
 #include "../windows/rkworkplace.h"
 #include "../misc/rkstandardicons.h"
 
@@ -269,9 +270,12 @@ RKObjectListModel::~RKObjectListModel () {
 QModelIndex RKObjectListModel::index (int row, int column, const QModelIndex& parent) const {
 	RK_TRACE (OBJECTS);
 	if (!parent.isValid ()) {
-		RK_ASSERT (row == 0);
+		RK_ASSERT (row < 2);
 		// must cast to RObject, here. Else casting to void* and back will confuse the hell out of GCC 4.2
-		return (createIndex (row, column, static_cast<RObject *> (RObjectList::getObjectList ())));
+		if (row == 0) return (createIndex (0, column, static_cast<RObject *> (RObjectList::getGlobalEnv ())));
+		if (row == 1) return (createIndex (1, column, static_cast<RObject *> (RObjectList::getObjectList ())));
+		RK_ASSERT (false);
+		return QModelIndex ();
 	}
 	RObject* parent_object = static_cast<RObject*> (parent.internalPointer ());
 
@@ -286,6 +290,7 @@ QModelIndex RKObjectListModel::parent (const QModelIndex& index) const {
 	if (!index.isValid ()) return QModelIndex ();
 	RObject* child = static_cast<RObject*> (index.internalPointer ());
 	RK_ASSERT (child);
+	if (child == RObjectList::getGlobalEnv ()) return QModelIndex ();
 	return (indexFor (child->parentObject ()));
 }
 
@@ -294,7 +299,7 @@ int RKObjectListModel::rowCount (const QModelIndex& parent) const {
 
 	RObject* parent_object = 0;
 	if (parent.isValid ()) parent_object = static_cast<RObject*> (parent.internalPointer ());
-	else return 1;		// the root item
+	else return 2;       // the root item
 
 	if (!parent_object) return 0;
 	return (parent_object->numChildrenForObjectModel ());
@@ -312,8 +317,8 @@ QVariant RKObjectListModel::data (const QModelIndex& index, int role) const {
 	int col = index.column ();
 	RObject *object = static_cast<RObject*> (index.internalPointer ());
 
-	if ((!object) || (col >= ColumnCount)) {
-		RK_ASSERT (false);
+	if (!object) {
+		RK_ASSERT (object);
 		return QVariant ();
 	}
 
@@ -337,6 +342,7 @@ QVariant RKObjectListModel::data (const QModelIndex& index, int role) const {
 		return object->getObjectDescription ();
 	}
 
+	RK_ASSERT (col < columnCount ());
 	return QVariant ();
 }
 
@@ -389,7 +395,14 @@ QModelIndex RKObjectListModel::indexFor (RObject *object) const {
 
 	RObject *parent = object->parentObject ();
 	// must cast to RObject, here. Else casting to void* and back will confuse the hell out of GCC 4.2
-	if (!parent) return createIndex (0, 0, static_cast<RObject*> (RObjectList::getObjectList ()));
+	if (!parent) {
+		if (object == RObjectList::getObjectList ()) {
+			return createIndex (1, 0, static_cast<RObject*> (RObjectList::getObjectList ()));
+		} else {
+			RK_ASSERT (object == RObjectList::getGlobalEnv ());
+			return createIndex (0, 0, static_cast<RObject*> (RObjectList::getGlobalEnv ()));
+		}
+	}
 
 	int row = parent->getObjectModelIndexOf (object);
 	if (row < 0) {

@@ -118,7 +118,7 @@ function calculate(){
 	arrOptAbout = arrOptAbout.filter(String);
 	// set the actual variable optAbout with all values for R option "about"
 	if(arrOptAbout.length > 0) {
-		var optAbout = ",\n\tabout=list(" + arrOptAbout.join(", ") + ")";
+		var optAbout = ", about=list(" + arrOptAbout.join(", ") + ")";
 	} else {
 		var optAbout = "";
 	}
@@ -149,7 +149,7 @@ function calculate(){
 	arrOptDependencies = arrOptDependencies.filter(String);
 	// set the actual variable optDependencies with all values for R option "dependencies"
 	if(arrOptDependencies.length > 0) {
-		var optDependencies = ",\n\tdependencies=list(" + arrOptDependencies.join(", ") + ")";
+		var optDependencies = ", dependencies=list(" + arrOptDependencies.join(", ") + ")";
 	} else {
 		var optDependencies = "";
 	}
@@ -187,11 +187,6 @@ function calculate(){
 		} else {
 			arrOptSkeleton.push("\n\t#pluginmap=list(name=\"\", hierarchy=\"\", require=\"\")");
 		}
-		if(frmDfndpndnChecked && (optDependencies || ocolOclInpPckgtxt)) {
-			arrOptSkeleton.push("\n\tdependencies=plugin.dependencies");
-		} else {
-			arrOptSkeleton.push("\n\t#dependencies=plugin.dependencies");
-		}
 		if(chcIncldplg) {
 			arrOptSkeleton.push("\n\ttests=TRUE");
 		} else {
@@ -216,7 +211,7 @@ function calculate(){
 	arrOptSkeleton = arrOptSkeleton.filter(String);
 	// set the actual variable optSkeleton with all values for R option ""
 	if(arrOptSkeleton.length > 0) {
-		var optSkeleton = "" + arrOptSkeleton.join(", ") + "";
+		var optSkeleton = ", " + arrOptSkeleton.join(", ") + "";
 	} else {
 		var optSkeleton = "";
 	}
@@ -232,22 +227,22 @@ function calculate(){
 	var ocolOclChcMntnrst = getList("ost_fPPPPGGFFE.ocl_chcMntnrst");
 	var ocolOclChcCntrbtr = getList("ost_fPPPPGGFFE.ocl_chcCntrbtr");
 	if(ocolOclInpGvnnmtx != "") {
-		echo("\tauthor=\"c(\n\t\t\t");
+		echo("\tauthor=c(\n\t\t\t");
 	for (var i = 0; i < ocolOclInpGvnnmtx.length; ++i){
 		// define the array arrOptAuthorRole for values of R option "role"
 		var arrOptAuthorRole = new Array();
 				if(ocolOclChcAthrstt[i] == 1) {
-						arrOptAuthorRole.push("\\\"aut\\\"");
+						arrOptAuthorRole.push("\"aut\"");
 				} else {
 						arrOptAuthorRole.push();
 				}
 				if(ocolOclChcMntnrst[i] == 1) {
-						arrOptAuthorRole.push("\\\"cre\\\"");
+						arrOptAuthorRole.push("\"cre\"");
 				} else {
 						arrOptAuthorRole.push();
 				}
 				if(ocolOclChcCntrbtr[i] == 1) {
-						arrOptAuthorRole.push("\\\"ctb\\\"");
+						arrOptAuthorRole.push("\"ctb\"");
 				} else {
 						arrOptAuthorRole.push();
 				}
@@ -255,28 +250,28 @@ function calculate(){
 		arrOptAuthorRole = arrOptAuthorRole.filter(String);
 		// set the actual variable optAuthorRole with all values for R option "role"
 		if(arrOptAuthorRole.length > 0) {
-				var optAuthorRole = "role=c(" + arrOptAuthorRole.join(", ") + ")";
+				var optAuthorRole = ", role=c(" + arrOptAuthorRole.join(", ") + ")";
 		} else {
 				var optAuthorRole = "";
 		}
 
 		echo("person(");
-		echo("given=\\\"" + ocolOclInpGvnnmtx[i] + "\\\"");
+		echo("given=\"" + ocolOclInpGvnnmtx[i] + "\"");
 		if(ocolOclInpFmlynmt[i]) {
-				echo(", family=\\\"" + ocolOclInpFmlynmt[i] + "\\\"");
+				echo(", family=\"" + ocolOclInpFmlynmt[i] + "\"");
 		}
 		if(ocolOclInpEmaltxt[i]) {
-				echo(", email=\\\"" + ocolOclInpEmaltxt[i] + "\\\"");
+				echo(", email=\"" + ocolOclInpEmaltxt[i] + "\"");
 		}
 		if(optAuthorRole) {
-				echo(", " + optAuthorRole);
+				echo(optAuthorRole);
 		}
 		echo(")");
 		if(i + 1 < ocolOclInpGvnnmtx.length) {
 			echo(",\n\t\t\t");
 		}
 	}
-	echo("\n\t\t)\",\n");
+	echo("\n\t\t),\n");
 	}
 	echo(optAbout);
 	echo("\n)\n\n");
@@ -330,6 +325,8 @@ function calculate(){
 	echo("#############\n" + "## the main call\n" + "## if you run the following function call, files will be written to output.dir!\n" + "#############\n" + "# this is where things get serious, that is, here all of the above is put together into one plugin\n" + "plugin.dir <- rk.plugin.skeleton(\n\tabout=about.plugin,");
 	if(frmDfndpndnChecked && optDependencies) {
 		echo("\n\tdependencies=plugin.dependencies,");
+	} else {
+		echo("\n\t#dependencies=plugin.dependencies,");
 	}
 	echo("\n\tpath=output.dir," + "\n\tguess.getter=guess.getter," + "\n\tscan=c(\"var\", \"saveobj\", \"settings\")," + "\n\txml=list(\n\t\t#dialog=,\n\t\t#wizard=,\n\t\t#logic=,\n\t\t#snippets=\n\t)," + "\n\tjs=list(\n\t\t#results.header=FALSE,\n\t\t#load.silencer=,\n\t\t#require=,\n\t\t#variables=," + "\n\t\t#globals=,\n\t\t#preprocess=,\n\t\t#calculate=,\n\t\t#printout=,\n\t\t#doPrintout=\n\t),");
 	if(frmWrthlpflChecked) {

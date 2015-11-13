@@ -9,7 +9,7 @@
 				<row>
 					<varselector id="vars"/>
 					<column>
-						<varslot type="numeric" id="x" multi="true" source="vars" required="true" label="variable(s):"/>
+						<varslot types="numeric" id="x" multi="true" source="vars" required="true" label="variable(s):"/>
 						<radio id="lshort" label="version of truncation lag parameter">
 							<option label="short" value="TRUE"/>
 							<option label="long" value="FALSE"/>

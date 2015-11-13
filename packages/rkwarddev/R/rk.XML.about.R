@@ -135,6 +135,11 @@ rk.XML.about <- function(name, author, about=list(desc="SHORT_DESCRIPTION", vers
       warning("<package> inside <about> is deprecated, use rk.XML.dependencies() instead!")
       xml.package <- sapply(package, function(this.package){
           pck.options <- names(this.package)
+          if(!"name" %in% pc.options){
+            stop(simpleError(
+              paste0("Missing but mandatory information to define package dependencies:\n  \"name\"")
+            ))
+          } else {}
           pck.attributes <- list(name=this.package[["name"]])
           for (this.option in c("min", "max","repository" )){
             if(this.option %in% pck.options){
@@ -158,13 +163,30 @@ rk.XML.about <- function(name, author, about=list(desc="SHORT_DESCRIPTION", vers
     } else {
       warning("<pluginmap> inside <about> is deprecated, use rk.XML.dependencies() instead!")
       xml.pluginmap <- sapply(pluginmap, function(this.pluginmap){
-          result <- XMLNode("pluginmap",
-            attrs=list(
-              name=this.pluginmap[["name"]],
-              url=this.pluginmap[["url"]]
+          plm.options <- names(this.pluginmap)
+          # check for missing attributes
+          mandatory.options <- c("name", "url")
+          missing.options <- !mandatory.options %in% plm.options
+          if(any(missing.options)){
+            stop(simpleError(
+              paste0("Missing but mandatory information to define pluginmap dependencies:\n  \"",
+                paste0(mandatory.options[missing.options], collapse="\", \""), "\""
+              )
             ))
+          } else {}
+          plm.attributes <- list(
+            name=this.pluginmap[["name"]],
+            url=this.pluginmap[["url"]]
+          )
+          if("min" %in% plm.options){
+            plm.attributes[["min_version"]] <- this.pluginmap[["min"]]
+          } else {}
+          if("rkward.max" %in% plm.options){
+            plm.attributes[["max_version"]] <- this.pluginmap[["max"]]
+          } else {}
+          result <- XMLNode("pluginmap", attrs=plm.attributes)
           return(result)
-        })
+      })
     }
 
   ###################

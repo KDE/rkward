@@ -1,8 +1,14 @@
 ChangeLog for package XiMpLe
 
-changes in version 0.03-23 (2014-12-14)
+changes in version 0.03-23 (2015-10-11)
+unreleased:
+  - this release is under development
 changed:
   - relocated the unit tests to tests/testthat
+fixed:
+  - XMLScanDeep() was said to examine node names, children and values as well
+    as attributes, but in fact it was hard-wired on attributes only. removed
+    children from the list and added support for names and values
 
 changes in version 0.03-22 (2014-12-02)
 fixed:

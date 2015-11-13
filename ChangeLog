@@ -1,3 +1,10 @@
+- Workspace browser gains functionality to search / filter objects by name
+- Separate globalenv() and other environments in the search path more clearly in workspace browser
+- Fix some minor toolbar glitches
+- Complete rework of <optionset> UI for better usability
+- Try harder to honor system locale settings
+- Remove obsolete "Export tabular data" plugin (superceded by "Export Table / CSV")
+- Some usability refinements to "Import CVS" plugin
 - Disabled the "Import Data"-dialog, as it was considered too confusing. The individual importers are still available from the menu, separately.
 - For multi-item varslots and valueslots, use separate buttons for adding / removing items
 - Don't show (useless) index number in mutli-value varslots and valueslots

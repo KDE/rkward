@@ -1,4 +1,4 @@
-# Copyright 2010-2014 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2010-2015 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package rkwarddev.
 #
@@ -19,7 +19,7 @@
 #' @include rk.comment.R
 #' @import XiMpLe rkward
 
-# set up an internal environment, e.g. for prompter settings
+# set up an internal environment, e.g. for prompter settings or indentation
 .rkdev.env <- new.env()
 
 # internal functions for the rk.* functions
@@ -106,8 +106,8 @@ trim <- function(char){
 
 ## function indent()
 # will create tabs to format the output
-indent <- function(level, by="\t"){
-  paste(rep(by, level-1), collapse="")
+indent <- function(level, by=rk.get.indent()){
+  paste(rep(by, max(0, level-1)), collapse="")
 } ## end function indent()
 
 
@@ -604,7 +604,7 @@ get.authors <- function(description, maintainer=TRUE, contributor=FALSE, copyrig
 ## function check.ID()
 # - node: a XiMpLe.node to search for an ID
 # - search.environment: if TRUE, the internal environment is searched for the ID
-#     as well; a use case for this is IDs of oprions, which need their parent IDs as well;
+#     as well; a use case for this is IDs of options, which need their parent IDs as well;
 #     see get.optionIDs() below
 # - env.get: the ID type to fetch from the environment, if search.environment=TRUE
 check.ID <- function(node, search.environment=FALSE, env.get="XML"){
@@ -641,6 +641,7 @@ check.ID <- function(node, search.environment=FALSE, env.get="XML"){
 ## function modif.validity()
 # checks if a modifier is valid for an XML node, if source is XiMpLe.node
 # if bool=FALSE, returns the modifier or ""
+# modifier can take multiple modifiers at once
 modif.validity <- function(source, modifier, ignore.empty=TRUE, warn.only=TRUE, bool=TRUE){
   if(identical(modifier, "") & isTRUE(ignore.empty)){
     if(isTRUE(bool)){
@@ -677,17 +678,18 @@ modif.validity <- function(source, modifier, ignore.empty=TRUE, warn.only=TRUE, 
   invalid.modif <- !unlist(modifier) %in% valid.modifs
   if(any(invalid.modif)){
     if(isTRUE(warn.only)){
-      warning(paste0("Some modifier you provided is invalid for '",tag.name,"' and was ignored: ",
-        paste(modifier[invalid.modif], collapse=", "), "\n",
-        "For a list of valid modifiers see rkwarddev:::all.valid.modifiers"), call.=FALSE)
+      warning(paste0("Some modifier you provided is invalid for '", tag.name, "' and was ignored: \"",
+        paste(modifier[invalid.modif], collapse="\", \""), "\"\n\n",
+        "Known modifiers for '", tag.name, "' nodes are:\n  \"", paste0(unlist(modifiers(obj=tag.name)[[tag.name]]), collapse="\", \""), "\"\n\n",
+        "For a list of all valid modifiers call modifiers(\"", tag.name, "\")"), call.=FALSE)
       if(isTRUE(bool)){
         return(!invalid.modif)
       } else {
         return("")
       }
     } else {
-      stop(simpleError(paste0("Some modifier you provided is invalid for '",tag.name,"' and was ignored: ",
-        paste(modifier[invalid.modif], collapse=", "))))
+      stop(simpleError(paste0("Some modifier you provided is invalid for '", tag.name, "' and was ignored: \"",
+        paste(modifier[invalid.modif], collapse="\", \""), "\"")))
     }
   } else {
     if(isTRUE(bool)){
@@ -813,7 +815,7 @@ clean.name <- function(name, message=TRUE){
 
 
 ## function paste.JS.ite()
-paste.JS.ite <- function(object, level=1, indent.by="\t", recurse=FALSE, empty.e=FALSE){
+paste.JS.ite <- function(object, level=1, indent.by=rk.get.indent(), recurse=FALSE, empty.e=FALSE){
   stopifnot(inherits(object, "rk.JS.ite"))
   # check indentation
   main.indent <- indent(level, by=indent.by)
@@ -862,7 +864,8 @@ paste.JS.ite <- function(object, level=1, indent.by="\t", recurse=FALSE, empty.e
 
 
 ## function paste.JS.array()
-paste.JS.array <- function(object, level=2, indent.by="\t", funct=NULL){
+# opt.sep: the separator that comes *before* the option that is set, in the resulting code
+paste.JS.array <- function(object, level=2, indent.by=rk.get.indent(), funct=NULL, opt.sep=NULL){
   stopifnot(inherits(object, "rk.JS.arr"))
   # check indentation
   main.indent <- indent(level, by=indent.by)
@@ -883,6 +886,12 @@ paste.JS.array <- function(object, level=2, indent.by="\t", funct=NULL){
     funct.start <- paste0(funct, "(")
     funct.end <- ")"
   }
+  if(is.null(opt.sep)){
+    opt.sep <- slot(object, "opt.sep")
+    if(is.null(opt.sep)){
+      opt.sep <- ", "
+    } else {}
+  } else {}
   
   JS.array <- paste0(
     main.indent, "// define the array ", arr.name, " for values of R option \"", option, "\"\n",
@@ -895,7 +904,7 @@ paste.JS.array <- function(object, level=2, indent.by="\t", funct=NULL){
     ifelse(identical(option, ""), "", paste0(" for R option \"", option)),
     ifelse(identical(funct, ""), "\"", paste0("=", funct, "()\"")), "\n",
     main.indent, "if(", arr.name, ".length > 0) {\n",
-    scnd.indent, "var ", opt.name, " = \", ",
+    scnd.indent, "var ", opt.name, " = \"", opt.sep,
     ifelse(identical(option, ""), "", paste0(option, "=")),
     ifelse(isTRUE(quote),
       paste0(funct.start, "\\\"\" + ", arr.name, ".join(\"\\\", \\\"\") + \"\\\"",funct.end,"\";\n"),
@@ -910,7 +919,8 @@ paste.JS.array <- function(object, level=2, indent.by="\t", funct=NULL){
 
 
 ## function paste.JS.options()
-paste.JS.options <- function(object, level=2, indent.by="\t", array=NULL, funct=NULL){
+# opt.sep: the separator that comes *before* the option that is set, in the resulting code
+paste.JS.options <- function(object, level=2, indent.by=rk.get.indent(), array=NULL, funct=NULL, opt.sep=NULL){
   stopifnot(inherits(object, "rk.JS.opt"))
   # check indentation
   main.indent <- indent(level, by=indent.by)
@@ -934,6 +944,12 @@ paste.JS.options <- function(object, level=2, indent.by="\t", array=NULL, funct=
     funct.start <- paste0(funct, "(")
     funct.end <- ")"
   }
+  if(is.null(opt.sep)){
+    opt.sep <- slot(object, "opt.sep")
+    if(is.null(opt.sep)){
+      opt.sep <- ", "
+    } else {}
+  } else {}
 
   # a function to add the object stuff to ite objects
   add.opts <- function(this.ite, collapse, array){
@@ -986,7 +1002,7 @@ paste.JS.options <- function(object, level=2, indent.by="\t", array=NULL, funct=
         main.indent, arr.name, " = ", arr.name, ".filter(String);\n",
         main.indent, "// set the actual variable ", variable, " with all values for R option \"", option, "\"\n",
         main.indent, "if(", arr.name, ".length > 0) {\n",
-        scnd.indent, "var ", variable, " = \"", collapse,
+        scnd.indent, "var ", variable, " = \"", opt.sep,
         ifelse(identical(option, ""), "", paste0(option, "=")),
         funct.start, "\" + ", arr.name, ".join(\", \") + \"",funct.end,"\";\n",
         main.indent, "} else {\n",
@@ -1003,7 +1019,7 @@ paste.JS.options <- function(object, level=2, indent.by="\t", array=NULL, funct=
 #   important for "checkbox", which has "state" as default modifier, but using the checkbox object will not
 #   notice this. works only for the first modifier given.
 # var: if FALSE, the variable is assumed to be already defined (globally?) and "var " will be omitted
-paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifiers=NULL, default=NULL, append.modifier=NULL,
+paste.JS.var <- function(object, level=2, indent.by=rk.get.indent(), JS.prefix=NULL, modifiers=NULL, default=NULL, append.modifier=NULL,
   join=NULL, getter=NULL, names.only=FALSE, check.modifiers=FALSE, var=TRUE){
   # paste several objects
   results <- unlist(sapply(slot(object, "vars"), function(this.obj){
@@ -1104,7 +1120,7 @@ paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifi
 
 
 ## function paste.JS.optionsset()
-paste.JS.optionsset <- function(object, level=2, indent.by="\t"){
+paste.JS.optionsset <- function(object, level=2, indent.by=rk.get.indent()){
   stopifnot(inherits(object, "rk.JS.oset"))
   # check indentation
   main.indent <- indent(level, by=indent.by)
@@ -1194,6 +1210,7 @@ dependenciesCompatWrapper <- function(dependencies, about, hints=FALSE){
   }
   return(results)
 } ## end function dependenciesCompatWrapper()
+
 
 ## function get.rk.env()
 # generic function to query the internal environment and declare a desired object, if not present yet
@@ -1410,3 +1427,238 @@ check.JS.lines <- function(relevant.tags, single.tags, add.abbrev, js, indent.by
   } else {}
   return(result)
 } ## end function check.JS.lines()
+
+
+## JS.operators
+# a complilation of operators we would like to fetch from R calls and 
+# substitute with character equivalents for JS code
+JS.operators <- c(
+  "+", "-", "*", "/", "%",
+  "++", "--", "=", "+=", "-=", "*=", "/=", "%=",
+  "==", "===", "!=", "!==", ">", "<", ">=", "<=",
+  "!", "||", "&&"
+) ## end JS.operators
+# currently not working: "%", "++", "--", "=", "+=", "-=", "*=", "/=", "%=", "===", "!==", "!"
+
+
+## function replaceJSOperators
+# takes arbitrary R code and tries to replace R operators with character strings.
+# makes it possible to use these operators in calls like id() without the need
+# for quoting them
+replaceJSOperators <- function(..., call="id"){
+  dotlist <- eval(substitute(alist(...)))
+  dotlist <- lapply(
+    dotlist,
+    function(thisItem){
+      # operators like ">" or "|" are represented as call objects
+      # with the operator as first argument (name).
+      # there can also be calls nested in calls so we need to test this recursively
+      if(inherits(thisItem, "call")){
+        callList <- unlist(thisItem)
+        if(as.character(callList[[1]]) %in% JS.operators){
+          result <- list(
+            if(is.call(callList[[2]])){
+              do.call("replaceJSOperators", list(callList[[2]]))
+            } else if(is.character(callList[[2]])){
+              paste0("\"", callList[[2]], "\"")
+            } else if(is.name(callList[[2]])){
+              # if this gets called inside a local() call, make sure we fetch the referenced object at all
+              fetchedObject1 <- dynGet(as.character(callList[[2]]), ifnotfound=get(as.character(callList[[2]])))
+              do.call(call, list(fetchedObject1))
+            } else {
+              do.call(call, list(callList[[2]]))
+            },
+            paste0(" ", as.character(callList[[1]]), " "),
+            if(is.call(callList[[3]])){
+              do.call("replaceJSOperators", list(callList[[3]]))
+            } else if(is.character(callList[[3]])){
+              paste0("\"", callList[[3]], "\"")
+            } else if(is.name(callList[[3]])){
+              # same as fetchedObject1 above
+              fetchedObject2 <- dynGet(as.character(callList[[3]]), ifnotfound=get(as.character(callList[[3]])))
+              do.call(call, list(fetchedObject2))
+            } else {
+              do.call(call, list(callList[[3]]))
+            }
+          )
+          return(paste0(unlist(result), collapse=""))
+        } else {
+          # replace object names with the actual objects for evaluation
+          if(length(thisItem) > 1){
+            for (itemParts in 2:length(thisItem)){
+              if(is.name(thisItem[[itemParts]])){
+                thisItem[[itemParts]] <- dynGet(as.character(thisItem[[itemParts]]), ifnotfound=get(as.character(thisItem[[itemParts]])))
+              } else {}
+            }
+          } else {}
+          thisItem <- eval(thisItem)
+          # R vectors don't make much sense, collapse them for JS
+          if(is.vector(thisItem)){
+            thisItem <- paste0(thisItem, collapse=", ")
+          } else {}
+          return(thisItem)
+        }
+      } else {
+        return(thisItem)
+      }
+    }
+  )
+  return(unlist(dotlist))
+} ## end function replaceJSOperators
+
+
+## function uncurl()
+# used by js() to fetch calls from then/else segments of if conditions,
+# omitting curly brackets that would get in the way with ite()
+uncurl <- function(cond, level=1, indent.by=rk.get.indent()){
+  if(!is.null(cond)){
+    cond.list <- as.list(cond)
+    # first check for the bracket
+    if(identical(as.character(cond[[1]]), "{")){
+      # now make sure the bracket isn't empty
+      if(length(cond) > 1){
+        cond <- paste0(
+          sapply(
+            2:length(cond.list),
+            function(this.cond.num){
+              do.call("js", args=list(cond[[this.cond.num]], level=level, by=indent.by))
+            }
+          ),
+          collapse=paste0("\n", indent(level=level, by=indent.by))
+        )
+      } else {
+        cond <- ""
+      }
+    } else {
+      cond <- do.call("js", args=list(cond, level=level, by=indent.by))
+    }
+  } else {}
+  return(cond)
+} ## end function uncurl()
+
+
+## function replaceJSIf
+replaceJSIf <- function(cond, level=1, paste=TRUE, indent.by=rk.get.indent(), empty.e=FALSE){
+  if(inherits(cond, "if")){
+    # if condition -- should be save to give to js()
+    cond.if   <- do.call(
+      "js",
+      args=list(
+        cond[[2]],
+        level=level,
+        indent.by=indent.by,
+        linebreaks=FALSE,
+        empty.e=empty.e
+      )
+    )
+    # then do -- could be nested with another if condition
+    if(inherits(cond[[3]], "if")){
+      cond.then <- replaceJSIf(cond[[3]], level=level+1, paste=FALSE, indent.by=indent.by, empty.e=empty.e)
+    } else {
+      cond.then <- do.call(
+        "js",
+        args=list(
+          uncurl(cond[[3]], level=level+1, indent.by=indent.by),
+          level=level,
+          indent.by=indent.by,
+          linebreaks=FALSE,
+          empty.e=empty.e
+        )
+      )
+    }
+    # else do -- could be missing or yet another if condition
+    cond.else <- NULL
+    if(length(as.list(cond)) > 3){
+      if(inherits(cond[[4]], "if")){
+        cond.else <- replaceJSIf(cond[[4]], level=level+1, paste=FALSE, indent.by=indent.by, empty.e=empty.e)
+      } else {
+        cond.else <- do.call(
+          "js",
+          args=list(
+            uncurl(cond[[4]], level=level+1, indent.by=indent.by),
+            level=level,
+            indent.by=indent.by,
+            linebreaks=FALSE,
+            empty.e=empty.e
+          )
+        )
+      }
+    } else {}
+
+    iteObject <- ite(
+      ifjs=cond.if,
+      thenjs=cond.then,
+      elsejs=cond.else 
+    )
+    if(isTRUE(paste)){
+      # the pasted result needs to be trimmed, because js() adds indentation itself
+      return(trim(rk.paste.JS(iteObject, level=level, indent.by=indent.by, empty.e=empty.e)))
+    } else {
+      return(iteObject)
+    }
+  } else {
+    cond <- do.call(
+      "js",
+      args=list(cond, level=level, indent.by=indent.by, linebreaks=FALSE, empty.e=empty.e)
+    )
+    return(cond)
+  }
+} ## end function replaceJSIf
+
+
+## function replaceJSFor
+# this function is currently not publicly announced, but is available through the js() function
+# 
+#<documentation> 
+# Using \code{for} loops is a bit more delicate, as they are very differently constructed in JavaScript. As
+# a workaround, \code{js} will define an array and a counter variable with randomly generated names, fill
+# the array with the values you provided and iterate through the array. In order to keep the iterator variable
+# name you used in the original R loop, so you can use it inside the loop body, you will have to define it before
+# the \code{js} call with a substitution of itself (see examples). Otherwise, you will get an "object not found" error.
+#
+# example:
+# # let's try preserving a for loop
+# # to use iterator variable i, we must initialize it first
+# i <- substitute(i)  # DON'T FORGET THIS!
+# cat(rk.paste.JS(js(
+#   for (i in 1:10) {
+#     echo(i)
+#   }
+# )))
+#</documentation> 
+replaceJSFor <- function(loop, level=1, indent.by=rk.get.indent()){
+  if(inherits(loop, "for")){
+    # for loops must be handled differently, we need to create an array
+    # first and then interate through the array to imitate ho R does this
+    # 
+    # also, the array and iterator variables must not be named like any
+    # of the given variables/objects. therefore, we will use some randomly
+    # generated character strings for those
+    arrayName <- paste0("a", paste0(sample(c(letters,LETTERS,0:9), 5, replace=TRUE), collapse=""))
+    iterName <- paste0("i", paste0(sample(c(letters,LETTERS,0:9), 5, replace=TRUE), collapse=""))
+    loop <- paste(
+      paste0(indent(level=level, by=indent.by), "// the variable names \"", arrayName, "\" and \"", iterName, "\" were randomly generated"),
+      paste0("var ", arrayName, " = new Array();"),
+      paste0(arrayName, ".push(", do.call("js", args=list(loop[[3]], level=level, indent.by=indent.by)), ");"),
+      paste0("for (var ", as.character(loop[[2]]), "=", arrayName, "[0], ", iterName, "=0; ",
+        iterName, " < ", arrayName, ".length; ",
+        iterName, "++, ", as.character(loop[[2]]), "=", arrayName, "[", iterName, "]) {"),
+      paste0(
+        indent(level=level, by=indent.by),
+        do.call(
+          "js",
+          args=list(
+            uncurl(loop[[4]], level=level+1, indent.by=indent.by),
+            level=level,
+            indent.by=indent.by
+          )
+        )
+      ),
+      "}\n",
+      sep=paste0("\n", indent(level=level, by=indent.by))
+    )
+  } else {
+    loop <- do.call("js", args=list(loop, level=level, indent.by=indent.by))
+    return(loop)
+  }
+} ## end function replaceJSFor

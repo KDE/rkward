@@ -2,7 +2,7 @@
                           rkvarselector.cpp  -  description
                              -------------------
     begin                : Thu Nov 7 2002
-    copyright            : (C) 2002, 2006, 2009, 2010, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2002-2015 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -18,19 +18,25 @@
 #include "rkvarselector.h"
 
 #include <QVBoxLayout>
-#include <qlabel.h>
+#include <QLabel>
+#include <QAction>
+#include <QMenu>
 
 #include <klocale.h>
 
 #include "../misc/xmlhelper.h"
 #include "../rkglobals.h"
 #include "../misc/rkobjectlistview.h"
+#include "../misc/rkstandardicons.h"
 #include "../core/robjectlist.h"
+#include "../core/renvironmentobject.h"
 
 #include "../debug.h"
 
 RKVarSelector::RKVarSelector (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
 	RK_TRACE (PLUGIN);
+
+	XMLHelper *xml = parent_component->xmlHelper ();
 
 // TODO: read filter settings
 	addChild ("selected", selected = new RKComponentPropertyRObjects (this, false));
@@ -42,16 +48,35 @@ RKVarSelector::RKVarSelector (const QDomElement &element, RKComponent *parent_co
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
 	
-	QLabel *label = new QLabel (element.attribute ("label", i18n ("Select Variable(s)")), this);
+	QLabel *label = new QLabel (xml->i18nStringAttribute (element, "label", i18n ("Select Variable(s)"), DL_INFO), this);
 	vbox->addWidget (label);
 
-	list_view = new RKObjectListView (this);
+	// TODO: Or should these actions be moved to RKObjectListView, non-tool-window-mode?
+	show_all_envs_action = new QAction (i18n ("Show all environments"), this);
+	show_all_envs_action->setCheckable (true);
+	show_all_envs_action->setToolTip (i18n ("Show objects in all environments on the <i>search()</i> path, instead of just those in <i>.GlobalEnv</i>. Check this, if you want to select objects from a loaded package."));
+	connect (show_all_envs_action, SIGNAL (toggled(bool)), this, SLOT (rootChanged()));
+
+	filter_widget = 0;
+	filter_widget_placeholder = new QVBoxLayout (this);
+	filter_widget_placeholder->setContentsMargins (0, 0, 0, 0);
+	vbox->addLayout (filter_widget_placeholder);
+	show_filter_action = new QAction (i18n ("Show filter options"), this);
+	show_filter_action->setCheckable (true);
+	show_filter_action->setShortcut (QKeySequence ("Ctrl+F"));
+	show_filter_action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionSearch));
+	connect (show_filter_action, SIGNAL (toggled(bool)), this, SLOT(showFilterWidget()));
+
+	list_view = new RKObjectListView (false, this);
 	list_view->setSelectionMode (QAbstractItemView::ExtendedSelection);
+	list_view->initialize ();
+	vbox->addWidget (list_view);
 	connect (list_view, SIGNAL (selectionChanged()), this, SLOT (objectSelectionChanged()));
 
-	vbox->addWidget (list_view);
-	list_view->getSettings ()->setSetting (RKObjectListViewSettings::ShowObjectsAllEnvironments, false);
-	list_view->initialize ();
+	QAction* sep = list_view->contextMenu ()->insertSeparator (list_view->contextMenu ()->actions ().value (0));
+	list_view->contextMenu ()->insertAction (sep, show_filter_action);
+	list_view->contextMenu ()->insertAction (sep, show_all_envs_action);
+
 	rootChanged ();
 }
 
@@ -59,11 +84,23 @@ RKVarSelector::~RKVarSelector () {
 	RK_TRACE (PLUGIN);
 }
 
+void RKVarSelector::showFilterWidget () {
+	RK_TRACE (PLUGIN);
+
+	if (!filter_widget) {
+		filter_widget = list_view->getSettings ()->filterWidget (this);
+		filter_widget_placeholder->addWidget (filter_widget);
+	}
+	filter_widget->setShown (show_filter_action->isChecked ());
+}
+
 void RKVarSelector::rootChanged () {
 	RK_TRACE (PLUGIN);
 
 	RObject* object = root->objectValue ();
-	if (!object) object = RObjectList::getObjectList ();
+	if (!object) {
+		if (!show_all_envs_action->isChecked ()) object = RObjectList::getGlobalEnv ();
+	}
 	list_view->setRootObject (object);
 }
 

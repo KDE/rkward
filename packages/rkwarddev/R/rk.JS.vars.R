@@ -1,4 +1,4 @@
-# Copyright 2010-2014 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2010-2015 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package rkwarddev.
 #
@@ -18,7 +18,7 @@
 
 #' Define variables in JavaScript code
 #' 
-#' @note To get a list of the implemented modifiers in this package, call \code{rkwarddev:::all.valid.modifiers}.
+#' @note To get a list of the implemented modifiers in this package see \code{\link[rkwarddev:modifiers]{modifiers}}.
 #'
 #' @param ... Either one or more character strings (the names of the variables to define),
 #'    or objects of class \code{XiMpLe.node} with plugin XML nodes (whose ID will be extracted and used).
@@ -36,11 +36,16 @@
 #'    useful alternatives. For backwards compatibility, the default is set to \code{"getValue"}.
 #' @param guess.getter Logical, if \code{TRUE} try to get a good default getter function for JavaScript
 #'    variable values.
+#' @param object.name Logical, if \code{TRUE} the JS variable name will roughly match the R object name. If the
+#'    object name contains dots, they will be removed and the JS name printed in camel code instead. Use this option
+#'    with great caution and do not combine it with \code{\link[rkwarddev:rk.JS.scan]{rk.JS.scan}}, as it will likely result
+#'    in unusable code. \code{rk.JS.scan} examines XML nodes and therefore does not know any R object names.
 #' @return An object of class \code{rk.JS.var}.
 #' @export
 #' @seealso \code{\link[rkwarddev:rk.JS.array]{rk.JS.array}},
 #'    \code{\link[rkwarddev:echo]{echo}},
 #'    \code{\link[rkwarddev:id]{id}},
+#'    \code{\link[rkwarddev:modifiers]{modifiers}},
 #'    and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' # create three checkboxes
@@ -51,13 +56,34 @@
 #' cat(rk.paste.JS(rk.JS.vars(list(checkA, checkB, checkC))))
 
 rk.JS.vars <- function(..., var.prefix=NULL, modifiers=NULL, default=FALSE, join="", check.modifiers=TRUE,
-  getter="getValue", guess.getter=FALSE){
-  variables <- list(...)
+  getter="getValue", guess.getter=FALSE, object.name=FALSE){
+  variables <- child.list(list(...))
+  if(isTRUE(object.name)){
+    var.alist <- eval(substitute(alist(...)))
+    JS.var.names <- lapply(
+      1:length(variables),
+      function(this.var.num){
+        this.var <- var.alist[[this.var.num]]
+        if(is.name(this.var)){
+          return(deparse(this.var))
+        } else if(is.character(this.var)){
+          return(this.var)
+        } else {
+          # fall back to the original input if we can't clearly make sense of it here
+          return(variables[[this.var.num]])
+        }
+      }
+    )
+  } else {}
 
   JS.vars <- new("rk.JS.var",
-      vars=sapply(child.list(variables), function(this.var){
+      vars=sapply(1:length(variables), function(this.var.num){
+        this.var <- this.JS.var <- variables[[this.var.num]]
+        if(isTRUE(object.name)){
+          this.JS.var <- JS.var.names[[this.var.num]]
+        } else {}
         get.JS.vars(
-          JS.var=this.var,
+          JS.var=this.JS.var,
           XML.var=this.var,
           JS.prefix=var.prefix,
           modifiers=modifiers,

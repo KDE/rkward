@@ -27,7 +27,7 @@
 #' @examples
 #' cat(R.comment("This will become an R comment"))
 
-R.comment <- function(..., indent.by="\\t", level=2, newline=""){
+R.comment <- function(..., indent.by=rk.get.indent(escape=TRUE), level=2, newline=""){
   message <- paste0(list(...), collapse=" ")
   if(level > 1){
     indentation <- paste0(", \"", rep(indent.by, level-1), "\"")
