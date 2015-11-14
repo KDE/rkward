@@ -1457,6 +1457,10 @@ replaceJSOperators <- function(..., call="id"){
         callList <- unlist(thisItem)
         if(as.character(callList[[1]]) %in% JS.operators){
           result <- list(
+            # the "!" operator needs to come first
+            if(as.character(callList[[1]]) %in% "!"){
+              paste0(as.character(callList[[1]]))
+            } else {},
             if(is.call(callList[[2]])){
               do.call("replaceJSOperators", list(callList[[2]]))
             } else if(is.character(callList[[2]])){
@@ -1468,18 +1472,24 @@ replaceJSOperators <- function(..., call="id"){
             } else {
               do.call(call, list(callList[[2]]))
             },
-            paste0(" ", as.character(callList[[1]]), " "),
-            if(is.call(callList[[3]])){
-              do.call("replaceJSOperators", list(callList[[3]]))
-            } else if(is.character(callList[[3]])){
-              paste0("\"", callList[[3]], "\"")
-            } else if(is.name(callList[[3]])){
-              # same as fetchedObject1 above
-              fetchedObject2 <- dynGet(as.character(callList[[3]]), ifnotfound=get(as.character(callList[[3]])))
-              do.call(call, list(fetchedObject2))
-            } else {
-              do.call(call, list(callList[[3]]))
-            }
+            # all except the "!" operator come here
+            if(!as.character(callList[[1]]) %in% "!"){
+              paste0(" ", as.character(callList[[1]]), " ")
+            } else {},
+            # operators like "!" don't have a third element
+            if(length(callList) > 2){
+              if(is.call(callList[[3]])){
+                do.call("replaceJSOperators", list(callList[[3]]))
+              } else if(is.character(callList[[3]])){
+                paste0("\"", callList[[3]], "\"")
+              } else if(is.name(callList[[3]])){
+                # same as fetchedObject1 above
+                fetchedObject2 <- dynGet(as.character(callList[[3]]), ifnotfound=get(as.character(callList[[3]])))
+                do.call(call, list(fetchedObject2))
+              } else {
+                do.call(call, list(callList[[3]]))
+              }
+            } else {}
           )
           return(paste0(unlist(result), collapse=""))
         } else {
