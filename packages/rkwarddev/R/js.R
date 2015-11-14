@@ -58,7 +58,7 @@
 #'   }
 #' )))
 
-js <- function(..., level=2, indent.by=rk.get.indent(), linebreaks=FALSE, empty.e=FALSE){
+js <- function(..., level=2, indent.by=rk.get.indent(), linebreaks=TRUE, empty.e=FALSE){
   full.content <- eval(substitute(alist(...)))
 
   if(isTRUE(linebreaks)){
