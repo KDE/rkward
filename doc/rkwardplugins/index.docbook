@@ -2552,7 +2552,7 @@ local({
 		</sect2>
 
   </sect1>
-  <sect1 id="i18n_rkwarddev"><title>Adding help pages</title>
+  <sect1 id="rkwarddev_rkh"><title>Adding help pages</title>
     <para>
       If you want to write a help page for your plugin, the most straight forward way to do so is to add the particular instructions directly to the definitions of the XML elements they belong to:
     </para>
@@ -2578,9 +2578,9 @@ variables &lt;- rk.XML.varselector(
     </programlisting>
     <para>
       To add global sections like <command>&lt;summary&gt;</command> or <command>&lt;usage&gt;</command> to the help page, you use functions like <function>rk.rkh.summary()</function> or <function>rk.rkh.usage()</function> accordingly. Their results are then used to set the list elements like <parameter>summary</parameter> or <parameter>usage</parameter> in the <parameter>rkh</parameter> parameter of <function>rk.plugin.component()</function>/<function>rk.plugin.skeleton()</function>.
-    <para>
+    </para>
 	</sect1>
-  <sect1 id="i18n_rkwarddev"><title>Translating plugins</title>
+  <sect1 id="rkwarddev_i18n"><title>Translating plugins</title>
     <para>
       The <application>rkwarddev</application> package is capable of producing external plugins with full i18n support. For instance, all relevant functions generating XML objects offer an optional parameter to specify <replaceable>i18n_context</replaceable> or <replaceable>noi18n_label</replaceable>:
     </para>
