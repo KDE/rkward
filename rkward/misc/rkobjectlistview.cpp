@@ -269,7 +269,7 @@ QWidget* RKObjectListViewSettings::filterWidget (QWidget *parent) {
 	sline->setProxy (this);
 	hlayout->addWidget (sline);
 	QPushButton* expander = new QPushButton (filter_widget);
-	expander->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionExpandDown));
+	expander->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionConfigureGeneric));
 	expander->setCheckable (true);
 	hlayout->addWidget (expander);
 

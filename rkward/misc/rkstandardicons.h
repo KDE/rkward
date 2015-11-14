@@ -44,6 +44,7 @@ public:
 		ActionCDToScript,
 
 		ActionConfigurePackages,
+		ActionConfigureGeneric,
 		ActionSearch,
 
 		ActionDeleteRow,
