@@ -5,7 +5,7 @@
 \title{Paste simple JavaScript plot code}
 \usage{
 rk.paste.JS.graph(..., plotOpts = NULL, printoutObj = NULL, level = 2,
-  indent.by = rk.get.indent(), empty.e = FALSE)
+  indent.by = rk.get.indent(), empty.e = rk.get.empty.e())
 }
 \arguments{
 \item{...}{The actual plot code, passed through to \code{rk.paste.JS}.}

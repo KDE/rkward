@@ -15,20 +15,20 @@
 # You should have received a copy of the GNU General Public License
 # along with rkwarddev.  If not, see <http://www.gnu.org/licenses/>.
 
-#' Globally define the indentation string
+#' Globally define handling of empty else conditions in JS
 #' 
-#' Many functions allow to manually set the indentation string that should be used
-#' for code formatting. The default string used can be globally defined with \code{rk.set.indent},
-#' so you don't have to specify it in each function call.
+#' Some JS functions allow to decide whether empty \code{else} statements should be omitted or printed
+#' nonetheless (which some consider more reader friendly). The default can be globally defined with
+#' \code{rk.set.empty.e}, so you don't have to specify it in each function call.
 #' 
-#' \code{rk.get.indent} returns the set value, which defaults to a tab character by default.
+#' \code{rk.get.empty.e} returns the set value, which defaults to \code{FALSE} by default.
 #' 
-#' @param by Character string, indentation string to be defined globally.
-#' @return \code{rk.set.indent} returns invisible(NULL), \code{rk.get.indent} a character string.
-#' @rdname rk.set.indent
+#' @param empty Logical, whether .
+#' @return \code{rk.set.empty.e} returns invisible(NULL), \code{rk.get.empty.e} either \code{TRUE} or \code{FALSE}.
+#' @rdname rk.set.empty.e
 #' @export
 
-rk.set.indent <- function(by="\t"){
-  set.rk.env("indent.by", value=by)
+rk.set.empty.e <- function(empty=FALSE){
+  set.rk.env("empty.e", value=empty)
   return(invisible(NULL))
 }

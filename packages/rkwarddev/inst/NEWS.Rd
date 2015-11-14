@@ -41,6 +41,8 @@
         node easier
       \item new functions \code{rk.get.indent()} and \code{rk.set.indent()} to globally set
         indentation string
+      \item new functions \code{rk.get.empty.e()} and \code{rk.set.empty.e()} to globally define
+        the handling of empty \code{"else"} clauses in JavaScript
       \item in \code{rk.JS.header()}, the second value provided by \code{"add"} can now be named
         \code{"noquote"} to have it nested in the JS \code{noquote()} function
     }
@@ -55,6 +57,8 @@
         useful feedback
       \item all functions offering \code{"intent.by"} as an option now fetch the default
         value by calling \code{rk.get.indent()}
+      \item all functions offering \code{"empty.e"} as an option now fetch the default
+        value by calling \code{rk.get.empty.e()}
       \item removed trailing newline in \code{rk.JS.header()} output
     }
   }

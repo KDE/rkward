@@ -104,6 +104,15 @@ trim <- function(char){
 } ## end function trim()
 
 
+## function trim.n()
+# cuts off newline at start and end of a character string
+trim.n <- function(char){
+  char <- gsub("^([\n]*)", "", char)
+  char <- gsub("([\n]*)$", "", char)
+  return(char)
+} ## end function trim.n()
+
+
 ## function indent()
 # will create tabs to format the output
 indent <- function(level, by=rk.get.indent()){
@@ -815,7 +824,7 @@ clean.name <- function(name, message=TRUE){
 
 
 ## function paste.JS.ite()
-paste.JS.ite <- function(object, level=1, indent.by=rk.get.indent(), recurse=FALSE, empty.e=FALSE){
+paste.JS.ite <- function(object, level=1, indent.by=rk.get.indent(), recurse=FALSE, empty.e=rk.get.empty.e()){
   stopifnot(inherits(object, "rk.JS.ite"))
   # check indentation
   main.indent <- indent(level, by=indent.by)
@@ -1548,7 +1557,7 @@ uncurl <- function(cond, level=1, indent.by=rk.get.indent()){
 
 
 ## function replaceJSIf
-replaceJSIf <- function(cond, level=1, paste=TRUE, indent.by=rk.get.indent(), empty.e=FALSE){
+replaceJSIf <- function(cond, level=1, paste=TRUE, indent.by=rk.get.indent(), empty.e=rk.get.empty.e()){
   if(inherits(cond, "if")){
     # if condition -- should be save to give to js()
     cond.if   <- do.call(

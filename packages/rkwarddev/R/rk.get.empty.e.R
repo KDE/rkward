@@ -15,20 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with rkwarddev.  If not, see <http://www.gnu.org/licenses/>.
 
-#' Globally define the indentation string
-#' 
-#' Many functions allow to manually set the indentation string that should be used
-#' for code formatting. The default string used can be globally defined with \code{rk.set.indent},
-#' so you don't have to specify it in each function call.
-#' 
-#' \code{rk.get.indent} returns the set value, which defaults to a tab character by default.
-#' 
-#' @param by Character string, indentation string to be defined globally.
-#' @return \code{rk.set.indent} returns invisible(NULL), \code{rk.get.indent} a character string.
-#' @rdname rk.set.indent
+#' @rdname rk.set.empty.e
 #' @export
 
-rk.set.indent <- function(by="\t"){
-  set.rk.env("indent.by", value=by)
-  return(invisible(NULL))
+rk.get.empty.e <- function(){
+  return(get.rk.env("empty.e", value=FALSE))
 }
