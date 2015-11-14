@@ -1531,7 +1531,7 @@ uncurl <- function(cond, level=1, indent.by=rk.get.indent()){
           sapply(
             2:length(cond.list),
             function(this.cond.num){
-              do.call("js", args=list(cond[[this.cond.num]], level=level, by=indent.by))
+              do.call("js", args=list(cond[[this.cond.num]], level=level, by=indent.by, linebreaks=FALSE))
             }
           ),
           collapse=paste0("\n", indent(level=level, by=indent.by))
@@ -1540,7 +1540,7 @@ uncurl <- function(cond, level=1, indent.by=rk.get.indent()){
         cond <- ""
       }
     } else {
-      cond <- do.call("js", args=list(cond, level=level, by=indent.by))
+      cond <- do.call("js", args=list(cond, level=level, by=indent.by, linebreaks=FALSE))
     }
   } else {}
   return(cond)
@@ -1649,7 +1649,7 @@ replaceJSFor <- function(loop, level=1, indent.by=rk.get.indent()){
     loop <- paste(
       paste0(indent(level=level, by=indent.by), "// the variable names \"", arrayName, "\" and \"", iterName, "\" were randomly generated"),
       paste0("var ", arrayName, " = new Array();"),
-      paste0(arrayName, ".push(", do.call("js", args=list(loop[[3]], level=level, indent.by=indent.by)), ");"),
+      paste0(arrayName, ".push(", do.call("js", args=list(loop[[3]], level=level, indent.by=indent.by, linebreaks=FALSE)), ");"),
       paste0("for (var ", as.character(loop[[2]]), "=", arrayName, "[0], ", iterName, "=0; ",
         iterName, " < ", arrayName, ".length; ",
         iterName, "++, ", as.character(loop[[2]]), "=", arrayName, "[", iterName, "]) {"),
@@ -1660,7 +1660,8 @@ replaceJSFor <- function(loop, level=1, indent.by=rk.get.indent()){
           args=list(
             uncurl(loop[[4]], level=level+1, indent.by=indent.by),
             level=level,
-            indent.by=indent.by
+            indent.by=indent.by,
+            linebreaks=FALSE
           )
         )
       ),
@@ -1668,7 +1669,7 @@ replaceJSFor <- function(loop, level=1, indent.by=rk.get.indent()){
       sep=paste0("\n", indent(level=level, by=indent.by))
     )
   } else {
-    loop <- do.call("js", args=list(loop, level=level, indent.by=indent.by))
+    loop <- do.call("js", args=list(loop, level=level, indent.by=indent.by, linebreaks=FALSE))
     return(loop)
   }
 } ## end function replaceJSFor
