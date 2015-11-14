@@ -252,6 +252,7 @@ public slots:
 	void activated ();
 	void markAllUpdates ();
 	void configureRepositories ();
+	void rowClicked (const QModelIndex& row);
 private:
 	void doInstall (bool refresh);
 	QTreeView *packages_view;
