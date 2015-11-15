@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.07-4 (2015-11-14)}{
+\section{Changes in rkwarddev version 0.07-4 (2015-11-15)}{
   \subsection{unreleased}{
     \itemize{
       \item this version is under development
@@ -45,6 +45,8 @@
         the handling of empty \code{"else"} clauses in JavaScript
       \item in \code{rk.JS.header()}, the second value provided by \code{"add"} can now be named
         \code{"noquote"} to have it nested in the JS \code{noquote()} function
+      \item new wrapper function \code{rk.updatePluginMessages()} for
+        update_plugin_messages.py, the package now comes with its own copy of this core i18n script
     }
   }
   \subsection{changed}{
@@ -57,8 +59,8 @@
         useful feedback
       \item all functions offering \code{"intent.by"} as an option now fetch the default
         value by calling \code{rk.get.indent()}
-      \item all functions offering \code{"empty.e"} as an option now fetch the default
-        value by calling \code{rk.get.empty.e()}
+      \item all functions offering \code{"empty.e"} as an option now fetch the default value
+        by calling \code{rk.get.empty.e()}
       \item removed trailing newline in \code{rk.JS.header()} output
     }
   }
