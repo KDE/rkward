@@ -77,7 +77,7 @@ pasteXMLTag <- function(tag, attr=NULL, child=NULL, empty=TRUE, level=1, allow.e
   if(isTRUE(nchar(tag) == 0) | length(tag) == 0){
     if(isTRUE(tidy)){
       child <- trim(child)
-      child <- gsub("\n", new.cmmt, setMinIndent(child, level=level, indent.by=indent.by, shine=shine))
+      child <- gsub("\n", new.cmmt, trim(setMinIndent(child, level=level, indent.by=indent.by, shine=shine)))
     }
     full.tag <- paste0(child, " ")
   } else {
@@ -87,7 +87,7 @@ pasteXMLTag <- function(tag, attr=NULL, child=NULL, empty=TRUE, level=1, allow.e
       if(!is.null(child)){
         if(isTRUE(tidy)){
           child <- trim(child)
-          child <- gsub("\n", new.cmmt, setMinIndent(child, level=level, indent.by=indent.by, shine=shine))
+          child <- gsub("\n", new.cmmt, trim(setMinIndent(child, level=level, indent.by=indent.by, shine=shine)))
         }
       } else {}
       full.tag <- paste0(new.indent, "<!-- ", new.attr, new.cmmt.indent,
