@@ -230,9 +230,7 @@ RKObjectListViewSettings::RKObjectListViewSettings (bool tool_window, QObject* p
 	connect (update_timer, SIGNAL(timeout()), this, SLOT(updateSelfNow()));
 
 	filter_widget = 0;
-	hide_functions = hide_non_functions = false;
-	filter_on_class = filter_on_label = filter_on_name = true;
-	depth_limit = 1;
+	in_reset_filters = false;
 
 	persistent_settings_actions[ShowObjectsHidden] = new QAction (i18n ("Show Hidden Objects"), this);
 	persistent_settings_actions[ShowFieldsType] = new QAction (i18n ("Type"), this);
@@ -246,6 +244,8 @@ RKObjectListViewSettings::RKObjectListViewSettings (bool tool_window, QObject* p
 		persistent_settings_actions[i]->setChecked (persistent_settings[i]);
 		connect (persistent_settings_actions[i], SIGNAL (toggled(bool)), this, SLOT(filterSettingsChanged ()));
 	}
+
+	resetFilters (); // inits defaults
 }
 
 RKObjectListViewSettings::~RKObjectListViewSettings () {
@@ -308,7 +308,7 @@ QWidget* RKObjectListViewSettings::filterWidget (QWidget *parent) {
 	                                      "<li><i>%2</i> includes direct child objects. In this case, the list will show matching objects on the search path, <i>and</i> objects on the search path that hold matching child objects.</li>", depth_box->itemText (0), depth_box->itemText (1)), depth_box);
 	boxvlayout->addWidget (depth_box);
 
-	depth_box->setCurrentIndex (depth_limit);
+	depth_box->setCurrentIndex (1);
 	connect (depth_box, SIGNAL (currentIndexChanged(QString)), this, SLOT (filterSettingsChanged()));
 
 	type_box = new QComboBox ();
@@ -323,17 +323,47 @@ QWidget* RKObjectListViewSettings::filterWidget (QWidget *parent) {
 	else type_box->setCurrentIndex (0);
 	connect (type_box, SIGNAL (currentIndexChanged(QString)), this, SLOT (filterSettingsChanged()));
 
+	QHBoxLayout *bottom_layout = new QHBoxLayout (filter_widget);
+	layout->addLayout (bottom_layout);
 	QCheckBox* hidden_objects_box = new QCheckBox (i18n ("Show Hidden Objects"));
 	hidden_objects_box->setChecked (persistent_settings[ShowObjectsHidden]);
 	connect (hidden_objects_box, SIGNAL (clicked(bool)), persistent_settings_actions[ShowObjectsHidden], SLOT (setChecked(bool)));
 	connect (persistent_settings_actions[ShowObjectsHidden], SIGNAL (triggered(bool)), hidden_objects_box, SLOT (setChecked(bool)));
-	layout->addWidget (hidden_objects_box);
+	bottom_layout->addWidget (hidden_objects_box);
+
+	reset_filters_button = new QPushButton (i18n ("Reset filters"), filter_widget);
+	connect (reset_filters_button, SIGNAL (clicked(bool)), this, SLOT(resetFilters()));
+	RKCommonFunctions::setTips (i18n ("Discards the current object search filters"), reset_filters_button);
+	reset_filters_button->hide ();
+	bottom_layout->addWidget (reset_filters_button);
 
 	return filter_widget;
 }
 
+void RKObjectListViewSettings::resetFilters () {
+	RK_TRACE (APP);
+
+	in_reset_filters = true;
+	if (filter_widget) {
+		type_box->setCurrentIndex (0);
+		filter_on_name_box->setChecked (true);
+		filter_on_label_box->setChecked (true);
+		filter_on_class_box->setChecked (true);
+		depth_box->setCurrentIndex (1);
+#warning TODO: reset search line
+	} else {
+		hide_functions = hide_non_functions = false;
+		filter_on_class = filter_on_label = filter_on_name = true;
+		depth_limit = 1;
+	}
+	in_reset_filters = false;
+	updateSelf ();
+}
+
 void RKObjectListViewSettings::filterSettingsChanged () {
 	RK_TRACE (APP);
+
+	if (in_reset_filters) return;  // Avoid updating for each setting, individually, when many are changed at once.
 
 	if (filter_widget) {
 		filter_on_name = filter_on_name_box->isChecked ();
@@ -342,6 +372,8 @@ void RKObjectListViewSettings::filterSettingsChanged () {
 		depth_limit = depth_box->currentIndex ();
 		hide_functions = type_box->currentIndex () == 2;
 		hide_non_functions = type_box->currentIndex () == 1;
+
+		reset_filters_button->setVisible (!filter_on_name || !filter_on_class || !filter_on_label || (depth_limit != 1) || hide_functions || hide_non_functions);
 	}
 
 	for (int i = 0; i < SettingsCount; ++i) {
