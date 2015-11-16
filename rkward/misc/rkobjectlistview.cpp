@@ -266,6 +266,7 @@ QWidget* RKObjectListViewSettings::filterWidget (QWidget *parent) {
 	layout->addLayout (hlayout);
 
 	sline = new RKDynamicSearchLine (filter_widget);
+	filter_widget->setFocusProxy (sline);
 	sline->setModelToFilter (this);
 	RKCommonFunctions::setTips (sline->regexpTip (), sline);
 	connect (sline, SIGNAL (searchChanged(QRegExp)), this, SLOT (filterSettingsChanged()));
@@ -318,7 +319,7 @@ QWidget* RKObjectListViewSettings::filterWidget (QWidget *parent) {
 	type_box->addItem (i18n ("Show functions, only"));
 	type_box->addItem (i18n ("Show objects excluding functions"));
 	RKCommonFunctions::setTips (i18n ("When looking for a particular function, you may want to exclude 'data' objects, and vice versa. This control allows you to limit the list to objects that are not (or do not contain) functions, or to those that are (or contain) functions."), type_box);
-	elayout->addWidget (type_box);
+	boxvlayout->addWidget (type_box);
 
 	if (hide_functions) type_box->setCurrentIndex (2);
 	else if (hide_non_functions) type_box->setCurrentIndex (1);
