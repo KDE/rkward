@@ -153,7 +153,7 @@ RObjectBrowserInternal::~RObjectBrowserInternal () {
 void RObjectBrowserInternal::focusInEvent (QFocusEvent *e) {
 	RK_TRACE (APP);
 
-	list_view->setFocus ();
+	list_view->getSettings ()->filterWidget (this)->setFocus ();
 	if (e->reason () != Qt::MouseFocusReason) {
 		list_view->setObjectCurrent (RObjectList::getGlobalEnv (), true);
 	}

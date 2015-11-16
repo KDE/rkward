@@ -333,6 +333,8 @@ QWidget* RKObjectListViewSettings::filterWidget (QWidget *parent) {
 	connect (persistent_settings_actions[ShowObjectsHidden], SIGNAL (triggered(bool)), hidden_objects_box, SLOT (setChecked(bool)));
 	bottom_layout->addWidget (hidden_objects_box);
 
+	// KF5 TODO: In frameworks, there is a function KIconUtils::kIconAddOverlay(). We could use this to overlay "view-filter" and discard, then use that
+	// in a tool button (with tooltip), in order to save space.
 	reset_filters_button = new QPushButton (i18nc ("Width is limited, please opt for something that is not much longer than the English string. Simply 'Clear'/'Reset' should be good enough to understand the function.", "Reset filters"), filter_widget);
 	connect (reset_filters_button, SIGNAL (clicked(bool)), this, SLOT(resetFilters()));
 	RKCommonFunctions::setTips (i18n ("Discards the current object search filters"), reset_filters_button);
