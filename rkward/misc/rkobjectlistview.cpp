@@ -17,7 +17,6 @@
 #include "rkobjectlistview.h"
 
 #include <klocale.h>
-#include <kfilterproxysearchline.h>
 
 #include <QContextMenuEvent>
 #include <QMenu>
@@ -36,6 +35,7 @@
 #include "../core/rkmodificationtracker.h"
 #include "rkstandardicons.h"
 #include "rkcommonfunctions.h"
+#include "rkdynamicsearchline.h"
 #include "../settings/rksettingsmoduleobjectbrowser.h"
 
 #include "../debug.h"
@@ -265,8 +265,10 @@ QWidget* RKObjectListViewSettings::filterWidget (QWidget *parent) {
 	hlayout->setContentsMargins (0, 0, 0, 0);
 	layout->addLayout (hlayout);
 
-	KFilterProxySearchLine* sline = new KFilterProxySearchLine (filter_widget);
-	sline->setProxy (this);
+	sline = new RKDynamicSearchLine (filter_widget);
+	sline->setModelToFilter (this);
+	RKCommonFunctions::setTips (sline->regexpTip (), sline);
+	connect (sline, SIGNAL (searchChanged(QRegExp)), this, SLOT (filterSettingsChanged()));
 	hlayout->addWidget (sline);
 	QPushButton* expander = new QPushButton (filter_widget);
 	expander->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionConfigureGeneric));
@@ -331,7 +333,7 @@ QWidget* RKObjectListViewSettings::filterWidget (QWidget *parent) {
 	connect (persistent_settings_actions[ShowObjectsHidden], SIGNAL (triggered(bool)), hidden_objects_box, SLOT (setChecked(bool)));
 	bottom_layout->addWidget (hidden_objects_box);
 
-	reset_filters_button = new QPushButton (i18n ("Reset filters"), filter_widget);
+	reset_filters_button = new QPushButton (i18nc ("Width is limited, please opt for something that is not much longer than the English string. Simply 'Clear'/'Reset' should be good enough to understand the function.", "Reset filters"), filter_widget);
 	connect (reset_filters_button, SIGNAL (clicked(bool)), this, SLOT(resetFilters()));
 	RKCommonFunctions::setTips (i18n ("Discards the current object search filters"), reset_filters_button);
 	reset_filters_button->hide ();
@@ -350,11 +352,12 @@ void RKObjectListViewSettings::resetFilters () {
 		filter_on_label_box->setChecked (true);
 		filter_on_class_box->setChecked (true);
 		depth_box->setCurrentIndex (1);
-#warning TODO: reset search line
+		sline->setText (QString ());
 	} else {
 		hide_functions = hide_non_functions = false;
 		filter_on_class = filter_on_label = filter_on_name = true;
 		depth_limit = 1;
+		setFilterRegExp (QRegExp ());
 	}
 	in_reset_filters = false;
 	updateSelf ();
@@ -373,7 +376,7 @@ void RKObjectListViewSettings::filterSettingsChanged () {
 		hide_functions = type_box->currentIndex () == 2;
 		hide_non_functions = type_box->currentIndex () == 1;
 
-		reset_filters_button->setVisible (!filter_on_name || !filter_on_class || !filter_on_label || (depth_limit != 1) || hide_functions || hide_non_functions);
+		reset_filters_button->setVisible (!filter_on_name || !filter_on_class || !filter_on_label || (depth_limit != 1) || hide_functions || hide_non_functions || !sline->text ().isEmpty ());
 	}
 
 	for (int i = 0; i < SettingsCount; ++i) {

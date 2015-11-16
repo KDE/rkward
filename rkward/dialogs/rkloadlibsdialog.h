@@ -39,6 +39,7 @@ class RCommandChain;
 class QCheckBox;
 class PackageInstallParamsWidget;
 class InstallPackagesWidget;
+class RKDynamicSearchLine;
 
 /**
 Dialog which excapsulates widgets to load/unload, update and install R packages
@@ -260,7 +261,7 @@ private:
 	RKRPackageInstallationStatusSortFilterModel *model;
 
 	QPushButton *mark_all_updates_button;
-	QLineEdit *filter_edit;
+	RKDynamicSearchLine *filter_edit;
 	QCheckBox *rkward_packages_only;
 	PackageInstallParamsWidget *install_params;
 	

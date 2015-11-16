@@ -45,6 +45,7 @@
 #include "../misc/rkprogresscontrol.h"
 #include "../misc/rkstandardicons.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkdynamicsearchline.h"
 
 #include "../debug.h"
 
@@ -678,7 +679,6 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidge
 	packages_view->setSortingEnabled (true);
 	model = new RKRPackageInstallationStatusSortFilterModel (this);
 	model->setSourceModel (packages_status);
-	model->setFilterCaseSensitivity (Qt::CaseInsensitive);
 	model->setSortCaseSensitivity (Qt::CaseInsensitive);
 	packages_view->setModel (model);
 	packages_view->setItemDelegateForColumn (0, new InstallPackagesDelegate (packages_view));
@@ -702,9 +702,9 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidge
 	hbox->addLayout (buttonvbox);
 	buttonvbox->setContentsMargins (0, 0, 0, 0);
 	QLabel *label = new QLabel (i18n ("Show only packages matching:"), this);
-	filter_edit = new QLineEdit (QString (), this);
-	RKCommonFunctions::setTips (i18n ("<p>You can limit the packages displayed in the list to with names or titles matching a filter string.</p><p><b>Note:</b> To limit the search to matches at the start of the string, start the filter with '^', e.g. ('^rk.'). To limit searches to the end of the string, append '$' at the end of the filter.</p>"), label, filter_edit);
-	connect (filter_edit, SIGNAL (textChanged(QString)), this, SLOT (filterChanged()));
+	filter_edit = new RKDynamicSearchLine (this);
+	RKCommonFunctions::setTips (i18n ("<p>You can limit the packages displayed in the list to with names or titles matching a filter string.</p>") + filter_edit->regexpTip (), label, filter_edit);
+	filter_edit->setModelToFilter (model);
 	rkward_packages_only = new QCheckBox (i18n ("Show only packages providing RKWard dialogs"), this);
 	RKCommonFunctions::setTips (i18n ("<p>Some but not all R packages come with plugins for RKWard. That means they provide a graphical user-interface in addition to R functions. Check this box to show only such packages.</p><p></p>"), rkward_packages_only);
 	connect (rkward_packages_only, SIGNAL(stateChanged(int)), this, SLOT (filterChanged()));
@@ -768,14 +768,8 @@ void InstallPackagesWidget::rowClicked (const QModelIndex& row) {
 void InstallPackagesWidget::filterChanged () {
 	RK_TRACE (DIALOGS);
 
-	QString f = filter_edit->text ();
-	if (f.isEmpty ()) f = '*';
-	else {
-		if (!f.startsWith ('^')) f.prepend ('*');
-		if (!f.endsWith ('$')) f.append ('*');
-	}
-	model->setFilterWildcard (f);
 	model->setRKWardOnly (rkward_packages_only->isChecked ());
+	// NOTE: filter string already set by RKDynamicSearchLine
 }
 
 void InstallPackagesWidget::trySelectPackage (const QString &package_name) {
@@ -1244,9 +1238,9 @@ bool RKRPackageInstallationStatusSortFilterModel::filterAcceptsRow (int source_r
 	}
 // filter on Name and Title
 	QString name = source_parent.child (source_row, RKRPackageInstallationStatus::PackageName).data ().toString ();
-	if (filterRegExp ().exactMatch (name)) return true;
+	if (name.contains (filterRegExp ())) return true;
 	QString title = source_parent.child (source_row, RKRPackageInstallationStatus::PackageTitle).data ().toString ();
-	return (filterRegExp ().exactMatch (title));
+	return (title.contains (filterRegExp ()));
 }
 
 void RKRPackageInstallationStatusSortFilterModel::setRKWardOnly (bool only) {
