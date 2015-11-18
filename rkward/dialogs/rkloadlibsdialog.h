@@ -66,6 +66,8 @@ public:
 	static void showInstallPackagesModal (QWidget *parent, RCommandChain *chain, const QString &package_name);
 	static void showPluginmapConfig (QWidget *parent=0, RCommandChain *chain=0);
 	QStringList currentLibraryLocations ()  const { return library_locations; };
+	void accept () override;
+	void reject () override;
 signals:
 	void downloadComplete ();
 	void installationComplete ();
@@ -78,7 +80,6 @@ protected:
 	void closeEvent (QCloseEvent *e);
 protected slots:
 /** overloaded to catch button presses. */
-	void slotButtonClicked (int button);
 	void childDeleted ();
 	void processExited (int exitCode, QProcess::ExitStatus exitStatus);
 	void installationProcessOutput ();
@@ -102,7 +103,7 @@ friend class InstallPackagesWidget;
 
 	QString auto_install_package;
 	int num_child_widgets;
-	bool accepted;
+	bool was_accepted;
 
 	QProcess* installation_process;
 };

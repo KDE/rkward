@@ -24,6 +24,7 @@
 #include <QSplitter>
 
 #include <kurl.h>
+#include <kconfigbase.h>
 
 #include "rkmdiwindow.h"
 #include "rktoolwindowlist.h"

@@ -19,7 +19,7 @@
 #define RKPRINTAGENT_H
 
 #include <QObject>
-#include <kparts/part.h>
+#include <kparts/readonlypart.h>
 
 /** The main purpose of this class is to cope with the lack of kprinter in KDE 4. Tries
  *  to offer a KDE print dialog for an existing postscript file. */

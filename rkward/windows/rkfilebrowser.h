@@ -23,6 +23,7 @@
 #include <kvbox.h>
 
 #include <QList>
+#include <QUrl>
 
 class KDirOperator;
 class RKFileBrowserWidget;
@@ -63,9 +64,9 @@ public:
 	void setURL (const QString &url);
 	bool eventFilter (QObject* o, QEvent* e);
 public slots:
-	void urlChangedInView (const KUrl &url);
+	void urlChangedInView (const QUrl &url);
 	void urlChangedInCombo (const QString &url);
-	void urlChangedInCombo (const KUrl &url);
+	void urlChangedInCombo (const QUrl &url);
 	void fileActivated (const KFileItem& item);
 	void saveConfig ();
 	void contextMenuHook (const KFileItem &item, QMenu *menu);

@@ -23,13 +23,13 @@
 #include <kio/jobclasses.h>
 #include <kwebpage.h>
 
+#include <QDomElement>
 
 #include "../windows/rkmdiwindow.h"
 
 class KActionCollection;
 class KRecentFilesAction;
 class QAction;
-class QDomElement;
 class RKComponentHandle;
 class XMLHelper;
 class RKHTMLWindowPart;

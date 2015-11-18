@@ -141,7 +141,7 @@ QVariant RKMatrixInput::value (const QString& modifier) {
 		if (l.size () > row_count->intValue ()) l = l.mid (0, row_count->intValue ());
 		return l;
 	}
-	return ("Modifier '" + modifier + "' not recognized\n"); 
+	return (QString ("Modifier '" + modifier + "' not recognized\n"));
 }
 
 bool RKMatrixInput::expandStorageForColumn (int column) {
@@ -503,7 +503,7 @@ QVariant RKMatrixInputModel::data (const QModelIndex& index, int role) const {
 	if ((role == Qt::DisplayRole) || (role == Qt::EditRole)) {
 		return QVariant (value);
 	} else if (role == Qt::BackgroundRole) {
-		if (!matrix->is_valid && !matrix->isValueValid (value)) return QVariant (Qt::red);
+		if (!matrix->is_valid && !matrix->isValueValid (value)) return QVariant (QColor (Qt::red));
 	} else if ((role == Qt::ToolTipRole) || (role == Qt::StatusTipRole)) {
 		if (!matrix->is_valid && (value.isEmpty () && !matrix->allow_missings)) return QVariant (i18n ("Empty values are not allowed"));
 		if (!matrix->is_valid && !matrix->isValueValid (value)) return QVariant (i18n ("This value is not allowed, here"));
@@ -528,7 +528,7 @@ QVariant RKMatrixInputModel::headerData (int section, Qt::Orientation orientatio
 		return QVariant (QString::number (section + 1));
 	} else if (orientation == Qt::Horizontal) {
 		if (section < matrix->column_count->intValue ()) {
-			if ((role == Qt::BackgroundRole) && !matrix->isColumnValid (section)) return QVariant (Qt::red);
+			if ((role == Qt::BackgroundRole) && !matrix->isColumnValid (section)) return QVariant (QColor (Qt::red));
 			if (((role == Qt::ToolTipRole) || (role == Qt::StatusTipRole)) && !matrix->isColumnValid (section)) return QVariant (i18n ("This column contains illegal values in some of its cells"));
 		}
 	}

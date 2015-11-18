@@ -36,7 +36,7 @@ RKImportDialogFormatSelector::RKImportDialogFormatSelector () : KHBox () {
 	combo = new QComboBox (this);
 }
 
-RKImportDialog::RKImportDialog (const QString &context_id, QWidget *parent) : KFileDialog (KUrl (), QString (), parent, format_selector=new RKImportDialogFormatSelector ()) {
+RKImportDialog::RKImportDialog (const QString &context_id, QWidget *parent) : KFileDialog (QUrl (), QString (), parent, format_selector=new RKImportDialogFormatSelector ()) {
 	RK_TRACE (DIALOGS);
 
 	setModal (false);

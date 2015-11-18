@@ -17,7 +17,7 @@
 
 #include "rkdummypart.h"
 
-#include <kglobal.h>
+#include <QGuiApplication>
 
 #include "../debug.h"
 

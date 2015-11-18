@@ -22,11 +22,13 @@
 #include <kmessagebox.h>
 #include <kvbox.h>
 #include <ktoolinvocation.h>
+#include <kicon.h>
 
 #include <QLabel>
 #include <QTextEdit>
 #include <QTemporaryFile>
 #include <QTextStream>
+#include <QPushButton>
 
 #include "../rbackend/rinterface.h"
 #include "../rbackend/rksessionvars.h"
@@ -99,16 +101,20 @@ void RKErrorDialog::reportableErrorMessage (QWidget* parent_widget, const QStrin
 	// adjusted from KMessageBox::detailedError
 	KDialog *dialog = new KDialog (parent_widget, Qt::Dialog);
 	dialog->setCaption (caption);
-	if (details.isEmpty ()) dialog->setButtons (KDialog::Ok | KDialog::No);
-	else dialog->setButtons (KDialog::Ok | KDialog::No | KDialog::Details);
-	dialog->setButtonText (KDialog::No, i18n ("Report As Bug"));
+	QDialogButtonBox *buttonbox = new QDialogButtonBox (dialog);
+	if (details.isEmpty ()) buttonbox->setStandardButtons (QDialogButtonBox::Ok | QDialogButtonBox::No);
+	else {
+		buttonbox->setStandardButtons (QDialogButtonBox::Ok | QDialogButtonBox::No | QDialogButtonBox::Help);
+		buttonbox->button (QDialogButtonBox::Help)->setText (i18n ("Show Details"));
+	}
+	buttonbox->button (QDialogButtonBox::No)->setText (i18n ("Report As Bug"));
 	dialog->setObjectName ("error");
-	dialog->setDefaultButton (KDialog::Ok);
-	dialog->setEscapeButton (KDialog::Ok);
+	buttonbox->button (QDialogButtonBox::Ok)->setDefault (true);
+	buttonbox->button (QDialogButtonBox::Ok)->setShortcut (Qt::Key_Escape);
 	KMessageBox::Options options = KMessageBox::Notify | KMessageBox::AllowLink;
 	dialog->setModal (true);
 
-	int ret = KMessageBox::createKMessageBox (dialog, QMessageBox::Critical, user_message, QStringList(), QString(), 0, options, details);
+	int ret = KMessageBox::createKMessageBox (dialog, buttonbox, QMessageBox::Critical, user_message, QStringList(), QString(), 0, options, details);
 
 	if (ret == KDialog::No) {
 		reportBug (parent_widget, (message_code.isEmpty () ? QString () : i18n ("Message code: %1\n", message_code)) + user_message);

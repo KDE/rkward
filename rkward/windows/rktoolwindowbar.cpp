@@ -280,11 +280,11 @@ bool RKToolWindowBar::eventFilter (QObject *obj, QEvent *ev) {
 				connect (a, SIGNAL (triggered(bool)), this, SLOT (changeAttachment()));
 
 				KSelectAction *sel = new KSelectAction (i18n ("Position"), &menu);
-				sel->addAction (KIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveLeft)), i18n ("Left Sidebar"));
-				sel->addAction (KIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveRight)), i18n ("Right Sidebar"));
-				sel->addAction (KIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveUp)), i18n ("Top Sidebar"));
-				sel->addAction (KIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveDown)), i18n ("Bottom Sidebar"));
-				sel->addAction (KIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDelete)), i18n ("Not shown in sidebar"));
+				sel->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveLeft), i18n ("Left Sidebar"));
+				sel->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveRight), i18n ("Right Sidebar"));
+				sel->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveUp), i18n ("Top Sidebar"));
+				sel->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveDown), i18n ("Bottom Sidebar"));
+				sel->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionDelete), i18n ("Not shown in sidebar"));
 				connect (sel, SIGNAL (triggered(int)), this, SLOT (moveToolWindow(int)));
 				menu.addAction (sel);
 	

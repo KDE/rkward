@@ -148,7 +148,7 @@ void RKTopLevelWindowGUI::reportRKWardBug () {
 void RKTopLevelWindowGUI::showAboutApplication () {
 	RK_TRACE (APP);
 
-	KAboutApplicationDialog about (KCmdLineArgs::aboutData ());
+	KAboutApplicationDialog about (KAboutData::applicationData ());
 	about.exec ();
 }
 

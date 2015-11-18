@@ -82,11 +82,13 @@ void RKWorkplaceView::initActions (KActionCollection *ac, const char *id_left, c
 
 	action_page_left = (QAction *) ac->addAction (id_left, this, SLOT (pageLeft()));
 	action_page_left->setText (i18n ("Window Left"));
-	action_page_left->setShortcut (KShortcut (Qt::ControlModifier + Qt::Key_Less, Qt::ControlModifier + Qt::Key_Comma));
+	ac->setDefaultShortcuts (action_page_left, QList<QKeySequence>() << Qt::ControlModifier + Qt::Key_Less << Qt::ControlModifier + Qt::Key_Comma);
+	action_page_left->setShortcut (Qt::ControlModifier + Qt::Key_Less); // KF5 TODO: not needed for KF5 >= 5.2
 
 	action_page_right = (QAction *) ac->addAction (id_right, this, SLOT (pageRight()));
 	action_page_right->setText (i18n ("Window Right"));
-	action_page_right->setShortcut (KShortcut (Qt::ControlModifier + Qt::Key_Greater, Qt::ControlModifier + Qt::Key_Period));
+	ac->setDefaultShortcuts (action_page_right, QList<QKeySequence>() << Qt::ControlModifier + Qt::Key_Greater << Qt::ControlModifier + Qt::Key_Period);
+	action_page_right->setShortcut (Qt::ControlModifier + Qt::Key_Greater); // KF5 TODO: not needed for KF5 >= 5.2
 
 	updateActions ();
 }

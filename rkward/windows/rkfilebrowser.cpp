@@ -25,6 +25,7 @@
 #include <kactioncollection.h>
 #include <kconfiggroup.h>
 #include <kdeversion.h>
+#include <KSharedConfig>
 #if KDE_IS_VERSION(4,3,0)
 #	include <kfileitemactions.h>
 #	include <kfileitemlistproperties.h>
@@ -104,7 +105,7 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : KVBox (parent) {
 
 	dir = new KDirOperator (KUrl (), this);
 	dir->setPreviewWidget (0);
-	KConfigGroup config = KGlobal::config ()->group ("file browser window");
+	KConfigGroup config = KSharedConfig::openConfig ()->group ("file browser window");
 	dir->readConfig (config);
 	dir->setView (KFile::Default);
 	connect (RKWardMainWindow::getMain (), SIGNAL (aboutToQuitRKWard()), this, SLOT (saveConfig()));
@@ -123,9 +124,9 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : KVBox (parent) {
 	connect (dir, SIGNAL (contextMenuAboutToShow(KFileItem,QMenu*)), this, SLOT (contextMenuHook(KFileItem,QMenu*)));
 #endif
 
-	connect (dir, SIGNAL (urlEntered(KUrl)), this, SLOT (urlChangedInView(KUrl)));
+	connect (dir, SIGNAL (urlEntered(QUrl)), this, SLOT (urlChangedInView(QUrl)));
 	connect (urlbox, SIGNAL (returnPressed(QString)), this, SLOT (urlChangedInCombo(QString)));
-	connect (urlbox, SIGNAL (urlActivated(KUrl)), this, SLOT (urlChangedInCombo(KUrl)));
+	connect (urlbox, SIGNAL (urlActivated(QUrl)), this, SLOT (urlChangedInCombo(QUrl)));
 
 	connect (dir, SIGNAL (fileSelected(KFileItem)), this, SLOT (fileActivated(KFileItem)));
 
@@ -162,7 +163,7 @@ void RKFileBrowserWidget::contextMenuHook(const KFileItem& item, QMenu* menu) {
 void RKFileBrowserWidget::saveConfig () {
 	RK_TRACE (APP);
 
-	KConfigGroup config = KGlobal::config ()->group ("file browser window");
+	KConfigGroup config = KSharedConfig::openConfig ()->group ("file browser window");
 	dir->writeConfig (config);
 }
 
@@ -173,7 +174,7 @@ void RKFileBrowserWidget::setURL (const QString &url) {
 	dir->setUrl (url, true);
 }
 
-void RKFileBrowserWidget::urlChangedInView (const KUrl &url) {
+void RKFileBrowserWidget::urlChangedInView (const QUrl &url) {
 	RK_TRACE (APP);
 
 	urlbox->setUrl (url);
@@ -185,7 +186,7 @@ void RKFileBrowserWidget::urlChangedInCombo (const QString &url) {
 	dir->setUrl (url, true);
 }
 
-void RKFileBrowserWidget::urlChangedInCombo (const KUrl &url) {
+void RKFileBrowserWidget::urlChangedInCombo (const QUrl &url) {
 	RK_TRACE (APP);
 
 	dir->setUrl (url, true);

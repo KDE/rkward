@@ -92,7 +92,7 @@ QString RKRecoverDialog::saveFileFor (const QString& recovery_file) {
 }
 
 //static
-KUrl RKRecoverDialog::checkRecoverCrashedWorkspace () {
+QUrl RKRecoverDialog::checkRecoverCrashedWorkspace () {
 	RK_TRACE (DIALOGS);
 
 	QDir dir (RKSettingsModuleGeneral::filesPath ());
@@ -114,9 +114,9 @@ KUrl RKRecoverDialog::checkRecoverCrashedWorkspace () {
 			matches[i] = new_name;
 		}
 
-		if (dialog.result () == QDialog::Accepted) return (KUrl::fromLocalFile (dir.absoluteFilePath (matches.first ())));
+		if (dialog.result () == QDialog::Accepted) return (QUrl::fromLocalFile (dir.absoluteFilePath (matches.first ())));
 	}
 
-	return KUrl ();
+	return QUrl ();
 }
 

@@ -31,7 +31,7 @@ SET(misc_STAT_SRCS
    )
 
 ADD_LIBRARY(misc STATIC ${misc_STAT_SRCS})
-
+TARGET_LINK_LIBRARIES(misc Qt5::Widgets KF5::KDELibs4Support)
 
 ########### install files ###############
 

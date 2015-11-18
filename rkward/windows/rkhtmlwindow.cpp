@@ -16,11 +16,9 @@
  ***************************************************************************/
 #include "rkhtmlwindow.h"
 
-#include <khtmlview.h>
-#include <khtml_part.h>
 #include <klibloader.h>
 #include <klocale.h>
-#include <kiconloader.h>
+#include <kicon.h>
 #include <kmessagebox.h>
 #include <kparts/plugin.h>
 #include <kactioncollection.h>

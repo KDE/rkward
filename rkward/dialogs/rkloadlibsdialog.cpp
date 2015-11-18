@@ -61,8 +61,8 @@ RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool 
 
 	setFaceType (KPageDialog::Tabbed);
 	setModal (modal);
-	setCaption (i18n ("Configure Packages"));
-	setButtons (KDialog::Ok | KDialog::Apply | KDialog::Cancel);
+	setWindowTitle (i18n ("Configure Packages"));
+	setStandardButtons (QDialogButtonBox::Ok | QDialogButtonBox::Apply | QDialogButtonBox::Cancel);
 
 	LoadUnloadWidget *luwidget = new LoadUnloadWidget (this);
 	addChild (luwidget, i18n ("Load / Unload R packages"));
@@ -76,7 +76,7 @@ RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool 
 	connect (this, SIGNAL (currentPageChanged(KPageWidgetItem*,KPageWidgetItem*)), this, SLOT (slotPageChanged()));
 	QTimer::singleShot (0, this, SLOT (slotPageChanged()));
 	num_child_widgets = 4;
-	accepted = false;
+	was_accepted = false;
 
 	RKGlobals::rInterface ()->issueCommand (".libPaths ()", RCommand::App | RCommand::GetStringVector, QString (), this, GET_CURRENT_LIBLOCS_COMMAND, chain);
 }
@@ -84,16 +84,16 @@ RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool 
 RKLoadLibsDialog::~RKLoadLibsDialog () {
 	RK_TRACE (DIALOGS);
 
-	if (accepted) KPageDialog::accept ();
+	if (was_accepted) KPageDialog::accept ();
 	else KPageDialog::reject ();
 }
 
 KPageWidgetItem* RKLoadLibsDialog::addChild (QWidget *child_page, const QString &caption) {
 	RK_TRACE (DIALOGS);
 
-	connect (this, SIGNAL (okClicked()), child_page, SLOT (ok()));
-	connect (this, SIGNAL (applyClicked()), child_page, SLOT (apply()));
-	connect (this, SIGNAL (cancelClicked()), child_page, SLOT (cancel()));
+	connect (this, SIGNAL (accepted()), child_page, SLOT (ok()));
+	connect (button (QDialogButtonBox::Apply), SIGNAL (clicked(bool)), child_page, SLOT (apply()));
+	connect (this, SIGNAL(rejected()), child_page, SLOT (cancel()));
 	connect (child_page, SIGNAL (destroyed()), this, SLOT (childDeleted()));
 	return addPage (child_page, caption);
 }
@@ -147,32 +147,26 @@ void RKLoadLibsDialog::childDeleted () {
 	tryDestruct ();
 }
 
-void RKLoadLibsDialog::slotButtonClicked (int button) {
-	RK_TRACE (DIALOGS);
-
-	switch (button) {
-	case KDialog::Ok:
-		accepted = true;
-		hide ();
-		emit (okClicked ()); // will self-destruct via childDeleted ()
-		break;
-	case KDialog::Cancel:
-		accepted = false;
-		hide ();
-		emit (cancelClicked ()); // will self-destruct via childDeleted ()
-		break;
-	case KDialog::Apply:
-		emit (applyClicked ());
-		break;
-	}
-}
-
 void RKLoadLibsDialog::closeEvent (QCloseEvent *e) {
 	RK_TRACE (DIALOGS);
 	e->accept ();
 
 	// do as if cancel button was clicked:
-	slotButtonClicked (KDialog::Cancel);
+	reject ();
+}
+
+void RKLoadLibsDialog::accept () {
+	was_accepted = true;
+	hide ();
+	// will self-destruct once all children are done
+	emit (accepted());
+}
+
+void RKLoadLibsDialog::reject () {
+	was_accepted = false;
+	hide ();
+	// will self-destruct once all children are done
+	emit (rejected());
 }
 
 void RKLoadLibsDialog::rCommandDone (RCommand *command) {

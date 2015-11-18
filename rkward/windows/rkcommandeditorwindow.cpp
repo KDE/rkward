@@ -18,10 +18,9 @@
 
 #include <kxmlguifactory.h>
 
-#include <ktexteditor/editorchooser.h>
+#include <ktexteditor/editor.h>
 #include <ktexteditor/modificationinterface.h>
 #include <ktexteditor/markinterface.h>
-#include <ktexteditor/sessionconfiginterface.h>
 
 #include <qlayout.h>
 #include <qapplication.h>
@@ -49,6 +48,7 @@
 #include <ktemporaryfile.h>
 #include <kio/deletejob.h>
 #include <kio/job.h>
+#include <kconfiggroup.h>
 
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkstandardicons.h"
@@ -85,7 +85,7 @@ RKCommandEditorWindowPart::~RKCommandEditorWindowPart () {
 RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highlighting, bool use_codehinting) : RKMDIWindow (parent, RKMDIWindow::CommandEditorWindow) {
 	RK_TRACE (COMMANDEDITOR);
 
-	KTextEditor::Editor* editor = KTextEditor::editor("katepart");
+	KTextEditor::Editor* editor = KTextEditor::Editor::instance ();
 	RK_ASSERT (editor);
 
 	m_doc = editor->createDocument (this);
@@ -97,7 +97,6 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	if (em_iface) em_iface->setModifiedOnDiskWarning (true);
 	else RK_ASSERT (false);
 	m_view = m_doc->createView (this);
-	m_doc->editor ()->readConfig ();
 
 	setFocusProxy (m_view);
 	setFocusPolicy (Qt::StrongFocus);
@@ -164,19 +163,14 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 
 	// NOTE: TODO: Ideally we'd only write out a changed config, but how to detect config changes?
 	// 	Alternatively, only for the last closed script window
-	m_doc->editor ()->writeConfig ();
+	// KF5 TODO: verify that the code below is no longer needed
+	//m_doc->editor ()->writeConfig ();
 	if (!url ().isEmpty ()) {
-		KTextEditor::SessionConfigInterface *iface = qobject_cast<KTextEditor::SessionConfigInterface*> (m_doc);
 		QString p_url = RKWorkplace::mainWorkplace ()->portableUrl (m_doc->url ());
-		if (iface) {
-			KConfigGroup conf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptDocumentSettings %1").arg (p_url));
-			iface->writeSessionConfig (conf);
-		}
-		iface = qobject_cast<KTextEditor::SessionConfigInterface*> (m_view);
-		if (iface) {
-			KConfigGroup conf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptViewSettings %1").arg (p_url));
-			iface->writeSessionConfig (conf);
-		}
+		KConfigGroup conf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptDocumentSettings %1").arg (p_url));
+		m_doc->writeSessionConfig (conf);
+		KConfigGroup viewconf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptViewSettings %1").arg (p_url));
+		m_view->writeSessionConfig (viewconf);
 	}
 
 	delete hinter;
@@ -216,7 +210,8 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	// NOTE: enter_and_submit is not currently added to the menu
 	QAction *action = ac->addAction ("enter_and_submit", this, SLOT (enterAndSubmit()));
 	action->setText (i18n ("Insert line break and run"));
-	action->setShortcuts (KShortcut (Qt::AltModifier + Qt::Key_Return, Qt::AltModifier + Qt::Key_Enter));
+	ac->setDefaultShortcuts (action, QList<QKeySequence>() << Qt::AltModifier + Qt::Key_Return << Qt::AltModifier + Qt::Key_Enter);
+	action->setShortcut (Qt::AltModifier + Qt::Key_Return); // KF5 TODO: This line needed only for KF5 < 5.2, according to documentation
 
 	action_help_function = RKStandardActions::functionHelp (this, this, SLOT (showHelp()));
 
@@ -233,9 +228,8 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 
 	action_setwd_to_script = ac->addAction ("setwd_to_script", this, SLOT (setWDToScript()));
 	action_setwd_to_script->setText (i18n ("CD to script directory"));
-#if KDE_IS_VERSION(4,3,0)
-	action_setwd_to_script->setHelpText (i18n ("Change the working directory to the directory of this script"));
-#endif
+	action_setwd_to_script->setStatusTip (i18n ("Change the working directory to the directory of this script"));
+	action_setwd_to_script->setToolTip (action_setwd_to_script->statusTip ());
 	action_setwd_to_script->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionCDToScript));
 
 	file_save = findAction (m_view, "file_save");
@@ -278,7 +272,7 @@ void RKCommandEditorWindow::initBlocks () {
 		QColor shaded = colors[i];
 		shaded.setAlpha (30);
 		record.attribute = KTextEditor::Attribute::Ptr (new KTextEditor::Attribute ());
-		record.attribute->clearProperty (KTextEditor::Attribute::BackgroundFillWhitespace);
+		record.attribute->setBackgroundFillWhitespace (false);
 		record.attribute->setBackground (shaded);
 
 		QPixmap colorsquare (16, 16);
@@ -331,7 +325,7 @@ QString RKCommandEditorWindow::fullCaption () {
 	if (m_doc->url ().isEmpty ()) {
 		return (shortCaption ());
 	} else {
-		QString cap = m_doc->url ().pathOrUrl ();
+		QString cap = m_doc->url ().toDisplayString (QUrl::PreferLocalFile | QUrl::PrettyDecoded);
 		if (isModified ()) cap.append (i18n (" [modified]"));
 		return (cap);
 	}
@@ -362,32 +356,28 @@ void RKCommandEditorWindow::setReadOnly (bool ro) {
 	m_doc->setReadWrite (!ro);
 }
 
-bool RKCommandEditorWindow::openURL (const KUrl url, const QString& encoding, bool use_r_highlighting, bool read_only, bool delete_on_close){
+bool RKCommandEditorWindow::openURL (const QUrl url, const QString& encoding, bool use_r_highlighting, bool read_only, bool delete_on_close){
 	RK_TRACE (COMMANDEDITOR);
 
 	// encoding must be set *before* loading the file
 	if (!encoding.isEmpty ()) m_doc->setEncoding (encoding);
 	if (m_doc->openUrl (url)) {
+		// KF5 TODO: Check which parts of this are still needed in KF5, and which no longer work
 		if (!delete_on_close) {	// don't litter config with temporary files
-			KTextEditor::SessionConfigInterface *iface = qobject_cast<KTextEditor::SessionConfigInterface*> (m_doc);
 			QString p_url = RKWorkplace::mainWorkplace ()->portableUrl (m_doc->url ());
-			if (iface) {
-				KConfigGroup conf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptDocumentSettings %1").arg (p_url));
-				// HACK: Hmm. KTextEditor::Document's readSessionConfig() simply restores too much. Yes, I want to load bookmarks and stuff.
-				// I do not want to mess with encoding, or risk loading a different url, after the doc is already loaded!
-				if (!encoding.isEmpty () && (conf.readEntry ("Encoding", encoding) != encoding)) conf.writeEntry ("Encoding", encoding);
-				if (conf.readEntry ("URL", url) != url) conf.writeEntry ("URL", url);
-				/* HACK: What the...?! Somehow, at least on longer R scripts, stored Mode="Normal" in combination with R Highlighting
-				 * causes code folding to fail (KDE 4.8.4, http://sourceforge.net/p/rkward/bugs/122/).
-				 * Forcing Mode == Highlighting appears to help. */
-				if (use_r_highlighting) conf.writeEntry ("Mode", conf.readEntry ("Highlighting", "Normal"));
-				iface->readSessionConfig (conf);
-			}
-			iface = qobject_cast<KTextEditor::SessionConfigInterface*> (m_view);
-			if (iface) {
-				KConfigGroup conf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptViewSettings %1").arg (p_url));
-				iface->readSessionConfig (conf);
-			}
+			KConfigGroup conf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptDocumentSettings %1").arg (p_url));
+			// HACK: Hmm. KTextEditor::Document's readSessionConfig() simply restores too much. Yes, I want to load bookmarks and stuff.
+			// I do not want to mess with encoding, or risk loading a different url, after the doc is already loaded!
+			if (!encoding.isEmpty () && (conf.readEntry ("Encoding", encoding) != encoding)) conf.writeEntry ("Encoding", encoding);
+			if (conf.readEntry ("URL", url) != url) conf.writeEntry ("URL", url);
+			// HACK: What the...?! Somehow, at least on longer R scripts, stored Mode="Normal" in combination with R Highlighting
+			// causes code folding to fail (KDE 4.8.4, http://sourceforge.net/p/rkward/bugs/122/).
+			// Forcing Mode == Highlighting appears to help.
+			if (use_r_highlighting) conf.writeEntry ("Mode", conf.readEntry ("Highlighting", "Normal"));
+			m_doc->readSessionConfig (conf);
+
+			KConfigGroup viewconf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptViewSettings %1").arg (p_url));
+			m_view->readSessionConfig (viewconf);
 		}
 		if (use_r_highlighting) RKCommandHighlighter::setHighlighting (m_doc, RKCommandHighlighter::RScript);
 		else RKCommandHighlighter::setHighlighting (m_doc, RKCommandHighlighter::Automatic);
@@ -1072,12 +1062,12 @@ void RKCodeCompletionModel::completionInvoked (KTextEditor::View*, const KTextEd
 	updateCompletionList (command_editor->currentCompletionWord ());
 }
 
-void RKCodeCompletionModel::executeCompletionItem (KTextEditor::Document *document, const KTextEditor::Range &word, int row) const {
+void RKCodeCompletionModel::executeCompletionItem (KTextEditor::View *view, const KTextEditor::Range &word, const QModelIndex &index) const {
 	RK_TRACE (COMMANDEDITOR);
 
-	RK_ASSERT (names.size () > row);
+	RK_ASSERT (names.size () > index.row ());
 
-	document->replaceText (word, names[row]);
+	view->document ()->replaceText (word, names[index.row ()]);
 }
 
 QVariant RKCodeCompletionModel::data (const QModelIndex& index, int role) const {
@@ -1108,12 +1098,12 @@ KTextEditor::Document* RKCommandHighlighter::getDoc () {
 	if (_doc) return _doc;
 
 	RK_TRACE (COMMANDEDITOR);
-	KTextEditor::Editor* editor = KTextEditor::editor("katepart");
+	KTextEditor::Editor* editor = KTextEditor::Editor::instance ();
 	RK_ASSERT (editor);
 
 	_doc = editor->createDocument (RKWardMainWindow::getMain ());
 // NOTE: In KDE 4.4.5, a (dummy) view is needed to access highlighting attributes. According to a katepart error message, this will be fixed, eventually.
-// TODO: check whether this is fixed in some later version of KDE
+// KF5 TODO: check whether this is fixed
 	QWidget* view = _doc->createView (0);
 	view->hide ();
 	RK_ASSERT (_doc);

@@ -28,6 +28,7 @@
 #include <krun.h>
 #include <kmimetype.h>
 #include <kstandarddirs.h>
+#include <KSharedConfig>
 
 #include <QFileInfo>
 #include <QCryptographicHash>
@@ -93,7 +94,7 @@ RKWorkplace::RKWorkplace (QWidget *parent) : QWidget (parent) {
 	tool_window_bars[RKToolWindowList::Right] = new RKToolWindowBar (KMultiTabBar::Right, hbox);
 	tool_window_bars[RKToolWindowList::Right]->setSplitter (horiz_splitter);
 
-	KConfigGroup toolbar_config = KGlobal::config ()->group ("ToolwindowBars");
+	KConfigGroup toolbar_config = KSharedConfig::openConfig ()->group ("ToolwindowBars");
 	for (int i = 0; i < TOOL_WINDOW_BAR_COUNT; ++i) tool_window_bars[i]->restoreSize (toolbar_config);
 
 	// now add it all to this widget
@@ -152,7 +153,7 @@ void RKWorkplace::setWorkspaceURL (const KUrl &url, bool keep_config) {
 void RKWorkplace::saveSettings () {
 	RK_TRACE (APP);
 
-	KConfigGroup toolbar_config = KGlobal::config ()->group ("ToolwindowBars");
+	KConfigGroup toolbar_config = KSharedConfig::openConfig ()->group ("ToolwindowBars");
 	for (int i = 0; i < TOOL_WINDOW_BAR_COUNT; ++i) tool_window_bars[i]->saveSize (toolbar_config);
 }
 

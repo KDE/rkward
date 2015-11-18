@@ -27,8 +27,8 @@ class RKRecoverDialog : public KDialog {
 	Q_OBJECT
 public:
 /** Check whether a crash recovery file is available. If so, display a dialog, offering to load the recovery file.
-@returns The url of the recovery file, if user selected to load it. An empty KUrl otherwise. */
-	static KUrl checkRecoverCrashedWorkspace ();
+@returns The url of the recovery file, if user selected to load it. An empty QUrl otherwise. */
+	static QUrl checkRecoverCrashedWorkspace ();
 protected:
 	RKRecoverDialog (const QStringList &recovery_files);
 	~RKRecoverDialog ();

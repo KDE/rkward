@@ -23,7 +23,7 @@
 #include <QEvent>
 #include <QPaintEvent>
 
-#include <kparts/event.h>
+#include <kparts/partactivateevent.h>
 #include <kxmlguifactory.h>
 #include <kactioncollection.h>
 #include <klocale.h>

@@ -823,8 +823,8 @@ QVariant RKOptionSetDisplayModel::data (const QModelIndex& index, int role) cons
 		}
 	} else if (role == Qt::BackgroundRole) {
 		const RKOptionSet::RowInfo &ri = set->rows[row];
-		if (!ri.finished) return Qt::yellow;
-		if (!ri.valid) return Qt::red;
+		if (!ri.finished) return QColor (Qt::yellow);
+		if (!ri.valid) return QColor (Qt::red);
 	} else if ((role == Qt::ToolTipRole) || role == (Qt::StatusTipRole)) {
 		const RKOptionSet::RowInfo &ri = set->rows[row];
 		if (!ri.finished) return i18n ("This row has not yet been processed.");
@@ -844,8 +844,8 @@ QVariant RKOptionSetDisplayModel::headerData (int section, Qt::Orientation orien
 	if (orientation == Qt::Horizontal) {
 		if (role == Qt::DisplayRole) return (column_labels.value (section));
 		if (role == Qt::BackgroundRole) {
-			if (set->n_unfinished_rows > 0) return Qt::yellow;
-			if (!set->isValid ()) return Qt::red;
+			if (set->n_unfinished_rows > 0) return QColor (Qt::yellow);
+			if (!set->isValid ()) return QColor (Qt::red);
 		}
 		if ((role == Qt::ToolTipRole) || role == (Qt::StatusTipRole)) {
 			if (set->n_unfinished_rows > 0) return i18n ("Please wait while settings are being processed");
