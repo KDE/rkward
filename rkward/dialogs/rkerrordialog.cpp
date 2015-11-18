@@ -66,7 +66,8 @@ public:
 		connect (this, SIGNAL (finished()), this, SLOT (deleteLater()));
 	}
 
-	void accept () override {
+	// KF5 TODO: add override keyword
+	void accept () {
 		// The report template is just too large to pass it via GET, so we use a local proxy page to pass it in a POST request
 		QTemporaryFile proxy;
 		proxy.setAutoRemove (false);
