@@ -48,7 +48,7 @@ public slots:
 	void requirednessChanged (RKComponentPropertyBase *);
 protected:
 /** Grey out input when disabled */
-	void enabledChange (bool old);
+	void changeEvent (QEvent *event) override;
 private:
 	void updateColor ();
 	bool updating;

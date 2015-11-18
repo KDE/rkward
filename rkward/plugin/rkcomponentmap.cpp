@@ -347,7 +347,7 @@ void RKComponentMap::initialize () {
 RKComponentMap::RKComponentMap () : QObject (), RKComponentGUIXML ("global"), KXMLGUIClient () {
 	RK_TRACE (PLUGIN);
 
-	setComponentData (KGlobal::mainComponent ());
+	setComponentName (QCoreApplication::applicationName (), QGuiApplication::applicationDisplayName ());
 	actionCollection ()->setConfigGroup ("Plugin Shortcuts");
 	contexts.insert ("global", this);
 }
@@ -719,7 +719,7 @@ void RKComponentMap::addedEntry (const QString &id, RKComponentHandle *handle) {
 	handle->setAccessible (true);
 	QAction *action = actionCollection ()->addAction (id, this, SLOT (activateComponent()));
 	action->setText (handle->getLabel ());
-	action->setShortcutConfigurable (true);
+	actionCollection ()->setShortcutsConfigurable (action, true);
 }
 
 void RKComponentGUIXML::appendPluginToList (const QString& id, QStringList* list) {

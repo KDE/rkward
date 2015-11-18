@@ -269,7 +269,7 @@ void RKCommandLogView::selectAll () {
 RKCommandLogPart::RKCommandLogPart (RKCommandLog *for_log) : KParts::Part (0) {
 	RK_TRACE (APP);
 
-	setComponentData (KGlobal::mainComponent ());
+	setComponentName (QCoreApplication::applicationName (), QGuiApplication::applicationDisplayName ());
 	setWidget (log = for_log);
 	setXMLFile ("rkcommandlogpart.rc");
 }

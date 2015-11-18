@@ -91,7 +91,7 @@ void RKVarSelector::showFilterWidget () {
 		filter_widget = list_view->getSettings ()->filterWidget (this);
 		filter_widget_placeholder->addWidget (filter_widget);
 	}
-	filter_widget->setShown (show_filter_action->isChecked ());
+	filter_widget->setVisible (show_filter_action->isChecked ());
 }
 
 void RKVarSelector::rootChanged () {

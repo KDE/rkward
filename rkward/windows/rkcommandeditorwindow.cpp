@@ -70,7 +70,7 @@
 RKCommandEditorWindowPart::RKCommandEditorWindowPart (QWidget *parent) : KParts::Part (parent) {
 	RK_TRACE (COMMANDEDITOR);
 
-	setComponentData (KGlobal::mainComponent ());
+	setComponentName (QCoreApplication::applicationName (), QGuiApplication::applicationDisplayName ());
 	setWidget (parent);
 	setXMLFile ("rkcommandeditorwindowpart.rc");
 }

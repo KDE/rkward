@@ -627,7 +627,7 @@ void RKCaughtX11Window::rCommandDone (RCommand *command) {
 RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KParts::Part (0) {
 	RK_TRACE (MISC);
 
-	setComponentData (KGlobal::mainComponent ());
+	setComponentName (QCoreApplication::applicationName (), QGuiApplication::applicationDisplayName ());
 
 	setWidget (window);
 	RKCaughtX11WindowPart::window = window;

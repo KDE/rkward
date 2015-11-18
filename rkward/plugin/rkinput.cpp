@@ -21,6 +21,7 @@
 #include <qlineedit.h>
 #include <qlabel.h>
 #include <QVBoxLayout>
+#include <QEvent>
 
 #include <klocale.h>
 
@@ -81,12 +82,11 @@ RKInput::~RKInput () {
 	RK_TRACE (PLUGIN);
 }
 
-void RKInput::enabledChange (bool old) {
+void RKInput::changeEvent (QEvent *event) {
 	RK_TRACE (PLUGIN);
 
-	updateColor ();
-
-	RKComponent::enabledChange (old);
+	if (event->type () == QEvent::EnabledChange) updateColor ();
+	RKComponent::changeEvent (event);
 }
 
 void RKInput::updateColor () {

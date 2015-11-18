@@ -22,6 +22,7 @@
 #include <QTreeWidget>
 #include <QHeaderView>
 #include <qstringlist.h>
+#include <QEvent>
 #include <QGridLayout>
 #include <QVBoxLayout>
 
@@ -190,6 +191,11 @@ void RKVarSlot::updateLook () {
 	}
 	if (!multi) palette.setColor (QPalette::Base, palette.color (QPalette::Window));
 	list->setPalette(palette);
+}
+
+void RKVarSlot::changeEvent (QEvent* event) {
+	if (event->type () == QEvent::EnabledChange) updateLook ();
+	RKComponent::changeEvent (event);
 }
 
 void RKVarSlot::addOrRemove (bool add) {

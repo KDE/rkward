@@ -566,7 +566,7 @@ void RKHTMLWindow::restoreBrowserState (VisitedLocation* state) {
 
 RKHTMLWindowPart::RKHTMLWindowPart (RKHTMLWindow* window) : KParts::Part (window) {
 	RK_TRACE (APP);
-	setComponentData (KGlobal::mainComponent ());
+	setComponentName (QCoreApplication::applicationName (), QGuiApplication::applicationDisplayName ());
 	RKHTMLWindowPart::window = window;
 	setWidget (window);
 }

@@ -993,7 +993,7 @@ void RKConsole::activate (bool with_focus) {
 RKConsolePart::RKConsolePart (RKConsole *console) : KParts::Part (0) {
 	RK_TRACE (APP);
 
-	setComponentData (KGlobal::mainComponent ());
+	setComponentName (QCoreApplication::applicationName (), QGuiApplication::applicationDisplayName ());
 
 	setWidget (console);
 

@@ -1185,7 +1185,7 @@ QVariant RKComponentPropertyCode::value (const QString &modifier) {
 	if (modifier == "printout") return printout ();
 	if (!modifier.isEmpty ()) warnModifierNotRecognized (modifier);
 
-	return (preprocess () + calculate () + printout ());
+	return (QString (preprocess () + calculate () + printout ()));
 }
 
 /////////////////////////////////////////// Convert ////////////////////////////////////////////////

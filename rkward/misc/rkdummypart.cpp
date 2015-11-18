@@ -24,9 +24,7 @@
 RKDummyPart::RKDummyPart (QObject *parent, QWidget *widget) : KParts::Part (parent) {
 	RK_TRACE (MISC);
 	setWidget (widget);
-
-	setComponentData (KGlobal::mainComponent ());
-
+	setComponentName (QCoreApplication::applicationName (), QGuiApplication::applicationDisplayName ());
 	setXMLFile ("rkdummypart.rc");
 }
 

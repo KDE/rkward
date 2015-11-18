@@ -42,7 +42,7 @@
 RKMDIStandardActionClient::RKMDIStandardActionClient () : KXMLGUIClient () {
 	RK_TRACE (APP);
 
-	setComponentData (KGlobal::mainComponent ());
+	setComponentName (QCoreApplication::applicationName (), QGuiApplication::applicationDisplayName ());
 	setXMLFile ("rkstandardactions.rc", true);
 }
 
