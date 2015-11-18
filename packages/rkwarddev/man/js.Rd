@@ -4,8 +4,8 @@
 \alias{js}
 \title{R to JavaScript translation}
 \usage{
-js(..., level = 2, indent.by = rk.get.indent(), linebreaks = FALSE,
-  empty.e = FALSE)
+js(..., level = 2, indent.by = rk.get.indent(), linebreaks = TRUE,
+  empty.e = rk.get.empty.e())
 }
 \arguments{
 \item{...}{One or several character strings and/or \code{XiMpLe.node} objects with plugin nodes,

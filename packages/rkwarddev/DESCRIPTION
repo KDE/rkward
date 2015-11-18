@@ -1,7 +1,7 @@
 Package: rkwarddev
 Type: Package
 Title: A Collection of Tools for RKWard Plugin Development
-Author: m.eik michalke [aut, cre]
+Author: m.eik michalke [aut, cre, cph]
 Maintainer: m.eik michalke <meik.michalke@hhu.de>
 Depends:
     R (>= 2.9.0),methods,XiMpLe (>= 0.03-21),rkward (>= 0.5.7)
@@ -14,9 +14,9 @@ License: GPL (>= 3)
 Encoding: UTF-8
 LazyLoad: yes
 URL: https://rkward.kde.org
-Authors@R: c(person(given="m.eik", family="michalke", email="meik.michalke@hhu.de", role=c("aut", "cre")))
+Authors@R: c(person(given="m.eik", family="michalke", email="meik.michalke@hhu.de", role=c("aut", "cre", "cph")))
 Version: 0.07-4
-Date: 2015-11-11
+Date: 2015-11-15
 RoxygenNote: 5.0.0
 Collate:
     '00_class_01_rk.JS.arr.R'
@@ -110,6 +110,7 @@ Collate:
     'rk.XML.wizard.R'
     'rk.build.plugin.R'
     'rk.get.comp.R'
+    'rk.get.empty.e.R'
     'rk.get.indent.R'
     'rk.get.rkh.prompter.R'
     'rk.i18n.comment.R'
@@ -131,10 +132,12 @@ Collate:
     'rk.rkh.title.R'
     'rk.rkh.usage.R'
     'rk.set.comp.R'
+    'rk.set.empty.e.R'
     'rk.set.indent.R'
     'rk.set.rkh.prompter.R'
     'rk.testsuite.doc.R'
     'rk.uniqueIDs.R'
+    'rk.updatePluginMessages.R'
     'rkwarddev-desc-internal.R'
     'rkwarddev-package.R'
     'rkwarddev.required.R'

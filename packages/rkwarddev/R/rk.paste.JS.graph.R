@@ -55,7 +55,7 @@
 #'  plotOpts=tmp.plot.options)
 #'
 #' cat(js.prnt)
-rk.paste.JS.graph <- function(..., plotOpts=NULL, printoutObj=NULL, level=2, indent.by=rk.get.indent(), empty.e=FALSE){
+rk.paste.JS.graph <- function(..., plotOpts=NULL, printoutObj=NULL, level=2, indent.by=rk.get.indent(), empty.e=rk.get.empty.e()){
 
   plotOptsIndent <- paste(rep(rk.get.indent(escape=TRUE), level), collapse="")
 

@@ -142,27 +142,25 @@ XML.single.tags <- function(tree, drop=NULL){
 ## function setMinIndent()
 # takes a string, determines the minimum number of grouped \t strings,
 # and adjusts it globally to the given level
-setMinIndent <- function(tag, level=1, indent.by="\t", shine=0){
-  if(shine > 0){
-    tag <- gsub("\n([^\t])", "\n\t\\1", tag, perl=TRUE)
-  } else {}
-  currentMinIndent <- min(nchar(unlist(strsplit(tag, "[^\t]+"), use.names=FALSE)))
+setMinIndent <- function(tag, level=1, indent.by="\t"){
+  currentMinIndent <- min(nchar(unlist(strsplit(tag, "[^\t ]+"), use.names=FALSE)))
   indentDiff <- currentMinIndent - level
+  tagParts <- unlist(strsplit(tag, "\n"))
   # if currentMinIndent is greater than level, reduce indentation
   if(indentDiff > 0){
-    tag <- gsub(paste0("(^|\n)(\t){", indentDiff, "}"), "\\1", tag, perl=TRUE)
+    tagParts <- gsub(paste0("(^|\n)([\t ]){", indentDiff+1, "}"), "\\1", tagParts, perl=TRUE)
   } else if(indentDiff < 0){
-    tag <- gsub("(^|\n)(\t)", paste0("\\1", indent(level + 1, by=indent.by)), tag, perl=TRUE)
+    tagParts <- paste0(indent(level=level, by=indent.by), tagParts)
   } else {}
-
-  return(tag)
+  
+  return(paste0(tagParts, collapse="\n"))
 } ## end function setMinIndent()
 
 
 ## function indent()
 # will create tabs to format the output
 indent <- function(level, by="\t"){
-  paste(rep(by, level-1), collapse="")
+  paste(rep(by, max(0, level-1)), collapse="")
 } ## end function indent()
 
 
@@ -256,7 +254,7 @@ parseXMLAttr <- function(tag){
     separated.tag <- gsub("( ,)?([^[:space:],\"]*)=\"", "\\1\"\\2\"=\"", separated.tag, perl=TRUE)
     ###################################################################################
     ## TODO:
-    ## empty attributes are not valid, force them into atrribute="attribute"
+    ## empty attributes are not valid, force them into attribute="attribute"
     ## does only work partially it the empty attribute is the last in line
     ## and still causes *problems* in matching string in the value of other attributes!
     # separated.tag <- gsub("(, |\\A)([^[:space:],\"=][[:alnum:]]*)", "\\1\"\\2\"=\"\\2\"", separated.tag, perl=TRUE)

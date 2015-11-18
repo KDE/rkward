@@ -1,3 +1,5 @@
+- Fixed: RKWard package repository would be listed twice on fresh installations
+- Switch to bugs.kde.org as primary issue tracker
 - Workspace browser gains functionality to search / filter objects by name
 - Separate globalenv() and other environments in the search path more clearly in workspace browser
 - Fix some minor toolbar glitches

@@ -18,9 +18,11 @@
 #include "rkvarselector.h"
 
 #include <QVBoxLayout>
+#include <QHBoxLayout>
 #include <QLabel>
 #include <QAction>
 #include <QMenu>
+#include <QToolButton>
 
 #include <klocale.h>
 
@@ -47,9 +49,17 @@ RKVarSelector::RKVarSelector (const QDomElement &element, RKComponent *parent_co
 
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
-	
+
+	QHBoxLayout *hbox = new QHBoxLayout ();
+	hbox->setContentsMargins (0, 0, 0, 0);
+	vbox->addLayout (hbox);
 	QLabel *label = new QLabel (xml->i18nStringAttribute (element, "label", i18n ("Select Variable(s)"), DL_INFO), this);
-	vbox->addWidget (label);
+	hbox->addWidget (label);
+	QToolButton *advanced_button = new QToolButton (this);
+	advanced_button->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionConfigureGeneric));
+	advanced_button->setPopupMode (QToolButton::InstantPopup);
+	advanced_button->setAutoRaise (true);
+	hbox->addWidget (advanced_button);
 
 	// TODO: Or should these actions be moved to RKObjectListView, non-tool-window-mode?
 	show_all_envs_action = new QAction (i18n ("Show all environments"), this);
@@ -76,6 +86,7 @@ RKVarSelector::RKVarSelector (const QDomElement &element, RKComponent *parent_co
 	QAction* sep = list_view->contextMenu ()->insertSeparator (list_view->contextMenu ()->actions ().value (0));
 	list_view->contextMenu ()->insertAction (sep, show_filter_action);
 	list_view->contextMenu ()->insertAction (sep, show_all_envs_action);
+	advanced_button->setMenu (list_view->contextMenu ());
 
 	rootChanged ();
 }
@@ -91,7 +102,12 @@ void RKVarSelector::showFilterWidget () {
 		filter_widget = list_view->getSettings ()->filterWidget (this);
 		filter_widget_placeholder->addWidget (filter_widget);
 	}
-	filter_widget->setVisible (show_filter_action->isChecked ());
+	if (show_filter_action->isChecked ()) {
+		filter_widget->show ();
+	} else {
+		filter_widget->hide ();
+		list_view->getSettings ()->resetFilters ();
+	}
 }
 
 void RKVarSelector::rootChanged () {

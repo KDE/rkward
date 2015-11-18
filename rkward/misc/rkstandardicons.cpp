@@ -44,6 +44,7 @@ void RKStandardIcons::initIcons () {
 	icons[ActionCDToScript] = KIcon ("folder-txt");
 
 	icons[ActionConfigurePackages] = KIcon ("utilities-file-archiver");
+	icons[ActionConfigureGeneric] = KIcon ("configure");
 	icons[ActionSearch] = KIcon ("edit-find");
 
 	icons[ActionDeleteRow] = KIcon ("edit-delete");
@@ -64,8 +65,8 @@ void RKStandardIcons::initIcons () {
 	icons[ActionMoveUp] = KIcon ("go-up");
 	icons[ActionMoveDown] = KIcon ("go-down");
 
-	icons[ActionExpandDown] = KIcon ("arrow-down");
-	icons[ActionCollapseUp] = KIcon ("arrow-up");
+	icons[ActionExpandDown] = KIcon ("arrow-right");
+	icons[ActionCollapseUp] = KIcon ("arrow-down");
 
 	icons[ActionDocumentInfo] = KIcon ("documentinfo.png");
 	icons[ActionFlagGreen] = KIcon ("flag-green.png");

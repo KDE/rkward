@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'XiMpLe'}
 \encoding{UTF-8}
-\section{Changes in XiMpLe version 0.03-23 (2015-10-11)}{
+\section{Changes in XiMpLe version 0.03-23 (2015-11-16)}{
   \subsection{unreleased}{
     \itemize{
       \item this release is under development
@@ -17,6 +17,9 @@
       \item \code{XMLScanDeep()} was said to examine node names, children and values as well
         as attributes, but in fact it was hard-wired on attributes only. removed
         children from the list and added support for names and values
+      \item corrected internal function \code{setMinIndent()} and \code{pasteXMLTag()} for better
+        indentation for comments
+      \item internal function \code{indent()} can now handle negative levels
     }
   }
 }

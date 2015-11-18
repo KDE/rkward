@@ -2,7 +2,7 @@
                           rkloadlibsdialog  -  description
                              -------------------
     begin                : Mon Sep 6 2004
-    copyright            : (C) 2004 - 2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2004 - 2015 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -39,6 +39,7 @@ class RCommandChain;
 class QCheckBox;
 class PackageInstallParamsWidget;
 class InstallPackagesWidget;
+class RKDynamicSearchLine;
 
 /**
 Dialog which excapsulates widgets to load/unload, update and install R packages
@@ -252,6 +253,7 @@ public slots:
 	void activated ();
 	void markAllUpdates ();
 	void configureRepositories ();
+	void rowClicked (const QModelIndex& row);
 private:
 	void doInstall (bool refresh);
 	QTreeView *packages_view;
@@ -259,7 +261,7 @@ private:
 	RKRPackageInstallationStatusSortFilterModel *model;
 
 	QPushButton *mark_all_updates_button;
-	QLineEdit *filter_edit;
+	RKDynamicSearchLine *filter_edit;
 	QCheckBox *rkward_packages_only;
 	PackageInstallParamsWidget *install_params;
 	

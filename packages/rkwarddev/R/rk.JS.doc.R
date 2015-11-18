@@ -90,7 +90,7 @@ rk.JS.doc <- function(require=c(), variables=NULL, globals=NULL, results.header=
   if(!is.null(globals)){
     js.globals <- paste0(
       "// define variables globally\n",
-      paste0(globals, collapse=""))
+      trim.n(paste0(globals, collapse="")))
     if(!is.null(variables)){
       # remove globals from variables, if duplicate
       # we'll split them by semicolon
@@ -124,7 +124,7 @@ rk.JS.doc <- function(require=c(), variables=NULL, globals=NULL, results.header=
   js.preprocess <- paste0("function preprocess(){\n",
     ifelse(isTRUE(addSetGlobalVars), paste0(indent(2, by=indent.by), "setGlobalVars();\n"), ""),
     indent(2, by=indent.by), "// add requirements etc. here\n",
-    paste(js.require, collapse=""),
+    trim.n(paste(js.require, collapse="")),
     "\n",
     ifelse(is.null(preprocess), "", paste0("\n", preprocess, "\n")),
     "}")
@@ -134,7 +134,7 @@ rk.JS.doc <- function(require=c(), variables=NULL, globals=NULL, results.header=
       if(is.null(doPrintout) | !is.null(calculate)){paste0(
         ifelse(is.null(variables), "", paste0(
           indent(2, by=indent.by), "// read in variables from dialog\n",
-          paste(variables, collapse=""), "\n\n")),
+          trim.n(paste(variables, collapse="")), "\n\n")),
         ifelse(is.null(calculate),
           paste0(indent(2, by=indent.by), "// generate the R code to be evaluated here\n"),
           paste0(indent(2, by=indent.by), "// the R code to be evaluated\n",calculate, "\n")))
@@ -172,7 +172,7 @@ rk.JS.doc <- function(require=c(), variables=NULL, globals=NULL, results.header=
           "function doPrintout(full){\n",
           ifelse(is.null(variables), "", paste0(
             indent(2, by=indent.by), "// read in variables from dialog\n", 
-            paste(variables, collapse=""), "\n\n")),
+            trim.n(paste(variables, collapse="")), "\n\n")),
           indent(2, by=indent.by), "// create the plot\n",
           if(is.character(results.header) && !identical(results.header, "")){
             rk.paste.JS(ite("full", rk.JS.header(results.header, guess.getter=guess.getter, .add=header.add)))

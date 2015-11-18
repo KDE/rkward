@@ -2,7 +2,7 @@
                           rkloadlibsdialog  -  description
                              -------------------
     begin                : Mon Sep 6 2004
-    copyright            : (C) 2004 - 2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2004 - 2015 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -45,6 +45,7 @@
 #include "../misc/rkprogresscontrol.h"
 #include "../misc/rkstandardicons.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkdynamicsearchline.h"
 
 #include "../debug.h"
 
@@ -631,6 +632,35 @@ void LoadUnloadWidget::cancel () {
 }
 
 /////////////////////// InstallPackagesWidget //////////////////////////
+#include <QHeaderView>
+#include <QStyledItemDelegate>
+
+/** Responsible for drawing the "category" items */
+class InstallPackagesDelegate : public QStyledItemDelegate {
+public:
+	InstallPackagesDelegate (QTreeView* parent) : QStyledItemDelegate (parent) {
+		table = parent;
+		expanded = RKStandardIcons::getIcon (RKStandardIcons::ActionCollapseUp);
+		collapsed = RKStandardIcons::getIcon (RKStandardIcons::ActionExpandDown);
+	}
+	void initStyleOption (QStyleOptionViewItem* option, const QModelIndex& index) const {
+		QStyledItemDelegate::initStyleOption (option, index);
+		if (!index.parent ().isValid ()) {
+			QStyleOptionViewItemV4 *v4 = qstyleoption_cast<QStyleOptionViewItemV4 *> (option);
+			if (!v4) {
+				RK_ASSERT (false);
+				return;
+			}
+			v4->icon = table->isExpanded (index) ? expanded : collapsed;
+			v4->features |= QStyleOptionViewItemV2::HasDecoration;
+			v4->font.setBold (true);
+			v4->backgroundBrush = table->palette ().mid ();
+		}
+	}
+	QTreeView* table;
+	QIcon expanded;
+	QIcon collapsed;
+};
 
 InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidget (0) {
 	RK_TRACE (DIALOGS);
@@ -649,9 +679,15 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidge
 	packages_view->setSortingEnabled (true);
 	model = new RKRPackageInstallationStatusSortFilterModel (this);
 	model->setSourceModel (packages_status);
-	model->setFilterCaseSensitivity (Qt::CaseInsensitive);
 	model->setSortCaseSensitivity (Qt::CaseInsensitive);
 	packages_view->setModel (model);
+	packages_view->setItemDelegateForColumn (0, new InstallPackagesDelegate (packages_view));
+	for (int i = 0; i < model->rowCount (); ++i) {  // the root level captions
+		packages_view->setFirstColumnSpanned (i, QModelIndex (), true);
+	}
+	connect (packages_view, SIGNAL(clicked(QModelIndex)), this, SLOT(rowClicked(QModelIndex)));
+	packages_view->setRootIsDecorated (false);
+	packages_view->setIndentation (0);
 	packages_view->setEnabled (false);
 	packages_view->setMinimumHeight (packages_view->sizeHintForRow (0) * 15);	// force a decent height
 	packages_view->setMinimumWidth (packages_view->fontMetrics ().width ("This is to force a sensible min width for the packages view (empty on construction)"));
@@ -666,9 +702,9 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidge
 	hbox->addLayout (buttonvbox);
 	buttonvbox->setContentsMargins (0, 0, 0, 0);
 	QLabel *label = new QLabel (i18n ("Show only packages matching:"), this);
-	filter_edit = new QLineEdit (QString (), this);
-	RKCommonFunctions::setTips (i18n ("<p>You can limit the packages displayed in the list to with names or titles matching a filter string.</p><p><b>Note:</b> To limit the search to matches at the start of the string, start the filter with '^', e.g. ('^rk.'). To limit searches to the end of the string, append '$' at the end of the filter.</p>"), label, filter_edit);
-	connect (filter_edit, SIGNAL (textChanged(QString)), this, SLOT (filterChanged()));
+	filter_edit = new RKDynamicSearchLine (this);
+	RKCommonFunctions::setTips (i18n ("<p>You can limit the packages displayed in the list to with names or titles matching a filter string.</p>") + filter_edit->regexpTip (), label, filter_edit);
+	filter_edit->setModelToFilter (model);
 	rkward_packages_only = new QCheckBox (i18n ("Show only packages providing RKWard dialogs"), this);
 	RKCommonFunctions::setTips (i18n ("<p>Some but not all R packages come with plugins for RKWard. That means they provide a graphical user-interface in addition to R functions. Check this box to show only such packages.</p><p></p>"), rkward_packages_only);
 	connect (rkward_packages_only, SIGNAL(stateChanged(int)), this, SLOT (filterChanged()));
@@ -709,26 +745,31 @@ void InstallPackagesWidget::initialize () {
 
 	packages_status->initialize (parent->chain);
 	packages_view->setEnabled (true);
-	for (int i = 0; i <= RKRPackageInstallationStatus::PackageName; ++i) {
+	// Force a good width for the icon column, particularly for MacOS X.
+	packages_view->header ()->resizeSection (0, packages_view->sizeHintForIndex (model->index (0, 0, model->index (RKRPackageInstallationStatus::NewPackages, 0, QModelIndex ()))).width () + packages_view->indentation ());
+	for (int i = 1; i <= RKRPackageInstallationStatus::PackageName; ++i) {
 		packages_view->resizeColumnToContents (i);
-#ifdef Q_WS_MAC
-		// HACK: Without this, the column is just too narrow on MacOS X, and the icon is hidden
-		if (i == RKRPackageInstallationStatus::EnhancesRKWard) packages_view->setColumnWidth (i, packages_view->columnWidth (i) + 16);
-#endif
+	}
+	// For whatever reason, we have to re-set these, here.
+	for (int i = 0; i < model->rowCount (); ++i) {
+		packages_view->setFirstColumnSpanned (i, QModelIndex (), true);
+	}
+}
+
+void InstallPackagesWidget::rowClicked (const QModelIndex& row) {
+	RK_TRACE (DIALOGS);
+
+	if (!row.parent ().isValid ()) {
+		QModelIndex fixed_row = model->index (row.row (), 0, row.parent ());
+		packages_view->setExpanded (fixed_row, !packages_view->isExpanded (fixed_row));
 	}
 }
 
 void InstallPackagesWidget::filterChanged () {
 	RK_TRACE (DIALOGS);
 
-	QString f = filter_edit->text ();
-	if (f.isEmpty ()) f = '*';
-	else {
-		if (!f.startsWith ('^')) f.prepend ('*');
-		if (!f.endsWith ('$')) f.append ('*');
-	}
-	model->setFilterWildcard (f);
 	model->setRKWardOnly (rkward_packages_only->isChecked ());
+	// NOTE: filter string already set by RKDynamicSearchLine
 }
 
 void InstallPackagesWidget::trySelectPackage (const QString &package_name) {
@@ -996,16 +1037,15 @@ QVariant RKRPackageInstallationStatus::data (const QModelIndex &index, int role)
 	if (!index.parent ().isValid ()) {	// top level item
 		int row = index.row ();
 		if (row == UpdateablePackages) {
-			if ((role == Qt::DisplayRole) && (index.column () == PackageName)) return QVariant (i18n ("Updateable Packages"));
+			if (role == Qt::DisplayRole) return QVariant (i18n ("Updateable Packages"));
 			if (role == Qt::ToolTipRole) return QVariant (i18n ("Packages for which an update is available. This may include packages which were merely built against a newer version of R."));
 		} else if (row == NewPackages) {
-			if ((role == Qt::DisplayRole) && (index.column () == PackageName)) return QVariant (i18n ("New Packages"));
+			if (role == Qt::DisplayRole) return QVariant (i18n ("New Packages"));
 			if (role == Qt::ToolTipRole) return QVariant (i18n ("Packages which are available for installation, but which are not currently installed."));
 		} else if (row == InstalledPackages) {
-			if ((role == Qt::DisplayRole) && (index.column () == PackageName)) return QVariant (i18n ("Installed Packages"));
+			if (role == Qt::DisplayRole) return QVariant (i18n ("Installed Packages"));
 			if (role == Qt::ToolTipRole) return QVariant (i18n ("Packages which are installed locally. Note that updates may be available for these packages."));
 		}
-		if (role == Qt::BackgroundColorRole) return QVariant (QColor (200, 200, 200));
 	} else if (!index.parent ().parent ().isValid ()) {		// model has exactly two levels
 		const int col = index.column ();
 		const int prow = index.parent ().row ();
@@ -1198,9 +1238,9 @@ bool RKRPackageInstallationStatusSortFilterModel::filterAcceptsRow (int source_r
 	}
 // filter on Name and Title
 	QString name = source_parent.child (source_row, RKRPackageInstallationStatus::PackageName).data ().toString ();
-	if (filterRegExp ().exactMatch (name)) return true;
+	if (name.contains (filterRegExp ())) return true;
 	QString title = source_parent.child (source_row, RKRPackageInstallationStatus::PackageTitle).data ().toString ();
-	return (filterRegExp ().exactMatch (title));
+	return (title.contains (filterRegExp ()));
 }
 
 void RKRPackageInstallationStatusSortFilterModel::setRKWardOnly (bool only) {

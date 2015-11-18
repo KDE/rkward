@@ -65,7 +65,7 @@
 #' @export
 
 rk.paste.JS <- function(..., level=2, indent.by=rk.get.indent(), funct=NULL, array=NULL,
-  var.prefix=NULL, modifiers=NULL, default=NULL, join=NULL, getter=NULL, var=TRUE, empty.e=FALSE,
+  var.prefix=NULL, modifiers=NULL, default=NULL, join=NULL, getter=NULL, var=TRUE, empty.e=rk.get.empty.e(),
   opt.sep=NULL){
   stopifnot(level > 0)
   all.objects <- list(...)

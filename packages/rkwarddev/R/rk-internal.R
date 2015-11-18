@@ -104,6 +104,15 @@ trim <- function(char){
 } ## end function trim()
 
 
+## function trim.n()
+# cuts off newline at start and end of a character string
+trim.n <- function(char){
+  char <- gsub("^([\n]*)", "", char)
+  char <- gsub("([\n]*)$", "", char)
+  return(char)
+} ## end function trim.n()
+
+
 ## function indent()
 # will create tabs to format the output
 indent <- function(level, by=rk.get.indent()){
@@ -815,7 +824,7 @@ clean.name <- function(name, message=TRUE){
 
 
 ## function paste.JS.ite()
-paste.JS.ite <- function(object, level=1, indent.by=rk.get.indent(), recurse=FALSE, empty.e=FALSE){
+paste.JS.ite <- function(object, level=1, indent.by=rk.get.indent(), recurse=FALSE, empty.e=rk.get.empty.e()){
   stopifnot(inherits(object, "rk.JS.ite"))
   # check indentation
   main.indent <- indent(level, by=indent.by)
@@ -1457,6 +1466,10 @@ replaceJSOperators <- function(..., call="id"){
         callList <- unlist(thisItem)
         if(as.character(callList[[1]]) %in% JS.operators){
           result <- list(
+            # the "!" operator needs to come first
+            if(as.character(callList[[1]]) %in% "!"){
+              paste0(as.character(callList[[1]]))
+            } else {},
             if(is.call(callList[[2]])){
               do.call("replaceJSOperators", list(callList[[2]]))
             } else if(is.character(callList[[2]])){
@@ -1468,18 +1481,24 @@ replaceJSOperators <- function(..., call="id"){
             } else {
               do.call(call, list(callList[[2]]))
             },
-            paste0(" ", as.character(callList[[1]]), " "),
-            if(is.call(callList[[3]])){
-              do.call("replaceJSOperators", list(callList[[3]]))
-            } else if(is.character(callList[[3]])){
-              paste0("\"", callList[[3]], "\"")
-            } else if(is.name(callList[[3]])){
-              # same as fetchedObject1 above
-              fetchedObject2 <- dynGet(as.character(callList[[3]]), ifnotfound=get(as.character(callList[[3]])))
-              do.call(call, list(fetchedObject2))
-            } else {
-              do.call(call, list(callList[[3]]))
-            }
+            # all except the "!" operator come here
+            if(!as.character(callList[[1]]) %in% "!"){
+              paste0(" ", as.character(callList[[1]]), " ")
+            } else {},
+            # operators like "!" don't have a third element
+            if(length(callList) > 2){
+              if(is.call(callList[[3]])){
+                do.call("replaceJSOperators", list(callList[[3]]))
+              } else if(is.character(callList[[3]])){
+                paste0("\"", callList[[3]], "\"")
+              } else if(is.name(callList[[3]])){
+                # same as fetchedObject1 above
+                fetchedObject2 <- dynGet(as.character(callList[[3]]), ifnotfound=get(as.character(callList[[3]])))
+                do.call(call, list(fetchedObject2))
+              } else {
+                do.call(call, list(callList[[3]]))
+              }
+            } else {}
           )
           return(paste0(unlist(result), collapse=""))
         } else {
@@ -1521,7 +1540,7 @@ uncurl <- function(cond, level=1, indent.by=rk.get.indent()){
           sapply(
             2:length(cond.list),
             function(this.cond.num){
-              do.call("js", args=list(cond[[this.cond.num]], level=level, by=indent.by))
+              do.call("js", args=list(cond[[this.cond.num]], level=level, by=indent.by, linebreaks=FALSE))
             }
           ),
           collapse=paste0("\n", indent(level=level, by=indent.by))
@@ -1530,7 +1549,7 @@ uncurl <- function(cond, level=1, indent.by=rk.get.indent()){
         cond <- ""
       }
     } else {
-      cond <- do.call("js", args=list(cond, level=level, by=indent.by))
+      cond <- do.call("js", args=list(cond, level=level, by=indent.by, linebreaks=FALSE))
     }
   } else {}
   return(cond)
@@ -1538,7 +1557,7 @@ uncurl <- function(cond, level=1, indent.by=rk.get.indent()){
 
 
 ## function replaceJSIf
-replaceJSIf <- function(cond, level=1, paste=TRUE, indent.by=rk.get.indent(), empty.e=FALSE){
+replaceJSIf <- function(cond, level=1, paste=TRUE, indent.by=rk.get.indent(), empty.e=rk.get.empty.e()){
   if(inherits(cond, "if")){
     # if condition -- should be save to give to js()
     cond.if   <- do.call(
@@ -1639,7 +1658,7 @@ replaceJSFor <- function(loop, level=1, indent.by=rk.get.indent()){
     loop <- paste(
       paste0(indent(level=level, by=indent.by), "// the variable names \"", arrayName, "\" and \"", iterName, "\" were randomly generated"),
       paste0("var ", arrayName, " = new Array();"),
-      paste0(arrayName, ".push(", do.call("js", args=list(loop[[3]], level=level, indent.by=indent.by)), ");"),
+      paste0(arrayName, ".push(", do.call("js", args=list(loop[[3]], level=level, indent.by=indent.by, linebreaks=FALSE)), ");"),
       paste0("for (var ", as.character(loop[[2]]), "=", arrayName, "[0], ", iterName, "=0; ",
         iterName, " < ", arrayName, ".length; ",
         iterName, "++, ", as.character(loop[[2]]), "=", arrayName, "[", iterName, "]) {"),
@@ -1650,7 +1669,8 @@ replaceJSFor <- function(loop, level=1, indent.by=rk.get.indent()){
           args=list(
             uncurl(loop[[4]], level=level+1, indent.by=indent.by),
             level=level,
-            indent.by=indent.by
+            indent.by=indent.by,
+            linebreaks=FALSE
           )
         )
       ),
@@ -1658,7 +1678,7 @@ replaceJSFor <- function(loop, level=1, indent.by=rk.get.indent()){
       sep=paste0("\n", indent(level=level, by=indent.by))
     )
   } else {
-    loop <- do.call("js", args=list(loop, level=level, indent.by=indent.by))
+    loop <- do.call("js", args=list(loop, level=level, indent.by=indent.by, linebreaks=FALSE))
     return(loop)
   }
 } ## end function replaceJSFor

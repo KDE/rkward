@@ -6,7 +6,7 @@
 \usage{
 rk.paste.JS(..., level = 2, indent.by = rk.get.indent(), funct = NULL,
   array = NULL, var.prefix = NULL, modifiers = NULL, default = NULL,
-  join = NULL, getter = NULL, var = TRUE, empty.e = FALSE,
+  join = NULL, getter = NULL, var = TRUE, empty.e = rk.get.empty.e(),
   opt.sep = NULL)
 }
 \arguments{

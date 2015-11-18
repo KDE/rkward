@@ -2186,7 +2186,7 @@ user (selection from a list of values shown next to this element) --&gt;
 		</programlisting>
 		<note>
 			<para>
-				In this example, all occasions of <token>plugin_name</token>, <token>testsuite_name</token> and <token>sometest_name</token> are to be replaced with their correct names, accordingly. Also, <token>ll</token> is a placeholder for a language abbreviation (e.g., <quote>de</quote>, <quote>en</quote> or <quote>es</quote>).
+				In this example, all occasions of <token>plugin_name</token>, <token>testsuite_name</token> and <token>sometest_name</token> are to be replaced with their correct names, accordingly. Also, <token>ll</token> is a placeholder for a language abbreviation (&eg;, <quote>de</quote>, <quote>en</quote> or <quote>es</quote>).
 			</para>
 		</note>
 		<tip>
@@ -2409,7 +2409,7 @@ JS.calc &lt;- rk.paste.JS(
 JS.print &lt;- rk.paste.JS(echo("rk.print (res)\n"), level=2)
 		</programlisting>
 		<para>As you can see, <application>rkwarddev</application> also provides an &r; implementation of the <function>echo()</function> function. It returns exactly one character string with a valid JS version of itself. You might also notice that all of the &r; objects here are the ones we created earlier. They will automatically be replaced with their variable names, so this should be quite intuitive. Whenever you need just this replacement, the function <function>id()</function> can be used, which also will return exactly one character string from all the objects it was given (you could say it behaves like <function>paste()</function> with a very specific object substitution).</para>
-		<para>The function name <function>ite()</function> is an abbreviation for <quote>if, then, else</quote>, and these three conditional statements are exactly what its three optional arguments are for -- although our example only uses two, so we're dealing with three <quote>if, then</quote> conditions here. Maybe it's best to just look at the above <quote>JS.calc</quote> object, which now contains a character string with this content:</para>
+    <para>The <function>js()</function> function is a wrapper that allows you to use &r;'s <command>if(){...} else {...}</command> conditions like you are used to. They will be translated directly into JS code. It also preserves some operators like <command>&lt;</command>, <command>&gt;=</command> or <command>||</command>, so you can logically compare your &r; objects without the need for quoting most of the time. Let's have a look at the resulting <quote>JS.calc</quote> object, which now contains a character string with this content:</para>
 		<programlisting>
 	echo("res &lt;- t.test (x=" + vrslCompare + ", y=" + vrslAgainst + ", hypothesis=\"" + radUsngtsth + "\"");
 	if(chcPardsmpl) {
@@ -2423,6 +2423,11 @@ JS.print &lt;- rk.paste.JS(echo("rk.print (res)\n"), level=2)
 	} else {}
 	echo(")\n");
 		</programlisting>
+    <note>
+      <para>
+        Alternatively for <function>if()</function> conditions nested in <function>js()</function>, you can use the <function>ite()</function> function, which behaves similar to &r;'s <function>ifelse()</function>. However, conditional statements constructed using <function>ite()</function> are usually harder to read and should be replaced by <function>js()</function> whenever possible.
+      </para>
+    </note>
 		</sect2>
 
 		<sect2 id="rkdev_pluginmap"><title>Plugin map</title>
@@ -2546,7 +2551,68 @@ local({
 		</programlisting>
 		</sect2>
 
+  </sect1>
+  <sect1 id="rkwarddev_rkh"><title>Adding help pages</title>
+    <para>
+      If you want to write a help page for your plugin, the most straight forward way to do so is to add the particular instructions directly to the definitions of the XML elements they belong to:
+    </para>
+    <programlisting>
+variables &lt;- rk.XML.varselector(
+  id.name="vars",
+  help="Select the data object you would like to analyse.",
+  component="Data"
+)
+    </programlisting>
+    <para>
+      The text given to the <parameter>help</parameter> parameter can then be fetched by <function>rk.rkh.scan()</function> and written to the help page of this plugin component. For this to work technically, however, <function>rk.rkh.scan()</function> must know which &r; objects belong to one plugin component. This is why you must also provide the <parameter>component</parameter> parameter and make sure it is identical for all objects belonging together.
+    </para>
+    <para>
+      Since you will usually combine many objects into one dialog and might also like to be able to re-use objects like the <command>&lt;varslot&gt;</command> in multiple components of your plugins, it is possible to globally define a component with the <function>rk.set.comp()</function>. If set, it is assumend that all the following objects used in your script belong to that particular component, until <function>rk.set.comp()</function> is being called again with a different component name. You can then omit the <parameter>component</parameter> parameter:
+    </para>
+    <programlisting>
+rk.set.comp("Data")
+variables &lt;- rk.XML.varselector(
+  id.name="vars",
+  help="Select the data object you would like to analyse."
+)
+    </programlisting>
+    <para>
+      To add global sections like <command>&lt;summary&gt;</command> or <command>&lt;usage&gt;</command> to the help page, you use functions like <function>rk.rkh.summary()</function> or <function>rk.rkh.usage()</function> accordingly. Their results are then used to set the list elements like <parameter>summary</parameter> or <parameter>usage</parameter> in the <parameter>rkh</parameter> parameter of <function>rk.plugin.component()</function>/<function>rk.plugin.skeleton()</function>.
+    </para>
 	</sect1>
+  <sect1 id="rkwarddev_i18n"><title>Translating plugins</title>
+    <para>
+      The <application>rkwarddev</application> package is capable of producing external plugins with full i18n support. For instance, all relevant functions generating XML objects offer an optional parameter to specify <replaceable>i18n_context</replaceable> or <replaceable>noi18n_label</replaceable>:
+    </para>
+    <programlisting>
+varComment &lt;- rk.XML.varselector(id.name="vars", i18n=list(comment="Main variable selector"))
+varContext &lt;- rk.XML.varselector(id.name="vars", i18n=list(context="Main variable selector"))
+cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
+    </programlisting>
+    <para>The above examples produce output like this:</para>
+    <programlisting>
+# varComment
+&lt;!-- i18n: Main variable selector --&gt;
+  &lt;varselector id="vars" /&gt;
+
+# varContext
+&lt;varselector id="vars" i18n_context="Main variable selector" /&gt;
+
+# cboxNoi18n
+&lt;checkbox id="power" noi18n_label="Power" value="true" /&gt;
+    </programlisting>
+    <para>
+      There's also support for translatable JS code. In fact, the package tries add <function>i18n()</function> calls by default in places where this is usually helpful. The <function>rk.JS.header()</function> function is a good example:
+    </para>
+    <programlisting>
+jsHeader &lt;- rk.JS.header("Test results")
+    </programlisting>
+    <para>This produces the following JS code:</para>
+    <programlisting>
+new Header(i18n("Test results")).print();
+    </programlisting>
+    <para>But you can also manually mark strings in your JS code as translatable, by using the <function>i18n()</function> function just like you would if you wrote the JS file directly.</para>
+  </sect1>
 </chapter>
 
 <appendix id="reference">

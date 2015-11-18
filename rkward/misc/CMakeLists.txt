@@ -26,6 +26,7 @@ SET(misc_STAT_SRCS
    rkmessagecatalog.cpp
    rkdbusapi.cpp
    rkfindbar.cpp
+   rkdynamicsearchline.cpp
    rkaccordiontable.cpp
    )
 

@@ -29,6 +29,8 @@ class RKObjectListViewSettings;
 class QTimer;
 class QCheckBox;
 class QComboBox;
+class QPushButton;
+class RKDynamicSearchLine;
 
 /**
 This class provides the common functionality for the tree views in the RObjectBrowser and RKVarselector(s). The caps it (will) provide are: keeping the list up to date and emitting change-signals when appropriate, filtering for certain types of objects, sorting, mapping items to objects. Maybe some GUI-stuff like popup-menus should also be added to this class?
@@ -107,6 +109,7 @@ signals:
 public slots:
 	void filterSettingsChanged ();
 	void updateSelfNow ();
+	void resetFilters ();
 protected:
 	bool filterAcceptsRow (int source_row, const QModelIndex& source_parent) const;
 	bool acceptRow (int source_row, const QModelIndex& source_parent) const;
@@ -119,6 +122,7 @@ private:
 	void updateSelf ();
 
 	QWidget *filter_widget;
+	RKDynamicSearchLine *sline;
 	QWidget *filter_widget_expansion;
 	QCheckBox* filter_on_name_box;
 	QCheckBox* filter_on_label_box;
@@ -131,6 +135,8 @@ private:
 	QComboBox* type_box;
 	bool hide_functions;
 	bool hide_non_functions;
+	QPushButton* reset_filters_button;
+	bool in_reset_filters;
 
 	bool is_tool_window;
 
