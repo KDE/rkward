@@ -18,15 +18,19 @@
 	The second gives a more hands on introduction to getting started with RKWard, but does not go quite as deep. If you have never used R or RKWard before, you should start with this guide, then later read the above page link: <link href="rkward://page/rkward_for_new_users" />.
 	</section>
 
-	<section title="General Information" id="further_info">
-	For more general information on RKWard, who writes it, how to help, further questions, etc. refer to <link href="http://rkward.kde.org/">the project homepage</link>.
-	</section>
-
 	<section title="Trouble Shooting" id="Trouble Shooting">
 	If you encounter problems please feel free to search in <link href="rkward://page/rkward_trouble_shooting">Trouble Shooting</link> first.
 	</section>
 
 	<section title="Missing something?" id="missing_something">
-	Are you missing a particular GUI dialog in the current menu? Check out the <link href="help:rkwardplugins">Introduction to Writing Plugins for RKWard</link> to learn how easy it is to enhance RKWard with your custom dialogs. And if you like, how to share your work with the community of RKWard users. See the <link href="rkward://rhelp/rkward-package">rkward package overview</link> for RKWard specific function for development and scripting.
+	Are you missing a particular GUI dialog in the current menu? A growing number of plugins is available for separate download as R packages. See what's available for installation at Settings-&gt;Manage R packages and plugins. In the R package installation section, you can select to show packages providing graphics dialogs for RKWard.
+	</section>
+
+	<section title="Still missing something?" id="writing_plugins">
+	Check out the <link href="help:rkwardplugins">Introduction to Writing Plugins for RKWard</link> to learn how easy it is to enhance RKWard with your custom dialogs. And if you like, how to share your work with the community of RKWard users. See the <link href="rkward://rhelp/rkward-package">rkward package overview</link> for RKWard specific function for development and scripting.
+	</section>
+
+	<section title="General Information" id="further_info">
+	For more general information on RKWard, who writes it, how to help, further questions, etc. refer to <link href="http://rkward.kde.org/">the project homepage</link>.
 	</section>
 </document>
