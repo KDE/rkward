@@ -1,6 +1,6 @@
 ChangeLog for package rkwarddev
 
-changes in version 0.07-4 (2015-11-15)
+changes in version 0.07-4 (2015-11-19)
 unreleased:
   - this version is under development
 fixed:
@@ -14,6 +14,7 @@ fixed:
   - some fixes to the skeleton GUI and demo script
   - prevent internal function indent() from losing it over negative values
   - indentation of rk.paste.JS.graph() was incorrect
+  - pasting comments via rk.paste.JS() gained an extra space for subsequent lines
 added:
   - new methods plugin2script() to try to translate raw plugin XML into
     working rkwarddev script calls
@@ -39,6 +40,8 @@ added:
     "noquote" to have it nested in the JS noquote() function
   - new wrapper function rk.updatePluginMessages() for
     update_plugin_messages.py, the package now comes with its own copy of this core i18n script
+  - the generator info gained support for hinting at the very rkwarddev script file
+    that was used to generate a particular plugin file
 changed:
   - improved error handling in rk.JS.header(), error messages are more
     informative now

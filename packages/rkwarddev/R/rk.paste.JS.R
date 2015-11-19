@@ -97,7 +97,7 @@ rk.paste.JS <- function(..., level=2, indent.by=rk.get.indent(), funct=NULL, arr
       if(identical(XMLName(this.object), "!--")){
         result <- paste0(indent(level, by=indent.by),
           "// ",
-          gsub("\n", paste0("\n", indent(level, by=indent.by), "//"), XMLValue(XMLChildren(this.object)[[1]])))
+          gsub("\n", paste0("\n", indent(level, by=indent.by), "// "), XMLValue(XMLChildren(this.object)[[1]])))
       } else {
         stop(simpleError("XiMpLe.node objects are only valid if they are comments!"))
       }

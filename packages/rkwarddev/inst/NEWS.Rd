@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.07-4 (2015-11-15)}{
+\section{Changes in rkwarddev version 0.07-4 (2015-11-19)}{
   \subsection{unreleased}{
     \itemize{
       \item this version is under development
@@ -19,6 +19,7 @@
       \item some fixes to the skeleton GUI and demo script
       \item prevent internal function \code{indent()} from losing it over negative values
       \item indentation of \code{rk.paste.JS.graph()} was incorrect
+      \item pasting comments via \code{rk.paste.JS()} gained an extra space for subsequent lines
     }
   }
   \subsection{added}{
@@ -47,6 +48,8 @@
         \code{"noquote"} to have it nested in the JS \code{noquote()} function
       \item new wrapper function \code{rk.updatePluginMessages()} for
         update_plugin_messages.py, the package now comes with its own copy of this core i18n script
+      \item the generator info gained support for hinting at the very rkwarddev script file
+        that was used to generate a particular plugin file
     }
   }
   \subsection{changed}{

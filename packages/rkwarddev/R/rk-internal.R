@@ -33,9 +33,20 @@ if(isTRUE(R_system_version(getRversion()) < 2.15)){
   }
 } else {}
 
+
+## function generator.info()
 # info message
-generator.info <- rk.comment(paste0("this code was generated using the rkwarddev package.\n",
-      "perhaps don't make changes here, but in the rkwarddev script instead!"))
+generator.info <- function(script=NULL){
+  genInfo <- paste0(
+    "this code was generated using the rkwarddev package.\n",
+    "perhaps don't make changes here, but in the rkwarddev script instead!"
+  )
+  if(!is.null(script)){
+    genInfo <- paste0(genInfo, "\n\nlook for a file called: ", script)
+  } else {}
+  return(rk.comment(genInfo))
+} ## end function generator.info()
+
 
 ## function auto.ids()
 auto.ids <- function(identifiers, prefix=NULL, suffix=NULL, chars=8){
