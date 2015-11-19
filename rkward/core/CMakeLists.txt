@@ -16,7 +16,7 @@ SET(core_STAT_SRCS
    )
 
 ADD_LIBRARY(core STATIC ${core_STAT_SRCS})
-
+TARGET_LINK_LIBRARIES(core Qt5::Core KF5::KDELibs4Support)
 
 ########### install files ###############
 

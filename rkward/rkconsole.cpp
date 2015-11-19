@@ -69,7 +69,8 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 	layout->setContentsMargins (0, 0, 0, 0);
 
 	// create a Kate-part as command-editor
-	KTextEditor::Editor* editor = KTextEditor::editor ("katepart");
+	// KF5 TODO: (How) can we make sure we are getting a katepart, here, not some other implementation. Or can we take that for granted?
+	KTextEditor::Editor* editor = KTextEditor::Editor::instance ();
 	if (!editor) {
 		RK_ASSERT (false);
 		KMessageBox::error (this, i18n ("The 'katepart' component could not be loaded. RKWard cannot run without katepart, and will exit, now. Please install katepart, and try again."), i18n ("'katepart' component could not be found"));

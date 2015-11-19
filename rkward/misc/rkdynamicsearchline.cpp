@@ -62,6 +62,3 @@ void RKDynamicSearchLine::delayedSearch () {
 	if (model) model->setFilterRegExp (filter);
 	emit (searchChanged (filter));
 }
-
-// KF5 TODO: remove
-#include "rkdynamicsearchline.moc"

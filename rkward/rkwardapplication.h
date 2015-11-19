@@ -18,17 +18,22 @@
 #ifndef RKWARDAPPLICATION_H
 #define RKWARDAPPLICATION_H
 
-#include <kapplication.h>
+#include <QApplication>
+#include <netwm_def.h>
 
 #include <qmap.h>
 
 class RKMDIWindow;
 
-/** The purpose of subclassing KApplication as RKWardApplication, is to obtain raw access to X11 events. This is needed to detect the creation of new toplevel windows (R X11 windows), and changed in the caption of those windows. */
+/** The purpose of subclassing KApplication as RKWardApplication, is to obtain raw access to X11 events. This is needed to detect the creation of new toplevel windows (R X11 windows), and changed in the caption of those windows.
+ * 
+ * KF5 TODO: This class should no longer be needed, but should be moved to window catcher (if the code that is in it now, works)
+*/
 
-class RKWardApplication : public KApplication {
+class RKWardApplication : public QApplication {
+	Q_OBJECT
 public:
-	RKWardApplication ();
+	RKWardApplication (int argc, char *argv[]);
 	~RKWardApplication ();
 
 	/** like KApplication::kApplication () (and actually, this should always return the same pointer), but without the need to cast */
@@ -40,18 +45,15 @@ public:
 	@returns the window id of the last top-level window created after the last call to startWindowCreation, hoping it was only one. 0 if no window was created/detected. */
 	WId endWindowCreationDetection ();
 
-#ifdef Q_WS_X11
-	/** watch the given window for changes in its WM_NAME property (i.e. changes in caption). When a change is detected, the caption will be set on watcher. WARNING: Do not use to watch windows managed by Qt! Will override the event mask for this window (within qt_xdisplay ()). WARNING: Remember to call unregisterNameWatcher, when watcher is deleted! */
+	/** watch the given window for changes in its WM_NAME property (i.e. changes in caption). When a change is detected, the caption will be set on watcher. WARNING: Do not use to watch windows managed by Qt! WARNING: Remember to call unregisterNameWatcher, when watcher is deleted! */
 	void registerNameWatcher (WId watched, RKMDIWindow *watcher);
 	/** remove a watch created with registerNameWatcher */
 	void unregisterNameWatcher (WId watched);
-
-	/** reimplemented from KApplication to look for CreateNotify and PropertyNotify events */
-	bool x11EventFilter (XEvent *e);
-#endif
+public slots:
+	void windowAdded (WId id);
+	void windowChanged (WId id, NET::Properties properties, NET::Properties2 properties2);
 private:
 	static RKWardApplication *rkapp;
-	bool detect_x11_creations;
 	WId created_window;
 
 	QMap<WId, RKMDIWindow*> name_watchers_list;

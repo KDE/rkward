@@ -19,6 +19,7 @@
 #include <qtimer.h>
 #include <QDesktopWidget>
 #include <QCloseEvent>
+#include <QPointer>
 
 // include files for KDE
 #include <kmessagebox.h>
@@ -40,6 +41,8 @@
 #include <khbox.h>
 #include <ktoolbar.h>
 #include <kactionmenu.h>
+#include <kicon.h>
+#include <KSharedConfig>
 
 // application specific includes
 #include "rkward.h"
@@ -662,18 +665,19 @@ void RKWardMainWindow::openWorkspace (const KUrl &url) {
 
 void RKWardMainWindow::saveOptions () {
 	RK_TRACE (APP);
-	KConfig *config = KGlobal::config ().data ();
+	KSharedConfig::Ptr config = KSharedConfig::openConfig ();
 
-	saveMainWindowSettings (config->group ("main window options"));
+	KConfigGroup cg = config->group ("main window options");
+	saveMainWindowSettings (cg);
 
-	KConfigGroup cg = config->group ("General Options");
+	cg = config->group ("General Options");
 // TODO: WORKAROUND. See corresponding line in readOptions ()
 	cg.writeEntry("Geometry", size ());
 
 	fileOpenRecentWorkspace->saveEntries (config->group ("Recent Files"));
 	fileOpenRecent->saveEntries (config->group ("Recent Command Files"));
 
-	RKSettings::saveSettings (config);
+	RKSettings::saveSettings (config.data ());
 
 	config->sync ();
 }
@@ -681,19 +685,14 @@ void RKWardMainWindow::saveOptions () {
 
 void RKWardMainWindow::readOptions () {
 	RK_TRACE (APP);
-	// first make sure to give the global defaults a chance, if needed.
-	// TODO: Why don't the toolbars honor the global style automatically?
-	QList<KToolBar*> tool_bars = toolBars ();
-	for (int i=0; i < tool_bars.size (); ++i) {
-		tool_bars[i]->setToolButtonStyle (KToolBar::toolButtonStyleSetting ());
-	}
 
-	KConfig *config = KGlobal::config ().data ();
+	KSharedConfig::Ptr config = KSharedConfig::openConfig ();
 
-	applyMainWindowSettings (config->group ("main window options"), true);
+	applyMainWindowSettings (config->group ("main window options"));
 
 // TODO: WORKAROUND: Actually applyMainWindowSettings could/should do this, but apparently this just does not work for maximized windows. Therefore we use our own version instead.
 // KDE4: still needed?
+// KF5 TODO: still needed?
 	KConfigGroup cg = config->group ("General Options");
 	QSize size = cg.readEntry ("Geometry", QSize ());
 	if (size.isEmpty ()) {
@@ -701,14 +700,14 @@ void RKWardMainWindow::readOptions () {
 	}
 	resize (size);
 
-	RKSettings::loadSettings (config);
-	RK_ASSERT (config == KGlobal::config ().data ());	// not messing with config groups
+	RKSettings::loadSettings (config.data ());
 
 	// initialize the recent file list
 	fileOpenRecentWorkspace->loadEntries (config->group ("Recent Files"));
 	fileOpenRecent->setMaxItems (RKSettingsModuleCommandEditor::maxNumRecentFiles ());
 	fileOpenRecent->loadEntries (config->group ("Recent Command Files"));
 }
+
 
 bool RKWardMainWindow::doQueryQuit () {
 	RK_TRACE (APP);
@@ -910,19 +909,18 @@ void RKWardMainWindow::slotOpenCommandEditor (const KUrl &url, const QString &en
 void RKWardMainWindow::slotOpenCommandEditor () {
 	RK_TRACE (APP);
 	KEncodingFileDialog::Result res;
-	KUrl::List::const_iterator it;
 
 #ifdef Q_WS_WIN
 	// getOpenUrls(KUrl("kfiledialog:///<rfiles>"), ...) causes a hang on windows (KDElibs 4.2.3).
 #	ifdef __GNUC__
 #		warning Track this bug down and/or report it
 #	endif
-	res = KEncodingFileDialog::getOpenUrlsAndEncoding (QString (), QString (), QString ("%1|R Script Files (%1)\n*|All Files (*)").arg (RKSettingsModuleCommandEditor::scriptFileFilter ()), this, i18n ("Open script file(s)"));
+	res = KEncodingFileDialog::getOpenUrlsAndEncoding (QString (), QUrl (), QString ("%1|R Script Files (%1)\n*|All Files (*)").arg (RKSettingsModuleCommandEditor::scriptFileFilter ()), this, i18n ("Open script file(s)"));
 #else
-	res = KEncodingFileDialog::getOpenUrlsAndEncoding (QString (), "kfiledialog:///<rfiles>", QString ("%1|R Script Files (%1)\n*|All Files (*)").arg (RKSettingsModuleCommandEditor::scriptFileFilter ()), this, i18n ("Open script file(s)"));
+	res = KEncodingFileDialog::getOpenUrlsAndEncoding (QString (), QUrl ("kfiledialog:///<rfiles>"), QString ("%1|R Script Files (%1)\n*|All Files (*)").arg (RKSettingsModuleCommandEditor::scriptFileFilter ()), this, i18n ("Open script file(s)"));
 #endif
-	for (it = res.URLs.begin() ; it != res.URLs.end() ; ++it) {
-		slotOpenCommandEditor (*it, res.encoding);
+	for (int i = 0; i < res.URLs.size (); ++i) {
+		slotOpenCommandEditor (res.URLs[i], res.encoding);
 	}
 };
 

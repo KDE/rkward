@@ -512,6 +512,4 @@ void RKAccordionTable::setModel (QAbstractItemModel* model) {
 	updateGeometry ();   // TODO: Not so clean to call this, here. But at this point we know the display_widget has been constructed, too
 }
 
-// KF5 TODO: remove:
 #include "rkaccordiontable.moc"
-#include "rkaccordiontablemodel_moc.cpp"
