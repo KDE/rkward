@@ -25,16 +25,16 @@
 
 #include <kmessagebox.h>
 #include <klocale.h>
-#include <kwindowsystem.h>
+#include <KWindowSystem>
+#include <KWindowInfo>
 
-#include "../rkwardapplication.h"
 #include "../settings/rksettingsmodulegraphics.h"
 #include "../dialogs/rkerrordialog.h"
 #include "rkworkplace.h"
 #include "../misc/rkstandardicons.h"
 #include "../debug.h"
 
-RKWindowCatcher::RKWindowCatcher () {
+RKWindowCatcher::RKWindowCatcher () : QObject () {
 	RK_TRACE (MISC);
 }
 
@@ -46,25 +46,31 @@ void RKWindowCatcher::start (int prev_cur_device) {
 	RK_TRACE (MISC);
 	RK_DEBUG (RBACKEND, DL_DEBUG, "Window Catcher activated");
 
-	RKWardApplication::getApp ()->startWindowCreationDetection ();
 	last_cur_device = prev_cur_device;
+	created_window = 0;
+	connect (KWindowSystem::self (), SIGNAL (windowAdded(WId)), this, SLOT (windowAdded(WId)));
 }
 
 void RKWindowCatcher::stop (int new_cur_device) {
 	RK_TRACE (MISC);
 	RK_DEBUG (RBACKEND, DL_DEBUG, "Window Catcher deactivated");
 
-	WId w = RKWardApplication::getApp ()->endWindowCreationDetection ();
+	if (!created_window) {
+		// we did not see the window, yet? Maybe the event simply hasn't been processed, yet.
+		qApp->processEvents ();
+	}
+	disconnect (KWindowSystem::self (), SIGNAL (windowAdded(WId)), this, SLOT (windowAdded(WId)));
+
 	if (new_cur_device != last_cur_device) {
-		if (w) {
-			RKWorkplace::mainWorkplace ()->newX11Window (w, new_cur_device);
+		if (created_window) {
+			RKWorkplace::mainWorkplace ()->newX11Window (created_window, new_cur_device);
 #if defined Q_WS_X11
 			// All this syncing looks like a bloody hack? Absolutely. It appears to work around the occasional error "figure margins too large" from R, though.
 			qApp->processEvents ();
 			qApp->syncX ();
 			qApp->processEvents ();
 			// this appears to have the side-effect of forcing the captured window to sync with X, which is exactly, what we're trying to achieve.
-			KWindowInfo wininfo = KWindowSystem::windowInfo (w, NET::WMName | NET::WMGeometry);
+			KWindowInfo wininfo = KWindowSystem::windowInfo (created_window, NET::WMName | NET::WMGeometry);
 #endif
 		} else {
 #if defined Q_WS_MAC
@@ -75,6 +81,43 @@ void RKWindowCatcher::stop (int new_cur_device) {
 		}
 	}
 	last_cur_device = new_cur_device;
+}
+
+void RKWindowCatcher::windowAdded (WId id) {
+	RK_TRACE (APP);
+
+	// KF5 TODO: Note: Previously, on windows we checked for IsWindow (hwnd) and IsWindowVisible (hwnd), as sometimes invisible ghost windows
+	// would be created in addition to the real device window. Is this still needed?
+	created_window = id;
+}
+
+void RKWindowCatcher::windowChanged (WId id, NET::Properties properties, NET::Properties2 properties2) {
+	Q_UNUSED (properties2);
+	if (!(properties & NET::WMName)) return;
+	RK_TRACE (APP);
+	RKMDIWindow *watcher = name_watchers_list.value (id);
+	if (!watcher) return;
+	watcher->setCaption (KWindowInfo (id, NET::WMName).name ());
+}
+
+void RKWindowCatcher::registerNameWatcher (WId watched, RKMDIWindow *watcher) {
+	RK_TRACE (APP);
+	RK_ASSERT (!name_watchers_list.contains (watched));
+
+	if (name_watchers_list.isEmpty ()) {
+		connect (KWindowSystem::self (), SIGNAL (windowChanged(WId,NET::Properties,NET::Properties2)), this, SLOT (windowChanged(WId,NET::Properties,NET::Properties2)));
+	}
+	name_watchers_list.insert (watched, watcher);
+}
+
+void RKWindowCatcher::unregisterNameWatcher (WId watched) {
+	RK_TRACE (APP);
+	RK_ASSERT (name_watchers_list.contains (watched));
+
+	name_watchers_list.remove (watched);
+	if (name_watchers_list.isEmpty ()) {
+		disconnect (KWindowSystem::self (), SIGNAL (windowChanged(WId,NET::Properties,NET::Properties2)), this, SLOT (windowChanged(WId,NET::Properties,NET::Properties2)));
+	}
 }
 
 void RKWindowCatcher::updateHistory (QStringList params) {
@@ -119,6 +162,7 @@ void RKWindowCatcher::killDevice (int device_number) {
 #elif defined Q_WS_X11
 #	include <QX11EmbedContainer>
 #endif
+#warning TODO: Q_WS_X11 is simply no longer defined. Adjust this functionality.
 #include <QTimer>
 #include <QCloseEvent>
 
@@ -247,7 +291,7 @@ void RKCaughtX11Window::doEmbed () {
 		capture->embedClient (embedded);
 		connect (capture, SIGNAL (clientClosed()), this, SLOT (deleteLater()));
 
-		RKWardApplication::getApp ()->registerNameWatcher (embedded, this);
+		RKWindowCatcher::registerNameWatcher (embedded, this);
 #endif
 	}
 	// make xembed_container resizable, again, now that it actually has a content
@@ -269,7 +313,7 @@ RKCaughtX11Window::~RKCaughtX11Window () {
 
 	close (false);
 #ifdef Q_WS_X11
-	if (embedded) RKWardApplication::getApp ()->unregisterNameWatcher (embedded);
+	if (embedded) RKWindowCatcher::unregisterNameWatcher (embedded);
 #endif
 	error_dialog->autoDeleteWhenDone ();
 	delete status_popup;
@@ -322,7 +366,7 @@ void RKCaughtX11Window::reEmbed () {
 // somehow, since some version of Qt, the QX11EmbedContainer would loose its client while reparenting. This allows us to circumvent the problem.
 	capture->discardClient ();
 	capture->deleteLater ();
-	RKWardApplication::getApp ()->unregisterNameWatcher (embedded);
+	RKWindowCatcher::unregisterNameWatcher (embedded);
 	QTimer::singleShot (0, this, SLOT(doEmbed()));
 #endif
 }

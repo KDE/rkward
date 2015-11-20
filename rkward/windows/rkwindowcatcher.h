@@ -22,6 +22,10 @@
 #ifndef DISABLE_RKWINDOWCATCHER
 
 #include <qwidget.h>
+#include <QMap>
+
+#include <netwm_def.h>
+class RKMDIWindow;
 
 /** This is a simple helper class helping in catching R X11 device windows. The start () and stop () functions are called from RInterface, and then this class takes care of handling those.
 
@@ -55,7 +59,8 @@ Catch R X11 device windows
 
 @author Thomas Friedrichsmeier
 */
-class RKWindowCatcher {
+class RKWindowCatcher : public QObject {
+	Q_OBJECT
 public:
 /** ctor. Probably you'll only ever need one instance of RKWindowCatcher. */
 	RKWindowCatcher ();
@@ -74,8 +79,17 @@ public:
 /** Kill an R device
 @param device_number R device number of the device to kil */
 	void killDevice (int device_number);
+	/** watch the given window for changes in its WM_NAME property (i.e. changes in caption). When a change is detected, the caption will be set on watcher. WARNING: Do not use to watch windows managed by Qt! WARNING: Remember to call unregisterNameWatcher, when watcher is deleted! */
+	void registerNameWatcher (WId watched, RKMDIWindow *watcher);
+	/** remove a watch created with registerNameWatcher */
+	void unregisterNameWatcher (WId watched);
+private slots:
+	void windowAdded (WId id);
+	void windowChanged (WId id, NET::Properties properties, NET::Properties2 properties2);
 private:
 	int last_cur_device;
+	WId created_window;
+	QMap<WId, RKMDIWindow*> name_watchers_list;
 };
 
 

@@ -40,7 +40,6 @@ SET(RKWard_Sources
 	rkglobals.cpp
 	robjectviewer.cpp
 	rkconsole.cpp
-	rkwardapplication.cpp
 )
 
 # somehow the needed libdirs for R do not get passed down automatically

@@ -55,6 +55,8 @@
 #include <klocale.h>
 #include <kstandarddirs.h>
 #include <kglobal.h>
+#include <KUrlAuthorized>
+#include <kurl.h>
 
 #include <qstring.h>
 #include <QMutex>
@@ -68,7 +70,6 @@
 
 #include "rkward.h"
 #include "rkglobals.h"
-#include "rkwardapplication.h"
 #include "settings/rksettingsmoduledebug.h"
 #include "windows/rkdebugmessagewindow.h"
 
@@ -129,7 +130,11 @@ int main (int argc, char *argv[]) {
 		argv_copy[i] = argv[i];
 	}
 
-	RKWardApplication app (argc, argv_copy);
+	QApplication app (argc, argv_copy);
+	// Don't complain when linking rkward://-pages from Rd pages
+	KUrlAuthorized::allowUrlAction ("redirect", KUrl ("http://"), KUrl ("rkward://"));
+	// Don't complain when trying to open help pages
+	KUrlAuthorized::allowUrlAction ("redirect", KUrl ("rkward://"), KUrl ("help:"));
 
 	KAboutData aboutData ("rkward", i18n ("RKWard"), RKWARD_VERSION, i18n ("Frontend to the R statistics language"), KAboutLicense::GPL, i18n ("(c) 2002, 2004 - 2015"), QString (), "http://rkward.kde.org");
 	aboutData.addAuthor (i18n ("Thomas Friedrichsmeier"), i18n ("Project leader / main developer"));
