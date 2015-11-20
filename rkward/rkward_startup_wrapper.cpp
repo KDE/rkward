@@ -174,31 +174,31 @@ int main (int argc, char *argv[]) {
 #endif
 
 	// Locate KDE and RKWard installations
-	QString kde4_config_exe = findExeAtPath ("kde4-config", QDir::currentPath ());
-	if (kde4_config_exe.isNull ()) kde4_config_exe = findExeAtPath ("kde4-config", app.applicationDirPath ());
-	if (kde4_config_exe.isNull ()) kde4_config_exe = findExeAtPath ("kde4-config", QDir (app.applicationDirPath ()).filePath ("KDE/bin"));
-	if (kde4_config_exe.isNull ()) {
+	QString kf5_config_exe = findExeAtPath ("kf5-config", QDir::currentPath ());
+	if (kf5_config_exe.isNull ()) kf5_config_exe = findExeAtPath ("kf5-config", app.applicationDirPath ());
+	if (kf5_config_exe.isNull ()) kf5_config_exe = findExeAtPath ("kf5-config", QDir (app.applicationDirPath ()).filePath ("KDE/bin"));
+	if (kf5_config_exe.isNull ()) {
 #ifdef Q_WS_WIN
 	QStringList syspath = QString (qgetenv ("PATH")).split (';');
 #else
 	QStringList syspath = QString (qgetenv ("PATH")).split (':');
 #endif
 		for (int i = 0; i < syspath.size (); ++i) {
-			kde4_config_exe = findExeAtPath ("kde4-config", syspath[i]);
-			if (!kde4_config_exe.isNull ()) break;
+			kf5_config_exe = findExeAtPath ("kf5-config", syspath[i]);
+			if (!kf5_config_exe.isNull ()) break;
 		}
 	}
 
-	if (kde4_config_exe.isNull ()) {
-		QMessageBox::critical (0, "Could not find KDE installation", "The KDE installation could not be found (kde4-config). When moving / copying RKWard, make sure to copy the whole application folder, or create a shorcut / link, instead.");
+	if (kf5_config_exe.isNull ()) {
+		QMessageBox::critical (0, "Could not find KDE installation", "The KDE installation could not be found (kf5-config). When moving / copying RKWard, make sure to copy the whole application folder, or create a shorcut / link, instead.");
 		exit (1);
 	}
 
-	QDir kde_dir (QFileInfo (kde4_config_exe).absolutePath ());
+	QDir kde_dir (QFileInfo (kf5_config_exe).absolutePath ());
 	kde_dir.makeAbsolute ();
 	QString kde_dir_safe_path = quoteCommand (kde_dir.path ());
 #ifdef Q_WS_WIN
-	QString kdeinit4_exe = findExeAtPath ("kdeinit4", kde_dir.path ());
+	QString kdeinit5_exe = findExeAtPath ("kdeinit5", kde_dir.path ());
 	qputenv ("PATH", QString (kde_dir_safe_path + ';' + qgetenv ("PATH")).toLocal8Bit ());
 	if (debug_level > 3) qDebug ("Adding %s to the system path", qPrintable (kde_dir_safe_path));
 #endif
@@ -226,10 +226,10 @@ int main (int argc, char *argv[]) {
 
 #ifdef Q_WS_WIN
 	// Explicit initialization of KDE, in case Windows 7 asks for admin privileges
-	if (kdeinit4_exe.isNull ()) {
-		kdeinit4_exe = findExeAtPath ("kdeinit4", QFileInfo (rkward_frontend_exe).absolutePath ());
+	if (kdeinit5_exe.isNull ()) {
+		kdeinit5_exe = findExeAtPath ("kdeinit5", QFileInfo (rkward_frontend_exe).absolutePath ());
 	}
-	if (!kdeinit4_exe.isNull ()) QProcess::execute (kdeinit4_exe, QStringList ());
+	if (!kdeinit5_exe.isNull ()) QProcess::execute (kdeinit5_exe, QStringList ());
 #endif
 
 	// Look for R:
