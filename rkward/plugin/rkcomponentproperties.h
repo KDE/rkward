@@ -41,16 +41,16 @@ public:
 /** destructor */
 	virtual ~RKComponentPropertyBase ();
 /** supplies the current value. Since more than one value may be supplied, modifier can be used to select a value. Default implementation only has  a single string, however. Reimplemented from RKComponentBase */
-	QVariant value (const QString &modifier=QString ());
+	QVariant value (const QString &modifier=QString ()) override;
 /** set the value in string form.
 @returns false if the value is illegal (in the base class, all strings are legal) */
 	virtual bool setValue (const QString &string);
 /** do not set the value, only check, whether it is legal */
 	virtual bool isStringValid (const QString &) { return true; };
 /** current setting valid? */
-	bool isValid () { return is_valid; };
+	bool isValid () override { return is_valid; };
 /** for RTTI. see RKComponentBase::RKComponentTypes */
-	int type () { return PropertyBase; };
+	int type () override { return PropertyBase; };
 /** connect this property to a governor property (given as argument). If reconcile_requirements, the requirements of both properties are reconciled to the least common denominator. The dependent property will be notified on all changes made in the governing property, so it can update its value. 
 Generally with few exceptions, you can only connect to properties that are either of the same class as this property, or of an extended class. Maybe in the future we will add some sophisticated converters allowing to connect vastly different types of properties in a meaningful way.
 If you specify a modifier, only the sub-value indicated by the modifier will be retrieved from the governing property on governorValueChanged. In this case reconcile_requirements is ignored. */
@@ -84,7 +84,7 @@ public:
 /** @returns true, if the property holds the maximum number of items (or more) */
 	bool atMaxLength () const { return (max_num_items && (max_num_items <= listLength ())); };
 /** reimplemented from RKComponentPropertyBase to actually reconcile requirements with other list properties */
-	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString (), bool reconcile_requirements=true);
+	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString (), bool reconcile_requirements=true) override;
 /** If set to true, duplicate values are dropped, silently */
 	void setStripDuplicates (bool strip) { strip_duplicates = strip; };
 	virtual void removeAt (int index) = 0;
@@ -110,24 +110,24 @@ public:
 /** destructor */
 	~RKComponentPropertyStringList ();
 /** for RTTI. see RKComponentBase::RKComponentTypes */
-	int type () { return PropertyStringList; };
+	int type () override { return PropertyStringList; };
 /** reimplemented to return all current strings */
-	QVariant value (const QString &modifier=QString ());
+	QVariant value (const QString &modifier=QString ()) override;
 /** return the string at the given index */
 	const QString valueAt (int index) const { return storage.value (index); };
 /** set the values in string form (values will be split by the current separator)
 @returns false if the value is illegal (in this property, all strings are legal) */
-	bool setValue (const QString &string);
+	bool setValue (const QString &string) override;
 /** change only the string at the given index. List will be expanded, as necessary. */
 	void setValueAt (int index, const QString &value);
 /** get all current strings as a QStringList */
 	const QStringList& values () const { return storage; };
 /** set current strings as a QStringList */
-	bool setValueList (const QStringList &new_values) { storage = new_values; checkStripDuplicates (); doChange (); return true; };
+	bool setValueList (const QStringList &new_values) override { storage = new_values; checkStripDuplicates (); doChange (); return true; };
 /** reimplemented from RKComponentPropertyBase to use special handling for list properties */
-	void governorValueChanged (RKComponentPropertyBase *property);
-	int listLength () const { return (storage.size ()); };
-	void removeAt (int index);
+	void governorValueChanged (RKComponentPropertyBase *property) override;
+	int listLength () const override { return (storage.size ()); };
+	void removeAt (int index) override;
 private:
 	void doChange ();
 	void checkStripDuplicates ();
@@ -152,17 +152,17 @@ public:
 /** current value as bool */
 	bool boolValue ();
 /** reimplemented from RKComponentPropertyBase. Modifier "true" returns value if true. Modifier "false" returns value if false. Modifier QString () returns current value as bool, modifier "labelled" returns the labelled value. */
-	QVariant value (const QString &modifier=QString ());
+	QVariant value (const QString &modifier=QString ()) override;
 /** reimplemented from RKComponentPropertyBase to convert to bool value according to current settings */
-	bool setValue (const QString &string);
+	bool setValue (const QString &string) override;
 /** reimplemented from RKComponentPropertyBase to test whether conversion to bool value is possible according to current settings */
-	bool isStringValid (const QString &string);
+	bool isStringValid (const QString &string) override;
 /** reimplemented from RKComponentPropertyBase to use special handling for bool and int properties (bools are copied directly, int handling: 0->false else true) */
-	void governorValueChanged (RKComponentPropertyBase *property);
+	void governorValueChanged (RKComponentPropertyBase *property) override;
 /** RTTI */
-	int type () { return PropertyBool; };
+	int type () override { return PropertyBool; };
 /** reimplemented to return a new negated boolean property if the identifier is "not" */
-	RKComponentBase* lookupComponent (const QString &identifier, QString *remainder);
+	RKComponentBase* lookupComponent (const QString &identifier, QString *remainder) override;
 	static bool stringToBool (const QString &value, bool *ok);
 	static bool variantToBool (const QVariant &value, bool *ok);
 private:
@@ -200,17 +200,17 @@ public:
 /** current value as int */
 	int intValue ();
 /** reimplemented from RKComponentPropertyBase. Return current value. */
-	QVariant value (const QString &modifier=QString ());
+	QVariant value (const QString &modifier=QString ()) override;
 /** reimplemented from RKComponentPropertyBase to convert to int value according to current settings */
-	bool setValue (const QString &string);
+	bool setValue (const QString &string) override;
 /** reimplemented from RKComponentPropertyBase to test whether conversion to int value is possible according to current settings (is a number, and within limits min and max) */
-	bool isStringValid (const QString &string);
+	bool isStringValid (const QString &string) override;
 /** reimplemented from RKComponentPropertyBase to actually reconcile requirements with other numeric slots */
-	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString (), bool reconcile_requirements=true);
+	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString (), bool reconcile_requirements=true) override;
 /** reimplemented from RKComponentPropertyBase to use special handling for int and double properties (ints are copied directly, doubles are rounded) */
-	void governorValueChanged (RKComponentPropertyBase *property);
+	void governorValueChanged (RKComponentPropertyBase *property) override;
 /** RTTI */
-	int type () { return PropertyInt; };
+	int type () override { return PropertyInt; };
 /** returns a validator for use in lineedits or similar widgets. */
 	QIntValidator *getValidator ();
 private:
@@ -237,7 +237,7 @@ public:
 /** sets the int value. Also takes care of notifying dependent components */
 	bool setDoubleValue (double new_value);
 /** reimplemented from RKComponentPropertyBase to convert to int value according to current settings */
-	bool setValue (const QString &string);
+	bool setValue (const QString &string) override;
 /** set lower boundary. Default parameter will effectively remove the boundary. You should call this *before* connecting to any other properties, so limits can be reconciled */
 	void setMin (double lower=FLT_MIN);
 /** set upper boundary. Default parameter will effectively remove the boundary. You should call this *before* connecting to any other properties, so limits can be reconciled */
@@ -251,15 +251,15 @@ public:
 /** current value as double */
 	double doubleValue ();
 /** reimplemented from RKComponentPropertyBase. Return current value as a string. */
-	QVariant value (const QString &modifier=QString ());
+	QVariant value (const QString &modifier=QString ()) override;
 /** reimplemented from RKComponentPropertyBase to test whether conversion to int value is possible according to current settings (is a number, and within limits min and max) */
-	bool isStringValid (const QString &string);
+	bool isStringValid (const QString &string) override;
 /** reimplemented from RKComponentPropertyBase to actually reconcile requirements with other numeric slots */
-	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString (), bool reconcile_requirements=true);
+	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString (), bool reconcile_requirements=true) override;
 /** reimplemented from RKComponentPropertyBase to use special handling for int and double properties (ints and doubles are copied directly) */
-	void governorValueChanged (RKComponentPropertyBase *property);
+	void governorValueChanged (RKComponentPropertyBase *property) override;
 /** RTTI */
-	int type () { return PropertyDouble; };
+	int type () override { return PropertyDouble; };
 /** returns a validator for use in lineedits or similar widgets. */
 	QDoubleValidator *getValidator ();
 private:
@@ -316,29 +316,29 @@ public:
 @returns an empty list if no valid object is selected */
 	RObject::ObjectList objectList ();
 /** reimplemented from RKComponentPropertyBase. Modifier "label" returns label(s). Modifier "shortname" returns short name(s). Modifier QString () returns full name. If no object is set, returns an empty string / variant */
-	QVariant value (const QString &modifier=QString ());
+	QVariant value (const QString &modifier=QString ()) override;
 /** reimplemented from RKComponentPropertyBase to convert to RObject with current constraints
 @returns false if no such object(s) could be found or the object(s) are invalid */
-	bool setValue (const QString &value);
+	bool setValue (const QString &value) override;
 /** overload of setValue() which accepts a list of names of RObjects
 @returns false if no such object(s) could be found or the object(s) are invalid */
-	bool setValueList (const QStringList &values);
+	bool setValueList (const QStringList &values) override;
 /** reimplemented from RKComponentPropertyBase to test whether conversion to RObject is possible with current constraints */
-	bool isStringValid (const QString &value);
+	bool isStringValid (const QString &value) override;
 /** RTTI */
-	int type () { return PropertyRObjects; };
+	int type () override { return PropertyRObjects; };
 /** reimplemented from RKComponentPropertyBase to actually reconcile requirements with other object properties */
-	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString (), bool reconcile_requirements=true);
+	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString (), bool reconcile_requirements=true) override;
 /** reimplemented from RKComponentPropertyBase to use special handling for object properties */
-	void governorValueChanged (RKComponentPropertyBase *property);
-	void removeAt (int index);
+	void governorValueChanged (RKComponentPropertyBase *property) override;
+	void removeAt (int index) override;
 	RObject* objectAt (int index) const { return object_list.value (index); };
-	int listLength () const { return (object_list.size ()); };
+	int listLength () const override { return (object_list.size ()); };
 protected:
 /** remove an object value. reimplemented from RObjectListener::objectRemoved (). This is so we get notified if the object currently selected is removed TODO: is this effectively a duplication of setFromList? */
-	void objectRemoved (RObject *removed);
+	void objectRemoved (RObject *removed) override;
 /** reimplemented from RObjectListener::objectMetaChanged (). This is so we get notified if the object currently selected is changed */
-	void objectMetaChanged (RObject *changed);
+	void objectMetaChanged (RObject *changed) override;
 private:
 /** check all objects currently in the list for validity. And set validity state accordingly. */
 	void validizeAll (bool silent=false);
@@ -379,7 +379,7 @@ public:
 /** the preview code */
 	QString preview () { return preview_code; };
 
-	QVariant value (const QString &modifier=QString ());
+	QVariant value (const QString &modifier=QString ()) override;
 
 /** set the preprocess code.
 @param code The code to set. If this is QString (), the property is seen to lack preprocess code and hence is not valid (see isValid ()). In contrast, empty strings are seen as valid */
@@ -391,10 +391,10 @@ public:
 /** see setPreview () */
 	void setPreview (const QString &code) { preview_code = code; emit (valueChanged (this)); };
 
-	bool isValid () { return (!(preprocess_code.isNull () || calculate_code.isNull () || printout_code.isNull ())); };
+	bool isValid () override { return (!(preprocess_code.isNull () || calculate_code.isNull () || printout_code.isNull ())); };
 
 /** RTTI */
-	int type () { return PropertyCode; };
+	int type () override { return PropertyCode; };
 private:
 	QString preprocess_code;
 	QString calculate_code;
@@ -412,7 +412,7 @@ public:
 /** constructor. Note that this property *requires* an RKComponent as parent (the one at the top of all the source properties) */
 	explicit RKComponentPropertyConvert (RKComponent *parent);
 	~RKComponentPropertyConvert ();
-	int type () { return PropertyConvert; };
+	int type () override { return PropertyConvert; };
 
 /** Mode of operation. see setMode () */
 	enum ConvertMode {
@@ -435,14 +435,14 @@ public:
 	void setRequireTrue (bool require_true);
 
 /** reimplemented for setRequireTrue ()*/
-	bool isValid ();
+	bool isValid () override;
 
 /** string represenation of the options in ConvertMode. For use in XMLHelper::getMultiChoiceAttribute */
 	static QString convertModeOptionString () { return ("equals;notequals;range;and;or"); };
 /** reimplemented to do raise a warning, and do nothing else. */
-	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString (), bool reconcile_requirements=true);
+	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString (), bool reconcile_requirements=true) override;
 /** reimplemented to do raise a warning, and do nothing else. */
-	bool setValue (const QString &value);
+	bool setValue (const QString &value) override;
 public slots:
 /** unfortuntely, as the parent component likely does not know about us, we have to notify it manually of any changes. That's done from this slot */
 	void selfChanged (RKComponentPropertyBase *);
@@ -474,12 +474,12 @@ public:
 /** set the sources, i.e. the properties to operate on */
 	void setSources (const QString &condition_prop, const QStringList &value_props);
 /** reimplemented to do raise a warning, and do nothing else. */
-	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString (), bool reconcile_requirements=true);
+	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString (), bool reconcile_requirements=true) override;
 /** reimplemented to do raise a warning, and do nothing else. */
-	bool setValue (const QString &value);
+	bool setValue (const QString &value) override;
 
-	QVariant value (const QString &modifier=QString ());
-	int type () { return PropertySwitch; };
+	QVariant value (const QString &modifier=QString ()) override;
+	int type () override { return PropertySwitch; };
 public slots:
 /** unfortuntely, as the parent component likely does not know about us, we have to notify it manually of any changes. That's done from this slot */
 	void selfChanged (RKComponentPropertyBase *);

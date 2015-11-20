@@ -276,7 +276,7 @@ friend class RKComponentHandle;
 	QMap<QString, AttributeValueMap> component_attributes;
 	QHash<RKComponentHandle*, QList<RKComponentDependency> > component_dependencies;
 protected:
-	void addedEntry (const QString &id, RKComponentHandle *handle);
+	void addedEntry (const QString &id, RKComponentHandle *handle) override;
 };
 
 #endif

@@ -38,8 +38,8 @@ public:
 	RKSettingsModuleGraphics (RKSettings *gui, QWidget *parent);
 	~RKSettingsModuleGraphics ();
 	
-	void applyChanges ();
-	void save (KConfig *config);
+	void applyChanges () override;
+	void save (KConfig *config) override;
 
 /** generate the commands needed to set the R run time options */
 	static QStringList makeRRunTimeOptionCommands ();
@@ -50,8 +50,8 @@ public:
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
 	
-	QString caption ();
-	QString helpURL () { return ("rkward://page/rkward_plot_history#scd_settings"); };
+	QString caption () override;
+	QString helpURL () override { return ("rkward://page/rkward_plot_history#scd_settings"); };
 
 	enum DefaultDevice {
 		RKDevice,

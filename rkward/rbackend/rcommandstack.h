@@ -78,19 +78,19 @@ public:
 	~RCommandStackModel ();
 
 	/** implements QAbstractItemModel::index() */
-	QModelIndex index (int row, int column, const QModelIndex& parent = QModelIndex ()) const;
+	QModelIndex index (int row, int column, const QModelIndex& parent = QModelIndex ()) const override;
 	/** implements QAbstractItemModel::parent() */
-	QModelIndex parent (const QModelIndex& index) const;
+	QModelIndex parent (const QModelIndex& index) const override;
 	/** implements QAbstractItemModel::rowCount() */
-	int rowCount (const QModelIndex& parent = QModelIndex ()) const;
+	int rowCount (const QModelIndex& parent = QModelIndex ()) const override;
 	/** implements QAbstractItemModel::columnCount(). This is identical for all items */
-	int columnCount (const QModelIndex& parent = QModelIndex ()) const;
+	int columnCount (const QModelIndex& parent = QModelIndex ()) const override;
 	/** implements QAbstractItemModel::data() */
-	QVariant data (const QModelIndex& index, int role = Qt::DisplayRole) const;
+	QVariant data (const QModelIndex& index, int role = Qt::DisplayRole) const override;
 	/** reimplemented from  QAbstractItemModel::headerData() to make only commands (not chains/stacks) selectable */
-	Qt::ItemFlags flags (const QModelIndex& index) const;
+	Qt::ItemFlags flags (const QModelIndex& index) const override;
 	/** reimplemented from  QAbstractItemModel::headerData() to provide column names */
-	QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
+	QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
 	/** static pointer to the model. Only one model will ever be around. */
 	static RCommandStackModel* getModel () { return static_model; };

@@ -35,13 +35,13 @@ public:
 
 	~RKSettingsModuleDebug ();
 	
-	void applyChanges ();
-	void save (KConfig *config);
+	void applyChanges () override;
+	void save (KConfig *config) override;
 	
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
 	
-	QString caption ();
+	QString caption () override;
 
 	// static members are declared in debug.h and defined in main.cpp
 public slots:

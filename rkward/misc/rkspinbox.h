@@ -62,12 +62,12 @@ public:
 	void setIntValue (int int_value);
 protected:
 /** reimplemented from QSpinBox to always return the text suitable for the *internal* value. The value given as parameter is ignored. */
-	QString textFromValue (int) const;
+	QString textFromValue (int) const override;
 /** reimplemented from QSpinBox to update steps and value whenever the text was changed. WARNING: not really const */
-	int valueFromText (const QString & text) const;
+	int valueFromText (const QString & text) const override;
 /** reimplemented from QSpinBox to adjust the internal value */
-	void stepBy (int steps);
-	QValidator::State validate (QString &input, int &pos ) const;
+	void stepBy (int steps) override;
+	QValidator::State validate (QString &input, int &pos ) const override;
 private slots:
 	void updateValue (int value);
 	void emitValueChange ();

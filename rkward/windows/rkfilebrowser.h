@@ -41,7 +41,7 @@ public:
 	~RKFileBrowser ();
 
 /** reimplemented to create the real file browser widget only when the file browser is shown for the first time */
-	void showEvent (QShowEvent *e);
+	void showEvent (QShowEvent *e) override;
 	static RKFileBrowser *getMainBrowser() { return main_browser; };
 public slots:
 	void currentWDChanged ();
@@ -62,7 +62,7 @@ public:
 	~RKFileBrowserWidget ();
 
 	void setURL (const QString &url);
-	bool eventFilter (QObject* o, QEvent* e);
+	bool eventFilter (QObject* o, QEvent* e) override;
 public slots:
 	void urlChangedInView (const QUrl &url);
 	void urlChangedInCombo (const QString &url);

@@ -62,7 +62,7 @@ public:
 public slots:
 	void pageChange (KPageWidgetItem *current, KPageWidgetItem *before);
 protected:
-	void slotButtonClicked (int button);
+	void slotButtonClicked (int button) override;
 protected:
 	RKSettings (QWidget *parent = 0);
 	~RKSettings ();

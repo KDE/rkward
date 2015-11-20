@@ -774,13 +774,13 @@ public:
 	}
 
 private:
-	void focusOutEvent (QFocusEvent *) {
+	void focusOutEvent (QFocusEvent *) override {
 		RK_TRACE (APP);
 
 		deleteLater ();
 	}
 
-	void keyReleaseEvent (QKeyEvent *ev) {
+	void keyReleaseEvent (QKeyEvent *ev) override {
 		RK_TRACE (APP);
 
 		if (ev->modifiers () == Qt::NoModifier) {
@@ -788,7 +788,7 @@ private:
 		}
 	}
 
-	void mouseReleaseEvent (QMouseEvent *ev) {
+	void mouseReleaseEvent (QMouseEvent *ev) override {
 		RK_TRACE (APP);
 
 		// HACK to get by without slots, and the associated moc'ing

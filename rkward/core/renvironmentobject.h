@@ -32,23 +32,23 @@ public:
 	REnvironmentObject (RContainerObject *parent, const QString &name);
 	~REnvironmentObject ();
 
-	void updateFromR (RCommandChain *chain);
+	void updateFromR (RCommandChain *chain) override;
 /** like updateFromR, but only update new / removed symbols from R. Theoretically this could be defined in RContainerObject, but the only use case is for environments. */
 	virtual void updateFromR (RCommandChain *chain, const QStringList &current_symbols);
 
-	QString getFullName () const;
-	QString makeChildName (const QString &short_child_name, bool misplaced=false) const;
-	QString makeChildBaseName (const QString &short_child_name) const;
+	QString getFullName () const override;
+	QString makeChildName (const QString &short_child_name, bool misplaced=false) const override;
+	QString makeChildBaseName (const QString &short_child_name) const override;
 /** reimplemented from RContainerObject: If this is an environment var, call RContainerObject::writeMetaData (). Else, do nothing. An environment has no meta data. */
-	void writeMetaData (RCommandChain *chain);
+	void writeMetaData (RCommandChain *chain) override;
 	QString packageName () const;
-	QString getObjectDescription () const;
+	QString getObjectDescription () const override;
 protected:
-	bool updateStructure (RData *new_data);
+	bool updateStructure (RData *new_data) override;
 /// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"
-	QString removeChildCommand (RObject *object) const;
+	QString removeChildCommand (RObject *object) const override;
 /// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"
-	QString renameChildCommand (RObject *object, const QString &new_name) const;
+	QString renameChildCommand (RObject *object, const QString &new_name) const override;
 friend class RObject;
 	void updateNamespace (RData *new_data);
 };

@@ -76,8 +76,8 @@ public:
 	RKSettingsModuleOutput (RKSettings *gui, QWidget *parent);
 	~RKSettingsModuleOutput ();
 	
-	void applyChanges ();
-	void save (KConfig *config);
+	void applyChanges () override;
+	void save (KConfig *config) override;
 
 /** generate the commands needed to set the R run time options */
 	static QStringList makeRRunTimeOptionCommands ();
@@ -85,7 +85,7 @@ public:
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
 	
-	QString caption ();
+	QString caption () override;
 	
 	static bool autoShow () { return auto_show; };
 	static bool autoRaise () { return auto_raise; };

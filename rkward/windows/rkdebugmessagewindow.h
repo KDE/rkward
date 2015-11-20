@@ -31,9 +31,9 @@ public:
 	~RKDebugMessageWindow ();
 
 /** reimplemented to create the real widget only when the viewer is shown */
-	void showEvent (QShowEvent *e);
+	void showEvent (QShowEvent *e) override;
 /** reimplemented to discard the real widget only when the viewer is hidden */
-	void hideEvent (QHideEvent *e);
+	void hideEvent (QHideEvent *e) override;
 	static RKDebugMessageWindow *instance () { return _instance; };
 	static void newMessage (const int flags, const int level, const QString &message);
 private:

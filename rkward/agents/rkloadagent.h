@@ -34,7 +34,7 @@ public:
 
 	~RKLoadAgent ();
 protected:
-	void rCommandDone (RCommand *command);
+	void rCommandDone (RCommand *command) override;
 private:
 /// needed if file to be loaded is remote
 	QString tmpfile;

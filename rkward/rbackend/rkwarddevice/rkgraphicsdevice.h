@@ -105,7 +105,7 @@ private slots:
 	void viewKilled ();
 private:
 	void goInteractive (const QString &prompt);
-	bool eventFilter (QObject *watched, QEvent *event);
+	bool eventFilter (QObject *watched, QEvent *event) override;
 	void checkSize ();
 
 	QTimer updatetimer;

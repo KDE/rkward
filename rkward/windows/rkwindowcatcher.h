@@ -124,12 +124,12 @@ public:
 /** dtor */
 	~RKCaughtX11Window ();
 /** TODO? */
-	bool isModified () { return false; };
+	bool isModified () override { return false; };
 
 /** reimplemented from RKMDIWindow to switch to fixed size mode, and disable the dynamic_size_action */
-	void prepareToBeAttached ();
+	void prepareToBeAttached () override;
 /** see prepareToBeAttached (). Reenable the dynamic_size_action */
-	void prepareToBeDetached ();
+	void prepareToBeDetached () override;
 /** returns the window corresponding the to given R device number (or 0 if no such window exists) */
 	static RKCaughtX11Window* getWindow (int device_number) { return device_windows.value (device_number); };
 	void updateHistoryActions (int history_length, int position, const QStringList &labels);
@@ -173,7 +173,7 @@ public slots:
 	void showPlotInfo ();
 
 /** reimplemented to keep window alive while saving history */
-	bool close (bool also_delete);
+	bool close (bool also_delete) override;
 	void setKilledInR () { killed_in_r = true; };
 private slots:
 	void doEmbed ();
@@ -181,7 +181,7 @@ private:
 	void forceClose ();
 	void commonInit (int device_number);
 	void reEmbed ();
-	void rCommandDone (RCommand *command);
+	void rCommandDone (RCommand *command) override;
 	friend class RKCaughtX11WindowPart;	// needs access to the actions
 	int device_number;
 	bool killed_in_r;

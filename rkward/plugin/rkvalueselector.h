@@ -34,9 +34,9 @@ class RKValueSelector : public RKComponent {
 public: 
 	RKValueSelector (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
 	~RKValueSelector ();
-	int type () { return ComponentValueSelector; };
-	QVariant value (const QString &modifier=QString ());
-	QStringList getUiLabelPair () const;
+	int type () override { return ComponentValueSelector; };
+	QVariant value (const QString &modifier=QString ()) override;
+	QStringList getUiLabelPair () const override;
 private slots:
 	void selectionPropertyChanged ();
 	void listSelectionChanged ();

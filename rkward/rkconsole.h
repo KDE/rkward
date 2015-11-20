@@ -61,7 +61,7 @@ public:
 /** Returns the current cursor position, within the current command (without taking into account the prefix). Returns -1 if the cursor is not on the line containing the command. */
 	int currentCursorPositionInCommand ();
 	void doTabCompletion ();
-	QString provideContext (int line_rev);
+	QString provideContext (int line_rev) override;
 
 	static RKConsole *mainConsole () { return main_console; };
 	static void setMainConsole (RKConsole *console) { main_console = console; };
@@ -71,7 +71,7 @@ public:
 	static void pipeUserCommand (const QString &command);
 
 /** reimplemnented from RKMDIWindow to clear selection when gaining focus */
-	void activate (bool with_focus=true);
+	void activate (bool with_focus=true) override;
 	void setCommandHistory (const QStringList &new_history, bool append);
 	QStringList commandHistory () const { return commands_history.getHistory (); };
 	void addCommandToHistory (const QString& text) { commands_history.append (text); };
@@ -79,14 +79,14 @@ protected:
 /** Handle keystrokes before they reach the kate-part. Return TRUE if we want the kate-part to ignore it
 \param e the QKeyEvent */
 	bool handleKeyPress (QKeyEvent * e);
-	void rCommandDone (RCommand *command);
+	void rCommandDone (RCommand *command) override;
 /** reimplemented from RCommandReceiver::newOutput () to handle output of console commands */
-	void newOutput (RCommand *command, ROutput *output);
+	void newOutput (RCommand *command, ROutput *output) override;
 /** reimplemented from QWidget to show the context menu */
-	void contextMenuEvent (QContextMenuEvent * event);
+	void contextMenuEvent (QContextMenuEvent * event) override;
 private:
 friend class RKConsolePart;
-	bool eventFilter (QObject *o, QEvent *e);
+	bool eventFilter (QObject *o, QEvent *e) override;
 	bool doTabCompletionHelper (int line_num, const QString &line, int word_start, int word_end, const QStringList &entries);
 /** a helper function to doTabCompletionHelper */
 	void insertCompletion (int line_num, int word_start, int word_end, const QString &completion);
@@ -187,7 +187,7 @@ private:
 	bool previous_chunk_was_piped;
 	
 /** Reimplemented from RCommandReceiver to display the next line of the command */
-	void userCommandLineIn (RCommand* command);
+	void userCommandLineIn (RCommand* command) override;
 };
 
 /** A part interface to RKConsole. Provides the context-help functionality

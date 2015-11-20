@@ -43,7 +43,7 @@ public:
 	void unlock ();
 	static RObjectBrowser *mainBrowser () { return object_browser; };
 /** reimplemented to create the real file browser widget only when the file browser is shown for the first time */
-	void showEvent (QShowEvent *e);
+	void showEvent (QShowEvent *e) override;
 private:
 	RObjectBrowserInternal *internal;
 	KVBox *layout_widget;
@@ -81,7 +81,7 @@ private slots:
 	void doubleClicked (const QModelIndex &index);
 protected:
 /** reimplemnented from QWidget to make show the globalenv object when activated (other than by mouse click) */
-	void focusInEvent (QFocusEvent *e);
+	void focusInEvent (QFocusEvent *e) override;
 private:
 	enum PopupActions {
 		Help=0,

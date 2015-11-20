@@ -40,7 +40,7 @@ public:
 	static RKRBackendProtocolFrontend* instance () { return _instance; };
 protected:
 /** needed to handle the QEvents, the R thread is sending (notifications on what's happening in the backend thread) */
-	void customEvent (QEvent *e);
+	void customEvent (QEvent *e) override;
 	QThread* main_thread;
 private:
 	static RKRBackendProtocolFrontend* _instance;

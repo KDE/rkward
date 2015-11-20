@@ -41,7 +41,7 @@ class RKContextHandler : public QObject, public RKComponentBase, public KXMLGUIC
 friend class RKComponentGUIXML;
 public:
 	void invokeComponent (RKComponentHandle *handle);
-	int type () { return ComponentContextHandler; };
+	int type () override { return ComponentContextHandler; };
 protected:
 /** constructor. Protected. Use RKContextMap::makeContextHandler() instead. */
 	RKContextHandler (QObject *parent, const QDomDocument &gui_xml, const QString &id);

@@ -58,9 +58,9 @@ private slots:
 	void splitterMoved (int, int);
 protected:
 	/** handle RMB clicks on individual buttons */
-	bool eventFilter (QObject *obj, QEvent *ev);
+	bool eventFilter (QObject *obj, QEvent *ev) override;
 	/** handle RMB clicks on the bar itself */
-	void contextMenuEvent (QContextMenuEvent *event);
+	void contextMenuEvent (QContextMenuEvent *event) override;
 private:
 friend class RKWorkplace;
 	void reclaimDetached (RKMDIWindow *window);

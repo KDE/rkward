@@ -40,8 +40,8 @@ public:
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
 	
-	void applyChanges ();
-	void save (KConfig *config);
+	void applyChanges () override;
+	void save (KConfig *config) override;
 
 	static bool saveHistory () { return save_history; };
 	static uint maxHistoryLength () { return max_history_length; };
@@ -61,9 +61,9 @@ public:
 	static QStringList loadCommandHistory ();
 	static void saveCommandHistory (const QStringList &list);
 
-	QString caption ();
+	QString caption () override;
 
-	QString helpURL () { return ("rkward://page/rkward_console#settings"); };
+	QString helpURL () override { return ("rkward://page/rkward_console#settings"); };
 public slots:
 	void changedSetting (int);
 private:

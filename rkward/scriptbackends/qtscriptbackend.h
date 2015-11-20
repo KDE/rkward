@@ -35,20 +35,20 @@ public:
 
 	~QtScriptBackend ();
 
-	bool initialize (RKComponentPropertyCode *code_property=0, bool add_headings=true);
-	void destroy ();
+	bool initialize (RKComponentPropertyCode *code_property=0, bool add_headings=true) override;
+	void destroy () override;
 	
-	void preprocess (int flags) { callFunction ("do_preprocess ();\n", flags, Preprocess); };
-	void calculate (int flags) { callFunction ("do_calculate ();\n", flags, Calculate); };
-	void printout (int flags) { callFunction ("do_printout ();\n", flags, Printout); };
-	void preview (int flags) { callFunction ("do_preview ();\n", flags, Preview); };
-	void writeData (const QVariant &data);
+	void preprocess (int flags) override { callFunction ("do_preprocess ();\n", flags, Preprocess); };
+	void calculate (int flags) override { callFunction ("do_calculate ();\n", flags, Calculate); };
+	void printout (int flags) override { callFunction ("do_printout ();\n", flags, Printout); };
+	void preview (int flags) override { callFunction ("do_preview ();\n", flags, Preview); };
+	void writeData (const QVariant &data) override;
 public slots:
 	void threadError (const QString &message);
 	void commandDone (const QString &result);
 	void needData (const QString &identifier, const int hint);
 private:
-	void tryNextFunction ();
+	void tryNextFunction () override;
 	QtScriptBackendThread *script_thread;
 	const RKMessageCatalog *catalog;
 
@@ -83,7 +83,7 @@ protected slots:
 	QVariant getUiLabelPair (const QString &identifier);
 	bool includeFile (const QString &filename);
 protected:
-	void run ();
+	void run () override;
 private:
 	/** for any script error in the last evaluation. If there was an error, a message is generated, and this function return true (and the thread should be made to exit!) */
 	bool scriptError ();

@@ -78,7 +78,7 @@ not be interrupted. */
 	static bool isNaReal (double value) { return na_real == value; };
 	static bool isNaInt (int value) { return na_int == value; };
 private:
-	void timerEvent (QTimerEvent *);
+	void timerEvent (QTimerEvent *) override;
 	int flush_timer_id;
 /** Calls RThread::flushOutput(), and takes care of adding the output to all applicable commands */
 	void flushOutput (bool forced);
@@ -135,7 +135,7 @@ friend class RKWardMainWindow;
 friend class RCommand;
 protected:
 	void handleRequest (RBackendRequest *request);
-	void rCommandDone (RCommand *command);
+	void rCommandDone (RCommand *command) override;
 };
 
 /**

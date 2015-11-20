@@ -37,7 +37,7 @@ public slots:
 	void doQuitNow ();
 	void showWaitDialog ();
 protected:
-	void rCommandDone (RCommand *command);
+	void rCommandDone (RCommand *command) override;
 private:
 	RKProgressControl *cancel_dialog;
 	static bool quitting;

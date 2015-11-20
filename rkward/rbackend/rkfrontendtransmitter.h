@@ -30,19 +30,19 @@ public:
 	RKFrontendTransmitter ();
 	~RKFrontendTransmitter ();
 
-	void run ();
+	void run () override;
 
-	bool doMSleep (int delay) {
+	bool doMSleep (int delay) override {
 		msleep (delay);
 		return true;
 	};
-	void writeRequest (RBackendRequest *request);
-	void requestReceived (RBackendRequest *request);
+	void writeRequest (RBackendRequest *request) override;
+	void requestReceived (RBackendRequest *request) override;
 private slots:
 	void connectAndEnterLoop ();
 	void backendExit (int exitcode);
 private:
-	void handleTransmissionError (const QString &message);
+	void handleTransmissionError (const QString &message) override;
 
 	QProcess* backend;
 	QLocalServer* server;

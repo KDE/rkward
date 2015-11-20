@@ -40,8 +40,8 @@ public:
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
 	
-	void applyChanges ();
-	void save (KConfig *config);
+	void applyChanges () override;
+	void save (KConfig *config) override;
 	void validateGUI ();
 
 	static bool shouldShowInput (RCommand *command);
@@ -51,7 +51,7 @@ public:
 
 	static uint maxLogLines () { return max_log_lines; };
 
-	QString caption ();
+	QString caption () override;
 public slots:
 	void changedSetting (int);
 private:

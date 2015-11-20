@@ -55,13 +55,13 @@ public:
 		RKMDIFocusFollowsMouse=1
 	};
 
-	void applyChanges ();
-	void save (KConfig *config);
+	void applyChanges () override;
+	void save (KConfig *config) override;
 	
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
 	
-	QString caption ();
+	QString caption () override;
 
 /// returns the directory-name where the logfiles should reside
 	static QString &filesPath () { return files_path; };

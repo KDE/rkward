@@ -34,7 +34,7 @@ public:
 
 	~RKEditObjectAgent ();
 protected:
-	void rCommandDone (RCommand *command);
+	void rCommandDone (RCommand *command) override;
 private:
 	QStringList object_names;
 	int done_command_id;

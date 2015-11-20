@@ -94,7 +94,7 @@ protected:
 /** low-level initialization of R */
 	bool startR ();
 /** reimplemented from RKROutputBuffer */
-	bool doMSleep (int msecs);
+	bool doMSleep (int msecs) override;
 public:
 /** convenience low-level function for running a command, directly
 @param command command to be runCommand

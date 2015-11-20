@@ -72,7 +72,7 @@ protected:
 	/** sets up the various tool windows, and starts the R engine */
 	void initToolViewsAndR ();
 	/** reimplemented from KMainWindow to call our doQueryClose (), and then (if quitting was not cancelled), invoke an RKQuitAgent to wait for the R-backend to finish up before actually quitting. */
-	virtual void closeEvent (QCloseEvent *e);
+	virtual void closeEvent (QCloseEvent *e) override;
 signals:
 	void aboutToQuitRKWard ();
 public slots:
@@ -100,7 +100,7 @@ public slots:
 	*/
 	void slotCancelAllCommands ();
 	void configureCarbonCopy ();
-	void slotSetStatusBarText (const QString &text);
+	void slotSetStatusBarText (const QString &text) override;
 /** Basically a shortcut to slotSetStatusBarText (QString ()). Needed as a slot without parameters. */
 	void slotSetStatusReady () { slotSetStatusBarText (QString ()); };
 
@@ -130,9 +130,9 @@ public slots:
 	void slotDetachWindow ();
 
 /** reimplemented from KMainWindow, to additionally include the workspace url. Parameters are ignored. Rather we create a caption according to the active view */
-	void setCaption (const QString &);
+	void setCaption (const QString &) override;
 /** HACK this is only to make the compiler happy with -Woverloaded-virtual */
-	void setCaption (const QString &dummy, bool) { setCaption (dummy); };
+	void setCaption (const QString &dummy, bool) override { setCaption (dummy); };
 private slots:
 	void partChanged (KParts::Part *new_part);
 private:

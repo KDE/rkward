@@ -47,15 +47,15 @@ public:
 	RObjectList ();
 	~RObjectList ();
 
-	void updateFromR (RCommandChain *chain);
+	void updateFromR (RCommandChain *chain) override;
 	/** like updateFromR, but only adjusts to new / missing environments, but does not update the .GlobalEnv. Designed to be used from the backend, when packages were loaded/unloaded . */
 	void updateFromR (RCommandChain *chain, const QStringList &current_searchpath, const QStringList &current_namespaces);
 	
-	QString getFullName () const { return QString (); };
-	QString getBaseName () const { return QString (); };
-	QString makeChildName (const QString &short_child_name, bool) const { return short_child_name; };
+	QString getFullName () const override { return QString (); };
+	QString getBaseName () const override { return QString (); };
+	QString makeChildName (const QString &short_child_name, bool) const override { return short_child_name; };
 	/** reimplemented from RContainerObject: do nothing. The object-list has no meta data. */
-	void writeMetaData (RCommandChain *) {};
+	void writeMetaData (RCommandChain *) override {};
 
 	REnvironmentObject* findPackage (const QString &namespacename) const;
 
@@ -67,7 +67,7 @@ public:
 	QStringList detachPackages (const QStringList &packages, RCommandChain *chain = 0, RKProgressControl *control = 0);
 	/** A pseudo object containing as children all loaded namespaces which do not belong to a package on the search path */
 	RKOrphanNamespacesObject* orphanNamespacesObject () const { return orphan_namespaces; };
-	QString getObjectDescription () const;
+	QString getObjectDescription () const override;
 public slots:
 	void timeout ();
 signals:
@@ -77,16 +77,16 @@ signals:
 	void updateComplete ();
 protected:
 /** reimplemented from RContainerObject to search the environments in search order */
-	RObject *findObjects (const QStringList &path, RObjectSearchMap *matches, const QString &op);
+	RObject *findObjects (const QStringList &path, RObjectSearchMap *matches, const QString &op) override;
 
 /// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"
-	QString removeChildCommand (RObject *object) const;
+	QString removeChildCommand (RObject *object) const override;
 /// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"
-	QString renameChildCommand (RObject *object, const QString &new_name) const;
+	QString renameChildCommand (RObject *object, const QString &new_name) const override;
 /// reimplemented from RContainerObject to emit a change signal
 	void objectsChanged ();
-	bool updateStructure (RData *new_data);
-	void rCommandDone (RCommand *command);
+	bool updateStructure (RData *new_data) override;
+	void rCommandDone (RCommand *command) override;
 	void updateEnvironments (const QStringList &env_names, bool force_globalenv_update);
 	void updateNamespaces (const QStringList namespace_names);
 private:

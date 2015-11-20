@@ -45,23 +45,23 @@ public:
 /** destructor */
 	~RKStandardComponent ();
 /** reimplemented to update code on changes*/
-	void changed ();
+	void changed () override;
 /** reimplemented to return true, if the RKStandardComponent is in Wizard mode */
-	bool isWizardish ();
+	bool isWizardish () override;
 /** reimplemented to actually answer the question (if in Wizard mode) */
-	bool havePage (bool next);
+	bool havePage (bool next) override;
 /** reimplemented to actually move the page (if in Wizard mode)  */
-	void movePage (bool next);
+	void movePage (bool next) override;
 /** reimplemented to actually answer the question (if in Wizard mode) */
-	bool currentPageSatisfied ();
+	bool currentPageSatisfied () override;
 /** for use by RKComponentBuilder to add a page to a wizardish component */
-	RKComponent *addPage ();
+	RKComponent *addPage () override;
 /** reimplemented to acutally register the component with the wizard */
-	void addComponentToCurrentPage (RKComponent *component);
+	void addComponentToCurrentPage (RKComponent *component) override;
 /** switch from dialog to wizard or vice versa */
 	void switchInterface ();
 /** RTTI */
-	int type () { return ComponentStandard; };
+	int type () override { return ComponentStandard; };
 /** set the GUI caption (if this is a top-level gui) */
 	void setCaption (const QString &caption);
 /** return the filename of the xml file */
@@ -76,7 +76,7 @@ public:
 /** convenience access function: closes the corresponding GUI */
 	void close ();
 /** reimplemented to actually return Dead or Processing when appropriate */
-	ComponentStatus recursiveStatus ();
+	ComponentStatus recursiveStatus () override;
 
 	RCommandChain *commandChain () const { return command_chain; };
 
@@ -123,7 +123,7 @@ private:
 protected:
 	friend class RKComponentBuilder;
 /** reimplemented for technical reasons. Additionally registers component children with the component stack if in wizard mode */
-	void addChild (const QString &id, RKComponentBase *child);
+	void addChild (const QString &id, RKComponentBase *child) override;
 };
 
 #include <qmap.h>

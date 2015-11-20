@@ -637,7 +637,7 @@ public:
 		expanded = RKStandardIcons::getIcon (RKStandardIcons::ActionCollapseUp);
 		collapsed = RKStandardIcons::getIcon (RKStandardIcons::ActionExpandDown);
 	}
-	void initStyleOption (QStyleOptionViewItem* option, const QModelIndex& index) const {
+	void initStyleOption (QStyleOptionViewItem* option, const QModelIndex& index) const override {
 		QStyledItemDelegate::initStyleOption (option, index);
 		if (!index.parent ().isValid ()) {
 			QStyleOptionViewItemV4 *v4 = qstyleoption_cast<QStyleOptionViewItemV4 *> (option);

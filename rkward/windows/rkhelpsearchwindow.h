@@ -41,7 +41,7 @@ class RKHelpSearchWindow : public RKMDIWindow, public RCommandReceiver {
 public:
 	RKHelpSearchWindow (QWidget *parent, bool tool_window, const char *name=0);
 	~RKHelpSearchWindow ();
-	void rCommandDone (RCommand *command);
+	void rCommandDone (RCommand *command) override;
 /** small convenience function to get context help for RKCommandEditorWindow and RKConsole.
 @param context_line The current line
 @param cursor_pos cursor position in the current line
@@ -55,7 +55,7 @@ public slots:
 	void updateInstalledPackages ();
 protected:
 /** reimplemnented from QWidget to make the input focus default to the input field */
-	void focusInEvent (QFocusEvent *e);
+	void focusInEvent (QFocusEvent *e) override;
 private:
 	QComboBox* field;
 	QComboBox* fieldsList;
@@ -81,10 +81,10 @@ public:
 /** Set the results. The model will assume ownership of the results */
 	void setResults (const QStringList &new_results);
 
-	int rowCount (const QModelIndex& parent=QModelIndex()) const;
-	int columnCount (const QModelIndex& parent=QModelIndex()) const;
-	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const;
-	QVariant headerData (int section, Qt::Orientation orientation, int role=Qt::DisplayRole) const;
+	int rowCount (const QModelIndex& parent=QModelIndex()) const override;
+	int columnCount (const QModelIndex& parent=QModelIndex()) const override;
+	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const override;
+	QVariant headerData (int section, Qt::Orientation orientation, int role=Qt::DisplayRole) const override;
 	QString resultsType (int row);
 private:
 	QStringList topics;

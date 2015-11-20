@@ -40,13 +40,13 @@ public:
 	RKSettingsModuleR (RKSettings *gui, QWidget *parent);
 	~RKSettingsModuleR ();
 	
-	void applyChanges ();
-	void save (KConfig *config);
+	void applyChanges () override;
+	void save (KConfig *config) override;
 	
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
 	
-	QString caption ();
+	QString caption () override;
 	
 /** generate the commands needed to set the R run time options */
 	static QStringList makeRRunTimeOptionCommands ();
@@ -109,8 +109,8 @@ public:
 	RKSettingsModuleRPackages (RKSettings *gui, QWidget *parent);
 	~RKSettingsModuleRPackages ();
 	
-	void applyChanges ();
-	void save (KConfig *config);
+	void applyChanges () override;
+	void save (KConfig *config) override;
 	
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
@@ -126,14 +126,14 @@ public:
 /** returns the list of packages which are essential to rkward. This is hard-coded. */
 	static QStringList essentialPackages () { return essential_packages.split ("\n"); };
 
-	QString caption ();
+	QString caption () override;
 public slots:
 	void settingChanged ();
 	void addLibLoc (QStringList *string_list);
 	void addRepository (QStringList *string_list);
 	void selectCRANMirror ();
 protected:
-	void rCommandDone (RCommand *command);
+	void rCommandDone (RCommand *command) override;
 private:
 	static QString libLocsCommand ();
 

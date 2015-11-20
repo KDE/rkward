@@ -57,14 +57,14 @@ public:
 	static StartupDialogResult getStartupAction (QWidget *parent, KRecentFilesAction *recent_files);
 	static KUrl getRestoreFile ();
 public slots:
-	void accept ();
-	void reject ();
+	void accept () override;
+	void reject () override;
 	void listDoubleClicked (QListWidgetItem* item);
 	void listClicked (QListWidgetItem* item);
 	void openButtonSelected (bool checked);
 protected:
 /** reimplemented from QWidget to achieve fixed width */
-	void showEvent (QShowEvent *event);
+	void showEvent (QShowEvent *event) override;
 private:
 	QRadioButton *empty_workspace_button;
 	QRadioButton *empty_table_button;

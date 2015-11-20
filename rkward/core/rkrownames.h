@@ -27,25 +27,25 @@ public:
 	explicit RKRowNames (RContainerObject *parent);
 	~RKRowNames ();
 
-	QString getFullName () const;
+	QString getFullName () const override;
 /** Reimplemented to return "row.names" */
-	QString getBaseName () const { return QString ("row.names"); };
+	QString getBaseName () const override { return QString ("row.names"); };
 /** Reimplemented to do nothing. There is no metadata on the rownames. */
-	void writeMetaData (RCommandChain *) {};
+	void writeMetaData (RCommandChain *) override {};
 
 /** Reimplemented to always try to write data as numbers, if possible */
-	void writeData (int from_row, int to_row, RCommandChain *chain=0);
+	void writeData (int from_row, int to_row, RCommandChain *chain=0) override;
 /** Reimplemented to check, whether the values are all 1:n, custom, or invalid. */
-	void setText (int row, const QString &text);
+	void setText (int row, const QString &text) override;
 /** Reimplemented to also adjust the subsequent row names, if, and only if rownames are 1:n */
-	void removeRows (int from_row, int to_row);
+	void removeRows (int from_row, int to_row) override;
 /** Reimplemented to give the new row and appropriate default name, and to adjust the subsequent row names, if, and only if rownames are 1:n */
-	void insertRows (int row, int count);
+	void insertRows (int row, int count) override;
 protected:
 /** Reimplemented to disable duplicate checks during the setText() calls within */
-	void setCharacterFromR (int from_row, int to_row, const QStringList &data);
+	void setCharacterFromR (int from_row, int to_row, const QStringList &data) override;
 /** Reimplemented to assume sequential row number on initialization */
-	void beginEdit ();
+	void beginEdit () override;
 private:
 /** @returns: true if the text was already unique, false, if it had to be adjusted */
 	bool makeUnique (QString *text, bool non_sequentials_only);

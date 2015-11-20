@@ -44,13 +44,13 @@ public slots:
 	void slotReattach ();
 /** update own caption, when the window's caption has changed */
 	void updateCaption (RKMDIWindow *);
-	void slotSetStatusBarText (const QString &text);
+	void slotSetStatusBarText (const QString &text) override;
 /** Hide any emtpy menus.
 @param ignore do nothing if true. For internal use, only. */
 	void hideEmptyMenus (bool ignore=false);
 protected:
 /** when receiving a close event, dispatch to the embedded window */
-	void closeEvent (QCloseEvent *e);
+	void closeEvent (QCloseEvent *e) override;
 private:
 	RKMDIWindow *captured;
 	RKTopLevelWindowGUI *toplevel_actions;

@@ -31,10 +31,10 @@ public:
 
 	QWidget *editorWidget () const { return editor_widget; };
 
-	void setModel (QAbstractItemModel *model);
+	void setModel (QAbstractItemModel *model) override;
 	void setShowAddRemoveButtons (bool show);
 
-	QSize sizeHint () const;                                                  // reimplemented to assure a proper size for the content
+	QSize sizeHint () const override;                                                  // reimplemented to assure a proper size for the content
 public slots:
 	void rowExpanded (QModelIndex row);
 	void rowClicked (QModelIndex row);
@@ -46,10 +46,10 @@ signals:
 	void addRow (int where);
 	void removeRow (int which);
 protected:
-	void resizeEvent (QResizeEvent* event);                                          // reimplemented to make the current content widget stretch / shrink
-	void currentChanged (const QModelIndex& current, const QModelIndex& previous);
-	void mousePressEvent (QMouseEvent* event);
-	void drawRow (QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+	void resizeEvent (QResizeEvent* event) override;                                          // reimplemented to make the current content widget stretch / shrink
+	void currentChanged (const QModelIndex& current, const QModelIndex& previous) override;
+	void mousePressEvent (QMouseEvent* event) override;
+	void drawRow (QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 private:
 	QSize sizeHintWithoutEditor () const;
 	int rowOfButton (QObject *button) const;

@@ -106,8 +106,8 @@ private:
 	QString text;
 	QString caption;
 protected:
-	void newOutput (RCommand *, ROutput *output);
-	void rCommandDone (RCommand *command);
+	void newOutput (RCommand *, ROutput *output) override;
+	void rCommandDone (RCommand *command) override;
 };
 
 /** This class provides the dialog shown as part of an RKProgressControl. Generally you should not use this class directly, but rather use RKProgressControl. */
@@ -123,7 +123,7 @@ public:
 	void setCloseTextToClose ();
 	void finished ();
 protected:
-	void closeEvent (QCloseEvent *e);
+	void closeEvent (QCloseEvent *e) override;
 private slots:
 	void scrollDown ();
 private:

@@ -36,9 +36,9 @@ class RKMatrixInput : public RKComponent {
 public:
 	RKMatrixInput (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
 	~RKMatrixInput ();
-	int type () { return ComponentMatrixInput; };
-	bool isValid () { return is_valid; };
-	QVariant value (const QString &modifier=QString ());
+	int type () override { return ComponentMatrixInput; };
+	bool isValid () override { return is_valid; };
+	QVariant value (const QString &modifier=QString ()) override;
 public slots:
 	void cut ();
 	void copy ();
@@ -105,12 +105,12 @@ private:
 friend class RKMatrixInput;
 	RKMatrixInputModel (RKMatrixInput *matrix);
 	virtual ~RKMatrixInputModel ();
-	int rowCount (const QModelIndex &parent = QModelIndex()) const; // implemented for QAbstractTableModel
-	int columnCount (const QModelIndex &parent = QModelIndex()) const; // implemented for QAbstractTableModel
-	QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const; // re-implemented for QAbstractTableModel
-	bool setData (const QModelIndex &index, const QVariant &value, int role = Qt::EditRole); // re-implemented for QAbstractTableModel
-	Qt::ItemFlags flags (const QModelIndex &index) const; // re-implemented for QAbstractTableModel
-	QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;  // re-implemented for QAbstractTableModel
+	int rowCount (const QModelIndex &parent = QModelIndex()) const override; // implemented for QAbstractTableModel
+	int columnCount (const QModelIndex &parent = QModelIndex()) const override; // implemented for QAbstractTableModel
+	QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override; // re-implemented for QAbstractTableModel
+	bool setData (const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override; // re-implemented for QAbstractTableModel
+	Qt::ItemFlags flags (const QModelIndex &index) const override; // re-implemented for QAbstractTableModel
+	QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;  // re-implemented for QAbstractTableModel
 
 	RKMatrixInput *matrix;
 	QStringList horiz_header;

@@ -47,9 +47,9 @@ signals:
 	void pageInternalNavigation (const QUrl& url);
 protected:
 /** reimplemented to always emit linkClicked() for pages that need special handling (importantly, rkward://-urls). */
-	bool acceptNavigationRequest (QWebFrame* frame, const QNetworkRequest& request, NavigationType type);
+	bool acceptNavigationRequest (QWebFrame* frame, const QNetworkRequest& request, NavigationType type) override;
 /** reimplemented to schedule new window creation for the next page to load */
-	QWebPage* createWindow (WebWindowType type);
+	QWebPage* createWindow (WebWindowType type) override;
 private:
 	RKHTMLWindow *window;
 	bool new_window;
@@ -88,7 +88,7 @@ public:
 	static bool handleRKWardURL (const KUrl &url, RKHTMLWindow *window=0);
 	void openRKHPage (const KUrl &url);
 
-	bool isModified ();
+	bool isModified () override;
 /** Return current url */
 	KUrl url ();
 /** Return current url in a restorable way, i.e. for help pages, abstract the session specific part of the path */

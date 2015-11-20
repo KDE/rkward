@@ -40,7 +40,7 @@ public:
 	RObject *createChildFromStructure (RData *child_data, const QString &child_name, int position);
 
 	/** reimplemented from RObject to also update children */
-	bool updateStructure (RData *new_data);
+	bool updateStructure (RData *new_data) override;
 
 	int numChildren () const;
 	/** returns true, if there are no children in this container. Note: of course the object list may not be up to date! */
@@ -62,9 +62,9 @@ public:
 	void moveChild (RObject* child, int from_index, int to_index);
 
 	/** reimplemented from RObject to do nothing at all, including not raising an assert. This is because container objects do not have any edit data, themselves, but may be opened for editing, e.g. as a data.frame */
-	void beginEdit () {};
+	void beginEdit () override {};
 	/** see beginEdit() */
-	void endEdit () {};
+	void endEdit () override {};
 	/** return an RKVariable representing the row-names object for this container */
 	RKRowNames* rowNames ();
 private:
@@ -72,7 +72,7 @@ private:
 	void updateRowNamesObject ();
 protected:
 	/** reimplemented from RObject to actually search for matching objects among the children */
-	RObject *findObjects (const QStringList &path, RObjectSearchMap *matches, const QString &op);
+	RObject *findObjects (const QStringList &path, RObjectSearchMap *matches, const QString &op) override;
 
 	void updateChildren (RData *new_children);
 	RObjectMap childmap;

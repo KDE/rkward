@@ -40,12 +40,12 @@ class RKOptionSet : public RKComponent {
 public:
 	RKOptionSet (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
 	~RKOptionSet ();
-	int type () { return ComponentOptionSet; };
-	bool isValid ();
+	int type () override { return ComponentOptionSet; };
+	bool isValid () override;
 	/** reimplemented from RKComponent */
-	ComponentStatus recursiveStatus ();
+	ComponentStatus recursiveStatus () override;
 	/** reimplemented from RKComponent */
-	void changed ();
+	void changed () override;
 private slots:
 	void governingPropertyChanged (RKComponentPropertyBase *property);
 	void columnPropertyChanged (RKComponentPropertyBase *property);
@@ -62,7 +62,7 @@ private slots:
 	void handleKeycolumnUpdate ();
 protected:
 friend class RKOptionSetDelegate;
-	void fetchPropertyValuesRecursive (PropertyValueMap *list, bool include_top_level=false, const QString &prefix=QString (), bool include_inactive_elements=false) const;
+	void fetchPropertyValuesRecursive (PropertyValueMap *list, bool include_top_level=false, const QString &prefix=QString (), bool include_inactive_elements=false) const override;
 friend class RKOptionSetDisplayModel;
 	int rowCount () const { return row_count->intValue (); };
 	void setRowState (int row, bool finished, bool valid);
@@ -140,20 +140,20 @@ private:
 friend class RKOptionSet;
 	explicit RKOptionSetDisplayModel (RKOptionSet* parent);
 	virtual ~RKOptionSetDisplayModel ();
-	int rowCount (const QModelIndex & parent = QModelIndex()) const;
-	int columnCount (const QModelIndex & parent = QModelIndex()) const;
-	QVariant data (const QModelIndex& index, int role = Qt::DisplayRole) const;
-	QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
+	int rowCount (const QModelIndex & parent = QModelIndex()) const override;
+	int columnCount (const QModelIndex & parent = QModelIndex()) const override;
+	QVariant data (const QModelIndex& index, int role = Qt::DisplayRole) const override;
+	QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 	void triggerReset ();
 	QTimer reset_timer;
 	QStringList column_labels;
 	RKOptionSet *set;
 
-	QMimeData* mimeData (const QModelIndexList& indexes) const;
-	QStringList mimeTypes () const;
-	bool dropMimeData (const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent);
-	Qt::ItemFlags flags (const QModelIndex& index) const;
-	Qt::DropActions supportedDropActions () const;
+	QMimeData* mimeData (const QModelIndexList& indexes) const override;
+	QStringList mimeTypes () const override;
+	bool dropMimeData (const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) override;
+	Qt::ItemFlags flags (const QModelIndex& index) const override;
+	Qt::DropActions supportedDropActions () const override;
 private slots:
 	void doResetNow ();
 };

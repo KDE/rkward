@@ -44,9 +44,9 @@ public slots:
 	void filterWasChanged (const QString &);
 protected:
 /** reimplemented to a) invoke the relevant plugin, b) trigger self-destruction of the dialog */
-	void accept ();
+	void accept () override;
 /** reimplemented to trigger self-destruction of the dialog */
-	void reject ();
+	void reject () override;
 private:
 	int format_count;
 	RKImportDialogFormatSelector *format_selector;

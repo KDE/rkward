@@ -87,7 +87,7 @@ public slots:
 	void updateArgHintWindow ();
 protected:
 	/** The (keypress) events of the view are filtered to determine, when to show / hide an argument hint */
-	bool eventFilter (QObject *, QEvent *e);
+	bool eventFilter (QObject *, QEvent *e) override;
 private:
 	RKScriptContextProvider *provider;
 	KTextEditor::View *view;
@@ -98,7 +98,6 @@ private:
 	QLabel *arghints_popup;
 };
 
-/** code completion model for RKCommandEditorWindow */
 class RKCodeCompletionModel : public KTextEditor::CodeCompletionModel, public KTextEditor::CodeCompletionModelControllerInterface {
 	Q_OBJECT
 	Q_INTERFACES(KTextEditor::CodeCompletionModelControllerInterface)
@@ -148,7 +147,7 @@ public:
 @param delete_on_close File should be deleted when closing the window. Only respected with read_only=true. */
 	bool openURL (const QUrl url, const QString& encoding=QString (), bool use_r_highlighting=true, bool read_only=false, bool delete_on_close=false);
 /** returns, whether the document was modified since the last save */
-	bool isModified ();
+	bool isModified () override;
 /** insert the given text into the document at the current cursor position. Additionally, focuses the view */
 	void insertText (const QString &text);
 /** set the current text (clear all previous text, and sets new text) */
@@ -161,14 +160,14 @@ public:
 	void copy ();
 
 /** reimplemented from RKMDIWindow to return full path of file (if any) */
-	QString fullCaption ();
+	QString fullCaption () override;
 
 	void setReadOnly (bool ro);
 
 /** Return current url */
 	KUrl url ();
 
-	QString provideContext (int line_rev);
+	QString provideContext (int line_rev) override;
 	QString currentCompletionWord () const;
 
 	void highlightLine (int linenum);
@@ -205,7 +204,7 @@ public slots:
 	QAction* fileSaveAsAction () { return file_save_as; };
 protected:
 /** reimplemented from RKMDIWindow: give the editor window a chance to object to being closed (if unsaved) */
-	void closeEvent (QCloseEvent *e);
+	void closeEvent (QCloseEvent *e) override;
 private slots:
 /** mark current selection as a block */
 	void markBlock ();

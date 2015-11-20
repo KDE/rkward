@@ -38,7 +38,7 @@ public:
 	
 	~RKSaveAgent ();
 protected:
-	void rCommandDone (RCommand *command);
+	void rCommandDone (RCommand *command) override;
 private:
 	bool askURL ();
 	void done ();

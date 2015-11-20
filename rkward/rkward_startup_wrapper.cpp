@@ -85,7 +85,7 @@ public:
         if (stdinClone == -1) stdinClone = ::dup (fileno(stdin));
     }
 protected:
-    void setupChildProcess () {
+    void setupChildProcess () override {
         ::dup2 (stdinClone, fileno(stdin));
     }
 };

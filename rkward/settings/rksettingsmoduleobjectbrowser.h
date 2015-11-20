@@ -37,13 +37,13 @@ public:
 	~RKSettingsModuleObjectBrowser ();
 
 /** applies current settings in this RKSettingsModule. This will only be called, if hasChanges () is true */
-	void applyChanges ();
+	void applyChanges () override;
 /** saves current changes to the given KConfig
 @param config probably always RKGlobals::rkApp ()->config. But passing this as an argument is both more flexible and saves #including files.*/
-	void save (KConfig *config);
+	void save (KConfig *config) override;
 
 /** @returns the caption ("Workspace Browser") */
-	QString caption ();
+	QString caption () override;
 
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
@@ -55,7 +55,7 @@ public:
 
 	static bool isPackageBlacklisted (const QString &package_name);
 
-	QString helpURL () { return ("rkward://page/rkward_workspace_browser#settings"); };
+	QString helpURL () override { return ("rkward://page/rkward_workspace_browser#settings"); };
 public slots:
 /** called when a checkbox has been changed. Signals change to RKSettings dialog to enable apply button */
 	void boxChanged (int);

@@ -76,10 +76,9 @@ signals:
 	void installationError (const QString &error);
 	void installedPackagesChanged ();
 protected:
-	void rCommandDone (RCommand *command);
-	void closeEvent (QCloseEvent *e);
+	void rCommandDone (RCommand *command) override;
+	void closeEvent (QCloseEvent *e) override;
 protected slots:
-/** overloaded to catch button presses. */
 	void childDeleted ();
 	void processExited (int exitCode, QProcess::ExitStatus exitStatus);
 	void installationProcessOutput ();
@@ -132,7 +131,7 @@ public slots:
 	void updateButtons ();
 	void activated ();
 protected:
-	void rCommandDone (RCommand *command);
+	void rCommandDone (RCommand *command) override;
 private:
 	void updateCurrentList ();
 	void doLoadUnload ();
@@ -179,14 +178,14 @@ public:
 	};
 
 /* Item model implementation */
-	int rowCount (const QModelIndex &parent = QModelIndex()) const;
-	int columnCount (const QModelIndex &) const { return COLUMN_COUNT; };
-	QVariant data (const QModelIndex &index, int role=Qt::DisplayRole) const;
-	QVariant headerData (int section, Qt::Orientation orientation, int role=Qt::DisplayRole) const;
-	Qt::ItemFlags flags (const QModelIndex &index) const;
-	QModelIndex index (int row, int column, const QModelIndex &parent=QModelIndex()) const;
-	QModelIndex parent (const QModelIndex &index) const;
-	bool setData (const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
+	int rowCount (const QModelIndex &parent = QModelIndex()) const override;
+	int columnCount (const QModelIndex &) const override { return COLUMN_COUNT; };
+	QVariant data (const QModelIndex &index, int role=Qt::DisplayRole) const override;
+	QVariant headerData (int section, Qt::Orientation orientation, int role=Qt::DisplayRole) const override;
+	Qt::ItemFlags flags (const QModelIndex &index) const override;
+	QModelIndex index (int row, int column, const QModelIndex &parent=QModelIndex()) const override;
+	QModelIndex parent (const QModelIndex &index) const override;
+	bool setData (const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
 
 /** returns a list of packages selected for installation / update */
 	QStringList packagesToInstall () const;
@@ -227,8 +226,8 @@ public:
 	~RKRPackageInstallationStatusSortFilterModel ();
 	void setRKWardOnly (bool only);
 protected:
-	bool lessThan (const QModelIndex &left, const QModelIndex &right) const;
-	bool filterAcceptsRow (int source_row, const QModelIndex &source_parent) const;
+	bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
+	bool filterAcceptsRow (int source_row, const QModelIndex &source_parent) const override;
 	bool rkward_only;
 };
 

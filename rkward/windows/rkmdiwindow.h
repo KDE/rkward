@@ -102,7 +102,7 @@ public:
 /** Tool windows will only hide themselves, and ignore the also_delete flag */
 	virtual bool close (bool also_delete);
 
-	bool eventFilter (QObject *watched, QEvent *e);
+	bool eventFilter (QObject *watched, QEvent *e) override;
 	bool acceptsEventsFor (QObject *object);
 /** Whether the window is active. This seems to be more reliable than hasFocus () */
 	bool isActive ();
@@ -123,11 +123,11 @@ protected:
 	void setPart (KParts::Part *p) { part = p; };
 	void setMetaInfo (const QString& generic_window_name, const QString& help_url, RKSettings::SettingsPage settings_page=RKSettings::NoPage);
 	void initializeActivationSignals ();
-	void paintEvent (QPaintEvent *e);
-	void windowActivationChange (bool);
+	void paintEvent (QPaintEvent *e) override;
+	void windowActivationChange (bool) override;
 
 /** reimplemented from QWidget to emulate focus-follows-mouse behavior */
-	void enterEvent (QEvent *event);
+	void enterEvent (QEvent *event) override;
 /** @see globalContextProperty() */
 	void setGlobalContextProperty (const QString& property, const QString& value) { global_context_properties.insert (property, value); };
 friend class RKWorkplace;

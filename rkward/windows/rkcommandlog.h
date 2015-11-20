@@ -41,14 +41,14 @@ public:
 /** Adds input to the log_view-window (i.e. commands issued) */
 	void addInput (RCommand *command);
 /** Adds output to the log_view-window (i.e. replies received) */
-	void newOutput (RCommand *command, ROutput *output_fragment);
+	void newOutput (RCommand *command, ROutput *output_fragment) override;
 
 	static RKCommandLog *getLog () { return rkcommand_log; };
 
 	RKCommandLogView *getView () { return log_view; };
 protected:
 /** Command has finished. If the command has failed, it may be necessary to print some more information */
-	void rCommandDone (RCommand *command);
+	void rCommandDone (RCommand *command) override;
 	RKCommandLog (QWidget *parent, bool tool_window, const char *name=0);
 	~RKCommandLog ();
 public slots:
@@ -85,7 +85,7 @@ public slots:
 signals:
 	void popupMenuRequest (const QPoint &pos);
 protected:
-	void contextMenuEvent (QContextMenuEvent *event);
+	void contextMenuEvent (QContextMenuEvent *event) override;
 };
 
 #include <kparts/part.h>

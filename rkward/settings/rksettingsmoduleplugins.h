@@ -39,15 +39,15 @@ public:
 	RKSettingsModulePlugins (RKSettings *gui, QWidget *parent);
 	~RKSettingsModulePlugins ();
 
-	void applyChanges ();
-	void save (KConfig *config);
+	void applyChanges () override;
+	void save (KConfig *config) override;
 	
 	enum PluginPrefs { PreferDialog=0, PreferRecommended=1, PreferWizard=2 };
 	
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
 	
-	QString caption ();
+	QString caption () override;
 
 	/** @returns a list of active plugin maps */
 	static QStringList pluginMaps ();
@@ -129,13 +129,13 @@ private:
 	const PluginMapMetaInfo &getPluginMapMetaInfo (const QString &pluginmapfile);
 
 	// reimplemented model functions
-	int rowCount (const QModelIndex &parent = QModelIndex()) const;
-	int columnCount (const QModelIndex &parent = QModelIndex()) const;
-	QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const;
-	QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
-	bool setData (const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
-    bool removeRows (int row, int count, const QModelIndex& parent = QModelIndex ());
-	Qt::ItemFlags flags (const QModelIndex &index) const;
+	int rowCount (const QModelIndex &parent = QModelIndex()) const override;
+	int columnCount (const QModelIndex &parent = QModelIndex()) const override;
+	QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
+	QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
+	bool setData (const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
+    bool removeRows (int row, int count, const QModelIndex& parent = QModelIndex ()) override;
+	Qt::ItemFlags flags (const QModelIndex &index) const override;
 };
 
 #endif
