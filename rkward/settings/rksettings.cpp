@@ -72,6 +72,8 @@ RKSettings::RKSettings (QWidget *parent) : KPageDialog (parent) {
 	buttonBox ()->setStandardButtons (QDialogButtonBox::Ok | QDialogButtonBox::Apply | QDialogButtonBox::Cancel | QDialogButtonBox::Help);
 	// KF5 TODO: connect buttons
 	button (QDialogButtonBox::Apply)->setEnabled (false);
+	connect (button (QDialogButtonBox::Apply), SIGNAL (clicked()), this, SLOT(applyAll()));
+	connect (button (QDialogButtonBox::Help), SIGNAL (clicked()), this, SLOT(helpClicked()));
 
 	setAttribute (Qt::WA_DeleteOnClose, true);
 
@@ -136,28 +138,23 @@ void RKSettings::pageChange (KPageWidgetItem *current, KPageWidgetItem *) {
 	button (QDialogButtonBox::Help)->setEnabled (has_help);
 }
 
-void RKSettings::slotButtonClicked (int button) {
+void RKSettings::done (int result) {
 	RK_TRACE (SETTINGS);
 
-	if (button == KDialog::Apply) {
-		applyAll ();
-	} else if (button == KDialog::Ok) {
-		applyAll ();
-		accept ();
-		close ();
-	} else if (button == KDialog::Cancel) {
-		reject ();
-	} else if (button == KDialog::Help) {
-		RKSettingsModule *current_module = dynamic_cast<RKSettingsModule*> (currentPage ()->widget ());
-		if (!current_module) {
-			RK_ASSERT (false);
-			return;
-		}
-	
-		RKWorkplace::mainWorkplace ()->openHelpWindow (current_module->helpURL ());
-	} else {
+	if (result == Accepted) applyAll ();
+	QDialog::done (result);
+}
+
+void RKSettings::helpClicked () {
+	RK_TRACE (SETTINGS);
+
+	RKSettingsModule *current_module = dynamic_cast<RKSettingsModule*> (currentPage ()->widget ());
+	if (!current_module) {
 		RK_ASSERT (false);
+		return;
 	}
+
+	RKWorkplace::mainWorkplace ()->openHelpWindow (current_module->helpURL ());
 }
 
 void RKSettings::applyAll () {

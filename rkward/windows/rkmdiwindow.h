@@ -124,7 +124,7 @@ protected:
 	void setMetaInfo (const QString& generic_window_name, const QString& help_url, RKSettings::SettingsPage settings_page=RKSettings::NoPage);
 	void initializeActivationSignals ();
 	void paintEvent (QPaintEvent *e) override;
-	void windowActivationChange (bool) override;
+	void changeEvent (QEvent *event) override;
 
 /** reimplemented from QWidget to emulate focus-follows-mouse behavior */
 	void enterEvent (QEvent *event) override;

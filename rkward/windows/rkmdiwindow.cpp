@@ -254,11 +254,14 @@ void RKMDIWindow::paintEvent (QPaintEvent *e) {
 	}
 }
 
-void RKMDIWindow::windowActivationChange (bool) {
+void RKMDIWindow::changeEvent (QEvent *event) {
 	RK_TRACE (APP);
 
-	// NOTE: active is NOT the same as isActive(). Active just means that this window *would* be active, if its toplevel window is active.
-	if (active || (!isAttached ())) update ();
+	if (event->type () == QEvent::ActivationChange) {
+		// NOTE: active is NOT the same as isActive(). Active just means that this window *would* be active, if its toplevel window is active.
+		if (active || (!isAttached ())) update ();
+	}
+	QFrame::changeEvent (event);
 }
 
 void RKMDIWindow::slotActivate () {
