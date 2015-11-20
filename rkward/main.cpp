@@ -136,6 +136,8 @@ int main(int argc, char *argv[]) {
 	aboutData.addAuthor (ki18n ("Meik Michalke"), ki18n ("Many plugins, suggestions, rkwarddev package"));
 	aboutData.addAuthor (ki18n ("Stefan Roediger"), ki18n ("Many plugins, suggestions, marketing, translations"));
 	aboutData.addCredit (ki18n ("Contributors in alphabetical order"));
+	aboutData.addCredit (ki18n ("Björn Balazs"), ki18n ("Extensive usability feedback"));
+	aboutData.addCredit (ki18n ("Jan Dittrich"), ki18n ("Extensive usability feedback"));
 	aboutData.addCredit (ki18n ("Philippe Grosjean"), ki18n ("Several helpful comments and discussions"));
 	aboutData.addCredit (ki18n ("Adrien d'Hardemare"), ki18n ("Plugins and patches"));
 	aboutData.addCredit (ki18n ("Yves Jacolin"), ki18n ("New website"));
