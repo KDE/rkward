@@ -856,6 +856,7 @@ void RKComponentPropertyRObjects::removeAt (int index) {
 		return;
 	}
 	RObject* obj = object_list.takeAt (index);
+	problems.remove (obj);
 	if (!object_list.contains (obj)) stopListenForObject (obj);
 	updateValidity ();
 	emit (valueChanged (this));

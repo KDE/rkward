@@ -623,10 +623,12 @@ void RObject::remove (bool removed_in_workspace) {
 
 //static
 QString RObject::typeToText (RDataType var_type) {
+	// TODO: These are non-i18n, and not easily i18n-able due to being used, internally.
+	// But they _are_ display strings, too.
 	if (var_type == DataUnknown) {
 		return "Unknown";
 	} else if (var_type == DataNumeric) {
-		return "Number";
+		return "Numeric";
 	} else if (var_type == DataCharacter) {
 		return "String";
 	} else if (var_type == DataFactor) {
@@ -643,7 +645,7 @@ QString RObject::typeToText (RDataType var_type) {
 RObject::RDataType RObject::textToType (const QString &text) {
 	if (text == "Unknown") {
 		return DataUnknown;
-	} else if (text == "Number") {
+	} else if (text == "Numeric") {
 		return DataNumeric;
 	} else if (text == "String") {
 		return DataCharacter;
