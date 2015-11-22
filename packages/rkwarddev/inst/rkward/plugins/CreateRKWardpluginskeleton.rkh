@@ -1,144 +1,142 @@
 <!DOCTYPE rkhelp >
 <document>
-	<!-- this code was generated using the rkwarddev package.
-			perhaps don't make changes here, but in the rkwarddev script instead! -->
-	<title>
-		Create RKWard plugin skeleton
-	</title>
-	<summary>
-		Generate a plugin skeleton for RKWard.
-	</summary>
-	<usage>
-		This plugin is both, an example for a plugin written with the rkwarddev package,
-		 and a quick way to get a skeleton for new plugins.
-	</usage>
-	<!-- <section id="sct_EDITORDE" title="EDIT OR DELETE ME">
-				EDIT OR DELETE ME
-			</section> -->
-	<settings>
-		<caption id="tab_Abtthplg" />
-		<caption id="frm_Abtthplg" />
-		<setting id="inp_Pluginnm">
-			Give the name for your new plugin here.
-		</setting>
-		<setting id="inp_License">
-			Define the license for your plugin. A short form should be sufficient.
-		</setting>
-		<setting id="inp_Shrtdscr">
-			Describe your plugin in a few sentences: What does it do?
-		</setting>
-		<setting id="inp_Vrsnnmbr">
-			Version information for your plugin.
-		</setting>
-		<setting id="inp_Rlsdtmpt">
-			The release date of your plugin. If you leave this empty, the current date will be used automatically.
-		</setting>
-		<setting id="inp_Homepage">
-			A URL where one can find more information on the plugin, download updates etc.
-		</setting>
-		<setting id="inp_Category">
-			A category for your plugin. This infromation is currently ignored by RKWard.
-		</setting>
-		<caption id="frm_Plugnthr" />
-		<caption id="frm_Pckgthrs" />
-		<caption id="frm_Packgthr" />
-		<setting id="inp_Givennam">
-			First name of the package author.
-		</setting>
-		<setting id="inp_Familynm">
-			Family name of the package author.
-		</setting>
-		<setting id="inp_Email">
-			The authors e-mail address, important for bug reports and receiving a myriad of thank yous...
-		</setting>
-		<caption id="frm_Roles" />
-		<setting id="chc_Author">
-			Check this if this person is the author of the plugin code.
-		</setting>
-		<setting id="chc_Maintanr">
-			Check this if this person maintains the plugin package.
-		</setting>
-		<setting id="chc_Contrbtr">
-			Check this if this person is a contributor to the plugin code (e.g., translations).
-		</setting>
-		<caption id="tab_Cretptns" />
-		<caption id="frm_rDTEMPDIRD" />
-		<setting id="brw_DTEMPDIR">
-			Set the directory where all plugin files and its directory structure should be generated. The default is a temporary directory.
-		</setting>
-		<setting id="chc_Ovrwrtxs">
-			If this is checked, existing files in the specified target directory will probably be replaced by new ones.
-		</setting>
-		<setting id="chc_Addwzrds">
-			If this is checked, a wizard section will be included in the skeleton.
-		</setting>
-		<setting id="chc_Incldplg">
-			If this is checked, plugin tests will be included in the skeleton.
-		</setting>
-		<setting id="chc_Opnflsfr">
-			If this is checked, all generated files will be opened for editing instantly.
-		</setting>
-		<setting id="chc_AddplRKW">
-			If this is checkend, the generated plugin will automatically be registered in RKWard's configuration.
-			            If you store it in a temporary directory and remove it before the next start of RKWard, the entry will removed again as well.
-		</setting>
-		<setting id="chc_Shwthplg">
-			If this is checked, the generated plugin will be shown (opened) for you to see what it looks like.
-		</setting>
-		<setting id="chc_GsRKW060">
-			If this is checked, rkwarddev tries to select the optimal getter functions to get data from the dialog into the R code. The plugin then requires RKWard &gt;= 0.6.0.
-		</setting>
-		<caption id="frm_rPPTFEVWRD" />
-		<setting id="drp_Plcntpmn">
-			Specify where the plugin should appear in RKWard's top menus.
-		</setting>
-		<setting id="inp_Nmnmnplg">
-			You can set the exact entry name of your main component in the menu here. If left empty, the plugin name will be used as default.
-		</setting>
-		<caption id="frm_Dfndpndn" />
-		<caption id="frm_DpndsRKW" />
-		<setting id="inp_RKWardmn">
-			The minimum version number of RKWard required to run this plugin.
-		</setting>
-		<setting id="inp_RKWardmx">
-			The maximum version number of RKWard required to run this plugin.
-		</setting>
-		<caption id="frm_DpndsnRv" />
-		<setting id="inp_Rmin">
-			The minimum version number of R required to run this plugin.
-		</setting>
-		<setting id="inp_Rmax">
-			The maximum version number of R required to run this plugin.
-		</setting>
-		<caption id="frm_DpndsnRp" />
-		<setting id="inp_Package">
-			The names of R packages required to run this plugin.
-		</setting>
-		<setting id="inp_min">
-			The minimum version number of R packages required to run this plugin.
-		</setting>
-		<setting id="inp_max">
-			The maximum version number of R packages required to run this plugin.
-		</setting>
-		<setting id="inp_Repostry">
-			The repository to download R packages from required to run this plugin.
-		</setting>
-		<caption id="tab_Helppage" />
-		<caption id="frm_Wrthlpfl" />
-		<setting id="inp_Summary">
-			Give a short summary of the plugin for the help page. If empty, the short description is taken as the default.
-		</setting>
-		<setting id="inp_Usage">
-			A general note on how to use the plugin.
-		</setting>
-	</settings>
-	<!-- <related>
-				<ul>
-					<li>
-						<link href="rkward://rhelp/..." />
-					</li>
-				</ul>
-			</related> -->
-	<technical>
-	</technical>
+  <title>
+    Create RKWard plugin skeleton
+  </title>
+  <summary>
+    Generate a plugin skeleton for RKWard.
+  </summary>
+  <usage>
+    This plugin is both, an example for a plugin written with the rkwarddev package,
+     and a quick way to get a skeleton for new plugins.
+  </usage>
+  <!--   <section id="sct_EDITORDE" title="EDIT OR DELETE ME">
+          EDIT OR DELETE ME
+        </section> -->
+  <settings>
+    <caption id="tab_Abtthplg" />
+    <caption id="aboutPlugin" />
+    <setting id="pluginName">
+      Give the name for your new plugin here.
+    </setting>
+    <setting id="pluginLicense">
+      Define the license for your plugin. A short form should be sufficient.
+    </setting>
+    <setting id="pluginDescription">
+      Describe your plugin in a few sentences: What does it do?
+    </setting>
+    <setting id="pluginVersion">
+      Version information for your plugin.
+    </setting>
+    <setting id="pluginDate">
+      The release date of your plugin. If you leave this empty, the current date will be used automatically.
+    </setting>
+    <setting id="pluginHomepage">
+      A URL where one can find more information on the plugin, download updates etc.
+    </setting>
+    <setting id="pluginCategory">
+      A category for your plugin. This infromation is currently ignored by RKWard.
+    </setting>
+    <caption id="aboutContact" />
+    <caption id="frm_Pckgthrs" />
+    <caption id="aboutContactFrame" />
+    <setting id="authorGivenName">
+      First name of the package author.
+    </setting>
+    <setting id="authorFamiliyName">
+      Family name of the package author.
+    </setting>
+    <setting id="authorMail">
+      The authors e-mail address, important for bug reports and receiving a myriad of thank yous...
+    </setting>
+    <caption id="frm_Roles" />
+    <setting id="authorAut">
+      Check this if this person is the author of the plugin code.
+    </setting>
+    <setting id="authorCre">
+      Check this if this person maintains the plugin package.
+    </setting>
+    <setting id="authorCtb">
+      Check this if this person is a contributor to the plugin code (e.g., translations).
+    </setting>
+    <caption id="tab_Cretptns" />
+    <caption id="createOptionsFrame" />
+    <setting id="outDir">
+      Set the directory where all plugin files and its directory structure should be generated. The default is a temporary directory.
+    </setting>
+    <setting id="overwrite">
+      If this is checked, existing files in the specified target directory will probably be replaced by new ones.
+    </setting>
+    <setting id="addWizard">
+      If this is checked, a wizard section will be included in the skeleton.
+    </setting>
+    <setting id="addTests">
+      If this is checked, plugin tests will be included in the skeleton.
+    </setting>
+    <setting id="editPlugin">
+      If this is checked, all generated files will be opened for editing instantly.
+    </setting>
+    <setting id="addToConfig">
+      If this is checkend, the generated plugin will automatically be registered in RKWard's configuration.
+                  If you store it in a temporary directory and remove it before the next start of RKWard, the entry will removed again as well.
+    </setting>
+    <setting id="showPlugin">
+      If this is checked, the generated plugin will be shown (opened) for you to see what it looks like.
+    </setting>
+    <setting id="guessGetters">
+      If this is checked, rkwarddev tries to select the optimal getter functions to get data from the dialog into the R code. The plugin then requires RKWard &gt;= 0.6.0.
+    </setting>
+    <caption id="frm_rHPTFEVWRD" />
+    <setting id="menuHier">
+      Specify where the plugin should appear in RKWard's top menus.
+    </setting>
+    <setting id="menuName">
+      You can set the exact entry name of your main component in the menu here. If left empty, the plugin name will be used as default.
+    </setting>
+    <caption id="dependencyFrame" />
+    <caption id="RKFrame" />
+    <setting id="RKMin">
+      The minimum version number of RKWard required to run this plugin.
+    </setting>
+    <setting id="RKMax">
+      The maximum version number of RKWard required to run this plugin.
+    </setting>
+    <caption id="RFrame" />
+    <setting id="RMin">
+      The minimum version number of R required to run this plugin.
+    </setting>
+    <setting id="RMax">
+      The maximum version number of R required to run this plugin.
+    </setting>
+    <caption id="frm_DpndsnRp" />
+    <setting id="pckgName">
+      The names of R packages required to run this plugin.
+    </setting>
+    <setting id="pckgMin">
+      The minimum version number of R packages required to run this plugin.
+    </setting>
+    <setting id="pckgMax">
+      The maximum version number of R packages required to run this plugin.
+    </setting>
+    <setting id="pckgRepo">
+      The repository to download R packages from required to run this plugin.
+    </setting>
+    <caption id="tab_Helppage" />
+    <caption id="helpText" />
+    <setting id="helpSummary">
+      Give a short summary of the plugin for the help page. If empty, the short description is taken as the default.
+    </setting>
+    <setting id="helpUsage">
+      A general note on how to use the plugin.
+    </setting>
+  </settings>
+  <!--   <related>
+          <ul>
+            <li>
+              <link href="rkward://rhelp/..." />
+            </li>
+          </ul>
+        </related> -->
+  <technical>
+  </technical>
 </document>

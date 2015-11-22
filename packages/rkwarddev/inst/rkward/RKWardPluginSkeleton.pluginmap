@@ -1,59 +1,55 @@
 <!DOCTYPE rkpluginmap >
 <document 
-	base_prefix=""
-	namespace="CreateRKWardpluginskeleton"
-	id="CreateRKWardpluginskeleton_rkward"
-	po_id="CreateRKWardpluginskeleton_rkward"
-	priority="medium"
+  base_prefix=""
+  namespace="CreateRKWardpluginskeleton"
+  id="CreateRKWardpluginskeleton_rkward"
+  po_id="CreateRKWardpluginskeleton_rkward"
+  priority="medium"
 >
-	<!-- 
-		this code was generated using the rkwarddev package.
-			perhaps don't make changes here, but in the rkwarddev script instead! 
-	-->
-	<dependencies rkward_min_version="0.6.0">
-	</dependencies>
-	<about 
-		name="RKWard Plugin Skeleton"
-		shortinfo="GUI interface to create RKWard plugin skeletons"
-		longinfo="GUI interface to create RKWard plugin skeletons"
-		version="0.06-5"
-		releasedate="2015-10-08"
-		url="http://rkward.kde.org"
-		license="GPL (&gt;= 3)"
-	>
-		<author 
-			given="Meik"
-			family="Michalke"
-			email="meik.michalke@hhu.de"
-			role="aut, cre"
-		 />
-	</about>
-	<require 
-		map="rkward::menu"
-	 />
-	<require 
-		map="rkward::embedded"
-	 />
-	<components>
-		<component 
-			id="cmp_CrtRKWrdplgnskltnCrtRKWrd"
-			label="Create RKWard plugin skeleton"
-			type="standard"
-			file="plugins/CreateRKWardpluginskeleton.xml"
-		>
-		</component>
-	</components>
-	<hierarchy>
-		<menu 
-			id="file"
-			label="File"
-		>
-			<menu 
-				id="export"
-				label="export"
-			>
-				<entry component="cmp_CrtRKWrdplgnskltnCrtRKWrd" />
-			</menu>
-		</menu>
-	</hierarchy>
+  <dependencies rkward_min_version="0.6.0">
+  </dependencies>
+  <about 
+    name="RKWard Plugin Skeleton"
+    shortinfo="GUI interface to create RKWard plugin skeletons"
+    longinfo="GUI interface to create RKWard plugin skeletons"
+    version="0.07-4"
+    releasedate="2015-11-22"
+    url="http://rkward.kde.org"
+    license="GPL (&gt;= 3)"
+  >
+    <author 
+      given="Meik"
+      family="Michalke"
+      email="meik.michalke@hhu.de"
+      role="aut, cre"
+     />
+  </about>
+  <require 
+    map="rkward::menu"
+   />
+  <require 
+    map="rkward::embedded"
+   />
+  <components>
+    <component 
+      id="cmp_CrtRKWrdplgnskltnCrtRKWrd"
+      label="Create RKWard plugin skeleton"
+      type="standard"
+      file="plugins/CreateRKWardpluginskeleton.xml"
+    >
+    </component>
+  </components>
+  <hierarchy>
+    <menu 
+      id="file"
+      label="File"
+    >
+      <menu 
+        id="export"
+        label="export"
+      >
+        <entry component="cmp_CrtRKWrdplgnskltnCrtRKWrd" />
+      </menu>
+    </menu>
+  </hierarchy>
 </document>
