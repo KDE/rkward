@@ -10,8 +10,8 @@ Choose a matrix, vector or a factor to be plotted. Further options are available
 
 	<settings>
 		<caption id="tab_variables"/>
+		<setting id="x">If your data is already suitable for plotting, directly, specify it here. Otherwise, leave this empty, and check the <i><label id="tabulate"/></i> option, below.</setting>
 		<setting id="tabulate">If your data needs to be tabulated / aggregated before plotting, check this option. Refer to <link href="rkward://component/one_var_tabulation"/> for details on the dependent options.</setting>
-		<setting id="x">If your data is already suitable for plotting, directly, specify it here. Otherwise, leave this empty, and check the "Tabulate" option, above.</setting>
 
 		<caption id="tab_limit_options"/>
 		<setting id="limit">If there are very many categories in your data, it may make sense to limit the amount of categories that will be displayed. Check this, if you want to set a limit. See Refer to <link href="rkward://component/limit_vector_length"/> for details on the dependent options.</setting>
