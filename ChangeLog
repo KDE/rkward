@@ -1,3 +1,4 @@
+- Plugins check for correct object type, in more places, but allow to proceed with questionable object selections
 - Fixed: RKWard package repository would be listed twice on fresh installations
 - Switch to bugs.kde.org as primary issue tracker
 - Workspace browser gains functionality to search / filter objects by name

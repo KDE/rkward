@@ -799,7 +799,7 @@ RKComponentPropertyRObjects::RKComponentPropertyRObjects (QObject *parent, bool 
 	RK_TRACE (PLUGIN);
 
 // no initial requirements
-	dims = min_length = max_length;
+	dims = min_length = max_length = 0;
 	problems_are_errors = true;
 	setStripDuplicates (true);      // legacy default
 
