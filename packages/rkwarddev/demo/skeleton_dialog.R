@@ -267,12 +267,27 @@ logic.section <- rk.XML.logic(
 ## JS code generation
 # about section
 js.opt.about.about <- rk.JS.options("optAbout",
-  ite(pluginDescription, qp("desc=\"",pluginDescription,"\"")),
-  ite(pluginVersion, qp("version=\"",pluginVersion,"\"")),
-  ite(pluginDate, qp("date=\"",pluginDate,"\"")),
-  ite(pluginHomepage, qp("url=\"",pluginHomepage,"\"")),
-  ite(pluginLicense, qp("license=\"",pluginLicense,"\"")),
-  ite(pluginCategory, qp("category=\"",pluginCategory,"\"")),
+  .ite=js(
+    if(pluginDescription){
+      qp("desc=\"",pluginDescription,"\"")
+    } else {},
+    if(pluginVersion){
+      qp("version=\"",pluginVersion,"\"")
+    } else {},
+    if(pluginDate){
+      qp("date=\"",pluginDate,"\"")
+    } else {},
+    if(pluginHomepage){
+      qp("url=\"",pluginHomepage,"\"")
+    } else {},
+    if(pluginLicense){
+      qp("license=\"",pluginLicense,"\"")
+    } else {},
+    if(pluginCategory){
+      qp("category=\"",pluginCategory,"\"")
+    } else {},
+    keep.ite=TRUE
+  ),
   funct="list", option="about", collapse=",\\n\\t")
 # dependencies section
 js.frm.dependencyFrame <- rk.JS.vars(dependencyFrame, modifiers="checked") # see to it frame is checked

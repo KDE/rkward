@@ -5,7 +5,7 @@
 \title{Combine several options in one JavaScript variable}
 \usage{
 rk.JS.options(var, ..., collapse = ", ", option = NULL, funct = NULL,
-  array = TRUE, opt.sep = ", ")
+  array = TRUE, opt.sep = ", ", .ite = list(...))
 }
 \arguments{
 \item{var}{Character string, name of the JavaScript variable to use in the script code.}
@@ -34,6 +34,8 @@ concatenated character string (probably only useful for mandatory options).}
 
 \item{opt.sep}{Character string,
       will be printed in the resulting R code before the option name.}
+
+\item{.ite}{Like \code{...}, if you have all objects in a list already.}
 }
 \value{
 An object of class \code{rk.JS.opt}, use \code{\link[rkwarddev:rk.paste.JS]{rk.paste.JS}}

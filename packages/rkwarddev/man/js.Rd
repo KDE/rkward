@@ -5,7 +5,7 @@
 \title{R to JavaScript translation}
 \usage{
 js(..., level = 2, indent.by = rk.get.indent(), linebreaks = TRUE,
-  empty.e = rk.get.empty.e())
+  empty.e = rk.get.empty.e(), keep.ite = FALSE)
 }
 \arguments{
 \item{...}{One or several character strings and/or \code{XiMpLe.node} objects with plugin nodes,
@@ -22,9 +22,14 @@ JavaScript operators and \code{if} conditions will be kept as-is.}
       if \code{TRUE} will force to add empty \code{else \{\}} brackets when
 there is no \code{else} statement defined,
       which is considered to enhance code readability by some.}
+
+\item{keep.ite}{Logical,
+      if \code{TRUE} returns \code{if/else} conditions in a list of objects of class \code{rk.JS.ite} instead
+of a pasted character string. Comes in handy if used inside \code{\link[rkwarddev:rk.JS.options]{rk.JS.options}}.}
 }
 \value{
-A character string.
+A character string (or \code{rk.JS.ite},
+      if \code{keep.ite=TRUE} and input is an \code{if/else} condition).
 }
 \description{
 This function is a wrapper for \code{\link[rkwarddev:id]{id}} similar to \code{\link[rkwarddev:qp]{qp}}

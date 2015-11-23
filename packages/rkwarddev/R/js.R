@@ -39,7 +39,9 @@
 #' @param linebreaks Logical, should there be line breaks between the elements in this call?
 #' @param empty.e For \code{if} conditions only: Logical, if \code{TRUE} will force to add empty \code{else \{\}} brackets when
 #'    there is no \code{else} statement defined, which is considered to enhance code readability by some.
-#' @return A character string.
+#' @param keep.ite Logical, if \code{TRUE} returns \code{if/else} conditions in a list of objects of class \code{rk.JS.ite} instead
+#'    of a pasted character string. Comes in handy if used inside \code{\link[rkwarddev:rk.JS.options]{rk.JS.options}}.
+#' @return A character string (or \code{rk.JS.ite}, if \code{keep.ite=TRUE} and input is an \code{if/else} condition).
 #' @export
 #' @seealso \code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}},
 #'    \code{\link[rkwarddev:rk.JS.array]{rk.JS.array}},
@@ -58,7 +60,7 @@
 #'   }
 #' )))
 
-js <- function(..., level=2, indent.by=rk.get.indent(), linebreaks=TRUE, empty.e=rk.get.empty.e()){
+js <- function(..., level=2, indent.by=rk.get.indent(), linebreaks=TRUE, empty.e=rk.get.empty.e(), keep.ite=FALSE){
   full.content <- eval(substitute(alist(...)))
 
   if(isTRUE(linebreaks)){
@@ -79,16 +81,20 @@ js <- function(..., level=2, indent.by=rk.get.indent(), linebreaks=TRUE, empty.e
       if(is.call(this.part)){
         # recursively check for if conditions
         if(inherits(this.part, "if")){
-          this.part <- replaceJSIf(this.part, level=level, indent.by=indent.by, empty.e=empty.e)
+          this.part <- replaceJSIf(this.part, level=level, paste=!keep.ite, indent.by=indent.by, empty.e=empty.e)
         } else {}
         if(inherits(this.part, "for")){
           this.part <- replaceJSFor(this.part, level=level, indent.by=indent.by)
         } else {}
-        if(identical(this.part[[1]], "rk.comment")){
-          return(rk.paste.JS(eval(this.part), level=level, indent.by=indent.by, empty.e=empty.e))
-        } else {}
-        # replace JS operators
-        return(do.call("replaceJSOperators", args=list(this.part)))
+        if(isTRUE(keep.ite)){
+          return(this.part)
+        } else {
+          if(identical(this.part[[1]], "rk.comment")){
+            return(rk.paste.JS(eval(this.part), level=level, indent.by=indent.by, empty.e=empty.e))
+          } else {}
+          # replace JS operators
+          return(do.call("replaceJSOperators", args=list(this.part)))
+        }
       } else if(is.XiMpLe.node(this.part)){
         if(XMLName(this.part) == "!--"){
           return(rk.paste.JS(this.part, level=level, indent.by=indent.by, empty.e=empty.e))
@@ -100,5 +106,10 @@ js <- function(..., level=2, indent.by=rk.get.indent(), linebreaks=TRUE, empty.e
       }
     }
   )
-  return(id(js=TRUE, collapse=collapse, .objects=ID.content))
+  
+  if(isTRUE(keep.ite)){
+    return(ID.content)
+  } else {
+    return(id(js=TRUE, collapse=collapse, .objects=ID.content))
+  }
 }
