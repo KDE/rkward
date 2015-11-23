@@ -26,6 +26,7 @@
 #include <QVBoxLayout>
 
 #include <klocale.h>
+#include <kicon.h>
 
 #include "rkvarselector.h"
 #include "../core/robject.h"
@@ -110,6 +111,7 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 		static_cast<RKComponentPropertyRObjects*> (available)->setClassFilter (xml->getStringAttribute (element, "classes", QString (), DL_INFO).split (' ', QString::SkipEmptyParts));
 		static_cast<RKComponentPropertyRObjects*> (available)->setTypeFilter (xml->getStringAttribute (element, "types", QString (), DL_INFO).split (' ', QString::SkipEmptyParts));
 		static_cast<RKComponentPropertyRObjects*> (available)->setDimensionFilter (xml->getIntAttribute (element, "num_dimensions", 0, DL_INFO), xml->getIntAttribute (element, "min_length", 0, DL_INFO), xml->getIntAttribute (element, "max_length", INT_MAX, DL_INFO));
+		static_cast<RKComponentPropertyRObjects*> (available)->setObjectProblemsAreErrors (false);
 	}
 	available->setStripDuplicates (!xml->getBoolAttribute (element, "allow_duplicates", false, DL_INFO));
 	setRequired (xml->getBoolAttribute (element, "required", false, DL_INFO));
@@ -163,8 +165,8 @@ void RKVarSlot::availablePropertyChanged (RKComponentPropertyBase *) {
 			new_item->setText (0, object->getShortName ());
 			QString probs = static_cast<RKComponentPropertyRObjects*> (available)->objectProblems (i);
 			if (!probs.isEmpty ()) {
-				new_item->setToolTip (0, i18n ("<p>This object is not allowed, here, for the following reason(s):</p>") + probs);
-				new_item->setIcon (0, RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteVar));
+				new_item->setToolTip (0, i18n ("<p>Using this object, here may lead to failures or unexpected results, for the following reason(s):</p>") + probs);
+				new_item->setIcon (0, KIcon ("task-attention"));
 			}
 		}
 	}

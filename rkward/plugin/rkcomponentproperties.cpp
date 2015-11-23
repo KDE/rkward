@@ -800,6 +800,7 @@ RKComponentPropertyRObjects::RKComponentPropertyRObjects (QObject *parent, bool 
 
 // no initial requirements
 	dims = min_length = max_length;
+	problems_are_errors = true;
 	setStripDuplicates (true);      // legacy default
 
 	addNotificationType (RObjectListener::ObjectRemoved);
@@ -951,7 +952,7 @@ QString RKComponentPropertyRObjects::checkObjectProblems (RObject *object) const
 	if (!types.isEmpty ()) {
 		QString type = RObject::typeToText (object->getDataType ()).toLower ();
 		if (!types.contains (type)) {
-			probs.append (i18n ("This object's data type is <i>%1</i>, while allowed type(s) is/are <i>%2</i>.", type, types.join (", ")));
+			probs.append (i18n ("This object's data type is <i>%1</i>, while expected type(s) is/are <i>%2</i>.", type, types.join (", ")));
 		}
 	}
 
@@ -1162,8 +1163,14 @@ void RKComponentPropertyRObjects::updateValidity () {
 
 	is_valid = true;	// innocent until proven guilty
 
-	if (!problems.isEmpty ()) is_valid = false;
+	if (problems_are_errors && (!problems.isEmpty ())) is_valid = false;
 	else is_valid = checkListLength ();
+}
+
+void RKComponentPropertyRObjects::setObjectProblemsAreErrors (bool errors) {
+	RK_TRACE (PLUGIN);
+	problems_are_errors = errors;
+	updateValidity ();
 }
 
 /////////////////////////////////////////// Code ////////////////////////////////////////////////
