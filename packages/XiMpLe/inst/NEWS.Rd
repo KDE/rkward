@@ -1,6 +1,13 @@
 \name{NEWS}
 \title{News for Package 'XiMpLe'}
 \encoding{UTF-8}
+\section{Changes in XiMpLe version 0.03-24 (2015-11-24)}{
+  \subsection{unreleased}{
+    \itemize{
+      \item this release is under development
+    }
+  }
+}
 \section{Changes in XiMpLe version 0.03-23 (2015-11-24)}{
   \subsection{changed}{
     \itemize{

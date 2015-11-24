@@ -6,7 +6,7 @@
 
 %opening
 \title{The XiMpLe Package}
-%\VignetteIndexEntry{Managing R Packages with roxyPackage}
+%\VignetteIndexEntry{The XiMpLe Package}
 \author{m.eik michalke}
 
 \begin{document}
