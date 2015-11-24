@@ -366,11 +366,25 @@ JS.prepare <- rk.paste.JS(
   rk.JS.vars(outDir, overwrite, guessGetters),
   echo("rkwarddev.required(\"0.07-4\")"),
   echo("\n\n# define where the plugin should write its files\noutput.dir <- "),
-  ite(outDir, echo("\"", outDir, "\""), echo("tempdir()")),
-  echo("\n# overwrite an existing plugin in output.dir?\noverwrite <- "),
-  ite(overwrite, echo("TRUE"), echo("FALSE")),
-  echo("\n# if you set guess.getters to TRUE, the resulting code will need RKWard >= 0.6.0\nguess.getter <- "),
-  ite(guessGetters, echo("TRUE"), echo("FALSE")),
+  js(
+    if(outDir){
+      echo("\"", outDir, "\"")
+    } else {
+      echo("tempdir()")
+    },
+    echo("\n# overwrite an existing plugin in output.dir?\noverwrite <- "),
+    if(overwrite){
+      echo("TRUE")
+    } else {
+      echo("FALSE")
+    },
+    echo("\n# if you set guess.getters to TRUE, the resulting code will need RKWard >= 0.6.0\nguess.getter <- "),
+    if(guessGetters){
+      echo("TRUE")
+    } else {
+      echo("FALSE")
+    }
+  ),
   echo("\n\n"),
   level=2)
   
@@ -381,7 +395,11 @@ JS.calculate <- rk.paste.JS(
   js.opt.skel.pluginmap,
   js.opt.skeleton,
   echo("aboutPlugin <- rk.XML.about("),
-    ite(pluginName, echo("\n\tname=\"", pluginName, "\"")),
+    js(
+      if(pluginName){
+        echo("\n\tname=\"", pluginName, "\"")
+      } else {}
+    ),
     # author section
     rk.JS.optionset(optionsetAuthors, vars=TRUE, guess.getter=TRUE),
     ite(id(optcolAuthorGivenName, " != \"\""),
@@ -389,15 +407,33 @@ JS.calculate <- rk.paste.JS(
         echo("\tauthor=c(\n\t\t\t"),
         rk.JS.optionset(optionsetAuthors,
           js.optionsetAuthors.role <- rk.JS.options("optAuthorRole",
-            ite(id(optcolAuthorAut, " == 1"), qp("\"aut\"")),
-            ite(id(optcolAuthorCre, " == 1"), qp("\"cre\"")),
-            ite(id(optcolAuthorCtb, " == 1"), qp("\"ctb\"")),
+            .ite=js(
+              if(optcolAuthorAut == 1){
+                qp("\"aut\"")
+              } else {},
+              if(optcolAuthorCre == 1){
+                qp("\"cre\"")
+              } else {},
+              if(optcolAuthorCtb == 1){
+                qp("\"ctb\"")
+              } else {},
+              keep.ite=TRUE
+            ),
             funct="c", option="role", collapse=""),
           echo("person("),
           echo("given=\"", optcolAuthorGivenName, "\""),
-          ite(optcolAuthorFamiliyName, echo(", family=\"", optcolAuthorFamiliyName, "\"")),
-          ite(optcolAuthorMail, echo(", email=\"", optcolAuthorMail, "\"")),
-          ite(js.optionsetAuthors.role, echo(js.optionsetAuthors.role)),
+          js(
+            if(optcolAuthorFamiliyName){
+              echo(", family=\"", optcolAuthorFamiliyName, "\"")
+            } else {},
+            if(optcolAuthorMail){
+              echo(", email=\"", optcolAuthorMail, "\"")
+            } else {},
+            if(js.optionsetAuthors.role){
+              echo(js.optionsetAuthors.role)
+            } else {},
+            level=3
+          ),
           echo(")"),
           collapse=",\\n\\t\\t\\t"
         ),
@@ -409,65 +445,89 @@ JS.calculate <- rk.paste.JS(
   ite(id(js.frm.dependencyFrame, " && (", js.opt.about.dep, " || ", optcolPckgName, ")"),
     rk.paste.JS(
       echo("plugin.dependencies <- rk.XML.dependencies("),
-      ite(id(js.opt.about.dep), echo(js.opt.about.dep)),
-      ite(id(js.opt.about.dep, " && ", optcolPckgName), echo(",")),
+      js(
+        if(js.opt.about.dep){
+          echo(js.opt.about.dep)
+        } else {},
+        if(js.opt.about.dep && optcolPckgName){
+          echo(",")
+        } else {},
+        level=3
+      ),
       ite(id(optcolPckgName , "!= \"\""),
         rk.paste.JS(
           echo("\n\tpackage=list(\n\t\t"),
           rk.JS.optionset(dependencyOptionset,
             echo("c("),
             echo("name=\"", optcolPckgName, "\""),
-            ite(optcolPckgMin, echo(", min=\"", optcolPckgMin, "\"")),
-            ite(optcolPckgMax, echo(", max=\"", optcolPckgMax, "\"")),
-            ite(optcolPckgRepo, echo(", repository=\"", optcolPckgRepo, "\"")),
+            js(
+              if(optcolPckgMin){
+                echo(", min=\"", optcolPckgMin, "\"")
+              } else {},
+              if(optcolPckgMax){
+                echo(", max=\"", optcolPckgMax, "\"")
+              } else {},
+              if(optcolPckgRepo){
+                echo(", repository=\"", optcolPckgRepo, "\"")
+              } else {},
+              level=5
+            ),
             echo(")"),
             collapse=",\\n\\t\\t"
           ),
-          echo("\n\t)")
+          echo("\n\t)"),
+          level=4
         )
       ),
       echo("\n)\n\n"),
     level=3)),
   echo("# name of the main component, relevant for help page content\nrk.set.comp(\""),
-  ite(menuName,
-    echo(menuName, "\")\n\n"),
-    echo(pluginName, "\")\n\n")
-  ),
-  echo("############\n## your plugin dialog and JavaScript should be put here\n############\n\n"),
-  ite(js.frm.helpText,
-    rk.paste.JS(
-      echo("############\n## help page\nplugin.summary <- rk.rkh.summary(\n\t"),
-      ite(helpSummary, echo("\"", helpSummary, "\"\n)"), echo("\"", pluginDescription, "\"\n)")),
-      echo("\nplugin.usage <- rk.rkh.usage(\n\t\"", helpUsage, "\"\n)\n\n"),
-    level=3)),
-  echo("#############\n",
-    "## the main call\n",
-    "## if you run the following function call, files will be written to output.dir!\n",
-    "#############\n",
-    "# this is where things get serious, that is, here all of the above is put together into one plugin\n",
-    "plugin.dir <- rk.plugin.skeleton(\n\tabout=aboutPlugin,"),
-  ite(
-    id(js.frm.dependencyFrame, " && ", js.opt.about.dep),
-    echo("\n\tdependencies=plugin.dependencies,"),
-    echo("\n\t#dependencies=plugin.dependencies,")
-  ),
-  echo("\n\tpath=output.dir,",
-    "\n\tguess.getter=guess.getter,",
-    "\n\tscan=c(\"var\", \"saveobj\", \"settings\"),",
-    "\n\txml=list(\n\t\t#dialog=,\n\t\t#wizard=,\n\t\t#logic=,\n\t\t#snippets=\n\t),",
-    "\n\tjs=list(\n\t\t#results.header=FALSE,\n\t\t#load.silencer=,\n\t\t#require=,\n\t\t#variables=,",
-      "\n\t\t#globals=,\n\t\t#preprocess=,\n\t\t#calculate=,\n\t\t#printout=,\n\t\t#doPrintout=\n\t),"
-  ),
-  ite(js.frm.helpText,
-    echo(
-      "\n\trkh=list(\n\t\tsummary=plugin.summary,\n\t\tusage=plugin.usage#,",
-      "\n\t\t#sections=,\n\t\t#settings=,\n\t\t#related=,\n\t\t#technical=\n\t),",
-      "\n\tcreate=c(\"pmap\", \"xml\", \"js\", \"desc\", \"rkh\"),"
+  js(
+    if(menuName){
+      echo(menuName, "\")\n\n")
+    } else {
+      echo(pluginName, "\")\n\n")
+    },
+    echo("############\n## your plugin dialog and JavaScript should be put here\n############\n\n"),
+    if(js.frm.helpText){
+      echo("############\n## help page\nplugin.summary <- rk.rkh.summary(\n\t")
+      if(helpSummary){
+        echo("\"", helpSummary, "\"\n)")
+      } else {
+        echo("\"", pluginDescription, "\"\n)")
+      }
+      echo("\nplugin.usage <- rk.rkh.usage(\n\t\"", helpUsage, "\"\n)\n\n")
+    } else {},
+    echo("#############\n",
+      "## the main call\n",
+      "## if you run the following function call, files will be written to output.dir!\n",
+      "#############\n",
+      "# this is where things get serious, that is, here all of the above is put together into one plugin\n",
+      "plugin.dir <- rk.plugin.skeleton(\n\tabout=aboutPlugin,"),
+    if(js.frm.dependencyFrame && js.opt.about.dep){
+      echo("\n\tdependencies=plugin.dependencies,")
+    } else {
+      echo("\n\t#dependencies=plugin.dependencies,")
+    },
+    echo("\n\tpath=output.dir,",
+      "\n\tguess.getter=guess.getter,",
+      "\n\tscan=c(\"var\", \"saveobj\", \"settings\"),",
+      "\n\txml=list(\n\t\t#dialog=,\n\t\t#wizard=,\n\t\t#logic=,\n\t\t#snippets=\n\t),",
+      "\n\tjs=list(\n\t\t#results.header=FALSE,\n\t\t#load.silencer=,\n\t\t#require=,\n\t\t#variables=,",
+        "\n\t\t#globals=,\n\t\t#preprocess=,\n\t\t#calculate=,\n\t\t#printout=,\n\t\t#doPrintout=\n\t),"
     ),
-    echo("\n\trkh=list(","\n\t\t#summary=,\n\t\t#usage=,",
-      "\n\t\t#sections=,\n\t\t#settings=,\n\t\t#related=,\n\t\t#technical=\n\t),",
-      "\n\tcreate=c(\"pmap\", \"xml\", \"js\", \"desc\"),"
-    )
+    if(js.frm.helpText){
+      echo(
+        "\n\trkh=list(\n\t\tsummary=plugin.summary,\n\t\tusage=plugin.usage#,",
+        "\n\t\t#sections=,\n\t\t#settings=,\n\t\t#related=,\n\t\t#technical=\n\t),",
+        "\n\tcreate=c(\"pmap\", \"xml\", \"js\", \"desc\", \"rkh\"),"
+      )
+    } else {
+      echo("\n\trkh=list(","\n\t\t#summary=,\n\t\t#usage=,",
+        "\n\t\t#sections=,\n\t\t#settings=,\n\t\t#related=,\n\t\t#technical=\n\t),",
+        "\n\tcreate=c(\"pmap\", \"xml\", \"js\", \"desc\"),"
+      )
+    }
   ),
   echo("\n\toverwrite=overwrite,"),
   echo("\n\t#components=list(),"),

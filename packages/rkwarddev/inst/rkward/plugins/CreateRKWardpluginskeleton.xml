@@ -1,9 +1,13 @@
 <!DOCTYPE rkplugin >
 <document>
+  <!-- this code was generated using the rkwarddev package.
+    perhaps don't make changes here, but in the rkwarddev script instead!
+    
+    look for a file called: $SRC/demo/skeleton_dialog.R -->
   <code file="CreateRKWardpluginskeleton.js" />
   <help file="CreateRKWardpluginskeleton.rkh" />
-  <!--   <dependencies>
-        </dependencies> -->
+  <!-- <dependencies>
+      </dependencies> -->
   <logic>
     <connect governor="dependencyFrame.checked" client="RKFrame.enabled" />
     <connect governor="dependencyFrame.checked" client="RFrame.enabled" />

@@ -6,6 +6,12 @@
   po_id="CreateRKWardpluginskeleton_rkward"
   priority="medium"
 >
+  <!-- 
+    this code was generated using the rkwarddev package.
+    perhaps don't make changes here, but in the rkwarddev script instead!
+    
+    look for a file called: $SRC/demo/skeleton_dialog.R 
+  -->
   <dependencies rkward_min_version="0.6.0">
   </dependencies>
   <about 
@@ -13,7 +19,7 @@
     shortinfo="GUI interface to create RKWard plugin skeletons"
     longinfo="GUI interface to create RKWard plugin skeletons"
     version="0.07-4"
-    releasedate="2015-11-22"
+    releasedate="2015-11-24"
     url="http://rkward.kde.org"
     license="GPL (&gt;= 3)"
   >

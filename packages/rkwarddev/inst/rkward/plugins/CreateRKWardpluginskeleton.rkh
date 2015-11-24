@@ -1,5 +1,9 @@
 <!DOCTYPE rkhelp >
 <document>
+  <!-- this code was generated using the rkwarddev package.
+    perhaps don't make changes here, but in the rkwarddev script instead!
+    
+    look for a file called: $SRC/demo/skeleton_dialog.R -->
   <title>
     Create RKWard plugin skeleton
   </title>
@@ -8,11 +12,11 @@
   </summary>
   <usage>
     This plugin is both, an example for a plugin written with the rkwarddev package,
-     and a quick way to get a skeleton for new plugins.
+   and a quick way to get a skeleton for new plugins.
   </usage>
-  <!--   <section id="sct_EDITORDE" title="EDIT OR DELETE ME">
-          EDIT OR DELETE ME
-        </section> -->
+  <!-- <section id="sct_EDITORDE" title="EDIT OR DELETE ME">
+        EDIT OR DELETE ME
+      </section> -->
   <settings>
     <caption id="tab_Abtthplg" />
     <caption id="aboutPlugin" />
@@ -78,7 +82,7 @@
     </setting>
     <setting id="addToConfig">
       If this is checkend, the generated plugin will automatically be registered in RKWard's configuration.
-                  If you store it in a temporary directory and remove it before the next start of RKWard, the entry will removed again as well.
+              If you store it in a temporary directory and remove it before the next start of RKWard, the entry will removed again as well.
     </setting>
     <setting id="showPlugin">
       If this is checked, the generated plugin will be shown (opened) for you to see what it looks like.
@@ -130,13 +134,13 @@
       A general note on how to use the plugin.
     </setting>
   </settings>
-  <!--   <related>
-          <ul>
-            <li>
-              <link href="rkward://rhelp/..." />
-            </li>
-          </ul>
-        </related> -->
+  <!-- <related>
+        <ul>
+          <li>
+            <link href="rkward://rhelp/..." />
+          </li>
+        </ul>
+      </related> -->
   <technical>
   </technical>
 </document>

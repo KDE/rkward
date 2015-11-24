@@ -1,4 +1,7 @@
-
+// this code was generated using the rkwarddev package.
+// perhaps don't make changes here, but in the rkwarddev script instead!
+// 
+// look for a file called: $SRC/demo/skeleton_dialog.R
 
 
 
@@ -12,21 +15,21 @@ function preprocess(){
   echo("rkwarddev.required(\"0.07-4\")");
   echo("\n\n# define where the plugin should write its files\noutput.dir <- ");
   if(outDir) {
-    echo("\"" + outDir + "\"");
+    echo("\"" + outDir + "\"");  
   } else {
-    echo("tempdir()");
+    echo("tempdir()");  
   }
   echo("\n# overwrite an existing plugin in output.dir?\noverwrite <- ");
   if(overwrite) {
-    echo("TRUE");
+    echo("TRUE");  
   } else {
-    echo("FALSE");
+    echo("FALSE");  
   }
   echo("\n# if you set guess.getters to TRUE, the resulting code will need RKWard >= 0.6.0\nguess.getter <- ");
   if(guessGetters) {
-    echo("TRUE");
+    echo("TRUE");  
   } else {
-    echo("FALSE");
+    echo("FALSE");  
   }
   echo("\n\n");
 }
@@ -83,32 +86,32 @@ function calculate(){
   // define the array arrOptAbout for values of R option "about"
   var arrOptAbout = new Array();
     if(pluginDescription) {
-      arrOptAbout.push("desc=\"" + pluginDescription + "\"");
+      arrOptAbout.push("desc=\"" + pluginDescription + "\""  );
     } else {
       arrOptAbout.push();
     }
     if(pluginVersion) {
-      arrOptAbout.push("version=\"" + pluginVersion + "\"");
+      arrOptAbout.push("version=\"" + pluginVersion + "\""  );
     } else {
       arrOptAbout.push();
     }
     if(pluginDate) {
-      arrOptAbout.push("date=\"" + pluginDate + "\"");
+      arrOptAbout.push("date=\"" + pluginDate + "\""  );
     } else {
       arrOptAbout.push();
     }
     if(pluginHomepage) {
-      arrOptAbout.push("url=\"" + pluginHomepage + "\"");
+      arrOptAbout.push("url=\"" + pluginHomepage + "\""  );
     } else {
       arrOptAbout.push();
     }
     if(pluginLicense) {
-      arrOptAbout.push("license=\"" + pluginLicense + "\"");
+      arrOptAbout.push("license=\"" + pluginLicense + "\""  );
     } else {
       arrOptAbout.push();
     }
     if(pluginCategory) {
-      arrOptAbout.push("category=\"" + pluginCategory + "\"");
+      arrOptAbout.push("category=\"" + pluginCategory + "\""  );
     } else {
       arrOptAbout.push();
     }
@@ -124,22 +127,22 @@ function calculate(){
   // define the array arrOptDependencies for values of R option "dependencies"
   var arrOptDependencies = new Array();
     if(dependencyFrameChecked && RKMin) {
-      arrOptDependencies.push("rkward.min=\"" + RKMin + "\"");
+      arrOptDependencies.push("rkward.min=\"" + RKMin + "\""  );
     } else {
       arrOptDependencies.push();
     }
     if(dependencyFrameChecked && RKMax) {
-      arrOptDependencies.push("rkward.max=\"" + RKMax + "\"");
+      arrOptDependencies.push("rkward.max=\"" + RKMax + "\""  );
     } else {
       arrOptDependencies.push();
     }
     if(dependencyFrameChecked && RMin) {
-      arrOptDependencies.push("R.min=\"" + RMin + "\"");
+      arrOptDependencies.push("R.min=\"" + RMin + "\""  );
     } else {
       arrOptDependencies.push();
     }
     if(dependencyFrameChecked && RMax) {
-      arrOptDependencies.push("R.max=\"" + RMax + "\"");
+      arrOptDependencies.push("R.max=\"" + RMax + "\""  );
     } else {
       arrOptDependencies.push();
     }
@@ -155,12 +158,12 @@ function calculate(){
   // define the array arrOptPluginmap for values of R option "pluginmap"
   var arrOptPluginmap = new Array();
     if(menuName) {
-      arrOptPluginmap.push("name=\"" + menuName + "\"");
+      arrOptPluginmap.push("name=\"" + menuName + "\""  );
     } else {
-      arrOptPluginmap.push("name=\"" + pluginName + "\"");
+      arrOptPluginmap.push("name=\"" + pluginName + "\""  );
     }
     if(menuHier) {
-      arrOptPluginmap.push("hierarchy=\"" + menuHier + "\"");
+      arrOptPluginmap.push("hierarchy=\"" + menuHier + "\""  );
     } else {
       arrOptPluginmap.push();
     }
@@ -176,34 +179,34 @@ function calculate(){
   // define the array arrOptSkeleton for values of R option ""
   var arrOptSkeleton = new Array();
     if(addWizard) {
-      arrOptSkeleton.push("\n\tprovides=c(\"logic\", \"dialog\", \"wizard\")");
+      arrOptSkeleton.push("\n\tprovides=c(\"logic\", \"dialog\", \"wizard\")"  );
     } else {
-      arrOptSkeleton.push("\n\t#provides=c(\"logic\", \"dialog\")");
+      arrOptSkeleton.push("\n\t#provides=c(\"logic\", \"dialog\")"  );
     }
     if(optPluginmap) {
-      arrOptSkeleton.push("\n\t" + optPluginmap);
+      arrOptSkeleton.push("\n\t" + optPluginmap  );
     } else {
-      arrOptSkeleton.push("\n\t#pluginmap=list(name=\"\", hierarchy=\"\", require=\"\")");
+      arrOptSkeleton.push("\n\t#pluginmap=list(name=\"\", hierarchy=\"\", require=\"\")"  );
     }
     if(addTests) {
-      arrOptSkeleton.push("\n\ttests=TRUE");
+      arrOptSkeleton.push("\n\ttests=TRUE"  );
     } else {
-      arrOptSkeleton.push("\n\ttests=FALSE");
+      arrOptSkeleton.push("\n\ttests=FALSE"  );
     }
     if(editPlugin) {
-      arrOptSkeleton.push("\n\tedit=TRUE");
+      arrOptSkeleton.push("\n\tedit=TRUE"  );
     } else {
-      arrOptSkeleton.push("\n\tedit=FALSE");
+      arrOptSkeleton.push("\n\tedit=FALSE"  );
     }
     if(addToConfig) {
-      arrOptSkeleton.push("\n\tload=TRUE");
+      arrOptSkeleton.push("\n\tload=TRUE"  );
     } else {
-      arrOptSkeleton.push("\n\tload=FALSE");
+      arrOptSkeleton.push("\n\tload=FALSE"  );
     }
     if(showPlugin) {
-      arrOptSkeleton.push("\n\tshow=TRUE");
+      arrOptSkeleton.push("\n\tshow=TRUE"  );
     } else {
-      arrOptSkeleton.push("\n\tshow=FALSE");
+      arrOptSkeleton.push("\n\tshow=FALSE"  );
     }
   // clean array arrOptSkeleton from empty strings
   arrOptSkeleton = arrOptSkeleton.filter(String);
@@ -216,7 +219,7 @@ function calculate(){
 
   echo("aboutPlugin <- rk.XML.about(");
   if(pluginName) {
-    echo("\n\tname=\"" + pluginName + "\"");
+    echo("\n\tname=\"" + pluginName + "\"");  
   } else {}
   var ocolOptcolAuthorGivenName = getList("optionsetAuthors.optcolAuthorGivenName");
   var ocolOptcolAuthorFamiliyName = getList("optionsetAuthors.optcolAuthorFamiliyName");
@@ -230,17 +233,17 @@ function calculate(){
     // define the array arrOptAuthorRole for values of R option "role"
     var arrOptAuthorRole = new Array();
         if(ocolOptcolAuthorAut[i] == 1) {
-            arrOptAuthorRole.push("\"aut\"");
+            arrOptAuthorRole.push("\"aut\""  );
         } else {
             arrOptAuthorRole.push();
         }
         if(ocolOptcolAuthorCre[i] == 1) {
-            arrOptAuthorRole.push("\"cre\"");
+            arrOptAuthorRole.push("\"cre\""  );
         } else {
             arrOptAuthorRole.push();
         }
         if(ocolOptcolAuthorCtb[i] == 1) {
-            arrOptAuthorRole.push("\"ctb\"");
+            arrOptAuthorRole.push("\"ctb\""  );
         } else {
             arrOptAuthorRole.push();
         }
@@ -256,13 +259,13 @@ function calculate(){
     echo("person(");
     echo("given=\"" + ocolOptcolAuthorGivenName[i] + "\"");
     if(ocolOptcolAuthorFamiliyName[i]) {
-        echo(", family=\"" + ocolOptcolAuthorFamiliyName[i] + "\"");
+      echo(", family=\"" + ocolOptcolAuthorFamiliyName[i] + "\"");  
     } else {}
     if(ocolOptcolAuthorMail[i]) {
-        echo(", email=\"" + ocolOptcolAuthorMail[i] + "\"");
+      echo(", email=\"" + ocolOptcolAuthorMail[i] + "\"");  
     } else {}
     if(optAuthorRole) {
-        echo(optAuthorRole);
+      echo(optAuthorRole);  
     } else {}
     echo(")");
     if(i + 1 < ocolOptcolAuthorGivenName.length) {
@@ -276,61 +279,61 @@ function calculate(){
   if(dependencyFrameChecked && (optDependencies || ocolOptcolPckgName)) {
     echo("plugin.dependencies <- rk.XML.dependencies(");
     if(optDependencies) {
-      echo(optDependencies);
+      echo(optDependencies);  
     } else {}
     if(optDependencies && ocolOptcolPckgName) {
-      echo(",");
+      echo(",");  
     } else {}
     if(ocolOptcolPckgName!= "") {
       echo("\n\tpackage=list(\n\t\t");
-  for (var i = 0; i < ocolOptcolPckgName.length; ++i){
-    echo("c(");
-    echo("name=\"" + ocolOptcolPckgName[i] + "\"");
-    if(ocolOptcolPckgMin[i]) {
-        echo(", min=\"" + ocolOptcolPckgMin[i] + "\"");
-    } else {}
-    if(ocolOptcolPckgMax[i]) {
-        echo(", max=\"" + ocolOptcolPckgMax[i] + "\"");
-    } else {}
-    if(ocolOptcolPckgRepo[i]) {
-        echo(", repository=\"" + ocolOptcolPckgRepo[i] + "\"");
-    } else {}
-    echo(")");
-    if(i + 1 < ocolOptcolPckgName.length) {
-      echo(",\n\t\t");
-    }
-  }
-  echo("\n\t)");
+      for (var i = 0; i < ocolOptcolPckgName.length; ++i){
+                        echo("c(");
+                        echo("name=\"" + ocolOptcolPckgName[i] + "\"");
+                        if(ocolOptcolPckgMin[i]) {
+          echo(", min=\"" + ocolOptcolPckgMin[i] + "\"");  
+        } else {}
+        if(ocolOptcolPckgMax[i]) {
+          echo(", max=\"" + ocolOptcolPckgMax[i] + "\"");  
+        } else {}
+        if(ocolOptcolPckgRepo[i]) {
+          echo(", repository=\"" + ocolOptcolPckgRepo[i] + "\"");  
+        } else {}
+                        echo(")");
+        if(i + 1 < ocolOptcolPckgName.length) {
+          echo(",\n\t\t");
+        }
+      }
+      echo("\n\t)");
     } else {}
     echo("\n)\n\n");
   } else {}
   echo("# name of the main component, relevant for help page content\nrk.set.comp(\"");
   if(menuName) {
-    echo(menuName + "\")\n\n");
+    echo(menuName + "\")\n\n");  
   } else {
-    echo(pluginName + "\")\n\n");
+    echo(pluginName + "\")\n\n");  
   }
   echo("############\n## your plugin dialog and JavaScript should be put here\n############\n\n");
   if(helpTextChecked) {
-    echo("############\n## help page\nplugin.summary <- rk.rkh.summary(\n\t");
+    echo("############\n## help page\nplugin.summary <- rk.rkh.summary(\n\t");  
     if(helpSummary) {
-      echo("\"" + helpSummary + "\"\n)");
+      echo("\"" + helpSummary + "\"\n)");  
     } else {
-      echo("\"" + pluginDescription + "\"\n)");
-    }
-    echo("\nplugin.usage <- rk.rkh.usage(\n\t\"" + helpUsage + "\"\n)\n\n");
+      echo("\"" + pluginDescription + "\"\n)");  
+    }  
+    echo("\nplugin.usage <- rk.rkh.usage(\n\t\"" + helpUsage + "\"\n)\n\n");  
   } else {}
   echo("#############\n" + "## the main call\n" + "## if you run the following function call, files will be written to output.dir!\n" + "#############\n" + "# this is where things get serious, that is, here all of the above is put together into one plugin\n" + "plugin.dir <- rk.plugin.skeleton(\n\tabout=aboutPlugin,");
   if(dependencyFrameChecked && optDependencies) {
-    echo("\n\tdependencies=plugin.dependencies,");
+    echo("\n\tdependencies=plugin.dependencies,");  
   } else {
-    echo("\n\t#dependencies=plugin.dependencies,");
+    echo("\n\t#dependencies=plugin.dependencies,");  
   }
   echo("\n\tpath=output.dir," + "\n\tguess.getter=guess.getter," + "\n\tscan=c(\"var\", \"saveobj\", \"settings\")," + "\n\txml=list(\n\t\t#dialog=,\n\t\t#wizard=,\n\t\t#logic=,\n\t\t#snippets=\n\t)," + "\n\tjs=list(\n\t\t#results.header=FALSE,\n\t\t#load.silencer=,\n\t\t#require=,\n\t\t#variables=," + "\n\t\t#globals=,\n\t\t#preprocess=,\n\t\t#calculate=,\n\t\t#printout=,\n\t\t#doPrintout=\n\t),");
   if(helpTextChecked) {
-    echo("\n\trkh=list(\n\t\tsummary=plugin.summary,\n\t\tusage=plugin.usage#," + "\n\t\t#sections=,\n\t\t#settings=,\n\t\t#related=,\n\t\t#technical=\n\t)," + "\n\tcreate=c(\"pmap\", \"xml\", \"js\", \"desc\", \"rkh\"),");
+    echo("\n\trkh=list(\n\t\tsummary=plugin.summary,\n\t\tusage=plugin.usage#," + "\n\t\t#sections=,\n\t\t#settings=,\n\t\t#related=,\n\t\t#technical=\n\t)," + "\n\tcreate=c(\"pmap\", \"xml\", \"js\", \"desc\", \"rkh\"),");  
   } else {
-    echo("\n\trkh=list(" + "\n\t\t#summary=,\n\t\t#usage=," + "\n\t\t#sections=,\n\t\t#settings=,\n\t\t#related=,\n\t\t#technical=\n\t)," + "\n\tcreate=c(\"pmap\", \"xml\", \"js\", \"desc\"),");
+    echo("\n\trkh=list(" + "\n\t\t#summary=,\n\t\t#usage=," + "\n\t\t#sections=,\n\t\t#settings=,\n\t\t#related=,\n\t\t#technical=\n\t)," + "\n\tcreate=c(\"pmap\", \"xml\", \"js\", \"desc\"),");  
   }
   echo("\n\toverwrite=overwrite,");
   echo("\n\t#components=list(),");
