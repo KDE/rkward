@@ -292,33 +292,74 @@ js.opt.about.about <- rk.JS.options("optAbout",
 # dependencies section
 js.frm.dependencyFrame <- rk.JS.vars(dependencyFrame, modifiers="checked") # see to it frame is checked
 js.opt.about.dep <- rk.JS.options("optDependencies",
-  ite(id(js.frm.dependencyFrame, " && ", RKMin), qp("rkward.min=\"",RKMin,"\"")),
-  ite(id(js.frm.dependencyFrame, " && ", RKMax), qp("rkward.max=\"",RKMax,"\"")),
-  ite(id(js.frm.dependencyFrame, " && ", RMin), qp("R.min=\"",RMin,"\"")),
-  ite(id(js.frm.dependencyFrame, " && ", RMax), qp("R.max=\"",RMax,"\"")),
+  .ite=js(
+    if(js.frm.dependencyFrame && RKMin){
+      qp("rkward.min=\"",RKMin,"\"")
+    } else {},
+    if(js.frm.dependencyFrame && RKMax){
+      qp("rkward.max=\"",RKMax,"\"")
+    } else {},
+    if(js.frm.dependencyFrame && RMin){
+      qp("R.min=\"",RMin,"\"")
+    } else {},
+    if(js.frm.dependencyFrame && RMax){
+      qp("R.max=\"",RMax,"\"")
+    } else {},
+    keep.ite=TRUE
+  ),
   funct="list", option="dependencies", collapse=",\\n\\t")
 
 js.opt.skel.pluginmap <- rk.JS.options("optPluginmap",
-  ite(menuName,
-    qp("name=\"", menuName, "\""),
-    qp("name=\"", pluginName, "\"")
+  .ite=js(
+    if(menuName){
+      qp("name=\"", menuName, "\"")
+    } else {
+      qp("name=\"", pluginName, "\"")
+    },
+    if(menuHier){
+      qp("hierarchy=\"", menuHier, "\"")
+    } else {},
+    keep.ite=TRUE
   ),
-  ite(menuHier,  qp("hierarchy=\"", menuHier, "\"")),
   funct="list", option="pluginmap", collapse="", opt.sep="")
 js.opt.skeleton <- rk.JS.options("optSkeleton",
-  ite(addWizard, qp("\n\tprovides=c(\"logic\", \"dialog\", \"wizard\")"), qp("\n\t#provides=c(\"logic\", \"dialog\")")),
-  ite(js.opt.skel.pluginmap,
-    qp("\n\t", js.opt.skel.pluginmap),
-    qp("\n\t#pluginmap=list(name=\"\", hierarchy=\"\", require=\"\")")
+  .ite=js(
+    if(addWizard){
+      qp("\n\tprovides=c(\"logic\", \"dialog\", \"wizard\")")
+    } else {
+      qp("\n\t#provides=c(\"logic\", \"dialog\")")
+    },
+    if(js.opt.skel.pluginmap){
+      qp("\n\t", js.opt.skel.pluginmap)
+    } else {
+      qp("\n\t#pluginmap=list(name=\"\", hierarchy=\"\", require=\"\")")
+    },
+  #   ite(id(js.frm.dependencyFrame, " && (", js.opt.about.dep, " || ", optcolPckgName, ")"),
+  #     qp("\n\tdependencies=plugin.dependencies"),
+  #     qp("\n\t#dependencies=plugin.dependencies")
+  #   ),
+    if(addTests){
+      qp("\n\ttests=TRUE")
+    } else {
+      qp("\n\ttests=FALSE")
+    },
+    if(editPlugin){
+      qp("\n\tedit=TRUE")
+    } else {
+      qp("\n\tedit=FALSE")
+    },
+    if(addToConfig){
+      qp("\n\tload=TRUE")
+    } else {
+      qp("\n\tload=FALSE")
+    },
+    if(showPlugin){
+      qp("\n\tshow=TRUE")
+    } else {
+      qp("\n\tshow=FALSE")
+    },
+    keep.ite=TRUE
   ),
-#   ite(id(js.frm.dependencyFrame, " && (", js.opt.about.dep, " || ", optcolPckgName, ")"),
-#     qp("\n\tdependencies=plugin.dependencies"),
-#     qp("\n\t#dependencies=plugin.dependencies")
-#   ),
-  ite(addTests, qp("\n\ttests=TRUE"), qp("\n\ttests=FALSE")),
-  ite(editPlugin, qp("\n\tedit=TRUE"), qp("\n\tedit=FALSE")),
-  ite(addToConfig, qp("\n\tload=TRUE"), qp("\n\tload=FALSE")),
-  ite(showPlugin, qp("\n\tshow=TRUE"), qp("\n\tshow=FALSE")),
   collapse="")
 
 JS.prepare <- rk.paste.JS(
