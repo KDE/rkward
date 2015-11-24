@@ -113,6 +113,8 @@ public slots:
 private slots:
 	void scrollToBottom ();
 	void mimeTypeDetermined (KIO::Job*, const QString& type);
+	void mimeTypeJobFail (KJob*);
+	void mimeTypeJobFail2 (KJob*);
 	void internalNavigation (const QUrl& new_url);
 	void makeContextMenu (const QPoint& pos);
 	void findRequest (const QString& text, bool backwards, const RKFindBar *findbar, bool* found);

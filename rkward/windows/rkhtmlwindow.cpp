@@ -65,7 +65,9 @@
 #include "../windows/rkworkplaceview.h"
 #include "../debug.h"
 
-RKWebPage::RKWebPage (RKHTMLWindow* window): KWebPage (window, KIOIntegration | KPartsIntegration) {
+// TODO: We used to have KioIntegration in addition to KPartsIntegration. But this is just buggy, buggy, buggy in KF5 5.9.0. (e.g. navigation to previous
+// // page in history just doesn't work).
+RKWebPage::RKWebPage (RKHTMLWindow* window): KWebPage (window, KPartsIntegration) {
 	RK_TRACE (APP);
 	RKWebPage::window = window;
 	new_window = false;
@@ -386,6 +388,8 @@ bool RKHTMLWindow::openURL (const KUrl &url) {
 		if ((host == "127.0.0.1") || (host == "localhost") || host == QHostInfo::localHostName ()) {
 			KIO::TransferJob *job = KIO::get (url, KIO::Reload);
 			connect (job, SIGNAL (mimetype(KIO::Job*,QString)), this, SLOT (mimeTypeDetermined(KIO::Job*,QString)));
+			// WORKAROUND. See slot.
+			connect (job, SIGNAL (result(KJob*)), this, SLOT (mimeTypeJobFail(KJob*)));
 			return true;
 		}
 	}
@@ -396,6 +400,34 @@ bool RKHTMLWindow::openURL (const KUrl &url) {
 
 KUrl RKHTMLWindow::url () {
 	return current_url;
+}
+
+void RKHTMLWindow::mimeTypeJobFail (KJob* job) {
+	RK_TRACE (APP);
+	
+	KIO::TransferJob* tj = static_cast<KIO::TransferJob*> (job);
+	if (tj->error ()) {
+		// WORKAROUND for bug in KIO version 5.9.0: After a redirect, the transfer job would claim "does not exist". Here, we help it get over _one_ redirect, hoping R's help server
+		// won't do more redirection than that.
+		// TODO: Report this!
+		QUrl url = tj->url ();
+		if (!tj->redirectUrl ().isEmpty ()) url = tj->redirectUrl ();
+		KIO::TransferJob *secondchance = KIO::get (url, KIO::Reload);
+		connect (secondchance, SIGNAL (mimetype(KIO::Job*,QString)), this, SLOT (mimeTypeDetermined(KIO::Job*,QString)));
+		connect (secondchance, SIGNAL (result(KJob*)), this, SLOT (mimeTypeJobFail2(KJob*)));
+	}
+}
+
+void RKHTMLWindow::mimeTypeJobFail2 (KJob* job) {
+	RK_TRACE (APP);
+	
+	KIO::TransferJob* tj = static_cast<KIO::TransferJob*> (job);
+	if (tj->error ()) {
+		// WORKAROUND continued. See above.
+		QUrl url = tj->url ();
+		if (!tj->redirectUrl ().isEmpty ()) url = tj->redirectUrl ();
+		RKWorkplace::mainWorkplace ()->openAnyUrl (url);
+	}
 }
 
 void RKHTMLWindow::mimeTypeDetermined (KIO::Job* job, const QString& type) {
