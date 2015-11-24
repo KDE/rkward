@@ -60,7 +60,7 @@ StartupDialog::StartupDialog (QWidget *parent, StartupDialogResult *result, KRec
 	choser->addButton (empty_workspace_button);
 	choser_layout->addWidget (empty_table_button = new QRadioButton (i18n ("Start with an empty table"), choser_box));
 	choser->addButton (empty_table_button);
-	KUrl rdata_file = getRestoreFile ();
+	QUrl rdata_file = getRestoreFile ();
 	choser_layout->addWidget (restore_workspace_button = new QRadioButton (choser_box));
 	choser->addButton (restore_workspace_button);
 	if (rdata_file.isEmpty ()) {
@@ -77,9 +77,9 @@ StartupDialog::StartupDialog (QWidget *parent, StartupDialogResult *result, KRec
 	file_list->setSortingEnabled (false);
 	chose_file_item = new QListWidgetItem (i18n ("<<Open another file>>"), file_list);
 	if (recent_files) {
-		KUrl::List urls = recent_files->urls ();
+		QList<QUrl> urls = recent_files->urls ();
 		for (int i = 0; i < urls.length (); ++i) {
-			file_list->addItem (urls[i].pathOrUrl ());
+			file_list->addItem (urls[i].url (QUrl::PreferLocalFile));
 		}
 	}
 	connect (file_list, SIGNAL (itemClicked(QListWidgetItem*)), this, SLOT (listClicked(QListWidgetItem*)));
@@ -108,7 +108,7 @@ void StartupDialog::accept () {
 			result->result = ChoseFile;
 		} else {
 			result->result = OpenFile;
-			result->open_url = KUrl (item->text ());
+			result->open_url = QUrl (item->text ());
 		}
 	} else {
 		RK_ASSERT (false);
@@ -172,13 +172,13 @@ void StartupDialog::showEvent (QShowEvent *event) {
 }
 
 // static
-KUrl StartupDialog::getRestoreFile () {
+QUrl StartupDialog::getRestoreFile () {
 	RK_TRACE (DIALOGS);
 
 	QFileInfo rdata_file (".RData");
-	if (rdata_file.exists ()) return KUrl::fromLocalFile (rdata_file.absoluteFilePath ());
+	if (rdata_file.exists ()) return QUrl::fromLocalFile (rdata_file.absoluteFilePath ());
 
-	return KUrl ();
+	return QUrl ();
 }
 
 //static

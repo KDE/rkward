@@ -429,7 +429,7 @@ void RKSettingsModuleRPackages::addLibLoc (QStringList *string_list) {
 		new_string = dummy.selectedFiles ().value (0);
 	}
 #else
-	QString new_string = KFileDialog::getExistingDirectory (KUrl (), this, i18n ("Add R Library Directory"));
+	QString new_string = KFileDialog::getExistingDirectory (QUrl (), this, i18n ("Add R Library Directory"));
 #endif
 	if (!new_string.isEmpty ()) {
 		(*string_list).append (new_string);

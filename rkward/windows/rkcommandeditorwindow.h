@@ -31,7 +31,7 @@
 #include <ktexteditor/movingrange.h>
 #include <ktexteditor/movinginterface.h>
 
-#include <kurl.h>
+#include <QUrl>
 
 #include "../windows/rkmdiwindow.h"
 
@@ -165,7 +165,7 @@ public:
 	void setReadOnly (bool ro);
 
 /** Return current url */
-	KUrl url ();
+	QUrl url ();
 
 	QString provideContext (int line_rev) override;
 	QString currentCompletionWord () const;
@@ -264,10 +264,10 @@ private:
 
 	QAction* action_help_function;
 
-	KUrl previous_autosave_url;
+	QUrl previous_autosave_url;
 	QTimer* autosave_timer;
 
-	KUrl delete_on_close;
+	QUrl delete_on_close;
 };
 
 /** Simple class to provide HTML highlighting for arbitrary R code. */

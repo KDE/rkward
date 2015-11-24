@@ -18,7 +18,7 @@
 #define STARTUPDIALOG_H
 
 #include <kdialog.h>
-#include <kurl.h>
+#include <QUrl>
 
 class QCheckBox;
 class QButtonGroup;
@@ -47,7 +47,7 @@ public:
 	};
 	struct StartupDialogResult {
 		Result result;
-		KUrl open_url;
+		QUrl open_url;
 	};
 
 	StartupDialog (QWidget *parent, StartupDialogResult *result, KRecentFilesAction *recent_files);
@@ -55,7 +55,7 @@ public:
 	~StartupDialog();
 	
 	static StartupDialogResult getStartupAction (QWidget *parent, KRecentFilesAction *recent_files);
-	static KUrl getRestoreFile ();
+	static QUrl getRestoreFile ();
 public slots:
 	void accept () override;
 	void reject () override;

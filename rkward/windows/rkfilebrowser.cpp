@@ -103,7 +103,7 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : KVBox (parent) {
 	urlbox->completionBox (true)->installEventFilter (this);
 	setFocusProxy (urlbox);
 
-	dir = new KDirOperator (KUrl (), this);
+	dir = new KDirOperator (QUrl (), this);
 	dir->setPreviewWidget (0);
 	KConfigGroup config = KSharedConfig::openConfig ()->group ("file browser window");
 	dir->readConfig (config);

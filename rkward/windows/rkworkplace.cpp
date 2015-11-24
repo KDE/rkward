@@ -114,8 +114,8 @@ RKWorkplace::~RKWorkplace () {
 //	closeAll ();	// not needed, as the windows will autodelete themselves using QObject mechanism. Of course, closeAll () should be called *before* quitting.
 }
 
-QString workspaceConfigFileName (const KUrl &url) {
-	QString base_name = QString (QCryptographicHash::hash (url.prettyUrl ().toUtf8 (), QCryptographicHash::Md5).toHex());
+QString workspaceConfigFileName (const QUrl &url) {
+	QString base_name = QString (QCryptographicHash::hash (url.toDisplayString ().toUtf8 (), QCryptographicHash::Md5).toHex());
 	return (KStandardDirs::locateLocal ("data", "rkward/workspace_config_" + base_name));
 }
 
@@ -127,13 +127,13 @@ KConfigBase *RKWorkplace::workspaceConfig () {
 	return _workspace_config;
 }
 
-QString RKWorkplace::portableUrl (const KUrl &url) {
-	KUrl relative = KUrl::relativeUrl (workspaceURL (), url);
+QString RKWorkplace::portableUrl (const QUrl &url) {
+	QUrl relative = QUrl::relativeUrl (workspaceURL (), url);
 	relative.cleanPath ();
 	return relative.prettyUrl ();
 }
 
-void RKWorkplace::setWorkspaceURL (const KUrl &url, bool keep_config) {
+void RKWorkplace::setWorkspaceURL (const QUrl &url, bool keep_config) {
 	RK_TRACE (APP);
 
 	if (url != current_url) {
@@ -248,7 +248,7 @@ void RKWorkplace::placeInToolWindowBar (RKMDIWindow *window, int position) {
 	else if (needs_registration) attachWindow (window);
 }
 
-bool RKWorkplace::openAnyUrl (const KUrl &url, const QString &known_mimetype, bool force_external) {
+bool RKWorkplace::openAnyUrl (const QUrl &url, const QString &known_mimetype, bool force_external) {
 	RK_TRACE (APP);
 
 	if (url.protocol () == "rkward") {
@@ -283,14 +283,14 @@ bool RKWorkplace::openAnyUrl (const KUrl &url, const QString &known_mimetype, bo
 	return false;
 }
 
-RKMDIWindow* RKWorkplace::openScriptEditor (const KUrl &url, const QString& encoding, bool use_r_highlighting, bool read_only, const QString &force_caption, bool delete_on_close) {
+RKMDIWindow* RKWorkplace::openScriptEditor (const QUrl &url, const QString& encoding, bool use_r_highlighting, bool read_only, const QString &force_caption, bool delete_on_close) {
 	RK_TRACE (APP);
 
 // is this url already opened?
 	if (!url.isEmpty ()) {
 	  	RKWorkplaceObjectList script_windows = getObjectList (RKMDIWindow::CommandEditorWindow, RKMDIWindow::AnyWindowState);
 		for (RKWorkplaceObjectList::const_iterator it = script_windows.constBegin (); it != script_windows.constEnd (); ++it) {
-			  KUrl ourl = static_cast<RKCommandEditorWindow *> (*it)->url ();
+			  QUrl ourl = static_cast<RKCommandEditorWindow *> (*it)->url ();
 			  if (url == ourl) {
 				  (*it)->activate ();
 				  return (*it);
@@ -313,7 +313,7 @@ RKMDIWindow* RKWorkplace::openScriptEditor (const KUrl &url, const QString& enco
 	return (editor);
 }
 
-RKMDIWindow* RKWorkplace::openHelpWindow (const KUrl &url, bool only_once) {
+RKMDIWindow* RKWorkplace::openHelpWindow (const QUrl &url, bool only_once) {
 	RK_TRACE (APP);
 
 	if (url.isEmpty ()) {
@@ -324,7 +324,7 @@ RKMDIWindow* RKWorkplace::openHelpWindow (const KUrl &url, bool only_once) {
 	if (only_once) {
 		RKWorkplaceObjectList help_windows = getObjectList (RKMDIWindow::HelpWindow, RKMDIWindow::AnyWindowState);
 		for (RKWorkplaceObjectList::const_iterator it = help_windows.constBegin (); it != help_windows.constEnd (); ++it) {
-			if (static_cast<RKHTMLWindow *> (*it)->url ().equals (url, KUrl::CompareWithoutTrailingSlash | KUrl::CompareWithoutFragment)) {
+			if (static_cast<RKHTMLWindow *> (*it)->url ().equals (url, QUrl::CompareWithoutTrailingSlash | QUrl::CompareWithoutFragment)) {
 				(*it)->activate ();
 				return (*it);
 			}
@@ -337,7 +337,7 @@ RKMDIWindow* RKWorkplace::openHelpWindow (const KUrl &url, bool only_once) {
 	return (hw);
 }
 
-RKMDIWindow* RKWorkplace::openOutputWindow (const KUrl &url) {
+RKMDIWindow* RKWorkplace::openOutputWindow (const QUrl &url) {
 	RK_TRACE (APP);
 
 	RKHTMLWindow *w = RKOutputWindowManager::self ()->getCurrentOutputWindow ();
@@ -566,7 +566,7 @@ QStringList RKWorkplace::makeWorkplaceDescription () {
 	QStringList workplace_description;
 
 	// first, save the base directory of the workplace. This allows us to cope better with moved workspaces while restoring.
-	KUrl base_url = workspaceURL ();
+	QUrl base_url = workspaceURL ();
 	base_url.setPath (base_url.directory ());
 	if (base_url.isLocalFile () && base_url.hasPath ()) workplace_description.append ("base::::" + base_url.url ());
 
@@ -632,14 +632,14 @@ void RKWorkplace::restoreWorkplace (RCommandChain *chain, bool merge) {
 	RKGlobals::rInterface ()->issueCommand ("rk.restore.workplace(" + no_close_windows + ')', RCommand::App, i18n ("Restore Workplace layout"), 0, 0, chain);
 }
 
-KUrl checkAdjustRestoredUrl (const QString &_url, const QString old_base) {
-	KUrl url (_url);
+QUrl checkAdjustRestoredUrl (const QString &_url, const QString old_base) {
+	QUrl url (_url);
 
 	if (old_base.isEmpty ()) return (url);
-	KUrl new_base_url = RKWorkplace::mainWorkplace ()->workspaceURL ();
+	QUrl new_base_url = RKWorkplace::mainWorkplace ()->workspaceURL ();
 	new_base_url.setPath (new_base_url.directory ());
 	if (new_base_url.isEmpty ()) return (url);
-	KUrl old_base_url (old_base);
+	QUrl old_base_url (old_base);
 	if (old_base_url == new_base_url) return (url);
 
 	// TODO: Should we also care about non-local files? In theory: yes, but stat'ing remote files for existence can take a long time.
@@ -649,7 +649,7 @@ KUrl checkAdjustRestoredUrl (const QString &_url, const QString old_base) {
 	if (QFileInfo (url.toLocalFile ()).exists ()) return (url);
 
 	// check whether a file exists for the adjusted url
-	KUrl relative = KUrl::fromLocalFile (new_base_url.path () + '/' + KUrl::relativePath (old_base_url.path (), url.path ()));
+	QUrl relative = QUrl::fromLocalFile (new_base_url.path () + '/' + QUrl::relativePath (old_base_url.path (), url.path ()));
 	relative.cleanPath ();
 // 	if (QFileInfo (relative.toLocalFile ()).exists ()) return (relative);
 	return (url);

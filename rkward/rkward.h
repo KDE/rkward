@@ -20,7 +20,7 @@
 
 #include <kapplication.h>
 #include <QAction>
-#include <kurl.h>
+#include <QUrl>
 #include <kparts/mainwindow.h>
 
 class QLabel;
@@ -80,7 +80,7 @@ public slots:
 	/** open a workspace. If the current workspace is not empty, ask whether to save first.
     @see setNoAskSave ()
     @see setWorkspaceMightBeModified () */
-	void askOpenWorkspace (const KUrl &url);
+	void askOpenWorkspace (const QUrl &url);
 	/** creates a new (empty) data.frame */
 	void slotNewDataFrame ();
 	/** open a file and load it into the document*/
@@ -108,9 +108,9 @@ public slots:
 	void slotConfigure ();
 
 /** Add the given url to the list of recent scripts */
-	void addScriptUrl (const KUrl& url);
+	void addScriptUrl (const QUrl &url);
 /** Add the given url to the list of recent workspaces */
-	void addWorkspaceUrl (const KUrl& url);
+	void addWorkspaceUrl (const QUrl &url);
 
 	/** Init-procedures to be done after the exec-loop was started */
 	void doPostInit ();
@@ -120,7 +120,7 @@ public slots:
 /** open a new command editor (ask for file to open) */
 	void slotOpenCommandEditor ();
 /** open a new command editor (load given url) */
-	void slotOpenCommandEditor (const KUrl &url, const QString& encoding = QString ());
+	void slotOpenCommandEditor (const QUrl &url, const QString& encoding = QString ());
 
 /** close current window (Windows->Close). */
 	void slotCloseWindow ();
@@ -137,7 +137,7 @@ private slots:
 	void partChanged (KParts::Part *new_part);
 private:
 /** Opens a new workspace, without asking or closing anything. */
-	void openWorkspace (const KUrl &url);
+	void openWorkspace (const QUrl &url);
 
 	QLabel* statusbar_r_status;
 	KSqueezedTextLabel* statusbar_cwd;

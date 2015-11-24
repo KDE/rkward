@@ -758,12 +758,12 @@ void RKConsole::setCommandHistory (const QStringList &new_history, bool append) 
 	commands_history.setHistory (new_history, append);
 }
 
-void RKConsole::userLoadHistory (const KUrl &_url) {
+void RKConsole::userLoadHistory (const QUrl &_url) {
 	RK_TRACE (APP);
 
-	KUrl url = _url;
+	QUrl url = _url;
 	if (url.isEmpty ()) {
-		url = KFileDialog::getOpenUrl (KUrl (), i18n ("*.Rhistory|R history files (*.Rhistory)\n*|All files (*)"), this, i18n ("Select command history file to load"));
+		url = KFileDialog::getOpenUrl (QUrl (), i18n ("*.Rhistory|R history files (*.Rhistory)\n*|All files (*)"), this, i18n ("Select command history file to load"));
 		if (url.isEmpty ()) return;
 	}
 
@@ -778,12 +778,12 @@ void RKConsole::userLoadHistory (const KUrl &_url) {
 	KIO::NetAccess::removeTempFile (tempfile);
 }
 
-void RKConsole::userSaveHistory (const KUrl &_url) {
+void RKConsole::userSaveHistory (const QUrl &_url) {
 	RK_TRACE (APP);
 
-	KUrl url = _url;
+	QUrl url = _url;
 	if (url.isEmpty ()) {
-		url = KFileDialog::getSaveUrl (KUrl (), i18n ("*.Rhistory|R history files (*.Rhistory)\n*|All files (*)"), this, i18n ("Select filename to save command history")
+		url = KFileDialog::getSaveUrl (QUrl (), i18n ("*.Rhistory|R history files (*.Rhistory)\n*|All files (*)"), this, i18n ("Select filename to save command history")
 #if KDE_IS_VERSION(4,4,0)
 		                                    , KFileDialog::ConfirmOverwrite
 #endif

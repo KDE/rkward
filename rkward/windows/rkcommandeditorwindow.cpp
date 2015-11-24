@@ -447,10 +447,11 @@ void RKCommandEditorWindow::doAutoSave () {
 	// Thus, for the simple case of local files, we use QFile, instead.
 	connect (alljobs, SIGNAL (finished(RKJobSequence*)), this, SLOT (autoSaveHandlerJobFinished(RKJobSequence*)));
 	// backup the old autosave file in case something goes wrong during pushing the new one
-	KUrl backup_autosave_url;
+	QUrl backup_autosave_url;
 	if (previous_autosave_url.isValid ()) {
 		backup_autosave_url = previous_autosave_url;
-		backup_autosave_url.setFileName (backup_autosave_url.fileName () + '~');
+		backup_autosave_url = backup_autosave_url.adjusted(QUrl::RemoveFilename);
+		backup_autosave_url.setPath(backup_autosave_url.path() + backup_autosave_url.fileName () + '~');
 		if (previous_autosave_url.isLocalFile ()) {
 			QFile::remove (backup_autosave_url.toLocalFile ());
 			QFile::copy (previous_autosave_url.toLocalFile (), backup_autosave_url.toLocalFile ());
@@ -461,18 +462,19 @@ void RKCommandEditorWindow::doAutoSave () {
 	
 	// push the newly written file
 	if (url ().isValid ()) {
-		KUrl autosave_url = url ();
-		autosave_url.setFileName (autosave_url.fileName () + RKSettingsModuleCommandEditor::autosaveSuffix ());
+		QUrl autosave_url = url ();
+		autosave_url = autosave_url.adjusted(QUrl::RemoveFilename);
+		autosave_url.setPath(autosave_url.path() + autosave_url.fileName () + RKSettingsModuleCommandEditor::autosaveSuffix ());
 		if (autosave_url.isLocalFile ()) {
 			QFile::remove (autosave_url.toLocalFile ());
 			save.copy (autosave_url.toLocalFile ());
 			save.remove ();
 		} else {
-			alljobs->addJob (KIO::file_move (KUrl::fromLocalFile (save.fileName ()), autosave_url, -1, KIO::HideProgressInfo | KIO::Overwrite));
+			alljobs->addJob (KIO::file_move (QUrl::fromLocalFile (save.fileName ()), autosave_url, -1, KIO::HideProgressInfo | KIO::Overwrite));
 		}
 		previous_autosave_url = autosave_url;
 	} else {		// i.e., the document is still "Untitled"
-		previous_autosave_url = KUrl::fromLocalFile (save.fileName ());
+		previous_autosave_url = QUrl::fromLocalFile (save.fileName ());
 	}
 
 	// remove the backup
@@ -497,7 +499,7 @@ void RKCommandEditorWindow::autoSaveHandlerJobFinished (RKJobSequence* seq) {
 	}
 }
 
-KUrl RKCommandEditorWindow::url () {
+QUrl RKCommandEditorWindow::url () {
 //	RK_TRACE (COMMANDEDITOR);
 	return (m_doc->url ());
 }
@@ -559,7 +561,7 @@ void RKCommandEditorWindow::highlightLine (int linenum) {
 void RKCommandEditorWindow::updateCaption (KTextEditor::Document*) {
 	RK_TRACE (COMMANDEDITOR);
 	QString name = url ().fileName ();
-	if (name.isEmpty ()) name = url ().prettyUrl ();
+	if (name.isEmpty ()) name = url ().toDisplayString ();
 	if (name.isEmpty ()) name = i18n ("Unnamed");
 	if (isModified ()) name.append (i18n (" [modified]"));
 
@@ -672,7 +674,7 @@ void RKCommandEditorWindow::setWDToScript () {
 	RK_TRACE (COMMANDEDITOR);
 
 	RK_ASSERT (!url ().isEmpty ());
-	QString dir = url ().directory ();
+	QString dir = url ().adjusted (QUrl::RemoveFilename).path ();
 #ifdef Q_OS_WIN
 	// KURL::directory () returns a leading slash on windows as of KDElibs 4.3
 	while (dir.startsWith ('/')) dir.remove (0, 1);

@@ -31,7 +31,7 @@
 
 #include "../debug.h"
 
-RKSaveAgent::RKSaveAgent (KUrl url, bool save_file_as, DoneAction when_done, KUrl load_url) : QObject () {
+RKSaveAgent::RKSaveAgent (QUrl url, bool save_file_as, DoneAction when_done, QUrl load_url) : QObject () {
 	RK_TRACE (APP);
 	save_url = url;
 	RKSaveAgent::when_done = when_done;

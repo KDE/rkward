@@ -18,7 +18,7 @@
 #include "rkhelpsearchwindow.h"
 
 #include <klocale.h>
-#include <kurl.h>
+#include <QUrl>
 #include <kmessagebox.h>
 
 #include <qcheckbox.h>

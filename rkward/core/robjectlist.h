@@ -22,7 +22,7 @@
 #include <qstring.h>
 #include <qmap.h>
 
-#include <kurl.h>
+#include <QUrl>
 
 #include "rcontainerobject.h"
 

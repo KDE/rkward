@@ -35,7 +35,7 @@
 #define WORKSPACE_LOAD_COMMAND 1
 #define WORKSPACE_LOAD_COMPLETE_COMMAND 2
 
-RKLoadAgent::RKLoadAgent (const KUrl &url, bool merge) {
+RKLoadAgent::RKLoadAgent (const QUrl &url, bool merge) {
 	RK_TRACE (APP);
 	RKWardMainWindow::getMain ()->slotSetStatusBarText (i18n ("Loading Workspace..."));
 
@@ -74,12 +74,12 @@ void RKLoadAgent::rCommandDone (RCommand *command) {
 		if (!tmpfile.isEmpty ()) KIO::NetAccess::removeTempFile (tmpfile);
 		if (command->failed ()) {
 			KMessageBox::error (0, i18n ("There has been an error opening file '%1':\n%2", RKWorkplace::mainWorkplace ()->workspaceURL ().path (), command->error ()), i18n ("Error loading workspace"));
-			RKWorkplace::mainWorkplace ()->setWorkspaceURL (KUrl());
+			RKWorkplace::mainWorkplace ()->setWorkspaceURL (QUrl());
 		} else {
 			RKWorkplace::mainWorkplace ()->restoreWorkplace (0, _merge);
 			if (RKSettingsModuleGeneral::cdToWorkspaceOnLoad ()) {
 				if (RKWorkplace::mainWorkplace ()->workspaceURL ().isLocalFile ()) {
-					RKGlobals::rInterface ()->issueCommand ("setwd (" + RObject::rQuote (RKWorkplace::mainWorkplace ()->workspaceURL ().directory ()) + ')', RCommand::App);
+					RKGlobals::rInterface ()->issueCommand ("setwd (" + RObject::rQuote (RKWorkplace::mainWorkplace ()->workspaceURL ().adjusted (QUrl::RemoveFilename).path ()) + ')', RCommand::App);
 				}
 			}
 			RKGlobals::rInterface ()->issueCommand (QString (), RCommand::EmptyCommand | RCommand::App, QString (), this, WORKSPACE_LOAD_COMPLETE_COMMAND);

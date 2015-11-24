@@ -95,7 +95,7 @@ bool RKWebPage::acceptNavigationRequest (QWebFrame* frame, const QNetworkRequest
 		return false;
 	}
 
-	if (KUrl (mainFrame ()->url ()).equals (request.url (), KUrl::CompareWithoutFragment | KUrl::CompareWithoutTrailingSlash)) {
+	if (QUrl (mainFrame ()->url ()).matches (request.url (), QUrl::NormalizePathSegments | QUrl::StripTrailingSlash)) {
 		RK_DEBUG (APP, DL_DEBUG, "Page internal navigation request from %s to %s", qPrintable (mainFrame ()->url ().toString ()), qPrintable (request.url ().toString ()));
 		emit (pageInternalNavigation (request.url ()));
 		return true;
@@ -166,7 +166,7 @@ RKHTMLWindow::~RKHTMLWindow () {
 	delete current_cache_file;
 }
 
-KUrl RKHTMLWindow::restorableUrl () {
+QUrl RKHTMLWindow::restorableUrl () {
 	RK_TRACE (APP);
 
 	return (current_url.url ().replace (RKSettingsModuleR::helpBaseUrl(), "rkward://RHELPBASE"));
@@ -286,10 +286,10 @@ void RKHTMLWindow::slotBack () {
 	openLocationFromHistory (url_history[current_history_position]);
 }
 
-void RKHTMLWindow::openRKHPage (const KUrl& url) {
+void RKHTMLWindow::openRKHPage (const QUrl &url) {
 	RK_TRACE (APP);
 
-	RK_ASSERT (url.protocol () == "rkward");
+	RK_ASSERT (url.scheme () == "rkward");
 	changeURL (url);
 	bool ok = false;
 	if ((url.host () == "component") || (url.host () == "page")) {
@@ -300,11 +300,11 @@ void RKHTMLWindow::openRKHPage (const KUrl& url) {
 		ok = render.renderRKHelp (url);
 		current_cache_file->close ();
 
-		KUrl cache_url = KUrl::fromLocalFile (current_cache_file->fileName ());
+		QUrl cache_url = QUrl::fromLocalFile (current_cache_file->fileName ());
 		cache_url.setFragment (url.fragment ());
 		page->load (cache_url);
 	} else if (url.host ().toUpper () == "RHELPBASE") {	// NOTE: QUrl () may lowercase the host part, internally
-		KUrl fixed_url = KUrl (RKSettingsModuleR::helpBaseUrl ());
+		QUrl fixed_url = QUrl (RKSettingsModuleR::helpBaseUrl ());
 		fixed_url.setPath (url.path ());
 		if (url.hasQuery ()) fixed_url.setQuery (url.query ());
 		if (url.hasFragment ()) fixed_url.setFragment (url.fragment ());
@@ -316,10 +316,10 @@ void RKHTMLWindow::openRKHPage (const KUrl& url) {
 }
 
 // static
-bool RKHTMLWindow::handleRKWardURL (const KUrl &url, RKHTMLWindow *window) {
+bool RKHTMLWindow::handleRKWardURL (const QUrl &url, RKHTMLWindow *window) {
 	RK_TRACE (APP);
 
-	if (url.protocol () == "rkward") {
+	if (url.scheme () == "rkward") {
 		if (url.host () == "runplugin") {
 			QString path = url.path ();
 			if (path.startsWith ('/')) path = path.mid (1);
@@ -346,7 +346,7 @@ bool RKHTMLWindow::handleRKWardURL (const KUrl &url, RKHTMLWindow *window) {
 	return false;
 }
 
-bool RKHTMLWindow::openURL (const KUrl &url) {
+bool RKHTMLWindow::openURL (const QUrl &url) {
 	RK_TRACE (APP);
 
 	if (handleRKWardURL (url, this)) return true;
@@ -376,14 +376,14 @@ bool RKHTMLWindow::openURL (const KUrl &url) {
 		return ok;
 	}
 
-	if (url_change_is_from_history || url.protocol ().toLower ().startsWith ("help")) {	// handle help pages, and any page that we have previously handled (from history)
+	if (url_change_is_from_history || url.scheme ().toLower ().startsWith ("help")) {	// handle help pages, and any page that we have previously handled (from history)
 		changeURL (url);
 		page->load (url);
 		return true;
 	}
 
 	// special casing for R's dynamic help pages. These should be considered local, even though they are served through http
-	if (url.protocol ().toLower ().startsWith ("http")) {
+	if (url.scheme ().toLower ().startsWith ("http")) {
 		QString host = url.host ();
 		if ((host == "127.0.0.1") || (host == "localhost") || host == QHostInfo::localHostName ()) {
 			KIO::TransferJob *job = KIO::get (url, KIO::Reload);
@@ -398,7 +398,7 @@ bool RKHTMLWindow::openURL (const KUrl &url) {
 	return true;
 }
 
-KUrl RKHTMLWindow::url () {
+QUrl RKHTMLWindow::url () {
 	return current_url;
 }
 
@@ -434,7 +434,7 @@ void RKHTMLWindow::mimeTypeDetermined (KIO::Job* job, const QString& type) {
 	RK_TRACE (APP);
 
 	KIO::TransferJob* tj = static_cast<KIO::TransferJob*> (job);
-	KUrl url = tj->url ();
+	QUrl url = tj->url ();
 	tj->putOnHold ();
 	if (type == "text/html") {
 		changeURL (url);
@@ -447,14 +447,14 @@ void RKHTMLWindow::mimeTypeDetermined (KIO::Job* job, const QString& type) {
 void RKHTMLWindow::internalNavigation (const QUrl& new_url) {
 	RK_TRACE (APP);
 
-	KUrl real_url = current_url;    // Note: This could be something quite different from new_url: a temp file for rkward://-urls. We know the base part of the URL has not actually changed, when this gets called, though.
+	QUrl real_url = current_url;    // Note: This could be something quite different from new_url: a temp file for rkward://-urls. We know the base part of the URL has not actually changed, when this gets called, though.
 	real_url.setFragment (new_url.fragment ());
 
 	changeURL (real_url);
 }
 
-void RKHTMLWindow::changeURL (const KUrl &url) {
-	KUrl prev_url = current_url;
+void RKHTMLWindow::changeURL (const QUrl &url) {
+	QUrl prev_url = current_url;
 	current_url = url;
 	updateCaption (url);
 
@@ -476,7 +476,7 @@ void RKHTMLWindow::changeURL (const KUrl &url) {
 	}
 }
 
-void RKHTMLWindow::updateCaption (const KUrl &url) {
+void RKHTMLWindow::updateCaption (const QUrl &url) {
 	RK_TRACE (APP);
 
 	if (window_mode == HTMLOutputWindow) setCaption (i18n ("Output %1").arg (url.fileName ()));
@@ -557,7 +557,7 @@ void RKHTMLWindow::fileDoesNotExistMessage () {
 	}
 	current_cache_file->close ();
 
-	KUrl cache_url = KUrl::fromLocalFile (current_cache_file->fileName ());
+	QUrl cache_url = QUrl::fromLocalFile (current_cache_file->fileName ());
 	page->load (cache_url);
 }
 
@@ -673,10 +673,10 @@ void RKHTMLWindowPart::setHelpWindowSkin () {
 //////////////////////////////////////////
 //////////////////////////////////////////
 
-bool RKHelpRenderer::renderRKHelp (const KUrl &url) {
+bool RKHelpRenderer::renderRKHelp (const QUrl &url) {
 	RK_TRACE (APP);
 
-	if (url.protocol () != "rkward") {
+	if (url.scheme () != "rkward") {
 		RK_ASSERT (false);
 		return (false);
 	}
@@ -745,7 +745,7 @@ bool RKHelpRenderer::renderRKHelp (const KUrl &url) {
 	XMLChildList src_elements = help_xml->findElementsWithAttribute (help_doc_element, "src", QString (), true, DL_DEBUG);
 	for (XMLChildList::iterator it = src_elements.begin (); it != src_elements.end (); ++it) {
 		QString src = (*it).attribute ("src");
-		if (KUrl::isRelativeUrl (src)) {
+		if (QUrl (src).isRelative ()) {
 			src = "file://" + QDir::cleanPath (base_path.filePath (src));
 			(*it).setAttribute ("src", src);
 		}
@@ -834,14 +834,14 @@ bool RKHelpRenderer::renderRKHelp (const KUrl &url) {
 	}
 
 	// create a navigation bar
-	KUrl url_copy = url;
+	QUrl url_copy = url;
 	QString navigation = i18n ("<h1>On this page:</h1>");
 	RK_ASSERT (anchornames.size () == anchors.size ());
 	for (int i = 0; i < anchors.size (); ++i) {
 		QString anchor = anchors[i];
 		QString anchorname = anchornames[i];
 		if (!(anchor.isEmpty () || anchorname.isEmpty ())) {
-			url_copy.setRef (anchor);
+			url_copy.setFragment (anchor);
 			navigation.append ("<p><a href=\"" + url_copy.url () + "\">" + anchorname + "</a></p>\n");
 		}
 	}
@@ -926,8 +926,8 @@ QString RKHelpRenderer::prepareHelpLink (const QString &href, const QString &tex
 		ret += text;
 	} else {
 		QString ltext;
-		KUrl url (href);
-		if (url.protocol () == "rkward") {
+		QUrl url (href);
+		if (url.scheme () == "rkward") {
 			if (url.host () == "component") {
 				RKComponentHandle *chandle = componentPathToHandle (url.path ());
 				if (chandle) ltext = chandle->getLabel ();
@@ -1020,14 +1020,14 @@ void RKOutputWindowManager::registerWindow (RKHTMLWindow *window) {
 	RK_TRACE (APP);
 
 	RK_ASSERT (window->mode () == RKHTMLWindow::HTMLOutputWindow);
-	KUrl url = window->url ();
+	QUrl url = window->url ();
 
 	if (!url.isLocalFile ()) {
 		RK_ASSERT (false);		// should not happen right now, but might be an ok condition in the future. We can't monitor non-local files, though.
 		return;
 	}
 
-	url.cleanPath ();
+	url = url.adjusted (QUrl::NormalizePathSegments);
 	QString file = url.toLocalFile ();
 	if (!windows.contains (file, window)) {
 		if (!windows.contains (file)) {
@@ -1044,8 +1044,8 @@ void RKOutputWindowManager::registerWindow (RKHTMLWindow *window) {
 void RKOutputWindowManager::setCurrentOutputPath (const QString &_path) {
 	RK_TRACE (APP);
 
-	KUrl url = KUrl::fromLocalFile (_path);
-	url.cleanPath ();
+	QUrl url = QUrl::fromLocalFile (_path);
+	url = url.adjusted (QUrl::NormalizePathSegments);
 	QString path = url.toLocalFile ();
 
 	if (path == current_default_path) return;
@@ -1068,7 +1068,7 @@ RKHTMLWindow* RKOutputWindowManager::getCurrentOutputWindow () {
 	if (!current_output) {
 		current_output = new RKHTMLWindow (RKWorkplace::mainWorkplace ()->view (), RKHTMLWindow::HTMLOutputWindow);
 
-		current_output->openURL (KUrl::fromLocalFile (current_default_path));
+		current_output->openURL (QUrl::fromLocalFile (current_default_path));
 
 		RK_ASSERT (current_output->url ().toLocalFile () == current_default_path);
 	}

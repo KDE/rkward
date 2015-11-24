@@ -141,7 +141,7 @@ void QtScriptBackend::needData (const QString &identifier, const int hint) {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#include <kurl.h>
+#include <QUrl>
 
 QtScriptBackendThread::QtScriptBackendThread (const QString &commonfile, const QString &scriptfile, QtScriptBackend *parent, const RKMessageCatalog *catalog) : QThread (parent), engine (0) {
 	RK_TRACE (PHP);
@@ -252,8 +252,7 @@ bool QtScriptBackendThread::includeFile (const QString &filename) {
 
 	QString _filename = filename;
 	if (QFileInfo (filename).isRelative ()) {
-		KUrl script_path = KUrl (QUrl::fromLocalFile (_scriptfile)).upUrl ();
-		script_path.addPath (filename);
+		QUrl script_path = QUrl (QUrl::fromLocalFile (_scriptfile)).adjusted (QUrl::RemoveFilename).resolved (filename);
 		_filename = script_path.toLocalFile ();
 	}
 

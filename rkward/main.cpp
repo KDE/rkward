@@ -56,7 +56,7 @@
 #include <kstandarddirs.h>
 #include <kglobal.h>
 #include <KUrlAuthorized>
-#include <kurl.h>
+#include <QUrl>
 
 #include <qstring.h>
 #include <QMutex>
@@ -132,9 +132,9 @@ int main (int argc, char *argv[]) {
 
 	QApplication app (argc, argv_copy);
 	// Don't complain when linking rkward://-pages from Rd pages
-	KUrlAuthorized::allowUrlAction ("redirect", KUrl ("http://"), KUrl ("rkward://"));
+	KUrlAuthorized::allowUrlAction ("redirect", QUrl("http://"), QUrl ("rkward://"));
 	// Don't complain when trying to open help pages
-	KUrlAuthorized::allowUrlAction ("redirect", KUrl ("rkward://"), KUrl ("help:"));
+	KUrlAuthorized::allowUrlAction ("redirect", QUrl("rkward://"), QUrl ("help:"));
 
 	KAboutData aboutData ("rkward", i18n ("RKWard"), RKWARD_VERSION, i18n ("Frontend to the R statistics language"), KAboutLicense::GPL, i18n ("(c) 2002, 2004 - 2015"), QString (), "http://rkward.kde.org");
 	aboutData.addAuthor (i18n ("Thomas Friedrichsmeier"), i18n ("Project leader / main developer"));

@@ -20,7 +20,7 @@
 #include <klocale.h>
 #include <QAction>
 #include <kactioncollection.h>
-#include <kurl.h>
+#include <QUrl>
 #include <kvbox.h>
 #include <khbox.h>
 
@@ -226,7 +226,7 @@ void RKStandardComponentGUI::help () {
 	RK_TRACE (PLUGIN);
 
 	QString path = component->getId ().split ("::").join ("/");
-	RKWorkplace::mainWorkplace ()->openHelpWindow (KUrl ("rkward://component/" + path));
+	RKWorkplace::mainWorkplace ()->openHelpWindow (QUrl ("rkward://component/" + path));
 }
 
 void RKStandardComponentGUI::closeEvent (QCloseEvent *e) {

@@ -563,7 +563,7 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 		RK_ASSERT (calllist.count () == 2);
 		RKOutputWindowManager::self ()->setCurrentOutputPath (calllist.value (1));
 	} else if (call == "getCSSlink") {
-		return (QStringList (QString ("<link rel=\"StyleSheet\" type=\"text/css\" href=\"" + KUrl::fromLocalFile (RKCommonFunctions::getRKWardDataDir () + "pages/rkward_output.css").toString () + "\"/>\n")));
+		return (QStringList (QString ("<link rel=\"StyleSheet\" type=\"text/css\" href=\"" + QUrl::fromLocalFile (RKCommonFunctions::getRKWardDataDir () + "pages/rkward_output.css").toString () + "\"/>\n")));
 	} else if (call == "wdChange") {
 		// in case of separate processes, apply new working directory in frontend, too.
 		QDir::setCurrent (calllist.value (1));
@@ -614,7 +614,7 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 			RKConsole::mainConsole ()->setCommandHistory (calllist.mid (2), calllist.value (1) == "append");
 		}
 	} else if (call == "getWorkspaceUrl") {
-		KUrl url = RKWorkplace::mainWorkplace ()->workspaceURL ();
+		QUrl url = RKWorkplace::mainWorkplace ()->workspaceURL ();
 		if (!url.isEmpty ()) return (QStringList (url.url ()));
 	} else if (call == "workplace.layout") {
 		if (calllist.value (1) == "set") {

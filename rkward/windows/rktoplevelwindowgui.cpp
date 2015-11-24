@@ -183,7 +183,7 @@ void RKTopLevelWindowGUI::showHelpSearch () {
 void RKTopLevelWindowGUI::showRKWardHelp () {
 	RK_TRACE (APP);
 
-	RKWorkplace::mainWorkplace ()->openHelpWindow (KUrl ("rkward://page/rkward_welcome"), true);
+	RKWorkplace::mainWorkplace ()->openHelpWindow (QUrl("rkward://page/rkward_welcome"), true);
 }
 
 void RKTopLevelWindowGUI::activateDocumentView () {
@@ -196,7 +196,7 @@ void RKTopLevelWindowGUI::activateDocumentView () {
 void RKTopLevelWindowGUI::slotOutputShow () {
 	RK_TRACE (APP);
 
-	RKWorkplace::mainWorkplace ()->openOutputWindow (KUrl ());
+	RKWorkplace::mainWorkplace ()->openOutputWindow (QUrl ());
 }
 
 void RKTopLevelWindowGUI::nextWindow () {

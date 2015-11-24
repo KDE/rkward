@@ -18,7 +18,7 @@
 #ifndef RKHTMLWINDOW_H
 #define RKHTMLWINDOW_H
 
-#include <kurl.h>
+#include <QUrl>
 #include <kparts/part.h>
 #include <kio/jobclasses.h>
 #include <kwebpage.h>
@@ -80,19 +80,19 @@ public:
 /** destructor */
 	~RKHTMLWindow ();
 /** open given URL. Returns false, if the URL is not an existing local file. Loading a non-local URL may succeed, even if this returns false! */
-	bool openURL (const KUrl &url);
+	bool openURL (const QUrl &url);
 /** takes care of special handling, if the url is an rkward://-url. Does nothing and returns false, otherwise.
  *  If window is not 0, and the url is a help window, open it, there (otherwise in a new window).
  *  TODO: move to RKWorkplace? As this can really open a bunch of different things, although generally _from_ an html window.
  */
-	static bool handleRKWardURL (const KUrl &url, RKHTMLWindow *window=0);
-	void openRKHPage (const KUrl &url);
+	static bool handleRKWardURL (const QUrl &url, RKHTMLWindow *window=0);
+	void openRKHPage (const QUrl &url);
 
 	bool isModified () override;
 /** Return current url */
-	KUrl url ();
+	QUrl url ();
 /** Return current url in a restorable way, i.e. for help pages, abstract the session specific part of the path */
-	KUrl restorableUrl ();
+	QUrl restorableUrl ();
 
 	WindowMode mode () { return window_mode; };
 public slots:
@@ -127,12 +127,12 @@ friend class RKHTMLWindowPart;
 /** In case the part is a khtmlpart: A ready-cast pointer to that. 0 otherwise (if a webkit part is in use) */
 	RKHTMLWindowPart *part;
 /** update caption according to given URL */
-	virtual void updateCaption (const KUrl &url);
+	virtual void updateCaption (const QUrl &url);
 /** called from openURL. Takes care of updating caption, and updating back/forward actions, if available */
-	void changeURL (const KUrl &url);
+	void changeURL (const QUrl &url);
 
 	struct VisitedLocation {
-		KUrl url;
+		QUrl url;
 		QPoint scroll_position;
 	};
 	QList<VisitedLocation> url_history;
@@ -140,7 +140,7 @@ friend class RKHTMLWindowPart;
 	int current_history_position;
 	bool url_change_is_from_history;	// dirty!!!
 
-	KUrl current_url;
+	QUrl current_url;
 	void startNewCacheFile ();
 	KTemporaryFile *current_cache_file;
 
@@ -196,7 +196,7 @@ public:
 	QDomElement component_doc_element;
 
 	// for dealing with rkward://[page|component]-pages
-	bool renderRKHelp (const KUrl &url);
+	bool renderRKHelp (const QUrl &url);
 	QString renderHelpFragment (QDomElement &fragment);
 	QString resolveLabel (const QString &id) const;
 	QString prepareHelpLink (const QString &href, const QString &text);

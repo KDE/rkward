@@ -120,7 +120,7 @@ void ShowEditTextFileAgent::showEditFiles (RBackendRequest *request) {
 
 	// do this last, as it may produce error messages, if some of the files could not be opened.
 	for (int n = 0; n < count; ++n) {
-		RKWorkplace::mainWorkplace ()->openScriptEditor (KUrl::fromLocalFile (files[n]), QString (), r_highlighting, read_only, display_titles[n], delete_files);
+		RKWorkplace::mainWorkplace ()->openScriptEditor (QUrl::fromLocalFile (files[n]), QString (), r_highlighting, read_only, display_titles[n], delete_files);
 	}
 }
 

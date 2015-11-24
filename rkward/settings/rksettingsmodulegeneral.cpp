@@ -289,12 +289,10 @@ QString RKSettingsModuleGeneral::checkAdjustLoadedPath (const QString& localpath
 	RK_TRACE (SETTINGS);
 
 	if (!installation_moved) return localpath;
-	bool is_parent;	// old data path is parent of given path
-	QString adjusted = KUrl::relativePath (previous_rkward_data_dir, localpath, &is_parent);
-	if (is_parent) {
+	if (QUrl::fromLocalFile (previous_rkward_data_dir).isParentOf (QUrl::fromLocalFile (localpath))) { // old data path is parent of given path
+		QString adjusted = QDir (previous_rkward_data_dir).relativeFilePath (localpath);
 		QDir new_data_dir (RKCommonFunctions::getRKWardDataDir ());
 		return QDir::cleanPath (new_data_dir.absoluteFilePath (adjusted));
 	}
 	return localpath;
 }
-

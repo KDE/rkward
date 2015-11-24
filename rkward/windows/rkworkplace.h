@@ -23,7 +23,7 @@
 #include <qtabwidget.h>
 #include <QSplitter>
 
-#include <kurl.h>
+#include <QUrl>
 #include <kconfigbase.h>
 
 #include "rkmdiwindow.h"
@@ -94,7 +94,7 @@ public:
 	RKMDIWindow *activeWindow (RKMDIWindow::State state);
 
 /** Opens the given url in the appropriate way. */
-	bool openAnyUrl (const KUrl &url, const QString &known_mimetype = QString (), bool force_external=false);
+	bool openAnyUrl (const QUrl &url, const QString &known_mimetype = QString (), bool force_external=false);
 
 /** Opens a new script editor
 @param url URL to load. Default option is to open an empty document
@@ -103,14 +103,14 @@ public:
 @param read_only Open the document read only? Default is false, i.e. Read-write
 @param force_caption Usually the caption is determined from the url of the file. If you specify a non-empty string here, that is used instead.
 @returns false if a local url could not be opened, true for all remote urls, and on success */
-	RKMDIWindow* openScriptEditor (const KUrl &url=KUrl (), const QString& encoding=QString (), bool use_r_highlighting=true, bool read_only=false, const QString &force_caption = QString (), bool delete_on_close=false);
+	RKMDIWindow* openScriptEditor (const QUrl &url=QUrl (), const QString& encoding=QString (), bool use_r_highlighting=true, bool read_only=false, const QString &force_caption = QString (), bool delete_on_close=false);
 /** Opens a new help window, starting at the given url
 @param url URL to open
 @param only_once if true, checks whether any help window already shows this URL. If so, raise it, but do not open a new window. Else show the new window */
-	RKMDIWindow* openHelpWindow (const KUrl &url=KUrl (), bool only_once=false);
+	RKMDIWindow* openHelpWindow (const QUrl &url=QUrl (), bool only_once=false);
 /** Opens a new output window. Currently only a single output window will ever be created. Subsequent calls to the function will not create additional windows right now (but will raise / refresh the output window
 @param url currently ignored! */
-	RKMDIWindow* openOutputWindow (const KUrl &url=KUrl ());
+	RKMDIWindow* openOutputWindow (const QUrl &url=QUrl ());
 
 	void newX11Window (WId window_to_embed, int device_number);
 	void newRKWardGraphisWindow (RKGraphicsDevice *dev, int device_number);
@@ -159,19 +159,19 @@ Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsMod
 	static RKMDIWindowHistory *getHistory () { return main_workplace->history; };
 	void placeToolWindows ();
 
-	void setWorkspaceURL (const KUrl &url, bool keep_config=false);
-	KUrl workspaceURL () const { return current_url; };
+	void setWorkspaceURL (const QUrl &url, bool keep_config=false);
+	QUrl workspaceURL () const { return current_url; };
 	KConfigBase *workspaceConfig ();
-	QString portableUrl (const KUrl &url);
+	QString portableUrl (const QUrl &url);
 signals:
 /** emitted when the workspace Url has changed */
-	void workspaceUrlChanged (const KUrl& url);
+	void workspaceUrlChanged (const QUrl &url);
 public slots:
 /** When windows are attached to the workplace, their QObject::destroyed () signal is connected to this slot. Thereby deleted objects are removed from the workplace automatically */
 	void removeWindow (QObject *window);
 	void saveSettings ();
 private:
-	KUrl current_url;
+	QUrl current_url;
 	KConfig *_workspace_config;
 
 /** current list of windows. @See getObjectList () */ 

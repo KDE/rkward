@@ -133,7 +133,7 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 	RKWorkplace::mainWorkplace ()->initActions (actionCollection (), "left_window", "right_window");
 	setCentralWidget (RKWorkplace::mainWorkplace ());
 	connect (RKWorkplace::mainWorkplace ()->view (), SIGNAL (captionChanged(QString)), this, SLOT (setCaption(QString)));
-	connect (RKWorkplace::mainWorkplace (), SIGNAL (workspaceUrlChanged(KUrl)), this, SLOT (addWorkspaceUrl(KUrl)));
+	connect (RKWorkplace::mainWorkplace (), SIGNAL (workspaceUrlChanged(QUrl)), this, SLOT (addWorkspaceUrl(QUrl)));
 
 	part_manager = new KParts::PartManager (this);
 	// When the manager says the active part changes,
@@ -220,7 +220,7 @@ void RKWardMainWindow::doPostInit () {
 	}
 #endif
 
-	KUrl recover_url = RKRecoverDialog::checkRecoverCrashedWorkspace ();
+	QUrl recover_url = RKRecoverDialog::checkRecoverCrashedWorkspace ();
 	if (!recover_url.isEmpty ()) {
 		open_urls.clear ();
 		open_urls.append (recover_url);		// Well, not a perfect solution. But we certainly don't want to overwrite the just recovered workspace.
@@ -229,9 +229,9 @@ void RKWardMainWindow::doPostInit () {
 	setMergeLoads (true);
 	for (int i = 0; i < open_urls.size (); ++i) {
 		// make sure local urls are absolute, as we may be changing wd before loading
-		KUrl url = open_urls[i].toUrl ();
+		QUrl url = open_urls[i].toUrl ();
 		if (url.isRelative ()) {
-			open_urls[i] = KUrl::fromLocalFile (QDir::current ().absoluteFilePath (url.toLocalFile ()));
+			open_urls[i] = QUrl::fromLocalFile (QDir::current ().absoluteFilePath (url.toLocalFile ()));
 		}
 	}
 	setMergeLoads (false);
@@ -255,7 +255,7 @@ void RKWardMainWindow::doPostInit () {
 			openWorkspace (result.open_url);
 		} else {
 			if (result.result == StartupDialog::ChoseFile) {
-				askOpenWorkspace (KUrl());
+				askOpenWorkspace (QUrl());
 			} else if (result.result == StartupDialog::EmptyTable) {
 				RKWorkplace::mainWorkplace ()->editNewDataFrame (i18n ("my.data"));
 			}
@@ -435,7 +435,7 @@ void RKWardMainWindow::initActions() {
 	fileOpen = actionCollection ()->addAction (KStandardAction::Open, "file_openy", this, SLOT(slotOpenCommandEditor()));
 	fileOpen->setText (i18n ("Open R Script File..."));
 
-	fileOpenRecent = static_cast<KRecentFilesAction*> (actionCollection ()->addAction (KStandardAction::OpenRecent, "file_open_recenty", this, SLOT(slotOpenCommandEditor(KUrl))));
+	fileOpenRecent = static_cast<KRecentFilesAction*> (actionCollection ()->addAction (KStandardAction::OpenRecent, "file_open_recenty", this, SLOT(slotOpenCommandEditor(QUrl))));
 	fileOpenRecent->setText (i18n ("Open Recent R Script File"));
 
 #if 0
@@ -457,7 +457,7 @@ void RKWardMainWindow::initActions() {
 	fileOpenWorkspace->setShortcut (Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_O);
 	fileOpenWorkspace->setStatusTip (i18n ("Opens an existing document"));
 
-	fileOpenRecentWorkspace = static_cast<KRecentFilesAction*> (actionCollection ()->addAction (KStandardAction::OpenRecent, "file_open_recentx", this, SLOT(askOpenWorkspace(KUrl))));
+	fileOpenRecentWorkspace = static_cast<KRecentFilesAction*> (actionCollection ()->addAction (KStandardAction::OpenRecent, "file_open_recentx", this, SLOT(askOpenWorkspace(QUrl))));
 	fileOpenRecentWorkspace->setText (i18n ("Open Recent Workspace"));
 	fileOpenRecentWorkspace->setStatusTip (i18n ("Opens a recently used file"));
 
@@ -656,7 +656,7 @@ void RKWardMainWindow::initStatusBar () {
 	setRStatus (Starting);
 }
 
-void RKWardMainWindow::openWorkspace (const KUrl &url) {
+void RKWardMainWindow::openWorkspace (const QUrl &url) {
 	RK_TRACE (APP);
 	if (url.isEmpty ()) return;
 
@@ -755,7 +755,7 @@ void RKWardMainWindow::slotNewDataFrame () {
 	if (ok) RKWorkplace::mainWorkplace ()->editNewDataFrame (name);
 }
 
-void RKWardMainWindow::askOpenWorkspace (const KUrl &url) {
+void RKWardMainWindow::askOpenWorkspace (const QUrl &url) {
 	RK_TRACE (APP);
 
 	if (!no_ask_save && ((!RObjectList::getGlobalEnv ()->isEmpty () && workspace_modified) || !RKGlobals::rInterface ()->backendIsIdle ())) {
@@ -771,16 +771,16 @@ void RKWardMainWindow::askOpenWorkspace (const KUrl &url) {
 	slotCloseAllEditors ();
 
 	slotSetStatusBarText(i18n("Opening workspace..."));
-	KUrl lurl = url;
+	QUrl lurl = url;
 	if (lurl.isEmpty ()) {
 #ifdef Q_WS_WIN
-	// getOpenUrl(KUrl("kfiledialog:///<rfiles>"), ...) causes a hang on windows (KDElibs 4.2.3).
+	// getOpenUrl(QUrl("kfiledialog:///<rfiles>"), ...) causes a hang on windows (KDElibs 4.2.3).
 #	ifdef __GNUC__
 #		warning Track this bug down and/or report it
 #	endif
-		lurl = KFileDialog::getOpenUrl (KUrl (), i18n("%1|R Workspace Files (%1)\n*|All files", RKSettingsModuleGeneral::workspaceFilenameFilter ()), this, i18n("Select workspace to open..."));
+		lurl = KFileDialog::getOpenUrl (QUrl (), i18n("%1|R Workspace Files (%1)\n*|All files", RKSettingsModuleGeneral::workspaceFilenameFilter ()), this, i18n("Select workspace to open..."));
 #else
-		lurl = KFileDialog::getOpenUrl (KUrl ("kfiledialog:///<rfiles>"), i18n("%1|R Workspace Files (%1)\n*|All files", RKSettingsModuleGeneral::workspaceFilenameFilter ()), this, i18n("Select workspace to open..."));
+		lurl = KFileDialog::getOpenUrl (QUrl("kfiledialog:///<rfiles>"), i18n("%1|R Workspace Files (%1)\n*|All files", RKSettingsModuleGeneral::workspaceFilenameFilter ()), this, i18n("Select workspace to open..."));
 #endif
 	}
 	if (!lurl.isEmpty ()) {
@@ -791,7 +791,7 @@ void RKWardMainWindow::askOpenWorkspace (const KUrl &url) {
 
 void RKWardMainWindow::slotFileOpenWorkspace () {
 	RK_TRACE (APP);
-	askOpenWorkspace (KUrl ());
+	askOpenWorkspace (QUrl ());
 }
 
 void RKWardMainWindow::slotFileLoadLibs () {
@@ -810,7 +810,7 @@ void RKWardMainWindow::slotFileSaveWorkspaceAs () {
 	new RKSaveAgent (RKWorkplace::mainWorkplace ()->workspaceURL (), true);
 }
 
-void RKWardMainWindow::addWorkspaceUrl (const KUrl &url) {
+void RKWardMainWindow::addWorkspaceUrl (const QUrl &url) {
 	RK_TRACE (APP);
 
 	if (!url.isEmpty ()) fileOpenRecentWorkspace->addUrl (url);
@@ -891,16 +891,16 @@ void RKWardMainWindow::importData () {
 void RKWardMainWindow::slotNewCommandEditor () {
 	RK_TRACE (APP);
 
-	slotOpenCommandEditor (KUrl ());
+	slotOpenCommandEditor (QUrl ());
 }
 
-void RKWardMainWindow::addScriptUrl (const KUrl& url) {
+void RKWardMainWindow::addScriptUrl (const QUrl &url) {
 	RK_TRACE (APP);
 
 	if (!url.isEmpty ()) fileOpenRecent->addUrl (url);
 }
 
-void RKWardMainWindow::slotOpenCommandEditor (const KUrl &url, const QString &encoding) {
+void RKWardMainWindow::slotOpenCommandEditor (const QUrl &url, const QString &encoding) {
 	RK_TRACE (APP);
 
 	RKWorkplace::mainWorkplace ()->openScriptEditor (url, encoding);
@@ -911,7 +911,7 @@ void RKWardMainWindow::slotOpenCommandEditor () {
 	KEncodingFileDialog::Result res;
 
 #ifdef Q_WS_WIN
-	// getOpenUrls(KUrl("kfiledialog:///<rfiles>"), ...) causes a hang on windows (KDElibs 4.2.3).
+	// getOpenUrls(QUrl("kfiledialog:///<rfiles>"), ...) causes a hang on windows (KDElibs 4.2.3).
 #	ifdef __GNUC__
 #		warning Track this bug down and/or report it
 #	endif
