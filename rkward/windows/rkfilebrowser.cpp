@@ -26,10 +26,8 @@
 #include <kconfiggroup.h>
 #include <kdeversion.h>
 #include <KSharedConfig>
-#if KDE_IS_VERSION(4,3,0)
-#	include <kfileitemactions.h>
-#	include <kfileitemlistproperties.h>
-#endif
+#include <kfileitemactions.h>
+#include <kfileitemlistproperties.h>
 
 #include <qdir.h>
 #include <qlayout.h>
@@ -119,10 +117,8 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : KVBox (parent) {
 	toolbar->addAction (dir->actionCollection ()->action ("detailed view"));
 //	toolbar->addAction (dir->actionCollection ()->action ("detailed tree view"));	// should we have this as well? Trying to avoid crowding in the toolbar
 
-#if KDE_IS_VERSION(4, 3, 0)
 	fi_actions = new KFileItemActions (this);
 	connect (dir, SIGNAL (contextMenuAboutToShow(KFileItem,QMenu*)), this, SLOT (contextMenuHook(KFileItem,QMenu*)));
-#endif
 
 	connect (dir, SIGNAL (urlEntered(QUrl)), this, SLOT (urlChangedInView(QUrl)));
 	connect (urlbox, SIGNAL (returnPressed(QString)), this, SLOT (urlChangedInCombo(QString)));
@@ -139,7 +135,7 @@ RKFileBrowserWidget::~RKFileBrowserWidget () {
 
 void RKFileBrowserWidget::contextMenuHook(const KFileItem& item, QMenu* menu) {
 	RK_TRACE (APP);
-#if KDE_IS_VERSION(4,3,0)
+
 	QList<KFileItem> dummy;
 	dummy.append (item);
 	fi_actions->setItemListProperties (KFileItemListProperties (dummy));
@@ -156,7 +152,6 @@ void RKFileBrowserWidget::contextMenuHook(const KFileItem& item, QMenu* menu) {
 
 	QList<QAction*> menu_actions_after = menu->actions ();
 	foreach (QAction* act, menu_actions_after) if (!menu_actions.contains (act)) added_service_actions.append (act);
-#endif
 }
 
 // does not work in d-tor. Apparently it's too late, then

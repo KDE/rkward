@@ -235,11 +235,7 @@ private:
 	void initializeActions (KActionCollection* ac);
 
 	struct BlockRecord {
-#if KDE_IS_VERSION(4,5,0)
 		KTextEditor::MovingRange* range;
-#else
-		KTextEditor::SmartRange* range;
-#endif
 		bool active;
 		KTextEditor::Attribute::Ptr attribute;
 		QAction* mark;
@@ -284,6 +280,8 @@ public:
 private:
 	static KTextEditor::Document* getDoc ();
 	static KTextEditor::Document* _doc;
+	static KTextEditor::View* getView ();
+	static KTextEditor::View* _view;
 };
 
 #endif

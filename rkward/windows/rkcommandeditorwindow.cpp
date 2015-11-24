@@ -143,11 +143,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 		}
 	}
 
-#if KDE_IS_VERSION(4,5,0)
 	smart_iface = qobject_cast<KTextEditor::MovingInterface*> (m_doc);
-#else
-	smart_iface = qobject_cast<KTextEditor::SmartInterface*> (m_doc);
-#endif
 	initBlocks ();
 	RK_ASSERT (smart_iface);
 
@@ -605,7 +601,6 @@ QString RKCommandEditorWindow::currentCompletionWord () const {
 	return RKCommonFunctions::getCurrentSymbol (current_line, cursor_pos, false);
 }
 
-#if KDE_IS_VERSION(4,2,0)
 KTextEditor::Range RKCodeCompletionModel::completionRange (KTextEditor::View *view, const KTextEditor::Cursor &position) {
 	if (!position.isValid ()) return KTextEditor::Range ();
 	QString current_line = view->document ()->line (position.line ());
@@ -614,7 +609,6 @@ KTextEditor::Range RKCodeCompletionModel::completionRange (KTextEditor::View *vi
 	RKCommonFunctions::getCurrentSymbolOffset (current_line, position.column (), false, &start, &end);
 	return KTextEditor::Range (position.line (), start, position.line (), end);
 }
-#endif
 
 void RKCommandEditorWindow::tryCompletion () {
 	// TODO: merge this with RKConsole::doTabCompletion () somehow
@@ -781,11 +775,7 @@ void RKCommandEditorWindow::clearUnusedBlocks () {
 	for (int i = 0; i < block_records.size (); ++i) {
 		if (block_records[i].active) {
 // TODO: do we need to check whether the range was deleted? Does the katepart do such evil things?
-#if KDE_IS_VERSION(4,5,0)
 			if (block_records[i].range->isEmpty ()) {
-#else
-			if (!block_records[i].range->isValid () || block_records[i].range->isEmpty ()) {
-#endif
 				removeBlock (i, true);
 			}
 		}
@@ -800,13 +790,8 @@ void RKCommandEditorWindow::addBlock (int index, const KTextEditor::Range& range
 	clearUnusedBlocks ();
 	removeBlock (index);
 
-#if KDE_IS_VERSION(4,5,0)
 	KTextEditor::MovingRange* srange = smart_iface->newMovingRange (range);
 	srange->setInsertBehaviors (KTextEditor::MovingRange::ExpandRight);
-#else
-	KTextEditor::SmartRange* srange = smart_iface->newSmartRange (range);
-	srange->setInsertBehavior (KTextEditor::SmartRange::ExpandRight);
-#endif
 
 	QString actiontext = i18n ("%1 (Active)", index + 1);
 	block_records[index].range = srange;
@@ -817,10 +802,6 @@ void RKCommandEditorWindow::addBlock (int index, const KTextEditor::Range& range
 	block_records[index].unmark->setEnabled (true);
 	block_records[index].run->setText (actiontext);
 	block_records[index].run->setEnabled (true);
-
-#if !KDE_IS_VERSION(4,5,0)
-	smart_iface->addHighlightToView (m_view, srange);
-#endif
 }
 
 void RKCommandEditorWindow::removeBlock (int index, bool was_deleted) {
@@ -829,9 +810,6 @@ void RKCommandEditorWindow::removeBlock (int index, bool was_deleted) {
 	RK_ASSERT ((index >= 0) && (index < block_records.size ()));
 
 	if (!was_deleted) {
-#if !KDE_IS_VERSION(4,5,0)
-		smart_iface->removeHighlightFromView (m_view, block_records[index].range);
-#endif
 		delete (block_records[index].range);
 	}
 
@@ -1096,6 +1074,7 @@ QVariant RKCodeCompletionModel::data (const QModelIndex& index, int role) const 
 
 // static
 KTextEditor::Document* RKCommandHighlighter::_doc = 0;
+KTextEditor::View* RKCommandHighlighter::_view = 0;
 KTextEditor::Document* RKCommandHighlighter::getDoc () {
 	if (_doc) return _doc;
 
@@ -1104,16 +1083,19 @@ KTextEditor::Document* RKCommandHighlighter::getDoc () {
 	RK_ASSERT (editor);
 
 	_doc = editor->createDocument (RKWardMainWindow::getMain ());
-// NOTE: In KDE 4.4.5, a (dummy) view is needed to access highlighting attributes. According to a katepart error message, this will be fixed, eventually.
-// KF5 TODO: check whether this is fixed
-	QWidget* view = _doc->createView (0);
-	view->hide ();
+// NOTE: A (dummy) view is needed to access highlighting attributes.
+	_view = _doc->createView (0);
+	_view->hide ();
 	RK_ASSERT (_doc);
 	return _doc;
 }
 
-#if KDE_IS_VERSION(4,4,0)
-#	include <ktexteditor/highlightinterface.h>
+KTextEditor::View* RKCommandHighlighter::getView () {
+	if (!_view) getDoc ();
+	return _view;
+}
+
+#include <ktexteditor/highlightinterface.h>
 #include <QTextDocument>
 
 //////////
@@ -1160,17 +1142,14 @@ QString exportText(const QString& text, const KTextEditor::Attribute::Ptr& attri
 
 QString RKCommandHighlighter::commandToHTML (const QString r_command, HighlightingMode mode) {
 	KTextEditor::Document* doc = getDoc ();
-	KTextEditor::HighlightInterface *iface = qobject_cast<KTextEditor::HighlightInterface*> (_doc);
-	RK_ASSERT (iface);
-	if (!iface) return (QString ("<pre>") + r_command + "</pre>");
-
+	KTextEditor::View* view = getView ();
 	doc->setText (r_command);
 	if (r_command.endsWith ('\n')) doc->removeLine (doc->lines () - 1);
 	setHighlighting (doc, mode);
 	QString ret;
 
 	QString opening;
-	KTextEditor::Attribute::Ptr m_defaultAttribute = iface->defaultStyle(KTextEditor::HighlightInterface::dsNormal);
+	KTextEditor::Attribute::Ptr m_defaultAttribute = view->defaultStyleAttribute (KTextEditor::dsNormal);
 	if ( !m_defaultAttribute ) {
 		opening = "<pre class=\"%3\">";
 	} else {
@@ -1192,7 +1171,7 @@ QString RKCommandHighlighter::commandToHTML (const QString r_command, Highlighti
 	for (int i = 0; i < doc->lines (); ++i)
 	{
 		const QString &line = doc->line(i);
-		QList<KTextEditor::HighlightInterface::AttributeBlock> attribs = iface->lineAttributes(i);
+		QList<KTextEditor::AttributeBlock> attribs = view->lineAttributes(i);
 		int lineStart = 0;
 
 		if (mode == RInteractiveSession) {
@@ -1216,7 +1195,7 @@ QString RKCommandHighlighter::commandToHTML (const QString r_command, Highlighti
 
 		int handledUntil = lineStart;
 		int remainingChars = line.length();
-		foreach ( const KTextEditor::HighlightInterface::AttributeBlock& block, attribs ) {
+		foreach ( const KTextEditor::AttributeBlock& block, attribs ) {
 			if ((block.start + block.length) <= handledUntil) continue;
 			int start = qMax(block.start, lineStart);
 			if ( start > handledUntil ) {
@@ -1238,12 +1217,6 @@ QString RKCommandHighlighter::commandToHTML (const QString r_command, Highlighti
 
 	return ret;
 }
-
-#else	// KDE < 4.4: No Highlighting Interface
-QString RKCommandHighlighter::commandToHTML (const QString r_command, HighlightingMode) {
-	return (QString ("<pre class=\"code\">") + r_command + "</pre>");
-}
-#endif
 
 /** set syntax highlighting-mode to R syntax. Outside of class, in order to allow use from the on demand code highlighter */
 void RKCommandHighlighter::setHighlighting (KTextEditor::Document *doc, HighlightingMode mode) {

@@ -479,7 +479,7 @@ void RKHTMLWindow::changeURL (const QUrl &url) {
 void RKHTMLWindow::updateCaption (const QUrl &url) {
 	RK_TRACE (APP);
 
-	if (window_mode == HTMLOutputWindow) setCaption (i18n ("Output %1").arg (url.fileName ()));
+	if (window_mode == HTMLOutputWindow) setCaption (i18n ("Output %1", url.fileName ()));
 	else setCaption (url.fileName ());
 }
 
