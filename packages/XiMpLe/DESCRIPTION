@@ -7,19 +7,20 @@ Depends:
     R (>= 2.9.0),methods
 Suggests:
     testthat
-Description: This package provides a simple XML tree parser/generator. It
-    includes functions to read XML files into R objects, get information out of
-    and into nodes, and write R objects back to XML code. It's not as powerful as
-    the 'XML' package and doesn't aim to be, but for simple XML handling it could
-    be useful. It was originally developed for the R GUI and IDE RKWard (https://
-    rkward.kde.org), to make plugin development easier.
+Description: Provides a simple XML tree parser/generator. It includes functions
+    to read XML files into R objects, get information out of and into nodes, and
+    write R objects back to XML code. It's not as powerful as the 'XML' package
+    and doesn't aim to be, but for simple XML handling it could be useful. It was
+    originally developed for the R GUI and IDE RKWard (https://rkward.kde.org), to
+    make plugin development easier.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyLoad: yes
 URL: http://reaktanz.de/?c=hacking&s=XiMpLe
 Authors@R: c(person(given="Meik", family="Michalke", email="meik.michalke@hhu.de", role=c("aut", "cre")))
 Version: 0.03-23
-Date: 2015-11-16
+Date: 2015-11-24
+RoxygenNote: 5.0.1
 Collate:
     '00_class_01_XiMpLe.node.R'
     '00_class_02_XiMpLe.doc.R'
@@ -33,4 +34,3 @@ Collate:
     'parseXMLTree.R'
     'pasteXMLTag.R'
     'zzz_is_get_utils.R'
-RoxygenNote: 5.0.1

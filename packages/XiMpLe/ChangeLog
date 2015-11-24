@@ -1,8 +1,6 @@
 ChangeLog for package XiMpLe
 
-changes in version 0.03-23 (2015-11-16)
-unreleased:
-  - this release is under development
+changes in version 0.03-23 (2015-11-24)
 changed:
   - relocated the unit tests to tests/testthat
 fixed:
