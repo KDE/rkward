@@ -33,6 +33,7 @@
 #include <QFileInfo>
 #include <QCryptographicHash>
 #include <QKeyEvent>
+#include <QDir>
 
 #include "detachedwindowcontainer.h"
 #include "rkcommandeditorwindow.h"
@@ -128,9 +129,13 @@ KConfigBase *RKWorkplace::workspaceConfig () {
 }
 
 QString RKWorkplace::portableUrl (const QUrl &url) {
-	QUrl relative = QUrl::relativeUrl (workspaceURL (), url);
-	relative.cleanPath ();
-	return relative.prettyUrl ();
+	QUrl ret = url;
+	if (url.scheme () == workspaceURL ().scheme () && url.authority () == workspaceURL ().authority ()) {
+		QString relative = QDir (workspaceURL ().path ()).relativeFilePath (url.path ());
+		ret = QUrl (relative);
+	}
+	// QUrl::toDisplayString () used here, for the side effect of stripping credentials
+	return QUrl (ret).adjusted (QUrl::NormalizePathSegments).toDisplayString ();
 }
 
 void RKWorkplace::setWorkspaceURL (const QUrl &url, bool keep_config) {
@@ -251,7 +256,7 @@ void RKWorkplace::placeInToolWindowBar (RKMDIWindow *window, int position) {
 bool RKWorkplace::openAnyUrl (const QUrl &url, const QString &known_mimetype, bool force_external) {
 	RK_TRACE (APP);
 
-	if (url.protocol () == "rkward") {
+	if (url.scheme () == "rkward") {
 		if (RKHTMLWindow::handleRKWardURL (url)) return true;
 	}
 	KMimeType::Ptr mimetype;
@@ -275,7 +280,7 @@ bool RKWorkplace::openAnyUrl (const QUrl &url, const QString &known_mimetype, bo
 		RK_DEBUG (APP, DL_INFO, "Don't know how to handle mimetype %s.", qPrintable (mimetype->name ()));
 	}
 
-	if (KMessageBox::questionYesNo (this, i18n ("The url you are trying to open ('%1') is not a local file or the filetype is not supported by RKWard. Do you want to open the url in the default application?", url.prettyUrl ()), i18n ("Open in default application?")) != KMessageBox::Yes) {
+	if (KMessageBox::questionYesNo (this, i18n ("The url you are trying to open ('%1') is not a local file or the filetype is not supported by RKWard. Do you want to open the url in the default application?", url.toDisplayString ()), i18n ("Open in default application?")) != KMessageBox::Yes) {
 		return false;
 	}
 	KRun *runner = new KRun (url, topLevelWidget());		// according to KRun-documentation, KRun will self-destruct when done.
@@ -303,7 +308,7 @@ RKMDIWindow* RKWorkplace::openScriptEditor (const QUrl &url, const QString& enco
 	if (!url.isEmpty ()) {
 		if (!editor->openURL (url, encoding, use_r_highlighting, read_only, delete_on_close)) {
 			delete editor;
-			KMessageBox::messageBox (view (), KMessageBox::Error, i18n ("Unable to open \"%1\"", url.prettyUrl ()), i18n ("Could not open command file"));
+			KMessageBox::messageBox (view (), KMessageBox::Error, i18n ("Unable to open \"%1\"", url.toDisplayString ()), i18n ("Could not open command file"));
 			return 0;
 		}
 	}
@@ -324,7 +329,7 @@ RKMDIWindow* RKWorkplace::openHelpWindow (const QUrl &url, bool only_once) {
 	if (only_once) {
 		RKWorkplaceObjectList help_windows = getObjectList (RKMDIWindow::HelpWindow, RKMDIWindow::AnyWindowState);
 		for (RKWorkplaceObjectList::const_iterator it = help_windows.constBegin (); it != help_windows.constEnd (); ++it) {
-			if (static_cast<RKHTMLWindow *> (*it)->url ().equals (url, QUrl::CompareWithoutTrailingSlash | QUrl::CompareWithoutFragment)) {
+			if (static_cast<RKHTMLWindow *> (*it)->url ().matches (url, QUrl::StripTrailingSlash | QUrl::NormalizePathSegments)) {
 				(*it)->activate ();
 				return (*it);
 			}
@@ -566,9 +571,8 @@ QStringList RKWorkplace::makeWorkplaceDescription () {
 	QStringList workplace_description;
 
 	// first, save the base directory of the workplace. This allows us to cope better with moved workspaces while restoring.
-	QUrl base_url = workspaceURL ();
-	base_url.setPath (base_url.directory ());
-	if (base_url.isLocalFile () && base_url.hasPath ()) workplace_description.append ("base::::" + base_url.url ());
+	QUrl base_url = workspaceURL ().adjusted (QUrl::RemoveFilename);
+	if (base_url.isLocalFile () && !base_url.isEmpty ()) workplace_description.append ("base::::" + base_url.url ());
 
 	// window order in the workplace view may have changed with respect to our list. Thus we first generate a properly sorted list
 	RKWorkplaceObjectList list = getObjectList (RKMDIWindow::DocumentWindow, RKMDIWindow::Detached);
@@ -633,11 +637,10 @@ void RKWorkplace::restoreWorkplace (RCommandChain *chain, bool merge) {
 }
 
 QUrl checkAdjustRestoredUrl (const QString &_url, const QString old_base) {
-	QUrl url (_url);
+	QUrl url = QUrl::fromUserInput (_url, QString (), QUrl::AssumeLocalFile);
 
 	if (old_base.isEmpty ()) return (url);
-	QUrl new_base_url = RKWorkplace::mainWorkplace ()->workspaceURL ();
-	new_base_url.setPath (new_base_url.directory ());
+	QUrl new_base_url = RKWorkplace::mainWorkplace ()->workspaceURL ().adjusted (QUrl::RemoveFilename | QUrl::NormalizePathSegments);
 	if (new_base_url.isEmpty ()) return (url);
 	QUrl old_base_url (old_base);
 	if (old_base_url == new_base_url) return (url);
@@ -649,9 +652,8 @@ QUrl checkAdjustRestoredUrl (const QString &_url, const QString old_base) {
 	if (QFileInfo (url.toLocalFile ()).exists ()) return (url);
 
 	// check whether a file exists for the adjusted url
-	QUrl relative = QUrl::fromLocalFile (new_base_url.path () + '/' + QUrl::relativePath (old_base_url.path (), url.path ()));
-	relative.cleanPath ();
-// 	if (QFileInfo (relative.toLocalFile ()).exists ()) return (relative);
+	QUrl relative = new_base_url.resolved (QDir (old_base_url.path ()).relativeFilePath (url.path ()));
+	if (QFileInfo (relative.toLocalFile ()).exists ()) return (relative);
 	return (url);
 }
 

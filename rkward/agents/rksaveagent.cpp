@@ -50,7 +50,7 @@ RKSaveAgent::RKSaveAgent (QUrl url, bool save_file_as, DoneAction when_done, QUr
 	
 	RKWorkplace::mainWorkplace ()->setWorkspaceURL (save_url, true);
 	RKWorkplace::mainWorkplace ()->saveWorkplace (save_chain);
-	RKGlobals::rInterface ()->issueCommand (new RCommand ("save.image (\"" + save_url.toLocalFile () + "\")", RCommand::App, QString (), this), save_chain);
+	RKGlobals::rInterface ()->issueCommand (new RCommand ("save.image (" + RObject::rQuote (save_url.toLocalFile ()) + ')', RCommand::App, QString (), this), save_chain);
 }
 
 RKSaveAgent::~RKSaveAgent () {
@@ -59,7 +59,7 @@ RKSaveAgent::~RKSaveAgent () {
 
 bool RKSaveAgent::askURL () {
 	RK_TRACE (APP);
-	save_url = KFileDialog::getSaveFileName (save_url, i18n ("%1|R Workspace Files (%1)\n*|All files", RKSettingsModuleGeneral::workspaceFilenameFilter ()));
+	save_url = QUrl::fromLocalFile (KFileDialog::getSaveFileName (save_url, i18n ("%1|R Workspace Files (%1)\n*|All files", RKSettingsModuleGeneral::workspaceFilenameFilter ())));
 	if (save_url.isEmpty ()) {
 		if (when_done != DoNothing) {
 			if (KMessageBox::warningYesNo (0, i18n ("No filename given. Your data was NOT saved. Do you still want to proceed?")) != KMessageBox::Yes) when_done = DoNothing;

@@ -463,10 +463,13 @@ void RKWardMainWindow::initActions() {
 
 	fileSaveWorkspace = actionCollection ()->addAction (KStandardAction::Save, "file_savex", this, SLOT(slotFileSaveWorkspace()));
 	fileSaveWorkspace->setText (i18n ("Save Workspace"));
-	fileSaveWorkspace->setShortcut (Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_S);
+	actionCollection ()->setDefaultShortcut (fileSaveWorkspace, Qt::ControlModifier + Qt::AltModifier + Qt::Key_S);
+	fileSaveWorkspace->setShortcut (Qt::ControlModifier + Qt::AltModifier + Qt::Key_S); // KF5 TODO: Not needed for KF5 >= 5.2
 	fileSaveWorkspace->setStatusTip (i18n ("Saves the actual document"));
 
 	fileSaveWorkspaceAs = actionCollection ()->addAction (KStandardAction::SaveAs, "file_save_asx", this, SLOT(slotFileSaveWorkspaceAs()));
+	actionCollection ()->setDefaultShortcut (fileSaveWorkspaceAs, Qt::ControlModifier + Qt::AltModifier + Qt::ShiftModifier + Qt::Key_S);
+	fileSaveWorkspaceAs->setShortcut (Qt::ControlModifier + Qt::AltModifier + Qt::ShiftModifier + Qt::Key_S); // KF5 TODO: Not needed for KF5 >= 5.2
 	fileSaveWorkspaceAs->setText (i18n ("Save Workspace As"));
 	fileSaveWorkspaceAs->setStatusTip (i18n ("Saves the actual document as..."));
 
@@ -928,7 +931,7 @@ void RKWardMainWindow::setCaption (const QString &) {
 	RK_TRACE (APP);
 
 	QString wcaption = RKWorkplace::mainWorkplace ()->workspaceURL ().fileName ();
-	if (wcaption.isEmpty ()) wcaption = RKWorkplace::mainWorkplace ()->workspaceURL ().prettyUrl ();
+	if (wcaption.isEmpty ()) wcaption = RKWorkplace::mainWorkplace ()->workspaceURL ().toDisplayString ();
 	if (wcaption.isEmpty ()) wcaption = i18n ("[Unnamed Workspace]");
 	RKMDIWindow *window = RKWorkplace::mainWorkplace ()->view ()->activePage ();
 	if (window) wcaption.append (" - " + window->fullCaption ());
