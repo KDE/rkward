@@ -29,8 +29,8 @@ RKDynamicSearchLine::RKDynamicSearchLine (QWidget *parent) : KLineEdit (parent) 
 	setClearButtonShown (true);
 	setClickMessage (i18n ("Search"));
 	timer.setSingleShot (true);
-	connect (&timer, SIGNAL (timeout ()), this, SLOT (delayedSearch ()));
-	connect (this, SIGNAL (textChanged(QString)), this, SLOT (textChanged()));
+	connect (&timer, &QTimer::timeout, this, &RKDynamicSearchLine::delayedSearch);
+	connect (this, &RKDynamicSearchLine::textChanged, this, &RKDynamicSearchLine::textChanged);
 }
 
 RKDynamicSearchLine::~RKDynamicSearchLine () {

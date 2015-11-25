@@ -72,14 +72,14 @@ RKSettings::RKSettings (QWidget *parent) : KPageDialog (parent) {
 	buttonBox ()->setStandardButtons (QDialogButtonBox::Ok | QDialogButtonBox::Apply | QDialogButtonBox::Cancel | QDialogButtonBox::Help);
 	// KF5 TODO: connect buttons
 	button (QDialogButtonBox::Apply)->setEnabled (false);
-	connect (button (QDialogButtonBox::Apply), SIGNAL (clicked()), this, SLOT(applyAll()));
-	connect (button (QDialogButtonBox::Help), SIGNAL (clicked()), this, SLOT(helpClicked()));
+	connect (button(QDialogButtonBox::Apply), &QPushButton::clicked, this, &RKSettings::applyAll);
+	connect (button(QDialogButtonBox::Help), &QPushButton::clicked, this, &RKSettings::helpClicked);
 
 	setAttribute (Qt::WA_DeleteOnClose, true);
 
 	initModules ();
 
-	connect (this, SIGNAL (currentPageChanged(KPageWidgetItem*,KPageWidgetItem*)), this, SLOT (pageChange(KPageWidgetItem*,KPageWidgetItem*)));
+	connect (this, &RKSettings::currentPageChanged, this, &RKSettings::pageChange);
 	pageChange (currentPage (), currentPage ());	// init
 }
 

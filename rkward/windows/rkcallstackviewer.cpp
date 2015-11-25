@@ -97,7 +97,7 @@ RKCallstackViewerWidget::RKCallstackViewerWidget (QWidget *parent) : QWidget (pa
 	v_layout->addWidget (label);
 	frame_selector = new QListWidget (this);
 	frame_selector->setSelectionMode (QAbstractItemView::SingleSelection);
-	connect (frame_selector, SIGNAL (currentRowChanged(int)), this, SLOT (frameChanged(int)));
+	connect (frame_selector, &QListWidget::currentRowChanged, this, &RKCallstackViewerWidget::frameChanged);
 	v_layout->addWidget (frame_selector);
 
 	v_layout = new QVBoxLayout ();

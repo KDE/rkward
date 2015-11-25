@@ -66,14 +66,14 @@ RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool 
 
 	LoadUnloadWidget *luwidget = new LoadUnloadWidget (this);
 	addChild (luwidget, i18n ("Load / Unload R packages"));
-	connect (this, SIGNAL (installedPackagesChanged()), luwidget, SLOT (updateInstalledPackages()));
+	connect (this, &RKLoadLibsDialog::installedPackagesChanged, luwidget, &LoadUnloadWidget::updateInstalledPackages);
 
 	install_packages_widget = new InstallPackagesWidget (this);
 	install_packages_pageitem = addChild (install_packages_widget, i18n ("Install / Update / Remove R packages"));
 
 	configure_pluginmaps_pageitem = addChild (new RKPluginMapSelectionWidget (this), i18n ("Manage RKWard Plugins"));
 
-	connect (this, SIGNAL (currentPageChanged(KPageWidgetItem*,KPageWidgetItem*)), this, SLOT (slotPageChanged()));
+	connect (this, &RKLoadLibsDialog::currentPageChanged, this, &RKLoadLibsDialog::slotPageChanged);
 	QTimer::singleShot (0, this, SLOT (slotPageChanged()));
 	num_child_widgets = 4;
 	was_accepted = false;
@@ -345,14 +345,14 @@ void RKLoadLibsDialog::runInstallationCommand (const QString& command, bool as_r
 	installation_process = new QProcess ();
 	installation_process->setProcessChannelMode (QProcess::SeparateChannels);
 
-	connect (installation_process, SIGNAL (finished(int,QProcess::ExitStatus)), this, SLOT (processExited(int,QProcess::ExitStatus)));
-	connect (installation_process, SIGNAL (readyReadStandardOutput()), this, SLOT (installationProcessOutput()));
-	connect (installation_process, SIGNAL (readyReadStandardError()), this, SLOT (installationProcessError()));
+	connect (installation_process, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), this, &RKLoadLibsDialog::processExited);
+	connect (installation_process, &QProcess::readyReadStandardOutput, this, &RKLoadLibsDialog::installationProcessOutput);
+	connect (installation_process, &QProcess::readyReadStandardError, this, &RKLoadLibsDialog::installationProcessError);
 
 	RKProgressControl *installation_progress = new RKProgressControl (this, message, title, RKProgressControl::CancellableProgress);
-	connect (this, SIGNAL (installationComplete()), installation_progress, SLOT (done()));
-	connect (this, SIGNAL (installationOutput(QString)), installation_progress, SLOT (newOutput(QString)));
-	connect (this, SIGNAL (installationError(QString)), installation_progress, SLOT (newError(QString)));
+	connect (this, &RKLoadLibsDialog::installationComplete, installation_progress, &RKProgressControl::done);
+	connect (this, &RKLoadLibsDialog::installationOutput, installation_progress, static_cast<void (RKProgressControl::*)(const QString&)>(&RKProgressControl::newOutput));
+	connect (this, &RKLoadLibsDialog::installationError, installation_progress, &RKProgressControl::newError);
 
 	installation_process->start (call, params, QIODevice::ReadWrite | QIODevice::Unbuffered);
 
@@ -425,9 +425,9 @@ LoadUnloadWidget::LoadUnloadWidget (RKLoadLibsDialog *dialog) : QWidget (0) {
 	instvbox->addWidget (installed_view);
 
 	load_button = new QPushButton (RKStandardIcons::getIcon (RKStandardIcons::ActionAddRight), i18n ("Load"), this);
-	connect (load_button, SIGNAL (clicked()), this, SLOT (loadButtonClicked()));
+	connect (load_button, &QPushButton::clicked, this, &LoadUnloadWidget::loadButtonClicked);
 	detach_button = new QPushButton (RKStandardIcons::getIcon (RKStandardIcons::ActionRemoveLeft), i18n ("Unload"), this);
-	connect (detach_button, SIGNAL (clicked()), this, SLOT (detachButtonClicked()));
+	connect (detach_button, &QPushButton::clicked, this, &LoadUnloadWidget::detachButtonClicked);
 	buttonvbox->addStretch (1);
 	buttonvbox->addWidget (load_button);
 	buttonvbox->addWidget (detach_button);
@@ -440,8 +440,8 @@ LoadUnloadWidget::LoadUnloadWidget (RKLoadLibsDialog *dialog) : QWidget (0) {
 	loadedvbox->addWidget (label);
 	loadedvbox->addWidget (loaded_view);
 
-	connect (loaded_view, SIGNAL (itemSelectionChanged()), this, SLOT (updateButtons()));
-	connect (installed_view, SIGNAL (itemSelectionChanged()), this, SLOT (updateButtons()));
+	connect (loaded_view, &QTreeWidget::itemSelectionChanged, this, &LoadUnloadWidget::updateButtons);
+	connect (installed_view, &QTreeWidget::itemSelectionChanged, this, &LoadUnloadWidget::updateButtons);
 
 	updateInstalledPackages ();
 	updateButtons ();
@@ -577,7 +577,7 @@ void LoadUnloadWidget::doLoadUnload () {
 	RK_TRACE (DIALOGS);
 
 	RKProgressControl *control = new RKProgressControl (this, i18n ("There has been an error while trying to load / unload packages. See transcript below for details"), i18n ("Error while handling packages"), RKProgressControl::DetailedError);
-	connect (this, SIGNAL (loadUnloadDone()), control, SLOT (done()));
+	connect (this, &LoadUnloadWidget::loadUnloadDone, control, &RKProgressControl::done);
 
 	// load packages previously not loaded
 	for (int i = 0; i < loaded_view->topLevelItemCount (); ++i) {
@@ -675,7 +675,7 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidge
 	for (int i = 0; i < model->rowCount (); ++i) {  // the root level captions
 		packages_view->setFirstColumnSpanned (i, QModelIndex (), true);
 	}
-	connect (packages_view, SIGNAL(clicked(QModelIndex)), this, SLOT(rowClicked(QModelIndex)));
+	connect (packages_view, &QTreeView::clicked, this, &InstallPackagesWidget::rowClicked);
 	packages_view->setRootIsDecorated (false);
 	packages_view->setIndentation (0);
 	packages_view->setEnabled (false);
@@ -685,7 +685,7 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidge
 
 	QPushButton *configure_repos_button = new QPushButton (i18n ("Configure Repositories"), this);
 	RKCommonFunctions::setTips (i18n ("Many packages are available on CRAN (Comprehensive R Archive Network), and other repositories.<br>Click this to add more sources."), configure_repos_button);
-	connect (configure_repos_button, SIGNAL (clicked()), this, SLOT(configureRepositories()));
+	connect (configure_repos_button, &QPushButton::clicked, this, &InstallPackagesWidget::configureRepositories);
 	vbox->addWidget (configure_repos_button);
 
 	QVBoxLayout *buttonvbox = new QVBoxLayout ();
@@ -697,14 +697,14 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidge
 	filter_edit->setModelToFilter (model);
 	rkward_packages_only = new QCheckBox (i18n ("Show only packages providing RKWard dialogs"), this);
 	RKCommonFunctions::setTips (i18n ("<p>Some but not all R packages come with plugins for RKWard. That means they provide a graphical user-interface in addition to R functions. Check this box to show only such packages.</p><p></p>"), rkward_packages_only);
-	connect (rkward_packages_only, SIGNAL(stateChanged(int)), this, SLOT (filterChanged()));
+	connect (rkward_packages_only, &QCheckBox::stateChanged, this, &InstallPackagesWidget::filterChanged);
 	filterChanged ();
 
 	mark_all_updates_button = new QPushButton (i18n ("Select all updates"), this);
-	connect (mark_all_updates_button, SIGNAL (clicked()), this, SLOT (markAllUpdates()));
+	connect (mark_all_updates_button, &QPushButton::clicked, this, &InstallPackagesWidget::markAllUpdates);
 
 	install_params = new PackageInstallParamsWidget (this);
-	connect (parent, SIGNAL (libraryLocationsChanged(QStringList)), install_params, SLOT (liblocsChanged(QStringList)));
+	connect (parent, &RKLoadLibsDialog::libraryLocationsChanged, install_params, &PackageInstallParamsWidget::liblocsChanged);
 
 	buttonvbox->addWidget (label);
 	buttonvbox->addWidget (filter_edit);
@@ -1266,9 +1266,9 @@ void RKPluginMapSelectionWidget::activated () {
 		model = new RKSettingsModulePluginsModel (this);
 		model->init (RKSettingsModulePlugins::knownPluginmaps ());
 		selector->setModel (model, 1);
-		connect (selector, SIGNAL (insertNewStrings(int)), model, SLOT (insertNewStrings(int)));
-		connect (selector, SIGNAL (swapRows(int,int)), model, SLOT (swapRows(int,int)));
-		connect (selector, SIGNAL (listChanged()), this, SLOT (changed()));
+		connect (selector, &RKMultiStringSelectorV2::insertNewStrings, model, &RKSettingsModulePluginsModel::insertNewStrings);
+		connect (selector, &RKMultiStringSelectorV2::swapRows, model, &RKSettingsModulePluginsModel::swapRows);
+		connect (selector, &RKMultiStringSelectorV2::listChanged, this, &RKPluginMapSelectionWidget::changed);
 	}
 }
 

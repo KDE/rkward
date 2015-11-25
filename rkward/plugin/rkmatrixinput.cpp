@@ -80,9 +80,9 @@ RKMatrixInput::RKMatrixInput (const QDomElement& element, RKComponent* parent_co
 	column_count->setInternal (true);
 	addChild ("columns", column_count);
 	addChild ("tsv", tsv_data);
-	connect (row_count, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (dimensionPropertyChanged(RKComponentPropertyBase*)));
-	connect (column_count, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (dimensionPropertyChanged(RKComponentPropertyBase*)));
-	connect (tsv_data, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (tsvPropertyChanged()));
+	connect (row_count, &RKComponentPropertyInt::valueChanged, this, &RKMatrixInput::dimensionPropertyChanged);
+	connect (column_count, &RKComponentPropertyInt::valueChanged, this, &RKMatrixInput::dimensionPropertyChanged);
+	connect (tsv_data, &RKComponentPropertyBase::valueChanged, this, &RKMatrixInput::tsvPropertyChanged);
 	updating_tsv_data = false;
 
 	model = new RKMatrixInputModel (this);
@@ -114,7 +114,7 @@ RKMatrixInput::RKMatrixInput (const QDomElement& element, RKComponent* parent_co
 	display->setContextMenuPolicy (Qt::ActionsContextMenu);
 
 	display->setRKItemDelegate (new RKItemDelegate (display, model, true));
-	connect (display, SIGNAL (blankSelectionRequest()), this, SLOT (clearSelectedCells()));
+	connect (display, &RKTableView::blankSelectionRequest, this, &RKMatrixInput::clearSelectedCells);
 }
 
 RKMatrixInput::~RKMatrixInput () {

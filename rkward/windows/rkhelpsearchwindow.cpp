@@ -118,7 +118,7 @@ RKHelpSearchWindow::RKHelpSearchWindow (QWidget *parent, bool tool_window, const
 
 	findButton = new QPushButton (i18n ("Find"), this);
 	findButton->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
-	connect (findButton, SIGNAL (clicked()), this, SLOT (slotFindButtonClicked()));
+	connect (findButton, &QPushButton::clicked, this, &RKHelpSearchWindow::slotFindButtonClicked);
 	selection_layout->addWidget (findButton);
 
 	results = new RKHelpSearchResultsModel (this);
@@ -128,7 +128,7 @@ RKHelpSearchWindow::RKHelpSearchWindow (QWidget *parent, bool tool_window, const
 	results_view->setRootIsDecorated (false);
 	results_view->setModel (proxy_model);
 	results_view->setSortingEnabled (true);
-	connect (results_view, SIGNAL (doubleClicked(QModelIndex)), this, SLOT (resultDoubleClicked(QModelIndex)));
+	connect (results_view, &QTreeView::doubleClicked, this, &RKHelpSearchWindow::resultDoubleClicked);
 	main_layout->addWidget (results_view);
 
 	setCaption (i18n ("Help search"));

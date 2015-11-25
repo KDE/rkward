@@ -55,7 +55,7 @@ void RKXMLGUISyncer::watchXMLGUIClientUIrc (KXMLGUIClient *client, bool recursiv
 			}
 
 			d->client_map.insertMulti (local_xml_file, ac);
-			d->connect (ac, SIGNAL (destroyed(QObject*)), d, SLOT (actionCollectionDestroyed(QObject*)));
+			d->connect (ac, &KActionCollection::destroyed, d, &RKXMLGUISyncerPrivate::actionCollectionDestroyed);
 		} // we simply ignore attempts to watch the same client twice
 	}
 

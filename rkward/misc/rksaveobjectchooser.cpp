@@ -51,17 +51,17 @@ RKSaveObjectChooser::RKSaveObjectChooser (QWidget *parent, const QString &initia
 	hlayout->addWidget (root_label);
 	hlayout->addStretch ();
 	root_button = new QPushButton (i18n ("Change"), this);
-	connect (root_button, SIGNAL (clicked()), this, SLOT (selectRootObject()));
+	connect (root_button, &QPushButton::clicked, this, &RKSaveObjectChooser::selectRootObject);
 	hlayout->addWidget (root_button);
 	layout->addLayout (hlayout);
 
 	name_edit = new QLineEdit (this);
 	name_edit->setText (initial);
-	connect (name_edit, SIGNAL (textChanged(QString)), this, SLOT (updateState()));
+	connect (name_edit, &QLineEdit::textChanged, this, &RKSaveObjectChooser::updateState);
 	layout->addWidget (name_edit);
 
 	overwrite_confirm = new QCheckBox (this);
-	connect (overwrite_confirm, SIGNAL (stateChanged(int)), this, SLOT (updateState()));
+	connect (overwrite_confirm, &QCheckBox::stateChanged, this, &RKSaveObjectChooser::updateState);
 	layout->addWidget (overwrite_confirm);
 
 	// initialize
@@ -109,7 +109,7 @@ void RKSaveObjectChooser::selectRootObject () {
 	list_view->setSelectionMode (QAbstractItemView::SingleSelection);
 	list_view->initialize ();
 	list_view->setObjectCurrent (root_object);
-	connect (list_view, SIGNAL (doubleClicked(QModelIndex)), dialog, SLOT (accept()));
+	connect (list_view, &RKObjectListView::doubleClicked, dialog, &KDialog::accept);
 
 	dialog->exec ();
 

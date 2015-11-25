@@ -38,7 +38,7 @@ RKFindBar::RKFindBar (QWidget* parent, bool custom) : QWidget (parent) {
 	QToolButton* close_button = new QToolButton (this);
 	close_button->setIcon (KIcon ("dialog-close"));
 	close_button->setAutoRaise (true);   // makes it flat
-	connect (close_button, SIGNAL (clicked()), this, SLOT (hide()));
+	connect (close_button, &QToolButton::clicked, this, &RKFindBar::hide);
 	mlayout->addWidget (close_button);
 
 	QHBoxLayout* slayout = new QHBoxLayout ();
@@ -48,8 +48,8 @@ RKFindBar::RKFindBar (QWidget* parent, bool custom) : QWidget (parent) {
 	term_edit = new KHistoryComboBox (this);
 	term_edit->setMaximumWidth (fontMetrics ().width ("This is quite a long search term by any standard, indeed"));
 	term_edit->setMinimumWidth (fontMetrics ().width ("A short search term"));
-	connect (term_edit, SIGNAL (editTextChanged(QString)), this, SLOT (searchChanged()));
-	connect (term_edit, SIGNAL(returnPressed(QString)), this, SLOT (forward()));
+	connect (term_edit, &KHistoryComboBox::editTextChanged, this, &RKFindBar::searchChanged);
+	connect (term_edit, static_cast<void (KHistoryComboBox::*)(const QString&)>(&KHistoryComboBox::returnPressed), this, &RKFindBar::forward);
 	regular_palette = term_edit->palette ();
 	nomatch_palette = regular_palette;
 	nomatch_palette.setColor (QPalette::Text, QColor (255, 0, 0));
@@ -59,13 +59,13 @@ RKFindBar::RKFindBar (QWidget* parent, bool custom) : QWidget (parent) {
 	backward_button->setArrowType (Qt::UpArrow);
 	backward_button->setContentsMargins (0, 0, 0, 0);
 	RKCommonFunctions::setTips (i18n ("Search backwards (previous occurrence of search term)"), backward_button);
-	connect (backward_button, SIGNAL (clicked()), this, SLOT(backward()));
+	connect (backward_button, &QToolButton::clicked, this, &RKFindBar::backward);
 	slayout->addWidget (backward_button);
 	QToolButton* forward_button = new QToolButton (this);
 	forward_button->setArrowType (Qt::DownArrow);
 	forward_button->setContentsMargins (0, 0, 0, 0);
 	RKCommonFunctions::setTips (i18n ("Search forward (next occurrence of search term)"), forward_button);
-	connect (forward_button, SIGNAL (clicked()), this, SLOT(forward()));
+	connect (forward_button, &QToolButton::clicked, this, &RKFindBar::forward);
 	slayout->addWidget (forward_button);
 
 	mlayout->addSpacing (15);
@@ -103,7 +103,7 @@ QCheckBox* RKFindBar::getOption (const RKFindBar::FindOptions option) {
 		} else {
 			RK_ASSERT (false);
 		}
-		connect (action, SIGNAL(stateChanged(int)), this, SLOT(searchChanged()));
+		connect (action, &QCheckBox::stateChanged, this, &RKFindBar::searchChanged);
 		default_actions.insert (option, action);
 	}
 

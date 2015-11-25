@@ -53,11 +53,11 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 	QVBoxLayout *button_layout = new QVBoxLayout ();
 	select_button = new QPushButton (QString (), this);
 	select_button->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionAddRight));
-	connect (select_button, SIGNAL (clicked()), this, SLOT (selectPressed()));
+	connect (select_button, &QPushButton::clicked, this, &RKVarSlot::selectPressed);
 	button_layout->addWidget (select_button);
 	remove_button = new QPushButton (QString (), this);
 	remove_button->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRemoveLeft));
-	connect (remove_button, SIGNAL (clicked()), this, SLOT (removePressed()));
+	connect (remove_button, &QPushButton::clicked, this, &RKVarSlot::removePressed);
 	button_layout->addWidget (remove_button);
 	button_layout->addStretch ();
 	g_layout->addLayout (button_layout, 1, 0);
@@ -89,7 +89,7 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 	// find out about options
 	if ((multi = xml->getBoolAttribute (element, "multi", false, DL_INFO))) {
 		available->setAllowedLength (xml->getIntAttribute (element, "min_vars", 1, DL_INFO), xml->getIntAttribute (element, "min_vars_if_any", 1, DL_INFO), xml->getIntAttribute (element, "max_vars", 0, DL_INFO));
-		connect (list, SIGNAL (itemSelectionChanged()), this, SLOT (listSelectionChanged()));
+		connect (list, &QTreeWidget::itemSelectionChanged, this, &RKVarSlot::listSelectionChanged);
 	} else {
 		available->setAllowedLength (1, 1, 1);
 
@@ -115,7 +115,7 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 	available->setStripDuplicates (!xml->getBoolAttribute (element, "allow_duplicates", false, DL_INFO));
 	setRequired (xml->getBoolAttribute (element, "required", false, DL_INFO));
 
-	connect (available, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (availablePropertyChanged(RKComponentPropertyBase*)));
+	connect (available, &RKComponentPropertyAbstractList::valueChanged, this, &RKVarSlot::availablePropertyChanged);
 	availablePropertyChanged (available);	// initialize
 }
 

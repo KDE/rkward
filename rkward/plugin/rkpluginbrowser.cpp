@@ -34,10 +34,10 @@ RKPluginBrowser::RKPluginBrowser (const QDomElement &element, RKComponent *paren
 
 	// create and add property
 	addChild ("selection", selection = new RKComponentPropertyBase (this, true));
-	connect (selection, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (textChanged(RKComponentPropertyBase*)));
+	connect (selection, &RKComponentPropertyBase::valueChanged, this, &RKPluginBrowser::textChanged);
 
 	setRequired (xml->getBoolAttribute (element, "required", true, DL_INFO));
-	connect (requirednessProperty (), SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (requirednessChanged(RKComponentPropertyBase*)));
+	connect (requirednessProperty (), &RKComponentPropertyBase::valueChanged, this, &RKPluginBrowser::updateColor);
 
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
@@ -57,13 +57,13 @@ RKPluginBrowser::RKPluginBrowser (const QDomElement &element, RKComponent *paren
 		filter.append ("\n*|All files");
 		selector->setFilter (filter);
 	}
-	connect (selector, SIGNAL (locationChanged()), SLOT (textChanged()));
+	connect (selector, &GetFileNameWidget::locationChanged, this, &RKPluginBrowser::textChangedFromUi);
 
 	vbox->addWidget (selector);
 
 	// initialize
 	updating = false;
-	textChanged ();
+	textChangedFromUi ();
 }
 
 RKPluginBrowser::~RKPluginBrowser () {
@@ -83,7 +83,7 @@ void RKPluginBrowser::textChanged (RKComponentPropertyBase *) {
 	changed ();
 }
 
-void RKPluginBrowser::textChanged () {
+void RKPluginBrowser::textChangedFromUi () {
 	RK_TRACE (PLUGIN);
 
 	selection->setValue (selector->getLocation ());
@@ -91,12 +91,6 @@ void RKPluginBrowser::textChanged () {
 
 bool RKPluginBrowser::isValid () {
 	return (!(fetchStringValue (selection).isEmpty ()));
-}
-
-void RKPluginBrowser::requirednessChanged (RKComponentPropertyBase *) {
-	RK_TRACE (PLUGIN);
-
-	updateColor ();
 }
 
 void RKPluginBrowser::updateColor () {

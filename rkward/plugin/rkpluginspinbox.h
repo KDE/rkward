@@ -42,7 +42,7 @@ public:
 	RKComponentPropertyInt *intvalue;
 	RKComponentPropertyDouble *realvalue;
 public slots:
-	void valueChanged (int);
+	void valueChangedFromUi ();
 	void valueChanged (RKComponentPropertyBase *property);
 private:
 	RKSpinBox *spinbox;

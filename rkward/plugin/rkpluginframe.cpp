@@ -45,7 +45,7 @@ RKPluginFrame::RKPluginFrame (const QDomElement &element, RKComponent *parent_co
 		frame->setCheckable (true);
 		frame->setChecked (xml->getBoolAttribute (element, "checked", true, DL_INFO));
 		initCheckedProperty ();
-		connect (frame, SIGNAL (toggled(bool)), this, SLOT (checkedChanged(bool)));
+		connect (frame, &QGroupBox::toggled, this, &RKPluginFrame::checkedChanged);
 	}
 }
 
@@ -62,7 +62,7 @@ void RKPluginFrame::initCheckedProperty () {
 	}
 
 	addChild ("checked", checked = new RKComponentPropertyBool (this, false, frame->isChecked (), "1", "0"));
-	connect (checked, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (propertyChanged(RKComponentPropertyBase*)));
+	connect (checked, &RKComponentPropertyBool::valueChanged, this, &RKPluginFrame::propertyChanged);
 }
 
 RKComponentBase* RKPluginFrame::lookupComponent (const QString& identifier, QString* remainder) {

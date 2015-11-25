@@ -25,7 +25,7 @@ RKPasteSpecialAction::RKPasteSpecialAction (QObject* parent) : KPasteTextAction 
 	RK_TRACE (MISC);
 
 	setText (i18n ("Paste special..."));
-	connect (this, SIGNAL (triggered(bool)), this, SLOT (doSpecialPaste()));
+	connect (this, &RKPasteSpecialAction::triggered, this, &RKPasteSpecialAction::doSpecialPaste);
 }
 
 RKPasteSpecialAction::~RKPasteSpecialAction () {
@@ -89,7 +89,7 @@ RKPasteSpecialDialog::RKPasteSpecialDialog (QWidget* parent) : KDialog (parent) 
 	dimensionality_group->addButton (rbutton, DimMatrix);
 	rbutton->setChecked (true);
 	group_layout->addWidget (rbutton);
-	connect (dimensionality_group, SIGNAL (buttonClicked(int)), this, SLOT (updateState()));
+	connect (dimensionality_group, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &RKPasteSpecialDialog::updateState);
 
 	const QMimeData* clipdata = QApplication::clipboard ()->mimeData ();
 
@@ -118,7 +118,7 @@ RKPasteSpecialDialog::RKPasteSpecialDialog (QWidget* parent) : KDialog (parent) 
 	separator_freefield = new QLineEdit (";", box);
 	h_layout->addWidget (separator_freefield);
 	group_layout->addLayout (h_layout);
-	connect (separator_group, SIGNAL (buttonClicked(int)), this, SLOT (updateState()));
+	connect (separator_group, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &RKPasteSpecialDialog::updateState);
 
 	row = new KHBox (page);
 
@@ -136,7 +136,7 @@ RKPasteSpecialDialog::RKPasteSpecialDialog (QWidget* parent) : KDialog (parent) 
 	rbutton = new QRadioButton (i18n ("Quote all values"), box);
 	quoting_group->addButton (rbutton, QuoteAll);
 	group_layout->addWidget (rbutton);
-	connect (quoting_group, SIGNAL (buttonClicked(int)), this, SLOT (updateState()));
+	connect (quoting_group, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &RKPasteSpecialDialog::updateState);
 
 	// further controls
 	box = new QGroupBox (i18n ("Transformations"), row);

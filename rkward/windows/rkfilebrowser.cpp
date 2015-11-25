@@ -118,13 +118,13 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : KVBox (parent) {
 //	toolbar->addAction (dir->actionCollection ()->action ("detailed tree view"));	// should we have this as well? Trying to avoid crowding in the toolbar
 
 	fi_actions = new KFileItemActions (this);
-	connect (dir, SIGNAL (contextMenuAboutToShow(KFileItem,QMenu*)), this, SLOT (contextMenuHook(KFileItem,QMenu*)));
+	connect (dir, &KDirOperator::contextMenuAboutToShow, this, &RKFileBrowserWidget::contextMenuHook);
 
-	connect (dir, SIGNAL (urlEntered(QUrl)), this, SLOT (urlChangedInView(QUrl)));
-	connect (urlbox, SIGNAL (returnPressed(QString)), this, SLOT (urlChangedInCombo(QString)));
-	connect (urlbox, SIGNAL (urlActivated(QUrl)), this, SLOT (urlChangedInCombo(QUrl)));
+	connect (dir, &KDirOperator::urlEntered, this, &RKFileBrowserWidget::urlChangedInView);
+	connect (urlbox, static_cast<void (KUrlComboBox::*)(const QString&)>(&KUrlComboBox::returnPressed), this, &RKFileBrowserWidget::stringChangedInCombo);
+	connect (urlbox, &KUrlComboBox::urlActivated, this, &RKFileBrowserWidget::urlChangedInCombo);
 
-	connect (dir, SIGNAL (fileSelected(KFileItem)), this, SLOT (fileActivated(KFileItem)));
+	connect (dir, &KDirOperator::fileSelected, this, &RKFileBrowserWidget::fileActivated);
 
 	setURL (QUrl::fromLocalFile (QDir::currentPath ()));
 }
@@ -175,7 +175,7 @@ void RKFileBrowserWidget::urlChangedInView (const QUrl &url) {
 	urlbox->setUrl (url);
 }
 
-void RKFileBrowserWidget::urlChangedInCombo (const QString &url) {
+void RKFileBrowserWidget::stringChangedInCombo (const QString &url) {
 	RK_TRACE (APP);
 
 	dir->setUrl (QUrl::fromUserInput (url, QDir::currentPath (), QUrl::AssumeLocalFile), true);

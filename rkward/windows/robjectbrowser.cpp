@@ -136,14 +136,14 @@ RObjectBrowserInternal::RObjectBrowserInternal (QWidget *parent) : QWidget (pare
 	QAction* sep = list_view->contextMenu ()->insertSeparator (list_view->contextMenu ()->actions ().value (0));
 	list_view->contextMenu ()->insertActions (sep, actions);
 
-	connect (list_view, SIGNAL (aboutToShowContextMenu(RObject*,bool*)), this, SLOT (contextMenuCallback(RObject*,bool*)));
+	connect (list_view, &RKObjectListView::aboutToShowContextMenu, this, &RObjectBrowserInternal::contextMenuCallback);
 	
-	connect (list_view, SIGNAL (doubleClicked(QModelIndex)), this, SLOT (doubleClicked(QModelIndex)));
+	connect (list_view, &RKObjectListView::doubleClicked, this, &RObjectBrowserInternal::doubleClicked);
 	
 	resize (minimumSizeHint ().expandedTo (QSize (400, 480)));
 
 	list_view->initialize ();
-	connect (update_button, SIGNAL (clicked()), this, SLOT (updateButtonClicked()));
+	connect (update_button, &QPushButton::clicked, this, &RObjectBrowserInternal::updateButtonClicked);
 }
 
 RObjectBrowserInternal::~RObjectBrowserInternal () {

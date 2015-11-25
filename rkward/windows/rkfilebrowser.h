@@ -65,7 +65,7 @@ public:
 	bool eventFilter (QObject* o, QEvent* e) override;
 public slots:
 	void urlChangedInView (const QUrl &url);
-	void urlChangedInCombo (const QString &url);
+	void stringChangedInCombo (const QString &url);
 	void urlChangedInCombo (const QUrl &url);
 	void fileActivated (const KFileItem& item);
 	void saveConfig ();

@@ -44,7 +44,7 @@ RKVarSelector::RKVarSelector (const QDomElement &element, RKComponent *parent_co
 	addChild ("selected", selected = new RKComponentPropertyRObjects (this, false));
 	selected->setInternal (true);
 	addChild ("root", root = new RKComponentPropertyRObjects (this, false));
-	connect (root, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (rootChanged()));
+	connect (root, &RKComponentPropertyRObjects::valueChanged, this, &RKVarSelector::rootChanged);
 	root->setInternal (true);
 
 	QVBoxLayout *vbox = new QVBoxLayout (this);
@@ -65,7 +65,7 @@ RKVarSelector::RKVarSelector (const QDomElement &element, RKComponent *parent_co
 	show_all_envs_action = new QAction (i18n ("Show all environments"), this);
 	show_all_envs_action->setCheckable (true);
 	show_all_envs_action->setToolTip (i18n ("Show objects in all environments on the <i>search()</i> path, instead of just those in <i>.GlobalEnv</i>. Check this, if you want to select objects from a loaded package."));
-	connect (show_all_envs_action, SIGNAL (toggled(bool)), this, SLOT (rootChanged()));
+	connect (show_all_envs_action, &QAction::toggled, this, &RKVarSelector::rootChanged);
 
 	filter_widget = 0;
 	filter_widget_placeholder = new QVBoxLayout (this);
@@ -75,13 +75,13 @@ RKVarSelector::RKVarSelector (const QDomElement &element, RKComponent *parent_co
 	show_filter_action->setCheckable (true);
 	show_filter_action->setShortcut (QKeySequence ("Ctrl+F"));
 	show_filter_action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionSearch));
-	connect (show_filter_action, SIGNAL (toggled(bool)), this, SLOT(showFilterWidget()));
+	connect (show_filter_action, &QAction::toggled, this, &RKVarSelector::showFilterWidget);
 
 	list_view = new RKObjectListView (false, this);
 	list_view->setSelectionMode (QAbstractItemView::ExtendedSelection);
 	list_view->initialize ();
 	vbox->addWidget (list_view);
-	connect (list_view, SIGNAL (selectionChanged()), this, SLOT (objectSelectionChanged()));
+	connect (list_view->selectionModel (), &QItemSelectionModel::selectionChanged, this, &RKVarSelector::objectSelectionChanged);
 
 	QAction* sep = list_view->contextMenu ()->insertSeparator (list_view->contextMenu ()->actions ().value (0));
 	list_view->contextMenu ()->insertAction (sep, show_filter_action);

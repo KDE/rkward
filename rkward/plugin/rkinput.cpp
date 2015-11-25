@@ -40,7 +40,7 @@ RKInput::RKInput (const QDomElement &element, RKComponent *parent_component, QWi
 
 	// create and add property
 	addChild ("text", text = new RKComponentPropertyBase (this, false));
-	connect (text, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (textChanged(RKComponentPropertyBase*)));
+	connect (text, &RKComponentPropertyBase::valueChanged, this, &RKInput::textChanged);
 
 	setRequired (xml->getBoolAttribute (element, "required", false, DL_INFO));
 	connect (requirednessProperty (), SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (requirednessChanged(RKComponentPropertyBase*)));
@@ -63,11 +63,11 @@ RKInput::RKInput (const QDomElement &element, RKComponent *parent_component, QWi
 		textedit->setMinimumSize (250, lheight * 4 + margin);
 
 		vbox->addWidget (textedit);
-		connect (textedit, SIGNAL (textChanged()), SLOT (textChanged()));
+		connect (textedit, &QTextEdit::textChanged, this, &RKInput::textChangedFromUi);
 	} else {
 		lineedit = new QLineEdit (this);
 		vbox->addWidget (lineedit);
-		connect (lineedit, SIGNAL (textChanged(QString)), SLOT (textChanged(QString)));
+		connect (lineedit, &QLineEdit::textChanged, this, &RKInput::textChangedFromUi);
 	}
 
 	vbox->addStretch (1);		// to keep the label attached
@@ -115,7 +115,7 @@ void RKInput::requirednessChanged (RKComponentPropertyBase *) {
 	updateColor ();
 }
 
-void RKInput::textChanged (RKComponentPropertyBase *) {
+void RKInput::textChanged () {
 	RK_TRACE (PLUGIN);
 
 	if (updating) return;
@@ -131,23 +131,20 @@ void RKInput::textChanged (RKComponentPropertyBase *) {
 	changed ();
 }
 
-void RKInput::textChanged (const QString &new_text) {
+void RKInput::textChangedFromUi () {
 	RK_TRACE (PLUGIN);
 
 	updating = true;
 
-	text->setValue (new_text);
+	if (lineedit) text->setValue (lineedit->text ());
+	else {
+		RK_ASSERT (textedit);
+		text->setValue (textedit->toPlainText ());
+	}
 	updateColor ();
 
 	updating = false;
 	changed ();
-}
-
-void RKInput::textChanged () {
-	RK_TRACE (PLUGIN);
-
-	RK_ASSERT (textedit);
-	textChanged (textedit->toPlainText ());
 }
 
 bool RKInput::isValid () {

@@ -132,7 +132,7 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 	findbar = new RKFindBar (this);
 	layout->addWidget (findbar);
 	findbar->hide ();
-	connect (findbar, SIGNAL(findRequest(QString,bool,const RKFindBar*,bool*)), this, SLOT(findRequest(QString,bool,const RKFindBar*,bool*)));
+	connect (findbar, &RKFindBar::findRequest, this, &RKHTMLWindow::findRequest);
 	have_highlight = false;
 
 	part = new RKHTMLWindowPart (this);
@@ -144,10 +144,10 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 	setFocusProxy (view);
 
 	// We have to connect this in order to allow browsing.
-	connect (page, SIGNAL (pageInternalNavigation(QUrl)), this, SLOT (internalNavigation(QUrl)));
-	connect (page, SIGNAL (downloadRequested(QNetworkRequest)), this, SLOT (saveRequested(QNetworkRequest)));
-	connect (page, SIGNAL (printRequested(QWebFrame*)), this, SLOT(slotPrint()));
-	connect (view, SIGNAL (customContextMenuRequested(QPoint)), this, SLOT(makeContextMenu(QPoint)));
+	connect (page, &RKWebPage::pageInternalNavigation, this, &RKHTMLWindow::internalNavigation);
+	connect (page, &RKWebPage::downloadRequested, this, &RKHTMLWindow::saveRequested);
+	connect (page, &RKWebPage::printRequested, this, &RKHTMLWindow::slotPrint);
+	connect (view, &KWebView::customContextMenuRequested, this, &RKHTMLWindow::makeContextMenu);
 
 	current_history_position = -1;
 	url_change_is_from_history = false;
@@ -156,7 +156,7 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 	useMode (mode);
 
 	// needed to enable / disable the run selection action
-	connect (view, SIGNAL (selectionChanged()), this, SLOT (selectionChanged()));
+	connect (view, &KWebView::selectionChanged, this, &RKHTMLWindow::selectionChanged);
 	selectionChanged ();
 }
 
@@ -383,9 +383,9 @@ bool RKHTMLWindow::openURL (const QUrl &url) {
 		QString host = url.host ();
 		if ((host == "127.0.0.1") || (host == "localhost") || host == QHostInfo::localHostName ()) {
 			KIO::TransferJob *job = KIO::get (url, KIO::Reload);
-			connect (job, SIGNAL (mimetype(KIO::Job*,QString)), this, SLOT (mimeTypeDetermined(KIO::Job*,QString)));
+			connect (job, static_cast<void (KIO::TransferJob::*)(KIO::Job*, const QString&)>(&KIO::TransferJob::mimetype), this, &RKHTMLWindow::mimeTypeDetermined);
 			// WORKAROUND. See slot.
-			connect (job, SIGNAL (result(KJob*)), this, SLOT (mimeTypeJobFail(KJob*)));
+			connect (job, &KIO::TransferJob::result, this, &RKHTMLWindow::mimeTypeJobFail);
 			return true;
 		}
 	}
@@ -409,8 +409,8 @@ void RKHTMLWindow::mimeTypeJobFail (KJob* job) {
 		QUrl url = tj->url ();
 		if (!tj->redirectUrl ().isEmpty ()) url = tj->redirectUrl ();
 		KIO::TransferJob *secondchance = KIO::get (url, KIO::Reload);
-		connect (secondchance, SIGNAL (mimetype(KIO::Job*,QString)), this, SLOT (mimeTypeDetermined(KIO::Job*,QString)));
-		connect (secondchance, SIGNAL (result(KJob*)), this, SLOT (mimeTypeJobFail2(KJob*)));
+		connect (secondchance, static_cast<void (KIO::TransferJob::*)(KIO::Job*, const QString&)>(&KIO::TransferJob::mimetype), this, &RKHTMLWindow::mimeTypeDetermined);
+		connect (secondchance, &KIO::TransferJob::result, this, &RKHTMLWindow::mimeTypeJobFail2);
 	}
 }
 
@@ -519,7 +519,7 @@ void RKHTMLWindow::useMode (WindowMode new_mode) {
 		setWindowIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowOutput));
 		part->setOutputWindowSkin ();
 		setMetaInfo (i18n ("Output Window"), QUrl ("rkward://page/rkward_output"), RKSettings::PageOutput);
-		connect (page, SIGNAL(loadFinished(bool)), this, SLOT(scrollToBottom()));
+		connect (page, &RKWebPage::loadFinished, this, &RKHTMLWindow::scrollToBottom);
 //	TODO: This would be an interesting extension, but how to deal with concurrent edits?
 //		page->setContentEditable (true);
 	} else {
@@ -528,7 +528,7 @@ void RKHTMLWindow::useMode (WindowMode new_mode) {
 		type = RKMDIWindow::HelpWindow | RKMDIWindow::DocumentWindow;
 		setWindowIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowHelp));
 		part->setHelpWindowSkin ();
-		disconnect (page, SIGNAL(loadFinished(bool)), this, SLOT(scrollToBottom()));
+		disconnect (page, &RKWebPage::loadFinished, this, &RKHTMLWindow::scrollToBottom);
 	}
 
 	updateCaption (current_url);
@@ -609,15 +609,15 @@ void RKHTMLWindowPart::initActions () {
 	// common actions
 	actionCollection ()->addAction (KStandardAction::Copy, "copy", window->view->pageAction (QWebPage::Copy), SLOT (trigger()));
 	QAction* zoom_in = actionCollection ()->addAction ("zoom_in", new QAction (KIcon ("zoom-in"), i18n ("Zoom In"), this));
-	connect (zoom_in, SIGNAL(triggered(bool)), window, SLOT (zoomIn()));
+	connect (zoom_in, &QAction::triggered, window, &RKHTMLWindow::zoomIn);
 	QAction* zoom_out = actionCollection ()->addAction ("zoom_out", new QAction (KIcon ("zoom-out"), i18n ("Zoom Out"), this));
-	connect (zoom_out, SIGNAL(triggered(bool)), window, SLOT (zoomOut()));
+	connect (zoom_out, &QAction::triggered, window, &RKHTMLWindow::zoomOut);
 	actionCollection ()->addAction (KStandardAction::SelectAll, "select_all", window->view->pageAction (QWebPage::SelectAll), SLOT (trigger()));
 	// unfortunately, this will only affect the default encoding, not necessarily the "real" encoding
 	KCodecAction *encoding = new KCodecAction (KIcon ("character-set"), i18n ("Default &Encoding"), this, true);
 	encoding->setStatusTip (i18n ("Set the encoding to assume in case no explicit encoding has been set in the page or in the HTTP headers."));
 	actionCollection ()->addAction ("view_encoding", encoding);
-	connect (encoding, SIGNAL (triggered(QTextCodec*)), window, SLOT (setTextEncoding(QTextCodec*)));
+	connect (encoding, static_cast<void (KCodecAction::*)(QTextCodec *)>(&KCodecAction::triggered), window, &RKHTMLWindow::setTextEncoding);
 
 	print = actionCollection ()->addAction (KStandardAction::Print, "print_html", window, SLOT (slotPrint()));
 	save_page = actionCollection ()->addAction (KStandardAction::Save, "save_html", window, SLOT (slotSave()));
@@ -1001,8 +1001,8 @@ RKOutputWindowManager::RKOutputWindowManager () : QObject () {
 	RK_TRACE (APP);
 
 	file_watcher = new KDirWatch (this);
-	connect (file_watcher, SIGNAL (dirty(QString)), this, SLOT (fileChanged(QString)));
-	connect (file_watcher, SIGNAL (created(QString)), this, SLOT (fileChanged(QString)));
+	connect (file_watcher, &KDirWatch::dirty, this, &RKOutputWindowManager::fileChanged);
+	connect (file_watcher, &KDirWatch::created, this, &RKOutputWindowManager::fileChanged);
 }
 
 RKOutputWindowManager::~RKOutputWindowManager () {
@@ -1031,7 +1031,7 @@ void RKOutputWindowManager::registerWindow (RKHTMLWindow *window) {
 		}
 	
 		windows.insertMulti (file, window);
-		connect (window, SIGNAL (destroyed(QObject*)), this, SLOT (windowDestroyed(QObject*)));
+		connect (window, &RKHTMLWindow::destroyed, this, &RKOutputWindowManager::windowDestroyed);
 	} else {
 		RK_ASSERT (false);
 	}

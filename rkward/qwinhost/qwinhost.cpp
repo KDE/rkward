@@ -95,7 +95,7 @@ QWinHost::QWinHost(QWidget *parent, Qt::WFlags f)
     setAttribute(Qt::WA_NoBackground);
     setAttribute(Qt::WA_NoSystemBackground);
 
-    connect(this, SIGNAL(clientFocused()), this, SLOT(setFocusSlot()), Qt::QueuedConnection);
+    connect (this, SIGNAL(clientFocused()), this, SLOT(setFocusSlot()), Qt::QueuedConnection);
 }
 
 /*!

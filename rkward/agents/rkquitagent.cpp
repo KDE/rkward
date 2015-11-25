@@ -40,7 +40,7 @@ RKQuitAgent::RKQuitAgent (QObject *parent) : QObject (parent) {
 	RKWardMainWindow::getMain ()->hide ();
 	cancel_dialog = new RKProgressControl (this, i18n ("Waiting for remaining R commands to finish. To quit immediately, press Cancel (WARNING: This may result in loss of data)"), i18n ("Waiting for R to finish"), RKProgressControl::AllowCancel | RKProgressControl::ShowAtOnce);
 	cancel_dialog->addRCommand (command, true);
-	connect (cancel_dialog, SIGNAL (cancelled()), this, SLOT (doQuitNow()));
+	connect (cancel_dialog, &RKProgressControl::cancelled, this, &RKQuitAgent::doQuitNow);
 
 	if (RKGlobals::rInterface ()->backendIsDead ()) {	// nothing to loose
 		QTimer::singleShot (0, this, SLOT (doQuitNow()));

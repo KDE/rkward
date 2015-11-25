@@ -50,7 +50,7 @@ void CellEditor::setValueLabels (const RObject::ValueLabels& labels) {
 	for (RObject::ValueLabels::const_iterator it = labels.constBegin (); it != labels.constEnd (); ++it) {
 		value_list->addAction (it.key () + ": " + it.value ())->setData (it.key ());
 	}
-	connect (value_list, SIGNAL (triggered(QAction*)), SLOT (selectedFromList(QAction*)));
+	connect (value_list, &QMenu::triggered, this, &CellEditor::selectedFromList);
 
 	QTimer::singleShot (200, this, SLOT (showValueLabels()));
 }

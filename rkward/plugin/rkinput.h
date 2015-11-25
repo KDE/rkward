@@ -43,8 +43,7 @@ public:
 	bool isValid ();
 public slots:
 	void textChanged ();
-	void textChanged (const QString &new_text);
-	void textChanged (RKComponentPropertyBase *);
+	void textChangedFromUi ();
 	void requirednessChanged (RKComponentPropertyBase *);
 protected:
 /** Grey out input when disabled */

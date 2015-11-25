@@ -278,8 +278,8 @@ RKAccordionTable::RKAccordionTable (QWidget* parent) : QTreeView (parent) {
 	delegate->pmodel = pmodel;
 	setItemDelegateForColumn (0, delegate);
 
-	connect (this, SIGNAL (expanded(QModelIndex)), this, SLOT (rowExpanded(QModelIndex)));
-	connect (this, SIGNAL (clicked(QModelIndex)), this, SLOT (rowClicked(QModelIndex)));
+	connect (this, &RKAccordionTable::expanded, this, &RKAccordionTable::rowExpanded);
+	connect (this, &RKAccordionTable::clicked, this, &RKAccordionTable::rowClicked);
 }
 
 RKAccordionTable::~RKAccordionTable () {
@@ -447,7 +447,7 @@ void RKAccordionTable::updateWidget () {
 
 				QToolButton *remove_button = new QToolButton (display_buttons);
 				remove_button->setAutoRaise (true);
-				connect (remove_button, SIGNAL (clicked(bool)), this, SLOT (removeClicked()));
+				connect (remove_button, &QToolButton::clicked, this, &RKAccordionTable::removeClicked);
 				remove_button->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteRow));
 				RKCommonFunctions::setTips (i18n ("Remove this row / element"), remove_button);
 				layout->addWidget (remove_button);
@@ -502,9 +502,9 @@ void RKAccordionTable::setModel (QAbstractItemModel* model) {
 
 	pmodel->setSourceModel (model);
 	QTreeView::setModel (pmodel);
-	connect (pmodel, SIGNAL (layoutChanged()), this, SLOT (updateWidget()));
-	connect (pmodel, SIGNAL (rowsInserted(const QModelIndex&,int,int)), this, SLOT (updateWidget()));
-	connect (pmodel, SIGNAL (rowsRemoved(const QModelIndex&,int,int)), this, SLOT (updateWidget()));
+	connect (pmodel, &RKAccordionDummyModel::layoutChanged, this, &RKAccordionTable::updateWidget);
+	connect (pmodel, &RKAccordionDummyModel::rowsInserted, this, &RKAccordionTable::updateWidget);
+	connect (pmodel, &RKAccordionDummyModel::rowsRemoved, this, &RKAccordionTable::updateWidget);
 
 	if (pmodel->rowCount () > 0) expand (pmodel->index (0, 0));
 

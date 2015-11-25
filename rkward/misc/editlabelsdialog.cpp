@@ -50,7 +50,7 @@ RKVarLevelsTable::RKVarLevelsTable (QWidget *parent, const RObject::ValueLabels&
 	setContextMenuPolicy (Qt::ActionsContextMenu);
 
 	setModel (lmodel = new RKVarLevelsTableModel (labels, this));
-	connect (this, SIGNAL (blankSelectionRequest()), this, SLOT (blankSelected()));
+	connect (this, &RKVarLevelsTable::blankSelectionRequest, this, &RKVarLevelsTable::blankSelected);
 	setRKItemDelegate (new RKItemDelegate (this, lmodel, true));
 	trailing_rows = 1;
 }
@@ -251,7 +251,7 @@ void EditLabelsDialogProxy::initialize (const RObject::ValueLabels& labels, cons
 	EditLabelsDialogProxy::labels = labels;		// we need to take a copy in case the dialog is rejected
 
 	dialog = new EditLabelsDialog (this, labels, varname);
-	connect (dialog, SIGNAL (finished(int)), this, SLOT (dialogDone(int)));
+	connect (dialog, &QDialog::finished, this, &EditLabelsDialogProxy::dialogDone);
 	QTimer::singleShot (0, dialog, SLOT (exec()));
 }
 

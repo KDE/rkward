@@ -61,7 +61,7 @@ EditFormatDialog::EditFormatDialog (QWidget *parent) : KDialog (parent) {
 	group_layout->addWidget (button);
 	precision_field = new QSpinBox (precision_box);
 	precision_field->setRange (0, 10);
-	connect (precision_field, SIGNAL (valueChanged(int)), this, SLOT (precisionFieldChanged(int)));
+	connect (precision_field, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &EditFormatDialog::precisionFieldChanged);
 	group_layout->addWidget (precision_field);
 	precision_group->button ((int) RKVariable::FormattingOptions::PrecisionDefault)->setChecked (true);
 
@@ -127,7 +127,7 @@ void EditFormatDialogProxy::initialize (const RKVariable::FormattingOptions& opt
 	dialog = new EditFormatDialog (this);
 	dialog->initialize (options, varname);
 
-	connect (dialog, SIGNAL (finished(int)), this, SLOT (dialogDone(int)));
+	connect (dialog, &QDialog::finished, this, &EditFormatDialogProxy::dialogDone);
 	QTimer::singleShot (0, dialog, SLOT (exec()));
 }
 

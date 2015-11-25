@@ -43,7 +43,7 @@ public:
 	};
 	QStringList getUiLabelPair () const;
 public slots:
-	void changedState (int);
+	void changedStateFromUi (int);
 	void changedState (RKComponentPropertyBase *);
 private:
 	bool updating;		// prevent recursion

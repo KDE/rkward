@@ -45,9 +45,8 @@ public:
 	int type () { return ComponentBrowser; };
 	bool isValid ();
 public slots:
-	void textChanged ();
+	void textChangedFromUi ();
 	void textChanged (RKComponentPropertyBase *);
-	void requirednessChanged (RKComponentPropertyBase *);
 private:
 	void updateColor ();
 	GetFileNameWidget *selector;

@@ -256,8 +256,8 @@ void RKAbstractTransmitter::setConnection (QLocalSocket *_connection) {
 	streamer.setIODevice (connection);
 	RK_ASSERT (connection->isOpen ());
 
-	connect (connection, SIGNAL (readyRead()), this, SLOT (fetchTransmission()));
-	connect (connection, SIGNAL (disconnected()), this, SLOT (disconnected()));
+	connect (connection, &QLocalSocket::readyRead, this, &RKAbstractTransmitter::fetchTransmission);
+	connect (connection, &QLocalSocket::disconnected, this, &RKAbstractTransmitter::disconnected);
 
 	// In case something is pending already.
 	if (connection->bytesAvailable ()) QTimer::singleShot (0, this, SLOT (fetchTransmission()));

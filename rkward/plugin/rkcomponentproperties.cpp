@@ -1197,7 +1197,7 @@ RKComponentPropertyConvert::RKComponentPropertyConvert (RKComponent *parent) : R
 	require_true = false;
 	c_parent = parent;
 	// get notified of own changes
-	connect (this, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (selfChanged(RKComponentPropertyBase*)));
+	connect (this, &RKComponentPropertyConvert::valueChanged, this, &RKComponentPropertyConvert::selfChanged);
 }
 
 RKComponentPropertyConvert::~RKComponentPropertyConvert () {
@@ -1221,7 +1221,7 @@ void RKComponentPropertyConvert::setSources (const QStringList &source_ids) {
 		if (prop && prop->isProperty ()) {
 			s.property = static_cast<RKComponentPropertyBase *>(prop);
 			sources.append (s);
-			connect (s.property, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (sourcePropertyChanged(RKComponentPropertyBase*)));
+			connect (s.property, &RKComponentPropertyBase::valueChanged, this, &RKComponentPropertyConvert::sourcePropertyChanged);
 		} else {
 			RK_DEBUG (PLUGIN, DL_WARNING, "Not found or not a property: %s", (*it).toLatin1 ().data ());
 		}
@@ -1356,7 +1356,7 @@ RKComponentPropertySwitch::RKComponentPropertySwitch (RKComponent* parent, const
 	condition_prop = 0;
 	c_parent = parent;
 
-	connect (this, SIGNAL(valueChanged(RKComponentPropertyBase*)), this, SLOT(selfChanged(RKComponentPropertyBase*)));
+	connect (this, &RKComponentPropertySwitch::valueChanged, this, &RKComponentPropertySwitch::selfChanged);
 }
 
 RKComponentPropertySwitch::~RKComponentPropertySwitch () {
@@ -1424,7 +1424,7 @@ void RKComponentPropertySwitch::setSources (const QString& _condition_prop, cons
 	if (!condition_prop) {
 		RK_DEBUG (PLUGIN, DL_ERROR, "Not a valid condition to connect <switch> property to: %s", qPrintable (_condition_prop));
 	} else {
-		connect (condition_prop, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (sourcePropertyChanged(RKComponentPropertyBase*)));
+		connect (condition_prop, &RKComponentPropertyBase::valueChanged, this, &RKComponentPropertySwitch::sourcePropertyChanged);
 	}
 
 	for (int i = 0; i < _value_props.size (); ++i) {

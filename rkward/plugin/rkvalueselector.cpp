@@ -35,13 +35,13 @@ RKValueSelector::RKValueSelector (const QDomElement &element, RKComponent *paren
 	standalone = element.tagName () == "select";
 
 	addChild ("selected", selected = new RKComponentPropertyStringList (this, false));
-	connect (selected, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (selectionPropertyChanged()));
+	connect (selected, &RKComponentPropertyStringList::valueChanged, this, &RKValueSelector::selectionPropertyChanged);
 	selected->setInternal (!standalone);
 	addChild ("available", available = new RKComponentPropertyStringList (this, false));
-	connect (available, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (availablePropertyChanged()));
+	connect (available, &RKComponentPropertyStringList::valueChanged, this, &RKValueSelector::availablePropertyChanged);
 	available->setInternal (true);
 	addChild ("labels", labels = new RKComponentPropertyStringList (this, false));
-	connect (labels, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (labelsPropertyChanged()));
+	connect (labels, &RKComponentPropertyStringList::valueChanged, this, &RKValueSelector::labelsPropertyChanged);
 	labels->setInternal (true);
 
 	QVBoxLayout *vbox = new QVBoxLayout (this);

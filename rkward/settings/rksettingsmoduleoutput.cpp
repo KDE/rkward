@@ -46,24 +46,24 @@ RKCarbonCopySettings::RKCarbonCopySettings (QWidget* parent) : QWidget (parent) 
 	QVBoxLayout *main_vbox = new QVBoxLayout (this);
 	cc_globally_enabled_box = new QGroupBox (i18n ("Carbon copy commands to output"), this);
 	cc_globally_enabled_box->setCheckable (true);
-	connect (cc_globally_enabled_box, SIGNAL (clicked(bool)), this, SLOT (settingChanged()));
+	connect (cc_globally_enabled_box, &QGroupBox::clicked, this, &RKCarbonCopySettings::settingChanged);
 	main_vbox->addWidget (cc_globally_enabled_box);
 
 	QVBoxLayout *group_layout = new QVBoxLayout (cc_globally_enabled_box);
 	cc_console_commands_box = new QCheckBox (i18n ("Commands entered in the console"), cc_globally_enabled_box);
-	connect (cc_console_commands_box, SIGNAL (clicked(bool)), this, SLOT (settingChanged()));
+	connect (cc_console_commands_box, &QCheckBox::clicked, this, &RKCarbonCopySettings::settingChanged);
 	group_layout->addWidget (cc_console_commands_box);
 
 	cc_script_commands_box = new QCheckBox (i18n ("Commands run via the 'Run' menu"), cc_globally_enabled_box);
-	connect (cc_script_commands_box, SIGNAL (clicked(bool)), this, SLOT (settingChanged()));
+	connect (cc_script_commands_box, &QCheckBox::clicked, this, &RKCarbonCopySettings::settingChanged);
 	group_layout->addWidget (cc_script_commands_box);
 
 	cc_app_plugin_commands_box = new QCheckBox (i18n ("Commands originating from dialogs and plugins"), cc_globally_enabled_box);
-	connect (cc_app_plugin_commands_box, SIGNAL (clicked(bool)), this, SLOT (settingChanged()));
+	connect (cc_app_plugin_commands_box, &QCheckBox::clicked, this, &RKCarbonCopySettings::settingChanged);
 	group_layout->addWidget (cc_app_plugin_commands_box);
 
 	cc_command_output_box = new QCheckBox (i18n ("Also carbon copy the command output"), cc_globally_enabled_box);
-	connect (cc_command_output_box, SIGNAL (clicked(bool)), this, SLOT (settingChanged()));
+	connect (cc_command_output_box, &QCheckBox::clicked, this, &RKCarbonCopySettings::settingChanged);
 	group_layout->addWidget (cc_command_output_box);
 
 	update ();
@@ -156,11 +156,11 @@ RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent
 	QVBoxLayout* group_layout = new QVBoxLayout (group);
 	group_layout->addWidget (auto_show_box = new QCheckBox (i18n ("show window on new output"), group));
 	auto_show_box->setChecked (auto_show);
-	connect (auto_show_box, SIGNAL (stateChanged(int)), this, SLOT (boxChanged()));
+	connect (auto_show_box, &QCheckBox::stateChanged, this, &RKSettingsModuleOutput::boxChanged);
 	group_layout->addWidget (auto_raise_box = new QCheckBox (i18n ("raise window on new output"), group));
 	auto_raise_box->setChecked (auto_raise);
 	auto_raise_box->setEnabled (auto_show);
-	connect (auto_raise_box, SIGNAL (stateChanged(int)), this, SLOT (boxChanged()));
+	connect (auto_raise_box, &QCheckBox::stateChanged, this, &RKSettingsModuleOutput::boxChanged);
 
 	main_vbox->addWidget (group);
 
@@ -176,12 +176,12 @@ RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent
 	graphics_type_box->addItem (i18n ("JPG"), QString ("\"JPG\""));
 	graphics_type_box->setCurrentIndex (graphics_type_box->findData (graphics_type));
 	graphics_type_box->setEditable (false);
-	connect (graphics_type_box, SIGNAL (currentIndexChanged(int)), this, SLOT (boxChanged()));
+	connect (graphics_type_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &RKSettingsModuleOutput::boxChanged);
 	h_layout->addSpacing (2*RKGlobals::spacingHint ());
 	h_layout->addWidget (new QLabel (i18n ("JPG quality"), group));
 	h_layout->addWidget (graphics_jpg_quality_box = new KIntSpinBox (1, 100, 1, graphics_jpg_quality, group));
 	graphics_jpg_quality_box->setEnabled (graphics_type == "\"JPG\"");
-	connect (graphics_jpg_quality_box, SIGNAL (valueChanged(int)), this, SLOT (boxChanged()));
+	connect (graphics_jpg_quality_box, static_cast<void (KIntSpinBox::*)(int)>(&KIntSpinBox::valueChanged), this, &RKSettingsModuleOutput::boxChanged);
 	h_layout->addStretch ();
 
 	h_layout = new QHBoxLayout ();
@@ -192,13 +192,13 @@ RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent
 	h_layout->addWidget (new QLabel (i18n ("Height:"), group));
 	h_layout->addWidget (graphics_height_box = new KIntSpinBox (1, INT_MAX, 1, graphics_height, group));
 	h_layout->addStretch ();
-	connect (graphics_width_box, SIGNAL (valueChanged(int)), this, SLOT (boxChanged()));
-	connect (graphics_height_box, SIGNAL (valueChanged(int)), this, SLOT (boxChanged()));
+	connect (graphics_width_box, static_cast<void (KIntSpinBox::*)(int)>(&KIntSpinBox::valueChanged), this, &RKSettingsModuleOutput::boxChanged);
+	connect (graphics_height_box, static_cast<void (KIntSpinBox::*)(int)>(&KIntSpinBox::valueChanged), this, &RKSettingsModuleOutput::boxChanged);
 
 	main_vbox->addWidget (group);
 
 	cc_settings = new RKCarbonCopySettings (this);
-	connect (cc_settings, SIGNAL (changed()), this, SLOT (boxChanged()));
+	connect (cc_settings, &RKCarbonCopySettings::changed, this, &RKSettingsModuleOutput::boxChanged);
 	main_vbox->addWidget (cc_settings);
 
 	main_vbox->addStretch ();

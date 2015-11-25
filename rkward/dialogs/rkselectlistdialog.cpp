@@ -54,7 +54,7 @@ RKSelectListDialog::RKSelectListDialog (QWidget *parent, const QString &caption,
 	// KDialog appears to be smart enough to limit this to the available screen geometry
 	setInitialSize (QSize (base_hint.width (), ideal_height));
 
-	connect (input, SIGNAL (itemSelectionChanged()), this, SLOT (updateState()));
+	connect (input, &QListWidget::itemSelectionChanged, this, &RKSelectListDialog::updateState);
 	updateState ();
 }
 

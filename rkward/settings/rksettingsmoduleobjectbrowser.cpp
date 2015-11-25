@@ -49,8 +49,8 @@ RKSettingsModuleObjectBrowser::RKSettingsModuleObjectBrowser (RKSettings *gui, Q
 
 	blacklist_choser = new MultiStringSelector (i18n ("Never fetch the structure of these packages:"), this);
 	blacklist_choser->setValues (getstructure_blacklist);
-	connect (blacklist_choser, SIGNAL (listChanged()), this, SLOT (listChanged()));
-	connect (blacklist_choser, SIGNAL (getNewStrings(QStringList*)), this, SLOT (addBlackList(QStringList*)));
+	connect (blacklist_choser, &MultiStringSelector::listChanged, this, &RKSettingsModuleObjectBrowser::listChanged);
+	connect (blacklist_choser, &MultiStringSelector::getNewStrings, this, &RKSettingsModuleObjectBrowser::addBlackList);
 	layout->addWidget (blacklist_choser);
 }
 

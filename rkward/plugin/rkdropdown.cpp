@@ -52,7 +52,7 @@ RKDropDown::RKDropDown (const QDomElement &element, RKComponent *parent_componen
 	addOptionsAndInit (element);
 
 	vbox->addWidget (box);
-	connect (box, SIGNAL (activated(int)), this, SLOT (comboItemActivated(int)));
+	connect (box, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), this, &RKDropDown::comboItemActivated);
 }
 
 RKDropDown::~RKDropDown(){

@@ -113,9 +113,9 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 		back->setPreviewTemplate (xml->getStringAttribute (element, "preview", QString (), DL_INFO));
 		backend = back;
 	}
-	connect (backend, SIGNAL (idle()), this, SLOT (backendIdle()));
-	connect (backend, SIGNAL (requestValue(QString,int)), this, SLOT (getValue(QString,int)));
-	connect (backend, SIGNAL (haveError()), this, SLOT (kill()));
+	connect (backend, &ScriptBackend::idle, this, &RKStandardComponent::backendIdle);
+	connect (backend, &ScriptBackend::requestValue, this, &RKStandardComponent::getValue);
+	connect (backend, &ScriptBackend::haveError, this, &RKStandardComponent::kill);
 	if (!backend->initialize (code, parent_component == 0)) return;
 
 	// check for existence of help file
@@ -192,7 +192,7 @@ RKComponentScriptingProxy* RKStandardComponent::scriptingProxy () {
 
 	if (!scripting) {
 		scripting = new RKComponentScriptingProxy (this);
-		connect (scripting, SIGNAL (haveError()), this, SLOT (kill()));
+		connect (scripting, &RKComponentScriptingProxy::haveError, this, &RKStandardComponent::kill);
 	}
 	return scripting;
 }

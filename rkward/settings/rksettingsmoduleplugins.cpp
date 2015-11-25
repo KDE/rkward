@@ -78,7 +78,7 @@ RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *pare
 	button_group->addButton (button, PreferWizard);
 	if ((button = button_group->button (interface_pref))) button->setChecked (true);
 
-	connect (button_group, SIGNAL (buttonClicked(int)), this, SLOT (settingChanged()));
+	connect (button_group, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &RKSettingsModulePlugins::settingChanged);
 	main_vbox->addWidget (button_box);
 
 
@@ -90,14 +90,14 @@ RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *pare
 
 	show_code_box = new QCheckBox (i18n ("Code shown by default"), code_frame);
 	show_code_box->setChecked (show_code);
-	connect (show_code_box, SIGNAL (stateChanged(int)), this, SLOT (settingChanged()));
+	connect (show_code_box, &QCheckBox::stateChanged, this, &RKSettingsModulePlugins::settingChanged);
 	group_layout->addWidget (show_code_box);
 
 	KHBox *code_size_hbox = new KHBox (code_frame);
 	new QLabel (i18n ("Default height of code display (pixels)"), code_size_hbox);
 	code_size_box = new RKSpinBox (code_size_hbox);
 	code_size_box->setIntMode (20, 5000, code_size);
-	connect (code_size_box, SIGNAL (valueChanged(int)), this, SLOT (settingChanged()));
+	connect (code_size_box, static_cast<void (RKSpinBox::*)(int)>(&RKSpinBox::valueChanged), this, &RKSettingsModulePlugins::settingChanged);
 	group_layout->addWidget (code_size_hbox);
 
 	main_vbox->addWidget (code_frame);
@@ -106,7 +106,7 @@ RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *pare
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 
 	QPushButton *pluginmap_config_button = new QPushButton (i18n ("Configure Active Plugins"), this);
-	connect (pluginmap_config_button, SIGNAL (clicked()), this, SLOT (configurePluginmaps()));
+	connect (pluginmap_config_button, &QPushButton::clicked, this, &RKSettingsModulePlugins::configurePluginmaps);
 	main_vbox->addWidget (pluginmap_config_button);
 
 	main_vbox->addStretch ();

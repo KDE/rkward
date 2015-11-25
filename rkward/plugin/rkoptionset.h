@@ -24,6 +24,7 @@
 #include <QDomElement>
 #include <QTimer>
 #include <QSet>
+#include <QAbstractTableModel>
 
 class RKAccordionTable;
 class QTreeView;
@@ -52,9 +53,7 @@ private slots:
 	void currentRowPropertyChanged (RKComponentPropertyBase *property);
 	void serializationPropertyChanged (RKComponentPropertyBase *property);
 	void addRow (int where);
-	void addRow ();
 	void removeRow (int which);
-	void removeRow ();
 	void currentRowChanged (int row);
 	void fetchDefaults ();
 	void slotUpdateUnfinishedRows ();
@@ -134,7 +133,7 @@ friend class RKOptionSetDisplayModel;
 	friend QString getDefaultValue (const ColumnInfo& ci, int row);
 };
 
-class RKOptionSetDisplayModel : QAbstractTableModel {
+class RKOptionSetDisplayModel : public QAbstractTableModel {
 	Q_OBJECT
 private:
 friend class RKOptionSet;

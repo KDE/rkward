@@ -881,7 +881,7 @@ RKMDIWindowHistoryWidget* RKMDIWindowHistory::getSwitcher (QAction* prev_action,
 	if (switcher) return switcher;
 
 	switcher = new RKMDIWindowHistoryWidget ();
-	connect (switcher, SIGNAL (destroyed(QObject*)), this, SLOT (switcherDestroyed()));
+	connect (switcher, &RKMDIWindowHistoryWidget::destroyed, this, &RKMDIWindowHistory::switcherDestroyed);
 	switcher->addAction (prev_action);
 	switcher->addAction (next_action);
 	switcher->update (recent_windows);

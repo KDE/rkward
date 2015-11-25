@@ -72,7 +72,7 @@ void RKFrontendTransmitter::run () {
 	// we add a bit of randomness to the servername, as in general the servername must be unique
 	// there could be conflicts with concurrent or with previous crashed rkward sessions.
 	if (!server->listen ("rkward" + KRandom::randomString (8))) handleTransmissionError ("Failure to start frontend server: " + server->errorString ());
-	connect (server, SIGNAL (newConnection()), this, SLOT (connectAndEnterLoop()), Qt::QueuedConnection);
+	connect (server, &QLocalServer::newConnection, this, &RKFrontendTransmitter::connectAndEnterLoop, Qt::QueuedConnection);
 
 	// start backend
 	backend = new QProcess (this);
@@ -90,7 +90,7 @@ void RKFrontendTransmitter::run () {
 	args.append ("--rkd-server-name=" + rkd_transmitter->serverName ());
 	args.append ("--data-dir=" + RKSettingsModuleGeneral::filesPath ());
 	args.append ("--locale-dir=" + KGlobal::dirs()->findResourceDir ("locale", QLocale ().name ().section ('_', 0, 0) + "/LC_MESSAGES/rkward.mo"));
-	connect (backend, SIGNAL (finished(int,QProcess::ExitStatus)), this, SLOT (backendExit(int)));
+	connect (backend, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), this, &RKFrontendTransmitter::backendExit);
 	QString backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath ());
 	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "/rbackend");	// for running directly from the build-dir
 #ifdef Q_WS_MAC

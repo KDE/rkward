@@ -120,7 +120,7 @@ void RKToolWindowBar::setSplitter (QSplitter *splitter) {
 	container->layout ()->setMargin (0);
 	container->hide ();
 
-	connect (splitter, SIGNAL(splitterMoved(int,int)), this, SLOT(splitterMoved(int,int)));
+	connect (splitter, &QSplitter::splitterMoved, this, &RKToolWindowBar::splitterMoved);
 }
 
 void RKToolWindowBar::addWidget (RKMDIWindow *window) {
@@ -277,7 +277,7 @@ bool RKToolWindowBar::eventFilter (QObject *obj, QEvent *ev) {
 				KMenu menu (this);
 
 				QAction *a = menu.addAction (RKStandardIcons::getIcon (widget->isAttached () ? RKStandardIcons::ActionDetachWindow : RKStandardIcons::ActionAttachWindow), widget->isAttached () ? i18n("Detach") : i18n("Attach"));
-				connect (a, SIGNAL (triggered(bool)), this, SLOT (changeAttachment()));
+				connect (a, &QAction::triggered, this, &RKToolWindowBar::changeAttachment);
 
 				KSelectAction *sel = new KSelectAction (i18n ("Position"), &menu);
 				sel->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveLeft), i18n ("Left Sidebar"));
@@ -285,7 +285,7 @@ bool RKToolWindowBar::eventFilter (QObject *obj, QEvent *ev) {
 				sel->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveUp), i18n ("Top Sidebar"));
 				sel->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveDown), i18n ("Bottom Sidebar"));
 				sel->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionDelete), i18n ("Not shown in sidebar"));
-				connect (sel, SIGNAL (triggered(int)), this, SLOT (moveToolWindow(int)));
+				connect (sel, static_cast<void (KSelectAction::*)(int)>(&KSelectAction::triggered), this, &RKToolWindowBar::moveToolWindow);
 				menu.addAction (sel);
 	
 				menu.exec (e->globalPos());

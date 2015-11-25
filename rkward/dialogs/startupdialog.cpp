@@ -69,7 +69,7 @@ StartupDialog::StartupDialog (QWidget *parent, StartupDialogResult *result, KRec
 	} else restore_workspace_button->setText (i18n ("Load workspace from current directory:\n%1", rdata_file.toLocalFile ()));
 	choser_layout->addWidget (open_button = new QRadioButton (i18n ("Load an existing workspace:"), choser_box));
 	choser->addButton (open_button);
-	connect (open_button, SIGNAL (toggled(bool)), this, SLOT (openButtonSelected(bool)));
+	connect (open_button, &QRadioButton::toggled, this, &StartupDialog::openButtonSelected);
 	empty_table_button->setChecked (true);
 
 	file_list = new QListWidget (choser_box);
@@ -82,8 +82,8 @@ StartupDialog::StartupDialog (QWidget *parent, StartupDialogResult *result, KRec
 			file_list->addItem (urls[i].url (QUrl::PreferLocalFile));
 		}
 	}
-	connect (file_list, SIGNAL (itemClicked(QListWidgetItem*)), this, SLOT (listClicked(QListWidgetItem*)));
-	connect (file_list, SIGNAL (itemDoubleClicked(QListWidgetItem*)), this, SLOT (listDoubleClicked(QListWidgetItem*)));
+	connect (file_list, &QListWidget::itemClicked, this, &StartupDialog::listClicked);
+	connect (file_list, &QListWidget::itemDoubleClicked, this, &StartupDialog::listDoubleClicked);
 	choser_layout->addWidget (file_list);
 	choser_layout->addWidget (remember_box = new QCheckBox (i18n ("Always do this on startup"), choser_box));
 }

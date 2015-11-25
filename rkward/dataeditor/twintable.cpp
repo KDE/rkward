@@ -77,8 +77,8 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent), RObjectListener (ROb
 	meta_header_anchor_section = -1;
 
 	// catch header context menu requests
-	connect (dataview, SIGNAL (contextMenuRequest(int,int,QPoint)), this, SLOT (contextMenu(int,int,QPoint)));
-	connect (metaview, SIGNAL (contextMenuRequest(int,int,QPoint)), this, SLOT (contextMenu(int,int,QPoint)));
+	connect (dataview, &TwinTableMember::contextMenuRequest, this, &TwinTable::contextMenu);
+	connect (metaview, &TwinTableMember::contextMenuRequest, this, &TwinTable::contextMenu);
 	context_menu_table = 0;
 	context_menu_row = context_menu_column = -2;
 
@@ -150,7 +150,7 @@ void TwinTable::initActions () {
 	action_tb_unlock_editing->setActionGroup (lockactions);
 	action_tb_unlock_editing->setStatusTip (i18n ("Enable editing"));
 	actionCollection ()->addAction ("unlock_editing", action_tb_unlock_editing);
-	connect (action_tb_unlock_editing, SIGNAL (toggled(bool)), this, SLOT (enableEditing(bool)));
+	connect (action_tb_unlock_editing, &QAction::toggled, this, &TwinTable::enableEditing);
 	// NOTE: No need to connect lock_editing, too, as they are radio-exclusive
 
 	// add all edit-actions to a group, so they can be enabled/disabled easily

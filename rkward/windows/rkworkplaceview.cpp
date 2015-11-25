@@ -45,12 +45,12 @@ RKWorkplaceView::RKWorkplaceView (QWidget *parent) : KTabWidget (parent) {
 	// close button(s)
 	QToolButton* close_button = new QToolButton (this);
 	close_button->setIcon (KIcon ("tab-close"));
-	connect (close_button, SIGNAL (clicked()), this, SLOT (closeCurrentPage()));
+	connect (close_button, &QToolButton::clicked, this, &RKWorkplaceView::closeCurrentPage);
 	close_button->adjustSize ();
 	setCornerWidget (close_button, Qt::TopRightCorner);
 
 	setTabsClosable (true);
-	connect (this, SIGNAL (tabCloseRequested(int)), this, SLOT (closePage(int)));
+	connect (this, &RKWorkplaceView::tabCloseRequested, this, static_cast<void (RKWorkplaceView::*)(int)>(&RKWorkplaceView::closePage));
 
 	setMovable (true);
 
@@ -59,7 +59,7 @@ RKWorkplaceView::RKWorkplaceView (QWidget *parent) : KTabWidget (parent) {
 
 	KAcceleratorManager::setNoAccel (tabBar ());	// TODO: This is a WORKAROUND for a bug in kdelibs where tabs named "a0.txt", "a1.txt", etc. will steal the Alt+0/1... shortcuts
 	setTabBarHidden (true);		// initially
-	connect (this, SIGNAL (currentChanged(int)), this, SLOT (currentPageChanged(int)));
+	connect (this, &RKWorkplaceView::currentChanged, this, &RKWorkplaceView::currentPageChanged);
 }
 
 RKWorkplaceView::~RKWorkplaceView () {

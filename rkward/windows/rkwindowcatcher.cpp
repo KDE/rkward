@@ -48,7 +48,7 @@ void RKWindowCatcher::start (int prev_cur_device) {
 
 	last_cur_device = prev_cur_device;
 	created_window = 0;
-	connect (KWindowSystem::self (), SIGNAL (windowAdded(WId)), this, SLOT (windowAdded(WId)));
+	connect (KWindowSystem::self(), &KWindowSystem::windowAdded, this, &RKWindowCatcher::windowAdded);
 }
 
 void RKWindowCatcher::stop (int new_cur_device) {
@@ -59,7 +59,7 @@ void RKWindowCatcher::stop (int new_cur_device) {
 		// we did not see the window, yet? Maybe the event simply hasn't been processed, yet.
 		qApp->processEvents ();
 	}
-	disconnect (KWindowSystem::self (), SIGNAL (windowAdded(WId)), this, SLOT (windowAdded(WId)));
+	disconnect (KWindowSystem::self(), &KWindowSystem::windowAdded, this, &RKWindowCatcher::windowAdded);
 
 	if (new_cur_device != last_cur_device) {
 		if (created_window) {
@@ -105,7 +105,7 @@ void RKWindowCatcher::registerNameWatcher (WId watched, RKMDIWindow *watcher) {
 	RK_ASSERT (!name_watchers_list.contains (watched));
 
 	if (name_watchers_list.isEmpty ()) {
-		connect (KWindowSystem::self (), SIGNAL (windowChanged(WId,NET::Properties,NET::Properties2)), this, SLOT (windowChanged(WId,NET::Properties,NET::Properties2)));
+		connect (KWindowSystem::self(), static_cast<void (KWindowSystem::*)(WId, NET::Properties, NET::Properties2)>(&KWindowSystem::windowChanged), this, &RKWindowCatcher::windowChanged);
 	}
 	name_watchers_list.insert (watched, watcher);
 }
@@ -116,7 +116,7 @@ void RKWindowCatcher::unregisterNameWatcher (WId watched) {
 
 	name_watchers_list.remove (watched);
 	if (name_watchers_list.isEmpty ()) {
-		disconnect (KWindowSystem::self (), SIGNAL (windowChanged(WId,NET::Properties,NET::Properties2)), this, SLOT (windowChanged(WId,NET::Properties,NET::Properties2)));
+		disconnect (KWindowSystem::self(), static_cast<void (KWindowSystem::*)(WId, NET::Properties, NET::Properties2)>(&KWindowSystem::windowChanged), this, &RKWindowCatcher::windowChanged);
 	}
 }
 
@@ -256,7 +256,7 @@ void RKCaughtX11Window::commonInit (int device_number) {
 
 	status_popup = new KPassivePopup (this);
 	status_popup->setTimeout (0);
-	disconnect (status_popup, SIGNAL (clicked()), status_popup, SLOT (hide()));	// no auto-hiding, please
+	disconnect (status_popup, static_cast<void (KPassivePopup::*)()>(&KPassivePopup::clicked), status_popup, &KPassivePopup::hide);
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
@@ -282,14 +282,14 @@ void RKCaughtX11Window::doEmbed () {
 		capture->setWindow (embedded);
 		capture->setFocusPolicy (Qt::ClickFocus);
 		capture->setAutoDestruct (true);
-		connect (capture, SIGNAL (clientDestroyed()), this, SLOT (deleteLater()), Qt::QueuedConnection);
-		connect (capture, SIGNAL (clientTitleChanged(QString)), this, SLOT (setCaption(QString)), Qt::QueuedConnection);
+		connect (capture, &QWidget::clientDestroyed, this, &RKCaughtX11Window::deleteLater, Qt::QueuedConnection);
+		connect (capture, &QWidget::clientTitleChanged, this, &RKCaughtX11Window::setCaption, Qt::QueuedConnection);
 
 		setCaption (capture->getClientTitle ());
 #elif defined Q_WS_X11
 		capture = new QX11EmbedContainer (xembed_container);
 		capture->embedClient (embedded);
-		connect (capture, SIGNAL (clientClosed()), this, SLOT (deleteLater()));
+		connect (capture, &QWidget::clientClosed, this, &RKCaughtX11Window::deleteLater);
 
 		RKWindowCatcher::registerNameWatcher (embedded, this);
 #endif
@@ -519,7 +519,7 @@ void RKCaughtX11Window::copyDeviceToRObject () {
 
 	new QLabel (i18n ("Specify the R object name, you want to save the graph to"), page);
 	RKSaveObjectChooser *chooser = new RKSaveObjectChooser (page, "my.plot");
-	connect (chooser, SIGNAL (changed(bool)), dialog, SLOT (enableButtonOk(bool)));
+	connect (chooser, &RKSaveObjectChooser::changed, dialog, &KDialog::enableButtonOk);
 	if (!chooser->isOk ()) dialog->enableButtonOk (false);
 
 	dialog->exec ();
@@ -679,7 +679,7 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KPart
 	setXMLFile ("rkcatchedx11windowpart.rc");
 
 	window->dynamic_size_action = new KToggleAction (i18n ("Draw area follows size of window"), window);
-	connect (window->dynamic_size_action, SIGNAL (triggered()), window, SLOT (fixedSizeToggled()));
+	connect (window->dynamic_size_action, &KToggleAction::triggered, window, &RKCaughtX11Window::fixedSizeToggled);
 	actionCollection ()->addAction ("toggle_fixed_size", window->dynamic_size_action);
 
 	QAction *action;
@@ -712,7 +712,7 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KPart
 	window->plot_list_action->setToolBarMode (KSelectAction::MenuMode);
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionListPlots));
 	actionCollection ()->addAction ("plot_list", action);
-	connect (action, SIGNAL (triggered(int)), window, SLOT (gotoPlot(int)));
+	connect (action, &QAction::triggered, window, &RKCaughtX11Window::gotoPlot);
 
 	action = actionCollection ()->addAction ("plot_force_append", window, SLOT (forceAppendCurrentPlot()));
  	action->setText (i18n ("Append this plot"));

@@ -116,11 +116,11 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 
 	connect (m_doc, SIGNAL (documentUrlChanged(KTextEditor::Document*)), this, SLOT (updateCaption(KTextEditor::Document*)));
 	connect (m_doc, SIGNAL (modifiedChanged(KTextEditor::Document*)), this, SLOT (updateCaption(KTextEditor::Document*)));                // of course most of the time this causes a redundant call to updateCaption. Not if a modification is undone, however.
-	connect (m_doc, SIGNAL (modifiedChanged(KTextEditor::Document*)), this, SLOT (autoSaveHandlerModifiedChanged()));
-	connect (m_doc, SIGNAL (textChanged(KTextEditor::Document*)), this, SLOT (autoSaveHandlerTextChanged()));
-	connect (m_view, SIGNAL (selectionChanged(KTextEditor::View*)), this, SLOT (selectionChanged(KTextEditor::View*)));
+	connect (m_doc, &KTextEditor::Document::modifiedChanged, this, &RKCommandEditorWindow::autoSaveHandlerModifiedChanged);
+	connect (m_doc, &KTextEditor::Document::textChanged, this, &RKCommandEditorWindow::autoSaveHandlerTextChanged);
+	connect (m_view, &KTextEditor::View::selectionChanged, this, &RKCommandEditorWindow::selectionChanged);
 	// somehow the katepart loses the context menu each time it loses focus
-	connect (m_view, SIGNAL (focusIn(KTextEditor::View*)), this, SLOT (focusIn(KTextEditor::View*)));
+	connect (m_view, &KTextEditor::View::focusIn, this, &RKCommandEditorWindow::focusIn);
 
 	completion_model = 0;
 	cc_iface = 0;
@@ -134,8 +134,8 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 				completion_model = new RKCodeCompletionModel (this);
 				completion_timer = new QTimer (this);
 				completion_timer->setSingleShot (true);
-				connect (completion_timer, SIGNAL (timeout()), this, SLOT (tryCompletion()));
-				connect (m_doc, SIGNAL (textChanged(KTextEditor::Document*)), this, SLOT (tryCompletionProxy(KTextEditor::Document*)));
+				connect (completion_timer, &QTimer::timeout, this, &RKCommandEditorWindow::tryCompletion);
+				connect (m_doc, &KTextEditor::Document::textChanged, this, &RKCommandEditorWindow::tryCompletionProxy);
 			} else {
 				RK_ASSERT (false);
 			}
@@ -148,7 +148,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	RK_ASSERT (smart_iface);
 
 	autosave_timer = new QTimer (this);
-	connect (autosave_timer, SIGNAL (timeout()), this, SLOT (doAutoSave()));
+	connect (autosave_timer, &QTimer::timeout, this, &RKCommandEditorWindow::doAutoSave);
 
 	updateCaption ();	// initialize
 	QTimer::singleShot (0, this, SLOT (setPopupMenu()));
@@ -408,7 +408,7 @@ void RKCommandEditorWindow::autoSaveHandlerModifiedChanged () {
 		} else {
 			RKJobSequence* dummy = new RKJobSequence ();
 			dummy->addJob (KIO::del (previous_autosave_url));
-			connect (dummy, SIGNAL (finished(RKJobSequence*)), this, SLOT (autoSaveHandlerJobFinished(RKJobSequence*)));
+			connect (dummy, &RKJobSequence::finished, this, &RKCommandEditorWindow::autoSaveHandlerJobFinished);
 			dummy->start ();
 		}
 		previous_autosave_url.clear ();
@@ -441,7 +441,7 @@ void RKCommandEditorWindow::doAutoSave () {
 	RKJobSequence* alljobs = new RKJobSequence ();
 	// The KJob-Handling below seems to be a bit error-prone, at least for the file-protocol on Windows.
 	// Thus, for the simple case of local files, we use QFile, instead.
-	connect (alljobs, SIGNAL (finished(RKJobSequence*)), this, SLOT (autoSaveHandlerJobFinished(RKJobSequence*)));
+	connect (alljobs, &RKJobSequence::finished, this, &RKCommandEditorWindow::autoSaveHandlerJobFinished);
 	// backup the old autosave file in case something goes wrong during pushing the new one
 	QUrl backup_autosave_url;
 	if (previous_autosave_url.isValid ()) {
@@ -879,7 +879,7 @@ RKFunctionArgHinter::RKFunctionArgHinter (RKScriptContextProvider *provider, KTe
 	arghints_popup->hide ();
 	active = false;
 
-	connect (&updater, SIGNAL (timeout()), this, SLOT (updateArgHintWindow()));
+	connect (&updater, &QTimer::timeout, this, &RKFunctionArgHinter::updateArgHintWindow);
 }
 
 RKFunctionArgHinter::~RKFunctionArgHinter () {

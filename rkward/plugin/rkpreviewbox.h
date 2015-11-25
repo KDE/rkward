@@ -43,7 +43,7 @@ public:
 	RKComponentPropertyBool *state;
 	QVariant value (const QString &modifier=QString ()) { return (state->value (modifier)); };
 public slots:
-	void changedState (int);
+	void changedStateFromUi ();
 	void changedState (RKComponentPropertyBase *);
 	void changedCode (RKComponentPropertyBase *);
 	void tryPreviewNow ();

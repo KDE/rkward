@@ -57,7 +57,7 @@ void RKGraphicsDeviceFrontendTransmitter::setupServer () {
 	RK_ASSERT (!local_server);
 	local_server = new QLocalServer ();
 	RK_ASSERT (local_server->listen ("rkd" + KRandom::randomString (8)));
-	connect (local_server, SIGNAL (newConnection()), this, SLOT (newConnection()));
+	connect (local_server, &QLocalServer::newConnection, this, &RKGraphicsDeviceFrontendTransmitter::newConnection);
 	server_name = local_server->fullServerName ();
 }
 
@@ -81,7 +81,7 @@ void RKGraphicsDeviceFrontendTransmitter::newConnection () {
 
 	connection = con;
 	streamer.setIODevice (con);
-	connect (connection, SIGNAL (readyRead()), this, SLOT (newData()));
+	connect (connection, &QIODevice::readyRead, this, &RKGraphicsDeviceFrontendTransmitter::newData);
 	newData ();	// might already be available
 }
 
@@ -187,9 +187,9 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			streamer.instream >> width >> height >> title >> antialias;
 			device = RKGraphicsDevice::newDevice (devnum, width, height, title, antialias);
 			RKWorkplace::mainWorkplace ()->newRKWardGraphisWindow (device, devnum+1);
-			connect (device, SIGNAL (locatorDone(bool,double,double)), this, SLOT (locatorDone(bool,double,double)));
-			connect (device, SIGNAL (newPageConfirmDone(bool)), this, SLOT (newPageConfirmDone(bool)));
-			connect (this, SIGNAL (stopInteraction()), device, SLOT (stopInteraction()));
+			connect (device, &RKGraphicsDevice::locatorDone, this, &RKGraphicsDeviceFrontendTransmitter::locatorDone);
+			connect (device, &RKGraphicsDevice::newPageConfirmDone, this, &RKGraphicsDeviceFrontendTransmitter::newPageConfirmDone);
+			connect (this, &RKGraphicsDeviceFrontendTransmitter::stopInteraction, device, &RKGraphicsDevice::stopInteraction);
 			continue;
 		} else {
 			if (devnum) device = RKGraphicsDevice::devices.value (devnum);

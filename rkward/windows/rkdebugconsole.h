@@ -39,7 +39,7 @@ public:
 public slots:
 	void newDebugState ();
 private slots:
-	void sendReply ();
+	void sendReplySlot ();
 	void stepButtonClicked ();
 	void stepOutButtonClicked ();
 	void continueButtonClicked ();
