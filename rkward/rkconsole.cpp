@@ -513,8 +513,8 @@ bool RKConsole::eventFilter (QObject *o, QEvent *e) {
 	} else if (e->type () == QEvent::DragMove || e->type () == QEvent::Drop) {
 		QDropEvent* me = static_cast<QDropEvent*> (e);  // NOTE: QDragMoveEvent inherits from QDropEvent
 
-		// WTF? the position seems to be off by around two chars. Icon border?
-		// Hack it to be correct.
+		// Widget of the event != view. The position returned by coordinatesToCursor seems to be off by around two chars. Icon border?
+		// We try to map it back to the view, correctly.
 		QWidget *rec = dynamic_cast<QWidget*> (o);
 		if (!o) rec = view;
 		KTextEditor::Cursor pos = view->coordinatesToCursor (rec->mapTo (view, me->pos ()));
@@ -526,11 +526,11 @@ bool RKConsole::eventFilter (QObject *o, QEvent *e) {
 		} else {
 			if (e->type () == QEvent::DragMove) {
 				// Not sure why this is needed, here, but without this, the move will remain permanently inacceptable,
-				// once it has been ignored, below, once. KF5 5.9.0
+				// once it has been ignored, above, once. KF5 5.9.0
 				e->accept ();
 				// But also _not_ filtering it.
 			} else {
-				// We have prevent the katepart from _moving_ the text in question. Thus, instead we fake a paste.
+				// We have to prevent the katepart from _moving_ the text in question. Thus, instead we fake a paste.
 				// This does mean, we don't support movements within the last line, either, but so what.
 				view->setCursorPosition (pos);
 				submitBatch (me->mimeData ()->text ());
