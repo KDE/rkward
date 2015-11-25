@@ -61,7 +61,7 @@ public:
 	explicit RKFileBrowserWidget (QWidget *widget);
 	~RKFileBrowserWidget ();
 
-	void setURL (const QString &url);
+	void setURL (const QUrl &url);
 	bool eventFilter (QObject* o, QEvent* e) override;
 public slots:
 	void urlChangedInView (const QUrl &url);

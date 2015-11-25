@@ -169,7 +169,7 @@ RKHTMLWindow::~RKHTMLWindow () {
 QUrl RKHTMLWindow::restorableUrl () {
 	RK_TRACE (APP);
 
-	return (current_url.url ().replace (RKSettingsModuleR::helpBaseUrl(), "rkward://RHELPBASE"));
+	return QUrl ((current_url.url ().replace (RKSettingsModuleR::helpBaseUrl(), "rkward://RHELPBASE")));
 }
 
 bool RKHTMLWindow::isModified () {
@@ -518,7 +518,7 @@ void RKHTMLWindow::useMode (WindowMode new_mode) {
 		type = RKMDIWindow::OutputWindow | RKMDIWindow::DocumentWindow;
 		setWindowIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowOutput));
 		part->setOutputWindowSkin ();
-		setMetaInfo (i18n ("Output Window"), "rkward://page/rkward_output", RKSettings::PageOutput);
+		setMetaInfo (i18n ("Output Window"), QUrl ("rkward://page/rkward_output"), RKSettings::PageOutput);
 		connect (page, SIGNAL(loadFinished(bool)), this, SLOT(scrollToBottom()));
 //	TODO: This would be an interesting extension, but how to deal with concurrent edits?
 //		page->setContentEditable (true);
@@ -1086,7 +1086,7 @@ void RKOutputWindowManager::fileChanged (const QString &path) {
 		if (RKSettingsModuleOutput::autoRaise ()) w->activate ();
 	} else {
 		RK_ASSERT (path == current_default_path);
-		if (RKSettingsModuleOutput::autoShow ()) RKWorkplace::mainWorkplace ()->openOutputWindow (path);
+		if (RKSettingsModuleOutput::autoShow ()) RKWorkplace::mainWorkplace ()->openOutputWindow (QUrl::fromUserInput (path, QString (), QUrl::AssumeLocalFile));
 	}
 }
 

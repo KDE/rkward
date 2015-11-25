@@ -51,7 +51,7 @@ public:
 	static void loadSettings (KConfig *config);
 	
 	QString caption () override;
-	QString helpURL () override { return ("rkward://page/rkward_plot_history#scd_settings"); };
+	QUrl helpURL () override { return QUrl ("rkward://page/rkward_plot_history#scd_settings"); };
 
 	enum DefaultDevice {
 		RKDevice,

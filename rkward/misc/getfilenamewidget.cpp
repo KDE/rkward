@@ -38,7 +38,7 @@ GetFileNameWidget::GetFileNameWidget (QWidget *parent, FileType mode, bool only_
 	connect (edit, SIGNAL (textChanged(QString)), this, SLOT (locationEditChanged(QString)));
 	vbox->addWidget (edit);
 
-	edit->setUrl (initial);
+	edit->setUrl (QUrl::fromUserInput (initial, QString (), QUrl::AssumeLocalFile));
 
 	KFile::Modes mode_flags;
 	if (mode == ExistingDirectory) {
@@ -77,7 +77,7 @@ void GetFileNameWidget::setFilter (const QString &filter) {
 void GetFileNameWidget::setLocation (const QString &new_location) {
 	RK_TRACE (MISC);
 
-	if (edit->text () != new_location) edit->setUrl (new_location);
+	if (edit->text () != new_location) edit->setUrl (QUrl::fromUserInput (new_location, QString (), QUrl::AssumeLocalFile));
 }
 
 #ifdef Q_WS_WIN

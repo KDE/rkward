@@ -105,7 +105,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	part->insertChildClient (m_view);
 	setPart (part);
 	fixupPartGUI ();
-	setMetaInfo (i18n ("Script Editor"), QString (), RKSettings::PageCommandEditor);
+	setMetaInfo (i18n ("Script Editor"), QUrl (), RKSettings::PageCommandEditor);
 	initializeActions (part->actionCollection ());
 	initializeActivationSignals ();
 	RKXMLGUISyncer::self()->registerChangeListener (m_view, this, SLOT (fixupPartGUI()));

@@ -652,8 +652,8 @@ QUrl checkAdjustRestoredUrl (const QString &_url, const QString old_base) {
 	if (QFileInfo (url.toLocalFile ()).exists ()) return (url);
 
 	// check whether a file exists for the adjusted url
-	QUrl relative = new_base_url.resolved (QDir (old_base_url.path ()).relativeFilePath (url.path ()));
-	if (QFileInfo (relative.toLocalFile ()).exists ()) return (relative);
+	QString relative = QDir (new_base_url.path ()).absoluteFilePath (QDir (old_base_url.path ()).relativeFilePath (url.path ()));
+	if (QFileInfo (relative).exists ()) return (QUrl::fromLocalFile (relative));
 	return (url);
 }
 

@@ -288,7 +288,7 @@ void RKMDIWindow::enterEvent (QEvent *event) {
 	QFrame::enterEvent (event);
 }
 
-void RKMDIWindow::setMetaInfo (const QString& _generic_window_name, const QString& _help_url, RKSettings::SettingsPage _settings_page) {
+void RKMDIWindow::setMetaInfo (const QString& _generic_window_name, const QUrl& _help_url, RKSettings::SettingsPage _settings_page) {
 	RK_TRACE (APP);
 
 	// only meant to be called once

@@ -92,7 +92,7 @@ void RKComponentScriptingProxy::include (const QString& filename) {
 
 	QString _filename = filename;
 	if (QFileInfo (filename).isRelative ()) {
-		QUrl script_path = QUrl (QUrl::fromLocalFile (_scriptfile)).adjusted (QUrl::RemoveFilename).resolved (filename);
+		QUrl script_path = QUrl (QUrl::fromLocalFile (_scriptfile)).adjusted (QUrl::RemoveFilename).resolved (QUrl (filename));
 		_filename = script_path.toLocalFile ();
 	}
 

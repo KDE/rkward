@@ -20,6 +20,7 @@
 
 #include <QFrame>
 #include <QMap>
+#include <QUrl>
 
 #include <kparts/part.h>
 
@@ -121,7 +122,7 @@ protected slots:
 	void showWindowSettings ();
 protected:
 	void setPart (KParts::Part *p) { part = p; };
-	void setMetaInfo (const QString& generic_window_name, const QString& help_url, RKSettings::SettingsPage settings_page=RKSettings::NoPage);
+	void setMetaInfo (const QString& generic_window_name, const QUrl& help_url, RKSettings::SettingsPage settings_page=RKSettings::NoPage);
 	void initializeActivationSignals ();
 	void paintEvent (QPaintEvent *e) override;
 	void changeEvent (QEvent *event) override;
@@ -146,7 +147,7 @@ friend class RKToolWindowBar;
 /** @see globalContextProperty() */
 	QMap<QString, QString> global_context_properties;
 	QString generic_window_name;
-	QString help_url;
+	QUrl help_url;
 	RKSettings::SettingsPage settings_page;
 };
 

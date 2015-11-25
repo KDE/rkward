@@ -57,7 +57,7 @@ void RKDBusAPI::openAnyUrl(const QStringList& urls) {
 
 	RKWardMainWindow::getMain ()->setMergeLoads (true);
 	for (int i = 0; i < urls.size (); ++i) {
-		RKWorkplace::mainWorkplace ()->openAnyUrl (urls[i]);
+		RKWorkplace::mainWorkplace ()->openAnyUrl (QUrl::fromUserInput (urls[i], QString (), QUrl::AssumeLocalFile));
 	}
 	RKWardMainWindow::getMain ()->setMergeLoads (false);
 }

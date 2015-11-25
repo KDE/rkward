@@ -596,7 +596,7 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 		RKSessionVars::instance ()->setInstalledPackages (calllist.mid (1));
 	} else if (call == "showHTML") {
 		RK_ASSERT (calllist.count () == 2);
-		RKWorkplace::mainWorkplace ()->openHelpWindow (calllist.value (1));
+		RKWorkplace::mainWorkplace ()->openHelpWindow (QUrl::fromUserInput (calllist.value (1), QDir::currentPath (), QUrl::AssumeLocalFile));
 	} else if (call == "select.list") {
 		QString title = calllist.value (1);
 		bool multiple = (calllist.value (2) == "multi");

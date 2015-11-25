@@ -55,7 +55,7 @@ public:
 
 	static bool isPackageBlacklisted (const QString &package_name);
 
-	QString helpURL () override { return ("rkward://page/rkward_workspace_browser#settings"); };
+	QUrl helpURL () override { return QUrl ("rkward://page/rkward_workspace_browser#settings"); };
 public slots:
 /** called when a checkbox has been changed. Signals change to RKSettings dialog to enable apply button */
 	void boxChanged (int);

@@ -63,7 +63,7 @@ public:
 
 	QString caption () override;
 
-	QString helpURL () override { return ("rkward://page/rkward_console#settings"); };
+	QUrl helpURL () override { return QUrl ("rkward://page/rkward_console#settings"); };
 public slots:
 	void changedSetting (int);
 private:

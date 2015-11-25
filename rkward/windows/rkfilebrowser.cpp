@@ -126,7 +126,7 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : KVBox (parent) {
 
 	connect (dir, SIGNAL (fileSelected(KFileItem)), this, SLOT (fileActivated(KFileItem)));
 
-	setURL (QDir::currentPath ());
+	setURL (QUrl::fromLocalFile (QDir::currentPath ()));
 }
 
 RKFileBrowserWidget::~RKFileBrowserWidget () {
@@ -162,7 +162,7 @@ void RKFileBrowserWidget::saveConfig () {
 	dir->writeConfig (config);
 }
 
-void RKFileBrowserWidget::setURL (const QString &url) {
+void RKFileBrowserWidget::setURL (const QUrl &url) {
 	RK_TRACE (APP);
 
 	urlbox->setUrl (url);
@@ -178,7 +178,7 @@ void RKFileBrowserWidget::urlChangedInView (const QUrl &url) {
 void RKFileBrowserWidget::urlChangedInCombo (const QString &url) {
 	RK_TRACE (APP);
 
-	dir->setUrl (url, true);
+	dir->setUrl (QUrl::fromUserInput (url, QDir::currentPath (), QUrl::AssumeLocalFile), true);
 }
 
 void RKFileBrowserWidget::urlChangedInCombo (const QUrl &url) {

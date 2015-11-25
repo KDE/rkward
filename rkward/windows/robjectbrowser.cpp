@@ -59,7 +59,7 @@ RObjectBrowser::RObjectBrowser (QWidget *parent, bool tool_window, const char *n
 
 	RKDummyPart *part = new RKDummyPart (this, layout_widget);
 	setPart (part);
-	setMetaInfo (i18n ("R workspace browser"), "rkward://page/rkward_workspace_browser", RKSettings::PageObjectBrowser);
+	setMetaInfo (i18n ("R workspace browser"), QUrl ("rkward://page/rkward_workspace_browser"), RKSettings::PageObjectBrowser);
 	initializeActivationSignals ();
 
 	setCaption (i18n ("R Workspace"));

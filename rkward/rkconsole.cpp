@@ -123,7 +123,7 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 	setCaption (i18n ("R Console"));
 	console_part = new RKConsolePart (this);
 	setPart (console_part);
-	setMetaInfo (shortCaption (), "rkward://page/rkward_console", RKSettings::PageConsole);
+	setMetaInfo (shortCaption (), QUrl ("rkward://page/rkward_console"), RKSettings::PageConsole);
 	initializeActivationSignals ();
 	initializeActions (getPart ()->actionCollection ());
 
@@ -461,7 +461,7 @@ void RKConsole::doTabCompletion () {
 	// as a very simple heuristic: If the current symbol starts with a quote, we should probably attempt file name completion, instead of symbol name completion
 	if (current_symbol.startsWith ('\"') || current_symbol.startsWith ('\'') || current_symbol.startsWith ('`')) {
 		KUrlCompletion comp (KUrlCompletion::FileCompletion);
-		comp.setDir (QDir::currentPath ());
+		comp.setDir (QUrl::fromLocalFile (QDir::currentPath ()));
 		comp.makeCompletion (current_symbol.mid (1));
 
 		if (doTabCompletionHelper (current_line_num, current_line, word_start + 1, word_end, comp.allMatches ())) return;

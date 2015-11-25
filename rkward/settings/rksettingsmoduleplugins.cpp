@@ -519,7 +519,7 @@ bool RKSettingsModulePluginsModel::setData (const QModelIndex& index, const QVar
 void RKSettingsModulePluginsModel::insertNewStrings (int above_row) {
 	RK_TRACE (SETTINGS);
 
-	QStringList files = KFileDialog::getOpenFileNames (RKCommonFunctions::getRKWardDataDir (), "*.pluginmap", static_cast<QWidget*> (QObject::parent ()), i18n ("Select .pluginmap-file"));
+	QStringList files = KFileDialog::getOpenFileNames (QUrl::fromLocalFile (RKCommonFunctions::getRKWardDataDir ()), "*.pluginmap", static_cast<QWidget*> (QObject::parent ()), i18n ("Select .pluginmap-file"));
 
 	// already known files are activated, but not added
 	for (int i = files.size () -1; i >= 0; --i) {
@@ -530,7 +530,7 @@ void RKSettingsModulePluginsModel::insertNewStrings (int above_row) {
 				emit (dataChanged (index (pos, 0), index (pos, COLUMN_COUNT - 1)));
 			}
 			files.removeAt (i);
-		} 
+		}
 	}
 
 	beginInsertRows (QModelIndex (), above_row, files.size ());
