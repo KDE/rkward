@@ -80,6 +80,7 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 	doc = editor->createDocument (this);
 	view = doc->createView (this);
 	layout->addWidget (view);
+	view->setStatusBarEnabled (false);
 
 	KTextEditor::ConfigInterface *confint = qobject_cast<KTextEditor::ConfigInterface*> (view);
 	RK_ASSERT (view);
@@ -509,6 +510,34 @@ bool RKConsole::eventFilter (QObject *o, QEvent *e) {
 				view->scroll (0, y - y2);
 			}
 		} */ // not good, yet: always jumps to bottom of view
+	} else if (e->type () == QEvent::DragMove || e->type () == QEvent::Drop) {
+		QDropEvent* me = static_cast<QDropEvent*> (e);  // NOTE: QDragMoveEvent inherits from QDropEvent
+
+		// WTF? the position seems to be off by around two chars. Icon border?
+		// Hack it to be correct.
+		QWidget *rec = dynamic_cast<QWidget*> (o);
+		if (!o) rec = view;
+		KTextEditor::Cursor pos = view->coordinatesToCursor (rec->mapTo (view, me->pos ()));
+
+		bool in_last_line = (pos.line () == doc->lines () - 1) && (pos.column () >= prefix.length ());
+		if (!in_last_line) {
+			e->ignore ();
+			return true;
+		} else {
+			if (e->type () == QEvent::DragMove) {
+				// Not sure why this is needed, here, but without this, the move will remain permanently inacceptable,
+				// once it has been ignored, below, once. KF5 5.9.0
+				e->accept ();
+				// But also _not_ filtering it.
+			} else {
+				// We have prevent the katepart from _moving_ the text in question. Thus, instead we fake a paste.
+				// This does mean, we don't support movements within the last line, either, but so what.
+				view->setCursorPosition (pos);
+				submitBatch (me->mimeData ()->text ());
+				me->ignore ();
+				return true;
+			}
+		}
 	}
 
 	if (acceptsEventsFor (o)) return RKMDIWindow::eventFilter (o, e);

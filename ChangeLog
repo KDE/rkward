@@ -1,3 +1,8 @@
+- Better handling of text drag-and-drop inside the R console window
+
+--- Version 0.6.4 - XXXXXXXXXXXXXXX
+
+
 - Fixed: RKWard package repository would be listed twice on fresh installations
 - Switch to bugs.kde.org as primary issue tracker
 - Workspace browser gains functionality to search / filter objects by name
