@@ -180,7 +180,7 @@ void RKPreviewBox::rCommandDone (RCommand *command) {
 		if (dev_num != old_devnum) {
 			disconnect (this, SLOT (previewWindowClosed()));
 			RKCaughtX11Window *window = RKCaughtX11Window::getWindow (dev_num);
-			if (window) connect (window, SIGNAL (destroyed(QObject*)), this, SLOT(previewWindowClosed()));
+			if (window) connect (window, &RKCaughtX11Window::destroyed, this, &RKPreviewBox::previewWindowClosed);
 		}
 	} else if (command->getFlags () == DO_PLOT) {
 		QString warnings = command->warnings () + command->error ();

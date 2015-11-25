@@ -91,10 +91,11 @@ RKLoadLibsDialog::~RKLoadLibsDialog () {
 KPageWidgetItem* RKLoadLibsDialog::addChild (QWidget *child_page, const QString &caption) {
 	RK_TRACE (DIALOGS);
 
+	// TODO: Can't convert these signal/slot connections to new syntax, without creating a common base class for the child pages
 	connect (this, SIGNAL (accepted()), child_page, SLOT (ok()));
 	connect (button (QDialogButtonBox::Apply), SIGNAL (clicked(bool)), child_page, SLOT (apply()));
 	connect (this, SIGNAL(rejected()), child_page, SLOT (cancel()));
-	connect (child_page, SIGNAL (destroyed()), this, SLOT (childDeleted()));
+	connect (child_page, &QObject::destroyed, this, &RKLoadLibsDialog::childDeleted);
 	return addPage (child_page, caption);
 }
 
@@ -930,7 +931,7 @@ void RKRPackageInstallationStatus::initialize (RCommandChain *chain) {
 	_initialized = true;	// will be re-set to false, should the command fail / be cancelled
 
 	RCommand *command = new RCommand (".rk.get.package.intallation.state ()", RCommand::App | RCommand::GetStructuredData);
-	connect (command->notifier (), SIGNAL (commandFinished(RCommand*)), this, SLOT (statusCommandFinished(RCommand*)));
+	connect (command->notifier (), &RCommandNotifier::commandFinished, this, &RKRPackageInstallationStatus::statusCommandFinished);
 	RKProgressControl *control = new RKProgressControl (this, i18n ("<p>Please stand by while searching for installed and available packages.</p><p><strong>Note:</strong> This requires a working internet connection, and may take some time, esp. if one or more repositories are temporarily unavailable.</p>"), i18n ("Searching for packages"), RKProgressControl::CancellableProgress | RKProgressControl::AutoCancelCommands);
 	control->addRCommand (command, true);
 	RKGlobals::rInterface ()->issueCommand (command, chain);

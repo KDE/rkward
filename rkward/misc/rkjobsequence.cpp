@@ -30,7 +30,7 @@ void RKJobSequence::addJob (KJob* job) {
 	RK_TRACE (MISC);
 
 	outstanding_jobs.append (job);
-	connect (job, SIGNAL (result(KJob*)), this, SLOT(jobDone(KJob*)));
+	connect (job, &KJob::result, this, &RKJobSequence::jobDone);
 }
 
 bool RKJobSequence::hadError () const {

@@ -48,7 +48,7 @@ RKCallstackViewer::RKCallstackViewer (QWidget *parent, bool tool_window, const c
 	setPart (new RKDummyPart (this, layout_widget));
 	initializeActivationSignals ();
 
-	connect (RKDebugHandler::instance (), SIGNAL (newDebugState()), this, SLOT (newDebugState()));
+	connect (RKDebugHandler::instance (), &RKDebugHandler::newDebugState, this, &RKCallstackViewer::newDebugState);
 }
 
 RKCallstackViewer::~RKCallstackViewer () {

@@ -132,13 +132,13 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 	new RKWorkplace (this);
 	RKWorkplace::mainWorkplace ()->initActions (actionCollection (), "left_window", "right_window");
 	setCentralWidget (RKWorkplace::mainWorkplace ());
-	connect (RKWorkplace::mainWorkplace ()->view (), SIGNAL (captionChanged(QString)), this, SLOT (setCaption(QString)));
-	connect (RKWorkplace::mainWorkplace (), SIGNAL (workspaceUrlChanged(QUrl)), this, SLOT (addWorkspaceUrl(QUrl)));
+	connect (RKWorkplace::mainWorkplace ()->view (), &RKWorkplaceView::captionChanged, this, static_cast<void (RKWardMainWindow::*)(const QString&)>(&RKWardMainWindow::setCaption));
+	connect (RKWorkplace::mainWorkplace (), &RKWorkplace::workspaceUrlChanged, this, &RKWardMainWindow::addWorkspaceUrl);
 
 	part_manager = new KParts::PartManager (this);
 	// When the manager says the active part changes,
 	// the builder updates (recreates) the GUI
-	connect (partManager (), SIGNAL (activePartChanged(KParts::Part*)), this, SLOT (partChanged(KParts::Part*)));
+	connect (partManager (), &KParts::PartManager::activePartChanged, this, &RKWardMainWindow::partChanged);
 
 	readOptions();
 	RKGlobals::mtracker = new RKModificationTracker (this);
@@ -270,12 +270,12 @@ void RKWardMainWindow::doPostInit () {
 
 	// up to this point, no "real" save-worthy stuff can be pending in the backend. So mark this point as "clean".
 	RCommand *command = new RCommand (QString (), RCommand::EmptyCommand | RCommand::Sync | RCommand::App);
-	connect (command->notifier (), SIGNAL (commandFinished(RCommand*)), this, SLOT (setWorkspaceUnmodified()));
+	connect (command->notifier (), &RCommandNotifier::commandFinished, this, &RKWardMainWindow::setWorkspaceUnmodified);
 	RKGlobals::rInterface ()->issueCommand (command);
 
 	if (!evaluate_code.isEmpty ()) RKConsole::pipeUserCommand (evaluate_code);
 	RKDBusAPI *dbus = new RKDBusAPI (this);
-	connect (this, SIGNAL(aboutToQuitRKWard()), dbus, SLOT(deleteLater()));	// RKWard sometimes needs to wait for R to quit. We don't want it sticking
+	connect (this, &RKWardMainWindow::aboutToQuitRKWard, dbus, &RKDBusAPI::deleteLater);
 	// around on the bus in this case.
 
 	setCaption (QString ());	// our version of setCaption takes care of creating a correct caption, so we do not need to provide it here
@@ -369,8 +369,8 @@ void RKWardMainWindow::configureCarbonCopy () {
 	dialog->setMainWidget (settings);
 	dialog->setButtons (KDialog::Ok | KDialog::Apply | KDialog::Cancel);
 	dialog->setAttribute (Qt::WA_DeleteOnClose);
-	connect (dialog, SIGNAL (okClicked()), settings, SLOT (applyChanges())); 
-	connect (dialog, SIGNAL (applyClicked()), settings, SLOT (applyChanges())); 
+	connect (dialog, &KDialog::okClicked, settings, &RKCarbonCopySettings::applyChanges);
+	connect (dialog, &KDialog::applyClicked, settings, &RKCarbonCopySettings::applyChanges);
 	dialog->show ();
 }
 

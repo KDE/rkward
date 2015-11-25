@@ -141,7 +141,7 @@ void RKToolWindowBar::addWidget (RKMDIWindow *window) {
 	window->tool_window_bar = this;
 	widget_to_id.insert (window, id);
 
-	connect (tab (id), SIGNAL (clicked(int)), this, SLOT (tabClicked(int)));
+	connect (tab (id), &KMultiTabBarTab::clicked, this, &RKToolWindowBar::tabClicked);
 	tab (id)->installEventFilter (this);
 
 	if (window->isAttached ()) {
@@ -308,7 +308,7 @@ void RKToolWindowBar::contextMenuEvent (QContextMenuEvent* event) {
 		a->setChecked (rep.window->tool_window_bar == this);
 		a->setData (rep.id);
 	}
-	connect (&menu, SIGNAL (triggered(QAction*)), this, SLOT (addRemoveToolWindow(QAction*)));
+	connect (&menu, &KMenu::triggered, this, &RKToolWindowBar::addRemoveToolWindow);
 	menu.exec (event->globalPos ());
 
 	event->accept ();

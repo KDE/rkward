@@ -65,7 +65,7 @@ public:
 		label->setWordWrap (true);
 		label->setOpenExternalLinks (true);
 
-		connect (this, SIGNAL (finished()), this, SLOT (deleteLater()));
+		connect (this, &QDialog::finished, this, &RKBugzillaReportDialog::deleteLater);
 	}
 
 	// KF5 TODO: add override keyword

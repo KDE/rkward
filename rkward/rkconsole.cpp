@@ -182,8 +182,8 @@ QAction* RKConsole::addProxyAction (const QString& actionName, const QString& la
 		ret->setChecked (found->isChecked ());
 		// TODO: ideally, we'd also relay enabledness, checked state, etc. That would probably require a separate class,
 		// and is not currently needed for the actions that we copy
-		connect (ret, SIGNAL (triggered(bool)), found, SLOT (trigger()));
-		connect (ret, SIGNAL (toggled(bool)), found, SLOT (toggle()));
+		connect (ret, &QAction::triggered, found, &QAction::trigger);
+		connect (ret, &QAction::toggled, found, &QAction::toggle);
 
 		getPart ()->actionCollection ()->addAction (actionName, ret);
 		return ret;

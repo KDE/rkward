@@ -83,7 +83,7 @@ RKHelpSearchWindow::RKHelpSearchWindow (QWidget *parent, bool tool_window, const
 	field = new QComboBox (this);
 	field->setEditable (true);
 	field->setSizePolicy (QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
-	connect (field->lineEdit () , SIGNAL (returnPressed()), this, SLOT (slotFindButtonClicked()));
+	connect (field->lineEdit (), &QLineEdit::returnPressed, this, &RKHelpSearchWindow::slotFindButtonClicked);
 	main_settings_layout->addWidget (field);
 
 	QHBoxLayout* fields_packages_layout = new QHBoxLayout ();
@@ -104,7 +104,7 @@ RKHelpSearchWindow::RKHelpSearchWindow (QWidget *parent, bool tool_window, const
 	packagesList = new QComboBox (this);
 	packagesList->setEditable (false);
 	fields_packages_layout->addWidget (packagesList);
-	connect (RKSessionVars::instance (), SIGNAL (installedPackagesChanged()), this, SLOT (updateInstalledPackages()));
+	connect (RKSessionVars::instance (), &RKSessionVars::installedPackagesChanged, this, &RKHelpSearchWindow::updateInstalledPackages);
 	updateInstalledPackages ();
 
 	QVBoxLayout* checkboxes_layout = new QVBoxLayout ();

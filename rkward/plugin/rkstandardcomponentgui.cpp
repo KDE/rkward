@@ -51,7 +51,7 @@ RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, 
 	RKStandardComponentGUI::component = component;
 	RKStandardComponentGUI::code_property = code_property;
 	connect (code_property, &RKComponentPropertyCode::valueChanged, this, &RKStandardComponentGUI::codeChanged);
-	connect (RKWardMainWindow::getMain(), SIGNAL (aboutToQuitRKWard()), this, SLOT (cancel()));
+	connect (RKWardMainWindow::getMain(), &RKWardMainWindow::aboutToQuitRKWard, this, &RKStandardComponentGUI::cancel);
 
 	RKStandardComponentGUI::enslaved = enslaved;
 

@@ -664,7 +664,7 @@ void RKComponentBuilder::buildElement (const QDomElement &element, XMLHelper &xm
 					swidget->setCaption (dummy);
 // TODO we should use a specialized pushbutton, that changes color if the corresponding component is dissatisfied!
 					QPushButton *button = new QPushButton (dummy, parent_widget);
-					component ()->connect (button, SIGNAL (clicked()), widget, SLOT (showGUI()));
+					component ()->connect (button, &QPushButton::clicked, swidget, &RKStandardComponent::showGUI);
 				} else {
 					widget = handle->invoke (component (), parent_widget);
 				}
@@ -714,7 +714,7 @@ void RKComponentBuilder::parseLogic (const QDomElement &element, XMLHelper &xml,
 			RKComponentPropertyBase *prop = new RKComponentPropertyBase (component (), xml.getBoolAttribute (cel, "required", false, DL_INFO));
 			component ()->addChild (id, prop);
 			prop->setInternal (true);
-			component ()->connect (prop, SIGNAL (valueChanged(RKComponentPropertyBase*)), component (), SLOT (outsideValueChanged(RKComponentPropertyBase*)));
+			component ()->connect (prop, &RKComponentPropertyBase::valueChanged, component (), &RKComponent::outsideValueChanged);
 
 			QString dummy = xml.getStringAttribute (cel, "default", QString (), DL_INFO);
 			if (!dummy.isNull ()) {

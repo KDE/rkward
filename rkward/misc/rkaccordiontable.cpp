@@ -150,10 +150,10 @@ public:
 
 	void setSourceModel (QAbstractItemModel* source_model) override {
 		/* More than these would be needed for a proper proxy of any model, but in our case, we only have to support the RKOptionsetDisplayModel */
-		connect (source_model, SIGNAL (rowsInserted(const QModelIndex&,int,int)), this, SLOT (r_rowsInserted(QModelIndex,int,int)));
-		connect (source_model, SIGNAL (rowsRemoved(const QModelIndex&,int,int)), this, SLOT (r_rowsRemoved(QModelIndex,int,int)));
-		connect (source_model, SIGNAL (dataChanged(QModelIndex,QModelIndex)), this, SLOT (r_dataChanged(QModelIndex,QModelIndex)));
-		connect (source_model, SIGNAL (layoutChanged()), this, SLOT (r_layoutChanged()));
+		connect (source_model, &QAbstractItemModel::rowsInserted, this, &RKAccordionDummyModel::r_rowsInserted);
+		connect (source_model, &QAbstractItemModel::rowsRemoved, this, &RKAccordionDummyModel::r_rowsRemoved);
+		connect (source_model, &QAbstractItemModel::dataChanged, this, &RKAccordionDummyModel::r_dataChanged);
+		connect (source_model, &QAbstractItemModel::layoutChanged, this, &RKAccordionDummyModel::r_layoutChanged);
 		QAbstractProxyModel::setSourceModel (source_model);
 	}
 

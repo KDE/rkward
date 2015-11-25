@@ -95,7 +95,7 @@ void RKTableView::setRKItemDelegate (RKItemDelegate* delegate) {
 	RK_TRACE (EDITOR);
 
 	setItemDelegate (delegate);
-	connect (delegate, SIGNAL (doCloseEditor(QWidget*,RKItemDelegate::EditorDoneReason)), this, SLOT (editorDone(QWidget*,RKItemDelegate::EditorDoneReason)));
+	connect (delegate, &RKItemDelegate::doCloseEditor, this, &RKTableView::editorDone);
 }
 
 void RKTableView::keyPressEvent (QKeyEvent *e) {

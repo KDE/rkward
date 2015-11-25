@@ -125,9 +125,9 @@ void RKComponentScriptingProxy::addChangeCommand (const QString& changed_id, con
 	if (remainder.isEmpty ()) {
 		component_commands.insert (base, command);
 		if (base->isComponent()) {
-			connect (static_cast<RKComponent*> (base), SIGNAL (componentChanged(RKComponent*)), this, SLOT (componentChanged(RKComponent*)));
+			connect (static_cast<RKComponent*> (base), &RKComponent::componentChanged, this, &RKComponentScriptingProxy::componentChanged);
 		} else {
-			connect (static_cast<RKComponentPropertyBase*> (base), SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (propertyChanged(RKComponentPropertyBase*)));
+			connect (static_cast<RKComponentPropertyBase*> (base), &RKComponentPropertyBase::valueChanged, this, &RKComponentScriptingProxy::propertyChanged);
 		}
 	} else {
 		evaluate (QString ("error ('No such property %1 (failed portion was %2)');\n").arg (changed_id, remainder));
@@ -151,7 +151,7 @@ QVariant RKComponentScriptingProxy::doRCommand (const QString& command, const QS
 
 	OutstandingCommand com;
 	com.command = new RCommand (command, RCommand::PriorityCommand | RCommand::GetStructuredData | RCommand::Plugin);
-	connect (com.command->notifier (), SIGNAL (commandFinished(RCommand*)), this, SLOT (scriptRCommandFinished(RCommand*)));
+	connect (com.command->notifier (), &RCommandNotifier::commandFinished, this, &RKComponentScriptingProxy::scriptRCommandFinished);
 	com.callback = callback;
 	outstanding_commands.append (com);
 

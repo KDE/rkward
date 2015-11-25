@@ -132,7 +132,7 @@ void RKComponentPropertyBase::connectToGovernor (RKComponentPropertyBase *govern
 	RK_TRACE (PLUGIN);
 
 	RK_ASSERT (governor);
-	connect (governor, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (governorValueChanged(RKComponentPropertyBase*)));
+	connect (governor, &RKComponentPropertyBase::valueChanged, this, &RKComponentPropertyBase::governorValueChanged);
 	governor_modifier = modifier;
 	// no need to reconcile any requirements, as the RKComponentPropertyBase does not have any requirements
 
@@ -1433,7 +1433,7 @@ void RKComponentPropertySwitch::setSources (const QString& _condition_prop, cons
 		if (!_value_props[i].isEmpty ()) p = c_parent->lookupProperty (_value_props[i], &mod, true);	// Don't try to look it up, if it's empty (as it always is for fixed_value, as this would generate a warning.)
 		value_props.append (p);	// NOTE: Even if it is 0. value() takes care of that.
 		value_prop_mods.append (mod);
-		if (p) connect (p, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (sourcePropertyChanged(RKComponentPropertyBase*)));
+		if (p) connect (p, &RKComponentPropertyBase::valueChanged, this, &RKComponentPropertySwitch::sourcePropertyChanged);
 	}
 }
 

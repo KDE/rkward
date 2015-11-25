@@ -43,7 +43,7 @@ RKInput::RKInput (const QDomElement &element, RKComponent *parent_component, QWi
 	connect (text, &RKComponentPropertyBase::valueChanged, this, &RKInput::textChanged);
 
 	setRequired (xml->getBoolAttribute (element, "required", false, DL_INFO));
-	connect (requirednessProperty (), SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (requirednessChanged(RKComponentPropertyBase*)));
+	connect (requirednessProperty (), &RKComponentPropertyBase::valueChanged, this, &RKInput::requirednessChanged);
 
 	// do all the layouting
 	QVBoxLayout *vbox = new QVBoxLayout (this);

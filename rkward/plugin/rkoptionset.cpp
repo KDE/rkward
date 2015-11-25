@@ -91,7 +91,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	builder->parseLogic (xml->getChildElement (element, "logic", DL_INFO), *xml, false);
 	builder->makeConnections ();
 	addChild ("contents", contents_container);
-	connect (standardComponent (), SIGNAL (standardInitializationComplete()), this, SLOT (fetchDefaults()));
+	connect (standardComponent (), &RKStandardComponent::standardInitializationComplete, this, &RKOptionSet::fetchDefaults);
 
 	// create columns
 	XMLChildList options = xml->getChildElements (element, "optioncolumn", DL_WARNING);

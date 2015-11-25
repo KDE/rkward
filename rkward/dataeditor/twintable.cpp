@@ -68,12 +68,17 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent), RObjectListener (ROb
 	dataview->setTwin (metaview);
 
 	// pressing the columns in the metaview-header should select columns in the dataview
+	// Note that the disconnects are on connections already set up by Qt. Since we don't want to worry about how these were set, we're disconnecting
+	// each in both old and new syntax.
 	disconnect (metaview->horizontalHeader (), SIGNAL (sectionClicked(int)));
-	connect (metaview->horizontalHeader (), SIGNAL (sectionClicked(int)), this, SLOT (metaHeaderClicked(int)));
+	disconnect (metaview->horizontalHeader (), &QHeaderView::sectionClicked, 0, 0);
+	connect (metaview->horizontalHeader (), &QHeaderView::sectionClicked, this, &TwinTable::metaHeaderClicked);
 	disconnect (metaview->horizontalHeader (), SIGNAL (sectionPressed(int)));
-	connect (metaview->horizontalHeader (), SIGNAL (sectionPressed(int)), this, SLOT (metaHeaderPressed(int)));
+	disconnect (metaview->horizontalHeader (), &QHeaderView::sectionPressed, 0, 0);
+	connect (metaview->horizontalHeader (), &QHeaderView::sectionPressed, this, &TwinTable::metaHeaderPressed);
 	disconnect (metaview->horizontalHeader (), SIGNAL (sectionEntered(int)));
-	connect (metaview->horizontalHeader (), SIGNAL (sectionEntered(int)), this, SLOT (metaHeaderEntered(int)));
+	disconnect (metaview->horizontalHeader (), &QHeaderView::sectionEntered, 0, 0);
+	connect (metaview->horizontalHeader (), &QHeaderView::sectionEntered, this, &TwinTable::metaHeaderEntered);
 	meta_header_anchor_section = -1;
 
 	// catch header context menu requests
@@ -188,7 +193,7 @@ void TwinTable::initTable (RKVarEditModel* model, RObject* object) {
 	addNotificationType (RObjectListener::MetaChanged);
 	listenForObject (object);
 	objectMetaChanged (object);
-	connect (model, SIGNAL (hasDuplicates(QStringList)), this, SLOT (containsDuplicates(QStringList)));
+	connect (model, &RKVarEditModel::hasDuplicates, this, &TwinTable::containsDuplicates);
 }
 
 void TwinTable::containsDuplicates (const QStringList& dupes) {

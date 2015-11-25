@@ -105,7 +105,7 @@ RKWorkplace::RKWorkplace (QWidget *parent) : QWidget (parent) {
 
 	history = new RKMDIWindowHistory (this);
 
-	connect (RKWardMainWindow::getMain (), SIGNAL (aboutToQuitRKWard()), this, SLOT (saveSettings()));
+	connect (RKWardMainWindow::getMain (), &RKWardMainWindow::aboutToQuitRKWard, this, &RKWorkplace::saveSettings);
 }
 
 RKWorkplace::~RKWorkplace () {
@@ -218,8 +218,8 @@ void RKWorkplace::addWindow (RKMDIWindow *window, bool attached) {
 	RK_TRACE (APP);
 
 	windows.append (window);
-	connect (window, SIGNAL (destroyed(QObject*)), this, SLOT (removeWindow(QObject*)));
-	connect (window, SIGNAL (windowActivated(RKMDIWindow*)), history, SLOT (windowActivated(RKMDIWindow*)));
+	connect (window, &RKMDIWindow::destroyed, this, &RKWorkplace::removeWindow);
+	connect (window, &RKMDIWindow::windowActivated, history, &RKMDIWindowHistory::windowActivated);
 	if (window->isToolWindow () && !window->tool_window_bar) return;
 	if (attached) attachWindow (window);
 	else detachWindow (window, false);

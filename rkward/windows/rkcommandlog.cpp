@@ -64,7 +64,7 @@ RKCommandLog::RKCommandLog (QWidget *parent, bool tool_window, const char *name)
 	initializeActivationSignals ();
 	setFocusPolicy (Qt::ClickFocus);
 
-	connect (RKSettings::tracker (), SIGNAL (settingsChanged(RKSettings::SettingsPage)), this, SLOT (settingsChanged(RKSettings::SettingsPage)));
+	connect (RKSettings::tracker (), &RKSettingsTracker::settingsChanged, this, &RKCommandLog::settingsChanged);
 	settingsChanged (RKSettings::PageWatch);
 }
 
@@ -290,7 +290,7 @@ void RKCommandLogPart::initActions () {
 
 	run_selection = RKStandardActions::runCurrent (log, log, SLOT(runSelection()));
 
-	connect (log->getView (), SIGNAL (popupMenuRequest(QPoint)), this, SLOT (doPopupMenu(QPoint)));
+	connect (log->getView (), &RKCommandLogView::popupMenuRequest, this, &RKCommandLogPart::doPopupMenu);
 }
 
 void RKCommandLogPart::doPopupMenu (const QPoint &pos) {

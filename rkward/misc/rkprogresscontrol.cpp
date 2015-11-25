@@ -152,7 +152,7 @@ void RKProgressControl::done () {
 	}
 
 	if ((!modal) && autodelete) {
-		if (dialog) disconnect (dialog, SIGNAL (destroyed()), this, SLOT (dialogDestroyed()));		// we're already dead
+		if (dialog) disconnect (dialog, &QObject::destroyed, this, &RKProgressControl::dialogDestroyed);		// we're already dead
 		deleteLater ();
 	}
 }

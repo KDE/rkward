@@ -46,8 +46,9 @@ GetFileNameWidget::GetFileNameWidget (QWidget *parent, FileType mode, bool only_
 #ifdef Q_WS_WIN
 		// TODO: Hang on Windows when trying to select any dir (also in KFileDialog::getExistingDirectory ()). KDE 4.10
 		// this hack works around this, by using QFileDialog::getExistingDirectory ().
-		edit->button ()->disconnect (SIGNAL (clicked()));
-		connect (edit->button (), SIGNAL (clicked()), this, SLOT(hackOverrideDirDialog()));
+		edit->button ()->disconnect (SIGNAL (clicked())); // Use old and new syntax, as we don't know, which way it was connected
+		disconnect (edit->button (), &QPushButton::clicked, 0, 0);
+		connect (edit->button (), &QPushButton::clicked, this, &GetFileNameWidget::hackOverrideDirDialog);
 #endif
 	} else if (mode == ExistingFile) {
 		mode_flags = KFile::File | KFile::ExistingOnly;

@@ -114,8 +114,8 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	layout->setContentsMargins (0, 0, 0, 0);
 	layout->addWidget(m_view);
 
-	connect (m_doc, SIGNAL (documentUrlChanged(KTextEditor::Document*)), this, SLOT (updateCaption(KTextEditor::Document*)));
-	connect (m_doc, SIGNAL (modifiedChanged(KTextEditor::Document*)), this, SLOT (updateCaption(KTextEditor::Document*)));                // of course most of the time this causes a redundant call to updateCaption. Not if a modification is undone, however.
+	connect (m_doc, &KTextEditor::Document::documentUrlChanged, this, &RKCommandEditorWindow::updateCaption);
+	connect (m_doc, &KTextEditor::Document::modifiedChanged, this, &RKCommandEditorWindow::updateCaption);                // of course most of the time this causes a redundant call to updateCaption. Not if a modification is undone, however.
 	connect (m_doc, &KTextEditor::Document::modifiedChanged, this, &RKCommandEditorWindow::autoSaveHandlerModifiedChanged);
 	connect (m_doc, &KTextEditor::Document::textChanged, this, &RKCommandEditorWindow::autoSaveHandlerTextChanged);
 	connect (m_view, &KTextEditor::View::selectionChanged, this, &RKCommandEditorWindow::selectionChanged);
@@ -214,13 +214,13 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	actionmenu_run_block = new KActionMenu (i18n ("Run block"), this);
 	actionmenu_run_block->setDelayed (false);	// KDE4: TODO does not work correctly in the tool bar.
 	ac->addAction ("run_block", actionmenu_run_block);
-	connect (actionmenu_run_block->menu(), SIGNAL (aboutToShow()), this, SLOT (clearUnusedBlocks()));
+	connect (actionmenu_run_block->menu(), &QMenu::aboutToShow, this, &RKCommandEditorWindow::clearUnusedBlocks);
 	actionmenu_mark_block = new KActionMenu (i18n ("Mark selection as block"), this);
 	ac->addAction ("mark_block", actionmenu_mark_block);
-	connect (actionmenu_mark_block->menu(), SIGNAL (aboutToShow()), this, SLOT (clearUnusedBlocks()));
+	connect (actionmenu_mark_block->menu(), &QMenu::aboutToShow, this, &RKCommandEditorWindow::clearUnusedBlocks);
 	actionmenu_unmark_block = new KActionMenu (i18n ("Unmark block"), this);
 	ac->addAction ("unmark_block", actionmenu_unmark_block);
-	connect (actionmenu_unmark_block->menu(), SIGNAL (aboutToShow()), this, SLOT (clearUnusedBlocks()));
+	connect (actionmenu_unmark_block->menu(), &QMenu::aboutToShow, this, &RKCommandEditorWindow::clearUnusedBlocks);
 
 	action_setwd_to_script = ac->addAction ("setwd_to_script", this, SLOT (setWDToScript()));
 	action_setwd_to_script->setText (i18n ("CD to script directory"));
@@ -554,7 +554,7 @@ void RKCommandEditorWindow::highlightLine (int linenum) {
 	if (!old_rw) m_doc->setReadWrite (false);
 }
 
-void RKCommandEditorWindow::updateCaption (KTextEditor::Document*) {
+void RKCommandEditorWindow::updateCaption () {
 	RK_TRACE (COMMANDEDITOR);
 	QString name = url ().fileName ();
 	if (name.isEmpty ()) name = url ().toDisplayString ();

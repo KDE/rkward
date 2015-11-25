@@ -173,7 +173,7 @@ public:
 	void highlightLine (int linenum);
 public slots:
 /** update Tab caption according to the current url. Display the filename-component of the URL, or - if not available - a more elaborate description of the url. Also appends a "[modified]" if appropriate */
-	void updateCaption (KTextEditor::Document* = 0);
+	void updateCaption ();
 /** called whenever it might be appropriate to show a code completion box. The box is not shown immediately, but only after a timeout (if at all) */
 	void tryCompletionProxy (KTextEditor::Document*);
 /** show a code completion box if appropriate. Use tryCompletionProxy () instead, which will call this function after a timeout */

@@ -80,8 +80,7 @@ DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture
 
 	hideEmptyMenus ();
 	// hide empty menus now, and after any reloads
-	// the signal is available since KDE 4.1.3, but we can tolerate a bit of aesthethic malfunction on earlier versions
-	connect (guiFactory (), SIGNAL(makingChanges(bool)), this, SLOT(hideEmptyMenus(bool)));
+	connect (guiFactory (), &KXMLGUIFactory::makingChanges, this, &DetachedWindowContainer::hideEmptyMenus);
 
 // sanitize toolbars
 	foreach (KToolBar *bar, toolBars ()) {
@@ -93,8 +92,8 @@ DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture
 	}
 
 // should self-destruct, when child widget is destroyed
-	connect (widget_to_capture, SIGNAL (destroyed(QObject*)), this, SLOT (viewDestroyed(QObject*)));
-	connect (widget_to_capture, SIGNAL (captionChanged(RKMDIWindow*)), this, SLOT (updateCaption(RKMDIWindow*)));
+	connect (widget_to_capture, &RKMDIWindow::destroyed, this, &DetachedWindowContainer::viewDestroyed);
+	connect (widget_to_capture, &RKMDIWindow::captionChanged, this, &DetachedWindowContainer::updateCaption);
 	setCaption (widget_to_capture->fullCaption ());	// has to come after createGUI!
 }
 

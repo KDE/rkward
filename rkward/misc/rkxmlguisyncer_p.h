@@ -46,9 +46,9 @@ Q_OBJECT
 public:
 	RKXMLGUISyncerPrivate () {
 		file_watcher = KDirWatch::self ();
-		connect (file_watcher, SIGNAL (dirty(const QString&)), this, SLOT (uiRcFileChanged(const QString&)));
+		connect (file_watcher, &KDirWatch::dirty, this, &RKXMLGUISyncerPrivate::uiRcFileChanged);
 	
-		connect (&rebuild_guis_timer, SIGNAL (timeout()), this, SLOT (rebuildGUIs()));
+		connect (&rebuild_guis_timer, &QTimer::timeout, this, &RKXMLGUISyncerPrivate::rebuildGUIs);
 		rebuild_guis_timer.setSingleShot (true);
 	}
 	~RKXMLGUISyncerPrivate () {};

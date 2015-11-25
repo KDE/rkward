@@ -185,9 +185,9 @@ void RKObjectListView::initialize () {
 	setMinimumHeight (rowHeight (genv) * 5);
 	settingsChanged ();
 
-	connect (RObjectList::getObjectList (), SIGNAL (updateComplete()), this, SLOT (updateComplete()));
-	connect (RObjectList::getObjectList (), SIGNAL (updateStarted()), this, SLOT (updateStarted()));
-	connect (selectionModel (), SIGNAL (selectionChanged(QItemSelection,QItemSelection)), this, SLOT (selectionChanged(QItemSelection,QItemSelection)));
+	connect (RObjectList::getObjectList (), &RObjectList::updateComplete, this, &RKObjectListView::updateComplete);
+	connect (RObjectList::getObjectList (), &RObjectList::updateStarted, this, &RKObjectListView::updateStarted);
+	connect (selectionModel (), &QItemSelectionModel::selectionChanged, this, static_cast<void (RKObjectListView::*)(const QItemSelection&, const QItemSelection&)>(&RKObjectListView::selectionChanged));
 	connect (settings, &RKObjectListViewSettings::settingsChanged, this, &RKObjectListView::settingsChanged);
 
 	updateComplete ();
@@ -242,7 +242,7 @@ RKObjectListViewSettings::RKObjectListViewSettings (bool tool_window, QObject* p
 		else persistent_settings[i] = RKSettingsModuleObjectBrowser::isDefaultForVarselector ((PersistentSettings) i);
 		persistent_settings_actions[i]->setCheckable (true);
 		persistent_settings_actions[i]->setChecked (persistent_settings[i]);
-		connect (persistent_settings_actions[i], SIGNAL (toggled(bool)), this, SLOT(filterSettingsChanged ()));
+		connect (persistent_settings_actions[i], &QAction::toggled, this, &RKObjectListViewSettings::filterSettingsChanged);
 	}
 
 	resetFilters (); // inits defaults
@@ -330,8 +330,8 @@ QWidget* RKObjectListViewSettings::filterWidget (QWidget *parent) {
 	layout->addLayout (bottom_layout);
 	QCheckBox* hidden_objects_box = new QCheckBox (i18n ("Show Hidden Objects"));
 	hidden_objects_box->setChecked (persistent_settings[ShowObjectsHidden]);
-	connect (hidden_objects_box, SIGNAL (clicked(bool)), persistent_settings_actions[ShowObjectsHidden], SLOT (setChecked(bool)));
-	connect (persistent_settings_actions[ShowObjectsHidden], SIGNAL (triggered(bool)), hidden_objects_box, SLOT (setChecked(bool)));
+	connect (hidden_objects_box, &QCheckBox::clicked, persistent_settings_actions[ShowObjectsHidden], &QAction::setChecked);
+	connect (persistent_settings_actions[ShowObjectsHidden], &QAction::triggered, hidden_objects_box, &QCheckBox::setChecked);
 	bottom_layout->addWidget (hidden_objects_box);
 
 	// KF5 TODO: In frameworks, there is a function KIconUtils::kIconAddOverlay(). We could use this to overlay "view-filter" and discard, then use that

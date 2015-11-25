@@ -227,8 +227,8 @@ RKCaughtX11Window::RKCaughtX11Window (RKGraphicsDevice* rkward_device, int devic
 	xembed_container->setFixedSize (rk_native_device->viewPort ()->size ());
 	resize (xembed_container->size ());
 	rk_native_device->viewPort ()->setParent (xembed_container);
-	connect (rkward_device, SIGNAL (captionChanged(QString)), this, SLOT (setCaption(QString)));
-	connect (rkward_device, SIGNAL (goingInteractive(bool,QString)), this, SLOT (deviceInteractive(bool,QString)));
+	connect (rkward_device, &RKGraphicsDevice::captionChanged, this, &RKCaughtX11Window::setCaption);
+	connect (rkward_device, &RKGraphicsDevice::goingInteractive, this, &RKCaughtX11Window::deviceInteractive);
 	stop_interaction->setVisible (true);
 	stop_interaction->setEnabled (false);
 	setCaption (rkward_device->viewPort ()->windowTitle ());

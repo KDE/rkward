@@ -115,23 +115,23 @@ RObjectBrowserInternal::RObjectBrowserInternal (QWidget *parent) : QWidget (pare
 	vbox->addWidget (update_button);
 
 	actions.insert (Help, new QAction (i18n ("Search Help"), this));
-	connect (actions[Help], SIGNAL(triggered(bool)), this, SLOT(popupHelp()));
+	connect (actions[Help], &QAction::triggered, this, &RObjectBrowserInternal::popupHelp);
 	actions.insert (Edit, new QAction (i18n ("Edit"), this));
-	connect (actions[Edit], SIGNAL(triggered(bool)), this, SLOT(popupEdit()));
+	connect (actions[Edit], &QAction::triggered, this, &RObjectBrowserInternal::popupEdit);
 	actions.insert (View, new QAction (i18n ("View"), this));
-	connect (actions[View], SIGNAL(triggered(bool)), this, SLOT(popupView()));
+	connect (actions[View], &QAction::triggered, this, &RObjectBrowserInternal::popupView);
 	actions.insert (Rename, new QAction (i18n ("Rename"), this));
-	connect (actions[Rename], SIGNAL(triggered(bool)), this, SLOT(popupRename()));
+	connect (actions[Rename], &QAction::triggered, this, &RObjectBrowserInternal::popupRename);
 	actions.insert (Copy, new QAction (i18n ("Copy to new symbol"), this));
-	connect (actions[Copy], SIGNAL(triggered(bool)), this, SLOT(popupCopy()));
+	connect (actions[Copy], &QAction::triggered, this, &RObjectBrowserInternal::popupCopy);
 	actions.insert (CopyToGlobalEnv, new QAction (i18n ("Copy to .GlobalEnv"), this));
-	connect (actions[CopyToGlobalEnv], SIGNAL(triggered(bool)), this, SLOT(popupCopyToGlobalEnv()));
+	connect (actions[CopyToGlobalEnv], &QAction::triggered, this, &RObjectBrowserInternal::popupCopyToGlobalEnv);
 	actions.insert (Delete, new QAction (i18n ("Delete"), this));
-	connect (actions[Delete], SIGNAL(triggered(bool)), this, SLOT(popupDelete()));
+	connect (actions[Delete], &QAction::triggered, this, &RObjectBrowserInternal::popupDelete);
 	actions.insert (Unload, new QAction (i18n ("Unload Package"), this));
-	connect (actions[Unload], SIGNAL(triggered(bool)), this, SLOT(popupUnload()));
+	connect (actions[Unload], &QAction::triggered, this, &RObjectBrowserInternal::popupUnload);
 	actions.insert (LoadUnloadPackages, new QAction (i18n ("Load / Unload Packages"), this));
-	connect (actions[LoadUnloadPackages], SIGNAL(triggered(bool)), RKWardMainWindow::getMain(), SLOT(slotFileLoadLibs()));
+	connect (actions[LoadUnloadPackages], &QAction::triggered, RKWardMainWindow::getMain(), &RKWardMainWindow::slotFileLoadLibs);
 
 	QAction* sep = list_view->contextMenu ()->insertSeparator (list_view->contextMenu ()->actions ().value (0));
 	list_view->contextMenu ()->insertActions (sep, actions);

@@ -564,7 +564,7 @@ void RKHTMLWindow::flushOutput () {
 	if (res==KMessageBox::Yes) {
 		QFile out_file (current_url.toLocalFile ());
 		RCommand *c = new RCommand ("rk.flush.output (" + RCommand::rQuote (out_file.fileName ()) + ", ask=FALSE)\n", RCommand::App);
-		connect (c->notifier (), SIGNAL (commandFinished(RCommand*)), this, SLOT (refresh()));
+		connect (c->notifier (), &RCommandNotifier::commandFinished, this, &RKHTMLWindow::refresh);
 		RKProgressControl *status = new RKProgressControl (this, i18n ("Flushing output"), i18n ("Flushing output"), RKProgressControl::CancellableNoProgress);
 		status->addRCommand (c, true);
 		status->doNonModal (true);
@@ -643,7 +643,7 @@ void RKHTMLWindowPart::initActions () {
 	actionCollection ()->addAction (KStandardAction::Find, "find", window->findbar, SLOT (activate()));
 	QAction* findAhead = actionCollection ()->addAction ("find_ahead", new QAction (i18n ("Find as you type"), this));
 	findAhead->setShortcut ('/');
-	connect (findAhead, SIGNAL (triggered(bool)), window->findbar, SLOT (activate()));
+	connect (findAhead, &QAction::triggered, window->findbar, &RKFindBar::activate);
 	actionCollection ()->addAction (KStandardAction::FindNext, "find_next", window->findbar, SLOT (forward()));;
 	actionCollection ()->addAction (KStandardAction::FindPrev, "find_previous", window->findbar, SLOT (backward()));;;
 }

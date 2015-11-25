@@ -55,7 +55,7 @@ RKWorkplaceView::RKWorkplaceView (QWidget *parent) : KTabWidget (parent) {
 	setMovable (true);
 
 	tabBar ()->setContextMenuPolicy (Qt::CustomContextMenu);
-	connect (tabBar (), SIGNAL (customContextMenuRequested(QPoint)), this, SLOT (showContextMenu(QPoint)));
+	connect (tabBar (), &QWidget::customContextMenuRequested, this, &RKWorkplaceView::showContextMenu);
 
 	KAcceleratorManager::setNoAccel (tabBar ());	// TODO: This is a WORKAROUND for a bug in kdelibs where tabs named "a0.txt", "a1.txt", etc. will steal the Alt+0/1... shortcuts
 	setTabBarHidden (true);		// initially
@@ -117,7 +117,7 @@ void RKWorkplaceView::addWindow (RKMDIWindow *widget) {
 
 	id = addTab (widget, icon, widget->shortCaption ());
 
-	connect (widget, SIGNAL (captionChanged(RKMDIWindow*)), this, SLOT (childCaptionChanged(RKMDIWindow*)));
+	connect (widget, &RKMDIWindow::captionChanged, this, &RKWorkplaceView::childCaptionChanged);
 	widget->show ();
 
 	if (count () > 1) setTabBarHidden (false);
@@ -134,7 +134,7 @@ void RKWorkplaceView::removeWindow (RKMDIWindow *widget, bool destroyed) {
 
 	int id = indexOf (widget);		// which page is it?
 	if (id == -1) RK_DEBUG (APP, DL_WARNING, "did not find page in RKWorkplaceView::removeWindow");
-	if (!destroyed) disconnect (widget, SIGNAL (captionChanged(RKMDIWindow*)), this, SLOT (childCaptionChanged(RKMDIWindow*)));
+	if (!destroyed) disconnect (widget, &RKMDIWindow::captionChanged, this, &RKWorkplaceView::childCaptionChanged);
 
 	removeTab (id);
 	if (count () <= 1) setTabBarHidden (true);

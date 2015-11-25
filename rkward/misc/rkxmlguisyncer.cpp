@@ -97,7 +97,7 @@ void RKXMLGUISyncerPrivate::uiRcFileChanged (const QString &path)  {
 		RK_DEBUG (MISC, DL_DEBUG, "reloaded client %p for file %s", client, qPrintable (path));
 		if (client->factory ()) {
 			affected_factories.insert (client->factory ());
-			connect (client->factory (), SIGNAL (destroyed(QObject*)), this, SLOT (guiFactoryDestroyed(QObject*)));
+			connect (client->factory (), &KXMLGUIFactory::destroyed, this, &RKXMLGUISyncerPrivate::guiFactoryDestroyed);
 		}
 
 		// find notifiers listening for this client

@@ -138,13 +138,15 @@ void RKMultiStringSelectorV2::setModel (QAbstractItemModel* model, int main_colu
 	if (model == tree_view->model ()) return;
 
 	if (tree_view->selectionModel ()) {
-		disconnect (tree_view->selectionModel (), SIGNAL (currentChanged(QModelIndex,QModelIndex)), this, SLOT (updateButtons()));
+		disconnect (tree_view->selectionModel (), &QItemSelectionModel::currentChanged, this, &RKMultiStringSelectorV2::updateButtons);
 	}
 	if (tree_view->model ()) {
-		disconnect (tree_view->model (), 0, this, SLOT (anyModelDataChange()));
+		// NOTE: Commented version gives compile error. Fortunately, we do not connect the model to any other slots, so the version below is ok.
+		//disconnect (tree_view->model (), 0, this, &RKMultiStringSelectorV2::anyModelDataChange);
+		disconnect (tree_view->model (), 0, this, 0);
 	}
 	tree_view->setModel (model);
-	connect (tree_view->selectionModel (), SIGNAL (currentChanged(QModelIndex,QModelIndex)), this, SLOT (updateButtons()));
+	connect (tree_view->selectionModel (), &QItemSelectionModel::currentChanged, this, &RKMultiStringSelectorV2::updateButtons);
 	connect (model, &QStringListModel::dataChanged, this, &RKMultiStringSelectorV2::anyModelDataChange);
 	connect (model, &QStringListModel::layoutChanged, this, &RKMultiStringSelectorV2::anyModelDataChange);
 	connect (model, &QStringListModel::rowsInserted, this, &RKMultiStringSelectorV2::anyModelDataChange);

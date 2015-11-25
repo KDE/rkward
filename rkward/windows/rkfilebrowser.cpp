@@ -106,7 +106,7 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : KVBox (parent) {
 	KConfigGroup config = KSharedConfig::openConfig ()->group ("file browser window");
 	dir->readConfig (config);
 	dir->setView (KFile::Default);
-	connect (RKWardMainWindow::getMain (), SIGNAL (aboutToQuitRKWard()), this, SLOT (saveConfig()));
+	connect (RKWardMainWindow::getMain (), &RKWardMainWindow::aboutToQuitRKWard, this, &RKFileBrowserWidget::saveConfig);
 
 	toolbar->addAction (dir->actionCollection ()->action ("up"));
 	toolbar->addAction (dir->actionCollection ()->action ("back"));
