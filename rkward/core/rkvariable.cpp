@@ -58,9 +58,7 @@ void RKVariable::setVarType (RObject::RDataType new_type, bool sync) {
 	if (data) {
 		// quick and dirty approach! TODO: make more efficient
 		QStringList list;
-#if QT_VERSION >= 0x040700
 		list.reserve (getLength ());
-#endif
 		bool labelled = (new_type == DataCharacter);
 		for (int i=0; i < getLength (); ++i) list.append (getText (i, labelled));
 

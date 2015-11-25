@@ -102,9 +102,7 @@ QStringList RKRSupport::SEXPToStringList (SEXP from_exp) {
 	// format already good? Avoid coercion (and associated copying)
 	int count = Rf_length (from_exp);
 	QStringList list;
-#if QT_VERSION >= 0x040700
 	list.reserve (count);
-#endif
 	for (int i = 0; i < count; ++i) {
 		SEXP dummy = STRING_ELT (from_exp, i);
 

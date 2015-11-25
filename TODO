@@ -6,7 +6,6 @@ KF5 port:
 Things to do:
 - Convert to new Signal / slot syntax
 - Remove kde4libssupport classes
-- Remove obsolete version checks
 - Adjust platform checks
 - Check for usages of i18n ("%1").arg(x), instead of i18n ("%1", x)
 Things to test at the end:

@@ -1015,10 +1015,9 @@ void RKCodeCompletionModel::updateCompletionList (const QString& symbol) {
 	int count = map.size ();
 	icons.clear ();
 	names.clear ();
-#if QT_VERSION >= 0x040700
 	icons.reserve (count);
 	names.reserve (count);
-#endif
+
 	// copy the map to two lists. For one thing, we need an int indexable storage, for another, caching this information is safer
 	// in case objects are removed while the completion mode is active.
 	for (RObject::RObjectSearchMap::const_iterator it = map.constBegin (); it != map.constEnd (); ++it) {

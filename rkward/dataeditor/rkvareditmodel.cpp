@@ -144,9 +144,7 @@ void RKVarEditModel::scheduleReset () {
 	if (!reset_scheduled) {
 		reset_scheduled = true;
 		QTimer::singleShot (0, this, SLOT (doResetNow()));
-#if QT_VERSION >= 0x040600
 		beginResetModel ();
-#endif
 	}
 }
 
@@ -155,11 +153,7 @@ void RKVarEditModel::doResetNow () {
 	RK_ASSERT (reset_scheduled);
 
 	reset_scheduled = false;
-#if QT_VERSION >= 0x040600
 	endResetModel ();
-#else
-	reset ();
-#endif
 }
 
 void RKVarEditModel::objectDataChanged (RObject* object, const RObject::ChangeSet *changes) {

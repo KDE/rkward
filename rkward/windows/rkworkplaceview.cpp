@@ -49,21 +49,10 @@ RKWorkplaceView::RKWorkplaceView (QWidget *parent) : KTabWidget (parent) {
 	close_button->adjustSize ();
 	setCornerWidget (close_button, Qt::TopRightCorner);
 
-#if KDE_IS_VERSION(4,1,0)
-#	if QT_VERSION >= 0x040500
 	setTabsClosable (true);
 	connect (this, SIGNAL (tabCloseRequested(int)), this, SLOT (closePage(int)));
-#	else
-	setCloseButtonEnabled (true);
-	connect (this, SIGNAL (closeRequest(QWidget*)), this, SLOT (closePage(QWidget*)));
-#	endif
-#endif
 
-#if QT_VERSION >= 0x040500
 	setMovable (true);
-#else
-	setTabReorderingEnabled (true);	// the KDE function is deprecated sind Qt 4.5 / KDE 4.4
-#endif
 
 	tabBar ()->setContextMenuPolicy (Qt::CustomContextMenu);
 	connect (tabBar (), SIGNAL (customContextMenuRequested(QPoint)), this, SLOT (showContextMenu(QPoint)));

@@ -228,9 +228,7 @@ void RKHelpSearchWindow::updateInstalledPackages () {
 	packagesList->clear ();
 	packagesList->addItem (i18n("All installed packages"));
 	packagesList->addItem (i18n("All loaded packages"));
-#if QT_VERSION >= 0x040400
 	packagesList->insertSeparator (2);
-#endif
 	packagesList->addItems (RKSessionVars::instance ()->installedPackages ());
 
 	int index = 0;

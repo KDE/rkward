@@ -83,9 +83,7 @@ ROutputList* RKRBackendSerializer::unserializeOutput (QDataStream &stream) {
 	ROutputList *ret = new ROutputList ();
 	qint32 len;
 	stream >> len;
-#if QT_VERSION >= 0x040700
 	ret->reserve (len);
-#endif
 
 	for (qint32 i = 0; i < len; ++i) {
 		ROutput* out = new ROutput;
@@ -143,9 +141,7 @@ RData* RKRBackendSerializer::unserializeData (QDataStream &stream) {
 		RData::RDataStorage data;
 		qint32 len;
 		stream >> len;
-#if QT_VERSION >= 0x040700
 		data.reserve (len);
-#endif
 		for (qint32 i = 0; i < len; ++i) {
 			data.append (unserializeData (stream));
 		}

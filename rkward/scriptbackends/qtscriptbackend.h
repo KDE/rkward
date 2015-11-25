@@ -105,12 +105,10 @@ private:
 	bool sleeping;
 };
 
-#if QT_VERSION >= 0x040700
-#	define USE_Q_SCRIPT_PROGRAM
-#	include <QScriptProgram>
+#define USE_Q_SCRIPT_PROGRAM
+#include <QScriptProgram>
 namespace RKPrecompiledQtScripts {
 	bool loadCommonScript (QScriptEngine *engine, QString scriptfile);
 };
-#endif
 
 #endif

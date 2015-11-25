@@ -783,11 +783,7 @@ void RKConsole::userSaveHistory (const QUrl &_url) {
 
 	QUrl url = _url;
 	if (url.isEmpty ()) {
-		url = KFileDialog::getSaveUrl (QUrl (), i18n ("*.Rhistory|R history files (*.Rhistory)\n*|All files (*)"), this, i18n ("Select filename to save command history")
-#if KDE_IS_VERSION(4,4,0)
-		                                    , KFileDialog::ConfirmOverwrite
-#endif
-		                                   );
+		url = KFileDialog::getSaveUrl (QUrl (), i18n ("*.Rhistory|R history files (*.Rhistory)\n*|All files (*)"), this, i18n ("Select filename to save command history"), KFileDialog::ConfirmOverwrite);
 		if (url.isEmpty ()) return;
 	}
 

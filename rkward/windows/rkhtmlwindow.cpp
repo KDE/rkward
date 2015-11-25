@@ -194,11 +194,7 @@ void RKHTMLWindow::selectionChanged () {
 		return;
 	}
 
-#if QT_VERSION >= 0x040800
 	part->run_selection->setEnabled (view->hasSelection ());
-#else
-	part->run_selection->setEnabled (!view->selectedText ().isEmpty ());
-#endif
 }
 
 void RKHTMLWindow::runSelection () {
