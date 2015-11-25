@@ -1,3 +1,4 @@
+- Fixed: Plugin variable slots taking more than one object would not be hightlighted in red while invalid
 - Plugins check for correct object type, in more places, but allow to proceed with questionable object selections
 - Fixed: RKWard package repository would be listed twice on fresh installations
 - Switch to bugs.kde.org as primary issue tracker
