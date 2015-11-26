@@ -41,7 +41,7 @@
 #include <khbox.h>
 #include <ktoolbar.h>
 #include <kactionmenu.h>
-#include <kicon.h>
+#include <QIcon>
 #include <KSharedConfig>
 
 // application specific includes
@@ -520,7 +520,7 @@ void RKWardMainWindow::initActions() {
 	view_menu_dummy->setEnabled (false);
 
 	// collections for the toolbar:
-	KActionMenu* open_any_action = new KActionMenu (KIcon ("document-open-folder"), i18n ("Open..."), this);
+	KActionMenu* open_any_action = new KActionMenu (QIcon::fromTheme("document-open-folder"), i18n ("Open..."), this);
 	open_any_action->setDelayed (false);
 	actionCollection ()->addAction ("open_any", open_any_action);
 
@@ -533,14 +533,14 @@ void RKWardMainWindow::initActions() {
 	proxy_import = new QAction (i18n ("Import"), this);
 	open_any_action->addAction (proxy_import);
 
-	KActionMenu* new_any_action = new KActionMenu (KIcon ("document-new"), i18n ("Create..."), this);
+	KActionMenu* new_any_action = new KActionMenu (QIcon::fromTheme("document-new"), i18n ("Create..."), this);
 	new_any_action->setDelayed (false);
 	actionCollection ()->addAction ("new_any", new_any_action);
 
 	new_any_action->addAction (new_data_frame);
 	new_any_action->addAction (new_command_editor);
 
-	save_any_action = new KActionMenu (KIcon ("document-save"), i18n ("Save..."), this);
+	save_any_action = new KActionMenu (QIcon::fromTheme("document-save"), i18n ("Save..."), this);
 	save_any_action->setDelayed (false);
 	actionCollection ()->addAction ("save_any", save_any_action);
 

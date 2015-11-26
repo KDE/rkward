@@ -22,7 +22,7 @@
 #include <kmessagebox.h>
 #include <kvbox.h>
 #include <ktoolinvocation.h>
-#include <kicon.h>
+#include <QIcon>
 
 #include <QLabel>
 #include <QTextEdit>
@@ -50,7 +50,7 @@ public:
 		setCaption (i18n ("Reporting bugs in RKWard"));
 		setButtons (KDialog::Ok | KDialog::Cancel);
 		setButtonText (KDialog::Ok, i18n ("Report issue"));
-		setButtonIcon (KDialog::Ok, KIcon ("tools-report-bug"));
+		setButtonIcon (KDialog::Ok, QIcon::fromTheme("tools-report-bug"));
 		KVBox *vbox = new KVBox (this);
 		setMainWidget (vbox);
 		QLabel *label = new QLabel (i18n ("<p><b>Where should I report bugs or wishes?</b></p><p>Thank you for taking the time to help improve RKWard. To help us "

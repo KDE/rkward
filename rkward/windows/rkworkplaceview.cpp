@@ -22,7 +22,7 @@
 #include <kshortcut.h>
 #include <kactioncollection.h>
 #include <QAction>
-#include <kicon.h>
+#include <QIcon>
 #include <kdeversion.h>
 #include <kacceleratormanager.h>
 #include <kmenu.h>
@@ -44,7 +44,7 @@ RKWorkplaceView::RKWorkplaceView (QWidget *parent) : KTabWidget (parent) {
 
 	// close button(s)
 	QToolButton* close_button = new QToolButton (this);
-	close_button->setIcon (KIcon ("tab-close"));
+	close_button->setIcon (QIcon::fromTheme("tab-close"));
 	connect (close_button, &QToolButton::clicked, this, &RKWorkplaceView::closeCurrentPage);
 	close_button->adjustSize ();
 	setCornerWidget (close_button, Qt::TopRightCorner);

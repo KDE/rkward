@@ -24,7 +24,7 @@
 
 #include <khistorycombobox.h>
 #include <klocale.h>
-#include <kicon.h>
+#include <QIcon>
 
 #include "rkcommonfunctions.h"
 
@@ -36,7 +36,7 @@ RKFindBar::RKFindBar (QWidget* parent, bool custom) : QWidget (parent) {
 	mlayout = new QHBoxLayout (this);
 	mlayout->setContentsMargins (0, 0, 0, 0);
 	QToolButton* close_button = new QToolButton (this);
-	close_button->setIcon (KIcon ("dialog-close"));
+	close_button->setIcon (QIcon::fromTheme("dialog-close"));
 	close_button->setAutoRaise (true);   // makes it flat
 	connect (close_button, &QToolButton::clicked, this, &RKFindBar::hide);
 	mlayout->addWidget (close_button);

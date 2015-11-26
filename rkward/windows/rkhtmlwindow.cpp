@@ -18,7 +18,7 @@
 
 #include <klibloader.h>
 #include <klocale.h>
-#include <kicon.h>
+#include <QIcon>
 #include <kmessagebox.h>
 #include <kparts/plugin.h>
 #include <kactioncollection.h>
@@ -608,13 +608,13 @@ void RKHTMLWindowPart::initActions () {
 
 	// common actions
 	actionCollection ()->addAction (KStandardAction::Copy, "copy", window->view->pageAction (QWebPage::Copy), SLOT (trigger()));
-	QAction* zoom_in = actionCollection ()->addAction ("zoom_in", new QAction (KIcon ("zoom-in"), i18n ("Zoom In"), this));
+	QAction* zoom_in = actionCollection ()->addAction ("zoom_in", new QAction (QIcon::fromTheme("zoom-in"), i18n ("Zoom In"), this));
 	connect (zoom_in, &QAction::triggered, window, &RKHTMLWindow::zoomIn);
-	QAction* zoom_out = actionCollection ()->addAction ("zoom_out", new QAction (KIcon ("zoom-out"), i18n ("Zoom Out"), this));
+	QAction* zoom_out = actionCollection ()->addAction ("zoom_out", new QAction (QIcon::fromTheme("zoom-out"), i18n ("Zoom Out"), this));
 	connect (zoom_out, &QAction::triggered, window, &RKHTMLWindow::zoomOut);
 	actionCollection ()->addAction (KStandardAction::SelectAll, "select_all", window->view->pageAction (QWebPage::SelectAll), SLOT (trigger()));
 	// unfortunately, this will only affect the default encoding, not necessarily the "real" encoding
-	KCodecAction *encoding = new KCodecAction (KIcon ("character-set"), i18n ("Default &Encoding"), this, true);
+	KCodecAction *encoding = new KCodecAction (QIcon::fromTheme("character-set"), i18n ("Default &Encoding"), this, true);
 	encoding->setStatusTip (i18n ("Set the encoding to assume in case no explicit encoding has been set in the page or in the HTTP headers."));
 	actionCollection ()->addAction ("view_encoding", encoding);
 	connect (encoding, static_cast<void (KCodecAction::*)(QTextCodec *)>(&KCodecAction::triggered), window, &RKHTMLWindow::setTextEncoding);
@@ -634,11 +634,11 @@ void RKHTMLWindowPart::initActions () {
 	// output window actions
 	outputFlush = actionCollection ()->addAction ("output_flush", window, SLOT (flushOutput()));
 	outputFlush->setText (i18n ("&Flush Output"));
-	outputFlush->setIcon (KIcon ("edit-delete"));
+	outputFlush->setIcon (QIcon::fromTheme("edit-delete"));
 
 	outputRefresh = actionCollection ()->addAction ("output_refresh", window->page->action (QWebPage::ReloadAndBypassCache), SLOT (trigger()));
 	outputRefresh->setText (i18n ("&Refresh Output"));
-	outputRefresh->setIcon (KIcon ("view-refresh"));
+	outputRefresh->setIcon (QIcon::fromTheme("view-refresh"));
 
 	actionCollection ()->addAction (KStandardAction::Find, "find", window->findbar, SLOT (activate()));
 	QAction* findAhead = actionCollection ()->addAction ("find_ahead", new QAction (i18n ("Find as you type"), this));
