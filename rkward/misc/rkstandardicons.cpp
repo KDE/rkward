@@ -27,12 +27,18 @@
 #include "../debug.h"
 
 // static
-QIcon RKStandardIcons::icons[Last];
+RKStandardIcons* RKStandardIcons::instance = 0;
 
 void RKStandardIcons::initIcons () {
 	RK_TRACE (APP);
 
-	RK_ASSERT (icons[ActionRunAll].isNull ());	// init only once
+	RK_ASSERT (!instance);	// init only once
+	instance = new RKStandardIcons ();
+	instance->doInitIcons ();
+}
+
+void RKStandardIcons::doInitIcons () {
+	RK_TRACE (APP);
 
 	// base path for icons provided by rkward itself
 	QString rkward_icon_base = RKCommonFunctions::getRKWardDataDir () + "icons/";
@@ -129,30 +135,30 @@ void RKStandardIcons::initIcons () {
 QIcon RKStandardIcons::iconForObject (const RObject* object) {
 	// don't trace this
 
-	if (!object) return icons[ObjectDataOther];
-	if (object->isDataFrame ()) return icons[ObjectDataFrame];
+	if (!object) return getIcon (ObjectDataOther);
+	if (object->isDataFrame ()) return getIcon (ObjectDataFrame);
 	if (object->isVariable()) {
 		switch (object->getDataType ()) {
 			case RObject::DataNumeric:
-				return icons[ObjectDataNumeric];
+				return getIcon (ObjectDataNumeric);
 			case RObject::DataFactor:
-				return icons[ObjectDataFactor];
+				return getIcon (ObjectDataFactor);
 			case RObject::DataCharacter:
-				return icons[ObjectDataCharacter];
+				return getIcon (ObjectDataCharacter);
 			case RObject::DataLogical:
-				return icons[ObjectDataLogical];
+				return getIcon (ObjectDataLogical);
 			case RObject::DataUnknown:
-				return icons[ObjectDataUnknown];
+				return getIcon (ObjectDataUnknown);
 			default:
-				return icons[ObjectDataOther];
+				return getIcon (ObjectDataOther);
 		}
 	}
-	if (object->isSlotsPseudoObject ()) return icons[ObjectPseudo];
-	if (object->isType (RObject::List)) return icons[ObjectList];
-	if (object->isType (RObject::Function)) return icons[ObjectFunction];
-	if (object->isType (RObject::Matrix)) return icons[ObjectMatrix];
-	if (object->isType (RObject::PackageEnv)) return icons[ObjectPackageEnvironment];
-	if (object->isType (RObject::Environment)) return icons[ObjectEnvironment];
+	if (object->isSlotsPseudoObject ()) return getIcon (ObjectPseudo);
+	if (object->isType (RObject::List)) return getIcon (ObjectList);
+	if (object->isType (RObject::Function)) return getIcon (ObjectFunction);
+	if (object->isType (RObject::Matrix)) return getIcon (ObjectMatrix);
+	if (object->isType (RObject::PackageEnv)) return getIcon (ObjectPackageEnvironment);
+	if (object->isType (RObject::Environment)) return getIcon (ObjectEnvironment);
 
 	return QIcon ();
 }
@@ -161,20 +167,20 @@ QIcon RKStandardIcons::iconForWindow (const RKMDIWindow* window) {
 	// don't trace this
 	if (!window) return QIcon ();
 
-	if (window->isType (RKMDIWindow::DataEditorWindow)) return icons[WindowDataFrameEditor];
-	if (window->isType (RKMDIWindow::CommandEditorWindow)) return icons[WindowCommandEditor];
-	if (window->isType (RKMDIWindow::OutputWindow)) return icons[WindowOutput];
-	if (window->isType (RKMDIWindow::HelpWindow)) return icons[WindowHelp];
-	if (window->isType (RKMDIWindow::X11Window)) return icons[WindowX11];
-	if (window->isType (RKMDIWindow::ObjectWindow)) return icons[WindowObject];
-	if (window->isType (RKMDIWindow::ConsoleWindow)) return icons[WindowConsole];
-	if (window->isType (RKMDIWindow::CommandLogWindow)) return icons[WindowCommandLog];
-	if (window->isType (RKMDIWindow::WorkspaceBrowserWindow)) return icons[WindowWorkspaceBrowser];
-	if (window->isType (RKMDIWindow::SearchHelpWindow)) return icons[WindowSearchHelp];
-	if (window->isType (RKMDIWindow::PendingJobsWindow)) return icons[WindowPendingJobs];
-	if (window->isType (RKMDIWindow::FileBrowserWindow)) return icons[WindowFileBrowser];
-	if (window->isType (RKMDIWindow::DebugConsoleWindow)) return icons[WindowDebugConsole];
-	if (window->isType (RKMDIWindow::CallstackViewerWindow)) return icons[WindowCallstackViewer];
+	if (window->isType (RKMDIWindow::DataEditorWindow)) return getIcon (WindowDataFrameEditor);
+	if (window->isType (RKMDIWindow::CommandEditorWindow)) return getIcon (WindowCommandEditor);
+	if (window->isType (RKMDIWindow::OutputWindow)) return getIcon (WindowOutput);
+	if (window->isType (RKMDIWindow::HelpWindow)) return getIcon (WindowHelp);
+	if (window->isType (RKMDIWindow::X11Window)) return getIcon (WindowX11);
+	if (window->isType (RKMDIWindow::ObjectWindow)) return getIcon (WindowObject);
+	if (window->isType (RKMDIWindow::ConsoleWindow)) return getIcon (WindowConsole);
+	if (window->isType (RKMDIWindow::CommandLogWindow)) return getIcon (WindowCommandLog);
+	if (window->isType (RKMDIWindow::WorkspaceBrowserWindow)) return getIcon (WindowWorkspaceBrowser);
+	if (window->isType (RKMDIWindow::SearchHelpWindow)) return getIcon (WindowSearchHelp);
+	if (window->isType (RKMDIWindow::PendingJobsWindow)) return getIcon (WindowPendingJobs);
+	if (window->isType (RKMDIWindow::FileBrowserWindow)) return getIcon (WindowFileBrowser);
+	if (window->isType (RKMDIWindow::DebugConsoleWindow)) return getIcon (WindowDebugConsole);
+	if (window->isType (RKMDIWindow::CallstackViewerWindow)) return getIcon (WindowCallstackViewer);
 
 	RK_ASSERT (false);
 	return QIcon ();

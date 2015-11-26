@@ -29,8 +29,6 @@ Also, since QIcons are only loaded on demand, and implicitely shared, this shoul
 
 Eventually all icons (even those that are only used once, so far) should be added, here. All direct constructions of QIcons (or KIconLoader) should be removed elsewhere.
 
-TODO: we should also have RKStandardActions
-
 @author Thomas Friedrichsmeier */
 class RKStandardIcons {
 public:
@@ -119,7 +117,7 @@ public:
 	};
 
 	/** get the icon with the given name */
-	static QIcon getIcon (IconName name) { return icons[name]; };
+	static QIcon getIcon (IconName name) { return instance->icons[name]; };
 
 	/** convenience function to get the icon most suited for the given RObject */
 	static QIcon iconForObject (const RObject* object);
@@ -127,7 +125,10 @@ public:
 	/** convenience function to get the icon most suited for the given RKMDIWindow */
 	static QIcon iconForWindow (const RKMDIWindow* window);
 private:
-	static QIcon icons[Last];
+	// NOTE: Using a static array of QIcons lead to crashes on exit (Qt 5.4.1). Moving that inside a class instance seems to fix the issue.
+	QIcon icons[Last];
+	void doInitIcons ();
+	static RKStandardIcons* instance;
 };
 
 #endif
