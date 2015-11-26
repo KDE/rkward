@@ -85,7 +85,7 @@ ADD_DEPENDENCIES(rkward.frontend rkward)
 INSTALL(DIRECTORY plugins/ pages DESTINATION ${DATA_INSTALL_DIR}/rkward
 	PATTERN .svn EXCLUDE)
 
-INSTALL(FILES resource.ver rkwardui.rc rkconsolepart.rc DESTINATION ${DATA_INSTALL_DIR}/rkward )
+INSTALL(FILES resource.ver rkwardui.rc rkconsolepart.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/rkward )
 
 IF(Q_WS_MAC)
 	INSTALL(TARGETS rkward.frontend DESTINATION ${BIN_INSTALL_DIR})
