@@ -28,6 +28,8 @@
 #include <QKeyEvent>
 #include <QMouseEvent>
 #include <QVBoxLayout>
+#include <QStandardPaths>
+#include <QFileInfo>
 
 #include <klocale.h>
 #include <QAction>
@@ -39,6 +41,7 @@
 #include <ktexteditor/editor.h>
 #include <ktexteditor/configinterface.h>
 #include <ktexteditor/markinterface.h>
+#include <ktexteditor_version.h>
 #include <kxmlguifactory.h>
 #include <kfiledialog.h>
 #include <kio/netaccess.h>
@@ -67,6 +70,22 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
+
+	// I'd like to have this as a runtime version-check, but for that, I'd have to create a KTextEditor::Editor::instance(), first, and by
+	// that time the katepart has already enumerated its highlighting files, and the hack below would not work (for this session, at least).
+	if (KTEXTEDITOR_VERSION < (5 << 16) | (16 << 8)) {
+		// Older katepart5 (before 5.16.0) will not accept rkward.xml installed in its own directory (as that has an index.json where
+		// rkward.xml is not included). Thus, we try to sneak in rkward.xml as a local user syntax highlighting file.
+		QDir writable_path = QDir (QDir (QStandardPaths::writableLocation (QStandardPaths::GenericDataLocation)).absoluteFilePath ("katepart5/syntax"));
+		QFileInfo rkwardxml (writable_path.absoluteFilePath ("rkward.xml"));
+		if (!rkwardxml.exists ()) {
+			writable_path.mkpath (".");
+			QFile rkwardxml_up (QStandardPaths::locate (QStandardPaths::GenericDataLocation, "katepart5/syntax/rkward.xml"));
+			rkwardxml_up.copy (rkwardxml.absoluteFilePath ());
+			QFile index_json (writable_path.absoluteFilePath ("index.json"));
+			if (index_json.exists ()) index_json.remove ();
+		}
+	}
 
 	// create a Kate-part as command-editor
 	// KF5 TODO: (How) can we make sure we are getting a katepart, here, not some other implementation. Or can we take that for granted?
