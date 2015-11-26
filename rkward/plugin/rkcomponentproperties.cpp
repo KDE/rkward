@@ -1197,7 +1197,7 @@ RKComponentPropertyConvert::RKComponentPropertyConvert (RKComponent *parent) : R
 	require_true = false;
 	c_parent = parent;
 	// get notified of own changes
-	connect (this, &RKComponentPropertyConvert::valueChanged, this, &RKComponentPropertyConvert::selfChanged);
+	connect (this, &RKComponentPropertyBase::valueChanged, this, &RKComponentPropertyConvert::selfChanged);
 }
 
 RKComponentPropertyConvert::~RKComponentPropertyConvert () {
@@ -1356,7 +1356,7 @@ RKComponentPropertySwitch::RKComponentPropertySwitch (RKComponent* parent, const
 	condition_prop = 0;
 	c_parent = parent;
 
-	connect (this, &RKComponentPropertySwitch::valueChanged, this, &RKComponentPropertySwitch::selfChanged);
+	connect (this, &RKComponentPropertyBase::valueChanged, this, &RKComponentPropertySwitch::selfChanged);
 }
 
 RKComponentPropertySwitch::~RKComponentPropertySwitch () {

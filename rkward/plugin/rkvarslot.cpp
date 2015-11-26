@@ -115,7 +115,7 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 	available->setStripDuplicates (!xml->getBoolAttribute (element, "allow_duplicates", false, DL_INFO));
 	setRequired (xml->getBoolAttribute (element, "required", false, DL_INFO));
 
-	connect (available, &RKComponentPropertyAbstractList::valueChanged, this, &RKVarSlot::availablePropertyChanged);
+	connect (available, &RKComponentPropertyBase::valueChanged, this, &RKVarSlot::availablePropertyChanged);
 	availablePropertyChanged (available);	// initialize
 }
 

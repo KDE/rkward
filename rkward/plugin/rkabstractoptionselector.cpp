@@ -29,7 +29,7 @@ RKAbstractOptionSelector::RKAbstractOptionSelector (RKComponent *parent_componen
 	addChild ("string", string = new RKComponentPropertyBase (this, false));
 	connect (string, &RKComponentPropertyBase::valueChanged, this, &RKAbstractOptionSelector::propertyChanged);
 	addChild ("number", number = new RKComponentPropertyInt (this, true, -1));
-	connect (number, &RKComponentPropertyInt::valueChanged, this, &RKAbstractOptionSelector::propertyChanged);
+	connect (number, &RKComponentPropertyBase::valueChanged, this, &RKAbstractOptionSelector::propertyChanged);
 	number->setInternal (true);
 }
 
@@ -95,7 +95,7 @@ RKComponentBase* RKAbstractOptionSelector::lookupComponent (const QString &ident
 
 		if (!(opt->enabledness_prop)) {		// requested for the first time
 			opt->enabledness_prop = new RKComponentPropertyBool (this, false);
-			connect (opt->enabledness_prop, &RKComponentPropertyBool::valueChanged, this, &RKAbstractOptionSelector::ItemPropertyChanged);
+			connect (opt->enabledness_prop, &RKComponentPropertyBase::valueChanged, this, &RKAbstractOptionSelector::ItemPropertyChanged);
 		}
 
 		return (opt->enabledness_prop);

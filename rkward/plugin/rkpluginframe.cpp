@@ -62,7 +62,7 @@ void RKPluginFrame::initCheckedProperty () {
 	}
 
 	addChild ("checked", checked = new RKComponentPropertyBool (this, false, frame->isChecked (), "1", "0"));
-	connect (checked, &RKComponentPropertyBool::valueChanged, this, &RKPluginFrame::propertyChanged);
+	connect (checked, &RKComponentPropertyBase::valueChanged, this, &RKPluginFrame::propertyChanged);
 }
 
 RKComponentBase* RKPluginFrame::lookupComponent (const QString& identifier, QString* remainder) {

@@ -88,7 +88,7 @@ RKObjectListView::RKObjectListView (bool toolwindow, QWidget *parent) : QTreeVie
 	menu = new QMenu (this);
 	settings->addSettingsToMenu (menu, 0);
 
-	connect (this, &RKObjectListView::clicked, this, &RKObjectListView::itemClicked);
+	connect (this, &QAbstractItemView::clicked, this, &RKObjectListView::itemClicked);
 }
 
 RKObjectListView::~RKObjectListView () {

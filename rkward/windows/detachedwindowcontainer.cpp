@@ -92,7 +92,7 @@ DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture
 	}
 
 // should self-destruct, when child widget is destroyed
-	connect (widget_to_capture, &RKMDIWindow::destroyed, this, &DetachedWindowContainer::viewDestroyed);
+	connect (widget_to_capture, &QObject::destroyed, this, &DetachedWindowContainer::viewDestroyed);
 	connect (widget_to_capture, &RKMDIWindow::captionChanged, this, &DetachedWindowContainer::updateCaption);
 	setCaption (widget_to_capture->fullCaption ());	// has to come after createGUI!
 }

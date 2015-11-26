@@ -37,7 +37,7 @@ RKSpinBox::RKSpinBox (QWidget *parent) : QSpinBox (parent) {
 	int_min = INT_MIN;
 	int_max = INT_MAX;
 
-	connect (this, static_cast<void (RKSpinBox::*)(int)>(&RKSpinBox::valueChanged), this, &RKSpinBox::updateValue);
+	connect (this, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSpinBox::updateValue);
 }
 
 RKSpinBox::~RKSpinBox () {

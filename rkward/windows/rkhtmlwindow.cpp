@@ -145,9 +145,9 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 
 	// We have to connect this in order to allow browsing.
 	connect (page, &RKWebPage::pageInternalNavigation, this, &RKHTMLWindow::internalNavigation);
-	connect (page, &RKWebPage::downloadRequested, this, &RKHTMLWindow::saveRequested);
-	connect (page, &RKWebPage::printRequested, this, &RKHTMLWindow::slotPrint);
-	connect (view, &KWebView::customContextMenuRequested, this, &RKHTMLWindow::makeContextMenu);
+	connect (page, &QWebPage::downloadRequested, this, &RKHTMLWindow::saveRequested);
+	connect (page, &QWebPage::printRequested, this, &RKHTMLWindow::slotPrint);
+	connect (view, &QWidget::customContextMenuRequested, this, &RKHTMLWindow::makeContextMenu);
 
 	current_history_position = -1;
 	url_change_is_from_history = false;
@@ -519,7 +519,7 @@ void RKHTMLWindow::useMode (WindowMode new_mode) {
 		setWindowIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowOutput));
 		part->setOutputWindowSkin ();
 		setMetaInfo (i18n ("Output Window"), QUrl ("rkward://page/rkward_output"), RKSettings::PageOutput);
-		connect (page, &RKWebPage::loadFinished, this, &RKHTMLWindow::scrollToBottom);
+		connect (page, &QWebPage::loadFinished, this, &RKHTMLWindow::scrollToBottom);
 //	TODO: This would be an interesting extension, but how to deal with concurrent edits?
 //		page->setContentEditable (true);
 	} else {
@@ -528,7 +528,7 @@ void RKHTMLWindow::useMode (WindowMode new_mode) {
 		type = RKMDIWindow::HelpWindow | RKMDIWindow::DocumentWindow;
 		setWindowIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowHelp));
 		part->setHelpWindowSkin ();
-		disconnect (page, &RKWebPage::loadFinished, this, &RKHTMLWindow::scrollToBottom);
+		disconnect (page, &QWebPage::loadFinished, this, &RKHTMLWindow::scrollToBottom);
 	}
 
 	updateCaption (current_url);
@@ -1031,7 +1031,7 @@ void RKOutputWindowManager::registerWindow (RKHTMLWindow *window) {
 		}
 	
 		windows.insertMulti (file, window);
-		connect (window, &RKHTMLWindow::destroyed, this, &RKOutputWindowManager::windowDestroyed);
+		connect (window, &QObject::destroyed, this, &RKOutputWindowManager::windowDestroyed);
 	} else {
 		RK_ASSERT (false);
 	}

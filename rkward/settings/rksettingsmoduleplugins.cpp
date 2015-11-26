@@ -97,7 +97,7 @@ RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *pare
 	new QLabel (i18n ("Default height of code display (pixels)"), code_size_hbox);
 	code_size_box = new RKSpinBox (code_size_hbox);
 	code_size_box->setIntMode (20, 5000, code_size);
-	connect (code_size_box, static_cast<void (RKSpinBox::*)(int)>(&RKSpinBox::valueChanged), this, &RKSettingsModulePlugins::settingChanged);
+	connect (code_size_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModulePlugins::settingChanged);
 	group_layout->addWidget (code_size_hbox);
 
 	main_vbox->addWidget (code_frame);

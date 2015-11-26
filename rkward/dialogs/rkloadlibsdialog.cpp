@@ -73,7 +73,7 @@ RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool 
 
 	configure_pluginmaps_pageitem = addChild (new RKPluginMapSelectionWidget (this), i18n ("Manage RKWard Plugins"));
 
-	connect (this, &RKLoadLibsDialog::currentPageChanged, this, &RKLoadLibsDialog::slotPageChanged);
+	connect (this, &KPageDialog::currentPageChanged, this, &RKLoadLibsDialog::slotPageChanged);
 	QTimer::singleShot (0, this, SLOT (slotPageChanged()));
 	num_child_widgets = 4;
 	was_accepted = false;

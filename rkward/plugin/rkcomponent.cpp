@@ -279,15 +279,15 @@ void RKComponent::createDefaultProperties () {
 	addChild ("enabled", enabledness_property = new RKComponentPropertyBool (this, false));
 	enabledness_property->setBoolValue (true);
 	enabledness_property->setInternal (true);
-	connect (enabledness_property, &RKComponentPropertyBool::valueChanged, this, &RKComponent::propertyValueChanged);
+	connect (enabledness_property, &RKComponentPropertyBase::valueChanged, this, &RKComponent::propertyValueChanged);
 	addChild ("visible", visibility_property = new RKComponentPropertyBool (this, false));
 	visibility_property->setBoolValue (true);
 	visibility_property->setInternal (true);
-	connect (visibility_property, &RKComponentPropertyBool::valueChanged, this, &RKComponent::propertyValueChanged);
+	connect (visibility_property, &RKComponentPropertyBase::valueChanged, this, &RKComponent::propertyValueChanged);
 	addChild ("required", requiredness_property = new RKComponentPropertyBool (this, false));
 	requiredness_property->setBoolValue (true);
 	requiredness_property->setInternal (true);
-	connect (requiredness_property, &RKComponentPropertyBool::valueChanged, this, &RKComponent::propertyValueChanged);
+	connect (requiredness_property, &RKComponentPropertyBase::valueChanged, this, &RKComponent::propertyValueChanged);
 }
 
 RKComponent::~RKComponent () {

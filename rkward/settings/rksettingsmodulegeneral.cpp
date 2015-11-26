@@ -144,7 +144,7 @@ RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *pare
 	warn_size_object_edit_box = new RKSpinBox (this);
 	warn_size_object_edit_box->setIntMode (0, INT_MAX, warn_size_object_edit);
 	warn_size_object_edit_box->setSpecialValueText (i18n ("No limit"));
-	connect (warn_size_object_edit_box, static_cast<void (RKSpinBox::*)(int)>(&RKSpinBox::valueChanged), this, &RKSettingsModuleGeneral::settingChanged);
+	connect (warn_size_object_edit_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleGeneral::settingChanged);
 	main_vbox->addWidget (label);
 	main_vbox->addWidget (warn_size_object_edit_box);
 

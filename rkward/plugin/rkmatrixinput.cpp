@@ -80,8 +80,8 @@ RKMatrixInput::RKMatrixInput (const QDomElement& element, RKComponent* parent_co
 	column_count->setInternal (true);
 	addChild ("columns", column_count);
 	addChild ("tsv", tsv_data);
-	connect (row_count, &RKComponentPropertyInt::valueChanged, this, &RKMatrixInput::dimensionPropertyChanged);
-	connect (column_count, &RKComponentPropertyInt::valueChanged, this, &RKMatrixInput::dimensionPropertyChanged);
+	connect (row_count, &RKComponentPropertyBase::valueChanged, this, &RKMatrixInput::dimensionPropertyChanged);
+	connect (column_count, &RKComponentPropertyBase::valueChanged, this, &RKMatrixInput::dimensionPropertyChanged);
 	connect (tsv_data, &RKComponentPropertyBase::valueChanged, this, &RKMatrixInput::tsvPropertyChanged);
 	updating_tsv_data = false;
 

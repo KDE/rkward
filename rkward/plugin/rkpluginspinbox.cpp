@@ -71,9 +71,9 @@ RKPluginSpinBox::RKPluginSpinBox (const QDomElement &element, RKComponent *paren
 	}
 
 	// connect
-	connect (spinbox, static_cast<void (RKSpinBox::*)(int)>(&RKSpinBox::valueChanged), this, &RKPluginSpinBox::valueChangedFromUi);
-	connect (intvalue, &RKComponentPropertyInt::valueChanged, this, &RKPluginSpinBox::valueChanged);
-	connect (realvalue, &RKComponentPropertyDouble::valueChanged, this, &RKPluginSpinBox::valueChanged);
+	connect (spinbox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKPluginSpinBox::valueChangedFromUi);
+	connect (intvalue, &RKComponentPropertyBase::valueChanged, this, &RKPluginSpinBox::valueChanged);
+	connect (realvalue, &RKComponentPropertyBase::valueChanged, this, &RKPluginSpinBox::valueChanged);
 	updating = false;
 
 	// finish layout

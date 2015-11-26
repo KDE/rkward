@@ -67,7 +67,7 @@ RKSettingsModuleCommandEditor::RKSettingsModuleCommandEditor (RKSettings *gui, Q
 	completion_min_chars_box = new RKSpinBox (group);
 	completion_min_chars_box->setIntMode (1, INT_MAX, completion_min_chars);
 	completion_min_chars_box->setEnabled (completion_enabled);
-	connect (completion_min_chars_box, static_cast<void (RKSpinBox::*)(int)>(&RKSpinBox::valueChanged), this, &RKSettingsModuleCommandEditor::settingChanged);
+	connect (completion_min_chars_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleCommandEditor::settingChanged);
 	box_layout->addWidget (label);
 	box_layout->addWidget (completion_min_chars_box);
 
@@ -78,7 +78,7 @@ RKSettingsModuleCommandEditor::RKSettingsModuleCommandEditor (RKSettings *gui, Q
 	completion_timeout_box = new RKSpinBox (group);
 	completion_timeout_box->setIntMode (0, INT_MAX, completion_timeout);
 	completion_timeout_box->setEnabled (completion_enabled);
-	connect (completion_timeout_box, static_cast<void (RKSpinBox::*)(int)>(&RKSpinBox::valueChanged), this, &RKSettingsModuleCommandEditor::settingChanged);
+	connect (completion_timeout_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleCommandEditor::settingChanged);
 	box_layout->addWidget (label);
 	box_layout->addWidget (completion_timeout_box);
 
@@ -100,7 +100,7 @@ RKSettingsModuleCommandEditor::RKSettingsModuleCommandEditor (RKSettings *gui, Q
 	label = new QLabel (i18n ("Autosave interval (minutes)"), group);
 	autosave_interval_box = new RKSpinBox (group);
 	autosave_interval_box->setIntMode (1, INT_MAX, autosave_interval);
-	connect (autosave_interval_box, static_cast<void (RKSpinBox::*)(int)>(&RKSpinBox::valueChanged), this, &RKSettingsModuleCommandEditor::settingChanged);
+	connect (autosave_interval_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleCommandEditor::settingChanged);
 	box_layout->addWidget (label);
 	box_layout->addWidget (autosave_interval_box);
 	box_layout->addSpacing (RKGlobals::spacingHint ());
@@ -120,7 +120,7 @@ RKSettingsModuleCommandEditor::RKSettingsModuleCommandEditor (RKSettings *gui, Q
 	num_recent_files_box = new RKSpinBox (group);
 	num_recent_files_box->setIntMode (1, INT_MAX, num_recent_files);
 	RKCommonFunctions::setTips (i18n ("<p>The number of recent files to remember (in the Open Recent R Script File menu).</p>") + RKCommonFunctions::noteSettingsTakesEffectAfterRestart (), num_recent_files_box, label);
-	connect (num_recent_files_box, static_cast<void (RKSpinBox::*)(int)>(&RKSpinBox::valueChanged), this, &RKSettingsModuleCommandEditor::settingChanged);
+	connect (num_recent_files_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleCommandEditor::settingChanged);
 	box_layout->addWidget (label);
 	box_layout->addWidget (num_recent_files_box);
 	box_layout->addSpacing (RKGlobals::spacingHint ());

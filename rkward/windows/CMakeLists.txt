@@ -37,4 +37,4 @@ INSTALL(FILES
 	rkcommandlogpart.rc
 	rktoplevelwindowgui.rc
 	rkstandardactions.rc
-	DESTINATION ${DATA_INSTALL_DIR}/rkward)
+	DESTINATION ${KXMLGUI_INSTALL_DIR}/rkward)

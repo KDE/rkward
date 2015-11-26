@@ -161,7 +161,7 @@ void RKProgressControl::createDialog () {
 	RK_TRACE (MISC);
 
 	dialog = new RKProgressControlDialog (text, caption, mode, modal);
-	connect (dialog, &RKProgressControlDialog::destroyed, this, &RKProgressControl::dialogDestroyed);
+	connect (dialog, &QObject::destroyed, this, &RKProgressControl::dialogDestroyed);
 	if (is_done) done ();
 	for (int i = 0; i < output_log.count (); ++i) {
 		dialog->addOutput (&(output_log[i]));
@@ -243,7 +243,7 @@ RKProgressControlDialog::RKProgressControlDialog (const QString &text, const QSt
 
 	setDetailsWidget (output_box);
 	// it's important to use a queued connection, here. Otherwise, if the details widget gets shown due to error output, scrollDown() would only scroll to the position directly *above* the new output.
-	connect (this, &RKProgressControlDialog::aboutToShowDetails, this, &RKProgressControlDialog::scrollDown, Qt::QueuedConnection);
+	connect (this, &KDialog::aboutToShowDetails, this, &RKProgressControlDialog::scrollDown, Qt::QueuedConnection);
 
 	KDialog::ButtonCodes button_codes = KDialog::Cancel;
 	if (mode_flags & RKProgressControl::OutputSwitchable) button_codes |= KDialog::Details;

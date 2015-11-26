@@ -138,7 +138,7 @@ RObjectBrowserInternal::RObjectBrowserInternal (QWidget *parent) : QWidget (pare
 
 	connect (list_view, &RKObjectListView::aboutToShowContextMenu, this, &RObjectBrowserInternal::contextMenuCallback);
 	
-	connect (list_view, &RKObjectListView::doubleClicked, this, &RObjectBrowserInternal::doubleClicked);
+	connect (list_view, &QAbstractItemView::doubleClicked, this, &RObjectBrowserInternal::doubleClicked);
 	
 	resize (minimumSizeHint ().expandedTo (QSize (400, 480)));
 

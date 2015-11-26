@@ -221,7 +221,7 @@ void RKWorkplace::addWindow (RKMDIWindow *window, bool attached) {
 	RK_TRACE (APP);
 
 	windows.append (window);
-	connect (window, &RKMDIWindow::destroyed, this, &RKWorkplace::removeWindow);
+	connect (window, &QObject::destroyed, this, &RKWorkplace::removeWindow);
 	connect (window, &RKMDIWindow::windowActivated, history, &RKMDIWindowHistory::windowActivated);
 	if (window->isToolWindow () && !window->tool_window_bar) return;
 	if (attached) attachWindow (window);
@@ -884,7 +884,7 @@ RKMDIWindowHistoryWidget* RKMDIWindowHistory::getSwitcher (QAction* prev_action,
 	if (switcher) return switcher;
 
 	switcher = new RKMDIWindowHistoryWidget ();
-	connect (switcher, &RKMDIWindowHistoryWidget::destroyed, this, &RKMDIWindowHistory::switcherDestroyed);
+	connect (switcher, &QObject::destroyed, this, &RKMDIWindowHistory::switcherDestroyed);
 	switcher->addAction (prev_action);
 	switcher->addAction (next_action);
 	switcher->update (recent_windows);

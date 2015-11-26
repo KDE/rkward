@@ -50,7 +50,7 @@ RKWorkplaceView::RKWorkplaceView (QWidget *parent) : KTabWidget (parent) {
 	setCornerWidget (close_button, Qt::TopRightCorner);
 
 	setTabsClosable (true);
-	connect (this, &RKWorkplaceView::tabCloseRequested, this, static_cast<void (RKWorkplaceView::*)(int)>(&RKWorkplaceView::closePage));
+	connect (this, &QTabWidget::tabCloseRequested, this, static_cast<void (RKWorkplaceView::*)(int)>(&RKWorkplaceView::closePage));
 
 	setMovable (true);
 

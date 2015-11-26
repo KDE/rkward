@@ -40,7 +40,7 @@ TwinTableMember::TwinTableMember (QWidget *parent) : RKTableView (parent){
 	horizontalHeader ()->setContextMenuPolicy (Qt::CustomContextMenu);
 	connect (horizontalHeader (), &QWidget::customContextMenuRequested, this, &TwinTableMember::handleContextMenuRequest);
 	setContextMenuPolicy (Qt::CustomContextMenu);
-	connect (this, &TwinTableMember::customContextMenuRequested, this, &TwinTableMember::handleContextMenuRequest);
+	connect (this, &QWidget::customContextMenuRequested, this, &TwinTableMember::handleContextMenuRequest);
 
 	updating_twin = false;
 	connect (this, &TwinTableMember::blankSelectionRequest, this, &TwinTableMember::blankSelected);

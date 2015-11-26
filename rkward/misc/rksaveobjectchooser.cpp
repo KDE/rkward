@@ -109,7 +109,7 @@ void RKSaveObjectChooser::selectRootObject () {
 	list_view->setSelectionMode (QAbstractItemView::SingleSelection);
 	list_view->initialize ();
 	list_view->setObjectCurrent (root_object);
-	connect (list_view, &RKObjectListView::doubleClicked, dialog, &KDialog::accept);
+	connect (list_view, &QAbstractItemView::doubleClicked, dialog, &KDialog::accept);
 
 	dialog->exec ();
 

@@ -278,8 +278,8 @@ RKAccordionTable::RKAccordionTable (QWidget* parent) : QTreeView (parent) {
 	delegate->pmodel = pmodel;
 	setItemDelegateForColumn (0, delegate);
 
-	connect (this, &RKAccordionTable::expanded, this, &RKAccordionTable::rowExpanded);
-	connect (this, &RKAccordionTable::clicked, this, &RKAccordionTable::rowClicked);
+	connect (this, &QTreeView::expanded, this, &RKAccordionTable::rowExpanded);
+	connect (this, &QTreeView::clicked, this, &RKAccordionTable::rowClicked);
 }
 
 RKAccordionTable::~RKAccordionTable () {
@@ -502,9 +502,9 @@ void RKAccordionTable::setModel (QAbstractItemModel* model) {
 
 	pmodel->setSourceModel (model);
 	QTreeView::setModel (pmodel);
-	connect (pmodel, &RKAccordionDummyModel::layoutChanged, this, &RKAccordionTable::updateWidget);
-	connect (pmodel, &RKAccordionDummyModel::rowsInserted, this, &RKAccordionTable::updateWidget);
-	connect (pmodel, &RKAccordionDummyModel::rowsRemoved, this, &RKAccordionTable::updateWidget);
+	connect (pmodel, &QAbstractItemModel::layoutChanged, this, &RKAccordionTable::updateWidget);
+	connect (pmodel, &QAbstractItemModel::rowsInserted, this, &RKAccordionTable::updateWidget);
+	connect (pmodel, &QAbstractItemModel::rowsRemoved, this, &RKAccordionTable::updateWidget);
 
 	if (pmodel->rowCount () > 0) expand (pmodel->index (0, 0));
 

@@ -44,11 +44,11 @@ RKPluginSaveObject::RKPluginSaveObject (const QDomElement &element, RKComponent 
 	connect (selection, &RKComponentPropertyBase::valueChanged, this, &RKPluginSaveObject::externalChange);
 	selection->setInternal (true);	// the two separate properties "parent" and "objectname" are used for (re-)storing.
 	addChild ("parent", parent = new RKComponentPropertyRObjects (this, false));
-	connect (parent, &RKComponentPropertyRObjects::valueChanged, this, &RKPluginSaveObject::externalChange);
+	connect (parent, &RKComponentPropertyBase::valueChanged, this, &RKPluginSaveObject::externalChange);
 	addChild ("objectname", objectname = new RKComponentPropertyBase (this, false));
 	connect (objectname, &RKComponentPropertyBase::valueChanged, this, &RKPluginSaveObject::externalChange);
 	addChild ("active", active = new RKComponentPropertyBool (this, false, false, "1", "0"));
-	connect (active, &RKComponentPropertyBool::valueChanged, this, &RKPluginSaveObject::externalChange);
+	connect (active, &RKComponentPropertyBase::valueChanged, this, &RKPluginSaveObject::externalChange);
 	if (!checkable) active->setInternal (true);
 
 	// create GUI

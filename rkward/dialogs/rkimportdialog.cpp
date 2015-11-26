@@ -77,7 +77,7 @@ RKImportDialog::RKImportDialog (const QString &context_id, QWidget *parent) : KF
 	// initialize
 	setMode (KFile::File | KFile::ExistingOnly | KFile::LocalOnly);
 	setFilter (formats);
-	connect (this, &RKImportDialog::filterChanged, this, &RKImportDialog::filterWasChanged);
+	connect (this, &KFileDialog::filterChanged, this, &RKImportDialog::filterWasChanged);
 	filterWasChanged (QString ());
 	show ();
 }

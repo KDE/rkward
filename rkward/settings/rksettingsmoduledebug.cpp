@@ -48,7 +48,7 @@ RKSettingsModuleDebug::RKSettingsModuleDebug (RKSettings *gui, QWidget *parent) 
 	label = new QLabel (i18n ("Debug level"), this);
 	debug_level_box = new RKSpinBox (this);
 	debug_level_box->setIntMode (DL_TRACE, DL_FATAL, DL_FATAL - RK_Debug_Level);
-	connect (debug_level_box, static_cast<void (RKSpinBox::*)(int)>(&RKSpinBox::valueChanged), this, &RKSettingsModuleDebug::settingChanged);
+	connect (debug_level_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleDebug::settingChanged);
 	main_vbox->addWidget (label);
 	main_vbox->addWidget (debug_level_box);
 
@@ -84,7 +84,7 @@ RKSettingsModuleDebug::RKSettingsModuleDebug (RKSettings *gui, QWidget *parent) 
 	label = new QLabel (i18n ("Command timeout"), this);
 	command_timeout_box = new RKSpinBox (this);
 	command_timeout_box->setIntMode (0, 10000, RK_Debug_CommandStep);
-	connect (command_timeout_box, static_cast<void (RKSpinBox::*)(int)>(&RKSpinBox::valueChanged), this, &RKSettingsModuleDebug::settingChanged);
+	connect (command_timeout_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleDebug::settingChanged);
 	main_vbox->addWidget (label);
 	main_vbox->addWidget (command_timeout_box);
 

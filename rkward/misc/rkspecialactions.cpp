@@ -25,7 +25,7 @@ RKPasteSpecialAction::RKPasteSpecialAction (QObject* parent) : KPasteTextAction 
 	RK_TRACE (MISC);
 
 	setText (i18n ("Paste special..."));
-	connect (this, &RKPasteSpecialAction::triggered, this, &RKPasteSpecialAction::doSpecialPaste);
+	connect (this, &QAction::triggered, this, &RKPasteSpecialAction::doSpecialPaste);
 }
 
 RKPasteSpecialAction::~RKPasteSpecialAction () {

@@ -119,8 +119,8 @@ RKSettingsModuleGraphics::RKSettingsModuleGraphics (RKSettings *gui, QWidget *pa
 	group_layout->addWidget (new QLabel (i18n ("Default height (inches)"), group));
 	group_layout->addWidget (graphics_height_box = new RKSpinBox (group));
 	graphics_height_box->setRealMode (1, 100.0, graphics_height, 1, 3);
-	connect (graphics_width_box, static_cast<void (RKSpinBox::*)(int)>(&RKSpinBox::valueChanged), this, &RKSettingsModuleGraphics::boxChanged);
-	connect (graphics_height_box, static_cast<void (RKSpinBox::*)(int)>(&RKSpinBox::valueChanged), this, &RKSettingsModuleGraphics::boxChanged);
+	connect (graphics_width_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleGraphics::boxChanged);
+	connect (graphics_height_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleGraphics::boxChanged);
 	main_vbox->addWidget (group);
 
 	kde_printing_box = new QCheckBox (i18n ("Use KDE printer dialog for printing devices (if available)"), this);

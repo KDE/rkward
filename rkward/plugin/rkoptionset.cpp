@@ -58,7 +58,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	accordion = new RKAccordionTable (this);
 	switcher->addWidget (accordion);
 
-	connect (accordion, &RKAccordionTable::activated, this, &RKOptionSet::currentRowChanged);
+	connect (accordion, static_cast<void (RKAccordionTable::*)(int)>(&RKAccordionTable::activated), this, &RKOptionSet::currentRowChanged);
 	connect (accordion, &RKAccordionTable::addRow, this, &RKOptionSet::addRow);
 	connect (accordion, &RKAccordionTable::removeRow, this, &RKOptionSet::removeRow);
 
@@ -80,7 +80,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	current_row = new RKComponentPropertyInt (this, false, active_row);
 	current_row->setInternal (true);
 	addChild ("current_row", current_row);		// NOTE: read-write
-	connect (current_row, &RKComponentPropertyInt::valueChanged, this, &RKOptionSet::currentRowPropertyChanged);
+	connect (current_row, &RKComponentPropertyBase::valueChanged, this, &RKOptionSet::currentRowPropertyChanged);
 
 	// first build the contents, as we will need to refer to the elements inside, later
 	model = new RKOptionSetDisplayModel (this);
@@ -118,7 +118,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 		RKComponentPropertyStringList *column_property = new RKComponentPropertyStringList (this, false);
 		column_property->setInternal (external);	// Yes, looks strange, indeed. External properties should simply not be serialized / restored...
 		addChild (id, column_property);
-		connect (column_property, &RKComponentPropertyStringList::valueChanged, this, &RKOptionSet::columnPropertyChanged);
+		connect (column_property, &RKComponentPropertyBase::valueChanged, this, &RKOptionSet::columnPropertyChanged);
 
 		if (!label.isEmpty ()) {
 			col_inf.display_index = visible_column_labels.size ();

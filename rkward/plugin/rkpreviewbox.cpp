@@ -47,7 +47,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	// create and add property
 	addChild ("state", state = new RKComponentPropertyBool (this, true, preview_active, "active", "inactive"));
 	state->setInternal (true);	// restoring this does not make sense.
-	connect (state, &RKComponentPropertyBool::valueChanged, this, &RKPreviewBox::changedState);
+	connect (state, &RKComponentPropertyBase::valueChanged, this, &RKPreviewBox::changedState);
 
 	// create checkbox
 	QVBoxLayout *vbox = new QVBoxLayout (this);
@@ -66,7 +66,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	RKComponentBase *cp = parentComponent ()->lookupComponent ("code", &dummy);
 	if (cp && dummy.isNull () && (cp->type () == PropertyCode)) {
 		code_property = static_cast<RKComponentPropertyCode *> (cp);
-		connect (code_property, &RKComponentPropertyCode::valueChanged, this, &RKPreviewBox::changedCode);
+		connect (code_property, &RKComponentPropertyBase::valueChanged, this, &RKPreviewBox::changedCode);
 	} else {
 		RK_DEBUG (PLUGIN, DL_WARNING, "Could not find code property in preview box (remainder: %s)", dummy.toLatin1().data ());
 		code_property = 0;

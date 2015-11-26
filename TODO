@@ -6,6 +6,10 @@ KF5 port:
 Things to do:
 - Remove kde4libssupport classes
 - Adjust platform checks
+- There seems to be a runtime problem resolving signals, if there is another function in the same (derived) class by the same name.
+  - Check for this, somehow, and fix (e.g. by using the proper base class in signal specification)
+  - This regexp looks for signals specifications that look like a member of a class not starting with Q or K (i.e., probably, an RKWard-class):
+    "connect[^:]*[\&\(][^QK][a-zA-Z]*::" . Hopefully, checking these will be enough?
 - Since the conversion from KIcon to QIcon, there is crash on exit, sometimes. Google turns up this: https://github.com/OtterBrowser/otter-browser/issues/889
 - Device window embedding / remove qwinhost
 Things to test at the end:

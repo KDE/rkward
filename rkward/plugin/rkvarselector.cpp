@@ -44,7 +44,7 @@ RKVarSelector::RKVarSelector (const QDomElement &element, RKComponent *parent_co
 	addChild ("selected", selected = new RKComponentPropertyRObjects (this, false));
 	selected->setInternal (true);
 	addChild ("root", root = new RKComponentPropertyRObjects (this, false));
-	connect (root, &RKComponentPropertyRObjects::valueChanged, this, &RKVarSelector::rootChanged);
+	connect (root, &RKComponentPropertyBase::valueChanged, this, &RKVarSelector::rootChanged);
 	root->setInternal (true);
 
 	QVBoxLayout *vbox = new QVBoxLayout (this);
