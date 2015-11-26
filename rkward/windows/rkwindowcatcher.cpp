@@ -73,7 +73,7 @@ void RKWindowCatcher::stop (int new_cur_device) {
 			KWindowInfo wininfo = KWindowSystem::windowInfo (created_window, NET::WMName | NET::WMGeometry);
 #endif
 		} else {
-#if defined Q_WS_MAC
+#if defined Q_OS_MAC
 			KMessageBox::information (0, i18n ("You have tried to embed a new R graphics device window in RKWard. However, this is not currently supported in this build of RKWard on Mac OS X. See http://rkward.kde.org/mac for more information."), i18n ("Could not embed R X11 window"), "embed_x11_device_not_supported");
 #else
 			RKErrorDialog::reportableErrorMessage (0, i18n ("You have tried to embed a new R graphics device window in RKWard. However, either no window was created, or RKWard failed to detect the new window. If you think RKWard should have done better, consider reporting this as a bug. Alternatively, you may want to adjust Settings->Configure RKWard->Onscreen Graphics."), QString (), i18n ("Could not embed R X11 window"), "failure_to_detect_x11_device");
@@ -156,7 +156,7 @@ void RKWindowCatcher::killDevice (int device_number) {
 
 #include <QScrollArea>
 #include <qlabel.h>
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #	include "../qwinhost/qwinhost.h"
 #	include <windows.h>
 #elif defined Q_WS_X11
@@ -191,7 +191,7 @@ RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : 
 	commonInit (device_number);
 	embedded = window_to_embed;
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	// unfortunately, trying to get KWindowInfo as below hangs on windows (KDElibs 4.2.3)
 	WINDOWINFO wininfo;
 	wininfo.cbSize = sizeof (WINDOWINFO);
@@ -277,7 +277,7 @@ void RKCaughtX11Window::doEmbed () {
 	RK_TRACE (MISC);
 
 	if (embedded) {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		capture = new QWinHost (xembed_container);
 		capture->setWindow (embedded);
 		capture->setFocusPolicy (Qt::ClickFocus);

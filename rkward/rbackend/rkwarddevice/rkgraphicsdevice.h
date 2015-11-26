@@ -24,7 +24,7 @@
 #include <QPainter>
 #include <QLabel>
 
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
 // On Mac, drawing on a pixmap does not work correctly. Probably can only be done inside paint
 // events. (MacOSX 10.6.8, Qt 4.8.4).
 // On X11, similar problems seem to occur on some, but not all systems. Only on old versions?

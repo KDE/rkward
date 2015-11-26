@@ -30,7 +30,7 @@
 #include "rcommandstack.h"
 #include "rkrbackendprotocol_backend.h"
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 extern "C" {
 	void RK_scheduleIntr();
 }

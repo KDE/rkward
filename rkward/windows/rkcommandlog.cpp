@@ -30,6 +30,7 @@
 #include <qsplitter.h>
 #include <QMenu>
 #include <QContextMenuEvent>
+#include <QFontDatabase>
 
 #include <klocale.h>
 #include <kactioncollection.h>
@@ -224,7 +225,7 @@ void RKCommandLog::clearLog () {
 	log_view->setPlainText (QString ());
 
 	// set a fixed width font
-	QFont font = KGlobalSettings::fixedFont ();
+	QFont font = QFontDatabase::systemFont (QFontDatabase::FixedFont);
 	log_view->setCurrentFont (font);
 }
 
@@ -266,6 +267,7 @@ void RKCommandLogView::selectAll () {
 #include <kxmlguifactory.h>
 #include <QAction>
 #include <QGuiApplication>
+#include <QFontDatabase>
 
 RKCommandLogPart::RKCommandLogPart (RKCommandLog *for_log) : KParts::Part (0) {
 	RK_TRACE (APP);

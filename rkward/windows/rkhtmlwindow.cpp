@@ -43,6 +43,7 @@
 #include <QPrintDialog>
 #include <QMenu>
 #include <QTextCodec>
+#include <QFontDatabase>
 
 #include "../rkglobals.h"
 #include "../rbackend/rinterface.h"
@@ -72,8 +73,8 @@ RKWebPage::RKWebPage (RKHTMLWindow* window): KWebPage (window, KPartsIntegration
 	RKWebPage::window = window;
 	new_window = false;
 	direct_load = false;
-	settings ()->setFontFamily (QWebSettings::StandardFont, KGlobalSettings::generalFont ().family ());
-	settings ()->setFontFamily (QWebSettings::FixedFont, KGlobalSettings::fixedFont ().family ());
+	settings ()->setFontFamily (QWebSettings::StandardFont, QFontDatabase::systemFont(QFontDatabase::GeneralFont).family ());
+	settings ()->setFontFamily (QWebSettings::FixedFont, QFontDatabase::systemFont(QFontDatabase::FixedFont).family ());
 }
 
 bool RKWebPage::acceptNavigationRequest (QWebFrame* frame, const QNetworkRequest& request, QWebPage::NavigationType type) {

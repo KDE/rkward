@@ -207,7 +207,7 @@ void RKWardMainWindow::doPostInit () {
 	gui_rebuild_locked = false;
 
 	show ();
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	// detect and disable the buggy "native" file dialogs
 	KConfigGroup cg = KGlobal::config ().data ()->group ("KFileDialog Settings");
 	if (cg.readEntry ("Native", true)) {
@@ -440,7 +440,7 @@ void RKWardMainWindow::initActions() {
 
 #if 0
 	// TODO: Fix import dialog and re-enable it: https://mail.kde.org/pipermail/rkward-devel/2015-June/004156.html
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	// TODO: find the cause and fix it! http://sourceforge.net/p/rkward/bugs/54/
 #	ifdef __GNUC__
 #		warning TODO: import data dialog is disabled on windows due to bug in kdelibs
@@ -776,7 +776,7 @@ void RKWardMainWindow::askOpenWorkspace (const QUrl &url) {
 	slotSetStatusBarText(i18n("Opening workspace..."));
 	QUrl lurl = url;
 	if (lurl.isEmpty ()) {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	// getOpenUrl(QUrl("kfiledialog:///<rfiles>"), ...) causes a hang on windows (KDElibs 4.2.3).
 #	ifdef __GNUC__
 #		warning Track this bug down and/or report it
@@ -913,7 +913,7 @@ void RKWardMainWindow::slotOpenCommandEditor () {
 	RK_TRACE (APP);
 	KEncodingFileDialog::Result res;
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	// getOpenUrls(QUrl("kfiledialog:///<rfiles>"), ...) causes a hang on windows (KDElibs 4.2.3).
 #	ifdef __GNUC__
 #		warning Track this bug down and/or report it

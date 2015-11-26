@@ -18,7 +18,7 @@
 #include "rkreventloop.h"
 #include "rkrbackend.h"
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #	define Win32
 #	include <R.h>
 #else
@@ -32,7 +32,7 @@ extern "C" void RK_doIntr ();
 
 static void processX11EventsWorker (void *) {
 // this basically copied from R's unix/sys-std.c (Rstd_ReadConsole)
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
 	for (;;) {
 		fd_set *what;
 		what = R_checkActivityEx(R_wait_usec > 0 ? R_wait_usec : 50, 1, RK_doIntr);

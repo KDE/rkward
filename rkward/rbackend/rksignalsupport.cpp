@@ -28,7 +28,7 @@
 typedef void (*rk_sighandler_t) (int);
 
 namespace RKSignalSupportPrivate {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	rk_sighandler_t r_sigsegv_handler = 0;
 	rk_sighandler_t default_sigsegv_handler = 0;
 	rk_sighandler_t r_sigill_handler = 0;
@@ -50,7 +50,7 @@ namespace RKSignalSupportPrivate {
 		signal (num, internal_sigint_handler);
 	}
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	void signal_proxy (int signum) {
 		rk_sighandler_t r_handler = r_sigsegv_handler;
 		rk_sighandler_t default_handler = default_sigsegv_handler;
@@ -73,7 +73,7 @@ namespace RKSignalSupportPrivate {
 
 		// if we are not in the R thread, handling the signal in R does more harm than good.
 		if (RKRBackendProtocolBackend::inRThread ()) {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 			if (r_handler) {
 				r_handler (signum);
 				return;
@@ -89,7 +89,7 @@ namespace RKSignalSupportPrivate {
 #endif
 		}
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		if (default_handler) {
 			default_handler (signum);
 			return;
@@ -115,7 +115,7 @@ namespace RKSignalSupportPrivate {
 void RKSignalSupport::saveDefaultSignalHandlers () {
 	RK_TRACE (RBACKEND);
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	RKSignalSupportPrivate::default_sigsegv_handler = signal (SIGSEGV, SIG_DFL);
 	RKSignalSupportPrivate::default_sigill_handler = signal (SIGILL, SIG_DFL);
 	RKSignalSupportPrivate::default_sigabrt_handler = signal (SIGABRT, SIG_DFL);
@@ -129,7 +129,7 @@ void RKSignalSupport::saveDefaultSignalHandlers () {
 void RKSignalSupport::installSignalProxies () {
 	RK_TRACE (RBACKEND);
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	RKSignalSupportPrivate::r_sigsegv_handler = signal (SIGSEGV, &RKSignalSupportPrivate::signal_proxy);
 	RKSignalSupportPrivate::r_sigill_handler = signal (SIGILL, &RKSignalSupportPrivate::signal_proxy);
 	RKSignalSupportPrivate::r_sigabrt_handler = signal (SIGABRT, &RKSignalSupportPrivate::signal_proxy);
@@ -164,7 +164,7 @@ void RKSignalSupport::installSigIntAndUsrHandlers (void (*handler) (void)) {
 	RK_ASSERT (!RKSignalSupportPrivate::r_sigint_handler);
 	RKSignalSupportPrivate::new_sigint_handler = handler;
 	RKSignalSupportPrivate::r_sigint_handler = signal (SIGINT, &RKSignalSupportPrivate::internal_sigint_handler);
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
 	// default action in R: save and quit. We use these as a proxy for SIGINT, instead.
 	signal (SIGUSR1, &RKSignalSupportPrivate::internal_sigint_handler);
 	signal (SIGUSR2, &RKSignalSupportPrivate::internal_sigint_handler);

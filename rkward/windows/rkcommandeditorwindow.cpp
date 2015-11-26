@@ -1102,7 +1102,7 @@ KTextEditor::View* RKCommandHighlighter::getView () {
 //////////
 QString exportText(const QString& text, const KTextEditor::Attribute::Ptr& attrib, const KTextEditor::Attribute::Ptr& m_defaultAttribute) {
 	if ( !attrib || !attrib->hasAnyProperty() || attrib == m_defaultAttribute ) {
-		return (Qt::escape(text));
+		return (text.toHtmlEscaped());
 	}
 
 	QString ret;
@@ -1124,7 +1124,7 @@ QString exportText(const QString& text, const KTextEditor::Attribute::Ptr& attri
 					.arg(writeBackground ? QString(QLatin1String("background:") + attrib->background().color().name() + QLatin1Char(';')) : QString()));
 	}
 
-	ret.append (Qt::escape(text));
+	ret.append (text.toHtmlEscaped());
 
 	if ( writeBackground || writeForeground ) {
 		ret.append ("</span>");

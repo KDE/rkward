@@ -43,7 +43,7 @@ QString findExeAtPath (const QString appname, const QString &path) {
 	QDir dir (path);
 	dir.makeAbsolute ();
 	if (QFileInfo (dir.filePath (appname)).isExecutable ()) return dir.filePath (appname);
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	if (QFileInfo (dir.filePath (appname + ".exe")).isExecutable ()) return dir.filePath (appname + ".exe");
 	if (QFileInfo (dir.filePath (appname + ".com")).isExecutable ()) return dir.filePath (appname + ".com");
 	if (QFileInfo (dir.filePath (appname + ".bat")).isExecutable ()) return dir.filePath (appname + ".bat");
@@ -55,11 +55,11 @@ QString findRKWardAtPath (const QString &path) {
 	return findExeAtPath ("rkward.frontend", path);
 }
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #include <windows.h>
 #endif
 QString quoteCommand (const QString &orig) {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 // Get short path name as a safe way to pass all sort of commands on the Windows shell
 // credits to http://erasmusjam.wordpress.com/2012/10/01/get-8-3-windows-short-path-names-in-a-qt-application/
 	wchar_t input[orig.size()+1];
@@ -74,7 +74,7 @@ QString quoteCommand (const QString &orig) {
 #endif
 }
 
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
 // see http://blog.qt.digia.com/blog/2006/03/16/starting-interactive-processes-with-qprocess/
 // Need an interactive process e.g. for running through gdb
 #	include <unistd.h>
@@ -161,7 +161,7 @@ int main (int argc, char *argv[]) {
 	}
 
 	// MacOS may need some path adjustments, first
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
 	QString oldpath = qgetenv ("PATH");
 	if (!oldpath.contains (INSTALL_PATH)) {
 		//ensure that PATH is set to include what we deliver with the bundle
@@ -178,7 +178,7 @@ int main (int argc, char *argv[]) {
 	if (kf5_config_exe.isNull ()) kf5_config_exe = findExeAtPath ("kf5-config", app.applicationDirPath ());
 	if (kf5_config_exe.isNull ()) kf5_config_exe = findExeAtPath ("kf5-config", QDir (app.applicationDirPath ()).filePath ("KDE/bin"));
 	if (kf5_config_exe.isNull ()) {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	QStringList syspath = QString (qgetenv ("PATH")).split (';');
 #else
 	QStringList syspath = QString (qgetenv ("PATH")).split (':');
@@ -197,7 +197,7 @@ int main (int argc, char *argv[]) {
 	QDir kde_dir (QFileInfo (kf5_config_exe).absolutePath ());
 	kde_dir.makeAbsolute ();
 	QString kde_dir_safe_path = quoteCommand (kde_dir.path ());
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	QString kdeinit5_exe = findExeAtPath ("kdeinit5", kde_dir.path ());
 	qputenv ("PATH", QString (kde_dir_safe_path + ';' + qgetenv ("PATH")).toLocal8Bit ());
 	if (debug_level > 3) qDebug ("Adding %s to the system path", qPrintable (kde_dir_safe_path));
@@ -207,7 +207,7 @@ int main (int argc, char *argv[]) {
 	if (debug_level > 3) qDebug ("Setting environment variable RKWARD_ENSURE_PREFIX=%s", qPrintable (kde_dir_safe_path));
 
 	QString rkward_frontend_exe = findRKWardAtPath (app.applicationDirPath ());	// this is for running directly from a build tree
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
 	if (rkward_frontend_exe.isNull ()) rkward_frontend_exe = findRKWardAtPath (app.applicationDirPath () + "/rkward.frontend.app/Contents/MacOS"); 	// this is for running directly from a build tree
 #endif
 	if (rkward_frontend_exe.isNull ()) rkward_frontend_exe = findRKWardAtPath (RKWARD_FRONTEND_LOCATION);
@@ -224,7 +224,7 @@ int main (int argc, char *argv[]) {
 		exit (1);
 	}
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	// Explicit initialization of KDE, in case Windows 7 asks for admin privileges
 	if (kdeinit5_exe.isNull ()) {
 		kdeinit5_exe = findExeAtPath ("kdeinit5", QFileInfo (rkward_frontend_exe).absolutePath ());
@@ -286,7 +286,7 @@ int main (int argc, char *argv[]) {
 	if (debug_level > 2) qDebug ("Starting frontend: %s %s", qPrintable (r_exe), qPrintable (call_args.join (" ")));
 
 	InteractiveProcess proc;
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	proc.setProcessChannelMode (debugger_args.isEmpty () ? QProcess::MergedChannels : QProcess::ForwardedChannels);   // ForwardedChannels causes console window to pop up!
 #else
 	proc.setProcessChannelMode (QProcess::ForwardedChannels);

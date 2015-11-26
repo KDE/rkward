@@ -124,9 +124,9 @@ QStringList RKSessionVars::frontendSessionInfo () {
 	lines.append ("KDE version (runtime): " + QString (KDE::versionString ()));
 	lines.append ("KDE version (compile time): " KDE_VERSION_STRING);
 	lines.append (QString ("Qt version (runtime): ") + qVersion ());
-#if defined Q_WS_WIN
+#if defined Q_OS_WIN
 	lines.append ("Windows runtime version (refer to QSysInfo documentation to translate code into human readable form): 0x" + QString::number (QSysInfo::windowsVersion (), 16));
-#elif defined Q_WS_MAC
+#elif defined Q_OS_MAC
 	lines.append ("MacOS runtime version (refer to QSysInfo documentation to translate code into human readable form): 0x" + QString::number (QSysInfo::MacintoshVersion, 16));
 #endif
 	lines.append ("Local KDE directory: " + KGlobal::dirs ()->localkdedir ());

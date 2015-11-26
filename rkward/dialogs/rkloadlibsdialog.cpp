@@ -265,7 +265,7 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, QString to_
 		QString mcaption = i18n ("Selected library location not writable");
 		QString message = i18n ("<p>The directory you have selected for installation (%1) is not writable with your current user permissions.</p>"
 			"<p>Would you like to install to %2, instead (you can also press \"Cancel\" and use the \"Configure Repositories\"-button to set up a different directory)?</p>", to_libloc, altlibloc);
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		message.append (i18n ("<p>Alternatively, if you have access to an administrator account on this machine, you can use that to install the package(s), or "
 			"you could change the permissions of '%1'. Sorry, automatic switching to Administrator is not yet supported in RKWard on Windows.</p>", to_libloc));
 		int res = KMessageBox::warningContinueCancel (this, message, mcaption, KGuiItem (i18n ("Install to %1", altlibloc)));
@@ -330,7 +330,7 @@ void RKLoadLibsDialog::runInstallationCommand (const QString& command, bool as_r
 	QString R_binary (getenv ("R_BINARY"));
 	QString call;
 	QStringList params;
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	RK_ASSERT (!as_root);
 	call = R_binary;
 #else

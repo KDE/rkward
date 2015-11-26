@@ -90,7 +90,7 @@ RKSettingsModuleGraphics::RKSettingsModuleGraphics (RKSettings *gui, QWidget *pa
 	button = new QRadioButton (i18n ("Embed original device"), group);
 	replace_standard_devices_group->addButton (button, (int) EmbedDevice);
 	group_layout->addWidget (button);
-#if not (defined Q_WS_X11 || defined Q_WS_WIN)
+#if not (defined Q_WS_X11 || defined Q_OS_WIN)
 	button->setEnabled (false);
 #endif
 	button = new QRadioButton (i18n ("No device integration"), group);
@@ -243,7 +243,7 @@ QStringList RKSettingsModuleGraphics::makeRRunTimeOptionCommands () {
 	if (default_device == RKDevice) command.append ("\"RK\"");
 	else if (default_device == OtherDevice) command.append (RObject::rQuote (default_device_other));
 	else {
-#if defined Q_WS_WIN
+#if defined Q_OS_WIN
 	command.append ("\"windows\"");
 #elif defined Q_OS_MAC
 	command.append ("ifelse (capabilities(\"quartz\"), \"quartz\", \"X11\")");

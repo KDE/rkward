@@ -17,7 +17,7 @@
 
 #include "rkrbackend.h"
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #	include <winsock2.h>
 #	include <windows.h>
 #	undef ERROR 	// clashes with R
@@ -77,7 +77,7 @@ extern "C" {
 #include <R_ext/Parse.h>
 #include <Rembedded.h>
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #	include <R_ext/RStartup.h>
 #	include <R_ext/Utils.h>
 
@@ -91,7 +91,7 @@ extern "C" {
 #	include <Rinterface.h>
 #endif
 
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
 #	include <signal.h>		// needed for pthread_kill
 #	include <pthread.h>		// seems to be needed at least on FreeBSD
 #	include <unistd.h>		// for non-blocking pipes
@@ -118,7 +118,7 @@ extern "C" {
 void RK_scheduleIntr () {
 	RK_DEBUG (RBACKEND, DL_DEBUG, "interrupt scheduled");
 	RKRBackend::repl_status.interrupted = true;
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	UserBreak = 1;
 #else
 	RKSignalSupport::callOldSigIntHandler ();
@@ -134,7 +134,7 @@ void RKRBackend::scheduleInterrupt () {
 	if (RKRBackendProtocolBackend::inRThread ()) {
 		RK_scheduleIntr ();
 	} else {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		RK_scheduleIntr ();		// Thread-safe on windows?!
 #else
 		pthread_kill ((pthread_t) RKRBackendProtocolBackend::instance ()->r_thread_id, SIGUSR1);	// NOTE: SIGUSR1 relays to SIGINT
@@ -420,7 +420,7 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 	return 1;
 }
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 int RReadConsoleWin (const char* prompt, char* buf, int buflen, int hist) {
 	return RReadConsole (prompt, (unsigned char*) buf, buflen, hist);
 }
@@ -759,7 +759,7 @@ RKRBackend::RKRBackend () : stdout_stderr_mutex (QMutex::Recursive) {
 	this_pointer = this;
 }
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 void RKRBackend::setupCallbacks () {
 	RK_TRACE (RBACKEND);
 
@@ -969,7 +969,7 @@ bool RKRBackend::startR () {
 	char* argv[3] = { qstrdup ("--slave"), qstrdup ("--no-save"), qstrdup ("--no-restore") };
 	Rf_initialize_R (argc, argv);
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	R_set_command_line_arguments(argc, argv);
 	FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
 #endif
@@ -985,7 +985,7 @@ bool RKRBackend::startR () {
 	stdout_stderr_fd = pfd[0];
 #endif
 
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
 	// It is important to set this *early*, so R does not bail out, if there is an error in .Rprofile.
 	// On windows, set in connectCallbacks() for technical reasons, and that seems sufficient.
 	R_Interactive = (Rboolean) TRUE;
@@ -993,7 +993,7 @@ bool RKRBackend::startR () {
 
 	setup_Rmainloop ();
 
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
 	// safety check: If we are beyond the stack boundaries already, we better disable stack checking
 	// this has to come *after* the first setup_Rmainloop ()!
 	Rboolean stack_ok = R_ToplevelExec (R_CheckStackWrapper, (void *) 0);
@@ -1006,7 +1006,7 @@ bool RKRBackend::startR () {
 	}
 #endif
 
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
 	// I am not sure, whether it is necessary to repeat this, here. It is not in R 3.0.0.
 	// But historically, it was placed here (after setup_Rmainloop(), and conceivably there
 	// was a reason to that (might have been reset in setup_Rmainloop() in earlier versions

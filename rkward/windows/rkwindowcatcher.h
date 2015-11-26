@@ -193,7 +193,7 @@ private:
 	RKProgressControl *error_dialog;
 
 	static QHash<int, RKCaughtX11Window*> device_windows;
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	QWinHost *capture;
 #elif defined Q_WS_X11
 	QX11EmbedContainer *capture;

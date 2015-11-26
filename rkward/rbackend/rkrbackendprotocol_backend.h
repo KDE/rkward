@@ -44,7 +44,7 @@ private:
 	QString rkd_server_name;
 	static RKRBackendProtocolBackend* _instance;
 	QThread *r_thread;
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
 	friend void completeForkChild ();
 	Qt::HANDLE r_thread_id;
 #endif

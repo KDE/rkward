@@ -73,7 +73,7 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 
 	// I'd like to have this as a runtime version-check, but for that, I'd have to create a KTextEditor::Editor::instance(), first, and by
 	// that time the katepart has already enumerated its highlighting files, and the hack below would not work (for this session, at least).
-	if (KTEXTEDITOR_VERSION < (5 << 16) | (16 << 8)) {
+	if (KTEXTEDITOR_VERSION < ((5 << 16) | (16 << 8))) {
 		// Older katepart5 (before 5.16.0) will not accept rkward.xml installed in its own directory (as that has an index.json where
 		// rkward.xml is not included). Thus, we try to sneak in rkward.xml as a local user syntax highlighting file.
 		QDir writable_path = QDir (QDir (QStandardPaths::writableLocation (QStandardPaths::GenericDataLocation)).absoluteFilePath ("katepart5/syntax"));
@@ -932,7 +932,7 @@ void RKConsole::showContextHelp () {
 
 void RKConsole::initializeActions (KActionCollection *ac) {
 	RK_TRACE (APP);
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
 #	define REAL_CTRL_KEY Qt::MetaModifier
 #	define REAL_CMD_KEY Qt::ControlModifier
 #else

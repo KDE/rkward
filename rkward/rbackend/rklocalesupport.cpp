@@ -20,7 +20,7 @@
 #include <qtextcodec.h>
 #include <QByteArray>
 
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
 	// see http://sourceforge.net/p/rkward/patches/4/
 	// seems to be needed for GCC 4.3 as well.
 #	include <langinfo.h>

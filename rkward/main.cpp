@@ -73,7 +73,7 @@
 #include "settings/rksettingsmoduledebug.h"
 #include "windows/rkdebugmessagewindow.h"
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	// these are needed for the exit hack.
 #	include <windows.h>
 #endif

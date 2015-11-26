@@ -39,7 +39,7 @@
 QString findBackendAtPath (const QString &path) {
 	QDir dir (path);
 	dir.makeAbsolute ();
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	QString ret = dir.filePath ("rkward.rbackend.exe");
 #else
 	QString ret = dir.filePath ("rkward.rbackend");
@@ -93,7 +93,7 @@ void RKFrontendTransmitter::run () {
 	connect (backend, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), this, &RKFrontendTransmitter::backendExit);
 	QString backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath ());
 	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "/rbackend");	// for running directly from the build-dir
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
         if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "/../../../rbackend");
 #endif
 	if (backend_executable.isEmpty ()) handleTransmissionError (i18n ("The backend executable could not be found. This is likely to be a problem with your installation."));

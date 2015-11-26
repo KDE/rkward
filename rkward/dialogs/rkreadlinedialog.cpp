@@ -28,6 +28,7 @@
 #include <klocale.h>
 #include <kvbox.h>
 #include <kglobalsettings.h>
+#include <QFontDatabase>
 
 #include "../rbackend/rcommand.h"
 
@@ -57,7 +58,7 @@ RKReadLineDialog::RKReadLineDialog (QWidget *parent, const QString &caption, con
 		QTextEdit *output = new QTextEdit (page);
 		output->setUndoRedoEnabled (false);
 		output->setPlainText (QString ());
-		output->setCurrentFont (KGlobalSettings::fixedFont ());
+		output->setCurrentFont (QFontDatabase::systemFont(QFontDatabase::FixedFont));
 		output->setLineWrapMode (QTextEdit::NoWrap);
 		output->insertPlainText (context);
 		output->setReadOnly (true);

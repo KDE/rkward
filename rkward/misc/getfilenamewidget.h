@@ -48,7 +48,7 @@ public slots:
 	void locationEditChanged (const QString &);
 signals:
 	void locationChanged ();
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 private slots:
 	void hackOverrideDirDialog ();
 #endif

@@ -26,6 +26,7 @@
 
 #include <klocale.h>
 #include <kglobalsettings.h>
+#include <QFontDatabase>
 
 #include "rbackend/rinterface.h"
 #include "rkglobals.h"
@@ -236,7 +237,7 @@ void RObjectViewerWidget::setText (const QString& text) {
 	RK_TRACE (APP);
 
 	area->setPlainText (QString ());
-	QFont font = KGlobalSettings::fixedFont ();
+	QFont font = QFontDatabase::systemFont(QFontDatabase::FixedFont);
 	area->setCurrentFont (font);
 
 	area->insertPlainText (text);

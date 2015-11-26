@@ -125,7 +125,7 @@ RKRBackendProtocolBackend::RKRBackendProtocolBackend (const QString &storage_dir
 	_instance = this;
 	new RKRBackend ();
 	r_thread = QThread::currentThread ();	// R thread == main thread
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
 	r_thread_id = QThread::currentThreadId ();
 #endif
 	data_dir = storage_dir;
