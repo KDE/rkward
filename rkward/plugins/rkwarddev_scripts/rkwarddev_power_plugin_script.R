@@ -80,7 +80,14 @@ pwr.proptype.drop <- rk.XML.dropdown("Samples",
   ), help=FALSE, # In the help file, same as t.test dropdown
   id.name="drp_pwr_proptype")
 
-pwr.input.power <- rk.XML.spinbox(label="Power", min=0, max=1, initial=0.8, help="Targeted power of test (1 minus Type II error probability)")
+pwr.input.power <- rk.XML.spinbox(
+  label="Power",
+  min=0,
+  max=1,
+  initial=0.8,
+  help="Targeted power of test (1 minus Type II error probability)",
+  i18n="Here 'power' is a common statistical term and should not be translated"
+)
 pwr.input.df <- rk.XML.spinbox(label="Degrees of freedom", id.name="pwr_spin_df", min=1, real=FALSE, initial=30,
                                help="Only shown for chi-square statistics: Targeted degrees of freedom. As a reminder, this is (rows &minus; 1)&times;(columns &minus; 1) for a test of independence,
                                and (cells &minus; 1) for a test of goodness of fit.")
@@ -120,7 +127,7 @@ pwr.input.signif <- rk.XML.spinbox(label="Significance level", min=0, max=1, ini
 
 
 save.results.pwr <- rk.XML.saveobj("Save results to workspace", initial="pwr.result",
-  component="Power analysis", help=FALSE)
+  component="Power analysis", help=FALSE, i18n="Here 'power' is a common statistical term and should not be translated")
 
 tab.pwr.data <- rk.XML.row(
     rk.XML.col(
@@ -184,7 +191,7 @@ tab.pwr.data <- rk.XML.row(
 
 pwr.full.dialog <- rk.XML.dialog(
   tab.pwr.data,
-  label="Power analysis")
+  label="Power analysis", i18n="Here 'power' is a common statistical term and should not be translated")
 
 ## logic section
   lgc.sect.pwr <- rk.XML.logic(
@@ -460,9 +467,9 @@ pwr.js.calc <- rk.paste.JS(
 )
 
 helper.make.effect.size.legend <- function (indicator, small, medium, large) {
-   indicator <- dQuote (indicator)
+   indicator <- paste0("\"", indicator, "\"")
    rk.paste.JS (echo(
-      "\trk.print(", i18n ("Interpretation of effect size <strong>%1</strong> (according to Cohen):", indicator, context="Argument is name of statistic, e.g. 'r'"), ")\n",
+      "\trk.print(", i18n ("Interpretation of effect size <strong>%1</strong> (according to Cohen): ", indicator, context="Argument is name of statistic, e.g. 'r'"), ")\n",
       "\trk.results(data.frame(", i18n ("small", context="effect size"), paste0 ("=", small, ", "),
                                   i18n ("medium", context="effect size"), paste0 ("=", medium, ", "),
                                   i18n ("large", context="effect size"), paste0 ("=", large, "))\n"))
@@ -551,8 +558,8 @@ pwr.plugin.dir <<- rk.plugin.skeleton(
   ),
   pluginmap=list(name="Power analysis", hierarchy=list("analysis")),
   dependencies=dependencies.info,
-#  create=c("pmap", "xml", "js", "desc", "rkh"),	# standalone
-  create=c("xml", "js", "rkh"),
+ create=c("pmap", "xml", "js", "desc", "rkh"),	# standalone
+#   create=c("xml", "js", "rkh"),
   overwrite=overwrite,
   tests=FALSE,
 # edit=TRUE,
