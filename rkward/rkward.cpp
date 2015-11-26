@@ -208,6 +208,7 @@ void RKWardMainWindow::doPostInit () {
 
 	show ();
 #ifdef Q_OS_WIN
+	// KF5 TODO: Still needed?
 	// detect and disable the buggy "native" file dialogs
 	KConfigGroup cg = KGlobal::config ().data ()->group ("KFileDialog Settings");
 	if (cg.readEntry ("Native", true)) {

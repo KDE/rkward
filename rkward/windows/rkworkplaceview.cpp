@@ -19,13 +19,13 @@
 
 #include <ktabbar.h>
 #include <klocale.h>
-#include <kshortcut.h>
+#include <QKeySequence>
 #include <kactioncollection.h>
 #include <QAction>
 #include <QIcon>
 #include <kdeversion.h>
 #include <kacceleratormanager.h>
-#include <kmenu.h>
+#include <QMenu>
 
 #include <qapplication.h>
 #include <qevent.h>
@@ -182,7 +182,7 @@ void RKWorkplaceView::showContextMenu (const QPoint &pos) {
 	int tab = tabBar ()->tabAt (pos);
 	if (tab < 0) return;	// no context menu for the empty area
 
-	KMenu* m = new KMenu (this);
+	QMenu* m = new QMenu (this);
 	QAction *action = KStandardAction::close (this, SLOT (contextMenuClosePage()), this);
 	action->setData (tab);
 	m->addAction (action);

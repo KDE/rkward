@@ -47,6 +47,7 @@
 #include <kxmlguifactory.h>
 #include <kfiledialog.h>
 #include <kio/netaccess.h>
+#include <QFileDialog>
 
 #include "rkglobals.h"
 #include "rkward.h"
@@ -812,7 +813,7 @@ void RKConsole::userLoadHistory (const QUrl &_url) {
 
 	QUrl url = _url;
 	if (url.isEmpty ()) {
-		url = KFileDialog::getOpenUrl (QUrl (), i18n ("*.Rhistory|R history files (*.Rhistory)\n*|All files (*)"), this, i18n ("Select command history file to load"));
+		url = QFileDialog::getOpenFileUrl (this, i18n ("Select command history file to load"), QUrl (), i18n ("R history files (*.Rhistory);;All files (*)"));
 		if (url.isEmpty ()) return;
 	}
 

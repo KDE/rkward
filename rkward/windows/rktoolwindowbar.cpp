@@ -20,7 +20,7 @@
 #include "rktoolwindowbar.h"
 
 #include <khbox.h>
-#include <kmenu.h>
+#include <QMenu>
 #include <klocale.h>
 #include <kparts/partmanager.h>
 #include <kselectaction.h>
@@ -274,7 +274,7 @@ bool RKToolWindowBar::eventFilter (QObject *obj, QEvent *ev) {
 			RKMDIWindow *widget = idToWidget (id_of_popup);
 			RK_ASSERT (widget);
 			if (widget) {
-				KMenu menu (this);
+				QMenu menu (this);
 
 				QAction *a = menu.addAction (RKStandardIcons::getIcon (widget->isAttached () ? RKStandardIcons::ActionDetachWindow : RKStandardIcons::ActionAttachWindow), widget->isAttached () ? i18n("Detach") : i18n("Attach"));
 				connect (a, &QAction::triggered, this, &RKToolWindowBar::changeAttachment);
@@ -301,14 +301,14 @@ bool RKToolWindowBar::eventFilter (QObject *obj, QEvent *ev) {
 void RKToolWindowBar::contextMenuEvent (QContextMenuEvent* event) {
 	RK_TRACE (APP);
 
-	KMenu menu (this);
+	QMenu menu (this);
 	foreach (const RKToolWindowList::ToolWindowRepresentation& rep, RKToolWindowList::registeredToolWindows ()) {
 		QAction *a = menu.addAction (rep.window->windowIcon (), rep.window->shortCaption ());
 		a->setCheckable (true);
 		a->setChecked (rep.window->tool_window_bar == this);
 		a->setData (rep.id);
 	}
-	connect (&menu, &KMenu::triggered, this, &RKToolWindowBar::addRemoveToolWindow);
+	connect (&menu, &QMenu::triggered, this, &RKToolWindowBar::addRemoveToolWindow);
 	menu.exec (event->globalPos ());
 
 	event->accept ();

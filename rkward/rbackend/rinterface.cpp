@@ -66,6 +66,7 @@ RKWindowCatcher *window_catcher;
 #include <qvalidator.h>
 
 #include <stdlib.h>
+#include <QFileDialog>
 
 // flush new pieces of output after this period of time:
 #define FLUSH_INTERVAL 100
@@ -857,9 +858,9 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 	} else if (type == RBackendRequest::ChooseFile) {
 		QString filename;
 		if (request->params["new"].toBool ()) {
-			filename = KFileDialog::getSaveFileName ();
+			filename = QFileDialog::getSaveFileName ();
 		} else {
-			filename = KFileDialog::getOpenFileName ();
+			filename = QFileDialog::getOpenFileName ();
 		}
 		request->params["result"] = QVariant (filename);
 	} else if (type == RBackendRequest::SetParamsFromBackend) {

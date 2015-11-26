@@ -37,7 +37,7 @@
 #include <QClipboard>
 
 #include <klocale.h>
-#include <kmenu.h>
+#include <QMenu>
 #include <kmessagebox.h>
 #include <kfiledialog.h>
 #include <QAction>
