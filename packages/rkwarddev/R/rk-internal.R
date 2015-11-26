@@ -1293,7 +1293,7 @@ rk.check.options <- function(options, parent){
           checked <- FALSE
         }
         if("i18n" %in% names(options[[this.num]])){
-          i18n <- isTRUE(as.logical(options[[this.num]][["i18n"]]))
+          i18n <- options[[this.num]][["i18n"]]
         } else {
           i18n <- NULL
         }
