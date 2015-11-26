@@ -28,7 +28,7 @@ dependencies.info <- rk.XML.dependencies(
 rk.set.comp("Power analysis")
 
 pwr.parameter.rad <- rk.XML.radio(label="Parameter to determine", options=list(
-    "Power of test"=c(val="Power", chk=TRUE),
+    "Power of test"=c(val="Power", chk=TRUE, i18n="Here 'power' is a common statistical term and should not be translated"),
     "Sample size"=c(val="Sample size"),
     "Effect size"=c(val="Effect size"),
     "Significance level"=c(val="Significance level"),
