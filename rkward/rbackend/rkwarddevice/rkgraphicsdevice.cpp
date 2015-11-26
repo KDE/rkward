@@ -108,7 +108,7 @@ RKGraphicsDevice* RKGraphicsDevice::newDevice (int devnum, double width, double 
 		RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Graphics device number %d already exists while trying to create it", devnum);
 		closeDevice (devnum);
 	}
-	RKGraphicsDevice* dev = new RKGraphicsDevice (width, height, title.isEmpty () ? i18n ("Graphics Device Number %1").arg (QString::number (devnum+1)) : title, antialias);
+	RKGraphicsDevice* dev = new RKGraphicsDevice (width, height, title.isEmpty () ? i18n ("Graphics Device Number %1", QString::number (devnum+1)) : title, antialias);
 	devices.insert (devnum, dev);
 	return (dev);
 }
@@ -274,8 +274,8 @@ QImage RKGraphicsDevice::capture () const {
 void RKGraphicsDevice::setActive (bool active) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
-	if (active) view->setWindowTitle (i18n ("%1 (Active)").arg (base_title));
-	else view->setWindowTitle (i18n ("%1 (Inactive)").arg (base_title));
+	if (active) view->setWindowTitle (i18nc ("Window title", "%1 (Active)", base_title));
+	else view->setWindowTitle (i18nc ("Window title", "%1 (Inactive)", base_title));
 	emit (activeChanged (active));
 	emit (captionChanged (view->windowTitle ()));
 }

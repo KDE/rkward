@@ -74,7 +74,7 @@ void RKGraphicsDeviceFrontendTransmitter::newConnection () {
 	QString token_c = QString::fromLocal8Bit (con->readLine ());
 	token_c.chop (1);
 	if (token_c != token) {
-		KMessageBox::detailedError (0, QString ("<p>%1</p>").arg (i18n ("There has been an error while trying to connect the on-screen graphics backend. This means, on-screen graphics using the RKWard device will not work in this session.")), i18n ("Expected connection token %1, but read connection token %2").arg (token).arg (token_c), i18n ("Error while connection graphics backend"));
+		KMessageBox::detailedError (0, QString ("<p>%1</p>").arg (i18n ("There has been an error while trying to connect the on-screen graphics backend. This means, on-screen graphics using the RKWard device will not work in this session.")), i18n ("Expected connection token %1, but read connection token %2", token, token_c), i18n ("Error while connection graphics backend"));
 		con->close ();
 		return;
 	}

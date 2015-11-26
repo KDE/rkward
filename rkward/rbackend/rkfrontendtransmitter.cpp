@@ -108,7 +108,7 @@ void RKFrontendTransmitter::run () {
 	}
 
 	if (!backend->waitForStarted ()) {
-		handleTransmissionError (i18n ("The backend executable could not be started. Error message was: %1").arg (backend->errorString ()));
+		handleTransmissionError (i18n ("The backend executable could not be started. Error message was: %1", backend->errorString ()));
 	}
 
 	// fetch security token
@@ -136,11 +136,11 @@ void RKFrontendTransmitter::connectAndEnterLoop () {
 	if (!con->canReadLine ()) con->waitForReadyRead (1000);
 	QString token_c = QString::fromLocal8Bit (con->readLine ());
 	token_c.chop (1);
-	if (token_c != token) handleTransmissionError (i18n ("Error during handshake with backend process. Expected token '%1', received token '%2'").arg (token).arg (token_c));
+	if (token_c != token) handleTransmissionError (i18n ("Error during handshake with backend process. Expected token '%1', received token '%2'", token, token_c));
 	if (!con->canReadLine ()) con->waitForReadyRead (1000);
 	QString version_c = QString::fromLocal8Bit (con->readLine ());
 	version_c.chop (1);
-	if (version_c != RKWARD_VERSION) handleTransmissionError (i18n ("Version mismatch during handshake with backend process. Frontend is version '%1' while backend is '%2'.\nPlease fix your installation.").arg (RKWARD_VERSION).arg (version_c));
+	if (version_c != RKWARD_VERSION) handleTransmissionError (i18n ("Version mismatch during handshake with backend process. Frontend is version '%1' while backend is '%2'.\nPlease fix your installation.", QString (RKWARD_VERSION), version_c));
 
 	setConnection (con);
 }

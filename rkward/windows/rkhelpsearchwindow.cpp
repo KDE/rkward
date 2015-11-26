@@ -168,7 +168,7 @@ void RKHelpSearchWindow::getFunctionHelp (const QString &function_name, const QS
 	command.append (")");
 	if (type == "vignette") command.append (")");
 
-	RKGlobals::rInterface ()->issueCommand (command, RCommand::App | RCommand::GetStringVector, i18n ("Find HTML help for %1").arg (function_name), this, GET_HELP);
+	RKGlobals::rInterface ()->issueCommand (command, RCommand::App | RCommand::GetStringVector, i18n ("Find HTML help for %1", function_name), this, GET_HELP);
 }
 
 void RKHelpSearchWindow::slotFindButtonClicked () {

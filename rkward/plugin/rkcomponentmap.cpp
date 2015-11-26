@@ -36,6 +36,7 @@
 #include "../rkward.h"
 #include "../settings/rksettingsmoduleplugins.h"
 #include "../rbackend/rksessionvars.h"
+#include "../dialogs/rkerrordialog.h"
 
 QString RKPluginMapFile::makeFileName (const QString &filename) const {
 	return QDir::cleanPath (QDir (basedir).filePath (filename));
@@ -468,7 +469,7 @@ bool RKComponentMap::invokeComponent (const QString &component_id, const QString
 	QString _message;
 	RKComponentHandle *handle = getComponentHandle (component_id);
 	if (!handle) {
-		_message = i18n ("You tried to invoke a plugin called '%1', but that plugin is currently unknown. Probably you need to load the corresponding PluginMap (Settings->Configure RKWard->Plugins), or perhaps the plugin was renamed.").arg (component_id);
+		_message = i18n ("You tried to invoke a plugin called '%1', but that plugin is currently unknown. Probably you need to load the corresponding PluginMap (Settings->Configure RKWard->Plugins), or perhaps the plugin was renamed.", component_id);
 		if (message) *message = _message;
 		else KMessageBox::sorry (RKWardMainWindow::getMain (), _message, i18n ("No such plugin"));
 		return false;
@@ -480,9 +481,9 @@ bool RKComponentMap::invokeComponent (const QString &component_id, const QString
 	RKComponent::PropertyValueMap state;
 	bool format_ok = RKComponent::stringListToValueMap (serialized_settings, &state);
 	if (!format_ok) {
-		_message = i18n ("Bad serialization format while trying to invoke plugin '%1'. Please contact the RKWard team (Help->About RKWard->Authors).").arg (component_id);
+		_message = i18n ("Bad serialization format while trying to invoke plugin '%1'. In general, this should not happen, unless you modified the parameters by hand. Please consider reporting this issue.", component_id);
 		if (message) *message = _message;
-		else KMessageBox::error (component, _message, i18n ("Bad serialization format"));
+		else RKErrorDialog::reportableErrorMessage (component, _message, QString (), i18n ("Bad serialization format"), "invoke_comp_deserialization_error");
 		return false;
 	}
 	component->applyState (state);

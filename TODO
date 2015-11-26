@@ -6,7 +6,6 @@ KF5 port:
 Things to do:
 - Remove kde4libssupport classes
 - Adjust platform checks
-- Check for usages of i18n ("%1").arg(x), instead of i18n ("%1", x)
 - Device window embedding / remove qwinhost
 Things to test at the end:
 - Everthing concerning loading / saving, from recent files, scripts, workspace, etc.
