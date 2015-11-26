@@ -307,47 +307,43 @@ pwr.js.calc <- rk.paste.JS(
   echo("\tpwr.result <- try(\n\t\t"),
   #########
   ## t-test
-  ite(id(pwr.stat.drop, " == \"pwr.t.test\""),
-    rk.paste.JS(
+  js(
+    if(pwr.stat.drop == "pwr.t.test"){
       # two samples with different sizes or not?
-      ite(id(pwr.type.drop, " == \"two.sample.diff\""),
-        rk.paste.JS(# yes
-          echo("pwr.t2n.test("),
-          ite(id(pwr.parameter.rad, " != \"Sample size\""),
-            echo("\n\t\t\tn1=", pwr.input.sample.n1, ",\n\t\t\tn2=", pwr.input.sample.n2),
-            echo("\n\t\t\tn1=", pwr.input.sample.n1, ",")
-          )
-        ),
-        rk.paste.JS(#no
-          echo("pwr.t.test("),
-          ite(id(pwr.parameter.rad, " != \"Sample size\""),
-            echo("\n\t\t\tn=", pwr.input.sample)
-          )
-        )
-      ),
-      ite(id(pwr.parameter.rad, " != \"Effect size\""),
-        rk.paste.JS(
-          ite(id(pwr.parameter.rad, " != \"Sample size\""), echo(",")),
-          echo("\n\t\t\td=", pwr.input.effect)
-        )
-      )
-    )
-  ),
+      if(pwr.type.drop == "two.sample.diff"){
+        echo("pwr.t2n.test(")
+        if(pwr.parameter.rad != "Sample size"){
+          echo("\n\t\t\tn1=", pwr.input.sample.n1, ",\n\t\t\tn2=", pwr.input.sample.n2)
+        } else {
+          echo("\n\t\t\tn1=", pwr.input.sample.n1, ",")
+        }
+      } else {
+        echo("pwr.t.test(")
+        if(pwr.parameter.rad != "Sample size"){
+          echo("\n\t\t\tn=", pwr.input.sample)
+        } else {}
+      }
+      if(pwr.parameter.rad != "Effect size"){
+        if(pwr.parameter.rad != "Sample size"){
+          echo(",")
+        } else {}
+        echo("\n\t\t\td=", pwr.input.effect)
+      } else {}
+    } else {},
   ###############
   ## correlations
-  ite(id(pwr.stat.drop, " == \"pwr.r.test\""),
-    rk.paste.JS(
-      echo("pwr.r.test("),
-      ite(id(pwr.parameter.rad, " != \"Sample size\""),
+    if(pwr.stat.drop == "pwr.r.test"){
+      echo("pwr.r.test(")
+      if(pwr.parameter.rad != "Sample size"){
         echo("\n\t\t\tn=", pwr.input.sample)
-      ),
-      ite(id(pwr.parameter.rad, " != \"Effect size\""),
-        rk.paste.JS(
-          ite(id(pwr.parameter.rad, " != \"Sample size\""), echo(",")),
-          echo("\n\t\t\tr=", pwr.input.effect)
-        )
-      )
-    )
+      } else {}
+      if(pwr.parameter.rad != "Effect size"){
+        if(pwr.parameter.rad != "Sample size"){
+          echo(",")
+        } else {}
+        echo("\n\t\t\tr=", pwr.input.effect)
+      } else {}
+    } else {}
   ),
   ########
   ## ANOVA
