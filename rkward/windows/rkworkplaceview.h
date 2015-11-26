@@ -18,16 +18,16 @@
 #ifndef RKWORKPLACEVIEW_H
 #define RKWORKPLACEVIEW_H
 
-#include <ktabwidget.h>
+#include <QTabWidget>
 
 class RKMDIWindow;
 class QAction;
 class KActionCollection;
 
-/** This is mostly a KTabWidget with some extras such as updating the caption, a context menu, etc.
+/** This is mostly a QTabWidget with some extras such as updating the caption, a context menu, etc.
  */
 
-class RKWorkplaceView : public KTabWidget {
+class RKWorkplaceView : public QTabWidget {
 	Q_OBJECT
 public:
 /** constructor
@@ -43,8 +43,6 @@ public:
 /** does this window exist in the view? */
 	bool hasWindow (RKMDIWindow *widget);
 
-/** activate the given window */
-	void setActivePage (RKMDIWindow *widget);
 /** @returns the currently active window */
 	RKMDIWindow *activePage ();
 /** reimplemented form QWidget::setCaption () to emit captionChanged () when the caption changes */

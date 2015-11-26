@@ -136,13 +136,21 @@ RKSettingsModuleGraphics::RKSettingsModuleGraphics (RKSettings *gui, QWidget *pa
 	h_layout = new QHBoxLayout ();
 	group_layout->addLayout (h_layout);
 	h_layout->addWidget (new QLabel (i18n ("Maximum number of recorded plots:"), graphics_hist_box));
-	h_layout->addWidget (graphics_hist_max_length_box = new KIntSpinBox (1, 200, 1, graphics_hist_max_length, graphics_hist_box));
+	h_layout->addWidget (graphics_hist_max_length_box = new QSpinBox(graphics_hist_box));
+	graphics_hist_max_length_box->setMaximum(200);
+	graphics_hist_max_length_box->setMinimum(1);
+	graphics_hist_max_length_box->setSingleStep(1);
+	graphics_hist_max_length_box->setValue(graphics_hist_max_length);
 	h_layout = new QHBoxLayout ();
 	group_layout->addLayout (h_layout);
 	h_layout->addWidget (new QLabel (i18n ("Maximum size of a single recorded plot (in KB):"), graphics_hist_box));
-	h_layout->addWidget (graphics_hist_max_plotsize_box = new KIntSpinBox (4, 20000, 4, graphics_hist_max_plotsize, graphics_hist_box));
-	connect (graphics_hist_max_length_box, static_cast<void (KIntSpinBox::*)(int)>(&KIntSpinBox::valueChanged), this, &RKSettingsModuleGraphics::boxChanged);
-	connect (graphics_hist_max_plotsize_box, static_cast<void (KIntSpinBox::*)(int)>(&KIntSpinBox::valueChanged), this, &RKSettingsModuleGraphics::boxChanged);
+	h_layout->addWidget (graphics_hist_max_plotsize_box = new QSpinBox(graphics_hist_box));
+	graphics_hist_max_plotsize_box->setMaximum(20000);
+	graphics_hist_max_plotsize_box->setMinimum(4);
+	graphics_hist_max_plotsize_box->setSingleStep(4);
+	graphics_hist_max_plotsize_box->setValue(graphics_hist_max_plotsize);
+	connect (graphics_hist_max_length_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleGraphics::boxChanged);
+	connect (graphics_hist_max_plotsize_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleGraphics::boxChanged);
 
 	main_vbox->addWidget (graphics_hist_box);
 

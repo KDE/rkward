@@ -24,7 +24,7 @@
 class QCheckBox;
 class QGroupBox;
 class QComboBox;
-class KIntSpinBox;
+class QSpinBox;
 class RCommand;
 
 /**
@@ -95,9 +95,9 @@ private:
 	QCheckBox *auto_show_box;
 	QCheckBox *auto_raise_box;
 	QComboBox *graphics_type_box;
-	KIntSpinBox *graphics_width_box;
-	KIntSpinBox *graphics_height_box;
-	KIntSpinBox *graphics_jpg_quality_box;
+	QSpinBox *graphics_width_box;
+	QSpinBox *graphics_height_box;
+	QSpinBox *graphics_jpg_quality_box;
 	RKCarbonCopySettings *cc_settings;
 
 	static bool auto_show;

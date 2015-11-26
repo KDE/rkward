@@ -21,7 +21,7 @@
 #include <QFileDialog>
 
 #include <klocale.h>
-#include <klineedit.h>
+#include <KLineEdit>
 #include <kurlrequester.h>
 
 #include "../debug.h"

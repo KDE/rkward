@@ -26,7 +26,7 @@
 #include <kmimetype.h>
 #include <kio/job.h>
 #include <kservice.h>
-#include <ktemporaryfile.h>
+#include <QTemporaryFile>
 #include <kwebview.h>
 #include <kcodecaction.h>
 #include <kglobalsettings.h>
@@ -538,8 +538,7 @@ void RKHTMLWindow::useMode (WindowMode new_mode) {
 
 void RKHTMLWindow::startNewCacheFile () {
 	delete current_cache_file;
-	current_cache_file = new KTemporaryFile ();
-	current_cache_file->setSuffix (".html");
+	current_cache_file = new QTemporaryFile (QDir::tempPath () + QLatin1String ("/rkward_XXXXXX") + QLatin1String (".html"));
 	current_cache_file->open ();
 }
 

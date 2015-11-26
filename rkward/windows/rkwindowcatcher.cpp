@@ -468,11 +468,20 @@ void RKCaughtX11Window::setFixedSizeManual () {
 	dialog->setMainWidget (page);
 
 	new QLabel (i18n ("Width"), page);
-	KIntSpinBox *width = new KIntSpinBox (5, 32767, 1, xembed_container->width (), page, 10);
-	width->setEditFocus (true);
+	QSpinBox *width = new QSpinBox(page);
+	width->setMaximum (32767);
+	width->setMinimum (5);
+	width->setSingleStep (1);
+	width->setValue (xembed_container->width ());
+	width->setFocus ();
+	width->selectAll ();
 
 	new QLabel (i18n ("Height"), page);
-	KIntSpinBox *height = new KIntSpinBox (5, 32767, 1, xembed_container->height (), page, 10);
+	QSpinBox *height = new QSpinBox(page);
+	height->setMaximum (32767);
+	height->setMinimum (5);
+	height->setSingleStep (1);
+	height->setValue (xembed_container->height ());
 
 	dialog->exec ();
 

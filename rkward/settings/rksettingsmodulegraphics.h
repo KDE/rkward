@@ -24,7 +24,7 @@
 class QLineEdit;
 class QGroupBox;
 class RKSpinBox;
-class KIntSpinBox;
+class QSpinBox;
 class QCheckBox;
 class QButtonGroup;
 class QRadioButton;
@@ -75,8 +75,8 @@ private:
 	QButtonGroup *replace_standard_devices_group;
 
 	QGroupBox *graphics_hist_box;
-	KIntSpinBox *graphics_hist_max_length_box;
-	KIntSpinBox *graphics_hist_max_plotsize_box;
+	QSpinBox *graphics_hist_max_length_box;
+	QSpinBox *graphics_hist_max_plotsize_box;
 
 	RKSpinBox *graphics_height_box;
 	RKSpinBox *graphics_width_box;

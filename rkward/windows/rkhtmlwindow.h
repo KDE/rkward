@@ -34,7 +34,7 @@ class RKComponentHandle;
 class XMLHelper;
 class RKHTMLWindowPart;
 class KWebView;
-class KTemporaryFile;
+class QTemporaryFile;
 class RKHTMLWindow;
 class RKFindBar;
 
@@ -142,7 +142,7 @@ friend class RKHTMLWindowPart;
 
 	QUrl current_url;
 	void startNewCacheFile ();
-	KTemporaryFile *current_cache_file;
+	QTemporaryFile *current_cache_file;
 
 	WindowMode window_mode;
 	void useMode (WindowMode);

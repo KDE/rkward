@@ -149,9 +149,13 @@ RKSettingsModuleWatch::RKSettingsModuleWatch (RKSettings *gui, QWidget *parent) 
 	vbox->addSpacing (2*RKGlobals::spacingHint ());
 
 	vbox->addWidget (new QLabel (i18n ("Maximum number of paragraphs/lines to display in the Command Log"), this));
-	max_log_lines_spinner = new KIntSpinBox (0, 10000, 10, max_log_lines, this);
+	max_log_lines_spinner = new QSpinBox(this);
+	max_log_lines_spinner->setMaximum(10000);
+	max_log_lines_spinner->setMinimum(0);
+	max_log_lines_spinner->setSingleStep(10);
+	max_log_lines_spinner->setValue(max_log_lines);
 	max_log_lines_spinner->setSpecialValueText (i18n ("Unlimited"));
-	connect (max_log_lines_spinner, static_cast<void (KIntSpinBox::*)(int)>(&KIntSpinBox::valueChanged), this, &RKSettingsModuleWatch::changedSetting);
+	connect (max_log_lines_spinner, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleWatch::changedSetting);
 	vbox->addWidget (max_log_lines_spinner);
 
 	vbox->addStretch ();

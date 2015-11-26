@@ -45,7 +45,7 @@
 #include <klibloader.h>
 #include <kactioncollection.h>
 #include <kactionmenu.h>
-#include <ktemporaryfile.h>
+#include <QTemporaryFile>
 #include <kio/deletejob.h>
 #include <kio/job.h>
 #include <kconfiggroup.h>
@@ -429,8 +429,7 @@ void RKCommandEditorWindow::doAutoSave () {
 	RK_TRACE (COMMANDEDITOR);
 	RK_ASSERT (isModified ());
 
-	KTemporaryFile save;
-	save.setSuffix (RKSettingsModuleCommandEditor::autosaveSuffix ());
+	QTemporaryFile save (QDir::tempPath () + QLatin1String ("/rkward_XXXXXX") + RKSettingsModuleCommandEditor::autosaveSuffix ());
 	RK_ASSERT (save.open ());
 	QTextStream out (&save);
 	out.setCodec ("UTF-8");		// make sure that all characters can be saved, without nagging the user

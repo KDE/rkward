@@ -101,20 +101,32 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 
 	// options (width)
 	grid->addWidget (new QLabel (i18n ("Output width (characters)"), this), ++row, 0);
-	width_input = new KIntSpinBox (10, 10000, 1, options_width, this);
-	connect (width_input, static_cast<void (KIntSpinBox::*)(int)>(&KIntSpinBox::valueChanged), this, &RKSettingsModuleR::settingChanged);
+	width_input = new QSpinBox(this);
+	width_input->setMaximum(10000);
+	width_input->setMinimum(10);
+	width_input->setSingleStep(1);
+	width_input->setValue(options_width);
+	connect (width_input, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleR::settingChanged);
 	grid->addWidget (width_input, row, 1);
 
 	// options (max.print)
 	grid->addWidget (new QLabel (i18n ("Maximum number of elements shown in print"), this), ++row, 0);
-	maxprint_input = new KIntSpinBox (100, INT_MAX, 1, options_maxprint, this);
-	connect (maxprint_input, static_cast<void (KIntSpinBox::*)(int)>(&KIntSpinBox::valueChanged), this, &RKSettingsModuleR::settingChanged);
+	maxprint_input = new QSpinBox(this);
+	maxprint_input->setMaximum(INT_MAX);
+	maxprint_input->setMinimum(100);
+	maxprint_input->setSingleStep(1);
+	maxprint_input->setValue(options_maxprint);
+	connect (maxprint_input, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleR::settingChanged);
 	grid->addWidget (maxprint_input, row, 1);
 
 	// options (warnings.length)
 	grid->addWidget (new QLabel (i18n ("Maximum length of warnings/errors to print"), this), ++row, 0);
-	warningslength_input = new KIntSpinBox (100, 8192, 1, options_warningslength, this);
-	connect (warningslength_input, static_cast<void (KIntSpinBox::*)(int)>(&KIntSpinBox::valueChanged), this, &RKSettingsModuleR::settingChanged);
+	warningslength_input = new QSpinBox(this);
+	warningslength_input->setMaximum(8192);
+	warningslength_input->setMinimum(100);
+	warningslength_input->setSingleStep(1);
+	warningslength_input->setValue(options_warningslength);
+	connect (warningslength_input, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleR::settingChanged);
 	grid->addWidget (warningslength_input, row, 1);
 
 	// options (keep.source)
@@ -139,14 +151,22 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 
 	// options (expressions)
 	grid->addWidget (new QLabel (i18n ("Maximum level of nested expressions"), this), ++row, 0);
-	expressions_input = new KIntSpinBox (25, 500000, 1, options_expressions, this);
-	connect (expressions_input, static_cast<void (KIntSpinBox::*)(int)>(&KIntSpinBox::valueChanged), this, &RKSettingsModuleR::settingChanged);
+	expressions_input = new QSpinBox(this);
+	expressions_input->setMaximum(500000);
+	expressions_input->setMinimum(25);
+	expressions_input->setSingleStep(1);
+	expressions_input->setValue(options_expressions);
+	connect (expressions_input, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleR::settingChanged);
 	grid->addWidget (expressions_input, row, 1);
 
 	// options (digits)
 	grid->addWidget (new QLabel (i18n ("Default decimal precision in print ()"), this), ++row, 0);
-	digits_input = new KIntSpinBox (1, 22, 1, options_digits, this);
-	connect (digits_input, static_cast<void (KIntSpinBox::*)(int)>(&KIntSpinBox::valueChanged), this, &RKSettingsModuleR::settingChanged);
+	digits_input = new QSpinBox(this);
+	digits_input->setMaximum(22);
+	digits_input->setMinimum(1);
+	digits_input->setSingleStep(1);
+	digits_input->setValue(options_digits);
+	connect (digits_input, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleR::settingChanged);
 	grid->addWidget (digits_input, row, 1);
 
 	// options (check.bounds)

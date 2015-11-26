@@ -125,7 +125,7 @@ void RKMDIWindow::activate (bool with_focus) {
 			topLevelWidget ()->raise ();
 		}
 	} else {
-		if (isAttached ()) RKWorkplace::mainWorkplace ()->view ()->setActivePage (this);
+		if (isAttached ()) RKWorkplace::mainWorkplace ()->view ()->setCurrentWidget (this);
 		else {
 			topLevelWidget ()->show ();
 			topLevelWidget ()->raise ();

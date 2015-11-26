@@ -53,15 +53,23 @@ RKSettingsModuleConsole::RKSettingsModuleConsole (RKSettings *gui, QWidget *pare
 	vbox->addWidget (save_history_box);
 
 	vbox->addWidget (new QLabel (i18n ("Maximum length of command history"), this));
-	max_history_length_spinner = new KIntSpinBox (0, 10000, 10, max_history_length, this);
+	max_history_length_spinner = new QSpinBox(this);
+	max_history_length_spinner->setMaximum(10000);
+	max_history_length_spinner->setMinimum(0);
+	max_history_length_spinner->setSingleStep(10);
+	max_history_length_spinner->setValue(max_history_length);
 	max_history_length_spinner->setSpecialValueText (i18n ("Unlimited"));
-	connect (max_history_length_spinner, static_cast<void (KIntSpinBox::*)(int)>(&KIntSpinBox::valueChanged), this, &RKSettingsModuleConsole::changedSetting);
+	connect (max_history_length_spinner, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleConsole::changedSetting);
 	vbox->addWidget (max_history_length_spinner);
 
 	vbox->addWidget (new QLabel (i18n ("Maximum number of paragraphs/lines to display in the console"), this));
-	max_console_lines_spinner = new KIntSpinBox (0, 10000, 10, max_console_lines, this);
+	max_console_lines_spinner = new QSpinBox(this);
+	max_console_lines_spinner->setMaximum(10000);
+	max_console_lines_spinner->setMinimum(0);
+	max_console_lines_spinner->setSingleStep(10);
+	max_console_lines_spinner->setValue(max_console_lines);
 	max_console_lines_spinner->setSpecialValueText (i18n ("Unlimited"));
-	connect (max_console_lines_spinner, static_cast<void (KIntSpinBox::*)(int)>(&KIntSpinBox::valueChanged), this, &RKSettingsModuleConsole::changedSetting);
+	connect (max_console_lines_spinner, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleConsole::changedSetting);
 	vbox->addWidget (max_console_lines_spinner);
 
 	vbox->addSpacing (2*RKGlobals::spacingHint ());

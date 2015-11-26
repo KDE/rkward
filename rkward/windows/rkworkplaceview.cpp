@@ -39,7 +39,7 @@
 #include "../debug.h"
 
 
-RKWorkplaceView::RKWorkplaceView (QWidget *parent) : KTabWidget (parent) {
+RKWorkplaceView::RKWorkplaceView (QWidget *parent) : QTabWidget (parent) {
 	RK_TRACE (APP);
 
 	// close button(s)
@@ -58,7 +58,7 @@ RKWorkplaceView::RKWorkplaceView (QWidget *parent) : KTabWidget (parent) {
 	connect (tabBar (), &QWidget::customContextMenuRequested, this, &RKWorkplaceView::showContextMenu);
 
 	KAcceleratorManager::setNoAccel (tabBar ());	// TODO: This is a WORKAROUND for a bug in kdelibs where tabs named "a0.txt", "a1.txt", etc. will steal the Alt+0/1... shortcuts
-	setTabBarHidden (true);		// initially
+	tabBar ()->hide ();		// initially
 	connect (this, &QTabWidget::currentChanged, this, &RKWorkplaceView::currentPageChanged);
 }
 
@@ -120,7 +120,7 @@ void RKWorkplaceView::addWindow (RKMDIWindow *widget) {
 	connect (widget, &RKMDIWindow::captionChanged, this, &RKWorkplaceView::childCaptionChanged);
 	widget->show ();
 
-	if (count () > 1) setTabBarHidden (false);
+	if (count () > 1) tabBar ()->show ();
 
 	setCurrentIndex (id);		// activate the new tab
 }
@@ -137,17 +137,7 @@ void RKWorkplaceView::removeWindow (RKMDIWindow *widget, bool destroyed) {
 	if (!destroyed) disconnect (widget, &RKMDIWindow::captionChanged, this, &RKWorkplaceView::childCaptionChanged);
 
 	removeTab (id);
-	if (count () <= 1) setTabBarHidden (true);
-}
-
-// KDE4 TODO: we can use setCurrentWidget, instead.
-void RKWorkplaceView::setActivePage (RKMDIWindow *widget) {
-	RK_TRACE (APP);
-
-	int id = indexOf (widget);
-	if (id == -1) RK_DEBUG (APP, DL_WARNING, "did not find page in RKWorkplaceView::setActivePage");
-
-	setCurrentIndex (id);
+	if (count () <= 1) tabBar ()->hide ();
 }
 
 RKMDIWindow *RKWorkplaceView::activePage () {

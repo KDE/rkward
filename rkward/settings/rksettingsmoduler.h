@@ -26,7 +26,7 @@ class QCheckBox;
 class QComboBox;
 class QLineEdit;
 class MultiStringSelector;
-class KIntSpinBox;
+class QSpinBox;
 class QTextEdit;
 
 /**
@@ -59,14 +59,14 @@ public slots:
 	void settingChanged ();
 private:
 	QLineEdit *outdec_input;
-	KIntSpinBox *width_input;
+	QSpinBox *width_input;
 	QComboBox *warn_input;
-	KIntSpinBox *warningslength_input;
-	KIntSpinBox *maxprint_input;
+	QSpinBox *warningslength_input;
+	QSpinBox *maxprint_input;
 	QComboBox *keepsource_input;
 	QComboBox *keepsourcepkgs_input;
-	KIntSpinBox *expressions_input;
-	KIntSpinBox *digits_input;
+	QSpinBox *expressions_input;
+	QSpinBox *digits_input;
 	QComboBox *checkbounds_input;
 	QComboBox *editor_input;
 	QComboBox *pager_input;

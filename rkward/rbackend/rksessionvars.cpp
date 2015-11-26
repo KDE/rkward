@@ -23,8 +23,8 @@
 #include "../version.h"
 
 #include <kdeversion.h>
-#include <ktemporaryfile.h>
-#include <kstandarddirs.h>
+#include <QTemporaryFile>
+#include <QStandardPaths>
 
 #include <QSysInfo>
 
@@ -129,7 +129,7 @@ QStringList RKSessionVars::frontendSessionInfo () {
 #elif defined Q_OS_MAC
 	lines.append ("MacOS runtime version (refer to QSysInfo documentation to translate code into human readable form): 0x" + QString::number (QSysInfo::MacintoshVersion, 16));
 #endif
-	lines.append ("Local KDE directory: " + KGlobal::dirs ()->localkdedir ());
+	lines.append ("Local config directory: " + QStandardPaths::writableLocation (QStandardPaths::GenericConfigLocation));
 	lines.append ("RKWard storage directory: " + RKSettingsModuleGeneral::filesPath ());
 	lines.append ("Backend version (as known to the frontend): " + r_version_string);
 	lines.append (QString());

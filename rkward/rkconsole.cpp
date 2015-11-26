@@ -30,9 +30,11 @@
 #include <QVBoxLayout>
 #include <QStandardPaths>
 #include <QFileInfo>
+#include <QTemporaryFile>
+#include <QMimeData>
+#include <QAction>
 
 #include <klocale.h>
-#include <QAction>
 #include <kactioncollection.h>
 #include <kconfig.h>
 #include <kapplication.h>
@@ -45,7 +47,6 @@
 #include <kxmlguifactory.h>
 #include <kfiledialog.h>
 #include <kio/netaccess.h>
-#include <ktemporaryfile.h>
 
 #include "rkglobals.h"
 #include "rkward.h"
@@ -835,7 +836,7 @@ void RKConsole::userSaveHistory (const QUrl &_url) {
 		if (url.isEmpty ()) return;
 	}
 
-	KTemporaryFile tempfile;
+	QTemporaryFile tempfile;
 	tempfile.open ();
 	tempfile.write (QString (commandHistory ().join ("\n") + '\n').toLocal8Bit ().data ());
 	tempfile.close ();

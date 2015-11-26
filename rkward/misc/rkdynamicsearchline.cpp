@@ -22,12 +22,12 @@
 
 #include "../debug.h"
 
-RKDynamicSearchLine::RKDynamicSearchLine (QWidget *parent) : KLineEdit (parent) {
+RKDynamicSearchLine::RKDynamicSearchLine (QWidget *parent) : QLineEdit (parent) {
 	RK_TRACE (MISC);
 
 	model = 0;
-	setClearButtonShown (true);
-	setClickMessage (i18n ("Search"));
+	setClearButtonEnabled (true);
+	setPlaceholderText (i18n ("Search"));
 	timer.setSingleShot (true);
 	connect (&timer, &QTimer::timeout, this, &RKDynamicSearchLine::delayedSearch);
 	connect (this, &QLineEdit::textChanged, this, &RKDynamicSearchLine::textChanged);

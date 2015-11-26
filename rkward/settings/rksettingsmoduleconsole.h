@@ -23,7 +23,7 @@
 
 class QCheckBox;
 class QComboBox;
-class KIntSpinBox;
+class QSpinBox;
 
 /**
 Settings module for the console. Allows you to configure whether to store command history, command history length. Future extensions: color for warnings/errors, etc.
@@ -78,8 +78,8 @@ private:
 	QCheckBox *reverse_context_mode_box;
 	QCheckBox *pipe_user_commands_through_console_box;
 	QComboBox *add_piped_commands_to_history_box;
-	KIntSpinBox *max_history_length_spinner;
-	KIntSpinBox *max_console_lines_spinner;
+	QSpinBox *max_history_length_spinner;
+	QSpinBox *max_console_lines_spinner;
 };
 
 #endif

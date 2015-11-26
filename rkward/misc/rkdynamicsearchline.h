@@ -18,7 +18,7 @@
 #ifndef RKDYNAMICSEARCHLINE_H
 #define RKDYNAMICSEARCHLINE_H
 
-#include <klineedit.h>
+#include <QLineEdit>
 
 #include <QTimer>
 
@@ -26,7 +26,7 @@ class QSortFilterProxyModel;
 
 /** This class is mostly like KFilterProxySearchLine, except allowing us to filter using regexps.
  *  Also some internal differences, due to the fact that we don't have to hide implementation details as in a framework lib. */
-class RKDynamicSearchLine : public KLineEdit {
+class RKDynamicSearchLine : public QLineEdit {
 	Q_OBJECT
 public:
 	RKDynamicSearchLine (QWidget *parent);
