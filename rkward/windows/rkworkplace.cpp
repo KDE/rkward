@@ -113,6 +113,9 @@ RKWorkplace::~RKWorkplace () {
 
 	delete _workspace_config;
 //	closeAll ();	// not needed, as the windows will autodelete themselves using QObject mechanism. Of course, closeAll () should be called *before* quitting.
+	for (int i = 0; i < windows.size (); ++i) {
+		disconnect (windows[i], 0, this, 0);
+	}
 }
 
 QString workspaceConfigFileName (const QUrl &url) {
