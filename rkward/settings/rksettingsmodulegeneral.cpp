@@ -54,6 +54,7 @@ QString RKSettingsModuleGeneral::initial_dir_specification;
 bool RKSettingsModuleGeneral::rkward_version_changed;
 bool RKSettingsModuleGeneral::installation_moved = false;
 QString RKSettingsModuleGeneral::previous_rkward_data_dir;
+QUrl RKSettingsModuleGeneral::generic_filedialog_start_url;
 
 RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -172,6 +173,28 @@ QString RKSettingsModuleGeneral::initialWorkingDirectory () {
 	if (initial_dir == RKWardDirectory) return filesPath ();
 	if (initial_dir == UserHomeDirectory) return QDir::homePath ();
 	return initial_dir_specification;
+}
+
+QUrl RKSettingsModuleGeneral::lastUsedUrlFor (const QString& thing) {
+	RK_TRACE (SETTINGS);
+
+	if (thing.isEmpty ()) {
+		if (generic_filedialog_start_url.isEmpty ()) return QUrl::fromLocalFile (QDir::currentPath ());
+		return generic_filedialog_start_url;
+	}
+	KConfigGroup cg (KSharedConfig::openConfig (), "FileDialogUrls");
+	return (cg.readEntry (thing, QUrl ()));
+}
+
+void RKSettingsModuleGeneral::updateLastUsedUrl (const QString& thing, const QUrl& new_path) {
+	RK_TRACE (SETTINGS);
+
+	if (thing.isEmpty ()) {
+		generic_filedialog_start_url = new_path;
+	} else {
+		KConfigGroup cg (KSharedConfig::openConfig (), "FileDialogUrls");
+		cg.writeEntry (thing, new_path);
+	}
 }
 
 void RKSettingsModuleGeneral::settingChanged () {

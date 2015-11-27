@@ -777,17 +777,10 @@ void RKWardMainWindow::askOpenWorkspace (const QUrl &url) {
 	slotSetStatusBarText(i18n("Opening workspace..."));
 	QUrl lurl = url;
 	if (lurl.isEmpty ()) {
-#ifdef Q_OS_WIN
-	// getOpenUrl(QUrl("kfiledialog:///<rfiles>"), ...) causes a hang on windows (KDElibs 4.2.3).
-#	ifdef __GNUC__
-#		warning Track this bug down and/or report it
-#	endif
-		lurl = KFileDialog::getOpenUrl (QUrl (), i18n("%1|R Workspace Files (%1)\n*|All files", RKSettingsModuleGeneral::workspaceFilenameFilter ()), this, i18n("Select workspace to open..."));
-#else
-		lurl = KFileDialog::getOpenUrl (QUrl("kfiledialog:///<rfiles>"), i18n("%1|R Workspace Files (%1)\n*|All files", RKSettingsModuleGeneral::workspaceFilenameFilter ()), this, i18n("Select workspace to open..."));
-#endif
+		lurl = QFileDialog::getOpenFileUrl (this, i18n("Select workspace to open..."), RKSettingsModuleGeneral::lastUsedUrlFor ("workspaces"), i18n ("R Workspace Files (%1);;All files (*)", RKSettingsModuleGeneral::workspaceFilenameFilter ()));
 	}
 	if (!lurl.isEmpty ()) {
+		RKSettingsModuleGeneral::updateLastUsedUrl ("workspaces", lurl.adjusted (QUrl::RemoveFilename));
 		openWorkspace (lurl);
 	}
 	slotSetStatusReady ();
@@ -914,16 +907,9 @@ void RKWardMainWindow::slotOpenCommandEditor () {
 	RK_TRACE (APP);
 	KEncodingFileDialog::Result res;
 
-#ifdef Q_OS_WIN
-	// getOpenUrls(QUrl("kfiledialog:///<rfiles>"), ...) causes a hang on windows (KDElibs 4.2.3).
-#	ifdef __GNUC__
-#		warning Track this bug down and/or report it
-#	endif
-	res = KEncodingFileDialog::getOpenUrlsAndEncoding (QString (), QUrl (), QString ("%1|R Script Files (%1)\n*|All Files (*)").arg (RKSettingsModuleCommandEditor::scriptFileFilter ()), this, i18n ("Open script file(s)"));
-#else
-	res = KEncodingFileDialog::getOpenUrlsAndEncoding (QString (), QUrl ("kfiledialog:///<rfiles>"), QString ("%1|R Script Files (%1)\n*|All Files (*)").arg (RKSettingsModuleCommandEditor::scriptFileFilter ()), this, i18n ("Open script file(s)"));
-#endif
+	res = KEncodingFileDialog::getOpenUrlsAndEncoding (QString (), RKSettingsModuleGeneral::lastUsedUrlFor ("rscripts"), QString ("%1|R Script Files (%1)\n*|All Files (*)").arg (RKSettingsModuleCommandEditor::scriptFileFilter ()), this, i18n ("Open script file(s)"));
 	for (int i = 0; i < res.URLs.size (); ++i) {
+		if (i == 0) RKSettingsModuleGeneral::updateLastUsedUrl ("rscripts", res.URLs[i].adjusted (QUrl::RemoveFilename));
 		slotOpenCommandEditor (res.URLs[i], res.encoding);
 	}
 };
