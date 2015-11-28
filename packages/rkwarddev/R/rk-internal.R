@@ -21,6 +21,8 @@
 
 # set up an internal environment, e.g. for prompter settings or indentation
 .rkdev.env <- new.env()
+# another environment for use with rk.local()
+.rk.local.env <- new.env()
 
 # internal functions for the rk.* functions
 

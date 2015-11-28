@@ -31,6 +31,9 @@
 #' 
 #' These are currently unsupported and still need to be quoted: \%, ++, --, =, +=, -=, *=, /=, \%=, ===, !== and !
 #'
+#' @note You should nest your plugin script inside \code{\link[rkwarddev:rk.local]{rk.local}} if you're
+#'    making use of js(), to be sure it can find all defined objects.
+#'
 #' @param ... One or several character strings and/or \code{XiMpLe.node} objects with plugin nodes,
 #'   and/or objects of classes \code{rk.JS.arr} or \code{rk.JS.opt}, simply separated by comma.
 #'   JavaScript operators and \code{if} conditions will be kept as-is.
@@ -43,7 +46,8 @@
 #'    of a pasted character string. Comes in handy if used inside \code{\link[rkwarddev:rk.JS.options]{rk.JS.options}}.
 #' @return A character string (or \code{rk.JS.ite}, if \code{keep.ite=TRUE} and input is an \code{if/else} condition).
 #' @export
-#' @seealso \code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}},
+#' @seealso \code{\link[rkwarddev:rk.local]{rk.local}},
+#'    \code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}},
 #'    \code{\link[rkwarddev:rk.JS.array]{rk.JS.array}},
 #'    \code{\link[rkwarddev:rk.JS.options]{rk.JS.options}},
 #'    \code{\link[rkwarddev:echo]{echo}},
@@ -89,8 +93,8 @@ js <- function(..., level=2, indent.by=rk.get.indent(), linebreaks=TRUE, empty.e
         if(isTRUE(keep.ite)){
           return(this.part)
         } else {
-          if(identical(this.part[[1]], "rk.comment")){
-            return(rk.paste.JS(eval(this.part), level=level, indent.by=indent.by, empty.e=empty.e))
+          if(as.character(this.part[[1]]) %in% c("rk.comment", "tf", "rk.JS.optionset")){
+            return(rk.paste.JS(eval(this.part, envir=.rk.local.env), level=level, indent.by=indent.by, empty.e=empty.e))
           } else {}
           # replace JS operators
           return(do.call("replaceJSOperators", args=list(this.part)))

@@ -1,6 +1,6 @@
 ChangeLog for package rkwarddev
 
-changes in version 0.07-4 (2015-11-23)
+changes in version 0.08-1 (2015-11-28)
 unreleased:
   - this version is under development
 fixed:
@@ -27,8 +27,8 @@ added:
     will be translated to JavaScript equivalents without the need for quoting.
     however, the "for" loop code is not publicly documented and remains a
     proof of concept kind of thing for now
-  - new option ".objects" in id() and ".ite" in rk.JS.options() to provide objects
-    as a list
+  - new option ".objects" in id() and ".ite" in rk.JS.options() to provide
+    objects as a list
   - new option "rk.JS.vars" to make JS variables match the name of the
     original R object
   - new function idq() to print quoted IDs of XML nodes for use in JavaScript
@@ -45,6 +45,8 @@ added:
     update_plugin_messages.py, the package now comes with its own copy of this core i18n script
   - the generator info gained support for hinting at the very rkwarddev
     script file that was used to generate a particular plugin file
+  - new function rk.local() to be used as an alternative to local() with a
+    predefined local environment to solve scope issues with js()
 changed:
   - improved error handling in rk.JS.header(), error messages are more
     informative now
