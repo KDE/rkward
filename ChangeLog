@@ -1,3 +1,4 @@
+- File selection fields in plugin dialogs remember the last used directory (per session), and check for a valid selection
 - Better handling of text drag-and-drop inside the R console window
 
 --- Version 0.6.4 - XXXXXXXXXXXXXXX

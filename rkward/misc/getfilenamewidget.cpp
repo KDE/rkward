@@ -24,6 +24,8 @@
 #include <KLineEdit>
 #include <kurlrequester.h>
 
+#include "../settings/rksettingsmodulegeneral.h"
+
 #include "../debug.h"
 
 GetFileNameWidget::GetFileNameWidget (QWidget *parent, FileType mode, bool only_local, const QString &label, const QString &caption, const QString &initial) : QWidget (parent) {
@@ -35,11 +37,9 @@ GetFileNameWidget::GetFileNameWidget (QWidget *parent, FileType mode, bool only_
 	if (!label.isEmpty ()) vbox->addWidget (new QLabel (label, this));
 
 	edit = new KUrlRequester (this);
-	connect (edit, &KUrlRequester::textChanged, this, &GetFileNameWidget::locationEditChanged);
 	vbox->addWidget (edit);
 
-	edit->setUrl (QUrl::fromUserInput (initial, QString (), QUrl::AssumeLocalFile));
-
+	_mode = mode;
 	KFile::Modes mode_flags;
 	if (mode == ExistingDirectory) {
 		mode_flags = KFile::Directory | KFile::ExistingOnly;
@@ -60,6 +60,26 @@ GetFileNameWidget::GetFileNameWidget (QWidget *parent, FileType mode, bool only_
 	if (only_local) mode_flags |= KFile::LocalOnly;
 	edit->setMode (mode_flags);
 
+	QString append = initial;
+	if (initial.startsWith ('<')) {
+		storage_key = initial.section ('>', 0, 0).mid (1);
+		append = initial.section ('>', 1);
+	}
+	QUrl initial_url = RKSettingsModuleGeneral::lastUsedUrlFor (storage_key);  // storage_key == QString () in the default case is intended
+	if (!append.isEmpty ()) {
+		if (initial_url.isLocalFile ()) {
+			initial_url = QUrl::fromUserInput (append, initial_url.toLocalFile (), QUrl::AssumeLocalFile);
+		} else {
+			initial_url.setPath (initial_url.path () + '/' + append);
+		}
+		initial_url = initial_url.adjusted (QUrl::NormalizePathSegments);
+	}
+	if (initial_url.isLocalFile () || !only_local) {
+		edit->setUrl (initial_url);
+	}
+	connect (edit, &KUrlRequester::textChanged, this, &GetFileNameWidget::locationEditChanged);
+	connect (edit, &KUrlRequester::urlSelected, this, &GetFileNameWidget::updateLastUsedUrl);
+
 	if (caption.isEmpty ()) edit->setWindowTitle (label);
 	else edit->setWindowTitle (caption);
 }
@@ -73,6 +93,14 @@ void GetFileNameWidget::setFilter (const QString &filter) {
 
 	RK_ASSERT (edit);
 	edit->setFilter (filter);
+}
+
+void GetFileNameWidget::updateLastUsedUrl (const QUrl& url) {
+	RK_TRACE (MISC);
+
+	if (!url.isValid ()) return;
+	if (edit->mode () & KFile::Directory) RKSettingsModuleGeneral::updateLastUsedUrl (storage_key, url);
+	else RKSettingsModuleGeneral::updateLastUsedUrl (storage_key, url.adjusted (QUrl::RemoveFilename));
 }
 
 void GetFileNameWidget::setLocation (const QString &new_location) {

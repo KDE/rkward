@@ -34,6 +34,7 @@ public:
 
 	GetFileNameWidget (QWidget *parent, FileType mode, bool only_local, const QString &label, const QString &caption, const QString &initial);
 	~GetFileNameWidget ();
+	FileType getMode () const { return (_mode); };
 
 /** set filename pattern filter, e.g. "*.cpp *.cc *.C|C++ Source Files\n*.h *.H|Header files" */
 	void setFilter (const QString &filter);
@@ -46,6 +47,7 @@ public:
 	QString getLocation ();
 public slots:
 	void locationEditChanged (const QString &);
+	void updateLastUsedUrl (const QUrl& url);
 signals:
 	void locationChanged ();
 #ifdef Q_OS_WIN
@@ -53,6 +55,8 @@ private slots:
 	void hackOverrideDirDialog ();
 #endif
 private:
+	FileType _mode;
+	QString storage_key;
 	KUrlRequester *edit;
 };
 
