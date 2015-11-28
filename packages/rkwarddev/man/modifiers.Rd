@@ -18,4 +18,8 @@ A character vector of valid modifiers.
 In case you want to see which modifiers are definied for a certain XML node,
 just call this helper function.
 }
+\examples{
+myCheckbox <- rk.XML.cbox("Check for action")
+modifiers(myCheckbox)
+}
 

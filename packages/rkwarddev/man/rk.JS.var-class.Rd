@@ -20,19 +20,15 @@ type of class manually.
 
 \item{\code{modifiers}}{A list of modifiers to apply to the XML node property.}
 
-\item{\code{default}}{Logical,
-      whether the default value (no special modifier) of the node should also be defined.}
+\item{\code{default}}{Logical, whether the default value (no special modifier) of the node should also be defined.}
 
-\item{\code{append.modifier}}{Logical, if a modifier is given,
-      should that become part of the variable name?}
+\item{\code{append.modifier}}{Logical, if a modifier is given, should that become part of the variable name?}
 
-\item{\code{join}}{Character string,
-      if set is used to collapse multiple values into one string.}
+\item{\code{join}}{Character string, if set is used to collapse multiple values into one string.}
 
 \item{\code{vars}}{A list of objects of class rk.JS.var.}
 
-\item{\code{getter}}{Character string,
-      the JavaScript function which should be used to fetch the values from the plugin.}
+\item{\code{getter}}{Character string, the JavaScript function which should be used to fetch the values from the plugin.}
 }}
 \keyword{Classes}
 

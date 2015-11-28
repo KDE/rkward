@@ -13,8 +13,7 @@ Must be set if \code{id.name="auto"}.}
 \item{id.name}{Character vector, unique ID for this element.}
 
 \item{i18n}{Either a character string or a named list with the optional elements \code{context}
-or \code{comment},
-      to give some \code{i18n_context} information for this node. If set to \code{FALSE},
+or \code{comment}, to give some \code{i18n_context} information for this node. If set to \code{FALSE},
 the attribute \code{label} will be renamed into \code{noi18n_label}.}
 }
 \value{

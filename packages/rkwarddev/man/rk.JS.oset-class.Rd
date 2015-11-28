@@ -20,8 +20,7 @@ type of class manually.
 
 \item{\code{body}}{A list of JavaScript code, the body of the for loop.}
 
-\item{\code{collapse}}{Character string,
-      how all optioncolumns should be concatenated on the R code level.}
+\item{\code{collapse}}{Character string, how all optioncolumns should be concatenated on the R code level.}
 }}
 \keyword{Classes}
 

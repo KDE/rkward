@@ -14,8 +14,7 @@ or an object of class \code{XiMpLe.node} (whose \code{id} will be extracted and 
 
 \item{to}{Character string or logical, the value the property should be set to.}
 
-\item{check.modifiers}{Logical,
-      if \code{TRUE} the given modifiers will be checked for validity. Should only be
+\item{check.modifiers}{Logical, if \code{TRUE} the given modifiers will be checked for validity. Should only be
 turned off if you know what you're doing.}
 }
 \value{

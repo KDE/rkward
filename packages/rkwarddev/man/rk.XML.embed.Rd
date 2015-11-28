@@ -8,22 +8,17 @@ rk.XML.embed(component, button = FALSE, label = "Options",
   id.name = "auto", i18n = NULL)
 }
 \arguments{
-\item{component}{A character string,
-      registered name (\code{id} in pluginmap file) of the component to be embedded.}
+\item{component}{A character string, registered name (\code{id} in pluginmap file) of the component to be embedded.}
 
-\item{button}{Logical,
-      whether the plugin should be embedded as a button and appear if it's pressed.}
+\item{button}{Logical, whether the plugin should be embedded as a button and appear if it's pressed.}
 
-\item{label}{A character string,
-      text label for the button (only used if \code{button=TRUE}).}
+\item{label}{A character string, text label for the button (only used if \code{button=TRUE}).}
 
 \item{id.name}{Character string, a unique ID for this plugin element.
-If \code{"auto"},
-      an ID will be generated automatically from the label and component strings.}
+If \code{"auto"}, an ID will be generated automatically from the label and component strings.}
 
 \item{i18n}{Either a character string or a named list with the optional elements \code{context}
-or \code{comment},
-      to give some \code{i18n_context} information for this node. If set to \code{FALSE},
+or \code{comment}, to give some \code{i18n_context} information for this node. If set to \code{FALSE},
 the attribute \code{label} will be renamed into \code{noi18n_label}.}
 }
 \value{

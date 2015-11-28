@@ -8,20 +8,16 @@ echo(..., newline = "")
 }
 \arguments{
 \item{...}{One or several character strings and/or \code{XiMpLe.node} objects with plugin nodes,
-and/or objects of classes \code{rk.JS.arr} or \code{rk.JS.opt},
-      simply separated by comma.}
+and/or objects of classes \code{rk.JS.arr} or \code{rk.JS.opt}, simply separated by comma.}
 
-\item{newline}{Character string,
-      can be set to e.g. \code{"\n"} to force a newline after the call.}
+\item{newline}{Character string, can be set to e.g. \code{"\n"} to force a newline after the call.}
 }
 \value{
 A character string.
 }
 \description{
-This function will take several elements, either character strings,
-      or objects of class \code{XiMpLe.node}
-which hold an XML node of some plugin GUI definition,
-      or objects of classes \code{rk.JS.arr} or \code{rk.JS.opt}.
+This function will take several elements, either character strings, or objects of class \code{XiMpLe.node}
+which hold an XML node of some plugin GUI definition, or objects of classes \code{rk.JS.arr} or \code{rk.JS.opt}.
 From those, it will generate a ready-to-run JavaScript \code{echo();} call from it.
 }
 \examples{

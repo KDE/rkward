@@ -8,8 +8,7 @@ qp(...)
 }
 \arguments{
 \item{...}{One or several character strings and/or \code{XiMpLe.node} objects with plugin nodes,
-and/or objects of classes \code{rk.JS.arr} or \code{rk.JS.opt},
-      simply separated by comma.}
+and/or objects of classes \code{rk.JS.arr} or \code{rk.JS.opt}, simply separated by comma.}
 }
 \value{
 A character string.

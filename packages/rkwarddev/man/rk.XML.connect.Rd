@@ -9,27 +9,21 @@ rk.XML.connect(governor, client, get = "state", set = "enabled",
 }
 \arguments{
 \item{governor}{Either a character string (the \code{id} of the property whose state should control
-the \code{client}),
-      or an object of class \code{XiMpLe.node} (whose \code{id} will be extracted
+the \code{client}), or an object of class \code{XiMpLe.node} (whose \code{id} will be extracted
 and used). Usually a \code{<convert>} node defined earlier (see
 \code{\link[rkwarddev:rk.XML.convert]{rk.XML.convert}}).}
 
-\item{client}{Character string,
-      the \code{id} if the element to be controlled by \code{governor}.}
+\item{client}{Character string, the \code{id} if the element to be controlled by \code{governor}.}
 
-\item{get}{Character string, a valid modifier for the node property of \code{governor},
-      often
+\item{get}{Character string, a valid modifier for the node property of \code{governor}, often
 the ".state" value of some apropriate node.}
 
-\item{set}{Character string, a valid modifier for the node property of \code{client},
-      usually
+\item{set}{Character string, a valid modifier for the node property of \code{client}, usually
 one of \code{"enabled"}, \code{"visible"} or \code{"required"}.}
 
-\item{not}{Logical, if \code{TRUE},
-      the state of \code{governor} (\code{TRUE/FALSE}) will be inversed.}
+\item{not}{Logical, if \code{TRUE}, the state of \code{governor} (\code{TRUE/FALSE}) will be inversed.}
 
-\item{reconcile}{Logical,
-      forces the \code{governor} to only accept values which are valid for
+\item{reconcile}{Logical, forces the \code{governor} to only accept values which are valid for
 the \code{client} as well.}
 }
 \value{

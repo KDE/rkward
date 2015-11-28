@@ -25,7 +25,7 @@
 #'   modifiers.
 #' @return A character vector of valid modifiers.
 #' @export
-#' @expamples
+#' @examples
 #' myCheckbox <- rk.XML.cbox("Check for action")
 #' modifiers(myCheckbox)
 

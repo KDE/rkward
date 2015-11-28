@@ -16,18 +16,15 @@ type of class manually.
 
 \item{\code{opt.name}}{Character string, the name of the option.}
 
-\item{\code{collapse}}{Character string,
-      used to collapse several options into one string.}
+\item{\code{collapse}}{Character string, used to collapse several options into one string.}
 
 \item{\code{ifs}}{A list with objects of class rk.JS.ite.}
 
 \item{\code{array}}{Logical, whether to use an array for options.}
 
-\item{\code{funct}}{Character string,
-      name of the R function to be called to combine the options.}
+\item{\code{funct}}{Character string, name of the R function to be called to combine the options.}
 
-\item{\code{opt.sep}}{Character string,
-      separates previous options from the one defined here.}
+\item{\code{opt.sep}}{Character string, separates previous options from the one defined here.}
 }}
 \keyword{Classes}
 

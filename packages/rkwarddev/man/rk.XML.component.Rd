@@ -15,16 +15,14 @@ rk.XML.component(label, file, id.name = "auto", type = "standard",
 \item{id.name}{Character string, a unique ID for this plugin element.
 If \code{"auto"}, an ID will be generated automatically from the label.}
 
-\item{type}{Character string, type of component. As of now,
-      only "standard" is supported. The option is
+\item{type}{Character string, type of component. As of now, only "standard" is supported. The option is
 just implemented for completeness.}
 
 \item{dependencies}{An object of class \code{XiMpLe.node} to define \code{<dependencies>} for this component.
 See \code{\link[rkwarddev:rk.XML.dependencies]{rk.XML.dependencies}} for details. Skipped if \code{NULL}.}
 
 \item{i18n}{Either a character string or a named list with the optional elements \code{context}
-or \code{comment},
-      to give some \code{i18n_context} information for this node. If set to \code{FALSE},
+or \code{comment}, to give some \code{i18n_context} information for this node. If set to \code{FALSE},
 the attribute \code{label} will be renamed into \code{noi18n_label}.}
 }
 \value{

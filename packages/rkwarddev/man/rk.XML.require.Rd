@@ -7,12 +7,10 @@
 rk.XML.require(file = NULL, map = NULL)
 }
 \arguments{
-\item{file}{Character string,
-      file name of another .pluginmap file to be included. Should be
+\item{file}{Character string, file name of another .pluginmap file to be included. Should be
 preferred over \code{map} if that file is in the same package.}
 
-\item{map}{Character string,
-      should be \code{"namespace::id"} of another .pluginmap to be included.
+\item{map}{Character string, should be \code{"namespace::id"} of another .pluginmap to be included.
 Can be used to address plugin maps which are not part of the same plugin package.}
 }
 \value{

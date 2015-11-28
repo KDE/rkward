@@ -12,12 +12,10 @@ idq(obj, modifiers = NULL, check.modifiers = TRUE, js = TRUE,
 
 \item{modifiers}{A character vector with modifiers you'd like to apply to the XML node property.}
 
-\item{check.modifiers}{Logical,
-      if \code{TRUE} the given modifiers will be checked for validity. Should only be
+\item{check.modifiers}{Logical, if \code{TRUE} the given modifiers will be checked for validity. Should only be
 turned off if you know what you're doing.}
 
-\item{js}{Logical,
-      if \code{TRUE} returns JavaScript varaible names for \code{XiMpLe.node} objects.
+\item{js}{Logical, if \code{TRUE} returns JavaScript varaible names for \code{XiMpLe.node} objects.
 Otherwise their actual ID is returned.}
 
 \item{quote}{Character string to be used for quoting.}
@@ -27,12 +25,10 @@ A character string.
 }
 \description{
 This is actually a convenience wrapper for \code{\link[rkwarddev:id]{id}}
-and returns the XML ID of XiMpLe nodes in quoted format,
-      optionally with an attached modifier.
+and returns the XML ID of XiMpLe nodes in quoted format, optionally with an attached modifier.
 }
 \details{
-You can use this function to write almost literal JavaScript code,
-      but still be able to extract IDs from
+You can use this function to write almost literal JavaScript code, but still be able to extract IDs from
 generated R objects.
 }
 \note{

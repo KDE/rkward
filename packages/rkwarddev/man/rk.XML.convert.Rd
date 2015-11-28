@@ -10,8 +10,7 @@ rk.XML.convert(sources, mode = c(), required = FALSE, id.name = "auto")
 \item{sources}{A list with at least one value, either resembling the \code{id} of
 an existing element to be queried as a character string, or a previously defined object
 of class \code{XiMpLe.node} (whose \code{id} will be extracted and used). If you want
-to examine e.g. the state or string value specificly, just name the value accoringly,
-      e.g.,
+to examine e.g. the state or string value specificly, just name the value accoringly, e.g.,
 \code{sources=list("vars0", string="input1", state="chkbx2")}.}
 
 \item{mode}{A named vector with either exactly one of the following elements:
@@ -29,8 +28,7 @@ or at least one of these elemets:
   \item{\code{max}}{True if \code{sources} is below this value. They must be numeric.}
 }}
 
-\item{required}{Logical,
-      sets the state of the \code{required_true} attribute. If \code{TRUE},
+\item{required}{Logical, sets the state of the \code{required_true} attribute. If \code{TRUE},
 the plugin submit button is only enabled if this property is true.}
 
 \item{id.name}{Character string, a unique ID for this plugin element.
@@ -41,8 +39,7 @@ and \code{mode} value.}
 An object of class \code{XiMpLe.node}.
 }
 \description{
-If \code{sources} holds \code{XiMpLe.node} objects,
-      the validity of modifiers is automatically checked for that tag.
+If \code{sources} holds \code{XiMpLe.node} objects, the validity of modifiers is automatically checked for that tag.
 }
 \note{
 To get a list of the implemented modifiers for \code{sources} in this package see \code{\link[rkwarddev:modifiers]{modifiers}}.

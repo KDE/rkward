@@ -11,26 +11,21 @@ rk.XML.dialog(..., label = NULL, recommended = FALSE, i18n = NULL)
 
 \item{label}{Character string, a text label for this plugin element.}
 
-\item{recommended}{Logical,
-      whether the dialog should be the recommended interface (unless the user has configured
-RKWard to default to a specific interface). This attribute currently has no effect,
-      as it is implicitly "true",
+\item{recommended}{Logical, whether the dialog should be the recommended interface (unless the user has configured
+RKWard to default to a specific interface). This attribute currently has no effect, as it is implicitly "true",
 unless the wizard is recommended.}
 
 \item{i18n}{Either a character string or a named list with the optional elements \code{context}
-or \code{comment},
-      to give some \code{i18n_context} information for this node. If set to \code{FALSE},
+or \code{comment}, to give some \code{i18n_context} information for this node. If set to \code{FALSE},
 the attribute \code{label} will be renamed into \code{noi18n_label}.}
 }
 \value{
 An object of class \code{XiMpLe.node}.
 }
 \description{
-This function will create a dialog section with optional child nodes "browser",
-      "checkbox",
+This function will create a dialog section with optional child nodes "browser", "checkbox",
 "column", "copy", "dropdown", "embed", "formula", "frame", "include", "input", "insert",
-"preview", "radio", "row", "saveobject", "select", "spinbox", "stretch", "tabbook",
-      "text",
+"preview", "radio", "row", "saveobject", "select", "spinbox", "stretch", "tabbook", "text",
 "valueselector", "valueslot", "varselector" and "varslot".
 }
 \examples{

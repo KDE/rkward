@@ -18,37 +18,33 @@ JavaScript operators and \code{if} conditions will be kept as-is.}
 
 \item{linebreaks}{Logical, should there be line breaks between the elements in this call?}
 
-\item{empty.e}{For \code{if} conditions only: Logical,
-      if \code{TRUE} will force to add empty \code{else \{\}} brackets when
-there is no \code{else} statement defined,
-      which is considered to enhance code readability by some.}
+\item{empty.e}{For \code{if} conditions only: Logical, if \code{TRUE} will force to add empty \code{else \{\}} brackets when
+there is no \code{else} statement defined, which is considered to enhance code readability by some.}
 
-\item{keep.ite}{Logical,
-      if \code{TRUE} returns \code{if/else} conditions in a list of objects of class \code{rk.JS.ite} instead
+\item{keep.ite}{Logical, if \code{TRUE} returns \code{if/else} conditions in a list of objects of class \code{rk.JS.ite} instead
 of a pasted character string. Comes in handy if used inside \code{\link[rkwarddev:rk.JS.options]{rk.JS.options}}.}
 }
 \value{
-A character string (or \code{rk.JS.ite},
-      if \code{keep.ite=TRUE} and input is an \code{if/else} condition).
+A character string (or \code{rk.JS.ite}, if \code{keep.ite=TRUE} and input is an \code{if/else} condition).
 }
 \description{
 This function is a wrapper for \code{\link[rkwarddev:id]{id}} similar to \code{\link[rkwarddev:qp]{qp}}
 that uses \code{eval(substitute(alist(...)))} to preserve the value of \code{...} as-is to be able to
-both keep operators like \code{">="} or \code{"!="} unevaluated in the resulting output,
-      as well as translating
+both keep operators like \code{">="} or \code{"!="} unevaluated in the resulting output, as well as translating
 \code{if/else} clauses from R to JavaScript.
 }
 \details{
-Normally,
-      \code{id} would simply evaluate the condition and then return the result of that evaluation, which
-most of the time is not what you want. With this function,
-      you can test conditions in usual R syntax, yet
+Normally, \code{id} would simply evaluate the condition and then return the result of that evaluation, which
+most of the time is not what you want. With this function, you can test conditions in usual R syntax, yet
 the operators and \code{if/else} clauses will end up pasted in the result.
 
 The following operators are supported: +, -, *, /, ==, !=, >, <, >=, <=, || and &&
 
-These are currently unsupported and still need to be quoted: \%, ++, --, =, +=, -=, *=,
-      /=, \%=, ===, !== and !
+These are currently unsupported and still need to be quoted: \%, ++, --, =, +=, -=, *=, /=, \%=, ===, !== and !
+}
+\note{
+You should nest your plugin script inside \code{\link[rkwarddev:rk.local]{rk.local}} if you're
+   making use of js(), to be sure it can find all defined objects.
 }
 \examples{
 # an example checkbox XML node
@@ -62,7 +58,8 @@ cat(rk.paste.JS(js(
 )))
 }
 \seealso{
-\code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}},
+\code{\link[rkwarddev:rk.local]{rk.local}},
+   \code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}},
    \code{\link[rkwarddev:rk.JS.array]{rk.JS.array}},
    \code{\link[rkwarddev:rk.JS.options]{rk.JS.options}},
    \code{\link[rkwarddev:echo]{echo}},

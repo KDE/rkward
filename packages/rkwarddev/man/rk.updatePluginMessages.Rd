@@ -8,11 +8,9 @@ rk.updatePluginMessages(pluginmap, extractOnly = FALSE, default_po = NULL,
   outdir = NULL)
 }
 \arguments{
-\item{pluginmap}{Character string,
-      full path to the main pluginmap file of the plugin to translate.}
+\item{pluginmap}{Character string, full path to the main pluginmap file of the plugin to translate.}
 
-\item{extractOnly}{Logical,
-      should translatable strings only be extracted? If \code{FALSE}, translatable
+\item{extractOnly}{Logical, should translatable strings only be extracted? If \code{FALSE}, translatable
 strings will be updated and installed.}
 
 \item{default_po}{Optional character string, fallback default name for \code{*.pot} file.}

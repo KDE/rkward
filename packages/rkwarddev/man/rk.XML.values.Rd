@@ -16,8 +16,7 @@ rk.XML.values(label, slot.text, options = list(label = c(val = NULL, chk =
 \item{slot.text}{Character string, a text label for the value selection slot.}
 
 \item{options}{A named list with string values to choose from. The names of the list elements will become
-labels of the options, \code{val} defines the value to submit if the value is selected,
-      and
+labels of the options, \code{val} defines the value to submit if the value is selected, and
 \code{chk=TRUE} should be set in the one option which is checked by default. You might also provide an \code{i18n}
 for this particular option (see \code{i18n}). Objects generated with \code{\link[rkwarddev:rk.XML.option]{rk.XML.option}}
 are accepted as well.}
@@ -26,8 +25,7 @@ are accepted as well.}
 
 \item{multi}{Logical, whether the valueslot holds only one or several objects.}
 
-\item{duplicates}{Logical,
-      if \code{multi=TRUE} defines whether the same entry may be added multiple times. Sets \code{multi=TRUE}.}
+\item{duplicates}{Logical, if \code{multi=TRUE} defines whether the same entry may be added multiple times. Sets \code{multi=TRUE}.}
 
 \item{min}{If \code{multi=TRUE} defines how many objects must be selected.}
 
@@ -44,22 +42,16 @@ if \code{FALSE} below it.}
 
 \item{frame.label}{Character string, a text label for the whole frame.}
 
-\item{id.name}{Character vector, unique IDs for the frame (first entry),
-      the valueselector (second entry)
-and valueslot (third entry). If \code{formula.dependent} is not \code{NULL},
-      a fourth and fifth entry is needed as well,
+\item{id.name}{Character vector, unique IDs for the frame (first entry), the valueselector (second entry)
+and valueslot (third entry). If \code{formula.dependent} is not \code{NULL}, a fourth and fifth entry is needed as well,
 for the dependent valueslot and the formula node, respectively.
-If \code{"auto"},
-      IDs will be generated automatically from \code{label} and \code{slot.text}.}
+If \code{"auto"}, IDs will be generated automatically from \code{label} and \code{slot.text}.}
 
-\item{help}{Character string or list of character values and XiMpLe nodes,
-      will be used as the \code{text} value for a setting node in the .rkh file.
-If set to \code{FALSE},
-      \code{\link[rkwarddev:rk.rkh.scan]{rk.rkh.scan}} will ignore this node.
+\item{help}{Character string or list of character values and XiMpLe nodes, will be used as the \code{text} value for a setting node in the .rkh file.
+If set to \code{FALSE}, \code{\link[rkwarddev:rk.rkh.scan]{rk.rkh.scan}} will ignore this node.
 Also needs \code{component} to be set accordingly!}
 
-\item{component}{Character string,
-      name of the component this node belongs to. Only needed if you
+\item{component}{Character string, name of the component this node belongs to. Only needed if you
 want to use the scan features for automatic help file generation; needs \code{help} to be set
 accordingly, too!}
 }
@@ -69,8 +61,7 @@ An object of class \code{XiMpLe.node}.
 \description{
 This function will create a <frame> node including a <valueselector> and a <valueslot> node. It is
 actually a wrapper for \code{\link[rkwarddev:rk.XML.valueslot]{rk.XML.valueslot}} and
-\code{\link[rkwarddev:rk.XML.valueselector]{rk.XML.valueselector}},
-      since you usually won't define one
+\code{\link[rkwarddev:rk.XML.valueselector]{rk.XML.valueselector}}, since you usually won't define one
 without the other.
 }
 \examples{

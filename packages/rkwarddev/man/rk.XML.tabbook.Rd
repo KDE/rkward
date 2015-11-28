@@ -18,8 +18,7 @@ If \code{"auto"}, IDs will be generated automatically from the labels.
 If \code{NULL}, no IDs will be given.}
 
 \item{i18n}{Either a character string or a named list with the optional elements \code{context}
-or \code{comment},
-      to give some \code{i18n_context} information for this node. If set to \code{FALSE},
+or \code{comment}, to give some \code{i18n_context} information for this node. If set to \code{FALSE},
 the attribute \code{label} will be renamed into \code{noi18n_label}.}
 }
 \value{
@@ -29,8 +28,7 @@ An object of class \code{XiMpLe.node}.
 Create XML node "tabbook" for RKWard plugins
 }
 \note{
-If a node in \code{tabs} is \code{<insert>}, it is returned as-is,
-      without being nested in \code{<tab>}.
+If a node in \code{tabs} is \code{<insert>}, it is returned as-is, without being nested in \code{<tab>}.
 }
 \examples{
 test.checkboxes <- rk.XML.row(rk.XML.col(

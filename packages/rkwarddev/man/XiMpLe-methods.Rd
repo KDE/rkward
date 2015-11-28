@@ -25,33 +25,26 @@ plugin2script(obj, prefix = "rkdev", indent = TRUE, level = 1,
   level = 1, drop.defaults = TRUE, node.names = TRUE, collapse = ".")
 }
 \arguments{
-\item{obj}{Either a character vector (path to a plugin XML file to parse), a connection,
-      an already
+\item{obj}{Either a character vector (path to a plugin XML file to parse), a connection, an already
 parsed XML tree (class \code{XiMpLe.doc}) or a single \code{XiMpLe.node} object.}
 
-\item{prefix}{Character string,
-      used as the prefix for the object names used in the script. Set to \code{""}
+\item{prefix}{Character string, used as the prefix for the object names used in the script. Set to \code{""}
 to disable the prefix.}
 
 \item{indent}{Logical, whether the script code should be indented properly.}
 
 \item{level}{Integer number, the starting leven of indentation.}
 
-\item{drop.defaults}{Logical,
-      whether to check for the default options in function calls. If the
-parsed and translated XML code resulted in default options,
-      they are omitted in the resulting script.}
+\item{drop.defaults}{Logical, whether to check for the default options in function calls. If the
+parsed and translated XML code resulted in default options, they are omitted in the resulting script.}
 
-\item{node.names}{Logical,
-      whether the node names should become part of the generated R object names.}
+\item{node.names}{Logical, whether the node names should become part of the generated R object names.}
 
-\item{collapse}{Character string,
-      used to collapse the parts of the generated R object names.}
+\item{collapse}{Character string, used to collapse the parts of the generated R object names.}
 }
 \value{
 Either a character vector (if \code{obj} is a single XML node)
-   or a list of character vectors named \code{"logic"}, \code{"dialog"},
-      and \code{"wizard"},
+   or a list of character vectors named \code{"logic"}, \code{"dialog"}, and \code{"wizard"},
    (if \code{obj} is a full XML document).
 }
 \description{
@@ -59,20 +52,17 @@ These methods try to translate plugin XML objects into \code{rkwarddev} function
 }
 \details{
 They are intended to make it easier to translate previously manually maintained plugin code
-into \code{rkwarddev} scripts. The generated output should not be used as-is,
-      but restructured
+into \code{rkwarddev} scripts. The generated output should not be used as-is, but restructured
 properly into a useful script.
 
 You can either use a full XML document (read with \code{\link[XiMpLe:parseXMLTree]{parseXMLTree}})
-or single (also nested) XiMpLe XML nodes. If you provide a character string,
-      it is assumed to be
+or single (also nested) XiMpLe XML nodes. If you provide a character string, it is assumed to be
 the full path to a document to be parsed with \code{parseXMLTree} and then analysed. Connections
 are also accepted.
 }
 \note{
 The methods might fail, especially with highly complex plugins. Try to break these
-into sensible chunks and try those speparately. Sometimes,
-      slightly changing the input file
+into sensible chunks and try those speparately. Sometimes, slightly changing the input file
 might also do the trick to get some usable results.
 }
 \examples{

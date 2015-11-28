@@ -10,8 +10,7 @@ rk.XML.plugin(name, dialog = NULL, wizard = NULL, logic = NULL,
   gen.info = TRUE, i18n = NULL)
 }
 \arguments{
-\item{name}{Character string,
-      the name of the plugin. Will be used for the names of the JavaScript and
+\item{name}{Character string, the name of the plugin. Will be used for the names of the JavaScript and
 help files to be included, following the scheme \emph{"<name>.<ext>"}.}
 
 \item{dialog}{An object of class \code{XiMpLe.node} to be pasted as the \code{<dialog>} section. See
@@ -26,24 +25,18 @@ help files to be included, following the scheme \emph{"<name>.<ext>"}.}
 \item{snippets}{An object of class \code{XiMpLe.node} to be pasted as the \code{<snippets>} section. See
 \code{\link[rkwarddev:rk.XML.snippets]{rk.XML.snippets}} for details.}
 
-\item{provides}{Character vector with possible entries of \code{"logic"},
-      \code{"dialog"} or \code{"wizard"}, defining what
-sections the document should provide even if \code{dialog},
-      \code{wizard} and \code{logic} are \code{NULL}.
+\item{provides}{Character vector with possible entries of \code{"logic"}, \code{"dialog"} or \code{"wizard"}, defining what
+sections the document should provide even if \code{dialog}, \code{wizard} and \code{logic} are \code{NULL}.
 These sections must be edited manually and some parts are therefore commented out.}
 
-\item{help}{Logical,
-      if \code{TRUE} an include tag for a help file named \emph{"<name>.rkh"} will be added to the header.}
+\item{help}{Logical, if \code{TRUE} an include tag for a help file named \emph{"<name>.rkh"} will be added to the header.}
 
-\item{include}{Character string or vector, relative path(s) to other file(s),
-      which will then be included in the head of the GUI XML document.}
+\item{include}{Character string or vector, relative path(s) to other file(s), which will then be included in the head of the GUI XML document.}
 
-\item{label}{Character string, a text label for the plugin's top level,
-      i.e. the window title of the dialog.
+\item{label}{Character string, a text label for the plugin's top level, i.e. the window title of the dialog.
 Will only be used if \code{dialog} or \code{wizard} are \code{NULL}.}
 
-\item{clean.name}{Logical, if \code{TRUE},
-      all non-alphanumeric characters except the underscore (\code{"_"}) will be removed from \code{name}.}
+\item{clean.name}{Logical, if \code{TRUE}, all non-alphanumeric characters except the underscore (\code{"_"}) will be removed from \code{name}.}
 
 \item{about}{An object of class \code{XiMpLe.node} with descriptive information on the plugin and its authors,
 see \code{link[XiMpLe:rk.XML.about]{rk.XML.about}} for details. Only useful for information that differs from the \code{<about>}
@@ -59,8 +52,7 @@ You can also provide a character string naming the very rkwarddev script file th
 which will then also be added to the comment.}
 
 \item{i18n}{Either a character string or a named list with the optional elements \code{context}
-or \code{comment},
-      to give some \code{i18n_context} information for this node. If set to \code{FALSE},
+or \code{comment}, to give some \code{i18n_context} information for this node. If set to \code{FALSE},
 the attribute \code{label} will be renamed into \code{noi18n_label}.}
 }
 \value{

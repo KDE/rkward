@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.07-4 (2015-11-23)}{
+\section{Changes in rkwarddev version 0.08-1 (2015-11-28)}{
   \subsection{unreleased}{
     \itemize{
       \item this version is under development
@@ -21,6 +21,7 @@
       \item indentation of \code{rk.paste.JS.graph()} was incorrect
       \item pasting comments via \code{rk.paste.JS()} gained an extra space for subsequent
         lines
+      \item the \code{"i18n"} attribute in lists e.g. for \code{rk.XML.radio()} didn't really work
     }
   }
   \subsection{added}{
@@ -34,7 +35,8 @@
         will be translated to JavaScript equivalents without the need for quoting.
         however, the \code{"for"} loop code is not publicly documented and remains a
         proof of concept kind of thing for now
-      \item new option \code{".objects"} in \code{id()} to provide objects as a list
+      \item new option \code{".objects"} in \code{id()} and \code{".ite"} in \code{rk.JS.options()} to provide
+        objects as a list
       \item new option \code{"rk.JS.vars"} to make JS variables match the name of the
         original R object
       \item new function \code{idq()} to print quoted IDs of XML nodes for use in JavaScript
@@ -51,6 +53,8 @@
         update_plugin_messages.py, the package now comes with its own copy of this core i18n script
       \item the generator info gained support for hinting at the very rkwarddev
         script file that was used to generate a particular plugin file
+      \item new function \code{rk.local()} to be used as an alternative to \code{local()} with a
+        predefined local environment to solve scope issues with \code{js()}
     }
   }
   \subsection{changed}{
