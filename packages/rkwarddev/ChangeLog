@@ -17,6 +17,7 @@ fixed:
   - pasting comments via rk.paste.JS() gained an extra space for subsequent
     lines
   - the "i18n" attribute in lists e.g. for rk.XML.radio() didn't really work
+  - improved indetation for rk.JS.oset objects
 added:
   - new methods plugin2script() to try to translate raw plugin XML into
     working rkwarddev script calls

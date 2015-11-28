@@ -1004,7 +1004,7 @@ paste.JS.options <- function(object, level=2, indent.by=rk.get.indent(), array=N
     } else {
       this.collapse <- ""
     }
-    paste.JS.ite(add.opts(thisIf, collapse=this.collapse, array=array), level=level+1, indent.by=indent.by)
+    paste.JS.ite(add.opts(thisIf, collapse=this.collapse, array=array), level=level, indent.by=indent.by)
   })
 
 #return(ifs.pasted)
@@ -1167,7 +1167,7 @@ paste.JS.optionsset <- function(object, level=2, indent.by=rk.get.indent()){
     for.head <- paste0(main.indent, "for (var ", loopvar, " = 0; ", loopvar, " < ", id(columns[[1]]), ".length; ++", loopvar, "){")
 
     paste.body <- sapply(body, function(bodyPart){
-        rk.paste.JS(bodyPart, level=level, indent.by=scnd.indent)
+        rk.paste.JS(bodyPart, level=level+1, indent.by=indent.by)
       })
     # replace the column IDs with indexed ones
     for (thisCol in sapply(columns, id)){

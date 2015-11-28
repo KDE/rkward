@@ -94,7 +94,7 @@ js <- function(..., level=2, indent.by=rk.get.indent(), linebreaks=TRUE, empty.e
           return(this.part)
         } else {
           if(as.character(this.part[[1]]) %in% c("rk.comment", "tf", "rk.JS.optionset")){
-            return(rk.paste.JS(eval(this.part, envir=.rk.local.env), level=level, indent.by=indent.by, empty.e=empty.e))
+            return(trim(rk.paste.JS(eval(this.part, envir=.rk.local.env), level=level, indent.by=indent.by, empty.e=empty.e)))
           } else {}
           # replace JS operators
           return(do.call("replaceJSOperators", args=list(this.part)))
