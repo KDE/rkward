@@ -12,6 +12,18 @@ Things to test at the end:
   - Moved installations, moved workspaces.
 - Window embedding
 
+Upcoming porting efforts: Port from QtScript to QJSEngine:
+- Unforunately, QJSEngine lacks support for pre-compiled JS (QScriptProgram), ATM (Qt 5.5). We'll need some other optimization.
+- Idea: Use _one_ engine for each plugin, _including_ any embedded plugins. Wrap existing JS code into a closure, exporting only the "primary" functions as properties of an object.
+  - Then, the scriptbackend will call plugin_a.preprocess(), etc.
+  - The scriptbackend knows which of the plugins it is currently dealing with, and thus can trivially relay all getValue()-calls as appropriate.
+- Same approach for UI scripting.
+
+Port from QtWebKit to QtWebEngine
+- Should be mostly unproblematic
+- Somewhat unfortunate that QWebElement will be gone. We might be using this to amend the context menu, e.g. for copying one section to clipboard / deleting one section, etc.
+  - Could perhaps be done by catching contextmenu event in JS, instead, then send to frontend, somehow.
+
 New features in R 3.1.0 to make use of / support:
 
 - A new browser command s has been added, to “step into” function calls.
