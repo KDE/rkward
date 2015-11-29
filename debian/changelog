@@ -2,6 +2,8 @@ rkward (0.6.3z+0.6.4+devel1-1) unstable; urgency=low
   * new upstream release
   * now uses QtWebKit module, adjust build-depends, accordingly (in a way that is
     backwards compatible with Ubuntu Lucid)
+  * Make build reproducible (thanks to Philip Rinn)
+    closes: #783290
 
  -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Thu, 26 Feb 2015 10:30:00 +0100
 
