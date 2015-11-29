@@ -61,27 +61,13 @@ rk.rkh.doc <- function(summary=NULL, usage=NULL, sections=NULL, settings=NULL, r
 
   if(!is.null(title)){
     # check if this is *really* a title section
-    if(is.XiMpLe.node(title)){
-      title.node.name <- slot(title, "name")
-    } else {
-      title.node.name <- "yougottabekiddingme"
-    }
-    if(!identical(title.node.name, "title")){
-      stop(simpleError("I don't know what this is, but 'title' is not a title section!"))
-    } else {}
+    valid.parent(parent="title", node=title, warn=FALSE, see="rk.rkh.title")
     all.children[[length(all.children)+1]] <- title
   } else {}
 
   if(!is.null(summary)){
     # check if this is *really* a summary section
-    if(is.XiMpLe.node(summary)){
-      summary.node.name <- slot(summary, "name")
-    } else {
-      summary.node.name <- "yougottabekiddingme"
-    }
-    if(!identical(summary.node.name, "summary")){
-      stop(simpleError("I don't know what this is, but 'summary' is not a summary section!"))
-    } else {}
+    valid.parent(parent="summary", node=summary, warn=FALSE, see="rk.rkh.summary")
     all.children[[length(all.children)+1]] <- summary
   } else if(isTRUE(hints)){
     all.children[[length(all.children)+1]] <- rk.rkh.summary()
@@ -89,14 +75,7 @@ rk.rkh.doc <- function(summary=NULL, usage=NULL, sections=NULL, settings=NULL, r
 
   if(!is.null(usage)){
     # check if this is *really* a usage section
-    if(is.XiMpLe.node(usage)){
-      usage.node.name <- slot(usage, "name")
-    } else {
-      usage.node.name <- "yougottabekiddingme"
-    }
-    if(!identical(usage.node.name, "usage")){
-      stop(simpleError("I don't know what this is, but 'usage' is not a usage section!"))
-    } else {}
+    valid.parent(parent="usage", node=usage, warn=FALSE, see="rk.rkh.usage")
     all.children[[length(all.children)+1]] <- usage
   } else if(isTRUE(hints)){
     all.children[[length(all.children)+1]] <- rk.rkh.usage()
@@ -105,15 +84,7 @@ rk.rkh.doc <- function(summary=NULL, usage=NULL, sections=NULL, settings=NULL, r
   if(!is.null(sections)){
     for(this.section in sections){
       # check if this is *really* a section
-      if(is.XiMpLe.node(this.section)){
-        this.section.node.name <- slot(this.section, "name")
-      } else {
-        this.section.node.name <- "yougottabekiddingme"
-      }
-      if(!identical(this.section.node.name, "section")){
-        stop(simpleError("I don't know what this is, but 'sections' does not hold section nodes!"))
-      } else {}
-
+      valid.parent(parent="section", node=section, warn=FALSE, see="rk.rkh.section")
       all.children[[length(all.children)+1]] <- this.section
     }
   } else if(isTRUE(hints)){
@@ -123,14 +94,7 @@ rk.rkh.doc <- function(summary=NULL, usage=NULL, sections=NULL, settings=NULL, r
 
   if(!is.null(settings)){
     # check if this is *really* a settings section
-    if(is.XiMpLe.node(settings)){
-      settings.node.name <- slot(settings, "name")
-    } else {
-      settings.node.name <- "yougottabekiddingme"
-    }
-    if(!identical(settings.node.name, "settings")){
-      stop(simpleError("I don't know what this is, but 'settings' is not a settings section!"))
-    } else {}
+    valid.parent(parent="settings", node=settings, warn=FALSE, see="rk.rkh.settings")
     all.children[[length(all.children)+1]] <- settings
   } else if(isTRUE(hints)){
     all.children[[length(all.children)+1]] <- rk.rkh.settings()
@@ -138,14 +102,7 @@ rk.rkh.doc <- function(summary=NULL, usage=NULL, sections=NULL, settings=NULL, r
 
   if(!is.null(related)){
     # check if this is *really* a related section
-    if(is.XiMpLe.node(related)){
-      related.node.name <- slot(related, "name")
-    } else {
-      related.node.name <- "yougottabekiddingme"
-    }
-    if(!identical(related.node.name, "related")){
-      stop(simpleError("I don't know what this is, but 'related' is not a related section!"))
-    } else {}
+    valid.parent(parent="related", node=related, warn=FALSE, see="rk.rkh.related")
     all.children[[length(all.children)+1]] <- related
   } else if(isTRUE(hints)){
     all.children[[length(all.children)+1]] <- XMLNode("!--", rk.rkh.related(rk.rkh.link("...")))
@@ -153,14 +110,7 @@ rk.rkh.doc <- function(summary=NULL, usage=NULL, sections=NULL, settings=NULL, r
 
   if(!is.null(technical)){
     # check if this is *really* a technical section
-    if(is.XiMpLe.node(technical)){
-      technical.node.name <- slot(technical, "name")
-    } else {
-      technical.node.name <- "yougottabekiddingme"
-    }
-    if(!identical(technical.node.name, "technical")){
-      stop(simpleError("I don't know what this is, but 'technical' is not a technical section!"))
-    } else {}
+    valid.parent(parent="technical", node=technical, warn=FALSE, see="rk.rkh.technical")
     all.children[[length(all.children)+1]] <- technical
   } else if(isTRUE(hints)){
     all.children[[length(all.children)+1]] <- rk.rkh.technical()
