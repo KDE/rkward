@@ -260,6 +260,8 @@ void RKTransmitNextUserCommandChunk (unsigned char* buf, int buflen) {
 	}
 }
 
+void RCleanUp (SA_TYPE saveact, int status, int RunLast);
+
 int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) {
 	RK_TRACE (RBACKEND);
 
