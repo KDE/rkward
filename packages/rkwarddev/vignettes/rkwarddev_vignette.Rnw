@@ -91,6 +91,7 @@ how you use them will also be explained later on:
 \begin{itemize}
   \item  \texttt{echo()}: Produces an equivalent of the JavaScript \texttt{echo()} function
   \item  \texttt{id()}: Similar to paste, but replaces \texttt{rkwarddev} objects with their ID value
+  \item  \texttt{idq()}: Like \texttt{id}, but also quotes the ID value
   \item  \texttt{js()}: Short for JavaScript, like \texttt{id()}, but will translate \texttt{if} control structures and some operands directly from R to JavaScript
   \item  \texttt{qp()}: Short for ''\textbf{q}uote \& \textbf{p}lus``, like \texttt{id()}, but with different replacement defaults
   \item  \texttt{ite()}: Short for ''\textbf{i}f, \textbf{t}hen, \textbf{e}lse``, a shortcut to generate JavaScript \texttt{if() \{\} else \{\}} conditions
@@ -478,7 +479,7 @@ the condition but translate it into JavaScript code:
 As you can see, the resulting JavaScript code is very similar to the \texttt{R} code that created it, so using \texttt{js()} is probably preferable
 over \texttt{ite()}. Notice the \texttt{cat()} call here? In contrast to \texttt{ite()} the output of \texttt{js()} is already a character string.
 
-But \texttt{js()} can do more: It also preserves some ofeten used operators from evaluation, so for instance you can do comparisons in your \texttt{if}
+But \texttt{js()} can do more: It also preserves some often used operators from evaluation, so for instance you can do comparisons in your \texttt{if}
 clause:
 
   \begin{Schunk}
@@ -555,7 +556,7 @@ Now the plugin actually changes the generated code if you select an object from 
 
 \subsection{Adding help pages}
 
-To help users understanding your plugin, it is a good practice to add a help page to it, allthoug it is optional, technically.
+To help users understanding your plugin, it is a good practice to add a help page to it, allthough it is optional, technically.
 A help starts with a summary and global usage information, and then usually has detailed information on each GUI element of the
 plugin dialog. It is very easy to add a help page with \texttt{rkwarddev}, so there is literally no excuse.
 
@@ -610,6 +611,59 @@ Now the plugin has a working \textit{Help} button which opens a page in the help
 \begin{center}
  \includegraphics{./RKWard_vign_example_help_page.png}
 \end{center}
+
+\section{Turning existing plugins into \texttt{rkwarddev} scripts}
+
+Imagine you already have your (manually written) \texttt{RKWard} plugin, and now would like to continue its development using
+an \texttt{rkwarddev} script. Do you have to rewrite everything from scratch? Fortunately, you don't. And even if you don't want
+to use \texttt{rkwarddev} for further development, the following might still be helpful for you, as it can be used to check
+your plugin code for undetected errors.
+
+The function \texttt{plugin2script()} can be used to go the other way around and generate \texttt{rkwarddev} script code from
+plugin XML code. It is capable of parsing *.xml files or \texttt{XiMpLe} objects. If the parsed code contains invalid
+syntax, you should get a warning, otherwise it returns a character string that can be used in a script to generate the equivalent
+XML code:
+
+  \begin{Schunk}
+    \begin{Sinput}
+> cat(plugin2script(myDialog))
+    \end{Sinput}
+    \begin{Soutput}
+rk.XML.dialog(
+  rkdev.row.row_vCCEXMLEXM <- rk.XML.row(
+    rkdev.varselector.my_vars <- rk.XML.varselector(
+      id.name="my_vars"
+    ),
+    rkdev.column.clm_vCCEXMLEXM <- rk.XML.col(
+      rkdev.varslot.vrsl_Chosvrbl <- rk.XML.varslot(
+        label="Chose a variable",
+        source="my_vars",
+        id.name="vrsl_Chosvrbl"
+      ),
+      rkdev.frame.frm_ExmplXML <- rk.XML.frame(
+        rkdev.checkbox.chc_Checkme <- rk.XML.cbox(
+          label="Check me!",
+          id.name="chc_Checkme"
+        ),
+        rkdev.checkbox.chc_Nocheckm <- rk.XML.cbox(
+          label="No, check me!!!",
+          chk=TRUE,
+          id.name="chc_Nocheckm"
+        ),
+        label="Example XML object",
+        id.name="frm_ExmplXML"
+      ),
+      id.name="clm_vCCEXMLEXM"
+    ),
+    id.name="row_vCCEXMLEXM"
+  ),
+  label="Example dialog"
+)
+    \end{Soutput}
+  \end{Schunk}
+
+This can be optimized, e.\,g., by re-ordering the object defintions without all the nesting,
+but it sure is a good start and saves a lot of typing.
 
 % \subsection{The whole is more than the sum of its parts}
 % 
