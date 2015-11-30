@@ -630,22 +630,22 @@ XML code:
     \end{Sinput}
     \begin{Soutput}
 rk.XML.dialog(
-  rkdev.row.row_vCCEXMLEXM <- rk.XML.row(
-    rkdev.varselector.my_vars <- rk.XML.varselector(
+  row_vCCEXMLEXM <- rk.XML.row(
+    my_vars <- rk.XML.varselector(
       id.name="my_vars"
     ),
-    rkdev.column.clm_vCCEXMLEXM <- rk.XML.col(
-      rkdev.varslot.vrsl_Chosvrbl <- rk.XML.varslot(
+    clm_vCCEXMLEXM <- rk.XML.col(
+      vrsl_Chosvrbl <- rk.XML.varslot(
         label="Chose a variable",
         source="my_vars",
         id.name="vrsl_Chosvrbl"
       ),
-      rkdev.frame.frm_ExmplXML <- rk.XML.frame(
-        rkdev.checkbox.chc_Checkme <- rk.XML.cbox(
+      frm_ExmplXML <- rk.XML.frame(
+        chc_Checkme <- rk.XML.cbox(
           label="Check me!",
           id.name="chc_Checkme"
         ),
-        rkdev.checkbox.chc_Nocheckm <- rk.XML.cbox(
+        chc_Nocheckm <- rk.XML.cbox(
           label="No, check me!!!",
           chk=TRUE,
           id.name="chc_Nocheckm"
