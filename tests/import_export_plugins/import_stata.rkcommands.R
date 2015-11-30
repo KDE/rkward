@@ -15,7 +15,7 @@ iconv.recursive <- function (x, from) {
 	x
 }
 ## Compute
-data <- read.dta ("import_export_plugins_testfile.dta", convert.dates=TRUE, convert.factors=TRUE, missing.type=FALSE, convert.underscore=FALSE)
+data <- read.dta ("PATH/import_export_plugins_testfile.dta", convert.dates=TRUE, convert.factors=TRUE, missing.type=FALSE, convert.underscore=FALSE)
 
 # convert all strings to the current encoding
 data <- iconv.recursive (data, from="ISO8859-1")
@@ -33,6 +33,6 @@ if (!is.null (labels)) {
 
 .GlobalEnv$my.stata.data <- data		# assign to globalenv()
 ## Print result
-rk.header ("Import Stata File", parameters=list("File name"="import_export_plugins_testfile.dta",
+rk.header ("Import Stata File", parameters=list("File name"="PATH/import_export_plugins_testfile.dta",
 	"Object to save to"="my.stata.data"))
 })

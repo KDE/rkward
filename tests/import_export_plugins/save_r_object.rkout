@@ -1,12 +1,12 @@
 <h1>Save R objects</h1>
 <h2>Parameters</h2>
-<ul><li>File name: x.RData</li>
+<ul><li>File name: PATH/x.RData</li>
 <li>Object: testx</li>
 </ul>
 DATE<br />
 <h1>Save R objects</h1>
 <h2>Parameters</h2>
-<ul><li>File name: y.RData</li>
+<ul><li>File name: PATH/y.RData</li>
 <li>Object: testy</li>
 </ul>
 DATE<br />
