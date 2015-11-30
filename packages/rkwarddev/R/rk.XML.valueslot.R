@@ -78,7 +78,11 @@ rk.XML.valueslot <- function(label, source, property=NULL, required=FALSE, multi
         value.slot.attr[["source_property"]] <- paste(check.ID(source), property, sep=".")
       } else {}
     }
-  } else {}
+  } else if(is.character(source)){
+    var.slot.attr[["source"]] <- check.ID(source)
+  } else {
+    stop(simpleError("No valid 'source' value given!"))
+  }
 
   if(isTRUE(required)){
     value.slot.attr[["required"]] <- "true"

@@ -18,6 +18,8 @@ fixed:
     lines
   - the "i18n" attribute in lists e.g. for rk.XML.radio() didn't really work
   - improved indetation for rk.JS.oset objects
+  - rk.XML.varslot() and rk.XML.valueslot() didn't correctly add sources if
+    they were character strings (which is valid)
 added:
   - new methods plugin2script() to try to translate raw plugin XML into
     working rkwarddev script calls
@@ -52,7 +54,7 @@ changed:
   - improved error handling in rk.JS.header(), error messages are more
     informative now
   - rk.uniqueIDs() now checks "dialog" and "wizard" sections separately
-  - updated the vignette with information on js() and how to add help pages
+  - updated the vignette with information on js(), plugin2script(), and how to add help pages
   - internal function modif.validity() now calls modifiers() to give more
     useful feedback
   - all functions offering "intent.by" as an option now fetch the default

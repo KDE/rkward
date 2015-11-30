@@ -88,7 +88,11 @@ rk.XML.varslot <- function(label, source, property=NULL, required=FALSE, multi=F
         var.slot.attr[["source_property"]] <- paste(check.ID(source), property, sep=".")
       } else {}
     }
-  } else {}
+  } else if(is.character(source)){
+    var.slot.attr[["source"]] <- check.ID(source)
+  } else {
+    stop(simpleError("No valid 'source' value given!"))
+  }
 
   if(!is.null(classes)){
     var.slot.attr[["classes"]] <- paste(classes, collapse=" ")

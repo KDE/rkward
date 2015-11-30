@@ -663,7 +663,18 @@ rk.XML.dialog(
   \end{Schunk}
 
 This can be optimized, e.\,g., by re-ordering the object defintions without all the nesting,
-but it sure is a good start and saves a lot of typing.
+replacing the character string \texttt{source="my\_vars"} in \texttt{rk.XML.varslot()} with the varselector object etc.
+But it sure is a good start and saves a lot of typing. Most importantly, the generated XML
+object of this script code is identical to the analyzed object:
+
+ \begin{Schunk}
+   \begin{Sinput}
+>  identical(eval(parse(text=plugin2script(myDialog))), myDialog)
+   \end{Sinput}
+   \begin{Soutput}
+[1] TRUE
+   \end{Soutput}
+ \end{Schunk}
 
 % \subsection{The whole is more than the sum of its parts}
 % 
