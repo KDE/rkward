@@ -13,9 +13,11 @@ rk.local(...)
 The result of evaluating the object(s).
 }
 \description{
-Can be used like \code{\link[base:local]{local}}, but evaluation is being done in a speacial
+Can be used like \code{\link[base:local]{local}},
+      but evaluation is being done in a speacial
 local environment of the rkwarddev package. This can be neccessary if you want to call functions
-nested insinde \code{\link[rkwarddev:js]{js}}, because it might not find all objects if they were
+nested insinde \code{\link[rkwarddev:js]{js}},
+      because it might not find all objects if they were
 only defined in a standard local environment.
 }
 

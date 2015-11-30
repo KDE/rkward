@@ -18,8 +18,10 @@ An object of class \code{rk.JS.echo}.
 }
 \description{
 This function pastes an object of class \code{rk.JS.arr} similar to \code{\link[rkwarddev:rk.paste.JS]{rk.paste.JS}},
-but was specifically written for elements like \code{<optionset>} or \code{<matrix>}, whose values must be queried
-by \code{getList()} rather than \code{getValue()}. This means, the resulting variable is already an array an merely
+but was specifically written for elements like \code{<optionset>} or \code{<matrix>},
+      whose values must be queried
+by \code{getList()} rather than \code{getValue()}. This means,
+      the resulting variable is already an array an merely
 needs to be joined in as R code output (e.g., an \code{<optioncolumn>}).
 }
 \seealso{

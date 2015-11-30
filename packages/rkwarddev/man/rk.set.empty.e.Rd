@@ -13,7 +13,8 @@ rk.set.empty.e(empty = FALSE)
 \item{empty}{Logical, whether .}
 }
 \value{
-\code{rk.set.empty.e} returns invisible(NULL), \code{rk.get.empty.e} either \code{TRUE} or \code{FALSE}.
+\code{rk.set.empty.e} returns invisible(NULL),
+      \code{rk.get.empty.e} either \code{TRUE} or \code{FALSE}.
 }
 \description{
 Some JS functions allow to decide whether empty \code{else} statements should be omitted or printed

@@ -14,15 +14,18 @@ constructed from several variables.}
 \item{variables}{A list with either character strings (the names of the variables to combine to a vector or list),
 or objects of class \code{XiMpLe.node} with plugin XML nodes (whose ID will be extracted and used).}
 
-\item{funct}{Character string, name of the R function to be called to combine the options, e.g. "list" for \code{list()},
+\item{funct}{Character string, name of the R function to be called to combine the options,
+      e.g. "list" for \code{list()},
 or "c" for \code{c()}.}
 
 \item{var.prefix}{A character string. sets a global string to be used as a prefix for the JS variable names.}
 
-\item{quote}{Logical, if \code{TRUE}, the values will be quoted in the resulting R code (might be neccessary
+\item{quote}{Logical, if \code{TRUE},
+      the values will be quoted in the resulting R code (might be neccessary
 for character values).}
 
-\item{opt.sep}{Character string, will be printed in the resulting R code before the option name.}
+\item{opt.sep}{Character string,
+      will be printed in the resulting R code before the option name.}
 }
 \value{
 An object of class \code{rk.JS.arr}.

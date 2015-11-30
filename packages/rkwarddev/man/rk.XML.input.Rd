@@ -10,7 +10,8 @@ rk.XML.input(label, initial = NULL, size = "medium", required = FALSE,
 \arguments{
 \item{label}{Character string, a text label for this plugin element.}
 
-\item{initial}{Character string, if not \code{NULL} will be used as the initial value of the input field.}
+\item{initial}{Character string,
+      if not \code{NULL} will be used as the initial value of the input field.}
 
 \item{size}{One value of either "small", "medium" or "large".}
 
@@ -19,16 +20,20 @@ rk.XML.input(label, initial = NULL, size = "medium", required = FALSE,
 \item{id.name}{Character string, a unique ID for this plugin element.
 If \code{"auto"}, an ID will be generated automatically from the label.}
 
-\item{help}{Character string or list of character values and XiMpLe nodes, will be used as the \code{text} value for a setting node in the .rkh file.
-If set to \code{FALSE}, \code{\link[rkwarddev:rk.rkh.scan]{rk.rkh.scan}} will ignore this node.
+\item{help}{Character string or list of character values and XiMpLe nodes,
+      will be used as the \code{text} value for a setting node in the .rkh file.
+If set to \code{FALSE},
+      \code{\link[rkwarddev:rk.rkh.scan]{rk.rkh.scan}} will ignore this node.
 Also needs \code{component} to be set accordingly!}
 
-\item{component}{Character string, name of the component this node belongs to. Only needed if you
+\item{component}{Character string,
+      name of the component this node belongs to. Only needed if you
 want to use the scan features for automatic help file generation; needs \code{help} to be set
 accordingly, too!}
 
 \item{i18n}{Either a character string or a named list with the optional elements \code{context}
-or \code{comment}, to give some \code{i18n_context} information for this node. If set to \code{FALSE},
+or \code{comment},
+      to give some \code{i18n_context} information for this node. If set to \code{FALSE},
 the attribute \code{label} will be renamed into \code{noi18n_label}.}
 }
 \value{

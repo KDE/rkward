@@ -12,23 +12,28 @@ rk.XML.radio(label, options = list(label = c(val = NULL, chk = FALSE, i18n =
 \item{label}{Character string, a text label for this plugin element.}
 
 \item{options}{A named list with options to choose from. The names of the list elements will become
-labels of the options, \code{val} defines the value to submit if the option is checked, and
+labels of the options, \code{val} defines the value to submit if the option is checked,
+      and
 \code{chk=TRUE} should be set in the one option which is checked by default. You might also provide an \code{i18n}
 for this particular option (see \code{i18n}). Objects generated with \code{\link[rkwarddev:rk.XML.option]{rk.XML.option}}
 are accepted as well.}
 
 \item{id.name}{Character string, a unique ID for this plugin element.
-If \code{"auto"} and a label was provided, an ID will be generated automatically from the label.}
+If \code{"auto"} and a label was provided,
+      an ID will be generated automatically from the label.}
 
-\item{help}{Character string or list of character values and XiMpLe nodes, will be used as the \code{text} value for a setting
+\item{help}{Character string or list of character values and XiMpLe nodes,
+      will be used as the \code{text} value for a setting
 node in the .rkh file. Also needs \code{component} to be set accordingly!}
 
-\item{component}{Character string, name of the component this node belongs to. Only needed if you
+\item{component}{Character string,
+      name of the component this node belongs to. Only needed if you
 want to use the scan features for automatic help file generation; needs \code{help} to be set
 accordingly, too!}
 
 \item{i18n}{Either a character string or a named list with the optional elements \code{context}
-or \code{comment}, to give some \code{i18n_context} information for this node. If set to \code{FALSE},
+or \code{comment},
+      to give some \code{i18n_context} information for this node. If set to \code{FALSE},
 the attribute \code{label} will be renamed into \code{noi18n_label}.}
 }
 \value{
