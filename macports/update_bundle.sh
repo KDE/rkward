@@ -179,9 +179,6 @@ if [[ $FRESHMCP ]] ; then
   if [[ $CLANG ]] ; then
     sudo port -v install ${CLANG} ${LLVMFIX} || exit 1
   fi
-#  # if you don't have the latest Xcode, some dependencies of subversion might need certain compilers
-#  sudo port -v install subversion ${LLVMFIX} || exit 1
-  sudo port -v install subversion || exit 1
   sudo port -v selfupdate || exit 1
   echo "successfully completed reincarnation of ${MPTINST}!"
 fi
