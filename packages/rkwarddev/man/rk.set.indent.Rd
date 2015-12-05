@@ -10,7 +10,8 @@ rk.get.indent(escape = FALSE)
 rk.set.indent(by = "\\t")
 }
 \arguments{
-\item{escape}{Logical, if set to \code{TRUE} each occurring "\\t" will be escaped by an additional "\\".}
+\item{escape}{Logical,
+      if set to \code{TRUE} each occurring "\\t" will be escaped by an additional "\\".}
 
 \item{by}{Character string, indentation string to be defined globally.}
 }

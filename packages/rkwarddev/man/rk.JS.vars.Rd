@@ -16,26 +16,37 @@ or objects of class \code{XiMpLe.node} with plugin XML nodes (whose ID will be e
 
 \item{modifiers}{A character vector with modifiers you'd like to apply to the XML node property.}
 
-\item{default}{Logical, if \code{TRUE} the default value (no special modifier) of the node will
+\item{default}{Logical,
+      if \code{TRUE} the default value (no special modifier) of the node will
 also be defined. Does nothing if \code{modifiers=NULL}.}
 
-\item{join}{A character string, useful for GUI elements which accept multiple objects (e.g., multi-varslots).
-If \code{join} is something other than \code{""}, these objects will be collapsed into one string when pasted,
+\item{join}{A character string,
+      useful for GUI elements which accept multiple objects (e.g., multi-varslots).
+If \code{join} is something other than \code{""},
+      these objects will be collapsed into one string when pasted,
 joined by this string.}
 
-\item{check.modifiers}{Logical, if \code{TRUE} the given modifiers will be checked for validity. Should only be
+\item{check.modifiers}{Logical,
+      if \code{TRUE} the given modifiers will be checked for validity. Should only be
 turned off if you know what you're doing.}
 
-\item{getter}{A character string, naming the JavaScript function which should be used to get the values in the
-actual plugin. Depending on the XML element, \code{"getString"}, \code{"getBool"} or \code{"getList"} can be
-useful alternatives. For backwards compatibility, the default is set to \code{"getValue"}.}
+\item{getter}{A character string,
+      naming the JavaScript function which should be used to get the values in the
+actual plugin. Depending on the XML element, \code{"getString"},
+      \code{"getBool"} or \code{"getList"} can be
+useful alternatives. For backwards compatibility,
+      the default is set to \code{"getValue"}.}
 
-\item{guess.getter}{Logical, if \code{TRUE} try to get a good default getter function for JavaScript
+\item{guess.getter}{Logical,
+      if \code{TRUE} try to get a good default getter function for JavaScript
 variable values.}
 
-\item{object.name}{Logical, if \code{TRUE} the JS variable name will roughly match the R object name. If the
-object name contains dots, they will be removed and the JS name printed in camel code instead. Use this option
-with great caution and do not combine it with \code{\link[rkwarddev:rk.JS.scan]{rk.JS.scan}}, as it will likely result
+\item{object.name}{Logical,
+      if \code{TRUE} the JS variable name will roughly match the R object name. If the
+object name contains dots,
+      they will be removed and the JS name printed in camel code instead. Use this option
+with great caution and do not combine it with \code{\link[rkwarddev:rk.JS.scan]{rk.JS.scan}},
+      as it will likely result
 in unusable code. \code{rk.JS.scan} examines XML nodes and therefore does not know any R object names.}
 }
 \value{

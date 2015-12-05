@@ -13,22 +13,28 @@ rk.XML.optionset(content, optioncolumn, min_rows = 0, min_rows_if_any = 0,
 
 \item{optioncolumn}{A list of \code{<optioncolumn>} XiMpLe.nodes.}
 
-\item{min_rows}{Numeric (integer), if specified, the set will be marked invalid, unless it has
+\item{min_rows}{Numeric (integer), if specified, the set will be marked invalid,
+      unless it has
 at least this number of rows. Ignored if set to 0.}
 
-\item{min_rows_if_any}{Numeric (integer), like min_rows, but will only be tested, if there is at
+\item{min_rows_if_any}{Numeric (integer), like min_rows, but will only be tested,
+      if there is at
 least one row. Ignored if set to 0.}
 
-\item{max_rows}{Numeric (integer), if specified, the set will be marked invalid, unless it has
+\item{max_rows}{Numeric (integer), if specified, the set will be marked invalid,
+      unless it has
 at most this number of rows. Ignored if set to 0.}
 
 \item{keycolumn}{Character}
 
 \item{logic}{A valid \code{<logic>} node.}
 
-\item{optiondisplay}{Logical value, can be used to automatically add an \code{<optiondisplay>} node on top
-of the \code{<content>} section. Depending on whether it's \code{TRUE} or \code{FALSE}, its \code{index}
-argument will be set to \code{"true"} or \code{"false"}, respectively. Set to \code{NULL} to deactivate.}
+\item{optiondisplay}{Logical value,
+      can be used to automatically add an \code{<optiondisplay>} node on top
+of the \code{<content>} section. Depending on whether it's \code{TRUE} or \code{FALSE},
+      its \code{index}
+argument will be set to \code{"true"} or \code{"false"},
+      respectively. Set to \code{NULL} to deactivate.}
 
 \item{id.name}{Character string, a unique ID for this plugin element.
 If \code{"auto"}, an ID will be generated automatically from the <content> nodes.}
@@ -40,13 +46,16 @@ An object of class \code{XiMpLe.node}.
 Note that if you want to refer to the optioncolumns in your JavaScript code, the \code{id}
 you need is a combination of \code{<optionset id>.<optioncolumn id>.<modifier>}. that is,
 you must always prefix it with the sets' \code{id}. For JavaScript code generating with
-\code{rkwarddev}, the easiest way to get to results is to use \code{\link[rkwarddev:rk.JS.optionset]{rk.JS.optionset}}.
+\code{rkwarddev},
+      the easiest way to get to results is to use \code{\link[rkwarddev:rk.JS.optionset]{rk.JS.optionset}}.
 It will automatically place your code fragments into a for loop and iterate through all available
 rows of the set.
 }
 \details{
-If this isn't flexible enough for your needs, you can also use the ID that functions like \code{\link[rkwarddev:id]{id}}
-return, because the JavaScript variable name will only contain a constant prefix ("ocol") and the column ID.
+If this isn't flexible enough for your needs,
+      you can also use the ID that functions like \code{\link[rkwarddev:id]{id}}
+return,
+      because the JavaScript variable name will only contain a constant prefix ("ocol") and the column ID.
 }
 \note{
 The \code{<optionset>} node was introduced with RKWard 0.6.1, please set the dependencies

@@ -13,7 +13,8 @@ rk.rkh.settings(...)
 An object of class \code{XiMpLe.node}.
 }
 \description{
-This function will create a settings node for the document section, with optional child nodes "setting" and "caption".
+This function will create a settings node for the document section,
+      with optional child nodes "setting" and "caption".
 }
 \examples{
 # define a sample frame

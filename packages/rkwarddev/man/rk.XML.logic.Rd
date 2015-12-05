@@ -13,8 +13,10 @@ rk.XML.logic(...)
 An object of class \code{XiMpLe.node}.
 }
 \description{
-This function will create a logic section with "convert", "connect", "include", "insert", "external" and "set" nodes.
-You can also include JavaScript code to use the locig scripting features of RKWard, if you place it in a comment
+This function will create a logic section with "convert", "connect", "include", "insert",
+      "external" and "set" nodes.
+You can also include JavaScript code to use the locig scripting features of RKWard,
+      if you place it in a comment
 with \code{\link[rkwarddev:rk.comment]{rk.comment}}: Its contents will automatically be placed inside a
 \code{<script><![CDATA[ ]]></script>} node.
 }

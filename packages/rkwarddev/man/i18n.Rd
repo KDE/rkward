@@ -7,11 +7,14 @@
 i18n(msgid, ..., context = NULL, plural = NULL, newline = "")
 }
 \arguments{
-\item{msgid}{Either a character string, the message to be translated (if applicable, its singular form),
-or an object of class \code{\link[base:noquote]{noquote}}, which will be pasted as a \code{noquote()} function call.}
+\item{msgid}{Either a character string, the message to be translated (if applicable,
+      its singular form),
+or an object of class \code{\link[base:noquote]{noquote}},
+      which will be pasted as a \code{noquote()} function call.}
 
 \item{...}{Either character string which will be pasted unquoted to be used in conjunctions with
-placeholders in msgid, or XiMpLe.node objects of which the JavaScript variable name will be
+placeholders in msgid,
+      or XiMpLe.node objects of which the JavaScript variable name will be
 used.}
 
 \item{context}{Character string, optional context information for this string.}
@@ -19,7 +22,8 @@ used.}
 \item{plural}{Character string for plural form of \code{msgid}, must at least include one
 placeholder, and the first one has to represent an integer value in the dialog.}
 
-\item{newline}{Character string, can be set to e.g. \code{"\n"} to force a newline after the call.}
+\item{newline}{Character string,
+      can be set to e.g. \code{"\n"} to force a newline after the call.}
 }
 \value{
 An object of class \code{rk.JS.i18n}.

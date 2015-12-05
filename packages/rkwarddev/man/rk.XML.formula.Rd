@@ -12,7 +12,8 @@ rk.XML.formula(fixed, dependent, id.name = "auto")
 \item{dependent}{The \code{id} of the varslot holding the selected dependent variable.}
 
 \item{id.name}{Character string, a unique ID for this plugin element.
-If \code{"auto"}, an ID will be generated automatically from the \code{fixed} and \code{dependent} value.}
+If \code{"auto"},
+      an ID will be generated automatically from the \code{fixed} and \code{dependent} value.}
 }
 \value{
 An object of class \code{XiMpLe.node}.

@@ -17,9 +17,12 @@ If \code{NULL}, no ID will be given.}
 An object of class \code{XiMpLe.node}.
 }
 \description{
-This function will create a page node for wizard sections, with optional child nodes "browser", "checkbox",
-"column", "copy", "dropdown", "formula", "frame", "input", "page", "radio", "row", "saveobject",
-"select", "spinbox", "stretch", "tabbook", "text", "valueselector", "valueslot", "varselector" and "varslot".
+This function will create a page node for wizard sections,
+      with optional child nodes "browser", "checkbox",
+"column", "copy", "dropdown", "formula", "frame", "input", "page", "radio", "row",
+      "saveobject",
+"select", "spinbox", "stretch", "tabbook", "text", "valueselector", "valueslot",
+      "varselector" and "varslot".
 }
 \examples{
 # define a checkbox for the actual dialog

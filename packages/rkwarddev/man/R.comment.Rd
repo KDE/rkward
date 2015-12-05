@@ -13,9 +13,11 @@ R.comment(..., indent.by = rk.get.indent(escape = TRUE), level = 2,
 \item{indent.by}{A character string defining the indentation string to use. Note that
 backslashes need to be escaped (e.g. \code{"\\t"} to produce \code{"\t"}).}
 
-\item{level}{Integer, which indentation level to use in the resulting R code, minimum is 1.}
+\item{level}{Integer, which indentation level to use in the resulting R code,
+      minimum is 1.}
 
-\item{newline}{Character string, can be set to e.g. \code{"\n"} to force a newline after the call.}
+\item{newline}{Character string,
+      can be set to e.g. \code{"\n"} to force a newline after the call.}
 }
 \value{
 A character string.

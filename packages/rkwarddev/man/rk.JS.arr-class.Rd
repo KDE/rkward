@@ -26,7 +26,8 @@ need to temper with this type of class manually.
 
 \item{\code{option}}{Character string, name of the option to set.}
 
-\item{\code{opt.sep}}{Character string, separates previous options from the one defined by the array.}
+\item{\code{opt.sep}}{Character string,
+      separates previous options from the one defined by the array.}
 }}
 \keyword{Classes}
 

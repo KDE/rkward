@@ -7,11 +7,14 @@
 rk.get.rkh.prompter(component = NULL, id = NULL)
 }
 \arguments{
-\item{component}{Character string, the name under which you stored information. If \code{NULL},
+\item{component}{Character string,
+      the name under which you stored information. If \code{NULL},
 returns all information stored in the internal \code{rkh.prompter} list.}
 
-\item{id}{Character string, the node ID if a given component to search for.  If \code{NULL}, returns
-the full list of the given component, otherwise only the help information for the requested node.}
+\item{id}{Character string,
+      the node ID if a given component to search for.  If \code{NULL}, returns
+the full list of the given component,
+      otherwise only the help information for the requested node.}
 }
 \description{
 Get .rkh related information stored internally

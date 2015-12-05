@@ -12,7 +12,8 @@ rk.XML.valueselector(label = NULL, options = list(label = c(val = NULL, chk
 Must be set if \code{id.name="auto"}.}
 
 \item{options}{A named list with string values to choose from. The names of the list elements will become
-labels of the options, \code{val} defines the value to submit if the value is selected, and
+labels of the options, \code{val} defines the value to submit if the value is selected,
+      and
 \code{chk=TRUE} should be set in the one option which is checked by default. You might also provide an \code{i18n}
 for this particular option (see \code{i18n}). Objects generated with \code{\link[rkwarddev:rk.XML.option]{rk.XML.option}}
 are accepted as well.}
@@ -20,7 +21,8 @@ are accepted as well.}
 \item{id.name}{Character vector, unique ID for this element.}
 
 \item{i18n}{Either a character string or a named list with the optional elements \code{context}
-or \code{comment}, to give some \code{i18n_context} information for this node. If set to \code{FALSE},
+or \code{comment},
+      to give some \code{i18n_context} information for this node. If set to \code{FALSE},
 the attribute \code{label} will be renamed into \code{noi18n_label}.}
 }
 \value{

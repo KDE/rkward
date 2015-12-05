@@ -5,17 +5,24 @@
 \title{Update plugin i18n messages}
 \usage{
 rk.updatePluginMessages(pluginmap, extractOnly = FALSE, default_po = NULL,
-  outdir = NULL)
+  outdir = NULL,
+  bug_reports = "https://mail.kde.org/mailman/listinfo/kde-i18n-doc")
 }
 \arguments{
-\item{pluginmap}{Character string, full path to the main pluginmap file of the plugin to translate.}
+\item{pluginmap}{Character string,
+      full path to the main pluginmap file of the plugin to translate.}
 
-\item{extractOnly}{Logical, should translatable strings only be extracted? If \code{FALSE}, translatable
+\item{extractOnly}{Logical,
+      should translatable strings only be extracted? If \code{FALSE}, translatable
 strings will be updated and installed.}
 
 \item{default_po}{Optional character string, fallback default name for \code{*.pot} file.}
 
 \item{outdir}{Optional character string, change the output directory for generated files.}
+
+\item{bug_reports}{Character string, URL to a bug tracker, mailing list or similar,
+      where translation
+issues should be reported.}
 }
 \description{
 A wrapper for calling \code{update_plugin_messages.py} to extract translatable

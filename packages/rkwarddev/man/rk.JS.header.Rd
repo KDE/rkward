@@ -13,17 +13,20 @@ nested in an i18n() call.}
 
 \item{...}{An optional number of additional info to add to the header. Each entry must be named \code{add}
 or \code{addFromUI} -- note that you can use multiple entries with the same name here. Entries named
-\code{add} must be vectors of legth 2, the first being the caption (character), the second its value (either
+\code{add} must be vectors of legth 2, the first being the caption (character),
+      the second its value (either
 character or a XiMpLe node from the dialog); if the second value is named \code{noquote} or \code{nq},
 the JS output will be nested inside \code{noquote()}. Entries named \code{addFromUI} must have exactly one value
 specifying the GUI element to query (either character or a XiMpLe node from the dialog).}
 
 \item{level}{Integer, if not \code{NULL} will be added as the header level.}
 
-\item{guess.getter}{Locigal, if \code{TRUE} try to get a good default getter function for JavaScript
+\item{guess.getter}{Locigal,
+      if \code{TRUE} try to get a good default getter function for JavaScript
 variable values.}
 
-\item{.add}{Same as \code{...}, but provided as a single list. If used, values will be appended to \code{...}.}
+\item{.add}{Same as \code{...}, but provided as a single list. If used,
+      values will be appended to \code{...}.}
 }
 \value{
 A character string.

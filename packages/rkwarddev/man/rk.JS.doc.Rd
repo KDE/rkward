@@ -17,7 +17,8 @@ rk.JS.doc(require = c(), variables = NULL, globals = NULL,
 or a (list of) objects of class \code{rk.JS.var} which will be coerced into character. These variables will be defined in
 the \code{calculate()} and/or \code{doPrintout()} functions.}
 
-\item{globals}{Like \code{variables}, but these variables will be defined globally. If \code{variables} is set as well,
+\item{globals}{Like \code{variables},
+      but these variables will be defined globally. If \code{variables} is set as well,
 the function tries to remove duplicate definitions.}
 
 \item{results.header}{A character string to headline the printed results. Include escapes quotes (\\") if needed.
@@ -33,14 +34,18 @@ pasted as-is, after \code{require} has been evaluated.}
 pasted as-is, after \code{variables} has been evaluated.}
 
 \item{printout}{A character string to be included in the \code{printout()} function. This string will be
-pasted as-is, after \code{results.header} has been evaluated. Ignored if \code{doPrintout} is set.}
+pasted as-is,
+      after \code{results.header} has been evaluated. Ignored if \code{doPrintout} is set.}
 
 \item{doPrintout}{A character string to be included in the \code{doPrintout()} function. This string will be
-pasted as-is. You don't need to define a \code{preview()} function, as this will be added automatically.
+pasted as-is. You don't need to define a \code{preview()} function,
+      as this will be added automatically.
 Use \code{ite("full", ...)} style JavaScript code to include headers etc.}
 
-\item{load.silencer}{Either a character string (ID of probably a checkbox), or an object of class \code{XiMpLe.node}.
-This defines a switch you can add to your plugin, to set the \code{require()} call inside \code{suppressMessages()},
+\item{load.silencer}{Either a character string (ID of probably a checkbox),
+      or an object of class \code{XiMpLe.node}.
+This defines a switch you can add to your plugin,
+      to set the \code{require()} call inside \code{suppressMessages()},
 hence suppressing all load messages (except for warnings and errors) of required packages in the output.}
 
 \item{gen.info}{Logical, if \code{TRUE} a comment note will be written into the document,
@@ -50,7 +55,8 @@ which will then also be added to the comment.}
 
 \item{indent.by}{A character string defining how indentation should be done.}
 
-\item{guess.getter}{Locigal, if \code{TRUE} try to get a good default getter function for JavaScript
+\item{guess.getter}{Locigal,
+      if \code{TRUE} try to get a good default getter function for JavaScript
 variable values. Only used if \code{header.add} contains XiMpLe nodes.}
 }
 \value{

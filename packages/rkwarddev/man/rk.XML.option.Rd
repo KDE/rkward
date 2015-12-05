@@ -12,13 +12,16 @@ rk.XML.option(label, val = NULL, chk = FALSE, id.name = NULL,
 
 \item{val}{Character string, defines the value to submit if the option is checked.}
 
-\item{chk}{Logical, should be set \code{TRUE} in the one option which is checked by default.}
+\item{chk}{Logical,
+      should be set \code{TRUE} in the one option which is checked by default.}
 
 \item{id.name}{Character string, a unique ID for this plugin element.
-If \code{"auto"} and a label was provided, an ID will be generated automatically from the label.}
+If \code{"auto"} and a label was provided,
+      an ID will be generated automatically from the label.}
 
 \item{i18n}{Either a character string or a named list with the optional elements \code{context}
-or \code{comment}, to give some \code{i18n_context} information for this node. If set to \code{FALSE},
+or \code{comment},
+      to give some \code{i18n_context} information for this node. If set to \code{FALSE},
 the attribute \code{label} will be renamed into \code{noi18n_label}.}
 }
 \value{

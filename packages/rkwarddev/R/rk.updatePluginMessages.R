@@ -30,13 +30,16 @@
 #'   strings will be updated and installed.
 #' @param default_po Optional character string, fallback default name for \code{*.pot} file.
 #' @param outdir Optional character string, change the output directory for generated files.
+#' @param bug_reports Character string, URL to a bug tracker, mailing list or similar, where translation
+#'   issues should be reported.
 #' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @export
 #' @examples \dontrun{
 #' rk.updatePluginMessages("~/myPlugins/lifeSaver/rkward/lifeSaver.pluginmap")
 #' }
 
-rk.updatePluginMessages <- function(pluginmap, extractOnly=FALSE, default_po=NULL, outdir=NULL){
+rk.updatePluginMessages <- function(pluginmap, extractOnly=FALSE, default_po=NULL, outdir=NULL,
+  bug_reports="https://mail.kde.org/mailman/listinfo/kde-i18n-doc"){
   # --default_po=PO_ID -> rkward_${PO_ID}.pot
   # --outdir=DIR       -> pluginmap basedir
   rkdPatch <- installed.packages()["rkwarddev", "LibPath"]
@@ -70,7 +73,10 @@ rk.updatePluginMessages <- function(pluginmap, extractOnly=FALSE, default_po=NUL
     upmOptions <- paste0(upmOptions, " --outdir=\"", outdir, "\"")
   } else {}
   
-  upmCall <- paste0(python[[1]], " ", upmScript, upmOptions, " \"", pluginmap, "\"")
+  upmCall <- paste0(
+    "export BUGADDR=\"", bug_reports, "\"; ",
+    python[[1]], " ", upmScript, upmOptions, " \"", pluginmap, "\""
+  )
   message(upmCall)
   if(identical(base::.Platform[["OS.type"]], "unix")){
     system(upmCall, intern=TRUE)
