@@ -1,8 +1,8 @@
 ## create dialog to build a plugin skeleton
 require(rkwarddev)
-rkwarddev.required("0.07-4")
+rkwarddev.required("0.08-1")
 
-local({
+rk.local({
 # define where the plugin should write its files
 output.dir <- tempdir()
 # overwrite an existing plugin in output.dir?
@@ -23,7 +23,7 @@ about.info <- rk.XML.about(
   about=list(desc="GUI interface to create RKWard plugin skeletons",
     # the version number should be in line with rkwarddev
     # to reflect when the script code was changed
-    version="0.07-4", url="http://rkward.kde.org")
+    version="0.08-1", url="http://rkward.kde.org")
   )
 dependencies.info <- rk.XML.dependencies(dependencies=list(rkward.min="0.6.0"))
 
@@ -105,6 +105,7 @@ aboutContact <- rk.XML.frame(
         optcolAuthorCre <- rk.XML.optioncolumn(connect=authorCre, modifier="state", id.name="optcolAuthorCre"),
         optcolAuthorCtb <- rk.XML.optioncolumn(connect=authorCtb, modifier="state", id.name="optcolAuthorCtb")
       ),
+      min_rows=1,
       logic=rk.XML.logic(
         rk.XML.connect(governor=authorCre, client=authorMail, set="required")
       ),
@@ -130,6 +131,8 @@ createOptionsFrame <- rk.XML.frame(
           help="If this is checked, a wizard section will be included in the skeleton."),
         addTests <- rk.XML.cbox("Include plugin tests", chk=TRUE, id.name="addTests",
           help="If this is checked, plugin tests will be included in the skeleton."),
+        showPlugin <- rk.XML.cbox("Show the plugin", chk=FALSE, id.name="showPlugin",
+          help="If this is checked, the generated plugin will be shown (opened) for you to see what it looks like."),
         rk.XML.stretch()),
       rk.XML.col(
         editPlugin <- rk.XML.cbox("Open files for editing", chk=TRUE, id.name="editPlugin",
@@ -137,15 +140,33 @@ createOptionsFrame <- rk.XML.frame(
         addToConfig <- rk.XML.cbox("Add plugin to RKWard configuration", chk=TRUE, id.name="addToConfig",
           help="If this is checkend, the generated plugin will automatically be registered in RKWard's configuration.
             If you store it in a temporary directory and remove it before the next start of RKWard, the entry will removed again as well."),
-        showPlugin <- rk.XML.cbox("Show the plugin", chk=FALSE, id.name="showPlugin",
-          help="If this is checked, the generated plugin will be shown (opened) for you to see what it looks like."),
         guessGetters <- rk.XML.cbox("Guess getter functions (RKWard >= 0.6.0)", chk=FALSE, id.name="guessGetters",
           help="If this is checked, rkwarddev tries to select the optimal getter functions to get data from the dialog into the R code. The plugin then requires RKWard >= 0.6.0."),
+        emptyElse <- rk.XML.cbox("Keep empty 'else {}'",
+          id.name="emptyElse",
+          help="Some consider it an enhancement for code readability if every \"if\" condition has an \"else\" clause, even if it is empty.
+            If you check this option, the generated JS code will keep these empty \"else\" clauses."
+        ),
         rk.XML.stretch())
     ),
     rk.XML.frame(
-      rk.XML.row(menuHier <- rk.XML.dropdown("Place in top menu",
-        options=list(
+      rk.XML.row(
+        codeIndent <- rk.XML.dropdown("Code indentation",
+          options=list(
+            "Tabs"=c(val="\\t", chk=TRUE),
+            "Single space"=c(val=" "),
+            "Two spaces"=c(val="  "),
+            "Four spaces"=c(val="    ")
+          ),
+          id.name="codeIndent",
+          help="Define how the generated code should be indented (by tabs or space characters)."
+        )
+      )
+    ),
+    rk.XML.frame(
+      rk.XML.row(
+        menuHier <- rk.XML.dropdown("Place in top menu",
+          options=list(
             "Test (created if needed)"=c(val="test", chk=TRUE),
             "File"=c(val="file"),
             "Edit"=c(val="edit"),
@@ -159,12 +180,13 @@ createOptionsFrame <- rk.XML.frame(
             "Windows"=c(val="windows"),
             "Settings"=c(val="settings"),
             "Help"=c(val="help")
+          ),
+          id.name="menuHier",
+          help="Specify where the plugin should appear in RKWard's top menus."
         ),
-        id.name="menuHier",
-        help="Specify where the plugin should appear in RKWard's top menus."
-      ),
-      menuName <- rk.XML.input("Name in menu (plugin name if empty)", id.name="menuName",
-        help="You can set the exact entry name of your main component in the menu here. If left empty, the plugin name will be used as default.")
+        menuName <- rk.XML.input("Name in menu (plugin name if empty)", id.name="menuName",
+          help="You can set the exact entry name of your main component in the menu here. If left empty, the plugin name will be used as default."
+        )
       )
     ),
     id.name="createOptionsFrame"
@@ -288,7 +310,7 @@ js.opt.about.about <- rk.JS.options("optAbout",
     } else {},
     keep.ite=TRUE
   ),
-  funct="list", option="about", collapse=",\\n\\t")
+  funct="list", option="about", collapse=",\\n\\t", opt.sep=",\\n\\t")
 # dependencies section
 js.frm.dependencyFrame <- rk.JS.vars(dependencyFrame, modifiers="checked") # see to it frame is checked
 js.opt.about.dep <- rk.JS.options("optDependencies",
@@ -363,8 +385,8 @@ js.opt.skeleton <- rk.JS.options("optSkeleton",
   collapse="")
 
 JS.prepare <- rk.paste.JS(
-  rk.JS.vars(outDir, overwrite, guessGetters),
-  echo("rkwarddev.required(\"0.07-4\")"),
+  rk.JS.vars(outDir, overwrite, guessGetters, codeIndent, emptyElse),
+  echo("rkwarddev.required(\"0.08-1\")"),
   echo("\n\n# define where the plugin should write its files\noutput.dir <- "),
   js(
     if(outDir){
@@ -383,7 +405,18 @@ JS.prepare <- rk.paste.JS(
       echo("TRUE")
     } else {
       echo("FALSE")
+    },
+    echo("\n# define the indentation character for the generated code\nrk.set.indent(by=\"", codeIndent,"\")",
+      "\n# should empty \"else\" clauses be kept in the JavaScript code?\nrk.set.empty.e("),
+    if(emptyElse){
+      echo("TRUE)")
+    } else {
+      echo("FALSE)")
     }
+  ),
+  echo(
+    "\n# make your plugin translatable by setting this to TRUE",
+    "\nupdate.translations <- FALSE"
   ),
   echo("\n\n"),
   level=2)
@@ -397,14 +430,14 @@ JS.calculate <- rk.paste.JS(
   echo("aboutPlugin <- rk.XML.about("),
     js(
       if(pluginName){
-        echo("\n\tname=\"", pluginName, "\"")
+        echo("\n\tname=\"", pluginName, "\",\n")
       } else {}
     ),
     # author section
     rk.JS.optionset(optionsetAuthors, vars=TRUE, guess.getter=TRUE),
     ite(id(optcolAuthorGivenName, " != \"\""),
       rk.paste.JS(
-        echo("\tauthor=c(\n\t\t\t"),
+        echo("\tauthor=c(\n\t\t"),
         rk.JS.optionset(optionsetAuthors,
           js.optionsetAuthors.role <- rk.JS.options("optAuthorRole",
             .ite=js(
@@ -435,9 +468,9 @@ JS.calculate <- rk.paste.JS(
             level=3
           ),
           echo(")"),
-          collapse=",\\n\\t\\t\\t"
+          collapse=",\\n\\t\\t"
         ),
-        echo("\n\t\t),\n")
+        echo("\n\t)")
       )
     ),
     echo(js.opt.about.about),
@@ -533,6 +566,12 @@ JS.calculate <- rk.paste.JS(
   echo("\n\t#components=list(),"),
   echo(js.opt.skeleton),
   echo("\n)\n\n"),
+  echo(
+    "\t# you can make your plugin translatable, see top of script",
+    "\n\tif(isTRUE(update.translations)){",
+    "\n\t\trk.updatePluginMessages(file.path(output.dir,\"", pluginName, "\",\"inst\",\"rkward\",\"", pluginName, ".pluginmap\"))",
+    "\n\t} else {}\n\n"
+  ),
   level=2)
 
 ############

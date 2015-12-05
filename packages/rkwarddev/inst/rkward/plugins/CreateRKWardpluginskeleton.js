@@ -12,7 +12,9 @@ function preprocess(){
   var outDir = getValue("outDir");
   var overwrite = getValue("overwrite");
   var guessGetters = getValue("guessGetters");
-  echo("rkwarddev.required(\"0.07-4\")");
+  var codeIndent = getValue("codeIndent");
+  var emptyElse = getValue("emptyElse");
+  echo("rkwarddev.required(\"0.08-1\")");
   echo("\n\n# define where the plugin should write its files\noutput.dir <- ");
   if(outDir) {
     echo("\"" + outDir + "\"");  
@@ -31,6 +33,13 @@ function preprocess(){
   } else {
     echo("FALSE");  
   }
+  echo("\n# define the indentation character for the generated code\nrk.set.indent(by=\"" + codeIndent + "\")" + "\n# should empty \"else\" clauses be kept in the JavaScript code?\nrk.set.empty.e(");
+  if(emptyElse) {
+    echo("TRUE)");  
+  } else {
+    echo("FALSE)");  
+  }
+  echo("\n# make your plugin translatable by setting this to TRUE" + "\nupdate.translations <- FALSE");
   echo("\n\n");
 }
 
@@ -53,6 +62,7 @@ function calculate(){
   var ocolOptcolAuthorCre = getList("optionsetAuthors.optcolAuthorCre");
   var ocolOptcolAuthorCtb = getList("optionsetAuthors.optcolAuthorCtb");
   var outDir = getString("outDir");
+  var codeIndent = getString("codeIndent");
   var menuHier = getString("menuHier");
   var menuName = getString("menuName");
   var RKMin = getString("RKMin");
@@ -75,77 +85,78 @@ function calculate(){
   var overwrite = getBoolean("overwrite.state");
   var addWizard = getBoolean("addWizard.state");
   var addTests = getBoolean("addTests.state");
+  var showPlugin = getBoolean("showPlugin.state");
   var editPlugin = getBoolean("editPlugin.state");
   var addToConfig = getBoolean("addToConfig.state");
-  var showPlugin = getBoolean("showPlugin.state");
   var guessGetters = getBoolean("guessGetters.state");
+  var emptyElse = getBoolean("emptyElse.state");
   var dependencyFrameChecked = getBoolean("dependencyFrame.checked");
   var helpTextChecked = getBoolean("helpText.checked");
 
   // the R code to be evaluated
   // define the array arrOptAbout for values of R option "about"
   var arrOptAbout = new Array();
-    if(pluginDescription) {
-      arrOptAbout.push("desc=\"" + pluginDescription + "\""  );
-    } else {
-      arrOptAbout.push();
-    }
-    if(pluginVersion) {
-      arrOptAbout.push("version=\"" + pluginVersion + "\""  );
-    } else {
-      arrOptAbout.push();
-    }
-    if(pluginDate) {
-      arrOptAbout.push("date=\"" + pluginDate + "\""  );
-    } else {
-      arrOptAbout.push();
-    }
-    if(pluginHomepage) {
-      arrOptAbout.push("url=\"" + pluginHomepage + "\""  );
-    } else {
-      arrOptAbout.push();
-    }
-    if(pluginLicense) {
-      arrOptAbout.push("license=\"" + pluginLicense + "\""  );
-    } else {
-      arrOptAbout.push();
-    }
-    if(pluginCategory) {
-      arrOptAbout.push("category=\"" + pluginCategory + "\""  );
-    } else {
-      arrOptAbout.push();
-    }
+  if(pluginDescription) {
+    arrOptAbout.push("desc=\"" + pluginDescription + "\""  );
+  } else {
+    arrOptAbout.push();
+  }
+  if(pluginVersion) {
+    arrOptAbout.push("version=\"" + pluginVersion + "\""  );
+  } else {
+    arrOptAbout.push();
+  }
+  if(pluginDate) {
+    arrOptAbout.push("date=\"" + pluginDate + "\""  );
+  } else {
+    arrOptAbout.push();
+  }
+  if(pluginHomepage) {
+    arrOptAbout.push("url=\"" + pluginHomepage + "\""  );
+  } else {
+    arrOptAbout.push();
+  }
+  if(pluginLicense) {
+    arrOptAbout.push("license=\"" + pluginLicense + "\""  );
+  } else {
+    arrOptAbout.push();
+  }
+  if(pluginCategory) {
+    arrOptAbout.push("category=\"" + pluginCategory + "\""  );
+  } else {
+    arrOptAbout.push();
+  }
   // clean array arrOptAbout from empty strings
   arrOptAbout = arrOptAbout.filter(String);
   // set the actual variable optAbout with all values for R option "about"
   if(arrOptAbout.length > 0) {
-    var optAbout = ", about=list(" + arrOptAbout.join(", ") + ")";
+    var optAbout = ",\n\tabout=list(" + arrOptAbout.join(", ") + ")";
   } else {
     var optAbout = "";
   }
 
   // define the array arrOptDependencies for values of R option "dependencies"
   var arrOptDependencies = new Array();
-    if(dependencyFrameChecked && RKMin) {
-      arrOptDependencies.push("rkward.min=\"" + RKMin + "\""  );
-    } else {
-      arrOptDependencies.push();
-    }
-    if(dependencyFrameChecked && RKMax) {
-      arrOptDependencies.push("rkward.max=\"" + RKMax + "\""  );
-    } else {
-      arrOptDependencies.push();
-    }
-    if(dependencyFrameChecked && RMin) {
-      arrOptDependencies.push("R.min=\"" + RMin + "\""  );
-    } else {
-      arrOptDependencies.push();
-    }
-    if(dependencyFrameChecked && RMax) {
-      arrOptDependencies.push("R.max=\"" + RMax + "\""  );
-    } else {
-      arrOptDependencies.push();
-    }
+  if(dependencyFrameChecked && RKMin) {
+    arrOptDependencies.push("rkward.min=\"" + RKMin + "\""  );
+  } else {
+    arrOptDependencies.push();
+  }
+  if(dependencyFrameChecked && RKMax) {
+    arrOptDependencies.push("rkward.max=\"" + RKMax + "\""  );
+  } else {
+    arrOptDependencies.push();
+  }
+  if(dependencyFrameChecked && RMin) {
+    arrOptDependencies.push("R.min=\"" + RMin + "\""  );
+  } else {
+    arrOptDependencies.push();
+  }
+  if(dependencyFrameChecked && RMax) {
+    arrOptDependencies.push("R.max=\"" + RMax + "\""  );
+  } else {
+    arrOptDependencies.push();
+  }
   // clean array arrOptDependencies from empty strings
   arrOptDependencies = arrOptDependencies.filter(String);
   // set the actual variable optDependencies with all values for R option "dependencies"
@@ -157,16 +168,16 @@ function calculate(){
 
   // define the array arrOptPluginmap for values of R option "pluginmap"
   var arrOptPluginmap = new Array();
-    if(menuName) {
-      arrOptPluginmap.push("name=\"" + menuName + "\""  );
-    } else {
-      arrOptPluginmap.push("name=\"" + pluginName + "\""  );
-    }
-    if(menuHier) {
-      arrOptPluginmap.push("hierarchy=\"" + menuHier + "\""  );
-    } else {
-      arrOptPluginmap.push();
-    }
+  if(menuName) {
+    arrOptPluginmap.push("name=\"" + menuName + "\""  );
+  } else {
+    arrOptPluginmap.push("name=\"" + pluginName + "\""  );
+  }
+  if(menuHier) {
+    arrOptPluginmap.push("hierarchy=\"" + menuHier + "\""  );
+  } else {
+    arrOptPluginmap.push();
+  }
   // clean array arrOptPluginmap from empty strings
   arrOptPluginmap = arrOptPluginmap.filter(String);
   // set the actual variable optPluginmap with all values for R option "pluginmap"
@@ -178,36 +189,36 @@ function calculate(){
 
   // define the array arrOptSkeleton for values of R option ""
   var arrOptSkeleton = new Array();
-    if(addWizard) {
-      arrOptSkeleton.push("\n\tprovides=c(\"logic\", \"dialog\", \"wizard\")"  );
-    } else {
-      arrOptSkeleton.push("\n\t#provides=c(\"logic\", \"dialog\")"  );
-    }
-    if(optPluginmap) {
-      arrOptSkeleton.push("\n\t" + optPluginmap  );
-    } else {
-      arrOptSkeleton.push("\n\t#pluginmap=list(name=\"\", hierarchy=\"\", require=\"\")"  );
-    }
-    if(addTests) {
-      arrOptSkeleton.push("\n\ttests=TRUE"  );
-    } else {
-      arrOptSkeleton.push("\n\ttests=FALSE"  );
-    }
-    if(editPlugin) {
-      arrOptSkeleton.push("\n\tedit=TRUE"  );
-    } else {
-      arrOptSkeleton.push("\n\tedit=FALSE"  );
-    }
-    if(addToConfig) {
-      arrOptSkeleton.push("\n\tload=TRUE"  );
-    } else {
-      arrOptSkeleton.push("\n\tload=FALSE"  );
-    }
-    if(showPlugin) {
-      arrOptSkeleton.push("\n\tshow=TRUE"  );
-    } else {
-      arrOptSkeleton.push("\n\tshow=FALSE"  );
-    }
+  if(addWizard) {
+    arrOptSkeleton.push("\n\tprovides=c(\"logic\", \"dialog\", \"wizard\")"  );
+  } else {
+    arrOptSkeleton.push("\n\t#provides=c(\"logic\", \"dialog\")"  );
+  }
+  if(optPluginmap) {
+    arrOptSkeleton.push("\n\t" + optPluginmap  );
+  } else {
+    arrOptSkeleton.push("\n\t#pluginmap=list(name=\"\", hierarchy=\"\", require=\"\")"  );
+  }
+  if(addTests) {
+    arrOptSkeleton.push("\n\ttests=TRUE"  );
+  } else {
+    arrOptSkeleton.push("\n\ttests=FALSE"  );
+  }
+  if(editPlugin) {
+    arrOptSkeleton.push("\n\tedit=TRUE"  );
+  } else {
+    arrOptSkeleton.push("\n\tedit=FALSE"  );
+  }
+  if(addToConfig) {
+    arrOptSkeleton.push("\n\tload=TRUE"  );
+  } else {
+    arrOptSkeleton.push("\n\tload=FALSE"  );
+  }
+  if(showPlugin) {
+    arrOptSkeleton.push("\n\tshow=TRUE"  );
+  } else {
+    arrOptSkeleton.push("\n\tshow=FALSE"  );
+  }
   // clean array arrOptSkeleton from empty strings
   arrOptSkeleton = arrOptSkeleton.filter(String);
   // set the actual variable optSkeleton with all values for R option ""
@@ -219,7 +230,7 @@ function calculate(){
 
   echo("aboutPlugin <- rk.XML.about(");
   if(pluginName) {
-    echo("\n\tname=\"" + pluginName + "\"");  
+    echo("\n\tname=\"" + pluginName + "\",\n");  
   } else {}
   var ocolOptcolAuthorGivenName = getList("optionsetAuthors.optcolAuthorGivenName");
   var ocolOptcolAuthorFamiliyName = getList("optionsetAuthors.optcolAuthorFamiliyName");
@@ -228,32 +239,32 @@ function calculate(){
   var ocolOptcolAuthorCre = getList("optionsetAuthors.optcolAuthorCre");
   var ocolOptcolAuthorCtb = getList("optionsetAuthors.optcolAuthorCtb");
   if(ocolOptcolAuthorGivenName != "") {
-    echo("\tauthor=c(\n\t\t\t");
+    echo("\tauthor=c(\n\t\t");
   for (var i = 0; i < ocolOptcolAuthorGivenName.length; ++i){
     // define the array arrOptAuthorRole for values of R option "role"
     var arrOptAuthorRole = new Array();
-        if(ocolOptcolAuthorAut[i] == 1) {
-            arrOptAuthorRole.push("\"aut\""  );
-        } else {
-            arrOptAuthorRole.push();
-        }
-        if(ocolOptcolAuthorCre[i] == 1) {
-            arrOptAuthorRole.push("\"cre\""  );
-        } else {
-            arrOptAuthorRole.push();
-        }
-        if(ocolOptcolAuthorCtb[i] == 1) {
-            arrOptAuthorRole.push("\"ctb\""  );
-        } else {
-            arrOptAuthorRole.push();
-        }
+    if(ocolOptcolAuthorAut[i] == 1) {
+      arrOptAuthorRole.push("\"aut\""  );
+    } else {
+      arrOptAuthorRole.push();
+    }
+    if(ocolOptcolAuthorCre[i] == 1) {
+      arrOptAuthorRole.push("\"cre\""  );
+    } else {
+      arrOptAuthorRole.push();
+    }
+    if(ocolOptcolAuthorCtb[i] == 1) {
+      arrOptAuthorRole.push("\"ctb\""  );
+    } else {
+      arrOptAuthorRole.push();
+    }
     // clean array arrOptAuthorRole from empty strings
     arrOptAuthorRole = arrOptAuthorRole.filter(String);
     // set the actual variable optAuthorRole with all values for R option "role"
     if(arrOptAuthorRole.length > 0) {
-        var optAuthorRole = ", role=c(" + arrOptAuthorRole.join(", ") + ")";
+      var optAuthorRole = ", role=c(" + arrOptAuthorRole.join(", ") + ")";
     } else {
-        var optAuthorRole = "";
+      var optAuthorRole = "";
     }
 
     echo("person(");
@@ -269,10 +280,10 @@ function calculate(){
     } else {}
     echo(")");
     if(i + 1 < ocolOptcolAuthorGivenName.length) {
-      echo(",\n\t\t\t");
+      echo(",\n\t\t");
     }
   }
-  echo("\n\t\t),\n");
+  echo("\n\t)");
   } else {}
   echo(optAbout);
   echo("\n)\n\n");
@@ -287,9 +298,9 @@ function calculate(){
     if(ocolOptcolPckgName!= "") {
       echo("\n\tpackage=list(\n\t\t");
       for (var i = 0; i < ocolOptcolPckgName.length; ++i){
-                        echo("c(");
-                        echo("name=\"" + ocolOptcolPckgName[i] + "\"");
-                        if(ocolOptcolPckgMin[i]) {
+        echo("c(");
+        echo("name=\"" + ocolOptcolPckgName[i] + "\"");
+        if(ocolOptcolPckgMin[i]) {
           echo(", min=\"" + ocolOptcolPckgMin[i] + "\"");  
         } else {}
         if(ocolOptcolPckgMax[i]) {
@@ -298,7 +309,7 @@ function calculate(){
         if(ocolOptcolPckgRepo[i]) {
           echo(", repository=\"" + ocolOptcolPckgRepo[i] + "\"");  
         } else {}
-                        echo(")");
+        echo(")");
         if(i + 1 < ocolOptcolPckgName.length) {
           echo(",\n\t\t");
         }
@@ -339,6 +350,7 @@ function calculate(){
   echo("\n\t#components=list(),");
   echo(optSkeleton);
   echo("\n)\n\n");
+  echo("\t# you can make your plugin translatable, see top of script" + "\n\tif(isTRUE(update.translations)){" + "\n\t\trk.updatePluginMessages(file.path(output.dir,\"" + pluginName + "\",\"inst\",\"rkward\",\"" + pluginName + ".pluginmap\"))" + "\n\t} else {}\n\n");
 }
 
 function printout(){

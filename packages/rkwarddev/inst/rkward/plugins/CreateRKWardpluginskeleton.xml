@@ -34,8 +34,8 @@
             </row>
           </frame>
           <frame label="Plugin author" id="aboutContact">
-            <row id="row_oACMPPPCFG">
-              <optionset id="optionsetAuthors">
+            <row id="row_oA1CMPPPCF">
+              <optionset id="optionsetAuthors" min_rows="1">
                 <logic>
                   <connect governor="authorCre.state" client="authorMail.required" />
                 </logic>
@@ -82,21 +82,32 @@
             <row id="row_bDTEMPDIRD">
               <browser label="Directory to save to (empty for $TEMPDIR)" type="dir" id="outDir" required="false" />
             </row>
-            <row id="row_cOWATIOWAT">
-              <column id="clm_chckbOWATI">
+            <row id="row_cOWATIPSOW">
+              <column id="clm_chcOWATIPS">
                 <checkbox id="overwrite" label="Overwrite existing files" value="true" />
                 <checkbox id="addWizard" label="Add wizard section" value="true" />
                 <checkbox id="addTests" label="Include plugin tests" value="true" checked="true" />
+                <checkbox id="showPlugin" label="Show the plugin" value="true" />
                 <stretch />
               </column>
-              <column id="clm_cPOTCARKWP">
+              <column id="clm_cPOTCARKWG">
                 <checkbox id="editPlugin" label="Open files for editing" value="true" checked="true" />
                 <checkbox id="addToConfig" label="Add plugin to RKWard configuration" value="true" checked="true" />
-                <checkbox id="showPlugin" label="Show the plugin" value="true" />
                 <checkbox id="guessGetters" label="Guess getter functions (RKWard &gt;= 0.6.0)" value="true" />
+                <checkbox id="emptyElse" label="Keep empty 'else {}'" value="true" />
                 <stretch />
               </column>
             </row>
+            <frame id="frm_rICTSTFICT">
+              <row id="row_drpdICTSTF">
+                <dropdown id="codeIndent" label="Code indentation">
+                  <option label="Tabs" value="\t" checked="true" />
+                  <option label="Single space" value=" " />
+                  <option label="Two spaces" value="  " />
+                  <option label="Four spaces" value="    " />
+                </dropdown>
+              </row>
+            </frame>
             <frame id="frm_rHPTFEVWRD">
               <row id="row_dHPTFEVWRD">
                 <dropdown id="menuHier" label="Place in top menu">

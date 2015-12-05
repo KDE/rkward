@@ -18,8 +18,8 @@
     name="RKWard Plugin Skeleton"
     shortinfo="GUI interface to create RKWard plugin skeletons"
     longinfo="GUI interface to create RKWard plugin skeletons"
-    version="0.07-4"
-    releasedate="2015-11-24"
+    version="0.08-1"
+    releasedate="2015-12-05"
     url="http://rkward.kde.org"
     license="GPL (&gt;= 3)"
   >
