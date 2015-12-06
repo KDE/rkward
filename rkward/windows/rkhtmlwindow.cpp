@@ -324,7 +324,8 @@ bool RKHTMLWindow::handleRKWardURL (const KUrl &url, RKHTMLWindow *window) {
 			QString path = url.path ();
 			if (path.startsWith ('/')) path = path.mid (1);
 			int sep = path.indexOf ('/');
-			RKComponentMap::invokeComponent (path.left (sep), path.mid (sep+1).split ('\n', QString::SkipEmptyParts));
+			// NOTE: These links may originate externally, even from untrusted sources. The submit mode *must* remain "ManualSubmit" for this reason!
+			RKComponentMap::invokeComponent (path.left (sep), path.mid (sep+1).split ('\n', QString::SkipEmptyParts), RKComponentMap::ManualSubmit);
 			return true;
 		} else {
 			if (url.host () == "rhelp") {
