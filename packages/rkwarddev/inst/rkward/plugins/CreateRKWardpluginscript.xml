@@ -4,18 +4,21 @@
     perhaps don't make changes here, but in the rkwarddev script instead!
     
     look for a file called: $SRC/demo/skeleton_dialog.R -->
-  <code file="CreateRKWardpluginskeleton.js" />
-  <help file="CreateRKWardpluginskeleton.rkh" />
+  <code file="CreateRKWardpluginscript.js" />
+  <help file="CreateRKWardpluginscript.rkh" />
   <!-- <dependencies>
       </dependencies> -->
   <logic>
     <connect governor="dependencyFrame.checked" client="RKFrame.enabled" />
     <connect governor="dependencyFrame.checked" client="RFrame.enabled" />
   </logic>
-  <dialog label="RKWard Plugin Skeleton">
-    <tabbook id="tbbk_PlgnSklt" label="Plugin Skeleton">
+  <dialog label="RKWard Plugin Script">
+    <tabbook id="tbbk_PlgnScrp" label="Plugin Script">
       <tab label="About the plugin" id="tab_Abtthplg">
-        <column id="clm_fAPPNLLGPL">
+        <column id="clm_tNOTEYNOTE">
+          <text id="txt_NOTEYshl" type="warning">
+            NOTE: You should not hit the submit button, but copy the generated code to a script file for further work on your plugin!
+          </text>
           <frame label="About the plugin" id="aboutPlugin">
             <row id="row_inPNLLGPL3">
               <input label="Plugin name" id="pluginName" size="small" required="true" />
@@ -33,37 +36,32 @@
               <input label="Category" id="pluginCategory" />
             </row>
           </frame>
-          <frame label="Plugin author" id="aboutContact">
-            <row id="row_oA1CMPPPCF">
+          <frame label="Plugin authors" id="aboutContact">
+            <row id="row_oA1CMCFGGN">
               <optionset id="optionsetAuthors" min_rows="1">
                 <logic>
                   <connect governor="authorCre.state" client="authorMail.required" />
                 </logic>
                 <content>
                   <optiondisplay />
-                  <frame label="Package authors" id="frm_Pckgthrs">
-                    <row id="row_fPCFGGNFFN">
-                      <frame label="Package author" id="aboutContactFrame">
-                        <row id="row_cGGNFFNEMG">
-                          <column id="clm_inGGNFFNEM">
-                            <input label="Given name" id="authorGivenName" required="true" />
-                            <input label="Family name" id="authorFamiliyName" required="true" />
-                            <input label="E-mail" id="authorMail" />
-                            <stretch />
-                          </column>
-                          <column id="clm_frRRAACMCC">
-                            <frame label="Roles" id="frm_Roles">
-                              <checkbox id="authorAut" label="Author" value="true" checked="true" />
-                              <checkbox id="authorCre" label="Maintainer" value="true" checked="true" />
-                              <checkbox id="authorCtb" label="Contributor" value="true" />
-                              <stretch />
-                            </frame>
-                          </column>
-                        </row>
-                      </frame>
+                  <row id="row_rCFGGNFFNE">
+                    <row id="aboutContactFrame">
+                      <column id="clm_inGGNFFNEM">
+                        <input label="Given name" id="authorGivenName" required="true" />
+                        <input label="Family name" id="authorFamiliyName" required="true" />
+                        <input label="E-mail" id="authorMail" />
+                        <stretch />
+                      </column>
+                      <column id="clm_frRRAACMCC">
+                        <frame label="Roles" id="frm_Roles">
+                          <checkbox id="authorAut" label="Author" value="true" checked="true" />
+                          <checkbox id="authorCre" label="Maintainer" value="true" checked="true" />
+                          <checkbox id="authorCtb" label="Contributor" value="true" />
+                          <stretch />
+                        </frame>
+                      </column>
                     </row>
-                    <stretch />
-                  </frame>
+                  </row>
                 </content>
                 <optioncolumn id="optcolAuthorGivenName" connect="authorGivenName.text" label="Given name" />
                 <optioncolumn id="optcolAuthorFamiliyName" connect="authorFamiliyName.text" label="Family name" />

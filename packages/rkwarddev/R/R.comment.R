@@ -30,7 +30,7 @@
 R.comment <- function(..., indent.by=rk.get.indent(escape=TRUE), level=2, newline=""){
   message <- paste0(list(...), collapse=" ")
   if(level > 1){
-    indentation <- paste0(", \"", rep(indent.by, level-1), "\"")
+    indentation <- paste0(", \"", paste0(rep(indent.by, level-1), collapse=""), "\"")
   } else {
     indentation <- ""
   }

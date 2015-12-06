@@ -18,6 +18,7 @@ fixed:
     lines
   - the "i18n" attribute in lists e.g. for rk.XML.radio() didn't really work
   - improved indetation for rk.JS.oset objects
+  - R.comment() didn't correctly paste indentation levels > 2
 added:
   - new methods plugin2script() to try to translate raw plugin XML into
     working rkwarddev script calls

@@ -5,14 +5,14 @@
     
     look for a file called: $SRC/demo/skeleton_dialog.R -->
   <title>
-    Create RKWard plugin skeleton
+    Create RKWard plugin script
   </title>
   <summary>
-    Generate a plugin skeleton for RKWard.
+    Generate a plugin skeleton for RKWard via rkwarddev scripts.
   </summary>
   <usage>
     This plugin is both, an example for a plugin written with the rkwarddev package,
-   and a quick way to get a skeleton for new plugins.
+   and a quick way to get an rkwarddev script for new plugins.
   </usage>
   <!-- <section id="sct_EDITORDE" title="EDIT OR DELETE ME">
         EDIT OR DELETE ME
@@ -42,8 +42,6 @@
       A category for your plugin. This infromation is currently ignored by RKWard.
     </setting>
     <caption id="aboutContact" />
-    <caption id="frm_Pckgthrs" />
-    <caption id="aboutContactFrame" />
     <setting id="authorGivenName">
       First name of the package author.
     </setting>

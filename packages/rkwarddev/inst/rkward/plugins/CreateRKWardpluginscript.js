@@ -350,7 +350,7 @@ function calculate(){
   echo("\n\t#components=list(),");
   echo(optSkeleton);
   echo("\n)\n\n");
-  echo("\t# you can make your plugin translatable, see top of script" + "\n\tif(isTRUE(update.translations)){" + "\n\t\trk.updatePluginMessages(file.path(output.dir,\"" + pluginName + "\",\"inst\",\"rkward\",\"" + pluginName + ".pluginmap\"))" + "\n\t} else {}\n\n");
+  echo("# you can make your plugin translatable, see top of script" + "\nif(isTRUE(update.translations)){" + "\n\trk.updatePluginMessages(" + "\n\t\tfile.path(output.dir,\"" + pluginName + "\",\"inst\",\"rkward\",\"" + pluginName + ".pluginmap\")," + "\n\t\t# where should translation bug reports go?" + "\n\t\tbug_reports=\"https://mail.kde.org/mailman/listinfo/kde-i18n-doc\"" + "\n\t)" + "\n} else {}\n\n");
 }
 
 function printout(){

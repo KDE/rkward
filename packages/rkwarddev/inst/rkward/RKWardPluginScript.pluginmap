@@ -1,9 +1,9 @@
 <!DOCTYPE rkpluginmap >
 <document 
   base_prefix=""
-  namespace="CreateRKWardpluginskeleton"
-  id="CreateRKWardpluginskeleton_rkward"
-  po_id="CreateRKWardpluginskeleton_rkward"
+  namespace="CreateRKWardpluginscript"
+  id="CreateRKWardpluginscript_rkward"
+  po_id="CreateRKWardpluginscript_rkward"
   priority="medium"
 >
   <!-- 
@@ -15,11 +15,11 @@
   <dependencies rkward_min_version="0.6.0">
   </dependencies>
   <about 
-    name="RKWard Plugin Skeleton"
-    shortinfo="GUI interface to create RKWard plugin skeletons"
-    longinfo="GUI interface to create RKWard plugin skeletons"
+    name="RKWard Plugin Script"
+    shortinfo="GUI interface to create RKWard plugin skeletons via rkwarddev scripts"
+    longinfo="GUI interface to create RKWard plugin skeletons via rkwarddev scripts"
     version="0.08-1"
-    releasedate="2015-12-05"
+    releasedate="2015-12-06"
     url="http://rkward.kde.org"
     license="GPL (&gt;= 3)"
   >
@@ -38,10 +38,10 @@
    />
   <components>
     <component 
-      id="cmp_CrtRKWrdplgnskltnCrtRKWrd"
-      label="Create RKWard plugin skeleton"
+      id="cmp_CrtRKWrdplgnscrptCrtRKWrd"
+      label="Create RKWard plugin script"
       type="standard"
-      file="plugins/CreateRKWardpluginskeleton.xml"
+      file="plugins/CreateRKWardpluginscript.xml"
     >
     </component>
   </components>
@@ -54,7 +54,7 @@
         id="export"
         label="export"
       >
-        <entry component="cmp_CrtRKWrdplgnskltnCrtRKWrd" />
+        <entry component="cmp_CrtRKWrdplgnscrptCrtRKWrd" />
       </menu>
     </menu>
   </hierarchy>
