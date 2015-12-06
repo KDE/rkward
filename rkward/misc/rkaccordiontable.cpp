@@ -321,7 +321,7 @@ QSize RKAccordionTable::sizeHintWithoutEditor () const {
 
 	// NOTE: This is not totally correct, but seems to be, roughly. We can't use sizeHintForRow(0) for height calcuation, as the model may be empty
 	// (for "driven" optionsets.
-	return (QSize (minimumSizeHint ().width (), horizontalScrollBar ()->sizeHint ().height () + QFontMetrics (QFont ()).lineSpacing () * 4));
+	return (QSize (minimumSizeHint ().width (), header ()->sizeHint().height () + horizontalScrollBar ()->sizeHint ().height () + QFontMetrics (QFont ()).lineSpacing () * 4));
 }
 
 QSize RKAccordionTable::sizeHint () const {
