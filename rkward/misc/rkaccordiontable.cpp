@@ -153,6 +153,7 @@ public:
 		connect (source_model, SIGNAL (rowsInserted(const QModelIndex&,int,int)), this, SLOT (r_rowsInserted(QModelIndex,int,int)));
 		connect (source_model, SIGNAL (rowsRemoved(const QModelIndex&,int,int)), this, SLOT (r_rowsRemoved(QModelIndex,int,int)));
 		connect (source_model, SIGNAL (dataChanged(QModelIndex,QModelIndex)), this, SLOT (r_dataChanged(QModelIndex,QModelIndex)));
+		connect (source_model, SIGNAL (headerDataChanged(Qt::Orientation,int,int)), this, SLOT (r_headerDataChanged(Qt::Orientation,int,int)));
 		connect (source_model, SIGNAL (layoutChanged()), this, SLOT (r_layoutChanged()));
 		QAbstractProxyModel::setSourceModel (source_model);
 	}
@@ -182,6 +183,9 @@ public slots:
 	}
 	void r_dataChanged (const QModelIndex& from, const QModelIndex& to) {
 		emit (dataChanged (mapFromSource (from), mapFromSource (to)));
+	}
+	void r_headerDataChanged(Qt::Orientation o,int from,int to) {
+		emit (headerDataChanged (o, from, to));
 	}
 	void r_layoutChanged () {
 		emit (layoutChanged());
