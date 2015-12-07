@@ -3,6 +3,8 @@ ChangeLog for package XiMpLe
 changes in version 0.03-24 (2015-11-24)
 unreleased:
   - this release is under development
+added:
+  - new method validXML() for some basic validity checks (WIP)
 
 changes in version 0.03-23 (2015-11-24)
 changed:
