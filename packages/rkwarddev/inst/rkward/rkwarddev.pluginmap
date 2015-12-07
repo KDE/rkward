@@ -2,10 +2,10 @@
 
 <document 
   base_prefix=""
-  namespace="CreateRKWardpluginskeleton"
-  id="CreateRKWardpluginskeleton_rkward"
-  po_id="CreateRKWardpluginskeleton_rkward"
+  namespace="CreateRKWardpluginscript"
+  id="CreateRKWardpluginscript_rkward"
+  po_id="CreateRKWardpluginscript_rkward"
   priority="medium"
 >
-	<include file="RKWardPluginSkeleton.pluginmap" />
+	<include file="RKWardPluginScript.pluginmap" />
 </document>

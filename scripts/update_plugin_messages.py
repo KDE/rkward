@@ -33,7 +33,7 @@ import copy
 import re
 
 # You might want to adjust the following values (can also be overridden from environment variable):
-BUGADDR = "http://p.sf.net/rkward/bugs"     # Technically, this is for bugs _in the translation_
+BUGADDR = "https://mail.kde.org/mailman/listinfo/kde-i18n-doc"     # Technically, this is for bugs _in the translation_
 BUGADDR = os.getenv ('BUGADDR', BUGADDR)
 XGETTEXT_CALL =  "xgettext --from-code=UTF-8 -C -kde -ci18n -ki18n:1 -ki18nc:1c,2 -ki18np:1,2 -ki18ncp:1c,2,3"
 XGETTEXT_CALL += " -ktr2i18n:1 -kI18N_NOOP:1 -kI18N_NOOP2:1c,2 -kaliasLocale -kki18n:1 -kki18nc:1c,2 -kki18np:1,2"

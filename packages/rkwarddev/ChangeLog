@@ -20,6 +20,7 @@ fixed:
   - improved indetation for rk.JS.oset objects
   - rk.XML.varslot() and rk.XML.valueslot() didn't correctly add sources if
     they were character strings (which is valid)
+  - R.comment() didn't correctly paste indentation levels > 2
 added:
   - new methods plugin2script() to try to translate raw plugin XML into
     working rkwarddev script calls

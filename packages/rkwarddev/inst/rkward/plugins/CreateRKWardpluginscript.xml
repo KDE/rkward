@@ -4,18 +4,21 @@
     perhaps don't make changes here, but in the rkwarddev script instead!
     
     look for a file called: $SRC/demo/skeleton_dialog.R -->
-  <code file="CreateRKWardpluginskeleton.js" />
-  <help file="CreateRKWardpluginskeleton.rkh" />
+  <code file="CreateRKWardpluginscript.js" />
+  <help file="CreateRKWardpluginscript.rkh" />
   <!-- <dependencies>
       </dependencies> -->
   <logic>
     <connect governor="dependencyFrame.checked" client="RKFrame.enabled" />
     <connect governor="dependencyFrame.checked" client="RFrame.enabled" />
   </logic>
-  <dialog label="RKWard Plugin Skeleton">
-    <tabbook id="tbbk_PlgnSklt" label="Plugin Skeleton">
+  <dialog label="RKWard Plugin Script">
+    <tabbook id="tbbk_PlgnScrp" label="Plugin Script">
       <tab label="About the plugin" id="tab_Abtthplg">
-        <column id="clm_fAPPNLLGPL">
+        <column id="clm_tNOTEYNOTE">
+          <text id="txt_NOTEYshl" type="warning">
+            NOTE: You should not hit the submit button, but copy the generated code to a script file for further work on your plugin!
+          </text>
           <frame label="About the plugin" id="aboutPlugin">
             <row id="row_inPNLLGPL3">
               <input label="Plugin name" id="pluginName" size="small" required="true" />
@@ -33,37 +36,32 @@
               <input label="Category" id="pluginCategory" />
             </row>
           </frame>
-          <frame label="Plugin author" id="aboutContact">
-            <row id="row_oACMPPPCFG">
-              <optionset id="optionsetAuthors">
+          <frame label="Plugin authors" id="aboutContact">
+            <row id="row_oA1CMCFGGN">
+              <optionset id="optionsetAuthors" min_rows="1">
                 <logic>
                   <connect governor="authorCre.state" client="authorMail.required" />
                 </logic>
                 <content>
                   <optiondisplay />
-                  <frame label="Package authors" id="frm_Pckgthrs">
-                    <row id="row_fPCFGGNFFN">
-                      <frame label="Package author" id="aboutContactFrame">
-                        <row id="row_cGGNFFNEMG">
-                          <column id="clm_inGGNFFNEM">
-                            <input label="Given name" id="authorGivenName" required="true" />
-                            <input label="Family name" id="authorFamiliyName" required="true" />
-                            <input label="E-mail" id="authorMail" />
-                            <stretch />
-                          </column>
-                          <column id="clm_frRRAACMCC">
-                            <frame label="Roles" id="frm_Roles">
-                              <checkbox id="authorAut" label="Author" value="true" checked="true" />
-                              <checkbox id="authorCre" label="Maintainer" value="true" checked="true" />
-                              <checkbox id="authorCtb" label="Contributor" value="true" />
-                              <stretch />
-                            </frame>
-                          </column>
-                        </row>
-                      </frame>
+                  <row id="row_rCFGGNFFNE">
+                    <row id="aboutContactFrame">
+                      <column id="clm_inGGNFFNEM">
+                        <input label="Given name" id="authorGivenName" required="true" />
+                        <input label="Family name" id="authorFamiliyName" required="true" />
+                        <input label="E-mail" id="authorMail" />
+                        <stretch />
+                      </column>
+                      <column id="clm_frRRAACMCC">
+                        <frame label="Roles" id="frm_Roles">
+                          <checkbox id="authorAut" label="Author" value="true" checked="true" />
+                          <checkbox id="authorCre" label="Maintainer" value="true" checked="true" />
+                          <checkbox id="authorCtb" label="Contributor" value="true" />
+                          <stretch />
+                        </frame>
+                      </column>
                     </row>
-                    <stretch />
-                  </frame>
+                  </row>
                 </content>
                 <optioncolumn id="optcolAuthorGivenName" connect="authorGivenName.text" label="Given name" />
                 <optioncolumn id="optcolAuthorFamiliyName" connect="authorFamiliyName.text" label="Family name" />
@@ -82,21 +80,32 @@
             <row id="row_bDTEMPDIRD">
               <browser label="Directory to save to (empty for $TEMPDIR)" type="dir" id="outDir" required="false" />
             </row>
-            <row id="row_cOWATIOWAT">
-              <column id="clm_chckbOWATI">
+            <row id="row_cOWATIPSOW">
+              <column id="clm_chcOWATIPS">
                 <checkbox id="overwrite" label="Overwrite existing files" value="true" />
                 <checkbox id="addWizard" label="Add wizard section" value="true" />
                 <checkbox id="addTests" label="Include plugin tests" value="true" checked="true" />
+                <checkbox id="showPlugin" label="Show the plugin" value="true" />
                 <stretch />
               </column>
-              <column id="clm_cPOTCARKWP">
+              <column id="clm_cPOTCARKWG">
                 <checkbox id="editPlugin" label="Open files for editing" value="true" checked="true" />
                 <checkbox id="addToConfig" label="Add plugin to RKWard configuration" value="true" checked="true" />
-                <checkbox id="showPlugin" label="Show the plugin" value="true" />
                 <checkbox id="guessGetters" label="Guess getter functions (RKWard &gt;= 0.6.0)" value="true" />
+                <checkbox id="emptyElse" label="Keep empty 'else {}'" value="true" />
                 <stretch />
               </column>
             </row>
+            <frame id="frm_rICTSTFICT">
+              <row id="row_drpdICTSTF">
+                <dropdown id="codeIndent" label="Code indentation">
+                  <option label="Tabs" value="\t" checked="true" />
+                  <option label="Single space" value=" " />
+                  <option label="Two spaces" value="  " />
+                  <option label="Four spaces" value="    " />
+                </dropdown>
+              </row>
+            </frame>
             <frame id="frm_rHPTFEVWRD">
               <row id="row_dHPTFEVWRD">
                 <dropdown id="menuHier" label="Place in top menu">

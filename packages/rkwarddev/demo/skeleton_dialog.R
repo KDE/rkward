@@ -1,8 +1,8 @@
 ## create dialog to build a plugin skeleton
 require(rkwarddev)
-rkwarddev.required("0.07-4")
+rkwarddev.required("0.08-1")
 
-local({
+rk.local({
 # define where the plugin should write its files
 output.dir <- tempdir()
 # overwrite an existing plugin in output.dir?
@@ -10,24 +10,24 @@ overwrite <- TRUE
 rk.set.indent(by="  ")
 rk.set.empty.e(TRUE)
 update.translations <- TRUE
-# the script generates a folder called "RKWardPluginSkeleton", set the
+# the script generates a folder called "RKWardPluginScript", set the
 # following to FALSE if you want to translate plugin files in the
 # rkwarddev package sources instead
 standalonePlugin <- TRUE
 
 about.info <- rk.XML.about(
-  name="RKWard Plugin Skeleton",
+  name="RKWard Plugin Script",
   author=c(
     person(given="Meik", family="Michalke",
       email="meik.michalke@hhu.de", role=c("aut","cre"))),
-  about=list(desc="GUI interface to create RKWard plugin skeletons",
+  about=list(desc="GUI interface to create RKWard plugin skeletons via rkwarddev scripts",
     # the version number should be in line with rkwarddev
     # to reflect when the script code was changed
-    version="0.07-4", url="http://rkward.kde.org")
+    version="0.08-1", url="http://rkward.kde.org")
   )
 dependencies.info <- rk.XML.dependencies(dependencies=list(rkward.min="0.6.0"))
 
-rk.set.comp("Create RKWard plugin skeleton")
+rk.set.comp("Create RKWard plugin script")
 
 # tab1: information on the thing
 aboutPlugin <- rk.XML.frame(
@@ -72,31 +72,27 @@ aboutPlugin <- rk.XML.frame(
 aboutContact <- rk.XML.frame(
   rk.XML.row(
     optionsetAuthors <- rk.XML.optionset(
-      content=rk.XML.frame(rk.XML.stretch(before=list(
-        rk.XML.row(
-        aboutContactFrame <- rk.XML.frame(
-          rk.XML.row(
-            rk.XML.col(
-              authorGivenName <- rk.XML.input("Given name", required=TRUE, id.name="authorGivenName",
-                help="First name of the package author."),
-              authorFamiliyName <- rk.XML.input("Family name", required=TRUE, id.name="authorFamiliyName",
-                help="Family name of the package author."),
-              authorMail <- rk.XML.input("E-mail", required=FALSE, id.name="authorMail",
-                help="The authors e-mail address, important for bug reports and receiving a myriad of thank yous..."),
-              rk.XML.stretch()),
-            rk.XML.col(rk.XML.frame(
-              authorAut <- rk.XML.cbox("Author", chk=TRUE, id.name="authorAut",
-                help="Check this if this person is the author of the plugin code."),
-              authorCre <- rk.XML.cbox("Maintainer", chk=TRUE, id.name="authorCre",
-                help="Check this if this person maintains the plugin package."),
-              authorCtb <- rk.XML.cbox("Contributor", chk=FALSE, id.name="authorCtb",
-                help="Check this if this person is a contributor to the plugin code (e.g., translations)."),
-              rk.XML.stretch(), label="Roles"))),
-            label="Package author",
-            id.name="aboutContactFrame"
-          )
+      content=rk.XML.row(
+        aboutContactRow <- rk.XML.row(
+          rk.XML.col(
+            authorGivenName <- rk.XML.input("Given name", required=TRUE, id.name="authorGivenName",
+              help="First name of the package author."),
+            authorFamiliyName <- rk.XML.input("Family name", required=TRUE, id.name="authorFamiliyName",
+              help="Family name of the package author."),
+            authorMail <- rk.XML.input("E-mail", required=FALSE, id.name="authorMail",
+              help="The authors e-mail address, important for bug reports and receiving a myriad of thank yous..."),
+            rk.XML.stretch()),
+          rk.XML.col(rk.XML.frame(
+            authorAut <- rk.XML.cbox("Author", chk=TRUE, id.name="authorAut",
+              help="Check this if this person is the author of the plugin code."),
+            authorCre <- rk.XML.cbox("Maintainer", chk=TRUE, id.name="authorCre",
+              help="Check this if this person maintains the plugin package."),
+            authorCtb <- rk.XML.cbox("Contributor", chk=FALSE, id.name="authorCtb",
+              help="Check this if this person is a contributor to the plugin code (e.g., translations)."),
+            rk.XML.stretch(), label="Roles")),
+          id.name="aboutContactFrame"
         )
-      )), label="Package authors"),
+      ),
       optioncolumn=list(
         optcolAuthorGivenName <- rk.XML.optioncolumn(connect=authorGivenName, modifier="text", id.name="optcolAuthorGivenName"),
         optcolAuthorFamiliyName <- rk.XML.optioncolumn(connect=authorFamiliyName, modifier="text", id.name="optcolAuthorFamiliyName"),
@@ -105,18 +101,27 @@ aboutContact <- rk.XML.frame(
         optcolAuthorCre <- rk.XML.optioncolumn(connect=authorCre, modifier="state", id.name="optcolAuthorCre"),
         optcolAuthorCtb <- rk.XML.optioncolumn(connect=authorCtb, modifier="state", id.name="optcolAuthorCtb")
       ),
+      min_rows=1,
       logic=rk.XML.logic(
         rk.XML.connect(governor=authorCre, client=authorMail, set="required")
       ),
       id.name="optionsetAuthors"
     )
   ),
-  label="Plugin author",
+  label="Plugin authors",
   id.name="aboutContact"
 )
 
+doNotSubmitWarning <- rk.XML.text(
+  "NOTE: You should not hit the submit button, but copy the generated code to a script file for further work on your plugin!",
+  type="warning"
+)
 
-tab1.about <- rk.XML.col(aboutPlugin, aboutContact)
+tab1.about <- rk.XML.col(
+  doNotSubmitWarning,
+  aboutPlugin,
+  aboutContact
+)
 
 # tab2: create options
 createOptionsFrame <- rk.XML.frame(
@@ -130,6 +135,8 @@ createOptionsFrame <- rk.XML.frame(
           help="If this is checked, a wizard section will be included in the skeleton."),
         addTests <- rk.XML.cbox("Include plugin tests", chk=TRUE, id.name="addTests",
           help="If this is checked, plugin tests will be included in the skeleton."),
+        showPlugin <- rk.XML.cbox("Show the plugin", chk=FALSE, id.name="showPlugin",
+          help="If this is checked, the generated plugin will be shown (opened) for you to see what it looks like."),
         rk.XML.stretch()),
       rk.XML.col(
         editPlugin <- rk.XML.cbox("Open files for editing", chk=TRUE, id.name="editPlugin",
@@ -137,15 +144,33 @@ createOptionsFrame <- rk.XML.frame(
         addToConfig <- rk.XML.cbox("Add plugin to RKWard configuration", chk=TRUE, id.name="addToConfig",
           help="If this is checkend, the generated plugin will automatically be registered in RKWard's configuration.
             If you store it in a temporary directory and remove it before the next start of RKWard, the entry will removed again as well."),
-        showPlugin <- rk.XML.cbox("Show the plugin", chk=FALSE, id.name="showPlugin",
-          help="If this is checked, the generated plugin will be shown (opened) for you to see what it looks like."),
         guessGetters <- rk.XML.cbox("Guess getter functions (RKWard >= 0.6.0)", chk=FALSE, id.name="guessGetters",
           help="If this is checked, rkwarddev tries to select the optimal getter functions to get data from the dialog into the R code. The plugin then requires RKWard >= 0.6.0."),
+        emptyElse <- rk.XML.cbox("Keep empty 'else {}'",
+          id.name="emptyElse",
+          help="Some consider it an enhancement for code readability if every \"if\" condition has an \"else\" clause, even if it is empty.
+            If you check this option, the generated JS code will keep these empty \"else\" clauses."
+        ),
         rk.XML.stretch())
     ),
     rk.XML.frame(
-      rk.XML.row(menuHier <- rk.XML.dropdown("Place in top menu",
-        options=list(
+      rk.XML.row(
+        codeIndent <- rk.XML.dropdown("Code indentation",
+          options=list(
+            "Tabs"=c(val="\\t", chk=TRUE),
+            "Single space"=c(val=" "),
+            "Two spaces"=c(val="  "),
+            "Four spaces"=c(val="    ")
+          ),
+          id.name="codeIndent",
+          help="Define how the generated code should be indented (by tabs or space characters)."
+        )
+      )
+    ),
+    rk.XML.frame(
+      rk.XML.row(
+        menuHier <- rk.XML.dropdown("Place in top menu",
+          options=list(
             "Test (created if needed)"=c(val="test", chk=TRUE),
             "File"=c(val="file"),
             "Edit"=c(val="edit"),
@@ -159,12 +184,13 @@ createOptionsFrame <- rk.XML.frame(
             "Windows"=c(val="windows"),
             "Settings"=c(val="settings"),
             "Help"=c(val="help")
+          ),
+          id.name="menuHier",
+          help="Specify where the plugin should appear in RKWard's top menus."
         ),
-        id.name="menuHier",
-        help="Specify where the plugin should appear in RKWard's top menus."
-      ),
-      menuName <- rk.XML.input("Name in menu (plugin name if empty)", id.name="menuName",
-        help="You can set the exact entry name of your main component in the menu here. If left empty, the plugin name will be used as default.")
+        menuName <- rk.XML.input("Name in menu (plugin name if empty)", id.name="menuName",
+          help="You can set the exact entry name of your main component in the menu here. If left empty, the plugin name will be used as default."
+        )
       )
     ),
     id.name="createOptionsFrame"
@@ -212,7 +238,10 @@ dependencyFrame <- rk.XML.frame(
   id.name="dependencyFrame"
 )
 
-tab2.create <- rk.XML.col(createOptionsFrame, dependencyFrame)
+tab2.create <- rk.XML.col(
+  createOptionsFrame,
+  dependencyFrame
+)
 
 # # tab3: varslot to select the actual content
 # children.text <- rk.XML.text("If you already created XML content for the plugin, select the main dialog object here (probably a tabbook?)")
@@ -244,18 +273,20 @@ helpText <- rk.XML.frame(
   id.name="helpText"
 )
   
-tab3.help <- rk.XML.col(helpText)
+tab3.help <- rk.XML.col(
+  helpText
+)
 
 ## glue all of the above together in one tabbook
 # sklt.tabbook <- rk.XML.dialog(rk.XML.tabbook("Plugin Skeleton",
 #   tab.labels=c("About the plugin", "Create options", "XML content"),
 #   children=list(tab1.about, tab2.create, tab3.children)), label="RKWard Plugin Skeleton")
-sklt.tabbook <- rk.XML.dialog(rk.XML.tabbook("Plugin Skeleton",
+sklt.tabbook <- rk.XML.dialog(rk.XML.tabbook("Plugin Script",
   tabs=list(
     "About the plugin"=tab1.about,
     "Create options"=tab2.create,
     "Help page"=tab3.help)),
-  label="RKWard Plugin Skeleton")
+  label="RKWard Plugin Script")
 
 ## some logic
 logic.section <- rk.XML.logic(
@@ -288,7 +319,7 @@ js.opt.about.about <- rk.JS.options("optAbout",
     } else {},
     keep.ite=TRUE
   ),
-  funct="list", option="about", collapse=",\\n\\t")
+  funct="list", option="about", collapse=",\\n\\t", opt.sep=",\\n\\t")
 # dependencies section
 js.frm.dependencyFrame <- rk.JS.vars(dependencyFrame, modifiers="checked") # see to it frame is checked
 js.opt.about.dep <- rk.JS.options("optDependencies",
@@ -363,8 +394,8 @@ js.opt.skeleton <- rk.JS.options("optSkeleton",
   collapse="")
 
 JS.prepare <- rk.paste.JS(
-  rk.JS.vars(outDir, overwrite, guessGetters),
-  echo("rkwarddev.required(\"0.07-4\")"),
+  rk.JS.vars(outDir, overwrite, guessGetters, codeIndent, emptyElse),
+  echo("rkwarddev.required(\"0.08-1\")"),
   echo("\n\n# define where the plugin should write its files\noutput.dir <- "),
   js(
     if(outDir){
@@ -383,7 +414,18 @@ JS.prepare <- rk.paste.JS(
       echo("TRUE")
     } else {
       echo("FALSE")
+    },
+    echo("\n# define the indentation character for the generated code\nrk.set.indent(by=\"", codeIndent,"\")",
+      "\n# should empty \"else\" clauses be kept in the JavaScript code?\nrk.set.empty.e("),
+    if(emptyElse){
+      echo("TRUE)")
+    } else {
+      echo("FALSE)")
     }
+  ),
+  echo(
+    "\n# make your plugin translatable by setting this to TRUE",
+    "\nupdate.translations <- FALSE"
   ),
   echo("\n\n"),
   level=2)
@@ -397,14 +439,14 @@ JS.calculate <- rk.paste.JS(
   echo("aboutPlugin <- rk.XML.about("),
     js(
       if(pluginName){
-        echo("\n\tname=\"", pluginName, "\"")
+        echo("\n\tname=\"", pluginName, "\",\n")
       } else {}
     ),
     # author section
     rk.JS.optionset(optionsetAuthors, vars=TRUE, guess.getter=TRUE),
     ite(id(optcolAuthorGivenName, " != \"\""),
       rk.paste.JS(
-        echo("\tauthor=c(\n\t\t\t"),
+        echo("\tauthor=c(\n\t\t"),
         rk.JS.optionset(optionsetAuthors,
           js.optionsetAuthors.role <- rk.JS.options("optAuthorRole",
             .ite=js(
@@ -435,9 +477,9 @@ JS.calculate <- rk.paste.JS(
             level=3
           ),
           echo(")"),
-          collapse=",\\n\\t\\t\\t"
+          collapse=",\\n\\t\\t"
         ),
-        echo("\n\t\t),\n")
+        echo("\n\t)")
       )
     ),
     echo(js.opt.about.about),
@@ -533,15 +575,26 @@ JS.calculate <- rk.paste.JS(
   echo("\n\t#components=list(),"),
   echo(js.opt.skeleton),
   echo("\n)\n\n"),
-  level=2)
+  echo(
+    "# you can make your plugin translatable, see top of script",
+    "\nif(isTRUE(update.translations)){",
+    "\n\trk.updatePluginMessages(",
+    "\n\t\tfile.path(output.dir,\"", pluginName, "\",\"inst\",\"rkward\",\"", pluginName, ".pluginmap\"),",
+    "\n\t\t# where should translation bug reports go?",
+    "\n\t\tbug_reports=\"https://mail.kde.org/mailman/listinfo/kde-i18n-doc\"",
+    "\n\t)",
+    "\n} else {}\n\n"
+  ),
+  level=2
+)
 
 ############
 ## help file
 
-rkh.summary <- rk.rkh.summary("Generate a plugin skeleton for RKWard.")
+rkh.summary <- rk.rkh.summary("Generate a plugin skeleton for RKWard via rkwarddev scripts.")
 
 rkh.usage <- rk.rkh.usage("This plugin is both, an example for a plugin written with the rkwarddev package,
- and a quick way to get a skeleton for new plugins.")
+ and a quick way to get an rkwarddev script for new plugins.")
 
 #############
 ## the main call
@@ -566,7 +619,7 @@ rk.plugin.skeleton(
     summary=rkh.summary,
     usage=rkh.usage
   ),
-  pluginmap=list(name="Create RKWard plugin skeleton", hierarchy=list("file", "export")),
+  pluginmap=list(name="Create RKWard plugin script", hierarchy=list("file", "export")),
   overwrite=TRUE,
   create=c("pmap","xml","js","desc", "rkh"),
   dependencies=dependencies.info,
@@ -579,7 +632,7 @@ rk.plugin.skeleton(
   
   if(isTRUE(update.translations)){
     if(isTRUE(standalonePlugin)){
-      rk.updatePluginMessages(file.path(output.dir,"RKWardPluginSkeleton","inst","rkward","RKWardPluginSkeleton.pluginmap"))
+      rk.updatePluginMessages(file.path(output.dir,"RKWardPluginScript","inst","rkward","RKWardPluginScript.pluginmap"))
     } else {
       rk.updatePluginMessages(file.path(output.dir,"rkwarddev","inst","rkward","rkwarddev.pluginmap"))
     }

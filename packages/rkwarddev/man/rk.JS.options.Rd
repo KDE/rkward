@@ -19,8 +19,7 @@ Use the \code{thenjs} element to define only the value to add to the option,
       how all options should be concatenated on the R code level
 (if \code{array=FALSE}),
       or how \code{option} should be added to the generated R code. Hint:
-To place each option in a new line with tab indentation, set \code{collapse=",
-     \\\\n\\\\t"}.}
+To place each option in a new line with tab indentation, set \code{collapse=",\\n\\t"}.}
 
 \item{option}{A character string, naming, e.g., an option of an R function which should be
 constructed from several variables. Only used if \code{array=TRUE}.}

@@ -5,9 +5,9 @@ PortSystem          1.0
 PortGroup           kde4 1.1
 fetch.type          git
 name                rkward
-version             0.6.3
+version             0.6.4
 git.url             http://anongit.kde.org/rkward.git
-git.branch          releases/0.6.3
+git.branch          releases/0.6.4
 #patchfiles          patch-rkward-rbackend-rkstructuregetter.cpp.diff
 worksrcdir          ${name}-${version}
 

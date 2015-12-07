@@ -27,13 +27,14 @@ declare -a EXCLPKG=(audio_lame audio_libmodplug audio_libopus \
   audio_libvorbis audio_speex audio_taglib databases_db46 databases_db48 databases_gdbm databases_openldap databases_sqlite3 devel_boost \
   gnome_at-spi2-atk gnome_at-spi2-core gnome_desktop-file-utils gnome_gnome-common gnome_gobject-introspection gnome_gtk-doc \
   gnome_gtk2 gnome_gtk3 gnome_hicolor-icon-theme gnome_libcroco gnome_libglade2 gnome_gobject-introspection \
+  lang_llvm-3.7 \
   multimedia_ffmpeg multimedia_libass multimedia_libbluray multimedia_libogg multimedia_libtheora multimedia_libvpx \
   multimedia_schroedinger multimedia_x264 multimedia_XviD \
   net_avahi net_kerberos5 net_tcp_wrappers security_cyrus-sasl2 security_p11-kit sysutils_e2fsprogs \
-  x11_pango x11_urw-fonts x11_Xft2 x11_xorg-bigreqsproto x11_xorg-compositeproto x11_xorg-damageproto x11_xorg-evieproto \
+  x11_mesa x11_pango x11_urw-fonts x11_Xft2 x11_xorg-bigreqsproto x11_xorg-compositeproto x11_xorg-damageproto \
   x11_xorg-fixesproto x11_xorg-inputproto x11_xorg-kbproto x11_xorg-libice x11_xorg-libpthread-stubs x11_xorg-libsm \
   x11_xorg-libX11 x11_xorg-libXau x11_xorg-libxcb x11_xorg-libXcomposite x11_xorg-libXcursor x11_xorg-libXdamage \
-  x11_xorg-libXdmcp x11_xorg-libXevie x11_xorg-libXext x11_xorg-libXfixes x11_xorg-libXi x11_xorg-libXinerama \
+  x11_xorg-libXdmcp x11_xorg-libXext x11_xorg-libXfixes x11_xorg-libXi x11_xorg-libXinerama \
   x11_xorg-libXrandr x11_xorg-libXt x11_xorg-libXtst x11_xorg-randrproto x11_xorg-recordproto x11_xorg-renderproto \
   x11_xorg-util-macros x11_xorg-xcb-proto x11_xorg-xcb-util x11_xorg-xcmiscproto x11_xorg-xextproto \
   x11_xorg-xf86bigfontproto x11_xorg-xineramaproto x11_xorg-xproto x11_xorg-xtrans x11_xrender )
@@ -238,11 +239,7 @@ if [[ $COPYMDMD ]] ; then
     # TARGETVERS=${PORTVERS}$(git ls-remote http://anongit.kde.org/rkward master | cut -c 1-7)
     # 
     # so here's something a little more elaborate...
-    if [[ $(hostname) == "RKWard-iMac.local" ]] ; then
-      TEMPFILE=$(mktemp /tmp/git_rev.XXXXXX || exit 1)
-    else
-      TEMPFILE=$(mktemp || exit 1)
-    fi
+    TEMPFILE=$(mktemp /tmp/git_rev.XXXXXX || exit 1)
     if ! [[ $(which wget) == "" ]] ; then
       wget -q -O "${TEMPFILE}" "http://quickgit.kde.org/?p=rkward.git" || exit 1
       GOTQUICKGIT=true
@@ -250,7 +247,7 @@ if [[ $COPYMDMD ]] ; then
       curl -s -o "${TEMPFILE}" "http://quickgit.kde.org/?p=rkward.git" || exit 1
       GOTQUICKGIT=true
     else
-      echo "neither wget nor curl can be found, only commit has can be used!"
+      echo "neither wget nor curl found, only commit can be used!"
       TARGETVERS=${PORTVERS}-git$(git ls-remote http://anongit.kde.org/rkward master | cut -c 1-7)
       GOTQUICKGIT=false
     fi
@@ -278,6 +275,13 @@ fi
 
 # make meta-package including dependencies
 if [[ $MAKEMDMD ]] ; then
+  # check for PackageMaker.app
+  if ! [ -d /Applications/PackageMaker.app ] ; then
+    # this is an anchient app, but MacPorts still relies on it for packaging
+    echo "unable to find /Applications/PackageMaker.app!"
+    echo "probably check whether MacPorts really still needs it."
+    exit 1
+  fi
   if [[ $RPATHFIX ]] ; then
     # this is to fix some kind of a race condition: if RKWard gets installed before R-framework,
     # it will create a directory which must actually be a symlink in order for R to run! so we'll
@@ -362,6 +366,10 @@ if [[ $MAKEMDMD ]] ; then
       TRGTFILE=${LPUBDIR}/RKWard${PNSUFFX}-${TARGETVERS}_KDE-${KDEVERS}_needs_CRAN_R-${RVERS}.dmg
     else
       TRGTFILE=${LPUBDIR}/RKWard${PNSUFFX}-${TARGETVERS}_R-${RVERS}_KDE-${KDEVERS}_MacOSX_bundle.dmg
+    fi
+    if ! [ -d ${LPUBDIR} ] ; then
+      echo "creating directory: ${LPUBDIR}"
+      mkdir -p ${LPUBDIR} || exit 1
     fi
     echo "copying: $MDMGFILE to $TRGTFILE ..."
     cp -av $MDMGFILE $TRGTFILE
