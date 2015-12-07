@@ -2,7 +2,7 @@
                           rkward_startup_wrapper  -  description
                              -------------------
     begin                : Sun Mar 10 2013
-    copyright            : (C) 2013, 2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2013, 2014, 2015 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -107,6 +107,7 @@ int main (int argc, char *argv[]) {
 	QStringList debugger_args;
 	QStringList file_args;
 	bool reuse = false;
+	bool warn_external = true;
 	QString r_exe_arg;
 	int debug_level = 2;
 
@@ -131,6 +132,8 @@ int main (int argc, char *argv[]) {
 			}
 		} else if (args[i] == "--reuse") {
 			reuse = true;
+		} else if (args[i] == "--nowarn-external") {
+			warn_external = false;
 		} else if (args[i].startsWith ("--")) {
 			// all RKWard and KDE options (other than --reuse) are of the for --option <value>. So skip over the <value>
 			i++;
@@ -150,7 +153,7 @@ int main (int argc, char *argv[]) {
 		} else {
 			QDBusInterface iface (RKDBUS_SERVICENAME, "/", "", QDBusConnection::sessionBus ());
 			if (iface.isValid ()) {
-				QDBusReply<void> reply = iface.call ("openAnyUrl", file_args);
+				QDBusReply<void> reply = iface.call ("openAnyUrl", file_args, warn_external);
 				if (!reply.isValid ()) {
 					if (debug_level > 2) qDebug ("Error while placing dbus call: %s", qPrintable (reply.error ().message ()));
 					return 1;
