@@ -1,0 +1,66 @@
+# Copyright 2015 Meik Michalke <meik.michalke@hhu.de>
+#
+# This file is part of the R package XiMpLe.
+#
+# XiMpLe is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# XiMpLe is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with XiMpLe.  If not, see <http://www.gnu.org/licenses/>.
+
+
+#' Class XiMpLe.validity
+#'
+#' Used for objects that describe valid child nodes and attributes of XiMpLe.nodes.
+#'
+#' @slot children Named list of character vectors, where the element name defines the parent node
+#'   name and each character string a valid child node name.
+#' @slot attrs Named list of character vectors, where the element name defines the parent node
+#'   name and each character string a valid attribute name.
+#' @slot allChildren Character vector, names of globally valid child nodes for all nodes, if any.
+#' @slot allAttrs Character vector, names of globally valid attributes for all nodes, if any.
+#' @name XiMpLe.validity,-class
+#' @aliases XiMpLe.validity-class XiMpLe.validity,-class
+#' @import methods
+#' @keywords classes
+#' @rdname XiMpLe.validity-class
+#' @export
+
+setClass("XiMpLe.validity",
+  representation=representation(
+    children="list",
+    attrs="list",
+    allChildren="character",
+    allAttrs="character"
+  ),
+  prototype(
+    children=list(),
+    attrs=list(),
+    allChildren=character(),
+    allAttrs=character()
+  )
+)
+
+setValidity("XiMpLe.validity", function(object){
+  obj.children <- slot(object, "children")
+  obj.attrs <- slot(object, "attrs")
+
+  for (thisChild in obj.children){
+    if(!is.character(thisChild)){
+      stop(simpleError("Invalid object: all \"children\" must be character vectors!"))
+    } else {}
+  }
+  for (thisAttr in obj.attrs){
+    if(!is.character(thisAttr)){
+      stop(simpleError("Invalid object: all \"attrs\" must be character vectors!"))
+    } else {}
+  }
+  return(TRUE)
+})

@@ -35,7 +35,6 @@
 #' @param section Either a character string (name of the section) or a XiMpLe node, whose name will be used
 #'    as name of the XML section this check refers to. This is only relevant for warnings and error messages,
 #'    in case you want to use something different than the actual parent node name.
-#' @node.names 
 #' @return Returns \code{TRUE} if tests pass, and depending on the setting of \code{warn} either \code{FALSE} or
 #'    an error if a test fails.
 #' @aliases
@@ -52,24 +51,65 @@
 #' @rdname validXML
 #' @include 00_class_01_XiMpLe.node.R
 #' @include 00_class_02_XiMpLe.doc.R
-setGeneric("validXML", function(obj, validity, parent=NULL, warn=FALSE, section=parent){standardGeneric("validXML")})
+setGeneric("validXML", function(obj, validity, parent=NULL, children=TRUE, attributes=TRUE, warn=FALSE, section=parent){standardGeneric("validXML")})
 
 #' @rdname validXML
 #' @export
-setMethod("validXML", signature(obj="XiMpLe.XML"), function(obj, validity, parent=NULL, warn=FALSE, section=parent){
+setMethod("validXML", signature(obj="XiMpLe.XML"), function(obj, validity, parent=NULL, children=TRUE, attributes=TRUE, warn=FALSE, section=parent){
+  childValidity <- NULL
+  if(!is.XiMpLe.validity(validity)){
+    stop(simpleError(paste0(
+      "Invalid value for \"validity\": Got class ",
+      class(valid),
+      ", should be XiMpLe.validity!"))
+    )
+  }
   # see if we're checking the parent node or child node for a given parent
   if(is.null(parent)){
     parentName <- XMLName(obj)
+    # are there any children to check in the first place?
+    nodeChildren <- XMLChildren(obj)
+    if(length(nodeChildren) == 0){
+      children <- FALSE
+    } else {
+      childValidity <- all(sapply(
+        nodeChildren,
+        function(thisChild){
+          validXML(thisChild, validity=validity, parent=parentName, children=children, attributes=attributes, warn=warn, section=parentName)
+        }
+      ))
+      children <- FALSE
+    }
   } else if(is.XiMpLe.node(parent)){
     parentName <- XMLName(parent)
   } else if(is.character(parent) & length(parent) == 1){
     parentName <- parent
   } else {
-    stop(simpleError("'parent' must be a XiMpLe node or single character string!"))
+    stop(simpleError(paste0(
+      "Invalid value for \"parent\": Got class \"",
+      class(parent),
+      "\", should be XiMpLe.node or single character string!"))
+    )
   }
+
+  if(is.null(section)){
+    section <- parentName
+  } else if(is.XiMpLe.node(section)){
+    section <- XMLName(section)
+  } else if(!is.character(section) | length(section) != 1){
+    stop(simpleError(paste0(
+      "Invalid value for \"section\": Got class \"",
+      class(section),
+      "\", should be XiMpLe.node or single character string!"))
+    )
+  } else {}
+  
   
   ## more checks
-  
-  ## call internal when ready valid.child()
-  
+
+  if(isTRUE(children)){
+    childValidity <- valid.child(parent=parentName, children=obj, validity=validity, warn=warn, section=section)
+  } else {}
+
+  return(childValidity)
 })
