@@ -56,7 +56,7 @@ setGeneric("validXML", function(obj, validity, parent=NULL, children=TRUE, attri
 #' @rdname validXML
 #' @export
 setMethod("validXML", signature(obj="XiMpLe.XML"), function(obj, validity, parent=NULL, children=TRUE, attributes=TRUE, warn=FALSE, section=parent){
-  childValidity <- NULL
+  childValidity <- attributeValidity <- NULL
   if(!is.XiMpLe.validity(validity)){
     stop(simpleError(paste0(
       "Invalid value for \"validity\": Got class ",
@@ -64,22 +64,21 @@ setMethod("validXML", signature(obj="XiMpLe.XML"), function(obj, validity, paren
       ", should be XiMpLe.validity!"))
     )
   }
-  # see if we're checking the parent node or child node for a given parent
+  # two possibilities:
+  # a) there's no "parent" value
+  #    we're checking "obj" as the parent node itself
+  #    - check attributes of "obj" directly
+  #    - check child nodes of "obj" for valid node names
+  #    - recursion: check attributes of child nodes etc.
+  # b) "parent" is given
+  #    we're checking "obj" as child node for a given parent
+  #    - check if "obj" node name is valid for parent node
+  #    - check attributes of "obj"
+  #    - no recursion
+  recursion <- FALSE
   if(is.null(parent)){
     parentName <- XMLName(obj)
-    # are there any children to check in the first place?
-    nodeChildren <- XMLChildren(obj)
-    if(length(nodeChildren) == 0){
-      children <- FALSE
-    } else {
-      childValidity <- all(sapply(
-        nodeChildren,
-        function(thisChild){
-          validXML(thisChild, validity=validity, parent=parentName, children=children, attributes=attributes, warn=warn, section=parentName)
-        }
-      ))
-      children <- FALSE
-    }
+    recursion <- TRUE
   } else if(is.XiMpLe.node(parent)){
     parentName <- XMLName(parent)
   } else if(is.character(parent) & length(parent) == 1){
@@ -103,13 +102,33 @@ setMethod("validXML", signature(obj="XiMpLe.XML"), function(obj, validity, paren
       "\", should be XiMpLe.node or single character string!"))
     )
   } else {}
-  
-  
-  ## more checks
 
   if(isTRUE(children)){
-    childValidity <- valid.child(parent=parentName, children=obj, validity=validity, warn=warn, section=section)
+    if(isTRUE(recursion)){
+      # are there any children to check in the first place?
+      nodeChildren <- XMLChildren(obj)
+      if(length(nodeChildren) > 0){
+        childValidity <- all(sapply(
+          nodeChildren,
+          function(thisChild){
+            # check child itself
+            thisChildValidity <- valid.child(parent=parentName, children=thisChild, validity=validity, warn=warn, section=section)
+            # check grandchildren
+            grandChildValidity <- validXML(thisChild, validity=validity, children=children, attributes=attributes, warn=warn, section=thisChild)
+            return(all(thisChildValidity, grandChildValidity))
+          }
+        ))
+      } else {
+        childValidity <- NULL
+      }
+    } else {
+      childValidity <- valid.child(parent=parentName, children=obj, validity=validity, warn=warn, section=section)
+    }
+  } else {}
+  if(isTRUE(attributes)){
+    # we only check attributes of "obj"
+    attributeValidity <- valid.attribute(node=XMLName(obj), attrs=XMLAttrs(obj), validity=validity, warn=warn)
   } else {}
 
-  return(childValidity)
+  return(all(childValidity, attributeValidity))
 })

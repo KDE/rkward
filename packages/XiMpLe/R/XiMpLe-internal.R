@@ -581,14 +581,14 @@ valid.child <- function(parent, children, validity, warn=FALSE, section=parent, 
             return(this.child.name)
           }
         } else {
-          stop(simpleError(paste0("Invalid object for ", section, " section, must be of class XiMpLe.node, but got class ", class(this.child), "!")))
+          stop(simpleError(paste0("Invalid object for <", section, "> node, must be of class XiMpLe.node, but got class ", class(this.child), "!")))
         }
       }))
   } else {}
 
   invalid.sets <- !node.names %in% c(slot(validity, "allChildren"), slot(validity, "children")[[parent]])
   if(any(invalid.sets)){
-    return.message <- paste0("Invalid XML nodes for ", section, " section: ", paste(node.names[invalid.sets], collapse=", "))
+    return.message <- paste0("Invalid XML nodes for <", section, "> section: ", paste(node.names[invalid.sets], collapse=", "))
     if(isTRUE(warn)){
       warning(return.message, call.=FALSE)
       return(FALSE)
@@ -599,3 +599,30 @@ valid.child <- function(parent, children, validity, warn=FALSE, section=parent, 
     return(TRUE)
   }
 } ## end function valid.child()
+
+
+## function valid.attribute()
+# similar to valid.child(), but checks the validity of attributes of a given node
+# it's a bit simpler
+# - node: a character string, node name
+# - attrs: a named list of attributes to check
+# - validity: definitions of valid child nodes, class XiMpLe.validity
+valid.attribute <- function(node, attrs, validity, warn=FALSE){
+  if(length(attrs) > 0){
+    attrsNames <- names(attrs)
+    invalid.sets <- !attrsNames %in% c(slot(validity, "allAttrs"), slot(validity, "attrs")[[node]])
+    if(any(invalid.sets)){
+      return.message <- paste0("Invalid XML attributes for <", node, "> node: ", paste(attrsNames[invalid.sets], collapse=", "))
+      if(isTRUE(warn)){
+        warning(return.message, call.=FALSE)
+        return(FALSE)
+      } else {
+        stop(simpleError(return.message))
+      }
+    } else {
+      return(TRUE)
+    }
+  } else {
+    return(NULL)
+  }
+}
