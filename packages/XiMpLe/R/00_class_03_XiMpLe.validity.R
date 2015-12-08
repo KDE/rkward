@@ -19,6 +19,8 @@
 #' Class XiMpLe.validity
 #'
 #' Used for objects that describe valid child nodes and attributes of XiMpLe.nodes.
+#' 
+#' You should use \code{\link[XiMpLe:XMLValidity]{XMLValidity}} to create objects of this class.
 #'
 #' @slot children Named list of character vectors, where the element name defines the parent node
 #'   name and each character string a valid child node name.
@@ -26,10 +28,14 @@
 #'   name and each character string a valid attribute name.
 #' @slot allChildren Character vector, names of globally valid child nodes for all nodes, if any.
 #' @slot allAttrs Character vector, names of globally valid attributes for all nodes, if any.
+#' @slot empty Character vector, names of nodes that must be empty nodes (i.e., no closing tag), if any.
 #' @name XiMpLe.validity,-class
 #' @aliases XiMpLe.validity-class XiMpLe.validity,-class
 #' @import methods
 #' @keywords classes
+#' @seealso
+#'    \code{\link[XiMpLe:XMLValidity]{XMLValidity}},
+#'    \code{\link[XiMpLe:validXML]{validXML}}
 #' @rdname XiMpLe.validity-class
 #' @export
 
@@ -38,13 +44,15 @@ setClass("XiMpLe.validity",
     children="list",
     attrs="list",
     allChildren="character",
-    allAttrs="character"
+    allAttrs="character",
+    empty="character"
   ),
   prototype(
     children=list(),
     attrs=list(),
     allChildren=character(),
-    allAttrs=character()
+    allAttrs=character(),
+    empty=character()
   )
 )
 

@@ -27,13 +27,32 @@
 #'   name and each character string a valid attribute name.
 #' @param allChildren Character vector, names of globally valid child nodes for all nodes, if any.
 #' @param allAttrs Character vector, names of globally valid attributes for all nodes, if any.
+#' @param empty Character vector, names of nodes that must be empty nodes (i.e., no closing tag), if any.
 #' @return An object of class \code{\link[XiMpLe:XiMpLe.validity-class]{XiMpLe.validity}}
 #' @seealso
 #'    \code{\link[XiMpLe:validXML]{validXML}}
 #' @export
-#' @rdname XiMpLe.validity-class
-
-XMLValidity <- function(children=NULL, attrs=NULL, allChildren=NULL, allAttrs=NULL){
+#' @rdname XMLValidity
+#' @examples
+#' HTMLish <- XMLValidity(
+#'    children=list(
+#'      body=c("a", "p", "ol", "ul", "strong"),
+#'      head=c("title"),
+#'      html=c("head", "body"),
+#'      li=c("a", "br", "strong"),
+#'      ol=c("li"),
+#'      p=c("a", "br", "ol", "ul", "strong"),
+#'      ul=c("li")
+#'    ),
+#'    attrs=list(
+#'      a=c("href", "name"),
+#'      p=c("align")
+#'    ),
+#'    allChildren=c("!--"),
+#'    allAttrs=c("id", "class"),
+#'    empty=c("br")
+#' )
+XMLValidity <- function(children=NULL, attrs=NULL, allChildren=NULL, allAttrs=NULL, empty=NULL){
 
   if(is.null(children)){
     children <- list()
@@ -47,12 +66,16 @@ XMLValidity <- function(children=NULL, attrs=NULL, allChildren=NULL, allAttrs=NU
   if(is.null(allAttrs)){
     allAttrs <- character()
   } else {}
+  if(is.null(empty)){
+    empty <- character()
+  } else {}
   
   newValidity <- new("XiMpLe.validity",
     children=children,
     attrs=attrs,
     allChildren=allChildren,
-    allAttrs=allAttrs
+    allAttrs=allAttrs,
+    empty=empty
   )
 
   return(newValidity)
