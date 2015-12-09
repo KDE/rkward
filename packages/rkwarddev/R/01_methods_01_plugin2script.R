@@ -77,7 +77,7 @@
 #' identical(rkdev.row.row_clmndc1212, test.checkboxes)
 setGeneric(
   "plugin2script",
-  function(obj, prefix="", indent=TRUE, level=1, drop.defaults=TRUE, node.names=FALSE, collapse="."){
+  function(obj, prefix="rkdev", indent=TRUE, level=1, drop.defaults=TRUE, node.names=TRUE, collapse="."){
     standardGeneric("plugin2script")
   }
 )
@@ -89,7 +89,7 @@ setGeneric(
 #' @import XiMpLe
 setMethod("plugin2script",
   signature(obj="XiMpLe.doc"),
-  function(obj, prefix="", indent=TRUE, level=1, drop.defaults=TRUE, node.names=FALSE, collapse=".") {
+  function(obj, prefix="rkdev", indent=TRUE, level=1, drop.defaults=TRUE, node.names=TRUE, collapse=".") {
     # search for logic, dialog and wizard sections
     secLogic <- XMLScan(obj, "logic")
     secDialog <- XMLScan(obj, "dialog")
@@ -132,7 +132,7 @@ setMethod("plugin2script",
 #' @import XiMpLe
 setMethod("plugin2script",
   signature(obj="XiMpLe.node"),
-  function(obj, prefix="", indent=TRUE, level=1, drop.defaults=TRUE, node.names=FALSE, collapse=".") {
+  function(obj, prefix="rkdev", indent=TRUE, level=1, drop.defaults=TRUE, node.names=TRUE, collapse=".") {
     return(p2s(node=obj, indent=indent, level=level, prefix=prefix, drop.defaults=drop.defaults, node.names=node.names, collapse=collapse))
   }
 )
@@ -144,7 +144,7 @@ setMethod("plugin2script",
 #' @import XiMpLe
 setMethod("plugin2script",
   signature(obj="character"),
-  function(obj, prefix="", indent=TRUE, level=1, drop.defaults=TRUE, node.names=FALSE, collapse=".") {
+  function(obj, prefix="rkdev", indent=TRUE, level=1, drop.defaults=TRUE, node.names=TRUE, collapse=".") {
     XML.tree <- parseXMLTree(obj)
     return(
       plugin2script(
@@ -167,7 +167,7 @@ setMethod("plugin2script",
 #' @import XiMpLe
 setMethod("plugin2script",
   signature(obj="connection"),
-  function(obj, prefix="", indent=TRUE, level=1, drop.defaults=TRUE, node.names=FALSE, collapse=".") {
+  function(obj, prefix="rkdev", indent=TRUE, level=1, drop.defaults=TRUE, node.names=TRUE, collapse=".") {
     XML.tree <- parseXMLTree(obj)
     return(
       plugin2script(
@@ -411,7 +411,7 @@ p2s.checkTabIDs <- function(node){
 ## function p2s()
 # this is the main work horse, going through nested XML nodes recursively
 # called by the actual methods
-p2s <- function(node, indent=TRUE, level=1, prefix="", drop.defaults=TRUE, node.names=FALSE, collapse="."){
+p2s <- function(node, indent=TRUE, level=1, prefix="rkdev", drop.defaults=TRUE, node.names=TRUE, collapse="."){
   nodeName <- XMLName(node)
   nodeAttrs <- XMLAttrs(node)
   # fail if we don't know this node type

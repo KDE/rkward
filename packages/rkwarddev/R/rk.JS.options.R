@@ -24,7 +24,7 @@
 #'    (e.g., \code{"paired=TRUE"} or \code{qp("conf.level=\"", conflevel, "\"")}.
 #' @param collapse Character string, how all options should be concatenated on the R code level
 #'    (if \code{array=FALSE}), or how \code{option} should be added to the generated R code. Hint:
-#'    To place each option in a new line with tab indentation, set \code{collapse=",\\\\n\\\\t"}.
+#'    To place each option in a new line with tab indentation, set \code{collapse=",\\n\\t"}.
 #' @param option A character string, naming, e.g., an option of an R function which should be
 #'    constructed from several variables. Only used if \code{array=TRUE}.
 #' @param funct Character string, name of the R function to be called to combine the options,
