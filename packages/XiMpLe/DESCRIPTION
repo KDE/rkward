@@ -19,17 +19,20 @@ LazyLoad: yes
 URL: http://reaktanz.de/?c=hacking&s=XiMpLe
 Authors@R: c(person(given="Meik", family="Michalke", email="meik.michalke@hhu.de", role=c("aut", "cre")))
 Version: 0.03-24
-Date: 2015-11-24
+Date: 2015-12-08
 RoxygenNote: 5.0.1
 Collate:
     '00_class_01_XiMpLe.node.R'
     '00_class_02_XiMpLe.doc.R'
+    '00_class_03_XiMpLe.validity.R'
     '01_method_01_pasteXML.R'
     'XiMpLe-internal.R'
     '01_method_02_node.R'
     '01_method_03_show.R'
+    '01_method_04_validXML.R'
     'XMLNode.R'
     'XMLTree.R'
+    'XMLValidity.R'
     'XiMpLe-package.R'
     'parseXMLTree.R'
     'pasteXMLTag.R'
