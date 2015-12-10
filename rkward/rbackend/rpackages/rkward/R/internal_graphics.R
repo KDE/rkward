@@ -23,6 +23,10 @@ assign(".rk.preview.devices", list (), envir=.rk.variables)
 
 #' @export
 ".rk.startPreviewDevice" <- function (x) {
+	# NOTE: I considered rewriting this to use .rk.create.preview.data(), but it did not seem right
+	# 1. Creation and removal of storage is mostly trivial
+	# 2. Plot previews need some extra logic for handling deivce closes (see .rk.discard.preview.device.num()), and implementing
+	#    this is easier, if plot preview data is kept in an entirely separate storage
 	a <- .rk.variables$.rk.preview.devices[[x]]
 	if (is.null (a)) {
 		devnum <- dev.cur ()

@@ -173,6 +173,8 @@ void TwinTable::initTable (RKVarEditModel* model, RObject* object) {
 
 	datamodel = model;
 	main_object = object;
+	action_enable_editing->setEnabled (object->canWrite ());
+	action_tb_unlock_editing->setEnabled (object->canWrite ());
 	dataview->setRKModel (model);
 	metaview->setRKModel (model->getMetaModel ());
 	model->setEditor (this);
@@ -468,7 +470,7 @@ void TwinTable::enableEditing (bool on) {
 
 	flushEdit ();
 
-	rw = on;
+	rw = main_object ? on && main_object->canWrite () : on;  // NOTE: File->New->Dataset creates an Editor window, first, then sets the object to edit afterwards (TODO which looks like silly design)
 	metaview->rw = rw;
 	dataview->rw = rw;
 
@@ -485,6 +487,7 @@ void TwinTable::enableEditing (bool on) {
 
 	edit_actions->setEnabled (rw);
 	action_enable_editing->setChecked (rw);
+	action_tb_lock_editing->setChecked (!rw);
 	action_tb_unlock_editing->setChecked (rw);
 
 	if (main_object) objectMetaChanged (main_object);	// update_caption;

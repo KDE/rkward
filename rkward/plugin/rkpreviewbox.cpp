@@ -48,6 +48,9 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	addChild ("state", state = new RKComponentPropertyBool (this, true, preview_active, "active", "inactive"));
 	state->setInternal (true);	// restoring this does not make sense.
 	connect (state, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (changedState(RKComponentPropertyBase*)));
+	idprop = new RKComponentPropertyBase (this, false);
+	idprop->setValue (RObject::rQuote (QString ().sprintf ("%p", this)));
+	addChild ("id", idprop);
 
 	// create checkbox
 	QVBoxLayout *vbox = new QVBoxLayout (this);
@@ -145,8 +148,7 @@ void RKPreviewBox::tryPreviewNow () {
 	}
 
 	preview_active = true;
-	QString dummy;
-	RKGlobals::rInterface ()->issueCommand (dummy.sprintf (".rk.startPreviewDevice (\"%p\")", this), RCommand::Plugin | RCommand::Sync | RCommand::GetIntVector, QString (), this, START_DEVICE);
+	RKGlobals::rInterface ()->issueCommand (".rk.startPreviewDevice (" + idprop->value ().toString () + ')', RCommand::Plugin | RCommand::Sync | RCommand::GetIntVector, QString (), this, START_DEVICE);
 	RKCaughtX11Window::setStatusMessage (dev_num, i18n ("Preview updating"));
 	RKGlobals::rInterface ()->issueCommand ("local({\n" + code_property->preview () + "})\n", RCommand::Plugin | RCommand::Sync, QString (), this, DO_PLOT);
 
@@ -161,8 +163,7 @@ void RKPreviewBox::killPreview () {
 
 	if (!preview_active) return;
 	preview_active = false;
-	QString command;
-	RKGlobals::rInterface ()->issueCommand (command.sprintf (".rk.killPreviewDevice (\"%p\")", this), RCommand::Plugin | RCommand::Sync);
+	RKGlobals::rInterface ()->issueCommand (".rk.killPreviewDevice (" + idprop->value ().toString () + ')', RCommand::Plugin | RCommand::Sync);
 
 	last_plot_done = true;
 	new_plot_pending = false;

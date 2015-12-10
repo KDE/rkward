@@ -63,6 +63,7 @@ private:
 	QCheckBox *toggle_preview_box;
 	QLabel *status_label;
 	RKComponentPropertyCode *code_property;
+	RKComponentPropertyBase *idprop;
 };
 
 #endif

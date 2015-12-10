@@ -447,3 +447,22 @@ assign("available.packages.cache", NULL, envir=.rk.variables)
 	# call separate assignments functions:
 	if (exists (".rk.fix.assignments.graphics")) eval (body (.rk.fix.assignments.graphics)) # internal_graphics.R
 }
+
+assign(".rk.preview.data", list (), envir=.rk.variables)
+
+# TODO document, move somewhere appropriate
+".rk.create.preview.data" <- function (id) {
+	pdata <- .rk.variables$.rk.preview.data
+	if (is.null (pdata[[id]])) {
+		pdata[[id]] <- list ()
+		assign (".rk.preview.data", pdata, envir=.rk.variables)
+	}
+	invisible (pdata[[id]])
+}
+
+".rk.discard.preview.data" <- function (id) {
+	pdata <- .rk.variables$.rk.preview.data
+	pdata[[id]] <- NULL
+	assign (".rk.preview.data", pdata, envir=.rk.variables)
+	invisible (NULL)
+}
