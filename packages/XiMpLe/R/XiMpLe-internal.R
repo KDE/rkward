@@ -556,3 +556,94 @@ XML.nodes <- function(single.tags, end.here=NA, start=1){
   }
   return(list(children=children, tag.no=tag.no))
 } ## end function XML.nodes()
+
+
+## function valid.child()
+# - parent: character string, name of the parent node
+# - children: (list of) XiMpLe.node objects, child nodes to check
+# - validity: definitions of valid child nodes, class XiMpLe.validity
+# - warn: warning or stop?
+# - section: an optional name for the section for the warning/error
+#   (if it shouldn't be the parent name)
+# - node names: can alternatively be given instead of 'children', as character vector
+# - graceful: allow everything inside "!--" comments?
+valid.child <- function(parent, children, validity, warn=FALSE, section=parent, node.names=NULL,
+  caseSens=TRUE, graceful=TRUE){
+  if(isTRUE(graceful) && identical(parent, "!--")){
+    # skip all checks and return TRUE
+    return(TRUE)
+  } else {}
+  if(is.null(node.names)){
+    # check the node names and allow only valid ones
+    node.names <- unlist(sapply(child.list(children), function(this.child){
+        if(is.XiMpLe.node(this.child)){
+          this.child.name <- XMLName(this.child)
+          if(identical(this.child.name, "")){
+            # special case: empty node name; this is used to combine
+            # comments with the node they belong to, so rather check
+            # the children of this special node
+            return(unlist(sapply(XMLChildren(this.child), XMLName)))
+          } else {
+            return(this.child.name)
+          }
+        } else {
+          stop(simpleError(paste0("Invalid object for <", section, "> node, must be of class XiMpLe.node, but got class ", class(this.child), "!")))
+        }
+      }))
+  } else {}
+  
+  validAllChildren <- slot(validity, "allChildren")
+  validChildren <- slot(validity, "children")[[parent]]
+  if(!isTRUE(caseSens)){
+    node.names <- tolower(node.names)
+    validAllChildren <- tolower(validAllChildren)
+    validChildren <- tolower(validChildren)
+  } else {}
+
+  invalid.sets <- !node.names %in% c(validAllChildren, validChildren)
+  if(any(invalid.sets)){
+    return.message <- paste0("Invalid XML nodes for <", section, "> section: ", paste(node.names[invalid.sets], collapse=", "))
+    if(isTRUE(warn)){
+      warning(return.message, call.=FALSE)
+      return(FALSE)
+    } else {
+      stop(simpleError(return.message))
+    }
+  } else {
+    return(TRUE)
+  }
+} ## end function valid.child()
+
+
+## function valid.attribute()
+# similar to valid.child(), but checks the validity of attributes of a given node
+# it's a bit simpler
+# - node: a character string, node name
+# - attrs: a named list of attributes to check
+# - validity: definitions of valid child nodes, class XiMpLe.validity
+valid.attribute <- function(node, attrs, validity, warn=FALSE, caseSens=TRUE){
+  if(length(attrs) > 0){
+    attrsNames <- names(attrs)
+    validAllAttrs <- slot(validity, "allAttrs")
+    validAttrs <- slot(validity, "attrs")[[node]]
+    if(!isTRUE(caseSens)){
+      attrsNames <- tolower(attrsNames)
+      validAllAttrs <- tolower(validAllAttrs)
+      validAttrs <- tolower(validAttrs)
+    } else {}
+    invalid.sets <- !attrsNames %in% c(validAllAttrs, validAttrs)
+    if(any(invalid.sets)){
+      return.message <- paste0("Invalid XML attributes for <", node, "> node: ", paste(attrsNames[invalid.sets], collapse=", "))
+      if(isTRUE(warn)){
+        warning(return.message, call.=FALSE)
+        return(FALSE)
+      } else {
+        stop(simpleError(return.message))
+      }
+    } else {
+      return(TRUE)
+    }
+  } else {
+    return(NULL)
+  }
+}
