@@ -145,7 +145,8 @@ XMLScanDeep(obj, find = NULL, search = "attributes")
 
 \item{name}{Character, name of nodes to scan for.}
 
-\item{as.list}{Logical, if \code{TRUE} allways returns a list (or NULL), otherwise if exactly one result is found,
+\item{as.list}{Logical, if \code{TRUE} allways returns a list (or NULL),
+      otherwise if exactly one result is found,
 it will be returned as as single \code{XiMpLe.node}.}
 
 \item{find}{Character, name of element to scan for.}
@@ -174,16 +175,21 @@ These are convenience methods to get or set slots from XML objects without using
 Another special method can scan a node/document tree object for appearances of nodes with a particular name:
 
 \itemize{
-   \item{\code{XMLScan(obj, name, as.list=FALSE)}: }{get/set the XML nodes by name (recursively searches slot \code{name} of both classes
-     \code{XiMpLe.node} and  \code{XiMpLe.doc}). If \code{as.list=TRUE} allways returns a list (or NULL), otherwise if exactly one result is found,
+   \item{\code{XMLScan(obj, name,
+      as.list=FALSE)}: }{get/set the XML nodes by name (recursively searches slot \code{name} of both classes
+     \code{XiMpLe.node} and  \code{XiMpLe.doc}). If \code{as.list=TRUE} allways returns a list (or NULL),
+      otherwise if exactly one result is found,
      it will be returned as as single \code{XiMpLe.node}.}
 }
 
-Finally, there is a method to scan for certain values in XiMpLe objects and just list them. For instance, it can be used to
+Finally,
+      there is a method to scan for certain values in XiMpLe objects and just list them. For instance,
+      it can be used to
 list all instances of a certain attribute type in a document tree:
 
 \itemize{
-   \item{\code{XMLScanDeep(obj, find, search="attributes")}: }{returns all found instances of \code{find} in all slots defined by \code{search}.}
+   \item{\code{XMLScanDeep(obj, find,
+      search="attributes")}: }{returns all found instances of \code{find} in all slots defined by \code{search}.}
 }
 }
 \examples{

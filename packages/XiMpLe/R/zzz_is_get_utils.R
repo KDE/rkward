@@ -19,25 +19,19 @@
 ## the name "zzz_*" is just to ensure roxygen doesn't parse it before XMLNode.R and XMLTree.R
 
 #' @param x An arbitrary \code{R} object.
-#' @rdname XiMpLe.node-class
+#' @rdname XMLNode
 #' @export
 is.XiMpLe.node <- function(x){
   inherits(x, "XiMpLe.node")
 }
 
 #' @param x An arbitrary \code{R} object.
-#' @rdname XiMpLe.doc-class
+#' @rdname XMLTree
 #' @export
 is.XiMpLe.doc <- function(x){
   inherits(x, "XiMpLe.doc")
 }
 
-#' @param x An arbitrary \code{R} object.
-#' @rdname XiMpLe.validity-class
-#' @export
-is.XiMpLe.validity <- function(x){
-  inherits(x, "XiMpLe.validity")
-}
 
 #' Getter/setter methods for S4 objects of XiMpLe XML classes
 #'
