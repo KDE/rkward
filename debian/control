@@ -2,7 +2,12 @@ Source: rkward
 Section: math
 Priority: optional
 Maintainer: Thomas Friedrichsmeier <tfry@users.sourceforge.net>
-Build-Depends: debhelper (>= 6.0.0), kdelibs5-dev, cmake, r-base-dev (>= 2.8.0), libx11-dev, libqtwebkit-dev | libqt4-dev (<< 4:4.7)
+Build-Depends: cmake,
+               debhelper (>= 6.0.0),
+               kdelibs5-dev,
+               libqtwebkit-dev | libqt4-dev (<< 4:4.7),
+               libx11-dev,
+               r-base-dev (>= 2.8.0)
 Standards-Version: 3.9.6
 Homepage: http://rkward.kde.org
 Vcs-Browser: http://quickgit.kde.org/?p=rkward.git&a=tree&f=debian
@@ -10,7 +15,7 @@ Vcs-Git: git://anongit.kde.org/rkward.git
 
 Package: rkward
 Architecture: any
-Depends: ${rvers}, ${shlibs:Depends}, ${misc:Depends}
+Depends: ${misc:Depends}, ${rvers}, ${shlibs:Depends}
 Recommends: r-base-html
 Description: KDE frontend to the R statistics language
  RKWard aims to become an easy to use, transparent frontend to R,
