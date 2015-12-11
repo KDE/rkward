@@ -37,20 +37,20 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	RK_TRACE (PLUGIN);
 
 	preview_active = false;
-	last_plot_done = true;
-	new_plot_pending = false;
+	prior_preview_done = true;
+	new_preview_pending = false;
 	dev_num = 0;
 
 	// get xml-helper
 	XMLHelper *xml = parent_component->xmlHelper ();
 
+	preview_mode = (PreviewMode) xml->getMultiChoiceAttribute (element, "mode", "plot;data;custom", 0);
+	idprop = RObject::rQuote (QString ().sprintf ("%p", this));
+
 	// create and add property
 	addChild ("state", state = new RKComponentPropertyBool (this, true, preview_active, "active", "inactive"));
 	state->setInternal (true);	// restoring this does not make sense.
 	connect (state, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (changedState(RKComponentPropertyBase*)));
-	idprop = new RKComponentPropertyBase (this, false);
-	idprop->setValue (RObject::rQuote (QString ().sprintf ("%p", this)));
-	addChild ("id", idprop);
 
 	// create checkbox
 	QVBoxLayout *vbox = new QVBoxLayout (this);
@@ -88,6 +88,14 @@ RKPreviewBox::~RKPreviewBox () {
 
 	killPreview ();
 }
+
+QVariant RKPreviewBox::value(const QString& modifier) {
+	if (modifier == "id") {
+		return idprop;
+	}
+	return (state->value (modifier));
+}
+
 
 void RKPreviewBox::changedState (RKComponentPropertyBase *) {
 	RK_TRACE (PLUGIN);
@@ -141,19 +149,19 @@ void RKPreviewBox::tryPreviewNow () {
 		return;
 	}
 
-	if (!last_plot_done) {		// if the last plot is not done, yet, wait before starting the next.
-		new_plot_pending = true;
+	if (!prior_preview_done) {		// if the last plot is not done, yet, wait before starting the next.
+		new_preview_pending = true;
 		updateStatusLabel ();
 		return;
 	}
 
 	preview_active = true;
-	RKGlobals::rInterface ()->issueCommand (".rk.startPreviewDevice (" + idprop->value ().toString () + ')', RCommand::Plugin | RCommand::Sync | RCommand::GetIntVector, QString (), this, START_DEVICE);
+	RKGlobals::rInterface ()->issueCommand (".rk.startPreviewDevice (" + idprop + ')', RCommand::Plugin | RCommand::Sync | RCommand::GetIntVector, QString (), this, START_DEVICE);
 	RKCaughtX11Window::setStatusMessage (dev_num, i18n ("Preview updating"));
 	RKGlobals::rInterface ()->issueCommand ("local({\n" + code_property->preview () + "})\n", RCommand::Plugin | RCommand::Sync, QString (), this, DO_PLOT);
 
-	last_plot_done = false;
-	new_plot_pending = false;
+	prior_preview_done = false;
+	new_preview_pending = false;
 
 	updateStatusLabel ();
 }
@@ -163,17 +171,17 @@ void RKPreviewBox::killPreview () {
 
 	if (!preview_active) return;
 	preview_active = false;
-	RKGlobals::rInterface ()->issueCommand (".rk.killPreviewDevice (" + idprop->value ().toString () + ')', RCommand::Plugin | RCommand::Sync);
+	RKGlobals::rInterface ()->issueCommand (".rk.killPreviewDevice (" + idprop + ')', RCommand::Plugin | RCommand::Sync);
 
-	last_plot_done = true;
-	new_plot_pending = false;
+	prior_preview_done = true;
+	new_preview_pending = false;
 }
 
 void RKPreviewBox::rCommandDone (RCommand *command) {
 	RK_TRACE (PLUGIN);
 
-	last_plot_done = true;
-	if (new_plot_pending) tryPreview ();
+	prior_preview_done = true;
+	if (new_preview_pending) tryPreview ();
 
 	if (command->getFlags () == START_DEVICE) {
 		int old_devnum = dev_num;
@@ -198,7 +206,7 @@ void RKPreviewBox::updateStatusLabel () {
 		status_label->setText (i18n ("Preview disabled"));
 	} else {
 		if (parentComponent ()->isSatisfied ()) {
-			if (last_plot_done && (!new_plot_pending)) {
+			if (prior_preview_done && (!new_preview_pending)) {
 				status_label->setText (i18n ("Preview up to date"));
 			} else {
 				status_label->setText (i18n ("Preview updating"));

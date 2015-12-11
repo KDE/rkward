@@ -41,7 +41,7 @@ public:
 	~RKPreviewBox ();
 	int type () { return ComponentPreviewBox; };
 	RKComponentPropertyBool *state;
-	QVariant value (const QString &modifier=QString ()) { return (state->value (modifier)); };
+	QVariant value (const QString &modifier=QString ()) override;
 public slots:
 	void changedState (int);
 	void changedState (RKComponentPropertyBase *);
@@ -53,17 +53,22 @@ protected:
 private:
 	bool updating;		// prevent recursion
 	bool preview_active;
-	bool last_plot_done;
-	bool new_plot_pending;
+	bool prior_preview_done;
+	bool new_preview_pending;
 	void tryPreview ();
 	void killPreview ();
 	void updateStatusLabel ();
 	int dev_num;
+	enum PreviewMode {
+		PlotPreview,
+		DataPreview,
+		CustomPreview
+	} preview_mode;
 	QTimer *update_timer;
 	QCheckBox *toggle_preview_box;
 	QLabel *status_label;
 	RKComponentPropertyCode *code_property;
-	RKComponentPropertyBase *idprop;
+	QString idprop;
 };
 
 #endif

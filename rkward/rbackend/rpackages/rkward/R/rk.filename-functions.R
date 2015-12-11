@@ -33,7 +33,7 @@
 #' @param ask Logical: Whether to ask before flushing the output file.
 #' @return \code{rk.get.tempfile.name}, \code{rk.get.output.html.file}, and
 #'   \code{rk.get.workspace.url} return a string while
-#'   \code{rk.set.output.html.file} returns \code{NULL}.
+#'   \code{rk.set.output.html.file} returns the \bold{previous} output html file.
 #' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
 #' @seealso \url{rkward://page/rkward_output}, \link{tempfile}, \link{file},
 #'   \link{rk.print}
@@ -79,6 +79,7 @@
 #' @rdname rk.get.tempfile.name
 "rk.set.output.html.file" <- function (x, additional.header.contents = getOption ("rk.html.header.additions")) {
 	stopifnot (is.character (x))
+	oldfile <- rk.get.output.html.file ()
 	assign (".rk.output.html.file", x, .rk.variables)
 
 	if (!file.exists (x)) {
@@ -159,7 +160,7 @@
 
 	# needs to come after initialization, so initialization alone does not trigger an update during startup
 	.rk.do.plain.call ("set.output.file", x, synchronous=FALSE)
-	invisible (NULL)
+	invisible (oldfile)
 }
 
 # Internal helper function to extract file names of images used in html files.
