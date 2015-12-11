@@ -3,7 +3,7 @@ Upstream-Name: RKWard
 Source: http://rkward.kde.org
 
 Files: *
-Copyright: 2002-2012 Thomas Friedrichsmeier and the RKWard team
+Copyright: 2002-2015 Thomas Friedrichsmeier and the RKWard team (Meik Michalke, Stefan Rödiger, Prasenjit Kapat, Pierre Ecochard, and others)
 License: GPL-2+
  This program is free software; you can redistribute it
  and/or modify it under the terms of the GNU General Public
