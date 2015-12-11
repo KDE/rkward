@@ -5,7 +5,6 @@ Maintainer: Thomas Friedrichsmeier <tfry@users.sourceforge.net>
 Build-Depends: cmake,
                debhelper (>= 6.0.0),
                kdelibs5-dev,
-               libqtwebkit-dev | libqt4-dev (<< 4:4.7),
                libx11-dev,
                r-base-dev (>= 2.8.0)
 Standards-Version: 3.9.6

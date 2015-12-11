@@ -1,8 +1,8 @@
 rkward (0.6.4-1) unstable; urgency=low
   * new upstream release
   * remove obsolete README.Debian file
-  * now uses QtWebKit module, adjust build-depends, accordingly (in a way that is
-    backwards compatible with Ubuntu Lucid)
+  * upstream has replaced KHTMLPart with QWebKit. As Qt4WebKit is scheduled for
+    removal, we revert this change, here
   * Make build reproducible (thanks to Philip Rinn)
     closes: #783290
 
