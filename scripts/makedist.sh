@@ -28,7 +28,7 @@ mkdir $DISTDIR/tests
 
 rsync -a --exclude '*~' --exclude '*.git*' $EXCLUDES $BASEDIR/doc/* $DISTDIR/doc
 rsync -a --exclude '*~' --exclude '*.git*' $EXCLUDES $BASEDIR/i18n/* $DISTDIR/i18n
-rsync -a --exclude '*~' --exclude '*.git*' --exclude 'templates' $EXCLUDES $BASEDIR/rkward/* $DISTDIR/rkward
+rsync -a --exclude '*~' --exclude '*.git*' --exclude 'templates' --exclude 'rbackend/rpackages/rkwardtests/debian' $EXCLUDES $BASEDIR/rkward/* $DISTDIR/rkward
 rsync -a --exclude '*~' --exclude '*.git*' $EXCLUDES $BASEDIR/tests/* $DISTDIR/tests
 
 # make messages
