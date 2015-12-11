@@ -2,7 +2,7 @@ rkward (0.6.4-1) unstable; urgency=low
   * new upstream release
   * remove obsolete README.Debian file
   * upstream has replaced KHTMLPart with QWebKit. As Qt4WebKit is scheduled for
-    removal, we revert this change, here
+    removal, revert this change, here. Change to 3.0 (quilt) format for this.
   * Make build reproducible (thanks to Philip Rinn)
     closes: #783290
 

@@ -3,10 +3,10 @@ Section: math
 Priority: optional
 Maintainer: Thomas Friedrichsmeier <tfry@users.sourceforge.net>
 Build-Depends: cmake,
-               debhelper (>= 6.0.0),
+               debhelper (>= 9.0.0),
                kdelibs5-dev,
                libx11-dev,
-               r-base-dev (>= 2.8.0)
+               r-base-dev (>= 3.0.0)
 Standards-Version: 3.9.6
 Homepage: http://rkward.kde.org
 Vcs-Browser: http://quickgit.kde.org/?p=rkward.git&a=tree&f=debian-official
