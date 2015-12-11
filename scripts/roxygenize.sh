@@ -1,16 +1,22 @@
 #!/bin/bash
+# roxygenize rkward package _or_ the packages specified on the command line
 
 cd `dirname $0`/..
 BASEDIR=`pwd`
 
-PACKAGES="'${BASEDIR}/rkward/rbackend/rpackages/rkward/'"
-         # currently excluded due to missing support for slots in roxygen2:
-         # '${BASEDIR}/rkward/rbackend/rpackages/rkwardtests/'
-if [ "$1" = "--all" ]; then
-PACKAGES="${PACKAGES}, \
-          '${BASEDIR}/packages/XiMpLe/',
-          '${BASEDIR}/packages/rkwarddev/'"
+if [ "$#" = 0 ]; then
+	PACKAGES="'${BASEDIR}/rkward/rbackend/rpackages/rkward/'"
+	# currently excluded due to missing support for slots in roxygen2:
+	# '${BASEDIR}/rkward/rbackend/rpackages/rkwardtests/'
+else
+	PACKAGES="'$1'"
+	shift
 fi
+
+while (( "$#" )); do
+	PACKAGES="${PACKAGES}, '$1'"
+	shift
+done
 
 echo "
 	library (roxygen2)
