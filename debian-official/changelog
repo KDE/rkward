@@ -1,6 +1,9 @@
 rkward (0.6.4-1) unstable; urgency=low
   * new upstream release
   * remove obsolete README.Debian file
+  * increase debhelper compatibility level to 9 (no changes needed)
+  * replace dh_clean -k with dh_prep
+  * remove legacy rules dealing with R versions prior to 3.0.0
   * upstream has replaced KHTMLPart with QWebKit. As Qt4WebKit is scheduled for
     removal, revert this change, here. Change to 3.0 (quilt) format for this.
   * Make build reproducible (thanks to Philip Rinn)
