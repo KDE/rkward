@@ -58,6 +58,7 @@ private:
 	void tryPreview ();
 	void killPreview ();
 	void updateStatusLabel ();
+	void setStatusMessage (const QString& status);
 	int dev_num;
 	enum PreviewMode {
 		PlotPreview,

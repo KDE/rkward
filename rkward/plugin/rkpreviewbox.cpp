@@ -31,7 +31,7 @@
 #include "../debug.h"
 
 #define START_DEVICE 101
-#define DO_PLOT 102
+#define DO_PREVIEW 102
 
 RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
 	RK_TRACE (PLUGIN);
@@ -44,7 +44,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	// get xml-helper
 	XMLHelper *xml = parent_component->xmlHelper ();
 
-	preview_mode = (PreviewMode) xml->getMultiChoiceAttribute (element, "mode", "plot;data;custom", 0);
+	preview_mode = (PreviewMode) xml->getMultiChoiceAttribute (element, "mode", "plot;data;custom", 0, DL_INFO);
 	idprop = RObject::rQuote (QString ().sprintf ("%p", this));
 
 	// create and add property
@@ -144,7 +144,7 @@ void RKPreviewBox::tryPreviewNow () {
 	if (s != Satisfied) {
 		if (s == Processing) tryPreview ();
 		else {
-			RKCaughtX11Window::setStatusMessage (dev_num, i18n ("Preview not (currently) possible"));
+			setStatusMessage (i18n ("Preview not (currently) possible"));
 		}
 		return;
 	}
@@ -156,9 +156,16 @@ void RKPreviewBox::tryPreviewNow () {
 	}
 
 	preview_active = true;
-	RKGlobals::rInterface ()->issueCommand (".rk.startPreviewDevice (" + idprop + ')', RCommand::Plugin | RCommand::Sync | RCommand::GetIntVector, QString (), this, START_DEVICE);
-	RKCaughtX11Window::setStatusMessage (dev_num, i18n ("Preview updating"));
-	RKGlobals::rInterface ()->issueCommand ("local({\n" + code_property->preview () + "})\n", RCommand::Plugin | RCommand::Sync, QString (), this, DO_PLOT);
+
+	if (preview_mode == PlotPreview) {
+		RKGlobals::rInterface ()->issueCommand (".rk.startPreviewDevice (" + idprop + ')', RCommand::Plugin | RCommand::Sync | RCommand::GetIntVector, QString (), this, START_DEVICE);
+		setStatusMessage (i18n ("Preview updating"));
+		RKGlobals::rInterface ()->issueCommand ("local({\n" + code_property->preview () + "})\n", RCommand::Plugin | RCommand::Sync, QString (), this, DO_PREVIEW);
+	} else if (preview_mode == DataPreview) {
+		RKGlobals::rInterface ()->issueCommand ("local({\n" + code_property->preview () + "\nrk.assign.preview.data(" + idprop + ", preview_data)\nrk.edit(rkward::.rk.variables$.rk.preview.data[[" + idprop + "]])\n})\n", RCommand::Plugin | RCommand::Sync, QString (), this, DO_PREVIEW);
+	} else {
+		RKGlobals::rInterface ()->issueCommand ("local({\n" + code_property->preview () + "})\n", RCommand::Plugin | RCommand::Sync, QString (), this, DO_PREVIEW);
+	}
 
 	prior_preview_done = false;
 	new_preview_pending = false;
@@ -166,12 +173,26 @@ void RKPreviewBox::tryPreviewNow () {
 	updateStatusLabel ();
 }
 
+void RKPreviewBox::setStatusMessage(const QString& status) {
+	RK_TRACE (PLUGIN);
+
+	if (preview_mode == PlotPreview) {
+		RKCaughtX11Window::setStatusMessage (dev_num, status);
+	} else {
+#warning TODO
+	}
+}
+
 void RKPreviewBox::killPreview () {
 	RK_TRACE (PLUGIN);
 
 	if (!preview_active) return;
 	preview_active = false;
-	RKGlobals::rInterface ()->issueCommand (".rk.killPreviewDevice (" + idprop + ')', RCommand::Plugin | RCommand::Sync);
+
+	QString command;
+	if (preview_mode == PlotPreview) command = ".rk.killPreviewDevice (" + idprop + ')';
+	else command = "rk.discard.preview.data (" + idprop + ')';
+	RKGlobals::rInterface ()->issueCommand (command, RCommand::Plugin | RCommand::Sync);
 
 	prior_preview_done = true;
 	new_preview_pending = false;
@@ -191,10 +212,10 @@ void RKPreviewBox::rCommandDone (RCommand *command) {
 			RKCaughtX11Window *window = RKCaughtX11Window::getWindow (dev_num);
 			if (window) connect (window, SIGNAL (destroyed(QObject*)), this, SLOT(previewWindowClosed()));
 		}
-	} else if (command->getFlags () == DO_PLOT) {
+	} else if (command->getFlags () == DO_PREVIEW) {
 		QString warnings = command->warnings () + command->error ();
 		if (!warnings.isEmpty ()) warnings = QString ("<b>%1</b>\n<pre>%2</pre>").arg (i18n ("Warnings or Errors:")).arg (Qt::escape (warnings));
-		RKCaughtX11Window::setStatusMessage (dev_num, warnings);
+		setStatusMessage (warnings);
 	}
 	updateStatusLabel ();
 }

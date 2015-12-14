@@ -230,11 +230,9 @@ assign(".rk.preview.data", list (), envir=.rk.variables)
 #' @aliases rk.get.preview.data .rk.discard.preview.data
 "rk.assign.preview.data" <- function (id, value=list ()) {
 	pdata <- .rk.variables$.rk.preview.data
-	if (is.null (pdata[[id]])) {
-		pdata[[id]] <- value
-		assign (".rk.preview.data", pdata, envir=.rk.variables)
-		rk.sync (.rk.variables$.rk.preview.data)
-	}
+	pdata[[id]] <- value
+	assign (".rk.preview.data", pdata, envir=.rk.variables)
+	rk.sync (.rk.variables$.rk.preview.data)
 	invisible (pdata[[id]])
 }
 
@@ -251,5 +249,6 @@ assign(".rk.preview.data", list (), envir=.rk.variables)
 	if (!is.null (pdata[[id]]) && !is.null (pdata[[id]]$on.exit)) pdata[[id]]$on.delete (id)
 	pdata[[id]] <- NULL
 	assign (".rk.preview.data", pdata, envir=.rk.variables)
+	rk.sync (.rk.variables$.rk.preview.data)
 	invisible (NULL)
 }

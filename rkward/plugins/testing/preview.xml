@@ -1,0 +1,11 @@
+<!DOCTYPE rkplugin>
+
+<document>
+	<code file="preview.js"/>
+
+	<dialog label="Testing various preview features">
+		<spinbox id="size" type="integer" min="0" label="Size" initial="3"/>
+		<spinbox id="value" type="real" min="0" label="Value" initial="1.23"/>
+		<preview mode="data" label="Preview data"/>
+	</dialog>
+</document> 
