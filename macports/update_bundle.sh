@@ -139,6 +139,7 @@ if [[ $WIPEINST ]] ; then
     /Library/LaunchDaemons/org.freedesktop.avahi-dnsconfd.plist \
     /Library/LaunchAgents/org.macports.kdecache.plist \
     /Library/LaunchDaemons/org.macports.mysql5.plist \
+    /Library/LaunchDaemons/org.macports.rsyncd.plist \
     /Library/LaunchDaemons/org.macports.slapd.plist
   do
     if [ -L "${libsymlink}" ] ; then
