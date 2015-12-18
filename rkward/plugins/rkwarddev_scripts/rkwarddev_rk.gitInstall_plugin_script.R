@@ -29,7 +29,7 @@ aboutPlugin <- rk.XML.about(
 )
 
 plugin.dependencies <- rk.XML.dependencies(
-  dependencies=list(rkward.min=">= 0.6.0"),
+  dependencies=list(rkward.min="0.6.0"),
   package=list(
     c(name="devtools")
   )
