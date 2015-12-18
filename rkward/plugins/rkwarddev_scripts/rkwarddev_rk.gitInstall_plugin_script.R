@@ -22,7 +22,7 @@ aboutPlugin <- rk.XML.about(
   ),
   about=list(
     desc="RKWard GUI to install R packges directly from git or subversion repositories",
-    version="0.01-0",
+    version="0.01-1",
     url="https://rkward.kde.org",
     license="GPL (>= 3)"
   )
