@@ -327,7 +327,7 @@ fi
 
 # remove previous installation and its build left-overs
 if $UPRKWARD ; then
-  INSTALLEDPORTS=$(port installed)
+  INSTALLEDPORTS=$(${MPTINST}/bin/port installed)
   # make sure each instance of previous RKWard installations is removed first
   for i in rkward rkward-devel rkward-binary rkward-devel-binary rkward-debug rkward-devel-debug ; do
     if [[ $(echo $INSTALLEDPORTS | grep "[[:space:]]${i}[[:space:]]" 2> /dev/null ) ]] ; then
