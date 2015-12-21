@@ -1,5 +1,8 @@
 #!/bin/bash
 
+LIST=false
+REMOVE=false
+
 if [[ $1 == "" ]] ; then
   echo "Usage: uninstall.sh OPTIONS
           OPTIONS:
@@ -13,8 +16,8 @@ fi
 # get the options
 while getopts ":lR" OPT; do
   case $OPT in
-    l) LIST=TRUE >&2 ;;
-    R) REMOVE=TRUE >&2 ;;
+    l) LIST=true >&2 ;;
+    R) REMOVE=true >&2 ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
       exit 1
@@ -33,14 +36,18 @@ ALLINSTPORTS=$(pkgutil --pkgs=org.macports.*)
 # treat only those who are associated with /opt/rkward
 for i in ${ALLINSTPORTS} ; do
   if [[ $(pkgutil --only-dirs --files "$i" | grep "opt/rkward/") != "" ]] ; then
-    if [ ${LIST} ] ; then
+    if ${LIST} ; then
       pkgutil --files "$i" | sed -e "s#^#/#g"
     fi
-    if [ ${REMOVE} ] ; then
+    if ${REMOVE} ; then
       # remove files
-      sudo rm $(pkgutil --only-files --files "$i" | sed -e "s#^#/#g") || exit 1
+      for j in $(pkgutil --only-files --files "$i" | sed -e "s#^#/#g") ; do
+        sudo rm "${j}" || exit 1
+      done
       # remove directories if empty
-      sudo rmdir -p $(pkgutil --only-dirs --files "$i" | sed -e "s#^#/#g")
+      for k in $(pkgutil --only-dirs --files "$i" | sed -e "s#^#/#g") ; do
+        sudo rmdir -p "${k}"
+      done
       # forget about the package
       sudo pkgutil --forget "$i"
     fi

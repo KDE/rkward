@@ -2,12 +2,13 @@
 cd `dirname $0`/..
 BASEDIR=`pwd`
 VERSION=`${BASEDIR}/scripts/getversion.sh ${1}`
+DEBDIR=${BASEDIR}/debian-official
 DEBTEMPDIR=${BASEDIR}/debiantemp
 rm -rf ${DEBTEMPDIR}
 mkdir ${DEBTEMPDIR}
 
-if [ -z "`head -n 1 ${BASEDIR}/debian/changelog | grep "rkward (${VERSION}-"`" ]; then
-  echo "Version mismatch! Adjust ${BASEDIR}/debian/changelog, first."
+if [ -z "`head -n 1 ${DEBDIR}/changelog | grep "rkward (${VERSION}-"`" ]; then
+  echo "Version mismatch! Adjust ${DEBDIR}/changelog, first."
   exit 1
 fi
 
@@ -21,7 +22,7 @@ cp ${BASEDIR}/rkward-$VERSION.tar.gz $DEBTEMPDIR/rkward_$VERSION.orig.tar.gz
 cd $DEBTEMPDIR
 tar -xzf rkward_$VERSION.orig.tar.gz
 cd rkward-$VERSION
-cp -a ${BASEDIR}/debian .
+cp -a ${DEBDIR} debian
 dpkg-buildpackage -k0x1858CBB6 -rfakeroot
 
 cd $DEBTEMPDIR

@@ -41,3 +41,4 @@ Collate:
     'rk.workspace-functions.R'
     'rkward-package.R'
     'ver.R'
+RoxygenNote: 5.0.1

@@ -1,13 +1,37 @@
 #!/bin/bash
 SRCDATE=$(date +%Y-%m-%d)
 SRCPATH=/opt/ports
+# specify git root path
+GITROOT=/opt/git
 # specify macports installation path
 MPTINST=/opt/rkward
 # specify the target port
 PTARGET=rkward-devel
 PNSUFFX="-devel"
-DEVEL=TRUE
+USERBIN=${HOME}/bin
+
+# initalize varaibles
+DEVEL=true
+ANONGIT=true
+BLDSETUP=false
+SSHGEN=false
+DEBUG=false
+BINARY=false
+FRESHMCP=false
+LSDSKUSG=false
+RMSTLIBS=false
+DOEXCPCK=false
+UPMPORTS=false
+UPRKWARD=false
+RPATHFIX=false
+MAKEMDMD=false
+MKSRCTAR=false
+COPYMDMD=false
+WIPEDSTF=false
+WIPEINST=false
+
 PVARIANT=""
+GITBRANCH="master"
 # specify work directory
 WORKDIR=/opt/ports/kde/${PTARGET}/work
 # specify local public directory
@@ -53,53 +77,79 @@ if [[ $1 == "" ]] ; then
           OPTIONS:
 
            the following must always be combined with r/m/s/c:
-           -D (build target rkward instead of rkward-devel)
-           -d (build variant 'debug')
-           -b (build subport 'binary', needs CRAN R)
+           -D  build target rkward instead of rkward-devel
+           -d  build variant 'debug'
+           -b  build subport 'binary', needs CRAN R
 
            these work on their own:
-           -X (completely!!! wipe ${MPTINST})
-           -F <MacPorts version> (do an all fresh installation of <MacPorts version>)
-           -f (list disk usage for all includable ports)
-           -l (remove static port libraries)
-           -L (don't bundle probably superfluous ports)
-           -p (update macports, remove inactive)
-           -r (update port ${PTARGET})
-           -m (create .mdmg of ${PTARGET})
-           -s (create sources .tar)
-           -c (copy .mdmg and src.tar to ${LPUBDIR}, if created)
-           -x (completely!!! wipe ${MPTINST}/var/macports/distfiles)"
+           
+           system setup:
+           -X  completely!!! wipe ${MPTINST}, ${GITROOT} & ${SRCPATH}
+               there will only be a copy of this script left in ${USERBIN}/update_bundle.sh
+           -S <comment>
+               generate new ssh key pair to register with https://identity.kde.org
+               comment could be \"<yourusername>@<yourmachine>\"
+           -G  setup basic build environment: ${GITROOT} & ${SRCPATH}
+               if -G is set without both -U and -E, it will fallback to setup
+               ${GITROOT} anonymously -- build-only setup, no development
+           -C  checkout a branch different than ${GITBRANCH}
+           -U  set git user name (KDE account)
+           -E  set git user e-mail (KDE account)
+           -F <MacPorts version>
+               do an all fresh installation of <MacPorts version>
+           -f  list disk usage for all includable ports
+           -x  completely!!! wipe ${MPTINST}/var/macports/distfiles
+
+           building & bundling:
+           -l  remove static port libraries
+           -L  don't bundle probably superfluous ports
+           -p  update macports, remove inactive
+           -r  update port ${PTARGET}
+           -m  create .mdmg of ${PTARGET}
+           -s  create sources .tar
+           -c  copy .mdmg and src.tar to ${LPUBDIR}, if created"
 exit 0
 fi
 
 # get the options
-while getopts ":DdbflLprmscxXF:" OPT; do
+while getopts ":CDE:dbfGlLprmsS:cU:xXF:" OPT; do
   case $OPT in
+    U) GITUSER=$OPTARG >&2 ;;
+    E) GITMAIL=$OPTARG >&2 ;;
+    G) BLDSETUP=true >&2
+       if [[ $GITUSER == "" || $GITMAIL == "" ]] ; then
+         ANONGIT=true >&2
+       else
+         ANONGIT=false >&2
+       fi ;;
+    C) GITBRANCH=$OPTARG >&2 ;;
+    S) SSHGEN=true >&2
+       SSHCOMMENT=$OPTARG >&2 ;;
     D) PTARGET=rkward >&2
        WORKDIR="/opt/ports/kde/${PTARGET}/work" >&2
        PNSUFFX="" >&2
-       DEVEL=FALSE >&2 ;;
-    d) DEBUG=TRUE >&2
+       DEVEL=false >&2 ;;
+    d) DEBUG=true >&2
        PVARIANT="+debug" >&2
        PNSUFFX="${PNSUFFX}-debug" >&2 ;;
-    b) BINARY=TRUE >&2
+    b) BINARY=true >&2
        PTARGET=${PTARGET}-binary >&2
        WORKDIR="/opt/ports/kde/rkward-devel/work" >&2
        PNSUFFX="${PNSUFFX}-binary" >&2 ;;
-    F) FRESHMCP=TRUE >&2
+    F) FRESHMCP=true >&2
        MCPVERS=$OPTARG >&2 ;;
-    f) LSDSKUSG=TRUE >&2 ;;
-    l) RMSTLIBS=TRUE >&2 ;;
-    L) DOEXCPCK=TRUE >&2 ;;
-    p) UPMPORTS=TRUE >&2 ;;
-    r) UPRKWARD=TRUE >&2 ;;
-    m) RPATHFIX=TRUE >&2
-       MAKEMDMD=TRUE >&2 ;;
-    s) MKSRCTAR=TRUE >&2 ;;
-    c) COPYMDMD=TRUE >&2 ;;
-    x) WIPEDSTF=TRUE >&2 ;;
-    X) WIPEDSTF=FALSE >&2
-       WIPEINST=TRUE >&2 ;;
+    f) LSDSKUSG=true >&2 ;;
+    l) RMSTLIBS=true >&2 ;;
+    L) DOEXCPCK=true >&2 ;;
+    p) UPMPORTS=true >&2 ;;
+    r) UPRKWARD=true >&2 ;;
+    m) RPATHFIX=true >&2
+       MAKEMDMD=true >&2 ;;
+    s) MKSRCTAR=true >&2 ;;
+    c) COPYMDMD=true >&2 ;;
+    x) WIPEDSTF=true >&2 ;;
+    X) WIPEDSTF=false >&2
+       WIPEINST=true >&2 ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
       exit 1
@@ -111,26 +161,34 @@ while getopts ":DdbflLprmscxXF:" OPT; do
   esac
 done
 
+linkbuildscript () {
+  # create a hardlink of the buildscript
+  # $1: target directory (e.g., $HOME/bin)
+  echo "updating hardlink $1/update_bundle.sh..."
+  mkdir -p "$1" || exit 1
+  ln -f "${GITROOT}/rkward/macports/update_bundle.sh" "$1/update_bundle.sh" || exit 1
+}
+
+rmdirv () {
+  # remove directories recursively with info
+  # $1: target directory to remove
+  if [ -d "$1" ] ; then
+    echo "removing $1..."
+    sudo rm -rf "$1" || exit 1
+  fi
+}
+
 # correct setting of RPATHFIX workaround, it's not needed
 # for binary subports since they don't include R.framework
-if [[ $BINARY ]] ; then
-  unset RPATHFIX
+if $BINARY ; then
+  RPATHFIX=false
 fi
 
 # remove MacPorts completely
-if [[ $WIPEINST ]] ; then
-  if [ -d ${MPTINST} ] ; then
-    echo "removing ${MPTINST}..."
-    sudo rm -rf ${MPTINST} || exit 1
-  fi
-  if [ -d ${APPLDIR} ] ; then
-    echo "removing ${APPLDIR}..."
-    sudo rm -rf ${APPLDIR} || exit 1
-  fi
-  if [ -d /Applications/MacPorts ] ; then
-    echo "removing /Applications/MacPorts..."
-    sudo rm -rf /Applications/MacPorts || exit 1
-  fi
+if $WIPEINST ; then
+  rmdirv "${MPTINST}"
+  rmdirv "${APPLDIR}"
+  rmdirv "/Applications/MacPorts"
   # these leftovers would conflict with port installation
   for libsymlink in \
     /Library/LaunchDaemons/org.freedesktop.dbus-system.plist \
@@ -139,6 +197,7 @@ if [[ $WIPEINST ]] ; then
     /Library/LaunchDaemons/org.freedesktop.avahi-dnsconfd.plist \
     /Library/LaunchAgents/org.macports.kdecache.plist \
     /Library/LaunchDaemons/org.macports.mysql5.plist \
+    /Library/LaunchDaemons/org.macports.rsyncd.plist \
     /Library/LaunchDaemons/org.macports.slapd.plist
   do
     if [ -L "${libsymlink}" ] ; then
@@ -146,16 +205,80 @@ if [[ $WIPEINST ]] ; then
       sudo rm "${libsymlink}"
     fi
   done
+  if [ -f ${SRCPATH} ] ; then
+    echo "removing symlink ${SRCPATH}..."
+    sudo rm ${SRCPATH} || exit 1
+  fi
+  # ensure ${USERBIN}/update_bundle.sh
+  linkbuildscript ${USERBIN}
+  rmdirv "${GITROOT}"
+  echo "successfully wiped RKWard from this machine!"
   exit 0
 fi
 
 # prepare for a clean installation, remove all cached sources
-if [[ $WIPEDSTF ]] ; then
+if $WIPEDSTF ; then
+  echo "rm -rf ${MPTINST}/var/macports/distfiles/*"
   sudo rm -rf ${MPTINST}/var/macports/distfiles/*
 fi
 
+if $SSHGEN ; then
+  mkdir -p "${HOME}/.ssh" || exit 1
+  chmod 700 "${HOME}/.ssh" || exit 1
+  ssh-keygen -t rsa -b 4096 -C "${SSHCOMMENT}" || exit 1
+  echo "next step: upload ~/.ssh/id_rsa.pub to https://identity.kde.org"
+  exit 0
+fi
+
+# prepare build environment
+if $BLDSETUP ; then
+  # check for Xcode.app
+  if ! [ -d /Applications/Xcode.app ] ; then
+    echo "you must install Xcode first!"
+    exit 1
+  fi
+  sudo mkdir -p "${GITROOT}" || exit 1
+  sudo chown ${USER} "${GITROOT}" || exit 1
+  cd "${GITROOT}" || exit 1
+  if $ANONGIT ; then
+    git clone git://anongit.kde.org/rkward.git || exit 1
+  else
+    # should this fail, try https:// instead of git@
+    git clone git@git.kde.org:rkward.git || exit 1
+    cd rkward || exit 1
+    echo "set git user to \"${GITUSER}\"..."
+    git config user.name "${GITUSER}" || exit 1
+    echo "set git e-mail to \"${GITMAIL}\"..."
+    git config user.email "${GITMAIL}" || exit 1
+    git config --global push.default simple || exit 1
+    if [[ ! "${GITBRANCH}" == "master" ]] ; then
+      git checkout "${GITBRANCH}" || exit 1
+    fi
+  fi
+  echo "sudo ln -s ${GITROOT}/rkward/macports/ /opt/ports"
+  sudo ln -s ${GITROOT}/rkward/macports/ /opt/ports || exit 1
+  linkbuildscript "${USERBIN}"
+  if [ -f "${HOME}/.bash_profile" ] ; then
+    BPFPATH=$(grep "^PATH" "${HOME}/.bash_profile")
+    if ! $(echo ${BPFPATH} | grep -q "${USERBIN}/:${MPTINST}/bin/:") ; then
+      echo "PATH=${USERBIN}/:${MPTINST}/bin/:\$PATH" >> "${HOME}/.bash_profile"
+    fi
+  else
+    echo "PATH=${USERBIN}/:${MPTINST}/bin/:\$PATH" > "${HOME}/.bash_profile"
+  fi
+  . "${HOME}/.bash_profile"
+  cd "${OLDWD}" || exit 1
+  echo "successfully completed reincarnation of ${GITROOT} -- you can now invoke the \"-F\" option!"
+  echo "but you should call the following first:"
+  echo ". \"${HOME}/.bash_profile\""
+  exit 0
+fi
+
 # do a full clean installation
-if [[ $FRESHMCP ]] ; then
+if $FRESHMCP ; then
+  if ! [ -d ${SRCPATH} ] ; then
+    echo "can't find ${SRCPATH} -- you should call the script with \"-G\" before setting up MacPorts!"
+  fi
   echo "creating ${MPTINST}..."
   sudo mkdir -p ${MPTINST} || exit 1
   mkdir /tmp/MP && cd /tmp/MP
@@ -170,49 +293,57 @@ if [[ $FRESHMCP ]] ; then
   echo "update MacPorts configuration"
   sudo sed -i -e "s+#\(portautoclean[[:space:]]*\)yes+\1no+" ${MPTINST}/etc/macports/macports.conf
   sudo sed -i -e "s+\(applications_dir[[:space:]]*\)/Applications/MacPorts+\1${APPLDIR}+" ${MPTINST}/etc/macports/macports.conf
-  sudo port -v selfupdate || exit 1
+  sudo ${MPTINST}/bin/port -v selfupdate || exit 1
   echo "adding local portfiles to ${MPTINST}/etc/macports/sources.conf..."
   sudo sed -i -e "s+rsync://rsync.macports.org.*\[default\]+file://${SRCPATH}/\\`echo -e '\n\r'`&+" ${MPTINST}/etc/macports/sources.conf || exit 1
   # install a needed gcc/clang first?
   if [[ $CMPLR ]] ; then
-    sudo port -v install ${CMPLR} ${LLVMFIX} || exit 1
+    sudo ${MPTINST}/bin/port -v install ${CMPLR} ${LLVMFIX} || exit 1
   fi
   if [[ $CLANG ]] ; then
-    sudo port -v install ${CLANG} ${LLVMFIX} || exit 1
+    sudo ${MPTINST}/bin/port -v install ${CLANG} ${LLVMFIX} || exit 1
   fi
-#  # if you don't have the latest Xcode, some dependencies of subversion might need certain compilers
-#  sudo port -v install subversion ${LLVMFIX} || exit 1
-  sudo port -v install subversion || exit 1
-  sudo port -v selfupdate || exit 1
+  # (re-)generate portindex
+  cd ${SRCPATH} || exit 1
+  ${MPTINST}/bin/portindex || exit 1
+  cd $OLDWD || exit 1
+  sudo ${MPTINST}/bin/port -v selfupdate || exit 1
   echo "successfully completed reincarnation of ${MPTINST}!"
+  exit 0
 fi
 
-
 # update installed ports
-if [[ $UPMPORTS ]] ; then
-  sudo port selfupdate
-  sudo port -v upgrade outdated
+if $UPMPORTS ; then
+  echo "sudo ${MPTINST}/bin/port selfupdate"
+  sudo ${MPTINST}/bin/port selfupdate
+  echo "sudo ${MPTINST}/bin/port -v upgrade outdated"
+  sudo ${MPTINST}/bin/port -v upgrade outdated
   # get rid of inactive stuff
-  sudo port clean inactive
-  sudo port -f uninstall inactive
+  echo "sudo ${MPTINST}/bin/port clean inactive"
+  sudo ${MPTINST}/bin/port clean inactive
+  echo "sudo ${MPTINST}/bin/port -f uninstall inactive"
+  sudo ${MPTINST}/bin/port -f uninstall inactive
 fi
 
 # remove previous installation and its build left-overs
-if [[ $UPRKWARD ]] ; then
-  INSTALLEDPORTS=$(port installed)
+if $UPRKWARD ; then
+  INSTALLEDPORTS=$(${MPTINST}/bin/port installed)
   # make sure each instance of previous RKWard installations is removed first
   for i in rkward rkward-devel rkward-binary rkward-devel-binary rkward-debug rkward-devel-debug ; do
     if [[ $(echo $INSTALLEDPORTS | grep "[[:space:]]${i}[[:space:]]" 2> /dev/null ) ]] ; then
-      sudo port uninstall ${i}
-      sudo port clean ${i}
+      echo "sudo ${MPTINST}/bin/port uninstall ${i}"
+      sudo ${MPTINST}/bin/port uninstall ${i}
+      echo "${MPTINST}/bin/port clean ${i}"
+      sudo ${MPTINST}/bin/port clean ${i}
     fi
   done
   # build and install recent version
-  sudo port -v install ${PTARGET} ${PVARIANT} || exit 1
+  echo "sudo ${MPTINST}/bin/port -v install ${PTARGET} ${PVARIANT}"
+  sudo ${MPTINST}/bin/port -v install ${PTARGET} ${PVARIANT} || exit 1
 fi
 
 # remove static libraries, they're a waste of disk space
-if [[ $RMSTLIBS ]] ; then
+if $RMSTLIBS ; then
   echo "deleting all static libs in ${MPTINST}/lib/..."
   sudo rm ${MPTINST}/lib/*.a
   echo "deleting all static libs in ${MPTINST}/var/macports/build..."
@@ -222,7 +353,7 @@ if [[ $RMSTLIBS ]] ; then
 fi
 
 # list disk usage of ports
-if [[ $LSDSKUSG ]] ; then
+if $LSDSKUSG ; then
   cd ${MPTINST}/var/macports/build/
   SBFLDRS=$(ls)
   for i in ${SBFLDRS} ; do
@@ -231,10 +362,10 @@ if [[ $LSDSKUSG ]] ; then
 fi
 
 # set some variables
-if [[ $COPYMDMD ]] ; then
+if $COPYMDMD ; then
   # get version information of installed ports
-  PORTVERS=$(port list $PTARGET | sed -e "s/.*@//;s/[[:space:]].*//")
-  if [[ $DEVEL ]] ; then
+  PORTVERS=$(${MPTINST}/bin/port list $PTARGET | sed -e "s/.*@//;s/[[:space:]].*//")
+  if $DEVEL ; then
     # we moved to git
     # TARGETVERS=${PORTVERS}$(svn info "$SVNREPO" | grep "^Revision:" | sed "s/[^[:digit:]]*//")
     # 
@@ -263,21 +394,21 @@ if [[ $COPYMDMD ]] ; then
   else
     TARGETVERS=$PORTVERS
   fi
-  KDEVERS=$(port list kdelibs4 | sed -e "s/.*@//;s/[[:space:]].*//")
+  KDEVERS=$(${MPTINST}/bin/port list kdelibs4 | sed -e "s/.*@//;s/[[:space:]].*//")
 fi
 
 # get R version, long and short
-if [[ $BINARY ]] ; then
+if $BINARY ; then
   RVERS=$(R --version | grep "R version" | sed -e "s/R version \([[:digit:].]*\).*/\1/")
 else
-  RVERS=$(port list R-framework | sed -e "s/.*@//;s/[[:space:]].*//")
+  RVERS=$(${MPTINST}/bin/port list R-framework | sed -e "s/.*@//;s/[[:space:]].*//")
 fi
 # if we have to re-create the symlinks for binary installation
 # this can be used to get the short version numer <major>.<minor>:
 #RVSHORT=$(echo $RVERS | sed -e "s/\([[:digit:]]*\.\)\([[:digit:]]*\).*/\1\2/")
 
 # make meta-package including dependencies
-if [[ $MAKEMDMD ]] ; then
+if $MAKEMDMD ; then
   # check for PackageMaker.app
   if ! [ -d /Applications/PackageMaker.app ] ; then
     # this is an anchient app, but MacPorts still relies on it for packaging
@@ -285,7 +416,7 @@ if [[ $MAKEMDMD ]] ; then
     echo "probably check whether MacPorts really still needs it."
     exit 1
   fi
-  if [[ $RPATHFIX ]] ; then
+  if $RPATHFIX ; then
     # this is to fix some kind of a race condition: if RKWard gets installed before R-framework,
     # it will create a directory which must actually be a symlink in order for R to run! so we'll
     # move RKWard's own packages before bundling it
@@ -313,7 +444,7 @@ if [[ $MAKEMDMD ]] ; then
       cd $OLDWD || exit 1
     fi
   fi
-  if [[ $DOEXCPCK ]] ; then
+  if $DOEXCPCK ; then
     # before we build the bundle package, replace the destroot folder of the packages
     # defined in the array EXCLPKG with empty ones, so their stuff is not included
     for i in ${EXCLPKG[@]} ; do
@@ -334,9 +465,10 @@ if [[ $MAKEMDMD ]] ; then
 
 #  # cleaning boost, the avahi port somehow gets installed in two varaints...
 #  sudo port clean boost
-  sudo port -v mdmg $PTARGET || exit 1
+  echo "sudo ${MPTINST}/bin/port -v mdmg ${PTARGET}"
+  sudo ${MPTINST}/bin/port -v mdmg ${PTARGET} || exit 1
 
-  if [[ $DOEXCPCK ]] ; then
+  if $DOEXCPCK ; then
     # restore original destroot directories
     for i in ${EXCLPKG[@]} ; do
       THISPKG=${MPTINST}/var/macports/build/${BLDPRFX}${i}
@@ -351,7 +483,7 @@ if [[ $MAKEMDMD ]] ; then
       unset THISPKG
     done
   fi
-  if [[ $RPATHFIX ]] ; then
+  if $RPATHFIX ; then
     if [ -d ${RKWRFWPATH}/Versions ] ; then
       cd $RKWRFWPATH || exit 1
       sudo mkdir -p "Resources" || exit 1
@@ -363,9 +495,9 @@ if [[ $MAKEMDMD ]] ; then
 
 
   # copy the image file to a public directory
-  if [[ $COPYMDMD ]] ; then
+  if $COPYMDMD ; then
     MDMGFILE=${WORKDIR}/${PTARGET}-${PORTVERS}.dmg
-    if [[ $BINARY ]] ; then
+    if $BINARY ; then
       TRGTFILE=${LPUBDIR}/RKWard${PNSUFFX}-${TARGETVERS}_KDE-${KDEVERS}_needs_CRAN_R-${RVERS}.dmg
     else
       TRGTFILE=${LPUBDIR}/RKWard${PNSUFFX}-${TARGETVERS}_R-${RVERS}_KDE-${KDEVERS}_MacOSX_bundle.dmg
@@ -381,10 +513,10 @@ if [[ $MAKEMDMD ]] ; then
 fi
 
 # archive sources
-if [[ $MKSRCTAR ]] ; then
-  if [[ ! $COPYMDMD ]] ; then
+if $MKSRCTAR ; then
+  if ! $COPYMDMD ; then
     # get version information of installed ports
-    PORTVERS=$(port list $PTARGET | sed -e "s/.*@//;s/[[:space:]].*//")
+    PORTVERS=$(${MPTINST}/bin/port list $PTARGET | sed -e "s/.*@//;s/[[:space:]].*//")
   fi
   SRCFILE=${SRCPATH}/sources_bundle_RKWard-${PORTVERS}_${SRCDATE}.tar
   if [ -f $SRCFILE ] ; then
@@ -392,8 +524,8 @@ if [[ $MKSRCTAR ]] ; then
   fi
   tar cvf $SRCFILE ${MPTINST}/var/macports/distfiles || exit 1
   # copy the source archive to a public directory
-  if [[ $COPYMDMD ]] ; then
-    if [[ $BINARY ]] ; then
+  if $COPYMDMD ; then
+    if $BINARY ; then
       TRGSFILE=${LPUBDIR}/RKWard${PNSUFFX}-${TARGETVERS}_KDE-${KDEVERS}_src.tar
     else
       TRGSFILE=${LPUBDIR}/RKWard${PNSUFFX}-${TARGETVERS}_R-${RVERS}_KDE-${KDEVERS}_src.tar
