@@ -30,6 +30,7 @@
 #include <qlabel.h>
 #include <QCloseEvent>
 #include <QCheckBox>
+#include <QSplitter>
 
 #include "rkcomponentmap.h"
 #include "../misc/rkcommonfunctions.h"
@@ -75,8 +76,12 @@ void RKStandardComponentGUI::createDialog (bool switchable) {
 
 	QVBoxLayout *main_vbox = new QVBoxLayout (this);
 	main_vbox->setContentsMargins (0, 0, 0, 0);
-	QWidget *upper_widget = new QWidget (this);
-	
+	splitter = new QSplitter (this);
+	splitter->setOrientation (Qt::Vertical);
+	main_vbox->addWidget (splitter);
+
+	QWidget *upper_widget = new QWidget ();
+
 	QHBoxLayout *hbox = new QHBoxLayout (upper_widget);
 
 	// build standard elements
@@ -127,16 +132,20 @@ void RKStandardComponentGUI::createDialog (bool switchable) {
 	if (enslaved) toggle_code_button->hide ();
 	
 	// code display
-	code_display = new RKCommandEditorWindow (this, true, false);
+	code_display = new RKCommandEditorWindow (0, true, false);
 	code_display->setReadOnly (true);
-	code_display->setMinimumHeight (RKSettingsModulePlugins::defaultCodeHeight ());
-	code_display->hide ();
 
-	main_vbox->addWidget (upper_widget);
-	main_vbox->addWidget (code_display);
+	splitter->addWidget (upper_widget);
+	splitter->setStretchFactor (0, 0);
+	splitter->addWidget (code_display);
+	splitter->setStretchFactor (1, 1);    // When resizing the dialog, *and* the code display is visible, effectively resize the code display. Dialog area can be resized via splitter.
+	splitter->setChildrenCollapsible (false);   // It's just too difficult to make this consistent, esp. for shrinking the dialog would _also_ be expected to collapse widgets. Besides, this makes it
+	                                            // easier to keep track of which expansions are currently visible.
 
 	if (!enslaved && RKSettingsModulePlugins::showCodeByDefault ()) {
 		toggle_code_button->setChecked (true);	// will trigger showing the code along with the dialog
+	} else {
+		code_display->hide ();
 	}
 }
 
@@ -199,14 +208,19 @@ void RKStandardComponentGUI::toggleCode () {
 	RK_ASSERT (toggle_code_button);
 
 	int new_height = height ();
+	QList<int> sizes = splitter->sizes ();
 
 	if (toggle_code_button->isChecked ()) {
 		new_height += RKSettingsModulePlugins::defaultCodeHeight ();
 		code_display->show ();
+		sizes[1] = RKSettingsModulePlugins::defaultCodeHeight ();
 	} else {
 		new_height -= code_display->height ();
 		code_display->hide ();
+		sizes[1] = 0;
+		splitter->refresh ();      // NOTE: Without this line, _and_ layout->activate() below, the dialog will _not_ shrink back to its original size when hiding the code display. Qt 4.8
 	}
+	splitter->setSizes (sizes);
 
 	if (isVisible ()) {
 		layout ()->activate ();

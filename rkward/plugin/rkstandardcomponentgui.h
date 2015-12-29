@@ -109,6 +109,7 @@ protected:
 	QPushButton *help_button;
 	QPushButton *switch_button;
 	QCheckBox *auto_close_box;
+	QSplitter *splitter;
 	RKCommandEditorWindow *code_display;
 
 	bool enslaved;
