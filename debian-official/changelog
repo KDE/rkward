@@ -1,3 +1,10 @@
+rkward (0.6.4z+0.6.5+devel1-1) UNRELEASED; urgency=low
+  * new upstream release
+  * add override for false-positive source-contains-prebuilt-javascript-object
+    lintian warnings
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Wed, 16 Dec 2015 10:30:00 +0100
+
 rkward (0.6.4-1) unstable; urgency=low
   * new upstream release
   * add override for false-positive source-is-missing lintian warnings
