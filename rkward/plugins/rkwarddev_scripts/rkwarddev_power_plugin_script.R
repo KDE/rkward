@@ -4,7 +4,7 @@
 # *EXCEPT* for the last call, see below.
 
 require(rkwarddev)
-rkwarddev.required("0.07-1")
+rkwarddev.required("0.07-4")
 
 local({
 # set the output directory to overwrite the actual plugin
@@ -28,7 +28,7 @@ dependencies.info <- rk.XML.dependencies(
 rk.set.comp("Power analysis")
 
 pwr.parameter.rad <- rk.XML.radio(label="Parameter to determine", options=list(
-    "Power of test"=c(val="Power", chk=TRUE),
+    "Power of test"=c(val="Power", chk=TRUE, i18n="Here 'power' is a common statistical term and should not be translated"),
     "Sample size"=c(val="Sample size"),
     "Effect size"=c(val="Effect size"),
     "Significance level"=c(val="Significance level"),
@@ -80,7 +80,14 @@ pwr.proptype.drop <- rk.XML.dropdown("Samples",
   ), help=FALSE, # In the help file, same as t.test dropdown
   id.name="drp_pwr_proptype")
 
-pwr.input.power <- rk.XML.spinbox(label="Power", min=0, max=1, initial=0.8, help="Targeted power of test (1 minus Type II error probability)")
+pwr.input.power <- rk.XML.spinbox(
+  label="Power",
+  min=0,
+  max=1,
+  initial=0.8,
+  help="Targeted power of test (1 minus Type II error probability)",
+  i18n="Here 'power' is a common statistical term and should not be translated"
+)
 pwr.input.df <- rk.XML.spinbox(label="Degrees of freedom", id.name="pwr_spin_df", min=1, real=FALSE, initial=30,
                                help="Only shown for chi-square statistics: Targeted degrees of freedom. As a reminder, this is (rows &minus; 1)&times;(columns &minus; 1) for a test of independence,
                                and (cells &minus; 1) for a test of goodness of fit.")
@@ -120,7 +127,7 @@ pwr.input.signif <- rk.XML.spinbox(label="Significance level", min=0, max=1, ini
 
 
 save.results.pwr <- rk.XML.saveobj("Save results to workspace", initial="pwr.result",
-  component="Power analysis", help=FALSE)
+  component="Power analysis", help=FALSE, i18n="Here 'power' is a common statistical term and should not be translated")
 
 tab.pwr.data <- rk.XML.row(
     rk.XML.col(
@@ -184,7 +191,7 @@ tab.pwr.data <- rk.XML.row(
 
 pwr.full.dialog <- rk.XML.dialog(
   tab.pwr.data,
-  label="Power analysis")
+  label="Power analysis", i18n="Here 'power' is a common statistical term and should not be translated")
 
 ## logic section
   lgc.sect.pwr <- rk.XML.logic(
@@ -300,169 +307,163 @@ pwr.js.calc <- rk.paste.JS(
   echo("\tpwr.result <- try(\n\t\t"),
   #########
   ## t-test
-  ite(id(pwr.stat.drop, " == \"pwr.t.test\""),
-    rk.paste.JS(
+  js(
+    if(pwr.stat.drop == "pwr.t.test"){
       # two samples with different sizes or not?
-      ite(id(pwr.type.drop, " == \"two.sample.diff\""),
-        rk.paste.JS(# yes
-          echo("pwr.t2n.test("),
-          ite(id(pwr.parameter.rad, " != \"Sample size\""),
-            echo("\n\t\t\tn1=", pwr.input.sample.n1, ",\n\t\t\tn2=", pwr.input.sample.n2),
-            echo("\n\t\t\tn1=", pwr.input.sample.n1, ",")
-          )
-        ),
-        rk.paste.JS(#no
-          echo("pwr.t.test("),
-          ite(id(pwr.parameter.rad, " != \"Sample size\""),
-            echo("\n\t\t\tn=", pwr.input.sample)
-          )
-        )
-      ),
-      ite(id(pwr.parameter.rad, " != \"Effect size\""),
-        rk.paste.JS(
-          ite(id(pwr.parameter.rad, " != \"Sample size\""), echo(",")),
-          echo("\n\t\t\td=", pwr.input.effect)
-        )
-      )
-    )
-  ),
+      if(pwr.type.drop == "two.sample.diff"){
+        echo("pwr.t2n.test(")
+        if(pwr.parameter.rad != "Sample size"){
+          echo("\n\t\t\tn1=", pwr.input.sample.n1, ",\n\t\t\tn2=", pwr.input.sample.n2)
+        } else {
+          echo("\n\t\t\tn1=", pwr.input.sample.n1, ",")
+        }
+      } else {
+        echo("pwr.t.test(")
+        if(pwr.parameter.rad != "Sample size"){
+          echo("\n\t\t\tn=", pwr.input.sample)
+        } else {}
+      }
+      if(pwr.parameter.rad != "Effect size"){
+        if(pwr.parameter.rad != "Sample size"){
+          echo(",")
+        } else {}
+        echo("\n\t\t\td=", pwr.input.effect)
+      } else {}
+    } else {},
   ###############
   ## correlations
-  ite(id(pwr.stat.drop, " == \"pwr.r.test\""),
-    rk.paste.JS(
-      echo("pwr.r.test("),
-      ite(id(pwr.parameter.rad, " != \"Sample size\""),
+    if(pwr.stat.drop == "pwr.r.test"){
+      echo("pwr.r.test(")
+      if(pwr.parameter.rad != "Sample size"){
         echo("\n\t\t\tn=", pwr.input.sample)
-      ),
-      ite(id(pwr.parameter.rad, " != \"Effect size\""),
-        rk.paste.JS(
-          ite(id(pwr.parameter.rad, " != \"Sample size\""), echo(",")),
-          echo("\n\t\t\tr=", pwr.input.effect)
-        )
-      )
-    )
-  ),
+      } else {}
+      if(pwr.parameter.rad != "Effect size"){
+        if(pwr.parameter.rad != "Sample size"){
+          echo(",")
+        } else {}
+        echo("\n\t\t\tr=", pwr.input.effect)
+      } else {}
+    } else {},
   ########
   ## ANOVA
-  ite(id(pwr.stat.drop, " == \"pwr.anova.test\""),
-    rk.paste.JS(
-      echo("pwr.anova.test("),
-      echo("\n\t\t\tk=", pwr.input.groups),
-      ite(id(pwr.parameter.rad, " != \"Sample size\""),
+    if(pwr.stat.drop == "pwr.anova.test"){
+      echo("pwr.anova.test(")
+      echo("\n\t\t\tk=", pwr.input.groups)
+      if(pwr.parameter.rad != "Sample size"){
         echo(",\n\t\t\tn=", pwr.input.sample)
-      ),
-      ite(id(pwr.parameter.rad, " != \"Effect size\""),
-        ite(id(pwr.effect.etasq.rad, " == \"f\""),
-          echo(",\n\t\t\tf=", pwr.input.effect),
-          rk.paste.JS (echo(",\n\t\t\tf=sqrt(", pwr.input.effect,"/(1-", pwr.input.effect,"))"), R.comment ("calculate f from eta squared"))
-        )
-      )
-    )
-  ),
+      } else {}
+      if(pwr.parameter.rad != "Effect size"){
+        if(pwr.effect.etasq.rad == "f"){
+          echo(",\n\t\t\tf=", pwr.input.effect)
+        } else {
+          echo(",\n\t\t\tf=sqrt(", pwr.input.effect,"/(1-", pwr.input.effect,"))")
+          R.comment ("calculate f from eta squared")
+        }
+      } else {}
+    } else {},
   ######
   ## GLM
-  ite(id(pwr.stat.drop, " == \"pwr.f2.test\""),
-    rk.paste.JS(
-      echo("pwr.f2.test("),
-      ite(id(pwr.parameter.rad, " != \"Parameter count\""),
-        rk.paste.JS(
-          echo("\n\t\t\tu=", pwr.input.dfu)
-        )
-      ),
-      ite(id(pwr.parameter.rad, " != \"Sample size\""),
-        rk.paste.JS(
-          ite(id(pwr.parameter.rad, " != \"Parameter count\""),
-            echo (",")
-          ),
-          echo("\n\t\t\tv=", pwr.input.dfv)
-        )
-      ),
-      ite(id(pwr.parameter.rad, " != \"Effect size\""),
-        rk.paste.JS(
-          echo(",\n\t\t\tf2=", pwr.input.effect)
-        )
-      )
-    )
-  ),
+    if(pwr.stat.drop == "pwr.f2.test"){
+      echo("pwr.f2.test(")
+      if(pwr.parameter.rad != "Parameter count"){
+        echo("\n\t\t\tu=", pwr.input.dfu)
+      } else {}
+      if(pwr.parameter.rad != "Sample size"){
+        if(pwr.parameter.rad != "Parameter count"){
+          echo (",")
+        } else {}
+        echo("\n\t\t\tv=", pwr.input.dfv)
+      } else {}
+      if(pwr.parameter.rad != "Effect size"){
+        echo(",\n\t\t\tf2=", pwr.input.effect)
+      } else {}
+    } else {},
   ##############
   ## Chi squared
-  ite(id(pwr.stat.drop, " == \"pwr.chisq.test\""),
-    rk.paste.JS(
-      echo("pwr.chisq.test("),
-      ite(id(pwr.parameter.rad, " != \"Effect size\""),
+    if(pwr.stat.drop == "pwr.chisq.test"){
+      echo("pwr.chisq.test(")
+      if(pwr.parameter.rad != "Effect size"){
         echo("\n\t\t\tw=", pwr.input.effect)
-      ),
-      ite(id(pwr.parameter.rad, " != \"Sample size\""),
-        rk.paste.JS(
-          ite(id(pwr.parameter.rad, " != \"Effect size\""), echo(",")),
-          echo("\n\t\t\tN=", pwr.input.sample)
-        )
-      ),
+      } else {}
+      if(pwr.parameter.rad != "Sample size"){
+        if(pwr.parameter.rad != "Effect size"){
+          echo(",")
+        } else {}
+        echo("\n\t\t\tN=", pwr.input.sample)
+      } else {}
       echo(",\n\t\t\tdf=", pwr.input.df)
-    )
-  ),
+    } else {},
   ##############
   ## proportions
-  ite(id(pwr.stat.drop, " == \"pwr.p.test\""),
-    rk.paste.JS(
-      ite(id(pwr.proptype.drop, " == \"two.sample.same\""), echo("pwr.2p.test(")),
-      ite(id(pwr.proptype.drop, " == \"two.sample.diff\""), echo("pwr.2p2n.test(")),
-      ite(id(pwr.proptype.drop, " == \"one.sample\""), echo("pwr.p.test(")),
-      ite(id(pwr.parameter.rad, " != \"Effect size\""),
+    if(pwr.stat.drop == "pwr.p.test"){
+      if(pwr.proptype.drop == "two.sample.same"){
+        echo("pwr.2p.test(")
+      } else {}
+      if(pwr.proptype.drop == "two.sample.diff"){
+        echo("pwr.2p2n.test(")
+      } else {}
+      if(pwr.proptype.drop == "one.sample"){
+        echo("pwr.p.test(")
+      } else {}
+      if(pwr.parameter.rad != "Effect size"){
         echo("\n\t\t\th=", pwr.input.effect)
-      ),
-      ite(id(pwr.parameter.rad, " != \"Sample size\""),
-        rk.paste.JS(
-          ite(id(pwr.parameter.rad, " != \"Effect size\""), echo(",")),
-          ite(id(pwr.proptype.drop, " != \"two.sample.diff\""),
-            echo("\n\t\t\tn=", pwr.input.sample),
-            echo("\n\t\t\tn1=", pwr.input.sample.n1, ",\n\t\t\tn2=", pwr.input.sample.n2)
-          )
-        ),
-        ite(id(pwr.proptype.drop, " == \"two.sample.diff\""),
-          echo(",\n\t\t\tn1=", pwr.input.sample.n1),
-        )
-      )
-    )
-  ),
+      } else {}
+      if(pwr.parameter.rad != "Sample size"){
+        if(pwr.parameter.rad != "Effect size"){
+          echo(",")
+        } else {}
+        if(pwr.proptype.drop != "two.sample.diff"){
+          echo("\n\t\t\tn=", pwr.input.sample)
+        } else {
+          echo("\n\t\t\tn1=", pwr.input.sample.n1, ",\n\t\t\tn2=", pwr.input.sample.n2)
+        }
+      } else {
+        if(pwr.proptype.drop == "two.sample.diff"){
+          echo(",\n\t\t\tn1=", pwr.input.sample.n1)
+        } else {}
+      }
+    } else {},
   ######################
   ## normal distribution
-  ite(id(pwr.stat.drop, " == \"pwr.norm.test\""),
-    rk.paste.JS(
-      echo("pwr.norm.test("),
-      ite(id(pwr.parameter.rad, " != \"Effect size\""),
+    if(pwr.stat.drop == "pwr.norm.test"){
+      echo("pwr.norm.test(")
+      if(pwr.parameter.rad != "Effect size"){
         echo("\n\t\t\td=", pwr.input.effect)
-      ),
-      ite(id(pwr.parameter.rad, " != \"Sample size\""),
-        rk.paste.JS(
-          ite(id(pwr.parameter.rad, " != \"Effect size\""), echo(",")),
-          echo("\n\t\t\tn=", pwr.input.sample)
-        )
-      )
-    )
-  ),
-  ite(id(pwr.parameter.rad, " != \"Significance level\""),
-    ite(id(pwr.input.signif, " != 0.05"), echo(",\n\t\t\tsig.level=", pwr.input.signif)),
-    echo(",\n\t\t\tsig.level=NULL")
-  ),
-  ite(id(pwr.parameter.rad, " != \"Power\""),
-    echo(",\n\t\t\tpower=", pwr.input.power)
-  ),
-  ite(id(pwr.stat.drop, " == \"pwr.t.test\" & ", pwr.type.drop, " != \"two.sample.diff\" & ", pwr.type.drop, " != \"two.sample\""),
-    echo(",\n\t\t\ttype=\"", pwr.type.drop, "\"")
-  ),
-  ite(id(pwr.stat.drop, " != \"pwr.anova.test\" & ", pwr.stat.drop, " != \"pwr.f2.test\" & ", pwr.stat.drop, " != \"pwr.chisq.test\""),
-    ite(id(pwr.hypothesis.drop, " != \"two.sided\""),
-      echo(",\n\t\t\talternative=\"", pwr.hypothesis.drop, "\"")
-    )
+      } else {}
+      if(pwr.parameter.rad != "Sample size"){
+        if(pwr.parameter.rad != "Effect size"){
+          echo(",")
+        } else {}
+        echo("\n\t\t\tn=", pwr.input.sample)
+      } else {}
+    } else {},
+    if(pwr.parameter.rad != "Significance level"){
+      if(pwr.input.signif != 0.05){
+        echo(",\n\t\t\tsig.level=", pwr.input.signif)
+      } else {}
+    } else {
+      echo(",\n\t\t\tsig.level=NULL")
+    },
+    if(pwr.parameter.rad != "Power"){
+      echo(",\n\t\t\tpower=", pwr.input.power)
+    } else {},
+    if(pwr.stat.drop == "pwr.t.test" && pwr.type.drop != "two.sample.diff" && pwr.type.drop != "two.sample"){
+      echo(",\n\t\t\ttype=\"", pwr.type.drop, "\"")
+    } else {},
+    if(pwr.stat.drop != "pwr.anova.test" && pwr.stat.drop != "pwr.f2.test" && pwr.stat.drop != "pwr.chisq.test"){
+      if(pwr.hypothesis.drop != "two.sided"){
+        echo(",\n\t\t\talternative=\"", pwr.hypothesis.drop, "\"")
+      } else {}
+    } else {}
   ),
   echo("\n\t\t)\n\t)\n\n")
 )
 
-helper.make.effect.size.legend <- function (indicator, small, medium, large) {
-   indicator <- dQuote (indicator)
+# unfortunately, js() somehow doesn't find this function if it's just defined inside the local environment
+helper.make.effect.size.legend <<- function (indicator, small, medium, large) {
+   indicator <- paste0("\"", indicator, "\"")
    rk.paste.JS (echo(
-      "\trk.print(", i18n ("Interpretation of effect size <strong>%1</strong> (according to Cohen):", indicator, context="Argument is name of statistic, e.g. 'r'"), ")\n",
+      "\trk.print(", i18n ("Interpretation of effect size <strong>%1</strong> (according to Cohen): ", indicator, context="Argument is name of statistic, e.g. 'r'"), ")\n",
       "\trk.results(data.frame(", i18n ("small", context="effect size"), paste0 ("=", small, ", "),
                                   i18n ("medium", context="effect size"), paste0 ("=", medium, ", "),
                                   i18n ("large", context="effect size"), paste0 ("=", large, "))\n"))
@@ -490,23 +491,25 @@ pwr.js.print <- rk.paste.JS(
     "\trk.results(pwr.result)\n",
     "\tif(!is.null(note)){\n\t\trk.print(paste(", i18n ("<strong>Note:</strong>"), ", note))\n\t}\n\n"
   ),
-  ite(id(pwr.stat.drop, " == \"pwr.t.test\" | ", pwr.stat.drop, " == \"pwr.norm.test\""),
-    helper.make.effect.size.legend ("d", "0.2", "0.5", "0.8")
-  ),
-  ite(id(pwr.stat.drop, " == \"pwr.r.test\""),
-    helper.make.effect.size.legend ("r", "0.1", "0.3", "0.5")
-  ),
-  ite(id(pwr.stat.drop, " == \"pwr.f2.test\""),
-    helper.make.effect.size.legend ("f<sup>2</sup>", "0.02", "0.15", "0.35")
-  ),
-  ite(id(pwr.stat.drop, " == \"pwr.anova.test\""),
-    helper.make.effect.size.legend ("f", "0.1", "0.25", "0.4")
-  ),
-  ite(id(pwr.stat.drop, " == \"pwr.chisq.test\""),
-    helper.make.effect.size.legend ("w", "0.1", "0.3", "0.5")
-  ),
-  ite(id(pwr.stat.drop, " == \"pwr.p.test\""),
-    helper.make.effect.size.legend ("h", "0.2", "0.5", "0.8")
+  js(
+    if(pwr.stat.drop == "pwr.t.test" || pwr.stat.drop == "pwr.norm.test"){
+      helper.make.effect.size.legend ("d", "0.2", "0.5", "0.8")
+    } else {},
+    if(pwr.stat.drop == "pwr.r.test"){
+      helper.make.effect.size.legend ("r", "0.1", "0.3", "0.5")
+    } else {},
+    if(pwr.stat.drop == "pwr.f2.test"){
+      helper.make.effect.size.legend ("f<sup>2</sup>", "0.02", "0.15", "0.35")
+    } else {},
+    if(pwr.stat.drop == "pwr.anova.test"){
+      helper.make.effect.size.legend ("f", "0.1", "0.25", "0.4")
+    } else {},
+    if(pwr.stat.drop == "pwr.chisq.test"){
+      helper.make.effect.size.legend ("w", "0.1", "0.3", "0.5")
+    } else {},
+    if(pwr.stat.drop == "pwr.p.test"){
+      helper.make.effect.size.legend ("h", "0.2", "0.5", "0.8")
+    } else {}
   )
 )
 
@@ -551,8 +554,8 @@ pwr.plugin.dir <<- rk.plugin.skeleton(
   ),
   pluginmap=list(name="Power analysis", hierarchy=list("analysis")),
   dependencies=dependencies.info,
-#  create=c("pmap", "xml", "js", "desc", "rkh"),	# standalone
-  create=c("xml", "js", "rkh"),
+ create=c("pmap", "xml", "js", "desc", "rkh"),	# standalone
+#   create=c("xml", "js", "rkh"),
   overwrite=overwrite,
   tests=FALSE,
 # edit=TRUE,

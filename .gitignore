@@ -16,3 +16,8 @@ scripts/tmp/
 # More (legacy) temp dirs
 osctemp/
 ppatemp/
+# can be added by MacPorts and shouldn't be part of the sources
+macports/PortIndex
+macports/PortIndex.quick
+macports/kde/rkward-devel/work
+macports/kde/rkward/work

@@ -200,7 +200,8 @@ void RKWardMainWindow::doPostInit () {
 		KMessageBox::error (this, i18n ("<p>RKWard either could not find its resource files at all, or only an old version of those files. The most likely cause is that the last installation failed to place the files in the correct place. This can lead to all sorts of problems, from single missing features to complete failure to function.</p><p><b>You should quit RKWard, now, and fix your installation</b>. For help with that, see <a href=\"http://rkward.kde.org/compiling\">http://rkward.kde.org/compiling</a>.</p>"), i18n ("Broken installation"), KMessageBox::Notify | KMessageBox::AllowLink);
 	}
 
-	QVariantList open_urls = RKGlobals::startup_options.take ("initial_urls").toList ();
+	QStringList open_urls = RKGlobals::startup_options.take ("initial_urls").toStringList ();
+	bool warn_external = RKGlobals::startup_options.take ("warn_external").toBool ();
 	QString evaluate_code = RKGlobals::startup_options.take ("evaluate").toString ();
 
 	initPlugins ();
@@ -220,22 +221,20 @@ void RKWardMainWindow::doPostInit () {
 		}
 	}
 #endif
+	KMessageBox::enableMessage ("external_link_warning");
 
 	QUrl recover_url = RKRecoverDialog::checkRecoverCrashedWorkspace ();
 	if (!recover_url.isEmpty ()) {
-		open_urls.clear ();
-		open_urls.append (recover_url);		// Well, not a perfect solution. But we certainly don't want to overwrite the just recovered workspace.
+		open_urls.clear ();    // Well, not a perfect solution. But we certainly don't want to overwrite the just recovered workspace.
+		open_urls.append (recover_url.url ());
 	}
 
-	setMergeLoads (true);
 	for (int i = 0; i < open_urls.size (); ++i) {
 		// make sure local urls are absolute, as we may be changing wd before loading
-		QUrl url = open_urls[i].toUrl ();
-		if (url.isRelative ()) {
-			open_urls[i] = QUrl::fromLocalFile (QDir::current ().absoluteFilePath (url.toLocalFile ()));
-		}
+		QUrl url (open_urls[i]), QDir::currentPath(), QUrl::AssumeLocalFile));
+		RK_ASSERT (!url.isRelative ());
+		open_urls[i] = url.url ();
 	}
-	setMergeLoads (false);
 
 	QString cd_to = RKSettingsModuleGeneral::initialWorkingDirectory ();
 	if (!cd_to.isEmpty ()) {
@@ -247,9 +246,7 @@ void RKWardMainWindow::doPostInit () {
 		// the help window will be on top
 		if (RKSettingsModuleGeneral::showHelpOnStartup ()) toplevel_actions->showRKWardHelp ();
 
-		for (int i = 0; i < open_urls.size (); ++i) {
-			RKWorkplace::mainWorkplace ()->openAnyUrl (open_urls[i].toUrl ());
-		}
+		openUrlsFromCommandLineOrDBus (warn_external, open_urls);
 	} else {
 		StartupDialog::StartupDialogResult result = StartupDialog::getStartupAction (this, fileOpenRecentWorkspace);
 		if (!result.open_url.isEmpty ()) {
@@ -280,6 +277,31 @@ void RKWardMainWindow::doPostInit () {
 	// around on the bus in this case.
 
 	setCaption (QString ());	// our version of setCaption takes care of creating a correct caption, so we do not need to provide it here
+}
+
+void RKWardMainWindow::openUrlsFromCommandLineOrDBus (bool warn_external, QStringList urls) {
+	RK_TRACE (APP);
+
+	bool any_dangerous_urls = false;
+	for (int i = 0; i < urls.size (); ++i) {
+		QUrl url = QUrl::fromUserInput (urls[i], QString (), QUrl::AssumeLocalFile);
+		if (url.scheme () == "rkward" && url.host () == "runplugin") {
+			any_dangerous_urls = true;
+			break;
+		}
+	}
+
+	if (warn_external && any_dangerous_urls) {
+		RK_ASSERT (urls.size () == 1);
+		QString message = i18n ("<p>You are about to start an RKWard dialog from outside of RKWard, probably by clicking on an 'rkward://'-link, somewhere. In case you have found this link on an external website, please bear in mind that R can be used to run arbitrary commands on your computer, <b>potentially including downloading and installing malicious software</b>. If you do not trust the source of the link you were following, you should press 'Cancel', below.</p><p>In case you click 'Continue', no R code will be run, unless and until you click 'Submit' in the dialog window, and you are encouraged to review the generated R code, before doing so.</p><p><i>Note</i>: Checking 'Do not ask again' will suppress this message for the remainder of this session, only.");
+		if (KMessageBox::warningContinueCancel (this, message, i18n ("A note on external links"), KStandardGuiItem::cont (), KStandardGuiItem::cancel (), "external_link_warning") != KMessageBox::Continue) return;
+	}
+
+	RKWardMainWindow::getMain ()->setMergeLoads (true);
+	for (int i = 0; i < urls.size (); ++i) {
+		RKWorkplace::mainWorkplace ()->openAnyUrl (urls[i], QString (), false);
+	}
+	RKWardMainWindow::getMain ()->setMergeLoads (false);
 }
 
 void RKWardMainWindow::initPlugins (const QStringList &automatically_added) {

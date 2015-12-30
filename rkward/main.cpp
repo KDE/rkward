@@ -143,6 +143,9 @@ int main (int argc, char *argv[]) {
 	aboutData.addAuthor (i18n ("Meik Michalke"), i18n ("Many plugins, suggestions, rkwarddev package"));
 	aboutData.addAuthor (i18n ("Stefan Roediger"), i18n ("Many plugins, suggestions, marketing, translations"));
 	aboutData.addCredit (i18n ("Contributors in alphabetical order"));
+	aboutData.addCredit (i18n ("Björn Balazs"), i18n ("Extensive usability feedback"));
+	aboutData.addCredit (i18n ("Aaron Batty"), i18n ("Whealth of feedback, hardware donations"));
+	aboutData.addCredit (i18n ("Jan Dittrich"), i18n ("Extensive usability feedback"));
 	aboutData.addCredit (i18n ("Philippe Grosjean"), i18n ("Several helpful comments and discussions"));
 	aboutData.addCredit (i18n ("Adrien d'Hardemare"), i18n ("Plugins and patches"));
 	aboutData.addCredit (i18n ("Yves Jacolin"), i18n ("New website"));
@@ -182,11 +185,8 @@ int main (int argc, char *argv[]) {
 
 	QStringList url_args = parser.positionalArguments ();
 	if (!url_args.isEmpty ()) {
-		QVariantList urls_to_open;
-		for (int i = 0; i < url_args.count (); ++i) {
-			urls_to_open.append (QUrl::fromUserInput (url_args[i], QDir::currentPath(), QUrl::AssumeLocalFile));
-		}
-		RKGlobals::startup_options["initial_urls"] = urls_to_open;
+		RKGlobals::startup_options["initial_urls"] = urls_args;
+		RKGlobals::startup_options["warn_external"] = args->isSet ("warn-external");
 	}
 	RKGlobals::startup_options["evaluate"] = decodeArgument (parser.value ("evaluate"));
 	RKGlobals::startup_options["backend-debugger"] = decodeArgument (parser.value ("backend-debugger"));

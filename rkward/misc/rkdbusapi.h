@@ -2,7 +2,7 @@
                           rkdbusapi  -  description
                              -------------------
     begin                : Thu Nov 20 2014
-    copyright            : (C) 2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2014, 2015 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -29,7 +29,7 @@ public:
 	explicit RKDBusAPI (QObject *parent);
 	~RKDBusAPI () {};
 public slots:
-	Q_SCRIPTABLE void openAnyUrl (const QStringList &urls);
+	Q_SCRIPTABLE void openAnyUrl (const QStringList &urls, bool warn_external=true);
 };
 
 #endif

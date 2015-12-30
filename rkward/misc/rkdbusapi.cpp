@@ -2,7 +2,7 @@
                           rkdbusapi  -  description
                              -------------------
     begin                : Thu Nov 20 2014
-    copyright            : (C) 2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2014, 2015 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -40,7 +40,7 @@ RKDBusAPI::RKDBusAPI (QObject* parent): QObject (parent) {
 	QDBusConnection::sessionBus ().registerObject ("/", this, QDBusConnection::ExportScriptableSlots);
 }
 
-void RKDBusAPI::openAnyUrl(const QStringList& urls) {
+void RKDBusAPI::openAnyUrl (const QStringList& urls, bool warn_external) {
 	RK_TRACE (APP);
 
 	// ok, raising the app window is totally hard to do, reliably. This solution copied from kate.
@@ -55,10 +55,6 @@ void RKDBusAPI::openAnyUrl(const QStringList& urls) {
 #endif
 	// end
 
-	RKWardMainWindow::getMain ()->setMergeLoads (true);
-	for (int i = 0; i < urls.size (); ++i) {
-		RKWorkplace::mainWorkplace ()->openAnyUrl (QUrl::fromUserInput (urls[i], QString (), QUrl::AssumeLocalFile));
-	}
-	RKWardMainWindow::getMain ()->setMergeLoads (false);
+	RKWardMainWindow::getMain ()->openUrlsFromCommandLineOrDBus (warn_external, urls);
 }
 

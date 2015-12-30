@@ -345,7 +345,8 @@ void RKSettingsModuleR::loadSettings (KConfig *config) {
 	options_pager = cg.readEntry ("pager", builtin_editor);
 	options_further = cg.readEntry ("further init commands", QString ());
 #ifdef Q_OS_WIN
-	options_internet2 = cg.readEntry ("internet2", false);
+	options_internet2 = cg.readEntry ("internet2", true);
+	if (RKSettingsModuleGeneral::storedConfigVersion () < RKSettingsModuleGeneral::RKWardConfig_0_6_4) options_internet2 = true;
 #endif
 }
 

@@ -334,6 +334,7 @@ public:
 	void removeAt (int index) override;
 	RObject* objectAt (int index) const { return object_list.value (index); };
 	int listLength () const override { return (object_list.size ()); };
+	void setObjectProblemsAreErrors (bool errors);
 protected:
 /** remove an object value. reimplemented from RObjectListener::objectRemoved (). This is so we get notified if the object currently selected is removed TODO: is this effectively a duplication of setFromList? */
 	void objectRemoved (RObject *removed) override;
@@ -352,6 +353,7 @@ private:
 	QString checkObjectProblems (RObject *object) const;
 	RObject::ObjectList object_list;
 	QMap<RObject*, QString> problems;
+	bool problems_are_errors;
 	int dims;
 	int min_length;
 	int max_length;

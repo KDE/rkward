@@ -22,12 +22,16 @@ Branches and policies
 =====================
 
 * master: 
-  Most development happens in master. For the time being master is always open for commits, although you are encouraged to develop more elaborate new features in a separate branch.
+  Most development happens in master. For the time being master is always open for commits, although you are encouraged to develop more elaborate new features in a separate branch. Do try to keep this branch compilable and functional at all times (some rough edges are allowed, though). For more disruptive work, use a "work" branch (see below).
+* frameworks:
+  The KF5 port of RKWard. This is the future master branch (it will be renamed to master, when the time has come). All commits to master get merged into this branch, but not vice-versa. For as long as this branch is _not_ yet master, the commit policy is somewhat more relaxed than master. As the port is stabilizing, you should still try to avoid fundamental breakage.
 * releases/*
   These branches are more restricted. In general you should:
   * not add any new features (only fixes) to these
   * monitor the mailing list for any (string) freezes in these branches, before doing any work, there
-  * also add your commit to master (and add it there, first), unless it is really specific to the release-branch
+  * merge your commit to master, unless it is really specific to the release-branch (or unless you cherry-picked it from master)
+* released:
+  This will be updated for each new stable release, but _only_ for each new stable release. Meant to allow tracking released versions. In general, please don't commit / push anything, here, unless you are the release manager.
 * work/*
   For longer, experimental, or disruptive work, consider creating a branch named "work/feature_description". Do let us know, when the feature is merged (or discarded), and the branch can be removed.
 
@@ -45,4 +49,4 @@ and after your changes. If in any doubt, ask on the mailing list rkward-devel@kd
 Review
 ======
 
-There is no strict policy on code reviews. It is never wrong to ask for review on git.reviewboard.kde.org, though. Always select group "rkward".
+There is no strict policy on code reviews. It is never wrong to ask for review on git.reviewboard.kde.org, though. Always select group "rkward". It is also possible to create a "Differential" fo RKWArd in Phabriactor: https://phabricator.kde.org/differential/diff/create/ .

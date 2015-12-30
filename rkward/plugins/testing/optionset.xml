@@ -19,7 +19,7 @@
 		</text>
 		<tabbook>
 			<tab label="Manual set">
-				<optionset id="mset" exp_mode="accordion">
+				<optionset id="mset" min_rows="1">
 					<content>
 						<row>
 							<varselector id="vars"/>
@@ -36,7 +36,7 @@
 				</optionset>
 			</tab>
 			<tab label="Manual set B">
-				<optionset id="msetb" exp_mode="detached">
+				<optionset id="msetb">
 					<content>
 						<frame>
 							<optiondisplay index="true"/>

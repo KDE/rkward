@@ -12,8 +12,8 @@
 				<row id="row_vTFFPSSTFF">
 					<varselector id="vars" />
 					<column id="clm_vrslTFFPSS">
-						<varslot id="x" label="compare" source="vars" types="number" required="true" />
-						<varslot id="y" label="against (optional)" i18n_context="compare against" source="vars" types="number" />
+						<varslot id="x" label="compare" source="vars" types="numeric" required="true" />
+						<varslot id="y" label="against (optional)" i18n_context="compare against" source="vars" types="numeric" />
 						<radio id="alternative" label="using test hypothesis">
 							<option label="Two-sided" value="two.sided" />
 							<option label="First is greater" value="greater" />

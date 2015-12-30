@@ -1,9 +1,14 @@
 - File selection fields in plugin dialogs remember the last used directory (per session), and check for a valid selection
 - Better handling of text drag-and-drop inside the R console window
 
---- Version 0.6.4 - XXXXXXXXXXXXXXX
+--- Version 0.6.5 - XXXXXXXXXXXXXXX
 
 
+- Show a warning screen when invoking plugins from the command line (or from clicking an rkward://-link in an external application)
+
+--- Version 0.6.4 - Dec-20-2015
+- Fixed: Plugin variable slots taking more than one object would not be hightlighted in red while invalid
+- Plugins check for correct object type, in more places, but allow to proceed with questionable object selections
 - Fixed: RKWard package repository would be listed twice on fresh installations
 - Switch to bugs.kde.org as primary issue tracker
 - Workspace browser gains functionality to search / filter objects by name
