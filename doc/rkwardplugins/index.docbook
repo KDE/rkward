@@ -3279,7 +3279,7 @@ Child-elements:
 	</varlistentry>
 	<varlistentry>
 	<term><parameter>filter</parameter></term>
-	<listitem><para>File type filter, &eg; ("*.txt *.csv" for .txt and .csv files. Try not to induce limits unless absolutely needed, though) (optional, defaults to "", &ie; all files)</para></listitem>
+	<listitem><para>File type filter, &eg; ("*.txt *.csv" for .txt and .csv files). A separate entry for "All files" is added, automatically (optional, defaults to "", &ie; All files)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term><parameter>required</parameter></term>

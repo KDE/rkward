@@ -1,3 +1,4 @@
+- File selectors in "Import XYZ" plugins now filter for standard file extensions, by default
 - Show a warning screen when invoking plugins from the command line (or from clicking an rkward://-link in an external application)
 
 --- Version 0.6.4 - Dec-20-2015

@@ -97,7 +97,7 @@
 	<dialog label="Import Text / CSV data" >
 		<tabbook>
 			<tab id="tab_general" label="General" >
-				<browser id="file" type="file" label="File name"/>
+				<browser id="file" type="file" label="File name" filter="*.csv *.tsv *.txt"/>
 				<dropdown id="quick" label="Data format" >
 					<option value="csv" label="Comma separated values (CSV)" checked="true" />
 					<option value="csv2" label="Semicolon separated values, comma as decimal separator (CSV2)" />
