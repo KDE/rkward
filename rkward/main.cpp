@@ -185,8 +185,8 @@ int main (int argc, char *argv[]) {
 
 	QStringList url_args = parser.positionalArguments ();
 	if (!url_args.isEmpty ()) {
-		RKGlobals::startup_options["initial_urls"] = urls_args;
-		RKGlobals::startup_options["warn_external"] = args->isSet ("warn-external");
+		RKGlobals::startup_options["initial_urls"] = url_args;
+		RKGlobals::startup_options["warn_external"] = parser.isSet ("warn-external");
 	}
 	RKGlobals::startup_options["evaluate"] = decodeArgument (parser.value ("evaluate"));
 	RKGlobals::startup_options["backend-debugger"] = decodeArgument (parser.value ("backend-debugger"));

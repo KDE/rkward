@@ -231,7 +231,7 @@ void RKWardMainWindow::doPostInit () {
 
 	for (int i = 0; i < open_urls.size (); ++i) {
 		// make sure local urls are absolute, as we may be changing wd before loading
-		QUrl url (open_urls[i]), QDir::currentPath(), QUrl::AssumeLocalFile));
+		QUrl url = QUrl::fromUserInput (open_urls[i], QDir::currentPath(), QUrl::AssumeLocalFile);
 		RK_ASSERT (!url.isRelative ());
 		open_urls[i] = url.url ();
 	}
@@ -279,16 +279,17 @@ void RKWardMainWindow::doPostInit () {
 	setCaption (QString ());	// our version of setCaption takes care of creating a correct caption, so we do not need to provide it here
 }
 
-void RKWardMainWindow::openUrlsFromCommandLineOrDBus (bool warn_external, QStringList urls) {
+void RKWardMainWindow::openUrlsFromCommandLineOrDBus (bool warn_external, QStringList _urls) {
 	RK_TRACE (APP);
 
 	bool any_dangerous_urls = false;
-	for (int i = 0; i < urls.size (); ++i) {
-		QUrl url = QUrl::fromUserInput (urls[i], QString (), QUrl::AssumeLocalFile);
+	QList<QUrl> urls;
+	for (int i = 0; i < _urls.size (); ++i) {
+		QUrl url = QUrl::fromUserInput (_urls[i], QString (), QUrl::AssumeLocalFile);
 		if (url.scheme () == "rkward" && url.host () == "runplugin") {
 			any_dangerous_urls = true;
-			break;
 		}
+		urls.append (url);
 	}
 
 	if (warn_external && any_dangerous_urls) {
