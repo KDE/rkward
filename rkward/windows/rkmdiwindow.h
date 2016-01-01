@@ -134,7 +134,7 @@ friend class RKWorkplace;
 /** type of this window */
 	int type;
 private slots:
-	void slotActivate ();
+	void slotActivateForFocusFollowsMouse ();
 private:
 friend class RKToolWindowBar;
 /** state of this window (attached / detached). This is usually set from the RKWorkplace */

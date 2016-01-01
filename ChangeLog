@@ -1,3 +1,4 @@
+- Fix several window activation quirks in "Focus follows mouse" mode
 - File selectors in "Import XYZ" plugins now filter for standard file extensions, by default
 - Show a warning screen when invoking plugins from the command line (or from clicking an rkward://-link in an external application)
 
