@@ -44,10 +44,13 @@
 
 /////////////////////////////////////// RKStandardComponentGUI ////////////////////////////////////////////////
 
-RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, RKComponentPropertyCode *code_property, bool enslaved) {
+RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, RKComponentPropertyCode *code_property, bool enslaved) :
+	code_display_visibility (this, false, false)
+{
 	RK_TRACE (PLUGIN);
 
-	toggle_code_button = 0;
+	toggle_code_box = 0;
+	splitter = 0;
 
 	RKStandardComponentGUI::component = component;
 	RKStandardComponentGUI::code_property = code_property;
@@ -125,29 +128,44 @@ void RKStandardComponentGUI::createDialog (bool switchable) {
 	}
 	vbox->addStretch (2);
 	
-	toggle_code_button = new QPushButton (i18n ("Code"), upper_widget);
-	toggle_code_button->setCheckable (true);
-	connect (toggle_code_button, SIGNAL (clicked()), this, SLOT (toggleCode()));
-	vbox->addWidget (toggle_code_button);
-	if (enslaved) toggle_code_button->hide ();
+	toggle_code_box = new QCheckBox (i18n ("Code Preview"), upper_widget);
+	connect (toggle_code_box, SIGNAL (clicked()), this, SLOT (toggleCode()));
+	vbox->addWidget (toggle_code_box);
+	if (enslaved) toggle_code_box->hide ();
 	
 	// code display
-	code_display = new RKCommandEditorWindow (0, true, false);
+	KVBox *dummy = new KVBox ();
+	QLabel *lab = new QLabel (i18n ("<b>Code Preview</b> [optional status info]"), dummy);
+	lab->setStyleSheet ("background-color: rgb(100, 100, 255);");
+	code_display = new RKCommandEditorWindow (dummy, true, false);
 	code_display->setReadOnly (true);
 
 	splitter->addWidget (upper_widget);
-	splitter->setStretchFactor (0, 0);
-	splitter->addWidget (code_display);
-	splitter->setStretchFactor (1, 1);    // When resizing the dialog, *and* the code display is visible, effectively resize the code display. Dialog area can be resized via splitter.
+	splitter->setStretchFactor (0, 0);          // When resizing the dialog, *and* any preview is visible, effectively resize the preview. Dialog area can be resized via splitter.
 	splitter->setChildrenCollapsible (false);   // It's just too difficult to make this consistent, esp. for shrinking the dialog would _also_ be expected to collapse widgets. Besides, this makes it
 	                                            // easier to keep track of which expansions are currently visible.
+	addDockedPreview (dummy, &code_display_visibility, RKSettingsModulePlugins::defaultCodeHeight ());
 
 	if (!enslaved && RKSettingsModulePlugins::showCodeByDefault ()) {
-		toggle_code_button->setChecked (true);	// will trigger showing the code along with the dialog
-	} else {
-		code_display->hide ();
+		toggle_code_box->setChecked (true);	// will trigger showing the code along with the dialog
 	}
 }
+
+void RKStandardComponentGUI::addDockedPreview (QWidget *area, RKComponentPropertyBool *controller, int sizehint) {
+	RK_TRACE (PLUGIN);
+
+	PreviewArea parea;
+	parea.area = area;
+	area->hide ();
+	parea.controller = controller;
+	parea.sizehint = sizehint;
+	previews.insert (0, parea);
+
+	splitter->insertWidget (1, area);
+	splitter->setStretchFactor (1, 1);
+
+	connect (controller, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (previewVisibilityChanged(RKComponentPropertyBase*)));
+};
 
 void RKStandardComponentGUI::showEvent (QShowEvent *e) {
 	RK_TRACE (PLUGIN);
@@ -159,11 +177,10 @@ void RKStandardComponentGUI::showEvent (QShowEvent *e) {
 	if ((min.width () < 50) || (min.height () < 50)) min = sizeHint ();
 	setMinimumSize (min.expandedTo (QSize (50, 50)));
 
-	if (toggle_code_button) {	// this is a dialog, not  wizard
+	if (toggle_code_box) {	// this is a dialog, not  wizard
 		QTimer::singleShot (0, this, SLOT (toggleCode()));
 	}
 }
-
 
 void RKStandardComponentGUI::ok () {
 	RK_TRACE (PLUGIN);
@@ -205,19 +222,49 @@ void RKStandardComponentGUI::cancel () {
 
 void RKStandardComponentGUI::toggleCode () {
 	RK_TRACE (PLUGIN);
-	RK_ASSERT (toggle_code_button);
+	RK_ASSERT (toggle_code_box);
+
+	if (code_display_visibility.boolValue () != toggle_code_box->isChecked ()) {
+		code_display_visibility.setBoolValue (toggle_code_box->isChecked ());
+	}
+	updateCode ();
+}
+
+void RKStandardComponentGUI::previewVisibilityChanged (RKComponentPropertyBase* prop) {
+	RK_TRACE (PLUGIN);
+
+	if (!splitter) return;
+
+	bool visible = static_cast<RKComponentPropertyBool*> (prop)->boolValue ();
+
+	// which preview got toggled?
+	int pos = -1;
+	for (int i = 0; i < previews.size (); ++i) {
+		if (prop == previews[i].controller) {
+			pos = i;
+			break;
+		}
+	}
+	if (pos < 0) {
+		RK_ASSERT (pos >= 0);
+		return;
+	}
+	PreviewArea &area = previews[pos];
 
 	int new_height = height ();
 	QList<int> sizes = splitter->sizes ();
 
-	if (toggle_code_button->isChecked ()) {
-		new_height += RKSettingsModulePlugins::defaultCodeHeight ();
-		code_display->show ();
-		sizes[1] = RKSettingsModulePlugins::defaultCodeHeight ();
+	if (visible) {
+		int h = area.sizehint;
+		if (h <= 0) h = RKSettingsModulePlugins::defaultCodeHeight ();
+		new_height += h;
+		area.area->show ();
+		sizes[pos+1] = RKSettingsModulePlugins::defaultCodeHeight ();
 	} else {
-		new_height -= code_display->height ();
-		code_display->hide ();
-		sizes[1] = 0;
+		area.sizehint = sizes[pos + 1];
+		new_height -= area.sizehint;
+		area.area->hide ();
+		sizes[pos+1] = 0;
 		splitter->refresh ();      // NOTE: Without this line, _and_ layout->activate() below, the dialog will _not_ shrink back to its original size when hiding the code display. Qt 4.8
 	}
 	splitter->setSizes (sizes);
@@ -226,8 +273,6 @@ void RKStandardComponentGUI::toggleCode () {
 		layout ()->activate ();
 		resize (width (), new_height);
 	}
-
-	updateCode ();
 }
 
 void RKStandardComponentGUI::copyCode () {

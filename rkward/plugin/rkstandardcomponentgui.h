@@ -83,6 +83,7 @@ public:
 	virtual void updateCode ();
 /** reimplemented from QWidget to take care of showing the code display if needed */
 	void showEvent (QShowEvent *e);
+	void addDockedPreview (QWidget *area, RKComponentPropertyBool *controller, int sizehint = -1);
 public slots:
 	void ok ();
 	void cancel ();
@@ -92,11 +93,13 @@ public slots:
 	void updateCodeNow ();
 	void switchInterface () { component->switchInterface (); };
 	void copyCode ();
+	void previewVisibilityChanged (RKComponentPropertyBase*);
 private:
 	RKComponentPropertyCode *code_property;
+	RKComponentPropertyBool code_display_visibility;
 
 	// widgets for dialog only
-	QPushButton *toggle_code_button;
+	QCheckBox *toggle_code_box;
 	QPushButton *ok_button;
 protected:
 	void closeEvent (QCloseEvent *e);
@@ -113,6 +116,13 @@ protected:
 	RKCommandEditorWindow *code_display;
 
 	bool enslaved;
+
+	struct PreviewArea {
+		QWidget *area;
+		RKComponentPropertyBool *controller;
+		int sizehint;
+	};
+	QList<PreviewArea> previews;
 };
 
 /** A wizardish RKStandardComponentGUI. You *must* call createDialog () after construction, and addLastPage () filling the wizard!
