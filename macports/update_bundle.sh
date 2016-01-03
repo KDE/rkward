@@ -105,9 +105,9 @@ if [[ $1 == "" ]] ; then
            -L  don't bundle probably superfluous ports
            -p  update macports, remove inactive
            -r  update port ${PTARGET}
-           -m  create .mdmg of ${PTARGET}
+           -m  create .mpkg of ${PTARGET}
            -s  create sources .tar
-           -c  copy .mdmg and src.tar to ${LPUBDIR}, if created"
+           -c  copy .mpkg and src.tar to ${LPUBDIR}, if created"
 exit 0
 fi
 
@@ -465,8 +465,8 @@ if $MAKEMDMD ; then
 
 #  # cleaning boost, the avahi port somehow gets installed in two varaints...
 #  sudo port clean boost
-  echo "sudo ${MPTINST}/bin/port -v mdmg ${PTARGET}"
-  sudo ${MPTINST}/bin/port -v mdmg ${PTARGET} || exit 1
+  echo "sudo ${MPTINST}/bin/port -v mpkg ${PTARGET}"
+  sudo ${MPTINST}/bin/port -v mpkg ${PTARGET} || exit 1
 
   if $DOEXCPCK ; then
     # restore original destroot directories
@@ -496,18 +496,18 @@ if $MAKEMDMD ; then
 
   # copy the image file to a public directory
   if $COPYMDMD ; then
-    MDMGFILE=${WORKDIR}/${PTARGET}-${PORTVERS}.dmg
+    MPKGFILE=${WORKDIR}/${PTARGET}-${PORTVERS}.pkg
     if $BINARY ; then
-      TRGTFILE=${LPUBDIR}/RKWard${PNSUFFX}-${TARGETVERS}_KDE-${KDEVERS}_needs_CRAN_R-${RVERS}.dmg
+      TRGTFILE=${LPUBDIR}/RKWard${PNSUFFX}-${TARGETVERS}_KDE-${KDEVERS}_needs_CRAN_R-${RVERS}.pkg
     else
-      TRGTFILE=${LPUBDIR}/RKWard${PNSUFFX}-${TARGETVERS}_R-${RVERS}_KDE-${KDEVERS}_MacOSX_bundle.dmg
+      TRGTFILE=${LPUBDIR}/RKWard${PNSUFFX}-${TARGETVERS}_R-${RVERS}_KDE-${KDEVERS}_MacOSX_bundle.pkg
     fi
     if ! [ -d ${LPUBDIR} ] ; then
       echo "creating directory: ${LPUBDIR}"
       mkdir -p ${LPUBDIR} || exit 1
     fi
-    echo "copying: $MDMGFILE to $TRGTFILE ..."
-    cp -av $MDMGFILE $TRGTFILE
+    echo "copying: $MPKGFILE to $TRGTFILE ..."
+    cp -av $MPKGFILE $TRGTFILE
     echo "done."
   fi
 fi
@@ -529,6 +529,10 @@ if $MKSRCTAR ; then
       TRGSFILE=${LPUBDIR}/RKWard${PNSUFFX}-${TARGETVERS}_KDE-${KDEVERS}_src.tar
     else
       TRGSFILE=${LPUBDIR}/RKWard${PNSUFFX}-${TARGETVERS}_R-${RVERS}_KDE-${KDEVERS}_src.tar
+    fi
+    if ! [ -d ${LPUBDIR} ] ; then
+      echo "creating directory: ${LPUBDIR}"
+      mkdir -p ${LPUBDIR} || exit 1
     fi
     echo "copying: $SRCFILE to $TRGSFILE ..."
     cp -av $SRCFILE $TRGSFILE
