@@ -242,6 +242,7 @@ if $BLDSETUP ; then
   cd "${GITROOT}" || exit 1
   if $ANONGIT ; then
     git clone git://anongit.kde.org/rkward.git || exit 1
+    cd rkward || exit 1
   else
     # should this fail, try https:// instead of git@
     git clone git@git.kde.org:rkward.git || exit 1
@@ -251,12 +252,14 @@ if $BLDSETUP ; then
     echo "set git e-mail to \"${GITMAIL}\"..."
     git config user.email "${GITMAIL}" || exit 1
     git config --global push.default simple || exit 1
-    if [[ ! "${GITBRANCH}" == "master" ]] ; then
-      git checkout "${GITBRANCH}" || exit 1
-    fi
   fi
-  echo "sudo ln -s ${GITROOT}/rkward/macports/ ${SRCPATH}"
-  sudo ln -s "${GITROOT}/rkward/macports/" "${SRCPATH}" || exit 1
+  if [[ ! "${GITBRANCH}" == "master" ]] ; then
+    git checkout "${GITBRANCH}" || exit 1
+  fi
+  if ! [ -d ${SRCPATH} ] ; then
+    echo "sudo ln -s ${GITROOT}/rkward/macports/ ${SRCPATH}"
+    sudo ln -s "${GITROOT}/rkward/macports/" "${SRCPATH}" || exit 1
+  fi
   linkbuildscript "${USERBIN}"
   if [ -f "${HOME}/.bash_profile" ] ; then
     BPFPATH=$(grep "^PATH" "${HOME}/.bash_profile")
@@ -333,13 +336,13 @@ if $UPRKWARD ; then
     if [[ $(echo "$INSTALLEDPORTS" | grep "[[:space:]]${i}[[:space:]]" 2> /dev/null ) ]] ; then
       echo "sudo ${MPTINST}/bin/port uninstall ${i}"
       sudo "${MPTINST}/bin/port" uninstall "${i}"
-      echo "${MPTINST}/bin/port clean ${i}"
+      echo "sudo ${MPTINST}/bin/port clean ${i}"
       sudo "${MPTINST}/bin/port" clean "${i}"
     fi
   done
   # build and install recent version
   echo "sudo ${MPTINST}/bin/port -v install ${PTARGET} ${PVARIANT}"
-  sudo "${MPTINST}/bin/port" -v install "${PTARGET}" "${PVARIANT}" || exit 1
+  sudo "${MPTINST}/bin/port" -v install ${PTARGET} ${PVARIANT} || exit 1
 fi
 
 # remove static libraries, they're a waste of disk space
@@ -466,7 +469,7 @@ if $MAKEMDMD ; then
 #  # cleaning boost, the avahi port somehow gets installed in two varaints...
 #  sudo port clean boost
   echo "sudo ${MPTINST}/bin/port -v mpkg ${PTARGET}"
-  sudo "${MPTINST}/bin/port" -v mpkg "${PTARGET}" || exit 1
+  sudo "${MPTINST}/bin/port" -v mpkg ${PTARGET} || exit 1
 
   if $DOEXCPCK ; then
     # restore original destroot directories
@@ -516,7 +519,7 @@ fi
 if $MKSRCTAR ; then
   if ! $COPYMDMD ; then
     # get version information of installed ports
-    PORTVERS=$("${MPTINST}/bin/port" list $PTARGET | sed -e "s/.*@//;s/[[:space:]].*//")
+    PORTVERS=$("${MPTINST}/bin/port" list ${PTARGET} | sed -e "s/.*@//;s/[[:space:]].*//")
   fi
   SRCFILE="${SRCPATH}/sources_bundle_RKWard-${PORTVERS}_${SRCDATE}.tar"
   if [ -f "${SRCFILE}" ] ; then
