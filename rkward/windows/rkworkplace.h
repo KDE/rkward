@@ -2,7 +2,7 @@
                           rkworkplace  -  description
                              -------------------
     begin                : Thu Sep 21 2006
-    copyright            : (C) 2006-2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2006-2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -162,6 +162,14 @@ Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsMod
 	KUrl workspaceURL () const { return current_url; };
 	KConfigBase *workspaceConfig ();
 	QString portableUrl (const KUrl &url);
+/** Register a named area where to place MDI windows. For directing preview windows to a specific location. */
+	void registerNamedWindow (const QString& id, QObject *owner, QWidget* parent, RKMDIWindow *window=0);
+/** Return the window in the specified named area (can be 0). */
+	RKMDIWindow *getNamedWindow (const QString& id);
+/** Make the next window to be created appear in a specific location (can be a named window). 
+ *  @note It is the caller's responsibility to clear the override (by calling setWindowPlacementOverride ()) after the window in question has been created.
+ *  @param spec can be "[attached|detached][:name]". */
+	void setWindowPlacementOverride (const QString& spec=QString ()) { placement_override_spec = spec; };
 signals:
 /** emitted when the workspace Url has changed */
 	void workspaceUrlChanged (const KUrl& url);
@@ -169,6 +177,9 @@ public slots:
 /** When windows are attached to the workplace, their QObject::destroyed () signal is connected to this slot. Thereby deleted objects are removed from the workplace automatically */
 	void removeWindow (QObject *window);
 	void saveSettings ();
+private slots:
+	void namedWindowDestroyed (QObject *);
+	void namedWindowOwnerDestroyed (QObject *);
 private:
 	KUrl current_url;
 	KConfig *_workspace_config;
@@ -192,6 +203,20 @@ private:
 	RKToolWindowBar* tool_window_bars[TOOL_WINDOW_BAR_COUNT];
 friend class RKToolWindowBar;
 	void placeInToolWindowBar (RKMDIWindow *window, int position);
+
+	/** Control placement of windows from R */
+	struct NamedWindow {
+		/** "Owner" of this named window. If non-0, and the owner gets destroyed, the named window record gets closed, too. */
+		QObject *owner;
+		/** Where to place window, if it does not exist, yet. Can be one of 0: detached, RKWardMainWindow::getMain(): attached, any other: docked in a special region */
+		QPointer<QWidget> parent;
+		/** Pointer to window, if it exists, already */
+		QPointer<RKMDIWindow> window;
+		/** Identifier string */
+		QString id;
+	};
+	QList<NamedWindow> named_windows;
+	QString placement_override_spec;
 };
 
 #endif

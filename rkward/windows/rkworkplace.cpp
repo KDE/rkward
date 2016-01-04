@@ -2,7 +2,7 @@
                           rkworkplace  -  description
                              -------------------
     begin                : Thu Sep 21 2006
-    copyright            : (C) 2006-2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2006-2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -215,6 +215,53 @@ void RKWorkplace::addWindow (RKMDIWindow *window, bool attached) {
 	connect (window, SIGNAL (destroyed(QObject*)), this, SLOT (removeWindow(QObject*)));
 	connect (window, SIGNAL (windowActivated(RKMDIWindow*)), history, SLOT (windowActivated(RKMDIWindow*)));
 	if (window->isToolWindow () && !window->tool_window_bar) return;
+
+	// a placment override / named window exists
+	if (!placement_override_spec.isEmpty ()) {
+		QString hint = placement_override_spec.section (':', 0, 0);
+		QString name = placement_override_spec.section (':', 1, 1);
+
+		if (hint == "attached") {
+			attached = true;
+		} else if (hint == "detached") {
+			attached = false;
+		} else {
+			RK_ASSERT (hint.isEmpty ());
+		}
+		QWidget *parent_hint = attached ? RKWardMainWindow::getMain () : 0;
+
+		if (!name.isEmpty ()) {
+			int pos = -1;
+			for (int i = 0; i < named_windows.size (); ++i) {
+				if (named_windows[i].id == name) {
+					pos = i;
+					break;
+				}
+			}
+			if (pos < 0) {   // not yet known: implicit registration -> create corresponing named_window_spec on the fly.
+				registerNamedWindow (name, 0, parent_hint);
+				pos = named_windows.size () - 1;
+			}
+
+			NamedWindow &nw = named_windows[pos];
+			if (nw.window && nw.window != window) {   // kill existing window (going to be replaced)
+				disconnect (nw.window, SIGNAL (destroyed(QObject*)), this, SLOT (namedWindowDestroyed(QObject*)));
+				nw.window->deleteLater ();
+				nw.window = window;
+			}
+
+			// add window in the correct area
+			if (nw.parent == RKWardMainWindow::getMain ()) attached = true;
+			else if (nw.parent == 0) attached = false;
+			else { // custom parent
+				window->prepareToBeAttached ();
+				window->setParent (nw.parent);
+				// TODO: do we have to set window state to attached?
+				return;
+			}
+		}
+	}
+
 	if (attached) attachWindow (window);
 	else detachWindow (window, false);
 }
@@ -245,6 +292,63 @@ void RKWorkplace::placeInToolWindowBar (RKMDIWindow *window, int position) {
 
 	if (!windows.contains (window)) addWindow (window, true);	// first time we see this window
 	else if (needs_registration) attachWindow (window);
+}
+
+void RKWorkplace::registerNamedWindow (const QString& id, QObject* owner, QWidget* parent, RKMDIWindow* window) {
+	RK_TRACE (APP);
+
+	NamedWindow nw;
+	nw.id = id;
+	nw.owner = owner;
+	nw.parent = parent;
+	nw.window = window;
+
+	for (int i = 0; i < named_windows.size (); ++i) {
+		RK_ASSERT (named_windows[i].id != id);
+	}
+
+	named_windows.append (nw);
+	if (owner) connect (owner, SIGNAL (destroyed(QObject*)), this, SLOT (namedWindowOwnerDestroyed(QObject*)));
+	if (window) connect (window, SIGNAL (destroyed(QObject*)), this, SLOT (namedWindowDestroyed(QObject*)));
+}
+
+RKMDIWindow* RKWorkplace::getNamedWindow (const QString& id) {
+	RK_TRACE (APP);
+
+	for (int i = 0; i < named_windows.size (); ++i) {
+		if (named_windows[i].id == id) {
+			return named_windows[i].window;
+		}
+	}
+
+	return 0;
+}
+
+void RKWorkplace::namedWindowDestroyed (QObject* window) {
+	RK_TRACE (APP);
+
+	for (int i = 0; i < named_windows.size (); ++i) {
+		if (named_windows[i].window == window) {
+			if (!named_windows[i].owner) {
+				named_windows.removeAt (i);
+				return;
+			}
+		}
+	}
+}
+
+void RKWorkplace::namedWindowOwnerDestroyed (QObject* owner) {
+	RK_TRACE (APP);
+
+	for (int i = 0; i < named_windows.size (); ++i) {
+		if (named_windows[i].owner == owner) {
+			if (named_windows[i].window) {
+				named_windows[i].window->deleteLater ();
+			}
+			named_windows.removeAt (i);
+			return;
+		}
+	}
 }
 
 bool RKWorkplace::openAnyUrl (const KUrl &url, const QString &known_mimetype, bool force_external) {
