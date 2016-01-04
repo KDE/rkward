@@ -35,7 +35,7 @@ GITBRANCH="master"
 # specify work directory
 WORKDIR="${SRCPATH}/kde/${PTARGET}/work"
 # specify local public directory
-LPUBDIR="~/Public/rkward"
+LPUBDIR="${HOME}/Public/rkward"
 # specify application dir used
 APPLDIR=/Applications/RKWard
 # specify the prefix for build directories below ${MPTINST}/var/macports/build
@@ -496,7 +496,7 @@ if $MAKEMDMD ; then
 
   # copy the image file to a public directory
   if $COPYMDMD ; then
-    MPKGFILE="${WORKDIR}/${PTARGET}-${PORTVERS}.pkg"
+    MPKGFILE="${WORKDIR}/${PTARGET}-${PORTVERS}.mpkg"
     if $BINARY ; then
       TRGTFILE="${LPUBDIR}/RKWard${PNSUFFX}-${TARGETVERS}_KDE-${KDEVERS}_needs_CRAN_R-${RVERS}.pkg"
     else
@@ -507,7 +507,7 @@ if $MAKEMDMD ; then
       mkdir -p "${LPUBDIR}" || exit 1
     fi
     echo "copying: $MPKGFILE to $TRGTFILE ..."
-    cp -av "${MPKGFILE}" "${TRGTFILE}"
+    cp -av "${MPKGFILE}" "${TRGTFILE}" || exit 1
     echo "done."
   fi
 fi
@@ -535,7 +535,7 @@ if $MKSRCTAR ; then
       mkdir -p "${LPUBDIR}" || exit 1
     fi
     echo "copying: $SRCFILE to $TRGSFILE ..."
-    cp -av "${SRCFILE}" "${TRGSFILE}"
+    cp -av "${SRCFILE}" "${TRGSFILE}" || exit 1
     echo "done."
   fi
 fi
