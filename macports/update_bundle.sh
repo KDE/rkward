@@ -348,7 +348,7 @@ fi
 # remove static libraries, they're a waste of disk space
 if $RMSTLIBS ; then
   echo "deleting all static libs in ${MPTINST}/lib/..."
-  sudo rm "${MPTINST}/lib/*.a"
+  sudo rm ${MPTINST}/lib/*.a
   echo "deleting all static libs in ${MPTINST}/var/macports/build..."
   #find "${MPTINST}/var/macports/build" -name "*.a" -exec sudo rm \{\} \;
   # only remove libs in destroot/libs/
