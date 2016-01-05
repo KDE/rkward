@@ -188,11 +188,7 @@ void RKPreviewBox::setStatusMessage(const QString& status) {
 
 	RKMDIWindow *window = RKWorkplace::mainWorkplace ()->getNamedWindow (idprop);
 	if (!window) return;
-	if (preview_mode == PlotPreview) {
-		static_cast<RKCaughtX11Window*> (window)->setStatusMessage (status);
-	} else {
-#warning TODO
-	}
+	window->setStatusMessage (status);
 }
 
 void RKPreviewBox::killPreview () {

@@ -94,7 +94,6 @@ class KVBox;
 class RKProgressControl;
 class QX11EmbedContainer;
 class QWinHost;
-class KPassivePopup;
 class RKGraphicsDevice;
 
 /** An R onscreen graphics device window managed by rkward. Currently, this can be X11 devices (on X11), Windows devices (on Windows), and
@@ -119,13 +118,6 @@ public:
 /** returns the window corresponding the to given R device number (or 0 if no such window exists) */
 	static RKCaughtX11Window* getWindow (int device_number) { return device_windows.value (device_number); };
 	void updateHistoryActions (int history_length, int position, const QStringList &labels);
-/** Set a status message to be shown in a popup inside the window. The message persists until the given R command has finished, or until this function is called with an empty string.
-This should be used, when the plot is currently out-of-date (e.g. when loading a plot from history), _not_ when the window
-is simply busy (e.g. when saving the current plot to history). */
-	void setStatusMessage (const QString& message, RCommand* command=0);
-/** static convencience wrapper around setStatusMessage (). Sets the message on the window corresponding to the given device number.
- * NOTE: If no device exists (or isn't known to the system), this function does nothing */
-	static void setStatusMessage (int dev_num, const QString &message, RCommand *command=0);
 public slots:
 	void deviceInteractive (bool interactive, const QString &prompt);
 	
@@ -167,7 +159,6 @@ private:
 	void forceClose ();
 	void commonInit (int device_number);
 	void reEmbed ();
-	void rCommandDone (RCommand *command);
 	friend class RKCaughtX11WindowPart;	// needs access to the actions
 	int device_number;
 	bool killed_in_r;
@@ -201,9 +192,6 @@ private:
 	KAction *plot_properties_action;
 	KSelectAction *plot_list_action;
 	KAction *stop_interaction;
-
-	KPassivePopup* status_popup;
-	RCommand* status_change_command;
 
 	int history_length;
 	int history_position;

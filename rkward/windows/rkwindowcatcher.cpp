@@ -128,7 +128,6 @@ void RKWindowCatcher::killDevice (int device_number) {
 #include <knuminput.h>
 #include <kvbox.h>
 #include <kactioncollection.h>
-#include <kpassivepopup.h>
 
 #include "../rkglobals.h"
 #include "../rbackend/rinterface.h"
@@ -210,10 +209,6 @@ void RKCaughtX11Window::commonInit (int device_number) {
 	setFocusPolicy (Qt::ClickFocus);
 	updateHistoryActions (0, 0, QStringList ());
 
-	status_popup = new KPassivePopup (this);
-	status_popup->setTimeout (0);
-	disconnect (status_popup, SIGNAL (clicked()), status_popup, SLOT (hide()));	// no auto-hiding, please
-
 	QVBoxLayout *layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
 	box_widget = new KVBox (this);
@@ -274,7 +269,6 @@ RKCaughtX11Window::~RKCaughtX11Window () {
 	if (embedded) RKWardApplication::getApp ()->unregisterNameWatcher (embedded);
 #endif
 	error_dialog->autoDeleteWhenDone ();
-	delete status_popup;
 }
 
 void RKCaughtX11Window::forceClose () {
@@ -589,39 +583,6 @@ void RKCaughtX11Window::updateHistoryActions (int history_length, int position, 
 	plot_clear_history_action->setEnabled (history_length > 0);
 	plot_properties_action->setEnabled (RKSettingsModuleGraphics::plotHistoryEnabled ());
 }
-
-void RKCaughtX11Window::setStatusMessage (const QString& message, RCommand *command) {
-	RK_TRACE (MISC);
-
-	status_change_command = command;
-	if (command) command->addReceiver (this);
-	if (!message.isEmpty ()) {
-		status_popup->setView (QString (), message);
-		status_popup->show (xembed_container->mapToGlobal (QPoint (20, 20)));
-	} else {
-		status_popup->hide ();
-	}
-}
-
-// static
-void RKCaughtX11Window::setStatusMessage(int dev_num, const QString& message, RCommand* command) {
-	RK_TRACE (MISC);
-
-	RKCaughtX11Window *window = getWindow (dev_num);
-	if (!window) return;
-	window->setStatusMessage (message, command);
-}
-
-void RKCaughtX11Window::rCommandDone (RCommand *command) {
-	RK_TRACE (MISC);
-
-	if (command == status_change_command) {
-		setStatusMessage (QString ());
-		status_popup->hide();
-	}
-	RCommandReceiver::rCommandDone (command);
-}
-
 
 ///////////////////////////////// END RKCaughtX11Window ///////////////////////////////
 /**************************************************************************************/

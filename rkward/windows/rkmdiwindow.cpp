@@ -28,6 +28,7 @@
 #include <kactioncollection.h>
 #include <klocale.h>
 #include <kaction.h>
+#include <kpassivepopup.h>
 
 #include "rkworkplace.h"
 #include "rkworkplaceview.h"
@@ -36,6 +37,7 @@
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../misc/rkstandardicons.h"
 #include "../misc/rkxmlguisyncer.h"
+#include "../rbackend/rcommand.h"
 
 #include "../debug.h"
 
@@ -66,6 +68,7 @@ RKMDIWindow::RKMDIWindow (QWidget *parent, int type, bool tool_window, const cha
 	part = 0;
 	active = false;
 	standard_client = 0;
+	status_popup = 0;
 
 	setWindowIcon (RKStandardIcons::iconForWindow (this));
 }
@@ -75,6 +78,7 @@ RKMDIWindow::~RKMDIWindow () {
 
 	if (isToolWindow ()) RKToolWindowList::unregisterToolWindow (this);
 	delete standard_client;
+	delete status_popup;
 }
 
 KActionCollection *RKMDIWindow::standardActionCollection () {
@@ -283,6 +287,30 @@ void RKMDIWindow::enterEvent (QEvent *event) {
 	}
 
 	QFrame::enterEvent (event);
+}
+
+void RKMDIWindow::setStatusMessage (const QString& message, RCommand *command) {
+	RK_TRACE (MISC);
+
+	if (!status_popup) {
+		status_popup = new KPassivePopup (this);
+		status_popup->setTimeout (0);
+		disconnect (status_popup, SIGNAL (clicked()), status_popup, SLOT (hide()));   // no auto-hiding, please
+	}
+
+	if (command) connect (command->notifier (), SIGNAL (commandFinished (RCommand*)), this, SLOT (clearStatusMessage()));
+	if (!message.isEmpty ()) {
+		status_popup->setView (QString (), message);
+		status_popup->show (this->mapToGlobal (QPoint (20, 20)));
+	} else {
+		status_popup->hide ();
+	}
+}
+
+void RKMDIWindow::clearStatusMessage () {
+	RK_TRACE (APP);
+
+	setStatusMessage (QString ());
 }
 
 void RKMDIWindow::setMetaInfo (const QString& _generic_window_name, const QString& _help_url, RKSettings::SettingsPage _settings_page) {
