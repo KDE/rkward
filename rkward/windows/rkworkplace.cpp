@@ -211,17 +211,14 @@ void RKWorkplace::detachWindow (RKMDIWindow *window, bool was_attached) {
 void RKWorkplace::addWindow (RKMDIWindow *window, bool attached) {
 	RK_TRACE (APP);
 
-	windows.append (window);
-	connect (window, SIGNAL (destroyed(QObject*)), this, SLOT (removeWindow(QObject*)));
-	connect (window, SIGNAL (windowActivated(RKMDIWindow*)), history, SLOT (windowActivated(RKMDIWindow*)));
-	if (window->isToolWindow () && !window->tool_window_bar) return;
-
 	// a placment override / named window exists
 	if (!placement_override_spec.isEmpty ()) {
 		QString hint = placement_override_spec.section (':', 0, 0);
 		QString name = placement_override_spec.section (':', 1, 1);
 
 		if (hint == "attached") {
+			if (!attached) window->state = RKMDIWindow::Detached;   // Ok, yeah. BAD style. But windows that would go to detached by default would not prepareToBeAttached(), without this.
+			                                                        // TODO: Create third state: NotManaged
 			attached = true;
 		} else if (hint == "detached") {
 			attached = false;
@@ -245,6 +242,7 @@ void RKWorkplace::addWindow (RKMDIWindow *window, bool attached) {
 
 			NamedWindow &nw = named_windows[pos];
 			if (nw.window && nw.window != window) {   // kill existing window (going to be replaced)
+				// TODO: this is not really elegant, yet, as it will change tab-placement (for attached windows), and discard / recreate container (for detached windows)
 				disconnect (nw.window, SIGNAL (destroyed(QObject*)), this, SLOT (namedWindowDestroyed(QObject*)));
 				nw.window->deleteLater ();
 				nw.window = window;
@@ -256,11 +254,18 @@ void RKWorkplace::addWindow (RKMDIWindow *window, bool attached) {
 			else { // custom parent
 				window->prepareToBeAttached ();
 				window->setParent (nw.parent);
-				// TODO: do we have to set window state to attached?
+				// TODO: do this is somewhat inconsistent. But such windows are not attached to the main workplace view, which makes them rather behave detached.
+				window->state = RKMDIWindow::Detached;
+				// NOTE: The window is _not_ added to the window list/window history in this case.
 				return;
 			}
 		}
 	}
+
+	windows.append (window);
+	connect (window, SIGNAL (destroyed(QObject*)), this, SLOT (removeWindow(QObject*)));
+	connect (window, SIGNAL (windowActivated(RKMDIWindow*)), history, SLOT (windowActivated(RKMDIWindow*)));
+	if (window->isToolWindow () && !window->tool_window_bar) return;
 
 	if (attached) attachWindow (window);
 	else detachWindow (window, false);

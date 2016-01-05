@@ -69,3 +69,40 @@
 	.rk.do.plain.call ("workplace.layout", c ("set", close, lines), synchronous=FALSE)
 	invisible (NULL)
 }
+
+#' Control window placement
+#' 
+#' \code{.rk.with.placement.hint} can be used to make windows appear in a specific
+#' location: attached, detached, or in a named position where a previous window is
+#' found. (The latter used for preview windows, importantly).
+#' 
+#' NOTE: This function is still somewhat experimental, and it is not guaranteed that
+#' it will remain in place, with compatible parameters.
+#' 
+#' @aliases .rk.with.placement.hint rk.with.placement.hint
+#' @param hint a character string specifying the placement in the form "[attached|detached][:name]"
+#'        If a name is given, and this position is not yet known, the attached/detached hint will
+#'        be followed (or, if ommitted, default placement will be used). If later a second window is
+#'        created with the same given name, it will replace the first window.
+#' @param expr Expression to evaluate, unsually an expression that is expected to create exactly one
+#'        new window.
+#' @return \code{NULL}, invisibly.
+#' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
+#' @keywords utilities
+#' @rdname rk.with.placement.hint
+#' @examples
+#' 
+#' ## Not run
+#' .rk.with.placement.hint ("attached", {
+#'    RK ()
+#'    plot (1, 1)
+#' })
+#' ## End not run
+#' 
+#' @export
+".rk.with.placement.hint" <- function (hint, expr) {
+	.rk.do.plain.call ("set.window.placement.hint", as.character (hint), FALSE)
+	on.exit (.rk.do.plain.call ("set.window.placement.hint", "", FALSE))
+	eval.parent (substitute (eval (quote (expr), parent.frame ())))
+	invisible (NULL)
+}

@@ -250,9 +250,11 @@ void RKCaughtX11Window::doEmbed () {
 		RKWardApplication::getApp ()->registerNameWatcher (embedded, this);
 #endif
 	}
-	// make xembed_container resizable, again, now that it actually has a content
-	dynamic_size_action->setChecked (true);
-	fixedSizeToggled ();
+	if (!isAttached ()) {
+		// make xembed_container resizable, again, now that it actually has a content
+		dynamic_size_action->setChecked (true);
+		fixedSizeToggled ();
+	}
 
 	// try to be helpful when the window is too large to fit on screen
 	QRect dims = window ()->frameGeometry ();
@@ -340,6 +342,8 @@ void RKCaughtX11Window::prepareToBeDetached () {
 	RK_TRACE (MISC);
 
 	dynamic_size_action->setEnabled (true);
+	dynamic_size_action->setChecked (true);
+	fixedSizeToggled ();
 	reEmbed ();
 }
 
