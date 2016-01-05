@@ -9,6 +9,7 @@ MPTINST=/opt/rkward
 PTARGET=rkward-devel
 PNSUFFX="-devel"
 USERBIN="${HOME}/bin"
+OSXVERSION=$(sw_vers -productVersion | sed -e "s/.[[:digit:]]*$//")
 
 # initalize varaibles
 DEVEL=true
@@ -501,9 +502,9 @@ if $MAKEMDMD ; then
   if $COPYMDMD ; then
     MPKGFILE="${WORKDIR}/${PTARGET}-${PORTVERS}.mpkg"
     if $BINARY ; then
-      TRGTFILE="${LPUBDIR}/RKWard${PNSUFFX}-${TARGETVERS}_KDE-${KDEVERS}_needs_CRAN_R-${RVERS}.pkg"
+      TRGTFILE="${LPUBDIR}/RKWard${PNSUFFX}-${TARGETVERS}_OSX${OSXVERSION}_KDE-${KDEVERS}_needs_CRAN_R-${RVERS}.pkg"
     else
-      TRGTFILE="${LPUBDIR}/RKWard${PNSUFFX}-${TARGETVERS}_R-${RVERS}_KDE-${KDEVERS}_MacOSX_bundle.pkg"
+      TRGTFILE="${LPUBDIR}/RKWard${PNSUFFX}-${TARGETVERS}_R-${RVERS}_KDE-${KDEVERS}_MacOSX${OSXVERSION}_bundle.pkg"
     fi
     if ! [ -d "${LPUBDIR}" ] ; then
       echo "creating directory: ${LPUBDIR}"
@@ -529,9 +530,9 @@ if $MKSRCTAR ; then
   # copy the source archive to a public directory
   if $COPYMDMD ; then
     if $BINARY ; then
-      TRGSFILE="${LPUBDIR}/RKWard${PNSUFFX}-${TARGETVERS}_KDE-${KDEVERS}_src.tar"
+      TRGSFILE="${LPUBDIR}/RKWard${PNSUFFX}-${TARGETVERS}_OSX${OSXVERSION}_KDE-${KDEVERS}_src.tar"
     else
-      TRGSFILE="${LPUBDIR}/RKWard${PNSUFFX}-${TARGETVERS}_R-${RVERS}_KDE-${KDEVERS}_src.tar"
+      TRGSFILE="${LPUBDIR}/RKWard${PNSUFFX}-${TARGETVERS}_OSX${OSXVERSION}_R-${RVERS}_KDE-${KDEVERS}_src.tar"
     fi
     if ! [ -d "${LPUBDIR}" ] ; then
       echo "creating directory: ${LPUBDIR}"
