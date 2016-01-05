@@ -185,9 +185,17 @@ static void RKD_QueryResolution (int *dpix, int *dpiy) {
 }
 
 static void RKD_Create (double width, double height, pDevDesc dev, const char *title, bool antialias) {
-	RKGraphicsDataStreamWriteGuard guard;
-	WRITE_HEADER (RKDCreate, dev);
-	RKD_OUT_STREAM << width << height << QString::fromUtf8 (title) << antialias;
+	{
+		RKGraphicsDataStreamWriteGuard guard;
+		WRITE_HEADER (RKDCreate, dev);
+		RKD_OUT_STREAM << width << height << QString::fromUtf8 (title) << antialias;
+	}
+	{
+		// Reading a reply in order to force this to be synchronous. .rk.with.placement.hint() may run into race conditions, otherwise.
+		RKGraphicsDataStreamReadGuard rguard;
+		quint32 dummy;
+		RKD_IN_STREAM >> dummy;
+	}
 }
 
 static void RKD_Size (double *left, double *right, double *top, double *bottom, pDevDesc dev) {

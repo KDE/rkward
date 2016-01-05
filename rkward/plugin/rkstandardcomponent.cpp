@@ -2,7 +2,7 @@
                           rkstandardcomponent  -  description
                              -------------------
     begin                : Sun Feb 19 2006
-    copyright            : (C) 2006, 2007, 2009, 2010, 2011, 2012, 2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2006-2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -362,6 +362,14 @@ void RKStandardComponent::buildAndInitialize (const QDomElement &doc_element, co
 	standardInitializationComplete ();
 }
 
+void RKStandardComponent::addDockedPreview (QWidget* area, RKComponentPropertyBool* controller, const QString& label) {
+	RK_TRACE (PLUGIN);
+
+	RK_ASSERT (gui);
+	if (!gui) return;
+	gui->addDockedPreview (area, controller, label);
+}
+
 RKComponentBase::ComponentStatus RKStandardComponent::recursiveStatus () {
 	RK_TRACE (PLUGIN);
 
@@ -375,7 +383,7 @@ bool RKStandardComponent::submit (RCommandChain *in_chain) {
 
 	if (!isSatisfied ()) return false;
 
-        RCommandChain *prev_chain = command_chain;
+	RCommandChain *prev_chain = command_chain;
 	command_chain = in_chain;
 	gui->ok ();
 	command_chain = prev_chain;

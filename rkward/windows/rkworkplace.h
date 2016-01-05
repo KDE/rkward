@@ -211,7 +211,7 @@ friend class RKToolWindowBar;
 		/** Where to place window, if it does not exist, yet. Can be one of 0: detached, RKWardMainWindow::getMain(): attached, any other: docked in a special region */
 		QPointer<QWidget> parent;
 		/** Pointer to window, if it exists, already */
-		QPointer<RKMDIWindow> window;
+		RKMDIWindow* window;
 		/** Identifier string */
 		QString id;
 	};

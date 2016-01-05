@@ -2,7 +2,7 @@
                           rkpreviewbox  -  description
                              -------------------
     begin                : Wed Jan 24 2007
-    copyright            : (C) 2007, 2009, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -23,14 +23,16 @@
 #include <QTextDocument>
 
 #include <klocale.h>
+#include <kvbox.h>
 
 #include "../rkglobals.h"
 #include "../rbackend/rinterface.h"
 #include "../misc/xmlhelper.h"
 #include "../windows/rkwindowcatcher.h"
+#include "../windows/rkworkplace.h"
+#include "rkstandardcomponent.h"
 #include "../debug.h"
 
-#define START_DEVICE 101
 #define DO_PREVIEW 102
 
 RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
@@ -39,12 +41,12 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	preview_active = false;
 	prior_preview_done = true;
 	new_preview_pending = false;
-	dev_num = 0;
 
 	// get xml-helper
 	XMLHelper *xml = parent_component->xmlHelper ();
 
 	preview_mode = (PreviewMode) xml->getMultiChoiceAttribute (element, "mode", "plot;data;custom", 0, DL_INFO);
+	placement = (PreviewPlacement) xml->getMultiChoiceAttribute (element, "placement", "default;attached;detached;docked", (preview_mode == PlotPreview) ? 0 : 3, DL_INFO);
 	idprop = RObject::rQuote (QString ().sprintf ("%p", this));
 
 	// create and add property
@@ -60,9 +62,18 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	toggle_preview_box->setChecked (preview_active);
 	connect (toggle_preview_box, SIGNAL (stateChanged(int)), this, SLOT (changedState(int)));
 
-	// status lable
+	// status label
 	status_label = new QLabel (QString (), this);
 	vbox->addWidget (status_label);
+
+	if (placement == DockedPreview) {
+		RKStandardComponent *uicomp = topmostStandardComponent ();
+		if (uicomp) {
+			QWidget *container = new KVBox ();
+			RKWorkplace::mainWorkplace ()->registerNamedWindow (idprop, this, container);
+			uicomp->addDockedPreview (container, state, toggle_preview_box->text ());
+		}
+	}
 
 	// find and connect to code property of the parent
 	QString dummy;
@@ -130,12 +141,6 @@ void RKPreviewBox::tryPreview () {
 	updateStatusLabel ();
 }
 
-void RKPreviewBox::previewWindowClosed () {
-	RK_TRACE (PLUGIN);
-
-	dev_num = 0;
-}
-
 void RKPreviewBox::tryPreviewNow () {
 	RK_TRACE (PLUGIN);
 
@@ -157,14 +162,19 @@ void RKPreviewBox::tryPreviewNow () {
 
 	preview_active = true;
 
+	QString placement_command;
+	if (placement == AttachedPreview) placement_command = "attached";
+	else if (placement == DetachedPreview) placement_command = "detached";
+	placement_command = ".rk.with.placement.hint (" + RObject::rQuote (placement_command + ':' + idprop) + ", {\n";
+	QString placement_end = "\n})";
+
+	setStatusMessage (i18n ("Preview updating"));
 	if (preview_mode == PlotPreview) {
-		RKGlobals::rInterface ()->issueCommand (".rk.startPreviewDevice (" + idprop + ')', RCommand::Plugin | RCommand::Sync | RCommand::GetIntVector, QString (), this, START_DEVICE);
-		setStatusMessage (i18n ("Preview updating"));
-		RKGlobals::rInterface ()->issueCommand ("local({\n" + code_property->preview () + "})\n", RCommand::Plugin | RCommand::Sync, QString (), this, DO_PREVIEW);
+		RKGlobals::rInterface ()->issueCommand (placement_command + ".rk.startPreviewDevice (" + idprop + ')' + placement_end + "\nlocal({\n" + code_property->preview () + "})\n", RCommand::Plugin | RCommand::Sync, QString (), this, DO_PREVIEW);
 	} else if (preview_mode == DataPreview) {
-		RKGlobals::rInterface ()->issueCommand ("local({\n" + code_property->preview () + "\nrk.assign.preview.data(" + idprop + ", preview_data)\nrk.edit(rkward::.rk.variables$.rk.preview.data[[" + idprop + "]])\n})\n", RCommand::Plugin | RCommand::Sync, QString (), this, DO_PREVIEW);
+		RKGlobals::rInterface ()->issueCommand ("local({\n" + code_property->preview () + "\nrk.assign.preview.data(" + idprop + ", preview_data)\n" + placement_command + "rk.edit(rkward::.rk.variables$.rk.preview.data[[" + idprop + "]])" + placement_end + "\n})\n", RCommand::Plugin | RCommand::Sync, QString (), this, DO_PREVIEW);
 	} else {
-		RKGlobals::rInterface ()->issueCommand ("local({\n" + code_property->preview () + "})\n", RCommand::Plugin | RCommand::Sync, QString (), this, DO_PREVIEW);
+		RKGlobals::rInterface ()->issueCommand ("local({\n" + placement_command + code_property->preview () + placement_end + "})\n", RCommand::Plugin | RCommand::Sync, QString (), this, DO_PREVIEW);
 	}
 
 	prior_preview_done = false;
@@ -176,8 +186,10 @@ void RKPreviewBox::tryPreviewNow () {
 void RKPreviewBox::setStatusMessage(const QString& status) {
 	RK_TRACE (PLUGIN);
 
+	RKMDIWindow *window = RKWorkplace::mainWorkplace ()->getNamedWindow (idprop);
+	if (!window) return;
 	if (preview_mode == PlotPreview) {
-		RKCaughtX11Window::setStatusMessage (dev_num, status);
+		static_cast<RKCaughtX11Window*> (window)->setStatusMessage (status);
 	} else {
 #warning TODO
 	}
@@ -204,19 +216,10 @@ void RKPreviewBox::rCommandDone (RCommand *command) {
 	prior_preview_done = true;
 	if (new_preview_pending) tryPreview ();
 
-	if (command->getFlags () == START_DEVICE) {
-		int old_devnum = dev_num;
-		dev_num = command->intVector ().value (0, 0);
-		if (dev_num != old_devnum) {
-			disconnect (this, SLOT (previewWindowClosed()));
-			RKCaughtX11Window *window = RKCaughtX11Window::getWindow (dev_num);
-			if (window) connect (window, SIGNAL (destroyed(QObject*)), this, SLOT(previewWindowClosed()));
-		}
-	} else if (command->getFlags () == DO_PREVIEW) {
-		QString warnings = command->warnings () + command->error ();
-		if (!warnings.isEmpty ()) warnings = QString ("<b>%1</b>\n<pre>%2</pre>").arg (i18n ("Warnings or Errors:")).arg (Qt::escape (warnings));
-		setStatusMessage (warnings);
-	}
+	QString warnings = command->warnings () + command->error ();
+	if (!warnings.isEmpty ()) warnings = QString ("<b>%1</b>\n<pre>%2</pre>").arg (i18n ("Warnings or Errors:")).arg (Qt::escape (warnings));
+	setStatusMessage (warnings);
+
 	updateStatusLabel ();
 }
 

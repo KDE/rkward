@@ -134,34 +134,35 @@ void RKStandardComponentGUI::createDialog (bool switchable) {
 	if (enslaved) toggle_code_box->hide ();
 	
 	// code display
-	KVBox *dummy = new KVBox ();
-	QLabel *lab = new QLabel (i18n ("<b>Code Preview</b> [optional status info]"), dummy);
-	lab->setStyleSheet ("background-color: rgb(100, 100, 255);");
-	code_display = new RKCommandEditorWindow (dummy, true, false);
+	code_display = new RKCommandEditorWindow (0, true, false);
 	code_display->setReadOnly (true);
 
 	splitter->addWidget (upper_widget);
 	splitter->setStretchFactor (0, 0);          // When resizing the dialog, *and* any preview is visible, effectively resize the preview. Dialog area can be resized via splitter.
 	splitter->setChildrenCollapsible (false);   // It's just too difficult to make this consistent, esp. for shrinking the dialog would _also_ be expected to collapse widgets. Besides, this makes it
 	                                            // easier to keep track of which expansions are currently visible.
-	addDockedPreview (dummy, &code_display_visibility, RKSettingsModulePlugins::defaultCodeHeight ());
+	addDockedPreview (code_display, &code_display_visibility, i18n ("Code Preview"), RKSettingsModulePlugins::defaultCodeHeight ());
 
 	if (!enslaved && RKSettingsModulePlugins::showCodeByDefault ()) {
 		toggle_code_box->setChecked (true);	// will trigger showing the code along with the dialog
 	}
 }
 
-void RKStandardComponentGUI::addDockedPreview (QWidget *area, RKComponentPropertyBool *controller, int sizehint) {
+void RKStandardComponentGUI::addDockedPreview (QWidget *area, RKComponentPropertyBool *controller, const QString& label, int sizehint) {
 	RK_TRACE (PLUGIN);
 
 	PreviewArea parea;
-	parea.area = area;
-	area->hide ();
+	KVBox *dummy = new KVBox ();
+	QLabel *lab = new QLabel (i18n ("<b>%1</b>", label), dummy);
+	lab->setStyleSheet ("background-color: rgb(100, 100, 255);");
+	area->setParent (dummy);
+	dummy->hide ();
+	parea.area = dummy;
 	parea.controller = controller;
 	parea.sizehint = sizehint;
 	previews.insert (0, parea);
 
-	splitter->insertWidget (1, area);
+	splitter->insertWidget (1, dummy);
 	splitter->setStretchFactor (1, 1);
 
 	connect (controller, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (previewVisibilityChanged(RKComponentPropertyBase*)));
@@ -310,7 +311,7 @@ void RKStandardComponentGUI::codeChanged (RKComponentPropertyBase *) {
 void RKStandardComponentGUI::updateCode () {
 	RK_TRACE (PLUGIN);
 
-	if (code_display->isHidden ()) return;
+	if (!code_display_visibility.boolValue ()) return;
 	code_update_timer->start (0);
 }
 

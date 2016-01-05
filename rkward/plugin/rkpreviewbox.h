@@ -2,7 +2,7 @@
                           rkpreviewbox  -  description
                              -------------------
     begin                : Wed Jan 24 2007
-    copyright            : (C) 2007, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -47,7 +47,6 @@ public slots:
 	void changedState (RKComponentPropertyBase *);
 	void changedCode (RKComponentPropertyBase *);
 	void tryPreviewNow ();
-	void previewWindowClosed ();
 protected:
 	void rCommandDone (RCommand *);
 private:
@@ -59,12 +58,17 @@ private:
 	void killPreview ();
 	void updateStatusLabel ();
 	void setStatusMessage (const QString& status);
-	int dev_num;
 	enum PreviewMode {
 		PlotPreview,
 		DataPreview,
 		CustomPreview
 	} preview_mode;
+	enum PreviewPlacement {
+		DefaultPreview,
+		AttachedPreview,
+		DetachedPreview,
+		DockedPreview
+	} placement;
 	QTimer *update_timer;
 	QCheckBox *toggle_preview_box;
 	QLabel *status_label;

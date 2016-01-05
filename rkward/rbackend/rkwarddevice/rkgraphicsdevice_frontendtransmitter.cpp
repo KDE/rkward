@@ -190,6 +190,8 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			connect (device, SIGNAL (locatorDone(bool,double,double)), this, SLOT (locatorDone(bool,double,double)));
 			connect (device, SIGNAL (newPageConfirmDone(bool)), this, SLOT (newPageConfirmDone(bool)));
 			connect (this, SIGNAL (stopInteraction()), device, SLOT (stopInteraction()));
+			streamer.outstream << (qint32) 1;  // dummy reply
+			streamer.writeOutBuffer ();
 			continue;
 		} else {
 			if (devnum) device = RKGraphicsDevice::devices.value (devnum);

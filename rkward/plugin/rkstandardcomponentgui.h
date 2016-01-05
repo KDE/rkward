@@ -83,7 +83,7 @@ public:
 	virtual void updateCode ();
 /** reimplemented from QWidget to take care of showing the code display if needed */
 	void showEvent (QShowEvent *e);
-	void addDockedPreview (QWidget *area, RKComponentPropertyBool *controller, int sizehint = -1);
+	void addDockedPreview (QWidget *area, RKComponentPropertyBool *controller, const QString& label, int sizehint = -1);
 public slots:
 	void ok ();
 	void cancel ();

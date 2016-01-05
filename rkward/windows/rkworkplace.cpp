@@ -214,7 +214,7 @@ void RKWorkplace::addWindow (RKMDIWindow *window, bool attached) {
 	// a placment override / named window exists
 	if (!placement_override_spec.isEmpty ()) {
 		QString hint = placement_override_spec.section (':', 0, 0);
-		QString name = placement_override_spec.section (':', 1, 1);
+		QString name = placement_override_spec.section (':', 1);
 
 		if (hint == "attached") {
 			if (!attached) window->state = RKMDIWindow::Detached;   // Ok, yeah. BAD style. But windows that would go to detached by default would not prepareToBeAttached(), without this.
@@ -241,12 +241,16 @@ void RKWorkplace::addWindow (RKMDIWindow *window, bool attached) {
 			}
 
 			NamedWindow &nw = named_windows[pos];
-			if (nw.window && nw.window != window) {   // kill existing window (going to be replaced)
-				// TODO: this is not really elegant, yet, as it will change tab-placement (for attached windows), and discard / recreate container (for detached windows)
-				disconnect (nw.window, SIGNAL (destroyed(QObject*)), this, SLOT (namedWindowDestroyed(QObject*)));
-				nw.window->deleteLater ();
+			if (nw.window != window) {
+				if (nw.window) {  // kill existing window (going to be replaced)
+					// TODO: this is not really elegant, yet, as it will change tab-placement (for attached windows), and discard / recreate container (for detached windows)
+					disconnect (nw.window, SIGNAL (destroyed(QObject*)), this, SLOT (namedWindowDestroyed(QObject*)));
+					nw.window->deleteLater ();
+				}
 				nw.window = window;
+				connect (nw.window, SIGNAL (destroyed(QObject*)), this, SLOT (namedWindowDestroyed(QObject*)));
 			}
+			named_windows[pos] = nw;
 
 			// add window in the correct area
 			if (nw.parent == RKWardMainWindow::getMain ()) attached = true;
@@ -337,6 +341,8 @@ void RKWorkplace::namedWindowDestroyed (QObject* window) {
 			if (!named_windows[i].owner) {
 				named_windows.removeAt (i);
 				return;
+			} else {
+				named_windows[i].window = 0;
 			}
 		}
 	}
