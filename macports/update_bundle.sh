@@ -8,6 +8,7 @@ MPTINST=/opt/rkward
 # specify the target port
 PTARGET=rkward-devel
 PNSUFFX="-devel"
+RKUSER="${USER}"
 USERBIN="${HOME}/bin"
 OSXVERSION=$(sw_vers -productVersion | sed -e "s/.[[:digit:]]*$//")
 
@@ -108,7 +109,7 @@ if [[ $1 == "" ]] ; then
            -r  update port ${PTARGET}
            -m  create .mpkg of ${PTARGET}
            -s  create sources .tar
-           -c  copy .mpkg and src.tar to ${LPUBDIR}, if created"
+           -c  move .mpkg and src.tar to ${LPUBDIR}, if created"
 exit 0
 fi
 
@@ -510,8 +511,9 @@ if $MAKEMDMD ; then
       echo "creating directory: ${LPUBDIR}"
       mkdir -p "${LPUBDIR}" || exit 1
     fi
-    echo "copying: $MPKGFILE to $TRGTFILE ..."
-    cp -av "${MPKGFILE}" "${TRGTFILE}" || exit 1
+    echo "moving: $MPKGFILE to $TRGTFILE ..."
+    sudo mv "${MPKGFILE}" "${TRGTFILE}" || exit 1
+    sudo chown ${RKUSER} "${TRGTFILE}" || exit 1
     echo "done."
   fi
 fi
@@ -538,8 +540,9 @@ if $MKSRCTAR ; then
       echo "creating directory: ${LPUBDIR}"
       mkdir -p "${LPUBDIR}" || exit 1
     fi
-    echo "copying: $SRCFILE to $TRGSFILE ..."
-    cp -av "${SRCFILE}" "${TRGSFILE}" || exit 1
+    echo "moving: $SRCFILE to $TRGSFILE ..."
+    sudo mv "${SRCFILE}" "${TRGSFILE}" || exit 1
+    sudo chown ${RKUSER} "${TRGSFILE}" || exit 1
     echo "done."
   fi
 fi
