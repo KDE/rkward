@@ -2,7 +2,7 @@
                           twintable.h  -  description
                              -------------------
     begin                : Tue Oct 29 2002
-    copyright            : (C) 2002, 2006, 2007, 2010, 2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2002-2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -31,6 +31,7 @@ class TwinTableMember;
 class RKVarEditModel;
 class QActionGroup;
 class KAction;
+class QSplitter;
 
 /**
   *@author Thomas Friedrichsmeier
@@ -54,6 +55,7 @@ public:
 	RKVarEditModel* datamodel;
 
 	QActionGroup* editActions () const { return edit_actions; };
+	void setWindowStyleHint (const QString& hint) override;
 public slots:
 	void metaHeaderPressed (int section);
 	void metaHeaderEntered (int section);
@@ -85,6 +87,8 @@ private:
 	int context_menu_row;
 /** Only valid, if context_menu_table != 0. Column of current context menu event. -1 for header column. -2 for no cell. */
 	int context_menu_column;
+
+	QSplitter *splitter;
 protected:	
 /** Returns the active Table (of the two members), 0 if no table active */
 	TwinTableMember *activeTable ();

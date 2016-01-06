@@ -67,6 +67,7 @@ RKMDIWindow::RKMDIWindow (QWidget *parent, int type, bool tool_window, const cha
 	tool_window_bar = 0;
 	part = 0;
 	active = false;
+	no_border_when_active = false;
 	standard_client = 0;
 	status_popup = 0;
 
@@ -248,7 +249,7 @@ void RKMDIWindow::paintEvent (QPaintEvent *e) {
 
 	QFrame::paintEvent (e);
 
-	if (isActive ()) {
+	if (isActive () && !no_border_when_active) {
 		QPainter paint (this);
 		paint.setPen (QColor (255, 0, 0));
 		paint.drawLine (0, 0, 0, height ()-1);
@@ -311,6 +312,12 @@ void RKMDIWindow::clearStatusMessage () {
 	RK_TRACE (APP);
 
 	setStatusMessage (QString ());
+}
+
+void RKMDIWindow::setWindowStyleHint (const QString& hint) {
+	RK_TRACE (APP);
+
+	if (hint == "preview") no_border_when_active = true;
 }
 
 void RKMDIWindow::setMetaInfo (const QString& _generic_window_name, const QString& _help_url, RKSettings::SettingsPage _settings_page) {

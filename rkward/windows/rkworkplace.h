@@ -167,9 +167,8 @@ Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsMod
 /** Return the window in the specified named area (can be 0). */
 	RKMDIWindow *getNamedWindow (const QString& id);
 /** Make the next window to be created appear in a specific location (can be a named window). 
- *  @note It is the caller's responsibility to clear the override (by calling setWindowPlacementOverride ()) after the window in question has been created.
- *  @param spec can be "[attached|detached][:name]". */
-	void setWindowPlacementOverride (const QString& spec=QString ()) { placement_override_spec = spec; };
+ *  @note It is the caller's responsibility to clear the override (by calling setWindowPlacementOverride ()) after the window in question has been created. */
+	void setWindowPlacementOverrides (const QString& placement=QString (), const QString& name=QString (), const QString& style=QString ());
 signals:
 /** emitted when the workspace Url has changed */
 	void workspaceUrlChanged (const KUrl& url);
@@ -216,7 +215,9 @@ friend class RKToolWindowBar;
 		QString id;
 	};
 	QList<NamedWindow> named_windows;
-	QString placement_override_spec;
+	RKMDIWindow::State window_placement_override;
+	QString window_name_override;
+	QString window_style_override;
 };
 
 #endif

@@ -107,6 +107,8 @@ public:
 This should be used, when the information shown is currently out-of-date (e.g. when refreshing a preview / loading a plot from history), _not_ when the window
 is simply busy (e.g. when saving the current plot to history). */
 	void setStatusMessage (const QString& message, RCommand* command=0);
+/** Set a style hint for the window. So far the only interpreted style hint is "preview", and not all windows implement it. Base implements hiding of "active" indicator border for "preview"s. */
+	virtual void setWindowStyleHint (const QString& hint);
 
 	bool eventFilter (QObject *watched, QEvent *e);
 	bool acceptsEventsFor (QObject *object);
@@ -149,6 +151,7 @@ friend class RKToolWindowBar;
 	State state;
 	RKToolWindowBar *tool_window_bar;
 	bool active;
+	bool no_border_when_active;
 	RKMDIStandardActionClient *standard_client;
 /** @see globalContextProperty() */
 	QMap<QString, QString> global_context_properties;

@@ -162,15 +162,18 @@ void RKPreviewBox::tryPreviewNow () {
 
 	preview_active = true;
 
-	QString placement_command;
-	if (placement == AttachedPreview) placement_command = "attached";
-	else if (placement == DetachedPreview) placement_command = "detached";
-	placement_command = ".rk.with.placement.hint (" + RObject::rQuote (placement_command + ':' + idprop) + ", {\n";
-	QString placement_end = "\n})";
+	QString placement_command = ".rk.with.window.hints ({";
+	QString placement_end = "\n}, ";
+	if (placement == AttachedPreview) placement_end.append ("\"attached\"");
+	else if (placement == DetachedPreview) placement_end.append ("\"detached\"");
+	else placement_end.append ("\"\"");
+	placement_end.append (", " + RObject::rQuote (idprop) + ", style=\"preview\")");
 
 	setStatusMessage (i18n ("Preview updating"));
 	if (preview_mode == PlotPreview) {
-		RKGlobals::rInterface ()->issueCommand (placement_command + ".rk.startPreviewDevice (" + idprop + ')' + placement_end + "\nlocal({\n" + code_property->preview () + "})\n", RCommand::Plugin | RCommand::Sync, QString (), this, DO_PREVIEW);
+		RKGlobals::rInterface ()->issueCommand (placement_command + ".rk.startPreviewDevice (" + idprop + ')' + placement_end, RCommand::Plugin | RCommand::Sync, QString ());
+		// creating window generates warnings, sometimes. Don't make those part of the warnings shown for the preview -> separate command for the actual plot.
+		RKGlobals::rInterface ()->issueCommand ("local({\n" + code_property->preview () + "})\n", RCommand::Plugin | RCommand::Sync, QString (), this, DO_PREVIEW);
 	} else if (preview_mode == DataPreview) {
 		RKGlobals::rInterface ()->issueCommand ("local({\n" + code_property->preview () + "\nrk.assign.preview.data(" + idprop + ", preview_data)\n" + placement_command + "rk.edit(rkward::.rk.variables$.rk.preview.data[[" + idprop + "]])" + placement_end + "\n})\n", RCommand::Plugin | RCommand::Sync, QString (), this, DO_PREVIEW);
 	} else {

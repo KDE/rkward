@@ -80,7 +80,6 @@ private:
 
 
 #include "rkmdiwindow.h"
-#include "../rbackend/rcommandreceiver.h"
 
 #include <QHash>
 
@@ -98,7 +97,7 @@ class RKGraphicsDevice;
 
 /** An R onscreen graphics device window managed by rkward. Currently, this can be X11 devices (on X11), Windows devices (on Windows), and
  RK devices (anywhere). */
-class RKCaughtX11Window : public RKMDIWindow, public RCommandReceiver {
+class RKCaughtX11Window : public RKMDIWindow {
 	Q_OBJECT
 public:
 /** ctor

@@ -626,7 +626,7 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 			return (RKWorkplace::mainWorkplace ()->makeWorkplaceDescription ());
 		}
 	} else if (call == "set.window.placement.hint") {
-		RKWorkplace::mainWorkplace ()->setWindowPlacementOverride (calllist.value (1));
+		RKWorkplace::mainWorkplace ()->setWindowPlacementOverrides (calllist.value (1), calllist.value (2), calllist.value (3));
 	} else if (call == "getSessionInfo") {
 		// Non-translatable on purpose. This is meant for posting to the bug tracker, mostly.
 		QStringList lines ("-- Frontend --");

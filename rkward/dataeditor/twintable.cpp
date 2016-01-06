@@ -2,7 +2,7 @@
                           twintable.cpp  -  description
                              -------------------
     begin                : Tue Oct 29 2002
-    copyright            : (C) 2002, 2006, 2007, 2010, 2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2002-2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -47,8 +47,8 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent), RObjectListener (ROb
 	QVBoxLayout *layout = new QVBoxLayout(this);
 	layout->setContentsMargins (0, 0, 0, 0);
 	
-	QSplitter *splitter = new QSplitter(this);
-	splitter->setOrientation(Qt::Vertical);
+	splitter = new QSplitter (this);
+	splitter->setOrientation (Qt::Vertical);
 
 	metaview = new TwinTableMember (splitter);
 	splitter->setStretchFactor (splitter->indexOf (metaview), 0);
@@ -191,6 +191,17 @@ void TwinTable::initTable (RKVarEditModel* model, RObject* object) {
 	listenForObject (object);
 	objectMetaChanged (object);
 	connect (model, SIGNAL (hasDuplicates(QStringList)), this, SLOT (containsDuplicates(QStringList)));
+}
+
+void TwinTable::setWindowStyleHint (const QString& hint) {
+	RK_TRACE (EDITOR);
+	if (hint == "preview") { // preview skin: Squeeze header as much as possible
+		metaview->horizontalHeader ()->hide ();
+		metaview->setMinimumHeight (metaview->rowHeight (0));
+		splitter->setStretchFactor (0, 0);
+		splitter->setStretchFactor (1, 1);
+	}
+	RKMDIWindow::setWindowStyleHint (hint);
 }
 
 void TwinTable::containsDuplicates (const QStringList& dupes) {
