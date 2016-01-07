@@ -55,7 +55,7 @@ private:
 	bool prior_preview_done;
 	bool new_preview_pending;
 	void tryPreview ();
-	void killPreview ();
+	void killPreview (bool force = false);
 	void updateStatusLabel ();
 	void setStatusMessage (const QString& status);
 	enum PreviewMode {

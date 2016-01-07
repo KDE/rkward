@@ -82,6 +82,12 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 			// create an empty data.frame as dummy. This is only really appropriate for data-previews, but even for other docked previews it has the effect of initializing the preview area
 			// with _something_.
 			RKGlobals::rInterface ()->issueCommand ("local ({\nrk.assign.preview.data(" + idprop + ", data.frame ())\n})\n" + placement_command + "rk.edit(rkward::.rk.variables$.rk.preview.data[[" + idprop + "]])" + placement_end, RCommand::Plugin | RCommand::Sync);
+
+			// A bit of a hack: For now, in wizards, docked previews are always active, and control boxes are meaningless.
+			if (uicomp->isWizardish ()) {
+				hide ();
+				toggle_preview_box->setChecked (true);
+			}
 		}
 	}
 
@@ -107,7 +113,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 RKPreviewBox::~RKPreviewBox () {
 	RK_TRACE (PLUGIN);
 
-	killPreview ();
+	killPreview (true);
 }
 
 QVariant RKPreviewBox::value(const QString& modifier) {
@@ -197,16 +203,18 @@ void RKPreviewBox::setStatusMessage(const QString& status) {
 	window->setStatusMessage (status);
 }
 
-void RKPreviewBox::killPreview () {
+void RKPreviewBox::killPreview (bool force) {
 	RK_TRACE (PLUGIN);
 
 	if (!preview_active) return;
 	preview_active = false;
 
-	QString command;
-	if (preview_mode == PlotPreview) command = ".rk.killPreviewDevice (" + idprop + ')';
-	else command = "rk.discard.preview.data (" + idprop + ')';
-	RKGlobals::rInterface ()->issueCommand (command, RCommand::Plugin | RCommand::Sync);
+	if (force || placement != DockedPreview) {
+		QString command;
+		if (preview_mode == PlotPreview) command = ".rk.killPreviewDevice (" + idprop + ')';
+		else command = "rk.discard.preview.data (" + idprop + ')';
+		RKGlobals::rInterface ()->issueCommand (command, RCommand::Plugin | RCommand::Sync);
+	}
 
 	prior_preview_done = true;
 	new_preview_pending = false;

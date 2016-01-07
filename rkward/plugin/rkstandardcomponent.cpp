@@ -274,12 +274,12 @@ bool RKStandardComponent::createTopLevel (const QDomElement &doc_element, int fo
 		static_cast<RKStandardComponentWizard *> (gui)->createWizard (!dialog_element.isNull ());
 		wizard = static_cast<RKStandardComponentWizard *> (gui)->getStack ();
 		buildAndInitialize (doc_element, wizard_element, gui->mainWidget (), true, enslaved);
-		static_cast<RKStandardComponentWizard *> (gui)->addLastPage ();
 	} else {
 		gui = new RKStandardComponentGUI (this, code, enslaved);
 		gui->createDialog (!wizard_element.isNull ());
 		buildAndInitialize (doc_element, dialog_element, gui->mainWidget (), false, enslaved);
 	}
+	gui->finalize ();
 
 	return true;
 }

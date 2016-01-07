@@ -84,6 +84,8 @@ public:
 /** reimplemented from QWidget to take care of showing the code display if needed */
 	void showEvent (QShowEvent *e);
 	void addDockedPreview (QWidget *area, RKComponentPropertyBool *controller, const QString& label, int sizehint = -1);
+/** Do anything needed after the dialog is created and its contents have been built. Base class adds the preview regions to the splitter */
+	virtual void finalize ();
 public slots:
 	void ok ();
 	void cancel ();
@@ -120,6 +122,7 @@ protected:
 	struct PreviewArea {
 		QWidget *area;
 		RKComponentPropertyBool *controller;
+		QString label;
 		int sizehint;
 	};
 	QList<PreviewArea> previews;
@@ -137,8 +140,8 @@ public:
 	void enableSubmit (bool enable);
 	void updateCode ();
 	void createWizard (bool switchable);
-/** Add a standard last page in the wizard. To confuse everybody, this also initializes the view to the first page */
-	void addLastPage ();
+/** Adds a standard last page in the wizard, and initializes the view to the first page */
+	void finalize () override;
 
 	void updateState ();
 
