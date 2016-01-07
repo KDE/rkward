@@ -198,8 +198,9 @@ void TwinTable::setWindowStyleHint (const QString& hint) {
 	if (hint == "preview") { // preview skin: Squeeze header as much as possible
 		metaview->horizontalHeader ()->hide ();
 		metaview->setMinimumHeight (metaview->rowHeight (0));
-		splitter->setStretchFactor (0, 0);
-		splitter->setStretchFactor (1, 1);
+		// Now, I just don't understand QSplitter sizing, here... Despite stretch factors being set, metaview continues to be the first to grow.
+		// Forcing minimum heigt of dataview help allocating initial size to the dataview, though.
+		dataview->setMinimumHeight (dataview->rowHeight (0) * 5);
 	}
 	RKMDIWindow::setWindowStyleHint (hint);
 }

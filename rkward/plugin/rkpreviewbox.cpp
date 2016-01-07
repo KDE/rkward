@@ -38,7 +38,6 @@
 RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
 	RK_TRACE (PLUGIN);
 
-	preview_active = false;
 	prior_preview_done = true;
 	new_preview_pending = false;
 
@@ -47,6 +46,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 
 	preview_mode = (PreviewMode) xml->getMultiChoiceAttribute (element, "mode", "plot;data;custom", 0, DL_INFO);
 	placement = (PreviewPlacement) xml->getMultiChoiceAttribute (element, "placement", "default;attached;detached;docked", (preview_mode == PlotPreview) ? 0 : 3, DL_INFO);
+	preview_active = xml->getBoolAttribute (element, "active", false, DL_INFO);
 	idprop = RObject::rQuote (QString ().sprintf ("%p", this));
 
 	// create and add property
@@ -175,7 +175,7 @@ void RKPreviewBox::tryPreviewNow () {
 		// creating window generates warnings, sometimes. Don't make those part of the warnings shown for the preview -> separate command for the actual plot.
 		RKGlobals::rInterface ()->issueCommand ("local({\n" + code_property->preview () + "})\n", RCommand::Plugin | RCommand::Sync, QString (), this, DO_PREVIEW);
 	} else if (preview_mode == DataPreview) {
-		RKGlobals::rInterface ()->issueCommand ("local({\n" + code_property->preview () + "\nrk.assign.preview.data(" + idprop + ", preview_data)\n" + placement_command + "rk.edit(rkward::.rk.variables$.rk.preview.data[[" + idprop + "]])" + placement_end + "\n})\n", RCommand::Plugin | RCommand::Sync, QString (), this, DO_PREVIEW);
+		RKGlobals::rInterface ()->issueCommand ("local({try({\n" + code_property->preview () + "\n})\nif(!exists(\"preview_data\",inherits=FALSE)) preview_data <- data.frame ('ERROR')\nrk.assign.preview.data(" + idprop + ", preview_data)\n})\n" + placement_command + "rk.edit(rkward::.rk.variables$.rk.preview.data[[" + idprop + "]])" + placement_end, RCommand::Plugin | RCommand::Sync, QString (), this, DO_PREVIEW);
 	} else {
 		RKGlobals::rInterface ()->issueCommand ("local({\n" + placement_command + code_property->preview () + placement_end + "})\n", RCommand::Plugin | RCommand::Sync, QString (), this, DO_PREVIEW);
 	}

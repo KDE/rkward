@@ -138,6 +138,7 @@
 					<saveobject id="name" initial="my.csv.data" label="Object to save to"/>
 					<checkbox id="doedit" value="1" value_unchecked="0" label="Open imported data for editing" checked="true" />
 				</frame>
+				<preview id="preview" active="true" mode="data"/>
 			</tab>
 			<tab id="tab_rows" label="Rows and Columns" >
 				<row>
