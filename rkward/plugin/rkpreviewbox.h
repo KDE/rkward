@@ -74,6 +74,8 @@ private:
 	QLabel *status_label;
 	RKComponentPropertyCode *code_property;
 	QString idprop;
+	QString placement_command;
+	QString placement_end;
 };
 
 #endif

@@ -66,12 +66,22 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	status_label = new QLabel (QString (), this);
 	vbox->addWidget (status_label);
 
+	// prepare placement
+	placement_command = ".rk.with.window.hints ({";
+	placement_end = "\n}, ";
+	if (placement == AttachedPreview) placement_end.append ("\"attached\"");
+	else if (placement == DetachedPreview) placement_end.append ("\"detached\"");
+	else placement_end.append ("\"\"");
+	placement_end.append (", " + RObject::rQuote (idprop) + ", style=\"preview\")");
 	if (placement == DockedPreview) {
 		RKStandardComponent *uicomp = topmostStandardComponent ();
 		if (uicomp) {
 			QWidget *container = new KVBox ();
 			RKWorkplace::mainWorkplace ()->registerNamedWindow (idprop, this, container);
 			uicomp->addDockedPreview (container, state, toggle_preview_box->text ());
+			// create an empty data.frame as dummy. This is only really appropriate for data-previews, but even for other docked previews it has the effect of initializing the preview area
+			// with _something_.
+			RKGlobals::rInterface ()->issueCommand ("local ({\nrk.assign.preview.data(" + idprop + ", data.frame ())\n})\n" + placement_command + "rk.edit(rkward::.rk.variables$.rk.preview.data[[" + idprop + "]])" + placement_end, RCommand::Plugin | RCommand::Sync);
 		}
 	}
 
@@ -161,13 +171,6 @@ void RKPreviewBox::tryPreviewNow () {
 	}
 
 	preview_active = true;
-
-	QString placement_command = ".rk.with.window.hints ({";
-	QString placement_end = "\n}, ";
-	if (placement == AttachedPreview) placement_end.append ("\"attached\"");
-	else if (placement == DetachedPreview) placement_end.append ("\"detached\"");
-	else placement_end.append ("\"\"");
-	placement_end.append (", " + RObject::rQuote (idprop) + ", style=\"preview\")");
 
 	setStatusMessage (i18n ("Preview updating"));
 	if (preview_mode == PlotPreview) {
