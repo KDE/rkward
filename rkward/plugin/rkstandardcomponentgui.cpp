@@ -78,6 +78,19 @@ RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, 
 
 RKStandardComponentGUI::~RKStandardComponentGUI () {
 	RK_TRACE (PLUGIN);
+
+	if (!enslaved && toggle_code_box && splitter) {  // A top-level dialog-style UI
+		for (int i = 0; i < previews.size (); ++i) {
+			bool visible = previews[i].controller->boolValue ();
+			int size = visible ? previews[i].area->height () : previews[i].sizehint;
+			if (i == previews.size () - 1) {  // code preview
+				RKSettingsModulePlugins::setShowCodeByDefault (visible);
+				if (size > 0) RKSettingsModulePlugins::setDefaultCodeHeight (size);
+			} else {
+				if (size > 0) RKSettingsModulePlugins::setDefaultOtherPreviewHeight (size);
+			}
+		}
+	}
 }
 
 void RKStandardComponentGUI::createDialog (bool switchable) {
@@ -267,10 +280,11 @@ void RKStandardComponentGUI::previewVisibilityChanged (RKComponentPropertyBase* 
 
 	if (visible) {
 		int h = area.sizehint;
-		if (h <= 0) h = RKSettingsModulePlugins::defaultCodeHeight ();
+		if (h <= 0) h = (pos == previews.size () - 1) ? RKSettingsModulePlugins::defaultCodeHeight () : RKSettingsModulePlugins::defaultOtherPreviewHeight ();
+		if (h < 40) h = 40;
 		new_height += h;
 		area.area->show ();
-		sizes[pos+1] = RKSettingsModulePlugins::defaultCodeHeight ();
+		sizes[pos+1] = h;
 	} else {
 		area.sizehint = sizes[pos + 1];
 		new_height -= area.sizehint;

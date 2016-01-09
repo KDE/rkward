@@ -40,7 +40,7 @@ function doCalculate (is_preview) {
 	echo (' na.strings = "' + getValue("na") + '", ' + nrows + ', skip = ' + getValue("skip") + ', check.names = ' + getValue("checkname") + ', strip.white = ' + getValue("stripwhite") + ', blank.lines.skip = ' + getValue("blanklinesskip") + getValue("allow_escapes") + getValue("flush") + getValue("strings_as_factors") + ')\n');
 	echo ('\n');
 	if (is_preview) {
-		echo ('preview_data <- imported\n');
+		echo ('preview_data <- imported[1:min(50,length(imported))]\n');  // limit preview to first 50 columns for efficiency
 	} else {
 		comment ('copy from the local environment to globalenv()');
 		echo ('.GlobalEnv$' + getValue("name") + ' <- imported\n');
