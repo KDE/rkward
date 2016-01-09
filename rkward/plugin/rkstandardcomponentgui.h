@@ -95,7 +95,9 @@ public slots:
 	void updateCodeNow ();
 	void switchInterface () { component->switchInterface (); };
 	void copyCode ();
+private slots:
 	void previewVisibilityChanged (RKComponentPropertyBase*);
+	void previewCloseButtonClicked ();
 private:
 	RKComponentPropertyCode *code_property;
 	RKComponentPropertyBool code_display_visibility;

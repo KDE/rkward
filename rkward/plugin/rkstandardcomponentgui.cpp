@@ -22,18 +22,19 @@
 #include <kactioncollection.h>
 #include <kurl.h>
 #include <kvbox.h>
-#include <khbox.h>
 
 #include <qtimer.h>
-#include <qlayout.h>
 #include <qpushbutton.h>
 #include <qlabel.h>
 #include <QCloseEvent>
 #include <QCheckBox>
 #include <QSplitter>
+#include <QHBoxLayout>
+#include <QToolButton>
 
 #include "rkcomponentmap.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkstandardicons.h"
 #include "../windows/rkworkplace.h"
 #include "../windows/rkcommandeditorwindow.h"
 #include "../rbackend/rinterface.h"
@@ -166,11 +167,29 @@ void RKStandardComponentGUI::finalize () {
 	RK_TRACE (PLUGIN);
 
 	for (int i = 0; i < previews.size (); ++i) {
-		KVBox *dummy = new KVBox ();
+		// Add preview to splitter. Also add a title bar to each preview.
+		QWidget *dummy = new QWidget ();
+		QVBoxLayout *vl = new QVBoxLayout (dummy);
+		vl->setContentsMargins (0, 0, 0, 0);
+		QFrame *line = new QFrame (dummy);
+		line->setFrameShape (QFrame::HLine);
+		vl->addWidget (line);
+		QHBoxLayout *hl = new QHBoxLayout ();
+		vl->addLayout (hl);
 		QLabel *lab = new QLabel (i18n ("<b>%1</b>", previews[i].label), dummy);
-		lab->setStyleSheet ("background-color: rgb(100, 100, 255);");
+		lab->setAlignment (Qt::AlignCenter);
+		QToolButton *tb = new QToolButton (dummy);
+		tb->setAutoRaise (true);
+		tb->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDelete));
+		tb->setProperty ("preview_area", QVariant::fromValue (dummy));
+		connect (tb, SIGNAL (clicked()), this, SLOT (previewCloseButtonClicked()));
+		hl->addStretch ();
+		hl->addWidget (lab);
+		hl->addWidget (tb);
+		hl->addStretch ();
+
+		vl->addWidget (previews[i].area);
 		previews[i].area->show ();
-		previews[i].area->setParent (dummy);
 		previews[i].area = dummy;
 		if (!(previews[i].controller->boolValue ())) dummy->hide ();
 		splitter->insertWidget (i+1, previews[i].area);
@@ -252,6 +271,23 @@ void RKStandardComponentGUI::toggleCode () {
 		code_display_visibility.setBoolValue (toggle_code_box->isChecked ());
 	}
 	updateCode ();
+}
+
+void RKStandardComponentGUI::previewCloseButtonClicked () {
+	RK_TRACE (PLUGIN);
+
+	RK_ASSERT (splitter);  // is a dialog
+	QWidget *area = qvariant_cast<QWidget*> (sender ()->property ("preview_area"));
+
+	for (int i = 0; i < previews.size (); ++i) {
+		if (area == previews[i].area) {
+			previews[i].controller->setBoolValue (false);
+			if (i == previews.size () - 1) toggle_code_box->setChecked (false);
+			return;
+		}
+	}
+
+	RK_ASSERT (false);
 }
 
 void RKStandardComponentGUI::previewVisibilityChanged (RKComponentPropertyBase* prop) {
