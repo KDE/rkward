@@ -61,6 +61,7 @@ private:
 	enum PreviewMode {
 		PlotPreview,
 		DataPreview,
+		HtmlPreview,
 		CustomPreview
 	} preview_mode;
 	enum PreviewPlacement {

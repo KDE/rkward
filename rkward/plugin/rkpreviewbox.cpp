@@ -44,7 +44,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	// get xml-helper
 	XMLHelper *xml = parent_component->xmlHelper ();
 
-	preview_mode = (PreviewMode) xml->getMultiChoiceAttribute (element, "mode", "plot;data;custom", 0, DL_INFO);
+	preview_mode = (PreviewMode) xml->getMultiChoiceAttribute (element, "mode", "plot;data;html;custom", 0, DL_INFO);
 	placement = (PreviewPlacement) xml->getMultiChoiceAttribute (element, "placement", "default;attached;detached;docked", (preview_mode == PlotPreview) ? 0 : 3, DL_INFO);
 	preview_active = xml->getBoolAttribute (element, "active", false, DL_INFO);
 	idprop = RObject::rQuote (QString ().sprintf ("%p", this));
@@ -79,9 +79,21 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 			QWidget *container = new KVBox ();
 			RKWorkplace::mainWorkplace ()->registerNamedWindow (idprop, this, container);
 			uicomp->addDockedPreview (container, state, toggle_preview_box->text ());
-			// create an empty data.frame as dummy. This is only really appropriate for data-previews, but even for other docked previews it has the effect of initializing the preview area
-			// with _something_.
-			RKGlobals::rInterface ()->issueCommand ("local ({\nrk.assign.preview.data(" + idprop + ", data.frame ())\n})\n" + placement_command + "rk.edit(rkward::.rk.variables$.rk.preview.data[[" + idprop + "]])" + placement_end, RCommand::Plugin | RCommand::Sync);
+
+			if (preview_mode == HtmlPreview) {
+				RKGlobals::rInterface ()->issueCommand ("local ({\n"
+				    "outfile <- tempfile (fileext='html')\n"
+				    "rk.assign.preview.data(" + idprop + ", list (filename=outfile, on.delete=function (id) {\n"
+				    "	rk.flush.output (outfile, ask=FALSE)\n"
+				    "	unlink (outfile)\n"
+				    "}))\n"
+				    "oldfile <- rk.set.output.html.file (outfile)  # for initialization\n"
+				    "rk.set.output.html.file (oldfile)\n"
+				    "})\n" + placement_command + "rk.show.html(rk.get.preview.data (" + idprop + ")$filename)" + placement_end, RCommand::Plugin | RCommand::Sync);
+			} else {
+				// For all others, create an empty data.frame as dummy. Even for custom docked previews it has the effect of initializing the preview area with _something_.
+				RKGlobals::rInterface ()->issueCommand ("local ({\nrk.assign.preview.data(" + idprop + ", data.frame ())\n})\n" + placement_command + "rk.edit(rkward::.rk.variables$.rk.preview.data[[" + idprop + "]])" + placement_end, RCommand::Plugin | RCommand::Sync);
+			}
 
 			// A bit of a hack: For now, in wizards, docked previews are always active, and control boxes are meaningless.
 			if (uicomp->isWizardish ()) {
@@ -185,6 +197,13 @@ void RKPreviewBox::tryPreviewNow () {
 		RKGlobals::rInterface ()->issueCommand ("local({\n" + code_property->preview () + "})\n", RCommand::Plugin | RCommand::Sync, QString (), this, DO_PREVIEW);
 	} else if (preview_mode == DataPreview) {
 		RKGlobals::rInterface ()->issueCommand ("local({try({\n" + code_property->preview () + "\n})\nif(!exists(\"preview_data\",inherits=FALSE)) preview_data <- data.frame ('ERROR')\nrk.assign.preview.data(" + idprop + ", preview_data)\n})\n" + placement_command + "rk.edit(rkward::.rk.variables$.rk.preview.data[[" + idprop + "]])" + placement_end, RCommand::Plugin | RCommand::Sync, QString (), this, DO_PREVIEW);
+	} else if (preview_mode == HtmlPreview) {
+		RKGlobals::rInterface ()->issueCommand (placement_command + "local({\n"
+		    "	oldfile <- rk.set.output.html.file(rk.get.preview.data (" + idprop + ")$filename)\n"
+		    "	rk.flush.output(ask=FALSE)\n"
+		    "	local({try({\n" + code_property->preview () + "\n})})\n"  // nested local to make sure "oldfile" is not overwritten.
+		    "	rk.set.output.html.file(oldfile)\n})\n"
+		    "rk.show.html(rk.get.preview.data (" + idprop + ")$filename)" + placement_end, RCommand::Plugin | RCommand::Sync, QString (), this, DO_PREVIEW);
 	} else {
 		RKGlobals::rInterface ()->issueCommand ("local({\n" + placement_command + code_property->preview () + placement_end + "})\n", RCommand::Plugin | RCommand::Sync, QString (), this, DO_PREVIEW);
 	}
@@ -209,7 +228,10 @@ void RKPreviewBox::killPreview (bool force) {
 	if (!preview_active) return;
 	preview_active = false;
 
-	if (force || placement != DockedPreview) {
+	// hmm, lots of special casing, here. But the reasons are:
+	// - docked preview are only hidden, really, and their window should not be destroyed
+	// - for HTML previews, removing the file has no effect in the first place, other than making code more difficult...
+	if (force || (placement != DockedPreview && preview_mode != HtmlPreview)) {
 		QString command;
 		if (preview_mode == PlotPreview) command = ".rk.killPreviewDevice (" + idprop + ')';
 		else command = "rk.discard.preview.data (" + idprop + ')';
