@@ -1331,7 +1331,7 @@ This chapter contains information on some topics that are useful only to certain
 	</sect2>
 	<sect2 id="preview_plots">
 		<title>Adding preview functionality</title>
-		<note><para>This section discusses adding preview functionality to plugins producing plots. There are separate sections on <link linkend="preview_data">previews of (imported) data</link>, or <link linkend="preview_custom">custom previews</link>. However, it is recommended that you read this section first, as the approach is similar in each case.</para></note>
+		<note><para>This section discusses adding preview functionality to plugins producing plots. There are separate sections on <link linkend="preview_output">previews of (HTML) output</link>, <link linkend="preview_data">previews of (imported) data</link>, and <link linkend="preview_custom">custom previews</link>. However, it is recommended that you read this section first, as the approach is similar in each case.</para></note>
 		<para>
 			A very useful feature for all plugins generating a plot/graph is to provide an automatically updating preview. To do so, you will need two things: Adding a <command>&lt;preview&gt;</command> check box to your <link linkend="mainxml">GUI definition</link>, and adjusting the <link linkend="jstemplate">generated code</link> for the preview.
 		</para>
@@ -1440,6 +1440,44 @@ This chapter contains information on some topics that are useful only to certain
 		if (full) {
 			echo ('rk.graph.off ()\n');
 		}
+	}
+		</programlisting>
+	</sect2>
+	<sect2 id="preview_output">
+		<title>Previews of (HTML) output</title>
+		<note><para>This section discusses adding preview functionality to plugins creating output / HTML printouts. It is recommended that you read the separate section on <link linkend="preview_plots">plot previews</link>, before this section.</para></note>
+		<para>
+			Creating a preview of HTML output is almost the same procedure as creating a plot preview. In this case, simply make sure that the <command>preview()</command> generates the relevant
+			<command>rk.print()/rk.results()</command> commands. It is generally a good idea to omit the header statements in the preview, however. Here is a stripped-down example:
+		</para>
+		<programlisting>
+	&lt;!-- In the plugin's XML file --&gt;>
+	&lt;dialog label="Import CSV data" &gt;
+		&lt;browser id="file" type="file" label="File name"/&gt;
+		&lt;!-- [...] --&gt;>
+		&lt;preview id="preview" mode="output"/&gt;
+	&lt;/dialog&gt;>
+		</programlisting>
+		<para>
+			Note the specification of <parameter>mode="output"</parameter> in the <command>&lt;preview&gt;</command> element.
+		</para>
+		<programlisting>
+	// In the plugin's JS file
+	function preview () {
+		// generates the code used for preview
+		doPrintout (true);
+	}
+
+	function printout () {
+		// generates the code used for real
+		doPrintout (false);
+	}
+
+	function doPrintout (is_preview) {
+		if (!is_preview) {
+			new Header ("This is a caption").print ();
+		}
+		echo ('rk.print (result)');
 	}
 		</programlisting>
 	</sect2>
