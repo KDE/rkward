@@ -13,7 +13,7 @@ function calculate () {
 	doCalculate (false);
 }
 
-function doCalculate () {
+function doCalculate (is_preview) {
 	var options = "";
 
 	if (getValue ("convert_dates")) {

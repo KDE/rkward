@@ -3512,7 +3512,7 @@ Child-elements:
 	</varlistentry>
 	<varlistentry>
 	<term><parameter>mode</parameter></term>
-	<listitem><para>Type of preview. Supported types are "plot" (see <link linkend="preview_plots">chapter on graph previews</link>), "data" (see <link linkend="preview_data">data previews</link>), and "custom" (see <link linkend="preview_custom">custom previews</link>). (optional, default is "plot")</para></listitem>
+	<listitem><para>Type of preview. Supported types are "plot" (see <link linkend="preview_plots">chapter on graph previews</link>), "output" (see <link linkend="preview_output">chapter on (HTML) output previews</link>), "data" (see <link linkend="preview_data">data previews</link>), and "custom" (see <link linkend="preview_custom">custom previews</link>). (optional, default is "plot")</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term><parameter>placement</parameter></term>
@@ -3520,7 +3520,7 @@ Child-elements:
 	</varlistentry>
 	<varlistentry>
 	<term><parameter>active</parameter></term>
-	<listitem><para>Whether the preview is active by default. In general, only docked previews should be made active by default (optional, default is "false")</para></listitem>
+	<listitem><para>Whether the preview is active by default. In general, only docked previews should be made active by default, and even for these, there is a reason why the default is in-active previews (optional, default is "false")</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
