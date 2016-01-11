@@ -174,7 +174,7 @@ This is a guide to writing plugins for &rkward;.
 		&lt;component type="standard" id="t_test_two_vars" file="t_test_two_vars.xml" label="Two Variable t-Test" /&gt;
 	</programlisting>
 	<para>
-		First the <parameter>type</parameter> attribute: Leave this to <replaceable>"standard"</replaceable> for now. Further types are not yet implemented. The <parameter>id</parameter> we've already hinted at. Each component has to be given a unique (in its namespace) identifier. Pick one that is easily recognizable. Avoid spaces and any special characters. Those are not banned, so far, but might have special meanings. With the <parameter>file</parameter> attribute, you specify where the <link linkend="mainxml">description of the actual plugin itself</link> is located. This is relative to the directory the &pluginmap; file is in, and the <parameter>base_prefix</parameter> above. Finally, give the component a label. This label will be shown whereever the plugin is placed in the menu (or in the future perhaps in other places as well).
+		First the <parameter>type</parameter> attribute: Leave this to <replaceable>"standard"</replaceable> for now. Further types are not yet implemented. The <parameter>id</parameter> we've already hinted at. Each component has to be given a unique (in its namespace) identifier. Pick one that is easily recognizable. Avoid spaces and any special characters. Those are not banned, so far, but might have special meanings. With the <parameter>file</parameter> attribute, you specify where the <link linkend="mainxml">description of the actual plugin itself</link> is located. This is relative to the directory the &pluginmap; file is in, and the <parameter>base_prefix</parameter> above. Finally, give the component a label. This label will be shown wherever the plugin is placed in the menu (or in the future perhaps in other places as well).
 	</para>
 	<para>
 		Typically a &pluginmap; file will contain several components, so here are a few more:
@@ -488,7 +488,7 @@ This is a guide to writing plugins for &rkward;.
 			&lt;page id="secondpage"&gt;
 				&lt;text&gt;Below are some advanced options. It's generally safe not to assume the
 					variables have equal variances. An appropriate correction will be applied then.
-					Chosing "assume equal variances" may increase test-strength, however.&lt;/text&gt;
+					Choosing "assume equal variances" may increase test-strength, however.&lt;/text&gt;
 				&lt;copy id="varequal"/&gt;
 				&lt;text&gt;Sometimes it's helpful to get an estimate of the confidence interval of
 					the difference in means. Below you can specify whether one should be shown, and
@@ -521,7 +521,7 @@ This is a guide to writing plugins for &rkward;.
 			If you find yourself creating a <command>&lt;radio&gt;</command> or <command>&lt;dropdown&gt;</command> with only two options, ask yourself, whether the question is essentially a yes / no type of question. E.g. a choice between <quote>adjust results</quote> and <quote>do not adjust results</quote>, or between <quote>remove missing values</quote> and <quote>keep missing values</quote>. In this case a <command>&lt;checkbox&gt;</command> is the best choice: It uses little space, will have the least words of labels, and is easiest to read for the user. There are very few situations where you should chose a <command>&lt;radio&gt;</command> over a <command>&lt;checkbox&gt;</command>, when there are only two options. An example of that might be: <quote>Method of calculation: 'pearson'/'spearman'</quote>. Here, more methods might be thinkable, and they don't really form a pair of opposites.
 		</para>
 		<para>
-			Chosing between a <command>&lt;radio&gt;</command> and a <command>&lt;dropdown&gt;</command> is mostly a question of space. The <command>&lt;dropdown&gt;</command> has the advantage of using little space, even if there are a lot of options to chose from. On the other hand, a <command>&lt;radio&gt;</command> has the advantage of making all possible choices visible to the user at once, without clicking on the dropdown arrow. Generally, if there are six or more options to chose from, a <command>&lt;dropdown&gt;</command> is preferable. If there are five or less options, a <command>&lt;radio&gt;</command> is the better choice.
+			Choosing between a <command>&lt;radio&gt;</command> and a <command>&lt;dropdown&gt;</command> is mostly a question of space. The <command>&lt;dropdown&gt;</command> has the advantage of using little space, even if there are a lot of options to chose from. On the other hand, a <command>&lt;radio&gt;</command> has the advantage of making all possible choices visible to the user at once, without clicking on the dropdown arrow. Generally, if there are six or more options to chose from, a <command>&lt;dropdown&gt;</command> is preferable. If there are five or less options, a <command>&lt;radio&gt;</command> is the better choice.
 		</para>
 	</sect2>
 </sect1>
@@ -1320,7 +1320,7 @@ This chapter contains information on some topics that are useful only to certain
 		<title>Drawing a plot to the output window</title>
 		<para>
 			In order to draw a plot to the output window, use <function>rk.graph.on()</function> directly before creating the plot, and
-			<function>rk.graph.off()</function>, directly afterwards. This is similar to &eg; callling <function>postscript()</function> and 
+			<function>rk.graph.off()</function>, directly afterwards. This is similar to &eg; calling <function>postscript()</function> and 
 			<function>dev.off()</function> in a regular R session.
 		</para>
 		<para>
@@ -1336,7 +1336,7 @@ This chapter contains information on some topics that are useful only to certain
 			A very useful feature for all plugins generating a plot/graph is to provide an automatically updating preview. To do so, you will need two things: Adding a <command>&lt;preview&gt;</command> check box to your <link linkend="mainxml">GUI definition</link>, and adjusting the <link linkend="jstemplate">generated code</link> for the preview.
 		</para>
 		<para>
-			Adding a <command>&lt;preview&gt;</command> check box is simple. Just place the following somewhere in your GUI. It will take care of all the behind-the-scenes magic of creating a preview device, updaing the preview whenever the setting have changed, &etc; Example:
+			Adding a <command>&lt;preview&gt;</command> check box is simple. Just place the following somewhere in your GUI. It will take care of all the behind-the-scenes magic of creating a preview device, updating the preview whenever the setting have changed, &etc; Example:
 		</para>
 		<programlisting>
 	&lt;document&gt;
@@ -1689,9 +1689,9 @@ This chapter contains information on some topics that are useful only to certain
 		  the command string to run, and as second parameter the name of a function to call, when the command has finished. Note that the command is running asynchronously, and this makes things
 		  a bit more complex. For one thing you want to make sure, that your <command>&lt;valueselector&gt;</command> remains disabled, while it does not contain up-to-date information. Another
 		  thing is that you could potentially have queued more than one command, before you get the first results. This is why every command is given an "id", and we store that in <parameter>last_command_id</parameter> for later reference.</para>
-	  <para>When the command is done, the specified callback is called (<parameter>commandFinished</parameter>, in this case) with two parameters: The result itself, and the id of the correspoding
+	  <para>When the command is done, the specified callback is called (<parameter>commandFinished</parameter>, in this case) with two parameters: The result itself, and the id of the corresponding
 		  command. The result will be of a type resembling the representation in R, &ie; a numeric Array, if the result is numeric, &etc; It can even be an R <command>list()</command>, but in this case
-		  it will be represented as a JS <command>Array()</command> whithout names.</para>
+		  it will be represented as a JS <command>Array()</command> without names.</para>
 	  <para>Note that even this example is somewhat simplified. In reality you should take additional precautions, &eg; to avoid putting an extreme amount of levels into the selector. The good news
 		  is that probably you do not have to do all this yourself. The above example is taken from the <command>rkward::level_select</command> plugin, for instance, which you can simply <link linkend="embedding">embed</link> in your own
 		  plugin. This even allows you to specify a different expression to run in place of <command>levels()</command>.</para>
@@ -1840,7 +1840,7 @@ This chapter contains information on some topics that are useful only to certain
 		<para>
 			Optionsets are a powerful tool, but they can sometimes do more harm than good, as they add considerable complexity, both
 			from the perspective of a plugin developer, and from the perspective of a user. Thus, think twice, when using them. Here's
-			some adivce:
+			some advice:
 		</para>
 		<itemizedlist>
 			<listitem><para>For some simple cases, the <command>&lt;matrix&gt;</command> element may provide a useful lightweight alternative.</para></listitem>
@@ -1974,7 +1974,7 @@ x	&lt;/components ...&gt;
 	<title>Plugin translations</title>
 	<para>
 		So far we have used a few concepts regarding translations or "i18n" (short for "internationaliation", which has 18 characters between i and n) in passing. In this chapter we
-		give a more in-depth account of what i18n functionaliy for &rkward; plugins. For the most part you will <emphasis>not</emphasis> need all of this in your plugins. However,
+		give a more in-depth account of what i18n functionally for &rkward; plugins. For the most part you will <emphasis>not</emphasis> need all of this in your plugins. However,
 		it may be a good idea to read over this chapter in full, as understanding these concept should help you creating plugins that are fully translatable, and that allow for a high
 		quality of translations.
 	</para>
@@ -2486,7 +2486,7 @@ full.wizard &lt;- rk.XML.wizard(
 		rk.XML.page(
 			rk.XML.text("Below are some advanced options. It's generally safe not to assume the
 				variables have equal variances. An appropriate correction will be applied then.
-				Chosing \"assume equal variances\" may increase test-strength, however."),
+				Choosing \"assume equal variances\" may increase test-strength, however."),
 			rk.XML.copy(check.eqvar),
 			rk.XML.text("Sometimes it's helpful to get an estimate of the confidence interval of
 				the difference in means. Below you can specify whether one should be shown, and
@@ -2624,7 +2624,7 @@ local({
 			rk.XML.page(
 				rk.XML.text("Below are some advanced options. It's generally safe not to assume the
 					variables have equal variances. An appropriate correction will be applied then.
-					Chosing \"assume equal variances\" may increase test-strength, however."),
+					Choosing \"assume equal variances\" may increase test-strength, however."),
 				rk.XML.copy(check.eqvar),
 				rk.XML.text("Sometimes it's helpful to get an estimate of the confidence interval of
 					the difference in means. Below you can specify whether one should be shown, and
@@ -2685,7 +2685,7 @@ variables &lt;- rk.XML.varselector(
       The text given to the <parameter>help</parameter> parameter can then be fetched by <function>rk.rkh.scan()</function> and written to the help page of this plugin component. For this to work technically, however, <function>rk.rkh.scan()</function> must know which &r; objects belong to one plugin component. This is why you must also provide the <parameter>component</parameter> parameter and make sure it is identical for all objects belonging together.
     </para>
     <para>
-      Since you will usually combine many objects into one dialog and might also like to be able to re-use objects like the <command>&lt;varslot&gt;</command> in multiple components of your plugins, it is possible to globally define a component with the <function>rk.set.comp()</function>. If set, it is assumend that all the following objects used in your script belong to that particular component, until <function>rk.set.comp()</function> is being called again with a different component name. You can then omit the <parameter>component</parameter> parameter:
+      Since you will usually combine many objects into one dialog and might also like to be able to re-use objects like the <command>&lt;varslot&gt;</command> in multiple components of your plugins, it is possible to globally define a component with the <function>rk.set.comp()</function>. If set, it is assumed that all the following objects used in your script belong to that particular component, until <function>rk.set.comp()</function> is being called again with a different component name. You can then omit the <parameter>component</parameter> parameter:
     </para>
     <programlisting>
 rk.set.comp("Data")
@@ -2947,7 +2947,7 @@ new Header(i18n("Test results")).print();
 	</varlistentry>
 	<varlistentry>
 	<term><parameter>copy_element_tag_name</parameter></term>
-	<listitem><para>In some few cases, you will want an almost literal copy, but change the tag-name of the element to copy. The most important example of this is, when you want to copy an entire &lt;tab&gt; from a dialog interface to the &lt;page&gt; of a wizard interface. In this case, you'd set coyp_elemnent_tag_name="page" to do this conversion automatically.</para></listitem>
+	<listitem><para>In some few cases, you will want an almost literal copy, but change the tag-name of the element to copy. The most important example of this is, when you want to copy an entire &lt;tab&gt; from a dialog interface to the &lt;page&gt; of a wizard interface. In this case, you'd set copy_element_tag_name="page" to do this conversion automatically.</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
@@ -3314,7 +3314,7 @@ made checkable, thus acting like a simple check box at the same time.
 	</varlistentry>
 	<varlistentry>
 	<term><parameter>horiz_headers</parameter></term>
-	<listitem><para>Strings to ues for the horiztonal header, separated by ";". The header will be hidden, if set to "". (optional, defaults to column number).</para></listitem>
+	<listitem><para>Strings to ues for the horizontal header, separated by ";". The header will be hidden, if set to "". (optional, defaults to column number).</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term><parameter>vert_headers</parameter></term>
@@ -4362,7 +4362,7 @@ Child elements:
 </varlistentry>
 <varlistentry>
 <term>&lt;require&gt;</term>
-<listitem><para>Include another &pluginmap; file. This &pluginmap; file is only loaded once, even if it is &lt;require&gt;d from several other files. The most important use case is to include a pluginmap file, which declares some comopnents, which are embedded by components declared in this &pluginmap;. &lt;require&gt;-elements are only allowed as direct children of the &lt;document&gt;-node. Attributes:
+<listitem><para>Include another &pluginmap; file. This &pluginmap; file is only loaded once, even if it is &lt;require&gt;d from several other files. The most important use case is to include a pluginmap file, which declares some components, which are embedded by components declared in this &pluginmap;. &lt;require&gt;-elements are only allowed as direct children of the &lt;document&gt;-node. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>file</term>
