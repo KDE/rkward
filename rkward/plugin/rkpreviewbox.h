@@ -55,13 +55,13 @@ private:
 	bool prior_preview_done;
 	bool new_preview_pending;
 	void tryPreview ();
-	void killPreview (bool force = false);
+	void killPreview (bool cleanup = false);
 	void updateStatusLabel ();
 	void setStatusMessage (const QString& status);
 	enum PreviewMode {
 		PlotPreview,
 		DataPreview,
-		HtmlPreview,
+		OutputPreview,
 		CustomPreview
 	} preview_mode;
 	enum PreviewPlacement {

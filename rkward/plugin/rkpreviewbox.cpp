@@ -44,7 +44,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	// get xml-helper
 	XMLHelper *xml = parent_component->xmlHelper ();
 
-	preview_mode = (PreviewMode) xml->getMultiChoiceAttribute (element, "mode", "plot;data;html;custom", 0, DL_INFO);
+	preview_mode = (PreviewMode) xml->getMultiChoiceAttribute (element, "mode", "plot;data;output;custom", 0, DL_INFO);
 	placement = (PreviewPlacement) xml->getMultiChoiceAttribute (element, "placement", "default;attached;detached;docked", (preview_mode == PlotPreview) ? 0 : 3, DL_INFO);
 	preview_active = xml->getBoolAttribute (element, "active", false, DL_INFO);
 	idprop = RObject::rQuote (QString ().sprintf ("%p", this));
@@ -80,14 +80,14 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 			RKWorkplace::mainWorkplace ()->registerNamedWindow (idprop, this, container);
 			uicomp->addDockedPreview (container, state, toggle_preview_box->text ());
 
-			if (preview_mode == HtmlPreview) {
+			if (preview_mode == OutputPreview) {
 				RKGlobals::rInterface ()->issueCommand ("local ({\n"
 				    "outfile <- tempfile (fileext='html')\n"
 				    "rk.assign.preview.data(" + idprop + ", list (filename=outfile, on.delete=function (id) {\n"
 				    "	rk.flush.output (outfile, ask=FALSE)\n"
 				    "	unlink (outfile)\n"
 				    "}))\n"
-				    "oldfile <- rk.set.output.html.file (outfile)  # for initialization\n"
+				    "oldfile <- rk.set.output.html.file (outfile, style='preview')  # for initialization\n"
 				    "rk.set.output.html.file (oldfile)\n"
 				    "})\n" + placement_command + "rk.show.html(rk.get.preview.data (" + idprop + ")$filename)" + placement_end, RCommand::Plugin | RCommand::Sync);
 			} else {
@@ -197,10 +197,10 @@ void RKPreviewBox::tryPreviewNow () {
 		RKGlobals::rInterface ()->issueCommand ("local({\n" + code_property->preview () + "})\n", RCommand::Plugin | RCommand::Sync, QString (), this, DO_PREVIEW);
 	} else if (preview_mode == DataPreview) {
 		RKGlobals::rInterface ()->issueCommand ("local({try({\n" + code_property->preview () + "\n})\nif(!exists(\"preview_data\",inherits=FALSE)) preview_data <- data.frame ('ERROR')\nrk.assign.preview.data(" + idprop + ", preview_data)\n})\n" + placement_command + "rk.edit(rkward::.rk.variables$.rk.preview.data[[" + idprop + "]])" + placement_end, RCommand::Plugin | RCommand::Sync, QString (), this, DO_PREVIEW);
-	} else if (preview_mode == HtmlPreview) {
+	} else if (preview_mode == OutputPreview) {
 		RKGlobals::rInterface ()->issueCommand (placement_command + "local({\n"
-		    "	oldfile <- rk.set.output.html.file(rk.get.preview.data (" + idprop + ")$filename)\n"
-		    "	rk.flush.output(ask=FALSE)\n"
+		    "	oldfile <- rk.set.output.html.file(rk.get.preview.data (" + idprop + ")$filename, style='preview')\n"
+		    "	rk.flush.output(ask=FALSE, style='preview')\n"
 		    "	local({try({\n" + code_property->preview () + "\n})})\n"  // nested local to make sure "oldfile" is not overwritten.
 		    "	rk.set.output.html.file(oldfile)\n})\n"
 		    "rk.show.html(rk.get.preview.data (" + idprop + ")$filename)" + placement_end, RCommand::Plugin | RCommand::Sync, QString (), this, DO_PREVIEW);
@@ -222,20 +222,21 @@ void RKPreviewBox::setStatusMessage(const QString& status) {
 	window->setStatusMessage (status);
 }
 
-void RKPreviewBox::killPreview (bool force) {
+void RKPreviewBox::killPreview (bool cleanup) {
 	RK_TRACE (PLUGIN);
 
 	if (!preview_active) return;
 	preview_active = false;
 
-	// hmm, lots of special casing, here. But the reasons are:
-	// - docked preview are only hidden, really, and their window should not be destroyed
-	// - for HTML previews, removing the file has no effect in the first place, other than making code more difficult...
-	if (force || (placement != DockedPreview && preview_mode != HtmlPreview)) {
+	if (cleanup) {
 		QString command;
 		if (preview_mode == PlotPreview) command = ".rk.killPreviewDevice (" + idprop + ')';
 		else command = "rk.discard.preview.data (" + idprop + ')';
 		RKGlobals::rInterface ()->issueCommand (command, RCommand::Plugin | RCommand::Sync);
+	}
+	if (placement != DockedPreview) {
+		RKMDIWindow *window =  RKWorkplace::mainWorkplace ()->getNamedWindow (idprop);
+		if (window) window->deleteLater ();
 	}
 
 	prior_preview_done = true;
