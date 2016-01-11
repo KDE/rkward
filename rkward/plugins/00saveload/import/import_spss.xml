@@ -33,6 +33,7 @@
 					<spinbox id="labels_limit" type="integer" initial="1000000" min="1" label="Maximum number of labels per object" />
 					<checkbox id="trim_labels" checked="false" label="Trim white space" value="1" value_unchecked="0"/>
 				</frame>
+				<preview id="preview" active="true" mode="data"/>
 			</tab>
 			<insert snippet="encoding_tab"/>
 		</tabbook>

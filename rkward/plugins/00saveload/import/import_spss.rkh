@@ -22,6 +22,7 @@ Choose the SPSS data file to import. Usually those files have the ending '*.sav'
 		<setting id="use_labels">Should SPSS variables with value labels be converted to R factors with those levels?</setting>
 		<setting id="labels_limit">Maximum number of factor levels to use (see <link href="rkward://rhelp/read.spss" />)</setting>
 		<setting id="trim_labels">Trim trailing white space from labels?</setting>
+		<setting id="preview">Preview imported data. Only the first 50 rows and columns are shown, for performance reasons. Internally, the preview uses a data.frame, even if <label id="data_frame"/> is not checked.</setting>
 		<insert snippet="encoding_doc"/>
 	</settings>
 	<related>
