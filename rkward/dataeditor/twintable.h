@@ -55,7 +55,7 @@ public:
 	RKVarEditModel* datamodel;
 
 	QActionGroup* editActions () const { return edit_actions; };
-	void setWindowStyleHint (const QString& hint) override;
+	void setWindowStyleHint (const QString& hint);
 public slots:
 	void metaHeaderPressed (int section);
 	void metaHeaderEntered (int section);
