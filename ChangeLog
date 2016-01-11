@@ -1,6 +1,10 @@
 - Fixed: Numerical (display) precision setting was not honored in data editor
 - Fix several window activation quirks in "Focus follows mouse" mode
 - File selectors in "Import XYZ" plugins now filter for standard file extensions, by default
+- Allow previews for data, (HTML) output, and custom types of previews
+- Allow previews to be docked to the dialog window
+- Implicitly save code preview visibility and size (instead of the former explicit settings)
+- data.frame objects outside of globalenv() can be opened read-only in an editor window
 - Show a warning screen when invoking plugins from the command line (or from clicking an rkward://-link in an external application)
 
 --- Version 0.6.4 - Dec-20-2015

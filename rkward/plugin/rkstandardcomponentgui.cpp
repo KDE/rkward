@@ -22,17 +22,19 @@
 #include <kactioncollection.h>
 #include <kurl.h>
 #include <kvbox.h>
-#include <khbox.h>
 
 #include <qtimer.h>
-#include <qlayout.h>
 #include <qpushbutton.h>
 #include <qlabel.h>
 #include <QCloseEvent>
 #include <QCheckBox>
+#include <QSplitter>
+#include <QHBoxLayout>
+#include <QToolButton>
 
 #include "rkcomponentmap.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkstandardicons.h"
 #include "../windows/rkworkplace.h"
 #include "../windows/rkcommandeditorwindow.h"
 #include "../rbackend/rinterface.h"
@@ -43,10 +45,14 @@
 
 /////////////////////////////////////// RKStandardComponentGUI ////////////////////////////////////////////////
 
-RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, RKComponentPropertyCode *code_property, bool enslaved) {
+RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, RKComponentPropertyCode *code_property, bool enslaved) :
+	code_display_visibility (this, false, false)
+{
 	RK_TRACE (PLUGIN);
 
-	toggle_code_button = 0;
+	toggle_code_box = 0;
+	splitter = 0;
+	code_display = 0;
 
 	RKStandardComponentGUI::component = component;
 	RKStandardComponentGUI::code_property = code_property;
@@ -61,6 +67,11 @@ RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, 
 	connect (code_update_timer, SIGNAL (timeout()), this, SLOT (updateCodeNow()));
 
 	if (!enslaved) {
+		// code display
+		code_display = new RKCommandEditorWindow (0, true, false);
+		code_display->setReadOnly (true);
+		addDockedPreview (code_display, &code_display_visibility, i18n ("Code Preview"), RKSettingsModulePlugins::defaultCodeHeight ());
+
 		KActionCollection *action_collection = new KActionCollection (this);
 		action_collection->addAction (KStandardAction::Copy, this, SLOT (copyCode()));
 	}
@@ -68,6 +79,19 @@ RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, 
 
 RKStandardComponentGUI::~RKStandardComponentGUI () {
 	RK_TRACE (PLUGIN);
+
+	if (!enslaved && toggle_code_box && splitter) {  // A top-level dialog-style UI
+		for (int i = 0; i < previews.size (); ++i) {
+			bool visible = previews[i].controller->boolValue ();
+			int size = visible ? previews[i].area->height () : previews[i].sizehint;
+			if (i == previews.size () - 1) {  // code preview
+				RKSettingsModulePlugins::setShowCodeByDefault (visible);
+				if (size > 0) RKSettingsModulePlugins::setDefaultCodeHeight (size);
+			} else {
+				if (size > 0) RKSettingsModulePlugins::setDefaultOtherPreviewHeight (size);
+			}
+		}
+	}
 }
 
 void RKStandardComponentGUI::createDialog (bool switchable) {
@@ -75,8 +99,12 @@ void RKStandardComponentGUI::createDialog (bool switchable) {
 
 	QVBoxLayout *main_vbox = new QVBoxLayout (this);
 	main_vbox->setContentsMargins (0, 0, 0, 0);
-	QWidget *upper_widget = new QWidget (this);
-	
+	splitter = new QSplitter (this);
+	splitter->setOrientation (Qt::Vertical);
+	main_vbox->addWidget (splitter);
+
+	QWidget *upper_widget = new QWidget ();
+
 	QHBoxLayout *hbox = new QHBoxLayout (upper_widget);
 
 	// build standard elements
@@ -120,25 +148,67 @@ void RKStandardComponentGUI::createDialog (bool switchable) {
 	}
 	vbox->addStretch (2);
 	
-	toggle_code_button = new QPushButton (i18n ("Code"), upper_widget);
-	toggle_code_button->setCheckable (true);
-	connect (toggle_code_button, SIGNAL (clicked()), this, SLOT (toggleCode()));
-	vbox->addWidget (toggle_code_button);
-	if (enslaved) toggle_code_button->hide ();
-	
-	// code display
-	code_display = new RKCommandEditorWindow (this, true, false);
-	code_display->setReadOnly (true);
-	code_display->setMinimumHeight (RKSettingsModulePlugins::defaultCodeHeight ());
-	code_display->hide ();
+	toggle_code_box = new QCheckBox (i18n ("Code Preview"), upper_widget);
+	connect (toggle_code_box, SIGNAL (clicked()), this, SLOT (toggleCode()));
+	vbox->addWidget (toggle_code_box);
+	if (enslaved) toggle_code_box->hide ();
 
-	main_vbox->addWidget (upper_widget);
-	main_vbox->addWidget (code_display);
+	splitter->addWidget (upper_widget);
+	splitter->setStretchFactor (0, 0);          // When resizing the dialog, *and* any preview is visible, effectively resize the preview. Dialog area can be resized via splitter.
+	splitter->setChildrenCollapsible (false);   // It's just too difficult to make this consistent, esp. for shrinking the dialog would _also_ be expected to collapse widgets. Besides, this makes it
+	                                            // easier to keep track of which expansions are currently visible.
 
 	if (!enslaved && RKSettingsModulePlugins::showCodeByDefault ()) {
-		toggle_code_button->setChecked (true);	// will trigger showing the code along with the dialog
+		toggle_code_box->setChecked (true);	// will trigger showing the code along with the dialog
 	}
 }
+
+void RKStandardComponentGUI::finalize () {
+	RK_TRACE (PLUGIN);
+
+	for (int i = 0; i < previews.size (); ++i) {
+		// Add preview to splitter. Also add a title bar to each preview.
+		QWidget *dummy = new QWidget ();
+		QVBoxLayout *vl = new QVBoxLayout (dummy);
+		vl->setContentsMargins (0, 0, 0, 0);
+		QFrame *line = new QFrame (dummy);
+		line->setFrameShape (QFrame::HLine);
+		vl->addWidget (line);
+		QHBoxLayout *hl = new QHBoxLayout ();
+		vl->addLayout (hl);
+		QLabel *lab = new QLabel (i18n ("<b>%1</b>", previews[i].label), dummy);
+		lab->setAlignment (Qt::AlignCenter);
+		QToolButton *tb = new QToolButton (dummy);
+		tb->setAutoRaise (true);
+		tb->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDelete));
+		tb->setProperty ("preview_area", QVariant::fromValue (dummy));
+		connect (tb, SIGNAL (clicked()), this, SLOT (previewCloseButtonClicked()));
+		hl->addStretch ();
+		hl->addWidget (lab);
+		hl->addWidget (tb);
+		hl->addStretch ();
+
+		vl->addWidget (previews[i].area);
+		previews[i].area->show ();
+		previews[i].area = dummy;
+		if (!(previews[i].controller->boolValue ())) dummy->hide ();
+		splitter->insertWidget (i+1, previews[i].area);
+		splitter->setStretchFactor (i+1, 1);
+	}
+}
+
+void RKStandardComponentGUI::addDockedPreview (QWidget *area, RKComponentPropertyBool *controller, const QString& label, int sizehint) {
+	RK_TRACE (PLUGIN);
+
+	PreviewArea parea;
+	parea.area = area;
+	parea.controller = controller;
+	parea.sizehint = sizehint;
+	parea.label = label;
+	previews.insert (0, parea);
+
+	connect (controller, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (previewVisibilityChanged(RKComponentPropertyBase*)));
+};
 
 void RKStandardComponentGUI::showEvent (QShowEvent *e) {
 	RK_TRACE (PLUGIN);
@@ -150,11 +220,10 @@ void RKStandardComponentGUI::showEvent (QShowEvent *e) {
 	if ((min.width () < 50) || (min.height () < 50)) min = sizeHint ();
 	setMinimumSize (min.expandedTo (QSize (50, 50)));
 
-	if (toggle_code_button) {	// this is a dialog, not  wizard
+	if (toggle_code_box) {	// this is a dialog, not  wizard
 		QTimer::singleShot (0, this, SLOT (toggleCode()));
 	}
 }
-
 
 void RKStandardComponentGUI::ok () {
 	RK_TRACE (PLUGIN);
@@ -196,24 +265,75 @@ void RKStandardComponentGUI::cancel () {
 
 void RKStandardComponentGUI::toggleCode () {
 	RK_TRACE (PLUGIN);
-	RK_ASSERT (toggle_code_button);
+	RK_ASSERT (toggle_code_box);
+
+	if (code_display_visibility.boolValue () != toggle_code_box->isChecked ()) {
+		code_display_visibility.setBoolValue (toggle_code_box->isChecked ());
+	}
+	updateCode ();
+}
+
+void RKStandardComponentGUI::previewCloseButtonClicked () {
+	RK_TRACE (PLUGIN);
+
+	RK_ASSERT (splitter);  // is a dialog
+	QWidget *area = qvariant_cast<QWidget*> (sender ()->property ("preview_area"));
+
+	for (int i = 0; i < previews.size (); ++i) {
+		if (area == previews[i].area) {
+			previews[i].controller->setBoolValue (false);
+			if (i == previews.size () - 1) toggle_code_box->setChecked (false);
+			return;
+		}
+	}
+
+	RK_ASSERT (false);
+}
+
+void RKStandardComponentGUI::previewVisibilityChanged (RKComponentPropertyBase* prop) {
+	RK_TRACE (PLUGIN);
+
+	if (!splitter) return;
+
+	bool visible = static_cast<RKComponentPropertyBool*> (prop)->boolValue ();
+
+	// which preview got toggled?
+	int pos = -1;
+	for (int i = 0; i < previews.size (); ++i) {
+		if (prop == previews[i].controller) {
+			pos = i;
+			break;
+		}
+	}
+	if (pos < 0) {
+		RK_ASSERT (pos >= 0);
+		return;
+	}
+	PreviewArea &area = previews[pos];
 
 	int new_height = height ();
+	QList<int> sizes = splitter->sizes ();
 
-	if (toggle_code_button->isChecked ()) {
-		new_height += RKSettingsModulePlugins::defaultCodeHeight ();
-		code_display->show ();
+	if (visible) {
+		int h = area.sizehint;
+		if (h <= 0) h = (pos == previews.size () - 1) ? RKSettingsModulePlugins::defaultCodeHeight () : RKSettingsModulePlugins::defaultOtherPreviewHeight ();
+		if (h < 40) h = 40;
+		new_height += h;
+		area.area->show ();
+		sizes[pos+1] = h;
 	} else {
-		new_height -= code_display->height ();
-		code_display->hide ();
+		area.sizehint = sizes[pos + 1];
+		new_height -= area.sizehint;
+		area.area->hide ();
+		sizes[pos+1] = 0;
+		splitter->refresh ();      // NOTE: Without this line, _and_ layout->activate() below, the dialog will _not_ shrink back to its original size when hiding the code display. Qt 4.8
 	}
+	splitter->setSizes (sizes);
 
 	if (isVisible ()) {
 		layout ()->activate ();
 		resize (width (), new_height);
 	}
-
-	updateCode ();
 }
 
 void RKStandardComponentGUI::copyCode () {
@@ -251,7 +371,7 @@ void RKStandardComponentGUI::codeChanged (RKComponentPropertyBase *) {
 void RKStandardComponentGUI::updateCode () {
 	RK_TRACE (PLUGIN);
 
-	if (code_display->isHidden ()) return;
+	if (!code_display_visibility.boolValue ()) return;
 	code_update_timer->start (0);
 }
 
@@ -328,7 +448,7 @@ void RKStandardComponentWizard::createWizard (bool switchable) {
 	auto_close_box->hide ();
 }
 
-void RKStandardComponentWizard::addLastPage () {
+void RKStandardComponentWizard::finalize () {
 	RK_TRACE (PLUGIN);
 
 	if (!enslaved) {
@@ -336,12 +456,22 @@ void RKStandardComponentWizard::addLastPage () {
 		RKComponent *last_page = stack->addPage (component);
 		QVBoxLayout *vbox = new QVBoxLayout (last_page);
 		vbox->setContentsMargins (0, 0, 0, 0);
-		QLabel *label = new QLabel (i18n ("Below you can see the command(s) corresponding to the settings you made. Click 'Submit' to run the command(s)."), last_page);
-		label->setWordWrap (true);
-		code_display = new RKCommandEditorWindow (last_page, true, false);
-		code_display->setReadOnly (true);
-		vbox->addWidget (label);
-		vbox->addWidget (code_display);
+		if (previews.size () < 2) {
+			RK_ASSERT (previews.size () == 1);
+			QLabel *label = new QLabel (i18n ("Below you can preview the R commands corresponding to the settings you made. Click 'Submit' to run the commands."), last_page);
+			label->setWordWrap (true);
+			vbox->addWidget (label);
+			vbox->addWidget (code_display);
+		} else {
+			QLabel *label = new QLabel (i18n ("Below you can preview the result of your settings, and the R commands to be run. Click 'Submit' to run the commands."), last_page);
+			label->setWordWrap (true);
+			vbox->addWidget (label);
+			QTabWidget *previews_widget = new QTabWidget (last_page);
+			vbox->addWidget (previews_widget);
+			for (int i = 0; i < previews.size (); ++i) {
+				previews_widget->addTab (previews[i].area, previews[i].label);
+			}
+		}
 	}
 
 	stack->goToFirstPage ();

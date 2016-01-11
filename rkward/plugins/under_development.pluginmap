@@ -21,6 +21,7 @@
 		<component type="standard" id="sort_data2" file="data/sort2.xml" label="Sort data (Variant 2)" />
 
 <!-- These are purely for testing: -->
+		<component type="standard" id="preview_test" file="testing/preview.xml" label="Preview Test" />
 		<component type="standard" id="qtscript_test1" file="testing/test1.xml" label="QtScript Test 1" />
 		<component type="standard" id="qtscript_test2" file="testing/test2.xml" label="QtScript Test 2" />
 		<component type="standard" id="optionset_test" file="testing/optionset.xml" label="Optionset Test" />
@@ -54,6 +55,7 @@
 			<entry component="optionset_test" group="testing"/>
 			<entry component="matrix_test1" group="testing"/>
 			<entry component="valueselect_test1" group="testing"/>
+			<entry component="preview_test" group="testing"/>
 		</menu>
 		<menu id="plots" label="Plots">
 			<group id="testing" group="bottom" separated="true"/>

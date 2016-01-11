@@ -749,7 +749,7 @@ void RObject::endEdit () {
 	RK_ASSERT (false);
 }
 
-bool RObject::canEdit () const {
+bool RObject::canWrite () const {
 	RK_TRACE (OBJECTS);
 
 	// TODO: find out, if binding is locked:

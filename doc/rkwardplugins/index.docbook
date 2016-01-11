@@ -1331,6 +1331,7 @@ This chapter contains information on some topics that are useful only to certain
 	</sect2>
 	<sect2 id="preview_plots">
 		<title>Adding preview functionality</title>
+		<note><para>This section discusses adding preview functionality to plugins producing plots. There are separate sections on <link linkend="preview_output">previews of (HTML) output</link>, <link linkend="preview_data">previews of (imported) data</link>, and <link linkend="preview_custom">custom previews</link>. However, it is recommended that you read this section first, as the approach is similar in each case.</para></note>
 		<para>
 			A very useful feature for all plugins generating a plot/graph is to provide an automatically updating preview. To do so, you will need two things: Adding a <command>&lt;preview&gt;</command> check box to your <link linkend="mainxml">GUI definition</link>, and adjusting the <link linkend="jstemplate">generated code</link> for the preview.
 		</para>
@@ -1441,6 +1442,123 @@ This chapter contains information on some topics that are useful only to certain
 		}
 	}
 		</programlisting>
+	</sect2>
+	<sect2 id="preview_output">
+		<title>Previews of (HTML) output</title>
+		<note><para>This section discusses adding preview functionality to plugins creating output / HTML printouts. It is recommended that you read the separate section on <link linkend="preview_plots">plot previews</link>, before this section.</para></note>
+		<para>
+			Creating a preview of HTML output is almost the same procedure as creating a plot preview. In this case, simply make sure that the <command>preview()</command> generates the relevant
+			<command>rk.print()/rk.results()</command> commands. It is generally a good idea to omit the header statements in the preview, however. Here is a stripped-down example:
+		</para>
+		<programlisting>
+	&lt;!-- In the plugin's XML file --&gt;>
+	&lt;dialog label="Import CSV data" &gt;
+		&lt;browser id="file" type="file" label="File name"/&gt;
+		&lt;!-- [...] --&gt;>
+		&lt;preview id="preview" mode="output"/&gt;
+	&lt;/dialog&gt;>
+		</programlisting>
+		<para>
+			Note the specification of <parameter>mode="output"</parameter> in the <command>&lt;preview&gt;</command> element.
+		</para>
+		<programlisting>
+	// In the plugin's JS file
+	function preview () {
+		// generates the code used for preview
+		doPrintout (true);
+	}
+
+	function printout () {
+		// generates the code used for real
+		doPrintout (false);
+	}
+
+	function doPrintout (is_preview) {
+		if (!is_preview) {
+			new Header ("This is a caption").print ();
+		}
+		echo ('rk.print (result)');
+	}
+		</programlisting>
+	</sect2>
+	<sect2 id="preview_data">
+		<title>Previews of (imported) data</title>
+		<note><para>This section discusses adding preview functionality to plugins creating (importing) data. It is recommended that you read the separate section on <link linkend="preview_plots">plot previews</link>, before this section.</para></note>
+		<para>
+			Creating a preview of imported data (any type of data that <command>rk.edit()</command> can handle), is very similar to creating a <link linkend="preview_plots">plot preview</link>. The following stripped down example should help illustrate how to create a data preview:
+		</para>
+		<programlisting>
+	&lt;!-- In the plugin's XML file --&gt;>
+	&lt;dialog label="Import CSV data" &gt;
+		&lt;browser id="file" type="file" label="File name"/&gt;
+		&lt;!-- [...] --&gt;>
+		&lt;preview id="preview" active="true" mode="data"/&gt;
+	&lt;/dialog&gt;>
+		</programlisting>
+		<para>
+			Note that the <command>&lt;preview&gt;</command> element specifies <parameter>mode="data"</parameter> this time. <parameter>active="true"</parameter> simply makes the preview active by
+			default.
+		</para>
+		<programlisting>
+	// In the plugin's JS file
+	function preview () {
+		// generates the code used for preview
+		doCalculate (true);
+	}
+
+	function calculate () {
+		// generates the "final" code
+		doCalculate (false);
+	}
+
+	function doCalculate (is_preview) {
+		echo ('imported &lt;- read.csv (file="' + getString ("file") /* [+ options] */);
+		if (is_preview) {
+			echo ('preview_data &lt;- imported\n');
+		} else {
+			echo ('.GlobalEnv$' + getString ("name") + ' &gt;- imported\n');
+		}
+	}
+
+	function printout () {
+		// [...]
+	}
+		</programlisting>
+		<para>
+			Again, the <command>preview()</command> function generates almost the same R code as the <command>calculate()</command> function, so we create a helper function <command>doCalcuate()</command> to factor out the common parts. The most important thing to note is that you will have to assign the imported data to a object called
+			<parameter>preview_data</parameter> (inside the current - local - environment). <emphasis>Everything else will happen automatically</emphasis> (roughly speaking, &kapp; will call <command>rk.edit(preview_data)</command>, wrapped inside a call to <command>.rk.with.window.hints()</command>).
+		</para>
+		<note><para>
+			While previews are a great feature, they do consume resources. In the case of data previews, there may be cases, where previews can cause significant performance issues. This could be
+			for importing huge datasets (which are just too large to be opened for editing in &kapp;'s editor window), but also "normal" datasets could be mis-imported, creating a huge number of rows or columns. <emphasis>It is very much recommended that you limit the <parameter>preview_data</parameter></emphasis> to a dimension that provides a useful preview, without the danger of
+			creating noticable performance issues (e.g. 50 rows by 50 columns should be more than enough in most cases).
+		</para></note>
+	</sect2>
+	<sect2 id="preview_custom">
+		<title>Custom previews</title>
+		<para>
+			The <command>&lt;preview&gt;</command> element can be used to create previews for any type of "document" window that can be attached to &kapp;'s workplace. In addition to <link linkend="preview_plots">plots</link> and <link linkend="preview_data">data windows</link>, this includes HTML files, R scripts, and object summary windows. For the latter ones, you will have to use <command>&lt;preview mode="custom"&gt;</command>.
+		</para>
+		<para>
+			If you have read the sections describing plot preview and data previews, you should have a general idea on the procedure, but "custom" previews require slightly more manual work behind the scenes. The most important R function to look at is <command>rk.assign.preview.data()</command>, here. The following short listing shows what your generated (preview) R code could look like:
+		</para>
+		<programlisting>
+	## To be generated in the preview() code section of a plugin
+	outfile &lt;- rk.get.tempfile.name(prefix="preview", extension=".html")
+	rk.assign.preview.data("SOMEID", list(filename=outfile, on.delete=function (id) {
+		unlink(rk.get.preview.data(id)$filename)
+	}))
+	oldfile &lt;- rk.set.output.html.file(f)
+	try ({
+		rk.header("This is a preview of what will happen")
+		rk.show.html(rk.get.output.html.file())
+		rk.flush.output()
+	})
+	rk.set.output.html.file(outfile)
+		</programlisting>
+		<para>
+			Here you should get the value <parameter>SOMEID</parameter> from the <parameter>id</parameter> property of the <command>&lt;preview&gt;</command>-element. I.e. using <command>getString ("preview.id")</command> in the plugin's .js file.
+		</para>
 	</sect2>
 </sect1>
 
@@ -3386,11 +3504,23 @@ Child-elements:
 
 <varlistentry>
 <term>&lt;preview&gt;</term>
-<listitem><para>Checkbox to toggle preview functionality (see <link linkend="preview_plots">chapter on graph previews</link>). Attributes:
+<listitem><para>Checkbox to toggle preview functionality. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term><parameter>label</parameter></term>
 	<listitem><para>Label of the box (optional, default is "Preview")</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term><parameter>mode</parameter></term>
+	<listitem><para>Type of preview. Supported types are "plot" (see <link linkend="preview_plots">chapter on graph previews</link>), "data" (see <link linkend="preview_data">data previews</link>), and "custom" (see <link linkend="preview_custom">custom previews</link>). (optional, default is "plot")</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term><parameter>placement</parameter></term>
+	<listitem><para>Placement of the preview: "attached" (to the main workplace), "detached" (standalone window), "docked" (attached to the plugin dialog) and "default" (default depending on type of preview). In general, it is recommended to leave this as the default setting for best UI-consistency (optional, default is "default")</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term><parameter>active</parameter></term>
+	<listitem><para>Whether the preview is active by default. In general, only docked previews should be made active by default (optional, default is "false")</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>

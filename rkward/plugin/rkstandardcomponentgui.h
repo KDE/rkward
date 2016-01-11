@@ -83,6 +83,9 @@ public:
 	virtual void updateCode ();
 /** reimplemented from QWidget to take care of showing the code display if needed */
 	void showEvent (QShowEvent *e);
+	void addDockedPreview (QWidget *area, RKComponentPropertyBool *controller, const QString& label, int sizehint = -1);
+/** Do anything needed after the dialog is created and its contents have been built. Base class adds the preview regions to the splitter */
+	virtual void finalize ();
 public slots:
 	void ok ();
 	void cancel ();
@@ -92,11 +95,15 @@ public slots:
 	void updateCodeNow ();
 	void switchInterface () { component->switchInterface (); };
 	void copyCode ();
+private slots:
+	void previewVisibilityChanged (RKComponentPropertyBase*);
+	void previewCloseButtonClicked ();
 private:
 	RKComponentPropertyCode *code_property;
+	RKComponentPropertyBool code_display_visibility;
 
 	// widgets for dialog only
-	QPushButton *toggle_code_button;
+	QCheckBox *toggle_code_box;
 	QPushButton *ok_button;
 protected:
 	void closeEvent (QCloseEvent *e);
@@ -109,9 +116,18 @@ protected:
 	QPushButton *help_button;
 	QPushButton *switch_button;
 	QCheckBox *auto_close_box;
+	QSplitter *splitter;
 	RKCommandEditorWindow *code_display;
 
 	bool enslaved;
+
+	struct PreviewArea {
+		QWidget *area;
+		RKComponentPropertyBool *controller;
+		QString label;
+		int sizehint;
+	};
+	QList<PreviewArea> previews;
 };
 
 /** A wizardish RKStandardComponentGUI. You *must* call createDialog () after construction, and addLastPage () filling the wizard!
@@ -126,8 +142,8 @@ public:
 	void enableSubmit (bool enable);
 	void updateCode ();
 	void createWizard (bool switchable);
-/** Add a standard last page in the wizard. To confuse everybody, this also initializes the view to the first page */
-	void addLastPage ();
+/** Adds a standard last page in the wizard, and initializes the view to the first page */
+	void finalize () override;
 
 	void updateState ();
 

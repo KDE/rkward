@@ -29,6 +29,8 @@ class QEvent;
 class QPaintEvent;
 class RKWorkplace;
 class RKToolWindowBar;
+class KPassivePopup;
+class RCommand;
 
 class RKMDIStandardActionClient : public KXMLGUIClient {
 public:
@@ -101,6 +103,12 @@ public:
 	virtual void prepareToBeDetached ();
 /** Tool windows will only hide themselves, and ignore the also_delete flag */
 	virtual bool close (bool also_delete);
+/** Set a status message to be shown in a popup inside the window. The message persists until the given R command has finished, or until this function is called with an empty string.
+This should be used, when the information shown is currently out-of-date (e.g. when refreshing a preview / loading a plot from history), _not_ when the window
+is simply busy (e.g. when saving the current plot to history). */
+	void setStatusMessage (const QString& message, RCommand* command=0);
+/** Set a style hint for the window. So far the only interpreted style hint is "preview", and not all windows implement it. Base implements hiding of "active" indicator border for "preview"s. */
+	virtual void setWindowStyleHint (const QString& hint);
 
 	bool eventFilter (QObject *watched, QEvent *e);
 	bool acceptsEventsFor (QObject *object);
@@ -119,6 +127,7 @@ signals:
 protected slots:
 	void showWindowHelp ();
 	void showWindowSettings ();
+	void clearStatusMessage ();
 protected:
 	void setPart (KParts::Part *p) { part = p; };
 	void setMetaInfo (const QString& generic_window_name, const QString& help_url, RKSettings::SettingsPage settings_page=RKSettings::NoPage);
@@ -142,12 +151,15 @@ friend class RKToolWindowBar;
 	State state;
 	RKToolWindowBar *tool_window_bar;
 	bool active;
+	bool no_border_when_active;
 	RKMDIStandardActionClient *standard_client;
 /** @see globalContextProperty() */
 	QMap<QString, QString> global_context_properties;
 	QString generic_window_name;
 	QString help_url;
 	RKSettings::SettingsPage settings_page;
+
+	KPassivePopup* status_popup;
 };
 
 #endif

@@ -2,7 +2,7 @@
                           rksettingsmoduleplugins  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004-2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -53,7 +53,11 @@ public:
 	static QStringList pluginMaps ();
 	static PluginPrefs getInterfacePreference () { return interface_pref; };
 	static bool showCodeByDefault () { return show_code; };
+	static void setShowCodeByDefault (bool shown) { show_code = shown; };
 	static int defaultCodeHeight () { return code_size; };
+	static void setDefaultCodeHeight (int new_height) { code_size = new_height; }
+	static int defaultOtherPreviewHeight () { return other_preview_height; };
+	static void setDefaultOtherPreviewHeight (int new_height) { other_preview_height = new_height; }
 	/** register a list of available plugin-maps (which may or may not already be known). New maps are activated, automatically.
 	 * @param maps Plugin maps (filenames) to add
 	 * @param force_add If true, maps are added, even if they are not "new", and had previously been disabled by the user
@@ -90,8 +94,6 @@ public slots:
 	void configurePluginmaps ();
 private:
 	QButtonGroup *button_group;
-	QCheckBox *show_code_box;
-	RKSpinBox *code_size_box;
 
 	/** plugin maps which are not necessarily active, but have been encountered, before. @see plugin_maps */
 	static PluginMapList known_plugin_maps;
@@ -99,6 +101,7 @@ private:
 	static PluginPrefs interface_pref;
 	static bool show_code;
 	static int code_size;
+	static int other_preview_height;
 
 /* TODO: This one is currently unused (leftover of GHNS-based plugin installation), but might still be of interest */
 	static QStringList findPluginMapsRecursive (const QString &basedir);

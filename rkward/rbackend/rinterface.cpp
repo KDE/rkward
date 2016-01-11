@@ -2,7 +2,7 @@
                           rinterface.cpp  -  description
                              -------------------
     begin                : Fri Nov 1 2002
-    copyright            : (C) 2002-2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2002-2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -625,6 +625,8 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 			RK_ASSERT (calllist.value (1) == "get");
 			return (RKWorkplace::mainWorkplace ()->makeWorkplaceDescription ());
 		}
+	} else if (call == "set.window.placement.hint") {
+		RKWorkplace::mainWorkplace ()->setWindowPlacementOverrides (calllist.value (1), calllist.value (2), calllist.value (3));
 	} else if (call == "getSessionInfo") {
 		// Non-translatable on purpose. This is meant for posting to the bug tracker, mostly.
 		QStringList lines ("-- Frontend --");

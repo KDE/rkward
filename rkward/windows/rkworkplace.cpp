@@ -2,7 +2,7 @@
                           rkworkplace  -  description
                              -------------------
     begin                : Thu Sep 21 2006
-    copyright            : (C) 2006-2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2006-2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -65,6 +65,7 @@ RKWorkplace::RKWorkplace (QWidget *parent) : QWidget (parent) {
 
 	main_workplace = this;
 	_workspace_config = 0;
+	window_placement_override = RKMDIWindow::AnyWindowState;
 
 	/* Splitter setup contains heavy copying from Kate's katemdi! */
 	KVBox *vbox = new KVBox (this);
@@ -211,10 +212,62 @@ void RKWorkplace::detachWindow (RKMDIWindow *window, bool was_attached) {
 void RKWorkplace::addWindow (RKMDIWindow *window, bool attached) {
 	RK_TRACE (APP);
 
+	// first handle placement overrides
+	if (window_placement_override == RKMDIWindow::Attached) {
+		if (!attached) window->state = RKMDIWindow::Detached;   // Ok, yeah. BAD style. But windows that would go to detached by default would not prepareToBeAttached(), without this.
+		                                                        // TODO: Create third state: NotManaged
+		attached = true;
+	} else if (window_placement_override == RKMDIWindow::Detached) {
+		attached = false;
+	}
+
+	// style override. Windows may or may not handle this
+	if (!window_style_override.isEmpty ()) window->setWindowStyleHint (window_style_override);
+
+	// next handle name overrides, if any
+	if (!window_name_override.isEmpty ()) {
+		int pos = -1;
+		for (int i = 0; i < named_windows.size (); ++i) {
+			if (named_windows[i].id == window_name_override) {
+				pos = i;
+				break;
+			}
+		}
+		if (pos < 0) {   // not yet known: implicit registration -> create corresponing named_window_spec on the fly.
+			registerNamedWindow (window_name_override, 0, attached ? RKWardMainWindow::getMain () : 0);
+			pos = named_windows.size () - 1;
+		}
+
+		NamedWindow &nw = named_windows[pos];
+		if (nw.window != window) {
+			if (nw.window) {  // kill existing window (going to be replaced)
+				// TODO: this is not really elegant, yet, as it will change tab-placement (for attached windows), and discard / recreate container (for detached windows)
+				disconnect (nw.window, SIGNAL (destroyed(QObject*)), this, SLOT (namedWindowDestroyed(QObject*)));
+				nw.window->deleteLater ();
+			}
+			nw.window = window;
+			connect (nw.window, SIGNAL (destroyed(QObject*)), this, SLOT (namedWindowDestroyed(QObject*)));
+		}
+		named_windows[pos] = nw;
+
+		// add window in the correct area
+		if (nw.parent == RKWardMainWindow::getMain ()) attached = true;
+		else if (nw.parent == 0) attached = false;
+		else { // custom parent
+			window->prepareToBeAttached ();
+			window->setParent (nw.parent);
+			// TODO: do this is somewhat inconsistent. But such windows are not attached to the main workplace view, which makes them rather behave detached.
+			window->state = RKMDIWindow::Detached;
+			// NOTE: The window is _not_ added to the window list/window history in this case.
+			return;
+		}
+	}
+
 	windows.append (window);
 	connect (window, SIGNAL (destroyed(QObject*)), this, SLOT (removeWindow(QObject*)));
 	connect (window, SIGNAL (windowActivated(RKMDIWindow*)), history, SLOT (windowActivated(RKMDIWindow*)));
 	if (window->isToolWindow () && !window->tool_window_bar) return;
+
 	if (attached) attachWindow (window);
 	else detachWindow (window, false);
 }
@@ -245,6 +298,78 @@ void RKWorkplace::placeInToolWindowBar (RKMDIWindow *window, int position) {
 
 	if (!windows.contains (window)) addWindow (window, true);	// first time we see this window
 	else if (needs_registration) attachWindow (window);
+}
+
+void RKWorkplace::setWindowPlacementOverrides(const QString& placement, const QString& name, const QString& style) {
+	RK_TRACE (APP);
+
+	if (placement == "attached") window_placement_override = RKMDIWindow::Attached;
+	else if (placement == "detached") window_placement_override = RKMDIWindow::Attached;
+	else {
+		RK_ASSERT (placement.isEmpty ());
+		window_placement_override = RKMDIWindow::AnyWindowState;
+	}
+	window_name_override = name;
+	window_style_override = style;
+}
+
+void RKWorkplace::registerNamedWindow (const QString& id, QObject* owner, QWidget* parent, RKMDIWindow* window) {
+	RK_TRACE (APP);
+
+	NamedWindow nw;
+	nw.id = id;
+	nw.owner = owner;
+	nw.parent = parent;
+	nw.window = window;
+
+	for (int i = 0; i < named_windows.size (); ++i) {
+		RK_ASSERT (named_windows[i].id != id);
+	}
+
+	named_windows.append (nw);
+	if (owner) connect (owner, SIGNAL (destroyed(QObject*)), this, SLOT (namedWindowOwnerDestroyed(QObject*)));
+	if (window) connect (window, SIGNAL (destroyed(QObject*)), this, SLOT (namedWindowDestroyed(QObject*)));
+}
+
+RKMDIWindow* RKWorkplace::getNamedWindow (const QString& id) {
+	RK_TRACE (APP);
+
+	for (int i = 0; i < named_windows.size (); ++i) {
+		if (named_windows[i].id == id) {
+			return named_windows[i].window;
+		}
+	}
+
+	return 0;
+}
+
+void RKWorkplace::namedWindowDestroyed (QObject* window) {
+	RK_TRACE (APP);
+
+	for (int i = 0; i < named_windows.size (); ++i) {
+		if (named_windows[i].window == window) {
+			if (!named_windows[i].owner) {
+				named_windows.removeAt (i);
+				return;
+			} else {
+				named_windows[i].window = 0;
+			}
+		}
+	}
+}
+
+void RKWorkplace::namedWindowOwnerDestroyed (QObject* owner) {
+	RK_TRACE (APP);
+
+	for (int i = 0; i < named_windows.size (); ++i) {
+		if (named_windows[i].owner == owner) {
+			if (named_windows[i].window) {
+				named_windows[i].window->deleteLater ();
+			}
+			named_windows.removeAt (i);
+			return;
+		}
+	}
 }
 
 bool RKWorkplace::openAnyUrl (const KUrl &url, const QString &known_mimetype, bool force_external) {

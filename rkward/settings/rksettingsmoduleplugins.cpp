@@ -2,7 +2,7 @@
                           rksettingsmoduleplugins  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004-2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -49,6 +49,7 @@ QList<RKSettingsModulePlugins::PluginMapStoredInfo> RKSettingsModulePlugins::kno
 RKSettingsModulePlugins::PluginPrefs RKSettingsModulePlugins::interface_pref;
 bool RKSettingsModulePlugins::show_code;
 int RKSettingsModulePlugins::code_size;
+int RKSettingsModulePlugins::other_preview_height;
 
 RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -81,28 +82,6 @@ RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *pare
 	connect (button_group, SIGNAL (buttonClicked(int)), this, SLOT (settingChanged()));
 	main_vbox->addWidget (button_box);
 
-
-	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
-
-
-	QGroupBox *code_frame = new QGroupBox (i18n ("R syntax display (in dialogs)"), this);
-	group_layout = new QVBoxLayout (code_frame);
-
-	show_code_box = new QCheckBox (i18n ("Code shown by default"), code_frame);
-	show_code_box->setChecked (show_code);
-	connect (show_code_box, SIGNAL (stateChanged(int)), this, SLOT (settingChanged()));
-	group_layout->addWidget (show_code_box);
-
-	KHBox *code_size_hbox = new KHBox (code_frame);
-	new QLabel (i18n ("Default height of code display (pixels)"), code_size_hbox);
-	code_size_box = new RKSpinBox (code_size_hbox);
-	code_size_box->setIntMode (20, 5000, code_size);
-	connect (code_size_box, SIGNAL (valueChanged(int)), this, SLOT (settingChanged()));
-	group_layout->addWidget (code_size_hbox);
-
-	main_vbox->addWidget (code_frame);
-
-
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 
 	QPushButton *pluginmap_config_button = new QPushButton (i18n ("Configure Active Plugins"), this);
@@ -130,8 +109,6 @@ void RKSettingsModulePlugins::applyChanges () {
 	RK_TRACE (SETTINGS);
 
 	interface_pref = static_cast<PluginPrefs> (button_group->checkedId ());
-	show_code = show_code_box->isChecked ();
-	code_size = code_size_box->intValue ();
 }
 
 RKSettingsModulePlugins::PluginMapList RKSettingsModulePlugins::setPluginMaps (const RKSettingsModulePlugins::PluginMapList new_list) {
@@ -178,6 +155,7 @@ void RKSettingsModulePlugins::saveSettings (KConfig *config) {
 	cg.writeEntry ("Interface Preferences", static_cast<int> (interface_pref));
 	cg.writeEntry ("Code display default", show_code);
 	cg.writeEntry ("Code display size", code_size);
+	cg.writeEntry ("Other preview size", other_preview_height);
 }
 
 void RKSettingsModulePlugins::loadSettings (KConfig *config) {
@@ -223,6 +201,8 @@ void RKSettingsModulePlugins::loadSettings (KConfig *config) {
 	interface_pref = static_cast<PluginPrefs> (cg.readEntry ("Interface Preferences", static_cast<int> (PreferRecommended)));
 	show_code = cg.readEntry ("Code display default", false);
 	code_size = cg.readEntry ("Code display size", 250);
+	other_preview_height = cg.readEntry ("Other preview size", code_size);
+
 	if (RKSettingsModuleGeneral::storedConfigVersion () <= RKSettingsModuleGeneral::RKWardConfig_Pre0_5_7) {
 		if (code_size == 40) code_size = 250;	// previous default untouched.
 	}
