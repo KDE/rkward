@@ -2,7 +2,7 @@
                           rkpreviewbox  -  description
                              -------------------
     begin                : Wed Jan 24 2007
-    copyright            : (C) 2007, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -41,28 +41,42 @@ public:
 	~RKPreviewBox ();
 	int type () { return ComponentPreviewBox; };
 	RKComponentPropertyBool *state;
-	QVariant value (const QString &modifier=QString ()) { return (state->value (modifier)); };
+	QVariant value (const QString &modifier=QString ()) override;
 public slots:
 	void changedStateFromUi ();
 	void changedState (RKComponentPropertyBase *);
 	void changedCode (RKComponentPropertyBase *);
 	void tryPreviewNow ();
-	void previewWindowClosed ();
 protected:
 	void rCommandDone (RCommand *);
 private:
 	bool updating;		// prevent recursion
 	bool preview_active;
-	bool last_plot_done;
-	bool new_plot_pending;
+	bool prior_preview_done;
+	bool new_preview_pending;
 	void tryPreview ();
-	void killPreview ();
+	void killPreview (bool cleanup = false);
 	void updateStatusLabel ();
-	int dev_num;
+	void setStatusMessage (const QString& status);
+	enum PreviewMode {
+		PlotPreview,
+		DataPreview,
+		OutputPreview,
+		CustomPreview
+	} preview_mode;
+	enum PreviewPlacement {
+		DefaultPreview,
+		AttachedPreview,
+		DetachedPreview,
+		DockedPreview
+	} placement;
 	QTimer *update_timer;
 	QCheckBox *toggle_preview_box;
 	QLabel *status_label;
 	RKComponentPropertyCode *code_property;
+	QString idprop;
+	QString placement_command;
+	QString placement_end;
 };
 
 #endif

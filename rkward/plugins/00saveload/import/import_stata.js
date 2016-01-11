@@ -5,7 +5,15 @@ function preprocess () {
 	makeEncodingPreprocessCode ();
 }
 
+function preview () {
+	doCalculate (true);
+}
+
 function calculate () {
+	doCalculate (false);
+}
+
+function doCalculate (is_preview) {
 	var options = "";
 
 	if (getValue ("convert_dates")) {
@@ -48,9 +56,13 @@ function calculate () {
 	echo ('        }\n');
 	echo ('}\n');
 	echo ('\n');
-	echo ('.GlobalEnv$' + object + ' <- data		'); comment ('assign to globalenv()');
-	if (getValue ("doedit") ) {
-		echo ('rk.edit (.GlobalEnv$' + object + ')\n');
+	if (is_preview) {
+		echo ('preview_data <- data[1:min(50,dim(data)[1]),1:min(50,dim(data)[2])]\n');
+	} else {
+		echo ('.GlobalEnv$' + object + ' <- data		'); comment ('assign to globalenv()');
+		if (getValue ("doedit") ) {
+			echo ('rk.edit (.GlobalEnv$' + object + ')\n');
+		}
 	}
 }
 

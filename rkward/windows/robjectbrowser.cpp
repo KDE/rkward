@@ -250,7 +250,8 @@ void RObjectBrowserInternal::contextMenuCallback (RObject *, bool *) {
 	}
 
 	actions[Help]->setVisible (!(object->isType (RObject::ToplevelEnv) || object->isInGlobalEnv ()));
-	actions[Edit]->setVisible (object->canEdit () && RKWorkplace::mainWorkplace ()->canEditObject (object));
+	actions[Edit]->setText (object->canWrite () ? i18n ("Edit") : i18n ("View in editor (read-only)"));
+	actions[Edit]->setVisible (RKWorkplace::mainWorkplace ()->canEditObject (object));
 	actions[View]->setVisible (object->canRead ());
 	actions[Rename]->setVisible (object->canRename ());
 	actions[Copy]->setVisible (object->canRead () && (!object->isType (RObject::ToplevelEnv)));
@@ -267,7 +268,7 @@ void RObjectBrowserInternal::doubleClicked (const QModelIndex& index) {
 	if (!object) return;
 	if (object == RObjectList::getObjectList ()) return;
 
-	if (object->canEdit () && RKWorkplace::mainWorkplace ()->canEditObject (object)) {
+	if (RKWorkplace::mainWorkplace ()->canEditObject (object)) {
 		RKWorkplace::mainWorkplace ()->editObject (object);
 	} else {
 		RKWorkplace::mainWorkplace ()->flushAllData ();

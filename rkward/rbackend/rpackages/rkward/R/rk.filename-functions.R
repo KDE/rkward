@@ -29,11 +29,13 @@
 #' @param additional.header.contents NULL or an additional string to add to the HTML header section.
 #'        This could be scripts or additional CSS definitions, for example. Note that
 #'        \emph{nothing} will be added to the header, if the file already exists.
+#' @param style Currently either "regular" or "preview". The latter omits table of contents and date.
 #' @param flush.images. If true, any images used in the output file will be deleted as well.
 #' @param ask Logical: Whether to ask before flushing the output file.
+#' @param ... Further parameters passed to rk.set.output.html.file()
 #' @return \code{rk.get.tempfile.name}, \code{rk.get.output.html.file}, and
 #'   \code{rk.get.workspace.url} return a string while
-#'   \code{rk.set.output.html.file} returns \code{NULL}.
+#'   \code{rk.set.output.html.file} returns the \bold{previous} output html file.
 #' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
 #' @seealso \url{rkward://page/rkward_output}, \link{tempfile}, \link{file},
 #'   \link{rk.print}
@@ -77,89 +79,95 @@
 
 #' @export
 #' @rdname rk.get.tempfile.name
-"rk.set.output.html.file" <- function (x, additional.header.contents = getOption ("rk.html.header.additions")) {
+"rk.set.output.html.file" <- function (x, additional.header.contents = getOption ("rk.html.header.additions"), style=c ("regular", "preview")) {
 	stopifnot (is.character (x))
+	style <- match.arg (style)
+	oldfile <- rk.get.output.html.file ()
 	assign (".rk.output.html.file", x, .rk.variables)
 
 	if (!file.exists (x)) {
 		.rk.cat.output (paste ("<?xml version=\"1.0\" encoding=\"", .Call ("rk.locale.name", PACKAGE="(embedding)"), "\"?>\n", sep=""))
 		.rk.cat.output (paste ("<html><head>\n<title>RKWard Output</title>\n", .rk.do.plain.call ("getCSSlink"), sep=""))
 		# the next part defines a JavaScript function to add individual results to a global table of contents menu in the document
-		.rk.cat.output (paste ("\t<script type=\"text/javascript\">
-		<!--
-			function addToTOC(id, level){
-				var fullHeader = document.getElementById(id);
-				var resultsTOC = document.getElementById('RKWardResultsTOCShown');
-				var headerName = fullHeader.getAttribute('name');
-				var headerText = fullHeader.firstChild.data;
-				var headerTitle = fullHeader.getAttribute('title');
-				var newDiv = document.createElement('div');
-				// create new anchor for TOC
-				var newAnchor = '<a href=\"#' + headerName + '\" title=\"' + headerTitle + '\"';
-				// indent anchor depending on header level
-				if(level > 1){
-					newDiv.style.textIndent = level-1 + 'em';
-					newDiv.className = 'level' + level;
-					newAnchor = '&bull; ' + newAnchor + '>' + headerText + '</a>';
-				} else {
-					newAnchor = newAnchor + '>' + headerText + '</a>';
-				}
-				newDiv.innerHTML = newAnchor;
-				resultsTOC.appendChild(newDiv);
-			}
-			function switchVisible(show, hide) {
-				document.getElementById(show).style.display = 'inline';
-				document.getElementById(hide).style.display = 'none';
-			}
-			function showMLevel(nodes){
-				for(var i=0; i < nodes.length; i++) {
-					nodes[i].style.display = 'block';
-				}
-			}
-			function hideMLevel(nodes){
-				for(var i=0; i < nodes.length; i++) {
-					nodes[i].style.display = 'none';
-				}
-			}
-			function maxLevel(level){
-				if(level > 5){
-					return false;
-				}
-				for(var i=1; i < 6; i++) {
-					if(i <= level){
-						showMLevel(document.getElementsByClassName('level' + i));
+		if (style != "preview") {
+			.rk.cat.output (paste ("\t<script type=\"text/javascript\">
+			<!--
+				function addToTOC(id, level){
+					var fullHeader = document.getElementById(id);
+					var resultsTOC = document.getElementById('RKWardResultsTOCShown');
+					var headerName = fullHeader.getAttribute('name');
+					var headerText = fullHeader.firstChild.data;
+					var headerTitle = fullHeader.getAttribute('title');
+					var newDiv = document.createElement('div');
+					// create new anchor for TOC
+					var newAnchor = '<a href=\"#' + headerName + '\" title=\"' + headerTitle + '\"';
+					// indent anchor depending on header level
+					if(level > 1){
+						newDiv.style.textIndent = level-1 + 'em';
+						newDiv.className = 'level' + level;
+						newAnchor = '&bull; ' + newAnchor + '>' + headerText + '</a>';
 					} else {
-						hideMLevel(document.getElementsByClassName('level' + i));
+						newAnchor = newAnchor + '>' + headerText + '</a>';
+					}
+					newDiv.innerHTML = newAnchor;
+					resultsTOC.appendChild(newDiv);
+				}
+				function switchVisible(show, hide) {
+					document.getElementById(show).style.display = 'inline';
+					document.getElementById(hide).style.display = 'none';
+				}
+				function showMLevel(nodes){
+					for(var i=0; i < nodes.length; i++) {
+						nodes[i].style.display = 'block';
 					}
 				}
-			}
-		// -->\n\t</script>\n", sep=""))
-		# positioning of the TOC is done by CSS, default state is hidden
-		# see $SRC/rkward/pages/rkward_output.css
+				function hideMLevel(nodes){
+					for(var i=0; i < nodes.length; i++) {
+						nodes[i].style.display = 'none';
+					}
+				}
+				function maxLevel(level){
+					if(level > 5){
+						return false;
+					}
+					for(var i=1; i < 6; i++) {
+						if(i <= level){
+							showMLevel(document.getElementsByClassName('level' + i));
+						} else {
+							hideMLevel(document.getElementsByClassName('level' + i));
+						}
+					}
+				}
+			// -->\n\t</script>\n", sep=""))
+			# positioning of the TOC is done by CSS, default state is hidden
+			# see $SRC/rkward/pages/rkward_output.css
+		}
 
 		if (!is.null (additional.header.contents)) .rk.cat.output (as.character (additional.header.contents))
 		.rk.cat.output ("</head>\n<body>\n")
-		# This initial output mostly to indicate the output is really there, just empty for now
-		.rk.cat.output (paste ("<a name=\"top\"></a>\n<pre>RKWard output initialized on", .rk.date (), "</pre>\n"))
-		# an empty <div> where the TOC menu gets added to dynamically, and a second one to toggle show/hide
-		.rk.cat.output (paste (
-			"<div id=\"RKWardResultsTOCShown\" class=\"RKTOC\">\n",
-			"\t<a onclick=\"javascript:switchVisible('RKWardResultsTOCHidden','RKWardResultsTOCShown'); return false;\" href=\"\" class=\"toggleTOC\">Hide TOC</a>\n",
-			"\t<span class=\"right\"><a href=\"#top\" class=\"toggleTOC\">Go to top</a></span>\n<br />",
-			"\t\t<span class=\"center\">\n\t\t\t<a onclick=\"javascript:maxLevel('1'); return false;\" href=\"\" title=\"TOC level 1\">1</a> &bull;\n",
-			"\t\t\t<a onclick=\"javascript:maxLevel('2'); return false;\" href=\"\" title=\"TOC level 2\">2</a> &bull;\n",
-			"\t\t\t<a onclick=\"javascript:maxLevel('3'); return false;\" href=\"\" title=\"TOC level 3\">3</a> &bull;\n",
-			"\t\t\t<a onclick=\"javascript:maxLevel('4'); return false;\" href=\"\" title=\"TOC level 4\">4</a>\n\t\t</span>\n",
-			"\t<!-- the TOC menu goes here -->\n</div>\n",
-			"<div id=\"RKWardResultsTOCHidden\" class=\"RKTOC RKTOChidden\">\n",
-			"\t<a onclick=\"javascript:switchVisible('RKWardResultsTOCShown','RKWardResultsTOCHidden'); return false;\" href=\"\" class=\"toggleTOC\">Show TOC</a>\n",
-			"\t<span class=\"right\"><a href=\"#top\" class=\"toggleTOC\">Go to top</a></span>\n",
-			"</div>\n", sep=""))
+		if (style != "preview") {
+			# This initial output mostly to indicate the output is really there, just empty for now
+			.rk.cat.output (paste ("<a name=\"top\"></a>\n<pre>RKWard output initialized on", .rk.date (), "</pre>\n"))
+			# an empty <div> where the TOC menu gets added to dynamically, and a second one to toggle show/hide
+			.rk.cat.output (paste (
+				"<div id=\"RKWardResultsTOCShown\" class=\"RKTOC\">\n",
+				"\t<a onclick=\"javascript:switchVisible('RKWardResultsTOCHidden','RKWardResultsTOCShown'); return false;\" href=\"\" class=\"toggleTOC\">Hide TOC</a>\n",
+				"\t<span class=\"right\"><a href=\"#top\" class=\"toggleTOC\">Go to top</a></span>\n<br />",
+				"\t\t<span class=\"center\">\n\t\t\t<a onclick=\"javascript:maxLevel('1'); return false;\" href=\"\" title=\"TOC level 1\">1</a> &bull;\n",
+				"\t\t\t<a onclick=\"javascript:maxLevel('2'); return false;\" href=\"\" title=\"TOC level 2\">2</a> &bull;\n",
+				"\t\t\t<a onclick=\"javascript:maxLevel('3'); return false;\" href=\"\" title=\"TOC level 3\">3</a> &bull;\n",
+				"\t\t\t<a onclick=\"javascript:maxLevel('4'); return false;\" href=\"\" title=\"TOC level 4\">4</a>\n\t\t</span>\n",
+				"\t<!-- the TOC menu goes here -->\n</div>\n",
+				"<div id=\"RKWardResultsTOCHidden\" class=\"RKTOC RKTOChidden\">\n",
+				"\t<a onclick=\"javascript:switchVisible('RKWardResultsTOCShown','RKWardResultsTOCHidden'); return false;\" href=\"\" class=\"toggleTOC\">Show TOC</a>\n",
+				"\t<span class=\"right\"><a href=\"#top\" class=\"toggleTOC\">Go to top</a></span>\n",
+				"</div>\n", sep=""))
+		}
 	}
 
 	# needs to come after initialization, so initialization alone does not trigger an update during startup
 	.rk.do.plain.call ("set.output.file", x, synchronous=FALSE)
-	invisible (NULL)
+	invisible (oldfile)
 }
 
 # Internal helper function to extract file names of images used in html files.
@@ -193,7 +201,7 @@
 
 #' @export
 #' @rdname rk.get.tempfile.name
-"rk.flush.output" <- function (x=rk.get.output.html.file (), flush.images=TRUE, ask=TRUE) {
+"rk.flush.output" <- function (x=rk.get.output.html.file (), flush.images=TRUE, ask=TRUE, ...) {
 	images <- character (0)
 	if (flush.images) images <- .rk.get.images.in.html.file (x)
 
@@ -213,5 +221,5 @@
 		}
 	)
 
-	rk.set.output.html.file (x)
+	rk.set.output.html.file (x, ...)
 }

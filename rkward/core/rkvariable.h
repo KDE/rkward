@@ -178,8 +178,6 @@ protected:
 	void writeInvalidFields (QList<int> rows, RCommandChain *chain=0);
 /** writes the values labels to the backend */
 	void writeValueLabels (RCommandChain *chain) const;
-/** tries to match a value-label to the value in the given cell. Returns the label, or - if there is no label - the original value in textual representation */
-	QString getLabeled (int row) const;
 
 /** allocate edit data (cells initialized to NAs) */
 	void allocateEditData ();

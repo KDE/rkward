@@ -146,7 +146,7 @@ public:
 
 /** Returns the editor of this object, if any, or 0 */
 	RKEditor* editor () const;
-	bool canEdit () const;
+	bool canWrite () const;
 	bool canRead () const;
 	bool canRename () const;
 	bool canRemove () const;

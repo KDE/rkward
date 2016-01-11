@@ -190,6 +190,8 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			connect (device, &RKGraphicsDevice::locatorDone, this, &RKGraphicsDeviceFrontendTransmitter::locatorDone);
 			connect (device, &RKGraphicsDevice::newPageConfirmDone, this, &RKGraphicsDeviceFrontendTransmitter::newPageConfirmDone);
 			connect (this, &RKGraphicsDeviceFrontendTransmitter::stopInteraction, device, &RKGraphicsDevice::stopInteraction);
+			streamer.outstream << (qint32) 1;  // dummy reply
+			streamer.writeOutBuffer ();
 			continue;
 		} else {
 			if (devnum) device = RKGraphicsDevice::devices.value (devnum);

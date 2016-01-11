@@ -2,7 +2,7 @@
                           rkstandardcomponent  -  description
                              -------------------
     begin                : Sun Feb 19 2006
-    copyright            : (C) 2006, 2007, 2009, 2010, 2012, 2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2006-2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -82,6 +82,8 @@ public:
 
 /** Return the GUI-scripting handler (creating it, if needed) */
 	RKComponentScriptingProxy* scriptingProxy ();
+
+	void addDockedPreview (QWidget *area, RKComponentPropertyBool *controller, const QString& label);
 signals:
 	void standardInitializationComplete ();
 public slots:

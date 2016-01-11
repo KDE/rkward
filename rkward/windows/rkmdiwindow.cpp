@@ -22,12 +22,13 @@
 #include <qtimer.h>
 #include <QEvent>
 #include <QPaintEvent>
+#include <QAction>
 
 #include <kparts/partactivateevent.h>
 #include <kxmlguifactory.h>
 #include <kactioncollection.h>
 #include <klocale.h>
-#include <QAction>
+#include <kpassivepopup.h>
 
 #include "rkworkplace.h"
 #include "rkworkplaceview.h"
@@ -36,6 +37,7 @@
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../misc/rkstandardicons.h"
 #include "../misc/rkxmlguisyncer.h"
+#include "../rbackend/rcommand.h"
 
 #include "../debug.h"
 
@@ -65,7 +67,9 @@ RKMDIWindow::RKMDIWindow (QWidget *parent, int type, bool tool_window, const cha
 	tool_window_bar = 0;
 	part = 0;
 	active = false;
+	no_border_when_active = false;
 	standard_client = 0;
+	status_popup = 0;
 
 	setWindowIcon (RKStandardIcons::iconForWindow (this));
 }
@@ -75,6 +79,7 @@ RKMDIWindow::~RKMDIWindow () {
 
 	if (isToolWindow ()) RKToolWindowList::unregisterToolWindow (this);
 	delete standard_client;
+	delete status_popup;
 }
 
 KActionCollection *RKMDIWindow::standardActionCollection () {
@@ -244,7 +249,7 @@ void RKMDIWindow::paintEvent (QPaintEvent *e) {
 
 	QFrame::paintEvent (e);
 
-	if (isActive ()) {
+	if (isActive () && !no_border_when_active) {
 		QPainter paint (this);
 		paint.setPen (QColor (255, 0, 0));
 		paint.drawLine (0, 0, 0, height ()-1);
@@ -264,10 +269,37 @@ void RKMDIWindow::changeEvent (QEvent *event) {
 	QFrame::changeEvent (event);
 }
 
-void RKMDIWindow::slotActivate () {
+void RKMDIWindow::slotActivateForFocusFollowsMouse () {
 	RK_TRACE (APP);
 
+	if (!underMouse ()) return;
+
+	// we can't do without activateWindow(), below. Unfortunately, this has the side effect of raising the window (in some cases). This is not always what we want, e.g. if a 
+	// plot window is stacked above this window. (And since this is activation by mouse hover, this window is already visible, by definition!)
+	// So we try a heuristic (imperfect) to find, if there are any other windows stacked above this one, in order to re-raise them above this.
+	QWidgetList toplevels = qApp->topLevelWidgets ();
+	QWidgetList overlappers;
+	QWidget *window = topLevelWidget ();
+	QRect rect = window->frameGeometry ();
+	for (int i = toplevels.size () - 1; i >= 0; --i) {
+		QWidget *tl = toplevels[i];
+		if (!tl->isWindow ()) continue;
+		if (tl == window) continue;
+		if (tl->isHidden ()) continue;
+
+		QRect tlrect = tl->geometry ();
+		QRect intersected = tlrect.intersected (rect);
+		if (!intersected.isEmpty ()) {
+			QWidget *above = qApp->topLevelAt ((intersected.left () +intersected.right ()) / 2, (intersected.top () +intersected.bottom ()) / 2);
+			if (above && (above != window) && (above->isWindow ()) && (!above->isHidden ()) && (overlappers.indexOf (above) < 0)) overlappers.append (above);
+		}
+	}
+
 	activate (true);
+
+	for (int i = 0; i < overlappers.size (); ++i) {
+		overlappers[i]->raise ();
+	}
 }
 
 void RKMDIWindow::enterEvent (QEvent *event) {
@@ -278,14 +310,50 @@ void RKMDIWindow::enterEvent (QEvent *event) {
 			if (!QApplication::activePopupWidget ()) {
 				// see http://sourceforge.net/p/rkward/bugs/90/
 				// enter events may be delivered while a popup-menu (in a different window) is executing. If we activate in this case, the popup-menu might get deleted
-				// while still handling events. Similar problems seem to occur, when the popup menu has just finished (by the user selecting an action) and this results
+				// while still handling events.
+				//
+				// Similar problems seem to occur, when the popup menu has just finished (by the user selecting an action) and this results
 				// in the mouse entering this widget. To prevent crashes in this second case, we delay the activation until the next iteration of the event loop.
-				QTimer::singleShot (0, this, SLOT (slotActivate()));
+				//
+				// Finally, in some cases (such as when a new script window was created), we need a short delay, as we may be catching an enter event on a window that is in the same place,
+				// where the newly created window goes. This would cause activation to switch back, immediately.
+				QTimer::singleShot (50, this, SLOT (slotActivateForFocusFollowsMouse()));
 			}
 		}
 	}
 
 	QFrame::enterEvent (event);
+}
+
+void RKMDIWindow::setStatusMessage (const QString& message, RCommand *command) {
+	RK_TRACE (MISC);
+
+	if (!status_popup) {
+		status_popup = new KPassivePopup (this);
+		status_popup->setTimeout (0);
+		disconnect (status_popup, SIGNAL (clicked()), status_popup, SLOT (hide()));   // no auto-hiding, please, either SIGNAL / SLOT mechanism
+		disconnect (status_popup, static_cast<void (KPassivePopup::*)()>(&KPassivePopup::clicked), status_popup, &QWidget::hide);
+	}
+
+	if (command) connect (command->notifier (), &RCommandNotifier::commandFinished, this, &RKMDIWindow::clearStatusMessage);
+	if (!message.isEmpty ()) {
+		status_popup->setView (QString (), message);
+		status_popup->show (this->mapToGlobal (QPoint (20, 20)));
+	} else {
+		status_popup->hide ();
+	}
+}
+
+void RKMDIWindow::clearStatusMessage () {
+	RK_TRACE (APP);
+
+	setStatusMessage (QString ());
+}
+
+void RKMDIWindow::setWindowStyleHint (const QString& hint) {
+	RK_TRACE (APP);
+
+	if (hint == "preview") no_border_when_active = true;
 }
 
 void RKMDIWindow::setMetaInfo (const QString& _generic_window_name, const QUrl& _help_url, RKSettings::SettingsPage _settings_page) {

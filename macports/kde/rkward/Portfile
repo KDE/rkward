@@ -36,7 +36,7 @@ depends_lib         port:kdelibs4 \
                     port:okular \
                     port:R
 
-checksums           rmd160  9923d04eb522d5cf805bd3a628692a539eee820a
+checksums           rmd160  9923d04eb522d5cf805bd3a628692a539eee820a \
                     sha256  a0fb7d084519e710ea3c7dc60bb92d24126bcb002bd1d1e00231f480e373f6c5
 
 post-extract {

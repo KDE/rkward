@@ -458,21 +458,34 @@ QString RKVariable::getText (int row, bool pretty) const {
 
 	if (data->cell_states[row] & RKVarEditData::NA) return (QString ());
 
-	if (pretty) return (getLabeled (row));
-
+	QString ret;
 	if (getDataType () == DataCharacter) {
 		RK_ASSERT (!data->cell_strings.isEmpty ());
-		return (data->cell_strings[row]);
+		ret = data->cell_strings[row];
 	} else {
 		RK_ASSERT (!data->cell_doubles.isEmpty ());
-		if (pretty && (data->formatting_options.precision_mode != FormattingOptions::PrecisionDefault)) {
+		if (pretty && (data->formatting_options.precision_mode != FormattingOptions::PrecisionDefault) && (getDataType () != DataLogical)) {
 			if (data->formatting_options.precision_mode == FormattingOptions::PrecisionRequired) {
-				return QString::number (data->cell_doubles[row], 'g', MAX_PRECISION);
+				ret = QString::number (data->cell_doubles[row], 'g', MAX_PRECISION);
+			} else {
+				ret = QString::number (data->cell_doubles[row], 'f', data->formatting_options.precision);
 			}
-			return QString::number (data->cell_doubles[row], 'f', data->formatting_options.precision);
+		} else {
+			ret = QString::number (data->cell_doubles[row], 'g', MAX_PRECISION);
 		}
-		return QString::number (data->cell_doubles[row], 'g', MAX_PRECISION);
 	}
+
+	if (pretty) {
+		if (getDataType () == DataLogical) {
+			if (ret == "0") return "FALSE";
+			else if (ret == "1") return "TRUE";
+		} else if (data->value_labels) {
+			if (data->value_labels->contains (ret)) {
+				return (*(data->value_labels))[ret];
+			}
+		}
+	}
+	return ret;
 }
 
 QString RKVariable::getRText (int row) const {
@@ -542,19 +555,6 @@ void RKVariable::setText (int row, const QString &text) {
 	}
 
 	cellsChanged (row, row);
-}
-
-QString RKVariable::getLabeled (int row) const {
-	QString otext = getText (row);
-	if (getDataType () == DataLogical) {
-		if (otext == "0") return "FALSE";
-		else if (otext == "1") return "TRUE";
-	} else if (data->value_labels) {
-		if (data->value_labels->contains (otext)) {
-			return (*(data->value_labels))[otext];
-		}
-	}
-	return otext;
 }
 
 void RKVariable::setNumericFromR (int from_row, int to_row, const QVector<double> &numdata) {
