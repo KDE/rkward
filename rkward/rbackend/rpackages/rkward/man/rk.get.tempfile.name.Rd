@@ -15,10 +15,11 @@ rk.get.workspace.url()
 rk.get.output.html.file()
 
 rk.set.output.html.file(x,
-  additional.header.contents = getOption("rk.html.header.additions"))
+  additional.header.contents = getOption("rk.html.header.additions"),
+  style = c("regular", "preview"))
 
 rk.flush.output(x = rk.get.output.html.file(), flush.images = TRUE,
-  ask = TRUE)
+  ask = TRUE, ...)
 }
 \arguments{
 \item{prefix}{a string, used as a filename prefix when saving images to the
@@ -33,14 +34,18 @@ to the output file}
 This could be scripts or additional CSS definitions, for example. Note that
 \emph{nothing} will be added to the header, if the file already exists.}
 
+\item{style}{Currently either "regular" or "preview". The latter omits table of contents and date.}
+
 \item{ask}{Logical: Whether to ask before flushing the output file.}
+
+\item{...}{Further parameters passed to rk.set.output.html.file()}
 
 \item{flush.images.}{If true, any images used in the output file will be deleted as well.}
 }
 \value{
 \code{rk.get.tempfile.name}, \code{rk.get.output.html.file}, and
   \code{rk.get.workspace.url} return a string while
-  \code{rk.set.output.html.file} returns \code{NULL}.
+  \code{rk.set.output.html.file} returns the \bold{previous} output html file.
 }
 \description{
 In RKWard the output is saved as a html file which is located at "~/.rkward"
