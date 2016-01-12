@@ -6,6 +6,7 @@ function preprocess () {
 }
 
 function preview () {
+	preprocess ();
 	doCalculate (true);
 }
 
