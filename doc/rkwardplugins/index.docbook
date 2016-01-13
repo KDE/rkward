@@ -712,6 +712,18 @@ function calculate () {
 	// ...
 }
 	</programlisting>
+	<para>
+		The simple helper function <function>makeOption()</function> can make it easier to omit parameters that are at their default value, in many cases:
+	</para>
+	<programlisting>
+function calculate () {
+	var options
+	//...
+	// This will do nothing, if VALUE is 0.95 (the default). Otherwise it will append ', conf.int=VALUE' to options.
+	options += makeOption ("conf.int", getString ("confint"), "0.95");
+	//...
+}
+	</programlisting>
 </sect1>
 </chapter>
 

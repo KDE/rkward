@@ -1,3 +1,4 @@
+- Add convenience JS-function "makeOption()" for use in plugins
 - Fixed: Numerical (display) precision setting was not honored in data editor
 - Fix several window activation quirks in "Focus follows mouse" mode
 - File selectors in "Import XYZ" plugins now filter for standard file extensions, by default
