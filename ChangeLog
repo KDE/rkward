@@ -9,6 +9,7 @@
 - Implicitly save code preview visibility and size (instead of the former explicit settings)
 - data.frame objects outside of globalenv() can be opened read-only in an editor window
 - Show a warning screen when invoking plugins from the command line (or from clicking an rkward://-link in an external application)
+- Use package type option "binary" from R 3.1.3 onwards, for automatic selection of the appropriate binary package
 
 --- Version 0.6.4 - Dec-20-2015
 - Fixed: Plugin variable slots taking more than one object would not be hightlighted in red while invalid
