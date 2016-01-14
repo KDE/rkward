@@ -19,13 +19,13 @@ function calculate (is_preview) {
 	var options = '';
 
 	var range = getString ("range");
-	if (range) options += ', region=' + quote ("range");
+	if (range) options += ', region=' + quote (range);
 	else {
 		options += makeOption ("startRow", getString ("startrow")) + makeOption ("startCol", getString ("startcol")) + makeOption ("endRow", getString ("endrow")) + makeOption ("endCol", getString ("endcol"));
 	}
 
-	if (!getBoolean ("autofitrow")) options += ', autoFitRow=FALSE';
-	if (!getBoolean ("autofitcol")) options += ', autoFitCol=FALSE';
+	if (!getBoolean ("autofitrow")) options += ', autofitRow=FALSE';
+	if (!getBoolean ("autofitcol")) options += ', autofitCol=FALSE';
 	if (!getBoolean ("header")) options += ', header=FALSE';
 	options += makeOption ("rownames", getString ("rownames"));
 

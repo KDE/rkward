@@ -6,7 +6,7 @@
 		<include file="convert_encoding.xml"/>
 	</snippets>
 	<logic>
-		<convert id="range_empty" mode="equals" sources="range" standard=""/>
+		<convert id="range_empty" mode="equals" sources="range.text" standard=""/>
 		<connect governor="range_empty" client="startrc.enabled"/>
 		<connect governor="range_empty" client="endrc.enabled"/>
 	</logic>
@@ -16,7 +16,7 @@
 				<browser type="file" id="file" filter="*.xls *.xlsx" label="File name" />
 				<input label="Index or &quot;name&quot; of sheet" id="sheet" initial="1" size="small" />
 				<frame>
-					<checkbox id="header" value="TRUE" value_unchecked="FALSE" checked="false" label="Use first row as column names"/>
+					<checkbox id="header" checked="true" label="Use first row as column names"/>
 					<input id="rownames" initial="" size="small" label="Index or &quot;name&quot; of column with row names (if any)"/>
 				</frame>
 				<frame>
