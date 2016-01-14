@@ -30,9 +30,9 @@
 					</frame>
 					<input size="small" initial="NA" id="na" label="Character for missing values" />
 					<radio id="strings_as_factors" label="Convert character columns to factors" >
-					  <option value=", stringsAsFactors=TRUE" label="Convert to factor" />
-					  <option value="" label="Default" checked="true" />
-					  <option value=", stringsAsFactors=FALSE" label="Do not convert" />
+						<option value=", stringsAsFactors=TRUE" label="Convert to factor" />
+						<option value="" label="Default" checked="true" />
+						<option value=", stringsAsFactors=FALSE" label="Do not convert" />
 					</radio>
 					<checkbox id="fill" checked="false" value="TRUE" value_unchecked="FALSE" label="Pad rows if unequal length" />
 					<checkbox value_unchecked="FALSE" checked="false" value="TRUE" id="stripwhite" label="Strip leading and trailing whitespace" />

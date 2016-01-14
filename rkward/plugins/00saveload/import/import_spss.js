@@ -7,14 +7,10 @@ function preprocess () {
 
 function preview () {
 	preprocess ();
-	doCalculate (true);
+	calculate (true);
 }
 
-function calculate () {
-	doCalculate (false);
-}
-
-function doCalculate (is_preview) {
+function calculate (is_preview) {
 	var data_frame = "";
 	var data_frame_opt = "";
 	if (getValue ("data_frame") || is_preview) {

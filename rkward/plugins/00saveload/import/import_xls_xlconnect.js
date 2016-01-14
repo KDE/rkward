@@ -1,10 +1,6 @@
 include ("convert_encoding.js");
 
-function preprocess () {
-	doPreprocess (false);
-}
-
-function doPreprocess (is_preview) {
+function preprocess (is_preview) {
 	if (is_preview) {
 		echo ('if (!base::require (XLConnect)) stop (' + i18n ("Preview not available, because package XLConnect is not installed or cannot be loaded.") + ')\n');
 	} else {
@@ -14,15 +10,12 @@ function doPreprocess (is_preview) {
 }
 
 function preview () {
-	doPreprocess (true);
-	doCalculate (true);
+	preprocess (true);
+	calculate (true);
+	// no printout()
 }
 
-function calculate () {
-	doCalculate (false);
-}
-
-function doCalculate (is_preview) {
+function calculate (is_preview) {
 	var options = '';
 
 	var range = getString ("range");
