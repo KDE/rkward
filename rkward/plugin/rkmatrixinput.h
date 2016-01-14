@@ -2,7 +2,7 @@
                           rkmatrixinput  -  description
                              -------------------
     begin                : Tue Oct 09 2012
-    copyright            : (C) 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2012-2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -78,6 +78,7 @@ private:
 	void updateColumn (int column);
 	bool expandStorageForColumn (int column);
 	QString makeColumnString (int column, const QString& sep, bool r_pasteable = true);
+	QStringList rowStrings (int row);
 	bool isColumnValid (int column);
 
 	bool is_valid;

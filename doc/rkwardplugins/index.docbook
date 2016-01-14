@@ -3902,6 +3902,10 @@ Child elements &lt;true&gt;, &lt;false&gt;, &lt;case&gt;, and &lt;default&gt; ta
 			<listitem><para>The data from a single column (0 for leftmost column). <function>getValue()</function>/<function>getString()</function> returns this as a single string, separated by "\n". However, the recommended way to get this is using <function>getList()</function>, which returns this column as an array of strings.</para></listitem>
 		</varlistentry>
 		<varlistentry>
+			<term>row.0,row.1,row.2...</term>
+			<listitem><para>The data from a single row (0 for topmost row). <function>getValue()</function>/<function>getString()</function> returns this as a single string, separated by "\n". However, the recommended way to get this is using <function>getList()</function>, which returns this column as an array of strings.</para></listitem>
+		</varlistentry>
+		<varlistentry>
 			<term>cbind</term>
 			<listitem><para>Data in a format suitable for pasting to R, wrapped in a cbind statement (string; read-only).</para></listitem>
 		</varlistentry>
