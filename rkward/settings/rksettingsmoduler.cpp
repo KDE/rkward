@@ -496,6 +496,7 @@ QString RKSettingsModuleRPackages::pkgTypeOption () {
 #if defined Q_WS_WIN || defined Q_WS_MAC
 	ret.append ("options (pkgType=\"");
 	if (source_packages) ret.append ("source");
+	else if (RKSessionVars::compareRVersion ("3.1.3") <= 0) ret.append ("binary");   // "automatically select appropriate binary", unfortunately it's only available from R 3.1.3. onwards.
 #	if defined Q_WS_WIN
 	else ret.append ("win.binary");
 #	else
