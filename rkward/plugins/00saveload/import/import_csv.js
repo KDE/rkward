@@ -1,12 +1,8 @@
 function preview () {
-	doCalculate (true);
+	calculate (true);
 }
 
-function calculate () {
-	doCalculate (false);
-}
-
-function doCalculate (is_preview) {
+function calculate (is_preview) {
 	var tableOptions = "";
 	var quick = getValue ("quick");
 	if (quick == "custom") quick = "table";   // Difference only relevant in UI
