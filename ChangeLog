@@ -1,3 +1,4 @@
+- Add plugins for importing Excel files (.xls and .xlsx, Perl- and Java-based)
 - Add ability to extract <matrix> values row-wise in plugins
 - Add convenience JS-function "makeOption()" for use in plugins
 - Fixed: Numerical (display) precision setting was not honored in data editor

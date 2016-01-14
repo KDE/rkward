@@ -6,19 +6,20 @@ Import a sheet of a Microsoft Excel file into a data frame.
 
 	<usage>
 Choose the Microsoft Excel file to import a sheet from. An R object containing the data will be created. This method of importing Excel sheets is based on R package "gdata",
-and requires a working Perl setup. In case this does not work on your system, you may want to try the Java-based alternative <link href="rkward://component/import_xls_xlconnect"/>.
+and requires a working Perl setup. In case this does not work on your system, or does not produce the expected results, you may want to try the Java-based alternative
+<link href="rkward://component/import_xls_xlconnect"/>.
 	</usage>
 
 	<settings>
 		<caption id="tab_general"/>
 		<setting id="file">The filename of the file to import</setting>
 		<setting id="name">The name of an R object to store the imported data in. If you choose an existing symbol name, you will be prompted, whether to overwrite this object.</setting>
-		<setting id="sheetname">Specifies the sheet which is imported from a Microsoft EXCEL file</setting>
-		<setting id="verbose">Print details as the file is processed</setting>
+		<setting id="sheetname">Specifies the sheet to be imported</setting>
+		<setting id="verbose">Print details as the file is processed. This may be helpful in troubleshooting.</setting>
 		<setting id="skip">Number of rows to skip at the top</setting>
 		<setting id="nrows">Maximum number of rows to import</setting>
 		<setting id="doedit">Whether the object should be opened for editing after it was imported</setting>		
-		<setting id="header">Whether the first row of the file contains should be interpreted as column names</setting>
+		<setting id="header">Whether the first row of the file should be interpreted as column names</setting>
 	</settings>
 	<related>
 		<ul>

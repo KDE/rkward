@@ -13,14 +13,14 @@
 				<browser type="file" allow_urls="true" id="file" filter="*.xls *.xlsx" label="File name" />
 				<input label="Name or number of sheet" id="sheetname" initial="1" size="medium" />
 				<frame>
-					<checkbox id="header" value="TRUE" value_unchecked="FALSE" checked="false" label="Use first row as column names"/>
-					<checkbox value_unchecked="FALSE" checked="true" value="TRUE" id="checkname" label="Check syntax of the variables names" />
+					<checkbox id="header" value="TRUE" value_unchecked="FALSE" checked="false" label="Use first row as column names" checked="true"/>
 				</frame>
-				<row>
+				<frame>
 					<saveobject id="saveto" initial="my.xls.data" label="Object to save to"/>
-					<checkbox id="doedit" value="1" value_unchecked="0" label="Edit Object" checked="true" />
-				</row>
+					<checkbox id="doedit" label="Open imported data for editing" checked="true" />
+				</frame>
 				<stretch/>
+				<preview id="preview" active="true" mode="data"/>
 			</tab>
 			<tab id="tab_further_options" label="Further Options" >
 				<column>
@@ -38,9 +38,7 @@
 					<checkbox value_unchecked="FALSE" checked="false" value="TRUE" id="stripwhite" label="Strip leading and trailing whitespace" />
 		
 					<frame label="Error handling">
-						<row>
-						      <checkbox id="verbose" value="TRUE" value_unchecked="FALSE" checked="false" label="Print details as the file is processed"/>
-						</row>
+						<checkbox id="verbose" value="TRUE" value_unchecked="FALSE" checked="false" label="Print details as the file is processed"/>
 					</frame>
 				</column>
 			</tab>
