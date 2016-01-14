@@ -13,7 +13,7 @@
 				<browser type="file" allow_urls="true" id="file" filter="*.xls *.xlsx" label="File name" />
 				<input label="Name or number of sheet" id="sheetname" initial="1" size="medium" />
 				<frame>
-					<checkbox id="header" value="TRUE" value_unchecked="FALSE" checked="false" label="Use first row as column names" checked="true"/>
+					<checkbox id="header" value="TRUE" value_unchecked="FALSE" label="Use first row as column names" checked="true"/>
 				</frame>
 				<frame>
 					<saveobject id="saveto" initial="my.xls.data" label="Object to save to"/>
