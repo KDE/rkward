@@ -139,6 +139,11 @@ protected:
 	void enterEvent (QEvent *event);
 /** @see globalContextProperty() */
 	void setGlobalContextProperty (const QString& property, const QString& value) { global_context_properties.insert (property, value); };
+
+	KPassivePopup* status_popup;
+	void hideEvent (QHideEvent *ev);
+	void showEvent (QShowEvent *ev);
+
 friend class RKWorkplace;
 /** type of this window */
 	int type;
@@ -158,8 +163,6 @@ friend class RKToolWindowBar;
 	QString generic_window_name;
 	QString help_url;
 	RKSettings::SettingsPage settings_page;
-
-	KPassivePopup* status_popup;
 };
 
 #endif
