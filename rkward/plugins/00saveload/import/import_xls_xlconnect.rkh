@@ -18,7 +18,7 @@ and requires a working Java-setup. In case this does not work on your system, yo
 		<setting id="file">The filename of the file to import</setting>
 		<setting id="sheet">Numeric index or name/label of the sheet to import from the file. If you specify a name, here, make sure to quote it.</setting>
 		<setting id="header">Whether the first row of data should be used as column headers. Alternatively, columns are named, automatically (by index).</setting>
-		<setting id="rownames">Numeric index or name/label of the row containing row names. If you specify a name, here, make sure to quote it. If you leave this field empty, row-names will
+		<setting id="rownames">Numeric index or name/label of the column containing row names. If you specify a name, here, make sure to quote it. If you leave this field empty, row-names will
 		                       be assigned automatically (row numbers)</setting>
 		<setting id="saveto">The name of an R object to store the imported data in. If you choose an existing symbol name, you will be prompted, whether to overwrite this object.</setting>
 		<setting id="doedit">Whether the object should be opened for editing after it was imported</setting>
