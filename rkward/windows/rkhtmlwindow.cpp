@@ -95,6 +95,10 @@ bool RKWebPage::acceptNavigationRequest (QWebFrame* frame, const QNetworkRequest
 		return false;
 	}
 
+	if (frame != mainFrame ()) {
+		if (request.url ().isLocalFile () && (KMimeType::findByUrl (request.url ())->is ("text/html"))) return true;
+	}
+
 	if (KUrl (mainFrame ()->url ()).equals (request.url (), KUrl::CompareWithoutFragment | KUrl::CompareWithoutTrailingSlash)) {
 		RK_DEBUG (APP, DL_DEBUG, "Page internal navigation request from %s to %s", qPrintable (mainFrame ()->url ().toString ()), qPrintable (request.url ().toString ()));
 		emit (pageInternalNavigation (request.url ()));
