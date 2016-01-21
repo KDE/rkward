@@ -358,9 +358,9 @@ bool RKHTMLWindow::openURL (const KUrl &url) {
 
 	if (window_mode == HTMLOutputWindow) {
 		if (url != current_url) {
-			// output window should not change url after initialization
+			// output window should not change url after initialization open any links in new windows
 			if (!current_url.isEmpty ()) {
-				RK_ASSERT (false);
+				RKWorkplace::mainWorkplace ()->openAnyUrl (url);
 				return false;
 			}
 

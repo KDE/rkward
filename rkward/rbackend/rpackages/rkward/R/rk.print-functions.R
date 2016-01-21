@@ -98,6 +98,9 @@
 		dir <- rk.get.tempfile.name (name, "_data")
 		saveWidget (x, filename, selfcontained=FALSE, libdir=dir)
 		.rk.cat.output (paste0 ("<object width=\"100%\" height=\"100%\" data=\"file://", filename, "\" onload=\"this.style.height = this.contentWindow.document.body.scrollHeight + 'px';\"></object>"))
+	} else if (inherits (x, "gvis")) {
+		require ("googleVis")
+		print (x, file=rk.get.output.html.file(), append=TRUE)
 	} else {
 		htmlfile <- rk.get.output.html.file()
 		if(require("R2HTML")==TRUE) {
