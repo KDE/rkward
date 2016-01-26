@@ -22,13 +22,14 @@
 #include <kmessagebox.h>
 #include <kvbox.h>
 #include <ktoolinvocation.h>
-#include <QIcon>
 
+#include <QIcon>
 #include <QLabel>
 #include <QTextEdit>
 #include <QTemporaryFile>
 #include <QTextStream>
 #include <QPushButton>
+#include <QDialog>
 
 #include "../rbackend/rinterface.h"
 #include "../rbackend/rksessionvars.h"
@@ -99,8 +100,8 @@ void RKErrorDialog::reportableErrorMessage (QWidget* parent_widget, const QStrin
 
 	if (!parent_widget) parent_widget = RKWardMainWindow::getMain ();
 	// adjusted from KMessageBox::detailedError
-	KDialog *dialog = new KDialog (parent_widget, Qt::Dialog);
-	dialog->setCaption (caption);
+	QDialog *dialog = new QDialog (parent_widget, Qt::Dialog);
+	dialog->setWindowTitle (caption);
 	QDialogButtonBox *buttonbox = new QDialogButtonBox (dialog);
 	if (details.isEmpty ()) buttonbox->setStandardButtons (QDialogButtonBox::Ok | QDialogButtonBox::No);
 	else {
