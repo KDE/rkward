@@ -1406,53 +1406,46 @@ This chapter contains information on some topics that are useful only to certain
 			Here's an example .JS file that you should use as a template, whenever you create a plotting plugin:
 		</para>
 		<programlisting>
-	function preprocess () {
-		// the "somepackage" is needed to create the plot
-		echo ("require (somepackage)\n");
-	}
+  function preprocess () {
+    // the "somepackage" is needed to create the plot
+    echo ("require (somepackage)\n");
+  }
 
-	function printout () {
-		// all the real work is moved to a custom defined function doPrintout (), below
+  function preview () {
+    // we call all stages of the general code. Only the printout () function needs to be called slightly different for the plot preview
+    preprocess ();
+    // calculate (); // in this example, the plugin has no calculate () function.
+    printout (true); // in this case, 'true' means: Create the plot, but not any headers or other output.
+  }
+  
+  function printout (is_preview) {
+    // If "is_preview" is set to false, it generates the full code, including headers.
+    // If "is_preview" is set to true, only the essentials will be generated.
 
-		doPrintout (true);	// in this case, 'true' means: We want all the headers that should be printed in the output, not just the preview
-	}
+    if (!is_preview) {
+      echo ('rk.header (' + i18n ("An example plot") + ')\n\n');
+      echo ('rk.graph.on ()\n');
+    }
+    // only the following section will be generated for is_preview==true
 
-	function preview () {
-		// we call all stages of the general code. Only the printout () function needs to be slightly different for the plot preview
-		preprocess ();
-		// calculate (); // in this example, the plugin has no calculate () function.
-		doPrintout (false);	// in this case, 'false' means: Create the plot, but not any headers or other output.
-	}
+    // remember: everything between rk.graph.on() and rk.graph.off() should be wrapped inside a try() statement:
+    echo ('try ({\n');
+    // insert any option-setting code that should be run before the actual plotting commands.
+    // The code itself is provided by the embedded plot options plugin. printIndentedUnlessEmpty() takes care of pretty formatting.
+    printIndentedUnlessEmpty ('\t', getString ("plotoptions.code.preprocess"), '', '\n');
 
-	function doPrintout (full) {
-		// this function takes care of generating the code for the printout() section. If "full" is set to true,
-		// it generates the full code, including headers. If full is set to false, only the essentials will
-		// be generated.
+    // create the actual plot. plotoptions.code.printout provides the part of the generic plot options
+    // that have to be added to the plotting call, itself.
+    echo ('plot (5, 5' + getString ("plotoptions.code.printout") + ')\n');
 
-		if (full) {
-			echo ('rk.header (' + i18n ("An example plot") + ')\n\n');
-			echo ('rk.graph.on ()\n');
-		}
-		// only the following section will be generated for full==false
+    // insert any option-setting code that should be run after the actual plot.
+    printIndentedUnlessEmpty ('\t', getString ("plotoptions.code.calculate"), '\n');
+    echo ('})'\n);  // the closure of the try() statement
 
-		// remember: everything between rk.graph.on() and rk.graph.off() should be wrapped inside a try() statement:
-		echo ('try ({\n');
-		// insert any option-setting code that should be run before the actual plotting commands.
-		// The code itself is provided by the embedded plot options plugin. printIndentedUnlessEmpty() takes care of pretty formatting.
-		printIndentedUnlessEmpty ('\t', getString ("plotoptions.code.preprocess"), '', '\n');
-
-		// create the actual plot. plotoptions.code.printout provides the part of the generic plot options
-		// that have to be added to the plotting call, itself.
-		echo ('plot (5, 5' + getString ("plotoptions.code.printout") + ')\n');
-
-		// insert any option-setting code that should be run after the actual plot.
-		printIndentedUnlessEmpty ('\t', getString ("plotoptions.code.calculate"), '\n');
-		echo ('})'\n);	// the closure of the try() statement
-
-		if (full) {
-			echo ('rk.graph.off ()\n');
-		}
-	}
+    if (!is_preview) {
+      echo ('rk.graph.off ()\n');
+    }
+  }
 		</programlisting>
 	</sect2>
 	<sect2 id="preview_output">
@@ -1477,15 +1470,11 @@ This chapter contains information on some topics that are useful only to certain
 	// In the plugin's JS file
 	function preview () {
 		// generates the code used for preview
-		doPrintout (true);
+		printout (true);
 	}
 
-	function printout () {
-		// generates the code used for real
-		doPrintout (false);
-	}
-
-	function doPrintout (is_preview) {
+	function printout (is_preview) {
+		// only generates a header if is_preview==false
 		if (!is_preview) {
 			new Header ("This is a caption").print ();
 		}
@@ -1515,15 +1504,10 @@ This chapter contains information on some topics that are useful only to certain
 	// In the plugin's JS file
 	function preview () {
 		// generates the code used for preview
-		doCalculate (true);
+		calculate (true);
 	}
 
-	function calculate () {
-		// generates the "final" code
-		doCalculate (false);
-	}
-
-	function doCalculate (is_preview) {
+	function calculate (is_preview) {
 		echo ('imported &lt;- read.csv (file="' + getString ("file") /* [+ options] */);
 		if (is_preview) {
 			echo ('preview_data &lt;- imported\n');
