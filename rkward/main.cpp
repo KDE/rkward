@@ -136,6 +136,7 @@ int main (int argc, char *argv[]) {
 	// Don't complain when trying to open help pages
 	KUrlAuthorized::allowUrlAction ("redirect", QUrl("rkward://"), QUrl ("help:"));
 
+	KLocalizedString::setApplicationDomain ("rkward");
 	KAboutData aboutData ("rkward", i18n ("RKWard"), RKWARD_VERSION, i18n ("Frontend to the R statistics language"), KAboutLicense::GPL, i18n ("(c) 2002, 2004 - 2015"), QString (), "http://rkward.kde.org");
 	aboutData.addAuthor (i18n ("Thomas Friedrichsmeier"), i18n ("Project leader / main developer"));
 	aboutData.addAuthor (i18n ("Pierre Ecochard"), i18n ("C++ developer between 2004 and 2007"));
@@ -191,10 +192,6 @@ int main (int argc, char *argv[]) {
 	RKGlobals::startup_options["evaluate"] = decodeArgument (parser.value ("evaluate"));
 	RKGlobals::startup_options["backend-debugger"] = decodeArgument (parser.value ("backend-debugger"));
 
-	// No, I do not really understand the point of separating KDE_LANG from LANGUAGE. We do honor it in so far as not
-	// forcing LANGUAGE on the backend, though. Having language as LANGUAGE makes code in RKMessageCatalog much easier compared to KCatalog.
-	// KF5 TODO: is this still needed at all? Does KDE_LANG still exist?
-	qputenv ("LANGUAGE", QLocale ().bcp47Name ().section ('-', 0, 0).toAscii ());
 	// install message handler *after* the componentData has been initialized
 	RKSettingsModuleDebug::debug_file = new QTemporaryFile (QDir::tempPath () + "/rkward.frontend");
 	RKSettingsModuleDebug::debug_file->setAutoRemove (false);
@@ -208,7 +205,6 @@ int main (int argc, char *argv[]) {
 	} else {
 		new RKWardMainWindow ();
 	}
-	
 
 	// Usually, KDE always adds the current directory to the list of prefixes.
 	// However, since RKWard 0.5.6, the main binary is in KDE's libexec dir, which defies this mechanism. Therefore, RKWARD_ENSURE_PREFIX is set from the wrapper script.
