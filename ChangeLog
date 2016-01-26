@@ -1,3 +1,4 @@
+- Add preview to Power Analysis plugin
 - Add support for adding "htmlwidget"- and "gvis"-class objects to the output window via rk.print()
 - Add plugins for importing Excel files (.xls and .xlsx, Perl- and Java-based)
 - Add ability to extract <matrix> values row-wise in plugins

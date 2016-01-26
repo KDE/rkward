@@ -154,7 +154,7 @@ suite <- new ("RKTestSuite", id="analysis_plugins",
 			rk.call.plugin ("rkward::power_analysis", drp_pwr_hypothesis.string="greater", drp_pwr_proptype.string="two.sample.same", drp_pwr_stat.string="pwr.p.test", pwr_spin_sample0.real="30.00", rad_pwr_param.string="Significance level", spn_Effectsz.real="0.30", spn_Power.real="0.81", svb_Svrsltst.active="0", svb_Svrsltst.objectname="pwr.result", svb_Svrsltst.parent=".GlobalEnv", submit.mode="submit")
 			rk.call.plugin ("rkward::power_analysis", drp_pwr_hypothesis.string="two.sided", drp_pwr_stat.string="pwr.norm.test", pwr_spin_sample0.real="30.00", rad_pwr_param.string="Significance level", spn_Effectsz.real="0.30", spn_Power.real="0.80", svb_Svrsltst.active="0", svb_Svrsltst.objectname="pwr.result", svb_Svrsltst.parent=".GlobalEnv", submit.mode="submit")
 			rk.call.plugin ("rkward::power_analysis", drp_pwr_stat.string="pwr.f2.test", pwr_spin_dfv.real="30.00", pwr_spin_sample0.real="30.00", rad_pwr_param.string="Parameter count", spn_Effectsz.real="0.30", spn_Power.real="0.80", spn_Sgnfcncl.real="0.10", svb_Svrsltst.active="0", svb_Svrsltst.objectname="pwr.result", svb_Svrsltst.parent=".GlobalEnv", submit.mode="submit")
-		})
+		}, libraries=c("pwr"))
 	), postCalls = list (	# like initCalls: run after all tests to clean up.
 		function () {
 			suppressWarnings (rm (list=c ("women", "warpbreaks", "rock", "co2", "test50x", "test50y", "test50z", "test10x", "test10y", "test10z", "test_table", "hptrend", "hpcycle"), envir=globalenv()))
