@@ -61,6 +61,17 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 			rk.print (my.stata.data)
 			for (var in my.stata.data) rk.print (rk.get.description(var))
 		}, libraries=c("foreign"), files=c("../import_export_plugins_testfile.dta")),
+		new ("RKTest", id="import_xls_xlconnect", call=function () {
+			rk.call.plugin ("rkward::import_xls_xlconnect", autofitcol.state="1", autofitrow.state="1", coltypes.tsv="", doedit.state="0", endcol.real="0.00", endrow.real="7.00", file.selection="/home/thomas/develop/rkward/tests/import_export_plugins_testfile.xlsx", header.state="1", range.text="", rownames.text="", saveto.objectname="my.xls.data", saveto.parent=".GlobalEnv", sheet.text="1", startcol.real="0.00", startrow.real="0.00", submit.mode="submit")
+			rk.print (my.xls.data)
+			rk.call.plugin ("rkward::import_xls_xlconnect", autofitcol.state="1", autofitrow.state="1", coltypes.tsv="", doedit.state="0", file.selection="/home/thomas/develop/rkward/tests/import_export_plugins_testfile.xls", header.state="0", range.text="A6:B9", rownames.text="", saveto.objectname="my.xlsx.data", saveto.parent=".GlobalEnv", sheet.text="1", submit.mode="submit")
+			rk.print (my.xlsx.data)
+		}, libraries=c("XLConnect"), files=c("../import_export_plugins_testfile.xls", "../import_export_plugins_testfile.xlsx")),
+		new ("RKTest", id="import_xls", call=function () {
+			rk.call.plugin ("rkward::import_xls", doedit.state="0", file.selection="/home/thomas/develop/rkward/tests/import_export_plugins_testfile.xls", fill.state="0", header.state="1", na.text="NA", nrows.text="-1", saveto.objectname="my.xls.data", saveto.parent=".GlobalEnv", sheetname.text="1", skip.text="0", strings_as_factors.string="", stripwhite.state="0", verbose.state="0", submit.mode="submit")
+			rk.print (my.xls.data)
+			# TODO: known bug: does not import numeric columns from xlsx-files correctly
+		}, libraries=c("gdata"), files=c("../import_export_plugins_testfile.xls", "../import_export_plugins_testfile.xlsx")),
 		new ("RKTest", id="load_source", call=function () {
 			stopifnot (!exists ("testx", globalenv ()))
 

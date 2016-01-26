@@ -96,6 +96,10 @@ bool RKWebPage::acceptNavigationRequest (QWebFrame* frame, const QNetworkRequest
 		return false;
 	}
 
+	if (frame != mainFrame ()) {
+		if (request.url ().isLocalFile () && (KMimeType::findByUrl (request.url ())->is ("text/html"))) return true;
+	}
+
 	if (QUrl (mainFrame ()->url ()).matches (request.url (), QUrl::NormalizePathSegments | QUrl::StripTrailingSlash)) {
 		RK_DEBUG (APP, DL_DEBUG, "Page internal navigation request from %s to %s", qPrintable (mainFrame ()->url ().toString ()), qPrintable (request.url ().toString ()));
 		emit (pageInternalNavigation (request.url ()));
@@ -351,9 +355,9 @@ bool RKHTMLWindow::openURL (const QUrl &url) {
 
 	if (window_mode == HTMLOutputWindow) {
 		if (url != current_url) {
-			// output window should not change url after initialization
+			// output window should not change url after initialization open any links in new windows
 			if (!current_url.isEmpty ()) {
-				RK_ASSERT (false);
+				RKWorkplace::mainWorkplace ()->openAnyUrl (url);
 				return false;
 			}
 

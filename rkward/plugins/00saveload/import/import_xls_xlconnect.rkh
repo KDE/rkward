@@ -1,0 +1,52 @@
+<!DOCTYPE rkhelp>
+<document>
+ 	<snippets>
+		<include file="convert_encoding.xml"/>
+	</snippets>
+
+	<summary>
+Import a sheet of a Microsoft Excel file into a data frame.
+	</summary>
+
+	<usage>
+Choose the Microsoft Excel file to import a sheet from. An R object containing the data will be created. This method of importing Excel sheets is based on R package "XLconnect",
+and requires a working Java-setup. In case this does not work on your system, you may want to try the Perl-based alternative <link href="rkward://component/import_xls"/>.
+	</usage>
+
+	<settings>
+		<caption id="tab_general"/>
+		<setting id="file">The filename of the file to import</setting>
+		<setting id="sheet">Numeric index or name/label of the sheet to import from the file. If you specify a name, here, make sure to quote it.</setting>
+		<setting id="header">Whether the first row of data should be used as column headers. Alternatively, columns are named, automatically (by index).</setting>
+		<setting id="rownames">Numeric index or name/label of the column containing row names. If you specify a name, here, make sure to quote it. If you leave this field empty, row-names will
+		                       be assigned automatically (row numbers)</setting>
+		<setting id="saveto">The name of an R object to store the imported data in. If you choose an existing symbol name, you will be prompted, whether to overwrite this object.</setting>
+		<setting id="doedit">Whether the object should be opened for editing after it was imported</setting>
+		<setting id="preview">Show a preview of the imported data. At most the first 50 rows and columns will be shown.</setting>
+		<caption id="tab_rows_columns"/>
+		<caption id="startrc"/>
+		<setting id="startrow">First row of data to import within the sheet. If left to 0 (the default), the start row will be determined, automatically. Alternatively, you can specify a range
+		                       in spreadsheet notation, below.</setting>
+		<setting id="startcol">First column of data to import within the sheet. See <label id="startrow"/>, above.</setting>
+		<caption id="endrc"/>
+		<setting id="endrow">Last row of data to import within the sheet. See <label id="startrow"/>, above.</setting>
+		<setting id="endcol">Last column of data to import within the sheet. See <label id="startrow"/>, above.</setting>
+		<setting id="range">Specify the range to import within the sheet in spreadsheet notation (e.g. "A10:B20").</setting>
+		<setting id="autofitrow">If checked, empty leading and trailing rows will be omitted from the imported data.</setting>
+		<setting id="autofitcol">If checked, empty leading and trailing columns will be omitted from the imported data.</setting>
+		<setting id="coltypes">Allows you to override the automatic data type detection. Specify R data types such as "character" or "numeric", here. Any specification you make here will be applied
+		                       to <b>all</b> imported columns (the specification will be "recycled", if necessary). To use automatic data type detection, leave this control empty, entirely. Also
+		                       note that most common type conversions can also be done <i>after</i> the data has been imported.</setting>
+
+		<insert snippet="encoding_doc"/>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/read.xls"/></li>
+			<li><link href="rkward://component/import_xls"/></li>
+			<li><link href="rkward://component/import_csv"/></li>
+			<li><link href="rkward://rhelp/read.table"/></li>
+		</ul>
+	</related>
+</document>
+ 

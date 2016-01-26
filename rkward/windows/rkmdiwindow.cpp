@@ -330,7 +330,6 @@ void RKMDIWindow::setStatusMessage (const QString& message, RCommand *command) {
 
 	if (!status_popup) {
 		status_popup = new KPassivePopup (this);
-		status_popup->setTimeout (0);
 		disconnect (status_popup, SIGNAL (clicked()), status_popup, SLOT (hide()));   // no auto-hiding, please, either SIGNAL / SLOT mechanism
 		disconnect (status_popup, static_cast<void (KPassivePopup::*)()>(&KPassivePopup::clicked), status_popup, &QWidget::hide);
 	}
@@ -339,8 +338,10 @@ void RKMDIWindow::setStatusMessage (const QString& message, RCommand *command) {
 	if (!message.isEmpty ()) {
 		status_popup->setView (QString (), message);
 		status_popup->show (this->mapToGlobal (QPoint (20, 20)));
+		status_popup->setTimeout (0);
 	} else {
 		status_popup->hide ();
+		status_popup->setTimeout (10);  // this is a lame way to keep track of whether the popup is empty. See showEvent()
 	}
 }
 
@@ -349,6 +350,19 @@ void RKMDIWindow::clearStatusMessage () {
 
 	setStatusMessage (QString ());
 }
+
+void RKMDIWindow::hideEvent (QHideEvent* ev) {
+	if (status_popup) {
+		status_popup->hide ();
+	}
+	QWidget::hideEvent (ev);
+}
+
+void RKMDIWindow::showEvent (QShowEvent* ev) {
+	if (status_popup && (status_popup->timeout () == 0)) status_popup->show (this->mapToGlobal (QPoint (20, 20)));
+	QWidget::showEvent (ev);
+}
+
 
 void RKMDIWindow::setWindowStyleHint (const QString& hint) {
 	RK_TRACE (APP);

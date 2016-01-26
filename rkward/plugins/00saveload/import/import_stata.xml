@@ -26,7 +26,7 @@
 					<checkbox id="missing_type" checked="false" label="For version 8 or later, store information about different types of missing data?" value="1" value_unchecked="0"/>
 					<checkbox id="convert_underscore" checked="false" label="Convert '_' in Stata variable names to '.' in R names" value="1" value_unchecked="0"/>
 				</frame>
-				<preview id="preview" active="true" mode="data"/>
+				<preview id="preview" active="true" mode="data" label="Preview"/>
 			</tab>
 			<insert snippet="encoding_tab"/>
 		</tabbook>

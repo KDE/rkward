@@ -6,14 +6,11 @@ function preprocess () {
 }
 
 function preview () {
-	doCalculate (true);
+	preprocess ();
+	calculate (true);
 }
 
-function calculate () {
-	doCalculate (false);
-}
-
-function doCalculate (is_preview) {
+function calculate (is_preview) {
 	var options = "";
 
 	if (getValue ("convert_dates")) {

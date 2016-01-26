@@ -1,0 +1,129 @@
+<h1>Import SPSS data</h1>
+<h2>Parameters</h2>
+<ul><li>File name: /home/thomas/develop/rkward/tests/import_export_plugins_testfile.xlsx</li>
+<li>Object to save to: my.xls.data</li>
+</ul>
+DATE<br />
+
+
+<p align= center >
+<table cellspacing=0 border=1>
+<caption align=bottom class=captiondataframe></caption>
+<tr><td>
+	<table border=0 class=dataframe>
+	<tbody> 
+	<tr class= firstline > 
+		<th>&nbsp;  </th>
+		<th>First.var  </th>
+		<th>Second.var  </th>
+		<th>Third.war  </th>
+		<th>Gap  </th>
+		<th>Fourth.var</th> 
+	</tr> 
+<tr> 
+<td class=firstcolumn>1
+</td>
+<td class=cellinside>5
+</td>
+<td class=cellinside>  a  
+</td>
+<td class=cellinside>1.1
+</td>
+<td class=cellinside> 
+</td>
+<td class=cellinside>This is a test
+</td></tr>
+ 
+<tr> 
+<td class=firstcolumn>2
+</td>
+<td class=cellinside>4
+</td>
+<td class=cellinside>b
+</td>
+<td class=cellinside>1.2
+</td>
+<td class=cellinside> 
+</td>
+<td class=cellinside> 
+</td></tr>
+ 
+<tr> 
+<td class=firstcolumn>3
+</td>
+<td class=cellinside>3
+</td>
+<td class=cellinside>c
+</td>
+<td class=cellinside>1.3
+</td>
+<td class=cellinside> 
+</td>
+<td class=cellinside>This is a test
+</td></tr>
+ 
+<tr> 
+<td class=firstcolumn>4
+</td>
+<td class=cellinside>2
+</td>
+<td class=cellinside>b
+</td>
+<td class=cellinside>1.4
+</td>
+<td class=cellinside> 
+</td>
+<td class=cellinside> 
+</td></tr>
+ 
+	</tbody>
+</table>
+ </td></table>
+ <br>
+<h1>Import SPSS data</h1>
+<h2>Parameters</h2>
+<ul><li>File name: /home/thomas/develop/rkward/tests/import_export_plugins_testfile.xls</li>
+<li>Object to save to: my.xlsx.data</li>
+</ul>
+DATE<br />
+
+
+<p align= center >
+<table cellspacing=0 border=1>
+<caption align=bottom class=captiondataframe></caption>
+<tr><td>
+	<table border=0 class=dataframe>
+	<tbody> 
+	<tr class= firstline > 
+		<th>&nbsp;  </th>
+		<th>Col1  </th>
+		<th>Col2</th> 
+	</tr> 
+<tr> 
+<td class=firstcolumn>1
+</td>
+<td class=cellinside>3
+</td>
+<td class=cellinside>c
+</td></tr>
+ 
+<tr> 
+<td class=firstcolumn>2
+</td>
+<td class=cellinside>2
+</td>
+<td class=cellinside>b
+</td></tr>
+ 
+<tr> 
+<td class=firstcolumn>3
+</td>
+<td class=cellinside>1
+</td>
+<td class=cellinside>b
+</td></tr>
+ 
+	</tbody>
+</table>
+ </td></table>
+ <br>

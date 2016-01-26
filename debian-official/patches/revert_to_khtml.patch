@@ -321,7 +321,7 @@ fcc6002a97581d15ee4fbe6842e3a8255e14ae46
  
  #include "../rkglobals.h"
  #include "../rbackend/rinterface.h"
-@@ -61,109 +53,77 @@
+@@ -61,113 +53,77 @@
  #include "../misc/rkxmlguisyncer.h"
  #include "../misc/rkprogresscontrol.h"
  #include "../misc/rkmessagecatalog.h"
@@ -357,6 +357,10 @@ fcc6002a97581d15ee4fbe6842e3a8255e14ae46
 -	if (!frame) {
 -		RKWorkplace::mainWorkplace ()->openAnyUrl (request.url ());
 -		return false;
+-	}
+-
+-	if (frame != mainFrame ()) {
+-		if (request.url ().isLocalFile () && (KMimeType::findByUrl (request.url ())->is ("text/html"))) return true;
 -	}
 -
 -	if (KUrl (mainFrame ()->url ()).equals (request.url (), KUrl::CompareWithoutFragment | KUrl::CompareWithoutTrailingSlash)) {
@@ -480,7 +484,7 @@ fcc6002a97581d15ee4fbe6842e3a8255e14ae46
  }
  
  KUrl RKHTMLWindow::restorableUrl () {
-@@ -177,74 +137,71 @@
+@@ -181,74 +137,71 @@
  	return false;
  }
  
@@ -592,7 +596,7 @@ fcc6002a97581d15ee4fbe6842e3a8255e14ae46
  }
  
  void RKHTMLWindow::openLocationFromHistory (VisitedLocation &loc) {
-@@ -254,17 +211,17 @@
+@@ -258,17 +211,17 @@
  	int history_last = url_history.count () - 1;
  	RK_ASSERT (current_history_position >= 0);
  	RK_ASSERT (current_history_position <= history_last);
@@ -616,7 +620,7 @@ fcc6002a97581d15ee4fbe6842e3a8255e14ae46
  }
  
  void RKHTMLWindow::slotForward () {
-@@ -279,7 +236,7 @@
+@@ -283,7 +236,7 @@
  
  	// if going back from the end of the history, save that position, first.
  	if (current_history_position >= (url_history.count () - 1)) {
@@ -625,7 +629,7 @@ fcc6002a97581d15ee4fbe6842e3a8255e14ae46
  		--current_history_position;
  	}
  	--current_history_position;
-@@ -292,17 +249,10 @@
+@@ -296,17 +249,10 @@
  	RK_ASSERT (url.protocol () == "rkward");
  	changeURL (url);
  	bool ok = false;
@@ -647,7 +651,7 @@ fcc6002a97581d15ee4fbe6842e3a8255e14ae46
  	} else if (url.host ().toUpper () == "RHELPBASE") {	// NOTE: QUrl () may lowercase the host part, internally
  		KUrl fixed_url = KUrl (RKSettingsModuleR::helpBaseUrl ());
  		fixed_url.setPath (url.path ());
-@@ -330,12 +280,7 @@
+@@ -334,12 +280,7 @@
  		} else {
  			if (url.host () == "rhelp") {
  				// TODO: find a nice solution to render this in the current window
@@ -661,7 +665,7 @@ fcc6002a97581d15ee4fbe6842e3a8255e14ae46
  				return true;
  			}
  
-@@ -370,7 +315,7 @@
+@@ -374,7 +315,7 @@
  		QFileInfo out_file (url.toLocalFile ());
  		bool ok = out_file.exists();
  		if (ok)  {
@@ -670,7 +674,7 @@ fcc6002a97581d15ee4fbe6842e3a8255e14ae46
  		} else {
  			fileDoesNotExistMessage ();
  		}
-@@ -379,7 +324,7 @@
+@@ -383,7 +324,7 @@
  
  	if (url_change_is_from_history || url.protocol ().toLower ().startsWith ("help")) {	// handle help pages, and any page that we have previously handled (from history)
  		changeURL (url);
@@ -679,7 +683,7 @@ fcc6002a97581d15ee4fbe6842e3a8255e14ae46
  		return true;
  	}
  
-@@ -409,23 +354,19 @@
+@@ -413,23 +354,19 @@
  	tj->putOnHold ();
  	if (type == "text/html") {
  		changeURL (url);
@@ -706,7 +710,7 @@ fcc6002a97581d15ee4fbe6842e3a8255e14ae46
  	current_url = url;
  	updateCaption (url);
  
-@@ -435,14 +376,14 @@
+@@ -439,14 +376,14 @@
  				url_history = url_history.mid (0, current_history_position);
  
  				VisitedLocation loc;
@@ -725,7 +729,7 @@ fcc6002a97581d15ee4fbe6842e3a8255e14ae46
  		}
  	}
  }
-@@ -454,82 +395,83 @@
+@@ -458,82 +395,83 @@
  	else setCaption (url.fileName ());
  }
  
@@ -847,7 +851,7 @@ fcc6002a97581d15ee4fbe6842e3a8255e14ae46
  }
  
  void RKHTMLWindow::flushOutput () {
-@@ -547,104 +489,7 @@
+@@ -551,104 +489,7 @@
  	}
  }
  
@@ -953,7 +957,7 @@ fcc6002a97581d15ee4fbe6842e3a8255e14ae46
  	RK_TRACE (APP);
  
  	if (url.protocol () != "rkward") {
-@@ -652,6 +497,8 @@
+@@ -656,6 +497,8 @@
  		return (false);
  	}
  
@@ -962,7 +966,7 @@ fcc6002a97581d15ee4fbe6842e3a8255e14ae46
  	bool for_component = false;		// is this a help page for a component, or a top-level help page?
  	if (url.host () == "component") for_component = true;
  
-@@ -663,19 +510,20 @@
+@@ -667,19 +510,20 @@
  		if (!chandle) return false;
  	}
  
@@ -987,7 +991,7 @@ fcc6002a97581d15ee4fbe6842e3a8255e14ae46
  			if (!help_file_name.isEmpty ()) help_file_name = QFileInfo (chandle->getFilename ()).absoluteDir ().filePath (help_file_name);
  		}
  	} else {
-@@ -684,22 +532,28 @@
+@@ -688,22 +532,28 @@
  	RK_DEBUG (APP, DL_DEBUG, "rendering help page for local file %s", help_file_name.toLatin1().data());
  
  	// open help file
@@ -1023,7 +1027,7 @@ fcc6002a97581d15ee4fbe6842e3a8255e14ae46
  
  	if (help_doc_element.isNull ()) {
  		RK_ASSERT (for_component);
-@@ -713,7 +567,7 @@
+@@ -717,7 +567,7 @@
  
  	// fix all elements containing an "src" attribute
  	QDir base_path (QFileInfo (help_file_name).absolutePath());
@@ -1032,7 +1036,7 @@ fcc6002a97581d15ee4fbe6842e3a8255e14ae46
  	for (XMLChildList::iterator it = src_elements.begin (); it != src_elements.end (); ++it) {
  		QString src = (*it).attribute ("src");
  		if (KUrl::isRelativeUrl (src)) {
-@@ -723,64 +577,64 @@
+@@ -727,64 +577,64 @@
  	}
  
  	// render the sections
@@ -1120,7 +1124,7 @@ fcc6002a97581d15ee4fbe6842e3a8255e14ae46
  	}
  
  	if (for_component) {
-@@ -797,7 +651,7 @@
+@@ -801,7 +651,7 @@
  	if (for_component) {
  		about = chandle->getAboutData ();
  	} else {
@@ -1129,7 +1133,7 @@ fcc6002a97581d15ee4fbe6842e3a8255e14ae46
  	}
  	if (about.valid) {
  		writeHTML (startSection ("about", i18n ("About"), QString (), &anchors, &anchornames));
-@@ -818,24 +672,30 @@
+@@ -822,24 +672,30 @@
  	}
  	writeHTML ("</div><div id=\"navigation\">" + navigation + "</div>");
  	writeHTML ("</body></html>\n");
@@ -1165,7 +1169,7 @@ fcc6002a97581d15ee4fbe6842e3a8255e14ae46
  
  	// Can't resolve links and references based on the already parsed dom-tree, because they can be inside string to be translated.
  	// I.e. resolving links before doing i18n will cause i18n-lookup to fail
-@@ -865,7 +725,7 @@
+@@ -869,7 +725,7 @@
  	}
  	ret += text.mid (pos);
  
@@ -1174,7 +1178,7 @@ fcc6002a97581d15ee4fbe6842e3a8255e14ae46
  		text = ret;
  		ret.clear ();
  		pos = 0;
-@@ -880,7 +740,7 @@
+@@ -884,7 +740,7 @@
  				id = text.mid (id_start, id_end - id_start);
  				pos = text.indexOf ("/>", id_end) + 2;
  			}
@@ -1183,7 +1187,7 @@ fcc6002a97581d15ee4fbe6842e3a8255e14ae46
  		}
  		ret += text.mid (pos);
  	}
-@@ -889,7 +749,7 @@
+@@ -893,7 +749,7 @@
  	return ret;
  }
  
@@ -1192,7 +1196,7 @@ fcc6002a97581d15ee4fbe6842e3a8255e14ae46
  	RK_TRACE (APP);
  
  	QString ret = "<a href=\"" + href + "\">";
-@@ -923,7 +783,7 @@
+@@ -927,7 +783,7 @@
  	return (ret + "</a>");
  }
  
@@ -1201,7 +1205,7 @@ fcc6002a97581d15ee4fbe6842e3a8255e14ae46
  	RK_TRACE (APP);
  
  	QStringList path_segments = path.split ('/', QString::SkipEmptyParts);
-@@ -935,13 +795,13 @@
+@@ -939,13 +795,13 @@
  	return (path_segments.join ("::"));
  }
  
@@ -1217,7 +1221,7 @@ fcc6002a97581d15ee4fbe6842e3a8255e14ae46
  	QString ret = "<a name=\"" + name + "\">";
  	ret.append ("<h2>" + title + "</h2>\n");
  	anchors->append (name);
-@@ -950,12 +810,66 @@
+@@ -954,12 +810,66 @@
  	return (ret);
  }
  
@@ -1286,7 +1290,7 @@ fcc6002a97581d15ee4fbe6842e3a8255e14ae46
  /////////////////////////////////////
  /////////////////////////////////////
  
-@@ -1081,3 +995,4 @@
+@@ -1085,3 +995,4 @@
  }
  
  #include "rkhtmlwindow.moc"

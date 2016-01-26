@@ -4,7 +4,7 @@
 # *EXCEPT* for the last call, see below.
 
 require(rkwarddev)
-rkwarddev.required("0.07-4")
+rkwarddev.required("0.08-2")
 
 local({
 # set the output directory to overwrite the actual plugin
@@ -18,7 +18,7 @@ about.info <- rk.XML.about(
       email="meik.michalke@hhu.de", role=c("aut","cre")),
     person(given="Thomas", family="Friedrichsmeier", email="thomas.friedrichsmeier@ruhr-uni-bochum.de", role=c("ctb"))),
   about=list(desc="RKWard GUI to perform power analysis and sample size estimation.",
-    version="0.02-1", url="http://rkward.kde.org")
+    version="0.03-1", url="http://rkward.kde.org")
   )
 dependencies.info <- rk.XML.dependencies(
   dependencies=list(rkward.min="0.6.3",
@@ -142,7 +142,10 @@ tab.pwr.data <- rk.XML.row(
         pwr.effect.etasq.rad,
         label="Statistical Method"
       ),
-      rk.XML.stretch()
+      rk.XML.stretch(),
+      rk.XML.frame (
+        rk.XML.preview (mode="output")
+      )
     ),
     rk.XML.col(
       rk.XML.frame(
@@ -479,12 +482,16 @@ pwr.js.print <- rk.paste.JS(
     "\t\treturn()\n\t}\n\n"),
   R.comment ("Prepare printout"),
   echo ("\tnote <- pwr.result[[\"note\"]]\n"),
-  id ("header = new Header ().addFromUI (\"", pwr.parameter.rad, "\");\n", js=FALSE),
-  echo ("\tparameters <- list("),
-  "echo (header.extractParameters ());",
-  echo (")\n",
-    "\tif(!is.null(pwr.result[[\"alternative\"]])){\n\t\tparameters[[", i18n ("alternative"), "]] <- pwr.result[[\"alternative\"]]\n\t}\n\n",
-    "\trk.header(pwr.result[[\"method\"]], parameters=parameters)\n",
+  js (if ("!is_preview") {
+    id ("header = new Header ().addFromUI (\"", pwr.parameter.rad, "\");\n", js=FALSE,
+    echo ("\tparameters <- list("),
+    "echo (header.extractParameters ());",
+    echo (")\n",
+      "\tif(!is.null(pwr.result[[\"alternative\"]])){\n\t\tparameters[[", i18n ("alternative"), "]] <- pwr.result[[\"alternative\"]]\n\t}\n\n",
+      "\trk.header(pwr.result[[\"method\"]], parameters=parameters)\n"
+    ))
+   }),
+  echo (
     "\tpwr.result[c(\"method\", \"note\", \"alternative\")] <- NULL\n",
     "\tpwr.result <- as.data.frame(unlist(pwr.result))\n",
     "\tcolnames(pwr.result) <- ", i18n ("Parameters"), "\n\n",
@@ -546,7 +553,8 @@ pwr.plugin.dir <<- rk.plugin.skeleton(
   js=list(results.header=FALSE,
     require="pwr",
     calculate=pwr.js.calc,
-    printout=pwr.js.print),
+    printout=pwr.js.print,
+    preview=TRUE),
   rkh=list(
     summary=pwr.rkh.summary,
     usage=pwr.rkh.usage,
