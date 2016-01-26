@@ -40,17 +40,18 @@ code, such as removing temporary files, etc.}
 ## To be generated in the preview() code section of a plugin
 
 ## NOT RUN
-outfile <- rk.get.tempfile.name(prefix="preview", extension=".html")
-rk.assign.preview.data("SOMEID", list(filename=outfile, on.delete=function (id) {
-  unlink(rk.get.preview.data(id)$filename)
-}))
-oldfile <- rk.set.output.html.file(f)
+pdata &lt;- rk.get.preview.data("SOMEID")
+if (is.null (pdata)) {
+  outfile &lt;- rk.get.tempfile.name(prefix="preview", extension=".txt")
+  pdata &lt;- list(filename=outfile, on.delete=function (id) {
+    unlink(rk.get.preview.data(id)$filename)
+  })
+  rk.assign.preview.data("SOMEID", pdata)
+}
 try ({
-  rk.header("This is a preview of what will happen")
-  rk.show.html(rk.get.output.html.file())
-  rk.flush.output()
+  cat ("This is a test", pdata$filename)
+  rk.edit.files(file=pdata$filename)
 })
-rk.set.output.html.file(outfile)
 ## END NOT RUN
 
 }
