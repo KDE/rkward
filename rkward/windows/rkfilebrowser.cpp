@@ -2,7 +2,7 @@
                           rkfilebrowser  -  description
                              -------------------
     begin                : Thu Apr 26 2007
-    copyright            : (C) 2007, 2008, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -28,6 +28,8 @@
 #include <KSharedConfig>
 #include <kfileitemactions.h>
 #include <kfileitemlistproperties.h>
+#include <klocale.h>
+#include <kio/copyjob.h>
 
 #include <qdir.h>
 #include <qlayout.h>
@@ -35,6 +37,7 @@
 #include <QVBoxLayout>
 #include <QScrollBar>
 #include <QMenu>
+#include <QInputDialog>
 
 #include "rkworkplace.h"
 #include "../rkward.h"
@@ -118,6 +121,9 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : KVBox (parent) {
 //	toolbar->addAction (dir->actionCollection ()->action ("detailed tree view"));	// should we have this as well? Trying to avoid crowding in the toolbar
 
 	fi_actions = new KFileItemActions (this);
+	rename_action = new QAction (i18n ("Rename"), this);  // Oh my, why isn't there a standard action for this?
+	rename_action->setIcon (QIcon::fromTheme (QStringLiteral("edit-rename")));
+	connect (rename_action, &QAction::triggered, this, &RKFileBrowserWidget::rename);
 	connect (dir, &KDirOperator::contextMenuAboutToShow, this, &RKFileBrowserWidget::contextMenuHook);
 
 	connect (dir, &KDirOperator::urlEntered, this, &RKFileBrowserWidget::urlChangedInView);
@@ -133,20 +139,37 @@ RKFileBrowserWidget::~RKFileBrowserWidget () {
 	RK_TRACE (APP);
 }
 
+void RKFileBrowserWidget::rename () {
+	RK_TRACE (APP);
+
+	QString name = QInputDialog::getText (this, i18n ("Rename..."), i18n ("New name for '%1':", context_menu_url.fileName ()), QLineEdit::Normal, context_menu_url.fileName ());
+	if (name.isEmpty ()) return;
+
+	QUrl dest_url = context_menu_url;
+	dest_url.setPath (context_menu_url.adjusted (QUrl::RemoveFilename).path () + '/' + name);
+	KIO::moveAs (context_menu_url, dest_url);
+}
+
 void RKFileBrowserWidget::contextMenuHook(const KFileItem& item, QMenu* menu) {
 	RK_TRACE (APP);
 
 	QList<KFileItem> dummy;
 	dummy.append (item);
 	fi_actions->setItemListProperties (KFileItemListProperties (dummy));
+	context_menu_url = item.url ();
 
 	// some versions of KDE appear to re-use the actions, others don't, and yet other are just plain broken (see this thread: https://mail.kde.org/pipermail/rkward-devel/2011-March/002770.html)
 	// Therefore, we remove all actions, explicitly, each time the menu is shown, then add them again.
 	QList<QAction*> menu_actions = menu->actions ();
-	foreach (QAction* act, menu_actions) if (added_service_actions.contains (act)) menu->removeAction (act);
+	QAction *first_sep = 0;
+	foreach (QAction* act, menu_actions) {
+		if (added_service_actions.contains (act)) menu->removeAction (act);
+		if (!first_sep && act->isSeparator ()) first_sep = act;
+	}
 	added_service_actions.clear ();
 	menu_actions = menu->actions ();
 
+	menu->insertAction (first_sep, rename_action);
 	fi_actions->addOpenWithActionsTo (menu, QString ());
 	fi_actions->addServiceActionsTo (menu);
 

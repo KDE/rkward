@@ -2,7 +2,7 @@
                           rkfilebrowser  -  description
                              -------------------
     begin                : Thu Apr 26 2007
-    copyright            : (C) 2007, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -70,11 +70,14 @@ public slots:
 	void fileActivated (const KFileItem& item);
 	void saveConfig ();
 	void contextMenuHook (const KFileItem &item, QMenu *menu);
+	void rename ();
 private:
 	QList<QAction*> added_service_actions;
 	KDirOperator *dir;
 	KUrlComboBox *urlbox;
 	KFileItemActions *fi_actions;
+	QAction *rename_action;
+	QUrl context_menu_url;
 };
 
 #endif
