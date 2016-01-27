@@ -18,7 +18,6 @@
 #ifndef RKWARD_H
 #define RKWARD_H
 
-#include <kapplication.h>
 #include <QAction>
 #include <QUrl>
 #include <kparts/mainwindow.h>

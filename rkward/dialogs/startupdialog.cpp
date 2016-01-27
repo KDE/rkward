@@ -29,31 +29,33 @@
 #include <QFileInfo>
 
 #include <klocale.h>
-#include <kvbox.h>
 #include <krecentfilesaction.h>
+#include <KConfigGroup>
+#include <QDialogButtonBox>
+#include <QPushButton>
 
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../debug.h"
 
-StartupDialog::StartupDialog (QWidget *parent, StartupDialogResult *result, KRecentFilesAction *recent_files) : KDialog (parent) {
+StartupDialog::StartupDialog (QWidget *parent, StartupDialogResult *result, KRecentFilesAction *recent_files) : QDialog (parent) {
 	RK_TRACE (DIALOGS);
 
 	setModal (true);
-	setButtons (KDialog::Ok | KDialog::Cancel);
-
 	StartupDialog::result = result;
 
-	setCaption (i18n ("What would you like to do?"));
+	setWindowTitle (i18n ("What would you like to do?"));
 
-	KVBox *vbox = new KVBox (this);
-	setMainWidget (vbox);
+	QVBoxLayout *vbox = new QVBoxLayout ();
+	setLayout (vbox);
 	
-	QLabel *pic = new QLabel (vbox);
+	QLabel *pic = new QLabel (this);
+	vbox->addWidget (pic);
 	pic->setPixmap (QPixmap (RKCommonFunctions::getRKWardDataDir () + "icons/rkward_logo.png"));
 
 	choser = new QButtonGroup (this);
-	QGroupBox* choser_box = new QGroupBox (vbox);
+	QGroupBox* choser_box = new QGroupBox (this);
+	vbox->addWidget (choser_box);
 	QVBoxLayout* choser_layout = new QVBoxLayout(choser_box);
 
 	choser_layout->addWidget (empty_workspace_button = new QRadioButton (i18n ("Start with an empty workspace"), choser_box));
@@ -86,6 +88,14 @@ StartupDialog::StartupDialog (QWidget *parent, StartupDialogResult *result, KRec
 	connect (file_list, &QListWidget::itemDoubleClicked, this, &StartupDialog::listDoubleClicked);
 	choser_layout->addWidget (file_list);
 	choser_layout->addWidget (remember_box = new QCheckBox (i18n ("Always do this on startup"), choser_box));
+
+	QDialogButtonBox *buttonBox = new QDialogButtonBox (QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+	QPushButton *okButton = buttonBox->button (QDialogButtonBox::Ok);
+	okButton->setDefault (true);
+	okButton->setShortcut (Qt::CTRL | Qt::Key_Return);
+	connect (buttonBox, SIGNAL (accepted()), this, SLOT (accept()));
+	connect (buttonBox, SIGNAL (rejected()), this, SLOT (reject()));
+	vbox->addWidget (buttonBox);
 }
 
 StartupDialog::~StartupDialog() {
@@ -168,7 +178,7 @@ void StartupDialog::showEvent (QShowEvent *event) {
 
 	// somehow, trying to achieve this in the ctor leads to the dialog never actually being shown (KDE4.0 beta)
 	setFixedWidth (width ());
-	KDialog::showEvent (event);
+	QDialog::showEvent (event);
 }
 
 // static

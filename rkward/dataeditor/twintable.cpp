@@ -30,6 +30,7 @@
 #include <QMenu>
 #include <QVBoxLayout>
 #include <QHeaderView>
+#include <QApplication>
 
 #include "twintablemember.h"
 #include "rkvareditmodel.h"

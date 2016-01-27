@@ -56,17 +56,18 @@
 #include <kstandarddirs.h>
 #include <kglobal.h>
 #include <KUrlAuthorized>
-#include <QUrl>
 
 #include <qstring.h>
 #include <QMutex>
 #include <QTemporaryFile>
 #include <QDir>
 #include <QThread>
+#include <QApplication>
+#include <QUrl>
+#include <QCommandLineParser>
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <QCommandLineParser>
 
 #include "rkward.h"
 #include "rkglobals.h"

@@ -22,6 +22,7 @@
 #include <QTime>
 #include <QObjectCleanupHandler>
 #include <QSet>
+#include <QGuiApplication>
 
 #include <klocale.h>
 #include <kactioncollection.h>

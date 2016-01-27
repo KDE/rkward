@@ -18,7 +18,6 @@
 
 #include <klibloader.h>
 #include <klocale.h>
-#include <QIcon>
 #include <kmessagebox.h>
 #include <kparts/plugin.h>
 #include <kactioncollection.h>
@@ -26,7 +25,6 @@
 #include <kmimetype.h>
 #include <kio/job.h>
 #include <kservice.h>
-#include <QTemporaryFile>
 #include <kwebview.h>
 #include <kcodecaction.h>
 #include <kglobalsettings.h>
@@ -44,6 +42,9 @@
 #include <QMenu>
 #include <QTextCodec>
 #include <QFontDatabase>
+#include <QTemporaryFile>
+#include <QGuiApplication>
+#include <QIcon>
 
 #include "../rkglobals.h"
 #include "../rbackend/rinterface.h"

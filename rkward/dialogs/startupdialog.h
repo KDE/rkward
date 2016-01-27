@@ -17,7 +17,7 @@
 #ifndef STARTUPDIALOG_H
 #define STARTUPDIALOG_H
 
-#include <kdialog.h>
+#include <QDialog>
 #include <QUrl>
 
 class QCheckBox;
@@ -33,7 +33,7 @@ This class represents the startup dialog asking you whether to open a recent fil
 @author Thomas Friedrichsmeier
 */
 /// the startup dialog
-class StartupDialog : public KDialog {
+class StartupDialog : public QDialog {
 Q_OBJECT
 public:
 	/** enum to hold result of StartupDialog. WARNING: do not change the numeric values! They are saved as user settings in the config (@see RKSettingsModuleGeneral). */

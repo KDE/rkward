@@ -17,6 +17,8 @@
 #ifndef RKSETTINGSMODULE_H
 #define RKSETTINGSMODULE_H
 
+#include <KConfigGroup>
+
 #include <qstring.h>
 #include <qwidget.h>
 #include <QUrl>

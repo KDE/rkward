@@ -19,8 +19,8 @@
 
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <KAboutData>
 #include <kaboutapplicationdialog.h>
-#include <kcmdlineargs.h>
 #include <kactioncollection.h>
 #include <kxmlguifactory.h>
 #include <kshortcutsdialog.h>

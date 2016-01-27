@@ -20,6 +20,7 @@
 #include <QDesktopWidget>
 #include <QCloseEvent>
 #include <QPointer>
+#include <QApplication>
 
 // include files for KDE
 #include <kmessagebox.h>

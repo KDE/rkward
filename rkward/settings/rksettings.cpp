@@ -19,9 +19,7 @@
 #include <QPushButton>
 
 #include <klocale.h>
-#include <kapplication.h>
 #include <kglobal.h>
-#include <kvbox.h>
 
 #include "../windows/rkworkplace.h"
 

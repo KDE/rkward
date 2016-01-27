@@ -59,7 +59,7 @@ IF(Q_WS_MAC)
 		@ONLY)
 ENDIF(Q_WS_MAC)
 
-TARGET_LINK_LIBRARIES(rkward.frontend  windows ${RKWARD_ADDLIBS} agents dialogs plugin settings dataeditor core scriptbackends rbackend misc KF5::KDELibs4Support KF5::WindowSystem Qt5::Widgets KF5::XmlGui ${GETTEXT_LIBRARIES})
+TARGET_LINK_LIBRARIES(rkward.frontend  windows ${RKWARD_ADDLIBS} agents dialogs plugin settings dataeditor core scriptbackends rbackend misc KF5::WindowSystem Qt5::Widgets KF5::XmlGui ${GETTEXT_LIBRARIES})
 
 # wrapper executable
 GET_DIRECTORY_PROPERTY(R_EXECUTABLE DIRECTORY rbackend DEFINITION R_EXECUTABLE)
