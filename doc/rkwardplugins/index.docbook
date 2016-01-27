@@ -1448,6 +1448,9 @@ This chapter contains information on some topics that are useful only to certain
   }
 		</programlisting>
 	</sect2>
+</sect1>
+<sect1>
+	<title>Previews for data, output and other results</title>
 	<sect2 id="preview_output">
 		<title>Previews of (HTML) output</title>
 		<note><para>This section discusses adding preview functionality to plugins creating output / HTML printouts. It is recommended that you read the separate section on <link linkend="preview_plots">plot previews</link>, before this section.</para></note>
