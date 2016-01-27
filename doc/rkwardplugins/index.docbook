@@ -574,7 +574,7 @@ res &lt;- t.test (
 			as plain text. Next we need to fill in the value, the user selected as the first variable. We fetch this using <function>getString ("x")</function>, and append it to the string to be <quote>echoed</quote>. This prints out the value of the GUI-element with <parameter>id=</parameter><replaceable>"x"</replaceable>: our first <command>&lt;checkbox&gt;</command>. Next, we append a ', ', and do the same to fetch the value of the element <replaceable>"y"</replaceable> - the second <command>&lt;checkbox&gt;</command>. For the hypothesis (the <command>&lt;radio&gt;</command> group), and the equal variances <command>&lt;checkbox&gt;</command>, the procedure is very similar.
 		</para>
 		<para>
-			Note that instead of concatenating the output snippets with <quote>+</quote>, you can also use several <function>echo()</function> statments. Everything is printed on a single line. To produce a line break in the generated code, insert a <replaceable>"\n"</replaceable> in the echoed string. In theory, you can even produce many lines with a single echo-statement, but please keep it to one line (or less) of generated code per <function>echo()</function>.
+			Note that instead of concatenating the output snippets with <quote>+</quote>, you can also use several <function>echo()</function> statements. Everything is printed on a single line. To produce a line break in the generated code, insert a <replaceable>"\n"</replaceable> in the echoed string. In theory, you can even produce many lines with a single echo-statement, but please keep it to one line (or less) of generated code per <function>echo()</function>.
 		</para>
 		<note>
 			<para>Besides <function>getString()</function>, there are also functions <function>getBoolean()</function>, which will try to return the value as a logical (suitable for using in an <function>if()</function>-statement), and <function>getList()</function>, which will try to return list-like data in a JS <function>Array()</function>. We will show examples of those, later.</para>
@@ -4402,7 +4402,7 @@ Child elements:
 </varlistentry>
 <varlistentry>
 <term>&lt;section&gt;</term>
-<listitem><para>A general purposes section. May be used any number of times as a direct child of the &lt;document&gt; node. These sections are displayed in the order of their definition, but all <emphasis>after</emphasis> the &lt;usage&gt; section and <emphasis>before</emphasis> the &lt;settings&gt; section. The text contained within the &lt;sectoin&gt; tag will be displayed.
+<listitem><para>A general purposes section. May be used any number of times as a direct child of the &lt;document&gt; node. These sections are displayed in the order of their definition, but all <emphasis>after</emphasis> the &lt;usage&gt; section and <emphasis>before</emphasis> the &lt;settings&gt; section. The text contained within the &lt;section&gt; tag will be displayed.
 	<variablelist>
 	<varlistentry>
 	<term>id</term>
