@@ -523,7 +523,7 @@ pwr.js.print <- rk.paste.JS(
 ############
 ## help file
 
-pwr.rkh.summary <- rk.rkh.summary("Perform power analysis for a variety of statistcal methods.")
+pwr.rkh.summary <- rk.rkh.summary("Perform power analysis for a variety of statistical methods.")
 
 pwr.rkh.usage <- rk.rkh.usage("Given three of the parameters 'power of test', 
   'sample size', 'effect size', and 'significance level', this plugin will 
