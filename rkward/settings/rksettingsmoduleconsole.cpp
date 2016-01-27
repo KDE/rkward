@@ -17,17 +17,14 @@
 #include "rksettingsmoduleconsole.h"
 
 #include <klocale.h>
-#include <kconfig.h>
 #include <kconfiggroup.h>
-#include <knuminput.h>
-#include <kapplication.h>
-#include <kglobal.h>
 
 #include <qlayout.h>
 #include <qcheckbox.h>
 #include <qlabel.h>
 #include <QVBoxLayout>
 #include <QComboBox>
+#include <QSpinBox>
 
 #include "../rbackend/rcommand.h"
 #include "../rkglobals.h"
@@ -148,7 +145,7 @@ void RKSettingsModuleConsole::loadSettings (KConfig *config) {
 QStringList RKSettingsModuleConsole::loadCommandHistory () {
 	RK_TRACE (SETTINGS);
 
-	KConfigGroup cg = KGlobal::config ()->group ("Console Settings");
+	KConfigGroup cg = KSharedConfig::openConfig ()->group ("Console Settings");
 	return cg.readEntry ("history", QStringList ());
 }
 
@@ -156,7 +153,7 @@ QStringList RKSettingsModuleConsole::loadCommandHistory () {
 void RKSettingsModuleConsole::saveCommandHistory (const QStringList &list) {
 	RK_TRACE (SETTINGS);
 
-	KConfigGroup cg = KGlobal::config ()->group ("Console Settings");
+	KConfigGroup cg = KSharedConfig::openConfig ()->group ("Console Settings");
 	if (save_history) {
 		cg.writeEntry ("history", list);
 	}

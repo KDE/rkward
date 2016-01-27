@@ -24,12 +24,40 @@
 #include <QTimer>
 
 #include <klocale.h>
+#include <kdialog.h>
 
 #include "../rkglobals.h"
 #include "../rbackend/rinterface.h"
 #include "../settings/rksettingsmoduler.h"
 
 #include "../debug.h"
+
+
+/** This class provides the dialog shown as part of an RKProgressControl. Generally you should not use this class directly, but rather use RKProgressControl. */
+class RKProgressControlDialog : public KDialog {
+public:
+/** constructor. */
+	RKProgressControlDialog (const QString &text, const QString &caption, int mode_flags, bool modal);
+/** destructor. */
+	~RKProgressControlDialog ();
+public:
+	void addOutput (const ROutput *output);
+	void setCloseTextToClose ();
+	void finished ();
+protected:
+	void closeEvent (QCloseEvent *e) override;
+	void scrollDown ();
+private:
+	QLabel *error_indicator;
+	QTextEdit *output_text;
+
+	QString output_button_text;
+
+	ROutput::ROutputType last_output_type;
+	bool prevent_close;
+	bool is_done;
+};
+
 
 RKProgressControl::RKProgressControl (QObject *parent, const QString &text, const QString &caption, int mode_flags) : QObject (parent) {
 	RK_TRACE (MISC);

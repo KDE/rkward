@@ -814,7 +814,7 @@ void RKConsole::userLoadHistory (const QUrl &_url) {
 
 	QUrl url = _url;
 	if (url.isEmpty ()) {
-		url = QFileDialog::getOpenFileUrl (this, i18n ("Select command history file to load"), RKSettingsModuleGeneral::lastUsedUrlFor ("rscripts"), i18n ("R history files (*.Rhistory);;All files (*)"));
+		url = QFileDialog::getOpenFileUrl (this, i18n ("Select command history file to load"), RKSettingsModuleGeneral::lastUsedUrlFor ("rscripts"), i18n ("R history files [*.Rhistory](*.Rhistory);;All files [*](*)"));
 		if (url.isEmpty ()) return;
 		RKSettingsModuleGeneral::updateLastUsedUrl ("rscripts", url.adjusted (QUrl::RemoveFilename));
 	}

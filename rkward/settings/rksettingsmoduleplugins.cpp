@@ -17,11 +17,9 @@
 #include "rksettingsmoduleplugins.h"
 
 #include <klocale.h>
-#include <kconfig.h>
-#include <kfiledialog.h>
 #include <kmessagebox.h>
-#include <khbox.h>
 #include <kdeversion.h>
+#include <KConfigGroup>
 
 #include <qlayout.h>
 #include <qlabel.h>
@@ -31,6 +29,7 @@
 #include <qcheckbox.h>
 #include <QVBoxLayout>
 #include <QPushButton>
+#include <QFileDialog>
 
 #include "../rkward.h"
 #include "../rkglobals.h"
@@ -499,7 +498,7 @@ bool RKSettingsModulePluginsModel::setData (const QModelIndex& index, const QVar
 void RKSettingsModulePluginsModel::insertNewStrings (int above_row) {
 	RK_TRACE (SETTINGS);
 
-	QStringList files = KFileDialog::getOpenFileNames (QUrl::fromLocalFile (RKCommonFunctions::getRKWardDataDir ()), "*.pluginmap", static_cast<QWidget*> (QObject::parent ()), i18n ("Select .pluginmap-file"));
+	QStringList files = QFileDialog::getOpenFileNames (static_cast<QWidget*> (QObject::parent ()), i18n ("Select .pluginmap-file"), RKCommonFunctions::getRKWardDataDir (), "RKWard pluginmap files [*.pluginmap](*.pluginmap)");
 
 	// already known files are activated, but not added
 	for (int i = files.size () -1; i >= 0; --i) {

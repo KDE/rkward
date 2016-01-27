@@ -19,7 +19,6 @@
 #include <QPushButton>
 
 #include <klocale.h>
-#include <kglobal.h>
 
 #include "../windows/rkworkplace.h"
 
@@ -163,7 +162,7 @@ void RKSettings::applyAll () {
 		if (it.value ()->hasChanges ()) {
 			it.value ()->applyChanges ();
 			it.value ()->changed = false;
-			it.value ()->save (KGlobal::config ().data ());
+			it.value ()->save (KSharedConfig::openConfig ().data ());
 			tracker ()->signalSettingsChange (it.key ());
 		}
 	}

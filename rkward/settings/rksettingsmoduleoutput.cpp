@@ -19,7 +19,6 @@
 #include <klocale.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
-#include <knuminput.h>
 
 #include <qlayout.h>
 #include <qlabel.h>
@@ -27,6 +26,7 @@
 #include <qcheckbox.h>
 #include <QVBoxLayout>
 #include <QComboBox>
+#include <QSpinBox>
 
 #include "../rkglobals.h"
 #include "../rbackend/rinterface.h"

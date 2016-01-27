@@ -17,10 +17,8 @@
 #include "rksettingsmoduler.h"
 
 #include <klocale.h>
-#include <kconfig.h>
-#include <kstandarddirs.h>
 #include <kinputdialog.h>
-#include <knuminput.h>
+#include <KConfigGroup>
 
 #include <qlabel.h>
 #include <qcheckbox.h>
@@ -31,6 +29,7 @@
 #include <QPushButton>
 #include <QTextEdit>
 #include <QFileDialog>
+#include <QSpinBox>
 
 #include "rksettingsmodulegeneral.h"
 #include "../core/robject.h"

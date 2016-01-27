@@ -19,12 +19,12 @@
 #include <klocale.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
-#include <knuminput.h>
 
 #include <qcheckbox.h>
 #include <qlabel.h>
 #include <QGridLayout>
 #include <QVBoxLayout>
+#include <QSpinBox>
 
 #include "../rbackend/rcommand.h"
 #include "rksettings.h"

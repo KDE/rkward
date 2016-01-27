@@ -17,9 +17,7 @@
 #include "rksettingsmodulegeneral.h"
 
 #include <klocale.h>
-#include <kconfig.h>
-#include <kglobal.h>
-#include <kstandarddirs.h>
+#include <KConfigGroup>
 
 #include <qlayout.h>
 #include <qlabel.h>

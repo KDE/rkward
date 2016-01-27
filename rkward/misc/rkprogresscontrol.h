@@ -20,7 +20,6 @@
 #include <qobject.h>
 #include <QList>
 #include <qstring.h>
-#include <kdialog.h>
 
 #include "../rbackend/rcommandreceiver.h"
 
@@ -108,33 +107,6 @@ private:
 protected:
 	void newOutput (RCommand *, ROutput *output) override;
 	void rCommandDone (RCommand *command) override;
-};
-
-/** This class provides the dialog shown as part of an RKProgressControl. Generally you should not use this class directly, but rather use RKProgressControl. */
-class RKProgressControlDialog : public KDialog {
-	Q_OBJECT
-public:
-/** constructor. */
-	RKProgressControlDialog (const QString &text, const QString &caption, int mode_flags, bool modal);
-/** destructor. */
-	~RKProgressControlDialog ();
-public:
-	void addOutput (const ROutput *output);
-	void setCloseTextToClose ();
-	void finished ();
-protected:
-	void closeEvent (QCloseEvent *e) override;
-private slots:
-	void scrollDown ();
-private:
-	QLabel *error_indicator;
-	QTextEdit *output_text;
-
-	QString output_button_text;
-
-	ROutput::ROutputType last_output_type;
-	bool prevent_close;
-	bool is_done;
 };
 
 #endif

@@ -89,12 +89,12 @@ StartupDialog::StartupDialog (QWidget *parent, StartupDialogResult *result, KRec
 	choser_layout->addWidget (file_list);
 	choser_layout->addWidget (remember_box = new QCheckBox (i18n ("Always do this on startup"), choser_box));
 
-	QDialogButtonBox *buttonBox = new QDialogButtonBox (QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+	QDialogButtonBox *buttonBox = new QDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
 	QPushButton *okButton = buttonBox->button (QDialogButtonBox::Ok);
 	okButton->setDefault (true);
 	okButton->setShortcut (Qt::CTRL | Qt::Key_Return);
-	connect (buttonBox, SIGNAL (accepted()), this, SLOT (accept()));
-	connect (buttonBox, SIGNAL (rejected()), this, SLOT (reject()));
+	connect (buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
+	connect (buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
 	vbox->addWidget (buttonBox);
 }
 
