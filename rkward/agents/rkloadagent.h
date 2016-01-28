@@ -23,6 +23,8 @@
 #include <qstring.h>
 #include <QUrl>
 
+class QTemporaryFile;
+
 /** The RKLoadAgent is really a rather simple agent. All it needs to do is display an error message, if loading fails. No further action is required. Like all
 agents, the RKLoadAgent self-destructs when done.
 @author Thomas Friedrichsmeier
@@ -37,7 +39,7 @@ protected:
 	void rCommandDone (RCommand *command) override;
 private:
 /// needed if file to be loaded is remote
-	QString tmpfile;
+	QTemporaryFile* tmpfile;
 	bool _merge;
 };
 

@@ -2,7 +2,7 @@
                           showedittextfileagent  -  description
                              -------------------
     begin                : Tue Sep 13 2005
-    copyright            : (C) 2005, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2005-2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -18,13 +18,14 @@
 #include "showedittextfileagent.h"
 
 #include <klocale.h>
-#include <kdialog.h>
 #include <kmessagebox.h>
+#include <KMessageWidget>
 
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qfile.h>
 #include <QVBoxLayout>
+#include <QDialog>
 
 #include "../windows/rkcommandeditorwindow.h"
 #include "../rbackend/rinterface.h"
@@ -40,27 +41,15 @@ ShowEditTextFileAgent::ShowEditTextFileAgent (RBackendRequest *request, const QS
 
 	ShowEditTextFileAgent::request = request;
 
-	dialog = new KDialog (0);
+	message = new KMessageWidget (0);
+	message->setMessageType (KMessageWidget::Information);
+	message->setText (QString ("<p><strong>%1<strong></p><p>%2</p>").arg (caption).arg (QString (text).replace ('\n', "<br/>")));
+	message->setCloseButtonVisible (false);
+	QAction *done_action = new QAction (QIcon::fromTheme ("dialog-ok"), i18n ("Done"), message);
+	connect (done_action, &QAction::triggered, this, &QObject::deleteLater);
+	message->addAction (done_action);
 
-	// dialog setup
-	dialog->setCaption (caption);
-	dialog->setButtons (KDialog::Ok);
-	dialog->setModal (false);
-
-	QWidget *page = new QWidget (dialog);
-	dialog->setMainWidget (page);
-	QVBoxLayout *layout = new QVBoxLayout (page);
-	layout->setContentsMargins (0, 0, 0, 0);
-	QLabel *label = new QLabel (text, page);
-	label->setWordWrap (true);
-	layout->addWidget (label);
-
-	dialog->setButtonText (KDialog::Ok, i18n ("Done"));
-
-	connect (dialog, &KDialog::finished, this, &ShowEditTextFileAgent::deleteLater);
-
-	// do it
-	dialog->show ();
+	RKWorkplace::mainWorkplace ()->addMessageWidget (message);
 }
 
 
@@ -68,7 +57,7 @@ ShowEditTextFileAgent::~ShowEditTextFileAgent () {
 	RK_TRACE (APP);
 
 	RKRBackendProtocolFrontend::setRequestCompleted (request);
-	dialog->deleteLater ();
+	message->deleteLater ();
 }
 
 // static
@@ -107,7 +96,7 @@ void ShowEditTextFileAgent::showEditFiles (RBackendRequest *request) {
 		RKRBackendProtocolFrontend::setRequestCompleted (request);
 	} else if (request->type == RBackendRequest::EditFiles) {
 		if (prompt) {
-			new ShowEditTextFileAgent (request, i18n ("A command running in the R-engine wants you to edit one or more file(s). Please look at these files, edit them as appropriate, and save them. When done, press the \"Done\"-button, or close this dialog to resume.\n\n") + display_titles.join ("\n"), i18n ("Edit file(s)"));
+			new ShowEditTextFileAgent (request, i18n ("A command running in the R-engine wants you to edit the following file(s). Please look at these files, edit them as appropriate, and save them. When done, press the \"Done\"-button, or close this dialog to resume.<ul><li>") + display_titles.join ("</li></li>") + "</li></ul>", i18n ("Edit file(s)"));
 		} else {
 			RKRBackendProtocolFrontend::setRequestCompleted (request);
 		}
@@ -123,4 +112,3 @@ void ShowEditTextFileAgent::showEditFiles (RBackendRequest *request) {
 		RKWorkplace::mainWorkplace ()->openScriptEditor (QUrl::fromLocalFile (files[n]), QString (), r_highlighting, read_only, display_titles[n], delete_files);
 	}
 }
-

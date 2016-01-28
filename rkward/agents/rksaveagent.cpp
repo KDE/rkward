@@ -17,10 +17,10 @@
 #include "rksaveagent.h"
 
 #include <klocale.h>
-#include <kfiledialog.h>
 #include <kmessagebox.h>
 
 #include <qapplication.h>
+#include <QFileDialog>
 
 #include "../rbackend/rinterface.h"
 #include "../core/robjectlist.h"
@@ -59,7 +59,7 @@ RKSaveAgent::~RKSaveAgent () {
 
 bool RKSaveAgent::askURL () {
 	RK_TRACE (APP);
-	save_url = QUrl::fromLocalFile (KFileDialog::getSaveFileName (save_url, i18n ("%1|R Workspace Files (%1)\n*|All files", RKSettingsModuleGeneral::workspaceFilenameFilter ())));
+	save_url = QUrl::fromLocalFile (QFileDialog::getSaveFileName (RKWardMainWindow::getMain (), QString (), save_url.toLocalFile (), i18n ("R Workspace Files [%1](%1);;All files [*](*)", RKSettingsModuleGeneral::workspaceFilenameFilter ())));
 	if (save_url.isEmpty ()) {
 		if (when_done != DoNothing) {
 			if (KMessageBox::warningYesNo (0, i18n ("No filename given. Your data was NOT saved. Do you still want to proceed?")) != KMessageBox::Yes) when_done = DoNothing;

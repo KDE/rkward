@@ -39,6 +39,7 @@ class QAction;
 class RKToolWindowBar;
 class RKMDIWindowHistoryWidget;
 class RKGraphicsDevice;
+class KMessageWidget;
 
 #define TOOL_WINDOW_BAR_COUNT 4
 
@@ -171,6 +172,10 @@ Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsMod
 /** Make the next window to be created appear in a specific location (can be a named window). 
  *  @note It is the caller's responsibility to clear the override (by calling setWindowPlacementOverride ()) after the window in question has been created. */
 	void setWindowPlacementOverrides (const QString& placement=QString (), const QString& name=QString (), const QString& style=QString ());
+
+/** Inserts the given message widget above the central area. While technically, the workplace becomes the parent widget of the message widget, it is the caller's responsibility to
+ *  delete the widget, when appropriate. */
+	void addMessageWidget (KMessageWidget *message);
 signals:
 /** emitted when the workspace Url has changed */
 	void workspaceUrlChanged (const QUrl &url);
@@ -200,6 +205,7 @@ private:
 
 	QSplitter *horiz_splitter;
 	QSplitter *vert_splitter;
+	QWidget *message_area;
 
 	RKToolWindowBar* tool_window_bars[TOOL_WINDOW_BAR_COUNT];
 friend class RKToolWindowBar;

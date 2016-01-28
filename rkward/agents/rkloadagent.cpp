@@ -16,12 +16,15 @@
  ***************************************************************************/
 #include "rkloadagent.h"
 
-#include <kio/netaccess.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kdeversion.h>
+#include <kio/filecopyjob.h>
+#include <KJobWidgets>
+#include <KJobUiDelegate>
 
 #include <qstring.h>
+#include <QTemporaryFile>
 
 #include "../rkglobals.h"
 #include "../core/robjectlist.h"
@@ -40,14 +43,21 @@ RKLoadAgent::RKLoadAgent (const QUrl &url, bool merge) {
 	RKWardMainWindow::getMain ()->slotSetStatusBarText (i18n ("Loading Workspace..."));
 
 	_merge = merge;
+
+	// downlad the file, if remote
+	tmpfile = 0;
 	QString filename;
 	if (!url.isLocalFile ()) {
-		KIO::NetAccess::download (url, tmpfile, RKWardMainWindow::getMain ());
-		filename = tmpfile;
+		tmpfile = new QTemporaryFile (this);
+		KIO::Job* getjob = KIO::file_copy (url, QUrl::fromLocalFile (tmpfile->fileName()));
+		KJobWidgets::setWindow (getjob, RKWardMainWindow::getMain ());
+		if (!getjob->exec ()) {
+			getjob->ui ()->showErrorMessage();
+			return;
+		}
 	} else {
 		filename = url.toLocalFile ();
 	}
-	
 
 	RCommand *command;
 	
@@ -71,7 +81,6 @@ void RKLoadAgent::rCommandDone (RCommand *command) {
 	RK_TRACE (APP);
 	
 	if (command->getFlags () == WORKSPACE_LOAD_COMMAND) {
-		if (!tmpfile.isEmpty ()) KIO::NetAccess::removeTempFile (tmpfile);
 		if (command->failed ()) {
 			KMessageBox::error (0, i18n ("There has been an error opening file '%1':\n%2", RKWorkplace::mainWorkplace ()->workspaceURL ().path (), command->error ()), i18n ("Error loading workspace"));
 			RKWorkplace::mainWorkplace ()->setWorkspaceURL (QUrl());

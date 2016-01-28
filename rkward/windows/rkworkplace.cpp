@@ -29,6 +29,7 @@
 #include <kmimetype.h>
 #include <kstandarddirs.h>
 #include <KSharedConfig>
+#include <KMessageWidget>
 
 #include <QFileInfo>
 #include <QCryptographicHash>
@@ -100,9 +101,15 @@ RKWorkplace::RKWorkplace (QWidget *parent) : QWidget (parent) {
 	KConfigGroup toolbar_config = KSharedConfig::openConfig ()->group ("ToolwindowBars");
 	for (int i = 0; i < TOOL_WINDOW_BAR_COUNT; ++i) tool_window_bars[i]->restoreSize (toolbar_config);
 
+	// message area
+	message_area = new QWidget (this);
+	QVBoxLayout *message_layout = new QVBoxLayout (message_area);
+	message_layout->setContentsMargins (0, 0, 0, 0);
+
 	// now add it all to this widget
 	QVBoxLayout *box = new QVBoxLayout (this);
 	box->setContentsMargins (0, 0, 0, 0);
+	box->addWidget (message_area);
 	box->addWidget (vbox);
 
 	history = new RKMDIWindowHistory (this);
@@ -118,6 +125,14 @@ RKWorkplace::~RKWorkplace () {
 	for (int i = 0; i < windows.size (); ++i) {
 		disconnect (windows[i], 0, this, 0);
 	}
+}
+
+void RKWorkplace::addMessageWidget (KMessageWidget* message) {
+	RK_TRACE (APP);
+
+	message_area->layout ()->addWidget (message);
+	topLevelWidget ()->show ();
+	topLevelWidget ()->raise ();
 }
 
 QString workspaceConfigFileName (const QUrl &url) {
