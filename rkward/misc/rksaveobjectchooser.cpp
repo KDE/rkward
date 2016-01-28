@@ -23,10 +23,10 @@
 #include <QVBoxLayout>
 #include <QPushButton>
 #include <QTimer>
+#include <QDialog>
+#include <QDialogButtonBox>
 
 #include <klocale.h>
-#include <kdialog.h>
-#include <kvbox.h>
 
 #include "../core/robjectlist.h"
 #include "../core/renvironmentobject.h"
@@ -98,18 +98,22 @@ void RKSaveObjectChooser::selectRootObject () {
 	RK_TRACE (MISC);
 
 	// TODO: not very pretty, yet
-	KDialog *dialog = new KDialog (this);
-	dialog->setButtons (KDialog::Ok|KDialog::Cancel);
-	dialog->setCaption (i18n ("Select parent object"));
+	QDialog *dialog = new QDialog (this);
+	dialog->setWindowTitle (i18n ("Select parent object"));
 	dialog->setModal (true);
-	KVBox *page = new KVBox (dialog);
-	dialog->setMainWidget (page);
+	QVBoxLayout *layout = new QVBoxLayout (dialog);
 
-	RKObjectListView* list_view = new RKObjectListView (false, page);
+	RKObjectListView* list_view = new RKObjectListView (false, dialog);
 	list_view->setSelectionMode (QAbstractItemView::SingleSelection);
 	list_view->initialize ();
 	list_view->setObjectCurrent (root_object);
-	connect (list_view, &QAbstractItemView::doubleClicked, dialog, &KDialog::accept);
+	connect (list_view, &QAbstractItemView::doubleClicked, dialog, &QDialog::accept);
+	layout->addWidget (list_view);
+
+	QDialogButtonBox *buttons = new QDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel, dialog);
+	connect (buttons->button (QDialogButtonBox::Ok), &QPushButton::clicked, dialog, &QDialog::accept);
+	connect (buttons->button (QDialogButtonBox::Cancel), &QPushButton::clicked, dialog, &QDialog::reject);
+	layout->addWidget (buttons);
 
 	dialog->exec ();
 

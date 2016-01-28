@@ -23,8 +23,6 @@
 
 #include <klocale.h>
 #include <kxmlguiclient.h>
-#include <kglobal.h>
-#include <kstandarddirs.h>
 
 #include "../settings/rksettingsmodulegeneral.h"
 
@@ -149,7 +147,7 @@ namespace RKCommonFunctions {
 	}
 
 	QString getRKWardDataDir () {
-		return (KGlobal::dirs ()->findResourceDir ("data", "rkward/resource.ver") + "rkward/");
+		return (QStandardPaths::locate (QStandardPaths::AppDataLocation, "resource.ver").replace ("resource.ver", QString ()));
 	}
 
 	QString getUseableRKWardSavefileName (const QString &prefix, const QString &postfix) {

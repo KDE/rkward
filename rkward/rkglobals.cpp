@@ -22,13 +22,14 @@ RInterface *RKGlobals::rinter;
 RKModificationTracker *RKGlobals::mtracker;
 QVariantMap RKGlobals::startup_options;
 
-#include <kdialog.h>
+#include <QApplication>
+#include <QStyle>
 
 int RKGlobals::marginHint () {
-	return KDialog::marginHint ();
+	return QApplication::style ()->pixelMetric (QStyle::PM_DefaultChildMargin);
 }
 
 int RKGlobals::spacingHint () {
-	return KDialog::spacingHint ();
+	return QApplication::style ()->pixelMetric (QStyle::PM_DefaultLayoutSpacing);
 }
 

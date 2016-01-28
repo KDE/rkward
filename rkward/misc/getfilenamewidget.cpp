@@ -21,8 +21,8 @@
 #include <QFileDialog>
 
 #include <klocale.h>
-#include <KLineEdit>
 #include <kurlrequester.h>
+#include <KLineEdit>
 
 #include "../settings/rksettingsmodulegeneral.h"
 
