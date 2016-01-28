@@ -18,14 +18,7 @@
 #include "showedittextfileagent.h"
 
 #include <klocale.h>
-#include <kmessagebox.h>
 #include <KMessageWidget>
-
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qfile.h>
-#include <QVBoxLayout>
-#include <QDialog>
 
 #include "../windows/rkcommandeditorwindow.h"
 #include "../rbackend/rinterface.h"
@@ -42,12 +35,17 @@ ShowEditTextFileAgent::ShowEditTextFileAgent (RBackendRequest *request, const QS
 	ShowEditTextFileAgent::request = request;
 
 	message = new KMessageWidget (0);
-	message->setMessageType (KMessageWidget::Information);
-	message->setText (QString ("<p><strong>%1<strong></p><p>%2</p>").arg (caption).arg (QString (text).replace ('\n', "<br/>")));
-	message->setCloseButtonVisible (false);
-	QAction *done_action = new QAction (QIcon::fromTheme ("dialog-ok"), i18n ("Done"), message);
-	connect (done_action, &QAction::triggered, this, &QObject::deleteLater);
-	message->addAction (done_action);
+	message->setText (QString ("<p><strong>%1<strong></p><p>%2</p>").arg (caption).arg (text));
+	if (request) {
+		message->setCloseButtonVisible (false);
+		QAction *done_action = new QAction (QIcon::fromTheme ("dialog-ok"), i18n ("Done"), message);
+		connect (done_action, &QAction::triggered, this, &QObject::deleteLater);
+		message->addAction (done_action);
+		message->setMessageType (KMessageWidget::Warning);  // Hm, not really a warning, but it _does_ require user attention, as the R engine is blocked until "Done" is clicked.
+	} else {
+		connect (message, &KMessageWidget::hideAnimationFinished, this, &QObject::deleteLater);
+		message->setMessageType (KMessageWidget::Information);
+	}
 
 	RKWorkplace::mainWorkplace ()->addMessageWidget (message);
 }
@@ -56,7 +54,7 @@ ShowEditTextFileAgent::ShowEditTextFileAgent (RBackendRequest *request, const QS
 ShowEditTextFileAgent::~ShowEditTextFileAgent () {
 	RK_TRACE (APP);
 
-	RKRBackendProtocolFrontend::setRequestCompleted (request);
+	if (request) RKRBackendProtocolFrontend::setRequestCompleted (request);
 	message->deleteLater ();
 }
 
@@ -90,10 +88,12 @@ void ShowEditTextFileAgent::showEditFiles (RBackendRequest *request) {
 	if (request->type == RBackendRequest::ShowFiles) {
 		RK_ASSERT (!request->synchronous);
 
-		if (prompt) KMessageBox::informationList (RKWardMainWindow::getMain (), i18n ("A command running in the R-engine wants you to see the following file(s):\n"), display_titles, i18n ("Showing file(s)"), "show_files");
-
 		delete_files = request->params["delete"].toBool ();
 		RKRBackendProtocolFrontend::setRequestCompleted (request);
+
+		if (prompt) {
+			new ShowEditTextFileAgent (0, i18n ("A command running in the R-engine wants you to see the following file(s):<ul><li>") + display_titles.join ("</li></li>") + "</li></ul>", i18n ("Showing file(s)"));
+		}
 	} else if (request->type == RBackendRequest::EditFiles) {
 		if (prompt) {
 			new ShowEditTextFileAgent (request, i18n ("A command running in the R-engine wants you to edit the following file(s). Please look at these files, edit them as appropriate, and save them. When done, press the \"Done\"-button, or close this dialog to resume.<ul><li>") + display_titles.join ("</li></li>") + "</li></ul>", i18n ("Edit file(s)"));
