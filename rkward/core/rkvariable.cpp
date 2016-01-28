@@ -871,7 +871,6 @@ RKVariable::FormattingOptions RKVariable::parseFormattingOptionsString (const QS
 	formatting_options.alignment = FormattingOptions::AlignDefault;
 	formatting_options.precision_mode = FormattingOptions::PrecisionDefault;
 	formatting_options.precision = 0;
-	bool empty = true;
 
 	QStringList list = string.split ('#', QString::SkipEmptyParts);
 	QString option, parameter;
@@ -884,20 +883,16 @@ RKVariable::FormattingOptions RKVariable::parseFormattingOptionsString (const QS
 		if (option == "align") {
 			int al = parameter.toInt ();
 			if ((al >= (int) FormattingOptions::AlignDefault) && (al <= (int) FormattingOptions::AlignRight)) {
-				empty = false;
 				formatting_options.alignment = (FormattingOptions::Alignment) al;
 			}
 		} else if (option == "prec") {
 			if (parameter == "d") {
-				empty = false;
 				formatting_options.precision_mode = FormattingOptions::PrecisionDefault;
 			} else if (parameter == "v") {
-				empty = false;
 				formatting_options.precision_mode = FormattingOptions::PrecisionRequired;
 			} else {
 				int digits = parameter.toInt ();
 				if ((digits >= 0) && (digits <= 15)) {
-					empty = false;
 					formatting_options.precision_mode = FormattingOptions::PrecisionFixed;
 					formatting_options.precision = digits;
 				}

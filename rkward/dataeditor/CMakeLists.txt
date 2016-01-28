@@ -13,7 +13,7 @@ SET(dataeditor_STAT_SRCS
    )
 
 ADD_LIBRARY(dataeditor STATIC ${dataeditor_STAT_SRCS})
-TARGET_LINK_LIBRARIES(dataeditor Qt5::Widgets KF5::KDELibs4Support)
+TARGET_LINK_LIBRARIES(dataeditor Qt5::Widgets KF5::WidgetsAddons KF5::Parts)
 
 ########### install files ###############
 
