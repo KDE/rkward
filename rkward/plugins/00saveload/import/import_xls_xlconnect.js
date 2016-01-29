@@ -37,7 +37,7 @@ function calculate (is_preview) {
 	makeEncodingCall ('data');
 	echo ('\n');
 	if (is_preview) {
-		echo ('preview_data <- data[1:min(50,dim(data)[1]),1:min(50,dim(data)[2])]\n');
+		echo ('preview_data <- data[1:min(50,dim(data)[1]),1:min(50,dim(data)[2]),drop=FALSE]\n');
 	} else {
 		var object = getString ("saveto");
 		echo ('.GlobalEnv$' + object + ' <- data		'); comment ('assign to globalenv()');

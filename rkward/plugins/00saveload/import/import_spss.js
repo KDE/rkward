@@ -45,7 +45,7 @@ function calculate (is_preview) {
 	}
 	echo ('\n');
 	if (is_preview) {
-		echo ('preview_data <- data[1:min(50,dim(data)[1]),1:min(50,dim(data)[2])]\n');
+		echo ('preview_data <- data[1:min(50,dim(data)[1]),1:min(50,dim(data)[2]),drop=FALSE]\n');
 	} else {
 		echo ('.GlobalEnv$' + object + ' <- data		'); comment ('assign to globalenv()');
 		if (getValue ("doedit") && data_frame) {

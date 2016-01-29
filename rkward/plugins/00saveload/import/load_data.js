@@ -19,5 +19,3 @@ function calculate () {
 function printout () {
 	new Header (i18n ("Load data")).addFromUI ("file").add (i18n ("Import to environment"), envir).print ();
 }
-
-
