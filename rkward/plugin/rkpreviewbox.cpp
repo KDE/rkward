@@ -64,6 +64,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 
 	// status label
 	status_label = new QLabel (QString (), this);
+	status_label->setWordWrap (true);
 	vbox->addWidget (status_label);
 
 	// prepare placement

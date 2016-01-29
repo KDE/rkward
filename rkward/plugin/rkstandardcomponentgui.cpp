@@ -147,7 +147,12 @@ void RKStandardComponentGUI::createDialog (bool switchable) {
 		vbox->addWidget (switch_button);
 	}
 	vbox->addStretch (2);
-	
+
+	custom_preview_buttons_area = new QWidget ();
+	QVBoxLayout *dummy = new QVBoxLayout (custom_preview_buttons_area);
+	dummy->setContentsMargins (0, 0, 0, 0);
+	vbox->addWidget (custom_preview_buttons_area);
+
 	toggle_code_box = new QCheckBox (i18n ("Code Preview"), upper_widget);
 	connect (toggle_code_box, SIGNAL (clicked()), this, SLOT (toggleCode()));
 	vbox->addWidget (toggle_code_box);

@@ -109,7 +109,6 @@ protected:
 	void closeEvent (QCloseEvent *e);
 	RKStandardComponent *component;
 	QTimer *code_update_timer;
-
 	// common widgets
 	QWidget *main_widget;
 	QPushButton *cancel_button;
@@ -118,6 +117,8 @@ protected:
 	QCheckBox *auto_close_box;
 	QSplitter *splitter;
 	RKCommandEditorWindow *code_display;
+friend class RKComponentBuilder;
+	QWidget *custom_preview_buttons_area;
 
 	bool enslaved;
 
