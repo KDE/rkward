@@ -16,7 +16,7 @@
 # Fetch the current size of the given RK() device from the frontend, and redraw
 "RK.resize" <- function (devnum) {
 	# Note: RK.resize() often fails, if something is currently being plotted. That's usually benign, and should not produce warning messages.
-	suppressMessages (try (.Call ("rk.graphics.device.resize", as.integer (devnum)-1, PACKAGE="(embedding)")))
+	try (.Call ("rk.graphics.device.resize", as.integer (devnum)-1, PACKAGE="(embedding)"), silent=TRUE)
 }
 
 #' @include internal.R
