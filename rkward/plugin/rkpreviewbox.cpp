@@ -44,6 +44,7 @@
 #include <ktoolbar.h>
 #include <kmenubar.h>
 #include <QPointer>
+#include <QWidgetAction>
 
 class RKXMLGUIPreviewArea : public KXmlGuiWindow {
 public:
@@ -90,7 +91,20 @@ protected:
 				menu->clear ();
 				QList<QAction*> entries = menuBar ()->actions ();
 				for (int i = 0; i < entries.size (); ++i) {
-					menu->addAction (entries[i]);
+					QMenu *smenu = entries[i]->menu ();
+					if (!smenu) continue;
+					QList<QAction*> subentries = smenu->actions ();
+					if (subentries.isEmpty ()) continue;
+
+					QWidgetAction *act = new QWidgetAction (this);
+					QLabel *lab = new QLabel ("<b>" + entries[i]->text ().replace ('&', "") + "</b>");
+					lab->setAlignment (Qt::AlignCenter);
+					act->setDefaultWidget (lab);
+					menu->addAction (act);
+
+					for (int j = 0; j < subentries.size (); ++j) {
+						menu->addAction (subentries[j]);
+					}
 				}
 			}
 		}
