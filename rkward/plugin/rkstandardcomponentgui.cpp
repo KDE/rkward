@@ -188,6 +188,8 @@ void RKStandardComponentGUI::finalize () {
 		tb->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDelete));
 		tb->setProperty ("preview_area", QVariant::fromValue (dummy));
 		connect (tb, SIGNAL (clicked()), this, SLOT (previewCloseButtonClicked()));
+		QWidget *button = previews[i].area->findChild<QWidget *> ("menubutton");
+		if (button) hl->addWidget (button);
 		hl->addStretch ();
 		hl->addWidget (lab);
 		hl->addWidget (tb);

@@ -35,6 +35,74 @@
 
 #define DO_PREVIEW 102
 
+#include <kxmlguifactory.h>
+#include <QMenu>
+#include <QToolButton>
+#include <QEvent>
+#include <QMenuBar>
+#include <kxmlguiwindow.h>
+#include <ktoolbar.h>
+#include <kmenubar.h>
+#include <QPointer>
+
+class RKXMLGUIPreviewArea : public KXmlGuiWindow {
+public:
+	explicit RKXMLGUIPreviewArea (QWidget* parent) : KXmlGuiWindow (parent) {
+		RK_TRACE (PLUGIN);
+		menu_button = new QToolButton (this);
+		menu_button->setPopupMode (QToolButton::InstantPopup);
+		menu_button->setIcon (QIcon::fromTheme ("menu_new"));
+		menu_button->setObjectName ("menubutton");
+		menu_button->setMenu (menu = new QMenu ());
+		current = 0;
+		setWindowFlags (Qt::Widget);
+		setMenuBar (new QMenuBar (this));
+		setHelpMenuEnabled (false);
+	}
+	~RKXMLGUIPreviewArea () {
+		RK_TRACE (PLUGIN);
+
+		if (current) {
+			removeChildClient (current);
+			current->setFactory (0);
+		}
+	}
+protected:
+	/** build / destroy menu, when child is added removed. Note that we are in the fortunate situation that RKMDIWindow-children only ever get to the
+	 *  preview area via reparenting, i.e. contrary to usual QEvent::ChildAdded semnatics, they are always fully constructed, when added. */
+	void childEvent (QChildEvent *event) {  // KF5 TODO: override keyword
+		RK_TRACE (PLUGIN);
+
+		if (event->type () == QEvent::ChildAdded) {
+			RKMDIWindow *child = qobject_cast<RKMDIWindow*> (event->child ());
+			if (child) {
+				if (current) {
+					removeChildClient (current);
+					factory ()->removeClient (current);  // _always_ remove before adding, or the previous child will be leaked in the factory
+				}
+				current = child->getPart ();
+				insertChildClient (current);
+				setCentralWidget (child);
+				createGUI ("rkdummypart.rc");
+				menuBar ()->hide ();
+				QList<KToolBar*> tbars = toolBars ();
+				for (int i = 0; i < tbars.size (); ++i) tbars[i]->hide ();
+				menu->clear ();
+				QList<QAction*> entries = menuBar ()->actions ();
+				for (int i = 0; i < entries.size (); ++i) {
+					menu->addAction (entries[i]);
+				}
+			}
+		}
+		QObject::childEvent (event);
+	}
+private:
+	QToolButton *menu_button;
+	QMenu *menu;
+	QPointer<KParts::Part> current;
+};
+
+
 RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
 	RK_TRACE (PLUGIN);
 
@@ -77,7 +145,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	if (placement == DockedPreview) {
 		RKStandardComponent *uicomp = topmostStandardComponent ();
 		if (uicomp) {
-			QWidget *container = new KVBox ();
+			QWidget *container = new RKXMLGUIPreviewArea (0);
 			RKWorkplace::mainWorkplace ()->registerNamedWindow (idprop, this, container);
 			uicomp->addDockedPreview (container, state, toggle_preview_box->text ());
 
