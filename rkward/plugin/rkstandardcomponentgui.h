@@ -116,6 +116,7 @@ protected:
 	QPushButton *switch_button;
 	QCheckBox *auto_close_box;
 	QSplitter *splitter;
+	QSplitter *preview_splitter;
 	RKCommandEditorWindow *code_display;
 friend class RKComponentBuilder;
 	QWidget *custom_preview_buttons_area;
