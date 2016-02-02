@@ -164,10 +164,10 @@ void RKStandardComponentGUI::createDialog (bool switchable) {
 	preview_splitter->setOrientation (Qt::Vertical);
 	preview_splitter->setChildrenCollapsible (false);
 
-	splitter->addWidget (preview_splitter);
 	splitter->addWidget (central_widget);
-	splitter->setStretchFactor (0, 1);
-	splitter->setStretchFactor (1, 0);          // When resizing the dialog, *and* any preview is visible, effectively resize the preview. Dialog area can be resized via splitter.
+	splitter->addWidget (preview_splitter);
+	splitter->setStretchFactor (0, 0);
+	splitter->setStretchFactor (1, 1);          // When resizing the dialog, *and* any preview is visible, effectively resize the preview. Dialog area can be resized via splitter.
 	splitter->setChildrenCollapsible (false);   // It's just too difficult to make this consistent, esp. for shrinking the dialog would _also_ be expected to collapse widgets. Besides, this makes it
 	                                            // easier to keep track of which expansions are currently visible.
 
@@ -338,13 +338,13 @@ void RKStandardComponentGUI::previewVisibilityChanged (RKComponentPropertyBase*)
 		if (w < 80) w = 80;
 		width_change = w;
 		preview_splitter->show ();
-		sizes[0] = w;
+		sizes[1] = w;
 	} else {
 		int w = preview_splitter->width ();
 		RKSettingsModulePlugins::setDefaultCodeHeight (w);
 		width_change = -w;
 		preview_splitter->hide ();
-		sizes[0] = 0;
+		sizes[1] = 0;
 		splitter->refresh ();      // NOTE: Without this line, _and_ layout->activate() below, the dialog will _not_ shrink back to its original size when hiding preview pane. Qt 4.8
 	}
 	splitter->setSizes (sizes);
@@ -352,7 +352,8 @@ void RKStandardComponentGUI::previewVisibilityChanged (RKComponentPropertyBase*)
 	if (isVisible ()) {
 		QRect boundary = QApplication::desktop ()->availableGeometry (this);
 		int new_width = qMin (boundary.width (), width () + width_change);  // no wider than screen
-		int new_x = qMax (boundary.x (), x () - width_change);              // don't leave screen to the left
+		//int new_x = qMax (boundary.x (), x () - width_change);              // don't leave screen to the left
+		int new_x = x ();
 		if (new_width + new_x > boundary.right ()) {                        // don't leave screen to the right
 			new_x = boundary.right () - new_width;
 		}
