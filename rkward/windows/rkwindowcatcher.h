@@ -152,6 +152,7 @@ public slots:
 /** reimplemented to keep window alive while saving history */
 	bool close (bool also_delete);
 	void setKilledInR () { killed_in_r = true; };
+	void setWindowStyleHint (const QString& hint); // KF5 TODO: add override keyword
 private slots:
 	void doEmbed ();
 private:
@@ -192,6 +193,7 @@ private:
 	KSelectAction *plot_list_action;
 	KAction *stop_interaction;
 
+	QList<QAction*> actions_not_for_preview;
 	int history_length;
 	int history_position;
 };
