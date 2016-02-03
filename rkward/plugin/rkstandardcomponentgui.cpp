@@ -81,20 +81,6 @@ RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, 
 
 RKStandardComponentGUI::~RKStandardComponentGUI () {
 	RK_TRACE (PLUGIN);
-
-	if (!enslaved && toggle_code_box && splitter) {  // A top-level dialog-style UI
-		for (int i = 0; i < previews.size (); ++i) {
-			bool visible = previews[i].controller->boolValue ();
-			int size = preview_splitter->width ();
-			if (i == previews.size () - 1) {  // code preview
-				RKSettingsModulePlugins::setShowCodeByDefault (visible);
-				if (visible) RKSettingsModulePlugins::setDefaultCodeHeight (size);
-			} else {
-#warning cleanup!
-				if (visible) RKSettingsModulePlugins::setDefaultOtherPreviewHeight (size);
-			}
-		}
-	}
 }
 
 void RKStandardComponentGUI::createDialog (bool switchable) {
@@ -279,6 +265,10 @@ void RKStandardComponentGUI::ok () {
 void RKStandardComponentGUI::cancel () {
 	RK_TRACE (PLUGIN);
 
+	if (!enslaved && toggle_code_box && splitter) {  // A top-level dialog-style UI. Save state of preview area
+		RKSettingsModulePlugins::setShowCodeByDefault (code_display_visibility.boolValue ());
+		if (preview_splitter->isVisible ()) RKSettingsModulePlugins::setDefaultCodeHeight (preview_splitter->width ());
+	}
 	hide ();
 	if (!enslaved) {
 		component->deleteLater ();
