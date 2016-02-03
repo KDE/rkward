@@ -38,7 +38,7 @@ RKXMLGUIPreviewArea::RKXMLGUIPreviewArea (QWidget* parent) : KXmlGuiWindow (pare
 
 	menu_button = new QToolButton (this);
 	menu_button->setPopupMode (QToolButton::InstantPopup);
-	menu_button->setIcon (QIcon::fromTheme ("menu_new"));
+	menu_button->setIcon (QIcon::fromTheme ("application-menu"));
 	menu_button->setMenu (menu = new QMenu ());
 	// KF5 TODO:
 	connect (menu, SIGNAL (aboutToShow()), this, SLOT (prepareMenu()));
