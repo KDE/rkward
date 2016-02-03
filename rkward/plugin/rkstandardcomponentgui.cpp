@@ -36,6 +36,7 @@
 #include "rkcomponentmap.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkstandardicons.h"
+#include "../misc/rkxmlguipreviewarea.h"
 #include "../windows/rkworkplace.h"
 #include "../windows/rkcommandeditorwindow.h"
 #include "../rbackend/rinterface.h"
@@ -197,8 +198,8 @@ void RKStandardComponentGUI::finalize () {
 		tb->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDelete));
 		tb->setProperty ("preview_area", QVariant::fromValue (dummy));
 		connect (tb, SIGNAL (clicked()), this, SLOT (previewCloseButtonClicked()));
-		QWidget *button = previews[i].area->findChild<QWidget *> ("menubutton");
-		if (button) hl->addWidget (button);
+		RKXMLGUIPreviewArea *parea = qobject_cast<RKXMLGUIPreviewArea*> (previews[i].area);
+		if (parea) hl->addWidget (parea->menuButton ());
 		hl->addStretch ();
 		hl->addWidget (lab);
 		hl->addWidget (tb);
