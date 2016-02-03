@@ -84,7 +84,7 @@ RKStandardComponentGUI::~RKStandardComponentGUI () {
 	if (!enslaved && toggle_code_box && splitter) {  // A top-level dialog-style UI
 		for (int i = 0; i < previews.size (); ++i) {
 			bool visible = previews[i].controller->boolValue ();
-			int size = previews[i].area->width ();
+			int size = preview_splitter->width ();
 			if (i == previews.size () - 1) {  // code preview
 				RKSettingsModulePlugins::setShowCodeByDefault (visible);
 				if (visible) RKSettingsModulePlugins::setDefaultCodeHeight (size);
