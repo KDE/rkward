@@ -45,6 +45,80 @@
 #include "../rkglobals.h"
 #include "../debug.h"
 
+class RKExtensionSplitter : public QSplitter {
+public:
+	explicit RKExtensionSplitter (QWidget *window, QWidget *parent, QWidget *main_area, QWidget *extension_area) : QSplitter (parent) {
+		RK_TRACE (PLUGIN);
+		RKExtensionSplitter::window = window;
+		extension = extension_area;
+		addWidget (main_area);
+		addWidget (extension_area);
+		setStretchFactor (0, 0);        // When resizing the window, *and* the extension (preview) is visible, effectively resize the extension. Dialog area can be resized via splitter.
+		setStretchFactor (1, 1);
+		setChildrenCollapsible (false); // It's just too difficult to make this consistent, esp. for shrinking the dialog would _also_ be expected to collapse widgets. Besides, this makes it
+	                                    // easier to keep track of which expansions are currently visible.
+	}
+
+	void setExtensionVisible (bool new_visible) {
+		RK_TRACE (PLUGIN);
+		if (extension->isVisible () == new_visible) return;
+
+		int size_change = 0;
+		QList<int> sizes = QSplitter::sizes ();
+
+		if (new_visible) {
+			int s = RKSettingsModulePlugins::defaultCodeHeight ();  // TODO: separatly for width, height.
+			if (s < 80) s = 80;
+			size_change = s;
+			extension->show ();
+			sizes[1] = s;
+		} else {
+			saveSize ();
+			int s = sizes[1];
+			size_change = -s;
+			extension->hide ();
+			sizes[1] = 0;
+			refresh ();      // NOTE: Without this line, _and_ layout->activate() below, the dialog will _not_ shrink back to its original size when hiding preview pane. Qt 4.8
+		}
+		setSizes (sizes);
+
+		if (isVisible ()) {
+			QRect boundary = QApplication::desktop ()->availableGeometry (this);
+			int new_width = window->width ();
+			int new_height = window->height ();
+			int new_x = window->x ();
+			int new_y = window->y ();
+			if (orientation () == Qt::Horizontal) {
+				new_width = qMin (boundary.width (), new_width + size_change);      // no wider than screen
+				if (new_width + new_x > boundary.right ()) {                        // don't leave screen to the right
+					new_x = boundary.right () - new_width;
+				}
+			} else {
+				new_height = qMin (boundary.height (), new_height + size_change);   // see above
+				if (new_height + new_y > boundary.bottom ()) {
+					new_y = boundary.bottom () - new_height;
+				}
+			}
+			window->layout ()->activate ();
+			// Ok, I can't find a way to make resize+move work with a single operation. Doing it in two operations carries the danger that the WM will interfere, though,so
+			// the order is shrink+move for hiding the preview pane, but move+grow for showing the preview pane.
+			if (new_visible) window->move (new_x, new_y);
+			window->resize (new_width, new_height);
+			if (!new_visible) window->move (new_x, new_y);
+		}
+	};
+
+	void saveSize () {
+		// TODO: separately for width / height
+		if (extension->isVisible ()) RKSettingsModulePlugins::setDefaultCodeHeight (sizes ()[1]);
+	}
+
+	bool isExtensionVisible () const { return extension->isVisible (); };
+private:
+	QWidget *window;
+	QWidget *extension;
+};
+
 /////////////////////////////////////// RKStandardComponentGUI ////////////////////////////////////////////////
 
 RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, RKComponentPropertyCode *code_property, bool enslaved) :
@@ -72,7 +146,7 @@ RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, 
 		// code display
 		code_display = new RKCommandEditorWindow (0, true, false);
 		code_display->setReadOnly (true);
-		addDockedPreview (code_display, &code_display_visibility, i18n ("Code Preview"), RKSettingsModulePlugins::defaultCodeHeight ());
+		addDockedPreview (code_display, &code_display_visibility, i18n ("Code Preview"));
 
 		KActionCollection *action_collection = new KActionCollection (this);
 		action_collection->addAction (KStandardAction::Copy, this, SLOT (copyCode()));
@@ -88,9 +162,6 @@ void RKStandardComponentGUI::createDialog (bool switchable) {
 
 	QVBoxLayout *main_vbox = new QVBoxLayout (this);
 	main_vbox->setContentsMargins (0, 0, 0, 0);
-	splitter = new QSplitter (this);
-	splitter->setOrientation (Qt::Horizontal);
-	main_vbox->addWidget (splitter);
 
 	QWidget *central_widget = new QWidget ();
 
@@ -151,12 +222,9 @@ void RKStandardComponentGUI::createDialog (bool switchable) {
 	preview_splitter->setOrientation (Qt::Vertical);
 	preview_splitter->setChildrenCollapsible (false);
 
-	splitter->addWidget (central_widget);
-	splitter->addWidget (preview_splitter);
-	splitter->setStretchFactor (0, 0);
-	splitter->setStretchFactor (1, 1);          // When resizing the dialog, *and* any preview is visible, effectively resize the preview. Dialog area can be resized via splitter.
-	splitter->setChildrenCollapsible (false);   // It's just too difficult to make this consistent, esp. for shrinking the dialog would _also_ be expected to collapse widgets. Besides, this makes it
-	                                            // easier to keep track of which expansions are currently visible.
+	splitter = new RKExtensionSplitter (this, this, central_widget, preview_splitter);
+	splitter->setOrientation (Qt::Horizontal);
+	main_vbox->addWidget (splitter);
 
 	if (!enslaved && RKSettingsModulePlugins::showCodeByDefault ()) {
 		toggle_code_box->setChecked (true);	// will trigger showing the code along with the dialog
@@ -205,13 +273,12 @@ void RKStandardComponentGUI::finalize () {
 	}
 }
 
-void RKStandardComponentGUI::addDockedPreview (QWidget *area, RKComponentPropertyBool *controller, const QString& label, int sizehint) {
+void RKStandardComponentGUI::addDockedPreview (QWidget *area, RKComponentPropertyBool *controller, const QString& label) {
 	RK_TRACE (PLUGIN);
 
 	PreviewArea parea;
 	parea.area = area;
 	parea.controller = controller;
-	parea.sizehint = sizehint;
 	parea.label = label;
 	previews.insert (0, parea);
 
@@ -267,7 +334,7 @@ void RKStandardComponentGUI::cancel () {
 
 	if (!enslaved && toggle_code_box && splitter) {  // A top-level dialog-style UI. Save state of preview area
 		RKSettingsModulePlugins::setShowCodeByDefault (code_display_visibility.boolValue ());
-		if (preview_splitter->isVisible ()) RKSettingsModulePlugins::setDefaultCodeHeight (preview_splitter->width ());
+		splitter->saveSize ();
 	}
 	hide ();
 	if (!enslaved) {
@@ -310,51 +377,13 @@ void RKStandardComponentGUI::previewVisibilityChanged (RKComponentPropertyBase*)
 	if (!isVisible ()) return;
 	if (!splitter) return;
 
-	bool old_visible = preview_splitter->isVisible ();
 	bool new_visible = false;
-
 	// which previews are active?
 	for (int i = 0; i < previews.size (); ++i) {
 		previews[i].area->setVisible (previews[i].controller->boolValue ());
 		if (previews[i].controller->boolValue ()) new_visible = true;
 	}
-
-	if (old_visible == new_visible) return;
-
-	int width_change = 0;
-	QList<int> sizes = splitter->sizes ();
-
-	if (new_visible) {
-		int w = RKSettingsModulePlugins::defaultCodeHeight ();
-		if (w < 80) w = 80;
-		width_change = w;
-		preview_splitter->show ();
-		sizes[1] = w;
-	} else {
-		int w = preview_splitter->width ();
-		RKSettingsModulePlugins::setDefaultCodeHeight (w);
-		width_change = -w;
-		preview_splitter->hide ();
-		sizes[1] = 0;
-		splitter->refresh ();      // NOTE: Without this line, _and_ layout->activate() below, the dialog will _not_ shrink back to its original size when hiding preview pane. Qt 4.8
-	}
-	splitter->setSizes (sizes);
-
-	if (isVisible ()) {
-		QRect boundary = QApplication::desktop ()->availableGeometry (this);
-		int new_width = qMin (boundary.width (), width () + width_change);  // no wider than screen
-		//int new_x = qMax (boundary.x (), x () - width_change);              // don't leave screen to the left
-		int new_x = x ();
-		if (new_width + new_x > boundary.right ()) {                        // don't leave screen to the right
-			new_x = boundary.right () - new_width;
-		}
-		layout ()->activate ();
-		// Ok, I can't find a way to make resize+move work with a single operation. Doing it in two operations carries the danger that the WM will interfere, though,so
-		// the order is shrink+move for hiding the preview pane, but move+grow for showing the preview pane.
-		if (new_visible) move (new_x, y ());
-		resize (new_width, height ());
-		if (!new_visible) move (new_x, y ());
-	}
+	splitter->setExtensionVisible (new_visible);
 }
 
 void RKStandardComponentGUI::copyCode () {

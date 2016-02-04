@@ -66,6 +66,7 @@ class QTimer;
 class QSplitter;
 class QCloseEvent;
 class QCheckBox;
+class RKExtensionSplitter;
 
 /** contains the standard GUI elements for a top-level RKStandardComponent. The base class creates a dialog interface. For a wizard interface use RKStandardComponentWizard. You *must* call createDialog () after construction, since I can't virualize this for reasons I don't understand!
 
@@ -83,7 +84,7 @@ public:
 	virtual void updateCode ();
 /** reimplemented from QWidget to take care of showing the code display if needed */
 	void showEvent (QShowEvent *e);
-	void addDockedPreview (QWidget *area, RKComponentPropertyBool *controller, const QString& label, int sizehint = -1);
+	void addDockedPreview (QWidget *area, RKComponentPropertyBool *controller, const QString& label);
 /** Do anything needed after the dialog is created and its contents have been built. Base class adds the preview regions to the splitter */
 	virtual void finalize ();
 public slots:
@@ -115,7 +116,7 @@ protected:
 	QPushButton *help_button;
 	QPushButton *switch_button;
 	QCheckBox *auto_close_box;
-	QSplitter *splitter;
+	RKExtensionSplitter *splitter;
 	QSplitter *preview_splitter;
 	RKCommandEditorWindow *code_display;
 friend class RKComponentBuilder;
@@ -127,7 +128,6 @@ friend class RKComponentBuilder;
 		QWidget *area;
 		RKComponentPropertyBool *controller;
 		QString label;
-		int sizehint;
 	};
 	QList<PreviewArea> previews;
 };
