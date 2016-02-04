@@ -51,7 +51,7 @@ public:
 		RK_TRACE (PLUGIN);
 		RKExtensionSplitter::window = window;
 		extension = extension_area;
-		addWidget (main_area);
+		addWidget (main_area);          // Right now, this class supports only left -> right and top -> bottom layout
 		addWidget (extension_area);
 		setStretchFactor (0, 0);        // When resizing the window, *and* the extension (preview) is visible, effectively resize the extension. Dialog area can be resized via splitter.
 		setStretchFactor (1, 1);
@@ -67,7 +67,7 @@ public:
 		QList<int> sizes = QSplitter::sizes ();
 
 		if (new_visible) {
-			int s = RKSettingsModulePlugins::defaultCodeHeight ();  // TODO: separatly for width, height.
+			int s = defaultExtensionSize ();
 			if (s < 80) s = 80;
 			size_change = s;
 			extension->show ();
@@ -109,8 +109,16 @@ public:
 	};
 
 	void saveSize () {
-		// TODO: separately for width / height
-		if (extension->isVisible ()) RKSettingsModulePlugins::setDefaultCodeHeight (sizes ()[1]);
+		if (extension->isVisible ()) {
+#warning clean up!
+			if (orientation () == Qt::Horizontal) RKSettingsModulePlugins::setDefaultOtherPreviewHeight (sizes ()[1]);
+			else RKSettingsModulePlugins::setDefaultCodeHeight (sizes ()[1]);
+		}
+	}
+
+	int defaultExtensionSize () {
+#warning clean up!
+		return ((orientation () == Qt::Horizontal) ? RKSettingsModulePlugins::defaultOtherPreviewHeight() : RKSettingsModulePlugins::defaultCodeHeight ());
 	}
 
 	bool isExtensionVisible () const { return extension->isVisible (); };
@@ -267,7 +275,7 @@ void RKStandardComponentGUI::finalize () {
 		preview_splitter->insertWidget (i, previews[i].area);
 	}
 	if (any_preview_visible) {
-		preview_splitter->setMinimumWidth (RKSettingsModulePlugins::defaultCodeHeight ());  // enforce minimum, here to achieve sane size on show. Will be cleared directly after show.
+		preview_splitter->setMinimumWidth (splitter->defaultExtensionSize ());  // enforce minimum, here to achieve sane size on show. Will be cleared directly after show.
 	} else {
 		preview_splitter->hide ();
 	}
