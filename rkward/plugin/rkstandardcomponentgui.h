@@ -84,7 +84,7 @@ public:
 	virtual void updateCode ();
 /** reimplemented from QWidget to take care of showing the code display if needed */
 	void showEvent (QShowEvent *e);
-	void addDockedPreview (QWidget *area, RKComponentPropertyBool *controller, const QString& label);
+	void addDockedPreview (QWidget *area, RKComponentPropertyBool *controller, const QString& label, bool bottom = false);
 /** Do anything needed after the dialog is created and its contents have been built. Base class adds the preview regions to the splitter */
 	virtual void finalize ();
 public slots:
@@ -99,6 +99,7 @@ public slots:
 private slots:
 	void previewVisibilityChanged (RKComponentPropertyBase*);
 	void previewCloseButtonClicked ();
+	void doPostShowCleanup ();
 private:
 	RKComponentPropertyCode *code_property;
 	RKComponentPropertyBool code_display_visibility;
@@ -116,8 +117,10 @@ protected:
 	QPushButton *help_button;
 	QPushButton *switch_button;
 	QCheckBox *auto_close_box;
-	RKExtensionSplitter *splitter;
-	QSplitter *preview_splitter;
+	RKExtensionSplitter *hsplitter;
+	RKExtensionSplitter *vsplitter;
+	QSplitter *hpreview_area;
+	QWidget *vpreview_area;
 	RKCommandEditorWindow *code_display;
 friend class RKComponentBuilder;
 	QWidget *custom_preview_buttons_area;
@@ -128,6 +131,7 @@ friend class RKComponentBuilder;
 		QWidget *area;
 		RKComponentPropertyBool *controller;
 		QString label;
+		Qt::Orientation position;
 	};
 	QList<PreviewArea> previews;
 };
