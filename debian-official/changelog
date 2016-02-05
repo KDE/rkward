@@ -10,7 +10,7 @@ rkward (0.6.4-1) unstable; urgency=low
   * Make build reproducible (thanks to Philip Rinn)
     closes: #783290
 
- -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Wed, 16 Dec 2015 10:30:00 +0100
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Sat, 19 Dec 2015 21:10:00 +0100
 
 rkward (0.6.3-1) unstable; urgency=low
   * new upstream release
