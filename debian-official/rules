@@ -29,6 +29,9 @@ RMINOR = $(shell echo $(RVERS) | awk -F. '{print $$2}')
 # set built-time of GNUR packages to time of created binary package based on stamp in changelog
 builttime = $(shell dpkg-parsechangelog -l$(CURDIR)/debian/changelog | awk -F': ' '/Date/ {print $$2}')
 
+# easier typing
+DESTDIR = $(CURDIR)/debian/tmp
+
 ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
 	CFLAGS += -O0
 else
@@ -94,8 +97,8 @@ install: build
 	dh_prep
 	dh_installdirs
 
-	# Add here commands to install the package into debian/rkward.
-	cd $(CURDIR)/build && $(MAKE) install DESTDIR=$(CURDIR)/debian/tmp
+	# Install into debian/tmp, first
+	cd $(CURDIR)/build && $(MAKE) install DESTDIR=$(DESTDIR)
 	# dirty hack to get rid of conflicting r.xml file without adjusting all makefiles
 	rm -vf $(DESTDIR)/`kde4-config --install data`/katepart/syntax/r.xml
 	
@@ -120,7 +123,7 @@ binary-arch: build install
 	dh_installdocs
 	dh_installexamples
 	dh_installmenu
-	dh_installman $(CURDIR)/build/doc/rkward/rkward.1
+	dh_installman
 	dh_link
 	dh_strip
 	# do not compress KDE HTML help
