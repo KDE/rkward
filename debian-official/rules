@@ -95,12 +95,18 @@ install: build
 	dh_installdirs
 
 	# Add here commands to install the package into debian/rkward.
-	cd $(CURDIR)/build && $(MAKE) install DESTDIR=$(CURDIR)/debian/rkward
+	cd $(CURDIR)/build && $(MAKE) install DESTDIR=$(CURDIR)/debian/tmp
 	# dirty hack to get rid of conflicting r.xml file without adjusting all makefiles
-	rm -vf $(CURDIR)/debian/rkward/`kde4-config --install data`/katepart/syntax/r.xml
+	rm -vf $(DESTDIR)/`kde4-config --install data`/katepart/syntax/r.xml
 	
 	# remove unneeded R package files
-	rm -vf $(CURDIR)/debian/rkward/usr/lib/R/site-library/R.css $(CURDIR)/debian/rkward/usr/lib/R/site-library/rkward/COPYING
+	rm -vf $(DESTDIR)/usr/lib/R/site-library/R.css $(DESTDIR)/usr/lib/R/site-library/rkward/COPYING
+
+	# remove x-test locale
+	rm -rvf $(DESTDIR)/usr/share/kde4/apps/rkward/po/x-test $(DESTDIR)/usr/share/locale/x-test
+
+	# Sort the remaining bits into rkward and rkward-data subpackages
+	dh_install
 
 # Build architecture-independent files here.
 binary-indep: build install

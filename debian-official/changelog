@@ -1,5 +1,7 @@
 rkward (0.6.4z+0.6.5+devel1-1) UNRELEASED; urgency=low
   * new upstream release
+  * strip testing locale "x-test" from package
+  * split architecture independent files into rkward-data package
   * add override for false-positive source-contains-prebuilt-javascript-object
     lintian warnings
 
