@@ -97,7 +97,7 @@ void RKXMLGUIPreviewArea::prepareMenu () {
 		bool menu_empty = true;
 		for (int j = 0; j < subentries.size (); ++j) {
 			QAction *act = subentries[j];
-			if (act->isVisible () && act) {
+			if (act->isVisible () && act->isEnabled () && act) {
 				entries_to_add.append (act);
 				if (!act->isSeparator ()) menu_empty = false;  // Copy separators, but purge menus with only separators in them.
 			}
@@ -110,8 +110,12 @@ void RKXMLGUIPreviewArea::prepareMenu () {
 		act->setDefaultWidget (lab);
 		menu->addAction (act);
 
+		QMenu *where_to_add = menu;
+		if (entries_to_add.size () >= 8) {                     // if there are really many entries in the menu don't flatten it, keep it as a (shortened) submenu
+			where_to_add = menu->addMenu (entries[i]->text ());
+		}
 		for (int j = 0; j < entries_to_add.size (); ++j) {
-			menu->addAction (entries_to_add[j]);
+			where_to_add->addAction (entries_to_add[j]);
 		}
 	}
 }

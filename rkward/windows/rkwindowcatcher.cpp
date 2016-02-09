@@ -279,6 +279,7 @@ void RKCaughtX11Window::setWindowStyleHint (const QString& hint) {
 			actions_not_for_preview[i]->setVisible (false);
 		}
 	}
+	RKMDIWindow::setWindowStyleHint (hint);
 }
 
 void RKCaughtX11Window::forceClose () {
