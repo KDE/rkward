@@ -78,9 +78,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	if (placement == DockedPreview) {
 		RKStandardComponent *uicomp = topmostStandardComponent ();
 		if (uicomp) {
-			QWidget *container = new RKXMLGUIPreviewArea (0);
-			RKWorkplace::mainWorkplace ()->registerNamedWindow (idprop, this, container);
-			uicomp->addDockedPreview (container, state, toggle_preview_box->text ());
+			uicomp->addDockedPreview (state, toggle_preview_box->text (), idprop);
 
 			if (preview_mode == OutputPreview) {
 				RKGlobals::rInterface ()->issueCommand ("local ({\n"

@@ -1,6 +1,7 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward_commandeditor" version="640">
+<kpartgui name="rkward_commandeditor" version="650">
 	<MenuBar>
+		<Menu name="file"><test>&amp;File</text></Menu>  <!-- Define placeholder to work around menu ordering bug -->
 		<Menu name="edit"><text>&amp;Edit</text>
 			<Menu name="tools" group="edit_first_merge"><text>&amp;Tools Move</text>
 				<Merge/>

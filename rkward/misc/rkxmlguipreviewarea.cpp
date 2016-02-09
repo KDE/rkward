@@ -91,7 +91,9 @@ void RKXMLGUIPreviewArea::prepareMenu () {
 	QList<QAction*> entries = menuBar ()->actions ();
 	for (int i = 0; i < entries.size (); ++i) {
 		QMenu *smenu = entries[i]->menu ();
-		if (!smenu) continue;
+		if (!smenu) continue;    // Don't think it can happen...
+		if (entries[i]->objectName () == "settings") continue;  // Skip settings menu, entirely
+
 		QList<QAction*> subentries = smenu->actions ();
 		QList<QAction*> entries_to_add;
 		bool menu_empty = true;

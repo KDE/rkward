@@ -155,10 +155,11 @@ RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, 
 
 	if (!enslaved) {
 		// code display
+		RKXMLGUIPreviewArea *area = addDockedPreview (&code_display_visibility, i18n ("Code Preview"), QString (), true);
 		code_display = new RKCommandEditorWindow (0, true, false);
 		code_display->setReadOnly (true);
 		code_display_visibility.setBoolValue (!enslaved && RKSettingsModulePlugins::showCodeByDefault ());
-		addDockedPreview (code_display, &code_display_visibility, i18n ("Code Preview"), true);
+		code_display->setParent (area);  // hm, mysterious breakage when adding via constructor. Whatever...
 
 		KActionCollection *action_collection = new KActionCollection (this);
 		action_collection->addAction (KStandardAction::Copy, this, SLOT (copyCode()));
@@ -298,15 +299,21 @@ void RKStandardComponentGUI::finalize () {
 	}
 }
 
-void RKStandardComponentGUI::addDockedPreview (QWidget *area, RKComponentPropertyBool *controller, const QString& label, bool bottom) {
+RKXMLGUIPreviewArea* RKStandardComponentGUI::addDockedPreview (RKComponentPropertyBool *controller, const QString& label, const QString &id, bool bottom) {
 	RK_TRACE (PLUGIN);
 
+	RKXMLGUIPreviewArea *area = new RKXMLGUIPreviewArea (0);
 	PreviewArea parea;
 	parea.area = area;
 	parea.controller = controller;
 	parea.label = label;
 	parea.position = bottom ? Qt::Vertical : Qt::Horizontal;
 	previews.insert (0, parea);
+
+	if (!id.isEmpty ()) {
+		RKWorkplace::mainWorkplace ()->registerNamedWindow (id, this, area);
+	}
+	return area;
 };
 
 void RKStandardComponentGUI::showEvent (QShowEvent *e) {
