@@ -362,12 +362,12 @@ void RKStandardComponent::buildAndInitialize (const QDomElement &doc_element, co
 	standardInitializationComplete ();
 }
 
-void RKStandardComponent::addDockedPreview (QWidget* area, RKComponentPropertyBool* controller, const QString& label) {
+RKXMLGUIPreviewArea* RKStandardComponent::addDockedPreview (RKComponentPropertyBool* controller, const QString& label, const QString &id) {
 	RK_TRACE (PLUGIN);
 
 	RK_ASSERT (gui);
-	if (!gui) return;
-	gui->addDockedPreview (area, controller, label);
+	if (!gui) return 0;
+	return gui->addDockedPreview (controller, label, id);
 }
 
 RKComponentBase::ComponentStatus RKStandardComponent::recursiveStatus () {
