@@ -1,11 +1,15 @@
 rkward (0.6.4z+0.6.5+devel1-1) UNRELEASED; urgency=low
   * new upstream release
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Wed, 10 Feb 2016 11:30:00 +0100
+
+ rkward (0.6.4-2) unstable; urgency=low
   * strip testing locale "x-test" from package
-  * split architecture independent files into rkward-data package
+  * split architecture independent files into new rkward-data package
   * add override for false-positive source-contains-prebuilt-javascript-object
     lintian warnings
 
- -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Wed, 16 Dec 2015 10:30:00 +0100
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Wed, 10 Feb 2016 11:00:00 +0100
 
 rkward (0.6.4-1) unstable; urgency=low
   * new upstream release
