@@ -3,6 +3,7 @@ rkward (0.6.4-2) unstable; urgency=low
   * split architecture independent files into new rkward-data package
   * add override for false-positive source-contains-prebuilt-javascript-object
     lintian warnings
+  * Adjust copyright file to changed filenames in rkward/qwinhost
 
  -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Wed, 10 Feb 2016 11:00:00 +0100
 
