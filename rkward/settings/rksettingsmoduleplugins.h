@@ -56,8 +56,8 @@ public:
 	static void setShowCodeByDefault (bool shown) { show_code = shown; };
 	static int defaultCodeHeight () { return code_size; };
 	static void setDefaultCodeHeight (int new_height) { code_size = new_height; }
-	static int defaultOtherPreviewHeight () { return other_preview_height; };
-	static void setDefaultOtherPreviewHeight (int new_height) { other_preview_height = new_height; }
+	static int defaultSidePreviewWidth () { return side_preview_width; };
+	static void setDefaultSidePreviewWidth (int new_width) { side_preview_width = new_width; }
 	/** register a list of available plugin-maps (which may or may not already be known). New maps are activated, automatically.
 	 * @param maps Plugin maps (filenames) to add
 	 * @param force_add If true, maps are added, even if they are not "new", and had previously been disabled by the user
@@ -101,7 +101,7 @@ private:
 	static PluginPrefs interface_pref;
 	static bool show_code;
 	static int code_size;
-	static int other_preview_height;
+	static int side_preview_width;
 
 /* TODO: This one is currently unused (leftover of GHNS-based plugin installation), but might still be of interest */
 	static QStringList findPluginMapsRecursive (const QString &basedir);

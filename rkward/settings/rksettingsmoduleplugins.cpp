@@ -49,7 +49,7 @@ QList<RKSettingsModulePlugins::PluginMapStoredInfo> RKSettingsModulePlugins::kno
 RKSettingsModulePlugins::PluginPrefs RKSettingsModulePlugins::interface_pref;
 bool RKSettingsModulePlugins::show_code;
 int RKSettingsModulePlugins::code_size;
-int RKSettingsModulePlugins::other_preview_height;
+int RKSettingsModulePlugins::side_preview_width;
 
 RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -155,7 +155,7 @@ void RKSettingsModulePlugins::saveSettings (KConfig *config) {
 	cg.writeEntry ("Interface Preferences", static_cast<int> (interface_pref));
 	cg.writeEntry ("Code display default", show_code);
 	cg.writeEntry ("Code display size", code_size);
-	cg.writeEntry ("Other preview size", other_preview_height);
+	cg.writeEntry ("Other preview size", side_preview_width);
 }
 
 void RKSettingsModulePlugins::loadSettings (KConfig *config) {
@@ -201,7 +201,7 @@ void RKSettingsModulePlugins::loadSettings (KConfig *config) {
 	interface_pref = static_cast<PluginPrefs> (cg.readEntry ("Interface Preferences", static_cast<int> (PreferRecommended)));
 	show_code = cg.readEntry ("Code display default", false);
 	code_size = cg.readEntry ("Code display size", 250);
-	other_preview_height = cg.readEntry ("Other preview size", code_size);
+	side_preview_width = cg.readEntry ("Other preview size", 250);
 
 	if (RKSettingsModuleGeneral::storedConfigVersion () <= RKSettingsModuleGeneral::RKWardConfig_Pre0_5_7) {
 		if (code_size == 40) code_size = 250;	// previous default untouched.

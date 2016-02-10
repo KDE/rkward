@@ -112,15 +112,13 @@ public:
 
 	void saveSize () {
 		if (extension->isVisible ()) {
-#warning clean up!
-			if (orientation () == Qt::Horizontal) RKSettingsModulePlugins::setDefaultOtherPreviewHeight (sizes ()[1]);
+			if (orientation () == Qt::Horizontal) RKSettingsModulePlugins::setDefaultSidePreviewWidth (sizes ()[1]);
 			else RKSettingsModulePlugins::setDefaultCodeHeight (sizes ()[1]);
 		}
 	}
 
 	int defaultExtensionSize () {
-#warning clean up!
-		return ((orientation () == Qt::Horizontal) ? RKSettingsModulePlugins::defaultOtherPreviewHeight() : RKSettingsModulePlugins::defaultCodeHeight ());
+		return ((orientation () == Qt::Horizontal) ? RKSettingsModulePlugins::defaultSidePreviewWidth () : RKSettingsModulePlugins::defaultCodeHeight ());
 	}
 
 	bool isExtensionVisible () const { return extension->isVisible (); };
