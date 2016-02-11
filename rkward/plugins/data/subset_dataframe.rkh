@@ -1,7 +1,7 @@
 <!DOCTYPE rkhelp >
 <document>
 	<!-- this code was generated using the rkwarddev package.
-			perhaps don't make changes here, but in the rkwarddev script instead! -->
+		perhaps don't make changes here, but in the rkwarddev script instead! -->
 	<title>
 		subset_dataframe
 	</title>
@@ -17,6 +17,9 @@
 	<settings>
 		<setting id="var_data">
 			Select the data.frame to subset.
+		</setting>
+		<setting id="preview">
+			Preview the resulting subset. Note that the preview is limited to the first 500 rows and 100 columns, for performance reasons.
 		</setting>
 		<caption id="frm_Fltrrwsb" />
 		<setting id="vrsl_Fltrbyvr">

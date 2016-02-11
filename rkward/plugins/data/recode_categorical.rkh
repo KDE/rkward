@@ -25,6 +25,9 @@
 		<setting id="datamode">
 			Storage mode of the recoded data.
 		</setting>
+		<setting id="preview">
+			Show a preview of the recoding, as a table with two columns for old and new values. The preview is limited to the first 500 rows of data, for performance reasons.
+		</setting>
 		<caption id="tab_values"/>
 		<setting id="set">
 			The upper half of this tab allows you to specify recodings for individual input values. To add more recodings, click the "add/+"-button. To

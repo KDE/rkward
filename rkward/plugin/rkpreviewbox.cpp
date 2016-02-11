@@ -28,6 +28,7 @@
 #include "../rkglobals.h"
 #include "../rbackend/rinterface.h"
 #include "../misc/xmlhelper.h"
+#include "../misc/rkxmlguipreviewarea.h"
 #include "../windows/rkwindowcatcher.h"
 #include "../windows/rkworkplace.h"
 #include "rkstandardcomponent.h"
@@ -45,7 +46,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	XMLHelper *xml = parent_component->xmlHelper ();
 
 	preview_mode = (PreviewMode) xml->getMultiChoiceAttribute (element, "mode", "plot;data;output;custom", 0, DL_INFO);
-	placement = (PreviewPlacement) xml->getMultiChoiceAttribute (element, "placement", "default;attached;detached;docked", (preview_mode == PlotPreview) ? 0 : 3, DL_INFO);
+	placement = (PreviewPlacement) xml->getMultiChoiceAttribute (element, "placement", "default;attached;detached;docked", (preview_mode == PlotPreview) ? 3 : 3, DL_INFO);
 	preview_active = xml->getBoolAttribute (element, "active", false, DL_INFO);
 	idprop = RObject::rQuote (QString ().sprintf ("%p", this));
 
@@ -64,6 +65,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 
 	// status label
 	status_label = new QLabel (QString (), this);
+	status_label->setWordWrap (true);
 	vbox->addWidget (status_label);
 
 	// prepare placement
@@ -76,9 +78,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	if (placement == DockedPreview) {
 		RKStandardComponent *uicomp = topmostStandardComponent ();
 		if (uicomp) {
-			QWidget *container = new KVBox ();
-			RKWorkplace::mainWorkplace ()->registerNamedWindow (idprop, this, container);
-			uicomp->addDockedPreview (container, state, toggle_preview_box->text ());
+			uicomp->addDockedPreview (state, toggle_preview_box->text (), idprop);
 
 			if (preview_mode == OutputPreview) {
 				RKGlobals::rInterface ()->issueCommand ("local ({\n"

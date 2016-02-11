@@ -367,7 +367,15 @@ void RKMDIWindow::showEvent (QShowEvent* ev) {
 void RKMDIWindow::setWindowStyleHint (const QString& hint) {
 	RK_TRACE (APP);
 
-	if (hint == "preview") no_border_when_active = true;
+	if (hint == "preview") {
+		if (standard_client) {
+			QAction *act = standardActionCollection ()->action ("window_help");
+			if (act) act->setVisible (false);
+			act = standardActionCollection ()->action ("window_configure");
+			if (act) act->setVisible (false);
+		}
+		no_border_when_active = true;
+	}
 }
 
 void RKMDIWindow::setMetaInfo (const QString& _generic_window_name, const QUrl& _help_url, RKSettings::SettingsPage _settings_page) {

@@ -5,6 +5,7 @@ INSTALL(FILES
 	function.png
 	list.png
 	matrix.png
+	menu.svg
 	data-numeric.png
 	data-factor.png
 	data-logical.png

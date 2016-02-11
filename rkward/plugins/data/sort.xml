@@ -57,6 +57,7 @@
 					<saveobject id="saveto" label="Object to save to" initial="sorted"/>
 				</row>
 				<stretch/>
+				<preview id="preview" label="Preview" mode="data"/>
 			</tab>
 			<tab id="sort_order" label="Sort order">
 				<radio id="order" label="Sort order">

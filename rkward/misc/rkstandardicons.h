@@ -2,7 +2,7 @@
                           rkstandardicons  -  description
                              -------------------
     begin                : Wed Oct 24 2007
-    copyright            : (C) 2007, 2009, 2010, 2011, 2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -81,6 +81,8 @@ public:
 
 		ActionLock,
 		ActionUnlock,
+
+		ActionShowMenu,
 
 		ObjectList,
 		ObjectFunction,

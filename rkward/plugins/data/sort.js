@@ -1,3 +1,7 @@
+function preview () {
+	calculate (true);
+}
+
 function makeSortItem (objectname, reversed, mode, conversion_custom) {
 	var obj = objectname;
 	if (mode == 'character') obj = 'as.character (' + obj + ')';
@@ -12,7 +16,7 @@ function makeSortItem (objectname, reversed, mode, conversion_custom) {
 	return obj;
 }
 
-function calculate () {
+function calculate (is_preview) {
 	var object = getString ("object");
 	var is_data_frame = getBoolean ("sortby.enabled");
 
@@ -33,7 +37,15 @@ function calculate () {
 		sortby = makeSortItem (object, false, getString ("conversion"), getString ("conversion_custom"));
 	}
 
-	echo ('.GlobalEnv$' + saveto + ' <- ' + object + '[order (' + sortby + getString ("order") + ')');
-	if (is_data_frame) echo (',');
-	echo (']\n');
+	var sorted = object + '[order (' + sortby + getString ("order") + ')';
+	if (is_data_frame) sorted = sorted + ',';
+	sorted = sorted + ']';
+
+	if (is_preview) {
+		echo ('sorted <- ' + sorted + '\n');
+		echo ('sorted <- as.data.frame (sorted)\n');
+		echo ('preview_data <- sorted[1:min(dim(sorted)[1],200),1:min(dim(sorted)[2],50),drop=FALSE]\n');
+	} else {
+		echo ('.GlobalEnv$' + saveto + ' <- ' + sorted + '\n');
+	}
 }

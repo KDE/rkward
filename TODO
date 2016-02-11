@@ -7,10 +7,13 @@ Things to do:
 - Remove kde4libssupport classes
 - Adjust platform checks
 - Device window embedding / remove qwinhost
+- Grep for "KF5 TODO"
 Things to test at the end:
 - Everthing concerning loading / saving, from recent files, scripts, workspace, etc.
   - Moved installations, moved workspaces.
 - Window embedding
+Knwon issues to fix:
+- Initial window placement for plugins with previews is borked
 
 Upcoming porting efforts: Port from QtScript to QJSEngine:
 - Unforunately, QJSEngine lacks support for pre-compiled JS (QScriptProgram), ATM (Qt 5.5). We'll need some other optimization.
@@ -45,6 +48,9 @@ i18n-Thoughts:
         any obvious problems.
         - At least we could check for errors
         - Perhaps a special diff of the generated R commands, where all quoted strings and comments are stripped?
+
+MacOS:
+  - Avoiding mis-placment of certain menu-entries: QAction::menuRole()
 
 Bugs outside RKWard:
 	- KDE 4

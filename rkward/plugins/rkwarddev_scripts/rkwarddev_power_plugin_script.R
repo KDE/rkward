@@ -466,7 +466,7 @@ pwr.js.calc <- rk.paste.JS(
 helper.make.effect.size.legend <<- function (indicator, small, medium, large) {
    indicator <- paste0("\"", indicator, "\"")
    rk.paste.JS (echo(
-      "\trk.print(", i18n ("Interpretation of effect size <strong>%1</strong> (according to Cohen): ", indicator, context="Argument is name of statistic, e.g. 'r'"), ")\n",
+      "\trk.print(", i18n ("Interpretation of effect size <strong>%1</strong> (according to Cohen):", indicator, context="Argument is name of statistic, e.g. 'r'"), ")\n",
       "\trk.results(data.frame(", i18n ("small", context="effect size"), paste0 ("=", small, ", "),
                                   i18n ("medium", context="effect size"), paste0 ("=", medium, ", "),
                                   i18n ("large", context="effect size"), paste0 ("=", large, "))\n"))
@@ -523,7 +523,7 @@ pwr.js.print <- rk.paste.JS(
 ############
 ## help file
 
-pwr.rkh.summary <- rk.rkh.summary("Perform power analysis for a variety of statistcal methods.")
+pwr.rkh.summary <- rk.rkh.summary("Perform power analysis for a variety of statistical methods.")
 
 pwr.rkh.usage <- rk.rkh.usage("Given three of the parameters 'power of test', 
   'sample size', 'effect size', and 'significance level', this plugin will 

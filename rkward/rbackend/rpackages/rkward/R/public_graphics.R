@@ -340,7 +340,7 @@
 		devId <- as.character (devId)
 		
 		histPositions [[devId]] <<- .hP.template
-		if ((env$duplicating.from.device > 1) && !histPositions [[devId.from]]$is.this.dev.new) {
+		if ((env$duplicating.from.device > 1) && .is.device.managed (devId.from) && !histPositions [[devId.from]]$is.this.dev.new) {
 			# devId.from > 1
 			## TODO: see if so many "[[" calls can be reduced?
 			histPositions [[devId]]$is.this.plot.new <<- TRUE

@@ -28,6 +28,7 @@ SET(misc_STAT_SRCS
    rkfindbar.cpp
    rkdynamicsearchline.cpp
    rkaccordiontable.cpp
+   rkxmlguipreviewarea.cpp
    )
 
 ADD_LIBRARY(misc STATIC ${misc_STAT_SRCS})

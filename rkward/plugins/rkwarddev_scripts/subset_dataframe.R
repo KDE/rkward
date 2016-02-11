@@ -17,8 +17,9 @@
 # - split into two plugins (one for rows, one for columns)?
 
 require(rkwarddev)
+rkwarddev.required("0.08-2")
 
-local({
+rk.local({
 # set the output directory to overwrite the actual plugin
 output.dir <- tempdir()
 overwrite <- TRUE
@@ -35,7 +36,7 @@ about.info <- rk.XML.about(
 		person(given="Thomas", family="Friedrichsmeier",
 			email="thomas.friedrichsmeier@kdemail.net", role=c("aut"))),
 	about=list(desc="RKWard GUI to define subsets of data objects",
-		version="0.02-1", url="http://rkward.kde.org")
+		version="0.03-1", url="http://rkward.kde.org")
 )
 
 ############
@@ -90,8 +91,8 @@ sset.filter.min.inc <- rk.XML.checkbox (label="Included (>=)", id.name="mininc")
 sset.filter.max <- rk.XML.input(label="Maximum (or empty)")
 sset.filter.max.inc <- rk.XML.checkbox (label="Included (<=)", id.name="maxinc")	#NOTE: Auto-id bug!
 sset.range.options <- rk.XML.row (
-	rk.XML.col (sset.filter.min, sset.filter.min.inc),
-	rk.XML.col (sset.filter.max, sset.filter.max.inc)
+	rk.XML.col (sset.filter.min, sset.filter.min.inc, id.name=NULL),
+	rk.XML.col (sset.filter.max, sset.filter.max.inc, id.name=NULL)
 )
 
 frame.filter.var <- rk.XML.frame(
@@ -137,6 +138,7 @@ lgc.filter.script <- rk.comment(id("
 		dataChanged (); // initialize", js=FALSE))
 
 save.results.sset <- rk.XML.saveobj("Save results to workspace", initial="sset.result", chk=TRUE)
+sset.preview <- rk.XML.preview (mode="data", label="Preview")
 
 sset.dialog.contents <- rk.XML.row (
 	var.select,
@@ -146,13 +148,14 @@ sset.dialog.contents <- rk.XML.row (
 			"Filter cases"=rk.XML.col(
 				frame.filter.var,
 				frame.filter.expression,
-				rk.XML.stretch()
-			), "Filter columns"=rk.XML.col(
+				rk.XML.stretch(),
+			id.name=NULL), "Filter columns"=rk.XML.col(
 				frame.selected.vars,
-				rk.XML.stretch()
-			))
+				rk.XML.stretch(),
+			id.name=NULL))
 		),
-		save.results.sset
+		save.results.sset,
+		sset.preview
 	)
 )
 
@@ -234,6 +237,9 @@ sset.js.calc <- id("
 		}
 	}
 	echo ('\\n\\t)\\n\\n');
+	if (is_preview) {
+		echo ('preview_data <- sset.result[1:min(dim(sset.result)[1],500),1:min(dim(sset.result)[2],100),drop=FALSE]\\n');
+	}
 ", js=FALSE)
 
 #############
@@ -250,12 +256,14 @@ sset.plugin.dir <<- rk.plugin.skeleton(
   		logic=lgc.sect.sset
 		),
 	js=list(results.header=FALSE,
-		calculate=sset.js.calc),
+		calculate=sset.js.calc,
+		preview=TRUE),
 	rkh=list(
 		summary = rk.rkh.summary ("Select a subset of rows and / or columns of a data.frame"),
 		usage = rk.rkh.usage ("Select the data.frame to subset. Then specify rules to filter by rows / cases, and / or columns. A data.frame containing only the specified subset is saved to your workspace."),
 		settings = rk.rkh.settings (list (
 			rk.rkh.setting (var.data, "Select the data.frame to subset."),
+			rk.rkh.setting (sset.preview, "Preview the resulting subset. Note that the preview is limited to the first 500 rows and 100 columns, for performance reasons."),
 			rk.rkh.caption (frame.filter.var),
 			rk.rkh.setting (filter.var, "Select a column of the data.frame specifying the condition to filter cases on. Leave empty, if you do not want to filter on a column."),
 			rk.rkh.setting (sset.filter.drop, "Select the type of condition. Note that depending on the type of the filter variable, different options are available"),

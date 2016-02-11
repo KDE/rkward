@@ -362,12 +362,12 @@ void RKStandardComponent::buildAndInitialize (const QDomElement &doc_element, co
 	standardInitializationComplete ();
 }
 
-void RKStandardComponent::addDockedPreview (QWidget* area, RKComponentPropertyBool* controller, const QString& label) {
+RKXMLGUIPreviewArea* RKStandardComponent::addDockedPreview (RKComponentPropertyBool* controller, const QString& label, const QString &id) {
 	RK_TRACE (PLUGIN);
 
 	RK_ASSERT (gui);
-	if (!gui) return;
-	gui->addDockedPreview (area, controller, label);
+	if (!gui) return 0;
+	return gui->addDockedPreview (controller, label, id);
 }
 
 RKComponentBase::ComponentStatus RKStandardComponent::recursiveStatus () {
@@ -658,7 +658,15 @@ void RKComponentBuilder::buildElement (const QDomElement &element, XMLHelper &xm
 		} else if (e.tagName () == QLatin1String ("text")) {
 			widget = new RKText (e, component (), parent_widget);
 		} else if (e.tagName () == QLatin1String ("preview")) {
+			QWidget *pwidget = parent_widget;
+			if (!parent->isWizardish ()) {
+				RKStandardComponent *uicomp = parent->topmostStandardComponent ();
+				if (uicomp) {
+					parent_widget = static_cast<RKStandardComponent*> (uicomp)->gui->custom_preview_buttons_area;
+				}
+			}
 			widget = new RKPreviewBox (e, component (), parent_widget);
+			parent_widget->layout ()->addWidget (widget);
 		} else if (e.tagName () == QLatin1String ("saveobject")) {
 			widget = new RKPluginSaveObject (e, component (), parent_widget);
 		} else if (e.tagName () == QLatin1String ("embed")) {

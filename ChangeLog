@@ -6,6 +6,11 @@
 --- Version 0.6.5 - XXXXXXXXXXXXXXX
 
 
+- Provide better status feedback when searching / filtering among installable packages
+- Add access to basic menu items for docked previews
+- Move preview controls to the button-column of dialogs                                            TODO document, polish
+- Add preview to Sort data-, Subset data, and Recode categorical data-plugins
+- Add preview to Power Analysis plugin
 - Add support for adding "htmlwidget"- and "gvis"-class objects to the output window via rk.print()
 - Add plugins for importing Excel files (.xls and .xlsx, Perl- and Java-based)
 - Add ability to extract <matrix> values row-wise in plugins
@@ -15,7 +20,7 @@
 - File selectors in "Import XYZ" plugins now filter for standard file extensions, by default
 - Add previews for CSV, SPSS, and Stata import plugins
 - Allow previews for data, (HTML) output, and custom types of previews
-- Allow previews to be docked to the dialog window
+- Allow previews to be docked to the dialog window, add dock them, by default                      TODO: update documentation on placemnet
 - Implicitly save code preview visibility and size (instead of the former explicit settings)
 - data.frame objects outside of globalenv() can be opened read-only in an editor window
 - Show a warning screen when invoking plugins from the command line (or from clicking an rkward://-link in an external application)
