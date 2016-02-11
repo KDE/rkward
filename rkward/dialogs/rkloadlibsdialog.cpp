@@ -2,7 +2,7 @@
                           rkloadlibsdialog  -  description
                              -------------------
     begin                : Mon Sep 6 2004
-    copyright            : (C) 2004 - 2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2004 - 2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -651,7 +651,13 @@ public:
 				RK_ASSERT (false);
 				return;
 			}
-			v4->icon = table->isExpanded (index) ? expanded : collapsed;
+			int ccount = index.model ()->rowCount (index);
+			v4->text = v4->text + " (" + QString::number (ccount) + ')';
+			if (ccount) {
+				v4->icon = table->isExpanded (index) ? expanded : collapsed;
+			} else {
+				v4->icon = QIcon ();    // empty dummy icon to reserve space
+			}
 			v4->features |= QStyleOptionViewItemV2::HasDecoration;
 			v4->font.setBold (true);
 			v4->backgroundBrush = table->palette ().mid ();
@@ -705,6 +711,8 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidge
 	filter_edit = new RKDynamicSearchLine (this);
 	RKCommonFunctions::setTips (i18n ("<p>You can limit the packages displayed in the list to with names or titles matching a filter string.</p>") + filter_edit->regexpTip (), label, filter_edit);
 	filter_edit->setModelToFilter (model);
+	// NOTE: Although the search line sets the filter in the model, automatically, we connect it, here, in order to expand new and updateable sections, when the filter changes.
+	connect (filter_edit, SIGNAL (searchChanged(QRegExp)), this, SLOT (filterChanged()));    // KF5 TODO
 	rkward_packages_only = new QCheckBox (i18n ("Show only packages providing RKWard dialogs"), this);
 	RKCommonFunctions::setTips (i18n ("<p>Some but not all R packages come with plugins for RKWard. That means they provide a graphical user-interface in addition to R functions. Check this box to show only such packages.</p><p></p>"), rkward_packages_only);
 	connect (rkward_packages_only, SIGNAL(stateChanged(int)), this, SLOT (filterChanged()));
@@ -769,6 +777,8 @@ void InstallPackagesWidget::filterChanged () {
 	RK_TRACE (DIALOGS);
 
 	model->setRKWardOnly (rkward_packages_only->isChecked ());
+	packages_view->expand (model->mapFromSource (packages_status->index(RKRPackageInstallationStatus::UpdateablePackages, 0)));
+	packages_view->expand (model->mapFromSource (packages_status->index(RKRPackageInstallationStatus::NewPackages, 0)));
 	// NOTE: filter string already set by RKDynamicSearchLine
 }
 

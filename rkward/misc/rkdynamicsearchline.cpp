@@ -39,6 +39,7 @@ RKDynamicSearchLine::~RKDynamicSearchLine () {
 
 void RKDynamicSearchLine::textChanged () {
 	RK_TRACE (MISC);
+	// KF5 TODO: Add activity indicator
 	timer.start (300);
 }
 

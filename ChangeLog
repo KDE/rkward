@@ -1,3 +1,4 @@
+- Provide better status feedback when searching / filtering among installable packages
 - Add access to basic menu items for docked previews
 - Move preview controls to the button-column of dialogs                                            TODO document, polish
 - Add preview to Sort data-, Subset data, and Recode categorical data-plugins
