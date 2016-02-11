@@ -61,6 +61,7 @@ RKWindowCatcher *window_catcher;
 #include <kfiledialog.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
+#include <kdialog.h>
 
 #include <qdir.h>
 #include <qvalidator.h>

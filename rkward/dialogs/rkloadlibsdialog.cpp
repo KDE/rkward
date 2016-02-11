@@ -33,9 +33,7 @@
 
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kvbox.h>
 #include <kuser.h>
-#include <kstandarddirs.h>
 
 #include "../rkglobals.h"
 #include "../rbackend/rinterface.h"
@@ -335,7 +333,8 @@ void RKLoadLibsDialog::runInstallationCommand (const QString& command, bool as_r
 	call = R_binary;
 #else
 	if (as_root) {
-		call = KStandardDirs::findExe ("kdesu");
+		call = QStandardPaths::findExecutable ("kdesu");
+		if (call.isEmpty ()) call = QStandardPaths::findExecutable ("kdesudo");
 		params << "-t" << "--" << R_binary;
 	} else {
 		call = R_binary;

@@ -18,7 +18,6 @@
 #include "rkimportdialog.h"
 
 #include <kmessagebox.h>
-#include <kfilefiltercombo.h>
 #include <klocale.h>
 
 #include <qcombobox.h>
@@ -29,14 +28,7 @@
 
 #include "../debug.h"
 
-RKImportDialogFormatSelector::RKImportDialogFormatSelector () : KHBox () {
-	RK_TRACE (DIALOGS);
-
-	new QLabel (i18n ("File format:"), this);
-	combo = new QComboBox (this);
-}
-
-RKImportDialog::RKImportDialog (const QString &context_id, QWidget *parent) : KFileDialog (QUrl (), QString (), parent, format_selector=new RKImportDialogFormatSelector ()) {
+RKImportDialog::RKImportDialog (const QString &context_id, QWidget *parent) : QFileDialog (parent) {
 	RK_TRACE (DIALOGS);
 
 	setModal (false);
@@ -48,11 +40,8 @@ RKImportDialog::RKImportDialog (const QString &context_id, QWidget *parent) : KF
 	}
 
 	component_ids = context->components ();
-	QString formats = "*|" + i18n ("All Files") + " (*)\n";
 	int format_count = 0;
 	for (QStringList::const_iterator it = component_ids.constBegin (); it != component_ids.constEnd (); ++it) {
-		if (format_count++) formats.append ('\n');
-
 		RKComponentHandle *handle = RKComponentMap::getComponentHandle (*it);
 		if (!handle) {
 			RK_ASSERT (false);
@@ -63,22 +52,14 @@ RKImportDialog::RKImportDialog (const QString &context_id, QWidget *parent) : KF
 		QString label = handle->getAttributeLabel ("format");
 
 		QString elabel = label;
-		elabel.replace ('/', "\\/");
-		elabel.replace ('|', "\\|");
-		formats.append (filter + '|' + elabel + " (" + filter + ')');
-
-		format_labels.append (label);
-		filters.append (filter);
+		elabel.replace ('(', "[");
+		elabel.replace (')', "]");
+		filters.append (elabel + " [" + filter + "] (" + filter + ')');
 	}
 
-	// file format selection box
-	format_selector->combo->insertItems (0, format_labels);
-
 	// initialize
-	setMode (KFile::File | KFile::ExistingOnly | KFile::LocalOnly);
-	setFilter (formats);
-	connect (this, &KFileDialog::filterChanged, this, &RKImportDialog::filterWasChanged);
-	filterWasChanged (QString ());
+	setFileMode (QFileDialog::ExistingFile);
+	setNameFilters (filters);
 	show ();
 }
 
@@ -86,26 +67,11 @@ RKImportDialog::~RKImportDialog () {
 	RK_TRACE (DIALOGS);
 }
 
-void RKImportDialog::filterWasChanged (const QString &) {
-	RK_TRACE (DIALOGS);
-
-	int index = filters.indexOf (filterWidget ()->currentFilter ());
-
-	if (index < 0) {		// All files
-		format_selector->combo->setEnabled (true);
-	} else {
-		format_selector->combo->setEnabled (false);
-		format_selector->combo->setCurrentIndex (index);
-	}
-}
-
 void RKImportDialog::accept () {
 	RK_TRACE (DIALOGS);
 
-	KFileDialog::accept ();
-
-	int index = format_selector->combo->currentIndex ();
-	QString cid = component_ids[index];
+	int index = filters.indexOf (selectedNameFilter ());
+	QString cid = component_ids.value (index);
 	RKComponentHandle *handle = RKComponentMap::getComponentHandle (cid);
 	RKContextHandler *chandler = context->makeContextHandler (this, false);
 
@@ -113,19 +79,20 @@ void RKImportDialog::accept () {
 		RK_ASSERT (false);
 	} else {
 		RKComponentPropertyBase *filename = new RKComponentPropertyBase (chandler, false);
-		filename->setValue (selectedFile ());
+		filename->setValue (selectedFiles ().value (0));
 		chandler->addChild ("filename", filename);
 
 		chandler->invokeComponent (handle);
 	}
 
+	QFileDialog::accept ();
 	deleteLater ();
 }
 
 void RKImportDialog::reject () {
 	RK_TRACE (DIALOGS);
 
-	KFileDialog::reject ();
+	QFileDialog::reject ();
 	deleteLater ();
 }
 

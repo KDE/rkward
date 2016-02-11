@@ -18,7 +18,7 @@
 #ifndef RKREADLINEDIALOG_H
 #define RKREADLINEDIALOG_H
 
-#include <kdialog.h>
+#include <QDialog>
 
 class QLineEdit;
 class QWidget;
@@ -29,7 +29,7 @@ This dialog displays the question asked, the output context (as often times the 
 
 @author Thomas Friedrichsmeier
 */
-class RKReadLineDialog : public KDialog {
+class RKReadLineDialog : public QDialog {
 public:
 	/** Construct and run modal RKReadLineDialog.
 	@param parent QWidget to center the modal dialog on (0 for application)

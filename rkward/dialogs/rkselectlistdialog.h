@@ -18,16 +18,16 @@
 #ifndef RKSELECTLISTDIALOG_H
 #define RKSELECTLISTDIALOG_H
 
-#include <kdialog.h>
+#include <QDialog>
 
 class QListWidget;
-class QWidget;
+class QDialogButtonBox;
 
 /** This class represent a dialog asking for a choice among several optiosn. It is used, when the backend calls select.list() / menu().
 
 @author Thomas Friedrichsmeier
 */
-class RKSelectListDialog : public KDialog {
+class RKSelectListDialog : public QDialog {
 	Q_OBJECT
 public:
 	/** Construct and run modal RKSelectListDialog.
@@ -47,6 +47,7 @@ private slots:
 	void updateState ();
 private:
 	QListWidget *input;
+	QDialogButtonBox *buttons;
 };
 
 #endif

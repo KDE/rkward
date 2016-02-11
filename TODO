@@ -13,7 +13,8 @@ Things to test at the end:
   - Moved installations, moved workspaces.
 - Window embedding
 Knwon issues to fix:
-- Initial window placement for plugins with previews is borked
+- Initial window placement for plugins is completely borked. One way around this seems to be to inherit RKStandardComponentGUI from QDialog.
+- Initial window placement for plots is always 0, 0 on screen 1, apparently. The above workaround may not be available, here?
 
 Upcoming porting efforts: Port from QtScript to QJSEngine:
 - Unforunately, QJSEngine lacks support for pre-compiled JS (QScriptProgram), ATM (Qt 5.5). We'll need some other optimization.
