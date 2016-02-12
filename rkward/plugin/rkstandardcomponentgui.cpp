@@ -729,8 +729,10 @@ RKComponent *RKStandardComponentStack::addPage (RKComponent *parent) {
 	RK_TRACE (PLUGIN);
 
 	PageDef *def = new PageDef;
-	KVBox *wrap = new KVBox (this);
+	QWidget *wrap = new QWidget ();
+	new QVBoxLayout (wrap);
 	def->page = new RKComponent (parent, wrap);
+	wrap->layout ()->addWidget (def->page);
 	setCurrentIndex (addWidget (wrap));
 	pages.append (def);
 

@@ -8,6 +8,7 @@ Things to do:
 - Adjust platform checks
 - Device window embedding / remove qwinhost
 - Grep for "KF5 TODO"
+- Remove katepart status bar from all previews (including in wizard)
 Things to test at the end:
 - Everthing concerning loading / saving, from recent files, scripts, workspace, etc.
   - Moved installations, moved workspaces.
