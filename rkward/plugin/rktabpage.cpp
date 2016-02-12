@@ -21,8 +21,6 @@
 #include <qtabwidget.h>
 #include <QVBoxLayout>
 
-#include <kvbox.h>
-
 #include "../rkglobals.h"
 #include "../misc/xmlhelper.h"
 #include "../debug.h"
@@ -34,14 +32,11 @@ RKTabPage::RKTabPage (const QDomElement &element, RKComponent *parent_component,
 	label = xml->i18nStringAttribute (element, "label", QString (), DL_WARNING);
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
-	page = new KVBox (this);
-	layout->addWidget (page);
+	page = this;
 
 	tabbook = parent_widget;
 	tabbook->addTab (this, label);
 	index = tabbook->indexOf (this);
-	// for whatever reason, this needs to be set *after* the page was added to the tabbook
-	page->setSizePolicy (QSizePolicy (QSizePolicy::Expanding, QSizePolicy::Expanding));
 
 	inserted = true;
 	connect (visibility_property, &RKComponentPropertyBase::valueChanged, this, &RKTabPage::visibleEnabledChanged);

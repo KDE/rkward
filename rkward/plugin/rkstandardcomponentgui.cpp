@@ -19,7 +19,6 @@
 
 #include <klocale.h>
 #include <kactioncollection.h>
-#include <kvbox.h>
 
 #include <qtimer.h>
 #include <qpushbutton.h>
@@ -179,7 +178,8 @@ void RKStandardComponentGUI::createDialog (bool switchable) {
 	QHBoxLayout *hbox = new QHBoxLayout (central_widget);
 
 	// build standard elements
-	main_widget = new KVBox (central_widget);
+	main_widget = new QWidget (central_widget);
+	new QVBoxLayout (main_widget);
 	main_widget->setSizePolicy (QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);  // HACK to achieve sane initial size. Will be reset to Preferred/Preferred after show.
 	hbox->addWidget (main_widget);
 

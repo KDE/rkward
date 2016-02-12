@@ -23,7 +23,6 @@
 #include <QTextDocument>
 
 #include <klocale.h>
-#include <kvbox.h>
 
 #include "../rkglobals.h"
 #include "../rbackend/rinterface.h"

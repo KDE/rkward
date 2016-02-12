@@ -26,7 +26,6 @@
 #include <QMimeData>
 
 #include <klocale.h>
-#include <kvbox.h>
 
 #include "rkstandardcomponent.h"
 #include "../misc/rkcommonfunctions.h"

@@ -20,8 +20,6 @@
 #include <QVBoxLayout>
 #include <QGroupBox>
 
-#include <kvbox.h>
-
 #include "../rkglobals.h"
 #include "../misc/xmlhelper.h"
 #include "../debug.h"
@@ -36,8 +34,9 @@ RKPluginFrame::RKPluginFrame (const QDomElement &element, RKComponent *parent_co
 	frame = new QGroupBox (xml->i18nStringAttribute (element, "label", QString(), DL_INFO), this);
 	layout->addWidget (frame);
 	layout = new QVBoxLayout (frame);
-	page = new KVBox (frame);
-	static_cast<KVBox*> (page)->setSpacing (RKGlobals::spacingHint ());
+	page = new QWidget (frame);
+	QVBoxLayout *pagelayout = new QVBoxLayout (page);
+	pagelayout->setSpacing (RKGlobals::spacingHint ());
 	layout->addWidget (page);
 
 	checked = 0;

@@ -608,6 +608,8 @@ void RKComponentBuilder::buildElement (const QDomElement &element, XMLHelper &xm
 			buildElement (e, xml, frame->getPage (), false);
 		} else if (e.tagName () == QLatin1String ("tabbook")) {
 			QTabWidget *tabbook = new QTabWidget (parent_widget);
+			// this is not an RKComponent, so we need to add it, manually
+			parent_widget->layout ()->addWidget (tabbook);
 			QDomNodeList tabs = e.childNodes ();
 			for (int t=0; t < tabs.count (); ++t) {
 				QDomElement tab_e = tabs.item (t).toElement ();
@@ -657,7 +659,6 @@ void RKComponentBuilder::buildElement (const QDomElement &element, XMLHelper &xm
 				}
 			}
 			widget = new RKPreviewBox (e, component (), parent_widget);
-			parent_widget->layout ()->addWidget (widget);
 		} else if (e.tagName () == QLatin1String ("saveobject")) {
 			widget = new RKPluginSaveObject (e, component (), parent_widget);
 		} else if (e.tagName () == QLatin1String ("embed")) {
@@ -672,6 +673,8 @@ void RKComponentBuilder::buildElement (const QDomElement &element, XMLHelper &xm
 // TODO we should use a specialized pushbutton, that changes color if the corresponding component is dissatisfied!
 					QPushButton *button = new QPushButton (dummy, parent_widget);
 					component ()->connect (button, &QPushButton::clicked, swidget, &RKStandardComponent::showGUI);
+					add_to_layout = false;
+					parent_widget->layout ()->addWidget (button);
 				} else {
 					widget = handle->invoke (component (), parent_widget);
 				}
