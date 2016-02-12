@@ -22,7 +22,6 @@
 #include <kxmlguifactory.h>
 #include <kactioncollection.h>
 #include <kdirwatch.h>
-#include <kapplication.h>
 
 #include <QDir>
 #include <QMultiHash>

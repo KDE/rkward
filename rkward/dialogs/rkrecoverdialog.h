@@ -18,12 +18,11 @@
 #ifndef RKRECOVERDIALOG_H
 #define RKRECOVERDIALOG_H
 
-#include <kdialog.h>
-
+#include <QDialog>
 #include <QStringList>
 
 /** Dialog to offer loading of recovery files during startup. */
-class RKRecoverDialog : public KDialog {
+class RKRecoverDialog : public QDialog {
 	Q_OBJECT
 public:
 /** Check whether a crash recovery file is available. If so, display a dialog, offering to load the recovery file.

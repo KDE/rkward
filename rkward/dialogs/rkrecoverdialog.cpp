@@ -19,35 +19,30 @@
 
 #include <krun.h>
 #include <klocale.h>
+#include <kmessagebox.h>
 
 #include <QDir>
 #include <QFileInfo>
 #include <QLabel>
-#include <kmessagebox.h>
+#include <QPushButton>
+#include <QVBoxLayout>
+#include <QDateTime>
 
 #include "../settings/rksettingsmodulegeneral.h"
+#include "../misc/rkcommonfunctions.h"
 
 #include "../debug.h"
 
-RKRecoverDialog::RKRecoverDialog (const QStringList &recovery_files) {
+RKRecoverDialog::RKRecoverDialog (const QStringList &recovery_files) : QDialog () {
 	RK_TRACE (DIALOGS);
 	RK_ASSERT (!recovery_files.isEmpty ());
 	files = recovery_files;
 
+	QVBoxLayout *layout = new QVBoxLayout (this);
+
 	const QString caption = i18n ("Crash recovery file detected");
-	setCaption (caption);
-	setButtons (KDialog::Ok | KDialog::Cancel | KDialog::User1);
-	setButtonText (KDialog::Ok, i18n ("Recover"));
-	setButtonToolTip (KDialog::Ok, i18n ("Saves the recovery file(s), and opens it (or the most recent one)"));
-	setButtonWhatsThis (KDialog::Ok, buttonToolTip (KDialog::Ok));
-	setButtonText (KDialog::Cancel, i18n ("Save for later"));
-	setButtonToolTip (KDialog::Cancel, i18n ("Saves the recovery file(s) for later use, but does not open it"));
-	setButtonWhatsThis (KDialog::Cancel, buttonToolTip (KDialog::Cancel));
-	setButtonText (KDialog::User1, i18n ("Delete"));
-	setButtonToolTip (KDialog::User1, i18n ("Deletes the recovery file(s)"));
-	setButtonWhatsThis (KDialog::User1, buttonToolTip (KDialog::User1));
-	
-	connect (this, &KDialog::user1Clicked, this, &RKRecoverDialog::deleteButtonClicked);
+	setWindowTitle (caption);
+
 	QLabel *label = new QLabel (this);
 	QString text = QString ("<p><b>%1</b></p>").arg (caption);
 	text.append (i18n ("<p>It looks like RKWard has crashed, recently. We are sorry about that! However, not everything is lost, and with a bit of luck, your data has been saved in time.</p>"));
@@ -55,7 +50,20 @@ RKRecoverDialog::RKRecoverDialog (const QStringList &recovery_files) {
 	text.append (i18n ("<p>Do you want to open this file, now, save it for later (as <i>%1</i>), or discard it?</p>", saveFileFor (recovery_files.first ())));
 	label->setText (text);
 	label->setWordWrap (true);
-	setMainWidget (label);
+	layout->addWidget (label);
+
+	QDialogButtonBox *buttons = new QDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Discard);
+	buttons->button (QDialogButtonBox::Ok)->setText (i18n ("Recover"));
+	RKCommonFunctions::setTips (i18n ("Saves the recovery file(s), and opens it (or the most recent one)"), buttons->button (QDialogButtonBox::Ok));
+	buttons->button (QDialogButtonBox::Cancel)->setText (i18n ("Save for later"));
+	RKCommonFunctions::setTips (i18n ("Saves the recovery file(s) for later use, but does not open it"), buttons->button (QDialogButtonBox::Cancel));
+	buttons->button (QDialogButtonBox::Discard)->setText (i18n ("Delete"));
+	RKCommonFunctions::setTips (i18n ("Deletes the recovery file(s)"), buttons->button (QDialogButtonBox::Discard));
+	connect (buttons->button (QDialogButtonBox::Ok), &QPushButton::clicked, this, &QDialog::accept);
+	buttons->button (QDialogButtonBox::Ok)->setShortcut (Qt::CTRL | Qt::Key_Return);
+	connect (buttons->button (QDialogButtonBox::Cancel), &QPushButton::clicked, this, &QDialog::reject);
+	connect (buttons->button (QDialogButtonBox::Discard), &QPushButton::clicked, this, &RKRecoverDialog::deleteButtonClicked);
+	layout->addWidget (buttons);
 }
 
 RKRecoverDialog::~RKRecoverDialog () {

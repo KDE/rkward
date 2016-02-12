@@ -23,22 +23,23 @@
 #include <qstringlist.h>
 #include <QVBoxLayout>
 #include <QTimer>
+#include <QDialogButtonBox>
+#include <QPushButton>
 
 #include <klocale.h>
-#include <kvbox.h>
 
 #include "../core/rkvariable.h"
 #include "../rkglobals.h"
 #include "../debug.h"
 
-EditFormatDialog::EditFormatDialog (QWidget *parent) : KDialog (parent) {
+EditFormatDialog::EditFormatDialog (QWidget *parent) : QDialog (parent) {
 	RK_TRACE (EDITOR);
 
-	KVBox *vbox = new KVBox ();
-	setMainWidget (vbox);
+	QVBoxLayout *layout = new QVBoxLayout (this);
 
 	alignment_group = new QButtonGroup (this);
-	QGroupBox* alignment_box = new QGroupBox (i18n ("Alignment"), vbox);
+	QGroupBox* alignment_box = new QGroupBox (i18n ("Alignment"), this);
+	layout->addWidget (alignment_box);
 	QVBoxLayout* group_layout = new QVBoxLayout (alignment_box);
 	group_layout->setContentsMargins (0, 0, 0, 0);
 	QRadioButton* button;
@@ -51,7 +52,8 @@ EditFormatDialog::EditFormatDialog (QWidget *parent) : KDialog (parent) {
 	alignment_group->button ((int) RKVariable::FormattingOptions::AlignDefault)->setChecked (true);
 
 	precision_group = new QButtonGroup (this);
-	QGroupBox* precision_box = new QGroupBox (i18n ("Decimal Places"), vbox);
+	QGroupBox* precision_box = new QGroupBox (i18n ("Decimal Places"), this);
+	layout->addWidget (precision_box);
 	group_layout = new QVBoxLayout (precision_box);
 	precision_group->addButton (button = new QRadioButton (i18n ("Default setting"), precision_box), (int) RKVariable::FormattingOptions::PrecisionDefault);
 	group_layout->addWidget (button);
@@ -65,7 +67,11 @@ EditFormatDialog::EditFormatDialog (QWidget *parent) : KDialog (parent) {
 	group_layout->addWidget (precision_field);
 	precision_group->button ((int) RKVariable::FormattingOptions::PrecisionDefault)->setChecked (true);
 
-	setButtons (KDialog::Ok | KDialog::Cancel);
+	QDialogButtonBox *buttons = new QDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+	connect (buttons->button (QDialogButtonBox::Ok), &QPushButton::clicked, this, &QDialog::accept);
+	buttons->button (QDialogButtonBox::Ok)->setShortcut (Qt::CTRL | Qt::Key_Return);
+	connect (buttons->button (QDialogButtonBox::Cancel), &QPushButton::clicked, this, &QDialog::reject);
+	layout->addWidget (buttons);
 }
 
 EditFormatDialog::~EditFormatDialog () {
@@ -75,7 +81,7 @@ EditFormatDialog::~EditFormatDialog () {
 void EditFormatDialog::initialize (const RKVariable::FormattingOptions& options, const QString& varname) {
 	RK_TRACE (EDITOR);
 
-	setCaption (i18n ("Formatting options for '%1'", varname));
+	setWindowTitle (i18n ("Formatting options for '%1'", varname));
 
 	EditFormatDialog::options = options;
 
@@ -96,7 +102,7 @@ void EditFormatDialog::accept () {
 		options.precision = 0;
 	}
 
-	KDialog::accept ();
+	QDialog::accept ();
 }
 
 void EditFormatDialog::precisionFieldChanged (int) {

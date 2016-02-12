@@ -17,8 +17,7 @@
 #ifndef EDITLABELSDIALOG_H
 #define EDITLABELSDIALOG_H
 
-#include <kdialog.h>
-
+#include <QDialog>
 #include <QAbstractTableModel>
 
 #include "../core/robject.h"
@@ -72,7 +71,7 @@ Allows editing of value labels / factor levels for an RKVariable. Use EditLabels
 
 @author Thomas Friedrichsmeier
 */
-class EditLabelsDialog : public KDialog {
+class EditLabelsDialog : public QDialog {
 protected:
 friend class EditLabelsDialogProxy;
 /** constructor., the variable to work on.

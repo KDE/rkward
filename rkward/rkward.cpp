@@ -44,6 +44,7 @@
 #include <kactionmenu.h>
 #include <QIcon>
 #include <KSharedConfig>
+#include <kdialog.h>
 
 // application specific includes
 #include "rkward.h"

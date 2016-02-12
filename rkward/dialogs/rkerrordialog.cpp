@@ -17,10 +17,8 @@
 
 #include "rkerrordialog.h"
 
-#include <kdialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kvbox.h>
 #include <ktoolinvocation.h>
 
 #include <QIcon>
@@ -30,6 +28,7 @@
 #include <QTextStream>
 #include <QPushButton>
 #include <QDialog>
+#include <QVBoxLayout>
 
 #include "../rbackend/rinterface.h"
 #include "../rbackend/rksessionvars.h"
@@ -42,18 +41,14 @@
 
 #define SUBMIT_ADDRESS "https://bugs.kde.org/enter_bug.cgi"
 
-class RKBugzillaReportDialog : public KDialog {
+class RKBugzillaReportDialog : public QDialog {
 public:
-	RKBugzillaReportDialog (QWidget* parent, const QString& report_template) : KDialog (parent) {
+	RKBugzillaReportDialog (QWidget* parent, const QString& report_template) : QDialog (parent) {
 		RK_TRACE (DIALOGS);
 
 		RKBugzillaReportDialog::report_template = report_template;
-		setCaption (i18n ("Reporting bugs in RKWard"));
-		setButtons (KDialog::Ok | KDialog::Cancel);
-		setButtonText (KDialog::Ok, i18n ("Report issue"));
-		setButtonIcon (KDialog::Ok, QIcon::fromTheme("tools-report-bug"));
-		KVBox *vbox = new KVBox (this);
-		setMainWidget (vbox);
+		setWindowTitle (i18n ("Reporting bugs in RKWard"));
+		QVBoxLayout *layout = new QVBoxLayout (this);
 		QLabel *label = new QLabel (i18n ("<p><b>Where should I report bugs or wishes?</b></p><p>Thank you for taking the time to help improve RKWard. To help us "
 		                                  "handle your request, efficiently, please submit your bug reports or wishes in the "
 		                                  "<a href=\"%1\">KDE bugtracking system</a>. Note that you need a user account for this, so that we will be able to contact you, "
@@ -62,14 +57,22 @@ public:
 		                         QString ("http://bugs.kde.org"), QString ("https://bugs.kde.org/createaccount.cgi"), QString ("http://rkward.kde.org/bugs/"))
 		                          + i18n ("<p><b>What information should I provide, and how?</b></p>Clicking \"Report issue\" will take you to the "
 		                                  "KDE bugtracking system. After logging in, some information will already be pre-filled into the report form. Please make sure "
-		                                  "to fill in the missing bits - in English - where indicated, especially in the \"Comment\" field.</p>"), vbox);
+		                                  "to fill in the missing bits - in English - where indicated, especially in the \"Comment\" field.</p>"), this);
 		label->setWordWrap (true);
 		label->setOpenExternalLinks (true);
+		layout->addWidget (label);
+
+		QDialogButtonBox *buttons = new QDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+		buttons->button (QDialogButtonBox::Ok)->setText (i18n ("Report issue"));
+		buttons->button (QDialogButtonBox::Ok)->setIcon (QIcon::fromTheme("tools-report-bug"));
+		connect (buttons->button (QDialogButtonBox::Ok), &QPushButton::clicked, this, &QDialog::accept);
+		buttons->button (QDialogButtonBox::Ok)->setShortcut (Qt::CTRL | Qt::Key_Return);
+		connect (buttons->button (QDialogButtonBox::Cancel), &QPushButton::clicked, this, &QDialog::reject);
+		layout->addWidget (buttons);
 
 		connect (this, &QDialog::finished, this, &RKBugzillaReportDialog::deleteLater);
 	}
 
-	// KF5 TODO: add override keyword
 	void accept () override {
 		// The report template is just too large to pass it via GET, so we use a local proxy page to pass it in a POST request
 		QTemporaryFile proxy;
@@ -89,7 +92,7 @@ public:
 		proxy.close ();
 
 		KToolInvocation::invokeBrowser (QUrl::fromLocalFile (proxy.fileName ()).toEncoded ());
-		KDialog::accept ();
+		QDialog::accept ();
 	}
 private:
 	QString report_template;
@@ -117,7 +120,7 @@ void RKErrorDialog::reportableErrorMessage (QWidget* parent_widget, const QStrin
 
 	int ret = KMessageBox::createKMessageBox (dialog, buttonbox, QMessageBox::Critical, user_message, QStringList(), QString(), 0, options, details);
 
-	if (ret == KDialog::No) {
+	if (ret == QDialogButtonBox::No) {
 		reportBug (parent_widget, (message_code.isEmpty () ? QString () : i18n ("Message code: %1\n", message_code)) + user_message);
 	}
 }

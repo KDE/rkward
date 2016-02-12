@@ -17,17 +17,16 @@
 #include "editlabelsdialog.h"
 
 #include <klocale.h>
-#include <kdialog.h>
-#include <QAction>
 #include <kactioncollection.h>
-#include <kvbox.h>
 
 #include <qlabel.h>
-#include <qlayout.h>
 #include <QHeaderView>
 #include <QTimer>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QAction>
+#include <QDialogButtonBox>
+#include <QPushButton>
 
 #include "../core/rkvariable.h"
 #include "../dataeditor/rktextmatrix.h"
@@ -207,18 +206,24 @@ QVariant RKVarLevelsTableModel::headerData (int section, Qt::Orientation orienta
 
 //////////////// EditLabelsDialog ///////////////////////
 
-EditLabelsDialog::EditLabelsDialog (QWidget *parent, const RObject::ValueLabels& labels, const QString& varname) : KDialog (parent) {
+EditLabelsDialog::EditLabelsDialog (QWidget *parent, const RObject::ValueLabels& labels, const QString& varname) : QDialog (parent) {
 	RK_TRACE (EDITOR);
 
-	KVBox *mainvbox = new KVBox ();
-	setMainWidget (mainvbox);
-	QLabel *label = new QLabel (i18n ("Levels can be assigned only to consecutive integers starting with 1 (the index column is read only). To remove levels at the end of the list, just set them to empty."), mainvbox);
+	setWindowTitle (i18n ("Levels / Value labels for '%1'", varname));
+
+	QVBoxLayout *layout = new QVBoxLayout (this);
+	QLabel *label = new QLabel (i18n ("Levels can be assigned only to consecutive integers starting with 1 (the index column is read only). To remove levels at the end of the list, just set them to empty."), this);
 	label->setWordWrap (true);
+	layout->addWidget (label);
 
-	table = new RKVarLevelsTable (mainvbox, labels);
+	table = new RKVarLevelsTable (this, labels);
+	layout->addWidget (table);
 
-	setButtons (KDialog::Ok | KDialog::Cancel);
-	setCaption (i18n ("Levels / Value labels for '%1'", varname));
+	QDialogButtonBox *buttons = new QDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+	connect (buttons->button (QDialogButtonBox::Ok), &QPushButton::clicked, this, &QDialog::accept);
+	buttons->button (QDialogButtonBox::Ok)->setShortcut (Qt::CTRL | Qt::Key_Return);
+	connect (buttons->button (QDialogButtonBox::Cancel), &QPushButton::clicked, this, &QDialog::reject);
+	layout->addWidget (buttons);
 }
 
 EditLabelsDialog::~EditLabelsDialog () {
@@ -229,7 +234,7 @@ void EditLabelsDialog::accept () {
 	RK_TRACE (EDITOR);
 
 	table->setCurrentIndex (QModelIndex ());	// should flush editing
-	KDialog::accept ();
+	QDialog::accept ();
 }
 
 ////////////////// EditLabelsDialogProxy /////////////////////////
