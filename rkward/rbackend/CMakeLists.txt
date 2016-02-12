@@ -44,7 +44,7 @@ SET (
 	rktransmitter.cpp
 )
 ADD_LIBRARY(rbackend STATIC ${rbackend_FRONTEND_SRCS})
-TARGET_LINK_LIBRARIES(rbackend rkgraphicsdevice.frontend Qt5::Widgets KF5::TextEditor KF5::WebKit KF5::KDELibs4Support)
+TARGET_LINK_LIBRARIES(rbackend rkgraphicsdevice.frontend Qt5::Widgets KF5::TextEditor KF5::WebKit KF5::WindowSystem)
 
 SET (
 	rbackend_BACKEND_SRCS

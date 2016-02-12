@@ -58,10 +58,7 @@ RKWindowCatcher *window_catcher;
 #include "../debug.h"
 
 #include <kmessagebox.h>
-#include <kfiledialog.h>
 #include <klocale.h>
-#include <kstandarddirs.h>
-#include <kdialog.h>
 
 #include <qdir.h>
 #include <qvalidator.h>
@@ -813,7 +810,7 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 		if (button_no.isEmpty () && button_cancel.isEmpty ()) {
 			dialog_type = KMessageBox::Information;
 			if (!request->synchronous) {	// non-modal dialogs are not supported out of the box by KMessageBox;
-				KDialog* dialog = new KDialog ();
+				QDialog* dialog = new QDialog ();
 				QDialogButtonBox *buttonBox = new QDialogButtonBox (dialog);
 				buttonBox->setStandardButtons (QDialogButtonBox::Ok);
 				KMessageBox::createKMessageBox (dialog, buttonBox, QMessageBox::Information, message, QStringList (), QString (), 0, KMessageBox::Notify | KMessageBox::NoExec);

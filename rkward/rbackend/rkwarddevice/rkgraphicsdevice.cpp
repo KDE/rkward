@@ -23,9 +23,11 @@
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QMouseEvent>
+#include <QDialog>
+#include <QDialogButtonBox>
+
 #include <klocale.h>
 #include <sys/stat.h>
-#include <kdialog.h>
 
 #include "rkgraphicsdevice_protocol_shared.h"
 #include "../rinterface.h"
@@ -312,10 +314,19 @@ void RKGraphicsDevice::confirmNewPage () {
 
 	QString msg = i18n ("<p>Press Enter to see next plot, or click 'Cancel' to abort.</p>");
 	goInteractive (msg);
-	dialog = new KDialog (view);
-	dialog->setCaption (i18n ("Ok to show next plot?"));
-	dialog->setButtons (KDialog::Ok | KDialog::Cancel);
-	dialog->setMainWidget (new QLabel (msg, dialog));
+
+	dialog = new QDialog (view);
+	dialog->setWindowTitle (i18n ("Ok to show next plot?"));
+
+	QVBoxLayout *layout = new QVBoxLayout (dialog);
+	layout->addWidget (new QLabel (msg, dialog));
+
+	QDialogButtonBox *buttons = new QDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+	connect (buttons->button (QDialogButtonBox::Ok), &QPushButton::clicked, dialog, &QDialog::accept);
+	buttons->button (QDialogButtonBox::Ok)->setShortcut (Qt::CTRL | Qt::Key_Return);
+	connect (buttons->button (QDialogButtonBox::Cancel), &QPushButton::clicked, dialog, &QDialog::reject);
+	layout->addWidget (buttons);
+
 //	dialog->setWindowModality (Qt::WindowModal);        // not good: Grays out the plot window
 	connect (dialog, &QDialog::finished, this, &RKGraphicsDevice::newPageDialogDone);
 	dialog->show ();
@@ -325,7 +336,7 @@ void RKGraphicsDevice::newPageDialogDone (int result) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
 	RK_ASSERT (dialog);
-	emit (newPageConfirmDone (result == KDialog::Accepted));
+	emit (newPageConfirmDone (result == QDialog::Accepted));
 	interaction_opcode = -1;
 	stopInteraction ();
 }
@@ -414,10 +425,10 @@ bool RKGraphicsDevice::eventFilter (QObject *watched, QEvent *event) {
 		if (event->type () == QEvent::KeyPress) {
 			QKeyEvent *ke = static_cast<QKeyEvent*> (event);
 			if ((ke->key () == Qt::Key_Return) || (ke->key () == Qt::Key_Enter)) {
-				newPageDialogDone (KDialog::Accepted);
+				newPageDialogDone (QDialog::Accepted);
 				return true;
 			} else if (ke->key () == Qt::Key_Escape) {
-				newPageDialogDone (KDialog::Rejected);
+				newPageDialogDone (QDialog::Rejected);
 				return true;
 			}
 		}

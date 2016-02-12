@@ -26,7 +26,6 @@
 
 #include <kxmlguifactory.h>
 #include <ktoolbar.h>
-#include <kmenubar.h>
 #include <klocale.h>
 
 #include "../windows/rkmdiwindow.h"

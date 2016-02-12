@@ -42,7 +42,7 @@
 #	include <QPixmap>
 #endif
 
-class KDialog;
+class QDialog;
 
 /** This is the class that actually does all the drawing for the RKGraphicsDevice */
 class RKGraphicsDevice : public QObject {
@@ -117,7 +117,7 @@ private:
 	QPainter painter;
 	QLabel *view;
 	QString base_title;
-	KDialog *dialog;
+	QDialog *dialog;
 
 	int interaction_opcode;	/**< Current interactive operation (from RKDOpcodes enum), or -1 is there is no current interactive operation */
 

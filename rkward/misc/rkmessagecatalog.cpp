@@ -19,7 +19,7 @@
 
 #include <libintl.h>
 #include <QFile>
-#include <kglobal.h>
+#include <QLocale>
 #include <klocale.h>
 
 #include "../debug.h"

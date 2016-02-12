@@ -12,7 +12,7 @@ SET(scriptbackends_STAT_SRCS
    )
 
 ADD_LIBRARY(scriptbackends STATIC ${scriptbackends_STAT_SRCS})
-TARGET_LINK_LIBRARIES(scriptbackends Qt5::Script Qt5::Widgets Qt5::Xml KF5::KDELibs4Support)
+TARGET_LINK_LIBRARIES(scriptbackends Qt5::Script Qt5::Widgets Qt5::Xml KF5::WidgetsAddons)
 
 ########### install files ###############
 

@@ -25,7 +25,6 @@
 #include <QHBoxLayout>
 #include <QLabel>
 
-#include <kvbox.h>
 #include <klocale.h>
 
 #include "rkcommonfunctions.h"
@@ -250,6 +249,7 @@ public:
 #include <QPainter>
 #include <QScrollBar>
 #include <QHeaderView>
+#include <kvbox.h>
 RKAccordionTable::RKAccordionTable (QWidget* parent) : QTreeView (parent) {
 	RK_TRACE (MISC);
 

@@ -24,9 +24,7 @@
 #include "../rkglobals.h"
 
 #include <klocale.h>
-#include <kglobal.h>
 #include <krandom.h>
-#include <kstandarddirs.h>
 #include <QCoreApplication>
 #include <QProcess>
 #include <QLocalServer>
@@ -64,6 +62,14 @@ RKFrontendTransmitter::~RKFrontendTransmitter () {
 	RK_ASSERT (!server->isListening ());
 }
 
+QString localeDir () {
+	// adapted from KCatalog::catalogLocaleDir()
+	QString relpath = QStringLiteral ("%1/LC_MESSAGES/rkward.mo").arg (QLocale ().name ().section ('_', 0, 0));
+	QString file = QStandardPaths::locate (QStandardPaths::GenericDataLocation, QStringLiteral ("locale/") + relpath);
+	if (file.isEmpty ()) return QString ();
+	return QFileInfo (file.left (file.size() - relpath.size ())).absolutePath ();
+}
+
 void RKFrontendTransmitter::run () {
 	RK_TRACE (RBACKEND);
 
@@ -89,7 +95,7 @@ void RKFrontendTransmitter::run () {
 	args.append ("--server-name=" + server->fullServerName ());
 	args.append ("--rkd-server-name=" + rkd_transmitter->serverName ());
 	args.append ("--data-dir=" + RKSettingsModuleGeneral::filesPath ());
-	args.append ("--locale-dir=" + KGlobal::dirs()->findResourceDir ("locale", QLocale ().name ().section ('_', 0, 0) + "/LC_MESSAGES/rkward.mo"));
+	args.append ("--locale-dir=" + localeDir ());
 	connect (backend, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), this, &RKFrontendTransmitter::backendExit);
 	QString backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath ());
 	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "/rbackend");	// for running directly from the build-dir
