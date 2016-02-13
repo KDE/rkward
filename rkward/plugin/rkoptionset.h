@@ -153,6 +153,7 @@ friend class RKOptionSet;
 	bool dropMimeData (const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) override;
 	Qt::ItemFlags flags (const QModelIndex& index) const override;
 	Qt::DropActions supportedDropActions () const override;
+	Qt::DropActions supportedDragActions () const override;
 private slots:
 	void doResetNow ();
 };

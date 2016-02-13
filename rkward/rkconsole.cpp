@@ -33,11 +33,12 @@
 #include <QTemporaryFile>
 #include <QMimeData>
 #include <QAction>
+#include <QFileDialog>
+#include <QApplication>
 
 #include <klocale.h>
 #include <kactioncollection.h>
 #include <kconfig.h>
-#include <kapplication.h>
 #include <kmessagebox.h>
 #include <kshellcompletion.h>
 #include <ktexteditor/editor.h>
@@ -45,9 +46,9 @@
 #include <ktexteditor/markinterface.h>
 #include <ktexteditor_version.h>
 #include <kxmlguifactory.h>
-#include <kfiledialog.h>
-#include <kio/netaccess.h>
-#include <QFileDialog>
+#include <kio/filecopyjob.h>
+#include <KJobWidgets>
+#include <KJobUiDelegate>
 
 #include "rkglobals.h"
 #include "rkward.h"
@@ -496,7 +497,7 @@ void RKConsole::doTabCompletion () {
 	}
 
 	// no completion was possible
-	KApplication::kApplication ()->beep ();
+	qApp->beep ();
 }
 
 bool RKConsole::eventFilter (QObject *o, QEvent *e) {
@@ -636,7 +637,7 @@ void RKConsole::commandsListUp (bool context_sensitive) {
 
 	bool found = commands_history.up (context_sensitive, currentEditingLine ());
 	if (found) setCurrentEditingLine (commands_history.current ());
-	else KApplication::kApplication ()->beep ();
+	else qApp->beep ();
 }
 
 void RKConsole::commandsListDown (bool context_sensitive) {
@@ -644,7 +645,7 @@ void RKConsole::commandsListDown (bool context_sensitive) {
 
 	bool found = commands_history.down (context_sensitive, currentEditingLine ());
 	if (found) setCurrentEditingLine (commands_history.current ());
-	else KApplication::kApplication ()->beep ();
+	else qApp->beep ();
 }
 
 void RKConsole::rCommandDone (RCommand *command) {
@@ -819,15 +820,28 @@ void RKConsole::userLoadHistory (const QUrl &_url) {
 		RKSettingsModuleGeneral::updateLastUsedUrl ("rscripts", url.adjusted (QUrl::RemoveFilename));
 	}
 
-	QString tempfile;
-	KIO::NetAccess::download (url, tempfile, this);
+	QTemporaryFile *tmpfile = 0;
+	QString filename;
+	if (!url.isLocalFile ()) {
+		tmpfile = new QTemporaryFile (this);
+		KIO::Job* getjob = KIO::file_copy (url, QUrl::fromLocalFile (tmpfile->fileName()));
+		KJobWidgets::setWindow (getjob, RKWardMainWindow::getMain ());
+		if (!getjob->exec ()) {
+			getjob->ui ()->showErrorMessage();
+			delete (tmpfile);
+			return;
+		}
+		filename = tmpfile->fileName ();
+	} else {
+		filename = url.toLocalFile ();
+	}
 
-	QFile file (tempfile);
+	QFile file (filename);
 	if (!file.open (QIODevice::Text | QIODevice::ReadOnly)) return;
 	setCommandHistory (QString (file.readAll ()).split ('\n', QString::SkipEmptyParts), false);
 	file.close ();
 
-	KIO::NetAccess::removeTempFile (tempfile);
+	delete (tmpfile);
 }
 
 void RKConsole::userSaveHistory (const QUrl &_url) {
@@ -835,7 +849,7 @@ void RKConsole::userSaveHistory (const QUrl &_url) {
 
 	QUrl url = _url;
 	if (url.isEmpty ()) {
-		url = KFileDialog::getSaveUrl (QUrl (), i18n ("*.Rhistory|R history files (*.Rhistory)\n*|All files (*)"), this, i18n ("Select filename to save command history"), KFileDialog::ConfirmOverwrite);
+		url = QFileDialog::getSaveFileUrl (this, i18n ("Select filename to save command history"), QUrl (), i18n ("R history files [*.Rhistory] (*.Rhistory);;All files [*] (*)"));
 		if (url.isEmpty ()) return;
 	}
 
@@ -844,7 +858,12 @@ void RKConsole::userSaveHistory (const QUrl &_url) {
 	tempfile.write (QString (commandHistory ().join ("\n") + '\n').toLocal8Bit ().data ());
 	tempfile.close ();
 
-	KIO::NetAccess::upload (tempfile.fileName (), url, this);
+	KIO::Job* getjob = KIO::file_copy (QUrl::fromLocalFile (tempfile.fileName()), url);
+	KJobWidgets::setWindow (getjob, RKWardMainWindow::getMain ());
+	if (!getjob->exec ()) {
+		getjob->ui ()->showErrorMessage();
+		return;
+	}
 }
 
 QString RKConsole::cleanSelection (const QString &origin) {

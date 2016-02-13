@@ -55,6 +55,7 @@ RKLoadAgent::RKLoadAgent (const QUrl &url, bool merge) {
 			getjob->ui ()->showErrorMessage();
 			return;
 		}
+		filename = tmpfile->fileName ();
 	} else {
 		filename = url.toLocalFile ();
 	}

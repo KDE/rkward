@@ -449,7 +449,7 @@ void RInterface::flushOutput (bool forced) {
 
 					previous_output_type = output->type;
 				}
-				recorded_output.append (Qt::escape (output->output));
+				recorded_output.append (output->output.toHtmlEscaped ());
 			}
 		}
 

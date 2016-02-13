@@ -21,9 +21,9 @@
 #include <QFocusEvent>
 #include <QVBoxLayout>
 #include <QMenu>
+#include <QInputDialog>
 
 #include <klocale.h>
-#include <kinputdialog.h>
 #include <kmessagebox.h>
 
 #include "../rkward.h"
@@ -184,7 +184,7 @@ void RObjectBrowserInternal::popupCopy () {
 	bool ok;
 	RObject *object = list_view->menuObject ();
 	QString suggested_name = RObjectList::getGlobalEnv ()->validizeName (object->getShortName ());
-	QString name = KInputDialog::getText (i18n ("Copy object"), i18n ("Enter the name to copy to"), suggested_name, &ok, this);
+	QString name = QInputDialog::getText (this, i18n ("Copy object"), i18n ("Enter the name to copy to"), QLineEdit::Normal, suggested_name, &ok);
 
 	if (ok) {
 		QString valid = RObjectList::getGlobalEnv ()->validizeName (name);
@@ -230,7 +230,7 @@ void RObjectBrowserInternal::popupUnload () {
 void RObjectBrowserInternal::popupRename () {
 	RK_TRACE (APP);
 	bool ok;
-	QString name = KInputDialog::getText (i18n ("Rename object"), i18n ("Enter the new name"), list_view->menuObject ()->getShortName (), &ok, this);
+	QString name = QInputDialog::getText (this, i18n ("Rename object"), i18n ("Enter the new name"), QLineEdit::Normal, list_view->menuObject ()->getShortName (), &ok);
 	
 	if (ok) {
 		QString valid = static_cast<RContainerObject*> (list_view->menuObject ()->parentObject ())->validizeName (name);

@@ -86,7 +86,7 @@ public:
 		out << "<input name=\"product\" type=\"hidden\" value=\"rkward\"/>\n";
 		out << "<input name=\"component\" type=\"hidden\" value=\"general\"/>\n";
 		out << "<input name=\"version\" type=\"hidden\" value=\"" RKWARD_VERSION "\"/>\n";
-		out << "<input name=\"comment\" type=\"hidden\" value=\"" << Qt::escape (report_template) << "\"/>\n";
+		out << "<input name=\"comment\" type=\"hidden\" value=\"" << report_template.toHtmlEscaped () << "\"/>\n";
 		out << "<input type=\"submit\" value=\"" << i18n ("Proceed") << "\"/>\n";
 		out << "</form></body></html>";
 		proxy.close ();

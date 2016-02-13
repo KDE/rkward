@@ -78,7 +78,6 @@ RKWorkplace::RKWorkplace (QWidget *parent) : QWidget (parent) {
 
 	tool_window_bars[RKToolWindowList::Top] = new RKToolWindowBar (KMultiTabBar::Top, this);
 	vert_splitter = new QSplitter (Qt::Vertical, this);
-	vert_splitter->setOpaqueResize (KGlobalSettings::opaqueResize ());
 	tool_window_bars[RKToolWindowList::Top]->setSplitter (vert_splitter);
 
 	QWidget *harea = new QWidget (vert_splitter);
@@ -88,7 +87,6 @@ RKWorkplace::RKWorkplace (QWidget *parent) : QWidget (parent) {
 
 	tool_window_bars[RKToolWindowList::Left] = new RKToolWindowBar (KMultiTabBar::Left, harea);
 	horiz_splitter = new QSplitter (Qt::Horizontal, harea);
-	horiz_splitter->setOpaqueResize (KGlobalSettings::opaqueResize ());
 	tool_window_bars[RKToolWindowList::Left]->setSplitter (horiz_splitter);
 
 	wview = new RKWorkplaceView (horiz_splitter);

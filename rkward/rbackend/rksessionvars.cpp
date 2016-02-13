@@ -121,7 +121,8 @@ int RKSessionVars::compareRVersion (const QString& version) {
 QStringList RKSessionVars::frontendSessionInfo () {
 	QStringList lines;
 	lines.append ("RKWard version: " RKWARD_VERSION);
-	lines.append ("KDE version (runtime): " + QString (KDE::versionString ()));
+	// KF5 TODO: find replacement for line below
+	//lines.append ("KDE version (runtime): " + QString (KDE::versionString ()));
 	lines.append ("KDE version (compile time): " KDE_VERSION_STRING);
 	lines.append (QString ("Qt version (runtime): ") + qVersion ());
 #if defined Q_OS_WIN

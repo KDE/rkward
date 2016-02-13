@@ -17,7 +17,6 @@
 #include "rksettingsmoduler.h"
 
 #include <klocale.h>
-#include <kinputdialog.h>
 #include <KConfigGroup>
 
 #include <qlabel.h>
@@ -30,6 +29,7 @@
 #include <QTextEdit>
 #include <QFileDialog>
 #include <QSpinBox>
+#include <QInputDialog>
 
 #include "rksettingsmodulegeneral.h"
 #include "../core/robject.h"
@@ -456,8 +456,9 @@ void RKSettingsModuleRPackages::addLibLoc (QStringList *string_list) {
 
 void RKSettingsModuleRPackages::addRepository (QStringList *string_list) {
 	RK_TRACE (SETTINGS);
-	QString new_string = KInputDialog::getText (i18n ("Add repository"), i18n ("Add URL of new repository"), QString (), 0, this);
-	(*string_list).append (new_string);
+	bool ok;
+	QString new_string = QInputDialog::getText (this, i18n ("Add repository"), i18n ("Add URL of new repository"), QLineEdit::Normal, QString (), &ok);
+	if (ok) (*string_list).append (new_string);
 }
 
 QString RKSettingsModuleRPackages::caption () {

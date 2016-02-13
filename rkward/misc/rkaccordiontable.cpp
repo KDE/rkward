@@ -461,8 +461,8 @@ void RKAccordionTable::updateWidget () {
 				if (i == 0) {
 					header ()->setStretchLastSection (false);  // we stretch the second to last, instead
 					header ()->resizeSection (button_index.column (), rowHeight (row));
-					header ()->setResizeMode (button_index.column (), QHeaderView::Fixed);
-					header ()->setResizeMode (button_index.column () - 1, QHeaderView::Stretch);
+					header ()->setSectionResizeMode (button_index.column (), QHeaderView::Fixed);
+					header ()->setSectionResizeMode (button_index.column () - 1, QHeaderView::Stretch);
 				}
 			}
 		}

@@ -16,8 +16,8 @@ INCLUDE(KDECompilerSettings)
 INCLUDE(ECMInstallIcons)
 INCLUDE(FeatureSummary)
 
-FIND_PACKAGE(Qt5 5.2 CONFIG REQUIRED COMPONENTS Widgets Core Xml Network WebKit Script)
-FIND_PACKAGE(KF5 5.0 REQUIRED COMPONENTS CoreAddons DocTools I18n XmlGui TextEditor WidgetsAddons KDELibs4Support WebKit Parts Config)
+FIND_PACKAGE(Qt5 5.2 CONFIG REQUIRED COMPONENTS Widgets Core Xml Network WebKit Script PrintSupport)
+FIND_PACKAGE(KF5 5.0 REQUIRED COMPONENTS CoreAddons DocTools I18n XmlGui TextEditor WidgetsAddons WebKit Parts Config Notifications WindowSystem)
 
 IF(FORCE_PRETTY_MAKEFILE)
 	SET(CMAKE_VERBOSE_MAKEFILE OFF)

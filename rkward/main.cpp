@@ -53,8 +53,6 @@
 
 #include <kaboutdata.h>
 #include <klocale.h>
-#include <kstandarddirs.h>
-#include <kglobal.h>
 #include <KUrlAuthorized>
 
 #include <qstring.h>
@@ -88,12 +86,13 @@ int RK_Debug_Flags = DEBUG_ALL;
 int RK_Debug_CommandStep = 0;
 QMutex RK_Debug_Mutex;
 
-void RKDebugMessageOutput (QtMsgType type, const char *msg) {
+void RKDebugMessageOutput (QtMsgType type, const QMessageLogContext &, const QString &msg) {
 	RK_Debug_Mutex.lock ();
 	if (type == QtFatalMsg) {
-		fprintf (stderr, "%s\n", msg);
+		fprintf (stderr, "%s\n", qPrintable (msg));
 	}
-	RKSettingsModuleDebug::debug_file->write (msg);
+	// KF5 TODO: Make use of message log context
+	RKSettingsModuleDebug::debug_file->write (qPrintable (msg));
 	RKSettingsModuleDebug::debug_file->write ("\n");
 	RKSettingsModuleDebug::debug_file->flush ();
 	RK_Debug_Mutex.unlock ();
@@ -110,7 +109,7 @@ void RKDebug (int flags, int level, const char *fmt, ...) {
 	va_start (ap, fmt);
 	vsnprintf (buffer, bufsize-1, fmt, ap);
 	va_end (ap);
-	RKDebugMessageOutput (QtDebugMsg, buffer);
+	RKDebugMessageOutput (QtDebugMsg, QMessageLogContext (), buffer);
 	if (QApplication::instance ()->thread () == QThread::currentThread ()) {
 		// not safe to call from any other than the GUI thread
 		RKDebugMessageWindow::newMessage (flags, level, QString (buffer));
@@ -198,7 +197,7 @@ int main (int argc, char *argv[]) {
 	RKSettingsModuleDebug::debug_file->setAutoRemove (false);
 	if (RKSettingsModuleDebug::debug_file->open ()) {
 		RK_DEBUG (APP, DL_INFO, "Full debug output is at %s", qPrintable (RKSettingsModuleDebug::debug_file->fileName ()));
-		qInstallMsgHandler (RKDebugMessageOutput);
+		qInstallMessageHandler (RKDebugMessageOutput);
 	}
 
 	if (app.isSessionRestored ()) {
@@ -207,15 +206,16 @@ int main (int argc, char *argv[]) {
 		new RKWardMainWindow ();
 	}
 
+/* KF5 TODO: Still needed?
 	// Usually, KDE always adds the current directory to the list of prefixes.
 	// However, since RKWard 0.5.6, the main binary is in KDE's libexec dir, which defies this mechanism. Therefore, RKWARD_ENSURE_PREFIX is set from the wrapper script.
 	QByteArray add_path = qgetenv ("RKWARD_ENSURE_PREFIX");
-	if (!add_path.isEmpty ()) KGlobal::dirs ()->addPrefix (QString::fromLocal8Bit (add_path));
+	if (!add_path.isEmpty ()) KGlobal::dirs ()->addPrefix (QString::fromLocal8Bit (add_path)); */
 
 	// do it!
 	int status = app.exec ();
 
-	qInstallMsgHandler (0);
+	qInstallMessageHandler (0);
 	RKSettingsModuleDebug::debug_file->close ();
 
 	return status;

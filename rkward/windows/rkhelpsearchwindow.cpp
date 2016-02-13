@@ -276,6 +276,7 @@ void RKHelpSearchResultsModel::setResults (const QStringList &results) {
 	RK_TRACE (APP);
 
 	RK_ASSERT ((results.size () % 4) == 0);
+	beginResetModel ();
 
 	result_count = results.size () / 4;
 	topics = results.mid (0, result_count);
@@ -283,7 +284,7 @@ void RKHelpSearchResultsModel::setResults (const QStringList &results) {
 	packages = results.mid (result_count*2, result_count);
 	types = results.mid (result_count*3, result_count);
 
-	reset ();
+	endResetModel ();
 }
 
 int RKHelpSearchResultsModel::rowCount (const QModelIndex& parent) const {

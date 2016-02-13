@@ -25,9 +25,9 @@
 #include <QEvent>
 #include <QGridLayout>
 #include <QVBoxLayout>
+#include <QIcon>
 
 #include <klocale.h>
-#include <kicon.h>
 
 #include "rkvarselector.h"
 #include "../core/robject.h"
@@ -167,7 +167,7 @@ void RKVarSlot::availablePropertyChanged (RKComponentPropertyBase *) {
 			QString probs = static_cast<RKComponentPropertyRObjects*> (available)->objectProblems (i);
 			if (!probs.isEmpty ()) {
 				new_item->setToolTip (0, i18n ("<p>Using this object, here, may lead to failures or unexpected results, for the following reason(s):</p>") + probs);
-				new_item->setIcon (0, KIcon ("task-attention"));
+				new_item->setIcon (0, QIcon::fromTheme ("task-attention"));
 			}
 		}
 	}

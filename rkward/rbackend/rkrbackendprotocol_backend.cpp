@@ -40,12 +40,12 @@
 	QMutex RK_Debug_Mutex;
 	QTemporaryFile* RK_Debug_File;
 
-	void RKDebugMessageOutput (QtMsgType type, const char *msg) {
+	void RKDebugMessageOutput (QtMsgType type, const QMessageLogContext &, const QString &msg) {
 		RK_Debug_Mutex.lock ();
 		if (type == QtFatalMsg) {
-			fprintf (stderr, "%s\n", msg);
+			fprintf (stderr, "%s\n", qPrintable (msg));
 		}
-		RK_Debug_File->write (msg);
+		RK_Debug_File->write (qPrintable (msg));
 		RK_Debug_File->write ("\n");
 		RK_Debug_File->flush ();
 		RK_Debug_Mutex.unlock ();
@@ -63,7 +63,7 @@
 		va_start (ap, fmt);
 		vsnprintf (buffer, bufsize-1, fmt, ap);
 		va_end (ap);
-		RKDebugMessageOutput (QtDebugMsg, buffer);
+		RKDebugMessageOutput (QtDebugMsg, QMessageLogContext (), buffer);
 	}
 
 	int main(int argc, char *argv[]) {
@@ -74,7 +74,7 @@
 
 		RK_Debug_File = new QTemporaryFile (QDir::tempPath () + "/rkward.rbackend");
 		RK_Debug_File->setAutoRemove (false);
-		if (RK_Debug_File->open ()) qInstallMsgHandler (RKDebugMessageOutput);
+		if (RK_Debug_File->open ()) qInstallMessageHandler (RKDebugMessageOutput);
 
 		QString servername, rkd_server_name;
 		QString data_dir, locale_dir;

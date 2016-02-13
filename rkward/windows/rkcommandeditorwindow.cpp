@@ -1003,6 +1003,7 @@ void RKCodeCompletionModel::updateCompletionList (const QString& symbol) {
 	RK_TRACE (COMMANDEDITOR);
 
 	if (current_symbol == symbol) return;	// already up to date
+	beginResetModel ();
 
 	RObject::RObjectSearchMap map;
 	RObjectList::getObjectList ()->findObjectsMatching (symbol, &map);
@@ -1023,7 +1024,7 @@ void RKCodeCompletionModel::updateCompletionList (const QString& symbol) {
 	setRowCount (count);
 	current_symbol = symbol;
 
-	reset ();
+	endResetModel ();
 }
 
 void RKCodeCompletionModel::completionInvoked (KTextEditor::View*, const KTextEditor::Range&, InvocationType) {
@@ -1182,7 +1183,7 @@ QString RKCommandHighlighter::commandToHTML (const QString r_command, Highlighti
 					ret.append (opening.arg ("output_normal"));
 					previous_chunk = Output;
 				}
-				ret.append (Qt::escape (line) + '\n');	// don't copy output "highlighting". It is set using CSS, instead
+				ret.append (line.toHtmlEscaped () + '\n');	// don't copy output "highlighting". It is set using CSS, instead
 				continue;
 			}
 		}

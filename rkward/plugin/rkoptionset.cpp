@@ -780,7 +780,6 @@ RKOptionSetDisplayModel::RKOptionSetDisplayModel (RKOptionSet* parent) : QAbstra
 	connect (&reset_timer, &QTimer::timeout, this, &RKOptionSetDisplayModel::doResetNow);
 	reset_timer.setInterval (0);
 	reset_timer.setSingleShot (true);
-	setSupportedDragActions (Qt::MoveAction);
 }
 
 RKOptionSetDisplayModel::~RKOptionSetDisplayModel () {
@@ -866,7 +865,7 @@ QStringList RKOptionSetDisplayModel::mimeTypes () const {
 QMimeData* RKOptionSetDisplayModel::mimeData (const QModelIndexList& indexes) const {
 	RK_ASSERT (indexes.length () >= 1);
 	QMimeData *ret = new QMimeData ();
-	ret->setData (optionsetdisplaymodel_mt, QByteArray (QString::number (indexes.first ().row ()).toAscii ()));
+	ret->setData (optionsetdisplaymodel_mt, QByteArray (QString::number (indexes.first ().row ()).toLatin1 ()));
 	return (ret);
 }
 
@@ -875,7 +874,7 @@ bool RKOptionSetDisplayModel::dropMimeData (const QMimeData* data, Qt::DropActio
 	if (action == Qt::IgnoreAction) return true;
 	if (action == Qt::MoveAction) {
 		if (parent.isValid ()) return false;
-		int srow = QString::fromAscii (data->data (optionsetdisplaymodel_mt)).toInt ();
+		int srow = QString::fromLatin1 (data->data (optionsetdisplaymodel_mt)).toInt ();
 		set->moveRow (srow, row);
 	}
 	return false;
@@ -889,3 +888,6 @@ Qt::DropActions RKOptionSetDisplayModel::supportedDropActions () const {
     return Qt::MoveAction;
 }
 
+Qt::DropActions RKOptionSetDisplayModel::supportedDragActions() const {
+	return Qt::MoveAction;
+}

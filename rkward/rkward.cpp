@@ -21,30 +21,27 @@
 #include <QCloseEvent>
 #include <QPointer>
 #include <QApplication>
+#include <QMenuBar>
+#include <QStatusBar>
+#include <QInputDialog>
 
 // include files for KDE
 #include <kmessagebox.h>
 #include <kencodingfiledialog.h>
-#include <kmenubar.h>
-#include <kstatusbar.h>
 #include <klocale.h>
 #include <kconfig.h>
-#include <kglobal.h>
-#include <kstandarddirs.h>
 #include <kstandardaction.h>
-#include <kinputdialog.h>
 #include <kmultitabbar.h>
 #include <ksqueezedtextlabel.h>
 #include <kparts/partmanager.h>
 #include <kxmlguifactory.h>
 #include <kactioncollection.h>
 #include <krecentfilesaction.h>
-#include <khbox.h>
 #include <ktoolbar.h>
 #include <kactionmenu.h>
 #include <QIcon>
 #include <KSharedConfig>
-#include <kdialog.h>
+#include <KConfigGroup>
 
 // application specific includes
 #include "rkward.h"
@@ -62,6 +59,7 @@
 #include "misc/rkcommonfunctions.h"
 #include "misc/rkxmlguisyncer.h"
 #include "misc/rkdbusapi.h"
+#include "misc/rkdialogbuttonbox.h"
 #include "rkglobals.h"
 #include "dialogs/startupdialog.h"
 #include "dialogs/rkloadlibsdialog.h"
@@ -262,7 +260,7 @@ void RKWardMainWindow::doPostInit () {
 		}
 
 		if (RKSettingsModuleGeneral::workplaceSaveMode () == RKSettingsModuleGeneral::SaveWorkplaceWithSession) {
-			RKWorkplace::mainWorkplace ()->restoreWorkplace (RKSettingsModuleGeneral::getSavedWorkplace (KGlobal::config ().data ()).split ('\n'));
+			RKWorkplace::mainWorkplace ()->restoreWorkplace (RKSettingsModuleGeneral::getSavedWorkplace (KSharedConfig::openConfig ().data ()).split ('\n'));
 		}
 		if (RKSettingsModuleGeneral::showHelpOnStartup ()) toplevel_actions->showRKWardHelp ();
 	}
@@ -389,14 +387,18 @@ void RKWardMainWindow::slotCancelAllCommands () {
 void RKWardMainWindow::configureCarbonCopy () {
 	RK_TRACE (APP);
 
-	KDialog *dialog = new KDialog ();
-	dialog->setCaption (i18n ("Carbon Copy Settings"));
+	QDialog *dialog = new QDialog ();
+	dialog->setWindowTitle (i18n ("Carbon Copy Settings"));
+	QVBoxLayout *layout = new QVBoxLayout (dialog);
 	RKCarbonCopySettings *settings = new RKCarbonCopySettings (dialog);
-	dialog->setMainWidget (settings);
-	dialog->setButtons (KDialog::Ok | KDialog::Apply | KDialog::Cancel);
+	layout->addWidget (settings);
+
+	RKDialogButtonBox *box = new RKDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Apply | QDialogButtonBox::Cancel, dialog);
 	dialog->setAttribute (Qt::WA_DeleteOnClose);
-	connect (dialog, &KDialog::okClicked, settings, &RKCarbonCopySettings::applyChanges);
-	connect (dialog, &KDialog::applyClicked, settings, &RKCarbonCopySettings::applyChanges);
+	connect (dialog, &QDialog::accepted, settings, &RKCarbonCopySettings::applyChanges);
+	connect (box->button (QDialogButtonBox::Apply), &QPushButton::clicked, settings, &RKCarbonCopySettings::applyChanges);
+	layout->addWidget (box);
+
 	dialog->show ();
 }
 
@@ -671,15 +673,18 @@ void RKWardMainWindow::initStatusBar () {
 	statusBar ()->addWidget (statusbar_cwd, 10);
 	updateCWD ();
 
-	KHBox *box = new KHBox (statusBar ());
-	box->setSpacing (0);
+	QWidget *box = new QWidget (statusBar ());
+	QHBoxLayout *boxl = new QHBoxLayout (box);
+	boxl->setSpacing (0);
 	statusbar_r_status = new QLabel ("&nbsp;<b>R</b>&nbsp;", box);
 	statusbar_r_status->setFixedHeight (statusBar ()->fontMetrics ().height () + 2);
+	boxl->addWidget (statusbar_r_status);
 
 	QToolButton* dummy = new QToolButton (box);
 	dummy->setDefaultAction (interrupt_all_commands);
 	dummy->setFixedHeight (statusbar_r_status->height ());
 	dummy->setAutoRaise (true);
+	boxl->addWidget (dummy);
 
 	statusBar ()->addPermanentWidget (box, 0);
 	setRStatus (Starting);
@@ -744,7 +749,7 @@ bool RKWardMainWindow::doQueryQuit () {
 	slotSetStatusBarText (i18n ("Exiting..."));
 	saveOptions ();
 	if (RKSettingsModuleGeneral::workplaceSaveMode () == RKSettingsModuleGeneral::SaveWorkplaceWithSession) {
-		RKSettingsModuleGeneral::setSavedWorkplace (RKWorkplace::mainWorkplace ()->makeWorkplaceDescription ().join ("\n"), KGlobal::config ().data ());
+		RKSettingsModuleGeneral::setSavedWorkplace (RKWorkplace::mainWorkplace ()->makeWorkplaceDescription ().join ("\n"), KSharedConfig::openConfig ().data ());
 	}
 
 //	if (!RObjectList::getGlobalEnv ()->isEmpty ()) {
@@ -779,7 +784,7 @@ void RKWardMainWindow::slotNewDataFrame () {
 	RK_TRACE (APP);
 	bool ok;
 
-	QString name = KInputDialog::getText (i18n ("New dataset"), i18n ("Enter name for the new dataset"), "my.data", &ok, this);
+	QString name = QInputDialog::getText (this, i18n ("New dataset"), i18n ("Enter name for the new dataset"), QLineEdit::Normal, "my.data", &ok);
 
 	if (ok) RKWorkplace::mainWorkplace ()->editNewDataFrame (name);
 }

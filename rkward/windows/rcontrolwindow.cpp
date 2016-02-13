@@ -65,7 +65,7 @@ RControlWindow::RControlWindow (QWidget *parent, bool tool_window, const char *n
 	commands_view = new QTreeView (this);
 
 	commands_view->setSortingEnabled (false);
-	commands_view->header ()->setMovable (false);
+	commands_view->header ()->setSectionsMovable (false);
 	commands_view->header ()->setStretchLastSection (false);
 
 	commands_view->setSelectionMode (QAbstractItemView::ExtendedSelection);
@@ -89,7 +89,7 @@ void RControlWindow::showEvent (QShowEvent *e) {
 	if (!commands_view->model ()) {
 		RCommandStackModel::getModel ()->addListener ();
 		commands_view->setModel (RCommandStackModel::getModel ());
-		commands_view->header ()->setResizeMode (0, QHeaderView::Stretch);	// can't do this in the ctor, as column 0 does not yet exist
+		commands_view->header ()->setSectionResizeMode (0, QHeaderView::Stretch);	// can't do this in the ctor, as column 0 does not yet exist
 		commands_view->expandAll ();
 	}
 

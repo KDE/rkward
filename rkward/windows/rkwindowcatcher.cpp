@@ -148,7 +148,8 @@ void RKWindowCatcher::killDevice (int device_number) {
 	if (window) {
 		window->setKilledInR ();
 		window->close (true);
-		QApplication::syncX ();
+		// KF5 TODO: Still needed?
+		//QApplication::syncX ();
 	}
 }
 

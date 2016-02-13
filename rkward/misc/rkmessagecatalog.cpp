@@ -115,7 +115,7 @@ RKMessageCatalog* RKMessageCatalog::nullCatalog () {
 void RKMessageCatalog::switchLanguage (const QString &new_language_code) {
 	RK_TRACE (MISC);
 
-	qputenv ("LANGUAGE", new_language_code.toAscii ().data ());
+	qputenv ("LANGUAGE", new_language_code.toLatin1 ().data ());
 	// KF5 TODO: correct?
 	QLocale::setDefault (QLocale (new_language_code));
 	// magic to make gettext discard cache

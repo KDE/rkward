@@ -249,7 +249,7 @@ void RKPreviewBox::rCommandDone (RCommand *command) {
 	if (new_preview_pending) tryPreview ();
 
 	QString warnings = command->warnings () + command->error ();
-	if (!warnings.isEmpty ()) warnings = QString ("<b>%1</b>\n<pre>%2</pre>").arg (i18n ("Warnings or Errors:")).arg (Qt::escape (warnings));
+	if (!warnings.isEmpty ()) warnings = QString ("<b>%1</b>\n<pre>%2</pre>").arg (i18n ("Warnings or Errors:")).arg (warnings.toHtmlEscaped ());
 	setStatusMessage (warnings);
 
 	updateStatusLabel ();

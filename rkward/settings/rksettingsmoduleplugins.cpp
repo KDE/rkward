@@ -384,8 +384,9 @@ RKSettingsModulePluginsModel::~RKSettingsModulePluginsModel() {
 
 void RKSettingsModulePluginsModel::init (const RKSettingsModulePlugins::PluginMapList& known_plugin_maps) {
 	RK_TRACE (SETTINGS);
+	beginResetModel ();
 	plugin_maps = known_plugin_maps;
-	emit (reset ());
+	endResetModel ();
 }
 
 int RKSettingsModulePluginsModel::rowCount (const QModelIndex& parent) const {

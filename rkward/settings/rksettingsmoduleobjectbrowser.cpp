@@ -20,12 +20,12 @@
 #include <klocale.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
-#include <kinputdialog.h>
 
 #include <qlayout.h>
 #include <qcheckbox.h>
 #include <qlabel.h>
 #include <QVBoxLayout>
+#include <QInputDialog>
 
 #include "../rkglobals.h"
 #include "../misc/multistringselector.h"
@@ -78,8 +78,9 @@ bool RKSettingsModuleObjectBrowser::isPackageBlacklisted (const QString &package
 
 void RKSettingsModuleObjectBrowser::addBlackList (QStringList *string_list) {
 	RK_TRACE (SETTINGS);
-	QString new_string = KInputDialog::getText (i18n ("Add exclusion"), i18n ("Add the name of the package that no structure should be fetched for"), QString (), 0, this);
-	(*string_list).append (new_string);
+	bool ok;
+	QString new_string = QInputDialog::getText (this, i18n ("Add exclusion"), i18n ("Add the name of the package that no structure should be fetched for"), QLineEdit::Normal, QString (), &ok);
+	if (ok) (*string_list).append (new_string);
 }
 
 void RKSettingsModuleObjectBrowser::applyChanges () {

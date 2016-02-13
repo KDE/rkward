@@ -53,12 +53,12 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent), RObjectListener (ROb
 
 	metaview = new TwinTableMember (splitter);
 	splitter->setStretchFactor (splitter->indexOf (metaview), 0);
-	metaview->verticalHeader ()->setResizeMode (QHeaderView::Fixed);
+	metaview->verticalHeader ()->setSectionResizeMode (QHeaderView::Fixed);
 	metaview->setHorizontalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
 	
 	dataview = new TwinTableMember (splitter);
 	splitter->setStretchFactor (splitter->indexOf (dataview), 1);
-	dataview->verticalHeader ()->setResizeMode (QHeaderView::Fixed);
+	dataview->verticalHeader ()->setSectionResizeMode (QHeaderView::Fixed);
 	dataview->horizontalHeader ()->hide ();
 	dataview->setAlternatingRowColors (true);
 

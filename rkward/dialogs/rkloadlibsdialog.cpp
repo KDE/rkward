@@ -991,9 +991,10 @@ void RKRPackageInstallationStatus::statusCommandFinished (RCommand *command) {
 void RKRPackageInstallationStatus::clearStatus () {
 	RK_TRACE (DIALOGS);
 
+	beginResetModel ();
 	available_status.fill (NoAction, available_packages.count ());
 	installed_status.fill (NoAction, installed_packages.count ());
-	reset ();
+	endResetModel ();
 }
 
 QVariant RKRPackageInstallationStatus::headerData (int section, Qt::Orientation orientation, int role) const {
