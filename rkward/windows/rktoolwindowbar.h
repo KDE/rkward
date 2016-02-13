@@ -72,7 +72,7 @@ friend class RKWorkplace;
 	RKMDIWindow* idToWidget (int id) const;
 
 	QSplitter* splitter;
-	KHBox* container;
+	QWidget* container;
 
 	int last_known_size;
 	int id_of_popup;

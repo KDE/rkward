@@ -18,7 +18,6 @@
 #include "rkcallstackviewer.h"
 
 #include <klocale.h>
-#include <kvbox.h>
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -41,7 +40,7 @@ RKCallstackViewer::RKCallstackViewer (QWidget *parent, bool tool_window, const c
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
-	layout_widget = new KVBox (this);
+	layout_widget = new QWidget (this);
 	layout->addWidget (layout_widget);
 	layout_widget->setFocusPolicy (Qt::StrongFocus);
 
@@ -69,6 +68,9 @@ void RKCallstackViewer::createRealWidget () {
 		RK_DEBUG (APP, DL_INFO, "creating callstack viewer");
 
 		real_widget = new RKCallstackViewerWidget (layout_widget);
+		QVBoxLayout *l = new QVBoxLayout (layout_widget);
+		l->setContentsMargins (0, 0, 0, 0);
+		layout ()->addWidget (real_widget);
 		setFocusProxy (real_widget);
 	}
 }

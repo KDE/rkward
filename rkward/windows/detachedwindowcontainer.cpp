@@ -19,7 +19,6 @@
 
 #include <klocale.h>
 #include <kactioncollection.h>
-#include <kstatusbar.h>
 #include <ktoolbar.h>
 #include <kxmlguifactory.h>
 
@@ -27,6 +26,7 @@
 #include <qwidget.h>
 #include <QCloseEvent>
 #include <QMenu>
+#include <QStatusBar>
 
 #include "rktoplevelwindowgui.h"
 #include "../rkward.h"

@@ -32,7 +32,7 @@ RKTabPage::RKTabPage (const QDomElement &element, RKComponent *parent_component,
 	label = xml->i18nStringAttribute (element, "label", QString (), DL_WARNING);
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
-	page = this;
+	layout->setContentsMargins (0, 0, 0, 0);
 
 	tabbook = parent_widget;
 	tabbook->addTab (this, label);

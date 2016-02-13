@@ -22,12 +22,9 @@
 #include <ktexteditor/modificationinterface.h>
 #include <ktexteditor/markinterface.h>
 
-#include <qlayout.h>
 #include <qapplication.h>
-#include <qtabwidget.h>
 #include <qfile.h>
 #include <qtimer.h>
-#include <qobject.h>
 #include <QHBoxLayout>
 #include <QCloseEvent>
 #include <QFrame>
@@ -35,17 +32,16 @@
 #include <QKeyEvent>
 #include <QEvent>
 #include <QClipboard>
+#include <QMenu>
+#include <QAction>
+#include <QTemporaryFile>
+#include <QDir>
 
 #include <klocale.h>
-#include <QMenu>
 #include <kmessagebox.h>
-#include <kfiledialog.h>
-#include <QAction>
 #include <kstandardaction.h>
-#include <klibloader.h>
 #include <kactioncollection.h>
 #include <kactionmenu.h>
-#include <QTemporaryFile>
 #include <kio/deletejob.h>
 #include <kio/job.h>
 #include <kconfiggroup.h>

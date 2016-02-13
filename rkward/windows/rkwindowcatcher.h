@@ -103,7 +103,6 @@ class QAction;
 class KSelectAction;
 class QXEmbedCopy;
 class QScrollArea;
-class KVBox;
 class RKProgressControl;
 class QX11EmbedContainer;
 class QWinHost;
@@ -178,9 +177,8 @@ private:
 	bool killed_in_r;
 	bool close_attempted;
 	WId embedded;
-	KVBox *xembed_container;
+	QWidget *xembed_container;
 	QScrollArea *scroll_widget;
-	KVBox *box_widget;
 	RKProgressControl *error_dialog;
 
 	static QHash<int, RKCaughtX11Window*> device_windows;

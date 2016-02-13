@@ -27,7 +27,6 @@ class RKObjectListViewSettings;
 class QPushButton;
 class RObject;
 class RObjectBrowserInternal;
-class KVBox;
 
 /**
 This widget provides a browsable list of all objects in the R workspace
@@ -46,7 +45,7 @@ public:
 	void showEvent (QShowEvent *e) override;
 private:
 	RObjectBrowserInternal *internal;
-	KVBox *layout_widget;
+	QWidget *layout_widget;
 
 	bool locked;
 	friend class RKWardMainWindow;

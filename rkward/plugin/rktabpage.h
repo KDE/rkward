@@ -37,7 +37,7 @@ public:
 	~RKTabPage ();
 
 	/** @returns the page child elements should be drawn in */
-	QWidget *getPage () { return page; };
+	QWidget *getPage () { return this; };
 
 	int type () { return ComponentTab; };
 
@@ -45,7 +45,6 @@ public slots:
 /** called when visibile or enabled properties change */
 	void visibleEnabledChanged (RKComponentPropertyBase *property);
 private:
-	QWidget *page;
 	QTabWidget *tabbook;
 	int index;
 	QString label;

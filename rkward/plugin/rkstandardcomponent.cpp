@@ -149,7 +149,8 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 				build_wizard = false;
 
 				QWidget *fake_page = parent_component->addPage ();
-				new QVBoxLayout (fake_page);
+				QVBoxLayout *l = new QVBoxLayout (fake_page);
+				l->setContentsMargins (0, 0, 0, 0);
 				parent_widget = fake_page;
 			}
 		} else {
@@ -584,7 +585,8 @@ void RKComponentBuilder::buildElement (const QDomElement &element, XMLHelper &xm
 		if (allow_pages && (e.tagName () == QLatin1String ("page"))) {
 			widget = component ()->addPage ();
 			add_to_layout = false;   // For wizards, that's done inside addPage()
-			new QVBoxLayout (widget);
+			QVBoxLayout *l = new QVBoxLayout (widget);
+			l->setContentsMargins (0, 0, 0, 0);
 			buildElement (e, xml, widget, false);
 		} else if (e.tagName () == QLatin1String ("row")) {
 			widget = new RKComponent (component (), parent_widget);		// wrapping this (and column, below) inside an RKComponent has the benefit, that it can have an id, and hence can be set to visibile/hidden, enabled/disabled

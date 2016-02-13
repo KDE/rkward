@@ -20,14 +20,9 @@
 #include <kparts/partmanager.h>
 #include <kmessagebox.h>
 #include <klocale.h>
-#include <kiconloader.h>
-#include <khbox.h>
-#include <kvbox.h>
 #include <kglobalsettings.h>
 #include <kactioncollection.h>
 #include <krun.h>
-#include <kmimetype.h>
-#include <kstandarddirs.h>
 #include <KSharedConfig>
 #include <KMessageWidget>
 
@@ -36,6 +31,7 @@
 #include <QKeyEvent>
 #include <QDir>
 #include <QApplication>
+#include <QMimeDatabase>
 
 #include "detachedwindowcontainer.h"
 #include "rkcommandeditorwindow.h"
@@ -71,20 +67,27 @@ RKWorkplace::RKWorkplace (QWidget *parent) : QWidget (parent) {
 	_workspace_config = 0;
 	window_placement_override = RKMDIWindow::AnyWindowState;
 
-	/* Splitter setup contains heavy copying from Kate's katemdi! */
-	KVBox *vbox = new KVBox (this);
+	// message area
+	message_area = new QWidget (this);
+	QVBoxLayout *message_layout = new QVBoxLayout (message_area);
+	message_layout->setContentsMargins (0, 0, 0, 0);
 
-	tool_window_bars[RKToolWindowList::Top] = new RKToolWindowBar (KMultiTabBar::Top, vbox);
-	vert_splitter = new QSplitter (Qt::Vertical, vbox);
+	QVBoxLayout *vbox = new QVBoxLayout (this);
+	vbox->setContentsMargins (0, 0, 0, 0);
+	vbox->addWidget (message_area);
+
+	tool_window_bars[RKToolWindowList::Top] = new RKToolWindowBar (KMultiTabBar::Top, this);
+	vert_splitter = new QSplitter (Qt::Vertical, this);
 	vert_splitter->setOpaqueResize (KGlobalSettings::opaqueResize ());
 	tool_window_bars[RKToolWindowList::Top]->setSplitter (vert_splitter);
 
-	KHBox *hbox = new KHBox (vert_splitter);
-	vert_splitter->setCollapsible (vert_splitter->indexOf (hbox), false);
-	vert_splitter->setStretchFactor (vert_splitter->indexOf (hbox), 1);
+	QWidget *harea = new QWidget (vert_splitter);
+	QHBoxLayout *hbox = new QHBoxLayout (harea);
+	vert_splitter->setCollapsible (vert_splitter->indexOf (harea), false);
+	vert_splitter->setStretchFactor (vert_splitter->indexOf (harea), 1);
 
-	tool_window_bars[RKToolWindowList::Left] = new RKToolWindowBar (KMultiTabBar::Left, hbox);
-	horiz_splitter = new QSplitter (Qt::Horizontal, hbox);
+	tool_window_bars[RKToolWindowList::Left] = new RKToolWindowBar (KMultiTabBar::Left, harea);
+	horiz_splitter = new QSplitter (Qt::Horizontal, harea);
 	horiz_splitter->setOpaqueResize (KGlobalSettings::opaqueResize ());
 	tool_window_bars[RKToolWindowList::Left]->setSplitter (horiz_splitter);
 
@@ -92,25 +95,20 @@ RKWorkplace::RKWorkplace (QWidget *parent) : QWidget (parent) {
 	horiz_splitter->setCollapsible (horiz_splitter->indexOf (wview), false);
 	horiz_splitter->setStretchFactor(horiz_splitter->indexOf (wview), 1);
 
-	tool_window_bars[RKToolWindowList::Bottom] = new RKToolWindowBar (KMultiTabBar::Bottom, vbox);
-	tool_window_bars[RKToolWindowList::Bottom]->setSplitter (vert_splitter);
-
-	tool_window_bars[RKToolWindowList::Right] = new RKToolWindowBar (KMultiTabBar::Right, hbox);
+	tool_window_bars[RKToolWindowList::Right] = new RKToolWindowBar (KMultiTabBar::Right, harea);
 	tool_window_bars[RKToolWindowList::Right]->setSplitter (horiz_splitter);
+	hbox->addWidget (tool_window_bars[RKToolWindowList::Left]);
+	hbox->addWidget (horiz_splitter);
+	hbox->addWidget (tool_window_bars[RKToolWindowList::Right]);
+
+	tool_window_bars[RKToolWindowList::Bottom] = new RKToolWindowBar (KMultiTabBar::Bottom, this);
+	tool_window_bars[RKToolWindowList::Bottom]->setSplitter (vert_splitter);
+	vbox->addWidget (tool_window_bars[RKToolWindowList::Top]);
+	vbox->addWidget (vert_splitter);
+	vbox->addWidget (tool_window_bars[RKToolWindowList::Bottom]);
 
 	KConfigGroup toolbar_config = KSharedConfig::openConfig ()->group ("ToolwindowBars");
 	for (int i = 0; i < TOOL_WINDOW_BAR_COUNT; ++i) tool_window_bars[i]->restoreSize (toolbar_config);
-
-	// message area
-	message_area = new QWidget (this);
-	QVBoxLayout *message_layout = new QVBoxLayout (message_area);
-	message_layout->setContentsMargins (0, 0, 0, 0);
-
-	// now add it all to this widget
-	QVBoxLayout *box = new QVBoxLayout (this);
-	box->setContentsMargins (0, 0, 0, 0);
-	box->addWidget (message_area);
-	box->addWidget (vbox);
 
 	history = new RKMDIWindowHistory (this);
 
@@ -137,7 +135,9 @@ void RKWorkplace::addMessageWidget (KMessageWidget* message) {
 
 QString workspaceConfigFileName (const QUrl &url) {
 	QString base_name = QString (QCryptographicHash::hash (url.toDisplayString ().toUtf8 (), QCryptographicHash::Md5).toHex());
-	return (KStandardDirs::locateLocal ("data", "rkward/workspace_config_" + base_name));
+	QDir dir (QStandardPaths::writableLocation (QStandardPaths::GenericDataLocation));
+	dir.mkpath ("rkward");
+	return (dir.absoluteFilePath ("rkward/workspace_config_" + base_name));
 }
 
 KConfigBase *RKWorkplace::workspaceConfig () {
@@ -403,14 +403,15 @@ bool RKWorkplace::openAnyUrl (const QUrl &url, const QString &known_mimetype, bo
 	if (url.scheme () == "rkward") {
 		if (RKHTMLWindow::handleRKWardURL (url)) return true;
 	}
-	KMimeType::Ptr mimetype;
-	if (!known_mimetype.isEmpty ()) mimetype = KMimeType::mimeType (known_mimetype);
-	else mimetype = KMimeType::findByUrl (url);
+	QMimeDatabase mdb;
+	QMimeType mimetype;
+	if (!known_mimetype.isEmpty ()) mimetype = mdb.mimeTypeForName (known_mimetype);
+	else mimetype = mdb.mimeTypeForUrl (url);
 
 	if (!force_external) {
 	// NOTE: Currently a known mimetype implies that the URL is local or served from the local machine.
 	// Thus, external web pages are *not* opened, here. Which is the behavior we want, although the implementation is ugly
-		if (mimetype->is ("text/html")) {
+		if (mimetype.inherits ("text/html")) {
 			openHelpWindow (url, true);
 			return true;	// TODO
 		}
@@ -418,10 +419,10 @@ bool RKWorkplace::openAnyUrl (const QUrl &url, const QString &known_mimetype, bo
 			RKWardMainWindow::getMain ()->askOpenWorkspace (url);
 			return true;	// TODO
 		}
-		if (mimetype->is ("text/plain")) {
+		if (mimetype.inherits ("text/plain")) {
 			return (openScriptEditor (url, QString (), RKSettingsModuleCommandEditor::matchesScriptFileFilter (url.fileName())));
 		}
-		RK_DEBUG (APP, DL_INFO, "Don't know how to handle mimetype %s.", qPrintable (mimetype->name ()));
+		RK_DEBUG (APP, DL_INFO, "Don't know how to handle mimetype %s.", qPrintable (mimetype.name ()));
 	}
 
 	if (KMessageBox::questionYesNo (this, i18n ("The url you are trying to open ('%1') is not a local file or the filetype is not supported by RKWard. Do you want to open the url in the default application?", url.toDisplayString ()), i18n ("Open in default application?")) != KMessageBox::Yes) {

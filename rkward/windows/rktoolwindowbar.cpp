@@ -19,7 +19,6 @@
 
 #include "rktoolwindowbar.h"
 
-#include <khbox.h>
 #include <QMenu>
 #include <klocale.h>
 #include <kparts/partmanager.h>
@@ -113,7 +112,8 @@ void RKToolWindowBar::setSplitter (QSplitter *splitter) {
 	RK_ASSERT (!container);
 
 	RKToolWindowBar::splitter = splitter;
-	container = new KHBox (splitter);
+	container = new QWidget (splitter);
+	new QHBoxLayout (container);
 	splitter->setContentsMargins (0, 0, 0, 0);
 	container->layout ()->setContentsMargins (0, 0, 0, 0);
 	container->layout ()->setSpacing (0);
@@ -145,8 +145,7 @@ void RKToolWindowBar::addWidget (RKMDIWindow *window) {
 	tab (id)->installEventFilter (this);
 
 	if (window->isAttached ()) {
-		window->hide();
-		window->setParent (container);
+		reclaimDetached (window);
 	}
 
 	show ();
@@ -157,6 +156,7 @@ void RKToolWindowBar::reclaimDetached (RKMDIWindow *window) {
 
 	window->hide();
 	window->setParent (container);
+	container->layout ()->addWidget (window);
 }
 
 void RKToolWindowBar::removeWidget (RKMDIWindow *widget) {

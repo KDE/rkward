@@ -68,7 +68,7 @@ RKVarSelector::RKVarSelector (const QDomElement &element, RKComponent *parent_co
 	connect (show_all_envs_action, &QAction::toggled, this, &RKVarSelector::rootChanged);
 
 	filter_widget = 0;
-	filter_widget_placeholder = new QVBoxLayout (this);
+	filter_widget_placeholder = new QVBoxLayout ();
 	filter_widget_placeholder->setContentsMargins (0, 0, 0, 0);
 	vbox->addLayout (filter_widget_placeholder);
 	show_filter_action = new QAction (i18n ("Show filter options"), this);

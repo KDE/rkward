@@ -22,6 +22,9 @@
 #include <qlayout.h>
 #include <qapplication.h>
 #include <QDesktopWidget>
+#include <QPushButton>
+#include <QDialogButtonBox>
+#include <QDialog>
 
 #include <kmessagebox.h>
 #include <klocale.h>
@@ -165,12 +168,10 @@ void RKWindowCatcher::killDevice (int device_number) {
 #warning TODO: Q_WS_X11 is simply no longer defined. Adjust this functionality.
 #include <QTimer>
 #include <QCloseEvent>
+#include <QSpinBox>
 
 #include <ktoggleaction.h>
 #include <kselectaction.h>
-#include <kdialog.h>
-#include <knuminput.h>
-#include <kvbox.h>
 #include <kactioncollection.h>
 
 #include "../rkglobals.h"
@@ -226,6 +227,7 @@ RKCaughtX11Window::RKCaughtX11Window (RKGraphicsDevice* rkward_device, int devic
 	xembed_container->setFixedSize (rk_native_device->viewPort ()->size ());
 	resize (xembed_container->size ());
 	rk_native_device->viewPort ()->setParent (xembed_container);
+	xembed_container->layout ()->addWidget (rk_native_device->viewPort ());
 	connect (rkward_device, &RKGraphicsDevice::captionChanged, this, &RKCaughtX11Window::setCaption);
 	connect (rkward_device, &RKGraphicsDevice::goingInteractive, this, &RKCaughtX11Window::deviceInteractive);
 	stop_interaction->setVisible (true);
@@ -255,14 +257,15 @@ void RKCaughtX11Window::commonInit (int device_number) {
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
-	box_widget = new KVBox (this);
-	layout->addWidget (box_widget);
 	scroll_widget = new QScrollArea (this);
 	scroll_widget->hide ();
 	layout->addWidget (scroll_widget);
 
-	xembed_container = new KVBox (box_widget);	// QX11EmbedContainer can not be reparented (between the box_widget, and the scroll_widget) directly. Therefore we place it into a container, and reparent that instead.
+	xembed_container = new QWidget (this);	// QX11EmbedContainer can not be reparented (between the this, and the scroll_widget) directly. Therefore we place it into a container, and reparent that instead.
 	// Also, this makes it easier to handle the various different devices
+	QVBoxLayout *xembed_layout = new QVBoxLayout (xembed_container);
+	xembed_layout->setContentsMargins (0, 0, 0, 0);
+	layout->addWidget (xembed_container);
 
 	dynamic_size = false;
 	dynamic_size_action->setChecked (false);
@@ -426,16 +429,15 @@ void RKCaughtX11Window::fixedSizeToggled () {
 
 	if (dynamic_size_action->isChecked ()) {
 		scroll_widget->takeWidget ();
-		xembed_container->setParent (box_widget);
+		layout ()->addWidget (xembed_container);
 		xembed_container->show ();
 		scroll_widget->hide ();
-		box_widget->show ();
 		xembed_container->setMinimumSize (5, 5);
 		xembed_container->setMaximumSize (32767, 32767);
 	} else {
 		xembed_container->setFixedSize (xembed_container->size ());
+		layout ()->removeWidget (xembed_container);
 		scroll_widget->setWidget (xembed_container);
-		box_widget->hide ();
 		scroll_widget->show ();
 	}
 }
@@ -468,29 +470,35 @@ void RKCaughtX11Window::setFixedSizeManual () {
 	RK_TRACE (MISC);
 
 // TODO: not very pretty, yet
-	KDialog *dialog = new KDialog (this);
-	dialog->setButtons (KDialog::Ok|KDialog::Cancel);
-	dialog->setCaption (i18n ("Specify fixed size"));
+	QDialog *dialog = new QDialog (this);
+	dialog->setWindowTitle (i18n ("Specify fixed size"));
 	dialog->setModal (true);
 
-	KVBox *page = new KVBox (dialog);
-	dialog->setMainWidget (page);
+	QVBoxLayout *dlayout = new QVBoxLayout (dialog);
 
-	new QLabel (i18n ("Width"), page);
-	QSpinBox *width = new QSpinBox(page);
+	dlayout->addWidget (new QLabel (i18n ("Width"), dialog));
+	QSpinBox *width = new QSpinBox (dialog);
 	width->setMaximum (32767);
 	width->setMinimum (5);
 	width->setSingleStep (1);
 	width->setValue (xembed_container->width ());
 	width->setFocus ();
 	width->selectAll ();
+	dlayout->addWidget (width);
 
-	new QLabel (i18n ("Height"), page);
-	QSpinBox *height = new QSpinBox(page);
+	dlayout->addWidget (new QLabel (i18n ("Height"), dialog));
+	QSpinBox *height = new QSpinBox (dialog);
 	height->setMaximum (32767);
 	height->setMinimum (5);
 	height->setSingleStep (1);
 	height->setValue (xembed_container->height ());
+	dlayout->addWidget (height);
+
+	QDialogButtonBox *box = new QDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+	connect (box->button (QDialogButtonBox::Ok), &QPushButton::clicked, dialog, &QDialog::accept);
+	connect (box->button (QDialogButtonBox::Cancel), &QPushButton::clicked, dialog, &QDialog::reject);
+	box->button (QDialogButtonBox::Ok)->setShortcut (Qt::CTRL | Qt::Key_Return);
+	dlayout->addWidget (box);
 
 	dialog->exec ();
 
@@ -528,17 +536,23 @@ void RKCaughtX11Window::copyDeviceToRObject () {
 	RK_TRACE (MISC);
 
 // TODO: not very pretty, yet
-	KDialog *dialog = new KDialog (this);
-	dialog->setButtons (KDialog::Ok|KDialog::Cancel);
-	dialog->setCaption (i18n ("Specify R object"));
+	QDialog *dialog = new QDialog (this);
+	dialog->setWindowTitle (i18n ("Specify R object"));
 	dialog->setModal (true);
-	KVBox *page = new KVBox (dialog);
-	dialog->setMainWidget (page);
+	QVBoxLayout *layout = new QVBoxLayout (dialog);
 
-	new QLabel (i18n ("Specify the R object name, you want to save the graph to"), page);
-	RKSaveObjectChooser *chooser = new RKSaveObjectChooser (page, "my.plot");
-	connect (chooser, &RKSaveObjectChooser::changed, dialog, &KDialog::enableButtonOk);
-	if (!chooser->isOk ()) dialog->enableButtonOk (false);
+	layout->addWidget (new QLabel (i18n ("Specify the R object name, you want to save the graph to"), dialog));
+	RKSaveObjectChooser *chooser = new RKSaveObjectChooser (dialog, "my.plot");
+	layout->addWidget (chooser);
+
+	QDialogButtonBox *box = new QDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+	connect (box->button (QDialogButtonBox::Ok), &QPushButton::clicked, dialog, &QDialog::accept);
+	connect (box->button (QDialogButtonBox::Cancel), &QPushButton::clicked, dialog, &QDialog::reject);
+	box->button (QDialogButtonBox::Ok)->setShortcut (Qt::CTRL | Qt::Key_Return);
+	layout->addWidget (box);
+
+	connect (chooser, &RKSaveObjectChooser::changed, box->button (QDialogButtonBox::Ok), &QPushButton::setEnabled);
+	if (!chooser->isOk ()) box->button (QDialogButtonBox::Ok)->setEnabled (false);
 
 	dialog->exec ();
 

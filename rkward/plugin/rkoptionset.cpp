@@ -84,6 +84,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	// first build the contents, as we will need to refer to the elements inside, later
 	model = new RKOptionSetDisplayModel (this);
 	contents_container = new RKComponent (this, accordion->editorWidget ());
+	accordion->editorWidget ()->layout ()->addWidget (contents_container);
 	QDomElement content_element = xml->getChildElement (element, "content", DL_ERROR);
 	RKComponentBuilder *builder = new RKComponentBuilder (contents_container, content_element);
 	builder->buildElement (content_element, *xml, accordion->editorWidget (), false);	// NOTE that parent widget != parent component, here, by intention. The point is that the display should not be disabled along with the contents

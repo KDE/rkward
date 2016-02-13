@@ -16,13 +16,11 @@
  ***************************************************************************/
 #include "rkhtmlwindow.h"
 
-#include <klibloader.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kparts/plugin.h>
 #include <kactioncollection.h>
 #include <kdirwatch.h>
-#include <kmimetype.h>
 #include <kio/job.h>
 #include <kservice.h>
 #include <kwebview.h>
@@ -45,6 +43,7 @@
 #include <QTemporaryFile>
 #include <QGuiApplication>
 #include <QIcon>
+#include <QMimeDatabase>
 
 #include "../rkglobals.h"
 #include "../rbackend/rinterface.h"
@@ -98,7 +97,7 @@ bool RKWebPage::acceptNavigationRequest (QWebFrame* frame, const QNetworkRequest
 	}
 
 	if (frame != mainFrame ()) {
-		if (request.url ().isLocalFile () && (KMimeType::findByUrl (request.url ())->is ("text/html"))) return true;
+		if (request.url ().isLocalFile () && (QMimeDatabase ().mimeTypeForUrl (request.url ()).inherits ("text/html"))) return true;
 	}
 
 	if (QUrl (mainFrame ()->url ()).matches (request.url (), QUrl::NormalizePathSegments | QUrl::StripTrailingSlash)) {
@@ -367,7 +366,7 @@ bool RKHTMLWindow::openURL (const QUrl &url) {
 		}
 	}
 
-	if (url.isLocalFile () && (KMimeType::findByUrl (url)->is ("text/html") || window_mode == HTMLOutputWindow)) {
+	if (url.isLocalFile () && (QMimeDatabase ().mimeTypeForUrl (url).inherits ("text/html") || window_mode == HTMLOutputWindow)) {
 		changeURL (url);
 		QFileInfo out_file (url.toLocalFile ());
 		bool ok = out_file.exists();
@@ -397,7 +396,7 @@ bool RKHTMLWindow::openURL (const QUrl &url) {
 		}
 	}
 
-	RKWorkplace::mainWorkplace ()->openAnyUrl (url, QString (), KMimeType::findByUrl (url)->is ("text/html"));	// NOTE: text/html type urls, which we have not handled, above, are forced to be opened externally, to avoid recursion. E.g. help:// protocol urls.
+	RKWorkplace::mainWorkplace ()->openAnyUrl (url, QString (), QMimeDatabase ().mimeTypeForUrl (url).inherits ("text/html"));	// NOTE: text/html type urls, which we have not handled, above, are forced to be opened externally, to avoid recursion. E.g. help:// protocol urls.
 	return true;
 }
 

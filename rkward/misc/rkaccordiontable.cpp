@@ -249,7 +249,6 @@ public:
 #include <QPainter>
 #include <QScrollBar>
 #include <QHeaderView>
-#include <kvbox.h>
 RKAccordionTable::RKAccordionTable (QWidget* parent) : QTreeView (parent) {
 	RK_TRACE (MISC);
 
@@ -261,7 +260,8 @@ RKAccordionTable::RKAccordionTable (QWidget* parent) : QTreeView (parent) {
 	editor_widget_container = new QWidget ();
 	QHBoxLayout *layout = new QHBoxLayout (editor_widget_container);
 	layout->setContentsMargins (0, 0, 0, 0);
-	editor_widget = new KVBox (editor_widget_container);
+	editor_widget = new QWidget (editor_widget_container);
+	new QVBoxLayout (editor_widget);
 	layout->addWidget (editor_widget);
 
 	setSelectionMode (SingleSelection);

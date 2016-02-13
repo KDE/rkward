@@ -36,6 +36,7 @@ RKPluginFrame::RKPluginFrame (const QDomElement &element, RKComponent *parent_co
 	layout = new QVBoxLayout (frame);
 	page = new QWidget (frame);
 	QVBoxLayout *pagelayout = new QVBoxLayout (page);
+	pagelayout->setContentsMargins (0, 0, 0, 0);
 	pagelayout->setSpacing (RKGlobals::spacingHint ());
 	layout->addWidget (page);
 

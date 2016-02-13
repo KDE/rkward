@@ -17,20 +17,20 @@
 
 #include "rkworkplaceview.h"
 
-#include <ktabbar.h>
 #include <klocale.h>
-#include <QKeySequence>
 #include <kactioncollection.h>
-#include <QAction>
-#include <QIcon>
 #include <kdeversion.h>
 #include <kacceleratormanager.h>
-#include <QMenu>
 
 #include <qapplication.h>
 #include <qevent.h>
 #include <qlayout.h>
 #include <QToolButton>
+#include <QTabBar>
+#include <QAction>
+#include <QIcon>
+#include <QMenu>
+#include <QKeySequence>
 
 #include "rkmdiwindow.h"
 #include "rkworkplace.h"

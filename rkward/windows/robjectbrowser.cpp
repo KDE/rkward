@@ -25,7 +25,6 @@
 #include <klocale.h>
 #include <kinputdialog.h>
 #include <kmessagebox.h>
-#include <kvbox.h>
 
 #include "../rkward.h"
 #include "rkhelpsearchwindow.h"
@@ -53,7 +52,7 @@ RObjectBrowser::RObjectBrowser (QWidget *parent, bool tool_window, const char *n
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
-	layout_widget = new KVBox (this);
+	layout_widget = new QWidget (this);
 	layout->addWidget (layout_widget);
 	layout_widget->setFocusPolicy (Qt::StrongFocus);
 
@@ -94,6 +93,10 @@ void RObjectBrowser::initialize () {
 	RK_DEBUG (APP, DL_INFO, "creating workspace browser");
 
 	internal = new RObjectBrowserInternal (layout_widget);
+	QVBoxLayout *l = new QVBoxLayout (layout_widget);
+	l->setContentsMargins (0, 0, 0, 0);
+	l->addWidget (internal);
+
 	setFocusProxy (internal);
 	setMinimumSize (internal->minimumSize ());
 }

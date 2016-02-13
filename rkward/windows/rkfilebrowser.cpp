@@ -55,7 +55,7 @@ RKFileBrowser::RKFileBrowser (QWidget *parent, bool tool_window, const char *nam
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
-	layout_widget = new KVBox (this);
+	layout_widget = new QWidget (this);
 	layout->addWidget (layout_widget);
 	layout_widget->setFocusPolicy (Qt::StrongFocus);
 
@@ -77,6 +77,9 @@ void RKFileBrowser::showEvent (QShowEvent *e) {
 		RK_DEBUG (APP, DL_INFO, "creating file browser");
 
 		real_widget = new RKFileBrowserWidget (layout_widget);
+		QVBoxLayout *l = new QVBoxLayout (layout_widget);
+		l->setContentsMargins (0, 0, 0, 0);
+		l->addWidget (real_widget);
 		setFocusProxy (real_widget);
 	}
 
@@ -89,12 +92,15 @@ void RKFileBrowser::currentWDChanged () {
 
 /////////////////// RKFileBrowserWidget ////////////////////
 
-RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : KVBox (parent) {
+RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : QWidget (parent) {
 	RK_TRACE (APP);
+
+	QVBoxLayout *layout = new QVBoxLayout (this);
 
 	KToolBar *toolbar = new KToolBar (this);
 	toolbar->setIconSize (QSize (16, 16));
 	toolbar->setToolButtonStyle (Qt::ToolButtonIconOnly);
+	layout->addWidget (toolbar);
 
 	urlbox = new KUrlComboBox (KUrlComboBox::Directories, true, this);
 	KUrlCompletion* cmpl = new KUrlCompletion (KUrlCompletion::DirCompletion);
@@ -103,6 +109,7 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : KVBox (parent) {
 	urlbox->setSizePolicy (QSizePolicy (QSizePolicy::Expanding, QSizePolicy::Fixed));
 	urlbox->completionBox (true)->installEventFilter (this);
 	setFocusProxy (urlbox);
+	layout->addWidget (urlbox);
 
 	dir = new KDirOperator (QUrl (), this);
 	dir->setPreviewWidget (0);
@@ -110,6 +117,7 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : KVBox (parent) {
 	dir->readConfig (config);
 	dir->setView (KFile::Default);
 	connect (RKWardMainWindow::getMain (), &RKWardMainWindow::aboutToQuitRKWard, this, &RKFileBrowserWidget::saveConfig);
+	layout->addWidget (dir);
 
 	toolbar->addAction (dir->actionCollection ()->action ("up"));
 	toolbar->addAction (dir->actionCollection ()->action ("back"));
@@ -226,7 +234,7 @@ bool RKFileBrowserWidget::eventFilter (QObject* o, QEvent* e) {
 		return false;
 	}
 
-	return (KVBox::eventFilter (o, e));
+	return (QWidget::eventFilter (o, e));
 }
 
 void RKFileBrowserWidget::fileActivated (const KFileItem& item) {

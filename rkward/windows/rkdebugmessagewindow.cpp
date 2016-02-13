@@ -22,7 +22,6 @@
 #include <QVBoxLayout>
 #include <QTextEdit>
 
-#include <kvbox.h>
 #include <kmessagebox.h>
 #include <klocale.h>
 
@@ -40,7 +39,9 @@ RKDebugMessageWindow::RKDebugMessageWindow (QWidget* parent, bool tool_window, c
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
-	layout_widget = new KVBox (this);
+	layout_widget = new QWidget (this);
+	QVBoxLayout *l = new QVBoxLayout (layout_widget);
+	l->setContentsMargins (0, 0, 0, 0);
 	layout->addWidget (layout_widget);
 	layout_widget->setFocusPolicy (Qt::StrongFocus);
 
@@ -72,6 +73,7 @@ void RKDebugMessageWindow::createWidget () {
 	if (!real_widget) {
 		RK_DEBUG (APP, DL_INFO, "creating debug message viewer");
 		real_widget = new RKDebugMessageWindowWidget (layout_widget);
+		layout_widget->layout ()->addWidget (real_widget);
 		setFocusProxy (layout_widget);
 
 		if (first) {
