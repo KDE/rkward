@@ -497,7 +497,7 @@ RKMDIWindow* RKWorkplace::openOutputWindow (const QUrl &url) {
 	return (w);
 }
 
-void RKWorkplace::newX11Window (WId window_to_embed, int device_number) {
+void RKWorkplace::newX11Window (QWindow* window_to_embed, int device_number) {
 	RK_TRACE (APP);
 
 	RKCaughtX11Window *window = new RKCaughtX11Window (window_to_embed, device_number);

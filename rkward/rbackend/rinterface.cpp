@@ -48,11 +48,6 @@
 
 #include "../windows/rkwindowcatcher.h"
 
-#ifndef DISABLE_RKWINDOWCATCHER
-// putting this here instead of the class-header so I'm able to mess with it often without long recompiles. Fix when it works!
-RKWindowCatcher *window_catcher;
-#endif // DISABLE_RKWINDOWCATCHER
-
 #include "../rkglobals.h"
 #include "../version.h"
 #include "../debug.h"
@@ -81,12 +76,8 @@ int RInterface::na_int;
 
 RInterface::RInterface () {
 	RK_TRACE (RBACKEND);
-	
-#ifndef DISABLE_RKWINDOWCATCHER
-	window_catcher = new RKWindowCatcher ();
-#endif // DISABLE_RKWINDOWCATCHER
 
-// If R_HOME is not set, most certainly the user called the binary without the wrapper script
+	// If R_HOME is not set, most certainly the user called the binary without the wrapper script
 	if (!getenv ("R_HOME")) {
 		RK_DEBUG (RBACKEND, DL_ERROR, "No R_HOME environment variable set. RKWard will quit in a moment. Always start rkward in the default way unless you know what you're doing.");
 	}
@@ -126,7 +117,7 @@ RInterface::~RInterface(){
 	RK_TRACE (RBACKEND);
 
 	if (num_active_output_record_requests) RK_DEBUG (RBACKEND, DL_WARNING, "%d requests for recording output still active on interface shutdown", num_active_output_record_requests);
-	delete window_catcher;
+	RKWindowCatcher::discardInstance ();
 }
 
 bool RInterface::backendIsIdle () {
@@ -727,17 +718,17 @@ void RInterface::processHistoricalSubstackRequest (const QStringList &calllist) 
 	// NOTE: WARNING: When converting these to PlainGenericRequests, the occasional "error, figure margins too large" starts coming up, again. Not sure, why.
  	} else if (call == "startOpenX11") {
 		RK_ASSERT (calllist.count () == 2);
-		window_catcher->start (calllist.value (1).toInt ());
+		RKWindowCatcher::instance ()->start (calllist.value (1).toInt ());
  	} else if (call == "endOpenX11") {
 		RK_ASSERT (calllist.count () == 2);
-		window_catcher->stop (calllist.value (1).toInt ());
+		RKWindowCatcher::instance ()->stop (calllist.value (1).toInt ());
 	} else if (call == "updateDeviceHistory") {
 		if (calllist.count () >= 2) {
-			window_catcher->updateHistory (calllist.mid (1));
+			RKWindowCatcher::instance ()->updateHistory (calllist.mid (1));
 		}
 	} else if (call == "killDevice") {
 		RK_ASSERT (calllist.count () == 2);
-		window_catcher->killDevice (calllist.value (1).toInt ());
+		RKWindowCatcher::instance ()->killDevice (calllist.value (1).toInt ());
 #endif // DISABLE_RKWINDOWCATCHER
 	} else if (call == "edit") {
 		RK_ASSERT (calllist.count () >= 2);

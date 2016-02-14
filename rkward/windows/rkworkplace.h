@@ -40,6 +40,7 @@ class RKToolWindowBar;
 class RKMDIWindowHistoryWidget;
 class RKGraphicsDevice;
 class KMessageWidget;
+class QWindow;
 
 #define TOOL_WINDOW_BAR_COUNT 4
 
@@ -114,7 +115,7 @@ public:
 @param url currently ignored! */
 	RKMDIWindow* openOutputWindow (const QUrl &url=QUrl ());
 
-	void newX11Window (WId window_to_embed, int device_number);
+	void newX11Window (QWindow* window_to_embed, int device_number);
 	void newRKWardGraphisWindow (RKGraphicsDevice *dev, int device_number);
 	void newObjectViewer (RObject *object);
 

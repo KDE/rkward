@@ -25,6 +25,7 @@
 #include <QPushButton>
 #include <QDialogButtonBox>
 #include <QDialog>
+#include <QWindow>
 
 #include <kmessagebox.h>
 #include <klocale.h>
@@ -36,6 +37,15 @@
 #include "rkworkplace.h"
 #include "../misc/rkstandardicons.h"
 #include "../debug.h"
+
+RKWindowCatcher *RKWindowCatcher::_instance = 0;
+RKWindowCatcher* RKWindowCatcher::instance () {
+	if (!_instance) {
+		RK_TRACE (MISC);
+		_instance = new RKWindowCatcher ();
+	}
+	return _instance;
+}
 
 RKWindowCatcher::RKWindowCatcher () : QObject () {
 	RK_TRACE (MISC);
@@ -60,21 +70,22 @@ void RKWindowCatcher::stop (int new_cur_device) {
 
 	if (!created_window) {
 		// we did not see the window, yet? Maybe the event simply hasn't been processed, yet.
+		qApp->sync ();
 		qApp->processEvents ();
 	}
 	disconnect (KWindowSystem::self(), &KWindowSystem::windowAdded, this, &RKWindowCatcher::windowAdded);
 
 	if (new_cur_device != last_cur_device) {
 		if (created_window) {
-			RKWorkplace::mainWorkplace ()->newX11Window (created_window, new_cur_device);
-#if defined Q_WS_X11
-			// All this syncing looks like a bloody hack? Absolutely. It appears to work around the occasional error "figure margins too large" from R, though.
-			qApp->processEvents ();
-			qApp->syncX ();
-			qApp->processEvents ();
+			qDebug ("using %x", created_window);
+			//qApp->sync ();
 			// this appears to have the side-effect of forcing the captured window to sync with X, which is exactly, what we're trying to achieve.
 			KWindowInfo wininfo = KWindowSystem::windowInfo (created_window, NET::WMName | NET::WMGeometry);
-#endif
+			QWindow *window = QWindow::fromWinId (created_window);
+			RKWorkplace::mainWorkplace ()->newX11Window (window, new_cur_device);
+			// All this syncing looks like a bloody hack? Absolutely. It appears to work around the occasional error "figure margins too large" from R, though.
+			//qApp->processEvents ();
+			//qApp->processEvents ();
 		} else {
 #if defined Q_OS_MAC
 			KMessageBox::information (0, i18n ("You have tried to embed a new R graphics device window in RKWard. However, this is not currently supported in this build of RKWard on Mac OS X. See http://rkward.kde.org/mac for more information."), i18n ("Could not embed R X11 window"), "embed_x11_device_not_supported");
@@ -91,6 +102,7 @@ void RKWindowCatcher::windowAdded (WId id) {
 
 	// KF5 TODO: Note: Previously, on windows we checked for IsWindow (hwnd) and IsWindowVisible (hwnd), as sometimes invisible ghost windows
 	// would be created in addition to the real device window. Is this still needed?
+	// A whole lot of windows appear to get created, but it does look like the last one is the one we need.
 	created_window = id;
 }
 
@@ -103,6 +115,7 @@ void RKWindowCatcher::windowChanged (WId id, NET::Properties properties, NET::Pr
 	watcher->setCaption (KWindowInfo (id, NET::WMName).name ());
 }
 
+// KF5 TODO: should no longer be needed. See QWindow::windowTitleChanged()
 void RKWindowCatcher::registerNameWatcher (WId watched, RKMDIWindow *watcher) {
 	RK_TRACE (APP);
 	RK_ASSERT (!name_watchers_list.contains (watched));
@@ -149,7 +162,7 @@ void RKWindowCatcher::killDevice (int device_number) {
 		window->setKilledInR ();
 		window->close (true);
 		// KF5 TODO: Still needed?
-		//QApplication::syncX ();
+		QApplication::sync ();
 	}
 }
 
@@ -161,12 +174,10 @@ void RKWindowCatcher::killDevice (int device_number) {
 #include <QScrollArea>
 #include <qlabel.h>
 #ifdef Q_OS_WIN
+// KF5 TODO: needed?
 #	include "../qwinhost/qwinhost.h"
 #	include <windows.h>
-#elif defined Q_WS_X11
-#	include <QX11EmbedContainer>
 #endif
-#warning TODO: Q_WS_X11 is simply no longer defined. Adjust this functionality.
 #include <QTimer>
 #include <QCloseEvent>
 #include <QSpinBox>
@@ -186,38 +197,29 @@ void RKWindowCatcher::killDevice (int device_number) {
 // static
 QHash<int, RKCaughtX11Window*> RKCaughtX11Window::device_windows;
 
-RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : RKMDIWindow (0, X11Window) {
+RKCaughtX11Window::RKCaughtX11Window (QWindow* window_to_embed, int device_number) : RKMDIWindow (0, X11Window) {
 	RK_TRACE (MISC);
-
+// TODO: Actually, the WindowCatcher should pass a QWindow*, not WId.
 	commonInit (device_number);
 	embedded = window_to_embed;
 
-#ifdef Q_OS_WIN
-	// unfortunately, trying to get KWindowInfo as below hangs on windows (KDElibs 4.2.3)
-	WINDOWINFO wininfo;
-	wininfo.cbSize = sizeof (WINDOWINFO);
-	GetWindowInfo (embedded, &wininfo);
-
-	// clip off the window frame and menubar
-	xembed_container->setContentsMargins (wininfo.rcWindow.left - wininfo.rcClient.left, wininfo.rcWindow.top - wininfo.rcClient.top,
-				wininfo.rcClient.right - wininfo.rcWindow.right, wininfo.rcClient.bottom - wininfo.rcWindow.bottom);
-	// set a fixed size until the window is shown
-	xembed_container->setFixedSize (wininfo.rcClient.right - wininfo.rcClient.left, wininfo.rcClient.bottom - wininfo.rcClient.top);
-	setGeometry (wininfo.rcClient.left, wininfo.rcClient.right, wininfo.rcClient.top, wininfo.rcClient.bottom);	// see comment in X11 section
-	move (wininfo.rcClient.left, wininfo.rcClient.top);		// else the window frame may be off scree on top/left.
-#elif defined Q_WS_X11
-	KWindowInfo wininfo = KWindowSystem::windowInfo (embedded, NET::WMName | NET::WMGeometry);
+#if !defined Q_OS_MAC
+	KWindowInfo wininfo = KWindowSystem::windowInfo (embedded->winId (), NET::WMName | NET::WMGeometry);
 	RK_ASSERT (wininfo.valid ());
 
 	// set a fixed size until the window is shown
 	xembed_container->setFixedSize (wininfo.geometry ().width (), wininfo.geometry ().height ());
 	setGeometry (wininfo.geometry ());	// it's important to set a size, even while not visible. Else DetachedWindowContainer will assign a default size of 640*480, and then size upwards, if necessary.
 	setCaption (wininfo.name ());
+#else
+	RK_ASSERT (false);
 #endif
 
+	// KF5 TODO: Still needed?
 	// somehow in Qt 4.4.3, when the RKCaughtWindow is reparented the first time, the QX11EmbedContainer may kill its client. Hence we delay the actual embedding until after the window was shown.
 	// In some previous version of Qt, this was not an issue, but I did not track the versions.
-	QTimer::singleShot (0, this, SLOT (doEmbed()));
+	QTimer::singleShot (2000, this, SLOT (doEmbed()));
+	//doEmbed ();
 }
 
 RKCaughtX11Window::RKCaughtX11Window (RKGraphicsDevice* rkward_device, int device_number) : RKMDIWindow (0, X11Window) {
@@ -242,8 +244,8 @@ void RKCaughtX11Window::commonInit (int device_number) {
 	RK_TRACE (MISC);
 
 	capture = 0;
-	rk_native_device = 0;
 	embedded = 0;
+	rk_native_device = 0;
 	killed_in_r = close_attempted = false;
 	RKCaughtX11Window::device_number = device_number;
 	RK_ASSERT (!device_windows.contains (device_number));
@@ -259,14 +261,15 @@ void RKCaughtX11Window::commonInit (int device_number) {
 	QVBoxLayout *layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
 	scroll_widget = new QScrollArea (this);
-	scroll_widget->hide ();
 	layout->addWidget (scroll_widget);
 
 	xembed_container = new QWidget (this);	// QX11EmbedContainer can not be reparented (between the this, and the scroll_widget) directly. Therefore we place it into a container, and reparent that instead.
 	// Also, this makes it easier to handle the various different devices
 	QVBoxLayout *xembed_layout = new QVBoxLayout (xembed_container);
 	xembed_layout->setContentsMargins (0, 0, 0, 0);
-	layout->addWidget (xembed_container);
+	//layout->addWidget (xembed_container);
+	scroll_widget->setWidget (xembed_container);
+	xembed_container->hide ();
 
 	dynamic_size = false;
 	dynamic_size_action->setChecked (false);
@@ -276,27 +279,24 @@ void RKCaughtX11Window::doEmbed () {
 	RK_TRACE (MISC);
 
 	if (embedded) {
-#ifdef Q_OS_WIN
-		capture = new QWinHost (xembed_container);
-		capture->setWindow (embedded);
-		capture->setFocusPolicy (Qt::ClickFocus);
-		capture->setAutoDestruct (true);
-		connect (capture, &QWidget::clientDestroyed, this, &RKCaughtX11Window::deleteLater, Qt::QueuedConnection);
-		connect (capture, &QWidget::clientTitleChanged, this, &RKCaughtX11Window::setCaption, Qt::QueuedConnection);
-
-		setCaption (capture->getClientTitle ());
-#elif defined Q_WS_X11
-		capture = new QX11EmbedContainer (xembed_container);
-		capture->embedClient (embedded);
-		connect (capture, &QWidget::clientClosed, this, &RKCaughtX11Window::deleteLater);
-
-		RKWindowCatcher::registerNameWatcher (embedded, this);
-#endif
+/*		if (capture) {
+			embedded->setParent (0);
+			capture->deleteLater ();
+		} */
+		qApp->sync ();
+		KWindowInfo wininfo = KWindowSystem::windowInfo (embedded->winId (), NET::WMName | NET::WMGeometry);
+		capture = QWidget::createWindowContainer (embedded, xembed_container);
+		xembed_container->layout ()->addWidget (capture);
+		QTimer::singleShot (100, xembed_container, SLOT (show ()));
+		// KF5 TODO: Will this detect closed device, correclty? No, will probably need assistance from KWindowSystem.
+		connect (embedded, &QObject::destroyed, this, &RKCaughtX11Window::deleteLater);
+		// KF5 TODO: Window caption?
 	}
+
 	if (!isAttached ()) {
 		// make xembed_container resizable, again, now that it actually has a content
 		dynamic_size_action->setChecked (true);
-		fixedSizeToggled ();
+		QTimer::singleShot (1000, this, SLOT (fixedSizeToggled ()));
 	}
 
 	// try to be helpful when the window is too large to fit on screen
@@ -313,9 +313,7 @@ RKCaughtX11Window::~RKCaughtX11Window () {
 	device_windows.remove (device_number);
 
 	close (false);
-#ifdef Q_WS_X11
-	if (embedded) RKWindowCatcher::unregisterNameWatcher (embedded);
-#endif
+	if (capture) RKWindowCatcher::instance ()->unregisterNameWatcher (capture->winId ());
 	error_dialog->autoDeleteWhenDone ();
 }
 
@@ -332,13 +330,11 @@ void RKCaughtX11Window::setWindowStyleHint (const QString& hint) {
 
 void RKCaughtX11Window::forceClose () {
 	killed_in_r = true;
-	if (capture) {
-#ifdef Q_WS_X11
-		// HACK: Somehow (R 3.0.0alpha), the X11() window is surpisingly die-hard, if it is not close "the regular way".
+	if (embedded) {
+		// HACK: Somehow (R 3.0.0alpha), the X11() window is surpisingly die-hard, if it is not closed "the regular way".
 		// So we expurge it, and leave the rest to the user.
-		capture->discardClient ();
+		embedded->setParent (0);
 		qApp->processEvents ();
-#endif
 	}
 	RKMDIWindow::close (true);
 }
@@ -369,26 +365,12 @@ bool RKCaughtX11Window::close (bool also_delete) {
 	return false;
 }
 
-void RKCaughtX11Window::reEmbed () {
-	RK_TRACE (MISC);
-
-#ifdef Q_WS_X11
-	if (!capture) return;
-// somehow, since some version of Qt, the QX11EmbedContainer would loose its client while reparenting. This allows us to circumvent the problem.
-	capture->discardClient ();
-	capture->deleteLater ();
-	RKWindowCatcher::unregisterNameWatcher (embedded);
-	QTimer::singleShot (0, this, SLOT(doEmbed()));
-#endif
-}
-
 void RKCaughtX11Window::prepareToBeAttached () {
 	RK_TRACE (MISC);
 
 	dynamic_size_action->setChecked (false);
 	fixedSizeToggled ();
 	dynamic_size_action->setEnabled (false);
-	reEmbed ();
 }
 
 void RKCaughtX11Window::prepareToBeDetached () {
@@ -397,7 +379,6 @@ void RKCaughtX11Window::prepareToBeDetached () {
 	dynamic_size_action->setEnabled (true);
 	dynamic_size_action->setChecked (true);
 	fixedSizeToggled ();
-	reEmbed ();
 }
 
 void RKCaughtX11Window::deviceInteractive (bool interactive, const QString& prompt) {
@@ -425,6 +406,7 @@ void RKCaughtX11Window::stopInteraction () {
 void RKCaughtX11Window::fixedSizeToggled () {
 	RK_TRACE (MISC);
 
+	if (embedded && !capture) return;  // while in the middle of embedding, don't mess with any of this, it seems to cause trouble
 	if (dynamic_size == dynamic_size_action->isChecked ()) return;
 	dynamic_size = dynamic_size_action->isChecked ();
 
