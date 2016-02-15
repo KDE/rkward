@@ -25,6 +25,7 @@
 #include <QPushButton>
 #include <QDialogButtonBox>
 #include <QDialog>
+#include <QWindow>
 
 #include <kmessagebox.h>
 #include <klocale.h>
@@ -37,8 +38,21 @@
 #include "../misc/rkstandardicons.h"
 #include "../debug.h"
 
+RKWindowCatcher *RKWindowCatcher::_instance = 0;
+RKWindowCatcher* RKWindowCatcher::instance () {
+	if (!_instance) {
+		RK_TRACE (MISC);
+		_instance = new RKWindowCatcher ();
+	}
+	return _instance;
+}
+
 RKWindowCatcher::RKWindowCatcher () : QObject () {
 	RK_TRACE (MISC);
+
+	poll_timer.setInterval (1000);
+	poll_timer.setSingleShot (true);
+	connect (&poll_timer, &QTimer::timeout, this, &RKWindowCatcher::pollWatchedWindowStates);
 }
 
 RKWindowCatcher::~RKWindowCatcher () {
@@ -50,31 +64,41 @@ void RKWindowCatcher::start (int prev_cur_device) {
 	RK_DEBUG (RBACKEND, DL_DEBUG, "Window Catcher activated");
 
 	last_cur_device = prev_cur_device;
-	created_window = 0;
-	connect (KWindowSystem::self(), &KWindowSystem::windowAdded, this, &RKWindowCatcher::windowAdded);
+	windows_before_add = KWindowSystem::windows ();
+}
+
+WId RKWindowCatcher::createdWindow () {
+	RK_TRACE (MISC);
+
+	// KF5 TODO: Note: Previously, on windows we checked for IsWindow (hwnd) and IsWindowVisible (hwnd), as sometimes invisible ghost windows
+	// would be created in addition to the real device window. Is this still needed?
+	// A whole lot of windows appear to get created, but it does look like the last one is the one we need.
+	QList<WId> windows_after_add = KWindowSystem::windows ();
+	WId candidate = windows_after_add.value (windows_after_add.size () - 1);
+	if (!windows_before_add.contains (windows_after_add.last ())) {
+		return candidate;
+	}
+	return 0;
 }
 
 void RKWindowCatcher::stop (int new_cur_device) {
 	RK_TRACE (MISC);
 	RK_DEBUG (RBACKEND, DL_DEBUG, "Window Catcher deactivated");
 
+	WId created_window = createdWindow ();
 	if (!created_window) {
 		// we did not see the window, yet? Maybe the event simply hasn't been processed, yet.
+		qApp->sync ();
 		qApp->processEvents ();
+		created_window = createdWindow ();
 	}
-	disconnect (KWindowSystem::self(), &KWindowSystem::windowAdded, this, &RKWindowCatcher::windowAdded);
 
 	if (new_cur_device != last_cur_device) {
 		if (created_window) {
-			RKWorkplace::mainWorkplace ()->newX11Window (created_window, new_cur_device);
-#if defined Q_WS_X11
-			// All this syncing looks like a bloody hack? Absolutely. It appears to work around the occasional error "figure margins too large" from R, though.
-			qApp->processEvents ();
-			qApp->syncX ();
-			qApp->processEvents ();
 			// this appears to have the side-effect of forcing the captured window to sync with X, which is exactly, what we're trying to achieve.
-			KWindowInfo wininfo = KWindowSystem::windowInfo (created_window, NET::WMName | NET::WMGeometry);
-#endif
+			KWindowInfo wininfo (created_window, NET::WMName | NET::WMGeometry);
+			QWindow *window = QWindow::fromWinId (created_window);
+			RKWorkplace::mainWorkplace ()->newX11Window (window, new_cur_device);
 		} else {
 #if defined Q_OS_MAC
 			KMessageBox::information (0, i18n ("You have tried to embed a new R graphics device window in RKWard. However, this is not currently supported in this build of RKWard on Mac OS X. See http://rkward.kde.org/mac for more information."), i18n ("Could not embed R X11 window"), "embed_x11_device_not_supported");
@@ -86,41 +110,43 @@ void RKWindowCatcher::stop (int new_cur_device) {
 	last_cur_device = new_cur_device;
 }
 
-void RKWindowCatcher::windowAdded (WId id) {
-	RK_TRACE (APP);
-
-	// KF5 TODO: Note: Previously, on windows we checked for IsWindow (hwnd) and IsWindowVisible (hwnd), as sometimes invisible ghost windows
-	// would be created in addition to the real device window. Is this still needed?
-	created_window = id;
-}
-
-void RKWindowCatcher::windowChanged (WId id, NET::Properties properties, NET::Properties2 properties2) {
-	Q_UNUSED (properties2);
-	if (!(properties & NET::WMName)) return;
-	RK_TRACE (APP);
-	RKMDIWindow *watcher = name_watchers_list.value (id);
-	if (!watcher) return;
-	watcher->setCaption (KWindowInfo (id, NET::WMName).name ());
-}
-
-void RKWindowCatcher::registerNameWatcher (WId watched, RKMDIWindow *watcher) {
-	RK_TRACE (APP);
-	RK_ASSERT (!name_watchers_list.contains (watched));
-
-	if (name_watchers_list.isEmpty ()) {
-		connect (KWindowSystem::self(), static_cast<void (KWindowSystem::*)(WId, NET::Properties, NET::Properties2)>(&KWindowSystem::windowChanged), this, &RKWindowCatcher::windowChanged);
+void RKWindowCatcher::pollWatchedWindowStates () {
+	// RK_TRACE (APP);
+	// Well, this really bad, but the notification in KWindowSystem (windowChanged(), windowRemoved()) just don't work for embedded windows. So we have to use polling to
+	// check whether windows changed their name, or have gone away... KF5 5.15.0, X.
+	for (QMap<WId, RKMDIWindow*>::const_iterator it = watchers_list.constBegin (); it != watchers_list.constEnd (); ++it) {
+		KWindowInfo wininfo (it.key (), NET::WMName);
+		if (!wininfo.valid ()) it.value ()->deleteLater ();
+		else {
+			if (it.value ()->shortCaption () != wininfo.name ()) it.value ()->setCaption (wininfo.name ());
+		}
 	}
-	name_watchers_list.insert (watched, watcher);
+	if (!watchers_list.isEmpty ()) {
+		poll_timer.start ();
+	}
 }
 
-void RKWindowCatcher::unregisterNameWatcher (WId watched) {
+void RKWindowCatcher::registerWatcher (WId watched, RKMDIWindow *watcher) {
 	RK_TRACE (APP);
-	RK_ASSERT (name_watchers_list.contains (watched));
+	RK_ASSERT (!watchers_list.contains (watched));
 
-	name_watchers_list.remove (watched);
-	if (name_watchers_list.isEmpty ()) {
-		disconnect (KWindowSystem::self(), static_cast<void (KWindowSystem::*)(WId, NET::Properties, NET::Properties2)>(&KWindowSystem::windowChanged), this, &RKWindowCatcher::windowChanged);
+	KWindowInfo wininfo (watched, NET::WMName);
+	if (!wininfo.valid ()) {
+		RK_DEBUG (APP, DL_ERROR, "Cannot fetch window info. Platform limitation? Not watching for window changes.")
+		return;
 	}
+
+	if (watchers_list.isEmpty ()) {
+		poll_timer.start ();
+	}
+	watchers_list.insert (watched, watcher);
+}
+
+void RKWindowCatcher::unregisterWatcher (WId watched) {
+	RK_TRACE (APP);
+	RK_ASSERT (watchers_list.contains (watched));
+
+	watchers_list.remove (watched);
 }
 
 void RKWindowCatcher::updateHistory (QStringList params) {
@@ -148,8 +174,7 @@ void RKWindowCatcher::killDevice (int device_number) {
 	if (window) {
 		window->setKilledInR ();
 		window->close (true);
-		// KF5 TODO: Still needed?
-		//QApplication::syncX ();
+		QApplication::sync ();
 	}
 }
 
@@ -160,13 +185,6 @@ void RKWindowCatcher::killDevice (int device_number) {
 
 #include <QScrollArea>
 #include <qlabel.h>
-#ifdef Q_OS_WIN
-#	include "../qwinhost/qwinhost.h"
-#	include <windows.h>
-#elif defined Q_WS_X11
-#	include <QX11EmbedContainer>
-#endif
-#warning TODO: Q_WS_X11 is simply no longer defined. Adjust this functionality.
 #include <QTimer>
 #include <QCloseEvent>
 #include <QSpinBox>
@@ -186,38 +204,29 @@ void RKWindowCatcher::killDevice (int device_number) {
 // static
 QHash<int, RKCaughtX11Window*> RKCaughtX11Window::device_windows;
 
-RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : RKMDIWindow (0, X11Window) {
+RKCaughtX11Window::RKCaughtX11Window (QWindow* window_to_embed, int device_number) : RKMDIWindow (0, X11Window) {
 	RK_TRACE (MISC);
-
+// TODO: Actually, the WindowCatcher should pass a QWindow*, not WId.
 	commonInit (device_number);
 	embedded = window_to_embed;
+	// NOTE: QWindow::windowTitleChanged is _NOT_ emitted for embedded windows (Qt 5.4.2, X), similarly QWindow is _NOT_ destroyed, when the embedded window is destroyed
+	//       So we need the RKWindowCatcher to help us.
+	RKWindowCatcher::instance ()->registerWatcher (embedded->winId (), this);
 
-#ifdef Q_OS_WIN
-	// unfortunately, trying to get KWindowInfo as below hangs on windows (KDElibs 4.2.3)
-	WINDOWINFO wininfo;
-	wininfo.cbSize = sizeof (WINDOWINFO);
-	GetWindowInfo (embedded, &wininfo);
-
-	// clip off the window frame and menubar
-	xembed_container->setContentsMargins (wininfo.rcWindow.left - wininfo.rcClient.left, wininfo.rcWindow.top - wininfo.rcClient.top,
-				wininfo.rcClient.right - wininfo.rcWindow.right, wininfo.rcClient.bottom - wininfo.rcWindow.bottom);
-	// set a fixed size until the window is shown
-	xembed_container->setFixedSize (wininfo.rcClient.right - wininfo.rcClient.left, wininfo.rcClient.bottom - wininfo.rcClient.top);
-	setGeometry (wininfo.rcClient.left, wininfo.rcClient.right, wininfo.rcClient.top, wininfo.rcClient.bottom);	// see comment in X11 section
-	move (wininfo.rcClient.left, wininfo.rcClient.top);		// else the window frame may be off scree on top/left.
-#elif defined Q_WS_X11
-	KWindowInfo wininfo = KWindowSystem::windowInfo (embedded, NET::WMName | NET::WMGeometry);
+#if !defined Q_OS_MAC
+	KWindowInfo wininfo (embedded->winId (), NET::WMName | NET::WMGeometry);
 	RK_ASSERT (wininfo.valid ());
 
 	// set a fixed size until the window is shown
 	xembed_container->setFixedSize (wininfo.geometry ().width (), wininfo.geometry ().height ());
 	setGeometry (wininfo.geometry ());	// it's important to set a size, even while not visible. Else DetachedWindowContainer will assign a default size of 640*480, and then size upwards, if necessary.
 	setCaption (wininfo.name ());
+#else
+	RK_ASSERT (false);
 #endif
 
-	// somehow in Qt 4.4.3, when the RKCaughtWindow is reparented the first time, the QX11EmbedContainer may kill its client. Hence we delay the actual embedding until after the window was shown.
-	// In some previous version of Qt, this was not an issue, but I did not track the versions.
-	QTimer::singleShot (0, this, SLOT (doEmbed()));
+	// We need to make sure that the R backend has had a chance to do event processing on the new device, or else embedding will fail (sometimes).
+	QTimer::singleShot (100, this, SLOT (doEmbed()));
 }
 
 RKCaughtX11Window::RKCaughtX11Window (RKGraphicsDevice* rkward_device, int device_number) : RKMDIWindow (0, X11Window) {
@@ -242,8 +251,9 @@ void RKCaughtX11Window::commonInit (int device_number) {
 	RK_TRACE (MISC);
 
 	capture = 0;
-	rk_native_device = 0;
 	embedded = 0;
+	embedding_complete = false;
+	rk_native_device = 0;
 	killed_in_r = close_attempted = false;
 	RKCaughtX11Window::device_number = device_number;
 	RK_ASSERT (!device_windows.contains (device_number));
@@ -259,14 +269,15 @@ void RKCaughtX11Window::commonInit (int device_number) {
 	QVBoxLayout *layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
 	scroll_widget = new QScrollArea (this);
-	scroll_widget->hide ();
 	layout->addWidget (scroll_widget);
 
 	xembed_container = new QWidget (this);	// QX11EmbedContainer can not be reparented (between the this, and the scroll_widget) directly. Therefore we place it into a container, and reparent that instead.
 	// Also, this makes it easier to handle the various different devices
 	QVBoxLayout *xembed_layout = new QVBoxLayout (xembed_container);
 	xembed_layout->setContentsMargins (0, 0, 0, 0);
-	layout->addWidget (xembed_container);
+	//layout->addWidget (xembed_container);
+	scroll_widget->setWidget (xembed_container);
+	xembed_container->hide (); // it seems to be important that the parent of a captured / embedded window is invisible prior to embedding.
 
 	dynamic_size = false;
 	dynamic_size_action->setChecked (false);
@@ -276,27 +287,21 @@ void RKCaughtX11Window::doEmbed () {
 	RK_TRACE (MISC);
 
 	if (embedded) {
-#ifdef Q_OS_WIN
-		capture = new QWinHost (xembed_container);
-		capture->setWindow (embedded);
-		capture->setFocusPolicy (Qt::ClickFocus);
-		capture->setAutoDestruct (true);
-		connect (capture, &QWidget::clientDestroyed, this, &RKCaughtX11Window::deleteLater, Qt::QueuedConnection);
-		connect (capture, &QWidget::clientTitleChanged, this, &RKCaughtX11Window::setCaption, Qt::QueuedConnection);
-
-		setCaption (capture->getClientTitle ());
-#elif defined Q_WS_X11
-		capture = new QX11EmbedContainer (xembed_container);
-		capture->embedClient (embedded);
-		connect (capture, &QWidget::clientClosed, this, &RKCaughtX11Window::deleteLater);
-
-		RKWindowCatcher::registerNameWatcher (embedded, this);
-#endif
+/*		if (capture) {  // Old re-embedding code, moved here. No longer needed?
+			embedded->setParent (0);
+			capture->deleteLater ();
+		} */
+		qApp->sync ();
+		KWindowInfo wininfo (embedded->winId (), NET::WMName | NET::WMGeometry);
+		capture = QWidget::createWindowContainer (embedded, xembed_container);
+		xembed_container->layout ()->addWidget (capture);
+		xembed_container->show ();
 	}
+
 	if (!isAttached ()) {
 		// make xembed_container resizable, again, now that it actually has a content
 		dynamic_size_action->setChecked (true);
-		fixedSizeToggled ();
+		QTimer::singleShot (0, this, SLOT (fixedSizeToggled ())); // For whatever reason, apparently we have to wait for the next event loop with this.
 	}
 
 	// try to be helpful when the window is too large to fit on screen
@@ -313,9 +318,7 @@ RKCaughtX11Window::~RKCaughtX11Window () {
 	device_windows.remove (device_number);
 
 	close (false);
-#ifdef Q_WS_X11
-	if (embedded) RKWindowCatcher::unregisterNameWatcher (embedded);
-#endif
+	if (embedded) RKWindowCatcher::instance ()->unregisterWatcher (embedded->winId ());
 	error_dialog->autoDeleteWhenDone ();
 }
 
@@ -332,13 +335,11 @@ void RKCaughtX11Window::setWindowStyleHint (const QString& hint) {
 
 void RKCaughtX11Window::forceClose () {
 	killed_in_r = true;
-	if (capture) {
-#ifdef Q_WS_X11
-		// HACK: Somehow (R 3.0.0alpha), the X11() window is surpisingly die-hard, if it is not close "the regular way".
+	if (embedded) {
+		// HACK: Somehow (R 3.0.0alpha), the X11() window is surpisingly die-hard, if it is not closed "the regular way".
 		// So we expurge it, and leave the rest to the user.
-		capture->discardClient ();
+		embedded->setParent (0);
 		qApp->processEvents ();
-#endif
 	}
 	RKMDIWindow::close (true);
 }
@@ -360,7 +361,7 @@ bool RKCaughtX11Window::close (bool also_delete) {
 		close_attempted = true;
 	} else {
 		if (KMessageBox::questionYesNo (this, i18n ("<p>The graphics device is being closed, saving the last plot to the plot history. This may take a while, if the R backend is still busy. You can close the graphics device immediately, in case it is stuck. However, the last plot may be missing from the plot history, if you do this.</p>")
-#ifdef Q_WS_X11
+#if !defined Q_OS_WIN
 		+ i18n ("<p>Note: On X11, the embedded window may be expurged, and you will have to close it manually in this case.</p>")
 #endif
 		, status, KGuiItem (i18n ("Close immediately")), KGuiItem (i18n ("Keep waiting"))) == KMessageBox::Yes) forceClose ();
@@ -369,26 +370,12 @@ bool RKCaughtX11Window::close (bool also_delete) {
 	return false;
 }
 
-void RKCaughtX11Window::reEmbed () {
-	RK_TRACE (MISC);
-
-#ifdef Q_WS_X11
-	if (!capture) return;
-// somehow, since some version of Qt, the QX11EmbedContainer would loose its client while reparenting. This allows us to circumvent the problem.
-	capture->discardClient ();
-	capture->deleteLater ();
-	RKWindowCatcher::unregisterNameWatcher (embedded);
-	QTimer::singleShot (0, this, SLOT(doEmbed()));
-#endif
-}
-
 void RKCaughtX11Window::prepareToBeAttached () {
 	RK_TRACE (MISC);
 
 	dynamic_size_action->setChecked (false);
 	fixedSizeToggled ();
 	dynamic_size_action->setEnabled (false);
-	reEmbed ();
 }
 
 void RKCaughtX11Window::prepareToBeDetached () {
@@ -397,7 +384,6 @@ void RKCaughtX11Window::prepareToBeDetached () {
 	dynamic_size_action->setEnabled (true);
 	dynamic_size_action->setChecked (true);
 	fixedSizeToggled ();
-	reEmbed ();
 }
 
 void RKCaughtX11Window::deviceInteractive (bool interactive, const QString& prompt) {
@@ -425,14 +411,15 @@ void RKCaughtX11Window::stopInteraction () {
 void RKCaughtX11Window::fixedSizeToggled () {
 	RK_TRACE (MISC);
 
+	if (embedded && !capture) return;  // while in the middle of embedding, don't mess with any of this, it seems to cause trouble
 	if (dynamic_size == dynamic_size_action->isChecked ()) return;
 	dynamic_size = dynamic_size_action->isChecked ();
 
 	if (dynamic_size_action->isChecked ()) {
 		scroll_widget->takeWidget ();
+		scroll_widget->hide ();
 		layout ()->addWidget (xembed_container);
 		xembed_container->show ();
-		scroll_widget->hide ();
 		xembed_container->setMinimumSize (5, 5);
 		xembed_container->setMaximumSize (32767, 32767);
 	} else {
@@ -440,6 +427,11 @@ void RKCaughtX11Window::fixedSizeToggled () {
 		layout ()->removeWidget (xembed_container);
 		scroll_widget->setWidget (xembed_container);
 		scroll_widget->show ();
+	}
+
+	if (embedded && !embedding_complete) {
+		embedding_complete = true;
+		RKGlobals::rInterface ()->issueCommand ("assign ('devembedded', TRUE, rkward:::.rk.variables)", RCommand::App | RCommand::Sync | RCommand::PriorityCommand);
 	}
 }
 
@@ -699,22 +691,22 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KPart
 
 	action = actionCollection ()->addAction ("plot_prev", window, SLOT (previousPlot()));
 	window->actions_not_for_preview.append (action);
- 	action->setText (i18n ("Previous plot"));
+	action->setText (i18n ("Previous plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveLeft));
 	window->plot_prev_action = (QAction *) action;
 	action = actionCollection ()->addAction ("plot_first", window, SLOT (firstPlot()));
 	window->actions_not_for_preview.append (action);
- 	action->setText (i18n ("First plot"));
+	action->setText (i18n ("First plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveFirst));
 	window->plot_first_action = (QAction *) action;
 	action = actionCollection ()->addAction ("plot_next", window, SLOT (nextPlot()));
 	window->actions_not_for_preview.append (action);
- 	action->setText (i18n ("Next plot"));
+	action->setText (i18n ("Next plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveRight));
 	window->plot_next_action = (QAction *) action;
 	action = actionCollection ()->addAction ("plot_last", window, SLOT (lastPlot()));
 	window->actions_not_for_preview.append (action);
- 	action->setText (i18n ("Last plot"));
+	action->setText (i18n ("Last plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveLast));
 	window->plot_last_action = (QAction *) action;
 	action = window->plot_list_action = new KSelectAction (i18n ("Go to plot"), 0);
@@ -726,18 +718,18 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KPart
 
 	action = actionCollection ()->addAction ("plot_force_append", window, SLOT (forceAppendCurrentPlot()));
 	window->actions_not_for_preview.append (action);
- 	action->setText (i18n ("Append this plot"));
+	action->setText (i18n ("Append this plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionSnapshot));
 	window->plot_force_append_action = (QAction *) action;
 	action = actionCollection ()->addAction ("plot_remove", window, SLOT (removeCurrentPlot()));
 	window->actions_not_for_preview.append (action);
- 	action->setText (i18n ("Remove this plot"));
+	action->setText (i18n ("Remove this plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRemovePlot));
 	window->plot_remove_action = (QAction *) action;
 
 	action = actionCollection ()->addAction ("plot_clear_history", window, SLOT (clearHistory()));
 	window->plot_clear_history_action = (QAction *) action;
- 	action->setText (i18n ("Clear history"));
+	action->setText (i18n ("Clear history"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionClear));
 	window->actions_not_for_preview.append (action);
 

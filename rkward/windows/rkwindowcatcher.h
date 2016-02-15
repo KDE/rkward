@@ -23,6 +23,7 @@
 
 #include <qwidget.h>
 #include <QMap>
+#include <QTimer>
 
 #include <netwm_def.h>
 class RKMDIWindow;
@@ -79,17 +80,21 @@ public:
 /** Kill an R device
 @param device_number R device number of the device to kil */
 	void killDevice (int device_number);
-	/** watch the given window for changes in its WM_NAME property (i.e. changes in caption). When a change is detected, the caption will be set on watcher. WARNING: Do not use to watch windows managed by Qt! WARNING: Remember to call unregisterNameWatcher, when watcher is deleted! */
-	void registerNameWatcher (WId watched, RKMDIWindow *watcher);
+	/** watch the given window for changes in its WM_NAME property (i.e. changes in caption), or deletion. When a change is detected, the watcher will be notified (setCaption() or deleteLater())
+	    WARNING: Remember to call unregisterNameWatcher, when watcher is deleted! */
+	void registerWatcher (WId watched, RKMDIWindow *watcher);
 	/** remove a watch created with registerNameWatcher */
-	void unregisterNameWatcher (WId watched);
-private slots:
-	void windowAdded (WId id);
-	void windowChanged (WId id, NET::Properties properties, NET::Properties2 properties2);
+	void unregisterWatcher (WId watched);
+	static RKWindowCatcher *instance ();
+	static void discardInstance () { delete _instance; };
 private:
+	void pollWatchedWindowStates ();
+	QTimer poll_timer;
+	WId createdWindow ();
 	int last_cur_device;
-	WId created_window;
-	QMap<WId, RKMDIWindow*> name_watchers_list;
+	QList<WId> windows_before_add;
+	static RKWindowCatcher* _instance;
+	QMap<WId, RKMDIWindow*> watchers_list;
 };
 
 
@@ -116,7 +121,7 @@ public:
 /** ctor
 @param window_to_embed the Window id of the R X11 device window to embed
 @param device_number the device number corresponding to that window */
-	RKCaughtX11Window (WId window_to_embed, int device_number);
+	RKCaughtX11Window (QWindow* window_to_embed, int device_number);
 	RKCaughtX11Window (RKGraphicsDevice *rkward_device, int device_number);
 /** dtor */
 	~RKCaughtX11Window ();
@@ -171,25 +176,18 @@ private slots:
 private:
 	void forceClose ();
 	void commonInit (int device_number);
-	void reEmbed ();
 	friend class RKCaughtX11WindowPart;	// needs access to the actions
 	int device_number;
 	bool killed_in_r;
 	bool close_attempted;
-	WId embedded;
 	QWidget *xembed_container;
 	QScrollArea *scroll_widget;
 	RKProgressControl *error_dialog;
 
 	static QHash<int, RKCaughtX11Window*> device_windows;
-#ifdef Q_OS_WIN
-	QWinHost *capture;
-#elif defined Q_WS_X11
-	QX11EmbedContainer *capture;
-#else
-	// a dummy to make things compile for now
-	QWidget *capture;
-#endif
+	QWindow *embedded;
+	bool embedding_complete;
+	QWidget *capture;  // The captured window (0, if using an rk native device)
 	RKGraphicsDevice *rk_native_device;
 
 	bool dynamic_size;
