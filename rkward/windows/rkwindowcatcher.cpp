@@ -174,7 +174,6 @@ void RKWindowCatcher::killDevice (int device_number) {
 	if (window) {
 		window->setKilledInR ();
 		window->close (true);
-		// KF5 TODO: Still needed?
 		QApplication::sync ();
 	}
 }
@@ -186,11 +185,6 @@ void RKWindowCatcher::killDevice (int device_number) {
 
 #include <QScrollArea>
 #include <qlabel.h>
-#ifdef Q_OS_WIN
-// KF5 TODO: needed?
-#	include "../qwinhost/qwinhost.h"
-#	include <windows.h>
-#endif
 #include <QTimer>
 #include <QCloseEvent>
 #include <QSpinBox>
