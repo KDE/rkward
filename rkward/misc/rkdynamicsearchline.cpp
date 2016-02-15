@@ -2,7 +2,7 @@
                           rkdynamicsearchline  -  description
                              -------------------
     begin                : Mon Nov 16 2015
-    copyright            : (C) 2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2015-2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -18,7 +18,11 @@
 #include "rkdynamicsearchline.h"
 
 #include <klocale.h>
+
 #include <QSortFilterProxyModel>
+#include <QAction>
+
+#include "rkstandardicons.h"
 
 #include "../debug.h"
 
@@ -31,6 +35,8 @@ RKDynamicSearchLine::RKDynamicSearchLine (QWidget *parent) : QLineEdit (parent) 
 	timer.setSingleShot (true);
 	connect (&timer, &QTimer::timeout, this, &RKDynamicSearchLine::delayedSearch);
 	connect (this, &QLineEdit::textChanged, this, &RKDynamicSearchLine::textChanged);
+	working_indicator = new QAction (this);
+	working_indicator->setIcon (RKStandardIcons::getIcon (RKStandardIcons::StatusWaitingUpdating));
 }
 
 RKDynamicSearchLine::~RKDynamicSearchLine () {
@@ -40,6 +46,7 @@ RKDynamicSearchLine::~RKDynamicSearchLine () {
 void RKDynamicSearchLine::textChanged () {
 	RK_TRACE (MISC);
 	// KF5 TODO: Add activity indicator
+	addAction (working_indicator, QLineEdit::TrailingPosition);
 	timer.start (300);
 }
 
@@ -61,5 +68,6 @@ void RKDynamicSearchLine::delayedSearch () {
 
 	QRegExp filter (term, Qt::CaseInsensitive, allnum ? QRegExp::FixedString : QRegExp::RegExp2);
 	if (model) model->setFilterRegExp (filter);
+	removeAction (working_indicator);
 	emit (searchChanged (filter));
 }

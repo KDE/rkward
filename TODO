@@ -4,16 +4,13 @@ All in all, this TODO list is mostly for internal purposes, and many parts may n
 
 KF5 port:
 Things to do:
-- Remove kde4libssupport classes
-- Adjust platform checks
-- Device window embedding / remove qwinhost
+- Device window embedding / remove qwinhost -> test / fix on Windows
 - Grep for "KF5 TODO"
 - Remove katepart status bar from all previews (including in wizard)
 - Replace Q_WS_* and Q_OS_X11 as appropriate
 Things to test at the end:
 - Everthing concerning loading / saving, from recent files, scripts, workspace, etc.
   - Moved installations, moved workspaces.
-- Window embedding
 Knwon issues to fix:
 - Initial window placement for plugins is completely borked. One way around this seems to be to inherit RKStandardComponentGUI from QDialog. Does that work for inline embedded plugins?
 - Initial window placement for plots is always 0, 0 on screen 1, apparently. The above workaround may not be available, here?

@@ -37,6 +37,9 @@ void RKStandardIcons::initIcons () {
 	instance->doInitIcons ();
 }
 
+// TODO: With number of items growing, we should probably use a lazy-loading approach, instead:
+//       if (!loaded[thing]) initIcon (thing);
+//       return icons[thing];
 void RKStandardIcons::doInitIcons () {
 	RK_TRACE (APP);
 
@@ -113,7 +116,7 @@ void RKStandardIcons::doInitIcons () {
 	icons[WindowCommandEditor] = QIcon::fromTheme("text-x-makefile");	// this may not be the most obvious choice, but it is not quite as awfully close to the data.frame editor icons as most other text icons
 	icons[WindowOutput] = QIcon::fromTheme("applications-education");
 	icons[WindowHelp] = QIcon::fromTheme("help-contents");
-	icons[WindowX11] = QIcon::fromTheme("x");
+	icons[WindowX11] = QIcon::fromTheme("applications-graphics");
 	icons[WindowObject] = QIcon::fromTheme("zoom-original");
 	icons[WindowConsole] = QIcon::fromTheme("utilities-terminal");
 	icons[WindowCommandLog] = QIcon::fromTheme("format-justify-left");
@@ -124,16 +127,16 @@ void RKStandardIcons::doInitIcons () {
 	icons[WindowDebugConsole] = QIcon::fromTheme("view-process-system");
 	icons[WindowCallstackViewer] = QIcon::fromTheme("view-sort-ascending");
 
+	// TODO: We really want an hourglass symbol, or similar, here.
+	icons[StatusWaitingUpdating] = QIcon::fromTheme ("system-search");
+
 	icons[DocumentPDF] = QIcon::fromTheme("application-pdf");
 
-	// KF5 TODO: The code below should work allright with QIcon::fromTheme
-/*	This does not work, as the icons are not really Null in this case, but some default icon. Any way to really test this?
 	RK_DO ({
 		for (int i = ActionRunAll; i < Last; ++i) {
 			if (icons[i].isNull ()) qDebug ("Icon %d could not be loaded", i);
 		}
 	}, MISC, DL_ERROR);
-*/
 }
 
 QIcon RKStandardIcons::iconForObject (const RObject* object) {

@@ -113,6 +113,8 @@ public:
 		WindowDebugConsole,
 		WindowCallstackViewer,
 
+		StatusWaitingUpdating,
+
 		DocumentPDF,
 
 		Last	/**< not really an item, only the count of items available. Do not use. */
