@@ -23,6 +23,7 @@
 
 #include <qwidget.h>
 #include <QMap>
+#include <QTimer>
 
 #include <netwm_def.h>
 class RKMDIWindow;
@@ -79,20 +80,21 @@ public:
 /** Kill an R device
 @param device_number R device number of the device to kil */
 	void killDevice (int device_number);
-	/** watch the given window for changes in its WM_NAME property (i.e. changes in caption). When a change is detected, the caption will be set on watcher. WARNING: Do not use to watch windows managed by Qt! WARNING: Remember to call unregisterNameWatcher, when watcher is deleted! */
-	void registerNameWatcher (WId watched, RKMDIWindow *watcher);
+	/** watch the given window for changes in its WM_NAME property (i.e. changes in caption), or deletion. When a change is detected, the watcher will be notified (setCaption() or deleteLater())
+	    WARNING: Remember to call unregisterNameWatcher, when watcher is deleted! */
+	void registerWatcher (WId watched, RKMDIWindow *watcher);
 	/** remove a watch created with registerNameWatcher */
-	void unregisterNameWatcher (WId watched);
+	void unregisterWatcher (WId watched);
 	static RKWindowCatcher *instance ();
 	static void discardInstance () { delete _instance; };
-private slots:
-	void windowAdded (WId id);
-	void windowChanged (WId id, NET::Properties properties, NET::Properties2 properties2);
 private:
+	void pollWatchedWindowStates ();
+	QTimer poll_timer;
+	WId createdWindow ();
 	int last_cur_device;
-	WId created_window;
+	QList<WId> windows_before_add;
 	static RKWindowCatcher* _instance;
-	QMap<WId, RKMDIWindow*> name_watchers_list;
+	QMap<WId, RKMDIWindow*> watchers_list;
 };
 
 

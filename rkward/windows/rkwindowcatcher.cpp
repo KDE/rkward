@@ -49,6 +49,10 @@ RKWindowCatcher* RKWindowCatcher::instance () {
 
 RKWindowCatcher::RKWindowCatcher () : QObject () {
 	RK_TRACE (MISC);
+
+	poll_timer.setInterval (1000);
+	poll_timer.setSingleShot (true);
+	connect (&poll_timer, &QTimer::timeout, this, &RKWindowCatcher::pollWatchedWindowStates);
 }
 
 RKWindowCatcher::~RKWindowCatcher () {
@@ -60,25 +64,39 @@ void RKWindowCatcher::start (int prev_cur_device) {
 	RK_DEBUG (RBACKEND, DL_DEBUG, "Window Catcher activated");
 
 	last_cur_device = prev_cur_device;
-	created_window = 0;
-	connect (KWindowSystem::self(), &KWindowSystem::windowAdded, this, &RKWindowCatcher::windowAdded);
+	windows_before_add = KWindowSystem::windows ();
+}
+
+WId RKWindowCatcher::createdWindow () {
+	RK_TRACE (MISC);
+
+	// KF5 TODO: Note: Previously, on windows we checked for IsWindow (hwnd) and IsWindowVisible (hwnd), as sometimes invisible ghost windows
+	// would be created in addition to the real device window. Is this still needed?
+	// A whole lot of windows appear to get created, but it does look like the last one is the one we need.
+	QList<WId> windows_after_add = KWindowSystem::windows ();
+	WId candidate = windows_after_add.value (windows_after_add.size () - 1);
+	if (!windows_before_add.contains (windows_after_add.last ())) {
+		return candidate;
+	}
+	return 0;
 }
 
 void RKWindowCatcher::stop (int new_cur_device) {
 	RK_TRACE (MISC);
 	RK_DEBUG (RBACKEND, DL_DEBUG, "Window Catcher deactivated");
 
+	WId created_window = createdWindow ();
 	if (!created_window) {
 		// we did not see the window, yet? Maybe the event simply hasn't been processed, yet.
 		qApp->sync ();
 		qApp->processEvents ();
+		created_window = createdWindow ();
 	}
-	disconnect (KWindowSystem::self(), &KWindowSystem::windowAdded, this, &RKWindowCatcher::windowAdded);
 
 	if (new_cur_device != last_cur_device) {
 		if (created_window) {
 			// this appears to have the side-effect of forcing the captured window to sync with X, which is exactly, what we're trying to achieve.
-			KWindowInfo wininfo = KWindowSystem::windowInfo (created_window, NET::WMName | NET::WMGeometry);
+			KWindowInfo wininfo (created_window, NET::WMName | NET::WMGeometry);
 			QWindow *window = QWindow::fromWinId (created_window);
 			RKWorkplace::mainWorkplace ()->newX11Window (window, new_cur_device);
 		} else {
@@ -92,43 +110,43 @@ void RKWindowCatcher::stop (int new_cur_device) {
 	last_cur_device = new_cur_device;
 }
 
-void RKWindowCatcher::windowAdded (WId id) {
-	RK_TRACE (APP);
-
-	// KF5 TODO: Note: Previously, on windows we checked for IsWindow (hwnd) and IsWindowVisible (hwnd), as sometimes invisible ghost windows
-	// would be created in addition to the real device window. Is this still needed?
-	// A whole lot of windows appear to get created, but it does look like the last one is the one we need.
-	created_window = id;
-}
-
-void RKWindowCatcher::windowChanged (WId id, NET::Properties properties, NET::Properties2 properties2) {
-	Q_UNUSED (properties2);
-	if (!(properties & NET::WMName)) return;
-	RK_TRACE (APP);
-	RKMDIWindow *watcher = name_watchers_list.value (id);
-	if (!watcher) return;
-	watcher->setCaption (KWindowInfo (id, NET::WMName).name ());
-}
-
-// KF5 TODO: should no longer be needed. See QWindow::windowTitleChanged()
-void RKWindowCatcher::registerNameWatcher (WId watched, RKMDIWindow *watcher) {
-	RK_TRACE (APP);
-	RK_ASSERT (!name_watchers_list.contains (watched));
-
-	if (name_watchers_list.isEmpty ()) {
-		connect (KWindowSystem::self(), static_cast<void (KWindowSystem::*)(WId, NET::Properties, NET::Properties2)>(&KWindowSystem::windowChanged), this, &RKWindowCatcher::windowChanged);
+void RKWindowCatcher::pollWatchedWindowStates () {
+	// RK_TRACE (APP);
+	// Well, this really bad, but the notification in KWindowSystem (windowChanged(), windowRemoved()) just don't work for embedded windows. So we have to use polling to
+	// check whether windows changed their name, or have gone away... KF5 5.15.0, X.
+	for (QMap<WId, RKMDIWindow*>::const_iterator it = watchers_list.constBegin (); it != watchers_list.constEnd (); ++it) {
+		KWindowInfo wininfo (it.key (), NET::WMName);
+		if (!wininfo.valid ()) it.value ()->deleteLater ();
+		else {
+			if (it.value ()->shortCaption () != wininfo.name ()) it.value ()->setCaption (wininfo.name ());
+		}
 	}
-	name_watchers_list.insert (watched, watcher);
+	if (!watchers_list.isEmpty ()) {
+		poll_timer.start ();
+	}
 }
 
-void RKWindowCatcher::unregisterNameWatcher (WId watched) {
+void RKWindowCatcher::registerWatcher (WId watched, RKMDIWindow *watcher) {
 	RK_TRACE (APP);
-	RK_ASSERT (name_watchers_list.contains (watched));
+	RK_ASSERT (!watchers_list.contains (watched));
 
-	name_watchers_list.remove (watched);
-	if (name_watchers_list.isEmpty ()) {
-		disconnect (KWindowSystem::self(), static_cast<void (KWindowSystem::*)(WId, NET::Properties, NET::Properties2)>(&KWindowSystem::windowChanged), this, &RKWindowCatcher::windowChanged);
+	KWindowInfo wininfo (watched, NET::WMName);
+	if (!wininfo.valid ()) {
+		RK_DEBUG (APP, DL_ERROR, "Cannot fetch window info. Platform limitation? Not watching for window changes.")
+		return;
 	}
+
+	if (watchers_list.isEmpty ()) {
+		poll_timer.start ();
+	}
+	watchers_list.insert (watched, watcher);
+}
+
+void RKWindowCatcher::unregisterWatcher (WId watched) {
+	RK_TRACE (APP);
+	RK_ASSERT (watchers_list.contains (watched));
+
+	watchers_list.remove (watched);
 }
 
 void RKWindowCatcher::updateHistory (QStringList params) {
@@ -197,9 +215,12 @@ RKCaughtX11Window::RKCaughtX11Window (QWindow* window_to_embed, int device_numbe
 // TODO: Actually, the WindowCatcher should pass a QWindow*, not WId.
 	commonInit (device_number);
 	embedded = window_to_embed;
+	// NOTE: QWindow::windowTitleChanged is _NOT_ emitted for embedded windows (Qt 5.4.2, X), similarly QWindow is _NOT_ destroyed, when the embedded window is destroyed
+	//       So we need the RKWindowCatcher to help us.
+	RKWindowCatcher::instance ()->registerWatcher (embedded->winId (), this);
 
 #if !defined Q_OS_MAC
-	KWindowInfo wininfo = KWindowSystem::windowInfo (embedded->winId (), NET::WMName | NET::WMGeometry);
+	KWindowInfo wininfo (embedded->winId (), NET::WMName | NET::WMGeometry);
 	RK_ASSERT (wininfo.valid ());
 
 	// set a fixed size until the window is shown
@@ -262,7 +283,7 @@ void RKCaughtX11Window::commonInit (int device_number) {
 	xembed_layout->setContentsMargins (0, 0, 0, 0);
 	//layout->addWidget (xembed_container);
 	scroll_widget->setWidget (xembed_container);
-	xembed_container->hide ();
+	xembed_container->hide (); // it seems to be important that the parent of a captured / embedded window is invisible prior to embedding.
 
 	dynamic_size = false;
 	dynamic_size_action->setChecked (false);
@@ -277,13 +298,10 @@ void RKCaughtX11Window::doEmbed () {
 			capture->deleteLater ();
 		} */
 		qApp->sync ();
-		KWindowInfo wininfo = KWindowSystem::windowInfo (embedded->winId (), NET::WMName | NET::WMGeometry);
+		KWindowInfo wininfo (embedded->winId (), NET::WMName | NET::WMGeometry);
 		capture = QWidget::createWindowContainer (embedded, xembed_container);
 		xembed_container->layout ()->addWidget (capture);
 		xembed_container->show ();
-		// KF5 TODO: Will this detect closed device, correctly? No, will probably need assistance from KWindowSystem.
-		connect (embedded, &QObject::destroyed, this, &RKCaughtX11Window::deleteLater);
-		// KF5 TODO: Window caption?
 	}
 
 	if (!isAttached ()) {
@@ -306,7 +324,7 @@ RKCaughtX11Window::~RKCaughtX11Window () {
 	device_windows.remove (device_number);
 
 	close (false);
-	if (capture) RKWindowCatcher::instance ()->unregisterNameWatcher (capture->winId ());
+	if (embedded) RKWindowCatcher::instance ()->unregisterWatcher (embedded->winId ());
 	error_dialog->autoDeleteWhenDone ();
 }
 
@@ -349,7 +367,7 @@ bool RKCaughtX11Window::close (bool also_delete) {
 		close_attempted = true;
 	} else {
 		if (KMessageBox::questionYesNo (this, i18n ("<p>The graphics device is being closed, saving the last plot to the plot history. This may take a while, if the R backend is still busy. You can close the graphics device immediately, in case it is stuck. However, the last plot may be missing from the plot history, if you do this.</p>")
-#ifdef Q_WS_X11
+#if !defined Q_OS_WIN
 		+ i18n ("<p>Note: On X11, the embedded window may be expurged, and you will have to close it manually in this case.</p>")
 #endif
 		, status, KGuiItem (i18n ("Close immediately")), KGuiItem (i18n ("Keep waiting"))) == KMessageBox::Yes) forceClose ();
@@ -679,22 +697,22 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KPart
 
 	action = actionCollection ()->addAction ("plot_prev", window, SLOT (previousPlot()));
 	window->actions_not_for_preview.append (action);
- 	action->setText (i18n ("Previous plot"));
+	action->setText (i18n ("Previous plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveLeft));
 	window->plot_prev_action = (QAction *) action;
 	action = actionCollection ()->addAction ("plot_first", window, SLOT (firstPlot()));
 	window->actions_not_for_preview.append (action);
- 	action->setText (i18n ("First plot"));
+	action->setText (i18n ("First plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveFirst));
 	window->plot_first_action = (QAction *) action;
 	action = actionCollection ()->addAction ("plot_next", window, SLOT (nextPlot()));
 	window->actions_not_for_preview.append (action);
- 	action->setText (i18n ("Next plot"));
+	action->setText (i18n ("Next plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveRight));
 	window->plot_next_action = (QAction *) action;
 	action = actionCollection ()->addAction ("plot_last", window, SLOT (lastPlot()));
 	window->actions_not_for_preview.append (action);
- 	action->setText (i18n ("Last plot"));
+	action->setText (i18n ("Last plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveLast));
 	window->plot_last_action = (QAction *) action;
 	action = window->plot_list_action = new KSelectAction (i18n ("Go to plot"), 0);
@@ -706,18 +724,18 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KPart
 
 	action = actionCollection ()->addAction ("plot_force_append", window, SLOT (forceAppendCurrentPlot()));
 	window->actions_not_for_preview.append (action);
- 	action->setText (i18n ("Append this plot"));
+	action->setText (i18n ("Append this plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionSnapshot));
 	window->plot_force_append_action = (QAction *) action;
 	action = actionCollection ()->addAction ("plot_remove", window, SLOT (removeCurrentPlot()));
 	window->actions_not_for_preview.append (action);
- 	action->setText (i18n ("Remove this plot"));
+	action->setText (i18n ("Remove this plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRemovePlot));
 	window->plot_remove_action = (QAction *) action;
 
 	action = actionCollection ()->addAction ("plot_clear_history", window, SLOT (clearHistory()));
 	window->plot_clear_history_action = (QAction *) action;
- 	action->setText (i18n ("Clear history"));
+	action->setText (i18n ("Clear history"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionClear));
 	window->actions_not_for_preview.append (action);
 
