@@ -154,8 +154,15 @@
 	oldd <- dev.cur ()
 	.rk.do.call ("startOpenX11", as.character (oldd));
 	on.exit (.rk.do.call ("endOpenX11", as.character (dev.cur())));
+	on.exit ({  # This serves to make R do all necessary X11 event processing, _while_ we are in the process of embedding the device in the frontend.
+		for (i in 1:10) {
+			if (.rk.variables$devembedded) break
+			Sys.sleep (.1)
+		}}, add=TRUE);
 
+	.rk.variables$devembedded <- FALSE
 	x <- eval.parent (expr)
+	Sys.sleep (.1) # This serves to make R do initial X11 event processing _before_ we try to embed the device in the frontend.
 
 	if (oldd != dev.cur ()) on.exit (rk.record.plot$onAddDevice (), add=TRUE)
 	else warning ("No device appears to have been created (dev.cur() has not changed)");

@@ -184,6 +184,7 @@ private:
 
 	static QHash<int, RKCaughtX11Window*> device_windows;
 	QWindow *embedded;
+	bool embedding_complete;
 	QWidget *capture;  // The captured window (0, if using an rk native device)
 	RKGraphicsDevice *rk_native_device;
 

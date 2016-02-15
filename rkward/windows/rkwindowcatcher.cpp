@@ -77,15 +77,10 @@ void RKWindowCatcher::stop (int new_cur_device) {
 
 	if (new_cur_device != last_cur_device) {
 		if (created_window) {
-			qDebug ("using %x", created_window);
-			//qApp->sync ();
 			// this appears to have the side-effect of forcing the captured window to sync with X, which is exactly, what we're trying to achieve.
 			KWindowInfo wininfo = KWindowSystem::windowInfo (created_window, NET::WMName | NET::WMGeometry);
 			QWindow *window = QWindow::fromWinId (created_window);
 			RKWorkplace::mainWorkplace ()->newX11Window (window, new_cur_device);
-			// All this syncing looks like a bloody hack? Absolutely. It appears to work around the occasional error "figure margins too large" from R, though.
-			//qApp->processEvents ();
-			//qApp->processEvents ();
 		} else {
 #if defined Q_OS_MAC
 			KMessageBox::information (0, i18n ("You have tried to embed a new R graphics device window in RKWard. However, this is not currently supported in this build of RKWard on Mac OS X. See http://rkward.kde.org/mac for more information."), i18n ("Could not embed R X11 window"), "embed_x11_device_not_supported");
@@ -215,11 +210,8 @@ RKCaughtX11Window::RKCaughtX11Window (QWindow* window_to_embed, int device_numbe
 	RK_ASSERT (false);
 #endif
 
-	// KF5 TODO: Still needed?
-	// somehow in Qt 4.4.3, when the RKCaughtWindow is reparented the first time, the QX11EmbedContainer may kill its client. Hence we delay the actual embedding until after the window was shown.
-	// In some previous version of Qt, this was not an issue, but I did not track the versions.
-	QTimer::singleShot (2000, this, SLOT (doEmbed()));
-	//doEmbed ();
+	// We need to make sure that the R backend has had a chance to do event processing on the new device, or else embedding will fail (sometimes).
+	QTimer::singleShot (100, this, SLOT (doEmbed()));
 }
 
 RKCaughtX11Window::RKCaughtX11Window (RKGraphicsDevice* rkward_device, int device_number) : RKMDIWindow (0, X11Window) {
@@ -245,6 +237,7 @@ void RKCaughtX11Window::commonInit (int device_number) {
 
 	capture = 0;
 	embedded = 0;
+	embedding_complete = false;
 	rk_native_device = 0;
 	killed_in_r = close_attempted = false;
 	RKCaughtX11Window::device_number = device_number;
@@ -279,7 +272,7 @@ void RKCaughtX11Window::doEmbed () {
 	RK_TRACE (MISC);
 
 	if (embedded) {
-/*		if (capture) {
+/*		if (capture) {  // Old re-embedding code, moved here. No longer needed?
 			embedded->setParent (0);
 			capture->deleteLater ();
 		} */
@@ -287,8 +280,8 @@ void RKCaughtX11Window::doEmbed () {
 		KWindowInfo wininfo = KWindowSystem::windowInfo (embedded->winId (), NET::WMName | NET::WMGeometry);
 		capture = QWidget::createWindowContainer (embedded, xembed_container);
 		xembed_container->layout ()->addWidget (capture);
-		QTimer::singleShot (100, xembed_container, SLOT (show ()));
-		// KF5 TODO: Will this detect closed device, correclty? No, will probably need assistance from KWindowSystem.
+		xembed_container->show ();
+		// KF5 TODO: Will this detect closed device, correctly? No, will probably need assistance from KWindowSystem.
 		connect (embedded, &QObject::destroyed, this, &RKCaughtX11Window::deleteLater);
 		// KF5 TODO: Window caption?
 	}
@@ -296,7 +289,7 @@ void RKCaughtX11Window::doEmbed () {
 	if (!isAttached ()) {
 		// make xembed_container resizable, again, now that it actually has a content
 		dynamic_size_action->setChecked (true);
-		QTimer::singleShot (1000, this, SLOT (fixedSizeToggled ()));
+		QTimer::singleShot (0, this, SLOT (fixedSizeToggled ())); // For whatever reason, apparently we have to wait for the next event loop with this.
 	}
 
 	// try to be helpful when the window is too large to fit on screen
@@ -422,6 +415,11 @@ void RKCaughtX11Window::fixedSizeToggled () {
 		layout ()->removeWidget (xembed_container);
 		scroll_widget->setWidget (xembed_container);
 		scroll_widget->show ();
+	}
+
+	if (embedded && !embedding_complete) {
+		embedding_complete = true;
+		RKGlobals::rInterface ()->issueCommand ("assign ('devembedded', TRUE, rkward:::.rk.variables)", RCommand::App | RCommand::Sync | RCommand::PriorityCommand);
 	}
 }
 
