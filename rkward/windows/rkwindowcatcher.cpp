@@ -405,9 +405,9 @@ void RKCaughtX11Window::fixedSizeToggled () {
 
 	if (dynamic_size_action->isChecked ()) {
 		scroll_widget->takeWidget ();
+		scroll_widget->hide ();
 		layout ()->addWidget (xembed_container);
 		xembed_container->show ();
-		scroll_widget->hide ();
 		xembed_container->setMinimumSize (5, 5);
 		xembed_container->setMaximumSize (32767, 32767);
 	} else {
