@@ -45,8 +45,10 @@ RKDynamicSearchLine::~RKDynamicSearchLine () {
 
 void RKDynamicSearchLine::textChanged () {
 	RK_TRACE (MISC);
-	// KF5 TODO: Add activity indicator
-	addAction (working_indicator, QLineEdit::TrailingPosition);
+
+	if (!timer.isActive ()) {
+		addAction (working_indicator, QLineEdit::TrailingPosition);
+	}
 	timer.start (300);
 }
 
