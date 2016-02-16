@@ -968,12 +968,12 @@ void RKConsole::initializeActions (KActionCollection *ac) {
 
 	interrupt_command_action = ac->addAction ("interrupt", this, SLOT (resetConsole()));
 	interrupt_command_action->setText (i18n ("Interrupt running command"));
-	interrupt_command_action->setShortcut (REAL_CTRL_KEY + Qt::Key_C);
+	ac->setDefaultShortcut (interrupt_command_action, REAL_CTRL_KEY + Qt::Key_C);
 	interrupt_command_action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionInterrupt));
 	interrupt_command_action->setEnabled (false);
 
 	copy_literal_action = ac->addAction ("rkconsole_copy_literal", this, SLOT (literalCopy()));
-	copy_literal_action->setShortcut (REAL_CMD_KEY + Qt::Key_C);
+	ac->setDefaultShortcut (copy_literal_action, REAL_CMD_KEY + Qt::Key_C);
 	copy_literal_action->setText (i18n ("Copy selection literally"));
 
 	copy_commands_action = ac->addAction ("rkconsole_copy_commands", this, SLOT (copyCommands()));

@@ -203,7 +203,7 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	QAction *action = ac->addAction ("enter_and_submit", this, SLOT (enterAndSubmit()));
 	action->setText (i18n ("Insert line break and run"));
 	ac->setDefaultShortcuts (action, QList<QKeySequence>() << Qt::AltModifier + Qt::Key_Return << Qt::AltModifier + Qt::Key_Enter);
-	action->setShortcut (Qt::AltModifier + Qt::Key_Return); // KF5 TODO: This line needed only for KF5 < 5.2, according to documentation
+	ac->setDefaultShortcut (action, Qt::AltModifier + Qt::Key_Return); // KF5 TODO: This line needed only for KF5 < 5.2, according to documentation
 
 	action_help_function = RKStandardActions::functionHelp (this, this, SLOT (showHelp()));
 
@@ -280,7 +280,7 @@ void RKCommandEditorWindow::initBlocks () {
 		record.unmark->setData (i);
 		actionmenu_unmark_block->addAction (record.unmark);
 		record.run = ac->addAction ("runblock" + QString::number (i), this, SLOT (runBlock()));
-		record.run->setShortcut (shortcuts[i]);
+		ac->setDefaultShortcut (record.run, shortcuts[i]);
 		record.run->setIcon (icon);
 		record.run->setData (i);
 		actionmenu_run_block->addAction (record.run);

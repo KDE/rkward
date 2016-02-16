@@ -482,7 +482,7 @@ void RKWardMainWindow::initActions() {
 
 	fileOpenWorkspace = actionCollection ()->addAction (KStandardAction::Open, "file_openx", this, SLOT(slotFileOpenWorkspace()));
 	fileOpenWorkspace->setText (i18n ("Open Workspace..."));
-	fileOpenWorkspace->setShortcut (Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_O);
+	actionCollection ()->setDefaultShortcut (fileOpenWorkspace, Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_O);
 	fileOpenWorkspace->setStatusTip (i18n ("Opens an existing document"));
 
 	fileOpenRecentWorkspace = static_cast<KRecentFilesAction*> (actionCollection ()->addAction (KStandardAction::OpenRecent, "file_open_recentx", this, SLOT(askOpenWorkspace(QUrl))));
@@ -492,12 +492,10 @@ void RKWardMainWindow::initActions() {
 	fileSaveWorkspace = actionCollection ()->addAction (KStandardAction::Save, "file_savex", this, SLOT(slotFileSaveWorkspace()));
 	fileSaveWorkspace->setText (i18n ("Save Workspace"));
 	actionCollection ()->setDefaultShortcut (fileSaveWorkspace, Qt::ControlModifier + Qt::AltModifier + Qt::Key_S);
-	fileSaveWorkspace->setShortcut (Qt::ControlModifier + Qt::AltModifier + Qt::Key_S); // KF5 TODO: Not needed for KF5 >= 5.2
 	fileSaveWorkspace->setStatusTip (i18n ("Saves the actual document"));
 
 	fileSaveWorkspaceAs = actionCollection ()->addAction (KStandardAction::SaveAs, "file_save_asx", this, SLOT(slotFileSaveWorkspaceAs()));
 	actionCollection ()->setDefaultShortcut (fileSaveWorkspaceAs, Qt::ControlModifier + Qt::AltModifier + Qt::ShiftModifier + Qt::Key_S);
-	fileSaveWorkspaceAs->setShortcut (Qt::ControlModifier + Qt::AltModifier + Qt::ShiftModifier + Qt::Key_S); // KF5 TODO: Not needed for KF5 >= 5.2
 	fileSaveWorkspaceAs->setText (i18n ("Save Workspace As"));
 	fileSaveWorkspaceAs->setStatusTip (i18n ("Saves the actual document as..."));
 
@@ -506,7 +504,7 @@ void RKWardMainWindow::initActions() {
 
 	interrupt_all_commands = actionCollection ()->addAction ("cancel_all_commands", this, SLOT (slotCancelAllCommands()));
 	interrupt_all_commands->setText (i18n ("Interrupt all commands"));
-	interrupt_all_commands->setShortcut (Qt::ShiftModifier + Qt::Key_Escape);
+	actionCollection ()->setDefaultShortcut (interrupt_all_commands, Qt::ShiftModifier + Qt::Key_Escape);
 	interrupt_all_commands->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionInterrupt));
 	interrupt_all_commands->setEnabled (false);		// enabled from within setRStatus()
 

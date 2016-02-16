@@ -647,7 +647,7 @@ void RKHTMLWindowPart::initActions () {
 
 	actionCollection ()->addAction (KStandardAction::Find, "find", window->findbar, SLOT (activate()));
 	QAction* findAhead = actionCollection ()->addAction ("find_ahead", new QAction (i18n ("Find as you type"), this));
-	findAhead->setShortcut ('/');
+	actionCollection ()->setDefaultShortcut (findAhead, '/');
 	connect (findAhead, &QAction::triggered, window->findbar, &RKFindBar::activate);
 	actionCollection ()->addAction (KStandardAction::FindNext, "find_next", window->findbar, SLOT (forward()));;
 	actionCollection ()->addAction (KStandardAction::FindPrev, "find_previous", window->findbar, SLOT (backward()));;;

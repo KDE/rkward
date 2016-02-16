@@ -41,7 +41,7 @@ QAction* RKStandardActions::pasteSpecial (RKMDIWindow *window, const QObject *re
 	QAction* ret = new RKPasteSpecialAction (window->standardActionCollection ());
 	window->standardActionCollection ()->addAction ("paste_special", ret);
 	ret->connect (ret, SIGNAL (pasteText(QString)), receiver, member);
-	ret->setShortcut (Qt::ShiftModifier + Qt::ControlModifier + Qt::Key_V);
+	window->standardActionCollection ()->setDefaultShortcut (ret, Qt::ShiftModifier + Qt::ControlModifier + Qt::Key_V);
 	return ret;
 }
 
@@ -58,7 +58,6 @@ QAction* RKStandardActions::runCurrent (RKMDIWindow *window, const QObject *rece
 	}
 	ret->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRunLine));
 	window->standardActionCollection ()->setDefaultShortcuts (ret, QList<QKeySequence>() << Qt::ControlModifier + Qt::Key_Return << Qt::ControlModifier + Qt::Key_Enter);
-	ret->setShortcut (Qt::ControlModifier + Qt::Key_Return);  // KF5 TODO: Not needed for KF5 >= 5.2
 
 	return ret;
 }
@@ -70,7 +69,6 @@ QAction* RKStandardActions::runAll (RKMDIWindow *window, const QObject *receiver
 	ret->setText (i18n ("Run all"));
 	ret->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRunAll));
 	window->standardActionCollection ()->setDefaultShortcuts (ret, QList<QKeySequence>() << Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_Return << Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_Enter);
-	ret->setShortcut (Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_Return);  // KF5 TODO: Not needed for KF5 >= 5.2
 
 	return ret;
 }
@@ -80,6 +78,6 @@ QAction* RKStandardActions::functionHelp (RKMDIWindow *window, const QObject *re
 
 	QAction* ret = window->standardActionCollection ()->addAction ("function_reference", receiver, member);
 	ret->setText (i18n ("&Function reference"));
-	ret->setShortcut (Qt::Key_F2);
+	window->standardActionCollection ()->setDefaultShortcut (ret, Qt::Key_F2);
 	return ret;
 }
