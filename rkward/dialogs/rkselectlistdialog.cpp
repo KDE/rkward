@@ -20,11 +20,12 @@
 #include <QListWidget>
 #include <QLabel>
 #include <QVBoxLayout>
-#include <QDialogButtonBox>
 #include <QPushButton>
 #include <QScrollBar>
 
 #include <klocale.h>
+
+#include "../misc/rkdialogbuttonbox.h"
 
 #include "../debug.h"
 
@@ -59,10 +60,7 @@ RKSelectListDialog::RKSelectListDialog (QWidget *parent, const QString &caption,
 	}
 	layout->addWidget (input);
 
-	buttons = new QDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-	connect (buttons->button (QDialogButtonBox::Ok), &QPushButton::clicked, this, &QDialog::accept);
-	connect (buttons->button (QDialogButtonBox::Cancel), &QPushButton::clicked, this, &QDialog::reject);
-	buttons->button (QDialogButtonBox::Ok)->setShortcut (Qt::CTRL | Qt::Key_Return);
+	buttons = new RKDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
 	layout->addWidget (buttons);
 
 	connect (input, &QListWidget::itemSelectionChanged, this, &RKSelectListDialog::updateState);

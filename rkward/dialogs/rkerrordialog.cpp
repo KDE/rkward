@@ -33,6 +33,7 @@
 #include "../rbackend/rinterface.h"
 #include "../rbackend/rksessionvars.h"
 #include "../misc/rkprogresscontrol.h"
+#include "../misc/rkdialogbuttonbox.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
 #include "../version.h"
@@ -62,12 +63,9 @@ public:
 		label->setOpenExternalLinks (true);
 		layout->addWidget (label);
 
-		QDialogButtonBox *buttons = new QDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+		RKDialogButtonBox *buttons = new RKDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
 		buttons->button (QDialogButtonBox::Ok)->setText (i18n ("Report issue"));
 		buttons->button (QDialogButtonBox::Ok)->setIcon (QIcon::fromTheme("tools-report-bug"));
-		connect (buttons->button (QDialogButtonBox::Ok), &QPushButton::clicked, this, &QDialog::accept);
-		buttons->button (QDialogButtonBox::Ok)->setShortcut (Qt::CTRL | Qt::Key_Return);
-		connect (buttons->button (QDialogButtonBox::Cancel), &QPushButton::clicked, this, &QDialog::reject);
 		layout->addWidget (buttons);
 
 		connect (this, &QDialog::finished, this, &RKBugzillaReportDialog::deleteLater);

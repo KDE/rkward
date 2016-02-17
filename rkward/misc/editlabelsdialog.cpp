@@ -30,6 +30,7 @@
 
 #include "../core/rkvariable.h"
 #include "../dataeditor/rktextmatrix.h"
+#include "../misc/rkdialogbuttonbox.h"
 #include "celleditor.h"
 
 #include "../debug.h"
@@ -219,10 +220,7 @@ EditLabelsDialog::EditLabelsDialog (QWidget *parent, const RObject::ValueLabels&
 	table = new RKVarLevelsTable (this, labels);
 	layout->addWidget (table);
 
-	QDialogButtonBox *buttons = new QDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-	connect (buttons->button (QDialogButtonBox::Ok), &QPushButton::clicked, this, &QDialog::accept);
-	buttons->button (QDialogButtonBox::Ok)->setShortcut (Qt::CTRL | Qt::Key_Return);
-	connect (buttons->button (QDialogButtonBox::Cancel), &QPushButton::clicked, this, &QDialog::reject);
+	RKDialogButtonBox *buttons = new RKDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
 	layout->addWidget (buttons);
 }
 

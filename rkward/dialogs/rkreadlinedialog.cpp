@@ -26,13 +26,12 @@
 #include <QTimer>
 #include <QVBoxLayout>
 #include <QFontDatabase>
-#include <QDialogButtonBox>
-#include <QPushButton>
 
 #include <klocale.h>
 #include <kglobalsettings.h>
 
 #include "../rbackend/rcommand.h"
+#include "../misc/rkdialogbuttonbox.h"
 
 #include "../debug.h"
 
@@ -79,10 +78,7 @@ RKReadLineDialog::RKReadLineDialog (QWidget *parent, const QString &caption, con
 	input->setFocus ();
 	layout->addWidget (input);
 
-	QDialogButtonBox *box = new QDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-	connect (box->button (QDialogButtonBox::Ok), &QPushButton::clicked, this, &QDialog::accept);
-	connect (box->button (QDialogButtonBox::Cancel), &QPushButton::clicked, this, &QDialog::reject);
-	box->button (QDialogButtonBox::Ok)->setShortcut (Qt::CTRL | Qt::Key_Return);
+	RKDialogButtonBox *box = new RKDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
 	layout->addWidget (box);
 }
 

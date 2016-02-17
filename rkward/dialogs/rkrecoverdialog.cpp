@@ -30,6 +30,7 @@
 
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkdialogbuttonbox.h"
 
 #include "../debug.h"
 
@@ -52,16 +53,13 @@ RKRecoverDialog::RKRecoverDialog (const QStringList &recovery_files) : QDialog (
 	label->setWordWrap (true);
 	layout->addWidget (label);
 
-	QDialogButtonBox *buttons = new QDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Discard);
+	RKDialogButtonBox *buttons = new RKDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Discard, this);
 	buttons->button (QDialogButtonBox::Ok)->setText (i18n ("Recover"));
 	RKCommonFunctions::setTips (i18n ("Saves the recovery file(s), and opens it (or the most recent one)"), buttons->button (QDialogButtonBox::Ok));
 	buttons->button (QDialogButtonBox::Cancel)->setText (i18n ("Save for later"));
 	RKCommonFunctions::setTips (i18n ("Saves the recovery file(s) for later use, but does not open it"), buttons->button (QDialogButtonBox::Cancel));
 	buttons->button (QDialogButtonBox::Discard)->setText (i18n ("Delete"));
 	RKCommonFunctions::setTips (i18n ("Deletes the recovery file(s)"), buttons->button (QDialogButtonBox::Discard));
-	connect (buttons->button (QDialogButtonBox::Ok), &QPushButton::clicked, this, &QDialog::accept);
-	buttons->button (QDialogButtonBox::Ok)->setShortcut (Qt::CTRL | Qt::Key_Return);
-	connect (buttons->button (QDialogButtonBox::Cancel), &QPushButton::clicked, this, &QDialog::reject);
 	connect (buttons->button (QDialogButtonBox::Discard), &QPushButton::clicked, this, &RKRecoverDialog::deleteButtonClicked);
 	layout->addWidget (buttons);
 }

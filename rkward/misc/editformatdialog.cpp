@@ -30,6 +30,8 @@
 
 #include "../core/rkvariable.h"
 #include "../rkglobals.h"
+#include "../misc/rkdialogbuttonbox.h"
+
 #include "../debug.h"
 
 EditFormatDialog::EditFormatDialog (QWidget *parent) : QDialog (parent) {
@@ -67,10 +69,7 @@ EditFormatDialog::EditFormatDialog (QWidget *parent) : QDialog (parent) {
 	group_layout->addWidget (precision_field);
 	precision_group->button ((int) RKVariable::FormattingOptions::PrecisionDefault)->setChecked (true);
 
-	QDialogButtonBox *buttons = new QDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-	connect (buttons->button (QDialogButtonBox::Ok), &QPushButton::clicked, this, &QDialog::accept);
-	buttons->button (QDialogButtonBox::Ok)->setShortcut (Qt::CTRL | Qt::Key_Return);
-	connect (buttons->button (QDialogButtonBox::Cancel), &QPushButton::clicked, this, &QDialog::reject);
+	RKDialogButtonBox *buttons = new RKDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
 	layout->addWidget (buttons);
 }
 

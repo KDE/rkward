@@ -20,11 +20,9 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QGraphicsRectItem>
-#include <QPushButton>
 #include <QHBoxLayout>
 #include <QMouseEvent>
 #include <QDialog>
-#include <QDialogButtonBox>
 
 #include <klocale.h>
 #include <sys/stat.h>
@@ -32,6 +30,7 @@
 #include "rkgraphicsdevice_protocol_shared.h"
 #include "../rinterface.h"
 #include "../../rkglobals.h"
+#include "../../misc/rkdialogbuttonbox.h"
 
 #include "../../debug.h"
 
@@ -321,10 +320,7 @@ void RKGraphicsDevice::confirmNewPage () {
 	QVBoxLayout *layout = new QVBoxLayout (dialog);
 	layout->addWidget (new QLabel (msg, dialog));
 
-	QDialogButtonBox *buttons = new QDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-	connect (buttons->button (QDialogButtonBox::Ok), &QPushButton::clicked, dialog, &QDialog::accept);
-	buttons->button (QDialogButtonBox::Ok)->setShortcut (Qt::CTRL | Qt::Key_Return);
-	connect (buttons->button (QDialogButtonBox::Cancel), &QPushButton::clicked, dialog, &QDialog::reject);
+	RKDialogButtonBox *buttons = new RKDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel, dialog);
 	layout->addWidget (buttons);
 
 //	dialog->setWindowModality (Qt::WindowModal);        // not good: Grays out the plot window

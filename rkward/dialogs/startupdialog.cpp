@@ -31,11 +31,12 @@
 #include <klocale.h>
 #include <krecentfilesaction.h>
 #include <KConfigGroup>
-#include <QDialogButtonBox>
 #include <QPushButton>
 
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkdialogbuttonbox.h"
+
 #include "../debug.h"
 
 StartupDialog::StartupDialog (QWidget *parent, StartupDialogResult *result, KRecentFilesAction *recent_files) : QDialog (parent) {
@@ -89,12 +90,8 @@ StartupDialog::StartupDialog (QWidget *parent, StartupDialogResult *result, KRec
 	choser_layout->addWidget (file_list);
 	choser_layout->addWidget (remember_box = new QCheckBox (i18n ("Always do this on startup"), choser_box));
 
-	QDialogButtonBox *buttonBox = new QDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-	QPushButton *okButton = buttonBox->button (QDialogButtonBox::Ok);
-	okButton->setDefault (true);
-	okButton->setShortcut (Qt::CTRL | Qt::Key_Return);
-	connect (buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
-	connect (buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
+	RKDialogButtonBox *buttonBox = new RKDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+	buttonBox->button (QDialogButtonBox::Ok)->setDefault (true);
 	vbox->addWidget (buttonBox);
 }
 
