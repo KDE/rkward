@@ -1,5 +1,6 @@
-rkward (0.6.4z+0.6.5+devel1-1) UNRELEASED; urgency=low
+rkward (0.6.9z+0.7.0+devel1-1) UNRELEASED; urgency=low
   * new upstream release
+  * TODO merge changelog of older releases
 
  -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Wed, 16 Dec 2015 10:30:00 +0100
 

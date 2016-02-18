@@ -7,7 +7,6 @@ Build-Depends: cmake,
                debhelper (>= 6.0.0),
                libkf5webkit-dev,
                libkf5texteditor-dev,
-               libkf5kdelibs4support-dev,
                kdoctools-dev,
                r-base-dev (>= 2.8.0)
 Standards-Version: 3.9.6
