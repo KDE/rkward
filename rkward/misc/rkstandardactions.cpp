@@ -17,7 +17,7 @@
 
 #include "rkstandardactions.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kactioncollection.h>
 #include <QAction>
 

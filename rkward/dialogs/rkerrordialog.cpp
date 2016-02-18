@@ -17,7 +17,7 @@
 
 #include "rkerrordialog.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kmessagebox.h>
 #include <ktoolinvocation.h>
 

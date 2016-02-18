@@ -23,13 +23,15 @@
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../rkglobals.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <krandom.h>
+
 #include <QCoreApplication>
 #include <QProcess>
 #include <QLocalServer>
 #include <QLocalSocket>
 #include <QDir>
+#include <QStandardPaths>
 
 #include "../version.h"
 #include "../debug.h"

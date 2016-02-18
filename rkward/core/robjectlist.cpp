@@ -24,7 +24,7 @@
 #include <qtimer.h>
 #include <qstringlist.h>
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "renvironmentobject.h"
 #include "../rbackend/rinterface.h"

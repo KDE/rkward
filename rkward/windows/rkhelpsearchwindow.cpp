@@ -17,7 +17,7 @@
 
 #include "rkhelpsearchwindow.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <QUrl>
 #include <kmessagebox.h>
 

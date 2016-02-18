@@ -16,7 +16,7 @@
  ***************************************************************************/
 #include "rkloadagent.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kmessagebox.h>
 #include <kdeversion.h>
 #include <kio/filecopyjob.h>

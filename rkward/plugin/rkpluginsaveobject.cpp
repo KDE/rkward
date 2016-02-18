@@ -20,7 +20,7 @@
 #include <QVBoxLayout>
 #include <QGroupBox>
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "../misc/xmlhelper.h"
 #include "../misc/rksaveobjectchooser.h"

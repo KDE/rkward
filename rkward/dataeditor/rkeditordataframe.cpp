@@ -17,7 +17,7 @@
 #include "rkeditordataframe.h"
 
 #include <kmessagebox.h>
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "../rbackend/rinterface.h"
 #include "../rkglobals.h"

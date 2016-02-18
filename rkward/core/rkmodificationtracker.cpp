@@ -17,7 +17,7 @@
 #include "rkmodificationtracker.h"
 
 #include <kmessagebox.h>
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "../rkglobals.h"
 #include "../dataeditor/rkeditor.h"

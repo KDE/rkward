@@ -20,7 +20,7 @@
 #include <libintl.h>
 #include <QFile>
 #include <QLocale>
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "../debug.h"
 

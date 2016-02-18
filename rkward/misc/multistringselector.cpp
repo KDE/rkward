@@ -24,7 +24,7 @@
 #include <QVBoxLayout>
 #include <QStringListModel>
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "rkstandardicons.h"
 #include "../debug.h"

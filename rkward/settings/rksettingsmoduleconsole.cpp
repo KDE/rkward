@@ -16,8 +16,9 @@
  ***************************************************************************/
 #include "rksettingsmoduleconsole.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kconfiggroup.h>
+#include <KSharedConfig>
 
 #include <qlayout.h>
 #include <qcheckbox.h>

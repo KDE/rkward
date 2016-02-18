@@ -25,7 +25,7 @@
 #include <QLabel>
 #include <QMimeData>
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "rkstandardcomponent.h"
 #include "../misc/rkcommonfunctions.h"

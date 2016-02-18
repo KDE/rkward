@@ -95,7 +95,7 @@ the specialized properties (e.g. RKComponentPropertyInt::intValue () always retu
 
 #include "../misc/rkcommonfunctions.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "../debug.h"
 

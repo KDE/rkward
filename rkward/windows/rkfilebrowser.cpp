@@ -28,7 +28,7 @@
 #include <KSharedConfig>
 #include <kfileitemactions.h>
 #include <kfileitemlistproperties.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kio/copyjob.h>
 
 #include <qdir.h>

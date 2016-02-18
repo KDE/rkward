@@ -16,7 +16,7 @@
  ***************************************************************************/
 #include "rcommandstack.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <QTimer>
 #include <QTime>

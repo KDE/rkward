@@ -19,7 +19,7 @@
 #include "robject.h"
 
 #include <qregexp.h>
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "../rbackend/rinterface.h"
 #include "../rbackend/rkrbackendprotocol_shared.h"

@@ -36,7 +36,7 @@
 #include <QFileDialog>
 #include <QApplication>
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kactioncollection.h>
 #include <kconfig.h>
 #include <kmessagebox.h>

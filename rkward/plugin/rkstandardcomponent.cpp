@@ -25,7 +25,7 @@
 #include <QVBoxLayout>
 #include <QGroupBox>
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kmessagebox.h>
 
 #include "rkstandardcomponentgui.h"

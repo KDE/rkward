@@ -23,7 +23,7 @@
 #include <QPushButton>
 #include <QScrollBar>
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "../misc/rkdialogbuttonbox.h"
 

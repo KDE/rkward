@@ -21,7 +21,7 @@
 #include <QUrl>
 #include <QDir>
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "../misc/xmlhelper.h"
 #include "../misc/getfilenamewidget.h"

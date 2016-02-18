@@ -17,7 +17,7 @@
 
 #include "rkworkplaceview.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kactioncollection.h>
 #include <kdeversion.h>
 #include <kacceleratormanager.h>

@@ -24,7 +24,7 @@
 #include "../misc/rktableview.h"
 #include "../dataeditor/rktextmatrix.h"
 #include "kstandardaction.h"
-#include "klocale.h"
+#include "KLocalizedString"
 
 #include "../misc/xmlhelper.h"
 

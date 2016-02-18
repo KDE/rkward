@@ -20,7 +20,7 @@
 #include "rktoolwindowbar.h"
 
 #include <QMenu>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kparts/partmanager.h>
 #include <kselectaction.h>
 

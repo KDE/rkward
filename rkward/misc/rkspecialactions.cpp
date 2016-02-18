@@ -17,7 +17,7 @@
 
 #include "rkspecialactions.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "../debug.h"
 

@@ -24,7 +24,7 @@
 #include <krun.h>
 #include <kservice.h>
 #include <kmessagebox.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <QUrl>
 
 #include "../rkward.h"

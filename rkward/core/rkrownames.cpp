@@ -19,7 +19,7 @@
 
 #include <limits.h>
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "rcontainerobject.h"
 #include "../rkglobals.h"

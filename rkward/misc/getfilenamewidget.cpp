@@ -20,7 +20,7 @@
 #include <QVBoxLayout>
 #include <QFileDialog>
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kurlrequester.h>
 #include <KLineEdit>
 

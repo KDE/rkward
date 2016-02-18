@@ -23,7 +23,7 @@
 #include <QTextEdit>
 
 #include <kmessagebox.h>
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "../misc/rkdummypart.h"
 

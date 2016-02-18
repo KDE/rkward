@@ -17,7 +17,7 @@
 
 #include "rkstandardcomponentgui.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kactioncollection.h>
 
 #include <qtimer.h>

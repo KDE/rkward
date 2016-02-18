@@ -26,7 +26,7 @@
 
 #include <kxmlguifactory.h>
 #include <ktoolbar.h>
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "../windows/rkmdiwindow.h"
 #include "rkstandardicons.h"

@@ -19,7 +19,7 @@
 #include <qlayout.h>
 #include <qlabel.h>
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "../misc/rkspinbox.h"
 #include "../misc/xmlhelper.h"

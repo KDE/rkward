@@ -18,7 +18,7 @@
 #include "rkrecoverdialog.h"
 
 #include <krun.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kmessagebox.h>
 
 #include <QDir>

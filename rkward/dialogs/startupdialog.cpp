@@ -28,7 +28,7 @@
 #include <QVBoxLayout>
 #include <QFileInfo>
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <krecentfilesaction.h>
 #include <KConfigGroup>
 #include <QPushButton>

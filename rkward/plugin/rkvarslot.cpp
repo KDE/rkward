@@ -27,7 +27,7 @@
 #include <QVBoxLayout>
 #include <QIcon>
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "rkvarselector.h"
 #include "../core/robject.h"

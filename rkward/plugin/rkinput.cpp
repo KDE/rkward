@@ -23,7 +23,7 @@
 #include <QVBoxLayout>
 #include <QEvent>
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "../misc/xmlhelper.h"
 #include "../rkglobals.h"

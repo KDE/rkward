@@ -16,7 +16,7 @@
  ***************************************************************************/
 #include "rkhtmlwindow.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kmessagebox.h>
 #include <kparts/plugin.h>
 #include <kactioncollection.h>

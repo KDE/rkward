@@ -28,7 +28,7 @@
 // include files for KDE
 #include <kmessagebox.h>
 #include <kencodingfiledialog.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kconfig.h>
 #include <kstandardaction.h>
 #include <kmultitabbar.h>

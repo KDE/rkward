@@ -18,7 +18,7 @@
 #include "rkimportdialog.h"
 
 #include <kmessagebox.h>
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <qcombobox.h>
 #include <qlabel.h>

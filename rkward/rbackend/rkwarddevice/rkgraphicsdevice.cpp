@@ -24,7 +24,7 @@
 #include <QMouseEvent>
 #include <QDialog>
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <sys/stat.h>
 
 #include "rkgraphicsdevice_protocol_shared.h"

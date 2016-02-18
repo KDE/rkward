@@ -26,7 +26,7 @@
 #include <qdom.h>
 #include <QTreeWidget>
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "rkcomponent.h"
 #include "../core/rcontainerobject.h"

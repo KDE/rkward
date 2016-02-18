@@ -16,7 +16,7 @@
  ***************************************************************************/
 #include "editlabelsdialog.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kactioncollection.h>
 
 #include <qlabel.h>

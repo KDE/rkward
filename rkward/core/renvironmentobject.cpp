@@ -18,7 +18,7 @@
 #include "renvironmentobject.h"
 
 #include <kmessagebox.h>
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "robjectlist.h"
 #include "rkpseudoobjects.h"

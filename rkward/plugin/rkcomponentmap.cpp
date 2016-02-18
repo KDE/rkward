@@ -24,7 +24,7 @@
 #include <QSet>
 #include <QGuiApplication>
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kactioncollection.h>
 #include <kmessagebox.h>
 

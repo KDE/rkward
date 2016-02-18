@@ -27,7 +27,7 @@
 #include <kparts/partactivateevent.h>
 #include <kxmlguifactory.h>
 #include <kactioncollection.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kpassivepopup.h>
 
 #include "rkworkplace.h"

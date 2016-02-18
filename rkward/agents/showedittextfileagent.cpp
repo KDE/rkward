@@ -17,7 +17,7 @@
 
 #include "showedittextfileagent.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <KMessageWidget>
 
 #include "../windows/rkcommandeditorwindow.h"

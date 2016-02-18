@@ -24,7 +24,7 @@
 #include <qradiobutton.h>
 #include <QVBoxLayout>
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "../rkglobals.h"
 #include "../misc/xmlhelper.h"

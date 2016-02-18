@@ -16,7 +16,8 @@
  ***************************************************************************/
 #include "rksettingsmodulegeneral.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
+#include <KSharedConfig>
 #include <KConfigGroup>
 
 #include <qlayout.h>

@@ -17,7 +17,7 @@
 
 #include "rkquitagent.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <qtimer.h>
 

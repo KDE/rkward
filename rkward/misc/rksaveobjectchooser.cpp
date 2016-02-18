@@ -26,7 +26,7 @@
 #include <QDialog>
 #include <QDialogButtonBox>
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "../core/robjectlist.h"
 #include "../core/renvironmentobject.h"

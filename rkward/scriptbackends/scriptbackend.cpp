@@ -16,7 +16,7 @@
  ***************************************************************************/
 #include "scriptbackend.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "../plugin/rkcomponentproperties.h"
 

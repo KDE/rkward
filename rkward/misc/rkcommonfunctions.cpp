@@ -20,8 +20,9 @@
 #include <qdom.h>
 #include <qregexp.h>
 #include <QDir>
+#include <QStandardPaths>
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kxmlguiclient.h>
 
 #include "../settings/rksettingsmodulegeneral.h"

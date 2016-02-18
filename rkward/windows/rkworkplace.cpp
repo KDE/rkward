@@ -19,7 +19,7 @@
 
 #include <kparts/partmanager.h>
 #include <kmessagebox.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kglobalsettings.h>
 #include <kactioncollection.h>
 #include <krun.h>

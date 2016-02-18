@@ -37,7 +37,7 @@
 #include <QTemporaryFile>
 #include <QDir>
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kmessagebox.h>
 #include <kstandardaction.h>
 #include <kactioncollection.h>

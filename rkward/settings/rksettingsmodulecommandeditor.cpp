@@ -16,7 +16,7 @@
  ***************************************************************************/
 #include "rksettingsmodulecommandeditor.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kconfig.h>
 #include <kconfiggroup.h>
 

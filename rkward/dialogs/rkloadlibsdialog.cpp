@@ -30,8 +30,9 @@
 #include <QSortFilterProxyModel>
 #include <QApplication>
 #include <QLineEdit>
+#include <QStandardPaths>
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kmessagebox.h>
 #include <kuser.h>
 

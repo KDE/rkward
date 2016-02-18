@@ -16,9 +16,10 @@
  ***************************************************************************/
 #include "rksettingsmoduleplugins.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kmessagebox.h>
 #include <kdeversion.h>
+#include <KSharedConfig>
 #include <KConfigGroup>
 
 #include <qlayout.h>

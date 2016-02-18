@@ -17,7 +17,7 @@
 
 #include "rktoplevelwindowgui.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kmessagebox.h>
 #include <KAboutData>
 #include <kaboutapplicationdialog.h>

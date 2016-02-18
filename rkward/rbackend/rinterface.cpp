@@ -53,7 +53,7 @@
 #include "../debug.h"
 
 #include <kmessagebox.h>
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <qdir.h>
 #include <qvalidator.h>

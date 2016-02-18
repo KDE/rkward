@@ -27,7 +27,7 @@
 #include <QVBoxLayout>
 #include <QFontDatabase>
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kglobalsettings.h>
 
 #include "../rbackend/rcommand.h"

@@ -24,7 +24,7 @@
 #include <QHBoxLayout>
 #include <QTabWidget>
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kglobalsettings.h>
 #include <QFontDatabase>
 

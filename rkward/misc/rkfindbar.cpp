@@ -23,7 +23,7 @@
 #include <QLineEdit>
 
 #include <khistorycombobox.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <QIcon>
 
 #include "rkcommonfunctions.h"

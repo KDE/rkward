@@ -52,7 +52,7 @@
 
 
 #include <kaboutdata.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <KUrlAuthorized>
 
 #include <qstring.h>

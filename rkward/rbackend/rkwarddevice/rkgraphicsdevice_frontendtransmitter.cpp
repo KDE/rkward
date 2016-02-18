@@ -22,7 +22,7 @@
 #include <QIODevice>
 #include <krandom.h>
 #include <kmessagebox.h>
-#include <klocale.h>
+#include <KLocalizedString>
 
 // for screen resolution
 #include <QApplication>

@@ -17,7 +17,7 @@
 
 #include "detachedwindowcontainer.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kactioncollection.h>
 #include <ktoolbar.h>
 #include <kxmlguifactory.h>

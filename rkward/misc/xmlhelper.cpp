@@ -17,7 +17,7 @@
 
 #include "xmlhelper.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <qstringlist.h>
 #include <qfile.h>

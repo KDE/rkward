@@ -26,7 +26,7 @@
 #include <QDialogButtonBox>
 #include <QPushButton>
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "../core/rkvariable.h"
 #include "../rkglobals.h"

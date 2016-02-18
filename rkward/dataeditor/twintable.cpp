@@ -17,7 +17,7 @@
 
 #include "twintable.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <QAction>
 #include <kactioncollection.h>
 #include <kxmlguifactory.h>

@@ -17,7 +17,7 @@
 
 #include "rkcallstackviewer.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>

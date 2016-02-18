@@ -22,7 +22,7 @@
 #include <qtimer.h>
 #include <QTextDocument>
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "../rkglobals.h"
 #include "../rbackend/rinterface.h"

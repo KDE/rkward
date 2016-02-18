@@ -17,7 +17,7 @@
 
 #include "rkdynamicsearchline.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <QSortFilterProxyModel>
 #include <QAction>

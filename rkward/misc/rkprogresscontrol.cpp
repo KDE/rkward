@@ -25,7 +25,7 @@
 #include <QDialog>
 #include <QDialogButtonBox>
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "../rkglobals.h"
 #include "../rbackend/rinterface.h"

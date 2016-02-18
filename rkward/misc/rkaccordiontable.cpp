@@ -25,7 +25,7 @@
 #include <QHBoxLayout>
 #include <QLabel>
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "rkcommonfunctions.h"
 #include "rkstandardicons.h"

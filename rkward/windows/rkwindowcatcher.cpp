@@ -28,7 +28,7 @@
 #include <QWindow>
 
 #include <kmessagebox.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <KWindowSystem>
 #include <KWindowInfo>
 

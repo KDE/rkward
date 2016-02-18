@@ -16,7 +16,7 @@
  ***************************************************************************/
 #include "rkobjectlistview.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <QContextMenuEvent>
 #include <QMenu>

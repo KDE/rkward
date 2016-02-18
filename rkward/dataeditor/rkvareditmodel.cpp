@@ -17,7 +17,7 @@
 
 #include "rkvareditmodel.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <QColor>
 #include <QTimer>

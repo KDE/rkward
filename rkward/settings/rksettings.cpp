@@ -18,7 +18,8 @@
 
 #include <QPushButton>
 
-#include <klocale.h>
+#include <KLocalizedString>
+#include <KSharedConfig>
 
 #include "../windows/rkworkplace.h"
 

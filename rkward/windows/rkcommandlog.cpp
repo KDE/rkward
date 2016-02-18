@@ -32,7 +32,7 @@
 #include <QContextMenuEvent>
 #include <QFontDatabase>
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kactioncollection.h>
 #include <kglobalsettings.h>
 
