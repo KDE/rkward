@@ -18,7 +18,6 @@
 
 #include <KLocalizedString>
 #include <kmessagebox.h>
-#include <kdeversion.h>
 #include <kio/filecopyjob.h>
 #include <KJobWidgets>
 #include <KJobUiDelegate>

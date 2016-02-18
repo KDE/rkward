@@ -22,7 +22,6 @@
 #include <QTimer>
 #include <QString>
 
-#include <kdeversion.h>
 #include <ktexteditor/view.h>
 #include <ktexteditor/document.h>
 #include <ktexteditor/codecompletionmodel.h>

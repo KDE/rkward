@@ -18,7 +18,6 @@
 
 #include <KLocalizedString>
 #include <kmessagebox.h>
-#include <kdeversion.h>
 #include <KSharedConfig>
 #include <KConfigGroup>
 

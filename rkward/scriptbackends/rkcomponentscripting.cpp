@@ -18,7 +18,6 @@
 #include "rkcomponentscripting.h"
 
 #include <KLocalizedString>
-#include <kdeversion.h>
 #include <kmessagebox.h>
 #include <QDir>
 

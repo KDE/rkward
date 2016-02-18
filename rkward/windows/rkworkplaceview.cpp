@@ -19,7 +19,6 @@
 
 #include <KLocalizedString>
 #include <kactioncollection.h>
-#include <kdeversion.h>
 #include <kacceleratormanager.h>
 
 #include <qapplication.h>

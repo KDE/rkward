@@ -24,7 +24,6 @@
 #include <ktoolbar.h>
 #include <kactioncollection.h>
 #include <kconfiggroup.h>
-#include <kdeversion.h>
 #include <KSharedConfig>
 #include <kfileitemactions.h>
 #include <kfileitemlistproperties.h>
