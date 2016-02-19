@@ -1090,7 +1090,6 @@ KTextEditor::View* RKCommandHighlighter::getView () {
 	return _view;
 }
 
-#include <ktexteditor/highlightinterface.h>
 #include <QTextDocument>
 
 //////////

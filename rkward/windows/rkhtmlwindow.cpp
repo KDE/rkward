@@ -25,7 +25,6 @@
 #include <kservice.h>
 #include <kwebview.h>
 #include <kcodecaction.h>
-#include <kglobalsettings.h>
 
 #include <qfileinfo.h>
 #include <qwidget.h>

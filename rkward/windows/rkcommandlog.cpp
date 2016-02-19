@@ -34,7 +34,6 @@
 
 #include <KLocalizedString>
 #include <kactioncollection.h>
-#include <kglobalsettings.h>
 
 #include "../debug.h"
 

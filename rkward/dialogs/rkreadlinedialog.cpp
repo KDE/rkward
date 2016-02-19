@@ -28,7 +28,6 @@
 #include <QFontDatabase>
 
 #include <KLocalizedString>
-#include <kglobalsettings.h>
 
 #include "../rbackend/rcommand.h"
 #include "../misc/rkdialogbuttonbox.h"

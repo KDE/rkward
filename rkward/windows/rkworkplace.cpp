@@ -20,7 +20,6 @@
 #include <kparts/partmanager.h>
 #include <kmessagebox.h>
 #include <KLocalizedString>
-#include <kglobalsettings.h>
 #include <kactioncollection.h>
 #include <krun.h>
 #include <KSharedConfig>

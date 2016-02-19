@@ -25,7 +25,6 @@
 #include <QTabWidget>
 
 #include <KLocalizedString>
-#include <kglobalsettings.h>
 #include <QFontDatabase>
 
 #include "rbackend/rinterface.h"
