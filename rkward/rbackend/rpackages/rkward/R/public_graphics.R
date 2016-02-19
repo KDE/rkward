@@ -45,6 +45,14 @@
 #' @rdname rk.graph.on
 "rk.graph.on" <- function (device.type=getOption ("rk.graphics.type"), width=getOption ("rk.graphics.width"), height=getOption ("rk.graphics.height"), quality, ...) 
 {
+	make.url <- function (filename) {
+		if (substr (filename, 1, 1) != "/") {  # this generally happens on Windows
+			paste ("file:///", filename, sep="")
+		} else {
+			paste ("file://", filename, sep="")
+		}
+	}
+
 	if (!is.numeric (width)) width <- 480
 	if (!is.numeric (height)) height <- 480
 	if (is.null (device.type)) device.type <- "PNG"	# default behavior is PNG for now
@@ -55,7 +63,7 @@
 	if (device.type == "PNG") {
 		filename <- rk.get.tempfile.name(prefix = "graph", extension = ".png")
 		ret <- png(filename = file.path(filename), width = width, height = height, ...)
-		.rk.cat.output(paste("<img src=\"", filename, "\" width=\"", width, 
+		.rk.cat.output(paste("<img src=\"", make.url (filename), "\" width=\"", width,
 			"\" height=\"", height, "\"><br>", sep = ""))
 	} else if (device.type == "JPG") {
 		if (missing (quality)) {
@@ -64,7 +72,7 @@
 		}
 		filename <- rk.get.tempfile.name(prefix = "graph", extension = ".jpg")
 		ret <- jpeg(filename = file.path(filename), width = width, height = height, "quality"=quality, ...)
-		.rk.cat.output(paste("<img src=\"", filename, "\" width=\"", width, 
+		.rk.cat.output(paste("<img src=\"", make.url (filename), "\" width=\"", width,
 			"\" height=\"", height, "\"><br>", sep = ""))
 	} else if (device.type == "SVG") {
 		if (!capabilities ("cairo")) {	# cairo support is not always compiled in
@@ -73,9 +81,9 @@
 		}
 		filename <- rk.get.tempfile.name(prefix = "graph", extension = ".svg")
 		ret <- svg(filename = file.path(filename), ...)
-		.rk.cat.output(paste("<object data=\"", filename, "\" type=\"image/svg+xml\" width=\"", width, 
+		.rk.cat.output(paste("<object data=\"", make.url (filename), "\" type=\"image/svg+xml\" width=\"", width,
 			"\" height=\"", height, "\">\n", sep = ""))
-		.rk.cat.output(paste("<param name=\"src\" value=\"", filename, "\">\n", sep = ""))
+		.rk.cat.output(paste("<param name=\"src\" value=\"", make.url (filename), "\">\n", sep = ""))
 		.rk.cat.output(paste("This browser appears incapable of displaying SVG object. The SVG source is at:", filename))
 		.rk.cat.output("</object>")
 	} else {
