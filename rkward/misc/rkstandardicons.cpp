@@ -17,8 +17,6 @@
 
 #include "rkstandardicons.h"
 
-#include "kicon.h"
-
 #include "../core/robject.h"
 #include "../core/robjectlist.h"
 #include "../windows/rkmdiwindow.h"
