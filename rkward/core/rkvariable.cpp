@@ -18,7 +18,7 @@
 
 #include <qstringlist.h>
 #include "float.h"
-#include "math.h"
+#include <cmath>
 
 #include "rcontainerobject.h"
 #include "robjectlist.h"
@@ -574,7 +574,7 @@ void RKVariable::setNumericFromR (int from_row, int to_row, const QVector<double
 			if (data->cell_states[row] & RKVarEditData::Invalid) data->cell_states[row] =  RKVarEditData::UnsyncedInvalidState;
 			else data->cell_states[row] = 0;
 
-			if (isnan (numdata[i]) || (!data->value_labels) || (!data->value_labels->contains (QString::number (numdata[i])))) {
+			if (std::isnan (numdata[i]) || (!data->value_labels) || (!data->value_labels->contains (QString::number (numdata[i])))) {
 				data->cell_states[row] |= RKVarEditData::NA;
 			} else {
 				data->cell_states[row] |= RKVarEditData::Valid;
@@ -588,7 +588,7 @@ void RKVariable::setNumericFromR (int from_row, int to_row, const QVector<double
 			if (data->cell_states[row] & RKVarEditData::Invalid) data->cell_states[row] = RKVarEditData::UnsyncedInvalidState;
 			else data->cell_states[row] = 0;
 
-			if (isnan (numdata[i])) {
+			if (std::isnan (numdata[i])) {
 				data->cell_states[row] |= RKVarEditData::NA;
 			} else {
 				data->cell_states[row] |= RKVarEditData::Valid;

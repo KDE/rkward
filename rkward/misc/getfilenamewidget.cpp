@@ -119,7 +119,7 @@ void GetFileNameWidget::hackOverrideDirDialog () {
 	dummy.setFileMode (QFileDialog::Directory);
 	dummy.setOptions (QFileDialog::ShowDirsOnly);
 	if (dummy.exec ()) {
-		edit->setUrl (dummy.selectedFiles ().value (0));
+		edit->setUrl (QUrl::fromLocalFile (dummy.selectedFiles ().value (0)));
 		emit (locationChanged ());
 	}
 }

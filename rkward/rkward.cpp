@@ -211,7 +211,7 @@ void RKWardMainWindow::doPostInit () {
 #ifdef Q_OS_WIN
 	// KF5 TODO: Still needed?
 	// detect and disable the buggy "native" file dialogs
-	KConfigGroup cg = KGlobal::config ().data ()->group ("KFileDialog Settings");
+	KConfigGroup cg = KSharedConfig::openConfig ().data ()->group ("KFileDialog Settings");
 	if (cg.readEntry ("Native", true)) {
 		int res = KMessageBox::questionYesNo (this, i18n ("Your installation of KDE is configured to use \"native\" file dialogs. This is known to cause issues in some cases, and we recommend to disable \"native\" file dialogs.\nShould \"native\" file dialogs be disabled in RKWard?"),
 							i18n ("Potential problem with your configuration"), KGuiItem (i18n ("Yes, disable")), KGuiItem (i18n ("No, use \"native\" file dialogs")), "windows_native_kfiledialog");
