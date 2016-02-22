@@ -37,7 +37,7 @@ License: GPL-2+
  License version 2 can be found in the file
  `/usr/share/common-licenses/GPL-2'.
 
-Files: rkward/qwinhost/qwinhost.cpp.orig rkward/qwinhost/qwinhost.cpp rkward/qwinhost/qwinhost.h.orig rkward/qwinhost/qwinhost.h
+Files: rkward/qwinhost/qwinhost.cpp.unmodified rkward/qwinhost/qwinhost.cpp rkward/qwinhost/qwinhost.h.unmodified rkward/qwinhost/qwinhost.h
 Copyright: (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
 License: LPGL-2.1 and Nokia_Exception or GPL-3
 
