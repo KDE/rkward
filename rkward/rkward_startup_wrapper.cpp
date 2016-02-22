@@ -308,7 +308,7 @@ int main (int argc, char *argv[]) {
 			for (int i = 0;  i < call_args.length (); ++i) {
 				vbs << " " << call_args[i];
 			}
-			vbs << "\", 0\r\nSet WomScriptHost = Nothing\r\n";
+			vbs << "\", 0\r\nSet WinScriptHost = Nothing\r\n";
 			vbsf->close ();
 			QString filename = vbsf->fileName ();
 			delete (vbsf);  // somehow, if creating vbsf on the stack, we cannot launch it, because "file is in use by another process", despite we have closed it.

@@ -32,6 +32,7 @@
 #include <QLocalSocket>
 #include <QDir>
 #include <QStandardPaths>
+#include <QTime>
 
 #include "../version.h"
 #include "../debug.h"
@@ -120,7 +121,13 @@ void RKFrontendTransmitter::run () {
 	}
 
 	// fetch security token
-	if (!backend->canReadLine ()) backend->waitForReadyRead ();
+	{
+		// NOTE: On Qt5+Windows, readyReady may actually come in char by char, so calling waitForReadyRead() does not guaranteed we will
+		//       see the full line, at all. But also, of course, we want to put some cap on trying. Using a time threshold for this.
+		QTime time;
+		time.start ();
+		while ((!backend->canReadLine ()) && (time.elapsed () < 3000)) backend->waitForReadyRead ();
+	}
 	token = QString::fromLocal8Bit (backend->readLine ()).trimmed ();
 	backend->closeReadChannel (QProcess::StandardError);
 	backend->closeReadChannel (QProcess::StandardOutput);
@@ -139,6 +146,9 @@ void RKFrontendTransmitter::connectAndEnterLoop () {
 
 	QLocalSocket *con = server->nextPendingConnection ();
 	server->close ();
+
+	// NOTE: Not the same as setConnection(), below, but needed in case of transmission errors.
+	connection = con;
 
 	// handshake
 	if (!con->canReadLine ()) con->waitForReadyRead (1000);
