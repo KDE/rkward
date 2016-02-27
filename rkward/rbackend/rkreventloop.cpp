@@ -67,10 +67,10 @@ void RKREventLoop::processX11Events() {
 	if (!RKRBackend::this_pointer->r_running) return;
 	if (RKRBackend::this_pointer->isKilled ()) return;
 
-	RKRBackend::RKRBackend::repl_status.eval_depth++;
+	RKRBackend::repl_status.eval_depth++;
 // In case an error (or user interrupt) is caught inside processX11EventsWorker, we don't want to long-jump out.
 	R_ToplevelExec (processX11EventsWorker, 0);
-	RKRBackend::RKRBackend::repl_status.eval_depth--;
+	RKRBackend::repl_status.eval_depth--;
 }
 
 static void (* RK_eventHandlerFunction)() = 0;

@@ -323,7 +323,7 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 					}
 					if (incomplete) RKRBackend::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorIncomplete;
 					RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::ReplIterationKilled;
-					if (RKRBackend::RKRBackend::repl_status.user_command_parsed_up_to <= 0) RKRBackend::this_pointer->startOutputCapture ();	// HACK: No capture active, but commandFinished() will try to end one
+					if (RKRBackend::repl_status.user_command_parsed_up_to <= 0) RKRBackend::this_pointer->startOutputCapture ();	// HACK: No capture active, but commandFinished() will try to end one
 					Rf_error ("");	// to discard the buffer
 				} else {
 					RKTransmitNextUserCommandChunk (buf, buflen);
@@ -332,7 +332,7 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 			} else if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::UserCommandSyntaxError) {
 				RKRBackend::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorSyntax;
 				RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::NoUserCommand;
-				if (RKRBackend::RKRBackend::repl_status.user_command_parsed_up_to <= 0) RKRBackend::this_pointer->startOutputCapture ();	// HACK: No capture active, but commandFinished() will try to end one
+				if (RKRBackend::repl_status.user_command_parsed_up_to <= 0) RKRBackend::this_pointer->startOutputCapture ();	// HACK: No capture active, but commandFinished() will try to end one
 				RKRBackend::this_pointer->commandFinished ();
 			} else if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::UserCommandRunning) {
 				// This can mean three different things:
@@ -838,7 +838,11 @@ RKRBackend::~RKRBackend () {
 	RK_TRACE (RBACKEND);
 }
 
+#ifdef _MSC_VER
+extern "C" int R_interrupts_pending;
+#else
 LibExtern int R_interrupts_pending;
+#endif
 SEXP doError (SEXP call) {
 	RK_TRACE (RBACKEND);
 

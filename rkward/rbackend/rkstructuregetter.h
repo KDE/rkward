@@ -18,9 +18,10 @@
 #ifndef RKSTRUCTUREGETTER_H
 #define RKSTRUCTUREGETTER_H
 
-#include <Rinternals.h>
-
 #include <QString>
+
+#define R_NO_REMAP 1
+#include <Rinternals.h>
 
 class RData;
 

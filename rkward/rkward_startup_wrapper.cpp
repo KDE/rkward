@@ -63,13 +63,13 @@ QString quoteCommand (const QString &orig) {
 #ifdef Q_OS_WIN
 // Get short path name as a safe way to pass all sort of commands on the Windows shell
 // credits to http://erasmusjam.wordpress.com/2012/10/01/get-8-3-windows-short-path-names-in-a-qt-application/
-	wchar_t input[orig.size()+1];
-	orig.toWCharArray (input);
-	input[orig.size ()] = L'\0'; // terminate string
-	long length = GetShortPathName (input, NULL, 0);
-	wchar_t output[length];
-	GetShortPathName (input, output, length);
-	return QString::fromWCharArray (output, length-1);
+	QByteArray input (sizeof (wchar_t) * (orig.size()+1), '\0');
+	// wchar_t input[orig.size()+1]; -- No: MSVC (2013) does not support variable length arrays. Oh dear...
+	orig.toWCharArray ((wchar_t*) input.data ());
+	long length = GetShortPathName ((wchar_t*) input.data (), NULL, 0);
+	QByteArray output (sizeof (wchar_t) * (length), '\0');
+	GetShortPathName ((wchar_t*) input.data (), (wchar_t*) output.data (), length);
+	return QString::fromWCharArray ((wchar_t*) output.data (), length-1);
 #else
 	return orig;
 #endif
