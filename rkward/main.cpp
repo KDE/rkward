@@ -124,7 +124,7 @@ int main (int argc, char *argv[]) {
 	// before initializing the commandline args, remove the ".bin" from "rkward.bin".
 	// This is so it prints "Usage rkward..." instead of "Usage rkward.bin...", etc.
 	// it seems safest to keep a copy, since the shell still owns argv
-	char *argv_copy[argc];
+	char **argv_copy = new char*[argc];
 	argv_copy[0] = qstrdup (QString (argv[0]).remove (".frontend").replace (".exe", ".bat").toLocal8Bit ());
 	for (int i = 1; i < argc; ++i) {
 		argv_copy[i] = argv[i];
@@ -217,6 +217,7 @@ int main (int argc, char *argv[]) {
 
 	qInstallMessageHandler (0);
 	RKSettingsModuleDebug::debug_file->close ();
+	delete argv_copy;
 
 	return status;
 }
