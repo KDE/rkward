@@ -147,9 +147,6 @@ void RKFrontendTransmitter::connectAndEnterLoop () {
 	QLocalSocket *con = server->nextPendingConnection ();
 	server->close ();
 
-	// NOTE: Not the same as setConnection(), below, but needed in case of transmission errors.
-	connection = con;
-
 	// handshake
 	if (!con->canReadLine ()) con->waitForReadyRead (1000);
 	QString token_c = QString::fromLocal8Bit (con->readLine ());
@@ -208,7 +205,7 @@ void RKFrontendTransmitter::writeRequest (RBackendRequest *request) {
 void RKFrontendTransmitter::handleTransmissionError (const QString &message) {
 	RK_TRACE (RBACKEND);
 
-	connection->close ();
+	if (connection) connection->close ();
 	RBackendRequest* req = new RBackendRequest (false, RBackendRequest::BackendExit);
 	req->params["message"] = message;
 	RKRBackendEvent* event = new RKRBackendEvent (req);
