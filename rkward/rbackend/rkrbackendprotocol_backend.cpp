@@ -27,7 +27,7 @@
 #include <QLocalSocket>
 #include <QMutex>
 #include "rktransmitter.h"
-#include <stdio.h>
+#include <iostream>
 
 #include "rkbackendtransmitter.h"
 #include <QUuid>		// mis-used as a random-string generator
@@ -105,8 +105,8 @@
 		// a simple security token to send to the frontend to make sure that it is really talking to the backend process that it started in the local socket connection.
 		// this token is sent both via stdout and the local socket connection. The frontend simply compares both values.
 		QString token = QUuid::createUuid ().toString ();
-		printf ("%s\n", token.toLocal8Bit ().data ());
-		fflush (stdout);
+		std::cout << token.toLocal8Bit ().data () << "\n";
+		std::cout.flush ();
 
 		RKRBackendTransmitter transmitter (servername, token);
 		RKRBackendProtocolBackend backend (data_dir, rkd_server_name);
