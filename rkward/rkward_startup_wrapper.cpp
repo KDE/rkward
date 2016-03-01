@@ -96,6 +96,12 @@ int InteractiveProcess::stdinClone = -1;
 #	define InteractiveProcess QProcess
 #endif
 
+#ifdef Q_OS_WIN
+#	define PATH_VAR_SEP ';'
+#else
+#	define PATH_VAR_SEP ':'
+#endif
+
 int main (int argc, char *argv[]) {
 	QApplication app (argc, argv);
 	QStringList args = app.arguments ();
@@ -178,39 +184,29 @@ int main (int argc, char *argv[]) {
 #endif
 
 	// Locate KDE and RKWard installations
-	QString kf5_config_exe = findExeAtPath ("kf5-config", QDir::currentPath ());
-	if (kf5_config_exe.isNull ()) kf5_config_exe = findExeAtPath ("kf5-config", app.applicationDirPath ());
-	if (kf5_config_exe.isNull ()) kf5_config_exe = findExeAtPath ("kf5-config", QDir (app.applicationDirPath ()).filePath ("KDE/bin"));
-#ifdef Q_OS_WIN
-	QStringList syspath = QString (qgetenv ("PATH")).split (';');
-#else
-	QStringList syspath = QString (qgetenv ("PATH")).split (':');
-#endif
-	if (kf5_config_exe.isNull ()) {
+	QString marker_exe_name ("qtpaths");    // Simply some file that should exist in the bin dir of a KDE installation on both Unix and Windows
+	QString marker_exe = findExeAtPath (marker_exe_name, QDir::currentPath ());
+	if (marker_exe.isNull ()) marker_exe = findExeAtPath (marker_exe_name, app.applicationDirPath ());
+	if (marker_exe.isNull ()) marker_exe = findExeAtPath (marker_exe_name, QDir (app.applicationDirPath ()).filePath ("KDE/bin"));
+	QStringList syspath = QString (qgetenv ("PATH")).split (PATH_VAR_SEP);
+	if (marker_exe.isNull ()) {
 		for (int i = 0; i < syspath.size (); ++i) {
-			kf5_config_exe = findExeAtPath ("kf5-config", syspath[i]);
-			if (!kf5_config_exe.isNull ()) break;
+			marker_exe = findExeAtPath (marker_exe_name, syspath[i]);
+			if (!marker_exe.isNull ()) break;
 		}
 	}
 
-	if (kf5_config_exe.isNull ()) {
-		QMessageBox::critical (0, "Could not find KDE installation", "The KDE installation could not be found (kf5-config). When moving / copying RKWard, make sure to copy the whole application folder, or create a shorcut / link, instead.");
+	if (marker_exe.isNull ()) {
+		QMessageBox::critical (0, "Could not find KDE installation", "The KDE installation could not be found (" + marker_exe_name + "). When moving / copying RKWard, make sure to copy the whole application folder, or create a shorcut / link, instead.");
 		exit (1);
 	}
 
-	QDir kde_dir (QFileInfo (kf5_config_exe).absolutePath ());
+	QDir kde_dir (QFileInfo (marker_exe).absolutePath ());
 	kde_dir.makeAbsolute ();
 	QString kde_dir_safe_path = quoteCommand (kde_dir.path ());
-#ifdef Q_OS_WIN
-	QString kdeinit5_exe = findExeAtPath ("kdeinit5", kde_dir.path ());
-#endif
-	if (syspath.indexOf (kde_dir.path ()) < 0) {
+        if (syspath.indexOf (kde_dir.path ()) < 0) {
 		if (debug_level > 3) qDebug ("Adding %s to the system path", qPrintable (kde_dir_safe_path));
-#ifdef Q_OS_WIN
-	qputenv ("PATH", QString (kde_dir_safe_path + ';' + qgetenv ("PATH")).toLocal8Bit ());
-#else
-	qputenv ("PATH", QString (kde_dir_safe_path + ':' + qgetenv ("PATH")).toLocal8Bit ());
-#endif
+	qputenv ("PATH", QString (kde_dir_safe_path + PATH_VAR_SEP + qgetenv ("PATH")).toLocal8Bit ());
 	}
 /* KF5 TODO: Still needed? 
 	// important if RKWard is not in KDEPREFIX/bin but e.g. KDEPREFIX/lib/libexec
@@ -237,6 +233,8 @@ int main (int argc, char *argv[]) {
 
 #ifdef Q_OS_WIN
 	// Explicit initialization of KDE, in case Windows 7 asks for admin privileges
+	// KF5 TODO: _is_ there a kdeinit5.exe on Windows? Do we have to add some dependency? Do we still need this?
+	QString kdeinit5_exe = findExeAtPath ("kdeinit5", kde_dir.path ());
 	if (kdeinit5_exe.isNull ()) {
 		kdeinit5_exe = findExeAtPath ("kdeinit5", QFileInfo (rkward_frontend_exe).absolutePath ());
 	}
