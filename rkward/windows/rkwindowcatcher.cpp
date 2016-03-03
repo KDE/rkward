@@ -59,25 +59,54 @@ RKWindowCatcher::~RKWindowCatcher () {
 	RK_TRACE (MISC);
 }
 
+#ifdef Q_OS_WIN
+#include <windows.h>
+#include <stdio.h>
+namespace RKWindowCatcherPrivate {
+	QList<WId> toplevel_windows;
+
+	BOOL CALLBACK EnumWindowsCallback (HWND hwnd, LPARAM) {
+		if (IsWindow(hwnd) && IsWindowVisible(hwnd)) toplevel_windows.append (reinterpret_cast<WId> (hwnd));
+		return true;
+	}
+
+	QList<WId> toplevelWindows () {
+		RK_TRACE (APP);
+		toplevel_windows.clear ();
+		EnumWindows (EnumWindowsCallback, 0);
+		return toplevel_windows;
+	};
+}
+#endif
+
 void RKWindowCatcher::start (int prev_cur_device) {
 	RK_TRACE (MISC);
 	RK_DEBUG (RBACKEND, DL_DEBUG, "Window Catcher activated");
 
 	last_cur_device = prev_cur_device;
+#ifdef Q_OS_WIN
+	windows_before_add = RKWindowCatcherPrivate::toplevelWindows ();
+#else
 	windows_before_add = KWindowSystem::windows ();
+#endif
 }
 
 WId RKWindowCatcher::createdWindow () {
 	RK_TRACE (MISC);
 
-	// KF5 TODO: Note: Previously, on windows we checked for IsWindow (hwnd) and IsWindowVisible (hwnd), as sometimes invisible ghost windows
-	// would be created in addition to the real device window. Is this still needed?
+#ifdef Q_OS_WIN
+	QList<WId> windows_after_add = RKWindowCatcherPrivate::toplevelWindows ();
+	for (int i = windows_after_add.size () - 1; i >= 0; --i) {
+		if (!windows_before_add.contains (windows_after_add[i])) return windows_after_add[i];
+	}
+#else
 	// A whole lot of windows appear to get created, but it does look like the last one is the one we need.
 	QList<WId> windows_after_add = KWindowSystem::windows ();
 	WId candidate = windows_after_add.value (windows_after_add.size () - 1);
 	if (!windows_before_add.contains (windows_after_add.last ())) {
 		return candidate;
 	}
+#endif
 	return 0;
 }
 
@@ -213,7 +242,19 @@ RKCaughtX11Window::RKCaughtX11Window (QWindow* window_to_embed, int device_numbe
 	//       So we need the RKWindowCatcher to help us.
 	RKWindowCatcher::instance ()->registerWatcher (embedded->winId (), this);
 
-#if !defined Q_OS_MAC
+#ifdef Q_OS_WIN
+	WINDOWINFO wininfo;
+	wininfo.cbSize = sizeof (WINDOWINFO);
+	GetWindowInfo (reinterpret_cast<HWND> (embedded->winId ()), &wininfo);
+
+	// clip off the window frame and menubar
+	xembed_container->setContentsMargins (wininfo.rcWindow.left - wininfo.rcClient.left, wininfo.rcWindow.top - wininfo.rcClient.top,
+	                                      wininfo.rcClient.right - wininfo.rcWindow.right, wininfo.rcClient.bottom - wininfo.rcWindow.bottom);
+	// set a fixed size until the window is shown
+	xembed_container->setFixedSize (wininfo.rcClient.right - wininfo.rcClient.left, wininfo.rcClient.bottom - wininfo.rcClient.top);
+	setGeometry (wininfo.rcClient.left, wininfo.rcClient.right, wininfo.rcClient.top, wininfo.rcClient.bottom);     // see comment in X11 section
+	move (wininfo.rcClient.left, wininfo.rcClient.top);             // else the window frame may be off scree on top/left.
+#else
 	KWindowInfo wininfo (embedded->winId (), NET::WMName | NET::WMGeometry);
 	RK_ASSERT (wininfo.valid ());
 
@@ -221,8 +262,6 @@ RKCaughtX11Window::RKCaughtX11Window (QWindow* window_to_embed, int device_numbe
 	xembed_container->setFixedSize (wininfo.geometry ().width (), wininfo.geometry ().height ());
 	setGeometry (wininfo.geometry ());	// it's important to set a size, even while not visible. Else DetachedWindowContainer will assign a default size of 640*480, and then size upwards, if necessary.
 	setCaption (wininfo.name ());
-#else
-	RK_ASSERT (false);
 #endif
 
 	// We need to make sure that the R backend has had a chance to do event processing on the new device, or else embedding will fail (sometimes).
