@@ -163,7 +163,6 @@ SEXP RKStructureGetter::resolvePromise (SEXP from) {
 	return ret;
 }
 
-extern "C" {
 // TODO: split out some of the large blocks into helper functions, to make this easier to read
 void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int add_type_flags, RData *storage, int nesting_depth) {
 	RK_TRACE (RBACKEND);
@@ -478,5 +477,3 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 	RK_ASSERT (!res.contains (0));
 	storage->setData (res);
 }
-
-}	/* extern "C" */
