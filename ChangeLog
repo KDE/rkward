@@ -1,4 +1,4 @@
-- Fixed: Help Search was not longer working correctly with recent version of R                     TODO: which version?
+- Fixed: Help Search was not longer working correctly with R 3.2.x
 - Fix compilation with R 3.3.x
 - Provide better status feedback when searching / filtering among installable packages
 - Add access to basic menu items for docked previews
