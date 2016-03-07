@@ -7,7 +7,7 @@ Build-Depends: cmake,
                kdelibs5-dev,
                libx11-dev,
                r-base-dev (>= 3.0.0)
-Standards-Version: 3.9.6
+Standards-Version: 3.9.7
 Homepage: http://rkward.kde.org
 Vcs-Browser: http://quickgit.kde.org/?p=rkward.git&a=tree&f=debian-official
 Vcs-Git: git://anongit.kde.org/rkward.git
