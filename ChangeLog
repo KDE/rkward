@@ -1,3 +1,5 @@
+- Fixed: Help Search was not longer working correctly with recent version of R                     TODO: which version?
+- Fix compilation with R 3.3.x
 - Provide better status feedback when searching / filtering among installable packages
 - Add access to basic menu items for docked previews
 - Move preview controls to the button-column of dialogs                                            TODO document, polish
@@ -12,7 +14,7 @@
 - File selectors in "Import XYZ" plugins now filter for standard file extensions, by default
 - Add previews for CSV, SPSS, and Stata import plugins
 - Allow previews for data, (HTML) output, and custom types of previews
-- Allow previews to be docked to the dialog window, add dock them, by default                      TODO: update documentation on placemnet
+- Allow previews to be docked to the dialog window, and dock them, by default                      TODO: update documentation on placemnet
 - Implicitly save code preview visibility and size (instead of the former explicit settings)
 - data.frame objects outside of globalenv() can be opened read-only in an editor window
 - Show a warning screen when invoking plugins from the command line (or from clicking an rkward://-link in an external application)
