@@ -23,15 +23,17 @@
 # a simple wrapper around help() that makes it easier to detect in code, whether help was found or not.
 # used from RKHelpSearchWindow::getFunctionHelp
 #' @export
-".rk.getHelp" <- function (...) {
-	if (compareVersion (as.character (getRversion()), "2.10.0") >= 0) {
-		res <- help (..., help_type="html")
-	} else {
-		res <- help (..., chmhelp=FALSE, htmlhelp=TRUE)
-	}
+".rk.getHelp" <- function (topic, package=NULL, ...) {
+	res <- help (topic, (package), ..., help_type="html")
 	if (!length (as.character (res))) {	# this seems undocumented, but it is what utils:::print.help_files_with_topic checks
-		show (res)
-		stop ("No help found")
+		if (!is.null (package)) {
+			# if no help found, try once more, without package restriction
+			res <- help (topic, package=NULL, ..., help_type="html")
+		}
+		if (!length (as.character (res))) {
+			show (res)
+			stop ("No help found")
+		}
 	}
 	show (res)
 	invisible (TRUE)

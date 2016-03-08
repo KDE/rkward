@@ -2,7 +2,7 @@
                           robjectbrowser  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004 - 2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2004 - 2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -62,7 +62,7 @@ Provides most of the functionality of RObjectBrowser
 class RObjectBrowserInternal : public QWidget {
 Q_OBJECT
 public:
-	explicit RObjectBrowserInternal (QWidget *parent);
+	explicit RObjectBrowserInternal (QWidget *parent, RObjectBrowser *browser);
 	~RObjectBrowserInternal ();
 private slots:
 	void updateButtonClicked ();
