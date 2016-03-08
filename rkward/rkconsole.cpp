@@ -885,6 +885,13 @@ void RKConsole::showContextHelp () {
 	RKHelpSearchWindow::mainHelpSearch ()->getContextHelp (currentEditingLine (), currentCursorPositionInCommand ());
 }
 
+void RKConsole::currentHelpContext (QString* symbol, QString* package) {
+	RK_TRACE (APP);
+	Q_UNUSED (package);
+
+	*symbol = RKCommonFunctions::getCurrentSymbol (currentEditingLine (), currentCursorPositionInCommand ());
+}
+
 void RKConsole::initializeActions (KActionCollection *ac) {
 	RK_TRACE (APP);
 #ifdef Q_WS_MAC
@@ -895,7 +902,8 @@ void RKConsole::initializeActions (KActionCollection *ac) {
 #	define REAL_CMD_KEY Qt::MetaModifier
 #endif
 	RKStandardActions::copyLinesToOutput (this, this, SLOT (copyLinesToOutput()));
-	context_help_action = RKStandardActions::functionHelp (this, this, SLOT(showContextHelp()));
+	RKStandardActions::functionHelp (this, this, SLOT(showContextHelp()));
+	RKStandardActions::onlineHelp (this, this);
 	run_selection_action = RKStandardActions::runCurrent (this, this, SLOT (runSelection()));
 
 	interrupt_command_action = ac->addAction ("interrupt", this, SLOT (resetConsole()));

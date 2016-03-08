@@ -589,6 +589,16 @@ void RKCommandEditorWindow::showHelp () {
 	RKHelpSearchWindow::mainHelpSearch ()->getContextHelp (line, c.column());
 }
 
+void RKCommandEditorWindow::currentHelpContext (QString *symbol, QString *package) {
+	RK_TRACE (COMMANDEDITOR);
+	Q_UNUSED (package);
+
+	KTextEditor::Cursor c = m_view->cursorPosition();
+	QString line = m_doc->line(c.line ()) + ' ';
+
+	*symbol = RKCommonFunctions::getCurrentSymbol (line, c.column ());
+}
+
 void RKCommandEditorWindow::tryCompletionProxy (KTextEditor::Document*) {
 	if (RKSettingsModuleCommandEditor::completionEnabled ()) {
 		if (cc_iface && cc_iface->isCompletionActive ()) {

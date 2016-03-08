@@ -2,7 +2,7 @@
                           rkcommandeditorwindow  -  description
                              -------------------
     begin                : Mon Aug 30 2004
-    copyright            : (C) 2004-2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -68,7 +68,12 @@ public:
 	/** to be implemented in subclasses. Provide some context, i.e. text *preceding* the cursor position (probably a line, but you may provide chunks in arbitrary size). If line_rev is 0, provide the line, the cursor is in. If line_rev is greater than 0, provide context before that.
 	@param context Place the context here
 	@returns a chunk of context. A null QString(), if no context was available. */
-	virtual QString provideContext (int line_rev) = 0;
+	virtual QString provideContext (int line_rev) {
+		Q_UNUSED (line_rev);
+		return QString ();
+	};
+	/** to be implemented in subclasses. Provide current context for help searches (based on current selection / current cursor position). If not package information is known, leave that empty. */
+	virtual void currentHelpContext (QString *symbol, QString *package) = 0;
 };
 
 class RObject;
@@ -190,6 +195,7 @@ public:
 	KUrl url ();
 
 	QString provideContext (int line_rev);
+	void currentHelpContext (QString* symbol, QString* package);  // KF5 TODO: add override keyword
 	QString currentCompletionWord () const;
 
 	void highlightLine (int linenum);

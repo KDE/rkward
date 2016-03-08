@@ -34,6 +34,7 @@ SET(misc_STAT_SRCS
 QT4_AUTOMOC(${misc_STAT_SRCS})
 # Urghs. QT4_AUTOMOC scans only the .h-file for Q_OBJECT macros. Let's hope this will be better with KF5
 QT4_GENERATE_MOC (rkaccordiontable.cpp ${CMAKE_CURRENT_BINARY_DIR}/rkaccordiontablemodel_moc.cpp)
+QT4_GENERATE_MOC (rkstandardactions.cpp ${CMAKE_CURRENT_BINARY_DIR}/rksearchonlinehelpaction_moc.cpp)
 
 ADD_LIBRARY(misc STATIC ${misc_STAT_SRCS})
 

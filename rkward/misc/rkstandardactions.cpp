@@ -24,6 +24,7 @@
 #include "rkstandardicons.h"
 #include "rkspecialactions.h"
 #include "../windows/rkmdiwindow.h"
+#include "../windows/rkcommandeditorwindow.h"
 
 #include "../debug.h"
 
@@ -79,3 +80,39 @@ KAction* RKStandardActions::functionHelp (RKMDIWindow *window, const QObject *re
 	ret->setShortcut (Qt::Key_F2);
 	return ret;
 }
+
+#include <kurifilter.h>
+#include <ktoolinvocation.h>
+
+class RKSearchOnlineHelpAction : public KAction {
+	Q_OBJECT
+public:
+	RKSearchOnlineHelpAction (QObject *parent, RKScriptContextProvider *context_provider) : KAction (parent) {
+		RK_TRACE (MISC);
+		provider = context_provider;
+		setText (i18n ("Search Online"));
+		connect (this, SIGNAL (triggered(bool)), this, SLOT (doSearch()));
+	};
+public slots:
+	void doSearch () {
+		RK_TRACE (MISC);
+		QString symbol, package;
+		provider->currentHelpContext (&symbol, &package);
+		KUriFilterData data (symbol + " " + package + " R");
+		KUriFilter::self ()->filterSearchUri (data, KUriFilter::NormalTextFilter);
+		KToolInvocation::invokeBrowser (data.uri ().url ());
+	};
+private:
+	RKScriptContextProvider *provider;
+};
+
+KAction* RKStandardActions::onlineHelp (RKMDIWindow *window, RKScriptContextProvider *context_provider) {
+	RK_TRACE (MISC);
+
+	// KF5 TODO: Add / replace with submenu to select search provider -> KUriFilterSearchProviderActions
+	KAction* ret = new RKSearchOnlineHelpAction (window, context_provider);
+	window->standardActionCollection ()->addAction ("search_online", ret);
+	return ret;
+}
+
+#include "rksearchonlinehelpaction_moc.cpp"

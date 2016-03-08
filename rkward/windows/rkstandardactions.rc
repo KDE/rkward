@@ -40,6 +40,7 @@
 			<Action name="run_all" group="run_actions_merge"/>
 		</Menu>
 		<Action name="function_reference" group="ktexteditor_popup_merge2"/>
+		<Action name="search_online" group="ktexteditor_popup_merge2"/>
 		<Separator group="ktexteditor_popup_merge2"/>
 		<Action name="window_configure" group="ktexteditor_popup_merge2"/>
 	</Menu>
@@ -48,6 +49,7 @@
 		<Action name="paste_special" group="rkconsole_context_merge_paste"/>
 		<Action name="run_current" group="rkconsole_context_merge1"/>
 		<Action name="function_reference" group="rkconsole_context_merge2"/>
+		<Action name="search_online" group="ktexteditor_context_merge2"/>
 		<Separator/>
 		<Action name="window_configure"/>
 	</Menu>
