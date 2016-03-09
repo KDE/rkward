@@ -1,3 +1,4 @@
+- Fixed: Wizard plugins would be too small, initially
 - Fixed: Help Search was not longer working correctly with R 3.2.x
 - Fix compilation with R 3.3.x
 - Provide better status feedback when searching / filtering among installable packages
