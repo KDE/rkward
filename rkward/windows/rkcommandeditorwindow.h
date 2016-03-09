@@ -208,8 +208,6 @@ public slots:
 	void tryCompletion ();
 	void setPopupMenu ();
 	void focusIn (KTextEditor::View *);
-/** Show help about the current word. */
-	void showHelp ();
 /** run the currently selected command(s) or line */
 	void runCurrent ();
 /** run the entire script */
@@ -293,8 +291,6 @@ private:
 	KAction* action_run_current;
 
 	KAction* action_setwd_to_script;
-
-	KAction* action_help_function;
 
 	KUrl previous_autosave_url;
 	QTimer* autosave_timer;

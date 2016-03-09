@@ -36,7 +36,7 @@ namespace RKStandardActions {
 	KAction* runCurrent (RKMDIWindow *window, const QObject *receiver=0, const char *member=0, bool current_or_line=false);
 	KAction* runAll (RKMDIWindow *window, const QObject *receiver=0, const char *member=0);
 
-	KAction* functionHelp (RKMDIWindow *window, const QObject *receiver=0, const char *member=0);
+	KAction* functionHelp (RKMDIWindow *window, RKScriptContextProvider *context_provider);
 /** Search for current symbol / selection, online. Note that you will not have to connect this action to any slot to work. It does everything by itself.
  *  It will query the given context_provider for context. */
 	KAction* onlineHelp (RKMDIWindow *window, RKScriptContextProvider *context_provider);

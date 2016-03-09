@@ -115,7 +115,8 @@ RObjectBrowserInternal::RObjectBrowserInternal (QWidget *parent, RObjectBrowser 
 	update_button = new QPushButton (i18n ("Update"), this);
 	vbox->addWidget (update_button);
 
-	actions.insert (Help, RKStandardActions::functionHelp (browser, this, SLOT(popupHelp())));
+	actions.insert (Help, RKStandardActions::functionHelp (browser, this));
+	actions.insert (SearchOnline, RKStandardActions::onlineHelp (browser, this));
 	actions.insert (Edit, new QAction (i18n ("Edit"), this));
 	connect (actions[Edit], SIGNAL(triggered(bool)), this, SLOT(popupEdit()));
 	actions.insert (View, new QAction (i18n ("View"), this));
@@ -164,12 +165,13 @@ void RObjectBrowserInternal::updateButtonClicked () {
 	RObjectList::getObjectList ()->updateFromR (0);
 }
 
-void RObjectBrowserInternal::popupHelp () {
+void RObjectBrowserInternal::currentHelpContext (QString* symbol, QString* package) {
 	RK_TRACE (APP);
 
 	RObject *object = list_view->menuObject ();
 	if (!object) return;
-	RKHelpSearchWindow::mainHelpSearch ()->getFunctionHelp (object->getShortName (), object->isInGlobalEnv () ? QString () : object->toplevelEnvironment ()->packageName ());
+	*symbol = object->getShortName ();
+	*package = object->isInGlobalEnv () ? QString () : object->toplevelEnvironment ()->packageName ();
 }
 
 void RObjectBrowserInternal::popupEdit () {
