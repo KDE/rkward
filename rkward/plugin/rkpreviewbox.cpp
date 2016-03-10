@@ -46,7 +46,8 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	XMLHelper *xml = parent_component->xmlHelper ();
 
 	preview_mode = (PreviewMode) xml->getMultiChoiceAttribute (element, "mode", "plot;data;output;custom", 0, DL_INFO);
-	placement = (PreviewPlacement) xml->getMultiChoiceAttribute (element, "placement", "default;attached;detached;docked", (preview_mode == PlotPreview) ? 3 : 3, DL_INFO);
+	placement = (PreviewPlacement) xml->getMultiChoiceAttribute (element, "placement", "default;attached;detached;docked", 0, DL_INFO);
+	if (placement == DefaultPreview) placement = DockedPreview;
 	preview_active = xml->getBoolAttribute (element, "active", false, DL_INFO);
 	idprop = RObject::rQuote (QString ().sprintf ("%p", this));
 

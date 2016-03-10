@@ -1,9 +1,10 @@
+- Added context menu option to search for information on current symbol online
 - Fixed: Wizard plugins would be too small, initially
 - Fixed: Help Search was not longer working correctly with R 3.2.x
 - Fix compilation with R 3.3.x
 - Provide better status feedback when searching / filtering among installable packages
 - Add access to basic menu items for docked previews
-- Move preview controls to the button-column of dialogs                                            TODO document, polish
+- Move preview controls to the button-column of dialogs
 - Add preview to Sort data-, Subset data, and Recode categorical data-plugins
 - Add preview to Power Analysis plugin
 - Add support for adding "htmlwidget"- and "gvis"-class objects to the output window via rk.print()
@@ -15,7 +16,7 @@
 - File selectors in "Import XYZ" plugins now filter for standard file extensions, by default
 - Add previews for CSV, SPSS, and Stata import plugins
 - Allow previews for data, (HTML) output, and custom types of previews
-- Allow previews to be docked to the dialog window, and dock them, by default                      TODO: update documentation on placemnet
+- Allow previews to be docked to the dialog window, and dock them, by default
 - Implicitly save code preview visibility and size (instead of the former explicit settings)
 - data.frame objects outside of globalenv() can be opened read-only in an editor window
 - Show a warning screen when invoking plugins from the command line (or from clicking an rkward://-link in an external application)

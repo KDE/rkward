@@ -1350,6 +1350,8 @@ This chapter contains information on some topics that are useful only to certain
 		<para>
 			Adding a <command>&lt;preview&gt;</command> check box is simple. Just place the following somewhere in your GUI. It will take care of all the behind-the-scenes magic of creating a preview device, updating the preview whenever the setting have changed, &etc; Example:
 		</para>
+		<note><para>Starting with version 0.6.5 of &kapp; <command>&lt;preview&gt;</command> preview elements are special-cased in plugin dialogs (not wizards): They will be placed in the button-column, irrespective of where exactly they are defined in the UI. It is still a good idea to define them at a sensible place in the layout, for backwards compatibility.
+		</para></note>
 		<programlisting>
 	&lt;document&gt;
 		[...]
@@ -3504,7 +3506,9 @@ Child-elements:
 
 <varlistentry>
 <term>&lt;preview&gt;</term>
-<listitem><para>Checkbox to toggle preview functionality. Attributes:
+<listitem><para>Checkbox to toggle preview functionality. Note that starting with version 0.6.5 of &kapp; <command>&lt;preview&gt;</command> preview elements are special-
+		cased in plugin dialogs (not wizards): They will be placed in the button-column, irrespective of where exactly they are defined in the UI. It is still a good idea to
+		define them at a sensible place in the layout, for backwards compatibility. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term><parameter>label</parameter></term>
@@ -3516,7 +3520,7 @@ Child-elements:
 	</varlistentry>
 	<varlistentry>
 	<term><parameter>placement</parameter></term>
-	<listitem><para>Placement of the preview: "attached" (to the main workplace), "detached" (standalone window), "docked" (attached to the plugin dialog) and "default" (default depending on type of preview). In general, it is recommended to leave this as the default setting for best UI-consistency (optional, default is "default")</para></listitem>
+	<listitem><para>Placement of the preview: "attached" (to the main workplace), "detached" (standalone window), "docked" (attached to the plugin dialog) and "default" (currently this is the same as "docked", but might become user-configuarable at some point). In general, it is recommended to leave this as the default setting for best UI-consistency (optional, default is "default")</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term><parameter>active</parameter></term>
