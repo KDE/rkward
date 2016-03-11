@@ -40,6 +40,7 @@ public:
 	explicit RKMultiStringSelectorV2 (const QString& label, QWidget* parent = 0);
 	virtual ~RKMultiStringSelectorV2 ();
 	void setModel (QAbstractItemModel *model, int main_column=-1);
+	void setAlwaysAddAtBottom (bool always_add_at_bottom) { add_at_bottom = always_add_at_bottom; };
 public slots:
 	void buttonClicked ();
 	void updateButtons ();
@@ -50,6 +51,7 @@ protected:
 	QPushButton* remove_button;
 	QPushButton* up_button;
 	QPushButton* down_button;
+	bool add_at_bottom;
 signals:
 	void insertNewStrings (int above_row);
 	void swapRows (int rowa, int rowb);

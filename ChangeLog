@@ -1,3 +1,4 @@
+- When manually adding pluginmaps, load these after, not before other pluginmaps, by default
 - Added context menu option to search for information on current symbol online
 - Fixed: Wizard plugins would be too small, initially
 - Fixed: Help Search was not longer working correctly with R 3.2.x
