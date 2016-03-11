@@ -26,6 +26,7 @@ class QGroupBox;
 class QComboBox;
 class KIntSpinBox;
 class RCommand;
+class GetFileNameWidget;
 
 /**
 Allows to configure which types of commands should be "carbon copied" to the output window. Like the RKSettingsModules classes, this class encapsulates both, the setting itself,
@@ -99,6 +100,7 @@ private:
 	KIntSpinBox *graphics_height_box;
 	KIntSpinBox *graphics_jpg_quality_box;
 	RKCarbonCopySettings *cc_settings;
+	GetFileNameWidget *custom_css_file_box;
 
 	static bool auto_show;
 	static bool auto_raise;
@@ -106,6 +108,7 @@ private:
 	static int graphics_width;
 	static int graphics_height;
 	static int graphics_jpg_quality;
+	static QString custom_css_file;
 };
 
 #endif
