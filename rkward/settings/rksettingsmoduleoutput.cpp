@@ -46,6 +46,7 @@ RKCarbonCopySettings::RKCarbonCopySettings (QWidget* parent) : QWidget (parent) 
 	RK_TRACE (SETTINGS);
 
 	QVBoxLayout *main_vbox = new QVBoxLayout (this);
+	main_vbox->setContentsMargins (0, 0, 0, 0);
 	cc_globally_enabled_box = new QGroupBox (i18n ("Carbon copy commands to output"), this);
 	cc_globally_enabled_box->setCheckable (true);
 	connect (cc_globally_enabled_box, SIGNAL (clicked(bool)), this, SLOT (settingChanged()));
@@ -169,6 +170,7 @@ RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent
 
 	custom_css_file_box = new GetFileNameWidget (this, GetFileNameWidget::ExistingFile, true, i18n ("CSS file to use for output (leave empty for default)"), i18n ("Select CSS file"), QString ());
 	connect (custom_css_file_box, SIGNAL (locationChanged()), this, SLOT (boxChanged()));  // KF5 TODO new syntax
+	RKCommonFunctions::setTips (i18n ("Select a CSS file for custom formatting of the output window. Leave empty to use the default CSS file shipped with RKWard. Note that this setting takes effect, when initializing an output file (e.g. after flushing the output), only."), custom_css_file_box);
 	main_vbox->addWidget (custom_css_file_box);
 
 	group = new QGroupBox (i18n ("Graphics"), this);
