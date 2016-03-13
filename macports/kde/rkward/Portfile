@@ -7,7 +7,7 @@ PortSystem          1.0
 PortGroup           kde4    1.1
 
 name                rkward
-version             0.6.4
+version             0.6.5
 # On next version or revision bump see notes in 'pre-activate' phase:
 revision            1
 
