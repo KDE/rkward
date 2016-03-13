@@ -85,7 +85,7 @@ void* RKRBackend::default_global_context = 0;
 	// why oh why isn't Rinterface.h available on Windows?
 	LibExtern void* R_GlobalContext;
 	LibExtern uintptr_t R_CStackLimit;
-	LibExtern void R_SaveGlobalEnvToFile(char*);
+	extern "C" void R_SaveGlobalEnvToFile(char*);
 #else
 #	include <Rinterface.h>
 #endif
