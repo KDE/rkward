@@ -85,7 +85,7 @@ void* RKRBackend::default_global_context = 0;
 	// why oh why isn't Rinterface.h available on Windows?
 	LibExtern void* R_GlobalContext;
 	LibExtern uintptr_t R_CStackLimit;
-	LibExtern void R_SaveGlobalEnvToFile(char*);
+	extern "C" void R_SaveGlobalEnvToFile(char*);
 #else
 #	include <Rinterface.h>
 #endif
@@ -258,6 +258,9 @@ void RKTransmitNextUserCommandChunk (unsigned char* buf, int buflen) {
 		RKRBackend::this_pointer->handleRequest (&req);
 	}
 }
+
+// forward declaration needed on Windows
+void RCleanUp (SA_TYPE saveact, int status, int RunLast);
 
 int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) {
 	RK_TRACE (RBACKEND);

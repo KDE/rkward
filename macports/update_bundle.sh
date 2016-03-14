@@ -31,6 +31,7 @@ MKSRCTAR=false
 COPYMDMD=false
 WIPEDSTF=false
 WIPEINST=false
+GETTARGVERS=true
 
 PVARIANT=""
 GITBRANCH="master"
@@ -109,12 +110,14 @@ if [[ $1 == "" ]] ; then
            -r  update port ${PTARGET}
            -m  create .mpkg of ${PTARGET}
            -s  create sources .tar
-           -c  move .mpkg and src.tar to ${LPUBDIR}, if created"
+           -c  move .mpkg and src.tar to ${LPUBDIR}, if created
+           -t  set target version for -c manually
+"
 exit 0
 fi
 
 # get the options
-while getopts ":CDE:dbfGlLprmsS:cU:xXF:" OPT; do
+while getopts ":CDE:dbfGlLprmsS:cU:xXF:t:" OPT; do
   case $OPT in
     U) GITUSER=$OPTARG >&2 ;;
     E) GITMAIL=$OPTARG >&2 ;;
@@ -149,6 +152,8 @@ while getopts ":CDE:dbfGlLprmsS:cU:xXF:" OPT; do
        MAKEMDMD=true >&2 ;;
     s) MKSRCTAR=true >&2 ;;
     c) COPYMDMD=true >&2 ;;
+    t) GETTARGVERS=false >&2
+       TARGETVERS=$OPTARG >&2 ;;
     x) WIPEDSTF=true >&2 ;;
     X) WIPEDSTF=false >&2
        WIPEINST=true >&2 ;;
@@ -370,34 +375,36 @@ fi
 if $COPYMDMD ; then
   # get version information of installed ports
   PORTVERS=$("${MPTINST}/bin/port" list $PTARGET | sed -e "s/.*@//;s/[[:space:]].*//")
-  if $DEVEL ; then
-    # we moved to git
-    # TARGETVERS=${PORTVERS}$(svn info "$SVNREPO" | grep "^Revision:" | sed "s/[^[:digit:]]*//")
-    # 
-    # this one-liner would give us the latest commit hash, but no date -- bad for humans and sorting:
-    # TARGETVERS=${PORTVERS}$(git ls-remote http://anongit.kde.org/rkward master | cut -c 1-7)
-    # 
-    # so here's something a little more elaborate...
-    TEMPFILE=$(mktemp /tmp/git_rev.XXXXXX || exit 1)
-    if ! [[ $(which wget) == "" ]] ; then
-      wget -q -O "${TEMPFILE}" "http://quickgit.kde.org/?p=rkward.git" || exit 1
-      GOTQUICKGIT=true
-    elif ! [[ $(which curl) == "" ]] ; then
-      curl -s -o "${TEMPFILE}" "http://quickgit.kde.org/?p=rkward.git" || exit 1
-      GOTQUICKGIT=true
+  if $GETTARGVERS ; then
+    if $DEVEL ; then
+      # we moved to git
+      # TARGETVERS=${PORTVERS}$(svn info "$SVNREPO" | grep "^Revision:" | sed "s/[^[:digit:]]*//")
+      # 
+      # this one-liner would give us the latest commit hash, but no date -- bad for humans and sorting:
+      # TARGETVERS=${PORTVERS}$(git ls-remote http://anongit.kde.org/rkward master | cut -c 1-7)
+      # 
+      # so here's something a little more elaborate...
+      TEMPFILE=$(mktemp /tmp/git_rev.XXXXXX || exit 1)
+      if ! [[ $(which wget) == "" ]] ; then
+        wget -q -O "${TEMPFILE}" "http://quickgit.kde.org/?p=rkward.git" || exit 1
+        GOTQUICKGIT=true
+      elif ! [[ $(which curl) == "" ]] ; then
+        curl -s -o "${TEMPFILE}" "http://quickgit.kde.org/?p=rkward.git" || exit 1
+        GOTQUICKGIT=true
+      else
+        echo "neither wget nor curl found, only commit can be used!"
+        TARGETVERS=${PORTVERS}-git$(git ls-remote http://anongit.kde.org/rkward master | cut -c 1-7)
+        GOTQUICKGIT=false
+      fi
+      if ${GOTQUICKGIT} ; then
+        CHANGEDATE=$(grep "last change.*<time datetime=" "${TEMPFILE}" | sed "s/.*datetime=\"\(.*\)+00:00.*/\1/g" | sed "s/[^[:digit:]]//g")
+        LASTCOMMIT=$(grep -m1 "<td class=\"monospace\">[[:alnum:]]\{7\}" "${TEMPFILE}" | sed "s#.*<td class=\"monospace\">\(.*\)</td>.*#\1#")
+        TARGETVERS="${PORTVERS}-git${CHANGEDATE}~${LASTCOMMIT}"
+      fi
+      rm "${TEMPFILE}"
     else
-      echo "neither wget nor curl found, only commit can be used!"
-      TARGETVERS=${PORTVERS}-git$(git ls-remote http://anongit.kde.org/rkward master | cut -c 1-7)
-      GOTQUICKGIT=false
+      TARGETVERS="$PORTVERS"
     fi
-    if ${GOTQUICKGIT} ; then
-      CHANGEDATE=$(grep "last change.*<time datetime=" "${TEMPFILE}" | sed "s/.*datetime=\"\(.*\)+00:00.*/\1/g" | sed "s/[^[:digit:]]//g")
-      LASTCOMMIT=$(grep -m1 "<td class=\"monospace\">[[:alnum:]]\{7\}" "${TEMPFILE}" | sed "s#.*<td class=\"monospace\">\(.*\)</td>.*#\1#")
-      TARGETVERS="${PORTVERS}-git${CHANGEDATE}~${LASTCOMMIT}"
-    fi
-    rm "${TEMPFILE}"
-  else
-    TARGETVERS="$PORTVERS"
   fi
   KDEVERS=$("${MPTINST}/bin/port" list kdelibs4 | sed -e "s/.*@//;s/[[:space:]].*//")
 fi
