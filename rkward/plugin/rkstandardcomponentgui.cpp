@@ -663,6 +663,7 @@ void RKStandardComponentWizard::enableSubmit (bool enable) {
 
 RKStandardComponentStack::RKStandardComponentStack (QWidget *parent) : QStackedWidget (parent) {
 	RK_TRACE (PLUGIN);
+	setSizePolicy (QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 }
 
 RKStandardComponentStack::~RKStandardComponentStack () {

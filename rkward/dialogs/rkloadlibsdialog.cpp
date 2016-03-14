@@ -1264,6 +1264,7 @@ RKPluginMapSelectionWidget::RKPluginMapSelectionWidget (RKLoadLibsDialog* dialog
 	vbox->setContentsMargins (0, 0, 0, 0);
 	vbox->addWidget (new QLabel (i18n ("Installed plugin groups (.pluginmap files)"), this));
 	selector = new RKMultiStringSelectorV2 (QString (), this);
+	selector->setAlwaysAddAtBottom (true);
 	vbox->addWidget (selector);
 }
 

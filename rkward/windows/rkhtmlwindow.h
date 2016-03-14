@@ -234,6 +234,7 @@ private:
 private slots:
 	void fileChanged (const QString &path);
 	void windowDestroyed (QObject *window);
+	void rewatchOutput ();
 };
 
 #endif

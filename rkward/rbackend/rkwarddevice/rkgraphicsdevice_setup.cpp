@@ -33,10 +33,8 @@
 #endif
 #define R_USE_PROTOTPYES 1
 
-extern "C" {
 #include <R_ext/GraphicsEngine.h>
 #include <Rversion.h>
-}
 
 // rcolor typedef added in R 3.0.0
 #ifndef rcolor

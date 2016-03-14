@@ -55,7 +55,6 @@ void* RKRBackend::default_global_context = 0;
 #include <stdint.h>
 #include <locale.h>
 
-extern "C" {
 #define R_INTERFACE_PTRS 1
 // for R_CStackStart/Limit
 #define CSTACK_DEFNS 1
@@ -86,7 +85,7 @@ extern "C" {
 	// why oh why isn't Rinterface.h available on Windows?
 	LibExtern void* R_GlobalContext;
 	LibExtern uintptr_t R_CStackLimit;
-	LibExtern void R_SaveGlobalEnvToFile(char*);
+	extern "C" void R_SaveGlobalEnvToFile(char*);
 #else
 #	include <Rinterface.h>
 #endif
@@ -179,9 +178,9 @@ void RKRBackend::clearPendingInterrupt () {
 #if R_VERSION < R_Version(2,13,0)
 LibExtern void Rf_PrintWarnings (void);
 #endif
-LibExtern void run_Rmainloop (void);
+extern "C" void run_Rmainloop (void);
 #include <R_ext/eventloop.h>
-}
+
 
 #include "rdata.h"
 

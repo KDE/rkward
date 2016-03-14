@@ -31,9 +31,7 @@
 #include "rkrbackendprotocol_backend.h"
 
 #ifdef Q_OS_WIN
-extern "C" {
-	void RK_scheduleIntr();
-}
+void RK_scheduleIntr();
 #endif
 
 class QStringList;

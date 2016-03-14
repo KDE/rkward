@@ -552,8 +552,6 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 	} else if (call == "set.output.file") {
 		RK_ASSERT (calllist.count () == 2);
 		RKOutputWindowManager::self ()->setCurrentOutputPath (calllist.value (1));
-	} else if (call == "getCSSlink") {
-		return (QStringList (QString ("<link rel=\"StyleSheet\" type=\"text/css\" href=\"" + QUrl::fromLocalFile (RKCommonFunctions::getRKWardDataDir () + "pages/rkward_output.css").toString () + "\"/>\n")));
 	} else if (call == "wdChange") {
 		// in case of separate processes, apply new working directory in frontend, too.
 		QDir::setCurrent (calllist.value (1));

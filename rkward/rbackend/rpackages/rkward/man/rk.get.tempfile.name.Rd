@@ -16,7 +16,7 @@ rk.get.output.html.file()
 
 rk.set.output.html.file(x,
   additional.header.contents = getOption("rk.html.header.additions"),
-  style = c("regular", "preview"))
+  style = c("regular", "preview"), css = getOption("rk.output.css.file"))
 
 rk.flush.output(x = rk.get.output.html.file(), flush.images = TRUE,
   ask = TRUE, ...)
@@ -35,6 +35,10 @@ This could be scripts or additional CSS definitions, for example. Note that
 \emph{nothing} will be added to the header, if the file already exists.}
 
 \item{style}{Currently either "regular" or "preview". The latter omits table of contents and date.}
+
+\item{css}{Local file name of CSS file to use, or NULL for no CSS file. The CSS file will be
+placed next to x, with file name extension ".css". Only effective when initializing a
+(non-existing) output file.}
 
 \item{ask}{Logical: Whether to ask before flushing the output file.}
 

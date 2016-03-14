@@ -205,7 +205,8 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	ac->setDefaultShortcuts (action, QList<QKeySequence>() << Qt::AltModifier + Qt::Key_Return << Qt::AltModifier + Qt::Key_Enter);
 	ac->setDefaultShortcut (action, Qt::AltModifier + Qt::Key_Return); // KF5 TODO: This line needed only for KF5 < 5.2, according to documentation
 
-	action_help_function = RKStandardActions::functionHelp (this, this, SLOT (showHelp()));
+	RKStandardActions::functionHelp (this, this);
+	RKStandardActions::onlineHelp (this, this);
 
 	actionmenu_run_block = new KActionMenu (i18n ("Run block"), this);
 	actionmenu_run_block->setDelayed (false);	// KDE4: TODO does not work correctly in the tool bar.
@@ -563,13 +564,14 @@ void RKCommandEditorWindow::updateCaption () {
 	RKWardMainWindow::getMain ()->addScriptUrl (url ());
 }
 
-void RKCommandEditorWindow::showHelp () {
+void RKCommandEditorWindow::currentHelpContext (QString *symbol, QString *package) {
 	RK_TRACE (COMMANDEDITOR);
+	Q_UNUSED (package);
 
 	KTextEditor::Cursor c = m_view->cursorPosition();
 	QString line = m_doc->line(c.line ()) + ' ';
 
-	RKHelpSearchWindow::mainHelpSearch ()->getContextHelp (line, c.column());
+	*symbol = RKCommonFunctions::getCurrentSymbol (line, c.column ());
 }
 
 void RKCommandEditorWindow::tryCompletionProxy (KTextEditor::Document*) {

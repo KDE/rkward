@@ -30,6 +30,9 @@
 #'        This could be scripts or additional CSS definitions, for example. Note that
 #'        \emph{nothing} will be added to the header, if the file already exists.
 #' @param style Currently either "regular" or "preview". The latter omits table of contents and date.
+#' @param css Local file name of CSS file to use, or NULL for no CSS file. The CSS file will be
+#'            placed next to x, with file name extension ".css". Only effective when initializing a
+#'            (non-existing) output file.
 #' @param flush.images. If true, any images used in the output file will be deleted as well.
 #' @param ask Logical: Whether to ask before flushing the output file.
 #' @param ... Further parameters passed to rk.set.output.html.file()
@@ -79,7 +82,7 @@
 
 #' @export
 #' @rdname rk.get.tempfile.name
-"rk.set.output.html.file" <- function (x, additional.header.contents = getOption ("rk.html.header.additions"), style=c ("regular", "preview")) {
+"rk.set.output.html.file" <- function (x, additional.header.contents = getOption ("rk.html.header.additions"), style=c ("regular", "preview"), css = getOption ("rk.output.css.file")) {
 	stopifnot (is.character (x))
 	style <- match.arg (style)
 	oldfile <- rk.get.output.html.file ()
@@ -87,7 +90,15 @@
 
 	if (!file.exists (x)) {
 		.rk.cat.output (paste ("<?xml version=\"1.0\" encoding=\"", .Call ("rk.locale.name", PACKAGE="(embedding)"), "\"?>\n", sep=""))
-		.rk.cat.output (paste ("<html><head>\n<title>RKWard Output</title>\n", .rk.do.plain.call ("getCSSlink"), sep=""))
+		.rk.cat.output ("<html><head>\n<title>RKWard Output</title>\n")
+		if (!is.null (css)) {
+			cssfilename <- paste (sub ("\\.[^.]*$", "", basename (x)), ".css", sep="")
+			.rk.cat.output (paste ("<link rel=\"StyleSheet\" type=\"text/css\" href=\"", cssfilename, "\"/>\n", sep=""))
+			cssfile <- file.path (dirname (x), cssfilename)
+			if (!file.copy (css, cssfile, overwrite=TRUE)) {
+				warning ("Failed to copy CSS file ", css, " to ", cssfile)
+			}
+		}
 		# the next part defines a JavaScript function to add individual results to a global table of contents menu in the document
 		if (style != "preview") {
 			.rk.cat.output (paste ("\t<script type=\"text/javascript\">

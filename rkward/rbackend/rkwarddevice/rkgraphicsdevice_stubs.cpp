@@ -25,9 +25,7 @@
 #include "../rkreventloop.h"
 #include "../../debug.h"
 
-extern "C" {
 #include <R_ext/GraphicsEngine.h>
-}
 
 #define RKD_IN_STREAM RKGraphicsDeviceBackendTransmitter::streamer.instream
 #define RKD_OUT_STREAM RKGraphicsDeviceBackendTransmitter::streamer.outstream

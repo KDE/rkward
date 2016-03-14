@@ -2,7 +2,7 @@
                           robject  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004-2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -150,7 +150,10 @@ public:
 	bool canRead () const;
 	bool canRename () const;
 	bool canRemove () const;
+/** returns true, if this object is inside the .GlobalEnv. The .GlobalEnv is not considered to be inside itself. */
 	bool isInGlobalEnv () const;
+/** returns the toplevel environment that this object is in. May the the same as the object. */
+	REnvironmentObject *toplevelEnvironment () const;
 
 	void rename (const QString &new_short_name);
 	void remove (bool removed_in_workspace);

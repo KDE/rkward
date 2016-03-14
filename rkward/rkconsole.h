@@ -62,6 +62,7 @@ public:
 	int currentCursorPositionInCommand ();
 	void doTabCompletion ();
 	QString provideContext (int line_rev) override;
+	void currentHelpContext (QString *symbol, QString *package) override;
 
 	static RKConsole *mainConsole () { return main_console; };
 	static void setMainConsole (RKConsole *console) { main_console = console; };
@@ -135,7 +136,6 @@ friend class RKConsolePart;
 
 	bool tab_key_pressed_before;
 
-	QAction* context_help_action;
 	QAction* run_selection_action;
 	QAction* interrupt_command_action;
 	QAction* copy_commands_action;
@@ -158,8 +158,6 @@ public slots:
 	void literalCopy ();
 /** Clear the view, and add a prompt at the top. */
 	void clear ();
-/** show context help on the current word */
-	void showContextHelp ();
 /** Cancels the current command, if any, and clears the command buffer(s) */
 	void resetConsole ();
 	void runSelection ();
