@@ -204,14 +204,10 @@ int main (int argc, char *argv[]) {
 	QDir kde_dir (QFileInfo (marker_exe).absolutePath ());
 	kde_dir.makeAbsolute ();
 	QString kde_dir_safe_path = quoteCommand (kde_dir.path ());
-        if (syspath.indexOf (kde_dir.path ()) < 0) {
+	if (syspath.indexOf (kde_dir.path ()) < 0) {
 		if (debug_level > 3) qDebug ("Adding %s to the system path", qPrintable (kde_dir_safe_path));
-	qputenv ("PATH", QString (kde_dir_safe_path + PATH_VAR_SEP + qgetenv ("PATH")).toLocal8Bit ());
+		qputenv ("PATH", QString (kde_dir_safe_path + PATH_VAR_SEP + qgetenv ("PATH")).toLocal8Bit ());
 	}
-/* KF5 TODO: Still needed? 
-	// important if RKWard is not in KDEPREFIX/bin but e.g. KDEPREFIX/lib/libexec
-	qputenv ("RKWARD_ENSURE_PREFIX", kde_dir_safe_path.toLocal8Bit ());
-	if (debug_level > 3) qDebug ("Setting environment variable RKWARD_ENSURE_PREFIX=%s", qPrintable (kde_dir_safe_path)); */
 
 	QString rkward_frontend_exe = findRKWardAtPath (app.applicationDirPath ());	// this is for running directly from a build tree
 #ifdef Q_OS_MAC

@@ -179,7 +179,6 @@ private:
 QAction* RKStandardActions::onlineHelp (RKMDIWindow *window, RKScriptContextProvider *context_provider) {
 	RK_TRACE (MISC);
 
-	// KF5 TODO: Add / replace with submenu to select search provider -> KUriFilterSearchProviderActions
 	QAction* ret = new RKSearchOnlineHelpAction (window, context_provider);
 	window->standardActionCollection ()->addAction ("search_online", ret);
 	return ret;

@@ -40,8 +40,7 @@ RKXMLGUIPreviewArea::RKXMLGUIPreviewArea (QWidget* parent) : KXmlGuiWindow (pare
 	menu_button->setPopupMode (QToolButton::InstantPopup);
 	menu_button->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionShowMenu));
 	menu_button->setMenu (menu = new QMenu ());
-	// KF5 TODO:
-	connect (menu, SIGNAL (aboutToShow()), this, SLOT (prepareMenu()));
+	connect (menu, &QMenu::aboutToShow, this, &RKXMLGUIPreviewArea::prepareMenu);
 	current = 0;
 	setWindowFlags (Qt::Widget);
 	setMenuBar (new QMenuBar (this));
@@ -71,6 +70,7 @@ void RKXMLGUIPreviewArea::childEvent (QChildEvent *event) {
 				removeChildClient (current);
 				factory ()->removeClient (current);  // _always_ remove before adding, or the previous child will be leaked in the factory
 			}
+			child->setWindowStyleHint ("preview");
 			current = child->getPart ();
 			insertChildClient (current);
 			setCentralWidget (child);

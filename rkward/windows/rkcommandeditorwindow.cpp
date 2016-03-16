@@ -337,6 +337,13 @@ void RKCommandEditorWindow::closeEvent (QCloseEvent *e) {
 	QWidget::closeEvent (e);
 }
 
+void RKCommandEditorWindow::setWindowStyleHint (const QString& hint) {
+	RK_TRACE (COMMANDEDITOR);
+
+	m_view->setStatusBarEnabled (hint != "preview");
+	RKMDIWindow::setWindowStyleHint (hint);
+}
+
 void RKCommandEditorWindow::copy () {
 	RK_TRACE (COMMANDEDITOR);
 

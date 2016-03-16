@@ -36,7 +36,7 @@ public:
 protected:
 	/** build / destroy menu, when child is added removed. Note that we are in the fortunate situation that RKMDIWindow-children only ever get to the
 	 *  preview area via reparenting, i.e. contrary to usual QEvent::ChildAdded semnatics, they are always fully constructed, when added. */
-	void childEvent (QChildEvent *event);  // KF5 TODO: override keyword
+	void childEvent (QChildEvent *event) override;
 protected slots:
 	void prepareMenu ();
 private:

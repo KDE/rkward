@@ -208,6 +208,7 @@ public slots:
 protected:
 /** reimplemented from RKMDIWindow: give the editor window a chance to object to being closed (if unsaved) */
 	void closeEvent (QCloseEvent *e) override;
+	void setWindowStyleHint (const QString& hint) override;
 private slots:
 /** mark current selection as a block */
 	void markBlock ();

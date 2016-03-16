@@ -169,7 +169,7 @@ RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent
 	main_vbox->addWidget (group);
 
 	custom_css_file_box = new GetFileNameWidget (this, GetFileNameWidget::ExistingFile, true, i18n ("CSS file to use for output (leave empty for default)"), i18n ("Select CSS file"), QString ());
-	connect (custom_css_file_box, SIGNAL (locationChanged()), this, SLOT (boxChanged()));  // KF5 TODO new syntax
+	connect (custom_css_file_box, &GetFileNameWidget::locationChanged, this, &RKSettingsModuleOutput::boxChanged);
 	RKCommonFunctions::setTips (i18n ("Select a CSS file for custom formatting of the output window. Leave empty to use the default CSS file shipped with RKWard. Note that this setting takes effect, when initializing an output file (e.g. after flushing the output), only."), custom_css_file_box);
 	main_vbox->addWidget (custom_css_file_box);
 

@@ -5,8 +5,6 @@ All in all, this TODO list is mostly for internal purposes, and many parts may n
 KF5 port:
 Things to do:
 - Grep for "KF5 TODO"
-- Remove katepart status bar from all previews (including in wizard)
-- Replace Q_WS_* and Q_OS_X11 as appropriate
 Things to test at the end:
 - Everthing concerning loading / saving, from recent files, scripts, workspace, etc.
   - Moved installations, moved workspaces.
@@ -27,6 +25,7 @@ Upcoming porting efforts: Port from QtScript to QJSEngine:
 
 Port from QtWebKit to QtWebEngine
 - Should be mostly unproblematic
+  - Gah, QWebEngine does not compile with MinGW! Need some entirely custom solution, instead? https://github.com/GreatTux/CefMinGWQt
 - Somewhat unfortunate that QWebElement will be gone. We might be using this to amend the context menu, e.g. for copying one section to clipboard / deleting one section, etc.
   - Could perhaps be done by catching contextmenu event in JS, instead, then send to frontend, somehow.
 
