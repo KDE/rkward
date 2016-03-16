@@ -83,7 +83,7 @@ public:
 		provider = context_provider;
 		setText (i18n ("&Function reference"));
 		setShortcut (Qt::Key_F2);
-		connect (this, SIGNAL (triggered(bool)), this, SLOT (doSearch()));
+		connect (this, &QAction::triggered, this, &RKSearchRHelpAction::doSearch);
 	};
 public slots:
 	void doSearch () {
@@ -104,6 +104,50 @@ QAction* RKStandardActions::functionHelp (RKMDIWindow *window, RKScriptContextPr
 	return ret;
 }
 
+// KF5 TODO: The following should work with KIO >= 5.16, but I have _not_ tested this, yet. change #ifdef, when ready.
+#if 0
+#include <kurifiltersearchprovideractions.h>
+#include <QMenu>
+
+class RKSearchOnlineHelpAction : public QObject {
+	Q_OBJECT
+public:
+	RKSearchOnlineHelpAction (QObject *parent, RKScriptContextProvider *context_provider) : QObject (parent) {
+		RK_TRACE (MISC);
+		provider = context_provider;
+		menu = new QMenu ();
+		connect (this, &QMenu::aboutToShow, this, &RKSearchOnlineHelpAction::init);
+		actions = new KUriFilterSearchProviderActions (this);
+		actions->addWebShortcutsToMenu (menu);
+	};
+	~RKSearchOnlineHelpAction () {
+		RK_TRACE (MISC);
+		menu->deleteLater ();
+	}
+	QAction *action () {
+		return menu->menuAction ();
+	}
+public slots:
+	void init () {
+		RK_TRACE (MISC);
+		QString symbol, package;
+		provider->currentHelpContext (&symbol, &package);
+		actions->setSelectedText (symbol + " " + package + " R");
+	};
+private:
+	QMenu *menu;
+	KUriFilterSearchProviderActions *actions;
+	RKScriptContextProvider *provider;
+};
+
+QAction* RKStandardActions::onlineHelp (RKMDIWindow *window, RKScriptContextProvider *context_provider) {
+	RK_TRACE (MISC);
+
+	QAction* ret = new RKSearchOnlineHelpAction (window, context_provider)->action ();
+	window->standardActionCollection ()->addAction ("search_online", ret);
+	return ret;
+}
+#else
 #include <kurifilter.h>
 #include <ktoolinvocation.h>
 
@@ -122,6 +166,8 @@ public slots:
 		QString symbol, package;
 		provider->currentHelpContext (&symbol, &package);
 		KUriFilterData data (symbol + " " + package + " R");
+		// I had hope to avoid hard-coding any search provider, but it seems (with KF5) we cannot rely on a default provider to be defined.
+		data.setAlternateDefaultSearchProvider ("google");
 		bool ok = KUriFilter::self ()->filterSearchUri (data, KUriFilter::NormalTextFilter);
 		RK_DEBUG (MISC, DL_DEBUG, "Searching for %s in %s online -> %d: %s", qPrintable (symbol), qPrintable (package), ok, qPrintable (data.uri ().url ()));
 		KToolInvocation::invokeBrowser (data.uri ().url ());
@@ -138,5 +184,6 @@ QAction* RKStandardActions::onlineHelp (RKMDIWindow *window, RKScriptContextProv
 	window->standardActionCollection ()->addAction ("search_online", ret);
 	return ret;
 }
+#endif
 
 #include "rkstandardactions.moc"
