@@ -73,6 +73,7 @@ RKWorkplace::RKWorkplace (QWidget *parent) : QWidget (parent) {
 
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
+	vbox->setSpacing (0);
 	vbox->addWidget (message_area);
 
 	tool_window_bars[RKToolWindowList::Top] = new RKToolWindowBar (KMultiTabBar::Top, this);
@@ -81,6 +82,8 @@ RKWorkplace::RKWorkplace (QWidget *parent) : QWidget (parent) {
 
 	QWidget *harea = new QWidget (vert_splitter);
 	QHBoxLayout *hbox = new QHBoxLayout (harea);
+	hbox->setContentsMargins (0, 0, 0, 0);
+	hbox->setSpacing (0);
 	vert_splitter->setCollapsible (vert_splitter->indexOf (harea), false);
 	vert_splitter->setStretchFactor (vert_splitter->indexOf (harea), 1);
 
