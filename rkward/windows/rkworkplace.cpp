@@ -229,7 +229,7 @@ void RKWorkplace::detachWindow (RKMDIWindow *window, bool was_attached) {
 		if (!window->isToolWindow ()) view ()->removeWindow (window);
 	}
 
-	DetachedWindowContainer *detached = new DetachedWindowContainer (window);
+	DetachedWindowContainer *detached = new DetachedWindowContainer (window, was_attached);
 	detached->show ();
 	if (!was_attached) window->activate ();
 }
@@ -329,7 +329,7 @@ void RKWorkplace::setWindowPlacementOverrides(const QString& placement, const QS
 	RK_TRACE (APP);
 
 	if (placement == "attached") window_placement_override = RKMDIWindow::Attached;
-	else if (placement == "detached") window_placement_override = RKMDIWindow::Attached;
+	else if (placement == "detached") window_placement_override = RKMDIWindow::Detached;
 	else {
 		RK_ASSERT (placement.isEmpty ());
 		window_placement_override = RKMDIWindow::AnyWindowState;

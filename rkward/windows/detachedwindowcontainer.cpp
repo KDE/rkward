@@ -2,7 +2,7 @@
                           detachedwindowcontainer  -  description
                              -------------------
     begin                : Wed Oct 21 2005
-    copyright            : (C) 2005, 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2005-2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -37,7 +37,7 @@
 #include "../debug.h"
 
 /* Warning! Do not pass a parent widget to the KParts::MainWindow. Otherwise there will be strange crahes while removing the KXMLGUIClients! (In this case: Open a help window, and detach it. Open another help window attached. Close the detached one, then close the attached one -> crash; KDE 3.5.5) */
-DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture) : KParts::MainWindow  () {
+DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture, bool copy_geometry) : KParts::MainWindow  () {
 	RK_TRACE (APP);
 
 	actionCollection ()->addAction (KStandardAction::Close, "dwindow_close", this, SLOT(close()));
@@ -61,17 +61,18 @@ DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture
 	}
 
 // capture widget
-// NOTE: If the window has not been shown, before, its geometry() is always 640*480, unconditionally.
-	setGeometry (widget_to_capture->frameGeometry ());
-	if (!widget_to_capture->isWindow ()) move (widget_to_capture->mapToGlobal (widget_to_capture->pos ()));
+	if (copy_geometry) {
+		setGeometry (widget_to_capture->frameGeometry ());
+		if (!widget_to_capture->isWindow ()) move (widget_to_capture->mapToGlobal (widget_to_capture->pos ()));
 #ifdef Q_OS_WIN
-	// fix for detached tool windows positioned with the frame outside the screen
-	ensurePolished ();
-	QPoint adjust = pos ();
-	if (adjust.x () < 0) adjust.setX (0);
-	if (adjust.y () < 0) adjust.setY (0);
-	if (adjust != pos ()) move (adjust);
+		// fix for detached tool windows positioned with the frame outside the screen
+		ensurePolished ();
+		QPoint adjust = pos ();
+		if (adjust.x () < 0) adjust.setX (0);
+		if (adjust.y () < 0) adjust.setY (0);
+		if (adjust != pos ()) move (adjust);
 #endif
+	}
 	widget_to_capture->setParent (this);
 	setCentralWidget (widget_to_capture);
 	widget_to_capture->show ();

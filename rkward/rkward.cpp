@@ -100,7 +100,7 @@ void bogusCalls () {
 	RKReadLineDialog::readLine (0, QString(), QString(), 0, 0);	// TODO: see above
 	RKSelectListDialog::doSelect (0, QString(), QStringList(), QStringList(), false);	// TODO: see above
 	new RKEditorDataFrame (0, 0);
-	DetachedWindowContainer (0);
+	DetachedWindowContainer (0, false);
 	new RKWorkplaceView (0);
 	new RKEditObjectAgent (QStringList (), 0);
 	RKPrintAgent::printPostscript (QString (), false);
