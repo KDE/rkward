@@ -171,16 +171,12 @@ RKStandardComponentGUI::~RKStandardComponentGUI () {
 void RKStandardComponentGUI::createDialog (bool switchable) {
 	RK_TRACE (PLUGIN);
 
-	QVBoxLayout *main_vbox = new QVBoxLayout (this);
-	main_vbox->setContentsMargins (0, 0, 0, 0);
-
 	QWidget *central_widget = new QWidget ();
 	QHBoxLayout *hbox = new QHBoxLayout (central_widget);
 
 	// build standard elements
 	main_widget = new QWidget (central_widget);
 	new QVBoxLayout (main_widget);
-	main_widget->setSizePolicy (QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);  // HACK to achieve sane initial size. Will be reset to Preferred/Preferred after show.
 	hbox->addWidget (main_widget);
 
 	// lines
@@ -241,6 +237,9 @@ void RKStandardComponentGUI::createDialog (bool switchable) {
 	hsplitter->setOrientation (Qt::Horizontal);
 	vsplitter = new RKExtensionSplitter (this, this, hsplitter, vpreview_area);
 	vsplitter->setOrientation (Qt::Vertical);
+
+	QVBoxLayout *main_vbox = new QVBoxLayout (this);
+	main_vbox->setContentsMargins (0, 0, 0, 0);
 	main_vbox->addWidget (vsplitter);
 }
 
@@ -296,6 +295,10 @@ void RKStandardComponentGUI::finalize () {
 	} else {
 		vpreview_area->hide ();
 	}
+
+	// (With Qt 5.4.1) it seems *very* important to call this before the first show. Otherwise we will see strange placement issues, esp. in multi-monitor setup.
+	// Yes, that's right. placement, not initial size. For whatever reason.
+	main_widget->updateGeometry ();
 }
 
 RKXMLGUIPreviewArea* RKStandardComponentGUI::addDockedPreview (RKComponentPropertyBool *controller, const QString& label, const QString &id, bool bottom) {
@@ -379,7 +382,6 @@ void RKStandardComponentGUI::doPostShowCleanup () {
 	if (toggle_code_box) {  // is Dialog
 		hpreview_area->setMinimumWidth (80);
 		vpreview_area->setMinimumHeight (40);
-		main_widget->setSizePolicy (QSizePolicy (QSizePolicy::Preferred, QSizePolicy::Preferred));
 		previewVisibilityChanged (0);
 	}
 }

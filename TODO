@@ -9,7 +9,6 @@ Things to test at the end:
 - Everthing concerning loading / saving, from recent files, scripts, workspace, etc.
   - Moved installations, moved workspaces.
 Knwon issues to fix:
-- Initial window placement for plugins is completely borked. One way around this seems to be to inherit RKStandardComponentGUI from QDialog. Does that work for inline embedded plugins?
 - Initial window placement for plots is always 0, 0 on screen 1, apparently. The above workaround may not be available, here?
 
 Minor layout stuff to fix in plugins:
