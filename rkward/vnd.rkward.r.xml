@@ -28,7 +28,7 @@
   <mime-type type="application/rdata">
     <comment>R data/workspace file</comment>
     <comment xml:lang="bs">R datoteka s podacima/radnim prostorom</comment>
-    <comment xml:lang="ca">Fitxer de les dades/espai de treball del R</comment>
+    <comment xml:lang="ca">Fitxer de les dades/espai de treball de l'R</comment>
     <comment xml:lang="ca@valencia">Fitxer de les dades/espai de treball del R</comment>
     <comment xml:lang="cs">Soubor pracovní plochy/dat R</comment>
     <comment xml:lang="de">R-Datendatei/Arbeitsbereichdatei</comment>
