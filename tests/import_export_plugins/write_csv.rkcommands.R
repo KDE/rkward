@@ -5,11 +5,11 @@ local({
 	# append=FALSE, sep=",", dec=".", col.names=NA, qmethod="double"
 	write.csv(
 		x=women,
-		file="data",
+		file="PATH/data",
 		fileEncoding=""
 	)
 
 ## Print result
-rk.header ("Export Table / CSV files", parameters=list("File"="data",
+rk.header ("Export Table / CSV files", parameters=list("File"="PATH/data",
 	"Data"="women"))
 })
