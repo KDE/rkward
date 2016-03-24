@@ -35,7 +35,7 @@ fcc6002a97581d15ee4fbe6842e3a8255e14ae46
 -   rkfindbar.cpp
     rkdynamicsearchline.cpp
     rkaccordiontable.cpp
-    )
+    rkxmlguipreviewarea.cpp
 --- a/rkward/misc/rkfindbar.cpp
 +++ /dev/null
 @@ -1,160 +0,0 @@
@@ -545,13 +545,11 @@ fcc6002a97581d15ee4fbe6842e3a8255e14ae46
  	RK_TRACE (APP);
  
 -	RKConsole::pipeUserCommand (view->selectedText ());
-+	RKConsole::pipeUserCommand (khtmlpart->selectedText ());
- }
- 
+-}
+-
 -void RKHTMLWindow::findRequest (const QString& text, bool backwards, const RKFindBar* findbar, bool* found) {
-+void RKHTMLWindow::doGotoAnchor (const QString &anchor_name) {
- 	RK_TRACE (APP);
- 
+-	RK_TRACE (APP);
+-
 -	QWebPage::FindFlags flags = QWebPage::FindWrapsAroundDocument;
 -	if (backwards) flags |= QWebPage::FindBackward;
 -	bool highlight = findbar->isOptionSet (RKFindBar::HighlightAll);
@@ -563,12 +561,11 @@ fcc6002a97581d15ee4fbe6842e3a8255e14ae46
 -
 -	*found = page->findText (text, flags);
 -	have_highlight = found && highlight;
-+	goto_anchor_name = anchor_name;
-+	QTimer::singleShot (0, this, SLOT (doGotoAnchorNow()));
++	RKConsole::pipeUserCommand (khtmlpart->selectedText ());
  }
  
 -void RKHTMLWindow::slotPrint () {
-+void RKHTMLWindow::doGotoAnchorNow () {
++void RKHTMLWindow::doGotoAnchor (const QString &anchor_name) {
  	RK_TRACE (APP);
  
 -	// NOTE: taken from kwebkitpart, with small mods
@@ -578,15 +575,18 @@ fcc6002a97581d15ee4fbe6842e3a8255e14ae46
 -		view->print (dlg->printer ());
 -	}
 -	delete dlg;
-+	if (khtmlpart) khtmlpart->gotoAnchor (goto_anchor_name);
++	goto_anchor_name = anchor_name;
++	QTimer::singleShot (0, this, SLOT (doGotoAnchorNow()));
  }
  
 -void RKHTMLWindow::slotSave () {
--	RK_TRACE (APP);
--
++void RKHTMLWindow::doGotoAnchorNow () {
+ 	RK_TRACE (APP);
+ 
 -	page->downloadUrl (page->mainFrame ()->url ());
--}
--
++	if (khtmlpart) khtmlpart->gotoAnchor (goto_anchor_name);
+ }
+ 
 -void RKHTMLWindow::saveRequested (const QNetworkRequest& request) {
 +void RKHTMLWindow::slotPrint () {
  	RK_TRACE (APP);
@@ -734,20 +734,20 @@ fcc6002a97581d15ee4fbe6842e3a8255e14ae46
  }
  
 -void RKHTMLWindow::refresh () {
--	RK_TRACE (APP);
--
--	view->reload ();
--}
--
--void RKHTMLWindow::scrollToBottom () {
 +void RKHTMLWindow::slotOpenUrl (const KUrl & url, const KParts::OpenUrlArguments &, const KParts::BrowserArguments &) {
  	RK_TRACE (APP);
  
--	RK_ASSERT (window_mode == HTMLOutputWindow);
--	view->page ()->mainFrame ()->setScrollBarValue (Qt::Vertical, view->page ()->mainFrame ()->scrollBarMaximum (Qt::Vertical));
+-	view->reload ();
 +	openURL (url);
  }
  
+-void RKHTMLWindow::scrollToBottom () {
+-	RK_TRACE (APP);
+-
+-	RK_ASSERT (window_mode == HTMLOutputWindow);
+-	view->page ()->mainFrame ()->setScrollBarValue (Qt::Vertical, view->page ()->mainFrame ()->scrollBarMaximum (Qt::Vertical));
+-}
+-
 -void RKHTMLWindow::zoomIn () {
 +void RKHTMLWindow::refresh () {
  	RK_TRACE (APP);
@@ -919,7 +919,7 @@ fcc6002a97581d15ee4fbe6842e3a8255e14ae46
 -	outputFlush->setText (i18n ("&Flush Output"));
 -	outputFlush->setIcon (KIcon ("edit-delete"));
 -
--	outputRefresh = actionCollection ()->addAction ("output_refresh", window->page->action (QWebPage::ReloadAndBypassCache), SLOT (trigger()));
+-	outputRefresh = actionCollection ()->addAction ("output_refresh", window, SLOT (refresh()));
 -	outputRefresh->setText (i18n ("&Refresh Output"));
 -	outputRefresh->setIcon (KIcon ("view-refresh"));
 -
@@ -1290,7 +1290,7 @@ fcc6002a97581d15ee4fbe6842e3a8255e14ae46
  /////////////////////////////////////
  /////////////////////////////////////
  
-@@ -1085,3 +995,4 @@
+@@ -1100,3 +1010,4 @@
  }
  
  #include "rkhtmlwindow.moc"
@@ -1530,7 +1530,7 @@ fcc6002a97581d15ee4fbe6842e3a8255e14ae46
  };
  
  #include <QMultiHash>
-@@ -235,3 +201,4 @@
+@@ -236,3 +202,4 @@
  };
  
  #endif
