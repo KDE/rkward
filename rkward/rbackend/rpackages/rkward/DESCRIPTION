@@ -19,7 +19,7 @@ Authors@R: c(person(given="Thomas", family="Friedrichsmeier",
     person(given="RKWard-devel", family="mailing list",
     email="rkward-devel@kde.org", role=c("cre","ctb")))
 Version: 0.6.5
-Date: 2016-03-12
+Date: 2016-03-24
 Collate:
     'base_overrides.R'
     'internal.R'
