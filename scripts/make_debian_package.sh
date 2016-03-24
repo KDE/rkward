@@ -23,7 +23,7 @@ cd $DEBTEMPDIR
 tar -xzf rkward_$VERSION.orig.tar.gz
 cd rkward-$VERSION
 cp -a ${DEBDIR} debian
-dpkg-buildpackage -k0x1858CBB6 -rfakeroot
+dpkg-buildpackage -k0x1858CBB6 -rfakeroot --force-sign
 
 cd $DEBTEMPDIR
 dpkg-scansources . | bzip2 > Sources.bz2
