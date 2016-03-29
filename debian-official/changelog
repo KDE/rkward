@@ -1,5 +1,6 @@
-rkward (0.6.5-1) unstable; urgency=low
+rkward (0.6.5~rc1-1) unstable; urgency=low
   * new upstream release
+  * split architecture independent files into new rkward-data package
   * bump standards version to 3.9.7 (no changes needed)
   * strip testing locale "x-test" from package
   * add override for false-positive source-contains-prebuilt-javascript-object
@@ -7,7 +8,7 @@ rkward (0.6.5-1) unstable; urgency=low
   * make existing lintian overrides work with lintian 2.5.42
   * Adjust copyright file to changed filenames in rkward/qwinhost
 
- -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Thu, 24 Mar 2016 20:00:00 +0100
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Tue, 29 Mar 2016 11:00:00 +0100
 
 rkward (0.6.4-1) unstable; urgency=low
   * new upstream release
