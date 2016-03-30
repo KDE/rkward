@@ -130,7 +130,7 @@ int main(int argc, char *argv[]) {
 	options.add ("nowarn-external", ki18n ("When used in conjunction with rkward://runplugin/-URLs specified on the command line, suppresses the warning about application-external (untrusted) links."));
 	options.add ("+[Files]", ki18n ("File or files to open, typically a workspace, or an R script file. When loading several things, you should specify the workspace, first."), 0);
 
-	KAboutData aboutData("rkward", QByteArray (), ki18n ("RKWard"), RKWARD_VERSION, ki18n ("Frontend to the R statistics language"), KAboutData::License_GPL, ki18n ("(c) 2002, 2004 - 2014"), KLocalizedString (), "http://rkward.kde.org", "submit@bugs.kde.org");
+	KAboutData aboutData("rkward", QByteArray (), ki18n ("RKWard"), RKWARD_VERSION, ki18n ("Frontend to the R statistics language"), KAboutData::License_GPL, ki18n ("(c) 2002, 2004 - 2016"), KLocalizedString (), "http://rkward.kde.org", "submit@bugs.kde.org");
 	aboutData.addAuthor (ki18n ("Thomas Friedrichsmeier"), ki18n ("Project leader / main developer"));
 	aboutData.addAuthor (ki18n ("Pierre Ecochard"), ki18n ("C++ developer between 2004 and 2007"));
 	aboutData.addAuthor (ki18n ("Prasenjit Kapat"), ki18n ("Many plugins, suggestions, plot history feature"));
