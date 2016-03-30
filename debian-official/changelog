@@ -1,3 +1,12 @@
+rkward (0.6.5-1) UNRELEASED; urgency=low
+  * new upstream release
+    (unchanged with respect to ~rc1)
+  * fix debian/watch file
+  * !!!TODO!!!: Make build really reproducible (fix for earlier attempt upstream)
+    closes: #783290
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Tue, 29 Mar 2016 11:00:00 +0100
+
 rkward (0.6.5~rc1-1) unstable; urgency=low
   * new upstream release
   * split architecture independent files into new rkward-data package
