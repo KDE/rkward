@@ -109,7 +109,7 @@ install: build
 	rm -rvf $(DESTDIR)/usr/share/kde4/apps/rkward/po/x-test $(DESTDIR)/usr/share/locale/x-test
 
 	# Sort the remaining bits into rkward and rkward-data subpackages
-	dh_install
+	dh_install --sourcedir=$(DESTDIR)
 
 # Build architecture-independent files here.
 binary-indep: build install
