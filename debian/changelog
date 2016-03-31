@@ -1,6 +1,11 @@
 rkward (0.6.5-1) UNRELEASED; urgency=low
   * new upstream release
   * fix debian/watch file
+  * split architecture independent files into new rkward-data package
+  * bump standards version to 3.9.7 (no changes needed)
+  * strip testing locale "x-test" from package
+  * add override for false-positive source-contains-prebuilt-javascript-object
+    and source-is-missing lintian warnings
 
  -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Wed, 30 Mar 2016 14:00:00 +0100
 
