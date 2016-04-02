@@ -2,7 +2,7 @@ local({
 ## Prepare
 require (foreign)
 ## Compute
-data <- read.spss ("import_export_plugins_testfile.sav", to.data.frame=TRUE, max.value.labels=1)
+data <- read.spss ("PATH/import_export_plugins_testfile.sav", to.data.frame=TRUE, max.value.labels=1)
 
 # set variable labels for use in RKWard
 labels <- attr (data, "variable.labels");
@@ -17,6 +17,6 @@ if (!is.null (labels)) {
 
 .GlobalEnv$my.spss.data <- data		# assign to globalenv()
 ## Print result
-rk.header ("Import SPSS data", parameters=list("File name"="import_export_plugins_testfile.sav",
+rk.header ("Import SPSS data", parameters=list("File name"="PATH/import_export_plugins_testfile.sav",
 	"Object to save to"="my.spss.data"))
 })

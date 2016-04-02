@@ -158,6 +158,10 @@ rktest.runRKTest <- function (test, standard.path, suite.id) {
 		else result@error <- "no"
 	}
 
+	rktest.cleanTestFile (output_file)
+	rktest.cleanTestFile (code_file)
+	rktest.cleanTestFile (message_file)
+
 	result@output_match = rktest.compare.against.standard (output_file, standard.path, test@fuzzy_output)
 	if (result@output_match == "MISMATCH") passed <- FALSE
 	result@message_match = rktest.compare.against.standard (message_file, standard.path)
@@ -168,6 +172,15 @@ rktest.runRKTest <- function (test, standard.path, suite.id) {
 	result@passed <- passed
 
 	result
+}
+
+# Make replacements to stabilize comparison. Currently strips tempdir path.
+rktest.cleanTestFile <- function (filename) {
+	if (file.exists (filename)) {
+		raw <- readLines (filename)
+		cleaned <- gsub (getwd (), "PATH", raw, fixed=TRUE)
+		writeLines (cleaned, filename)
+	}
 }
 
 rktest.cleanRKTestSuite <- function (suite) {

@@ -1,4 +1,4 @@
-<h1>Wilcox Rank Sum distribution</h1>
+<h1>Wilcoxon Rank Sum distribution</h1>
 <h2>Parameters</h2>
 <ul><li>m (Numbers of observations in the first sample): 5</li>
 <li>n (Numbers of observations in the second sample): 5</li>

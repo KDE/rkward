@@ -8,14 +8,14 @@ Build-Depends: cmake,
                libqtwebkit-dev | libqt4-dev (<< 4:4.7),
                libx11-dev,
                r-base-dev (>= 2.8.0)
-Standards-Version: 3.9.6
+Standards-Version: 3.9.7
 Homepage: http://rkward.kde.org
 Vcs-Browser: http://quickgit.kde.org/?p=rkward.git&a=tree&f=debian
 Vcs-Git: git://anongit.kde.org/rkward.git
 
 Package: rkward
 Architecture: any
-Depends: ${misc:Depends}, ${rvers}, ${shlibs:Depends}
+Depends: rkward-data, ${misc:Depends}, ${rvers}, ${shlibs:Depends}
 Recommends: r-base-html
 Description: KDE frontend to the R statistics language
  RKWard aims to become an easy to use, transparent frontend to R,
@@ -23,3 +23,18 @@ Description: KDE frontend to the R statistics language
  Besides a convenient GUI for the most important statistical functions,
  future versions will also provide seamless integration with an
  office-suite.
+
+Package: rkward-data
+Architecture: all
+Depends: ${misc:Depends}
+Recommends: rkward
+Breaks: rkward (<< 0.6.5~rc1-1~)
+Replaces: rkward (<< 0.6.5~rc1-1~)
+Description: KDE frontend to the R statistics language
+ RKWard aims to become an easy to use, transparent frontend to R,
+ a powerful system for statistical computation and graphics.
+ Besides a convenient GUI for the most important statistical functions,
+ future versions will also provide seamless integration with an
+ office-suite.
+ .
+ This package provides the architecture independent data files for rkward.

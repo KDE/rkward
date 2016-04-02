@@ -1,6 +1,6 @@
 <h1>Import text / csv data</h1>
 <h2>Parameters</h2>
-<ul><li>File name: women.csv</li>
+<ul><li>File name: PATH/women.csv</li>
 <li>Object to save to: women</li>
 </ul>
 DATE<br />
