@@ -9,7 +9,8 @@
 #' \code{rk.print} prints/exports the given object to the output (html) file
 #' using the \code{\link{HTML}} function. This requires the \code{R2HTML}
 #' package. Additional arguments in \code{...} are passed on to
-#' \code{\link{HTML}}.
+#' \code{\link{HTML}}. For some types of objects (e.g. "htmlwidgets" from
+#' the "htmlwidgets" package) additional packages may be required.
 #' 
 #' \code{rk.print.literal} prints/exports the given object using a
 #' \code{paste(x, collapse="\n")} construct to the output (html) file.
@@ -90,9 +91,21 @@
 #' 
 #' @export
 "rk.print" <- function(x,...) {
-	htmlfile <- rk.get.output.html.file()
-	if(require("R2HTML")==TRUE) {
-		HTML(x, file=htmlfile,...)
+	if (inherits (x, "htmlwidget")) {
+		require ("htmlwidgets")
+		name <- deparse (substitute (x))
+		filename <- rk.get.tempfile.name (name, ".html")
+		dir <- rk.get.tempfile.name (name, "_data")
+		saveWidget (x, filename, selfcontained=FALSE, libdir=dir)
+		.rk.cat.output (paste0 ("<object width=\"100%\" height=\"100%\" data=\"file://", filename, "\" onload=\"this.style.height = this.contentWindow.document.body.scrollHeight + 'px';\"></object>"))
+	} else if (inherits (x, "gvis")) {
+		require ("googleVis")
+		print (x, file=rk.get.output.html.file(), append=TRUE)
+	} else {
+		htmlfile <- rk.get.output.html.file()
+		if(require("R2HTML")==TRUE) {
+			HTML(x, file=htmlfile,...)
+		}
 	}
 }
 

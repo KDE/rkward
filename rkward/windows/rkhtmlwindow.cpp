@@ -95,6 +95,10 @@ bool RKWebPage::acceptNavigationRequest (QWebFrame* frame, const QNetworkRequest
 		return false;
 	}
 
+	if (frame != mainFrame ()) {
+		if (request.url ().isLocalFile () && (KMimeType::findByUrl (request.url ())->is ("text/html"))) return true;
+	}
+
 	if (KUrl (mainFrame ()->url ()).equals (request.url (), KUrl::CompareWithoutFragment | KUrl::CompareWithoutTrailingSlash)) {
 		RK_DEBUG (APP, DL_DEBUG, "Page internal navigation request from %s to %s", qPrintable (mainFrame ()->url ().toString ()), qPrintable (request.url ().toString ()));
 		emit (pageInternalNavigation (request.url ()));
@@ -354,9 +358,9 @@ bool RKHTMLWindow::openURL (const KUrl &url) {
 
 	if (window_mode == HTMLOutputWindow) {
 		if (url != current_url) {
-			// output window should not change url after initialization
+			// output window should not change url after initialization open any links in new windows
 			if (!current_url.isEmpty ()) {
-				RK_ASSERT (false);
+				RKWorkplace::mainWorkplace ()->openAnyUrl (url);
 				return false;
 			}
 
@@ -611,7 +615,7 @@ void RKHTMLWindowPart::initActions () {
 	outputFlush->setText (i18n ("&Flush Output"));
 	outputFlush->setIcon (KIcon ("edit-delete"));
 
-	outputRefresh = actionCollection ()->addAction ("output_refresh", window->page->action (QWebPage::ReloadAndBypassCache), SLOT (trigger()));
+	outputRefresh = actionCollection ()->addAction ("output_refresh", window, SLOT (refresh()));
 	outputRefresh->setText (i18n ("&Refresh Output"));
 	outputRefresh->setIcon (KIcon ("view-refresh"));
 
@@ -1019,6 +1023,13 @@ void RKOutputWindowManager::setCurrentOutputPath (const QString &_path) {
 	url.cleanPath ();
 	QString path = url.toLocalFile ();
 
+#ifdef Q_OS_WIN
+	// On windows, when flushing the output (i.e. deleting, re-creating it), KDirWatch seems to purge the file from the
+	// watch list (KDE 4.10.2; always?), so we need to re-add it. To make things complex, however, this may happen
+	// asynchronously, with this function called (via rk.set.output.html.file()), _before_ KDirWatch purges the file.
+	// To hack around the race condition, we re-watch the output file after a short delay.
+	QTimer::singleShot (100, this, SLOT (rewatchOutput ()));
+#endif
 	if (path == current_default_path) return;
 
 	if (!windows.contains (path)) {
@@ -1029,6 +1040,13 @@ void RKOutputWindowManager::setCurrentOutputPath (const QString &_path) {
 	}
 
 	current_default_path = path;
+}
+
+void RKOutputWindowManager::rewatchOutput () {
+	RK_TRACE (APP);
+	// called on Windows, only
+	file_watcher->removeFile (current_default_path);
+	file_watcher->addFile (current_default_path);
 }
 
 RKHTMLWindow* RKOutputWindowManager::getCurrentOutputWindow () {
@@ -1056,6 +1074,7 @@ void RKOutputWindowManager::fileChanged (const QString &path) {
 		window_list[i]->refresh ();
 		w = window_list[i];
 	}
+	RK_DEBUG (APP, DL_DEBUG, "changed %s, window %p", qPrintable (path), w);
 
 	if (w) {
 		if (RKSettingsModuleOutput::autoRaise ()) w->activate ();

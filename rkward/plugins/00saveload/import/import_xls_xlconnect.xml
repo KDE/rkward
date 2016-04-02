@@ -1,0 +1,55 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="import_xls_xlconnect.js" />
+	<help file="import_xls_xlconnect.rkh" />
+	<snippets>
+		<include file="convert_encoding.xml"/>
+	</snippets>
+	<logic>
+		<convert id="range_empty" mode="equals" sources="range.text" standard=""/>
+		<connect governor="range_empty" client="startrc.enabled"/>
+		<connect governor="range_empty" client="endrc.enabled"/>
+	</logic>
+	<dialog label="Import Microsoft EXCEL sheet">
+		<tabbook>
+			<tab id="tab_general" label="General">
+				<browser type="file" id="file" filter="*.xls *.xlsx" label="File name" />
+				<input label="Index or &quot;name&quot; of sheet" id="sheet" initial="1" size="small" />
+				<frame>
+					<checkbox id="header" checked="true" label="Use first row as column names"/>
+					<input id="rownames" initial="" size="small" label="Index or &quot;name&quot; of column with row names (if any)"/>
+				</frame>
+				<frame>
+					<saveobject id="saveto" initial="my.xls.data" label="Object to save to"/>
+					<checkbox id="doedit" value="1" value_unchecked="0" label="Open imported data for editing" checked="true" />
+				</frame>
+				<stretch/>
+				<preview id="preview" active="true" mode="data" label="Preview"/>
+			</tab>
+			<tab id="tab_rows_columns" label="Rows and columns">
+				<frame label="Range">
+					<row>
+						<frame label="Start row / column (&quot;0&quot; for automatic)" id="startrc">
+							<spinbox id="startrow" initial="0" min="0" type="integer" label="Row"/>
+							<spinbox id="startcol" initial="0" min="0" type="integer" label="Column"/>
+						</frame>
+						<frame label="End row / column (&quot;0&quot; for automatic)" id="endrc">
+							<spinbox id="endrow" initial="0" min="0" type="integer" label="Row"/>
+							<spinbox id="endcol" initial="0" min="0" type="integer" label="Column"/>
+						</frame>
+					</row>
+					<row><text>- <b>or</b> Excel Range (e.g. "A10:B20") -</text></row>
+					<input id="range" label="" size="small" initial="" />
+				</frame>
+				<frame>
+					<checkbox id="autofitrow" label="Skip empty leading or trailing rows" checked="true"/>
+					<checkbox id="autofitcol" label="Skip empty leading or trailing columns" checked="true"/>
+				</frame>
+				<matrix id="coltypes" label="Column classes (empty for automatic)" mode="string" allow_user_resize_columns="true" allow_user_resize_rows="false" rows="1" fixed_height="true" vert_headers=""/>
+				<stretch/>
+			</tab>
+			<insert snippet="encoding_logic"/>
+		</tabbook>
+	</dialog>
+</document>
+ 

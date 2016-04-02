@@ -8,7 +8,7 @@
 		</snippet>
 		<snippet id="rkward_version_guard">
 			<!-- Guard against accidental inclusion of pluginmaps in a different installed version of RKWard -->
-			<dependencies rkward_min_version="0.6.4" rkward_max_version="0.6.4y" />
+			<dependencies rkward_min_version="0.6.5" rkward_max_version="0.6.5y" />
 		</snippet>
 	</snippets>
 </document>

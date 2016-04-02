@@ -29,6 +29,8 @@
 #include <QComboBox>
 
 #include "../rkglobals.h"
+#include "../misc/getfilenamewidget.h"
+#include "../misc/rkcommonfunctions.h"
 #include "../rbackend/rinterface.h"
 #include "../debug.h"
 
@@ -44,6 +46,7 @@ RKCarbonCopySettings::RKCarbonCopySettings (QWidget* parent) : QWidget (parent) 
 	RK_TRACE (SETTINGS);
 
 	QVBoxLayout *main_vbox = new QVBoxLayout (this);
+	main_vbox->setContentsMargins (0, 0, 0, 0);
 	cc_globally_enabled_box = new QGroupBox (i18n ("Carbon copy commands to output"), this);
 	cc_globally_enabled_box->setCheckable (true);
 	connect (cc_globally_enabled_box, SIGNAL (clicked(bool)), this, SLOT (settingChanged()));
@@ -146,6 +149,7 @@ QString RKSettingsModuleOutput::graphics_type;
 int RKSettingsModuleOutput::graphics_width;
 int RKSettingsModuleOutput::graphics_height;
 int RKSettingsModuleOutput::graphics_jpg_quality;
+QString RKSettingsModuleOutput::custom_css_file;
 
 RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -163,6 +167,11 @@ RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent
 	connect (auto_raise_box, SIGNAL (stateChanged(int)), this, SLOT (boxChanged()));
 
 	main_vbox->addWidget (group);
+
+	custom_css_file_box = new GetFileNameWidget (this, GetFileNameWidget::ExistingFile, true, i18n ("CSS file to use for output (leave empty for default)"), i18n ("Select CSS file"), QString ());
+	connect (custom_css_file_box, SIGNAL (locationChanged()), this, SLOT (boxChanged()));  // KF5 TODO new syntax
+	RKCommonFunctions::setTips (i18n ("Select a CSS file for custom formatting of the output window. Leave empty to use the default CSS file shipped with RKWard. Note that this setting takes effect, when initializing an output file (e.g. after flushing the output), only."), custom_css_file_box);
+	main_vbox->addWidget (custom_css_file_box);
 
 	group = new QGroupBox (i18n ("Graphics"), this);
 	group_layout = new QVBoxLayout (group);
@@ -255,6 +264,7 @@ void RKSettingsModuleOutput::saveSettings (KConfig *config) {
 	cg.writeEntry ("graphics_width", graphics_width);
 	cg.writeEntry ("graphics_height", graphics_height);
 	cg.writeEntry ("graphics_jpg_quality", graphics_jpg_quality);
+	cg.writeEntry ("custom css file", custom_css_file);
 
 	RKCarbonCopySettings::saveSettings (config);
 }
@@ -269,6 +279,7 @@ void RKSettingsModuleOutput::loadSettings (KConfig *config) {
 	graphics_width = cg.readEntry ("graphics_width", 480);
 	graphics_height = cg.readEntry ("graphics_height", 480);
 	graphics_jpg_quality = cg.readEntry ("graphics_jpg_quality", 75);
+	custom_css_file = cg.readEntry ("custom css file", QString ());
 
 	RKCarbonCopySettings::loadSettings (config);
 }
@@ -283,8 +294,9 @@ QStringList RKSettingsModuleOutput::makeRRunTimeOptionCommands () {
 	command.append (", \"rk.graphics.width\"=" + QString::number (graphics_width));
 	command.append (", \"rk.graphics.height\"=" + QString::number (graphics_height));
 	if (graphics_type == "\"JPG\"") command.append (", \"rk.graphics.jpg.quality\"=" + QString::number (graphics_jpg_quality));
+	command.append (", \"rk.output.css.file\"=\"" + (custom_css_file.isEmpty () ? RKCommonFunctions::getRKWardDataDir () + "pages/rkward_output.css" : custom_css_file) + '\"');
 	list.append (command + ")\n");
-	
+
 	return (list);
 }
 

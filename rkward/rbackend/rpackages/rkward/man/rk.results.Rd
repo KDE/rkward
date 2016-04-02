@@ -61,7 +61,8 @@ Output. Basically, these functions along with the ones described in
 \code{rk.print} prints/exports the given object to the output (html) file
 using the \code{\link{HTML}} function. This requires the \code{R2HTML}
 package. Additional arguments in \code{...} are passed on to
-\code{\link{HTML}}.
+\code{\link{HTML}}. For some types of objects (e.g. "htmlwidgets" from
+the "htmlwidgets" package) additional packages may be required.
 
 \code{rk.print.literal} prints/exports the given object using a
 \code{paste(x, collapse="\n")} construct to the output (html) file.

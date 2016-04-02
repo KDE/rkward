@@ -1,26 +1,26 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward_standardactions" version="640">
+<kpartgui name="rkward_standardactions" version="650">
 <!-- What is this for, wouldn't it be easier to just inline these actions in the parts where they
      end up? Yes, but then they would be separate actions, internally, and each could be assigned
      a shortcut of its own. This is needed to tie them all together. -->
 	<MenuBar>
-		<Menu name="file">
+		<Menu name="file"><text>&amp;File</text>
 			<Action name="copy_lines_to_output"/>
 		</Menu>
-		<Menu name="edit">
+		<Menu name="edit"><text>&amp;Edit</text>
 			<Action name="paste_special" group="after_edit_paste_merge"/>
 		</Menu>
-		<Menu name="run">
+		<Menu name="run"><text>&amp;Run</text>
 			<Action name="run_current" group="run_actions_merge"/>
 			<Action name="run_all" group="run_actions_merge"/>
 			<WeakSeparator group="postrun_actions_merge"/>
 			<Action name="interrupt" group="postrun_actions_merge"/>
 		</Menu>
-		<Menu name="help">
+		<Menu name="help"><text>&amp;Help</text>
 			<Action name="function_reference" group="help_actions_merge"/>
 			<Action name="window_help" group="prehelp_actions_merge"/>
 		</Menu>
-		<Menu name="settings">
+		<Menu name="settings"><text>&amp;Settings</text>
 			<Action name="window_configure"/>
 		</Menu>
 	</MenuBar>
@@ -40,6 +40,7 @@
 			<Action name="run_all" group="run_actions_merge"/>
 		</Menu>
 		<Action name="function_reference" group="ktexteditor_popup_merge2"/>
+		<Action name="search_online" group="ktexteditor_popup_merge2"/>
 		<Separator group="ktexteditor_popup_merge2"/>
 		<Action name="window_configure" group="ktexteditor_popup_merge2"/>
 	</Menu>
@@ -48,6 +49,7 @@
 		<Action name="paste_special" group="rkconsole_context_merge_paste"/>
 		<Action name="run_current" group="rkconsole_context_merge1"/>
 		<Action name="function_reference" group="rkconsole_context_merge2"/>
+		<Action name="search_online" group="ktexteditor_context_merge2"/>
 		<Separator/>
 		<Action name="window_configure"/>
 	</Menu>

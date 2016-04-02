@@ -24,6 +24,9 @@ i18n-Thoughts:
         - At least we could check for errors
         - Perhaps a special diff of the generated R commands, where all quoted strings and comments are stripped?
 
+MacOS:
+  - Avoiding mis-placment of certain menu-entries: QAction::menuRole()
+
 Bugs outside RKWard:
 	- KDE 4
 		- why is the icon style only honored for mainToolBar (in KXMLGUIBuilder)? It looks like this is done on purpose, but why???

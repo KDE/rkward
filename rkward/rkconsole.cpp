@@ -880,9 +880,11 @@ void RKConsole::copyLinesToOutput () {
 	RKCommandHighlighter::copyLinesToOutput (view, RKCommandHighlighter::RInteractiveSession);
 }
 
-void RKConsole::showContextHelp () {
+void RKConsole::currentHelpContext (QString* symbol, QString* package) {
 	RK_TRACE (APP);
-	RKHelpSearchWindow::mainHelpSearch ()->getContextHelp (currentEditingLine (), currentCursorPositionInCommand ());
+	Q_UNUSED (package);
+
+	*symbol = RKCommonFunctions::getCurrentSymbol (currentEditingLine (), currentCursorPositionInCommand ());
 }
 
 void RKConsole::initializeActions (KActionCollection *ac) {
@@ -895,7 +897,8 @@ void RKConsole::initializeActions (KActionCollection *ac) {
 #	define REAL_CMD_KEY Qt::MetaModifier
 #endif
 	RKStandardActions::copyLinesToOutput (this, this, SLOT (copyLinesToOutput()));
-	context_help_action = RKStandardActions::functionHelp (this, this, SLOT(showContextHelp()));
+	RKStandardActions::functionHelp (this, this);
+	RKStandardActions::onlineHelp (this, this);
 	run_selection_action = RKStandardActions::runCurrent (this, this, SLOT (runSelection()));
 
 	interrupt_command_action = ac->addAction ("interrupt", this, SLOT (resetConsole()));

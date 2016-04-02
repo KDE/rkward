@@ -2,7 +2,7 @@
                           robjectbrowser  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004 - 2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2004 - 2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -21,6 +21,8 @@
 
 #include <QModelIndex>
 #include <QFocusEvent>
+
+#include "rkcommandeditorwindow.h"
 
 class RKObjectListView;
 class RKObjectListViewSettings;
@@ -59,16 +61,15 @@ Provides most of the functionality of RObjectBrowser
 
 @author Thomas Friedrichsmeier
 */
-class RObjectBrowserInternal : public QWidget {
+class RObjectBrowserInternal : public QWidget, public RKScriptContextProvider {
 Q_OBJECT
 public:
-	explicit RObjectBrowserInternal (QWidget *parent);
+	explicit RObjectBrowserInternal (QWidget *parent, RObjectBrowser *browser);
 	~RObjectBrowserInternal ();
 private slots:
 	void updateButtonClicked ();
 	void contextMenuCallback (RObject *object, bool *suppress);
-	
-	void popupHelp ();
+
 	void popupEdit ();
 	void popupCopy ();
 /** essentially like popupCopy, but does not ask for a name */
@@ -82,9 +83,11 @@ private slots:
 protected:
 /** reimplemnented from QWidget to make show the globalenv object when activated (other than by mouse click) */
 	void focusInEvent (QFocusEvent *e);
+	void currentHelpContext (QString *symbol, QString *package); // KF5 TODO: override
 private:
 	enum PopupActions {
 		Help=0,
+		SearchOnline,
 		Edit,
 		View,
 		Rename,

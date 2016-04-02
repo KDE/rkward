@@ -127,9 +127,10 @@ int main(int argc, char *argv[]) {
 	options.add ("backend-debugger <command>", ki18n ("Debugger for the backend. (Enclose any debugger arguments in single quotes ('') together with the command. Make sure to re-direct stdout!)"), "");
 	options.add ("r-executable <command>", ki18n ("Use specified R installation, instead of the one configured at compile time (note: rkward R library must be installed to that installation of R)"), "");
 	options.add ("reuse", ki18n ("Reuse a running RKWard instance (if available). If a running instance is reused, only the file arguments will be interpreted, all other options will be ignored."), 0);
+	options.add ("nowarn-external", ki18n ("When used in conjunction with rkward://runplugin/-URLs specified on the command line, suppresses the warning about application-external (untrusted) links."));
 	options.add ("+[Files]", ki18n ("File or files to open, typically a workspace, or an R script file. When loading several things, you should specify the workspace, first."), 0);
 
-	KAboutData aboutData("rkward", QByteArray (), ki18n ("RKWard"), RKWARD_VERSION, ki18n ("Frontend to the R statistics language"), KAboutData::License_GPL, ki18n ("(c) 2002, 2004 - 2015"), KLocalizedString (), "http://rkward.kde.org", "submit@bugs.kde.org");
+	KAboutData aboutData("rkward", QByteArray (), ki18n ("RKWard"), RKWARD_VERSION, ki18n ("Frontend to the R statistics language"), KAboutData::License_GPL, ki18n ("(c) 2002, 2004 - 2014"), KLocalizedString (), "http://rkward.kde.org", "submit@bugs.kde.org");
 	aboutData.addAuthor (ki18n ("Thomas Friedrichsmeier"), ki18n ("Project leader / main developer"));
 	aboutData.addAuthor (ki18n ("Pierre Ecochard"), ki18n ("C++ developer between 2004 and 2007"));
 	aboutData.addAuthor (ki18n ("Prasenjit Kapat"), ki18n ("Many plugins, suggestions, plot history feature"));
@@ -172,11 +173,12 @@ int main(int argc, char *argv[]) {
 	}
 
 	if (args->count ()) {
-		QVariantList urls_to_open;
+		QStringList urls_to_open;
 		for (int i = 0; i < args->count (); ++i) {
-			urls_to_open.append (QUrl (KCmdLineArgs::makeURL (decodeArgument (args->arg (i)).toUtf8 ())));
+			urls_to_open.append (KCmdLineArgs::makeURL (decodeArgument (args->arg (i)).toUtf8 ()).url ());
 		}
 		RKGlobals::startup_options["initial_urls"] = urls_to_open;
+		RKGlobals::startup_options["warn_external"] = args->isSet ("warn-external");
 	}
 	RKGlobals::startup_options["evaluate"] = decodeArgument (args->getOption ("evaluate"));
 	RKGlobals::startup_options["backend-debugger"] = decodeArgument (args->getOption ("backend-debugger"));

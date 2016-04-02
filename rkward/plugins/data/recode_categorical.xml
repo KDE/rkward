@@ -39,6 +39,7 @@
 				<option value="logical" label="Logical"/>
 			</dropdown>
 			<stretch/>
+			<preview id="preview" label="Preview" mode="data"/>
 		</tab>
 		<tab label="Values" id="tab_values">
 			<row>

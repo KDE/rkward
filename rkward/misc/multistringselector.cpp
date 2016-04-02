@@ -89,6 +89,7 @@ void MultiStringSelector::swapRowsImpl (int rowa, int rowb) {
 RKMultiStringSelectorV2::RKMultiStringSelectorV2 (const QString& label, QWidget* parent) : QWidget (parent) {
 	RK_TRACE (MISC);
 
+	add_at_bottom = false;
 	QHBoxLayout *hbox = new QHBoxLayout (this);
 	hbox->setContentsMargins (0, 0, 0, 0);
 
@@ -170,8 +171,9 @@ void RKMultiStringSelectorV2::buttonClicked () {
 	if (index.isValid ()) row = index.row ();
 
 	if (sender () == add_button) {
-		if (row < 0) row = tree_view->model ()->rowCount ();
+		if (add_at_bottom || (row < 0)) row = tree_view->model ()->rowCount ();
 		emit (insertNewStrings (row));
+		tree_view->setCurrentIndex (tree_view->model ()->index (row, 0));
 	} else if (row < 0) {	// all actions below need a valid row
 		RK_ASSERT (false);
 	} else if (sender () == remove_button) {

@@ -2,7 +2,7 @@
                           rkmatrixinput  -  description
                              -------------------
     begin                : Tue Oct 09 2012
-    copyright            : (C) 2012, 2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2012-2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -128,6 +128,12 @@ QVariant RKMatrixInput::value (const QString& modifier) {
 			ret.append ("\tc (" + makeColumnString (i, ", ") + ')');
 		}
 		return QString ("cbind (\n" + ret.join (",\n") + "\n)");
+	} else if (modifier.startsWith ("row.")) {
+		bool ok;
+		int row = modifier.mid (4).toInt (&ok);
+		if ((row >= 0) && ok) {
+			return (rowStrings (row));
+		}
 	}
 
 	bool ok;
@@ -212,6 +218,12 @@ void RKMatrixInput::updateColumn (int column) {
 	updateAll ();
 }
 
+QString pasteableValue (const QString &in, bool string) {
+	if (string) return (RObject::rQuote (in));
+	else if (in.isEmpty ()) return ("NA");
+	else return in;
+}
+
 QString RKMatrixInput::makeColumnString (int column, const QString& sep, bool r_pasteable) {
 	RK_TRACE (PLUGIN);
 
@@ -224,13 +236,20 @@ QString RKMatrixInput::makeColumnString (int column, const QString& sep, bool r_
 	for (int i = 0; i < row_count->intValue (); ++i) {
 		if (i > 0) ret.append (sep);
 		const QString val = storage.value (i);
-		if (r_pasteable) {
-			if (mode == String) ret.append (RObject::rQuote (val));
-			else if (val.isEmpty ()) ret.append ("NA");
-			else ret.append (val);
-		} else {
-			ret.append (val);
-		}
+		if (r_pasteable) ret.append (pasteableValue (val, mode == String));
+		else ret.append (val);
+	}
+	return ret;
+}
+
+QStringList RKMatrixInput::rowStrings (int row) {
+	RK_TRACE (PLUGIN);
+
+	QStringList ret;
+	ret.reserve (column_count->intValue ());
+	for (int i = 0; i < column_count->intValue (); ++i) {
+		if (i < columns.size ()) ret.append (columns[i].storage.value (row));
+		else ret.append (QString ());
 	}
 	return ret;
 }

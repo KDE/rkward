@@ -328,7 +328,8 @@ void RKSettingsModuleR::loadSettings (KConfig *config) {
 	options_pager = cg.readEntry ("pager", builtin_editor);
 	options_further = cg.readEntry ("further init commands", QString ());
 #ifdef Q_WS_WIN
-	options_internet2 = cg.readEntry ("internet2", false);
+	options_internet2 = cg.readEntry ("internet2", true);
+	if (RKSettingsModuleGeneral::storedConfigVersion () < RKSettingsModuleGeneral::RKWardConfig_0_6_4) options_internet2 = true;
 #endif
 }
 
@@ -495,6 +496,7 @@ QString RKSettingsModuleRPackages::pkgTypeOption () {
 #if defined Q_WS_WIN || defined Q_WS_MAC
 	ret.append ("options (pkgType=\"");
 	if (source_packages) ret.append ("source");
+	else if (RKSessionVars::compareRVersion ("3.1.3") <= 0) ret.append ("binary");   // "automatically select appropriate binary", unfortunately it's only available from R 3.1.3. onwards.
 #	if defined Q_WS_WIN
 	else ret.append ("win.binary");
 #	else

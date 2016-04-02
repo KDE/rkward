@@ -2,7 +2,7 @@
                           rinterface.cpp  -  description
                              -------------------
     begin                : Fri Nov 1 2002
-    copyright            : (C) 2002-2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2002-2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -562,8 +562,6 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 	} else if (call == "set.output.file") {
 		RK_ASSERT (calllist.count () == 2);
 		RKOutputWindowManager::self ()->setCurrentOutputPath (calllist.value (1));
-	} else if (call == "getCSSlink") {
-		return (QStringList (QString ("<link rel=\"StyleSheet\" type=\"text/css\" href=\"" + KUrl::fromLocalFile (RKCommonFunctions::getRKWardDataDir () + "pages/rkward_output.css").toString () + "\"/>\n")));
 	} else if (call == "wdChange") {
 		// in case of separate processes, apply new working directory in frontend, too.
 		QDir::setCurrent (calllist.value (1));
@@ -625,6 +623,8 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 			RK_ASSERT (calllist.value (1) == "get");
 			return (RKWorkplace::mainWorkplace ()->makeWorkplaceDescription ());
 		}
+	} else if (call == "set.window.placement.hint") {
+		RKWorkplace::mainWorkplace ()->setWindowPlacementOverrides (calllist.value (1), calllist.value (2), calllist.value (3));
 	} else if (call == "getSessionInfo") {
 		// Non-translatable on purpose. This is meant for posting to the bug tracker, mostly.
 		QStringList lines ("-- Frontend --");

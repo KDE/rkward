@@ -128,7 +128,6 @@ void RKWindowCatcher::killDevice (int device_number) {
 #include <knuminput.h>
 #include <kvbox.h>
 #include <kactioncollection.h>
-#include <kpassivepopup.h>
 
 #include "../rkglobals.h"
 #include "../rbackend/rinterface.h"
@@ -141,7 +140,7 @@ void RKWindowCatcher::killDevice (int device_number) {
 // static
 QHash<int, RKCaughtX11Window*> RKCaughtX11Window::device_windows;
 
-RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : RKMDIWindow (0, X11Window), RCommandReceiver () {
+RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : RKMDIWindow (0, X11Window) {
 	RK_TRACE (MISC);
 
 	commonInit (device_number);
@@ -210,10 +209,6 @@ void RKCaughtX11Window::commonInit (int device_number) {
 	setFocusPolicy (Qt::ClickFocus);
 	updateHistoryActions (0, 0, QStringList ());
 
-	status_popup = new KPassivePopup (this);
-	status_popup->setTimeout (0);
-	disconnect (status_popup, SIGNAL (clicked()), status_popup, SLOT (hide()));	// no auto-hiding, please
-
 	QVBoxLayout *layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
 	box_widget = new KVBox (this);
@@ -250,9 +245,11 @@ void RKCaughtX11Window::doEmbed () {
 		RKWardApplication::getApp ()->registerNameWatcher (embedded, this);
 #endif
 	}
-	// make xembed_container resizable, again, now that it actually has a content
-	dynamic_size_action->setChecked (true);
-	fixedSizeToggled ();
+	if (!isAttached ()) {
+		// make xembed_container resizable, again, now that it actually has a content
+		dynamic_size_action->setChecked (true);
+		fixedSizeToggled ();
+	}
 
 	// try to be helpful when the window is too large to fit on screen
 	QRect dims = window ()->frameGeometry ();
@@ -272,7 +269,17 @@ RKCaughtX11Window::~RKCaughtX11Window () {
 	if (embedded) RKWardApplication::getApp ()->unregisterNameWatcher (embedded);
 #endif
 	error_dialog->autoDeleteWhenDone ();
-	delete status_popup;
+}
+
+void RKCaughtX11Window::setWindowStyleHint (const QString& hint) {
+	RK_TRACE (MISC);
+
+	if (hint == "preview") {
+		for (int i = actions_not_for_preview.count () - 1; i >= 0; --i) {
+			actions_not_for_preview[i]->setVisible (false);
+		}
+	}
+	RKMDIWindow::setWindowStyleHint (hint);
 }
 
 void RKCaughtX11Window::forceClose () {
@@ -340,6 +347,8 @@ void RKCaughtX11Window::prepareToBeDetached () {
 	RK_TRACE (MISC);
 
 	dynamic_size_action->setEnabled (true);
+	dynamic_size_action->setChecked (true);
+	fixedSizeToggled ();
 	reEmbed ();
 }
 
@@ -586,39 +595,6 @@ void RKCaughtX11Window::updateHistoryActions (int history_length, int position, 
 	plot_properties_action->setEnabled (RKSettingsModuleGraphics::plotHistoryEnabled ());
 }
 
-void RKCaughtX11Window::setStatusMessage (const QString& message, RCommand *command) {
-	RK_TRACE (MISC);
-
-	status_change_command = command;
-	if (command) command->addReceiver (this);
-	if (!message.isEmpty ()) {
-		status_popup->setView (QString (), message);
-		status_popup->show (xembed_container->mapToGlobal (QPoint (20, 20)));
-	} else {
-		status_popup->hide ();
-	}
-}
-
-// static
-void RKCaughtX11Window::setStatusMessage(int dev_num, const QString& message, RCommand* command) {
-	RK_TRACE (MISC);
-
-	RKCaughtX11Window *window = getWindow (dev_num);
-	if (!window) return;
-	window->setStatusMessage (message, command);
-}
-
-void RKCaughtX11Window::rCommandDone (RCommand *command) {
-	RK_TRACE (MISC);
-
-	if (command == status_change_command) {
-		setStatusMessage (QString ());
-		status_popup->hide();
-	}
-	RCommandReceiver::rCommandDone (command);
-}
-
-
 ///////////////////////////////// END RKCaughtX11Window ///////////////////////////////
 /**************************************************************************************/
 //////////////////////////////// BEGIN RKCaughtX11WindowPart //////////////////////////
@@ -637,44 +613,56 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KPart
 	window->dynamic_size_action = new KToggleAction (i18n ("Draw area follows size of window"), window);
 	connect (window->dynamic_size_action, SIGNAL (triggered()), window, SLOT (fixedSizeToggled()));
 	actionCollection ()->addAction ("toggle_fixed_size", window->dynamic_size_action);
+	window->actions_not_for_preview.append (window->dynamic_size_action);
 
 	QAction *action;
 	action = actionCollection ()->addAction ("set_fixed_size_1", window, SLOT (setFixedSize1()));
 	action->setText (i18n ("Set fixed size 500x500"));
+	window->actions_not_for_preview.append (action);
 	action = actionCollection ()->addAction ("set_fixed_size_2", window, SLOT (setFixedSize2()));
 	action->setText (i18n ("Set fixed size 1000x1000"));
+	window->actions_not_for_preview.append (action);
 	action = actionCollection ()->addAction ("set_fixed_size_3", window, SLOT (setFixedSize3()));
 	action->setText (i18n ("Set fixed size 2000x2000"));
+	window->actions_not_for_preview.append (action);
 	action = actionCollection ()->addAction ("set_fixed_size_manual", window, SLOT (setFixedSizeManual()));
 	action->setText (i18n ("Set specified fixed size..."));
+	window->actions_not_for_preview.append (action);
 
 	action = actionCollection ()->addAction ("plot_prev", window, SLOT (previousPlot()));
+	window->actions_not_for_preview.append (action);
  	action->setText (i18n ("Previous plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveLeft));
 	window->plot_prev_action = (KAction*) action;
 	action = actionCollection ()->addAction ("plot_first", window, SLOT (firstPlot()));
+	window->actions_not_for_preview.append (action);
  	action->setText (i18n ("First plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveFirst));
 	window->plot_first_action = (KAction*) action;
 	action = actionCollection ()->addAction ("plot_next", window, SLOT (nextPlot()));
+	window->actions_not_for_preview.append (action);
  	action->setText (i18n ("Next plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveRight));
 	window->plot_next_action = (KAction*) action;
 	action = actionCollection ()->addAction ("plot_last", window, SLOT (lastPlot()));
+	window->actions_not_for_preview.append (action);
  	action->setText (i18n ("Last plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveLast));
 	window->plot_last_action = (KAction*) action;
 	action = window->plot_list_action = new KSelectAction (i18n ("Go to plot"), 0);
+	window->actions_not_for_preview.append (action);
 	window->plot_list_action->setToolBarMode (KSelectAction::MenuMode);
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionListPlots));
 	actionCollection ()->addAction ("plot_list", action);
 	connect (action, SIGNAL (triggered(int)), window, SLOT (gotoPlot(int)));
 
 	action = actionCollection ()->addAction ("plot_force_append", window, SLOT (forceAppendCurrentPlot()));
+	window->actions_not_for_preview.append (action);
  	action->setText (i18n ("Append this plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionSnapshot));
 	window->plot_force_append_action = (KAction*) action;
 	action = actionCollection ()->addAction ("plot_remove", window, SLOT (removeCurrentPlot()));
+	window->actions_not_for_preview.append (action);
  	action->setText (i18n ("Remove this plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRemovePlot));
 	window->plot_remove_action = (KAction*) action;
@@ -683,15 +671,18 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KPart
 	window->plot_clear_history_action = (KAction*) action;
  	action->setText (i18n ("Clear history"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionClear));
+	window->actions_not_for_preview.append (action);
 
 	action = actionCollection ()->addAction ("plot_properties", window, SLOT (showPlotInfo()));
 	window->plot_properties_action = (KAction*) action;
 	action->setText (i18n ("Plot properties"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDocumentInfo));
+	window->actions_not_for_preview.append (action);
 
 	action = actionCollection ()->addAction ("device_activate", window, SLOT (activateDevice()));
 	action->setText (i18n ("Make active"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionFlagGreen));
+	window->actions_not_for_preview.append (action);
 	action = actionCollection ()->addAction ("device_copy_to_output", window, SLOT (copyDeviceToOutput()));
 	action->setText (i18n ("Copy to output"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowOutput));

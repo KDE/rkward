@@ -158,6 +158,11 @@ printValue = function (id) {
 	echo (getValue (id));
 }
 
+makeOption = function (optionname, value, def) {
+	if (typeof (de) == 'undefined') def = "";
+	return ((value == def) ? '' : (', ' + optionname + '=' + value));
+}
+
 include = function (file) {
 	_RK_backend.includeFile (file);
 }

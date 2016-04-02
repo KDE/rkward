@@ -66,6 +66,8 @@ class QTimer;
 class QSplitter;
 class QCloseEvent;
 class QCheckBox;
+class RKExtensionSplitter;
+class RKXMLGUIPreviewArea;
 
 /** contains the standard GUI elements for a top-level RKStandardComponent. The base class creates a dialog interface. For a wizard interface use RKStandardComponentWizard. You *must* call createDialog () after construction, since I can't virualize this for reasons I don't understand!
 
@@ -83,6 +85,9 @@ public:
 	virtual void updateCode ();
 /** reimplemented from QWidget to take care of showing the code display if needed */
 	void showEvent (QShowEvent *e);
+	RKXMLGUIPreviewArea* addDockedPreview (RKComponentPropertyBool *controller, const QString& label, const QString &id=QString (), bool bottom = false);
+/** Do anything needed after the dialog is created and its contents have been built. Base class adds the preview regions to the splitter */
+	virtual void finalize ();
 public slots:
 	void ok ();
 	void cancel ();
@@ -92,26 +97,44 @@ public slots:
 	void updateCodeNow ();
 	void switchInterface () { component->switchInterface (); };
 	void copyCode ();
+private slots:
+	void previewVisibilityChanged (RKComponentPropertyBase*);
+	void previewCloseButtonClicked ();
+	void doPostShowCleanup ();
 private:
 	RKComponentPropertyCode *code_property;
+	RKComponentPropertyBool code_display_visibility;
 
 	// widgets for dialog only
-	QPushButton *toggle_code_button;
+	QCheckBox *toggle_code_box;
 	QPushButton *ok_button;
 protected:
 	void closeEvent (QCloseEvent *e);
 	RKStandardComponent *component;
 	QTimer *code_update_timer;
-
 	// common widgets
 	QWidget *main_widget;
 	QPushButton *cancel_button;
 	QPushButton *help_button;
 	QPushButton *switch_button;
 	QCheckBox *auto_close_box;
+	RKExtensionSplitter *hsplitter;
+	RKExtensionSplitter *vsplitter;
+	QSplitter *hpreview_area;
+	QWidget *vpreview_area;
 	RKCommandEditorWindow *code_display;
+friend class RKComponentBuilder;
+	QWidget *custom_preview_buttons_area;
 
 	bool enslaved;
+
+	struct PreviewArea {
+		QWidget *area;
+		RKComponentPropertyBool *controller;
+		QString label;
+		Qt::Orientation position;
+	};
+	QList<PreviewArea> previews;
 };
 
 /** A wizardish RKStandardComponentGUI. You *must* call createDialog () after construction, and addLastPage () filling the wizard!
@@ -126,8 +149,8 @@ public:
 	void enableSubmit (bool enable);
 	void updateCode ();
 	void createWizard (bool switchable);
-/** Add a standard last page in the wizard. To confuse everybody, this also initializes the view to the first page */
-	void addLastPage ();
+/** Adds a standard last page in the wizard, and initializes the view to the first page */
+	void finalize ();
 
 	void updateState ();
 

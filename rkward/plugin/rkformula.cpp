@@ -40,11 +40,11 @@ RKFormula::RKFormula (const QDomElement &element, RKComponent *parent_component,
 	RK_TRACE (PLUGIN);
 
 	// create and register properties
-	fixed_factors = new RKComponentPropertyRObjects (this, true);
+	fixed_factors = new RKComponentPropertyRObjects (this, false);
 	connect (fixed_factors, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (factorsChanged(RKComponentPropertyBase*)));
 	addChild ("fixed_factors", fixed_factors);
 	fixed_factors->setInternal (true);
-	dependent = new RKComponentPropertyRObjects (this, true);
+	dependent = new RKComponentPropertyRObjects (this, false);
 	connect (dependent, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (factorsChanged(RKComponentPropertyBase*)));
 	addChild ("dependent", dependent);
 	dependent->setInternal (true);

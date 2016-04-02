@@ -1,14 +1,20 @@
 // this code was generated using the rkwarddev package.
-//perhaps don't make changes here, but in the rkwarddev script instead!
+// perhaps don't make changes here, but in the rkwarddev script instead!
 
 
 
-function preprocess(){
+function preview(){
+	preprocess(true);
+	calculate(true);
+	printout(true);
+}
+
+function preprocess(is_preview){
 	// add requirements etc. here
 
 }
 
-function calculate(){
+function calculate(is_preview){
 	// the R code to be evaluated
 
 	var data = getString ('var_data');
@@ -59,22 +65,27 @@ function calculate(){
 		}
 	}
 	echo ('\n\t)\n\n');
+	if (is_preview) {
+		echo ('preview_data <- sset.result[1:min(dim(sset.result)[1],500),1:min(dim(sset.result)[2],100),drop=FALSE]\n');
+	}
 
 }
 
-function printout(){
+function printout(is_preview){
 	// printout the results
 
 
 
-	//// save result object
-	// read in saveobject variables
-	var svbSvrsltst = getValue("svb_Svrsltst");
-	var svbSvrsltstActive = getValue("svb_Svrsltst.active");
-	var svbSvrsltstParent = getValue("svb_Svrsltst.parent");
-	// assign object to chosen environment
-	if(svbSvrsltstActive) {
-		echo(".GlobalEnv$" + svbSvrsltst + " <- sset.result\n");
+	if(!is_preview) {
+		//// save result object
+		// read in saveobject variables
+		var svbSvrsltst = getValue("svb_Svrsltst");
+		var svbSvrsltstActive = getValue("svb_Svrsltst.active");
+		var svbSvrsltstParent = getValue("svb_Svrsltst.parent");
+		// assign object to chosen environment
+		if(svbSvrsltstActive) {
+			echo(".GlobalEnv$" + svbSvrsltst + " <- sset.result\n");
+		}	
 	}
 
 }

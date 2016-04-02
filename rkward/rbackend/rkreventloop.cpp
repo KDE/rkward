@@ -28,7 +28,7 @@
 
 #include "../debug.h"
 
-extern "C" void RK_doIntr ();
+void RK_doIntr ();
 
 static void processX11EventsWorker (void *) {
 // this basically copied from R's unix/sys-std.c (Rstd_ReadConsole)

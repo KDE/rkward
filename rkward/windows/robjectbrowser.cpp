@@ -2,7 +2,7 @@
                           robjectbrowser  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004 - 2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2004 - 2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -37,6 +37,7 @@
 #include "../misc/rkobjectlistview.h"
 #include "../misc/rkdummypart.h"
 #include "../misc/rkstandardicons.h"
+#include "../misc/rkstandardactions.h"
 #include "rkworkplace.h"
 #include "../dataeditor/rkeditor.h"
 
@@ -93,14 +94,14 @@ void RObjectBrowser::initialize () {
 
 	RK_DEBUG (APP, DL_INFO, "creating workspace browser");
 
-	internal = new RObjectBrowserInternal (layout_widget);
+	internal = new RObjectBrowserInternal (layout_widget, this);
 	setFocusProxy (internal);
 	setMinimumSize (internal->minimumSize ());
 }
 
 
 ///////////////////////// RObjectBrowserInternal /////////////////////////////
-RObjectBrowserInternal::RObjectBrowserInternal (QWidget *parent) : QWidget (parent) {
+RObjectBrowserInternal::RObjectBrowserInternal (QWidget *parent, RObjectBrowser *browser) : QWidget (parent) {
 	RK_TRACE (APP);
 	setFocusPolicy (Qt::ClickFocus);
 
@@ -114,8 +115,8 @@ RObjectBrowserInternal::RObjectBrowserInternal (QWidget *parent) : QWidget (pare
 	update_button = new QPushButton (i18n ("Update"), this);
 	vbox->addWidget (update_button);
 
-	actions.insert (Help, new QAction (i18n ("Search Help"), this));
-	connect (actions[Help], SIGNAL(triggered(bool)), this, SLOT(popupHelp()));
+	actions.insert (Help, RKStandardActions::functionHelp (browser, this));
+	actions.insert (SearchOnline, RKStandardActions::onlineHelp (browser, this));
 	actions.insert (Edit, new QAction (i18n ("Edit"), this));
 	connect (actions[Edit], SIGNAL(triggered(bool)), this, SLOT(popupEdit()));
 	actions.insert (View, new QAction (i18n ("View"), this));
@@ -164,10 +165,13 @@ void RObjectBrowserInternal::updateButtonClicked () {
 	RObjectList::getObjectList ()->updateFromR (0);
 }
 
-void RObjectBrowserInternal::popupHelp () {
+void RObjectBrowserInternal::currentHelpContext (QString* symbol, QString* package) {
 	RK_TRACE (APP);
 
-	if (list_view->menuObject ()) RKHelpSearchWindow::mainHelpSearch ()->getFunctionHelp (list_view->menuObject ()->getShortName ());
+	RObject *object = list_view->menuObject ();
+	if (!object) return;
+	*symbol = object->getShortName ();
+	*package = object->isInGlobalEnv () ? QString () : object->toplevelEnvironment ()->packageName ();
 }
 
 void RObjectBrowserInternal::popupEdit () {
@@ -250,7 +254,8 @@ void RObjectBrowserInternal::contextMenuCallback (RObject *, bool *) {
 	}
 
 	actions[Help]->setVisible (!(object->isType (RObject::ToplevelEnv) || object->isInGlobalEnv ()));
-	actions[Edit]->setVisible (object->canEdit () && RKWorkplace::mainWorkplace ()->canEditObject (object));
+	actions[Edit]->setText (object->canWrite () ? i18n ("Edit") : i18n ("View in editor (read-only)"));
+	actions[Edit]->setVisible (RKWorkplace::mainWorkplace ()->canEditObject (object));
 	actions[View]->setVisible (object->canRead ());
 	actions[Rename]->setVisible (object->canRename ());
 	actions[Copy]->setVisible (object->canRead () && (!object->isType (RObject::ToplevelEnv)));
@@ -267,7 +272,7 @@ void RObjectBrowserInternal::doubleClicked (const QModelIndex& index) {
 	if (!object) return;
 	if (object == RObjectList::getObjectList ()) return;
 
-	if (object->canEdit () && RKWorkplace::mainWorkplace ()->canEditObject (object)) {
+	if (RKWorkplace::mainWorkplace ()->canEditObject (object)) {
 		RKWorkplace::mainWorkplace ()->editObject (object);
 	} else {
 		RKWorkplace::mainWorkplace ()->flushAllData ();

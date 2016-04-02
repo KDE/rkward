@@ -29,6 +29,9 @@ RMINOR = $(shell echo $(RVERS) | awk -F. '{print $$2}')
 # set built-time of GNUR packages to time of created binary package based on stamp in changelog
 builttime = $(shell dpkg-parsechangelog -l$(CURDIR)/debian/changelog | awk -F': ' '/Date/ {print $$2}')
 
+# easier typing
+DESTDIR = $(CURDIR)/debian/tmp
+
 ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
 	CFLAGS += -O0
 else
@@ -94,13 +97,19 @@ install: build
 	dh_prep
 	dh_installdirs
 
-	# Add here commands to install the package into debian/rkward.
-	cd $(CURDIR)/build && $(MAKE) install DESTDIR=$(CURDIR)/debian/rkward
+	# Install into debian/tmp, first
+	cd $(CURDIR)/build && $(MAKE) install DESTDIR=$(DESTDIR)
 	# dirty hack to get rid of conflicting r.xml file without adjusting all makefiles
-	rm -vf $(CURDIR)/debian/rkward/`kde4-config --install data`/katepart/syntax/r.xml
+	rm -vf $(DESTDIR)/`kde4-config --install data`/katepart/syntax/r.xml
 	
 	# remove unneeded R package files
-	rm -vf $(CURDIR)/debian/rkward/usr/lib/R/site-library/R.css $(CURDIR)/debian/rkward/usr/lib/R/site-library/rkward/COPYING
+	rm -vf $(DESTDIR)/usr/lib/R/site-library/R.css $(DESTDIR)/usr/lib/R/site-library/rkward/COPYING
+
+	# remove x-test locale
+	rm -rvf $(DESTDIR)/usr/share/kde4/apps/rkward/po/x-test $(DESTDIR)/usr/share/locale/x-test
+
+	# Sort the remaining bits into rkward and rkward-data subpackages
+	dh_install
 
 # Build architecture-independent files here.
 binary-indep: build install
@@ -114,7 +123,7 @@ binary-arch: build install
 	dh_installdocs
 	dh_installexamples
 	dh_installmenu
-	dh_installman $(CURDIR)/build/doc/rkward/rkward.1
+	dh_installman
 	dh_link
 	dh_strip
 	# do not compress KDE HTML help

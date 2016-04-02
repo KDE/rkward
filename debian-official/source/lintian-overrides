@@ -1,0 +1,4 @@
+# Some of the plugin .js-files seem to generate false positives. Most of these _are_ primary sources, none of them are minified or post-processed in any other way.
+# A handful of .js-files _are_ generated (upstream, manually), indeed. These carry a corresponding notice, and their primary sources are included in rkward/plugins/rkwarddev_scripts .
+rkward source: source-contains-prebuilt-javascript-object rkward/plugins/*
+rkward source: source-is-missing rkward/plugins/*

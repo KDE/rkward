@@ -29,3 +29,6 @@ for pluginmap in *.pluginmap pluginmap_meta.inc; do
           -e "s/rkward_min_version=\"[^\"]*\"/rkward_min_version=\"${PRIOR_VERSION}\"/" \
           -e "s/rkward_max_version=\"[^\"]*\"/rkward_max_version=\"${TARGET_VERSION}y\"/" $pluginmap
 done
+
+sed -i -e "s/^Version:.*$/Version: ${TARGET_VERSION}/" \
+       -e "s/^Date:.*$/Date: `date +%Y-%m-%d`/" ${BASEDIR}/rkward/rbackend/rpackages/rkward/DESCRIPTION

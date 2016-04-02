@@ -133,6 +133,8 @@ public slots:
 	void setCaption (const QString &);
 /** HACK this is only to make the compiler happy with -Woverloaded-virtual */
 	void setCaption (const QString &dummy, bool) { setCaption (dummy); };
+
+	void openUrlsFromCommandLineOrDBus (bool warn_external, QStringList urls);
 private slots:
 	void partChanged (KParts::Part *new_part);
 private:

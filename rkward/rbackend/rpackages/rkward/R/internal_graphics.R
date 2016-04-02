@@ -15,7 +15,8 @@
 
 # Fetch the current size of the given RK() device from the frontend, and redraw
 "RK.resize" <- function (devnum) {
-	.Call ("rk.graphics.device.resize", as.integer (devnum)-1, PACKAGE="(embedding)")
+	# Note: RK.resize() often fails, if something is currently being plotted. That's usually benign, and should not produce warning messages.
+	try (.Call ("rk.graphics.device.resize", as.integer (devnum)-1, PACKAGE="(embedding)"), silent=TRUE)
 }
 
 #' @include internal.R
@@ -23,6 +24,10 @@ assign(".rk.preview.devices", list (), envir=.rk.variables)
 
 #' @export
 ".rk.startPreviewDevice" <- function (x) {
+	# NOTE: I considered rewriting this to use .rk.create.preview.data(), but it did not seem right
+	# 1. Creation and removal of storage is mostly trivial
+	# 2. Plot previews need some extra logic for handling deivce closes (see .rk.discard.preview.device.num()), and implementing
+	#    this is easier, if plot preview data is kept in an entirely separate storage
 	a <- .rk.variables$.rk.preview.devices[[x]]
 	if (is.null (a)) {
 		devnum <- dev.cur ()

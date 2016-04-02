@@ -23,15 +23,17 @@
 # a simple wrapper around help() that makes it easier to detect in code, whether help was found or not.
 # used from RKHelpSearchWindow::getFunctionHelp
 #' @export
-".rk.getHelp" <- function (...) {
-	if (compareVersion (as.character (getRversion()), "2.10.0") >= 0) {
-		res <- help (..., help_type="html")
-	} else {
-		res <- help (..., chmhelp=FALSE, htmlhelp=TRUE)
-	}
+".rk.getHelp" <- function (topic, package=NULL, ...) {
+	res <- help (topic, (package), ..., help_type="html")
 	if (!length (as.character (res))) {	# this seems undocumented, but it is what utils:::print.help_files_with_topic checks
-		show (res)
-		stop ("No help found")
+		if (!is.null (package)) {
+			# if no help found, try once more, without package restriction
+			res <- help (topic, package=NULL, ..., help_type="html")
+		}
+		if (!length (as.character (res))) {
+			show (res)
+			stop ("No help found")
+		}
 	}
 	show (res)
 	invisible (TRUE)
@@ -40,8 +42,14 @@
 # Simple wrapper around help.search. Concatenates the relevant fields of the results in order for passing to the frontend.
 #' @export
 ".rk.get.search.results" <- function (pattern, ...) {
-	H=as.data.frame (help.search(pattern, ...)$matches)
-	# NOTE: The field "Type" was added in R 2.14.0. For earlier versions of R, only help pages were returned as results of help.search()
-	if ((dim (H)[1] > 0) && (is.null (H$Type))) H$Type <- "help"
-	c (as.character (H$topic), as.character (H$title), as.character(H$Package), as.character(H$Type))
+	H = as.data.frame(help.search(pattern, ...)$matches)
+	fields <- names (H)
+	c(
+		# NOTE: Field header capitalization appears to have changed in some version of R around 3.2.x
+		as.character (if ("topic" %in% fields) H$topic else H$Topic),
+		as.character (if ("title" %in% fields) H$title else H$Title),
+		as.character (if ("package" %in% fields) H$package else H$Package),
+		# NOTE: The field "Type" was added in R 2.14.0. For earlier versions of R, only help pages were returned as results of help.search()
+		as.character (if ("Type" %in% fields) H$Type else rep ("help", length.out=dim(H)[1]))
+	)
 }

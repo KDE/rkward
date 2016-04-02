@@ -181,3 +181,75 @@
 	.rk.do.plain.call ("setPluginStatus", c (id, context, visible))
 	invisible (NULL)
 }
+
+assign(".rk.preview.data", list (), envir=.rk.variables)
+
+#' Manage (shortly) persistent data for previews (for use in RKWard plugins wishing to provide custom previews)
+#'
+#' \code{rk.assign.preview.data} stores data associated with a specific "id". Usually this id is
+#'    provided by the <preview>-feature of a plugin.
+#' \code{rk.get.preview.data} retrieves data previously stored with \code{rk.assign.preview.data}
+#' \code{rk.discard.preview.data} discards data previously stored with \code{rk.assign.preview.data}.
+#'    This gets called by the <preview>-box of the plugin, automtically, when the plugin dialog is closed.
+#'    You do not generally have to call it manually. See the notes for running custom clearnup code, below.
+#'
+#' @param id (character). Id associated with the data. Usually this will be the 'id' value of the <preview>-box.
+#' @param value. The value to assign. If this is a list, and contains a function named "on.delete", this function
+#'    will be run by rk.discard.preview.data (with the \code{id} as argument. This is useful for running custom clearnup
+#'    code, such as removing temporary files, etc.
+#'
+#' @return \code{rk.assign.preview.data} amd \code{rk.get.preview.data} returns the preview data (newly) associated
+#'    with the given id. \code{rk.discard.preview.data} returns \code{NULL}, invisibly.
+#'
+#' \bold{Note}: Plugins that want to produce a single plot, or open a single object via \code{\link{rk.edit}()} do \bold{not}
+#'              have to call these functions, manually. See the chapter on providing previews in the Introduction to
+#'              writing plugins for RKWard.
+#'
+#' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
+#' @keywords utilities
+#'
+#' @examples
+#' ## To be generated in the preview() code section of a plugin
+#'
+#' ## NOT RUN
+#' pdata &lt;- rk.get.preview.data("SOMEID")
+#' if (is.null (pdata)) {
+#'   outfile &lt;- rk.get.tempfile.name(prefix="preview", extension=".txt")
+#'   pdata &lt;- list(filename=outfile, on.delete=function (id) {
+#'     unlink(rk.get.preview.data(id)$filename)
+#'   })
+#'   rk.assign.preview.data("SOMEID", pdata)
+#' }
+#' try ({
+#'   cat ("This is a test", pdata$filename)
+#'   rk.edit.files(file=pdata$filename)
+#' })
+#' ## END NOT RUN
+#'
+#' @export
+#' @rdname rk.assign.preview.data
+#' @aliases rk.get.preview.data .rk.discard.preview.data
+"rk.assign.preview.data" <- function (id, value=list ()) {
+	pdata <- .rk.variables$.rk.preview.data
+	pdata[[id]] <- value
+	assign (".rk.preview.data", pdata, envir=.rk.variables)
+	rk.sync (.rk.variables$.rk.preview.data)
+	invisible (pdata[[id]])
+}
+
+#' @export
+#' @rdname rk.assign.preview.data
+"rk.get.preview.data" <- function (id) {
+	.rk.variables$.rk.preview.data[[id]]
+}
+
+#' @export
+#' @rdname rk.assign.preview.data
+"rk.discard.preview.data" <- function (id) {
+	pdata <- .rk.variables$.rk.preview.data
+	if (!is.null (pdata[[id]]) && !is.null (pdata[[id]]$on.exit)) pdata[[id]]$on.delete (id)
+	pdata[[id]] <- NULL
+	assign (".rk.preview.data", pdata, envir=.rk.variables)
+	rk.sync (.rk.variables$.rk.preview.data)
+	invisible (NULL)
+}

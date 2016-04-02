@@ -2,7 +2,7 @@
                           rkward_startup_wrapper  -  description
                              -------------------
     begin                : Sun Mar 10 2013
-    copyright            : (C) 2013, 2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2013, 2014, 2015 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -57,6 +57,7 @@ QString findRKWardAtPath (const QString &path) {
 
 #ifdef Q_WS_WIN
 #include <windows.h>
+#include <QTemporaryFile>
 #endif
 QString quoteCommand (const QString &orig) {
 #ifdef Q_WS_WIN
@@ -107,6 +108,7 @@ int main (int argc, char *argv[]) {
 	QStringList debugger_args;
 	QStringList file_args;
 	bool reuse = false;
+	bool warn_external = true;
 	QString r_exe_arg;
 	int debug_level = 2;
 
@@ -131,6 +133,8 @@ int main (int argc, char *argv[]) {
 			}
 		} else if (args[i] == "--reuse") {
 			reuse = true;
+		} else if (args[i] == "--nowarn-external") {
+			warn_external = false;
 		} else if (args[i].startsWith ("--")) {
 			// all RKWard and KDE options (other than --reuse) are of the for --option <value>. So skip over the <value>
 			i++;
@@ -150,7 +154,7 @@ int main (int argc, char *argv[]) {
 		} else {
 			QDBusInterface iface (RKDBUS_SERVICENAME, "/", "", QDBusConnection::sessionBus ());
 			if (iface.isValid ()) {
-				QDBusReply<void> reply = iface.call ("openAnyUrl", file_args);
+				QDBusReply<void> reply = iface.call ("openAnyUrl", file_args, warn_external);
 				if (!reply.isValid ()) {
 					if (debug_level > 2) qDebug ("Error while placing dbus call: %s", qPrintable (reply.error ().message ()));
 					return 1;
@@ -287,10 +291,32 @@ int main (int argc, char *argv[]) {
 
 	InteractiveProcess proc;
 #ifdef Q_WS_WIN
-	proc.setProcessChannelMode (debugger_args.isEmpty () ? QProcess::MergedChannels : QProcess::ForwardedChannels);   // ForwardedChannels causes console window to pop up!
-#else
-	proc.setProcessChannelMode (QProcess::ForwardedChannels);
+	if (debugger_args.isEmpty ()) {
+		// start _without_ opening an annoying console window
+		QTemporaryFile *vbsf = new QTemporaryFile (QDir::tempPath () + "/rkwardlaunchXXXXXX.vbs");
+		vbsf->setAutoRemove (false);
+		if (vbsf->open ()) {
+			QTextStream vbs (vbsf);
+			vbs << "Dim WinScriptHost\r\nSet WinScriptHost = CreateObject(\"WScript.Shell\")\r\nWinScriptHost.Run \"" << quoteCommand (r_exe);
+			for (int i = 0;  i < call_args.length (); ++i) {
+				vbs << " " << call_args[i];
+			}
+			vbs << "\", 0\r\nSet WomScriptHost = Nothing\r\n";
+			vbsf->close ();
+			QString filename = vbsf->fileName ();
+			delete (vbsf);  // somehow, if creating vbsf on the stack, we cannot launch it, because "file is in use by another process", despite we have closed it.
+			proc.start ("WScript.exe", QStringList (filename));
+			bool ok = proc.waitForFinished (-1);
+			if (proc.exitCode () || !ok) {
+				QMessageBox::critical (0, "Error starting RKWard", QString ("Starting RKWard failed with error \"%1\"").arg (proc.errorString ()));
+			}
+			QFile (filename).remove ();
+			return (0);
+		}
+	}
+	// if that did not work or not on windows:
 #endif
+	proc.setProcessChannelMode (QProcess::ForwardedChannels);
 	proc.start (quoteCommand (r_exe), call_args);
 	bool ok = proc.waitForFinished (-1);
 	if (proc.exitCode () || !ok) {

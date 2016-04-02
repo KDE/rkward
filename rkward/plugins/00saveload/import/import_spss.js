@@ -5,10 +5,15 @@ function preprocess () {
 	makeEncodingPreprocessCode ();
 }
 
-function calculate () {
+function preview () {
+	preprocess ();
+	calculate (true);
+}
+
+function calculate (is_preview) {
 	var data_frame = "";
 	var data_frame_opt = "";
-	if (getValue ("data_frame")) {
+	if (getValue ("data_frame") || is_preview) {
 		data_frame = true;
 		data_frame_opt = ", to.data.frame=TRUE";
 	}
@@ -39,9 +44,13 @@ function calculate () {
 		echo ('}\n');
 	}
 	echo ('\n');
-	echo ('.GlobalEnv$' + object + ' <- data		'); comment ('assign to globalenv()');
-	if (getValue ("doedit") && data_frame) {
-		echo ('rk.edit (.GlobalEnv$' + object + ')\n');
+	if (is_preview) {
+		echo ('preview_data <- data[1:min(50,dim(data)[1]),1:min(50,dim(data)[2]),drop=FALSE]\n');
+	} else {
+		echo ('.GlobalEnv$' + object + ' <- data		'); comment ('assign to globalenv()');
+		if (getValue ("doedit") && data_frame) {
+			echo ('rk.edit (.GlobalEnv$' + object + ')\n');
+		}
 	}
 }
 

@@ -19,7 +19,7 @@ EXECUTE_PROCESS(
 MESSAGE (STATUS "R architecture is ${R_ARCH}")
 
 # check R version.
-SET (R_MIN_VERSION "2.8.0")
+SET (R_MIN_VERSION "2.10.0")
 MESSAGE (STATUS "Checking R version")
 EXECUTE_PROCESS(
 	COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "-e" "cat (paste(R.version$major, R.version$minor, sep='.'))"

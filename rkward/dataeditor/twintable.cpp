@@ -2,7 +2,7 @@
                           twintable.cpp  -  description
                              -------------------
     begin                : Tue Oct 29 2002
-    copyright            : (C) 2002, 2006, 2007, 2010, 2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2002-2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -47,8 +47,8 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent), RObjectListener (ROb
 	QVBoxLayout *layout = new QVBoxLayout(this);
 	layout->setContentsMargins (0, 0, 0, 0);
 	
-	QSplitter *splitter = new QSplitter(this);
-	splitter->setOrientation(Qt::Vertical);
+	splitter = new QSplitter (this);
+	splitter->setOrientation (Qt::Vertical);
 
 	metaview = new TwinTableMember (splitter);
 	splitter->setStretchFactor (splitter->indexOf (metaview), 0);
@@ -173,6 +173,8 @@ void TwinTable::initTable (RKVarEditModel* model, RObject* object) {
 
 	datamodel = model;
 	main_object = object;
+	action_enable_editing->setEnabled (object->canWrite ());
+	action_tb_unlock_editing->setEnabled (object->canWrite ());
 	dataview->setRKModel (model);
 	metaview->setRKModel (model->getMetaModel ());
 	model->setEditor (this);
@@ -189,6 +191,18 @@ void TwinTable::initTable (RKVarEditModel* model, RObject* object) {
 	listenForObject (object);
 	objectMetaChanged (object);
 	connect (model, SIGNAL (hasDuplicates(QStringList)), this, SLOT (containsDuplicates(QStringList)));
+}
+
+void TwinTable::setWindowStyleHint (const QString& hint) {
+	RK_TRACE (EDITOR);
+	if (hint == "preview") { // preview skin: Squeeze header as much as possible
+		metaview->horizontalHeader ()->hide ();
+		metaview->setMinimumHeight (metaview->rowHeight (0));
+		// Now, I just don't understand QSplitter sizing, here... Despite stretch factors being set, metaview continues to be the first to grow.
+		// Forcing minimum heigt of dataview help allocating initial size to the dataview, though.
+		dataview->setMinimumHeight (dataview->rowHeight (0) * 5);
+	}
+	RKMDIWindow::setWindowStyleHint (hint);
 }
 
 void TwinTable::containsDuplicates (const QStringList& dupes) {
@@ -468,7 +482,7 @@ void TwinTable::enableEditing (bool on) {
 
 	flushEdit ();
 
-	rw = on;
+	rw = main_object ? on && main_object->canWrite () : on;  // NOTE: File->New->Dataset creates an Editor window, first, then sets the object to edit afterwards (TODO which looks like silly design)
 	metaview->rw = rw;
 	dataview->rw = rw;
 
@@ -485,6 +499,7 @@ void TwinTable::enableEditing (bool on) {
 
 	edit_actions->setEnabled (rw);
 	action_enable_editing->setChecked (rw);
+	action_tb_lock_editing->setChecked (!rw);
 	action_tb_unlock_editing->setChecked (rw);
 
 	if (main_object) objectMetaChanged (main_object);	// update_caption;

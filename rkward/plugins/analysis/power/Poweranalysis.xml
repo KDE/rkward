@@ -1,12 +1,12 @@
 <!DOCTYPE rkplugin >
 <document>
 	<!-- this code was generated using the rkwarddev package.
-			perhaps don't make changes here, but in the rkwarddev script instead! -->
+		perhaps don't make changes here, but in the rkwarddev script instead! -->
 	<code file="Poweranalysis.js" />
 	<help file="Poweranalysis.rkh" />
 	<!-- <dependencies>
 			</dependencies> -->
-	<about name="Power analysis" shortinfo="RKWard GUI to perform power analysis and sample size estimation." longinfo="RKWard GUI to perform power analysis and sample size estimation." version="0.02-1" releasedate="2015-02-02" url="http://rkward.kde.org" license="GPL (&gt;= 3)">
+	<about name="Power analysis" shortinfo="RKWard GUI to perform power analysis and sample size estimation." longinfo="RKWard GUI to perform power analysis and sample size estimation." version="0.03-1" releasedate="2016-01-26" url="http://rkward.kde.org" license="GPL (&gt;= 3)">
 		<author given="Meik" family="Michalke" email="meik.michalke@hhu.de" role="aut, cre" />
 		<author given="Thomas" family="Friedrichsmeier" email="thomas.friedrichsmeier@ruhr-uni-bochum.de" role="ctb" />
 	</about>
@@ -16,7 +16,7 @@
 		<convert id="pwr_lgc_effect" sources="rad_pwr_param.string" mode="equals" standard="Effect size" />
 		<convert id="pwr_lgc_signif" sources="rad_pwr_param.string" mode="equals" standard="Significance level" />
 		<convert id="pwr_lgc_df_u" sources="rad_pwr_param.string" mode="equals" standard="Parameter count" />
-		<connect governor="pwr_lgc_power.not" client="frm_spnbPP0801.enabled" />
+		<connect governor="pwr_lgc_power.not" client="frm_sPP080118H.enabled" />
 		<connect governor="pwr_lgc_effect.not" client="frm_sEE0311MCM.enabled" />
 		<connect governor="pwr_lgc_signif.not" client="frm_spnSS00501.enabled" />
 		<convert id="pwr_lgc_ttest" sources="drp_pwr_stat.string" mode="equals" standard="pwr.t.test" />
@@ -95,7 +95,7 @@
 		<connect governor="pwr_lgc_alt_warn_neg" client="pwr_txt_hypothesis_neg.visible" />
 		<connect governor="pwr_lgc_alt_warn_pos" client="pwr_txt_hypothesis_pos.visible" />
 	</logic>
-	<dialog label="Power analysis">
+	<dialog label="Power analysis" i18n_context="Here 'power' is a common statistical term and should not be translated">
 		<row id="row_cSMSMSTCAN">
 			<column id="clm_fSMSMSTCAN">
 				<frame label="Statistical Method" id="frm_SttstclM">
@@ -137,11 +137,14 @@
 					</radio>
 				</frame>
 				<stretch />
+				<frame id="frm_prevwmdtpt">
+					<preview mode="output" />
+				</frame>
 			</column>
-			<column id="clm_fTTPPPSSEE">
+			<column id="clm_fTTPPP18HS">
 				<frame label="Target measure" id="frm_Targtmsr">
 					<radio id="rad_pwr_param" label="Parameter to determine">
-						<option label="Power of test" value="Power" checked="true" />
+						<option label="Power of test" value="Power" checked="true" i18n_context="Here 'power' is a common statistical term and should not be translated" />
 						<option label="Sample size" value="Sample size" />
 						<option label="Effect size" value="Effect size" />
 						<option label="Significance level" value="Significance level" />
@@ -150,10 +153,10 @@
 					<stretch />
 				</frame>
 			</column>
-			<column id="clm_fKKPP0801P">
+			<column id="clm_fKKPP08011">
 				<frame label="Known measures" id="frm_Knwnmsrs">
-					<frame id="frm_spnbPP0801">
-						<spinbox label="Power" id="spn_Power" initial="0.8" min="0" max="1" />
+					<frame id="frm_sPP080118H">
+						<spinbox label="Power" id="spn_Power" initial="0.8" min="0" max="1" i18n_context="Here 'power' is a common statistical term and should not be translated" />
 					</frame>
 					<frame id="frm_sD301D3011">
 						<spinbox label="Degrees of freedom" id="pwr_spin_df" initial="30" min="1" type="integer" />
@@ -246,7 +249,7 @@
 						<spinbox label="Significance level" id="spn_Sgnfcncl" initial="0.05" min="0" max="1" />
 					</frame>
 					<stretch />
-					<saveobject label="Save results to workspace" checkable="true" initial="pwr.result" id="svb_Svrsltst" />
+					<saveobject label="Save results to workspace" checkable="true" initial="pwr.result" id="svb_Svrsltst" i18n_context="Here 'power' is a common statistical term and should not be translated" />
 				</frame>
 			</column>
 		</row>

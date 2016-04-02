@@ -2,7 +2,7 @@
                           rkstandardcomponent  -  description
                              -------------------
     begin                : Sun Feb 19 2006
-    copyright            : (C) 2006, 2007, 2009, 2010, 2011, 2012, 2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2006-2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -274,12 +274,12 @@ bool RKStandardComponent::createTopLevel (const QDomElement &doc_element, int fo
 		static_cast<RKStandardComponentWizard *> (gui)->createWizard (!dialog_element.isNull ());
 		wizard = static_cast<RKStandardComponentWizard *> (gui)->getStack ();
 		buildAndInitialize (doc_element, wizard_element, gui->mainWidget (), true, enslaved);
-		static_cast<RKStandardComponentWizard *> (gui)->addLastPage ();
 	} else {
 		gui = new RKStandardComponentGUI (this, code, enslaved);
 		gui->createDialog (!wizard_element.isNull ());
 		buildAndInitialize (doc_element, dialog_element, gui->mainWidget (), false, enslaved);
 	}
+	gui->finalize ();
 
 	return true;
 }
@@ -362,6 +362,14 @@ void RKStandardComponent::buildAndInitialize (const QDomElement &doc_element, co
 	standardInitializationComplete ();
 }
 
+RKXMLGUIPreviewArea* RKStandardComponent::addDockedPreview (RKComponentPropertyBool* controller, const QString& label, const QString &id) {
+	RK_TRACE (PLUGIN);
+
+	RK_ASSERT (gui);
+	if (!gui) return 0;
+	return gui->addDockedPreview (controller, label, id);
+}
+
 RKComponentBase::ComponentStatus RKStandardComponent::recursiveStatus () {
 	RK_TRACE (PLUGIN);
 
@@ -375,7 +383,7 @@ bool RKStandardComponent::submit (RCommandChain *in_chain) {
 
 	if (!isSatisfied ()) return false;
 
-        RCommandChain *prev_chain = command_chain;
+	RCommandChain *prev_chain = command_chain;
 	command_chain = in_chain;
 	gui->ok ();
 	command_chain = prev_chain;
@@ -650,7 +658,15 @@ void RKComponentBuilder::buildElement (const QDomElement &element, XMLHelper &xm
 		} else if (e.tagName () == QLatin1String ("text")) {
 			widget = new RKText (e, component (), parent_widget);
 		} else if (e.tagName () == QLatin1String ("preview")) {
+			QWidget *pwidget = parent_widget;
+			if (!parent->isWizardish ()) {
+				RKStandardComponent *uicomp = parent->topmostStandardComponent ();
+				if (uicomp) {
+					parent_widget = static_cast<RKStandardComponent*> (uicomp)->gui->custom_preview_buttons_area;
+				}
+			}
 			widget = new RKPreviewBox (e, component (), parent_widget);
+			parent_widget->layout ()->addWidget (widget);
 		} else if (e.tagName () == QLatin1String ("saveobject")) {
 			widget = new RKPluginSaveObject (e, component (), parent_widget);
 		} else if (e.tagName () == QLatin1String ("embed")) {

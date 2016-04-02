@@ -174,7 +174,7 @@ This is a guide to writing plugins for &rkward;.
 		&lt;component type="standard" id="t_test_two_vars" file="t_test_two_vars.xml" label="Two Variable t-Test" /&gt;
 	</programlisting>
 	<para>
-		First the <parameter>type</parameter> attribute: Leave this to <replaceable>"standard"</replaceable> for now. Further types are not yet implemented. The <parameter>id</parameter> we've already hinted at. Each component has to be given a unique (in its namespace) identifier. Pick one that is easily recognizable. Avoid spaces and any special characters. Those are not banned, so far, but might have special meanings. With the <parameter>file</parameter> attribute, you specify where the <link linkend="mainxml">description of the actual plugin itself</link> is located. This is relative to the directory the &pluginmap; file is in, and the <parameter>base_prefix</parameter> above. Finally, give the component a label. This label will be shown whereever the plugin is placed in the menu (or in the future perhaps in other places as well).
+		First the <parameter>type</parameter> attribute: Leave this to <replaceable>"standard"</replaceable> for now. Further types are not yet implemented. The <parameter>id</parameter> we've already hinted at. Each component has to be given a unique (in its namespace) identifier. Pick one that is easily recognizable. Avoid spaces and any special characters. Those are not banned, so far, but might have special meanings. With the <parameter>file</parameter> attribute, you specify where the <link linkend="mainxml">description of the actual plugin itself</link> is located. This is relative to the directory the &pluginmap; file is in, and the <parameter>base_prefix</parameter> above. Finally, give the component a label. This label will be shown wherever the plugin is placed in the menu (or in the future perhaps in other places as well).
 	</para>
 	<para>
 		Typically a &pluginmap; file will contain several components, so here are a few more:
@@ -488,7 +488,7 @@ This is a guide to writing plugins for &rkward;.
 			&lt;page id="secondpage"&gt;
 				&lt;text&gt;Below are some advanced options. It's generally safe not to assume the
 					variables have equal variances. An appropriate correction will be applied then.
-					Chosing "assume equal variances" may increase test-strength, however.&lt;/text&gt;
+					Choosing "assume equal variances" may increase test-strength, however.&lt;/text&gt;
 				&lt;copy id="varequal"/&gt;
 				&lt;text&gt;Sometimes it's helpful to get an estimate of the confidence interval of
 					the difference in means. Below you can specify whether one should be shown, and
@@ -521,7 +521,7 @@ This is a guide to writing plugins for &rkward;.
 			If you find yourself creating a <command>&lt;radio&gt;</command> or <command>&lt;dropdown&gt;</command> with only two options, ask yourself, whether the question is essentially a yes / no type of question. E.g. a choice between <quote>adjust results</quote> and <quote>do not adjust results</quote>, or between <quote>remove missing values</quote> and <quote>keep missing values</quote>. In this case a <command>&lt;checkbox&gt;</command> is the best choice: It uses little space, will have the least words of labels, and is easiest to read for the user. There are very few situations where you should chose a <command>&lt;radio&gt;</command> over a <command>&lt;checkbox&gt;</command>, when there are only two options. An example of that might be: <quote>Method of calculation: 'pearson'/'spearman'</quote>. Here, more methods might be thinkable, and they don't really form a pair of opposites.
 		</para>
 		<para>
-			Chosing between a <command>&lt;radio&gt;</command> and a <command>&lt;dropdown&gt;</command> is mostly a question of space. The <command>&lt;dropdown&gt;</command> has the advantage of using little space, even if there are a lot of options to chose from. On the other hand, a <command>&lt;radio&gt;</command> has the advantage of making all possible choices visible to the user at once, without clicking on the dropdown arrow. Generally, if there are six or more options to chose from, a <command>&lt;dropdown&gt;</command> is preferable. If there are five or less options, a <command>&lt;radio&gt;</command> is the better choice.
+			Choosing between a <command>&lt;radio&gt;</command> and a <command>&lt;dropdown&gt;</command> is mostly a question of space. The <command>&lt;dropdown&gt;</command> has the advantage of using little space, even if there are a lot of options to chose from. On the other hand, a <command>&lt;radio&gt;</command> has the advantage of making all possible choices visible to the user at once, without clicking on the dropdown arrow. Generally, if there are six or more options to chose from, a <command>&lt;dropdown&gt;</command> is preferable. If there are five or less options, a <command>&lt;radio&gt;</command> is the better choice.
 		</para>
 	</sect2>
 </sect1>
@@ -574,7 +574,7 @@ res &lt;- t.test (
 			as plain text. Next we need to fill in the value, the user selected as the first variable. We fetch this using <function>getString ("x")</function>, and append it to the string to be <quote>echoed</quote>. This prints out the value of the GUI-element with <parameter>id=</parameter><replaceable>"x"</replaceable>: our first <command>&lt;checkbox&gt;</command>. Next, we append a ', ', and do the same to fetch the value of the element <replaceable>"y"</replaceable> - the second <command>&lt;checkbox&gt;</command>. For the hypothesis (the <command>&lt;radio&gt;</command> group), and the equal variances <command>&lt;checkbox&gt;</command>, the procedure is very similar.
 		</para>
 		<para>
-			Note that instead of concatenating the output snippets with <quote>+</quote>, you can also use several <function>echo()</function> statments. Everything is printed on a single line. To produce a line break in the generated code, insert a <replaceable>"\n"</replaceable> in the echoed string. In theory, you can even produce many lines with a single echo-statement, but please keep it to one line (or less) of generated code per <function>echo()</function>.
+			Note that instead of concatenating the output snippets with <quote>+</quote>, you can also use several <function>echo()</function> statements. Everything is printed on a single line. To produce a line break in the generated code, insert a <replaceable>"\n"</replaceable> in the echoed string. In theory, you can even produce many lines with a single echo-statement, but please keep it to one line (or less) of generated code per <function>echo()</function>.
 		</para>
 		<note>
 			<para>Besides <function>getString()</function>, there are also functions <function>getBoolean()</function>, which will try to return the value as a logical (suitable for using in an <function>if()</function>-statement), and <function>getList()</function>, which will try to return list-like data in a JS <function>Array()</function>. We will show examples of those, later.</para>
@@ -710,6 +710,18 @@ function calculate () {
 	echo ("results$bar &lt;- bar (x" + narm + ")\n");
 	echo ("results$foobar &lt;- foobar (x" + narm "\n");
 	// ...
+}
+	</programlisting>
+	<para>
+		The simple helper function <function>makeOption()</function> can make it easier to omit parameters that are at their default value, in many cases:
+	</para>
+	<programlisting>
+function calculate () {
+	var options
+	//...
+	// This will do nothing, if VALUE is 0.95 (the default). Otherwise it will append ', conf.int=VALUE' to options.
+	options += makeOption ("conf.int", getString ("confint"), "0.95");
+	//...
 }
 	</programlisting>
 </sect1>
@@ -1320,7 +1332,7 @@ This chapter contains information on some topics that are useful only to certain
 		<title>Drawing a plot to the output window</title>
 		<para>
 			In order to draw a plot to the output window, use <function>rk.graph.on()</function> directly before creating the plot, and
-			<function>rk.graph.off()</function>, directly afterwards. This is similar to &eg; callling <function>postscript()</function> and 
+			<function>rk.graph.off()</function>, directly afterwards. This is similar to &eg; calling <function>postscript()</function> and 
 			<function>dev.off()</function> in a regular R session.
 		</para>
 		<para>
@@ -1331,12 +1343,15 @@ This chapter contains information on some topics that are useful only to certain
 	</sect2>
 	<sect2 id="preview_plots">
 		<title>Adding preview functionality</title>
+		<note><para>This section discusses adding preview functionality to plugins producing plots. There are separate sections on <link linkend="preview_output">previews of (HTML) output</link>, <link linkend="preview_data">previews of (imported) data</link>, and <link linkend="preview_custom">custom previews</link>. However, it is recommended that you read this section first, as the approach is similar in each case.</para></note>
 		<para>
 			A very useful feature for all plugins generating a plot/graph is to provide an automatically updating preview. To do so, you will need two things: Adding a <command>&lt;preview&gt;</command> check box to your <link linkend="mainxml">GUI definition</link>, and adjusting the <link linkend="jstemplate">generated code</link> for the preview.
 		</para>
 		<para>
-			Adding a <command>&lt;preview&gt;</command> check box is simple. Just place the following somewhere in your GUI. It will take care of all the behind-the-scenes magic of creating a preview device, updaing the preview whenever the setting have changed, &etc; Example:
+			Adding a <command>&lt;preview&gt;</command> check box is simple. Just place the following somewhere in your GUI. It will take care of all the behind-the-scenes magic of creating a preview device, updating the preview whenever the setting have changed, &etc; Example:
 		</para>
+		<note><para>Starting with version 0.6.5 of &kapp; <command>&lt;preview&gt;</command> preview elements are special-cased in plugin dialogs (not wizards): They will be placed in the button-column, irrespective of where exactly they are defined in the UI. It is still a good idea to define them at a sensible place in the layout, for backwards compatibility.
+		</para></note>
 		<programlisting>
 	&lt;document&gt;
 		[...]
@@ -1393,54 +1408,159 @@ This chapter contains information on some topics that are useful only to certain
 			Here's an example .JS file that you should use as a template, whenever you create a plotting plugin:
 		</para>
 		<programlisting>
-	function preprocess () {
-		// the "somepackage" is needed to create the plot
-		echo ("require (somepackage)\n");
+  function preprocess () {
+    // the "somepackage" is needed to create the plot
+    echo ("require (somepackage)\n");
+  }
+
+  function preview () {
+    // we call all stages of the general code. Only the printout () function needs to be called slightly different for the plot preview
+    preprocess ();
+    // calculate (); // in this example, the plugin has no calculate () function.
+    printout (true); // in this case, 'true' means: Create the plot, but not any headers or other output.
+  }
+  
+  function printout (is_preview) {
+    // If "is_preview" is set to false, it generates the full code, including headers.
+    // If "is_preview" is set to true, only the essentials will be generated.
+
+    if (!is_preview) {
+      echo ('rk.header (' + i18n ("An example plot") + ')\n\n');
+      echo ('rk.graph.on ()\n');
+    }
+    // only the following section will be generated for is_preview==true
+
+    // remember: everything between rk.graph.on() and rk.graph.off() should be wrapped inside a try() statement:
+    echo ('try ({\n');
+    // insert any option-setting code that should be run before the actual plotting commands.
+    // The code itself is provided by the embedded plot options plugin. printIndentedUnlessEmpty() takes care of pretty formatting.
+    printIndentedUnlessEmpty ('\t', getString ("plotoptions.code.preprocess"), '', '\n');
+
+    // create the actual plot. plotoptions.code.printout provides the part of the generic plot options
+    // that have to be added to the plotting call, itself.
+    echo ('plot (5, 5' + getString ("plotoptions.code.printout") + ')\n');
+
+    // insert any option-setting code that should be run after the actual plot.
+    printIndentedUnlessEmpty ('\t', getString ("plotoptions.code.calculate"), '\n');
+    echo ('})'\n);  // the closure of the try() statement
+
+    if (!is_preview) {
+      echo ('rk.graph.off ()\n');
+    }
+  }
+		</programlisting>
+	</sect2>
+</sect1>
+<sect1>
+	<title>Previews for data, output and other results</title>
+	<sect2 id="preview_output">
+		<title>Previews of (HTML) output</title>
+		<note><para>This section discusses adding preview functionality to plugins creating output / HTML printouts. It is recommended that you read the separate section on <link linkend="preview_plots">plot previews</link>, before this section.</para></note>
+		<para>
+			Creating a preview of HTML output is almost the same procedure as creating a plot preview. In this case, simply make sure that the <command>preview()</command> generates the relevant
+			<command>rk.print()/rk.results()</command> commands. It is generally a good idea to omit the header statements in the preview, however. Here is a stripped-down example:
+		</para>
+		<programlisting>
+	&lt;!-- In the plugin's XML file --&gt;>
+	&lt;dialog label="Import CSV data" &gt;
+		&lt;browser id="file" type="file" label="File name"/&gt;
+		&lt;!-- [...] --&gt;>
+		&lt;preview id="preview" mode="output"/&gt;
+	&lt;/dialog&gt;>
+		</programlisting>
+		<para>
+			Note the specification of <parameter>mode="output"</parameter> in the <command>&lt;preview&gt;</command> element.
+		</para>
+		<programlisting>
+	// In the plugin's JS file
+	function preview () {
+		// generates the code used for preview
+		printout (true);
+	}
+
+	function printout (is_preview) {
+		// only generates a header if is_preview==false
+		if (!is_preview) {
+			new Header ("This is a caption").print ();
+		}
+		echo ('rk.print (result)');
+	}
+		</programlisting>
+	</sect2>
+	<sect2 id="preview_data">
+		<title>Previews of (imported) data</title>
+		<note><para>This section discusses adding preview functionality to plugins creating (importing) data. It is recommended that you read the separate section on <link linkend="preview_plots">plot previews</link>, before this section.</para></note>
+		<para>
+			Creating a preview of imported data (any type of data that <command>rk.edit()</command> can handle), is very similar to creating a <link linkend="preview_plots">plot preview</link>. The following stripped down example should help illustrate how to create a data preview:
+		</para>
+		<programlisting>
+	&lt;!-- In the plugin's XML file --&gt;>
+	&lt;dialog label="Import CSV data" &gt;
+		&lt;browser id="file" type="file" label="File name"/&gt;
+		&lt;!-- [...] --&gt;>
+		&lt;preview id="preview" active="true" mode="data"/&gt;
+	&lt;/dialog&gt;>
+		</programlisting>
+		<para>
+			Note that the <command>&lt;preview&gt;</command> element specifies <parameter>mode="data"</parameter> this time. <parameter>active="true"</parameter> simply makes the preview active by
+			default.
+		</para>
+		<programlisting>
+	// In the plugin's JS file
+	function preview () {
+		// generates the code used for preview
+		calculate (true);
+	}
+
+	function calculate (is_preview) {
+		echo ('imported &lt;- read.csv (file="' + getString ("file") /* [+ options] */);
+		if (is_preview) {
+			echo ('preview_data &lt;- imported\n');
+		} else {
+			echo ('.GlobalEnv$' + getString ("name") + ' &gt;- imported\n');
+		}
 	}
 
 	function printout () {
-		// all the real work is moved to a custom defined function doPrintout (), below
-
-		doPrintout (true);	// in this case, 'true' means: We want all the headers that should be printed in the output, not just the preview
-	}
-
-	function preview () {
-		// we call all stages of the general code. Only the printout () function needs to be slightly different for the plot preview
-		preprocess ();
-		// calculate (); // in this example, the plugin has no calculate () function.
-		doPrintout (false);	// in this case, 'false' means: Create the plot, but not any headers or other output.
-	}
-
-	function doPrintout (full) {
-		// this function takes care of generating the code for the printout() section. If "full" is set to true,
-		// it generates the full code, including headers. If full is set to false, only the essentials will
-		// be generated.
-
-		if (full) {
-			echo ('rk.header (' + i18n ("An example plot") + ')\n\n');
-			echo ('rk.graph.on ()\n');
-		}
-		// only the following section will be generated for full==false
-
-		// remember: everything between rk.graph.on() and rk.graph.off() should be wrapped inside a try() statement:
-		echo ('try ({\n');
-		// insert any option-setting code that should be run before the actual plotting commands.
-		// The code itself is provided by the embedded plot options plugin. printIndentedUnlessEmpty() takes care of pretty formatting.
-		printIndentedUnlessEmpty ('\t', getString ("plotoptions.code.preprocess"), '', '\n');
-
-		// create the actual plot. plotoptions.code.printout provides the part of the generic plot options
-		// that have to be added to the plotting call, itself.
-		echo ('plot (5, 5' + getString ("plotoptions.code.printout") + ')\n');
-
-		// insert any option-setting code that should be run after the actual plot.
-		printIndentedUnlessEmpty ('\t', getString ("plotoptions.code.calculate"), '\n');
-		echo ('})'\n);	// the closure of the try() statement
-
-		if (full) {
-			echo ('rk.graph.off ()\n');
-		}
+		// [...]
 	}
 		</programlisting>
+		<para>
+			Again, the <command>preview()</command> function generates almost the same R code as the <command>calculate()</command> function, so we create a helper function <command>doCalcuate()</command> to factor out the common parts. The most important thing to note is that you will have to assign the imported data to a object called
+			<parameter>preview_data</parameter> (inside the current - local - environment). <emphasis>Everything else will happen automatically</emphasis> (roughly speaking, &kapp; will call <command>rk.edit(preview_data)</command>, wrapped inside a call to <command>.rk.with.window.hints()</command>).
+		</para>
+		<note><para>
+			While previews are a great feature, they do consume resources. In the case of data previews, there may be cases, where previews can cause significant performance issues. This could be
+			for importing huge datasets (which are just too large to be opened for editing in &kapp;'s editor window), but also "normal" datasets could be mis-imported, creating a huge number of rows or columns. <emphasis>It is very much recommended that you limit the <parameter>preview_data</parameter></emphasis> to a dimension that provides a useful preview, without the danger of
+			creating noticable performance issues (e.g. 50 rows by 50 columns should be more than enough in most cases).
+		</para></note>
+	</sect2>
+	<sect2 id="preview_custom">
+		<title>Custom previews</title>
+		<para>
+			The <command>&lt;preview&gt;</command> element can be used to create previews for any type of "document" window that can be attached to &kapp;'s workplace. In addition to <link linkend="preview_plots">plots</link> and <link linkend="preview_data">data windows</link>, this includes HTML files, R scripts, and object summary windows. For the latter ones, you will have to use <command>&lt;preview mode="custom"&gt;</command>.
+		</para>
+		<para>
+			If you have read the sections describing plot preview and data previews, you should have a general idea on the procedure, but "custom" previews require slightly more manual work behind the scenes. The most important R function to look at is <command>rk.assign.preview.data()</command>, here. The following short listing shows what your generated (preview) R code could look like for a plugin creating a text file output:
+		</para>
+		<programlisting>
+	## To be generated in the preview() code section of a plugin
+	pdata &lt;- rk.get.preview.data("SOMEID")
+	if (is.null (pdata)) {
+		outfile &lt;- rk.get.tempfile.name(prefix="preview", extension=".txt")
+		pdata &lt;- list(filename=outfile, on.delete=function (id) {
+			unlink(rk.get.preview.data(id)$filename)
+		})
+		rk.assign.preview.data("SOMEID", pdata)
+	}
+	try ({
+		cat ("This is a test", pdata$filename)
+		rk.edit.files(file=pdata$filename)
+	})
+		</programlisting>
+		<para>
+			Here you should get the value <parameter>SOMEID</parameter> from the <parameter>id</parameter> property of the <command>&lt;preview&gt;</command>-element. I.e. using <command>getString ("preview.id")</command> in the plugin's .js file.
+		</para>
 	</sect2>
 </sect1>
 
@@ -1571,9 +1691,9 @@ This chapter contains information on some topics that are useful only to certain
 		  the command string to run, and as second parameter the name of a function to call, when the command has finished. Note that the command is running asynchronously, and this makes things
 		  a bit more complex. For one thing you want to make sure, that your <command>&lt;valueselector&gt;</command> remains disabled, while it does not contain up-to-date information. Another
 		  thing is that you could potentially have queued more than one command, before you get the first results. This is why every command is given an "id", and we store that in <parameter>last_command_id</parameter> for later reference.</para>
-	  <para>When the command is done, the specified callback is called (<parameter>commandFinished</parameter>, in this case) with two parameters: The result itself, and the id of the correspoding
+	  <para>When the command is done, the specified callback is called (<parameter>commandFinished</parameter>, in this case) with two parameters: The result itself, and the id of the corresponding
 		  command. The result will be of a type resembling the representation in R, &ie; a numeric Array, if the result is numeric, &etc; It can even be an R <command>list()</command>, but in this case
-		  it will be represented as a JS <command>Array()</command> whithout names.</para>
+		  it will be represented as a JS <command>Array()</command> without names.</para>
 	  <para>Note that even this example is somewhat simplified. In reality you should take additional precautions, &eg; to avoid putting an extreme amount of levels into the selector. The good news
 		  is that probably you do not have to do all this yourself. The above example is taken from the <command>rkward::level_select</command> plugin, for instance, which you can simply <link linkend="embedding">embed</link> in your own
 		  plugin. This even allows you to specify a different expression to run in place of <command>levels()</command>.</para>
@@ -1722,7 +1842,7 @@ This chapter contains information on some topics that are useful only to certain
 		<para>
 			Optionsets are a powerful tool, but they can sometimes do more harm than good, as they add considerable complexity, both
 			from the perspective of a plugin developer, and from the perspective of a user. Thus, think twice, when using them. Here's
-			some adivce:
+			some advice:
 		</para>
 		<itemizedlist>
 			<listitem><para>For some simple cases, the <command>&lt;matrix&gt;</command> element may provide a useful lightweight alternative.</para></listitem>
@@ -1856,7 +1976,7 @@ x	&lt;/components ...&gt;
 	<title>Plugin translations</title>
 	<para>
 		So far we have used a few concepts regarding translations or "i18n" (short for "internationaliation", which has 18 characters between i and n) in passing. In this chapter we
-		give a more in-depth account of what i18n functionaliy for &rkward; plugins. For the most part you will <emphasis>not</emphasis> need all of this in your plugins. However,
+		give a more in-depth account of what i18n functionally for &rkward; plugins. For the most part you will <emphasis>not</emphasis> need all of this in your plugins. However,
 		it may be a good idea to read over this chapter in full, as understanding these concept should help you creating plugins that are fully translatable, and that allow for a high
 		quality of translations.
 	</para>
@@ -2368,7 +2488,7 @@ full.wizard &lt;- rk.XML.wizard(
 		rk.XML.page(
 			rk.XML.text("Below are some advanced options. It's generally safe not to assume the
 				variables have equal variances. An appropriate correction will be applied then.
-				Chosing \"assume equal variances\" may increase test-strength, however."),
+				Choosing \"assume equal variances\" may increase test-strength, however."),
 			rk.XML.copy(check.eqvar),
 			rk.XML.text("Sometimes it's helpful to get an estimate of the confidence interval of
 				the difference in means. Below you can specify whether one should be shown, and
@@ -2394,7 +2514,7 @@ JS.calc &lt;- rk.paste.JS(
 		if(check.paired){
 			echo(", paired=TRUE")
 		},
-		if(id("!", check.paired, "  &amp;&amp; ", check.eqvar)){
+		if(!check.paired &amp;&amp; check.eqvar){
 			echo(", var.equal=TRUE")
 		},
 		if(conf.level != "0.95"){
@@ -2506,7 +2626,7 @@ local({
 			rk.XML.page(
 				rk.XML.text("Below are some advanced options. It's generally safe not to assume the
 					variables have equal variances. An appropriate correction will be applied then.
-					Chosing \"assume equal variances\" may increase test-strength, however."),
+					Choosing \"assume equal variances\" may increase test-strength, however."),
 				rk.XML.copy(check.eqvar),
 				rk.XML.text("Sometimes it's helpful to get an estimate of the confidence interval of
 					the difference in means. Below you can specify whether one should be shown, and
@@ -2520,7 +2640,7 @@ local({
 			if(check.paired){
 			echo(", paired=TRUE")
 			},
-			if(id("!", check.paired, "  &amp;&amp; ", check.eqvar)){
+			if(!check.paired &amp;&amp; check.eqvar){
 			echo(", var.equal=TRUE")
 			},
 			if(conf.level != "0.95"){
@@ -2567,7 +2687,7 @@ variables &lt;- rk.XML.varselector(
       The text given to the <parameter>help</parameter> parameter can then be fetched by <function>rk.rkh.scan()</function> and written to the help page of this plugin component. For this to work technically, however, <function>rk.rkh.scan()</function> must know which &r; objects belong to one plugin component. This is why you must also provide the <parameter>component</parameter> parameter and make sure it is identical for all objects belonging together.
     </para>
     <para>
-      Since you will usually combine many objects into one dialog and might also like to be able to re-use objects like the <command>&lt;varslot&gt;</command> in multiple components of your plugins, it is possible to globally define a component with the <function>rk.set.comp()</function>. If set, it is assumend that all the following objects used in your script belong to that particular component, until <function>rk.set.comp()</function> is being called again with a different component name. You can then omit the <parameter>component</parameter> parameter:
+      Since you will usually combine many objects into one dialog and might also like to be able to re-use objects like the <command>&lt;varslot&gt;</command> in multiple components of your plugins, it is possible to globally define a component with the <function>rk.set.comp()</function>. If set, it is assumed that all the following objects used in your script belong to that particular component, until <function>rk.set.comp()</function> is being called again with a different component name. You can then omit the <parameter>component</parameter> parameter:
     </para>
     <programlisting>
 rk.set.comp("Data")
@@ -2829,7 +2949,7 @@ new Header(i18n("Test results")).print();
 	</varlistentry>
 	<varlistentry>
 	<term><parameter>copy_element_tag_name</parameter></term>
-	<listitem><para>In some few cases, you will want an almost literal copy, but change the tag-name of the element to copy. The most important example of this is, when you want to copy an entire &lt;tab&gt; from a dialog interface to the &lt;page&gt; of a wizard interface. In this case, you'd set coyp_elemnent_tag_name="page" to do this conversion automatically.</para></listitem>
+	<listitem><para>In some few cases, you will want an almost literal copy, but change the tag-name of the element to copy. The most important example of this is, when you want to copy an entire &lt;tab&gt; from a dialog interface to the &lt;page&gt; of a wizard interface. In this case, you'd set copy_element_tag_name="page" to do this conversion automatically.</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
@@ -3196,7 +3316,7 @@ made checkable, thus acting like a simple check box at the same time.
 	</varlistentry>
 	<varlistentry>
 	<term><parameter>horiz_headers</parameter></term>
-	<listitem><para>Strings to ues for the horiztonal header, separated by ";". The header will be hidden, if set to "". (optional, defaults to column number).</para></listitem>
+	<listitem><para>Strings to ues for the horizontal header, separated by ";". The header will be hidden, if set to "". (optional, defaults to column number).</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term><parameter>vert_headers</parameter></term>
@@ -3279,7 +3399,7 @@ Child-elements:
 	</varlistentry>
 	<varlistentry>
 	<term><parameter>filter</parameter></term>
-	<listitem><para>File type filter, &eg; ("*.txt *.csv" for .txt and .csv files. Try not to induce limits unless absolutely needed, though) (optional, defaults to "", &ie; all files)</para></listitem>
+	<listitem><para>File type filter, &eg; ("*.txt *.csv" for .txt and .csv files). A separate entry for "All files" is added, automatically (optional, defaults to "", &ie; All files)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term><parameter>required</parameter></term>
@@ -3386,11 +3506,25 @@ Child-elements:
 
 <varlistentry>
 <term>&lt;preview&gt;</term>
-<listitem><para>Checkbox to toggle preview functionality (see <link linkend="preview_plots">chapter on graph previews</link>). Attributes:
+<listitem><para>Checkbox to toggle preview functionality. Note that starting with version 0.6.5 of &kapp; <command>&lt;preview&gt;</command> preview elements are special-
+		cased in plugin dialogs (not wizards): They will be placed in the button-column, irrespective of where exactly they are defined in the UI. It is still a good idea to
+		define them at a sensible place in the layout, for backwards compatibility. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term><parameter>label</parameter></term>
 	<listitem><para>Label of the box (optional, default is "Preview")</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term><parameter>mode</parameter></term>
+	<listitem><para>Type of preview. Supported types are "plot" (see <link linkend="preview_plots">chapter on graph previews</link>), "output" (see <link linkend="preview_output">chapter on (HTML) output previews</link>), "data" (see <link linkend="preview_data">data previews</link>), and "custom" (see <link linkend="preview_custom">custom previews</link>). (optional, default is "plot")</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term><parameter>placement</parameter></term>
+	<listitem><para>Placement of the preview: "attached" (to the main workplace), "detached" (standalone window), "docked" (attached to the plugin dialog) and "default" (currently this is the same as "docked", but might become user-configuarable at some point). In general, it is recommended to leave this as the default setting for best UI-consistency (optional, default is "default")</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term><parameter>active</parameter></term>
+	<listitem><para>Whether the preview is active by default. In general, only docked previews should be made active by default, and even for these, there is a reason why the default is in-active previews (optional, default is "false")</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
@@ -3757,6 +3891,10 @@ Child elements &lt;true&gt;, &lt;false&gt;, &lt;case&gt;, and &lt;default&gt; ta
 		<varlistentry>
 			<term>0,1,2...</term>
 			<listitem><para>The data from a single column (0 for leftmost column). <function>getValue()</function>/<function>getString()</function> returns this as a single string, separated by "\n". However, the recommended way to get this is using <function>getList()</function>, which returns this column as an array of strings.</para></listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>row.0,row.1,row.2...</term>
+			<listitem><para>The data from a single row (0 for topmost row). <function>getValue()</function>/<function>getString()</function> returns this as a single string, separated by "\n". However, the recommended way to get this is using <function>getList()</function>, which returns this column as an array of strings.</para></listitem>
 		</varlistentry>
 		<varlistentry>
 			<term>cbind</term>
@@ -4232,7 +4370,7 @@ Child elements:
 </varlistentry>
 <varlistentry>
 <term>&lt;require&gt;</term>
-<listitem><para>Include another &pluginmap; file. This &pluginmap; file is only loaded once, even if it is &lt;require&gt;d from several other files. The most important use case is to include a pluginmap file, which declares some comopnents, which are embedded by components declared in this &pluginmap;. &lt;require&gt;-elements are only allowed as direct children of the &lt;document&gt;-node. Attributes:
+<listitem><para>Include another &pluginmap; file. This &pluginmap; file is only loaded once, even if it is &lt;require&gt;d from several other files. The most important use case is to include a pluginmap file, which declares some components, which are embedded by components declared in this &pluginmap;. &lt;require&gt;-elements are only allowed as direct children of the &lt;document&gt;-node. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>file</term>
@@ -4268,7 +4406,7 @@ Child elements:
 </varlistentry>
 <varlistentry>
 <term>&lt;section&gt;</term>
-<listitem><para>A general purposes section. May be used any number of times as a direct child of the &lt;document&gt; node. These sections are displayed in the order of their definition, but all <emphasis>after</emphasis> the &lt;usage&gt; section and <emphasis>before</emphasis> the &lt;settings&gt; section. The text contained within the &lt;sectoin&gt; tag will be displayed.
+<listitem><para>A general purposes section. May be used any number of times as a direct child of the &lt;document&gt; node. These sections are displayed in the order of their definition, but all <emphasis>after</emphasis> the &lt;usage&gt; section and <emphasis>before</emphasis> the &lt;settings&gt; section. The text contained within the &lt;section&gt; tag will be displayed.
 	<variablelist>
 	<varlistentry>
 	<term>id</term>

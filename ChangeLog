@@ -1,3 +1,30 @@
+--- Version 0.6.5 - Apr-02-2016
+- Add option to override CSS file used for the output window
+- When manually adding pluginmaps, load these after, not before other pluginmaps, by default
+- Added context menu option to search for information on current symbol online
+- Fixed: Wizard plugins would be too small, initially
+- Fixed: Help Search was not longer working correctly with R 3.2.x
+- Fix compilation with R 3.3.x
+- Provide better status feedback when searching / filtering among installable packages
+- Add access to basic menu items for docked previews
+- Move preview controls to the button-column of dialogs
+- Add preview to Sort data-, Subset data, and Recode categorical data-plugins
+- Add preview to Power Analysis plugin
+- Add support for adding "htmlwidget"- and "gvis"-class objects to the output window via rk.print()
+- Add plugins for importing Excel files (.xls and .xlsx, Perl- and Java-based)
+- Add ability to extract <matrix> values row-wise in plugins
+- Add convenience JS-function "makeOption()" for use in plugins
+- Fixed: Numerical (display) precision setting was not honored in data editor
+- Fix several window activation quirks in "Focus follows mouse" mode
+- File selectors in "Import XYZ" plugins now filter for standard file extensions, by default
+- Add previews for CSV, SPSS, and Stata import plugins
+- Allow previews for data, (HTML) output, and custom types of previews
+- Allow previews to be docked to the dialog window, and dock them, by default
+- Implicitly save code preview visibility and size (instead of the former explicit settings)
+- data.frame objects outside of globalenv() can be opened read-only in an editor window
+- Show a warning screen when invoking plugins from the command line (or from clicking an rkward://-link in an external application)
+- Use package type option "binary" from R 3.1.3 onwards, for automatic selection of the appropriate binary package
+
 --- Version 0.6.4 - Dec-20-2015
 - Fixed: Plugin variable slots taking more than one object would not be hightlighted in red while invalid
 - Plugins check for correct object type, in more places, but allow to proceed with questionable object selections

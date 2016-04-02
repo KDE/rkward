@@ -2,7 +2,7 @@
                           robject  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004-2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -749,7 +749,7 @@ void RObject::endEdit () {
 	RK_ASSERT (false);
 }
 
-bool RObject::canEdit () const {
+bool RObject::canWrite () const {
 	RK_TRACE (OBJECTS);
 
 	// TODO: find out, if binding is locked:
@@ -783,7 +783,7 @@ bool RObject::canRemove () const {
 	return (isInGlobalEnv ());
 }
 
-bool RObject::isInGlobalEnv () const {
+REnvironmentObject* RObject::toplevelEnvironment () const {
 	RK_TRACE (OBJECTS);
 
 // could be made recursive instead, but likely it's faster like this
@@ -791,11 +791,17 @@ bool RObject::isInGlobalEnv () const {
 	while (o && (!o->isType (ToplevelEnv))) {
 		o = o->parent;
 	}
-
 	if (!o) {
 		RK_ASSERT (this == RObjectList::getObjectList ());
-		return false;
+		return RObjectList::getGlobalEnv ();
 	}
+	return static_cast<REnvironmentObject*> (o);
+}
+
+bool RObject::isInGlobalEnv () const {
+	RK_TRACE (OBJECTS);
+
+	RObject* o = toplevelEnvironment ();
 	if (o->isType (GlobalEnv)) {
 		if (o != this) return true;	// the GlobalEnv is not inside the GlobalEnv!
 	}

@@ -69,3 +69,45 @@
 	.rk.do.plain.call ("workplace.layout", c ("set", close, lines), synchronous=FALSE)
 	invisible (NULL)
 }
+
+#' Control window placement and style
+#' 
+#' \code{.rk.with.window.hints} can be used to make windows appear in a specific
+#' location: attached, detached, or in a named position where a previous window is
+#' found. (The latter used for preview windows, importantly). It can also be used to pass
+#' "style" hints, importantly indicating that the window is a preview window. All specifications
+#' affect newly created windows, only, not existing ones.
+#' 
+#' NOTE: This function is still somewhat experimental, and it is not guaranteed that
+#' it will remain in place, with compatible parameters.
+#' 
+#' @aliases .rk.with.window.hints rk.with.window.hints
+#' @param expr Expression to evaluate, unsually an expression that is expected to create exactly one
+#'        new window.
+#' @param placement a character string specifying either "attached" or "detached" placement, or
+#'        (if left empty) the default placement for the type of window created.
+#' @param name character string specifing a named position. If a name is given, and this position is
+#'        not yet known, the placement hint (see above) will be followed. If later a second window is
+#'        created with the same given name, it will replace the first window.
+#' @param style character string specifing a style hint. Currently, this can either be "preview" or
+#'        "" (default), with most types of window not implementing any special behavior for "preview".
+#' @return \code{NULL}, invisibly.
+#' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
+#' @keywords utilities
+#' @rdname rk.with.window.hints
+#' @examples
+#' 
+#' ## Not run
+#' .rk.with.window.hints ({
+#'    RK ()
+#'    plot (1, 1)
+#' }, "attached")
+#' ## End not run
+#' 
+#' @export
+".rk.with.window.hints" <- function (expr, placement="", name="", style="") {
+	.rk.do.plain.call ("set.window.placement.hint", as.character (c (placement, name, style)), FALSE)
+	on.exit (.rk.do.plain.call ("set.window.placement.hint", c ("", "", ""), FALSE))
+	eval.parent (substitute (eval (quote (expr), parent.frame ())))
+	invisible (NULL)
+}

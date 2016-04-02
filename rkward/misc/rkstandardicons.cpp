@@ -2,7 +2,7 @@
                           rkstandardicons  -  description
                              -------------------
     begin                : Wed Oct 24 2007
-    copyright            : (C) 2007, 2009, 2010, 2011, 2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -84,6 +84,9 @@ void RKStandardIcons::initIcons () {
 	icons[ActionLock] = KIcon ("object-locked");
 	icons[ActionUnlock] = KIcon ("object-unlocked");
 
+	icons[ActionShowMenu] = QIcon::fromTheme ("application-menu");
+	if (icons[ActionShowMenu].isNull ()) icons[ActionShowMenu] = QIcon (rkward_icon_base + "menu.svg");  // fallback
+
 	// objects
 	icons[ObjectList] = QIcon (rkward_icon_base + "list.png");
 	icons[ObjectFunction] = QIcon (rkward_icon_base + "function.png");
@@ -117,6 +120,7 @@ void RKStandardIcons::initIcons () {
 
 	icons[DocumentPDF] = KIcon ("application-pdf");
 
+	// KF5 TODO: The code below should work allright with QIcon::fromTheme
 /*	This does not work, as the icons are not really Null in this case, but some default icon. Any way to really test this?
 	RK_DO ({
 		for (int i = ActionRunAll; i < Last; ++i) {

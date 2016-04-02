@@ -1,7 +1,11 @@
 var input;
 var output;
 
-function calculate () {
+function preview () {
+	calculate (true);
+}
+
+function calculate (is_preview) {
 	input = getString ("x");
 	output = input;
 	if (getBoolean ("saveto_other_object")) output = getString ("saveto");
@@ -69,10 +73,14 @@ function calculate () {
 		echo ('\nwarning (' + i18n ("Some input values were specified more than once: ") + ', ' + quote (dupes.join (', ')) + ')\n');
 	}
 
-	// Set data type and assign to output variable in GlobalEnv
-	echo ('.GlobalEnv$' + output + ' <- ');
-	if (is_factor) echo ('as.factor (recoded)\n');
-	else echo ('recoded\n');
+	// Set data type and assign to output variable in GlobalEnv / preview
+	var result = is_factor ? 'as.factor (recoded)' : 'recoded';
+	if (is_preview) {
+		echo ('temp <- data.frame ("Old values"=I(' + input + '), "New values"=I(' + result + '))\n');
+		echo ('preview_data <- temp[1:min(dim(temp)[1],500),]\n');
+	} else {
+		echo ('.GlobalEnv$' + output + ' <- ' + result + '\n');
+	}
 }
 
 function printout () {
