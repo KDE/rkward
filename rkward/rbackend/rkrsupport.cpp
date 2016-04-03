@@ -18,6 +18,7 @@
 #include "rkrsupport.h"
 
 #include <Rdefines.h>
+#include <Rversion.h>
 
 // needed to detect CHARSXP encoding
 #define IS_UTF8(x) (Rf_getCharCE(x) == CE_UTF8)
@@ -133,8 +134,12 @@ SEXP RKRSupport::StringListToSEXP (const QStringList& list) {
 
 	SEXP ret = Rf_allocVector (STRSXP, list.size ());
 	for (int i = 0; i < list.size (); ++i) {
-		// TODO: in R 2.13.0 there is Rf_mkCharCE(). This could be used to set unicode strings, directly. But of course, we'd have to check, when exactly this was introduced.
+#if R_VERSION >= R_Version(2,13,0)
+		SET_STRING_ELT (ret, i, Rf_mkCharCE (list[i].toUtf8 (), CE_UTF8));
+#else
+		// TODO Rf_mkCharCE _might_ have been introduced earlier. Check if still an ongoing concern.
 		SET_STRING_ELT (ret, i, Rf_mkChar (RKRBackend::this_pointer->current_locale_codec->fromUnicode (list[i]).data ()));
+#endif
 	}
 	return ret;
 }

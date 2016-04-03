@@ -1,3 +1,6 @@
+--- Version 0.6.5a - UNRELEASED
+- Avoid some potential encoding issues, that could cause graphical select.list to fail for certain strings, under some circumstances
+
 --- Version 0.6.5 - Apr-02-2016
 - Add option to override CSS file used for the output window
 - When manually adding pluginmaps, load these after, not before other pluginmaps, by default
