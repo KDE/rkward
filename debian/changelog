@@ -1,6 +1,8 @@
 rkward (0.6.5-1) UNRELEASED; urgency=low
   * new upstream release
   * fix debian/watch file
+  * always use build-time version of r-base-core as runtime dependency, even
+    if most builds would actually be backwards compatible
   * split architecture independent files into new rkward-data package
   * bump standards version to 3.9.7 (no changes needed)
   * strip testing locale "x-test" from package

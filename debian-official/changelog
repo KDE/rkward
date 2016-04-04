@@ -2,8 +2,10 @@ rkward (0.6.5-1) UNRELEASED; urgency=low
   * new upstream release
     (unchanged with respect to ~rc1)
   * fix debian/watch file
-  * switch to dh-based rules file
-    !!!TODO!!!: Does this fix the rkward-data build for binary-arch problem?
+  * always use build-time version of r-base-core as runtime dependency, even
+    if most builds would actually be backwards compatible
+  * switch to dh-based rules file. This also fixes missing separation between
+    arch-dependent and arch-independent build targets
   * !!!TODO!!!: Make build really reproducible (fix for earlier attempt upstream)
     closes: #783290
 
