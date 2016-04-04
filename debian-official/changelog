@@ -6,7 +6,7 @@ rkward (0.6.5-1) UNRELEASED; urgency=low
     if most builds would actually be backwards compatible
   * switch to dh-based rules file. This also fixes missing separation between
     arch-dependent and arch-independent build targets
-  * !!!TODO!!!: Make build really reproducible (fix for earlier attempt upstream)
+  * Make build really reproducible (fix for earlier attempt upstream)
     closes: #783290
 
  -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Tue, 29 Mar 2016 11:00:00 +0100

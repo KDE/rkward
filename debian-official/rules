@@ -64,5 +64,5 @@ override_dh_shlibdeps:
 	# NOTE: This "if" is currently always true (see build-deps), but left here, for convenience, in case we get into trouble
 	# with binary incompatibility (esp. foward incompatibility) again, in the future.
 	@if [ "$(RMAJOR)" -eq "3" ] && [ "$(RMINOR)" -ge "0" ] ; then \
-		echo "rvers=r-base-core (>= $(RMAJOR).$(RMINOR).0)" >> $(CURDIR)/debian/rkward.substvars ; \
+		echo "rvers=r-base-core (>= $(RVERS))" >> $(CURDIR)/debian/rkward.substvars ; \
 	fi
