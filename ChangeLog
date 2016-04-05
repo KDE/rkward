@@ -1,5 +1,6 @@
 --- Version 0.6.5a - UNRELEASED
-- Fix bug report feature on Windows 		TODO: Really test this!
+- Fixed: Setting an output CSS file via the GUI did not work
+- Fixed: Bug report feature on Windows did nothing 		TODO: Really test this!
 - Avoid some potential encoding issues, that could cause graphical select.list to fail for certain strings, under some circumstances
 
 --- Version 0.6.5 - Apr-02-2016
