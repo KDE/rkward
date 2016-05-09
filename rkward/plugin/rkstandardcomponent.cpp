@@ -667,6 +667,7 @@ void RKComponentBuilder::buildElement (const QDomElement &element, XMLHelper &xm
 			}
 			widget = new RKPreviewBox (e, component (), parent_widget);
 			parent_widget->layout ()->addWidget (widget);
+			parent_widget = pwidget;
 		} else if (e.tagName () == QLatin1String ("saveobject")) {
 			widget = new RKPluginSaveObject (e, component (), parent_widget);
 		} else if (e.tagName () == QLatin1String ("embed")) {

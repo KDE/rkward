@@ -1,3 +1,9 @@
+--- Version 0.6.5a - UNRELEASED
+- Fixed: Preview boxes followed by a <stretch/> element would not work under some circumstances
+- Fixed: Setting an output CSS file via the GUI did not work
+- Fixed: Bug report feature on Windows did nothing 		TODO: Really test this!
+- Avoid some potential encoding issues, that could cause graphical select.list to fail for certain strings, under some circumstances
+
 --- Version 0.6.5 - Apr-02-2016
 - Add option to override CSS file used for the output window
 - When manually adding pluginmaps, load these after, not before other pluginmaps, by default

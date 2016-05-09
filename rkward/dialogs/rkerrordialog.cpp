@@ -26,6 +26,7 @@
 #include <QLabel>
 #include <QTextEdit>
 #include <QTemporaryFile>
+#include <QDir>
 #include <QTextStream>
 
 #include "../rbackend/rinterface.h"
@@ -70,6 +71,7 @@ public:
 	void accept () {
 		// The report template is just too large to pass it via GET, so we use a local proxy page to pass it in a POST request
 		QTemporaryFile proxy;
+		proxy.setFileTemplate (QDir::tempPath () + "/rkwardbugXXXXXX.html"); // Force .html-suffix, as it appears to be required on Windows
 		proxy.setAutoRemove (false);
 		proxy.open ();
 		QTextStream out (&proxy);
