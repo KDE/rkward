@@ -8,6 +8,11 @@ RMINOR = $(shell echo $(RVERS) | awk -F. '{print $$2}')
 # set built-time of GNUR packages to time of created binary package based on stamp in changelog
 builttime = $(shell dpkg-parsechangelog -l$(CURDIR)/debian/changelog | awk -F': ' '/Date/ {print $$2}')
 
+# Workaround for cmake not handling CPPFLAGS (https://wiki.debian.org/HardeningWalkthrough):
+# As we cannot easily use dh for configuring, we have to merge flags, manually.
+CFLAGS += $(CPPFLAGS)
+CXXFLAGS += $(CPPFLAGS)
+
 # easier typing
 DESTDIR = $(CURDIR)/debian/tmp
 BUILDDIR = $(CURDIR)/debian/build
