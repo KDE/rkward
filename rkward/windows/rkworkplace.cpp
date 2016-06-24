@@ -631,7 +631,9 @@ void RKWorkplace::removeWindow (QObject *object) {
 void RKWorkplace::windowRemoved () {
 	RK_TRACE (APP);
 
-	if (activeWindow (RKMDIWindow::AnyWindowState) != 0) return;	// something already active
+	if (activeWindow (RKMDIWindow::AnyWindowState) != 0) return;	// some RKMDIWindow is already active
+	QWidget *appWin = QApplication::activeWindow ();
+	if (appWin && appWin != RKWardMainWindow::getMain () && !qobject_cast<DetachedWindowContainer*> (appWin)) return; // a dialog window or the like is active
 
 	// try to activate an attached document window, first
 	RKMDIWindow *window = view ()->activePage ();
