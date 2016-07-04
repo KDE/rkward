@@ -654,6 +654,7 @@ void RKComponentBuilder::buildElement (const QDomElement &element, XMLHelper &xm
 		} else if (e.tagName () == QLatin1String ("text")) {
 			widget = new RKText (e, component (), parent_widget);
 		} else if (e.tagName () == QLatin1String ("preview")) {
+			QWidget *pwidget = parent_widget;
 			if (!parent->isWizardish ()) {
 				RKStandardComponent *uicomp = parent->topmostStandardComponent ();
 				if (uicomp) {
@@ -663,6 +664,7 @@ void RKComponentBuilder::buildElement (const QDomElement &element, XMLHelper &xm
 			widget = new RKPreviewBox (e, component (), parent_widget);
 			parent_widget->layout ()->addWidget (widget);
 			parent_widget = pwidget;
+                        add_to_layout = false;
 		} else if (e.tagName () == QLatin1String ("saveobject")) {
 			widget = new RKPluginSaveObject (e, component (), parent_widget);
 		} else if (e.tagName () == QLatin1String ("embed")) {
