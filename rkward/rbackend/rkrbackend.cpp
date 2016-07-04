@@ -1031,6 +1031,9 @@ bool RKRBackend::startR () {
 
 	RKSignalSupport::installSignalProxies ();	// for the crash signals
 	RKSignalSupport::installSigIntAndUsrHandlers (RK_scheduleIntr);
+	RKRBackend::this_pointer->current_locale_codec = RKGetCurrentLocaleCodec ();  // Ok, why is this needed? Beats me (mostly), but the result is different form codecForLocale() used in initialization:
+	                                                                              // This one will turn non-representable characters into unicode numbers, the other one will just strip them...
+	                                                                              // KF5 TODO: Use makeEncoder() and makeDecoder() to get defined behavior on this
 
 // register our functions
 	R_CallMethodDef callMethods [] = {
@@ -1137,7 +1140,7 @@ SEXP parseCommand (const QString &command_qstring, RKRBackend::RKWardRError *err
 	SafeParseWrap wrap;
 	wrap.status = PARSE_NULL;
 
-	QByteArray localc = RKRBackend::this_pointer->current_locale_codec->fromUnicode (command_qstring);		// needed so the string below does not go out of scope
+	QByteArray localc = RKRBackend::this_pointer->current_locale_codec->fromUnicode (command_qstring); // needed so the string below does not go out of scope
 	const char *command = localc.data ();
 
 	PROTECT(wrap.cv=Rf_allocVector(STRSXP, 1));

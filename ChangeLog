@@ -3,7 +3,14 @@
 - File selection fields in plugin dialogs remember the last used directory (per session), and check for a valid selection
 - Better handling of text drag-and-drop inside the R console window
 
-UNRELEASED: --- Version 0.6.5 - Apr-02-2016
+--- Version 0.6.5a - UNRELEASED
+- EXPERIMENTAL: Fix NAs introduced by editing data containing characters that cannot be encoded in the system locale
+- Fixed: Preview boxes followed by a <stretch/> element would not work under some circumstances
+- Fixed: Setting an output CSS file via the GUI did not work
+- Fixed: Bug report feature on Windows did nothing 		TODO: Really test this!
+- Avoid some potential encoding issues, that could cause graphical select.list to fail for certain strings, under some circumstances
+
+--- Version 0.6.5 - Apr-02-2016
 - Add option to override CSS file used for the output window
 - When manually adding pluginmaps, load these after, not before other pluginmaps, by default
 - Added context menu option to search for information on current symbol online

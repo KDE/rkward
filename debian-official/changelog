@@ -1,19 +1,33 @@
-rkward (0.6.4z+0.6.5+devel1-1) UNRELEASED; urgency=low
+rkward (0.6.5-2) unstable; urgency=low
+  * CPPFLags (TODO test)
+  * Force rebuild against R 3.3.x
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Mon, 09 May 2017 11:00:00 +0100
+
+ rkward (0.6.5-1) unstable; urgency=low
   * new upstream release
-  * TODO: FIX changelog in case 0.6.4-2 never gets uploaded!!!!!!!!!!
+    (unchanged with respect to ~rc1)
+  * fix debian/watch file
+  * always use build-time version of r-base-core as runtime dependency, even
+    if most builds would actually be backwards compatible
+  * switch to dh-based rules file. This also fixes missing separation between
+    arch-dependent and arch-independent build targets
+  * Make build really reproducible (fix for earlier attempt upstream)
+    closes: #783290
 
- -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Wed, 10 Feb 2016 11:30:00 +0100
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Mon, 04 Apr 2016 11:00:00 +0100
 
-rkward (0.6.4-2) unstable; urgency=low
+rkward (0.6.5~rc1-1) unstable; urgency=low
+  * new upstream release
+  * split architecture independent files into new rkward-data package
   * bump standards version to 3.9.7 (no changes needed)
   * strip testing locale "x-test" from package
-  * split architecture independent files into new rkward-data package
   * add override for false-positive source-contains-prebuilt-javascript-object
     lintian warnings
   * make existing lintian overrides work with lintian 2.5.42
   * Adjust copyright file to changed filenames in rkward/qwinhost
 
- -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Mon, 07 Mar 2016 14:00:00 +0100
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Tue, 29 Mar 2016 11:00:00 +0100
 
 rkward (0.6.4-1) unstable; urgency=low
   * new upstream release
