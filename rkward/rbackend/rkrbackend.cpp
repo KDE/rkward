@@ -307,6 +307,8 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 					RKRBackend::repl_status.user_command_completely_transmitted = false;
 					RKRBackend::repl_status.user_command_parsed_up_to = 0;
 					RKRBackend::repl_status.user_command_successful_up_to = 0;
+					// TODO FIXME: This is a problem when sending characters which are not encodable in R's current locale. I wish we could simply tell R that the input is UTF8 (as we do in parseCommand()).
+					// Or is there? Alternatively, perhaps we can somehow hack-in UTF8 character positions?
 					RKRBackend::repl_status.user_command_buffer = RKRBackend::this_pointer->current_locale_codec->fromUnicode (command->command);
 					RKTransmitNextUserCommandChunk (buf, buflen);
 					RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandTransmitted;
@@ -1133,11 +1135,11 @@ SEXP parseCommand (const QString &command_qstring, RKRBackend::RKWardRError *err
 	SafeParseWrap wrap;
 	wrap.status = PARSE_NULL;
 
-	QByteArray localc = RKRBackend::this_pointer->current_locale_codec->fromUnicode (command_qstring);		// needed so the string below does not go out of scope
+	QByteArray localc = command_qstring.toUtf8 (); // needed so the string below does not go out of scope
 	const char *command = localc.data ();
 
 	PROTECT(wrap.cv=Rf_allocVector(STRSXP, 1));
-	SET_STRING_ELT(wrap.cv, 0, Rf_mkChar(command));
+	SET_STRING_ELT(wrap.cv, 0, Rf_mkCharCE(command, CE_UTF8));
 
 	// Yes, if there is an error in the parse, R does jump back to toplevel!
 	// trying to parse list(""=1) is an example in R 3.1.1
