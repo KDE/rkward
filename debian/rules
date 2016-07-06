@@ -54,22 +54,17 @@ build-stamp:
 	CXX="`/usr/bin/R CMD config CXX`" \
 	F77="`/usr/bin/R CMD config F77`" \
 	cmake .. \
-		-DCMAKE_INSTALL_PREFIX=`kde4-config --prefix` \
-		-DDATA_INSTALL_DIR=`kde4-config --install data` \
-		-DHTML_INSTALL_DIR=`kde4-config --install html` \
-		-DKCFG_INSTALL_DIR=`kde4-config --install kcfg` \
-		-DINFO_INSTALL_DIR=/usr/share/info \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DDATA_INSTALL_DIR=/usr/share \
+		-DHTML_INSTALL_DIR=/usr/share/doc/HTML \
 		-DMAN_INSTALL_DIR=/usr/share/man \
-		-DKDE_DEFAULT_HOME=`kde4-config --localprefix` \
 		-DCMAKE_SKIP_RPATH=true \
-		-DKDE4_USE_ALWAYS_FULL_RPATH=false \
 		-DCMAKE_CXX_FLAGS="$(CXXFLAGS)" \
 		-DCMAKE_C_FLAGS="$(CFLAGS)" \
 		-DCMAKE_EXE_LINKER_FLAGS="$(LDFLAGS)" \
 		-DCMAKE_MODULE_LINKER_FLAGS="$(LDFLAGS)" \
 		-DCMAKE_SHARED_LINKER_FLAGS="$(LDFLAGS)" \
 		-DCMAKE_VERBOSE_MAKEFILE=ON \
-		-DKDE4_DISABLE_MULTIMEDIA=ON \
 		-DR_EXECUTABLE=/usr/bin/R/ \
 		-DR_LIBDIR=/usr/lib/R/site-library/ \
 		-DBUILD_TIMESTAMP="$(builttime)"
@@ -100,12 +95,12 @@ install: build
 	# Install into debian/tmp, first
 	cd $(CURDIR)/build && $(MAKE) install DESTDIR=$(DESTDIR)
 	# dirty hack to get rid of conflicting r.xml file without adjusting all makefiles
-	rm -vf $(DESTDIR)/`kde4-config --install data`/katepart/syntax/r.xml
+	rm -vf $(DESTDIR)/usr/share/katepart/syntax/r.xml
 	
 	# remove unneeded R package files
 	rm -vf $(DESTDIR)/usr/lib/R/site-library/R.css $(DESTDIR)/usr/lib/R/site-library/rkward/COPYING
 
-	# remove x-test locale
+	# remove x-test locale KF5 TODO FIXME
 	rm -rvf $(DESTDIR)/usr/share/kde4/apps/rkward/po/x-test $(DESTDIR)/usr/share/locale/x-test
 
 	# Sort the remaining bits into rkward and rkward-data subpackages
