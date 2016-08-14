@@ -19,8 +19,20 @@ INCLUDE(KDECompilerSettings)
 INCLUDE(ECMInstallIcons)
 INCLUDE(FeatureSummary)
 
-FIND_PACKAGE(Qt5 5.2 CONFIG REQUIRED COMPONENTS Widgets Core Xml Network WebKit Script PrintSupport)
-FIND_PACKAGE(KF5 5.2 REQUIRED COMPONENTS CoreAddons DocTools I18n XmlGui TextEditor WidgetsAddons WebKit Parts Config Notifications WindowSystem)
+FIND_PACKAGE(Qt5 5.2 CONFIG REQUIRED COMPONENTS Widgets Core Xml Network Script PrintSupport)
+FIND_PACKAGE(KF5 5.2 REQUIRED COMPONENTS CoreAddons DocTools I18n XmlGui TextEditor WidgetsAddons Parts Config Notifications WindowSystem)
+IF(NOT NO_QT_WEBENGINE)
+	FIND_PACKAGE(Qt5 OPTIONAL_COMPONENTS WebEngine)
+ENDIF(NOT NoQtWebEngine)
+IF(NOT Qt5WebEngine_FOUND)
+	FIND_PACKAGE(KF5 5.2 OPTIONAL_COMPONENTS WebKit)
+	IF(NOT KF5_WebKit_FOUND)
+		MESSAGE(FATAL_ERROR "At least one of KF5WebKit or QtWebEngine is required. Neither was found on this system.")
+	ENDIF(NOT KF5_WebKit_FOUND)
+	ADD_DEFINITIONS(-DNO_QT_WEBENGINE)  # TODO: rather set it for rkhtmlwindow, only
+ELSE(Qt5WebEngine_FOUND)
+	MESSAGE(STATUS "QtWebEngine will be used for rendering HTML. To use KF5WebKit, instead (if available), pass -DNO_QT_WEBENGINE in your call to cmake.")
+ENDIF(Qt5WebEngine_FOUND)
 FIND_PACKAGE(Gettext REQUIRED)
 
 # FindIntl in cmake is broken for MSVC on Windows, (and only included from 3.2.3 upwards).

@@ -21,7 +21,6 @@
 #include <QUrl>
 #include <kparts/part.h>
 #include <kio/jobclasses.h>
-#include <kwebpage.h>
 
 #include <QDomElement>
 
@@ -33,12 +32,19 @@ class QAction;
 class RKComponentHandle;
 class XMLHelper;
 class RKHTMLWindowPart;
-class KWebView;
 class QTemporaryFile;
 class RKHTMLWindow;
 class RKFindBar;
 
+#ifdef NO_QT_WEBENGINE
+#	include <kwebpage.h>
+class KWebView;
 class RKWebPage : public KWebPage {
+#else
+#	include <QWebEnginePage>
+class QWebEngineView;
+class RKWebPage : public QWebEnginePage {
+#endif
 	Q_OBJECT
 public:
 	explicit RKWebPage (RKHTMLWindow* window);
@@ -46,10 +52,17 @@ public:
 signals:
 	void pageInternalNavigation (const QUrl& url);
 protected:
+#ifdef NO_QT_WEBENGINE
 /** reimplemented to always emit linkClicked() for pages that need special handling (importantly, rkward://-urls). */
 	bool acceptNavigationRequest (QWebFrame* frame, const QNetworkRequest& request, NavigationType type) override;
 /** reimplemented to schedule new window creation for the next page to load */
 	QWebPage* createWindow (WebWindowType type) override;
+#else
+/** reimplemented to always emit linkClicked() for pages that need special handling (importantly, rkward://-urls). */
+	bool acceptNavigationRequest (const QUrl &url, NavigationType type, bool isMainFrame) override;
+/** reimplemented to schedule new window creation for the next page to load */
+	QWebEnginePage* createWindow (WebWindowType type) override;
+#endif
 private:
 	RKHTMLWindow *window;
 	bool new_window;
@@ -120,7 +133,11 @@ private slots:
 	void findRequest (const QString& text, bool backwards, const RKFindBar *findbar, bool* found);
 private:
 friend class RKHTMLWindowPart;
+#ifdef NO_QT_WEBENGINE
 	KWebView* view;
+#else
+	QWebEngineView* view;
+#endif
 	RKWebPage* page;
 	RKFindBar* findbar;
 	bool have_highlight;

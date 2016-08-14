@@ -23,7 +23,6 @@
 #include <kdirwatch.h>
 #include <kio/job.h>
 #include <kservice.h>
-#include <kwebview.h>
 #include <kcodecaction.h>
 
 #include <qfileinfo.h>
@@ -33,8 +32,6 @@
 #include <qdir.h>
 #include <QHBoxLayout>
 #include <QHostInfo>
-#include <QNetworkRequest>
-#include <QWebFrame>
 #include <QPrintDialog>
 #include <QMenu>
 #include <QTextCodec>
@@ -65,9 +62,16 @@
 #include "../windows/rkworkplaceview.h"
 #include "../debug.h"
 
+#ifdef NO_QT_WEBENGINE
+#	include <QWebFrame>
+#	include <QNetworkRequest>
+#	include <kwebview.h>
 // TODO: We used to have KioIntegration in addition to KPartsIntegration. But this is just buggy, buggy, buggy in KF5 5.9.0. (e.g. navigation to previous
 // // page in history just doesn't work).
 RKWebPage::RKWebPage (RKHTMLWindow* window): KWebPage (window, KPartsIntegration) {
+#else
+RKWebPage::RKWebPage (RKHTMLWindow* window): QWebEnginePage (window) {
+#endif
 	RK_TRACE (APP);
 	RKWebPage::window = window;
 	new_window = false;
@@ -76,46 +80,59 @@ RKWebPage::RKWebPage (RKHTMLWindow* window): KWebPage (window, KPartsIntegration
 	settings ()->setFontFamily (QWebSettings::FixedFont, QFontDatabase::systemFont(QFontDatabase::FixedFont).family ());
 }
 
+#ifdef NO_QT_WEBENGINE
 bool RKWebPage::acceptNavigationRequest (QWebFrame* frame, const QNetworkRequest& request, QWebPage::NavigationType type) {
+	QUrl navurl = request.url ();
+	QUrl cururl (mainFrame ()->url ());
+	bool is_main_frame = frame == mainFrame ();
+#else
+bool RKWebPage::acceptNavigationRequest (const QUrl &navurl, QWebEnginePage::NavigationType type, bool is_main_frame) override {
+	QUrl cururl (url ());
+#endif
 	Q_UNUSED (type);
 
 	RK_TRACE (APP);
-	RK_DEBUG (APP, DL_DEBUG, "Navigation request to %s", qPrintable (request.url ().toString ()));
-	if (direct_load && (frame == mainFrame ())) {
+	RK_DEBUG (APP, DL_DEBUG, "Navigation request to %s", qPrintable (navurl.toString ()));
+	if (direct_load && (is_main_frame)) {
 		direct_load = false;
 		return true;
 	}
 
 	if (new_window) {
-		frame = 0;
 		new_window = false;
-	}
-	if (!frame) {
-		RKWorkplace::mainWorkplace ()->openAnyUrl (request.url ());
+		RKWorkplace::mainWorkplace ()->openAnyUrl (navurl);
 		return false;
 	}
 
-	if (frame != mainFrame ()) {
-		if (request.url ().isLocalFile () && (QMimeDatabase ().mimeTypeForUrl (request.url ()).inherits ("text/html"))) return true;
+	if (!is_main_frame) {
+		if (navurl.isLocalFile () && (QMimeDatabase ().mimeTypeForUrl (navurl).inherits ("text/html"))) return true;
 	}
 
-	if (QUrl (mainFrame ()->url ()).matches (request.url (), QUrl::NormalizePathSegments | QUrl::StripTrailingSlash)) {
-		RK_DEBUG (APP, DL_DEBUG, "Page internal navigation request from %s to %s", qPrintable (mainFrame ()->url ().toString ()), qPrintable (request.url ().toString ()));
-		emit (pageInternalNavigation (request.url ()));
+	if (cururl.matches (navurl, QUrl::NormalizePathSegments | QUrl::StripTrailingSlash)) {
+		RK_DEBUG (APP, DL_DEBUG, "Page internal navigation request from %s to %s", qPrintable (cururl.toString ()), qPrintable (navurl.toString ()));
+		emit (pageInternalNavigation (navurl));
 		return true;
 	}
 
-	window->openURL (request.url ());
+	window->openURL (navurl);
 	return false;
 }
 
 void RKWebPage::load (const QUrl& url) {
 	RK_TRACE (APP);
 	direct_load = true;
+#ifdef NO_QT_WEBENGINE
 	mainFrame ()->load (url);
+#else
+	load (url);
+#endif
 }
 
+#ifdef NO_QT_WEBENGINE
 QWebPage* RKWebPage::createWindow (QWebPage::WebWindowType) {
+#else
+QWebEnginePage* RKWebPage::createWindow (QWebEnginePage::WebWindowType) {
+#endif
 	RK_TRACE (APP);
 	new_window = true;         // Don't actually create the window, until we know which URL we're talking about.
 	return (this);
@@ -149,7 +166,7 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 
 	// We have to connect this in order to allow browsing.
 	connect (page, &RKWebPage::pageInternalNavigation, this, &RKHTMLWindow::internalNavigation);
-	connect (page, &QWebPage::downloadRequested, this, &RKHTMLWindow::saveRequested);
+	connect (page, &QWebPage::downloadRequested, this, &RKHTMLWindow::saveRequested);  --> webengine: override triggerAction virtual
 	connect (page, &QWebPage::printRequested, this, &RKHTMLWindow::slotPrint);
 	connect (view, &QWidget::customContextMenuRequested, this, &RKHTMLWindow::makeContextMenu);
 
