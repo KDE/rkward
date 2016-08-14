@@ -216,6 +216,10 @@ int main (int argc, char *argv[]) {
 	if (rkward_frontend_exe.isNull ()) rkward_frontend_exe = findRKWardAtPath (RKWARD_FRONTEND_LOCATION);
 	if (rkward_frontend_exe.isNull ()) rkward_frontend_exe = findRKWardAtPath (kde_dir.absoluteFilePath ("bin"));
 	if (rkward_frontend_exe.isNull ()) rkward_frontend_exe = findRKWardAtPath (kde_dir.absoluteFilePath ("../lib/libexec"));
+	for (int i = 0; i < syspath.size (); ++i) {
+		rkward_frontend_exe = findRKWardAtPath (syspath[i]);
+		if (!rkward_frontend_exe.isNull ()) break;
+	}
 
 	if (rkward_frontend_exe.isNull ()) {
 		QMessageBox::critical (0, "RKWard frontend binary missing", "RKWard frontend binary could not be found. When moving / copying RKWard, make sure to copy the whole application folder, or create a shorcut / link, instead.");

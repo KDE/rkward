@@ -69,7 +69,7 @@ ADD_EXECUTABLE (rkward rkward_startup_wrapper.cpp rkward_windows_icon.rc rkward.
 add_definitions (-DR_EXECUTABLE="${R_EXECUTABLE}")
 add_definitions (-DINSTALL_PATH="${CMAKE_INSTALL_PREFIX}")
 add_definitions (-DR_LIBS="${R_LIBDIR}")
-add_definitions (-DRKWARD_FRONTEND_LOCATION="${RKWARD_FRONTEND_LOCATION}")
+add_definitions (-DRKWARD_FRONTEND_LOCATION="${CMAKE_INSTALL_PREFIX}/${RKWARD_FRONTEND_LOCATION}")
 TARGET_LINK_LIBRARIES(rkward Qt5::Gui Qt5::Core Qt5::DBus Qt5::Widgets)
 
 ADD_DEPENDENCIES(rkward.frontend rkward)
