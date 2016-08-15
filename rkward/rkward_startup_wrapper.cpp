@@ -217,8 +217,8 @@ int main (int argc, char *argv[]) {
 	if (rkward_frontend_exe.isNull ()) rkward_frontend_exe = findRKWardAtPath (kde_dir.absoluteFilePath ("bin"));
 	if (rkward_frontend_exe.isNull ()) rkward_frontend_exe = findRKWardAtPath (kde_dir.absoluteFilePath ("../lib/libexec"));
 	for (int i = 0; i < syspath.size (); ++i) {
-		rkward_frontend_exe = findRKWardAtPath (syspath[i]);
 		if (!rkward_frontend_exe.isNull ()) break;
+		rkward_frontend_exe = findRKWardAtPath (syspath[i]);
 	}
 
 	if (rkward_frontend_exe.isNull ()) {
