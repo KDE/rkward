@@ -49,6 +49,7 @@ Comment[sv]=Grafiskt användargränssnitt för R-projektet
 Comment[uk]=Графічний інтерфейс проекту R
 Comment[x-test]=xxGUI for the R-projectxx
 Icon=rkward
+X-DBUS-ServiceName=org.kde.rkward-open
 Exec=rkward --reuse %F
 Terminal=false
 Type=Application

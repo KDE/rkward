@@ -106,7 +106,7 @@ int main (int argc, char *argv[]) {
 	QApplication app (argc, argv);
 	QStringList args = app.arguments ();
 	if (!args.isEmpty ()) args.pop_front ();	// The command itself
-	qputenv ("DESKTOP_STARTUP_ID", qgetenv ("STARTUP_ID_COPY"));	// for startup notifications (set via rkward.desktop)
+	qputenv ("DESKTOP_STARTUP_ID", qgetenv ("STARTUP_ID_COPY"));	// for startup notifications (set via org.kde.rkward.desktop)
 	qputenv ("STARTUP_ID_COPY", "");
 
 	// Parse arguments that need handling in the wrapper
