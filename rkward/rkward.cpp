@@ -153,9 +153,6 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 	createShellGUI (true);
 	RKXMLGUISyncer::self ()->watchXMLGUIClientUIrc (this);
 
-	proxy_import->setMenu (dynamic_cast<QMenu*>(guiFactory ()->container ("import", this)));
-	proxy_export->setMenu (dynamic_cast<QMenu*>(guiFactory ()->container ("export", this)));
-
 	RKComponentMap::initialize ();
 
 	// stuff which should wait until the event loop is running
@@ -205,6 +202,8 @@ void RKWardMainWindow::doPostInit () {
 	QString evaluate_code = RKGlobals::startup_options.take ("evaluate").toString ();
 
 	initPlugins ();
+	proxy_import->setMenu (dynamic_cast<QMenu*>(guiFactory ()->container ("import", this)));
+	proxy_export->setMenu (dynamic_cast<QMenu*>(guiFactory ()->container ("export", this)));
 	gui_rebuild_locked = false;
 
 	show ();
