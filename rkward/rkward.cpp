@@ -153,6 +153,12 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 	createShellGUI (true);
 	RKXMLGUISyncer::self ()->watchXMLGUIClientUIrc (this);
 
+	// replicate File->import and export menus into the Open/Save toolbar button menus
+	QMenu *menu = dynamic_cast<QMenu*>(guiFactory ()->container ("import", this));
+	if (menu) open_any_action->addAction (menu->menuAction ());
+	menu = dynamic_cast<QMenu*>(guiFactory ()->container ("export", this));
+	save_any_action->addAction (menu->menuAction ());
+
 	RKComponentMap::initialize ();
 
 	// stuff which should wait until the event loop is running
@@ -202,8 +208,6 @@ void RKWardMainWindow::doPostInit () {
 	QString evaluate_code = RKGlobals::startup_options.take ("evaluate").toString ();
 
 	initPlugins ();
-	proxy_import->setMenu (dynamic_cast<QMenu*>(guiFactory ()->container ("import", this)));
-	proxy_export->setMenu (dynamic_cast<QMenu*>(guiFactory ()->container ("export", this)));
 	gui_rebuild_locked = false;
 
 	show ();
@@ -532,7 +536,7 @@ void RKWardMainWindow::initActions() {
 	view_menu_dummy->setEnabled (false);
 
 	// collections for the toolbar:
-	KActionMenu* open_any_action = new KActionMenu (QIcon::fromTheme("document-open-folder"), i18n ("Open..."), this);
+	open_any_action = new KActionMenu (QIcon::fromTheme("document-open-folder"), i18n ("Open..."), this);
 	open_any_action->setDelayed (false);
 	actionCollection ()->addAction ("open_any", open_any_action);
 
@@ -542,8 +546,7 @@ void RKWardMainWindow::initActions() {
 	open_any_action->addAction (fileOpen);
 	open_any_action->addAction (fileOpenRecent);
 	open_any_action->addSeparator ();
-	proxy_import = new QAction (i18n ("Import"), this);
-	open_any_action->addAction (proxy_import);
+	//open_any_action->addAction (proxy_import); -> later
 
 	KActionMenu* new_any_action = new KActionMenu (QIcon::fromTheme("document-new"), i18n ("Create..."), this);
 	new_any_action->setDelayed (false);
@@ -556,13 +559,12 @@ void RKWardMainWindow::initActions() {
 	save_any_action->setDelayed (false);
 	actionCollection ()->addAction ("save_any", save_any_action);
 
-	proxy_export = new QAction (i18n ("Export"), this);
 	save_any_action->addAction (fileSaveWorkspace);
 	save_any_action->addAction (fileSaveWorkspaceAs);
 	save_any_action->addSeparator ();
 // TODO: A way to add R-script-save actions, dynamically, would be nice
 	save_actions_plug_point = save_any_action->addSeparator ();
-	save_any_action->addAction (proxy_export);
+	//save_any_action->addAction (proxy_export); -> later
 }
 
 /*

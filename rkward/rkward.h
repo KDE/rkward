@@ -168,7 +168,7 @@ private:
 	/** used so that if the menu is empty, there is a note in it, explaining that fact */
 	QAction* view_menu_dummy;
 
-	QAction* proxy_export, *proxy_import;
+	KActionMenu* open_any_action;
 	KActionMenu* save_any_action;
 	QAction* save_actions_plug_point;
 	QList<QPointer <QAction> > plugged_save_actions;
