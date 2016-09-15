@@ -30,7 +30,7 @@ class QEvent;
 class QPaintEvent;
 class RKWorkplace;
 class RKToolWindowBar;
-class KPassivePopup;
+class KMessageWidget;
 class RCommand;
 
 class RKMDIStandardActionClient : public KXMLGUIClient {
@@ -141,9 +141,9 @@ protected:
 /** @see globalContextProperty() */
 	void setGlobalContextProperty (const QString& property, const QString& value) { global_context_properties.insert (property, value); };
 
-	KPassivePopup* status_popup;
-	void hideEvent (QHideEvent *ev);
-	void showEvent (QShowEvent *ev);
+	KMessageWidget* status_popup;
+	QWidget* status_popup_container;
+	void resizeEvent (QResizeEvent *ev) override;
 
 friend class RKWorkplace;
 /** type of this window */
