@@ -1004,6 +1004,10 @@ RKOutputWindowManager* RKOutputWindowManager::self () {
 RKOutputWindowManager::RKOutputWindowManager () : QObject () {
 	RK_TRACE (APP);
 
+	// TODO: This is a _temporary_ hack!
+#warning Remove me!
+	qputenv ("KDIRWATCH_METHOD", "Stat");
+
 	file_watcher = new KDirWatch (this);
 	connect (file_watcher, &KDirWatch::dirty, this, &RKOutputWindowManager::fileChanged);
 	connect (file_watcher, &KDirWatch::created, this, &RKOutputWindowManager::fileChanged);
