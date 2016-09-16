@@ -1016,6 +1016,17 @@ RKOutputWindowManager::~RKOutputWindowManager () {
 	delete (file_watcher);
 }
 
+QString watchFilePath (const QString &file) {
+	RK_TRACE (APP);
+
+	QFileInfo fi = QFileInfo (file);
+	if (fi.isSymLink ()) {
+		// Monitor the actual data and not the symlink (taken from ktexteditor)
+		return (fi.canonicalFilePath ());
+	}
+	return (file);
+}
+
 void RKOutputWindowManager::registerWindow (RKHTMLWindow *window) {
 	RK_TRACE (APP);
 
@@ -1028,10 +1039,13 @@ void RKOutputWindowManager::registerWindow (RKHTMLWindow *window) {
 	}
 
 	url = url.adjusted (QUrl::NormalizePathSegments);
-	QString file = url.toLocalFile ();
+	QString file = watchFilePath (url.toLocalFile ());
 	if (!windows.contains (file, window)) {
 		if (!windows.contains (file)) {
-			if (file != current_default_path) file_watcher->addFile (file);
+			if (file != current_default_path) {
+				RK_DEBUG (APP, DL_DEBUG, "starting to watch %s for changes", qPrintable (file));
+				file_watcher->addFile (file);
+			}
 		}
 	
 		windows.insertMulti (file, window);
@@ -1046,7 +1060,8 @@ void RKOutputWindowManager::setCurrentOutputPath (const QString &_path) {
 
 	QUrl url = QUrl::fromLocalFile (_path);
 	url = url.adjusted (QUrl::NormalizePathSegments);
-	QString path = url.toLocalFile ();
+	QString path = watchFilePath (url.toLocalFile ());
+	RK_DEBUG (APP, DL_DEBUG, "setting default ouput file to %s (%s), from %s", qPrintable (path), qPrintable (_path), qPrintable (current_default_path));
 
 #ifdef Q_OS_WIN
 	// On windows, when flushing the output (i.e. deleting, re-creating it), KDirWatch seems to purge the file from the
@@ -1058,10 +1073,14 @@ void RKOutputWindowManager::setCurrentOutputPath (const QString &_path) {
 	if (path == current_default_path) return;
 
 	if (!windows.contains (path)) {
+		RK_DEBUG (APP, DL_DEBUG, "starting to watch %s for changes, KDirWatch method %d", qPrintable (path), file_watcher->internalMethod ());
 		file_watcher->addFile (path);
 	}
 	if (!windows.contains (current_default_path)) {
-		file_watcher->removeFile (current_default_path);
+		if (!current_default_path.isEmpty ()) {
+			RK_DEBUG (APP, DL_DEBUG, "no longer watching %s for changes", qPrintable (current_default_path));
+			file_watcher->removeFile (current_default_path);
+		}
 	}
 
 	current_default_path = path;
@@ -1120,6 +1139,7 @@ void RKOutputWindowManager::windowDestroyed (QObject *window) {
 
 	// if there are no further windows for this file, stop listening
 	if ((path != current_default_path) && (!windows.contains (path))) {
+		RK_DEBUG (APP, DL_DEBUG, "no longer watching %s for changes", qPrintable (path));
 		file_watcher->removeFile (path);
 	}
 }
