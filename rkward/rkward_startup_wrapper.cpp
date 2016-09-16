@@ -280,6 +280,10 @@ int main (int argc, char *argv[]) {
 		}
 	}
 
+	// TODO: This is a _temporary_ hack!
+#warning Remove me!
+	qputenv ("KDIRWATCH_METHOD", QByteArray ("Stat"));
+
 	qputenv ("R_BINARY", r_exe.toLocal8Bit ());
 	QStringList call_args ("CMD");
 	call_args.append (debugger_args);
