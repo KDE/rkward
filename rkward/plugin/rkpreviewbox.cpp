@@ -82,7 +82,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 
 			if (preview_mode == OutputPreview) {
 				RKGlobals::rInterface ()->issueCommand ("local ({\n"
-				    "outfile <- tempfile (fileext='html')\n"
+				    "outfile <- tempfile (fileext='.html')\n"
 				    "rk.assign.preview.data(" + idprop + ", list (filename=outfile, on.delete=function (id) {\n"
 				    "	rk.flush.output (outfile, ask=FALSE)\n"
 				    "	unlink (outfile)\n"
