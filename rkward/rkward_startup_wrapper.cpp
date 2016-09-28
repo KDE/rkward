@@ -145,12 +145,8 @@ int main (int argc, char *argv[]) {
 			// all RKWard and KDE options (other than --reuse) are of the for --option <value>. So skip over the <value>
 			i++;
 		} else {
-			QUrl url (args[i]);
-			if (url.isRelative ()) {
-				file_args.append (QDir::current ().absoluteFilePath (url.toLocalFile ()));
-			} else {
-				file_args.append (args[i]);
-			}
+			QUrl url = QUrl::fromUserInput (args[i], QDir::currentPath (), QUrl::AssumeLocalFile);
+			file_args.append (url.toString ());
 		}
 	}
 
