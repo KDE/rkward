@@ -31,6 +31,7 @@ RCommandStack *RCommandStack::regular_stack;
 RCommandStack::RCommandStack () : RCommandChain () {
 	RK_TRACE (RBACKEND);
 	closed = false;
+	parent = 0;
 }
 
 RCommandStack::~RCommandStack () {
@@ -139,6 +140,7 @@ void RCommandStack::pop (RCommandChain *item) {
 	RK_TRACE (RBACKEND);
 
 	RCommandChain *parent = item->parent;
+	RK_DEBUG (RBACKEND, DL_DEBUG, "removing form parent: %s", item->isCommand () ? qPrintable (item->toCommand ()->command ()) : "<chain>");
 	removeFromParent (item);
 	popIfCompleted (parent);
 }
@@ -197,7 +199,6 @@ QModelIndex RCommandStackModel::index (int row, int column, const QModelIndex& p
 	RK_TRACE (RBACKEND);
 
 	RCommandChain* index_data = 0;
-
 	if (!parent.isValid ()) {
 		index_data = RCommandStack::regular_stack;
 	} else {
@@ -223,6 +224,7 @@ QModelIndex RCommandStackModel::parent (const QModelIndex& child) const {
 		RK_ASSERT (child_index);
 
 		RCommandChain* index_data = child_index->parent;
+		if (!index_data) return QModelIndex ();  // probably the regular_stack
 		if (index_data) return (createIndex (0, 0, index_data));
 	}
 
