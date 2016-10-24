@@ -1331,9 +1331,9 @@ void doPendingPriorityCommands () {
 
 	if (RKRBackend::this_pointer->killed) return;
 	RCommandProxy *command = RKRBackend::this_pointer->pending_priority_command;
+	RKRBackend::this_pointer->pending_priority_command = 0;
 	if (command) {
 		RK_DEBUG (RBACKEND, DL_DEBUG, "running priority command %s", qPrintable (command->command));
-		RKRBackend::this_pointer->setPriorityCommand (0);
 		{
 			QMutexLocker lock (&RKRBackend::this_pointer->all_current_commands_mutex);
 			RKRBackend::this_pointer->all_current_commands.append (command);
@@ -1341,8 +1341,10 @@ void doPendingPriorityCommands () {
 		}
 
 		RKRBackend::this_pointer->runCommand (command);
-		RKRBackend::this_pointer->commandFinished (false);
 		// TODO: Oh boy, what a mess. Sending notifications should be split from fetchNextCommand() (which is not appropriate, here)
+		RCommandProxy *previous_command_backup = RKRBackend::this_pointer->previous_command;
+		RKRBackend::this_pointer->commandFinished (false);
+		RKRBackend::this_pointer->previous_command = previous_command_backup;
 		RBackendRequest req (false, RBackendRequest::CommandOut);      // NOTE: We do *NOT* want a reply to this one, and in particular, we do *NOT* want to do 
 		                                                               // (recursive) event processing while handling this.
 		req.command = command;
@@ -1466,6 +1468,7 @@ RCommandProxy* RKRBackend::handleRequest (RBackendRequest *request, bool mayHand
 		if (!request->done) RKRBackendProtocolBackend::msleep (++i < 200 ? 10 : 50);
 	}
 
+	// TODO remove me?
 	while (pending_priority_command) RKREventLoop::processX11Events ();  // Probably not needed, but make sure to process priority commands first at all times.
 
 	RCommandProxy* command = request->takeCommand ();
@@ -1513,6 +1516,7 @@ void RKRBackend::handleHistoricalSubstackRequest (const QStringList &list) {
 
 	RBackendRequest request (true, RBackendRequest::HistoricalSubstackRequest);
 	request.params["call"] = list;
+	request.command = current_command;
 	handleRequest (&request);
 }
 

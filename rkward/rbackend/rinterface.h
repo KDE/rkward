@@ -92,7 +92,7 @@ private:
 		RecordingCommandsUnfiltered
 	} command_logfile_mode;
 
-	void processHistoricalSubstackRequest (const QStringList &calllist);
+	void processHistoricalSubstackRequest (const QStringList &calllist, RCommand *parent_command);
 	QStringList processPlainGenericRequest (const QStringList &calllist);
 	void processRBackendRequest (RBackendRequest *request);
 

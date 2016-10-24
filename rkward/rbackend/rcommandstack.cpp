@@ -149,6 +149,7 @@ bool RCommandStack::popIfCompleted (RCommandChain* item) {
 	RK_TRACE (RBACKEND);
 
 	if (item->isClosed () && item->sub_commands.isEmpty () && item->parent && (!item->is_command)) {	// if the item has no parent, it is the main stack. If it is a command, it will be popped from the RInterface.
+		RK_DEBUG (RBACKEND, DL_DEBUG, "popping completed chain: %p", item);
 		pop (item);
 		return true;
 	}

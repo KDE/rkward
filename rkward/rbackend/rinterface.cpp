@@ -361,6 +361,11 @@ void RInterface::handleRequest (RBackendRequest* request) {
 	flushOutput (true);
 	if (request->type == RBackendRequest::CommandOut) {
 		RCommandProxy *cproxy = request->takeCommand ();
+		if (cproxy) {
+			RK_DEBUG (RBACKEND, DL_DEBUG, "Command out \"%s\", id %d", qPrintable (cproxy->command), cproxy->id);
+		} else {
+			RK_DEBUG (RBACKEND, DL_DEBUG, "Fake command out");
+		}
 		RCommand *command = 0;
 		// NOTE: the order of processing is: first try to submit the next command, then handle the old command.
 		// The reason for doing it this way, instead of the reverse, is that this allows the backend thread / process to continue working, concurrently
@@ -375,8 +380,16 @@ void RInterface::handleRequest (RBackendRequest* request) {
 		}
 		tryNextCommand ();
 	} else if (request->type == RBackendRequest::HistoricalSubstackRequest) {
+		RCommandProxy *cproxy = request->command;
+		RCommand *parent = 0;
+		for (int i = all_current_commands.size () - 1; i >= 0; --i) {
+			if (all_current_commands[i]->id () == cproxy->id) {
+				parent = all_current_commands[i];
+				break;
+			}
+		}
 		command_requests.append (request);
-		processHistoricalSubstackRequest (request->params["call"].toStringList ());
+		processHistoricalSubstackRequest (request->params["call"].toStringList (), parent);
 	} else if (request->type == RBackendRequest::PlainGenericRequest) {
 		request->params["return"] = QVariant (processPlainGenericRequest (request->params["call"].toStringList ()));
 		RKRBackendProtocolFrontend::setRequestCompleted (request);
@@ -676,19 +689,19 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 	return QStringList ();
 }
 
-void RInterface::processHistoricalSubstackRequest (const QStringList &calllist) {
+void RInterface::processHistoricalSubstackRequest (const QStringList &calllist, RCommand *parent_command) {
 	RK_TRACE (RBACKEND);
 
-	RCommand *current_command = runningCommand ();
 	RCommandChain *in_chain;
-	if (!current_command) {
+	if (!parent_command) {
 		// This can happen for Tcl events. Create a dummy command on the stack to keep things looping.
-		current_command = new RCommand (QString (), RCommand::App | RCommand::EmptyCommand | RCommand::Sync);
-		RCommandStack::issueCommand (current_command, 0);
-		all_current_commands.append (current_command);
-		dummy_command_on_stack = current_command;	// so we can get rid of it again, after it's sub-commands have finished
+		parent_command = new RCommand (QString (), RCommand::App | RCommand::EmptyCommand | RCommand::Sync);
+		RCommandStack::issueCommand (parent_command, 0);
+		all_current_commands.append (parent_command);
+		dummy_command_on_stack = parent_command;	// so we can get rid of it again, after it's sub-commands have finished
 	}
-	in_chain = openSubcommandChain (current_command);
+	in_chain = openSubcommandChain (parent_command);
+	RK_DEBUG (RBACKEND, DL_DEBUG, "started sub-command chain (%p) for command %s", in_chain, qPrintable (parent_command->command ()));
 
 	QString call = calllist.value (0);
 	if (call == "sync") {

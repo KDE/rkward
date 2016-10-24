@@ -213,7 +213,7 @@ private:
 	QStringList global_env_toplevel_names;
 /** check whether the object list / global environment / individual symbols have changed, and updates them, if needed */
 	void checkObjectUpdatesNeeded (bool check_list);
-
+friend void doPendingPriorityCommands ();
 	/** The previously executed command. Only non-zero until a new command has been requested. */
 	RCommandProxy *previous_command;
 };
