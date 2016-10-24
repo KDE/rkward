@@ -54,6 +54,9 @@
 #include <kaboutdata.h>
 #include <KLocalizedString>
 #include <KUrlAuthorized>
+#ifdef WITH_KCRASH
+#	include <KCrash>
+#endif
 
 #include <qstring.h>
 #include <QMutex>
@@ -131,6 +134,9 @@ int main (int argc, char *argv[]) {
 	}
 
 	QApplication app (argc, argv_copy);
+#ifdef WITH_KCRASH
+	KCrash::setDrKonqiEnabled (true);
+#endif
 	// Don't complain when linking rkward://-pages from Rd pages
 	KUrlAuthorized::allowUrlAction ("redirect", QUrl("http://"), QUrl ("rkward://"));
 	// Don't complain when trying to open help pages
