@@ -905,27 +905,30 @@ void RKFunctionArgHinter::tryArgHintNow () {
 
 	// find the active opening brace
 	int line_rev = -1;
-	int brace_level = 1;
-	int potential_symbol_end = -1;
+	QList<int> unclosed_braces;
 	QString full_context;
-	while (potential_symbol_end < 0) {
+	while (unclosed_braces.isEmpty ()) {
 		QString context_line = provider->provideContext (++line_rev);
 		if (context_line.isNull ()) break;
-
 		full_context.prepend (context_line);
-		int pos = context_line.length ();
-		while (--pos >= 0) {
-			QChar c = full_context.at (pos);
-			if (c == ')') ++brace_level;
-			else if (c == '(') {
-				--brace_level;
-				if (brace_level == 0) {
-					potential_symbol_end = pos - 1;
-					break;
-				}
+		for (int i = 0; i < context_line.length (); ++i) {
+			QChar c = context_line.at (i);
+			if (c == '"' || c == '\'' || c == '`') {  // NOTE: this algo does not produce good results on string constants spanning newlines.
+				i = RKCommonFunctions::quoteEndPosition (c, context_line, i + 1);
+				if (i < 0) break;
+				continue;
+			} else if (c == '\\') {
+				++i;
+				continue;
+			} else if (c == '(') {
+				unclosed_braces.append (i);
+			} else if (c == ')') {
+				if (!unclosed_braces.isEmpty()) unclosed_braces.pop_back ();
 			}
 		}
 	}
+
+	int potential_symbol_end = unclosed_braces.isEmpty () ? -1 : unclosed_braces.last () - 1;
 
 	// now find out where the symbol to the left of the opening brace ends
 	// there cannot be a line-break between the opening brace, and the symbol name (or can there?), so no need to fetch further context

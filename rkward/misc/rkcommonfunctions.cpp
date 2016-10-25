@@ -113,6 +113,19 @@ namespace RKCommonFunctions {
 		return (context_line.mid (current_word_start, current_word_end - current_word_start));
 	}
 
+	int quoteEndPosition (const QChar& quote_char, const QString& haystack, int from) {
+		int line_end = haystack.length () - 1;
+		for (int i=from; i <= line_end; ++i) {
+			QChar c = haystack.at (i);
+			if (c == quote_char) return i;
+			if (c == '\\') {
+				++i;
+				continue;
+			}
+		}
+		return -1; // quote end not found
+	}
+
 	void getCurrentSymbolOffset (const QString &context_line, int cursor_pos, bool strict, int *start, int *end) {
 		*start = 0;
 
@@ -120,22 +133,16 @@ namespace RKCommonFunctions {
 		*end = line_end + 1;
 		if (cursor_pos > line_end) cursor_pos = line_end;
 
-		QChar quote_char;
 		for (int i=0; i <= line_end; ++i) {
 			QChar c = context_line.at (i);
-			if (!quote_char.isNull ()) {
-				if (c == '\\') ++i;
-				if (c == quote_char) quote_char = QChar ();
+			if (c == '\'' || c == '\"' || c == '`') {
+				i = quoteEndPosition (c, context_line, i+1);
+				if (i < 0) break;
 				continue;
-			} else {
-				if (c == '\'' || c == '\"' || c == '`') {
-					quote_char = c;
-					continue;
-				} else if (c.isLetterOrNumber () || c == '.' || c == '_') {
-					continue;
-				} else if (!strict) {
-					if (c == '$' || c == ':' || c == '[' || c == ']' || c == '@') continue;
-				}
+			} else if (c.isLetterOrNumber () || c == '.' || c == '_') {
+				continue;
+			} else if (!strict) {
+				if (c == '$' || c == ':' || c == '[' || c == ']' || c == '@') continue;
 			}
 
 			// if we did not hit a continue, yet, that means we are on a potential symbol boundary

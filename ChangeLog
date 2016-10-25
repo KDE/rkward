@@ -1,3 +1,4 @@
+- Function argument hinting is less easily fooled by braces inside quotes
 - Preview status messages can now be closed
 - Show the message accompanying rk.show.files() or rk.edit.files() inside the main window, instead of a separate dialog
 - File browser gains "Rename" context menu action
