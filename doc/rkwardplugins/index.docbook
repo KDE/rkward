@@ -1324,7 +1324,7 @@ This chapter contains information on some topics that are useful only to certain
 </para>
 
 <sect1 id="specialized_plugins_plots">
-	<title>Plugins than produce a plot</title>
+	<title>Plugins that produce a plot</title>
 	<para>
 		Creating a plot from a plugin is easy to do. However, there are a few sublte gotchas to avoid, and also some great generic functionality that you should be aware of. This section shows you the basic concepts, and concludes with a canonical example that you should follow whenever creating plot plugins.
 	</para>
