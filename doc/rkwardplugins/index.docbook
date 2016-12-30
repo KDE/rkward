@@ -3316,7 +3316,7 @@ made checkable, thus acting like a simple check box at the same time.
 	</varlistentry>
 	<varlistentry>
 	<term><parameter>horiz_headers</parameter></term>
-	<listitem><para>Strings to ues for the horizontal header, separated by ";". The header will be hidden, if set to "". (optional, defaults to column number).</para></listitem>
+	<listitem><para>Strings to use for the horizontal header, separated by ";". The header will be hidden, if set to "". (optional, defaults to column number).</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term><parameter>vert_headers</parameter></term>
@@ -4141,7 +4141,7 @@ different types, using modifiers may lead to errors. For <replaceable>fixed_valu
 </varlistentry>
 <varlistentry>
 <term>&lt;dependencies&gt;</term>
-<listitem><para>This element, specifying dependencies, is allowed as a direct child of the &lt;document&gt; element (once), and as a child of &lt;component&gt; elements (once for each &lt;component&gt; element). Specifies the dependencies that must be met in order to use the plugin(s). See the <link linkend="chapter_dependencies">chapter on dependencies</link> for an overview. Attributes:
+<listitem><para>This element, specifying dependencies, is allowed as a direct child of the &lt;document&gt; element (once), and as a child of &lt;component&gt; elements (once for each &lt;component&gt; element). Specifies the dependencies that must be met in order to use the plugin(s). See the <link linkend="chapter_dependencies">chapter on dependencies</link> for an overview. Attributes:</para>
 	<variablelist>
 	<varlistentry>
 	<term>rkward_min_version, rkward_max_version</term>
@@ -4152,7 +4152,7 @@ different types, using modifiers may lead to errors. For <replaceable>fixed_valu
 	<listitem><para>Minimum and maximum allowed version of &rkward;. Version specifications may <emphasis>not</emphasis> include non-numeric suffixes, like "0.5.7z-devel1". The R version dependency will be shown on the plugins' help pages, but does not have any direct effect, as of &rkward; 0.6.1. <link linkend="sect_dependencies_r_version">More information</link>. Optional; if not specified, no minimum / maximum version of &r; will be required.</para></listitem>
 	</varlistentry>
 	</variablelist>
-Child elements:
+<para>Child elements:</para>
 	<variablelist>
 	<varlistentry>
 	<term>&lt;package&gt;</term>
@@ -4193,11 +4193,11 @@ Child elements:
 	</para></listitem>
 	</varlistentry>
 	</variablelist>
-</para></listitem>
+</listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;about&gt;</term>
-<listitem><para>May be present exactly once as a direct child of the &lt;document&gt; element. Contains meta information on the &pluginmap; (or plugin). See the <link linkend="chapter_about_information">chapter on 'about' information</link> for an overview. Attributes:
+<listitem><para>May be present exactly once as a direct child of the &lt;document&gt; element. Contains meta information on the &pluginmap; (or plugin). See the <link linkend="chapter_about_information">chapter on 'about' information</link> for an overview. Attributes:</para>
 	<variablelist>
 	<varlistentry>
 	<term>name</term>
@@ -4232,7 +4232,7 @@ Child elements:
 	<listitem><para>Category of plugin(s), &eg; "Item response theory". As of &rkward; 0.6.1, no categories are predefined. Optional.</para></listitem>
 	</varlistentry>
 	</variablelist>
-Child elements:
+<para>Child elements:</para>
 	<variablelist>
 	<varlistentry>
 	<term>&lt;author&gt;</term>
@@ -4258,7 +4258,7 @@ Child elements:
 	</para></listitem>
 	</varlistentry>
 	</variablelist>
-</para></listitem>
+</listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;components&gt;</term>
@@ -4529,7 +4529,7 @@ Child elements:
 <listitem><para>An array of RObject instances. An instance of this class can be obtained by using <command>makeRObjectArray(objectnames)</command>. It is particularly useful when dealing with varslots which allow to select multiple objects.</para></listitem>
 </varlistentry>
 <varlistentry><term>include()-function</term>
-<listitem><para><command>include(filename)</command>can be used to include a separate JS file.</para></listitem>
+<listitem><para><command>include(filename)</command> can be used to include a separate JS file.</para></listitem>
 </varlistentry>
 <varlistentry><term>doRCommand()-function</term>
 <listitem><para><command>doRCommand(command, callback)</command> can be used to query R for information. Please read the section on <link linkend="querying_r_for_info">querying R from inside a plugin</link> for details, and caveats.</para></listitem>
