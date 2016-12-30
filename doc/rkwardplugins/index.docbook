@@ -1052,7 +1052,7 @@ function printout () {
 &lt;/dialog&gt;
 </programlisting>
 	<para>
-		In this case, a single push button will be added to your plugin, labelled <guibutton>Specify plotting options</guibutton>. When you press that button, a separate dialog will come up, with all the options of the embedded plugin. Even while this embedded GUI is not visible most of the time, you can fetch its settings just as described <link linkend="embedding_code">above</link>.
+		In this case, a single push button will be added to your plugin, labeled <guibutton>Specify plotting options</guibutton>. When you press that button, a separate dialog will come up, with all the options of the embedded plugin. Even while this embedded GUI is not visible most of the time, you can fetch its settings just as described <link linkend="embedding_code">above</link>.
 	</para>
 	<para>
 		<caution>
@@ -1068,7 +1068,7 @@ function printout () {
 		Some plugins -- and as a matter of fact, the plot_options used as an example above, is one of them -- are not complete by themselves. They simply do not have the GUI elements to select some important values. They are meant to be used only embedded into other plugins.
 	</para>
 	<para>
-		In how far is the plot_options plugin incomplete? Well, for some option settings, it needs to know the name of the objects/expressions for the x and y axes (actually it will do fine if it only has either, but it needs at least one to function properly). However, it does not have a mechansim of selecting those objects, or entering them any other way. So how does it know about them?
+		In how far is the plot_options plugin incomplete? Well, for some option settings, it needs to know the name of the objects/expressions for the x and y axes (actually it will do fine if it only has either, but it needs at least one to function properly). However, it does not have a mechanism of selecting those objects, or entering them any other way. So how does it know about them?
 	</para>
 	<para>
 		In the logic section of the plot_options plugin there are two additional lines, not covered, yet:
@@ -1328,7 +1328,7 @@ This chapter contains information on some topics that are useful only to certain
 <sect1 id="specialized_plugins_plots">
 	<title>Plugins that produce a plot</title>
 	<para>
-		Creating a plot from a plugin is easy to do. However, there are a few sublte gotchas to avoid, and also some great generic functionality that you should be aware of. This section shows you the basic concepts, and concludes with a canonical example that you should follow whenever creating plot plugins.
+		Creating a plot from a plugin is easy to do. However, there are a few subtle gotchas to avoid, and also some great generic functionality that you should be aware of. This section shows you the basic concepts, and concludes with a canonical example that you should follow whenever creating plot plugins.
 	</para>
 	<sect2 id="rk_graph_on">
 		<title>Drawing a plot to the output window</title>
@@ -1645,7 +1645,7 @@ This chapter contains information on some topics that are useful only to certain
 &lt;/document&gt;
 		</programlisting>
 		<para>
-			The attribute line simply says, that the associate filename extensions for XYZ files are <literal role="extension">*.xyz</literal> or <literal role="extension">*.zyx</literal>, and that the filter should be labelled <quote>XYZ data files</quote> in the file selection dialog.
+			The attribute line simply says, that the associate filename extensions for XYZ files are <literal role="extension">*.xyz</literal> or <literal role="extension">*.zyx</literal>, and that the filter should be labeled <quote>XYZ data files</quote> in the file selection dialog.
 		</para>
 		<para>
 			You can declare two <command>&lt;external&gt;</command> properties in your plugin. <parameter>filename</parameter> will be set to the selected file name, and <parameter>context</parameter> will be set to <replaceable>"import"</replaceable>.
@@ -3322,7 +3322,7 @@ made checkable, thus acting like a simple check box at the same time.
 	</varlistentry>
 	<varlistentry>
 	<term><parameter>vert_headers</parameter></term>
-	<listitem><para>Strings to ues for the vertical header, separated by ";". The header will be hidden, if set to "". (optional, defaults to row number).</para></listitem>
+	<listitem><para>Strings to use for the vertical header, separated by ";". The header will be hidden, if set to "". (optional, defaults to row number).</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
