@@ -100,12 +100,14 @@ This is a guide to writing plugins for &rkward;.
 	</para>
 	<para>
 		Writing a standard plugin is basically a four-step process:
+	</para>
 		<itemizedlist>
 			<listitem><para><link linkend="pluginmap">Placing a new Action in the menu hierarchy</link></para></listitem>
 			<listitem><para><link linkend="mainxml">Describing the looks and behavior of the plugin GUI</link></para></listitem>
 			<listitem><para><link linkend="jstemplate">Defining, how R-code is to be generated from the settings, the user makes in the GUI</link></para></listitem>
 			<listitem><para><link linkend="pluginhelp">Adding a help page to your plugin</link></para></listitem>
 		</itemizedlist>
+	<para>
 		Those will be dealt with in turn.
 	</para>
 	<para>
@@ -2797,7 +2799,7 @@ new Header(i18n("Test results")).print();
 	<variablelist>
 	<varlistentry>
 	<term>No modifier ("")</term>
-	<listitem><para>For <function>getValue() / getString()</function>, this returns the same as "formatted". In future versions, it will be possible to obtain a numeric represenation, instead.</para></listitem>
+	<listitem><para>For <function>getValue() / getString()</function>, this returns the same as "formatted". In future versions, it will be possible to obtain a numeric representation, instead.</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>"formatted"</term>
@@ -3327,7 +3329,7 @@ made checkable, thus acting like a simple check box at the same time.
 
 <varlistentry>
 <term>&lt;optionset&gt;</term>
-<listitem><para>A UI for repeating a set of options for an arbitrary number of items (<link linkend="optionset">introduction to optionsets</link>). Attributes:
+<listitem><para>A UI for repeating a set of options for an arbitrary number of items (<link linkend="optionset">introduction to optionsets</link>). Attributes:</para>
 	<variablelist>
 	<varlistentry>
 	<term><parameter>min_rows</parameter></term>
@@ -3346,7 +3348,7 @@ made checkable, thus acting like a simple check box at the same time.
 	<listitem><para>Id of the column to act as keycolumn. An optionset with a (valid) keycolumn will act as a "driven" optionset. An optionset with no keycolumn will allow manual insertion / removal of items. The keycolumn must be marked as external. (optional, defaults to no keycolumn).</para></listitem>
 	</varlistentry>
 	</variablelist>
-Child-elements:
+<para>Child-elements:</para>
 	<variablelist>
 	<varlistentry>
 	<term>&lt;optioncolumn&gt;</term>
@@ -3374,7 +3376,7 @@ Child-elements:
 	<listitem><para>Optional specification of UI logic to apply <emphasis>inside</emphasis> the contents region the optionset. See <link linkend="logicelements">the reference on &lt;logic&gt;</link>
 	</para></listitem></varlistentry>
 	</variablelist>
-</para></listitem>
+</listitem>
 </varlistentry>
 
 <varlistentry>
@@ -3520,7 +3522,7 @@ Child-elements:
 	</varlistentry>
 	<varlistentry>
 	<term><parameter>placement</parameter></term>
-	<listitem><para>Placement of the preview: "attached" (to the main workplace), "detached" (standalone window), "docked" (attached to the plugin dialog) and "default" (currently this is the same as "docked", but might become user-configuarable at some point). In general, it is recommended to leave this as the default setting for best UI-consistency (optional, default is "default")</para></listitem>
+	<listitem><para>Placement of the preview: "attached" (to the main workplace), "detached" (standalone window), "docked" (attached to the plugin dialog) and "default" (currently this is the same as "docked", but might become user-configurable at some point). In general, it is recommended to leave this as the default setting for best UI-consistency (optional, default is "default")</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term><parameter>active</parameter></term>
@@ -3599,7 +3601,7 @@ Attributes:
 	</varlistentry>
 	<varlistentry>
 	<term><parameter>mode</parameter></term>
-	<listitem><para>The mode of conversion/operation. One of "equals", "notequals", "range", "and", "or". If in mode equals, the property will only be true, if the value of all of its sources equals the attribute standard (see below). If in at mode notequals, the property will only be true, if the value of all of its sources are different from the attribute standard (see below). If in mode range, the sources have to be numeric (integer or real). The property will only be true, if all sources are in the range specified by the attributes min and max (see below). If in mode and, the sources have to be boolean properties. The property will only be true, if all the sources are true simultaniously. If in mode or, the sources have to be boolean properties. The property will only be true, if at least one of the sources is true. (required)</para></listitem>
+	<listitem><para>The mode of conversion/operation. One of "equals", "notequals", "range", "and", "or". If in mode equals, the property will only be true, if the value of all of its sources equals the attribute standard (see below). If in at mode notequals, the property will only be true, if the value of all of its sources are different from the attribute standard (see below). If in mode range, the sources have to be numeric (integer or real). The property will only be true, if all sources are in the range specified by the attributes min and max (see below). If in mode and, the sources have to be boolean properties. The property will only be true, if all the sources are true simultaneously. If in mode or, the sources have to be boolean properties. The property will only be true, if at least one of the sources is true. (required)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term><parameter>standard</parameter></term>
@@ -3623,7 +3625,7 @@ Attributes:
 
 <varlistentry>
 <term>&lt;switch&gt;</term>
-<listitem><para>Create a new property that will relay to different target properties (or fixed strings) based on the value of a condition property. This allows to create logic similar to <function>if()</function> or <function>switch()</function> constructs. Attributes:
+<listitem><para>Create a new property that will relay to different target properties (or fixed strings) based on the value of a condition property. This allows to create logic similar to <function>if()</function> or <function>switch()</function> constructs. Attributes:</para>
 	<variablelist>
 	<varlistentry>
 	<term><parameter>id</parameter></term>
@@ -3634,7 +3636,7 @@ Attributes:
 	<listitem><para>The id of the condition property (required)</para></listitem>
 	</varlistentry>
 	</variablelist>
-Child elements:
+<para>Child elements:</para>
 	<variablelist>
 	<varlistentry>
 	<term>&lt;true&gt;</term>
@@ -3655,7 +3657,7 @@ Child elements:
 	&lt;case&gt; element is matches the value of the condition property (optional, allowed only once, in combination with one or more &lt;case&gt; elements).</para></listitem>
 	</varlistentry>
 	</variablelist>
-Child elements &lt;true&gt;, &lt;false&gt;, &lt;case&gt;, and &lt;default&gt; take the following attributes:
+<para>Child elements &lt;true&gt;, &lt;false&gt;, &lt;case&gt;, and &lt;default&gt; take the following attributes:</para>
 	<variablelist>
 	<varlistentry>
 	<term><parameter>standard</parameter></term>
@@ -3669,7 +3671,8 @@ Child elements &lt;true&gt;, &lt;false&gt;, &lt;case&gt;, and &lt;default&gt; ta
 	<term><parameter>dynamic_value</parameter></term>
 	<listitem><para>The <parameter>id</parameter> of the target property that should be supplied as the value of the &lt;switch&gt; property, if the current condition matches (required, if fixed_value is not supplied).</para></listitem>
 	</varlistentry>
-	</variablelist></para></listitem>
+	</variablelist>
+	</listitem>
 </varlistentry>
 
 <varlistentry>
