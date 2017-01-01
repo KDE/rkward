@@ -87,7 +87,7 @@ This is a guide to writing plugins for &rkward;.
 		</para>
 	</note>
 	<para>
-		This document describes how to write your own plugins. Note, that at the time of this writing, some of the concepts are not yet set it stone. Therefore, this document should be regarded as an introduction to the current approach, and as a basis for discussion. All sorts of comments are welcome.
+		This document describes how to write your own plugins. Note, that at the time of this writing, some of the concepts are not yet set in stone. Therefore, this document should be regarded as an introduction to the current approach, and as a basis for discussion. All sorts of comments are welcome.
 		The documentation has grown quite large over time. Don't let that scare you. We recommend reading through the four basic steps (as
 		outlined, below), to get a basic idea of how things work. After that you may want to skim the table of contents to see which advanced
 		topics could be of relevance to you.
