@@ -351,7 +351,7 @@ This is a guide to writing plugins for &rkward;.
 	&lt;dialog label="Two Variable t-Test"&gt;
 	</programlisting>
 	<para>
-		As you know, plugins may have either a dialog or a wizard interface or both. Here we start defining a dialog interface. the <parameter>label</parameter> attribute specifies the caption of the dialog.
+		As you know, plugins may have either a dialog or a wizard interface or both. Here we start defining a dialog interface. The <parameter>label</parameter> attribute specifies the caption of the dialog.
 	</para>
 	<programlisting>
 		&lt;tabbook&gt;
