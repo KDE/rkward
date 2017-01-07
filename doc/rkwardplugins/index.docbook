@@ -3294,11 +3294,11 @@ made checkable, thus acting like a simple check box at the same time.
 	</varlistentry>
 	<varlistentry>
 	<term><parameter>rows</parameter></term>
-	<listitem><para>Number of rows in the matrix. Has no effect for allow_user_resize_rows="true". <note><para>This can also be controlled by setting the "rows" property".</para></note> (optional, defaults to 2).</para></listitem>
+	<listitem><para>Number of rows in the matrix. Has no effect for allow_user_resize_rows="true". <note><para>This can also be controlled by setting the "rows" property.</para></note> (optional, defaults to 2).</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term><parameter>columns</parameter></term>
-	<listitem><para>Number of columns in the matrix. Has no effect for allow_user_resize_columns="true". <note><para>This can also be controlled by setting the "columns" property".</para></note> (optional, defaults to 2).</para></listitem>
+	<listitem><para>Number of columns in the matrix. Has no effect for allow_user_resize_columns="true". <note><para>This can also be controlled by setting the "columns" property.</para></note> (optional, defaults to 2).</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term><parameter>min_rows</parameter></term>
@@ -3493,7 +3493,7 @@ made checkable, thus acting like a simple check box at the same time.
 	<variablelist>
 	<varlistentry>
 	<term><parameter>component</parameter></term>
-	<listitem><para>The registered name of the component to embed (see <link linkend="pluginmap">chapter on registering components</link> (required)</para></listitem>
+	<listitem><para>The registered name of the component to embed (see <link linkend="pluginmap">chapter on registering components</link>) (required)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term><parameter>as_button</parameter></term>
@@ -3897,7 +3897,7 @@ Attributes:
 		</varlistentry>
 		<varlistentry>
 			<term>row.0,row.1,row.2...</term>
-			<listitem><para>The data from a single row (0 for topmost row). <function>getValue()</function>/<function>getString()</function> returns this as a single string, separated by "\n". However, the recommended way to get this is using <function>getList()</function>, which returns this column as an array of strings.</para></listitem>
+			<listitem><para>The data from a single row (0 for topmost row). <function>getValue()</function>/<function>getString()</function> returns this as a single string, separated by "\n". However, the recommended way to get this is using <function>getList()</function>, which returns this row as an array of strings.</para></listitem>
 		</varlistentry>
 		<varlistentry>
 			<term>cbind</term>
@@ -4094,12 +4094,6 @@ different types, using modifiers may lead to errors. For <replaceable>fixed_valu
   <entry>embedded.pluginmap</entry>
   <entry>Limit the length of a vector (to the n largest or smallest elements).</entry>
   <entry>Plots->Barplot</entry>
-</row>
-<row>
-  <entry>rkward::grid</entry>
-  <entry>embedded.pluginmap</entry>
-  <entry>Add grid to a plot</entry>
-  <entry>In an existing plot window: Edit->Draw grid.</entry>
 </row>
 <row>
   <entry>rkward::level_select</entry>
