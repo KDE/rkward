@@ -4271,7 +4271,7 @@ different types, using modifiers may lead to errors. For <replaceable>fixed_valu
 	</varlistentry>
 	<varlistentry>
 	<term>id</term>
-	<listitem><para>The ID by which this component can be retrieved (for placing it in the menu (see below), or for embedding). See &lt;document/gt;-namespace above.</para></listitem>
+	<listitem><para>The ID by which this component can be retrieved (for placing it in the menu (see below), or for embedding). See &lt;document&gt;-namespace above.</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>file</term>
