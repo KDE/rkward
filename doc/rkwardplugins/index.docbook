@@ -4124,7 +4124,7 @@ different types, using modifiers may lead to errors. For <replaceable>fixed_valu
 	</varlistentry>
 	<varlistentry>
 	<term>namespace</term>
-	<listitem><para>A namespace for the component ids. When looking up components for embedding, the components will beretrievable via a string "namespace::component_id". Set to "rkward" for now.</para></listitem>
+	<listitem><para>A namespace for the component ids. When looking up components for embedding, the components will be retrievable via a string "namespace::component_id". Set to "rkward" for now.</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>id</term>
