@@ -596,7 +596,7 @@ function printout () {
 		</programlisting>
 		<para>
 			And this was all there is to the printout function in most cases. <function>rk.header()</function> prints a standard headline for the results. Note that in the .js files, you have to
-			mark up all translatable strings by hand, using <command>i18n()</command>, or some alternative commands. More on this in the <link linkend="i18n_js">chapter on internationaliation</link>.
+			mark up all translatable strings by hand, using <command>i18n()</command>, or some alternative commands. More on this in the <link linkend="i18n_js">chapter on internationalization</link>.
 			You can also add some more information to this, if you like, &eg;:
 		</para>
 		<programlisting>
@@ -1656,7 +1656,7 @@ This chapter contains information on some topics that are useful only to certain
 <sect1 id="querying_r_for_info">
 <title>Querying R for information</title>
 	<para>In some cases, you may want to fetch further information from R, to be presented in your plugin's UI. For instance, you may want to offer a selection of the levels of a factor that the user
-	has selected for analysis. Since version 0.6.2 or &rkward; it is possible to do so. Before we start, it is important that you are aware of some caveats:</para>
+	has selected for analysis. Since version 0.6.2 of &rkward; it is possible to do so. Before we start, it is important that you are aware of some caveats:</para>
 	<para>R Code run from inside the plugin's UI logic is evaluated in R's event loop, meaning they can be run <emphasis>while</emphasis> other computations are running. This is to make sure your plugin's UI will be usable, even while R is busy doing other things. However, this makes it really important, that your code does not have side effects. In particular:</para>
 	<itemizedlist>
 		<listitem><para>Do <emphasis>not</emphasis> make any assignments in .GlobalEnv or any other non-local environment.</para></listitem>
@@ -1977,7 +1977,7 @@ x	&lt;/components ...&gt;
 <chapter id="i18n">
 	<title>Plugin translations</title>
 	<para>
-		So far we have used a few concepts regarding translations or "i18n" (short for "internationaliation", which has 18 characters between i and n) in passing. In this chapter we
+		So far we have used a few concepts regarding translations or "i18n" (short for "internationalization", which has 18 characters between i and n) in passing. In this chapter we
 		give a more in-depth account of what i18n functionally for &rkward; plugins. For the most part you will <emphasis>not</emphasis> need all of this in your plugins. However,
 		it may be a good idea to read over this chapter in full, as understanding these concept should help you creating plugins that are fully translatable, and that allow for a high
 		quality of translations.
