@@ -636,7 +636,7 @@ echo ('rk.print (res)\n');
 			If the user explicitly asks for a variable to be saved, you will need to assign to that object using <function>.GlobalEnv$objectname &lt;- value</function>. In general, do not use the <function>&lt;&lt;-</function> operator. It will not necessarily assign in .GlobalEnv.
 		</para>
 		<para>
-			One important pitfall is using <function>eval()</function>. Here, you need to note that eval will by default use the current environment for evaluation, &ie; the local one. This will work well most of the times, but but not always. Thus, if you need to use <function>eval()</function>, you will probably want to specify the <parameter>envir</parameter> parameter: <function>eval(..., envir=globalenv()</function>).
+			One important pitfall is using <function>eval()</function>. Here, you need to note that eval will by default use the current environment for evaluation, &ie; the local one. This will work well most of the times, but not always. Thus, if you need to use <function>eval()</function>, you will probably want to specify the <parameter>envir</parameter> parameter: <function>eval(..., envir=globalenv()</function>).
 		</para>
 	</sect2>
 
@@ -911,7 +911,7 @@ R code.
 		the varslot is shown and required, <emphasis>or</emphasis> the spinbox is shown and required - depending on which option is selected in the radio control. The GUI is changing itself according to the radio option. Try the example, if you like.
 	</para>
 	<para>
-		For a complete list of properties, refer to the <link linkend="reference">reference</link>. One more property, however, is special in that all GUI elements have it: <quote>enabled</quote>. This is slightly less drastic that <quote>visible</quote>. It does not show/hide the GUI element, but only enables/disables it. Disabled elements are typically shown grayed out, and do not react to user input.
+		For a complete list of properties, refer to the <link linkend="reference">reference</link>. One more property, however, is special in that all GUI elements have it: <quote>enabled</quote>. This is slightly less drastic than <quote>visible</quote>. It does not show/hide the GUI element, but only enables/disables it. Disabled elements are typically shown grayed out, and do not react to user input.
 	</para>
 	<note>
 		<para>Besides <command>&lt;convert&gt;</command> and <command>&lt;connect&gt;</command>, there are several further elements for use in the <command>&lt;logic&gt;</command> section. E.g. conditional constructs can also be implemented using the <command>&lt;switch&gt;</command>-element. Refer to the <link linkend="logicelements">reference on logic elements</link> for details.</para>
@@ -2057,7 +2057,7 @@ user (selection from a list of values shown next to this element) --&gt;
 <varlistentry>
 	<term><command>i18n (msgid, [...])</command></term>
 	<listitem><para>The most important function. Marks the string for translation. The string (whether translated or not) is returned quoted using double quotes ('"'). An arbitrary
-			number of placeholders can be used in the string like shown below. Using such placeholders instead of concatenating small substrings is much easier for translators.:</para>
+			number of placeholders can be used in the string like shown below. Using such placeholders instead of concatenating small substrings is much easier for translators:</para>
 		<programlisting>
 			i18n ("Compare objects %1 and %2", getString ('x'), getString ('y'));
 		</programlisting></listitem>
