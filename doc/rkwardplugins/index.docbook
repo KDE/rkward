@@ -1111,7 +1111,7 @@ function printout () {
 		The naive approach to this is to develop one plugin, then basically copy and paste the entire contents of the <literal role="extension">.js</literal>, <literal role="extension">.xml</literal>, and <literal role="extension">.rkh</literal> files, then changing the few portions that are different. However, what if sometime later you find a spelling mistake that has been copied and pasted to all plugins? What if you want to add support for a new feature? You'd have to visit all plugins again, and change each single one. A tiresome and tedious process.
 	</para>
 	<para>
-		A second approach would be to use <link linkend="embedding">embedding</link>. However, in some cases this does not lend itself well to the problem at hand, mostly because the <quote>chunks</quote> you can embed are sometimes too large to be useful, and it places some constraints on the layout. For these cases, the concepts <link linkend="include_js">including <literal role="extension">.js</literal> files</link> <link linkend="include_xml">including <literal role="extension">.xml</literal> files</link> and <link linkend="snippets">snippets</link> can be very useful (but see the <link linkend="include_snippets_vs_embedding">thoughts on when it is preferable to use embedding</link>).
+		A second approach would be to use <link linkend="embedding">embedding</link>. However, in some cases this does not lend itself well to the problem at hand, mostly because the <quote>chunks</quote> you can embed are sometimes too large to be useful, and it places some constraints on the layout. For these cases, the concepts <link linkend="include_js">including <literal role="extension">.js</literal> files</link>, <link linkend="include_xml">including <literal role="extension">.xml</literal> files</link> and <link linkend="snippets">snippets</link> can be very useful (but see the <link linkend="include_snippets_vs_embedding">thoughts on when it is preferable to use embedding</link>).
 	</para>
 	<para>
 		One word of caution, before you begin reading, though: These concepts can help making it simpler to deal with many similar plugins, and can improve maintainability and readability of those plugins. However, overdoing it can easily lead to the reverse effect. Use with some caution.
@@ -2275,7 +2275,7 @@ user (selection from a list of values shown next to this element) --&gt;
     
 	<sect2 id="file_hierarchy"><title>File hierarchy</title>
 		<para>
-			Lets have a look at the prototypic file hierarchy of an elaborate plugin archive. You don’t have to include all of these directories and/or files for a plugin to work (read on to learn what’s absolutely necessary), consider this a <quote>best practice</quote> example:
+			Let's have a look at the prototypic file hierarchy of an elaborate plugin archive. You don’t have to include all of these directories and/or files for a plugin to work (read on to learn what’s absolutely necessary), consider this a <quote>best practice</quote> example:
 		</para>
 		<programlisting>
 	plugin_name/
