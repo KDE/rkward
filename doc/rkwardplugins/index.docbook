@@ -3617,8 +3617,8 @@ Attributes:
 	</varlistentry>
 	<varlistentry>
 	<term><parameter>require_true</parameter></term>
-	<listitem><para>If set to "true", the property will become required, and will only be considered valid, if its state is true/on. Hence, if the property is false, it will block the <guibutton>Submit</guibutton> button (optional, defaults to "false".
-		<caution><remark>If you use this, make sure the user can easily detect what's wrong, such as by showing an explanatory &lt;text&gt;)</remark></caution></para></listitem>
+	<listitem><para>If set to "true", the property will become required, and will only be considered valid, if its state is true/on. Hence, if the property is false, it will block the <guibutton>Submit</guibutton> button (optional, defaults to "false").
+		<caution><remark>If you use this, make sure the user can easily detect what's wrong, such as by showing an explanatory &lt;text&gt;.</remark></caution></para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
