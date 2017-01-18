@@ -4303,7 +4303,7 @@ different types, using modifiers may lead to errors. For <replaceable>fixed_valu
 </varlistentry>
 <varlistentry>
 <term>&lt;hierarchy&gt;</term>
-<listitem><para>Needs to be present exactly once as a direct child of the &lt;document&gt; element. Described where the components declared above should be placed in the menu hierarchy. Accepts only &lt;menu&gt; elements as direct children. No attributes.</para></listitem>
+<listitem><para>Needs to be present exactly once as a direct child of the &lt;document&gt; element. Describes where the components declared above should be placed in the menu hierarchy. Accepts only &lt;menu&gt; elements as direct children. No attributes.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;menu&gt;</term>
