@@ -3648,7 +3648,7 @@ Attributes:
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;case&gt;</term>
-	<listitem><para>If the condition property is not boolean, you can supply and arbitrary number of &lt;case&gt;-elements, one for each
+	<listitem><para>If the condition property is not boolean, you can supply an arbitrary number of &lt;case&gt;-elements, one for each
 	value of the condition property that you want to match (at least one such element is required, if the condition property is not boolean)</para></listitem>
 	</varlistentry>
 	<varlistentry>
