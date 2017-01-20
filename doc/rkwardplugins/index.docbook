@@ -18,7 +18,7 @@
 as Authors, publish date, the abstract, and Keywords -->
 
 <bookinfo>
-<title>Introduction to Writing Plugins for RKWard</title>
+<title>Introduction to Writing Plugins for &rkward;</title>
 
 <authorgroup>
 <author>
@@ -161,7 +161,7 @@ This is a guide to writing plugins for &rkward;.
 	<para>
 		The <parameter>base_prefix</parameter> attribute can be used, if all your plugins reside in a common directory. Basically, then you can omit that directory from the filenames specified below. It safe to leave this at <replaceable>""</replaceable>.
 	</para><para>
-		As you will see below, all plugins get a unique identifier, <parameter>id</parameter>. The <parameter>namespace</parameter> is a way to organize those IDs, and make it less likely to create a duplicate identifier accidentally. Internally, basically the namespace and then a <quote>::</quote> gets prepended to all the identifiers you specify in this &pluginmap;. In general, if you intend to <link linkend="sect_external_plugins">distribute your plugins in an R package</link>, it is a good idea to use the package name as <parameter>namespace</parameter> parameter. Plugins shipped with the official &rkward; distribution have <replaceable>namespace="rkward"</replaceable>.
+		As you will see below, all plugins get a unique identifier, <parameter>id</parameter>. The <parameter>namespace</parameter> is a way to organize those IDs, and make it less likely to create a duplicate identifier accidentally. Internally, basically the namespace and then a <quote>::</quote> gets prepended to all the identifiers you specify in this &pluginmap;. In general, if you intend to <link linkend="sect_external_plugins">distribute your plugins in an &r; package</link>, it is a good idea to use the package name as <parameter>namespace</parameter> parameter. Plugins shipped with the official &rkward; distribution have <replaceable>namespace="rkward"</replaceable>.
 	</para>
 	<para>
 		The <parameter>id</parameter> attribute is optional, but specifying an id for your &pluginmap; makes it possible for other people to make their &pluginmap;s load your &pluginmap;, automatically (see <link linkend="chapter_dependencies">the section on dependencies</link>).
@@ -530,8 +530,8 @@ This is a guide to writing plugins for &rkward;.
 </chapter>
 
 <chapter id="jstemplate">
-<title>Generating R code from GUI settings</title>
-<sect1 id="sect_generating_R_code"><title>Using JavaScript in RKWard plugins</title>
+<title>Generating &r; code from GUI settings</title>
+<sect1 id="sect_generating_R_code"><title>Using JavaScript in &rkward; plugins</title>
 	<para>
 		Now we have a GUI defined, but we still need to generate some &r; code from that. For that, we need another text file, <filename>code.js</filename>, located in the same directory as the <link linkend="mainxml"><filename>description.xml</filename></link>. You may or may not be familiar with JavaScript (or, to be technically precise: ECMA-script). Documentation on JS can be found in abundance, both in printed form, and on the Internet (&eg;: <ulink url="https://developer.mozilla.org/en/Core_JavaScript_1.5_Guide">https://developer.mozilla.org/en/Core_JavaScript_1.5_Guide</ulink>). But for most purposes you will not need to know much about JS at all, as we'll only use some very basic features.
 	</para>
@@ -567,7 +567,7 @@ function calculate () {
 }
 		</programlisting>
 		<para>
-			This function generates the actual R syntax to be run from the GUI settings. Let's look at this in detail: The code to be used is generated using <function>echo()</function> statement. Looking at the <function>echo()</function> statement step by step, the first part of it is
+			This function generates the actual &r; syntax to be run from the GUI settings. Let's look at this in detail: The code to be used is generated using <function>echo()</function> statement. Looking at the <function>echo()</function> statement step by step, the first part of it is
 		</para>
 		<screen>
 res &lt;- t.test (
@@ -795,14 +795,14 @@ This links to a top level rkward help page (not for a plugin).
 &lt;link href="rkward://component/[namespace/]component_id"/&gt;
 
 This links to the help page of another plugin. The [namespace/] part may be omitted
-(in this case, rkward is assumed as the standard namespace, &eg;:
+(in this case, rkward is assumed as the standard namespace, e.g.:
 &lt;link href="rkward://component/import_spss"/&gt; or
 &lt;link href="rkward://component/rkward/import_spss"/&gt; are equivalent).
 The component_id is the same that you specified in the <link linkend="pluginmap">&pluginmap;</link>.
 
 &lt;link href="rkward://rhelp/rfunction"/&gt;
 
-Links to the R help page on "rfunction".
+Links to the &r; help page on "rfunction".
 
 Note that the link names will be generated automatically for these types of links.
 	&lt;/section&gt;
@@ -1335,10 +1335,10 @@ This chapter contains information on some topics that are useful only to certain
 		<para>
 			In order to draw a plot to the output window, use <function>rk.graph.on()</function> directly before creating the plot, and
 			<function>rk.graph.off()</function>, directly afterwards. This is similar to &eg; calling <function>postscript()</function> and 
-			<function>dev.off()</function> in a regular R session.
+			<function>dev.off()</function> in a regular &r; session.
 		</para>
 		<para>
-			Importantly, however, you must <emphasis>always</emphasis> call <function>rk.graph.off()</function> after calling <function>rk.graph.on()</function>. Otherwise the output file will be left in a broken state. To ensure <function>rk.graph.off()</function> really gets called, you should wrap <emphasis>all</emphasis> R commands between the two calls in
+			Importantly, however, you must <emphasis>always</emphasis> call <function>rk.graph.off()</function> after calling <function>rk.graph.on()</function>. Otherwise the output file will be left in a broken state. To ensure <function>rk.graph.off()</function> really gets called, you should wrap <emphasis>all</emphasis> &r; commands between the two calls in
 			<function>try()</function> statement. Never heard of that? Don't worry, it's easy. All you need to do is follow the pattern shown in
 			<link linkend="plot_plugin_example">example</link>, below.
 		</para>
@@ -1352,7 +1352,7 @@ This chapter contains information on some topics that are useful only to certain
 		<para>
 			Adding a <command>&lt;preview&gt;</command> check box is simple. Just place the following somewhere in your GUI. It will take care of all the behind-the-scenes magic of creating a preview device, updating the preview whenever the setting have changed, &etc; Example:
 		</para>
-		<note><para>Starting with version 0.6.5 of &kapp; <command>&lt;preview&gt;</command> preview elements are special-cased in plugin dialogs (not wizards): They will be placed in the button-column, irrespective of where exactly they are defined in the UI. It is still a good idea to define them at a sensible place in the layout, for backwards compatibility.
+		<note><para>Starting with version 0.6.5 of &rkward; <command>&lt;preview&gt;</command> preview elements are special-cased in plugin dialogs (not wizards): They will be placed in the button-column, irrespective of where exactly they are defined in the UI. It is still a good idea to define them at a sensible place in the layout, for backwards compatibility.
 		</para></note>
 		<programlisting>
 	&lt;document&gt;
@@ -1375,7 +1375,7 @@ This chapter contains information on some topics that are useful only to certain
 	<sect2 id="plot_options">
 		<title>Generic plot options</title>
 		<para>
-			You will have noticed that most plotting plugins in RKWard provide a wide range of generic options &eg; for customizing axis titles or figure margins. Adding these options to your plugin is easy. They are provided by an <link linkend="embedding">embeddable</link> plugin called <command>rkward::plot_options</command>. Embed this in your plugin UI like this:
+			You will have noticed that most plotting plugins in &rkward; provide a wide range of generic options &eg; for customizing axis titles or figure margins. Adding these options to your plugin is easy. They are provided by an <link linkend="embedding">embeddable</link> plugin called <command>rkward::plot_options</command>. Embed this in your plugin UI like this:
 		</para>
 		<programlisting>
 	&lt;document&gt;
@@ -1528,22 +1528,22 @@ This chapter contains information on some topics that are useful only to certain
 	}
 		</programlisting>
 		<para>
-			Again, the <command>preview()</command> function generates almost the same R code as the <command>calculate()</command> function, so we create a helper function <command>doCalcuate()</command> to factor out the common parts. The most important thing to note is that you will have to assign the imported data to a object called
-			<parameter>preview_data</parameter> (inside the current - local - environment). <emphasis>Everything else will happen automatically</emphasis> (roughly speaking, &kapp; will call <command>rk.edit(preview_data)</command>, wrapped inside a call to <command>.rk.with.window.hints()</command>).
+			Again, the <command>preview()</command> function generates almost the same &r; code as the <command>calculate()</command> function, so we create a helper function <command>doCalcuate()</command> to factor out the common parts. The most important thing to note is that you will have to assign the imported data to a object called
+			<parameter>preview_data</parameter> (inside the current - local - environment). <emphasis>Everything else will happen automatically</emphasis> (roughly speaking, &rkward; will call <command>rk.edit(preview_data)</command>, wrapped inside a call to <command>.rk.with.window.hints()</command>).
 		</para>
 		<note><para>
 			While previews are a great feature, they do consume resources. In the case of data previews, there may be cases, where previews can cause significant performance issues. This could be
-			for importing huge datasets (which are just too large to be opened for editing in &kapp;'s editor window), but also "normal" datasets could be mis-imported, creating a huge number of rows or columns. <emphasis>It is very much recommended that you limit the <parameter>preview_data</parameter></emphasis> to a dimension that provides a useful preview, without the danger of
-			creating noticable performance issues (e.g. 50 rows by 50 columns should be more than enough in most cases).
+			for importing huge datasets (which are just too large to be opened for editing in &rkward;'s editor window), but also "normal" datasets could be mis-imported, creating a huge number of rows or columns. <emphasis>It is very much recommended that you limit the <parameter>preview_data</parameter></emphasis> to a dimension that provides a useful preview, without the danger of
+			creating noticable performance issues (&eg; 50 rows by 50 columns should be more than enough in most cases).
 		</para></note>
 	</sect2>
 	<sect2 id="preview_custom">
 		<title>Custom previews</title>
 		<para>
-			The <command>&lt;preview&gt;</command> element can be used to create previews for any type of "document" window that can be attached to &kapp;'s workplace. In addition to <link linkend="preview_plots">plots</link> and <link linkend="preview_data">data windows</link>, this includes HTML files, R scripts, and object summary windows. For the latter ones, you will have to use <command>&lt;preview mode="custom"&gt;</command>.
+			The <command>&lt;preview&gt;</command> element can be used to create previews for any type of "document" window that can be attached to &rkward;'s workplace. In addition to <link linkend="preview_plots">plots</link> and <link linkend="preview_data">data windows</link>, this includes HTML files, &r; scripts, and object summary windows. For the latter ones, you will have to use <command>&lt;preview mode="custom"&gt;</command>.
 		</para>
 		<para>
-			If you have read the sections describing plot preview and data previews, you should have a general idea on the procedure, but "custom" previews require slightly more manual work behind the scenes. The most important R function to look at is <command>rk.assign.preview.data()</command>, here. The following short listing shows what your generated (preview) R code could look like for a plugin creating a text file output:
+			If you have read the sections describing plot preview and data previews, you should have a general idea on the procedure, but "custom" previews require slightly more manual work behind the scenes. The most important &r; function to look at is <command>rk.assign.preview.data()</command>, here. The following short listing shows what your generated (preview) &r; code could look like for a plugin creating a text file output:
 		</para>
 		<programlisting>
 	## To be generated in the preview() code section of a plugin
@@ -1654,10 +1654,10 @@ This chapter contains information on some topics that are useful only to certain
 </sect1>
 
 <sect1 id="querying_r_for_info">
-<title>Querying R for information</title>
+<title>Querying &r; for information</title>
 	<para>In some cases, you may want to fetch further information from R, to be presented in your plugin's UI. For instance, you may want to offer a selection of the levels of a factor that the user
 	has selected for analysis. Since version 0.6.2 of &rkward; it is possible to do so. Before we start, it is important that you are aware of some caveats:</para>
-	<para>R Code run from inside the plugin's UI logic is evaluated in R's event loop, meaning they can be run <emphasis>while</emphasis> other computations are running. This is to make sure your plugin's UI will be usable, even while R is busy doing other things. However, this makes it really important, that your code does not have side effects. In particular:</para>
+	<para>R Code run from inside the plugin's UI logic is evaluated in R's event loop, meaning they can be run <emphasis>while</emphasis> other computations are running. This is to make sure your plugin's UI will be usable, even while &r; is busy doing other things. However, this makes it really important, that your code does not have side effects. In particular:</para>
 	<itemizedlist>
 		<listitem><para>Do <emphasis>not</emphasis> make any assignments in .GlobalEnv or any other non-local environment.</para></listitem>
 		<listitem><para>Do <emphasis>not</emphasis> print anything to the output file.</para></listitem>
@@ -1694,7 +1694,7 @@ This chapter contains information on some topics that are useful only to certain
 		  a bit more complex. For one thing you want to make sure, that your <command>&lt;valueselector&gt;</command> remains disabled, while it does not contain up-to-date information. Another
 		  thing is that you could potentially have queued more than one command, before you get the first results. This is why every command is given an "id", and we store that in <parameter>last_command_id</parameter> for later reference.</para>
 	  <para>When the command is done, the specified callback is called (<parameter>commandFinished</parameter>, in this case) with two parameters: The result itself, and the id of the corresponding
-		  command. The result will be of a type resembling the representation in R, &ie; a numeric Array, if the result is numeric, &etc; It can even be an R <command>list()</command>, but in this case
+		  command. The result will be of a type resembling the representation in R, &ie; a numeric Array, if the result is numeric, &etc; It can even be an &r; <command>list()</command>, but in this case
 		  it will be represented as a JS <command>Array()</command> without names.</para>
 	  <para>Note that even this example is somewhat simplified. In reality you should take additional precautions, &eg; to avoid putting an extreme amount of levels into the selector. The good news
 		  is that probably you do not have to do all this yourself. The above example is taken from the <command>rkward::level_select</command> plugin, for instance, which you can simply <link linkend="embedding">embed</link> in your own
@@ -2032,7 +2032,7 @@ user (selection from a list of values shown next to this element) --&gt;
 		</para>
 		<para>
 			Finally, in rare cases, you may want to exclude certain strings from translation. This may make sense, for example, if you offer a choice between
-			several R function names in a <command>&lt;radio&gt;</command>-control. You do not want these to be translated, then (but depending on the context, 
+			several &r; function names in a <command>&lt;radio&gt;</command>-control. You do not want these to be translated, then (but depending on the context, 
 			you should consider giving a descriptive label, instead):
 		</para>
 		<programlisting>
@@ -2174,13 +2174,13 @@ user (selection from a list of values shown next to this element) --&gt;
 	</sect1>
 	<sect1 id="i18n_translators"><title>Writing plugin translations</title>
 		<para>
-			We assume you know your trade as a translator, or are willing to read up on it, elsewhere. A few words specifically about translations of RKWard plugins, though:
+			We assume you know your trade as a translator, or are willing to read up on it, elsewhere. A few words specifically about translations of &rkward; plugins, though:
 		</para>
 		<itemizedlist>
-			<listitem><para>RKWard plugins were not translatable until version 0.6.3, and were mostly not written with i18n in mind, before then. Thus you are going to encounter rather
+			<listitem><para>&rkward; plugins were not translatable until version 0.6.3, and were mostly not written with i18n in mind, before then. Thus you are going to encounter rather
 					more ambiguous strings, and other i18n problems than in other mature projects. Please don't just silently work around these, but let us (or the plugin maintainers) 
 					know, so we can fix these issues.</para></listitem>
-			<listitem><para>Many RKWard plugins refer to highly specialized terms, from data handling and statistics, but also from other fields of science. In many cases, a good translation
+			<listitem><para>Many &rkward; plugins refer to highly specialized terms, from data handling and statistics, but also from other fields of science. In many cases, a good translation
 					will require at least basic knowledge of these fields. In some cases, there <emphasis>is</emphasis> no good translation for a technical term, and the best option may 
 					be to leave the term untranslated, or to include the English term in parentheses. Don't focus too much on the 100% mark of translated strings, focus on providing 
 					a good translation, even if that means skipping some strings (or even skipping some message catalogs as a whole). Other users may be able to fill in any gaps in technical
@@ -2418,7 +2418,7 @@ var.y &lt;- rk.XML.varslot("against", source=variables, types="number", required
 		<para>In order to recreate the example code to the point, you'd have to set all ID values manually. But since the package shall make our lives easier, from now on we will no longer care about that.</para>
 		<tip>
 			<para>
-				<application>rkwarddev</application> is capable of a lot of automation to help you build your plugins. However, it might be preferable to not use it to its full extend. If your goal is to produce code that is not only working but can also be easily read and compared to your generator script by a human being, you should consider to always set useful IDs with <parameter>id.name</parameter>. Naming your R objects identical to these IDs will also help in getting script code that is easy to understand.
+				<application>rkwarddev</application> is capable of a lot of automation to help you build your plugins. However, it might be preferable to not use it to its full extend. If your goal is to produce code that is not only working but can also be easily read and compared to your generator script by a human being, you should consider to always set useful IDs with <parameter>id.name</parameter>. Naming your &r; objects identical to these IDs will also help in getting script code that is easy to understand.
 			</para>
 		</tip>
 		<para>If you want to see how the XML code of the defined element looks like if you exported it to a file, you can just call the object by its name. So, if you now called <quote>var.x</quote> in your &r; session, you should see something like this:</para>
@@ -2755,7 +2755,7 @@ new Header(i18n("Test results")).print();
 	</varlistentry>
 	<varlistentry>
 	<term>quoted</term>
-	<listitem><para>The string in quoted form (suitable for passing to R as character).</para></listitem>
+	<listitem><para>The string in quoted form (suitable for passing to &r; as character).</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
@@ -2970,7 +2970,7 @@ new Header(i18n("Test results")).print();
 	</varlistentry>
 	<varlistentry>
 	<term><parameter>recommended</parameter></term>
-	<listitem><para>Should the dialog be used as the "recommended" interface (&ie; the interface that will be shown by default, unless the user has configured RKWard to default to a specific interface)? This attribute does not currently have an effect, as it is implicitly "true", unless the wizard is recommended.</para></listitem>
+	<listitem><para>Should the dialog be used as the "recommended" interface (&ie; the interface that will be shown by default, unless the user has configured &rkward; to default to a specific interface)? This attribute does not currently have an effect, as it is implicitly "true", unless the wizard is recommended.</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
@@ -2984,7 +2984,7 @@ new Header(i18n("Test results")).print();
 	</varlistentry>
 	<varlistentry>
 	<term><parameter>recommended</parameter></term>
-	<listitem><para>Should the wizard be used as the "recommended" interface (&ie; the interface that will be shown by default, unless the user has configured RKWard to default to a specific interface)? Optional, defaults to "false".</para></listitem>
+	<listitem><para>Should the wizard be used as the "recommended" interface (&ie; the interface that will be shown by default, unless the user has configured &rkward; to default to a specific interface)? Optional, defaults to "false".</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
@@ -3135,7 +3135,7 @@ new Header(i18n("Test results")).print();
 
 <varlistentry>
 <term>&lt;valueselector&gt;</term>
-<listitem><para>Provides a list of available strings (not R objects) to be selected in one or more accompanying &lt;valueslot&gt;s. String options can be defined using &lt;option&gt;-tags as direct children (see below), or set using dynamic <link linkend="elementproperties">properties</link>. Attributes:
+<listitem><para>Provides a list of available strings (not &r; objects) to be selected in one or more accompanying &lt;valueslot&gt;s. String options can be defined using &lt;option&gt;-tags as direct children (see below), or set using dynamic <link linkend="elementproperties">properties</link>. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term><parameter>label</parameter></term>
@@ -3262,7 +3262,7 @@ made checkable, thus acting like a simple check box at the same time.
 
 <varlistentry>
 <term>&lt;matrix&gt;</term>
-<listitem><para>A table for entering matrix data (or vectors) in the GUI. <note><para>This input element is <emphasis>not</emphasis> optimized for entering editing large amounts of data. While there is no strict limit on the size of a &lt;matrix&gt;, in general it should not exceed around ten rows / columns. If you expect larger data, allow users to select it as an R object (which may be a good idea as an alternative option, in almost <emphasis>every</emphasis> instance where you use a matrix element).</para></note> Attributes:
+<listitem><para>A table for entering matrix data (or vectors) in the GUI.</para> <note><para>This input element is <emphasis>not</emphasis> optimized for entering/editing large amounts of data. While there is no strict limit on the size of a &lt;matrix&gt;, in general it should not exceed around ten rows / columns. If you expect larger data, allow users to select it as an &r; object (which may be a good idea as an alternative option, in almost <emphasis>every</emphasis> instance where you use a matrix element).</para></note> <para>Attributes:
 	<variablelist>
 	<varlistentry>
 	<term><parameter>label</parameter></term>
@@ -3369,7 +3369,7 @@ made checkable, thus acting like a simple check box at the same time.
 	</para></listitem></varlistentry>
 	<varlistentry>
 	<term>&lt;content&gt;</term>
-	<listitem><para>Declare the content / UI of the set. No attributes. All usual active, passive, and layout elements are allowed as childname elements. In addition, in earlier versions of RKWard (up to 0.6.3), the special child-element <command>&lt;optiondisplay&gt;</command> was allowed. This is obsolete in RKWard 0.6.4, and should simply be removed from existing plugins.
+	<listitem><para>Declare the content / UI of the set. No attributes. All usual active, passive, and layout elements are allowed as childname elements. In addition, in earlier versions of &rkward; (up to 0.6.3), the special child-element <command>&lt;optiondisplay&gt;</command> was allowed. This is obsolete in &rkward; 0.6.4, and should simply be removed from existing plugins.
 	</para></listitem></varlistentry>
 	<varlistentry>
 	<term>&lt;logic&gt;</term>
@@ -3508,7 +3508,7 @@ made checkable, thus acting like a simple check box at the same time.
 
 <varlistentry>
 <term>&lt;preview&gt;</term>
-<listitem><para>Checkbox to toggle preview functionality. Note that starting with version 0.6.5 of &kapp; <command>&lt;preview&gt;</command> preview elements are special-
+<listitem><para>Checkbox to toggle preview functionality. Note that starting with version 0.6.5 of &rkward; <command>&lt;preview&gt;</command> preview elements are special-
 		cased in plugin dialogs (not wizards): They will be placed in the button-column, irrespective of where exactly they are defined in the UI. It is still a good idea to
 		define them at a sensible place in the layout, for backwards compatibility. Attributes:
 	<variablelist>
@@ -4038,7 +4038,7 @@ different types, using modifiers may lead to errors. For <replaceable>fixed_valu
 </variablelist>
 </sect1>
 
-<sect1 id="standard_embeddable_plugins"><title>Embeddable plugins shipped with the official RKWard release</title>
+<sect1 id="standard_embeddable_plugins"><title>Embeddable plugins shipped with the official &rkward; release</title>
 <para>A number of embeddable plugins is shipped with &rkward;, and can be used in your own plugins. Detailed documentation is currently available
 	only in these plugins source or help files. However, here is a list to give you a quick overview of what is available:</para>
 <table frame='all'><title>Standard embeddable plugins</title>
@@ -4146,7 +4146,7 @@ different types, using modifiers may lead to errors. For <replaceable>fixed_valu
 	</varlistentry>
 	<varlistentry>
 	<term>R_min_version, R_max_version</term>
-	<listitem><para>Minimum and maximum allowed version of &r;. Version specifications may <emphasis>not</emphasis> include non-numeric suffixes, like "0.5.7z-devel1". The R version dependency will be shown on the plugins' help pages, but does not have any direct effect, as of &rkward; 0.6.1. <link linkend="sect_dependencies_r_version">More information</link>. Optional; if not specified, no minimum / maximum version of &r; will be required.</para></listitem>
+	<listitem><para>Minimum and maximum allowed version of &r;. Version specifications may <emphasis>not</emphasis> include non-numeric suffixes, like "0.5.7z-devel1". The &r; version dependency will be shown on the plugins' help pages, but does not have any direct effect, as of &rkward; 0.6.1. <link linkend="sect_dependencies_r_version">More information</link>. Optional; if not specified, no minimum / maximum version of &r; will be required.</para></listitem>
 	</varlistentry>
 	</variablelist>
 <para>Child elements:</para>
@@ -4529,7 +4529,7 @@ different types, using modifiers may lead to errors. For <replaceable>fixed_valu
 <listitem><para><command>include(filename)</command> can be used to include a separate JS file.</para></listitem>
 </varlistentry>
 <varlistentry><term>doRCommand()-function</term>
-<listitem><para><command>doRCommand(command, callback)</command> can be used to query R for information. Please read the section on <link linkend="querying_r_for_info">querying R from inside a plugin</link> for details, and caveats.</para></listitem>
+<listitem><para><command>doRCommand(command, callback)</command> can be used to query &r; for information. Please read the section on <link linkend="querying_r_for_info">querying &r; from inside a plugin</link> for details, and caveats.</para></listitem>
 </varlistentry>
 </variablelist>
 </sect1>
@@ -4539,10 +4539,10 @@ different types, using modifiers may lead to errors. For <replaceable>fixed_valu
 <appendix id="troubleshooting">
 <title>Troubleshooting during plugin development</title>
 <para>
-So you've read all the documentation, did everything right, and still cannot get it to work? Don't worry, we'll work it out. First thing to do is: Activate "RKWard Debug Messages" - window (available from the "Windows" - menu, or right click on one of the tool bars), and then start your plugin, again. As a general rule of thumb, you should not see any output in the messages window when your plugin gets invoked, or at any other time. If there is one, it's likely related to your plugin. See if it helps you.
+    So you've read all the documentation, did everything right, and still cannot get it to work? Don't worry, we'll work it out. First thing to do is: Activate <guilabel>&rkward; Debug Messages</guilabel> - window (available from the <guimenu>Windows</guimenu> - menu, or right click on one of the tool bars), and then start your plugin, again. As a general rule of thumb, you should not see any output in the messages window when your plugin gets invoked, or at any other time. If there is one, it's likely related to your plugin. See if it helps you.
 </para>
 <para>
-If everything seems fine on the console, try to increase the debug-level (from the command line, using <command>rkward --debug-level 3</command>, or by setting debug level to 3 in Settings-&gt;Configure RKWard-&gt;Debug. Not all messages shown at higher debug levels necessarily indicate a problem, but chance are, your problem shows up somewhere between the messages.
+    If everything seems fine on the console, try to increase the debug-level (from the command line, using <command>rkward --debug-level 3</command>, or by setting debug level to 3 in <menuchoice><guimenu>Settings</guimenu> <guimenuitem>Configure &rkward;</guimenuitem> <guimenuitem>Debug</guimenuitem></menuchoice>). Not all messages shown at higher debug levels necessarily indicate a problem, but chance are, your problem shows up somewhere between the messages.
 </para>
 <para>
 If you still cannot find out what's wrong, don't despair. We know this is complicated stuff, and - after all - possibly you've also come across a bug in &rkward;, and &rkward; needs to be fixed. Just write to the development mailing list, and tell us about the problem. We'll be happy to help you.
