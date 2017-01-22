@@ -1773,7 +1773,7 @@ This chapter contains information on some topics that are useful only to certain
 &lt;/dialog&gt;
 		</programlisting>
 	<para>
-		Of course you can also use <link linkend="logic">UI logic</link> inside an optionset. There are two options for doing this: You can do so	by making connection (or scripting) in the main <command>&lt;logic&gt;</command> section of your plugin, as usual. However, you will access the UI elements in the contents region as (&eg;) "set.contents.firstname.XYZ". Note the prefix "set" (the <parameter>id</parameter> you have assigned to the set and "contents". Alternatively, you can add a separate <command>&lt;logic&gt;</command> section as a child element of your <command>&lt;optionset&gt;</command>. In this case, <parameter>id</parameter>s will be addressed relative to the contents region, &eg; "firstname.XYZ". Only the <command>&lt;script&gt;</command>-element is not allowed in the logic section of an optionset. If you want to use scripting,
+		Of course you can also use <link linkend="logic">UI logic</link> inside an optionset. There are two options for doing this: You can do so by making connection (or scripting) in the main <command>&lt;logic&gt;</command> section of your plugin, as usual. However, you will access the UI elements in the contents region as (&eg;) "set.contents.firstname.XYZ". Note the prefix "set" (the <parameter>id</parameter> you have assigned to the set and "contents"). Alternatively, you can add a separate <command>&lt;logic&gt;</command> section as a child element of your <command>&lt;optionset&gt;</command>. In this case, <parameter>id</parameter>s will be addressed relative to the contents region, &eg; "firstname.XYZ". Only the <command>&lt;script&gt;</command>-element is not allowed in the logic section of an optionset. If you want to use scripting,
 		you will have to utilize the plugin's main <command>&lt;logic&gt;</command> section.
 	</para>
 	<note>
@@ -4375,7 +4375,7 @@ different types, using modifiers may lead to errors. For <replaceable>fixed_valu
 	</varlistentry>
 	<varlistentry>
 	<term>map</term>
-	<listitem><para>To include a &pluginmap; file from a different package (or an &rkward; &pluginmap; from your external &pluginmap;, you can refer to it by its <replaceable>namespacename::id</replaceable>, as specified in the required &pluginmap;s &lt;document&gt; element. Inclusion will fail, if no &pluginmap; by that id is known (&eg; not installed on the user's system). You should use this method for including &pluginmap;s outside your package, only. For maps inside your package, specifying a relative path (<parameter>file</parameter> attribute) is faster, and more reliable.
+	<listitem><para>To include a &pluginmap; file from a different package (or an &rkward; &pluginmap; from your external &pluginmap;), you can refer to it by its <replaceable>namespacename::id</replaceable>, as specified in the required &pluginmap;s &lt;document&gt; element. Inclusion will fail, if no &pluginmap; by that id is known (&eg; not installed on the user's system). You should use this method for including &pluginmap;s outside your package, only. For maps inside your package, specifying a relative path (<parameter>file</parameter> attribute) is faster, and more reliable.
 	</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
