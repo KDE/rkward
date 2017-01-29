@@ -373,9 +373,7 @@ This is a guide to writing plugins for &rkward;.
 		Using this simple tag you create a list from which the user can select variables. You have to specify an <parameter>id</parameter> for this element, so &rkward; knows how to find it.
 	</para>
 	<warning>
-		<remark>
 			You may NOT use a dot (.) in the <parameter>id</parameter> string.
-		</remark>
 	</warning>
 	<programlisting>
 					&lt;column&gt;
@@ -1056,9 +1054,7 @@ function printout () {
 	</para>
 	<para>
 		<caution>
-			<remark>
 				Probably the <quote>button</quote> approach should only ever be used for plugins that can never be invalid (for missing/bad settings). Otherwise the user would not be able to submit the code, but might have a hard time finding out, the reason for that is hidden behind some button.
-			</remark>
 		</caution>
 	</para>
 </sect1>
@@ -1773,7 +1769,7 @@ This chapter contains information on some topics that are useful only to certain
 &lt;/dialog&gt;
 		</programlisting>
 	<para>
-		Of course you can also use <link linkend="logic">UI logic</link> inside an optionset. There are two options for doing this: You can do so by making connection (or scripting) in the main <command>&lt;logic&gt;</command> section of your plugin, as usual. However, you will access the UI elements in the contents region as (&eg;) "set.contents.firstname.XYZ". Note the prefix "set" (the <parameter>id</parameter> you have assigned to the set and "contents"). Alternatively, you can add a separate <command>&lt;logic&gt;</command> section as a child element of your <command>&lt;optionset&gt;</command>. In this case, <parameter>id</parameter>s will be addressed relative to the contents region, &eg; "firstname.XYZ". Only the <command>&lt;script&gt;</command>-element is not allowed in the logic section of an optionset. If you want to use scripting,
+		Of course you can also use <link linkend="logic">UI logic</link> inside an optionset. There are two options for doing this: You can do so	by making connection (or scripting) in the main <command>&lt;logic&gt;</command> section of your plugin, as usual. However, you will access the UI elements in the contents region as (&eg;) "set.contents.firstname.XYZ". Note the prefix "set" (the <parameter>id</parameter> you have assigned to the set and "contents". Alternatively, you can add a separate <command>&lt;logic&gt;</command> section as a child element of your <command>&lt;optionset&gt;</command>. In this case, <parameter>id</parameter>s will be addressed relative to the contents region, &eg; "firstname.XYZ". Only the <command>&lt;script&gt;</command>-element is not allowed in the logic section of an optionset. If you want to use scripting,
 		you will have to utilize the plugin's main <command>&lt;logic&gt;</command> section.
 	</para>
 	<note>
@@ -3618,7 +3614,7 @@ Attributes:
 	<varlistentry>
 	<term><parameter>require_true</parameter></term>
 	<listitem><para>If set to "true", the property will become required, and will only be considered valid, if its state is true/on. Hence, if the property is false, it will block the <guibutton>Submit</guibutton> button (optional, defaults to "false").
-		<caution><remark>If you use this, make sure the user can easily detect what's wrong, such as by showing an explanatory &lt;text&gt;.</remark></caution></para></listitem>
+		<caution>If you use this, make sure the user can easily detect what's wrong, such as by showing an explanatory &lt;text&gt;.</caution></para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
@@ -4375,7 +4371,7 @@ different types, using modifiers may lead to errors. For <replaceable>fixed_valu
 	</varlistentry>
 	<varlistentry>
 	<term>map</term>
-	<listitem><para>To include a &pluginmap; file from a different package (or an &rkward; &pluginmap; from your external &pluginmap;), you can refer to it by its <replaceable>namespacename::id</replaceable>, as specified in the required &pluginmap;s &lt;document&gt; element. Inclusion will fail, if no &pluginmap; by that id is known (&eg; not installed on the user's system). You should use this method for including &pluginmap;s outside your package, only. For maps inside your package, specifying a relative path (<parameter>file</parameter> attribute) is faster, and more reliable.
+	<listitem><para>To include a &pluginmap; file from a different package (or an &rkward; &pluginmap; from your external &pluginmap;, you can refer to it by its <replaceable>namespacename::id</replaceable>, as specified in the required &pluginmap;s &lt;document&gt; element. Inclusion will fail, if no &pluginmap; by that id is known (&eg; not installed on the user's system). You should use this method for including &pluginmap;s outside your package, only. For maps inside your package, specifying a relative path (<parameter>file</parameter> attribute) is faster, and more reliable.
 	</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
@@ -4502,7 +4498,7 @@ different types, using modifiers may lead to errors. For <replaceable>fixed_valu
 	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry><term>Class "RObject"</term>
-<listitem><para>Class which represents a single &r; object. An instance of this class can be obtained by using <command>makeRObject(objectname)</command>. The following methods are available for instances of class "RObject": <warning><remark>If any commands are still pending in the backend, the information provided by these methods can be out-of-date by the time that the plugin code is run. Do <emphasis>not</emphasis> rely on it for critical operations (risking loss of data).</remark></warning>
+<listitem><para>Class which represents a single &r; object. An instance of this class can be obtained by using <command>makeRObject(objectname)</command>. The following methods are available for instances of class "RObject": <warning>If any commands are still pending in the backend, the information provided by these methods can be out-of-date by the time that the plugin code is run. Do <emphasis>not</emphasis> rely on it for critical operations (risking loss of data).</warning>
 	<variablelist>
 	<varlistentry><term>getName()</term><listitem><para>Returns the absolute name of the object.</para></listitem></varlistentry>
 	<varlistentry><term>exists()</term><listitem><para>Returns whether the object exists. You should generally check this before using any of the methods listed below.</para></listitem></varlistentry>
