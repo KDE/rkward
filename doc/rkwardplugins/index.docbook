@@ -373,7 +373,9 @@ This is a guide to writing plugins for &rkward;.
 		Using this simple tag you create a list from which the user can select variables. You have to specify an <parameter>id</parameter> for this element, so &rkward; knows how to find it.
 	</para>
 	<warning>
+		<para>
 			You may NOT use a dot (.) in the <parameter>id</parameter> string.
+		</para>
 	</warning>
 	<programlisting>
 					&lt;column&gt;
@@ -1054,7 +1056,9 @@ function printout () {
 	</para>
 	<para>
 		<caution>
+			<para>
 				Probably the <quote>button</quote> approach should only ever be used for plugins that can never be invalid (for missing/bad settings). Otherwise the user would not be able to submit the code, but might have a hard time finding out, the reason for that is hidden behind some button.
+			</para>	
 		</caution>
 	</para>
 </sect1>
@@ -3614,7 +3618,7 @@ Attributes:
 	<varlistentry>
 	<term><parameter>require_true</parameter></term>
 	<listitem><para>If set to "true", the property will become required, and will only be considered valid, if its state is true/on. Hence, if the property is false, it will block the <guibutton>Submit</guibutton> button (optional, defaults to "false").
-		<caution>If you use this, make sure the user can easily detect what's wrong, such as by showing an explanatory &lt;text&gt;.</caution></para></listitem>
+		<caution><para>If you use this, make sure the user can easily detect what's wrong, such as by showing an explanatory &lt;text&gt;.</para></caution></para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
@@ -4498,7 +4502,7 @@ different types, using modifiers may lead to errors. For <replaceable>fixed_valu
 	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry><term>Class "RObject"</term>
-<listitem><para>Class which represents a single &r; object. An instance of this class can be obtained by using <command>makeRObject(objectname)</command>. The following methods are available for instances of class "RObject": <warning>If any commands are still pending in the backend, the information provided by these methods can be out-of-date by the time that the plugin code is run. Do <emphasis>not</emphasis> rely on it for critical operations (risking loss of data).</warning>
+<listitem><para>Class which represents a single &r; object. An instance of this class can be obtained by using <command>makeRObject(objectname)</command>. The following methods are available for instances of class "RObject": <warning><para>If any commands are still pending in the backend, the information provided by these methods can be out-of-date by the time that the plugin code is run. Do <emphasis>not</emphasis> rely on it for critical operations (risking loss of data).</para></warning>
 	<variablelist>
 	<varlistentry><term>getName()</term><listitem><para>Returns the absolute name of the object.</para></listitem></varlistentry>
 	<varlistentry><term>exists()</term><listitem><para>Returns whether the object exists. You should generally check this before using any of the methods listed below.</para></listitem></varlistentry>
