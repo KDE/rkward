@@ -1655,7 +1655,7 @@ This chapter contains information on some topics that are useful only to certain
 
 <sect1 id="querying_r_for_info">
 <title>Querying &r; for information</title>
-	<para>In some cases, you may want to fetch further information from R, to be presented in your plugin's UI. For instance, you may want to offer a selection of the levels of a factor that the user
+	<para>In some cases, you may want to fetch further information from &r;, to be presented in your plugin's UI. For instance, you may want to offer a selection of the levels of a factor that the user
 	has selected for analysis. Since version 0.6.2 of &rkward; it is possible to do so. Before we start, it is important that you are aware of some caveats:</para>
 	<para>R Code run from inside the plugin's UI logic is evaluated in R's event loop, meaning they can be run <emphasis>while</emphasis> other computations are running. This is to make sure your plugin's UI will be usable, even while &r; is busy doing other things. However, this makes it really important, that your code does not have side effects. In particular:</para>
 	<itemizedlist>
@@ -1694,7 +1694,7 @@ This chapter contains information on some topics that are useful only to certain
 		  a bit more complex. For one thing you want to make sure, that your <command>&lt;valueselector&gt;</command> remains disabled, while it does not contain up-to-date information. Another
 		  thing is that you could potentially have queued more than one command, before you get the first results. This is why every command is given an "id", and we store that in <parameter>last_command_id</parameter> for later reference.</para>
 	  <para>When the command is done, the specified callback is called (<parameter>commandFinished</parameter>, in this case) with two parameters: The result itself, and the id of the corresponding
-		  command. The result will be of a type resembling the representation in R, &ie; a numeric Array, if the result is numeric, &etc; It can even be an &r; <command>list()</command>, but in this case
+		  command. The result will be of a type resembling the representation in &r;, &ie; a numeric Array, if the result is numeric, &etc; It can even be an &r; <command>list()</command>, but in this case
 		  it will be represented as a JS <command>Array()</command> without names.</para>
 	  <para>Note that even this example is somewhat simplified. In reality you should take additional precautions, &eg; to avoid putting an extreme amount of levels into the selector. The good news
 		  is that probably you do not have to do all this yourself. The above example is taken from the <command>rkward::level_select</command> plugin, for instance, which you can simply <link linkend="embedding">embed</link> in your own
@@ -1773,7 +1773,7 @@ This chapter contains information on some topics that are useful only to certain
 &lt;/dialog&gt;
 		</programlisting>
 	<para>
-		Of course you can also use <link linkend="logic">UI logic</link> inside an optionset. There are two options for doing this: You can do so	by making connection (or scripting) in the main <command>&lt;logic&gt;</command> section of your plugin, as usual. However, you will access the UI elements in the contents region as (&eg;) "set.contents.firstname.XYZ". Note the prefix "set" (the <parameter>id</parameter> you have assigned to the set and "contents". Alternatively, you can add a separate <command>&lt;logic&gt;</command> section as a child element of your <command>&lt;optionset&gt;</command>. In this case, <parameter>id</parameter>s will be addressed relative to the contents region, &eg; "firstname.XYZ". Only the <command>&lt;script&gt;</command>-element is not allowed in the logic section of an optionset. If you want to use scripting,
+		Of course you can also use <link linkend="logic">UI logic</link> inside an optionset. There are two options for doing this: You can do so by making connection (or scripting) in the main <command>&lt;logic&gt;</command> section of your plugin, as usual. However, you will access the UI elements in the contents region as (&eg;) "set.contents.firstname.XYZ". Note the prefix "set" (the <parameter>id</parameter> you have assigned to the set and "contents"). Alternatively, you can add a separate <command>&lt;logic&gt;</command> section as a child element of your <command>&lt;optionset&gt;</command>. In this case, <parameter>id</parameter>s will be addressed relative to the contents region, &eg; "firstname.XYZ". Only the <command>&lt;script&gt;</command>-element is not allowed in the logic section of an optionset. If you want to use scripting,
 		you will have to utilize the plugin's main <command>&lt;logic&gt;</command> section.
 	</para>
 	<note>
@@ -2108,7 +2108,7 @@ user (selection from a list of values shown next to this element) --&gt;
 				Should you require a translatable string to be quoted, a second time, send it through <command>quote()</command>, <emphasis>twice</emphasis>.
 			</para>
 			<para>
-				That said, it is generally not a good idea to make bits like function names or variable names translatable. For one thing, R, the programming language, is inherently in English,
+				That said, it is generally not a good idea to make bits like function names or variable names translatable. For one thing, &r;, the programming language, is inherently in English,
 				and there is no internationalization of the language itself. Code comments are a different beast, but you should use the <command>comment()</command>-function for those. Secondly,
 				making syntactically relevant parts of the generated code translatable means that translations could actually break your plugin.
 				E.g. if an unsuspecting translator translates a string meant as a variable name in two distinct words with a space in between.
@@ -2506,7 +2506,7 @@ full.wizard &lt;- rk.XML.wizard(
 			<para>First of all, just like we didn't have to care about IDs for elements when defining the GUI layout, we don't have to care about JavaScript variable names in the next step. If you want more control, you can write plain JavaScript code and have it pasted to the generated file. But it's probably much more efficient to do it the <application>rkwarddev</application> way.</para>
 			<para>Most notably you don't have to define any variable yourself, as <function>rk.plugin.skeleton()</function> can scan your XML code and automatically define all variables you will probably need -- for instance, you wouldn't bother to include a check box if you don't use its value or state afterwards. So we can start writing the actual &r; code generating JS immediately.</para>
 			<tip><para>The function <function>rk.JS.scan()</function> can also scan existing XML files for variables.</para></tip>
-			<para>The package has some functions for JS code constructs that are commonly used in &rkward; plugins, like the <function>echo()</function> function or <function>if() {...} else {...}</function> conditions. There are some differences between JS and R, &eg;, for <function>paste()</function> in &r; you use the comma to concatenate character strings, whereas for <function>echo()</function> in JS you use <quote>+</quote>, and lines must end with a semicolon. By using the &r; functions, you can almost forget about these differences and keep writing &r; code.</para>
+			<para>The package has some functions for JS code constructs that are commonly used in &rkward; plugins, like the <function>echo()</function> function or <function>if() {...} else {...}</function> conditions. There are some differences between JS and &r;, &eg;, for <function>paste()</function> in &r; you use the comma to concatenate character strings, whereas for <function>echo()</function> in JS you use <quote>+</quote>, and lines must end with a semicolon. By using the &r; functions, you can almost forget about these differences and keep writing &r; code.</para>
 			<para>These functions can take different classes of input objects: Either plain text, &r; objects with XML code like above, or in turn results of some other JS functions of the package. In the end, you will always call <function>rk.paste.JS()</function>, which behaves similar to <function>paste()</function>, but depending on the input objects it will replace them with their XML ID, JavaScript variable name or even complete JavaScript code blocks.</para>
 			<para>For the t-test example, we need two JS objects: One to calculate the results, and one to print them in the <function>printout()</function> function:</para>
 		<programlisting>
@@ -3901,7 +3901,7 @@ Attributes:
 		</varlistentry>
 		<varlistentry>
 			<term>cbind</term>
-			<listitem><para>Data in a format suitable for pasting to R, wrapped in a cbind statement (string; read-only).</para></listitem>
+			<listitem><para>Data in a format suitable for pasting to &r;, wrapped in a cbind statement (string; read-only).</para></listitem>
 		</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
@@ -4375,7 +4375,7 @@ different types, using modifiers may lead to errors. For <replaceable>fixed_valu
 	</varlistentry>
 	<varlistentry>
 	<term>map</term>
-	<listitem><para>To include a &pluginmap; file from a different package (or an &rkward; &pluginmap; from your external &pluginmap;, you can refer to it by its <replaceable>namespacename::id</replaceable>, as specified in the required &pluginmap;s &lt;document&gt; element. Inclusion will fail, if no &pluginmap; by that id is known (&eg; not installed on the user's system). You should use this method for including &pluginmap;s outside your package, only. For maps inside your package, specifying a relative path (<parameter>file</parameter> attribute) is faster, and more reliable.
+	<listitem><para>To include a &pluginmap; file from a different package (or an &rkward; &pluginmap; from your external &pluginmap;), you can refer to it by its <replaceable>namespacename::id</replaceable>, as specified in the required &pluginmap;s &lt;document&gt; element. Inclusion will fail, if no &pluginmap; by that id is known (&eg; not installed on the user's system). You should use this method for including &pluginmap;s outside your package, only. For maps inside your package, specifying a relative path (<parameter>file</parameter> attribute) is faster, and more reliable.
 	</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
