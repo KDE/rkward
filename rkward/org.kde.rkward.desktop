@@ -50,7 +50,7 @@ Comment[uk]=Графічний інтерфейс проекту R
 Comment[x-test]=xxGUI for the R-projectxx
 Icon=rkward
 X-DBUS-ServiceName=org.kde.rkward
-Exec=sh -c "STARTUP_ID_COPY=\\${DESKTOP_STARTUP_ID} rkward -qwindowtitle '%c'"
+Exec=rkward -qwindowtitle '%c'
 Terminal=false
 Type=Application
 X-DocPath=rkward/index.html

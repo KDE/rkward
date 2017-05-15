@@ -77,11 +77,6 @@ int RInterface::na_int;
 RInterface::RInterface () {
 	RK_TRACE (RBACKEND);
 
-	// If R_HOME is not set, most certainly the user called the binary without the wrapper script
-	if (!getenv ("R_HOME")) {
-		RK_DEBUG (RBACKEND, DL_ERROR, "No R_HOME environment variable set. RKWard will quit in a moment. Always start rkward in the default way unless you know what you're doing.");
-	}
-
 	new RCommandStackModel (this);
 	RCommandStack::regular_stack = new RCommandStack ();
 	startup_phase2_error = false;

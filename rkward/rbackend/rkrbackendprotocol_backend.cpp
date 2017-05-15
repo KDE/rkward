@@ -33,6 +33,7 @@
 #include <QUuid>		// mis-used as a random-string generator
 #include <QTemporaryFile>
 #include <QDir>
+#include <QUrl>
 
 	void RK_setupGettext (const char*);
 	int RK_Debug_Level = 2;
@@ -83,16 +84,13 @@
 			if (args[i].startsWith ("--debug-level")) {
 				RK_Debug_Level = args[i].section ('=', 1).toInt ();
 			} else if (args[i].startsWith ("--server-name")) {
-				servername = args[i].section ('=', 1);
+				servername = QUrl::fromPercentEncoding (args[i].section ('=', 1).toUtf8 ());
 			} else if (args[i].startsWith ("--data-dir")) {
-#ifdef __GNUC__
-#	warning What about paths with spaces?!
-#endif
-				data_dir = args[i].section ('=', 1);
+				data_dir = QUrl::fromPercentEncoding (args[i].section ('=', 1).toUtf8 ());
 			} else if (args[i].startsWith ("--locale-dir")) {
-				locale_dir = args[i].section ('=', 1);
+				locale_dir = QUrl::fromPercentEncoding (args[i].section ('=', 1).toUtf8 ());
 			} else if (args[i].startsWith ("--rkd-server-name")) {
-				rkd_server_name = args[i].section ('=', 1);
+				rkd_server_name = QUrl::fromPercentEncoding (args[i].section ('=', 1).toUtf8 ());
 			} else {
 				printf ("unknown argument %s", qPrintable (args[i]));
 			}

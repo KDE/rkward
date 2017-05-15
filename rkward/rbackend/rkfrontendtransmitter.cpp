@@ -95,10 +95,11 @@ void RKFrontendTransmitter::run () {
 
 	QStringList args;
 	args.append ("--debug-level=" + QString::number (RK_Debug_Level));
-	args.append ("--server-name=" + server->fullServerName ());
-	args.append ("--rkd-server-name=" + rkd_transmitter->serverName ());
-	args.append ("--data-dir=" + RKSettingsModuleGeneral::filesPath ());
-	args.append ("--locale-dir=" + localeDir ());
+	// NOTE: QProcess quotes its arguments, *but* properly passing all spaces and quotes through the R CMD wrapper, seems near(?) impossible on Windows. Instead, we use percent encoding, internally.
+	args.append ("--server-name=" + server->fullServerName ().toUtf8 ().toPercentEncoding ());
+	args.append ("--rkd-server-name=" + rkd_transmitter->serverName ().toUtf8 ().toPercentEncoding ());
+	args.append ("--data-dir=" + RKSettingsModuleGeneral::filesPath ().toUtf8 ().toPercentEncoding ());
+	args.append ("--locale-dir=" + localeDir ().toUtf8 ().toPercentEncoding ());
 	connect (backend, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), this, &RKFrontendTransmitter::backendExit);
 	QString backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath ());
 	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "/rbackend");	// for running directly from the build-dir
@@ -107,14 +108,16 @@ void RKFrontendTransmitter::run () {
 #endif
 	if (backend_executable.isEmpty ()) handleTransmissionError (i18n ("The backend executable could not be found. This is likely to be a problem with your installation."));
 	QString debugger = RKGlobals::startup_options["backend-debugger"].toString ();
+	args.prepend (RKCommonFunctions::windowsShellScriptSafeCommand (backend_executable));
+	args.prepend ("CMD");
 	if (!debugger.isEmpty ()) {
-		args.prepend (backend_executable);
-		QStringList l = debugger.split (' ');
-		args = l.mid (1) + args;
-		backend->start (l.first (), args, QIODevice::ReadOnly);
-	} else {
-		backend->start (backend_executable, args, QIODevice::ReadOnly);
+		args = debugger.split (' ') + args;
 	}
+for (int i = 0; i < args.size (); ++i) {
+qDebug ("%s", qPrintable (args[i]));
+}
+qDebug ("%s", qPrintable (qgetenv ("R_BINARY")));
+	backend->start (qgetenv ("R_BINARY"), args, QIODevice::ReadOnly);
 
 	if (!backend->waitForStarted ()) {
 		handleTransmissionError (i18n ("The backend executable could not be started. Error message was: %1", backend->errorString ()));

@@ -1,3 +1,7 @@
+- Remove startup wrapper script (moving the still-needed functionality into the main executable)
+    TODO: This is still mostly EXPERIMENTAL, and only vaguely tested on Linux so far. It should help resolve a number of long standing quirks, though, such as command windows (on Windows), icons,
+          startup notification quirks, etc.
+    TODO: Clean up the Mac portions in CMakeLists.txt
 - Function argument hinting is less easily fooled by braces inside quotes
 - Preview status messages can now be closed
 - Show the message accompanying rk.show.files() or rk.edit.files() inside the main window, instead of a separate dialog
