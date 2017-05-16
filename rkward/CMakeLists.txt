@@ -5,12 +5,9 @@ ENDIF(NOT ${PROJECT_NAME} STREQUAL "rkward")
 INCLUDE(SetVersionNumber.cmake)
 
 IF(Q_WS_MAC)
-	SET(RKWARD_FRONTEND_LOCATION ${BIN_INSTALL_DIR}/rkward.frontend.app/Contents/MacOS)
 	SET(CPACK_BUNDLE_ICON rkward.icns)
 	SET(CPACK_BUNDLE_NAME RKWard)
 	SET(CPACK_BUNDLE_STARTUP_COMMAND rkward)
-ELSE(Q_WS_MAC)
-	SET(RKWARD_FRONTEND_LOCATION ${LIBEXEC_INSTALL_DIR})
 ENDIF(Q_WS_MAC)
 
 ADD_SUBDIRECTORY( dataeditor )
@@ -46,7 +43,7 @@ ADD_CUSTOM_COMMAND (OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/rkward.ico"
 			"${CMAKE_CURRENT_BINARY_DIR}/rkward.ico")
 
 add_executable(rkward ${RKWard_Sources} rkward_windows_icon.rc rkward.ico)
-# NOTE: These definitions are needed for the wrapper, only.
+# NOTE: These definitions are needed for the startup procedure (main.cpp), only.
 # We should switch with to target_compile_definitions once we require CMAKE 2.6+
 add_definitions (-DR_EXECUTABLE="${R_EXECUTABLE}")
 add_definitions (-DINSTALL_PATH="${CMAKE_INSTALL_PREFIX}")
@@ -76,14 +73,11 @@ INSTALL(DIRECTORY plugins/ pages DESTINATION ${DATA_INSTALL_DIR}/rkward
 
 INSTALL(FILES rkwardui.rc rkconsolepart.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/rkward)
 INSTALL(FILES resource.ver DESTINATION ${DATA_INSTALL_DIR}/rkward)
+INSTALL(TARGETS rkward DESTINATION ${BIN_INSTALL_DIR})
 
 IF(Q_WS_MAC)
-	INSTALL(TARGETS rkward.frontend DESTINATION ${BIN_INSTALL_DIR})
-	INSTALL(TARGETS rkward DESTINATION ${BUNDLE_INSTALL_DIR}/${CPACK_BUNDLE_NAME}.app/Contents/MacOS)
 	INSTALL(FILES ${CMAKE_SOURCE_DIR}/rkward/icons/app-icon/rkward.icns DESTINATION ${BUNDLE_INSTALL_DIR}/${CPACK_BUNDLE_NAME}.app/Contents/Resources)
 	INSTALL(FILES ${RKWARD_INFOPLIST_FILE} DESTINATION ${BUNDLE_INSTALL_DIR}/${CPACK_BUNDLE_NAME}.app/Contents)
-ELSE(Q_WS_MAC)
-	INSTALL(TARGETS rkward DESTINATION ${BIN_INSTALL_DIR})
 ENDIF(Q_WS_MAC)
 
 INSTALL(FILES org.kde.rkward.desktop org.kde.rkward-open.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
