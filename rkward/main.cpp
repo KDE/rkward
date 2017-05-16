@@ -224,6 +224,19 @@ int main (int argc, char *argv[]) {
 	RKGlobals::startup_options["evaluate"] = parser.value ("evaluate");
 	RKGlobals::startup_options["backend-debugger"] = parser.value ("backend-debugger");
 
+	// MacOS may need some path adjustments, first
+#ifdef Q_OS_MAC
+	QString oldpath = qgetenv ("PATH");
+	if (!oldpath.contains (INSTALL_PATH)) {
+		//ensure that PATH is set to include what we deliver with the bundle
+		qputenv ("PATH", QString ("%1/bin:%1/sbin:%2").arg (INSTALL_PATH).arg (oldpath).toLocal8Bit ());
+		if (debug_level > 3) qDebug ("Adjusting system path to %s", qPrintable (qgetenv ("PATH")));
+	}
+	// ensure that RKWard finds its own packages
+	qputenv ("R_LIBS", R_LIBS);
+	QProcess::execute ("launchctl", QStringList () << "load" << "-w" << INSTALL_PATH "/Library/LaunchAgents/org.freedesktop.dbus-session.plist");
+#endif
+
 	// Handle --reuse option, by placing a dbus-call to existing RKWard process (if any) and exiting
 	if (parser.isSet ("reuse")) {
 		if (!QDBusConnection::sessionBus ().isConnected ()) {
@@ -240,19 +253,6 @@ int main (int argc, char *argv[]) {
 			}
 		}
 	}
-
-// MacOS may need some path adjustments, first
-#ifdef Q_OS_MAC
-	QString oldpath = qgetenv ("PATH");
-	if (!oldpath.contains (INSTALL_PATH)) {
-		//ensure that PATH is set to include what we deliver with the bundle
-		qputenv ("PATH", QString ("%1/bin:%1/sbin:%2").arg (INSTALL_PATH).arg (oldpath).toLocal8Bit ());
-		if (debug_level > 3) qDebug ("Adjusting system path to %s", qPrintable (qgetenv ("PATH")));
-	}
-	// ensure that RKWard finds its own packages
-	qputenv ("R_LIBS", R_LIBS);
-	QProcess::execute ("launchctl", QStringList () << "load" << "-w" << INSTALL_PATH "/Library/LaunchAgents/org.freedesktop.dbus-session.plist");
-#endif
 
 	// Locate KDE and RKWard installations
 	QString marker_exe_name ("qtpaths");    // Simply some file that should exist in the bin dir of a KDE installation on both Unix and Windows

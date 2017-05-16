@@ -63,5 +63,5 @@ IF(WIN32)
 	# all the KDE library versions, first, when loading DLLs
 	INSTALL(TARGETS rkward.rbackend DESTINATION ${BIN_INSTALL_DIR}/rbackend)
 ELSE(WIN32)
-		INSTALL(TARGETS rkward.rbackend DESTINATION ${RKWARD_FRONTEND_LOCATION})
+	INSTALL(TARGETS rkward.rbackend DESTINATION ${LIBEXEC_INSTALL_DIR})
 ENDIF(WIN32)
