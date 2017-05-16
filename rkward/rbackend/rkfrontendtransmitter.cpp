@@ -102,6 +102,11 @@ void RKFrontendTransmitter::run () {
 	args.append ("--locale-dir=" + localeDir ().toUtf8 ().toPercentEncoding ());
 	connect (backend, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), this, &RKFrontendTransmitter::backendExit);
 	QString backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath ());
+#ifdef Q_OS_MAC
+	if (backend_executable.isNull ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "/rkward.frontend.app/Contents/MacOS"); 	// this is for running directly from a build tree
+#endif
+	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (RKWARD_BACKEND_PATH);
+	if (backend_executable.isNull ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "../lib/libexec");
 	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "/rbackend");	// for running directly from the build-dir
 #ifdef Q_OS_MAC
         if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "/../../../rbackend");

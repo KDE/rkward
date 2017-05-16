@@ -33,21 +33,21 @@ SET(RKWard_Sources
 	rkconsole.cpp
 )
 
-# somehow the needed libdirs for R do not get passed down automatically
+# somehow the detected R paths from FindR.cmake do not get passed down automatically
+GET_DIRECTORY_PROPERTY(R_EXECUTABLE DIRECTORY rbackend DEFINITION R_EXECUTABLE)
 GET_DIRECTORY_PROPERTY(R_SHAREDLIBDIR DIRECTORY rbackend LINK_DIRECTORIES)
 LINK_DIRECTORIES(${R_SHAREDLIBDIR})
 
-GET_DIRECTORY_PROPERTY(R_EXECUTABLE DIRECTORY rbackend DEFINITION R_EXECUTABLE)
 ADD_CUSTOM_COMMAND (OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/rkward.ico"
 			COMMAND cmake -E copy "${CMAKE_CURRENT_SOURCE_DIR}/icons/app-icon/rkward.ico"
 			"${CMAKE_CURRENT_BINARY_DIR}/rkward.ico")
 
-add_executable(rkward ${RKWard_Sources} rkward_windows_icon.rc rkward.ico)
+ADD_EXECUTABLE(rkward ${RKWard_Sources} rkward_windows_icon.rc rkward.ico)
 # NOTE: These definitions are needed for the startup procedure (main.cpp), only.
 # We should switch with to target_compile_definitions once we require CMAKE 2.6+
-add_definitions (-DR_EXECUTABLE="${R_EXECUTABLE}")
-add_definitions (-DINSTALL_PATH="${CMAKE_INSTALL_PREFIX}")
-add_definitions (-DR_LIBS="${R_LIBDIR}")
+ADD_DEFINITIONS(-DR_EXECUTABLE="${R_EXECUTABLE}")
+ADD_DEFINITIONS(-DINSTALL_PATH="${CMAKE_INSTALL_PREFIX}")
+ADD_DEFINITIONS(-DR_LIBS="${R_LIBDIR}")
 SET_TARGET_PROPERTIES(rkward PROPERTIES
         MACOSX_BUNDLE_BUNDLE_NAME "RKWard")
 
