@@ -59,6 +59,9 @@ LINK_DIRECTORIES(${R_SHAREDLIBDIR})
 ADD_EXECUTABLE(rkward.rbackend ${rbackend_BACKEND_SRCS})
 ECM_MARK_NONGUI_EXECUTABLE(rkward.rbackend)
 TARGET_LINK_LIBRARIES(rkward.rbackend rkgraphicsdevice.backend ${R_USED_LIBS} ${CMAKE_THREAD_LIBS_INIT} Qt5::Network Qt5::Core ${LibIntl_LIBRARIES})
+IF(APPLE)
+    TARGET_LINK_LIBRARIES(rkward.rbackend "-framework CoreFoundation")
+ENDIF()
 
 IF(WIN32)
 	# on Widows, we install to the rbackend subdirectory, because 1) LIBEXEC_INSTALL_DIR == BIN_INSTALL_DIR and 2) we don't want the backend to pick up
