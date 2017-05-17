@@ -392,7 +392,7 @@ RKSettingsModuleRPackages::RKSettingsModuleRPackages (RKSettings *gui, QWidget *
 	connect (archive_packages_box, &QCheckBox::stateChanged, this, &RKSettingsModuleRPackages::settingChanged);
 	main_vbox->addWidget (archive_packages_box);
 
-#if defined Q_OS_WIN || defined Q_OS_MAC
+#if defined Q_OS_WIN || defined Q_OS_MACOS
 	source_packages_box = new QCheckBox (i18n ("Build packages from source"), this);
 	source_packages_box->setChecked (source_packages);
 #else
@@ -512,7 +512,7 @@ QString RKSettingsModuleRPackages::libLocsCommand () {
 //static
 QString RKSettingsModuleRPackages::pkgTypeOption () {
 	QString ret;
-#if defined Q_OS_WIN || defined Q_OS_MAC
+#if defined Q_OS_WIN || defined Q_OS_MACOS
 	ret.append ("options (pkgType=\"");
 	if (source_packages) ret.append ("source");
 	else if (RKSessionVars::compareRVersion ("3.1.3") <= 0) ret.append ("binary");   // "automatically select appropriate binary", unfortunately it's only available from R 3.1.3. onwards.
@@ -543,7 +543,7 @@ QStringList RKSettingsModuleRPackages::makeRRunTimeOptionCommands () {
 	}
 	list.append (command + "))\n");
 
-#if defined Q_OS_WIN || defined Q_OS_MAC
+#if defined Q_OS_WIN || defined Q_OS_MACOS
 	list.append (pkgTypeOption ());
 #endif
 
@@ -606,7 +606,7 @@ void RKSettingsModuleRPackages::loadSettings (KConfig *config) {
 
 	liblocs = cg.readEntry ("LibraryLocations", QStringList ());
 	archive_packages = cg.readEntry ("archive packages", false);
-#if defined Q_OS_WIN || defined Q_OS_MAC
+#if defined Q_OS_WIN || defined Q_OS_MACOS
 #	if defined USE_BINARY_PACKAGES
 #		define USE_SOURCE_PACKAGES false
 #	else
