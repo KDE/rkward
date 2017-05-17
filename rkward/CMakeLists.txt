@@ -9,7 +9,7 @@ IF(APPLE)
     SET(CPACK_BUNDLE_NAME RKWard)
     SET(CPACK_BUNDLE_STARTUP_COMMAND rkward)
 ENDIF()
-SET(RKWARD_FRONTEND_LOCATION ${KDE_INSTALL_LIBEXECDIR})
+SET(RKWARD_FRONTEND_LOCATION ${KDE_INSTALL_FULL_LIBEXECDIR})
 # once tested and working this could become the default on Mac:
 OPTION(APPLE_STANDALONE_BUNDLE "Generate a standalone app bundle when building on Mac" OFF)
 ADD_FEATURE_INFO("App Bundle" APPLE_STANDALONE_BUNDLE "Generate a standalone app bundle when building on Mac. Do not use for now.")
