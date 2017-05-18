@@ -16,6 +16,9 @@ ENDIF(R_EXECUTABLE-NOTFOUND)
 EXECUTE_PROCESS(
 	COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "-e" "cat(R.version$arch)"
 	OUTPUT_VARIABLE R_ARCH)
+	IF (${R_ARCH} STREQUAL "x86_64")
+		SET (R_ARCH "x64")
+	ENDIF (${R_ARCH} STREQUAL "x86_64")
 MESSAGE (STATUS "R architecture is ${R_ARCH}")
 
 # check R version.
