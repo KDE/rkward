@@ -118,7 +118,7 @@ QStringList RKRSupport::SEXPToStringList (SEXP from_exp) {
 				} else if (IS_LATIN1 (dummy)) {
 					list.append (QString::fromLatin1 ((char *) STRING_PTR (dummy)));
 				} else {
-					list.append (RKRBackend::this_pointer->current_locale_codec->toUnicode ((char *) STRING_PTR (dummy)));
+					list.append (RKRBackend::toUtf8 ((char *) STRING_PTR (dummy)));
 				}
 			}
 		}
@@ -136,7 +136,7 @@ SEXP RKRSupport::StringListToSEXP (const QStringList& list) {
 		SET_STRING_ELT (ret, i, Rf_mkCharCE (list[i].toUtf8 (), CE_UTF8));
 #else
 		// TODO Rf_mkCharCE _might_ have been introduced earlier. Check if still an ongoing concern.
-		SET_STRING_ELT (ret, i, Rf_mkChar (RKRBackend::this_pointer->current_locale_codec->fromUnicode (list[i]).data ()));
+		SET_STRING_ELT (ret, i, Rf_mkChar (RKRBackend::fromUtf8 (list[i]).data ()));
 #endif
 	}
 	return ret;
