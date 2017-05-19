@@ -750,6 +750,9 @@ SEXP doUpdateLocale ();
 RKRBackend::RKRBackend () : stdout_stderr_mutex (QMutex::Recursive) {
 	RK_TRACE (RBACKEND);
 
+	RK_ASSERT (this_pointer == 0);
+	this_pointer = this;
+
 	current_locale_encoder = 0; // marks locale as not yet initialized
 	doUpdateLocale ();
 	r_running = false;
@@ -757,9 +760,6 @@ RKRBackend::RKRBackend () : stdout_stderr_mutex (QMutex::Recursive) {
 	current_command = 0;
 	pending_priority_command = 0;
 	stdout_stderr_fd = -1;
-
-	RK_ASSERT (this_pointer == 0);
-	this_pointer = this;
 }
 
 #ifdef Q_OS_WIN
@@ -920,10 +920,10 @@ SEXP doUpdateLocale () {
 		delete (RKRBackend::this_pointer->current_locale_encoder);
 		delete (RKRBackend::this_pointer->current_locale_decoder);
 		QTextCodec::setCodecForLocale (0);
-		RK_ASSERT (QTextCodec::codecForLocale ());
-		RKRBackend::this_pointer->current_locale_encoder = QTextCodec::codecForLocale ()->makeEncoder (QTextCodec::DefaultConversion);  // NOTE: shall pass non-representable characters unmodified, rather than stripping them.
-		RKRBackend::this_pointer->current_locale_decoder = QTextCodec::codecForLocale ()->makeDecoder (QTextCodec::DefaultConversion);
 	}
+	RK_ASSERT (QTextCodec::codecForLocale ());
+	RKRBackend::this_pointer->current_locale_encoder = QTextCodec::codecForLocale ()->makeEncoder (QTextCodec::DefaultConversion);  // NOTE: shall pass non-representable characters unmodified, rather than stripping them.
+	RKRBackend::this_pointer->current_locale_decoder = QTextCodec::codecForLocale ()->makeDecoder (QTextCodec::DefaultConversion);
 	RK_DEBUG (RBACKEND, DL_WARNING, "New locale codec is %s", QTextCodec::codecForLocale ()->name ().data ());
 
 	return R_NilValue;
