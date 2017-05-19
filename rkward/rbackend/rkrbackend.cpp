@@ -178,8 +178,9 @@ void RKRBackend::clearPendingInterrupt () {
 LibExtern void Rf_PrintWarnings (void);
 #endif
 extern "C" void run_Rmainloop (void);
-#include <R_ext/eventloop.h>
-
+#ifndef Q_OS_WIN
+#	include <R_ext/eventloop.h>
+#endif
 
 #include "rdata.h"
 
