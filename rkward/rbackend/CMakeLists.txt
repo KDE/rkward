@@ -19,7 +19,6 @@ SET (
 	rbackend_backend_SRCS
 	rkrbackend.cpp
 	rksignalsupport.cpp
-	rklocalesupport.cpp
 	rkrsupport.cpp
 	rkstructuregetter.cpp
 	rkrbackendprotocol_backend.cpp
