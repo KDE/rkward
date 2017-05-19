@@ -46,7 +46,7 @@
 "rk.graph.on" <- function (device.type=getOption ("rk.graphics.type"), width=getOption ("rk.graphics.width"), height=getOption ("rk.graphics.height"), quality, ...) 
 {
 	make.url <- function (filename) {
-		if (substr (filename, 2, 1) == ":") {  # *very* likely an absolute Windows path like c:\xyz .
+		if (substr (filename, 2, 2) == ":") {  # *very* likely an absolute Windows path like c:\xyz .
 			paste ("file:///", filename, sep="")
 		} else if (substr (filename, 1, 1) == "/") {
 			paste ("file://", filename, sep="")
