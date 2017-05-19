@@ -155,7 +155,7 @@ namespace RKCommonFunctions {
 	}
 
 	QString getRKWardDataDir () {
-		return (QStandardPaths::locate (QStandardPaths::AppDataLocation, "resource.ver").replace ("resource.ver", QString ()));
+		return (QStandardPaths::locate (QStandardPaths::GenericDataLocation, "rkward/resource.ver").replace ("resource.ver", QString ()));
 	}
 
 	QString getUseableRKWardSavefileName (const QString &prefix, const QString &postfix) {
