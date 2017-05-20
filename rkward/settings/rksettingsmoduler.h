@@ -71,7 +71,6 @@ private:
 	QComboBox *editor_input;
 	QComboBox *pager_input;
 	QTextEdit *further_input;
-	QCheckBox *internet2_input;
 
 	static QString options_outdec;
 	static int options_width;
@@ -86,7 +85,6 @@ private:
 	static QString options_editor;
 	static QString options_pager;
 	static QString options_further;
-	static bool options_internet2;
 
 // constants
 	static QString builtin_editor;
