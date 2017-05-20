@@ -118,10 +118,10 @@ void RKFrontendTransmitter::run () {
 	if (!debugger.isEmpty ()) {
 		args = debugger.split (' ') + args;
 	}
-for (int i = 0; i < args.size (); ++i) {
-qDebug ("%s", qPrintable (args[i]));
-}
-qDebug ("%s", qPrintable (qgetenv ("R_BINARY")));
+	if (DL_DEBUG >= RK_Debug_Level) {
+		qDebug ("%s", qPrintable (args.join ("\n")));
+		qDebug ("%s", qPrintable (qgetenv ("R_BINARY")));
+	}
 	backend->start (qgetenv ("R_BINARY"), args, QIODevice::ReadOnly);
 
 	if (!backend->waitForStarted ()) {
@@ -141,6 +141,8 @@ qDebug ("%s", qPrintable (qgetenv ("R_BINARY")));
 	backend->closeReadChannel (QProcess::StandardOutput);
 
 	exec ();
+
+	backend->waitForFinished ();
 
 	if (!connection) {
 		RK_ASSERT (false);
