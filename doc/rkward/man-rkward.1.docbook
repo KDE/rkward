@@ -67,7 +67,7 @@
 </varlistentry>
 <varlistentry>
 <term><option>--debug-output</option> <replaceable>where</replaceable></term>
-<listitem><para>Where to send debug output. Default is to store it in a file in the temporary directory. Specifying "terminal" will write debug output to stdout, instead (useful for debugging, sometimes). Not that debug output from the backend process is always stored in a file.</para></listitem>
+<listitem><para>Where to send debug output. Default is to store it in a file in the temporary directory. Specifying "terminal" will write debug output to stderr, instead (useful for debugging, sometimes). Not that debug output from the backend process is always stored in a file.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term><option>--debug-flags</option> <replaceable>flags</replaceable></term>

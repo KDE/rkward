@@ -125,12 +125,12 @@ void RKDebugMessageOutput (QtMsgType type, const QMessageLogContext &ctx, const 
 
 	if (RK_Debug_Terminal) {
 #ifdef QT_MESSAGELOGCONTEXT
-		printf ("%s, %s: %s", ctx.file, ctx.function, qPrintable (msg));
+		fprintf (stderr, "%s, %s: %s", ctx.file, ctx.function, qPrintable (msg));
 #else
 		Q_UNUSED (ctx);
-		printf ("%s", qPrintable (msg));
+		fprintf (stderr, "%s", qPrintable (msg));
 #endif
-		printf ("\n");
+		fprintf (stderr, "\n");
 	} else {
 #ifdef QT_MESSAGELOGCONTEXT
 		RKSettingsModuleDebug::debug_file->write (ctx.file);
