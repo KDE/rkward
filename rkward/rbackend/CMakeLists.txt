@@ -7,7 +7,7 @@ ENDIF(NOT WIN32)
 ADD_SUBDIRECTORY( rpackages )
 ADD_SUBDIRECTORY( rkwarddevice )
 
-INCLUDE_DIRECTORIES( ${R_INCLUDEDIR} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR}   )
+INCLUDE_DIRECTORIES( ${R_INCLUDEDIR} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR} ${LibIntl_INCLUDE_DIRS} )
 
 SET (
 	rbackend_shared_SRCS
@@ -19,7 +19,6 @@ SET (
 	rbackend_backend_SRCS
 	rkrbackend.cpp
 	rksignalsupport.cpp
-	rklocalesupport.cpp
 	rkrsupport.cpp
 	rkstructuregetter.cpp
 	rkrbackendprotocol_backend.cpp

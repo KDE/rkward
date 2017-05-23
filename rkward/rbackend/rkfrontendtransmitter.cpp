@@ -118,10 +118,10 @@ void RKFrontendTransmitter::run () {
 	if (!debugger.isEmpty ()) {
 		args = debugger.split (' ') + args;
 	}
-for (int i = 0; i < args.size (); ++i) {
-qDebug ("%s", qPrintable (args[i]));
-}
-qDebug ("%s", qPrintable (qgetenv ("R_BINARY")));
+	if (DL_DEBUG >= RK_Debug_Level) {
+		qDebug ("%s", qPrintable (args.join ("\n")));
+		qDebug ("%s", qPrintable (qgetenv ("R_BINARY")));
+	}
 	backend->start (qgetenv ("R_BINARY"), args, QIODevice::ReadOnly);
 
 	if (!backend->waitForStarted ()) {
@@ -142,6 +142,8 @@ qDebug ("%s", qPrintable (qgetenv ("R_BINARY")));
 
 	exec ();
 
+	backend->waitForFinished ();
+
 	if (!connection) {
 		RK_ASSERT (false);
 		return;
@@ -158,11 +160,14 @@ void RKFrontendTransmitter::connectAndEnterLoop () {
 	// handshake
 	if (!con->canReadLine ()) con->waitForReadyRead (1000);
 	QString token_c = QString::fromLocal8Bit (con->readLine ());
-	token_c.chop (1);
+	token_c = token_c.trimmed ();
 	if (token_c != token) handleTransmissionError (i18n ("Error during handshake with backend process. Expected token '%1', received token '%2'", token, token_c));
 	if (!con->canReadLine ()) con->waitForReadyRead (1000);
-	QString version_c = QString::fromLocal8Bit (con->readLine ());
-	version_c.chop (1);
+	QString version_c = QString::fromLocal8Bit (con->readLine ().trimmed ());
+	if (version_c.isEmpty ()) {  // may happend on Windows, due to \r\n lines ends
+		if (!con->canReadLine ()) con->waitForReadyRead (1000);
+			version_c = QString::fromLocal8Bit (con->readLine ().trimmed ());
+	}
 	if (version_c != RKWARD_VERSION) handleTransmissionError (i18n ("Version mismatch during handshake with backend process. Frontend is version '%1' while backend is '%2'.\nPlease fix your installation.", QString (RKWARD_VERSION), version_c));
 
 	setConnection (con);

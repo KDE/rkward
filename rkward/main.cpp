@@ -2,7 +2,7 @@
                           main.cpp  -  description
                              -------------------
     begin                : Tue Oct 29 20:06:08 CET 2002
-    copyright            : (C) 2002-2014 by Thomas Friedrichsmeier 
+    copyright            : (C) 2002-2017 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -113,18 +113,33 @@ QString findExeAtPath (const QString appname, const QString &path) {
 
 int RK_Debug_Level = 0;
 int RK_Debug_Flags = DEBUG_ALL;
+bool RK_Debug_Terminal = false;
 int RK_Debug_CommandStep = 0;
 QMutex RK_Debug_Mutex;
 
-void RKDebugMessageOutput (QtMsgType type, const QMessageLogContext &, const QString &msg) {
+void RKDebugMessageOutput (QtMsgType type, const QMessageLogContext &ctx, const QString &msg) {
 	RK_Debug_Mutex.lock ();
 	if (type == QtFatalMsg) {
 		fprintf (stderr, "%s\n", qPrintable (msg));
 	}
-	// KF5 TODO: Make use of message log context
-	RKSettingsModuleDebug::debug_file->write (qPrintable (msg));
-	RKSettingsModuleDebug::debug_file->write ("\n");
-	RKSettingsModuleDebug::debug_file->flush ();
+
+	if (RK_Debug_Terminal) {
+#ifdef QT_MESSAGELOGCONTEXT
+		fprintf (stderr, "%s, %s: %s", ctx.file, ctx.function, qPrintable (msg));
+#else
+		Q_UNUSED (ctx);
+		fprintf (stderr, "%s", qPrintable (msg));
+#endif
+		fprintf (stderr, "\n");
+	} else {
+#ifdef QT_MESSAGELOGCONTEXT
+		RKSettingsModuleDebug::debug_file->write (ctx.file);
+		RKSettingsModuleDebug::debug_file->write (ctx.function);
+#endif
+		RKSettingsModuleDebug::debug_file->write (qPrintable (msg));
+		RKSettingsModuleDebug::debug_file->write ("\n");
+		RKSettingsModuleDebug::debug_file->flush ();
+	}
 	RK_Debug_Mutex.unlock ();
 }
 
@@ -192,6 +207,7 @@ int main (int argc, char *argv[]) {
 	parser.addOption (QCommandLineOption ("evaluate", i18n ("After starting (and after loading the specified workspace, if applicable), evaluate the given R code."), "Rcode", QString ()));
 	parser.addOption (QCommandLineOption ("debug-level", i18n ("Verbosity of debug messages (0-5)"), "level", "2"));
 	parser.addOption (QCommandLineOption ("debug-flags", i18n ("Mask for components to debug (see debug.h)"), "flags", QString::number (DEBUG_ALL)));
+	parser.addOption (QCommandLineOption ("debug-output", i18n ("Where to send debug message (file|terminal)"), "where", "file"));
 	parser.addOption (QCommandLineOption ("backend-debugger", i18n ("Debugger for the backend. (Enclose any debugger arguments in single quotes ('') together with the command. Make sure to re-direct stdout!)"), "command", QString ()));
 	parser.addOption (QCommandLineOption ("r-executable", i18n ("Use specified R installation, instead of the one configured at compile time (note: rkward R library must be installed to that installation of R)"), "command", QString ()));
 	parser.addOption (QCommandLineOption ("reuse", i18n ("Reuse a running RKWard instance (if available). If a running instance is reused, only the file arguments will be interpreted, all other options will be ignored.")));
@@ -205,8 +221,9 @@ int main (int argc, char *argv[]) {
 	// Set up debugging
 	RK_Debug_Level = DL_FATAL - QString (parser.value ("debug-level")).toInt ();
 	RK_Debug_Flags = QString (parser.value ("debug-flags")).toInt ();
+	RK_Debug_Terminal = QString (parser.value ("debug-output")) == "terminal";
 	RKSettingsModuleDebug::debug_file = new QTemporaryFile (QDir::tempPath () + "/rkward.frontend");
-	RKSettingsModuleDebug::debug_file->setAutoRemove (false);
+	RKSettingsModuleDebug::debug_file->setAutoRemove (RK_Debug_Terminal);
 	if (RKSettingsModuleDebug::debug_file->open ()) {
 		RK_DEBUG (APP, DL_INFO, "Full debug output is at %s", qPrintable (RKSettingsModuleDebug::debug_file->fileName ()));
 		qInstallMessageHandler (RKDebugMessageOutput);
