@@ -249,10 +249,10 @@ void RInterface::doNextCommand (RCommand *command) {
 	}
 	// importantly, this point is not reached for the fake startup command
 
-	if (RK_Debug_CommandStep) {
+	if (RK_Debug::RK_Debug_CommandStep) {
 		QTime t;
 		t.start ();
-		while (t.elapsed () < RK_Debug_CommandStep) {}
+		while (t.elapsed () < RK_Debug::RK_Debug_CommandStep) {}
 	}
 
 	flushOutput (true);

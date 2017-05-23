@@ -2,7 +2,7 @@
                           rksettingsmoduledebug -  description
                              -------------------
     begin                : Tue Oct 23 2007
-    copyright            : (C) 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2009, 2017 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -21,7 +21,7 @@
 
 class RKSpinBox;
 class QButtonGroup;
-class QTemporaryFile;
+class QFile;
 
 /**
 configuration for the Command Editor windows
@@ -46,9 +46,6 @@ public:
 	// static members are declared in debug.h and defined in main.cpp
 public slots:
 	void settingChanged (int);
-public:
-	// public for internal reason, only! Do not mess with this!
-	static QTemporaryFile* debug_file;
 private:
 	RKSpinBox* command_timeout_box;
 	RKSpinBox* debug_level_box;

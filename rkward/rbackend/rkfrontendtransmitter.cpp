@@ -94,7 +94,7 @@ void RKFrontendTransmitter::run () {
 	backend->setEnvironment (env);
 
 	QStringList args;
-	args.append ("--debug-level=" + QString::number (RK_Debug_Level));
+	args.append ("--debug-level=" + QString::number (RK_Debug::RK_Debug_Level));
 	// NOTE: QProcess quotes its arguments, *but* properly passing all spaces and quotes through the R CMD wrapper, seems near(?) impossible on Windows. Instead, we use percent encoding, internally.
 	args.append ("--server-name=" + server->fullServerName ().toUtf8 ().toPercentEncoding ());
 	args.append ("--rkd-server-name=" + rkd_transmitter->serverName ().toUtf8 ().toPercentEncoding ());
@@ -118,7 +118,7 @@ void RKFrontendTransmitter::run () {
 	if (!debugger.isEmpty ()) {
 		args = debugger.split (' ') + args;
 	}
-	if (DL_DEBUG >= RK_Debug_Level) {
+	if (DL_DEBUG >= RK_Debug::RK_Debug_Level) {
 		qDebug ("%s", qPrintable (args.join ("\n")));
 		qDebug ("%s", qPrintable (qgetenv ("R_BINARY")));
 	}

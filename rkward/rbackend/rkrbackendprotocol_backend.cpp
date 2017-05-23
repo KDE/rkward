@@ -40,19 +40,16 @@
 #endif
 
 	void RK_setupGettext (const char*);
-	int RK_Debug_Level = 2;
-	int RK_Debug_Flags = DEBUG_ALL;
 	QMutex RK_Debug_Mutex;
-	QTemporaryFile* RK_Debug_File;
 
 	void RKDebugMessageOutput (QtMsgType type, const QMessageLogContext &, const QString &msg) {
 		RK_Debug_Mutex.lock ();
 		if (type == QtFatalMsg) {
 			fprintf (stderr, "%s\n", qPrintable (msg));
 		}
-		RK_Debug_File->write (qPrintable (msg));
-		RK_Debug_File->write ("\n");
-		RK_Debug_File->flush ();
+		RK_Debug::debug_file->write (qPrintable (msg));
+		RK_Debug::debug_file->write ("\n");
+		RK_Debug::debug_file->flush ();
 		RK_Debug_Mutex.unlock ();
 	}
 
@@ -91,16 +88,15 @@
 		setvbuf (stdout, NULL, _IONBF, 0);
 		setvbuf (stderr, NULL, _IONBF, 0);
 
-		RK_Debug_File = new QTemporaryFile (QDir::tempPath () + "/rkward.rbackend");
-		RK_Debug_File->setAutoRemove (false);
-		if (RK_Debug_File->open ()) qInstallMessageHandler (RKDebugMessageOutput);
+		RK_Debug::RK_Debug_Flags = RBACKEND;
+		if (RK_Debug::setupLogFile (QDir::tempPath () + "/rkward.rbackend")) qInstallMessageHandler (RKDebugMessageOutput);
 
 		QString servername, rkd_server_name;
 		QString data_dir, locale_dir;
 		QStringList args = app.arguments ();
 		for (int i = 1; i < args.count (); ++i) {
 			if (args[i].startsWith ("--debug-level")) {
-				RK_Debug_Level = args[i].section ('=', 1).toInt ();
+				RK_Debug::RK_Debug_Level = args[i].section ('=', 1).toInt ();
 			} else if (args[i].startsWith ("--server-name")) {
 				servername = QUrl::fromPercentEncoding (args[i].section ('=', 1).toUtf8 ());
 			} else if (args[i].startsWith ("--data-dir")) {
@@ -174,5 +170,5 @@ void RKRBackendProtocolBackend::msleep (int delay) {
 }
 
 QString RKRBackendProtocolBackend::backendDebugFile () {
-	return RK_Debug_File->fileName ();
+	return RK_Debug::debug_file->fileName ();
 }
