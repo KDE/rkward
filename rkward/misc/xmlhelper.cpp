@@ -387,7 +387,7 @@ void XMLHelper::displayError (const QDomNode *in_node, const QString &message, i
 
 	if (message_level < debug_level) message_level = debug_level;
 
-	if ((RK_Debug_Flags & XML) && (message_level >= RK_Debug_Level)) {
+	if ((RK_Debug::RK_Debug_Flags & XML) && (message_level >= RK_Debug::RK_Debug_Level)) {
 		QString backtrace = i18n ("XML-parsing '%1' ", filename);
 		// create a "backtrace"
 		QStringList list;

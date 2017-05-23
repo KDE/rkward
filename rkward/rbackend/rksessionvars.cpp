@@ -135,7 +135,7 @@ QStringList RKSessionVars::frontendSessionInfo () {
 	lines.append ("Backend version (as known to the frontend): " + r_version_string);
 	lines.append (QString());
 	lines.append ("Debug message file (this may contain relevant diagnostic output in case of trouble):");
-	lines.append (RKSettingsModuleDebug::debug_file->fileName ());
+	lines.append (RK_Debug::debug_file->fileName ());
 	return lines;
 }
 

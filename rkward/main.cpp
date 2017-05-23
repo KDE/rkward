@@ -111,10 +111,7 @@ QString findExeAtPath (const QString appname, const QString &path) {
 	return QString ();
 }
 
-int RK_Debug_Level = 0;
-int RK_Debug_Flags = DEBUG_ALL;
 bool RK_Debug_Terminal = false;
-int RK_Debug_CommandStep = 0;
 QMutex RK_Debug_Mutex;
 
 void RKDebugMessageOutput (QtMsgType type, const QMessageLogContext &ctx, const QString &msg) {
@@ -133,12 +130,12 @@ void RKDebugMessageOutput (QtMsgType type, const QMessageLogContext &ctx, const 
 		fprintf (stderr, "\n");
 	} else {
 #ifdef QT_MESSAGELOGCONTEXT
-		RKSettingsModuleDebug::debug_file->write (ctx.file);
-		RKSettingsModuleDebug::debug_file->write (ctx.function);
+		RK_Debug::debug_file->write (ctx.file);
+		RK_Debug::debug_file->write (ctx.function);
 #endif
-		RKSettingsModuleDebug::debug_file->write (qPrintable (msg));
-		RKSettingsModuleDebug::debug_file->write ("\n");
-		RKSettingsModuleDebug::debug_file->flush ();
+		RK_Debug::debug_file->write (qPrintable (msg));
+		RK_Debug::debug_file->write ("\n");
+		RK_Debug::debug_file->flush ();
 	}
 	RK_Debug_Mutex.unlock ();
 }
@@ -219,15 +216,16 @@ int main (int argc, char *argv[]) {
 	aboutData.processCommandLine (&parser);
 
 	// Set up debugging
-	RK_Debug_Level = DL_FATAL - QString (parser.value ("debug-level")).toInt ();
-	RK_Debug_Flags = QString (parser.value ("debug-flags")).toInt ();
+	RK_Debug::RK_Debug_Level = DL_FATAL - QString (parser.value ("debug-level")).toInt ();
+	RK_Debug::RK_Debug_Flags = QString (parser.value ("debug-flags")).toInt ();
 	RK_Debug_Terminal = QString (parser.value ("debug-output")) == "terminal";
-	RKSettingsModuleDebug::debug_file = new QTemporaryFile (QDir::tempPath () + "/rkward.frontend");
-	RKSettingsModuleDebug::debug_file->setAutoRemove (RK_Debug_Terminal);
-	if (RKSettingsModuleDebug::debug_file->open ()) {
-		RK_DEBUG (APP, DL_INFO, "Full debug output is at %s", qPrintable (RKSettingsModuleDebug::debug_file->fileName ()));
-		qInstallMessageHandler (RKDebugMessageOutput);
+	if (RK_Debug::setupLogFile (QDir::tempPath () + "/rkward.frontend")) {
+		RK_DEBUG (APP, DL_INFO, "Full debug output is at %s", qPrintable (RK_Debug::debug_file->fileName ()));
+	} else {
+		RK_Debug_Terminal = true;
+		RK_DEBUG (APP, DL_INFO, "Failed to open debug file %s", qPrintable (RK_Debug::debug_file->fileName ()));
 	}
+	qInstallMessageHandler (RKDebugMessageOutput);
 
 	// handle positional (file) arguments, first
 	QStringList url_args = parser.positionalArguments ();
@@ -344,17 +342,11 @@ int main (int argc, char *argv[]) {
 		new RKWardMainWindow ();
 	}
 
-/* KF5 TODO: Still needed?
-	// Usually, KDE always adds the current directory to the list of prefixes.
-	// However, since RKWard 0.5.6, the main binary is in KDE's libexec dir, which defies this mechanism. Therefore, RKWARD_ENSURE_PREFIX is set from the wrapper script.
-	QByteArray add_path = qgetenv ("RKWARD_ENSURE_PREFIX");
-	if (!add_path.isEmpty ()) KGlobal::dirs ()->addPrefix (QString::fromLocal8Bit (add_path)); */
-
 	// do it!
 	int status = app.exec ();
 
 	qInstallMessageHandler (0);
-	RKSettingsModuleDebug::debug_file->close ();
+	RK_Debug::debug_file->close ();
 
 	return status;
 }

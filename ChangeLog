@@ -1,3 +1,4 @@
+- Limit the number of debug log-files to keep (at most three, each, for frontend and backend)
 - Remove Windows-only UI for setInternet2()-option (no longer available in R, with setInternet2(TRUE) the default since R 3.2.2)
 - Remove startup wrapper script (moving the still-needed functionality into the main executable)
     TODO: This is still mostly EXPERIMENTAL, and only vaguely tested on Linux so far. It should help resolve a number of long standing quirks, though, such as command windows (on Windows), icons,
