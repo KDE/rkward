@@ -49,6 +49,7 @@ RKGraphicsDeviceFrontendTransmitter::~RKGraphicsDeviceFrontendTransmitter () {
 	RK_TRACE (GRAPHICS_DEVICE);
 
 	if (connection) connection->close ();
+	if (local_server->isListening ()) local_server->close ();
 }
 
 void RKGraphicsDeviceFrontendTransmitter::setupServer () {
