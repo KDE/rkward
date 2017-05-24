@@ -114,13 +114,13 @@ void RKFrontendTransmitter::run () {
 	if (backend_executable.isEmpty ()) handleTransmissionError (i18n ("The backend executable could not be found. This is likely to be a problem with your installation."));
 	QString debugger = RKGlobals::startup_options["backend-debugger"].toString ();
 	args.prepend (RKCommonFunctions::windowsShellScriptSafeCommand (backend_executable));
-	args.prepend ("CMD");
 	if (!debugger.isEmpty ()) {
 		args = debugger.split (' ') + args;
 	}
+	args.prepend ("CMD");
 	if (DL_DEBUG >= RK_Debug::RK_Debug_Level) {
-		qDebug ("%s", qPrintable (args.join ("\n")));
 		qDebug ("%s", qPrintable (qgetenv ("R_BINARY")));
+		qDebug ("%s", qPrintable (args.join ("\n")));
 	}
 	backend->start (qgetenv ("R_BINARY"), args, QIODevice::ReadOnly);
 

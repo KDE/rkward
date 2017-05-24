@@ -31,7 +31,6 @@
 
 #include "rkbackendtransmitter.h"
 #include <QUuid>		// mis-used as a random-string generator
-#include <QTemporaryFile>
 #include <QDir>
 #include <QUrl>
 
