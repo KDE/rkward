@@ -335,7 +335,7 @@ int main (int argc, char *argv[]) {
 	// TODO: Store somewhere else
 	qputenv ("R_BINARY", r_exe.toLocal8Bit ());
 
-
+	qsrand (QTime::currentTime ().msec ()); // Workaround for some versions of kcoreaddons (5.21.0 through at least 5.34.0). See https://phabricator.kde.org/D5966
 	if (app.isSessionRestored ()) {
 		RESTORE(RKWardMainWindow);	// well, whatever this is supposed to do -> TODO
 	} else {

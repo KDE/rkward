@@ -77,12 +77,12 @@ void RKFrontendTransmitter::run () {
 	RK_TRACE (RBACKEND);
 
 	// start server
+	qsrand (QTime::currentTime ().msec ()); // Workaround for some versions of kcoreaddons (5.21.0 through at least 5.34.0). See https://phabricator.kde.org/D5966
 	server = new QLocalServer (this);
 	// we add a bit of randomness to the servername, as in general the servername must be unique
 	// there could be conflicts with concurrent or with previous crashed rkward sessions.
 	if (!server->listen ("rkward" + KRandom::randomString (8))) handleTransmissionError ("Failure to start frontend server: " + server->errorString ());
 	connect (server, &QLocalServer::newConnection, this, &RKFrontendTransmitter::connectAndEnterLoop, Qt::QueuedConnection);
-
 	// start backend
 	backend = new QProcess (this);
 
