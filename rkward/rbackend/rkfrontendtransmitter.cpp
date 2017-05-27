@@ -128,14 +128,7 @@ void RKFrontendTransmitter::run () {
 		handleTransmissionError (i18n ("The backend executable could not be started. Error message was: %1", backend->errorString ()));
 	}
 
-	// fetch security token
-	{
-		// NOTE: On Qt5+Windows, readyReady may actually come in char by char, so calling waitForReadyRead() does not guaranteed we will
-		//       see the full line, at all. But also, of course, we want to put some cap on trying. Using a time threshold for this.
-		QTime time;
-		time.start ();
-		while ((!backend->canReadLine ()) && (time.elapsed () < 3000)) backend->waitForReadyRead ();
-	}
+	waitForCanReadLine (backend, 3000);
 	token = QString::fromLocal8Bit (backend->readLine ()).trimmed ();
 	backend->closeReadChannel (QProcess::StandardError);
 	backend->closeReadChannel (QProcess::StandardOutput);
@@ -150,6 +143,16 @@ void RKFrontendTransmitter::run () {
 	}
 }
 
+void RKFrontendTransmitter::waitForCanReadLine (QIODevice* con, int msecs) {
+	RK_TRACE (RBACKEND);
+
+	// NOTE: On Qt5+Windows, readyReady may actually come in char by char, so calling waitForReadyRead() does not guarantee we will
+	//       see the full line, at all. But also, of course, we want to put some cap on trying. Using a time threshold for this.
+	QTime time;
+	time.start ();
+	while ((!con->canReadLine ()) && (time.elapsed () < msecs)) con->waitForReadyRead (500);
+}
+
 void RKFrontendTransmitter::connectAndEnterLoop () {
 	RK_TRACE (RBACKEND);
 	RK_ASSERT (server->hasPendingConnections ());
@@ -158,16 +161,11 @@ void RKFrontendTransmitter::connectAndEnterLoop () {
 	server->close ();
 
 	// handshake
-	if (!con->canReadLine ()) con->waitForReadyRead (1000);
-	QString token_c = QString::fromLocal8Bit (con->readLine ());
-	token_c = token_c.trimmed ();
+	waitForCanReadLine (con, 1000);
+	QString token_c = QString::fromLocal8Bit (con->readLine ()). trimmed ();
 	if (token_c != token) handleTransmissionError (i18n ("Error during handshake with backend process. Expected token '%1', received token '%2'", token, token_c));
-	if (!con->canReadLine ()) con->waitForReadyRead (1000);
+	waitForCanReadLine (con, 1000);
 	QString version_c = QString::fromLocal8Bit (con->readLine ().trimmed ());
-	if (version_c.isEmpty ()) {  // may happend on Windows, due to \r\n lines ends
-		if (!con->canReadLine ()) con->waitForReadyRead (1000);
-			version_c = QString::fromLocal8Bit (con->readLine ().trimmed ());
-	}
 	if (version_c != RKWARD_VERSION) handleTransmissionError (i18n ("Version mismatch during handshake with backend process. Frontend is version '%1' while backend is '%2'.\nPlease fix your installation.", QString (RKWARD_VERSION), version_c));
 
 	setConnection (con);
