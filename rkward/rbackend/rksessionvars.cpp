@@ -17,7 +17,7 @@
 
 #include "rksessionvars.h"
 
-#include "rinterface.h"
+#include "rkrinterface.h"
 #include "../settings/rksettingsmoduledebug.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../version.h"

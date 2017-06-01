@@ -52,7 +52,7 @@
 #include "settings/rksettingsmodulegeneral.h"
 #include "settings/rksettingsmoduleoutput.h"
 #include "settings/rksettingsmodulecommandeditor.h"
-#include "rbackend/rinterface.h"
+#include "rbackend/rkrinterface.h"
 #include "core/robjectlist.h"
 #include "core/renvironmentobject.h"
 #include "misc/rkstandardicons.h"

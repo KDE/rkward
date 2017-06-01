@@ -21,7 +21,7 @@
 #include <QTimer>
 #include <QTime>
 
-#include "rinterface.h"
+#include "rkrinterface.h"
 
 #include "../debug.h"
 

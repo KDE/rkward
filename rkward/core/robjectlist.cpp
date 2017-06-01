@@ -27,7 +27,7 @@
 #include <KLocalizedString>
 
 #include "renvironmentobject.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "rkmodificationtracker.h"
 #include "../misc/rkprogresscontrol.h"
 #include "../settings/rksettingsmoduler.h"

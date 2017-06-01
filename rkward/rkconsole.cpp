@@ -53,7 +53,7 @@
 #include "rkglobals.h"
 #include "rkward.h"
 #include "windows/rkhelpsearchwindow.h"
-#include "rbackend/rinterface.h"
+#include "rbackend/rkrinterface.h"
 #include "rbackend/rcommand.h"
 #include "settings/rksettings.h"
 #include "settings/rksettingsmoduleconsole.h"

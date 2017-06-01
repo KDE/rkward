@@ -17,7 +17,7 @@
 
 #include "rcommand.h"
 #include "rcommandreceiver.h"
-#include "rinterface.h"
+#include "rkrinterface.h"
 #include "../windows/rkcommandlog.h"
 #include "rkrbackendprotocol_shared.h"
 #include "../core/robject.h"

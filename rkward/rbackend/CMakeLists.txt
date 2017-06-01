@@ -27,7 +27,7 @@ SET (
 
 SET (
 	rbackend_frontend_SRCS
-	rinterface.cpp
+	rkrinterface.cpp
 	rcommand.cpp
 	rcommandreceiver.cpp
 	rcommandstack.cpp

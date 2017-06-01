@@ -17,7 +17,7 @@
 
 #include "rkcommandlog.h"
 
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../rkglobals.h"
 #include "../rkconsole.h"
 #include "../settings/rksettingsmodulewatch.h"

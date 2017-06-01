@@ -1,8 +1,8 @@
 /***************************************************************************
-                          rinterface.h  -  description
+                          rkrinterface.h  -  description
                              -------------------
     begin                : Fri Nov 1 2002
-    copyright            : (C) 2002 - 2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2002 - 2017 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -15,8 +15,8 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef RINTERFACE_H
-#define RINTERFACE_H
+#ifndef RKRINTERFACE_H
+#define RKRINTERFACE_H
 
 #include <qobject.h>
 #include <QFile>

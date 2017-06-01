@@ -37,7 +37,7 @@
 #include "../misc/multistringselector.h"
 #include "../misc/rkprogresscontrol.h"
 #include "../misc/rkcommonfunctions.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../rbackend/rksessionvars.h"
 #include "../rkglobals.h"
 #include "../debug.h"

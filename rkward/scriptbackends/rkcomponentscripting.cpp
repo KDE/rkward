@@ -26,7 +26,7 @@
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/xmlhelper.h"
 #include "../rkglobals.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "qtscriptbackend.h"
 #include "qtscripti18n.h"
 

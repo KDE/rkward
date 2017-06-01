@@ -27,7 +27,7 @@
 
 #include "../rkglobals.h"
 #include "../core/robjectlist.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../rkward.h"
 #include "../windows/rkworkplace.h"
 #include "../settings/rksettingsmodulegeneral.h"

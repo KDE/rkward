@@ -23,7 +23,7 @@
 #include "rcontainerobject.h"
 #include "robjectlist.h"
 
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../rkglobals.h"
 #include "rkmodificationtracker.h"
 

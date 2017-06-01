@@ -52,7 +52,7 @@
 #include "../misc/rkxmlguisyncer.h"
 #include "../misc/rkjobsequence.h"
 #include "../core/robjectlist.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../settings/rksettings.h"
 #include "../settings/rksettingsmodulecommandeditor.h"
 #include "../rkconsole.h"

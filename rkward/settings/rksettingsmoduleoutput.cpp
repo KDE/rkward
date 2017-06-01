@@ -31,7 +31,7 @@
 #include "../rkglobals.h"
 #include "../misc/getfilenamewidget.h"
 #include "../misc/rkcommonfunctions.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../debug.h"
 
 // static members

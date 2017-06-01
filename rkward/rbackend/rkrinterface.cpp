@@ -1,8 +1,8 @@
 /***************************************************************************
-                          rinterface.cpp  -  description
+                          rkrinterface.cpp  -  description
                              -------------------
     begin                : Fri Nov 1 2002
-    copyright            : (C) 2002-2016 by Thomas Friedrichsmeier
+    copyright            : (C) 2002-2017 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "rinterface.h"
+#include "rkrinterface.h"
 
 #include "rcommandstack.h"
 #include "rkrbackendprotocol_frontend.h"

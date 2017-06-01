@@ -22,7 +22,7 @@
 #include <qtimer.h>
 
 #include "../rkglobals.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../rkward.h"
 #include "../misc/rkprogresscontrol.h"
 
