@@ -1,13 +1,13 @@
 bibentry("Manual",
     title="rkward: Provides functions related to the RKWard GUI",
     author="Thomas Friedrichsmeier",
-    year="2014",
-    note="(Version 0.6.3)",
+    year="2016",
+    note="(Version 0.6.6)",
     url="http://rkward.kde.org",
 
     textVersion =
-    paste("Friedrichsmeier, T. (2014). ",
-        "rkward: Provides functions related to the RKWard GUI (Version 0.6.3). ",
+    paste("Friedrichsmeier, T. (2016). ",
+        "rkward: Provides functions related to the RKWard GUI (Version 0.6.6). ",
         "Available from http://rkward.kde.org",
         sep=""),
 

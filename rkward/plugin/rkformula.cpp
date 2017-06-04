@@ -382,6 +382,7 @@ void RKFormula::checkCustomModel () {
 		level_box->setMaximum (0);
 	}
 
+	InteractionMap new_map = interaction_map;
 	// clear terms which are no longer valid
 	for (InteractionMap::iterator in = interaction_map.begin (); in != interaction_map.end (); ++in) {
 		Interaction inter = in.value ();
@@ -397,9 +398,10 @@ void RKFormula::checkCustomModel () {
 		}
 		if (found_vars < (inter.level + 1)) {
 			delete (in.key ());
-			interaction_map.erase (in);
+			new_map.remove (in.key ());
 		}
 	}
+	interaction_map = new_map;
 }
 
 bool RKFormula::isValid () {
