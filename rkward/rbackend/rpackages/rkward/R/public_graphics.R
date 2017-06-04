@@ -428,7 +428,7 @@
 		# store the "lattice.status" into each device specific list, so that, if/when removing
 		# one of the displayed plots, the other can still be re-added back in the history.
 		devId <- as.character (devId)
-		histPositions [[devId]]$plot <<- trellis.last.object ()
+		histPositions [[devId]]$plot <<- lattice:::trellis.last.object ()
 		histPositions [[devId]]$tlo.ls <<- get ("lattice.status", envir = lattice:::.LatticeEnv)
 		invisible ()
 	}
