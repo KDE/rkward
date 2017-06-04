@@ -94,7 +94,10 @@ bool RKModificationTracker::removeObject (RObject *object, RKEditor *editor, boo
 	}
 
 	RK_ASSERT (object);
-	RK_ASSERT (object->parentObject ());
+	if (!object->parentObject ()) {
+		RK_DEBUG (OBJECTS, DL_ERROR, "Trying to remove root level object. Backend crashed?");
+		return false;
+	}
 	bool view_update = !updates_locked && !object->isType (RObject::NonVisibleObject);
 
 	if (view_update) {
