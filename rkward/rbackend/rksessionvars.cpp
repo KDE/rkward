@@ -22,7 +22,7 @@
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../version.h"
 
-#include <kxmlgui_version.h>
+#include <kcoreaddons_version.h>
 
 #include <QTemporaryFile>
 #include <QStandardPaths>
@@ -122,8 +122,10 @@ QStringList RKSessionVars::frontendSessionInfo () {
 	QStringList lines;
 	lines.append ("RKWard version: " RKWARD_VERSION);
 	// KF5 TODO: find replacement for line below
-	//lines.append ("KDE version (runtime): " + QString (KDE::versionString ()));
-	lines.append ("KDE version (compile time): " KXMLGUI_VERSION_STRING);
+#if KCOREADDONS_VERSION >= QT_VERSION_CHECK(5,20,0)
+	lines.append ("KDE version (runtime): " + QString (KCoreAddons::versionString ()));
+#endif
+	lines.append ("KDE version (compile time): " KCOREADDONS_VERSION_STRING);
 	lines.append (QString ("Qt version (runtime): ") + qVersion ());
 #if defined Q_OS_WIN
 	lines.append ("Windows runtime version (refer to QSysInfo documentation to translate code into human readable form): 0x" + QString::number (QSysInfo::windowsVersion (), 16));
