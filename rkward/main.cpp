@@ -271,7 +271,7 @@ int main (int argc, char *argv[]) {
 	}
 
 	// Locate KDE and RKWard installations
-	QString marker_exe_name ("qtpaths");    // Simply some file that should exist in the bin dir of a KDE installation on both Unix and Windows
+	QString marker_exe_name ("kreadconfig5");    // Simply some file that should exist in the bin dir of a KDE installation on both Unix and Windows
 	QString marker_exe = findExeAtPath (marker_exe_name, QDir::currentPath ());
 	if (marker_exe.isNull ()) marker_exe = findExeAtPath (marker_exe_name, app.applicationDirPath ());
 	if (marker_exe.isNull ()) marker_exe = findExeAtPath (marker_exe_name, QDir (app.applicationDirPath ()).filePath ("KDE/bin"));
