@@ -22,6 +22,7 @@
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../version.h"
 
+#include <kcoreaddons.h>
 #include <kcoreaddons_version.h>
 
 #include <QTemporaryFile>
