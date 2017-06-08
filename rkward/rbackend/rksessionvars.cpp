@@ -22,8 +22,10 @@
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../version.h"
 
-#include <kcoreaddons.h>
 #include <kcoreaddons_version.h>
+#if KCOREADDONS_VERSION >= QT_VERSION_CHECK(5,20,0)
+#include <kcoreaddons.h>
+#endif
 
 #include <QTemporaryFile>
 #include <QStandardPaths>
