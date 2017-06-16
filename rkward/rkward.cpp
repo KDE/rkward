@@ -229,6 +229,7 @@ void RKWardMainWindow::doPostInit () {
 	QString cd_to = RKSettingsModuleGeneral::initialWorkingDirectory ();
 	if (!cd_to.isEmpty ()) {
 		RKGlobals::rInterface ()->issueCommand ("setwd (" + RObject::rQuote (cd_to) + ")\n", RCommand::App);
+		QDir::setCurrent (cd_to);
 	}
 
 	if (!open_urls.isEmpty()) {
@@ -266,6 +267,7 @@ void RKWardMainWindow::doPostInit () {
 	connect (this, &RKWardMainWindow::aboutToQuitRKWard, dbus, &RKDBusAPI::deleteLater);
 	// around on the bus in this case.
 
+	updateCWD ();
 	setCaption (QString ());	// our version of setCaption takes care of creating a correct caption, so we do not need to provide it here
 }
 
