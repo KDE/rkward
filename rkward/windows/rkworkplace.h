@@ -77,7 +77,7 @@ public:
 @param parent: The parent widget for the workspace view (see view ()) */
 	explicit RKWorkplace (QWidget *parent);
 	~RKWorkplace ();
-	void initActions (KActionCollection *ac, const char *left_id, const char *right_id);
+	void initActions (KActionCollection *ac);
 
 /** @returns a pointer to the view of the workplace. Since possibly the workplace layout might change, better not rely on this pointer being valid for long */
 	RKWorkplaceView *view () { return wview; };

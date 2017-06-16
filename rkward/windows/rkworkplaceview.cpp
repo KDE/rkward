@@ -2,7 +2,7 @@
                           rkworkplaceview  -  description
                              -------------------
     begin                : Tue Sep 26 2006
-    copyright            : (C) 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2006 - 2017 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -37,143 +37,41 @@
 
 #include "../debug.h"
 
-
-RKWorkplaceView::RKWorkplaceView (QWidget *parent) : QTabWidget (parent) {
+RKWorkplaceViewPane::RKWorkplaceViewPane (RKWorkplaceView* parent) : QTabWidget (parent) {
 	RK_TRACE (APP);
+
+	workplace_view = parent;
 
 	// close button(s)
 	QToolButton* close_button = new QToolButton (this);
 	close_button->setIcon (QIcon::fromTheme("tab-close"));
-	connect (close_button, &QToolButton::clicked, this, &RKWorkplaceView::closeCurrentPage);
+	connect (close_button, &QToolButton::clicked, this, &RKWorkplaceViewPane::closeCurrentPage);
 	close_button->adjustSize ();
 	setCornerWidget (close_button, Qt::TopRightCorner);
 
 	setTabsClosable (true);
-	connect (this, &QTabWidget::tabCloseRequested, this, static_cast<void (RKWorkplaceView::*)(int)>(&RKWorkplaceView::closePage));
+	connect (this, &QTabWidget::tabCloseRequested, this, static_cast<void (RKWorkplaceViewPane::*)(int)>(&RKWorkplaceViewPane::closePage));
 
 	setMovable (true);
 
 	tabBar ()->setContextMenuPolicy (Qt::CustomContextMenu);
-	connect (tabBar (), &QWidget::customContextMenuRequested, this, &RKWorkplaceView::showContextMenu);
+	connect (tabBar (), &QWidget::customContextMenuRequested, this, &RKWorkplaceViewPane::showContextMenu);
 
 	KAcceleratorManager::setNoAccel (tabBar ());	// TODO: This is a WORKAROUND for a bug in kdelibs where tabs named "a0.txt", "a1.txt", etc. will steal the Alt+0/1... shortcuts
-	tabBar ()->hide ();		// initially
-	connect (this, &QTabWidget::currentChanged, this, &RKWorkplaceView::currentPageChanged);
+	connect (this, &QTabWidget::currentChanged, workplace_view, &RKWorkplaceView::currentPageChanged);
 }
 
-RKWorkplaceView::~RKWorkplaceView () {
+RKWorkplaceViewPane::~RKWorkplaceViewPane () {
 	RK_TRACE (APP);
 }
 
-void RKWorkplaceView::initActions (KActionCollection *ac, const char *id_left, const char *id_right) {
+bool RKWorkplaceViewPane::isActive () {
 	RK_TRACE (APP);
 
-	action_page_left = (QAction *) ac->addAction (id_left, this, SLOT (pageLeft()));
-	action_page_left->setText (i18n ("Window Left"));
-	ac->setDefaultShortcuts (action_page_left, QList<QKeySequence>() << Qt::ControlModifier + Qt::Key_Less << Qt::ControlModifier + Qt::Key_Comma);
-
-	action_page_right = (QAction *) ac->addAction (id_right, this, SLOT (pageRight()));
-	action_page_right->setText (i18n ("Window Right"));
-	ac->setDefaultShortcuts (action_page_right, QList<QKeySequence>() << Qt::ControlModifier + Qt::Key_Greater << Qt::ControlModifier + Qt::Key_Period);
-
-	updateActions ();
+	return (currentWidget () && static_cast<RKMDIWindow*> (currentWidget ())->isActiveInsideToplevelWindow ());
 }
 
-void RKWorkplaceView::updateActions () {
-	RK_TRACE (APP);
-
-	int index = currentIndex ();
-	action_page_left->setEnabled (index > 0);
-	action_page_right->setEnabled (index < (count () - 1));
-}
-
-void RKWorkplaceView::pageLeft () {
-	RK_TRACE (APP);
-
-	int index = currentIndex ();
-	RK_ASSERT (index > 0);
-	setCurrentIndex (index - 1);
-}
-
-void RKWorkplaceView::pageRight () {
-	RK_TRACE (APP);
-
-	int index = currentIndex ();
-	RK_ASSERT (index < (count () - 1));
-	setCurrentIndex (index + 1);
-}
-
-void RKWorkplaceView::addWindow (RKMDIWindow *widget) {
-	RK_TRACE (APP);
-
-	int id = -1;
-
-	QIcon icon = widget->windowIcon ();
-	if (icon.isNull ()) icon = widget->topLevelWidget ()->windowIcon ();
-	if (icon.isNull ()) RK_ASSERT (false);
-
-	id = addTab (widget, icon, widget->shortCaption ());
-
-	connect (widget, &RKMDIWindow::captionChanged, this, &RKWorkplaceView::childCaptionChanged);
-	widget->show ();
-
-	if (count () > 1) tabBar ()->show ();
-
-	setCurrentIndex (id);		// activate the new tab
-}
-
-bool RKWorkplaceView::hasWindow (RKMDIWindow *widget) {
-	return (indexOf (widget) != -1);
-}
-
-void RKWorkplaceView::removeWindow (RKMDIWindow *widget, bool destroyed) {
-	RK_TRACE (APP);
-
-	int id = indexOf (widget);		// which page is it?
-	if (id == -1) RK_DEBUG (APP, DL_WARNING, "did not find page in RKWorkplaceView::removeWindow");
-	if (!destroyed) disconnect (widget, &RKMDIWindow::captionChanged, this, &RKWorkplaceView::childCaptionChanged);
-
-	removeTab (id);
-	if (count () <= 1) tabBar ()->hide ();
-}
-
-RKMDIWindow *RKWorkplaceView::activePage () {
-	RK_TRACE (APP);
-
-	QWidget *w = currentWidget ();
-	return (dynamic_cast<RKMDIWindow *> (w));
-}
-
-void RKWorkplaceView::closeCurrentPage () {
-	RK_TRACE (APP);
-
-	RKMDIWindow* w = activePage ();
-
-	if (!w) {
-		RK_ASSERT (false);	// the close button should not be visible, if there are no pages
-		return;
-	}
-
-	w->close (true);
-}
-
-void RKWorkplaceView::closePage (QWidget* page) {
-	RK_TRACE (APP);
-
-	if (!page) {
-		RK_ASSERT (false);
-		return;
-	}
-	static_cast<RKMDIWindow*>(page)->close (true);
-}
-
-void RKWorkplaceView::closePage (int page) {
-	RK_TRACE (APP);
-
-	closePage (widget (page));
-}
-
-void RKWorkplaceView::showContextMenu (const QPoint &pos) {
+void RKWorkplaceViewPane::showContextMenu (const QPoint &pos) {
 	RK_TRACE (APP);
 
 	int tab = tabBar ()->tabAt (pos);
@@ -189,7 +87,35 @@ void RKWorkplaceView::showContextMenu (const QPoint &pos) {
 	delete m;
 }
 
-void RKWorkplaceView::contextMenuClosePage () {
+void RKWorkplaceViewPane::closeCurrentPage () {
+	RK_TRACE (APP);
+
+	closePage (currentWidget ());
+}
+
+void RKWorkplaceViewPane::closePage (int index) {
+	RK_TRACE (APP);
+
+	closePage (widget (index));
+}
+
+void RKWorkplaceViewPane::closePage (QWidget* page) {
+	RK_TRACE (APP);
+
+	if (!page) {
+		RK_ASSERT (false);
+		return;
+	}
+	static_cast<RKMDIWindow*>(page)->close (true);
+}
+
+void RKWorkplaceViewPane::tabRemoved (int index) {
+	RK_TRACE (APP);
+	QTabWidget::tabRemoved (index);
+	if (count () < 1) emit (becameEmpty (this));
+}
+
+void RKWorkplaceViewPane::contextMenuClosePage () {
 	RK_TRACE (APP);
 
 	QAction* action = dynamic_cast<QAction*> (sender ());
@@ -203,7 +129,7 @@ void RKWorkplaceView::contextMenuClosePage () {
 	closePage (tab);
 }
 
-void RKWorkplaceView::contextMenuDetachWindow () {
+void RKWorkplaceViewPane::contextMenuDetachWindow () {
 	RK_TRACE (APP);
 
 	QAction* action = dynamic_cast<QAction*> (sender ());
@@ -217,13 +143,198 @@ void RKWorkplaceView::contextMenuDetachWindow () {
 	RKWorkplace::mainWorkplace ()->detachWindow (static_cast<RKMDIWindow*> (widget (tab)));
 }
 
+
+
+RKWorkplaceView::RKWorkplaceView (QWidget *parent) : QSplitter (parent) {
+	RK_TRACE (APP);
+	newPane (0);
+}
+
+RKWorkplaceView::~RKWorkplaceView () {
+	RK_TRACE (APP);
+}
+
+RKWorkplaceViewPane* RKWorkplaceView::activePane () const {
+	RK_TRACE (APP);
+
+	for (int i = 0; i < panes.size (); ++i) {
+		if (panes[i]->isActive ()) return panes[i];
+	}
+	if (!panes.isEmpty ()) return panes.first ();
+	return 0;
+}
+
+void RKWorkplaceView::initActions (KActionCollection *ac) {
+	RK_TRACE (APP);
+
+	action_page_left = (QAction *) ac->addAction ("left_window", this, SLOT (pageLeft()));
+	action_page_left->setText (i18n ("Window Left"));
+	ac->setDefaultShortcuts (action_page_left, QList<QKeySequence>() << Qt::ControlModifier + Qt::Key_Less << Qt::ControlModifier + Qt::Key_Comma);
+
+	action_page_right = (QAction *) ac->addAction ("right_window", this, SLOT (pageRight()));
+	action_page_right->setText (i18n ("Window Right"));
+	ac->setDefaultShortcuts (action_page_right, QList<QKeySequence>() << Qt::ControlModifier + Qt::Key_Greater << Qt::ControlModifier + Qt::Key_Period);
+
+	updateActions ();
+}
+
+void RKWorkplaceView::updateActions () {
+	RK_TRACE (APP);
+
+	bool several_pages = panes.count () > 1 || (panes.count () > 0 && panes.first()->count () > 1);
+	action_page_left->setEnabled (several_pages);
+	action_page_right->setEnabled (several_pages);
+}
+
+void RKWorkplaceView::pageLeft () {
+	RK_TRACE (APP);
+
+	RKWorkplaceViewPane *current = activePane ();
+	if (!current) {
+		RK_ASSERT (current);  // can this happen? It should not, as long as the action does not get called on an empty workplace view
+		return;
+	}
+
+	int index = current->currentIndex ();
+	if (index > 0) {
+		current->setCurrentIndex (index - 1);
+	} else {
+		int pindex = panes.indexOf (current);
+		if (pindex > 0) --pindex;
+		else pindex = panes.size () - 1;
+		if (panes[pindex]->count () < 1) {
+			RK_ASSERT (false); // it should have been purged.
+			return;
+		}
+		panes[pindex]->setCurrentIndex (panes[pindex]->count () - 1);
+	}
+}
+
+void RKWorkplaceView::pageRight () {
+	RK_TRACE (APP);
+
+	RKWorkplaceViewPane *current = activePane ();
+	if (!current) {
+		RK_ASSERT (current);  // can this happen? It should not, as long as the action does not get called on an empty workplace view
+		return;
+	}
+
+	int index = current->currentIndex ();
+	if (index < current->count () - 1) {
+		current->setCurrentIndex (index + 1);
+	} else {
+		int pindex = panes.indexOf (current);
+		if (pindex < panes.count () - 1) ++pindex;
+		else pindex = 0;
+		if (panes[pindex]->count () < 1) {
+			RK_ASSERT (false); // it should have been purged.
+			return;
+		}
+		panes[pindex]->setCurrentIndex (0);
+	}
+}
+
+RKWorkplaceViewPane* RKWorkplaceView::newPane (int index) {
+	RK_TRACE (APP);
+
+	if (index < 0) index = count ();
+	RKWorkplaceViewPane *pane = new RKWorkplaceViewPane (this);
+	addWidget (pane);
+	connect (pane, &RKWorkplaceViewPane::becameEmpty, this, &RKWorkplaceView::purgePane);
+	panes.append (pane);
+	return pane;
+}
+
+void RKWorkplaceView::addWindow (RKMDIWindow *widget) {
+	RK_TRACE (APP);
+
+	int id = -1;
+
+	QIcon icon = widget->windowIcon ();
+	if (icon.isNull ()) icon = widget->topLevelWidget ()->windowIcon ();
+	if (icon.isNull ()) RK_ASSERT (false);
+
+	RKWorkplaceViewPane *pane = activePane ();
+	if (!pane) {
+		RK_ASSERT (count () == 0);
+		pane = newPane (0);
+	}
+	id = pane->addTab (widget, icon, widget->shortCaption ());
+
+	connect (widget, &RKMDIWindow::captionChanged, this, &RKWorkplaceView::childCaptionChanged);
+	widget->show ();
+
+	pane->setCurrentIndex (id);		// activate the new tab
+}
+
+void RKWorkplaceView::showWindow (RKMDIWindow *widget) {
+	RK_TRACE (APP);
+
+	RKWorkplaceViewPane *pane = findWindow (widget);
+	pane->setCurrentIndex (pane->indexOf (widget));
+}
+
+RKWorkplaceViewPane* RKWorkplaceView::findWindow (RKMDIWindow *widget) const {
+	for (int i = 0; i < panes.size (); ++i) {
+		if (panes[i]->indexOf (widget) > -1) return panes[i];
+	}
+	return 0;
+}
+
+bool RKWorkplaceView::hasWindow (RKMDIWindow *widget) const {
+	return (findWindow (widget) != 0);
+}
+
+void RKWorkplaceView::removeWindow (RKMDIWindow *widget, bool destroyed) {
+	RK_TRACE (APP);
+
+	RKWorkplaceViewPane *pane = findWindow (widget);
+	int id = pane ? pane->indexOf (widget) : -1;		// which page is it?
+	if (id == -1) RK_DEBUG (APP, DL_WARNING, "did not find page in RKWorkplaceView::removeWindow");
+	if (!destroyed) disconnect (widget, &RKMDIWindow::captionChanged, this, &RKWorkplaceView::childCaptionChanged);
+
+	if (pane) pane->removeTab (id);
+}
+
+void RKWorkplaceView::purgePane (RKWorkplaceViewPane* pane) {
+	RK_TRACE (APP);
+	RK_ASSERT (pane);
+	if (pane->count () > 0) return;
+	if (count () == 1 && pane->parentWidget () == this) return;  // keep at least one pane around for layout purposes
+
+	QSplitter* split = static_cast<QSplitter*> (pane->parentWidget ());
+	pane->hide ();
+	pane->setParent (0); // TODO: needed?
+	pane->deleteLater ();
+	while (split != this && split->count () < 1) {
+		QSplitter* p = static_cast<QSplitter*> (split->parentWidget ());
+		delete (split);
+		split = p;
+	}
+	bool removed = panes.removeAll (pane) > 0;
+	RK_ASSERT (removed);
+}
+
+RKMDIWindow *RKWorkplaceView::activePage () const {
+	RK_TRACE (APP);
+
+	RKWorkplaceViewPane *pane = activePane ();
+	if (pane) return (dynamic_cast<RKMDIWindow *> (pane->currentWidget ()));
+	return 0;
+}
+
 void RKWorkplaceView::childCaptionChanged (RKMDIWindow *widget) {
 	RK_TRACE (APP);
 
-	int id = indexOf (widget);
+	RKWorkplaceViewPane *pane = findWindow (widget);
+	if (!pane)  {
+		RK_ASSERT (pane);
+		return;
+	}
+	int id = pane->indexOf (widget);
 	RK_ASSERT (id >= 0);
-	setTabText (id, widget->shortCaption ());
-	if (id == currentIndex ()) setCaption (widget->shortCaption ());
+	pane->setTabText (id, widget->shortCaption ());
+	if (id == pane->currentIndex ()) setCaption (widget->shortCaption ());
 }
 
 void RKWorkplaceView::setCaption (const QString &caption) {

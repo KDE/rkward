@@ -182,10 +182,10 @@ void RKWorkplace::saveSettings () {
 	for (int i = 0; i < TOOL_WINDOW_BAR_COUNT; ++i) tool_window_bars[i]->saveSize (toolbar_config);
 }
 
-void RKWorkplace::initActions (KActionCollection *ac, const char *left_id, const char *right_id) {
+void RKWorkplace::initActions (KActionCollection *ac) {
 	RK_TRACE (APP);
 
-	wview->initActions (ac, left_id, right_id);
+	wview->initActions (ac);
 }
 
 void RKWorkplace::attachWindow (RKMDIWindow *window) {

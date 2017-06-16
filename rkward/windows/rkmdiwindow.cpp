@@ -2,7 +2,7 @@
                           rkmdiwindow  -  description
                              -------------------
     begin                : Tue Sep 26 2006
-    copyright            : (C) 2006, 2007, 2008, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2006 - 2017 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -115,6 +115,11 @@ bool RKMDIWindow::isActive () {
 	// don't trace, called pretty often
 
 	if (!topLevelWidget ()->isActiveWindow ()) return false;
+	return isActiveInsideToplevelWindow ();
+}
+
+bool RKMDIWindow::isActiveInsideToplevelWindow () {
+	// don't trace, called pretty often
 	return (active || (!isAttached ()));
 }
 
@@ -131,7 +136,7 @@ void RKMDIWindow::activate (bool with_focus) {
 			topLevelWidget ()->raise ();
 		}
 	} else {
-		if (isAttached ()) RKWorkplace::mainWorkplace ()->view ()->setCurrentWidget (this);
+		if (isAttached ()) RKWorkplace::mainWorkplace ()->view ()->showWindow (this);
 		else {
 			topLevelWidget ()->show ();
 			topLevelWidget ()->raise ();

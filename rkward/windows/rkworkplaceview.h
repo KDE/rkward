@@ -2,7 +2,7 @@
                           rkworkplaceview  -  description
                              -------------------
     begin                : Tue Sep 26 2006
-    copyright            : (C) 2006, 2007, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2006 - 017 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -19,16 +19,46 @@
 #define RKWORKPLACEVIEW_H
 
 #include <QTabWidget>
+#include <QSplitter>
 
 class RKMDIWindow;
 class QAction;
 class KActionCollection;
+class RKWorkplaceView;
+
+class RKWorkplaceViewPane : public QTabWidget {
+	Q_OBJECT
+friend class RKWorkplaceView;
+private:
+	explicit RKWorkplaceViewPane (RKWorkplaceView *parent);
+	~RKWorkplaceViewPane ();
+	RKWorkplaceView* workplace_view;
+/** Close a page given the correspoding widget */
+	void closePage (QWidget* page);
+/** Close a page given its index */
+	void closePage (int page);
+/** (Attempts to) close the current tab */
+	void closeCurrentPage ();
+	bool isActive ();
+protected:
+	void tabRemoved (int index) override;
+signals:
+	void becameEmpty (RKWorkplaceViewPane* pane);
+private slots:
+/** handle context menu requests */
+	void showContextMenu (const QPoint &pos);
+/** handle close request from context menu */
+	void contextMenuClosePage ();
+/** handle detach request from context menu */
+	void contextMenuDetachWindow ();
+};
 
 /** This is mostly a QTabWidget with some extras such as updating the caption, a context menu, etc.
  */
 
-class RKWorkplaceView : public QTabWidget {
+class RKWorkplaceView : public QSplitter {
 	Q_OBJECT
+friend class RKWorkplaceViewPane;
 public:
 /** constructor
 @param parent parent QWidget */
@@ -41,14 +71,16 @@ public:
 @param destroyed if the window is already destroyed, set this to true */
 	void removeWindow (RKMDIWindow *widget, bool destroyed=false);
 /** does this window exist in the view? */
-	bool hasWindow (RKMDIWindow *widget);
+	bool hasWindow (RKMDIWindow *widget) const;
+/** show the given page (does not set focus) */
+	void showWindow (RKMDIWindow *widget);
 
 /** @returns the currently active window */
-	RKMDIWindow *activePage ();
+	RKMDIWindow *activePage () const;
 /** reimplemented form QWidget::setCaption () to emit captionChanged () when the caption changes */
 	void setCaption (const QString &caption);
 /** initialize the window left/right actions */
-	void initActions (KActionCollection *ac, const char *id_left, const char *id_right);
+	void initActions (KActionCollection *ac);
 signals:
 /** a new page / window was activated
 @param widget the newly activated window */
@@ -57,14 +89,6 @@ signals:
 @param new_caption the new caption */
 	void captionChanged (const QString &new_caption);
 private slots:
-/** (Attempts to) close the current tab */
-	void closeCurrentPage ();
-/** handle context menu requests */
-	void showContextMenu (const QPoint &pos);
-/** handle close request from context menu */
-	void contextMenuClosePage ();
-/** handle detach request from context menu */
-	void contextMenuDetachWindow ();
 /** Internal function to update caption and actions, when the current page has changed. */
 	void currentPageChanged (int page);
 /** called when the caption of a window changes. Updates the tab-label, and - if appropriate - the caption of this widget */
@@ -73,15 +97,18 @@ private slots:
 	void pageLeft ();
 /** Active the page right of the current tab */
 	void pageRight ();
-/** Close a page given the correspoding widget */
-	void closePage (QWidget* page);
-/** Close a page given its index */
-	void closePage (int page);
+/** Purge the given pane (if it is empty) */
+	void purgePane (RKWorkplaceViewPane *pane);
 private:
 	void updateActions ();
+	RKWorkplaceViewPane *findWindow (RKMDIWindow *window) const;
+	RKWorkplaceViewPane *newPane (int index);
 
 	QAction *action_page_left;
 	QAction *action_page_right;
+
+	QList<RKWorkplaceViewPane*> panes;
+	RKWorkplaceViewPane *activePane () const;
 };
 
 #endif
