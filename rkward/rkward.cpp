@@ -81,6 +81,7 @@
 #include "windows/rkdebugconsole.h"
 #include "windows/rkcallstackviewer.h"
 #include "windows/rkdebugmessagewindow.h"
+#include "windows/katepluginintegration.h"
 #include "rkconsole.h"
 #include "debug.h"
 #include "version.h"
@@ -120,6 +121,7 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 	workspace_modified = false;
 	merge_loads = false;
 	rkward_mainwin = this;
+	katepluginintegration = 0;
 	RKGlobals::rinter = 0;
 	RKSettings::settings_tracker = new RKSettingsTracker (this);
 
@@ -177,6 +179,15 @@ RKWardMainWindow::~RKWardMainWindow() {
 	delete RKGlobals::tracker ();
 	delete RKGlobals::rInterface ();
 	delete RControlWindow::getControl ();
+}
+
+KatePluginIntegration* RKWardMainWindow::katePluginIntegration () {
+	RK_TRACE (APP);
+
+	if (!katepluginintegration) {
+		katepluginintegration = new KatePluginIntegration (this);
+	}
+	return katepluginintegration;
 }
 
 void RKWardMainWindow::closeEvent (QCloseEvent *e) {

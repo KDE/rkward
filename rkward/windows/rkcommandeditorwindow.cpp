@@ -60,6 +60,7 @@
 #include "../rkward.h"
 #include "rkhelpsearchwindow.h"
 #include "rkworkplace.h"
+#include "katepluginintegration.h"
 
 #include "../debug.h"
 
@@ -92,7 +93,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	KTextEditor::ModificationInterface* em_iface = qobject_cast<KTextEditor::ModificationInterface*> (m_doc);
 	if (em_iface) em_iface->setModifiedOnDiskWarning (true);
 	else RK_ASSERT (false);
-	m_view = m_doc->createView (this);
+	m_view = m_doc->createView (this, RKWardMainWindow::getMain ()->katePluginIntegration ()->mainWindow ());
 
 	setFocusProxy (m_view);
 	setFocusPolicy (Qt::StrongFocus);
