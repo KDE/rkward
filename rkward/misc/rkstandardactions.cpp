@@ -20,6 +20,7 @@
 #include <KLocalizedString>
 #include <kactioncollection.h>
 #include <QAction>
+#include <QDesktopServices>
 
 #include "rkstandardicons.h"
 #include "rkspecialactions.h"
@@ -170,7 +171,7 @@ public slots:
 		data.setAlternateDefaultSearchProvider ("google");
 		bool ok = KUriFilter::self ()->filterSearchUri (data, KUriFilter::NormalTextFilter);
 		RK_DEBUG (MISC, DL_DEBUG, "Searching for %s in %s online -> %d: %s", qPrintable (symbol), qPrintable (package), ok, qPrintable (data.uri ().url ()));
-		KToolInvocation::invokeBrowser (data.uri ().url ());
+		QDesktopServices::openUrl (data.uri ());
 	};
 private:
 	RKScriptContextProvider *provider;

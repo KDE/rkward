@@ -19,7 +19,6 @@
 
 #include <KLocalizedString>
 #include <kmessagebox.h>
-#include <ktoolinvocation.h>
 
 #include <QIcon>
 #include <QLabel>
@@ -30,6 +29,7 @@
 #include <QPushButton>
 #include <QDialog>
 #include <QVBoxLayout>
+#include <QDesktopServices>
 
 #include "../rbackend/rinterface.h"
 #include "../rbackend/rksessionvars.h"
@@ -91,7 +91,7 @@ public:
 		out << "</form></body></html>";
 		proxy.close ();
 
-		KToolInvocation::invokeBrowser (QUrl::fromLocalFile (proxy.fileName ()).toEncoded ());
+		QDesktopServices::openUrl (QUrl::fromLocalFile (proxy.fileName ()));
 		QDialog::accept ();
 	}
 private:
