@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward_main" version="640">
+<kpartgui name="rkward_main" version="700">
 <MenuBar>
 	<!-- The Main Window ui.rc is the only one, where merging happens, reliably. That is, why we need to define
 	     a lot of merge points, here, which can then be used be mdi windows and their children.
@@ -66,6 +66,9 @@
 		<Action name="window_close"/>
 		<Action name="window_close_all"/>
 		<Action name="close_all_editors"/>
+		<Separator/>
+		<Action name="view_split_vert"/>
+		<Action name="view_split_horiz"/>
 		<Separator/>
 		<Menu name="window_activate"><text>&amp;Activate</text>
 			<Action name="left_window"/>

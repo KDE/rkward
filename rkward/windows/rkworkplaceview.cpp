@@ -37,7 +37,7 @@
 
 #include "../debug.h"
 
-RKWorkplaceViewPane::RKWorkplaceViewPane (RKWorkplaceView* parent) : QTabWidget (parent) {
+RKWorkplaceViewPane::RKWorkplaceViewPane (RKWorkplaceView* parent) : QTabWidget () {
 	RK_TRACE (APP);
 
 	workplace_view = parent;
@@ -58,6 +58,7 @@ RKWorkplaceViewPane::RKWorkplaceViewPane (RKWorkplaceView* parent) : QTabWidget 
 	connect (tabBar (), &QWidget::customContextMenuRequested, this, &RKWorkplaceViewPane::showContextMenu);
 
 	KAcceleratorManager::setNoAccel (tabBar ());	// TODO: This is a WORKAROUND for a bug in kdelibs where tabs named "a0.txt", "a1.txt", etc. will steal the Alt+0/1... shortcuts
+	tabBar ()->hide ();  // initially
 	connect (this, &QTabWidget::currentChanged, workplace_view, &RKWorkplaceView::currentPageChanged);
 }
 
@@ -112,7 +113,16 @@ void RKWorkplaceViewPane::closePage (QWidget* page) {
 void RKWorkplaceViewPane::tabRemoved (int index) {
 	RK_TRACE (APP);
 	QTabWidget::tabRemoved (index);
+	if (count () < 2) tabBar ()->hide ();
 	if (count () < 1) emit (becameEmpty (this));
+	workplace_view->updateActions ();
+}
+
+void RKWorkplaceViewPane::tabInserted (int index) {
+	RK_TRACE (APP);
+	QTabWidget::tabInserted (index);
+	if (count () > 1) tabBar ()->show ();
+	workplace_view->updateActions ();
 }
 
 void RKWorkplaceViewPane::contextMenuClosePage () {
@@ -145,9 +155,20 @@ void RKWorkplaceViewPane::contextMenuDetachWindow () {
 
 
 
+RKWorkplaceViewPane* RKWorkplaceView::createPane () {
+	RK_TRACE (APP);
+	RKWorkplaceViewPane *pane = new RKWorkplaceViewPane (this);
+	QObject::connect (pane, &RKWorkplaceViewPane::becameEmpty, this, &RKWorkplaceView::purgePane);
+	return pane;
+}
+
 RKWorkplaceView::RKWorkplaceView (QWidget *parent) : QSplitter (parent) {
 	RK_TRACE (APP);
-	newPane (0);
+
+	RKWorkplaceViewPane *pane = createPane ();
+	addWidget (pane);
+	panes.append (pane);
+	setChildrenCollapsible (false);
 }
 
 RKWorkplaceView::~RKWorkplaceView () {
@@ -160,8 +181,14 @@ RKWorkplaceViewPane* RKWorkplaceView::activePane () const {
 	for (int i = 0; i < panes.size (); ++i) {
 		if (panes[i]->isActive ()) return panes[i];
 	}
-	if (!panes.isEmpty ()) return panes.first ();
-	return 0;
+
+	// Esp. when switching between console and script window, consider the previous window active
+	RKWorkplaceViewPane *pane = findWindow (RKWorkplace::mainWorkplace ()->getHistory ()->previousDocumentWindow ());
+	if (pane) return pane;
+
+	// As a last resort, return top-left pane
+	RK_ASSERT (!panes.isEmpty ());
+	return panes.first ();
 }
 
 void RKWorkplaceView::initActions (KActionCollection *ac) {
@@ -175,13 +202,28 @@ void RKWorkplaceView::initActions (KActionCollection *ac) {
 	action_page_right->setText (i18n ("Window Right"));
 	ac->setDefaultShortcuts (action_page_right, QList<QKeySequence>() << Qt::ControlModifier + Qt::Key_Greater << Qt::ControlModifier + Qt::Key_Period);
 
+	// NOTE: Icons, shortcuts, action names for split view actions as in kate
+	QAction *action = ac->addAction (QStringLiteral ("view_split_vert"));
+	action->setIcon (QIcon::fromTheme(QStringLiteral ("view-split-left-right")));
+	action->setText (i18n("Split Ve&rtical"));
+	ac->setDefaultShortcut (action, Qt::CTRL + Qt::SHIFT + Qt::Key_L);
+	connect (action, &QAction::triggered, this, &RKWorkplaceView::splitViewVert);
+	action->setWhatsThis (i18n ("Split the currently active view into two views, vertically."));
+
+	action = ac->addAction (QStringLiteral ("view_split_horiz"));
+	action->setIcon (QIcon::fromTheme(QStringLiteral ("view-split-top-bottom")));
+	action->setText (i18n ("Split &Horizontal"));
+	ac->setDefaultShortcut (action, Qt::CTRL + Qt::SHIFT + Qt::Key_T);
+	connect (action, &QAction::triggered, this, &RKWorkplaceView::splitViewHoriz);
+	action->setWhatsThis (i18n ("Split the currently active view into two views, horizontally."));
+
 	updateActions ();
 }
 
 void RKWorkplaceView::updateActions () {
 	RK_TRACE (APP);
 
-	bool several_pages = panes.count () > 1 || (panes.count () > 0 && panes.first()->count () > 1);
+	bool several_pages = panes.count () > 1 || (panes.count () > 0 && panes.first ()->count () > 1);
 	action_page_left->setEnabled (several_pages);
 	action_page_right->setEnabled (several_pages);
 }
@@ -190,11 +232,6 @@ void RKWorkplaceView::pageLeft () {
 	RK_TRACE (APP);
 
 	RKWorkplaceViewPane *current = activePane ();
-	if (!current) {
-		RK_ASSERT (current);  // can this happen? It should not, as long as the action does not get called on an empty workplace view
-		return;
-	}
-
 	int index = current->currentIndex ();
 	if (index > 0) {
 		current->setCurrentIndex (index - 1);
@@ -203,7 +240,7 @@ void RKWorkplaceView::pageLeft () {
 		if (pindex > 0) --pindex;
 		else pindex = panes.size () - 1;
 		if (panes[pindex]->count () < 1) {
-			RK_ASSERT (false); // it should have been purged.
+			RK_ASSERT (false); // action should have been disabled on an empty workplaceview
 			return;
 		}
 		panes[pindex]->setCurrentIndex (panes[pindex]->count () - 1);
@@ -214,11 +251,6 @@ void RKWorkplaceView::pageRight () {
 	RK_TRACE (APP);
 
 	RKWorkplaceViewPane *current = activePane ();
-	if (!current) {
-		RK_ASSERT (current);  // can this happen? It should not, as long as the action does not get called on an empty workplace view
-		return;
-	}
-
 	int index = current->currentIndex ();
 	if (index < current->count () - 1) {
 		current->setCurrentIndex (index + 1);
@@ -227,22 +259,74 @@ void RKWorkplaceView::pageRight () {
 		if (pindex < panes.count () - 1) ++pindex;
 		else pindex = 0;
 		if (panes[pindex]->count () < 1) {
-			RK_ASSERT (false); // it should have been purged.
+			RK_ASSERT (false); // action should have been disabled on an empty workplaceview
 			return;
 		}
 		panes[pindex]->setCurrentIndex (0);
 	}
 }
 
-RKWorkplaceViewPane* RKWorkplaceView::newPane (int index) {
+void RKWorkplaceView::splitViewHoriz () {
+	RK_TRACE (APP);
+	splitView (Qt::Vertical, activePane ());
+}
+
+void RKWorkplaceView::splitViewVert () {
+	RK_TRACE (APP);
+	splitView (Qt::Horizontal, activePane ());
+}
+
+// NOTE: Some of this function taken from kate's kateviewmanager.cpp
+void RKWorkplaceView::splitView (Qt::Orientation orientation, RKWorkplaceViewPane *pane) {
 	RK_TRACE (APP);
 
-	if (index < 0) index = count ();
-	RKWorkplaceViewPane *pane = new RKWorkplaceViewPane (this);
-	addWidget (pane);
-	connect (pane, &RKWorkplaceViewPane::becameEmpty, this, &RKWorkplaceView::purgePane);
-	panes.append (pane);
-	return pane;
+	RKMDIWindow *active = activePage ();
+	RK_ASSERT (pane);
+	QSplitter *splitter = qobject_cast<QSplitter *> (pane->parentWidget ());
+    if (!splitter) {
+		RK_ASSERT (splitter);
+		return;
+	}
+
+	setUpdatesEnabled (false);
+	QList<int> sizes = splitter->sizes ();
+
+	// index where to insert new splitter/viewspace
+	const int index = splitter->indexOf (pane);
+	const int lindex = panes.indexOf (pane);
+
+	RKWorkplaceViewPane *newpane = createPane ();
+	panes.insert (lindex + 1, newpane);
+
+	// If there is only one child (left) in the current splitter, we can just set the orientation as needed.
+	if (splitter->count () == 1) {
+		splitter->setOrientation (orientation);
+	}
+	if (splitter->orientation () == orientation) {  // not the same as above: Also, if an existing larger splitter is suitably oriented, arleady
+		// First calculate the size of the new and the old elements.
+		// This is not pixel perfect, but reasonably close.
+		for (int i = sizes.count () - 1; i >= 0; --i) {
+			sizes[i] = sizes[i] * sizes.count () / (sizes.count () + 1);
+		}
+		sizes.insert (index + 1, (orientation == Qt::Horizontal ? splitter->width () : splitter->height ()) / (splitter->count () + 1) - splitter->handleWidth ());
+
+		splitter->insertWidget (index + 1, newpane);
+	} else {
+		QSplitter *newsplitter = new QSplitter (orientation);
+		newsplitter->setChildrenCollapsible (false);
+		newsplitter->addWidget (pane);
+		newsplitter->addWidget (newpane);
+		splitter->insertWidget (index, newsplitter);
+		QList<int> subsizes = newsplitter->sizes ();
+		subsizes[0] = subsizes[1] = (subsizes[0] + subsizes[1]) / 2;
+		newsplitter->setSizes (subsizes);
+	}
+	newpane->show ();
+	newpane->addTab (active, "Test");
+	newpane->currentWidget ()->setFocus ();
+
+	splitter->setSizes (sizes);
+	setUpdatesEnabled (true);
 }
 
 void RKWorkplaceView::addWindow (RKMDIWindow *widget) {
@@ -255,10 +339,7 @@ void RKWorkplaceView::addWindow (RKMDIWindow *widget) {
 	if (icon.isNull ()) RK_ASSERT (false);
 
 	RKWorkplaceViewPane *pane = activePane ();
-	if (!pane) {
-		RK_ASSERT (count () == 0);
-		pane = newPane (0);
-	}
+	RK_ASSERT (pane);
 	id = pane->addTab (widget, icon, widget->shortCaption ());
 
 	connect (widget, &RKMDIWindow::captionChanged, this, &RKWorkplaceView::childCaptionChanged);
@@ -300,7 +381,7 @@ void RKWorkplaceView::purgePane (RKWorkplaceViewPane* pane) {
 	RK_TRACE (APP);
 	RK_ASSERT (pane);
 	if (pane->count () > 0) return;
-	if (count () == 1 && pane->parentWidget () == this) return;  // keep at least one pane around for layout purposes
+	if (panes.count () < 2) return;  // keep at least one pane around for layout purposes
 
 	QSplitter* split = static_cast<QSplitter*> (pane->parentWidget ());
 	pane->hide ();
@@ -319,8 +400,8 @@ RKMDIWindow *RKWorkplaceView::activePage () const {
 	RK_TRACE (APP);
 
 	RKWorkplaceViewPane *pane = activePane ();
-	if (pane) return (dynamic_cast<RKMDIWindow *> (pane->currentWidget ()));
-	return 0;
+	RK_ASSERT (pane);
+	return (dynamic_cast<RKMDIWindow *> (pane->currentWidget ()));
 }
 
 void RKWorkplaceView::childCaptionChanged (RKMDIWindow *widget) {
@@ -354,7 +435,6 @@ void RKWorkplaceView::currentPageChanged (int) {
 	} else {
 		setCaption (QString ());
 	}
-	updateActions ();
 }
 
 

@@ -2,7 +2,7 @@
                           rkworkplaceview  -  description
                              -------------------
     begin                : Tue Sep 26 2006
-    copyright            : (C) 2006 - 017 by Thomas Friedrichsmeier
+    copyright            : (C) 2006 - 2017 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -42,6 +42,7 @@ private:
 	bool isActive ();
 protected:
 	void tabRemoved (int index) override;
+	void tabInserted (int index) override;
 signals:
 	void becameEmpty (RKWorkplaceViewPane* pane);
 private slots:
@@ -99,10 +100,16 @@ private slots:
 	void pageRight ();
 /** Purge the given pane (if it is empty) */
 	void purgePane (RKWorkplaceViewPane *pane);
+/** Split current view vertically */
+	void splitViewVert ();
+/** Split current view horizontally */
+	void splitViewHoriz ();
 private:
 	void updateActions ();
+	void splitView (Qt::Orientation horiz, RKWorkplaceViewPane *pane);
+	RKWorkplaceViewPane *createPane ();
 	RKWorkplaceViewPane *findWindow (RKMDIWindow *window) const;
-	RKWorkplaceViewPane *newPane (int index);
+	RKWorkplaceViewPane *addNewPane (int index);
 
 	QAction *action_page_left;
 	QAction *action_page_right;
