@@ -438,13 +438,15 @@ RKMDIWindow* RKWorkplace::openScriptEditor (const QUrl &url, const QString& enco
 
 // is this url already opened?
 	if (!url.isEmpty ()) {
-	  	RKWorkplaceObjectList script_windows = getObjectList (RKMDIWindow::CommandEditorWindow, RKMDIWindow::AnyWindowState);
-		for (RKWorkplaceObjectList::const_iterator it = script_windows.constBegin (); it != script_windows.constEnd (); ++it) {
-			  QUrl ourl = static_cast<RKCommandEditorWindow *> (*it)->url ();
-			  if (url == ourl) {
-				  (*it)->activate ();
-				  return (*it);
-			  }
+		RKWorkplaceObjectList script_windows = getObjectList (RKMDIWindow::CommandEditorWindow, RKMDIWindow::AnyWindowState);
+		for (int i = 0; i < script_windows.size (); ++i) {
+			QUrl ourl = static_cast<RKCommandEditorWindow *> (script_windows[i])->url ();
+			if (url == ourl) {
+				if (view ()->windowInActivePane (script_windows[i])) {
+					script_windows[i]->activate ();
+					return (script_windows[i]);
+				}
+			}
 		}
 	}
 
@@ -473,10 +475,12 @@ RKMDIWindow* RKWorkplace::openHelpWindow (const QUrl &url, bool only_once) {
 
 	if (only_once) {
 		RKWorkplaceObjectList help_windows = getObjectList (RKMDIWindow::HelpWindow, RKMDIWindow::AnyWindowState);
-		for (RKWorkplaceObjectList::const_iterator it = help_windows.constBegin (); it != help_windows.constEnd (); ++it) {
-			if (static_cast<RKHTMLWindow *> (*it)->url ().matches (url, QUrl::StripTrailingSlash | QUrl::NormalizePathSegments)) {
-				(*it)->activate ();
-				return (*it);
+		for (int i = 0; i < help_windows.size (); ++i) {
+			if (static_cast<RKHTMLWindow *> (help_windows[i])->url ().matches (url, QUrl::StripTrailingSlash | QUrl::NormalizePathSegments)) {
+				if (view ()->windowInActivePane (help_windows[i])) {
+					help_windows[i]->activate ();
+					return (help_windows[i]);
+				}
 			}
 		}
 	}
@@ -840,7 +844,8 @@ void RKWorkplace::restoreWorkplace (const QStringList &description) {
 			RObject *object = RObjectList::getObjectList ()->findObject (specification);
 			if (object) win = editObject (object);
 		} else if (type == "script") {
-			win = openScriptEditor (checkAdjustRestoredUrl (specification, base));
+			QUrl url = checkAdjustRestoredUrl (specification, base);
+			win = openScriptEditor (url, QString (), RKSettingsModuleCommandEditor::matchesScriptFileFilter (url.fileName()));
 		} else if (type == "output") {
 			win = openOutputWindow (checkAdjustRestoredUrl (specification, base));
 		} else if (type == "help") {
@@ -868,6 +873,21 @@ void RKWorkplace::restoreWorkplace (const QStringList &description) {
 	}
 	RKWardMainWindow::getMain ()->lockGUIRebuild (false);
 }
+
+void RKWorkplace::duplicateAndAttachWindow (RKMDIWindow* source) {
+	RK_TRACE (APP);
+	RK_ASSERT (source);
+
+	if (source->isType (RKMDIWindow::CommandEditorWindow)) {
+		QUrl url = static_cast<RKCommandEditorWindow*> (source)->url ();
+		openScriptEditor (url, QString (), RKSettingsModuleCommandEditor::matchesScriptFileFilter (url.fileName()));
+	} else if (source->isType (RKMDIWindow::HelpWindow)) {
+		openHelpWindow (static_cast<RKHTMLWindow*> (source)->url ());
+	} else {
+		openHelpWindow (QUrl ("rkward://page/rkward_split_views"));
+	}
+}
+
 
 ///////////////////////// END RKWorkplace ////////////////////////////
 ///////////////////// BEGIN RKMDIWindowHistory ///////////////////////

@@ -177,6 +177,9 @@ Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsMod
 /** Inserts the given message widget above the central area. While technically, the workplace becomes the parent widget of the message widget, it is the caller's responsibility to
  *  delete the widget, when appropriate. */
 	void addMessageWidget (KMessageWidget *message);
+
+/** For window splitting: Copy the given window (or, if that is not possible, create a placeholder window), and attach it to the main view. */
+	void duplicateAndAttachWindow (RKMDIWindow *source);
 signals:
 /** emitted when the workspace Url has changed */
 	void workspaceUrlChanged (const QUrl &url);

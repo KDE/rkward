@@ -52,6 +52,8 @@ private slots:
 	void contextMenuClosePage ();
 /** handle detach request from context menu */
 	void contextMenuDetachWindow ();
+/** Internal function to ensure proper focus and update caption, when the current page has changed. */
+	void currentPageChanged (int page);
 };
 
 /** This is mostly a QTabWidget with some extras such as updating the caption, a context menu, etc.
@@ -75,6 +77,8 @@ public:
 	bool hasWindow (RKMDIWindow *widget) const;
 /** show the given page (does not set focus) */
 	void showWindow (RKMDIWindow *widget);
+/** Returns true if the given window is in the active pane of this view. */
+	bool windowInActivePane (RKMDIWindow *widget) const;
 
 /** @returns the currently active window */
 	RKMDIWindow *activePage () const;
@@ -90,8 +94,6 @@ signals:
 @param new_caption the new caption */
 	void captionChanged (const QString &new_caption);
 private slots:
-/** Internal function to update caption and actions, when the current page has changed. */
-	void currentPageChanged (int page);
 /** called when the caption of a window changes. Updates the tab-label, and - if appropriate - the caption of this widget */
 	void childCaptionChanged (RKMDIWindow *widget);
 /** Active the page left of the current tab */
@@ -116,6 +118,8 @@ private:
 
 	QList<RKWorkplaceViewPane*> panes;
 	RKWorkplaceViewPane *activePane () const;
+/** Newly added pane. Pointer needed so the first "new" window will go here. */
+	RKWorkplaceViewPane *newpane;
 };
 
 #endif

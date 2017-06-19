@@ -1,0 +1,21 @@
+<!DOCTYPE rkhelp>
+<document>
+	<title>Split views</title>
+
+	<summary>
+	Split views can be used to partition the main window into several view areas.
+
+	They can be used to make better used of screen space, but also to view far-apart portions of a single file, simultaniously.
+	</summary>
+
+	<section title="Splitting views" id="introduction">
+	Splitting views is currently supported for the main window, only. Use Window->Split Vertical or Window->Split Horizontal to split the current view area vertically, or horizontally. For windows that support it (e.g. scripts, help pages), the newly created view area will contain a copy of the current window. When splitting other windows (such as onscreen graphics devices), the new view area will be initialized to show this help page.
+
+	To add further files to a view area, simply open them the normal way (from "File Browser" window, the menu, or from the "R Console" window). Simply make sure that the view area where you want them new window to open has focus / is active.
+	</section>
+
+	<section title="Closing split views" id="closing">
+	To remove a view area, simply close all windows inside it.
+	</section>
+</document>
+ 

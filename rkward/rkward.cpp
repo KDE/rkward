@@ -760,7 +760,7 @@ bool RKWardMainWindow::doQueryQuit () {
 				return false;
 			}
 		}
-		lockGUIRebuild (false);
+//		lockGUIRebuild (false);  // No need to update GUI anymore (and doing so is potentially asking for trouble, anyway)
 	}
 
 	return true;

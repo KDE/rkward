@@ -58,8 +58,8 @@ RKWorkplaceViewPane::RKWorkplaceViewPane (RKWorkplaceView* parent) : QTabWidget 
 	connect (tabBar (), &QWidget::customContextMenuRequested, this, &RKWorkplaceViewPane::showContextMenu);
 
 	KAcceleratorManager::setNoAccel (tabBar ());	// TODO: This is a WORKAROUND for a bug in kdelibs where tabs named "a0.txt", "a1.txt", etc. will steal the Alt+0/1... shortcuts
-	tabBar ()->hide ();  // initially
-	connect (this, &QTabWidget::currentChanged, workplace_view, &RKWorkplaceView::currentPageChanged);
+//	tabBar ()->hide ();  // initially
+	connect (this, &QTabWidget::currentChanged, this, &RKWorkplaceViewPane::currentPageChanged);
 }
 
 RKWorkplaceViewPane::~RKWorkplaceViewPane () {
@@ -113,7 +113,7 @@ void RKWorkplaceViewPane::closePage (QWidget* page) {
 void RKWorkplaceViewPane::tabRemoved (int index) {
 	RK_TRACE (APP);
 	QTabWidget::tabRemoved (index);
-	if (count () < 2) tabBar ()->hide ();
+//	if (count () < 2) tabBar ()->hide ();
 	if (count () < 1) emit (becameEmpty (this));
 	workplace_view->updateActions ();
 }
@@ -121,7 +121,7 @@ void RKWorkplaceViewPane::tabRemoved (int index) {
 void RKWorkplaceViewPane::tabInserted (int index) {
 	RK_TRACE (APP);
 	QTabWidget::tabInserted (index);
-	if (count () > 1) tabBar ()->show ();
+//	if (count () > 1) tabBar ()->show ();
 	workplace_view->updateActions ();
 }
 
@@ -153,18 +153,32 @@ void RKWorkplaceViewPane::contextMenuDetachWindow () {
 	RKWorkplace::mainWorkplace ()->detachWindow (static_cast<RKMDIWindow*> (widget (tab)));
 }
 
+void RKWorkplaceViewPane::currentPageChanged (int page) {
+	RK_TRACE (APP);
+
+	RKMDIWindow *w = static_cast<RKMDIWindow*> (currentWidget ());
+	if (w) {
+		workplace_view->setCaption (w->shortCaption ());
+		w->activate ();		// not always automatically active
+	} else {
+		// happens when empty
+		workplace_view->setCaption (QString ());
+	}
+}
+
 
 
 RKWorkplaceViewPane* RKWorkplaceView::createPane () {
 	RK_TRACE (APP);
-	RKWorkplaceViewPane *pane = new RKWorkplaceViewPane (this);
-	QObject::connect (pane, &RKWorkplaceViewPane::becameEmpty, this, &RKWorkplaceView::purgePane);
-	return pane;
+	newpane = new RKWorkplaceViewPane (this);
+	QObject::connect (newpane, &RKWorkplaceViewPane::becameEmpty, this, &RKWorkplaceView::purgePane);
+	return newpane;
 }
 
 RKWorkplaceView::RKWorkplaceView (QWidget *parent) : QSplitter (parent) {
 	RK_TRACE (APP);
 
+	newpane = 0;
 	RKWorkplaceViewPane *pane = createPane ();
 	addWidget (pane);
 	panes.append (pane);
@@ -177,6 +191,8 @@ RKWorkplaceView::~RKWorkplaceView () {
 
 RKWorkplaceViewPane* RKWorkplaceView::activePane () const {
 	RK_TRACE (APP);
+
+	if (newpane) return newpane;
 
 	for (int i = 0; i < panes.size (); ++i) {
 		if (panes[i]->isActive ()) return panes[i];
@@ -295,7 +311,7 @@ void RKWorkplaceView::splitView (Qt::Orientation orientation, RKWorkplaceViewPan
 	const int index = splitter->indexOf (pane);
 	const int lindex = panes.indexOf (pane);
 
-	RKWorkplaceViewPane *newpane = createPane ();
+	newpane = createPane ();
 	panes.insert (lindex + 1, newpane);
 
 	// If there is only one child (left) in the current splitter, we can just set the orientation as needed.
@@ -322,8 +338,9 @@ void RKWorkplaceView::splitView (Qt::Orientation orientation, RKWorkplaceViewPan
 		newsplitter->setSizes (subsizes);
 	}
 	newpane->show ();
-	newpane->addTab (active, "Test");
-	newpane->currentWidget ()->setFocus ();
+	// "copy" the "split" window to the new pane.
+	// TODO: line below will only work for the main window, for the time being. We need to rethink this, if we want to enable window splitting for detached windows, too.
+	RKWorkplace::mainWorkplace ()->duplicateAndAttachWindow (active);
 
 	splitter->setSizes (sizes);
 	setUpdatesEnabled (true);
@@ -340,6 +357,7 @@ void RKWorkplaceView::addWindow (RKMDIWindow *widget) {
 
 	RKWorkplaceViewPane *pane = activePane ();
 	RK_ASSERT (pane);
+	newpane = 0; // next window will get default treatment
 	id = pane->addTab (widget, icon, widget->shortCaption ());
 
 	connect (widget, &RKMDIWindow::captionChanged, this, &RKWorkplaceView::childCaptionChanged);
@@ -364,6 +382,10 @@ RKWorkplaceViewPane* RKWorkplaceView::findWindow (RKMDIWindow *widget) const {
 
 bool RKWorkplaceView::hasWindow (RKMDIWindow *widget) const {
 	return (findWindow (widget) != 0);
+}
+
+bool RKWorkplaceView::windowInActivePane (RKMDIWindow *widget) const {
+	return (findWindow (widget) == activePane ());
 }
 
 void RKWorkplaceView::removeWindow (RKMDIWindow *widget, bool destroyed) {
@@ -423,18 +445,6 @@ void RKWorkplaceView::setCaption (const QString &caption) {
 
 	QWidget::setWindowTitle (caption);
 	emit (captionChanged (caption));
-}
-
-void RKWorkplaceView::currentPageChanged (int) {
-	RK_TRACE (APP);
-
-	RKMDIWindow *w = activePage ();
-	if (w) {
-		setCaption (w->shortCaption ());
-		w->activate ();		// not always automatically active
-	} else {
-		setCaption (QString ());
-	}
 }
 
 
