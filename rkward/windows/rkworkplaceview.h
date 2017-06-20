@@ -37,12 +37,14 @@ private:
 	void closePage (QWidget* page);
 /** Close a page given its index */
 	void closePage (int page);
-/** (Attempts to) close the current tab */
-	void closeCurrentPage ();
+/** (Attempts to) close all tabs in this pane (and thus the pane itself) */
+	void closeAll ();
 	bool isActive ();
+	void initActions ();
 protected:
 	void tabRemoved (int index) override;
 	void tabInserted (int index) override;
+	bool eventFilter (QObject* obj, QEvent* event) override;
 signals:
 	void becameEmpty (RKWorkplaceViewPane* pane);
 private slots:
@@ -111,10 +113,11 @@ private:
 	void splitView (Qt::Orientation horiz, RKWorkplaceViewPane *pane);
 	RKWorkplaceViewPane *createPane ();
 	RKWorkplaceViewPane *findWindow (RKMDIWindow *window) const;
-	RKWorkplaceViewPane *addNewPane (int index);
 
 	QAction *action_page_left;
 	QAction *action_page_right;
+	QAction *action_split_horiz;
+	QAction *action_split_vert;
 
 	QList<RKWorkplaceViewPane*> panes;
 	RKWorkplaceViewPane *activePane () const;

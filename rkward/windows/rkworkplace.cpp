@@ -494,13 +494,17 @@ RKMDIWindow* RKWorkplace::openHelpWindow (const QUrl &url, bool only_once) {
 RKMDIWindow* RKWorkplace::openOutputWindow (const QUrl &url) {
 	RK_TRACE (APP);
 
-	RKHTMLWindow *w = RKOutputWindowManager::self ()->getCurrentOutputWindow ();
-	if (!windows.contains (w)) {
-		addWindow (w);
-	} else {
-		w->activate ();
+	QList<RKHTMLWindow*> owins = RKOutputWindowManager::self ()->existingOutputWindows ();
+	for (int i = 0; i < owins.size (); ++i) {
+		if (view ()->windowInActivePane (owins[i])) {
+			owins[i]->activate ();
+			return (owins[i]);
+		}
 	}
-	return (w);
+
+	RKHTMLWindow* ret = RKOutputWindowManager::self ()->newOutputWindow ();
+	addWindow (ret);
+	return (ret);
 }
 
 void RKWorkplace::newX11Window (QWindow* window_to_embed, int device_number) {
@@ -524,10 +528,13 @@ void RKWorkplace::newObjectViewer (RObject *object) {
 	RK_ASSERT (object);
 
 	RKWorkplaceObjectList object_windows = getObjectList (RKMDIWindow::ObjectWindow, RKMDIWindow::AnyWindowState);
-	for (RKWorkplaceObjectList::const_iterator it = object_windows.constBegin (); it != object_windows.constEnd (); ++it) {
-		if (static_cast<RObjectViewer *> (*it)->object () == object) {
-			(*it)->activate ();
-			return;
+	for (int i = 0; i < object_windows.size (); ++i) {
+		RObjectViewer *viewer = static_cast<RObjectViewer *> (object_windows[i]);
+		if (viewer->object () == object) {
+			if (view ()->windowInActivePane (viewer)) {
+				viewer->activate ();
+				return;
+			}
 		}
 	}
 
@@ -561,17 +568,27 @@ RKEditor *RKWorkplace::editObject (RObject *object) {
 	RK_ASSERT (object);
 
 	RObject *iobj = object;
+	if (!iobj->isDataFrame ()) {
+		if (iobj->isVariable () && iobj->parentObject ()->isDataFrame ()) {
+			iobj = iobj->parentObject ();
+		} else {
+			return 0;
+		}
+	}
+
 	RKEditor *ed = 0;
-	RKEditor *existing_editor = object->editor ();
-	if (!existing_editor) {
-		if (!iobj->isDataFrame ()) {
-			if (iobj->isVariable () && iobj->parentObject ()->isDataFrame ()) {
-				iobj = iobj->parentObject ();
-			} else {
-				return 0;
+	QList<RKEditor*> existing_editors = object->editors ();
+	for (int i = 0; i < existing_editors.size (); ++i) {
+		RObject *eobj = existing_editors[i]->getObject ();
+		if (eobj == iobj) {
+			if (view ()->windowInActivePane (existing_editors[i])) {
+				ed = existing_editors[i];
+				break;
 			}
 		}
+	}
 
+	if (!ed) {
 		unsigned long size = 1;
 		foreach (int dim, iobj->getDimensions ()) {
 			size *= dim;
@@ -584,8 +601,6 @@ RKEditor *RKWorkplace::editObject (RObject *object) {
 
 		ed = new RKEditorDataFrame (static_cast<RContainerObject*> (iobj), 0);
 		addWindow (ed);
-	} else {
-		ed = existing_editor;
 	}
 
 	ed->activate ();
@@ -634,10 +649,15 @@ RKWorkplace::RKWorkplaceObjectList RKWorkplace::getObjectList (int type, int sta
 void RKWorkplace::closeAll (int type, int state) {
 	RK_TRACE (APP);
 
+	closeWindows (getObjectList (type, state));
+}
+
+void RKWorkplace::closeWindows (QList<RKMDIWindow*> windows) {
+	RK_TRACE (APP);
+
 	RKWardMainWindow::getMain ()->lockGUIRebuild (true);
-	RKWorkplaceObjectList list_to_close = getObjectList (type, state);
-	for (RKWorkplaceObjectList::const_iterator it = list_to_close.constBegin (); it != list_to_close.constEnd (); ++it) {
-		closeWindow (*it);
+	for (int i = windows.size () - 1; i >= 0; --i) {
+		closeWindow (windows[i]);
 	}
 	RKWardMainWindow::getMain ()->lockGUIRebuild (false);
 }
@@ -883,6 +903,12 @@ void RKWorkplace::duplicateAndAttachWindow (RKMDIWindow* source) {
 		openScriptEditor (url, QString (), RKSettingsModuleCommandEditor::matchesScriptFileFilter (url.fileName()));
 	} else if (source->isType (RKMDIWindow::HelpWindow)) {
 		openHelpWindow (static_cast<RKHTMLWindow*> (source)->url ());
+	} else if (source->isType (RKMDIWindow::OutputWindow)) {
+		openOutputWindow (static_cast<RKHTMLWindow*> (source)->url ());
+	} else if (source->isType (RKMDIWindow::DataEditorWindow)) {
+		editObject (static_cast<RKEditor*> (source)->getObject ());
+	} else if (source->isType (RKMDIWindow::ObjectWindow)) {
+		newObjectViewer (static_cast<RObjectViewer*> (source)->object ());
 	} else {
 		openHelpWindow (QUrl ("rkward://page/rkward_split_views"));
 	}

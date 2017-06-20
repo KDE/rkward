@@ -42,13 +42,6 @@ RKWorkplaceViewPane::RKWorkplaceViewPane (RKWorkplaceView* parent) : QTabWidget 
 
 	workplace_view = parent;
 
-	// close button(s)
-	QToolButton* close_button = new QToolButton (this);
-	close_button->setIcon (QIcon::fromTheme("tab-close"));
-	connect (close_button, &QToolButton::clicked, this, &RKWorkplaceViewPane::closeCurrentPage);
-	close_button->adjustSize ();
-	setCornerWidget (close_button, Qt::TopRightCorner);
-
 	setTabsClosable (true);
 	connect (this, &QTabWidget::tabCloseRequested, this, static_cast<void (RKWorkplaceViewPane::*)(int)>(&RKWorkplaceViewPane::closePage));
 
@@ -65,6 +58,34 @@ RKWorkplaceViewPane::RKWorkplaceViewPane (RKWorkplaceView* parent) : QTabWidget 
 RKWorkplaceViewPane::~RKWorkplaceViewPane () {
 	RK_TRACE (APP);
 }
+
+void RKWorkplaceViewPane::initActions () {
+	RK_TRACE (APP);
+
+	QToolButton *split_button = new QToolButton (this);
+	split_button->setAutoRaise (true);
+	split_button->setPopupMode (QToolButton::InstantPopup);
+	split_button->setIcon (QIcon::fromTheme (QStringLiteral("view-split-left-right")));
+	split_button->addAction (workplace_view->action_split_vert);
+	split_button->addAction (workplace_view->action_split_horiz);
+	QAction *close_all = new QAction (QIcon::fromTheme("tab-close"), i18n ("Close all"), this);
+	connect (close_all, &QAction::triggered, this, &RKWorkplaceViewPane::closeAll);
+	split_button->addAction (close_all);
+	split_button->installEventFilter (this); // on click, active this pane
+	split_button->adjustSize ();
+	setCornerWidget (split_button, Qt::TopRightCorner);
+}
+
+bool RKWorkplaceViewPane::eventFilter (QObject* obj, QEvent* event) {
+	if (event->type () == QEvent::MouseButtonPress) {
+		RKMDIWindow *current = static_cast<RKMDIWindow*> (currentWidget ());
+		if (current && !current->isActiveInsideToplevelWindow()) {
+			current->activate ();  // make sure this pane is active
+		}
+	}
+	return QObject::eventFilter (obj, event);
+}
+
 
 bool RKWorkplaceViewPane::isActive () {
 	RK_TRACE (APP);
@@ -88,10 +109,14 @@ void RKWorkplaceViewPane::showContextMenu (const QPoint &pos) {
 	delete m;
 }
 
-void RKWorkplaceViewPane::closeCurrentPage () {
+void RKWorkplaceViewPane::closeAll () {
 	RK_TRACE (APP);
 
-	closePage (currentWidget ());
+	QList<RKMDIWindow*> windows;
+	for (int i = count () - 1; i >= 0; --i) {
+		windows.append (static_cast<RKMDIWindow*> (widget (i)));
+	}
+	RKWorkplace::mainWorkplace ()->closeWindows (windows);
 }
 
 void RKWorkplaceViewPane::closePage (int index) {
@@ -192,8 +217,6 @@ RKWorkplaceView::~RKWorkplaceView () {
 RKWorkplaceViewPane* RKWorkplaceView::activePane () const {
 	RK_TRACE (APP);
 
-	if (newpane) return newpane;
-
 	for (int i = 0; i < panes.size (); ++i) {
 		if (panes[i]->isActive ()) return panes[i];
 	}
@@ -219,20 +242,23 @@ void RKWorkplaceView::initActions (KActionCollection *ac) {
 	ac->setDefaultShortcuts (action_page_right, QList<QKeySequence>() << Qt::ControlModifier + Qt::Key_Greater << Qt::ControlModifier + Qt::Key_Period);
 
 	// NOTE: Icons, shortcuts, action names for split view actions as in kate
-	QAction *action = ac->addAction (QStringLiteral ("view_split_vert"));
-	action->setIcon (QIcon::fromTheme(QStringLiteral ("view-split-left-right")));
-	action->setText (i18n("Split Ve&rtical"));
-	ac->setDefaultShortcut (action, Qt::CTRL + Qt::SHIFT + Qt::Key_L);
-	connect (action, &QAction::triggered, this, &RKWorkplaceView::splitViewVert);
-	action->setWhatsThis (i18n ("Split the currently active view into two views, vertically."));
+	action_split_vert = ac->addAction (QStringLiteral ("view_split_vert"));
+	action_split_vert->setIcon (QIcon::fromTheme(QStringLiteral ("view-split-left-right")));
+	action_split_vert->setText (i18n("Split Ve&rtical"));
+	ac->setDefaultShortcut (action_split_vert, Qt::CTRL + Qt::SHIFT + Qt::Key_L);
+	connect (action_split_vert, &QAction::triggered, this, &RKWorkplaceView::splitViewVert);
+	action_split_vert->setWhatsThis (i18n ("Split the currently active view into two views, vertically."));
 
-	action = ac->addAction (QStringLiteral ("view_split_horiz"));
-	action->setIcon (QIcon::fromTheme(QStringLiteral ("view-split-top-bottom")));
-	action->setText (i18n ("Split &Horizontal"));
-	ac->setDefaultShortcut (action, Qt::CTRL + Qt::SHIFT + Qt::Key_T);
-	connect (action, &QAction::triggered, this, &RKWorkplaceView::splitViewHoriz);
-	action->setWhatsThis (i18n ("Split the currently active view into two views, horizontally."));
+	action_split_horiz = ac->addAction (QStringLiteral ("view_split_horiz"));
+	action_split_horiz->setIcon (QIcon::fromTheme(QStringLiteral ("view-split-top-bottom")));
+	action_split_horiz->setText (i18n ("Split &Horizontal"));
+	ac->setDefaultShortcut (action_split_horiz, Qt::CTRL + Qt::SHIFT + Qt::Key_T);
+	connect (action_split_horiz, &QAction::triggered, this, &RKWorkplaceView::splitViewHoriz);
+	action_split_horiz->setWhatsThis (i18n ("Split the currently active view into two views, horizontally."));
 
+	for (int i = 0; i < panes.size (); ++i) {
+		panes[i]->initActions ();
+	}
 	updateActions ();
 }
 
@@ -297,6 +323,12 @@ void RKWorkplaceView::splitView (Qt::Orientation orientation, RKWorkplaceViewPan
 	RK_TRACE (APP);
 
 	RKMDIWindow *active = activePage ();
+	if (!active) {
+		RKWorkplace::mainWorkplace ()->openHelpWindow (QUrl ("rkward://page/rkward_split_views"));
+		RK_ASSERT (count () == 0);
+		active = activePage ();
+		RK_ASSERT (active);
+	}
 	RK_ASSERT (pane);
 	QSplitter *splitter = qobject_cast<QSplitter *> (pane->parentWidget ());
     if (!splitter) {
@@ -313,6 +345,7 @@ void RKWorkplaceView::splitView (Qt::Orientation orientation, RKWorkplaceViewPan
 
 	newpane = createPane ();
 	panes.insert (lindex + 1, newpane);
+	newpane->initActions ();
 
 	// If there is only one child (left) in the current splitter, we can just set the orientation as needed.
 	if (splitter->count () == 1) {
@@ -355,7 +388,8 @@ void RKWorkplaceView::addWindow (RKMDIWindow *widget) {
 	if (icon.isNull ()) icon = widget->topLevelWidget ()->windowIcon ();
 	if (icon.isNull ()) RK_ASSERT (false);
 
-	RKWorkplaceViewPane *pane = activePane ();
+	RKWorkplaceViewPane *pane = newpane;
+	if (!pane) pane = activePane ();
 	RK_ASSERT (pane);
 	newpane = 0; // next window will get default treatment
 	id = pane->addTab (widget, icon, widget->shortCaption ());

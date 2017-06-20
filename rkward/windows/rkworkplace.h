@@ -111,7 +111,7 @@ public:
 @param url URL to open
 @param only_once if true, checks whether any help window already shows this URL. If so, raise it, but do not open a new window. Else show the new window */
 	RKMDIWindow* openHelpWindow (const QUrl &url=QUrl (), bool only_once=false);
-/** Opens a new output window. Currently only a single output window will ever be created. Subsequent calls to the function will not create additional windows right now (but will raise / refresh the output window
+/** Opens a new output window, or raise / refresh the current output window.
 @param url currently ignored! */
 	RKMDIWindow* openOutputWindow (const QUrl &url=QUrl ());
 
@@ -138,6 +138,9 @@ public:
 /** Close the given window, whether it is attached or detached.
 @param window window to close */
 	void closeWindow (RKMDIWindow *window);
+/** Close the given windows, whether they are attached or detached. TODO: Be smart about asking what to save.
+@param windows list windows to close */
+	void closeWindows (QList<RKMDIWindow*> windows);
 /** Closes all windows of the given type(s). Default call (no arguments) closes all windows
 @param type: A bitwise OR of RKWorkplaceObjectType
 @param state: A bitwise OR of RKWorkplaceObjectState */
