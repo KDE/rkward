@@ -117,7 +117,7 @@ public:
 
 	void newX11Window (QWindow* window_to_embed, int device_number);
 	void newRKWardGraphisWindow (RKGraphicsDevice *dev, int device_number);
-	void newObjectViewer (RObject *object);
+	RKMDIWindow* newObjectViewer (RObject *object);
 
 /** @returns true if there is a known editor for this type of object, false otherwise */
 	bool canEditObject (RObject *object);
@@ -158,6 +158,9 @@ Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsMod
 	void restoreWorkplace (const QStringList &description);
 
 	QStringList makeWorkplaceDescription ();
+	QString makeItemDescription (RKMDIWindow *) const;
+/** Restore a document window given its description. Returns true, if a window was restored, false otherwise (e.g. invalid/unsupported description). */
+	bool restoreDocumentWindow (const QString &description, const QString &base=QString ());
 
 /** In the current design there is only ever one workplace. Use this static function to reference it.
 @returns a pointer to the workplace */
@@ -182,7 +185,7 @@ Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsMod
 	void addMessageWidget (KMessageWidget *message);
 
 /** For window splitting: Copy the given window (or, if that is not possible, create a placeholder window), and attach it to the main view. */
-	void duplicateAndAttachWindow (RKMDIWindow *source);
+	void splitAndAttachWindow (RKMDIWindow *source);
 signals:
 /** emitted when the workspace Url has changed */
 	void workspaceUrlChanged (const QUrl &url);

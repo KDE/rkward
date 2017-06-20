@@ -88,6 +88,11 @@ public:
 	void setCaption (const QString &caption);
 /** initialize the window left/right actions */
 	void initActions (KActionCollection *ac);
+
+/** List the contents of the view, recursively. Windows are returned as pointers in the list, Splits are returned as strings "split::::horiz", "split::::vert", or "split::::end" (for end of current splitter) */
+	QVariantList listContents () const;
+/** Public for use by RKWorkplace while restoring a workplace, only. @return the newly created pane */
+	RKWorkplaceViewPane* splitView (Qt::Orientation orientation, RKWorkplaceViewPane *pane, const QString &description=QString (), const QString &base=QString ());
 signals:
 /** a new page / window was activated
 @param widget the newly activated window */
@@ -110,7 +115,6 @@ private slots:
 	void splitViewHoriz ();
 private:
 	void updateActions ();
-	void splitView (Qt::Orientation horiz, RKWorkplaceViewPane *pane);
 	RKWorkplaceViewPane *createPane ();
 	RKWorkplaceViewPane *findWindow (RKMDIWindow *window) const;
 

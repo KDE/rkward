@@ -523,7 +523,7 @@ void RKWorkplace::newRKWardGraphisWindow (RKGraphicsDevice* dev, int device_numb
 	addWindow (window, false);
 }
 
-void RKWorkplace::newObjectViewer (RObject *object) {
+RKMDIWindow* RKWorkplace::newObjectViewer (RObject *object) {
 	RK_TRACE (APP);
 	RK_ASSERT (object);
 
@@ -533,13 +533,14 @@ void RKWorkplace::newObjectViewer (RObject *object) {
 		if (viewer->object () == object) {
 			if (view ()->windowInActivePane (viewer)) {
 				viewer->activate ();
-				return;
+				return viewer;
 			}
 		}
 	}
 
 	RObjectViewer *ov = new RObjectViewer (view (), object);
 	addWindow (ov);
+	return ov;
 }
 
 bool RKWorkplace::canEditObject (RObject *object) {
@@ -736,6 +737,127 @@ RKMDIWindow *RKWorkplace::activeWindow (RKMDIWindow::State state) {
 	return (ret);
 }
 
+QUrl checkAdjustRestoredUrl (const QString &_url, const QString old_base) {
+	QUrl url = QUrl::fromUserInput (_url, QString (), QUrl::AssumeLocalFile);
+
+	if (old_base.isEmpty ()) return (url);
+	QUrl new_base_url = RKWorkplace::mainWorkplace ()->workspaceURL ().adjusted (QUrl::RemoveFilename | QUrl::NormalizePathSegments);
+	if (new_base_url.isEmpty ()) return (url);
+	QUrl old_base_url (old_base);
+	if (old_base_url == new_base_url) return (url);
+
+	// TODO: Should we also care about non-local files? In theory: yes, but stat'ing remote files for existence can take a long time.
+	if (!(old_base_url.isLocalFile () && new_base_url.isLocalFile () && url.isLocalFile ())) return (url);
+
+	// if the file exists, unadjusted, return it.
+	if (QFileInfo (url.toLocalFile ()).exists ()) return (url);
+
+	// check whether a file exists for the adjusted url
+	QString relative = QDir (new_base_url.path ()).absoluteFilePath (QDir (old_base_url.path ()).relativeFilePath (url.path ()));
+	if (QFileInfo (relative).exists ()) return (QUrl::fromLocalFile (relative));
+	return (url);
+}
+
+QString RKWorkplace::makeItemDescription (RKMDIWindow *win) const {
+	QString type, specification;
+	QStringList params;
+	if (win->isType (RKMDIWindow::DataEditorWindow)) {
+		type = "data";
+		specification = static_cast<RKEditor*> (win)->getObject ()->getFullName ();
+	} else if (win->isType (RKMDIWindow::CommandEditorWindow)) {
+		type = "script";
+		specification = static_cast<RKCommandEditorWindow*> (win)->url ().url ();
+	} else if (win->isType (RKMDIWindow::OutputWindow)) {
+		type = "output";
+		specification = static_cast<RKHTMLWindow*> (win)->url ().url ();
+	} else if (win->isType (RKMDIWindow::HelpWindow)) {
+		type = "help";
+		specification = static_cast<RKHTMLWindow*> (win)->restorableUrl ().url ();
+	} else if (win->isToolWindow ()) {
+		type = RKToolWindowList::idOfWindow (win);
+	} else if (win->isType (RKMDIWindow::ObjectWindow)) {
+		type = "object";
+		specification = static_cast<RObjectViewer*> (win)->object ()->getFullName ();
+	}
+	if (!type.isEmpty ()) {
+		if (!win->isAttached ()) {
+			params.append (QString ("detached,") + QString::number (win->x ()) + ',' + QString::number (win->y ()) + ',' + QString::number (win->width ()) + ',' + QString::number (win->height ()));
+		}
+		if (win->isToolWindow ()) {
+			int sidebar = RKToolWindowList::Nowhere;
+			for (int i = 0; i < TOOL_WINDOW_BAR_COUNT; ++i) {
+				if (win->tool_window_bar == tool_window_bars[i]) {
+					sidebar = i;
+					break;
+				}
+			}
+			params.append (QString ("sidebar,") + QString::number (sidebar));
+		}
+		return (type + "::" + params.join (":") + "::" + specification);
+	}
+
+	return QString ();
+}
+
+struct ItemSpecification {
+	QString type;
+	QString specification;
+	QStringList params;
+};
+
+ItemSpecification parseItemDescription (const QString &description) {
+	ItemSpecification ret;
+
+	// Item format for rkward <= 0.5.4: "type:specification"
+	// Item format for rkward <= 0.5.5: "type::[optional_params1[:optional_params2[:...]]]::specification"
+	int typeend = description.indexOf (':');
+	if ((typeend < 0) || (typeend >= (description.size () - 1))) {
+		RK_ASSERT (false);
+		return ret;
+	}
+	ret.type = description.left (typeend);
+	if (description.at (typeend + 1) == ':') {	// rkward 0.5.5 or later
+		int specstart = description.indexOf ("::", typeend + 2);
+		if (specstart < typeend) {
+			RK_ASSERT (false);
+			return ret;
+		}
+		ret.params = description.mid (typeend + 2, specstart - typeend - 2).split (':', QString::SkipEmptyParts);
+		ret.specification = description.mid (specstart + 2);
+	} else {
+		ret.specification = description.mid (typeend + 1);
+	}
+
+	return ret;
+}
+
+RKMDIWindow* restoreDocumentWindowInternal (RKWorkplace* wp, ItemSpecification spec, const QString &base) {
+	RK_TRACE (APP);
+
+	RKMDIWindow *win = 0;
+	if (spec.type == "data") {
+		RObject *object = RObjectList::getObjectList ()->findObject (spec.specification);
+		if (object) win = wp->editObject (object);
+	} else if (spec.type == "script") {
+		QUrl url = checkAdjustRestoredUrl (spec.specification, base);
+		win = wp->openScriptEditor (url, QString (), RKSettingsModuleCommandEditor::matchesScriptFileFilter (url.fileName()));
+	} else if (spec.type == "output") {
+		win = wp->openOutputWindow (checkAdjustRestoredUrl (spec.specification, base));
+	} else if (spec.type == "help") {
+		win = wp->openHelpWindow (checkAdjustRestoredUrl (spec.specification, base), true);
+	} else if (spec.type == "object") {
+		RObject *object = RObjectList::getObjectList ()->findObject (spec.specification);
+		if (object) win = wp->newObjectViewer (object);
+	}
+	return win;
+}
+
+bool RKWorkplace::restoreDocumentWindow (const QString &description, const QString &base) {
+	RK_TRACE (APP);
+
+	return (restoreDocumentWindowInternal (this, parseItemDescription (description), base) != 0);
+}
+
 QStringList RKWorkplace::makeWorkplaceDescription () {
 	RK_TRACE (APP);
 
@@ -747,44 +869,26 @@ QStringList RKWorkplace::makeWorkplaceDescription () {
 
 	// window order in the workplace view may have changed with respect to our list. Thus we first generate a properly sorted list
 	RKWorkplaceObjectList list = getObjectList (RKMDIWindow::DocumentWindow, RKMDIWindow::Detached);
-	for (int i=0; i < wview->count (); ++i) {
-		list.append (static_cast<RKMDIWindow*> (wview->widget (i)));
-	}
-	list.append (getObjectList (RKMDIWindow::ToolWindow, RKMDIWindow::AnyWindowState));
 	foreach (RKMDIWindow *win, list) {
-		QString type, specification;
-		QStringList params;
-		if (win->isType (RKMDIWindow::DataEditorWindow)) {
-			type = "data";
-			specification = static_cast<RKEditor*> (win)->getObject ()->getFullName ();
-		} else if (win->isType (RKMDIWindow::CommandEditorWindow)) {
-			type = "script";
-			specification = static_cast<RKCommandEditorWindow*> (win)->url ().url ();
-		} else if (win->isType (RKMDIWindow::OutputWindow)) {
-			type = "output";
-			specification = static_cast<RKHTMLWindow*> (win)->url ().url ();
-		} else if (win->isType (RKMDIWindow::HelpWindow)) {
-			type = "help";
-			specification = static_cast<RKHTMLWindow*> (win)->restorableUrl ().url ();
-		} else if (win->isToolWindow ()) {
-			type = RKToolWindowList::idOfWindow (win);
+		QString desc = makeItemDescription (win);
+		if (!desc.isEmpty ()) workplace_description.append (desc);
+	}
+
+	QVariantList attached_list = wview->listContents ();
+	for (int i=0; i < attached_list.count (); ++i) {
+		if (attached_list[i].canConvert<QObject*>()) {
+			RKMDIWindow *win = static_cast<RKMDIWindow*> (attached_list[i].value<QObject*>());
+			QString desc = makeItemDescription (win);
+			if (!desc.isEmpty ()) workplace_description.append (desc);
+		} else {
+			workplace_description.append (attached_list[i].toString ());
 		}
-		if (!type.isEmpty ()) {
-			if (!win->isAttached ()) {
-				params.append (QString ("detached,") + QString::number (win->x ()) + ',' + QString::number (win->y ()) + ',' + QString::number (win->width ()) + ',' + QString::number (win->height ()));
-			}
-			if (win->isToolWindow ()) {
-				int sidebar = RKToolWindowList::Nowhere;
-				for (int i = 0; i < TOOL_WINDOW_BAR_COUNT; ++i) {
-					if (win->tool_window_bar == tool_window_bars[i]) {
-						sidebar = i;
-						break;
-					}
-				}
-				params.append (QString ("sidebar,") + QString::number (sidebar));
-			}
-			workplace_description.append (type + "::" + params.join (":") + "::" + specification);
-		}
+	}
+
+	list = getObjectList (RKMDIWindow::ToolWindow, RKMDIWindow::AnyWindowState);
+	foreach (RKMDIWindow *win, list) {
+		QString desc = makeItemDescription (win);
+		if (!desc.isEmpty ()) workplace_description.append (desc);
 	}
 	return workplace_description;
 }
@@ -807,83 +911,40 @@ void RKWorkplace::restoreWorkplace (RCommandChain *chain, bool merge) {
 	RKGlobals::rInterface ()->issueCommand ("rk.restore.workplace(" + no_close_windows + ')', RCommand::App, i18n ("Restore Workplace layout"), 0, 0, chain);
 }
 
-QUrl checkAdjustRestoredUrl (const QString &_url, const QString old_base) {
-	QUrl url = QUrl::fromUserInput (_url, QString (), QUrl::AssumeLocalFile);
-
-	if (old_base.isEmpty ()) return (url);
-	QUrl new_base_url = RKWorkplace::mainWorkplace ()->workspaceURL ().adjusted (QUrl::RemoveFilename | QUrl::NormalizePathSegments);
-	if (new_base_url.isEmpty ()) return (url);
-	QUrl old_base_url (old_base);
-	if (old_base_url == new_base_url) return (url);
-
-	// TODO: Should we also care about non-local files? In theory: yes, but stat'ing remote files for existence can take a long time.
-	if (!(old_base_url.isLocalFile () && new_base_url.isLocalFile () && url.isLocalFile ())) return (url);
-
-	// if the file exists, unadjusted, return it.
-	if (QFileInfo (url.toLocalFile ()).exists ()) return (url);
-
-	// check whether a file exists for the adjusted url
-	QString relative = QDir (new_base_url.path ()).absoluteFilePath (QDir (old_base_url.path ()).relativeFilePath (url.path ()));
-	if (QFileInfo (relative).exists ()) return (QUrl::fromLocalFile (relative));
-	return (url);
-}
-
 void RKWorkplace::restoreWorkplace (const QStringList &description) {
 	RK_TRACE (APP);
 
 	RKWardMainWindow::getMain ()->lockGUIRebuild (true);
 	QString base;
 	for (int i = 0; i < description.size (); ++i) {
-		// Item format for rkward <= 0.5.4: "type:specification"
-		// Item format for rkward <= 0.5.5: "type::[optional_params1[:optional_params2[:...]]]::specification"
-		int typeend = description[i].indexOf (':');
-		if ((typeend < 0) || (typeend >= (description[i].size () - 1))) {
-			RK_ASSERT (false);
-			continue;
-		}
-		QString type, specification;
-		QStringList params;
-		type = description[i].left (typeend);
-		if (description[i].at (typeend + 1) == ':') {	// rkward 0.5.5 or later
-			int specstart = description[i].indexOf ("::", typeend + 2);
-			if (specstart < typeend) {
-				RK_ASSERT (false);
-				continue;
-			}
-			params = description[i].mid (typeend + 2, specstart - typeend - 2).split (':', QString::SkipEmptyParts);
-			specification = description[i].mid (specstart + 2);
-		} else {
-			specification = description[i].mid (typeend + 1);
-		}
+/*		if (split_next) {
+			split_next = false;
+			view ()->restoreSplitView (split_orientation, description[i], base);
+		} */
 
+		ItemSpecification spec = parseItemDescription (description[i]);
 		RKMDIWindow *win = 0;
-		if (type == "base") {
+		if (spec.type == "base") {
 			RK_ASSERT (i == 0);
-			base = specification;
-		} else if (type == "data") {
-			RObject *object = RObjectList::getObjectList ()->findObject (specification);
-			if (object) win = editObject (object);
-		} else if (type == "script") {
-			QUrl url = checkAdjustRestoredUrl (specification, base);
-			win = openScriptEditor (url, QString (), RKSettingsModuleCommandEditor::matchesScriptFileFilter (url.fileName()));
-		} else if (type == "output") {
-			win = openOutputWindow (checkAdjustRestoredUrl (specification, base));
-		} else if (type == "help") {
-			win = openHelpWindow (checkAdjustRestoredUrl (specification, base), true);
+			base = spec.specification;
+		} else if (restoreDocumentWindowInternal (this, spec, base)) {
+			// it was restored. nothing else to do
+		} else if (spec.type == "split") {
+#warning implement
 		} else {
-			win = RKToolWindowList::findToolWindowById (type);
+			win = RKToolWindowList::findToolWindowById (spec.type);
 			RK_ASSERT (win);
 		}
 
 		// apply generic window parameters
 		if (win) {
-			for (int p = 0; p < params.size (); ++p) {
-				if (params[p].startsWith ("sidebar")) {
-					int position = params[p].section (',', 1).toInt ();
+			for (int p = 0; p < spec.params.size (); ++p) {
+				if (spec.params[p].startsWith ("sidebar")) {
+					int position = spec.params[p].section (',', 1).toInt ();
 					placeInToolWindowBar (win, position);
 				}
-				if (params[p].startsWith ("detached")) {
-					QStringList geom = params[p].split (',');
+				if (spec.params[p].startsWith ("detached")) {
+					QStringList geom = spec.params[p].split (',');
 					win->hide ();
 					win->setGeometry (geom.value (1).toInt (), geom.value (2).toInt (), geom.value (3).toInt (), geom.value (4).toInt ());
 					detachWindow (win);
@@ -894,7 +955,7 @@ void RKWorkplace::restoreWorkplace (const QStringList &description) {
 	RKWardMainWindow::getMain ()->lockGUIRebuild (false);
 }
 
-void RKWorkplace::duplicateAndAttachWindow (RKMDIWindow* source) {
+void RKWorkplace::splitAndAttachWindow (RKMDIWindow* source) {
 	RK_TRACE (APP);
 	RK_ASSERT (source);
 

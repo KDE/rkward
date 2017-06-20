@@ -217,6 +217,8 @@ RKWorkplaceView::~RKWorkplaceView () {
 RKWorkplaceViewPane* RKWorkplaceView::activePane () const {
 	RK_TRACE (APP);
 
+	if (newpane) return newpane;
+
 	for (int i = 0; i < panes.size (); ++i) {
 		if (panes[i]->isActive ()) return panes[i];
 	}
@@ -285,7 +287,8 @@ void RKWorkplaceView::pageLeft () {
 			RK_ASSERT (false); // action should have been disabled on an empty workplaceview
 			return;
 		}
-		panes[pindex]->setCurrentIndex (panes[pindex]->count () - 1);
+		// NOTE: setCurrentIndex() is not enough, here, as the index may be current, already, while the pane is still inactive.
+		static_cast<RKMDIWindow*> (panes[pindex]->widget (panes[pindex]->count () - 1))->activate ();
 	}
 }
 
@@ -304,7 +307,8 @@ void RKWorkplaceView::pageRight () {
 			RK_ASSERT (false); // action should have been disabled on an empty workplaceview
 			return;
 		}
-		panes[pindex]->setCurrentIndex (0);
+		// NOTE: setCurrentIndex() is not enough, here, as the index may be current, already, while the pane is still inactive.
+		static_cast<RKMDIWindow*> (panes[pindex]->widget (0))->activate ();
 	}
 }
 
@@ -319,21 +323,27 @@ void RKWorkplaceView::splitViewVert () {
 }
 
 // NOTE: Some of this function taken from kate's kateviewmanager.cpp
-void RKWorkplaceView::splitView (Qt::Orientation orientation, RKWorkplaceViewPane *pane) {
+RKWorkplaceViewPane* RKWorkplaceView::splitView (Qt::Orientation orientation, RKWorkplaceViewPane *pane, const QString &description, const QString &base) {
 	RK_TRACE (APP);
 
-	RKMDIWindow *active = activePage ();
-	if (!active) {
-		RKWorkplace::mainWorkplace ()->openHelpWindow (QUrl ("rkward://page/rkward_split_views"));
-		RK_ASSERT (count () == 0);
-		active = activePage ();
-		RK_ASSERT (active);
+	if (!pane) pane = activePane ();
+
+	QString _description = description;
+	if (_description.isEmpty ()) {
+		RKMDIWindow *active = dynamic_cast<RKMDIWindow *> (pane->currentWidget ());
+		if (!active) {
+			RKWorkplace::mainWorkplace ()->openHelpWindow (QUrl ("rkward://page/rkward_split_views"));
+			RK_ASSERT (count () == 0);
+			active = activePage ();
+			RK_ASSERT (active);
+		}
+		_description = RKWorkplace::mainWorkplace ()->makeItemDescription (active);
 	}
-	RK_ASSERT (pane);
+
 	QSplitter *splitter = qobject_cast<QSplitter *> (pane->parentWidget ());
     if (!splitter) {
 		RK_ASSERT (splitter);
-		return;
+		return 0;
 	}
 
 	setUpdatesEnabled (false);
@@ -372,11 +382,17 @@ void RKWorkplaceView::splitView (Qt::Orientation orientation, RKWorkplaceViewPan
 	}
 	newpane->show ();
 	// "copy" the "split" window to the new pane.
-	// TODO: line below will only work for the main window, for the time being. We need to rethink this, if we want to enable window splitting for detached windows, too.
-	RKWorkplace::mainWorkplace ()->duplicateAndAttachWindow (active);
+	// TODO: lines below will only work for the main window, for the time being. We need to rethink this, if we want to enable window splitting for detached windows, too.
+	if (!RKWorkplace::mainWorkplace ()->restoreDocumentWindow (_description, base)) {
+		RKWorkplace::mainWorkplace ()->openHelpWindow (QUrl ("rkward://page/rkward_split_views"));
+	}
+	RKWorkplaceViewPane *ret = newpane;
+	newpane = 0;
 
 	splitter->setSizes (sizes);
 	setUpdatesEnabled (true);
+
+	return ret;
 }
 
 void RKWorkplaceView::addWindow (RKMDIWindow *widget) {
@@ -388,10 +404,8 @@ void RKWorkplaceView::addWindow (RKMDIWindow *widget) {
 	if (icon.isNull ()) icon = widget->topLevelWidget ()->windowIcon ();
 	if (icon.isNull ()) RK_ASSERT (false);
 
-	RKWorkplaceViewPane *pane = newpane;
-	if (!pane) pane = activePane ();
+	RKWorkplaceViewPane *pane = activePane ();
 	RK_ASSERT (pane);
-	newpane = 0; // next window will get default treatment
 	id = pane->addTab (widget, icon, widget->shortCaption ());
 
 	connect (widget, &RKMDIWindow::captionChanged, this, &RKWorkplaceView::childCaptionChanged);
@@ -481,4 +495,32 @@ void RKWorkplaceView::setCaption (const QString &caption) {
 	emit (captionChanged (caption));
 }
 
+void listContents (const QSplitter *parent, QVariantList *ret) {
+	RK_TRACE (APP);
 
+	for (int i = 0; i < parent->count (); ++i) {
+		QWidget* w = parent->widget (i);
+		RKWorkplaceViewPane *pane = qobject_cast<RKWorkplaceViewPane*> (w);
+		if (pane) {
+			for (int j = 0; j < pane->count (); ++j) {
+				ret->append (QVariant::fromValue<QObject*> (pane->widget (j)));
+			}
+		} else {
+			QSplitter* sub = qobject_cast<QSplitter*> (w);
+			listContents (sub, ret);
+		}
+		if (i < parent->count () - 1) {
+			if (parent->orientation () == Qt::Vertical) ret->append (QStringLiteral ("split::::vert"));
+			else ret->append (QStringLiteral ("split::::horiz"));
+		}
+	}
+	ret->append (QStringLiteral ("split::::end"));
+}
+
+QVariantList RKWorkplaceView::listContents () const {
+	RK_TRACE (APP);
+
+	QVariantList ret;
+	::listContents (this, &ret);
+	return ret;
+}
