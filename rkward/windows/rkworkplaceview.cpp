@@ -178,7 +178,7 @@ void RKWorkplaceViewPane::contextMenuDetachWindow () {
 	RKWorkplace::mainWorkplace ()->detachWindow (static_cast<RKMDIWindow*> (widget (tab)));
 }
 
-void RKWorkplaceViewPane::currentPageChanged (int page) {
+void RKWorkplaceViewPane::currentPageChanged (int) {
 	RK_TRACE (APP);
 
 	RKMDIWindow *w = static_cast<RKMDIWindow*> (currentWidget ());
@@ -192,6 +192,14 @@ void RKWorkplaceViewPane::currentPageChanged (int page) {
 }
 
 
+// Create new splitter with default setup
+QSplitter *createSplitter (Qt::Orientation orientation) {
+	RK_TRACE (APP);
+
+	QSplitter* ret = new QSplitter (orientation);
+	ret->setChildrenCollapsible (false);
+	return ret;
+}
 
 RKWorkplaceViewPane* RKWorkplaceView::createPane () {
 	RK_TRACE (APP);
@@ -314,19 +322,19 @@ void RKWorkplaceView::pageRight () {
 
 void RKWorkplaceView::splitViewHoriz () {
 	RK_TRACE (APP);
-	splitView (Qt::Vertical, activePane ());
+	splitView (Qt::Vertical);
 }
 
 void RKWorkplaceView::splitViewVert () {
 	RK_TRACE (APP);
-	splitView (Qt::Horizontal, activePane ());
+	splitView (Qt::Horizontal);
 }
 
 // NOTE: Some of this function taken from kate's kateviewmanager.cpp
-RKWorkplaceViewPane* RKWorkplaceView::splitView (Qt::Orientation orientation, RKWorkplaceViewPane *pane, const QString &description, const QString &base) {
+void RKWorkplaceView::splitView (Qt::Orientation orientation, const QString &description, const QString &base) {
 	RK_TRACE (APP);
 
-	if (!pane) pane = activePane ();
+	RKWorkplaceViewPane* pane = activePane ();
 
 	QString _description = description;
 	if (_description.isEmpty ()) {
@@ -343,7 +351,7 @@ RKWorkplaceViewPane* RKWorkplaceView::splitView (Qt::Orientation orientation, RK
 	QSplitter *splitter = qobject_cast<QSplitter *> (pane->parentWidget ());
     if (!splitter) {
 		RK_ASSERT (splitter);
-		return 0;
+		return;
 	}
 
 	setUpdatesEnabled (false);
@@ -371,8 +379,7 @@ RKWorkplaceViewPane* RKWorkplaceView::splitView (Qt::Orientation orientation, RK
 
 		splitter->insertWidget (index + 1, newpane);
 	} else {
-		QSplitter *newsplitter = new QSplitter (orientation);
-		newsplitter->setChildrenCollapsible (false);
+		QSplitter *newsplitter = createSplitter (orientation);
 		newsplitter->addWidget (pane);
 		newsplitter->addWidget (newpane);
 		splitter->insertWidget (index, newsplitter);
@@ -386,13 +393,10 @@ RKWorkplaceViewPane* RKWorkplaceView::splitView (Qt::Orientation orientation, RK
 	if (!RKWorkplace::mainWorkplace ()->restoreDocumentWindow (_description, base)) {
 		RKWorkplace::mainWorkplace ()->openHelpWindow (QUrl ("rkward://page/rkward_split_views"));
 	}
-	RKWorkplaceViewPane *ret = newpane;
 	newpane = 0;
 
 	splitter->setSizes (sizes);
 	setUpdatesEnabled (true);
-
-	return ret;
 }
 
 void RKWorkplaceView::addWindow (RKMDIWindow *widget) {
@@ -495,7 +499,86 @@ void RKWorkplaceView::setCaption (const QString &caption) {
 	emit (captionChanged (caption));
 }
 
-void listContents (const QSplitter *parent, QVariantList *ret) {
+void RKWorkplaceView::restoreLayout(const QString& desc) {
+	RK_TRACE (APP);
+
+	QList<QSplitter*> parents;
+	parents.append (this);
+	QStringList dl = desc.split ('-');
+	if (dl.value (0) == QStringLiteral ("col")) setOrientation (Qt::Vertical);
+	else setOrientation (Qt::Horizontal);
+
+	for (int i = 1; i < dl.size () - 1; ++i) {
+		if (dl[i] == QStringLiteral ("p")) {
+			RKWorkplaceViewPane *pane = createPane ();
+			panes.append (pane);
+			parents.last ()->insertWidget (-1, pane);
+		} else if (dl[i] == QStringLiteral ("row")) {
+			QSplitter* newsplit = createSplitter (Qt::Horizontal);
+			parents.last ()->insertWidget (-1, newsplit);
+			parents.append (newsplit);
+		} else if (dl[i] == QStringLiteral ("col")) {
+			QSplitter* newsplit = createSplitter (Qt::Vertical);
+			parents.last ()->insertWidget (-1, newsplit);
+			parents.append (newsplit);
+		} else {
+			RK_ASSERT (dl[i] == QStringLiteral ("end"));
+			if (parents.isEmpty ()) {
+				RK_ASSERT (!parents.isEmpty ());
+			} else {
+				parents.pop_back ();
+			}
+		}
+		if (parents.isEmpty ()) {
+			RK_DEBUG (APP, DL_ERROR, "Bad specification while restoring workplace view layout");
+		}
+	}
+
+	newpane = panes.value (0);
+}
+
+void RKWorkplaceView::nextPane () {
+	RK_TRACE (APP);
+
+	RKWorkplaceViewPane *pane = activePane ();
+	int index = panes.indexOf (pane);
+	newpane = panes.value (index + 1);
+
+	RK_DEBUG (APP, DL_DEBUG, "Activating pane %p after pane %p (index %d / %d)", newpane, pane, index + 1, index);
+}
+
+void RKWorkplaceView::purgeEmptyPanes () {
+	RK_TRACE (APP);
+
+	newpane = 0; // just in case of broken specifications during workplace restoration
+	for (int i = 0; i < panes.count (); ++i) {
+		if (panes[i]->count () < 1) {
+			purgePane (panes[i]);
+			--i;
+		}
+	}
+}
+
+QString listLayout (const QSplitter *parent) {
+	RK_TRACE (APP);
+
+	QString ret = (parent->orientation () == Qt::Horizontal ? QStringLiteral ("row") : QStringLiteral ("col"));
+
+	for (int i = 0; i < parent->count (); ++i) {
+		QWidget* w = parent->widget (i);
+		RKWorkplaceViewPane *pane = qobject_cast<RKWorkplaceViewPane*> (w);
+		if (pane) {
+			ret.append (QStringLiteral ("-p"));
+		} else {
+			QSplitter* sub = qobject_cast<QSplitter*> (w);
+			ret.append ('-' + listLayout (sub));
+		}
+	}
+
+	return ret + QStringLiteral ("-end");
+}
+
+void listContents (const QSplitter *parent, QStringList *ret) {
 	RK_TRACE (APP);
 
 	for (int i = 0; i < parent->count (); ++i) {
@@ -503,24 +586,25 @@ void listContents (const QSplitter *parent, QVariantList *ret) {
 		RKWorkplaceViewPane *pane = qobject_cast<RKWorkplaceViewPane*> (w);
 		if (pane) {
 			for (int j = 0; j < pane->count (); ++j) {
-				ret->append (QVariant::fromValue<QObject*> (pane->widget (j)));
+				QString desc = RKWorkplace::mainWorkplace ()->makeItemDescription (static_cast<RKMDIWindow*> (pane->widget (j)));
+				if (!desc.isEmpty ()) ret->append (desc);
 			}
+			ret->append (QStringLiteral ("pane_end::::"));
 		} else {
 			QSplitter* sub = qobject_cast<QSplitter*> (w);
 			listContents (sub, ret);
 		}
-		if (i < parent->count () - 1) {
-			if (parent->orientation () == Qt::Vertical) ret->append (QStringLiteral ("split::::vert"));
-			else ret->append (QStringLiteral ("split::::horiz"));
-		}
 	}
-	ret->append (QStringLiteral ("split::::end"));
 }
 
-QVariantList RKWorkplaceView::listContents () const {
+QString RKWorkplaceView::listLayout () const {
+	return (::listLayout (this));
+}
+
+QStringList RKWorkplaceView::listContents () const {
 	RK_TRACE (APP);
 
-	QVariantList ret;
+	QStringList ret;
 	::listContents (this, &ret);
 	return ret;
 }

@@ -874,16 +874,8 @@ QStringList RKWorkplace::makeWorkplaceDescription () {
 		if (!desc.isEmpty ()) workplace_description.append (desc);
 	}
 
-	QVariantList attached_list = wview->listContents ();
-	for (int i=0; i < attached_list.count (); ++i) {
-		if (attached_list[i].canConvert<QObject*>()) {
-			RKMDIWindow *win = static_cast<RKMDIWindow*> (attached_list[i].value<QObject*>());
-			QString desc = makeItemDescription (win);
-			if (!desc.isEmpty ()) workplace_description.append (desc);
-		} else {
-			workplace_description.append (attached_list[i].toString ());
-		}
-	}
+	workplace_description.append (QStringLiteral ("layout::::") + wview->listLayout ());
+	workplace_description.append (wview->listContents ());
 
 	list = getObjectList (RKMDIWindow::ToolWindow, RKMDIWindow::AnyWindowState);
 	foreach (RKMDIWindow *win, list) {
@@ -917,11 +909,6 @@ void RKWorkplace::restoreWorkplace (const QStringList &description) {
 	RKWardMainWindow::getMain ()->lockGUIRebuild (true);
 	QString base;
 	for (int i = 0; i < description.size (); ++i) {
-/*		if (split_next) {
-			split_next = false;
-			view ()->restoreSplitView (split_orientation, description[i], base);
-		} */
-
 		ItemSpecification spec = parseItemDescription (description[i]);
 		RKMDIWindow *win = 0;
 		if (spec.type == "base") {
@@ -929,8 +916,10 @@ void RKWorkplace::restoreWorkplace (const QStringList &description) {
 			base = spec.specification;
 		} else if (restoreDocumentWindowInternal (this, spec, base)) {
 			// it was restored. nothing else to do
-		} else if (spec.type == "split") {
-#warning implement
+		} else if (spec.type == "layout") {
+			view ()->restoreLayout (spec.specification);
+		} else if (spec.type == "pane_end") {
+			view ()->nextPane ();
 		} else {
 			win = RKToolWindowList::findToolWindowById (spec.type);
 			RK_ASSERT (win);
@@ -952,6 +941,7 @@ void RKWorkplace::restoreWorkplace (const QStringList &description) {
 			}
 		}
 	}
+	view ()->purgeEmptyPanes ();
 	RKWardMainWindow::getMain ()->lockGUIRebuild (false);
 }
 
