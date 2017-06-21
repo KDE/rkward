@@ -27,7 +27,7 @@
 #include <KLocalizedString>
 #include <QFontDatabase>
 
-#include "rbackend/rinterface.h"
+#include "rbackend/rkrinterface.h"
 #include "rkglobals.h"
 #include "core/robject.h"
 #include "misc/rkdummypart.h"

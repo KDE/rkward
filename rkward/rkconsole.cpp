@@ -53,7 +53,7 @@
 #include "rkglobals.h"
 #include "rkward.h"
 #include "windows/rkhelpsearchwindow.h"
-#include "rbackend/rinterface.h"
+#include "rbackend/rkrinterface.h"
 #include "rbackend/rcommand.h"
 #include "settings/rksettings.h"
 #include "settings/rksettingsmoduleconsole.h"
@@ -957,7 +957,7 @@ void RKConsole::currentHelpContext (QString* symbol, QString* package) {
 
 void RKConsole::initializeActions (KActionCollection *ac) {
 	RK_TRACE (APP);
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
 #	define REAL_CTRL_KEY Qt::MetaModifier
 #	define REAL_CMD_KEY Qt::ControlModifier
 #else

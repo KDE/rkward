@@ -28,7 +28,7 @@
 #include <sys/stat.h>
 
 #include "rkgraphicsdevice_protocol_shared.h"
-#include "../rinterface.h"
+#include "../rkrinterface.h"
 #include "../../rkglobals.h"
 #include "../../misc/rkdialogbuttonbox.h"
 

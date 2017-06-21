@@ -39,7 +39,7 @@
 #include "../misc/rkxmlguipreviewarea.h"
 #include "../windows/rkworkplace.h"
 #include "../windows/rkcommandeditorwindow.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../rkward.h"
 #include "../settings/rksettingsmoduleplugins.h"
 #include "../rkglobals.h"

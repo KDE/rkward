@@ -31,7 +31,7 @@
 #include <QVBoxLayout>
 #include <QDesktopServices>
 
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../rbackend/rksessionvars.h"
 #include "../misc/rkprogresscontrol.h"
 #include "../misc/rkdialogbuttonbox.h"

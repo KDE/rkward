@@ -22,7 +22,7 @@
 #include <qapplication.h>
 #include <QFileDialog>
 
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../core/robjectlist.h"
 #include "../rkglobals.h"
 #include "../rkward.h"

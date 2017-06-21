@@ -52,7 +52,7 @@
 #include "settings/rksettingsmodulegeneral.h"
 #include "settings/rksettingsmoduleoutput.h"
 #include "settings/rksettingsmodulecommandeditor.h"
-#include "rbackend/rinterface.h"
+#include "rbackend/rkrinterface.h"
 #include "core/robjectlist.h"
 #include "core/renvironmentobject.h"
 #include "misc/rkstandardicons.h"
@@ -157,7 +157,7 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 	QMenu *menu = dynamic_cast<QMenu*>(guiFactory ()->container ("import", this));
 	if (menu) open_any_action->addAction (menu->menuAction ());
 	menu = dynamic_cast<QMenu*>(guiFactory ()->container ("export", this));
-	save_any_action->addAction (menu->menuAction ());
+	if (menu) save_any_action->addAction (menu->menuAction ());
 
 	RKComponentMap::initialize ();
 

@@ -17,7 +17,7 @@
 
 #include "rkrbackendprotocol_frontend.h"
 
-#include "rinterface.h"
+#include "rkrinterface.h"
 
 #include <QThread>
 

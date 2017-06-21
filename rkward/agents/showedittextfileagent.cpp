@@ -21,7 +21,7 @@
 #include <KMessageWidget>
 
 #include "../windows/rkcommandeditorwindow.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../rbackend/rkrbackendprotocol_frontend.h"
 #include "../windows/rkworkplace.h"
 #include "../rkglobals.h"

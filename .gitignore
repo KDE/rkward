@@ -21,3 +21,5 @@ macports/PortIndex
 macports/PortIndex.quick
 macports/kde/rkward-devel/work
 macports/kde/rkward/work
+*.orig
+*.rej

@@ -32,7 +32,7 @@
 #include "../core/robjectlist.h"
 #include "../core/renvironmentobject.h"
 #include "../core/rkmodificationtracker.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../misc/rkobjectlistview.h"
 #include "../misc/rkdummypart.h"
 #include "../misc/rkstandardicons.h"

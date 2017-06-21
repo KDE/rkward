@@ -34,6 +34,10 @@
 #include <QDir>
 #include <QUrl>
 
+#ifdef Q_OS_MACOS
+#include <CoreFoundation/CoreFoundation.h>
+#endif
+
 	void RK_setupGettext (const char*);
 	QMutex RK_Debug_Mutex;
 
@@ -64,6 +68,20 @@
 	}
 
 	int main(int argc, char *argv[]) {
+#ifdef Q_OS_MACOS
+		CFBundleRef mainBundle = CFBundleGetMainBundle();
+		if (mainBundle) {
+			// get the application's Info Dictionary. For app bundles this would live in the bundle's Info.plist,
+			// for regular executables it is obtained in another way.
+			CFMutableDictionaryRef infoDict = (CFMutableDictionaryRef) CFBundleGetInfoDictionary(mainBundle);
+			if (infoDict) {
+				// Add or set the "LSUIElement" key with/to value "1". This can simply be a CFString.
+				CFDictionarySetValue(infoDict, CFSTR("LSUIElement"), CFSTR("1"));
+				// That's it. We're now considered as an "agent" by the window server, and thus will have
+				// neither menubar nor presence in the Dock or App Switcher.
+			}
+		}
+#endif
 		QCoreApplication app (argc, argv);
 
 		setvbuf (stdout, NULL, _IONBF, 0);

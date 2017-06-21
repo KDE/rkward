@@ -21,7 +21,7 @@
 #include <qregexp.h>
 #include <KLocalizedString>
 
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../rbackend/rkrbackendprotocol_shared.h"
 #include "../rkglobals.h"
 #include "robjectlist.h"

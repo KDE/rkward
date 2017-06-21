@@ -17,7 +17,7 @@
 
 #include "rksessionvars.h"
 
-#include "rinterface.h"
+#include "rkrinterface.h"
 #include "../settings/rksettingsmoduledebug.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../version.h"
@@ -132,7 +132,7 @@ QStringList RKSessionVars::frontendSessionInfo () {
 	lines.append (QString ("Qt version (runtime): ") + qVersion ());
 #if defined Q_OS_WIN
 	lines.append ("Windows runtime version (refer to QSysInfo documentation to translate code into human readable form): 0x" + QString::number (QSysInfo::windowsVersion (), 16));
-#elif defined Q_OS_MAC
+#elif defined Q_OS_MACOS
 	lines.append ("MacOS runtime version (refer to QSysInfo documentation to translate code into human readable form): 0x" + QString::number (QSysInfo::MacintoshVersion, 16));
 #endif
 	lines.append ("Local config directory: " + QStandardPaths::writableLocation (QStandardPaths::GenericConfigLocation));

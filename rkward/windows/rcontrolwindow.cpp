@@ -27,7 +27,7 @@
 
 #include "../settings/rksettings.h"
 #include "../misc/rkdummypart.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../rbackend/rcommand.h"
 #include "../rbackend/rcommandstack.h"
 #include "../rkglobals.h"

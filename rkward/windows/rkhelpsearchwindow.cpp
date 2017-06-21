@@ -33,7 +33,7 @@
 #include <QVBoxLayout>
 #include <QSortFilterProxyModel>
 
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../rbackend/rcommandreceiver.h"
 #include "../rbackend/rksessionvars.h"
 #include "../debug.h"

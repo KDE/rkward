@@ -46,7 +46,7 @@
 #include "../robjectviewer.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../settings/rksettingsmodulecommandeditor.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../windows/rkwindowcatcher.h"
 #include "../rbackend/rcommand.h"
 #include "../misc/rkcommonfunctions.h"

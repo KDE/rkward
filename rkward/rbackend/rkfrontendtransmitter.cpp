@@ -102,13 +102,13 @@ void RKFrontendTransmitter::run () {
 	args.append ("--locale-dir=" + localeDir ().toUtf8 ().toPercentEncoding ());
 	connect (backend, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), this, &RKFrontendTransmitter::backendExit);
 	QString backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath ());
-#ifdef Q_OS_MAC
-	if (backend_executable.isNull ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "/rkward.frontend.app/Contents/MacOS"); 	// this is for running directly from a build tree
+#ifdef Q_OS_MACOS
+	if (backend_executable.isNull ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "../Resources"); // an appropriate location in a standalone app-bundle
 #endif
 	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (RKWARD_BACKEND_PATH);
 	if (backend_executable.isNull ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "../lib/libexec");
 	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "/rbackend");	// for running directly from the build-dir
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
         if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "/../../../rbackend");
 #endif
 	if (backend_executable.isEmpty ()) handleTransmissionError (i18n ("The backend executable could not be found. This is likely to be a problem with your installation."));

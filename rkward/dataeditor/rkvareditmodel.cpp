@@ -26,7 +26,7 @@
 #include "../core/rcontainerobject.h"
 #include "../core/rkmodificationtracker.h"
 #include "../core/rkrownames.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../rkglobals.h"
 
 #include "../debug.h"

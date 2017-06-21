@@ -22,7 +22,7 @@
 
 #include "robjectlist.h"
 #include "rkpseudoobjects.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../settings/rksettingsmoduleobjectbrowser.h"
 #include "rkmodificationtracker.h"
 #include "../rkglobals.h"

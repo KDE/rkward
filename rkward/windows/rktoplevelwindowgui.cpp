@@ -42,7 +42,7 @@
 #include "../misc/rkcommonfunctions.h"
 #include "../plugin/rkcomponentmap.h"
 #include "../dialogs/rkerrordialog.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
 

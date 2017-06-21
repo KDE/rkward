@@ -17,6 +17,8 @@ INCLUDE(KDEInstallDirs)
 INCLUDE(KDECMakeSettings)
 INCLUDE(KDECompilerSettings)
 INCLUDE(ECMInstallIcons)
+INCLUDE(ECMAddAppIcon)
+INCLUDE(ECMMarkNonGuiExecutable)
 INCLUDE(FeatureSummary)
 
 FIND_PACKAGE(Qt5 5.2 CONFIG REQUIRED COMPONENTS Widgets Core Xml Network WebKit Script PrintSupport)

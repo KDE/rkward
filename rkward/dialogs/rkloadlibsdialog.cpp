@@ -37,7 +37,7 @@
 #include <kuser.h>
 
 #include "../rkglobals.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../settings/rksettings.h"
 #include "../core/robjectlist.h"

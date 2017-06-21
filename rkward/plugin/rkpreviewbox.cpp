@@ -25,7 +25,7 @@
 #include <KLocalizedString>
 
 #include "../rkglobals.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../misc/xmlhelper.h"
 #include "../misc/rkxmlguipreviewarea.h"
 #include "../windows/rkwindowcatcher.h"
