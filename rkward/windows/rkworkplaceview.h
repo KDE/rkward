@@ -72,7 +72,7 @@ public:
 
 /** add the given window to the view */
 	void addWindow (RKMDIWindow *widget);
-/** remove the given window to the view
+/** remove the given window from the view
 @param destroyed if the window is already destroyed, set this to true */
 	void removeWindow (RKMDIWindow *widget, bool destroyed=false);
 /** does this window exist in the view? */
@@ -121,7 +121,7 @@ private slots:
 	void splitViewHoriz ();
 private:
 	void updateActions ();
-	RKWorkplaceViewPane *createPane ();
+	RKWorkplaceViewPane *createPane (bool init_actions = true);
 	RKWorkplaceViewPane *findWindow (RKMDIWindow *window) const;
 	void splitView (Qt::Orientation orientation, const QString &description=QString (), const QString &base=QString ());
 

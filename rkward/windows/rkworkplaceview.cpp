@@ -201,10 +201,11 @@ QSplitter *createSplitter (Qt::Orientation orientation) {
 	return ret;
 }
 
-RKWorkplaceViewPane* RKWorkplaceView::createPane () {
+RKWorkplaceViewPane* RKWorkplaceView::createPane (bool init_actions) {
 	RK_TRACE (APP);
 	newpane = new RKWorkplaceViewPane (this);
 	QObject::connect (newpane, &RKWorkplaceViewPane::becameEmpty, this, &RKWorkplaceView::purgePane);
+	if (init_actions) newpane->initActions ();
 	return newpane;
 }
 
@@ -212,7 +213,7 @@ RKWorkplaceView::RKWorkplaceView (QWidget *parent) : QSplitter (parent) {
 	RK_TRACE (APP);
 
 	newpane = 0;
-	RKWorkplaceViewPane *pane = createPane ();
+	RKWorkplaceViewPane *pane = createPane (false);
 	addWidget (pane);
 	panes.append (pane);
 	setChildrenCollapsible (false);
@@ -266,9 +267,7 @@ void RKWorkplaceView::initActions (KActionCollection *ac) {
 	connect (action_split_horiz, &QAction::triggered, this, &RKWorkplaceView::splitViewHoriz);
 	action_split_horiz->setWhatsThis (i18n ("Split the currently active view into two views, horizontally."));
 
-	for (int i = 0; i < panes.size (); ++i) {
-		panes[i]->initActions ();
-	}
+	panes.first ()->initActions ();
 	updateActions ();
 }
 
@@ -363,7 +362,6 @@ void RKWorkplaceView::splitView (Qt::Orientation orientation, const QString &des
 
 	newpane = createPane ();
 	panes.insert (lindex + 1, newpane);
-	newpane->initActions ();
 
 	// If there is only one child (left) in the current splitter, we can just set the orientation as needed.
 	if (splitter->count () == 1) {
@@ -502,39 +500,75 @@ void RKWorkplaceView::setCaption (const QString &caption) {
 void RKWorkplaceView::restoreLayout(const QString& desc) {
 	RK_TRACE (APP);
 
+	bool old_updates_enabled = updatesEnabled ();
+	setUpdatesEnabled (false);
+
+	QList<RKMDIWindow*> windows_to_readd;
+	// It is probably not a good idea to restore the layout while merging workplaces, i.e. without closing existing windows, first.
+	// However, we'll do our best to cope... For this, we clear out all splitters, first.
+	for (int i = 0; i < panes.count (); ++i) {
+		while (panes[i]->count ()) {
+			RKMDIWindow *win = static_cast<RKMDIWindow*> (panes[i]->widget (0));
+			panes[i]->removeTab (0);
+			windows_to_readd.append (win);
+			win->hide ();
+			win->setParent (0);
+		}
+	}
+	while (count ()) {
+		delete (widget (0));
+	}
+	panes.clear ();
+
 	QList<QSplitter*> parents;
 	parents.append (this);
 	QStringList dl = desc.split ('-');
 	if (dl.value (0) == QStringLiteral ("col")) setOrientation (Qt::Vertical);
 	else setOrientation (Qt::Horizontal);
 
-	for (int i = 1; i < dl.size () - 1; ++i) {
+	for (int i = 1; i < dl.size (); ++i) {
+		if (parents.isEmpty ()) {
+			RK_DEBUG (APP, DL_ERROR, "Bad specification while restoring workplace view layout");
+			break;
+		}
 		if (dl[i] == QStringLiteral ("p")) {
 			RKWorkplaceViewPane *pane = createPane ();
+			pane = createPane ();
 			panes.append (pane);
-			parents.last ()->insertWidget (-1, pane);
+			parents.last ()->addWidget (pane);
 		} else if (dl[i] == QStringLiteral ("row")) {
 			QSplitter* newsplit = createSplitter (Qt::Horizontal);
-			parents.last ()->insertWidget (-1, newsplit);
+			parents.last ()->addWidget (newsplit);
 			parents.append (newsplit);
 		} else if (dl[i] == QStringLiteral ("col")) {
 			QSplitter* newsplit = createSplitter (Qt::Vertical);
-			parents.last ()->insertWidget (-1, newsplit);
+			parents.last ()->addWidget (newsplit);
 			parents.append (newsplit);
 		} else {
-			RK_ASSERT (dl[i] == QStringLiteral ("end"));
-			if (parents.isEmpty ()) {
-				RK_ASSERT (!parents.isEmpty ());
-			} else {
-				parents.pop_back ();
+			RK_ASSERT (dl[i].startsWith (QStringLiteral ("end")));
+			const QStringList s = dl[i].mid (4).split (',');
+			QList<int> sizes = parents.last ()->sizes ();  // simply to have an initialized list of the correct length
+			for (int i = 0; i < sizes.count (); ++i) {
+				int size = qMax (50, s.value (i).toInt ());  // avoid collapsed views in case of errors
+				sizes[i] = size;
 			}
-		}
-		if (parents.isEmpty ()) {
-			RK_DEBUG (APP, DL_ERROR, "Bad specification while restoring workplace view layout");
+			parents.last ()->setSizes (sizes);
+			parents.pop_back ();
 		}
 	}
 
+	if (panes.isEmpty ()) {
+		panes.append (createPane ());
+		addWidget (panes[0]);
+	}
+
 	newpane = panes.value (0);
+
+	for (int i = 0; i < windows_to_readd.count (); ++i) {
+		addWindow (windows_to_readd[i]);
+	}
+
+	setUpdatesEnabled (old_updates_enabled);
 }
 
 void RKWorkplaceView::nextPane () {
@@ -575,7 +609,13 @@ QString listLayout (const QSplitter *parent) {
 		}
 	}
 
-	return ret + QStringLiteral ("-end");
+	ret.append (QStringLiteral ("-end"));
+	const QList<int> sizes = parent->sizes ();
+	for (int i = 0; i < sizes.count (); ++i) {
+		ret.append (',' + QString::number (sizes[i]));
+	}
+
+	return ret;
 }
 
 void listContents (const QSplitter *parent, QStringList *ret) {
