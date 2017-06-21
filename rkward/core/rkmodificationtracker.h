@@ -2,7 +2,7 @@
                           rkmodificationtracker  -  description
                              -------------------
     begin                : Tue Aug 31 2004
-    copyright            : (C) 2004, 2007, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2004 - 2017 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -135,7 +135,7 @@ public:
 /** recursive! */
 	void lockUpdates (bool lock);
 /** returns (the first) editor that is currently active for this object, or 0, if there is no editor */
-	RKEditor* objectEditor (const RObject* object);
+	QList<RKEditor*> objectEditors (const RObject* object) const;
 private:
 	int updates_locked;
 /** relay change notifications to connected listeners. This is not pretty, since the arguments change their meanings depending on the type of notification, but for now this is ok */

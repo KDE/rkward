@@ -145,7 +145,7 @@ public:
 	void markDataDirty ();
 
 /** Returns the editor of this object, if any, or 0 */
-	RKEditor* editor () const;
+	QList<RKEditor*> editors () const;
 	bool canWrite () const;
 	bool canRead () const;
 	bool canRename () const;

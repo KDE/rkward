@@ -2,7 +2,7 @@
                           rkhtmlwindow  -  description
                              -------------------
     begin                : Wed Oct 12 2005
-    copyright            : (C) 2005-2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2005-2017 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -1093,18 +1093,18 @@ void RKOutputWindowManager::rewatchOutput () {
 	file_watcher->addFile (current_default_path);
 }
 
-RKHTMLWindow* RKOutputWindowManager::getCurrentOutputWindow () {
+QList<RKHTMLWindow*> RKOutputWindowManager::existingOutputWindows () const {
 	RK_TRACE (APP);
 
-	RKHTMLWindow *current_output = windows.value (current_default_path);
+	return (windows.values (current_default_path));
+}
 
-	if (!current_output) {
-		current_output = new RKHTMLWindow (RKWorkplace::mainWorkplace ()->view (), RKHTMLWindow::HTMLOutputWindow);
+RKHTMLWindow* RKOutputWindowManager::newOutputWindow () {
+	RK_TRACE (APP);
 
-		current_output->openURL (QUrl::fromLocalFile (current_default_path));
-
-		RK_ASSERT (current_output->url ().toLocalFile () == current_default_path);
-	}
+	RKHTMLWindow* current_output = new RKHTMLWindow (RKWorkplace::mainWorkplace ()->view (), RKHTMLWindow::HTMLOutputWindow);
+	current_output->openURL (QUrl::fromLocalFile (current_default_path));
+	RK_ASSERT (current_output->url ().toLocalFile () == current_default_path);
 
 	return current_output;
 }

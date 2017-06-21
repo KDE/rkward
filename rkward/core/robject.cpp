@@ -558,8 +558,8 @@ RObject *RObject::findChildByObjectModelIndex (int index) const {
 	return 0;
 }
 
-RKEditor *RObject::editor () const {
-	return (RKGlobals::tracker ()->objectEditor (this));
+QList <RKEditor*> RObject::editors () const {
+	return (RKGlobals::tracker ()->objectEditors (this));
 }
 
 void RObject::rename (const QString &new_short_name) {
