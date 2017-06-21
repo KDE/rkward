@@ -1,5 +1,3 @@
-TODO: Workplace save as does not as for overwrite confirmation
-
 - Implement "split view" feature, allowing to partion the main window, and to hvae several views of the same files / data side-by-side
 - Fixed: Creating trellis on-screen plots, while package lattice is not on the search path would produce errors in plot history mechanism
 - Limit the number of debug log-files to keep (at most three, each, for frontend and backend)
