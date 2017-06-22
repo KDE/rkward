@@ -759,6 +759,7 @@ QString RKWorkplace::makeItemDescription (RKMDIWindow *win) const {
 	} else if (win->isType (RKMDIWindow::CommandEditorWindow)) {
 		type = "script";
 		specification = static_cast<RKCommandEditorWindow*> (win)->url ().url ();
+		if (specification.isEmpty ()) specification = static_cast<RKCommandEditorWindow*> (win)->id ();
 	} else if (win->isType (RKMDIWindow::OutputWindow)) {
 		type = "output";
 		specification = static_cast<RKHTMLWindow*> (win)->url ().url ();

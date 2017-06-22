@@ -166,7 +166,9 @@ public:
 	void setReadOnly (bool ro);
 
 /** Return current url */
-	QUrl url ();
+	QUrl url () const;
+/** Returns an id string for this document. Meaningful, only when url is empty. For keeping track of split views on unnamed/unsaved windows */
+	QString id () const { return _id; };
 
 	QString provideContext (int line_rev) override;
 	void currentHelpContext (QString* symbol, QString* package) override;
@@ -264,8 +266,8 @@ private:
 
 	QUrl delete_on_close;
 
-/** open given URL. See RKCommandEditorWindow () */
-	bool openURL (const QUrl url, const QString& encoding=QString (), bool use_r_highlighting=true, bool read_only=false, bool delete_on_close=false);
+	QString _id;
+	static QMap<QString, KTextEditor::Document*> unnamed_documents;
 };
 
 /** Simple class to provide HTML highlighting for arbitrary R code. */

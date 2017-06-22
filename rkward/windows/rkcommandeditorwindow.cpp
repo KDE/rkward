@@ -45,6 +45,7 @@
 #include <kio/deletejob.h>
 #include <kio/job.h>
 #include <kconfiggroup.h>
+#include <krandom.h>
 
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkstandardicons.h"
@@ -78,14 +79,37 @@ RKCommandEditorWindowPart::~RKCommandEditorWindowPart () {
 #define GET_HELP_URL 1
 #define NUM_BLOCK_RECORDS 6
 
-RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl url, const QString& encoding, bool use_r_highlighting, bool use_codehinting, bool read_only, bool delete_on_close) : RKMDIWindow (parent, RKMDIWindow::CommandEditorWindow) {
+//static
+QMap<QString, KTextEditor::Document*> RKCommandEditorWindow::unnamed_documents;
+
+RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, const QString& encoding, bool use_r_highlighting, bool use_codehinting, bool read_only, bool delete_on_close) : RKMDIWindow (parent, RKMDIWindow::CommandEditorWindow) {
 	RK_TRACE (COMMANDEDITOR);
+
+	QString id_header = QStringLiteral ("unnamedscript://");
 
 	KTextEditor::Editor* editor = KTextEditor::Editor::instance ();
 	RK_ASSERT (editor);
 
+	QUrl url = _url;
 	m_doc = 0;
-	if (!url.isEmpty ()) {  // TODO: what about delete_on_close
+
+	// Lookup of existing text editor documents: First, if no url is given at all, create a new document, and register an id, in case this window will get split, later
+	if (url.isEmpty ()) {
+		m_doc = editor->createDocument (RKWardMainWindow::getMain ());
+		_id = id_header + KRandom::randomString (16).toLower ();
+		RK_ASSERT (!unnamed_documents.contains (_id));
+		unnamed_documents.insert (_id, m_doc);
+	} else if (url.url ().startsWith (id_header)) { // Next, handle the case that a pseudo-url is passed in
+		_id = url.url ();
+		m_doc = unnamed_documents.value (_id);
+		url.clear ();
+		if (!m_doc) {  // can happen while restoring saved workplace.
+			m_doc = editor->createDocument (RKWardMainWindow::getMain ());
+			unnamed_documents.insert (_id, m_doc);
+		}
+	} else {   // regular url given. Try to find an existing document for that url
+		       // NOTE: we cannot simply use the same map as above, for this purpose, as document urls may change.
+		       // instead we iterate over the document list.
 		QList<KTextEditor::Document*> docs = editor->documents ();
 		for (int i = 0; i < docs.count (); ++i) {
 			if (docs[i]->url ().matches (url, QUrl::NormalizePathSegments | QUrl::StripTrailingSlash | QUrl::PreferLocalFile)) {
@@ -93,11 +117,17 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl url, c
 				break;
 			}
 		}
+	}
+
+	// if an existing document is re-used, try to honor decoding.
+	if (m_doc) {
 		if (!encoding.isEmpty () && (m_doc->encoding () != encoding)) {
 			m_doc->setEncoding (encoding);
 			m_doc->documentReload ();
 		}
 	}
+
+	// no existing document was found, so create one and load the url
 	if (!m_doc) {
 		m_doc = editor->createDocument (RKWardMainWindow::getMain ()); // The document may have to outlive this window
 
@@ -210,10 +240,6 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl url, c
 RKCommandEditorWindow::~RKCommandEditorWindow () {
 	RK_TRACE (COMMANDEDITOR);
 
-	// NOTE: TODO: Ideally we'd only write out a changed config, but how to detect config changes?
-	// 	Alternatively, only for the last closed script window
-	// KF5 TODO: verify that the code below is no longer needed
-	//m_doc->editor ()->writeConfig ();
 	if (!url ().isEmpty ()) {
 		QString p_url = RKWorkplace::mainWorkplace ()->portableUrl (m_doc->url ());
 		KConfigGroup conf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptDocumentSettings %1").arg (p_url));
@@ -228,6 +254,11 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 	if (views.isEmpty ()) {
 		delete m_doc;
 		if (!delete_on_close.isEmpty ()) KIO::del (delete_on_close)->start ();
+		unnamed_documents.remove (_id);
+	}
+	// NOTE, under rather unlikely circumstances, the above may leave stale ids->stale pointers in the map: Create unnamed window, split it, save to a url, split again, close the first two windows, close the last. This situation should be caught by the following, however:
+	if (!url ().isEmpty () && !_id.isEmpty ()) {
+		unnamed_documents.remove (_id);
 	}
 }
 
@@ -516,12 +547,12 @@ void RKCommandEditorWindow::autoSaveHandlerJobFinished (RKJobSequence* seq) {
 	}
 }
 
-QUrl RKCommandEditorWindow::url () {
+QUrl RKCommandEditorWindow::url () const {
 //	RK_TRACE (COMMANDEDITOR);
 	return (m_doc->url ());
 }
 
-bool RKCommandEditorWindow::isModified() {
+bool RKCommandEditorWindow::isModified () {
 	RK_TRACE (COMMANDEDITOR);
 	return m_doc->isModified();
 }
