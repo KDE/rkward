@@ -450,15 +450,7 @@ RKMDIWindow* RKWorkplace::openScriptEditor (const QUrl &url, const QString& enco
 		}
 	}
 
-	RKCommandEditorWindow *editor = new RKCommandEditorWindow (view (), use_r_highlighting);
-
-	if (!url.isEmpty ()) {
-		if (!editor->openURL (url, encoding, use_r_highlighting, read_only, delete_on_close)) {
-			delete editor;
-			KMessageBox::messageBox (view (), KMessageBox::Error, i18n ("Unable to open \"%1\"", url.toDisplayString ()), i18n ("Could not open command file"));
-			return 0;
-		}
-	}
+	RKCommandEditorWindow *editor = new RKCommandEditorWindow (view (), url, encoding, use_r_highlighting, read_only, delete_on_close);
 
 	if (!force_caption.isEmpty ()) editor->setCaption (force_caption);
 	addWindow (editor);

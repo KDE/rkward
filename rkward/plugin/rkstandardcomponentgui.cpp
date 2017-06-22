@@ -154,7 +154,7 @@ RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, 
 	if (!enslaved) {
 		// code display
 		RKXMLGUIPreviewArea *area = addDockedPreview (&code_display_visibility, i18n ("Code Preview"), QString (), true);
-		code_display = new RKCommandEditorWindow (0, true, false);
+		code_display = new RKCommandEditorWindow (0, QUrl (), QString (), true, false);
 		code_display->setReadOnly (true);
 		code_display_visibility.setBoolValue (!enslaved && RKSettingsModulePlugins::showCodeByDefault ());
 		code_display->setParent (area);  // hm, mysterious breakage when adding via constructor. Whatever...

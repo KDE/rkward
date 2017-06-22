@@ -2,7 +2,7 @@
                           rkcommandeditorwindow  -  description
                              -------------------
     begin                : Mon Aug 30 2004
-    copyright            : (C) 2004-2016 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2017 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -140,16 +140,13 @@ class RKCommandEditorWindow : public RKMDIWindow, public RKScriptContextProvider
 	Q_OBJECT
 public:
 /** constructor
-@param use_r_highlighting Initialize the view to use R syntax highlighting. Use, if you're going to edit an R syntax file */
-	explicit RKCommandEditorWindow (QWidget *parent = 0, bool use_r_highlighting=true, bool use_codehinting=true);
-/** destructor */
-	~RKCommandEditorWindow ();
-/** open given URL. 
-@param use_r_highlighting Initialize the view to use R syntax highlighting. Use, if you're going to edit an R syntax file
 @param encoding encoding to use. If QString (), the default encoding is used.
 @param read_only Open the file in read-only mode
-@param delete_on_close File should be deleted when closing the window. Only respected with read_only=true. */
-	bool openURL (const QUrl url, const QString& encoding=QString (), bool use_r_highlighting=true, bool read_only=false, bool delete_on_close=false);
+@param delete_on_close File should be deleted when closing the window. Only respected with read_only=true.
+@param use_r_highlighting Initialize the view to use R syntax highlighting. Use, if you're going to edit an R syntax file */
+	explicit RKCommandEditorWindow (QWidget *parent, const QUrl url, const QString& encoding=QString (), bool use_r_highlighting=true, bool use_codehinting=true, bool read_only=false, bool delete_on_close=false);
+/** destructor */
+	~RKCommandEditorWindow ();
 /** returns, whether the document was modified since the last save */
 	bool isModified () override;
 /** insert the given text into the document at the current cursor position. Additionally, focuses the view */
@@ -266,6 +263,9 @@ private:
 	QTimer* autosave_timer;
 
 	QUrl delete_on_close;
+
+/** open given URL. See RKCommandEditorWindow () */
+	bool openURL (const QUrl url, const QString& encoding=QString (), bool use_r_highlighting=true, bool read_only=false, bool delete_on_close=false);
 };
 
 /** Simple class to provide HTML highlighting for arbitrary R code. */
