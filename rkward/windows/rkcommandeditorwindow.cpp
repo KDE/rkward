@@ -2,7 +2,7 @@
                           rkcommandeditorwindow  -  description
                              -------------------
     begin                : Mon Aug 30 2004
-    copyright            : (C) 2004-2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2017 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -45,6 +45,7 @@
 #include <kio/deletejob.h>
 #include <kio/job.h>
 #include <kconfiggroup.h>
+#include <krandom.h>
 
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkstandardicons.h"
@@ -78,13 +79,92 @@ RKCommandEditorWindowPart::~RKCommandEditorWindowPart () {
 #define GET_HELP_URL 1
 #define NUM_BLOCK_RECORDS 6
 
-RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highlighting, bool use_codehinting) : RKMDIWindow (parent, RKMDIWindow::CommandEditorWindow) {
+//static
+QMap<QString, KTextEditor::Document*> RKCommandEditorWindow::unnamed_documents;
+
+RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, const QString& encoding, bool use_r_highlighting, bool use_codehinting, bool read_only, bool delete_on_close) : RKMDIWindow (parent, RKMDIWindow::CommandEditorWindow) {
 	RK_TRACE (COMMANDEDITOR);
+
+	QString id_header = QStringLiteral ("unnamedscript://");
 
 	KTextEditor::Editor* editor = KTextEditor::Editor::instance ();
 	RK_ASSERT (editor);
 
-	m_doc = editor->createDocument (this);
+	QUrl url = _url;
+	m_doc = 0;
+
+	// Lookup of existing text editor documents: First, if no url is given at all, create a new document, and register an id, in case this window will get split, later
+	if (url.isEmpty ()) {
+		m_doc = editor->createDocument (RKWardMainWindow::getMain ());
+		_id = id_header + KRandom::randomString (16).toLower ();
+		RK_ASSERT (!unnamed_documents.contains (_id));
+		unnamed_documents.insert (_id, m_doc);
+	} else if (url.url ().startsWith (id_header)) { // Next, handle the case that a pseudo-url is passed in
+		_id = url.url ();
+		m_doc = unnamed_documents.value (_id);
+		url.clear ();
+		if (!m_doc) {  // can happen while restoring saved workplace.
+			m_doc = editor->createDocument (RKWardMainWindow::getMain ());
+			unnamed_documents.insert (_id, m_doc);
+		}
+	} else {   // regular url given. Try to find an existing document for that url
+		       // NOTE: we cannot simply use the same map as above, for this purpose, as document urls may change.
+		       // instead we iterate over the document list.
+		QList<KTextEditor::Document*> docs = editor->documents ();
+		for (int i = 0; i < docs.count (); ++i) {
+			if (docs[i]->url ().matches (url, QUrl::NormalizePathSegments | QUrl::StripTrailingSlash | QUrl::PreferLocalFile)) {
+				m_doc = docs[i];
+				break;
+			}
+		}
+	}
+
+	// if an existing document is re-used, try to honor decoding.
+	if (m_doc) {
+		if (!encoding.isEmpty () && (m_doc->encoding () != encoding)) {
+			m_doc->setEncoding (encoding);
+			m_doc->documentReload ();
+		}
+	}
+
+	// no existing document was found, so create one and load the url
+	if (!m_doc) {
+		m_doc = editor->createDocument (RKWardMainWindow::getMain ()); // The document may have to outlive this window
+
+		// encoding must be set *before* loading the file
+		if (!encoding.isEmpty ()) m_doc->setEncoding (encoding);
+		if (!url.isEmpty ()) {
+			if (m_doc->openUrl (url)) {
+				// KF5 TODO: Check which parts of this are still needed in KF5, and which no longer work
+				if (!delete_on_close) {	// don't litter config with temporary files
+					QString p_url = RKWorkplace::mainWorkplace ()->portableUrl (m_doc->url ());
+					KConfigGroup conf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptDocumentSettings %1").arg (p_url));
+					// HACK: Hmm. KTextEditor::Document's readSessionConfig() simply restores too much. Yes, I want to load bookmarks and stuff.
+					// I do not want to mess with encoding, or risk loading a different url, after the doc is already loaded!
+					if (!encoding.isEmpty () && (conf.readEntry ("Encoding", encoding) != encoding)) conf.writeEntry ("Encoding", encoding);
+					if (conf.readEntry ("URL", url) != url) conf.writeEntry ("URL", url);
+					// HACK: What the...?! Somehow, at least on longer R scripts, stored Mode="Normal" in combination with R Highlighting
+					// causes code folding to fail (KDE 4.8.4, http://sourceforge.net/p/rkward/bugs/122/).
+					// Forcing Mode == Highlighting appears to help.
+					if (use_r_highlighting) conf.writeEntry ("Mode", conf.readEntry ("Highlighting", "Normal"));
+					m_doc->readSessionConfig (conf);
+				}
+			} else {
+				KMessageBox::messageBox (this, KMessageBox::Error, i18n ("Unable to open \"%1\"", url.toDisplayString ()), i18n ("Could not open command file"));
+			}
+		}
+	}
+
+	setReadOnly (read_only);
+
+	if (delete_on_close) {
+		if (read_only) {
+			RKCommandEditorWindow::delete_on_close = url;
+		} else {
+			RK_ASSERT (false);
+		}
+	}
+
 	RK_ASSERT (m_doc);
 	// yes, we want to be notified, if the file has changed on disk.
 	// why, oh why is this not the default?
@@ -93,6 +173,10 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	if (em_iface) em_iface->setModifiedOnDiskWarning (true);
 	else RK_ASSERT (false);
 	m_view = m_doc->createView (this);
+	if (!url.isEmpty ()) {
+		KConfigGroup viewconf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptViewSettings %1").arg (RKWorkplace::mainWorkplace ()->portableUrl (url)));
+		m_view->readSessionConfig (viewconf);
+	}
 
 	setFocusProxy (m_view);
 	setFocusPolicy (Qt::StrongFocus);
@@ -112,6 +196,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 
 	connect (m_doc, &KTextEditor::Document::documentUrlChanged, this, &RKCommandEditorWindow::updateCaption);
 	connect (m_doc, &KTextEditor::Document::modifiedChanged, this, &RKCommandEditorWindow::updateCaption);                // of course most of the time this causes a redundant call to updateCaption. Not if a modification is undone, however.
+#warning remove this in favor of KTextEditor::Document::restore()
 	connect (m_doc, &KTextEditor::Document::modifiedChanged, this, &RKCommandEditorWindow::autoSaveHandlerModifiedChanged);
 	connect (m_doc, &KTextEditor::Document::textChanged, this, &RKCommandEditorWindow::autoSaveHandlerTextChanged);
 	connect (m_view, &KTextEditor::View::selectionChanged, this, &RKCommandEditorWindow::selectionChanged);
@@ -137,6 +222,8 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 			}
 			hinter = new RKFunctionArgHinter (this, m_view);
 		}
+	} else {
+		RKCommandHighlighter::setHighlighting (m_doc, RKCommandHighlighter::Automatic);
 	}
 
 	smart_iface = qobject_cast<KTextEditor::MovingInterface*> (m_doc);
@@ -153,10 +240,6 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 RKCommandEditorWindow::~RKCommandEditorWindow () {
 	RK_TRACE (COMMANDEDITOR);
 
-	// NOTE: TODO: Ideally we'd only write out a changed config, but how to detect config changes?
-	// 	Alternatively, only for the last closed script window
-	// KF5 TODO: verify that the code below is no longer needed
-	//m_doc->editor ()->writeConfig ();
 	if (!url ().isEmpty ()) {
 		QString p_url = RKWorkplace::mainWorkplace ()->portableUrl (m_doc->url ());
 		KConfigGroup conf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptDocumentSettings %1").arg (p_url));
@@ -166,8 +249,17 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 	}
 
 	delete hinter;
-	delete m_doc;
-	if (!delete_on_close.isEmpty ()) KIO::del (delete_on_close)->start ();
+	delete m_view;
+	QList<KTextEditor::View*> views = m_doc->views ();
+	if (views.isEmpty ()) {
+		delete m_doc;
+		if (!delete_on_close.isEmpty ()) KIO::del (delete_on_close)->start ();
+		unnamed_documents.remove (_id);
+	}
+	// NOTE, under rather unlikely circumstances, the above may leave stale ids->stale pointers in the map: Create unnamed window, split it, save to a url, split again, close the first two windows, close the last. This situation should be caught by the following, however:
+	if (!url ().isEmpty () && !_id.isEmpty ()) {
+		unnamed_documents.remove (_id);
+	}
 }
 
 void RKCommandEditorWindow::fixupPartGUI () {
@@ -356,49 +448,6 @@ void RKCommandEditorWindow::setReadOnly (bool ro) {
 	m_doc->setReadWrite (!ro);
 }
 
-bool RKCommandEditorWindow::openURL (const QUrl url, const QString& encoding, bool use_r_highlighting, bool read_only, bool delete_on_close){
-	RK_TRACE (COMMANDEDITOR);
-
-	// encoding must be set *before* loading the file
-	if (!encoding.isEmpty ()) m_doc->setEncoding (encoding);
-	if (m_doc->openUrl (url)) {
-		// KF5 TODO: Check which parts of this are still needed in KF5, and which no longer work
-		if (!delete_on_close) {	// don't litter config with temporary files
-			QString p_url = RKWorkplace::mainWorkplace ()->portableUrl (m_doc->url ());
-			KConfigGroup conf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptDocumentSettings %1").arg (p_url));
-			// HACK: Hmm. KTextEditor::Document's readSessionConfig() simply restores too much. Yes, I want to load bookmarks and stuff.
-			// I do not want to mess with encoding, or risk loading a different url, after the doc is already loaded!
-			if (!encoding.isEmpty () && (conf.readEntry ("Encoding", encoding) != encoding)) conf.writeEntry ("Encoding", encoding);
-			if (conf.readEntry ("URL", url) != url) conf.writeEntry ("URL", url);
-			// HACK: What the...?! Somehow, at least on longer R scripts, stored Mode="Normal" in combination with R Highlighting
-			// causes code folding to fail (KDE 4.8.4, http://sourceforge.net/p/rkward/bugs/122/).
-			// Forcing Mode == Highlighting appears to help.
-			if (use_r_highlighting) conf.writeEntry ("Mode", conf.readEntry ("Highlighting", "Normal"));
-			m_doc->readSessionConfig (conf);
-
-			KConfigGroup viewconf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptViewSettings %1").arg (p_url));
-			m_view->readSessionConfig (viewconf);
-		}
-		if (use_r_highlighting) RKCommandHighlighter::setHighlighting (m_doc, RKCommandHighlighter::RScript);
-		else RKCommandHighlighter::setHighlighting (m_doc, RKCommandHighlighter::Automatic);
-
-		setReadOnly (read_only);
-
-		updateCaption ();
-
-		if (delete_on_close) {
-			if (!read_only) {
-				RK_ASSERT (false);
-				return true;
-			}
-			RKCommandEditorWindow::delete_on_close = url;
-		}
-
-		return true;
-	}
-	return false;
-}
-
 void RKCommandEditorWindow::autoSaveHandlerModifiedChanged () {
 	RK_TRACE (COMMANDEDITOR);
 
@@ -498,12 +547,12 @@ void RKCommandEditorWindow::autoSaveHandlerJobFinished (RKJobSequence* seq) {
 	}
 }
 
-QUrl RKCommandEditorWindow::url () {
+QUrl RKCommandEditorWindow::url () const {
 //	RK_TRACE (COMMANDEDITOR);
 	return (m_doc->url ());
 }
 
-bool RKCommandEditorWindow::isModified() {
+bool RKCommandEditorWindow::isModified () {
 	RK_TRACE (COMMANDEDITOR);
 	return m_doc->isModified();
 }
