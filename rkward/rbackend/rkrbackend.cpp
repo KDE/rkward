@@ -844,7 +844,7 @@ extern "C" int R_interrupts_pending;
 #else
 LibExtern int R_interrupts_pending;
 #endif
-SEXP doError (SEXP call) {
+void doError (QString callstring) {
 	RK_TRACE (RBACKEND);
 
 	if ((RKRBackend::repl_status.eval_depth == 0) && (!RKRBackend::repl_status.browser_context) && (!RKRBackend::this_pointer->isKilled ()) && (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::ReplIterationKilled) && (!RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::NoUserCommand)) {
@@ -862,11 +862,9 @@ SEXP doError (SEXP call) {
 			}
 		}
 	} else if (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::ReplIterationKilled) {
-		QString string = RKRSupport::SEXPToString (call);
-		RKRBackend::this_pointer->handleOutput (string, string.length (), ROutput::Error);
-		RK_DEBUG (RBACKEND, DL_DEBUG, "error '%s'", qPrintable (string));
+		RKRBackend::this_pointer->handleOutput (callstring, callstring.length (), ROutput::Error);
+		RK_DEBUG (RBACKEND, DL_DEBUG, "error '%s'", qPrintable (callstring));
 	}
-	return R_NilValue;
 }
 
 SEXP doSubstackCall (SEXP call) {
@@ -876,17 +874,7 @@ SEXP doSubstackCall (SEXP call) {
 
 	QStringList list = RKRSupport::SEXPToStringList (call);
 
-	// handle symbol updates inline
-	if (list.count () == 2) {		// schedule symbol update for later
-		if (list[0] == "ws") {
-			// always keep in mind: No current command can happen for tcl/tk events.
-			if ((!RKRBackend::this_pointer->current_command) || (RKRBackend::this_pointer->current_command->type & RCommand::ObjectListUpdate) || (!(RKRBackend::this_pointer->current_command->type & RCommand::Sync))) {		// ignore Sync commands that are not flagged as ObjectListUpdate
-				if (!RKRBackend::this_pointer->changed_symbol_names.contains (list[1])) RKRBackend::this_pointer->changed_symbol_names.append (list[1]);
-			}
-			return R_NilValue;
-		}
-	}
-/*	// this is a useful place to sneak in test code for profiling
+	/*	// this is a useful place to sneak in test code for profiling
 	if (list.value (0) == "testit") {
 		for (int i = 10000; i >= 1; --i) {
 			setWarnOption (i);
@@ -909,6 +897,51 @@ SEXP doPlainGenericRequest (SEXP call, SEXP synchronous) {
 	return RKRSupport::StringListToSEXP (ret);
 }
 
+// Function to handle several simple calls from R code, that do not need any special arguments, or interaction with the frontend process.
+SEXP doSimpleBackendCall (SEXP _call) {
+	RK_TRACE (RBACKEND);
+
+	QStringList list = RKRSupport::SEXPToStringList (_call);
+	QString call = list[0];
+
+	// symbol updates
+	if (list.count () == 2 && call == QStringLiteral ("ws")) {		// schedule symbol update for later
+		// always keep in mind: No current command can happen for tcl/tk events.
+		if ((!RKRBackend::this_pointer->current_command) || (RKRBackend::this_pointer->current_command->type & RCommand::ObjectListUpdate) || (!(RKRBackend::this_pointer->current_command->type & RCommand::Sync))) {		// ignore Sync commands that are not flagged as ObjectListUpdate
+			if (!RKRBackend::this_pointer->changed_symbol_names.contains (list[1])) RKRBackend::this_pointer->changed_symbol_names.append (list[1]);
+		}
+		return R_NilValue;
+	} else if (call == QStringLiteral ("unused.filename")) {
+		QString prefix = list.value (1);
+		QString extension = list.value (2);
+		QString dirs = list.value (3);
+		QDir  dir (dirs);
+		if (dirs.isEmpty ()) {
+			dir = QDir (RKRBackendProtocolBackend::dataDir ());
+		}
+
+		int i = 0;
+		while (true) {
+			QString candidate = prefix + QString::number (i) + extension;
+			if (!dir.exists (candidate)) {
+				return (RKRSupport::StringListToSEXP (QStringList (candidate) << dir.absoluteFilePath (candidate))); // return as c (relpath, abspath)
+			}
+			i++;
+		}
+	} else if (call == QStringLiteral ("error")) {  // capture error message
+		doError (list.value (1));
+		return R_NilValue;
+	} else if (call == QStringLiteral ("locale.name")) {
+		RK_ASSERT (QTextCodec::codecForLocale());
+		return (RKRSupport::StringListToSEXP (QStringList (QTextCodec::codecForLocale()->name ().data ())));
+	} else if (call == QStringLiteral ("tempdir")) {
+		return (RKRSupport::StringListToSEXP (QStringList (RKRBackendProtocolBackend::dataDir ())));
+	}
+
+	RK_ASSERT (false);  // Unhandled call.
+	return R_NilValue;
+}
+
 void R_CheckStackWrapper (void *) {
 	R_CheckStack ();
 }
@@ -928,18 +961,6 @@ SEXP doUpdateLocale () {
 	RK_DEBUG (RBACKEND, DL_WARNING, "New locale codec is %s", QTextCodec::codecForLocale ()->name ().data ());
 
 	return R_NilValue;
-}
-
-// returns the MIME-name of the current locale encoding (from Qt)
-SEXP doLocaleName () {
-	RK_TRACE (RBACKEND);
-
-	RK_ASSERT (QTextCodec::codecForLocale());
-	SEXP res = Rf_allocVector(STRSXP, 1);
-	PROTECT (res);
-	SET_STRING_ELT (res, 0, Rf_mkChar (QTextCodec::codecForLocale()->name ().data ()));
-	UNPROTECT (1);
-	return res;
 }
 
 SEXP doGetStructure (SEXP toplevel, SEXP name, SEXP envlevel, SEXP namespacename) {
@@ -1043,7 +1064,7 @@ bool RKRBackend::startR () {
 
 // register our functions
 	R_CallMethodDef callMethods [] = {
-		{ "rk.do.error", (DL_FUNC) &doError, 1 },
+		{ "rk.simple", (DL_FUNC) &doSimpleBackendCall, 1},
 		{ "rk.do.command", (DL_FUNC) &doSubstackCall, 1 },
 		{ "rk.do.generic.request", (DL_FUNC) &doPlainGenericRequest, 2 },
 		{ "rk.get.structure", (DL_FUNC) &doGetStructure, 4 },
@@ -1053,7 +1074,6 @@ bool RKRBackend::startR () {
 		{ "rk.show.files", (DL_FUNC) &doShowFiles, 5 },
 		{ "rk.dialog", (DL_FUNC) &doDialog, 6 },
 		{ "rk.update.locale", (DL_FUNC) &doUpdateLocale, 0 },
-		{ "rk.locale.name", (DL_FUNC) &doLocaleName, 0 },
 		{ "rk.graphics.device", (DL_FUNC) &RKStartGraphicsDevice, 7},
 		{ "rk.graphics.device.resize", (DL_FUNC) &RKD_AdjustSize, 1},
 		{ 0, 0, 0 }

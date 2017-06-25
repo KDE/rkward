@@ -6,9 +6,10 @@
 \alias{rk.get.tempfile.name}
 \alias{rk.get.workspace.url}
 \alias{rk.set.output.html.file}
+\alias{rk.tempdir}
 \title{RKWard file names}
 \usage{
-rk.get.tempfile.name(prefix = "image", extension = ".jpg")
+rk.get.tempfile.name(prefix = "image", extension = ".jpg", directory = "")
 
 rk.get.workspace.url()
 
@@ -23,10 +24,15 @@ rk.flush.output(x = rk.get.output.html.file(), flush.images = TRUE,
 }
 \arguments{
 \item{prefix}{a string, used as a filename prefix when saving images to the
-output file}
+output file. This is usually just a plain file name, but can also be a relative or absolute
+path. Relative paths are resolved with the default output directory as base, absolute paths
+are kept as is.}
 
 \item{extension}{a string, used as a filename extension when saving images
 to the output file}
+
+\item{directory}{a string, The base directory for the file. If left empty, this will default to the
+write directory of the current output file (usually "~.rkward)}
 
 \item{x}{a string, giving the filename of the of the output file}
 
@@ -60,12 +66,18 @@ the current (or specified) html file, and re-initialize it.
 }
 \details{
 \code{rk.get.tempfile.name} returns a non-existing filename inside the
-directory of the output file. It is mainly used by \link{rk.graph.on} to
+directory of the output file. The filename is returned as an absolute path,
+but the relative path with respect to the base directory can be obtained via
+\code{names()}. It is mainly used by \link{rk.graph.on} to
 create filenames suitable for storing images in the output. The filenames of
 the temporary files are of the form
 "\code{prefix}\emph{xyz}.\code{extension}". \code{rk.get.tempfile.name} is
 somewhat misnamed. For truly temporary files, \link{tempfile} is generally
 more suitable.
+
+\code{rk.tempdir} returns a directory suitable for storing rkward related
+  temporary files. Almost the same as \code{tempdir()}, but the directory
+  returned will be inside the configured RKWard data path  ("$HOME/.rkward", by default).
 
 \code{rk.get.workspace.url} returns the url of workspace file which has been
 loaded in RKWard, or NULL, if no workspace has been loaded. NOTE: This value

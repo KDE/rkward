@@ -1,3 +1,5 @@
+TODO: Check for duplicated factor levels in data editor, as these are no longer allowed in R
+
 - Implement "split view" feature, allowing to partion the main window, and to hvae several views of the same files / data side-by-side
 - Fixed: Creating trellis on-screen plots, while package lattice is not on the search path would produce errors in plot history mechanism
 - Limit the number of debug log-files to keep (at most three, each, for frontend and backend)

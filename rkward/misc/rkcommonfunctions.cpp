@@ -158,19 +158,6 @@ namespace RKCommonFunctions {
 		return (QStandardPaths::locate (QStandardPaths::GenericDataLocation, "rkward/resource.ver").replace ("resource.ver", QString ()));
 	}
 
-	QString getUseableRKWardSavefileName (const QString &prefix, const QString &postfix) {
-		QDir dir (RKSettingsModuleGeneral::filesPath ());
-
-		int i=0;
-		while (true) {
-			QString candidate = prefix + QString::number (i) + postfix;
-			if (!dir.exists (candidate)) {
-				return dir.filePath (candidate);
-			}
-			i++;
-		}
-	}
-
 	QString escape (const QString &in) {
 		QString out;
 

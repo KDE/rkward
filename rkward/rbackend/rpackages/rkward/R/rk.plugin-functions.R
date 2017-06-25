@@ -214,7 +214,7 @@ assign(".rk.preview.data", list (), envir=.rk.variables)
 #' ## NOT RUN
 #' pdata &lt;- rk.get.preview.data("SOMEID")
 #' if (is.null (pdata)) {
-#'   outfile &lt;- rk.get.tempfile.name(prefix="preview", extension=".txt")
+#'   outfile &lt;- rk.get.tempfile.name(prefix="preview", extension=".txt", directory=rk.tempdir ())
 #'   pdata &lt;- list(filename=outfile, on.delete=function (id) {
 #'     unlink(rk.get.preview.data(id)$filename)
 #'   })

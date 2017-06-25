@@ -117,7 +117,7 @@
 ".rk.do.error" <- function () {
 # comment in R sources says, it may not be good to query options during error handling. But what can we do, if R_ShowErrorMessages is not longer exported?
 	if (getOption ("show.error.messages")) {
-		.Call ("rk.do.error", c (geterrmessage ()), PACKAGE="(embedding)");
+		.rk.do.simple.call ("error", geterrmessage ())
 	}
 }
 
@@ -134,6 +134,10 @@
 #' @export
 ".rk.do.plain.call" <- function (x, args=NULL, synchronous=TRUE) {
 	.Call ("rk.do.generic.request", c (x, args), isTRUE (synchronous), PACKAGE="(embedding)")
+}
+
+".rk.do.simple.call" <- function (x, args=NULL) {
+	.Call ("rk.simple", c (x, args), PACKAGE="(embedding)")
 }
 
 #' @export
@@ -241,9 +245,9 @@
 	function (value) {
 		if (!missing (value)) {
 			assign (k, value, envir=.rk.watched.symbols)
-			.Call ("rk.do.command", c ("ws", k), PACKAGE="(embedding)");
+			.Call ("rk.simple", c ("ws", k), PACKAGE="(embedding)");
 #			NOTE: the above is essentially the same a
-#				.rk.do.call ("ws", k);
+#				.rk.do.simple.call ("ws", k);
 #			only minimally faster.
 			invisible (value)
 		} else {

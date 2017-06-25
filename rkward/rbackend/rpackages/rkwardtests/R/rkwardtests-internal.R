@@ -232,7 +232,7 @@ rktest.initializeEnvironment <- function () {
 	rktest.replace (".rk.make.hr", function (...) list (...))
 
 	# This should make the output of rk.graph.on() fixed
-	rktest.replace ("rk.get.tempfile.name", function (prefix="image", extension=".jpg") paste (prefix, extension, sep=""))
+	rktest.replace ("rk.get.tempfile.name", function (prefix="image", extension=".jpg", directory="") paste (prefix, extension, directory, sep=""))
 	options (rk.graphics.type="PNG", rk.graphics.width=480, rk.graphics.height=480)
 
 	# HACK: Override date, so we don't get a difference for each call of rk.header ()

@@ -554,10 +554,7 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 	RK_TRACE (RBACKEND);
 
 	QString call = calllist.value (0);
-	if (call == "get.tempfile.name") {
-		RK_ASSERT (calllist.count () == 3);
-		return (QStringList (RKCommonFunctions::getUseableRKWardSavefileName (calllist.value (1), calllist.value (2))));
-	} else if (call == "set.output.file") {
+	if (call == "set.output.file") {
 		RK_ASSERT (calllist.count () == 2);
 		RKOutputWindowManager::self ()->setCurrentOutputPath (calllist.value (1));
 	} else if (call == "wdChange") {

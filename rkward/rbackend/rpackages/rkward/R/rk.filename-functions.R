@@ -7,12 +7,18 @@
 #' the current (or specified) html file, and re-initialize it.
 #' 
 #' \code{rk.get.tempfile.name} returns a non-existing filename inside the
-#' directory of the output file. It is mainly used by \link{rk.graph.on} to
+#' directory of the output file. The filename is returned as an absolute path,
+#' but the relative path with respect to the base directory can be obtained via
+#' \code{names()}. It is mainly used by \link{rk.graph.on} to
 #' create filenames suitable for storing images in the output. The filenames of
 #' the temporary files are of the form
 #' "\code{prefix}\emph{xyz}.\code{extension}". \code{rk.get.tempfile.name} is
 #' somewhat misnamed. For truly temporary files, \link{tempfile} is generally
 #' more suitable.
+#'
+#' \code{rk.tempdir} returns a directory suitable for storing rkward related
+#'   temporary files. Almost the same as \code{tempdir()}, but the directory
+#'   returned will be inside the configured RKWard data path  ("$HOME/.rkward", by default).
 #' 
 #' \code{rk.get.workspace.url} returns the url of workspace file which has been
 #' loaded in RKWard, or NULL, if no workspace has been loaded. NOTE: This value
@@ -20,11 +26,15 @@
 #' via the RKWard GUI.
 #' 
 #' @aliases rk.get.tempfile.name rk.get.workspace.url rk.get.output.html.file
-#'   rk.set.output.html.file
+#'   rk.set.output.html.file rk.tempdir
 #' @param prefix a string, used as a filename prefix when saving images to the
-#'   output file
+#'   output file. This is usually just a plain file name, but can also be a relative or absolute
+#'   path. Relative paths are resolved with the default output directory as base, absolute paths
+#'   are kept as is.
 #' @param extension a string, used as a filename extension when saving images
 #'   to the output file
+#' @param directory a string, The base directory for the file. If left empty, this will default to the
+#'   write directory of the current output file (usually "~.rkward)
 #' @param x a string, giving the filename of the of the output file
 #' @param additional.header.contents NULL or an additional string to add to the HTML header section.
 #'        This could be scripts or additional CSS definitions, for example. Note that
@@ -62,8 +72,16 @@
 #' rk.set.output.html.file(outfile)
 #' 
 #' @export
-"rk.get.tempfile.name" <- function (prefix="image", extension=".jpg") {
-	return (.rk.do.plain.call ("get.tempfile.name", c (prefix, extension)))
+"rk.get.tempfile.name" <- function (prefix="image", extension=".jpg", directory="") {
+	x <- .rk.do.simple.call ("unused.filename", c (prefix, extension, directory))
+	ret <- x[2]
+	names (ret) <- x[1]
+	ret
+}
+
+#' @export
+"rk.tempdir" <- function () {
+	.rk.do.simple.call ("tempdir")
 }
 
 #' @export
@@ -89,7 +107,7 @@
 	assign (".rk.output.html.file", x, .rk.variables)
 
 	if (!file.exists (x)) {
-		.rk.cat.output (paste ("<?xml version=\"1.0\" encoding=\"", .Call ("rk.locale.name", PACKAGE="(embedding)"), "\"?>\n", sep=""))
+		.rk.cat.output (paste ("<?xml version=\"1.0\" encoding=\"", .rk.do.simple.call ("locale.name"), "\"?>\n", sep=""))
 		.rk.cat.output ("<html><head>\n<title>RKWard Output</title>\n")
 		if (!is.null (css)) {
 			cssfilename <- paste (sub ("\\.[^.]*$", "", basename (x)), ".css", sep="")
