@@ -11,7 +11,7 @@ rk.load.pluginmaps(pluginmap.files = NULL, force.add = TRUE,
 \item{pluginmap.files}{a character vector of file names to add. This may be left empty,
 if the only desired effect is to reload all active pluginmaps.}
 
-\item{force.add}{logical. Whether the pluginmap files should also be added, if they had
+\item{force.add}{logical. Whether the pluginmap files should also be added, if# they had
 been previously de-selected in the settings menu, and regardless of their
 priority setting. In scripted usage, this should generally be set to FALSE.}
 

@@ -344,30 +344,6 @@
 	ret
 }
 
-#' @export
-".rk.get.environment.children" <- function (x, envlevel=0, namespacename=NULL) {
-	ret <- list ()
-
-	if (envlevel < 2) {		# prevent infinite recursion
-		lst <- ls (x, all.names=TRUE)
-		if (is.null (namespacename)) {
-			for (childname in lst) {
-				ret[[childname]] <- .rk.get.structure (name=childname, envlevel=envlevel, envir=x)
-			}
-		} else {
-			# for R 2.4.0 or greater: operator "::" works if package has no namespace at all, or has a namespace with the symbol in it
-			ns <- tryCatch (asNamespace (namespacename), error = function(e) NULL)
-			for (childname in lst) {
-				misplaced <- FALSE
-				if ((!is.null (ns)) && (!exists (childname, envir=ns, inherits=FALSE))) misplaced <- TRUE
-				ret[[childname]] <- .rk.get.structure (name=childname, envlevel=envlevel, misplaced=misplaced, envir=x)
-			}
-		}
-	}
-
-	ret
-}
-
 # hidden, as this is not portable to different output formats
 #' @export
 ".rk.cat.output" <- function (x) {
