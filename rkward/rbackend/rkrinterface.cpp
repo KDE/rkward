@@ -384,7 +384,7 @@ void RInterface::handleRequest (RBackendRequest* request) {
 			}
 		}
 		command_requests.append (request);
-		processHistoricalSubstackRequest (request->params["call"].toStringList (), parent);
+		processHistoricalSubstackRequest (request->params["call"].toStringList (), parent, request);
 	} else if (request->type == RBackendRequest::PlainGenericRequest) {
 		request->params["return"] = QVariant (processPlainGenericRequest (request->params["call"].toStringList ()));
 		RKRBackendProtocolFrontend::setRequestCompleted (request);
@@ -681,7 +681,7 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 	return QStringList ();
 }
 
-void RInterface::processHistoricalSubstackRequest (const QStringList &calllist, RCommand *parent_command) {
+void RInterface::processHistoricalSubstackRequest (const QStringList &calllist, RCommand *parent_command, RBackendRequest *request) {
 	RK_TRACE (RBACKEND);
 
 	RCommandChain *in_chain;
@@ -739,14 +739,10 @@ void RInterface::processHistoricalSubstackRequest (const QStringList &calllist, 
 		QStringList object_list = calllist.mid (1);
 		new RKEditObjectAgent (object_list, in_chain);
 	} else if (call == "require") {
-		if (calllist.count () >= 2) {
-			QString lib_name = calllist[1];
-			KMessageBox::information (0, i18n ("The R-backend has indicated that in order to carry out the current task it needs the package '%1', which is not currently installed. We will open the package-management tool, and there you can try to locate and install the needed package.", lib_name), i18n ("Require package '%1'", lib_name));
-			RKLoadLibsDialog::showInstallPackagesModal (0, in_chain, lib_name);
-			issueCommand (".rk.set.reply (\"\")", RCommand::App | RCommand::Sync, QString (), 0, 0, in_chain);
-		} else {
-			issueCommand (".rk.set.reply (\"Too few arguments in call to require.\")", RCommand::App | RCommand::Sync, QString (), 0, 0, in_chain);
-		}
+		RK_ASSERT (calllist.count () == 2);
+		QString lib_name = calllist.value (1);
+		KMessageBox::information (0, i18n ("The R-backend has indicated that in order to carry out the current task it needs the package '%1', which is not currently installed. We will open the package-management tool, and there you can try to locate and install the needed package.", lib_name), i18n ("Require package '%1'", lib_name));
+		RKLoadLibsDialog::showInstallPackagesModal (0, in_chain, lib_name);
 	} else if (call == "doPlugin") {
 		if (calllist.count () >= 3) {
 			QString message;
@@ -757,15 +753,13 @@ void RInterface::processHistoricalSubstackRequest (const QStringList &calllist, 
 			ok = RKComponentMap::invokeComponent (calllist[1], calllist.mid (3), mode, &message, in_chain);
 
 			if (!message.isEmpty ()) {
-				QString type = "warning";
-				if (!ok) type = "error";
-				issueCommand (".rk.set.reply (list (type=\"" + type + "\", message=\"" + RKCommonFunctions::escape (message) + "\"))", RCommand::App | RCommand::Sync, QString (), 0, 0, in_chain);
+				request->params["return"] = QVariant (QStringList (ok ? QStringLiteral ("warning") : QStringLiteral ("error")) << message);
 			}
 		} else {
 			RK_ASSERT (false);
 		}
 	} else {
-		issueCommand ("stop (\"Unrecognized call '" + call + "'. Ignoring\")", RCommand::App | RCommand::Sync, QString (), 0, 0, in_chain);
+		request->params["return"] = QVariant (QStringList (QStringLiteral ("error")) << i18n ("Unrecognized call '%1'", call));
 	}
 	
 	closeChain (in_chain);

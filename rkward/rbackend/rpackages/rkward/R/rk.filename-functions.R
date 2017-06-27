@@ -7,7 +7,8 @@
 #' the current (or specified) html file, and re-initialize it.
 #' 
 #' \code{rk.get.tempfile.name} returns a non-existing filename inside the
-#' directory of the output file. The filename is returned as an absolute path,
+#' specified directory (or the directory of the current output file, if the parameter is
+#' omitted / left empty). The filename is returned as an absolute path,
 #' but the relative path with respect to the base directory can be obtained via
 #' \code{names()}. It is mainly used by \link{rk.graph.on} to
 #' create filenames suitable for storing images in the output. The filenames of

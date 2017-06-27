@@ -92,8 +92,11 @@ private:
 		RecordingCommandsUnfiltered
 	} command_logfile_mode;
 
-	void processHistoricalSubstackRequest (const QStringList &calllist, RCommand *parent_command);
+/** helper function to handle backend requests that (may) involve running additional R-"sub"-commands. TODO; This should probably be merged with processRBackendRequest.*/
+	void processHistoricalSubstackRequest (const QStringList &calllist, RCommand *parent_command, RBackendRequest *request);
+/** helper function to handle the bulk backend of requests that do not involve running sub-commands, and need a return value that can easily be represented in a QStringList() */
 	QStringList processPlainGenericRequest (const QStringList &calllist);
+/** helper function to handle backend requests that do not inolve running sub-commands. */
 	void processRBackendRequest (RBackendRequest *request);
 
 /** A list of all commands that have entered, and not yet left, the backend thread */

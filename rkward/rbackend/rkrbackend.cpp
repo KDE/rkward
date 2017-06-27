@@ -883,9 +883,10 @@ SEXP doSubstackCall (SEXP call) {
 	} */
 
 
-	RKRBackend::this_pointer->handleHistoricalSubstackRequest (list);
+	QStringList ret = RKRBackend::this_pointer->handleHistoricalSubstackRequest (list).toStringList ();
 
-	return R_NilValue;
+	if (ret.isEmpty ()) return R_NilValue;
+	return RKRSupport::StringListToSEXP (ret);
 }
 
 SEXP doPlainGenericRequest (SEXP call, SEXP synchronous) {
@@ -1537,13 +1538,14 @@ RCommandProxy* RKRBackend::fetchNextCommand () {
 	return (handleRequest (&req, false));
 }
 
-void RKRBackend::handleHistoricalSubstackRequest (const QStringList &list) {
+QVariant RKRBackend::handleHistoricalSubstackRequest (const QStringList &list) {
 	RK_TRACE (RBACKEND);
 
 	RBackendRequest request (true, RBackendRequest::HistoricalSubstackRequest);
 	request.params["call"] = list;
 	request.command = current_command;
 	handleRequest (&request);
+	return request.params.value ("return");
 }
 
 QStringList RKRBackend::handlePlainGenericRequest (const QStringList &parameters, bool synchronous) {

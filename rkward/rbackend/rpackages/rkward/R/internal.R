@@ -121,17 +121,14 @@
 	}
 }
 
-#' @export
-".rk.set.reply" <- function (x) .rk.variables$.rk.rkreply <- x
-
-#' @export
 ".rk.do.call" <- function (x, args=NULL) {
-	.rk.set.reply (NULL)
-	.Call ("rk.do.command", c (x, args), PACKAGE="(embedding)");
-	return (.rk.variables$.rk.rkreply)
+	ret <- .Call ("rk.do.command", c (x, args), PACKAGE="(embedding)");
+	if (!is.null (ret)) {
+		if (ret[1] == "warning") warning (ret[2])
+		else stop (ret[2])
+	}
 }
 
-#' @export
 ".rk.do.plain.call" <- function (x, args=NULL, synchronous=TRUE) {
 	.Call ("rk.do.generic.request", c (x, args), isTRUE (synchronous), PACKAGE="(embedding)")
 }
@@ -230,7 +227,6 @@
 #' @export
 ".rk.watched.symbols" <- new.env ()
 
-#' @export
 ".rk.make.watch.f" <- function (k) {
 	# we need to make sure, the functions we use are *not* looked up as symbols in .GlobalEnv.
 	# else, for instance, if the user names a symbol "missing", and we try to resolve it in the
@@ -239,7 +235,7 @@
 	get <- base::get
 	missing <- base::missing
 	assign <- base::assign
-	.rk.do.call <- rkward::.rk.do.call
+	.Call <- base::.Call
 	invisible <- base::invisible
 
 	function (value) {

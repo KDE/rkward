@@ -20,6 +20,7 @@
 		package <- as.character(substitute(package))
 	}
 	if (!base::require(as.character(package), quietly = quietly, character.only = TRUE, ...)) {
+		if (missing (package)) stop ("No package name given")
 		.rk.do.call("require", as.character(package))
 		invisible(base::require(as.character(package), quietly = TRUE, character.only = TRUE, ...))
 	} else {
