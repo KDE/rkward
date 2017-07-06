@@ -221,10 +221,13 @@ public:
 	void registerWindow (RKHTMLWindow *window);
 /** R may produce output while no output window is active. This allows to set the file that should be monitored for such changes (called from within rk.set.html.output.file()). */
 	void setCurrentOutputPath (const QString &path);
-/** returns a list (possibly empty) of pointers to existing output windows (for the current output path, only). */
-	QList<RKHTMLWindow*> existingOutputWindows () const;
-/** Create (and show) a new output window, and @return the pointer */
-	RKHTMLWindow* newOutputWindow ();
+/** returns a list (possibly empty) of pointers to existing output windows for the given path (for the current output path, if no path given). */
+	QList<RKHTMLWindow*> existingOutputWindows (const QString &path = QString ()) const;
+/** Create (and show) a new output window (for the current output path, unless path is specified), and @return the pointer */
+	RKHTMLWindow* newOutputWindow (const QString& path = QString ());
+/** Import an existing output directory. @Returns the file name of the index_file in the writeable location (the "output path"), or an empty string, if an error occured. */
+	QString importOutputDirectory (const QString& dir, const QString& index_file);
+	QString createOutputDirectory ();
 private:
 	RKOutputWindowManager ();
 	~RKOutputWindowManager ();
@@ -233,6 +236,15 @@ private:
 	QString current_default_path;
 	KDirWatch *file_watcher;
 	QMultiHash<QString, RKHTMLWindow *> windows;
+
+	struct OutputDirectory {
+		QString work_dir;
+		QString index_file;
+		QString saved_hash;
+		QDateTime save_timestamp;
+		QString save_dir;
+	};
+	QList<OutputDirectory> outputs;
 private slots:
 	void fileChanged (const QString &path);
 	void windowDestroyed (QObject *window);

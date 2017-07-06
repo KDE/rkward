@@ -988,6 +988,10 @@ void RKHelpRenderer::writeHTML (const QString& string) {
 /////////////////////////////////////
 /////////////////////////////////////
 
+#include <QDir>
+#include <QFileInfo>
+#include <QCryptographicHash>
+#include <KIO/CopyJob>
 
 // static
 RKOutputWindowManager* RKOutputWindowManager::_self = 0;
@@ -1093,18 +1097,22 @@ void RKOutputWindowManager::rewatchOutput () {
 	file_watcher->addFile (current_default_path);
 }
 
-QList<RKHTMLWindow*> RKOutputWindowManager::existingOutputWindows () const {
+QList<RKHTMLWindow*> RKOutputWindowManager::existingOutputWindows (const QString &path) const {
 	RK_TRACE (APP);
 
+	if (!path.isNull ()) return (windows.values (path));
 	return (windows.values (current_default_path));
 }
 
-RKHTMLWindow* RKOutputWindowManager::newOutputWindow () {
+RKHTMLWindow* RKOutputWindowManager::newOutputWindow (const QString& _path) {
 	RK_TRACE (APP);
 
+	QString path = _path;
+	if (path.isNull ()) path = current_default_path;
+
 	RKHTMLWindow* current_output = new RKHTMLWindow (RKWorkplace::mainWorkplace ()->view (), RKHTMLWindow::HTMLOutputWindow);
-	current_output->openURL (QUrl::fromLocalFile (current_default_path));
-	RK_ASSERT (current_output->url ().toLocalFile () == current_default_path);
+	current_output->openURL (QUrl::fromLocalFile (path));
+	RK_ASSERT (current_output->url ().toLocalFile () == path);
 
 	return current_output;
 }
@@ -1144,3 +1152,70 @@ void RKOutputWindowManager::windowDestroyed (QObject *window) {
 	}
 }
 
+/** much like `ls -Rl`. List directory contents including timestamps and sizes, recursively. Used to detect whether an output directory has any changes. */
+void listDirectoryState (const QString& _dir, QString *list) {
+	RK_TRACE (APP);
+
+	QDir dir (_dir);
+	QFileInfoList entries = dir.entryInfoList (QDir::NoFilter, QDir::Name | QDir::DirsLast);
+	for (int i = 0; i < entries.size (); ++i) {
+		const QFileInfo fi = entries[i];
+		if (fi.isDir ()) {
+			list->append (QStringLiteral ("dir: ") + fi.fileName () + '\n');
+			listDirectoryState (fi.absolutePath (), list);
+			list->append (QStringLiteral ("enddir\n"));
+		} else {
+			list->append (fi.fileName () + '\n');
+			list->append (fi.lastModified ().toString ("dd.hh.mm.ss.zzz") + '\n');
+			list->append (QString::number (fi.size ()) + '\n');
+		}
+	}
+}
+
+QString hashDirectoryState (const QString& dir) {
+	RK_TRACE (APP);
+	QString list;
+	listDirectoryState (dir, &list);
+	return QCryptographicHash::hash (list.toUtf8 (), QCryptographicHash::Md5);
+}
+
+QString RKOutputWindowManager::importOutputDirectory (const QString& _dir, const QString& index_file) {
+	RK_TRACE (APP);
+
+	QFileInfo fi (_dir);
+	QString dir = fi.canonicalFilePath ();
+	for (int i = 0; i < outputs.count (); ++i) {
+		if (outputs[i].save_dir == dir) {
+			if (KMessageBox::warningContinueCancel (RKWardMainWindow::getMain (), i18n ("The output directory %1 is already imported (use Window->Show Output to show it). Importing it again will revert any unsaved changes made to the output directory during the past %2 minutes. Are you sure you want to revert?", dir, outputs[i].save_timestamp.secsTo (QDateTime::currentDateTime ()) / 60), i18n ("Reset output directory?"), KStandardGuiItem::reset ()) != KMessageBox::Continue) {
+				return QString ();
+			} else {
+				outputs.removeAt (i);
+				break;
+			}
+		}
+	}
+
+	QString prefix = QStringLiteral ("unsaved_output");
+	QString destname = prefix;
+	QDir ddir (RKSettingsModuleGeneral::filesPath ());
+	int i = 0;
+	while (true) {
+		if (!ddir.exists (destname)) break;
+		destname = prefix + QString::number (i);
+	}
+	QString dest = ddir.absoluteFilePath (destname);
+
+	KIO::CopyJob *j = KIO::copyAs (QUrl::fromLocalFile (dir), QUrl::fromLocalFile (dest));
+#warning No good, just for testing.
+	j->exec ();
+
+	OutputDirectory od;
+	od.index_file = index_file;
+	od.save_dir = dir;
+	od.work_dir = dest;
+	od.saved_hash = hashDirectoryState (dest);
+	od.save_timestamp = QDateTime::currentDateTime ();
+	outputs.append (od);
+
+	return (dest + '/' + index_file);
+}

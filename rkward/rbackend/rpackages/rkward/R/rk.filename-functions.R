@@ -8,7 +8,7 @@
 #' 
 #' \code{rk.get.tempfile.name} returns a non-existing filename inside the
 #' specified directory (or the directory of the current output file, if the parameter is
-#' omitted / left empty). The filename is returned as an absolute path,
+#' omitted). The filename is returned as an absolute path,
 #' but the relative path with respect to the base directory can be obtained via
 #' \code{names()}. It is mainly used by \link{rk.graph.on} to
 #' create filenames suitable for storing images in the output. The filenames of
@@ -73,7 +73,7 @@
 #' rk.set.output.html.file(outfile)
 #' 
 #' @export
-"rk.get.tempfile.name" <- function (prefix="image", extension=".jpg", directory="") {
+"rk.get.tempfile.name" <- function (prefix="image", extension=".jpg", directory=dirname (rk.get.output.html.file ())) {
 	x <- .rk.do.simple.call ("unused.filename", c (prefix, extension, directory))
 	ret <- x[2]
 	names (ret) <- x[1]
@@ -105,6 +105,8 @@
 	stopifnot (is.character (x))
 	style <- match.arg (style)
 	oldfile <- rk.get.output.html.file ()
+	dir.create (dirname (x, showWarnings=FALSE, recursive=TRUE))
+	stopifnot (dir.exists (dirname (x)))
 	assign (".rk.output.html.file", x, .rk.variables)
 
 	if (!file.exists (x)) {
@@ -252,4 +254,41 @@
 	)
 
 	rk.set.output.html.file (x, ...)
+}
+
+## TODO move the following functions (and some others to a dedicated file/help page)
+# 
+# .rk.purge.target.dir (target, ask) {
+# 	if (dir.exists (target)) {
+# 		if (isTRUE (ask)) {
+# 			if (!rk.show.question (paste ("The target directory (", target, ") already exists, and proceeding will delete everyhting inside this directory. Are you sure you want to proceed?", sep = ""))) {
+# 				stop("Aborted by user")
+# 			}
+# 		}
+# 		try (target, recursive=TRUE)
+# 	}
+# 	stopifnot (dir.create (target.dir, showWarnings=FALSE, recursive=TRUE))
+# }
+
+#' @export
+#' @rdname rk.get.tempfile.name
+rk.export.output.dir <- function (target.dir, source.dir=basename (rk.get.output.html.file ()), ask=TRUE) {
+# This is not terribly complex, but we need an implementation in the frontend, anyway, so we use that.
+	x <- .rk.plain.call ("output.export", c (target.dir, source.dir, as.character (isTRUE (ask))))
+	if (!is.null (x)) stop (x)
+# 	.rk.purge.target.dir (target.dir, ask)
+# 	file.copy (source.dir, target.dir, recursive = TRUE, copy.date = TRUE)
+}
+
+#' @export
+#' @rdname rk.get.tempfile.name
+rk.import.output.dir <- function (source.dir, target.dir=file.path (rk.tempdir (), "output"), ask=TRUE, activate="index.html") {
+# This is not terribly complex, but we need an implementation in the frontend, anyway, so we use that.
+	x <- .rk.plain.call ("output.import", c (target.dir, source.dir, as.character (isTRUE (ask)), activate))
+	if (!is.null (x)) stop (x)
+# 	.rk.purge.target.dir (target.dir, ask)
+# 	file.copy (source.dir, target.dir, recursive = TRUE, copy.date = TRUE)
+# 	if (nzchar (activate)) {
+# 		rk.set.output.html.file (file.path (target.dir, activate))
+# 	}
 }
