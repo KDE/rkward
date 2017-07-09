@@ -37,6 +37,7 @@ class KWebView;
 class QTemporaryFile;
 class RKHTMLWindow;
 class RKFindBar;
+class RCommandChain;
 
 class RKWebPage : public KWebPage {
 	Q_OBJECT
@@ -225,9 +226,22 @@ public:
 	QList<RKHTMLWindow*> existingOutputWindows (const QString &path = QString ()) const;
 /** Create (and show) a new output window (for the current output path, unless path is specified), and @return the pointer */
 	RKHTMLWindow* newOutputWindow (const QString& path = QString ());
-/** Import an existing output directory. @Returns the file name of the index_file in the writeable location (the "output path"), or an empty string, if an error occured. */
-	QString importOutputDirectory (const QString& dir, const QString& index_file);
-	QString createOutputDirectory ();
+/** Import an existing output directory. @Returns error message, if any, and empty string in case of success */
+	QString importOutputDirectory (const QString& dir, const QString& index_file, bool ask_revert = true, RCommandChain* chain = 0);
+/** Save the given output directory to the locaiton it was last saved to / imported from. If the output directory has not been saved / imported, yet, prompt the user for a destination.
+    @param index_path output directory to save
+    @returns error message, if any, an empty string in case of success */
+	QString saveOutputDirectory (const QString& dir, RCommandChain* chain = 0);
+/** Save the given output directory. @see saveOutputDirectory ().
+    @param index_path the output directory to save
+    @param dest destination directory. May be left empty, in which case the user will be prompted for a destination.
+    @returns error message, if any, an empty string in case of success */
+	QString saveOutputDirectoryAs (const QString& dir, const QString& dest = QString (), bool ask_overwrite = true, RCommandChain* chain = 0);
+/** Create a new empty output directory.
+    @returns path of the new directory */
+	QString createOutputDirectory (RCommandChain* chain = 0);
+/** Drop the given output directory. If it was the active directory, activate another output file. Return the new active output file. */
+	QString dropOutputDirectory (const QString& index_path, bool ask=true, RCommandChain* chain = 0);
 private:
 	RKOutputWindowManager ();
 	~RKOutputWindowManager ();
@@ -238,17 +252,21 @@ private:
 	QMultiHash<QString, RKHTMLWindow *> windows;
 
 	struct OutputDirectory {
-		QString work_dir;
 		QString index_file;
 		QString saved_hash;
 		QDateTime save_timestamp;
 		QString save_dir;
 	};
-	QList<OutputDirectory> outputs;
+	/** map of outputs. Key is the working directory of the output */
+	QMap<QString, OutputDirectory> outputs;
+	void backendActivateOutputDirectory (const QString& dir, RCommandChain* chain);
+	QString createOutputDirectoryInternal ();
 private slots:
 	void fileChanged (const QString &path);
 	void windowDestroyed (QObject *window);
 	void rewatchOutput ();
+
+	void updateOutputSavedHash (RCommand *command);
 };
 
 #endif

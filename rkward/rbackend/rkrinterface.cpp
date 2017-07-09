@@ -758,6 +758,21 @@ void RInterface::processHistoricalSubstackRequest (const QStringList &calllist, 
 		} else {
 			RK_ASSERT (false);
 		}
+	} else if (call == QStringLiteral ("output")) {
+		const QString &subcall = calllist.value (1);
+		QString error;
+		if (subcall == QStringLiteral ("export")) {
+			error = RKOutputWindowManager::self ()->saveOutputDirectoryAs (calllist.value (2), calllist.value (3), calllist.value (4) == QStringLiteral ("TRUE"), in_chain);
+		} else if (subcall == QStringLiteral ("import")) {
+			error = RKOutputWindowManager::self ()->importOutputDirectory (calllist.value (2), calllist.value (3), calllist.value (4) == QStringLiteral ("TRUE"), in_chain);
+		} else if (subcall == QStringLiteral ("create")) {
+			RKOutputWindowManager::self ()->createOutputDirectory (in_chain);
+		} else {
+			RK_ASSERT (false);
+		}
+		if (!error.isEmpty ()) {
+			request->params["return"] = QVariant (QStringList (QStringLiteral ("error")) << error);
+		}
 	} else {
 		request->params["return"] = QVariant (QStringList (QStringLiteral ("error")) << i18n ("Unrecognized call '%1'", call));
 	}

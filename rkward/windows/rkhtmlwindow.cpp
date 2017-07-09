@@ -37,6 +37,7 @@
 #include <QWebFrame>
 #include <QPrintDialog>
 #include <QMenu>
+#include <QFileDialog>
 #include <QTextCodec>
 #include <QFontDatabase>
 #include <QTemporaryFile>
@@ -1157,7 +1158,7 @@ void listDirectoryState (const QString& _dir, QString *list) {
 	RK_TRACE (APP);
 
 	QDir dir (_dir);
-	QFileInfoList entries = dir.entryInfoList (QDir::NoFilter, QDir::Name | QDir::DirsLast);
+	QFileInfoList entries = dir.entryInfoList (QDir::NoDotAndDotDot, QDir::Name | QDir::DirsLast);
 	for (int i = 0; i < entries.size (); ++i) {
 		const QFileInfo fi = entries[i];
 		if (fi.isDir ()) {
@@ -1179,43 +1180,186 @@ QString hashDirectoryState (const QString& dir) {
 	return QCryptographicHash::hash (list.toUtf8 (), QCryptographicHash::Md5);
 }
 
-QString RKOutputWindowManager::importOutputDirectory (const QString& _dir, const QString& index_file) {
+bool copyDirRecursively (const QString& _source_dir, const QString& _dest_dir) {
+	RK_TRACE (APP);
+
+	QDir dest_dir (_dest_dir);
+	QDir source_dir (_source_dir);
+	if (!QDir ().mkpath (_dest_dir)) return false;
+	if (!source_dir.exists ()) return false;
+
+	bool ok = true;
+	QFileInfoList entries = source_dir.entryInfoList (QDir::NoDotAndDotDot);
+	for (int i = 0; i < entries.size (); ++i) {
+		const QFileInfo fi = entries[i];
+		if (fi.isDir ()) {
+			ok = ok && copyDirRecursively (fi.absoluteFilePath (), dest_dir.absoluteFilePath (fi.fileName ()));
+		} else {
+			// NOTE: this does not overwrite existing target files, but in our use case, we're always writing into empty targets
+			ok = ok && QFile::copy (fi.absoluteFilePath (), dest_dir.absoluteFilePath (fi.fileName ()));
+		}
+	}
+
+	return ok;
+}
+
+QString RKOutputWindowManager::saveOutputDirectory (const QString& _dir, RCommandChain* chain) {
+	RK_TRACE (APP);
+
+	const QString dir = QFileInfo (_dir).canonicalFilePath ();
+	return saveOutputDirectoryAs (_dir, outputs.value (dir).save_dir, true, chain);  // pass raw "dir" parameter b/c of error handling.
+}
+
+QString RKOutputWindowManager::saveOutputDirectoryAs (const QString& dir, const QString& _dest, bool ask_overwrite, RCommandChain* chain) {
+	RK_TRACE (APP);
+
+	const QString work_dir = QFileInfo (dir).canonicalFilePath ();
+	if (!outputs.contains (work_dir)) {
+		return i18n ("The directory %1 does not correspond to to any output directory loaded in this session.", dir);
+	}
+
+	QString dest = _dest;
+	if (dest.isEmpty ()) {
+		QFileDialog dialog (RKWardMainWindow::getMain (), i18n ("Specify directory where to save output"), outputs.value (work_dir).save_dir);
+		dialog.setFileMode (QFileDialog::Directory);
+		dialog.setOption (QFileDialog::ShowDirsOnly, true);
+		dialog.setAcceptMode (QFileDialog::AcceptSave);
+		dialog.setOption (QFileDialog::DontConfirmOverwrite, true);  // custom handling below
+
+		int result = dialog.exec ();
+		const QString cancelled = i18n ("File selection cancelled");
+		if (result != QDialog::Accepted) return cancelled;
+
+		dest = QDir::cleanPath (dialog.selectedFiles ().value (0));
+		if (ask_overwrite && QFileInfo (dest).exists ()) {
+#warning: TODO: We really need some marker to make extra sure that we are not overwriting just _any_ directory, only ones that appear to be RKWard outputs.
+			const QString warning = i18n ("Are you sure you want to overwrite the existing directory '%1'? All current contents, including subdirectories will be lost.", dest);
+			KMessageBox::ButtonCode res = KMessageBox::warningContinueCancel (RKWardMainWindow::getMain (), warning, i18n ("Overwrite Directory?"), KStandardGuiItem::overwrite (),
+			                                                                 KStandardGuiItem::cancel (), QString (), KMessageBox::Options (KMessageBox::Notify | KMessageBox::Dangerous));
+			if (KMessageBox::Continue != res) {
+				return cancelled;
+			}
+		}
+	}
+
+	// If destination already exists, rename it before copying, so we can restore the save in case of an error
+	QString tempname;
+	if (QFileInfo (dest).exists ()) {
+		tempname = dest + '~';
+		while (QFileInfo (tempname).exists ()) {
+			tempname.append ('~');
+		}
+		if (!QDir ().rename (dest, tempname)) {
+			return i18n ("Failed to create temporary backup file %1.", tempname);
+		}
+	}
+
+	bool error = copyDirRecursively (work_dir, dest);
+	if (error) {
+		if (!tempname.isEmpty ()) {
+			QDir ().rename (tempname, dest);
+		}
+		return i18n ("Error while copying %1 to %2", work_dir, dest);
+	}
+	if (!tempname.isEmpty ()) {
+		QDir (tempname).removeRecursively ();
+	}
+
+	OutputDirectory& od = outputs[work_dir];
+	od.save_timestamp = QDateTime::currentDateTime ();
+	od.save_dir = dest;
+	od.saved_hash = hashDirectoryState (work_dir);
+
+	return QString ();
+}
+
+QString RKOutputWindowManager::importOutputDirectory (const QString& _dir, const QString& index_file, bool ask_revert, RCommandChain* chain) {
 	RK_TRACE (APP);
 
 	QFileInfo fi (_dir);
+	if (!fi.isDir ()) {
+		return i18n ("The path %1 does not exist or is not a directory.", _dir);
+	}
+
 	QString dir = fi.canonicalFilePath ();
-	for (int i = 0; i < outputs.count (); ++i) {
-		if (outputs[i].save_dir == dir) {
-			if (KMessageBox::warningContinueCancel (RKWardMainWindow::getMain (), i18n ("The output directory %1 is already imported (use Window->Show Output to show it). Importing it again will revert any unsaved changes made to the output directory during the past %2 minutes. Are you sure you want to revert?", dir, outputs[i].save_timestamp.secsTo (QDateTime::currentDateTime ()) / 60), i18n ("Reset output directory?"), KStandardGuiItem::reset ()) != KMessageBox::Continue) {
-				return QString ();
+	QMap<QString, OutputDirectory>::const_iterator i = outputs.constBegin ();
+	while (i != outputs.constEnd ()) {
+		if (i.value ().save_dir == dir) {
+			if (ask_revert && (KMessageBox::warningContinueCancel (RKWardMainWindow::getMain (), i18n ("The output directory %1 is already imported (use Window->Show Output to show it). Importing it again will revert any unsaved changes made to the output directory during the past %2 minutes. Are you sure you want to revert?", dir, i.value ().save_timestamp.secsTo (QDateTime::currentDateTime ()) / 60), i18n ("Reset output directory?"), KStandardGuiItem::reset ()) != KMessageBox::Continue)) {
+				return i18n ("Cancelled");
 			} else {
-				outputs.removeAt (i);
+				outputs.remove (i.key ());
 				break;
 			}
 		}
 	}
 
-	QString prefix = QStringLiteral ("unsaved_output");
-	QString destname = prefix;
-	QDir ddir (RKSettingsModuleGeneral::filesPath ());
-	int i = 0;
-	while (true) {
-		if (!ddir.exists (destname)) break;
-		destname = prefix + QString::number (i);
-	}
-	QString dest = ddir.absoluteFilePath (destname);
+	QString dest = createOutputDirectoryInternal ();
 
-	KIO::CopyJob *j = KIO::copyAs (QUrl::fromLocalFile (dir), QUrl::fromLocalFile (dest));
-#warning No good, just for testing.
-	j->exec ();
+	if (!copyDirRecursively (dir, dest)) {
+		QDir (dest).removeRecursively ();
+		return i18n ("The path %1 could not be imported (copy failure).", _dir);
+	}
 
 	OutputDirectory od;
 	od.index_file = index_file;
 	od.save_dir = dir;
-	od.work_dir = dest;
 	od.saved_hash = hashDirectoryState (dest);
 	od.save_timestamp = QDateTime::currentDateTime ();
-	outputs.append (od);
+	outputs.insert (dest, od);
 
-	return (dest + '/' + index_file);
+	backendActivateOutputDirectory (dest, chain);
+
+	return (QString ());
+}
+
+QString RKOutputWindowManager::createOutputDirectory (RCommandChain* chain) {
+	RK_TRACE (APP);
+
+	QString dest = createOutputDirectoryInternal ();
+
+	OutputDirectory od;
+	od.index_file = QStringLiteral ("index.html");
+	outputs.insert (dest, od);
+
+	backendActivateOutputDirectory (dest, chain);
+
+	// the state of the output directory cannot be hashed until the backend has created the index file (via backendActivateOutputDirectory())
+	RCommand *command = new RCommand (QString (), RCommand::App | RCommand::Sync | RCommand::EmptyCommand);
+	command->notifier ()->setProperty ("path", dest);
+	connect (command->notifier (), &RCommandNotifier::commandFinished, this, &RKOutputWindowManager::updateOutputSavedHash);
+	RKGlobals::rInterface ()->issueCommand (command, chain);
+
+	return dest;
+}
+
+QString RKOutputWindowManager::createOutputDirectoryInternal () {
+	RK_TRACE (APP);
+
+	QString prefix = QStringLiteral ("unsaved_output");
+	QString destname = prefix;
+	QDir ddir (RKSettingsModuleGeneral::filesPath ());
+	int x = 0;
+	while (true) {
+		if (!ddir.exists (destname)) break;
+		destname = prefix + QString::number (x++);
+	}
+	ddir.mkpath (destname);
+	return ddir.absoluteFilePath (destname);
+}
+
+void RKOutputWindowManager::backendActivateOutputDirectory (const QString& dir, RCommandChain* chain) {
+	RK_TRACE (APP);
+
+	RKGlobals::rInterface ()->issueCommand (QStringLiteral ("rk.set.output.html.file (\"") + RKCommonFunctions::escape (dir + '/' + outputs.value (dir).index_file) + QStringLiteral ("\")\n"), RCommand::App, QString (), 0, 0, chain);
+}
+
+void RKOutputWindowManager::updateOutputSavedHash (RCommand* command) {
+	RK_TRACE (APP);
+
+	QString path = command->notifier ()->property ("path").toString ();
+	RK_ASSERT (outputs.contains (path));
+	OutputDirectory &output = outputs[path];
+	output.saved_hash = hashDirectoryState (path);
+	output.save_timestamp = QDateTime::currentDateTime ();
 }

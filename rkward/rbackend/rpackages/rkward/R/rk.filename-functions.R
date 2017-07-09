@@ -105,7 +105,7 @@
 	stopifnot (is.character (x))
 	style <- match.arg (style)
 	oldfile <- rk.get.output.html.file ()
-	dir.create (dirname (x, showWarnings=FALSE, recursive=TRUE))
+	dir.create (dirname (x), showWarnings=FALSE, recursive=TRUE)
 	stopifnot (dir.exists (dirname (x)))
 	assign (".rk.output.html.file", x, .rk.variables)
 
@@ -272,23 +272,21 @@
 
 #' @export
 #' @rdname rk.get.tempfile.name
-rk.export.output.dir <- function (target.dir, source.dir=basename (rk.get.output.html.file ()), ask=TRUE) {
+rk.export.output.dir <- function (source.dir=basename (rk.get.output.html.file ()), target.dir, ask=TRUE) {
 # This is not terribly complex, but we need an implementation in the frontend, anyway, so we use that.
-	x <- .rk.plain.call ("output.export", c (target.dir, source.dir, as.character (isTRUE (ask))))
-	if (!is.null (x)) stop (x)
-# 	.rk.purge.target.dir (target.dir, ask)
-# 	file.copy (source.dir, target.dir, recursive = TRUE, copy.date = TRUE)
+	x <- .rk.do.call ("output", c ("export", source.dir, target.dir, as.character (isTRUE (ask))))
 }
 
 #' @export
 #' @rdname rk.get.tempfile.name
-rk.import.output.dir <- function (source.dir, target.dir=file.path (rk.tempdir (), "output"), ask=TRUE, activate="index.html") {
+rk.import.output.dir <- function (source.dir, activate="index.html", ask=TRUE) {
 # This is not terribly complex, but we need an implementation in the frontend, anyway, so we use that.
-	x <- .rk.plain.call ("output.import", c (target.dir, source.dir, as.character (isTRUE (ask)), activate))
-	if (!is.null (x)) stop (x)
-# 	.rk.purge.target.dir (target.dir, ask)
-# 	file.copy (source.dir, target.dir, recursive = TRUE, copy.date = TRUE)
-# 	if (nzchar (activate)) {
-# 		rk.set.output.html.file (file.path (target.dir, activate))
-# 	}
+	x <- .rk.do.call ("output", c ("import", source.dir, activate, as.character (isTRUE (ask))))
+}
+
+#' @export
+#' @rdname rk.get.tempfile.name
+rk.create.output.dir <- function () {
+# This is not terribly complex, but we need an implementation in the frontend, anyway, so we use that.
+	x <- .rk.do.call ("output", c ("create"))
 }
