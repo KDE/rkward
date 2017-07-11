@@ -1232,7 +1232,10 @@ QString RKOutputWindowManager::saveOutputDirectoryAs (const QString& dir, const 
 
 		dest = QDir::cleanPath (dialog.selectedFiles ().value (0));
 		if (ask_overwrite && QFileInfo (dest).exists ()) {
-#warning: TODO: We really need some marker to make extra sure that we are not overwriting just _any_ directory, only ones that appear to be RKWard outputs.
+			if (!isRKWwardOutputDirectory (dest)) {
+				return i18n ("The directory %1 exists, but does not appear to be an RKWard output directory. Refusing to overwrite it.", dest);
+			}
+
 			const QString warning = i18n ("Are you sure you want to overwrite the existing directory '%1'? All current contents, including subdirectories will be lost.", dest);
 			KMessageBox::ButtonCode res = KMessageBox::warningContinueCancel (RKWardMainWindow::getMain (), warning, i18n ("Overwrite Directory?"), KStandardGuiItem::overwrite (),
 			                                                                 KStandardGuiItem::cancel (), QString (), KMessageBox::Options (KMessageBox::Notify | KMessageBox::Dangerous));
@@ -1245,6 +1248,10 @@ QString RKOutputWindowManager::saveOutputDirectoryAs (const QString& dir, const 
 	// If destination already exists, rename it before copying, so we can restore the save in case of an error
 	QString tempname;
 	if (QFileInfo (dest).exists ()) {
+		if (!isRKWwardOutputDirectory (dest)) {
+			return i18n ("The directory %1 exists, but does not appear to be an RKWard output directory. Refusing to overwrite it.", dest);
+		}
+
 		tempname = dest + '~';
 		while (QFileInfo (tempname).exists ()) {
 			tempname.append ('~');
@@ -1273,7 +1280,7 @@ QString RKOutputWindowManager::saveOutputDirectoryAs (const QString& dir, const 
 	return QString ();
 }
 
-QString RKOutputWindowManager::importOutputDirectory (const QString& _dir, const QString& index_file, bool ask_revert, RCommandChain* chain) {
+QString RKOutputWindowManager::importOutputDirectory (const QString& _dir, const QString& _index_file, bool ask_revert, RCommandChain* chain) {
 	RK_TRACE (APP);
 
 	QFileInfo fi (_dir);
@@ -1294,6 +1301,27 @@ QString RKOutputWindowManager::importOutputDirectory (const QString& _dir, const
 		}
 	}
 
+	QString index_file = _index_file;
+	if (index_file.isEmpty ()) {
+		QStringList html_files = QDir (dir).entryList (QStringList () << "*.html" << "*.htm", QDir::Files | QDir::Readable);
+		if (html_files.isEmpty ()) {
+			return i18n ("The directory %1 does not appear to contain any (readable) HTML-files.", dir);
+		} else if (html_files.contains ("rk_out.html")) {
+			index_file = "rk_out.html";
+		} else if (html_files.contains ("index.html")) {
+			index_file = "index.html";
+		} else {
+			index_file = html_files.first ();
+		}
+	}
+
+	bool was_rkward_ouput = isRKWwardOutputDirectory (dir);
+	if ((!was_rkward_ouput) && ask_revert) {
+		if (KMessageBox::warningContinueCancel (RKWardMainWindow::getMain (), i18n ("The directory %1 does not appear to be an existing RKWard output directory. RKWard can try to import it, anyway (and this will usually work for output files created by RKWard < 0.7.0), but it may not be possible to append to the existing output, and for safety concerns RKWard will refuse to save the modified output back to this directory.\nAre you sure you want to continue?", dir)) != KMessageBox::Continue) {
+			return i18n ("Cancelled");
+		}
+	}
+
 	QString dest = createOutputDirectoryInternal ();
 
 	if (!copyDirRecursively (dir, dest)) {
@@ -1303,7 +1331,7 @@ QString RKOutputWindowManager::importOutputDirectory (const QString& _dir, const
 
 	OutputDirectory od;
 	od.index_file = index_file;
-	od.save_dir = dir;
+	if (was_rkward_ouput) od.save_dir = dir;
 	od.saved_hash = hashDirectoryState (dest);
 	od.save_timestamp = QDateTime::currentDateTime ();
 	outputs.insert (dest, od);
@@ -1345,7 +1373,92 @@ QString RKOutputWindowManager::createOutputDirectoryInternal () {
 		destname = prefix + QString::number (x++);
 	}
 	ddir.mkpath (destname);
+
+	QFile marker (destname + QStringLiteral ("/rkward_output_marker.txt"));
+	marker.open (QIODevice::WriteOnly);
+	marker.write (i18n ("This file is used to indicate that this directory is an ouptut directory created by RKWard (http://rkward.kde.org). Do not place any other contents in this directory, as the entire directory will be purged if/when overwriting the output.\nRKWard will ask you before purging this directory (unless explicitly told otherwise), but if you remove this file, RKWard will not purge this directory.\n").toLocal8Bit ());
+	marker.close ();
+
 	return ddir.absoluteFilePath (destname);
+}
+
+QString RKOutputWindowManager::dropOutputDirectory (const QString& dir, bool ask, RCommandChain* chain) {
+	RK_TRACE (APP);
+
+	const QString work_dir = QFileInfo (dir).canonicalFilePath ();
+	if (!outputs.contains (work_dir)) {
+		return i18n ("The directory %1 does not correspond to to any output directory loaded in this session.", dir);
+	}
+
+	OutputDirectory od = outputs[work_dir];
+	if (ask) {
+		if (od.saved_hash != hashDirectoryState (work_dir)) {
+			if (KMessageBox::warningContinueCancel (RKWardMainWindow::getMain (), i18n ("The output directory %1 has unsaved changes, which will be lost by dropping it. Are you sure you want to proceed?", work_dir)) != KMessageBox::Continue) return i18n ("Cancelled");
+		}
+	}
+
+	QString error = dropOutputDirectoryInternal (work_dir);
+	if (!error.isEmpty ()) return error;
+
+	if (current_default_path.startsWith (work_dir)) {
+		if (!outputs.isEmpty ()) {
+			backendActivateOutputDirectory (outputs.constBegin ().key (), chain);
+		} else {
+			createOutputDirectory (chain);
+		}
+	}
+
+	return QString ();
+}
+
+QString RKOutputWindowManager::dropOutputDirectoryInternal (const QString& dir) {
+	RK_TRACE (APP);
+
+	if (!isRKWwardOutputDirectory (dir)) {
+		RK_ASSERT (false); // this should not happen unless user messes with the temporary file, but we better play it safe.
+		return (i18n ("The directory %1 does not appear to be an RKWard output directory. Refusing to remove it.", dir));
+	}
+	outputs.remove (dir);
+	QDir (dir).removeRecursively ();
+
+	QStringList paths = windows.keys ();
+	for (int i = 0; i < paths.size (); ++i) {
+		if (paths[i].startsWith (dir)) {
+//			RKWorkplace::closeWindows (windows.values (paths[i]));  // NOTE: Won't work with current compilers
+			QList<RKHTMLWindow*> wins = windows.values (paths[i]);
+			for (int j = 0; j < wins.size (); ++j) {
+				RKWorkplace::mainWorkplace ()->closeWindow (wins[j]);
+			}
+		}
+	}
+
+	return QString ();
+}
+
+void RKOutputWindowManager::purgeAllOututputDirectories () {
+	RK_TRACE (APP);
+
+	QStringList output_dirs = outputs.keys ();
+	for (int i = output_dirs.size () - 1; i >= 0; --i) {
+		if (i > 0) dropOutputDirectoryInternal (output_dirs[i]);
+		else dropOutputDirectory (output_dirs[i], false);
+	}
+}
+
+QStringList RKOutputWindowManager::modifiedOutputDirectories() const {
+	RK_TRACE (APP);
+
+	QStringList ret;
+	for (QMap<QString, OutputDirectory>::const_iterator it = outputs.constBegin (); it != outputs.constEnd (); ++it) {
+		if (it.value ().saved_hash != hashDirectoryState (it.key ())) ret.append (it.key ());
+	}
+	return ret;
+}
+
+bool RKOutputWindowManager::isRKWwardOutputDirectory (const QString& dir) {
+	RK_TRACE (APP);
+
+	return (QDir (dir).exists (QStringLiteral ("rkward_output_marker.txt")));
 }
 
 void RKOutputWindowManager::backendActivateOutputDirectory (const QString& dir, RCommandChain* chain) {
