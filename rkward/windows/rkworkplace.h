@@ -139,12 +139,14 @@ public:
 @param window window to close */
 	void closeWindow (RKMDIWindow *window);
 /** Close the given windows, whether they are attached or detached. TODO: Be smart about asking what to save.
-@param windows list windows to close */
-	void closeWindows (QList<RKMDIWindow*> windows);
+@param windows list windows to close
+@returns false if cancelled by user (user was prompted for saving, and chose cancel) */
+	bool closeWindows (QList<RKMDIWindow*> windows);
 /** Closes all windows of the given type(s). Default call (no arguments) closes all windows
 @param type: A bitwise OR of RKWorkplaceObjectType
-@param state: A bitwise OR of RKWorkplaceObjectState */
-	void closeAll (int type=RKMDIWindow::AnyType, int state=RKMDIWindow::AnyWindowState);
+@param state: A bitwise OR of RKWorkplaceObjectState
+@returns false if cancelled by user (user was prompted for saving, and chose cancel) */
+	bool closeAll (int type=RKMDIWindow::AnyType, int state=RKMDIWindow::AnyWindowState);
 
 /** Write a description of all current windows to the R backend. This can later be read by restoreWorkplace (). Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace
 @param chain command chain to place the command in */

@@ -43,6 +43,7 @@
 #include "../core/robjectlist.h"
 #include "../dataeditor/rkeditor.h"
 #include "../dataeditor/rkeditordataframe.h"
+#include "../dialogs/rksavemodifieddialog.h"
 #include "../robjectviewer.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../settings/rksettingsmodulecommandeditor.h"
@@ -639,20 +640,25 @@ RKWorkplace::RKWorkplaceObjectList RKWorkplace::getObjectList (int type, int sta
 	return ret;
 }
 
-void RKWorkplace::closeAll (int type, int state) {
+bool RKWorkplace::closeAll (int type, int state) {
 	RK_TRACE (APP);
 
-	closeWindows (getObjectList (type, state));
+	return closeWindows (windows);
 }
 
-void RKWorkplace::closeWindows (QList<RKMDIWindow*> windows) {
+bool RKWorkplace::closeWindows (QList<RKMDIWindow*> windows) {
 	RK_TRACE (APP);
 
 	RKWardMainWindow::getMain ()->lockGUIRebuild (true);
-	for (int i = windows.size () - 1; i >= 0; --i) {
-		closeWindow (windows[i]);
+	bool ok = RKSaveModifiedDialog::askSaveModified (this, windows, false);
+	if (ok) {
+		for (int i = windows.size () - 1; i >= 0; --i) {
+			closeWindow (windows[i]);
+			// TODO: Do not ask for saving _again_
+		}
 	}
 	RKWardMainWindow::getMain ()->lockGUIRebuild (false);
+	return ok;
 }
 
 void RKWorkplace::removeWindow (QObject *object) {
