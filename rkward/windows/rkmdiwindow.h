@@ -82,6 +82,9 @@ public slots:
 public:
 /** @returns true, if the window's document was modified (and would need to be saved) */
 	virtual bool isModified () { return false; };
+/** Ask the window's document to save itself.
+@returns true on success, _or_ if the document cannot be saved at all (in which case isModified() should return false, too. False, if saving failed / was cancelled */
+	virtual bool save () { return true; };
 /** @returns A long / complete caption. Default implementation simply calls shortCaption () */
 	virtual QString fullCaption ();
 /** @returns A short caption (e.g. only the filename without the path). Default implementation simply calls QWidget::caption () */
@@ -102,8 +105,13 @@ public:
 	virtual void prepareToBeAttached ();
 /** If your mdi window should perform any adjustments before being detached, reimplement this function. Default implementation does nothing, but raises an assert, if this is a tool window */
 	virtual void prepareToBeDetached ();
-/** Tool windows will only hide themselves, and ignore the also_delete flag */
-	virtual bool close (bool also_delete);
+	enum CloseWindowMode {
+		AutoAskSaveModified,
+		NoAskSaveModified
+	};
+/** Closes the window. Most windows will be autodestruct (unless user choses to cancel closing while asked whether to save modifications), tool windows will only hide themselves (and never ask for saving).
+@returns true, if the window was closed, false otherwise. */
+	virtual bool close (CloseWindowMode ask_save);
 /** Set a status message to be shown in a popup inside the window. The message persists until the given R command has finished, or until this function is called with an empty string.
 This should be used, when the information shown is currently out-of-date (e.g. when refreshing a preview / loading a plot from history), _not_ when the window
 is simply busy (e.g. when saving the current plot to history). */

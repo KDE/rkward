@@ -611,12 +611,12 @@ void RKWorkplace::flushAllData () {
 	}
 }
 
-void RKWorkplace::closeWindow (RKMDIWindow *window) {
+void RKWorkplace::closeWindow (RKMDIWindow *window, RKMDIWindow::CloseWindowMode ask_save) {
 	RK_TRACE (APP);
 	RK_ASSERT (windows.contains (window));
 
 	bool tool_window = window->isToolWindow ();
-	window->close (true);		// all the rest should happen in removeWindow ()
+	window->close (ask_save);		// all the rest should happen in removeWindow ()
 	
 	if (tool_window) windowRemoved ();	// for regular windows, this happens in removeWindow(), already
 }
@@ -653,7 +653,7 @@ bool RKWorkplace::closeWindows (QList<RKMDIWindow*> windows) {
 	bool ok = RKSaveModifiedDialog::askSaveModified (this, windows, false);
 	if (ok) {
 		for (int i = windows.size () - 1; i >= 0; --i) {
-			closeWindow (windows[i]);
+			closeWindow (windows[i], RKMDIWindow::NoAskSaveModified);
 			// TODO: Do not ask for saving _again_
 		}
 	}

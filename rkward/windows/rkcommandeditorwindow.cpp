@@ -250,6 +250,7 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 
 	delete hinter;
 	delete m_view;
+	m_doc->waitSaveComplete ();
 	QList<KTextEditor::View*> views = m_doc->views ();
 	if (views.isEmpty ()) {
 		delete m_doc;
@@ -554,7 +555,12 @@ QUrl RKCommandEditorWindow::url () const {
 
 bool RKCommandEditorWindow::isModified () {
 	RK_TRACE (COMMANDEDITOR);
-	return m_doc->isModified();
+	return m_doc->isModified ();
+}
+
+bool RKCommandEditorWindow::save () {
+	RK_TRACE (COMMANDEDITOR);
+	return m_doc->documentSave ();
 }
 
 void RKCommandEditorWindow::insertText (const QString &text) {

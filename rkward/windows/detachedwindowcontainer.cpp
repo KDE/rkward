@@ -148,7 +148,7 @@ void DetachedWindowContainer::slotReattach () {
 void DetachedWindowContainer::closeEvent (QCloseEvent *e) {
 	RK_TRACE (APP);
 
-	if (captured->close (true)) {
+	if (captured->close (RKMDIWindow::AutoAskSaveModified)) {
 		e->accept ();
 	} else {
 		e->ignore ();

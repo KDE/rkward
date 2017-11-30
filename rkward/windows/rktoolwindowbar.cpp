@@ -242,7 +242,7 @@ void RKToolWindowBar::tabClicked (int id) {
 	RK_ASSERT (widget);
 
 	if (widget->isActive ()) {
-		if (!widget->isAttached ()) widget->close (false);
+		if (!widget->isAttached ()) widget->close (RKMDIWindow::NoAskSaveModified);
 		else hideWidget (widget);
 	} else {
 		widget->activate (true);

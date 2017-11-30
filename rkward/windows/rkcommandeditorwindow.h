@@ -149,6 +149,8 @@ public:
 	~RKCommandEditorWindow ();
 /** returns, whether the document was modified since the last save */
 	bool isModified () override;
+/** saves the document, returns true on success */
+	bool save () override;
 /** insert the given text into the document at the current cursor position. Additionally, focuses the view */
 	void insertText (const QString &text);
 /** set the current text (clear all previous text, and sets new text) */

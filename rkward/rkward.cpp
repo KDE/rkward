@@ -751,19 +751,14 @@ bool RKWardMainWindow::doQueryQuit () {
 	}
 //	}
 
-	RKWorkplace::RKWorkplaceObjectList map = RKWorkplace::mainWorkplace ()->getObjectList ();
-	for (RKWorkplace::RKWorkplaceObjectList::const_iterator it = map.constBegin (); it != map.constEnd (); ++it) {
-		lockGUIRebuild (true);
-		if (!(*it)->close (true)) {
-			if (!(*it)->isType (RKMDIWindow::X11Window)) {	// X11 windows have a delayed close
-				// If a child refuses to close, we return false.
-				slotSetStatusReady ();
-				lockGUIRebuild (false);
-				return false;
-			}
-		}
-//		lockGUIRebuild (false);  // No need to update GUI anymore (and doing so is potentially asking for trouble, anyway)
+	lockGUIRebuild (true);
+	if (!RKWorkplace::mainWorkplace ()->closeAll ()) {
+		// User cancelled closing, when asked to save changes
+		slotSetStatusReady ();
+		lockGUIRebuild (false);
+		return false;
 	}
+//	lockGUIRebuild (false);  // No need to update GUI anymore (and doing so is potentially asking for trouble, anyway)
 
 	return true;
 }

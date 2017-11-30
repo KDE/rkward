@@ -157,7 +157,7 @@ void RKTopLevelWindowGUI::toggleToolView (RKMDIWindow *tool_window) {
 	RK_ASSERT (tool_window);
 
 	if (tool_window->isActive ()) {
-		tool_window->close (false);
+		tool_window->close (RKMDIWindow::NoAskSaveModified);
 		activateDocumentView ();
 	} else {
 		tool_window->activate (true);

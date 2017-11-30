@@ -168,7 +168,7 @@ public slots:
 	void showPlotInfo ();
 
 /** reimplemented to keep window alive while saving history */
-	bool close (bool also_delete) override;
+	bool close (CloseWindowMode ask_save) override;
 	void setKilledInR () { killed_in_r = true; };
 	void setWindowStyleHint (const QString& hint) override;
 private slots:

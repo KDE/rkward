@@ -202,7 +202,7 @@ void RKWindowCatcher::killDevice (int device_number) {
 	RKCaughtX11Window* window = RKCaughtX11Window::getWindow (device_number);
 	if (window) {
 		window->setKilledInR ();
-		window->close (true);
+		window->close (RKMDIWindow::AutoAskSaveModified);
 		QApplication::sync ();
 	}
 }
@@ -356,7 +356,7 @@ RKCaughtX11Window::~RKCaughtX11Window () {
 	RK_ASSERT (device_windows.contains (device_number));
 	device_windows.remove (device_number);
 
-	close (false);
+	close (NoAskSaveModified);
 	if (embedded) RKWindowCatcher::instance ()->unregisterWatcher (embedded->winId ());
 	error_dialog->autoDeleteWhenDone ();
 }
@@ -380,14 +380,14 @@ void RKCaughtX11Window::forceClose () {
 		embedded->setParent (0);
 		qApp->processEvents ();
 	}
-	RKMDIWindow::close (true);
+	RKMDIWindow::close (NoAskSaveModified);
 }
 
-bool RKCaughtX11Window::close (bool also_delete) {
+bool RKCaughtX11Window::close (CloseWindowMode ask_save) {
 	RK_TRACE (MISC);
 
 	if (killed_in_r || RKGlobals::rInterface ()->backendIsDead ()) {
-		return RKMDIWindow::close (also_delete);
+		return RKMDIWindow::close (ask_save);
 	}
 
 	if (rk_native_device) rk_native_device->stopInteraction ();

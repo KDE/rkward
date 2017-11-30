@@ -20,10 +20,12 @@
 
 #include <QDialog>
 #include <QList>
+#include <QMap>
+#include <QPointer>
 
 #include "../windows/rkmdiwindow.h"
 
-class QTreeWidget;
+class QTreeWidgetItem;
 
 class RKSaveModifiedDialog : public QDialog {
 	Q_OBJECT
@@ -36,7 +38,7 @@ public:
 private:
 	RKSaveModifiedDialog (QWidget* parent, QList<RKMDIWindow*> modified_windows, bool project);
 	virtual ~RKSaveModifiedDialog ();
-	QTreeWidget *tree;
+	QMap<QTreeWidgetItem *, QPointer<RKMDIWindow>> window_checklist;
 private slots:
 	void saveWorkplaceChanged ();
 	void saveSelected ();

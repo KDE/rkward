@@ -77,7 +77,7 @@ RKSaveModifiedDialog::RKSaveModifiedDialog (QWidget* parent, QList<RKMDIWindow*>
 			item->setFirstColumnSpanned (true);
 			header->addChild (item);
 			item->setCheckState (0, Qt::Checked);
-			item->setData (0, Qt::UserRole, QVariant::fromValue (QPointer<RKMDIWindow> (modified_wins[i])));
+			window_checklist.insert (item, QPointer<RKMDIWindow> (modified_wins[i]));
 		}
 	}
 
@@ -108,7 +108,13 @@ void RKSaveModifiedDialog::saveWorkplaceChanged () {
 
 void RKSaveModifiedDialog::saveSelected () {
 	RK_TRACE (APP);
-// TODO: get list of selected items from tree, and save them
-// TODO: _when done_:
-//	accepted ();
+
+	bool all_ok = true;
+	for (QMap<QTreeWidgetItem *, QPointer<RKMDIWindow>>::const_iterator it = window_checklist.constBegin (); it != window_checklist.constEnd (); ++it) {
+		if (it.key ()->checkState (0) != Qt::Checked) continue;
+		if (!it.value ()) continue;
+		if (!it.value ()->save ()) all_ok = false; // but we proceed with the others
+	}
+	if (all_ok) accept ();
+	else reject ();
 }
