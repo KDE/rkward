@@ -16,6 +16,7 @@ OSXVERSION=$(sw_vers -productVersion | sed -e "s/.[[:digit:]]*$//")
 DEVEL=true
 ANONGIT=true
 BLDSETUP=false
+BUILDQT=false
 SSHGEN=false
 DEBUG=false
 BINARY=false
@@ -70,7 +71,9 @@ declare -a EXCLPKG=(audio_lame audio_libmodplug audio_libopus \
 # sudo port rdeps rkward-devel
 
 #SVNREPO=http://svn.code.sf.net/p/rkward/code/trunk
-GITREPO=http://anongit.kde.org/rkward.git
+GITREPO="git://anongit.kde.org/rkward.git"
+GITREPOKDE="git@git.kde.org:rkward.git"
+RJVBREPO="https://github.com/mkae/macstrop.git"
 OLDWD="$(pwd)"
 
 if [[ $1 == "" ]] ; then
@@ -93,6 +96,7 @@ if [[ $1 == "" ]] ; then
            -G  setup basic build environment: ${GITROOT} & ${SRCPATH}
                if -G is set without both -U and -E, it will fallback to setup
                ${GITROOT} anonymously -- build-only setup, no development
+           -Q  build and install patched qt5-kde port from RJVB repo
            -C  checkout a branch different than ${GITBRANCH}
            -U  set git user name (KDE account)
            -E  set git user e-mail (KDE account)
@@ -115,7 +119,7 @@ exit 0
 fi
 
 # get the options
-while getopts ":CDE:dbfGlLprmsS:cU:xXF:t:" OPT; do
+while getopts ":CDE:dbfGlLprQmsS:cU:xXF:t:" OPT; do
   case $OPT in
     U) GITUSER=$OPTARG >&2 ;;
     E) GITMAIL=$OPTARG >&2 ;;
@@ -125,6 +129,7 @@ while getopts ":CDE:dbfGlLprmsS:cU:xXF:t:" OPT; do
        else
          ANONGIT=false >&2
        fi ;;
+    Q) BUILDQT=true >&2 ;;
     C) GITBRANCH=$OPTARG >&2 ;;
     S) SSHGEN=true >&2
        SSHCOMMENT=$OPTARG >&2 ;;
@@ -246,11 +251,11 @@ if $BLDSETUP ; then
   sudo chown "${USER}" "${GITROOT}" || exit 1
   cd "${GITROOT}" || exit 1
   if $ANONGIT ; then
-    git clone git://anongit.kde.org/rkward.git || exit 1
+    git clone "${GITREPO}" || exit 1
     cd rkward || exit 1
   else
     # should this fail, try https:// instead of git@
-    git clone git@git.kde.org:rkward.git || exit 1
+    git clone "${GITREPOKDE}" || exit 1
     cd rkward || exit 1
     echo "set git user to \"${GITUSER}\"..."
     git config user.name "${GITUSER}" || exit 1
@@ -261,6 +266,9 @@ if $BLDSETUP ; then
   if [[ ! "${GITBRANCH}" == "master" ]] ; then
     git checkout "${GITBRANCH}" || exit 1
   fi
+  echo "cloning RJVB local repository (patched Qt5)"
+  cd "${GITROOT}" || exit 1
+  git clone "${RJVBREPO}" || exit 1
   if ! [ -d ${SRCPATH} ] ; then
     echo "sudo ln -s ${GITROOT}/rkward/macports/ ${SRCPATH}"
     sudo ln -s "${GITROOT}/rkward/macports/" "${SRCPATH}" || exit 1
@@ -271,8 +279,12 @@ if $BLDSETUP ; then
     if ! $(echo "${BPFPATH}" | grep -q "${USERBIN}/:${MPTINST}/bin/:") ; then
       echo "PATH=${USERBIN}/:${MPTINST}/bin/:\$PATH" >> "${HOME}/.bash_profile"
     fi
+    if ! $(echo "${BPFPATH}" | grep -q "KDE_SESSION_VERSION") ; then
+      echo "export KDE_SESSION_VERSION=5" >> "${HOME}/.bash_profile"
+    fi
   else
     echo "PATH=${USERBIN}/:${MPTINST}/bin/:\$PATH" > "${HOME}/.bash_profile"
+    echo "export KDE_SESSION_VERSION=5" >> "${HOME}/.bash_profile"
   fi
   . "${HOME}/.bash_profile"
   cd "${OLDWD}" || exit 1
@@ -286,6 +298,7 @@ fi
 if $FRESHMCP ; then
   if ! [ -d ${SRCPATH} ] ; then
     echo "can't find ${SRCPATH} -- you should call the script with \"-G\" before setting up MacPorts!"
+    exit 1
   fi
   echo "creating ${MPTINST}..."
   sudo mkdir -p "${MPTINST}" || exit 1
@@ -293,7 +306,7 @@ if $FRESHMCP ; then
   curl "https://distfiles.macports.org/MacPorts/MacPorts-${MCPVERS}.tar.bz2" -o "MacPorts-${MCPVERS}.tar.bz2" || exit 1
   tar xjvf "MacPorts-${MCPVERS}.tar.bz2" || exit 1
   cd "MacPorts-${MCPVERS}" || exit 1
-  ./configure --prefix="${MPTINST}"  || exit 1
+  ./configure --prefix="${MPTINST}" || exit 1
   make || exit 1
   sudo make install || exit 1
   cd "${OLDWD}" || exit 1
@@ -303,7 +316,11 @@ if $FRESHMCP ; then
   sudo sed -i -e "s+\(applications_dir[[:space:]]*\)/Applications/MacPorts+\1${APPLDIR}+" "${MPTINST}/etc/macports/macports.conf"
   sudo "${MPTINST}/bin/port" -v selfupdate || exit 1
   echo "adding local portfiles to ${MPTINST}/etc/macports/sources.conf..."
-  sudo sed -i -e "s+rsync://rsync.macports.org.*\[default\]+file://${SRCPATH}/\\`echo -e '\n\r'`&+" "${MPTINST}/etc/macports/sources.conf" || exit 1
+  # sudo sed -i -e "s+rsync://rsync.macports.org.*\[default\]+file://${SRCPATH}/\\`echo -e '\n\r'`&+" "${MPTINST}/etc/macports/sources.conf" || exit 1
+  # adding newlines with sed in macOS is totally f**ked up, here's an ugly workaround in three steps
+  sudo sed -i -e $'s+rsync://rsync.macports.org.*\[default\]+file://_GITROOT_/macstrop/\\\nfile://_SRCPATH_/\\\n&+' "${MPTINST}/etc/macports/sources.conf" || exit 1
+  sudo sed -i -e "s+file://_SRCPATH_+file://${SRCPATH}+" "${MPTINST}/etc/macports/sources.conf" || exit 1
+  sudo sed -i -e "s+file://_GITROOT_+file://${GITROOT}+" "${MPTINST}/etc/macports/sources.conf" || exit 1
   # install a needed gcc/clang first?
   if [[ $CMPLR ]] ; then
     sudo "${MPTINST}/bin/port" -v install "${CMPLR}" "${LLVMFIX}" || exit 1
@@ -314,10 +331,18 @@ if $FRESHMCP ; then
   # (re-)generate portindex
   cd "${SRCPATH}" || exit 1
   "${MPTINST}/bin/portindex" || exit 1
+  cd "${GITROOT}/macstrop" || exit 1
+  "${MPTINST}/bin/portindex" || exit 1
   cd "${OLDWD}" || exit 1
   sudo "${MPTINST}/bin/port" -v selfupdate || exit 1
   echo "successfully completed reincarnation of ${MPTINST}!"
   exit 0
+fi
+
+if $BUILDQT ; then
+  echo "sudo ${MPTINST}/bin/port -v install qt5-kde"
+  sudo "${MPTINST}/bin/port" -v install qt5-kde || exit 1
+  sudo "${MPTINST}/bin/port" -v install kf5-osx-integration || exit 1
 fi
 
 # update installed ports
