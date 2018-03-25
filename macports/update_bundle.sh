@@ -328,6 +328,8 @@ if $FRESHMCP ; then
   if [[ $CLANG ]] ; then
     sudo "${MPTINST}/bin/port" -v install "${CLANG}" "${LLVMFIX}" || exit 1
   fi
+  echo "syncing PortGroup files"
+  sudo rsync -av "${GITROOT}/macstrop/_resources/port1.0/"  "${MPTINST}/var/macports/sources/rsync.macports.org/macports/release/tarballs/ports/_resources/port1.0/" || exit 1
   # (re-)generate portindex
   cd "${SRCPATH}" || exit 1
   "${MPTINST}/bin/portindex" || exit 1
@@ -347,6 +349,13 @@ fi
 
 # update installed ports
 if $UPMPORTS ; then
+  echo "updating RJVB local repository (patched Qt5)"
+  cd "${GITROOT}/macstrop" || exit 1
+  git pull --rebase origin || exit 1
+  echo "syncing RJVB PortGroup files"
+  sudo rsync -av "${GITROOT}/macstrop/_resources/port1.0/"  "${MPTINST}/var/macports/sources/rsync.macports.org/macports/release/tarballs/ports/_resources/port1.0/" || exit 1
+  "${MPTINST}/bin/portindex" || exit 1
+  cd "${OLDWD}" || exit 1
   echo "sudo ${MPTINST}/bin/port selfupdate"
   sudo "${MPTINST}/bin/port" selfupdate
   echo "sudo ${MPTINST}/bin/port -v upgrade outdated"
