@@ -252,6 +252,9 @@ bool RKLoadLibsDialog::removePackages (QStringList packages, QStringList from_li
 	return true;
 }
 
+#ifdef Q_OS_WIN
+extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
+#endif
 bool RKLoadLibsDialog::installPackages (const QStringList &packages, QString to_libloc, bool install_suggested_packages, const QStringList& repos) {
 	RK_TRACE (DIALOGS);
 
@@ -259,8 +262,16 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, QString to_
 
 	bool as_root = false;
 	QString altlibloc = QDir (RKSettingsModuleGeneral::filesPath ()).absoluteFilePath ("library");
+#ifdef Q_OS_WIN
+	extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
+	qt_ntfs_permission_lookup++;
+#endif
 	QFileInfo fi = QFileInfo (to_libloc);
-	if (!fi.isWritable ()) {
+	bool writable = fi.isWritable ();
+#ifdef Q_OS_WIN
+	qt_ntfs_permission_lookup--;
+#endif
+	if (!writable) {
 		QString mcaption = i18n ("Selected library location not writable");
 		QString message = i18n ("<p>The directory you have selected for installation (%1) is not writable with your current user permissions.</p>"
 			"<p>Would you like to install to %2, instead (you can also press \"Cancel\" and use the \"Configure Repositories\"-button to set up a different directory)?</p>", to_libloc, altlibloc);
