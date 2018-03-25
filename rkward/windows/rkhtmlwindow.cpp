@@ -1203,14 +1203,14 @@ bool copyDirRecursively (const QString& _source_dir, const QString& _dest_dir) {
 	return ok;
 }
 
-QString RKOutputWindowManager::saveOutputDirectory (const QString& _dir, RCommandChain* chain) {
+QString RKOutputWindowManager::exportOutputDirectory (const QString& _dir, RCommandChain* chain) {
 	RK_TRACE (APP);
 
 	const QString dir = QFileInfo (_dir).canonicalFilePath ();
-	return saveOutputDirectoryAs (_dir, outputs.value (dir).save_dir, true, chain);  // pass raw "dir" parameter b/c of error handling.
+	return exportOutputDirectoryAs (_dir, outputs.value (dir).export_dir, true, chain);  // pass raw "dir" parameter b/c of error handling.
 }
 
-QString RKOutputWindowManager::saveOutputDirectoryAs (const QString& dir, const QString& _dest, bool ask_overwrite, RCommandChain* chain) {
+QString RKOutputWindowManager::exportOutputDirectoryAs (const QString& dir, const QString& _dest, bool ask_overwrite, RCommandChain* chain) {
 	RK_TRACE (APP);
 
 	const QString work_dir = QFileInfo (dir).canonicalFilePath ();
@@ -1220,7 +1220,7 @@ QString RKOutputWindowManager::saveOutputDirectoryAs (const QString& dir, const 
 
 	QString dest = _dest;
 	if (dest.isEmpty ()) {
-		QFileDialog dialog (RKWardMainWindow::getMain (), i18n ("Specify directory where to save output"), outputs.value (work_dir).save_dir);
+		QFileDialog dialog (RKWardMainWindow::getMain (), i18n ("Specify directory where to export output"), outputs.value (work_dir).export_dir);
 		dialog.setFileMode (QFileDialog::Directory);
 		dialog.setOption (QFileDialog::ShowDirsOnly, true);
 		dialog.setAcceptMode (QFileDialog::AcceptSave);
@@ -1236,7 +1236,7 @@ QString RKOutputWindowManager::saveOutputDirectoryAs (const QString& dir, const 
 				return i18n ("The directory %1 exists, but does not appear to be an RKWard output directory. Refusing to overwrite it.", dest);
 			}
 
-			const QString warning = i18n ("Are you sure you want to overwrite the existing directory '%1'? All current contents, including subdirectories will be lost.", dest);
+			const QString warning = i18n ("Are you sure you want to overwrite the existing directory '%1'? All current contents, <b>including subdirectories</b> will be lost.", dest);
 			KMessageBox::ButtonCode res = KMessageBox::warningContinueCancel (RKWardMainWindow::getMain (), warning, i18n ("Overwrite Directory?"), KStandardGuiItem::overwrite (),
 			                                                                 KStandardGuiItem::cancel (), QString (), KMessageBox::Options (KMessageBox::Notify | KMessageBox::Dangerous));
 			if (KMessageBox::Continue != res) {
@@ -1274,7 +1274,7 @@ QString RKOutputWindowManager::saveOutputDirectoryAs (const QString& dir, const 
 
 	OutputDirectory& od = outputs[work_dir];
 	od.save_timestamp = QDateTime::currentDateTime ();
-	od.save_dir = dest;
+	od.export_dir = dest;
 	od.saved_hash = hashDirectoryState (work_dir);
 
 	return QString ();
@@ -1453,6 +1453,13 @@ QStringList RKOutputWindowManager::modifiedOutputDirectories() const {
 		if (it.value ().saved_hash != hashDirectoryState (it.key ())) ret.append (it.key ());
 	}
 	return ret;
+}
+
+QString RKOutputWindowManager::outputCaption (const QString& dir) const {
+	RK_TRACE (APP);
+
+	// TODO: real implementation!
+	return (dir);
 }
 
 bool RKOutputWindowManager::isRKWwardOutputDirectory (const QString& dir) {

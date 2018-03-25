@@ -138,7 +138,7 @@ public:
 /** Close the given window, whether it is attached or detached.
 @param window window to close */
 	void closeWindow (RKMDIWindow *window, RKMDIWindow::CloseWindowMode ask_save = RKMDIWindow::AutoAskSaveModified);
-/** Close the given windows, whether they are attached or detached. TODO: Be smart about asking what to save.
+/** Close the given windows, whether they are attached or detached.
 @param windows list windows to close
 @returns false if cancelled by user (user was prompted for saving, and chose cancel) */
 	bool closeWindows (QList<RKMDIWindow*> windows);

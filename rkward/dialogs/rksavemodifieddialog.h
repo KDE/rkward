@@ -39,6 +39,8 @@ private:
 	RKSaveModifiedDialog (QWidget* parent, QList<RKMDIWindow*> modified_windows, bool project);
 	virtual ~RKSaveModifiedDialog ();
 	QMap<QTreeWidgetItem *, QPointer<RKMDIWindow>> window_checklist;
+	QTreeWidgetItem *save_project_check;
+	QMap<QTreeWidgetItem *, QString> outputdir_checklist;
 private slots:
 	void saveWorkplaceChanged ();
 	void saveSelected ();

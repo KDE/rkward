@@ -226,17 +226,26 @@ public:
 	QList<RKHTMLWindow*> existingOutputWindows (const QString &path = QString ()) const;
 /** Create (and show) a new output window (for the current output path, unless path is specified), and @return the pointer */
 	RKHTMLWindow* newOutputWindow (const QString& path = QString ());
+	enum ImportMode {
+		Ask,           /// Ask whether to integrate imported output into workplace
+		Integrate,     /// Integrate imported output (forget original source, save with workplace)
+		KeepSeparate   /// Keep output separate (save back to original source)
+	};
 /** Import an existing output directory. @Returns error message, if any, and empty string in case of success */
 	QString importOutputDirectory (const QString& dir, const QString& index_file=QString (), bool ask_revert = true, RCommandChain* chain = 0);
-/** Save the given output directory to the locaiton it was last saved to / imported from. If the output directory has not been saved / imported, yet, prompt the user for a destination.
-    @param index_path output directory to save
+/** Export the given output directory to the location it was last exported to / imported from. If the output directory has not been exported / imported, yet, prompt the user for a destination.
+    @param dir output directory to export
     @returns error message, if any, an empty string in case of success */
-	QString saveOutputDirectory (const QString& dir, RCommandChain* chain = 0);
-/** Save the given output directory. @see saveOutputDirectory ().
-    @param index_path the output directory to save
+	QString exportOutputDirectory (const QString& dir, RCommandChain* chain = 0);
+/** Export the given output directory. @see exportOutputDirectory ().
+    @param dir the output directory to export
     @param dest destination directory. May be left empty, in which case the user will be prompted for a destination.
     @returns error message, if any, an empty string in case of success */
-	QString saveOutputDirectoryAs (const QString& dir, const QString& dest = QString (), bool ask_overwrite = true, RCommandChain* chain = 0);
+	QString exportOutputDirectoryAs (const QString& dir, const QString& dest = QString (), bool ask_overwrite = true, RCommandChain* chain = 0);
+/** Save the given output directory to the given location. Does not ask for overwrite confirmation.
+    @param dir output directory to save
+    @returns error message, if any, an empty string in case of success */
+	QString saveOutputDirectory (const QString& dir, const QString& dest, RCommandChain* chain = 0);
 /** Create a new empty output directory.
     @returns path of the new directory */
 	QString createOutputDirectory (RCommandChain* chain = 0);
@@ -245,6 +254,8 @@ public:
 
 /** Return a list of all current output directories that have been modified. Used for asking for save during shutdown. */
 	QStringList modifiedOutputDirectories () const;
+/** Return the name / caption of the given output directory */
+	QString outputCaption (const QString &dir) const;
 /** Use with case! Purges all current output directories, saved or not. You should query modifiedOutputDirectories (), and make sure to prompt for saving, before calling this. For use during shutdown. */
 	void purgeAllOututputDirectories ();
 private:
@@ -260,6 +271,7 @@ private:
 		QString index_file;
 		QString saved_hash;
 		QDateTime save_timestamp;
+		QString export_dir;
 		QString save_dir;
 	};
 	/** map of outputs. Key is the working directory of the output */

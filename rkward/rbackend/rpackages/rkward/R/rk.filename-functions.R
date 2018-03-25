@@ -274,19 +274,21 @@
 #' @rdname rk.get.tempfile.name
 rk.export.output.dir <- function (source.dir=basename (rk.get.output.html.file ()), target.dir, ask=TRUE) {
 # This is not terribly complex, but we need an implementation in the frontend, anyway, so we use that.
-	x <- .rk.do.call ("output", c ("export", source.dir, target.dir, as.character (isTRUE (ask))))
+	.rk.do.call ("output", c ("export", source.dir, target.dir, as.character (isTRUE (ask))))
 }
 
 #' @export
 #' @rdname rk.get.tempfile.name
-rk.import.output.dir <- function (source.dir, activate="index.html", ask=TRUE) {
+rk.import.output.dir <- function (source.dir, activate="index.html", mode=c("ask", "integrate", "keep.separate"), ask=TRUE) {
 # This is not terribly complex, but we need an implementation in the frontend, anyway, so we use that.
-	x <- .rk.do.call ("output", c ("import", source.dir, activate, as.character (isTRUE (ask))))
+	.rk.do.call ("output", c ("import", source.dir, activate, as.character (isTRUE (ask))))
+	rk.get.output.html.file ()
 }
 
 #' @export
 #' @rdname rk.get.tempfile.name
 rk.create.output.dir <- function () {
 # This is not terribly complex, but we need an implementation in the frontend, anyway, so we use that.
-	x <- .rk.do.call ("output", c ("create"))
+	.rk.do.call ("output", c ("create"))
+	rk.get.output.html.file ()
 }

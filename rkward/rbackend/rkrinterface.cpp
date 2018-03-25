@@ -764,7 +764,10 @@ void RInterface::processHistoricalSubstackRequest (const QStringList &calllist, 
 		if (subcall == QStringLiteral ("export")) {
 			error = RKOutputWindowManager::self ()->saveOutputDirectoryAs (calllist.value (2), calllist.value (3), calllist.value (4) == QStringLiteral ("TRUE"), in_chain);
 		} else if (subcall == QStringLiteral ("import")) {
-			error = RKOutputWindowManager::self ()->importOutputDirectory (calllist.value (2), calllist.value (3), calllist.value (4) == QStringLiteral ("TRUE"), in_chain);
+			RKOutputWindowManager::ImportMode mode = RKOutputWindowManager::Ask;
+			if (calllist.value (4) == "integrate") mode = RKOutputWindowManager::Integrate;
+			else if (calllist.value (4) == "keep.separate") mode = RKOutputWindowManager::KeepSeparate;
+			error = RKOutputWindowManager::self ()->importOutputDirectory (calllist.value (2), calllist.value (3), mode, calllist.value (5) == QStringLiteral ("TRUE"), in_chain);
 		} else if (subcall == QStringLiteral ("create")) {
 			RKOutputWindowManager::self ()->createOutputDirectory (in_chain);
 		} else {

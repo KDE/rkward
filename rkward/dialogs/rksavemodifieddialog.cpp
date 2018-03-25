@@ -27,10 +27,15 @@
 
 #include <klocale.h>
 
+#include "../windows/rkworkplace.h"
+#include "../windows/rkhtmlwindow.h"
+
 #include "../debug.h"
 
 bool RKSaveModifiedDialog::askSaveModified (QWidget* parent, QList <RKMDIWindow*> windows, bool project) {
 	RK_TRACE (APP);
+
+	save_project_check = 0;
 
 	QList<RKMDIWindow*> modified_wins;
 	for (int i = 0; i < windows.size (); ++i) {
@@ -48,6 +53,21 @@ bool RKSaveModifiedDialog::askSaveModified (QWidget* parent, QList <RKMDIWindow*
 	return true;
 }
 
+QTreeWidgetItem* makeHeaderItem (const QString &label, QTreeWidget* tree) {
+	RK_TRACE (APP);
+
+	QTreeWidgetItem* header = new QTreeWidgetItem (QStringList (label));
+	header->setFirstColumnSpanned (true);
+	header->setFlags (Qt::ItemIsEnabled);
+	QFont f = tree->font ();
+	f.setBold (true);
+	header->setFont (0, f);
+	tree->addTopLevelItem (header);
+	header->setExpanded (true);
+
+	return header;
+}
+
 RKSaveModifiedDialog::RKSaveModifiedDialog (QWidget* parent, QList<RKMDIWindow*> modified_wins, bool project) : QDialog (parent) {
 	RK_TRACE (APP);
 
@@ -61,17 +81,32 @@ RKSaveModifiedDialog::RKSaveModifiedDialog (QWidget* parent, QList<RKMDIWindow*>
 	v_layout->addWidget (tree);
 
 	tree->header ()->hide ();
+#warning TODO: remove me
+project = true;
 	if (project) {
+		QTreeWidgetItem *header = makeHeaderItem (i18n ("R Workspace (Data and Functions)"), tree);
+		QString url = RKWorkplace::mainWorkplace ()->workspaceURL ().toDisplayString ();
+		if (url.isEmpty ()) {
+			url = i18n ("Not previously saved");
+		}
+		QTreeWidgetItem *save_project_check = new QTreeWidgetItem (QStringList (url));
+		header->addChild (save_project_check);
+		save_project_check->setCheckState (0, Qt::Checked);
+
+		QStringList modified_outputs = RKOutputWindowManager::modifiedOutputDirectories ();
+		if (!modified_outputs.isEmpty ()) {
+			QTreeWidgetItem *header = makeHeaderItem (i18n ("Output files"), tree);
+			for (int i = 0; i < modified_outputs.size (); ++i) {
+				QTreeWidgetItem *item = new QTreeWidgetItem (RKOutputWindowManager::outputCaption (modified_outputs[i]));
+				item->setFirstColumnSpanned (true);
+				header->addChild (item);
+				item->setCheckState (0, Qt::Checked);
+				outputdir_checklist.insert (item, modified_outputs[i]);
+			}
+		}
 	}
 	if (!modified_wins.isEmpty ()) {
-		QTreeWidgetItem* header = new QTreeWidgetItem (QStringList (i18n ("Scripts")));
-		header->setFirstColumnSpanned (true);
-		header->setFlags (Qt::ItemIsEnabled);
-		QFont f = tree->font ();
-		f.setBold (true);
-		header->setFont (0, f);
-		tree->addTopLevelItem (header);
-		header->setExpanded (true);
+		QTreeWidgetItem* header = makeHeaderItem (i18n ("Scripts"), tree);
 		for (int i = 0; i < modified_wins.size (); ++i) {
 			QTreeWidgetItem *item = new QTreeWidgetItem (QStringList (modified_wins[i]->fullCaption ()));
 			item->setFirstColumnSpanned (true);
@@ -115,6 +150,16 @@ void RKSaveModifiedDialog::saveSelected () {
 		if (!it.value ()) continue;
 		if (!it.value ()->save ()) all_ok = false; // but we proceed with the others
 	}
+
+	if (save_project_check && save_project_check->checkState (0) == Qt::Checked) {
+#warning TODO
+	}
+
+	for (QMap<QTreeWidgetItem *, QString>::const_iterator it = outputdir_checklist.constBegin (); it != outputdir_checklist.constEnd (); ++it) {
+		if (it.key ()->checkState (0) != Qt::Checked) continue;
+		RKOutputWindowManager::saveOutputDirectory (it.value ());
+	}
+
 	if (all_ok) accept ();
 	else reject ();
 }
