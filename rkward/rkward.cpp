@@ -918,7 +918,7 @@ void RKWardMainWindow::addScriptUrl (const QUrl &url) {
 void RKWardMainWindow::slotOpenCommandEditor (const QUrl &url, const QString &encoding) {
 	RK_TRACE (APP);
 
-	RKWorkplace::mainWorkplace ()->openScriptEditor (url, encoding);
+	RKWorkplace::mainWorkplace ()->openScriptEditor (url, encoding, RKSettingsModuleCommandEditor::matchesScriptFileFilter (url.fileName()));
 }
 
 void RKWardMainWindow::slotOpenCommandEditor () {

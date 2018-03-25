@@ -102,7 +102,7 @@ public:
 /** Opens a new script editor
 @param url URL to load. Default option is to open an empty document
 @param encoding encoding to use. If QString (), the default encoding is used.
-@param use_r_highlighting Set R highlighting mode (vs. no highlighting)? Default is yes
+@param use_r_highlighting Force R highlighting mode? Default is no
 @param read_only Open the document read only? Default is false, i.e. Read-write
 @param force_caption Usually the caption is determined from the url of the file. If you specify a non-empty string here, that is used instead.
 @returns false if a local url could not be opened, true for all remote urls, and on success */
