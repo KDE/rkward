@@ -116,11 +116,11 @@ QStringList RKRSupport::SEXPToStringList (SEXP from_exp) {
 				list.append (QString ());
 			} else {
 				if (IS_UTF8 (dummy)) {
-					list.append (QString::fromUtf8 ((char *) STRING_PTR (dummy)));
+					list.append (QString::fromUtf8 (CHAR (dummy)));
 				} else if (IS_LATIN1 (dummy)) {
-					list.append (QString::fromLatin1 ((char *) STRING_PTR (dummy)));
+					list.append (QString::fromLatin1 (CHAR (dummy)));
 				} else {
-					list.append (RKRBackend::this_pointer->current_locale_codec->toUnicode ((char *) STRING_PTR (dummy)));
+					list.append (RKRBackend::this_pointer->current_locale_codec->toUnicode (CHAR (dummy)));
 				}
 			}
 		}

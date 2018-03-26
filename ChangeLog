@@ -1,8 +1,9 @@
 --- Version 0.6.5a - UNRELEASED
+- Fix crash with R 3.5.x due to use to STRING_PTR
 - EXPERIMENTAL: Fix NAs introduced by editing data containing characters that cannot be encoded in the system locale
 - Fixed: Preview boxes followed by a <stretch/> element would not work under some circumstances
 - Fixed: Setting an output CSS file via the GUI did not work
-- Fixed: Bug report feature on Windows did nothing 		TODO: Really test this!
+- Fixed: Bug report feature on Windows did nothing
 - Avoid some potential encoding issues, that could cause graphical select.list to fail for certain strings, under some circumstances
 
 --- Version 0.6.5 - Apr-02-2016
