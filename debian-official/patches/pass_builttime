@@ -1,8 +1,0 @@
---- a/rkward/rbackend/rpackages/rpackage_install.cmake.in
-+++ b/rkward/rbackend/rpackages/rpackage_install.cmake.in
-@@ -1,4 +1,5 @@
- SET(DESTDIR $ENV{DESTDIR})
-+SET(BUILD_TIMESTAMP "@BUILD_TIMESTAMP@")
- 
- MESSAGE(STATUS "Installing R support packages")
- 
