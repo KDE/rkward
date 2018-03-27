@@ -62,25 +62,13 @@ build-stamp:
 	touch build-stamp
 
 clean:
-	dh_testdir
-	dh_testroot
+	dh_auto_clean
 	rm -f build-stamp
-	# remove any .svn subdir included by accident
-	rm -rf $(CURDIR)/debian/.svn
-
-	# Add here commands to clean up after the build process.
-	rm -rf $(CURDIR)/build/
-
-	dh_clean 
+	dh_clean
 
 install: build
-	dh_testdir
-	dh_testroot
-	dh_prep
-	dh_installdirs
+	dh_auto_install
 
-	# Install into debian/tmp, first
-	cd $(CURDIR)/build && $(MAKE) install DESTDIR=$(DESTDIR)
 	# dirty hack to get rid of conflicting r.xml file without adjusting all makefiles
 	rm -vf $(DESTDIR)/usr/share/katepart/syntax/r.xml
 	
