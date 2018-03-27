@@ -6,8 +6,11 @@ GITROOT=/opt/git
 # specify macports installation path
 MPTINST=/opt/rkward
 # specify the target port
-PTARGET=rkward-devel
-PNSUFFX="-devel"
+PTARGET=kf5-rkward
+BINSTRING=""
+DEVSTRING="-devel"
+DBGSTRING=""
+PNSUFFX="${BINSTRING}${DBGSTRING}${DEVSTRING}"
 RKUSER="${USER}"
 USERBIN="${HOME}/bin"
 OSXVERSION=$(sw_vers -productVersion | sed -e "s/.[[:digit:]]*$//")
@@ -35,9 +38,11 @@ WIPEINST=false
 GETTARGVERS=true
 
 PVARIANT=""
-GITBRANCH="master"
+## TODO: this will only keep work for a few days now...
+GITBRANCH="frameworks"
+#GITBRANCH="master"
 # specify work directory
-WORKDIR="${SRCPATH}/kde/${PTARGET}/work"
+WORKDIR="${SRCPATH}/kf5/${PTARGET}/work"
 # specify local public directory
 LPUBDIR="${HOME}/Public/rkward"
 # specify application dir used
@@ -81,7 +86,7 @@ if [[ $1 == "" ]] ; then
           OPTIONS:
 
            the following must always be combined with r/m/s/c:
-           -D  build target rkward instead of rkward-devel
+           -D  build target ${PTARGET} instead of ${PTARGET}-devel
            -d  build variant 'debug'
            -b  build subport 'binary', needs CRAN R
 
@@ -133,17 +138,15 @@ while getopts ":CDE:dbfGlLprQmsS:cU:xXF:t:" OPT; do
     C) GITBRANCH=$OPTARG >&2 ;;
     S) SSHGEN=true >&2
        SSHCOMMENT=$OPTARG >&2 ;;
-    D) PTARGET=rkward >&2
-       WORKDIR="${SRCPATH}/kde/${PTARGET}/work" >&2
-       PNSUFFX="" >&2
+    D) DEVSTRING="" >&2
+       WORKDIR="${SRCPATH}/kf5/kf5-rkward/work" >&2
        DEVEL=false >&2 ;;
     d) DEBUG=true >&2
        PVARIANT="+debug" >&2
-       PNSUFFX="${PNSUFFX}-debug" >&2 ;;
+       DBGSTRING="-debug" >&2 ;;
     b) BINARY=true >&2
-       PTARGET=${PTARGET}-binary >&2
-       WORKDIR="${SRCPATH}/kde/rkward-devel/work" >&2
-       PNSUFFX="${PNSUFFX}-binary" >&2 ;;
+       BINSTRING="-binary" >&2
+       WORKDIR="${SRCPATH}/kf5/kf5-rkward-binary/work" >&2 ;;
     F) FRESHMCP=true >&2
        MCPVERS=$OPTARG >&2 ;;
     f) LSDSKUSG=true >&2 ;;
@@ -170,6 +173,9 @@ while getopts ":CDE:dbfGlLprQmsS:cU:xXF:t:" OPT; do
       ;;
   esac
 done
+
+PNSUFFX="${BINSTRING}${DBGSTRING}${DEVSTRING}"
+PTARGET="kf5-rkward${PNSUFFX}"
 
 linkbuildscript () {
   # create a hardlink of the buildscript
@@ -201,11 +207,13 @@ if $WIPEINST ; then
   rmdirv "/Applications/MacPorts"
   # these leftovers would conflict with port installation
   for libsymlink in \
-    /Library/LaunchDaemons/org.freedesktop.dbus-system.plist \
     /Library/LaunchAgents/org.freedesktop.dbus-session.plist \
+    /Library/LaunchAgents/org.macports.kdecache.plist \
+    /Library/LaunchAgents/org.macports.kdecache5.plist \
+    /Library/LaunchAgents/org.macports.kwalletd5.plist \
+    /Library/LaunchDaemons/org.freedesktop.dbus-system.plist \
     /Library/LaunchDaemons/org.freedesktop.avahi-daemon.plist \
     /Library/LaunchDaemons/org.freedesktop.avahi-dnsconfd.plist \
-    /Library/LaunchAgents/org.macports.kdecache.plist \
     /Library/LaunchDaemons/org.macports.mysql5.plist \
     /Library/LaunchDaemons/org.macports.rsyncd.plist \
     /Library/LaunchDaemons/org.macports.slapd.plist
@@ -371,7 +379,7 @@ fi
 if $UPRKWARD ; then
   INSTALLEDPORTS=$("${MPTINST}/bin/port" installed)
   # make sure each instance of previous RKWard installations is removed first
-  for i in rkward rkward-devel rkward-binary rkward-devel-binary rkward-debug rkward-devel-debug ; do
+  for i in kf5-rkward kf5-rkward-devel kf5-rkward-binary kf5-rkward-binary-devel kf5-rkward-debug kf5-rkward-debug-devel ; do
     if [[ $(echo "$INSTALLEDPORTS" | grep "[[:space:]]${i}[[:space:]]" 2> /dev/null ) ]] ; then
       echo "sudo ${MPTINST}/bin/port uninstall ${i}"
       sudo "${MPTINST}/bin/port" uninstall "${i}"
@@ -453,13 +461,6 @@ fi
 
 # make meta-package including dependencies
 if $MAKEMDMD ; then
-  # check for PackageMaker.app
-  if ! [ -d /Applications/PackageMaker.app ] ; then
-    # this is an anchient app, but MacPorts still relies on it for packaging
-    echo "unable to find /Applications/PackageMaker.app!"
-    echo "probably check whether MacPorts really still needs it."
-    exit 1
-  fi
   if $RPATHFIX ; then
     # this is to fix some kind of a race condition: if RKWard gets installed before R-framework,
     # it will create a directory which must actually be a symlink in order for R to run! so we'll
