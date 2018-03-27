@@ -3,9 +3,12 @@ Section: math
 Priority: optional
 Maintainer: Thomas Friedrichsmeier <tfry@users.sourceforge.net>
 Build-Depends: cmake,
+               extra-cmake-modules,
+               pkg-kde-tools | pkg-kf5-tools,
                debhelper (>= 9.0.0),
-               kdelibs5-dev,
-               libx11-dev,
+               libkf5webkit-dev,
+               libkf5texteditor-dev,
+               kdoctools-dev,
                r-base-dev (>= 3.0.0)
 Standards-Version: 3.9.7
 Homepage: http://rkward.kde.org

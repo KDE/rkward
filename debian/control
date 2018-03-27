@@ -4,7 +4,8 @@ Priority: optional
 Maintainer: Thomas Friedrichsmeier <tfry@users.sourceforge.net>
 Build-Depends: cmake,
                extra-cmake-modules,
-               debhelper (>= 6.0.0),
+               pkg-kde-tools | pkg-kf5-tools,
+               debhelper (>= 9.0.0),
                libkf5webkit-dev,
                libkf5texteditor-dev,
                kdoctools-dev,
