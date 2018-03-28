@@ -249,8 +249,10 @@ int main (int argc, char *argv[]) {
 	}
 	// ensure that RKWard finds its own packages
 	qputenv ("R_LIBS", R_LIBS);
-    // try to ensure that DBus is running before trying to connect
-	QProcess::execute ("launchctl", QStringList () << "load" << "/Library/LaunchAgents/org.freedesktop.dbus-session.plist");
+	if (!qEnvironmentVariableIsSet ("DBUS_LAUNCHD_SESSION_BUS_SOCKET")) {
+		// try to ensure that DBus is running before trying to connect
+		QProcess::execute ("launchctl", QStringList () << "load" << "/Library/LaunchAgents/org.freedesktop.dbus-session.plist");
+	}
 #endif
 
 	// Handle --reuse option, by placing a dbus-call to existing RKWard process (if any) and exiting
