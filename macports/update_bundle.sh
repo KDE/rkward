@@ -38,9 +38,7 @@ WIPEINST=false
 GETTARGVERS=true
 
 PVARIANT=""
-## TODO: this will only keep work for a few days now...
-GITBRANCH="frameworks"
-#GITBRANCH="master"
+GITBRANCH="master"
 # specify work directory
 WORKDIR="${SRCPATH}/kf5/${PTARGET}/work"
 # specify local public directory

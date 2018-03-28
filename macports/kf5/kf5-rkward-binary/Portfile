@@ -40,7 +40,7 @@ if {${subport} eq "${name}-devel"} {
     fetch.type      git
 #    git.url         git://anongit.kde.org/rkward
 #     v0.6.5-201-g9585a62
-    git.branch      frameworks
+    git.branch      master
     version         0.6.9z
     distname        ${kf5.project}-5
 } else {
