@@ -71,8 +71,7 @@ configure.args-append \
         -DRKVERSION_NUMBER=${version} \
         -DUSE_BINARY_PACKAGES=1 \
         -DR_EXECUTABLE=/Library/Frameworks/R.framework/Resources/R \
-        -DR_LIBDIR=${frameworks_dir}/R.framework/Resources/library \
-        -DR_EXECUTABLE=${frameworks_dir}/R.framework/Resources/R
+        -DR_LIBDIR=${frameworks_dir}/R.framework/Resources/library
 #        -DBUNDLE_INSTALL_DIR=${applications_dir} \
 
 # create libdir if it doesn't exist
