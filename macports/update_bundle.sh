@@ -119,7 +119,8 @@ if [[ $1 == "" ]] ; then
 
        ${TXT_DGRAY}cleaning up:${OFF}
            ${TXT_BOLD}-X${OFF}  ${TXT_LRED}completely!!! wipe${OFF} ${TXT_BLUE}${MPTINST}${OFF}, ${TXT_BLUE}${GITROOT}${OFF} & ${TXT_BLUE}${SRCPATH}${OFF}
-               there will only be a copy of this script left in ${TXT_BLUE}${USERBIN}/update_bundle.sh${OFF}
+               this will leave only a copy of this script (${TXT_BLUE}${USERBIN}/update_bundle.sh${OFF})
+               and its config file (${TXT_BLUE}${CONFIGFILE}${OFF})
            ${TXT_BOLD}-x${OFF}  ${TXT_LRED}completely!!! wipe${OFF} ${TXT_BLUE}${MPTINST}/var/macports/distfiles${OFF}
 
        ${TXT_DGRAY}system setup:${OFF}
@@ -158,6 +159,9 @@ if [[ $1 == "" ]] ; then
                default: ${TXT_BLUE}${DBGMENU}${OFF}
            ${TXT_BOLD}-b${OFF} ${TXT_LRED}${TXT_ITALIC}<0|1>${OFF}  1 build subport ${TXT_BLUE}binary${OFF}, needs CRAN R
                default: ${TXT_BLUE}${BINMENU}${OFF}
+
+  ${TXT_DGRAY}you can change/set the defaults by editing the config file for this script:${OFF}
+  ${TXT_BLUE}${CONFIGFILE}${OFF}
 "
 # off for the moment:
 #            ${TXT_BOLD}-L${OFF}  don't bundle probably superfluous ports
