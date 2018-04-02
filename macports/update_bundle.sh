@@ -482,7 +482,7 @@ if $UPMPORTS ; then
   sudo "${MPTINST}/bin/port" clean inactive
   echo -e "sudo ${TXT_BLUE}${MPTINST}/bin/port${OFF} -f uninstall inactive"
   sudo "${MPTINST}/bin/port" -f uninstall inactive
-  echo -e "sudo ${TXT_BLUE}${MPTINST}/bin/port${OFF} reclaim"
+  echo -e "sudo ${TXT_BLUE}${MPTINST}/bin/port${OFF} reclaim ${TXT_DGRAY}# remove unused distfiles${OFF}"
   sudo "${MPTINST}/bin/port" reclaim
   alldone
 fi
@@ -669,6 +669,8 @@ fi
 
 # archive sources
 if $MKSRCTAR ; then
+  echo -e "sudo ${TXT_BLUE}${MPTINST}/bin/port${OFF} reclaim ${TXT_DGRAY}# remove unused distfiles${OFF}"
+  sudo "${MPTINST}/bin/port" reclaim
   if ! $COPYMDMD ; then
     # get version information of installed ports
     PORTVERS=$("${MPTINST}/bin/port" list ${PTARGET} | sed -e "s/.*@//;s/[[:space:]].*//")
