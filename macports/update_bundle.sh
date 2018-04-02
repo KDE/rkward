@@ -24,9 +24,9 @@ GITROOT="/opt/git"
 MPTINST="/opt/rkward"
 # specify the target port
 PTARGET="kf5-rkward"
-BINSTRING=""
-DEVSTRING="-devel"
-DBGSTRING=""
+BINARY=true
+DEVEL=true
+DEBUG=false
 RKUSER="${USER}"
 USERBIN="${HOME}/bin"
 OSXVERSION=\$(sw_vers -productVersion | sed -e "s/.[[:digit:]]*\$//")
@@ -47,16 +47,26 @@ EOF
 fi
 
 . "${CONFIGFILE}"
-PNSUFFX="${BINSTRING}${DBGSTRING}${DEVSTRING}"
 
-# initalize varaibles
-DEVEL=true
+# mainly for the usage menu
+BINMENU=0
+DEVMENU=0
+DBGMENU=0
+if $BINARY ; then
+  BINMENU=1
+fi
+if $DEVEL ; then
+  DEVMENU=1
+fi
+if $DEBUG ; then
+  DBGMENU=1
+fi
+
+# initalize variables
 ANONGIT=true
 BLDSETUP=false
 BUILDQT=false
 SSHGEN=false
-DEBUG=false
-BINARY=false
 FRESHMCP=false
 LSDSKUSG=false
 RMSTLIBS=false
@@ -102,8 +112,8 @@ if [[ $1 == "" ]] ; then
     ${TXT_DGRAY}1.${OFF} setup basic build environment (${TXT_BOLD}-G${OFF})
     ${TXT_DGRAY}2.${OFF} install MacPorts (${TXT_BOLD}-F${OFF} ${TXT_ITALIC}<version>${OFF})
     ${TXT_DGRAY}3.${OFF} build Qt (${TXT_BOLD}-Q${OFF})
-    ${TXT_DGRAY}4.${OFF} build RKWard using CRAN R (${TXT_BOLD}-br${OFF})
-    ${TXT_DGRAY}5.${OFF} remove static libs & create binary bundle (${TXT_BOLD}-blm${OFF})
+    ${TXT_DGRAY}4.${OFF} build RKWard using CRAN R (${TXT_BOLD}-r${OFF})
+    ${TXT_DGRAY}5.${OFF} remove static libs & create binary bundle (${TXT_BOLD}-lm${OFF})
 
   ${TXT_UNDERSCORE}OPTIONS${OFF}:
 
@@ -142,9 +152,12 @@ if [[ $1 == "" ]] ; then
            ${TXT_BOLD}-t${OFF}  set target version for ${TXT_BOLD}-c${OFF} manually
 
        ${TXT_DGRAY}the following must always be combined with${OFF} ${TXT_BOLD}-r${OFF}${TXT_DGRAY}/${OFF}${TXT_BOLD}-m${OFF}${TXT_DGRAY}/${OFF}${TXT_BOLD}-s${OFF}${TXT_DGRAY}/${OFF}${TXT_BOLD}-c${OFF}${TXT_DGRAY}:${OFF}
-           ${TXT_BOLD}-D${OFF}  build target ${TXT_BLUE}${PTARGET}${OFF} instead of ${TXT_BLUE}${PTARGET}-devel${OFF}
-           ${TXT_BOLD}-d${OFF}  build variant ${TXT_BLUE}debug${OFF}
-           ${TXT_BOLD}-b${OFF}  build subport ${TXT_BLUE}binary${OFF}, needs CRAN R
+           ${TXT_BOLD}-D${OFF} ${TXT_LRED}${TXT_ITALIC}<0|1>${OFF}  1 will build target ${TXT_BLUE}${PTARGET}-devel${OFF} instead of ${TXT_BLUE}${PTARGET}${OFF}
+               default: ${TXT_BLUE}${DEVMENU}${OFF}
+           ${TXT_BOLD}-d${OFF} ${TXT_LRED}${TXT_ITALIC}<0|1>${OFF}  1 will build variant ${TXT_BLUE}debug${OFF}
+               default: ${TXT_BLUE}${DBGMENU}${OFF}
+           ${TXT_BOLD}-b${OFF} ${TXT_LRED}${TXT_ITALIC}<0|1>${OFF}  1 build subport ${TXT_BLUE}binary${OFF}, needs CRAN R
+               default: ${TXT_BLUE}${BINMENU}${OFF}
 "
 # off for the moment:
 #            ${TXT_BOLD}-L${OFF}  don't bundle probably superfluous ports
@@ -152,7 +165,7 @@ exit 0
 fi
 
 # get the options
-while getopts ":CDE:dbfGlLprQqmsS:cU:xXF:t:" OPT; do
+while getopts ":CD:E:d:b:fGlLprQqmsS:cU:xXF:t:" OPT; do
   case $OPT in
     U) GITUSER=$OPTARG >&2 ;;
     E) GITMAIL=$OPTARG >&2 ;;
@@ -167,15 +180,21 @@ while getopts ":CDE:dbfGlLprQqmsS:cU:xXF:t:" OPT; do
     C) GITBRANCH=$OPTARG >&2 ;;
     S) SSHGEN=true >&2
        SSHCOMMENT=$OPTARG >&2 ;;
-    D) DEVSTRING="" >&2
-       WORKDIR="${SRCPATH}/kf5/kf5-rkward/work" >&2
-       DEVEL=false >&2 ;;
-    d) DEBUG=true >&2
-       PVARIANT="+debug" >&2
-       DBGSTRING="-debug" >&2 ;;
-    b) BINARY=true >&2
-       BINSTRING="-binary" >&2
-       WORKDIR="${SRCPATH}/kf5/kf5-rkward-binary/work" >&2 ;;
+    D) if [ $OPTARG -eq 1 ] ; then
+         DEVEL=true >&2
+       else
+         DEVEL=false >&2
+       fi ;;
+    d) if [ $OPTARG -eq 1 ] ; then
+         DEBUG=true >&2
+       else
+         DEBUG=false >&2
+       fi ;;
+    b) if [ $OPTARG -eq 1 ] ; then
+         BINARY=true >&2
+       else
+         BINARY=false >&2
+       fi ;;
     F) FRESHMCP=true >&2
        MCPVERS=$OPTARG >&2 ;;
     f) LSDSKUSG=true >&2 ;;
@@ -202,6 +221,26 @@ while getopts ":CDE:dbfGlLprQqmsS:cU:xXF:t:" OPT; do
       ;;
   esac
 done
+
+if $BINARY ; then
+  WORKDIR="${SRCPATH}/kf5/kf5-rkward-binary/work"
+  BINSTRING="-binary"
+else
+  BINARY=false
+  BINSTRING=""
+fi
+if $DEVEL ; then
+  DEVSTRING="-devel"
+else
+  WORKDIR="${SRCPATH}/kf5/kf5-rkward/work"
+  DEVSTRING=""
+fi
+if $DEBUG ; then
+  PVARIANT="+debug"
+  DBGSTRING="-debug"
+else
+  DBGSTRING=""
+fi
 
 PNSUFFX="${BINSTRING}${DBGSTRING}${DEVSTRING}"
 PTARGET="kf5-rkward${PNSUFFX}"
@@ -431,8 +470,7 @@ if $UPMPORTS ; then
   echo "updating RJVB local repository (patched Qt5)"
   cd "${GITROOT}/macstrop" || exit 1
   git pull --rebase origin || exit 1
-  echo "syncing RJVB PortGroup files"
-  sudo rsync -av "${GITROOT}/macstrop/_resources/port1.0/"  "${MPTINST}/var/macports/sources/rsync.macports.org/macports/release/tarballs/ports/_resources/port1.0/" || exit 1
+  updatePortGrous
   "${MPTINST}/bin/portindex" || exit 1
   cd "${OLDWD}" || exit 1
   echo -e "sudo ${TXT_BLUE}${MPTINST}/bin/port${OFF} selfupdate"
@@ -444,6 +482,8 @@ if $UPMPORTS ; then
   sudo "${MPTINST}/bin/port" clean inactive
   echo -e "sudo ${TXT_BLUE}${MPTINST}/bin/port${OFF} -f uninstall inactive"
   sudo "${MPTINST}/bin/port" -f uninstall inactive
+  echo -e "sudo ${TXT_BLUE}${MPTINST}/bin/port${OFF} reclaim"
+  sudo "${MPTINST}/bin/port" reclaim
   alldone
 fi
 
