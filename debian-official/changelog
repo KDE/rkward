@@ -1,6 +1,9 @@
-rkward (0.6.9-1) unstable; urgency=low
+rkward (0.7.0-1) UNRELEASED; urgency=low
   * New upstream release
   * Package now based on kf5-libraries, instead of KDE 4
+    closes: #531086
+  * Add dependency on r-api-3.4 to ease handling of future non-compatible changes in R
+    closes: #877283
   * Use dh_auto_configure for basic setup
 
  -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Mon, 26 Mar 2018 11:00:00 +0100
