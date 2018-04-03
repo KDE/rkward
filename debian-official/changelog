@@ -1,5 +1,7 @@
 rkward (0.7.0-1) UNRELEASED; urgency=low
   * New upstream release
+  * The divergently licenced qwinhost-files are no longer part of this release,
+    simplifying copyright
   * Package now based on kf5-libraries, instead of KDE 4
     closes: #531086
   * Add dependency on r-api-3.4 to ease handling of future non-compatible changes in R

@@ -1,5 +1,7 @@
 rkward (0.6.9z+0.7.0+devel1-1) UNRELEASED; urgency=low
   * New upstream release
+  * The divergently licenced qwinhost-files are no longer part of this release,
+    simplifying copyright
   * Package now based on kf5-libraries, instead of KDE 4
     closes: #531086
   * Use dh_auto_configure for basic setup
