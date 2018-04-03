@@ -240,7 +240,8 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 RKCommandEditorWindow::~RKCommandEditorWindow () {
 	RK_TRACE (COMMANDEDITOR);
 
-	if (!url ().isEmpty ()) {
+	bool have_url = !url().isEmpty(); // cache early, as potentially needed after destruction of m_doc (at which point calling url() may crash
+	if (have_url) {
 		QString p_url = RKWorkplace::mainWorkplace ()->portableUrl (m_doc->url ());
 		KConfigGroup conf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptDocumentSettings %1").arg (p_url));
 		m_doc->writeSessionConfig (conf);
@@ -257,7 +258,7 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 		unnamed_documents.remove (_id);
 	}
 	// NOTE, under rather unlikely circumstances, the above may leave stale ids->stale pointers in the map: Create unnamed window, split it, save to a url, split again, close the first two windows, close the last. This situation should be caught by the following, however:
-	if (!url ().isEmpty () && !_id.isEmpty ()) {
+	if (have_url && !_id.isEmpty ()) {
 		unnamed_documents.remove (_id);
 	}
 }
