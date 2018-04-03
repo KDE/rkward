@@ -60,6 +60,7 @@
 
 #include <stdlib.h>
 #include <QFileDialog>
+#include <QApplication>
 
 // flush new pieces of output after this period of time:
 #define FLUSH_INTERVAL 100
@@ -600,7 +601,7 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 		QStringList preselects = calllist.mid (4, num_preselects);
 		QStringList choices = calllist.mid (4 + num_preselects);
 
-		QStringList results = RKSelectListDialog::doSelect (0, title, choices, preselects, multiple);
+		QStringList results = RKSelectListDialog::doSelect (QApplication::activeWindow(), title, choices, preselects, multiple);
 		if (results.isEmpty ()) results.append ("");	// R wants to have it that way
 		return (results);
 	} else if (call == "commandHistory") {
