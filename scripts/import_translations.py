@@ -29,7 +29,7 @@ import os
 import codecs
 import re
 
-SVNROOT = "svn://anonsvn.kde.org/home/kde/trunk/l10n-kde4/"
+SVNROOT = "svn://anonsvn.kde.org/home/kde/trunk/l10n-kf5/"
 RKWARDSVNPATH = "messages/playground-edu/"
 SCRIPTDIR = os.path.dirname (os.path.realpath (sys.argv[0]))
 TMPDIR = os.path.join (SCRIPTDIR, "tmp")
@@ -73,10 +73,14 @@ for lang in LANGUAGES:
     os.chdir (TMPDIR)
     for pofile in pofiles:
         outfile = os.path.join (EXPORTDIR, re.sub ("po$", lang + ".po", pofile))
+        infile = os.path.join (langdir, pofile)
+        if not os.path.isfile (infile):
+            print ("###### svn up failed to create " + infile + " #######")
+            continue
 
         # copy to destination, and strip unneeded comments
         print ("writing " + outfile)
-        pf = codecs.open (os.path.join (langdir, pofile), 'r', 'utf-8')
+        pf = codecs.open (infile, 'r', 'utf-8')
         of = codecs.open (outfile, 'w', 'utf-8')
         prev_was_comment = False
         for line in pf:
