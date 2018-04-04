@@ -23,7 +23,7 @@
 class RKDebugMessageWindowWidget;
 class QTextEdit;
 
-/** Tool window for displaying RKWard debug messages. Mainly targetted at plugin
+/** Tool window for displaying RKWard debug messages. Mainly targeted at plugin
  * developers. */
 class RKDebugMessageWindow : public RKMDIWindow {
 public:

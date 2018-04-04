@@ -1061,7 +1061,7 @@ void RKOutputWindowManager::setCurrentOutputPath (const QString &_path) {
 	QUrl url = QUrl::fromLocalFile (_path);
 	url = url.adjusted (QUrl::NormalizePathSegments);
 	QString path = watchFilePath (url.toLocalFile ());
-	RK_DEBUG (APP, DL_DEBUG, "setting default ouput file to %s (%s), from %s", qPrintable (path), qPrintable (_path), qPrintable (current_default_path));
+	RK_DEBUG (APP, DL_DEBUG, "setting default output file to %s (%s), from %s", qPrintable (path), qPrintable (_path), qPrintable (current_default_path));
 
 #ifdef Q_OS_WIN
 	// On windows, when flushing the output (i.e. deleting, re-creating it), KDirWatch seems to purge the file from the
