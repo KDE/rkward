@@ -10,7 +10,7 @@ rkward (0.7.0-1) UNRELEASED; urgency=low
 
  -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Mon, 26 Mar 2018 11:00:00 +0100
 
- rkward (0.6.5-1) unstable; urgency=low
+rkward (0.6.5-1) unstable; urgency=low
   * new upstream release
     (unchanged with respect to ~rc1)
   * fix debian/watch file
