@@ -5,9 +5,9 @@ rkward (0.6.9z+0.7.0+devel1-1) UNRELEASED; urgency=low
   * Package now based on kf5-libraries, instead of KDE 4
     closes: #531086
   * Use dh_auto_configure for basic setup
-  * Update VCS-browser, and some other urls
+  * Update VCS-browser, watch, and some other urls
 
- -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Mon, 26 Mar 2018 11:00:00 +0100
+ -- Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>  Mon, 26 Mar 2018 11:00:00 +0100
 
 rkward (0.6.5-1) unstable; urgency=low
   * new upstream release
