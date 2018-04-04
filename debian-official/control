@@ -12,7 +12,7 @@ Build-Depends: cmake,
                r-base-dev (>= 3.0.0)
 Standards-Version: 3.9.7
 Homepage: http://rkward.kde.org
-Vcs-Browser: http://quickgit.kde.org/?p=rkward.git&a=tree&f=debian-official
+Vcs-Browser: https://cgit.kde.org/rkward.git/tree/debian-official
 Vcs-Git: git://anongit.kde.org/rkward.git
 
 Package: rkward
