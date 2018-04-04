@@ -1,7 +1,7 @@
 Source: rkward
 Section: math
 Priority: optional
-Maintainer: Thomas Friedrichsmeier <tfry@users.sourceforge.net>
+Maintainer: Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 Build-Depends: cmake,
                extra-cmake-modules,
                pkg-kde-tools | pkg-kf5-tools,
