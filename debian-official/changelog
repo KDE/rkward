@@ -8,6 +8,8 @@ rkward (0.7.0-1) UNRELEASED; urgency=low
     changes in R
     closes: #877283
   * Use dh_auto_configure for basic setup
+  * Add lintian overrides for r-data-without-readme-source and
+    desktop-command-not-in-package
 
  -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Mon, 26 Mar 2018 11:00:00 +0100
 
