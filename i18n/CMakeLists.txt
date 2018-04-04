@@ -5,11 +5,9 @@ MACRO(RKHandlePO _PO_FILES)
 		LIST(LENGTH _nameParts _namePartsCount)
 		LIST(GET _nameParts 0 _poid)
 		LIST(GET _nameParts 1 _lang) # Remainder of _nameParts should be "po"
-		IF(NOT ${_poid} STREQUAL "rkward")
-			SET(ACCEPT_INCOMPLETE_PO "-DACCEPT_INCOMPLETE_PO=1")
-		ELSE(NOT ${_poid} STREQUAL "rkward")
-			SET(ACCEPT_INCOMPLETE_PO "")
-		ENDIF(NOT ${_poid} STREQUAL "rkward")
+		# This can be used to allow temporary exceptions to our "translations must be at least 80% complete, as else, they are probably in bad shape"-rule.
+		# NOTE: Could also be set only for specific ${_poid}s (e.g. recently added po files)
+		# SET(ACCEPT_INCOMPLETE_PO "-DACCEPT_INCOMPLETE_PO=1")
 
 		SET(_gmoFile ${CMAKE_CURRENT_BINARY_DIR}/${_poid}.${_lang}.gmo)
 
