@@ -30,6 +30,7 @@ override_dh_auto_configure:
 	dh_auto_configure '--buildsystem=kf5' --parallel -- \
 		-DR_EXECUTABLE=/usr/bin/R/ \
 		-DR_LIBDIR=/usr/lib/R/site-library/ \
+		-DCMAKE_SKIP_RPATH=YES \
 		-DBUILD_TIMESTAMP="$(builttime)"
 
 override_dh_auto_install:
