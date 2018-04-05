@@ -511,8 +511,13 @@ if $UPMPORTS ; then
   sudo "${MPTINST}/bin/port" clean inactive
   echo -e "sudo ${TXT_BLUE}${MPTINST}/bin/port${OFF} -f uninstall inactive"
   sudo "${MPTINST}/bin/port" -f uninstall inactive
+  # this uninstalls way too many ports:
+  # echo -e "sudo ${TXT_BLUE}${MPTINST}/bin/port${OFF} uninstall --follow-dependencies leaves ${TXT_DGRAY}# remove orphaned dependencies${OFF}"
+  # sudo "${MPTINST}/bin/port" uninstall --follow-dependencies leaves
   echo -e "sudo ${TXT_BLUE}${MPTINST}/bin/port${OFF} reclaim ${TXT_DGRAY}# remove unused distfiles${OFF}"
   sudo "${MPTINST}/bin/port" reclaim
+  # somehow the port groups keep disappearing
+  updatePortGrous
   alldone
 fi
 
