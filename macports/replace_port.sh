@@ -9,6 +9,11 @@ MAKEPATH=/usr/bin/make
 # specify deactivation suffix
 DCTSFFX="_works"
 
+DEACT=false
+REACT=false
+IMAKE=false
+RMDCT=false
+    
 if [[ $1 == "" ]] ; then
  echo "Usage: replace_port.sh OPTION
           OPTIONS:
@@ -22,10 +27,10 @@ fi
 # get the options
 while getopts ":damx" OPT; do
   case $OPT in
-    d) DEACT=TRUE >&2 ;;
-    a) REACT=TRUE >&2 ;;
-    m) IMAKE=TRUE >&2 ;;
-    x) RMDCT=TRUE >&2 ;;
+    d) DEACT=true >&2 ;;
+    a) REACT=true >&2 ;;
+    m) IMAKE=true >&2 ;;
+    x) RMDCT=true >&2 ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
       exit 1
@@ -37,7 +42,7 @@ while getopts ":damx" OPT; do
   esac
 done
 
-if [[ $DEACT ]] ; then
+if $DEACT ; then
 	if [ -d "${MPTINST}${DCTSFFX}" ] ; then
 		echo "ouch: \"${MPTINST}${DCTSFFX}\" already exists, aborting!"
 		exit 1
@@ -55,8 +60,8 @@ if [[ $DEACT ]] ; then
 	fi
 fi
 
-if [[ $REACT ]] ; then
-	if [[ $IMAKE ]] && ! [ -f "${MAKEPATH}${DCTSFFX}" ] ; then
+if $REACT ; then
+	if $IMAKE && ! [ -f "${MAKEPATH}${DCTSFFX}" ] ; then
 		echo "ouch: \"${MAKEPATH}${DCTSFFX}\" doesn't exist, skipping!"
 	else
 		sudo mv "${MAKEPATH}${DCTSFFX}" "${MAKEPATH}"
