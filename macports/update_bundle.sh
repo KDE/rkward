@@ -555,7 +555,7 @@ if $LSDSKUSG ; then
   cd "${MPTINST}/var/macports/build/"
   SBFLDRS=$(ls)
   for i in ${SBFLDRS} ; do
-    if [ -d ${i}/$(ls ${i}/)/work/destroot ] ; then
+    if [ -d "${i}/$(ls ${i}/)/work/destroot" ] ; then
       echo $(du -sh ${i}/$(ls ${i}/)/work/destroot | sed -e "s+\(${BLDPRFX}\)\(.*\)\(/work/destroot\)+\2+")
     fi
   done
