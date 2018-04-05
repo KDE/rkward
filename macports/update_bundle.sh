@@ -8,6 +8,7 @@ TXT_GREEN="\033[0;32m"
 TXT_BOLD="\033[1m"
 TXT_ITALIC="\033[3m"
 TXT_UNDERSCORE="\033[4m"
+TXT_ORANGE_ON_GREY="\033[48;5;240;38;5;202m"
 OFF="\033[0m"
 
 # poor man's configuration
@@ -81,6 +82,8 @@ WIPEDSTF=false
 WIPEINST=false
 GETTARGVERS=true
 PORTGROUPS=false
+LISTRDEPENDS=false
+SHOWBUNDLESIZE=false
 
 # this array holds all packages who should not be included in the bundle
 declare -a EXCLPKG=(audio_lame audio_libmodplug audio_libopus \
@@ -133,6 +136,9 @@ if [[ $1 == "" ]] ; then
 
            ${TXT_BOLD}-q${OFF}  manually update/fix PortGroups from RJVB repo
            ${TXT_BOLD}-f${OFF}  list disk usage for all includable ports
+           ${TXT_BOLD}-a${OFF} ${TXT_LRED}${TXT_ITALIC}<.pkg/.mpkg file>${OFF}
+               show file size of a given .pkg/.mpkg file and the full disk usage if installed
+           ${TXT_BOLD}-R${OFF}  list recursive dependencies of port ${TXT_BLUE}${PTARGET}${OFF}
            ${TXT_BOLD}-S${OFF} ${TXT_LRED}${TXT_ITALIC}<comment>${OFF}
                generate new ssh key pair to register with ${TXT_BLUE}https://identity.kde.org${OFF}
                comment could be ${TXT_BLUE}${TXT_ITALIC}\"<yourusername>@<yourmachine>\"${OFF}
@@ -169,8 +175,10 @@ exit 0
 fi
 
 # get the options
-while getopts ":CD:E:d:b:fGlLprQqmsS:cU:xXF:t:" OPT; do
+while getopts ":a:CD:E:d:b:fGlLprRQqmsS:cU:xXF:t:" OPT; do
   case $OPT in
+    a) SHOWBUNDLESIZE=true >&2
+       SHOWMPKGFILE=$OPTARG >&2 ;;
     U) GITUSER=$OPTARG >&2 ;;
     E) GITMAIL=$OPTARG >&2 ;;
     G) BLDSETUP=true >&2
@@ -206,6 +214,7 @@ while getopts ":CD:E:d:b:fGlLprQqmsS:cU:xXF:t:" OPT; do
     L) DOEXCPCK=true >&2 ;;
     p) UPMPORTS=true >&2 ;;
     r) UPRKWARD=true >&2 ;;
+    R) LISTRDEPENDS=true >&2 ;;
     m) RPATHFIX=true >&2
        MAKEMDMD=true >&2 ;;
     s) MKSRCTAR=true >&2 ;;
@@ -255,6 +264,11 @@ error() {
   exit 1
 }
 
+warning() {
+  # $1: message to print
+  echo -e "${TXT_ORANGE_ON_GREY}warning:${OFF} $1"
+}
+
 alldone() {
   echo -e " ${TXT_GREEN}done! ${OFF}"
 }
@@ -291,6 +305,17 @@ updatePortGrous() {
   echo "syncing PortGroup files..."
   sudo rsync -av "${GITROOT}/macstrop/_resources/port1.0/"  "${MPTINST}/var/macports/sources/rsync.macports.org/macports/release/tarballs/ports/_resources/port1.0/" || exit 1
   alldone
+}
+
+bundlesize() {
+  # $1: path to .mpkg/.pkg file
+  if [ -f "$1" ] ; then
+    SIZEINSTALLED=$(installer -pkginfo -verbose -pkg "$1" | grep -m 1 Size | awk '{print $3}')
+    SIZEARCHIVE=$(($(ls -l "$1" | awk '{print $5}') / 1024))
+    echo -e "\n${TXT_BOLD}bundle size${OFF}\n      ${TXT_DGRAY}file:${OFF} ${TXT_BLUE}$1${OFF}\n   ${TXT_DGRAY}archive:${OFF}  ${TXT_BLUE}$((${SIZEARCHIVE} / 1024)) MB${OFF} (${TXT_BLUE}${SIZEARCHIVE} KB${OFF})\n ${TXT_DGRAY}installed:${OFF} ${TXT_BLUE}$((${SIZEINSTALLED} / 1024)) MB${OFF} (${TXT_BLUE}${SIZEINSTALLED} KB${OFF})\n"
+  else
+    warning "file not found: ${TXT_BLUE}$1${OFF}"
+  fi
 }
 
 # correct setting of RPATHFIX workaround, it's not needed
@@ -525,14 +550,27 @@ if $LSDSKUSG ; then
   cd "${MPTINST}/var/macports/build/"
   SBFLDRS=$(ls)
   for i in ${SBFLDRS} ; do
-    echo $(du -sh ${i}/$(ls ${i}/)/work/destroot | sed -e "s+\(${BLDPRFX}\)\(.*\)\(/work/destroot\)+\2+")
+    if [ -d ${i}/$(ls ${i}/)/work/destroot ] ; then
+      echo $(du -sh ${i}/$(ls ${i}/)/work/destroot | sed -e "s+\(${BLDPRFX}\)\(.*\)\(/work/destroot\)+\2+")
+    fi
   done
+fi
+
+# show bundle size and disk usage if installed
+if $SHOWBUNDLESIZE ; then
+  bundlesize "${SHOWMPKGFILE}"
+fi
+       
+# show all dependencies of our port recursively
+if $LISTRDEPENDS ; then
+  echo -e "${TXT_BLUE}${MPTINST}/bin/port${OFF} rdeps ${PTARGET}"
+  "${MPTINST}/bin/port" rdeps "${PTARGET}"
 fi
 
 # set some variables
 if $COPYMDMD ; then
   # get version information of installed ports
-  PORTVERS=$("${MPTINST}/bin/port" list $PTARGET | sed -e "s/.*@//;s/[[:space:]].*//")
+  PORTVERS=$("${MPTINST}/bin/port" list ${PTARGET} | sed -e "s/.*@//;s/[[:space:]].*//")
   if $GETTARGVERS ; then
     if $DEVEL ; then
       # we moved to git
@@ -618,7 +656,7 @@ if $MAKEMDMD ; then
         fi
         unset SUBFLDR
       else
-        echo -e "${TXT_RED}warning: can't find ${THISPKG}!${OFF}"
+        warning "can't find ${TXT_BLUE}${THISPKG}${OFF}!"
       fi
       unset THISPKG
     done
@@ -654,7 +692,6 @@ if $MAKEMDMD ; then
     fi
   fi
 
-
   # copy the image file to a public directory
   if $COPYMDMD ; then
     MPKGFILE="${WORKDIR}/${PTARGET}-${PORTVERS}.mpkg"
@@ -668,6 +705,9 @@ if $MAKEMDMD ; then
     sudo mv "${MPKGFILE}" "${TRGTFILE}" || exit 1
     sudo chown ${RKUSER} "${TRGTFILE}" || exit 1
     alldone
+    bundlesize ${TRGTFILE}
+  else
+    bundlesize ${MPKGFILE}
   fi
 fi
 
