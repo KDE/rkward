@@ -542,22 +542,20 @@ fi
 # remove static libraries, they're a waste of disk space
 if $RMSTLIBS ; then
   echo -e "deleting all static libs in ${TXT_BLUE}${MPTINST}/lib/${OFF}..."
-  sudo rm ${MPTINST}/lib/*.a
+  sudo rm ${MPTINST}/lib/*.a 2>/dev/null
   echo -e "deleting all static libs in ${TXT_BLUE}${MPTINST}/var/macports/build${OFF}..."
   #find "${MPTINST}/var/macports/build" -name "*.a" -exec sudo rm \{\} \;
   # only remove libs in destroot/libs/
-  find -E "${MPTINST}/var/macports/build" -type f -regex '.*/destroot'${MPTINST}'/lib/[^/]*\.a' -exec sudo rm \{\} \;
+  find -E "${MPTINST}/var/macports/build" -type f -regex '.*/destroot'${MPTINST}'/lib/[^/]*\.a' -exec sudo rm \{\} 2>/dev/null \;
   alldone
 fi
 
 # list disk usage of ports
 if $LSDSKUSG ; then
   cd "${MPTINST}/var/macports/build/"
-  SBFLDRS=$(ls)
-  for i in ${SBFLDRS} ; do
-    if [ -d "${i}/$(ls ${i}/)/work/destroot" ] ; then
-      echo $(du -sh ${i}/$(ls ${i}/)/work/destroot | sed -e "s+\(${BLDPRFX}\)\(.*\)\(/work/destroot\)+\2+")
-    fi
+  DESTROOTS=$(find . -type d -name "destroot" 2>/dev/null)
+  for i in ${DESTROOTS} ; do
+    echo $(du -sh ${i} | sed -e "s+\(${BLDPRFX}\)\(.*\)\(/work/destroot\)+\2+")
   done
 fi
 
