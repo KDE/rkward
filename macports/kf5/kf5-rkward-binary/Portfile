@@ -129,5 +129,7 @@ post-destroot {
 
 pre-pkg {
         file copy -force -- ${worksrcpath}/macports/postinstall ${package.scripts}/postinstall
+        file copy -force -- ${worksrcpath}/macports/postflight ${package.scripts}/postflight
         file attributes ${package.scripts}/postinstall -permissions 0755
+        file attributes ${package.scripts}/postflight -permissions 0755
 }
