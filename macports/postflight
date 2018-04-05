@@ -1,6 +1,0 @@
-#!/bin/sh
-if [ -d "$3/Applications/RKWard/rkward.app" ] ; then
-  # manually move the actual RKWard app from its subfolder to Applications
-  mv "$3/Applications/RKWard/rkward.app" "$3/Applications/rkward.app" && rm -rf "$3/Applications/RKWard"
-fi
-exit 0
