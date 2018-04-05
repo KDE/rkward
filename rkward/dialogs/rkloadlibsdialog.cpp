@@ -764,6 +764,7 @@ void InstallPackagesWidget::initialize () {
 	for (int i = 0; i < model->rowCount (); ++i) {
 		packages_view->setFirstColumnSpanned (i, QModelIndex (), true);
 	}
+	window()->raise(); // needed on Mac, otherwise the dialog may go hiding behind the main app window, after the progress control window closes, for some reason
 }
 
 void InstallPackagesWidget::rowClicked (const QModelIndex& row) {
