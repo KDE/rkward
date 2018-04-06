@@ -19,8 +19,9 @@ rkward (0.7.0-1) UNRELEASED; urgency=low
   * Update standards version to 4.1.4
   * Add lintian overrides for r-data-without-readme-source and
     desktop-command-not-in-package
+  * Make rkward binary package depend on identical version rkward-data package
 
- -- Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>  Mon, 26 Mar 2018 11:00:00 +0100
+ -- Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>  Fri, 06 Apr 2018 11:00:00 +0100
 
 rkward (0.6.5-1) unstable; urgency=low
   * new upstream release

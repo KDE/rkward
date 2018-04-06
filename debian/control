@@ -17,7 +17,7 @@ Vcs-Git: https://anongit.kde.org/rkward.git
 
 Package: rkward
 Architecture: any
-Depends: rkward-data, ${misc:Depends}, ${rvers}, ${shlibs:Depends}
+Depends: rkward-data (= ${binary:Version}), ${misc:Depends}, ${rvers}, ${shlibs:Depends}
 Recommends: r-base-html
 Description: KDE frontend to the R statistics language
  RKWard aims to become an easy to use, transparent frontend to R,
