@@ -330,6 +330,25 @@ portversion() {
   "${MPTINST}/bin/port" list $1 | sed -e "s/.*@//;s/[[:space:]].*//"
 }
 
+appendconfig () {
+  # appends given text as a new line to given file
+  # $1: file name, full path
+  # $2: stuff to grep for in $1 to check whether the entry is already there
+  # $3: full line to add to $1 otherwise
+  # $4: the key word "sudo" if sudo is needed for the operation
+  if ! [[ $(grep "$2" "$1") ]] ; then
+    echo -en "appending ${TXT_BLUE}$2${OFF} to ${TXT_BLUE}$1${OFF}..."
+    if [[ $4 == "sudo" ]] ; then
+      echo -e "$3" | sudo tee --append "$1" > /dev/null || exit 1
+    else
+      echo -e "$3" >> "$1" || exit 1
+    fi
+    alldone
+  else
+    echo -e "exists, ${TXT_BOLD}skip${OFF} appending to ${TXT_BLUE}$1${OFF} (${TXT_BLUE}$2${OFF})"
+  fi
+}
+
 # correct setting of RPATHFIX workaround, it's not needed
 # for binary subports since they don't include R.framework
 if $BINARY ; then
@@ -425,18 +444,11 @@ if $BLDSETUP ; then
     alldone
   fi
   linkbuildscript "${USERBIN}"
-  if [ -f "${HOME}/.bash_profile" ] ; then
-    BPFPATH=$(grep "^PATH" "${HOME}/.bash_profile")
-    if ! $(echo "${BPFPATH}" | grep -q "${USERBIN}/:${MPTINST}/bin/:") ; then
-      echo "PATH=${USERBIN}/:${MPTINST}/bin/:\$PATH" >> "${HOME}/.bash_profile"
-    fi
-    if ! $(echo "${BPFPATH}" | grep -q "KDE_SESSION_VERSION") ; then
-      echo "export KDE_SESSION_VERSION=5" >> "${HOME}/.bash_profile"
-    fi
-  else
-    echo "PATH=${USERBIN}/:${MPTINST}/bin/:\$PATH" > "${HOME}/.bash_profile"
-    echo "export KDE_SESSION_VERSION=5" >> "${HOME}/.bash_profile"
+  if ! [ -f "${HOME}/.bash_profile" ] ; then
+    touch "${HOME}/.bash_profile"
   fi
+  appendconfig "${HOME}/.bash_profile" "${USERBIN}/:${MPTINST}/bin/:" "PATH=${USERBIN}/:${MPTINST}/bin/:\$PATH"
+  appendconfig "${HOME}/.bash_profile" "KDE_SESSION_VERSION" "export KDE_SESSION_VERSION=5"
   . "${HOME}/.bash_profile"
   cd "${OLDWD}" || exit 1
   echo -e "${TXT_GREEN}successfully completed reincarnation of${OFF} ${TXT_BLUE}${GITROOT}${OFF} -- you can now invoke the \"-F\" option!"
@@ -469,12 +481,15 @@ if $FRESHMCP ; then
   sudo sed -i -e "s+#\(portautoclean[[:space:]]*\)yes+\1no+" "${MPTINST}/etc/macports/macports.conf"
   sudo sed -i -e "s+\(applications_dir[[:space:]]*\)/Applications/MacPorts+\1${APPLDIR}+" "${MPTINST}/etc/macports/macports.conf"
   sudo "${MPTINST}/bin/port" -v selfupdate || exit 1
-  echo -e "adding local portfiles to ${TXT_BLUE}${MPTINST}/etc/macports/sources.conf${OFF}..."
+  echo -en "adding local portfiles to ${TXT_BLUE}${MPTINST}/etc/macports/sources.conf${OFF}..."
   # sudo sed -i -e "s+rsync://rsync.macports.org.*\[default\]+file://${SRCPATH}/\\`echo -e '\n\r'`&+" "${MPTINST}/etc/macports/sources.conf" || exit 1
   # adding newlines with sed in macOS is totally f**ked up, here's an ugly workaround in three steps
   sudo sed -i -e $'s+rsync://rsync.macports.org.*\[default\]+file://_GITROOT_/macstrop/\\\nfile://_SRCPATH_/\\\n&+' "${MPTINST}/etc/macports/sources.conf" || exit 1
   sudo sed -i -e "s+file://_SRCPATH_+file://${SRCPATH}+" "${MPTINST}/etc/macports/sources.conf" || exit 1
   sudo sed -i -e "s+file://_GITROOT_+file://${GITROOT}+" "${MPTINST}/etc/macports/sources.conf" || exit 1
+  alldone
+  appendconfig "${MPTINST}/etc/macports/variants.conf" "^[[:space:]]*-x11 +no_x11 +quartz" "-x11 +no_x11 +quartz +replace_cocoa" "sudo"
+  appendconfig "${MPTINST}/etc/macports/variants.conf" "^[[:space:]]*+replace_cocoa" "+replace_cocoa" "sudo"
   # install a needed gcc/clang first?
   if [[ $CMPLR ]] ; then
     sudo "${MPTINST}/bin/port" -v install "${CMPLR}" "${LLVMFIX}" || exit 1
@@ -501,8 +516,8 @@ fi
 if $BUILDQT ; then
   echo -e "sudo ${TXT_BLUE}${MPTINST}/bin/port${OFF} -v install qt5-kde"
   sudo "${MPTINST}/bin/port" -v install qt5-kde || exit 1
-  echo -e "sudo ${TXT_BLUE}${MPTINST}/bin/port${OFF} -v install kf5-osx-integration +replace_cocoa"
-  sudo "${MPTINST}/bin/port" -v install kf5-osx-integration +replace_cocoa || exit 1
+  echo -e "sudo ${TXT_BLUE}${MPTINST}/bin/port${OFF} -v install kf5-osx-integration-devel +replace_cocoa"
+  sudo "${MPTINST}/bin/port" -v install kf5-osx-integration-devel +replace_cocoa || exit 1
   alldone
 fi
 

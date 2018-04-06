@@ -84,15 +84,6 @@ kf5.depends_frameworks \
                     kdoctools ki18n knotifications kparts \
                     ktexteditor kwidgetsaddons kwindowsystem kxmlgui
 
-# activate +replace_cocoa variant as default
-PortGroup active_variants 1.1
-require_active_variants port:kf5-osx-integration_devel replace_cocoa
-
-# do not install the following (indirect) dependencies with their +x11 variant:
-foreach dep {cairo giflib} {
-    require_active_variants ${dep} {} x11
-}
-
 depends_lib-append \
                     port:gettext \
                     port:kf5-osx-integration-devel \
