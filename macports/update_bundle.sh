@@ -384,7 +384,10 @@ if $WIPEINST ; then
     sudo rm "${SRCPATH}" || exit 1
     alldone
   fi
-  # ensure ${USERBIN}/update_bundle.sh
+  # ensure ${USERBIN}/update_bundle.sh is most recent before we remove all
+  echo -e "updating ${TXT_BLUE}~/bin/update_bundle.sh${OFF}..."
+  cd "${GITROOT}" && git pull --rebase origin || warning "couldn't pull from git repo!"
+  cd "${OLDWD}"
   linkbuildscript "${USERBIN}"
   rmdirv "${GITROOT}"
   echo -e "${TXT_GREEN}successfully wiped RKWard from this machine!${OFF}"
