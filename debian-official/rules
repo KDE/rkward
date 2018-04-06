@@ -40,8 +40,8 @@ override_dh_auto_install:
 	rm -vf $(DESTDIR)/usr/share/katepart/syntax/r.xml
 	# remove unneeded R package files
 	rm -vf $(DESTDIR)/usr/lib/R/site-library/R.css $(DESTDIR)/usr/lib/R/site-library/rkward/COPYING
-	# remove x-test locale KF5 TODO FIXME
-	rm -rvf $(DESTDIR)/usr/share/kde4/apps/rkward/po/x-test $(DESTDIR)/usr/share/locale/x-test
+	# remove x-test locale
+	rm -rvf $(DESTDIR)/usr/share/rkward/po/x-test $(DESTDIR)/usr/share/locale/x-test
 
 override_dh_compress:
 	# do not compress KDE HTML help

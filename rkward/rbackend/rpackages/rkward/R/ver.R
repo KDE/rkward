@@ -3,4 +3,4 @@
 # rkward/SetVersionNumber.cmake
 
 #' @export
-".rk.app.version" <- "0.6.9z+0.7.0+devel1"
+".rk.app.version" <- "0.6.9z+0.7.0+pre1"

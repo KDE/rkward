@@ -40,8 +40,8 @@ override_dh_auto_install:
 	rm -vf $(DESTDIR)/usr/share/katepart/syntax/r.xml
 	# remove unneeded R package files
 	rm -vf $(DESTDIR)/usr/lib/R/site-library/R.css $(DESTDIR)/usr/lib/R/site-library/rkward/COPYING
-	# remove x-test locale KF5 TODO FIXME
-	rm -rvf $(DESTDIR)/usr/share/kde4/apps/rkward/po/x-test $(DESTDIR)/usr/share/locale/x-test
+	# remove x-test locale
+	rm -rvf $(DESTDIR)/usr/share/rkward/po/x-test $(DESTDIR)/usr/share/locale/x-test
 
 override_dh_compress:
 	# do not compress KDE HTML help
@@ -52,12 +52,15 @@ override_dh_shlibdeps:
 	# unfortunately, the r-base-core dependency can not be found by dh_shlibdeps, so we need to get at the version manually
 	# NOTE: This "if" is currently always true (see build-deps), but left here, for convenience, in case we get into trouble
 	# with binary incompatibility (esp. foward incompatibility) again, in the future.
-	@if [ "$(RMAJOR)" -eq "3" ] && [ "$(RMINOR)" -ge "0" ] ; then \
+	@if [ "$(RMAJOR)" -eq "3" ] && [ "$(RMINOR)" -ge "5" ] ; then \
 		echo "rvers=r-base-core (>= $(RVERS))" >> $(CURDIR)/debian/rkward.substvars ; \
+	else \
+		if [ "$(RMAJOR)" -eq "3" ] && [ "$(RMINOR)" -ge "0" ] ; then \
+		echo "rvers=r-base-core (>= $(RVERS)), r-base-core (<< 3.5.0)" >> $(CURDIR)/debian/rkward.substvars ; \
 	else \
 		if [ "$(RMAJOR)" -eq "2" ] && [ "$(RMINOR)" -ge "14" ] ; then \
 		echo "rvers=r-base-core (>= 2.9.0), r-base-core (<< 3.0.0)" >> $(CURDIR)/debian/rkward.substvars ; \
 	else \
 		if [ "$(RMAJOR)" -eq "2" ] && [ "$(RMINOR)" -ge "9" ] ; then \
 		echo "rvers=r-base-core (<< 2.14.0), r-base-core (>= 2.9.0)" >> $(CURDIR)/debian/rkward.substvars ; \
-	fi; fi; fi;
+	fi; fi; fi; fi;
