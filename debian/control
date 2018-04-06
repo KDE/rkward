@@ -10,10 +10,10 @@ Build-Depends: cmake,
                libkf5texteditor-dev,
                kdoctools-dev,
                r-base-dev (>= 2.8.0)
-Standards-Version: 3.9.7
+Standards-Version: 4.1.4
 Homepage: http://rkward.kde.org
 Vcs-Browser: https://cgit.kde.org/rkward.git/tree/debian
-Vcs-Git: git://anongit.kde.org/rkward.git
+Vcs-Git: https://anongit.kde.org/rkward.git
 
 Package: rkward
 Architecture: any
