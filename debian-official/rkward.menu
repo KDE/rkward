@@ -1,1 +1,0 @@
-?package(rkward):needs="x11" section="Applications/Science/Mathematics" title="RKWard" command="/usr/bin/rkward"
