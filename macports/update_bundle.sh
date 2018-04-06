@@ -502,7 +502,7 @@ if $BUILDQT ; then
   echo -e "sudo ${TXT_BLUE}${MPTINST}/bin/port${OFF} -v install qt5-kde"
   sudo "${MPTINST}/bin/port" -v install qt5-kde || exit 1
   echo -e "sudo ${TXT_BLUE}${MPTINST}/bin/port${OFF} -v install kf5-osx-integration"
-  sudo "${MPTINST}/bin/port" -v install kf5-osx-integration || exit 1
+  sudo "${MPTINST}/bin/port" -v install kf5-osx-integration +replace_cocoa || exit 1
   alldone
 fi
 
