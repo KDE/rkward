@@ -1,11 +1,24 @@
-rkward (0.6.9z+0.7.0+devel1-1) UNRELEASED; urgency=low
+rkward (0.7.0-1) UNRELEASED; urgency=low
+  * THIS IS AN INOFFICIAL PACKAGE
+    We use this to build debian packages for a variety to Debian/Ubuntu
+    releases, automatically and manually. It is close to the official packages, but due
+    to the need to cover more divergent systems, it is not identical to those.
+    All changelog entries below cover only the official debian package, not the changes
+    made to this inofficial packaging.
   * New upstream release
   * The divergently licenced qwinhost-files are no longer part of this release,
     simplifying copyright
   * Package now based on kf5-libraries, instead of KDE 4
     closes: #531086
+  * Add dependency on r-api-3.4 to ease handling of future non-compatible
+    changes in R
+    closes: #877283
   * Use dh_auto_configure for basic setup
+  * Remove debian/rkward.menu, as package provides a FreeDesktop entry
   * Update VCS-browser, watch, and some other urls
+  * Update standards version to 4.1.4
+  * Add lintian overrides for r-data-without-readme-source and
+    desktop-command-not-in-package
 
  -- Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>  Mon, 26 Mar 2018 11:00:00 +0100
 
