@@ -41,6 +41,8 @@ LPUBDIR="${HOME}/Public/rkward"
 APPLDIR="/Applications/RKWard"
 # specify the prefix for build directories below \${MPTINST}/var/macports/build
 BLDPRFX=_opt_rkward_var_macports_sources_rsync.macports.org_release_tarballs_ports_
+# a temporary directory to use for cleaning up the bundle archive
+BNDLTMP="/tmp/rkward_bundle"
 GITREPO="git://anongit.kde.org/rkward.git"
 GITREPOKDE="git@git.kde.org:rkward.git"
 RJVBREPO="https://github.com/mkae/macstrop.git"
@@ -99,6 +101,9 @@ declare -a EXCLPKG=(audio_lame audio_libmodplug audio_libopus \
   x11_xorg-util-macros x11_xorg-xcb-proto x11_xorg-xcb-util x11_xorg-xcmiscproto x11_xorg-xextproto \
   x11_xorg-xf86bigfontproto x11_xorg-xineramaproto x11_xorg-xproto x11_xorg-xtrans x11_xrender )
 
+# this array lists ports which usually write something in ./Applications, which we're trying to avoid
+declare -a RMAPPLICATIONS=( python27-*-component )
+
 #LLVMFIX="configure.compiler=llvm-gcc-4.2"
 
 # to see the dependency tree of ports, run
@@ -151,6 +156,9 @@ if [[ $1 == "" ]] ; then
 
        ${TXT_DGRAY}building & bundling (can be combined with${OFF} ${TXT_BOLD}-D${OFF}${TXT_DGRAY}/${OFF}${TXT_BOLD}-d${OFF}${TXT_DGRAY}/${OFF}${TXT_BOLD}-b${OFF}${TXT_DGRAY}):${OFF}
            ${TXT_BOLD}-l${OFF}  remove static port libraries
+           ${TXT_BOLD}-L${OFF} ${TXT_LRED}${TXT_ITALIC}<.pkg/.mpkg file>${OFF}
+               remove probably superfluous parts from the given bundle
+               temporary directory: ${TXT_BLUE}${BNDLTMP}${OFF}
            ${TXT_BOLD}-p${OFF}  update macports, remove inactive
            ${TXT_BOLD}-r${OFF}  update port ${TXT_BLUE}${PTARGET}${OFF}
            ${TXT_BOLD}-m${OFF}  create .mpkg of ${TXT_BLUE}${PTARGET}${OFF}
@@ -170,12 +178,11 @@ if [[ $1 == "" ]] ; then
   ${TXT_BLUE}${CONFIGFILE}${OFF}
 "
 # off for the moment:
-#            ${TXT_BOLD}-L${OFF}  don't bundle probably superfluous ports
 exit 0
 fi
 
 # get the options
-while getopts ":a:CD:E:d:b:fGlLprRQqmsS:cU:xXF:t:" OPT; do
+while getopts ":a:CD:E:d:b:fGlL:prRQqmsS:cU:xXF:t:" OPT; do
   case $OPT in
     a) SHOWBUNDLESIZE=true >&2
        SHOWMPKGFILE=$OPTARG >&2 ;;
@@ -211,7 +218,8 @@ while getopts ":a:CD:E:d:b:fGlLprRQqmsS:cU:xXF:t:" OPT; do
        MCPVERS=$OPTARG >&2 ;;
     f) LSDSKUSG=true >&2 ;;
     l) RMSTLIBS=true >&2 ;;
-    L) DOEXCPCK=true >&2 ;;
+    L) DOEXCPCK=true
+       MPKGNAME=$OPTARG >&2 ;;
     p) UPMPORTS=true >&2 ;;
     r) UPRKWARD=true >&2 ;;
     R) LISTRDEPENDS=true >&2 ;;
@@ -316,6 +324,10 @@ bundlesize() {
   else
     warning "file not found: ${TXT_BLUE}$1${OFF}"
   fi
+}
+
+portversion() {
+  "${MPTINST}/bin/port" list $1 | sed -e "s/.*@//;s/[[:space:]].*//"
 }
 
 # correct setting of RPATHFIX workaround, it's not needed
@@ -573,7 +585,7 @@ fi
 # set some variables
 if $COPYMDMD ; then
   # get version information of installed ports
-  PORTVERS=$("${MPTINST}/bin/port" list ${PTARGET} | sed -e "s/.*@//;s/[[:space:]].*//")
+  PORTVERS=$(portversion "${PTARGET}")
   if $GETTARGVERS ; then
     if $DEVEL ; then
       # we moved to git
@@ -646,45 +658,45 @@ if $MAKEMDMD ; then
       cd "${OLDWD}" || exit 1
     fi
   fi
-  if $DOEXCPCK ; then
-    # before we build the bundle package, replace the destroot folder of the packages
-    # defined in the array EXCLPKG with empty ones, so their stuff is not included
-    for i in ${EXCLPKG[@]} ; do
-      THISPKG=${MPTINST}/var/macports/build/${BLDPRFX}${i}
-      if [ -d "${THISPKG}" ] ; then
-        SUBFLDR=$(ls $THISPKG)
-        if [ -d "${THISPKG}/${SUBFLDR}/work/destroot" ] && [ ! -d "${THISPKG}/${SUBFLDR}/work/destroot_off" ]; then
-          sudo mv "${THISPKG}/${SUBFLDR}/work/destroot" "${THISPKG}/${SUBFLDR}/work/destroot_off"
-          sudo mkdir "${THISPKG}/${SUBFLDR}/work/destroot"
-        fi
-        unset SUBFLDR
-      else
-        warning "can't find ${TXT_BLUE}${THISPKG}${OFF}!"
-      fi
-      unset THISPKG
-    done
-  fi
+#   if $DOEXCPCK ; then
+#     # before we build the bundle package, replace the destroot folder of the packages
+#     # defined in the array EXCLPKG with empty ones, so their stuff is not included
+#     for i in ${EXCLPKG[@]} ; do
+#       THISPKG=${MPTINST}/var/macports/build/${BLDPRFX}${i}
+#       if [ -d "${THISPKG}" ] ; then
+#         SUBFLDR=$(ls $THISPKG)
+#         if [ -d "${THISPKG}/${SUBFLDR}/work/destroot" ] && [ ! -d "${THISPKG}/${SUBFLDR}/work/destroot_off" ]; then
+#           sudo mv "${THISPKG}/${SUBFLDR}/work/destroot" "${THISPKG}/${SUBFLDR}/work/destroot_off"
+#           sudo mkdir "${THISPKG}/${SUBFLDR}/work/destroot"
+#         fi
+#         unset SUBFLDR
+#       else
+#         warning "can't find ${TXT_BLUE}${THISPKG}${OFF}!"
+#       fi
+#       unset THISPKG
+#     done
+#   fi
 
 #  # cleaning boost, the avahi port somehow gets installed in two varaints...
 #  sudo port clean boost
   echo -e "sudo ${TXT_BLUE}${MPTINST}/bin/port${OFF} -v mpkg ${PTARGET}"
   sudo "${MPTINST}/bin/port" -v mpkg ${PTARGET} || exit 1
 
-  if $DOEXCPCK ; then
-    # restore original destroot directories
-    for i in ${EXCLPKG[@]} ; do
-      THISPKG="${MPTINST}/var/macports/build/${BLDPRFX}${i}"
-      if [ -d "${THISPKG}" ] ; then
-        SUBFLDR="$(ls $THISPKG)"
-        if [ -d "${THISPKG}/${SUBFLDR}/work/destroot_off" ] ; then
-          sudo rmdir "${THISPKG}/${SUBFLDR}/work/destroot"
-          sudo mv "${THISPKG}/${SUBFLDR}/work/destroot_off" "${THISPKG}/${SUBFLDR}/work/destroot"
-        fi
-        unset SUBFLDR
-      fi
-      unset THISPKG
-    done
-  fi
+#   if $DOEXCPCK ; then
+#     # restore original destroot directories
+#     for i in ${EXCLPKG[@]} ; do
+#       THISPKG="${MPTINST}/var/macports/build/${BLDPRFX}${i}"
+#       if [ -d "${THISPKG}" ] ; then
+#         SUBFLDR="$(ls $THISPKG)"
+#         if [ -d "${THISPKG}/${SUBFLDR}/work/destroot_off" ] ; then
+#           sudo rmdir "${THISPKG}/${SUBFLDR}/work/destroot"
+#           sudo mv "${THISPKG}/${SUBFLDR}/work/destroot_off" "${THISPKG}/${SUBFLDR}/work/destroot"
+#         fi
+#         unset SUBFLDR
+#       fi
+#       unset THISPKG
+#     done
+#   fi
   if $RPATHFIX ; then
     if [ -d "${RKWRFWPATH}/Versions" ] ; then
       cd "${RKWRFWPATH}" || exit 1
@@ -696,8 +708,8 @@ if $MAKEMDMD ; then
   fi
 
   # copy the image file to a public directory
+  MPKGFILE="${WORKDIR}/${PTARGET}-$(portversion "${PTARGET}").mpkg"
   if $COPYMDMD ; then
-    MPKGFILE="${WORKDIR}/${PTARGET}-${PORTVERS}.mpkg"
     if $BINARY ; then
       TRGTFILE="${LPUBDIR}/RKWard${PNSUFFX}-${TARGETVERS}_OSX${OSXVERSION}_KF5-${KDEVERS}_needs_CRAN_R-${RVERS}.pkg"
     else
@@ -720,7 +732,7 @@ if $MKSRCTAR ; then
   sudo "${MPTINST}/bin/port" reclaim
   if ! $COPYMDMD ; then
     # get version information of installed ports
-    PORTVERS=$("${MPTINST}/bin/port" list ${PTARGET} | sed -e "s/.*@//;s/[[:space:]].*//")
+    PORTVERS=$(portversion "${PTARGET}")
   fi
   SRCFILE="${SRCPATH}/sources_bundle_RKWard-${PORTVERS}_${SRCDATE}.tar"
   if [ -f "${SRCFILE}" ] ; then
@@ -739,6 +751,48 @@ if $MKSRCTAR ; then
     sudo mv "${SRCFILE}" "${TRGSFILE}" || exit 1
     sudo chown ${RKUSER} "${TRGSFILE}" || exit 1
     alldone
+  fi
+fi
+
+# clean up .pkg/.mpkg archive
+if $DOEXCPCK ; then
+  if ! [ -d "${BNDLTMP}" ] ; then
+    mkmissingdir "${BNDLTMP}"
+    echo -en "unpacking ${TXT_BLUE}$(basename ${MPKGNAME})${OFF}..."
+    pkgutil --expand "${MPKGNAME}" "${BNDLTMP}/bundle"
+    alldone
+    for i in ${RMAPPLICATIONS[@]} ; do
+      cd "${BNDLTMP}/bundle"
+      THISPKG=$(find . -type d -name "${i}.pkg")
+      if [ -d "${THISPKG}" ] ; then
+        echo -en "unrolling Payload of ${TXT_BLUE}$(basename ${THISPKG})${OFF}..."
+        mkdir -p "${THISPKG}/Payload_new" || error "can't create ${THISPKG}/Payload_new"
+        cd "${THISPKG}/Payload_new"
+        cat "${BNDLTMP}/bundle/${THISPKG}/Payload" | gzip -d | cpio -id
+        alldone
+        if [ -d "${THISPKG}/Payload_new/Applications" ] ; then
+          echo -en "remove ${TXT_BLUE}Applications${OFF} directory..."
+          rm -rf "Applications" || warning "failed!"
+          alldone
+          echo -en "compress new Payload..."
+          find . | cpio -o --format odc | gzip -c > "${THISPKG}/Payload"
+        fi
+        cd ..
+        echo -en "remove ${TXT_BLUE}Payload_new${OFF}..."
+        rm -rf "${BNDLTMP}/bundle/${THISPKG}/Payload_new" || error "failed!"
+        alldone
+      fi
+      unset THISPKG
+      cd "${OLDWD}"
+    done
+    echo -en "re-packing ${TXT_BLUE}$(basename ${MPKGNAME})${OFF}..."
+    sudo pkgutil --flatten "${BNDLTMP}/bundle" "$(dirname ${MPKGNAME})/stripped_$(basename ${MPKGNAME})" || error "failed!"
+    alldone
+    echo -e "remove temporary dir ${TXT_BLUE}${BNDLTMP}${OFF}..."
+    rm -rf "${BNDLTMP}" || error "failed!"
+    alldone
+  else
+    error "${TXT_BLUE}${BNDLTMP}${OFF} exists, can't unpack the bundle archive!"
   fi
 fi
 
