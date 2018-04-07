@@ -957,13 +957,14 @@ SEXP doGetGlobalEnvStructure (SEXP name, SEXP envlevel, SEXP namespacename) {
 }
 
 /** copy a symbol without touching it (esp. not forcing any promises) */
-SEXP doCopyNoEval (SEXP name, SEXP fromenv, SEXP toenv) {
+SEXP doCopyNoEval (SEXP fromname, SEXP fromenv, SEXP toname, SEXP toenv) {
 	RK_TRACE (RBACKEND);
 
-	if(!Rf_isString (name) || Rf_length (name) != 1) Rf_error ("name is not a single string");
+	if(!Rf_isString (fromname) || Rf_length (fromname) != 1) Rf_error ("fromname is not a single string");
+	if(!Rf_isString (toname) || Rf_length (toname) != 1) Rf_error ("toname is not a single string");
 	if(!Rf_isEnvironment (fromenv)) Rf_error ("fromenv is not an environment");
 	if(!Rf_isEnvironment (toenv)) Rf_error ("toenv is not an environment");
-	Rf_defineVar (Rf_install (CHAR (STRING_ELT (name, 0))), Rf_findVar (Rf_install (CHAR (STRING_ELT (name, 0))), fromenv), toenv);
+	Rf_defineVar (Rf_install (CHAR (STRING_ELT (toname, 0))), Rf_findVar (Rf_install (CHAR (STRING_ELT (fromname, 0))), fromenv), toenv);
 	return (R_NilValue);
 }
 
@@ -1048,7 +1049,7 @@ bool RKRBackend::startR () {
 		{ "rk.do.generic.request", (DL_FUNC) &doPlainGenericRequest, 2 },
 		{ "rk.get.structure", (DL_FUNC) &doGetStructure, 4 },
 		{ "rk.get.structure.global", (DL_FUNC) &doGetGlobalEnvStructure, 3 },
-		{ "rk.copy.no.eval", (DL_FUNC) &doCopyNoEval, 3 },
+		{ "rk.copy.no.eval", (DL_FUNC) &doCopyNoEval, 4 },
 		{ "rk.edit.files", (DL_FUNC) &doEditFiles, 4 },
 		{ "rk.show.files", (DL_FUNC) &doShowFiles, 5 },
 		{ "rk.dialog", (DL_FUNC) &doDialog, 6 },

@@ -232,22 +232,20 @@
 	# else, for instance, if the user names a symbol "missing", and we try to resolve it in the
 	# wrapper function below, evaluation would recurse to look up "missing" in the .GlobalEnv
 	# due to the call to "if (!missing(value))".
-	get <- base::get
 	missing <- base::missing
-	assign <- base::assign
 	.rk.do.call <- rkward::.rk.do.call
 	invisible <- base::invisible
 
 	function (value) {
 		if (!missing (value)) {
-			assign (k, value, envir=.rk.watched.symbols)
+			x <<- value
 			.Call ("rk.do.command", c ("ws", k), PACKAGE="(embedding)");
 #			NOTE: the above is essentially the same a
 #				.rk.do.call ("ws", k);
 #			only minimally faster.
-			invisible (value)
+			invisible (x)
 		} else {
-			get (k, envir=.rk.watched.symbols)
+			x
 		}
 	}
 }
@@ -255,7 +253,7 @@
 #' @export
 ".rk.watch.symbol" <- function (k) {
 	f <- .rk.make.watch.f (k)
-	.Call ("rk.copy.no.eval", k, globalenv(), .rk.watched.symbols, PACKAGE="(embedding)");
+	.Call ("rk.copy.no.eval", k, globalenv(), "x", environment (f), PACKAGE="(embedding)");
 	#assign (k, get (k, envir=globalenv ()), envir=.rk.watched.symbols)
 	rm (list=k, envir=globalenv ())
 
