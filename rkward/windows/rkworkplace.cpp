@@ -944,7 +944,7 @@ void RKWorkplace::splitAndAttachWindow (RKMDIWindow* source) {
 
 	if (source->isType (RKMDIWindow::CommandEditorWindow)) {
 		QUrl url = static_cast<RKCommandEditorWindow*> (source)->url ();
-		openScriptEditor (url, QString (), RKSettingsModuleCommandEditor::matchesScriptFileFilter (url.fileName()));
+		openScriptEditor (url, QString (), url.isEmpty () || RKSettingsModuleCommandEditor::matchesScriptFileFilter (url.fileName()));
 	} else if (source->isType (RKMDIWindow::HelpWindow)) {
 		openHelpWindow (static_cast<RKHTMLWindow*> (source)->url ());
 	} else if (source->isType (RKMDIWindow::OutputWindow)) {
