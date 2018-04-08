@@ -525,6 +525,8 @@ void RKHTMLWindow::useMode (WindowMode new_mode) {
 		part->setOutputWindowSkin ();
 		setMetaInfo (i18n ("Output Window"), QUrl ("rkward://page/rkward_output"), RKSettings::PageOutput);
 		connect (page, &QWebPage::loadFinished, this, &RKHTMLWindow::scrollToBottom);
+		page->action (QWebPage::Reload)->setText (i18n ("&Refresh Output"));
+
 //	TODO: This would be an interesting extension, but how to deal with concurrent edits?
 //		page->setContentEditable (true);
 	} else {
@@ -640,9 +642,7 @@ void RKHTMLWindowPart::initActions () {
 	outputFlush->setText (i18n ("&Flush Output"));
 	outputFlush->setIcon (QIcon::fromTheme("edit-delete"));
 
-	outputRefresh = actionCollection ()->addAction ("output_refresh", window, SLOT (refresh()));
-	outputRefresh->setText (i18n ("&Refresh Output"));
-	outputRefresh->setIcon (QIcon::fromTheme("view-refresh"));
+	outputRefresh = actionCollection ()->addAction ("output_refresh", window->page->action(QWebPage::Reload));
 
 	actionCollection ()->addAction (KStandardAction::Find, "find", window->findbar, SLOT (activate()));
 	QAction* findAhead = actionCollection ()->addAction ("find_ahead", new QAction (i18n ("Find as you type"), this));
