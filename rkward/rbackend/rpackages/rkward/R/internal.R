@@ -222,7 +222,7 @@
 #	.Internal (.addCondHands (c ("message", "warning", "error"), list (function (m) { .Call ("rk.do.condition", c ("m", conditionMessage (m))) }, function (w) { .Call ("rk.do.condition", c ("w", conditionMessage (w))) }, function (e) { .Call ("rk.do.condition", c ("e", conditionMessage (e))) }), globalenv (), NULL, TRUE))
 #}
 
-# these functions can be used to track assignments to R objects. The main interfaces are .rk.watch.symbol (k) and .rk.unwatch.symbol (k). This works by copying the symbol to a backup environment, removing it, and replacing it by an active binding to the backup location
+# these functions can be used to track assignments to R objects. The main interfaces are .rk.watch.symbol (k) and .rk.unwatch.symbol (k). This works by copying the symbol to a local environment, removing it, and replacing it by an active binding to the backup location
 #' @export
 ".rk.watched.symbols" <- new.env ()
 
@@ -233,14 +233,14 @@
 	# wrapper function below, evaluation would recurse to look up "missing" in the .GlobalEnv
 	# due to the call to "if (!missing(value))".
 	missing <- base::missing
-	.rk.do.call <- rkward::.rk.do.call
+	.Call <- base::.Call
 	invisible <- base::invisible
 
 	function (value) {
 		if (!missing (value)) {
 			x <<- value
 			.Call ("rk.do.command", c ("ws", k), PACKAGE="(embedding)");
-#			NOTE: the above is essentially the same a
+#			NOTE: the above is essentially the same as
 #				.rk.do.call ("ws", k);
 #			only minimally faster.
 			invisible (x)
@@ -254,10 +254,10 @@
 ".rk.watch.symbol" <- function (k) {
 	f <- .rk.make.watch.f (k)
 	.Call ("rk.copy.no.eval", k, globalenv(), "x", environment (f), PACKAGE="(embedding)");
-	#assign (k, get (k, envir=globalenv ()), envir=.rk.watched.symbols)
 	rm (list=k, envir=globalenv ())
 
 	.rk.makeActiveBinding.default (k, f, globalenv ())
+	.rk.watched.symbols[[k]] <- TRUE
 
 	invisible (TRUE)
 }
@@ -265,10 +265,9 @@
 # not needed by rkward but provided for completeness
 #' @export
 ".rk.unwatch.symbol" <- function (k) {
+	x <- get(k, envir=globalenv ())
 	rm (list=k, envir=globalenv ())
-
-	assign (k, .rk.watched.symbols$k, envir=globalenv ())
-
+	assign (k, x, envir=globalenv ())
 	rm (k, envir=.rk.watched.symbols);
 
 	invisible (TRUE)
