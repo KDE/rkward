@@ -108,7 +108,7 @@ rkward (0.6.0-2) unstable; urgency=low
   * make sure to include CPPFLAGS and LDFLAGS in call to cmake
   * correct path to qwinhost files in debian/copyright
   * correct syntax in debian/copyright (thanks to Laszlo Kajan)
-  
+
  -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Sat, 24 Nov 2012 14:15:00 +0200
 
 rkward (0.6.0-1) unstable; urgency=low
@@ -302,7 +302,7 @@ rkward (0.4.9a-1) unstable; urgency=low
 
 rkward (0.4.9-2) unstable; urgency=low
 
-  * remove --ignore-missing-info parameter again (dpkg-shlibdeps 1.14.12 
+  * remove --ignore-missing-info parameter again (dpkg-shlibdeps 1.14.12
     does not need it, anymore)
   * when uploaded to main archive, this
     closes: #460745
@@ -319,7 +319,7 @@ rkward (0.4.9-1) unstable; urgency=low
 
 rkward (0.4.8a-2) unstable; urgency=low
 
-  * quote the R CMD config calls, as they may also contain compiler arguments 
+  * quote the R CMD config calls, as they may also contain compiler arguments
     (thanks to Meik Michalke for a patch)
 
  -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Thu, 14 Nov 2007 13:30:00 +0200
@@ -347,7 +347,7 @@ rkward (0.4.7a-2) unstable; urgency=low
     closes: #432377
   * merge upstream fix for R 2.6
     closes: #442059
-  * changed distclean rule in debian/rules to only ignore missing Makefiles 
+  * changed distclean rule in debian/rules to only ignore missing Makefiles
 
  -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Fri, 14 Sep 2007 13:30:00 +0200
 
@@ -439,7 +439,7 @@ rkward (0.3.7-1) unstable; urgency=low
 
 rkward (0.3.6-4) unstable; urgency=low
 
-  * fix automatic build on alpha machines 
+  * fix automatic build on alpha machines
     patch provided by Martin Michlmayr <tbm@cyrius.com>
     closes: #374005
   * bumbed to standards 3.7.2
