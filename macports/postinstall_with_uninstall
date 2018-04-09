@@ -1,0 +1,58 @@
+#!/bin/bash
+INSTDIR="$2/opt/rkward"
+INSTALLER_USER=$(stat -f '%Su' $HOME)
+"${INSTDIR}/bin/update-mime-database" -V "${INSTDIR}/share/mime"
+if [ -d "${INSTDIR}/share/rkward" ] ; then
+  mkdir -p "${INSTDIR}/share/rkward/macOS"
+  # generate uninstall script
+    cat <<EOF > "${INSTDIR}/share/rkward/macOS/uninstall.scpt"
+set RKWardDir to "${INSTDIR}"
+set haveRKWard to false
+tell application "System Events"
+  if exists folder RKWardDir then
+    set haveRKWard to true
+  end if
+end tell
+if haveRKWard
+  try
+    display dialog "Most of RKWard's installation resides in " & RKWardDir & ". To uninstall RKWard completely that directory should be deleted as well.\n\nDo you want to remove it now?\n\nIf you choose this option, all files below " & RKWardDir & " will not be moved to Trash but removed permanently!"  buttons {"No, keep for now", "Yes, completely remove"} default button "Yes, completely remove" cancel button "No, keep for now" with title "Remove RKWard completely?" with icon caution
+    set {buttonReturned} to {button returned of result}
+    if buttonReturned is "Yes, completely remove" then
+      try
+        do shell script "rm -rf \"" & RKWardDir & "\"" with administrator privileges
+        do shell script "rm ~/Library/LaunchAgents/org.macports.kf5-rkward.plist"
+      on error
+        display alert "Failed removing " & RKWardDir & "!"
+      end try
+    end if
+  end try
+end if
+EOF
+  # generate watch job
+  cat <<EOF > "${INSTDIR}/share/rkward/macOS/org.macports.kf5-rkward.plist"
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>org.macports.kf5-rkward</string>
+    <key>WatchPaths</key>
+    <array>
+      <string>~/.Trash/rkward.app</string>
+    </array>
+    <key>ProgramArguments</key>
+    <array>
+      <string>osascript</string>
+      <string>${INSTDIR}/share/rkward/macOS/uninstall.scpt</string>
+    </array>
+    <key>KeepAlive</key>
+    <false/>
+  </dict>
+</plist>
+EOF
+  # link watch job
+  sudo -u "${INSTALLER_USER}" mkdir -p "~/Library/LaunchAgents"
+  sudo -u "${INSTALLER_USER}" ln -sf "${INSTDIR}/share/rkward/macOS/org.macports.kf5-rkward.plist" "~/Library/LaunchAgents/org.macports.kf5-rkward.plist"
+  sudo -u "${INSTALLER_USER}" launchctl load -w "$HOME/Library/LaunchAgents/org.macports.kf5-rkward.plist"
+fi
+exit 0
