@@ -223,7 +223,6 @@
 #}
 
 # these functions can be used to track assignments to R objects. The main interfaces are .rk.watch.symbol (k) and .rk.unwatch.symbol (k). This works by copying the symbol to a local environment, removing it, and replacing it by an active binding to the backup location
-#' @export
 ".rk.watched.symbols" <- new.env ()
 
 #' @export
@@ -234,18 +233,15 @@
 	# due to the call to "if (!missing(value))".
 	missing <- base::missing
 	.Call <- base::.Call
-	invisible <- base::invisible
 
+	# NOTE: - Another _small_ speedup (~10%) _could_ be achieved by pre-compiling the returned function (compiler::cmpfun()).
+	#       - Limiting the .Call()s (by keeping/clearing a flag of whether change has been signalled, before) does not have any measurable effect, but adds complexity
 	function (value) {
-		if (!missing (value)) {
-			x <<- value
-			.Call ("rk.do.command", c ("ws", k), PACKAGE="(embedding)");
-#			NOTE: the above is essentially the same as
-#				.rk.do.call ("ws", k);
-#			only minimally faster.
-			invisible (x)
-		} else {
+		if (missing (value)) {
 			x
+		} else {
+			.Call ("ws", k, PACKAGE="(embedding)");
+			x <<- value
 		}
 	}
 }

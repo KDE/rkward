@@ -869,6 +869,14 @@ SEXP doError (SEXP call) {
 	return R_NilValue;
 }
 
+SEXP doWs (SEXP name) {
+	if ((!RKRBackend::this_pointer->current_command) || (RKRBackend::this_pointer->current_command->type & RCommand::ObjectListUpdate) || (!(RKRBackend::this_pointer->current_command->type & RCommand::Sync))) {		// ignore Sync commands that are not flagged as ObjectListUpdate
+		QString sym = RKRSupport::SEXPToString(name);
+		if (!RKRBackend::this_pointer->changed_symbol_names.contains (sym)) RKRBackend::this_pointer->changed_symbol_names.append (sym);  // schedule symbol update for later
+	}
+	return R_NilValue;
+}
+
 SEXP doSubstackCall (SEXP call) {
 	RK_TRACE (RBACKEND);
 
@@ -876,16 +884,6 @@ SEXP doSubstackCall (SEXP call) {
 
 	QStringList list = RKRSupport::SEXPToStringList (call);
 
-	// handle symbol updates inline
-	if (list.count () == 2) {		// schedule symbol update for later
-		if (list[0] == "ws") {
-			// always keep in mind: No current command can happen for tcl/tk events.
-			if ((!RKRBackend::this_pointer->current_command) || (RKRBackend::this_pointer->current_command->type & RCommand::ObjectListUpdate) || (!(RKRBackend::this_pointer->current_command->type & RCommand::Sync))) {		// ignore Sync commands that are not flagged as ObjectListUpdate
-				if (!RKRBackend::this_pointer->changed_symbol_names.contains (list[1])) RKRBackend::this_pointer->changed_symbol_names.append (list[1]);
-			}
-			return R_NilValue;
-		}
-	}
 /*	// this is a useful place to sneak in test code for profiling
 	if (list.value (0) == "testit") {
 		for (int i = 10000; i >= 1; --i) {
@@ -970,6 +968,7 @@ SEXP doCopyNoEval (SEXP fromname, SEXP fromenv, SEXP toname, SEXP toenv) {
 
 SEXP RKStartGraphicsDevice (SEXP width, SEXP height, SEXP pointsize, SEXP family, SEXP bg, SEXP title, SEXP antialias);
 SEXP RKD_AdjustSize (SEXP devnum);
+SEXP doWs (SEXP name);
 void doPendingPriorityCommands ();
 
 bool RKRBackend::startR () {
@@ -1044,6 +1043,7 @@ bool RKRBackend::startR () {
 
 // register our functions
 	R_CallMethodDef callMethods [] = {
+		{ "ws", (DL_FUNC) &doWs, 1 },
 		{ "rk.do.error", (DL_FUNC) &doError, 1 },
 		{ "rk.do.command", (DL_FUNC) &doSubstackCall, 1 },
 		{ "rk.do.generic.request", (DL_FUNC) &doPlainGenericRequest, 2 },

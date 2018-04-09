@@ -20,7 +20,7 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			.GlobalEnv$active.binding.value <- 123
 			stopifnot (.GlobalEnv$active.binding == 123)
 
-			stopifnot (bindingIsActive ("active.binding", rkward::.rk.watched.symbols))
+			stopifnot (isTRUE(rkward:::.rk.watched.symbols$active.binding))
 
 			# NOTE: the message "active.binding" should be displayed in the message output
 		}),
