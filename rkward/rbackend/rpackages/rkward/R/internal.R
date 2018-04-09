@@ -248,11 +248,15 @@
 
 #' @export
 ".rk.watch.symbol" <- function (k) {
-	f <- .rk.make.watch.f (k)
-	.Call ("rk.copy.no.eval", k, globalenv(), "x", environment (f), PACKAGE="(embedding)");
-	rm (list=k, envir=globalenv ())
-
-	.rk.makeActiveBinding.default (k, f, globalenv ())
+	if (bindingIsActive(k, globalenv())) {
+		# If the symbol already is an active binding, give up for now, as there is not currently a user-accessible way to copy an active binding (not just its value)
+		message("Note: RKWard cannot watch active binding ", k, " for changes.")
+	} else {
+		f <- .rk.make.watch.f (k)
+		.Call ("rk.copy.no.eval", k, globalenv(), "x", environment (f), PACKAGE="(embedding)");
+		rm (list=k, envir=globalenv ())
+		.rk.makeActiveBinding.default (k, f, globalenv ())
+	}
 	.rk.watched.symbols[[k]] <- TRUE
 
 	invisible (TRUE)
