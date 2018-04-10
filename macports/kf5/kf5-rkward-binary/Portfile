@@ -26,9 +26,9 @@ conflicts           port:rkward rkward-devel rkward-binary rkward-devel-binary k
 homepage            https://rkward.kde.org/
 
 subport ${name}-devel {
-    description     ${description} This port follows git/frameworks
+    description     ${description}
     long_description \
-                    ${long_description} This port follows git/frameworks
+                    ${long_description}
 }
 
 ############
