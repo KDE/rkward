@@ -120,6 +120,7 @@ GETTARGVERS=true
 PORTGROUPS=false
 LISTRDEPENDS=false
 SHOWBUNDLESIZE=false
+POSTINST=false
 
 # this array holds all packages who should not be included in the bundle
 declare -a EXCLPKG=(audio_lame audio_libmodplug audio_libopus \
@@ -156,6 +157,7 @@ if [[ $1 == "" ]] ; then
     ${TXT_DGRAY}3.${OFF} build Qt (${TXT_BOLD}-Q${OFF})
     ${TXT_DGRAY}4.${OFF} build RKWard using CRAN R (${TXT_BOLD}-r${OFF})
     ${TXT_DGRAY}5.${OFF} remove static libs & create binary bundle (${TXT_BOLD}-lm${OFF})
+    ${TXT_DGRAY}6.${OFF} customize the bundle (${TXT_BOLD}-L${OFF} ${TXT_ITALIC}<path to bundle>${OFF})
 
   ${TXT_UNDERSCORE}OPTIONS${OFF}:
 
@@ -191,8 +193,11 @@ if [[ $1 == "" ]] ; then
        ${TXT_DGRAY}building & bundling (can be combined with${OFF} ${TXT_BOLD}-D${OFF}${TXT_DGRAY}/${OFF}${TXT_BOLD}-d${OFF}${TXT_DGRAY}/${OFF}${TXT_BOLD}-b${OFF}${TXT_DGRAY}):${OFF}
            ${TXT_BOLD}-l${OFF}  remove static port libraries
            ${TXT_BOLD}-L${OFF} ${TXT_LRED}${TXT_ITALIC}<.pkg/.mpkg file>${OFF}
-               remove probably superfluous parts from the given bundle
+               remove probably superfluous parts from the given bundle, re-brand installer
                temporary directory: ${TXT_BLUE}${BNDLTMP}${OFF}
+           ${TXT_BOLD}-P${OFF} ${TXT_LRED}${TXT_ITALIC}<postinstall file>${OFF}
+               replace bundle postinstall script with customized file
+               (for testing; only effective in combination with ${TXT_BOLD}-L${OFF})
            ${TXT_BOLD}-p${OFF}  update macports, remove inactive
            ${TXT_BOLD}-r${OFF}  update port ${TXT_BLUE}${PTARGET}${OFF}
            ${TXT_BOLD}-m${OFF}  create .mpkg of ${TXT_BLUE}${PTARGET}${OFF}
@@ -216,7 +221,7 @@ exit 0
 fi
 
 # get the options
-while getopts ":a:CD:E:d:b:fGlL:prRQqmsS:cU:xXF:t:" OPT; do
+while getopts ":a:CD:E:d:b:fGlL:pP:rRQqmsS:cU:xXF:t:" OPT; do
   case $OPT in
     a) SHOWBUNDLESIZE=true >&2
        SHOWMPKGFILE=$OPTARG >&2 ;;
@@ -255,6 +260,8 @@ while getopts ":a:CD:E:d:b:fGlL:prRQqmsS:cU:xXF:t:" OPT; do
     L) DOEXCPCK=true
        MPKGNAME=$OPTARG >&2 ;;
     p) UPMPORTS=true >&2 ;;
+    P) POSTINST=true >&2
+       POSTINSTFILE=$OPTARG >&2 ;;
     r) UPRKWARD=true >&2 ;;
     R) LISTRDEPENDS=true >&2 ;;
     m) RPATHFIX=true >&2
@@ -746,22 +753,33 @@ if $DOEXCPCK ; then
         alldone
         if [ -d "${BNDLTMP}/bundle/${THISPKG}/Payload_new/Applications/RKWard/rkward.app" ] ; then
           # move rkward.app to a proper place
-          echo -en "    move ${TXT_BLUE}rkward.app${OFF} directory..."
+          echo -en "    moving ${TXT_BLUE}rkward.app${OFF} directory..."
           mv "${BNDLTMP}/bundle/${THISPKG}/Payload_new/Applications/RKWard/rkward.app" "${BNDLTMP}/bundle/${THISPKG}/Payload_new/Applications/rkward.app" || warning "failed!"
           alldone
-          echo -en "    remove empty ${TXT_BLUE}Applications/RKWard${OFF} directory..."
+          echo -en "    removing empty ${TXT_BLUE}Applications/RKWard${OFF} directory..."
           rm -rf "${BNDLTMP}/bundle/${THISPKG}/Payload_new/Applications/RKWard" 2>/dev/null || warning "failed!"
           alldone
+          if $POSTINST ; then
+            echo -en "    replacing ${TXT_BLUE}postinstall${OFF}..."
+            if [ -f "${POSTINSTFILE}" ] ; then
+              mkmissingdir "${BNDLTMP}/bundle/${THISPKG}/Scripts"
+              cp "/Users/rkward/bin/postinstall_with_uninstall" "${BNDLTMP}/bundle/${THISPKG}/Scripts/postinstall"
+              chmod 755 "${BNDLTMP}/bundle/${THISPKG}/Scripts/postinstall"
+              alldone
+            else
+              warning "failed, file not found: ${TXT_BLUE}${POSTINSTFILE}${OFF}"
+            fi
+          fi
         elif [ -d "${BNDLTMP}/bundle/${THISPKG}/Payload_new/Applications" ] ; then
-          echo -en "    remove ${TXT_BLUE}Applications${OFF} directory..."
+          echo -en "    removing ${TXT_BLUE}Applications${OFF} directory..."
           rm -rf "${BNDLTMP}/bundle/${THISPKG}/Payload_new/Applications" 2>/dev/null || warning "failed!"
           alldone
         fi
-        echo -en "    compress new Payload..."
+        echo -en "    compressing new Payload..."
         find . | cpio -o --format odc 2>/dev/null | gzip -c > "${BNDLTMP}/bundle/${THISPKG}/Payload" 2>/dev/null
         alldone
         cd ..
-        echo -en "    remove ${TXT_BLUE}Payload_new${OFF}..."
+        echo -en "    removing ${TXT_BLUE}Payload_new${OFF}..."
         rm -rf "${BNDLTMP}/bundle/${THISPKG}/Payload_new" 2>/dev/null || error "failed!"
         alldone
       fi
@@ -787,7 +805,7 @@ if $DOEXCPCK ; then
     echo -en "\nre-packing ${TXT_BLUE}stripped_$(basename ${MPKGNAME})${OFF}..."
     pkgutil --flatten "${BNDLTMP}/bundle" "$(dirname ${MPKGNAME})/stripped_$(basename ${MPKGNAME})" || error "failed!"
     alldone
-    echo -en "remove temporary dir ${TXT_BLUE}${BNDLTMP}${OFF}..."
+    echo -en "removing temporary dir ${TXT_BLUE}${BNDLTMP}${OFF}..."
     rm -rf "${BNDLTMP}" 2>/dev/null || error "failed!"
     alldone
   else
