@@ -16,15 +16,20 @@ if [ -d "${RKWARDSHARE}" ] ; then
   # generate uninstall script
     cat <<EOF > "${UNINSTALLER}"
 set RKWardDir to "${INSTDIR}"
+set appInTrash to POSIX path of (path to trash) & "rkward.app/Contents/Info.plist"
 set haveRKWard to false
+set haveTrash to false
 tell application "System Events"
+  if exists file appInTrash then
+    set haveTrash to true
+  end if
   if exists folder RKWardDir then
     set haveRKWard to true
   end if
 end tell
-if haveRKWard then
+if haveTrash and haveRKWard then
   try
-    display dialog "Most of RKWard's installation resides in " & RKWardDir & ". To uninstall RKWard completely that directory should be deleted as well.\n\nDo you want to remove it now?\n\nIf you choose this option, all files below " & RKWardDir & " will not be moved to Trash but removed permanently!"  buttons {"No, keep for now", "Yes, completely remove"} default button "Yes, completely remove" cancel button "No, keep for now" with title "Remove RKWard completely?" with icon caution
+    display dialog "Most of RKWard's installation resides in " & RKWardDir & ". To completely uninstall RKWard, that directory should be deleted as well.\n\nIf you choose this option, all files below " & RKWardDir & " will not be moved to Trash but removed permanently!\n\nDo you want to remove " & RKWardDir & " now?" buttons {"No, keep for now", "Yes, completely remove"} default button "Yes, completely remove" cancel button "No, keep for now" with title "Remove RKWard completely?" with icon caution
     set {buttonReturned} to {button returned of result}
     if buttonReturned is "Yes, completely remove" then
       try
@@ -36,8 +41,8 @@ if haveRKWard then
       end try
       if removeRKWardOK then
         try
-          do shell script "launchctl unload \"${PLISTTARGET}\""
           do shell script "rm \"${PLISTTARGET}\""
+          do shell script "launchctl remove \"${AGENT}\""
         end try
       end if
     end if
