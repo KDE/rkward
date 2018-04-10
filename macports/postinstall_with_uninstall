@@ -1,6 +1,5 @@
 #!/bin/bash
 INSTDIR="$2/opt/rkward"
-INSTALLER_USER=$(stat -f '%Su' $HOME)
 "${INSTDIR}/bin/update-mime-database" -V "${INSTDIR}/share/mime"
 if [ -d "${INSTDIR}/share/rkward" ] ; then
   mkdir -p "${INSTDIR}/share/rkward/macOS"
