@@ -50,9 +50,24 @@ EOF
   </dict>
 </plist>
 EOF
-  # link watch job
-  sudo -u "${INSTALLER_USER}" mkdir -p "~/Library/LaunchAgents"
-  sudo -u "${INSTALLER_USER}" ln -sf "${INSTDIR}/share/rkward/macOS/org.macports.kf5-rkward.plist" "~/Library/LaunchAgents/org.macports.kf5-rkward.plist"
-  sudo -u "${INSTALLER_USER}" launchctl load -w "$HOME/Library/LaunchAgents/org.macports.kf5-rkward.plist"
+  # add watch job agent to startup script
+  if [ $(file "$2/Applications/rkward.app/Contents/MacOS/rkward.rbackend" | grep text) ] ; then
+    sed -i -e "1 a \
+AGENT=\"org.macports.kf5-rkward\" \n\
+AGENTSDIR=\"~/Library/LaunchAgents\" \n\
+PLISTSOURCE=\"${INSTDIR}/share/rkward/macOS/\${AGENT}.plist\" \n\
+PLISTTARGET=\"\${AGENTSDIR}/\${AGENT}.plist\" \n\
+if [ -f \"\${PLISTSOURCE}\" ] ; then \n\
+  if ! [ -d \"\${AGENTSDIR}\" ] ; then \n\
+    mkdir -p \"\${AGENTSDIR}\" \n\
+  fi \n\
+  if ! [ -f \"\${PLISTTARGET}\" ] ; then \n\
+    ln -sf \"\${PLISTSOURCE}\" \"\${PLISTTARGET}\" \n\
+  fi \n\
+  if ! [ \$(launchctl list | grep \${AGENT}) ] ; then \n\
+    launchctl load -w \"\${PLISTTARGET}\" \n\
+  fi \n\
+fi" "$2/Applications/rkward.app/Contents/MacOS/rkward.rbackend"
+  fi
 fi
 exit 0
