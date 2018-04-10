@@ -1,10 +1,20 @@
-#!/bin/bash
-INSTDIR="$2/opt/rkward"
+#!/usr/bin/env bash
+INSTDIR=$(echo "$2/opt/rkward" | sed 's#//#/#g')
+INSTALLER_USER=$(stat -f '%Su' "${HOME}")
+AGENT="org.macports.kf5-rkward"
+RKWARDSHARE="${INSTDIR}/share/rkward"
+SCRIPTDIR="${RKWARDSHARE}/macOS"
+PLISTSOURCE="${SCRIPTDIR}/${AGENT}.plist"
+AGENTSDIR="${HOME}/Library/LaunchAgents"
+PLISTTARGET="${AGENTSDIR}/${AGENT}.plist"
+UNINSTALLER="${SCRIPTDIR}/uninstall.scpt"
+
 "${INSTDIR}/bin/update-mime-database" -V "${INSTDIR}/share/mime"
-if [ -d "${INSTDIR}/share/rkward" ] ; then
-  mkdir -p "${INSTDIR}/share/rkward/macOS"
+
+if [ -d "${RKWARDSHARE}" ] ; then
+  mkdir -p "${SCRIPTDIR}"
   # generate uninstall script
-    cat <<EOF > "${INSTDIR}/share/rkward/macOS/uninstall.scpt"
+    cat <<EOF > "${UNINSTALLER}"
 set RKWardDir to "${INSTDIR}"
 set haveRKWard to false
 tell application "System Events"
@@ -12,29 +22,36 @@ tell application "System Events"
     set haveRKWard to true
   end if
 end tell
-if haveRKWard
+if haveRKWard then
   try
     display dialog "Most of RKWard's installation resides in " & RKWardDir & ". To uninstall RKWard completely that directory should be deleted as well.\n\nDo you want to remove it now?\n\nIf you choose this option, all files below " & RKWardDir & " will not be moved to Trash but removed permanently!"  buttons {"No, keep for now", "Yes, completely remove"} default button "Yes, completely remove" cancel button "No, keep for now" with title "Remove RKWard completely?" with icon caution
     set {buttonReturned} to {button returned of result}
     if buttonReturned is "Yes, completely remove" then
       try
         do shell script "rm -rf \"" & RKWardDir & "\"" with administrator privileges
-        do shell script "rm ~/Library/LaunchAgents/org.macports.kf5-rkward.plist"
+        set removeRKWardOK to true
       on error
+        set removeRKWardOK to false
         display alert "Failed removing " & RKWardDir & "!"
       end try
+      if removeRKWardOK then
+        try
+          do shell script "launchctl unload \"${PLISTTARGET}\""
+          do shell script "rm \"${PLISTTARGET}\""
+        end try
+      end if
     end if
   end try
 end if
 EOF
   # generate watch job
-  cat <<EOF > "${INSTDIR}/share/rkward/macOS/org.macports.kf5-rkward.plist"
+  cat <<EOF > "${PLISTSOURCE}"
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
     <key>Label</key>
-    <string>org.macports.kf5-rkward</string>
+    <string>${AGENT}</string>
     <key>WatchPaths</key>
     <array>
       <string>~/.Trash/rkward.app</string>
@@ -42,31 +59,24 @@ EOF
     <key>ProgramArguments</key>
     <array>
       <string>osascript</string>
-      <string>${INSTDIR}/share/rkward/macOS/uninstall.scpt</string>
+      <string>${UNINSTALLER}</string>
     </array>
     <key>KeepAlive</key>
     <false/>
   </dict>
 </plist>
 EOF
-  # add watch job agent to startup script
-  if [ $(file "$2/Applications/rkward.app/Contents/MacOS/rkward.rbackend" | grep text) ] ; then
-    sed -i -e "1 a \
-AGENT=\"org.macports.kf5-rkward\" \n\
-AGENTSDIR=\"~/Library/LaunchAgents\" \n\
-PLISTSOURCE=\"${INSTDIR}/share/rkward/macOS/\${AGENT}.plist\" \n\
-PLISTTARGET=\"\${AGENTSDIR}/\${AGENT}.plist\" \n\
-if [ -f \"\${PLISTSOURCE}\" ] ; then \n\
-  if ! [ -d \"\${AGENTSDIR}\" ] ; then \n\
-    mkdir -p \"\${AGENTSDIR}\" \n\
-  fi \n\
-  if ! [ -f \"\${PLISTTARGET}\" ] ; then \n\
-    ln -sf \"\${PLISTSOURCE}\" \"\${PLISTTARGET}\" \n\
-  fi \n\
-  if ! [ \$(launchctl list | grep \${AGENT}) ] ; then \n\
-    launchctl load -w \"\${PLISTTARGET}\" \n\
-  fi \n\
-fi" "$2/Applications/rkward.app/Contents/MacOS/rkward.rbackend"
+  # link watch job
+  if [ -f "${PLISTSOURCE}" ] ; then
+    if ! [ -d "${AGENTSDIR}" ] ; then
+      sudo -u "${INSTALLER_USER}" mkdir -p "${AGENTSDIR}"
+    fi
+    if ! [ -f "${PLISTTARGET}" ] ; then
+      sudo -u "${INSTALLER_USER}" ln -s "${PLISTSOURCE}" "${PLISTTARGET}"
+    fi
+    if ! [ $(launchctl list | grep ${AGENT}) ] ; then
+      sudo -u "${INSTALLER_USER}" launchctl load -w "${PLISTTARGET}"
+    fi
   fi
 fi
 exit 0
