@@ -71,7 +71,7 @@
 </varlistentry>
 <varlistentry>
 <term><option>--debug-flags</option> <replaceable>flags</replaceable></term>
-<listitem><para>Allows to configure, which sections of code to debug. Flags are given as a binary number. Refer to the source files for documentation, as this really is an internal option.</para></listitem>
+<listitem><para>Configure which sections of code to debug. Flags are given as a binary number. Refer to the source files for documentation, as this really is an internal option.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term><option>--backend-debugger</option> <replaceable>command</replaceable></term>
@@ -112,7 +112,7 @@ rkward --nowarn-external rkward://runplugin/rkward::t_test/
 rkward --reuse file_a.R file_b.R
 
 # Run the rkward backend through valgrind
-rkward --backend-debugger 'valgrind --log-file=valgrind.log'.
+rkward --backend-debugger 'valgrind --log-file=valgrind.log'
 </programlisting></para>
 </refsect1>
 
