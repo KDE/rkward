@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 INSTDIR=$(echo "$2/opt/rkward" | sed 's#//#/#g')
 INSTALLER_USER=$(stat -f '%Su' "${HOME}")
+APPDIR=$(echo "$2/Applications/rkward.app" | sed 's#//#/#g')
 AGENT="org.macports.kf5-rkward"
 RKWARDSHARE="${INSTDIR}/share/rkward"
 SCRIPTDIR="${RKWARDSHARE}/macOS"
@@ -8,6 +9,9 @@ PLISTSOURCE="${SCRIPTDIR}/${AGENT}.plist"
 AGENTSDIR="${HOME}/Library/LaunchAgents"
 PLISTTARGET="${AGENTSDIR}/${AGENT}.plist"
 UNINSTALLER="${SCRIPTDIR}/uninstall.scpt"
+UNINSTALLER_DIR="${HOME}/Applications"
+UNINSTALLER_USER_APP="${UNINSTALLER_DIR}/RKWard_uninstall.app"
+UNINSTALLER_APP="${SCRIPTDIR}/RKWard_uninstall.app"
 
 "${INSTDIR}/bin/update-mime-database" -V "${INSTDIR}/share/mime"
 
@@ -16,9 +20,14 @@ if [ -d "${RKWARDSHARE}" ] ; then
   # generate uninstall script
     cat <<EOF > "${UNINSTALLER}"
 set RKWardDir to "${INSTDIR}"
-set appInTrash to POSIX path of (path to trash) & "rkward.app/Contents/Info.plist"
+set RKWardAppDir to "${APPDIR}"
+set appInTrash to POSIX path of (path to trash) & "/rkward.app/Contents/Info.plist"
+set appInDir to POSIX path of RKWardAppDir & "/Contents/Info.plist"
 set haveRKWard to false
 set haveTrash to false
+set haveApp to false
+-- the next variable is not changed by the script itself but during installation
+set manualUninstall to false
 tell application "System Events"
   if exists file appInTrash then
     set haveTrash to true
@@ -26,10 +35,18 @@ tell application "System Events"
   if exists folder RKWardDir then
     set haveRKWard to true
   end if
+  if exists file appInDir then
+    set haveApp to true
+  end if
 end tell
 if haveTrash and haveRKWard then
+  if manualUninstall and haveApp then
+    set addToDialog to " and " & RKWardAppDir
+  else
+    set addToDialog to ""
+  end if
   try
-    display dialog "Most of RKWard's installation resides in " & RKWardDir & ". To completely uninstall RKWard, that directory should be deleted as well.\n\nIf you choose this option, all files below " & RKWardDir & " will not be moved to Trash but removed permanently!\n\nDo you want to remove " & RKWardDir & " now?" buttons {"No, keep for now", "Yes, completely remove"} default button "Yes, completely remove" cancel button "No, keep for now" with title "Remove RKWard completely?" with icon caution
+    display dialog "Most of RKWard's installation resides in " & RKWardDir & ". To completely uninstall RKWard, both " & RKWardAppDir & " and " & RKWardDir & " should be deleted.\n\nIf you choose this option, all files below " & RKWardDir & addToDialog & " will removed permanently (not moved to Trash)!\n\nDo you want to irrevocably remove " & RKWardDir & addToDialog & " now?" buttons {"No, keep for now", "Yes, completely remove"} default button "Yes, completely remove" cancel button "No, keep for now" with title "Remove RKWard completely?" with icon caution
     set {buttonReturned} to {button returned of result}
     if buttonReturned is "Yes, completely remove" then
       try
@@ -39,7 +56,15 @@ if haveTrash and haveRKWard then
         set removeRKWardOK to false
         display alert "Failed removing " & RKWardDir & "!"
       end try
+      if manualUninstall and haveApp and removeRKWardOK then
+        try
+          do shell script "rm -rf \"${APPDIR}\""
+        end try
+      end if
       if removeRKWardOK then
+        try
+          do shell script "rm -rf \"${UNINSTALLER_USER_APP}\""
+        end try
         try
           do shell script "rm \"${PLISTTARGET}\""
           do shell script "launchctl remove \"${AGENT}\""
@@ -49,6 +74,12 @@ if haveTrash and haveRKWard then
   end try
 end if
 EOF
+  # create a standalone uninstaller from a modified version without the check for trash
+  if ! [ -d "${UNINSTALLER_DIR}" ] ; then
+    sudo -u "${INSTALLER_USER}" mkdir -p "${UNINSTALLER_DIR}"
+  fi
+  sed -e "s/set manualUninstall to false/set manualUninstall to true/g" "${UNINSTALLER}" | sed -e "s/if haveTrash and haveRKWard then/if haveRKWard then/g" | osacompile -o "${UNINSTALLER_APP}"
+  sudo -u "${INSTALLER_USER}" cp -r "${UNINSTALLER_APP}" "${UNINSTALLER_DIR}"
   # generate watch job
   cat <<EOF > "${PLISTSOURCE}"
 <?xml version="1.0" encoding="UTF-8"?>

@@ -800,6 +800,7 @@ if $DOEXCPCK ; then
       echo -en "\nfixing ${TXT_BLUE}Distribution${OFF}..."
       sed -i -e "s|<title>kf5-rkward[-binarydevl]*</title>|<title>RKWard</title>|g" "${BNDLTMP}/bundle/Distribution" || warning "failed!"
       sed -i -e "s|Applications/RKWard/rkward.app|Applications/rkward.app|g" "${BNDLTMP}/bundle/Distribution" || warning "failed!"
+      sed -i -e $'s|</allowed-os-versions>|</allowed-os-versions>\\\n    <domains enable_anywhere="false" enable_currentUserHome="false" enable_localSystem="true"/>|' "${BNDLTMP}/bundle/Distribution"
       alldone
     fi
     echo -en "\nre-packing ${TXT_BLUE}stripped_$(basename ${MPKGNAME})${OFF}..."
@@ -808,6 +809,7 @@ if $DOEXCPCK ; then
     echo -en "removing temporary dir ${TXT_BLUE}${BNDLTMP}${OFF}..."
     rm -rf "${BNDLTMP}" 2>/dev/null || error "failed!"
     alldone
+    bundlesize "$(dirname ${MPKGNAME})/stripped_$(basename ${MPKGNAME})"
   else
     error "${TXT_BLUE}${BNDLTMP}${OFF} exists, can't unpack the bundle archive!"
   fi
