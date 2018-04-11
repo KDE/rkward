@@ -19,7 +19,7 @@ Package: rkward
 Architecture: any
 Depends: rkward-data (= ${source:Version}), ${misc:Depends}, ${rvers}, ${rapivers}, ${shlibs:Depends}
 Recommends: r-base-html
-Description: RKWard is a KDE frontend to the R statistics language
+Description: KDE frontend to the R statistics language
  RKWard aims to become an easy to use, transparent frontend to R,
  a powerful system for statistical computation and graphics.
  Besides a convenient GUI for the most important statistical functions,
@@ -32,6 +32,6 @@ Depends: ${misc:Depends}
 Recommends: rkward
 Breaks: rkward (<< 0.6.5~rc1-1~)
 Replaces: rkward (<< 0.6.5~rc1-1~)
-Description: RKWard is a KDE frontend to the R statistics language
+Description: KDE frontend to the R statistics language
  .
  This package provides the architecture independent data files for rkward.
