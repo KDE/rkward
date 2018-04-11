@@ -1,12 +1,10 @@
 #!/usr/bin/make -f
+include /usr/share/dpkg/pkg-info.mk
 
 #we need to know the R version
 RVERS = $(shell dpkg-query -W --showformat='$${Version}' r-base-core)
 RMAJOR = $(shell echo $(RVERS) | awk -F. '{print $$1}')
 RMINOR = $(shell echo $(RVERS) | awk -F. '{print $$2}')
-
-# set built-time of GNUR packages to time of created binary package based on stamp in changelog
-builttime = $(shell dpkg-parsechangelog -l$(CURDIR)/debian/changelog | awk -F': ' '/Date/ {print $$2}')
 
 # Workaround for cmake not handling CPPFLAGS (https://wiki.debian.org/HardeningWalkthrough):
 # As we cannot easily use dh for configuring, we have to merge flags, manually.
@@ -31,7 +29,7 @@ override_dh_auto_configure:
 		-DR_EXECUTABLE=/usr/bin/R/ \
 		-DR_LIBDIR=/usr/lib/R/site-library/ \
 		-DCMAKE_SKIP_RPATH=YES \
-		-DBUILD_TIMESTAMP="$(builttime)"
+		-DBUILD_TIMESTAMP="$(SOURCE_DATE_EPOCH)"
 
 override_dh_auto_install:
 	dh_auto_install

@@ -5,7 +5,7 @@ Maintainer: Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 Build-Depends: cmake,
                extra-cmake-modules,
                pkg-kde-tools | pkg-kf5-tools,
-               debhelper (>= 9.0.0),
+               debhelper (>= 11.0.0),
                libkf5webkit-dev,
                libkf5texteditor-dev,
                kdoctools-dev,
