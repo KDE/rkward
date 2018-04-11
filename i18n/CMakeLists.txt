@@ -40,21 +40,25 @@ IF(NOT GETTEXT_MSGFMT_EXECUTABLE)
                  NOTE: msgfmt not found. Translations will *not* be installed
 ------")
 ELSE(NOT GETTEXT_MSGFMT_EXECUTABLE)
-	IF(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/po/")
-		FILE(GLOB PO_FILES po/*.po)
-		RKHandlePO("${PO_FILES}")
-
-		ADD_CUSTOM_TARGET(translations ALL DEPENDS ${active_translations})
-	ELSE(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/po/")
-	MESSAGE(WARNING
+	IF(NOT TRANSLATION_SRC_DIR)
+		SET(TRANSLATION_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/po/")
+	ENDIF(NOT TRANSLATION_SRC_DIR)
+	FILE(GLOB PO_FILES "${TRANSLATION_SRC_DIR}/*.po")
+	MESSAGE(STATUS "${PO_FILES}")
+	RKHandlePO("${PO_FILES}")
+	ADD_CUSTOM_TARGET(translations ALL DEPENDS ${active_translations})
+	IF(NOT PO_FILES)
+		MESSAGE(WARNING
 "------
-                 Translations are not available.
+        No translations found at ${TRANSLATION_SRC_DIR}.
 
-${CMAKE_CURRENT_SOURCE_DIR}/po/ was not found. This probably means that you are building from the development repository, and have not fetched translations. This is ok, if you want to run RKWard in English, only. Otherwise, to fetch translations, either
+${TRANSLATION_SRC_DIR} was not found. This probably means that you are building from the development repository, and have not fetched translations. This is ok, if you want to run RKWard in English, only. Otherwise, to fetch translations, either
    scripts/import_translations.py XX
 where (XX is your language code, such as \"de\"; optionally specify several codes separated by spaces). In some cases (esp., if you want to build all existing translations), it is much faster to use:
    git clone git://anongit.kde.org/scratch/tfry/rkward-po-export i18n/po
+Should you have installed translations to a non-standard directory, you can specify that using
+   cmake [...] -DTRANSLATION_SRC_DIR=/x/y/z
 ------")
-	ENDIF(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/po/")
+	ENDIF(NOT PO_FILES)
 ENDIF(NOT GETTEXT_MSGFMT_EXECUTABLE)
 
