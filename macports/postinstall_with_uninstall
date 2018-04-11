@@ -12,6 +12,7 @@ UNINSTALLER="${SCRIPTDIR}/uninstall.scpt"
 UNINSTALLER_DIR="${HOME}/Applications"
 UNINSTALLER_USER_APP="${UNINSTALLER_DIR}/RKWard_uninstall.app"
 UNINSTALLER_APP="${SCRIPTDIR}/RKWard_uninstall.app"
+OLDRKWARD="$(echo "$2/Applications/RKWard" | sed 's#//#/#g')"
 
 "${INSTDIR}/bin/update-mime-database" -V "${INSTDIR}/share/mime"
 
@@ -113,6 +114,10 @@ EOF
     if ! [ $(launchctl list | grep ${AGENT}) ] ; then
       sudo -u "${INSTALLER_USER}" launchctl load -w "${PLISTTARGET}"
     fi
+  fi
+  # finally remove the old RKWard folder if it's still present
+  if [ -d "${OLDRKWARD}" ] ; then
+    mv "${OLDRKWARD}" "${HOME}/.Trash/"
   fi
 fi
 exit 0
