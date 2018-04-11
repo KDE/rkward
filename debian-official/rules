@@ -29,7 +29,7 @@ override_dh_auto_configure:
 		-DR_EXECUTABLE=/usr/bin/R/ \
 		-DR_LIBDIR=/usr/lib/R/site-library/ \
 		-DCMAKE_SKIP_RPATH=YES \
-		-DBUILD_TIMESTAMP="$(shell date --date='@$(SOURCE_DATE_EPOCH)')"
+		-DBUILD_TIMESTAMP="$(shell date --utc --date='@$(SOURCE_DATE_EPOCH)')"
 
 override_dh_auto_install:
 	dh_auto_install
