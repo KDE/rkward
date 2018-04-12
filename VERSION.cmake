@@ -1,3 +1,3 @@
 # DO NOT CHANGE THIS FILE MANUALLY!
 # It will be overwritten by scripts/set_dist_version.sh
-SET(RKVERSION_NUMBER 0.7.0)
+SET(RKVERSION_NUMBER 0.7.0z+0.7.1+devel1)
