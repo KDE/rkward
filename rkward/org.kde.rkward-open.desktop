@@ -59,5 +59,6 @@ Terminal=false
 Type=Application
 X-DocPath=rkward/index.html
 Categories=Science;Math;NumericalAnalysis;
+Keywords=statistics;data;r;
 MimeType=text/r;application/rdata;
 # vi: encoding=utf-8

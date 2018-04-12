@@ -59,3 +59,4 @@ Terminal=false
 Type=Application
 X-DocPath=rkward/index.html
 Categories=Qt;KDE;Science;Math;NumericalAnalysis;
+Keywords=statistics;data;r;
