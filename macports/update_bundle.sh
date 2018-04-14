@@ -74,7 +74,7 @@ appendconfig "${CONFIGFILE}" "^USERBIN=" "USERBIN=\"${HOME}/bin\"" "config"
 appendconfig "${CONFIGFILE}" "^OSXVERSION=" "OSXVERSION=\$(sw_vers -productVersion | sed -e \"s/.[[:digit:]]*\$//\")" "config"
 appendconfig "${CONFIGFILE}" "^PVARIANT=" "PVARIANT=\"\"" "config"
 appendconfig "${CONFIGFILE}" "^GITBRANCH=" "GITBRANCH=\"master\"" "config"
-appendconfig "${CONFIGFILE}" "^WORKDIR=" "# specify work directory\nWORKDIR=\"\${SRCPATH}/kf5/\${PTARGET}/work\"" "config"
+appendconfig "${CONFIGFILE}" "^WORKDIR=" "# specify work directory\nWORKDIR=\"\${SRCPATH}/kf5/kf5-rkward-binary/work\"" "config"
 appendconfig "${CONFIGFILE}" "^LPUBDIR=" "# specify local public directory\nLPUBDIR=\"${HOME}/Public/rkward\"" "config"
 appendconfig "${CONFIGFILE}" "^APPLDIR=" "# specify application dir used\nAPPLDIR=\"/Applications/RKWard\"" "config"
 appendconfig "${CONFIGFILE}" "^BLDPRFX=" "# specify the prefix for build directories below \${MPTINST}/var/macports/build\nBLDPRFX=_opt_rkward_var_macports_sources_rsync.macports.org_release_tarballs_ports_" "config"
@@ -285,7 +285,6 @@ while getopts ":a:CD:E:d:b:fGlL:pP:rRQqmsS:cU:xXF:t:" OPT; do
 done
 
 if $BINARY ; then
-  WORKDIR="${SRCPATH}/kf5/kf5-rkward-binary/work"
   BINSTRING="-binary"
 else
   BINARY=false
@@ -294,8 +293,7 @@ fi
 if $DEVEL ; then
   DEVSTRING="-devel"
 else
-  WORKDIR="${SRCPATH}/kf5/kf5-rkward/work"
-  DEVSTRING=""
+z  DEVSTRING=""
 fi
 if $DEBUG ; then
   PVARIANT="+debug"
