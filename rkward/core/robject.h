@@ -130,8 +130,8 @@ public:
 	bool isType (int type) const { return (RObject::type & type); };
 	bool isPseudoObject () const { return isType (PseudoObject); };
 	PseudoObjectType getPseudoObjectType () const { return pseudo_object_types.value (this, InvalidPseudoObject); };
-	bool isSlotsPseudoObject () const { return (this && isPseudoObject () && (getPseudoObjectType () == SlotsObject)); };
-	bool isPackageNamespace () const { return (this && isPseudoObject () && (getPseudoObjectType () == NamespaceObject)); };
+	bool isSlotsPseudoObject () const { return (isPseudoObject () && (getPseudoObjectType () == SlotsObject)); };
+	bool isPackageNamespace () const { return (isPseudoObject () && (getPseudoObjectType () == NamespaceObject)); };
 	bool hasPseudoObject (const PseudoObjectType type) const { return (contained_objects & type); };
 	bool hasMetaObject () const { return (meta_map); };
 	/** see RObjectType::Pending */
