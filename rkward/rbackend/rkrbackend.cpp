@@ -869,6 +869,14 @@ SEXP doError (SEXP call) {
 	return R_NilValue;
 }
 
+SEXP doWs (SEXP name) {
+	if ((!RKRBackend::this_pointer->current_command) || (RKRBackend::this_pointer->current_command->type & RCommand::ObjectListUpdate) || (!(RKRBackend::this_pointer->current_command->type & RCommand::Sync))) {		// ignore Sync commands that are not flagged as ObjectListUpdate
+		QString sym = RKRSupport::SEXPToString(name);
+		if (!RKRBackend::this_pointer->changed_symbol_names.contains (sym)) RKRBackend::this_pointer->changed_symbol_names.append (sym);  // schedule symbol update for later
+	}
+	return R_NilValue;
+}
+
 SEXP doSubstackCall (SEXP call) {
 	RK_TRACE (RBACKEND);
 
@@ -876,16 +884,6 @@ SEXP doSubstackCall (SEXP call) {
 
 	QStringList list = RKRSupport::SEXPToStringList (call);
 
-	// handle symbol updates inline
-	if (list.count () == 2) {		// schedule symbol update for later
-		if (list[0] == "ws") {
-			// always keep in mind: No current command can happen for tcl/tk events.
-			if ((!RKRBackend::this_pointer->current_command) || (RKRBackend::this_pointer->current_command->type & RCommand::ObjectListUpdate) || (!(RKRBackend::this_pointer->current_command->type & RCommand::Sync))) {		// ignore Sync commands that are not flagged as ObjectListUpdate
-				if (!RKRBackend::this_pointer->changed_symbol_names.contains (list[1])) RKRBackend::this_pointer->changed_symbol_names.append (list[1]);
-			}
-			return R_NilValue;
-		}
-	}
 /*	// this is a useful place to sneak in test code for profiling
 	if (list.value (0) == "testit") {
 		for (int i = 10000; i >= 1; --i) {
@@ -957,18 +955,20 @@ SEXP doGetGlobalEnvStructure (SEXP name, SEXP envlevel, SEXP namespacename) {
 }
 
 /** copy a symbol without touching it (esp. not forcing any promises) */
-SEXP doCopyNoEval (SEXP name, SEXP fromenv, SEXP toenv) {
+SEXP doCopyNoEval (SEXP fromname, SEXP fromenv, SEXP toname, SEXP toenv) {
 	RK_TRACE (RBACKEND);
 
-	if(!Rf_isString (name) || Rf_length (name) != 1) Rf_error ("name is not a single string");
+	if(!Rf_isString (fromname) || Rf_length (fromname) != 1) Rf_error ("fromname is not a single string");
+	if(!Rf_isString (toname) || Rf_length (toname) != 1) Rf_error ("toname is not a single string");
 	if(!Rf_isEnvironment (fromenv)) Rf_error ("fromenv is not an environment");
 	if(!Rf_isEnvironment (toenv)) Rf_error ("toenv is not an environment");
-	Rf_defineVar (Rf_install (CHAR (STRING_ELT (name, 0))), Rf_findVar (Rf_install (CHAR (STRING_ELT (name, 0))), fromenv), toenv);
+	Rf_defineVar (Rf_install (CHAR (STRING_ELT (toname, 0))), Rf_findVar (Rf_install (CHAR (STRING_ELT (fromname, 0))), fromenv), toenv);
 	return (R_NilValue);
 }
 
 SEXP RKStartGraphicsDevice (SEXP width, SEXP height, SEXP pointsize, SEXP family, SEXP bg, SEXP title, SEXP antialias);
 SEXP RKD_AdjustSize (SEXP devnum);
+SEXP doWs (SEXP name);
 void doPendingPriorityCommands ();
 
 bool RKRBackend::startR () {
@@ -1043,12 +1043,13 @@ bool RKRBackend::startR () {
 
 // register our functions
 	R_CallMethodDef callMethods [] = {
+		{ "ws", (DL_FUNC) &doWs, 1 },
 		{ "rk.do.error", (DL_FUNC) &doError, 1 },
 		{ "rk.do.command", (DL_FUNC) &doSubstackCall, 1 },
 		{ "rk.do.generic.request", (DL_FUNC) &doPlainGenericRequest, 2 },
 		{ "rk.get.structure", (DL_FUNC) &doGetStructure, 4 },
 		{ "rk.get.structure.global", (DL_FUNC) &doGetGlobalEnvStructure, 3 },
-		{ "rk.copy.no.eval", (DL_FUNC) &doCopyNoEval, 3 },
+		{ "rk.copy.no.eval", (DL_FUNC) &doCopyNoEval, 4 },
 		{ "rk.edit.files", (DL_FUNC) &doEditFiles, 4 },
 		{ "rk.show.files", (DL_FUNC) &doShowFiles, 5 },
 		{ "rk.dialog", (DL_FUNC) &doDialog, 6 },
