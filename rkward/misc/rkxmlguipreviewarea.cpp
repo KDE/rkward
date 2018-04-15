@@ -107,7 +107,7 @@ void RKXMLGUIPreviewArea::prepareMenu () {
 		if (menu_empty) continue;
 
 		QWidgetAction *act = new QWidgetAction (this);
-		QLabel *lab = new QLabel ("<b>" + entries[i]->text ().replace ('&', "") + "</b>");
+		QLabel *lab = new QLabel ("<b>" + entries[i]->text ().remove ('&') + "</b>");
 		lab->setAlignment (Qt::AlignCenter);
 		act->setDefaultWidget (lab);
 		menu->addAction (act);

@@ -246,7 +246,6 @@ public:
 	QIcon collapsed;
 };
 
-#include <QPainter>
 #include <QScrollBar>
 #include <QHeaderView>
 RKAccordionTable::RKAccordionTable (QWidget* parent) : QTreeView (parent) {

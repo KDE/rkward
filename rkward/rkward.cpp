@@ -15,6 +15,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include "rkward.h"
+
 // include files for QT
 #include <qtimer.h>
 #include <QDesktopWidget>
@@ -44,7 +46,6 @@
 #include <KConfigGroup>
 
 // application specific includes
-#include "rkward.h"
 #include "core/rkmodificationtracker.h"
 #include "plugin/rkcomponentmap.h"
 #include "settings/rksettings.h"

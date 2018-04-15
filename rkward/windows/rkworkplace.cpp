@@ -415,7 +415,7 @@ bool RKWorkplace::openAnyUrl (const QUrl &url, const QString &known_mimetype, bo
 			openHelpWindow (url, true);
 			return true;	// TODO
 		}
-		if (url.fileName ().toLower ().endsWith (".rdata") || url.fileName ().toLower ().endsWith (".rda")) {
+		if (url.fileName ().toLower ().endsWith (QLatin1String (".rdata")) || url.fileName ().toLower ().endsWith (QLatin1String (".rda"))) {
 			RKWardMainWindow::getMain ()->askOpenWorkspace (url);
 			return true;	// TODO
 		}
@@ -921,11 +921,11 @@ void RKWorkplace::restoreWorkplace (const QStringList &description) {
 		// apply generic window parameters
 		if (win) {
 			for (int p = 0; p < spec.params.size (); ++p) {
-				if (spec.params[p].startsWith ("sidebar")) {
+				if (spec.params[p].startsWith (QLatin1String ("sidebar"))) {
 					int position = spec.params[p].section (',', 1).toInt ();
 					placeInToolWindowBar (win, position);
 				}
-				if (spec.params[p].startsWith ("detached")) {
+				if (spec.params[p].startsWith (QLatin1String ("detached"))) {
 					QStringList geom = spec.params[p].split (',');
 					win->hide ();
 					win->setGeometry (geom.value (1).toInt (), geom.value (2).toInt (), geom.value (3).toInt (), geom.value (4).toInt ());

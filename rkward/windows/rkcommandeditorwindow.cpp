@@ -196,7 +196,9 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 
 	connect (m_doc, &KTextEditor::Document::documentUrlChanged, this, &RKCommandEditorWindow::updateCaption);
 	connect (m_doc, &KTextEditor::Document::modifiedChanged, this, &RKCommandEditorWindow::updateCaption);                // of course most of the time this causes a redundant call to updateCaption. Not if a modification is undone, however.
+#ifdef __GNUC__'
 #warning remove this in favor of KTextEditor::Document::restore()
+#endif
 	connect (m_doc, &KTextEditor::Document::modifiedChanged, this, &RKCommandEditorWindow::autoSaveHandlerModifiedChanged);
 	connect (m_doc, &KTextEditor::Document::textChanged, this, &RKCommandEditorWindow::autoSaveHandlerTextChanged);
 	connect (m_view, &KTextEditor::View::selectionChanged, this, &RKCommandEditorWindow::selectionChanged);
@@ -1283,9 +1285,9 @@ void RKCommandHighlighter::setHighlighting (KTextEditor::Document *doc, Highligh
 	else if (mode == RInteractiveSession) mode_string = "R interactive session";
 	else {
 		QString fn = doc->url ().fileName ().toLower ();
-		if (fn.endsWith (".pluginmap") || fn.endsWith (".rkh") || fn.endsWith (".xml") || fn.endsWith (".inc")) {
+		if (fn.endsWith (QLatin1String (".pluginmap")) || fn.endsWith (QLatin1String (".rkh")) || fn.endsWith (QLatin1String (".xml")) || fn.endsWith (QLatin1String (".inc"))) {
 			mode_string = "XML";
-		} else if (fn.endsWith (".js")) {
+		} else if (fn.endsWith (QLatin1String (".js"))) {
 			mode_string = "JavaScript";
 		} else {
 			return;

@@ -377,14 +377,14 @@ bool RKHTMLWindow::openURL (const QUrl &url) {
 		return ok;
 	}
 
-	if (url_change_is_from_history || url.scheme ().toLower ().startsWith ("help")) {	// handle help pages, and any page that we have previously handled (from history)
+	if (url_change_is_from_history || url.scheme ().toLower ().startsWith (QLatin1String ("help"))) {	// handle help pages, and any page that we have previously handled (from history)
 		changeURL (url);
 		page->load (url);
 		return true;
 	}
 
 	// special casing for R's dynamic help pages. These should be considered local, even though they are served through http
-	if (url.scheme ().toLower ().startsWith ("http")) {
+	if (url.scheme ().toLower ().startsWith (QLatin1String ("http"))) {
 		QString host = url.host ();
 		if ((host == "127.0.0.1") || (host == "localhost") || host == QHostInfo::localHostName ()) {
 			KIO::TransferJob *job = KIO::get (url, KIO::Reload);

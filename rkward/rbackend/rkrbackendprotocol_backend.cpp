@@ -94,15 +94,15 @@
 		QString data_dir, locale_dir;
 		QStringList args = app.arguments ();
 		for (int i = 1; i < args.count (); ++i) {
-			if (args[i].startsWith ("--debug-level")) {
+			if (args[i].startsWith (QLatin1String ("--debug-level"))) {
 				RK_Debug::RK_Debug_Level = args[i].section ('=', 1).toInt ();
-			} else if (args[i].startsWith ("--server-name")) {
+			} else if (args[i].startsWith (QLatin1String ("--server-name"))) {
 				servername = QUrl::fromPercentEncoding (args[i].section ('=', 1).toUtf8 ());
-			} else if (args[i].startsWith ("--data-dir")) {
+			} else if (args[i].startsWith (QLatin1String ("--data-dir"))) {
 				data_dir = QUrl::fromPercentEncoding (args[i].section ('=', 1).toUtf8 ());
-			} else if (args[i].startsWith ("--locale-dir")) {
+			} else if (args[i].startsWith (QLatin1String ("--locale-dir"))) {
 				locale_dir = QUrl::fromPercentEncoding (args[i].section ('=', 1).toUtf8 ());
-			} else if (args[i].startsWith ("--rkd-server-name")) {
+			} else if (args[i].startsWith (QLatin1String ("--rkd-server-name"))) {
 				rkd_server_name = QUrl::fromPercentEncoding (args[i].section ('=', 1).toUtf8 ());
 			} else {
 				printf ("unknown argument %s", qPrintable (args[i]));

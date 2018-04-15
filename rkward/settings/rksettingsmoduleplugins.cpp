@@ -224,7 +224,7 @@ QString RKSettingsModulePlugins::findPluginMapById (const QString &id) {
 		if (known_plugin_maps[i].id == id) return known_plugin_maps[i].filename;
 	}
 	// for "rkward::" namespace, try a little harded:
-	if (id.startsWith ("rkward::")) {
+	if (id.startsWith (QLatin1String ("rkward::"))) {
 		QFileInfo info (RKCommonFunctions::getRKWardDataDir () + '/' + id.mid (8));
 		if (info.isReadable ()) return info.absoluteFilePath ();
 	}

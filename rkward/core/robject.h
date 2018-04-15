@@ -152,7 +152,7 @@ public:
 	bool canRemove () const;
 /** returns true, if this object is inside the .GlobalEnv. The .GlobalEnv is not considered to be inside itself. */
 	bool isInGlobalEnv () const;
-/** returns the toplevel environment that this object is in. May the the same as the object. */
+/** returns the toplevel environment that this object is in. May the same as the object. */
 	REnvironmentObject *toplevelEnvironment () const;
 
 	void rename (const QString &new_short_name);
