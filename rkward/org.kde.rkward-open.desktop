@@ -60,6 +60,7 @@ Type=Application
 X-DocPath=rkward/index.html
 Categories=Science;Math;NumericalAnalysis;
 Keywords=statistics;data;r;
+Keywords[ca]=estadística;dades;r;
 Keywords[nl]=statistics;data;r;
 Keywords[pt]=estatísticas;dados;r;
 Keywords[sv]=statistik;data;r;
