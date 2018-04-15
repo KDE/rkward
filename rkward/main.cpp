@@ -159,10 +159,6 @@ void RKDebug (int flags, int level, const char *fmt, ...) {
 }
 
 int main (int argc, char *argv[]) {
-	// TODO: This is a _temporary_ hack! --> Problems with output not updating on Windows Live Image. See https://mail.kde.org/pipermail/rkward-devel/2016-September/004660.html .
-#warning Remove me!
-	qputenv ("KDIRWATCH_METHOD", QByteArray ("Stat"));
-
 	QApplication app (argc, argv);
 #ifdef WITH_KCRASH
 	KCrash::setDrKonqiEnabled (true);
