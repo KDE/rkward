@@ -524,7 +524,7 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 	if (saveact != SA_SUICIDE) {
 		if (!RKRBackend::this_pointer->isKilled ()) {
 			RBackendRequest request (true, RBackendRequest::BackendExit);
-			request.params["message"] = QVariant (i18n ("The R engine has shut down with status: %1").arg (status));
+			request.params["message"] = QVariant (i18n ("The R engine has shut down with status: %1").arg (status)); // krazy:exclude=i18ncheckarg
 			RKRBackend::this_pointer->handleRequest (&request);
 		}
 
@@ -543,7 +543,7 @@ void RSuicide (const char* message) {
 
 	if (!RKRBackend::this_pointer->isKilled ()) {
 		RBackendRequest request (true, RBackendRequest::BackendExit);
-		request.params["message"] = QVariant (i18n ("The R engine has encountered a fatal error:\n%1").arg (message));
+		request.params["message"] = QVariant (i18n ("The R engine has encountered a fatal error:\n%1").arg (message)); // krazy:exclude=i18ncheckarg
 		RKRBackend::this_pointer->handleRequest (&request);
 		RKRBackend::this_pointer->killed = RKRBackend::EmergencySaveThenExit;
 		RCleanUp (SA_SUICIDE, 1, 0);
