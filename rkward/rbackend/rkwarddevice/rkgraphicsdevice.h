@@ -24,7 +24,7 @@
 #include <QPainter>
 #include <QLabel>
 
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
 // On Mac, drawing on a pixmap does not work correctly. Probably can only be done inside paint
 // events. (MacOSX 10.6.8, Qt 4.8.4).
 // On X11, similar problems seem to occur on some, but not all systems. Only on old versions?
@@ -42,7 +42,7 @@
 #	include <QPixmap>
 #endif
 
-class KDialog;
+class QDialog;
 
 /** This is the class that actually does all the drawing for the RKGraphicsDevice */
 class RKGraphicsDevice : public QObject {
@@ -105,7 +105,7 @@ private slots:
 	void viewKilled ();
 private:
 	void goInteractive (const QString &prompt);
-	bool eventFilter (QObject *watched, QEvent *event);
+	bool eventFilter (QObject *watched, QEvent *event) override;
 	void checkSize ();
 
 	QTimer updatetimer;
@@ -117,7 +117,7 @@ private:
 	QPainter painter;
 	QLabel *view;
 	QString base_title;
-	KDialog *dialog;
+	QDialog *dialog;
 
 	int interaction_opcode;	/**< Current interactive operation (from RKDOpcodes enum), or -1 is there is no current interactive operation */
 

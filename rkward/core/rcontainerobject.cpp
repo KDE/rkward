@@ -18,7 +18,7 @@
 
 #include <qregexp.h>
 
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "robjectlist.h"
 #include "rkpseudoobjects.h"
 #include "rkvariable.h"

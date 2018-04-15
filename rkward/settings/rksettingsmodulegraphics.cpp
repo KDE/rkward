@@ -16,10 +16,9 @@
  ***************************************************************************/
 #include "rksettingsmodulegraphics.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kconfig.h>
 #include <kconfiggroup.h>
-#include <knuminput.h>
 
 #include <qlayout.h>
 #include <qlabel.h>
@@ -29,9 +28,10 @@
 #include <QButtonGroup>
 #include <QLineEdit>
 #include <QRadioButton>
+#include <QSpinBox>
 
 #include "../rkglobals.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../misc/rkspinbox.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../debug.h"
@@ -77,8 +77,8 @@ RKSettingsModuleGraphics::RKSettingsModuleGraphics (RKSettings *gui, QWidget *pa
 	                                  "<p>The RKWard native device is the recommended choice for most users. This corresponds to the R command <i>RK()</i>.</p>"
 	                                  "<p>The 'Platform default device' corresponds to one of <i>X11()</i>, <i>windows()</i>, or <i>quartz()</i>, depending on the platform.</p>"
 	                                  "<p>You can also specify the name of a function such as <i>cairoDevice</i>.</p>"), group);
-	connect (default_device_group, SIGNAL (buttonClicked(int)), this, SLOT (boxChanged()));
-	connect (default_device_other_edit, SIGNAL (textChanged(QString)), this, SLOT (boxChanged()));
+	connect (default_device_group, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &RKSettingsModuleGraphics::boxChanged);
+	connect (default_device_other_edit, &QLineEdit::textChanged, this, &RKSettingsModuleGraphics::boxChanged);
 	h_layout1->addWidget (group);
 
 	group = new QGroupBox (i18n ("Integration of R standard devices"), this);
@@ -90,7 +90,7 @@ RKSettingsModuleGraphics::RKSettingsModuleGraphics (RKSettings *gui, QWidget *pa
 	button = new QRadioButton (i18n ("Embed original device"), group);
 	replace_standard_devices_group->addButton (button, (int) EmbedDevice);
 	group_layout->addWidget (button);
-#if not (defined Q_WS_X11 || defined Q_WS_WIN)
+#ifndef Q_OS_MACOS
 	button->setEnabled (false);
 #endif
 	button = new QRadioButton (i18n ("No device integration"), group);
@@ -107,7 +107,7 @@ RKSettingsModuleGraphics::RKSettingsModuleGraphics (RKSettings *gui, QWidget *pa
 	                                  "<li>The original platform specific devices can be used unchanged, without the addition of RKWard specific features.</li></ul>"
 	                                  "<p>Regardless of this setting, the original devices are always accessible as <i>grDevices::X11()</i>, etc.</p>"
 	                                  "<p>Using a device on a platform where it is not defined (e.g. <i>Windows()</i> on Mac OS X) will always fall back to the <i>RK()</i> device.</p>"), group);
-	connect (replace_standard_devices_group, SIGNAL (buttonClicked(int)), this, SLOT (boxChanged()));
+	connect (replace_standard_devices_group, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &RKSettingsModuleGraphics::boxChanged);
 	h_layout1->addWidget (group);
 
 	group = new QGroupBox (i18n ("Default window size (for RK(), or embedded device windows)"), this);
@@ -119,30 +119,38 @@ RKSettingsModuleGraphics::RKSettingsModuleGraphics (RKSettings *gui, QWidget *pa
 	group_layout->addWidget (new QLabel (i18n ("Default height (inches)"), group));
 	group_layout->addWidget (graphics_height_box = new RKSpinBox (group));
 	graphics_height_box->setRealMode (1, 100.0, graphics_height, 1, 3);
-	connect (graphics_width_box, SIGNAL (valueChanged(int)), this, SLOT (boxChanged()));
-	connect (graphics_height_box, SIGNAL (valueChanged(int)), this, SLOT (boxChanged()));
+	connect (graphics_width_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleGraphics::boxChanged);
+	connect (graphics_height_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleGraphics::boxChanged);
 	main_vbox->addWidget (group);
 
 	kde_printing_box = new QCheckBox (i18n ("Use KDE printer dialog for printing devices (if available)"), this);
 	kde_printing_box->setChecked (options_kde_printing);
-	connect (kde_printing_box, SIGNAL (stateChanged(int)), this, SLOT (boxChanged()));
+	connect (kde_printing_box, &QCheckBox::stateChanged, this, &RKSettingsModuleGraphics::boxChanged);
 	main_vbox->addWidget (kde_printing_box);
 
 	graphics_hist_box = new QGroupBox (i18n ("Screen device history"), this);
 	graphics_hist_box->setCheckable (true);
 	graphics_hist_box->setChecked (graphics_hist_enable);
 	group_layout = new QVBoxLayout (graphics_hist_box);
-	connect (graphics_hist_box, SIGNAL (toggled(bool)), this, SLOT (boxChanged()));
+	connect (graphics_hist_box, &QGroupBox::toggled, this, &RKSettingsModuleGraphics::boxChanged);
 	h_layout = new QHBoxLayout ();
 	group_layout->addLayout (h_layout);
 	h_layout->addWidget (new QLabel (i18n ("Maximum number of recorded plots:"), graphics_hist_box));
-	h_layout->addWidget (graphics_hist_max_length_box = new KIntSpinBox (1, 200, 1, graphics_hist_max_length, graphics_hist_box));
+	h_layout->addWidget (graphics_hist_max_length_box = new QSpinBox(graphics_hist_box));
+	graphics_hist_max_length_box->setMaximum(200);
+	graphics_hist_max_length_box->setMinimum(1);
+	graphics_hist_max_length_box->setSingleStep(1);
+	graphics_hist_max_length_box->setValue(graphics_hist_max_length);
 	h_layout = new QHBoxLayout ();
 	group_layout->addLayout (h_layout);
 	h_layout->addWidget (new QLabel (i18n ("Maximum size of a single recorded plot (in KB):"), graphics_hist_box));
-	h_layout->addWidget (graphics_hist_max_plotsize_box = new KIntSpinBox (4, 20000, 4, graphics_hist_max_plotsize, graphics_hist_box));
-	connect (graphics_hist_max_length_box, SIGNAL (valueChanged(int)), this, SLOT (boxChanged()));
-	connect (graphics_hist_max_plotsize_box, SIGNAL (valueChanged(int)), this, SLOT (boxChanged()));
+	h_layout->addWidget (graphics_hist_max_plotsize_box = new QSpinBox(graphics_hist_box));
+	graphics_hist_max_plotsize_box->setMaximum(20000);
+	graphics_hist_max_plotsize_box->setMinimum(4);
+	graphics_hist_max_plotsize_box->setSingleStep(4);
+	graphics_hist_max_plotsize_box->setValue(graphics_hist_max_plotsize);
+	connect (graphics_hist_max_length_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleGraphics::boxChanged);
+	connect (graphics_hist_max_plotsize_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleGraphics::boxChanged);
 
 	main_vbox->addWidget (graphics_hist_box);
 
@@ -243,9 +251,9 @@ QStringList RKSettingsModuleGraphics::makeRRunTimeOptionCommands () {
 	if (default_device == RKDevice) command.append ("\"RK\"");
 	else if (default_device == OtherDevice) command.append (RObject::rQuote (default_device_other));
 	else {
-#if defined Q_WS_WIN
+#if defined Q_OS_WIN
 	command.append ("\"windows\"");
-#elif defined Q_OS_MAC
+#elif defined Q_OS_MACOS
 	command.append ("ifelse (capabilities(\"quartz\"), \"quartz\", \"X11\")");
 #else
 	command.append ("\"X11\"");
@@ -274,4 +282,3 @@ QStringList RKSettingsModuleGraphics::makeRRunTimeOptionCommands () {
 	return (list);
 }
 
-#include "rksettingsmodulegraphics.moc"

@@ -83,9 +83,7 @@ ROutputList* RKRBackendSerializer::unserializeOutput (QDataStream &stream) {
 	ROutputList *ret = new ROutputList ();
 	qint32 len;
 	stream >> len;
-#if QT_VERSION >= 0x040700
 	ret->reserve (len);
-#endif
 
 	for (qint32 i = 0; i < len; ++i) {
 		ROutput* out = new ROutput;
@@ -143,9 +141,7 @@ RData* RKRBackendSerializer::unserializeData (QDataStream &stream) {
 		RData::RDataStorage data;
 		qint32 len;
 		stream >> len;
-#if QT_VERSION >= 0x040700
 		data.reserve (len);
-#endif
 		for (qint32 i = 0; i < len; ++i) {
 			data.append (unserializeData (stream));
 		}
@@ -260,8 +256,8 @@ void RKAbstractTransmitter::setConnection (QLocalSocket *_connection) {
 	streamer.setIODevice (connection);
 	RK_ASSERT (connection->isOpen ());
 
-	connect (connection, SIGNAL (readyRead()), this, SLOT (fetchTransmission()));
-	connect (connection, SIGNAL (disconnected()), this, SLOT (disconnected()));
+	connect (connection, &QLocalSocket::readyRead, this, &RKAbstractTransmitter::fetchTransmission);
+	connect (connection, &QLocalSocket::disconnected, this, &RKAbstractTransmitter::disconnected);
 
 	// In case something is pending already.
 	if (connection->bytesAvailable ()) QTimer::singleShot (0, this, SLOT (fetchTransmission()));
@@ -273,4 +269,3 @@ void RKAbstractTransmitter::disconnected () {
 	handleTransmissionError ("Connection closed unexpectedly. Last error was: " + connection->errorString ());
 }
 
-#include "rktransmitter.moc"

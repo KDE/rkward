@@ -46,10 +46,12 @@
 "rk.graph.on" <- function (device.type=getOption ("rk.graphics.type"), width=getOption ("rk.graphics.width"), height=getOption ("rk.graphics.height"), quality, ...) 
 {
 	make.url <- function (filename) {
-		if (substr (filename, 1, 1) != "/") {  # this generally happens on Windows
+		if (substr (filename, 2, 2) == ":") {  # *very* likely an absolute Windows path like c:\xyz .
 			paste ("file:///", filename, sep="")
-		} else {
+		} else if (substr (filename, 1, 1) == "/") {
 			paste ("file://", filename, sep="")
+		} else { # relative path: return unchanged. NOTE that this will currently happen during automated tesing, only. Usually rk.get.tempfile.name() always returns absolute paths.
+			filename
 		}
 	}
 
@@ -162,8 +164,15 @@
 	oldd <- dev.cur ()
 	.rk.do.call ("startOpenX11", as.character (oldd));
 	on.exit (.rk.do.call ("endOpenX11", as.character (dev.cur())));
+	on.exit ({  # This serves to make R do all necessary X11 event processing, _while_ we are in the process of embedding the device in the frontend.
+		for (i in 1:10) {
+			if (.rk.variables$devembedded) break
+			Sys.sleep (.1)
+		}}, add=TRUE);
 
+	.rk.variables$devembedded <- FALSE
 	x <- eval.parent (expr)
+	Sys.sleep (.1) # This serves to make R do initial X11 event processing _before_ we try to embed the device in the frontend.
 
 	if (oldd != dev.cur ()) on.exit (rk.record.plot$onAddDevice (), add=TRUE)
 	else warning ("No device appears to have been created (dev.cur() has not changed)");
@@ -419,7 +428,7 @@
 		# store the "lattice.status" into each device specific list, so that, if/when removing
 		# one of the displayed plots, the other can still be re-added back in the history.
 		devId <- as.character (devId)
-		histPositions [[devId]]$plot <<- trellis.last.object ()
+		histPositions [[devId]]$plot <<- lattice:::trellis.last.object ()
 		histPositions [[devId]]$tlo.ls <<- get ("lattice.status", envir = lattice:::.LatticeEnv)
 		invisible ()
 	}

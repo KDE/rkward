@@ -16,7 +16,7 @@
  ***************************************************************************/
 #include "rkobjectlistview.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <QContextMenuEvent>
 #include <QMenu>
@@ -48,7 +48,7 @@ public:
 		expanded = RKStandardIcons::getIcon (RKStandardIcons::ActionCollapseUp);
 		collapsed = RKStandardIcons::getIcon (RKStandardIcons::ActionExpandDown);
 	}
-	void initStyleOption (QStyleOptionViewItem* option, const QModelIndex& index) const {
+	void initStyleOption (QStyleOptionViewItem* option, const QModelIndex& index) const override {
 		QStyledItemDelegate::initStyleOption (option, index);
 		if (!index.parent ().isValid ()) {
 			QStyleOptionViewItemV4 *v4 = qstyleoption_cast<QStyleOptionViewItemV4 *> (option);
@@ -88,7 +88,7 @@ RKObjectListView::RKObjectListView (bool toolwindow, QWidget *parent) : QTreeVie
 	menu = new QMenu (this);
 	settings->addSettingsToMenu (menu, 0);
 
-	connect (this, SIGNAL(clicked(QModelIndex)), this, SLOT(itemClicked(QModelIndex)));
+	connect (this, &QAbstractItemView::clicked, this, &RKObjectListView::itemClicked);
 }
 
 RKObjectListView::~RKObjectListView () {
@@ -185,10 +185,10 @@ void RKObjectListView::initialize () {
 	setMinimumHeight (rowHeight (genv) * 5);
 	settingsChanged ();
 
-	connect (RObjectList::getObjectList (), SIGNAL (updateComplete()), this, SLOT (updateComplete()));
-	connect (RObjectList::getObjectList (), SIGNAL (updateStarted()), this, SLOT (updateStarted()));
-	connect (selectionModel (), SIGNAL (selectionChanged(QItemSelection,QItemSelection)), this, SLOT (selectionChanged(QItemSelection,QItemSelection)));
-	connect (settings, SIGNAL (settingsChanged()), this, SLOT (settingsChanged()));
+	connect (RObjectList::getObjectList (), &RObjectList::updateComplete, this, &RKObjectListView::updateComplete);
+	connect (RObjectList::getObjectList (), &RObjectList::updateStarted, this, &RKObjectListView::updateStarted);
+	connect (selectionModel (), &QItemSelectionModel::selectionChanged, this, static_cast<void (RKObjectListView::*)(const QItemSelection&, const QItemSelection&)>(&RKObjectListView::selectionChanged));
+	connect (settings, &RKObjectListViewSettings::settingsChanged, this, &RKObjectListView::settingsChanged);
 
 	updateComplete ();
 }
@@ -227,7 +227,7 @@ RKObjectListViewSettings::RKObjectListViewSettings (bool tool_window, QObject* p
 
 	update_timer = new QTimer (this);
 	update_timer->setSingleShot (true);
-	connect (update_timer, SIGNAL(timeout()), this, SLOT(updateSelfNow()));
+	connect (update_timer, &QTimer::timeout, this, &RKObjectListViewSettings::updateSelfNow);
 
 	filter_widget = 0;
 	in_reset_filters = false;
@@ -242,7 +242,7 @@ RKObjectListViewSettings::RKObjectListViewSettings (bool tool_window, QObject* p
 		else persistent_settings[i] = RKSettingsModuleObjectBrowser::isDefaultForVarselector ((PersistentSettings) i);
 		persistent_settings_actions[i]->setCheckable (true);
 		persistent_settings_actions[i]->setChecked (persistent_settings[i]);
-		connect (persistent_settings_actions[i], SIGNAL (toggled(bool)), this, SLOT(filterSettingsChanged ()));
+		connect (persistent_settings_actions[i], &QAction::toggled, this, &RKObjectListViewSettings::filterSettingsChanged);
 	}
 
 	resetFilters (); // inits defaults
@@ -269,7 +269,7 @@ QWidget* RKObjectListViewSettings::filterWidget (QWidget *parent) {
 	filter_widget->setFocusProxy (sline);
 	sline->setModelToFilter (this);
 	RKCommonFunctions::setTips (sline->regexpTip (), sline);
-	connect (sline, SIGNAL (searchChanged(QRegExp)), this, SLOT (filterSettingsChanged()));
+	connect (sline, &RKDynamicSearchLine::searchChanged, this, &RKObjectListViewSettings::filterSettingsChanged);
 	hlayout->addWidget (sline);
 	QPushButton* expander = new QPushButton (filter_widget);
 	expander->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionConfigureGeneric));
@@ -278,7 +278,7 @@ QWidget* RKObjectListViewSettings::filterWidget (QWidget *parent) {
 
 	filter_widget_expansion = new QWidget (filter_widget);
 	layout->addWidget (filter_widget_expansion);
-	connect (expander, SIGNAL (toggled(bool)), filter_widget_expansion, SLOT (setShown(bool)));
+	connect (expander, &QPushButton::toggled, filter_widget_expansion, &QWidget::setVisible);
 	filter_widget_expansion->hide ();
 	QVBoxLayout *elayout = new QVBoxLayout (filter_widget_expansion);
 	elayout->setContentsMargins (0, 0, 0, 0);
@@ -299,9 +299,9 @@ QWidget* RKObjectListViewSettings::filterWidget (QWidget *parent) {
 	filter_on_name_box->setChecked (filter_on_name);
 	filter_on_label_box->setChecked (filter_on_label);
 	filter_on_class_box->setChecked (filter_on_class);
-	connect (filter_on_name_box, SIGNAL(clicked(bool)), this, SLOT (filterSettingsChanged()));
-	connect (filter_on_label_box, SIGNAL(clicked(bool)), this, SLOT (filterSettingsChanged()));
-	connect (filter_on_class_box, SIGNAL(clicked(bool)), this, SLOT (filterSettingsChanged()));
+	connect (filter_on_name_box, &QCheckBox::clicked, this, &RKObjectListViewSettings::filterSettingsChanged);
+	connect (filter_on_label_box, &QCheckBox::clicked, this, &RKObjectListViewSettings::filterSettingsChanged);
+	connect (filter_on_class_box, &QCheckBox::clicked, this, &RKObjectListViewSettings::filterSettingsChanged);
 
 	depth_box = new QComboBox ();
 	depth_box->addItem (i18n ("Top level objects, only"));
@@ -312,7 +312,7 @@ QWidget* RKObjectListViewSettings::filterWidget (QWidget *parent) {
 	boxvlayout->addWidget (depth_box);
 
 	depth_box->setCurrentIndex (1);
-	connect (depth_box, SIGNAL (currentIndexChanged(QString)), this, SLOT (filterSettingsChanged()));
+	connect (depth_box, static_cast<void (QComboBox::*)(const QString &)>(&QComboBox::currentIndexChanged), this, &RKObjectListViewSettings::filterSettingsChanged);
 
 	type_box = new QComboBox ();
 	type_box->addItem (i18n ("Show all objects"));
@@ -324,20 +324,20 @@ QWidget* RKObjectListViewSettings::filterWidget (QWidget *parent) {
 	if (hide_functions) type_box->setCurrentIndex (2);
 	else if (hide_non_functions) type_box->setCurrentIndex (1);
 	else type_box->setCurrentIndex (0);
-	connect (type_box, SIGNAL (currentIndexChanged(QString)), this, SLOT (filterSettingsChanged()));
+	connect (type_box, static_cast<void (QComboBox::*)(const QString &)>(&QComboBox::currentIndexChanged), this, &RKObjectListViewSettings::filterSettingsChanged);
 
 	QHBoxLayout *bottom_layout = new QHBoxLayout (filter_widget);
 	layout->addLayout (bottom_layout);
 	QCheckBox* hidden_objects_box = new QCheckBox (i18n ("Show Hidden Objects"));
 	hidden_objects_box->setChecked (persistent_settings[ShowObjectsHidden]);
-	connect (hidden_objects_box, SIGNAL (clicked(bool)), persistent_settings_actions[ShowObjectsHidden], SLOT (setChecked(bool)));
-	connect (persistent_settings_actions[ShowObjectsHidden], SIGNAL (triggered(bool)), hidden_objects_box, SLOT (setChecked(bool)));
+	connect (hidden_objects_box, &QCheckBox::clicked, persistent_settings_actions[ShowObjectsHidden], &QAction::setChecked);
+	connect (persistent_settings_actions[ShowObjectsHidden], &QAction::triggered, hidden_objects_box, &QCheckBox::setChecked);
 	bottom_layout->addWidget (hidden_objects_box);
 
 	// KF5 TODO: In frameworks, there is a function KIconUtils::kIconAddOverlay(). We could use this to overlay "view-filter" and discard, then use that
 	// in a tool button (with tooltip), in order to save space.
 	reset_filters_button = new QPushButton (i18nc ("Width is limited, please opt for something that is not much longer than the English string. Simply 'Clear'/'Reset' should be good enough to understand the function.", "Reset filters"), filter_widget);
-	connect (reset_filters_button, SIGNAL (clicked(bool)), this, SLOT(resetFilters()));
+	connect (reset_filters_button, &QPushButton::clicked, this, &RKObjectListViewSettings::resetFilters);
 	RKCommonFunctions::setTips (i18n ("Discards the current object search filters"), reset_filters_button);
 	reset_filters_button->hide ();
 	bottom_layout->addWidget (reset_filters_button);
@@ -522,5 +522,3 @@ void RKObjectListViewSettings::updateSelfNow () {
 
 	emit (settingsChanged ());
 }
-
-#include "rkobjectlistview.moc"

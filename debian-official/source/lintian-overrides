@@ -1,4 +1,7 @@
 # Some of the plugin .js-files seem to generate false positives. Most of these _are_ primary sources, none of them are minified or post-processed in any other way.
-# A handful of .js-files _are_ generated (upstream, manually), indeed. These carry a corresponding notice, and their primary sources are included in rkward/plugins/rkwarddev_scripts .
-rkward source: source-contains-prebuilt-javascript-object rkward/plugins/*
-rkward source: source-is-missing rkward/plugins/*
+# A handful of .js-files _are_ generated (upstream, manually), indeed. These carry a corresponding notice, and their primary sources are included in rkward/plugins/rkwarddev_scripts.
+rkward source: source-contains-prebuilt-javascript-object rkward/plugins/*.js*
+rkward source: source-is-missing rkward/plugins/*.js*
+# The following is not a user-facing .RData file. In fact it is does not even get installed. It contains an object that RKWard used to crash on, and is used for optional unit-testing, only.
+# See tests/rkward_applications_tests.R for additional detail.
+rkward source: r-data-without-readme-source tests/rkward_application_tests_strange_object.RData

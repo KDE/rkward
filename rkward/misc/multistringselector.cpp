@@ -24,7 +24,7 @@
 #include <QVBoxLayout>
 #include <QStringListModel>
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "rkstandardicons.h"
 #include "../debug.h"
@@ -33,7 +33,7 @@ class RKStringListModelWithColumnLabel : public QStringListModel {
 public:
 	RKStringListModelWithColumnLabel (QObject *parent, const QString& _label) : QStringListModel (parent), label (_label) {};
 	~RKStringListModelWithColumnLabel () {};
-	QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const {
+	QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override {
 		if ((section == 0) && (orientation == Qt::Horizontal) && (role == Qt::DisplayRole)) return label;
 		return QVariant ();
 	};
@@ -44,8 +44,8 @@ MultiStringSelector::MultiStringSelector (const QString& label, QWidget* parent)
 	RK_TRACE (MISC);
 
 	model = new RKStringListModelWithColumnLabel (this, i18n ("Filename"));
-	connect (this, SIGNAL (swapRows(int,int)), this, SLOT (swapRowsImpl(int,int)));
-	connect (this, SIGNAL (insertNewStrings(int)), this, SLOT (insertNewStringsImpl(int)));
+	connect (this, &MultiStringSelector::swapRows, this, &MultiStringSelector::swapRowsImpl);
+	connect (this, &MultiStringSelector::insertNewStrings, this, &MultiStringSelector::insertNewStringsImpl);
 	setModel (model);
 }
 
@@ -111,21 +111,21 @@ RKMultiStringSelectorV2::RKMultiStringSelectorV2 (const QString& label, QWidget*
 	main_box->addWidget (tree_view);
 
 	add_button = new QPushButton (i18n ("Add"), this);
-	connect (add_button, SIGNAL (clicked()), this, SLOT (buttonClicked()));
+	connect (add_button, &QPushButton::clicked, this, &RKMultiStringSelectorV2::buttonClicked);
 	button_box->addWidget (add_button);
 
 	remove_button = new QPushButton (i18n ("Remove"), this);
-	connect (remove_button, SIGNAL (clicked()), this, SLOT (buttonClicked()));
+	connect (remove_button, &QPushButton::clicked, this, &RKMultiStringSelectorV2::buttonClicked);
 	button_box->addWidget (remove_button);
 
 	button_box->addSpacing (10);
 
 	up_button = new QPushButton (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveUp), i18n ("Up"), this);
-	connect (up_button, SIGNAL (clicked()), this, SLOT (buttonClicked()));
+	connect (up_button, &QPushButton::clicked, this, &RKMultiStringSelectorV2::buttonClicked);
 	button_box->addWidget (up_button);
 
 	down_button = new QPushButton (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveDown), i18n ("Down"), this);
-	connect (down_button, SIGNAL (clicked()), this, SLOT (buttonClicked()));
+	connect (down_button, &QPushButton::clicked, this, &RKMultiStringSelectorV2::buttonClicked);
 	button_box->addWidget (down_button);
 }
 
@@ -139,18 +139,20 @@ void RKMultiStringSelectorV2::setModel (QAbstractItemModel* model, int main_colu
 	if (model == tree_view->model ()) return;
 
 	if (tree_view->selectionModel ()) {
-		disconnect (tree_view->selectionModel (), SIGNAL (currentChanged(QModelIndex,QModelIndex)), this, SLOT (updateButtons()));
+		disconnect (tree_view->selectionModel (), &QItemSelectionModel::currentChanged, this, &RKMultiStringSelectorV2::updateButtons);
 	}
 	if (tree_view->model ()) {
-		disconnect (tree_view->model (), 0, this, SLOT (anyModelDataChange()));
+		// NOTE: Commented version gives compile error. Fortunately, we do not connect the model to any other slots, so the version below is ok.
+		//disconnect (tree_view->model (), 0, this, &RKMultiStringSelectorV2::anyModelDataChange);
+		disconnect (tree_view->model (), 0, this, 0);
 	}
 	tree_view->setModel (model);
-	connect (tree_view->selectionModel (), SIGNAL (currentChanged(QModelIndex,QModelIndex)), this, SLOT (updateButtons()));
-	connect (model, SIGNAL (dataChanged(QModelIndex,QModelIndex)), this, SLOT (anyModelDataChange()));
-	connect (model, SIGNAL (layoutChanged()), this, SLOT (anyModelDataChange()));
-	connect (model, SIGNAL (rowsInserted(QModelIndex,int,int)), this, SLOT (anyModelDataChange()));
-	connect (model, SIGNAL (rowsRemoved(QModelIndex,int,int)), this, SLOT (anyModelDataChange()));
-	connect (model, SIGNAL (modelReset()), this, SLOT (anyModelDataChange()));
+	connect (tree_view->selectionModel (), &QItemSelectionModel::currentChanged, this, &RKMultiStringSelectorV2::updateButtons);
+	connect (model, &QStringListModel::dataChanged, this, &RKMultiStringSelectorV2::anyModelDataChange);
+	connect (model, &QStringListModel::layoutChanged, this, &RKMultiStringSelectorV2::anyModelDataChange);
+	connect (model, &QStringListModel::rowsInserted, this, &RKMultiStringSelectorV2::anyModelDataChange);
+	connect (model, &QStringListModel::rowsRemoved, this, &RKMultiStringSelectorV2::anyModelDataChange);
+	connect (model, &QStringListModel::modelReset, this, &RKMultiStringSelectorV2::anyModelDataChange);
 
 	if (main_column >= 0) tree_view->resizeColumnToContents (main_column);
 	
@@ -214,4 +216,3 @@ void RKMultiStringSelectorV2::anyModelDataChange () {
 	emit (listChanged ());
 }
 
-#include "multistringselector.moc"

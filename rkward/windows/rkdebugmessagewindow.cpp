@@ -22,9 +22,8 @@
 #include <QVBoxLayout>
 #include <QTextEdit>
 
-#include <kvbox.h>
 #include <kmessagebox.h>
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "../misc/rkdummypart.h"
 
@@ -40,7 +39,9 @@ RKDebugMessageWindow::RKDebugMessageWindow (QWidget* parent, bool tool_window, c
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
-	layout_widget = new KVBox (this);
+	layout_widget = new QWidget (this);
+	QVBoxLayout *l = new QVBoxLayout (layout_widget);
+	l->setContentsMargins (0, 0, 0, 0);
 	layout->addWidget (layout_widget);
 	layout_widget->setFocusPolicy (Qt::StrongFocus);
 
@@ -72,10 +73,11 @@ void RKDebugMessageWindow::createWidget () {
 	if (!real_widget) {
 		RK_DEBUG (APP, DL_INFO, "creating debug message viewer");
 		real_widget = new RKDebugMessageWindowWidget (layout_widget);
+		layout_widget->layout ()->addWidget (real_widget);
 		setFocusProxy (layout_widget);
 
 		if (first) {
-			KMessageBox::information (this, i18n ("<p>This window is used for displaying RKWard related debug messages. It is targetted primarily at (plugin) developers. It does <b>not</b> offer any features for debugging R code.</p>"
+			KMessageBox::information (this, i18n ("<p>This window is used for displaying RKWard related debug messages. It is targeted primarily at (plugin) developers. It does <b>not</b> offer any features for debugging R code.</p>"
 				"<p>Note that the list of messages is cleared every time you close the window.</p><p>Type and severity level of messages can be controlled from Settings->Configure RKWard->Debug</p>"), i18n ("About this window"), "inforkdebugmessagewindow");
 			first = false;
 		}

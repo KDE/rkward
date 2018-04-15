@@ -52,8 +52,8 @@ public slots:
 	void showValueLabels ();
 protected:
 /// reimplemented to ignore arrow left/right if at the beginning/end
-	void keyPressEvent (QKeyEvent *e);
-	bool eventFilter (QObject* object, QEvent* event);
+	void keyPressEvent (QKeyEvent *e) override;
+	bool eventFilter (QObject* object, QEvent* event) override;
 private:
 	QMenu *value_list;
 };

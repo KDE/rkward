@@ -21,6 +21,7 @@
 #include "rktransmitter.h"
 
 class QProcess;
+class QIODevice;
 class QLocalServer;
 class RKGraphicsDeviceFrontendTransmitter;
 
@@ -30,19 +31,22 @@ public:
 	RKFrontendTransmitter ();
 	~RKFrontendTransmitter ();
 
-	void run ();
+	void run () override;
 
-	bool doMSleep (int delay) {
+	bool doMSleep (int delay) override {
 		msleep (delay);
 		return true;
 	};
-	void writeRequest (RBackendRequest *request);
-	void requestReceived (RBackendRequest *request);
+	void writeRequest (RBackendRequest *request) override;
+	void requestReceived (RBackendRequest *request) override;
+	/** Simple convenience function similar to QIODevice::waitForReadyRead(), but waiting for a full line to be available.
+	    In particular on Windows, we often receive _less_ than a full line per chunk. */
+	static void waitForCanReadLine (QIODevice *con, int msecs);
 private slots:
 	void connectAndEnterLoop ();
 	void backendExit (int exitcode);
 private:
-	void handleTransmissionError (const QString &message);
+	void handleTransmissionError (const QString &message) override;
 
 	QProcess* backend;
 	QLocalServer* server;

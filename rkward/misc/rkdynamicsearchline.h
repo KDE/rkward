@@ -2,7 +2,7 @@
                           rkdynamicsearchline  -  description
                              -------------------
     begin                : Mon Nov 16 2015
-    copyright            : (C) 2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2015-2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -18,15 +18,16 @@
 #ifndef RKDYNAMICSEARCHLINE_H
 #define RKDYNAMICSEARCHLINE_H
 
-#include <klineedit.h>
+#include <QLineEdit>
 
 #include <QTimer>
 
 class QSortFilterProxyModel;
+class QAction;
 
 /** This class is mostly like KFilterProxySearchLine, except allowing us to filter using regexps.
  *  Also some internal differences, due to the fact that we don't have to hide implementation details as in a framework lib. */
-class RKDynamicSearchLine : public KLineEdit {
+class RKDynamicSearchLine : public QLineEdit {
 	Q_OBJECT
 public:
 	RKDynamicSearchLine (QWidget *parent);
@@ -42,6 +43,7 @@ private slots:
 	void delayedSearch ();
 private:
 	QTimer timer;
+	QAction *working_indicator;
 	QSortFilterProxyModel *model;
 };
 

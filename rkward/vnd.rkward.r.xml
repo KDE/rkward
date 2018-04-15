@@ -9,7 +9,9 @@
     <comment xml:lang="cs">Zdrojový soubor R</comment>
     <comment xml:lang="de">R-Quelldatei</comment>
     <comment xml:lang="es">Archivo fuente de R</comment>
+    <comment xml:lang="fr">Fichier source R</comment>
     <comment xml:lang="gl">Ficheiro de código R</comment>
+    <comment xml:lang="it">File sorgente di R</comment>
     <comment xml:lang="nl">R-bronbestand</comment>
     <comment xml:lang="pl">Plik źródłowy R</comment>
     <comment xml:lang="pt">Ficheiro de código em R</comment>
@@ -17,7 +19,6 @@
     <comment xml:lang="sk">Zdrojový súbor R</comment>
     <comment xml:lang="sv">R-källkodsfil</comment>
     <comment xml:lang="uk">файл коду R</comment>
-    <comment xml:lang="zh_CN">R 资源文件</comment>
     <acronym>R</acronym>
     <expanded-acronym>R programming language</expanded-acronym>
     <generic-icon name="text-x-generic"/>
@@ -28,12 +29,14 @@
   <mime-type type="application/rdata">
     <comment>R data/workspace file</comment>
     <comment xml:lang="bs">R datoteka s podacima/radnim prostorom</comment>
-    <comment xml:lang="ca">Fitxer de les dades/espai de treball del R</comment>
-    <comment xml:lang="ca@valencia">Fitxer de les dades/espai de treball del R</comment>
+    <comment xml:lang="ca">Fitxer de les dades/espai de treball de l'R</comment>
+    <comment xml:lang="ca@valencia">Fitxer de les dades/espai de treball de l'R</comment>
     <comment xml:lang="cs">Soubor pracovní plochy/dat R</comment>
     <comment xml:lang="de">R-Datendatei/Arbeitsbereichdatei</comment>
     <comment xml:lang="es">Archivo de datos o de espacio de trabajo de R</comment>
+    <comment xml:lang="fr">Fichier de données ou d'espace de travail R</comment>
     <comment xml:lang="gl">Ficheiro de dato ou espazo de traballo de R</comment>
+    <comment xml:lang="it">File di dati/spazio di lavoro di R</comment>
     <comment xml:lang="nl">R-gegevens/werkruimtebestand</comment>
     <comment xml:lang="pl">Plik danych/przestrzeni roboczej R</comment>
     <comment xml:lang="pt">Ficheiro de dados/área de trabalho do R</comment>
@@ -41,7 +44,6 @@
     <comment xml:lang="sk">Súbor údajov/pracovnej plochy R</comment>
     <comment xml:lang="sv">R-datafil/arbetsrymdsfil</comment>
     <comment xml:lang="uk">файл даних/робочого простору R</comment>
-    <comment xml:lang="zh_CN">R 数据/工作空间文件</comment>
     <acronym>RData</acronym>
     <expanded-acronym>R data/workspace file</expanded-acronym>
     <generic-icon name="package-x-generic"/>

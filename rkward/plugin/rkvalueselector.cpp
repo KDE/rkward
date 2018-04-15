@@ -35,13 +35,13 @@ RKValueSelector::RKValueSelector (const QDomElement &element, RKComponent *paren
 	standalone = element.tagName () == "select";
 
 	addChild ("selected", selected = new RKComponentPropertyStringList (this, false));
-	connect (selected, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (selectionPropertyChanged()));
+	connect (selected, &RKComponentPropertyBase::valueChanged, this, &RKValueSelector::selectionPropertyChanged);
 	selected->setInternal (!standalone);
 	addChild ("available", available = new RKComponentPropertyStringList (this, false));
-	connect (available, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (availablePropertyChanged()));
+	connect (available, &RKComponentPropertyBase::valueChanged, this, &RKValueSelector::availablePropertyChanged);
 	available->setInternal (true);
 	addChild ("labels", labels = new RKComponentPropertyStringList (this, false));
-	connect (labels, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (labelsPropertyChanged()));
+	connect (labels, &RKComponentPropertyBase::valueChanged, this, &RKValueSelector::labelsPropertyChanged);
 	labels->setInternal (true);
 
 	QVBoxLayout *vbox = new QVBoxLayout (this);
@@ -59,7 +59,7 @@ RKValueSelector::RKValueSelector (const QDomElement &element, RKComponent *paren
 	list_view->setRootIsDecorated (false);
 	model = new QStringListModel (this);
 	list_view->setModel (model);
-	connect (list_view->selectionModel (), SIGNAL (selectionChanged(QItemSelection,QItemSelection)), this, SLOT (listSelectionChanged()));
+	connect (list_view->selectionModel (), &QItemSelectionModel::selectionChanged, this, &RKValueSelector::listSelectionChanged);
 
 	vbox->addWidget (list_view);
 
@@ -194,4 +194,3 @@ QStringList RKValueSelector::getUiLabelPair () const {
 	return ret;
 }
 
-#include "rkvalueselector.moc"

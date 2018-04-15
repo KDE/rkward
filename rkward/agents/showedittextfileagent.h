@@ -2,7 +2,7 @@
                           showedittextfileagent  -  description
                              -------------------
     begin                : Tue Sep 13 2005
-    copyright            : (C) 2005, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2010, 2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -21,7 +21,7 @@
 #include <qobject.h>
 
 class RBackendRequest;
-class KDialog;
+class KMessageWidget;
 
 /** The purpose of this agent is to display text files for showing and/or editing on request of the R backend. Technically speaking, it gets invoked, whenever the standard R callbacks (ptr_)R_ShowFiles, (ptr_)R_EditFiles, or (ptr_)R_EditFile are called. While the task of simply opening such files for display/editing is rather simple, there is one slightly more difficult issue involved (and hence this class to handle it): In standard R, all these calls are blocking further processing, until the user has closed the shown/edited files. In some cases this may be necessary (for instance if R wants to use with the edited files immediately), in some cases this is an unnecessary nuisance (such as when R simply wants to display a help page or some other purely informational text).
 
@@ -46,7 +46,7 @@ out, what exactly needs to be done. Note that this is a static member. It will t
 	static void showEditFiles (RBackendRequest *request);
 private:
 	RBackendRequest *request;
-	KDialog *dialog;
+	KMessageWidget *message;
 };
 
 #endif

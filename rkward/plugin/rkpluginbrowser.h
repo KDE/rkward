@@ -22,6 +22,8 @@
 
 #include "rkcomponentproperties.h"
 
+#include <QTimer>
+
 class GetFileNameWidget;
 class QDomElement;
 
@@ -40,18 +42,21 @@ public:
 	~RKPluginBrowser ();
 
 	RKComponentPropertyBase *selection;
-	QVariant value (const QString &modifier=QString ()) { return (selection->value (modifier)); };
+	QVariant value (const QString &modifier=QString ()) override { return (selection->value (modifier)); };
 	QStringList getUiLabelPair () const;
-	int type () { return ComponentBrowser; };
-	bool isValid ();
+	int type () override { return ComponentBrowser; };
+	ComponentStatus recursiveStatus () override { return status; };
 public slots:
-	void textChanged ();
+	void textChangedFromUi ();
 	void textChanged (RKComponentPropertyBase *);
-	void requirednessChanged (RKComponentPropertyBase *);
+	void validateInput ();
 private:
 	void updateColor ();
+	QTimer validation_timer;
+	ComponentStatus status;
 	GetFileNameWidget *selector;
 	bool updating;
+	bool only_local;
 	QString label_string;
 };
 

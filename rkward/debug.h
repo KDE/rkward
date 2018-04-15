@@ -2,7 +2,7 @@
                           debug  -  description
                              -------------------
     begin                : Sun Aug 8 2004
-    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2017 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -17,10 +17,7 @@
 
 #define RKWARD_DEBUG
 
-extern int RK_Debug_Level;
-extern int RK_Debug_Flags;
-extern int RK_Debug_CommandStep;
-extern void RKDebug (int flags, int level, const char *fmt, ...);
+void RKDebug (int flags, int level, const char *fmt, ...);
 
 // Debug-levels
 #define DL_TRACE 0
@@ -48,8 +45,8 @@ extern void RKDebug (int flags, int level, const char *fmt, ...);
 
 #ifdef RKWARD_DEBUG
 // Debug functions 
-#	define RK_DO(expr,flags,level) if ((flags & RK_Debug_Flags) && (level >= RK_Debug_Level)) { expr; }
-#	define RK_DEBUG(flags,level,...) { if ((flags & RK_Debug_Flags) && (level >= RK_Debug_Level)) RKDebug (flags,level,__VA_ARGS__); }
+#	define RK_DO(expr,flags,level) if ((flags & RK_Debug::RK_Debug_Flags) && (level >= RK_Debug::RK_Debug_Level)) { expr; }
+#	define RK_DEBUG(flags,level,...) { if ((flags & RK_Debug::RK_Debug_Flags) && (level >= RK_Debug::RK_Debug_Level)) RKDebug (flags,level,__VA_ARGS__); }
 #	define RK_ASSERT(x) if (!(x)) RK_DEBUG (DEBUG_ALL, DL_FATAL, "Assert '%s' failed at %s - function %s line %d", #x, __FILE__, __FUNCTION__, __LINE__);
 #	ifndef RKWARD_NO_TRACE
 #		define RK_TRACE(flags) RK_DEBUG (flags, DL_TRACE, "Trace: %s - function %s line %d", __FILE__, __FUNCTION__, __LINE__);
@@ -62,3 +59,12 @@ extern void RKDebug (int flags, int level, const char *fmt, ...);
 #	define RK_ASSERT(x)
 #	define RK_TRACE(flags)
 #endif
+
+class QFile;
+namespace RK_Debug {
+	extern int RK_Debug_Level;
+	extern int RK_Debug_Flags;
+	extern int RK_Debug_CommandStep;
+	bool setupLogFile (const QString &basename);
+	extern QFile* debug_file;
+};

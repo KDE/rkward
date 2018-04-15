@@ -2,7 +2,7 @@
                           rkmdiwindow  -  description
                              -------------------
     begin                : Tue Sep 26 2006
-    copyright            : (C) 2006, 2007, 2008, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2006 - 2017 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -20,6 +20,7 @@
 
 #include <QFrame>
 #include <QMap>
+#include <QUrl>
 
 #include <kparts/part.h>
 
@@ -29,7 +30,7 @@ class QEvent;
 class QPaintEvent;
 class RKWorkplace;
 class RKToolWindowBar;
-class KPassivePopup;
+class KMessageWidget;
 class RCommand;
 
 class RKMDIStandardActionClient : public KXMLGUIClient {
@@ -110,10 +111,12 @@ is simply busy (e.g. when saving the current plot to history). */
 /** Set a style hint for the window. So far the only interpreted style hint is "preview", and not all windows implement it. Base implements hiding of "active" indicator border for "preview"s. */
 	virtual void setWindowStyleHint (const QString& hint);
 
-	bool eventFilter (QObject *watched, QEvent *e);
+	bool eventFilter (QObject *watched, QEvent *e) override;
 	bool acceptsEventsFor (QObject *object);
 /** Whether the window is active. This seems to be more reliable than hasFocus () */
 	bool isActive ();
+/** Like isActive (), but also returns true, if this window _would_ be the active one, if the parent topLevelWindow() _was_ the active Window. */
+	bool isActiveInsideToplevelWindow ();
 /** Returns a pointer to an action collection suitable to place RKStandardAction in. This collection (and the corresponding KXMLGUIClient) is created on the fly. */
 	KActionCollection *standardActionCollection ();
 /** plugin-accessible properties of this object in the global context. Currently used only by RKEditorDataFrame to give information on the currently active data.frame. NOTE: ATM, you cannot set arbitrary properties. Only those supported in RKStandardComponent will have an effect. */
@@ -130,19 +133,19 @@ protected slots:
 	void clearStatusMessage ();
 protected:
 	void setPart (KParts::Part *p) { part = p; };
-	void setMetaInfo (const QString& generic_window_name, const QString& help_url, RKSettings::SettingsPage settings_page=RKSettings::NoPage);
+	void setMetaInfo (const QString& generic_window_name, const QUrl& help_url, RKSettings::SettingsPage settings_page=RKSettings::NoPage);
 	void initializeActivationSignals ();
-	void paintEvent (QPaintEvent *e);
-	void windowActivationChange (bool);
+	void paintEvent (QPaintEvent *e) override;
+	void changeEvent (QEvent *event) override;
 
 /** reimplemented from QWidget to emulate focus-follows-mouse behavior */
-	void enterEvent (QEvent *event);
+	void enterEvent (QEvent *event) override;
 /** @see globalContextProperty() */
 	void setGlobalContextProperty (const QString& property, const QString& value) { global_context_properties.insert (property, value); };
 
-	KPassivePopup* status_popup;
-	void hideEvent (QHideEvent *ev);
-	void showEvent (QShowEvent *ev);
+	KMessageWidget* status_popup;
+	QWidget* status_popup_container;
+	void resizeEvent (QResizeEvent *ev) override;
 
 friend class RKWorkplace;
 /** type of this window */
@@ -161,7 +164,7 @@ friend class RKToolWindowBar;
 /** @see globalContextProperty() */
 	QMap<QString, QString> global_context_properties;
 	QString generic_window_name;
-	QString help_url;
+	QUrl help_url;
 	RKSettings::SettingsPage settings_page;
 };
 

@@ -35,7 +35,7 @@ public:
 	~RKPluginFrame ();
 
 /** returns the page child elements should be drawn in */
-	KVBox *getPage () { return page; };
+	QWidget *getPage () { return page; };
 	int type () { return ComponentFrame; };
 /** reimplemented to return the value of the checked property by default */
 	QVariant value (const QString &modifier=QString ());
@@ -49,7 +49,7 @@ private slots:
 private:
 	void initCheckedProperty ();
 	RKComponentPropertyBool *checked;
-	KVBox *page;
+	QWidget *page;
 	QGroupBox *frame;
 };
 

@@ -2,7 +2,7 @@
                           rkcommandeditorwindow  -  description
                              -------------------
     begin                : Mon Aug 30 2004
-    copyright            : (C) 2004-2016 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2017 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -22,19 +22,15 @@
 #include <QTimer>
 #include <QString>
 
-#include <kdeversion.h>
 #include <ktexteditor/view.h>
 #include <ktexteditor/document.h>
 #include <ktexteditor/codecompletionmodel.h>
 #include <ktexteditor/codecompletioninterface.h>
-#if KDE_IS_VERSION(4,5,0)
-#	include <ktexteditor/movingrange.h>
-#	include <ktexteditor/movinginterface.h>
-#else
-#	include <ktexteditor/smartrange.h>
-#	include <ktexteditor/smartinterface.h>
-#endif
-#include <kurl.h>
+#include <ktexteditor/codecompletionmodelcontrollerinterface.h>
+#include <ktexteditor/movingrange.h>
+#include <ktexteditor/movinginterface.h>
+
+#include <QUrl>
 
 #include "../windows/rkmdiwindow.h"
 
@@ -42,7 +38,7 @@ class QEvent;
 class QCloseEvent;
 class QFrame;
 class QLabel;
-class KAction;
+class QAction;
 class QAction;
 class KActionMenu;
 class RKCommandEditorWindow;
@@ -95,7 +91,7 @@ public slots:
 	void updateArgHintWindow ();
 protected:
 	/** The (keypress) events of the view are filtered to determine, when to show / hide an argument hint */
-	bool eventFilter (QObject *, QEvent *e);
+	bool eventFilter (QObject *, QEvent *e) override;
 private:
 	RKScriptContextProvider *provider;
 	KTextEditor::View *view;
@@ -106,39 +102,20 @@ private:
 	QLabel *arghints_popup;
 };
 
-/** code completion model for RKCommandEditorWindow */
-#if KDE_VERSION_MAJOR != 4
-#	error Adjust the versioning hack below!
-#endif
-// Unfortunately, MOC is not smart enough to understand the KDE_IS_VERSION macro
-#if KDE_VERSION_MINOR >= 2
-#	include <ktexteditor/codecompletionmodelcontrollerinterface.h>
-#	if KDE_VERSION_MINOR >= 5
-class RKCodeCompletionModel : public KTextEditor::CodeCompletionModel, public KTextEditor::CodeCompletionModelControllerInterface3 {
-	Q_OBJECT
-	Q_INTERFACES(KTextEditor::CodeCompletionModelControllerInterface3)
-public:
-	KTextEditor::Range completionRange (KTextEditor::View *view, const KTextEditor::Cursor &position);
-	QString filterString (KTextEditor::View *, const KTextEditor::Range &, const KTextEditor::Cursor &) { return QString (); };
-#	else
 class RKCodeCompletionModel : public KTextEditor::CodeCompletionModel, public KTextEditor::CodeCompletionModelControllerInterface {
 	Q_OBJECT
 	Q_INTERFACES(KTextEditor::CodeCompletionModelControllerInterface)
 public:
-	KTextEditor::Range completionRange (KTextEditor::View *view, const KTextEditor::Cursor &position);
-	QString filterString (KTextEditor::View *, const KTextEditor::SmartRange &, const KTextEditor::Cursor &) { return QString (); };
-#	endif
-#else
-class RKCodeCompletionModel : public KTextEditor::CodeCompletionModel {
-#endif
-public:
 	explicit RKCodeCompletionModel (RKCommandEditorWindow* parent);
 	~RKCodeCompletionModel ();
 
+	KTextEditor::Range completionRange (KTextEditor::View *view, const KTextEditor::Cursor &position) override;
+	QString filterString (KTextEditor::View *, const KTextEditor::Range &, const KTextEditor::Cursor &) override { return QString (); };
+
 	void updateCompletionList (const QString& symbol);
-	void completionInvoked (KTextEditor::View *, const KTextEditor::Range &, InvocationType);
-	void executeCompletionItem (KTextEditor::Document *document, const KTextEditor::Range &word, int row) const;
-	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const;
+	void completionInvoked (KTextEditor::View *, const KTextEditor::Range &, InvocationType) override;
+	void executeCompletionItem (KTextEditor::View *view, const KTextEditor::Range &word, const QModelIndex &index) const override;
+	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const override;
 
 	bool isEmpty () const { return names.isEmpty (); };
 private:
@@ -163,18 +140,15 @@ class RKCommandEditorWindow : public RKMDIWindow, public RKScriptContextProvider
 	Q_OBJECT
 public:
 /** constructor
-@param use_r_highlighting Initialize the view to use R syntax highlighting. Use, if you're going to edit an R syntax file */
-	explicit RKCommandEditorWindow (QWidget *parent = 0, bool use_r_highlighting=true, bool use_codehinting=true);
-/** destructor */
-	~RKCommandEditorWindow ();
-/** open given URL. 
-@param use_r_highlighting Initialize the view to use R syntax highlighting. Use, if you're going to edit an R syntax file
 @param encoding encoding to use. If QString (), the default encoding is used.
 @param read_only Open the file in read-only mode
-@param delete_on_close File should be deleted when closing the window. Only respected with read_only=true. */
-	bool openURL (const KUrl url, const QString& encoding=QString (), bool use_r_highlighting=true, bool read_only=false, bool delete_on_close=false);
+@param delete_on_close File should be deleted when closing the window. Only respected with read_only=true.
+@param use_r_highlighting Initialize the view to use R syntax highlighting. Use, if you're going to edit an R syntax file */
+	explicit RKCommandEditorWindow (QWidget *parent, const QUrl url, const QString& encoding=QString (), bool use_r_highlighting=true, bool use_codehinting=true, bool read_only=false, bool delete_on_close=false);
+/** destructor */
+	~RKCommandEditorWindow ();
 /** returns, whether the document was modified since the last save */
-	bool isModified ();
+	bool isModified () override;
 /** insert the given text into the document at the current cursor position. Additionally, focuses the view */
 	void insertText (const QString &text);
 /** set the current text (clear all previous text, and sets new text) */
@@ -187,21 +161,23 @@ public:
 	void copy ();
 
 /** reimplemented from RKMDIWindow to return full path of file (if any) */
-	QString fullCaption ();
+	QString fullCaption () override;
 
 	void setReadOnly (bool ro);
 
 /** Return current url */
-	KUrl url ();
+	QUrl url () const;
+/** Returns an id string for this document. Meaningful, only when url is empty. For keeping track of split views on unnamed/unsaved windows */
+	QString id () const { return _id; };
 
-	QString provideContext (int line_rev);
-	void currentHelpContext (QString* symbol, QString* package);  // KF5 TODO: add override keyword
+	QString provideContext (int line_rev) override;
+	void currentHelpContext (QString* symbol, QString* package) override;
 	QString currentCompletionWord () const;
 
 	void highlightLine (int linenum);
 public slots:
 /** update Tab caption according to the current url. Display the filename-component of the URL, or - if not available - a more elaborate description of the url. Also appends a "[modified]" if appropriate */
-	void updateCaption (KTextEditor::Document* = 0);
+	void updateCaption ();
 /** called whenever it might be appropriate to show a code completion box. The box is not shown immediately, but only after a timeout (if at all) */
 	void tryCompletionProxy (KTextEditor::Document*);
 /** show a code completion box if appropriate. Use tryCompletionProxy () instead, which will call this function after a timeout */
@@ -230,7 +206,8 @@ public slots:
 	QAction* fileSaveAsAction () { return file_save_as; };
 protected:
 /** reimplemented from RKMDIWindow: give the editor window a chance to object to being closed (if unsaved) */
-	void closeEvent (QCloseEvent *e);
+	void closeEvent (QCloseEvent *e) override;
+	void setWindowStyleHint (const QString& hint) override;
 private slots:
 /** mark current selection as a block */
 	void markBlock ();
@@ -252,11 +229,7 @@ private:
 	KTextEditor::Document *m_doc;
 	KTextEditor::View *m_view;
 	KTextEditor::CodeCompletionInterface *cc_iface;
-#if KDE_IS_VERSION(4,5,0)
 	KTextEditor::MovingInterface *smart_iface;
-#else
-	KTextEditor::SmartInterface *smart_iface;
-#endif
 	RKFunctionArgHinter *hinter;
 	RKCodeCompletionModel *completion_model;
 
@@ -265,16 +238,12 @@ private:
 	void initializeActions (KActionCollection* ac);
 
 	struct BlockRecord {
-#if KDE_IS_VERSION(4,5,0)
 		KTextEditor::MovingRange* range;
-#else
-		KTextEditor::SmartRange* range;
-#endif
 		bool active;
 		KTextEditor::Attribute::Ptr attribute;
-		KAction* mark;
-		KAction* unmark;
-		KAction* run;
+		QAction* mark;
+		QAction* unmark;
+		QAction* run;
 	};
 	QVector<BlockRecord> block_records;
 	void initBlocks ();
@@ -287,15 +256,18 @@ private:
 	KActionMenu* actionmenu_unmark_block;
 	KActionMenu* actionmenu_run_block;
 
-	KAction* action_run_all;
-	KAction* action_run_current;
+	QAction* action_run_all;
+	QAction* action_run_current;
 
-	KAction* action_setwd_to_script;
+	QAction* action_setwd_to_script;
 
-	KUrl previous_autosave_url;
+	QUrl previous_autosave_url;
 	QTimer* autosave_timer;
 
-	KUrl delete_on_close;
+	QUrl delete_on_close;
+
+	QString _id;
+	static QMap<QString, KTextEditor::Document*> unnamed_documents;
 };
 
 /** Simple class to provide HTML highlighting for arbitrary R code. */
@@ -312,6 +284,8 @@ public:
 private:
 	static KTextEditor::Document* getDoc ();
 	static KTextEditor::Document* _doc;
+	static KTextEditor::View* getView ();
+	static KTextEditor::View* _view;
 };
 
 #endif

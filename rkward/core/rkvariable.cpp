@@ -18,12 +18,12 @@
 
 #include <qstringlist.h>
 #include "float.h"
-#include "math.h"
+#include <cmath>
 
 #include "rcontainerobject.h"
 #include "robjectlist.h"
 
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../rkglobals.h"
 #include "rkmodificationtracker.h"
 
@@ -58,9 +58,7 @@ void RKVariable::setVarType (RObject::RDataType new_type, bool sync) {
 	if (data) {
 		// quick and dirty approach! TODO: make more efficient
 		QStringList list;
-#if QT_VERSION >= 0x040700
 		list.reserve (getLength ());
-#endif
 		bool labelled = (new_type == DataCharacter);
 		for (int i=0; i < getLength (); ++i) list.append (getText (i, labelled));
 
@@ -576,7 +574,7 @@ void RKVariable::setNumericFromR (int from_row, int to_row, const QVector<double
 			if (data->cell_states[row] & RKVarEditData::Invalid) data->cell_states[row] =  RKVarEditData::UnsyncedInvalidState;
 			else data->cell_states[row] = 0;
 
-			if (isnan (numdata[i]) || (!data->value_labels) || (!data->value_labels->contains (QString::number (numdata[i])))) {
+			if (std::isnan (numdata[i]) || (!data->value_labels) || (!data->value_labels->contains (QString::number (numdata[i])))) {
 				data->cell_states[row] |= RKVarEditData::NA;
 			} else {
 				data->cell_states[row] |= RKVarEditData::Valid;
@@ -590,7 +588,7 @@ void RKVariable::setNumericFromR (int from_row, int to_row, const QVector<double
 			if (data->cell_states[row] & RKVarEditData::Invalid) data->cell_states[row] = RKVarEditData::UnsyncedInvalidState;
 			else data->cell_states[row] = 0;
 
-			if (isnan (numdata[i])) {
+			if (std::isnan (numdata[i])) {
 				data->cell_states[row] |= RKVarEditData::NA;
 			} else {
 				data->cell_states[row] |= RKVarEditData::Valid;
@@ -873,7 +871,6 @@ RKVariable::FormattingOptions RKVariable::parseFormattingOptionsString (const QS
 	formatting_options.alignment = FormattingOptions::AlignDefault;
 	formatting_options.precision_mode = FormattingOptions::PrecisionDefault;
 	formatting_options.precision = 0;
-	bool empty = true;
 
 	QStringList list = string.split ('#', QString::SkipEmptyParts);
 	QString option, parameter;
@@ -886,20 +883,16 @@ RKVariable::FormattingOptions RKVariable::parseFormattingOptionsString (const QS
 		if (option == "align") {
 			int al = parameter.toInt ();
 			if ((al >= (int) FormattingOptions::AlignDefault) && (al <= (int) FormattingOptions::AlignRight)) {
-				empty = false;
 				formatting_options.alignment = (FormattingOptions::Alignment) al;
 			}
 		} else if (option == "prec") {
 			if (parameter == "d") {
-				empty = false;
 				formatting_options.precision_mode = FormattingOptions::PrecisionDefault;
 			} else if (parameter == "v") {
-				empty = false;
 				formatting_options.precision_mode = FormattingOptions::PrecisionRequired;
 			} else {
 				int digits = parameter.toInt ();
 				if ((digits >= 0) && (digits <= 15)) {
-					empty = false;
 					formatting_options.precision_mode = FormattingOptions::PrecisionFixed;
 					formatting_options.precision = digits;
 				}

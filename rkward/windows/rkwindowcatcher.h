@@ -22,6 +22,11 @@
 #ifndef DISABLE_RKWINDOWCATCHER
 
 #include <qwidget.h>
+#include <QMap>
+#include <QTimer>
+
+#include <netwm_def.h>
+class RKMDIWindow;
 
 /** This is a simple helper class helping in catching R X11 device windows. The start () and stop () functions are called from RInterface, and then this class takes care of handling those.
 
@@ -55,7 +60,8 @@ Catch R X11 device windows
 
 @author Thomas Friedrichsmeier
 */
-class RKWindowCatcher {
+class RKWindowCatcher : public QObject {
+	Q_OBJECT
 public:
 /** ctor. Probably you'll only ever need one instance of RKWindowCatcher. */
 	RKWindowCatcher ();
@@ -74,8 +80,21 @@ public:
 /** Kill an R device
 @param device_number R device number of the device to kil */
 	void killDevice (int device_number);
+	/** watch the given window for changes in its WM_NAME property (i.e. changes in caption), or deletion. When a change is detected, the watcher will be notified (setCaption() or deleteLater())
+	    WARNING: Remember to call unregisterNameWatcher, when watcher is deleted! */
+	void registerWatcher (WId watched, RKMDIWindow *watcher);
+	/** remove a watch created with registerNameWatcher */
+	void unregisterWatcher (WId watched);
+	static RKWindowCatcher *instance ();
+	static void discardInstance () { delete _instance; };
 private:
+	void pollWatchedWindowStates ();
+	QTimer poll_timer;
+	WId createdWindow ();
 	int last_cur_device;
+	QList<WId> windows_before_add;
+	static RKWindowCatcher* _instance;
+	QMap<WId, RKMDIWindow*> watchers_list;
 };
 
 
@@ -85,11 +104,10 @@ private:
 
 class RKCaughtX11WindowPart;
 class KToggleAction;
-class KAction;
+class QAction;
 class KSelectAction;
 class QXEmbedCopy;
 class QScrollArea;
-class KVBox;
 class RKProgressControl;
 class QX11EmbedContainer;
 class QWinHost;
@@ -103,17 +121,17 @@ public:
 /** ctor
 @param window_to_embed the Window id of the R X11 device window to embed
 @param device_number the device number corresponding to that window */
-	RKCaughtX11Window (WId window_to_embed, int device_number);
+	RKCaughtX11Window (QWindow* window_to_embed, int device_number);
 	RKCaughtX11Window (RKGraphicsDevice *rkward_device, int device_number);
 /** dtor */
 	~RKCaughtX11Window ();
 /** TODO? */
-	bool isModified () { return false; };
+	bool isModified () override { return false; };
 
 /** reimplemented from RKMDIWindow to switch to fixed size mode, and disable the dynamic_size_action */
-	void prepareToBeAttached ();
+	void prepareToBeAttached () override;
 /** see prepareToBeAttached (). Reenable the dynamic_size_action */
-	void prepareToBeDetached ();
+	void prepareToBeDetached () override;
 /** returns the window corresponding the to given R device number (or 0 if no such window exists) */
 	static RKCaughtX11Window* getWindow (int device_number) { return device_windows.value (device_number); };
 	void updateHistoryActions (int history_length, int position, const QStringList &labels);
@@ -150,48 +168,40 @@ public slots:
 	void showPlotInfo ();
 
 /** reimplemented to keep window alive while saving history */
-	bool close (bool also_delete);
+	bool close (bool also_delete) override;
 	void setKilledInR () { killed_in_r = true; };
-	void setWindowStyleHint (const QString& hint); // KF5 TODO: add override keyword
+	void setWindowStyleHint (const QString& hint) override;
 private slots:
 	void doEmbed ();
 private:
 	void forceClose ();
 	void commonInit (int device_number);
-	void reEmbed ();
 	friend class RKCaughtX11WindowPart;	// needs access to the actions
 	int device_number;
 	bool killed_in_r;
 	bool close_attempted;
-	WId embedded;
-	KVBox *xembed_container;
+	QWidget *xembed_container;
 	QScrollArea *scroll_widget;
-	KVBox *box_widget;
 	RKProgressControl *error_dialog;
 
 	static QHash<int, RKCaughtX11Window*> device_windows;
-#ifdef Q_WS_WIN
-	QWinHost *capture;
-#elif defined Q_WS_X11
-	QX11EmbedContainer *capture;
-#else
-	// a dummy to make things compile for now
-	QWidget *capture;
-#endif
+	QWindow *embedded;
+	bool embedding_complete;
+	QWidget *capture;  // The captured window (0, if using an rk native device)
 	RKGraphicsDevice *rk_native_device;
 
 	bool dynamic_size;
 	KToggleAction *dynamic_size_action;
-	KAction *plot_prev_action;
-	KAction *plot_next_action;
-	KAction *plot_first_action;
-	KAction *plot_last_action;
-	KAction *plot_force_append_action;
-	KAction *plot_remove_action;
-	KAction *plot_clear_history_action;
-	KAction *plot_properties_action;
+	QAction *plot_prev_action;
+	QAction *plot_next_action;
+	QAction *plot_first_action;
+	QAction *plot_last_action;
+	QAction *plot_force_append_action;
+	QAction *plot_remove_action;
+	QAction *plot_clear_history_action;
+	QAction *plot_properties_action;
 	KSelectAction *plot_list_action;
-	KAction *stop_interaction;
+	QAction *stop_interaction;
 
 	QList<QAction*> actions_not_for_preview;
 	int history_length;

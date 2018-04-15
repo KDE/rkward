@@ -19,7 +19,7 @@
 #include <qlayout.h>
 #include <qlabel.h>
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "../misc/rkspinbox.h"
 #include "../misc/xmlhelper.h"
@@ -71,9 +71,9 @@ RKPluginSpinBox::RKPluginSpinBox (const QDomElement &element, RKComponent *paren
 	}
 
 	// connect
-	connect (spinbox, SIGNAL (valueChanged(int)), this, SLOT (valueChanged(int)));
-	connect (intvalue, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (valueChanged(RKComponentPropertyBase*)));
-	connect (realvalue, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (valueChanged(RKComponentPropertyBase*)));
+	connect (spinbox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKPluginSpinBox::valueChangedFromUi);
+	connect (intvalue, &RKComponentPropertyBase::valueChanged, this, &RKPluginSpinBox::valueChanged);
+	connect (realvalue, &RKComponentPropertyBase::valueChanged, this, &RKPluginSpinBox::valueChanged);
 	updating = false;
 
 	// finish layout
@@ -84,7 +84,7 @@ RKPluginSpinBox::RKPluginSpinBox (const QDomElement &element, RKComponent *paren
 	}
 
 	// initialize
-	valueChanged (1);
+	valueChangedFromUi ();
 }
 
 RKPluginSpinBox::~RKPluginSpinBox () {
@@ -114,7 +114,7 @@ void RKPluginSpinBox::valueChanged (RKComponentPropertyBase *property) {
 	updating = false;
 }
 
-void RKPluginSpinBox::valueChanged (int) {
+void RKPluginSpinBox::valueChangedFromUi () {
 	RK_TRACE (PLUGIN);
 
 	if (intmode) {
@@ -146,4 +146,3 @@ QStringList RKPluginSpinBox::getUiLabelPair () const {
 	return ret;
 }
 
-#include "rkpluginspinbox.moc"

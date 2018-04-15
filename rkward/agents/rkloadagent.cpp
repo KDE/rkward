@@ -16,16 +16,18 @@
  ***************************************************************************/
 #include "rkloadagent.h"
 
-#include <kio/netaccess.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kmessagebox.h>
-#include <kdeversion.h>
+#include <kio/filecopyjob.h>
+#include <KJobWidgets>
+#include <KJobUiDelegate>
 
 #include <qstring.h>
+#include <QTemporaryFile>
 
 #include "../rkglobals.h"
 #include "../core/robjectlist.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../rkward.h"
 #include "../windows/rkworkplace.h"
 #include "../settings/rksettingsmodulegeneral.h"
@@ -35,19 +37,27 @@
 #define WORKSPACE_LOAD_COMMAND 1
 #define WORKSPACE_LOAD_COMPLETE_COMMAND 2
 
-RKLoadAgent::RKLoadAgent (const KUrl &url, bool merge) {
+RKLoadAgent::RKLoadAgent (const QUrl &url, bool merge) {
 	RK_TRACE (APP);
 	RKWardMainWindow::getMain ()->slotSetStatusBarText (i18n ("Loading Workspace..."));
 
 	_merge = merge;
+
+	// downlad the file, if remote
+	tmpfile = 0;
 	QString filename;
 	if (!url.isLocalFile ()) {
-		KIO::NetAccess::download (url, tmpfile, RKWardMainWindow::getMain ());
-		filename = tmpfile;
+		tmpfile = new QTemporaryFile (this);
+		KIO::Job* getjob = KIO::file_copy (url, QUrl::fromLocalFile (tmpfile->fileName()));
+		KJobWidgets::setWindow (getjob, RKWardMainWindow::getMain ());
+		if (!getjob->exec ()) {
+			getjob->ui ()->showErrorMessage();
+			return;
+		}
+		filename = tmpfile->fileName ();
 	} else {
 		filename = url.toLocalFile ();
 	}
-	
 
 	RCommand *command;
 	
@@ -71,15 +81,14 @@ void RKLoadAgent::rCommandDone (RCommand *command) {
 	RK_TRACE (APP);
 	
 	if (command->getFlags () == WORKSPACE_LOAD_COMMAND) {
-		if (!tmpfile.isEmpty ()) KIO::NetAccess::removeTempFile (tmpfile);
 		if (command->failed ()) {
 			KMessageBox::error (0, i18n ("There has been an error opening file '%1':\n%2", RKWorkplace::mainWorkplace ()->workspaceURL ().path (), command->error ()), i18n ("Error loading workspace"));
-			RKWorkplace::mainWorkplace ()->setWorkspaceURL (KUrl());
+			RKWorkplace::mainWorkplace ()->setWorkspaceURL (QUrl());
 		} else {
 			RKWorkplace::mainWorkplace ()->restoreWorkplace (0, _merge);
 			if (RKSettingsModuleGeneral::cdToWorkspaceOnLoad ()) {
 				if (RKWorkplace::mainWorkplace ()->workspaceURL ().isLocalFile ()) {
-					RKGlobals::rInterface ()->issueCommand ("setwd (" + RObject::rQuote (RKWorkplace::mainWorkplace ()->workspaceURL ().directory ()) + ')', RCommand::App);
+					RKGlobals::rInterface ()->issueCommand ("setwd (" + RObject::rQuote (RKWorkplace::mainWorkplace ()->workspaceURL ().adjusted (QUrl::RemoveFilename).path ()) + ')', RCommand::App);
 				}
 			}
 			RKGlobals::rInterface ()->issueCommand (QString (), RCommand::EmptyCommand | RCommand::App, QString (), this, WORKSPACE_LOAD_COMPLETE_COMMAND);
@@ -96,4 +105,3 @@ void RKLoadAgent::rCommandDone (RCommand *command) {
 	}
 }
 
-#include "rkloadagent.moc"

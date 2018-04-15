@@ -22,7 +22,7 @@
 class RCommand;
 class QCheckBox;
 class QGridLayout;
-class KIntSpinBox;
+class QSpinBox;
 
 /**
 Settings module for the RInterface-watch. Allows you to configure what kind of commands you would like to see/hide.
@@ -40,8 +40,8 @@ public:
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
 	
-	void applyChanges ();
-	void save (KConfig *config);
+	void applyChanges () override;
+	void save (KConfig *config) override;
 	void validateGUI ();
 
 	static bool shouldShowInput (RCommand *command);
@@ -51,7 +51,7 @@ public:
 
 	static uint maxLogLines () { return max_log_lines; };
 
-	QString caption ();
+	QString caption () override;
 public slots:
 	void changedSetting (int);
 private:
@@ -79,7 +79,7 @@ private:
 
 	static uint max_log_lines;
 
-	KIntSpinBox *max_log_lines_spinner;
+	QSpinBox *max_log_lines_spinner;
 };
 
 #endif

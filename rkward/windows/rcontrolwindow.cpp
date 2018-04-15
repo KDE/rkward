@@ -22,12 +22,12 @@
 #include <QVBoxLayout>
 #include <QHeaderView>
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kmessagebox.h>
 
 #include "../settings/rksettings.h"
 #include "../misc/rkdummypart.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../rbackend/rcommand.h"
 #include "../rbackend/rcommandstack.h"
 #include "../rkglobals.h"
@@ -49,23 +49,23 @@ RControlWindow::RControlWindow (QWidget *parent, bool tool_window, const char *n
 	main_vbox->addLayout (button_hbox);
 
 	QPushButton *configure_r_button = new QPushButton (i18n ("Configure R backend"), this);
-	connect (configure_r_button, SIGNAL (clicked()), this, SLOT (configureButtonClicked()));
+	connect (configure_r_button, &QPushButton::clicked, this, &RControlWindow::configureButtonClicked);
 	button_hbox->addWidget (configure_r_button);
 	button_hbox->addStretch ();
 
 	pause_button = new QPushButton (i18n ("Pause execution"), this);
-	connect (pause_button, SIGNAL (clicked()), this, SLOT (pauseButtonClicked()));
+	connect (pause_button, &QPushButton::clicked, this, &RControlWindow::pauseButtonClicked);
 	button_hbox->addWidget (pause_button);
 	button_hbox->addStretch ();
 
 	cancel_button = new QPushButton (i18n ("Cancel selected commands"), this);
-	connect (cancel_button, SIGNAL (clicked()), this, SLOT (cancelButtonClicked()));
+	connect (cancel_button, &QPushButton::clicked, this, &RControlWindow::cancelButtonClicked);
 	button_hbox->addWidget (cancel_button);
 
 	commands_view = new QTreeView (this);
 
 	commands_view->setSortingEnabled (false);
-	commands_view->header ()->setMovable (false);
+	commands_view->header ()->setSectionsMovable (false);
 	commands_view->header ()->setStretchLastSection (false);
 
 	commands_view->setSelectionMode (QAbstractItemView::ExtendedSelection);
@@ -89,7 +89,7 @@ void RControlWindow::showEvent (QShowEvent *e) {
 	if (!commands_view->model ()) {
 		RCommandStackModel::getModel ()->addListener ();
 		commands_view->setModel (RCommandStackModel::getModel ());
-		commands_view->header ()->setResizeMode (0, QHeaderView::Stretch);	// can't do this in the ctor, as column 0 does not yet exist
+		commands_view->header ()->setSectionResizeMode (0, QHeaderView::Stretch);	// can't do this in the ctor, as column 0 does not yet exist
 		commands_view->expandAll ();
 	}
 
@@ -154,4 +154,3 @@ void RControlWindow::configureButtonClicked () {
 	RKSettings::configureSettings (RKSettings::PageR, this);
 }
 
-#include "rcontrolwindow.moc"

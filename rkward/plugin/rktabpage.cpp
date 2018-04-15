@@ -21,8 +21,6 @@
 #include <qtabwidget.h>
 #include <QVBoxLayout>
 
-#include <kvbox.h>
-
 #include "../rkglobals.h"
 #include "../misc/xmlhelper.h"
 #include "../debug.h"
@@ -34,18 +32,15 @@ RKTabPage::RKTabPage (const QDomElement &element, RKComponent *parent_component,
 	label = xml->i18nStringAttribute (element, "label", QString (), DL_WARNING);
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
-	page = new KVBox (this);
-	layout->addWidget (page);
+	layout->setContentsMargins (0, 0, 0, 0);
 
 	tabbook = parent_widget;
 	tabbook->addTab (this, label);
 	index = tabbook->indexOf (this);
-	// for whatever reason, this needs to be set *after* the page was added to the tabbook
-	page->setSizePolicy (QSizePolicy (QSizePolicy::Expanding, QSizePolicy::Expanding));
 
 	inserted = true;
-	connect (visibility_property, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (visibleEnabledChanged(RKComponentPropertyBase*)));
-	connect (enabledness_property, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (visibleEnabledChanged(RKComponentPropertyBase*)));
+	connect (visibility_property, &RKComponentPropertyBase::valueChanged, this, &RKTabPage::visibleEnabledChanged);
+	connect (enabledness_property, &RKComponentPropertyBase::valueChanged, this, &RKTabPage::visibleEnabledChanged);
 }
 
 RKTabPage::~RKTabPage () {
@@ -75,4 +70,3 @@ void RKTabPage::visibleEnabledChanged (RKComponentPropertyBase *property) {
 	}
 }
 
-#include "rktabpage.moc"

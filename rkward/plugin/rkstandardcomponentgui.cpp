@@ -17,11 +17,8 @@
 
 #include "rkstandardcomponentgui.h"
 
-#include <klocale.h>
-#include <kaction.h>
+#include <KLocalizedString>
 #include <kactioncollection.h>
-#include <kurl.h>
-#include <kvbox.h>
 
 #include <qtimer.h>
 #include <qpushbutton.h>
@@ -32,6 +29,9 @@
 #include <QHBoxLayout>
 #include <QToolButton>
 #include <QDesktopWidget>
+#include <QAction>
+#include <QUrl>
+#include <QApplication>
 
 #include "rkcomponentmap.h"
 #include "../misc/rkcommonfunctions.h"
@@ -39,7 +39,7 @@
 #include "../misc/rkxmlguipreviewarea.h"
 #include "../windows/rkworkplace.h"
 #include "../windows/rkcommandeditorwindow.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../rkward.h"
 #include "../settings/rksettingsmoduleplugins.h"
 #include "../rkglobals.h"
@@ -141,20 +141,20 @@ RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, 
 
 	RKStandardComponentGUI::component = component;
 	RKStandardComponentGUI::code_property = code_property;
-	connect (code_property, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (codeChanged(RKComponentPropertyBase*)));
-	connect (RKWardMainWindow::getMain(), SIGNAL (aboutToQuitRKWard()), this, SLOT (cancel()));
+	connect (code_property, &RKComponentPropertyBase::valueChanged, this, &RKStandardComponentGUI::codeChanged);
+	connect (RKWardMainWindow::getMain(), &RKWardMainWindow::aboutToQuitRKWard, this, &RKStandardComponentGUI::cancel);
 
 	RKStandardComponentGUI::enslaved = enslaved;
 
 	// code update timer
 	code_update_timer = new QTimer (this);
 	code_update_timer->setSingleShot (true);
-	connect (code_update_timer, SIGNAL (timeout()), this, SLOT (updateCodeNow()));
+	connect (code_update_timer, &QTimer::timeout, this, &RKStandardComponentGUI::updateCodeNow);
 
 	if (!enslaved) {
 		// code display
 		RKXMLGUIPreviewArea *area = addDockedPreview (&code_display_visibility, i18n ("Code Preview"), QString (), true);
-		code_display = new RKCommandEditorWindow (0, true, false);
+		code_display = new RKCommandEditorWindow (0, QUrl (), QString (), true, false);
 		code_display->setReadOnly (true);
 		code_display_visibility.setBoolValue (!enslaved && RKSettingsModulePlugins::showCodeByDefault ());
 		code_display->setParent (area);  // hm, mysterious breakage when adding via constructor. Whatever...
@@ -171,15 +171,12 @@ RKStandardComponentGUI::~RKStandardComponentGUI () {
 void RKStandardComponentGUI::createDialog (bool switchable) {
 	RK_TRACE (PLUGIN);
 
-	QVBoxLayout *main_vbox = new QVBoxLayout (this);
-	main_vbox->setContentsMargins (0, 0, 0, 0);
-
 	QWidget *central_widget = new QWidget ();
 	QHBoxLayout *hbox = new QHBoxLayout (central_widget);
 
 	// build standard elements
-	main_widget = new KVBox (central_widget);
-	main_widget->setSizePolicy (QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);  // HACK to achieve sane initial size. Will be reset to Preferred/Preferred after show.
+	main_widget = new QWidget (central_widget);
+	new QVBoxLayout (main_widget);
 	hbox->addWidget (main_widget);
 
 	// lines
@@ -194,12 +191,12 @@ void RKStandardComponentGUI::createDialog (bool switchable) {
 	vbox->setContentsMargins (0, 0, 0, 0);
 	vbox->setSpacing (RKGlobals::spacingHint ());
 	ok_button = new QPushButton (i18n ("Submit"), central_widget);
-	connect (ok_button, SIGNAL (clicked()), this, SLOT (ok()));
+	connect (ok_button, &QPushButton::clicked, this, &RKStandardComponentGUI::ok);
 	vbox->addWidget (ok_button);
 	if (enslaved) ok_button->hide ();
 
 	cancel_button = new QPushButton (i18n ("Close"), central_widget);
-	connect (cancel_button, SIGNAL (clicked()), this, SLOT (cancel()));
+	connect (cancel_button, &QPushButton::clicked, this, &RKStandardComponentGUI::cancel);
 	vbox->addWidget (cancel_button);
 	auto_close_box = new QCheckBox (i18n ("Auto close"), central_widget);
 	auto_close_box->setChecked (true);
@@ -209,12 +206,12 @@ void RKStandardComponentGUI::createDialog (bool switchable) {
 	
 	help_button = new QPushButton (i18n ("Help"), central_widget);
 	help_button->setEnabled (component->haveHelp ());
-	connect (help_button, SIGNAL (clicked()), this, SLOT (help()));
+	connect (help_button, &QPushButton::clicked, this, &RKStandardComponentGUI::help);
 	vbox->addWidget (help_button);
 	
 	if (switchable && (!enslaved)) {
 		switch_button = new QPushButton (i18n ("Use Wizard"), central_widget);
-		connect (switch_button, SIGNAL (clicked()), this, SLOT (switchInterface()));
+		connect (switch_button, &QPushButton::clicked, this, &RKStandardComponentGUI::switchInterface);
 		vbox->addWidget (switch_button);
 	}
 	vbox->addStretch (2);
@@ -226,7 +223,7 @@ void RKStandardComponentGUI::createDialog (bool switchable) {
 
 	toggle_code_box = new QCheckBox (i18n ("Code Preview"), central_widget);
 	toggle_code_box->setChecked (code_display_visibility.boolValue ());
-	connect (toggle_code_box, SIGNAL (clicked()), this, SLOT (toggleCode()));
+	connect (toggle_code_box, &QCheckBox::clicked, this, &RKStandardComponentGUI::toggleCode);
 	vbox->addWidget (toggle_code_box);
 	if (enslaved) toggle_code_box->hide ();
 
@@ -240,6 +237,9 @@ void RKStandardComponentGUI::createDialog (bool switchable) {
 	hsplitter->setOrientation (Qt::Horizontal);
 	vsplitter = new RKExtensionSplitter (this, this, hsplitter, vpreview_area);
 	vsplitter->setOrientation (Qt::Vertical);
+
+	QVBoxLayout *main_vbox = new QVBoxLayout (this);
+	main_vbox->setContentsMargins (0, 0, 0, 0);
 	main_vbox->addWidget (vsplitter);
 }
 
@@ -264,7 +264,7 @@ void RKStandardComponentGUI::finalize () {
 		tb->setAutoRaise (true);
 		tb->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDelete));
 		tb->setProperty ("preview_area", QVariant::fromValue (dummy));
-		connect (tb, SIGNAL (clicked()), this, SLOT (previewCloseButtonClicked()));
+		connect (tb, &QAbstractButton::clicked, this, &RKStandardComponentGUI::previewCloseButtonClicked);
 		RKXMLGUIPreviewArea *parea = qobject_cast<RKXMLGUIPreviewArea*> (previews[i].area);
 		if (parea) hl->addWidget (parea->menuButton ());
 		hl->addStretch ();
@@ -275,7 +275,7 @@ void RKStandardComponentGUI::finalize () {
 		vl->addWidget (previews[i].area);
 		previews[i].area->show ();
 		previews[i].area = dummy;
-		connect (previews[i].controller, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (previewVisibilityChanged(RKComponentPropertyBase*)));
+		connect (previews[i].controller, &RKComponentPropertyBase::valueChanged, this, &RKStandardComponentGUI::previewVisibilityChanged);
 		if (!(previews[i].controller->boolValue ())) dummy->hide ();
 		else {
 			if (previews[i].position == Qt::Horizontal) any_hpreview_visible = true;
@@ -295,6 +295,10 @@ void RKStandardComponentGUI::finalize () {
 	} else {
 		vpreview_area->hide ();
 	}
+
+	// (With Qt 5.4.1) it seems *very* important to call this before the first show. Otherwise we will see strange placement issues, esp. in multi-monitor setup.
+	// Yes, that's right. placement, not initial size. For whatever reason.
+	main_widget->updateGeometry ();
 }
 
 RKXMLGUIPreviewArea* RKStandardComponentGUI::addDockedPreview (RKComponentPropertyBool *controller, const QString& label, const QString &id, bool bottom) {
@@ -378,7 +382,6 @@ void RKStandardComponentGUI::doPostShowCleanup () {
 	if (toggle_code_box) {  // is Dialog
 		hpreview_area->setMinimumWidth (80);
 		vpreview_area->setMinimumHeight (40);
-		main_widget->setSizePolicy (QSizePolicy (QSizePolicy::Preferred, QSizePolicy::Preferred));
 		previewVisibilityChanged (0);
 	}
 }
@@ -441,7 +444,7 @@ void RKStandardComponentGUI::help () {
 	RK_TRACE (PLUGIN);
 
 	QString path = component->getId ().split ("::").join ("/");
-	RKWorkplace::mainWorkplace ()->openHelpWindow (KUrl ("rkward://component/" + path));
+	RKWorkplace::mainWorkplace ()->openHelpWindow (QUrl ("rkward://component/" + path));
 }
 
 void RKStandardComponentGUI::closeEvent (QCloseEvent *e) {
@@ -532,10 +535,10 @@ void RKStandardComponentWizard::createWizard (bool switchable) {
 	main_grid->addWidget (prev_button, 2, 2, Qt::AlignRight);
 	next_button = new QPushButton (QString (), this);
 	main_grid->addWidget (next_button, 2, 3, Qt::AlignRight);
-	connect (next_button, SIGNAL (clicked()), this, SLOT (next()));
-	connect (prev_button, SIGNAL (clicked()), this, SLOT (prev()));
-	connect (cancel_button, SIGNAL (clicked()), this, SLOT (cancel()));
-	connect (help_button, SIGNAL (clicked()), this, SLOT (help()));
+	connect (next_button, &QPushButton::clicked, this, &RKStandardComponentWizard::next);
+	connect (prev_button, &QPushButton::clicked, this, &RKStandardComponentWizard::prev);
+	connect (cancel_button, &QPushButton::clicked, this, &RKStandardComponentWizard::cancel);
+	connect (help_button, &QPushButton::clicked, this, &RKStandardComponentWizard::help);
 
 	// dummy:
 	auto_close_box = new QCheckBox(this);
@@ -729,8 +732,10 @@ RKComponent *RKStandardComponentStack::addPage (RKComponent *parent) {
 	RK_TRACE (PLUGIN);
 
 	PageDef *def = new PageDef;
-	KVBox *wrap = new KVBox (this);
+	QWidget *wrap = new QWidget ();
+	new QVBoxLayout (wrap);
 	def->page = new RKComponent (parent, wrap);
+	wrap->layout ()->addWidget (def->page);
 	setCurrentIndex (addWidget (wrap));
 	pages.append (def);
 
@@ -773,4 +778,3 @@ int RKStandardComponentStack::nextVisiblePage () {
 	return next_page;
 }
 
-#include "rkstandardcomponentgui.moc"

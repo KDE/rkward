@@ -16,12 +16,10 @@
  ***************************************************************************/
 #include "rksettings.h"
 
-#include <qlayout.h>
+#include <QPushButton>
 
-#include <klocale.h>
-#include <kapplication.h>
-#include <kglobal.h>
-#include <kvbox.h>
+#include <KLocalizedString>
+#include <KSharedConfig>
 
 #include "../windows/rkworkplace.h"
 
@@ -68,15 +66,18 @@ RKSettings::RKSettings (QWidget *parent) : KPageDialog (parent) {
 	RK_TRACE (SETTINGS);
 
 	setFaceType (KPageDialog::Tree);
-	setCaption (i18n ("Settings"));
-	setButtons (KDialog::Ok | KDialog::Apply | KDialog::Cancel | KDialog::Help);
-	enableButtonApply (false);
+	setWindowTitle (i18n ("Settings"));
+	buttonBox ()->setStandardButtons (QDialogButtonBox::Ok | QDialogButtonBox::Apply | QDialogButtonBox::Cancel | QDialogButtonBox::Help);
+	// KF5 TODO: connect buttons
+	button (QDialogButtonBox::Apply)->setEnabled (false);
+	connect (button(QDialogButtonBox::Apply), &QPushButton::clicked, this, &RKSettings::applyAll);
+	connect (button(QDialogButtonBox::Help), &QPushButton::clicked, this, &RKSettings::helpClicked);
 
 	setAttribute (Qt::WA_DeleteOnClose, true);
 
 	initModules ();
 
-	connect (this, SIGNAL (currentPageChanged(KPageWidgetItem*,KPageWidgetItem*)), this, SLOT (pageChange(KPageWidgetItem*,KPageWidgetItem*)));
+	connect (this, &KPageDialog::currentPageChanged, this, &RKSettings::pageChange);
 	pageChange (currentPage (), currentPage ());	// init
 }
 
@@ -132,31 +133,26 @@ void RKSettings::pageChange (KPageWidgetItem *current, KPageWidgetItem *) {
 	} else {
 		has_help = !(new_module->helpURL ().isEmpty ());
 	}
-	enableButton (KDialog::Help, has_help);
+	button (QDialogButtonBox::Help)->setEnabled (has_help);
 }
 
-void RKSettings::slotButtonClicked (int button) {
+void RKSettings::done (int result) {
 	RK_TRACE (SETTINGS);
 
-	if (button == KDialog::Apply) {
-		applyAll ();
-	} else if (button == KDialog::Ok) {
-		applyAll ();
-		accept ();
-		close ();
-	} else if (button == KDialog::Cancel) {
-		reject ();
-	} else if (button == KDialog::Help) {
-		RKSettingsModule *current_module = dynamic_cast<RKSettingsModule*> (currentPage ()->widget ());
-		if (!current_module) {
-			RK_ASSERT (false);
-			return;
-		}
-	
-		RKWorkplace::mainWorkplace ()->openHelpWindow (current_module->helpURL ());
-	} else {
+	if (result == Accepted) applyAll ();
+	QDialog::done (result);
+}
+
+void RKSettings::helpClicked () {
+	RK_TRACE (SETTINGS);
+
+	RKSettingsModule *current_module = dynamic_cast<RKSettingsModule*> (currentPage ()->widget ());
+	if (!current_module) {
 		RK_ASSERT (false);
+		return;
 	}
+
+	RKWorkplace::mainWorkplace ()->openHelpWindow (current_module->helpURL ());
 }
 
 void RKSettings::applyAll () {
@@ -167,16 +163,16 @@ void RKSettings::applyAll () {
 		if (it.value ()->hasChanges ()) {
 			it.value ()->applyChanges ();
 			it.value ()->changed = false;
-			it.value ()->save (KGlobal::config ().data ());
+			it.value ()->save (KSharedConfig::openConfig ().data ());
 			tracker ()->signalSettingsChange (it.key ());
 		}
 	}
-	enableButtonApply (false);
+	button (QDialogButtonBox::Apply)->setEnabled (false);
 }
 
 void RKSettings::enableApply () {
 	RK_TRACE (SETTINGS);
-	enableButtonApply (true);
+	button (QDialogButtonBox::Apply)->setEnabled (true);
 }
 
 void RKSettings::loadSettings (KConfig *config) {
@@ -225,4 +221,3 @@ void RKSettingsTracker::signalSettingsChange (RKSettings::SettingsPage page) {
 	emit (settingsChanged (page));
 }
 
-#include "rksettings.moc"

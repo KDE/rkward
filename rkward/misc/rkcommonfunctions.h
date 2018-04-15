@@ -17,6 +17,8 @@
 #ifndef RKCOMMONFUNCTIONS_H
 #define RKCOMMONFUNCTIONS_H
 
+#include <QChar>
+
 class QStringList;
 class QString;
 class QDomNode;
@@ -41,6 +43,8 @@ namespace RKCommonFunctions {
 /** Get a suitable file name in the RKWard data directory */
 	QString getUseableRKWardSavefileName (const QString &prefix, const QString &postfix);
 
+/** given a context line, find the end of a quote started by quote_char. @returns -1 if not end of quote was found. */
+	int quoteEndPosition (const QChar& quote_char, const QString& haystack, int from = 0);
 
 /** given the context line, find what looks like an R symbol */
 	QString getCurrentSymbol (const QString &context_line, int cursor_pos, bool strict=true);
@@ -55,6 +59,8 @@ namespace RKCommonFunctions {
 /** simultaneously sets tool tips and what's this tips on up to three QWidgets */
 	void setTips (const QString tip, QWidget *first, QWidget *second=0, QWidget *third=0);
 	QString noteSettingsTakesEffectAfterRestart ();
+/** Passing commands as part of arguments to windows shell scripts will fail miserably for paths with spaces or special characters. Transform to short path names for safety. No-op on sane platforms.*/
+	QString windowsShellScriptSafeCommand (const QString &orig);
 };
 
 #endif

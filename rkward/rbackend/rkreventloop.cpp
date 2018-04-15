@@ -18,7 +18,7 @@
 #include "rkreventloop.h"
 #include "rkrbackend.h"
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #	define Win32
 #	include <R.h>
 #else
@@ -32,7 +32,7 @@ void RK_doIntr ();
 
 static void processX11EventsWorker (void *) {
 // this basically copied from R's unix/sys-std.c (Rstd_ReadConsole)
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
 	for (;;) {
 		fd_set *what;
 		what = R_checkActivityEx(R_wait_usec > 0 ? R_wait_usec : 50, 1, RK_doIntr);
@@ -67,10 +67,10 @@ void RKREventLoop::processX11Events() {
 	if (!RKRBackend::this_pointer->r_running) return;
 	if (RKRBackend::this_pointer->isKilled ()) return;
 
-	RKRBackend::RKRBackend::repl_status.eval_depth++;
+	RKRBackend::repl_status.eval_depth++;
 // In case an error (or user interrupt) is caught inside processX11EventsWorker, we don't want to long-jump out.
 	R_ToplevelExec (processX11EventsWorker, 0);
-	RKRBackend::RKRBackend::repl_status.eval_depth--;
+	RKRBackend::repl_status.eval_depth--;
 }
 
 static void (* RK_eventHandlerFunction)() = 0;

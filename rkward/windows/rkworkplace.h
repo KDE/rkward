@@ -22,8 +22,10 @@
 #include <qstring.h>
 #include <qtabwidget.h>
 #include <QSplitter>
+#include <QPointer>
 
-#include <kurl.h>
+#include <QUrl>
+#include <kconfigbase.h>
 
 #include "rkmdiwindow.h"
 #include "rktoolwindowlist.h"
@@ -33,10 +35,12 @@ class RCommandChain;
 class RKWorkplaceView;
 class RKEditor;
 class KActionCollection;
-class KAction;
+class QAction;
 class RKToolWindowBar;
 class RKMDIWindowHistoryWidget;
 class RKGraphicsDevice;
+class KMessageWidget;
+class QWindow;
 
 #define TOOL_WINDOW_BAR_COUNT 4
 
@@ -51,8 +55,8 @@ public:
 /** pops the last window from the list, if it matches the given pointer */
 	void popLastWindow (RKMDIWindow *match);
 	RKMDIWindow *previousDocumentWindow ();
-	void next (KAction *prev_action, KAction *next_action);
-	void prev (KAction *prev_action, KAction *next_action);
+	void next (QAction *prev_action, QAction *next_action);
+	void prev (QAction *prev_action, QAction *next_action);
 public slots:
 	void windowActivated (RKMDIWindow *window);
 private slots:
@@ -61,7 +65,7 @@ private:
 	void updateSwitcher ();
 	QList<RKMDIWindow *> recent_windows;
 	RKMDIWindowHistoryWidget *switcher;
-	RKMDIWindowHistoryWidget *getSwitcher (KAction *prev_action, KAction *next_action);
+	RKMDIWindowHistoryWidget *getSwitcher (QAction *prev_action, QAction *next_action);
 };
 
 /** This class (only one instance will probably be around) keeps track of which windows are opened in the workplace, which are detached, etc. Also it is responsible for creating and manipulating those windows.
@@ -73,7 +77,7 @@ public:
 @param parent: The parent widget for the workspace view (see view ()) */
 	explicit RKWorkplace (QWidget *parent);
 	~RKWorkplace ();
-	void initActions (KActionCollection *ac, const char *left_id, const char *right_id);
+	void initActions (KActionCollection *ac);
 
 /** @returns a pointer to the view of the workplace. Since possibly the workplace layout might change, better not rely on this pointer being valid for long */
 	RKWorkplaceView *view () { return wview; };
@@ -93,27 +97,27 @@ public:
 	RKMDIWindow *activeWindow (RKMDIWindow::State state);
 
 /** Opens the given url in the appropriate way. */
-	bool openAnyUrl (const KUrl &url, const QString &known_mimetype = QString (), bool force_external=false);
+	bool openAnyUrl (const QUrl &url, const QString &known_mimetype = QString (), bool force_external=false);
 
 /** Opens a new script editor
 @param url URL to load. Default option is to open an empty document
 @param encoding encoding to use. If QString (), the default encoding is used.
-@param use_r_highlighting Set R highlighting mode (vs. no highlighting)? Default is yes
+@param use_r_highlighting Force R highlighting mode? Default is no
 @param read_only Open the document read only? Default is false, i.e. Read-write
 @param force_caption Usually the caption is determined from the url of the file. If you specify a non-empty string here, that is used instead.
 @returns false if a local url could not be opened, true for all remote urls, and on success */
-	RKMDIWindow* openScriptEditor (const KUrl &url=KUrl (), const QString& encoding=QString (), bool use_r_highlighting=true, bool read_only=false, const QString &force_caption = QString (), bool delete_on_close=false);
+	RKMDIWindow* openScriptEditor (const QUrl &url=QUrl (), const QString& encoding=QString (), bool use_r_highlighting=true, bool read_only=false, const QString &force_caption = QString (), bool delete_on_close=false);
 /** Opens a new help window, starting at the given url
 @param url URL to open
 @param only_once if true, checks whether any help window already shows this URL. If so, raise it, but do not open a new window. Else show the new window */
-	RKMDIWindow* openHelpWindow (const KUrl &url=KUrl (), bool only_once=false);
-/** Opens a new output window. Currently only a single output window will ever be created. Subsequent calls to the function will not create additional windows right now (but will raise / refresh the output window
+	RKMDIWindow* openHelpWindow (const QUrl &url=QUrl (), bool only_once=false);
+/** Opens a new output window, or raise / refresh the current output window.
 @param url currently ignored! */
-	RKMDIWindow* openOutputWindow (const KUrl &url=KUrl ());
+	RKMDIWindow* openOutputWindow (const QUrl &url=QUrl ());
 
-	void newX11Window (WId window_to_embed, int device_number);
+	void newX11Window (QWindow* window_to_embed, int device_number);
 	void newRKWardGraphisWindow (RKGraphicsDevice *dev, int device_number);
-	void newObjectViewer (RObject *object);
+	RKMDIWindow* newObjectViewer (RObject *object);
 
 /** @returns true if there is a known editor for this type of object, false otherwise */
 	bool canEditObject (RObject *object);
@@ -134,6 +138,9 @@ public:
 /** Close the given window, whether it is attached or detached.
 @param window window to close */
 	void closeWindow (RKMDIWindow *window);
+/** Close the given windows, whether they are attached or detached. TODO: Be smart about asking what to save.
+@param windows list windows to close */
+	void closeWindows (QList<RKMDIWindow*> windows);
 /** Closes all windows of the given type(s). Default call (no arguments) closes all windows
 @param type: A bitwise OR of RKWorkplaceObjectType
 @param state: A bitwise OR of RKWorkplaceObjectState */
@@ -151,6 +158,9 @@ Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsMod
 	void restoreWorkplace (const QStringList &description);
 
 	QStringList makeWorkplaceDescription ();
+	QString makeItemDescription (RKMDIWindow *) const;
+/** Restore a document window given its description. Returns true, if a window was restored, false otherwise (e.g. invalid/unsupported description). */
+	bool restoreDocumentWindow (const QString &description, const QString &base=QString ());
 
 /** In the current design there is only ever one workplace. Use this static function to reference it.
 @returns a pointer to the workplace */
@@ -158,10 +168,10 @@ Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsMod
 	static RKMDIWindowHistory *getHistory () { return main_workplace->history; };
 	void placeToolWindows ();
 
-	void setWorkspaceURL (const KUrl &url, bool keep_config=false);
-	KUrl workspaceURL () const { return current_url; };
+	void setWorkspaceURL (const QUrl &url, bool keep_config=false);
+	QUrl workspaceURL () const { return current_url; };
 	KConfigBase *workspaceConfig ();
-	QString portableUrl (const KUrl &url);
+	QString portableUrl (const QUrl &url);
 /** Register a named area where to place MDI windows. For directing preview windows to a specific location. */
 	void registerNamedWindow (const QString& id, QObject *owner, QWidget* parent, RKMDIWindow *window=0);
 /** Return the window in the specified named area (can be 0). */
@@ -169,9 +179,16 @@ Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsMod
 /** Make the next window to be created appear in a specific location (can be a named window). 
  *  @note It is the caller's responsibility to clear the override (by calling setWindowPlacementOverride ()) after the window in question has been created. */
 	void setWindowPlacementOverrides (const QString& placement=QString (), const QString& name=QString (), const QString& style=QString ());
+
+/** Inserts the given message widget above the central area. While technically, the workplace becomes the parent widget of the message widget, it is the caller's responsibility to
+ *  delete the widget, when appropriate. */
+	void addMessageWidget (KMessageWidget *message);
+
+/** For window splitting: Copy the given window (or, if that is not possible, create a placeholder window), and attach it to the main view. */
+	void splitAndAttachWindow (RKMDIWindow *source);
 signals:
 /** emitted when the workspace Url has changed */
-	void workspaceUrlChanged (const KUrl& url);
+	void workspaceUrlChanged (const QUrl &url);
 public slots:
 /** When windows are attached to the workplace, their QObject::destroyed () signal is connected to this slot. Thereby deleted objects are removed from the workplace automatically */
 	void removeWindow (QObject *window);
@@ -180,7 +197,7 @@ private slots:
 	void namedWindowDestroyed (QObject *);
 	void namedWindowOwnerDestroyed (QObject *);
 private:
-	KUrl current_url;
+	QUrl current_url;
 	KConfig *_workspace_config;
 
 /** current list of windows. @See getObjectList () */ 
@@ -198,6 +215,7 @@ private:
 
 	QSplitter *horiz_splitter;
 	QSplitter *vert_splitter;
+	QWidget *message_area;
 
 	RKToolWindowBar* tool_window_bars[TOOL_WINDOW_BAR_COUNT];
 friend class RKToolWindowBar;

@@ -2,7 +2,7 @@
                           rkdynamicsearchline  -  description
                              -------------------
     begin                : Mon Nov 16 2015
-    copyright            : (C) 2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2015-2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -17,20 +17,26 @@
 
 #include "rkdynamicsearchline.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
+
 #include <QSortFilterProxyModel>
+#include <QAction>
+
+#include "rkstandardicons.h"
 
 #include "../debug.h"
 
-RKDynamicSearchLine::RKDynamicSearchLine (QWidget *parent) : KLineEdit (parent) {
+RKDynamicSearchLine::RKDynamicSearchLine (QWidget *parent) : QLineEdit (parent) {
 	RK_TRACE (MISC);
 
 	model = 0;
-	setClearButtonShown (true);
-	setClickMessage (i18n ("Search"));
+	setClearButtonEnabled (true);
+	setPlaceholderText (i18n ("Search"));
 	timer.setSingleShot (true);
-	connect (&timer, SIGNAL (timeout ()), this, SLOT (delayedSearch ()));
-	connect (this, SIGNAL (textChanged(QString)), this, SLOT (textChanged()));
+	connect (&timer, &QTimer::timeout, this, &RKDynamicSearchLine::delayedSearch);
+	connect (this, &QLineEdit::textChanged, this, &RKDynamicSearchLine::textChanged);
+	working_indicator = new QAction (this);
+	working_indicator->setIcon (RKStandardIcons::getIcon (RKStandardIcons::StatusWaitingUpdating));
 }
 
 RKDynamicSearchLine::~RKDynamicSearchLine () {
@@ -39,7 +45,10 @@ RKDynamicSearchLine::~RKDynamicSearchLine () {
 
 void RKDynamicSearchLine::textChanged () {
 	RK_TRACE (MISC);
-	// KF5 TODO: Add activity indicator
+
+	if (!timer.isActive ()) {
+		addAction (working_indicator, QLineEdit::TrailingPosition);
+	}
 	timer.start (300);
 }
 
@@ -61,8 +70,6 @@ void RKDynamicSearchLine::delayedSearch () {
 
 	QRegExp filter (term, Qt::CaseInsensitive, allnum ? QRegExp::FixedString : QRegExp::RegExp2);
 	if (model) model->setFilterRegExp (filter);
+	removeAction (working_indicator);
 	emit (searchChanged (filter));
 }
-
-// KF5 TODO: remove
-#include "rkdynamicsearchline.moc"

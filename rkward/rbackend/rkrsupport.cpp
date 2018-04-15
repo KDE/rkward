@@ -18,6 +18,7 @@
 #include "rkrsupport.h"
 
 #include <Rdefines.h>
+#include <Rversion.h>
 
 // needed to detect CHARSXP encoding
 #define IS_UTF8(x) (Rf_getCharCE(x) == CE_UTF8)
@@ -102,9 +103,7 @@ QStringList RKRSupport::SEXPToStringList (SEXP from_exp) {
 	// format already good? Avoid coercion (and associated copying)
 	int count = Rf_length (from_exp);
 	QStringList list;
-#if QT_VERSION >= 0x040700
 	list.reserve (count);
-#endif
 	for (int i = 0; i < count; ++i) {
 		SEXP dummy = STRING_ELT (from_exp, i);
 
@@ -115,11 +114,11 @@ QStringList RKRSupport::SEXPToStringList (SEXP from_exp) {
 				list.append (QString ());
 			} else {
 				if (IS_UTF8 (dummy)) {
-					list.append (QString::fromUtf8 ((char *) STRING_PTR (dummy)));
+					list.append (QString::fromUtf8 (CHAR (dummy)));
 				} else if (IS_LATIN1 (dummy)) {
-					list.append (QString::fromLatin1 ((char *) STRING_PTR (dummy)));
+					list.append (QString::fromLatin1 (CHAR (dummy)));
 				} else {
-					list.append (RKRBackend::this_pointer->current_locale_codec->toUnicode ((char *) STRING_PTR (dummy)));
+					list.append (RKRBackend::toUtf8 (CHAR (dummy)));
 				}
 			}
 		}
@@ -133,8 +132,12 @@ SEXP RKRSupport::StringListToSEXP (const QStringList& list) {
 
 	SEXP ret = Rf_allocVector (STRSXP, list.size ());
 	for (int i = 0; i < list.size (); ++i) {
-		// TODO: in R 2.13.0 there is Rf_mkCharCE(). This could be used to set unicode strings, directly. But of course, we'd have to check, when exactly this was introduced.
-		SET_STRING_ELT (ret, i, Rf_mkChar (RKRBackend::this_pointer->current_locale_codec->fromUnicode (list[i]).data ()));
+#if R_VERSION >= R_Version(2,13,0)
+		SET_STRING_ELT (ret, i, Rf_mkCharCE (list[i].toUtf8 (), CE_UTF8));
+#else
+		// TODO Rf_mkCharCE _might_ have been introduced earlier. Check if still an ongoing concern.
+		SET_STRING_ELT (ret, i, Rf_mkChar (RKRBackend::fromUtf8 (list[i]).data ()));
+#endif
 	}
 	return ret;
 }

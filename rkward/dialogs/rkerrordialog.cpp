@@ -17,20 +17,24 @@
 
 #include "rkerrordialog.h"
 
-#include <kdialog.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kmessagebox.h>
-#include <kvbox.h>
-#include <ktoolinvocation.h>
 
+#include <QIcon>
 #include <QLabel>
 #include <QTextEdit>
 #include <QTemporaryFile>
+#include <QDir>
 #include <QTextStream>
+#include <QPushButton>
+#include <QDialog>
+#include <QVBoxLayout>
+#include <QDesktopServices>
 
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../rbackend/rksessionvars.h"
 #include "../misc/rkprogresscontrol.h"
+#include "../misc/rkdialogbuttonbox.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
 #include "../version.h"
@@ -39,18 +43,14 @@
 
 #define SUBMIT_ADDRESS "https://bugs.kde.org/enter_bug.cgi"
 
-class RKBugzillaReportDialog : public KDialog {
+class RKBugzillaReportDialog : public QDialog {
 public:
-	RKBugzillaReportDialog (QWidget* parent, const QString& report_template) : KDialog (parent) {
+	RKBugzillaReportDialog (QWidget* parent, const QString& report_template) : QDialog (parent) {
 		RK_TRACE (DIALOGS);
 
 		RKBugzillaReportDialog::report_template = report_template;
-		setCaption (i18n ("Reporting bugs in RKWard"));
-		setButtons (KDialog::Ok | KDialog::Cancel);
-		setButtonText (KDialog::Ok, i18n ("Report issue"));
-		setButtonIcon (KDialog::Ok, KIcon ("tools-report-bug"));
-		KVBox *vbox = new KVBox (this);
-		setMainWidget (vbox);
+		setWindowTitle (i18n ("Reporting bugs in RKWard"));
+		QVBoxLayout *layout = new QVBoxLayout (this);
 		QLabel *label = new QLabel (i18n ("<p><b>Where should I report bugs or wishes?</b></p><p>Thank you for taking the time to help improve RKWard. To help us "
 		                                  "handle your request, efficiently, please submit your bug reports or wishes in the "
 		                                  "<a href=\"%1\">KDE bugtracking system</a>. Note that you need a user account for this, so that we will be able to contact you, "
@@ -59,17 +59,23 @@ public:
 		                         QString ("http://bugs.kde.org"), QString ("https://bugs.kde.org/createaccount.cgi"), QString ("http://rkward.kde.org/bugs/"))
 		                          + i18n ("<p><b>What information should I provide, and how?</b></p>Clicking \"Report issue\" will take you to the "
 		                                  "KDE bugtracking system. After logging in, some information will already be pre-filled into the report form. Please make sure "
-		                                  "to fill in the missing bits - in English - where indicated, especially in the \"Comment\" field.</p>"), vbox);
+		                                  "to fill in the missing bits - in English - where indicated, especially in the \"Comment\" field.</p>"), this);
 		label->setWordWrap (true);
 		label->setOpenExternalLinks (true);
+		layout->addWidget (label);
 
-		connect (this, SIGNAL (finished()), this, SLOT (deleteLater()));
+		RKDialogButtonBox *buttons = new RKDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+		buttons->button (QDialogButtonBox::Ok)->setText (i18n ("Report issue"));
+		buttons->button (QDialogButtonBox::Ok)->setIcon (QIcon::fromTheme("tools-report-bug"));
+		layout->addWidget (buttons);
+
+		connect (this, &QDialog::finished, this, &RKBugzillaReportDialog::deleteLater);
 	}
 
-	// KF5 TODO: add override keyword
-	void accept () {
+	void accept () override {
 		// The report template is just too large to pass it via GET, so we use a local proxy page to pass it in a POST request
 		QTemporaryFile proxy;
+		proxy.setFileTemplate (QDir::tempPath () + "/rkwardbugXXXXXX.html"); // Force .html-suffix, as it appears to be required on Windows
 		proxy.setAutoRemove (false);
 		proxy.open ();
 		QTextStream out (&proxy);
@@ -80,13 +86,13 @@ public:
 		out << "<input name=\"product\" type=\"hidden\" value=\"rkward\"/>\n";
 		out << "<input name=\"component\" type=\"hidden\" value=\"general\"/>\n";
 		out << "<input name=\"version\" type=\"hidden\" value=\"" RKWARD_VERSION "\"/>\n";
-		out << "<input name=\"comment\" type=\"hidden\" value=\"" << Qt::escape (report_template) << "\"/>\n";
+		out << "<input name=\"comment\" type=\"hidden\" value=\"" << report_template.toHtmlEscaped () << "\"/>\n";
 		out << "<input type=\"submit\" value=\"" << i18n ("Proceed") << "\"/>\n";
 		out << "</form></body></html>";
 		proxy.close ();
 
-		KToolInvocation::invokeBrowser (QUrl::fromLocalFile (proxy.fileName ()).toEncoded ());
-		KDialog::accept ();
+		QDesktopServices::openUrl (QUrl::fromLocalFile (proxy.fileName ()));
+		QDialog::accept ();
 	}
 private:
 	QString report_template;
@@ -97,20 +103,24 @@ void RKErrorDialog::reportableErrorMessage (QWidget* parent_widget, const QStrin
 
 	if (!parent_widget) parent_widget = RKWardMainWindow::getMain ();
 	// adjusted from KMessageBox::detailedError
-	KDialog *dialog = new KDialog (parent_widget, Qt::Dialog);
-	dialog->setCaption (caption);
-	if (details.isEmpty ()) dialog->setButtons (KDialog::Ok | KDialog::No);
-	else dialog->setButtons (KDialog::Ok | KDialog::No | KDialog::Details);
-	dialog->setButtonText (KDialog::No, i18n ("Report As Bug"));
+	QDialog *dialog = new QDialog (parent_widget, Qt::Dialog);
+	dialog->setWindowTitle (caption);
+	QDialogButtonBox *buttonbox = new QDialogButtonBox (dialog);
+	if (details.isEmpty ()) buttonbox->setStandardButtons (QDialogButtonBox::Ok | QDialogButtonBox::No);
+	else {
+		buttonbox->setStandardButtons (QDialogButtonBox::Ok | QDialogButtonBox::No | QDialogButtonBox::Help);
+		buttonbox->button (QDialogButtonBox::Help)->setText (i18n ("Show Details"));
+	}
+	buttonbox->button (QDialogButtonBox::No)->setText (i18n ("Report As Bug"));
 	dialog->setObjectName ("error");
-	dialog->setDefaultButton (KDialog::Ok);
-	dialog->setEscapeButton (KDialog::Ok);
+	buttonbox->button (QDialogButtonBox::Ok)->setDefault (true);
+	buttonbox->button (QDialogButtonBox::Ok)->setShortcut (Qt::Key_Escape);
 	KMessageBox::Options options = KMessageBox::Notify | KMessageBox::AllowLink;
 	dialog->setModal (true);
 
-	int ret = KMessageBox::createKMessageBox (dialog, QMessageBox::Critical, user_message, QStringList(), QString(), 0, options, details);
+	int ret = KMessageBox::createKMessageBox (dialog, buttonbox, QMessageBox::Critical, user_message, QStringList(), QString(), 0, options, details);
 
-	if (ret == KDialog::No) {
+	if (ret == QDialogButtonBox::No) {
 		reportBug (parent_widget, (message_code.isEmpty () ? QString () : i18n ("Message code: %1\n", message_code)) + user_message);
 	}
 }

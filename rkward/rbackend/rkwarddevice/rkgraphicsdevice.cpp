@@ -20,16 +20,17 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QGraphicsRectItem>
-#include <QPushButton>
 #include <QHBoxLayout>
 #include <QMouseEvent>
-#include <klocale.h>
+#include <QDialog>
+
+#include <KLocalizedString>
 #include <sys/stat.h>
-#include <kdialog.h>
 
 #include "rkgraphicsdevice_protocol_shared.h"
-#include "../rinterface.h"
+#include "../rkrinterface.h"
 #include "../../rkglobals.h"
+#include "../../misc/rkdialogbuttonbox.h"
 
 #include "../../debug.h"
 
@@ -53,8 +54,8 @@ RKGraphicsDevice::RKGraphicsDevice (double width, double height, const QString &
 	view->installEventFilter (this);
 	view->setScaledContents (true);    // this is just for preview during scaling. The area will be re-sized and re-drawn from R.
 	view->setFocusPolicy (Qt::StrongFocus);   // for receiving key events for R's getGraphicsEvent()
-	connect (view, SIGNAL (destroyed(QObject*)), this, SLOT (viewKilled()));
-	connect (&updatetimer, SIGNAL (timeout()), this, SLOT (updateNow()));
+	connect (view, &QLabel::destroyed, this, &RKGraphicsDevice::viewKilled);
+	connect (&updatetimer, &QTimer::timeout, this, &RKGraphicsDevice::updateNow);
 	updatetimer.setSingleShot (true);
 	clear ();
 	if (antialias) painter.setRenderHints (QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
@@ -108,7 +109,7 @@ RKGraphicsDevice* RKGraphicsDevice::newDevice (int devnum, double width, double 
 		RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Graphics device number %d already exists while trying to create it", devnum);
 		closeDevice (devnum);
 	}
-	RKGraphicsDevice* dev = new RKGraphicsDevice (width, height, title.isEmpty () ? i18n ("Graphics Device Number %1").arg (QString::number (devnum+1)) : title, antialias);
+	RKGraphicsDevice* dev = new RKGraphicsDevice (width, height, title.isEmpty () ? i18n ("Graphics Device Number %1", QString::number (devnum+1)) : title, antialias);
 	devices.insert (devnum, dev);
 	return (dev);
 }
@@ -124,13 +125,9 @@ void RKGraphicsDevice::clear (const QColor& col) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
 	if (painter.isActive ()) painter.end ();
-#if QT_VERSION >= 0x040800
 	if (col.isValid ()) area.fill (col);
 	else area.fill (QColor (255, 255, 255, 255));
-#else
-	if (col.isValid ()) area.fill (col.rgb ());
-	else area.fill (qRgb (255, 255, 255));
-#endif
+
 	updateNow ();
 	setClip (area.rect ());	// R's devX11.c resets clip on clear, so we do this, too.
 }
@@ -278,8 +275,8 @@ QImage RKGraphicsDevice::capture () const {
 void RKGraphicsDevice::setActive (bool active) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
-	if (active) view->setWindowTitle (i18n ("%1 (Active)").arg (base_title));
-	else view->setWindowTitle (i18n ("%1 (Inactive)").arg (base_title));
+	if (active) view->setWindowTitle (i18nc ("Window title", "%1 (Active)", base_title));
+	else view->setWindowTitle (i18nc ("Window title", "%1 (Inactive)", base_title));
 	emit (activeChanged (active));
 	emit (captionChanged (view->windowTitle ()));
 }
@@ -316,12 +313,18 @@ void RKGraphicsDevice::confirmNewPage () {
 
 	QString msg = i18n ("<p>Press Enter to see next plot, or click 'Cancel' to abort.</p>");
 	goInteractive (msg);
-	dialog = new KDialog (view);
-	dialog->setCaption (i18n ("Ok to show next plot?"));
-	dialog->setButtons (KDialog::Ok | KDialog::Cancel);
-	dialog->setMainWidget (new QLabel (msg, dialog));
+
+	dialog = new QDialog (view);
+	dialog->setWindowTitle (i18n ("Ok to show next plot?"));
+
+	QVBoxLayout *layout = new QVBoxLayout (dialog);
+	layout->addWidget (new QLabel (msg, dialog));
+
+	RKDialogButtonBox *buttons = new RKDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel, dialog);
+	layout->addWidget (buttons);
+
 //	dialog->setWindowModality (Qt::WindowModal);        // not good: Grays out the plot window
-	connect (dialog, SIGNAL (finished(int)), this, SLOT (newPageDialogDone(int)));
+	connect (dialog, &QDialog::finished, this, &RKGraphicsDevice::newPageDialogDone);
 	dialog->show ();
 }
 
@@ -329,7 +332,7 @@ void RKGraphicsDevice::newPageDialogDone (int result) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
 	RK_ASSERT (dialog);
-	emit (newPageConfirmDone (result == KDialog::Accepted));
+	emit (newPageConfirmDone (result == QDialog::Accepted));
 	interaction_opcode = -1;
 	stopInteraction ();
 }
@@ -418,10 +421,10 @@ bool RKGraphicsDevice::eventFilter (QObject *watched, QEvent *event) {
 		if (event->type () == QEvent::KeyPress) {
 			QKeyEvent *ke = static_cast<QKeyEvent*> (event);
 			if ((ke->key () == Qt::Key_Return) || (ke->key () == Qt::Key_Enter)) {
-				newPageDialogDone (KDialog::Accepted);
+				newPageDialogDone (QDialog::Accepted);
 				return true;
 			} else if (ke->key () == Qt::Key_Escape) {
-				newPageDialogDone (KDialog::Rejected);
+				newPageDialogDone (QDialog::Rejected);
 				return true;
 			}
 		}
@@ -462,4 +465,3 @@ void RKGraphicsDevice::stopInteraction () {
 	interaction_opcode = -1;
 }
 
-#include "rkgraphicsdevice.moc"

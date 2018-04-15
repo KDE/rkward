@@ -29,7 +29,6 @@ class RKObjectListViewSettings;
 class QPushButton;
 class RObject;
 class RObjectBrowserInternal;
-class KVBox;
 
 /**
 This widget provides a browsable list of all objects in the R workspace
@@ -45,10 +44,10 @@ public:
 	void unlock ();
 	static RObjectBrowser *mainBrowser () { return object_browser; };
 /** reimplemented to create the real file browser widget only when the file browser is shown for the first time */
-	void showEvent (QShowEvent *e);
+	void showEvent (QShowEvent *e) override;
 private:
 	RObjectBrowserInternal *internal;
-	KVBox *layout_widget;
+	QWidget *layout_widget;
 
 	bool locked;
 	friend class RKWardMainWindow;
@@ -82,8 +81,8 @@ private slots:
 	void doubleClicked (const QModelIndex &index);
 protected:
 /** reimplemnented from QWidget to make show the globalenv object when activated (other than by mouse click) */
-	void focusInEvent (QFocusEvent *e);
-	void currentHelpContext (QString *symbol, QString *package); // KF5 TODO: override
+	void focusInEvent (QFocusEvent *e) override;
+	void currentHelpContext (QString *symbol, QString *package) override;
 private:
 	enum PopupActions {
 		Help=0,

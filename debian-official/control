@@ -1,20 +1,23 @@
 Source: rkward
 Section: math
 Priority: optional
-Maintainer: Thomas Friedrichsmeier <tfry@users.sourceforge.net>
+Maintainer: Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 Build-Depends: cmake,
-               debhelper (>= 9.0.0),
-               kdelibs5-dev,
-               libx11-dev,
+               extra-cmake-modules,
+               pkg-kde-tools | pkg-kf5-tools,
+               debhelper (>= 11.0.0),
+               libkf5webkit-dev,
+               libkf5texteditor-dev,
+               kdoctools-dev,
                r-base-dev (>= 3.0.0)
-Standards-Version: 3.9.7
+Standards-Version: 4.1.4
 Homepage: http://rkward.kde.org
-Vcs-Browser: http://quickgit.kde.org/?p=rkward.git&a=tree&f=debian-official
-Vcs-Git: git://anongit.kde.org/rkward.git
+Vcs-Browser: https://cgit.kde.org/rkward.git/tree/debian-official
+Vcs-Git: https://anongit.kde.org/rkward.git
 
 Package: rkward
 Architecture: any
-Depends: rkward-data, ${misc:Depends}, ${rvers}, ${shlibs:Depends}
+Depends: rkward-data (= ${source:Version}), ${misc:Depends}, ${rvers}, ${rapivers}, ${shlibs:Depends}
 Recommends: r-base-html
 Description: KDE frontend to the R statistics language
  RKWard aims to become an easy to use, transparent frontend to R,
@@ -27,9 +30,9 @@ Package: rkward-data
 Architecture: all
 Depends: ${misc:Depends}
 Recommends: rkward
-Breaks: rkward (<< 0.6.4-2~)
-Replaces: rkward (<< 0.6.4-2~)
-Description: KDE frontend to the R statistics language
+Breaks: rkward (<< 0.6.5~rc1-1~)
+Replaces: rkward (<< 0.6.5~rc1-1~)
+Description: KDE frontend to the R statistics language - data files
  RKWard aims to become an easy to use, transparent frontend to R,
  a powerful system for statistical computation and graphics.
  Besides a convenient GUI for the most important statistical functions,

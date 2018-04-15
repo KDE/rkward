@@ -16,10 +16,9 @@
  ***************************************************************************/
 #include "rksettingsmoduleoutput.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kconfig.h>
 #include <kconfiggroup.h>
-#include <knuminput.h>
 
 #include <qlayout.h>
 #include <qlabel.h>
@@ -27,11 +26,12 @@
 #include <qcheckbox.h>
 #include <QVBoxLayout>
 #include <QComboBox>
+#include <QSpinBox>
 
 #include "../rkglobals.h"
 #include "../misc/getfilenamewidget.h"
 #include "../misc/rkcommonfunctions.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../debug.h"
 
 // static members
@@ -49,24 +49,24 @@ RKCarbonCopySettings::RKCarbonCopySettings (QWidget* parent) : QWidget (parent) 
 	main_vbox->setContentsMargins (0, 0, 0, 0);
 	cc_globally_enabled_box = new QGroupBox (i18n ("Carbon copy commands to output"), this);
 	cc_globally_enabled_box->setCheckable (true);
-	connect (cc_globally_enabled_box, SIGNAL (clicked(bool)), this, SLOT (settingChanged()));
+	connect (cc_globally_enabled_box, &QGroupBox::clicked, this, &RKCarbonCopySettings::settingChanged);
 	main_vbox->addWidget (cc_globally_enabled_box);
 
 	QVBoxLayout *group_layout = new QVBoxLayout (cc_globally_enabled_box);
 	cc_console_commands_box = new QCheckBox (i18n ("Commands entered in the console"), cc_globally_enabled_box);
-	connect (cc_console_commands_box, SIGNAL (clicked(bool)), this, SLOT (settingChanged()));
+	connect (cc_console_commands_box, &QCheckBox::clicked, this, &RKCarbonCopySettings::settingChanged);
 	group_layout->addWidget (cc_console_commands_box);
 
 	cc_script_commands_box = new QCheckBox (i18n ("Commands run via the 'Run' menu"), cc_globally_enabled_box);
-	connect (cc_script_commands_box, SIGNAL (clicked(bool)), this, SLOT (settingChanged()));
+	connect (cc_script_commands_box, &QCheckBox::clicked, this, &RKCarbonCopySettings::settingChanged);
 	group_layout->addWidget (cc_script_commands_box);
 
 	cc_app_plugin_commands_box = new QCheckBox (i18n ("Commands originating from dialogs and plugins"), cc_globally_enabled_box);
-	connect (cc_app_plugin_commands_box, SIGNAL (clicked(bool)), this, SLOT (settingChanged()));
+	connect (cc_app_plugin_commands_box, &QCheckBox::clicked, this, &RKCarbonCopySettings::settingChanged);
 	group_layout->addWidget (cc_app_plugin_commands_box);
 
 	cc_command_output_box = new QCheckBox (i18n ("Also carbon copy the command output"), cc_globally_enabled_box);
-	connect (cc_command_output_box, SIGNAL (clicked(bool)), this, SLOT (settingChanged()));
+	connect (cc_command_output_box, &QCheckBox::clicked, this, &RKCarbonCopySettings::settingChanged);
 	group_layout->addWidget (cc_command_output_box);
 
 	update ();
@@ -160,16 +160,16 @@ RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent
 	QVBoxLayout* group_layout = new QVBoxLayout (group);
 	group_layout->addWidget (auto_show_box = new QCheckBox (i18n ("show window on new output"), group));
 	auto_show_box->setChecked (auto_show);
-	connect (auto_show_box, SIGNAL (stateChanged(int)), this, SLOT (boxChanged()));
+	connect (auto_show_box, &QCheckBox::stateChanged, this, &RKSettingsModuleOutput::boxChanged);
 	group_layout->addWidget (auto_raise_box = new QCheckBox (i18n ("raise window on new output"), group));
 	auto_raise_box->setChecked (auto_raise);
 	auto_raise_box->setEnabled (auto_show);
-	connect (auto_raise_box, SIGNAL (stateChanged(int)), this, SLOT (boxChanged()));
+	connect (auto_raise_box, &QCheckBox::stateChanged, this, &RKSettingsModuleOutput::boxChanged);
 
 	main_vbox->addWidget (group);
 
-	custom_css_file_box = new GetFileNameWidget (this, GetFileNameWidget::ExistingFile, true, i18n ("CSS file to use for output (leave empty for default)"), i18n ("Select CSS file"), QString ());
-	connect (custom_css_file_box, SIGNAL (locationChanged()), this, SLOT (boxChanged()));  // KF5 TODO new syntax
+	custom_css_file_box = new GetFileNameWidget (this, GetFileNameWidget::ExistingFile, true, i18n ("CSS file to use for output (leave empty for default)"), i18n ("Select CSS file"), custom_css_file);
+	connect (custom_css_file_box, &GetFileNameWidget::locationChanged, this, &RKSettingsModuleOutput::boxChanged);
 	RKCommonFunctions::setTips (i18n ("Select a CSS file for custom formatting of the output window. Leave empty to use the default CSS file shipped with RKWard. Note that this setting takes effect, when initializing an output file (e.g. after flushing the output), only."), custom_css_file_box);
 	main_vbox->addWidget (custom_css_file_box);
 
@@ -185,29 +185,41 @@ RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent
 	graphics_type_box->addItem (i18n ("JPG"), QString ("\"JPG\""));
 	graphics_type_box->setCurrentIndex (graphics_type_box->findData (graphics_type));
 	graphics_type_box->setEditable (false);
-	connect (graphics_type_box, SIGNAL (currentIndexChanged(int)), this, SLOT (boxChanged()));
+	connect (graphics_type_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &RKSettingsModuleOutput::boxChanged);
 	h_layout->addSpacing (2*RKGlobals::spacingHint ());
 	h_layout->addWidget (new QLabel (i18n ("JPG quality"), group));
-	h_layout->addWidget (graphics_jpg_quality_box = new KIntSpinBox (1, 100, 1, graphics_jpg_quality, group));
+	h_layout->addWidget (graphics_jpg_quality_box = new QSpinBox(group));
+	graphics_jpg_quality_box->setMaximum(100);
+	graphics_jpg_quality_box->setMinimum(1);
+	graphics_jpg_quality_box->setSingleStep(1);
+	graphics_jpg_quality_box->setValue(graphics_jpg_quality);
 	graphics_jpg_quality_box->setEnabled (graphics_type == "\"JPG\"");
-	connect (graphics_jpg_quality_box, SIGNAL (valueChanged(int)), this, SLOT (boxChanged()));
+	connect (graphics_jpg_quality_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleOutput::boxChanged);
 	h_layout->addStretch ();
 
 	h_layout = new QHBoxLayout ();
 	group_layout->addLayout (h_layout);
 	h_layout->addWidget (new QLabel (i18n ("Width:"), group));
-	h_layout->addWidget (graphics_width_box = new KIntSpinBox (1, INT_MAX, 1, graphics_width, group));
+	h_layout->addWidget (graphics_width_box = new QSpinBox(group));
+	graphics_width_box->setMaximum(INT_MAX);
+	graphics_width_box->setMinimum(1);
+	graphics_width_box->setSingleStep(1);
+	graphics_width_box->setValue(graphics_width);
 	h_layout->addSpacing (2*RKGlobals::spacingHint ());
 	h_layout->addWidget (new QLabel (i18n ("Height:"), group));
-	h_layout->addWidget (graphics_height_box = new KIntSpinBox (1, INT_MAX, 1, graphics_height, group));
+	h_layout->addWidget (graphics_height_box = new QSpinBox(group));
+	graphics_height_box->setMaximum(INT_MAX);
+	graphics_height_box->setMinimum(1);
+	graphics_height_box->setSingleStep(1);
+	graphics_height_box->setValue(graphics_height);
 	h_layout->addStretch ();
-	connect (graphics_width_box, SIGNAL (valueChanged(int)), this, SLOT (boxChanged()));
-	connect (graphics_height_box, SIGNAL (valueChanged(int)), this, SLOT (boxChanged()));
+	connect (graphics_width_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleOutput::boxChanged);
+	connect (graphics_height_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleOutput::boxChanged);
 
 	main_vbox->addWidget (group);
 
 	cc_settings = new RKCarbonCopySettings (this);
-	connect (cc_settings, SIGNAL (changed()), this, SLOT (boxChanged()));
+	connect (cc_settings, &RKCarbonCopySettings::changed, this, &RKSettingsModuleOutput::boxChanged);
 	main_vbox->addWidget (cc_settings);
 
 	main_vbox->addStretch ();
@@ -234,6 +246,8 @@ void RKSettingsModuleOutput::applyChanges () {
 
 	auto_show = auto_show_box->isChecked ();
 	auto_raise = auto_raise_box->isChecked ();
+
+	custom_css_file = custom_css_file_box->getLocation ();
 
 	graphics_type = graphics_type_box->itemData (graphics_type_box->currentIndex ()).toString ();
 	graphics_width = graphics_width_box->value ();
@@ -300,4 +314,3 @@ QStringList RKSettingsModuleOutput::makeRRunTimeOptionCommands () {
 	return (list);
 }
 
-#include "rksettingsmoduleoutput.moc"

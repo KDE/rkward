@@ -18,9 +18,8 @@
 #ifndef RKWARD_H
 #define RKWARD_H
 
-#include <kapplication.h>
-#include <kaction.h>
-#include <kurl.h>
+#include <QAction>
+#include <QUrl>
 #include <kparts/mainwindow.h>
 
 class QLabel;
@@ -72,7 +71,7 @@ protected:
 	/** sets up the various tool windows, and starts the R engine */
 	void initToolViewsAndR ();
 	/** reimplemented from KMainWindow to call our doQueryClose (), and then (if quitting was not cancelled), invoke an RKQuitAgent to wait for the R-backend to finish up before actually quitting. */
-	virtual void closeEvent (QCloseEvent *e);
+	virtual void closeEvent (QCloseEvent *e) override;
 signals:
 	void aboutToQuitRKWard ();
 public slots:
@@ -80,7 +79,7 @@ public slots:
 	/** open a workspace. If the current workspace is not empty, ask whether to save first.
     @see setNoAskSave ()
     @see setWorkspaceMightBeModified () */
-	void askOpenWorkspace (const KUrl &url);
+	void askOpenWorkspace (const QUrl &url);
 	/** creates a new (empty) data.frame */
 	void slotNewDataFrame ();
 	/** open a file and load it into the document*/
@@ -100,7 +99,7 @@ public slots:
 	*/
 	void slotCancelAllCommands ();
 	void configureCarbonCopy ();
-	void slotSetStatusBarText (const QString &text);
+	void slotSetStatusBarText (const QString &text) override;
 /** Basically a shortcut to slotSetStatusBarText (QString ()). Needed as a slot without parameters. */
 	void slotSetStatusReady () { slotSetStatusBarText (QString ()); };
 
@@ -108,9 +107,9 @@ public slots:
 	void slotConfigure ();
 
 /** Add the given url to the list of recent scripts */
-	void addScriptUrl (const KUrl& url);
+	void addScriptUrl (const QUrl &url);
 /** Add the given url to the list of recent workspaces */
-	void addWorkspaceUrl (const KUrl& url);
+	void addWorkspaceUrl (const QUrl &url);
 
 	/** Init-procedures to be done after the exec-loop was started */
 	void doPostInit ();
@@ -120,7 +119,7 @@ public slots:
 /** open a new command editor (ask for file to open) */
 	void slotOpenCommandEditor ();
 /** open a new command editor (load given url) */
-	void slotOpenCommandEditor (const KUrl &url, const QString& encoding = QString ());
+	void slotOpenCommandEditor (const QUrl &url, const QString& encoding = QString ());
 
 /** close current window (Windows->Close). */
 	void slotCloseWindow ();
@@ -130,47 +129,46 @@ public slots:
 	void slotDetachWindow ();
 
 /** reimplemented from KMainWindow, to additionally include the workspace url. Parameters are ignored. Rather we create a caption according to the active view */
-	void setCaption (const QString &);
+	void setCaption (const QString &) override;
 /** HACK this is only to make the compiler happy with -Woverloaded-virtual */
-	void setCaption (const QString &dummy, bool) { setCaption (dummy); };
-
+	void setCaption (const QString &dummy, bool) override { setCaption (dummy); };
 	void openUrlsFromCommandLineOrDBus (bool warn_external, QStringList urls);
 private slots:
 	void partChanged (KParts::Part *new_part);
 private:
 /** Opens a new workspace, without asking or closing anything. */
-	void openWorkspace (const KUrl &url);
+	void openWorkspace (const QUrl &url);
 
 	QLabel* statusbar_r_status;
 	KSqueezedTextLabel* statusbar_cwd;
 	QLabel* statusbar_ready;
 	KParts::PartManager *part_manager;
 
-	// KAction pointers to enable/disable actions
-	KAction* fileOpen;
+	// QAction pointers to enable/disable actions
+	QAction* fileOpen;
 	KRecentFilesAction* fileOpenRecent;
 	
-	KAction* fileOpenWorkspace;
+	QAction* fileOpenWorkspace;
 	KRecentFilesAction* fileOpenRecentWorkspace;
-	KAction* fileSaveWorkspace;
-	KAction* fileSaveWorkspaceAs;
-	KAction* fileQuit;
-	KAction* interrupt_all_commands;
-	KAction* close_all_editors;
-	KAction* new_data_frame;
-	KAction* new_command_editor;
+	QAction* fileSaveWorkspace;
+	QAction* fileSaveWorkspaceAs;
+	QAction* fileQuit;
+	QAction* interrupt_all_commands;
+	QAction* close_all_editors;
+	QAction* new_data_frame;
+	QAction* new_command_editor;
 
-	KAction* window_close_all;
-	KAction* window_detach;
+	QAction* window_close_all;
+	QAction* window_detach;
 	
-	KAction* configure;
+	QAction* configure;
 
 	/** used so that if the menu is empty, there is a note in it, explaining that fact */
-	KAction* edit_menu_dummy;
+	QAction* edit_menu_dummy;
 	/** used so that if the menu is empty, there is a note in it, explaining that fact */
-	KAction* view_menu_dummy;
+	QAction* view_menu_dummy;
 
-	KAction* proxy_export, *proxy_import;
+	KActionMenu* open_any_action;
 	KActionMenu* save_any_action;
 	QAction* save_actions_plug_point;
 	QList<QPointer <QAction> > plugged_save_actions;

@@ -62,12 +62,14 @@ public:
 public slots:
 	void pageChange (KPageWidgetItem *current, KPageWidgetItem *before);
 protected:
-	void slotButtonClicked (int button);
-protected:
 	RKSettings (QWidget *parent = 0);
 	~RKSettings ();
-private:
+
+	void done (int result) override;
+private slots:
 	void applyAll ();
+	void helpClicked ();
+private:
 	void initModules ();
 	void raisePage (SettingsPage page);
 	static void dialogClosed ();

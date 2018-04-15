@@ -2,7 +2,7 @@
                           main.cpp  -  description
                              -------------------
     begin                : Tue Oct 29 20:06:08 CET 2002
-    copyright            : (C) 2002-2014 by Thomas Friedrichsmeier 
+    copyright            : (C) 2002-2017 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -50,27 +50,37 @@
 **
 */
 
-#include <kcmdlineargs.h>
+
 #include <kaboutdata.h>
-#include <klocale.h>
-#include <kstandarddirs.h>
+#include <KLocalizedString>
+#include <KUrlAuthorized>
+#ifdef WITH_KCRASH
+#	include <KCrash>
+#endif
 
 #include <qstring.h>
 #include <QMutex>
 #include <QTemporaryFile>
 #include <QDir>
 #include <QThread>
+#include <QApplication>
+#include <QUrl>
+#include <QCommandLineParser>
+#include <QtDBus>
+#include <QSettings>
+#include <QMessageBox>
 
 #include <stdio.h>
 #include <stdlib.h>
 
 #include "rkward.h"
 #include "rkglobals.h"
-#include "rkwardapplication.h"
 #include "settings/rksettingsmoduledebug.h"
 #include "windows/rkdebugmessagewindow.h"
+#include "misc/rkdbusapi.h"
+#include "misc/rkcommonfunctions.h"
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	// these are needed for the exit hack.
 #	include <windows.h>
 #endif
@@ -79,21 +89,54 @@
 
 #include "version.h"
 
-int RK_Debug_Level = 0;
-int RK_Debug_Flags = DEBUG_ALL;
-int RK_Debug_CommandStep = 0;
+#ifndef R_EXECUTABLE
+#	define R_EXECUTABLE ""
+#endif
+
+#ifdef Q_OS_WIN
+#	define PATH_VAR_SEP ';'
+#else
+#	define PATH_VAR_SEP ':'
+#endif
+
+QString findExeAtPath (const QString appname, const QString &path) {
+	QDir dir (path);
+	dir.makeAbsolute ();
+	if (QFileInfo (dir.filePath (appname)).isExecutable ()) return dir.filePath (appname);
+#ifdef Q_OS_WIN
+	if (QFileInfo (dir.filePath (appname + ".exe")).isExecutable ()) return dir.filePath (appname + ".exe");
+	if (QFileInfo (dir.filePath (appname + ".com")).isExecutable ()) return dir.filePath (appname + ".com");
+	if (QFileInfo (dir.filePath (appname + ".bat")).isExecutable ()) return dir.filePath (appname + ".bat");
+#endif
+	return QString ();
+}
+
+bool RK_Debug_Terminal = false;
 QMutex RK_Debug_Mutex;
 
-static KCmdLineOptions options;
-
-void RKDebugMessageOutput (QtMsgType type, const char *msg) {
+void RKDebugMessageOutput (QtMsgType type, const QMessageLogContext &ctx, const QString &msg) {
 	RK_Debug_Mutex.lock ();
 	if (type == QtFatalMsg) {
-		fprintf (stderr, "%s\n", msg);
+		fprintf (stderr, "%s\n", qPrintable (msg));
 	}
-	RKSettingsModuleDebug::debug_file->write (msg);
-	RKSettingsModuleDebug::debug_file->write ("\n");
-	RKSettingsModuleDebug::debug_file->flush ();
+
+	if (RK_Debug_Terminal) {
+#ifdef QT_MESSAGELOGCONTEXT
+		fprintf (stderr, "%s, %s: %s", ctx.file, ctx.function, qPrintable (msg));
+#else
+		Q_UNUSED (ctx);
+		fprintf (stderr, "%s", qPrintable (msg));
+#endif
+		fprintf (stderr, "\n");
+	} else {
+#ifdef QT_MESSAGELOGCONTEXT
+		RK_Debug::debug_file->write (ctx.file);
+		RK_Debug::debug_file->write (ctx.function);
+#endif
+		RK_Debug::debug_file->write (qPrintable (msg));
+		RK_Debug::debug_file->write ("\n");
+		RK_Debug::debug_file->flush ();
+	}
 	RK_Debug_Mutex.unlock ();
 }
 
@@ -108,110 +151,203 @@ void RKDebug (int flags, int level, const char *fmt, ...) {
 	va_start (ap, fmt);
 	vsnprintf (buffer, bufsize-1, fmt, ap);
 	va_end (ap);
-	RKDebugMessageOutput (QtDebugMsg, buffer);
+	RKDebugMessageOutput (QtDebugMsg, QMessageLogContext (), buffer);
 	if (QApplication::instance ()->thread () == QThread::currentThread ()) {
 		// not safe to call from any other than the GUI thread
 		RKDebugMessageWindow::newMessage (flags, level, QString (buffer));
 	}
 }
 
-QString decodeArgument (const QString &input) {
-	return (QUrl::fromPercentEncoding (input.toUtf8()));
-}
+int main (int argc, char *argv[]) {
+	// TODO: This is a _temporary_ hack! --> Problems with output not updating on Windows Live Image. See https://mail.kde.org/pipermail/rkward-devel/2016-September/004660.html .
+#warning Remove me!
+	qputenv ("KDIRWATCH_METHOD", QByteArray ("Stat"));
 
-int main(int argc, char *argv[]) {
-	options.add ("evaluate <Rcode>", ki18n ("After starting (and after loading the specified workspace, if applicable), evaluate the given R code."), 0);
-	options.add ("debug-level <level>", ki18n ("Verbosity of debug messages (0-5)"), "2");
-	options.add ("debug-flags <flags>", ki18n ("Mask for components to debug (see debug.h)"), QString::number (DEBUG_ALL).toLocal8Bit ());
-	options.add ("debugger <command and arguments>", ki18n ("Debugger for the frontend. Specify last, or add '--' after all debugger arguments"), "");
-	options.add ("backend-debugger <command>", ki18n ("Debugger for the backend. (Enclose any debugger arguments in single quotes ('') together with the command. Make sure to re-direct stdout!)"), "");
-	options.add ("r-executable <command>", ki18n ("Use specified R installation, instead of the one configured at compile time (note: rkward R library must be installed to that installation of R)"), "");
-	options.add ("reuse", ki18n ("Reuse a running RKWard instance (if available). If a running instance is reused, only the file arguments will be interpreted, all other options will be ignored."), 0);
-	options.add ("nowarn-external", ki18n ("When used in conjunction with rkward://runplugin/-URLs specified on the command line, suppresses the warning about application-external (untrusted) links."));
-	options.add ("+[Files]", ki18n ("File or files to open, typically a workspace, or an R script file. When loading several things, you should specify the workspace, first."), 0);
+	QApplication app (argc, argv);
+#ifdef WITH_KCRASH
+	KCrash::setDrKonqiEnabled (true);
+#endif
+	// Don't complain when linking rkward://-pages from Rd pages
+	KUrlAuthorized::allowUrlAction ("redirect", QUrl("http://"), QUrl ("rkward://"));
+	// Don't complain when trying to open help pages
+	KUrlAuthorized::allowUrlAction ("redirect", QUrl("rkward://"), QUrl ("help:"));
 
-	KAboutData aboutData("rkward", QByteArray (), ki18n ("RKWard"), RKWARD_VERSION, ki18n ("Frontend to the R statistics language"), KAboutData::License_GPL, ki18n ("(c) 2002, 2004 - 2014"), KLocalizedString (), "http://rkward.kde.org", "submit@bugs.kde.org");
-	aboutData.addAuthor (ki18n ("Thomas Friedrichsmeier"), ki18n ("Project leader / main developer"));
-	aboutData.addAuthor (ki18n ("Pierre Ecochard"), ki18n ("C++ developer between 2004 and 2007"));
-	aboutData.addAuthor (ki18n ("Prasenjit Kapat"), ki18n ("Many plugins, suggestions, plot history feature"));
-	aboutData.addAuthor (ki18n ("Meik Michalke"), ki18n ("Many plugins, suggestions, rkwarddev package"));
-	aboutData.addAuthor (ki18n ("Stefan Roediger"), ki18n ("Many plugins, suggestions, marketing, translations"));
-	aboutData.addCredit (ki18n ("Contributors in alphabetical order"));
-	aboutData.addCredit (ki18n ("Björn Balazs"), ki18n ("Extensive usability feedback"));
-	aboutData.addCredit (ki18n ("Aaron Batty"), ki18n ("Whealth of feedback, hardware donations"));
-	aboutData.addCredit (ki18n ("Jan Dittrich"), ki18n ("Extensive usability feedback"));
-	aboutData.addCredit (ki18n ("Philippe Grosjean"), ki18n ("Several helpful comments and discussions"));
-	aboutData.addCredit (ki18n ("Adrien d'Hardemare"), ki18n ("Plugins and patches"));
-	aboutData.addCredit (ki18n ("Yves Jacolin"), ki18n ("New website"));
-	aboutData.addCredit (ki18n ("Germán Márquez Mejía"), ki18n ("HP filter plugin, spanish translation"), 0);
-	aboutData.addCredit (ki18n ("Marco Martin"), ki18n ("A cool icon"));
-	aboutData.addCredit (ki18n ("Daniele Medri"), ki18n ("RKWard logo, many suggestions, help on wording"));
-	aboutData.addCredit (ki18n ("David Sibai"), ki18n ("Several valuable comments, hints and patches"));
-	aboutData.addCredit (ki18n ("Ilias Soumpasis"), ki18n ("Translation, Suggestions, plugins"));
-	aboutData.addCredit (ki18n ("Ralf Tautenhahn"), ki18n ("Many comments, useful suggestions, and bug reports"));
-	aboutData.addCredit (ki18n ("Jannis Vajen"), ki18n ("German Translation, bug reports"));
-	aboutData.addCredit (ki18n ("Roland Vollgraf"), ki18n ("Some patches"));
-	aboutData.addCredit (ki18n ("Roy Qu"), ki18n ("patches and helpful comments"));
-	aboutData.addCredit (ki18n ("Many more people on rkward-devel@kde.org"), ki18n ("Sorry, if we forgot to list you. Please contact us to get added"));
+	KLocalizedString::setApplicationDomain ("rkward");
+	KAboutData aboutData ("rkward", i18n ("RKWard"), RKWARD_VERSION, i18n ("Frontend to the R statistics language"), KAboutLicense::GPL, i18n ("(c) 2002, 2004 - 2016"), QString (), "http://rkward.kde.org");
+	aboutData.addAuthor (i18n ("Thomas Friedrichsmeier"), i18n ("Project leader / main developer"));
+	aboutData.addAuthor (i18n ("Pierre Ecochard"), i18n ("C++ developer between 2004 and 2007"));
+	aboutData.addAuthor (i18n ("Prasenjit Kapat"), i18n ("Many plugins, suggestions, plot history feature"));
+	aboutData.addAuthor (i18n ("Meik Michalke"), i18n ("Many plugins, suggestions, rkwarddev package"));
+	aboutData.addAuthor (i18n ("Stefan Roediger"), i18n ("Many plugins, suggestions, marketing, translations"));
+	aboutData.addCredit (i18n ("Contributors in alphabetical order"));
+	aboutData.addCredit (i18n ("Björn Balazs"), i18n ("Extensive usability feedback"));
+	aboutData.addCredit (i18n ("Aaron Batty"), i18n ("Whealth of feedback, hardware donations"));
+	aboutData.addCredit (i18n ("Jan Dittrich"), i18n ("Extensive usability feedback"));
+	aboutData.addCredit (i18n ("Philippe Grosjean"), i18n ("Several helpful comments and discussions"));
+	aboutData.addCredit (i18n ("Adrien d'Hardemare"), i18n ("Plugins and patches"));
+	aboutData.addCredit (i18n ("Yves Jacolin"), i18n ("New website"));
+	aboutData.addCredit (i18n ("Germán Márquez Mejía"), i18n ("HP filter plugin, spanish translation"), 0);
+	aboutData.addCredit (i18n ("Marco Martin"), i18n ("A cool icon"));
+	aboutData.addCredit (i18n ("Daniele Medri"), i18n ("RKWard logo, many suggestions, help on wording"));
+	aboutData.addCredit (i18n ("David Sibai"), i18n ("Several valuable comments, hints and patches"));
+	aboutData.addCredit (i18n ("Ilias Soumpasis"), i18n ("Translation, Suggestions, plugins"));
+	aboutData.addCredit (i18n ("Ralf Tautenhahn"), i18n ("Many comments, useful suggestions, and bug reports"));
+	aboutData.addCredit (i18n ("Jannis Vajen"), i18n ("German Translation, bug reports"));
+	aboutData.addCredit (i18n ("Roland Vollgraf"), i18n ("Some patches"));
+	aboutData.addCredit (i18n ("Roy Qu"), i18n ("patches and helpful comments"));
+	aboutData.addCredit (i18n ("Many more people on rkward-devel@kde.org"), i18n ("Sorry, if we forgot to list you. Please contact us to get added"));
+	KAboutData::setApplicationData (aboutData);
 
-	// before initializing the commandline args, remove the ".bin" from "rkward.bin".
-	// This is so it prints "Usage rkward..." instead of "Usage rkward.bin...", etc.
-	// it seems safest to keep a copy, since the shell still owns argv
-	char *argv_copy[argc];
-	argv_copy[0] = qstrdup (QString (argv[0]).remove (".frontend").replace (".exe", ".bat").toLocal8Bit ());
-	for (int i = 1; i < argc; ++i) {
-		argv_copy[i] = argv[i];
+	QCommandLineParser parser;
+	parser.addVersionOption ();
+	parser.addHelpOption ();
+	parser.addOption (QCommandLineOption ("evaluate", i18n ("After starting (and after loading the specified workspace, if applicable), evaluate the given R code."), "Rcode", QString ()));
+	parser.addOption (QCommandLineOption ("debug-level", i18n ("Verbosity of debug messages (0-5)"), "level", "2"));
+	parser.addOption (QCommandLineOption ("debug-flags", i18n ("Mask for components to debug (see debug.h)"), "flags", QString::number (DEBUG_ALL)));
+	parser.addOption (QCommandLineOption ("debug-output", i18n ("Where to send debug message (file|terminal)"), "where", "file"));
+	parser.addOption (QCommandLineOption ("backend-debugger", i18n ("Debugger for the backend. (Enclose any debugger arguments in single quotes ('') together with the command. Make sure to re-direct stdout!)"), "command", QString ()));
+	parser.addOption (QCommandLineOption ("r-executable", i18n ("Use specified R installation, instead of the one configured at compile time (note: rkward R library must be installed to that installation of R)"), "command", QString ()));
+	parser.addOption (QCommandLineOption ("reuse", i18n ("Reuse a running RKWard instance (if available). If a running instance is reused, only the file arguments will be interpreted, all other options will be ignored.")));
+	parser.addOption (QCommandLineOption ("nowarn-external", i18n ("When used in conjunction with rkward://runplugin/-URLs specified on the command line, suppresses the warning about application-external (untrusted) links.")));
+	parser.addPositionalArgument ("files", i18n ("File or files to open, typically a workspace, or an R script file. When loading several things, you should specify the workspace, first."), "[Files...]");
+
+	aboutData.setupCommandLine (&parser);
+	parser.process (app);
+	aboutData.processCommandLine (&parser);
+
+	// Set up debugging
+	RK_Debug::RK_Debug_Level = DL_FATAL - QString (parser.value ("debug-level")).toInt ();
+	RK_Debug::RK_Debug_Flags = QString (parser.value ("debug-flags")).toInt ();
+	RK_Debug_Terminal = QString (parser.value ("debug-output")) == "terminal";
+	if (RK_Debug::setupLogFile (QDir::tempPath () + "/rkward.frontend")) {
+		RK_DEBUG (APP, DL_INFO, "Full debug output is at %s", qPrintable (RK_Debug::debug_file->fileName ()));
+	} else {
+		RK_Debug_Terminal = true;
+		RK_DEBUG (APP, DL_INFO, "Failed to open debug file %s", qPrintable (RK_Debug::debug_file->fileName ()));
 	}
-	KCmdLineArgs::init (argc, argv_copy, &aboutData);
-	KCmdLineArgs::addCmdLineOptions( options ); // Add our own options.
+	qInstallMessageHandler (RKDebugMessageOutput);
 
-	KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
-	RK_Debug_Level = DL_FATAL - QString (args->getOption ("debug-level")).toInt ();
-	RK_Debug_Flags = QString (args->getOption ("debug-flags")).toInt ();
-	if (!args->getOption ("debugger").isEmpty ()) {
-		RK_DEBUG (DEBUG_ALL, DL_ERROR, "--debugger option should have been handled by wrapper script. Ignoring.");
-	}
-
-	if (args->count ()) {
-		QStringList urls_to_open;
-		for (int i = 0; i < args->count (); ++i) {
-			urls_to_open.append (KCmdLineArgs::makeURL (decodeArgument (args->arg (i)).toUtf8 ()).url ());
+	// handle positional (file) arguments, first
+	QStringList url_args = parser.positionalArguments ();
+	if (!url_args.isEmpty ()) {
+		for (int i = 0; i < url_args.size (); ++i) {
+			url_args[i] = QUrl::fromUserInput (url_args[i], QDir::currentPath (), QUrl::AssumeLocalFile).toString ();
 		}
-		RKGlobals::startup_options["initial_urls"] = urls_to_open;
-		RKGlobals::startup_options["warn_external"] = args->isSet ("warn-external");
+		RKGlobals::startup_options["initial_urls"] = url_args;
+		RKGlobals::startup_options["warn_external"] = !parser.isSet ("nowarn-external");
 	}
-	RKGlobals::startup_options["evaluate"] = decodeArgument (args->getOption ("evaluate"));
-	RKGlobals::startup_options["backend-debugger"] = decodeArgument (args->getOption ("backend-debugger"));
+	RKGlobals::startup_options["evaluate"] = parser.value ("evaluate");
+	RKGlobals::startup_options["backend-debugger"] = parser.value ("backend-debugger");
 
-	RKWardApplication app;
-	// No, I do not really understand the point of separating KDE_LANG from LANGUAGE. We do honor it in so far as not
-	// forcing LANGUAGE on the backend, though. Having language as LANGUAGE makes code in RKMessageCatalog much easier compared to KCatalog.
-	qputenv ("LANGUAGE", QFile::encodeName (KGlobal::locale ()->language ()));
-	// install message handler *after* the componentData has been initialized
-	RKSettingsModuleDebug::debug_file = new QTemporaryFile (QDir::tempPath () + "/rkward.frontend");
-	RKSettingsModuleDebug::debug_file->setAutoRemove (false);
-	if (RKSettingsModuleDebug::debug_file->open ()) {
-		RK_DEBUG (APP, DL_INFO, "Full debug output is at %s", qPrintable (RKSettingsModuleDebug::debug_file->fileName ()));
-		qInstallMsgHandler (RKDebugMessageOutput);
+	// MacOS may need some path adjustments, first
+#ifdef Q_OS_MACOS
+	QString oldpath = qgetenv ("PATH");
+	if (!oldpath.contains (INSTALL_PATH)) {
+		//ensure that PATH is set to include what we deliver with the bundle
+		qputenv ("PATH", QString ("%1/bin:%1/sbin:%2").arg (INSTALL_PATH).arg (oldpath).toLocal8Bit ());
+		if (RK_Debug::RK_Debug_Level > 3) qDebug ("Adjusting system path to %s", qPrintable (qgetenv ("PATH")));
+	}
+	// ensure that RKWard finds its own packages
+	qputenv ("R_LIBS", R_LIBS);
+    // try to ensure that DBus is running before trying to connect
+	QProcess::execute ("launchctl", QStringList () << "load" << "/Library/LaunchAgents/org.freedesktop.dbus-session.plist");
+#endif
+
+	// Handle --reuse option, by placing a dbus-call to existing RKWard process (if any) and exiting
+	if (parser.isSet ("reuse")) {
+		if (!QDBusConnection::sessionBus ().isConnected ()) {
+			RK_DEBUG (DEBUG_ALL, DL_WARNING, "Could not connect to session dbus");
+		} else {
+			QDBusInterface iface (RKDBUS_SERVICENAME, "/", "", QDBusConnection::sessionBus ());
+			if (iface.isValid ()) {
+				QDBusReply<void> reply = iface.call ("openAnyUrl", url_args, !parser.isSet ("nowarn-external"));
+				if (!reply.isValid ()) {
+					RK_DEBUG (DEBUG_ALL, DL_ERROR, "Error while placing dbus call: %s", qPrintable (reply.error ().message ()));
+					return 1;
+				}
+				return 0;
+			}
+		}
 	}
 
+	// Locate KDE and RKWard installations
+	QString marker_exe_name ("kreadconfig5");    // Simply some file that should exist in the bin dir of a KDE installation on both Unix and Windows
+	QString marker_exe = findExeAtPath (marker_exe_name, QDir::currentPath ());
+	if (marker_exe.isNull ()) marker_exe = findExeAtPath (marker_exe_name, app.applicationDirPath ());
+	if (marker_exe.isNull ()) marker_exe = findExeAtPath (marker_exe_name, QDir (app.applicationDirPath ()).filePath ("KDE/bin"));
+	QStringList syspath = QString (qgetenv ("PATH")).split (PATH_VAR_SEP);
+	if (marker_exe.isNull ()) {
+		for (int i = 0; i < syspath.size (); ++i) {
+			marker_exe = findExeAtPath (marker_exe_name, syspath[i]);
+			if (!marker_exe.isNull ()) break;
+		}
+	}
+
+	if (marker_exe.isNull ()) {
+		QMessageBox::critical (0, "Could not find KDE installation", "The KDE installation could not be found (" + marker_exe_name + "). When moving / copying RKWard, make sure to copy the whole application folder, or create a shorcut / link, instead.");
+		exit (1);
+	}
+
+	QDir kde_dir (QFileInfo (marker_exe).absolutePath ());
+	kde_dir.makeAbsolute ();
+	QString kde_dir_safe_path = RKCommonFunctions::windowsShellScriptSafeCommand (kde_dir.path ());
+	if (syspath.indexOf (kde_dir.path ()) < 0) {
+		RK_DEBUG (DEBUG_ALL, DL_INFO, "Adding %s to the system path", qPrintable (kde_dir_safe_path));
+		qputenv ("PATH", QString (kde_dir_safe_path + PATH_VAR_SEP + qgetenv ("PATH")).toLocal8Bit ());
+	}
+
+	// Look for R:
+	//- command line parameter
+	//- Specified in cfg file next to rkward executable
+	//- compile-time default
+	QString r_exe = parser.value ("r-executable");
+	if (!r_exe.isNull ()) {
+		if (!QFileInfo (r_exe).isExecutable ()) {
+			QMessageBox::critical (0, "Specified R executable does not exist", QString ("The R executable specified on the command line (%1) does not exist or is not executable.").arg (r_exe));
+			exit (1);
+		}
+		RK_DEBUG (APP, DL_DEBUG, "Using R specified on command line");
+	} else {
+		QDir frontend_path = app.applicationDirPath ();
+		QFileInfo rkward_ini_file (frontend_path.absoluteFilePath ("rkward.ini"));
+		if (rkward_ini_file.isReadable ()) {
+			QSettings rkward_ini (rkward_ini_file.absoluteFilePath (), QSettings::IniFormat);
+			r_exe = rkward_ini.value ("R executable").toString ();
+			if (!r_exe.isNull ()) {
+				if (QDir::isRelativePath (r_exe)) {
+					r_exe = frontend_path.absoluteFilePath (r_exe);
+				}
+				if (!QFileInfo (r_exe).isExecutable ()) {
+					QMessageBox::critical (0, "Specified R executable does not exist", QString ("The R executable specified in the rkward.ini file (%1) does not exist or is not executable.").arg (rkward_ini_file.absoluteFilePath ()));
+					exit (1);
+				}
+			}
+			RK_DEBUG (APP, DL_DEBUG, "Using R as configured in config file %s", qPrintable (rkward_ini_file.absoluteFilePath ()));
+		}
+		if (r_exe.isNull ()) {
+			r_exe = R_EXECUTABLE;
+			if (!QFileInfo (r_exe).isExecutable ()) {
+				QMessageBox::critical (0, "Specified R executable does not exist", QString ("The R executable specified at compile time (%1) does not exist or is not executable. Probably the installation of R has moved. You can use the command line parameter '--r-executable <i>PATH_TO_R</i>', or supply an rkward.ini file to specify the new location.").arg (r_exe));
+				exit (1);
+			}
+			RK_DEBUG (APP, DL_DEBUG, "Using R as configured at compile time");
+		}
+	}
+	// TODO: Store somewhere else
+	qputenv ("R_BINARY", r_exe.toLocal8Bit ());
+
+	qsrand (QTime::currentTime ().msec ()); // Workaround for some versions of kcoreaddons (5.21.0 through at least 5.34.0). See https://phabricator.kde.org/D5966
 	if (app.isSessionRestored ()) {
 		RESTORE(RKWardMainWindow);	// well, whatever this is supposed to do -> TODO
 	} else {
 		new RKWardMainWindow ();
 	}
-	args->clear();
-
-	// Usually, KDE always adds the current directory to the list of prefixes.
-	// However, since RKWard 0.5.6, the main binary is in KDE's libexec dir, which defies this mechanism. Therefore, RKWARD_ENSURE_PREFIX is set from the wrapper script.
-	char *add_path = getenv ("RKWARD_ENSURE_PREFIX");
-	if (add_path) KGlobal::dirs ()->addPrefix (QString::fromLocal8Bit (add_path));
 
 	// do it!
 	int status = app.exec ();
 
-	qInstallMsgHandler (0);
-	RKSettingsModuleDebug::debug_file->close ();
+	qInstallMessageHandler (0);
+	RK_Debug::debug_file->close ();
 
 	return status;
 }

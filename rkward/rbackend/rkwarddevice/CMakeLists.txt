@@ -1,4 +1,4 @@
-INCLUDE_DIRECTORIES( ${R_INCLUDEDIR} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES}  )
+INCLUDE_DIRECTORIES( ${R_INCLUDEDIR} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR}    )
 
 SET (
 	rkgraphicsdevice_backend_SRCS
@@ -13,8 +13,8 @@ SET (
 	rkgraphicsdevice.cpp
 )
 
-QT4_AUTOMOC(${rkgraphicsdevice_frontend_SRCS})
 ADD_LIBRARY(rkgraphicsdevice.frontend STATIC ${rkgraphicsdevice_frontend_SRCS})
+TARGET_LINK_LIBRARIES(rkgraphicsdevice.frontend Qt5::Widgets Qt5::Core Qt5::Network KF5::CoreAddons KF5::WidgetsAddons KF5::I18n KF5::ConfigCore KF5::Parts)
 
-QT4_AUTOMOC(${rkgraphicsdevice_backend_SRCS})
 ADD_LIBRARY(rkgraphicsdevice.backend STATIC ${rkgraphicsdevice_backend_SRCS})
+TARGET_LINK_LIBRARIES(rkgraphicsdevice.backend Qt5::Core Qt5::Network)

@@ -1,28 +1,60 @@
 PROJECT(rkward)
 
-CMAKE_MINIMUM_REQUIRED(VERSION 2.4)	# KDElibs seems to need 2.6, though
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8.12)	# As required by KF5
+IF(NOT "${CMAKE_VERSION}" VERSION_LESS 3.3.0)
+	CMAKE_POLICY(SET CMP0063 OLD)  # No symbol visibility in any of our static libraries needed
+ENDIF()
 
 IF(NOT CMAKE_VERBOSE_MAKEFILE)
 	SET (FORCE_PRETTY_MAKEFILE ON)
 ENDIF(NOT CMAKE_VERBOSE_MAKEFILE)
 
-SET(KDE_MIN_VERSION 3.9.7)	# KDE 4.0rc2
-FIND_PACKAGE(KDE4 REQUIRED)
+FIND_PACKAGE(ECM 0.0.11 REQUIRED NO_MODULE)
+
+SET(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR})
+
+INCLUDE(KDEInstallDirs)
+INCLUDE(KDECMakeSettings)
+INCLUDE(KDECompilerSettings)
+INCLUDE(ECMInstallIcons)
+INCLUDE(ECMAddAppIcon)
+INCLUDE(ECMMarkNonGuiExecutable)
+INCLUDE(FeatureSummary)
+
+FIND_PACKAGE(Qt5 5.2 CONFIG REQUIRED COMPONENTS Widgets Core Xml Network WebKitWidgets Script PrintSupport)
+FIND_PACKAGE(KF5 5.2 REQUIRED COMPONENTS CoreAddons DocTools I18n XmlGui TextEditor WidgetsAddons WebKit Parts Config Notifications WindowSystem OPTIONAL_COMPONENTS Crash)
 FIND_PACKAGE(Gettext REQUIRED)
+
+# FindIntl in cmake is broken for MSVC on Windows, (and only included from 3.2.3 upwards).
+# Borrowing some code from ki18n instead (originally BSD licensed, copyright Copyright 2014 Alex Richardson <arichardson.kde@gmail.com>)
+FIND_PATH(LibIntl_INCLUDE_DIRS NAMES libintl.h)
+FIND_LIBRARY(LibIntl_LIBRARIES NAMES intl libintl)
+INCLUDE(CheckCXXSymbolExists)
+CHECK_CXX_SYMBOL_EXISTS(dngettext libintl.h LibIntl_SYMBOL_FOUND)
+INCLUDE(FindPackageHandleStandardArgs)
+IF(LibIntl_SYMBOL_FOUND)
+    MESSAGE(STATUS "libintl is part of libc, no extra library is required.")
+    SET(LibIntl_LIBRARIES "")
+    FIND_PACKAGE_HANDLE_STANDARD_ARGS(LibIntl REQUIRED_VARS LibIntl_INCLUDE_DIRS)
+ELSE()
+    MESSAGE(STATUS "libintl is a separate library.")
+    FIND_PACKAGE_HANDLE_STANDARD_ARGS(LibIntl REQUIRED_VARS LibIntl_INCLUDE_DIRS LibIntl_LIBRARIES)
+ENDIF()
 
 IF(FORCE_PRETTY_MAKEFILE)
 	SET(CMAKE_VERBOSE_MAKEFILE OFF)
 ENDIF(FORCE_PRETTY_MAKEFILE)
 
-ADD_DEFINITIONS(${QT_DEFINITIONS} ${KDE4_DEFINITIONS} -DQT_NO_CAST_TO_ASCII)
+ADD_DEFINITIONS(${QT_DEFINITIONS} -DQT_NO_CAST_TO_ASCII)
+ADD_DEFINITIONS(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
+ADD_DEFINITIONS(-DQT_NO_URL_CAST_FROM_STRING)
+
 #uncomment the line below to save ~250-350kB in object size
 #ADD_DEFINITIONS(-DRKWARD_NO_TRACE)
-
-LINK_DIRECTORIES(${KDE4_LIB_DIR})
 
 ADD_SUBDIRECTORY(rkward)
 ADD_SUBDIRECTORY(i18n)
 ADD_SUBDIRECTORY(doc)
 ADD_SUBDIRECTORY(tests)
 
-# TODO: figure out how to make source distributions (with README files, etc.)
+FEATURE_SUMMARY(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)

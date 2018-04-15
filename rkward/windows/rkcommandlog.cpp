@@ -17,7 +17,7 @@
 
 #include "rkcommandlog.h"
 
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../rkglobals.h"
 #include "../rkconsole.h"
 #include "../settings/rksettingsmodulewatch.h"
@@ -30,10 +30,10 @@
 #include <qsplitter.h>
 #include <QMenu>
 #include <QContextMenuEvent>
+#include <QFontDatabase>
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kactioncollection.h>
-#include <kglobalsettings.h>
 
 #include "../debug.h"
 
@@ -64,7 +64,7 @@ RKCommandLog::RKCommandLog (QWidget *parent, bool tool_window, const char *name)
 	initializeActivationSignals ();
 	setFocusPolicy (Qt::ClickFocus);
 
-	connect (RKSettings::tracker (), SIGNAL (settingsChanged(RKSettings::SettingsPage)), this, SLOT (settingsChanged(RKSettings::SettingsPage)));
+	connect (RKSettings::tracker (), &RKSettingsTracker::settingsChanged, this, &RKCommandLog::settingsChanged);
 	settingsChanged (RKSettings::PageWatch);
 }
 
@@ -224,7 +224,7 @@ void RKCommandLog::clearLog () {
 	log_view->setPlainText (QString ());
 
 	// set a fixed width font
-	QFont font = KGlobalSettings::fixedFont ();
+	QFont font = QFontDatabase::systemFont (QFontDatabase::FixedFont);
 	log_view->setCurrentFont (font);
 }
 
@@ -264,12 +264,14 @@ void RKCommandLogView::selectAll () {
 /////////////////////// BEGIN RKCommandLogPart ////////////////////////
 
 #include <kxmlguifactory.h>
-#include <kaction.h>
+#include <QAction>
+#include <QGuiApplication>
+#include <QFontDatabase>
 
 RKCommandLogPart::RKCommandLogPart (RKCommandLog *for_log) : KParts::Part (0) {
 	RK_TRACE (APP);
 
-	setComponentData (KGlobal::mainComponent ());
+	setComponentName (QCoreApplication::applicationName (), QGuiApplication::applicationDisplayName ());
 	setWidget (log = for_log);
 	setXMLFile ("rkcommandlogpart.rc");
 }
@@ -289,7 +291,7 @@ void RKCommandLogPart::initActions () {
 
 	run_selection = RKStandardActions::runCurrent (log, log, SLOT(runSelection()));
 
-	connect (log->getView (), SIGNAL (popupMenuRequest(QPoint)), this, SLOT (doPopupMenu(QPoint)));
+	connect (log->getView (), &RKCommandLogView::popupMenuRequest, this, &RKCommandLogPart::doPopupMenu);
 }
 
 void RKCommandLogPart::doPopupMenu (const QPoint &pos) {
@@ -307,4 +309,3 @@ void RKCommandLogPart::doPopupMenu (const QPoint &pos) {
 	run_selection->setEnabled (true);
 }
 
-#include "rkcommandlog.moc"

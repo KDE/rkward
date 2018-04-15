@@ -69,27 +69,27 @@ public:
 	RKVarEditMetaModel* getMetaModel ();
 
 	// QAbstractTableModel implementations
-	bool insertRows (int row, int count, const QModelIndex& parent = QModelIndex());
-	bool removeRows (int row, int count, const QModelIndex& parent = QModelIndex());
-	int rowCount (const QModelIndex& parent = QModelIndex()) const;
-	int columnCount (const QModelIndex& parent = QModelIndex()) const;
-	QVariant data (const QModelIndex& index, int role = Qt::DisplayRole) const;
-	Qt::ItemFlags flags (const QModelIndex& index) const;
-	bool setData (const QModelIndex& index, const QVariant& value, int role = Qt::EditRole);
-	QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
+	bool insertRows (int row, int count, const QModelIndex& parent = QModelIndex()) override;
+	bool removeRows (int row, int count, const QModelIndex& parent = QModelIndex()) override;
+	int rowCount (const QModelIndex& parent = QModelIndex()) const override;
+	int columnCount (const QModelIndex& parent = QModelIndex()) const override;
+	QVariant data (const QModelIndex& index, int role = Qt::DisplayRole) const override;
+	Qt::ItemFlags flags (const QModelIndex& index) const override;
+	bool setData (const QModelIndex& index, const QVariant& value, int role = Qt::EditRole) override;
+	QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
-	RKTextMatrix getTextMatrix (const QItemSelectionRange& range) const;
-	void blankRange (const QItemSelectionRange& range);
-	void setTextMatrix (const QModelIndex& offset, const RKTextMatrix& text, const QItemSelectionRange& confine_to = QItemSelectionRange ());
+	RKTextMatrix getTextMatrix (const QItemSelectionRange& range) const override;
+	void blankRange (const QItemSelectionRange& range) override;
+	void setTextMatrix (const QModelIndex& offset, const RKTextMatrix& text, const QItemSelectionRange& confine_to = QItemSelectionRange ()) override;
 
-	int trueCols () const { return objects.size (); };
-	int trueRows () const { return (objects.isEmpty () ? 0 : objects[0]->getLength ()); };
+	int trueCols () const override { return objects.size (); };
+	int trueRows () const override { return (objects.isEmpty () ? 0 : objects[0]->getLength ()); };
 	void lockHeader (bool lock) { header_locked = lock; };
 
 	virtual void restoreObject (RObject* object, RCommandChain* chain);
 
-	void objectMetaChanged (RObject* changed);
-	void objectDataChanged (RObject* object, const RObject::ChangeSet *changes);
+	void objectMetaChanged (RObject* changed) override;
+	void objectDataChanged (RObject* object, const RObject::ChangeSet *changes) override;
 
 	RKVariable* getObject (int index) const;
 signals:
@@ -112,7 +112,7 @@ friend class RKVarEditMetaModel;
 	int apparentRows () const { return (trueRows () + trailing_rows); };
 
 	/** Receives notifications of object removals. Takes care of removing the object from the list. */
-	void objectRemoved (RObject* object);
+	void objectRemoved (RObject* object) override;
 
 	/** insert new columns at index. Default implementation does nothing. To be implemented in subclasses */
 	virtual void doInsertColumns (int index, int count);
@@ -148,19 +148,19 @@ public:
 	};
 
 	// QAbstractTableModel implementations
-	int rowCount (const QModelIndex& parent = QModelIndex()) const;
-	int columnCount (const QModelIndex& parent = QModelIndex()) const;
-	QVariant data (const QModelIndex& index, int role = Qt::DisplayRole) const;
-	Qt::ItemFlags flags (const QModelIndex& index) const;
-	bool setData (const QModelIndex& index, const QVariant& value, int role = Qt::EditRole);
-	QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
+	int rowCount (const QModelIndex& parent = QModelIndex()) const override;
+	int columnCount (const QModelIndex& parent = QModelIndex()) const override;
+	QVariant data (const QModelIndex& index, int role = Qt::DisplayRole) const override;
+	Qt::ItemFlags flags (const QModelIndex& index) const override;
+	bool setData (const QModelIndex& index, const QVariant& value, int role = Qt::EditRole) override;
+	QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
-	RKTextMatrix getTextMatrix (const QItemSelectionRange& range) const;
-	void blankRange (const QItemSelectionRange& range);
-	void setTextMatrix (const QModelIndex& offset, const RKTextMatrix& text, const QItemSelectionRange& confine_to = QItemSelectionRange ());
+	RKTextMatrix getTextMatrix (const QItemSelectionRange& range) const override;
+	void blankRange (const QItemSelectionRange& range) override;
+	void setTextMatrix (const QModelIndex& offset, const RKTextMatrix& text, const QItemSelectionRange& confine_to = QItemSelectionRange ()) override;
 
-	int trueCols () const { return data_model->trueCols (); };
-	int trueRows () const { return RowCount; };
+	int trueCols () const override { return data_model->trueCols (); };
+	int trueRows () const override { return RowCount; };
 
 	RObject::ValueLabels getValueLabels (int column) const;
 	void setValueLabels (int column, const RObject::ValueLabels& labels);
@@ -190,25 +190,25 @@ public:
 	RKVarEditDataFrameModel (const QString& validized_name, RContainerObject* parent_object, RCommandChain* chain, int initial_cols, QObject* parent);
 	~RKVarEditDataFrameModel ();
 
-	bool insertColumns (int column, int count, const QModelIndex& parent = QModelIndex());
-	bool removeColumns (int column, int count, const QModelIndex& parent = QModelIndex());
+	bool insertColumns (int column, int count, const QModelIndex& parent = QModelIndex()) override;
+	bool removeColumns (int column, int count, const QModelIndex& parent = QModelIndex()) override;
 
 	RContainerObject* getObject () const { return dataframe; };
 
-	void restoreObject (RObject* object, RCommandChain* chain);
+	void restoreObject (RObject* object, RCommandChain* chain) override;
 signals:
 	void modelObjectDestroyed ();
 protected:
-	void doInsertColumns (int index, int count);
+	void doInsertColumns (int index, int count) override;
 	/** reimplemented from RKVarEditModel to listen for the dataframe object as well */
-	void objectRemoved (RObject* object);
+	void objectRemoved (RObject* object) override;
 	/** receives notifications of new objects added to this data.frame */
-	void childAdded (int index, RObject* parent);
+	void childAdded (int index, RObject* parent) override;
 	/** receives notifications of object position changes inside this data.frame */
-	void childMoved (int old_index, int new_index, RObject* parent);
+	void childMoved (int old_index, int new_index, RObject* parent) override;
 
-	void doInsertRowsInBackend (int row, int count);
-	void doRemoveRowsInBackend (int row, int count);
+	void doInsertRowsInBackend (int row, int count) override;
+	void doRemoveRowsInBackend (int row, int count) override;
 
 	RContainerObject* dataframe;
 

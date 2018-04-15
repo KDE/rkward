@@ -16,18 +16,16 @@
  ***************************************************************************/
 #include "rksettingsmoduleconsole.h"
 
-#include <klocale.h>
-#include <kconfig.h>
+#include <KLocalizedString>
 #include <kconfiggroup.h>
-#include <knuminput.h>
-#include <kapplication.h>
-#include <kglobal.h>
+#include <KSharedConfig>
 
 #include <qlayout.h>
 #include <qcheckbox.h>
 #include <qlabel.h>
 #include <QVBoxLayout>
 #include <QComboBox>
+#include <QSpinBox>
 
 #include "../rbackend/rcommand.h"
 #include "../rkglobals.h"
@@ -49,26 +47,34 @@ RKSettingsModuleConsole::RKSettingsModuleConsole (RKSettings *gui, QWidget *pare
 
 	save_history_box = new QCheckBox (i18n ("Load/Save command history"), this);
 	save_history_box->setChecked (save_history);
-	connect (save_history_box, SIGNAL (stateChanged(int)), this, SLOT (changedSetting(int)));
+	connect (save_history_box, &QCheckBox::stateChanged, this, &RKSettingsModuleConsole::changedSetting);
 	vbox->addWidget (save_history_box);
 
 	vbox->addWidget (new QLabel (i18n ("Maximum length of command history"), this));
-	max_history_length_spinner = new KIntSpinBox (0, 10000, 10, max_history_length, this);
+	max_history_length_spinner = new QSpinBox(this);
+	max_history_length_spinner->setMaximum(10000);
+	max_history_length_spinner->setMinimum(0);
+	max_history_length_spinner->setSingleStep(10);
+	max_history_length_spinner->setValue(max_history_length);
 	max_history_length_spinner->setSpecialValueText (i18n ("Unlimited"));
-	connect (max_history_length_spinner, SIGNAL (valueChanged(int)), this, SLOT (changedSetting(int)));
+	connect (max_history_length_spinner, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleConsole::changedSetting);
 	vbox->addWidget (max_history_length_spinner);
 
 	vbox->addWidget (new QLabel (i18n ("Maximum number of paragraphs/lines to display in the console"), this));
-	max_console_lines_spinner = new KIntSpinBox (0, 10000, 10, max_console_lines, this);
+	max_console_lines_spinner = new QSpinBox(this);
+	max_console_lines_spinner->setMaximum(10000);
+	max_console_lines_spinner->setMinimum(0);
+	max_console_lines_spinner->setSingleStep(10);
+	max_console_lines_spinner->setValue(max_console_lines);
 	max_console_lines_spinner->setSpecialValueText (i18n ("Unlimited"));
-	connect (max_console_lines_spinner, SIGNAL (valueChanged(int)), this, SLOT (changedSetting(int)));
+	connect (max_console_lines_spinner, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleConsole::changedSetting);
 	vbox->addWidget (max_console_lines_spinner);
 
 	vbox->addSpacing (2*RKGlobals::spacingHint ());
 
 	pipe_user_commands_through_console_box = new QCheckBox (i18n ("Run commands from script editor through console"), this);
 	pipe_user_commands_through_console_box->setChecked (pipe_user_commands_through_console);
-	connect (pipe_user_commands_through_console_box, SIGNAL (stateChanged(int)), this, SLOT (changedSetting(int)));
+	connect (pipe_user_commands_through_console_box, &QCheckBox::stateChanged, this, &RKSettingsModuleConsole::changedSetting);
 	vbox->addWidget (pipe_user_commands_through_console_box);
 
 	vbox->addWidget (new QLabel (i18n ("Also add those commands to console history"), this));
@@ -77,14 +83,14 @@ RKSettingsModuleConsole::RKSettingsModuleConsole (RKSettings *gui, QWidget *pare
 	add_piped_commands_to_history_box->insertItem ((int) AddSingleLine, i18n ("Add only if single line"));
 	add_piped_commands_to_history_box->insertItem ((int) AlwaysAdd, i18n ("Add all commands"));
 	add_piped_commands_to_history_box->setCurrentIndex ((int) add_piped_commands_to_history);
-	connect (add_piped_commands_to_history_box, SIGNAL (currentIndexChanged(int)), this, SLOT (changedSetting(int)));
+	connect (add_piped_commands_to_history_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &RKSettingsModuleConsole::changedSetting);
 	add_piped_commands_to_history_box->setEnabled (pipe_user_commands_through_console_box->isChecked ());
 	vbox->addWidget (add_piped_commands_to_history_box);
 
 	vbox->addSpacing (2*RKGlobals::spacingHint ());
 
 	reverse_context_mode_box = new QCheckBox (i18n ("Command history is context sensitive by default"), this);
-	connect (reverse_context_mode_box, SIGNAL (stateChanged(int)), this, SLOT (changedSetting(int)));
+	connect (reverse_context_mode_box, &QCheckBox::stateChanged, this, &RKSettingsModuleConsole::changedSetting);
 	reverse_context_mode_box->setChecked (context_sensitive_history_by_default);
 	vbox->addWidget (reverse_context_mode_box);
 
@@ -140,7 +146,7 @@ void RKSettingsModuleConsole::loadSettings (KConfig *config) {
 QStringList RKSettingsModuleConsole::loadCommandHistory () {
 	RK_TRACE (SETTINGS);
 
-	KConfigGroup cg = KGlobal::config ()->group ("Console Settings");
+	KConfigGroup cg = KSharedConfig::openConfig ()->group ("Console Settings");
 	return cg.readEntry ("history", QStringList ());
 }
 
@@ -148,7 +154,7 @@ QStringList RKSettingsModuleConsole::loadCommandHistory () {
 void RKSettingsModuleConsole::saveCommandHistory (const QStringList &list) {
 	RK_TRACE (SETTINGS);
 
-	KConfigGroup cg = KGlobal::config ()->group ("Console Settings");
+	KConfigGroup cg = KSharedConfig::openConfig ()->group ("Console Settings");
 	if (save_history) {
 		cg.writeEntry ("history", list);
 	}
@@ -178,4 +184,3 @@ QString RKSettingsModuleConsole::caption () {
 	return (i18n ("Console"));
 }
 
-#include "rksettingsmoduleconsole.moc"

@@ -1,7 +1,4 @@
-INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES}  )
-
-
-########### next target ###############
+INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}    )
 
 SET(core_STAT_SRCS
    rkvariable.cpp
@@ -15,22 +12,6 @@ SET(core_STAT_SRCS
    rkpseudoobjects.cpp
    )
 
-QT4_AUTOMOC(${core_STAT_SRCS})
-
 ADD_LIBRARY(core STATIC ${core_STAT_SRCS})
+TARGET_LINK_LIBRARIES(core Qt5::Core Qt5::Widgets KF5::WidgetsAddons KF5::I18n KF5::Parts)
 
-
-########### install files ###############
-
-
-
-
-#original Makefile.am contents follow:
-
-#INCLUDES = $(all_includes)
-#METASOURCES = AUTO
-#noinst_LIBRARIES =  libcore.a
-#libcore_a_SOURCES = rkvariable.cpp robjectlist.cpp robject.cpp rcontainerobject.cpp rkmodificationtracker.cpp \
-#	rfunctionobject.cpp renvironmentobject.cpp
-#noinst_HEADERS = rkvariable.h robjectlist.h robject.h rcontainerobject.h rkmodificationtracker.h \
-#	rfunctionobject.h renvironmentobject.h

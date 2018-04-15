@@ -22,11 +22,10 @@
 #include <qtimer.h>
 #include <QTextDocument>
 
-#include <klocale.h>
-#include <kvbox.h>
+#include <KLocalizedString>
 
 #include "../rkglobals.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../misc/xmlhelper.h"
 #include "../misc/rkxmlguipreviewarea.h"
 #include "../windows/rkwindowcatcher.h"
@@ -54,7 +53,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	// create and add property
 	addChild ("state", state = new RKComponentPropertyBool (this, true, preview_active, "active", "inactive"));
 	state->setInternal (true);	// restoring this does not make sense.
-	connect (state, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (changedState(RKComponentPropertyBase*)));
+	connect (state, &RKComponentPropertyBase::valueChanged, this, &RKPreviewBox::changedState);
 
 	// create checkbox
 	QVBoxLayout *vbox = new QVBoxLayout (this);
@@ -62,7 +61,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	toggle_preview_box = new QCheckBox (xml->i18nStringAttribute (element, "label", i18n ("Preview"), DL_INFO), this);
 	vbox->addWidget (toggle_preview_box);
 	toggle_preview_box->setChecked (preview_active);
-	connect (toggle_preview_box, SIGNAL (stateChanged(int)), this, SLOT (changedState(int)));
+	connect (toggle_preview_box, &QCheckBox::stateChanged, this, &RKPreviewBox::changedStateFromUi);
 
 	// status label
 	status_label = new QLabel (QString (), this);
@@ -83,7 +82,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 
 			if (preview_mode == OutputPreview) {
 				RKGlobals::rInterface ()->issueCommand ("local ({\n"
-				    "outfile <- tempfile (fileext='html')\n"
+				    "outfile <- tempfile (fileext='.html')\n"
 				    "rk.assign.preview.data(" + idprop + ", list (filename=outfile, on.delete=function (id) {\n"
 				    "	rk.flush.output (outfile, ask=FALSE)\n"
 				    "	unlink (outfile)\n"
@@ -109,7 +108,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	RKComponentBase *cp = parentComponent ()->lookupComponent ("code", &dummy);
 	if (cp && dummy.isNull () && (cp->type () == PropertyCode)) {
 		code_property = static_cast<RKComponentPropertyCode *> (cp);
-		connect (code_property, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (changedCode(RKComponentPropertyBase*)));
+		connect (code_property, &RKComponentPropertyBase::valueChanged, this, &RKPreviewBox::changedCode);
 	} else {
 		RK_DEBUG (PLUGIN, DL_WARNING, "Could not find code property in preview box (remainder: %s)", dummy.toLatin1().data ());
 		code_property = 0;
@@ -118,7 +117,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	// initialize
 	update_timer = new QTimer (this);
 	update_timer->setSingleShot (true);
-	connect (update_timer, SIGNAL (timeout()), this, SLOT (tryPreviewNow()));
+	connect (update_timer, &QTimer::timeout, this, &RKPreviewBox::tryPreviewNow);
 	updating = false;
 	changedState (0);
 }
@@ -155,7 +154,7 @@ void RKPreviewBox::changedCode (RKComponentPropertyBase *) {
 	tryPreview ();
 }
 
-void RKPreviewBox::changedState (int) {
+void RKPreviewBox::changedStateFromUi () {
 	RK_TRACE (PLUGIN);
 
 	state->setBoolValue (toggle_preview_box->isChecked ());
@@ -251,7 +250,7 @@ void RKPreviewBox::rCommandDone (RCommand *command) {
 	if (new_preview_pending) tryPreview ();
 
 	QString warnings = command->warnings () + command->error ();
-	if (!warnings.isEmpty ()) warnings = QString ("<b>%1</b>\n<pre>%2</pre>").arg (i18n ("Warnings or Errors:")).arg (Qt::escape (warnings));
+	if (!warnings.isEmpty ()) warnings = QString ("<b>%1</b>\n<pre>%2</pre>").arg (i18n ("Warnings or Errors:")).arg (warnings.toHtmlEscaped ());
 	setStatusMessage (warnings);
 
 	updateStatusLabel ();
@@ -275,4 +274,3 @@ void RKPreviewBox::updateStatusLabel () {
 	}
 }
 
-#include "rkpreviewbox.moc"

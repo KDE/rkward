@@ -19,7 +19,7 @@
 #include <QTimer>
 #include <QDir>
 
-#include "klocale.h"
+#include "KLocalizedString"
 #include "kmessagebox.h"
 
 #include "../misc/rkcommonfunctions.h"
@@ -56,9 +56,9 @@ bool QtScriptBackend::initialize (RKComponentPropertyCode *code_property, bool a
 	QString common_js (files_path.absoluteFilePath ("common.js"));
 
 	script_thread = new QtScriptBackendThread (common_js, filename, this, catalog);
-	connect (script_thread, SIGNAL (error(QString)), this, SLOT (threadError(QString)));
-	connect (script_thread, SIGNAL (commandDone(QString)), this, SLOT (commandDone(QString)));
-	connect (script_thread, SIGNAL (needData(QString,int)), this, SLOT (needData(QString,int)));
+	connect (script_thread, &QtScriptBackendThread::error, this, &QtScriptBackend::threadError);
+	connect (script_thread, &QtScriptBackendThread::commandDone, this, &QtScriptBackend::commandDone);
+	connect (script_thread, &QtScriptBackendThread::needData, this, &QtScriptBackend::needData);
 	current_type = ScriptBackend::Ignore;
 	script_thread->start ();
 
@@ -141,7 +141,7 @@ void QtScriptBackend::needData (const QString &identifier, const int hint) {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#include <kurl.h>
+#include <QUrl>
 
 QtScriptBackendThread::QtScriptBackendThread (const QString &commonfile, const QString &scriptfile, QtScriptBackend *parent, const RKMessageCatalog *catalog) : QThread (parent), engine (0) {
 	RK_TRACE (PHP);
@@ -252,8 +252,7 @@ bool QtScriptBackendThread::includeFile (const QString &filename) {
 
 	QString _filename = filename;
 	if (QFileInfo (filename).isRelative ()) {
-		KUrl script_path = KUrl (QUrl::fromLocalFile (_scriptfile)).upUrl ();
-		script_path.addPath (filename);
+		QUrl script_path = QUrl (QUrl::fromLocalFile (_scriptfile)).adjusted (QUrl::RemoveFilename).resolved (QUrl (filename));
 		_filename = script_path.toLocalFile ();
 	}
 
@@ -362,4 +361,3 @@ namespace RKPrecompiledQtScripts {
 }
 #endif
 
-#include "qtscriptbackend.moc"

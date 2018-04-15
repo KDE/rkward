@@ -2,7 +2,7 @@
                           rkcommandeditorwindow  -  description
                              -------------------
     begin                : Mon Aug 30 2004
-    copyright            : (C) 2004-2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2017 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -18,17 +18,13 @@
 
 #include <kxmlguifactory.h>
 
-#include <ktexteditor/editorchooser.h>
+#include <ktexteditor/editor.h>
 #include <ktexteditor/modificationinterface.h>
 #include <ktexteditor/markinterface.h>
-#include <ktexteditor/sessionconfiginterface.h>
 
-#include <qlayout.h>
 #include <qapplication.h>
-#include <qtabwidget.h>
 #include <qfile.h>
 #include <qtimer.h>
-#include <qobject.h>
 #include <QHBoxLayout>
 #include <QCloseEvent>
 #include <QFrame>
@@ -36,19 +32,20 @@
 #include <QKeyEvent>
 #include <QEvent>
 #include <QClipboard>
+#include <QMenu>
+#include <QAction>
+#include <QTemporaryFile>
+#include <QDir>
 
-#include <klocale.h>
-#include <kmenu.h>
+#include <KLocalizedString>
 #include <kmessagebox.h>
-#include <kfiledialog.h>
-#include <kaction.h>
 #include <kstandardaction.h>
-#include <klibloader.h>
 #include <kactioncollection.h>
 #include <kactionmenu.h>
-#include <ktemporaryfile.h>
 #include <kio/deletejob.h>
 #include <kio/job.h>
+#include <kconfiggroup.h>
+#include <krandom.h>
 
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkstandardicons.h"
@@ -56,7 +53,7 @@
 #include "../misc/rkxmlguisyncer.h"
 #include "../misc/rkjobsequence.h"
 #include "../core/robjectlist.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../settings/rksettings.h"
 #include "../settings/rksettingsmodulecommandeditor.h"
 #include "../rkconsole.h"
@@ -70,7 +67,7 @@
 RKCommandEditorWindowPart::RKCommandEditorWindowPart (QWidget *parent) : KParts::Part (parent) {
 	RK_TRACE (COMMANDEDITOR);
 
-	setComponentData (KGlobal::mainComponent ());
+	setComponentName (QCoreApplication::applicationName (), QGuiApplication::applicationDisplayName ());
 	setWidget (parent);
 	setXMLFile ("rkcommandeditorwindowpart.rc");
 }
@@ -82,13 +79,92 @@ RKCommandEditorWindowPart::~RKCommandEditorWindowPart () {
 #define GET_HELP_URL 1
 #define NUM_BLOCK_RECORDS 6
 
-RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highlighting, bool use_codehinting) : RKMDIWindow (parent, RKMDIWindow::CommandEditorWindow) {
+//static
+QMap<QString, KTextEditor::Document*> RKCommandEditorWindow::unnamed_documents;
+
+RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, const QString& encoding, bool use_r_highlighting, bool use_codehinting, bool read_only, bool delete_on_close) : RKMDIWindow (parent, RKMDIWindow::CommandEditorWindow) {
 	RK_TRACE (COMMANDEDITOR);
 
-	KTextEditor::Editor* editor = KTextEditor::editor("katepart");
+	QString id_header = QStringLiteral ("unnamedscript://");
+
+	KTextEditor::Editor* editor = KTextEditor::Editor::instance ();
 	RK_ASSERT (editor);
 
-	m_doc = editor->createDocument (this);
+	QUrl url = _url;
+	m_doc = 0;
+
+	// Lookup of existing text editor documents: First, if no url is given at all, create a new document, and register an id, in case this window will get split, later
+	if (url.isEmpty ()) {
+		m_doc = editor->createDocument (RKWardMainWindow::getMain ());
+		_id = id_header + KRandom::randomString (16).toLower ();
+		RK_ASSERT (!unnamed_documents.contains (_id));
+		unnamed_documents.insert (_id, m_doc);
+	} else if (url.url ().startsWith (id_header)) { // Next, handle the case that a pseudo-url is passed in
+		_id = url.url ();
+		m_doc = unnamed_documents.value (_id);
+		url.clear ();
+		if (!m_doc) {  // can happen while restoring saved workplace.
+			m_doc = editor->createDocument (RKWardMainWindow::getMain ());
+			unnamed_documents.insert (_id, m_doc);
+		}
+	} else {   // regular url given. Try to find an existing document for that url
+		       // NOTE: we cannot simply use the same map as above, for this purpose, as document urls may change.
+		       // instead we iterate over the document list.
+		QList<KTextEditor::Document*> docs = editor->documents ();
+		for (int i = 0; i < docs.count (); ++i) {
+			if (docs[i]->url ().matches (url, QUrl::NormalizePathSegments | QUrl::StripTrailingSlash | QUrl::PreferLocalFile)) {
+				m_doc = docs[i];
+				break;
+			}
+		}
+	}
+
+	// if an existing document is re-used, try to honor decoding.
+	if (m_doc) {
+		if (!encoding.isEmpty () && (m_doc->encoding () != encoding)) {
+			m_doc->setEncoding (encoding);
+			m_doc->documentReload ();
+		}
+	}
+
+	// no existing document was found, so create one and load the url
+	if (!m_doc) {
+		m_doc = editor->createDocument (RKWardMainWindow::getMain ()); // The document may have to outlive this window
+
+		// encoding must be set *before* loading the file
+		if (!encoding.isEmpty ()) m_doc->setEncoding (encoding);
+		if (!url.isEmpty ()) {
+			if (m_doc->openUrl (url)) {
+				// KF5 TODO: Check which parts of this are still needed in KF5, and which no longer work
+				if (!delete_on_close) {	// don't litter config with temporary files
+					QString p_url = RKWorkplace::mainWorkplace ()->portableUrl (m_doc->url ());
+					KConfigGroup conf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptDocumentSettings %1").arg (p_url));
+					// HACK: Hmm. KTextEditor::Document's readSessionConfig() simply restores too much. Yes, I want to load bookmarks and stuff.
+					// I do not want to mess with encoding, or risk loading a different url, after the doc is already loaded!
+					if (!encoding.isEmpty () && (conf.readEntry ("Encoding", encoding) != encoding)) conf.writeEntry ("Encoding", encoding);
+					if (conf.readEntry ("URL", url) != url) conf.writeEntry ("URL", url);
+					// HACK: What the...?! Somehow, at least on longer R scripts, stored Mode="Normal" in combination with R Highlighting
+					// causes code folding to fail (KDE 4.8.4, http://sourceforge.net/p/rkward/bugs/122/).
+					// Forcing Mode == Highlighting appears to help.
+					if (use_r_highlighting) conf.writeEntry ("Mode", conf.readEntry ("Highlighting", "Normal"));
+					m_doc->readSessionConfig (conf);
+				}
+			} else {
+				KMessageBox::messageBox (this, KMessageBox::Error, i18n ("Unable to open \"%1\"", url.toDisplayString ()), i18n ("Could not open command file"));
+			}
+		}
+	}
+
+	setReadOnly (read_only);
+
+	if (delete_on_close) {
+		if (read_only) {
+			RKCommandEditorWindow::delete_on_close = url;
+		} else {
+			RK_ASSERT (false);
+		}
+	}
+
 	RK_ASSERT (m_doc);
 	// yes, we want to be notified, if the file has changed on disk.
 	// why, oh why is this not the default?
@@ -97,7 +173,10 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	if (em_iface) em_iface->setModifiedOnDiskWarning (true);
 	else RK_ASSERT (false);
 	m_view = m_doc->createView (this);
-	m_doc->editor ()->readConfig ();
+	if (!url.isEmpty ()) {
+		KConfigGroup viewconf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptViewSettings %1").arg (RKWorkplace::mainWorkplace ()->portableUrl (url)));
+		m_view->readSessionConfig (viewconf);
+	}
 
 	setFocusProxy (m_view);
 	setFocusPolicy (Qt::StrongFocus);
@@ -106,7 +185,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	part->insertChildClient (m_view);
 	setPart (part);
 	fixupPartGUI ();
-	setMetaInfo (i18n ("Script Editor"), QString (), RKSettings::PageCommandEditor);
+	setMetaInfo (i18n ("Script Editor"), QUrl (), RKSettings::PageCommandEditor);
 	initializeActions (part->actionCollection ());
 	initializeActivationSignals ();
 	RKXMLGUISyncer::self()->registerChangeListener (m_view, this, SLOT (fixupPartGUI()));
@@ -115,13 +194,14 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	layout->setContentsMargins (0, 0, 0, 0);
 	layout->addWidget(m_view);
 
-	connect (m_doc, SIGNAL (documentUrlChanged(KTextEditor::Document*)), this, SLOT (updateCaption(KTextEditor::Document*)));
-	connect (m_doc, SIGNAL (modifiedChanged(KTextEditor::Document*)), this, SLOT (updateCaption(KTextEditor::Document*)));                // of course most of the time this causes a redundant call to updateCaption. Not if a modification is undone, however.
-	connect (m_doc, SIGNAL (modifiedChanged(KTextEditor::Document*)), this, SLOT (autoSaveHandlerModifiedChanged()));
-	connect (m_doc, SIGNAL (textChanged(KTextEditor::Document*)), this, SLOT (autoSaveHandlerTextChanged()));
-	connect (m_view, SIGNAL (selectionChanged(KTextEditor::View*)), this, SLOT (selectionChanged(KTextEditor::View*)));
+	connect (m_doc, &KTextEditor::Document::documentUrlChanged, this, &RKCommandEditorWindow::updateCaption);
+	connect (m_doc, &KTextEditor::Document::modifiedChanged, this, &RKCommandEditorWindow::updateCaption);                // of course most of the time this causes a redundant call to updateCaption. Not if a modification is undone, however.
+#warning remove this in favor of KTextEditor::Document::restore()
+	connect (m_doc, &KTextEditor::Document::modifiedChanged, this, &RKCommandEditorWindow::autoSaveHandlerModifiedChanged);
+	connect (m_doc, &KTextEditor::Document::textChanged, this, &RKCommandEditorWindow::autoSaveHandlerTextChanged);
+	connect (m_view, &KTextEditor::View::selectionChanged, this, &RKCommandEditorWindow::selectionChanged);
 	// somehow the katepart loses the context menu each time it loses focus
-	connect (m_view, SIGNAL (focusIn(KTextEditor::View*)), this, SLOT (focusIn(KTextEditor::View*)));
+	connect (m_view, &KTextEditor::View::focusIn, this, &RKCommandEditorWindow::focusIn);
 
 	completion_model = 0;
 	cc_iface = 0;
@@ -135,25 +215,23 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 				completion_model = new RKCodeCompletionModel (this);
 				completion_timer = new QTimer (this);
 				completion_timer->setSingleShot (true);
-				connect (completion_timer, SIGNAL (timeout()), this, SLOT (tryCompletion()));
-				connect (m_doc, SIGNAL (textChanged(KTextEditor::Document*)), this, SLOT (tryCompletionProxy(KTextEditor::Document*)));
+				connect (completion_timer, &QTimer::timeout, this, &RKCommandEditorWindow::tryCompletion);
+				connect (m_doc, &KTextEditor::Document::textChanged, this, &RKCommandEditorWindow::tryCompletionProxy);
 			} else {
 				RK_ASSERT (false);
 			}
 			hinter = new RKFunctionArgHinter (this, m_view);
 		}
+	} else {
+		RKCommandHighlighter::setHighlighting (m_doc, RKCommandHighlighter::Automatic);
 	}
 
-#if KDE_IS_VERSION(4,5,0)
 	smart_iface = qobject_cast<KTextEditor::MovingInterface*> (m_doc);
-#else
-	smart_iface = qobject_cast<KTextEditor::SmartInterface*> (m_doc);
-#endif
 	initBlocks ();
 	RK_ASSERT (smart_iface);
 
 	autosave_timer = new QTimer (this);
-	connect (autosave_timer, SIGNAL (timeout()), this, SLOT (doAutoSave()));
+	connect (autosave_timer, &QTimer::timeout, this, &RKCommandEditorWindow::doAutoSave);
 
 	updateCaption ();	// initialize
 	QTimer::singleShot (0, this, SLOT (setPopupMenu()));
@@ -162,26 +240,27 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 RKCommandEditorWindow::~RKCommandEditorWindow () {
 	RK_TRACE (COMMANDEDITOR);
 
-	// NOTE: TODO: Ideally we'd only write out a changed config, but how to detect config changes?
-	// 	Alternatively, only for the last closed script window
-	m_doc->editor ()->writeConfig ();
-	if (!url ().isEmpty ()) {
-		KTextEditor::SessionConfigInterface *iface = qobject_cast<KTextEditor::SessionConfigInterface*> (m_doc);
+	bool have_url = !url().isEmpty(); // cache early, as potentially needed after destruction of m_doc (at which point calling url() may crash
+	if (have_url) {
 		QString p_url = RKWorkplace::mainWorkplace ()->portableUrl (m_doc->url ());
-		if (iface) {
-			KConfigGroup conf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptDocumentSettings %1").arg (p_url));
-			iface->writeSessionConfig (conf);
-		}
-		iface = qobject_cast<KTextEditor::SessionConfigInterface*> (m_view);
-		if (iface) {
-			KConfigGroup conf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptViewSettings %1").arg (p_url));
-			iface->writeSessionConfig (conf);
-		}
+		KConfigGroup conf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptDocumentSettings %1").arg (p_url));
+		m_doc->writeSessionConfig (conf);
+		KConfigGroup viewconf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptViewSettings %1").arg (p_url));
+		m_view->writeSessionConfig (viewconf);
 	}
 
 	delete hinter;
-	delete m_doc;
-	if (!delete_on_close.isEmpty ()) KIO::del (delete_on_close)->start ();
+	delete m_view;
+	QList<KTextEditor::View*> views = m_doc->views ();
+	if (views.isEmpty ()) {
+		delete m_doc;
+		if (!delete_on_close.isEmpty ()) KIO::del (delete_on_close)->start ();
+		unnamed_documents.remove (_id);
+	}
+	// NOTE, under rather unlikely circumstances, the above may leave stale ids->stale pointers in the map: Create unnamed window, split it, save to a url, split again, close the first two windows, close the last. This situation should be caught by the following, however:
+	if (have_url && !_id.isEmpty ()) {
+		unnamed_documents.remove (_id);
+	}
 }
 
 void RKCommandEditorWindow::fixupPartGUI () {
@@ -214,9 +293,10 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	action_run_all = RKStandardActions::runAll (this, this, SLOT (runAll()));
 	action_run_current = RKStandardActions::runCurrent (this, this, SLOT (runCurrent()), true);
 	// NOTE: enter_and_submit is not currently added to the menu
-	KAction *action = ac->addAction ("enter_and_submit", this, SLOT (enterAndSubmit()));
+	QAction *action = ac->addAction ("enter_and_submit", this, SLOT (enterAndSubmit()));
 	action->setText (i18n ("Insert line break and run"));
-	action->setShortcuts (KShortcut (Qt::AltModifier + Qt::Key_Return, Qt::AltModifier + Qt::Key_Enter));
+	ac->setDefaultShortcuts (action, QList<QKeySequence>() << Qt::AltModifier + Qt::Key_Return << Qt::AltModifier + Qt::Key_Enter);
+	ac->setDefaultShortcut (action, Qt::AltModifier + Qt::Key_Return); // KF5 TODO: This line needed only for KF5 < 5.2, according to documentation
 
 	RKStandardActions::functionHelp (this, this);
 	RKStandardActions::onlineHelp (this, this);
@@ -224,19 +304,18 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	actionmenu_run_block = new KActionMenu (i18n ("Run block"), this);
 	actionmenu_run_block->setDelayed (false);	// KDE4: TODO does not work correctly in the tool bar.
 	ac->addAction ("run_block", actionmenu_run_block);
-	connect (actionmenu_run_block->menu(), SIGNAL (aboutToShow()), this, SLOT (clearUnusedBlocks()));
+	connect (actionmenu_run_block->menu(), &QMenu::aboutToShow, this, &RKCommandEditorWindow::clearUnusedBlocks);
 	actionmenu_mark_block = new KActionMenu (i18n ("Mark selection as block"), this);
 	ac->addAction ("mark_block", actionmenu_mark_block);
-	connect (actionmenu_mark_block->menu(), SIGNAL (aboutToShow()), this, SLOT (clearUnusedBlocks()));
+	connect (actionmenu_mark_block->menu(), &QMenu::aboutToShow, this, &RKCommandEditorWindow::clearUnusedBlocks);
 	actionmenu_unmark_block = new KActionMenu (i18n ("Unmark block"), this);
 	ac->addAction ("unmark_block", actionmenu_unmark_block);
-	connect (actionmenu_unmark_block->menu(), SIGNAL (aboutToShow()), this, SLOT (clearUnusedBlocks()));
+	connect (actionmenu_unmark_block->menu(), &QMenu::aboutToShow, this, &RKCommandEditorWindow::clearUnusedBlocks);
 
 	action_setwd_to_script = ac->addAction ("setwd_to_script", this, SLOT (setWDToScript()));
 	action_setwd_to_script->setText (i18n ("CD to script directory"));
-#if KDE_IS_VERSION(4,3,0)
-	action_setwd_to_script->setHelpText (i18n ("Change the working directory to the directory of this script"));
-#endif
+	action_setwd_to_script->setStatusTip (i18n ("Change the working directory to the directory of this script"));
+	action_setwd_to_script->setToolTip (action_setwd_to_script->statusTip ());
 	action_setwd_to_script->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionCDToScript));
 
 	file_save = findAction (m_view, "file_save");
@@ -279,7 +358,7 @@ void RKCommandEditorWindow::initBlocks () {
 		QColor shaded = colors[i];
 		shaded.setAlpha (30);
 		record.attribute = KTextEditor::Attribute::Ptr (new KTextEditor::Attribute ());
-		record.attribute->clearProperty (KTextEditor::Attribute::BackgroundFillWhitespace);
+		record.attribute->setBackgroundFillWhitespace (false);
 		record.attribute->setBackground (shaded);
 
 		QPixmap colorsquare (16, 16);
@@ -295,7 +374,7 @@ void RKCommandEditorWindow::initBlocks () {
 		record.unmark->setData (i);
 		actionmenu_unmark_block->addAction (record.unmark);
 		record.run = ac->addAction ("runblock" + QString::number (i), this, SLOT (runBlock()));
-		record.run->setShortcut (shortcuts[i]);
+		ac->setDefaultShortcut (record.run, shortcuts[i]);
 		record.run->setIcon (icon);
 		record.run->setData (i);
 		actionmenu_run_block->addAction (record.run);
@@ -332,7 +411,7 @@ QString RKCommandEditorWindow::fullCaption () {
 	if (m_doc->url ().isEmpty ()) {
 		return (shortCaption ());
 	} else {
-		QString cap = m_doc->url ().pathOrUrl ();
+		QString cap = m_doc->url ().toDisplayString (QUrl::PreferLocalFile | QUrl::PrettyDecoded);
 		if (isModified ()) cap.append (i18n (" [modified]"));
 		return (cap);
 	}
@@ -351,6 +430,13 @@ void RKCommandEditorWindow::closeEvent (QCloseEvent *e) {
 	QWidget::closeEvent (e);
 }
 
+void RKCommandEditorWindow::setWindowStyleHint (const QString& hint) {
+	RK_TRACE (COMMANDEDITOR);
+
+	m_view->setStatusBarEnabled (hint != "preview");
+	RKMDIWindow::setWindowStyleHint (hint);
+}
+
 void RKCommandEditorWindow::copy () {
 	RK_TRACE (COMMANDEDITOR);
 
@@ -361,53 +447,6 @@ void RKCommandEditorWindow::setReadOnly (bool ro) {
 	RK_TRACE (COMMANDEDITOR);
 
 	m_doc->setReadWrite (!ro);
-}
-
-bool RKCommandEditorWindow::openURL (const KUrl url, const QString& encoding, bool use_r_highlighting, bool read_only, bool delete_on_close){
-	RK_TRACE (COMMANDEDITOR);
-
-	// encoding must be set *before* loading the file
-	if (!encoding.isEmpty ()) m_doc->setEncoding (encoding);
-	if (m_doc->openUrl (url)) {
-		if (!delete_on_close) {	// don't litter config with temporary files
-			KTextEditor::SessionConfigInterface *iface = qobject_cast<KTextEditor::SessionConfigInterface*> (m_doc);
-			QString p_url = RKWorkplace::mainWorkplace ()->portableUrl (m_doc->url ());
-			if (iface) {
-				KConfigGroup conf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptDocumentSettings %1").arg (p_url));
-				// HACK: Hmm. KTextEditor::Document's readSessionConfig() simply restores too much. Yes, I want to load bookmarks and stuff.
-				// I do not want to mess with encoding, or risk loading a different url, after the doc is already loaded!
-				if (!encoding.isEmpty () && (conf.readEntry ("Encoding", encoding) != encoding)) conf.writeEntry ("Encoding", encoding);
-				if (conf.readEntry ("URL", url) != url) conf.writeEntry ("URL", url);
-				/* HACK: What the...?! Somehow, at least on longer R scripts, stored Mode="Normal" in combination with R Highlighting
-				 * causes code folding to fail (KDE 4.8.4, http://sourceforge.net/p/rkward/bugs/122/).
-				 * Forcing Mode == Highlighting appears to help. */
-				if (use_r_highlighting) conf.writeEntry ("Mode", conf.readEntry ("Highlighting", "Normal"));
-				iface->readSessionConfig (conf);
-			}
-			iface = qobject_cast<KTextEditor::SessionConfigInterface*> (m_view);
-			if (iface) {
-				KConfigGroup conf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptViewSettings %1").arg (p_url));
-				iface->readSessionConfig (conf);
-			}
-		}
-		if (use_r_highlighting) RKCommandHighlighter::setHighlighting (m_doc, RKCommandHighlighter::RScript);
-		else RKCommandHighlighter::setHighlighting (m_doc, RKCommandHighlighter::Automatic);
-
-		setReadOnly (read_only);
-
-		updateCaption ();
-
-		if (delete_on_close) {
-			if (!read_only) {
-				RK_ASSERT (false);
-				return true;
-			}
-			RKCommandEditorWindow::delete_on_close = url;
-		}
-
-		return true;
-	}
-	return false;
 }
 
 void RKCommandEditorWindow::autoSaveHandlerModifiedChanged () {
@@ -423,7 +462,7 @@ void RKCommandEditorWindow::autoSaveHandlerModifiedChanged () {
 		} else {
 			RKJobSequence* dummy = new RKJobSequence ();
 			dummy->addJob (KIO::del (previous_autosave_url));
-			connect (dummy, SIGNAL (finished(RKJobSequence*)), this, SLOT (autoSaveHandlerJobFinished(RKJobSequence*)));
+			connect (dummy, &RKJobSequence::finished, this, &RKCommandEditorWindow::autoSaveHandlerJobFinished);
 			dummy->start ();
 		}
 		previous_autosave_url.clear ();
@@ -444,8 +483,7 @@ void RKCommandEditorWindow::doAutoSave () {
 	RK_TRACE (COMMANDEDITOR);
 	RK_ASSERT (isModified ());
 
-	KTemporaryFile save;
-	save.setSuffix (RKSettingsModuleCommandEditor::autosaveSuffix ());
+	QTemporaryFile save (QDir::tempPath () + QLatin1String ("/rkward_XXXXXX") + RKSettingsModuleCommandEditor::autosaveSuffix ());
 	RK_ASSERT (save.open ());
 	QTextStream out (&save);
 	out.setCodec ("UTF-8");		// make sure that all characters can be saved, without nagging the user
@@ -456,12 +494,13 @@ void RKCommandEditorWindow::doAutoSave () {
 	RKJobSequence* alljobs = new RKJobSequence ();
 	// The KJob-Handling below seems to be a bit error-prone, at least for the file-protocol on Windows.
 	// Thus, for the simple case of local files, we use QFile, instead.
-	connect (alljobs, SIGNAL (finished(RKJobSequence*)), this, SLOT (autoSaveHandlerJobFinished(RKJobSequence*)));
+	connect (alljobs, &RKJobSequence::finished, this, &RKCommandEditorWindow::autoSaveHandlerJobFinished);
 	// backup the old autosave file in case something goes wrong during pushing the new one
-	KUrl backup_autosave_url;
+	QUrl backup_autosave_url;
 	if (previous_autosave_url.isValid ()) {
 		backup_autosave_url = previous_autosave_url;
-		backup_autosave_url.setFileName (backup_autosave_url.fileName () + '~');
+		backup_autosave_url = backup_autosave_url.adjusted(QUrl::RemoveFilename);
+		backup_autosave_url.setPath(backup_autosave_url.path() + backup_autosave_url.fileName () + '~');
 		if (previous_autosave_url.isLocalFile ()) {
 			QFile::remove (backup_autosave_url.toLocalFile ());
 			QFile::copy (previous_autosave_url.toLocalFile (), backup_autosave_url.toLocalFile ());
@@ -472,18 +511,19 @@ void RKCommandEditorWindow::doAutoSave () {
 	
 	// push the newly written file
 	if (url ().isValid ()) {
-		KUrl autosave_url = url ();
-		autosave_url.setFileName (autosave_url.fileName () + RKSettingsModuleCommandEditor::autosaveSuffix ());
+		QUrl autosave_url = url ();
+		autosave_url = autosave_url.adjusted(QUrl::RemoveFilename);
+		autosave_url.setPath(autosave_url.path() + autosave_url.fileName () + RKSettingsModuleCommandEditor::autosaveSuffix ());
 		if (autosave_url.isLocalFile ()) {
 			QFile::remove (autosave_url.toLocalFile ());
 			save.copy (autosave_url.toLocalFile ());
 			save.remove ();
 		} else {
-			alljobs->addJob (KIO::file_move (KUrl::fromLocalFile (save.fileName ()), autosave_url, -1, KIO::HideProgressInfo | KIO::Overwrite));
+			alljobs->addJob (KIO::file_move (QUrl::fromLocalFile (save.fileName ()), autosave_url, -1, KIO::HideProgressInfo | KIO::Overwrite));
 		}
 		previous_autosave_url = autosave_url;
 	} else {		// i.e., the document is still "Untitled"
-		previous_autosave_url = KUrl::fromLocalFile (save.fileName ());
+		previous_autosave_url = QUrl::fromLocalFile (save.fileName ());
 	}
 
 	// remove the backup
@@ -508,12 +548,12 @@ void RKCommandEditorWindow::autoSaveHandlerJobFinished (RKJobSequence* seq) {
 	}
 }
 
-KUrl RKCommandEditorWindow::url () {
+QUrl RKCommandEditorWindow::url () const {
 //	RK_TRACE (COMMANDEDITOR);
 	return (m_doc->url ());
 }
 
-bool RKCommandEditorWindow::isModified() {
+bool RKCommandEditorWindow::isModified () {
 	RK_TRACE (COMMANDEDITOR);
 	return m_doc->isModified();
 }
@@ -567,10 +607,10 @@ void RKCommandEditorWindow::highlightLine (int linenum) {
 	if (!old_rw) m_doc->setReadWrite (false);
 }
 
-void RKCommandEditorWindow::updateCaption (KTextEditor::Document*) {
+void RKCommandEditorWindow::updateCaption () {
 	RK_TRACE (COMMANDEDITOR);
 	QString name = url ().fileName ();
-	if (name.isEmpty ()) name = url ().prettyUrl ();
+	if (name.isEmpty ()) name = url ().toDisplayString ();
 	if (name.isEmpty ()) name = i18n ("Unnamed");
 	if (isModified ()) name.append (i18n (" [modified]"));
 
@@ -615,7 +655,6 @@ QString RKCommandEditorWindow::currentCompletionWord () const {
 	return RKCommonFunctions::getCurrentSymbol (current_line, cursor_pos, false);
 }
 
-#if KDE_IS_VERSION(4,2,0)
 KTextEditor::Range RKCodeCompletionModel::completionRange (KTextEditor::View *view, const KTextEditor::Cursor &position) {
 	if (!position.isValid ()) return KTextEditor::Range ();
 	QString current_line = view->document ()->line (position.line ());
@@ -624,7 +663,6 @@ KTextEditor::Range RKCodeCompletionModel::completionRange (KTextEditor::View *vi
 	RKCommonFunctions::getCurrentSymbolOffset (current_line, position.column (), false, &start, &end);
 	return KTextEditor::Range (position.line (), start, position.line (), end);
 }
-#endif
 
 void RKCommandEditorWindow::tryCompletion () {
 	// TODO: merge this with RKConsole::doTabCompletion () somehow
@@ -684,7 +722,7 @@ void RKCommandEditorWindow::setWDToScript () {
 	RK_TRACE (COMMANDEDITOR);
 
 	RK_ASSERT (!url ().isEmpty ());
-	QString dir = url ().directory ();
+	QString dir = url ().adjusted (QUrl::RemoveFilename).path ();
 #ifdef Q_OS_WIN
 	// KURL::directory () returns a leading slash on windows as of KDElibs 4.3
 	while (dir.startsWith ('/')) dir.remove (0, 1);
@@ -791,11 +829,7 @@ void RKCommandEditorWindow::clearUnusedBlocks () {
 	for (int i = 0; i < block_records.size (); ++i) {
 		if (block_records[i].active) {
 // TODO: do we need to check whether the range was deleted? Does the katepart do such evil things?
-#if KDE_IS_VERSION(4,5,0)
 			if (block_records[i].range->isEmpty ()) {
-#else
-			if (!block_records[i].range->isValid () || block_records[i].range->isEmpty ()) {
-#endif
 				removeBlock (i, true);
 			}
 		}
@@ -810,13 +844,8 @@ void RKCommandEditorWindow::addBlock (int index, const KTextEditor::Range& range
 	clearUnusedBlocks ();
 	removeBlock (index);
 
-#if KDE_IS_VERSION(4,5,0)
 	KTextEditor::MovingRange* srange = smart_iface->newMovingRange (range);
 	srange->setInsertBehaviors (KTextEditor::MovingRange::ExpandRight);
-#else
-	KTextEditor::SmartRange* srange = smart_iface->newSmartRange (range);
-	srange->setInsertBehavior (KTextEditor::SmartRange::ExpandRight);
-#endif
 
 	QString actiontext = i18n ("%1 (Active)", index + 1);
 	block_records[index].range = srange;
@@ -827,10 +856,6 @@ void RKCommandEditorWindow::addBlock (int index, const KTextEditor::Range& range
 	block_records[index].unmark->setEnabled (true);
 	block_records[index].run->setText (actiontext);
 	block_records[index].run->setEnabled (true);
-
-#if !KDE_IS_VERSION(4,5,0)
-	smart_iface->addHighlightToView (m_view, srange);
-#endif
 }
 
 void RKCommandEditorWindow::removeBlock (int index, bool was_deleted) {
@@ -839,9 +864,6 @@ void RKCommandEditorWindow::removeBlock (int index, bool was_deleted) {
 	RK_ASSERT ((index >= 0) && (index < block_records.size ()));
 
 	if (!was_deleted) {
-#if !KDE_IS_VERSION(4,5,0)
-		smart_iface->removeHighlightFromView (m_view, block_records[index].range);
-#endif
 		delete (block_records[index].range);
 	}
 
@@ -911,7 +933,7 @@ RKFunctionArgHinter::RKFunctionArgHinter (RKScriptContextProvider *provider, KTe
 	arghints_popup->hide ();
 	active = false;
 
-	connect (&updater, SIGNAL (timeout()), this, SLOT (updateArgHintWindow()));
+	connect (&updater, &QTimer::timeout, this, &RKFunctionArgHinter::updateArgHintWindow);
 }
 
 RKFunctionArgHinter::~RKFunctionArgHinter () {
@@ -933,27 +955,30 @@ void RKFunctionArgHinter::tryArgHintNow () {
 
 	// find the active opening brace
 	int line_rev = -1;
-	int brace_level = 1;
-	int potential_symbol_end = -1;
+	QList<int> unclosed_braces;
 	QString full_context;
-	while (potential_symbol_end < 0) {
+	while (unclosed_braces.isEmpty ()) {
 		QString context_line = provider->provideContext (++line_rev);
 		if (context_line.isNull ()) break;
-
 		full_context.prepend (context_line);
-		int pos = context_line.length ();
-		while (--pos >= 0) {
-			QChar c = full_context.at (pos);
-			if (c == ')') ++brace_level;
-			else if (c == '(') {
-				--brace_level;
-				if (brace_level == 0) {
-					potential_symbol_end = pos - 1;
-					break;
-				}
+		for (int i = 0; i < context_line.length (); ++i) {
+			QChar c = context_line.at (i);
+			if (c == '"' || c == '\'' || c == '`') {  // NOTE: this algo does not produce good results on string constants spanning newlines.
+				i = RKCommonFunctions::quoteEndPosition (c, context_line, i + 1);
+				if (i < 0) break;
+				continue;
+			} else if (c == '\\') {
+				++i;
+				continue;
+			} else if (c == '(') {
+				unclosed_braces.append (i);
+			} else if (c == ')') {
+				if (!unclosed_braces.isEmpty()) unclosed_braces.pop_back ();
 			}
 		}
 	}
+
+	int potential_symbol_end = unclosed_braces.isEmpty () ? -1 : unclosed_braces.last () - 1;
 
 	// now find out where the symbol to the left of the opening brace ends
 	// there cannot be a line-break between the opening brace, and the symbol name (or can there?), so no need to fetch further context
@@ -1040,6 +1065,7 @@ void RKCodeCompletionModel::updateCompletionList (const QString& symbol) {
 	RK_TRACE (COMMANDEDITOR);
 
 	if (current_symbol == symbol) return;	// already up to date
+	beginResetModel ();
 
 	RObject::RObjectSearchMap map;
 	RObjectList::getObjectList ()->findObjectsMatching (symbol, &map);
@@ -1047,10 +1073,9 @@ void RKCodeCompletionModel::updateCompletionList (const QString& symbol) {
 	int count = map.size ();
 	icons.clear ();
 	names.clear ();
-#if QT_VERSION >= 0x040700
 	icons.reserve (count);
 	names.reserve (count);
-#endif
+
 	// copy the map to two lists. For one thing, we need an int indexable storage, for another, caching this information is safer
 	// in case objects are removed while the completion mode is active.
 	for (RObject::RObjectSearchMap::const_iterator it = map.constBegin (); it != map.constEnd (); ++it) {
@@ -1061,7 +1086,7 @@ void RKCodeCompletionModel::updateCompletionList (const QString& symbol) {
 	setRowCount (count);
 	current_symbol = symbol;
 
-	reset ();
+	endResetModel ();
 }
 
 void RKCodeCompletionModel::completionInvoked (KTextEditor::View*, const KTextEditor::Range&, InvocationType) {
@@ -1074,12 +1099,12 @@ void RKCodeCompletionModel::completionInvoked (KTextEditor::View*, const KTextEd
 	updateCompletionList (command_editor->currentCompletionWord ());
 }
 
-void RKCodeCompletionModel::executeCompletionItem (KTextEditor::Document *document, const KTextEditor::Range &word, int row) const {
+void RKCodeCompletionModel::executeCompletionItem (KTextEditor::View *view, const KTextEditor::Range &word, const QModelIndex &index) const {
 	RK_TRACE (COMMANDEDITOR);
 
-	RK_ASSERT (names.size () > row);
+	RK_ASSERT (names.size () > index.row ());
 
-	document->replaceText (word, names[row]);
+	view->document ()->replaceText (word, names[index.row ()]);
 }
 
 QVariant RKCodeCompletionModel::data (const QModelIndex& index, int role) const {
@@ -1106,24 +1131,27 @@ QVariant RKCodeCompletionModel::data (const QModelIndex& index, int role) const 
 
 // static
 KTextEditor::Document* RKCommandHighlighter::_doc = 0;
+KTextEditor::View* RKCommandHighlighter::_view = 0;
 KTextEditor::Document* RKCommandHighlighter::getDoc () {
 	if (_doc) return _doc;
 
 	RK_TRACE (COMMANDEDITOR);
-	KTextEditor::Editor* editor = KTextEditor::editor("katepart");
+	KTextEditor::Editor* editor = KTextEditor::Editor::instance ();
 	RK_ASSERT (editor);
 
 	_doc = editor->createDocument (RKWardMainWindow::getMain ());
-// NOTE: In KDE 4.4.5, a (dummy) view is needed to access highlighting attributes. According to a katepart error message, this will be fixed, eventually.
-// TODO: check whether this is fixed in some later version of KDE
-	QWidget* view = _doc->createView (0);
-	view->hide ();
+// NOTE: A (dummy) view is needed to access highlighting attributes.
+	_view = _doc->createView (0);
+	_view->hide ();
 	RK_ASSERT (_doc);
 	return _doc;
 }
 
-#if KDE_IS_VERSION(4,4,0)
-#	include <ktexteditor/highlightinterface.h>
+KTextEditor::View* RKCommandHighlighter::getView () {
+	if (!_view) getDoc ();
+	return _view;
+}
+
 #include <QTextDocument>
 
 //////////
@@ -1131,7 +1159,7 @@ KTextEditor::Document* RKCommandHighlighter::getDoc () {
 //////////
 QString exportText(const QString& text, const KTextEditor::Attribute::Ptr& attrib, const KTextEditor::Attribute::Ptr& m_defaultAttribute) {
 	if ( !attrib || !attrib->hasAnyProperty() || attrib == m_defaultAttribute ) {
-		return (Qt::escape(text));
+		return (text.toHtmlEscaped());
 	}
 
 	QString ret;
@@ -1153,7 +1181,7 @@ QString exportText(const QString& text, const KTextEditor::Attribute::Ptr& attri
 					.arg(writeBackground ? QString(QLatin1String("background:") + attrib->background().color().name() + QLatin1Char(';')) : QString()));
 	}
 
-	ret.append (Qt::escape(text));
+	ret.append (text.toHtmlEscaped());
 
 	if ( writeBackground || writeForeground ) {
 		ret.append ("</span>");
@@ -1170,17 +1198,14 @@ QString exportText(const QString& text, const KTextEditor::Attribute::Ptr& attri
 
 QString RKCommandHighlighter::commandToHTML (const QString r_command, HighlightingMode mode) {
 	KTextEditor::Document* doc = getDoc ();
-	KTextEditor::HighlightInterface *iface = qobject_cast<KTextEditor::HighlightInterface*> (_doc);
-	RK_ASSERT (iface);
-	if (!iface) return (QString ("<pre>") + r_command + "</pre>");
-
+	KTextEditor::View* view = getView ();
 	doc->setText (r_command);
 	if (r_command.endsWith ('\n')) doc->removeLine (doc->lines () - 1);
 	setHighlighting (doc, mode);
 	QString ret;
 
 	QString opening;
-	KTextEditor::Attribute::Ptr m_defaultAttribute = iface->defaultStyle(KTextEditor::HighlightInterface::dsNormal);
+	KTextEditor::Attribute::Ptr m_defaultAttribute = view->defaultStyleAttribute (KTextEditor::dsNormal);
 	if ( !m_defaultAttribute ) {
 		opening = "<pre class=\"%3\">";
 	} else {
@@ -1202,7 +1227,7 @@ QString RKCommandHighlighter::commandToHTML (const QString r_command, Highlighti
 	for (int i = 0; i < doc->lines (); ++i)
 	{
 		const QString &line = doc->line(i);
-		QList<KTextEditor::HighlightInterface::AttributeBlock> attribs = iface->lineAttributes(i);
+		QList<KTextEditor::AttributeBlock> attribs = view->lineAttributes(i);
 		int lineStart = 0;
 
 		if (mode == RInteractiveSession) {
@@ -1219,14 +1244,14 @@ QString RKCommandHighlighter::commandToHTML (const QString r_command, Highlighti
 					ret.append (opening.arg ("output_normal"));
 					previous_chunk = Output;
 				}
-				ret.append (Qt::escape (line) + '\n');	// don't copy output "highlighting". It is set using CSS, instead
+				ret.append (line.toHtmlEscaped () + '\n');	// don't copy output "highlighting". It is set using CSS, instead
 				continue;
 			}
 		}
 
 		int handledUntil = lineStart;
 		int remainingChars = line.length();
-		foreach ( const KTextEditor::HighlightInterface::AttributeBlock& block, attribs ) {
+		foreach ( const KTextEditor::AttributeBlock& block, attribs ) {
 			if ((block.start + block.length) <= handledUntil) continue;
 			int start = qMax(block.start, lineStart);
 			if ( start > handledUntil ) {
@@ -1248,12 +1273,6 @@ QString RKCommandHighlighter::commandToHTML (const QString r_command, Highlighti
 
 	return ret;
 }
-
-#else	// KDE < 4.4: No Highlighting Interface
-QString RKCommandHighlighter::commandToHTML (const QString r_command, HighlightingMode) {
-	return (QString ("<pre class=\"code\">") + r_command + "</pre>");
-}
-#endif
 
 /** set syntax highlighting-mode to R syntax. Outside of class, in order to allow use from the on demand code highlighter */
 void RKCommandHighlighter::setHighlighting (KTextEditor::Document *doc, HighlightingMode mode) {
@@ -1297,4 +1316,3 @@ void RKCommandHighlighter::copyLinesToOutput (KTextEditor::View *view, Highlight
 	}
 }
 
-#include "rkcommandeditorwindow.moc"

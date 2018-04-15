@@ -24,10 +24,10 @@
 #include <qtimer.h>
 #include <qstringlist.h>
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "renvironmentobject.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "rkmodificationtracker.h"
 #include "../misc/rkprogresscontrol.h"
 #include "../settings/rksettingsmoduler.h"
@@ -46,7 +46,7 @@ RObjectList::RObjectList () : RContainerObject (0, QString ()) {
 
 	update_timer = new QTimer (this);
 	update_timer->setSingleShot (true);
-	connect (update_timer, SIGNAL (timeout()), this, SLOT (timeout()));
+	connect (update_timer, &QTimer::timeout, this, &RObjectList::timeout);
 	
 	//update_timer->start (AUTO_UPDATE_INTERVAL, true);
 	
@@ -307,5 +307,4 @@ QString RObjectList::removeChildCommand (RObject *object) const {
 	return ("remove (" + object->getFullName () + ')');
 }
 
-#include "robjectlist.moc"
 

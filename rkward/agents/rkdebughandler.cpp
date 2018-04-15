@@ -90,4 +90,3 @@ void RKDebugHandler::endDebug () {
 	newDebugState ();
 }
 
-#include "rkdebughandler.moc"

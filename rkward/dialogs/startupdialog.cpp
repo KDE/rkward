@@ -28,39 +28,42 @@
 #include <QVBoxLayout>
 #include <QFileInfo>
 
-#include <klocale.h>
-#include <kvbox.h>
+#include <KLocalizedString>
 #include <krecentfilesaction.h>
+#include <KConfigGroup>
+#include <QPushButton>
 
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkdialogbuttonbox.h"
+
 #include "../debug.h"
 
-StartupDialog::StartupDialog (QWidget *parent, StartupDialogResult *result, KRecentFilesAction *recent_files) : KDialog (parent) {
+StartupDialog::StartupDialog (QWidget *parent, StartupDialogResult *result, KRecentFilesAction *recent_files) : QDialog (parent) {
 	RK_TRACE (DIALOGS);
 
 	setModal (true);
-	setButtons (KDialog::Ok | KDialog::Cancel);
-
 	StartupDialog::result = result;
 
-	setCaption (i18n ("What would you like to do?"));
+	setWindowTitle (i18n ("What would you like to do?"));
 
-	KVBox *vbox = new KVBox (this);
-	setMainWidget (vbox);
+	QVBoxLayout *vbox = new QVBoxLayout ();
+	setLayout (vbox);
 	
-	QLabel *pic = new QLabel (vbox);
+	QLabel *pic = new QLabel (this);
+	vbox->addWidget (pic);
 	pic->setPixmap (QPixmap (RKCommonFunctions::getRKWardDataDir () + "icons/rkward_logo.png"));
 
 	choser = new QButtonGroup (this);
-	QGroupBox* choser_box = new QGroupBox (vbox);
+	QGroupBox* choser_box = new QGroupBox (this);
+	vbox->addWidget (choser_box);
 	QVBoxLayout* choser_layout = new QVBoxLayout(choser_box);
 
 	choser_layout->addWidget (empty_workspace_button = new QRadioButton (i18n ("Start with an empty workspace"), choser_box));
 	choser->addButton (empty_workspace_button);
 	choser_layout->addWidget (empty_table_button = new QRadioButton (i18n ("Start with an empty table"), choser_box));
 	choser->addButton (empty_table_button);
-	KUrl rdata_file = getRestoreFile ();
+	QUrl rdata_file = getRestoreFile ();
 	choser_layout->addWidget (restore_workspace_button = new QRadioButton (choser_box));
 	choser->addButton (restore_workspace_button);
 	if (rdata_file.isEmpty ()) {
@@ -69,7 +72,7 @@ StartupDialog::StartupDialog (QWidget *parent, StartupDialogResult *result, KRec
 	} else restore_workspace_button->setText (i18n ("Load workspace from current directory:\n%1", rdata_file.toLocalFile ()));
 	choser_layout->addWidget (open_button = new QRadioButton (i18n ("Load an existing workspace:"), choser_box));
 	choser->addButton (open_button);
-	connect (open_button, SIGNAL (toggled(bool)), this, SLOT (openButtonSelected(bool)));
+	connect (open_button, &QRadioButton::toggled, this, &StartupDialog::openButtonSelected);
 	empty_table_button->setChecked (true);
 
 	file_list = new QListWidget (choser_box);
@@ -77,15 +80,19 @@ StartupDialog::StartupDialog (QWidget *parent, StartupDialogResult *result, KRec
 	file_list->setSortingEnabled (false);
 	chose_file_item = new QListWidgetItem (i18n ("<<Open another file>>"), file_list);
 	if (recent_files) {
-		KUrl::List urls = recent_files->urls ();
+		QList<QUrl> urls = recent_files->urls ();
 		for (int i = 0; i < urls.length (); ++i) {
-			file_list->addItem (urls[i].pathOrUrl ());
+			file_list->addItem (urls[i].url (QUrl::PreferLocalFile));
 		}
 	}
-	connect (file_list, SIGNAL (itemClicked(QListWidgetItem*)), this, SLOT (listClicked(QListWidgetItem*)));
-	connect (file_list, SIGNAL (itemDoubleClicked(QListWidgetItem*)), this, SLOT (listDoubleClicked(QListWidgetItem*)));
+	connect (file_list, &QListWidget::itemClicked, this, &StartupDialog::listClicked);
+	connect (file_list, &QListWidget::itemDoubleClicked, this, &StartupDialog::listDoubleClicked);
 	choser_layout->addWidget (file_list);
 	choser_layout->addWidget (remember_box = new QCheckBox (i18n ("Always do this on startup"), choser_box));
+
+	RKDialogButtonBox *buttonBox = new RKDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+	buttonBox->button (QDialogButtonBox::Ok)->setDefault (true);
+	vbox->addWidget (buttonBox);
 }
 
 StartupDialog::~StartupDialog() {
@@ -108,7 +115,7 @@ void StartupDialog::accept () {
 			result->result = ChoseFile;
 		} else {
 			result->result = OpenFile;
-			result->open_url = KUrl (item->text ());
+			result->open_url = QUrl (item->text ());
 		}
 	} else {
 		RK_ASSERT (false);
@@ -168,17 +175,17 @@ void StartupDialog::showEvent (QShowEvent *event) {
 
 	// somehow, trying to achieve this in the ctor leads to the dialog never actually being shown (KDE4.0 beta)
 	setFixedWidth (width ());
-	KDialog::showEvent (event);
+	QDialog::showEvent (event);
 }
 
 // static
-KUrl StartupDialog::getRestoreFile () {
+QUrl StartupDialog::getRestoreFile () {
 	RK_TRACE (DIALOGS);
 
 	QFileInfo rdata_file (".RData");
-	if (rdata_file.exists ()) return KUrl::fromLocalFile (rdata_file.absoluteFilePath ());
+	if (rdata_file.exists ()) return QUrl::fromLocalFile (rdata_file.absoluteFilePath ());
 
-	return KUrl ();
+	return QUrl ();
 }
 
 //static
@@ -205,4 +212,3 @@ StartupDialog::StartupDialogResult StartupDialog::getStartupAction (QWidget *par
 	return result;
 }
 
-#include "startupdialog.moc"

@@ -24,7 +24,7 @@
 class QCheckBox;
 class QGroupBox;
 class QComboBox;
-class KIntSpinBox;
+class QSpinBox;
 class RCommand;
 class GetFileNameWidget;
 
@@ -77,8 +77,8 @@ public:
 	RKSettingsModuleOutput (RKSettings *gui, QWidget *parent);
 	~RKSettingsModuleOutput ();
 	
-	void applyChanges ();
-	void save (KConfig *config);
+	void applyChanges () override;
+	void save (KConfig *config) override;
 
 /** generate the commands needed to set the R run time options */
 	static QStringList makeRRunTimeOptionCommands ();
@@ -86,7 +86,7 @@ public:
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
 	
-	QString caption ();
+	QString caption () override;
 	
 	static bool autoShow () { return auto_show; };
 	static bool autoRaise () { return auto_raise; };
@@ -96,9 +96,9 @@ private:
 	QCheckBox *auto_show_box;
 	QCheckBox *auto_raise_box;
 	QComboBox *graphics_type_box;
-	KIntSpinBox *graphics_width_box;
-	KIntSpinBox *graphics_height_box;
-	KIntSpinBox *graphics_jpg_quality_box;
+	QSpinBox *graphics_width_box;
+	QSpinBox *graphics_height_box;
+	QSpinBox *graphics_jpg_quality_box;
 	RKCarbonCopySettings *cc_settings;
 	GetFileNameWidget *custom_css_file_box;
 

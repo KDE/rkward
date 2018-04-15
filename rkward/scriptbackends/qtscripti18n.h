@@ -18,6 +18,8 @@
 #ifndef QTSCRIPTI18N_H
 #define QTSCRIPTI18N_H
 
+#include <QObject>
+
 #include "../misc/rkmessagecatalog.h"
 
 class QScriptEngine;

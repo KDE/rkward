@@ -70,11 +70,11 @@ If you set *suppress to true, showing the context menu will be suppressed. */
 public slots:
 	void updateComplete ();
 	void updateStarted ();
-	void selectionChanged (const QItemSelection & selected, const QItemSelection & deselected);
+	void selectionChanged (const QItemSelection & selected, const QItemSelection & deselected) override;
 	void settingsChanged ();
 	void itemClicked (const QModelIndex& index);
 protected:
-	void contextMenuEvent (QContextMenuEvent* event);
+	void contextMenuEvent (QContextMenuEvent* event) override;
 private:
 	QMenu *menu;
 	RObject *menu_object;
@@ -111,10 +111,10 @@ public slots:
 	void updateSelfNow ();
 	void resetFilters ();
 protected:
-	bool filterAcceptsRow (int source_row, const QModelIndex& source_parent) const;
+	bool filterAcceptsRow (int source_row, const QModelIndex& source_parent) const override;
 	bool acceptRow (int source_row, const QModelIndex& source_parent) const;
-	bool filterAcceptsColumn (int source_column, const QModelIndex& source_parent) const;
-	bool lessThan (const QModelIndex& left, const QModelIndex& right) const;
+	bool filterAcceptsColumn (int source_column, const QModelIndex& source_parent) const override;
+	bool lessThan (const QModelIndex& left, const QModelIndex& right) const override;
 private:
 	QAction* persistent_settings_actions[SettingsCount];
 	bool persistent_settings[SettingsCount];

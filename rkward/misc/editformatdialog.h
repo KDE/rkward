@@ -17,7 +17,7 @@
 #ifndef EDITFORMATDIALOG_H
 #define EDITFORMATDIALOG_H
 
-#include <kdialog.h>
+#include <QDialog>
 
 #include "../core/rkvariable.h"
 #include "rktableview.h"
@@ -30,13 +30,13 @@ Allows editing of format-attributes for an RKVariable
 
 @author Thomas Friedrichsmeier
 */
-class EditFormatDialog : public KDialog {
+class EditFormatDialog : public QDialog {
 	Q_OBJECT
 public slots:
 	void precisionFieldChanged (int);
 protected:
 /** reimplemented to make the newly selected options available */
-	void accept ();
+	void accept () override;
 
 friend class EditFormatDialogProxy;
 /** ctor */

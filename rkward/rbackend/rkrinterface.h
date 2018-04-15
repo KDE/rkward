@@ -1,8 +1,8 @@
 /***************************************************************************
-                          rinterface.h  -  description
+                          rkrinterface.h  -  description
                              -------------------
     begin                : Fri Nov 1 2002
-    copyright            : (C) 2002 - 2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2002 - 2017 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -15,8 +15,8 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef RINTERFACE_H
-#define RINTERFACE_H
+#ifndef RKRINTERFACE_H
+#define RKRINTERFACE_H
 
 #include <qobject.h>
 #include <QFile>
@@ -78,7 +78,7 @@ not be interrupted. */
 	static bool isNaReal (double value) { return na_real == value; };
 	static bool isNaInt (int value) { return na_int == value; };
 private:
-	void timerEvent (QTimerEvent *);
+	void timerEvent (QTimerEvent *) override;
 	int flush_timer_id;
 /** Calls RThread::flushOutput(), and takes care of adding the output to all applicable commands */
 	void flushOutput (bool forced);
@@ -92,7 +92,7 @@ private:
 		RecordingCommandsUnfiltered
 	} command_logfile_mode;
 
-	void processHistoricalSubstackRequest (const QStringList &calllist);
+	void processHistoricalSubstackRequest (const QStringList &calllist, RCommand *parent_command);
 	QStringList processPlainGenericRequest (const QStringList &calllist);
 	void processRBackendRequest (RBackendRequest *request);
 
@@ -135,7 +135,7 @@ friend class RKWardMainWindow;
 friend class RCommand;
 protected:
 	void handleRequest (RBackendRequest *request);
-	void rCommandDone (RCommand *command);
+	void rCommandDone (RCommand *command) override;
 };
 
 /**

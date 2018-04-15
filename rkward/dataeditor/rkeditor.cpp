@@ -27,4 +27,3 @@ RKEditor::~RKEditor () {
 //	getObject ()->setObjectOpened (this, false);
 }
 
-#include "rkeditor.moc"

@@ -24,10 +24,10 @@
 #include <QHBoxLayout>
 #include <QTabWidget>
 
-#include <klocale.h>
-#include <kglobalsettings.h>
+#include <KLocalizedString>
+#include <QFontDatabase>
 
-#include "rbackend/rinterface.h"
+#include "rbackend/rkrinterface.h"
 #include "rkglobals.h"
 #include "core/robject.h"
 #include "misc/rkdummypart.h"
@@ -66,7 +66,7 @@ RObjectViewer::RObjectViewer (QWidget *parent, RObject *object, ViewerPage initi
 
 	tabs->setCurrentIndex (initial_page);
 	currentTabChanged (initial_page);
-	connect (tabs, SIGNAL (currentChanged(int)), this, SLOT (currentTabChanged(int)));
+	connect (tabs, &QTabWidget::currentChanged, this, &RObjectViewer::currentTabChanged);
 
 	initDescription (false);
 }
@@ -170,11 +170,11 @@ RObjectViewerWidget::RObjectViewerWidget (QWidget* parent, RObject* object) : QW
 	status_layout->addStretch ();
 
 	update_button = new QPushButton (i18n ("Update"), this);
-	connect (update_button, SIGNAL (clicked()), this, SLOT (update()));
+	connect (update_button, &QPushButton::clicked, this, &RObjectViewerWidget::update);
 	status_layout->addWidget (update_button);
 
 	cancel_button = new QPushButton (i18n ("Cancel"), this);
-	connect (cancel_button, SIGNAL (clicked()), this, SLOT (cancel()));
+	connect (cancel_button, &QPushButton::clicked, this, &RObjectViewerWidget::cancel);
 	status_layout->addWidget (cancel_button);
 
 	area = new QTextEdit (this);
@@ -236,7 +236,7 @@ void RObjectViewerWidget::setText (const QString& text) {
 	RK_TRACE (APP);
 
 	area->setPlainText (QString ());
-	QFont font = KGlobalSettings::fixedFont ();
+	QFont font = QFontDatabase::systemFont(QFontDatabase::FixedFont);
 	area->setCurrentFont (font);
 
 	area->insertPlainText (text);
@@ -318,4 +318,3 @@ void RObjectStructureWidget::update () {
 	RKGlobals::rInterface ()->issueCommand (command, 0);
 }
 
-#include "robjectviewer.moc"

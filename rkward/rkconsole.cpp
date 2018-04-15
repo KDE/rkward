@@ -28,29 +28,36 @@
 #include <QKeyEvent>
 #include <QMouseEvent>
 #include <QVBoxLayout>
+#include <QStandardPaths>
+#include <QFileInfo>
+#include <QTemporaryFile>
+#include <QMimeData>
+#include <QAction>
+#include <QFileDialog>
+#include <QApplication>
 
-#include <klocale.h>
-#include <kaction.h>
+#include <KLocalizedString>
 #include <kactioncollection.h>
 #include <kconfig.h>
-#include <kapplication.h>
 #include <kmessagebox.h>
 #include <kshellcompletion.h>
 #include <ktexteditor/editor.h>
 #include <ktexteditor/configinterface.h>
 #include <ktexteditor/markinterface.h>
+#include <ktexteditor_version.h>
 #include <kxmlguifactory.h>
-#include <kfiledialog.h>
-#include <kio/netaccess.h>
-#include <ktemporaryfile.h>
+#include <kio/filecopyjob.h>
+#include <KJobWidgets>
+#include <KJobUiDelegate>
 
 #include "rkglobals.h"
 #include "rkward.h"
 #include "windows/rkhelpsearchwindow.h"
-#include "rbackend/rinterface.h"
+#include "rbackend/rkrinterface.h"
 #include "rbackend/rcommand.h"
 #include "settings/rksettings.h"
 #include "settings/rksettingsmoduleconsole.h"
+#include "settings/rksettingsmodulegeneral.h"
 #include "misc/rkcommonfunctions.h"
 #include "misc/rkstandardicons.h"
 #include "misc/rkstandardactions.h"
@@ -68,8 +75,25 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 	QVBoxLayout *layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
 
+	// I'd like to have this as a runtime version-check, but for that, I'd have to create a KTextEditor::Editor::instance(), first, and by
+	// that time the katepart has already enumerated its highlighting files, and the hack below would not work (for this session, at least).
+	if (KTEXTEDITOR_VERSION < ((5 << 16) | (16 << 8))) {
+		// Older katepart5 (before 5.16.0) will not accept rkward.xml installed in its own directory (as that has an index.json where
+		// rkward.xml is not included). Thus, we try to sneak in rkward.xml as a local user syntax highlighting file.
+		QDir writable_path = QDir (QDir (QStandardPaths::writableLocation (QStandardPaths::GenericDataLocation)).absoluteFilePath ("katepart5/syntax"));
+		QFileInfo rkwardxml (writable_path.absoluteFilePath ("rkward.xml"));
+		if (!rkwardxml.exists ()) {
+			writable_path.mkpath (".");
+			QFile rkwardxml_up (QStandardPaths::locate (QStandardPaths::GenericDataLocation, "katepart5/syntax/rkward.xml"));
+			rkwardxml_up.copy (rkwardxml.absoluteFilePath ());
+			QFile index_json (writable_path.absoluteFilePath ("index.json"));
+			if (index_json.exists ()) index_json.remove ();
+		}
+	}
+
 	// create a Kate-part as command-editor
-	KTextEditor::Editor* editor = KTextEditor::editor ("katepart");
+	// KF5 TODO: (How) can we make sure we are getting a katepart, here, not some other implementation. Or can we take that for granted?
+	KTextEditor::Editor* editor = KTextEditor::Editor::instance ();
 	if (!editor) {
 		RK_ASSERT (false);
 		KMessageBox::error (this, i18n ("The 'katepart' component could not be loaded. RKWard cannot run without katepart, and will exit, now. Please install katepart, and try again."), i18n ("'katepart' component could not be found"));
@@ -79,6 +103,7 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 	doc = editor->createDocument (this);
 	view = doc->createView (this);
 	layout->addWidget (view);
+	view->setStatusBarEnabled (false);
 
 	KTextEditor::ConfigInterface *confint = qobject_cast<KTextEditor::ConfigInterface*> (view);
 	RK_ASSERT (view);
@@ -122,7 +147,7 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 	setCaption (i18n ("R Console"));
 	console_part = new RKConsolePart (this);
 	setPart (console_part);
-	setMetaInfo (shortCaption (), "rkward://page/rkward_console", RKSettings::PageConsole);
+	setMetaInfo (shortCaption (), QUrl ("rkward://page/rkward_console"), RKSettings::PageConsole);
 	initializeActivationSignals ();
 	initializeActions (getPart ()->actionCollection ());
 
@@ -169,7 +194,7 @@ QAction* RKConsole::addProxyAction (const QString& actionName, const QString& la
 	}
 
 	if (found) {
-		QAction* ret = new KAction (getPart ());
+		QAction* ret = new QAction (getPart ());
 		if (label.isEmpty ()) ret->setText (found->text ());
 		else ret->setText (label);
 		ret->setIcon (found->icon ());
@@ -180,8 +205,8 @@ QAction* RKConsole::addProxyAction (const QString& actionName, const QString& la
 		ret->setChecked (found->isChecked ());
 		// TODO: ideally, we'd also relay enabledness, checked state, etc. That would probably require a separate class,
 		// and is not currently needed for the actions that we copy
-		connect (ret, SIGNAL (triggered(bool)), found, SLOT (trigger()));
-		connect (ret, SIGNAL (toggled(bool)), found, SLOT (toggle()));
+		connect (ret, &QAction::triggered, found, &QAction::trigger);
+		connect (ret, &QAction::toggled, found, &QAction::toggle);
 
 		getPart ()->actionCollection ()->addAction (actionName, ret);
 		return ret;
@@ -460,7 +485,7 @@ void RKConsole::doTabCompletion () {
 	// as a very simple heuristic: If the current symbol starts with a quote, we should probably attempt file name completion, instead of symbol name completion
 	if (current_symbol.startsWith ('\"') || current_symbol.startsWith ('\'') || current_symbol.startsWith ('`')) {
 		KUrlCompletion comp (KUrlCompletion::FileCompletion);
-		comp.setDir (QDir::currentPath ());
+		comp.setDir (QUrl::fromLocalFile (QDir::currentPath ()));
 		comp.makeCompletion (current_symbol.mid (1));
 
 		if (doTabCompletionHelper (current_line_num, current_line, word_start + 1, word_end, comp.allMatches ())) return;
@@ -472,7 +497,7 @@ void RKConsole::doTabCompletion () {
 	}
 
 	// no completion was possible
-	KApplication::kApplication ()->beep ();
+	qApp->beep ();
 }
 
 bool RKConsole::eventFilter (QObject *o, QEvent *e) {
@@ -508,6 +533,34 @@ bool RKConsole::eventFilter (QObject *o, QEvent *e) {
 				view->scroll (0, y - y2);
 			}
 		} */ // not good, yet: always jumps to bottom of view
+	} else if (e->type () == QEvent::DragMove || e->type () == QEvent::Drop) {
+		QDropEvent* me = static_cast<QDropEvent*> (e);  // NOTE: QDragMoveEvent inherits from QDropEvent
+
+		// Widget of the event != view. The position returned by coordinatesToCursor seems to be off by around two chars. Icon border?
+		// We try to map it back to the view, correctly.
+		QWidget *rec = dynamic_cast<QWidget*> (o);
+		if (!o) rec = view;
+		KTextEditor::Cursor pos = view->coordinatesToCursor (rec->mapTo (view, me->pos ()));
+
+		bool in_last_line = (pos.line () == doc->lines () - 1) && (pos.column () >= prefix.length ());
+		if (!in_last_line) {
+			e->ignore ();
+			return true;
+		} else {
+			if (e->type () == QEvent::DragMove) {
+				// Not sure why this is needed, here, but without this, the move will remain permanently inacceptable,
+				// once it has been ignored, above, once. KF5 5.9.0
+				e->accept ();
+				// But also _not_ filtering it.
+			} else {
+				// We have to prevent the katepart from _moving_ the text in question. Thus, instead we fake a paste.
+				// This does mean, we don't support movements within the last line, either, but so what.
+				view->setCursorPosition (pos);
+				submitBatch (me->mimeData ()->text ());
+				me->ignore ();
+				return true;
+			}
+		}
 	}
 
 	if (acceptsEventsFor (o)) return RKMDIWindow::eventFilter (o, e);
@@ -584,7 +637,7 @@ void RKConsole::commandsListUp (bool context_sensitive) {
 
 	bool found = commands_history.up (context_sensitive, currentEditingLine ());
 	if (found) setCurrentEditingLine (commands_history.current ());
-	else KApplication::kApplication ()->beep ();
+	else qApp->beep ();
 }
 
 void RKConsole::commandsListDown (bool context_sensitive) {
@@ -592,7 +645,7 @@ void RKConsole::commandsListDown (bool context_sensitive) {
 
 	bool found = commands_history.down (context_sensitive, currentEditingLine ());
 	if (found) setCurrentEditingLine (commands_history.current ());
-	else KApplication::kApplication ()->beep ();
+	else qApp->beep ();
 }
 
 void RKConsole::rCommandDone (RCommand *command) {
@@ -757,45 +810,60 @@ void RKConsole::setCommandHistory (const QStringList &new_history, bool append) 
 	commands_history.setHistory (new_history, append);
 }
 
-void RKConsole::userLoadHistory (const KUrl &_url) {
+void RKConsole::userLoadHistory (const QUrl &_url) {
 	RK_TRACE (APP);
 
-	KUrl url = _url;
+	QUrl url = _url;
 	if (url.isEmpty ()) {
-		url = KFileDialog::getOpenUrl (KUrl (), i18n ("*.Rhistory|R history files (*.Rhistory)\n*|All files (*)"), this, i18n ("Select command history file to load"));
+		url = QFileDialog::getOpenFileUrl (this, i18n ("Select command history file to load"), RKSettingsModuleGeneral::lastUsedUrlFor ("rscripts"), i18n ("R history files [*.Rhistory](*.Rhistory);;All files [*](*)"));
 		if (url.isEmpty ()) return;
+		RKSettingsModuleGeneral::updateLastUsedUrl ("rscripts", url.adjusted (QUrl::RemoveFilename));
 	}
 
-	QString tempfile;
-	KIO::NetAccess::download (url, tempfile, this);
+	QTemporaryFile *tmpfile = 0;
+	QString filename;
+	if (!url.isLocalFile ()) {
+		tmpfile = new QTemporaryFile (this);
+		KIO::Job* getjob = KIO::file_copy (url, QUrl::fromLocalFile (tmpfile->fileName()));
+		KJobWidgets::setWindow (getjob, RKWardMainWindow::getMain ());
+		if (!getjob->exec ()) {
+			getjob->ui ()->showErrorMessage();
+			delete (tmpfile);
+			return;
+		}
+		filename = tmpfile->fileName ();
+	} else {
+		filename = url.toLocalFile ();
+	}
 
-	QFile file (tempfile);
+	QFile file (filename);
 	if (!file.open (QIODevice::Text | QIODevice::ReadOnly)) return;
 	setCommandHistory (QString (file.readAll ()).split ('\n', QString::SkipEmptyParts), false);
 	file.close ();
 
-	KIO::NetAccess::removeTempFile (tempfile);
+	delete (tmpfile);
 }
 
-void RKConsole::userSaveHistory (const KUrl &_url) {
+void RKConsole::userSaveHistory (const QUrl &_url) {
 	RK_TRACE (APP);
 
-	KUrl url = _url;
+	QUrl url = _url;
 	if (url.isEmpty ()) {
-		url = KFileDialog::getSaveUrl (KUrl (), i18n ("*.Rhistory|R history files (*.Rhistory)\n*|All files (*)"), this, i18n ("Select filename to save command history")
-#if KDE_IS_VERSION(4,4,0)
-		                                    , KFileDialog::ConfirmOverwrite
-#endif
-		                                   );
+		url = QFileDialog::getSaveFileUrl (this, i18n ("Select filename to save command history"), QUrl (), i18n ("R history files [*.Rhistory] (*.Rhistory);;All files [*] (*)"));
 		if (url.isEmpty ()) return;
 	}
 
-	KTemporaryFile tempfile;
+	QTemporaryFile tempfile;
 	tempfile.open ();
 	tempfile.write (QString (commandHistory ().join ("\n") + '\n').toLocal8Bit ().data ());
 	tempfile.close ();
 
-	KIO::NetAccess::upload (tempfile.fileName (), url, this);
+	KIO::Job* getjob = KIO::file_copy (QUrl::fromLocalFile (tempfile.fileName()), url);
+	KJobWidgets::setWindow (getjob, RKWardMainWindow::getMain ());
+	if (!getjob->exec ()) {
+		getjob->ui ()->showErrorMessage();
+		return;
+	}
 }
 
 QString RKConsole::cleanSelection (const QString &origin) {
@@ -889,7 +957,7 @@ void RKConsole::currentHelpContext (QString* symbol, QString* package) {
 
 void RKConsole::initializeActions (KActionCollection *ac) {
 	RK_TRACE (APP);
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MACOS
 #	define REAL_CTRL_KEY Qt::MetaModifier
 #	define REAL_CMD_KEY Qt::ControlModifier
 #else
@@ -903,12 +971,12 @@ void RKConsole::initializeActions (KActionCollection *ac) {
 
 	interrupt_command_action = ac->addAction ("interrupt", this, SLOT (resetConsole()));
 	interrupt_command_action->setText (i18n ("Interrupt running command"));
-	interrupt_command_action->setShortcut (REAL_CTRL_KEY + Qt::Key_C);
+	ac->setDefaultShortcut (interrupt_command_action, REAL_CTRL_KEY + Qt::Key_C);
 	interrupt_command_action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionInterrupt));
 	interrupt_command_action->setEnabled (false);
 
 	copy_literal_action = ac->addAction ("rkconsole_copy_literal", this, SLOT (literalCopy()));
-	copy_literal_action->setShortcut (REAL_CMD_KEY + Qt::Key_C);
+	ac->setDefaultShortcut (copy_literal_action, REAL_CMD_KEY + Qt::Key_C);
 	copy_literal_action->setText (i18n ("Copy selection literally"));
 
 	copy_commands_action = ac->addAction ("rkconsole_copy_commands", this, SLOT (copyCommands()));
@@ -925,7 +993,7 @@ void RKConsole::initializeActions (KActionCollection *ac) {
 	addProxyAction ("view_inc_font_sizes");
 	addProxyAction ("view_dec_font_sizes");
 
-	KAction *action = ac->addAction ("loadhistory", this, SLOT (userLoadHistory()));
+	QAction *action = ac->addAction ("loadhistory", this, SLOT (userLoadHistory()));
 	action->setText (i18n ("Import command history..."));
 	action = ac->addAction ("savehistory", this, SLOT (userSaveHistory()));
 	action->setText (i18n ("Export command history..."));
@@ -996,7 +1064,7 @@ void RKConsole::activate (bool with_focus) {
 RKConsolePart::RKConsolePart (RKConsole *console) : KParts::Part (0) {
 	RK_TRACE (APP);
 
-	setComponentData (KGlobal::mainComponent ());
+	setComponentName (QCoreApplication::applicationName (), QGuiApplication::applicationDisplayName ());
 
 	setWidget (console);
 
@@ -1019,4 +1087,3 @@ void RKConsolePart::showPopupMenu (const QPoint &pos) {
 	menu->exec (pos);
 }
 
-#include "rkconsole.moc"

@@ -150,7 +150,7 @@ public:
 	void updateCode ();
 	void createWizard (bool switchable);
 /** Adds a standard last page in the wizard, and initializes the view to the first page */
-	void finalize ();
+	void finalize () override;
 
 	void updateState ();
 

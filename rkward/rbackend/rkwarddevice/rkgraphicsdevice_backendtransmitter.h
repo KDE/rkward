@@ -42,7 +42,7 @@ private:
 	static RKGraphicsDeviceBackendTransmitter* _instance;
 	bool alive;
 	bool is_local_socket;
-	void run ();
+	void run () override;
 };
 
 #endif

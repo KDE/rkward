@@ -5,11 +5,9 @@ MACRO(RKHandlePO _PO_FILES)
 		LIST(LENGTH _nameParts _namePartsCount)
 		LIST(GET _nameParts 0 _poid)
 		LIST(GET _nameParts 1 _lang) # Remainder of _nameParts should be "po"
-		IF(NOT ${_poid} STREQUAL "rkward")
-			SET(ACCEPT_INCOMPLETE_PO "-DACCEPT_INCOMPLETE_PO=1")
-		ELSE(NOT ${_poid} STREQUAL "rkward")
-			SET(ACCEPT_INCOMPLETE_PO "")
-		ENDIF(NOT ${_poid} STREQUAL "rkward")
+		# This can be used to allow temporary exceptions to our "translations must be at least 80% complete, as else, they are probably in bad shape"-rule.
+		# NOTE: Could also be set only for specific ${_poid}s (e.g. recently added po files)
+		# SET(ACCEPT_INCOMPLETE_PO "-DACCEPT_INCOMPLETE_PO=1")
 
 		SET(_gmoFile ${CMAKE_CURRENT_BINARY_DIR}/${_poid}.${_lang}.gmo)
 
@@ -23,11 +21,13 @@ MACRO(RKHandlePO _PO_FILES)
 			DEPENDS ${_poFile})
 		LIST(APPEND active_translations ${_stampFile})
 
-		IF(${_poid} STREQUAL "rkward")
-			INSTALL(FILES ${_gmoFile} DESTINATION ${LOCALE_INSTALL_DIR}/${_lang}/LC_MESSAGES/ RENAME rkward.mo OPTIONAL)
-		ELSE(${_poid} STREQUAL "rkward")
-			INSTALL(FILES ${_gmoFile} DESTINATION ${DATA_INSTALL_DIR}/rkward/po/${_lang}/LC_MESSAGES/ RENAME ${_poid}.mo OPTIONAL)
-		ENDIF(${_poid} STREQUAL "rkward")
+		IF(EXISTS "${_gmoFile}")
+			IF(${_poid} STREQUAL "rkward")
+				INSTALL(FILES ${_gmoFile} DESTINATION ${LOCALE_INSTALL_DIR}/${_lang}/LC_MESSAGES/ RENAME rkward.mo OPTIONAL)
+			ELSE(${_poid} STREQUAL "rkward")
+				INSTALL(FILES ${_gmoFile} DESTINATION ${DATA_INSTALL_DIR}/rkward/po/${_lang}/LC_MESSAGES/ RENAME ${_poid}.mo OPTIONAL)
+			ENDIF(${_poid} STREQUAL "rkward")
+		ENDIF(EXISTS "${_gmoFile}")
 	ENDFOREACH(_poFile ${_PO_FILES})
 ENDMACRO(RKHandlePO)
 
@@ -40,21 +40,24 @@ IF(NOT GETTEXT_MSGFMT_EXECUTABLE)
                  NOTE: msgfmt not found. Translations will *not* be installed
 ------")
 ELSE(NOT GETTEXT_MSGFMT_EXECUTABLE)
-	IF(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/po/")
-		FILE(GLOB PO_FILES po/*.po)
-		RKHandlePO("${PO_FILES}")
-
-		ADD_CUSTOM_TARGET(translations ALL DEPENDS ${active_translations})
-	ELSE(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/po/")
-	MESSAGE(WARNING
+	IF(NOT TRANSLATION_SRC_DIR)
+		SET(TRANSLATION_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/po/")
+	ENDIF(NOT TRANSLATION_SRC_DIR)
+	FILE(GLOB PO_FILES "${TRANSLATION_SRC_DIR}/*.po")
+	RKHandlePO("${PO_FILES}")
+	ADD_CUSTOM_TARGET(translations ALL DEPENDS ${active_translations})
+	IF(NOT PO_FILES)
+		MESSAGE(WARNING
 "------
-                 Translations are not available.
+        No translations found at ${TRANSLATION_SRC_DIR}.
 
-${CMAKE_CURRENT_SOURCE_DIR}/po/ was not found. This probably means that you are building from the development repository, and have not fetched translations. This is ok, if you want to run RKWard in English, only. Otherwise, to fetch translations, either
+${TRANSLATION_SRC_DIR} was not found. This probably means that you are building from the development repository, and have not fetched translations. This is ok, if you want to run RKWard in English, only. Otherwise, to fetch translations, either
    scripts/import_translations.py XX
 where (XX is your language code, such as \"de\"; optionally specify several codes separated by spaces). In some cases (esp., if you want to build all existing translations), it is much faster to use:
    git clone git://anongit.kde.org/scratch/tfry/rkward-po-export i18n/po
+Should you have installed translations to a non-standard directory, you can specify that using
+   cmake [...] -DTRANSLATION_SRC_DIR=/x/y/z
 ------")
-	ENDIF(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/po/")
+	ENDIF(NOT PO_FILES)
 ENDIF(NOT GETTEXT_MSGFMT_EXECUTABLE)
 

@@ -2,6 +2,32 @@ The following list of TODO-items is NOT complete!
 Also, plans change frequently. If something is listed for a specific release, that's no more than a rough plan.
 All in all, this TODO list is mostly for internal purposes, and many parts may not necessarily be intellegible to anybody but the authors.
 
+KF5 port:
+Things to do:
+- Grep for "KF5 TODO"
+Things to test at the end:
+- Everthing concerning loading / saving, from recent files, scripts, workspace, etc.
+  - Moved installations, moved workspaces.
+Knwon issues to fix:
+- ???
+
+Minor layout stuff to fix in plugins:
+- Barplot: "Display values" should be checkable frame
+- Sort data: optionset should simply use vertical stacking, or fix the horizontal alignment
+
+Upcoming porting efforts: Port from QtScript to QJSEngine:
+- Unforunately, QJSEngine lacks support for pre-compiled JS (QScriptProgram), ATM (Qt 5.5). We'll need some other optimization.
+- Idea: Use _one_ engine for each plugin, _including_ any embedded plugins. Wrap existing JS code into a closure, exporting only the "primary" functions as properties of an object.
+  - Then, the scriptbackend will call plugin_a.preprocess(), etc.
+  - The scriptbackend knows which of the plugins it is currently dealing with, and thus can trivially relay all getValue()-calls as appropriate.
+- Same approach for UI scripting.
+
+Port from QtWebKit to QtWebEngine
+- Should be mostly unproblematic
+  - Gah, QWebEngine does not compile with MinGW! Need some entirely custom solution, instead? https://github.com/GreatTux/CefMinGWQt
+- Somewhat unfortunate that QWebElement will be gone. We might be using this to amend the context menu, e.g. for copying one section to clipboard / deleting one section, etc.
+  - Could perhaps be done by catching contextmenu event in JS, instead, then send to frontend, somehow.
+
 New features in R 3.1.0 to make use of / support:
 
 - A new browser command s has been added, to “step into” function calls.

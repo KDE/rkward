@@ -87,13 +87,13 @@ assign(".rk.preview.devices", list (), envir=.rk.variables)
 				rk.record.plot$onDelDevice (devId = which)
 			
 			# see http://thread.gmane.org/gmane.comp.statistics.rkward.devel/802
-			.rk.do.call ("killDevice", as.character (which))
+			rkward:::.rk.do.call ("killDevice", as.character (which))
 			
 			ret <- eval (body (.rk.backups$dev.off))
 
 			printfile <- .rk.variables$.rk.printer.devices[[as.character (which)]]
 			if (!is.null (printfile)) {
-				.rk.do.plain.call ("printPreview", printfile, FALSE)
+				rkward:::.rk.do.plain.call ("printPreview", printfile, FALSE)
 				.rk.variables$.rk.printer.devices[[as.character (which)]] <- NULL
 			}
 

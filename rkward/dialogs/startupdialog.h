@@ -17,8 +17,8 @@
 #ifndef STARTUPDIALOG_H
 #define STARTUPDIALOG_H
 
-#include <kdialog.h>
-#include <kurl.h>
+#include <QDialog>
+#include <QUrl>
 
 class QCheckBox;
 class QButtonGroup;
@@ -33,7 +33,7 @@ This class represents the startup dialog asking you whether to open a recent fil
 @author Thomas Friedrichsmeier
 */
 /// the startup dialog
-class StartupDialog : public KDialog {
+class StartupDialog : public QDialog {
 Q_OBJECT
 public:
 	/** enum to hold result of StartupDialog. WARNING: do not change the numeric values! They are saved as user settings in the config (@see RKSettingsModuleGeneral). */
@@ -47,7 +47,7 @@ public:
 	};
 	struct StartupDialogResult {
 		Result result;
-		KUrl open_url;
+		QUrl open_url;
 	};
 
 	StartupDialog (QWidget *parent, StartupDialogResult *result, KRecentFilesAction *recent_files);
@@ -55,16 +55,16 @@ public:
 	~StartupDialog();
 	
 	static StartupDialogResult getStartupAction (QWidget *parent, KRecentFilesAction *recent_files);
-	static KUrl getRestoreFile ();
+	static QUrl getRestoreFile ();
 public slots:
-	void accept ();
-	void reject ();
+	void accept () override;
+	void reject () override;
 	void listDoubleClicked (QListWidgetItem* item);
 	void listClicked (QListWidgetItem* item);
 	void openButtonSelected (bool checked);
 protected:
 /** reimplemented from QWidget to achieve fixed width */
-	void showEvent (QShowEvent *event);
+	void showEvent (QShowEvent *event) override;
 private:
 	QRadioButton *empty_workspace_button;
 	QRadioButton *empty_table_button;

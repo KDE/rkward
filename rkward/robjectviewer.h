@@ -54,9 +54,9 @@ protected:
 	friend class RKWorkplace;
 	RObjectViewer (QWidget *parent, RObject *object, ViewerPage initial_page = SummaryPage);
 
-	void objectRemoved (RObject *object);
-	void objectMetaChanged (RObject *object);
-	void objectDataChanged (RObject *object, const RObject::ChangeSet*);
+	void objectRemoved (RObject *object) override;
+	void objectMetaChanged (RObject *object) override;
+	void objectDataChanged (RObject *object, const RObject::ChangeSet*) override;
 private:
 	void initDescription (bool notify);
 
@@ -88,7 +88,7 @@ public slots:
 	void cancel ();
 	virtual void update ();
 protected:
-	void rCommandDone (RCommand *command);
+	void rCommandDone (RCommand *command) override;
 	void ready ();
 
 	QLabel* status_label;
@@ -109,7 +109,7 @@ public:
 	~RObjectSummaryWidget () {};
 
 	/** reimplemented from RObjectViewerWidget to call "summary" */
-	void update ();
+	void update () override;
 };
 
 /** Represents the "print" area in an RObjectViewer */
@@ -119,7 +119,7 @@ public:
 	~RObjectPrintWidget () {};
 
 	/** reimplemented from RObjectViewerWidget to call "print" */
-	void update ();
+	void update () override;
 };
 
 /** Represents the "str" area in an RObjectViewer */
@@ -129,7 +129,7 @@ public:
 	~RObjectStructureWidget () {};
 
 	/** reimplemented from RObjectViewerWidget to call "str" */
-	void update ();
+	void update () override;
 };
 
 #endif

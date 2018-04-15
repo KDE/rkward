@@ -7,7 +7,7 @@ ENDIF(NOT WIN32)
 ADD_SUBDIRECTORY( rpackages )
 ADD_SUBDIRECTORY( rkwarddevice )
 
-INCLUDE_DIRECTORIES( ${R_INCLUDEDIR} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} )
+INCLUDE_DIRECTORIES( ${R_INCLUDEDIR} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR} ${LibIntl_INCLUDE_DIRS} )
 
 SET (
 	rbackend_shared_SRCS
@@ -19,7 +19,6 @@ SET (
 	rbackend_backend_SRCS
 	rkrbackend.cpp
 	rksignalsupport.cpp
-	rklocalesupport.cpp
 	rkrsupport.cpp
 	rkstructuregetter.cpp
 	rkrbackendprotocol_backend.cpp
@@ -28,7 +27,7 @@ SET (
 
 SET (
 	rbackend_frontend_SRCS
-	rinterface.cpp
+	rkrinterface.cpp
 	rcommand.cpp
 	rcommandreceiver.cpp
 	rcommandstack.cpp
@@ -43,9 +42,8 @@ SET (
 	rkfrontendtransmitter.cpp
 	rktransmitter.cpp
 )
-QT4_AUTOMOC(${rbackend_FRONTEND_SRCS})
 ADD_LIBRARY(rbackend STATIC ${rbackend_FRONTEND_SRCS})
-TARGET_LINK_LIBRARIES(rbackend rkgraphicsdevice.frontend)
+TARGET_LINK_LIBRARIES(rbackend rkgraphicsdevice.frontend Qt5::Widgets KF5::TextEditor KF5::WebKit KF5::WindowSystem)
 
 SET (
 	rbackend_BACKEND_SRCS
@@ -54,16 +52,20 @@ SET (
 	rkbackendtransmitter.cpp
 	rktransmitter.cpp
 )
-QT4_AUTOMOC(${rbackend_BACKEND_SRCS})
 ADD_DEFINITIONS (-DRKWARD_SPLIT_PROCESS)
+ADD_DEFINITIONS (-DRKWARD_BACKEND_PATH="${KDE_INSTALL_FULL_LIBEXECDIR}")
 LINK_DIRECTORIES(${R_SHAREDLIBDIR})
 ADD_EXECUTABLE(rkward.rbackend ${rbackend_BACKEND_SRCS})
-TARGET_LINK_LIBRARIES(rkward.rbackend rkgraphicsdevice.backend ${R_USED_LIBS} ${CMAKE_THREAD_LIBS_INIT} ${QT_QTNETWORK_LIBRARY} ${QT_QTCORE_LIBRARY} ${GETTEXT_LIBRARIES} )
+ECM_MARK_NONGUI_EXECUTABLE(rkward.rbackend)
+TARGET_LINK_LIBRARIES(rkward.rbackend rkgraphicsdevice.backend ${R_USED_LIBS} ${CMAKE_THREAD_LIBS_INIT} Qt5::Network Qt5::Core ${LibIntl_LIBRARIES})
+IF(APPLE)
+    TARGET_LINK_LIBRARIES(rkward.rbackend "-framework CoreFoundation")
+ENDIF()
 
 IF(WIN32)
 	# on Widows, we install to the rbackend subdirectory, because 1) LIBEXEC_INSTALL_DIR == BIN_INSTALL_DIR and 2) we don't want the backend to pick up
 	# all the KDE library versions, first, when loading DLLs
 	INSTALL(TARGETS rkward.rbackend DESTINATION ${BIN_INSTALL_DIR}/rbackend)
 ELSE(WIN32)
-		INSTALL(TARGETS rkward.rbackend DESTINATION ${RKWARD_FRONTEND_LOCATION})
+	INSTALL(TARGETS rkward.rbackend DESTINATION ${LIBEXEC_INSTALL_DIR})
 ENDIF(WIN32)

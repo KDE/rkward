@@ -17,8 +17,8 @@
 
 #include "twintable.h"
 
-#include <klocale.h>
-#include <kaction.h>
+#include <KLocalizedString>
+#include <QAction>
 #include <kactioncollection.h>
 #include <kxmlguifactory.h>
 #include <kmessagebox.h>
@@ -30,6 +30,7 @@
 #include <QMenu>
 #include <QVBoxLayout>
 #include <QHeaderView>
+#include <QApplication>
 
 #include "twintablemember.h"
 #include "rkvareditmodel.h"
@@ -52,12 +53,12 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent), RObjectListener (ROb
 
 	metaview = new TwinTableMember (splitter);
 	splitter->setStretchFactor (splitter->indexOf (metaview), 0);
-	metaview->verticalHeader ()->setResizeMode (QHeaderView::Fixed);
+	metaview->verticalHeader ()->setSectionResizeMode (QHeaderView::Fixed);
 	metaview->setHorizontalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
 	
 	dataview = new TwinTableMember (splitter);
 	splitter->setStretchFactor (splitter->indexOf (dataview), 1);
-	dataview->verticalHeader ()->setResizeMode (QHeaderView::Fixed);
+	dataview->verticalHeader ()->setSectionResizeMode (QHeaderView::Fixed);
 	dataview->horizontalHeader ()->hide ();
 	dataview->setAlternatingRowColors (true);
 
@@ -68,17 +69,22 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent), RObjectListener (ROb
 	dataview->setTwin (metaview);
 
 	// pressing the columns in the metaview-header should select columns in the dataview
+	// Note that the disconnects are on connections already set up by Qt. Since we don't want to worry about how these were set, we're disconnecting
+	// each in both old and new syntax.
 	disconnect (metaview->horizontalHeader (), SIGNAL (sectionClicked(int)));
-	connect (metaview->horizontalHeader (), SIGNAL (sectionClicked(int)), this, SLOT (metaHeaderClicked(int)));
+	disconnect (metaview->horizontalHeader (), &QHeaderView::sectionClicked, 0, 0);
+	connect (metaview->horizontalHeader (), &QHeaderView::sectionClicked, this, &TwinTable::metaHeaderClicked);
 	disconnect (metaview->horizontalHeader (), SIGNAL (sectionPressed(int)));
-	connect (metaview->horizontalHeader (), SIGNAL (sectionPressed(int)), this, SLOT (metaHeaderPressed(int)));
+	disconnect (metaview->horizontalHeader (), &QHeaderView::sectionPressed, 0, 0);
+	connect (metaview->horizontalHeader (), &QHeaderView::sectionPressed, this, &TwinTable::metaHeaderPressed);
 	disconnect (metaview->horizontalHeader (), SIGNAL (sectionEntered(int)));
-	connect (metaview->horizontalHeader (), SIGNAL (sectionEntered(int)), this, SLOT (metaHeaderEntered(int)));
+	disconnect (metaview->horizontalHeader (), &QHeaderView::sectionEntered, 0, 0);
+	connect (metaview->horizontalHeader (), &QHeaderView::sectionEntered, this, &TwinTable::metaHeaderEntered);
 	meta_header_anchor_section = -1;
 
 	// catch header context menu requests
-	connect (dataview, SIGNAL (contextMenuRequest(int,int,QPoint)), this, SLOT (contextMenu(int,int,QPoint)));
-	connect (metaview, SIGNAL (contextMenuRequest(int,int,QPoint)), this, SLOT (contextMenu(int,int,QPoint)));
+	connect (dataview, &TwinTableMember::contextMenuRequest, this, &TwinTable::contextMenu);
+	connect (metaview, &TwinTableMember::contextMenuRequest, this, &TwinTable::contextMenu);
 	context_menu_table = 0;
 	context_menu_row = context_menu_column = -2;
 
@@ -150,7 +156,7 @@ void TwinTable::initActions () {
 	action_tb_unlock_editing->setActionGroup (lockactions);
 	action_tb_unlock_editing->setStatusTip (i18n ("Enable editing"));
 	actionCollection ()->addAction ("unlock_editing", action_tb_unlock_editing);
-	connect (action_tb_unlock_editing, SIGNAL (toggled(bool)), this, SLOT (enableEditing(bool)));
+	connect (action_tb_unlock_editing, &QAction::toggled, this, &TwinTable::enableEditing);
 	// NOTE: No need to connect lock_editing, too, as they are radio-exclusive
 
 	// add all edit-actions to a group, so they can be enabled/disabled easily
@@ -190,7 +196,7 @@ void TwinTable::initTable (RKVarEditModel* model, RObject* object) {
 	addNotificationType (RObjectListener::MetaChanged);
 	listenForObject (object);
 	objectMetaChanged (object);
-	connect (model, SIGNAL (hasDuplicates(QStringList)), this, SLOT (containsDuplicates(QStringList)));
+	connect (model, &RKVarEditModel::hasDuplicates, this, &TwinTable::containsDuplicates);
 }
 
 void TwinTable::setWindowStyleHint (const QString& hint) {
@@ -514,4 +520,3 @@ void TwinTable::showRownames (bool show) {
 	datamodel->lockHeader (!show);
 }
 
-#include "twintable.moc"

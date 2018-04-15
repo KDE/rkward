@@ -25,8 +25,7 @@
 #include <QHBoxLayout>
 #include <QLabel>
 
-#include <kvbox.h>
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "rkcommonfunctions.h"
 #include "rkstandardicons.h"
@@ -44,7 +43,7 @@ public:
 		add_trailing_rows = 1;
 	};
 
-	QModelIndex mapFromSource (const QModelIndex& sindex) const {
+	QModelIndex mapFromSource (const QModelIndex& sindex) const override {
 		if (!sindex.isValid ()) return QModelIndex ();
 		// we're using Source row as "Internal ID", here. This _would_ fall on our feet when removing rows, _if_ we'd actually
 		// have to be able to map the dummy rows back to their real parents.
@@ -63,7 +62,7 @@ public:
 		return (column >= mapColumnFromSource (sourceModel ()->columnCount ()));
 	}
 
-	QModelIndex mapToSource (const QModelIndex& pindex) const {
+	QModelIndex mapToSource (const QModelIndex& pindex) const override {
 		if (!pindex.isValid ()) return QModelIndex ();
 		if (pindex.internalId () == real_item_id) {
 			return sourceModel ()->index (pindex.row (), mapColumnToSource (pindex.column ()));
@@ -74,7 +73,7 @@ public:
 		}
 	}
 
-	Qt::ItemFlags flags (const QModelIndex& index) const {
+	Qt::ItemFlags flags (const QModelIndex& index) const override {
 		if (isFake (index)) {
 			if (index.internalId () == trailing_item_id) return (Qt::ItemIsEnabled);
 			return (Qt::NoItemFlags);
@@ -82,13 +81,13 @@ public:
 		return (QAbstractProxyModel::flags (index));
 	}
 
-	int rowCount (const QModelIndex& parent = QModelIndex ()) const {
+	int rowCount (const QModelIndex& parent = QModelIndex ()) const override {
 		if (isFake (parent)) return 0;
 		if (parent.isValid ()) return 1;
 		return sourceModel ()->rowCount (mapToSource (parent)) + add_trailing_rows;
 	}
 
-    QVariant data (const QModelIndex& proxyIndex, int role = Qt::DisplayRole) const {
+    QVariant data (const QModelIndex& proxyIndex, int role = Qt::DisplayRole) const override {
 		if (isFake (proxyIndex)) {
 			if (proxyIndex.internalId () == trailing_item_id) {
 				if (role == Qt::DisplayRole) {
@@ -107,7 +106,7 @@ public:
 		return QAbstractProxyModel::data (proxyIndex, role);
 	}
 
-	bool dropMimeData (const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) {
+	bool dropMimeData (const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) override {
 		// Ok, I don't understand why exactly, but something goes wrong while mapping this back to the source model. So we help it a bit:
 		Q_UNUSED (column);
 
@@ -119,21 +118,21 @@ public:
 		return sourceModel ()->dropMimeData (data, action, row, 0, QModelIndex ());
 	}
 
-	QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const {
+	QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override {
 		if ((orientation == Qt::Horizontal) && isFakeColumn (section) && (role == Qt::DisplayRole)) return QVariant ();
 		return QAbstractProxyModel::headerData (section, orientation, role);
 	}
 
-	bool hasChildren (const QModelIndex& parent) const {
+	bool hasChildren (const QModelIndex& parent) const override {
 		return (!isFake (parent));
 	}
 
-	int columnCount (const QModelIndex& parent = QModelIndex ()) const {
+	int columnCount (const QModelIndex& parent = QModelIndex ()) const override {
 		if (isFake (parent)) return 1;
 		return mapColumnFromSource (sourceModel ()->columnCount (mapToSource (parent))) + add_trailing_columns;
 	}
 
-	QModelIndex index (int row, int column, const QModelIndex& parent = QModelIndex ()) const {
+	QModelIndex index (int row, int column, const QModelIndex& parent = QModelIndex ()) const override {
 		if (!parent.isValid ()) {
 			if (row == sourceModel ()->rowCount ()) return createIndex (row, column, trailing_item_id);
 			return createIndex (row, column, real_item_id);
@@ -142,19 +141,19 @@ public:
 		return createIndex (row, column, parent.row ());
 	}
 
-	QModelIndex parent (const QModelIndex& child) const {
+	QModelIndex parent (const QModelIndex& child) const override {
 		if (child.internalId () == real_item_id) return QModelIndex ();
 		else if (child.internalId () == trailing_item_id) return QModelIndex ();
 		return createIndex (child.internalId (), 0, real_item_id);
 	}
 
-	void setSourceModel (QAbstractItemModel* source_model) {
+	void setSourceModel (QAbstractItemModel* source_model) override {
 		/* More than these would be needed for a proper proxy of any model, but in our case, we only have to support the RKOptionsetDisplayModel */
-		connect (source_model, SIGNAL (rowsInserted(const QModelIndex&,int,int)), this, SLOT (r_rowsInserted(QModelIndex,int,int)));
-		connect (source_model, SIGNAL (rowsRemoved(const QModelIndex&,int,int)), this, SLOT (r_rowsRemoved(QModelIndex,int,int)));
-		connect (source_model, SIGNAL (dataChanged(QModelIndex,QModelIndex)), this, SLOT (r_dataChanged(QModelIndex,QModelIndex)));
-		connect (source_model, SIGNAL (headerDataChanged(Qt::Orientation,int,int)), this, SLOT (r_headerDataChanged(Qt::Orientation,int,int)));
-		connect (source_model, SIGNAL (layoutChanged()), this, SLOT (r_layoutChanged()));
+		connect (source_model, &QAbstractItemModel::rowsInserted, this, &RKAccordionDummyModel::r_rowsInserted);
+		connect (source_model, &QAbstractItemModel::rowsRemoved, this, &RKAccordionDummyModel::r_rowsRemoved);
+		connect (source_model, &QAbstractItemModel::dataChanged, this, &RKAccordionDummyModel::r_dataChanged);
+		connect (source_model, &QAbstractItemModel::headerDataChanged, this, &RKAccordionDummyModel::r_headerDataChanged);
+		connect (source_model, &QAbstractItemModel::layoutChanged, this, &RKAccordionDummyModel::r_layoutChanged);
 		QAbstractProxyModel::setSourceModel (source_model);
 	}
 
@@ -229,7 +228,7 @@ public:
 		expanded = RKStandardIcons::getIcon (RKStandardIcons::ActionCollapseUp);
 		collapsed = RKStandardIcons::getIcon (RKStandardIcons::ActionExpandDown);
 	}
-	void initStyleOption (QStyleOptionViewItem* option, const QModelIndex& index) const {
+	void initStyleOption (QStyleOptionViewItem* option, const QModelIndex& index) const override {
 		QStyledItemDelegate::initStyleOption (option, index);
 		if (!pmodel->isFake (index)) {
 			QStyleOptionViewItemV4 *v4 = qstyleoption_cast<QStyleOptionViewItemV4 *> (option);
@@ -261,7 +260,8 @@ RKAccordionTable::RKAccordionTable (QWidget* parent) : QTreeView (parent) {
 	editor_widget_container = new QWidget ();
 	QHBoxLayout *layout = new QHBoxLayout (editor_widget_container);
 	layout->setContentsMargins (0, 0, 0, 0);
-	editor_widget = new KVBox (editor_widget_container);
+	editor_widget = new QWidget (editor_widget_container);
+	new QVBoxLayout (editor_widget);
 	layout->addWidget (editor_widget);
 
 	setSelectionMode (SingleSelection);
@@ -282,8 +282,8 @@ RKAccordionTable::RKAccordionTable (QWidget* parent) : QTreeView (parent) {
 	delegate->pmodel = pmodel;
 	setItemDelegateForColumn (0, delegate);
 
-	connect (this, SIGNAL (expanded(QModelIndex)), this, SLOT (rowExpanded(QModelIndex)));
-	connect (this, SIGNAL (clicked(QModelIndex)), this, SLOT (rowClicked(QModelIndex)));
+	connect (this, &QTreeView::expanded, this, &RKAccordionTable::rowExpanded);
+	connect (this, &QTreeView::clicked, this, &RKAccordionTable::rowClicked);
 }
 
 RKAccordionTable::~RKAccordionTable () {
@@ -451,7 +451,7 @@ void RKAccordionTable::updateWidget () {
 
 				QToolButton *remove_button = new QToolButton (display_buttons);
 				remove_button->setAutoRaise (true);
-				connect (remove_button, SIGNAL (clicked(bool)), this, SLOT (removeClicked()));
+				connect (remove_button, &QToolButton::clicked, this, &RKAccordionTable::removeClicked);
 				remove_button->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteRow));
 				RKCommonFunctions::setTips (i18n ("Remove this row / element"), remove_button);
 				layout->addWidget (remove_button);
@@ -461,8 +461,8 @@ void RKAccordionTable::updateWidget () {
 				if (i == 0) {
 					header ()->setStretchLastSection (false);  // we stretch the second to last, instead
 					header ()->resizeSection (button_index.column (), rowHeight (row));
-					header ()->setResizeMode (button_index.column (), QHeaderView::Fixed);
-					header ()->setResizeMode (button_index.column () - 1, QHeaderView::Stretch);
+					header ()->setSectionResizeMode (button_index.column (), QHeaderView::Fixed);
+					header ()->setSectionResizeMode (button_index.column () - 1, QHeaderView::Stretch);
 				}
 			}
 		}
@@ -506,9 +506,9 @@ void RKAccordionTable::setModel (QAbstractItemModel* model) {
 
 	pmodel->setSourceModel (model);
 	QTreeView::setModel (pmodel);
-	connect (pmodel, SIGNAL (layoutChanged()), this, SLOT (updateWidget()));
-	connect (pmodel, SIGNAL (rowsInserted(const QModelIndex&,int,int)), this, SLOT (updateWidget()));
-	connect (pmodel, SIGNAL (rowsRemoved(const QModelIndex&,int,int)), this, SLOT (updateWidget()));
+	connect (pmodel, &QAbstractItemModel::layoutChanged, this, &RKAccordionTable::updateWidget);
+	connect (pmodel, &QAbstractItemModel::rowsInserted, this, &RKAccordionTable::updateWidget);
+	connect (pmodel, &QAbstractItemModel::rowsRemoved, this, &RKAccordionTable::updateWidget);
 
 	if (pmodel->rowCount () > 0) expand (pmodel->index (0, 0));
 
@@ -516,6 +516,4 @@ void RKAccordionTable::setModel (QAbstractItemModel* model) {
 	updateGeometry ();   // TODO: Not so clean to call this, here. But at this point we know the display_widget has been constructed, too
 }
 
-// KF5 TODO: remove:
 #include "rkaccordiontable.moc"
-#include "rkaccordiontablemodel_moc.cpp"

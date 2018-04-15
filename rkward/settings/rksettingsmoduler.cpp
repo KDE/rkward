@@ -16,12 +16,9 @@
  ***************************************************************************/
 #include "rksettingsmoduler.h"
 
-#include <klocale.h>
-#include <kconfig.h>
-#include <kstandarddirs.h>
-#include <kinputdialog.h>
-#include <knuminput.h>
-#include <kfiledialog.h>
+#include <KLocalizedString>
+#include <KSharedConfig>
+#include <KConfigGroup>
 
 #include <qlabel.h>
 #include <qcheckbox.h>
@@ -31,16 +28,16 @@
 #include <QGridLayout>
 #include <QPushButton>
 #include <QTextEdit>
-#ifdef Q_WS_WIN
-#	include <QFileDialog>
-#endif
+#include <QFileDialog>
+#include <QSpinBox>
+#include <QInputDialog>
 
 #include "rksettingsmodulegeneral.h"
 #include "../core/robject.h"
 #include "../misc/multistringselector.h"
 #include "../misc/rkprogresscontrol.h"
 #include "../misc/rkcommonfunctions.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../rbackend/rksessionvars.h"
 #include "../rkglobals.h"
 #include "../debug.h"
@@ -59,7 +56,6 @@ bool RKSettingsModuleR::options_checkbounds;
 QString RKSettingsModuleR::options_editor;
 QString RKSettingsModuleR::options_pager;
 QString RKSettingsModuleR::options_further;
-bool RKSettingsModuleR::options_internet2;
 // static constants
 QString RKSettingsModuleR::builtin_editor = "<rkward>";
 // session constants
@@ -89,32 +85,44 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 	warn_input->insertItem (2, i18n ("Print warnings immediately"));
 	warn_input->insertItem (3, i18n ("Convert warnings to errors"));
 	warn_input->setCurrentIndex (options_warn + 1);
-	connect (warn_input, SIGNAL (activated(int)), this, SLOT (settingChanged()));
+	connect (warn_input, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), this, &RKSettingsModuleR::settingChanged);
 	grid->addWidget (warn_input, row, 1);
 
 	// options (OutDec)
 	grid->addWidget (new QLabel (i18n ("Decimal character (only for printing)"), this), ++row, 0);
 	outdec_input = new QLineEdit (options_outdec, this);
 	outdec_input->setMaxLength (1);
-	connect (outdec_input, SIGNAL (textChanged(QString)), this, SLOT (settingChanged()));
+	connect (outdec_input, &QLineEdit::textChanged, this, &RKSettingsModuleR::settingChanged);
 	grid->addWidget (outdec_input, row, 1);
 
 	// options (width)
 	grid->addWidget (new QLabel (i18n ("Output width (characters)"), this), ++row, 0);
-	width_input = new KIntSpinBox (10, 10000, 1, options_width, this);
-	connect (width_input, SIGNAL (valueChanged(int)), this, SLOT (settingChanged()));
+	width_input = new QSpinBox(this);
+	width_input->setMaximum(10000);
+	width_input->setMinimum(10);
+	width_input->setSingleStep(1);
+	width_input->setValue(options_width);
+	connect (width_input, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleR::settingChanged);
 	grid->addWidget (width_input, row, 1);
 
 	// options (max.print)
 	grid->addWidget (new QLabel (i18n ("Maximum number of elements shown in print"), this), ++row, 0);
-	maxprint_input = new KIntSpinBox (100, INT_MAX, 1, options_maxprint, this);
-	connect (maxprint_input, SIGNAL (valueChanged(int)), this, SLOT (settingChanged()));
+	maxprint_input = new QSpinBox(this);
+	maxprint_input->setMaximum(INT_MAX);
+	maxprint_input->setMinimum(100);
+	maxprint_input->setSingleStep(1);
+	maxprint_input->setValue(options_maxprint);
+	connect (maxprint_input, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleR::settingChanged);
 	grid->addWidget (maxprint_input, row, 1);
 
 	// options (warnings.length)
 	grid->addWidget (new QLabel (i18n ("Maximum length of warnings/errors to print"), this), ++row, 0);
-	warningslength_input = new KIntSpinBox (100, 8192, 1, options_warningslength, this);
-	connect (warningslength_input, SIGNAL (valueChanged(int)), this, SLOT (settingChanged()));
+	warningslength_input = new QSpinBox(this);
+	warningslength_input->setMaximum(8192);
+	warningslength_input->setMinimum(100);
+	warningslength_input->setSingleStep(1);
+	warningslength_input->setValue(options_warningslength);
+	connect (warningslength_input, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleR::settingChanged);
 	grid->addWidget (warningslength_input, row, 1);
 
 	// options (keep.source)
@@ -124,7 +132,7 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 	keepsource_input->addItem (i18n ("TRUE (default)"), true);
 	keepsource_input->addItem (i18n ("FALSE"), false);
 	keepsource_input->setCurrentIndex (options_keepsource ? 0 : 1);
-	connect (keepsource_input, SIGNAL (activated(int)), this, SLOT (settingChanged()));
+	connect (keepsource_input, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), this, &RKSettingsModuleR::settingChanged);
 	grid->addWidget (keepsource_input, row, 1);
 
 	// options (keep.source.pkgs)
@@ -134,19 +142,27 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 	keepsourcepkgs_input->addItem (i18n ("TRUE"), true);
 	keepsourcepkgs_input->addItem (i18n ("FALSE (default)"), false);
 	keepsourcepkgs_input->setCurrentIndex (options_keepsourcepkgs ? 0 : 1);
-	connect (keepsourcepkgs_input, SIGNAL (activated(int)), this, SLOT (settingChanged()));
+	connect (keepsourcepkgs_input, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), this, &RKSettingsModuleR::settingChanged);
 	grid->addWidget (keepsourcepkgs_input, row, 1);
 
 	// options (expressions)
 	grid->addWidget (new QLabel (i18n ("Maximum level of nested expressions"), this), ++row, 0);
-	expressions_input = new KIntSpinBox (25, 500000, 1, options_expressions, this);
-	connect (expressions_input, SIGNAL (valueChanged(int)), this, SLOT (settingChanged()));
+	expressions_input = new QSpinBox(this);
+	expressions_input->setMaximum(500000);
+	expressions_input->setMinimum(25);
+	expressions_input->setSingleStep(1);
+	expressions_input->setValue(options_expressions);
+	connect (expressions_input, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleR::settingChanged);
 	grid->addWidget (expressions_input, row, 1);
 
 	// options (digits)
 	grid->addWidget (new QLabel (i18n ("Default decimal precision in print ()"), this), ++row, 0);
-	digits_input = new KIntSpinBox (1, 22, 1, options_digits, this);
-	connect (digits_input, SIGNAL (valueChanged(int)), this, SLOT (settingChanged()));
+	digits_input = new QSpinBox(this);
+	digits_input->setMaximum(22);
+	digits_input->setMinimum(1);
+	digits_input->setSingleStep(1);
+	digits_input->setValue(options_digits);
+	connect (digits_input, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleR::settingChanged);
 	grid->addWidget (digits_input, row, 1);
 
 	// options (check.bounds)
@@ -156,7 +172,7 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 	checkbounds_input->addItem (i18n ("TRUE"), true);
 	checkbounds_input->addItem (i18n ("FALSE (default)"), false);
 	checkbounds_input->setCurrentIndex (options_checkbounds ? 0 : 1);
-	connect (checkbounds_input, SIGNAL (activated(int)), this, SLOT (settingChanged()));
+	connect (checkbounds_input, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), this, &RKSettingsModuleR::settingChanged);
 	grid->addWidget (checkbounds_input, row, 1);
 
 	grid->addWidget (new QLabel (i18n ("Editor command"), this), ++row, 0);
@@ -167,7 +183,7 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 		editor_input->addItem (options_editor);
 		editor_input->setCurrentIndex (1);
 	}
-	connect (editor_input, SIGNAL (editTextChanged(QString)), this, SLOT (settingChanged()));
+	connect (editor_input, &QComboBox::editTextChanged, this, &RKSettingsModuleR::settingChanged);
 	grid->addWidget (editor_input, row, 1);
 
 	grid->addWidget (new QLabel (i18n ("Pager command"), this), ++row, 0);
@@ -178,26 +194,15 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 		pager_input->addItem (options_pager);
 		pager_input->setCurrentIndex (1);
 	}
-	connect (pager_input, SIGNAL (editTextChanged(QString)), this, SLOT (settingChanged()));
+	connect (pager_input, &QComboBox::editTextChanged, this, &RKSettingsModuleR::settingChanged);
 	grid->addWidget (pager_input, row, 1);
-
-#ifdef Q_WS_WIN
-	grid->addWidget (label = new QLabel (i18n ("Use Internet Explorer functions for internet access"), this), ++row, 0);
-	internet2_input = new QCheckBox (this);
-	internet2_input->setChecked (options_internet2);
-	connect (internet2_input, SIGNAL (stateChanged(int)), this, SLOT (settingChanged()));
-	grid->addWidget (internet2_input, row, 1);
-	RKCommonFunctions::setTips (i18n ("<p>Use Internet Explorer functions for accessing the internet from R. "
-									"Enabling this option may help in case of problems with accessing the internet from R (e.g. for "
-									"installing packages).</p>"), internet2_input, label);
-#endif
 
 	grid->addWidget (new QLabel (i18n ("Further (option) commands to run in each session"), this), ++row, 0, 1, 2);
 	further_input = new QTextEdit (this);
 	further_input->setWordWrapMode (QTextOption::NoWrap);
 	further_input->setAcceptRichText (false);
 	further_input->setPlainText (options_further);
-	connect (further_input, SIGNAL (textChanged()), this, SLOT (settingChanged()));
+	connect (further_input, &QTextEdit::textChanged, this, &RKSettingsModuleR::settingChanged);
 	grid->addWidget (further_input, ++row, 0, 1, 2);
 
 	main_vbox->addStretch ();
@@ -233,9 +238,6 @@ void RKSettingsModuleR::applyChanges () {
 	options_editor = editor_input->currentText ();
 	options_pager = pager_input->currentText ();
 	options_further = further_input->toPlainText ();
-#ifdef Q_WS_WIN
-	options_internet2 = internet2_input->isChecked ();
-#endif
 
 // apply run time options in R
 	QStringList commands = makeRRunTimeOptionCommands ();
@@ -268,9 +270,6 @@ QStringList RKSettingsModuleR::makeRRunTimeOptionCommands () {
 	if (options_pager == builtin_editor) list.append ("options (pager=rk.show.files)\n");
 	else list.append ("options (pager=\"" + options_pager + "\")\n");
 	if (!options_further.isEmpty ()) list.append (options_further + '\n');
-#ifdef Q_WS_WIN
-	list.append (QString ("setInternet2 (") + (options_internet2 ? "TRUE)\n" : "FALSE)\n"));
-#endif
 
 #ifdef __GNUC__
 #	warning TODO make the following options configurable
@@ -305,9 +304,6 @@ void RKSettingsModuleR::saveSettings (KConfig *config) {
 	cg.writeEntry ("editor", options_editor);
 	cg.writeEntry ("pager", options_pager);
 	cg.writeEntry ("further init commands", options_further);
-#ifdef Q_WS_WIN
-	cg.writeEntry ("internet2", options_internet2);
-#endif
 }
 
 void RKSettingsModuleR::loadSettings (KConfig *config) {
@@ -327,10 +323,6 @@ void RKSettingsModuleR::loadSettings (KConfig *config) {
 	options_editor = cg.readEntry ("editor", builtin_editor);
 	options_pager = cg.readEntry ("pager", builtin_editor);
 	options_further = cg.readEntry ("further init commands", QString ());
-#ifdef Q_WS_WIN
-	options_internet2 = cg.readEntry ("internet2", true);
-	if (RKSettingsModuleGeneral::storedConfigVersion () < RKSettingsModuleGeneral::RKWardConfig_0_6_4) options_internet2 = true;
-#endif
 }
 
 //#################################################
@@ -358,24 +350,24 @@ RKSettingsModuleRPackages::RKSettingsModuleRPackages (RKSettings *gui, QWidget *
 	main_vbox->addLayout (hbox);
 	cran_mirror_input = new QLineEdit (cran_mirror_url, this);
 	if (cran_mirror_url == "@CRAN@") cran_mirror_input->clear ();
-	connect (cran_mirror_input, SIGNAL (textChanged(QString)), this, SLOT (settingChanged()));
+	connect (cran_mirror_input, &QLineEdit::textChanged, this, &RKSettingsModuleRPackages::settingChanged);
 	hbox->addWidget (cran_mirror_input);
 	QPushButton* cran_mirror_button = new QPushButton (i18n ("Select mirror"), this);
-	connect (cran_mirror_button, SIGNAL (clicked()), this, SLOT (selectCRANMirror()));
+	connect (cran_mirror_button, &QPushButton::clicked, this, &RKSettingsModuleRPackages::selectCRANMirror);
 	hbox->addWidget (cran_mirror_button);
 
 	repository_selector = new MultiStringSelector (i18n ("Additional package repositories (where libraries are downloaded from)"), this);
 	repository_selector->setValues (package_repositories);
-	connect (repository_selector, SIGNAL (listChanged()), this, SLOT (settingChanged()));
-	connect (repository_selector, SIGNAL (getNewStrings(QStringList*)), this, SLOT (addRepository(QStringList*)));
+	connect (repository_selector, &MultiStringSelector::listChanged, this, &RKSettingsModuleRPackages::settingChanged);
+	connect (repository_selector, &MultiStringSelector::getNewStrings, this, &RKSettingsModuleRPackages::addRepository);
 	main_vbox->addWidget (repository_selector);
 
 	archive_packages_box = new QCheckBox (i18n ("Archive downloaded packages"), this);
 	archive_packages_box->setChecked (archive_packages);
-	connect (archive_packages_box, SIGNAL (stateChanged(int)), this, SLOT (settingChanged()));
+	connect (archive_packages_box, &QCheckBox::stateChanged, this, &RKSettingsModuleRPackages::settingChanged);
 	main_vbox->addWidget (archive_packages_box);
 
-#if defined Q_WS_WIN || defined Q_WS_MAC
+#if defined Q_OS_WIN || defined Q_OS_MACOS
 	source_packages_box = new QCheckBox (i18n ("Build packages from source"), this);
 	source_packages_box->setChecked (source_packages);
 #else
@@ -384,15 +376,15 @@ RKSettingsModuleRPackages::RKSettingsModuleRPackages (RKSettings *gui, QWidget *
 	source_packages_box->setEnabled (false);
 #endif
 	RKCommonFunctions::setTips (QString ("<p>%1</p>").arg (i18n ("Installing packages from pre-compiled binaries (if available) is generally faster, and does not require an installation of development tools and libraries. On the other hand, building packages from source provides best compatibility. On Mac OS X and Linux, building packages from source is currently recommended.")), source_packages_box);
-	connect (source_packages_box, SIGNAL (stateChanged(int)), this, SLOT (settingChanged()));
+	connect (source_packages_box, &QCheckBox::stateChanged, this, &RKSettingsModuleRPackages::settingChanged);
 	main_vbox->addWidget (source_packages_box);
 
 	main_vbox->addStretch ();
 
 	libloc_selector = new MultiStringSelector (i18n ("R Library locations (where libraries get installed to, locally)"), this);
 	libloc_selector->setValues (liblocs);
-	connect (libloc_selector, SIGNAL (listChanged()), this, SLOT (settingChanged()));
-	connect (libloc_selector, SIGNAL (getNewStrings(QStringList*)), this, SLOT (addLibLoc(QStringList*)));
+	connect (libloc_selector, &MultiStringSelector::listChanged, this, &RKSettingsModuleRPackages::settingChanged);
+	connect (libloc_selector, &MultiStringSelector::getNewStrings, this, &RKSettingsModuleRPackages::addLibLoc);
 	main_vbox->addWidget (libloc_selector);
 	QLabel *label = new QLabel (i18n ("Note: The startup defaults will always be used in addition to the locations you specify in this list"), this);
 	main_vbox->addWidget (label);
@@ -420,7 +412,8 @@ void RKSettingsModuleRPackages::settingChanged () {
 
 void RKSettingsModuleRPackages::addLibLoc (QStringList *string_list) {
 	RK_TRACE (SETTINGS);
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
+	// KF5 TODO: Still needed?
 	// TODO: Hang on Windows when trying to select any dir using (K|Q)FileDialog::getExistingDirectory (). KDE 4.10
 	QFileDialog dummy (this, i18n ("Add R Library Directory"));
 	dummy.setFileMode (QFileDialog::Directory);
@@ -430,7 +423,7 @@ void RKSettingsModuleRPackages::addLibLoc (QStringList *string_list) {
 		new_string = dummy.selectedFiles ().value (0);
 	}
 #else
-	QString new_string = KFileDialog::getExistingDirectory (KUrl (), this, i18n ("Add R Library Directory"));
+	QString new_string = QFileDialog::getExistingDirectory (this, i18n ("Add R Library Directory"));
 #endif
 	if (!new_string.isEmpty ()) {
 		(*string_list).append (new_string);
@@ -439,8 +432,9 @@ void RKSettingsModuleRPackages::addLibLoc (QStringList *string_list) {
 
 void RKSettingsModuleRPackages::addRepository (QStringList *string_list) {
 	RK_TRACE (SETTINGS);
-	QString new_string = KInputDialog::getText (i18n ("Add repository"), i18n ("Add URL of new repository"), QString (), 0, this);
-	(*string_list).append (new_string);
+	bool ok;
+	QString new_string = QInputDialog::getText (this, i18n ("Add repository"), i18n ("Add URL of new repository"), QLineEdit::Normal, QString (), &ok);
+	if (ok) (*string_list).append (new_string);
 }
 
 QString RKSettingsModuleRPackages::caption () {
@@ -493,11 +487,11 @@ QString RKSettingsModuleRPackages::libLocsCommand () {
 //static
 QString RKSettingsModuleRPackages::pkgTypeOption () {
 	QString ret;
-#if defined Q_WS_WIN || defined Q_WS_MAC
+#if defined Q_OS_WIN || defined Q_OS_MACOS
 	ret.append ("options (pkgType=\"");
 	if (source_packages) ret.append ("source");
 	else if (RKSessionVars::compareRVersion ("3.1.3") <= 0) ret.append ("binary");   // "automatically select appropriate binary", unfortunately it's only available from R 3.1.3. onwards.
-#	if defined Q_WS_WIN
+#	if defined Q_OS_WIN
 	else ret.append ("win.binary");
 #	else
 	else if (RKSessionVars::compareRVersion ("3.0.0") > 0) {
@@ -524,7 +518,7 @@ QStringList RKSettingsModuleRPackages::makeRRunTimeOptionCommands () {
 	}
 	list.append (command + "))\n");
 
-#if defined Q_WS_WIN || defined Q_WS_MAC
+#if defined Q_OS_WIN || defined Q_OS_MACOS
 	list.append (pkgTypeOption ());
 #endif
 
@@ -587,7 +581,7 @@ void RKSettingsModuleRPackages::loadSettings (KConfig *config) {
 
 	liblocs = cg.readEntry ("LibraryLocations", QStringList ());
 	archive_packages = cg.readEntry ("archive packages", false);
-#if defined Q_WS_WIN || defined Q_WS_MAC
+#if defined Q_OS_WIN || defined Q_OS_MACOS
 #	if defined USE_BINARY_PACKAGES
 #		define USE_SOURCE_PACKAGES false
 #	else
@@ -603,4 +597,3 @@ void RKSettingsModuleRPackages::loadSettings (KConfig *config) {
 #endif
 }
 
-#include "rksettingsmoduler.moc"

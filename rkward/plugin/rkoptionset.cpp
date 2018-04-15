@@ -25,8 +25,7 @@
 #include <QLabel>
 #include <QMimeData>
 
-#include <klocale.h>
-#include <kvbox.h>
+#include <KLocalizedString>
 
 #include "rkstandardcomponent.h"
 #include "../misc/rkcommonfunctions.h"
@@ -58,20 +57,20 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	accordion = new RKAccordionTable (this);
 	switcher->addWidget (accordion);
 
-	connect (accordion, SIGNAL (activated(int)), this, SLOT(currentRowChanged(int)));
-	connect (accordion, SIGNAL (addRow(int)), this, SLOT(addRow(int)));
-	connect (accordion, SIGNAL (removeRow(int)), this, SLOT(removeRow(int)));
+	connect (accordion, static_cast<void (RKAccordionTable::*)(int)>(&RKAccordionTable::activated), this, &RKOptionSet::currentRowChanged);
+	connect (accordion, &RKAccordionTable::addRow, this, &RKOptionSet::addRow);
+	connect (accordion, &RKAccordionTable::removeRow, this, &RKOptionSet::removeRow);
 
 	updating_notice = new QLabel (i18n ("Updating status, please wait"), this);
 	switcher->addWidget (updating_notice);
 	update_timer.setInterval (0);
 	update_timer.setSingleShot (true);
-	connect (&update_timer, SIGNAL (timeout()), this, SLOT (slotUpdateUnfinishedRows()));
+	connect (&update_timer, &QTimer::timeout, this, &RKOptionSet::slotUpdateUnfinishedRows);
 
 	// create some meta properties
 	serialization_of_set = new RKComponentPropertyBase (this, false);
 	addChild ("serialized", serialization_of_set);
-	connect (serialization_of_set, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (serializationPropertyChanged(RKComponentPropertyBase*)));
+	connect (serialization_of_set, &RKComponentPropertyBase::valueChanged, this, &RKOptionSet::serializationPropertyChanged);
 
 	row_count = new RKComponentPropertyInt (this, false, 0);
 	row_count->setInternal (true);
@@ -80,18 +79,19 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	current_row = new RKComponentPropertyInt (this, false, active_row);
 	current_row->setInternal (true);
 	addChild ("current_row", current_row);		// NOTE: read-write
-	connect (current_row, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (currentRowPropertyChanged(RKComponentPropertyBase*)));
+	connect (current_row, &RKComponentPropertyBase::valueChanged, this, &RKOptionSet::currentRowPropertyChanged);
 
 	// first build the contents, as we will need to refer to the elements inside, later
 	model = new RKOptionSetDisplayModel (this);
 	contents_container = new RKComponent (this, accordion->editorWidget ());
+	accordion->editorWidget ()->layout ()->addWidget (contents_container);
 	QDomElement content_element = xml->getChildElement (element, "content", DL_ERROR);
 	RKComponentBuilder *builder = new RKComponentBuilder (contents_container, content_element);
 	builder->buildElement (content_element, *xml, accordion->editorWidget (), false);	// NOTE that parent widget != parent component, here, by intention. The point is that the display should not be disabled along with the contents
 	builder->parseLogic (xml->getChildElement (element, "logic", DL_INFO), *xml, false);
 	builder->makeConnections ();
 	addChild ("contents", contents_container);
-	connect (standardComponent (), SIGNAL (standardInitializationComplete()), this, SLOT (fetchDefaults()));
+	connect (standardComponent (), &RKStandardComponent::standardInitializationComplete, this, &RKOptionSet::fetchDefaults);
 
 	// create columns
 	XMLChildList options = xml->getChildElements (element, "optioncolumn", DL_WARNING);
@@ -118,7 +118,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 		RKComponentPropertyStringList *column_property = new RKComponentPropertyStringList (this, false);
 		column_property->setInternal (external);	// Yes, looks strange, indeed. External properties should simply not be serialized / restored...
 		addChild (id, column_property);
-		connect (column_property, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (columnPropertyChanged(RKComponentPropertyBase*)));
+		connect (column_property, &RKComponentPropertyBase::valueChanged, this, &RKOptionSet::columnPropertyChanged);
 
 		if (!label.isEmpty ()) {
 			col_inf.display_index = visible_column_labels.size ();
@@ -165,7 +165,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 					}
 				}
 				columns_to_update.insertMulti (gov_prop, it.key ());
-				connect (gov_prop, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (governingPropertyChanged(RKComponentPropertyBase*)));
+				connect (gov_prop, &RKComponentPropertyBase::valueChanged, this, &RKOptionSet::governingPropertyChanged);
 			} else {
 				RK_DEBUG (PLUGIN, DL_ERROR, "did not find governing property %s for column %s of optionset", qPrintable (ci.governor), qPrintable (ci.column_name));
 			}
@@ -372,12 +372,6 @@ void RKOptionSet::updateUnfinishedRows () {
 	RK_ASSERT (false);	// This would mean, we did not find any unfinished row, even though we tested for n_unfinished_rows, above.
 }
 
-// TODO: removeMe
-void RKOptionSet::addRow () {
-	RK_TRACE (PLUGIN);
-	addRow (active_row >= 0 ? active_row + 1 : rowCount ());	// append feels more natural than insert, here
-}
-
 void RKOptionSet::addRow (int row) {
 	RK_TRACE (PLUGIN);
 
@@ -415,12 +409,6 @@ void RKOptionSet::addRow (int row) {
 	current_row->setIntValue (row);  // Setting this _again_, as the view might have messed with it following endInsertRows ()
 
 	changed ();
-}
-
-// TODO: removeMe
-void RKOptionSet::removeRow () {
-	RK_TRACE (PLUGIN);
-	removeRow (active_row);
 }
 
 void RKOptionSet::removeRow (int row) {
@@ -789,10 +777,9 @@ bool RKOptionSet::isValid () {
 RKOptionSetDisplayModel::RKOptionSetDisplayModel (RKOptionSet* parent) : QAbstractTableModel (parent) {
 	RK_TRACE (PLUGIN);
 	set = parent;
-	connect (&reset_timer, SIGNAL (timeout()), this, SLOT (doResetNow()));
+	connect (&reset_timer, &QTimer::timeout, this, &RKOptionSetDisplayModel::doResetNow);
 	reset_timer.setInterval (0);
 	reset_timer.setSingleShot (true);
-	setSupportedDragActions (Qt::MoveAction);
 }
 
 RKOptionSetDisplayModel::~RKOptionSetDisplayModel () {
@@ -823,8 +810,8 @@ QVariant RKOptionSetDisplayModel::data (const QModelIndex& index, int role) cons
 		}
 	} else if (role == Qt::BackgroundRole) {
 		const RKOptionSet::RowInfo &ri = set->rows[row];
-		if (!ri.finished) return Qt::yellow;
-		if (!ri.valid) return Qt::red;
+		if (!ri.finished) return QColor (Qt::yellow);
+		if (!ri.valid) return QColor (Qt::red);
 	} else if ((role == Qt::ToolTipRole) || role == (Qt::StatusTipRole)) {
 		const RKOptionSet::RowInfo &ri = set->rows[row];
 		if (!ri.finished) return i18n ("This row has not yet been processed.");
@@ -844,8 +831,8 @@ QVariant RKOptionSetDisplayModel::headerData (int section, Qt::Orientation orien
 	if (orientation == Qt::Horizontal) {
 		if (role == Qt::DisplayRole) return (column_labels.value (section));
 		if (role == Qt::BackgroundRole) {
-			if (set->n_unfinished_rows > 0) return Qt::yellow;
-			if (!set->isValid ()) return Qt::red;
+			if (set->n_unfinished_rows > 0) return QColor (Qt::yellow);
+			if (!set->isValid ()) return QColor (Qt::red);
 		}
 		if ((role == Qt::ToolTipRole) || role == (Qt::StatusTipRole)) {
 			if (set->n_unfinished_rows > 0) return i18n ("Please wait while settings are being processed");
@@ -878,7 +865,7 @@ QStringList RKOptionSetDisplayModel::mimeTypes () const {
 QMimeData* RKOptionSetDisplayModel::mimeData (const QModelIndexList& indexes) const {
 	RK_ASSERT (indexes.length () >= 1);
 	QMimeData *ret = new QMimeData ();
-	ret->setData (optionsetdisplaymodel_mt, QByteArray (QString::number (indexes.first ().row ()).toAscii ()));
+	ret->setData (optionsetdisplaymodel_mt, QByteArray (QString::number (indexes.first ().row ()).toLatin1 ()));
 	return (ret);
 }
 
@@ -887,7 +874,7 @@ bool RKOptionSetDisplayModel::dropMimeData (const QMimeData* data, Qt::DropActio
 	if (action == Qt::IgnoreAction) return true;
 	if (action == Qt::MoveAction) {
 		if (parent.isValid ()) return false;
-		int srow = QString::fromAscii (data->data (optionsetdisplaymodel_mt)).toInt ();
+		int srow = QString::fromLatin1 (data->data (optionsetdisplaymodel_mt)).toInt ();
 		set->moveRow (srow, row);
 	}
 	return false;
@@ -901,4 +888,6 @@ Qt::DropActions RKOptionSetDisplayModel::supportedDropActions () const {
     return Qt::MoveAction;
 }
 
-#include "rkoptionset.moc"
+Qt::DropActions RKOptionSetDisplayModel::supportedDragActions() const {
+	return Qt::MoveAction;
+}

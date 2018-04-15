@@ -54,7 +54,7 @@ public slots:
 	void availablePropertyChanged (RKComponentPropertyBase *);
 protected:
 /** Calls updateLook (), when enabledness changes */
-	void enabledChange (bool old) { updateLook (); QWidget::enabledChange (old); };
+	void changeEvent (QEvent *event) override;
 private:
 	void addOrRemove (bool add);
 	enum {

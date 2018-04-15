@@ -17,16 +17,14 @@
 
 #include "rkdummypart.h"
 
-#include <kglobal.h>
+#include <QGuiApplication>
 
 #include "../debug.h"
 
 RKDummyPart::RKDummyPart (QObject *parent, QWidget *widget) : KParts::Part (parent) {
 	RK_TRACE (MISC);
 	setWidget (widget);
-
-	setComponentData (KGlobal::mainComponent ());
-
+	setComponentName (QCoreApplication::applicationName (), QGuiApplication::applicationDisplayName ());
 	setXMLFile ("rkdummypart.rc");
 }
 

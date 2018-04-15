@@ -40,16 +40,16 @@ public:
 	void setPrintoutTemplate (const QString &template_string) { printout_template = template_string; };
 	void setPreviewTemplate (const QString &template_string) { preview_template = template_string; };
 
-	bool initialize (RKComponentPropertyCode *code_property=0, bool add_headings=true);
-	void destroy ();
+	bool initialize (RKComponentPropertyCode *code_property=0, bool add_headings=true) override;
+	void destroy () override;
 	
-	void preprocess (int flags);
-	void calculate (int flags);
-	void printout (int flags);
-	void preview (int flags);
+	void preprocess (int flags) override;
+	void calculate (int flags) override;
+	void printout (int flags) override;
+	void preview (int flags) override;
 	
-	void writeData (const QVariant &data);
-	void tryNextFunction ();
+	void writeData (const QVariant &data) override;
+	void tryNextFunction () override;
 private:
 	QString preprocess_template;
 	QString calculate_template;

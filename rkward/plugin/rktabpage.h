@@ -24,7 +24,6 @@
 
 class QDomElement;
 class QTabWidget;
-class KVBox;
 
 /** A passive component acting as a page in a tabbook. The only function is, that if the component is hidden, the corresponding tab in the tabbook is also hidden.
 
@@ -37,8 +36,8 @@ public:
 
 	~RKTabPage ();
 
-	// returns the page child elements should be drawn in
-	KVBox *getPage () { return page; };
+	/** @returns the page child elements should be drawn in */
+	QWidget *getPage () { return this; };
 
 	int type () { return ComponentTab; };
 
@@ -46,7 +45,6 @@ public slots:
 /** called when visibile or enabled properties change */
 	void visibleEnabledChanged (RKComponentPropertyBase *property);
 private:
-	KVBox *page;
 	QTabWidget *tabbook;
 	int index;
 	QString label;

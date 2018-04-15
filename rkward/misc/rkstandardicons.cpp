@@ -17,8 +17,6 @@
 
 #include "rkstandardicons.h"
 
-#include "kicon.h"
-
 #include "../core/robject.h"
 #include "../core/robjectlist.h"
 #include "../windows/rkmdiwindow.h"
@@ -27,12 +25,21 @@
 #include "../debug.h"
 
 // static
-QIcon RKStandardIcons::icons[Last];
+RKStandardIcons* RKStandardIcons::instance = 0;
 
 void RKStandardIcons::initIcons () {
 	RK_TRACE (APP);
 
-	RK_ASSERT (icons[ActionRunAll].isNull ());	// init only once
+	RK_ASSERT (!instance);	// init only once
+	instance = new RKStandardIcons ();
+	instance->doInitIcons ();
+}
+
+// TODO: With number of items growing, we should probably use a lazy-loading approach, instead:
+//       if (!loaded[thing]) initIcon (thing);
+//       return icons[thing];
+void RKStandardIcons::doInitIcons () {
+	RK_TRACE (APP);
 
 	// base path for icons provided by rkward itself
 	QString rkward_icon_base = RKCommonFunctions::getRKWardDataDir () + "icons/";
@@ -41,48 +48,48 @@ void RKStandardIcons::initIcons () {
 	icons[ActionRunAll] = QIcon (rkward_icon_base + "run_all.png");
 	icons[ActionRunLine] = QIcon (rkward_icon_base + "run_line.png");
 	icons[ActionRunSelection] = QIcon (rkward_icon_base + "run_selection.png");
-	icons[ActionCDToScript] = KIcon ("folder-txt");
+	icons[ActionCDToScript] = QIcon::fromTheme("folder-txt");
 
-	icons[ActionConfigurePackages] = KIcon ("utilities-file-archiver");
-	icons[ActionConfigureGeneric] = KIcon ("configure");
-	icons[ActionSearch] = KIcon ("edit-find");
+	icons[ActionConfigurePackages] = QIcon::fromTheme("utilities-file-archiver");
+	icons[ActionConfigureGeneric] = QIcon::fromTheme("configure");
+	icons[ActionSearch] = QIcon::fromTheme("edit-find");
 
-	icons[ActionDeleteRow] = KIcon ("edit-delete");
-	icons[ActionInsertRow] = KIcon ("list-add");
+	icons[ActionDeleteRow] = QIcon::fromTheme("edit-delete");
+	icons[ActionInsertRow] = QIcon::fromTheme("list-add");
 	icons[ActionDeleteVar] = icons[ActionDeleteRow];
 	icons[ActionInsertVar] = icons[ActionInsertRow];
 	icons[ActionPasteInsideTable] = QIcon (rkward_icon_base + "paste_inside_table.png");
 	icons[ActionPasteInsideSelection] = QIcon (rkward_icon_base + "paste_inside_selection.png");
 
 	icons[ActionDelete] = icons[ActionDeleteRow];
-	icons[ActionAddRight] = KIcon ("arrow-right");
-	icons[ActionRemoveLeft] = KIcon ("arrow-left");
+	icons[ActionAddRight] = QIcon::fromTheme("arrow-right");
+	icons[ActionRemoveLeft] = QIcon::fromTheme("arrow-left");
 
-	icons[ActionMoveLeft] = KIcon ("go-previous");
-	icons[ActionMoveRight] = KIcon ("go-next");
-	icons[ActionMoveFirst] = KIcon ("go-first");
-	icons[ActionMoveLast] = KIcon ("go-last");
-	icons[ActionMoveUp] = KIcon ("go-up");
-	icons[ActionMoveDown] = KIcon ("go-down");
+	icons[ActionMoveLeft] = QIcon::fromTheme("go-previous");
+	icons[ActionMoveRight] = QIcon::fromTheme("go-next");
+	icons[ActionMoveFirst] = QIcon::fromTheme("go-first");
+	icons[ActionMoveLast] = QIcon::fromTheme("go-last");
+	icons[ActionMoveUp] = QIcon::fromTheme("go-up");
+	icons[ActionMoveDown] = QIcon::fromTheme("go-down");
 
-	icons[ActionExpandDown] = KIcon ("arrow-right");
-	icons[ActionCollapseUp] = KIcon ("arrow-down");
+	icons[ActionExpandDown] = QIcon::fromTheme("arrow-right");
+	icons[ActionCollapseUp] = QIcon::fromTheme("arrow-down");
 
-	icons[ActionDocumentInfo] = KIcon ("documentinfo.png");
-	icons[ActionFlagGreen] = KIcon ("flag-green.png");
-	icons[ActionSnapshot] = KIcon ("list-add.png");
-	icons[ActionListPlots] = KIcon ("view-preview.png");
-	icons[ActionRemovePlot] = KIcon ("list-remove.png");
-	icons[ActionWindowDuplicate] = KIcon ("window-duplicate.png");
+	icons[ActionDocumentInfo] = QIcon::fromTheme("documentinfo.png");
+	icons[ActionFlagGreen] = QIcon::fromTheme("flag-green.png");
+	icons[ActionSnapshot] = QIcon::fromTheme("list-add.png");
+	icons[ActionListPlots] = QIcon::fromTheme("view-preview.png");
+	icons[ActionRemovePlot] = QIcon::fromTheme("list-remove.png");
+	icons[ActionWindowDuplicate] = QIcon::fromTheme("window-duplicate.png");
 
-	icons[ActionClear] = KIcon ("edit-clear.png");
-	icons[ActionInterrupt] = KIcon ("media-playback-stop");
+	icons[ActionClear] = QIcon::fromTheme("edit-clear.png");
+	icons[ActionInterrupt] = QIcon::fromTheme("media-playback-stop");
 
-	icons[ActionDetachWindow] = KIcon ("view-fullscreen");
-	icons[ActionAttachWindow] = KIcon ("view-restore");
+	icons[ActionDetachWindow] = QIcon::fromTheme("view-fullscreen");
+	icons[ActionAttachWindow] = QIcon::fromTheme("view-restore");
 
-	icons[ActionLock] = KIcon ("object-locked");
-	icons[ActionUnlock] = KIcon ("object-unlocked");
+	icons[ActionLock] = QIcon::fromTheme("object-locked");
+	icons[ActionUnlock] = QIcon::fromTheme("object-unlocked");
 
 	icons[ActionShowMenu] = QIcon::fromTheme ("application-menu");
 	if (icons[ActionShowMenu].isNull ()) icons[ActionShowMenu] = QIcon (rkward_icon_base + "menu.svg");  // fallback
@@ -90,73 +97,73 @@ void RKStandardIcons::initIcons () {
 	// objects
 	icons[ObjectList] = QIcon (rkward_icon_base + "list.png");
 	icons[ObjectFunction] = QIcon (rkward_icon_base + "function.png");
-	icons[ObjectEnvironment] = KIcon ("konqueror");
+	icons[ObjectEnvironment] = QIcon::fromTheme("konqueror");
 	icons[ObjectPackageEnvironment] = icons[ActionConfigurePackages];
 	icons[ObjectMatrix] = QIcon (rkward_icon_base + "matrix.png");
-	icons[ObjectDataFrame] = KIcon ("x-office-spreadsheet");
+	icons[ObjectDataFrame] = QIcon::fromTheme("x-office-spreadsheet");
 	icons[ObjectDataNumeric] = QIcon (rkward_icon_base + "data-numeric.png");
 	icons[ObjectDataFactor] = QIcon (rkward_icon_base + "data-factor.png");
-	icons[ObjectDataCharacter] = KIcon ("draw-text");
+	icons[ObjectDataCharacter] = QIcon::fromTheme("draw-text");
 	icons[ObjectDataLogical] = QIcon (rkward_icon_base + "data-logical.png");
-	icons[ObjectDataUnknown] = KIcon ("unknown");
+	icons[ObjectDataUnknown] = QIcon::fromTheme("unknown");
 	icons[ObjectDataOther] = icons[ActionDeleteRow];
 	icons[ObjectPseudo] = QIcon (rkward_icon_base + "s4_slots.png");
 
 	// windows
 	icons[WindowDataFrameEditor] = icons[ObjectDataFrame];
-	icons[WindowCommandEditor] = KIcon ("text-x-makefile");	// this may not be the most obvious choice, but it is not quite as awfully close to the data.frame editor icons as most other text icons
-	icons[WindowOutput] = KIcon ("applications-education");
-	icons[WindowHelp] = KIcon ("help-contents");
-	icons[WindowX11] = KIcon ("x");
-	icons[WindowObject] = KIcon ("zoom-original");
-	icons[WindowConsole] = KIcon ("utilities-terminal");
-	icons[WindowCommandLog] = KIcon ("format-justify-left");
-	icons[WindowWorkspaceBrowser] = KIcon ("view-list-tree");
-	icons[WindowSearchHelp] = KIcon ("help-contents");
-	icons[WindowPendingJobs] = KIcon ("system-run");
-	icons[WindowFileBrowser] = KIcon ("folder");
-	icons[WindowDebugConsole] = KIcon ("view-process-system");
-	icons[WindowCallstackViewer] = KIcon ("view-sort-ascending");
+	icons[WindowCommandEditor] = QIcon::fromTheme("text-x-makefile");	// this may not be the most obvious choice, but it is not quite as awfully close to the data.frame editor icons as most other text icons
+	icons[WindowOutput] = QIcon::fromTheme("applications-education");
+	icons[WindowHelp] = QIcon::fromTheme("help-contents");
+	icons[WindowX11] = QIcon::fromTheme("applications-graphics");
+	icons[WindowObject] = QIcon::fromTheme("zoom-original");
+	icons[WindowConsole] = QIcon::fromTheme("utilities-terminal");
+	icons[WindowCommandLog] = QIcon::fromTheme("format-justify-left");
+	icons[WindowWorkspaceBrowser] = QIcon::fromTheme("view-list-tree");
+	icons[WindowSearchHelp] = QIcon::fromTheme("help-contents");
+	icons[WindowPendingJobs] = QIcon::fromTheme("system-run");
+	icons[WindowFileBrowser] = QIcon::fromTheme("folder");
+	icons[WindowDebugConsole] = QIcon::fromTheme("view-process-system");
+	icons[WindowCallstackViewer] = QIcon::fromTheme("view-sort-ascending");
 
-	icons[DocumentPDF] = KIcon ("application-pdf");
+	// TODO: We really want an hourglass symbol, or similar, here.
+	icons[StatusWaitingUpdating] = QIcon::fromTheme ("system-search");
 
-	// KF5 TODO: The code below should work allright with QIcon::fromTheme
-/*	This does not work, as the icons are not really Null in this case, but some default icon. Any way to really test this?
+	icons[DocumentPDF] = QIcon::fromTheme("application-pdf");
+
 	RK_DO ({
 		for (int i = ActionRunAll; i < Last; ++i) {
 			if (icons[i].isNull ()) qDebug ("Icon %d could not be loaded", i);
 		}
 	}, MISC, DL_ERROR);
-*/
 }
 
 QIcon RKStandardIcons::iconForObject (const RObject* object) {
 	// don't trace this
 
-	if (!object) return icons[ObjectDataOther];
-	if (object->isDataFrame ()) return icons[ObjectDataFrame];
+	if (!object) return getIcon (ObjectDataOther);
+	if (object->isDataFrame ()) return getIcon (ObjectDataFrame);
 	if (object->isVariable()) {
 		switch (object->getDataType ()) {
 			case RObject::DataNumeric:
-				return icons[ObjectDataNumeric];
+				return getIcon (ObjectDataNumeric);
 			case RObject::DataFactor:
-				return icons[ObjectDataFactor];
+				return getIcon (ObjectDataFactor);
 			case RObject::DataCharacter:
-				return icons[ObjectDataCharacter];
+				return getIcon (ObjectDataCharacter);
 			case RObject::DataLogical:
-				return icons[ObjectDataLogical];
+				return getIcon (ObjectDataLogical);
 			case RObject::DataUnknown:
-				return icons[ObjectDataUnknown];
+				return getIcon (ObjectDataUnknown);
 			default:
-				return icons[ObjectDataOther];
+				return getIcon (ObjectDataOther);
 		}
 	}
-	if (object->isSlotsPseudoObject ()) return icons[ObjectPseudo];
-	if (object->isType (RObject::List)) return icons[ObjectList];
-	if (object->isType (RObject::Function)) return icons[ObjectFunction];
-	if (object->isType (RObject::Matrix)) return icons[ObjectMatrix];
-	if (object->isType (RObject::PackageEnv)) return icons[ObjectPackageEnvironment];
-	if (object->isType (RObject::Environment)) return icons[ObjectEnvironment];
+	if (object->isSlotsPseudoObject ()) return getIcon (ObjectPseudo);
+	if (object->isType (RObject::List)) return getIcon (ObjectList);
+	if (object->isType (RObject::Function)) return getIcon (ObjectFunction);
+	if (object->isType (RObject::Matrix)) return getIcon (ObjectMatrix);
+	if (object->isType (RObject::PackageEnv)) return getIcon (ObjectPackageEnvironment);
+	if (object->isType (RObject::Environment)) return getIcon (ObjectEnvironment);
 
 	return QIcon ();
 }
@@ -165,20 +172,20 @@ QIcon RKStandardIcons::iconForWindow (const RKMDIWindow* window) {
 	// don't trace this
 	if (!window) return QIcon ();
 
-	if (window->isType (RKMDIWindow::DataEditorWindow)) return icons[WindowDataFrameEditor];
-	if (window->isType (RKMDIWindow::CommandEditorWindow)) return icons[WindowCommandEditor];
-	if (window->isType (RKMDIWindow::OutputWindow)) return icons[WindowOutput];
-	if (window->isType (RKMDIWindow::HelpWindow)) return icons[WindowHelp];
-	if (window->isType (RKMDIWindow::X11Window)) return icons[WindowX11];
-	if (window->isType (RKMDIWindow::ObjectWindow)) return icons[WindowObject];
-	if (window->isType (RKMDIWindow::ConsoleWindow)) return icons[WindowConsole];
-	if (window->isType (RKMDIWindow::CommandLogWindow)) return icons[WindowCommandLog];
-	if (window->isType (RKMDIWindow::WorkspaceBrowserWindow)) return icons[WindowWorkspaceBrowser];
-	if (window->isType (RKMDIWindow::SearchHelpWindow)) return icons[WindowSearchHelp];
-	if (window->isType (RKMDIWindow::PendingJobsWindow)) return icons[WindowPendingJobs];
-	if (window->isType (RKMDIWindow::FileBrowserWindow)) return icons[WindowFileBrowser];
-	if (window->isType (RKMDIWindow::DebugConsoleWindow)) return icons[WindowDebugConsole];
-	if (window->isType (RKMDIWindow::CallstackViewerWindow)) return icons[WindowCallstackViewer];
+	if (window->isType (RKMDIWindow::DataEditorWindow)) return getIcon (WindowDataFrameEditor);
+	if (window->isType (RKMDIWindow::CommandEditorWindow)) return getIcon (WindowCommandEditor);
+	if (window->isType (RKMDIWindow::OutputWindow)) return getIcon (WindowOutput);
+	if (window->isType (RKMDIWindow::HelpWindow)) return getIcon (WindowHelp);
+	if (window->isType (RKMDIWindow::X11Window)) return getIcon (WindowX11);
+	if (window->isType (RKMDIWindow::ObjectWindow)) return getIcon (WindowObject);
+	if (window->isType (RKMDIWindow::ConsoleWindow)) return getIcon (WindowConsole);
+	if (window->isType (RKMDIWindow::CommandLogWindow)) return getIcon (WindowCommandLog);
+	if (window->isType (RKMDIWindow::WorkspaceBrowserWindow)) return getIcon (WindowWorkspaceBrowser);
+	if (window->isType (RKMDIWindow::SearchHelpWindow)) return getIcon (WindowSearchHelp);
+	if (window->isType (RKMDIWindow::PendingJobsWindow)) return getIcon (WindowPendingJobs);
+	if (window->isType (RKMDIWindow::FileBrowserWindow)) return getIcon (WindowFileBrowser);
+	if (window->isType (RKMDIWindow::DebugConsoleWindow)) return getIcon (WindowDebugConsole);
+	if (window->isType (RKMDIWindow::CallstackViewerWindow)) return getIcon (WindowCallstackViewer);
 
 	RK_ASSERT (false);
 	return QIcon ();

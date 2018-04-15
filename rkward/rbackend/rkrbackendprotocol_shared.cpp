@@ -2,7 +2,7 @@
                           rkrbackendprotocol  -  description
                              -------------------
     begin                : Thu Nov 04 2010
-    copyright            : (C) 2010, 2011, 2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2010, 2011, 2013, 2017 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -167,3 +167,29 @@ QString RKRSharedFunctionality::quote (const QString &string) {
 
 	return ret;
 }
+
+#include <QFile>
+/* These definitions don't really belong into this file, but, importantly, they need to be compiled for both frontend and backend. */
+namespace RK_Debug {
+	int RK_Debug_Level = 0;
+	int RK_Debug_Flags = DEBUG_ALL;
+	int RK_Debug_CommandStep = 0;
+	QFile *debug_file = 0;
+
+	bool setupLogFile (const QString &basename) {
+		QStringList all_debug_files (basename);
+		all_debug_files << basename + ".0" << basename + ".1";
+		for (int i = all_debug_files.size () -1; i >= 0; --i) {
+			QFile oldfile (all_debug_files[i]);
+			if (oldfile.exists ()) {
+				if (i < all_debug_files.size () -1) {
+					oldfile.rename (all_debug_files[i+1]);
+				} else {
+					oldfile.remove ();
+				}
+			}
+		}
+		debug_file = new QFile (basename);
+		return (debug_file->open (QIODevice::WriteOnly | QIODevice::Truncate));
+	}
+};

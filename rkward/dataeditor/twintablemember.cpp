@@ -36,14 +36,14 @@ TwinTableMember::TwinTableMember (QWidget *parent) : RKTableView (parent){
 	setSelectionMode (QAbstractItemView::ContiguousSelection);
 
 	verticalHeader ()->setContextMenuPolicy (Qt::CustomContextMenu);
-	connect (verticalHeader (), SIGNAL (customContextMenuRequested(QPoint)), this, SLOT (handleContextMenuRequest(QPoint)));
+	connect (verticalHeader (), &QWidget::customContextMenuRequested, this, &TwinTableMember::handleContextMenuRequest);
 	horizontalHeader ()->setContextMenuPolicy (Qt::CustomContextMenu);
-	connect (horizontalHeader (), SIGNAL (customContextMenuRequested(QPoint)), this, SLOT (handleContextMenuRequest(QPoint)));
+	connect (horizontalHeader (), &QWidget::customContextMenuRequested, this, &TwinTableMember::handleContextMenuRequest);
 	setContextMenuPolicy (Qt::CustomContextMenu);
-	connect (this, SIGNAL (customContextMenuRequested(QPoint)), this, SLOT (handleContextMenuRequest(QPoint)));
+	connect (this, &QWidget::customContextMenuRequested, this, &TwinTableMember::handleContextMenuRequest);
 
 	updating_twin = false;
-	connect (this, SIGNAL (blankSelectionRequest()), this, SLOT (blankSelected()));
+	connect (this, &TwinTableMember::blankSelectionRequest, this, &TwinTableMember::blankSelected);
 }
 
 TwinTableMember::~TwinTableMember(){
@@ -57,7 +57,7 @@ void TwinTableMember::setRKModel (RKVarEditModelBase* model) {
 	setModel (model);
 
 	// now we should also have a selectionModel() (but not before)
-	connect (selectionModel (), SIGNAL (selectionChanged(QItemSelection,QItemSelection)), this, SLOT (tableSelectionChanged(QItemSelection,QItemSelection)));
+	connect (selectionModel (), &QItemSelectionModel::selectionChanged, this, &TwinTableMember::tableSelectionChanged);
 }
 
 void TwinTableMember::setTwin (TwinTableMember * new_twin) {
@@ -65,7 +65,7 @@ void TwinTableMember::setTwin (TwinTableMember * new_twin) {
 	twin = new_twin;
 
 	// probably we only need this one way (metaview->dataview), but why not be safe, when it's so easy
-	connect (twin->horizontalHeader (), SIGNAL (sectionResized(int,int,int)), this, SLOT (updateColWidth(int,int,int)));
+	connect (twin->horizontalHeader (), &QHeaderView::sectionResized, this, &TwinTableMember::updateColWidth);
 }
 
 void TwinTableMember::tableSelectionChanged (const QItemSelection& selected, const QItemSelection&) {
@@ -171,4 +171,3 @@ void TwinTableMember::handleContextMenuRequest (const QPoint& pos) {
 	}
 }
 
-#include "twintablemember.moc"

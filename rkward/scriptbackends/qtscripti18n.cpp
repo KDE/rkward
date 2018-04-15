@@ -26,4 +26,3 @@ void RKMessageCatalogObject::addI18nToScriptEngine (QScriptEngine* engine, const
 	engine->globalObject ().setProperty ("_i18n", handle);
 }
 
-#include "qtscripti18n.moc"

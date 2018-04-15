@@ -1,13 +1,64 @@
-rkward (0.6.4z+0.6.5+devel1-1) UNRELEASED; urgency=low
-  * new upstream release
+rkward (0.7.0-1) unstable; urgency=low
+  * THIS IS AN INOFFICIAL PACKAGE
+    We use this to build debian packages for a variety to Debian/Ubuntu
+    releases, automatically and manually. It is close to the official packages, but due
+    to the need to cover more divergent systems, it is not identical to those.
+    All changelog entries below cover only the official debian package, not the changes
+    made to this inofficial packaging.
+  * New upstream release
+  * The divergently licenced qwinhost-files are no longer part of this release,
+    simplifying copyright
+  * Package now based on kf5-libraries, instead of KDE 4
+    closes: #531086
+  * Add dependency on r-api-3.4 to ease handling of future non-compatible
+    changes in R
+    closes: #877283
+  * Use dh_auto_configure for basic setup
+  * Remove debian/rkward.menu, as package provides a FreeDesktop entry
+  * Update VCS-browser, watch, and some other urls
+  * Update standards version to 4.1.4
+  * Add lintian overrides for r-data-without-readme-source and
+    desktop-command-not-in-package
+  * Make rkward binary package depend on identical version rkward-data package
+  * Increase debhelper compat level to 11
+  * Use SOURCE_DATE_EPOCH for build timestamp, instead of parsing changelog
 
- -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Wed, 16 Dec 2015 10:30:00 +0100
+ -- Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>  Sat, 14 Apr 2018 13:00:00 +0100
+
+rkward (0.6.5-1) unstable; urgency=low
+  * new upstream release
+    (unchanged with respect to ~rc1)
+  * fix debian/watch file
+  * always use build-time version of r-base-core as runtime dependency, even
+    if most builds would actually be backwards compatible
+  * switch to dh-based rules file. This also fixes missing separation between
+    arch-dependent and arch-independent build targets
+  * Make build really reproducible (fix for earlier attempt upstream)
+    closes: #783290
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Mon, 04 Apr 2016 11:00:00 +0100
+
+rkward (0.6.5~rc1-1) unstable; urgency=low
+  * new upstream release
+  * split architecture independent files into new rkward-data package
+  * bump standards version to 3.9.7 (no changes needed)
+  * strip testing locale "x-test" from package
+  * add override for false-positive source-contains-prebuilt-javascript-object
+    lintian warnings
+  * make existing lintian overrides work with lintian 2.5.42
+  * Adjust copyright file to changed filenames in rkward/qwinhost
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Tue, 29 Mar 2016 11:00:00 +0100
 
 rkward (0.6.4-1) unstable; urgency=low
   * new upstream release
+  * add override for false-positive source-is-missing lintian warnings
   * remove obsolete README.Debian file
-  * now uses QtWebKit module, adjust build-depends, accordingly (in a way that is
-    backwards compatible with Ubuntu Lucid)
+  * increase debhelper compatibility level to 9 (no changes needed)
+  * replace dh_clean -k with dh_prep
+  * remove legacy rules dealing with R versions prior to 3.0.0
+  * upstream has replaced KHTMLPart with QWebKit. As Qt4WebKit is scheduled for
+    removal, revert this change, here. Change to 3.0 (quilt) format for this.
   * Make build reproducible (thanks to Philip Rinn)
     closes: #783290
 
@@ -65,7 +116,7 @@ rkward (0.6.0-2) unstable; urgency=low
   * make sure to include CPPFLAGS and LDFLAGS in call to cmake
   * correct path to qwinhost files in debian/copyright
   * correct syntax in debian/copyright (thanks to Laszlo Kajan)
-  
+
  -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Sat, 24 Nov 2012 14:15:00 +0200
 
 rkward (0.6.0-1) unstable; urgency=low
@@ -259,7 +310,7 @@ rkward (0.4.9a-1) unstable; urgency=low
 
 rkward (0.4.9-2) unstable; urgency=low
 
-  * remove --ignore-missing-info parameter again (dpkg-shlibdeps 1.14.12 
+  * remove --ignore-missing-info parameter again (dpkg-shlibdeps 1.14.12
     does not need it, anymore)
   * when uploaded to main archive, this
     closes: #460745
@@ -276,7 +327,7 @@ rkward (0.4.9-1) unstable; urgency=low
 
 rkward (0.4.8a-2) unstable; urgency=low
 
-  * quote the R CMD config calls, as they may also contain compiler arguments 
+  * quote the R CMD config calls, as they may also contain compiler arguments
     (thanks to Meik Michalke for a patch)
 
  -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Thu, 14 Nov 2007 13:30:00 +0200
@@ -304,7 +355,7 @@ rkward (0.4.7a-2) unstable; urgency=low
     closes: #432377
   * merge upstream fix for R 2.6
     closes: #442059
-  * changed distclean rule in debian/rules to only ignore missing Makefiles 
+  * changed distclean rule in debian/rules to only ignore missing Makefiles
 
  -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Fri, 14 Sep 2007 13:30:00 +0200
 
@@ -396,7 +447,7 @@ rkward (0.3.7-1) unstable; urgency=low
 
 rkward (0.3.6-4) unstable; urgency=low
 
-  * fix automatic build on alpha machines 
+  * fix automatic build on alpha machines
     patch provided by Martin Michlmayr <tbm@cyrius.com>
     closes: #374005
   * bumbed to standards 3.7.2

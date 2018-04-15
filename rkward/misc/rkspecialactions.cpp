@@ -17,7 +17,7 @@
 
 #include "rkspecialactions.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "../debug.h"
 
@@ -25,7 +25,7 @@ RKPasteSpecialAction::RKPasteSpecialAction (QObject* parent) : KPasteTextAction 
 	RK_TRACE (MISC);
 
 	setText (i18n ("Paste special..."));
-	connect (this, SIGNAL (triggered(bool)), this, SLOT (doSpecialPaste()));
+	connect (this, &QAction::triggered, this, &RKPasteSpecialAction::doSpecialPaste);
 }
 
 RKPasteSpecialAction::~RKPasteSpecialAction () {
@@ -53,22 +53,20 @@ void RKPasteSpecialAction::doSpecialPaste () {
 #include <QApplication>
 #include <QClipboard>
 #include <QMimeData>
-
-#include <kvbox.h>
-#include <khbox.h>
+#include <QDialogButtonBox>
+#include <QPushButton>
 
 #include "../dataeditor/rktextmatrix.h"
 #include "../core/robject.h"
 
-RKPasteSpecialDialog::RKPasteSpecialDialog (QWidget* parent) : KDialog (parent) {
+RKPasteSpecialDialog::RKPasteSpecialDialog (QWidget* parent) : QDialog (parent) {
 	RK_TRACE (MISC);
 
-	setCaption (i18n ("Paste Special..."));
-	setButtons (KDialog::Ok | KDialog::Cancel);
+	setWindowTitle (i18n ("Paste Special..."));
 
-	KVBox* page = new KVBox (this);
-	setMainWidget (page);
-	KHBox* row = new KHBox (page);
+	QVBoxLayout *pagelayout = new QVBoxLayout (this);
+	QHBoxLayout *rowlayout = new QHBoxLayout ();
+	pagelayout->addLayout (rowlayout);
 
 	QGroupBox* box;
 	QVBoxLayout* group_layout;
@@ -76,7 +74,7 @@ RKPasteSpecialDialog::RKPasteSpecialDialog (QWidget* parent) : KDialog (parent) 
 	QRadioButton* rbutton;
 
 	// Mode box
-	box = new QGroupBox (i18n ("Paste Mode"), row);
+	box = new QGroupBox (i18n ("Paste Mode"), this);
 	group_layout = new QVBoxLayout (box);
 	dimensionality_group = new QButtonGroup (box);
 	rbutton = new QRadioButton (i18n ("Single string"), box);
@@ -89,12 +87,13 @@ RKPasteSpecialDialog::RKPasteSpecialDialog (QWidget* parent) : KDialog (parent) 
 	dimensionality_group->addButton (rbutton, DimMatrix);
 	rbutton->setChecked (true);
 	group_layout->addWidget (rbutton);
-	connect (dimensionality_group, SIGNAL (buttonClicked(int)), this, SLOT (updateState()));
+	connect (dimensionality_group, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &RKPasteSpecialDialog::updateState);
+	rowlayout->addWidget (box);
 
 	const QMimeData* clipdata = QApplication::clipboard ()->mimeData ();
 
 	// Separator box
-	box = new QGroupBox (i18n ("Field Separator"), row);
+	box = new QGroupBox (i18n ("Field Separator"), this);
 	group_layout = new QVBoxLayout (box);
 	separator_group = new QButtonGroup (box);
 	rbutton = new QRadioButton (i18n ("Tab"), box);
@@ -118,12 +117,14 @@ RKPasteSpecialDialog::RKPasteSpecialDialog (QWidget* parent) : KDialog (parent) 
 	separator_freefield = new QLineEdit (";", box);
 	h_layout->addWidget (separator_freefield);
 	group_layout->addLayout (h_layout);
-	connect (separator_group, SIGNAL (buttonClicked(int)), this, SLOT (updateState()));
+	connect (separator_group, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &RKPasteSpecialDialog::updateState);
+	rowlayout->addWidget (box);
 
-	row = new KHBox (page);
+	rowlayout = new QHBoxLayout;
+	pagelayout->addLayout (rowlayout);
 
 	// Quoting box
-	box = new QGroupBox (i18n ("Quoting"), row);
+	box = new QGroupBox (i18n ("Quoting"), this);
 	group_layout = new QVBoxLayout (box);
 	quoting_group = new QButtonGroup (box);
 	rbutton = new QRadioButton (i18n ("Do not quote values"), box);
@@ -136,10 +137,11 @@ RKPasteSpecialDialog::RKPasteSpecialDialog (QWidget* parent) : KDialog (parent) 
 	rbutton = new QRadioButton (i18n ("Quote all values"), box);
 	quoting_group->addButton (rbutton, QuoteAll);
 	group_layout->addWidget (rbutton);
-	connect (quoting_group, SIGNAL (buttonClicked(int)), this, SLOT (updateState()));
+	connect (quoting_group, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &RKPasteSpecialDialog::updateState);
+	rowlayout->addWidget (box);
 
 	// further controls
-	box = new QGroupBox (i18n ("Transformations"), row);
+	box = new QGroupBox (i18n ("Transformations"), this);
 	group_layout = new QVBoxLayout (box);
 	reverse_h_box = new QCheckBox (i18n ("Reverse horizontally"), box);
 	group_layout->addWidget (reverse_h_box);
@@ -150,6 +152,12 @@ RKPasteSpecialDialog::RKPasteSpecialDialog (QWidget* parent) : KDialog (parent) 
 	insert_nas_box = new QCheckBox (i18n ("Insert NAs where needed"), box);
 	insert_nas_box->setChecked (true);
 	group_layout->addWidget (insert_nas_box);
+	rowlayout->addWidget (box);
+
+	QDialogButtonBox *buttons = new QDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+	connect (buttons->button (QDialogButtonBox::Ok), &QPushButton::clicked, this, &QDialog::accept);
+	connect (buttons->button (QDialogButtonBox::Cancel), &QPushButton::clicked, this, &QDialog::reject);
+	pagelayout->addWidget (buttons);
 
 	updateState ();		// initialize
 }
@@ -250,4 +258,3 @@ QString RKPasteSpecialDialog::prepString (const QString& src) const {
 	return src;
 }
 
-#include "rkspecialactions.moc"

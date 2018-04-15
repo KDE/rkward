@@ -16,21 +16,21 @@
  ***************************************************************************/
 #include "editlabelsdialog.h"
 
-#include <klocale.h>
-#include <kdialog.h>
-#include <kaction.h>
+#include <KLocalizedString>
 #include <kactioncollection.h>
-#include <kvbox.h>
 
 #include <qlabel.h>
-#include <qlayout.h>
 #include <QHeaderView>
 #include <QTimer>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QAction>
+#include <QDialogButtonBox>
+#include <QPushButton>
 
 #include "../core/rkvariable.h"
 #include "../dataeditor/rktextmatrix.h"
+#include "../misc/rkdialogbuttonbox.h"
 #include "celleditor.h"
 
 #include "../debug.h"
@@ -50,7 +50,7 @@ RKVarLevelsTable::RKVarLevelsTable (QWidget *parent, const RObject::ValueLabels&
 	setContextMenuPolicy (Qt::ActionsContextMenu);
 
 	setModel (lmodel = new RKVarLevelsTableModel (labels, this));
-	connect (this, SIGNAL (blankSelectionRequest()), this, SLOT (blankSelected()));
+	connect (this, &RKVarLevelsTable::blankSelectionRequest, this, &RKVarLevelsTable::blankSelected);
 	setRKItemDelegate (new RKItemDelegate (this, lmodel, true));
 	trailing_rows = 1;
 }
@@ -207,18 +207,21 @@ QVariant RKVarLevelsTableModel::headerData (int section, Qt::Orientation orienta
 
 //////////////// EditLabelsDialog ///////////////////////
 
-EditLabelsDialog::EditLabelsDialog (QWidget *parent, const RObject::ValueLabels& labels, const QString& varname) : KDialog (parent) {
+EditLabelsDialog::EditLabelsDialog (QWidget *parent, const RObject::ValueLabels& labels, const QString& varname) : QDialog (parent) {
 	RK_TRACE (EDITOR);
 
-	KVBox *mainvbox = new KVBox ();
-	setMainWidget (mainvbox);
-	QLabel *label = new QLabel (i18n ("Levels can be assigned only to consecutive integers starting with 1 (the index column is read only). To remove levels at the end of the list, just set them to empty."), mainvbox);
+	setWindowTitle (i18n ("Levels / Value labels for '%1'", varname));
+
+	QVBoxLayout *layout = new QVBoxLayout (this);
+	QLabel *label = new QLabel (i18n ("Levels can be assigned only to consecutive integers starting with 1 (the index column is read only). To remove levels at the end of the list, just set them to empty."), this);
 	label->setWordWrap (true);
+	layout->addWidget (label);
 
-	table = new RKVarLevelsTable (mainvbox, labels);
+	table = new RKVarLevelsTable (this, labels);
+	layout->addWidget (table);
 
-	setButtons (KDialog::Ok | KDialog::Cancel);
-	setCaption (i18n ("Levels / Value labels for '%1'", varname));
+	RKDialogButtonBox *buttons = new RKDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+	layout->addWidget (buttons);
 }
 
 EditLabelsDialog::~EditLabelsDialog () {
@@ -229,7 +232,7 @@ void EditLabelsDialog::accept () {
 	RK_TRACE (EDITOR);
 
 	table->setCurrentIndex (QModelIndex ());	// should flush editing
-	KDialog::accept ();
+	QDialog::accept ();
 }
 
 ////////////////// EditLabelsDialogProxy /////////////////////////
@@ -251,7 +254,7 @@ void EditLabelsDialogProxy::initialize (const RObject::ValueLabels& labels, cons
 	EditLabelsDialogProxy::labels = labels;		// we need to take a copy in case the dialog is rejected
 
 	dialog = new EditLabelsDialog (this, labels, varname);
-	connect (dialog, SIGNAL (finished(int)), this, SLOT (dialogDone(int)));
+	connect (dialog, &QDialog::finished, this, &EditLabelsDialogProxy::dialogDone);
 	QTimer::singleShot (0, dialog, SLOT (exec()));
 }
 
@@ -270,4 +273,3 @@ void EditLabelsDialogProxy::dialogDone (int result) {
 }
 
 
-#include "editlabelsdialog.moc"

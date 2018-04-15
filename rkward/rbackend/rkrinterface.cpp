@@ -1,8 +1,8 @@
 /***************************************************************************
-                          rinterface.cpp  -  description
+                          rkrinterface.cpp  -  description
                              -------------------
     begin                : Fri Nov 1 2002
-    copyright            : (C) 2002-2016 by Thomas Friedrichsmeier
+    copyright            : (C) 2002-2017 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "rinterface.h"
+#include "rkrinterface.h"
 
 #include "rcommandstack.h"
 #include "rkrbackendprotocol_frontend.h"
@@ -48,24 +48,19 @@
 
 #include "../windows/rkwindowcatcher.h"
 
-#ifndef DISABLE_RKWINDOWCATCHER
-// putting this here instead of the class-header so I'm able to mess with it often without long recompiles. Fix when it works!
-RKWindowCatcher *window_catcher;
-#endif // DISABLE_RKWINDOWCATCHER
-
 #include "../rkglobals.h"
 #include "../version.h"
 #include "../debug.h"
 
 #include <kmessagebox.h>
-#include <kfiledialog.h>
-#include <klocale.h>
-#include <kstandarddirs.h>
+#include <KLocalizedString>
 
 #include <qdir.h>
 #include <qvalidator.h>
 
 #include <stdlib.h>
+#include <QFileDialog>
+#include <QApplication>
 
 // flush new pieces of output after this period of time:
 #define FLUSH_INTERVAL 100
@@ -82,15 +77,6 @@ int RInterface::na_int;
 
 RInterface::RInterface () {
 	RK_TRACE (RBACKEND);
-	
-#ifndef DISABLE_RKWINDOWCATCHER
-	window_catcher = new RKWindowCatcher ();
-#endif // DISABLE_RKWINDOWCATCHER
-
-// If R_HOME is not set, most certainly the user called the binary without the wrapper script
-	if (!getenv ("R_HOME")) {
-		RK_DEBUG (RBACKEND, DL_ERROR, "No R_HOME environment variable set. RKWard will quit in a moment. Always start rkward in the default way unless you know what you're doing.");
-	}
 
 	new RCommandStackModel (this);
 	RCommandStack::regular_stack = new RCommandStack ();
@@ -127,7 +113,7 @@ RInterface::~RInterface(){
 	RK_TRACE (RBACKEND);
 
 	if (num_active_output_record_requests) RK_DEBUG (RBACKEND, DL_WARNING, "%d requests for recording output still active on interface shutdown", num_active_output_record_requests);
-	delete window_catcher;
+	RKWindowCatcher::discardInstance ();
 }
 
 bool RInterface::backendIsIdle () {
@@ -264,10 +250,10 @@ void RInterface::doNextCommand (RCommand *command) {
 	}
 	// importantly, this point is not reached for the fake startup command
 
-	if (RK_Debug_CommandStep) {
+	if (RK_Debug::RK_Debug_CommandStep) {
 		QTime t;
 		t.start ();
-		while (t.elapsed () < RK_Debug_CommandStep) {}
+		while (t.elapsed () < RK_Debug::RK_Debug_CommandStep) {}
 	}
 
 	flushOutput (true);
@@ -371,6 +357,11 @@ void RInterface::handleRequest (RBackendRequest* request) {
 	flushOutput (true);
 	if (request->type == RBackendRequest::CommandOut) {
 		RCommandProxy *cproxy = request->takeCommand ();
+		if (cproxy) {
+			RK_DEBUG (RBACKEND, DL_DEBUG, "Command out \"%s\", id %d", qPrintable (cproxy->command), cproxy->id);
+		} else {
+			RK_DEBUG (RBACKEND, DL_DEBUG, "Fake command out");
+		}
 		RCommand *command = 0;
 		// NOTE: the order of processing is: first try to submit the next command, then handle the old command.
 		// The reason for doing it this way, instead of the reverse, is that this allows the backend thread / process to continue working, concurrently
@@ -385,8 +376,16 @@ void RInterface::handleRequest (RBackendRequest* request) {
 		}
 		tryNextCommand ();
 	} else if (request->type == RBackendRequest::HistoricalSubstackRequest) {
+		RCommandProxy *cproxy = request->command;
+		RCommand *parent = 0;
+		for (int i = all_current_commands.size () - 1; i >= 0; --i) {
+			if (all_current_commands[i]->id () == cproxy->id) {
+				parent = all_current_commands[i];
+				break;
+			}
+		}
 		command_requests.append (request);
-		processHistoricalSubstackRequest (request->params["call"].toStringList ());
+		processHistoricalSubstackRequest (request->params["call"].toStringList (), parent);
 	} else if (request->type == RBackendRequest::PlainGenericRequest) {
 		request->params["return"] = QVariant (processPlainGenericRequest (request->params["call"].toStringList ()));
 		RKRBackendProtocolFrontend::setRequestCompleted (request);
@@ -450,7 +449,7 @@ void RInterface::flushOutput (bool forced) {
 
 					previous_output_type = output->type;
 				}
-				recorded_output.append (Qt::escape (output->output));
+				recorded_output.append (output->output.toHtmlEscaped ());
 			}
 		}
 
@@ -594,7 +593,7 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 		RKSessionVars::instance ()->setInstalledPackages (calllist.mid (1));
 	} else if (call == "showHTML") {
 		RK_ASSERT (calllist.count () == 2);
-		RKWorkplace::mainWorkplace ()->openHelpWindow (calllist.value (1));
+		RKWorkplace::mainWorkplace ()->openHelpWindow (QUrl::fromUserInput (calllist.value (1), QDir::currentPath (), QUrl::AssumeLocalFile));
 	} else if (call == "select.list") {
 		QString title = calllist.value (1);
 		bool multiple = (calllist.value (2) == "multi");
@@ -602,7 +601,7 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 		QStringList preselects = calllist.mid (4, num_preselects);
 		QStringList choices = calllist.mid (4 + num_preselects);
 
-		QStringList results = RKSelectListDialog::doSelect (0, title, choices, preselects, multiple);
+		QStringList results = RKSelectListDialog::doSelect (QApplication::activeWindow(), title, choices, preselects, multiple);
 		if (results.isEmpty ()) results.append ("");	// R wants to have it that way
 		return (results);
 	} else if (call == "commandHistory") {
@@ -612,7 +611,7 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 			RKConsole::mainConsole ()->setCommandHistory (calllist.mid (2), calllist.value (1) == "append");
 		}
 	} else if (call == "getWorkspaceUrl") {
-		KUrl url = RKWorkplace::mainWorkplace ()->workspaceURL ();
+		QUrl url = RKWorkplace::mainWorkplace ()->workspaceURL ();
 		if (!url.isEmpty ()) return (QStringList (url.url ()));
 	} else if (call == "workplace.layout") {
 		if (calllist.value (1) == "set") {
@@ -686,19 +685,19 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 	return QStringList ();
 }
 
-void RInterface::processHistoricalSubstackRequest (const QStringList &calllist) {
+void RInterface::processHistoricalSubstackRequest (const QStringList &calllist, RCommand *parent_command) {
 	RK_TRACE (RBACKEND);
 
-	RCommand *current_command = runningCommand ();
 	RCommandChain *in_chain;
-	if (!current_command) {
+	if (!parent_command) {
 		// This can happen for Tcl events. Create a dummy command on the stack to keep things looping.
-		current_command = new RCommand (QString (), RCommand::App | RCommand::EmptyCommand | RCommand::Sync);
-		RCommandStack::issueCommand (current_command, 0);
-		all_current_commands.append (current_command);
-		dummy_command_on_stack = current_command;	// so we can get rid of it again, after it's sub-commands have finished
+		parent_command = new RCommand (QString (), RCommand::App | RCommand::EmptyCommand | RCommand::Sync);
+		RCommandStack::issueCommand (parent_command, 0);
+		all_current_commands.append (parent_command);
+		dummy_command_on_stack = parent_command;	// so we can get rid of it again, after it's sub-commands have finished
 	}
-	in_chain = openSubcommandChain (current_command);
+	in_chain = openSubcommandChain (parent_command);
+	RK_DEBUG (RBACKEND, DL_DEBUG, "started sub-command chain (%p) for command %s", in_chain, qPrintable (parent_command->command ()));
 
 	QString call = calllist.value (0);
 	if (call == "sync") {
@@ -726,17 +725,17 @@ void RInterface::processHistoricalSubstackRequest (const QStringList &calllist) 
 	// NOTE: WARNING: When converting these to PlainGenericRequests, the occasional "error, figure margins too large" starts coming up, again. Not sure, why.
  	} else if (call == "startOpenX11") {
 		RK_ASSERT (calllist.count () == 2);
-		window_catcher->start (calllist.value (1).toInt ());
+		RKWindowCatcher::instance ()->start (calllist.value (1).toInt ());
  	} else if (call == "endOpenX11") {
 		RK_ASSERT (calllist.count () == 2);
-		window_catcher->stop (calllist.value (1).toInt ());
+		RKWindowCatcher::instance ()->stop (calllist.value (1).toInt ());
 	} else if (call == "updateDeviceHistory") {
 		if (calllist.count () >= 2) {
-			window_catcher->updateHistory (calllist.mid (1));
+			RKWindowCatcher::instance ()->updateHistory (calllist.mid (1));
 		}
 	} else if (call == "killDevice") {
 		RK_ASSERT (calllist.count () == 2);
-		window_catcher->killDevice (calllist.value (1).toInt ());
+		RKWindowCatcher::instance ()->killDevice (calllist.value (1).toInt ());
 #endif // DISABLE_RKWINDOWCATCHER
 	} else if (call == "edit") {
 		RK_ASSERT (calllist.count () >= 2);
@@ -809,11 +808,12 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 		if (button_no.isEmpty () && button_cancel.isEmpty ()) {
 			dialog_type = KMessageBox::Information;
 			if (!request->synchronous) {	// non-modal dialogs are not supported out of the box by KMessageBox;
-				KDialog* dialog = new KDialog ();
-				KMessageBox::createKMessageBox (dialog, QMessageBox::Information, message, QStringList (), QString (), 0, KMessageBox::Notify | KMessageBox::NoExec);
+				QDialog* dialog = new QDialog ();
+				QDialogButtonBox *buttonBox = new QDialogButtonBox (dialog);
+				buttonBox->setStandardButtons (QDialogButtonBox::Ok);
+				KMessageBox::createKMessageBox (dialog, buttonBox, QMessageBox::Information, message, QStringList (), QString (), 0, KMessageBox::Notify | KMessageBox::NoExec);
 				dialog->setWindowTitle (caption);
 				dialog->setAttribute (Qt::WA_DeleteOnClose);
-				dialog->setButtons (KDialog::Ok);
 				dialog->show();
 
 				RKRBackendProtocolFrontend::setRequestCompleted (request);
@@ -856,9 +856,9 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 	} else if (type == RBackendRequest::ChooseFile) {
 		QString filename;
 		if (request->params["new"].toBool ()) {
-			filename = KFileDialog::getSaveFileName ();
+			filename = QFileDialog::getSaveFileName ();
 		} else {
-			filename = KFileDialog::getOpenFileName ();
+			filename = QFileDialog::getOpenFileName ();
 		}
 		request->params["result"] = QVariant (filename);
 	} else if (type == RBackendRequest::SetParamsFromBackend) {
@@ -879,4 +879,3 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 	RKRBackendProtocolFrontend::setRequestCompleted (request);
 }
 
-#include "rinterface.moc"

@@ -2,7 +2,7 @@
                           robjectbrowser  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004 - 2016 by Thomas Friedrichsmeier
+    copyright            : (C) 2004 - 2017 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -21,11 +21,10 @@
 #include <QFocusEvent>
 #include <QVBoxLayout>
 #include <QMenu>
+#include <QInputDialog>
 
-#include <klocale.h>
-#include <kinputdialog.h>
+#include <KLocalizedString>
 #include <kmessagebox.h>
-#include <kvbox.h>
 
 #include "../rkward.h"
 #include "rkhelpsearchwindow.h"
@@ -33,7 +32,7 @@
 #include "../core/robjectlist.h"
 #include "../core/renvironmentobject.h"
 #include "../core/rkmodificationtracker.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../misc/rkobjectlistview.h"
 #include "../misc/rkdummypart.h"
 #include "../misc/rkstandardicons.h"
@@ -54,13 +53,13 @@ RObjectBrowser::RObjectBrowser (QWidget *parent, bool tool_window, const char *n
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
-	layout_widget = new KVBox (this);
+	layout_widget = new QWidget (this);
 	layout->addWidget (layout_widget);
 	layout_widget->setFocusPolicy (Qt::StrongFocus);
 
 	RKDummyPart *part = new RKDummyPart (this, layout_widget);
 	setPart (part);
-	setMetaInfo (i18n ("R workspace browser"), "rkward://page/rkward_workspace_browser", RKSettings::PageObjectBrowser);
+	setMetaInfo (i18n ("R workspace browser"), QUrl ("rkward://page/rkward_workspace_browser"), RKSettings::PageObjectBrowser);
 	initializeActivationSignals ();
 
 	setCaption (i18n ("R Workspace"));
@@ -95,6 +94,10 @@ void RObjectBrowser::initialize () {
 	RK_DEBUG (APP, DL_INFO, "creating workspace browser");
 
 	internal = new RObjectBrowserInternal (layout_widget, this);
+	QVBoxLayout *l = new QVBoxLayout (layout_widget);
+	l->setContentsMargins (0, 0, 0, 0);
+	l->addWidget (internal);
+
 	setFocusProxy (internal);
 	setMinimumSize (internal->minimumSize ());
 }
@@ -118,33 +121,33 @@ RObjectBrowserInternal::RObjectBrowserInternal (QWidget *parent, RObjectBrowser 
 	actions.insert (Help, RKStandardActions::functionHelp (browser, this));
 	actions.insert (SearchOnline, RKStandardActions::onlineHelp (browser, this));
 	actions.insert (Edit, new QAction (i18n ("Edit"), this));
-	connect (actions[Edit], SIGNAL(triggered(bool)), this, SLOT(popupEdit()));
+	connect (actions[Edit], &QAction::triggered, this, &RObjectBrowserInternal::popupEdit);
 	actions.insert (View, new QAction (i18n ("View"), this));
-	connect (actions[View], SIGNAL(triggered(bool)), this, SLOT(popupView()));
+	connect (actions[View], &QAction::triggered, this, &RObjectBrowserInternal::popupView);
 	actions.insert (Rename, new QAction (i18n ("Rename"), this));
-	connect (actions[Rename], SIGNAL(triggered(bool)), this, SLOT(popupRename()));
+	connect (actions[Rename], &QAction::triggered, this, &RObjectBrowserInternal::popupRename);
 	actions.insert (Copy, new QAction (i18n ("Copy to new symbol"), this));
-	connect (actions[Copy], SIGNAL(triggered(bool)), this, SLOT(popupCopy()));
+	connect (actions[Copy], &QAction::triggered, this, &RObjectBrowserInternal::popupCopy);
 	actions.insert (CopyToGlobalEnv, new QAction (i18n ("Copy to .GlobalEnv"), this));
-	connect (actions[CopyToGlobalEnv], SIGNAL(triggered(bool)), this, SLOT(popupCopyToGlobalEnv()));
+	connect (actions[CopyToGlobalEnv], &QAction::triggered, this, &RObjectBrowserInternal::popupCopyToGlobalEnv);
 	actions.insert (Delete, new QAction (i18n ("Delete"), this));
-	connect (actions[Delete], SIGNAL(triggered(bool)), this, SLOT(popupDelete()));
+	connect (actions[Delete], &QAction::triggered, this, &RObjectBrowserInternal::popupDelete);
 	actions.insert (Unload, new QAction (i18n ("Unload Package"), this));
-	connect (actions[Unload], SIGNAL(triggered(bool)), this, SLOT(popupUnload()));
+	connect (actions[Unload], &QAction::triggered, this, &RObjectBrowserInternal::popupUnload);
 	actions.insert (LoadUnloadPackages, new QAction (i18n ("Load / Unload Packages"), this));
-	connect (actions[LoadUnloadPackages], SIGNAL(triggered(bool)), RKWardMainWindow::getMain(), SLOT(slotFileLoadLibs()));
+	connect (actions[LoadUnloadPackages], &QAction::triggered, RKWardMainWindow::getMain(), &RKWardMainWindow::slotFileLoadLibs);
 
 	QAction* sep = list_view->contextMenu ()->insertSeparator (list_view->contextMenu ()->actions ().value (0));
 	list_view->contextMenu ()->insertActions (sep, actions);
 
-	connect (list_view, SIGNAL (aboutToShowContextMenu(RObject*,bool*)), this, SLOT (contextMenuCallback(RObject*,bool*)));
+	connect (list_view, &RKObjectListView::aboutToShowContextMenu, this, &RObjectBrowserInternal::contextMenuCallback);
 	
-	connect (list_view, SIGNAL (doubleClicked(QModelIndex)), this, SLOT (doubleClicked(QModelIndex)));
+	connect (list_view, &QAbstractItemView::doubleClicked, this, &RObjectBrowserInternal::doubleClicked);
 	
 	resize (minimumSizeHint ().expandedTo (QSize (400, 480)));
 
 	list_view->initialize ();
-	connect (update_button, SIGNAL (clicked()), this, SLOT (updateButtonClicked()));
+	connect (update_button, &QPushButton::clicked, this, &RObjectBrowserInternal::updateButtonClicked);
 }
 
 RObjectBrowserInternal::~RObjectBrowserInternal () {
@@ -185,7 +188,7 @@ void RObjectBrowserInternal::popupCopy () {
 	bool ok;
 	RObject *object = list_view->menuObject ();
 	QString suggested_name = RObjectList::getGlobalEnv ()->validizeName (object->getShortName ());
-	QString name = KInputDialog::getText (i18n ("Copy object"), i18n ("Enter the name to copy to"), suggested_name, &ok, this);
+	QString name = QInputDialog::getText (this, i18n ("Copy object"), i18n ("Enter the name to copy to"), QLineEdit::Normal, suggested_name, &ok);
 
 	if (ok) {
 		QString valid = RObjectList::getGlobalEnv ()->validizeName (name);
@@ -231,7 +234,7 @@ void RObjectBrowserInternal::popupUnload () {
 void RObjectBrowserInternal::popupRename () {
 	RK_TRACE (APP);
 	bool ok;
-	QString name = KInputDialog::getText (i18n ("Rename object"), i18n ("Enter the new name"), list_view->menuObject ()->getShortName (), &ok, this);
+	QString name = QInputDialog::getText (this, i18n ("Rename object"), i18n ("Enter the new name"), QLineEdit::Normal, list_view->menuObject ()->getShortName (), &ok);
 	
 	if (ok) {
 		QString valid = static_cast<RContainerObject*> (list_view->menuObject ()->parentObject ())->validizeName (name);
@@ -272,12 +275,13 @@ void RObjectBrowserInternal::doubleClicked (const QModelIndex& index) {
 	if (!object) return;
 	if (object == RObjectList::getObjectList ()) return;
 
-	if (RKWorkplace::mainWorkplace ()->canEditObject (object)) {
-		RKWorkplace::mainWorkplace ()->editObject (object);
+	if (object->isInGlobalEnv ()) {
+		if (RKWorkplace::mainWorkplace ()->canEditObject (object)) {
+			RKWorkplace::mainWorkplace ()->editObject (object);
+		} else {
+			RKWorkplace::mainWorkplace ()->newObjectViewer (object);
+		}
 	} else {
-		RKWorkplace::mainWorkplace ()->flushAllData ();
-		RKWorkplace::mainWorkplace ()->newObjectViewer (object);
+		RKHelpSearchWindow::mainHelpSearch ()->getFunctionHelp (object->getShortName (), object->toplevelEnvironment ()->packageName ());
 	}
 }
-
-#include "robjectbrowser.moc"

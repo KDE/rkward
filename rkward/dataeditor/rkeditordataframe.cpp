@@ -17,9 +17,9 @@
 #include "rkeditordataframe.h"
 
 #include <kmessagebox.h>
-#include <klocale.h>
+#include <KLocalizedString>
 
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../rkglobals.h"
 #include "twintable.h"
 #include "twintablemember.h"
@@ -49,7 +49,7 @@ RKEditorDataFrame::RKEditorDataFrame (RContainerObject* object, QWidget *parent)
 
 	RKVarEditDataFrameModel* model = new RKVarEditDataFrameModel (object, this);
 	initTable (model, object);
-	connect (model, SIGNAL (modelObjectDestroyed()), this, SLOT (detachModel()));
+	connect (model, &RKVarEditDataFrameModel::modelObjectDestroyed, this, &RKEditorDataFrame::detachModel);
 
 	waitForLoad ();
 }
@@ -69,7 +69,7 @@ RKEditorDataFrame::RKEditorDataFrame (const QString& new_object_name, QWidget* p
 	setGlobalContextProperty ("current_object", object->getFullName());
 
 	initTable (model, object);
-	connect (model, SIGNAL (modelObjectDestroyed()), this, SLOT (deleteLater()));
+	connect (model, &RKVarEditDataFrameModel::modelObjectDestroyed, this, &RKEditorDataFrame::deleteLater);
 
 	RKGlobals::rInterface ()->closeChain (open_chain);
 }
@@ -131,4 +131,3 @@ void RKEditorDataFrame::restoreObject (RObject *object) {
 	datamodel->restoreObject (object, 0);
 }
 
-#include "rkeditordataframe.moc"

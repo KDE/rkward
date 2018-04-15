@@ -4,6 +4,7 @@ MESSAGE(STATUS "Looking for R executable")
 IF(R_EXECUTABLE)
 	MESSAGE(STATUS "Specified by user")
 ENDIF(R_EXECUTABLE)
+SET(CMAKE_FIND_APPBUNDLE NEVER)  # Do not get fooled by R GUI on Mac
 FIND_PROGRAM(R_EXECUTABLE R)
 
 IF(R_EXECUTABLE-NOTFOUND)
@@ -14,19 +15,22 @@ ENDIF(R_EXECUTABLE-NOTFOUND)
 
 # find out about R architecture (needed for some paths)
 EXECUTE_PROCESS(
-	COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "-e" "cat(R.version$arch)"
+	COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "--no-init-file" "-e" "cat(R.version$arch)"
 	OUTPUT_VARIABLE R_ARCH)
+	IF (${R_ARCH} STREQUAL "x86_64")
+		SET (R_ARCH "x64")
+	ENDIF (${R_ARCH} STREQUAL "x86_64")
 MESSAGE (STATUS "R architecture is ${R_ARCH}")
 
 # check R version.
 SET (R_MIN_VERSION "2.10.0")
 MESSAGE (STATUS "Checking R version")
 EXECUTE_PROCESS(
-	COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "-e" "cat (paste(R.version$major, R.version$minor, sep='.'))"
+	COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "--no-init-file" "-e" "cat (paste(R.version$major, R.version$minor, sep='.'))"
 	OUTPUT_VARIABLE R_VERSION)
 MESSAGE (STATUS "R version is ${R_VERSION}")
 EXECUTE_PROCESS(
-	COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "-e" "min_ver <- '${R_MIN_VERSION}'; if (compareVersion ('${R_VERSION}', min_ver) < 0) cat ('At least R version', min_ver, 'is required')"
+	COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "--no-init-file" "-e" "min_ver <- '${R_MIN_VERSION}'; if (compareVersion ('${R_VERSION}', min_ver) < 0) cat ('At least R version', min_ver, 'is required')"
 	OUTPUT_VARIABLE R_VERSION_STATUS)
 IF (R_VERSION_STATUS)
 	MESSAGE (FATAL_ERROR ${R_VERSION_STATUS})
@@ -37,7 +41,7 @@ ENDIF (R_VERSION_STATUS)
 MESSAGE(STATUS "Looking for R_HOME")
 IF(NOT R_HOME)
 	EXECUTE_PROCESS(
-		COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "-e" "cat(R.home())"
+		COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "--no-init-file" "-e" "cat(R.home())"
 		OUTPUT_VARIABLE R_HOME)
 ELSE(NOT R_HOME)
 	MESSAGE(STATUS "Specified by user")
@@ -54,7 +58,7 @@ MESSAGE(STATUS "Looking for R include files")
 IF(NOT R_INCLUDEDIR)
 	IF(WIN32 OR APPLE)	# This version of the test will not work with R < 2.9.0, but the other version (in the else part) will not work on windows or apple (but we do not really need to support ancient versions of R, there).
 		EXECUTE_PROCESS(
-			COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "-e" "cat(R.home('include'))"
+			COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "--no-init-file" "-e" "cat(R.home('include'))"
 			OUTPUT_VARIABLE R_INCLUDEDIR)
 	ELSE(WIN32 OR APPLE)
 		EXECUTE_PROCESS(
@@ -89,7 +93,7 @@ SET(R_INCLUDEDIR ${R_INCLUDEDIR} ${R_INCLUDEDIR}/${R_ARCH})
 MESSAGE(STATUS "Checking for existence of R shared library")
 FIND_LIBRARY(LIBR_SO
 	R
-	PATHS ${R_HOME}/lib ${R_SHAREDLIBDIR} ${R_HOME}/bin ${R_HOME}/bin/${R_ARCH} ${R_HOME}/lib/${R_ARCH}
+	PATHS ${R_HOME}/lib ${R_SHAREDLIBDIR} ${R_HOME}/bin ${R_HOME}/bin/${R_ARCH} ${R_HOME}/lib/${R_ARCH} ${PROJECT_BINARY_DIR}
 	NO_DEFAULT_PATH)
 IF(NOT LIBR_SO)
 	MESSAGE(FATAL_ERROR "Not found. Make sure the location of R was detected correctly, above, and R was compiled with the --enable-R-shlib option")
@@ -151,7 +155,7 @@ ENDIF(WIN32)
 MESSAGE(STATUS "Checking for R package library location to use")
 IF(NOT R_LIBDIR)
 	EXECUTE_PROCESS(
-		COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "-e" "cat(paste(unique (c(.Library.site, .Library)), collapse='${PATH_SEP}'))"
+		COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "--no-init-file" "-e" "cat(paste(unique (c(.Library.site, .Library)), collapse='${PATH_SEP}'))"
 		OUTPUT_VARIABLE R_LIBDIR)
 ELSE(NOT R_LIBDIR)
 	MESSAGE(STATUS "Location specified by user")

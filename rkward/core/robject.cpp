@@ -19,9 +19,9 @@
 #include "robject.h"
 
 #include <qregexp.h>
-#include <klocale.h>
+#include <KLocalizedString>
 
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../rbackend/rkrbackendprotocol_shared.h"
 #include "../rkglobals.h"
 #include "robjectlist.h"
@@ -558,8 +558,8 @@ RObject *RObject::findChildByObjectModelIndex (int index) const {
 	return 0;
 }
 
-RKEditor *RObject::editor () const {
-	return (RKGlobals::tracker ()->objectEditor (this));
+QList <RKEditor*> RObject::editors () const {
+	return (RKGlobals::tracker ()->objectEditors (this));
 }
 
 void RObject::rename (const QString &new_short_name) {

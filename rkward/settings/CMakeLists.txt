@@ -1,4 +1,4 @@
-INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES}  )
+INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}    )
 
 
 ########### next target ###############
@@ -18,8 +18,6 @@ SET(settings_STAT_SRCS
    rksettingsmoduledebug.cpp
    )
 
-QT4_AUTOMOC(${settings_STAT_SRCS})
-
 IF (WIN32 OR USE_BINARY_PACKAGES)
 	SET_PROPERTY (
 		SOURCE rksettingsmoduler.cpp
@@ -30,3 +28,4 @@ IF (WIN32 OR USE_BINARY_PACKAGES)
 ENDIF (WIN32 OR USE_BINARY_PACKAGES)
 
 ADD_LIBRARY(settings STATIC ${settings_STAT_SRCS})
+TARGET_LINK_LIBRARIES(settings Qt5::Widgets KF5::WidgetsAddons Qt5::Xml KF5::ConfigCore KF5::Parts)

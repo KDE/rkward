@@ -17,9 +17,10 @@
 
 #include "rkstandardactions.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kactioncollection.h>
-#include <kaction.h>
+#include <QAction>
+#include <QDesktopServices>
 
 #include "rkstandardicons.h"
 #include "rkspecialactions.h"
@@ -29,28 +30,28 @@
 
 #include "../debug.h"
 
-KAction* RKStandardActions::copyLinesToOutput (RKMDIWindow *window, const QObject *receiver, const char *member) {
+QAction* RKStandardActions::copyLinesToOutput (RKMDIWindow *window, const QObject *receiver, const char *member) {
 	RK_TRACE (MISC);
 
-	KAction* ret = window->standardActionCollection ()->addAction ("copy_lines_to_output", receiver, member);
+	QAction* ret = window->standardActionCollection ()->addAction ("copy_lines_to_output", receiver, member);
 	ret->setText (i18n ("Copy lines to output"));
 	return ret;
 }
 
-KAction* RKStandardActions::pasteSpecial (RKMDIWindow *window, const QObject *receiver, const char *member) {
+QAction* RKStandardActions::pasteSpecial (RKMDIWindow *window, const QObject *receiver, const char *member) {
 	RK_TRACE (MISC);
 
-	KAction* ret = new RKPasteSpecialAction (window->standardActionCollection ());
+	QAction* ret = new RKPasteSpecialAction (window->standardActionCollection ());
 	window->standardActionCollection ()->addAction ("paste_special", ret);
 	ret->connect (ret, SIGNAL (pasteText(QString)), receiver, member);
-	ret->setShortcut (Qt::ShiftModifier + Qt::ControlModifier + Qt::Key_V);
+	window->standardActionCollection ()->setDefaultShortcut (ret, Qt::ShiftModifier + Qt::ControlModifier + Qt::Key_V);
 	return ret;
 }
 
-KAction* RKStandardActions::runCurrent (RKMDIWindow *window, const QObject *receiver, const char *member, bool current_or_line) {
+QAction* RKStandardActions::runCurrent (RKMDIWindow *window, const QObject *receiver, const char *member, bool current_or_line) {
 	RK_TRACE (MISC);
 
-	KAction* ret = window->standardActionCollection ()->addAction ("run_current", receiver, member);
+	QAction* ret = window->standardActionCollection ()->addAction ("run_current", receiver, member);
 	if (current_or_line) {
 		ret->setText (i18n ("Run line / selection"));
 		ret->setStatusTip (i18n ("Runs the current selection (if any) or the current line (if there is no selection)"));
@@ -59,29 +60,31 @@ KAction* RKStandardActions::runCurrent (RKMDIWindow *window, const QObject *rece
 		ret->setText (i18n ("Run selection"));
 	}
 	ret->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRunLine));
-	ret->setShortcut (KShortcut (Qt::ControlModifier + Qt::Key_Return, Qt::ControlModifier + Qt::Key_Enter));
+	window->standardActionCollection ()->setDefaultShortcuts (ret, QList<QKeySequence>() << Qt::ControlModifier + Qt::Key_Return << Qt::ControlModifier + Qt::Key_Enter);
+
 	return ret;
 }
 
-KAction* RKStandardActions::runAll (RKMDIWindow *window, const QObject *receiver, const char *member) {
+QAction* RKStandardActions::runAll (RKMDIWindow *window, const QObject *receiver, const char *member) {
 	RK_TRACE (MISC);
 
-	KAction* ret = window->standardActionCollection ()->addAction ("run_all", receiver, member);
+	QAction* ret = window->standardActionCollection ()->addAction ("run_all", receiver, member);
 	ret->setText (i18n ("Run all"));
 	ret->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRunAll));
-	ret->setShortcut (KShortcut (Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_Return, Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_Enter));
+	window->standardActionCollection ()->setDefaultShortcuts (ret, QList<QKeySequence>() << Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_Return << Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_Enter);
+
 	return ret;
 }
 
-class RKSearchRHelpAction : public KAction {
+class RKSearchRHelpAction : public QAction {
 	Q_OBJECT
 public:
-	RKSearchRHelpAction (QObject *parent, RKScriptContextProvider *context_provider) : KAction (parent) {
+	RKSearchRHelpAction (QObject *parent, RKScriptContextProvider *context_provider) : QAction (parent) {
 		RK_TRACE (MISC);
 		provider = context_provider;
 		setText (i18n ("&Function reference"));
 		setShortcut (Qt::Key_F2);
-		connect (this, SIGNAL (triggered(bool)), this, SLOT (doSearch()));
+		connect (this, &QAction::triggered, this, &RKSearchRHelpAction::doSearch);
 	};
 public slots:
 	void doSearch () {
@@ -94,21 +97,65 @@ private:
 	RKScriptContextProvider *provider;
 };
 
-KAction* RKStandardActions::functionHelp (RKMDIWindow *window, RKScriptContextProvider *context_provider) {
+QAction* RKStandardActions::functionHelp (RKMDIWindow *window, RKScriptContextProvider *context_provider) {
 	RK_TRACE (MISC);
 
-	KAction* ret = new RKSearchRHelpAction (window, context_provider);
+	QAction* ret = new RKSearchRHelpAction (window, context_provider);
 	window->standardActionCollection ()->addAction ("function_reference", ret);
 	return ret;
 }
 
+// KF5 TODO: The following should work with KIO >= 5.16, but I have _not_ tested this, yet. change #ifdef, when ready.
+#if 0
+#include <kurifiltersearchprovideractions.h>
+#include <QMenu>
+
+class RKSearchOnlineHelpAction : public QObject {
+	Q_OBJECT
+public:
+	RKSearchOnlineHelpAction (QObject *parent, RKScriptContextProvider *context_provider) : QObject (parent) {
+		RK_TRACE (MISC);
+		provider = context_provider;
+		menu = new QMenu ();
+		connect (this, &QMenu::aboutToShow, this, &RKSearchOnlineHelpAction::init);
+		actions = new KUriFilterSearchProviderActions (this);
+		actions->addWebShortcutsToMenu (menu);
+	};
+	~RKSearchOnlineHelpAction () {
+		RK_TRACE (MISC);
+		menu->deleteLater ();
+	}
+	QAction *action () {
+		return menu->menuAction ();
+	}
+public slots:
+	void init () {
+		RK_TRACE (MISC);
+		QString symbol, package;
+		provider->currentHelpContext (&symbol, &package);
+		actions->setSelectedText (symbol + " " + package + " R");
+	};
+private:
+	QMenu *menu;
+	KUriFilterSearchProviderActions *actions;
+	RKScriptContextProvider *provider;
+};
+
+QAction* RKStandardActions::onlineHelp (RKMDIWindow *window, RKScriptContextProvider *context_provider) {
+	RK_TRACE (MISC);
+
+	QAction* ret = new RKSearchOnlineHelpAction (window, context_provider)->action ();
+	window->standardActionCollection ()->addAction ("search_online", ret);
+	return ret;
+}
+#else
 #include <kurifilter.h>
 #include <ktoolinvocation.h>
 
-class RKSearchOnlineHelpAction : public KAction {
+class RKSearchOnlineHelpAction : public QAction {
 	Q_OBJECT
 public:
-	RKSearchOnlineHelpAction (QObject *parent, RKScriptContextProvider *context_provider) : KAction (parent) {
+	RKSearchOnlineHelpAction (QObject *parent, RKScriptContextProvider *context_provider) : QAction (parent) {
 		RK_TRACE (MISC);
 		provider = context_provider;
 		setText (i18n ("Search Online"));
@@ -120,20 +167,23 @@ public slots:
 		QString symbol, package;
 		provider->currentHelpContext (&symbol, &package);
 		KUriFilterData data (symbol + " " + package + " R");
-		KUriFilter::self ()->filterSearchUri (data, KUriFilter::NormalTextFilter);
-		KToolInvocation::invokeBrowser (data.uri ().url ());
+		// I had hope to avoid hard-coding any search provider, but it seems (with KF5) we cannot rely on a default provider to be defined.
+		data.setAlternateDefaultSearchProvider ("google");
+		bool ok = KUriFilter::self ()->filterSearchUri (data, KUriFilter::NormalTextFilter);
+		RK_DEBUG (MISC, DL_DEBUG, "Searching for %s in %s online -> %d: %s", qPrintable (symbol), qPrintable (package), ok, qPrintable (data.uri ().url ()));
+		QDesktopServices::openUrl (data.uri ());
 	};
 private:
 	RKScriptContextProvider *provider;
 };
 
-KAction* RKStandardActions::onlineHelp (RKMDIWindow *window, RKScriptContextProvider *context_provider) {
+QAction* RKStandardActions::onlineHelp (RKMDIWindow *window, RKScriptContextProvider *context_provider) {
 	RK_TRACE (MISC);
 
-	// KF5 TODO: Add / replace with submenu to select search provider -> KUriFilterSearchProviderActions
-	KAction* ret = new RKSearchOnlineHelpAction (window, context_provider);
+	QAction* ret = new RKSearchOnlineHelpAction (window, context_provider);
 	window->standardActionCollection ()->addAction ("search_online", ret);
 	return ret;
 }
+#endif
 
-#include "rkstandardactions_moc.cpp"
+#include "rkstandardactions.moc"

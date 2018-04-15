@@ -46,9 +46,9 @@ public:
 	~RControlWindow ();
 
 /** reimplemented to start listening to the RCommandStackModel when showing. */
-	void showEvent (QShowEvent *e);
+	void showEvent (QShowEvent *e) override;
 /** when hidden, disconnect from the RCommandStackModel to save resources */
-	void hideEvent (QHideEvent *e);
+	void hideEvent (QHideEvent *e) override;
 /** Static reference to the control window */
 	static RControlWindow* getControl () { return control_window; };
 public slots:

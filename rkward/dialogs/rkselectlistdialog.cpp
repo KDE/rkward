@@ -19,27 +19,38 @@
 
 #include <QListWidget>
 #include <QLabel>
+#include <QVBoxLayout>
+#include <QPushButton>
+#include <QScrollBar>
 
-#include <klocale.h>
-#include <kvbox.h>
+#include <KLocalizedString>
+
+#include "../misc/rkdialogbuttonbox.h"
 
 #include "../debug.h"
 
-RKSelectListDialog::RKSelectListDialog (QWidget *parent, const QString &caption, const QStringList& choices, const QStringList& preselected, bool multiple) : KDialog (parent) {
+/** A QListWidget with a sane sizeHint() */
+class RKSelectListDialogListWidget : public QListWidget {
+public:
+	explicit RKSelectListDialogListWidget (QWidget* parent) : QListWidget (parent) {};
+	QSize sizeHint () const override {
+		return (QSize (qMax (50, sizeHintForColumn (0) + verticalScrollBar ()->width ()), qMax (50, sizeHintForRow (0)*(count ()+1))));
+	}
+};
+
+RKSelectListDialog::RKSelectListDialog (QWidget *parent, const QString &caption, const QStringList& choices, const QStringList& preselected, bool multiple) : QDialog (parent) {
 	RK_TRACE (DIALOGS);
 
 	setModal (true);
-	setCaption (caption);
-	setButtons (KDialog::Ok | KDialog::Cancel);
+	setWindowTitle (caption);
 
-	KVBox *page = new KVBox ();
-	setMainWidget (page);
+	QVBoxLayout *layout = new QVBoxLayout (this);
 
-	if (multiple) new QLabel (i18n ("<b>Select one or more:</b>"), page);
-	else new QLabel (i18n ("<b>Select one:</b>"), page);
-	new QLabel (caption, page);
+	if (multiple) layout->addWidget (new QLabel (i18n ("<b>Select one or more:</b>"), this));
+	else layout->addWidget (new QLabel (i18n ("<b>Select one:</b>"), this));
+	layout->addWidget (new QLabel (caption, this));
 
-	input = new QListWidget (page);
+	input = new RKSelectListDialogListWidget (this);
 	input->addItems (choices);
 	if (multiple) input->setSelectionMode (QAbstractItemView::MultiSelection);
 	else input->setSelectionMode (QAbstractItemView::SingleSelection);
@@ -47,14 +58,12 @@ RKSelectListDialog::RKSelectListDialog (QWidget *parent, const QString &caption,
 		int pos = choices.indexOf (preselected[i]);
 		if (pos >= 0) input->item (pos)->setSelected (true);
 	}
+	layout->addWidget (input);
 
-	QSize base_hint = minimumSizeHint ();
-	int other_height = base_hint.height () - input->minimumSizeHint ().height ();	// height of all other things besides the list widget
-	int ideal_height = other_height + qMax (input->sizeHintForRow (0)*input->count (), 50);
-	// KDialog appears to be smart enough to limit this to the available screen geometry
-	setInitialSize (QSize (base_hint.width (), ideal_height));
+	buttons = new RKDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+	layout->addWidget (buttons);
 
-	connect (input, SIGNAL (itemSelectionChanged()), this, SLOT (updateState()));
+	connect (input, &QListWidget::itemSelectionChanged, this, &RKSelectListDialog::updateState);
 	updateState ();
 }
 
@@ -66,8 +75,7 @@ void RKSelectListDialog::updateState () {
 	RK_TRACE (DIALOGS);
 
 	// TODO is there no QListWidget::hasSelection()?
-	if (input->selectedItems ().isEmpty ()) enableButtonOk (false);
-	else enableButtonOk (true);
+	buttons->button (QDialogButtonBox::Ok)->setEnabled (!input->selectedItems ().isEmpty ());
 }
 
 //static
@@ -87,4 +95,3 @@ QStringList RKSelectListDialog::doSelect (QWidget *parent, const QString &captio
 	return (list);
 }
 
-#include "rkselectlistdialog.moc"

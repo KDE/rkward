@@ -44,9 +44,9 @@ public:
 	void setVarType (RObject::RDataType, bool sync=true);
 
 /** reimplemented from RObject to also store value labels/factor levels (and in the future probably futher info) */
-	void writeMetaData (RCommandChain *chain);
+	void writeMetaData (RCommandChain *chain) override;
 friend class RContainerObject;
-	void rCommandDone (RCommand *command);
+	void rCommandDone (RCommand *command) override;
 public:
 ////////////// BEGIN: data handling ////////////////////////
 /** the Status enum is used for both keeping track of the entire row and inidvidual cells. For single cells the meaning should be obvious. The entire row
@@ -58,7 +58,7 @@ is set to Unused, if _no_ cell in the row is used, Valid if _all_ cells in the r
 /** syncs pending data changes to the backend */
 	void syncDataToR ();
 /** reimplemented from RObject */
-	void updateDataFromR (RCommandChain *chain);
+	void updateDataFromR (RCommandChain *chain) override;
 
 	bool hasInvalidFields () const;
 
@@ -135,7 +135,7 @@ protected:
 /** set numeric values in the given range. Assumes you provide enough values for the range. If internalStorage is String, all values will be converted to strings, so you should use this function only, if you know you are dealing with a numeric object. Code may assume that all data comes directly from R, is entirely valid in R. */
 	void setNumericFromR (int from_row, int to_row, const QVector<double> &data);
 /** reimplemented from RObject to change the internal data storage mode, if the var is being edited */
-	bool updateType (RData *new_data);
+	bool updateType (RData *new_data) override;
 /** Extended from RObject::EditData to actually contain data. */
 	struct RKVarEditData {
 		QStringList cell_strings;
@@ -167,9 +167,9 @@ protected:
 	RKVarEditData* data;
 
 /** reimplemented from RObject */
-	void beginEdit ();
+	void beginEdit () override;
 /** reimplemented from RObject */
-	void endEdit ();
+	void endEdit () override;
 
 /** takes care of syncing the given range of cells */
 	void cellsChanged (int from_row, int to_row);

@@ -1,4 +1,4 @@
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES})
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}  )
 
 ########### next target ###############
 
@@ -23,10 +23,8 @@ SET(windows_STAT_SRCS
 	rkdebugmessagewindow.cpp
 )
 
-QT4_AUTOMOC(${windows_STAT_SRCS})
-
 ADD_LIBRARY(windows STATIC ${windows_STAT_SRCS})
-
+TARGET_LINK_LIBRARIES(windows Qt5::Widgets Qt5::Xml Qt5::PrintSupport Qt5::WebKitWidgets KF5::TextEditor KF5::WebKit KF5::Notifications KF5::WindowSystem KF5::KIOFileWidgets)
 
 ########### install files ###############
 
@@ -39,4 +37,4 @@ INSTALL(FILES
 	rkcommandlogpart.rc
 	rktoplevelwindowgui.rc
 	rkstandardactions.rc
-	DESTINATION ${DATA_INSTALL_DIR}/rkward)
+	DESTINATION ${KXMLGUI_INSTALL_DIR}/rkward)

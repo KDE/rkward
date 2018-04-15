@@ -23,7 +23,7 @@
 #include <qcombobox.h>
 #include <QListWidget>
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "../rkglobals.h"
 #include "../misc/xmlhelper.h"
@@ -52,7 +52,7 @@ RKDropDown::RKDropDown (const QDomElement &element, RKComponent *parent_componen
 	addOptionsAndInit (element);
 
 	vbox->addWidget (box);
-	connect (box, SIGNAL (activated(int)), this, SLOT (comboItemActivated(int)));
+	connect (box, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), this, &RKDropDown::comboItemActivated);
 }
 
 RKDropDown::~RKDropDown(){
@@ -96,4 +96,3 @@ QStringList RKDropDown::getUiLabelPair () const {
 	return ret;
 }
 
-#include "rkdropdown.moc"

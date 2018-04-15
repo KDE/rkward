@@ -2,7 +2,7 @@
                           rkfilebrowser  -  description
                              -------------------
     begin                : Thu Apr 26 2007
-    copyright            : (C) 2007, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -20,9 +20,8 @@
 
 #include "rkmdiwindow.h"
 
-#include <kvbox.h>
-
 #include <QList>
+#include <QUrl>
 
 class KDirOperator;
 class RKFileBrowserWidget;
@@ -40,13 +39,13 @@ public:
 	~RKFileBrowser ();
 
 /** reimplemented to create the real file browser widget only when the file browser is shown for the first time */
-	void showEvent (QShowEvent *e);
+	void showEvent (QShowEvent *e) override;
 	static RKFileBrowser *getMainBrowser() { return main_browser; };
 public slots:
 	void currentWDChanged ();
 private:
 	RKFileBrowserWidget *real_widget;
-	KVBox *layout_widget;
+	QWidget *layout_widget;
 friend class RKWardMainWindow;
 	static RKFileBrowser *main_browser;
 };
@@ -54,26 +53,29 @@ friend class RKWardMainWindow;
 /** The internal widget used in RKFileBrowser 
 TODO: KDE4: check whether there is a ready widget for this. Much of the implementation is a modified copy from Kate / kdevelop.
 */
-class RKFileBrowserWidget : public KVBox {
+class RKFileBrowserWidget : public QWidget {
 	Q_OBJECT
 public:
 	explicit RKFileBrowserWidget (QWidget *widget);
 	~RKFileBrowserWidget ();
 
-	void setURL (const QString &url);
-	bool eventFilter (QObject* o, QEvent* e);
+	void setURL (const QUrl &url);
+	bool eventFilter (QObject* o, QEvent* e) override;
 public slots:
-	void urlChangedInView (const KUrl &url);
-	void urlChangedInCombo (const QString &url);
-	void urlChangedInCombo (const KUrl &url);
+	void urlChangedInView (const QUrl &url);
+	void stringChangedInCombo (const QString &url);
+	void urlChangedInCombo (const QUrl &url);
 	void fileActivated (const KFileItem& item);
 	void saveConfig ();
 	void contextMenuHook (const KFileItem &item, QMenu *menu);
+	void rename ();
 private:
 	QList<QAction*> added_service_actions;
 	KDirOperator *dir;
 	KUrlComboBox *urlbox;
 	KFileItemActions *fi_actions;
+	QAction *rename_action;
+	QUrl context_menu_url;
 };
 
 #endif

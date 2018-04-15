@@ -18,8 +18,10 @@
 #include "rkpluginbrowser.h"
 
 #include <QVBoxLayout>
+#include <QUrl>
+#include <QDir>
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "../misc/xmlhelper.h"
 #include "../misc/getfilenamewidget.h"
@@ -34,10 +36,10 @@ RKPluginBrowser::RKPluginBrowser (const QDomElement &element, RKComponent *paren
 
 	// create and add property
 	addChild ("selection", selection = new RKComponentPropertyBase (this, true));
-	connect (selection, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (textChanged(RKComponentPropertyBase*)));
+	connect (selection, &RKComponentPropertyBase::valueChanged, this, &RKPluginBrowser::textChanged);
 
 	setRequired (xml->getBoolAttribute (element, "required", true, DL_INFO));
-	connect (requirednessProperty (), SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (requirednessChanged(RKComponentPropertyBase*)));
+	connect (requirednessProperty (), &RKComponentPropertyBase::valueChanged, this, &RKPluginBrowser::validateInput);
 
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
@@ -48,22 +50,25 @@ RKPluginBrowser::RKPluginBrowser (const QDomElement &element, RKComponent *paren
 	else if (intmode == 1) mode = GetFileNameWidget::ExistingDirectory;
 	else mode = GetFileNameWidget::SaveFile;
 
-	bool only_local = !xml->getBoolAttribute (element, "allow_urls", false, DL_INFO);
+	only_local = !xml->getBoolAttribute (element, "allow_urls", false, DL_INFO);
 
 	label_string = xml->i18nStringAttribute (element, "label", i18n ("Enter filename"), DL_INFO);
 	selector = new GetFileNameWidget (this, mode, only_local, label_string, i18n ("Select"), xml->getStringAttribute (element, "initial", QString (), DL_INFO));
 	QString filter = xml->getStringAttribute (element, "filter", QString (), DL_INFO);
 	if (!filter.isEmpty ()) {
-		filter.append ("\n*|All files");
+		filter.append ("\nAll files (*)");
 		selector->setFilter (filter);
 	}
-	connect (selector, SIGNAL (locationChanged()), SLOT (textChanged()));
+	connect (selector, &GetFileNameWidget::locationChanged, this, &RKPluginBrowser::textChangedFromUi);
 
 	vbox->addWidget (selector);
 
+	validation_timer.setSingleShot (true);
+	connect (&validation_timer, &QTimer::timeout, this, &RKPluginBrowser::validateInput);
+
 	// initialize
 	updating = false;
-	textChanged ();
+	textChangedFromUi ();
 }
 
 RKPluginBrowser::~RKPluginBrowser () {
@@ -76,35 +81,96 @@ void RKPluginBrowser::textChanged (RKComponentPropertyBase *) {
 	if (updating) return;
 	updating = true;
 
-	selector->setLocation (fetchStringValue (selection));
+	if (status != RKComponentBase::Processing) {
+		status = RKComponentBase::Processing;
+		changed ();
+	}
+	validation_timer.start (300);
+
+	QUrl url = QUrl::fromUserInput (selection->value ().toString (), QDir::currentPath (), QUrl::AssumeLocalFile);
+	if (!url.isValid ()) url = QUrl (selector->getLocation ());
+	QString urlstring = only_local ? url.url (QUrl::PreferLocalFile) : url.url ();
+	if (url.url () != selection->value ().toString ()) {
+		// NOTE: We refuse to accept relative urls
+		selection->setValue (urlstring);
+	}
+	selector->setLocation (url.url ());
 	updateColor ();
 
 	updating = false;
-	changed ();
 }
 
-void RKPluginBrowser::textChanged () {
+void RKPluginBrowser::textChangedFromUi () {
 	RK_TRACE (PLUGIN);
 
 	selection->setValue (selector->getLocation ());
 }
 
-bool RKPluginBrowser::isValid () {
-	return (!(fetchStringValue (selection).isEmpty ()));
-}
-
-void RKPluginBrowser::requirednessChanged (RKComponentPropertyBase *) {
+void RKPluginBrowser::validateInput () {
 	RK_TRACE (PLUGIN);
 
+	QString tip;
+	QUrl url = QUrl::fromUserInput (selection->value ().toString (), QDir::currentPath (), QUrl::AssumeLocalFile);
+	RK_ASSERT (!url.isRelative ());
+	if (url.isValid ()) {
+		if (url.isLocalFile ()) {
+			GetFileNameWidget::FileType mode = selector->getMode ();
+			QFileInfo fi (url.toLocalFile ());
+			if (mode == GetFileNameWidget::ExistingFile || mode == GetFileNameWidget::ExistingDirectory) {
+				if (!fi.exists ()) {
+					tip = i18n ("The file or directory does not exist.");
+					status = RKComponentBase::Unsatisfied;
+				} else if (mode == GetFileNameWidget::ExistingFile && !fi.isFile ()) {
+					tip = i18n ("Only files (not directories) are acceptable, here.");
+					status = RKComponentBase::Unsatisfied;
+				} else if (mode == GetFileNameWidget::ExistingDirectory && !fi.isDir ()) {
+					tip = i18n ("Only directories (not files) are acceptable, here.");
+					status = RKComponentBase::Unsatisfied;
+				} else {
+					status = RKComponentBase::Satisfied;
+				}
+			} else {
+				RK_ASSERT (mode == GetFileNameWidget::SaveFile);
+				if (!(fi.isWritable () || (!fi.exists () && QFileInfo (fi.dir ().absolutePath ()).isWritable ()))) {
+					tip = i18n ("The specified file is not writable.");
+					status = RKComponentBase::Unsatisfied;
+				} else if (fi.isDir ()) {
+					tip = i18n ("You have to specify a filename (not directory) to write to.");
+					status = RKComponentBase::Unsatisfied;
+				} else if (fi.exists ()) {
+					// TODO: soft warning (icon)
+					tip = i18n ("<b>Note:</b> The given file already exists, and will be modified / overwritten.");
+					status = RKComponentBase::Satisfied;
+				} else {
+					status = RKComponentBase::Satisfied;
+				}
+			}
+		} else {
+			if (only_local) {
+				tip = i18n ("Only local files are allowed, here.");
+				status = RKComponentBase::Unsatisfied;
+			} else {
+				tip = i18n ("This url looks valid.");
+				status = RKComponentBase::Satisfied;
+			}
+		}
+	} else {
+		tip = i18n ("The given filename / url is not valid.");
+		status = RKComponentBase::Unsatisfied;
+	}
+	setToolTip (tip);
 	updateColor ();
+	changed ();
 }
 
 void RKPluginBrowser::updateColor () {
 	RK_TRACE (PLUGIN);
 
 	if (isEnabled ()) {
-		if (isSatisfied ()) {
+		if (status == RKComponentBase::Satisfied) {
 			selector->setBackgroundColor (QColor (255, 255, 255));
+		} else if (status == RKComponentBase::Processing) {
+			selector->setBackgroundColor (QColor (255, 255, 0));
 		} else {
 			selector->setBackgroundColor (QColor (255, 0, 0));
 		}
@@ -121,4 +187,3 @@ QStringList RKPluginBrowser::getUiLabelPair () const {
 	return ret;
 }
 
-#include "rkpluginbrowser.moc"

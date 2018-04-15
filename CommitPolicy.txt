@@ -9,14 +9,14 @@ Library dependencies
 ====================
 
 It is important to note that RKWard makes a point of _not_ requiring the latest KDE / QT libraries. If you want to use the latest and greatest, be sure to use #ifdef's, and make a best
-effort to support features for older versions of libraries, too. For the moment, in the KDE 4 versions of RKWard, we're trying to support Unbutu 10.04, meaning:
+effort to support features for older versions of libraries, too. For the moment, in the KF5 versions of RKWard, we're trying to support:
 
 Oldest library versions to support:
-* Qt: 4.6.2
-* KDE: 4.4.2
-* R: 2.10.1
+* Qt: 5.2.1 (= Ubuntu Trusty)
+* KDE: 5.2.0 -- TODO: What version would be readily accessible for Trusty (if any)
+* R: 3.0.0? (= Ubuntu Trusty)
 
-With the upcoming port to KF5, allowable dependencies will be increased, considerably. Thus, if your feature really needs something newer, don't despair, but commit to work-branch, for now.
+Note: This is not set in stone, may change according to whatever is included in important distributions.
 
 Branches and policies
 =====================

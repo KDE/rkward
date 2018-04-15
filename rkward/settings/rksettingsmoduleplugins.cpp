@@ -16,12 +16,10 @@
  ***************************************************************************/
 #include "rksettingsmoduleplugins.h"
 
-#include <klocale.h>
-#include <kconfig.h>
-#include <kfiledialog.h>
+#include <KLocalizedString>
 #include <kmessagebox.h>
-#include <khbox.h>
-#include <kdeversion.h>
+#include <KSharedConfig>
+#include <KConfigGroup>
 
 #include <qlayout.h>
 #include <qlabel.h>
@@ -31,6 +29,7 @@
 #include <qcheckbox.h>
 #include <QVBoxLayout>
 #include <QPushButton>
+#include <QFileDialog>
 
 #include "../rkward.h"
 #include "../rkglobals.h"
@@ -79,13 +78,13 @@ RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *pare
 	button_group->addButton (button, PreferWizard);
 	if ((button = button_group->button (interface_pref))) button->setChecked (true);
 
-	connect (button_group, SIGNAL (buttonClicked(int)), this, SLOT (settingChanged()));
+	connect (button_group, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &RKSettingsModulePlugins::settingChanged);
 	main_vbox->addWidget (button_box);
 
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 
 	QPushButton *pluginmap_config_button = new QPushButton (i18n ("Configure Active Plugins"), this);
-	connect (pluginmap_config_button, SIGNAL (clicked()), this, SLOT (configurePluginmaps()));
+	connect (pluginmap_config_button, &QPushButton::clicked, this, &RKSettingsModulePlugins::configurePluginmaps);
 	main_vbox->addWidget (pluginmap_config_button);
 
 	main_vbox->addStretch ();
@@ -366,12 +365,7 @@ QStringList RKSettingsModulePlugins::findPluginMapsRecursive (const QString &bas
 
 	QStringList subdirs = dir.entryList (QDir::Dirs | QDir::NoSymLinks | QDir::NoDotAndDotDot);
 	foreach (const QString& subdir, subdirs) {
-#if QT_VERSION >= 0x040500
 		ret.append (findPluginMapsRecursive (dir.absoluteFilePath (subdir)));
-#else
-		QStringList subs = findPluginMapsRecursive (dir.absoluteFilePath (subdir));
-		foreach (const QString& sub, subs) ret.append (sub);
-#endif
 	}
 
 	return ret;
@@ -390,8 +384,9 @@ RKSettingsModulePluginsModel::~RKSettingsModulePluginsModel() {
 
 void RKSettingsModulePluginsModel::init (const RKSettingsModulePlugins::PluginMapList& known_plugin_maps) {
 	RK_TRACE (SETTINGS);
+	beginResetModel ();
 	plugin_maps = known_plugin_maps;
-	emit (reset ());
+	endResetModel ();
 }
 
 int RKSettingsModulePluginsModel::rowCount (const QModelIndex& parent) const {
@@ -420,11 +415,11 @@ QVariant RKSettingsModulePluginsModel::data (const QModelIndex& index, int role)
 	const RKSettingsModulePlugins::PluginMapStoredInfo &inf = plugin_maps[index.row ()];
 
 	if (role == Qt::BackgroundRole) {
-		if (inf.broken_in_this_version) return Qt::red;
-		if (inf.quirky_in_this_version) return Qt::yellow;
+		if (inf.broken_in_this_version) return QColor (Qt::red);
+		if (inf.quirky_in_this_version) return QColor (Qt::yellow);
 		return (QVariant ());
 	} else if (role == Qt::ForegroundRole) {
-		if (inf.priority < RKSettingsModulePlugins::PriorityLow) return Qt::gray;
+		if (inf.priority < RKSettingsModulePlugins::PriorityLow) return QColor (Qt::gray);
 	} else if (role == Qt::ToolTipRole) {
 		const PluginMapMetaInfo &meta = const_cast<RKSettingsModulePluginsModel*> (this)->getPluginMapMetaInfo (inf.filename);
 		QString desc = meta.about->toHtml ();
@@ -504,7 +499,7 @@ bool RKSettingsModulePluginsModel::setData (const QModelIndex& index, const QVar
 void RKSettingsModulePluginsModel::insertNewStrings (int above_row) {
 	RK_TRACE (SETTINGS);
 
-	QStringList files = KFileDialog::getOpenFileNames (RKCommonFunctions::getRKWardDataDir (), "*.pluginmap", static_cast<QWidget*> (QObject::parent ()), i18n ("Select .pluginmap-file"));
+	QStringList files = QFileDialog::getOpenFileNames (static_cast<QWidget*> (QObject::parent ()), i18n ("Select .pluginmap-file"), RKCommonFunctions::getRKWardDataDir (), "RKWard pluginmap files [*.pluginmap](*.pluginmap)");
 
 	// already known files are activated, but not added
 	for (int i = files.size () -1; i >= 0; --i) {
@@ -515,7 +510,7 @@ void RKSettingsModulePluginsModel::insertNewStrings (int above_row) {
 				emit (dataChanged (index (pos, 0), index (pos, COLUMN_COUNT - 1)));
 			}
 			files.removeAt (i);
-		} 
+		}
 	}
 
 	beginInsertRows (QModelIndex (), above_row, files.size ());
@@ -563,4 +558,3 @@ const RKSettingsModulePluginsModel::PluginMapMetaInfo& RKSettingsModulePluginsMo
 	return (plugin_map_dynamic_info[pluginmapfile]);
 }
 
-#include "rksettingsmoduleplugins.moc"

@@ -19,7 +19,7 @@
 
 #include "../rbackend/rcommandreceiver.h"
 
-#include <kurl.h>
+#include <QUrl>
 #include <QObject>
 
 class RCommandChain;
@@ -34,18 +34,18 @@ public:
 	enum DoneAction { DoNothing=0, Load=1 };
 
 /** creates a new RKSaveAgent. If when_done == Quit, the RKSaveAgent will quit the application as soon as saving was successful (or it asked to by the user). Similarly, if when_done==Load, it will load a new workspace after saving (specify the url in load_url). If url is given (not empty), and not save_file_as, the agent will try to save to the given url, else it will ask the user to specify a url. RKSaveAgent will self destruct when done. */
-	explicit RKSaveAgent (KUrl url, bool save_file_as=false, DoneAction when_done=DoNothing, KUrl load_url=KUrl());
+	explicit RKSaveAgent (QUrl url, bool save_file_as=false, DoneAction when_done=DoNothing, QUrl load_url=QUrl());
 	
 	~RKSaveAgent ();
 protected:
-	void rCommandDone (RCommand *command);
+	void rCommandDone (RCommand *command) override;
 private:
 	bool askURL ();
 	void done ();
 	RCommandChain *save_chain;
-	KUrl save_url;
-	KUrl load_url;
-	KUrl previous_url;
+	QUrl save_url;
+	QUrl load_url;
+	QUrl previous_url;
 	DoneAction when_done;
 };
 

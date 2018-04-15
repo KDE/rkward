@@ -19,6 +19,7 @@
 
 #include <qstring.h>
 #include <qwidget.h>
+#include <QUrl>
 
 class KConfig;
 class RKSettings;
@@ -44,7 +45,7 @@ public:
 be inserted into this chain. It's safe to use this unconditionally, as if there is no chain, this will return 0, which corresponds to using the top-level chain */
 	RCommandChain *commandChain () { return chain; };
 
-	virtual QString helpURL () { return QString (); };
+	virtual QUrl helpURL () { return QUrl (); };
 protected:
 	void change ();
 

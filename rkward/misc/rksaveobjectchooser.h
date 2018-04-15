@@ -46,8 +46,8 @@ private slots:
 signals:
 	void changed (bool);
 protected:
-	void objectRemoved (RObject* removed);
-	void childAdded (int index, RObject* parent);
+	void objectRemoved (RObject* removed) override;
+	void childAdded (int index, RObject* parent) override;
 private:
 	bool object_exists;
 

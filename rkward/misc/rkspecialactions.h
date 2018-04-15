@@ -37,14 +37,14 @@ signals:
 };
 
 
-#include <kdialog.h>
+#include <QDialog>
 
 class QButtonGroup;
 class QLineEdit;
 class QCheckBox;
 
 /** Dialog used in RKPasteSpecialAction */
-class RKPasteSpecialDialog : public KDialog {
+class RKPasteSpecialDialog : public QDialog {
 	Q_OBJECT
 public:
 	explicit RKPasteSpecialDialog (QWidget* parent);

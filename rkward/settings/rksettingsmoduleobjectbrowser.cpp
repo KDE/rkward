@@ -17,15 +17,15 @@
 
 #include "rksettingsmoduleobjectbrowser.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kconfig.h>
 #include <kconfiggroup.h>
-#include <kinputdialog.h>
 
 #include <qlayout.h>
 #include <qcheckbox.h>
 #include <qlabel.h>
 #include <QVBoxLayout>
+#include <QInputDialog>
 
 #include "../rkglobals.h"
 #include "../misc/multistringselector.h"
@@ -49,8 +49,8 @@ RKSettingsModuleObjectBrowser::RKSettingsModuleObjectBrowser (RKSettings *gui, Q
 
 	blacklist_choser = new MultiStringSelector (i18n ("Never fetch the structure of these packages:"), this);
 	blacklist_choser->setValues (getstructure_blacklist);
-	connect (blacklist_choser, SIGNAL (listChanged()), this, SLOT (listChanged()));
-	connect (blacklist_choser, SIGNAL (getNewStrings(QStringList*)), this, SLOT (addBlackList(QStringList*)));
+	connect (blacklist_choser, &MultiStringSelector::listChanged, this, &RKSettingsModuleObjectBrowser::listChanged);
+	connect (blacklist_choser, &MultiStringSelector::getNewStrings, this, &RKSettingsModuleObjectBrowser::addBlackList);
 	layout->addWidget (blacklist_choser);
 }
 
@@ -78,8 +78,9 @@ bool RKSettingsModuleObjectBrowser::isPackageBlacklisted (const QString &package
 
 void RKSettingsModuleObjectBrowser::addBlackList (QStringList *string_list) {
 	RK_TRACE (SETTINGS);
-	QString new_string = KInputDialog::getText (i18n ("Add exclusion"), i18n ("Add the name of the package that no structure should be fetched for"), QString (), 0, this);
-	(*string_list).append (new_string);
+	bool ok;
+	QString new_string = QInputDialog::getText (this, i18n ("Add exclusion"), i18n ("Add the name of the package that no structure should be fetched for"), QLineEdit::Normal, QString (), &ok);
+	if (ok) (*string_list).append (new_string);
 }
 
 void RKSettingsModuleObjectBrowser::applyChanges () {
@@ -146,4 +147,3 @@ void RKSettingsModuleObjectBrowser::listChanged () {
 	change ();
 }
 
-#include "rksettingsmoduleobjectbrowser.moc"

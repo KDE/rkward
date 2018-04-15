@@ -2,7 +2,7 @@
                           rkhtmlwindow  -  description
                              -------------------
     begin                : Wed Oct 12 2005
-    copyright            : (C) 2005, 2006, 2007, 2009, 2011, 2014, 2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2005-2017 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -18,23 +18,23 @@
 #ifndef RKHTMLWINDOW_H
 #define RKHTMLWINDOW_H
 
-#include <kurl.h>
+#include <QUrl>
 #include <kparts/part.h>
 #include <kio/jobclasses.h>
 #include <kwebpage.h>
 
+#include <QDomElement>
 
 #include "../windows/rkmdiwindow.h"
 
 class KActionCollection;
 class KRecentFilesAction;
 class QAction;
-class QDomElement;
 class RKComponentHandle;
 class XMLHelper;
 class RKHTMLWindowPart;
 class KWebView;
-class KTemporaryFile;
+class QTemporaryFile;
 class RKHTMLWindow;
 class RKFindBar;
 
@@ -47,9 +47,9 @@ signals:
 	void pageInternalNavigation (const QUrl& url);
 protected:
 /** reimplemented to always emit linkClicked() for pages that need special handling (importantly, rkward://-urls). */
-	bool acceptNavigationRequest (QWebFrame* frame, const QNetworkRequest& request, NavigationType type);
+	bool acceptNavigationRequest (QWebFrame* frame, const QNetworkRequest& request, NavigationType type) override;
 /** reimplemented to schedule new window creation for the next page to load */
-	QWebPage* createWindow (WebWindowType type);
+	QWebPage* createWindow (WebWindowType type) override;
 private:
 	RKHTMLWindow *window;
 	bool new_window;
@@ -80,19 +80,19 @@ public:
 /** destructor */
 	~RKHTMLWindow ();
 /** open given URL. Returns false, if the URL is not an existing local file. Loading a non-local URL may succeed, even if this returns false! */
-	bool openURL (const KUrl &url);
+	bool openURL (const QUrl &url);
 /** takes care of special handling, if the url is an rkward://-url. Does nothing and returns false, otherwise.
  *  If window is not 0, and the url is a help window, open it, there (otherwise in a new window).
  *  TODO: move to RKWorkplace? As this can really open a bunch of different things, although generally _from_ an html window.
  */
-	static bool handleRKWardURL (const KUrl &url, RKHTMLWindow *window=0);
-	void openRKHPage (const KUrl &url);
+	static bool handleRKWardURL (const QUrl &url, RKHTMLWindow *window=0);
+	void openRKHPage (const QUrl &url);
 
-	bool isModified ();
+	bool isModified () override;
 /** Return current url */
-	KUrl url ();
+	QUrl url ();
 /** Return current url in a restorable way, i.e. for help pages, abstract the session specific part of the path */
-	KUrl restorableUrl ();
+	QUrl restorableUrl ();
 
 	WindowMode mode () { return window_mode; };
 public slots:
@@ -113,6 +113,8 @@ public slots:
 private slots:
 	void scrollToBottom ();
 	void mimeTypeDetermined (KIO::Job*, const QString& type);
+	void mimeTypeJobFail (KJob*);
+	void mimeTypeJobFail2 (KJob*);
 	void internalNavigation (const QUrl& new_url);
 	void makeContextMenu (const QPoint& pos);
 	void findRequest (const QString& text, bool backwards, const RKFindBar *findbar, bool* found);
@@ -125,12 +127,12 @@ friend class RKHTMLWindowPart;
 /** In case the part is a khtmlpart: A ready-cast pointer to that. 0 otherwise (if a webkit part is in use) */
 	RKHTMLWindowPart *part;
 /** update caption according to given URL */
-	virtual void updateCaption (const KUrl &url);
+	virtual void updateCaption (const QUrl &url);
 /** called from openURL. Takes care of updating caption, and updating back/forward actions, if available */
-	void changeURL (const KUrl &url);
+	void changeURL (const QUrl &url);
 
 	struct VisitedLocation {
-		KUrl url;
+		QUrl url;
 		QPoint scroll_position;
 	};
 	QList<VisitedLocation> url_history;
@@ -138,9 +140,9 @@ friend class RKHTMLWindowPart;
 	int current_history_position;
 	bool url_change_is_from_history;	// dirty!!!
 
-	KUrl current_url;
+	QUrl current_url;
 	void startNewCacheFile ();
-	KTemporaryFile *current_cache_file;
+	QTemporaryFile *current_cache_file;
 
 	WindowMode window_mode;
 	void useMode (WindowMode);
@@ -194,7 +196,7 @@ public:
 	QDomElement component_doc_element;
 
 	// for dealing with rkward://[page|component]-pages
-	bool renderRKHelp (const KUrl &url);
+	bool renderRKHelp (const QUrl &url);
 	QString renderHelpFragment (QDomElement &fragment);
 	QString resolveLabel (const QString &id) const;
 	QString prepareHelpLink (const QString &href, const QString &text);
@@ -219,8 +221,10 @@ public:
 	void registerWindow (RKHTMLWindow *window);
 /** R may produce output while no output window is active. This allows to set the file that should be monitored for such changes (called from within rk.set.html.output.file()). */
 	void setCurrentOutputPath (const QString &path);
-/** return a pointer to the current output. If there is no output window, one will be created (and shown) automatically */
-	RKHTMLWindow* getCurrentOutputWindow ();
+/** returns a list (possibly empty) of pointers to existing output windows (for the current output path, only). */
+	QList<RKHTMLWindow*> existingOutputWindows () const;
+/** Create (and show) a new output window, and @return the pointer */
+	RKHTMLWindow* newOutputWindow ();
 private:
 	RKOutputWindowManager ();
 	~RKOutputWindowManager ();

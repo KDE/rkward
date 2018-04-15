@@ -48,14 +48,11 @@ void RKDBusAPI::openAnyUrl (const QStringList& urls, bool warn_external) {
 	main->show();
 	main->activateWindow();
 	main->raise();
-#ifdef Q_WS_X11
 	KWindowSystem::forceActiveWindow (main->winId ());
 	KWindowSystem::raiseWindow (main->winId ());
 	KWindowSystem::demandAttention (main->winId ());
-#endif
 	// end
 
 	RKWardMainWindow::getMain ()->openUrlsFromCommandLineOrDBus (warn_external, urls);
 }
 
-#include "rkdbusapi.moc"

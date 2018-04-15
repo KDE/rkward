@@ -17,8 +17,7 @@
 
 #include "rkcallstackviewer.h"
 
-#include <klocale.h>
-#include <kvbox.h>
+#include <KLocalizedString>
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -41,14 +40,14 @@ RKCallstackViewer::RKCallstackViewer (QWidget *parent, bool tool_window, const c
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
-	layout_widget = new KVBox (this);
+	layout_widget = new QWidget (this);
 	layout->addWidget (layout_widget);
 	layout_widget->setFocusPolicy (Qt::StrongFocus);
 
 	setPart (new RKDummyPart (this, layout_widget));
 	initializeActivationSignals ();
 
-	connect (RKDebugHandler::instance (), SIGNAL (newDebugState()), this, SLOT (newDebugState()));
+	connect (RKDebugHandler::instance (), &RKDebugHandler::newDebugState, this, &RKCallstackViewer::newDebugState);
 }
 
 RKCallstackViewer::~RKCallstackViewer () {
@@ -69,6 +68,9 @@ void RKCallstackViewer::createRealWidget () {
 		RK_DEBUG (APP, DL_INFO, "creating callstack viewer");
 
 		real_widget = new RKCallstackViewerWidget (layout_widget);
+		QVBoxLayout *l = new QVBoxLayout (layout_widget);
+		l->setContentsMargins (0, 0, 0, 0);
+		layout ()->addWidget (real_widget);
 		setFocusProxy (real_widget);
 	}
 }
@@ -97,7 +99,7 @@ RKCallstackViewerWidget::RKCallstackViewerWidget (QWidget *parent) : QWidget (pa
 	v_layout->addWidget (label);
 	frame_selector = new QListWidget (this);
 	frame_selector->setSelectionMode (QAbstractItemView::SingleSelection);
-	connect (frame_selector, SIGNAL (currentRowChanged(int)), this, SLOT (frameChanged(int)));
+	connect (frame_selector, &QListWidget::currentRowChanged, this, &RKCallstackViewerWidget::frameChanged);
 	v_layout->addWidget (frame_selector);
 
 	v_layout = new QVBoxLayout ();
@@ -108,7 +110,7 @@ RKCallstackViewerWidget::RKCallstackViewerWidget (QWidget *parent) : QWidget (pa
 	frame_info->setWordWrap (true);
 	v_layout->addWidget (frame_info);
 
-	frame_source = new RKCommandEditorWindow (this, true);
+	frame_source = new RKCommandEditorWindow (this, QUrl (), QString (), true);
 	v_layout->addWidget (frame_source);
 
 	updateState ();
@@ -142,9 +144,9 @@ void RKCallstackViewerWidget::frameChanged (int frame_number) {
 	if (RKDebugHandler::instance ()->state () == RKDebugHandler::NotInDebugger) return;
 
 	frame_info->setText (i18n ("<b>Current call:</b> %1<br><b>Environment:</b> %2<br><b>Local objects:</b> %3",
-									Qt::escape (RKDebugHandler::instance ()->calls ().value (frame_number)),
-									Qt::escape (RKDebugHandler::instance ()->environments ().value (frame_number)),
-									Qt::escape (RKDebugHandler::instance ()->locals ().value (frame_number).split ('\n').join (", "))));
+									RKDebugHandler::instance ()->calls ().value (frame_number).toHtmlEscaped (),
+									RKDebugHandler::instance ()->environments ().value (frame_number).toHtmlEscaped (),
+									RKDebugHandler::instance ()->locals ().value (frame_number).split ('\n').join (", ").toHtmlEscaped ()));
 	frame_source->setText (RKDebugHandler::instance ()->functions ().value (frame_number) + '\n');
 	int line = RKDebugHandler::instance ()->relativeSourceLines ().value (frame_number, 0);
 	if (line > 0) frame_source->highlightLine (line - 1);
@@ -160,4 +162,3 @@ void RKCallstackViewerWidget::frameChanged (int frame_number) {
 	}
 }
 
-#include "rkcallstackviewer.moc"

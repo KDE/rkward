@@ -95,7 +95,7 @@ void RKTableView::setRKItemDelegate (RKItemDelegate* delegate) {
 	RK_TRACE (EDITOR);
 
 	setItemDelegate (delegate);
-	connect (delegate, SIGNAL (doCloseEditor(QWidget*,RKItemDelegate::EditorDoneReason)), this, SLOT (editorDone(QWidget*,RKItemDelegate::EditorDoneReason)));
+	connect (delegate, &RKItemDelegate::doCloseEditor, this, &RKTableView::editorDone);
 }
 
 void RKTableView::keyPressEvent (QKeyEvent *e) {
@@ -171,6 +171,7 @@ QWidget* RKItemDelegate::createEditor (QWidget* parent, const QStyleOptionViewIt
 	}
 
 	ed->setFont (option.font);
+	// NOTE: Can't use new SIGNAL/SLOT syntax, here, as the editors are of different types (TODO: define a common base class)
 	connect (ed, SIGNAL (done(QWidget*,RKItemDelegate::EditorDoneReason)), this, SLOT (editorDone(QWidget*,RKItemDelegate::EditorDoneReason)));
 	return ed;
 }
@@ -272,4 +273,3 @@ void RKItemDelegate::editorDone (QWidget* editor, RKItemDelegate::EditorDoneReas
 	locked_for_modal_editor = false;
 }
 
-#include "rktableview.moc"

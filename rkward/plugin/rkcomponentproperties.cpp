@@ -95,7 +95,7 @@ the specialized properties (e.g. RKComponentPropertyInt::intValue () always retu
 
 #include "../misc/rkcommonfunctions.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "../debug.h"
 
@@ -132,7 +132,7 @@ void RKComponentPropertyBase::connectToGovernor (RKComponentPropertyBase *govern
 	RK_TRACE (PLUGIN);
 
 	RK_ASSERT (governor);
-	connect (governor, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (governorValueChanged(RKComponentPropertyBase*)));
+	connect (governor, &RKComponentPropertyBase::valueChanged, this, &RKComponentPropertyBase::governorValueChanged);
 	governor_modifier = modifier;
 	// no need to reconcile any requirements, as the RKComponentPropertyBase does not have any requirements
 
@@ -1193,7 +1193,7 @@ QVariant RKComponentPropertyCode::value (const QString &modifier) {
 	if (modifier == "printout") return printout ();
 	if (!modifier.isEmpty ()) warnModifierNotRecognized (modifier);
 
-	return (preprocess () + calculate () + printout ());
+	return (QString (preprocess () + calculate () + printout ()));
 }
 
 /////////////////////////////////////////// Convert ////////////////////////////////////////////////
@@ -1205,7 +1205,7 @@ RKComponentPropertyConvert::RKComponentPropertyConvert (RKComponent *parent) : R
 	require_true = false;
 	c_parent = parent;
 	// get notified of own changes
-	connect (this, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (selfChanged(RKComponentPropertyBase*)));
+	connect (this, &RKComponentPropertyBase::valueChanged, this, &RKComponentPropertyConvert::selfChanged);
 }
 
 RKComponentPropertyConvert::~RKComponentPropertyConvert () {
@@ -1229,7 +1229,7 @@ void RKComponentPropertyConvert::setSources (const QStringList &source_ids) {
 		if (prop && prop->isProperty ()) {
 			s.property = static_cast<RKComponentPropertyBase *>(prop);
 			sources.append (s);
-			connect (s.property, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (sourcePropertyChanged(RKComponentPropertyBase*)));
+			connect (s.property, &RKComponentPropertyBase::valueChanged, this, &RKComponentPropertyConvert::sourcePropertyChanged);
 		} else {
 			RK_DEBUG (PLUGIN, DL_WARNING, "Not found or not a property: %s", (*it).toLatin1 ().data ());
 		}
@@ -1364,7 +1364,7 @@ RKComponentPropertySwitch::RKComponentPropertySwitch (RKComponent* parent, const
 	condition_prop = 0;
 	c_parent = parent;
 
-	connect (this, SIGNAL(valueChanged(RKComponentPropertyBase*)), this, SLOT(selfChanged(RKComponentPropertyBase*)));
+	connect (this, &RKComponentPropertyBase::valueChanged, this, &RKComponentPropertySwitch::selfChanged);
 }
 
 RKComponentPropertySwitch::~RKComponentPropertySwitch () {
@@ -1432,7 +1432,7 @@ void RKComponentPropertySwitch::setSources (const QString& _condition_prop, cons
 	if (!condition_prop) {
 		RK_DEBUG (PLUGIN, DL_ERROR, "Not a valid condition to connect <switch> property to: %s", qPrintable (_condition_prop));
 	} else {
-		connect (condition_prop, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (sourcePropertyChanged(RKComponentPropertyBase*)));
+		connect (condition_prop, &RKComponentPropertyBase::valueChanged, this, &RKComponentPropertySwitch::sourcePropertyChanged);
 	}
 
 	for (int i = 0; i < _value_props.size (); ++i) {
@@ -1441,8 +1441,7 @@ void RKComponentPropertySwitch::setSources (const QString& _condition_prop, cons
 		if (!_value_props[i].isEmpty ()) p = c_parent->lookupProperty (_value_props[i], &mod, true);	// Don't try to look it up, if it's empty (as it always is for fixed_value, as this would generate a warning.)
 		value_props.append (p);	// NOTE: Even if it is 0. value() takes care of that.
 		value_prop_mods.append (mod);
-		if (p) connect (p, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (sourcePropertyChanged(RKComponentPropertyBase*)));
+		if (p) connect (p, &RKComponentPropertyBase::valueChanged, this, &RKComponentPropertySwitch::sourcePropertyChanged);
 	}
 }
 
-#include "rkcomponentproperties.moc"

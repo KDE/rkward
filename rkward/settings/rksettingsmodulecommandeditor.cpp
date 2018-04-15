@@ -16,7 +16,7 @@
  ***************************************************************************/
 #include "rksettingsmodulecommandeditor.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kconfig.h>
 #include <kconfiggroup.h>
 
@@ -57,7 +57,7 @@ RKSettingsModuleCommandEditor::RKSettingsModuleCommandEditor (RKSettings *gui, Q
 
 	completion_enabled_box = new QCheckBox (i18n ("Enable code completion"), group);
 	completion_enabled_box->setChecked (completion_enabled);
-	connect (completion_enabled_box, SIGNAL (stateChanged(int)), this, SLOT (settingChanged()));
+	connect (completion_enabled_box, &QCheckBox::stateChanged, this, &RKSettingsModuleCommandEditor::settingChanged);
 	box_layout->addWidget (completion_enabled_box);
 
 	box_layout->addSpacing (RKGlobals::spacingHint ());
@@ -67,7 +67,7 @@ RKSettingsModuleCommandEditor::RKSettingsModuleCommandEditor (RKSettings *gui, Q
 	completion_min_chars_box = new RKSpinBox (group);
 	completion_min_chars_box->setIntMode (1, INT_MAX, completion_min_chars);
 	completion_min_chars_box->setEnabled (completion_enabled);
-	connect (completion_min_chars_box, SIGNAL (valueChanged(int)), this, SLOT (settingChanged()));
+	connect (completion_min_chars_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleCommandEditor::settingChanged);
 	box_layout->addWidget (label);
 	box_layout->addWidget (completion_min_chars_box);
 
@@ -78,7 +78,7 @@ RKSettingsModuleCommandEditor::RKSettingsModuleCommandEditor (RKSettings *gui, Q
 	completion_timeout_box = new RKSpinBox (group);
 	completion_timeout_box->setIntMode (0, INT_MAX, completion_timeout);
 	completion_timeout_box->setEnabled (completion_enabled);
-	connect (completion_timeout_box, SIGNAL (valueChanged(int)), this, SLOT (settingChanged()));
+	connect (completion_timeout_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleCommandEditor::settingChanged);
 	box_layout->addWidget (label);
 	box_layout->addWidget (completion_timeout_box);
 
@@ -86,7 +86,7 @@ RKSettingsModuleCommandEditor::RKSettingsModuleCommandEditor (RKSettings *gui, Q
 
 	arghinting_enabled_box = new QCheckBox (i18n ("Enable function argument hinting"), group);
 	arghinting_enabled_box->setChecked (arghinting_enabled);
-	connect (arghinting_enabled_box, SIGNAL (stateChanged(int)), this, SLOT (settingChanged()));
+	connect (arghinting_enabled_box, &QCheckBox::stateChanged, this, &RKSettingsModuleCommandEditor::settingChanged);
 	main_vbox->addWidget (arghinting_enabled_box);
 
 	main_vbox->addSpacing (2 * RKGlobals::spacingHint ());
@@ -94,20 +94,20 @@ RKSettingsModuleCommandEditor::RKSettingsModuleCommandEditor (RKSettings *gui, Q
 	group = autosave_enabled_box = new QGroupBox (i18n ("Autosaves"), this);
 	autosave_enabled_box->setCheckable (true);
 	autosave_enabled_box->setChecked (autosave_enabled);
-	connect (autosave_enabled_box, SIGNAL (toggled(bool)), this, SLOT (settingChanged()));
+	connect (autosave_enabled_box, &QGroupBox::toggled, this, &RKSettingsModuleCommandEditor::settingChanged);
 	box_layout = new QVBoxLayout (group);
 
 	label = new QLabel (i18n ("Autosave interval (minutes)"), group);
 	autosave_interval_box = new RKSpinBox (group);
 	autosave_interval_box->setIntMode (1, INT_MAX, autosave_interval);
-	connect (autosave_interval_box, SIGNAL (valueChanged(int)), this, SLOT (settingChanged()));
+	connect (autosave_interval_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleCommandEditor::settingChanged);
 	box_layout->addWidget (label);
 	box_layout->addWidget (autosave_interval_box);
 	box_layout->addSpacing (RKGlobals::spacingHint ());
 
 	autosave_keep_box = new QCheckBox (i18n ("Keep autosave file after manual save"), group);
 	autosave_keep_box->setChecked (autosave_keep);
-	connect (autosave_keep_box, SIGNAL (stateChanged(int)), this, SLOT (settingChanged()));
+	connect (autosave_keep_box, &QCheckBox::stateChanged, this, &RKSettingsModuleCommandEditor::settingChanged);
 	box_layout->addWidget (autosave_keep_box);
 
 	main_vbox->addWidget (group);
@@ -120,7 +120,7 @@ RKSettingsModuleCommandEditor::RKSettingsModuleCommandEditor (RKSettings *gui, Q
 	num_recent_files_box = new RKSpinBox (group);
 	num_recent_files_box->setIntMode (1, INT_MAX, num_recent_files);
 	RKCommonFunctions::setTips (i18n ("<p>The number of recent files to remember (in the Open Recent R Script File menu).</p>") + RKCommonFunctions::noteSettingsTakesEffectAfterRestart (), num_recent_files_box, label);
-	connect (num_recent_files_box, SIGNAL (valueChanged(int)), this, SLOT (settingChanged()));
+	connect (num_recent_files_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleCommandEditor::settingChanged);
 	box_layout->addWidget (label);
 	box_layout->addWidget (num_recent_files_box);
 	box_layout->addSpacing (RKGlobals::spacingHint ());
@@ -129,7 +129,7 @@ RKSettingsModuleCommandEditor::RKSettingsModuleCommandEditor (RKSettings *gui, Q
 	script_file_filter_box = new QLineEdit (group);
 	script_file_filter_box->setText (script_file_filter);
 	RKCommonFunctions::setTips (i18n ("<p>A list of filters (file name extensions) that should be treated as R script files. Most importantly, files matching one of these filters will always be opened with R syntax highlighting.</p><p>Filters are case insensitive.</p>"), script_file_filter_box, label);
-	connect (script_file_filter_box, SIGNAL (textChanged(QString)), this, SLOT (settingChanged()));
+	connect (script_file_filter_box, &QLineEdit::textChanged, this, &RKSettingsModuleCommandEditor::settingChanged);
 	box_layout->addWidget (label);
 	box_layout->addWidget (script_file_filter_box);
 	box_layout->addSpacing (RKGlobals::spacingHint ());
@@ -223,4 +223,3 @@ bool RKSettingsModuleCommandEditor::matchesScriptFileFilter (const QString &file
 	return false;
 }
 
-#include "rksettingsmodulecommandeditor.moc"

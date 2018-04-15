@@ -35,10 +35,10 @@ public:
 	RKItemDelegate (QObject *parent, QAbstractItemModel* model, bool dummy);
 	~RKItemDelegate ();
 
-	QWidget* createEditor (QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const;
-	void setEditorData (QWidget* editor, const QModelIndex& index) const;
-	void setModelData (QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const;
-	bool eventFilter (QObject* editor, QEvent* event);
+	QWidget* createEditor (QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
+	void setEditorData (QWidget* editor, const QModelIndex& index) const override;
+	void setModelData (QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const override;
+	bool eventFilter (QObject* editor, QEvent* event) override;
 
 	enum EditorDoneReason {
 		EditorExitLeft,
@@ -85,7 +85,7 @@ signals:
 	void blankSelectionRequest ();
 protected:
 /** will emit blankSelectionRequest() on DEL and BACKSPACE. Also scrolls to current index on key presses. */
-	void keyPressEvent (QKeyEvent *e);
+	void keyPressEvent (QKeyEvent *e) override;
 private slots:
 	void editorDone (QWidget* editor, RKItemDelegate::EditorDoneReason reason);
 };

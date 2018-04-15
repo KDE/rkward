@@ -2,7 +2,7 @@
                           detachedwindowcontainer  -  description
                              -------------------
     begin                : Wed Oct 21 2005
-    copyright            : (C) 2005, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2005-2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -34,7 +34,7 @@ class DetachedWindowContainer : public KParts::MainWindow {
 public:
 /** constructor.
 @param widget_to_capture The window to reparent into the detached window */
-	explicit DetachedWindowContainer (RKMDIWindow *widget_to_capture);
+	explicit DetachedWindowContainer (RKMDIWindow *widget_to_capture, bool copy_geometry);
 /** destructor. Usually you don't call this explicitly, but rather delete/close the child view. The DetachedWindowContainer will then self destruct via viewDestroyed () */
 	~DetachedWindowContainer ();
 public slots:
@@ -44,13 +44,13 @@ public slots:
 	void slotReattach ();
 /** update own caption, when the window's caption has changed */
 	void updateCaption (RKMDIWindow *);
-	void slotSetStatusBarText (const QString &text);
+	void slotSetStatusBarText (const QString &text) override;
 /** Hide any emtpy menus.
 @param ignore do nothing if true. For internal use, only. */
 	void hideEmptyMenus (bool ignore=false);
 protected:
 /** when receiving a close event, dispatch to the embedded window */
-	void closeEvent (QCloseEvent *e);
+	void closeEvent (QCloseEvent *e) override;
 private:
 	RKMDIWindow *captured;
 	RKTopLevelWindowGUI *toplevel_actions;

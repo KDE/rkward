@@ -145,7 +145,7 @@ public:
 	void markDataDirty ();
 
 /** Returns the editor of this object, if any, or 0 */
-	RKEditor* editor () const;
+	QList<RKEditor*> editors () const;
 	bool canWrite () const;
 	bool canRead () const;
 	bool canRename () const;
@@ -298,7 +298,7 @@ friend class RKModificationTracker;
 /** Notify the object that a model no longer needs its data. If there have been as many endEdit() as beginEdit() calls, the object should discard its data storage. The default implementation does nothing (raises an assert). */
 	virtual void endEdit ();
 
-	void rCommandDone (RCommand *command);
+	void rCommandDone (RCommand *command) override;
 
 /* Storage hashes for special objects which are held by some but not all objects, and thus should not have a pointer
  * in the class declaration. Some apply only to specific RObject types, but moving storage to the relevant classes, would make it more

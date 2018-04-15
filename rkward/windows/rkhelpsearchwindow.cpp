@@ -17,8 +17,8 @@
 
 #include "rkhelpsearchwindow.h"
 
-#include <klocale.h>
-#include <kurl.h>
+#include <KLocalizedString>
+#include <QUrl>
 #include <kmessagebox.h>
 
 #include <qcheckbox.h>
@@ -33,7 +33,7 @@
 #include <QVBoxLayout>
 #include <QSortFilterProxyModel>
 
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../rbackend/rcommandreceiver.h"
 #include "../rbackend/rksessionvars.h"
 #include "../debug.h"
@@ -83,7 +83,7 @@ RKHelpSearchWindow::RKHelpSearchWindow (QWidget *parent, bool tool_window, const
 	field = new QComboBox (this);
 	field->setEditable (true);
 	field->setSizePolicy (QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
-	connect (field->lineEdit () , SIGNAL (returnPressed()), this, SLOT (slotFindButtonClicked()));
+	connect (field->lineEdit (), &QLineEdit::returnPressed, this, &RKHelpSearchWindow::slotFindButtonClicked);
 	main_settings_layout->addWidget (field);
 
 	QHBoxLayout* fields_packages_layout = new QHBoxLayout ();
@@ -104,7 +104,7 @@ RKHelpSearchWindow::RKHelpSearchWindow (QWidget *parent, bool tool_window, const
 	packagesList = new QComboBox (this);
 	packagesList->setEditable (false);
 	fields_packages_layout->addWidget (packagesList);
-	connect (RKSessionVars::instance (), SIGNAL (installedPackagesChanged()), this, SLOT (updateInstalledPackages()));
+	connect (RKSessionVars::instance (), &RKSessionVars::installedPackagesChanged, this, &RKHelpSearchWindow::updateInstalledPackages);
 	updateInstalledPackages ();
 
 	QVBoxLayout* checkboxes_layout = new QVBoxLayout ();
@@ -118,7 +118,7 @@ RKHelpSearchWindow::RKHelpSearchWindow (QWidget *parent, bool tool_window, const
 
 	findButton = new QPushButton (i18n ("Find"), this);
 	findButton->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
-	connect (findButton, SIGNAL (clicked()), this, SLOT (slotFindButtonClicked()));
+	connect (findButton, &QPushButton::clicked, this, &RKHelpSearchWindow::slotFindButtonClicked);
 	selection_layout->addWidget (findButton);
 
 	results = new RKHelpSearchResultsModel (this);
@@ -128,7 +128,7 @@ RKHelpSearchWindow::RKHelpSearchWindow (QWidget *parent, bool tool_window, const
 	results_view->setRootIsDecorated (false);
 	results_view->setModel (proxy_model);
 	results_view->setSortingEnabled (true);
-	connect (results_view, SIGNAL (doubleClicked(QModelIndex)), this, SLOT (resultDoubleClicked(QModelIndex)));
+	connect (results_view, &QTreeView::doubleClicked, this, &RKHelpSearchWindow::resultDoubleClicked);
 	main_layout->addWidget (results_view);
 
 	setCaption (i18n ("Help search"));
@@ -168,7 +168,7 @@ void RKHelpSearchWindow::getFunctionHelp (const QString &function_name, const QS
 	command.append (")");
 	if (type == "vignette") command.append (")");
 
-	RKGlobals::rInterface ()->issueCommand (command, RCommand::App | RCommand::GetStringVector, i18n ("Find HTML help for %1").arg (function_name), this, GET_HELP);
+	RKGlobals::rInterface ()->issueCommand (command, RCommand::App | RCommand::GetStringVector, i18n ("Find HTML help for %1", function_name), this, GET_HELP);
 }
 
 void RKHelpSearchWindow::slotFindButtonClicked () {
@@ -228,9 +228,7 @@ void RKHelpSearchWindow::updateInstalledPackages () {
 	packagesList->clear ();
 	packagesList->addItem (i18n("All installed packages"));
 	packagesList->addItem (i18n("All loaded packages"));
-#if QT_VERSION >= 0x040400
 	packagesList->insertSeparator (2);
-#endif
 	packagesList->addItems (RKSessionVars::instance ()->installedPackages ());
 
 	int index = 0;
@@ -278,6 +276,7 @@ void RKHelpSearchResultsModel::setResults (const QStringList &results) {
 	RK_TRACE (APP);
 
 	RK_ASSERT ((results.size () % 4) == 0);
+	beginResetModel ();
 
 	result_count = results.size () / 4;
 	topics = results.mid (0, result_count);
@@ -285,7 +284,7 @@ void RKHelpSearchResultsModel::setResults (const QStringList &results) {
 	packages = results.mid (result_count*2, result_count);
 	types = results.mid (result_count*3, result_count);
 
-	reset ();
+	endResetModel ();
 }
 
 int RKHelpSearchResultsModel::rowCount (const QModelIndex& parent) const {
@@ -349,4 +348,3 @@ QVariant RKHelpSearchResultsModel::headerData (int section, Qt::Orientation orie
 	return QVariant ();
 }
 
-#include "rkhelpsearchwindow.moc"

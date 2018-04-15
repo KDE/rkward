@@ -17,8 +17,7 @@
 
 #include "rkcomponentscripting.h"
 
-#include <klocale.h>
-#include <kdeversion.h>
+#include <KLocalizedString>
 #include <kmessagebox.h>
 #include <QDir>
 
@@ -27,7 +26,7 @@
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/xmlhelper.h"
 #include "../rkglobals.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "qtscriptbackend.h"
 #include "qtscripti18n.h"
 
@@ -92,8 +91,7 @@ void RKComponentScriptingProxy::include (const QString& filename) {
 
 	QString _filename = filename;
 	if (QFileInfo (filename).isRelative ()) {
-		KUrl script_path = KUrl (QUrl::fromLocalFile (_scriptfile)).upUrl ();
-		script_path.addPath (filename);
+		QUrl script_path = QUrl (QUrl::fromLocalFile (_scriptfile)).adjusted (QUrl::RemoveFilename).resolved (QUrl (filename));
 		_filename = script_path.toLocalFile ();
 	}
 
@@ -126,9 +124,9 @@ void RKComponentScriptingProxy::addChangeCommand (const QString& changed_id, con
 	if (remainder.isEmpty ()) {
 		component_commands.insert (base, command);
 		if (base->isComponent()) {
-			connect (static_cast<RKComponent*> (base), SIGNAL (componentChanged(RKComponent*)), this, SLOT (componentChanged(RKComponent*)));
+			connect (static_cast<RKComponent*> (base), &RKComponent::componentChanged, this, &RKComponentScriptingProxy::componentChanged);
 		} else {
-			connect (static_cast<RKComponentPropertyBase*> (base), SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (propertyChanged(RKComponentPropertyBase*)));
+			connect (static_cast<RKComponentPropertyBase*> (base), &RKComponentPropertyBase::valueChanged, this, &RKComponentScriptingProxy::propertyChanged);
 		}
 	} else {
 		evaluate (QString ("error ('No such property %1 (failed portion was %2)');\n").arg (changed_id, remainder));
@@ -152,7 +150,7 @@ QVariant RKComponentScriptingProxy::doRCommand (const QString& command, const QS
 
 	OutstandingCommand com;
 	com.command = new RCommand (command, RCommand::PriorityCommand | RCommand::GetStructuredData | RCommand::Plugin);
-	connect (com.command->notifier (), SIGNAL (commandFinished(RCommand*)), this, SLOT (scriptRCommandFinished(RCommand*)));
+	connect (com.command->notifier (), &RCommandNotifier::commandFinished, this, &RKComponentScriptingProxy::scriptRCommandFinished);
 	com.callback = callback;
 	outstanding_commands.append (com);
 
@@ -328,4 +326,3 @@ QString RKComponentScriptingProxy::getObjectChild (const QString &name) {
 	return (QString ());
 }
 
-#include "rkcomponentscripting.moc"

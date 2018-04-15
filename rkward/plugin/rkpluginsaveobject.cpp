@@ -20,7 +20,7 @@
 #include <QVBoxLayout>
 #include <QGroupBox>
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "../misc/xmlhelper.h"
 #include "../misc/rksaveobjectchooser.h"
@@ -41,24 +41,24 @@ RKPluginSaveObject::RKPluginSaveObject (const QDomElement &element, RKComponent 
 
 	// create and add properties
 	addChild ("selection", selection = new RKComponentPropertyBase (this, required));
-	connect (selection, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (externalChange()));
+	connect (selection, &RKComponentPropertyBase::valueChanged, this, &RKPluginSaveObject::externalChange);
 	selection->setInternal (true);	// the two separate properties "parent" and "objectname" are used for (re-)storing.
 	addChild ("parent", parent = new RKComponentPropertyRObjects (this, false));
-	connect (parent, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (externalChange()));
+	connect (parent, &RKComponentPropertyBase::valueChanged, this, &RKPluginSaveObject::externalChange);
 	addChild ("objectname", objectname = new RKComponentPropertyBase (this, false));
-	connect (objectname, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (externalChange()));
+	connect (objectname, &RKComponentPropertyBase::valueChanged, this, &RKPluginSaveObject::externalChange);
 	addChild ("active", active = new RKComponentPropertyBool (this, false, false, "1", "0"));
-	connect (active, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (externalChange()));
+	connect (active, &RKComponentPropertyBase::valueChanged, this, &RKPluginSaveObject::externalChange);
 	if (!checkable) active->setInternal (true);
 
 	// create GUI
 	groupbox = new QGroupBox (label, this);
 	groupbox->setCheckable (checkable);
 	if (checkable) groupbox->setChecked (checked);
-	connect (groupbox, SIGNAL (toggled(bool)), this, SLOT (internalChange()));
+	connect (groupbox, &QGroupBox::toggled, this, &RKPluginSaveObject::internalChange);
 
 	selector = new RKSaveObjectChooser (groupbox, initial);
-	connect (selector, SIGNAL (changed(bool)), SLOT (internalChange()));
+	connect (selector, &RKSaveObjectChooser::changed, this, &RKPluginSaveObject::internalChange);
 
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
@@ -139,4 +139,3 @@ QStringList RKPluginSaveObject::getUiLabelPair () const {
 	return ret;
 }
 
-#include "rkpluginsaveobject.moc"

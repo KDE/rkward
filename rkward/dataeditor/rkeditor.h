@@ -17,7 +17,7 @@
 #ifndef RKEDITOR_H
 #define RKEDITOR_H
 
-#include <qwidget.h>
+#include <QWidget>
 
 #include "../core/robject.h"
 
@@ -51,7 +51,7 @@ public:
 /** Tells the editor to restore the given object in the R-workspace from its copy of the data */
 	virtual void restoreObject (RObject *object) = 0;
 
-	bool isModified () { return false; };
+	bool isModified () override { return false; };
 protected:
 	RObject *object;
 };

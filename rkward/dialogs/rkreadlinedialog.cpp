@@ -24,40 +24,38 @@
 #include <qdesktopwidget.h>
 #include <QScrollBar>
 #include <QTimer>
+#include <QVBoxLayout>
+#include <QFontDatabase>
 
-#include <klocale.h>
-#include <kvbox.h>
-#include <kglobalsettings.h>
+#include <KLocalizedString>
 
 #include "../rbackend/rcommand.h"
+#include "../misc/rkdialogbuttonbox.h"
 
 #include "../debug.h"
 
 QByteArray RKReadLineDialog::stored_geom;
 
-RKReadLineDialog::RKReadLineDialog (QWidget *parent, const QString &caption, const QString &prompt, RCommand *command) : KDialog (parent) {
+RKReadLineDialog::RKReadLineDialog (QWidget *parent, const QString &caption, const QString &prompt, RCommand *command) : QDialog (parent) {
 	RK_TRACE (DIALOGS);
 	RK_ASSERT (command);
 
 	setModal (true);
-	setCaption (caption);
-	setButtons (KDialog::Ok | KDialog::Cancel);
+	setWindowTitle (caption);
+	QVBoxLayout *layout = new QVBoxLayout (this);
 
-	KVBox *page = new KVBox ();
-	setMainWidget (page);
+	layout->addWidget (new QLabel (caption, this));
 
-	new QLabel (caption, page);
-
-	int screen_width = qApp->desktop ()->width () - 2*marginHint() - 2*spacingHint ();		// TODO is this correct on xinerama?
+	int screen_width = qApp->desktop ()->availableGeometry (this).width ();
 
 	QString context = command->fullOutput ();
 	if (!context.isEmpty ()) {
-		new QLabel (i18n ("Context:"), page);
+		layout->addWidget (new QLabel (i18n ("Context:"), this));
 
-		QTextEdit *output = new QTextEdit (page);
+		QTextEdit *output = new QTextEdit (this);
 		output->setUndoRedoEnabled (false);
 		output->setPlainText (QString ());
-		output->setCurrentFont (KGlobalSettings::fixedFont ());
+		output->setCurrentFont (QFontDatabase::systemFont (QFontDatabase::FixedFont));
 		output->setLineWrapMode (QTextEdit::NoWrap);
 		output->insertPlainText (context);
 		output->setReadOnly (true);
@@ -66,15 +64,21 @@ RKReadLineDialog::RKReadLineDialog (QWidget *parent, const QString &caption, con
 		output->setMinimumWidth (screen_width < cwidth ? screen_width : cwidth);
 		output->moveCursor (QTextCursor::End);
 		output->setFocusPolicy (Qt::NoFocus);
-		page->setStretchFactor (output, 10);
+		layout->addWidget (output);
+		layout->setStretchFactor (output, 10);
 	}
 
-	QLabel *promptl = new QLabel (prompt, page);
+	QLabel *promptl = new QLabel (prompt, this);
 	promptl->setWordWrap (true);
+	layout->addWidget (promptl);
 
-	input = new QLineEdit (QString (), page);
+	input = new QLineEdit (QString (), this);
 	input->setMinimumWidth (fontMetrics ().maxWidth ()*20);
 	input->setFocus ();
+	layout->addWidget (input);
+
+	RKDialogButtonBox *box = new RKDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+	layout->addWidget (box);
 }
 
 RKReadLineDialog::~RKReadLineDialog () {

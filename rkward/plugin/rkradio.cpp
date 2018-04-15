@@ -24,7 +24,7 @@
 #include <qradiobutton.h>
 #include <QVBoxLayout>
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "../rkglobals.h"
 #include "../misc/xmlhelper.h"
@@ -48,7 +48,7 @@ RKRadio::RKRadio (const QDomElement &element, RKComponent *parent_component, QWi
 	addOptionsAndInit (element);
 
 	vbox->addWidget (group_box);
-	connect (group, SIGNAL (buttonClicked(int)), this, SLOT (itemSelected(int)));
+	connect (group, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &RKRadio::itemSelected);
 }
 
 RKRadio::~RKRadio(){
@@ -86,4 +86,3 @@ QStringList RKRadio::getUiLabelPair () const {
 	return ret;
 }
 
-#include "rkradio.moc"

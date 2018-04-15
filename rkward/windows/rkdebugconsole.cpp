@@ -23,7 +23,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kmessagebox.h>
 #include <khistorycombobox.h>
 
@@ -52,19 +52,19 @@ RKDebugConsole::RKDebugConsole (QWidget *parent, bool tool_window, const char *n
 	QVBoxLayout *button_layout = new QVBoxLayout ();
 	upper_layout->addLayout (button_layout);
 	step_button = new QPushButton (i18n ("Next"), this);
-	connect (step_button, SIGNAL (clicked()), this, SLOT (stepButtonClicked()));
+	connect (step_button, &QPushButton::clicked, this, &RKDebugConsole::stepButtonClicked);
 	button_layout->addWidget (step_button);
 	step_out_button = new QPushButton (i18n ("Step out"), this);
-	connect (step_out_button, SIGNAL (clicked()), this, SLOT (stepOutButtonClicked()));
+	connect (step_out_button, &QPushButton::clicked, this, &RKDebugConsole::stepOutButtonClicked);
 	RKCommonFunctions::setTips (i18n ("<p>Continue until the caller of this function is reached (unless another debug statement is hit, earlier)</p>"
 	                                  "<p><b>Note:</b> In some cases, the calling function will never be reached, because the call was the last step in the caller. "
 	                                  "In these cases, the behavior is identical to 'Continue'.</p>"), step_out_button);
 	button_layout->addWidget (step_out_button);
 	continue_button = new QPushButton (i18n ("Continue"), this);
-	connect (continue_button, SIGNAL (clicked()), this, SLOT (continueButtonClicked()));
+	connect (continue_button, &QPushButton::clicked, this, &RKDebugConsole::continueButtonClicked);
 	button_layout->addWidget (continue_button);
 	cancel_button = new QPushButton (i18n ("Cancel"), this);
-	connect (cancel_button, SIGNAL (clicked()), this, SLOT (cancelButtonClicked()));
+	connect (cancel_button, &QPushButton::clicked, this, &RKDebugConsole::cancelButtonClicked);
 	button_layout->addWidget (cancel_button);
 	button_layout->addStretch ();
 
@@ -75,7 +75,7 @@ RKDebugConsole::RKDebugConsole (QWidget *parent, bool tool_window, const char *n
 	lower_layout->addWidget (prompt_label);
 	reply_edit = new KHistoryComboBox (this);
 	reply_edit->setSizePolicy (QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
-	connect (reply_edit, SIGNAL (returnPressed()), this, SLOT (sendReply()));
+	connect (reply_edit, static_cast<void (KHistoryComboBox::*)()>(&KHistoryComboBox::returnPressed), this, &RKDebugConsole::sendReplySlot);
 	lower_layout->addWidget (reply_edit);
 	setFocusProxy (reply_edit);
 
@@ -84,7 +84,7 @@ RKDebugConsole::RKDebugConsole (QWidget *parent, bool tool_window, const char *n
 	setPart (new RKDummyPart (this, this));
 	initializeActivationSignals ();
 
-	connect (RKDebugHandler::instance (), SIGNAL (newDebugState()), this, SLOT (newDebugState()));
+	connect (RKDebugHandler::instance (), &RKDebugHandler::newDebugState, this, &RKDebugConsole::newDebugState);
 	newDebugState ();
 }
 
@@ -124,7 +124,7 @@ void RKDebugConsole::newDebugState () {
 	cancel_button->setEnabled (enable);
 }
 
-void RKDebugConsole::sendReply () {
+void RKDebugConsole::sendReplySlot () {
 	RK_TRACE (APP);
 
 	QString reply = reply_edit->currentText ();
@@ -173,4 +173,3 @@ bool RKDebugConsole::close (bool also_delete) {
 	return RKMDIWindow::close (also_delete);
 }
 
-#include "rkdebugconsole.moc"

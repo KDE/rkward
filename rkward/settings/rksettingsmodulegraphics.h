@@ -24,7 +24,7 @@
 class QLineEdit;
 class QGroupBox;
 class RKSpinBox;
-class KIntSpinBox;
+class QSpinBox;
 class QCheckBox;
 class QButtonGroup;
 class QRadioButton;
@@ -38,8 +38,8 @@ public:
 	RKSettingsModuleGraphics (RKSettings *gui, QWidget *parent);
 	~RKSettingsModuleGraphics ();
 	
-	void applyChanges ();
-	void save (KConfig *config);
+	void applyChanges () override;
+	void save (KConfig *config) override;
 
 /** generate the commands needed to set the R run time options */
 	static QStringList makeRRunTimeOptionCommands ();
@@ -50,8 +50,8 @@ public:
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
 	
-	QString caption ();
-	QString helpURL () { return ("rkward://page/rkward_plot_history#scd_settings"); };
+	QString caption () override;
+	QUrl helpURL () override { return QUrl ("rkward://page/rkward_plot_history#scd_settings"); };
 
 	enum DefaultDevice {
 		RKDevice,
@@ -75,8 +75,8 @@ private:
 	QButtonGroup *replace_standard_devices_group;
 
 	QGroupBox *graphics_hist_box;
-	KIntSpinBox *graphics_hist_max_length_box;
-	KIntSpinBox *graphics_hist_max_plotsize_box;
+	QSpinBox *graphics_hist_max_length_box;
+	QSpinBox *graphics_hist_max_plotsize_box;
 
 	RKSpinBox *graphics_height_box;
 	RKSpinBox *graphics_width_box;

@@ -30,7 +30,7 @@
 class TwinTableMember;
 class RKVarEditModel;
 class QActionGroup;
-class KAction;
+class QAction;
 class QSplitter;
 
 /**
@@ -55,7 +55,7 @@ public:
 	RKVarEditModel* datamodel;
 
 	QActionGroup* editActions () const { return edit_actions; };
-	void setWindowStyleHint (const QString& hint);
+	void setWindowStyleHint (const QString& hint) override;
 public slots:
 	void metaHeaderPressed (int section);
 	void metaHeaderEntered (int section);
@@ -96,20 +96,20 @@ protected:
 	TwinTableMember* metaview;
 	TwinTableMember* dataview;
 
-	KAction* action_insert_col_left;
-	KAction* action_delete_col;
-	KAction* action_insert_row_above;
-	KAction* action_delete_row;
-	KAction* action_delete_rows;
-	KAction* action_enable_editing;
-	KAction* action_tb_lock_editing;
-	KAction* action_tb_unlock_editing;
-	KAction* action_show_rownames;
-	KAction* editCut;
-	KAction* editCopy;
-	KAction* editPaste;
-	KAction* editPasteToSelection;
-	KAction* editPasteToTable;
+	QAction* action_insert_col_left;
+	QAction* action_delete_col;
+	QAction* action_insert_row_above;
+	QAction* action_delete_row;
+	QAction* action_delete_rows;
+	QAction* action_enable_editing;
+	QAction* action_tb_lock_editing;
+	QAction* action_tb_unlock_editing;
+	QAction* action_show_rownames;
+	QAction* editCut;
+	QAction* editCopy;
+	QAction* editPaste;
+	QAction* editPasteToSelection;
+	QAction* editPasteToTable;
 
 	QActionGroup* edit_actions;
 

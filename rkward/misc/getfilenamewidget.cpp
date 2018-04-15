@@ -20,9 +20,11 @@
 #include <QVBoxLayout>
 #include <QFileDialog>
 
-#include <klocale.h>
-#include <klineedit.h>
+#include <KLocalizedString>
 #include <kurlrequester.h>
+#include <KLineEdit>
+
+#include "../settings/rksettingsmodulegeneral.h"
 
 #include "../debug.h"
 
@@ -35,19 +37,19 @@ GetFileNameWidget::GetFileNameWidget (QWidget *parent, FileType mode, bool only_
 	if (!label.isEmpty ()) vbox->addWidget (new QLabel (label, this));
 
 	edit = new KUrlRequester (this);
-	connect (edit, SIGNAL (textChanged(QString)), this, SLOT (locationEditChanged(QString)));
 	vbox->addWidget (edit);
 
-	edit->setUrl (initial);
-
+	_mode = mode;
 	KFile::Modes mode_flags;
 	if (mode == ExistingDirectory) {
 		mode_flags = KFile::Directory | KFile::ExistingOnly;
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
+		// KF5 TODO: Still needed?
 		// TODO: Hang on Windows when trying to select any dir (also in KFileDialog::getExistingDirectory ()). KDE 4.10
 		// this hack works around this, by using QFileDialog::getExistingDirectory ().
-		edit->button ()->disconnect (SIGNAL (clicked()));
-		connect (edit->button (), SIGNAL (clicked()), this, SLOT(hackOverrideDirDialog()));
+		edit->button ()->disconnect (SIGNAL (clicked())); // Use old and new syntax, as we don't know, which way it was connected
+		disconnect (edit->button (), &QPushButton::clicked, 0, 0);
+		connect (edit->button (), &QPushButton::clicked, this, &GetFileNameWidget::hackOverrideDirDialog);
 #endif
 	} else if (mode == ExistingFile) {
 		mode_flags = KFile::File | KFile::ExistingOnly;
@@ -58,6 +60,28 @@ GetFileNameWidget::GetFileNameWidget (QWidget *parent, FileType mode, bool only_
 	}
 	if (only_local) mode_flags |= KFile::LocalOnly;
 	edit->setMode (mode_flags);
+
+	QString append = initial;
+	if (initial.startsWith ('<')) {
+		storage_key = initial.section ('>', 0, 0).mid (1);
+		append = initial.section ('>', 1);
+	}
+	QUrl initial_url = RKSettingsModuleGeneral::lastUsedUrlFor (storage_key);  // storage_key == QString () in the default case is intended
+	if (!append.isEmpty ()) {
+		if (initial_url.isLocalFile ()) {
+			initial_url = QUrl::fromUserInput (append, initial_url.toLocalFile (), QUrl::AssumeLocalFile);
+		} else {
+			initial_url.setPath (initial_url.path () + '/' + append);
+		}
+		initial_url = initial_url.adjusted (QUrl::NormalizePathSegments);
+	}
+	if (initial_url.isLocalFile () || !only_local) {
+		if (!initial.isEmpty ()) edit->setUrl (initial_url);
+		else edit->setStartDir (initial_url);
+	}
+
+	connect (edit, &KUrlRequester::textChanged, this, &GetFileNameWidget::locationEditChanged);
+	connect (edit, &KUrlRequester::urlSelected, this, &GetFileNameWidget::updateLastUsedUrl);
 
 	if (caption.isEmpty ()) edit->setWindowTitle (label);
 	else edit->setWindowTitle (caption);
@@ -74,13 +98,21 @@ void GetFileNameWidget::setFilter (const QString &filter) {
 	edit->setFilter (filter);
 }
 
+void GetFileNameWidget::updateLastUsedUrl (const QUrl& url) {
+	RK_TRACE (MISC);
+
+	if (!url.isValid ()) return;
+	if (edit->mode () & KFile::Directory) RKSettingsModuleGeneral::updateLastUsedUrl (storage_key, url);
+	else RKSettingsModuleGeneral::updateLastUsedUrl (storage_key, url.adjusted (QUrl::RemoveFilename));
+}
+
 void GetFileNameWidget::setLocation (const QString &new_location) {
 	RK_TRACE (MISC);
 
-	if (edit->text () != new_location) edit->setUrl (new_location);
+	if (edit->text () != new_location) edit->setUrl (QUrl::fromUserInput (new_location, QString (), QUrl::AssumeLocalFile));
 }
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 void GetFileNameWidget::hackOverrideDirDialog () {
 	RK_TRACE (MISC);
 
@@ -89,7 +121,7 @@ void GetFileNameWidget::hackOverrideDirDialog () {
 	dummy.setFileMode (QFileDialog::Directory);
 	dummy.setOptions (QFileDialog::ShowDirsOnly);
 	if (dummy.exec ()) {
-		edit->setUrl (dummy.selectedFiles ().value (0));
+		edit->setUrl (QUrl::fromLocalFile (dummy.selectedFiles ().value (0)));
 		emit (locationChanged ());
 	}
 }
@@ -113,4 +145,3 @@ void GetFileNameWidget::setBackgroundColor (const QColor & color) {
 	edit->lineEdit ()->setPalette (palette);
 }
 
-#include "getfilenamewidget.moc"

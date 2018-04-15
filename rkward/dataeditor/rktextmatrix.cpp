@@ -170,9 +170,7 @@ QStringList RKTextMatrix::getColumn (int col) const {
 	}
 
 	QStringList ret;
-#if QT_VERSION >= 0x040700
 	ret.reserve (rows.size ());
-#endif
 	for (int i = 0; i < rows.size (); ++i) {
 		ret.append (rows[i][col]);
 	}

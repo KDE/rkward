@@ -4,14 +4,15 @@ ENDIF(NOT ${PROJECT_NAME} STREQUAL "rkward")
 
 INCLUDE(SetVersionNumber.cmake)
 
-IF(Q_WS_MAC)
-	SET(RKWARD_FRONTEND_LOCATION ${BIN_INSTALL_DIR}/rkward.frontend.app/Contents/MacOS)
-	SET(CPACK_BUNDLE_ICON rkward.icns)
-	SET(CPACK_BUNDLE_NAME RKWard)
-	SET(CPACK_BUNDLE_STARTUP_COMMAND rkward)
-ELSE(Q_WS_MAC)
-	SET(RKWARD_FRONTEND_LOCATION ${LIBEXEC_INSTALL_DIR})
-ENDIF(Q_WS_MAC)
+IF(APPLE)
+    SET(CPACK_BUNDLE_ICON rkward.icns)
+    SET(CPACK_BUNDLE_NAME RKWard)
+    SET(CPACK_BUNDLE_STARTUP_COMMAND rkward)
+ENDIF()
+
+# once tested and working this could become the default on Mac:
+OPTION(APPLE_STANDALONE_BUNDLE "Generate a standalone app bundle when building on Mac" OFF)
+ADD_FEATURE_INFO("App Bundle" APPLE_STANDALONE_BUNDLE "Generate a standalone app bundle when building on Mac. Do not use for now.")
 
 ADD_SUBDIRECTORY( dataeditor )
 ADD_SUBDIRECTORY( settings )
@@ -23,16 +24,10 @@ ADD_SUBDIRECTORY( scriptbackends )
 ADD_SUBDIRECTORY( misc )
 ADD_SUBDIRECTORY( core )
 ADD_SUBDIRECTORY( icons )
-IF(WIN32)
-	ADD_SUBDIRECTORY( qwinhost )
-	LIST(APPEND RKWARD_ADDLIBS qwinhost)
-ELSE(WIN32)
-	LIST(APPEND RKWARD_ADDLIBS ${X11_X11_LIB})
-ENDIF(WIN32)
 ADD_SUBDIRECTORY( windows )
 ADD_SUBDIRECTORY( syntax )
 
-INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} ${QT_QTWEBKIT_INCLUDE_DIR} ${X11_X11_INCLUDE_PATH} )
+INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}   ${QT_QTWEBKIT_INCLUDE_DIR} )
 
 SET(RKWard_Sources
 	rkward.cpp
@@ -40,67 +35,81 @@ SET(RKWard_Sources
 	rkglobals.cpp
 	robjectviewer.cpp
 	rkconsole.cpp
-	rkwardapplication.cpp
 )
 
-# auto-gen sources
-#QT4_AUTOMOC(${RKWard_Sources})	# not needed here, as KDE4_ADD_EXECUTABLE mocs the sources in this dir.
-
-# somehow the needed libdirs for R do not get passed down automatically
+# somehow the detected R paths from FindR.cmake do not get passed down automatically
+GET_DIRECTORY_PROPERTY(R_EXECUTABLE DIRECTORY rbackend DEFINITION R_EXECUTABLE)
 GET_DIRECTORY_PROPERTY(R_SHAREDLIBDIR DIRECTORY rbackend LINK_DIRECTORIES)
 LINK_DIRECTORIES(${R_SHAREDLIBDIR})
 
-KDE4_ADD_EXECUTABLE(rkward.frontend ${RKWard_Sources})
-SET_TARGET_PROPERTIES(rkward.frontend PROPERTIES
+IF(APPLE)
+    # create the application icon from the available sources. This should work on MS Windows
+    # too but I don't want to start modifying things I cannot test.
+    FILE(GLOB ICON_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/icons/app-icon/*-apps-rkward.png") 
+    # recent ECM versions will prefer the scalable version: prepend it to the icon source list:
+    ECM_ADD_APP_ICON(RKWard_Sources ICONS ${CMAKE_CURRENT_SOURCE_DIR}/icons/app-icon/sc-apps-rkward.svgz ${ICON_SRCS})
+    ADD_EXECUTABLE(rkward ${RKWard_Sources})
+ELSE()
+    ADD_CUSTOM_COMMAND (OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/rkward.ico"
+			COMMAND cmake -E copy "${CMAKE_CURRENT_SOURCE_DIR}/icons/app-icon/rkward.ico"
+			"${CMAKE_CURRENT_BINARY_DIR}/rkward.ico")
+    ADD_EXECUTABLE(rkward ${RKWard_Sources} rkward_windows_icon.rc rkward.ico)
+ENDIF()
+
+# NOTE: These definitions are needed for the startup procedure (main.cpp), only.
+# We should switch with to target_compile_definitions once we require CMAKE 2.6+
+ADD_DEFINITIONS(-DR_EXECUTABLE="${R_EXECUTABLE}")
+ADD_DEFINITIONS(-DINSTALL_PATH="${CMAKE_INSTALL_PREFIX}")
+ADD_DEFINITIONS(-DR_LIBS="${R_LIBDIR}")
+SET_TARGET_PROPERTIES(rkward PROPERTIES
         MACOSX_BUNDLE_BUNDLE_NAME "RKWard")
 
-IF(Q_WS_MAC)
+IF(APPLE)
 	SET(RKWARD_INFOPLIST_TEMPLATE Info.plist.in)
 	SET(RKWARD_INFOPLIST_FILE ${CMAKE_SOURCE_DIR}/rkward/Info.plist)
 	CONFIGURE_FILE(
 		${RKWARD_INFOPLIST_TEMPLATE}
 		${RKWARD_INFOPLIST_FILE}
 		@ONLY)
-ENDIF(Q_WS_MAC)
+ENDIF(APPLE)
 
-TARGET_LINK_LIBRARIES(rkward.frontend ${KDE4_KDECORE_LIBS} windows ${RKWARD_ADDLIBS} agents dialogs plugin settings dataeditor core scriptbackends rbackend misc ${KDE4_KTEXTEDITOR_LIBS} ${KDE4_KFILE_LIBS} ${KDE4_KDEUI_LIBS} ${KDE4_KDEWEBKIT_LIBS} ${QT_QTDBUS_LIBRARY} ${QT_QTSCRIPT_LIBRARY} ${QT_QTNETWORK_LIBRARY} ${GETTEXT_LIBRARIES})
-
-# wrapper executable
-GET_DIRECTORY_PROPERTY(R_EXECUTABLE DIRECTORY rbackend DEFINITION R_EXECUTABLE)
-IF (WIN32)
-	SET (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static")
-ENDIF (WIN32)
-ADD_CUSTOM_COMMAND (OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/rkward.ico"
-			COMMAND cmake -E copy "${CMAKE_CURRENT_SOURCE_DIR}/icons/app-icon/rkward.ico"
-			"${CMAKE_CURRENT_BINARY_DIR}/rkward.ico")
-ADD_EXECUTABLE (rkward rkward_startup_wrapper.cpp rkward_windows_icon.rc rkward.ico)
-# NOTE: These definitions are needed for the wrapper, only.
-# We should switch with to target_compile_definitions once we require CMAKE 2.6+
-add_definitions ("-DR_EXECUTABLE=\\\"${R_EXECUTABLE}\\\"")
-add_definitions ("-DINSTALL_PATH=\\\"${CMAKE_INSTALL_PREFIX}\\\"")
-add_definitions ("-DR_LIBS=\\\"${R_LIBDIR}\\\"")
-add_definitions ("-DRKWARD_FRONTEND_LOCATION=\\\"${RKWARD_FRONTEND_LOCATION}\\\"")
-TARGET_LINK_LIBRARIES(rkward ${QT_QTGUI_LIBRARY} ${QT_QTCORE_LIBRARY} ${QT_QTDBUS_LIBRARY})
-
-ADD_DEPENDENCIES(rkward.frontend rkward)
+TARGET_LINK_LIBRARIES(rkward windows ${RKWARD_ADDLIBS} agents dialogs plugin settings dataeditor core scriptbackends rbackend misc KF5::WindowSystem Qt5::Widgets KF5::XmlGui ${LibIntl_LIBRARIES})
+IF(KF5Crash_FOUND)
+	TARGET_LINK_LIBRARIES(rkward KF5::Crash)
+	SET_SOURCE_FILES_PROPERTIES(main.cpp PROPERTIES COMPILE_DEFINITIONS WITH_KCRASH=1)
+ENDIF(KF5Crash_FOUND)
 
 ########### install files ###############
 
 INSTALL(DIRECTORY plugins/ pages DESTINATION ${DATA_INSTALL_DIR}/rkward
 	PATTERN .svn EXCLUDE)
 
-INSTALL(FILES resource.ver rkwardui.rc rkconsolepart.rc DESTINATION ${DATA_INSTALL_DIR}/rkward )
+INSTALL(FILES rkwardui.rc rkconsolepart.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/rkward)
+INSTALL(FILES resource.ver DESTINATION ${DATA_INSTALL_DIR}/rkward)
 
-IF(Q_WS_MAC)
-	INSTALL(TARGETS rkward.frontend DESTINATION ${BIN_INSTALL_DIR})
-	INSTALL(TARGETS rkward DESTINATION ${BUNDLE_INSTALL_DIR}/${CPACK_BUNDLE_NAME}.app/Contents/MacOS)
-	INSTALL(FILES ${CMAKE_SOURCE_DIR}/rkward/icons/app-icon/rkward.icns DESTINATION ${BUNDLE_INSTALL_DIR}/${CPACK_BUNDLE_NAME}.app/Contents/Resources)
-	INSTALL(FILES ${RKWARD_INFOPLIST_FILE} DESTINATION ${BUNDLE_INSTALL_DIR}/${CPACK_BUNDLE_NAME}.app/Contents)
-ELSE(Q_WS_MAC)
-	INSTALL(TARGETS rkward.frontend DESTINATION ${LIBEXEC_INSTALL_DIR})
-	INSTALL(TARGETS rkward DESTINATION ${BIN_INSTALL_DIR})
-ENDIF(Q_WS_MAC)
+IF(APPLE)
+    INSTALL(TARGETS rkward DESTINATION ${BUNDLE_INSTALL_DIR})
+    if(APPLE_STANDALONE_BUNDLE)
+#         INSTALL(FILES ${CMAKE_SOURCE_DIR}/rkward/icons/app-icon/rkward.icns DESTINATION ${BUNDLE_INSTALL_DIR}/${CPACK_BUNDLE_NAME}.app/Contents/Resources)
+#         INSTALL(FILES ${RKWARD_INFOPLIST_FILE} DESTINATION ${BUNDLE_INSTALL_DIR}/${CPACK_BUNDLE_NAME}.app/Contents)
+    ENDIF()
+    # the MacOSX bundle display name property (CFBundleDisplayName) is not currently supported by cmake,
+    # so has to be set for all targets in this cmake file
+    SET(MACOSX_BUNDLE_DISPLAY_NAME RKWard)
+    # We provide our own Info.plist, but for the wrapper only
+    set_target_properties(rkward PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${RKWARD_INFOPLIST_FILE})
+    set_target_properties(rkward PROPERTIES MACOSX_BUNDLE_GUI_IDENTIFIER "org.kde.RKWard")
+    set_target_properties(rkward PROPERTIES MACOSX_BUNDLE_BUNDLE_NAME "RKWard")
+    set_target_properties(rkward PROPERTIES MACOSX_BUNDLE_DISPLAY_NAME "RKWard")
+    set_target_properties(rkward PROPERTIES MACOSX_BUNDLE_INFO_STRING "Frontend to the R statistics language")
+    set_target_properties(rkward PROPERTIES MACOSX_BUNDLE_LONG_VERSION_STRING "RKWard ${RKVERSION_NUMBER}")
+    set_target_properties(rkward PROPERTIES MACOSX_BUNDLE_SHORT_VERSION_STRING "${RKVERSION_NUMBER}")
+    set_target_properties(rkward PROPERTIES MACOSX_BUNDLE_BUNDLE_VERSION "${RKVERSION_NUMBER}")
+    set_target_properties(rkward PROPERTIES MACOSX_BUNDLE_COPYRIGHT "RKWard Team")
+ELSE()
+    INSTALL(TARGETS rkward DESTINATION ${BIN_INSTALL_DIR})
+ENDIF()
 
-INSTALL(FILES rkward.desktop rkward-open.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+INSTALL(FILES org.kde.rkward.desktop org.kde.rkward-open.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
 INSTALL(FILES vnd.rkward.r.xml DESTINATION ${XDG_MIME_INSTALL_DIR})
 INSTALL(FILES rkward.protocol DESTINATION ${SERVICES_INSTALL_DIR})

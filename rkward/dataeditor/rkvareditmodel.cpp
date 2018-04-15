@@ -17,7 +17,7 @@
 
 #include "rkvareditmodel.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <QColor>
 #include <QTimer>
@@ -26,7 +26,7 @@
 #include "../core/rcontainerobject.h"
 #include "../core/rkmodificationtracker.h"
 #include "../core/rkrownames.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../rkglobals.h"
 
 #include "../debug.h"
@@ -144,9 +144,7 @@ void RKVarEditModel::scheduleReset () {
 	if (!reset_scheduled) {
 		reset_scheduled = true;
 		QTimer::singleShot (0, this, SLOT (doResetNow()));
-#if QT_VERSION >= 0x040600
 		beginResetModel ();
-#endif
 	}
 }
 
@@ -155,11 +153,7 @@ void RKVarEditModel::doResetNow () {
 	RK_ASSERT (reset_scheduled);
 
 	reset_scheduled = false;
-#if QT_VERSION >= 0x040600
 	endResetModel ();
-#else
-	reset ();
-#endif
 }
 
 void RKVarEditModel::objectDataChanged (RObject* object, const RObject::ChangeSet *changes) {
@@ -281,12 +275,12 @@ QVariant RKVarEditModel::data (const QModelIndex& index, int role) const {
 
 	if (col < var_col_offset) {
 		// TODO: make this look more like a normal header
-		if (role == Qt::ForegroundRole) return (Qt::blue);
+		if (role == Qt::ForegroundRole) return (QColor (Qt::blue));
 	}
 
 	// on a trailing row / col
 	if ((col >= objects.size ()) || (row >= objects[0]->getLength ())) {
-		if (role == Qt::BackgroundRole) return (Qt::gray);
+		if (role == Qt::BackgroundRole) return (QColor (Qt::gray));
 		if (role == Qt::ToolTipRole) {
 			if (col >= objects.size ()) return (i18n ("Type on these fields to add new columns"));
 			else return (i18n ("Type on these fields to add new rows"));
@@ -306,11 +300,11 @@ QVariant RKVarEditModel::data (const QModelIndex& index, int role) const {
 		return var->getText (row, true);
 	}
 	if (role == Qt::BackgroundRole) {
-		if (status == RKVariable::ValueInvalid) return (Qt::red);
+		if (status == RKVariable::ValueInvalid) return (QColor (Qt::red));
 	} else if (role == Qt::ToolTipRole) {
 		if (status == RKVariable::ValueInvalid) return (i18n ("This value is not allowed, here"));
 	}
-	if ((role == Qt::ForegroundRole) && ((status == RKVariable::ValueUnknown) || (status == RKVariable::ValueUnused))) return (Qt::lightGray);
+	if ((role == Qt::ForegroundRole) && ((status == RKVariable::ValueUnknown) || (status == RKVariable::ValueUnused))) return (QColor (Qt::lightGray));
 	if (role == Qt::TextAlignmentRole) {
 		if (var->getAlignment () == RKVariable::AlignCellLeft) return ((int) Qt::AlignLeft | Qt::AlignVCenter);
 		else return ((int) Qt::AlignRight | Qt::AlignVCenter);
@@ -380,7 +374,7 @@ QVariant RKVarEditModel::headerData (int section, Qt::Orientation orientation, i
 			if (section < var_col_offset) return i18n ("Row names");
 			return (QString::number (section - var_col_offset + 1));
 		} else if (role == Qt::BackgroundRole) {
-			if ((section < objects.size  ()) && objects[section]->hasInvalidFields ()) return QVariant (Qt::red);
+			if ((section < objects.size  ()) && objects[section]->hasInvalidFields ()) return QVariant (QColor (Qt::red));
 		} else if ((role == Qt::ToolTipRole) || (role == Qt::StatusTipRole)) {
 			if ((section < objects.size  ()) && objects[section]->hasInvalidFields ()) return i18n ("This column contains one or more invalid fields");
 		}
@@ -549,13 +543,13 @@ QVariant RKVarEditMetaModel::data (const QModelIndex& index, int role) const {
 	}
 
 	if (col < var_col_offset) {
-	  	if (role == Qt::BackgroundRole) return (Qt::lightGray);
+		if (role == Qt::BackgroundRole) return (QColor (Qt::lightGray));
 		return QVariant ();
 	}
 
 	// on a trailing col
 	if (col >= data_model->objects.size ()) {
-		if (role == Qt::BackgroundRole) return (Qt::gray);
+		if (role == Qt::BackgroundRole) return (QColor (Qt::gray));
 		if (role == Qt::ToolTipRole) return (i18n ("Type on these fields to add new columns"));
 		return QVariant ();
 	}
@@ -1002,4 +996,3 @@ void RKVarEditDataFrameModel::restoreObject (RObject* object, RCommandChain* cha
 }
 
 
-#include "rkvareditmodel.moc"

@@ -19,8 +19,8 @@
 
 #include <libintl.h>
 #include <QFile>
-#include <kglobal.h>
-#include <klocale.h>
+#include <QLocale>
+#include <KLocalizedString>
 
 #include "../debug.h"
 
@@ -107,7 +107,7 @@ RKMessageCatalog* RKMessageCatalog::nullCatalog () {
 	return null_catalog;
 }
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	extern "C" int __declspec(dllimport) _nl_msg_cat_cntr;
 #endif
 
@@ -115,9 +115,9 @@ RKMessageCatalog* RKMessageCatalog::nullCatalog () {
 void RKMessageCatalog::switchLanguage (const QString &new_language_code) {
 	RK_TRACE (MISC);
 
-	qputenv ("LANGUAGE", new_language_code.toAscii ().data ());
-	KLocale *l = new KLocale ("rkward", new_language_code);
-	KGlobal::setLocale (l);
+	qputenv ("LANGUAGE", new_language_code.toLatin1 ().data ());
+	// KF5 TODO: correct?
+	QLocale::setDefault (QLocale (new_language_code));
 	// magic to make gettext discard cache
 #ifndef _MSC_VER
 	extern int _nl_msg_cat_cntr;

@@ -26,7 +26,7 @@ class QCheckBox;
 class QComboBox;
 class QLineEdit;
 class MultiStringSelector;
-class KIntSpinBox;
+class QSpinBox;
 class QTextEdit;
 
 /**
@@ -40,13 +40,13 @@ public:
 	RKSettingsModuleR (RKSettings *gui, QWidget *parent);
 	~RKSettingsModuleR ();
 	
-	void applyChanges ();
-	void save (KConfig *config);
+	void applyChanges () override;
+	void save (KConfig *config) override;
 	
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
 	
-	QString caption ();
+	QString caption () override;
 	
 /** generate the commands needed to set the R run time options */
 	static QStringList makeRRunTimeOptionCommands ();
@@ -59,19 +59,18 @@ public slots:
 	void settingChanged ();
 private:
 	QLineEdit *outdec_input;
-	KIntSpinBox *width_input;
+	QSpinBox *width_input;
 	QComboBox *warn_input;
-	KIntSpinBox *warningslength_input;
-	KIntSpinBox *maxprint_input;
+	QSpinBox *warningslength_input;
+	QSpinBox *maxprint_input;
 	QComboBox *keepsource_input;
 	QComboBox *keepsourcepkgs_input;
-	KIntSpinBox *expressions_input;
-	KIntSpinBox *digits_input;
+	QSpinBox *expressions_input;
+	QSpinBox *digits_input;
 	QComboBox *checkbounds_input;
 	QComboBox *editor_input;
 	QComboBox *pager_input;
 	QTextEdit *further_input;
-	QCheckBox *internet2_input;
 
 	static QString options_outdec;
 	static int options_width;
@@ -86,7 +85,6 @@ private:
 	static QString options_editor;
 	static QString options_pager;
 	static QString options_further;
-	static bool options_internet2;
 
 // constants
 	static QString builtin_editor;
@@ -109,8 +107,8 @@ public:
 	RKSettingsModuleRPackages (RKSettings *gui, QWidget *parent);
 	~RKSettingsModuleRPackages ();
 	
-	void applyChanges ();
-	void save (KConfig *config);
+	void applyChanges () override;
+	void save (KConfig *config) override;
 	
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
@@ -126,14 +124,14 @@ public:
 /** returns the list of packages which are essential to rkward. This is hard-coded. */
 	static QStringList essentialPackages () { return essential_packages.split ("\n"); };
 
-	QString caption ();
+	QString caption () override;
 public slots:
 	void settingChanged ();
 	void addLibLoc (QStringList *string_list);
 	void addRepository (QStringList *string_list);
 	void selectCRANMirror ();
 protected:
-	void rCommandDone (RCommand *command);
+	void rCommandDone (RCommand *command) override;
 private:
 	static QString libLocsCommand ();
 

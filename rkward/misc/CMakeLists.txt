@@ -1,7 +1,4 @@
-INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES}  )
-
-
-########### next target ###############
+INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${LibIntl_INCLUDE_DIRS} )
 
 SET(misc_STAT_SRCS
    rkspinbox.cpp
@@ -29,18 +26,14 @@ SET(misc_STAT_SRCS
    rkdynamicsearchline.cpp
    rkaccordiontable.cpp
    rkxmlguipreviewarea.cpp
+   rkdialogbuttonbox.cpp
    )
 
-QT4_AUTOMOC(${misc_STAT_SRCS})
-# Urghs. QT4_AUTOMOC scans only the .h-file for Q_OBJECT macros. Let's hope this will be better with KF5
-QT4_GENERATE_MOC (rkaccordiontable.cpp ${CMAKE_CURRENT_BINARY_DIR}/rkaccordiontablemodel_moc.cpp)
-QT4_GENERATE_MOC (rkstandardactions.cpp ${CMAKE_CURRENT_BINARY_DIR}/rkstandardactions_moc.cpp)
-
 ADD_LIBRARY(misc STATIC ${misc_STAT_SRCS})
-
+TARGET_LINK_LIBRARIES(misc Qt5::Widgets KF5::WidgetsAddons KF5::KIOWidgets Qt5::Xml KF5::ConfigCore KF5::Parts KF5::WindowSystem KF5::TextEditor)
 
 ########### install files ###############
 
 INSTALL(FILES
 	rkdummypart.rc
-	DESTINATION ${DATA_INSTALL_DIR}/rkward)
+	DESTINATION ${KXMLGUI_INSTALL_DIR}/rkward)

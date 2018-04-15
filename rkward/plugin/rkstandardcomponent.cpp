@@ -25,10 +25,8 @@
 #include <QVBoxLayout>
 #include <QGroupBox>
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kmessagebox.h>
-#include <kvbox.h>
-#include <khbox.h>
 
 #include "rkstandardcomponentgui.h"
 #include "rkcomponentmap.h"
@@ -113,9 +111,9 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 		back->setPreviewTemplate (xml->getStringAttribute (element, "preview", QString (), DL_INFO));
 		backend = back;
 	}
-	connect (backend, SIGNAL (idle()), this, SLOT (backendIdle()));
-	connect (backend, SIGNAL (requestValue(QString,int)), this, SLOT (getValue(QString,int)));
-	connect (backend, SIGNAL (haveError()), this, SLOT (kill()));
+	connect (backend, &ScriptBackend::idle, this, &RKStandardComponent::backendIdle);
+	connect (backend, &ScriptBackend::requestValue, this, &RKStandardComponent::getValue);
+	connect (backend, &ScriptBackend::haveError, this, &RKStandardComponent::kill);
 	if (!backend->initialize (code, parent_component == 0)) return;
 
 	// check for existence of help file
@@ -151,10 +149,9 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 				build_wizard = false;
 
 				QWidget *fake_page = parent_component->addPage ();
-				QVBoxLayout *layout = new QVBoxLayout (fake_page);	
-				KVBox *box = new KVBox (fake_page);
-				layout->addWidget (box);
-				parent_widget = box;
+				QVBoxLayout *l = new QVBoxLayout (fake_page);
+				l->setContentsMargins (0, 0, 0, 0);
+				parent_widget = fake_page;
 			}
 		} else {
 			gui_element = xml->getChildElement (doc_element, "dialog", DL_WARNING);
@@ -192,7 +189,7 @@ RKComponentScriptingProxy* RKStandardComponent::scriptingProxy () {
 
 	if (!scripting) {
 		scripting = new RKComponentScriptingProxy (this);
-		connect (scripting, SIGNAL (haveError()), this, SLOT (kill()));
+		connect (scripting, &RKComponentScriptingProxy::haveError, this, &RKStandardComponent::kill);
 	}
 	return scripting;
 }
@@ -576,6 +573,7 @@ void RKComponentBuilder::buildElement (const QDomElement &element, XMLHelper &xm
 	
 	XMLChildList::const_iterator it;
 	for (it = children.constBegin (); it != children.constEnd (); ++it) {
+		bool add_to_layout = true;
 		RKComponent *widget = 0;
 		QDomElement e = *it;		// shorthand
 		QString id = xml.getStringAttribute (e, "id", QString (), DL_INFO);
@@ -586,36 +584,34 @@ void RKComponentBuilder::buildElement (const QDomElement &element, XMLHelper &xm
 
 		if (allow_pages && (e.tagName () == QLatin1String ("page"))) {
 			widget = component ()->addPage ();
-			QVBoxLayout *layout = new QVBoxLayout (widget);
-			KVBox *box = new KVBox (widget);
-			layout->addWidget (box);
-			buildElement (e, xml, box, false);
+			add_to_layout = false;   // For wizards, that's done inside addPage()
+			QVBoxLayout *l = new QVBoxLayout (widget);
+			l->setContentsMargins (0, 0, 0, 0);
+			buildElement (e, xml, widget, false);
 		} else if (e.tagName () == QLatin1String ("row")) {
 			widget = new RKComponent (component (), parent_widget);		// wrapping this (and column, below) inside an RKComponent has the benefit, that it can have an id, and hence can be set to visibile/hidden, enabled/disabled
-			QVBoxLayout *layout = new QVBoxLayout (widget);
+			QHBoxLayout *layout = new QHBoxLayout (widget);
 			layout->setContentsMargins (0, 0, 0, 0);
-			KHBox *box = new KHBox (widget);
-			layout->addWidget (box);
-			buildElement (e, xml, box, false);
+			buildElement (e, xml, widget, false);
 		} else if (e.tagName () == QLatin1String ("stretch")) {
 			QWidget *stretch = new QWidget (parent_widget);
 			stretch->setSizePolicy (QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-			KHBox *box = dynamic_cast<KHBox *> (parent_widget);
+			QBoxLayout *box = dynamic_cast<QBoxLayout *> (parent_widget->layout ());
 			// RK_ASSERT (box);  <- NO, also meaningful in a <frame>
 			if (box) box->setStretchFactor (stretch, 100);
 		} else if (e.tagName () == QLatin1String ("column")) {
 			widget = new RKComponent (component (), parent_widget);
 			QVBoxLayout *layout = new QVBoxLayout (widget);
 			layout->setContentsMargins (0, 0, 0, 0);
-			KVBox *box = new KVBox (widget);
-			layout->addWidget (box);
-			buildElement (e, xml, box, false);
+			buildElement (e, xml, widget, false);
 		} else if (e.tagName () == QLatin1String ("frame")) {
 			RKPluginFrame *frame = new RKPluginFrame (e, component (), parent_widget);
 			widget = frame;
 			buildElement (e, xml, frame->getPage (), false);
 		} else if (e.tagName () == QLatin1String ("tabbook")) {
 			QTabWidget *tabbook = new QTabWidget (parent_widget);
+			// this is not an RKComponent, so we need to add it, manually
+			parent_widget->layout ()->addWidget (tabbook);
 			QDomNodeList tabs = e.childNodes ();
 			for (int t=0; t < tabs.count (); ++t) {
 				QDomElement tab_e = tabs.item (t).toElement ();
@@ -667,6 +663,8 @@ void RKComponentBuilder::buildElement (const QDomElement &element, XMLHelper &xm
 			}
 			widget = new RKPreviewBox (e, component (), parent_widget);
 			parent_widget->layout ()->addWidget (widget);
+			parent_widget = pwidget;
+                        add_to_layout = false;
 		} else if (e.tagName () == QLatin1String ("saveobject")) {
 			widget = new RKPluginSaveObject (e, component (), parent_widget);
 		} else if (e.tagName () == QLatin1String ("embed")) {
@@ -680,7 +678,9 @@ void RKComponentBuilder::buildElement (const QDomElement &element, XMLHelper &xm
 					swidget->setCaption (dummy);
 // TODO we should use a specialized pushbutton, that changes color if the corresponding component is dissatisfied!
 					QPushButton *button = new QPushButton (dummy, parent_widget);
-					component ()->connect (button, SIGNAL (clicked()), widget, SLOT (showGUI()));
+					component ()->connect (button, &QPushButton::clicked, swidget, &RKStandardComponent::showGUI);
+					add_to_layout = false;
+					parent_widget->layout ()->addWidget (button);
 				} else {
 					widget = handle->invoke (component (), parent_widget);
 				}
@@ -701,8 +701,9 @@ void RKComponentBuilder::buildElement (const QDomElement &element, XMLHelper &xm
 			xml.displayError (&e, QString ("Invalid tagname '%1'").arg (e.tagName ()), DL_ERROR);
 		}
 
-		if (widget && (!(id.isNull ()))) {
-			parent->addChild (id, widget);
+		if (widget) {
+			if (add_to_layout) parent_widget->layout ()->addWidget (widget);
+			if (!id.isNull ()) parent->addChild (id, widget);
 		}
 	}
 }
@@ -730,7 +731,7 @@ void RKComponentBuilder::parseLogic (const QDomElement &element, XMLHelper &xml,
 			RKComponentPropertyBase *prop = new RKComponentPropertyBase (component (), xml.getBoolAttribute (cel, "required", false, DL_INFO));
 			component ()->addChild (id, prop);
 			prop->setInternal (true);
-			component ()->connect (prop, SIGNAL (valueChanged(RKComponentPropertyBase*)), component (), SLOT (outsideValueChanged(RKComponentPropertyBase*)));
+			component ()->connect (prop, &RKComponentPropertyBase::valueChanged, component (), &RKComponent::outsideValueChanged);
 
 			QString dummy = xml.getStringAttribute (cel, "default", QString (), DL_INFO);
 			if (!dummy.isNull ()) {
@@ -873,4 +874,3 @@ void RKComponentBuilder::makeConnections () {
 }
 
 
-#include "rkstandardcomponent.moc"

@@ -20,11 +20,10 @@
 #include <qdom.h>
 #include <qregexp.h>
 #include <QDir>
+#include <QStandardPaths>
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kxmlguiclient.h>
-#include <kglobal.h>
-#include <kstandarddirs.h>
 
 #include "../settings/rksettingsmodulegeneral.h"
 
@@ -114,6 +113,19 @@ namespace RKCommonFunctions {
 		return (context_line.mid (current_word_start, current_word_end - current_word_start));
 	}
 
+	int quoteEndPosition (const QChar& quote_char, const QString& haystack, int from) {
+		int line_end = haystack.length () - 1;
+		for (int i=from; i <= line_end; ++i) {
+			QChar c = haystack.at (i);
+			if (c == quote_char) return i;
+			if (c == '\\') {
+				++i;
+				continue;
+			}
+		}
+		return -1; // quote end not found
+	}
+
 	void getCurrentSymbolOffset (const QString &context_line, int cursor_pos, bool strict, int *start, int *end) {
 		*start = 0;
 
@@ -121,22 +133,16 @@ namespace RKCommonFunctions {
 		*end = line_end + 1;
 		if (cursor_pos > line_end) cursor_pos = line_end;
 
-		QChar quote_char;
 		for (int i=0; i <= line_end; ++i) {
 			QChar c = context_line.at (i);
-			if (!quote_char.isNull ()) {
-				if (c == '\\') ++i;
-				if (c == quote_char) quote_char = QChar ();
+			if (c == '\'' || c == '\"' || c == '`') {
+				i = quoteEndPosition (c, context_line, i+1);
+				if (i < 0) break;
 				continue;
-			} else {
-				if (c == '\'' || c == '\"' || c == '`') {
-					quote_char = c;
-					continue;
-				} else if (c.isLetterOrNumber () || c == '.' || c == '_') {
-					continue;
-				} else if (!strict) {
-					if (c == '$' || c == ':' || c == '[' || c == ']' || c == '@') continue;
-				}
+			} else if (c.isLetterOrNumber () || c == '.' || c == '_') {
+				continue;
+			} else if (!strict) {
+				if (c == '$' || c == ':' || c == '[' || c == ']' || c == '@') continue;
 			}
 
 			// if we did not hit a continue, yet, that means we are on a potential symbol boundary
@@ -149,7 +155,7 @@ namespace RKCommonFunctions {
 	}
 
 	QString getRKWardDataDir () {
-		return (KGlobal::dirs ()->findResourceDir ("data", "rkward/resource.ver") + "rkward/");
+		return (QStandardPaths::locate (QStandardPaths::GenericDataLocation, "rkward/resource.ver").replace ("resource.ver", QString ()));
 	}
 
 	QString getUseableRKWardSavefileName (const QString &prefix, const QString &postfix) {
@@ -216,4 +222,22 @@ namespace RKCommonFunctions {
 		return (i18n ("<p><em>Note:</em> This setting does not take effect until you restart RKWard.</p>"));
 	}
 
+#ifdef Q_OS_WIN
+#	include <windows.h>
+#	include <QTemporaryFile>
+#endif
+	QString windowsShellScriptSafeCommand (const QString &orig) {
+#ifdef Q_OS_WIN
+		// credits to http://erasmusjam.wordpress.com/2012/10/01/get-8-3-windows-short-path-names-in-a-qt-application/
+		QByteArray input (sizeof (wchar_t) * (orig.size()+1), '\0');
+		// wchar_t input[orig.size()+1]; -- No: MSVC (2013) does not support variable length arrays. Oh dear...
+		orig.toWCharArray ((wchar_t*) input.data ());
+		long length = GetShortPathName ((wchar_t*) input.data (), NULL, 0);
+		QByteArray output (sizeof (wchar_t) * (length), '\0');
+		GetShortPathName ((wchar_t*) input.data (), (wchar_t*) output.data (), length);
+		return QString::fromWCharArray ((wchar_t*) output.data (), length-1);
+#else
+		return orig;
+#endif
+	}
 }	// namespace

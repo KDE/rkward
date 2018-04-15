@@ -16,7 +16,7 @@
  ***************************************************************************/
 #include "scriptbackend.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "../plugin/rkcomponentproperties.h"
 
@@ -115,4 +115,3 @@ void ScriptBackend::commandFinished (const QString &output) {
 }
 
 
-#include "scriptbackend.moc"

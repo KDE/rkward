@@ -24,7 +24,8 @@
 #include <krun.h>
 #include <kservice.h>
 #include <kmessagebox.h>
-#include <klocale.h>
+#include <KLocalizedString>
+#include <QUrl>
 
 #include "../rkward.h"
 
@@ -60,7 +61,7 @@ void RKPrintAgent::printPostscript (const QString &file, bool delete_file) {
 			bool ok = connect (a, SIGNAL (triggered()), provider, SLOT (slotPrint()));
 			if (ok) printaction = a;
 		}
-		if (!(printaction && provider->openUrl (KUrl::fromLocalFile (file)))) {
+		if (!(printaction && provider->openUrl (QUrl::fromLocalFile (file)))) {
 			RK_DEBUG (APP, DL_WARNING, "No print action in postscript provider");
 			delete provider;
 			provider = 0;
@@ -71,7 +72,7 @@ void RKPrintAgent::printPostscript (const QString &file, bool delete_file) {
 		RK_DEBUG (APP, DL_WARNING, "No valid postscript postscript provider was found");
 		KMessageBox::sorry (RKWardMainWindow::getMain (), i18n ("No service was found to provide a KDE print dialog for PostScript files. We will try to open a generic PostScript viewer (if any), instead.<br><br>Consider installing 'okular', or configure RKWard not to attempt to print using a KDE print dialog."), i18n ("Unable to open KDE print dialog"));
 		// fallback: If we can't find a proper part, try to invoke a standalone PS reader, instead
-		KRun::runUrl (KUrl::fromLocalFile (file), "appication/postscript", RKWardMainWindow::getMain ());
+		KRun::runUrl (QUrl::fromLocalFile (file), "appication/postscript", RKWardMainWindow::getMain ());
 		return;
 	}
 
@@ -91,4 +92,3 @@ void RKPrintAgent::printPostscript (const QString &file, bool delete_file) {
 	}
 }
 
-#include "rkprintagent.moc"

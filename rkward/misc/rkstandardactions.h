@@ -18,7 +18,7 @@
 #ifndef RKSTANDARDACTIONS_H
 #define RKSTANDARDACTIONS_H
 
-class KAction;
+class QAction;
 class QString;
 class QObject;
 class RKMDIWindow;
@@ -28,18 +28,18 @@ class RKScriptContextProvider;
 
 @author Thomas Friedrichsmeier */
 namespace RKStandardActions {
-	KAction *copyLinesToOutput (RKMDIWindow *window, const QObject *receiver=0, const char *member=0);
+	QAction *copyLinesToOutput (RKMDIWindow *window, const QObject *receiver=0, const char *member=0);
 /** Allows special pasting modes for script windows.
 @param member needs to have the signature void fun (const QString&). */
-	KAction* pasteSpecial (RKMDIWindow *window, const QObject *receiver=0, const char *member=0);
+	QAction* pasteSpecial (RKMDIWindow *window, const QObject *receiver=0, const char *member=0);
 
-	KAction* runCurrent (RKMDIWindow *window, const QObject *receiver=0, const char *member=0, bool current_or_line=false);
-	KAction* runAll (RKMDIWindow *window, const QObject *receiver=0, const char *member=0);
+	QAction* runCurrent (RKMDIWindow *window, const QObject *receiver=0, const char *member=0, bool current_or_line=false);
+	QAction* runAll (RKMDIWindow *window, const QObject *receiver=0, const char *member=0);
 
-	KAction* functionHelp (RKMDIWindow *window, RKScriptContextProvider *context_provider);
+	QAction* functionHelp (RKMDIWindow *window, RKScriptContextProvider *context_provider);
 /** Search for current symbol / selection, online. Note that you will not have to connect this action to any slot to work. It does everything by itself.
  *  It will query the given context_provider for context. */
-	KAction* onlineHelp (RKMDIWindow *window, RKScriptContextProvider *context_provider);
+	QAction* onlineHelp (RKMDIWindow *window, RKScriptContextProvider *context_provider);
 };
 
 #endif

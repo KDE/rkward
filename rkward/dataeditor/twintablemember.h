@@ -45,8 +45,8 @@ public:
 	void paste (RKEditor::PasteMode mode);
 
 	void setRKModel (RKVarEditModelBase* model);
-	int trueRows () const;	// re-implemented from RKTableView
-	int trueColumns () const;	// re-implemented from RKTableView
+	int trueRows () const override;	// re-implemented from RKTableView
+	int trueColumns () const override;	// re-implemented from RKTableView
 public slots:
 /** blanks out the currently selected cells (or the currently active cell, if there is no selection) */
 	void blankSelected ();
@@ -57,7 +57,7 @@ protected:
 	bool updating_twin;
 
 /** reimplemented from QTableView to also adjust the twin */
-	void scrollContentsBy (int dx, int dy);
+	void scrollContentsBy (int dx, int dy) override;
 
 	RKVarEditModelBase* mymodel;
 

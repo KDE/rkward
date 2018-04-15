@@ -22,7 +22,7 @@
 #include <QIODevice>
 #include <krandom.h>
 #include <kmessagebox.h>
-#include <klocale.h>
+#include <KLocalizedString>
 
 // for screen resolution
 #include <QApplication>
@@ -49,6 +49,7 @@ RKGraphicsDeviceFrontendTransmitter::~RKGraphicsDeviceFrontendTransmitter () {
 	RK_TRACE (GRAPHICS_DEVICE);
 
 	if (connection) connection->close ();
+	if (local_server->isListening ()) local_server->close ();
 }
 
 void RKGraphicsDeviceFrontendTransmitter::setupServer () {
@@ -57,7 +58,7 @@ void RKGraphicsDeviceFrontendTransmitter::setupServer () {
 	RK_ASSERT (!local_server);
 	local_server = new QLocalServer ();
 	RK_ASSERT (local_server->listen ("rkd" + KRandom::randomString (8)));
-	connect (local_server, SIGNAL (newConnection()), this, SLOT (newConnection()));
+	connect (local_server, &QLocalServer::newConnection, this, &RKGraphicsDeviceFrontendTransmitter::newConnection);
 	server_name = local_server->fullServerName ();
 }
 
@@ -70,18 +71,17 @@ void RKGraphicsDeviceFrontendTransmitter::newConnection () {
 
 	// handshake
 	QString token = RKFrontendTransmitter::instance ()->connectionToken ();
-	if (!con->canReadLine ()) con->waitForReadyRead (1000);
-	QString token_c = QString::fromLocal8Bit (con->readLine ());
-	token_c.chop (1);
+	RKFrontendTransmitter::waitForCanReadLine (con, 2000);
+	QString token_c = QString::fromLocal8Bit (con->readLine ()).trimmed ();
 	if (token_c != token) {
-		KMessageBox::detailedError (0, QString ("<p>%1</p>").arg (i18n ("There has been an error while trying to connect the on-screen graphics backend. This means, on-screen graphics using the RKWard device will not work in this session.")), i18n ("Expected connection token %1, but read connection token %2").arg (token).arg (token_c), i18n ("Error while connection graphics backend"));
+		KMessageBox::detailedError (0, QString ("<p>%1</p>").arg (i18n ("There has been an error while trying to connect the on-screen graphics backend. This means, on-screen graphics using the RKWard device will not work in this session.")), i18n ("Expected connection token %1, but read connection token %2", token, token_c), i18n ("Error while connection graphics backend"));
 		con->close ();
 		return;
 	}
 
 	connection = con;
 	streamer.setIODevice (con);
-	connect (connection, SIGNAL (readyRead()), this, SLOT (newData()));
+	connect (connection, &QIODevice::readyRead, this, &RKGraphicsDeviceFrontendTransmitter::newData);
 	newData ();	// might already be available
 }
 
@@ -187,9 +187,9 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			streamer.instream >> width >> height >> title >> antialias;
 			device = RKGraphicsDevice::newDevice (devnum, width, height, title, antialias);
 			RKWorkplace::mainWorkplace ()->newRKWardGraphisWindow (device, devnum+1);
-			connect (device, SIGNAL (locatorDone(bool,double,double)), this, SLOT (locatorDone(bool,double,double)));
-			connect (device, SIGNAL (newPageConfirmDone(bool)), this, SLOT (newPageConfirmDone(bool)));
-			connect (this, SIGNAL (stopInteraction()), device, SLOT (stopInteraction()));
+			connect (device, &RKGraphicsDevice::locatorDone, this, &RKGraphicsDeviceFrontendTransmitter::locatorDone);
+			connect (device, &RKGraphicsDevice::newPageConfirmDone, this, &RKGraphicsDeviceFrontendTransmitter::newPageConfirmDone);
+			connect (this, &RKGraphicsDeviceFrontendTransmitter::stopInteraction, device, &RKGraphicsDevice::stopInteraction);
 			streamer.outstream << (qint32) 1;  // dummy reply
 			streamer.writeOutBuffer ();
 			continue;
@@ -390,4 +390,3 @@ void RKGraphicsDeviceFrontendTransmitter::newPageConfirmDone (bool accepted) {
 	streamer.writeOutBuffer ();
 }
 
-#include "rkgraphicsdevice_frontendtransmitter.moc"

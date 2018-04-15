@@ -22,8 +22,9 @@
 #include <QTime>
 #include <QObjectCleanupHandler>
 #include <QSet>
+#include <QGuiApplication>
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kactioncollection.h>
 #include <kmessagebox.h>
 
@@ -36,6 +37,7 @@
 #include "../rkward.h"
 #include "../settings/rksettingsmoduleplugins.h"
 #include "../rbackend/rksessionvars.h"
+#include "../dialogs/rkerrordialog.h"
 
 QString RKPluginMapFile::makeFileName (const QString &filename) const {
 	return QDir::cleanPath (QDir (basedir).filePath (filename));
@@ -347,7 +349,7 @@ void RKComponentMap::initialize () {
 RKComponentMap::RKComponentMap () : QObject (), RKComponentGUIXML ("global"), KXMLGUIClient () {
 	RK_TRACE (PLUGIN);
 
-	setComponentData (KGlobal::mainComponent ());
+	setComponentName (QCoreApplication::applicationName (), QGuiApplication::applicationDisplayName ());
 	actionCollection ()->setConfigGroup ("Plugin Shortcuts");
 	contexts.insert ("global", this);
 }
@@ -468,7 +470,7 @@ bool RKComponentMap::invokeComponent (const QString &component_id, const QString
 	QString _message;
 	RKComponentHandle *handle = getComponentHandle (component_id);
 	if (!handle) {
-		_message = i18n ("You tried to invoke a plugin called '%1', but that plugin is currently unknown. Probably you need to load the corresponding PluginMap (Settings->Configure RKWard->Plugins), or perhaps the plugin was renamed.").arg (component_id);
+		_message = i18n ("You tried to invoke a plugin called '%1', but that plugin is currently unknown. Probably you need to load the corresponding PluginMap (Settings->Configure RKWard->Plugins), or perhaps the plugin was renamed.", component_id);
 		if (message) *message = _message;
 		else KMessageBox::sorry (RKWardMainWindow::getMain (), _message, i18n ("No such plugin"));
 		return false;
@@ -480,9 +482,9 @@ bool RKComponentMap::invokeComponent (const QString &component_id, const QString
 	RKComponent::PropertyValueMap state;
 	bool format_ok = RKComponent::stringListToValueMap (serialized_settings, &state);
 	if (!format_ok) {
-		_message = i18n ("Bad serialization format while trying to invoke plugin '%1'. Please contact the RKWard team (Help->About RKWard->Authors).").arg (component_id);
+		_message = i18n ("Bad serialization format while trying to invoke plugin '%1'. In general, this should not happen, unless you modified the parameters by hand. Please consider reporting this issue.", component_id);
 		if (message) *message = _message;
-		else KMessageBox::error (component, _message, i18n ("Bad serialization format"));
+		else RKErrorDialog::reportableErrorMessage (component, _message, QString (), i18n ("Bad serialization format"), "invoke_comp_deserialization_error");
 		return false;
 	}
 	component->applyState (state);
@@ -717,9 +719,9 @@ void RKComponentMap::addedEntry (const QString &id, RKComponentHandle *handle) {
 	RK_TRACE (PLUGIN);
 
 	handle->setAccessible (true);
-	KAction *action = actionCollection ()->addAction (id, this, SLOT (activateComponent()));
+	QAction *action = actionCollection ()->addAction (id, this, SLOT (activateComponent()));
 	action->setText (handle->getLabel ());
-	action->setShortcutConfigurable (true);
+	actionCollection ()->setShortcutsConfigurable (action, true);
 }
 
 void RKComponentGUIXML::appendPluginToList (const QString& id, QStringList* list) {
@@ -738,9 +740,7 @@ QStringList RKComponentMap::listPlugins () {
 	RK_TRACE (PLUGIN);
 
 	QStringList ret;
-#if QT_VERSION >= 0x040700
 	ret.reserve (components.size () * 4);
-#endif
 	for (ComponentMap::const_iterator it = components.constBegin (); it != components.constEnd (); ++it) {
 		// RKComponentMap (in contrast to other contexts) will also contain plugins not added to the menu,
 		// and is listed separately, for this reason
@@ -861,4 +861,3 @@ RKComponentAboutData RKComponentHandle::getAboutData () {
 
 ///########################### END RKComponentHandle ###############################
 
-#include "rkcomponentmap.moc"

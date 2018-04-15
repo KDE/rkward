@@ -46,6 +46,8 @@ In some cases you may want to set the following options:
 -DUSE_BINARY_PACKAGES
 	Currently only interpreted on Mac OS: If RKWard should default to installing binary R packages (if available) use
 	-DUSE_BINARY_PACKAGE=1. Otherwise, RKWard will default to building R packages from source.
+-DTRANSLATION_SRC_CIR
+	If you have imported translation source files (.po-files) to a separate directory, you can specify this, here.
 
 Further generic options are listed on http://www.cmake.org/Wiki/CMake_Useful_Variables .
 

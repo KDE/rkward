@@ -2,7 +2,7 @@
                           rkmdiwindow  -  description
                              -------------------
     begin                : Tue Sep 26 2006
-    copyright            : (C) 2006, 2007, 2008, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2006 - 2017 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -22,13 +22,14 @@
 #include <qtimer.h>
 #include <QEvent>
 #include <QPaintEvent>
+#include <QAction>
+#include <QVBoxLayout>
 
-#include <kparts/event.h>
+#include <kparts/partactivateevent.h>
 #include <kxmlguifactory.h>
 #include <kactioncollection.h>
-#include <klocale.h>
-#include <kaction.h>
-#include <kpassivepopup.h>
+#include <KLocalizedString>
+#include <kmessagewidget.h>
 
 #include "rkworkplace.h"
 #include "rkworkplaceview.h"
@@ -44,7 +45,7 @@
 RKMDIStandardActionClient::RKMDIStandardActionClient () : KXMLGUIClient () {
 	RK_TRACE (APP);
 
-	setComponentData (KGlobal::mainComponent ());
+	setComponentName (QCoreApplication::applicationName (), QGuiApplication::applicationDisplayName ());
 	setXMLFile ("rkstandardactions.rc", true);
 }
 
@@ -70,6 +71,7 @@ RKMDIWindow::RKMDIWindow (QWidget *parent, int type, bool tool_window, const cha
 	no_border_when_active = false;
 	standard_client = 0;
 	status_popup = 0;
+	status_popup_container = 0;
 
 	setWindowIcon (RKStandardIcons::iconForWindow (this));
 }
@@ -79,7 +81,6 @@ RKMDIWindow::~RKMDIWindow () {
 
 	if (isToolWindow ()) RKToolWindowList::unregisterToolWindow (this);
 	delete standard_client;
-	delete status_popup;
 }
 
 KActionCollection *RKMDIWindow::standardActionCollection () {
@@ -114,6 +115,11 @@ bool RKMDIWindow::isActive () {
 	// don't trace, called pretty often
 
 	if (!topLevelWidget ()->isActiveWindow ()) return false;
+	return isActiveInsideToplevelWindow ();
+}
+
+bool RKMDIWindow::isActiveInsideToplevelWindow () {
+	// don't trace, called pretty often
 	return (active || (!isAttached ()));
 }
 
@@ -130,7 +136,7 @@ void RKMDIWindow::activate (bool with_focus) {
 			topLevelWidget ()->raise ();
 		}
 	} else {
-		if (isAttached ()) RKWorkplace::mainWorkplace ()->view ()->setActivePage (this);
+		if (isAttached ()) RKWorkplace::mainWorkplace ()->view ()->showWindow (this);
 		else {
 			topLevelWidget ()->show ();
 			topLevelWidget ()->raise ();
@@ -259,11 +265,14 @@ void RKMDIWindow::paintEvent (QPaintEvent *e) {
 	}
 }
 
-void RKMDIWindow::windowActivationChange (bool) {
+void RKMDIWindow::changeEvent (QEvent *event) {
 	RK_TRACE (APP);
 
-	// NOTE: active is NOT the same as isActive(). Active just means that this window *would* be active, if its toplevel window is active.
-	if (active || (!isAttached ())) update ();
+	if (event->type () == QEvent::ActivationChange) {
+		// NOTE: active is NOT the same as isActive(). Active just means that this window *would* be active, if its toplevel window is active.
+		if (active || (!isAttached ())) update ();
+	}
+	QFrame::changeEvent (event);
 }
 
 void RKMDIWindow::slotActivateForFocusFollowsMouse () {
@@ -326,18 +335,32 @@ void RKMDIWindow::setStatusMessage (const QString& message, RCommand *command) {
 	RK_TRACE (MISC);
 
 	if (!status_popup) {
-		status_popup = new KPassivePopup (this);
-		disconnect (status_popup, SIGNAL (clicked()), status_popup, SLOT (hide()));   // no auto-hiding, please
+		status_popup_container = new QWidget (this);
+		status_popup_container->resize (size ());
+		QVBoxLayout *layout = new QVBoxLayout (status_popup_container);
+		layout->setContentsMargins (10, 10, 10, 10);
+		status_popup = new KMessageWidget (status_popup_container);
+		status_popup->setCloseButtonVisible (true);
+		status_popup->setMessageType (KMessageWidget::Warning);
+		layout->addWidget (status_popup);
+		layout->addStretch ();
 	}
 
-	if (command) connect (command->notifier (), SIGNAL (commandFinished (RCommand*)), this, SLOT (clearStatusMessage()));
+	if (command) connect (command->notifier (), &RCommandNotifier::commandFinished, this, &RKMDIWindow::clearStatusMessage);
 	if (!message.isEmpty ()) {
-		status_popup->setView (QString (), message);
-		status_popup->show (this->mapToGlobal (QPoint (20, 20)));
-		status_popup->setTimeout (0);
+		status_popup_container->show ();
+		if (status_popup->text () == message) {
+			if (!status_popup->isVisible ()) status_popup->animatedShow ();  // it might have been close by user. And no, simply show() is _not_ good enough. KF5 (5.15.0)
+		}
+		if (status_popup->text () != message) {
+			if (status_popup->isVisible ()) status_popup->hide (); // otherwise, the KMessageWidget does not update geometry (KF5, 5.15.0)
+			status_popup->setText (message);
+			status_popup->animatedShow ();
+		}
 	} else {
+		status_popup_container->hide ();
 		status_popup->hide ();
-		status_popup->setTimeout (10);  // this is a lame way to keep track of whether the popup is empty. See showEvent()
+		status_popup->setText (QString ());  // this is a lame way to keep track of whether the popup is empty. See resizeEvent()
 	}
 }
 
@@ -347,16 +370,10 @@ void RKMDIWindow::clearStatusMessage () {
 	setStatusMessage (QString ());
 }
 
-void RKMDIWindow::hideEvent (QHideEvent* ev) {
-	if (status_popup) {
-		status_popup->hide ();
+void RKMDIWindow::resizeEvent (QResizeEvent*) {
+	if (status_popup_container && !status_popup->text ().isEmpty ()) {
+		status_popup_container->resize (size ());
 	}
-	QWidget::hideEvent (ev);
-}
-
-void RKMDIWindow::showEvent (QShowEvent* ev) {
-	if (status_popup && (status_popup->timeout () == 0)) status_popup->show (this->mapToGlobal (QPoint (20, 20)));
-	QWidget::showEvent (ev);
 }
 
 
@@ -374,7 +391,7 @@ void RKMDIWindow::setWindowStyleHint (const QString& hint) {
 	}
 }
 
-void RKMDIWindow::setMetaInfo (const QString& _generic_window_name, const QString& _help_url, RKSettings::SettingsPage _settings_page) {
+void RKMDIWindow::setMetaInfo (const QString& _generic_window_name, const QUrl& _help_url, RKSettings::SettingsPage _settings_page) {
 	RK_TRACE (APP);
 
 	// only meant to be called once
@@ -384,11 +401,11 @@ void RKMDIWindow::setMetaInfo (const QString& _generic_window_name, const QStrin
 	settings_page = _settings_page;
 
 	if (!help_url.isEmpty ()) {
-		KAction *action = standardActionCollection ()->addAction ("window_help", this, SLOT (showWindowHelp()));
+		QAction *action = standardActionCollection ()->addAction ("window_help", this, SLOT (showWindowHelp()));
 		action->setText (i18n ("Help on %1", generic_window_name));
 	}
 	if (settings_page != RKSettings::NoPage) {
-		KAction *action = standardActionCollection ()->addAction ("window_configure", this, SLOT (showWindowSettings()));
+		QAction *action = standardActionCollection ()->addAction ("window_configure", this, SLOT (showWindowSettings()));
 		action->setText (i18n ("Configure %1", generic_window_name));
 	}
 }
@@ -408,4 +425,3 @@ void RKMDIWindow::showWindowSettings () {
 }
 
 
-#include "rkmdiwindow.moc"

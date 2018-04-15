@@ -33,7 +33,7 @@ public:
 	~RFunctionObject ();
 
 /** reimplemented from RObject to handle function arguments */
-	bool updateStructure (RData *new_data);
+	bool updateStructure (RData *new_data) override;
 	QString printArgs () const;
 protected:
 	QStringList argnames;

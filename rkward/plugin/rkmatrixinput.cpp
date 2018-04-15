@@ -24,8 +24,7 @@
 #include "../misc/rktableview.h"
 #include "../dataeditor/rktextmatrix.h"
 #include "kstandardaction.h"
-#include "kaction.h"
-#include "klocale.h"
+#include "KLocalizedString"
 
 #include "../misc/xmlhelper.h"
 
@@ -80,9 +79,9 @@ RKMatrixInput::RKMatrixInput (const QDomElement& element, RKComponent* parent_co
 	column_count->setInternal (true);
 	addChild ("columns", column_count);
 	addChild ("tsv", tsv_data);
-	connect (row_count, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (dimensionPropertyChanged(RKComponentPropertyBase*)));
-	connect (column_count, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (dimensionPropertyChanged(RKComponentPropertyBase*)));
-	connect (tsv_data, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (tsvPropertyChanged()));
+	connect (row_count, &RKComponentPropertyBase::valueChanged, this, &RKMatrixInput::dimensionPropertyChanged);
+	connect (column_count, &RKComponentPropertyBase::valueChanged, this, &RKMatrixInput::dimensionPropertyChanged);
+	connect (tsv_data, &RKComponentPropertyBase::valueChanged, this, &RKMatrixInput::tsvPropertyChanged);
 	updating_tsv_data = false;
 
 	model = new RKMatrixInputModel (this);
@@ -105,16 +104,16 @@ RKMatrixInput::RKMatrixInput (const QDomElement& element, RKComponent* parent_co
 	}
 
 	// define standard actions
-	KAction *cut = KStandardAction::cut (this, SLOT (cut()), this);
+	QAction *cut = KStandardAction::cut (this, SLOT (cut()), this);
 	display->addAction (cut);
-	KAction *copy = KStandardAction::copy (this, SLOT (copy()), this);
+	QAction *copy = KStandardAction::copy (this, SLOT (copy()), this);
 	display->addAction (copy);
-	KAction *paste = KStandardAction::paste (this, SLOT (paste()), this);
+	QAction *paste = KStandardAction::paste (this, SLOT (paste()), this);
 	display->addAction (paste);
 	display->setContextMenuPolicy (Qt::ActionsContextMenu);
 
 	display->setRKItemDelegate (new RKItemDelegate (display, model, true));
-	connect (display, SIGNAL (blankSelectionRequest()), this, SLOT (clearSelectedCells()));
+	connect (display, &RKTableView::blankSelectionRequest, this, &RKMatrixInput::clearSelectedCells);
 }
 
 RKMatrixInput::~RKMatrixInput () {
@@ -147,7 +146,7 @@ QVariant RKMatrixInput::value (const QString& modifier) {
 		if (l.size () > row_count->intValue ()) l = l.mid (0, row_count->intValue ());
 		return l;
 	}
-	return ("Modifier '" + modifier + "' not recognized\n"); 
+	return (QString ("Modifier '" + modifier + "' not recognized\n"));
 }
 
 bool RKMatrixInput::expandStorageForColumn (int column) {
@@ -522,7 +521,7 @@ QVariant RKMatrixInputModel::data (const QModelIndex& index, int role) const {
 	if ((role == Qt::DisplayRole) || (role == Qt::EditRole)) {
 		return QVariant (value);
 	} else if (role == Qt::BackgroundRole) {
-		if (!matrix->is_valid && !matrix->isValueValid (value)) return QVariant (Qt::red);
+		if (!matrix->is_valid && !matrix->isValueValid (value)) return QVariant (QColor (Qt::red));
 	} else if ((role == Qt::ToolTipRole) || (role == Qt::StatusTipRole)) {
 		if (!matrix->is_valid && (value.isEmpty () && !matrix->allow_missings)) return QVariant (i18n ("Empty values are not allowed"));
 		if (!matrix->is_valid && !matrix->isValueValid (value)) return QVariant (i18n ("This value is not allowed, here"));
@@ -547,7 +546,7 @@ QVariant RKMatrixInputModel::headerData (int section, Qt::Orientation orientatio
 		return QVariant (QString::number (section + 1));
 	} else if (orientation == Qt::Horizontal) {
 		if (section < matrix->column_count->intValue ()) {
-			if ((role == Qt::BackgroundRole) && !matrix->isColumnValid (section)) return QVariant (Qt::red);
+			if ((role == Qt::BackgroundRole) && !matrix->isColumnValid (section)) return QVariant (QColor (Qt::red));
 			if (((role == Qt::ToolTipRole) || (role == Qt::StatusTipRole)) && !matrix->isColumnValid (section)) return QVariant (i18n ("This column contains illegal values in some of its cells"));
 		}
 	}
@@ -563,4 +562,3 @@ bool RKMatrixInputModel::setData (const QModelIndex& index, const QVariant& valu
 	return true;
 }
 
-#include "rkmatrixinput.moc"

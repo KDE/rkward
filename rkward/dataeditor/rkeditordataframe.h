@@ -44,10 +44,10 @@ public:
 /** destructor */
 	~RKEditorDataFrame ();
 
-	void flushChanges ();
+	void flushChanges () override;
 
 /** Tells the editor to restore the given object in the R-workspace from its copy of the data */
-	void restoreObject (RObject *object);
+	void restoreObject (RObject *object) override;
 private slots:
 	void detachModel ();
 private:
@@ -57,7 +57,7 @@ private:
 	RCommandChain *open_chain;
 	void waitForLoad ();
 protected:
-	void rCommandDone (RCommand *command);
+	void rCommandDone (RCommand *command) override;
 };
 
 #endif

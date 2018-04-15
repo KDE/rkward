@@ -167,7 +167,7 @@ public:
 	RKComponent (RKComponent *parent_component, QWidget *parent_widget);
 /** destructor */
 	virtual ~RKComponent ();
-	int type () { return Component; };
+	int type () override { return Component; };
 /** change notification mechanism. Call this, if something in the component changed that could result in a change in code/values/satisfaction state. Default implementation propagates the change upwards to parent components, if any, but does not do anything further. Reimplement, for instance, to regenerate code */
 	virtual void changed ();
 /** The component as a wizardish (multi-page) interface. Default implementation returns false */

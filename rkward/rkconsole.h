@@ -31,7 +31,7 @@
 class QEvent;
 class QKeyEvent;
 class QStringList;
-class KAction;
+class QAction;
 class RCommand;
 class KActionCollection;
 class RKConsolePart;
@@ -61,8 +61,8 @@ public:
 /** Returns the current cursor position, within the current command (without taking into account the prefix). Returns -1 if the cursor is not on the line containing the command. */
 	int currentCursorPositionInCommand ();
 	void doTabCompletion ();
-	QString provideContext (int line_rev);
-	void currentHelpContext (QString *symbol, QString *package);  // KF5 TODO: override keyword
+	QString provideContext (int line_rev) override;
+	void currentHelpContext (QString *symbol, QString *package) override;
 
 	static RKConsole *mainConsole () { return main_console; };
 	static void setMainConsole (RKConsole *console) { main_console = console; };
@@ -72,7 +72,7 @@ public:
 	static void pipeUserCommand (const QString &command);
 
 /** reimplemnented from RKMDIWindow to clear selection when gaining focus */
-	void activate (bool with_focus=true);
+	void activate (bool with_focus=true) override;
 	void setCommandHistory (const QStringList &new_history, bool append);
 	QStringList commandHistory () const { return commands_history.getHistory (); };
 	void addCommandToHistory (const QString& text) { commands_history.append (text); };
@@ -80,14 +80,14 @@ protected:
 /** Handle keystrokes before they reach the kate-part. Return TRUE if we want the kate-part to ignore it
 \param e the QKeyEvent */
 	bool handleKeyPress (QKeyEvent * e);
-	void rCommandDone (RCommand *command);
+	void rCommandDone (RCommand *command) override;
 /** reimplemented from RCommandReceiver::newOutput () to handle output of console commands */
-	void newOutput (RCommand *command, ROutput *output);
+	void newOutput (RCommand *command, ROutput *output) override;
 /** reimplemented from QWidget to show the context menu */
-	void contextMenuEvent (QContextMenuEvent * event);
+	void contextMenuEvent (QContextMenuEvent * event) override;
 private:
 friend class RKConsolePart;
-	bool eventFilter (QObject *o, QEvent *e);
+	bool eventFilter (QObject *o, QEvent *e) override;
 	bool doTabCompletionHelper (int line_num, const QString &line, int word_start, int word_end, const QStringList &entries);
 /** a helper function to doTabCompletionHelper */
 	void insertCompletion (int line_num, int word_start, int word_end, const QString &completion);
@@ -136,11 +136,11 @@ friend class RKConsolePart;
 
 	bool tab_key_pressed_before;
 
-	KAction* run_selection_action;
-	KAction* interrupt_command_action;
-	KAction* copy_commands_action;
-	KAction* copy_literal_action;
-	KAction* paste_action;
+	QAction* run_selection_action;
+	QAction* interrupt_command_action;
+	QAction* copy_commands_action;
+	QAction* copy_literal_action;
+	QAction* paste_action;
 
 	KActionCollection *kate_edit_actions;
 	void triggerEditAction (QString name);
@@ -167,8 +167,8 @@ public slots:
 \param batch a QString containing the batch of commands to be executed */
 	void submitBatch (const QString &batch);
 
-	void userLoadHistory (const KUrl &url=KUrl ());
-	void userSaveHistory (const KUrl &url=KUrl ());
+	void userLoadHistory (const QUrl &url=QUrl ());
+	void userSaveHistory (const QUrl &url=QUrl ());
 private:
 /** Commands can be queued in the console in four different places:
 1) The not-yet-executed remainder of a previous incomplete command.
@@ -185,7 +185,7 @@ private:
 	bool previous_chunk_was_piped;
 	
 /** Reimplemented from RCommandReceiver to display the next line of the command */
-	void userCommandLineIn (RCommand* command);
+	void userCommandLineIn (RCommand* command) override;
 };
 
 /** A part interface to RKConsole. Provides the context-help functionality

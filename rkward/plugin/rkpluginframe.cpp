@@ -20,8 +20,6 @@
 #include <QVBoxLayout>
 #include <QGroupBox>
 
-#include <kvbox.h>
-
 #include "../rkglobals.h"
 #include "../misc/xmlhelper.h"
 #include "../debug.h"
@@ -36,8 +34,10 @@ RKPluginFrame::RKPluginFrame (const QDomElement &element, RKComponent *parent_co
 	frame = new QGroupBox (xml->i18nStringAttribute (element, "label", QString(), DL_INFO), this);
 	layout->addWidget (frame);
 	layout = new QVBoxLayout (frame);
-	page = new KVBox (frame);
-	page->setSpacing (RKGlobals::spacingHint ());
+	page = new QWidget (frame);
+	QVBoxLayout *pagelayout = new QVBoxLayout (page);
+	pagelayout->setContentsMargins (0, 0, 0, 0);
+	pagelayout->setSpacing (RKGlobals::spacingHint ());
 	layout->addWidget (page);
 
 	checked = 0;
@@ -45,7 +45,7 @@ RKPluginFrame::RKPluginFrame (const QDomElement &element, RKComponent *parent_co
 		frame->setCheckable (true);
 		frame->setChecked (xml->getBoolAttribute (element, "checked", true, DL_INFO));
 		initCheckedProperty ();
-		connect (frame, SIGNAL (toggled(bool)), this, SLOT (checkedChanged(bool)));
+		connect (frame, &QGroupBox::toggled, this, &RKPluginFrame::checkedChanged);
 	}
 }
 
@@ -62,7 +62,7 @@ void RKPluginFrame::initCheckedProperty () {
 	}
 
 	addChild ("checked", checked = new RKComponentPropertyBool (this, false, frame->isChecked (), "1", "0"));
-	connect (checked, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (propertyChanged(RKComponentPropertyBase*)));
+	connect (checked, &RKComponentPropertyBase::valueChanged, this, &RKPluginFrame::propertyChanged);
 }
 
 RKComponentBase* RKPluginFrame::lookupComponent (const QString& identifier, QString* remainder) {
@@ -94,4 +94,3 @@ void RKPluginFrame::checkedChanged (bool new_state) {
 	changed ();
 }
 
-#include "rkpluginframe.moc"

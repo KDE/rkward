@@ -26,7 +26,7 @@
 #include <qdom.h>
 #include <QTreeWidget>
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "rkcomponent.h"
 #include "../core/rcontainerobject.h"
@@ -41,11 +41,11 @@ RKFormula::RKFormula (const QDomElement &element, RKComponent *parent_component,
 
 	// create and register properties
 	fixed_factors = new RKComponentPropertyRObjects (this, false);
-	connect (fixed_factors, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (factorsChanged(RKComponentPropertyBase*)));
+	connect (fixed_factors, &RKComponentPropertyBase::valueChanged, this, &RKFormula::factorsChanged);
 	addChild ("fixed_factors", fixed_factors);
 	fixed_factors->setInternal (true);
 	dependent = new RKComponentPropertyRObjects (this, false);
-	connect (dependent, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (factorsChanged(RKComponentPropertyBase*)));
+	connect (dependent, &RKComponentPropertyBase::valueChanged, this, &RKFormula::factorsChanged);
 	addChild ("dependent", dependent);
 	dependent->setInternal (true);
 	model = new RKComponentPropertyBase (this, true);
@@ -76,7 +76,7 @@ RKFormula::RKFormula (const QDomElement &element, RKComponent *parent_component,
 	type_selector->addButton (button, (int) MainEffects);
 	vbox->addWidget (button = new QRadioButton (i18n ("Custom Model:"), this));
 	type_selector->addButton (button, (int) Custom);
-	connect (type_selector, SIGNAL (buttonClicked(int)), this, SLOT (typeChange(int)));
+	connect (type_selector, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &RKFormula::typeChange);
 
 	custom_model_widget = new QWidget (this);
 	QHBoxLayout *model_hbox = new QHBoxLayout (custom_model_widget);
@@ -92,11 +92,11 @@ RKFormula::RKFormula (const QDomElement &element, RKComponent *parent_component,
 	model_hbox->addLayout (model_vbox);
 	add_button = new QPushButton (QString (), custom_model_widget);
 	add_button->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionAddRight));
-	connect (add_button, SIGNAL (clicked()), this, SLOT (addButtonClicked()));
+	connect (add_button, &QPushButton::clicked, this, &RKFormula::addButtonClicked);
 	model_vbox->addWidget (add_button);
 	remove_button = new QPushButton (QString (), custom_model_widget);
 	remove_button->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRemoveLeft));
-	connect (remove_button, SIGNAL (clicked()), this, SLOT (removeButtonClicked()));
+	connect (remove_button, &QPushButton::clicked, this, &RKFormula::removeButtonClicked);
 	model_vbox->addWidget (remove_button);
 	level_box = new QSpinBox (custom_model_widget);
 	level_box->setRange (0, 0);
@@ -382,6 +382,7 @@ void RKFormula::checkCustomModel () {
 		level_box->setMaximum (0);
 	}
 
+	InteractionMap new_map = interaction_map;
 	// clear terms which are no longer valid
 	for (InteractionMap::iterator in = interaction_map.begin (); in != interaction_map.end (); ++in) {
 		Interaction inter = in.value ();
@@ -397,9 +398,10 @@ void RKFormula::checkCustomModel () {
 		}
 		if (found_vars < (inter.level + 1)) {
 			delete (in.key ());
-			interaction_map.erase (in);
+			new_map.remove (in.key ());
 		}
 	}
+	interaction_map = new_map;
 }
 
 bool RKFormula::isValid () {
@@ -417,4 +419,3 @@ QStringList RKFormula::getUiLabelPair () const {
 	return ret;
 }
 
-#include "rkformula.moc"

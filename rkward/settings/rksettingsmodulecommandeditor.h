@@ -36,13 +36,13 @@ public:
 
 	~RKSettingsModuleCommandEditor ();
 	
-	void applyChanges ();
-	void save (KConfig *config);
+	void applyChanges () override;
+	void save (KConfig *config) override;
 	
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
 	
-	QString caption ();
+	QString caption () override;
 
 /// min number of character to try code completion
 	static int completionMinChars () { return completion_min_chars; };

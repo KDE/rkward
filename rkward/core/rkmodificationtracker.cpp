@@ -2,7 +2,7 @@
                           rkmodificationtracker  -  description
                              -------------------
     begin                : Tue Aug 31 2004
-    copyright            : (C) 2004-2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2017 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -17,7 +17,7 @@
 #include "rkmodificationtracker.h"
 
 #include <kmessagebox.h>
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "../rkglobals.h"
 #include "../dataeditor/rkeditor.h"
@@ -55,9 +55,8 @@ void RKModificationTracker::lockUpdates (bool lock) {
 
 bool RKModificationTracker::removeObject (RObject *object, RKEditor *editor, bool removed_in_workspace) {
 	RK_TRACE (OBJECTS);
-// TODO: allow more than one editor per object
 // WARNING: This does not work, if a sub-object is being edited!
-	RKEditor *ed = objectEditor (object);
+	RKEditor* ed = objectEditors (object).value (0);
 	RK_ASSERT (object);
 	RK_ASSERT (!((editor) && (!ed)));
 	RK_ASSERT (!(removed_in_workspace && editor));
@@ -94,7 +93,10 @@ bool RKModificationTracker::removeObject (RObject *object, RKEditor *editor, boo
 	}
 
 	RK_ASSERT (object);
-	RK_ASSERT (object->parentObject ());
+	if (!object->parentObject ()) {
+		RK_DEBUG (OBJECTS, DL_ERROR, "Trying to remove root level object. Backend crashed?");
+		return false;
+	}
 	bool view_update = !updates_locked && !object->isType (RObject::NonVisibleObject);
 
 	if (view_update) {
@@ -242,19 +244,20 @@ void RKModificationTracker::sendListenerNotification (RObjectListener::Notificat
 	}
 }
 
-RKEditor* RKModificationTracker::objectEditor (const RObject* object) {
+QList<RKEditor*> RKModificationTracker::objectEditors (const RObject* object) const {
 	RK_TRACE (OBJECTS);
 
+	QList<RKEditor*> ret;
 	QList<RObjectListener*> obj_listeners = listeners.values (const_cast<RObject*> (object));
 	for (int i = obj_listeners.size () - 1; i >= 0; --i) {
 		RObjectListener* listener = obj_listeners[i];
 		if (!(listener->listenerType () == RObjectListener::DataModel)) continue;
 
 		RKEditor* ed = static_cast<RKVarEditModel*> (listener)->getEditor ();
-		if (ed) return ed;
+		if (ed) ret.append (ed);
 	}
 
-	return 0;
+	return ret;
 }
 
 ///////////////// RKObjectListModel ///////////////////////////

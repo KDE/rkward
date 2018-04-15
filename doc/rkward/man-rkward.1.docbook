@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<!DOCTYPE refentry PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
+<!DOCTYPE refentry PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
 <!ENTITY % English "INCLUDE">
 <!ENTITY rkward '<application>RKWard</application>'>
 <!ENTITY R '<application>R</application>'>
@@ -16,7 +16,7 @@
 <address><email>rkward-devel@kde.org</email></address>
 </affiliation>
 </author>
-<date>2015-12-07</date>
+<date>2017-05-20</date>
 <productname>K Desktop Environment</productname>
 </refentryinfo>
 
@@ -36,7 +36,7 @@
 <group choice="opt"><option>--evaluate</option> <replaceable> Rcode</replaceable></group>
 <group choice="opt"><option>--debug-level</option> <replaceable> level</replaceable></group>
 <group choice="opt"><option>--debug-flags</option> <replaceable> flags</replaceable></group>
-<arg><option>--debugger</option> <replaceable>debugger_command</replaceable><arg choice="opt">debugger_args<arg choice="opt"><option>--</option></arg></arg></arg>
+<group choice="opt"><option>--debug-output</option> <replaceable> where</replaceable></group>
 <group choice="opt"><option>--backend-debugger</option> <replaceable> debugger_command</replaceable></group>
 <group choice="opt"><option>--r-executable</option> <replaceable> path_to_executable</replaceable></group>
 <group choice="opt"><option>--reuse</option></group>
@@ -63,17 +63,15 @@
 </varlistentry>
 <varlistentry>
 <term><option>--debug-level</option> <replaceable>level</replaceable></term>
-<listitem><para>Verbosity of debug output. 0-5, where 0 is no output, 5 is all output including function trace information. Default it 2.</para></listitem>
+<listitem><para>Verbosity of debug output. 0-5, where 0 is no output, 5 is all output including function trace information. Default is 2.</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><option>--debug-output</option> <replaceable>where</replaceable></term>
+<listitem><para>Where to send debug output. Default is to store it in a file in the temporary directory. Specifying "terminal" will write debug output to stderr, instead (useful for debugging startup problems). Note that debug output from the backend process is always stored in a file.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term><option>--debug-flags</option> <replaceable>flags</replaceable></term>
-<listitem><para>Allows to configure, which sections of code to debug. Flags are given as a binary number. Refer to the source files for documentation, as this really is an internal option.</para></listitem>
-</varlistentry>
-<varlistentry>
-<term><option>--debugger</option> <replaceable>command</replaceable> [<replaceable>arguments</replaceable> [<replaceable>--</replaceable>]]</term>
-<listitem><para>Run &rkward; through the specified debugger command. All arguments following this will be passed to the debugger command. To end debugger arguments (and add arguments to pass to &rkward;), use "--". <emphasis>NOTE:</emphasis> Only the frontend process will be debugged, using this option.</para>
-<para>Note that there are a number of pitfalls that may complicate setting up the debugger session as desired. Consider starting &rkward; with option \-\-debug-lebel 3, which will print the effective command line used to start the frontend (but not all relevant environment variables). As one hint, you will generally need to pass a separator argument with the debugger arguments, e.g. <command>rkward --debugger gdb --args</command>.
-Under Windows, the debugger command will <emphasis>not</emphasis> be connected to stdin. For interactive debugging, consider using a graphical debugger.</para></listitem>
+<listitem><para>Configure which sections of code to debug. Flags are given as a binary number. Refer to the source files for documentation, as this really is an internal option.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term><option>--backend-debugger</option> <replaceable>command</replaceable></term>
@@ -114,9 +112,7 @@ rkward --nowarn-external rkward://runplugin/rkward::t_test/
 rkward --reuse file_a.R file_b.R
 
 # Run the rkward backend through valgrind
-rkward --backend-debugger 'valgrind --log-file=valgrind.log'.
-# Debug the frontend through gdb
-rkward --debugger 'gdb --args'
+rkward --backend-debugger 'valgrind --log-file=valgrind.log'
 </programlisting></para>
 </refsect1>
 

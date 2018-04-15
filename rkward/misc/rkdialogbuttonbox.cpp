@@ -1,8 +1,8 @@
 /***************************************************************************
-                          rklocalesupport  -  description
+                          rkdialogbuttonbox  -  description
                              -------------------
-    begin                : Sun Mar 11 2007
-    copyright            : (C) 2007 by Thomas Friedrichsmeier
+    begin                : Sat Feb 13 2016
+    copyright            : (C) 2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -15,12 +15,20 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef RKLOCALESUPPORT_H
-#define RKLOCALESUPPORT_H
+#include "rkdialogbuttonbox.h"
 
-class QTextCodec;
+#include <QPushButton>
+#include <QDialog>
 
-/** Helper function to determine the QTextCodec best suited to recode the current CTYPE to UTF-8 */
-QTextCodec *RKGetCurrentLocaleCodec ();
+#include "../debug.h"
 
-#endif
+RKDialogButtonBox::RKDialogButtonBox (QDialogButtonBox::StandardButtons buttons, QDialog *parent) : QDialogButtonBox (buttons, parent) {
+	RK_TRACE (MISC);
+	if (buttons & QDialogButtonBox::Ok) {
+		connect (button (QDialogButtonBox::Ok), &QPushButton::clicked, parent, &QDialog::accept);
+		button (QDialogButtonBox::Ok)->setShortcut (Qt::CTRL | Qt::Key_Return);
+	}
+	if (buttons & QDialogButtonBox::Cancel) {
+		connect (button (QDialogButtonBox::Cancel), &QPushButton::clicked, parent, &QDialog::reject);
+	}
+}

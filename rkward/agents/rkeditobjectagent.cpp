@@ -16,12 +16,12 @@
  ***************************************************************************/
 #include "rkeditobjectagent.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kmessagebox.h>
 
 #include "../rkglobals.h"
 #include "../core/robjectlist.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../rkward.h"
 #include "../windows/rkworkplace.h"
 
@@ -62,4 +62,3 @@ void RKEditObjectAgent::rCommandDone (RCommand *command) {
 	}
 }
 
-#include "rkeditobjectagent.moc"

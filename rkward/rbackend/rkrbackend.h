@@ -25,17 +25,17 @@
 #include <QMutex>
 #include <QStringList>
 #include <QEvent>
+#include <QTextEncoder>
+#include <QTextDecoder>
 
 #include "rcommand.h"
 #include "rcommandstack.h"
 #include "rkrbackendprotocol_backend.h"
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 void RK_scheduleIntr();
 #endif
 
-class QStringList;
-class QTextCodec;
 class RInterface;
 struct ROutput;
 
@@ -92,7 +92,7 @@ protected:
 /** low-level initialization of R */
 	bool startR ();
 /** reimplemented from RKROutputBuffer */
-	bool doMSleep (int msecs);
+	bool doMSleep (int msecs) override;
 public:
 /** convenience low-level function for running a command, directly
 @param command command to be runCommand
@@ -139,7 +139,14 @@ handleHistoricalSubstackRequest(). Exactly which requests get handled by which f
 	void kill () { killed = ExitNow; };
 	bool isKilled () { return (killed != NotKilled); };
 
-	QTextCodec *current_locale_codec;
+	static QString toUtf8 (const char *local_coded) {
+		return this_pointer->current_locale_decoder->toUnicode (local_coded);
+	}
+	static QByteArray fromUtf8 (const QString &uni_coded) {
+		return this_pointer->current_locale_encoder->fromUnicode (uni_coded);
+	}
+	QTextEncoder *current_locale_encoder;
+	QTextDecoder *current_locale_decoder;
 
 	struct RKReplStatus {
 		QByteArray user_command_buffer;
@@ -213,7 +220,7 @@ private:
 	QStringList global_env_toplevel_names;
 /** check whether the object list / global environment / individual symbols have changed, and updates them, if needed */
 	void checkObjectUpdatesNeeded (bool check_list);
-
+friend void doPendingPriorityCommands ();
 	/** The previously executed command. Only non-zero until a new command has been requested. */
 	RCommandProxy *previous_command;
 };

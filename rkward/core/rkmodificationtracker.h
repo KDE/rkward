@@ -2,7 +2,7 @@
                           rkmodificationtracker  -  description
                              -------------------
     begin                : Tue Aug 31 2004
-    copyright            : (C) 2004, 2007, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2004 - 2017 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -90,24 +90,24 @@ protected:
 	virtual ~RKObjectListModel ();
 public:
 	/** implements QAbstractItemModel::index() */
-	QModelIndex index (int row, int column, const QModelIndex& parent = QModelIndex ()) const;
+	QModelIndex index (int row, int column, const QModelIndex& parent = QModelIndex ()) const override;
 	/** implements QAbstractItemModel::parent() */
-	QModelIndex parent (const QModelIndex& index) const;
+	QModelIndex parent (const QModelIndex& index) const override;
 	/** implements QAbstractItemModel::rowCount() */
-	int rowCount (const QModelIndex& parent = QModelIndex ()) const;
+	int rowCount (const QModelIndex& parent = QModelIndex ()) const override;
 	/** implements QAbstractItemModel::columnCount(). This is identical for all items */
-	int columnCount (const QModelIndex& parent = QModelIndex ()) const;
+	int columnCount (const QModelIndex& parent = QModelIndex ()) const override;
 	/** implements QAbstractItemModel::data() */
-	QVariant data (const QModelIndex& index, int role = Qt::DisplayRole) const;
+	QVariant data (const QModelIndex& index, int role = Qt::DisplayRole) const override;
 	/** reimplemented from  QAbstractItemModel::headerData() to provide column names */
-	QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
+	QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
 	/** reimplemented from  QAbstractItemModel::canFetchMore() */
-	bool canFetchMore (const QModelIndex &parent) const;
+	bool canFetchMore (const QModelIndex &parent) const override;
 	/** reimplemented from  QAbstractItemModel::fetchMore() */
-	void fetchMore (const QModelIndex &parent);
+	void fetchMore (const QModelIndex &parent) override;
 	/** reimplemented from  QAbstractItemModel::hasChildren() */
-	bool hasChildren (const QModelIndex &parent = QModelIndex ()) const; 
+	bool hasChildren (const QModelIndex &parent = QModelIndex ()) const override; 
 
 	/** convenience function to create an index for a particular object */
 	QModelIndex indexFor (RObject *object) const;
@@ -135,7 +135,7 @@ public:
 /** recursive! */
 	void lockUpdates (bool lock);
 /** returns (the first) editor that is currently active for this object, or 0, if there is no editor */
-	RKEditor* objectEditor (const RObject* object);
+	QList<RKEditor*> objectEditors (const RObject* object) const;
 private:
 	int updates_locked;
 /** relay change notifications to connected listeners. This is not pretty, since the arguments change their meanings depending on the type of notification, but for now this is ok */

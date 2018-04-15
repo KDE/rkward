@@ -18,19 +18,15 @@
 #ifndef RKIMPORTDIALOG_H
 #define RKIMPORTDIALOG_H
 
-#include <kfiledialog.h>
-
 #include <qstringlist.h>
-
-#include <khbox.h>
+#include <QFileDialog>
 
 class QComboBox;
 class RKComponentGUIXML;
-class RKImportDialogFormatSelector;
 
 /** This dialog is designed to allow the user to select a file, and file format. After that a suitable plugin
 is opened automatically to deal with this type of file . */
-class RKImportDialog : public KFileDialog {
+class RKImportDialog : public QFileDialog {
 	Q_OBJECT
 public:
 /** constructor
@@ -39,31 +35,16 @@ public:
 	RKImportDialog (const QString &context_id, QWidget *parent);
 /** dtor */
 	~RKImportDialog ();
-public slots:
-/** The currently selected file extension filter was changed. Update the file format selection box accordingly. */
-	void filterWasChanged (const QString &);
 protected:
 /** reimplemented to a) invoke the relevant plugin, b) trigger self-destruction of the dialog */
-	void accept ();
+	void accept () override;
 /** reimplemented to trigger self-destruction of the dialog */
-	void reject ();
+	void reject () override;
 private:
 	int format_count;
-	RKImportDialogFormatSelector *format_selector;
-	QStringList format_labels;
 	QStringList filters;
 	QStringList component_ids;
 	RKComponentGUIXML *context;
-};
-
-/** Internal helper class to RKImportDialog. Needed solely to work around a design flaw in the KFileDialog API */
-class RKImportDialogFormatSelector : public KHBox {
-friend class RKImportDialog;
-private:
-	RKImportDialogFormatSelector ();
-	~RKImportDialogFormatSelector () {};
-
-	QComboBox *combo;
 };
 
 #endif

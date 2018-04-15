@@ -17,7 +17,7 @@
 
 #include "rkcomponentcontext.h"
 
-#include <kaction.h>
+#include <QAction>
 #include <kactioncollection.h>
 
 #include "rkstandardcomponent.h"
@@ -101,4 +101,3 @@ void RKContextHandler::invokeComponent (RKComponentHandle *handle) {
 	}
 }
 
-#include "rkcomponentcontext.moc"

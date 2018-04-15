@@ -17,10 +17,10 @@
 
 #include "rktoplevelwindowgui.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kmessagebox.h>
+#include <KAboutData>
 #include <kaboutapplicationdialog.h>
-#include <kcmdlineargs.h>
 #include <kactioncollection.h>
 #include <kxmlguifactory.h>
 #include <kshortcutsdialog.h>
@@ -42,7 +42,7 @@
 #include "../misc/rkcommonfunctions.h"
 #include "../plugin/rkcomponentmap.h"
 #include "../dialogs/rkerrordialog.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
 
@@ -76,23 +76,23 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI (KXmlGuiWindow *for_window) : QObject (
 	prev_action = actionCollection ()->addAction ("prev_window", this, SLOT (previousWindow()));
 	prev_action->setText (i18n ("Previous Window"));
 	prev_action->setIcon (QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/window_back.png"));
-	prev_action->setShortcut (Qt::ControlModifier + Qt::Key_Tab);
+	actionCollection ()->setDefaultShortcut (prev_action, Qt::ControlModifier + Qt::Key_Tab);
 	next_action = actionCollection ()->addAction ("next_window", this, SLOT (nextWindow()));
 	next_action->setText (i18n ("Next Window"));
 	next_action->setIcon (QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/window_forward.png"));
-	next_action->setShortcut (Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_Tab);
+	actionCollection ()->setDefaultShortcut (next_action, Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_Tab);
 
-	KAction *action;
+	QAction *action;
 	foreach (const RKToolWindowList::ToolWindowRepresentation& rep, RKToolWindowList::registeredToolWindows ()) {
 		action = actionCollection ()->addAction ("window_show_" + rep.id, this, SLOT (toggleToolView()));
 		action->setText (i18n ("Show/Hide %1", rep.window->shortCaption ()));
 		action->setIcon (rep.window->windowIcon ());
-		action->setShortcut (rep.default_shortcut);
+		actionCollection ()->setDefaultShortcut (action, rep.default_shortcut);
 		action->setProperty ("rk_toolwindow_id", rep.id);
 	}
 	action = actionCollection ()->addAction ("window_activate_docview", this, SLOT(activateDocumentView()));
 	action->setText (i18n ("Activate Document view"));
-	action->setShortcut (Qt::AltModifier + Qt::Key_0);
+	actionCollection ()->setDefaultShortcut (action, Qt::AltModifier + Qt::Key_0);
 
 	action = actionCollection ()->addAction ("output_show", this, SLOT (slotOutputShow()));
 	action->setText (i18n ("Show &Output"));
@@ -148,7 +148,7 @@ void RKTopLevelWindowGUI::reportRKWardBug () {
 void RKTopLevelWindowGUI::showAboutApplication () {
 	RK_TRACE (APP);
 
-	KAboutApplicationDialog about (KCmdLineArgs::aboutData ());
+	KAboutApplicationDialog about (KAboutData::applicationData ());
 	about.exec ();
 }
 
@@ -183,7 +183,7 @@ void RKTopLevelWindowGUI::showHelpSearch () {
 void RKTopLevelWindowGUI::showRKWardHelp () {
 	RK_TRACE (APP);
 
-	RKWorkplace::mainWorkplace ()->openHelpWindow (KUrl ("rkward://page/rkward_welcome"), true);
+	RKWorkplace::mainWorkplace ()->openHelpWindow (QUrl("rkward://page/rkward_welcome"), true);
 }
 
 void RKTopLevelWindowGUI::activateDocumentView () {
@@ -196,7 +196,7 @@ void RKTopLevelWindowGUI::activateDocumentView () {
 void RKTopLevelWindowGUI::slotOutputShow () {
 	RK_TRACE (APP);
 
-	RKWorkplace::mainWorkplace ()->openOutputWindow (KUrl ());
+	RKWorkplace::mainWorkplace ()->openOutputWindow (QUrl ());
 }
 
 void RKTopLevelWindowGUI::nextWindow () {
@@ -212,4 +212,3 @@ void RKTopLevelWindowGUI::previousWindow () {
 	RKWorkplace::getHistory ()->prev (prev_action, next_action);
 }
 
-#include "rktoplevelwindowgui.moc"

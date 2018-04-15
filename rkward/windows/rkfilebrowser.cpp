@@ -2,7 +2,7 @@
                           rkfilebrowser  -  description
                              -------------------
     begin                : Thu Apr 26 2007
-    copyright            : (C) 2007, 2008, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2016 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -24,11 +24,11 @@
 #include <ktoolbar.h>
 #include <kactioncollection.h>
 #include <kconfiggroup.h>
-#include <kdeversion.h>
-#if KDE_IS_VERSION(4,3,0)
-#	include <kfileitemactions.h>
-#	include <kfileitemlistproperties.h>
-#endif
+#include <KSharedConfig>
+#include <kfileitemactions.h>
+#include <kfileitemlistproperties.h>
+#include <KLocalizedString>
+#include <kio/copyjob.h>
 
 #include <qdir.h>
 #include <qlayout.h>
@@ -36,6 +36,7 @@
 #include <QVBoxLayout>
 #include <QScrollBar>
 #include <QMenu>
+#include <QInputDialog>
 
 #include "rkworkplace.h"
 #include "../rkward.h"
@@ -53,7 +54,7 @@ RKFileBrowser::RKFileBrowser (QWidget *parent, bool tool_window, const char *nam
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
-	layout_widget = new KVBox (this);
+	layout_widget = new QWidget (this);
 	layout->addWidget (layout_widget);
 	layout_widget->setFocusPolicy (Qt::StrongFocus);
 
@@ -75,6 +76,9 @@ void RKFileBrowser::showEvent (QShowEvent *e) {
 		RK_DEBUG (APP, DL_INFO, "creating file browser");
 
 		real_widget = new RKFileBrowserWidget (layout_widget);
+		QVBoxLayout *l = new QVBoxLayout (layout_widget);
+		l->setContentsMargins (0, 0, 0, 0);
+		l->addWidget (real_widget);
 		setFocusProxy (real_widget);
 	}
 
@@ -87,12 +91,15 @@ void RKFileBrowser::currentWDChanged () {
 
 /////////////////// RKFileBrowserWidget ////////////////////
 
-RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : KVBox (parent) {
+RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : QWidget (parent) {
 	RK_TRACE (APP);
+
+	QVBoxLayout *layout = new QVBoxLayout (this);
 
 	KToolBar *toolbar = new KToolBar (this);
 	toolbar->setIconSize (QSize (16, 16));
 	toolbar->setToolButtonStyle (Qt::ToolButtonIconOnly);
+	layout->addWidget (toolbar);
 
 	urlbox = new KUrlComboBox (KUrlComboBox::Directories, true, this);
 	KUrlCompletion* cmpl = new KUrlCompletion (KUrlCompletion::DirCompletion);
@@ -101,13 +108,15 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : KVBox (parent) {
 	urlbox->setSizePolicy (QSizePolicy (QSizePolicy::Expanding, QSizePolicy::Fixed));
 	urlbox->completionBox (true)->installEventFilter (this);
 	setFocusProxy (urlbox);
+	layout->addWidget (urlbox);
 
-	dir = new KDirOperator (KUrl (), this);
+	dir = new KDirOperator (QUrl (), this);
 	dir->setPreviewWidget (0);
-	KConfigGroup config = KGlobal::config ()->group ("file browser window");
+	KConfigGroup config = KSharedConfig::openConfig ()->group ("file browser window");
 	dir->readConfig (config);
 	dir->setView (KFile::Default);
-	connect (RKWardMainWindow::getMain (), SIGNAL (aboutToQuitRKWard()), this, SLOT (saveConfig()));
+	connect (RKWardMainWindow::getMain (), &RKWardMainWindow::aboutToQuitRKWard, this, &RKFileBrowserWidget::saveConfig);
+	layout->addWidget (dir);
 
 	toolbar->addAction (dir->actionCollection ()->action ("up"));
 	toolbar->addAction (dir->actionCollection ()->action ("back"));
@@ -118,74 +127,91 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : KVBox (parent) {
 	toolbar->addAction (dir->actionCollection ()->action ("detailed view"));
 //	toolbar->addAction (dir->actionCollection ()->action ("detailed tree view"));	// should we have this as well? Trying to avoid crowding in the toolbar
 
-#if KDE_IS_VERSION(4, 3, 0)
 	fi_actions = new KFileItemActions (this);
-	connect (dir, SIGNAL (contextMenuAboutToShow(KFileItem,QMenu*)), this, SLOT (contextMenuHook(KFileItem,QMenu*)));
-#endif
+	rename_action = new QAction (i18n ("Rename"), this);  // Oh my, why isn't there a standard action for this?
+	rename_action->setIcon (QIcon::fromTheme (QStringLiteral("edit-rename")));
+	connect (rename_action, &QAction::triggered, this, &RKFileBrowserWidget::rename);
+	connect (dir, &KDirOperator::contextMenuAboutToShow, this, &RKFileBrowserWidget::contextMenuHook);
 
-	connect (dir, SIGNAL (urlEntered(KUrl)), this, SLOT (urlChangedInView(KUrl)));
-	connect (urlbox, SIGNAL (returnPressed(QString)), this, SLOT (urlChangedInCombo(QString)));
-	connect (urlbox, SIGNAL (urlActivated(KUrl)), this, SLOT (urlChangedInCombo(KUrl)));
+	connect (dir, &KDirOperator::urlEntered, this, &RKFileBrowserWidget::urlChangedInView);
+	connect (urlbox, static_cast<void (KUrlComboBox::*)(const QString&)>(&KUrlComboBox::returnPressed), this, &RKFileBrowserWidget::stringChangedInCombo);
+	connect (urlbox, &KUrlComboBox::urlActivated, this, &RKFileBrowserWidget::urlChangedInCombo);
 
-	connect (dir, SIGNAL (fileSelected(KFileItem)), this, SLOT (fileActivated(KFileItem)));
+	connect (dir, &KDirOperator::fileSelected, this, &RKFileBrowserWidget::fileActivated);
 
-	setURL (QDir::currentPath ());
+	setURL (QUrl::fromLocalFile (QDir::currentPath ()));
 }
 
 RKFileBrowserWidget::~RKFileBrowserWidget () {
 	RK_TRACE (APP);
 }
 
+void RKFileBrowserWidget::rename () {
+	RK_TRACE (APP);
+
+	QString name = QInputDialog::getText (this, i18n ("Rename..."), i18n ("New name for '%1':", context_menu_url.fileName ()), QLineEdit::Normal, context_menu_url.fileName ());
+	if (name.isEmpty ()) return;
+
+	QUrl dest_url = context_menu_url;
+	dest_url.setPath (context_menu_url.adjusted (QUrl::RemoveFilename).path () + '/' + name);
+	KIO::moveAs (context_menu_url, dest_url);
+}
+
 void RKFileBrowserWidget::contextMenuHook(const KFileItem& item, QMenu* menu) {
 	RK_TRACE (APP);
-#if KDE_IS_VERSION(4,3,0)
+
 	QList<KFileItem> dummy;
 	dummy.append (item);
 	fi_actions->setItemListProperties (KFileItemListProperties (dummy));
+	context_menu_url = item.url ();
 
 	// some versions of KDE appear to re-use the actions, others don't, and yet other are just plain broken (see this thread: https://mail.kde.org/pipermail/rkward-devel/2011-March/002770.html)
 	// Therefore, we remove all actions, explicitly, each time the menu is shown, then add them again.
 	QList<QAction*> menu_actions = menu->actions ();
-	foreach (QAction* act, menu_actions) if (added_service_actions.contains (act)) menu->removeAction (act);
+	QAction *first_sep = 0;
+	foreach (QAction* act, menu_actions) {
+		if (added_service_actions.contains (act)) menu->removeAction (act);
+		if (!first_sep && act->isSeparator ()) first_sep = act;
+	}
 	added_service_actions.clear ();
 	menu_actions = menu->actions ();
 
+	menu->insertAction (first_sep, rename_action);
 	fi_actions->addOpenWithActionsTo (menu, QString ());
 	fi_actions->addServiceActionsTo (menu);
 
 	QList<QAction*> menu_actions_after = menu->actions ();
 	foreach (QAction* act, menu_actions_after) if (!menu_actions.contains (act)) added_service_actions.append (act);
-#endif
 }
 
 // does not work in d-tor. Apparently it's too late, then
 void RKFileBrowserWidget::saveConfig () {
 	RK_TRACE (APP);
 
-	KConfigGroup config = KGlobal::config ()->group ("file browser window");
+	KConfigGroup config = KSharedConfig::openConfig ()->group ("file browser window");
 	dir->writeConfig (config);
 }
 
-void RKFileBrowserWidget::setURL (const QString &url) {
+void RKFileBrowserWidget::setURL (const QUrl &url) {
 	RK_TRACE (APP);
 
 	urlbox->setUrl (url);
 	dir->setUrl (url, true);
 }
 
-void RKFileBrowserWidget::urlChangedInView (const KUrl &url) {
+void RKFileBrowserWidget::urlChangedInView (const QUrl &url) {
 	RK_TRACE (APP);
 
 	urlbox->setUrl (url);
 }
 
-void RKFileBrowserWidget::urlChangedInCombo (const QString &url) {
+void RKFileBrowserWidget::stringChangedInCombo (const QString &url) {
 	RK_TRACE (APP);
 
-	dir->setUrl (url, true);
+	dir->setUrl (QUrl::fromUserInput (url, QDir::currentPath (), QUrl::AssumeLocalFile), true);
 }
 
-void RKFileBrowserWidget::urlChangedInCombo (const KUrl &url) {
+void RKFileBrowserWidget::urlChangedInCombo (const QUrl &url) {
 	RK_TRACE (APP);
 
 	dir->setUrl (url, true);
@@ -207,7 +233,7 @@ bool RKFileBrowserWidget::eventFilter (QObject* o, QEvent* e) {
 		return false;
 	}
 
-	return (KVBox::eventFilter (o, e));
+	return (QWidget::eventFilter (o, e));
 }
 
 void RKFileBrowserWidget::fileActivated (const KFileItem& item) {
@@ -216,4 +242,3 @@ void RKFileBrowserWidget::fileActivated (const KFileItem& item) {
 	RKWorkplace::mainWorkplace ()->openAnyUrl (item.url ());
 }
 
-#include "rkfilebrowser.moc"

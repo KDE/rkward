@@ -17,16 +17,18 @@
 
 #include "rksessionvars.h"
 
-#include "rinterface.h"
+#include "rkrinterface.h"
 #include "../settings/rksettingsmoduledebug.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../version.h"
 
-#include <kdeversion.h>
-#include <ktemporaryfile.h>
-#include <kstandarddirs.h>
+#include <kcoreaddons_version.h>
+#if KCOREADDONS_VERSION >= QT_VERSION_CHECK(5,20,0)
+#include <kcoreaddons.h>
+#endif
 
-#include <QLibraryInfo>
+#include <QTemporaryFile>
+#include <QStandardPaths>
 #include <QSysInfo>
 
 #include "../debug.h"
@@ -122,21 +124,23 @@ int RKSessionVars::compareRVersion (const QString& version) {
 QStringList RKSessionVars::frontendSessionInfo () {
 	QStringList lines;
 	lines.append ("RKWard version: " RKWARD_VERSION);
-	lines.append ("KDE version (runtime): " + QString (KDE::versionString ()));
-	lines.append ("KDE version (compile time): " KDE_VERSION_STRING);
-	lines.append ("Qt build key: " + QLibraryInfo::buildKey ());
-#if defined Q_WS_WIN
+	// KF5 TODO: find replacement for line below
+#if KCOREADDONS_VERSION >= QT_VERSION_CHECK(5,20,0)
+	lines.append ("KDE Frameworks version (runtime): " + QString (KCoreAddons::versionString ()));
+#endif
+	lines.append ("KDE Frameworks version (compile time): " KCOREADDONS_VERSION_STRING);
+	lines.append (QString ("Qt version (runtime): ") + qVersion ());
+#if defined Q_OS_WIN
 	lines.append ("Windows runtime version (refer to QSysInfo documentation to translate code into human readable form): 0x" + QString::number (QSysInfo::windowsVersion (), 16));
-#elif defined Q_WS_MAC
+#elif defined Q_OS_MACOS
 	lines.append ("MacOS runtime version (refer to QSysInfo documentation to translate code into human readable form): 0x" + QString::number (QSysInfo::MacintoshVersion, 16));
 #endif
-	lines.append ("Local KDE directory: " + KGlobal::dirs ()->localkdedir ());
+	lines.append ("Local config directory: " + QStandardPaths::writableLocation (QStandardPaths::GenericConfigLocation));
 	lines.append ("RKWard storage directory: " + RKSettingsModuleGeneral::filesPath ());
 	lines.append ("Backend version (as known to the frontend): " + r_version_string);
 	lines.append (QString());
 	lines.append ("Debug message file (this may contain relevant diagnostic output in case of trouble):");
-	lines.append (RKSettingsModuleDebug::debug_file->fileName ());
+	lines.append (RK_Debug::debug_file->fileName ());
 	return lines;
 }
 
-#include "rksessionvars.moc"

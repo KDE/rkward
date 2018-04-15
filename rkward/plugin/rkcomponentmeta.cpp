@@ -21,7 +21,7 @@
 #include "../misc/rkmessagecatalog.h"
 #include "../rbackend/rksessionvars.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "../debug.h"
 

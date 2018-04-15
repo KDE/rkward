@@ -58,7 +58,7 @@ protected:
 	virtual void handleTransmissionError (const QString &message) = 0;
 
 	void transmitRequest (RBackendRequest *request);
-	void customEvent (QEvent *e);
+	void customEvent (QEvent *e) override;
 	void setConnection (QLocalSocket *connection);
 	QLocalSocket *connection;
 	QString token;

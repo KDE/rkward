@@ -55,7 +55,7 @@ void RKXMLGUISyncer::watchXMLGUIClientUIrc (KXMLGUIClient *client, bool recursiv
 			}
 
 			d->client_map.insertMulti (local_xml_file, ac);
-			d->connect (ac, SIGNAL (destroyed(QObject*)), d, SLOT (actionCollectionDestroyed(QObject*)));
+			d->connect (ac, &KActionCollection::destroyed, d, &RKXMLGUISyncerPrivate::actionCollectionDestroyed);
 		} // we simply ignore attempts to watch the same client twice
 	}
 
@@ -97,7 +97,7 @@ void RKXMLGUISyncerPrivate::uiRcFileChanged (const QString &path)  {
 		RK_DEBUG (MISC, DL_DEBUG, "reloaded client %p for file %s", client, qPrintable (path));
 		if (client->factory ()) {
 			affected_factories.insert (client->factory ());
-			connect (client->factory (), SIGNAL (destroyed(QObject*)), this, SLOT (guiFactoryDestroyed(QObject*)));
+			connect (client->factory (), &KXMLGUIFactory::destroyed, this, &RKXMLGUISyncerPrivate::guiFactoryDestroyed);
 		}
 
 		// find notifiers listening for this client
@@ -166,4 +166,3 @@ void RKXMLGUISyncerPrivate::guiFactoryDestroyed (QObject *object) {
 	affected_factories.remove (static_cast<KXMLGUIFactory*>(object));
 }
 
-#include "rkxmlguisyncer_p.moc"

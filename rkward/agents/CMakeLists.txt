@@ -1,4 +1,4 @@
-INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES}  )
+INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}    )
 
 
 ########### next target ###############
@@ -13,6 +13,5 @@ SET(agents_STAT_SRCS
    showedittextfileagent.cpp
    )
 
-QT4_AUTOMOC(${agents_STAT_SRCS})
-
 ADD_LIBRARY(agents STATIC ${agents_STAT_SRCS})
+TARGET_LINK_LIBRARIES(agents Qt5::Widgets KF5::TextEditor)
