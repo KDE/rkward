@@ -51,7 +51,7 @@ if {${subport} eq "${name}-devel"} {
     use_xz          yes
 #    checksums       rmd160  0 \
 #                    sha256  0
-    version             0.7.0a
+    version             0.7.0b
     git.branch          releases/0.7.0
 }
 
