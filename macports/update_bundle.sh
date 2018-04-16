@@ -293,7 +293,7 @@ fi
 if $DEVEL ; then
   DEVSTRING="-devel"
 else
-z  DEVSTRING=""
+  DEVSTRING=""
 fi
 if $DEBUG ; then
   PVARIANT="+debug"
