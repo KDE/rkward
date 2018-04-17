@@ -1,3 +1,9 @@
+rkward (0.7.0b-1) unstable; urgency=low
+  * New upstream release
+    Includes missing translation files in rkward-data
+
+ -- Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>  Mon, 16 Apr 2018 20:00:00 +0100
+
 rkward (0.7.0-1) unstable; urgency=low
   * New upstream release
   * The divergently licenced qwinhost-files are no longer part of this release,

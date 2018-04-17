@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## begin: These may need adjusting!
-TARGETS="xenial wily vivid precise trusty"
+TARGETS="xenial artful bionic"
 AUTHOR="Thomas Friedrichsmeier <tfry@users.sourceforge.net>"
 ## end: These may need adjusting!
 
@@ -12,7 +12,7 @@ mkdir $PPATEMPDIR
 
 if [ "${1}" == "--stable" ]; then
 	shift
-	PPAIDS="rkward-stable rkward-stable-cran"
+	PPAIDS="rkward-stable rkward-stable-cran rkward-stable-backports-cran"
 	PPAVERSIONSTRING=".1rkward.stable"
 	VERSION=`${BASEDIR}/scripts/getversion.sh ${2}`
 else
