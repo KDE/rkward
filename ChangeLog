@@ -1,3 +1,8 @@
+--- Version 0.7.1 - UNRELEASED
+
+--- Version 0.7.0b - Apr-16-2018
+- Fix failure to install translations
+
 --- Version 0.7.0 - Apr-16-2018
 - Fix crash with R 3.5.x due to use to STRING_PTR
 - Double click on object in Workspace browser tries to open reference page, not object viewer, if the object is outside of .GlobalEnv

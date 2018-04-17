@@ -1,9 +1,15 @@
 rkward (0.7.0z+0.7.1+devel1-1) UNRELEASED; urgency=low
   * New upstream release
+
+ -- Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>  Sat, 14 Apr 2018 14:00:00 +0100
+
+rkward (0.7.0b-1) unstable; urgency=low
+  * New upstream release
+    Includes missing translation files in rkward-data
   * Replace kdoctools-dev dependency with libkf5doctools-dev
     closes: #895875
 
- -- Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>  Sat, 14 Apr 2018 14:00:00 +0100
+ -- Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>  Mon, 16 Apr 2018 20:00:00 +0100
 
 rkward (0.7.0-1) unstable; urgency=low
   * New upstream release
