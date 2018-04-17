@@ -281,7 +281,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 	// get dims
 	RData::IntStorage dims;
 	SEXP dims_s = RKRSupport::callSimpleFun (dims_fun, value, baseenv);
-	if (!Rf_isNull (dims_s)) {
+	if (Rf_isNumeric (dims_s)) {
 		dims = RKRSupport::SEXPToIntArray (dims_s);
 	} else {
 		unsigned int len = Rf_length (value);
