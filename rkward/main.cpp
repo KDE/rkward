@@ -54,6 +54,7 @@
 #include <kaboutdata.h>
 #include <KLocalizedString>
 #include <KUrlAuthorized>
+#include <KMessageBox>
 #ifdef WITH_KCRASH
 #	include <KCrash>
 #endif
@@ -68,7 +69,6 @@
 #include <QCommandLineParser>
 #include <QtDBus>
 #include <QSettings>
-#include <QMessageBox>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -266,32 +266,6 @@ int main (int argc, char *argv[]) {
 		}
 	}
 
-	// Locate KDE and RKWard installations
-	QString marker_exe_name ("kreadconfig5");    // Simply some file that should exist in the bin dir of a KDE installation on both Unix and Windows
-	QString marker_exe = findExeAtPath (marker_exe_name, QDir::currentPath ());
-	if (marker_exe.isNull ()) marker_exe = findExeAtPath (marker_exe_name, app.applicationDirPath ());
-	if (marker_exe.isNull ()) marker_exe = findExeAtPath (marker_exe_name, QDir (app.applicationDirPath ()).filePath ("KDE/bin"));
-	QStringList syspath = QString (qgetenv ("PATH")).split (PATH_VAR_SEP);
-	if (marker_exe.isNull ()) {
-		for (int i = 0; i < syspath.size (); ++i) {
-			marker_exe = findExeAtPath (marker_exe_name, syspath[i]);
-			if (!marker_exe.isNull ()) break;
-		}
-	}
-
-	if (marker_exe.isNull ()) {
-		QMessageBox::critical (0, "Could not find KDE installation", "The KDE installation could not be found (" + marker_exe_name + "). When moving / copying RKWard, make sure to copy the whole application folder, or create a shorcut / link, instead.");
-		exit (1);
-	}
-
-	QDir kde_dir (QFileInfo (marker_exe).absolutePath ());
-	kde_dir.makeAbsolute ();
-	QString kde_dir_safe_path = RKCommonFunctions::windowsShellScriptSafeCommand (kde_dir.path ());
-	if (syspath.indexOf (kde_dir.path ()) < 0) {
-		RK_DEBUG (DEBUG_ALL, DL_INFO, "Adding %s to the system path", qPrintable (kde_dir_safe_path));
-		qputenv ("PATH", QString (kde_dir_safe_path + PATH_VAR_SEP + qgetenv ("PATH")).toLocal8Bit ());
-	}
-
 	// Look for R:
 	//- command line parameter
 	//- Specified in cfg file next to rkward executable
@@ -299,6 +273,8 @@ int main (int argc, char *argv[]) {
 	QString r_exe = parser.value ("r-executable");
 	if (!r_exe.isNull ()) {
 		if (!QFileInfo (r_exe).isExecutable ()) {
+			// TODO, while fixing krazy2 warnings: KMessageBox layout for static messages is quirky in that it has squeezed caption, and does not allow resize -> Submit a patch.
+			//KMessageBox::error (0, QString ("The R executable specified on the command line (%1) does not exist or is not executable.").arg (r_exe), "Specified R executable does not exist");
 			QMessageBox::critical (0, "Specified R executable does not exist", QString ("The R executable specified on the command line (%1) does not exist or is not executable.").arg (r_exe));
 			exit (1);
 		}
