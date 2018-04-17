@@ -6,6 +6,8 @@ rkward (0.7.0z+0.7.1+devel1-1) UNRELEASED; urgency=low
     All changelog entries below cover only the official debian package, not the changes
     made to this inofficial packaging.
   * New upstream release
+  * Replace kdoctools-dev dependency with libkf5doctools-dev
+    closes: #895875
 
  -- Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>  Sat, 14 Apr 2018 14:00:00 +0100
 
