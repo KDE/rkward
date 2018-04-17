@@ -105,9 +105,9 @@ void RKFrontendTransmitter::run () {
 #ifdef Q_OS_MACOS
 	if (backend_executable.isNull ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "../Resources"); // an appropriate location in a standalone app-bundle
 #endif
+	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "/rbackend");	// for running directly from the build-dir
 	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (RKWARD_BACKEND_PATH);
 	if (backend_executable.isNull ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "../lib/libexec");
-	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "/rbackend");	// for running directly from the build-dir
 #ifdef Q_OS_MACOS
         if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "/../../../rbackend");
 #endif
