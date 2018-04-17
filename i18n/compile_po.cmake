@@ -1,8 +1,17 @@
 # helper script, which will compile a po into a gmo, if, and only if it is at least 80% translated.
 # this is basically, because ADD_CUSTOM_COMMAND won't capture stdout, and EXECUTE_PROCESS
 # can't be made to re-run when the po-file changes.
-EXECUTE_PROCESS(COMMAND ${GETTEXT_MSGFMT_EXECUTABLE} --check -o ${_gmoFile} ${_poFile})	# For printing any errors / warnings
-EXECUTE_PROCESS(COMMAND ${GETTEXT_MSGFMT_EXECUTABLE} --statistics -o ${_gmoFile} ${_poFile}	# Second run to grab stats
+
+# NOTE: Our mutli-step rename strategy may seem convoluted, but it needed to make sure files do not get mixed
+#       up during parallel builds!
+GET_FILENAME_COMPONENT(TARGETDIR ${_gmoFile} DIRECTORY)
+GET_FILENAME_COMPONENT(TARGETNAME ${_gmoFile} NAME)
+GET_FILENAME_COMPONENT(SOURCENAME ${_poFile} NAME)
+SET(COMPILEDNAME ${SOURCENAME}.compiled)
+SET(COMPILEDFILE "${CMAKE_CURRENT_BINARY_DIR}/${COMPILEDNAME}")
+
+EXECUTE_PROCESS(COMMAND ${GETTEXT_MSGFMT_EXECUTABLE} --check -o ${COMPILEDFILE} ${_poFile})	# For printing any errors / warnings
+EXECUTE_PROCESS(COMMAND ${GETTEXT_MSGFMT_EXECUTABLE} --statistics -o ${COMPILEDFILE} ${_poFile}	# Second run to grab stats
 	ERROR_VARIABLE MSGFMT_STATS ERROR_STRIP_TRAILING_WHITESPACE)
 
 # Try to extract statistics information on translated vs. untranslated strings
@@ -24,10 +33,14 @@ MATH(EXPR TRANSLATION_RATIO "${TRANSLATED_COUNT}*100/(${TRANSLATED_COUNT}+${UNTR
 IF(TRANSLATION_RATIO LESS 80)
 	IF(${ACCEPT_INCOMPLETE_PO})
 		MESSAGE (STATUS "${_poFile} is only ${TRANSLATION_RATIO}% translated. Accepting anyway as a temporary exception")
+		FILE(COPY ${COMPILEDFILE} DESTINATION ${TARGETDIR})
+		FILE(RENAME "${TARGETDIR}/${COMPILEDNAME}" "${TARGETDIR}/${TARGETNAME}")
 	ELSE(${ACCEPT_INCOMPLETE_PO})
 		MESSAGE (STATUS "${_poFile} is only ${TRANSLATION_RATIO}% translated. Will not be installed.")
-		FILE(REMOVE ${_gmoFile})
 	ENDIF(${ACCEPT_INCOMPLETE_PO})
 ELSE(TRANSLATION_RATIO LESS 80)
 	MESSAGE (STATUS "${_poFile} is ${TRANSLATION_RATIO}% translated.")
+		FILE(COPY ${COMPILEDFILE} DESTINATION ${TARGETDIR})
+		FILE(RENAME "${TARGETDIR}/${COMPILEDNAME}" "${TARGETDIR}/${TARGETNAME}")
 ENDIF(TRANSLATION_RATIO LESS 80)
+FILE(REMOVE ${COMPILEDFILE})
