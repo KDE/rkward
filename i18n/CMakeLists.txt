@@ -12,9 +12,9 @@ MACRO(RKHandlePO _PO_FILES)
 		# Sort files into a proper tree layout during generation, so they can be installed using INSTALL(DIRECTORY ...)
 		# INSTALL(FILES ... OPTIONAL) will leave empty directories, if file does not exist (was not generated)
 		IF(${_poid} STREQUAL "rkward")
-			SET(_gmoFile ${CMAKE_CURRENT_BINARY_DIR}/main/${_lang}/rkward.mo)
+			SET(_gmoFile ${CMAKE_CURRENT_BINARY_DIR}/main/${_lang}/LC_MESSAGES/rkward.mo)
 		ELSE(${_poid} STREQUAL "rkward")
-			SET(_gmoFile ${CMAKE_CURRENT_BINARY_DIR}/plugins/${_lang}/${_poid}.mo)
+			SET(_gmoFile ${CMAKE_CURRENT_BINARY_DIR}/plugins/${_lang}/LC_MESSAGES/${_poid}.mo)
 		ENDIF(${_poid} STREQUAL "rkward")
 
 		# making the gmo be re-built, when the po changes, but not every time is surprsingly difficult

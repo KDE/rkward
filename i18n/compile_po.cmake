@@ -2,7 +2,7 @@
 # this is basically, because ADD_CUSTOM_COMMAND won't capture stdout, and EXECUTE_PROCESS
 # can't be made to re-run when the po-file changes.
 
-# NOTE: Our mutli-step rename strategy may seem convoluted, but it needed to make sure files do not get mixed
+# NOTE: Our multi-step rename strategy may seem convoluted, but it is needed to make sure files do not get mixed
 #       up during parallel builds!
 GET_FILENAME_COMPONENT(TARGETDIR ${_gmoFile} DIRECTORY)
 GET_FILENAME_COMPONENT(TARGETNAME ${_gmoFile} NAME)
