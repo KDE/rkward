@@ -114,7 +114,7 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : QWidget (parent) {
 	dir->setPreviewWidget (0);
 	KConfigGroup config = KSharedConfig::openConfig ()->group ("file browser window");
 	dir->readConfig (config);
-	dir->setView (KFile::Default);
+	dir->setView (KFile::Tree);
 	connect (RKWardMainWindow::getMain (), &RKWardMainWindow::aboutToQuitRKWard, this, &RKFileBrowserWidget::saveConfig);
 	layout->addWidget (dir);
 
