@@ -1,6 +1,7 @@
 --- Version 0.7.1 - UNRELEASED
-- Do not throw an error on objects that return non-numeric/non-scalar dim()
+- File tool window gains button to switch to current working directory
 - Fix a crash when closing a plugin dialog with an active plot preview
+- Do not throw an error on objects that return non-numeric/non-scalar dim()
 
 --- Version 0.7.0b - Apr-16-2018
 - Fix failure to install translations

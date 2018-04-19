@@ -2,7 +2,7 @@
                           rkfilebrowser  -  description
                              -------------------
     begin                : Thu Apr 26 2007
-    copyright            : (C) 2007-2016 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -122,6 +122,11 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : QWidget (parent) {
 	toolbar->addAction (dir->actionCollection ()->action ("back"));
 	toolbar->addAction (dir->actionCollection ()->action ("forward"));
 	toolbar->addAction (dir->actionCollection ()->action ("home"));
+	QAction* action = new QAction (QIcon::fromTheme ("folder-sync"), i18n ("Working directory"), this);
+	action->setToolTip (action->text ());
+	connect(action, &QAction::triggered, this, [=] () { setURL (QUrl::fromLocalFile (QDir::currentPath ())); });
+	toolbar->addAction (action);
+	toolbar->addSeparator ();
 	toolbar->addAction (dir->actionCollection ()->action ("short view"));
 	toolbar->addAction (dir->actionCollection ()->action ("tree view"));
 	toolbar->addAction (dir->actionCollection ()->action ("detailed view"));

@@ -59,9 +59,9 @@ public:
 	explicit RKFileBrowserWidget (QWidget *widget);
 	~RKFileBrowserWidget ();
 
-	void setURL (const QUrl &url);
 	bool eventFilter (QObject* o, QEvent* e) override;
 public slots:
+	void setURL (const QUrl &url);
 	void urlChangedInView (const QUrl &url);
 	void stringChangedInCombo (const QString &url);
 	void urlChangedInCombo (const QUrl &url);
