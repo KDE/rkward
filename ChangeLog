@@ -1,5 +1,6 @@
 --- Version 0.7.1 - UNRELEASED
 - Do not throw an error on objects that return non-numeric/non-scalar dim()
+- Fix a crash when closing a plugin dialog with an active plot preview
 
 --- Version 0.7.0b - Apr-16-2018
 - Fix failure to install translations

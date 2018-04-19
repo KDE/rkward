@@ -180,6 +180,7 @@ private:
 	int device_number;
 	bool killed_in_r;
 	bool close_attempted;
+	bool in_destructor;
 	QWidget *xembed_container;
 	QScrollArea *scroll_widget;
 	RKProgressControl *error_dialog;
