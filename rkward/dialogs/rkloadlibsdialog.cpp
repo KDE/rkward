@@ -2,7 +2,7 @@
                           rkloadlibsdialog  -  description
                              -------------------
     begin                : Mon Sep 6 2004
-    copyright            : (C) 2004 - 2016 by Thomas Friedrichsmeier
+    copyright            : (C) 2004 - 2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -648,21 +648,16 @@ public:
 	void initStyleOption (QStyleOptionViewItem* option, const QModelIndex& index) const override {
 		QStyledItemDelegate::initStyleOption (option, index);
 		if (!index.parent ().isValid ()) {
-			QStyleOptionViewItemV4 *v4 = qstyleoption_cast<QStyleOptionViewItemV4 *> (option);
-			if (!v4) {
-				RK_ASSERT (false);
-				return;
-			}
 			int ccount = index.model ()->rowCount (index);
-			v4->text = v4->text + " (" + QString::number (ccount) + ')';
+			option->text = option->text + " (" + QString::number (ccount) + ')';
 			if (ccount) {
-				v4->icon = table->isExpanded (index) ? expanded : collapsed;
+				option->icon = table->isExpanded (index) ? expanded : collapsed;
 			} else {
-				v4->icon = QIcon ();    // empty dummy icon to reserve space
+				option->icon = QIcon ();    // empty dummy icon to reserve space
 			}
-			v4->features |= QStyleOptionViewItemV2::HasDecoration;
-			v4->font.setBold (true);
-			v4->backgroundBrush = table->palette ().mid ();
+			option->features |= QStyleOptionViewItem::HasDecoration;
+			option->font.setBold (true);
+			option->backgroundBrush = table->palette ().mid ();
 		}
 	}
 	QTreeView* table;
