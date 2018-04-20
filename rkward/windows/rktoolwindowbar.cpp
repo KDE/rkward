@@ -136,7 +136,7 @@ void RKToolWindowBar::addWidget (RKMDIWindow *window) {
 		window->tool_window_bar->removeWidget (window);
 	}
 
-	appendTab (window->windowIcon ().pixmap (QSize (16, 16)), id, window->shortCaption ());
+	appendTab (window->windowIcon (), id, window->shortCaption ());
 
 	window->tool_window_bar = this;
 	widget_to_id.insert (window, id);
