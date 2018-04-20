@@ -1,4 +1,5 @@
 --- Version 0.7.1 - UNRELEASED
+- On Mac, do not attempt to start DBus, if it is already running
 - Fix most compiler warnings
 - File tool window gains button to switch to current working directory
 - Fix a crash when closing a plugin dialog with an active plot preview
