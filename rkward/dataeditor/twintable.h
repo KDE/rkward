@@ -114,7 +114,7 @@ protected:
 	QActionGroup* edit_actions;
 
 /** receives object meta change notifications. This updates the caption */
-	void objectMetaChanged (RObject* changed);
+	void objectMetaChanged (RObject* changed) override;
 
 	void initActions ();
 

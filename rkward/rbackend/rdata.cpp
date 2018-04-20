@@ -61,7 +61,6 @@ void RData::discardData () {
 }
 
 unsigned int RData::getDataLength() const {
-	if (!this) return 0;
 	if (datatype == RealVector) return (static_cast<RealStorage *> (data)->size ());
 	if (datatype == IntVector) return (static_cast<IntStorage *> (data)->size ());
 	if (datatype == StringVector) return (static_cast<StringStorage *> (data)->size ());

@@ -2,7 +2,7 @@
                           rkstandardcomponentgui  -  description
                              -------------------
     begin                : Sun Mar 19 2006
-    copyright            : (C) 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2006-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -146,8 +146,8 @@ public:
 	RKStandardComponentWizard (RKStandardComponent *component, RKComponentPropertyCode *code_property, bool enslaved);
 	~RKStandardComponentWizard ();
 
-	void enableSubmit (bool enable);
-	void updateCode ();
+	void enableSubmit (bool enable) override;
+	void updateCode () override;
 	void createWizard (bool switchable);
 /** Adds a standard last page in the wizard, and initializes the view to the first page */
 	void finalize () override;

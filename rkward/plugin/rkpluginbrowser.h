@@ -2,7 +2,7 @@
                           rkpluginbrowser  -  description
                              -------------------
     begin                : Sat Mar 10 2005
-    copyright            : (C) 2005, 2006, 2007, 2012, 2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2005 - 2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -43,7 +43,7 @@ public:
 
 	RKComponentPropertyBase *selection;
 	QVariant value (const QString &modifier=QString ()) override { return (selection->value (modifier)); };
-	QStringList getUiLabelPair () const;
+	QStringList getUiLabelPair () const override;
 	int type () override { return ComponentBrowser; };
 	ComponentStatus recursiveStatus () override { return status; };
 public slots:

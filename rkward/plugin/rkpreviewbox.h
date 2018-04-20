@@ -2,7 +2,7 @@
                           rkpreviewbox  -  description
                              -------------------
     begin                : Wed Jan 24 2007
-    copyright            : (C) 2007-2016 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -39,7 +39,7 @@ class RKPreviewBox : public RKComponent, public RCommandReceiver {
 public: 
 	RKPreviewBox (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
 	~RKPreviewBox ();
-	int type () { return ComponentPreviewBox; };
+	int type () override { return ComponentPreviewBox; };
 	RKComponentPropertyBool *state;
 	QVariant value (const QString &modifier=QString ()) override;
 public slots:
@@ -48,7 +48,7 @@ public slots:
 	void changedCode (RKComponentPropertyBase *);
 	void tryPreviewNow ();
 protected:
-	void rCommandDone (RCommand *);
+	void rCommandDone (RCommand *) override;
 private:
 	bool updating;		// prevent recursion
 	bool preview_active;
