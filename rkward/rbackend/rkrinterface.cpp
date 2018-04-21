@@ -520,10 +520,10 @@ void RInterface::cancelAll () {
 bool RInterface::softCancelCommand (RCommand* command) {
 	RK_TRACE (RBACKEND);
 
-	if (!(command->type () && RCommand::Running)) {
+	if (!(command->type () & RCommand::Running)) {
 		cancelCommand (command);
 	}
-	return command->status && RCommand::Canceled;
+	return command->status & RCommand::Canceled;
 }
 
 void RInterface::cancelCommand (RCommand *command) {
@@ -531,7 +531,7 @@ void RInterface::cancelCommand (RCommand *command) {
 
 	if (!(command->type () & RCommand::Sync)) {
 		command->status |= RCommand::Canceled;
-		if (command->type () && RCommand::Running) {
+		if (command->type () & RCommand::Running) {
 			if ((RKDebugHandler::instance ()->state () == RKDebugHandler::InDebugPrompt) && (command == RKDebugHandler::instance ()->command ())) {
 				RKDebugHandler::instance ()->sendCancel ();
 			} else {
