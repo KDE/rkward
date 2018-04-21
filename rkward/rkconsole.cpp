@@ -2,7 +2,7 @@
                           rkconsole  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -827,7 +827,7 @@ void RKConsole::userLoadHistory (const QUrl &_url) {
 		KIO::Job* getjob = KIO::file_copy (url, QUrl::fromLocalFile (tmpfile->fileName()));
 		KJobWidgets::setWindow (getjob, RKWardMainWindow::getMain ());
 		if (!getjob->exec ()) {
-			getjob->ui ()->showErrorMessage();
+			getjob->uiDelegate ()->showErrorMessage();
 			delete (tmpfile);
 			return;
 		}
@@ -861,7 +861,7 @@ void RKConsole::userSaveHistory (const QUrl &_url) {
 	KIO::Job* getjob = KIO::file_copy (QUrl::fromLocalFile (tempfile.fileName()), url);
 	KJobWidgets::setWindow (getjob, RKWardMainWindow::getMain ());
 	if (!getjob->exec ()) {
-		getjob->ui ()->showErrorMessage();
+		getjob->uiDelegate ()->showErrorMessage();
 		return;
 	}
 }
