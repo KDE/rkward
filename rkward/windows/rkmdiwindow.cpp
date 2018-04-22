@@ -257,11 +257,8 @@ void RKMDIWindow::paintEvent (QPaintEvent *e) {
 
 	if (isActive () && !no_border_when_active) {
 		QPainter paint (this);
-		paint.setPen (QColor (255, 0, 0));
-		paint.drawLine (0, 0, 0, height ()-1);
-		paint.drawLine (0, height ()-1, width ()-1, height ()-1);
-		paint.drawLine (0, 0, width ()-1, 0);
-		paint.drawLine (width ()-1, 0, width ()-1, height ()-1);
+		paint.setPen (QApplication::palette ().color(QPalette::Highlight));
+		paint.drawRect (0, 0, width ()-1, height ()-1);
 	}
 }
 
