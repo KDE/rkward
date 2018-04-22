@@ -61,6 +61,7 @@
 #include "../rkward.h"
 #include "rkhelpsearchwindow.h"
 #include "rkworkplace.h"
+#include "katepluginintegration.h"
 
 #include "../debug.h"
 
@@ -172,7 +173,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 	KTextEditor::ModificationInterface* em_iface = qobject_cast<KTextEditor::ModificationInterface*> (m_doc);
 	if (em_iface) em_iface->setModifiedOnDiskWarning (true);
 	else RK_ASSERT (false);
-	m_view = m_doc->createView (this);
+	m_view = m_doc->createView (this, RKWardMainWindow::getMain ()->katePluginIntegration ()->mainWindow ());
 	if (!url.isEmpty ()) {
 		KConfigGroup viewconf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptViewSettings %1").arg (RKWorkplace::mainWorkplace ()->portableUrl (url)));
 		m_view->readSessionConfig (viewconf);
