@@ -1134,12 +1134,12 @@ Qt::ItemFlags RKRPackageInstallationStatus::flags (const QModelIndex &index) con
 }
 
 QModelIndex RKRPackageInstallationStatus::index (int row, int column, const QModelIndex &parent) const {
-	if (!parent.isValid ()) return createIndex (row, column, -1);	// toplevel items
+	if (!parent.isValid ()) return createIndex (row, column, (quintptr) std::numeric_limits<quintptr>::max);	// toplevel items
 	return createIndex (row, column, parent.row ());				// parent.row () identifies, which toplevel item is the parent.
 }
 
 QModelIndex RKRPackageInstallationStatus::parent (const QModelIndex& index) const {
-	if (index.internalId () == -1) return QModelIndex ();
+	if (index.internalId () == (quintptr) std::numeric_limits<quintptr>::max) return QModelIndex ();
 	return (RKRPackageInstallationStatus::index (index.internalId (), 0, QModelIndex ()));
 }
 

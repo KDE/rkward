@@ -2,7 +2,7 @@
                           rkprintagent  -  description
                              -------------------
     begin                : Mon Aug 01 2011
-    copyright            : (C) 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2011-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
