@@ -269,6 +269,7 @@ void RKWardMainWindow::doPostInit () {
 	// around on the bus in this case.
 
 	updateCWD ();
+	connect (RKGlobals::rInterface (), &RInterface::backendWorkdirChanged, this, &RKWardMainWindow::updateCWD);
 	setCaption (QString ());	// our version of setCaption takes care of creating a correct caption, so we do not need to provide it here
 }
 

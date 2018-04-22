@@ -2,7 +2,7 @@
                           rkrinterface.cpp  -  description
                              -------------------
     begin                : Fri Nov 1 2002
-    copyright            : (C) 2002-2017 by Thomas Friedrichsmeier
+    copyright            : (C) 2002-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -564,7 +564,7 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 	} else if (call == "wdChange") {
 		// in case of separate processes, apply new working directory in frontend, too.
 		QDir::setCurrent (calllist.value (1));
-		RKWardMainWindow::getMain ()->updateCWD ();
+		emit (backendWorkdirChanged());
 	} else if (call == "highlightRCode") {
 		return (QStringList (RKCommandHighlighter::commandToHTML (calllist.value (1))));
 	} else if (call == "quit") {

@@ -2,7 +2,7 @@
                           rkrinterface.h  -  description
                              -------------------
     begin                : Fri Nov 1 2002
-    copyright            : (C) 2002 - 2017 by Thomas Friedrichsmeier
+    copyright            : (C) 2002 - 2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -136,6 +136,8 @@ friend class RCommand;
 protected:
 	void handleRequest (RBackendRequest *request);
 	void rCommandDone (RCommand *command) override;
+signals:
+	void backendWorkdirChanged();
 };
 
 /**

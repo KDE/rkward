@@ -39,6 +39,8 @@
 #include <QInputDialog>
 
 #include "rkworkplace.h"
+#include "../rkglobals.h"
+#include "../rbackend/rkrinterface.h"
 #include "../rkward.h"
 #include "../misc/rkdummypart.h"
 
@@ -83,10 +85,7 @@ void RKFileBrowser::showEvent (QShowEvent *e) {
 	}
 
 	RKMDIWindow::showEvent (e);
-}
-
-void RKFileBrowser::currentWDChanged () {
-	RK_TRACE (APP);
+	real_widget->syncToWD();
 }
 
 /////////////////// RKFileBrowserWidget ////////////////////
@@ -124,7 +123,7 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : QWidget (parent) {
 	toolbar->addAction (dir->actionCollection ()->action ("home"));
 	QAction* action = new QAction (QIcon::fromTheme ("folder-sync"), i18n ("Working directory"), this);
 	action->setToolTip (action->text ());
-	connect(action, &QAction::triggered, this, [=] () { setURL (QUrl::fromLocalFile (QDir::currentPath ())); });
+	connect(action, &QAction::triggered, this, [=] () { follow_working_directory = true; syncToWD(); });
 	toolbar->addAction (action);
 	toolbar->addSeparator ();
 	toolbar->addAction (dir->actionCollection ()->action ("short view"));
@@ -143,12 +142,20 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : QWidget (parent) {
 	connect (urlbox, &KUrlComboBox::urlActivated, this, &RKFileBrowserWidget::urlChangedInCombo);
 
 	connect (dir, &KDirOperator::fileSelected, this, &RKFileBrowserWidget::fileActivated);
+	connect (RKGlobals::rInterface (), &RInterface::backendWorkdirChanged, this, &RKFileBrowserWidget::syncToWD);
 
 	setURL (QUrl::fromLocalFile (QDir::currentPath ()));
 }
 
 RKFileBrowserWidget::~RKFileBrowserWidget () {
 	RK_TRACE (APP);
+}
+
+void RKFileBrowserWidget::syncToWD () {
+	RK_TRACE (APP);
+
+	if (!follow_working_directory) return;
+	if (isVisible()) setURL (QUrl::fromLocalFile (QDir::currentPath ()));
 }
 
 void RKFileBrowserWidget::rename () {
@@ -202,12 +209,14 @@ void RKFileBrowserWidget::setURL (const QUrl &url) {
 
 	urlbox->setUrl (url);
 	dir->setUrl (url, true);
+	follow_working_directory = (url.path() == QDir::currentPath ());
 }
 
 void RKFileBrowserWidget::urlChangedInView (const QUrl &url) {
 	RK_TRACE (APP);
 
 	urlbox->setUrl (url);
+	follow_working_directory = (url.path() == QDir::currentPath ());
 }
 
 void RKFileBrowserWidget::stringChangedInCombo (const QString &url) {
