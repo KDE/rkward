@@ -675,7 +675,7 @@ void RKCommandEditorWindow::tryCompletion () {
 	}
 
 	KTextEditor::Cursor c = m_view->cursorPosition();
-	uint para=c.line(); uint cursor_pos=c.column();
+	uint para=c.line(); int cursor_pos=c.column();
 
 	QString current_line = m_doc->line (para);
 	int start;
