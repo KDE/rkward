@@ -9,7 +9,7 @@ Build-Depends: cmake,
                libkf5webkit-dev,
                libkf5texteditor-dev,
                libkf5doctools-dev,
-               r-base-dev (>= 3.0.0)
+               r-base-dev (>= 3.5.0)
 Standards-Version: 4.1.4
 Homepage: http://rkward.kde.org
 Vcs-Browser: https://cgit.kde.org/rkward.git/tree/debian-official
