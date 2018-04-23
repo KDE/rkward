@@ -40,7 +40,7 @@ public:
 	QVariant value (const QString &modifier=QString ()) override { return (text->value (modifier)); };
 	QStringList getUiLabelPair () const override;
 	int type () override { return ComponentInput; };
-	bool isValid ();
+	bool isValid () override;
 public slots:
 	void textChanged ();
 	void textChangedFromUi ();
