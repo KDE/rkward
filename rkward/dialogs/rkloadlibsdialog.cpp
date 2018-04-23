@@ -174,6 +174,7 @@ void RKLoadLibsDialog::rCommandDone (RCommand *command) {
 	if (command->getFlags () == GET_CURRENT_LIBLOCS_COMMAND) {
 		RK_ASSERT (command->getDataType () == RData::StringVector);
 		RK_ASSERT (command->getDataLength () > 0);
+		// NOTE: The problem is that e.g. R_LIBS_USER is not in .libPaths() if it does not exist, yet. But it should be available as an option, of course
 		library_locations = command->stringVector ();
 		emit (libraryLocationsChanged (library_locations));
 	} else {
@@ -261,7 +262,9 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, QString to_
 	if (packages.isEmpty ()) return false;
 
 	bool as_root = false;
-	QString altlibloc = QDir (RKSettingsModuleGeneral::filesPath ()).absoluteFilePath ("library");
+	// It is ok, if the selected location does not yet exist. In order to know, whether we can write to it, we have to create it first.
+	QDir().mkpath (to_libloc);
+	QString altlibloc = library_locations.value (0);
 #ifdef Q_OS_WIN
 	extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 	qt_ntfs_permission_lookup++;
@@ -889,7 +892,7 @@ void PackageInstallParamsWidget::liblocsChanged (const QStringList &newlist) {
 	RK_TRACE (DIALOGS);
 
 	libloc_selector->clear ();
-	libloc_selector->insertItems (0, newlist);
+	libloc_selector->insertItems (0, RKSettingsModuleRPackages::addUserLibLocTo (newlist));
 }
 
 /////////// RKRPackageInstallationStatus /////////////////

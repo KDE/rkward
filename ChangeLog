@@ -1,4 +1,5 @@
 --- Version 0.7.1 - UNRELEASED
+- Offer R_LIBS_USER, instead of ~/.rkward/library as standard library installation location
 - File browser tool window follows changes in current working directory (while showing current working directory)
 - Show focus indication in highlighted item color (usually blue), instead of hardcoded red
 - On Mac, do not attempt to start DBus, if it is already running

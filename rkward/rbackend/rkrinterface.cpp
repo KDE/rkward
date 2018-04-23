@@ -300,7 +300,8 @@ void RInterface::rCommandDone (RCommand *command) {
 
 	if (command->getFlags () == GET_LIB_PATHS) {
 		RK_ASSERT (command->getDataType () == RData::StringVector);
-		RKSettingsModuleRPackages::defaultliblocs += command->stringVector ();
+		RKSettingsModuleRPackages::r_libs_user = command->stringVector ().value (0);
+		RKSettingsModuleRPackages::defaultliblocs += command->stringVector ().mid (1);
 
 		RCommandChain *chain = command->parent;
 		RK_ASSERT (chain);
@@ -398,7 +399,7 @@ void RInterface::handleRequest (RBackendRequest* request) {
 
 		issueCommand ("paste (R.version[c (\"major\", \"minor\")], collapse=\".\")\n", RCommand::GetStringVector | RCommand::App | RCommand::Sync, QString (), this, GET_R_VERSION, chain);
 		// find out about standard library locations
-		issueCommand (".libPaths ()\n", RCommand::GetStringVector | RCommand::App | RCommand::Sync, QString (), this, GET_LIB_PATHS, chain);
+		issueCommand ("c(path.expand(Sys.getenv(\"R_LIBS_USER\")), .libPaths())\n", RCommand::GetStringVector | RCommand::App | RCommand::Sync, QString (), this, GET_LIB_PATHS, chain);
 		// start help server / determined help base url
 		issueCommand (".rk.getHelpBaseUrl ()\n", RCommand::GetStringVector | RCommand::App | RCommand::Sync, QString (), this, GET_HELP_BASE, chain);
 

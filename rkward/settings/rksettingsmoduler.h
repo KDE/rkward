@@ -2,7 +2,7 @@
                           rksettingsmoduler  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004, 2007, 2009, 2010, 2011, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -119,7 +119,10 @@ public:
 	static bool archivePackages () { return archive_packages; }
 	static QString pkgTypeOption ();
 	static void addLibraryLocation (const QString& new_loc, RCommandChain *chain);
-	static QStringList libraryLocations () { return (liblocs + defaultliblocs); };
+	static QStringList libraryLocations ();
+/** Add a reasonable user writable path to the given library locations. */
+	static QStringList addUserLibLocTo (const QStringList &liblocs);
+	static QString userLibraryLocation ();
 
 /** returns the list of packages which are essential to rkward. This is hard-coded. */
 	static QStringList essentialPackages () { return essential_packages.split ("\n"); };
@@ -148,6 +151,7 @@ private:
 	static QStringList package_repositories;
 
 	friend class RInterface;
+	static QString r_libs_user;
 	static QStringList defaultliblocs;
 	static QString essential_packages;
 };

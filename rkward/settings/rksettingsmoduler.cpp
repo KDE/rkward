@@ -2,7 +2,7 @@
                           rksettingsmoduler  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004-2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -332,6 +332,7 @@ void RKSettingsModuleR::loadSettings (KConfig *config) {
 // static members
 QStringList RKSettingsModuleRPackages::liblocs;
 QStringList RKSettingsModuleRPackages::defaultliblocs;
+QString RKSettingsModuleRPackages::r_libs_user;
 bool RKSettingsModuleRPackages::archive_packages;
 bool RKSettingsModuleRPackages::source_packages;
 QStringList RKSettingsModuleRPackages::package_repositories;
@@ -403,6 +404,20 @@ void RKSettingsModuleRPackages::addLibraryLocation (const QString& new_loc, RCom
 
 	// update the backend in any case. User might have changed liblocs, there.
 	RKGlobals::rInterface ()->issueCommand (".libPaths (unique (c (" + RObject::rQuote (new_loc) + ", .libPaths ())))", RCommand::App | RCommand::Sync, QString (), 0, 0, chain);
+}
+
+QString RKSettingsModuleRPackages::userLibraryLocation () {
+	if (!r_libs_user.isEmpty()) return r_libs_user;
+	return QDir (RKSettingsModuleGeneral::filesPath ()).absoluteFilePath ("library/" + RKSessionVars::RVersion (true));
+}
+
+QStringList RKSettingsModuleRPackages::libraryLocations () {
+	return (QStringList (userLibraryLocation ()) + liblocs + defaultliblocs);
+}
+
+QStringList RKSettingsModuleRPackages::addUserLibLocTo (const QStringList& liblocs) {
+	if (!liblocs.contains(userLibraryLocation ())) return (QStringList (userLibraryLocation ()) + liblocs);
+	return liblocs;
 }
 
 void RKSettingsModuleRPackages::settingChanged () {
