@@ -264,7 +264,7 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, QString to_
 	bool as_root = false;
 	// It is ok, if the selected location does not yet exist. In order to know, whether we can write to it, we have to create it first.
 	QDir().mkpath (to_libloc);
-	QString altlibloc = library_locations.value (0);
+	QString altlibloc = RKSettingsModuleRPackages::addUserLibLocTo (library_locations).value (0);
 #ifdef Q_OS_WIN
 	extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 	qt_ntfs_permission_lookup++;
