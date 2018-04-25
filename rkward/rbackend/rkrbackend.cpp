@@ -456,9 +456,28 @@ bool RKRBackend::fetchStdoutStderr (bool forcibly) {
 	return true;
 }
 
+#ifdef Q_OS_WIN
+QByteArray winutf8start, winutf8stop;
+#endif
 void RWriteConsoleEx (const char *buf, int buflen, int type) {
 	RK_TRACE (RBACKEND);
 	RK_DEBUG (RBACKEND, DL_DEBUG, "raw output type %d, size %d: %s", type, buflen, buf);
+
+#ifdef Q_OS_WIN
+	// Since R 3.5.0, R on Windows (in CharacterMode == RGui) will print "UTF8 markers" around utf8-encoded sub-sections of the output.
+	// Of course, the actual markers used are not accessible in public API...
+	// So here we try to detect the markers (if any) from print(c("X", "X"), print.gap=1, quote=FALSE), i.e. an expected output of the form
+	// [1] _s_X_e_ _s_X_e_
+	// Where _s_ and _e_ are the start and stop markers, respectively.
+	if (winutf8start.isNull()) {
+		QByteArray str(buf, buflen);
+		str = str.split('X').value (1);
+		winutf8stop = str.split(' ').value(0);
+		winutf8start = str.split(' ').value(1);
+		if (winutf8start.isNull()) winutf8start = "";  // don't try detection, again
+		return;
+	}
+#endif
 
 	// output while nothing else is running (including handlers?) -> This may be a syntax error.
 	if ((RKRBackend::repl_status.eval_depth == 0) && (!RKRBackend::repl_status.browser_context) && (!RKRBackend::this_pointer->isKilled ())) {
@@ -479,7 +498,37 @@ void RWriteConsoleEx (const char *buf, int buflen, int type) {
 	if (RKRBackend::this_pointer->killed == RKRBackend::AlreadyDead) return;	// this check is mostly for fork()ed clients
 	if (RKRBackend::repl_status.browser_context == RKRBackend::RKReplStatus::InBrowserContextPreventRecursion) return;
 	RKRBackend::this_pointer->fetchStdoutStderr (true);
-	RKRBackend::this_pointer->handleOutput (RKRBackend::toUtf8 (buf), buflen, type == 0 ? ROutput::Output : ROutput::Warning);
+#ifdef Q_OS_WIN
+	// See note, above. Here we handle the UTF8 markers in the output
+	QByteArray str(buf, buflen);
+	QString utf8;
+	if (winutf8start.isEmpty()) {
+		utf8 = RKRBackend::toUtf8 (buf);
+	} else {
+		int pos = 0;
+		while (pos < buflen) {
+			int start = str.indexOf(winutf8start, pos);
+			if (start < 0) {
+				utf8.append (RKRBackend::toUtf8 (str.mid(pos)));
+				break;
+			}
+			utf8.append (RKRBackend::toUtf8 (str.left(start)));
+			start += winutf8start.length();
+			if (start >= buflen) break;
+			int end = str.indexOf(winutf8stop, start);
+			if (end >= 0) {
+				utf8.append(QString::fromUtf8(str.mid(start, end - start)));
+				pos = end + winutf8stop.length();
+			} else {
+				utf8.append(QString::fromUtf8(str.mid(start)));
+				break;
+			}
+		}
+	}
+#else
+	QString utf8 = RKRBackend::toUtf8 (buf);
+#endif
+	RKRBackend::this_pointer->handleOutput (utf8, buflen, type == 0 ? ROutput::Output : ROutput::Warning);
 }
 
 /** For R callbacks that we want to disable, entirely */
@@ -1065,6 +1114,11 @@ bool RKRBackend::startR () {
 	RKInsertToplevelStatementFinishedCallback (0);
 	RKREventLoop::setRKEventHandler (doPendingPriorityCommands);
 	default_global_context = R_GlobalContext;
+#ifdef Q_OS_WIN
+	// See the corresponding note in RWriteConsoleEx(). For auto-detecting UTF8 markers in console output.
+	winutf8start.clear();
+	runDirectCommand("print(c(\"X\",\"X\"), print.gap=1, quote=FALSE)");
+#endif
 
 	// get info on R runtime version
 	RCommandProxy *dummy = runDirectCommand ("as.numeric (R.version$major) * 1000 + as.numeric (R.version$minor) * 10", RCommand::GetIntVector);
