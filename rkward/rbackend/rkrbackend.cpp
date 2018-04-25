@@ -466,14 +466,14 @@ void RWriteConsoleEx (const char *buf, int buflen, int type) {
 #ifdef Q_OS_WIN
 	// Since R 3.5.0, R on Windows (in CharacterMode == RGui) will print "UTF8 markers" around utf8-encoded sub-sections of the output.
 	// Of course, the actual markers used are not accessible in public API...
-	// So here we try to detect the markers (if any) from print(c("X", "X"), print.gap=1, quote=FALSE), i.e. an expected output of the form
-	// [1] _s_X_e_ _s_X_e_
+	// So here we try to detect the markers (if any) from print("X", print.gap=1, quote=FALSE), i.e. an expected output of the form
+	// [1] _s_X_e_
 	// Where _s_ and _e_ are the start and stop markers, respectively.
 	if (winutf8start.isNull()) {
 		QByteArray str(buf, buflen);
-		str = str.split('X').value (1);
-		winutf8stop = str.split(' ').value(0);
-		winutf8start = str.split(' ').value(1);
+		if (str.indexOf(' ') >= 0) str = str.split(' ').value (1);  // Can row numbers ever be missing? We rather play it safe
+		winutf8start = str.split('X').value(0);
+		winutf8stop = str.split('X').value(1);
 		if (winutf8start.isNull()) winutf8start = "";  // don't try detection, again
 		return;
 	}
@@ -1117,7 +1117,7 @@ bool RKRBackend::startR () {
 #ifdef Q_OS_WIN
 	// See the corresponding note in RWriteConsoleEx(). For auto-detecting UTF8 markers in console output.
 	winutf8start.clear();
-	runDirectCommand("print(c(\"X\",\"X\"), print.gap=1, quote=FALSE)");
+	runDirectCommand("print(\"X\", print.gap=1, quote=FALSE)");
 #endif
 
 	// get info on R runtime version
