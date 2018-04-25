@@ -457,6 +457,7 @@ bool RKRBackend::fetchStdoutStderr (bool forcibly) {
 }
 
 #ifdef Q_OS_WIN
+bool win_do_detect_winutf8markers = false;
 QByteArray winutf8start, winutf8stop;
 #endif
 void RWriteConsoleEx (const char *buf, int buflen, int type) {
@@ -469,12 +470,12 @@ void RWriteConsoleEx (const char *buf, int buflen, int type) {
 	// So here we try to detect the markers (if any) from print("X", print.gap=1, quote=FALSE), i.e. an expected output of the form
 	// [1] _s_X_e_
 	// Where _s_ and _e_ are the start and stop markers, respectively.
-	if (winutf8start.isNull()) {
+	if (win_do_detect_winutf8markers) {
 		QByteArray str(buf, buflen);
-		if (str.indexOf(' ') >= 0) str = str.split(' ').value (1);  // Can row numbers ever be missing? We rather play it safe
+		if (!str.contains('X')) return;  // May happen. We better don't rely on how exactly the output is chunked
+		if (str.indexOf(' ') >= 0) str = str.split(' ').value (1);  // The value may or may not be printed on the same line as the row number
 		winutf8start = str.split('X').value(0);
 		winutf8stop = str.split('X').value(1);
-		if (winutf8start.isNull()) winutf8start = "";  // don't try detection, again
 		return;
 	}
 #endif
@@ -1116,8 +1117,9 @@ bool RKRBackend::startR () {
 	default_global_context = R_GlobalContext;
 #ifdef Q_OS_WIN
 	// See the corresponding note in RWriteConsoleEx(). For auto-detecting UTF8 markers in console output.
-	winutf8start.clear();
+	win_do_detect_winutf8markers = true;
 	runDirectCommand("print(\"X\", print.gap=1, quote=FALSE)");
+	win_do_detect_winutf8markers = false;
 #endif
 
 	// get info on R runtime version
