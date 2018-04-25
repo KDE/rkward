@@ -473,7 +473,12 @@ void RWriteConsoleEx (const char *buf, int buflen, int type) {
 	if (win_do_detect_winutf8markers) {
 		QByteArray str(buf, buflen);
 		if (!str.contains('X')) return;  // May happen. We better don't rely on how exactly the output is chunked
-		if (str.indexOf(' ') >= 0) str = str.split(' ').value (1);  // The value may or may not be printed on the same line as the row number
+		// The value may or may not be printed in the same chunk as the row number, and the following value
+		// so split into whatever values have arrived in this chunk, then pick the one with the 'X'
+		QList<QByteArray> candidates = str.split(' ');
+		for (int i = 0; i < candidates.size(); ++i) {
+			if (candidates[i].contains('X')) str = candidates[i];
+		}
 		winutf8start = str.split('X').value(0);
 		winutf8stop = str.split('X').value(1);
 		return;
