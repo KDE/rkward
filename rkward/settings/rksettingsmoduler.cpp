@@ -19,6 +19,7 @@
 #include <KLocalizedString>
 #include <KSharedConfig>
 #include <KConfigGroup>
+#include <KUrlRequester>
 
 #include <qlabel.h>
 #include <qcheckbox.h>
@@ -28,7 +29,7 @@
 #include <QGridLayout>
 #include <QPushButton>
 #include <QTextEdit>
-#include <QFileDialog>
+#include <QDialogButtonBox>
 #include <QSpinBox>
 #include <QInputDialog>
 
@@ -406,13 +407,22 @@ void RKSettingsModuleRPackages::addLibraryLocation (const QString& new_loc, RCom
 	RKGlobals::rInterface ()->issueCommand (".libPaths (unique (c (" + RObject::rQuote (new_loc) + ", .libPaths ())))", RCommand::App | RCommand::Sync, QString (), 0, 0, chain);
 }
 
+QStringList expandLibLocs (const QStringList &in) {
+	QStringList ret;
+	for (int i = 0; i < in.size (); ++i) {
+		QString dummy = in[i];
+		ret.append (dummy.replace (QLatin1String ("%v"), RKSessionVars::RVersion (true)));
+	}
+	return ret;
+}
+
 QString RKSettingsModuleRPackages::userLibraryLocation () {
 	if (!r_libs_user.isEmpty()) return r_libs_user;
 	return QDir (RKSettingsModuleGeneral::filesPath ()).absoluteFilePath ("library/" + RKSessionVars::RVersion (true));
 }
 
 QStringList RKSettingsModuleRPackages::libraryLocations () {
-	return (QStringList (userLibraryLocation ()) + liblocs + defaultliblocs);
+	return (QStringList (userLibraryLocation ()) + expandLibLocs (liblocs + defaultliblocs));
 }
 
 QStringList RKSettingsModuleRPackages::addUserLibLocTo (const QStringList& liblocs) {
@@ -427,21 +437,29 @@ void RKSettingsModuleRPackages::settingChanged () {
 
 void RKSettingsModuleRPackages::addLibLoc (QStringList *string_list) {
 	RK_TRACE (SETTINGS);
-#ifdef Q_OS_WIN
-	// KF5 TODO: Still needed?
-	// TODO: Hang on Windows when trying to select any dir using (K|Q)FileDialog::getExistingDirectory (). KDE 4.10
-	QFileDialog dummy (this, i18n ("Add R Library Directory"));
-	dummy.setFileMode (QFileDialog::Directory);
-	dummy.setOptions (QFileDialog::ShowDirsOnly);
-	QString new_string;
-	if (dummy.exec ()) {
-		new_string = dummy.selectedFiles ().value (0);
-	}
-#else
-	QString new_string = QFileDialog::getExistingDirectory (this, i18n ("Add R Library Directory"));
-#endif
-	if (!new_string.isEmpty ()) {
-		(*string_list).append (new_string);
+
+	QDialog dialog (this);
+	dialog.setWindowTitle (i18n ("Add R Library Directory"));
+	QVBoxLayout *layout = new QVBoxLayout (&dialog);
+	QLabel *label = new QLabel (i18n ("Specify or select library location to add.\nNote that locations may contain a '%v', which will expand to the first "
+	                                  "two components of the R version number (e.g. to 3.5), automatically. Including this is recommended, because R packages "
+	                                  "compiled for one version of R will often fail to work correctly in a different version of R."));
+	label->setWordWrap (true);
+	layout->addWidget (label);
+
+	KUrlRequester *req = new KUrlRequester ();
+	req->setText (QDir (RKSettingsModuleGeneral::filesPath ()).absoluteFilePath ("library/%v"));
+	req->setMode (KFile::Directory);
+	layout->addWidget (req);
+
+	QDialogButtonBox *buttons = new QDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+	buttons->button(QDialogButtonBox::Ok)->setText (i18nc ("Add file to list", "Add"));
+	connect (buttons, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+	connect (buttons, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+	layout->addWidget (buttons);
+
+	if (dialog.exec () == QDialog::Accepted) {
+		if (!req->text ().isEmpty ()) (*string_list).append (req->text ());
 	}
 }
 
