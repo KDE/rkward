@@ -2,7 +2,7 @@
                           rksettingsmoduleplugins  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004-2016 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -186,8 +186,10 @@ void RKSettingsModulePlugins::loadSettings (KConfig *config) {
 			known_plugin_maps.append (inf);
 		}
 	}
-	if (RKSettingsModuleGeneral::rkwardVersionChanged ()) {
-		// if it is the first start this version, scan the installation for new pluginmaps
+	if (RKSettingsModuleGeneral::rkwardVersionChanged () || RKSettingsModuleGeneral::installationMoved ()) {
+		// if it is the first start this version or from a new path, scan the installation for new pluginmaps
+		// Note that in the case of installationMoved(), checkAdjustLoadedPath() has already kicked in, above, but rescanning is still useful
+		// e.g. if users have installed to a new location, because they had botched their previous installation
 		QDir def_plugindir (RKCommonFunctions::getRKWardDataDir ());
 		QStringList def_pluginmaps = def_plugindir.entryList (QStringList ("*.pluginmap"));
 		for (int i = 0; i < def_pluginmaps.size (); ++i) {

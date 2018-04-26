@@ -2,7 +2,7 @@
                           rksettingsmodulegeneral  -  description
                              -------------------
     begin                : Fri Jul 30 2004
-    copyright            : (C) 2004-2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -106,6 +106,8 @@ public:
 	static bool anyExistingConfig () { return config_exists; };
 	/** Returns true, if the runtime version of RKWard has changed since the previous session. */
 	static bool rkwardVersionChanged () { return rkward_version_changed; };
+	/** Returns true, if rkward seems to have started from a different path than on the previous run. */
+	static bool installationMoved () { return installation_moved; };
 public slots:
 	void settingChanged ();
 private:
