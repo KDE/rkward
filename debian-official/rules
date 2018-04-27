@@ -48,9 +48,13 @@ override_dh_compress:
 override_dh_shlibdeps:
 	dh_shlibdeps
 	# unfortunately, the r-base-core dependency can not be found by dh_shlibdeps, so we need to get at the version manually
-	# NOTE: This "if" is currently always true (see build-deps), but left here, for convenience, in case we get into trouble
-	# with binary incompatibility (esp. foward incompatibility) again, in the future.
 	@if [ "$(RMAJOR)" -eq "3" ] && [ "$(RMINOR)" -ge "5" ] ; then \
 		echo "rvers=r-base-core (>= $(RVERS))" >> $(CURDIR)/debian/rkward.substvars ; \
 		echo "rapivers=r-api-3.5" >> $(CURDIR)/debian/rkward.substvars ; \
-	fi
+	else \
+		if [ "$(RMAJOR)" -eq "3" ] && [ "$(RMINOR)" -ge "4" ] ; then \
+		echo "rvers=r-base-core (>= $(RVERS)), r-base-core (<< 3.5.0)" >> $(CURDIR)/debian/rkward.substvars ; \
+		echo "rapivers=r-api-3.4" >> $(CURDIR)/debian/rkward.substvars ; \
+	else \
+		echo "rvers=r-base-core (>= $(RVERS)), r-base-core (<< 3.5.0)" >> $(CURDIR)/debian/rkward.substvars ; \
+	fi; fi; fi
