@@ -2,7 +2,7 @@
                           rkcommonfunctions  -  description
                              -------------------
     begin                : Mon Oct 17 2005
-    copyright            : (C) 2005, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2005-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -26,6 +26,8 @@
 #include <kxmlguiclient.h>
 
 #include "../settings/rksettingsmodulegeneral.h"
+#include "../version.h"
+#include "../debug.h"
 
 namespace RKCommonFunctions {
 	void removeNamedElementsRecursive (const QStringList &names, QDomNode &parent) {
@@ -155,7 +157,20 @@ namespace RKCommonFunctions {
 	}
 
 	QString getRKWardDataDir () {
-		return (QStandardPaths::locate (QStandardPaths::GenericDataLocation, "rkward/resource.ver").replace ("resource.ver", QString ()));
+		static QString rkward_data_dir;
+		if (rkward_data_dir.isNull ()) {
+			QStringList candidates = QStandardPaths::locateAll (QStandardPaths::AppDataLocation, "resource.ver");
+			for (int i = 0; i < candidates.size (); ++i) {
+				QFile resource_ver (candidates[i]);
+				if (resource_ver.open (QIODevice::ReadOnly) && (resource_ver.read (100).trimmed () == RKWARD_VERSION)) {
+					rkward_data_dir = candidates[i].replace ("resource.ver", QString ());
+					return rkward_data_dir;
+				}
+			}
+			rkward_data_dir = "";   // prevents checking again
+			RK_DEBUG(APP, DL_WARNING, "resource.ver not found. Data path(s): %s", qPrintable (QStandardPaths::standardLocations (QStandardPaths::AppDataLocation).join (':')));
+		}
+		return rkward_data_dir;
 	}
 
 	QString getUseableRKWardSavefileName (const QString &prefix, const QString &postfix) {

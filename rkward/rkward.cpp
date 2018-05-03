@@ -84,8 +84,6 @@
 #include "windows/rkdebugmessagewindow.h"
 #include "rkconsole.h"
 #include "debug.h"
-#include "version.h"
-
 
 #include "agents/showedittextfileagent.h"	// TODO: see below: needed purely for linking!
 #include "dialogs/rkreadlinedialog.h"	// TODO: see below: needed purely for linking!
@@ -199,10 +197,8 @@ void RKWardMainWindow::doPostInit () {
 	RK_TRACE (APP);
 
 	// Check installation first
-	QFile resource_ver (RKCommonFunctions::getRKWardDataDir () + "resource.ver");
-	if (!(resource_ver.open (QIODevice::ReadOnly) && (resource_ver.read (100).trimmed () == RKWARD_VERSION))) {
+	if (RKCommonFunctions::getRKWardDataDir ().isEmpty ()) {
 		KMessageBox::error (this, i18n ("<p>RKWard either could not find its resource files at all, or only an old version of those files. The most likely cause is that the last installation failed to place the files in the correct place. This can lead to all sorts of problems, from single missing features to complete failure to function.</p><p><b>You should quit RKWard, now, and fix your installation</b>. For help with that, see <a href=\"http://rkward.kde.org/compiling\">http://rkward.kde.org/compiling</a>.</p>"), i18n ("Broken installation"), KMessageBox::Notify | KMessageBox::AllowLink);
-		RK_DEBUG(APP, DL_WARNING, "resource.ver not found. Data path(s): %s", qPrintable (QStandardPaths::standardLocations (QStandardPaths::GenericDataLocation).join (':')));
 	}
 
 	QStringList open_urls = RKGlobals::startup_options.take ("initial_urls").toStringList ();
