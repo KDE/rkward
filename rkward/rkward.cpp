@@ -120,6 +120,7 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 	merge_loads = false;
 	rkward_mainwin = this;
 	RKGlobals::rinter = 0;
+	RKCommonFunctions::getRKWardDataDir(); // call this before any forking, in order to avoid potential race conditions during initialization of data dir
 	RKSettings::settings_tracker = new RKSettingsTracker (this);
 
 	///////////////////////////////////////////////////////////////////
