@@ -5,9 +5,9 @@ ENDIF(NOT ${PROJECT_NAME} STREQUAL "rkward")
 INCLUDE(SetVersionNumber.cmake)
 
 IF(APPLE)
-    SET(CPACK_BUNDLE_ICON rkward.icns)
-    SET(CPACK_BUNDLE_NAME RKWard)
-    SET(CPACK_BUNDLE_STARTUP_COMMAND rkward)
+	SET(CPACK_BUNDLE_ICON rkward.icns)
+	SET(CPACK_BUNDLE_NAME RKWard)
+	SET(CPACK_BUNDLE_STARTUP_COMMAND rkward)
 ENDIF()
 
 # once tested and working this could become the default on Mac:
@@ -36,6 +36,7 @@ SET(RKWard_Sources
 	robjectviewer.cpp
 	rkconsole.cpp
 )
+QT5_ADD_RESOURCES(RKWard_Sources resources.qrc)
 
 # somehow the detected R paths from FindR.cmake do not get passed down automatically
 GET_DIRECTORY_PROPERTY(R_EXECUTABLE DIRECTORY rbackend DEFINITION R_EXECUTABLE)
@@ -84,7 +85,6 @@ ENDIF(KF5Crash_FOUND)
 INSTALL(DIRECTORY plugins/ pages DESTINATION ${DATA_INSTALL_DIR}/rkward
 	PATTERN .svn EXCLUDE)
 
-INSTALL(FILES rkwardui.rc rkconsolepart.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/rkward)
 INSTALL(FILES resource.ver DESTINATION ${DATA_INSTALL_DIR}/rkward)
 
 IF(APPLE)
