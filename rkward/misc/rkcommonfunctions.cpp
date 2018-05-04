@@ -159,7 +159,12 @@ namespace RKCommonFunctions {
 	QString getRKWardDataDir () {
 		static QString rkward_data_dir;
 		if (rkward_data_dir.isNull ()) {
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 4, 0))
 			QStringList candidates = QStandardPaths::locateAll (QStandardPaths::AppDataLocation, "resource.ver");
+			candidates += QStandardPaths::locateAll (QStandardPaths::AppDataLocation, "rkward/resource.ver");  // Well, isn't this just silly? AppDataLocation may or may not contain the application name (on Mac)
+#else
+			QStringList candidates = QStandardPaths::locateAll (QStandardPaths::GenericDataLocation, "resource.ver");  // Fails on Mac with unpatched Qt 5.10 (and before). See https://mail.kde.org/pipermail/kde-frameworks-devel/2018-May/063151.html
+#endif
 			for (int i = 0; i < candidates.size (); ++i) {
 				QFile resource_ver (candidates[i]);
 				if (resource_ver.open (QIODevice::ReadOnly) && (resource_ver.read (100).trimmed () == RKWARD_VERSION)) {
