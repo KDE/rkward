@@ -39,13 +39,14 @@ class RKSettingsModuleR : public RKSettingsModule {
 public:
 	RKSettingsModuleR (RKSettings *gui, QWidget *parent);
 	~RKSettingsModuleR ();
-	
+
 	void applyChanges () override;
 	void save (KConfig *config) override;
-	
+
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
-	
+	static void validateSettingsInteractive (QList<RKSettingsWizardPage*>*) {};
+
 	QString caption () override;
 	
 /** generate the commands needed to set the R run time options */
@@ -106,12 +107,13 @@ class RKSettingsModuleRPackages : public RKSettingsModule, public RCommandReceiv
 public:
 	RKSettingsModuleRPackages (RKSettings *gui, QWidget *parent);
 	~RKSettingsModuleRPackages ();
-	
+
 	void applyChanges () override;
 	void save (KConfig *config) override;
-	
+
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
+	static void validateSettingsInteractive (QList<RKSettingsWizardPage*>*);
 
 /** generate the commands needed to set the R run time options */
 	static QStringList makeRRunTimeOptionCommands ();

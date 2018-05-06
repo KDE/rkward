@@ -2,7 +2,7 @@
                           rksettings  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004-2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -175,34 +175,49 @@ void RKSettings::enableApply () {
 	button (QDialogButtonBox::Apply)->setEnabled (true);
 }
 
+#define FOREACH_SETTINGS_MODULE(X)           \
+	RKSettingsModuleGeneral::X;  /* always handle this first (esp., when loading settings), as it contains the base path for rkward files */ \
+	RKSettingsModulePlugins::X;          \
+	RKSettingsModuleR::X;                \
+	RKSettingsModuleRPackages::X;        \
+	RKSettingsModuleOutput::X;           \
+	RKSettingsModuleGraphics::X;         \
+	RKSettingsModuleWatch::X;            \
+	RKSettingsModuleConsole::X;          \
+	RKSettingsModuleCommandEditor::X;    \
+	RKSettingsModuleObjectBrowser::X;
+
 void RKSettings::loadSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
-	RKSettingsModuleGeneral::loadSettings(config);		// alway load this first, as it contains the base path for rkward files
-	RKSettingsModulePlugins::loadSettings(config);
-	RKSettingsModuleR::loadSettings(config);
-	RKSettingsModuleRPackages::loadSettings(config);
-	RKSettingsModuleOutput::loadSettings(config);
-	RKSettingsModuleGraphics::loadSettings(config);
-	RKSettingsModuleWatch::loadSettings(config);
-	RKSettingsModuleConsole::loadSettings(config);
-	RKSettingsModuleCommandEditor::loadSettings(config);
-	RKSettingsModuleObjectBrowser::loadSettings(config);
+	FOREACH_SETTINGS_MODULE(loadSettings(config));
 }
 
 void RKSettings::saveSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
-	RKSettingsModuleGeneral::saveSettings(config);
-	RKSettingsModulePlugins::saveSettings(config);
-	RKSettingsModuleR::saveSettings(config);
-	RKSettingsModuleRPackages::saveSettings(config);
-	RKSettingsModuleOutput::saveSettings(config);
-	RKSettingsModuleGraphics::saveSettings(config);
-	RKSettingsModuleWatch::saveSettings(config);
-	RKSettingsModuleConsole::saveSettings(config);
-	RKSettingsModuleCommandEditor::saveSettings(config);
-	RKSettingsModuleObjectBrowser::saveSettings(config);
+	FOREACH_SETTINGS_MODULE(saveSettings(config));
+}
+
+#include <KAssistantDialog>
+void RKSettings::validateSettingsInteractive () {
+	RK_TRACE (SETTINGS);
+
+	QList<RKSettingsWizardPage*> interaction_pages;
+	FOREACH_SETTINGS_MODULE(validateSettingsInteractive(&interaction_pages));
+	if (!interaction_pages.isEmpty ()) {
+		KAssistantDialog dialog ((QWidget*) 0);
+		for (int i = 0; i < interaction_pages.size (); ++i) {
+			dialog.addPage (interaction_pages[i], interaction_pages[i]->windowTitle ());
+		}
+		QPushButton *help_button = dialog.button (QDialogButtonBox::Help);
+		if (help_button) help_button->hide ();
+		if (dialog.exec () == QDialog::Accepted) {
+			for (int i = 0; i < interaction_pages.size (); ++i) {
+				interaction_pages[i]->apply ();
+			}
+		}
+	}
 }
 
 //############ END RKSettings ##################

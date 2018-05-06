@@ -33,7 +33,6 @@ class RKSettingsModuleGeneral : public RKSettingsModule {
 	Q_OBJECT
 public:
 	RKSettingsModuleGeneral (RKSettings *gui, QWidget *parent);
-
 	~RKSettingsModuleGeneral ();
 
 	enum WorkplaceSaveMode {	// don't change the int values of this enum, or you'll ruin users saved settings. Append new values at the end
@@ -57,10 +56,11 @@ public:
 
 	void applyChanges () override;
 	void save (KConfig *config) override;
-	
+
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
-	
+	static void validateSettingsInteractive (QList<RKSettingsWizardPage*>*) {};
+
 	QString caption () override;
 
 /// returns the directory-name where the logfiles should reside
@@ -95,6 +95,7 @@ public:
 		RKWardConfig_0_6_1,
 		RKWardConfig_0_6_3,
 		RKWardConfig_0_6_4,
+		RKWardConfig_0_7_1,
 		RKWardConfig_Next,		/**< add new configuration versions above / before this entry */
 		RKWardConfig_Latest = RKWardConfig_Next - 1
 	};

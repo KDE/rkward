@@ -70,6 +70,7 @@
 #define SET_RUNTIME_OPTS 3
 #define STARTUP_PHASE2_COMPLETE 4
 #define GET_R_VERSION 5
+#define RSTARTUP_COMPLETE 6
 
 // statics
 double RInterface::na_real;
@@ -102,6 +103,8 @@ RInterface::RInterface () {
 	/////// Further initialization commands, which do not necessarily have to run before everything else can be queued, here. ///////
 	// NOTE: will receive the list as a call plain generic request from the backend ("updateInstalledPackagesList")
 	issueCommand (".rk.get.installed.packages()", RCommand::App | RCommand::Sync);
+
+	issueCommand (new RCommand (QString (), RCommand::App | RCommand::Sync | RCommand::EmptyCommand, QString (), this, RSTARTUP_COMPLETE));
 }
 
 void RInterface::issueCommand (const QString &command, int type, const QString &rk_equiv, RCommandReceiver *receiver, int flags, RCommandChain *chain) {
@@ -342,6 +345,8 @@ void RInterface::rCommandDone (RCommand *command) {
 		}
 
 		startup_errors.clear ();
+	} else if (command->getFlags () == RSTARTUP_COMPLETE) {
+		RKSettings::validateSettingsInteractive ();
 	}
 }
 

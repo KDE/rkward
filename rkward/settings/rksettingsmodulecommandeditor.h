@@ -2,7 +2,7 @@
                           rksettingsmodulecommandeditor  -  description
                              -------------------
     begin                : Tue Oct 23 2007
-    copyright            : (C) 2007, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -33,15 +33,15 @@ class RKSettingsModuleCommandEditor : public RKSettingsModule {
 	Q_OBJECT
 public:
 	RKSettingsModuleCommandEditor (RKSettings *gui, QWidget *parent);
-
 	~RKSettingsModuleCommandEditor ();
 	
 	void applyChanges () override;
 	void save (KConfig *config) override;
-	
+
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
-	
+	static void validateSettingsInteractive (QList<RKSettingsWizardPage*>*) {};
+
 	QString caption () override;
 
 /// min number of character to try code completion

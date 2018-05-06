@@ -630,3 +630,63 @@ void RKSettingsModuleRPackages::loadSettings (KConfig *config) {
 #endif
 }
 
+#include <QGroupBox>
+#include <QRadioButton>
+
+void RKSettingsModuleRPackages::validateSettingsInteractive (QList<RKSettingsWizardPage*>* pages) {
+	RK_TRACE (SETTINGS);
+
+	if (RKSettingsModuleGeneral::storedConfigVersion () < RKSettingsModuleGeneral::RKWardConfig_0_7_1) {
+		QString legacy_libloc = QDir (RKSettingsModuleGeneral::filesPath ()).absoluteFilePath ("library");
+		if (liblocs.contains (legacy_libloc)) {
+			RKSettingsWizardPage *page = new RKSettingsWizardPage ();
+			page->setWindowTitle (i18n ("Unversioned library location"));
+			QVBoxLayout *layout = new QVBoxLayout (page);
+			QLabel *label = new QLabel (i18n ("The configured library locations (where R packages will be installed on this system) contains the directory '%1', "
+			                                  "which was suggested as a default library location in earlier versions of RKWard. Use of this directory is no longer "
+			                                  "recommended, as it is not accessible R sessions outside of RKWard (unless configured, explicitly). Also due to the lack "
+			                                  "of an R version number in the directory name, it offers no protection against using packages built for an incompatible "
+			                                  "version of R.", legacy_libloc));
+			label->setWordWrap (true);
+			layout->addWidget (label);
+			// D'uh. QRadioButton supports neither wordwrap nor formatting. Why?
+			QGroupBox *group = new QGroupBox (i18n ("What do you want to do?"));
+			QRadioButton *removebutton = new QRadioButton ();
+			QLabel *removelabel = new QLabel (i18n ("<b>Remove</b> this location from the configuration (it will not be deleted on disk). You will have to "
+			                                        "re-install any packages that you want to keep."));
+			removelabel->setWordWrap (true);
+			QRadioButton *renamebutton = new QRadioButton ();
+			QLabel *renamelabel = new QLabel (i18n ("<b>Rename</b> this location to include the version number of the currently running R. Packages will continue "
+			                                        "to work (if they are compatible with this version of R)."));
+			renamelabel->setWordWrap (true);
+			QRadioButton *keepbutton = new QRadioButton ();
+			QLabel *keeplabel = new QLabel (i18n ("<b>Keep</b> this location (do not change anything)."));
+			keeplabel->setWordWrap (true);
+			QGridLayout *group_layout = new QGridLayout (group);
+			group_layout->addWidget (removebutton, 0, 0);
+			group_layout->addWidget (removelabel, 0, 1);
+			group_layout->addWidget (renamebutton, 1, 0);
+			group_layout->addWidget (renamelabel, 1, 1);
+			group_layout->addWidget (keepbutton, 2, 0);
+			group_layout->addWidget (keeplabel, 2, 1);
+			group_layout->setColumnStretch (1, 1);
+			renamebutton->setChecked (true);
+			layout->addWidget (group);
+
+			page->setApplyCallback([keepbutton, renamebutton, legacy_libloc, &liblocs]() {
+				if (keepbutton->isChecked ()) return;
+
+				liblocs.removeAll (legacy_libloc);
+				if (renamebutton->isChecked ()) {
+					QString new_loc = legacy_libloc + '/' + RKSessionVars::RVersion (true);
+					RKGlobals::rInterface ()->issueCommand (QString ("file.rename(%1, %2)\n").arg (RObject::rQuote (legacy_libloc)).arg (RObject::rQuote (new_loc)), RCommand::App);
+					liblocs.prepend (legacy_libloc + QStringLiteral ("/%v"));
+				}
+
+				RKGlobals::rInterface ()->issueCommand (libLocsCommand(), RCommand::App);
+			});
+
+			pages->append (page);
+		}
+	}
+}

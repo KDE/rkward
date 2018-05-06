@@ -2,7 +2,7 @@
                           rksettingsmodule  -  description
                              -------------------
     begin                : Fri Apr 22 2005
-    copyright            : (C) 2005, 2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2005-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -33,7 +33,6 @@ class RKSettingsModuleObjectBrowser : public RKSettingsModule {
 	Q_OBJECT
 public:
 	RKSettingsModuleObjectBrowser (RKSettings *gui, QWidget *parent);
-
 	~RKSettingsModuleObjectBrowser ();
 
 /** applies current settings in this RKSettingsModule. This will only be called, if hasChanges () is true */
@@ -47,6 +46,7 @@ public:
 
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
+	static void validateSettingsInteractive (QList<RKSettingsWizardPage*>*) {};
 
 	static bool isDefaultForWorkspace (RKObjectListViewSettings::PersistentSettings setting) { return workspace_settings[setting]; };
 	static bool isDefaultForVarselector (RKObjectListViewSettings::PersistentSettings setting) { return varselector_settings[setting]; };
