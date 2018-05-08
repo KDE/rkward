@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward_commandeditor" version="650">
+<kpartgui name="rkward_commandeditor" version="710">
 	<MenuBar>
 		<Menu name="file"><text>&amp;File</text></Menu>  <!-- Define placeholder to work around menu ordering bug -->
 		<Menu name="edit"><text>&amp;Edit</text>
@@ -11,6 +11,7 @@
 		</Menu>
 		<Menu name="run"><text>&amp;Run</text>
 			<Action name="run_block" group="postrun_actions_merge"/>
+			<Action name="render_preview" group="postrun_actions_merge"/>
 			<Separator group="postrun_actions_merge"/>
 			<Action name="setwd_to_script" group="postrun_actions_merge"/>
 		</Menu>
@@ -21,6 +22,7 @@
 
 	<ToolBar fullWidth="true" name="mainToolBar">
 		<Action name="run_block" group="posttoolbar_actions_merge"/>
+		<Action name="render_preview" group="posttoolbar_actions_merge"/>
 		<Action name="setwd_to_script" group="posttoolbar_actions_merge"/>
 	</ToolBar>
 

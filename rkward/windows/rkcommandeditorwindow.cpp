@@ -36,6 +36,7 @@
 #include <QAction>
 #include <QTemporaryFile>
 #include <QDir>
+#include <QSplitter>
 
 #include <KLocalizedString>
 #include <kmessagebox.h>
@@ -52,6 +53,7 @@
 #include "../misc/rkstandardactions.h"
 #include "../misc/rkxmlguisyncer.h"
 #include "../misc/rkjobsequence.h"
+#include "../misc/rkxmlguipreviewarea.h"
 #include "../core/robjectlist.h"
 #include "../rbackend/rkrinterface.h"
 #include "../settings/rksettings.h"
@@ -172,7 +174,9 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 	KTextEditor::ModificationInterface* em_iface = qobject_cast<KTextEditor::ModificationInterface*> (m_doc);
 	if (em_iface) em_iface->setModifiedOnDiskWarning (true);
 	else RK_ASSERT (false);
+	preview = new RKXMLGUIPreviewArea (this);
 	m_view = m_doc->createView (this);
+	RKWorkplace::mainWorkplace()->registerNamedWindow (QString ().sprintf ("%p", this).remove ('%'), this, preview);
 	if (!url.isEmpty ()) {
 		KConfigGroup viewconf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptViewSettings %1").arg (RKWorkplace::mainWorkplace ()->portableUrl (url)));
 		m_view->readSessionConfig (viewconf);
@@ -192,7 +196,10 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 
 	QHBoxLayout *layout = new QHBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
-	layout->addWidget(m_view);
+	preview_splitter = new QSplitter (this);
+	preview_splitter->addWidget (preview);
+	preview_splitter->addWidget (m_view);
+	layout->addWidget(preview_splitter);
 
 	connect (m_doc, &KTextEditor::Document::documentUrlChanged, this, &RKCommandEditorWindow::updateCaption);
 	connect (m_doc, &KTextEditor::Document::modifiedChanged, this, &RKCommandEditorWindow::updateCaption);                // of course most of the time this causes a redundant call to updateCaption. Not if a modification is undone, however.
@@ -320,6 +327,10 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	action_setwd_to_script->setToolTip (action_setwd_to_script->statusTip ());
 	action_setwd_to_script->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionCDToScript));
 
+	action_render_preview = ac->addAction ("render_preview", this, SLOT (renderPreview()));
+	action_render_preview->setText ("Render Preview");
+	action_render_preview->setCheckable (true);
+	
 	file_save = findAction (m_view, "file_save");
 	if (file_save) file_save->setText (i18n ("Save Script..."));
 	file_save_as = findAction (m_view, "file_save_as");
@@ -762,6 +773,27 @@ void RKCommandEditorWindow::copyLinesToOutput () {
 	RK_TRACE (COMMANDEDITOR);
 
 	RKCommandHighlighter::copyLinesToOutput (m_view, RKCommandHighlighter::RScript);
+}
+
+void RKCommandEditorWindow::renderPreview () {
+	RK_TRACE (COMMANDEDITOR);
+
+	QString id = QString ().sprintf ("%p", this).remove ('%');
+	QTemporaryFile save (QDir::tempPath () + QStringLiteral ("/rkward_XXXXXX") + id + QStringLiteral (".Rmd"));
+	RK_ASSERT (save.open ());
+	QTextStream out (&save);
+	out.setCodec ("UTF-8");     // make sure that all characters can be saved, without nagging the user
+	out << m_doc->text ();
+	save.close ();
+	save.setAutoRemove (false);
+
+	QString command ("require(knitr)\n"
+	                 "require(markdown)\n"
+	                 "rk.show.html (knitr::knit2html(%1))");
+	command = command.arg (RObject::rQuote (save.fileName ()));
+
+	RKGlobals::rInterface ()->issueCommand (".rk.with.window.hints ({\n" + command + QStringLiteral ("}, \"\", ") + RObject::rQuote (id) + ')', RCommand::App);
+	preview->show ();
 }
 
 void RKCommandEditorWindow::runAll () {
