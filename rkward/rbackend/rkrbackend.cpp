@@ -734,7 +734,7 @@ int RShowFiles (int nfile, const char **file, const char **headers, const char *
 
 /* FROM R_ext/RStartup.h: "Return value here is expected to be 1 for Yes, -1 for No and 0 for Cancel:
    symbolic constants in graphapp.h" */
-int doDialogHelper (QString caption, QString message, QString button_yes, QString button_no, QString button_cancel, bool wait) {
+int doDialogHelper (QString caption, QString message, QString button_yes, QString button_no, QString button_cancel, QString default_button, bool wait) {
 	RK_TRACE (RBACKEND);
 
 	RBackendRequest request (wait, RBackendRequest::ShowMessage);
@@ -743,6 +743,7 @@ int doDialogHelper (QString caption, QString message, QString button_yes, QStrin
 	request.params["button_yes"] = QVariant (button_yes);
 	request.params["button_no"] = QVariant (button_no);
 	request.params["button_cancel"] = QVariant (button_cancel);
+	request.params["default"] = QVariant (default_button);
 
 	RKRBackend::this_pointer->handleRequest (&request);
  
@@ -754,10 +755,10 @@ int doDialogHelper (QString caption, QString message, QString button_yes, QStrin
 	return 0;
 }
 
-SEXP doDialog (SEXP caption, SEXP message, SEXP button_yes, SEXP button_no, SEXP button_cancel, SEXP wait) {
+SEXP doDialog (SEXP caption, SEXP message, SEXP button_yes, SEXP button_no, SEXP button_cancel, SEXP default_button, SEXP wait) {
 	RK_TRACE (RBACKEND);
 
-	int result = doDialogHelper (RKRSupport::SEXPToString (caption), RKRSupport::SEXPToString (message), RKRSupport::SEXPToString (button_yes), RKRSupport::SEXPToString (button_no), RKRSupport::SEXPToString (button_cancel), RKRSupport::SEXPToInt (wait));
+	int result = doDialogHelper (RKRSupport::SEXPToString (caption), RKRSupport::SEXPToString (message), RKRSupport::SEXPToString (button_yes), RKRSupport::SEXPToString (button_no), RKRSupport::SEXPToString (button_cancel), RKRSupport::SEXPToString (default_button), RKRSupport::SEXPToInt (wait));
 
 	SEXP ret = Rf_allocVector(INTSXP, 1);
 	INTEGER (ret)[0] = result;
@@ -767,7 +768,7 @@ SEXP doDialog (SEXP caption, SEXP message, SEXP button_yes, SEXP button_no, SEXP
 void RShowMessage (const char* message) {
 	RK_TRACE (RBACKEND);
 
-	doDialogHelper (i18n ("Message from the R backend"), message, "ok", QString (), QString (), true);
+	doDialogHelper (i18n ("Message from the R backend"), message, "ok", QString (), QString (), "ok", true);
 }
 
 // TODO: currently used on windows, only!
@@ -775,7 +776,7 @@ int RAskYesNoCancel (const char* message) {
 	RK_TRACE (RBACKEND);
 
 	if (RKRBackend::this_pointer->killed) return -1;	// HACK: At this point R asks whether to save the workspace. We have already handled that. So return -1 for "no"
-	return doDialogHelper (i18n ("Question from the R backend"), message, "yes", "no", "cancel", true);
+	return doDialogHelper (i18n ("Question from the R backend"), message, "yes", "no", "cancel", "yes", true);
 }
 
 void RBusy (int busy) {
@@ -1107,7 +1108,7 @@ bool RKRBackend::startR () {
 		{ "rk.copy.no.eval", (DL_FUNC) &doCopyNoEval, 4 },
 		{ "rk.edit.files", (DL_FUNC) &doEditFiles, 4 },
 		{ "rk.show.files", (DL_FUNC) &doShowFiles, 5 },
-		{ "rk.dialog", (DL_FUNC) &doDialog, 6 },
+		{ "rk.dialog", (DL_FUNC) &doDialog, 7 },
 		{ "rk.update.locale", (DL_FUNC) &doUpdateLocale, 0 },
 		{ "rk.locale.name", (DL_FUNC) &doLocaleName, 0 },
 		{ "rk.graphics.device", (DL_FUNC) &RKStartGraphicsDevice, 7},

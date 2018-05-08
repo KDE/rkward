@@ -32,4 +32,3 @@ Thomas Friedrichsmeier \email{rkward-devel@kde.org}
 \keyword{attribute}
 \keyword{misc}
 \keyword{utilities}
-

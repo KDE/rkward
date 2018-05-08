@@ -3,6 +3,7 @@
 \name{rk.list.plugins}
 \alias{rk.list.plugins}
 \alias{rk.set.plugin.status}
+\alias{rk.set.plugin.status}
 \title{List of modify loaded plugins}
 \usage{
 rk.list.plugins()
@@ -50,11 +51,10 @@ rk.set.plugin.status ("rkward::t_test", visible=FALSE)
 ## END NOT RUN
 
 }
-\author{
-Thomas Friedrichsmeier \email{rkward-devel@kde.org}
-}
 \seealso{
 \code{\link{rk.call.plugin}} for invoking a plugin, programatically
 }
+\author{
+Thomas Friedrichsmeier \email{rkward-devel@kde.org}
+}
 \keyword{utilities}
-

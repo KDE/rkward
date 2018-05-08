@@ -16,4 +16,3 @@ To stop recording, supply NULL or "" as filename.
 Currently used for the purpose of automated testing, only. Perhaps in the future
 this or a similar mechanism could also be added as a user feature.
 }
-

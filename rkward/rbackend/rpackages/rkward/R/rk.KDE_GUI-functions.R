@@ -18,11 +18,17 @@
 #' @param caption a string for title of the message box.
 #' @param button.yes a string for the text label of the \bold{Yes} button. Can
 #'   be an empty string (\code{""}), in which case the button is not displayed
-#'   at all.
-#' @param button.no a string used for the text label of the \bold{No} button,
-#'   similar to \code{button.yes}.
-#' @param button.canel a string used for the text label of the \bold{Cancel}
-#'   button, similar to \code{button.yes}.
+#'   at all. Note that the default value of "yes" (lower case) means to use a default
+#'   rendering of a "Yes" button, which may or may not be the literal string "Yes"
+#'   (importantly, it will be translated, automatically).
+#' @param button.no a string used for the text label of the \bold{No} button.
+#'   This behaves similar to \code{button.yes}, including the meaning of the
+#'   default value "no".
+#' @param button.cancel a string used for the text label of the \bold{Cancel} button.
+#'   This behaves similar to \code{button.yes}, including the meaning of the
+#'   default value "cancel".
+#' @param default.button The button will be the default (selected if the user
+#'   simply pressed enter.
 #' @param wait a logical (not NA) indicating whether the R interpreter should
 #'   wait for the user's action, or run it asynchronously.
 #' @param list a vector, coerced into a character vector.
@@ -34,7 +40,8 @@
 #' @return \code{rk.show.message} always returns \code{TRUE}, invisibly.
 #' 
 #' \code{rk.show.question} returns \code{TRUE} for \bold{Yes}, \code{FALSE} for
-#'   \bold{No}, and \code{NULL} for \bold{Cancel} actions.
+#'   \bold{No}, and \code{NULL} for \bold{Cancel} actions. If the dialog is closed
+#'   without clicking on any button, \code{NULL} is returned, as well.
 #' 
 #' \code{rk.select.list} returns the value of \code{\link{select.list}}.
 #' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
@@ -60,16 +67,16 @@
 #'   multiple = TRUE, title = "vowels")
 
 #' @export
-"rk.show.message" <- function (message, caption = "Information", wait=TRUE) {
-	.Call ("rk.dialog", caption, message, "ok", "", "", isTRUE (wait), PACKAGE="(embedding)")
+"rk.show.message" <- function (message, caption = gettext("Information"), wait=TRUE) {
+	.Call ("rk.dialog", caption, message, "ok", "", "", "ok", isTRUE (wait), PACKAGE="(embedding)")
 	invisible (TRUE)
 }
 
 # to disable a button, set it to ""
 #' @export
 #' @rdname rk.show.messages
-"rk.show.question" <- function (message, caption = "Question", button.yes = "yes", button.no = "no", button.cancel = "cancel") {
-	res <- .Call ("rk.dialog", caption, message, button.yes, button.no, button.cancel, TRUE, PACKAGE="(embedding)")
+"rk.show.question" <- function (message, caption = gettext("Question"), button.yes = "yes", button.no = "no", button.cancel = "cancel", default.button=button.yes) {
+	res <- .Call ("rk.dialog", caption, message, button.yes, button.no, button.cancel, default.button, TRUE, PACKAGE="(embedding)")
 	if (res > 0) return (TRUE)
 	else if (res < 0) return (FALSE)
 	else return (NULL)	# cancelled

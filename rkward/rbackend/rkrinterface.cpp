@@ -61,6 +61,7 @@
 #include <stdlib.h>
 #include <QFileDialog>
 #include <QApplication>
+#include <QPushButton>
 
 // flush new pieces of output after this period of time:
 #define FLUSH_INTERVAL 100
@@ -781,6 +782,15 @@ void RInterface::processHistoricalSubstackRequest (const QStringList &calllist, 
 	closeChain (in_chain);
 }
 
+int addButtonToBox (QDialog *dialog, QDialogButtonBox *box, QDialogButtonBox::StandardButton which, const QString &text, const QString &def_text, bool is_default) {
+	if (text.isEmpty ()) return 0;
+	QPushButton *button = box->addButton (which);
+	if (text != def_text) button->setText (text);
+	if (is_default) button->setDefault (true);
+	QObject::connect (button, &QPushButton::clicked, [dialog, which]() { dialog->done (which); });
+	return 1;
+}
+
 void RInterface::processRBackendRequest (RBackendRequest *request) {
 	RK_TRACE (RBACKEND);
 
@@ -801,41 +811,40 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 		QString button_yes = request->params["button_yes"].toString ();;
 		QString button_no = request->params["button_no"].toString ();;
 		QString button_cancel = request->params["button_cancel"].toString ();;
+		QString def_button = request->params["default"].toString ();;
 
-		KGuiItem button_yes_item = KStandardGuiItem::yes ();
-		if (button_yes != "yes") button_yes_item.setText (button_yes);
-		KGuiItem button_no_item = KStandardGuiItem::no ();
-		if (button_no != "no") button_no_item.setText (button_no);
-		KGuiItem button_cancel_item = KStandardGuiItem::cancel ();
-		if (button_cancel != "cancel") button_cancel_item.setText (button_cancel);
-
-		KMessageBox::DialogType dialog_type = KMessageBox::QuestionYesNoCancel;
-		if (button_cancel.isEmpty ()) dialog_type = KMessageBox::QuestionYesNo;
-		if (button_no.isEmpty () && button_cancel.isEmpty ()) {
-			dialog_type = KMessageBox::Information;
-			if (!request->synchronous) {	// non-modal dialogs are not supported out of the box by KMessageBox;
-				QDialog* dialog = new QDialog ();
-				QDialogButtonBox *buttonBox = new QDialogButtonBox (dialog);
-				buttonBox->setStandardButtons (QDialogButtonBox::Ok);
-				KMessageBox::createKMessageBox (dialog, buttonBox, QMessageBox::Information, message, QStringList (), QString (), 0, KMessageBox::Notify | KMessageBox::NoExec);
-				dialog->setWindowTitle (caption);
-				dialog->setAttribute (Qt::WA_DeleteOnClose);
-				dialog->show();
-
-				RKRBackendProtocolFrontend::setRequestCompleted (request);
-				return;
-			}
+		// NOTE: In order to support non-modal (information) dialogs, we cannot use KMessageBox or QMessgaeBox, below.
+		QDialog* dialog = new QDialog ();
+		dialog->setResult (-1);  // We use this to stand for cancelled
+		QDialogButtonBox *button_box = new QDialogButtonBox (dialog);
+		QPushButton *button;
+		int button_count = 0;
+		button_count += addButtonToBox (dialog, button_box, QDialogButtonBox::Yes, button_yes, "yes", def_button == button_yes);
+		button_count += addButtonToBox (dialog, button_box, QDialogButtonBox::No, button_no, "no", def_button == button_no);
+		button_count += addButtonToBox (dialog, button_box, QDialogButtonBox::Cancel, button_cancel, "cancel", def_button == button_cancel);
+		if (!button_count) { // cannot have no button defined at all
+			button_count += addButtonToBox (dialog, button_box, QDialogButtonBox::Ok, "ok", "ok", true);
 		}
 
-		int result = KMessageBox::messageBox (0, dialog_type, message, caption, button_yes_item, button_no_item, button_cancel_item);
+		bool synchronous = request->synchronous || (button_count > 1);
+		KMessageBox::createKMessageBox (dialog, button_box, button_count < 2 ? QMessageBox::Information : QMessageBox::Question, message, QStringList (), QString (), 0, KMessageBox::Notify | KMessageBox::NoExec);
+		dialog->setWindowTitle (caption);
 
-		QString result_string;
-		if ((result == KMessageBox::Yes) || (result == KMessageBox::Ok)) result_string = "yes";
-		else if (result == KMessageBox::No) result_string = "no";
-		else if (result == KMessageBox::Cancel) result_string = "cancel";
-		else RK_ASSERT (false);
+		if (!synchronous) {
+			dialog->setAttribute (Qt::WA_DeleteOnClose);
+			dialog->show();
 
-		request->params["result"] = result_string;
+			RKRBackendProtocolFrontend::setRequestCompleted (request);
+			return;
+		} else {
+			int result = dialog->exec ();
+			QString result_string;
+			if (result == QDialogButtonBox::Yes || result == QDialogButtonBox::Ok) result_string = "yes";
+			else if (result == QDialogButtonBox::No) result_string = "no";
+			else result_string = "cancel";
+			request->params["result"] = result_string;
+			delete dialog;
+		}
 	} else if (type == RBackendRequest::ReadLine) {
 		QString result;
 

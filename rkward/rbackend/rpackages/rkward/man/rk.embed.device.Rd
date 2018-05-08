@@ -32,4 +32,3 @@ plot (rnorm (10))
 \seealso{
 \link{RK}
 }
-
