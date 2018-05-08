@@ -11,7 +11,7 @@
 rk.show.message(message, caption = gettext("Information"), wait = TRUE)
 
 rk.show.question(message, caption = gettext("Question"), button.yes = "yes",
-  button.no = "no", button.cancel = "cancel", default.button = button.yes)
+  button.no = "no", button.cancel = "cancel", default = TRUE)
 
 rk.select.list(list, preselect = NULL, multiple = FALSE, title = NULL)
 }
@@ -37,8 +37,9 @@ default value "no".}
 This behaves similar to \code{button.yes}, including the meaning of the
 default value "cancel".}
 
-\item{default.button}{The button will be the default (selected if the user
-simply pressed enter.}
+\item{default}{The expected or "safe" default response (e.g. \code{TRUE} for "Yes button").
+The corresponding button will focused, so that it will become selected option,
+if the user simply presses enter.}
 
 \item{list}{a vector, coerced into a character vector.}
 

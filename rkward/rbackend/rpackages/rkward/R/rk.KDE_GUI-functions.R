@@ -27,8 +27,9 @@
 #' @param button.cancel a string used for the text label of the \bold{Cancel} button.
 #'   This behaves similar to \code{button.yes}, including the meaning of the
 #'   default value "cancel".
-#' @param default.button The button will be the default (selected if the user
-#'   simply pressed enter.
+#' @param default The expected or "safe" default response (e.g. \code{TRUE} for "Yes button").
+#'   The corresponding button will focused, so that it will become selected option,
+#'   if the user simply presses enter.
 #' @param wait a logical (not NA) indicating whether the R interpreter should
 #'   wait for the user's action, or run it asynchronously.
 #' @param list a vector, coerced into a character vector.
@@ -75,8 +76,11 @@
 # to disable a button, set it to ""
 #' @export
 #' @rdname rk.show.messages
-"rk.show.question" <- function (message, caption = gettext("Question"), button.yes = "yes", button.no = "no", button.cancel = "cancel", default.button=button.yes) {
-	res <- .Call ("rk.dialog", caption, message, button.yes, button.no, button.cancel, default.button, TRUE, PACKAGE="(embedding)")
+"rk.show.question" <- function (message, caption = gettext("Question"), button.yes = "yes", button.no = "no", button.cancel = "cancel", default=TRUE) {
+	if (isTRUE (default)) default_button <- button.yes
+	else if (identical (default, FALSE)) default_button <- button.no
+	else default_button <- button.cancel
+	res <- .Call ("rk.dialog", caption, message, button.yes, button.no, button.cancel, default_button, TRUE, PACKAGE="(embedding)")
 	if (res > 0) return (TRUE)
 	else if (res < 0) return (FALSE)
 	else return (NULL)	# cancelled
