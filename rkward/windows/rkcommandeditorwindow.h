@@ -2,7 +2,7 @@
                           rkcommandeditorwindow  -  description
                              -------------------
     begin                : Mon Aug 30 2004
-    copyright            : (C) 2004-2017 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -127,6 +127,8 @@ private:
 
 class QTimer;
 class RKJobSequence;
+class QSplitter;
+class RKXMLGUIPreviewArea;
 
 /**
 	\brief Provides an editor window for R-commands, as well as a text-editor window in general.
@@ -188,6 +190,8 @@ public slots:
 	void runCurrent ();
 /** run the entire script */
 	void runAll ();
+/** Render the (.Rmd) current script */
+	void renderPreview ();
 /** insert line break and run the (previous) line */
 	void enterAndSubmit ();
 	void copyLinesToOutput ();
@@ -258,6 +262,7 @@ private:
 
 	QAction* action_run_all;
 	QAction* action_run_current;
+	QAction* action_render_preview;
 
 	QAction* action_setwd_to_script;
 
@@ -268,6 +273,9 @@ private:
 
 	QString _id;
 	static QMap<QString, KTextEditor::Document*> unnamed_documents;
+
+	QSplitter *preview_splitter;
+	RKXMLGUIPreviewArea *preview;
 };
 
 /** Simple class to provide HTML highlighting for arbitrary R code. */
