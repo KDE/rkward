@@ -673,14 +673,14 @@ void RKSettingsModuleRPackages::validateSettingsInteractive (QList<RKSettingsWiz
 			renamebutton->setChecked (true);
 			layout->addWidget (group);
 
-			page->setApplyCallback([keepbutton, renamebutton, legacy_libloc, &liblocs]() {
+			page->setApplyCallback([keepbutton, renamebutton, legacy_libloc]() {
 				if (keepbutton->isChecked ()) return;
 
 				liblocs.removeAll (legacy_libloc);
 				if (renamebutton->isChecked ()) {
-					QString new_loc = legacy_libloc + '/' + RKSessionVars::RVersion (true);
+					QString new_loc = legacy_libloc + '-' + RKSessionVars::RVersion (true);
 					RKGlobals::rInterface ()->issueCommand (QString ("file.rename(%1, %2)\n").arg (RObject::rQuote (legacy_libloc)).arg (RObject::rQuote (new_loc)), RCommand::App);
-					liblocs.prepend (legacy_libloc + QStringLiteral ("/%v"));
+					liblocs.prepend (legacy_libloc + QStringLiteral ("-%v"));
 				}
 
 				RKGlobals::rInterface ()->issueCommand (libLocsCommand(), RCommand::App);
