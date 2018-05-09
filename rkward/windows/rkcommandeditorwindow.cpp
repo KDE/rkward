@@ -174,7 +174,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 	KTextEditor::ModificationInterface* em_iface = qobject_cast<KTextEditor::ModificationInterface*> (m_doc);
 	if (em_iface) em_iface->setModifiedOnDiskWarning (true);
 	else RK_ASSERT (false);
-	preview = new RKXMLGUIPreviewArea (this);
+	preview = new RKXMLGUIPreviewArea (i18n ("Preview of rendered R Markdown"), this);
 	m_view = m_doc->createView (this);
 	RKWorkplace::mainWorkplace()->registerNamedWindow (QString ().sprintf ("%p", this).remove ('%'), this, preview);
 	if (!url.isEmpty ()) {
@@ -197,8 +197,10 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 	QHBoxLayout *layout = new QHBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
 	preview_splitter = new QSplitter (this);
-	preview_splitter->addWidget (preview);
 	preview_splitter->addWidget (m_view);
+	QWidget *preview_widget = preview->wrapperWidget ();
+	preview_splitter->addWidget (preview_widget);
+	preview_widget->hide ();
 	layout->addWidget(preview_splitter);
 
 	connect (m_doc, &KTextEditor::Document::documentUrlChanged, this, &RKCommandEditorWindow::updateCaption);
@@ -330,6 +332,7 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	action_render_preview = ac->addAction ("render_preview", this, SLOT (renderPreview()));
 	action_render_preview->setText ("Render Preview");
 	action_render_preview->setCheckable (true);
+	connect (preview, &RKXMLGUIPreviewArea::previewClosed, action_render_preview, &QAction::toggle);
 	
 	file_save = findAction (m_view, "file_save");
 	if (file_save) file_save->setText (i18n ("Save Script..."));
@@ -778,22 +781,26 @@ void RKCommandEditorWindow::copyLinesToOutput () {
 void RKCommandEditorWindow::renderPreview () {
 	RK_TRACE (COMMANDEDITOR);
 
-	QString id = QString ().sprintf ("%p", this).remove ('%');
-	QTemporaryFile save (QDir::tempPath () + QStringLiteral ("/rkward_XXXXXX") + id + QStringLiteral (".Rmd"));
-	RK_ASSERT (save.open ());
-	QTextStream out (&save);
-	out.setCodec ("UTF-8");     // make sure that all characters can be saved, without nagging the user
-	out << m_doc->text ();
-	save.close ();
-	save.setAutoRemove (false);
+	if (action_render_preview->isChecked ()) {
+		QString id = QString ().sprintf ("%p", this).remove ('%');
+		QTemporaryFile save (QDir::tempPath () + QStringLiteral ("/rkward_XXXXXX") + id + QStringLiteral (".Rmd"));
+		RK_ASSERT (save.open ());
+		QTextStream out (&save);
+		out.setCodec ("UTF-8");     // make sure that all characters can be saved, without nagging the user
+		out << m_doc->text ();
+		save.close ();
+		save.setAutoRemove (false);
 
-	QString command ("require(knitr)\n"
-	                 "require(markdown)\n"
-	                 "rk.show.html (knitr::knit2html(%1))");
-	command = command.arg (RObject::rQuote (save.fileName ()));
+		QString command ("require(knitr)\n"
+				"require(markdown)\n"
+				"rk.show.html (knitr::knit2html(%1))");
+		command = command.arg (RObject::rQuote (save.fileName ()));
 
-	RKGlobals::rInterface ()->issueCommand (".rk.with.window.hints ({\n" + command + QStringLiteral ("}, \"\", ") + RObject::rQuote (id) + ')', RCommand::App);
-	preview->show ();
+		RKGlobals::rInterface ()->issueCommand (".rk.with.window.hints ({\n" + command + QStringLiteral ("}, \"\", ") + RObject::rQuote (id) + ')', RCommand::App);
+		preview->wrapperWidget ()->show ();
+	} else {
+		preview->wrapperWidget ()->hide ();
+	}
 }
 
 void RKCommandEditorWindow::runAll () {

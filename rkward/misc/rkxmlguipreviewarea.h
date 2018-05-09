@@ -2,7 +2,7 @@
                           rkxmlguipreviewarea  -  description
                              -------------------
     begin                : Wed Feb 03 2016
-    copyright            : (C) 2016 by Thomas Friedrichsmeier
+    copyright            : (C) 2016-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -29,18 +29,22 @@ class QToolButton;
 class RKXMLGUIPreviewArea : public KXmlGuiWindow {
 	Q_OBJECT
 public:
-	explicit RKXMLGUIPreviewArea (QWidget* parent);
+	RKXMLGUIPreviewArea (const QString &label, QWidget* parent);
 	~RKXMLGUIPreviewArea ();
-
-	QWidget *menuButton () const;
+	/** (initializes, and) returns a wrapper widget that contains this widget along with a caption (see setLabel()), menu button, and close button. */
+	QWidget *wrapperWidget ();
+	QString label () const { return _label; };
 protected:
 	/** build / destroy menu, when child is added removed. Note that we are in the fortunate situation that RKMDIWindow-children only ever get to the
 	 *  preview area via reparenting, i.e. contrary to usual QEvent::ChildAdded semnatics, they are always fully constructed, when added. */
 	void childEvent (QChildEvent *event) override;
 protected slots:
 	void prepareMenu ();
+signals:
+	void previewClosed (RKXMLGUIPreviewArea *preview);
 private:
-	QToolButton *menu_button;
+	QWidget *wrapper_widget;
+	QString _label;
 	QMenu *menu;
 	QPointer<KParts::Part> current;
 };

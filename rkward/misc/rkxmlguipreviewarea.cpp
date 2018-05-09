@@ -23,6 +23,7 @@
 #include <QMenuBar>
 #include <QWidgetAction>
 #include <QLabel>
+#include <QVBoxLayout>
 
 #include <kxmlguifactory.h>
 #include <ktoolbar.h>
@@ -33,14 +34,11 @@
 
 #include "../debug.h"
 
-RKXMLGUIPreviewArea::RKXMLGUIPreviewArea (QWidget* parent) : KXmlGuiWindow (parent) {
+RKXMLGUIPreviewArea::RKXMLGUIPreviewArea (const QString &label, QWidget* parent) : KXmlGuiWindow (parent) {
 	RK_TRACE (PLUGIN);
 
-	menu_button = new QToolButton (this);
-	menu_button->setPopupMode (QToolButton::InstantPopup);
-	menu_button->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionShowMenu));
-	menu_button->setMenu (menu = new QMenu ());
-	connect (menu, &QMenu::aboutToShow, this, &RKXMLGUIPreviewArea::prepareMenu);
+	_label = label;
+	wrapper_widget = 0;
 	current = 0;
 	setWindowFlags (Qt::Widget);
 	setMenuBar (new QMenuBar (this));
@@ -56,8 +54,44 @@ RKXMLGUIPreviewArea::~RKXMLGUIPreviewArea () {
 	}
 }
 
-QWidget* RKXMLGUIPreviewArea::menuButton() const {
-	return menu_button;
+QWidget* RKXMLGUIPreviewArea::wrapperWidget () {
+	if (wrapper_widget) return wrapper_widget;
+
+	wrapper_widget = new QWidget ();
+
+	QVBoxLayout *vl = new QVBoxLayout (wrapper_widget);
+	vl->setContentsMargins (0, 0, 0, 0);
+	QFrame *line = new QFrame (wrapper_widget);
+	line->setFrameShape (QFrame::HLine);
+	vl->addWidget (line);
+	QHBoxLayout *hl = new QHBoxLayout ();
+	vl->addLayout (hl);
+	QLabel *lab = new QLabel (_label, wrapper_widget);
+	QFont fnt (lab->font ());
+	fnt.setBold (true);
+	lab->setFont (fnt);
+	lab->setAlignment (Qt::AlignCenter);
+	QToolButton *tb = new QToolButton (wrapper_widget);
+	tb->setAutoRaise (true);
+	tb->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDelete));
+	connect (tb, &QAbstractButton::clicked, [this]() { wrapper_widget->hide (); emit (previewClosed(this)); });
+
+	QToolButton *menu_button = new QToolButton (this);
+	menu_button->setPopupMode (QToolButton::InstantPopup);
+	menu_button->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionShowMenu));
+	menu_button->setMenu (menu = new QMenu ());
+	connect (menu, &QMenu::aboutToShow, this, &RKXMLGUIPreviewArea::prepareMenu);
+
+	hl->addWidget (menu_button);
+	hl->addStretch ();
+	hl->addWidget (lab);
+	hl->addWidget (tb);
+	hl->addStretch ();
+
+	vl->addWidget (this);
+	show ();
+
+	return wrapper_widget;
 }
 
 void RKXMLGUIPreviewArea::childEvent (QChildEvent *event) {
@@ -74,7 +108,7 @@ void RKXMLGUIPreviewArea::childEvent (QChildEvent *event) {
 			current = child->getPart ();
 			insertChildClient (current);
 			setCentralWidget (child);
-			createGUI ("rkdummypart.rc");
+			createGUI ("rkwrapper_widgetpart.rc");
 			menuBar ()->hide ();
 			QList<KToolBar*> tbars = toolBars ();
 			for (int i = 0; i < tbars.size (); ++i) tbars[i]->hide ();

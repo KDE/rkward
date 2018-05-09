@@ -99,7 +99,7 @@ public slots:
 	void copyCode ();
 private slots:
 	void previewVisibilityChanged (RKComponentPropertyBase*);
-	void previewCloseButtonClicked ();
+	void previewCloseButtonClicked (RKXMLGUIPreviewArea *area);
 	void doPostShowCleanup ();
 private:
 	RKComponentPropertyCode *code_property;
@@ -129,9 +129,9 @@ friend class RKComponentBuilder;
 	bool enslaved;
 
 	struct PreviewArea {
-		QWidget *area;
+		QWidget *widget;
+		RKXMLGUIPreviewArea *preview_area;
 		RKComponentPropertyBool *controller;
-		QString label;
 		Qt::Orientation position;
 	};
 	QList<PreviewArea> previews;
