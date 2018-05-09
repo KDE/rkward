@@ -250,39 +250,16 @@ void RKStandardComponentGUI::finalize () {
 	bool any_vpreview_visible = RKSettingsModulePlugins::showCodeByDefault ();
 	for (int i = 0; i < previews.size (); ++i) {
 		// Add preview to splitter. Also add a title bar to each preview.
-		QWidget *dummy = new QWidget ();
-		QVBoxLayout *vl = new QVBoxLayout (dummy);
-		vl->setContentsMargins (0, 0, 0, 0);
-		QFrame *line = new QFrame (dummy);
-		line->setFrameShape (QFrame::HLine);
-		vl->addWidget (line);
-		QHBoxLayout *hl = new QHBoxLayout ();
-		vl->addLayout (hl);
-		QLabel *lab = new QLabel (i18n ("<b>%1</b>", previews[i].label), dummy);
-		lab->setAlignment (Qt::AlignCenter);
-		QToolButton *tb = new QToolButton (dummy);
-		tb->setAutoRaise (true);
-		tb->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDelete));
-		tb->setProperty ("preview_area", QVariant::fromValue (dummy));
-		connect (tb, &QAbstractButton::clicked, this, &RKStandardComponentGUI::previewCloseButtonClicked);
-		RKXMLGUIPreviewArea *parea = qobject_cast<RKXMLGUIPreviewArea*> (previews[i].area);
-		if (parea) hl->addWidget (parea->menuButton ());
-		hl->addStretch ();
-		hl->addWidget (lab);
-		hl->addWidget (tb);
-		hl->addStretch ();
-
-		vl->addWidget (previews[i].area);
-		previews[i].area->show ();
-		previews[i].area = dummy;
+		previews[i].widget = previews[i].preview_area->wrapperWidget ();
+		connect (previews[i].preview_area, &RKXMLGUIPreviewArea::previewClosed, this, &RKStandardComponentGUI::previewCloseButtonClicked);
 		connect (previews[i].controller, &RKComponentPropertyBase::valueChanged, this, &RKStandardComponentGUI::previewVisibilityChanged);
-		if (!(previews[i].controller->boolValue ())) dummy->hide ();
+		if (!(previews[i].controller->boolValue ())) previews[i].widget->hide ();
 		else {
 			if (previews[i].position == Qt::Horizontal) any_hpreview_visible = true;
 			else any_vpreview_visible = true;
 		}
-		if (previews[i].position == Qt::Horizontal) hpreview_area->insertWidget (hpreview_area->count () - 1, previews[i].area);
-		else vpreview_area->layout ()->addWidget (previews[i].area);
+		if (previews[i].position == Qt::Horizontal) hpreview_area->insertWidget (hpreview_area->count () - 1, previews[i].widget);
+		else vpreview_area->layout ()->addWidget (previews[i].widget);
 	}
 
 	if (any_hpreview_visible) {
@@ -304,11 +281,11 @@ void RKStandardComponentGUI::finalize () {
 RKXMLGUIPreviewArea* RKStandardComponentGUI::addDockedPreview (RKComponentPropertyBool *controller, const QString& label, const QString &id, bool bottom) {
 	RK_TRACE (PLUGIN);
 
-	RKXMLGUIPreviewArea *area = new RKXMLGUIPreviewArea (0);
+	RKXMLGUIPreviewArea *area = new RKXMLGUIPreviewArea (label, 0);
 	PreviewArea parea;
-	parea.area = area;
+	parea.preview_area = area;
+	parea.widget = area;   // may be replaced by a wrapper in "finalize"
 	parea.controller = controller;
-	parea.label = label;
 	parea.position = bottom ? Qt::Vertical : Qt::Horizontal;
 	previews.insert (0, parea);
 
@@ -397,14 +374,12 @@ void RKStandardComponentGUI::toggleCode () {
 	updateCode ();
 }
 
-void RKStandardComponentGUI::previewCloseButtonClicked () {
+void RKStandardComponentGUI::previewCloseButtonClicked (RKXMLGUIPreviewArea *area) {
 	RK_TRACE (PLUGIN);
 
 	RK_ASSERT (hsplitter);  // is a dialog
-	QWidget *area = qvariant_cast<QWidget*> (sender ()->property ("preview_area"));
-
 	for (int i = 0; i < previews.size (); ++i) {
-		if (area == previews[i].area) {
+		if (area == previews[i].preview_area) {
 			previews[i].controller->setBoolValue (false);
 			if (i == previews.size () - 1) toggle_code_box->setChecked (false);
 			return;
@@ -424,7 +399,7 @@ void RKStandardComponentGUI::previewVisibilityChanged (RKComponentPropertyBase*)
 	bool new_v_visible = false;
 	// which previews are active?
 	for (int i = 0; i < previews.size (); ++i) {
-		previews[i].area->setVisible (previews[i].controller->boolValue ());
+		previews[i].widget->setVisible (previews[i].controller->boolValue ());
 		if (previews[i].controller->boolValue ()) {
 			if (previews[i].position == Qt::Horizontal) new_h_visible = true;
 			else new_v_visible = true;
@@ -567,7 +542,7 @@ void RKStandardComponentWizard::finalize () {
 			QTabWidget *previews_widget = new QTabWidget (last_page);
 			vbox->addWidget (previews_widget);
 			for (int i = 0; i < previews.size (); ++i) {
-				previews_widget->addTab (previews[i].area, previews[i].label);
+				previews_widget->addTab (previews[i].widget, previews[i].preview_area->label ());
 			}
 		}
 	}
