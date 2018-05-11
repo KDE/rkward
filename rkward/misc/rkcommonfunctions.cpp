@@ -148,7 +148,7 @@ namespace RKCommonFunctions {
 			}
 
 			// if we did not hit a continue, yet, that means we are on a potential symbol boundary
-			if (i < cursor_pos) *start = i+1;
+			if (i <= cursor_pos) *start = i+1;
 			else {
 				*end = i;
 				break;

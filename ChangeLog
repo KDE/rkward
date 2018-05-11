@@ -1,4 +1,5 @@
 --- Version 0.7.1 - UNRELEASED
+- Do not attempt object name hinting behind empty quoted strings or spaces.
 - rk.show.message() gains a parameter to allow setting a default button other than "yes"
 - Compile in ui definitions, instead of providing them as separate files
 - Fix printing of strings with R 3.5.0 on Windows in the console

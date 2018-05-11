@@ -1070,7 +1070,10 @@ void RKCodeCompletionModel::updateCompletionList (const QString& symbol) {
 	beginResetModel ();
 
 	RObject::RObjectSearchMap map;
-	RObjectList::getObjectList ()->findObjectsMatching (symbol, &map);
+	QStringList objectpath = RObject::parseObjectPath (symbol);
+	if (!objectpath.isEmpty () && !objectpath[0].isEmpty ()) {  // Skip completion, if the current symbol is '""' (or another empty quote), for instance
+		RObjectList::getObjectList ()->findObjectsMatching (symbol, &map);
+	}
 
 	int count = map.size ();
 	icons.clear ();
