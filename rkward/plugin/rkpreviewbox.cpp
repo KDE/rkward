@@ -38,8 +38,8 @@
 RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
 	RK_TRACE (PLUGIN);
 
-	prior_preview_done = true;
-	new_preview_pending = false;
+	manager = new RKPreviewManager (this);
+	connect (manager, &RKPreviewManager::statusChanged, this, &RKPreviewBox::tryPreview);
 
 	// get xml-helper
 	XMLHelper *xml = parent_component->xmlHelper ();
@@ -48,7 +48,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	placement = (PreviewPlacement) xml->getMultiChoiceAttribute (element, "placement", "default;attached;detached;docked", 0, DL_INFO);
 	if (placement == DefaultPreview) placement = DockedPreview;
 	preview_active = xml->getBoolAttribute (element, "active", false, DL_INFO);
-	idprop = RObject::rQuote (QString ().sprintf ("%p", this));
+	idprop = RObject::rQuote (manager->previewId ());
 
 	// create and add property
 	addChild ("state", state = new RKComponentPropertyBool (this, true, preview_active, "active", "inactive"));
@@ -74,11 +74,11 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	if (placement == AttachedPreview) placement_end.append ("\"attached\"");
 	else if (placement == DetachedPreview) placement_end.append ("\"detached\"");
 	else placement_end.append ("\"\"");
-	placement_end.append (", " + RObject::rQuote (idprop) + ", style=\"preview\")");
+	placement_end.append (", " + idprop + ", style=\"preview\")");
 	if (placement == DockedPreview) {
 		RKStandardComponent *uicomp = topmostStandardComponent ();
 		if (uicomp) {
-			uicomp->addDockedPreview (state, toggle_preview_box->text (), idprop);
+			uicomp->addDockedPreview (state, toggle_preview_box->text (), manager->previewId ());
 
 			if (preview_mode == OutputPreview) {
 				RKGlobals::rInterface ()->issueCommand ("local ({\n"
@@ -144,6 +144,9 @@ void RKPreviewBox::changedState (RKComponentPropertyBase *) {
 	toggle_preview_box->setChecked (state->boolValue ());
 	updating = false;
 
+	if (toggle_preview_box->isChecked ()) manager->setUpdatePending ();
+	else manager->setPreviewDisabled ();
+
 	tryPreview ();
 	changed ();
 }
@@ -151,6 +154,7 @@ void RKPreviewBox::changedState (RKComponentPropertyBase *) {
 void RKPreviewBox::changedCode (RKComponentPropertyBase *) {
 	RK_TRACE (PLUGIN);
 
+	if (toggle_preview_box->isChecked ()) manager->setUpdatePending ();
 	tryPreview ();
 }
 
@@ -166,111 +170,59 @@ void RKPreviewBox::tryPreview () {
 	if (isEnabled () && toggle_preview_box->isChecked ()) update_timer->start (10);
 	else killPreview ();
 
-	updateStatusLabel ();
+	status_label->setText (manager->shortStatusLabel ());
 }
 
 void RKPreviewBox::tryPreviewNow () {
 	RK_TRACE (PLUGIN);
 
 	if (!code_property) return;
+
 	ComponentStatus s = parentComponent ()->recursiveStatus ();
 	if (s != Satisfied) {
+		manager->setNoPreviewAvailable ();
 		if (s == Processing) tryPreview ();
-		else {
-			setStatusMessage (i18n ("Preview not (currently) possible"));
-		}
 		return;
 	}
 
-	if (!prior_preview_done) {		// if the last plot is not done, yet, wait before starting the next.
-		new_preview_pending = true;
-		updateStatusLabel ();
-		return;
-	}
+	if (!manager->needsCommand ()) return; // if the last plot is not done, yet, wait before starting the next.
 
 	preview_active = true;
 
-	setStatusMessage (i18n ("Preview updating"));
+	RCommand *command;
 	if (preview_mode == PlotPreview) {
 		RKGlobals::rInterface ()->issueCommand (placement_command + ".rk.startPreviewDevice (" + idprop + ')' + placement_end, RCommand::Plugin | RCommand::Sync, QString ());
 		// creating window generates warnings, sometimes. Don't make those part of the warnings shown for the preview -> separate command for the actual plot.
-		RKGlobals::rInterface ()->issueCommand ("local({\n" + code_property->preview () + "})\n", RCommand::Plugin | RCommand::Sync, QString (), this, DO_PREVIEW);
+		command = new RCommand ("local({\n" + code_property->preview () + "})\n", RCommand::Plugin | RCommand::Sync);
 	} else if (preview_mode == DataPreview) {
-		RKGlobals::rInterface ()->issueCommand ("local({try({\n" + code_property->preview () + "\n})\nif(!exists(\"preview_data\",inherits=FALSE)) preview_data <- data.frame ('ERROR')\nrk.assign.preview.data(" + idprop + ", preview_data)\n})\n" + placement_command + "rk.edit(rkward::.rk.variables$.rk.preview.data[[" + idprop + "]])" + placement_end, RCommand::Plugin | RCommand::Sync, QString (), this, DO_PREVIEW);
+		command = new RCommand ("local({try({\n" + code_property->preview () + "\n})\nif(!exists(\"preview_data\",inherits=FALSE)) preview_data <- data.frame ('ERROR')\nrk.assign.preview.data(" + idprop + ", preview_data)\n})\n" + placement_command + "rk.edit(rkward::.rk.variables$.rk.preview.data[[" + idprop + "]])" + placement_end, RCommand::Plugin | RCommand::Sync);
 	} else if (preview_mode == OutputPreview) {
-		RKGlobals::rInterface ()->issueCommand (placement_command + "local({\n"
+		command = new RCommand (placement_command + "local({\n"
 		    "	oldfile <- rk.set.output.html.file(rk.get.preview.data (" + idprop + ")$filename, style='preview')\n"
 		    "	rk.flush.output(ask=FALSE, style='preview')\n"
 		    "	local({try({\n" + code_property->preview () + "\n})})\n"  // nested local to make sure "oldfile" is not overwritten.
 		    "	rk.set.output.html.file(oldfile)\n})\n"
-		    "rk.show.html(rk.get.preview.data (" + idprop + ")$filename)" + placement_end, RCommand::Plugin | RCommand::Sync, QString (), this, DO_PREVIEW);
+		    "rk.show.html(rk.get.preview.data (" + idprop + ")$filename)" + placement_end, RCommand::Plugin | RCommand::Sync);
 	} else {
-		RKGlobals::rInterface ()->issueCommand ("local({\n" + placement_command + code_property->preview () + placement_end + "})\n", RCommand::Plugin | RCommand::Sync, QString (), this, DO_PREVIEW);
+		command = new RCommand ("local({\n" + placement_command + code_property->preview () + placement_end + "})\n", RCommand::Plugin | RCommand::Sync);
 	}
-
-	prior_preview_done = false;
-	new_preview_pending = false;
-
-	updateStatusLabel ();
-}
-
-void RKPreviewBox::setStatusMessage(const QString& status) {
-	RK_TRACE (PLUGIN);
-
-	RKMDIWindow *window = RKWorkplace::mainWorkplace ()->getNamedWindow (idprop);
-	if (!window) return;
-	window->setStatusMessage (status);
+	manager->setCommand (command);
 }
 
 void RKPreviewBox::killPreview (bool cleanup) {
 	RK_TRACE (PLUGIN);
 
-	if (!preview_active) return;
+	if (!(preview_active || cleanup)) return;
 	preview_active = false;
 
 	if (cleanup) {
 		QString command;
-		if (preview_mode == PlotPreview) command = ".rk.killPreviewDevice (" + idprop + ')';
-		else command = "rk.discard.preview.data (" + idprop + ')';
+		if (preview_mode == PlotPreview) command = ".rk.killPreviewDevice (" + idprop + ")\n";
+		command += "rk.discard.preview.data (" + idprop + ')';
 		RKGlobals::rInterface ()->issueCommand (command, RCommand::Plugin | RCommand::Sync);
 	}
 	if (placement != DockedPreview) {
-		RKMDIWindow *window =  RKWorkplace::mainWorkplace ()->getNamedWindow (idprop);
+		RKMDIWindow *window =  RKWorkplace::mainWorkplace ()->getNamedWindow (manager->previewId ());
 		if (window) window->deleteLater ();
 	}
-
-	prior_preview_done = true;
-	new_preview_pending = false;
 }
-
-void RKPreviewBox::rCommandDone (RCommand *command) {
-	RK_TRACE (PLUGIN);
-
-	prior_preview_done = true;
-	if (new_preview_pending) tryPreview ();
-
-	QString warnings = command->warnings () + command->error ();
-	if (!warnings.isEmpty ()) warnings = QString ("<b>%1</b>\n<pre>%2</pre>").arg (i18n ("Warnings or Errors:")).arg (warnings.toHtmlEscaped ());
-	setStatusMessage (warnings);
-
-	updateStatusLabel ();
-}
-
-void RKPreviewBox::updateStatusLabel () {
-	RK_TRACE (PLUGIN);
-
-	if (!toggle_preview_box->isChecked ()) {
-		status_label->setText (i18n ("Preview disabled"));
-	} else {
-		if (parentComponent ()->isSatisfied ()) {
-			if (prior_preview_done && (!new_preview_pending)) {
-				status_label->setText (i18n ("Preview up to date"));
-			} else {
-				status_label->setText (i18n ("Preview updating"));
-			}
-		} else {
-			status_label->setText (i18n ("Preview not (yet) possible"));
-		}
-	}
-}
-

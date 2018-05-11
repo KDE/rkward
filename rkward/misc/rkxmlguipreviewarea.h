@@ -31,7 +31,7 @@ class RKXMLGUIPreviewArea : public KXmlGuiWindow {
 public:
 	RKXMLGUIPreviewArea (const QString &label, QWidget* parent);
 	~RKXMLGUIPreviewArea ();
-	/** (initializes, and) returns a wrapper widget that contains this widget along with a caption (see setLabel()), menu button, and close button. */
+	/** Returns a wrapper widget (created on first call of this function) that contains this widget along with a caption (see setLabel()), menu button, and close button. */
 	QWidget *wrapperWidget ();
 	QString label () const { return _label; };
 protected:
@@ -47,6 +47,40 @@ private:
 	QString _label;
 	QMenu *menu;
 	QPointer<KParts::Part> current;
+};
+
+class RCommand;
+/** Simple manager (state machine) for previews. Keeps track of whether a preview is currently updating / up-to-date, and provides
+ *  status information to any preview window. */
+class RKPreviewManager : public QObject {
+	Q_OBJECT
+public:
+	explicit RKPreviewManager (QObject *parent);
+	~RKPreviewManager ();
+
+	void setUpdatePending ();
+	void setPreviewDisabled ();
+	void setNoPreviewAvailable ();
+	/** Start the next preview update, as given by command. You must call needsCommand() first, to check whether the next command is
+	 *  ready to go. */
+	void setCommand (RCommand *command);
+	bool needsCommand () const { return !updating && (update_pending == UpdatePending); };
+	QString previewId () const { return id; };
+	QString shortStatusLabel () const;
+signals:
+	void statusChanged ();
+private slots:
+	void previewCommandDone (RCommand *command);
+private:
+	void setStatusMessage (const QString &);
+	enum {
+		NoUpdatePending,
+		NoUpdatePossible,
+		PreviewDisabled,
+		UpdatePending
+	} update_pending;
+	bool updating;
+	QString id;
 };
 
 #endif
