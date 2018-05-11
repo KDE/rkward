@@ -28,13 +28,14 @@ class QCheckBox;
 class QDomElement;
 class QLabel;
 class QTimer;
+class RKPreviewManager;
 
 /**
 This RKComponent provides a (togglable) automatic graphical preview. WARNING: This component violates some standards of "good component behavior", esp. by assuming several things about the nature of the parent component. So please do not take this as an example for basing other components on.
 
 @author Thomas Friedrichsmeier
 */
-class RKPreviewBox : public RKComponent, public RCommandReceiver {
+class RKPreviewBox : public RKComponent {
 	Q_OBJECT
 public: 
 	RKPreviewBox (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
@@ -47,17 +48,12 @@ public slots:
 	void changedState (RKComponentPropertyBase *);
 	void changedCode (RKComponentPropertyBase *);
 	void tryPreviewNow ();
-protected:
-	void rCommandDone (RCommand *) override;
 private:
 	bool updating;		// prevent recursion
 	bool preview_active;
-	bool prior_preview_done;
-	bool new_preview_pending;
 	void tryPreview ();
 	void killPreview (bool cleanup = false);
-	void updateStatusLabel ();
-	void setStatusMessage (const QString& status);
+	RKPreviewManager *manager;
 	enum PreviewMode {
 		PlotPreview,
 		DataPreview,

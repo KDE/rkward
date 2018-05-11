@@ -30,6 +30,9 @@
 #include <KLocalizedString>
 
 #include "../windows/rkmdiwindow.h"
+#include "../rbackend/rcommand.h"
+#include "../rbackend/rkrinterface.h"
+#include "../rkglobals.h"
 #include "rkstandardicons.h"
 
 #include "../debug.h"
@@ -153,6 +156,92 @@ void RKXMLGUIPreviewArea::prepareMenu () {
 		for (int j = 0; j < entries_to_add.size (); ++j) {
 			where_to_add->addAction (entries_to_add[j]);
 		}
+	}
+}
+
+
+#include "../windows/rkworkplace.h"
+
+RKPreviewManager::RKPreviewManager(QObject* parent) : QObject (parent) {
+	RK_TRACE (PLUGIN);
+
+	update_pending = NoUpdatePending;
+	updating = false;
+	id = QString ().sprintf ("%p", this).remove ('%');
+}
+
+RKPreviewManager::~RKPreviewManager () {
+	RK_TRACE (PLUGIN);
+}
+
+void RKPreviewManager::previewCommandDone (RCommand* command) {
+	RK_TRACE (PLUGIN);
+
+	updating = false;
+	if (update_pending == NoUpdatePossible) {
+		setNoPreviewAvailable ();
+	} else {
+		QString warnings = command->warnings () + command->error ();
+		if (!warnings.isEmpty ()) warnings = QString ("<b>%1</b>\n<pre>%2</pre>").arg (i18n ("Warnings or Errors:")).arg (warnings.toHtmlEscaped ());
+		setStatusMessage (warnings);
+	}
+}
+
+void RKPreviewManager::setCommand (RCommand* command) {
+	RK_TRACE (PLUGIN);
+
+	RK_ASSERT (!updating);
+	updating = true;
+	update_pending = NoUpdatePending;
+	connect (command->notifier(), &RCommandNotifier::commandFinished, this, &RKPreviewManager::previewCommandDone);
+	RKGlobals::rInterface ()->issueCommand (command);
+	setStatusMessage (shortStatusLabel ());
+}
+
+void RKPreviewManager::setUpdatePending () {
+	if (update_pending == UpdatePending) return;
+	RK_TRACE (PLUGIN);
+
+	update_pending = UpdatePending;
+	setStatusMessage (shortStatusLabel ());
+}
+
+void RKPreviewManager::setNoPreviewAvailable () {
+	if (update_pending == NoUpdatePossible) return;
+	RK_TRACE (PLUGIN);
+
+	update_pending = NoUpdatePossible;
+	setStatusMessage (shortStatusLabel ());
+}
+
+void RKPreviewManager::setPreviewDisabled () {
+	if (update_pending == PreviewDisabled) return;
+	RK_TRACE (PLUGIN);
+
+	update_pending = PreviewDisabled;
+	setStatusMessage (shortStatusLabel ());
+}
+
+void RKPreviewManager::setStatusMessage (const QString& message) {
+	RK_TRACE (PLUGIN);
+
+	RKMDIWindow *window = RKWorkplace::mainWorkplace ()->getNamedWindow (id);
+	if (window) window->setStatusMessage (message);
+
+	emit (statusChanged());
+}
+
+QString RKPreviewManager::shortStatusLabel() const {
+//	RK_TRACE (PLUGIN);
+
+	if (update_pending == NoUpdatePossible) {
+		return (i18n ("Preview not (yet) possible"));
+	} else if (update_pending == PreviewDisabled) {
+		return (i18n ("Preview disabled"));
+	} else if (updating || (update_pending == UpdatePending)) {
+		return (i18n ("Preview updating"));
+	} else {
+		return (i18n ("Preview up to date"));
 	}
 }
 
