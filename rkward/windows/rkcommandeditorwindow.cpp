@@ -175,8 +175,10 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 	if (em_iface) em_iface->setModifiedOnDiskWarning (true);
 	else RK_ASSERT (false);
 	preview = new RKXMLGUIPreviewArea (i18n ("Preview of rendered R Markdown"), this);
+	preview_manager = new RKPreviewManager (this);
+	connect (preview_manager, &RKPreviewManager::statusChanged, [this]() { preview_timer.start (500); });
 	m_view = m_doc->createView (this);
-	RKWorkplace::mainWorkplace()->registerNamedWindow (QString ().sprintf ("%p", this).remove ('%'), this, preview);
+	RKWorkplace::mainWorkplace()->registerNamedWindow (preview_manager->previewId(), this, preview);
 	if (!url.isEmpty ()) {
 		KConfigGroup viewconf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptViewSettings %1").arg (RKWorkplace::mainWorkplace ()->portableUrl (url)));
 		m_view->readSessionConfig (viewconf);
@@ -196,7 +198,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 
 	QHBoxLayout *layout = new QHBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
-	preview_splitter = new QSplitter (this);
+	QSplitter* preview_splitter = new QSplitter (this);
 	preview_splitter->addWidget (m_view);
 	QWidget *preview_widget = preview->wrapperWidget ();
 	preview_splitter->addWidget (preview_widget);
@@ -209,7 +211,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 #warning remove this in favor of KTextEditor::Document::restore()
 #endif
 	connect (m_doc, &KTextEditor::Document::modifiedChanged, this, &RKCommandEditorWindow::autoSaveHandlerModifiedChanged);
-	connect (m_doc, &KTextEditor::Document::textChanged, this, &RKCommandEditorWindow::autoSaveHandlerTextChanged);
+	connect (m_doc, &KTextEditor::Document::textChanged, this, &RKCommandEditorWindow::textChanged);
 	connect (m_view, &KTextEditor::View::selectionChanged, this, &RKCommandEditorWindow::selectionChanged);
 	// somehow the katepart loses the context menu each time it loses focus
 	connect (m_view, &KTextEditor::View::focusIn, this, &RKCommandEditorWindow::focusIn);
@@ -241,8 +243,8 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 	initBlocks ();
 	RK_ASSERT (smart_iface);
 
-	autosave_timer = new QTimer (this);
-	connect (autosave_timer, &QTimer::timeout, this, &RKCommandEditorWindow::doAutoSave);
+	connect (&autosave_timer, &QTimer::timeout, this, &RKCommandEditorWindow::doAutoSave);
+	connect (&preview_timer, &QTimer::timeout, this, &RKCommandEditorWindow::doRenderPreview);
 
 	updateCaption ();	// initialize
 	QTimer::singleShot (0, this, SLOT (setPopupMenu()));
@@ -329,7 +331,7 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	action_setwd_to_script->setToolTip (action_setwd_to_script->statusTip ());
 	action_setwd_to_script->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionCDToScript));
 
-	action_render_preview = ac->addAction ("render_preview", this, SLOT (renderPreview()));
+	action_render_preview = ac->addAction ("render_preview", this, SLOT (textChanged()));
 	action_render_preview->setText ("Render Preview");
 	action_render_preview->setCheckable (true);
 	connect (preview, &RKXMLGUIPreviewArea::previewClosed, action_render_preview, &QAction::toggle);
@@ -469,7 +471,7 @@ void RKCommandEditorWindow::autoSaveHandlerModifiedChanged () {
 	RK_TRACE (COMMANDEDITOR);
 
 	if (!isModified ()) {
-		autosave_timer->stop ();
+		autosave_timer.stop ();
 
 		if (RKSettingsModuleCommandEditor::autosaveKeep ()) return;
 		if (!previous_autosave_url.isValid ()) return;
@@ -485,13 +487,23 @@ void RKCommandEditorWindow::autoSaveHandlerModifiedChanged () {
 	}
 }
 
-void RKCommandEditorWindow::autoSaveHandlerTextChanged () {
+void RKCommandEditorWindow::textChanged () {
 	RK_TRACE (COMMANDEDITOR);
 
+	// render preview
+	if (action_render_preview->isChecked ()) {
+		preview_manager->setUpdatePending ();
+		preview_timer.start (500);              // brief delay to buffer keystrokes
+	} else {
+		preview->wrapperWidget ()->hide ();
+		preview_manager->setPreviewDisabled ();
+	}
+
+	// auto save
 	if (!isModified ()) return;		// may happen after load or undo
 	if (!RKSettingsModuleCommandEditor::autosaveEnabled ()) return;
-	if (!autosave_timer->isActive ()) {
-		autosave_timer->start (RKSettingsModuleCommandEditor::autosaveInterval () * 60 * 1000);
+	if (!autosave_timer.isActive ()) {
+		autosave_timer.start (RKSettingsModuleCommandEditor::autosaveInterval () * 60 * 1000);
 	}
 }
 
@@ -553,7 +565,7 @@ void RKCommandEditorWindow::doAutoSave () {
 	alljobs->start ();
 
 	// do not create any more autosaves until the text is changed, again
-	autosave_timer->stop ();
+	autosave_timer.stop ();
 }
 
 void RKCommandEditorWindow::autoSaveHandlerJobFinished (RKJobSequence* seq) {
@@ -778,12 +790,13 @@ void RKCommandEditorWindow::copyLinesToOutput () {
 	RKCommandHighlighter::copyLinesToOutput (m_view, RKCommandHighlighter::RScript);
 }
 
-void RKCommandEditorWindow::renderPreview () {
+void RKCommandEditorWindow::doRenderPreview () {
 	RK_TRACE (COMMANDEDITOR);
 
 	if (action_render_preview->isChecked ()) {
-		QString id = QString ().sprintf ("%p", this).remove ('%');
-		QTemporaryFile save (QDir::tempPath () + QStringLiteral ("/rkward_XXXXXX") + id + QStringLiteral (".Rmd"));
+		if (!preview_manager->needsCommand ()) return;
+
+		QTemporaryFile save (QDir::tempPath () + QStringLiteral ("/rkward_XXXXXX") + preview_manager->previewId () + QStringLiteral (".Rmd"));
 		RK_ASSERT (save.open ());
 		QTextStream out (&save);
 		out.setCodec ("UTF-8");     // make sure that all characters can be saved, without nagging the user
@@ -793,13 +806,12 @@ void RKCommandEditorWindow::renderPreview () {
 
 		QString command ("require(knitr)\n"
 				"require(markdown)\n"
-				"rk.show.html (knitr::knit2html(%1))");
+				"rk.show.html (knitr::knit2html(%1, quiet=TRUE))");
 		command = command.arg (RObject::rQuote (save.fileName ()));
 
-		RKGlobals::rInterface ()->issueCommand (".rk.with.window.hints ({\n" + command + QStringLiteral ("}, \"\", ") + RObject::rQuote (id) + ')', RCommand::App);
+		RCommand *rcommand = new RCommand (".rk.with.window.hints ({\n" + command + QStringLiteral ("}, \"\", ") + RObject::rQuote (preview_manager->previewId ()) + ')', RCommand::App);
+		preview_manager->setCommand (rcommand);
 		preview->wrapperWidget ()->show ();
-	} else {
-		preview->wrapperWidget ()->hide ();
 	}
 }
 

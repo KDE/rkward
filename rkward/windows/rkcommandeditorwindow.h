@@ -125,10 +125,9 @@ private:
 	RKCommandEditorWindow *command_editor;
 };
 
-class QTimer;
 class RKJobSequence;
-class QSplitter;
 class RKXMLGUIPreviewArea;
+class RKPreviewManager;
 
 /**
 	\brief Provides an editor window for R-commands, as well as a text-editor window in general.
@@ -190,8 +189,6 @@ public slots:
 	void runCurrent ();
 /** run the entire script */
 	void runAll ();
-/** Render the (.Rmd) current script */
-	void renderPreview ();
 /** insert line break and run the (previous) line */
 	void enterAndSubmit ();
 	void copyLinesToOutput ();
@@ -220,12 +217,14 @@ private slots:
 /** run a block */
 	void runBlock ();
 	void clearUnusedBlocks ();
+/** handler to control when autosaves should be created, preview should be updated */
+	void textChanged ();
+/** Render the (.Rmd) current script */
+	void doRenderPreview ();
 /** creates an autosave file */
 	void doAutoSave ();
 /** handler to control when autosaves should be created */
 	void autoSaveHandlerModifiedChanged ();
-/** handler to control when autosaves should be created */
-	void autoSaveHandlerTextChanged ();
 /** handle any errors during auto-saving */
 	void autoSaveHandlerJobFinished (RKJobSequence* seq);
 private:
@@ -267,15 +266,16 @@ private:
 	QAction* action_setwd_to_script;
 
 	QUrl previous_autosave_url;
-	QTimer* autosave_timer;
+	QTimer autosave_timer;
 
 	QUrl delete_on_close;
 
 	QString _id;
 	static QMap<QString, KTextEditor::Document*> unnamed_documents;
 
-	QSplitter *preview_splitter;
 	RKXMLGUIPreviewArea *preview;
+	QTimer preview_timer;
+	RKPreviewManager *preview_manager;
 };
 
 /** Simple class to provide HTML highlighting for arbitrary R code. */
