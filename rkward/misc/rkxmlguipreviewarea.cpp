@@ -115,6 +115,9 @@ void RKXMLGUIPreviewArea::childEvent (QChildEvent *event) {
 			menuBar ()->hide ();
 			QList<KToolBar*> tbars = toolBars ();
 			for (int i = 0; i < tbars.size (); ++i) tbars[i]->hide ();
+			// avoid shortcut conflicts
+			QList<QAction*> acts = actions ();
+			for (int i = 0; i < acts.size (); ++i) acts[i]->setShortcutContext(Qt::WidgetWithChildrenShortcut);
 		}
 	}
 	QObject::childEvent (event);
