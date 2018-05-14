@@ -2,7 +2,7 @@
                           rkhtmlwindow  -  description
                              -------------------
     begin                : Wed Oct 12 2005
-    copyright            : (C) 2005-2017 by Thomas Friedrichsmeier
+    copyright            : (C) 2005-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -65,9 +65,10 @@
 #include "../windows/rkworkplaceview.h"
 #include "../debug.h"
 
-// TODO: We used to have KioIntegration in addition to KPartsIntegration. But this is just buggy, buggy, buggy in KF5 5.9.0. (e.g. navigation to previous
-// // page in history just doesn't work).
-RKWebPage::RKWebPage (RKHTMLWindow* window): KWebPage (window, KPartsIntegration) {
+// NOTE: According to an earlier note at this place, KIOIntegration used to be very buggy around KF5 5.9.0. It seem to just work,
+//       at 5.44.0, and the symptoms are probably not terible for earlier versions, so we use it here (allows us to render help:/-pages
+//       inside the help window.
+RKWebPage::RKWebPage (RKHTMLWindow* window): KWebPage (window, KPartsIntegration | KIOIntegration) {
 	RK_TRACE (APP);
 	RKWebPage::window = window;
 	new_window = false;
@@ -377,7 +378,7 @@ bool RKHTMLWindow::openURL (const QUrl &url) {
 		return ok;
 	}
 
-	if (url_change_is_from_history || url.scheme ().toLower ().startsWith (QLatin1String ("help"))) {	// handle help pages, and any page that we have previously handled (from history)
+	if (url_change_is_from_history || url.scheme ().toLower ().startsWith (QLatin1String ("help"))) {	// handle any page that we have previously handled (from history)
 		changeURL (url);
 		page->load (url);
 		return true;
@@ -461,12 +462,16 @@ void RKHTMLWindow::changeURL (const QUrl &url) {
 
 	if (!url_change_is_from_history) {
 		if (window_mode == HTMLHelpWindow) {
-			if (current_history_position >= 0) {	// skip initial blank page
+			if (current_history_position >= 0) {	// just skip initial blank page
 				url_history = url_history.mid (0, current_history_position);
 
 				VisitedLocation loc;
 				loc.url = prev_url;
 				saveBrowserState (&loc);
+				if (url_history.value (current_history_position).url == url) { // e.g. a redirect. We still save the most recent browser state, but do not keep two entries for the same page
+					url_history.pop_back ();
+					--current_history_position;
+				}
 				url_history.append (loc);
 			}
 

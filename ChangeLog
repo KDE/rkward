@@ -1,4 +1,5 @@
 --- Version 0.7.1 - UNRELEASED
+- Support handling of help:/ pages (e.g. RKWard plugins documentation) inside the RKWard help window, again.
 - Do not attempt object name hinting behind empty quoted strings or spaces.
 - rk.show.message() gains a parameter to allow setting a default button other than "yes"
 - Compile in ui definitions, instead of providing them as separate files
