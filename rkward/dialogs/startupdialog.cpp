@@ -2,7 +2,7 @@
                           startupdialog  -  description
                              -------------------
     begin                : Thu Aug 26 2004
-    copyright            : (C) 2004, 2011, 2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -115,7 +115,7 @@ void StartupDialog::accept () {
 			result->result = ChoseFile;
 		} else {
 			result->result = OpenFile;
-			result->open_url = QUrl (item->text ());
+			result->open_url = QUrl::fromLocalFile (item->text ());
 		}
 	} else {
 		RK_ASSERT (false);
