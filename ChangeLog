@@ -1,4 +1,7 @@
 --- Version 0.7.1 - UNRELEASED
+- Expand root level objects (esp. data.frames) by default in plugin object lists. Add button to toggle back to collapsed.
+- Allow Tab-key to advance to the next row of data in data editor
+- Fix highlighting of "trailing" rows and columns in data editor
 - Fixed: Loading existing workspace from startup dialog failed silently.
 - Support handling of help:/ pages (e.g. RKWard plugins documentation) inside the RKWard help window, again.
 - Do not attempt object name hinting behind empty quoted strings or spaces.
