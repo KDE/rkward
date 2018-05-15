@@ -329,7 +329,7 @@ Qt::ItemFlags RKVarEditModel::flags (const QModelIndex& index) const {
 	if ((col < var_col_offset) && header_locked) return flags;
 
 	if (!edit_blocks) flags |= Qt::ItemIsEditable | Qt::ItemIsEnabled;
-	if ((col < objects.size ()) && (row < objects[0]->getLength ())) flags |= Qt::ItemIsSelectable;
+	flags |= Qt::ItemIsSelectable;   // NOTE: Setting this even for trailing rows / cols, as highlighting of current cell is based on this   // if ((col < objects.size ()) && (row < objects[0]->getLength ())) flags |= Qt::ItemIsSelectable;
 
 	return flags;
 }
@@ -592,7 +592,7 @@ Qt::ItemFlags RKVarEditMetaModel::flags (const QModelIndex& index) const {
 
 	if (col < var_col_offset) return flags;
 	if (!data_model->edit_blocks) flags |= Qt::ItemIsEditable | Qt::ItemIsEnabled;
-	if ((col < data_model->objects.size ()) && (row < RowCount)) flags |= Qt::ItemIsSelectable;
+	flags |= Qt::ItemIsSelectable;   // NOTE: Setting this even for trailing rows / cols, as highlighting of current cell is based on this   // if ((col < data_model->objects.size ()) && (row < RowCount)) flags |= Qt::ItemIsSelectable;
 
 	return flags;
 }
