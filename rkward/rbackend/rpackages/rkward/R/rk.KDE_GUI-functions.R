@@ -27,6 +27,9 @@
 #' @param button.cancel a string used for the text label of the \bold{Cancel} button.
 #'   This behaves similar to \code{button.yes}, including the meaning of the
 #'   default value "cancel".
+#' @param prompts either a character vector containing 3 prompts corresponding to return
+#'   values of TRUE, FALSE, or NA, or a single character value containing the prompts
+#'   separated by \code{/} characters.
 #' @param default The expected or "safe" default response (e.g. \code{TRUE} for "Yes button").
 #'   The corresponding button will focused, so that it will become selected option,
 #'   if the user simply presses enter.
@@ -77,6 +80,7 @@
 #' @export
 #' @rdname rk.show.messages
 "rk.show.question" <- function (message, caption = gettext("Question"), button.yes = "yes", button.no = "no", button.cancel = "cancel", default=TRUE) {
+  .Deprecated("rk.askYesNo")
 	if (isTRUE (default)) default_button <- button.yes
 	else if (identical (default, FALSE)) default_button <- button.no
 	else default_button <- button.cancel
@@ -84,6 +88,51 @@
 	if (res > 0) return (TRUE)
 	else if (res < 0) return (FALSE)
 	else return (NULL)	# cancelled
+}
+
+#' @export
+#' @rdname rk.show.messages
+"rk.askYesNo" <- function (message, default = TRUE, prompts = c("yes", "no", "cancel"), caption = gettext("Question")) {
+  if(is.character(prompts)){
+    if(length(prompts) == 1){
+      prompts <- unlist(strsplit(prompts, "/"))
+    } else {}
+    if(length(prompts) != 3){
+      stop(simpleError("'prompts' must be either a single character string or three character values!"))
+    } else {}
+    button.yes <- prompts[1]
+    button.no <- prompts[2]
+    button.cancel <- prompts[3]
+  } else {
+    stop(simpleError("'prompts' must be character!"))
+  }
+
+  default_button <- switch(
+    as.character(as.logical(default)),
+    "TRUE"=button.yes,
+    "FALSE"=button.no,
+    button.cancel
+  )
+
+  res <- .Call(
+    "rk.dialog",
+    caption,
+    message,
+    button.yes,
+    button.no,
+    button.cancel,
+    default_button,
+    TRUE,
+    PACKAGE="(embedding)"
+  )
+
+  if (res > 0){
+    return (TRUE)
+  } else if (res < 0){
+    return (FALSE)
+  } else {
+    return (NA) # cancelled
+  }
 }
 
 # drop-in-replacement for tk_select.list()
