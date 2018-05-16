@@ -294,7 +294,7 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, QString to_
 
 	addLibraryLocation (to_libloc);
 
-	QString command_string = "install.packages (c (\"" + packages.join ("\", \"") + "\")" + ", lib=\"" + to_libloc + "\"";
+	QString command_string = "install.packages (c (\"" + packages.join ("\", \"") + "\")" + ", lib=" + RObject::rQuote (to_libloc);
 	QString downloaddir = QDir (RKSettingsModuleGeneral::filesPath ()).filePath ("package_archive");
 	if (RKSettingsModuleRPackages::archivePackages ()) {
 		QDir (RKSettingsModuleGeneral::filesPath ()).mkdir ("package_archive");
