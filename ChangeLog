@@ -1,4 +1,5 @@
 --- Version 0.7.1 - UNRELEASED
+- Fixed a layout issue in plugins using <stretch>-elements that would sometimes also render top-left aligned UI-elements unsuable.
 - Remove a bit of unused empty space around the main area of plugin dialogs
 - Expand root level objects (esp. data.frames) by default in plugin object lists. Add button to toggle back to collapsed.
 - Allow Tab-key to advance to the next row of data in data editor
