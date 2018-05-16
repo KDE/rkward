@@ -298,7 +298,7 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, QString to_
 	QString downloaddir = QDir (RKSettingsModuleGeneral::filesPath ()).filePath ("package_archive");
 	if (RKSettingsModuleRPackages::archivePackages ()) {
 		QDir (RKSettingsModuleGeneral::filesPath ()).mkdir ("package_archive");
-		command_string += ", destdir=\"" + downloaddir + "\"";
+		command_string += ", destdir=" + RObject::rQuote (downloaddir);
 	}
 	if (install_suggested_packages) command_string += ", dependencies=TRUE";
 	command_string += ")\n";
