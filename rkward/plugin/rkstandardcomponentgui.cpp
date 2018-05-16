@@ -176,7 +176,8 @@ void RKStandardComponentGUI::createDialog (bool switchable) {
 
 	// build standard elements
 	main_widget = new QWidget (central_widget);
-	new QVBoxLayout (main_widget);
+	QVBoxLayout* main_widget_layout = new QVBoxLayout (main_widget);
+	main_widget_layout->setContentsMargins(0, 0, 0, 0);
 	hbox->addWidget (main_widget);
 
 	// lines
