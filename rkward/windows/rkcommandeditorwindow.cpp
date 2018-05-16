@@ -993,7 +993,7 @@ void RKFunctionArgHinter::tryArgHintNow () {
 	}
 
 	// now identify the symbol and object (if any)
-	QString effective_symbol = RKCommonFunctions::getCurrentSymbol (full_context, potential_symbol_end+1);
+	QString effective_symbol = RKCommonFunctions::getCurrentSymbol (full_context, potential_symbol_end);
 	if (effective_symbol.isEmpty ()) {
 		hideArgHint ();
 		return;
