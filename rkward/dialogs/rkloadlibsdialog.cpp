@@ -1011,7 +1011,7 @@ void RKRPackageInstallationStatus::clearStatus () {
 QVariant RKRPackageInstallationStatus::headerData (int section, Qt::Orientation orientation, int role) const {
 	if (orientation != Qt::Horizontal) return QVariant ();
 
-	if ((role == Qt::DecorationRole) && (section == EnhancesRKWard)) return QApplication::windowIcon ();
+	if ((role == Qt::DecorationRole) && (section == EnhancesRKWard)) return RKStandardIcons::getIcon (RKStandardIcons::RKWardIcon);
 
 	if (role == Qt::DisplayRole) {
 		if (section == InstallationStatus) return QVariant (i18n ("Status"));
@@ -1096,7 +1096,7 @@ QVariant RKRPackageInstallationStatus::data (const QModelIndex &index, int role)
 				if (prow == InstalledPackages) enhance_rk = enhance_rk_in_installed.value (irow);
 				else enhance_rk = enhance_rk_in_available.value (arow);
 				if (role == Qt::UserRole) return QVariant (enhance_rk);
-				if (enhance_rk) return QApplication::windowIcon ();
+				if (enhance_rk) return RKStandardIcons::getIcon (RKStandardIcons::RKWardIcon);
 			}
 		} else if (col == PackageName) {
 			if (role == Qt::DisplayRole) {

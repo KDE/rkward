@@ -2,7 +2,7 @@
                           rkstandardicons  -  description
                              -------------------
     begin                : Wed Oct 24 2007
-    copyright            : (C) 2007-2016 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -116,6 +116,8 @@ public:
 		StatusWaitingUpdating,
 
 		DocumentPDF,
+
+		RKWardIcon,
 
 		Last	/**< not really an item, only the count of items available. Do not use. */
 	};
