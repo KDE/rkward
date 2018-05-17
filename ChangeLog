@@ -1,4 +1,5 @@
 --- Version 0.7.1 - UNRELEASED
+- Slighlty less confusing output in case a package is installed from require(), such as in many plugins
 - Fixed: RKWard icon was missing for the "enhances RKWard" column in package installation dialog
 - Fixed a layout issue in plugins using <stretch>-elements that would sometimes also render top-left aligned UI-elements unsuable.
 - Remove a bit of unused empty space around the main area of plugin dialogs
