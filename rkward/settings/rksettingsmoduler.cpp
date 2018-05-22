@@ -278,6 +278,7 @@ QStringList RKSettingsModuleR::makeRRunTimeOptionCommands () {
 	list.append ("options (help_type=\"html\")\n");		// for R 2.10.0 and above
 	list.append ("try ({options (htmlhelp=TRUE); options (chmhelp=FALSE)})\n");	// COMPAT: for R 2.9.x and below
 	list.append ("options (browser=rk.show.html)\n");
+	list.append ("options (askYesNo=rk.askYesNo)\n"); // for R 3.5.0 and above
 
 	return list;
 }
