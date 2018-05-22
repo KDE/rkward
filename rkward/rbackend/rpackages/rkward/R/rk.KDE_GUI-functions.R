@@ -15,6 +15,8 @@
 #' 
 #' @aliases rk.show.message rk.show.question rk.select.list
 #' @param message a string for the content of the message box.
+#' @param msg like \code{message}, only the argument was renamed to mimic the formals of
+#'   \code{askYesNo}.
 #' @param caption a string for title of the message box.
 #' @param button.yes a string for the text label of the \bold{Yes} button. Can
 #'   be an empty string (\code{""}), in which case the button is not displayed
@@ -41,11 +43,18 @@
 #' @param multiple a logical (not NA), when \code{TRUE} multiple selection
 #'   selection is allowed.
 #' @param title a string, for the window title of the displayed list
+#' @param is.rk.askYesNo a logical value, you can safely ignore this argument if you call
+#'    \code{rk.askYesNo} manually. This argument is needed if \code{rk.askYesNo} is set
+#'    via \code{options("askYesNo"=rk.askYesNo)} because otherwise we'd either need more
+#'    complicated function code there, fail with an error or end up in an infinite loop.
 #' @return \code{rk.show.message} always returns \code{TRUE}, invisibly.
 #' 
 #' \code{rk.show.question} returns \code{TRUE} for \bold{Yes}, \code{FALSE} for
 #'   \bold{No}, and \code{NULL} for \bold{Cancel} actions. If the dialog is closed
 #'   without clicking on any button, \code{NULL} is returned, as well.
+#' 
+#' \code{rk.askYesNo} has the same return values as \code{rk.show.question}, except
+#'   it returns \code{NA} for \bold{Cancel} actions.
 #' 
 #' \code{rk.select.list} returns the value of \code{\link{select.list}}.
 #' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
@@ -92,7 +101,16 @@
 
 #' @export
 #' @rdname rk.show.messages
-"rk.askYesNo" <- function (message, default = TRUE, prompts = c("yes", "no", "cancel"), caption = gettext("Question")) {
+"rk.askYesNo" <- function (msg, default = TRUE, prompts = c("yes", "no", "cancel"), caption = gettext("Question"), is.rk.askYesNo=TRUE, ...) {
+ if(is.function(prompts)){
+    # using options() to set the prompts value for askYesNo() to this function also replaces our prompts and we'd
+    # end up in an infinite loop. we can check for the presence of the "rk.askYesNo" argument to see if that's the case
+    if(isTRUE(is.rk.askYesNo)){
+      prompts <- eval(formals("rk.askYesNo")[["prompts"]])
+    } else {
+      stop(simpleError("'rk.askYesNo' was designed to be used as the function code of 'askYesNo' and cannot be given a function "))
+    }
+  } else {}
   if(is.character(prompts)){
     if(length(prompts) == 1){
       prompts <- unlist(strsplit(prompts, "/"))
@@ -117,7 +135,7 @@
   res <- .Call(
     "rk.dialog",
     caption,
-    message,
+    msg,
     button.yes,
     button.no,
     button.cancel,

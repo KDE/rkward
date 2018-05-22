@@ -1,26 +1,28 @@
 Package: rkward
 Type: Package
 Title: Provides functions related to the RKWard GUI
-Author: Thomas Friedrichsmeier <thomas.friedrichsmeier@ruhr-uni-bochum.de> and
-    the RKWard Team <rkward-devel@kde.org>
+Description: This package contains functions which are useful in
+        combination with the RKWard GUI. Many of these functions only
+        needed for the internal communication between RKWard and R, but
+        some are also useful in user scripts.
+Author: Thomas Friedrichsmeier
+        <thomas.friedrichsmeier@ruhr-uni-bochum.de> and the RKWard Team
+        <rkward-devel@kde.org>
 Maintainer: RKWard-devel mailing list <rkward-devel@kde.org>
-Depends:
-    R (>= 2.9.0),methods
-Description: This package contains functions which are useful in combination
-    with the RKWard GUI. Many of these functions only needed for the internal
-    communication between RKWard and R, but some are also useful in user
-    scripts.
+Depends: R (>= 2.9.0),methods
+URL: https://rkward.kde.org
+BugReports: https://rkward.kde.org/Bugs
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyLoad: yes
-URL: http://rkward.kde.org
 Authors@R: c(person(given="Thomas", family="Friedrichsmeier",
-    email="thomas.friedrichsmeier@ruhr-uni-bochum.de", role=c("aut")),
-    person(given="RKWard-devel", family="mailing list",
-    email="rkward-devel@kde.org", role=c("cre","ctb")))
+        email="thomas.friedrichsmeier@ruhr-uni-bochum.de",
+        role=c("aut")), person(given="the RKWard", family="team",
+        email="rkward-devel@kde.org", role=c("cre","ctb")))
 Version: 0.7.1
-Date: 2018-04-20
-Collate:
+Date: 2018-05-22
+RoxygenNote: 6.0.1
+Collate: 
     'base_overrides.R'
     'internal.R'
     'internal_debugger.R'
@@ -40,5 +42,3 @@ Collate:
     'rk.utility-functions.R'
     'rk.workspace-functions.R'
     'rkward-package.R'
-    'ver.R'
-RoxygenNote: 6.0.1

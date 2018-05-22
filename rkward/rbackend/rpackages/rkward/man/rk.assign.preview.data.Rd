@@ -17,7 +17,8 @@ rk.discard.preview.data(id)
 \arguments{
 \item{id}{(character). Id associated with the data. Usually this will be the 'id' value of the <preview>-box.}
 
-\item{value.}{The value to assign. If this is a list, and contains a function named "on.delete", this function
+\item{value.}{The value to assign. If this is a list,
+      and contains a function named "on.delete", this function
 will be run by rk.discard.preview.data (with the \code{id} as argument. This is useful for running custom clearnup
 code, such as removing temporary files, etc.}
 }
@@ -25,8 +26,10 @@ code, such as removing temporary files, etc.}
 \code{rk.assign.preview.data} amd \code{rk.get.preview.data} returns the preview data (newly) associated
    with the given id. \code{rk.discard.preview.data} returns \code{NULL}, invisibly.
 
-\bold{Note}: Plugins that want to produce a single plot, or open a single object via \code{\link{rk.edit}()} do \bold{not}
-             have to call these functions, manually. See the chapter on providing previews in the Introduction to
+\bold{Note}: Plugins that want to produce a single plot,
+      or open a single object via \code{\link{rk.edit}()} do \bold{not}
+             have to call these functions,
+      manually. See the chapter on providing previews in the Introduction to
              writing plugins for RKWard.
 }
 \description{
@@ -34,8 +37,10 @@ code, such as removing temporary files, etc.}
    provided by the <preview>-feature of a plugin.
 \code{rk.get.preview.data} retrieves data previously stored with \code{rk.assign.preview.data}
 \code{rk.discard.preview.data} discards data previously stored with \code{rk.assign.preview.data}.
-   This gets called by the <preview>-box of the plugin, automtically, when the plugin dialog is closed.
-   You do not generally have to call it manually. See the notes for running custom clearnup code, below.
+   This gets called by the <preview>-box of the plugin, automtically,
+      when the plugin dialog is closed.
+   You do not generally have to call it manually. See the notes for running custom clearnup code,
+      below.
 }
 \examples{
 ## To be generated in the preview() code section of a plugin

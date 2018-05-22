@@ -5,6 +5,7 @@
 \alias{rk.show.question}
 \alias{rk.select.list}
 \alias{rk.show.question}
+\alias{rk.askYesNo}
 \alias{rk.select.list}
 \title{Message boxes and selection list using native KDE GUI}
 \usage{
@@ -12,6 +13,9 @@ rk.show.message(message, caption = gettext("Information"), wait = TRUE)
 
 rk.show.question(message, caption = gettext("Question"), button.yes = "yes",
   button.no = "no", button.cancel = "cancel", default = TRUE)
+
+rk.askYesNo(msg, default = TRUE, prompts = c("yes", "no", "cancel"),
+  caption = gettext("Question"), is.rk.askYesNo = TRUE, ...)
 
 rk.select.list(list, preselect = NULL, multiple = FALSE, title = NULL)
 }
@@ -41,6 +45,18 @@ default value "cancel".}
 The corresponding button will focused, so that it will become selected option,
 if the user simply presses enter.}
 
+\item{msg}{like \code{message}, only the argument was renamed to mimic the formals of
+\code{askYesNo}.}
+
+\item{prompts}{either a character vector containing 3 prompts corresponding to return
+values of TRUE, FALSE, or NA, or a single character value containing the prompts
+separated by \code{/} characters.}
+
+\item{is.rk.askYesNo}{a logical value, you can safely ignore this argument if you call
+\code{rk.askYesNo} manually. This argument is needed if \code{rk.askYesNo} is set
+via \code{options("askYesNo"=rk.askYesNo)} because otherwise we'd either need more
+complicated function code there, fail with an error or end up in an infinite loop.}
+
 \item{list}{a vector, coerced into a character vector.}
 
 \item{multiple}{a logical (not NA), when \code{TRUE} multiple selection
@@ -57,6 +73,9 @@ preselected.}
 \code{rk.show.question} returns \code{TRUE} for \bold{Yes}, \code{FALSE} for
   \bold{No}, and \code{NULL} for \bold{Cancel} actions. If the dialog is closed
   without clicking on any button, \code{NULL} is returned, as well.
+
+\code{rk.askYesNo} has the same return values as \code{rk.show.question}, except
+  it returns \code{NA} for \bold{Cancel} actions.
 
 \code{rk.select.list} returns the value of \code{\link{select.list}}.
 }
@@ -84,7 +103,8 @@ if (rk.show.question ("Question:\\nDo you want to know about RKWard?",
     button.yes = "Yes, I do!", button.no = "No, I don't care!", button.cancel = "")) {
   rk.show.message ("Message:\\nRKWard is a KDE GUI for R.", "RKWard Info")
 } else {
-  rk.show.message ("You must be joking!", "RKWard Info", wait = FALSE) ## Run asynchronously
+  rk.show.message ("You must be joking!", "RKWard Info",
+      wait = FALSE) ## Run asynchronously
 }
 
 ## Selection lists:

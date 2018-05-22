@@ -58,7 +58,8 @@ x1 <- rnorm (100)
 x2 <- rnorm (100, 2)
 
 rk.call.plugin ("rkward::t_test_two_vars", 
-  confint.state="1", conflevel.real="0.95", hypothesis.string="greater", paired.state="0", varequal.state="0", 
+  confint.state="1", conflevel.real="0.95", hypothesis.string="greater", paired.state="0",
+      varequal.state="0", 
   x.available="x1", y.available="x2", 
   submit.mode="submit")
 })

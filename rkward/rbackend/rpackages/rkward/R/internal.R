@@ -34,7 +34,7 @@
 	eval (substitute (attr (x, ".rk.invalid.fields") <<- l))
 }
 
-#' Work around some peculiarities in R's handling of levels
+# Work around some peculiarities in R's handling of levels
 #' @export
 ".rk.set.levels" <- function (var, levels) {
 	if (is.factor (var)) {

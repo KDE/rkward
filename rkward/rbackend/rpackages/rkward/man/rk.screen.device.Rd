@@ -7,7 +7,8 @@
 rk.screen.device(...)
 }
 \description{
-Depending on your use case, you should use \code{dev.new()}, \code{RK()} or \code{rk.embed.device()}, instead.
+Depending on your use case, you should use \code{dev.new()},
+      \code{RK()} or \code{rk.embed.device()}, instead.
 }
 \seealso{
 \link{dev.new}, \link{RK}, \link{rk.embed.device}
