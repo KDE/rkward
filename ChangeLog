@@ -9,7 +9,8 @@
 - Fixed: Loading existing workspace from startup dialog failed silently.
 - Support handling of help:/ pages (e.g. RKWard plugins documentation) inside the RKWard help window, again.
 - Do not attempt object name hinting behind empty quoted strings or spaces.
-- rk.show.message() gains a parameter to allow setting a default button other than "yes"
+- rk.show.question() gains a parameter to allow setting a default button other than "yes"
+- new function rk.askYesNo() combines the functionality of askYesNo() (R >= 3.5.0) with rk.show.question() and is the default option for askYesNo() calls
 - Compile in ui definitions, instead of providing them as separate files
 - Fix printing of strings with R 3.5.0 on Windows in the console
 - Offer R_LIBS_USER, instead of ~/.rkward/library as standard library installation location
