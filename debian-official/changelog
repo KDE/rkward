@@ -5,8 +5,10 @@ rkward (0.7.0b-1) unstable; urgency=low
     closes: #895875
   * Depend on r-api-3.5 when built against r-base-core >= 3.5.0
   * Do not depend on r-api-3.4 when built against r-base-core < 3.4.0
+  * Remove explicit specification of C compiler
+    closes: #900591
 
- -- Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>  Mon, 23 Apr 2018 20:00:00 +0100
+ -- Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>  Sat, 02 Jun 2018 09:00:00 +0100
 
 rkward (0.7.0-1) unstable; urgency=low
   * New upstream release

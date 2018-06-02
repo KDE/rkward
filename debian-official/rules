@@ -20,11 +20,7 @@ BUILDDIR = $(CURDIR)/debian/build
 
 override_dh_auto_configure:
 	mkdir -p $(BUILDDIR)
-	# Some installations of R need a specific version of the compiler(s)
-	# R CMD config provides info on which compiler to use
-	CC="`/usr/bin/R CMD config CC`" \
-	CXX="`/usr/bin/R CMD config CXX`" \
-	F77="`/usr/bin/R CMD config F77`" \
+
 	dh_auto_configure '--buildsystem=kf5' --parallel -- \
 		-DR_EXECUTABLE=/usr/bin/R/ \
 		-DR_LIBDIR=/usr/lib/R/site-library/ \
