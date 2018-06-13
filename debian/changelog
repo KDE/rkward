@@ -14,6 +14,10 @@ rkward (0.7.0b-1) unstable; urgency=low
     Includes missing translation files in rkward-data
   * Replace kdoctools-dev dependency with libkf5doctools-dev
     closes: #895875
+  * Depend on r-api-3.5 when built against r-base-core >= 3.5.0
+  * Do not depend on r-api-3.4 when built against r-base-core < 3.4.0
+  * Remove explicit specification of C compiler
+    closes: #900591
 
  -- Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>  Mon, 16 Apr 2018 20:00:00 +0100
 
