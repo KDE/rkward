@@ -58,6 +58,8 @@ public:
 	static int getDefaultWidth () { return options_width; };
 public slots:
 	void settingChanged ();
+private slots:
+	void addPaths (QStringList *string_list);
 private:
 	QLineEdit *outdec_input;
 	QSpinBox *width_input;
@@ -72,6 +74,7 @@ private:
 	QComboBox *editor_input;
 	QComboBox *pager_input;
 	QTextEdit *further_input;
+	MultiStringSelector *addpaths_selector;
 
 	static QString options_outdec;
 	static int options_width;
@@ -86,6 +89,7 @@ private:
 	static QString options_editor;
 	static QString options_pager;
 	static QString options_further;
+	static QStringList options_addpaths;
 
 // constants
 	static QString builtin_editor;
