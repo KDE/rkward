@@ -5,6 +5,9 @@
 \alias{rk.edit.files}
 \alias{rk.show.files}
 \alias{rk.show.html}
+\alias{rk.edit.files}
+\alias{rk.show.files}
+\alias{rk.show.html}
 \title{Edit / show an object / file}
 \usage{
 rk.edit(x)
@@ -59,13 +62,12 @@ and \code{getOption("browser")}.
 x <- data.frame (a=c(1:3), b=c(2:4))
 rk.edit(x)
 }
-\author{
-Thomas Friedrichsmeier \email{rkward-devel@kde.org}
-}
 \seealso{
 \code{\link{edit}}, \code{\link{file.edit}},
   \code{\link{file.show}}, \code{\link{browseURL}}
 }
+\author{
+Thomas Friedrichsmeier \email{rkward-devel@kde.org}
+}
 \keyword{IO}
 \keyword{utilities}
-

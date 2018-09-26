@@ -27,4 +27,3 @@ functions only needed for the internal communication between RKWard and R, but s
 Thomas Friedrichsmeier, with contributions from RKWard-devel mailing list
 }
 \keyword{package}
-

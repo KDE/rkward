@@ -12,4 +12,3 @@ Depending on your use case, you should use \code{dev.new()}, \code{RK()} or \cod
 \seealso{
 \link{dev.new}, \link{RK}, \link{rk.embed.device}
 }
-

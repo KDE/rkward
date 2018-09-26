@@ -20,4 +20,3 @@ show strings in the new lanuage, however.
 \details{
 To change the language in the backend, use \code{Sys.setenv(LANGUAGE=...)} or \code{Sys.setlocale()}.
 }
-

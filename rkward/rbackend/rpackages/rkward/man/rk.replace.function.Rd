@@ -50,12 +50,11 @@ rk.replace.function ("history", as.environment ("package:utils"),
 ## End not run
 
 }
-\author{
-Thomas Friedrichsmeier \email{rkward-devel@kde.org}
-}
 \seealso{
 \code{\link{assignInNamespace}}, \code{\link{debug}}
 }
+\author{
+Thomas Friedrichsmeier \email{rkward-devel@kde.org}
+}
 \keyword{IO}
 \keyword{utilities}
-

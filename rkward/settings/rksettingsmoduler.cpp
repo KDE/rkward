@@ -57,6 +57,7 @@ bool RKSettingsModuleR::options_checkbounds;
 QString RKSettingsModuleR::options_editor;
 QString RKSettingsModuleR::options_pager;
 QString RKSettingsModuleR::options_further;
+QStringList RKSettingsModuleR::options_addpaths;
 // static constants
 QString RKSettingsModuleR::builtin_editor = "<rkward>";
 // session constants
@@ -207,6 +208,12 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 	grid->addWidget (further_input, ++row, 0, 1, 2);
 
 	main_vbox->addStretch ();
+
+	addpaths_selector = new MultiStringSelector (i18n ("Addition search paths for utilities used by R"), this);
+	addpaths_selector->setValues (options_addpaths);
+	connect (addpaths_selector, &MultiStringSelector::listChanged, this, &RKSettingsModuleR::settingChanged);
+	connect (addpaths_selector, &MultiStringSelector::getNewStrings, this, &RKSettingsModuleR::addPaths);
+	main_vbox->addWidget (addpaths_selector);
 }
 
 RKSettingsModuleR::~RKSettingsModuleR() {
@@ -239,11 +246,43 @@ void RKSettingsModuleR::applyChanges () {
 	options_editor = editor_input->currentText ();
 	options_pager = pager_input->currentText ();
 	options_further = further_input->toPlainText ();
+	// normalize system paths before adding
+	QStringList paths = addpaths_selector->getValues ();
+	options_addpaths.clear ();
+	for (int i = 0; i < paths.count (); ++i) {
+		QString path = QDir::cleanPath (paths[i]);
+		if (!options_addpaths.contains (path)) options_addpaths.append (path);
+	}
 
 // apply run time options in R
 	QStringList commands = makeRRunTimeOptionCommands ();
 	for (QStringList::const_iterator it = commands.begin (); it != commands.end (); ++it) {
 		RKGlobals::rInterface ()->issueCommand (*it, RCommand::App, QString (), 0, 0, commandChain ());
+	}
+}
+
+void RKSettingsModuleR::addPaths(QStringList* string_list) {
+	RK_TRACE (SETTINGS);
+
+	QDialog dialog (this);
+	dialog.setWindowTitle (i18n ("Add System Path Directory"));
+	QVBoxLayout *layout = new QVBoxLayout (&dialog);
+	QLabel *label = new QLabel (i18n ("Specify or select directory to add to the system file path of the running R session"));
+	label->setWordWrap (true);
+	layout->addWidget (label);
+
+	KUrlRequester *req = new KUrlRequester ();
+	req->setMode (KFile::Directory);
+	layout->addWidget (req);
+
+	QDialogButtonBox *buttons = new QDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+	buttons->button(QDialogButtonBox::Ok)->setText (i18nc ("Add directory to list", "Add"));
+	connect (buttons, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+	connect (buttons, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+	layout->addWidget (buttons);
+
+	if (dialog.exec () == QDialog::Accepted) {
+		if (!req->text ().isEmpty ()) (*string_list).append (req->text ());
 	}
 }
 
@@ -271,6 +310,13 @@ QStringList RKSettingsModuleR::makeRRunTimeOptionCommands () {
 	if (options_pager == builtin_editor) list.append ("options (pager=rk.show.files)\n");
 	else list.append ("options (pager=\"" + options_pager + "\")\n");
 	if (!options_further.isEmpty ()) list.append (options_further + '\n');
+	if (!options_addpaths.isEmpty ()) {
+		QString command = "rk.adjust.system.path (add=c(";
+		foreach (const QString &p, options_addpaths) {
+			command.append (RObject::rQuote (p));
+		}
+		list.append (command + "))\n");
+	}
 
 #ifdef __GNUC__
 #	warning TODO make the following options configurable
@@ -305,6 +351,7 @@ void RKSettingsModuleR::saveSettings (KConfig *config) {
 	cg.writeEntry ("editor", options_editor);
 	cg.writeEntry ("pager", options_pager);
 	cg.writeEntry ("further init commands", options_further);
+	cg.writeEntry ("addsyspaths", options_addpaths);
 }
 
 void RKSettingsModuleR::loadSettings (KConfig *config) {
@@ -324,6 +371,7 @@ void RKSettingsModuleR::loadSettings (KConfig *config) {
 	options_editor = cg.readEntry ("editor", builtin_editor);
 	options_pager = cg.readEntry ("pager", builtin_editor);
 	options_further = cg.readEntry ("further init commands", QString ());
+	options_addpaths = cg.readEntry ("addsyspaths", QStringList ());
 }
 
 //#################################################

@@ -30,4 +30,3 @@ including the device independent fonts names "sans", "serif", and "mono"}
 The default settings for \code{width}, and \code{height} can be modified from Settings -> Configure RKWard -> Onscreen Graphics.
 }
 \keyword{devices}
-
