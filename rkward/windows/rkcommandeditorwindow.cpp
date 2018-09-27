@@ -804,12 +804,22 @@ void RKCommandEditorWindow::doRenderPreview () {
 		save.close ();
 		save.setAutoRemove (false);
 
-		QString command ("require(knitr)\n"
-				"require(markdown)\n"
-				"rk.show.html (knitr::knit2html(%1, quiet=TRUE))");
-		command = command.arg (RObject::rQuote (save.fileName ()));
+		QString command ("if (!nzchar(Sys.which(\"pandoc\"))) {\n"
+		                 "	output <- rk.set.output.html.file(%2)\n"
+		                 "	rk.header (" + RObject::rQuote (i18n ("Pandoc is not installed")) + ")\n"
+		                 "	rk.print (" + RObject::rQuote (i18n ("The software <tt>pandoc</tt>, required ot rendering R markdown files, is not installed, or not in the system path of "
+		                           "the running R session. You will need to install pandoc from <a href=\"https://pandoc.org/\">https://pandoc.org/</a>.</br>"
+		                           "If is installed, but cannot be found, try adding it to the system path of the running R session at "
+		                           "<a href=\"rkward://settings/rbackend\">Settings->Configure RKward->R-backend</a>.")) + ")\n"
+		                 "	rk.set.output.html.file(output)\n"
+		                 "} else {\n"
+		                 "	require(rmarkdown)\n"
+		                 "	rmarkdown::render (%1, output_format=\"html_document\", output_file=%2, quiet=TRUE)\n"
+		                 "}\n"
+		                 "rk.show.html(%2)\n");
+		command = command.arg (RObject::rQuote (save.fileName ()), RObject::rQuote (save.fileName () + ".html"));
 
-		RCommand *rcommand = new RCommand (".rk.with.window.hints ({\n" + command + QStringLiteral ("}, \"\", ") + RObject::rQuote (preview_manager->previewId ()) + ')', RCommand::App);
+		RCommand *rcommand = new RCommand (".rk.with.window.hints (local ({\n" + command + QStringLiteral ("}), \"\", ") + RObject::rQuote (preview_manager->previewId ()) + ')', RCommand::App);
 		preview_manager->setCommand (rcommand);
 		preview->wrapperWidget ()->show ();
 	}
@@ -1371,4 +1381,5 @@ void RKCommandHighlighter::copyLinesToOutput (KTextEditor::View *view, Highlight
 		RKGlobals::rInterface ()->issueCommand (".rk.cat.output (" + RObject::rQuote (highlighted) + ")\n", RCommand::App | RCommand::Silent);
 	}
 }
+
 
