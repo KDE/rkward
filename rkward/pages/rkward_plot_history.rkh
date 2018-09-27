@@ -22,7 +22,7 @@
 	</section>
 
 	<section title="Configurable Settings" id="scd_settings">
-	Some default settings for the Screen device history can be configured from Settings->Configure RKWard->Onscreen Graphics:
+	Some default settings for the Screen device history can be configured from <a href="rkward://settings/graphics">Settings->Configure RKWard->Onscreen Graphics</a>:
 
 	<ul>
 		<li><b>Screen device history</b>: Enables / disables the recording of plots globally. You can toggle this from within a running RKWard session which will affect all currently open and future screen devices. When unchecked, RKWard will not store any further plots in the history; although, the ones already stored are not lost! You can access the stored plots by re-enabling this. When toggling this, RKWard tries to save any unsaved plots, but be careful especially when the maximum history length is small (see below). You may want to disable this when the implemented history behavior seems non-intuitive or when dealing with large plots.</li>

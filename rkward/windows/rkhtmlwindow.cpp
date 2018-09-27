@@ -341,6 +341,12 @@ bool RKHTMLWindow::handleRKWardURL (const QUrl &url, RKHTMLWindow *window) {
 			if (path.startsWith ('/')) path = path.mid (1);
 			if (path == QStringLiteral ("rbackend")) {
 				RKSettings::configureSettings (RKSettings::PageR);
+			} else if (path == QStringLiteral ("console")) {
+				RKSettings::configureSettings (RKSettings::PageConsole);
+			} else if (path == QStringLiteral ("graphics")) {
+				RKSettings::configureSettings (RKSettings::PageX11);
+			} else if (path == QStringLiteral ("browser")) {
+				RKSettings::configureSettings (RKSettings::PageObjectBrowser);
 			} else {
 				RKSettings::configureSettings (RKSettings::NoPage);
 			}
