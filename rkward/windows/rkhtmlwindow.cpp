@@ -51,6 +51,7 @@
 #include "../rkconsole.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../settings/rksettingsmoduler.h"
+#include "../settings/rksettings.h"
 #include "../settings/rksettingsmoduleoutput.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkstandardactions.h"
@@ -327,23 +328,27 @@ bool RKHTMLWindow::handleRKWardURL (const QUrl &url, RKHTMLWindow *window) {
 			int sep = path.indexOf ('/');
 			// NOTE: These links may originate externally, even from untrusted sources. The submit mode *must* remain "ManualSubmit" for this reason!
 			RKComponentMap::invokeComponent (path.left (sep), path.mid (sep+1).split ('\n', QString::SkipEmptyParts), RKComponentMap::ManualSubmit);
-			return true;
-		} else {
-			if (url.host () == "rhelp") {
-				// TODO: find a nice solution to render this in the current window
-				QStringList spec = url.path ().mid (1).split ('/');
-				QString function, package, type;
-				if (!spec.isEmpty ()) function = spec.takeLast ();
-				if (!spec.isEmpty ()) package = spec.takeLast ();
-				if (!spec.isEmpty ()) type = spec.takeLast ();
-				RKHelpSearchWindow::mainHelpSearch ()->getFunctionHelp (function, package, type);
-				return true;
+		} else if (url.host () == "rhelp") {
+			// TODO: find a nice solution to render this in the current window
+			QStringList spec = url.path ().mid (1).split ('/');
+			QString function, package, type;
+			if (!spec.isEmpty ()) function = spec.takeLast ();
+			if (!spec.isEmpty ()) package = spec.takeLast ();
+			if (!spec.isEmpty ()) type = spec.takeLast ();
+			RKHelpSearchWindow::mainHelpSearch ()->getFunctionHelp (function, package, type);
+		} else if (url.host () == "settings") {
+			QString path = url.path ();
+			if (path.startsWith ('/')) path = path.mid (1);
+			if (path == QStringLiteral ("rbackend")) {
+				RKSettings::configureSettings (RKSettings::PageR);
+			} else {
+				RKSettings::configureSettings (RKSettings::NoPage);
 			}
-
+		} else {
 			if (window) window->openRKHPage (url);
 			else RKWorkplace::mainWorkplace ()->openHelpWindow (url);	// will recurse with window set, via openURL()
-			return true;
 		}
+		return true;
 	}
 	return false;
 }
