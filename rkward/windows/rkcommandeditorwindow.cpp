@@ -266,6 +266,7 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 	}
 
 	delete hinter;
+	discardPreview ();
 	delete m_view;
 	QList<KTextEditor::View*> views = m_doc->views ();
 	if (views.isEmpty ()) {
@@ -277,7 +278,6 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 	if (have_url && !_id.isEmpty ()) {
 		unnamed_documents.remove (_id);
 	}
-	delete preview_dir;
 }
 
 void RKCommandEditorWindow::fixupPartGUI () {
@@ -343,7 +343,7 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	actionmenu_preview->addAction (RKStandardIcons::getIcon (RKStandardIcons::WindowConsole), i18n ("R Console"));
 	actionmenu_preview->setCurrentItem (NoPreview);
 	actionmenu_preview->setToolBarMode (KSelectAction::MenuMode);
-	connect (preview, &RKXMLGUIPreviewArea::previewClosed, [this]() { actionmenu_preview->setCurrentItem (NoPreview); });
+	connect (preview, &RKXMLGUIPreviewArea::previewClosed, [this]() { actionmenu_preview->setCurrentItem (NoPreview); discardPreview (); });
 	connect (actionmenu_preview, static_cast<void (KSelectAction::*)(int)>(&KSelectAction::triggered), this, &RKCommandEditorWindow::textChanged);
 	ac->addAction ("render_preview", actionmenu_preview);
 	
@@ -498,6 +498,18 @@ void RKCommandEditorWindow::autoSaveHandlerModifiedChanged () {
 	}
 }
 
+void RKCommandEditorWindow::discardPreview () {
+	RK_TRACE (COMMANDEDITOR);
+
+	if (preview_dir) {
+		preview->wrapperWidget ()->hide ();
+		preview_manager->setPreviewDisabled ();
+		RKGlobals::rInterface ()->issueCommand (QString (".rk.killPreviewDevice(%1)\nrk.discard.preview.data (%1)").arg (RObject::rQuote(preview_manager->previewId ())), RCommand::App | RCommand::Sync);
+		delete preview_dir;
+		preview_dir = 0;
+	}
+}
+
 void RKCommandEditorWindow::textChanged () {
 	RK_TRACE (COMMANDEDITOR);
 
@@ -506,8 +518,7 @@ void RKCommandEditorWindow::textChanged () {
 		preview_manager->setUpdatePending ();
 		preview_timer.start (500);              // brief delay to buffer keystrokes
 	} else {
-		preview->wrapperWidget ()->hide ();
-		preview_manager->setPreviewDisabled ();
+		discardPreview ();
 	}
 
 	// auto save
@@ -843,10 +854,10 @@ void RKCommandEditorWindow::doRenderPreview () {
 		command = command.arg (RObject::rQuote (save.fileName ()), RObject::rQuote (output_file));
 	} else if (actionmenu_preview->currentItem () == GraphPreview) {
 		command = "olddev <- dev.cur()\n"
-		          "RK()\n"
+		          ".rk.startPreviewDevice(%2)\n"
 		          "try(source(%1))\n"
-		          "dev.set(olddev)\n";
-		command = command.arg (RObject::rQuote (save.fileName ()));
+		          "if (olddev != 1) dev.set(olddev)\n";
+		command = command.arg (RObject::rQuote (save.fileName ()), RObject::rQuote (preview_manager->previewId ()));
 	} else {
 		RK_ASSERT (actionmenu_preview->currentItem () == ConsolePreview);
 	}

@@ -286,6 +286,7 @@ private:
 	QTimer preview_timer;
 	RKPreviewManager *preview_manager;
 	QTemporaryDir *preview_dir;
+	void discardPreview ();
 };
 
 /** Simple class to provide HTML highlighting for arbitrary R code. */
