@@ -344,7 +344,7 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	actionmenu_preview->setCurrentItem (NoPreview);
 	actionmenu_preview->setToolBarMode (KSelectAction::MenuMode);
 	connect (preview, &RKXMLGUIPreviewArea::previewClosed, [this]() { actionmenu_preview->setCurrentItem (NoPreview); discardPreview (); });
-	connect (actionmenu_preview, static_cast<void (KSelectAction::*)(int)>(&KSelectAction::triggered), this, &RKCommandEditorWindow::textChanged);
+	connect (actionmenu_preview, static_cast<void (KSelectAction::*)(int)>(&KSelectAction::triggered), this, &RKCommandEditorWindow::changePreviewMode);
 	ac->addAction ("render_preview", actionmenu_preview);
 	
 	file_save = findAction (m_view, "file_save");
@@ -495,6 +495,19 @@ void RKCommandEditorWindow::autoSaveHandlerModifiedChanged () {
 			dummy->start ();
 		}
 		previous_autosave_url.clear ();
+	}
+}
+
+void RKCommandEditorWindow::changePreviewMode (int mode) {
+	RK_TRACE (COMMANDEDITOR);
+
+	if (mode != NoPreview) {
+		if (!preview_dir) {  // triggered on change from no preview to some preview, but not between previews
+			if (KMessageBox::warningContinueCancel (this, i18n ("<p>The preview feature <b>tries</b> to avoid making any lasting changes to your workspace (technically, by making use of a <i>local()</i> evaluation environment). <b>However, there are cases where using the preview feature may cause unexpected side-effects</b>.</p><p>In particular, this is the case for scripts that contain explicit assignments to <i>globalenv()</i>, or to scripts that alter files on your filesystem. Further, attaching/detaching packages or package namespaces will affect the entire running R session.</p><p>Please keep this in mind when using the preview feature, and especially when using the feature on scripts originating from untrusted sources.</p>"), i18n ("Potential side-effects of previews"), KStandardGuiItem::cont (), KStandardGuiItem::cancel (), QStringLiteral ("preview_side_effects")) != KMessageBox::Continue) {
+				actionmenu_preview->setCurrentItem (NoPreview);
+			}
+		}
+		textChanged ();
 	}
 }
 

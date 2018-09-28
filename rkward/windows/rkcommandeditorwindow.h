@@ -286,6 +286,7 @@ private:
 	QTimer preview_timer;
 	RKPreviewManager *preview_manager;
 	QTemporaryDir *preview_dir;
+	void changePreviewMode (int mode);
 	void discardPreview ();
 };
 
