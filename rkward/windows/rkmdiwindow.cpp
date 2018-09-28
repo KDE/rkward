@@ -357,7 +357,7 @@ void RKMDIWindow::setStatusMessage (const QString& message, RCommand *command) {
 	} else {
 		status_popup_container->hide ();
 		status_popup->hide ();
-		status_popup->setText (QString ());  // this is a lame way to keep track of whether the popup is empty. See resizeEvent()
+		status_popup->setText (QString ());
 	}
 }
 
@@ -368,9 +368,7 @@ void RKMDIWindow::clearStatusMessage () {
 }
 
 void RKMDIWindow::resizeEvent (QResizeEvent*) {
-	if (status_popup_container && !status_popup->text ().isEmpty ()) {
-		status_popup_container->resize (size ());
-	}
+	if (status_popup_container) status_popup_container->resize (size ());
 }
 
 
