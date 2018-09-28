@@ -57,6 +57,16 @@ RKXMLGUIPreviewArea::~RKXMLGUIPreviewArea () {
 	}
 }
 
+void RKXMLGUIPreviewArea::setLabel (const QString& label) {
+	RK_TRACE (PLUGIN);
+
+	if (label == _label) return;
+	_label = label;
+	if (wrapper_widget) {
+		lab->setText (label);
+	}
+}
+
 QWidget* RKXMLGUIPreviewArea::wrapperWidget () {
 	if (wrapper_widget) return wrapper_widget;
 
@@ -69,7 +79,7 @@ QWidget* RKXMLGUIPreviewArea::wrapperWidget () {
 	vl->addWidget (line);
 	QHBoxLayout *hl = new QHBoxLayout ();
 	vl->addLayout (hl);
-	QLabel *lab = new QLabel (_label, wrapper_widget);
+	lab = new QLabel (_label, wrapper_widget);
 	QFont fnt (lab->font ());
 	fnt.setBold (true);
 	lab->setFont (fnt);
