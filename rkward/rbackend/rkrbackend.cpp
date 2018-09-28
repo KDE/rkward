@@ -784,14 +784,14 @@ void RBusy (int busy) {
 	// R_ReplIteration calls R_Busy (1) after reading in code (if needed), successfully parsing it, and right before evaluating it.
 	if (busy) {
 		if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::UserCommandTransmitted) {
+			if (RKRBackend::this_pointer->current_command->type & RCommand::CCOutput) {
+				// flush any previous output capture and start a new one
+				if (RKRBackend::repl_status.user_command_successful_up_to > 0) RKRBackend::this_pointer->printAndClearCapturedMessages (false);
+				RKRBackend::this_pointer->startOutputCapture ();
+			}
 			if (RKRBackend::this_pointer->current_command->type & RCommand::CCCommand) {
 				QByteArray chunk = RKRBackend::repl_status.user_command_buffer.mid (RKRBackend::repl_status.user_command_parsed_up_to, RKRBackend::repl_status.user_command_transmitted_up_to - RKRBackend::repl_status.user_command_parsed_up_to);
 				RKRBackend::this_pointer->printCommand (RKRBackend::toUtf8 (chunk));
-			}
-			if (RKRBackend::this_pointer->current_command->type & RCommand::CCOutput) {
-				// flush any previous output caputre and start a new one
-				if (RKRBackend::repl_status.user_command_successful_up_to > 0) RKRBackend::this_pointer->printAndClearCapturedMessages (false);
-				RKRBackend::this_pointer->startOutputCapture ();
 			}
 			RKRBackend::repl_status.user_command_parsed_up_to = RKRBackend::repl_status.user_command_transmitted_up_to;
 			RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandRunning;
