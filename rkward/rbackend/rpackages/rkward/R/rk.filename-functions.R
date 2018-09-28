@@ -33,6 +33,7 @@
 #' @param css Local file name of CSS file to use, or NULL for no CSS file. The CSS file will be
 #'            placed next to x, with file name extension ".css". Only effective when initializing a
 #'            (non-existing) output file.
+#' @param silent Set to true to avoid the output window being raised in the frontend.
 #' @param flush.images. If true, any images used in the output file will be deleted as well.
 #' @param ask Logical: Whether to ask before flushing the output file.
 #' @param ... Further parameters passed to rk.set.output.html.file()
@@ -82,7 +83,7 @@
 
 #' @export
 #' @rdname rk.get.tempfile.name
-"rk.set.output.html.file" <- function (x, additional.header.contents = getOption ("rk.html.header.additions"), style=c ("regular", "preview"), css = getOption ("rk.output.css.file")) {
+"rk.set.output.html.file" <- function (x, additional.header.contents = getOption ("rk.html.header.additions"), style=c ("regular", "preview"), css = getOption ("rk.output.css.file"), silent=FALSE) {
 	stopifnot (is.character (x))
 	style <- match.arg (style)
 	oldfile <- rk.get.output.html.file ()
@@ -177,7 +178,7 @@
 	}
 
 	# needs to come after initialization, so initialization alone does not trigger an update during startup
-	.rk.do.plain.call ("set.output.file", x, synchronous=FALSE)
+	.rk.do.plain.call ("set.output.file", c (x, if (isTRUE (silent)) "SILENT" else NULL), synchronous=FALSE)
 	invisible (oldfile)
 }
 
