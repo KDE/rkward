@@ -39,8 +39,9 @@ class QCloseEvent;
 class QFrame;
 class QLabel;
 class QAction;
-class QAction;
+class QTemporaryDir;
 class KActionMenu;
+class KSelectAction;
 class RKCommandEditorWindow;
 class KActionCollection;
 
@@ -261,7 +262,15 @@ private:
 
 	QAction* action_run_all;
 	QAction* action_run_current;
-	QAction* action_render_preview;
+	KSelectAction* actionmenu_preview;
+
+	enum PreviewMode {
+		NoPreview,
+		RMarkdownPreview,
+		RKOutputPreview,
+		GraphPreview,
+		ConsolePreview,
+	};
 
 	QAction* action_setwd_to_script;
 
@@ -276,6 +285,7 @@ private:
 	RKXMLGUIPreviewArea *preview;
 	QTimer preview_timer;
 	RKPreviewManager *preview_manager;
+	QTemporaryDir *preview_dir;
 };
 
 /** Simple class to provide HTML highlighting for arbitrary R code. */

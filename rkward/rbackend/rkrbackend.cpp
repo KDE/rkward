@@ -1602,7 +1602,7 @@ QStringList RKRBackend::handlePlainGenericRequest (const QStringList &parameters
 		output_file = parameters.value (1);
 		if (parameters.length () > 2) {
 			RK_ASSERT (parameters.value (2) == "SILENT");
-			return QStringList ();		// For automated testing. The frontend should not be notified, here
+			return QStringList ();		// For automated testing and previews. The frontend should not be notified, here
 		}
 		request.params["call"] = parameters;
 	} else {
