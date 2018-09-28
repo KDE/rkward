@@ -25,6 +25,7 @@
 
 class QMenu;
 class QToolButton;
+class QLabel;
 
 class RKXMLGUIPreviewArea : public KXmlGuiWindow {
 	Q_OBJECT
@@ -34,6 +35,7 @@ public:
 	/** Returns a wrapper widget (created on first call of this function) that contains this widget along with a caption (see setLabel()), menu button, and close button. */
 	QWidget *wrapperWidget ();
 	QString label () const { return _label; };
+	void setLabel (const QString &label);
 protected:
 	/** build / destroy menu, when child is added removed. Note that we are in the fortunate situation that RKMDIWindow-children only ever get to the
 	 *  preview area via reparenting, i.e. contrary to usual QEvent::ChildAdded semnatics, they are always fully constructed, when added. */
@@ -45,6 +47,7 @@ signals:
 private:
 	QWidget *wrapper_widget;
 	QString _label;
+	QLabel *lab;
 	QMenu *menu;
 	QPointer<KParts::Part> current;
 };

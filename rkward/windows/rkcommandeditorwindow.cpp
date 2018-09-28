@@ -177,7 +177,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 	KTextEditor::ModificationInterface* em_iface = qobject_cast<KTextEditor::ModificationInterface*> (m_doc);
 	if (em_iface) em_iface->setModifiedOnDiskWarning (true);
 	else RK_ASSERT (false);
-	preview = new RKXMLGUIPreviewArea (i18n ("Preview of rendered R Markdown"), this);
+	preview = new RKXMLGUIPreviewArea (QString(), this);
 	preview_manager = new RKPreviewManager (this);
 	connect (preview_manager, &RKPreviewManager::statusChanged, [this]() { preview_timer.start (500); });
 	m_view = m_doc->createView (this);
@@ -820,6 +820,7 @@ void RKCommandEditorWindow::doRenderPreview () {
 
 	if (!preview_dir) preview_dir = new QTemporaryDir ();
 	QFile save (preview_dir->filePath ("script.R"));
+	if (actionmenu_preview->currentItem () == RMarkdownPreview) save.setFileName (preview_dir->filePath ("markdownscript.Rmd"));
 	RK_ASSERT (save.open (QIODevice::WriteOnly));
 	QTextStream out (&save);
 	out.setCodec ("UTF-8");     // make sure that all characters can be saved, without nagging the user
@@ -828,7 +829,7 @@ void RKCommandEditorWindow::doRenderPreview () {
 
 	QString command;
 	if (actionmenu_preview->currentItem () == RMarkdownPreview) {
-		save.rename (preview_dir->filePath ("markdownscript.Rmd"));
+		preview->setLabel (i18n ("Preview of rendered R Markdown"));
 
 		command = "if (!nzchar(Sys.which(\"pandoc\"))) {\n"
 		           "	output <- rk.set.output.html.file(%2, silent=TRUE)\n"
@@ -845,17 +846,19 @@ void RKCommandEditorWindow::doRenderPreview () {
 		           "rk.show.html(%2)\n";
 		command = command.arg (RObject::rQuote (save.fileName ()), RObject::rQuote (save.fileName () + ".html"));
 	} else if (actionmenu_preview->currentItem () == RKOutputPreview) {
+		preview->setLabel (i18n ("Preview of generated RKWard output"));
 		QString output_file = preview_dir->filePath ("output.html");
 		command = "output <- rk.set.output.html.file(%2, silent=TRUE)\n"
 		          "try(rk.flush.output(ask=FALSE, style=\"preview\", silent=TRUE))\n"
-		          "try(source(%1))\n"
+		          "try(source(%1, local=TRUE))\n"
 		          "rk.set.output.html.file(output, silent=TRUE)\n"
 		          "rk.show.html(%2)\n";
 		command = command.arg (RObject::rQuote (save.fileName ()), RObject::rQuote (output_file));
 	} else if (actionmenu_preview->currentItem () == GraphPreview) {
+		preview->setLabel (i18n ("Preview of generated plot"));
 		command = "olddev <- dev.cur()\n"
 		          ".rk.startPreviewDevice(%2)\n"
-		          "try(source(%1))\n"
+		          "try(source(%1, local=TRUE))\n"
 		          "if (olddev != 1) dev.set(olddev)\n";
 		command = command.arg (RObject::rQuote (save.fileName ()), RObject::rQuote (preview_manager->previewId ()));
 	} else {
@@ -865,19 +868,18 @@ void RKCommandEditorWindow::doRenderPreview () {
 	preview->wrapperWidget ()->show ();
 
 	if (actionmenu_preview->currentItem () == ConsolePreview) {  // somewhat hacky, I admit...
+		preview->setLabel (i18n ("Preview of script running in interactive R Console"));
 		QString output_file = RObject::rQuote (preview_dir->filePath ("output.html"));
 		RKGlobals::rInterface ()->issueCommand (QString (
-		                                        ".rk.with.window.hints ({\n"
-		                                        "   rk.assign.preview.data(%1, rk.set.output.html.file(%2, silent=TRUE))\n"
-		                                        "   rk.flush.output(ask=FALSE, style=\"preview\", silent=TRUE)\n"
-		                                        "}, \"\", %1, style=\"preview\")\n").arg (RObject::rQuote (preview_manager->previewId ()), output_file), RCommand::App);
+		                                        "rk.assign.preview.data(%1, rk.set.output.html.file(%2, silent=TRUE))\n"
+		                                        "rk.flush.output(ask=FALSE, style=\"preview\", silent=TRUE)\n").arg (RObject::rQuote (preview_manager->previewId ()), output_file), RCommand::App | RCommand::Sync);
 
-		RCommand *rcommand = new RCommand (m_doc->text(), RCommand::User | RCommand::CCCommand | RCommand::CCOutput);
+		RCommand *rcommand = new RCommand (QString ("local({\n%1\n})").arg (m_doc->text()), RCommand::User | RCommand::CCCommand | RCommand::CCOutput);
 		preview_manager->setCommand (rcommand);
 		RKGlobals::rInterface ()->issueCommand (QString ("rk.set.output.html.file(rk.get.preview.data(%1), silent=TRUE)\n"
 		                                        ".rk.with.window.hints ({\n"
 		                                        "	rk.show.html(%2)\n"
-		                                        "}, \"\", %1, style=\"preview\")\n").arg (RObject::rQuote (preview_manager->previewId ()), output_file), RCommand::App);
+		                                        "}, \"\", %1, style=\"preview\")\n").arg (RObject::rQuote (preview_manager->previewId ()), output_file), RCommand::App | RCommand::Sync);
 	} else {
 		RCommand *rcommand = new RCommand (".rk.with.window.hints (local ({\n" + command + QStringLiteral ("}), \"\", ") + RObject::rQuote (preview_manager->previewId ()) + ", style=\"preview\")", RCommand::App);
 		preview_manager->setCommand (rcommand);
