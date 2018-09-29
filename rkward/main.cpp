@@ -59,7 +59,7 @@
 #	include <KCrash>
 #endif
 
-#include <qstring.h>
+#include <QString>
 #include <QMutex>
 #include <QTemporaryFile>
 #include <QDir>
@@ -67,7 +67,10 @@
 #include <QApplication>
 #include <QUrl>
 #include <QCommandLineParser>
-#include <QtDBus>
+#include <QDBusConnection>
+#include <QDBusInterface>
+#include <QDBusReply>
+#include <QTime>
 #include <QSettings>
 
 #include <stdio.h>
