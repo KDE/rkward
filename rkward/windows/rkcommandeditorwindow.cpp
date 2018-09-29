@@ -832,8 +832,8 @@ void RKCommandEditorWindow::doRenderPreview () {
 	if (!preview_manager->needsCommand ()) return;
 
 	if (!preview_dir) preview_dir = new QTemporaryDir ();
-	QFile save (preview_dir->filePath ("script.R"));
-	if (actionmenu_preview->currentItem () == RMarkdownPreview) save.setFileName (preview_dir->filePath ("markdownscript.Rmd"));
+	QFile save (QDir (preview_dir->path()).absoluteFilePath ("script.R"));
+	if (actionmenu_preview->currentItem () == RMarkdownPreview) save.setFileName (QDir (preview_dir->path()).absoluteFilePath ("markdownscript.Rmd"));
 	RK_ASSERT (save.open (QIODevice::WriteOnly));
 	QTextStream out (&save);
 	out.setCodec ("UTF-8");     // make sure that all characters can be saved, without nagging the user
@@ -860,7 +860,7 @@ void RKCommandEditorWindow::doRenderPreview () {
 		command = command.arg (RObject::rQuote (save.fileName ()), RObject::rQuote (save.fileName () + ".html"));
 	} else if (actionmenu_preview->currentItem () == RKOutputPreview) {
 		preview->setLabel (i18n ("Preview of generated RKWard output"));
-		QString output_file = preview_dir->filePath ("output.html");
+		QString output_file = QDir (preview_dir->path()).absoluteFilePath ("output.html");
 		command = "output <- rk.set.output.html.file(%2, silent=TRUE)\n"
 		          "try(rk.flush.output(ask=FALSE, style=\"preview\", silent=TRUE))\n"
 		          "try(source(%1, local=TRUE))\n"
@@ -882,7 +882,7 @@ void RKCommandEditorWindow::doRenderPreview () {
 
 	if (actionmenu_preview->currentItem () == ConsolePreview) {  // somewhat hacky, I admit...
 		preview->setLabel (i18n ("Preview of script running in interactive R Console"));
-		QString output_file = RObject::rQuote (preview_dir->filePath ("output.html"));
+		QString output_file = RObject::rQuote (QDir (preview_dir->path()).absoluteFilePath ("output.html"));
 		RKGlobals::rInterface ()->issueCommand (QString (
 		                                        "rk.assign.preview.data(%1, rk.set.output.html.file(%2, silent=TRUE))\n"
 		                                        "rk.flush.output(ask=FALSE, style=\"preview\", silent=TRUE)\n").arg (RObject::rQuote (preview_manager->previewId ()), output_file), RCommand::App | RCommand::Sync);
