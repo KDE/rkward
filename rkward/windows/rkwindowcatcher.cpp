@@ -341,7 +341,7 @@ void RKCaughtX11Window::doEmbed () {
 	if (!isAttached ()) {
 		// make xembed_container resizable, again, now that it actually has a content
 		dynamic_size_action->setChecked (true);
-		QTimer::singleShot (0, this, SLOT (fixedSizeToggled ())); // For whatever reason, apparently we have to wait for the next event loop with this.
+		QTimer::singleShot (0, this, SLOT (fixedSizeToggled())); // For whatever reason, apparently we have to wait for the next event loop with this.
 	}
 
 	// try to be helpful when the window is too large to fit on screen

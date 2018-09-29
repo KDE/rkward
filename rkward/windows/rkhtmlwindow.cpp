@@ -1084,7 +1084,7 @@ void RKOutputWindowManager::setCurrentOutputPath (const QString &_path) {
 	// watch list (KDE 4.10.2; always?), so we need to re-add it. To make things complex, however, this may happen
 	// asynchronously, with this function called (via rk.set.output.html.file()), _before_ KDirWatch purges the file.
 	// To hack around the race condition, we re-watch the output file after a short delay.
-	QTimer::singleShot (100, this, SLOT (rewatchOutput ()));
+	QTimer::singleShot (100, this, SLOT (rewatchOutput()));
 #endif
 	if (path == current_default_path) return;
 
