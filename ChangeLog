@@ -1,4 +1,5 @@
 --- Version 0.7.1 - UNRELEASED
+- Allow to reference current script file in plugins      TODO: Test this
 - Add various live-preview options for R scripts, including a preview of R markdown rendering
 - Make it possible to "link" to specific settings pages from the internal documentation
 - Slighlty less confusing output in case a package is installed from require(), such as in many plugins
