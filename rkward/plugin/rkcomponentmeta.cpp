@@ -201,7 +201,7 @@ QString numericVersionToString (quint32 numeric) {
 		ret.append (QString::number (ver_part));
 		if (i > 0) ret.append ('.');
 	}
-	if (ret.endsWith (QLatin1String (".0"))) ret.chop (2);	// HACK: Don't print more than three verison parts, unless the fourth is non-zero
+	if (ret.endsWith (QLatin1String (".0"))) ret.chop (2);	// HACK: Don't print more than three version parts, unless the fourth is non-zero
 	return ret;
 }
 

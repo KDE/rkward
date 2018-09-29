@@ -29,7 +29,7 @@ class QDomElement;
 
 /** RKComponent to select one or more file(s) or directories
 
-TODO: Rename to somehting like RKComponentFileSelect or a similarilly ugly name
+TODO: Rename to something like RKComponentFileSelect or a similarly ugly name
 TODO: I ripped out multiple file selection for now. GetFileNameWidget should be extended to handle that internally (tfry)
 
 @author Adrien d'Hardemare

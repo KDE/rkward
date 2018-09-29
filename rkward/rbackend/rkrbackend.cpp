@@ -293,10 +293,10 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 					RKRBackend::this_pointer->runCommand (command);
 					RKRBackend::this_pointer->commandFinished ();
 				} else {
-					// so, we are about to transmit a new user command, which is quite a complex endeavour...
+					// so, we are about to transmit a new user command, which is quite a complex endeavor...
 					/* Some words about running user commands:
 					- User commands can only be run at the top level of execution, not in any sub-stacks. But then, they should never get there, in the first place.
-					- Handling user commands is totally different from all other commands, and relies on R's "REPL" (read-evaluate-print-loop). This is a whole bunch of dedicated code, but there is no other way to achieve handling of commands as if they had been entered on a plain R console (incluing auto-printing, and toplevel handlers). Most importantly, since important symbols are not exported, such as R_Visible. Vice versa, it is not possible to treat all commands like user commands, esp. in substacks.
+					- Handling user commands is totally different from all other commands, and relies on R's "REPL" (read-evaluate-print-loop). This is a whole bunch of dedicated code, but there is no other way to achieve handling of commands as if they had been entered on a plain R console (including auto-printing, and toplevel handlers). Most importantly, since important symbols are not exported, such as R_Visible. Vice versa, it is not possible to treat all commands like user commands, esp. in substacks.
 
 					Problems to deal with:
 					- R_ReadConsole serves a lot of different functions, including reading in code, but also handling user input for readline() or browser(). This makes it necessary to carefully track the current status using "repl_status". You will find repl_status to be modified at a couple of different functions.
@@ -620,7 +620,7 @@ void RKRBackend::tryToDoEmergencySave () {
 		// Fortunately, if we are in the wrong thread, that probably means, the R thread did *not* crash, and will thus still be functional
 		this_pointer->killed = EmergencySaveThenExit;
 		RK_scheduleIntr ();
-		for (int i = 0; i < 100; ++i) {		// give it up to ten seconds to intterrupt and exit the loop
+		for (int i = 0; i < 100; ++i) {		// give it up to ten seconds to interrupt and exit the loop
 			if (!this_pointer->r_running) break;
 			RKRBackendProtocolBackend::msleep (100);
 		}
@@ -907,7 +907,7 @@ SEXP doError (SEXP call) {
 		RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandFailed;
 	}
 	if (RKRBackend::repl_status.interrupted) {
-		// it is unlikely, but possible, that an interrupt signal was received, but the current command failed for some other reason, before processing was acutally interrupted. In this case, R_interrupts_pending if not yet cleared.
+		// it is unlikely, but possible, that an interrupt signal was received, but the current command failed for some other reason, before processing was actually interrupted. In this case, R_interrupts_pending if not yet cleared.
 		// NOTE: if R_interrupts_pending stops being exported one day, we might be able to use R_CheckUserInterrupt() inside an R_ToplevelExec() to find out, whether an interrupt was still pending.
 		if (!R_interrupts_pending) {
 			RKRBackend::repl_status.interrupted = false;

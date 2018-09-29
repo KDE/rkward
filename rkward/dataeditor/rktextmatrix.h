@@ -27,7 +27,7 @@ to and from text/tab-separated-values format, and it does not hickup in case of 
 class RKTextMatrix {
 public:
 	RKTextMatrix ();
-/** copy constructor. Since we're mostly just copying a QList (which is implicitely shared) and two ints, this is pretty fast. */
+/** copy constructor. Since we're mostly just copying a QList (which is implicitly shared) and two ints, this is pretty fast. */
 	RKTextMatrix (const RKTextMatrix& copy);
 	~RKTextMatrix ();
 

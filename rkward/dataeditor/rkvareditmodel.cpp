@@ -133,7 +133,7 @@ void RKVarEditModel::objectMetaChanged (RObject* changed) {
 	RK_TRACE (EDITOR);
 
 	int cindex = objects.indexOf (static_cast<RKVariable*> (changed));	// no check for isVariable needed. we only need to look up, if we have this object, and where.
-	if (cindex < 0) return;	// none of our buisiness
+	if (cindex < 0) return;	// none of our business
 
 	if (meta_model) meta_model->objectMetaChanged (cindex);
 }

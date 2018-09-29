@@ -105,7 +105,7 @@ void RKProgressControl::doNonModal (bool autodelete) {
 	RK_ASSERT (!dialog);
 
 	RKProgressControl::autodelete = autodelete;
-	if ((!dialog) && (mode & ShowAtOnce)) {		// actually, dialog should alway be 0 at this point
+	if ((!dialog) && (mode & ShowAtOnce)) {		// actually, dialog should always be 0 at this point
 		createDialog ();
 		dialog->show ();
 	}

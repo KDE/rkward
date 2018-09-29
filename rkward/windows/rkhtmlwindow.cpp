@@ -67,7 +67,7 @@
 #include "../debug.h"
 
 // NOTE: According to an earlier note at this place, KIOIntegration used to be very buggy around KF5 5.9.0. It seem to just work,
-//       at 5.44.0, and the symptoms are probably not terible for earlier versions, so we use it here (allows us to render help:/-pages
+//       at 5.44.0, and the symptoms are probably not terrible for earlier versions, so we use it here (allows us to render help:/-pages
 //       inside the help window.
 RKWebPage::RKWebPage (RKHTMLWindow* window): KWebPage (window, KPartsIntegration | KIOIntegration) {
 	RK_TRACE (APP);

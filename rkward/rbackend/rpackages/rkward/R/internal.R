@@ -155,7 +155,7 @@
 # Gather status information on installed and available packages.
 # Return value is used in class RKRPackageInstallationStatus of the frontend
 #' @export
-".rk.get.package.intallation.state" <- function () {
+".rk.get.package.installation.state" <- function () {
 	# fetch all status information
 	available <- .rk.cached.available.packages ()
 	inst <- installed.packages (fields="Title")

@@ -49,7 +49,7 @@ Catch R X11 device windows
 		- notify app right before device is created
 		- notify app right after device is created
 	- least preferable solution as we can not be sure we catch every use.
-		- but definitely most. This is dispatched via CurrentDevice ()->options("device"), and then evalued in R_GlobalEnv
+		- but definitely most. This is dispatched via CurrentDevice ()->options("device"), and then evaluated in R_GlobalEnv
 - remaining problem: how to get the window id given the device id?
 	- http://tronche.com/gui/x/xlib/events/window-state-change/create.html#XCreateWindowEvent
 	- for active / inactive: XPropertyEvent WM_NAME

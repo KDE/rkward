@@ -313,7 +313,7 @@ void RKAccordionTable::setShowAddRemoveButtons (bool show) {
 QSize RKAccordionTable::sizeHintWithoutEditor () const {
 	RK_TRACE (MISC);
 
-	// NOTE: This is not totally correct, but seems to be, roughly. We can't use sizeHintForRow(0) for height calcuation, as the model may be empty
+	// NOTE: This is not totally correct, but seems to be, roughly. We can't use sizeHintForRow(0) for height calculation, as the model may be empty
 	// (for "driven" optionsets.
 	return (QSize (minimumSizeHint ().width (), header ()->sizeHint().height () + horizontalScrollBar ()->sizeHint ().height () + QFontMetrics (QFont ()).lineSpacing () * 4));
 }

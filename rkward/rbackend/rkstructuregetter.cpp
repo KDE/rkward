@@ -372,7 +372,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 		if (do_env) {
 			RK_DEBUG (RBACKEND, DL_DEBUG, "recurse into environment %s", name.toLatin1().data ());
 			if (!Rf_isEnvironment (value)) {
-				// some classes (ReferenceClasses) are identified as envionments by is.environment(), but are not internally ENVSXPs.
+				// some classes (ReferenceClasses) are identified as environments by is.environment(), but are not internally ENVSXPs.
 				// For these, Rf_findVar would fail.
 				REPROTECT (value = RKRSupport::callSimpleFun (as_environment_fun, value, R_GlobalEnv), value_index);
 			}

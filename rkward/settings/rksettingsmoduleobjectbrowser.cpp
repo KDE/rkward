@@ -43,7 +43,7 @@ RKSettingsModuleObjectBrowser::RKSettingsModuleObjectBrowser (RKSettings *gui, Q
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
 
-	// Note: Up to RKWard 0.6.3, this settings module had a lot of additional checkboxes. Since 0.6.4, most settings are stored, implictily,
+	// Note: Up to RKWard 0.6.3, this settings module had a lot of additional checkboxes. Since 0.6.4, most settings are stored, implicitly,
 	//       i.e. the Workspace Browser tool window "remembers" its latest settings (and so does the Varselector, separately). This modules
 	//       is still responsible to storing / loading settings.
 

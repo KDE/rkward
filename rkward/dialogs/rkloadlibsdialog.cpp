@@ -950,7 +950,7 @@ void RKRPackageInstallationStatus::initialize (RCommandChain *chain) {
 
 	_initialized = true;	// will be re-set to false, should the command fail / be cancelled
 
-	RCommand *command = new RCommand (".rk.get.package.intallation.state ()", RCommand::App | RCommand::GetStructuredData);
+	RCommand *command = new RCommand (".rk.get.package.installation.state ()", RCommand::App | RCommand::GetStructuredData);
 	connect (command->notifier (), &RCommandNotifier::commandFinished, this, &RKRPackageInstallationStatus::statusCommandFinished);
 	RKProgressControl *control = new RKProgressControl (this, i18n ("<p>Please stand by while searching for installed and available packages.</p><p><strong>Note:</strong> This requires a working internet connection, and may take some time, esp. if one or more repositories are temporarily unavailable.</p>"), i18n ("Searching for packages"), RKProgressControl::CancellableProgress | RKProgressControl::AutoCancelCommands);
 	control->addRCommand (command, true);

@@ -34,7 +34,7 @@ RData::~RData () {
 }
 
 void RData::doAssert(RData::RDataType requested_type) const {
-	RK_DEBUG (RBACKEND, DL_ERROR, "Reqeusted data of type %d, while %p has type %d", requested_type, this, datatype);
+	RK_DEBUG (RBACKEND, DL_ERROR, "Requested data of type %d, while %p has type %d", requested_type, this, datatype);
 }
 
 void RData::discardData () {

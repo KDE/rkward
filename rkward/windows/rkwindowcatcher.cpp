@@ -377,7 +377,7 @@ void RKCaughtX11Window::setWindowStyleHint (const QString& hint) {
 void RKCaughtX11Window::forceClose () {
 	killed_in_r = true;
 	if (embedded) {
-		// HACK: Somehow (R 3.0.0alpha), the X11() window is surpisingly die-hard, if it is not closed "the regular way".
+		// HACK: Somehow (R 3.0.0alpha), the X11() window is surprisingly die-hard, if it is not closed "the regular way".
 		// So we expurge it, and leave the rest to the user.
 		embedded->setParent (0);
 		qApp->processEvents ();

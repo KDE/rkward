@@ -36,7 +36,7 @@ class RKOrphanNamespacesObject;
 
 /**
 This class is responsible for keeping and updating a list of objects in the R-workspace.
-Acutally it kind of represents the R-workspace, including methods to save and load the workspace.
+Actually it kind of represents the R-workspace, including methods to save and load the workspace.
 It acts as the "document".
 
 @author Thomas Friedrichsmeier

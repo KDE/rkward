@@ -56,7 +56,7 @@ public:
 	type and with the name (if necessary) changed to a legal value. TODO: checking for and changing illegal names is not yet implemented */
 	RObject *createPendingChild (const QString &name, int position=-1, bool container=false, bool data_frame=false);
 
-	/** given child_name, constructs a name which is as close as possible to the orginial but valid (i.e. not already in use, not contaning illegal characters */
+	/** given child_name, constructs a name which is as close as possible to the orginial but valid (i.e. not already in use, not containing illegal characters */
 	QString validizeName (const QString &child_name, bool unique=true) const;
 
 	void moveChild (RObject* child, int from_index, int to_index);

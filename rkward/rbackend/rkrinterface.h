@@ -98,7 +98,7 @@ private:
 
 /** A list of all commands that have entered, and not yet left, the backend thread */
 	QList<RCommand*> all_current_commands;
-/** NOTE: processsing R events while waiting for the next command may, conceivably, lead to new requests, which may also wait for sub-commands! Thus we keep a simple stack of requests. */
+/** NOTE: processing R events while waiting for the next command may, conceivably, lead to new requests, which may also wait for sub-commands! Thus we keep a simple stack of requests. */
 	QList<RBackendRequest*> command_requests;
 	RBackendRequest* currentCommandRequest () const { return (command_requests.isEmpty () ? 0 : command_requests.last ()); };
 	void tryNextCommand ();

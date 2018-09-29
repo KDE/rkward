@@ -57,7 +57,7 @@ public:
 	bool currentPageSatisfied () override;
 /** for use by RKComponentBuilder to add a page to a wizardish component */
 	RKComponent *addPage () override;
-/** reimplemented to acutally register the component with the wizard */
+/** reimplemented to actually register the component with the wizard */
 	void addComponentToCurrentPage (RKComponent *component) override;
 /** switch from dialog to wizard or vice versa */
 	void switchInterface ();

@@ -258,7 +258,7 @@ void RKWorkplace::addWindow (RKMDIWindow *window, bool attached) {
 				break;
 			}
 		}
-		if (pos < 0) {   // not yet known: implicit registration -> create corresponing named_window_spec on the fly.
+		if (pos < 0) {   // not yet known: implicit registration -> create corresponding named_window_spec on the fly.
 			registerNamedWindow (window_name_override, 0, attached ? RKWardMainWindow::getMain () : 0);
 			pos = named_windows.size () - 1;
 		}
