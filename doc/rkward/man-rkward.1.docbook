@@ -49,8 +49,8 @@
 
 <refsect1>
 <title>Description</title>
-<para>&rkward; is the a &kde;-based GUI and IDE for the &R; scripting language for statistical computing.</para> 
-<para>For more information, please refer to <ulink url="http://rkward.kde.org/">the &rkward; website</ulink>, and the documentation provided inside &rkward;.</para>
+<para>&rkward; is the a &kde;-based &GUI; and <acronym>IDE</acronym> for the &R; scripting language for statistical computing.</para>
+<para>For more information, please refer to <ulink url="https://rkward.kde.org/">the &rkward; website</ulink>, and the documentation provided inside &rkward;.</para>
 </refsect1>
 
 <refsect1>
@@ -79,19 +79,19 @@
 </varlistentry>
 <varlistentry>
 <term><option>--r-executable</option> <replaceable>command</replaceable></term>
-<listitem><para>In the case of several R installations, specify the installation to use, e.g. /usr/bin/R. Note that the rkward R library must have been installed to this installation of R, or startup will fail.</para></listitem>
+<listitem><para>In the case of several R installations, specify the installation to use, &eg; <filename>/usr/bin/R</filename>. Note that the &rkward; R library must have been installed to this installation of R, or startup will fail.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term><option>--reuse</option></term>
-<listitem><para>If an instance of RKWard is already running, bring that to the front, and open <replaceable>files_to_open</replaceable>. Note that all other command line options will be ignored in case an instance is reused.</para></listitem>
+<listitem><para>If an instance of &rkward; is already running, bring that to the front, and open <replaceable>files_to_open</replaceable>. Note that all other command line options will be ignored in case an instance is reused.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term><option>--nowarn-external</option></term>
-<listitem><para>Usually, when invoking RKWard plugins from the command line (i.e. when <replaceable>files_to_open</replaceable> contains urls of the form <replaceable>rkward://runplugin/...</replaceable>), RKWard will show a warning that such urls <emphasis>could</emphasis> be used to trigger malicious actions on your system. This warning applies specifically to links found on untrusted websites, or other untrusted external sources. If you want to script RKWard locally, you can avoid this warning by adding --nowarn-external to the command line.</para></listitem>
+<listitem><para>Usually, when invoking &rkward; plugins from the command line (&ie; when <replaceable>files_to_open</replaceable> contains &URL;s of the form <replaceable>rkward://runplugin/...</replaceable>), &rkward; will show a warning that such &URL;s <emphasis>could</emphasis> be used to trigger malicious actions on your system. This warning applies specifically to links found on untrusted websites, or other untrusted external sources. If you want to script &rkward; locally, you can avoid this warning by adding --nowarn-external to the command line.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term><replaceable>files_to_open</replaceable></term>
-<listitem><para>You can specify any number of file names or urls for RKWard to open. Usually this will be either workspace files, workplace files, R script files, or rkward://-urls (e.g. for starting with a plugin dialog). Specifying more than one workspace file will lead to the workspaces being merged together, and is not recommended.</para></listitem>
+<listitem><para>You can specify any number of file names or &URL;s for &rkward; to open. Usually this will be either workspace files, workplace files, R script files, or rkward:// &URL;s (&eg; for starting with a plugin dialog). Specifying more than one workspace file will lead to the workspaces being merged together, and is not recommended.</para></listitem>
 </varlistentry>
 </variablelist>
 
@@ -118,7 +118,7 @@ rkward --backend-debugger 'valgrind --log-file=valgrind.log'
 
 <refsect1>
 <title>Authors</title>
-<para>&rkward; was written by Thomas Friedrichsmeier and the &rkward; team. See <ulink url="http://rkward.kde.org/">the &rkward; website</ulink>.</para>
+<para>&rkward; was written by Thomas Friedrichsmeier and the &rkward; team. See <ulink url="https://rkward.kde.org/">the &rkward; website</ulink>.</para>
 </refsect1>
 
 </refentry>
