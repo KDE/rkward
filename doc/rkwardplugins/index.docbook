@@ -4454,7 +4454,7 @@ different types, using modifiers may lead to errors. For <replaceable>fixed_valu
 </varlistentry>
 <varlistentry>
 <term>&lt;related&gt;</term>
-<listitem><para>Defines a section containing links to further related information. Will always be displayed after the &lt;settings&gt; section. No attributes. The text contained within the &lt;related&gt; tag will be displayed. Typically this will contain an  style list. Recommended for plugin help pages, but not required. May only be defined once, as a direct child of the &lt;document&gt; node.</para></listitem>
+<listitem><para>Defines a section containing links to further related information. Will always be displayed after the &lt;settings&gt; section. No attributes. The text contained within the &lt;related&gt; tag will be displayed. Typically this will contain an &HTML;-style list. Recommended for plugin help pages, but not required. May only be defined once, as a direct child of the &lt;document&gt; node.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;technical&gt;</term>
