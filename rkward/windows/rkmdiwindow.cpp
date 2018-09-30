@@ -332,8 +332,11 @@ void RKMDIWindow::setStatusMessage (const QString& message, RCommand *command) {
 	RK_TRACE (MISC);
 
 	if (!status_popup) {
+		// NOTE: Yes, this clearly goes against the explicit recommendation, but we do want the status message as an overlay to the main widget.
+		//       This is especially important for plots, where changing the plot area geometry will trigger redraws of the plot.
+		//       Note that these messages are mostly used on previews, so far, where they will either be a) transient ("preview updating"),
+		//       or b) in case of errors, the place of interest will be outside the preview widget _and_ the preview will generally be invalid.
 		status_popup_container = new QWidget (this);
-		status_popup_container->resize (size ());
 		QVBoxLayout *layout = new QVBoxLayout (status_popup_container);
 		layout->setContentsMargins (10, 10, 10, 10);
 		status_popup = new KMessageWidget (status_popup_container);
@@ -345,7 +348,11 @@ void RKMDIWindow::setStatusMessage (const QString& message, RCommand *command) {
 
 	if (command) connect (command->notifier (), &RCommandNotifier::commandFinished, this, &RKMDIWindow::clearStatusMessage);
 	if (!message.isEmpty ()) {
+		status_popup_container->resize (size ());
 		status_popup_container->show ();
+		// when animation is finished, squeeze the popup-container, so as not to interfere with mouse events in the main window
+		connect (status_popup, &KMessageWidget::showAnimationFinished, [this]() { status_popup_container->resize (QSize(width(), status_popup->height () + 20)); });
+		connect (status_popup, &KMessageWidget::hideAnimationFinished, status_popup_container, &QWidget::hide);
 		if (status_popup->text () == message) {
 			if (!status_popup->isVisible ()) status_popup->animatedShow ();  // it might have been close by user. And no, simply show() is _not_ good enough. KF5 (5.15.0)
 		}
@@ -368,7 +375,7 @@ void RKMDIWindow::clearStatusMessage () {
 }
 
 void RKMDIWindow::resizeEvent (QResizeEvent*) {
-	if (status_popup_container) status_popup_container->resize (size ());
+	if (status_popup_container && status_popup_container->isVisible ()) status_popup_container->resize (QSize(width(), status_popup->height () + 20));
 }
 
 
