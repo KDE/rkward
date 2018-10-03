@@ -19,7 +19,8 @@ rk.get.output.html.file()
 
 rk.set.output.html.file(x,
   additional.header.contents = getOption("rk.html.header.additions"),
-  style = c("regular", "preview"), css = getOption("rk.output.css.file"))
+  style = c("regular", "preview"), css = getOption("rk.output.css.file"),
+  silent = FALSE)
 
 rk.flush.output(x = rk.get.output.html.file(), flush.images = TRUE,
   ask = TRUE, ...)
@@ -39,10 +40,11 @@ This could be scripts or additional CSS definitions, for example. Note that
 
 \item{style}{Currently either "regular" or "preview". The latter omits table of contents and date.}
 
-\item{css}{Local file name of CSS file to use,
-      or NULL for no CSS file. The CSS file will be
+\item{css}{Local file name of CSS file to use, or NULL for no CSS file. The CSS file will be
 placed next to x, with file name extension ".css". Only effective when initializing a
 (non-existing) output file.}
+
+\item{silent}{Set to true to avoid the output window being raised in the frontend.}
 
 \item{ask}{Logical: Whether to ask before flushing the output file.}
 

@@ -24,19 +24,15 @@ be accessible embedded into other plugins.}
 \value{
 \code{rk.list.plugins} returns a data.frame listing plugin ids, context, menu path
   (tab-separated), and label of the plugin. If a plugin is available in more
-  than one context,
-      it will be listed several times. The exact layout (number and order of columns)
-  of this data.frame might be subject to change. However,
-      the \bold{names} of the columns in the
+  than one context, it will be listed several times. The exact layout (number and order of columns)
+  of this data.frame might be subject to change. However, the \bold{names} of the columns in the
   returned data.frame are expected to remain stable.
   \code{rk.set.plugin.status} returns \code{NULL}, invisibly
 
 \bold{Note}: Each call to \code{rk.set.plugin.status} will result in a complete rebuild of the
              menu (in the current implementation). While this should be hardly noticeable in interactive
-             use, it could be an issue when changing the status of many plugins,
-      programatically.
-             In this case,
-      make sure to do all changes in \bold{one} call to \code{rk.set.plugin.status},
+             use, it could be an issue when changing the status of many plugins, programatically.
+             In this case, make sure to do all changes in \bold{one} call to \code{rk.set.plugin.status},
              rather than many separate calls.
 }
 \description{

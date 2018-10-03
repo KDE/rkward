@@ -137,11 +137,11 @@ public:
 	enum CaptureMode {
 		RecordMessages = 1,
 		RecordOutput = 2,
-		EatMessages = 4,
-		EatOutput = 8
+		SuppressMessages = 4,
+		SuppressOutput = 8
 	};
 	void pushOutputCapture (int capture_mode);
-	QString popOutputCapture ();
+	QString popOutputCapture (bool highlighted);
 
 /** Flushes current output buffer. Meant to be called from RInterface::flushOutput, only.
 @param forcibly: if true, will always flush the output. If false, will flush the output only if the mutex can be locked without waiting. */

@@ -1022,6 +1022,22 @@ SEXP doCopyNoEval (SEXP fromname, SEXP fromenv, SEXP toname, SEXP toenv) {
 	return (R_NilValue);
 }
 
+SEXP doCaptureOutput (SEXP mode, SEXP capture_messages, SEXP capture_output, SEXP suppress_messages, SEXP suppress_output) {
+	RK_TRACE (RBACKEND);
+
+	if (RKRSupport::SEXPToInt (mode) == 1) {
+		int cm = 0;
+		if (RKRSupport::SEXPToInt (capture_messages)) cm |= RKROutputBuffer::RecordMessages;
+		if (RKRSupport::SEXPToInt (capture_output)) cm |= RKROutputBuffer::RecordOutput;
+		if (RKRSupport::SEXPToInt (suppress_messages)) cm |= RKROutputBuffer::SuppressMessages;
+		if (RKRSupport::SEXPToInt (suppress_output)) cm |= RKROutputBuffer::SuppressOutput;
+		RKRBackend::this_pointer->pushOutputCapture (cm);
+		return (R_NilValue);
+	} else {
+		return RKRSupport::StringListToSEXP (QStringList (RKRBackend::this_pointer->popOutputCapture (RKRSupport::SEXPToInt (mode) == 2)));
+	}
+}
+
 SEXP RKStartGraphicsDevice (SEXP width, SEXP height, SEXP pointsize, SEXP family, SEXP bg, SEXP title, SEXP antialias);
 SEXP RKD_AdjustSize (SEXP devnum);
 SEXP doWs (SEXP name);
@@ -1111,6 +1127,7 @@ bool RKRBackend::startR () {
 		{ "rk.dialog", (DL_FUNC) &doDialog, 7 },
 		{ "rk.update.locale", (DL_FUNC) &doUpdateLocale, 0 },
 		{ "rk.locale.name", (DL_FUNC) &doLocaleName, 0 },
+		{ "rk.capture.output", (DL_FUNC) &doCaptureOutput, 5 },
 		{ "rk.graphics.device", (DL_FUNC) &RKStartGraphicsDevice, 7},
 		{ "rk.graphics.device.resize", (DL_FUNC) &RKD_AdjustSize, 1},
 		{ 0, 0, 0 }
@@ -1457,7 +1474,7 @@ void RKRBackend::startOutputCapture () {
 void RKRBackend::printAndClearCapturedMessages (bool with_header) {
 	RK_TRACE (RBACKEND);
 
-	QString out = popOutputCapture ();
+	QString out = popOutputCapture (true);
 
 	if (out.isEmpty ()) return;
 	if (with_header) out.prepend ("<h2>Messages, warnings, or errors:</h2>\n");

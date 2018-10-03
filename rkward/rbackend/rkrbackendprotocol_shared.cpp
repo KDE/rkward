@@ -106,7 +106,7 @@ void RKROutputBuffer::pushOutputCapture (int capture_mode) {
 	output_captures.append (capture);
 }
 
-QString RKROutputBuffer::popOutputCapture () {
+QString RKROutputBuffer::popOutputCapture (bool highlighted) {
 	RK_TRACE (RBACKEND);
 
 	if (output_captures.isEmpty ()) {
@@ -123,7 +123,7 @@ QString RKROutputBuffer::popOutputCapture () {
 		if (output->output.isEmpty ()) continue;
 
 		if (output->type != ROutput::Error) {	// NOTE: skip error output. It has already been written as a warning.
-			if (output->type != previous_type) {
+			if (highlighted && (output->type != previous_type)) {
 				if (!ret.isEmpty ()) ret.append ("</pre>\n");
 
 				if (output->type == ROutput::Output) ret.append ("<pre class=\"output_normal\">");
@@ -133,11 +133,13 @@ QString RKROutputBuffer::popOutputCapture () {
 					ret.append ("<pre>");
 				}
 			}
-			ret.append (output->output.toHtmlEscaped ());
+			if (highlighted) ret.append (output->output.toHtmlEscaped ());
+			else ret.append (output->output);
+
 			previous_type = output->type;
 		}
 	}
-	if (!ret.isEmpty ()) ret.append ("</pre>\n");
+	if (highlighted && !ret.isEmpty ()) ret.append ("</pre>\n");
 	return ret;
 }
 
@@ -175,10 +177,10 @@ bool RKROutputBuffer::handleOutput (const QString &output, int buf_length, ROutp
 		OutputCapture &cap = output_captures[i];
 		if (output_type == ROutput::Output) {
 			if (cap.mode & RecordOutput) appendToOutputList (&(cap.recorded), output, output_type);
-			if (cap.mode & EatOutput) return previously_empty;
+			if (cap.mode & SuppressOutput) return previously_empty;
 		} else {
 			if (cap.mode & RecordMessages) appendToOutputList (&(cap.recorded), output, output_type);
-			if (cap.mode & EatMessages) return previously_empty;
+			if (cap.mode & SuppressMessages) return previously_empty;
 		}
 	}
 
