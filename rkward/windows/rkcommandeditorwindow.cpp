@@ -841,6 +841,8 @@ void RKCommandEditorWindow::doRenderPreview () {
 	out << m_doc->text ();
 	save.close ();
 
+	// TODO: Make sure to initialze the preview region with some window, so it will be able to display status messages at all!
+
 	QString command;
 	if (actionmenu_preview->currentItem () == RMarkdownPreview) {
 		preview->setLabel (i18n ("Preview of rendered R Markdown"));
@@ -875,29 +877,34 @@ void RKCommandEditorWindow::doRenderPreview () {
 		          "try(source(%1, local=TRUE))\n"
 		          "if (olddev != 1) dev.set(olddev)\n";
 		command = command.arg (RObject::rQuote (save.fileName ()), RObject::rQuote (preview_manager->previewId ()));
+	} else if (actionmenu_preview->currentItem () == ConsolePreview) {  // somewhat hacky, I admit...
+		preview->setLabel (i18n ("Preview of script running in interactive R Console"));
+		QString output_file = RObject::rQuote (QDir (preview_dir->path()).absoluteFilePath ("output.html"));
+		command = "output <- rk.set.output.html.file(%2, silent=TRUE)\n"
+		          "on.exit(rk.set.output.html.file(output, silent=TRUE))\n"
+		          "try(rk.flush.output(ask=FALSE, style=\"preview\", silent=TRUE))\n"
+		          "try({\n"
+		          "    exprs <- parse (%1, keep.source=TRUE)\n"
+		          "    for (i in 1:length (exprs)) {\n"
+		          "        rk.print.code(as.character(attr(exprs, \"srcref\")[[i]]))\n"
+		          "        rk.capture.output()\n"
+		          "        try({\n"
+		          "            withAutoprint(exprs[[i]], evaluated=TRUE, echo=FALSE)\n"
+			  "        })\n"
+		          "        .rk.cat.output(rk.end.capture.output(TRUE))\n"
+		          "    }\n"
+		          "})\n"
+		          "rk.set.output.html.file(output, silent=TRUE)\n"
+		          "rk.show.html(%2)\n";
+		command = command.arg (RObject::rQuote (save.fileName ())).arg (output_file);
 	} else {
 		RK_ASSERT (actionmenu_preview->currentItem () == ConsolePreview);
 	}
 
 	preview->wrapperWidget ()->show ();
 
-	if (actionmenu_preview->currentItem () == ConsolePreview) {  // somewhat hacky, I admit...
-		preview->setLabel (i18n ("Preview of script running in interactive R Console"));
-		QString output_file = RObject::rQuote (QDir (preview_dir->path()).absoluteFilePath ("output.html"));
-		RKGlobals::rInterface ()->issueCommand (QString (
-		                                        "rk.assign.preview.data(%1, rk.set.output.html.file(%2, silent=TRUE))\n"
-		                                        "rk.flush.output(ask=FALSE, style=\"preview\", silent=TRUE)\n").arg (RObject::rQuote (preview_manager->previewId ()), output_file), RCommand::App | RCommand::Sync);
-
-		RCommand *rcommand = new RCommand (QString ("local({\n%1\n})").arg (m_doc->text()), RCommand::User | RCommand::CCCommand | RCommand::CCOutput);
-		preview_manager->setCommand (rcommand);
-		RKGlobals::rInterface ()->issueCommand (QString ("rk.set.output.html.file(rk.get.preview.data(%1), silent=TRUE)\n"
-		                                        ".rk.with.window.hints ({\n"
-		                                        "	rk.show.html(%2)\n"
-		                                        "}, \"\", %1, style=\"preview\")\n").arg (RObject::rQuote (preview_manager->previewId ()), output_file), RCommand::App | RCommand::Sync);
-	} else {
-		RCommand *rcommand = new RCommand (".rk.with.window.hints (local ({\n" + command + QStringLiteral ("}), \"\", ") + RObject::rQuote (preview_manager->previewId ()) + ", style=\"preview\")", RCommand::App);
-		preview_manager->setCommand (rcommand);
-	}
+	RCommand *rcommand = new RCommand (".rk.with.window.hints (local ({\n" + command + QStringLiteral ("}), \"\", ") + RObject::rQuote (preview_manager->previewId ()) + ", style=\"preview\")", RCommand::App);
+	preview_manager->setCommand (rcommand);
 }
 
 void RKCommandEditorWindow::runAll () {
