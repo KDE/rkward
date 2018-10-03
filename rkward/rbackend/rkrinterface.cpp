@@ -87,8 +87,6 @@ RInterface::RInterface () {
 	previously_idle = false;
 	locked = 0;
 	backend_dead = false;
-	num_active_output_record_requests = 0;
-	previous_output_type = ROutput::NoOutput;
 	flush_timer_id = 0;
 	dummy_command_on_stack = 0;
 
@@ -116,7 +114,6 @@ void RInterface::issueCommand (const QString &command, int type, const QString &
 RInterface::~RInterface(){
 	RK_TRACE (RBACKEND);
 
-	if (num_active_output_record_requests) RK_DEBUG (RBACKEND, DL_WARNING, "%d requests for recording output still active on interface shutdown", num_active_output_record_requests);
 	RKWindowCatcher::discardInstance ();
 }
 
@@ -442,24 +439,6 @@ void RInterface::flushOutput (bool forced) {
 			RK_DEBUG (RBACKEND, DL_DEBUG, "output '%s'", qPrintable (output->output));
 		}
 
-		if (num_active_output_record_requests) {
-			if (output->type != ROutput::Error) {	// NOTE: skip error output. It has already been written as a warning.
-				if (output->type != previous_output_type) {
-					if (!recorded_output.isEmpty ()) recorded_output.append ("</pre>\n");
-
-					if (output->type == ROutput::Output) recorded_output.append ("<pre class=\"output_normal\">");
-					else if (output->type == ROutput::Warning) recorded_output.append ("<pre class=\"output_warning\">");
-					else {
-						RK_ASSERT (false);
-						recorded_output.append ("<pre>");
-					}
-
-					previous_output_type = output->type;
-				}
-				recorded_output.append (output->output.toHtmlEscaped ());
-			}
-		}
-
 		bool first = true;
 		foreach (RCommand* command, all_current_commands) {
 			ROutput *coutput = output;
@@ -663,20 +642,6 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 					return (QStringList ("Could not open file for writing. Not recording commands"));
 				}
 			}
-		}
-	} else if (call == "recordOutput") {
-		// NOTE: requests to record output can overlap (i.e. several can be active at the same time). However, we always clear the buffer, each time a request ends, i.e. then
-		// recorded output does NOT overlap.
-		if (calllist.value (1) == "end") {
-			RK_ASSERT (num_active_output_record_requests > 0);
-			--num_active_output_record_requests;
-			QString dummy = recorded_output;
-			recorded_output.clear ();
-			if (!dummy.isEmpty ()) dummy.append ("</pre>\n");
-			previous_output_type = ROutput::NoOutput;
-			return QStringList (dummy);
-		} else {
-			++num_active_output_record_requests;
 		}
 	} else if (call == "printPreview") {
 		RKPrintAgent::printPostscript (calllist.value (1), true);

@@ -123,9 +123,6 @@ private:
 
 	QString startup_errors;
 	bool startup_phase2_error;
-	int num_active_output_record_requests;
-	ROutput::ROutputType previous_output_type;
-	QString recorded_output;
 	RCommand *dummy_command_on_stack;
 friend class RKRBackendProtocolFrontend;
 	bool backend_dead;

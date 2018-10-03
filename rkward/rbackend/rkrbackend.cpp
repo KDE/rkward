@@ -1451,16 +1451,13 @@ void RKRBackend::printCommand (const QString &command) {
 void RKRBackend::startOutputCapture () {
 	RK_TRACE (RBACKEND);
 
-	// TODO: One of those days, we need to revisit output handling. This request could be perfectly async, but unfortunately, in that case, output chunks can sneak in front of it.
-	handlePlainGenericRequest (QStringList ("recordOutput"), true);
+	pushOutputCapture (RecordMessages | RecordOutput);
 }
 
 void RKRBackend::printAndClearCapturedMessages (bool with_header) {
 	RK_TRACE (RBACKEND);
 
-	QStringList params ("recordOutput");
-	params.append ("end");
-	QString out = handlePlainGenericRequest (params, true).value (0);
+	QString out = popOutputCapture ();
 
 	if (out.isEmpty ()) return;
 	if (with_header) out.prepend ("<h2>Messages, warnings, or errors:</h2>\n");
