@@ -344,17 +344,18 @@ void RKMDIWindow::setStatusMessage (const QString& message, RCommand *command) {
 		status_popup->setMessageType (KMessageWidget::Warning);
 		layout->addWidget (status_popup);
 		layout->addStretch ();
+
+		// when animation is finished, squeeze the popup-container, so as not to interfere with mouse events in the main window
+		connect (status_popup, &KMessageWidget::showAnimationFinished, [this]() { status_popup_container->resize (QSize(width(), status_popup->height () + 20)); });
+		connect (status_popup, &KMessageWidget::hideAnimationFinished, status_popup_container, &QWidget::hide);
 	}
 
 	if (command) connect (command->notifier (), &RCommandNotifier::commandFinished, this, &RKMDIWindow::clearStatusMessage);
 	if (!message.isEmpty ()) {
 		status_popup_container->resize (size ());
 		status_popup_container->show ();
-		// when animation is finished, squeeze the popup-container, so as not to interfere with mouse events in the main window
-		connect (status_popup, &KMessageWidget::showAnimationFinished, [this]() { status_popup_container->resize (QSize(width(), status_popup->height () + 20)); });
-		connect (status_popup, &KMessageWidget::hideAnimationFinished, status_popup_container, &QWidget::hide);
 		if (status_popup->text () == message) {
-			if (!status_popup->isVisible ()) status_popup->animatedShow ();  // it might have been close by user. And no, simply show() is _not_ good enough. KF5 (5.15.0)
+			if (!status_popup->isVisible ()) status_popup->animatedShow ();  // it might have been closed by user. And no, simply show() is _not_ good enough. KF5 (5.15.0)
 		}
 		if (status_popup->text () != message) {
 			if (status_popup->isVisible ()) status_popup->hide (); // otherwise, the KMessageWidget does not update geometry (KF5, 5.15.0)

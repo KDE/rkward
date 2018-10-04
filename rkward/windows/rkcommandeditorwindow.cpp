@@ -832,7 +832,13 @@ void RKCommandEditorWindow::doRenderPreview () {
 	if (actionmenu_preview->currentItem () == NoPreview) return;
 	if (!preview_manager->needsCommand ()) return;
 
-	if (!preview_dir) preview_dir = new QTemporaryDir ();
+	if (!preview_dir) {
+		if (!preview->findChild<RKMDIWindow*>()) {
+			// (lazily) initialize the preview window with _something_, as an RKMDIWindow is needed to display messages (important, if there is an error during the first preview)
+			RKGlobals::rInterface()->issueCommand (".rk.with.window.hints (rk.show.html(\"\"), " + RObject::rQuote (preview_manager->previewId ()) + ", style=\"preview\")", RCommand::App | RCommand::Sync);
+		}
+		preview_dir = new QTemporaryDir ();
+	}
 	QFile save (QDir (preview_dir->path()).absoluteFilePath ("script.R"));
 	if (actionmenu_preview->currentItem () == RMarkdownPreview) save.setFileName (QDir (preview_dir->path()).absoluteFilePath ("markdownscript.Rmd"));
 	RK_ASSERT (save.open (QIODevice::WriteOnly));
@@ -840,8 +846,6 @@ void RKCommandEditorWindow::doRenderPreview () {
 	out.setCodec ("UTF-8");     // make sure that all characters can be saved, without nagging the user
 	out << m_doc->text ();
 	save.close ();
-
-	// TODO: Make sure to initialze the preview region with some window, so it will be able to display status messages at all!
 
 	QString command;
 	if (actionmenu_preview->currentItem () == RMarkdownPreview) {
@@ -883,17 +887,20 @@ void RKCommandEditorWindow::doRenderPreview () {
 		command = "output <- rk.set.output.html.file(%2, silent=TRUE)\n"
 		          "on.exit(rk.set.output.html.file(output, silent=TRUE))\n"
 		          "try(rk.flush.output(ask=FALSE, style=\"preview\", silent=TRUE))\n"
+		          "exprs <- expression(NULL)\n"
+		          "rk.capture.output(suppress.messages=TRUE)\n"
 		          "try({\n"
 		          "    exprs <- parse (%1, keep.source=TRUE)\n"
-		          "    for (i in 1:length (exprs)) {\n"
-		          "        rk.print.code(as.character(attr(exprs, \"srcref\")[[i]]))\n"
-		          "        rk.capture.output()\n"
-		          "        try({\n"
-		          "            withAutoprint(exprs[[i]], evaluated=TRUE, echo=FALSE)\n"
-			  "        })\n"
-		          "        .rk.cat.output(rk.end.capture.output(TRUE))\n"
-		          "    }\n"
 		          "})\n"
+		          ".rk.cat.output(rk.end.capture.output(TRUE))\n"
+		          "for (i in 1:length (exprs)) {\n"
+		          "    rk.print.code(as.character(attr(exprs, \"srcref\")[[i]]))\n"
+		          "    rk.capture.output(suppress.messages=TRUE)\n"
+		          "    try({\n"
+		          "        withAutoprint(exprs[[i]], evaluated=TRUE, echo=FALSE)\n"
+		          "    })\n"
+		          "    .rk.cat.output(rk.end.capture.output(TRUE))\n"
+		          "}\n"
 		          "rk.set.output.html.file(output, silent=TRUE)\n"
 		          "rk.show.html(%2)\n";
 		command = command.arg (RObject::rQuote (save.fileName ())).arg (output_file);
