@@ -64,6 +64,7 @@
 #include "../rkglobals.h"
 #include "../rkward.h"
 #include "rkhelpsearchwindow.h"
+#include "rkhtmlwindow.h"
 #include "rkworkplace.h"
 
 #include "../debug.h"
@@ -521,6 +522,8 @@ void RKCommandEditorWindow::discardPreview () {
 		RKGlobals::rInterface ()->issueCommand (QString (".rk.killPreviewDevice(%1)\nrk.discard.preview.data (%1)").arg (RObject::rQuote(preview_manager->previewId ())), RCommand::App | RCommand::Sync);
 		delete preview_dir;
 		preview_dir = 0;
+		delete preview_input_file;
+		preview_input_file = 0;
 	}
 }
 
@@ -834,21 +837,40 @@ void RKCommandEditorWindow::doRenderPreview () {
 
 	if (!preview_dir) {
 		preview_dir = new QTemporaryDir ();
+		preview_input_file = 0;
 	}
-	QFile save (QDir (preview_dir->path()).absoluteFilePath ("script.R"));
+	if (preview_input_file) {
+		// When switching between .Rmd and .R previews, discard input file
+		if ((actionmenu_preview->currentItem () == RMarkdownPreview) != (preview_input_file->fileName().endsWith (".Rmd"))) {
+			delete preview_input_file;
+			preview_input_file = 0;
+		}
+	}
+	if (!preview_input_file) { // NOT an else!
+		if (m_doc->url ().isEmpty () || !m_doc->url ().isLocalFile ()) {
+			preview_input_file = new QFile (QDir (preview_dir->path()).absoluteFilePath (actionmenu_preview->currentItem () == RMarkdownPreview ? "script.Rmd" : "script.R"));
+		} else {
+			// If the file is already saved, save the preview input as a temp file in the same folder.
+			// esp. .Rmd files might try to include other files by relative path.
+			QString tempfiletemplate = m_doc->url ().toLocalFile ();
+			tempfiletemplate.append (".preview_XXXXXX.R");
+			if (actionmenu_preview->currentItem () == RMarkdownPreview) tempfiletemplate.append ("md");
+			preview_input_file = new QTemporaryFile (tempfiletemplate);
+		}
+	}
+
 	QString output_file = QDir (preview_dir->path()).absoluteFilePath ("output.html");  // NOTE: not needed by all types of preview
 
-	if (actionmenu_preview->currentItem () != GraphPreview && !preview->wrapperWidget ()->findChild<RKMDIWindow*>()) {
+	if (actionmenu_preview->currentItem () != GraphPreview && !preview->findChild<RKMDIWindow*>()) {
 		// (lazily) initialize the preview window with _something_, as an RKMDIWindow is needed to display messages (important, if there is an error during the first preview)
 		RKGlobals::rInterface()->issueCommand (".rk.with.window.hints (rk.show.html(" + RObject::rQuote (output_file) + "), \"\", " + RObject::rQuote (preview_manager->previewId ()) + ", style=\"preview\")", RCommand::App | RCommand::Sync);
 	}
 
-	if (actionmenu_preview->currentItem () == RMarkdownPreview) save.setFileName (QDir (preview_dir->path()).absoluteFilePath ("markdownscript.Rmd"));
-	RK_ASSERT (save.open (QIODevice::WriteOnly));
-	QTextStream out (&save);
+	RK_ASSERT (preview_input_file->open (QIODevice::WriteOnly));
+	QTextStream out (preview_input_file);
 	out.setCodec ("UTF-8");     // make sure that all characters can be saved, without nagging the user
 	out << m_doc->text ();
-	save.close ();
+	preview_input_file->close ();
 
 	QString command;
 	if (actionmenu_preview->currentItem () == RMarkdownPreview) {
@@ -867,7 +889,7 @@ void RKCommandEditorWindow::doRenderPreview () {
 		           "	rmarkdown::render (%1, output_format=\"html_document\", output_file=%2, quiet=TRUE)\n"
 		           "}\n"
 		           "rk.show.html(%2)\n";
-		command = command.arg (RObject::rQuote (save.fileName ()), RObject::rQuote (save.fileName () + ".html"));
+		command = command.arg (RObject::rQuote (preview_input_file->fileName ()), RObject::rQuote (output_file));
 	} else if (actionmenu_preview->currentItem () == RKOutputPreview) {
 		preview->setLabel (i18n ("Preview of generated RKWard output"));
 		command = "output <- rk.set.output.html.file(%2, silent=TRUE)\n"
@@ -875,17 +897,16 @@ void RKCommandEditorWindow::doRenderPreview () {
 		          "try(source(%1, local=TRUE))\n"
 		          "rk.set.output.html.file(output, silent=TRUE)\n"
 		          "rk.show.html(%2)\n";
-		command = command.arg (RObject::rQuote (save.fileName ()), RObject::rQuote (output_file));
+		command = command.arg (RObject::rQuote (preview_input_file->fileName ()), RObject::rQuote (output_file));
 	} else if (actionmenu_preview->currentItem () == GraphPreview) {
 		preview->setLabel (i18n ("Preview of generated plot"));
 		command = "olddev <- dev.cur()\n"
 		          ".rk.startPreviewDevice(%2)\n"
 		          "try(source(%1, local=TRUE))\n"
 		          "if (olddev != 1) dev.set(olddev)\n";
-		command = command.arg (RObject::rQuote (save.fileName ()), RObject::rQuote (preview_manager->previewId ()));
+		command = command.arg (RObject::rQuote (preview_input_file->fileName ()), RObject::rQuote (preview_manager->previewId ()));
 	} else if (actionmenu_preview->currentItem () == ConsolePreview) {  // somewhat hacky, I admit...
 		preview->setLabel (i18n ("Preview of script running in interactive R Console"));
-		QString output_file = RObject::rQuote (QDir (preview_dir->path()).absoluteFilePath ("output.html"));
 		command = "output <- rk.set.output.html.file(%2, silent=TRUE)\n"
 		          "on.exit(rk.set.output.html.file(output, silent=TRUE))\n"
 		          "try(rk.flush.output(ask=FALSE, style=\"preview\", silent=TRUE))\n"
@@ -905,7 +926,7 @@ void RKCommandEditorWindow::doRenderPreview () {
 		          "}\n"
 		          "rk.set.output.html.file(output, silent=TRUE)\n"
 		          "rk.show.html(%2)\n";
-		command = command.arg (RObject::rQuote (save.fileName ())).arg (output_file);
+		command = command.arg (RObject::rQuote (preview_input_file->fileName ())).arg (RObject::rQuote (output_file));
 	} else {
 		RK_ASSERT (actionmenu_preview->currentItem () == ConsolePreview);
 	}
@@ -1310,6 +1331,9 @@ KTextEditor::View* RKCommandHighlighter::getView () {
 }
 
 #include <QTextDocument>
+#include "rkhtmlwindow.h"
+#include "rkhtmlwindow.h"
+#include "rkhtmlwindow.h"
 
 //////////
 // NOTE: Most of the exporting code is copied from the katepart HTML exporter plugin more or less verbatim! (Source license: LGPL v2)

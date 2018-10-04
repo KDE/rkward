@@ -207,6 +207,12 @@ void RKPreviewManager::setCommand (RCommand* command) {
 	updating = true;
 	update_pending = NoUpdatePending;
 	connect (command->notifier(), &RCommandNotifier::commandFinished, this, &RKPreviewManager::previewCommandDone);
+
+	// Send an empty dummy command first. This is to sync up with any commands that should have been run _before_ the preview (e.g. to set up the preview area, so that status labels can be shown)
+	RCommand *dummy = new RCommand (QString (), RCommand::App | RCommand::Sync | RCommand::EmptyCommand);
+	connect (dummy->notifier(), &RCommandNotifier::commandFinished, [this]() { setStatusMessage (shortStatusLabel ()); });
+	RKGlobals::rInterface ()->issueCommand (dummy);
+
 	RKGlobals::rInterface ()->issueCommand (command);
 	setStatusMessage (shortStatusLabel ());
 }

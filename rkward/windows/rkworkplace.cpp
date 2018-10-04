@@ -481,8 +481,9 @@ RKMDIWindow* RKWorkplace::openHelpWindow (const QUrl &url, bool only_once) {
 		int pos = -1;
 		for (int i = 0; i < named_windows.size (); ++i) {
 			if (named_windows[i].id == window_name_override) {
-				RKMDIWindow *w = dynamic_cast<RKHTMLWindow*> (named_windows[i].window);
+				RKHTMLWindow *w = dynamic_cast<RKHTMLWindow*> (named_windows[i].window);
 				if (w) {
+					w->openURL (url);
 					w->activate ();
 					return w;
 				}
