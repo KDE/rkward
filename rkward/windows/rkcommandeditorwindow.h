@@ -39,9 +39,9 @@ class QCloseEvent;
 class QFrame;
 class QLabel;
 class QAction;
+class QActionGroup;
 class QTemporaryDir;
 class KActionMenu;
-class KSelectAction;
 class RKCommandEditorWindow;
 class KActionCollection;
 
@@ -228,6 +228,8 @@ private slots:
 	void autoSaveHandlerModifiedChanged ();
 /** handle any errors during auto-saving */
 	void autoSaveHandlerJobFinished (RKJobSequence* seq);
+/** document was saved. Update preview, if appropriate */
+	void documentSaved ();
 private:
 	KTextEditor::Cursor saved_scroll_position;
 	KTextEditor::Document *m_doc;
@@ -262,7 +264,9 @@ private:
 
 	QAction* action_run_all;
 	QAction* action_run_current;
-	KSelectAction* actionmenu_preview;
+	QActionGroup* preview_modes;
+	QAction* action_no_preview;
+	QAction* action_preview_as_you_type;
 
 	enum PreviewMode {
 		NoPreview,
@@ -287,7 +291,7 @@ private:
 	RKPreviewManager *preview_manager;
 	QTemporaryDir *preview_dir;
 	QFile *preview_input_file;
-	void changePreviewMode (int mode);
+	void changePreviewMode (QAction* mode);
 	void discardPreview ();
 };
 
