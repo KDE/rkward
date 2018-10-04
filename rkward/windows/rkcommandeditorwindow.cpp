@@ -833,13 +833,16 @@ void RKCommandEditorWindow::doRenderPreview () {
 	if (!preview_manager->needsCommand ()) return;
 
 	if (!preview_dir) {
-		if (!preview->findChild<RKMDIWindow*>()) {
-			// (lazily) initialize the preview window with _something_, as an RKMDIWindow is needed to display messages (important, if there is an error during the first preview)
-			RKGlobals::rInterface()->issueCommand (".rk.with.window.hints (rk.show.html(\"\"), " + RObject::rQuote (preview_manager->previewId ()) + ", style=\"preview\")", RCommand::App | RCommand::Sync);
-		}
 		preview_dir = new QTemporaryDir ();
 	}
 	QFile save (QDir (preview_dir->path()).absoluteFilePath ("script.R"));
+	QString output_file = QDir (preview_dir->path()).absoluteFilePath ("output.html");  // NOTE: not needed by all types of preview
+
+	if (actionmenu_preview->currentItem () != GraphPreview && !preview->wrapperWidget ()->findChild<RKMDIWindow*>()) {
+		// (lazily) initialize the preview window with _something_, as an RKMDIWindow is needed to display messages (important, if there is an error during the first preview)
+		RKGlobals::rInterface()->issueCommand (".rk.with.window.hints (rk.show.html(" + RObject::rQuote (output_file) + "), \"\", " + RObject::rQuote (preview_manager->previewId ()) + ", style=\"preview\")", RCommand::App | RCommand::Sync);
+	}
+
 	if (actionmenu_preview->currentItem () == RMarkdownPreview) save.setFileName (QDir (preview_dir->path()).absoluteFilePath ("markdownscript.Rmd"));
 	RK_ASSERT (save.open (QIODevice::WriteOnly));
 	QTextStream out (&save);
@@ -867,7 +870,6 @@ void RKCommandEditorWindow::doRenderPreview () {
 		command = command.arg (RObject::rQuote (save.fileName ()), RObject::rQuote (save.fileName () + ".html"));
 	} else if (actionmenu_preview->currentItem () == RKOutputPreview) {
 		preview->setLabel (i18n ("Preview of generated RKWard output"));
-		QString output_file = QDir (preview_dir->path()).absoluteFilePath ("output.html");
 		command = "output <- rk.set.output.html.file(%2, silent=TRUE)\n"
 		          "try(rk.flush.output(ask=FALSE, style=\"preview\", silent=TRUE))\n"
 		          "try(source(%1, local=TRUE))\n"

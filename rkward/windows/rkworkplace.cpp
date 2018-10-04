@@ -476,6 +476,21 @@ RKMDIWindow* RKWorkplace::openHelpWindow (const QUrl &url, bool only_once) {
 			}
 		}
 	}
+	// if we're working with a window hint, try to _reuse_ the existing window, even if it did not get found, above
+	if (!window_name_override.isEmpty ()) {
+		int pos = -1;
+		for (int i = 0; i < named_windows.size (); ++i) {
+			if (named_windows[i].id == window_name_override) {
+				RKMDIWindow *w = dynamic_cast<RKHTMLWindow*> (named_windows[i].window);
+				if (w) {
+					w->activate ();
+					return w;
+				}
+				break;
+			}
+		}
+	}
+
 
 	RKHTMLWindow *hw = new RKHTMLWindow (view (), RKHTMLWindow::HTMLHelpWindow);
 	hw->openURL (url);
