@@ -41,6 +41,7 @@ class QLabel;
 class QAction;
 class QActionGroup;
 class QTemporaryDir;
+class QFile;
 class KActionMenu;
 class RKCommandEditorWindow;
 class KActionCollection;
