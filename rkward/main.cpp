@@ -73,6 +73,11 @@
 #include <QTime>
 #include <QSettings>
 
+#ifdef Q_OS_MACOS
+	// Needed to allow execution of launchctl
+#	include <QProcess>
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 
