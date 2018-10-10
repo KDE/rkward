@@ -2,7 +2,6 @@
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="text/r">
     <comment>R source file</comment>
-    <comment xml:lang="ast">Ficheru de recursu R</comment>
     <comment xml:lang="bs">R izvorna datoteka</comment>
     <comment xml:lang="ca">Fitxer de codi font en R</comment>
     <comment xml:lang="ca@valencia">Fitxer de codi font en R</comment>
@@ -19,7 +18,6 @@
     <comment xml:lang="sk">Zdrojový súbor R</comment>
     <comment xml:lang="sv">R-källkodsfil</comment>
     <comment xml:lang="uk">файл коду R</comment>
-    <comment xml:lang="zh_CN">R 源代码文件</comment>
     <acronym>R</acronym>
     <expanded-acronym>R programming language</expanded-acronym>
     <generic-icon name="text-x-generic"/>
@@ -45,7 +43,6 @@
     <comment xml:lang="sk">Súbor údajov/pracovnej plochy R</comment>
     <comment xml:lang="sv">R-datafil/arbetsrymdsfil</comment>
     <comment xml:lang="uk">файл даних/робочого простору R</comment>
-    <comment xml:lang="zh_CN">R 数据/工作区文件</comment>
     <acronym>RData</acronym>
     <expanded-acronym>R data/workspace file</expanded-acronym>
     <generic-icon name="package-x-generic"/>
