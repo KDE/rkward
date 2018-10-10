@@ -1,7 +1,6 @@
 # KDE Config File
 [Desktop Entry]
 Name=RKWard
-Name[ast]=RKWard
 Name[bs]=RKWard
 Name[ca]=RKWard
 Name[ca@valencia]=RKWard
@@ -64,6 +63,7 @@ Keywords=statistics;data;r;
 Keywords[ca]=estadística;dades;r;
 Keywords[ca@valencia]=estadística;dades;r;
 Keywords[cs]=statistika;data;r;
+Keywords[es]=estadísticas;datos;r;
 Keywords[gl]=estatísticas;datos;r;
 Keywords[it]=statistiche;dati;r;
 Keywords[nl]=statistics;data;r;
