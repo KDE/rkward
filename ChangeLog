@@ -1,4 +1,5 @@
 --- Version 0.7.1 - UNRELEASED
+- <select> elements in plugin dialogs can be set to accept only a single selection
 - New R functions rk.capture.output() and and rk.end.capture.output()
 - Allow to reference current script file in plugins      TODO: Test this
 - Add various live-preview options for R scripts, including a preview of R markdown rendering

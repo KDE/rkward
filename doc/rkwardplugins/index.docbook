@@ -3180,6 +3180,10 @@ new Header(i18n("Test results")).print();
 	<term><parameter>label</parameter></term>
 	<listitem><para>Label for the &lt;select&gt; (optional, defaults to no label)</para></listitem>
 	</varlistentry>
+	<varlistentry>
+	<term><parameter>single</parameter></term>
+	<listitem><para>If set to true, only a single value will be selectable, instead of multiple values at once (boolean, defaults to false)</para></listitem>
+	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
 
