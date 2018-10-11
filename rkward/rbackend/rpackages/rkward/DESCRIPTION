@@ -28,7 +28,7 @@ Collate:
     'internal_help.R'
     'public_graphics.R'
     'rk.KDE_GUI-functions.R'
-    'rk.check_for_pandoc.R'
+    'rk.check.for.pandoc.R'
     'rk.demo.R'
     'rk.edit-functions.R'
     'rk.filename-functions.R'
