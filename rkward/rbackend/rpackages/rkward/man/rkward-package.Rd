@@ -26,6 +26,7 @@ URL: \tab https://rkward.kde.org\cr
 Useful links:
 \itemize{
   \item \url{https://rkward.kde.org}
+  \item Report bugs at \url{https://rkward.kde.org/Bugs}
 }
 
 }
