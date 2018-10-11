@@ -9,12 +9,12 @@
 #' @seealso \code{\link{rk.sessionInfo}}
 #' @keywords utilities misc
 #' @export
-#' @rdname rk.check_for_pandoc
+#' @rdname rk.check.for.pandoc
 #' @examples
 #'
-#' rk.check_for_pandoc()
+#' rk.check.for.pandoc()
 
-"rk.check_for_pandoc" <- function(){
+"rk.check.for.pandoc" <- function(){
   pandoc <- list(available=FALSE)
   pandoc_path <- Sys.which("pandoc")[["pandoc"]]
   if(!"" %in% pandoc_path){
