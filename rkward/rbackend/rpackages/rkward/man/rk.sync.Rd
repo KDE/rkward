@@ -3,7 +3,6 @@
 \name{rk.sync}
 \alias{rk.sync}
 \alias{rk.sync.global}
-\alias{rk.sync.global}
 \title{Sync R object(s)}
 \usage{
 rk.sync(x)

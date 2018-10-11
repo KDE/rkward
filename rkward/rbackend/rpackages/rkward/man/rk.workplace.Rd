@@ -3,7 +3,6 @@
 \name{rk.save.workplace}
 \alias{rk.save.workplace}
 \alias{rk.restore.workplace}
-\alias{rk.restore.workplace}
 \title{Save or restore RKWard workplace}
 \usage{
 rk.save.workplace(file = NULL, description = NULL)

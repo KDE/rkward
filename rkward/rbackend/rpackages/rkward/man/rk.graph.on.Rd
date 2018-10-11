@@ -3,7 +3,6 @@
 \name{rk.graph.on}
 \alias{rk.graph.on}
 \alias{rk.graph.off}
-\alias{rk.graph.off}
 \title{Plot graphics to HTML output file}
 \usage{
 rk.graph.on(device.type = getOption("rk.graphics.type"),
@@ -13,7 +12,8 @@ rk.graph.on(device.type = getOption("rk.graphics.type"),
 rk.graph.off()
 }
 \arguments{
-\item{device.type}{Type of device to create / graphics format to use. Currently, supported devices are "PNG", "SVG", or "JPG".
+\item{device.type}{Type of device to create / graphics format to use. Currently,
+      supported devices are "PNG", "SVG", or "JPG".
 The default is to use the format configured in Settings -> Configure RKWard -> Output.}
 
 \item{width}{Width of graphics in pixels. The default is to use the width configured in Settings -> Configure RKWard -> Output.}
@@ -26,13 +26,13 @@ The default is to use the quality configured in Settings -> Configure RKWard -> 
 \item{...}{Further options will be passed to the graphics device used internally.
 
 \bold{Warning}: It is advised to use \code{rk.graph.off} and \bold{not} \code{dev.off} to close the device opened by
-\code{rk.graph.on}. \code{dev.print(device = rk.graph.on)} is a \bold{wrong} usage for this "device," and will result in errors.}
+\code{rk.graph.on}. \code{dev.print(device = rk.graph.on)} is a \bold{wrong} usage for this "device,
+     " and will result in errors.}
 }
 \description{
 \code{rk.graph.on()} creates an R device that will plot to the output html page in RKWard (\url{rkward://page/rkward_output}).
-The default settings for \code{device.type}, \code{width}, \code{height}, and \code{quality} can be modified from Settings -> Configure RKWard -> Output.
-
-\code{rk.graph.off()} closes the device that was opened by \code{rk.graph.on}.
+The default settings for \code{device.type}, \code{width}, \code{height},
+      and \code{quality} can be modified from Settings -> Configure RKWard -> Output.
 }
 \examples{
 require (rkward)

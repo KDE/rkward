@@ -4,20 +4,20 @@
 \alias{rk.show.message}
 \alias{rk.show.question}
 \alias{rk.select.list}
-\alias{rk.show.question}
 \alias{rk.askYesNo}
-\alias{rk.select.list}
 \title{Message boxes and selection list using native KDE GUI}
 \usage{
 rk.show.message(message, caption = gettext("Information"), wait = TRUE)
 
-rk.show.question(message, caption = gettext("Question"), button.yes = "yes",
-  button.no = "no", button.cancel = "cancel", default = TRUE)
+rk.show.question(message, caption = gettext("Question"),
+  button.yes = "yes", button.no = "no", button.cancel = "cancel",
+  default = TRUE)
 
 rk.askYesNo(msg, default = TRUE, prompts = c("yes", "no", "cancel"),
   caption = gettext("Question"), is.rk.askYesNo = TRUE, ...)
 
-rk.select.list(list, preselect = NULL, multiple = FALSE, title = NULL)
+rk.select.list(list, preselect = NULL, multiple = FALSE,
+  title = NULL)
 }
 \arguments{
 \item{message}{a string for the content of the message box.}
@@ -103,7 +103,8 @@ if (rk.show.question ("Question:\\nDo you want to know about RKWard?",
     button.yes = "Yes, I do!", button.no = "No, I don't care!", button.cancel = "")) {
   rk.show.message ("Message:\\nRKWard is a KDE GUI for R.", "RKWard Info")
 } else {
-  rk.show.message ("You must be joking!", "RKWard Info", wait = FALSE) ## Run asynchronously
+  rk.show.message ("You must be joking!", "RKWard Info",
+      wait = FALSE) ## Run asynchronously
 }
 
 ## Selection lists:

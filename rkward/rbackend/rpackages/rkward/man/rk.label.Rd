@@ -7,13 +7,8 @@
 \alias{rk.get.description}
 \alias{rk.list.names}
 \alias{rk.list}
-\alias{rk.set.label}
 \alias{rk.list.labels}
-\alias{rk.get.short.name}
 \alias{.rk.make.short.name}
-\alias{rk.get.description}
-\alias{rk.list}
-\alias{rk.list.names}
 \title{Various label related utility functions}
 \usage{
 rk.get.label(x)

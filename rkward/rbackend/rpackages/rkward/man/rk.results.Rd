@@ -7,11 +7,6 @@
 \alias{rk.header}
 \alias{rk.results}
 \alias{rk.describe.alternative}
-\alias{rk.print.code}
-\alias{rk.header}
-\alias{rk.results}
-\alias{rk.print.literal}
-\alias{rk.describe.alternative}
 \title{Print objects and results to output}
 \usage{
 rk.print(x, ...)

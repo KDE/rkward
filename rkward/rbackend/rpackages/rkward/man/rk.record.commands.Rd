@@ -9,7 +9,8 @@ rk.record.commands(filename, include.all = FALSE)
 \arguments{
 \item{filename}{filename to write to (file will be truncated!).}
 
-\item{include.all}{By default, some types of command are filtered (internal synchronisation commands, and run again links). Should these be included?}
+\item{include.all}{By default,
+      some types of command are filtered (internal synchronisation commands, and run again links). Should these be included?}
 }
 \description{
 To stop recording, supply NULL or "" as filename.

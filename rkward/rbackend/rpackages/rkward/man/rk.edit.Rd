@@ -5,9 +5,6 @@
 \alias{rk.edit.files}
 \alias{rk.show.files}
 \alias{rk.show.html}
-\alias{rk.edit.files}
-\alias{rk.show.files}
-\alias{rk.show.html}
 \title{Edit / show an object / file}
 \usage{
 rk.edit(x)

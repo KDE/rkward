@@ -15,14 +15,17 @@ if the only desired effect is to reload all active pluginmaps.}
 been previously de-selected in the settings menu, and regardless of their
 priority setting. In scripted usage, this should generally be set to FALSE.}
 
-\item{force.reload}{logical. By default the active pluginmaps are reloaded, only if any new ones
+\item{force.reload}{logical. By default the active pluginmaps are reloaded,
+      only if any new ones
                     were added. If set to TRUE, pluginmaps are reloaded in any case. In
                     scripted usage, this should generally be set to FALSE. NOTE: Since
                     a reload always means reloading _all_ active pluginmaps, This may be
                     slow, and should be used with care.
 
-\bold{Note}: It is not necessary to reload the pluginmap, in order to refresh an individual
-             plugin (e.g. after modifying the dialog), as plugins are not kept in memory after closing.
+\bold{Note}: It is not necessary to reload the pluginmap,
+      in order to refresh an individual
+             plugin (e.g. after modifying the dialog),
+      as plugins are not kept in memory after closing.
              Any currently opened plugins are not affected by this function.}
 }
 \description{

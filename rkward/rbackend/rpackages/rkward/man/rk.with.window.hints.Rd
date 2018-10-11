@@ -8,18 +8,24 @@
 .rk.with.window.hints(expr, placement = "", name = "", style = "")
 }
 \arguments{
-\item{expr}{Expression to evaluate, unsually an expression that is expected to create exactly one
+\item{expr}{Expression to evaluate,
+      unsually an expression that is expected to create exactly one
 new window.}
 
-\item{placement}{a character string specifying either "attached" or "detached" placement, or
+\item{placement}{a character string specifying either "attached" or "detached" placement,
+      or
 (if left empty) the default placement for the type of window created.}
 
-\item{name}{character string specifing a named position. If a name is given, and this position is
-not yet known, the placement hint (see above) will be followed. If later a second window is
+\item{name}{character string specifing a named position. If a name is given,
+      and this position is
+not yet known,
+      the placement hint (see above) will be followed. If later a second window is
 created with the same given name, it will replace the first window.}
 
-\item{style}{character string specifing a style hint. Currently, this can either be "preview" or
-"" (default), with most types of window not implementing any special behavior for "preview".}
+\item{style}{character string specifing a style hint. Currently,
+      this can either be "preview" or
+"" (default),
+      with most types of window not implementing any special behavior for "preview".}
 }
 \value{
 \code{NULL}, invisibly.
@@ -28,7 +34,8 @@ created with the same given name, it will replace the first window.}
 \code{.rk.with.window.hints} can be used to make windows appear in a specific
 location: attached, detached, or in a named position where a previous window is
 found. (The latter used for preview windows, importantly). It can also be used to pass
-"style" hints, importantly indicating that the window is a preview window. All specifications
+"style" hints,
+      importantly indicating that the window is a preview window. All specifications
 affect newly created windows, only, not existing ones.
 }
 \details{

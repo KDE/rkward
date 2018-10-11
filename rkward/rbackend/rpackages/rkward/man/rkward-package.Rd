@@ -14,7 +14,7 @@ The DESCRIPTION file:
 Package: \tab rkward\cr
 Type: \tab Package\cr
 Version: \tab 0.7.1\cr
-Date: \tab 2018-05-22\cr
+Date: \tab 2018-10-11\cr
 Depends: \tab R (>= 2.9.0),methods\cr
 Encoding: \tab UTF-8\cr
 License: \tab GPL (>= 2)\cr
@@ -26,7 +26,6 @@ URL: \tab https://rkward.kde.org\cr
 Useful links:
 \itemize{
   \item \url{https://rkward.kde.org}
-  \item Report bugs at \url{https://rkward.kde.org/Bugs}
 }
 
 }

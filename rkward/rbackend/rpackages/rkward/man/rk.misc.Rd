@@ -5,8 +5,6 @@
 \alias{rk.misc}
 \alias{rk.make.repos.string}
 \alias{rk.select.CRAN.mirror}
-\alias{rk.make.repos.string}
-\alias{rk.select.CRAN.mirror}
 \title{Miscellaneous utility functions}
 \usage{
 rk.rename.in.container(x, old_name, new_name, envir = parent.frame())
