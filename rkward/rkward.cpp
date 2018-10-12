@@ -177,6 +177,8 @@ RKWardMainWindow::~RKWardMainWindow() {
 	delete RKGlobals::tracker ();
 	delete RKGlobals::rInterface ();
 	delete RControlWindow::getControl ();
+	factory ()->removeClient (RKComponentMap::getMap ());
+	delete RKComponentMap::getMap ();
 }
 
 void RKWardMainWindow::closeEvent (QCloseEvent *e) {

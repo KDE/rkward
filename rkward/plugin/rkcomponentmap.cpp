@@ -68,6 +68,8 @@ RKComponentGUIXML::RKComponentGUIXML (const QString &context_id) {
 
 RKComponentGUIXML::~RKComponentGUIXML () {
 	RK_TRACE (PLUGIN);
+
+	toplevel_menu.clear ();
 }
 
 void RKComponentGUIXML::clearGUIDescription () {
@@ -159,7 +161,8 @@ void RKComponentGUIXML::finalize () {
 
 RKComponentGUIXML::Group::~Group () {
 	for (int i = 0; i < entries.size (); ++i) {
-		delete (entries[i]);
+		if (entries[i]->is_menu) delete (static_cast<RKComponentGUIXML::Menu*> (entries[i]));   // NOTE: No virtual d'tor in base-class Entry
+		else delete (entries[i]);
 	}
 }
 
