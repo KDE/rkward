@@ -119,7 +119,7 @@ QString findExeAtPath (const QString appname, const QString &path) {
 	return QString ();
 }
 
-bool RK_Debug_Terminal = false;
+bool RK_Debug_Terminal = true;
 QMutex RK_Debug_Mutex;
 
 void RKDebugMessageOutput (QtMsgType type, const QMessageLogContext &ctx, const QString &msg) {
@@ -167,6 +167,7 @@ void RKDebug (int flags, int level, const char *fmt, ...) {
 }
 
 int main (int argc, char *argv[]) {
+	RK_Debug::RK_Debug_Level = DL_WARNING;
 	QApplication app (argc, argv);
 #ifdef WITH_KCRASH
 	KCrash::setDrKonqiEnabled (true);
