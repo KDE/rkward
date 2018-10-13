@@ -1,4 +1,5 @@
 --- Version 0.7.1 - UNRELEASED
+- Add command-line option --autoreuse to avoid shipping two separate .desktop files
 - <select> elements in plugin dialogs can be set to accept only a single selection
 - New R functions rk.capture.output() and and rk.end.capture.output()
 - Allow to reference current script file in plugins      TODO: Test this

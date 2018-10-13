@@ -213,6 +213,7 @@ int main (int argc, char *argv[]) {
 	parser.addOption (QCommandLineOption ("backend-debugger", i18n ("Debugger for the backend. (Enclose any debugger arguments in single quotes ('') together with the command. Make sure to re-direct stdout!)"), "command", QString ()));
 	parser.addOption (QCommandLineOption ("r-executable", i18n ("Use specified R installation, instead of the one configured at compile time (note: rkward R library must be installed to that installation of R)"), "command", QString ()));
 	parser.addOption (QCommandLineOption ("reuse", i18n ("Reuse a running RKWard instance (if available). If a running instance is reused, only the file arguments will be interpreted, all other options will be ignored.")));
+	parser.addOption (QCommandLineOption ("autoreuse", i18n ("Behaves like --reuse, if any file arguments are also given, starts a new instance, otherwise. Intended for use in the .desktop file.")));
 	parser.addOption (QCommandLineOption ("nowarn-external", i18n ("When used in conjunction with rkward://runplugin/-URLs specified on the command line, suppresses the warning about application-external (untrusted) links.")));
 	parser.addPositionalArgument ("files", i18n ("File or files to open, typically a workspace, or an R script file. When loading several things, you should specify the workspace, first."), "[Files...]");
 
@@ -267,7 +268,7 @@ int main (int argc, char *argv[]) {
 	}
 
 	// Handle --reuse option, by placing a dbus-call to existing RKWard process (if any) and exiting
-	if (parser.isSet ("reuse")) {
+	if (parser.isSet ("reuse") || (parser.isSet ("autoreuse") && !url_args.isEmpty ())) {
 		if (!QDBusConnection::sessionBus ().isConnected ()) {
 			RK_DEBUG (DEBUG_ALL, DL_WARNING, "Could not connect to session dbus");
 		} else {
