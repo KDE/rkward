@@ -342,7 +342,7 @@ void RKSettingsModuleR::saveSettings (KConfig *config) {
 	cg.writeEntry ("OutDec", options_outdec);
 	cg.writeEntry ("width", options_width);
 	cg.writeEntry ("warn", options_warn);
-	cg.writeEntry ("maxprint", options_maxprint);
+	cg.writeEntry ("max.print", options_maxprint);
 	cg.writeEntry ("warnings.length", options_warningslength);
 	cg.writeEntry ("keep.source", options_keepsource);
 	cg.writeEntry ("keep.source.pkgs", options_keepsourcepkgs);
