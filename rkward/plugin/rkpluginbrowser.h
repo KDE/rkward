@@ -26,6 +26,7 @@
 
 class GetFileNameWidget;
 class QDomElement;
+class QCheckBox;
 
 /** RKComponent to select one or more file(s) or directories
 
@@ -58,6 +59,7 @@ private:
 	bool updating;
 	bool only_local;
 	QString label_string;
+	QCheckBox* overwrite_confirm;
 };
 
 #endif

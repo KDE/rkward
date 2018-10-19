@@ -20,6 +20,7 @@
 #include <QVBoxLayout>
 #include <QUrl>
 #include <QDir>
+#include <QCheckBox>
 
 #include <KLocalizedString>
 
@@ -62,6 +63,11 @@ RKPluginBrowser::RKPluginBrowser (const QDomElement &element, RKComponent *paren
 	connect (selector, &GetFileNameWidget::locationChanged, this, &RKPluginBrowser::textChangedFromUi);
 
 	vbox->addWidget (selector);
+
+	overwrite_confirm = new QCheckBox (this);
+	connect (overwrite_confirm, &QCheckBox::toggled, this, &RKPluginBrowser::validateInput);
+	vbox->addWidget (overwrite_confirm);
+	overwrite_confirm->setVisible (mode == GetFileNameWidget::SaveFile);
 
 	validation_timer.setSingleShot (true);
 	connect (&validation_timer, &QTimer::timeout, this, &RKPluginBrowser::validateInput);
@@ -137,6 +143,8 @@ void RKPluginBrowser::validateInput () {
 				}
 			} else {
 				RK_ASSERT (mode == GetFileNameWidget::SaveFile);
+				overwrite_confirm->setText (i18n ("Overwrite?"));
+				overwrite_confirm->setEnabled (false);
 				if (!(fi.isWritable () || (!fi.exists () && QFileInfo (fi.dir ().absolutePath ()).isWritable ()))) {
 					tip = i18n ("The specified file is not writable.");
 					status = RKComponentBase::Unsatisfied;
@@ -144,9 +152,11 @@ void RKPluginBrowser::validateInput () {
 					tip = i18n ("You have to specify a filename (not directory) to write to.");
 					status = RKComponentBase::Unsatisfied;
 				} else if (fi.exists ()) {
+					overwrite_confirm->setText ("Overwrite? (The given file already exists)");
+					overwrite_confirm->setEnabled (true);
 					// TODO: soft warning (icon)
 					tip = i18n ("<b>Note:</b> The given file already exists, and will be modified / overwritten.");
-					status = RKComponentBase::Satisfied;
+					status = overwrite_confirm->isChecked () ? RKComponentBase::Satisfied : RKComponentBase::Unsatisfied;
 				} else {
 					status = RKComponentBase::Satisfied;
 				}
