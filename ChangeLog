@@ -1,4 +1,5 @@
 --- Version 0.7.1 - UNRELEASED
+- Fixed: <browser> element could not be set to not required
 - Fixed: max.print option was not saved, correctly, when set from RKWard settings
 - Add command-line option --autoreuse to avoid shipping two separate .desktop files
 - <select> elements in plugin dialogs can be set to accept only a single selection

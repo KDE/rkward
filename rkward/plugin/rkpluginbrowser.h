@@ -45,7 +45,7 @@ public:
 	QVariant value (const QString &modifier=QString ()) override { return (selection->value (modifier)); };
 	QStringList getUiLabelPair () const override;
 	int type () override { return ComponentBrowser; };
-	ComponentStatus recursiveStatus () override { return status; };
+	ComponentStatus recursiveStatus () override;
 public slots:
 	void textChangedFromUi ();
 	void textChanged (RKComponentPropertyBase *);

@@ -2,7 +2,7 @@
                           rkpluginbrowser  -  description
                              -------------------
     begin                : Sat Mar 10 2005
-    copyright            : (C) 2005, 2006, 2007, 2009, 2010, 2012, 2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -73,6 +73,12 @@ RKPluginBrowser::RKPluginBrowser (const QDomElement &element, RKComponent *paren
 
 RKPluginBrowser::~RKPluginBrowser () {
 	RK_TRACE (PLUGIN);
+}
+
+RKComponentBase::ComponentStatus RKPluginBrowser::recursiveStatus () {
+	if (status == RKComponentBase::Processing) return status;
+	if (isInactive () || !required) return RKComponentBase::Satisfied;
+	return status;
 }
 
 void RKPluginBrowser::textChanged (RKComponentPropertyBase *) {
