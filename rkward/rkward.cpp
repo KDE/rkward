@@ -764,7 +764,7 @@ bool RKWardMainWindow::doQueryQuit () {
 				return false;
 			}
 		}
-//		lockGUIRebuild (false);  // No need to update GUI anymore (and doing so is potentially asking for trouble, anyway)
+		gui_rebuild_locked = false; // like lockGUIRebuild (false), but does not trigger an immediate rebuild, as we are about to leave, anyway.
 	}
 
 	return true;
