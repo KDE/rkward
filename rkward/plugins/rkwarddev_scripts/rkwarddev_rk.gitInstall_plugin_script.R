@@ -45,6 +45,7 @@ rk.set.comp("Install from git")
 packageSource <- rk.XML.dropdown("Package source",
   options=list(
     "GitHub"=c(val="github", chk=TRUE),
+    "GitLab"=c(val="gitlab"),
     "Bitbucket"=c(val="bitbucket"),
     "git (generic)"=c(val="git"),
     "subversion (generic)"=c(val="svn")
@@ -57,12 +58,12 @@ gitUserRepo <- rk.XML.row(
   gitUser <- rk.XML.input("Git user name",
     required=TRUE,
     id.name="gitUser",
-    help="Specify the user name (GitHub and Bitbucket only)."
+    help="Specify the user name (GitHub, GitLab and Bitbucket only)."
   ),
   gitRepo <- rk.XML.input("Repository",
     required=TRUE,
     id.name="gitRepo",
-    help="Give the repository name (GitHub and Bitbucket only)."
+    help="Give the repository name (GitHub, GitLab and Bitbucket only)."
   )
 )
 
@@ -100,7 +101,7 @@ authPassword <- rk.XML.input("Password",
 
 authToken <- rk.XML.input("Personal access token (PAT)",
   required=TRUE,
-  help="To install from a private repository, set your personal access token (PAT, GitHub only)."
+  help="To install from a private repository, set your personal access token (PAT, GitHub and GitLab only)."
 )
 
 authFrame <- rk.XML.frame(
@@ -132,8 +133,11 @@ logicSection <- rk.XML.logic(
   rk.XML.connect(governor=lgcRequireURL, client=gitUserRepo, set="visible", not=TRUE),
   rk.XML.connect(governor=lgcRequireURL, client=fullURL, set="visible"),
   lgcIsGithub <- rk.XML.convert(sources=list(string=packageSource), mode=c(equals="github"), id.name="lgcIsGithub"),
+  lgcIsGitlab <- rk.XML.convert(sources=list(string=packageSource), mode=c(equals="gitlab"), id.name="lgcIsGitlab"),
+  lgcIsGithubOrGitlab <- rk.XML.convert(sources=list(lgcIsGithub, lgcIsGitlab), mode=c(or=""), id.name="lgcIsGithubOrGitlab"),
   lgcIsBitbucket <- rk.XML.convert(sources=list(string=packageSource), mode=c(equals="bitbucket"), id.name="lgcIsBitbucket"),
-  rk.XML.connect(governor=lgcIsGithub, client=authToken, set="enabled"),
+  lgcEnableAuthToken <- rk.XML.convert(sources=list(checked=authFrame, lgcIsGithubOrGitlab), mode=c(and=""), id.name="lgcEnableAuthToken"),
+  rk.XML.connect(governor=lgcEnableAuthToken, client=authToken, set="enabled"),
   rk.XML.connect(governor=lgcIsBitbucket, client=authUser, set="enabled"),
   rk.XML.connect(governor=lgcIsBitbucket, client=authPassword, set="enabled"),
   rk.XML.connect(governor=lgcRequireURL, client=authFrame, set="enabled", not=TRUE)
@@ -147,14 +151,20 @@ JScalculate <- rk.paste.JS(
   authFrameChecked,
   echo("\tinstall_", packageSource, "(\n"),
   js(
-    if(packageSource == "github" || packageSource == "bitbucket"){
-      echo("\t\trepo=\"", gitUser, "/", gitRepo, "\"")
-      if(gitReference){
-        echo(",\n\t\tref=\"", gitReference, "\"")
+    if(packageSource == "github" || packageSource == "gitlab" || packageSource == "bitbucket"){
+      echo("\t\trepo=\"", gitUser, "/", gitRepo)
+      if(gitSubdir){
+        echo("/", gitSubdir)
       } else {}
+      if(gitReference){
+        echo("@", gitReference)
+      } else {}
+      echo("\"")
       if(authFrameChecked){
-        if(packageSource == "github" && authToken){
-          echo(",\n\t\tauth_token=\"", authToken, "\"")
+        if(packageSource == "github" || packageSource == "gitlab"){
+          if(authToken){
+            echo(",\n\t\tauth_token=\"", authToken, "\"")
+          } else {}
         } else if(packageSource == "bitbucket"){
           if(authUser){
             echo(",\n\t\tauth_user=\"", authUser, "\"")
@@ -169,9 +179,6 @@ JScalculate <- rk.paste.JS(
       if(gitReference){
         echo(",\n\t\tbranch=\"", gitReference, "\"")
       } else {}
-    } else {},
-    if(gitSubdir){
-      echo(",\n\t\tsubdir=\"", gitSubdir, "\"")
     } else {}
   ),
   echo("\n\t)"),
