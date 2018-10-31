@@ -881,7 +881,7 @@ void RKCommandEditorWindow::doRenderPreview () {
 			delete preview_input_file;
 			preview_input_file = 0;
 		} else {
-			preview_input_file->remove ();  // If re-using an existing filename, remove it first. Somehow, contrary to documenation, this does not happen in open(WriteOnly), below.
+			preview_input_file->remove ();  // If re-using an existing filename, remove it first. Somehow, contrary to documentation, this does not happen in open(WriteOnly), below.
 		}
 	}
 	if (!preview_input_file) { // NOT an else!

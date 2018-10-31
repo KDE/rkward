@@ -15,7 +15,7 @@
       Choose the file to be exported.
     </setting>
     <setting id="targetFormat">
-      Set the target format for exported files. If you choose either "All formats defined in document" or "First format defined in document", the formats defined via output_format will be used, see the documenation on rmarkdown::render().
+      Set the target format for exported files. If you choose either "All formats defined in document" or "First format defined in document", the formats defined via output_format will be used, see the documentation on rmarkdown::render().
     </setting>
     <setting id="targetFile">
       Choose the target file name to export to.

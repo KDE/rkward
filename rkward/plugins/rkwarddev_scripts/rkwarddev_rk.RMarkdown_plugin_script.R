@@ -87,7 +87,7 @@ targetFormat <- rk.XML.dropdown("Target format",
     "Word"                              =c(val="docx")              # word_document
   ),
   id.name="targetFormat",
-  help="Set the target format for exported files. If you choose either \"All formats defined in document\" or \"First format defined in document\", the formats defined via output_format will be used, see the documenation on rmarkdown::render()."
+  help="Set the target format for exported files. If you choose either \"All formats defined in document\" or \"First format defined in document\", the formats defined via output_format will be used, see the documentation on rmarkdown::render()."
 )
 
 markdownVersion <- rk.XML.radio(
