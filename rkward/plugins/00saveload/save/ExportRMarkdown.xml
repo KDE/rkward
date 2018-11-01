@@ -3,12 +3,12 @@
   <!-- this code was generated using the rkwarddev package.
     perhaps don't make changes here, but in the rkwarddev script instead!
     
-    look for a file called: $SRC/inst/rkward/rkwarddev_rk.RMarkdown_plugin_script.R -->
+    look for a file called: ../../rkwarddev_scripts/rkwarddev_rk.RMarkdown_plugin_script.R -->
   <code file="ExportRMarkdown.js" />
   <help file="ExportRMarkdown.rkh" />
   <!-- <dependencies>
       </dependencies> -->
-  <about name="Export RMarkdown" shortinfo="RKWard GUI to export RMarkdown documents in various formats" longinfo="RKWard GUI to export RMarkdown documents in various formats" version="0.01-1" releasedate="2018-10-30" url="https://rkward.kde.org" license="GPL (&gt;= 3)">
+  <about name="Export RMarkdown" shortinfo="RKWard GUI to export RMarkdown documents in various formats" longinfo="RKWard GUI to export RMarkdown documents in various formats" version="0.01-1" releasedate="2018-11-01" url="https://rkward.kde.org" license="GPL (&gt;= 3)">
     <author given="Meik" family="Michalke" email="meik.michalke@hhu.de" role="aut, cre" />
   </about>
   <logic>

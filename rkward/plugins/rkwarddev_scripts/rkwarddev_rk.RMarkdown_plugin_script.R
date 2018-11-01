@@ -348,7 +348,7 @@ plugin.dir <- rk.plugin.skeleton(
   edit=FALSE, 
   load=TRUE, 
   show=FALSE,
-  gen.info="$SRC/inst/rkward/rkwarddev_rk.RMarkdown_plugin_script.R",
+  gen.info="../../rkwarddev_scripts/rkwarddev_rk.RMarkdown_plugin_script.R",
   hints=FALSE,
   internal=TRUE
 )

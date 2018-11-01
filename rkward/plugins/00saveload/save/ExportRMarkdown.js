@@ -1,7 +1,7 @@
 // this code was generated using the rkwarddev package.
 // perhaps don't make changes here, but in the rkwarddev script instead!
 // 
-// look for a file called: $SRC/inst/rkward/rkwarddev_rk.RMarkdown_plugin_script.R
+// look for a file called: ../../rkwarddev_scripts/rkwarddev_rk.RMarkdown_plugin_script.R
 
 // define variables globally
 var markdownVersion;
