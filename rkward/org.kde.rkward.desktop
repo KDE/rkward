@@ -63,6 +63,7 @@ Terminal=false
 Type=Application
 X-DocPath=rkward/index.html
 Categories=Qt;KDE;Science;Math;NumericalAnalysis;
+MimeType=text/r;application/rdata;
 Keywords=statistics;data;r;
 Keywords[ca]=estadística;dades;r;
 Keywords[ca@valencia]=estadística;dades;r;
