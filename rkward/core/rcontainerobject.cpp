@@ -384,7 +384,7 @@ QString RContainerObject::validizeName (const QString &child_name, bool unique) 
 	QString ret = child_name;
 	if (ret.isEmpty ()) ret = "var";
 	else {
-		ret = ret.replace (QRegExp ("[^a-zA-Z0-9]"), ".");
+		ret = ret.replace (QRegExp ("[^a-zA-Z0-9_]"), ".");
 		ret = ret.replace (QRegExp ("^\\.*[0-9]+"), ".");
 	}
 	if (!unique) return ret;

@@ -1,4 +1,5 @@
 --- Version 0.7.1 - UNRELEASED
+- Fixed: Underscore (_) was not accepted in names of newly created data.frames
 - <browser> element in save file mode gains checkbox to control overwriting of existing files
 - Fixed: <browser> element could not be set to not required
 - Fixed: max.print option was not saved, correctly, when set from RKWard settings
