@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component type="desktop-application">
+  <id>org.kde.rkward</id>
+  <metadata_license>FSFAP</metadata_license>
+  <project_license>GPL-2.0+</project_license>
+  <name>rkward</name>
+  <summary>KDE frontend to the R statistics language</summary>
+  <description>
+    <p>
+      RKWard aims to become an easy to use, transparent frontend to R,
+      a powerful system for statistical computation and graphics.
+      Besides a convenient GUI for the most important statistical functions,
+      future versions will also provide seamless integration with an
+      office-suite.
+    </p>
+  </description>
+  <url type="homepage">https://rkward.kde.org</url>
+  <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=rkward</url>
+  <url type="donation">https://www.kde.org/community/donations/?app=rkward</url>
+  <launchable type="desktop-id">org.kde.rkward.desktop</launchable>
+  <!-- <screenshots>
+    <screenshot type="default">
+      <image>
+        see https://www.freedesktop.org/software/appstream/docs/chap-Metadata.html#tag-screenshots
+        Central hosting for uploading at https://phabricator.kde.org/source/websites-product-screenshots/
+        Central URL to use here https://cdn.kde.org/screenshots/...
+      </image>
+    </screenshot>
+  </screenshots> -->
+  <provides>
+    <binary>rkward</binary>
+  </provides>
+  <project_group>KDE</project_group>
+</component>
