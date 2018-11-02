@@ -44,10 +44,10 @@ rk.set.comp("Install from git")
 
 packageSource <- rk.XML.dropdown("Package source",
   options=list(
-    "GitHub"=c(val="github", chk=TRUE),
+    "git (generic)"=c(val="git", chk=TRUE),
+    "GitHub"=c(val="github"),
     "GitLab"=c(val="gitlab"),
     "Bitbucket"=c(val="bitbucket"),
-    "git (generic)"=c(val="git"),
     "subversion (generic)"=c(val="svn")
   ),
   id.name="packageSource",
@@ -149,10 +149,10 @@ authFrameChecked <- rk.JS.vars(authFrame, modifiers="checked")
 
 JScalculate <- rk.paste.JS(
   authFrameChecked,
-  echo("\tinstall_", packageSource, "(\n"),
+  echo("  install_", packageSource, "(\n"),
   js(
     if(packageSource == "github" || packageSource == "gitlab" || packageSource == "bitbucket"){
-      echo("\t\trepo=\"", gitUser, "/", gitRepo)
+      echo("    repo=\"", gitUser, "/", gitRepo)
       if(gitSubdir){
         echo("/", gitSubdir)
       } else {}
@@ -163,25 +163,28 @@ JScalculate <- rk.paste.JS(
       if(authFrameChecked){
         if(packageSource == "github" || packageSource == "gitlab"){
           if(authToken){
-            echo(",\n\t\tauth_token=\"", authToken, "\"")
+            echo(",\n    auth_token=\"", authToken, "\"")
           } else {}
         } else if(packageSource == "bitbucket"){
           if(authUser){
-            echo(",\n\t\tauth_user=\"", authUser, "\"")
+            echo(",\n    auth_user=\"", authUser, "\"")
           } else {}
           if(authPassword){
-            echo(",\n\t\tpassword=\"", authPassword, "\"")
+            echo(",\n    password=\"", authPassword, "\"")
           } else {}
         } else {}
       } else {}
     } else if(packageSource == "git" || packageSource == "svn"){
-      echo("\t\turl=\"", fullURL, "\"")
+      echo("    url=\"", fullURL, "\"")
       if(gitReference){
-        echo(",\n\t\tbranch=\"", gitReference, "\"")
+        echo(",\n    branch=\"", gitReference, "\"")
+      } else {}
+      if(gitSubdir){
+        echo(",\n    subdir=\"", gitSubdir, "\"")
       } else {}
     } else {}
   ),
-  echo("\n\t)"),
+  echo("\n  )"),
   echo("\n")
 )
 
