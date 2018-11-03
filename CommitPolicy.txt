@@ -49,4 +49,4 @@ and after your changes. If in any doubt, ask on the mailing list rkward-devel@kd
 Review
 ======
 
-There is no strict policy on code reviews. It is never wrong to ask for review on git.reviewboard.kde.org, though. Always select group "rkward". It is also possible to create a "Differential" fo RKWard in Phabriactor: https://phabricator.kde.org/differential/diff/create/ .
+There is no strict policy on code reviews. It is never wrong to ask for review on Phabricator: https://phabricator.kde.org/differential/diff/create/ . Always select repository "RKward".
