@@ -3,7 +3,7 @@
   <id>org.kde.rkward</id>
   <metadata_license>FSFAP</metadata_license>
   <project_license>GPL-2.0+</project_license>
-  <name>rkward</name>
+  <name>RKward</name>
   <summary>KDE frontend to the R statistics language</summary>
   <description>
     <p>
@@ -17,16 +17,16 @@
   <url type="homepage">https://rkward.kde.org</url>
   <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=rkward</url>
   <url type="donation">https://www.kde.org/community/donations/?app=rkward</url>
+  <url type="help">https://docs.kde.org/?application=rkward</url>
   <launchable type="desktop-id">org.kde.rkward.desktop</launchable>
-  <!-- <screenshots>
+  <screenshots>
     <screenshot type="default">
+      <caption>Working with data in RKward</caption>
       <image>
-        see https://www.freedesktop.org/software/appstream/docs/chap-Metadata.html#tag-screenshots
-        Central hosting for uploading at https://phabricator.kde.org/source/websites-product-screenshots/
-        Central URL to use here https://cdn.kde.org/screenshots/...
+        https://rkward.kde.org/images/4/46/EditorDataFrame.png
       </image>
     </screenshot>
-  </screenshots> -->
+  </screenshots>
   <provides>
     <binary>rkward</binary>
   </provides>
