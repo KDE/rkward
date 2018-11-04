@@ -5,6 +5,11 @@
   <project_license>GPL-2.0+</project_license>
   <name>RKward</name>
   <summary>KDE frontend to the R statistics language</summary>
+  <summary xml:lang="ca">Frontal del KDE pel llenguatge estadístic R</summary>
+  <summary xml:lang="gl">Interface de KDE para a linguaxe de estatística R</summary>
+  <summary xml:lang="nl">KDE frontend naar de statistische taal R</summary>
+  <summary xml:lang="uk">Оболонка KDE до мови для статичних обчислень R</summary>
+  <summary xml:lang="x-test">xxKDE frontend to the R statistics languagexx</summary>
   <description>
     <p>
       RKWard aims to become an easy to use, transparent frontend to R,
@@ -13,6 +18,11 @@
       future versions will also provide seamless integration with an
       office-suite.
     </p>
+    <p xml:lang="ca">El RKWard pretén esdevenir en una interfície fàcil d'usar i transparent per a l'R, un potent sistema de càlcul estadístic i de gràfics. A més d'un GUI convenient per a les característiques estadístiques més importants, les futures versions també proporcionaran una perfecta integració amb una suite d'oficina.</p>
+    <p xml:lang="gl">RKWard pretende converterse nunha interface para R fácil de usar e transparente, un potente sistema de computación estatística e gráficas. Ademais de fornecer unha interface gráfica cómoda para as funcións estatísticas máis importantes, versión futuras fornecerán integración transparente cunha suite de ofimática.</p>
+    <p xml:lang="nl">Het doel van RKWard is een gemakkelijk te gebruiken, transparante frontend naar R, een krachtig systeem voor statistische berekeningen en grafieken te worden. En ernaast een gemakkelijke GUI voor de meest belangrijke statistische functies, toekomstige versies zullen ook naadloze integratie bieden met een kantoor-suite.</p>
+    <p xml:lang="uk">RKWard — проста у користуванні, прозора оболонка до R — потужної системи для статистичних обчислень та побудови графіків. Окрім зручного графічного інтерфейсу до більшості статистичних функцій, у майбутніх версіях буде реалізовано безшовну інтеграцію із комплексами офісних програм.</p>
+    <p xml:lang="x-test">xxRKWard aims to become an easy to use, transparent frontend to R, a powerful system for statistical computation and graphics. Besides a convenient GUI for the most important statistical functions, future versions will also provide seamless integration with an office-suite.xx</p>
   </description>
   <url type="homepage">https://rkward.kde.org</url>
   <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=rkward</url>
@@ -29,6 +39,11 @@
   </screenshots>
   <provides>
     <binary>rkward</binary>
+    <binary xml:lang="ca">RKWard</binary>
+    <binary xml:lang="gl">rkward</binary>
+    <binary xml:lang="nl">rkward</binary>
+    <binary xml:lang="uk">rkward</binary>
+    <binary xml:lang="x-test">xxrkwardxx</binary>
   </provides>
   <project_group>KDE</project_group>
 </component>
