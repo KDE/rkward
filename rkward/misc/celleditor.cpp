@@ -2,7 +2,7 @@
                           celleditor  -  description
                              -------------------
     begin                : Mon Sep 13 2004
-    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -20,6 +20,8 @@
 #include <QTimer>
 #include <QEvent>
 #include <QKeyEvent>
+
+#include <KLocalizedString>
 
 #include "../debug.h"
 
@@ -47,8 +49,14 @@ void CellEditor::setValueLabels (const RObject::ValueLabels& labels) {
 	value_list->setFocusProxy (this);
 	value_list->installEventFilter (this);	// somehow setting us as a focus proxy is not enough to continue to receive the key-presses
 
+	const int limit = 64;
+	int i = 0;
 	for (RObject::ValueLabels::const_iterator it = labels.constBegin (); it != labels.constEnd (); ++it) {
+		if (++i >= limit) break;
 		value_list->addAction (it.key () + ": " + it.value ())->setData (it.key ());
+	}
+	if (i >= limit) {
+		value_list->addAction (i18n ("[Omitted %1 more factor levels]", labels.size () - limit))->setEnabled (false);
 	}
 	connect (value_list, &QMenu::triggered, this, &CellEditor::selectedFromList);
 
