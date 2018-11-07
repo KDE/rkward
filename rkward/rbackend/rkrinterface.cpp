@@ -773,10 +773,10 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 	} else if (type == RBackendRequest::ShowMessage) {
 		QString caption = request->params["caption"].toString ();
 		QString message = request->params["message"].toString ();
-		QString button_yes = request->params["button_yes"].toString ();;
-		QString button_no = request->params["button_no"].toString ();;
-		QString button_cancel = request->params["button_cancel"].toString ();;
-		QString def_button = request->params["default"].toString ();;
+		QString button_yes = request->params["button_yes"].toString ();
+		QString button_no = request->params["button_no"].toString ();
+		QString button_cancel = request->params["button_cancel"].toString ();
+		QString def_button = request->params["default"].toString ();
 
 		// NOTE: In order to support non-modal (information) dialogs, we cannot use KMessageBox or QMessgaeBox, below.
 		QDialog* dialog = new QDialog ();

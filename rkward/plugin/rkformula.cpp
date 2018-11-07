@@ -187,7 +187,7 @@ void RKFormula::makeModelString () {
 		}
 		table_string.append (")");
 	} else {
-		if (container) table_string = container->getFullName ();;
+		if (container) table_string = container->getFullName ();
 	}
 	
 	// construct model string

@@ -94,7 +94,7 @@ void RKObjectListView::itemClicked (const QModelIndex& index) {
 	RK_TRACE (APP);
 
 	if (!index.parent ().isValid ()) {  // root level (pseudo) items expand on click
-		QModelIndex fixed_index = model ()->index (index.row (), 0, index.parent ());;
+		QModelIndex fixed_index = model ()->index (index.row (), 0, index.parent ());
 		if (!isExpanded (fixed_index)) {
 			expand (fixed_index);
 			resizeColumnToContents (0);

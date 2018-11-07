@@ -107,7 +107,7 @@ QString RObject::getDescription () const {
 		QString label = meta_map->value ("label");
 		if (!label.isEmpty ()) return (getShortName () + " (" + label + ')');
 	}
-	return getShortName ();;
+	return getShortName ();
 }
 
 QString RObject::getObjectDescription () const {

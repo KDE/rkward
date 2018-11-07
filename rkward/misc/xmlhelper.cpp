@@ -277,7 +277,7 @@ int XMLHelper::getIntAttribute (const QDomElement &element, const QString &name,
 
 	QString res = getStringAttribute (element, name, QString::number (def), debug_level);
 
-	bool valid_number;;
+	bool valid_number;
 	int ret = res.toInt (&valid_number);
 
 	if (!valid_number) {
@@ -293,7 +293,7 @@ double XMLHelper::getDoubleAttribute (const QDomElement &element, const QString 
 
 	QString res = getStringAttribute (element, name, QString::number (def), debug_level);
 
-	bool valid_number;;
+	bool valid_number;
 	double ret = res.toDouble (&valid_number);
 
 	if (!valid_number) {
