@@ -57,9 +57,7 @@
       <caption xml:lang="sv">Arbeta med data i RKward</caption>
       <caption xml:lang="uk">Робота з даними у RKward</caption>
       <caption xml:lang="x-test">xxWorking with data in RKwardxx</caption>
-      <image>
-        https://rkward.kde.org/images/4/46/EditorDataFrame.png
-      </image>
+      <image>https://rkward.kde.org/images/4/46/EditorDataFrame.png</image>
     </screenshot>
   </screenshots>
   <provides>
