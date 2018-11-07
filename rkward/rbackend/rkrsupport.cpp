@@ -238,6 +238,7 @@ RData *RKRSupport::SEXPToRData (SEXP from_exp) {
 				R_ClearExternalPtr (from_exp);
 				break;
 			}
+		Q_FALLTHROUGH();
 		//case STRSXP: // intentional fallthrough, conversion to stringlist is the default handling
 		default:
 			data->setData (SEXPToStringList (from_exp));
