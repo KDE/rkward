@@ -238,7 +238,9 @@ RData *RKRSupport::SEXPToRData (SEXP from_exp) {
 				R_ClearExternalPtr (from_exp);
 				break;
 			}
+#if (QT_VERSION >= QT_VERSION_CHECK(5,8,0))
 		Q_FALLTHROUGH();
+#endif
 		//case STRSXP: // intentional fallthrough, conversion to stringlist is the default handling
 		default:
 			data->setData (SEXPToStringList (from_exp));
