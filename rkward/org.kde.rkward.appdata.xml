@@ -6,6 +6,8 @@
   <name>RKward</name>
   <name xml:lang="ca">RKward</name>
   <name xml:lang="ca-valencia">RKward</name>
+  <name xml:lang="cs">RKward</name>
+  <name xml:lang="de">RKward</name>
   <name xml:lang="gl">RKWard</name>
   <name xml:lang="nl">RKward</name>
   <name xml:lang="pt">RKward</name>
@@ -16,6 +18,7 @@
   <summary>KDE frontend to the R statistics language</summary>
   <summary xml:lang="ca">Frontal del KDE pel llenguatge estadístic R</summary>
   <summary xml:lang="ca-valencia">Frontal del KDE pel llenguatge estadístic R</summary>
+  <summary xml:lang="de">KDE-Oberfläche für die Statistiksprache R</summary>
   <summary xml:lang="gl">Interface de KDE para a linguaxe de estatística R</summary>
   <summary xml:lang="nl">KDE frontend naar de statistische taal R</summary>
   <summary xml:lang="pt">Interface para o KDE da linguagem de estatísticas R</summary>
@@ -50,6 +53,7 @@
       <caption>Working with data in RKward</caption>
       <caption xml:lang="ca">Treballant amb dades al RKward</caption>
       <caption xml:lang="ca-valencia">Treballant amb dades al RKward</caption>
+      <caption xml:lang="de">Arbeiten mit Daten in RKward</caption>
       <caption xml:lang="gl">Traballando con datos en RKWard</caption>
       <caption xml:lang="nl">Met gegevens werken in RKward</caption>
       <caption xml:lang="pt">Lidar com dados no RKward</caption>
