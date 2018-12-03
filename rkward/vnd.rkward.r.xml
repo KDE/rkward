@@ -7,6 +7,7 @@
     <comment xml:lang="ca@valencia">Fitxer de codi font en R</comment>
     <comment xml:lang="cs">Zdrojový soubor R</comment>
     <comment xml:lang="de">R-Quelldatei</comment>
+    <comment xml:lang="en_GB">R source file</comment>
     <comment xml:lang="es">Archivo fuente de R</comment>
     <comment xml:lang="fr">Fichier source R</comment>
     <comment xml:lang="gl">Ficheiro de código R</comment>
@@ -34,6 +35,7 @@
     <comment xml:lang="ca@valencia">Fitxer de les dades/espai de treball de l'R</comment>
     <comment xml:lang="cs">Soubor pracovní plochy/dat R</comment>
     <comment xml:lang="de">R-Datendatei/Arbeitsbereichdatei</comment>
+    <comment xml:lang="en_GB">R data/workspace file</comment>
     <comment xml:lang="es">Archivo de datos o de espacio de trabajo de R</comment>
     <comment xml:lang="fr">Fichier de données ou d'espace de travail R</comment>
     <comment xml:lang="gl">Ficheiro de dato ou espazo de traballo de R</comment>
