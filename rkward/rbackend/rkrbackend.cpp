@@ -1145,14 +1145,19 @@ bool RKRBackend::startR () {
 	win_do_detect_winutf8markers = false;
 #endif
 
+	// What the??? Somehow the first command we run *will* appear to throw a syntax error. Some init step seems to be missing, but where?
+	// Anyway, we just run a dummy to "clear" that trap.
+	runDirectCommand ("\n");
+
 	// get info on R runtime version
-	RCommandProxy *dummy = runDirectCommand ("as.numeric (R.version$major) * 1000 + as.numeric (R.version$minor) * 10", RCommand::GetIntVector);
+	RCommandProxy *dummy = runDirectCommand ("(as.numeric(R.version$major)*1000+as.numeric(R.version$minor)*10)\n", RCommand::GetIntVector);
 	if ((dummy->getDataType () == RData::IntVector) && (dummy->getDataLength () == 1)) {
 		r_version = dummy->intVector ().at (0);
 	} else {
 		RK_ASSERT (false);
 		r_version = 0;
 	}
+	delete dummy;
 
 	return true;
 }
