@@ -37,6 +37,7 @@ public:
 
 	QString getFullName () const override;
 	QString makeChildName (const QString &short_child_name, bool misplaced=false) const override;
+	QString makeChildBaseName (const QString &short_child_name) const override;
 };
 
 /**

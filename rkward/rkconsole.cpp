@@ -492,8 +492,12 @@ void RKConsole::doTabCompletion () {
 	} else if (!current_symbol.isEmpty ()) {
 		RObject::RObjectSearchMap map;
 		RObjectList::getObjectList ()->findObjectsMatching (current_symbol, &map);
+		QStringList completions;
+		for (RObject::RObjectSearchMap::const_iterator i = map.constBegin (); i != map.constEnd(); ++i) {
+			completions.append (i.value ()->getBaseName ());
+		}
 
-		if (doTabCompletionHelper (current_line_num, current_line, word_start, word_end, map.keys ())) return;
+		if (doTabCompletionHelper (current_line_num, current_line, word_start, word_end, completions)) return;
 	}
 
 	// no completion was possible
