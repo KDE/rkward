@@ -261,8 +261,23 @@ RObject *RObjectList::findObjects (const QStringList &path, RObjectSearchMap *ma
 	RObject *found = getGlobalEnv ()->findObjects (path, matches, "$");
 	if (found && !matches) return found;
 	for (int i = 0; i < childmap.size (); ++i) {
-		found = childmap[i]->findObjects (path, matches, "$");
-		if (found && !matches) return found;
+		if (!matches) {
+			found = childmap[i]->findObjects (path, 0, "$");
+			if (found) return found;
+		} else {
+			RObjectSearchMap pmatches;
+			childmap[i]->findObjects (path, &pmatches, "$");
+			// For matches in environments on the search path:
+			// - If the name is *not* masked (yet), return the plain name.
+			// - If the name *is* masked, return the full qualitfied name.
+			for (RObjectSearchMap::const_iterator it = pmatches.constBegin (); it != pmatches.constEnd (); ++it) {
+				if (matches->contains (it.key ())) {
+					matches->insert (it.value ()->getFullName (), it.value ());
+				} else {
+					matches->insert (it.key (), it.value ());
+				}
+			}
+		}
 	}
 	return 0;
 }

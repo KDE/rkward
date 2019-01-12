@@ -1296,7 +1296,7 @@ void RKCodeCompletionModel::updateCompletionList (const QString& symbol) {
 	// in case objects are removed while the completion mode is active.
 	for (RObject::RObjectSearchMap::const_iterator it = map.constBegin (); it != map.constEnd (); ++it) {
 		icons.append (RKStandardIcons::iconForObject (it.value ()));
-		names.append (it.value ()->getBaseName ());
+		names.append (it.key ());
 	}
 
 	setRowCount (count);
