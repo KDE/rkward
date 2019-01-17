@@ -71,14 +71,9 @@ bool RObject::irregularShortName (const QString &name) {
 	return (name.contains (invalidChars));
 }
 
-QString RObject::getFullName () const {
+QString RObject::getFullName (int options) const {
 	RK_TRACE (OBJECTS);
-	return parent->makeChildName (RObject::name, type & Misplaced);
-}
-
-QString RObject::getBaseName () const {
-	RK_TRACE (OBJECTS);
-	return parent->makeChildBaseName (RObject::name);
+	return parent->makeChildName (RObject::name, type & Misplaced, options);
 }
 
 QString RObject::getLabel () const {
@@ -189,14 +184,13 @@ bool RObject::inherits (const QString &class_name) const {
 	return (classnames.contains (class_name));
 }
 
-QString RObject::makeChildName (const QString &short_child_name, bool) const {
+QString RObject::makeChildName (const QString &short_child_name, bool, int options) const {
 	RK_TRACE (OBJECTS);
-	return (getFullName () + "[[" + rQuote (short_child_name) + "]]");
-}
-
-QString RObject::makeChildBaseName (const QString &short_child_name) const {
-	RK_TRACE (OBJECTS);
-	return (getBaseName () + "[[" + rQuote (short_child_name) + "]]");
+	if (options & DollarExpansion) {
+		if (irregularShortName (short_child_name)) return (getFullName (options) + '$' + rQuote (short_child_name));
+		return (getFullName (options) + '$' + short_child_name);  // Do not return list$"member", unless necessary
+	}
+	return (getFullName (options) + "[[" + rQuote (short_child_name) + "]]");
 }
 
 void RObject::writeMetaData (RCommandChain *chain) {

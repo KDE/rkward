@@ -51,9 +51,8 @@ public:
 	/** like updateFromR, but only adjusts to new / missing environments, but does not update the .GlobalEnv. Designed to be used from the backend, when packages were loaded/unloaded . */
 	void updateFromR (RCommandChain *chain, const QStringList &current_searchpath, const QStringList &current_namespaces);
 	
-	QString getFullName () const override { return QString (); };
-	QString getBaseName () const override { return QString (); };
-	QString makeChildName (const QString &short_child_name, bool) const override { return short_child_name; };
+	QString getFullName (int) const override { return QString (); };
+	QString makeChildName (const QString &short_child_name, bool, int) const override { return short_child_name; };
 	/** reimplemented from RContainerObject: do nothing. The object-list has no meta data. */
 	void writeMetaData (RCommandChain *) override {};
 

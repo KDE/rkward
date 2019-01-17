@@ -61,15 +61,15 @@ QString REnvironmentObject::packageName () const {
 	return name.section (':', 1);
 }
 
-QString REnvironmentObject::getFullName () const {
+QString REnvironmentObject::getFullName (int options) const {
 	RK_TRACE (OBJECTS);
 
 	if (type & GlobalEnv) return name;	// .GlobalEnv
-	if (type & ToplevelEnv) return ("as.environment (" + rQuote (name) + ')');
-	return parent->makeChildName (name, type & Misplaced);
+	if ((type & ToplevelEnv) && (options & IncludeEnvirIfNotGlobalEnv)) return ("as.environment (" + rQuote (name) + ')');
+	return parent->makeChildName (name, type & Misplaced, options);
 }
 
-QString REnvironmentObject::makeChildName (const QString &short_child_name, bool misplaced) const {
+QString REnvironmentObject::makeChildName (const QString &short_child_name, bool misplaced, int options) const {
 	RK_TRACE (OBJECTS);
 
 	QString safe_name;
@@ -84,20 +84,14 @@ QString REnvironmentObject::makeChildName (const QString &short_child_name, bool
 		return (safe_name);
 	}
 	if (type & ToplevelEnv) {
+		if (!(options & IncludeEnvirIfNotGlobalEnv)) return (short_child_name);
 /* Some items are placed outside of their native namespace. E.g. in package:boot item "motor". It can be retrieved using as.environment ("package:boot")$motor. This is extremely ugly. We need to give them (and only them) this special treatment. */
 // TODO: hopefully one day operator "::" will work even in those cases. So check back later, and remove after a sufficient amount of backwards compatibility time
-// NOTE: This appears to have been fixed in R 2.14.0, when all packages were forced to have namespaces.
+// NOTE: This appears to have been fixed in R 2.14.0, when all packages were forced to have namespaces. Currently backend has a version check to set "misplaced", appropriately.
 		if ((type & PackageEnv) && (!misplaced)) return (packageName () + "::" + safe_name);
-		return (getFullName () + '$' + safe_name);
+		return (getFullName (options) + '$' + safe_name);
 	}
-	return (getFullName () + '$' + safe_name);
-}
-
-QString REnvironmentObject::makeChildBaseName (const QString &short_child_name) const {
-	RK_TRACE (OBJECTS);
-
-	if (type & ToplevelEnv) return (short_child_name);
-	return (name + '$' + short_child_name);
+	return (getFullName (options) + '$' + safe_name);
 }
 
 void REnvironmentObject::writeMetaData (RCommandChain *chain) {
@@ -120,7 +114,7 @@ void REnvironmentObject::updateFromR (RCommandChain *chain) {
 	if (type & GlobalEnv) options = ", envlevel=-1";	// in the .GlobalEnv recurse one more level
 	if (type & PackageEnv) options.append (", namespacename=" + rQuote (packageName ()));
 
-	RCommand *command = new RCommand (".rk.get.structure (" + getFullName () + ", " + rQuote (getShortName ()) + options + ')', RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString (), this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
+	RCommand *command = new RCommand (".rk.get.structure (" + getFullName (DefaultObjectNameOptions) + ", " + rQuote (getShortName ()) + options + ')', RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString (), this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, chain);
 
 	type |= Updating;
@@ -205,7 +199,7 @@ void REnvironmentObject::updateNamespace (RData* new_data) {
 QString REnvironmentObject::renameChildCommand (RObject *object, const QString &new_name) const {
 	RK_TRACE (OBJECTS);
 
-	return (makeChildName (new_name) + " <- " + object->getFullName () + '\n' + removeChildCommand (object));
+	return (makeChildName (new_name, false, IncludeEnvirIfNotGlobalEnv) + " <- " + object->getFullName () + '\n' + removeChildCommand (object));
 }
 
 QString REnvironmentObject::removeChildCommand (RObject *object) const {

@@ -36,9 +36,8 @@ public:
 /** like updateFromR, but only update new / removed symbols from R. Theoretically this could be defined in RContainerObject, but the only use case is for environments. */
 	virtual void updateFromR (RCommandChain *chain, const QStringList &current_symbols);
 
-	QString getFullName () const override;
-	QString makeChildName (const QString &short_child_name, bool misplaced=false) const override;
-	QString makeChildBaseName (const QString &short_child_name) const override;
+	QString getFullName (int) const override;
+	QString makeChildName (const QString &short_child_name, bool misplaced, int options) const override;
 /** reimplemented from RContainerObject: If this is an environment var, call RContainerObject::writeMetaData (). Else, do nothing. An environment has no meta data. */
 	void writeMetaData (RCommandChain *chain) override;
 	QString packageName () const;

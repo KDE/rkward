@@ -114,8 +114,12 @@ public:
 	static bool isMatchingType (int old_type, int new_type) { return ((old_type & ROBJECT_TYPE_INTERNAL_MASK) == (new_type & ROBJECT_TYPE_INTERNAL_MASK)); };
 	
 	QString getShortName () const { return name; };
-	virtual QString getFullName () const;
-	virtual QString getBaseName () const;
+	enum ObjectNameOptions {
+		DollarExpansion = 1,              /**< Return list members as list$member, instead of list[["member"]]  */
+		IncludeEnvirIfNotGlobalEnv = 2,   /**< Include package name for objects on the search path  */
+		DefaultObjectNameOptions = IncludeEnvirIfNotGlobalEnv
+	};
+	virtual QString getFullName (int name_options = DefaultObjectNameOptions) const;
 	QString getLabel () const;
 	QString getMetaProperty (const QString &id) const;
 	QString getDescription () const;
@@ -229,7 +233,7 @@ public:
 	};
 
 /** generates a (full) name for a child of this object with the given name. */
-	virtual QString makeChildName (const QString &short_child_name, bool misplaced=false) const;
+	virtual QString makeChildName (const QString &short_child_name, bool misplaced=false, int object_name_options=DefaultObjectNameOptions) const;
 protected:
 // why do I need those to compile? I thought they were derived classes!
 	friend class RContainerObject;
@@ -253,8 +257,6 @@ protected:
 
 /** Worker function for findObject() and findObjectsMatching(). If matches != 0, look for partial matches, and store them in the map (findObjectsMatching()). Else look for exact matches and return the first match (findObject()). */
 	virtual RObject *findObjects (const QStringList &path, RObjectSearchMap *matches, const QString &op);
-
-	virtual QString makeChildBaseName (const QString &short_child_name) const;
 
 /** Update object to reflect the structure passed in the new_data argument. If the data is mismatching (i.e. can not be accommodated by this type of object) false is returned (calls canAccommodateStructure () internally). In this case you should delete the object, and create a new one.
 @returns true if the changes could be done, false if this  */

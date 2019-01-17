@@ -277,7 +277,7 @@ RObject *RContainerObject::findObjects (const QStringList &path, RObjectSearchMa
 		for (int i = 0; i < childmap.size (); ++i) {
 			RObject* child = childmap[i];
 			if (partial.isEmpty () || child->getShortName ().startsWith (partial)) {
-				QString base_name = child->getBaseName ();
+				QString base_name = child->getFullName (DefaultObjectNameOptions - (DefaultObjectNameOptions & IncludeEnvirIfNotGlobalEnv));
 				if (matches->contains (base_name) || irregularShortName (base_name)) {
 					matches->insert (child->getFullName (), child);
 				} else {
