@@ -2,7 +2,7 @@
                           renvironmentobject  -  description
                              -------------------
     begin                : Wed Sep 27 2006
-    copyright            : (C) 2006, 2009, 2010, 2011, 2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2006-2019 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -79,8 +79,8 @@ QString REnvironmentObject::makeChildName (const QString &short_child_name, bool
 		safe_name = rQuote (short_child_name);
 	} else safe_name = short_child_name;
 
-	if (type & GlobalEnv) {		// don't print as ".GlobalEnv$something" unless childname needs fixing
-		if (irregular) return (getShortName () + '$' + safe_name);
+	if (type & GlobalEnv) {		// don't print as ".GlobalEnv$something" unless asked to, or childname needs fixing
+		if (irregular || (options & IncludeEnvirForGlobalEnv)) return (getShortName () + '$' + safe_name);
 		return (safe_name);
 	}
 	if (type & ToplevelEnv) {

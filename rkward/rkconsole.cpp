@@ -2,7 +2,7 @@
                           rkconsole  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004-2018 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2019 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -490,9 +490,10 @@ void RKConsole::doTabCompletion () {
 
 		if (doTabCompletionHelper (current_line_num, current_line, word_start + 1, word_end, comp.allMatches ())) return;
 	} else if (!current_symbol.isEmpty ()) {
-		RObject::RObjectSearchMap map;
-		RObjectList::getObjectList ()->findObjectsMatching (current_symbol, &map);
-		if (doTabCompletionHelper (current_line_num, current_line, word_start, word_end, map.keys ())) return;
+		RObject::ObjectList matches;
+		matches = RObjectList::getObjectList ()->findObjectsMatching (current_symbol);
+		QStringList match_names = RObject::getFullNames (matches, RObject::IncludeEnvirIfMasked);
+		if (doTabCompletionHelper (current_line_num, current_line, word_start, word_end, match_names)) return;
 	}
 
 	// no completion was possible

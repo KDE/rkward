@@ -2,7 +2,7 @@
                           rkcommandeditorwindow  -  description
                              -------------------
     begin                : Mon Aug 30 2004
-    copyright            : (C) 2004-2018 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2019 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -1280,23 +1280,20 @@ void RKCodeCompletionModel::updateCompletionList (const QString& symbol) {
 	if (current_symbol == symbol) return;	// already up to date
 	beginResetModel ();
 
-	RObject::RObjectSearchMap map;
+	RObject::ObjectList matches;
 	QStringList objectpath = RObject::parseObjectPath (symbol);
 	if (!objectpath.isEmpty () && !objectpath[0].isEmpty ()) {  // Skip completion, if the current symbol is '""' (or another empty quote), for instance
-		RObjectList::getObjectList ()->findObjectsMatching (symbol, &map);
+		matches = RObjectList::getObjectList ()->findObjectsMatching (symbol);
 	}
-
-	int count = map.size ();
-	icons.clear ();
-	names.clear ();
-	icons.reserve (count);
-	names.reserve (count);
 
 	// copy the map to two lists. For one thing, we need an int indexable storage, for another, caching this information is safer
 	// in case objects are removed while the completion mode is active.
-	for (RObject::RObjectSearchMap::const_iterator it = map.constBegin (); it != map.constEnd (); ++it) {
-		icons.append (RKStandardIcons::iconForObject (it.value ()));
-		names.append (it.key ());
+	int count = matches.size ();
+	icons.clear ();
+	icons.reserve (count);
+	names = RObject::getFullNames (matches, RObject::IncludeEnvirIfMasked);
+	for (int i = 0; i < count; ++i) {
+		icons.append (RKStandardIcons::iconForObject (matches[i]));
 	}
 
 	setRowCount (count);

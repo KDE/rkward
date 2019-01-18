@@ -2,7 +2,7 @@
                           rcontainerobject  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004-2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2019 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -72,7 +72,7 @@ private:
 	void updateRowNamesObject ();
 protected:
 	/** reimplemented from RObject to actually search for matching objects among the children */
-	RObject *findObjects (const QStringList &path, RObjectSearchMap *matches, const QString &op) override;
+	RObject::ObjectList findObjects (const QStringList &path, bool partial, const QString &op) override;
 
 	void updateChildren (RData *new_children);
 	RObjectMap childmap;

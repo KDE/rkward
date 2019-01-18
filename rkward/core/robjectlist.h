@@ -2,7 +2,7 @@
                           robjectlist  -  description
                              -------------------
     begin                : Wed Aug 18 2004
-    copyright            : (C) 2004-2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2019 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -76,7 +76,7 @@ signals:
 	void updateComplete ();
 protected:
 /** reimplemented from RContainerObject to search the environments in search order */
-	RObject *findObjects (const QStringList &path, RObjectSearchMap *matches, const QString &op) override;
+	RObject::ObjectList findObjects (const QStringList &path, bool partial, const QString &op) override;
 
 /// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"
 	QString removeChildCommand (RObject *object) const override;

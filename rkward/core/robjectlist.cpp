@@ -2,7 +2,7 @@
                           robjectlist  -  description
                              -------------------
     begin                : Wed Aug 18 2004
-    copyright            : (C) 2004-2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2019 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -235,51 +235,58 @@ REnvironmentObject *RObjectList::createTopLevelEnvironment (const QString &name)
 	return envobj;
 }
 
-RObject *RObjectList::findObjects (const QStringList &path, RObjectSearchMap *matches, const QString &op) {
+RObject::ObjectList RObjectList::findObjects (const QStringList &path, bool partial, const QString &op) {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (op == "$");
 
+	RObject::ObjectList ret;
 	if (path.value (1) == "::") {
 		RObject *environment = findPackage (path[0]);
-		if (!environment) return 0;
-		
-		return environment->findObjects (path.mid (2), matches, "$");
+		if (environment) return (environment->findObjects (path.mid (2), partial, "$"));
+		return ret;
 	} else if (path.value (1) == ":::") {
 		RObject *environment = findPackage (path[0]);
 		if (environment) environment = static_cast<REnvironmentObject*> (environment)->namespaceEnvironment ();
 		if (!environment) environment = orphan_namespaces->findOrphanNamespace (path[0]);
-		if (!environment) return 0;
-
-		return environment->findObjects (path.mid (2), matches, "$");
+		if (environment) return (environment->findObjects (path.mid (2), partial, "$"));
+		return ret;
 	} else if (path.value (0) == ".GlobalEnv") {
-		if (path.length () > 1) return getGlobalEnv ()->findObjects (path.mid (2), matches, "$");
-		else if (matches) matches->insert (path.value (0), getGlobalEnv ());	// no return, here: At least one more match will be found in base
-		else return getGlobalEnv ();
+		if (path.length () > 1) return getGlobalEnv ()->findObjects (path.mid (2), partial, "$");
+		// else we'll find base::.GlobalEnv, below
 	}
 
-	// no namespace given. Search all environments for matches
-	RObject *found = getGlobalEnv ()->findObjects (path, matches, "$");
-	if (found && !matches) return found;
+	// no namespace given. Search all environments for matches, .GlobalEnv, first
+	ret = getGlobalEnv ()->findObjects (path, partial, "$");
 	for (int i = 0; i < childmap.size (); ++i) {
-		if (!matches) {
-			found = childmap[i]->findObjects (path, 0, "$");
-			if (found) return found;
-		} else {
-			RObjectSearchMap pmatches;
-			childmap[i]->findObjects (path, &pmatches, "$");
-			// For matches in environments on the search path:
+		if (!(partial || ret.isEmpty ())) return ret;
+
+		ret.append (childmap[i]->findObjects (path, partial, "$"));
+	}
+	return ret;
+}
+
+QStringList RObject::getFullNames (const RObject::ObjectList &matches, int options) {
+	RK_TRACE (OBJECTS);
+
+	QStringList ret;
+	QSet<QString> unique_names;
+	for (int i = 0; i < matches.count (); ++i) {
+		if (options & IncludeEnvirIfMasked) {
 			// - If the name is *not* masked (yet), return the plain name.
 			// - If the name *is* masked, return the full qualitfied name.
-			for (RObjectSearchMap::const_iterator it = pmatches.constBegin (); it != pmatches.constEnd (); ++it) {
-				if (matches->contains (it.key ())) {
-					matches->insert (it.value ()->getFullName (), it.value ());
-				} else {
-					matches->insert (it.key (), it.value ());
-				}
+			// NOTE: This assumes objects are given in search order!
+			QString base_name = matches[i]->getFullName (options);
+			if (unique_names.contains (base_name)) {
+				base_name = matches[i]->getFullName (options | IncludeEnvirIfNotGlobalEnv | IncludeEnvirForGlobalEnv);
 			}
+			RK_ASSERT (!unique_names.contains (base_name));
+			unique_names.insert (base_name);
+			ret.append (base_name);
+		} else {
+			ret.append (matches[i]->getFullName (options));
 		}
 	}
-	return 0;
+	return ret;
 }
 
 REnvironmentObject* RObjectList::findPackage (const QString &namespacename) const {

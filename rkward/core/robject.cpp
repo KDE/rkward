@@ -2,7 +2,7 @@
                           robject  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004-2016 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2019 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -81,13 +81,13 @@ QString RObject::getLabel () const {
 	return getMetaProperty ("label");
 }
 
-RObject* RObject::findObjects (const QStringList &path, RObjectSearchMap *matches, const QString &op) {
+RObject::ObjectList RObject::findObjects (const QStringList &path, bool partial, const QString &op) {
 	RK_TRACE (OBJECTS);
 	// not a container
 	if (op == "@") {
-		if (slotsPseudoObject ()) return (slotsPseudoObject ()->findObjects (path, matches, "$"));
+		if (slotsPseudoObject ()) return (slotsPseudoObject ()->findObjects (path, partial, "$"));
 	}
-	return 0;
+	return ObjectList();
 }
 
 QString RObject::getMetaProperty (const QString &id) const {
