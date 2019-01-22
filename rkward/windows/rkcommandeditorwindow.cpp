@@ -1268,6 +1268,7 @@ RKCodeCompletionModel::RKCodeCompletionModel (RKCommandEditorWindow *parent) : K
 
 	setRowCount (0);
 	command_editor = parent;
+	setHasGroups (true);
 }
 
 RKCodeCompletionModel::~RKCodeCompletionModel () {
@@ -1291,12 +1292,11 @@ void RKCodeCompletionModel::updateCompletionList (const QString& symbol) {
 	int count = matches.size ();
 	icons.clear ();
 	icons.reserve (count);
-	names = RObject::getFullNames (matches, RObject::IncludeEnvirIfMasked);
+	names = RObject::getFullNames (matches, RKSettingsModuleCommandEditor::completionOptions());
 	for (int i = 0; i < count; ++i) {
 		icons.append (RKStandardIcons::iconForObject (matches[i]));
 	}
 
-	setRowCount (count);
 	current_symbol = symbol;
 
 	endResetModel ();
@@ -1320,14 +1320,43 @@ void RKCodeCompletionModel::executeCompletionItem (KTextEditor::View *view, cons
 	view->document ()->replaceText (word, names[index.row ()]);
 }
 
+QModelIndex RKCodeCompletionModel::index (int row, int column, const QModelIndex& parent) const {
+	if (!parent.isValid ()) { // header item
+		if (row == 0) return createIndex (row, column, quintptr (0));
+		return QModelIndex ();
+	} else if (parent.parent ().isValid ()) {
+		return QModelIndex ();
+	}
+
+	if (row < 0 || row >= names.count () || column < 0 || column >= ColumnCount) {
+		return QModelIndex ();
+	}
+
+	return createIndex (row, column, 1);  // regular item
+}
+
+QModelIndex RKCodeCompletionModel::parent (const QModelIndex& index) const {
+	if (index.internalId ()) return createIndex (0, 0, quintptr (0));
+	return QModelIndex ();
+}
+
+int RKCodeCompletionModel::rowCount (const QModelIndex& parent) const {
+	if (parent.parent ().isValid ()) return 0;  // no children on completion entries
+	if (parent.isValid ()) return names.count ();
+	return (!names.isEmpty ()); // header item, if list not empty
+}
+
 QVariant RKCodeCompletionModel::data (const QModelIndex& index, int role) const {
+	if (!index.parent ().isValid ()) {  // group header
+		if (role == Qt::DisplayRole) return i18n ("Objects on search path");
+		if (role == GroupRole) return Qt::DisplayRole;
+		return QVariant ();
+	}
 
 	int col = index.column ();
 	int row = index.row ();
 
-	if (index.parent ().isValid ()) return QVariant ();
-
-	if ((role == Qt::DisplayRole) || (role==KTextEditor::CodeCompletionModel::CompletionRole)) {
+	if ((role == Qt::DisplayRole) || (role == KTextEditor::CodeCompletionModel::CompletionRole)) {
 		if (col == KTextEditor::CodeCompletionModel::Name) {
 			return (names.value (row));
 		}
@@ -1335,6 +1364,10 @@ QVariant RKCodeCompletionModel::data (const QModelIndex& index, int role) const 
 		if (col == KTextEditor::CodeCompletionModel::Icon) {
 			return (icons.value (row));
 		}
+	} else if (role == KTextEditor::CodeCompletionModel::InheritanceDepth) {
+		return (row);  // disable sorting
+	} else if (role == KTextEditor::CodeCompletionModel::MatchQuality) {
+		return (10);
 	}
 
 	return QVariant ();

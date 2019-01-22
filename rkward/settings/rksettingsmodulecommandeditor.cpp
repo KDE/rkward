@@ -2,7 +2,7 @@
                           rksettingsmodulecommandeditor  -  description
                              -------------------
     begin                : Tue Oct 23 2007
-    copyright            : (C) 2007, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2019 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -26,9 +26,11 @@
 #include <QCheckBox>
 #include <QGroupBox>
 #include <QLineEdit>
+#include <QComboBox>
 
 #include "../misc/rkspinbox.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../core/robject.h"
 #include "../rkglobals.h"
 #include "../debug.h"
 
@@ -36,6 +38,7 @@
 int RKSettingsModuleCommandEditor::completion_min_chars;
 int RKSettingsModuleCommandEditor::completion_timeout;
 bool RKSettingsModuleCommandEditor::completion_enabled;
+int RKSettingsModuleCommandEditor::completion_options;
 bool RKSettingsModuleCommandEditor::arghinting_enabled;
 bool RKSettingsModuleCommandEditor::autosave_enabled;
 bool RKSettingsModuleCommandEditor::autosave_keep;
@@ -81,6 +84,30 @@ RKSettingsModuleCommandEditor::RKSettingsModuleCommandEditor (RKSettings *gui, Q
 	connect (completion_timeout_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleCommandEditor::settingChanged);
 	box_layout->addWidget (label);
 	box_layout->addWidget (completion_timeout_box);
+
+	label = new QLabel (i18nc ("Note: list() and data.frame() are programming terms in R, and should not be translated, here", "Operator for access to members of list() and data.frame() objects"));
+	label->setWordWrap (true);
+	completion_list_member_operator_box = new QComboBox (group);
+	completion_list_member_operator_box->addItem (i18n ("'$'-operator (list$member)"));
+	completion_list_member_operator_box->addItem (i18n ("'[['-operator (list[[\"member\"]])"));
+	completion_list_member_operator_box->setCurrentIndex ((completion_options & RObject::DollarExpansion) ? 0 : 1);
+	connect (completion_list_member_operator_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &RKSettingsModuleCommandEditor::settingChanged);
+	box_layout->addWidget (label);
+	box_layout->addWidget (completion_list_member_operator_box);
+
+	label = new QLabel (i18n ("Include environment for objects on the search path:"));
+	label->setWordWrap (true);
+	completion_object_qualification_box = new QComboBox (group);
+	completion_object_qualification_box->addItem (i18n ("For masked objects, only"));
+	completion_object_qualification_box->addItem (i18n ("For objects outside of <i>.GlobalEnv</i>, only"));
+	completion_object_qualification_box->addItem (i18n ("Always"));
+	if (completion_options & (RObject::IncludeEnvirIfNotGlobalEnv)) {
+		if (completion_options & (RObject::IncludeEnvirIfNotGlobalEnv)) completion_object_qualification_box->setCurrentIndex (2);
+		else completion_object_qualification_box->setCurrentIndex (1);
+	}
+	connect (completion_object_qualification_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &RKSettingsModuleCommandEditor::settingChanged);
+	box_layout->addWidget (label);
+	box_layout->addWidget (completion_object_qualification_box);
 
 	main_vbox->addWidget (group);
 
@@ -163,6 +190,11 @@ void RKSettingsModuleCommandEditor::applyChanges () {
 	completion_min_chars = completion_min_chars_box->intValue ();
 	completion_timeout = completion_timeout_box->intValue ();
 	arghinting_enabled = arghinting_enabled_box->isChecked ();
+	completion_options = 0;
+	if (completion_list_member_operator_box->currentIndex () == 0) completion_options += RObject::DollarExpansion;
+	if (completion_object_qualification_box->currentIndex () == 2) completion_options += RObject::IncludeEnvirForGlobalEnv | RObject::IncludeEnvirIfNotGlobalEnv;
+	else if (completion_object_qualification_box->currentIndex () == 1) completion_options += RObject::IncludeEnvirIfNotGlobalEnv;
+	else completion_options += RObject::IncludeEnvirIfMasked;
 
 	autosave_enabled = autosave_enabled_box->isChecked ();
 	autosave_keep = autosave_keep_box->isChecked ();
@@ -184,6 +216,7 @@ void RKSettingsModuleCommandEditor::saveSettings (KConfig *config) {
 	cg.writeEntry ("Completion enabled", completion_enabled);
 	cg.writeEntry ("Completion min chars", completion_min_chars);
 	cg.writeEntry ("Completion timeout", completion_timeout);
+	cg.writeEntry ("Completion option flags", completion_options);
 	cg.writeEntry ("Argument hinting enabled", arghinting_enabled);
 
 	cg.writeEntry ("Autosave enabled", autosave_enabled);
@@ -201,6 +234,7 @@ void RKSettingsModuleCommandEditor::loadSettings (KConfig *config) {
 	completion_enabled = cg.readEntry ("Completion enabled", true);
 	completion_min_chars = cg.readEntry ("Completion min chars", 2);
 	completion_timeout = cg.readEntry ("Completion timeout", 500);
+	completion_options = cg.readEntry ("Completion option flags", RObject::DollarExpansion | RObject::IncludeEnvirIfMasked);
 	arghinting_enabled = cg.readEntry ("Argument hinting enabled", true);
 
 	autosave_enabled = cg.readEntry ("Autosave enabled", true);

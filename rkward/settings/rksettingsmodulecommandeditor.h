@@ -2,7 +2,7 @@
                           rksettingsmodulecommandeditor  -  description
                              -------------------
     begin                : Tue Oct 23 2007
-    copyright            : (C) 2007-2018 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2019 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -23,6 +23,7 @@ class RKSpinBox;
 class QCheckBox;
 class QLineEdit;
 class QGroupBox;
+class QComboBox;
 
 /**
 configuration for the Command Editor windows
@@ -49,6 +50,7 @@ public:
 	static int completionTimeout () { return completion_timeout; };
 	static bool completionEnabled () { return completion_enabled; };
 	static bool argHintingEnabled () { return arghinting_enabled; };
+	static int completionOptions () { return completion_options; };
 
 	static bool autosaveEnabled () { return autosave_enabled; };
 	static bool autosaveKeep () { return autosave_keep; };
@@ -65,11 +67,14 @@ private:
 	static int completion_timeout;
 	static bool completion_enabled;
 	static bool arghinting_enabled;
+	static int completion_options;
 
 	RKSpinBox* completion_min_chars_box;
 	RKSpinBox* completion_timeout_box;
 	QCheckBox* completion_enabled_box;
 	QCheckBox* arghinting_enabled_box;
+	QComboBox* completion_list_member_operator_box;
+	QComboBox* completion_object_qualification_box;
 
 	static bool autosave_enabled;
 	static bool autosave_keep;

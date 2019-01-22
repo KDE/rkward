@@ -2,7 +2,7 @@
                           rkcommandeditorwindow  -  description
                              -------------------
     begin                : Mon Aug 30 2004
-    copyright            : (C) 2004-2018 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2019 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -118,6 +118,9 @@ public:
 	void completionInvoked (KTextEditor::View *, const KTextEditor::Range &, InvocationType) override;
 	void executeCompletionItem (KTextEditor::View *view, const KTextEditor::Range &word, const QModelIndex &index) const override;
 	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const override;
+	int rowCount (const QModelIndex &parent) const override;
+	QModelIndex index (int row, int column, const QModelIndex &parent = QModelIndex ()) const override;
+	QModelIndex parent (const QModelIndex &index) const override;
 
 	bool isEmpty () const { return names.isEmpty (); };
 private:
