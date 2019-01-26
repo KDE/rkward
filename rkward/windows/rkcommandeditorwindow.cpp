@@ -1108,6 +1108,8 @@ void RKCommandEditorWindow::selectionChanged (KTextEditor::View* view) {
 
 #include "../core/rfunctionobject.h"
 
+RKCodeCompletionModel* dirty_hack;
+
 RKFunctionArgHinter::RKFunctionArgHinter (RKScriptContextProvider *provider, KTextEditor::View* view) {
 	RK_TRACE (COMMANDEDITOR);
 
@@ -1218,6 +1220,7 @@ void RKFunctionArgHinter::tryArgHintNow () {
 
 	// initialize and show popup
 	arghints_popup->setText (effective_symbol + " (" + static_cast<RFunctionObject*> (object)->printArgs () + ')');
+	dirty_hack->updateFunctionArgHint (object);
 	arghints_popup->resize (arghints_popup->sizeHint () + QSize (2, 2));
 	active = true;
 	updater.start (50);
@@ -1266,9 +1269,9 @@ bool RKFunctionArgHinter::eventFilter (QObject *, QEvent *e) {
 RKCodeCompletionModel::RKCodeCompletionModel (RKCommandEditorWindow *parent) : KTextEditor::CodeCompletionModel (parent) {
 	RK_TRACE (COMMANDEDITOR);
 
-	setRowCount (0);
 	command_editor = parent;
 	setHasGroups (true);
+	dirty_hack = this;
 }
 
 RKCodeCompletionModel::~RKCodeCompletionModel () {
@@ -1302,6 +1305,24 @@ void RKCodeCompletionModel::updateCompletionList (const QString& symbol) {
 	endResetModel ();
 }
 
+void RKCodeCompletionModel::updateFunctionArgHint (RObject *fo) {
+	RK_TRACE (COMMANDEDITOR);
+
+	RFunctionObject *fun = static_cast<RFunctionObject*> (fo);
+	if (fo && !fo->isType (RObject::Function)) fun = 0;
+
+// TODO optimization
+	beginResetModel ();
+	if (fun) {
+		args = fun->argumentNames ();
+		arg_defaults = fun->argumentDefaults ();
+	} else {
+		args.clear ();
+		arg_defaults.clear ();
+	}
+	endResetModel ();
+}
+
 void RKCodeCompletionModel::completionInvoked (KTextEditor::View*, const KTextEditor::Range&, InvocationType) {
 	RK_TRACE (COMMANDEDITOR);
 
@@ -1320,35 +1341,46 @@ void RKCodeCompletionModel::executeCompletionItem (KTextEditor::View *view, cons
 	view->document ()->replaceText (word, names[index.row ()]);
 }
 
+enum RKCodeCompletionModelItemFlags {
+	FormalsHint = 1,
+	ObjectHint = 2,
+	HintTypeMask = FormalsHint | ObjectHint,
+	CompletionHeader = 4,
+	CompletionItem = 8
+};
+
 QModelIndex RKCodeCompletionModel::index (int row, int column, const QModelIndex& parent) const {
-	if (!parent.isValid ()) { // header item
-		if (row == 0) return createIndex (row, column, quintptr (0));
+	if (!parent.isValid ()) { // root item
+		if (row == 0) return createIndex (row, column, quintptr (FormalsHint | CompletionHeader));
+		else if (row == 1) return createIndex (row, column, quintptr (ObjectHint | CompletionHeader));
 		return QModelIndex ();
-	} else if (parent.parent ().isValid ()) {
-		return QModelIndex ();
-	}
-
-	if (row < 0 || row >= names.count () || column < 0 || column >= ColumnCount) {
+	} else if (parent.internalId () & CompletionItem) {
 		return QModelIndex ();
 	}
 
-	return createIndex (row, column, 1);  // regular item
+	return createIndex (row, column, quintptr ((parent.internalId () & HintTypeMask) | CompletionItem));  // regular item
 }
 
 QModelIndex RKCodeCompletionModel::parent (const QModelIndex& index) const {
-	if (index.internalId ()) return createIndex (0, 0, quintptr (0));
+	if (index.internalId () & CompletionItem) return createIndex (0, 0, quintptr ((index.internalId () & HintTypeMask) | CompletionHeader));
 	return QModelIndex ();
 }
 
 int RKCodeCompletionModel::rowCount (const QModelIndex& parent) const {
-	if (parent.parent ().isValid ()) return 0;  // no children on completion entries
-	if (parent.isValid ()) return names.count ();
-	return (!names.isEmpty ()); // header item, if list not empty
+	if (parent.internalId () & CompletionItem) return 0;  // no children on completion entries
+	if (parent.internalId () & CompletionHeader) {
+		if (parent.internalId () & FormalsHint) return args.count ();
+		return names.count ();
+	}
+	return 2;
 }
 
 QVariant RKCodeCompletionModel::data (const QModelIndex& index, int role) const {
-	if (!index.parent ().isValid ()) {  // group header
-		if (role == Qt::DisplayRole) return i18n ("Objects on search path");
+	if (index.internalId () & CompletionHeader) {  // group header
+		if (role == Qt::DisplayRole) {
+			if (index.internalId () & FormalsHint) return i18n ("Function Arguments");
+			else return i18n ("Objects on search path");
+		}
 		if (role == GroupRole) return Qt::DisplayRole;
 		return QVariant ();
 	}
@@ -1358,10 +1390,13 @@ QVariant RKCodeCompletionModel::data (const QModelIndex& index, int role) const 
 
 	if ((role == Qt::DisplayRole) || (role == KTextEditor::CodeCompletionModel::CompletionRole)) {
 		if (col == KTextEditor::CodeCompletionModel::Name) {
+			if (index.internalId () == (CompletionItem | FormalsHint)) return (args.value (row));
 			return (names.value (row));
+		} else if (col == KTextEditor::CodeCompletionModel::Postfix) {
+			if (index.internalId () == (CompletionItem | FormalsHint)) return (QVariant (QString (" = ") + arg_defaults.value (row)));
 		}
 	} else if (role == Qt::DecorationRole) {
-		if (col == KTextEditor::CodeCompletionModel::Icon) {
+		if (col == KTextEditor::CodeCompletionModel::Icon  && index.internalId () == (CompletionItem | ObjectHint)) {
 			return (icons.value (row));
 		}
 	} else if (role == KTextEditor::CodeCompletionModel::InheritanceDepth) {

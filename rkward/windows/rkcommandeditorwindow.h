@@ -115,6 +115,7 @@ public:
 	QString filterString (KTextEditor::View *, const KTextEditor::Range &, const KTextEditor::Cursor &) override { return QString (); };
 
 	void updateCompletionList (const QString& symbol);
+	void updateFunctionArgHint (RObject *fo);
 	void completionInvoked (KTextEditor::View *, const KTextEditor::Range &, InvocationType) override;
 	void executeCompletionItem (KTextEditor::View *view, const KTextEditor::Range &word, const QModelIndex &index) const override;
 	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const override;
@@ -126,6 +127,8 @@ public:
 private:
 	QList<QIcon> icons;
 	QStringList names;
+	QStringList args;
+	QStringList arg_defaults;
 	QString current_symbol;
 	RKCommandEditorWindow *command_editor;
 };
