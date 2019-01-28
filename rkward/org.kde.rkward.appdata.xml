@@ -14,6 +14,7 @@
   <name xml:lang="id">RKward</name>
   <name xml:lang="it">RKWard</name>
   <name xml:lang="nl">RKward</name>
+  <name xml:lang="pl">RKward</name>
   <name xml:lang="pt">RKward</name>
   <name xml:lang="sk">RKward</name>
   <name xml:lang="sv">RKward</name>
@@ -29,6 +30,7 @@
   <summary xml:lang="id">Frontend KDE untuk bahasa statistik R</summary>
   <summary xml:lang="it">Interfaccia di KDE per il linguaggio statistico R</summary>
   <summary xml:lang="nl">KDE frontend naar de statistische taal R</summary>
+  <summary xml:lang="pl">Nakładka KDE na język statystyczny R</summary>
   <summary xml:lang="pt">Interface para o KDE da linguagem de estatísticas R</summary>
   <summary xml:lang="sk">KDE frontend pre štatistický jazyk R</summary>
   <summary xml:lang="sv">KDE-gränssnitt till statistikspråket R</summary>
@@ -49,6 +51,7 @@
     <p xml:lang="id">RKWard ditujukan untuk menjadi yang mudah digunakan, frontend transparan untuk R, sebuah sistem yang unggul untuk grafik dan komputasi statistik. Selain GUI yang nyaman untuk beberapa fungsi statistik yang penting, versi masa depan juga akan menyediakan integrasi yang sama dengan office suite.</p>
     <p xml:lang="it">RKWard mira a diventare un'interfaccia trasparente per R, facile da usare, un potente sistema per il calcolo statistico e la grafica. Oltre a una comoda interfaccia per le funzioni statistiche più importanti, le versioni future forniranno anche una perfetta integrazione con una suite per ufficio.</p>
     <p xml:lang="nl">Het doel van RKWard is een gemakkelijk te gebruiken, transparante frontend naar R, een krachtig systeem voor statistische berekeningen en grafieken te worden. En ernaast een gemakkelijke GUI voor de meest belangrijke statistische functies, toekomstige versies zullen ook naadloze integratie bieden met een kantoor-suite.</p>
+    <p xml:lang="pl">RKWard dąży do tego, aby stać się łatwą w użyciu i przejrzystą nakładką na R, zaawansowany system do obliczeń statystycznych i obrazowania. Poza wygodnym interfejsem użytkownika dla większości z ważnych funkcji, przyszłe wydania dostarczą także integrację z pakietem biurowym.</p>
     <p xml:lang="pt">O RKWard pretende tornar-se uma interface simples de usar e transparente para o R, um sistema poderoso para cálculos estatísticos e gráficos. Para além de uma interface adequada para as funções estatísticas mais importantes, as futuras versões também irão oferecer uma integração transparente com os pacotes de aplicações de escritório.</p>
     <p xml:lang="sv">RKward har som mål att bli ett lättanvänt, transparent gränssnitt till R, ett kraftfullt system för statistiska beräkningar och grafik. Förutom ett praktiskt grafiskt användargränssnitt för de viktigaste statistikfunktionerna, kommer framtida versioner också att tillhandahålla sömlös integrering med en kontorssvit.</p>
     <p xml:lang="uk">RKWard — проста у користуванні, прозора оболонка до R — потужної системи для статистичних обчислень та побудови графіків. Окрім зручного графічного інтерфейсу до більшості статистичних функцій, у майбутніх версіях буде реалізовано безшовну інтеграцію із комплексами офісних програм.</p>
@@ -71,6 +74,7 @@
       <caption xml:lang="id">Bekerja dengan data di RKward</caption>
       <caption xml:lang="it">Lavorare coi dati in RKward</caption>
       <caption xml:lang="nl">Met gegevens werken in RKward</caption>
+      <caption xml:lang="pl">Praca z danymi w RKward</caption>
       <caption xml:lang="pt">Lidar com dados no RKward</caption>
       <caption xml:lang="sk">Práca s dátami v RKward</caption>
       <caption xml:lang="sv">Arbeta med data i RKward</caption>
