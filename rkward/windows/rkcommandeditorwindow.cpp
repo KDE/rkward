@@ -222,6 +222,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 	connect (m_view, &KTextEditor::View::focusIn, this, &RKCommandEditorWindow::focusIn);
 
 	completion_model = 0;
+	kate_keyword_completion_model = 0;
 	cc_iface = 0;
 	hinter = 0;
 	if (use_r_highlighting) {
@@ -229,12 +230,18 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 		if (use_codehinting) {
 			cc_iface = qobject_cast<KTextEditor::CodeCompletionInterface*> (m_view);
 			if (cc_iface) {
-				cc_iface->setAutomaticInvocationEnabled (true);
+				cc_iface->setAutomaticInvocationEnabled (false);
 				completion_model = new RKCodeCompletionModel (this);
 				completion_timer = new QTimer (this);
 				completion_timer->setSingleShot (true);
 				connect (completion_timer, &QTimer::timeout, this, &RKCommandEditorWindow::tryCompletion);
 				connect (m_doc, &KTextEditor::Document::textChanged, this, &RKCommandEditorWindow::tryCompletionProxy);
+
+				// HACK: I just can't see to make the object name completion model play nice with automatic invocation.
+				//       However, there is no official way to invoke all registered models, manually. So we try to hack our way
+				//       to a pointer to the default kate keyword completion model
+				kate_keyword_completion_model = editor->findChild<KTextEditor::CodeCompletionModel *> ();
+				if (!kate_keyword_completion_model) kate_keyword_completion_model = m_view->findChild<KTextEditor::CodeCompletionModel *> (QString());
 			} else {
 				RK_ASSERT (false);
 			}
@@ -766,6 +773,11 @@ KTextEditor::Range RKCodeCompletionModel::completionRange (KTextEditor::View *vi
 	return KTextEditor::Range (position.line (), start, position.line (), end);
 }
 
+KTextEditor::Range RKCodeCompletionModel::updateCompletionRange(KTextEditor::View *view, const KTextEditor::Range &range) {
+	updateCompletionList (view->document ()->text (range));
+	return range;
+}
+
 void RKCommandEditorWindow::tryCompletion () {
 	// TODO: merge this with RKConsole::doTabCompletion () somehow
 	RK_TRACE (COMMANDEDITOR);
@@ -790,10 +802,11 @@ void RKCommandEditorWindow::tryCompletion () {
 	if (word.length () >= RKSettingsModuleCommandEditor::completionMinChars ()) {
 		completion_model->updateCompletionList (word);
 		if (completion_model->isEmpty ()) {
-			cc_iface->abortCompletion ();
+			if (kate_keyword_completion_model && kate_keyword_completion_model->rowCount () < 1) cc_iface->abortCompletion ();
 		} else {
 			if (!cc_iface->isCompletionActive ()) {
 				cc_iface->startCompletion (range, completion_model);
+				if (kate_keyword_completion_model) cc_iface->startCompletion (range, kate_keyword_completion_model);
 			}
 		}
 	} else {

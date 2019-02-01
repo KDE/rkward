@@ -113,6 +113,9 @@ public:
 
 	KTextEditor::Range completionRange (KTextEditor::View *view, const KTextEditor::Cursor &position) override;
 	QString filterString (KTextEditor::View *, const KTextEditor::Range &, const KTextEditor::Cursor &) override { return QString (); };
+	bool shouldAbortCompletion (KTextEditor::View *, const KTextEditor::Range &, const QString &) override { return false; }
+	KTextEditor::CodeCompletionModelControllerInterface::MatchReaction matchingItem (const QModelIndex &) override { return KTextEditor::CodeCompletionModelControllerInterface::None; };
+	KTextEditor::Range updateCompletionRange (KTextEditor::View *view, const KTextEditor::Range &range) override;
 
 	void updateCompletionList (const QString& symbol);
 	void completionInvoked (KTextEditor::View *, const KTextEditor::Range &, InvocationType) override;
@@ -242,6 +245,7 @@ private:
 	KTextEditor::MovingInterface *smart_iface;
 	RKFunctionArgHinter *hinter;
 	RKCodeCompletionModel *completion_model;
+	KTextEditor::CodeCompletionModel* kate_keyword_completion_model;
 
 	QTimer *completion_timer;
 
