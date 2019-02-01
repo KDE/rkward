@@ -119,6 +119,7 @@ public:
 		IncludeEnvirIfNotGlobalEnv = 2,   /**< Include package name for objects on the search path  */
 		IncludeEnvirForGlobalEnv = 4,     /**< Include ".GlobalEnv" for objects inside globalenv  */
 		IncludeEnvirIfMasked = 8,         /**< Include package name for objects that are masked (only applicable for object lists, i.e. getFullNames()) */
+		ExplicitSlotsExpansion = 16,      /**< Return slots as slot(object, member), intead of object\@member */
 		NoIncludeEnvir = 0,               /**< Label for missing include-envirs */
 		DefaultObjectNameOptions = IncludeEnvirIfNotGlobalEnv
 	};

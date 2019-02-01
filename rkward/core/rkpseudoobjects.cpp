@@ -41,6 +41,9 @@ QString RSlotsPseudoObject::getFullName (int options) const {
 QString RSlotsPseudoObject::makeChildName (const QString &short_child_name, bool, int options) const {
 	RK_TRACE (OBJECTS);
 
+	if (options & ExplicitSlotsExpansion) {
+		return (QStringLiteral("slot(") + parent->getFullName (options) + QStringLiteral(", ") + rQuote(short_child_name) + ')');
+	}
 	QString safe_name = short_child_name;
 	if (irregularShortName (safe_name)) safe_name = rQuote (short_child_name);
 	return (parent->getFullName (options) + '@' + safe_name);

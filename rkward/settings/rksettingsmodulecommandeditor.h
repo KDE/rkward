@@ -74,6 +74,7 @@ private:
 	QCheckBox* completion_enabled_box;
 	QCheckBox* arghinting_enabled_box;
 	QComboBox* completion_list_member_operator_box;
+	QComboBox* completion_slot_operator_box;
 	QComboBox* completion_object_qualification_box;
 
 	static bool autosave_enabled;

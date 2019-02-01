@@ -95,6 +95,16 @@ RKSettingsModuleCommandEditor::RKSettingsModuleCommandEditor (RKSettings *gui, Q
 	box_layout->addWidget (label);
 	box_layout->addWidget (completion_list_member_operator_box);
 
+	label = new QLabel (i18nc ("Note: S4-slot() is a programming term in R, and should not be translated, here", "Operator for access to S4-slot()s"));
+	label->setWordWrap (true);
+	completion_slot_operator_box = new QComboBox (group);
+	completion_slot_operator_box->addItem (i18n ("'@'-operator (object@smember)"));
+	completion_slot_operator_box->addItem (i18n ("'slot()'-function (slot(object, member))"));
+	completion_slot_operator_box->setCurrentIndex ((completion_options & RObject::ExplicitSlotsExpansion) ? 1 : 0);
+	connect (completion_slot_operator_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &RKSettingsModuleCommandEditor::settingChanged);
+	box_layout->addWidget (label);
+	box_layout->addWidget (completion_slot_operator_box);
+
 	label = new QLabel (i18n ("Include environment for objects on the search path:"));
 	label->setWordWrap (true);
 	completion_object_qualification_box = new QComboBox (group);
@@ -192,6 +202,7 @@ void RKSettingsModuleCommandEditor::applyChanges () {
 	arghinting_enabled = arghinting_enabled_box->isChecked ();
 	completion_options = 0;
 	if (completion_list_member_operator_box->currentIndex () == 0) completion_options += RObject::DollarExpansion;
+	if (completion_slot_operator_box->currentIndex () == 1) completion_options += RObject::ExplicitSlotsExpansion;
 	if (completion_object_qualification_box->currentIndex () == 2) completion_options += RObject::IncludeEnvirForGlobalEnv | RObject::IncludeEnvirIfNotGlobalEnv;
 	else if (completion_object_qualification_box->currentIndex () == 1) completion_options += RObject::IncludeEnvirIfNotGlobalEnv;
 	else completion_options += RObject::IncludeEnvirIfMasked;
@@ -234,7 +245,7 @@ void RKSettingsModuleCommandEditor::loadSettings (KConfig *config) {
 	completion_enabled = cg.readEntry ("Completion enabled", true);
 	completion_min_chars = cg.readEntry ("Completion min chars", 2);
 	completion_timeout = cg.readEntry ("Completion timeout", 500);
-	completion_options = cg.readEntry ("Completion option flags", RObject::DollarExpansion | RObject::IncludeEnvirIfMasked);
+	completion_options = cg.readEntry ("Completion option flags", (int) RObject::IncludeEnvirIfMasked);
 	arghinting_enabled = cg.readEntry ("Argument hinting enabled", true);
 
 	autosave_enabled = cg.readEntry ("Autosave enabled", true);
