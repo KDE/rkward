@@ -773,11 +773,6 @@ KTextEditor::Range RKCodeCompletionModel::completionRange (KTextEditor::View *vi
 	return KTextEditor::Range (position.line (), start, position.line (), end);
 }
 
-KTextEditor::Range RKCodeCompletionModel::updateCompletionRange(KTextEditor::View *view, const KTextEditor::Range &range) {
-	updateCompletionList (view->document ()->text (range));
-	return range;
-}
-
 void RKCommandEditorWindow::tryCompletion () {
 	// TODO: merge this with RKConsole::doTabCompletion () somehow
 	RK_TRACE (COMMANDEDITOR);

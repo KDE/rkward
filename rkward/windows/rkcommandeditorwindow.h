@@ -115,7 +115,6 @@ public:
 	QString filterString (KTextEditor::View *, const KTextEditor::Range &, const KTextEditor::Cursor &) override { return QString (); };
 	bool shouldAbortCompletion (KTextEditor::View *, const KTextEditor::Range &, const QString &) override { return false; }
 	KTextEditor::CodeCompletionModelControllerInterface::MatchReaction matchingItem (const QModelIndex &) override { return KTextEditor::CodeCompletionModelControllerInterface::None; };
-	KTextEditor::Range updateCompletionRange (KTextEditor::View *view, const KTextEditor::Range &range) override;
 
 	void updateCompletionList (const QString& symbol);
 	void completionInvoked (KTextEditor::View *, const KTextEditor::Range &, InvocationType) override;
