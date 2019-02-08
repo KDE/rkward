@@ -1187,13 +1187,12 @@ RKCompletionManager::RKCompletionManager (KTextEditor::View* view) : QObject (vi
 	RK_TRACE (COMMANDEDITOR);
 
 	RKCompletionManager::view = view;
-	completion_model = 0;
-	kate_keyword_completion_model = 0;
 
 	cc_iface = qobject_cast<KTextEditor::CodeCompletionInterface*> (view);
 	if (cc_iface) {
 		cc_iface->setAutomaticInvocationEnabled (false);
 		completion_model = new RKCodeCompletionModel (this);
+		file_completion_model = new RKFileCompletionModel (this);
 		completion_timer = new QTimer (this);
 		completion_timer->setSingleShot (true);
 		connect (completion_timer, &QTimer::timeout, this, &RKCompletionManager::tryCompletion);
@@ -1220,6 +1219,7 @@ RKCompletionManager::~RKCompletionManager () {
 void RKCompletionManager::tryCompletionProxy () {
 	if (RKSettingsModuleCommandEditor::completionEnabled ()) {
 		if (cc_iface && cc_iface->isCompletionActive ()) {
+			// TODO: Actually, in this case we should try to _update_ the existing completion, i.e. try to save some CPU cycles.
 			tryCompletion ();
 		} else if (cc_iface) {
 			completion_timer->start (RKSettingsModuleCommandEditor::completionTimeout ());
@@ -1257,12 +1257,17 @@ void RKCompletionManager::tryCompletion () {
 
 	QString word = currentCompletionWord ();
 	if (word.length () >= RKSettingsModuleCommandEditor::completionMinChars ()) {
-		completion_model->updateCompletionList (word);
-		if (completion_model->isEmpty ()) {
+		// as a very simple heuristic: If the current symbol starts with a quote, we should probably attempt file name completion, instead of symbol name completion
+		bool filename_completion = (word.startsWith ('\"') || word.startsWith ('\'') || word.startsWith ('`'));
+
+		completion_model->updateCompletionList (filename_completion ? QString () : word);
+		file_completion_model->updateCompletionList (filename_completion ? word.mid (1) : QString ());
+		if (completion_model->isEmpty () && file_completion_model->isEmpty ()) {
 			if ((!kate_keyword_completion_model) || (kate_keyword_completion_model->rowCount () < 1)) cc_iface->abortCompletion ();
 		} else {
 			if (!cc_iface->isCompletionActive ()) {
 				cc_iface->startCompletion (symbol_range, completion_model);
+				cc_iface->startCompletion (symbol_range, file_completion_model);
 				if (kate_keyword_completion_model) cc_iface->startCompletion (symbol_range, kate_keyword_completion_model);
 			}
 		}
@@ -1374,16 +1379,6 @@ KTextEditor::Range RKCodeCompletionModel::completionRange (KTextEditor::View *vi
 	return KTextEditor::Range (position.line (), start, position.line (), end);
 }
 
-void RKCodeCompletionModel::completionInvoked (KTextEditor::View*, const KTextEditor::Range&, InvocationType) {
-	RK_TRACE (COMMANDEDITOR);
-
-	// we totally ignore whichever range the katepart thinks we should offer a completion on.
-	// it is often wrong, esp, when there are dots in the symbol
-// KDE4 TODO: This may no longer be needed, if the katepart gets fixed not to abort completions when the range
-// contains dots or other special characters
-	updateCompletionList (manager->currentCompletionWord ());
-}
-
 void RKCodeCompletionModel::executeCompletionItem (KTextEditor::View *view, const KTextEditor::Range &word, const QModelIndex &index) const {
 	RK_TRACE (COMMANDEDITOR);
 
@@ -1395,6 +1390,7 @@ void RKCodeCompletionModel::executeCompletionItem (KTextEditor::View *view, cons
 QVariant RKCodeCompletionModel::data (const QModelIndex& index, int role) const {
 	if (isHeaderItem (index)) {
 		if (role == Qt::DisplayRole) return i18n ("Objects on search path");
+		if (role == KTextEditor::CodeCompletionModel::GroupRole) return Qt::DisplayRole;
 		return QVariant ();
 	}
 
@@ -1418,7 +1414,95 @@ QVariant RKCodeCompletionModel::data (const QModelIndex& index, int role) const 
 	return QVariant ();
 }
 
+//////////////////////// RKFileCompletionModel ////////////////////
+#include <KUrlCompletion>
+RKFileCompletionModelWorker::RKFileCompletionModelWorker (const QString &_string) : QThread () {
+	RK_TRACE (COMMANDEDITOR);
+	string = _string;
+	connect (this, &QThread::finished, this, &QObject::deleteLater);
+}
 
+void RKFileCompletionModelWorker::run () {
+	RK_TRACE (COMMANDEDITOR);
+
+	KUrlCompletion comp;
+	comp.setDir (QUrl::fromLocalFile (QDir::currentPath ()));
+	comp.makeCompletion (string);
+	QStringList files = comp.allMatches ();
+
+	comp.setMode (KUrlCompletion::ExeCompletion);
+	comp.makeCompletion (string);
+	QStringList exes = comp.allMatches ();
+
+	emit (completionsReady (string, exes, comp.allMatches ()));
+}
+
+RKFileCompletionModel::RKFileCompletionModel (RKCompletionManager* manager) : RKCompletionModelBase (manager) {
+	RK_TRACE (COMMANDEDITOR);
+	worker = 0;
+}
+
+RKFileCompletionModel::~RKFileCompletionModel () {
+	RK_TRACE (COMMANDEDITOR);
+}
+
+void RKFileCompletionModel::updateCompletionList(const QString& fragment) {
+	RK_TRACE (COMMANDEDITOR);
+
+	if (current_fragment == fragment) return;
+
+	current_fragment = fragment;
+	launchThread ();
+}
+
+void RKFileCompletionModel::launchThread () {
+	RK_TRACE (COMMANDEDITOR);
+
+	if (current_fragment.isEmpty ()) {
+		completionsReady (QString (), QStringList (), QStringList ());
+	} else if (!worker) {
+		RK_DEBUG (COMMANDEDITOR, DL_DEBUG, "Launching filename completion thread for '%s'", qPrintable (current_fragment));
+		worker = new RKFileCompletionModelWorker (current_fragment);
+		connect (worker, &RKFileCompletionModelWorker::completionsReady, this, &RKFileCompletionModel::completionsReady);
+		worker->start ();
+	}
+}
+
+void RKFileCompletionModel::completionsReady (const QString& string, const QStringList& exes, const QStringList& files) {
+	RK_TRACE (COMMANDEDITOR);
+
+	RK_DEBUG (COMMANDEDITOR, DL_DEBUG, "Filename completion finished for '%s': %d matches", qPrintable (string), files.size () + exes.size ());
+	worker = 0;
+	if (current_fragment == string) {
+		beginResetModel ();
+		names = files + exes; // TODO: This could be prettier
+		n_completions = names.size ();
+		endResetModel ();
+	} else {
+		launchThread ();
+	}
+}
+
+QVariant RKFileCompletionModel::data (const QModelIndex& index, int role) const {
+	if (isHeaderItem (index)) {
+		if (role == Qt::DisplayRole) return i18n ("Local file names");
+		if (role == KTextEditor::CodeCompletionModel::GroupRole) return Qt::DisplayRole;
+		return QVariant ();
+	}
+
+	int col = index.column ();
+	int row = index.row ();
+	if ((role == Qt::DisplayRole) || (role == KTextEditor::CodeCompletionModel::CompletionRole)) {
+		if (col == KTextEditor::CodeCompletionModel::Name) {
+			return (names.value (row));
+		}
+	} else if (role == KTextEditor::CodeCompletionModel::InheritanceDepth) {
+		return (row);  // disable sorting
+	} else if (role == KTextEditor::CodeCompletionModel::MatchQuality) {
+		return (10);
+	}
+	return QVariant ();
+}
 
 // static
 KTextEditor::Document* RKCommandHighlighter::_doc = 0;

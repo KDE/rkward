@@ -105,6 +105,7 @@ private:
 };
 
 class RKCodeCompletionModel;
+class RKFileCompletionModel;
 class RKCompletionManager : public QObject {
 	Q_OBJECT
 public:
@@ -125,6 +126,7 @@ private:
 	void tryCompletionProxy ();
 	KTextEditor::CodeCompletionInterface *cc_iface;
 	RKCodeCompletionModel *completion_model;
+	RKFileCompletionModel *file_completion_model;
 	KTextEditor::CodeCompletionModel* kate_keyword_completion_model;
 	QTimer *completion_timer;
 
@@ -169,13 +171,41 @@ public:
 	KTextEditor::Range completionRange (KTextEditor::View *view, const KTextEditor::Cursor &position) override;
 
 	void updateCompletionList (const QString& symbol);
-	void completionInvoked (KTextEditor::View *, const KTextEditor::Range &, InvocationType) override;
 	void executeCompletionItem (KTextEditor::View *view, const KTextEditor::Range &word, const QModelIndex &index) const override;
 	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const override;
 private:
 	QList<QIcon> icons;
 	QStringList names;
 	QString current_symbol;
+};
+
+#include <QThread>
+class RKFileCompletionModelWorker : public QThread {
+	Q_OBJECT
+public:
+	explicit RKFileCompletionModelWorker (const QString &string);
+signals:
+	void completionsReady (const QString &string, const QStringList &exes, const QStringList &files);
+private:
+	void run () override;
+	QString string;
+};
+
+class RKFileCompletionModel : public RKCompletionModelBase {
+	Q_OBJECT
+public:
+	explicit RKFileCompletionModel (RKCompletionManager *manager);
+	~RKFileCompletionModel ();
+
+	void updateCompletionList (const QString& fragment);
+	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const override;
+private slots:
+	void completionsReady (const QString &string, const QStringList &exes, const QStringList &files);
+private:
+	void launchThread ();
+	QStringList names;
+	QString current_fragment;
+	RKFileCompletionModelWorker *worker;
 };
 
 class RKJobSequence;
