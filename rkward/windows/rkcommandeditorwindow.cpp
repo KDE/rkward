@@ -221,30 +221,11 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 	// somehow the katepart loses the context menu each time it loses focus
 	connect (m_view, &KTextEditor::View::focusIn, this, &RKCommandEditorWindow::focusIn);
 
-	completion_model = 0;
-	kate_keyword_completion_model = 0;
-	cc_iface = 0;
 	hinter = 0;
 	if (use_r_highlighting) {
 		RKCommandHighlighter::setHighlighting (m_doc, RKCommandHighlighter::RScript);
 		if (use_codehinting) {
-			cc_iface = qobject_cast<KTextEditor::CodeCompletionInterface*> (m_view);
-			if (cc_iface) {
-				cc_iface->setAutomaticInvocationEnabled (false);
-				completion_model = new RKCodeCompletionModel (this);
-				completion_timer = new QTimer (this);
-				completion_timer->setSingleShot (true);
-				connect (completion_timer, &QTimer::timeout, this, &RKCommandEditorWindow::tryCompletion);
-				connect (m_doc, &KTextEditor::Document::textChanged, this, &RKCommandEditorWindow::tryCompletionProxy);
-
-				// HACK: I just can't see to make the object name completion model play nice with automatic invocation.
-				//       However, there is no official way to invoke all registered models, manually. So we try to hack our way
-				//       to a pointer to the default kate keyword completion model
-				kate_keyword_completion_model = editor->findChild<KTextEditor::CodeCompletionModel *> ();
-				if (!kate_keyword_completion_model) kate_keyword_completion_model = m_view->findChild<KTextEditor::CodeCompletionModel *> (QString());
-			} else {
-				RK_ASSERT (false);
-			}
+			new RKCompletionManager (m_view);
 			hinter = new RKFunctionArgHinter (this, m_view);
 		}
 	} else {
@@ -740,75 +721,6 @@ void RKCommandEditorWindow::currentHelpContext (QString *symbol, QString *packag
 	*symbol = RKCommonFunctions::getCurrentSymbol (line, c.column ());
 }
 
-void RKCommandEditorWindow::tryCompletionProxy (KTextEditor::Document*) {
-	if (RKSettingsModuleCommandEditor::completionEnabled ()) {
-		if (cc_iface && cc_iface->isCompletionActive ()) {
-			tryCompletion ();
-		} else if (cc_iface) {
-			completion_timer->start (RKSettingsModuleCommandEditor::completionTimeout ());
-		}
-	}
-}
-
-QString RKCommandEditorWindow::currentCompletionWord () const {
-	RK_TRACE (COMMANDEDITOR);
-// KDE4 TODO: This may no longer be needed, if the katepart gets fixed not to abort completions when the range
-// contains dots or other special characters
-	KTextEditor::Cursor c = m_view->cursorPosition();
-	if (!c.isValid ()) return QString ();
-	uint para=c.line(); uint cursor_pos=c.column();
-
-	QString current_line = m_doc->line (para);
-	if (current_line.lastIndexOf ("#", cursor_pos) >= 0) return QString ();	// do not hint while in comments
-
-	return RKCommonFunctions::getCurrentSymbol (current_line, cursor_pos, false);
-}
-
-KTextEditor::Range RKCodeCompletionModel::completionRange (KTextEditor::View *view, const KTextEditor::Cursor &position) {
-	if (!position.isValid ()) return KTextEditor::Range ();
-	QString current_line = view->document ()->line (position.line ());
-	int start;
-	int end;
-	RKCommonFunctions::getCurrentSymbolOffset (current_line, position.column (), false, &start, &end);
-	return KTextEditor::Range (position.line (), start, position.line (), end);
-}
-
-void RKCommandEditorWindow::tryCompletion () {
-	// TODO: merge this with RKConsole::doTabCompletion () somehow
-	RK_TRACE (COMMANDEDITOR);
-	if ((!cc_iface) || (!completion_model)) {
-		RK_ASSERT (false);
-		return;
-	}
-
-	KTextEditor::Cursor c = m_view->cursorPosition();
-	uint para=c.line(); int cursor_pos=c.column();
-
-	QString current_line = m_doc->line (para);
-	int start;
-	int end;
-	RKCommonFunctions::getCurrentSymbolOffset (current_line, cursor_pos, false, &start, &end);
-	if (end > cursor_pos) return;   // Only hint when at the end of a word/symbol: https://mail.kde.org/pipermail/rkward-devel/2015-April/004122.html
-
-	KTextEditor::Range range = KTextEditor::Range (para, start, para, end);
-	QString word;
-	if (range.isValid ()) word = m_doc->text (range);
-	if (current_line.lastIndexOf ("#", cursor_pos) >= 0) word.clear ();	// do not hint while in comments
-	if (word.length () >= RKSettingsModuleCommandEditor::completionMinChars ()) {
-		completion_model->updateCompletionList (word);
-		if (completion_model->isEmpty ()) {
-			if (kate_keyword_completion_model && kate_keyword_completion_model->rowCount () < 1) cc_iface->abortCompletion ();
-		} else {
-			if (!cc_iface->isCompletionActive ()) {
-				cc_iface->startCompletion (range, completion_model);
-				if (kate_keyword_completion_model) cc_iface->startCompletion (range, kate_keyword_completion_model);
-			}
-		}
-	} else {
-		cc_iface->abortCompletion ();
-	}
-}
-
 QString RKCommandEditorWindow::provideContext (int line_rev) {
 	RK_TRACE (COMMANDEDITOR);
 
@@ -1269,13 +1181,156 @@ bool RKFunctionArgHinter::eventFilter (QObject *, QEvent *e) {
 	return false;
 }
 
-//////////////////////// RKCodeCompletionModel ////////////////////
+//////////////////////// RKCompletionManager //////////////////////
 
-RKCodeCompletionModel::RKCodeCompletionModel (RKCommandEditorWindow *parent) : KTextEditor::CodeCompletionModel (parent) {
+RKCompletionManager::RKCompletionManager (KTextEditor::View* view) : QObject (view) {
 	RK_TRACE (COMMANDEDITOR);
 
-	setRowCount (0);
-	command_editor = parent;
+	RKCompletionManager::view = view;
+	completion_model = 0;
+	kate_keyword_completion_model = 0;
+
+	cc_iface = qobject_cast<KTextEditor::CodeCompletionInterface*> (view);
+	if (cc_iface) {
+		cc_iface->setAutomaticInvocationEnabled (false);
+		completion_model = new RKCodeCompletionModel (this);
+		completion_timer = new QTimer (this);
+		completion_timer->setSingleShot (true);
+		connect (completion_timer, &QTimer::timeout, this, &RKCompletionManager::tryCompletion);
+		connect (view->document (), &KTextEditor::Document::textInserted, this, &RKCompletionManager::textInserted);
+		connect (view->document (), &KTextEditor::Document::textRemoved, this, &RKCompletionManager::textRemoved);
+		connect (view->document (), &KTextEditor::Document::lineWrapped, this, &RKCompletionManager::lineWrapped);
+		connect (view->document (), &KTextEditor::Document::lineUnwrapped, this, &RKCompletionManager::lineUnwrapped);
+		connect (view, &KTextEditor::View::cursorPositionChanged, this, &RKCompletionManager::cursorPositionChanged);
+
+		// HACK: I just can't see to make the object name completion model play nice with automatic invocation.
+		//       However, there is no official way to invoke all registered models, manually. So we try to hack our way
+		//       to a pointer to the default kate keyword completion model
+		kate_keyword_completion_model = KTextEditor::Editor::instance ()->findChild<KTextEditor::CodeCompletionModel *> ();
+		if (!kate_keyword_completion_model) kate_keyword_completion_model = view->findChild<KTextEditor::CodeCompletionModel *> (QString());
+	} else {
+		RK_ASSERT (false);  // Not a katepart?
+	}
+}
+
+RKCompletionManager::~RKCompletionManager () {
+	RK_TRACE (COMMANDEDITOR);
+}
+
+void RKCompletionManager::tryCompletionProxy () {
+	if (RKSettingsModuleCommandEditor::completionEnabled ()) {
+		if (cc_iface && cc_iface->isCompletionActive ()) {
+			tryCompletion ();
+		} else if (cc_iface) {
+			completion_timer->start (RKSettingsModuleCommandEditor::completionTimeout ());
+		}
+	}
+}
+
+QString RKCompletionManager::currentCompletionWord () const {
+	RK_TRACE (COMMANDEDITOR);
+
+	if (symbol_range.isValid ()) return view->document ()->text (symbol_range);
+	return QString ();
+}
+
+void RKCompletionManager::tryCompletion () {
+	// TODO: merge this with RKConsole::doTabCompletion () somehow
+	RK_TRACE (COMMANDEDITOR);
+	if (!cc_iface) {
+		RK_ASSERT (cc_iface);
+		symbol_range = KTextEditor::Range ();
+		return;
+	}
+
+	KTextEditor::Document *doc = view->document ();
+	KTextEditor::Cursor c = view->cursorPosition();
+	uint para=c.line(); int cursor_pos=c.column();
+
+	QString current_line = doc->line (para);
+	int start;
+	int end;
+	RKCommonFunctions::getCurrentSymbolOffset (current_line, cursor_pos, false, &start, &end);
+	if (end > cursor_pos) return;   // Only hint when at the end of a word/symbol: https://mail.kde.org/pipermail/rkward-devel/2015-April/004122.html
+	if (current_line.lastIndexOf ("#", cursor_pos) >= 0) symbol_range = KTextEditor::Range ();	// do not hint while in comments
+	else symbol_range = KTextEditor::Range (para, start, para, end);
+
+	QString word = currentCompletionWord ();
+	if (word.length () >= RKSettingsModuleCommandEditor::completionMinChars ()) {
+		completion_model->updateCompletionList (word);
+		if (completion_model->isEmpty ()) {
+			if ((!kate_keyword_completion_model) || (kate_keyword_completion_model->rowCount () < 1)) cc_iface->abortCompletion ();
+		} else {
+			if (!cc_iface->isCompletionActive ()) {
+				cc_iface->startCompletion (symbol_range, completion_model);
+				if (kate_keyword_completion_model) cc_iface->startCompletion (symbol_range, kate_keyword_completion_model);
+			}
+		}
+	} else {
+		cc_iface->abortCompletion ();
+	}
+}
+
+void RKCompletionManager::textInserted(KTextEditor::Document* document, const KTextEditor::Cursor& position, const QString& text) {
+	tryCompletionProxy();
+}
+
+void RKCompletionManager::textRemoved(KTextEditor::Document* document, const KTextEditor::Range& range, const QString& text) {
+	tryCompletionProxy();
+}
+
+void RKCompletionManager::lineWrapped(KTextEditor::Document* document, const KTextEditor::Cursor& position) {
+	tryCompletionProxy();
+}
+
+void RKCompletionManager::lineUnwrapped(KTextEditor::Document* document, int line) {
+	tryCompletionProxy();
+}
+
+void RKCompletionManager::cursorPositionChanged(KTextEditor::View* view, const KTextEditor::Cursor& newPosition) {
+	tryCompletionProxy();
+}
+
+
+//////////////////////// RKCompletionModelBase ////////////////////
+
+RKCompletionModelBase::RKCompletionModelBase (RKCompletionManager *manager) : KTextEditor::CodeCompletionModel (manager) {
+	RK_TRACE (COMMANDEDITOR);
+	n_completions = 0;
+	RKCompletionModelBase::manager = manager;
+}
+
+RKCompletionModelBase::~RKCompletionModelBase () {
+	RK_TRACE (COMMANDEDITOR);
+}
+
+QModelIndex RKCompletionModelBase::index (int row, int column, const QModelIndex& parent) const {
+	if (!parent.isValid ()) { // root
+		if (row == 0) return createIndex (row, column, quintptr (HeaderItem));
+	} else if (isHeaderItem (parent)) {
+		return createIndex (row, column, quintptr (LeafItem));
+	}
+	return QModelIndex ();
+}
+
+QModelIndex RKCompletionModelBase::parent (const QModelIndex& index) const {
+	if (index.isValid () && !isHeaderItem (index)) {
+		return createIndex (0, 0, quintptr (HeaderItem));
+	}
+	return QModelIndex ();
+}
+
+int RKCompletionModelBase::rowCount (const QModelIndex& parent) const {
+	if (!parent.isValid ()) return (n_completions ? 1 : 0); // header item, if list not empty
+	if (isHeaderItem (parent)) return n_completions;
+	return 0;  // no children on completion entries
+}
+
+//////////////////////// RKCodeCompletionModel ////////////////////
+
+RKCodeCompletionModel::RKCodeCompletionModel (RKCompletionManager *manager) : RKCompletionModelBase (manager) {
+	RK_TRACE (COMMANDEDITOR);
+
 	setHasGroups (true);
 }
 
@@ -1297,17 +1352,26 @@ void RKCodeCompletionModel::updateCompletionList (const QString& symbol) {
 
 	// copy the map to two lists. For one thing, we need an int indexable storage, for another, caching this information is safer
 	// in case objects are removed while the completion mode is active.
-	int count = matches.size ();
+	n_completions = matches.size ();
 	icons.clear ();
-	icons.reserve (count);
+	icons.reserve (n_completions);
 	names = RObject::getFullNames (matches, RKSettingsModuleCommandEditor::completionOptions());
-	for (int i = 0; i < count; ++i) {
+	for (int i = 0; i < n_completions; ++i) {
 		icons.append (RKStandardIcons::iconForObject (matches[i]));
 	}
 
 	current_symbol = symbol;
 
 	endResetModel ();
+}
+
+KTextEditor::Range RKCodeCompletionModel::completionRange (KTextEditor::View *view, const KTextEditor::Cursor &position) {
+	if (!position.isValid ()) return KTextEditor::Range ();
+	QString current_line = view->document ()->line (position.line ());
+	int start;
+	int end;
+	RKCommonFunctions::getCurrentSymbolOffset (current_line, position.column (), false, &start, &end);
+	return KTextEditor::Range (position.line (), start, position.line (), end);
 }
 
 void RKCodeCompletionModel::completionInvoked (KTextEditor::View*, const KTextEditor::Range&, InvocationType) {
@@ -1317,7 +1381,7 @@ void RKCodeCompletionModel::completionInvoked (KTextEditor::View*, const KTextEd
 	// it is often wrong, esp, when there are dots in the symbol
 // KDE4 TODO: This may no longer be needed, if the katepart gets fixed not to abort completions when the range
 // contains dots or other special characters
-	updateCompletionList (command_editor->currentCompletionWord ());
+	updateCompletionList (manager->currentCompletionWord ());
 }
 
 void RKCodeCompletionModel::executeCompletionItem (KTextEditor::View *view, const KTextEditor::Range &word, const QModelIndex &index) const {
@@ -1328,36 +1392,9 @@ void RKCodeCompletionModel::executeCompletionItem (KTextEditor::View *view, cons
 	view->document ()->replaceText (word, names[index.row ()]);
 }
 
-QModelIndex RKCodeCompletionModel::index (int row, int column, const QModelIndex& parent) const {
-	if (!parent.isValid ()) { // header item
-		if (row == 0) return createIndex (row, column, quintptr (0));
-		return QModelIndex ();
-	} else if (parent.parent ().isValid ()) {
-		return QModelIndex ();
-	}
-
-	if (row < 0 || row >= names.count () || column < 0 || column >= ColumnCount) {
-		return QModelIndex ();
-	}
-
-	return createIndex (row, column, 1);  // regular item
-}
-
-QModelIndex RKCodeCompletionModel::parent (const QModelIndex& index) const {
-	if (index.internalId ()) return createIndex (0, 0, quintptr (0));
-	return QModelIndex ();
-}
-
-int RKCodeCompletionModel::rowCount (const QModelIndex& parent) const {
-	if (parent.parent ().isValid ()) return 0;  // no children on completion entries
-	if (parent.isValid ()) return names.count ();
-	return (!names.isEmpty ()); // header item, if list not empty
-}
-
 QVariant RKCodeCompletionModel::data (const QModelIndex& index, int role) const {
-	if (!index.parent ().isValid ()) {  // group header
+	if (isHeaderItem (index)) {
 		if (role == Qt::DisplayRole) return i18n ("Objects on search path");
-		if (role == GroupRole) return Qt::DisplayRole;
 		return QVariant ();
 	}
 
