@@ -1186,7 +1186,7 @@ bool RKFunctionArgHinter::eventFilter (QObject *, QEvent *e) {
 RKCompletionManager::RKCompletionManager (KTextEditor::View* view) : QObject (view) {
 	RK_TRACE (COMMANDEDITOR);
 
-	RKCompletionManager::view = view;
+	_view = view;
 	active = false;
 	update_call = true;
 	cached_position = KTextEditor::Cursor (-1, -1);
@@ -1236,7 +1236,7 @@ void RKCompletionManager::tryCompletionProxy () {
 QString RKCompletionManager::currentCompletionWord () const {
 	RK_TRACE (COMMANDEDITOR);
 
-	if (symbol_range.isValid ()) return view->document ()->text (symbol_range);
+	if (symbol_range.isValid ()) return _view->document ()->text (symbol_range);
 	return QString ();
 }
 
@@ -1249,8 +1249,8 @@ void RKCompletionManager::tryCompletion () {
 		return;
 	}
 
-	KTextEditor::Document *doc = view->document ();
-	KTextEditor::Cursor c = view->cursorPosition();
+	KTextEditor::Document *doc = _view->document ();
+	KTextEditor::Cursor c = _view->cursorPosition();
 	cached_position = c;
 	uint para=c.line(); int cursor_pos=c.column();
 
@@ -1258,6 +1258,7 @@ void RKCompletionManager::tryCompletion () {
 	int start;
 	int end;
 	RKCommonFunctions::getCurrentSymbolOffset (current_line, cursor_pos, false, &start, &end);
+	symbol_range = KTextEditor::Range (para, start, para, end);
 	if (end > cursor_pos) {
 		symbol_range = KTextEditor::Range (-1, -1, -1, -1);   // Only hint when at the end of a word/symbol: https://mail.kde.org/pipermail/rkward-devel/2015-April/004122.html
 	} else if (current_line.lastIndexOf ("#", cursor_pos) >= 0) symbol_range = KTextEditor::Range ();	// do not hint while in comments
@@ -1270,6 +1271,9 @@ void RKCompletionManager::tryCompletion () {
 
 		completion_model->updateCompletionList (filename_completion ? QString () : word);
 		file_completion_model->updateCompletionList (filename_completion ? word.mid (1) : QString ());
+	} else {
+		completion_model->updateCompletionList (QString ());
+		file_completion_model->updateCompletionList (QString ());
 	}
 
 	updateCallHint ();
@@ -1285,7 +1289,7 @@ void RKCompletionManager::updateCallHint () {
 	int line = cached_position.line () + 1;
 	QString full_context;
 	int potential_symbol_end = -2;
-	KTextEditor::Document *doc = view->document ();
+	KTextEditor::Document *doc = _view->document ();
 	while (potential_symbol_end < -1 && line >= 0) {
 		--line;
 		QString context_line = doc->line (line);
@@ -1326,30 +1330,32 @@ void RKCompletionManager::updateCallHint () {
 	callhint_model->setFunction (object);
 }
 
-bool startModel (KTextEditor::CodeCompletionInterface* iface, KTextEditor::CodeCompletionModel *model, const KTextEditor::Range &range) {
-	if (model->rowCount () > 0) {
-		iface->startCompletion (range, model);
-		return true;
+void startModel (KTextEditor::CodeCompletionInterface* iface, KTextEditor::CodeCompletionModel *model, bool start, const KTextEditor::Range &range, QList<KTextEditor::CodeCompletionModel*> *active_models) {
+	if (start && model->rowCount () > 0) {
+		if (!active_models->contains (model)) {
+			iface->startCompletion (range, model);
+			active_models->append (model);
+		}
+	} else {
+		active_models->removeAll (model);
 	}
-	return false;
 }
 
 void RKCompletionManager::updateVisibility () {
 	RK_TRACE (COMMANDEDITOR);
 
-	bool any_hint = false;
-
-	QString word = currentCompletionWord ();
-	if (word.length () >= RKSettingsModuleCommandEditor::completionMinChars ()) {
-		// TODO: To avoid flicker, we should only start the models that still need starting, but how to figure out which ones are those?
-		any_hint |= startModel (cc_iface, completion_model, symbol_range);
-		any_hint |= startModel (cc_iface, file_completion_model, symbol_range);
-		if (kate_keyword_completion_model) any_hint |= startModel (cc_iface, kate_keyword_completion_model, symbol_range);
+	if (!cc_iface->isCompletionActive ()) {
+		active_models.clear ();
 	}
-// NOTE: Freaky bug in KF 5.44.0: Call hint will not show for the first time, if logically above the primary screen. TODO: provide patch for kateargumenthinttree.cpp:166pp
-	any_hint |= startModel (cc_iface, callhint_model, currentCallRange ());
 
-	if (any_hint) {
+	bool min_len = (currentCompletionWord ().length () >= RKSettingsModuleCommandEditor::completionMinChars ());
+	startModel (cc_iface, completion_model, min_len, symbol_range, &active_models);
+	startModel (cc_iface, file_completion_model, min_len, symbol_range, &active_models);
+	if (kate_keyword_completion_model) startModel (cc_iface, kate_keyword_completion_model, min_len, symbol_range, &active_models);
+// NOTE: Freaky bug in KF 5.44.0: Call hint will not show for the first time, if logically above the primary screen. TODO: provide patch for kateargumenthinttree.cpp:166pp
+	startModel (cc_iface, callhint_model, true, currentCallRange (), &active_models);
+
+	if (!active_models.isEmpty ()) {
 		active = true;
 	} else {
 		cc_iface->abortCompletion ();
@@ -1359,7 +1365,7 @@ void RKCompletionManager::updateVisibility () {
 	if (!active) update_call = true;
 }
 
-void RKCompletionManager::textInserted(KTextEditor::Document*, const KTextEditor::Cursor& position, const QString& text) {
+void RKCompletionManager::textInserted (KTextEditor::Document*, const KTextEditor::Cursor& position, const QString& text) {
 	if (active) {
 		if (position < call_opening) update_call = true;
 		else if (text.contains (QChar ('(')) || text.contains (QChar (')'))) update_call = true;
@@ -1367,7 +1373,7 @@ void RKCompletionManager::textInserted(KTextEditor::Document*, const KTextEditor
 	tryCompletionProxy();
 }
 
-void RKCompletionManager::textRemoved(KTextEditor::Document*, const KTextEditor::Range& range, const QString& text) {
+void RKCompletionManager::textRemoved (KTextEditor::Document*, const KTextEditor::Range& range, const QString& text) {
 	if (active) {
 		if (range.start () < call_opening) update_call = true;
 		else if (text.contains (QChar ('(')) || text.contains (QChar (')'))) update_call = true;
@@ -1375,23 +1381,29 @@ void RKCompletionManager::textRemoved(KTextEditor::Document*, const KTextEditor:
 	tryCompletionProxy();
 }
 
-void RKCompletionManager::lineWrapped(KTextEditor::Document* , const KTextEditor::Cursor& ) {
+void RKCompletionManager::lineWrapped (KTextEditor::Document* , const KTextEditor::Cursor& ) {
 // should already have been handled by textInserted()
-	tryCompletionProxy();
+	tryCompletionProxy ();
 }
 
-void RKCompletionManager::lineUnwrapped(KTextEditor::Document* , int ) {
+void RKCompletionManager::lineUnwrapped (KTextEditor::Document* , int ) {
 // should already have been handled by textRemoved()
-	tryCompletionProxy();
+	tryCompletionProxy ();
 }
 
-void RKCompletionManager::cursorPositionChanged(KTextEditor::View* view, const KTextEditor::Cursor& newPosition) {
-	// TODO!!
-	tryCompletionProxy();
+void RKCompletionManager::cursorPositionChanged (KTextEditor::View* view, const KTextEditor::Cursor& newPosition) {
+	if (active) {
+		if (newPosition < call_opening) update_call = true;
+		else {
+			QString text = view->document ()->text (KTextEditor::Range (newPosition, cached_position));
+			if (text.contains (QChar ('(')) || text.contains (QChar (')'))) update_call = true;
+		}
+	}
+	tryCompletionProxy ();
 }
 
 KTextEditor::Range RKCompletionManager::currentCallRange () const {
-	return KTextEditor::Range (call_opening, view->cursorPosition ());
+	return KTextEditor::Range (call_opening, _view->cursorPosition ());
 }
 
 
@@ -1510,20 +1522,50 @@ QVariant RKCodeCompletionModel::data (const QModelIndex& index, int role) const 
 //////////////////////// RKCallHintModel //////////////////////////
 RKCallHintModel::RKCallHintModel (RKCompletionManager* manager) : RKCompletionModelBase (manager) {
 	RK_TRACE (COMMANDEDITOR);
+	function = 0;
 }
 
-void RKCallHintModel::setFunction(RObject* function) {
+#include <QDesktopWidget>
+// TODO: There could be more than one function by a certain name, and we could support this!
+void RKCallHintModel::setFunction(RObject* _function) {
 	RK_TRACE (COMMANDEDITOR);
+
+	if (function == _function) return;
+	function = _function;
+
 	beginResetModel ();
 	if (function && function->isType (RObject::Function)) {
-		// initialize and show popup
+		// initialize hint
+		RFunctionObject *fo = static_cast<RFunctionObject*> (function);
+		QStringList args = fo->argumentNames ();
+		QStringList defs = fo->argumentDefaults ();
+
 		name = function->getFullName ();
-		formals = QStringLiteral ("(") + static_cast<RFunctionObject*>(function)->printArgs () + ')';
-		n_completions = 1; // TODO: There could be more than one function by the name, and we could support this!
+
+		formals = '(';
+		formatting.clear ();
+		KTextEditor::Attribute format;
+//		format.setFontBold (); // NOTE: Not good. makes size mis-calculation worse.
+		format.setForeground (QBrush (Qt::green));  // But turns out purple?!
+
+		// NOTE: Unfortunately, adding new-lines within (long) formals does not work. If this issue turns out to be relevant, we'll have to resort to breaking the formals into
+		// several (dummy) items.
+		int pos = 1;
+		for (int i = 0; i < args.size (); ++i) {
+			QString pair = args[i];
+			if (!defs.value(i).isEmpty ()) pair.append ('=' + defs[i]);
+			formatting.append ({ pos + args[i].length (), pair.length ()-args[i].length (), format });
+
+			if (i < (args.size () - 1)) pair.append (", ");
+			formals.append (pair);
+
+			pos = pos + pair.length ();
+		}
+		formals.append (')');
+		n_completions = 1;
 	} else {
 		n_completions = 0;
 	}
-//	RK_DEBUG(COMMANDEDITOR, DL_ERROR, "%d, %p", n_completions, function);
 	endResetModel ();
 }
 
@@ -1535,16 +1577,20 @@ QVariant RKCallHintModel::data (const QModelIndex& index, int role) const {
 	}
 
 	int col = index.column ();
-	if ((role == Qt::DisplayRole) || (role == KTextEditor::CodeCompletionModel::CompletionRole)) {
+	if (role == Qt::DisplayRole) {
 		if (col == KTextEditor::CodeCompletionModel::Prefix) return (name);
 		if (col == KTextEditor::CodeCompletionModel::Arguments) return (formals);
-	}
-
-	if (role == KTextEditor::CodeCompletionModel::ArgumentHintDepth) {
+		if (col == KTextEditor::CodeCompletionModel::Postfix) return ("        "); // Size is of a bit for KF5 5.44.0. Provide some padding to work around cut-off parts.
+	} else if (role == KTextEditor::CodeCompletionModel::ArgumentHintDepth) {
 		return 1;
-	}
-	if (role == KTextEditor::CodeCompletionModel::MatchQuality) {
-		return 10;
+	} else if (role == KTextEditor::CodeCompletionModel::CompletionRole) {
+		return KTextEditor::CodeCompletionModel::Function;
+	} else if (role == KTextEditor::CodeCompletionModel::HighlightingMethod) {
+		if (col == KTextEditor::CodeCompletionModel::Arguments) return KTextEditor::CodeCompletionModel::CustomHighlighting;
+	} else if (role == KTextEditor::CodeCompletionModel::CustomHighlight) {
+		if (col == KTextEditor::CodeCompletionModel::Arguments)  return formatting;
+	} else if (role == KTextEditor::CodeCompletionModel::MatchQuality) {
+		return (10);
 	}
 
 	return QVariant ();

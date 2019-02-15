@@ -116,6 +116,7 @@ public:
 	QString currentCompletionWord () const;
 	KTextEditor::Range currentSymbolRange () const { return symbol_range; };
 	KTextEditor::Range currentCallRange () const;
+	KTextEditor::View* view () const { return (_view); };
 private slots:
 	void lineWrapped (KTextEditor::Document *document, const KTextEditor::Cursor &position);
 	void lineUnwrapped (KTextEditor::Document *document, int line);
@@ -136,7 +137,7 @@ private:
 	KTextEditor::CodeCompletionModel* kate_keyword_completion_model;
 	QTimer *completion_timer;
 
-	KTextEditor::View *view;
+	KTextEditor::View *_view;
 	KTextEditor::Cursor cached_position;
 
 	KTextEditor::Range symbol_range;
@@ -144,6 +145,8 @@ private:
 
 	bool update_call;
 	bool active;
+
+	QList<KTextEditor::CodeCompletionModel*> active_models;
 };
 
 /** Base class for the completion models employed in script editor. Essentially it takes care of the bureaucratic overhead involved in providing a group header */
@@ -199,8 +202,10 @@ public:
 	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const override;
 	KTextEditor::Range completionRange (KTextEditor::View *view, const KTextEditor::Cursor &position) override;
 private:
+	RObject *function;
 	QString name;
 	QString formals;
+	QVariantList formatting;
 };
 
 #include <QThread>
