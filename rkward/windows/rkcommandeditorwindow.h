@@ -106,6 +106,7 @@ private:
 
 class RKCodeCompletionModel;
 class RKFileCompletionModel;
+class RKCallHintModel;
 class RKCompletionManager : public QObject {
 	Q_OBJECT
 public:
@@ -124,15 +125,23 @@ private slots:
 private:
 /** called whenever it might be appropriate to show a code completion box. The box is not shown immediately, but only after a timeout (if at all) */
 	void tryCompletionProxy ();
+	void updateVisibility ();
+	void updateCallHint ();
 	KTextEditor::CodeCompletionInterface *cc_iface;
 	RKCodeCompletionModel *completion_model;
 	RKFileCompletionModel *file_completion_model;
+	RKCallHintModel *callhint_model;
 	KTextEditor::CodeCompletionModel* kate_keyword_completion_model;
 	QTimer *completion_timer;
 
 	KTextEditor::View *view;
 	KTextEditor::Cursor cached_position;
+
 	KTextEditor::Range symbol_range;
+	KTextEditor::Cursor call_opening;
+
+	bool update_call;
+	bool active;
 };
 
 /** Base class for the completion models employed in script editor. Essentially it takes care of the bureaucratic overhead involved in providing a group header */
@@ -177,6 +186,18 @@ private:
 	QList<QIcon> icons;
 	QStringList names;
 	QString current_symbol;
+};
+
+class RKCallHintModel : public RKCompletionModelBase {
+	Q_OBJECT
+public:
+	explicit RKCallHintModel (RKCompletionManager *manager);
+	void setFunction (RObject *function);
+
+	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const override;
+private:
+	QString name;
+	QString formals;
 };
 
 #include <QThread>
