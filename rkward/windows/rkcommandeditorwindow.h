@@ -114,6 +114,8 @@ public:
 	~RKCompletionManager ();
 
 	QString currentCompletionWord () const;
+	KTextEditor::Range currentSymbolRange () const { return symbol_range; };
+	KTextEditor::Range currentCallRange () const;
 private slots:
 	void lineWrapped (KTextEditor::Document *document, const KTextEditor::Cursor &position);
 	void lineUnwrapped (KTextEditor::Document *document, int line);
@@ -195,6 +197,7 @@ public:
 	void setFunction (RObject *function);
 
 	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const override;
+	KTextEditor::Range completionRange (KTextEditor::View *view, const KTextEditor::Cursor &position) override;
 private:
 	QString name;
 	QString formals;

@@ -1258,8 +1258,9 @@ void RKCompletionManager::tryCompletion () {
 	int start;
 	int end;
 	RKCommonFunctions::getCurrentSymbolOffset (current_line, cursor_pos, false, &start, &end);
-	if (end > cursor_pos) return;   // Only hint when at the end of a word/symbol: https://mail.kde.org/pipermail/rkward-devel/2015-April/004122.html
-	if (current_line.lastIndexOf ("#", cursor_pos) >= 0) symbol_range = KTextEditor::Range ();	// do not hint while in comments
+	if (end > cursor_pos) {
+		symbol_range = KTextEditor::Range (-1, -1, -1, -1);   // Only hint when at the end of a word/symbol: https://mail.kde.org/pipermail/rkward-devel/2015-April/004122.html
+	} else if (current_line.lastIndexOf ("#", cursor_pos) >= 0) symbol_range = KTextEditor::Range ();	// do not hint while in comments
 	else symbol_range = KTextEditor::Range (para, start, para, end);
 
 	QString word = currentCompletionWord ();
@@ -1282,52 +1283,55 @@ void RKCompletionManager::updateCallHint () {
 	update_call = false;
 
 	int line = cached_position.line () + 1;
-	QList<int> unclosed_braces;
 	QString full_context;
+	int potential_symbol_end = -2;
 	KTextEditor::Document *doc = view->document ();
-	while (unclosed_braces.isEmpty () && (line >= 0)) {
+	while (potential_symbol_end < -1 && line >= 0) {
 		--line;
 		QString context_line = doc->line (line);
 		if (context_line.startsWith ('>')) continue; // For console: TODO limit to console
-
 		full_context.prepend (context_line);
-		for (int i = 0; i < context_line.length (); ++i) {
+
+		int pos = context_line.length () - 1;
+		if (line == cached_position.line ()) pos = cached_position.column ();
+		for (int i = pos; i >= 0; --i) {
 			QChar c = context_line.at (i);
 			if (c == '(') {
 				KTextEditor::DefaultStyle style = doc->defaultStyleAt (KTextEditor::Cursor (line, i));
-				if (style != KTextEditor::dsComment && style != KTextEditor::dsString) {
-					unclosed_braces.append (i);
-				}
-			} else if (c == ')') {
-				KTextEditor::DefaultStyle style = doc->defaultStyleAt (KTextEditor::Cursor (line, i));
-				if (style != KTextEditor::dsComment && style != KTextEditor::dsString) {
-					if (!unclosed_braces.isEmpty ()) unclosed_braces.pop_back ();
+				if (style != KTextEditor::dsComment && style != KTextEditor::dsString && style != KTextEditor::dsChar) {
+					potential_symbol_end = i - 1;
+					break;
 				}
 			}
 		}
 	}
-
-	int potential_symbol_end = unclosed_braces.isEmpty () ? -1 : unclosed_braces.last () - 1;
 
 	// now find out where the symbol to the left of the opening brace ends
 	// there cannot be a line-break between the opening brace, and the symbol name (or can there?), so no need to fetch further context
 	while ((potential_symbol_end >= 0) && full_context.at (potential_symbol_end).isSpace ()) {
 		--potential_symbol_end;
 	}
-	if (potential_symbol_end <= 0) {
-		callhint_model->setFunction (0);
-		return;
-	}
 
 	// now identify the symbol and object (if any)
-	QString effective_symbol = RKCommonFunctions::getCurrentSymbol (full_context, potential_symbol_end);
-	if (effective_symbol.isEmpty ()) {
-		callhint_model->setFunction (0);
-		return;
+	RObject *object = 0;
+	call_opening = KTextEditor::Cursor (-1, -1);
+	if (potential_symbol_end > 0) {
+		QString effective_symbol = RKCommonFunctions::getCurrentSymbol (full_context, potential_symbol_end);
+		if (!effective_symbol.isEmpty ()) {
+			object = RObjectList::getObjectList ()->findObject (effective_symbol);
+			call_opening = KTextEditor::Cursor (line, potential_symbol_end+1);
+		}
 	}
 
-	RObject *object = RObjectList::getObjectList ()->findObject (effective_symbol);
 	callhint_model->setFunction (object);
+}
+
+bool startModel (KTextEditor::CodeCompletionInterface* iface, KTextEditor::CodeCompletionModel *model, const KTextEditor::Range &range) {
+	if (model->rowCount () > 0) {
+		iface->startCompletion (range, model);
+		return true;
+	}
+	return false;
 }
 
 void RKCompletionManager::updateVisibility () {
@@ -1337,19 +1341,15 @@ void RKCompletionManager::updateVisibility () {
 
 	QString word = currentCompletionWord ();
 	if (word.length () >= RKSettingsModuleCommandEditor::completionMinChars ()) {
-		any_hint |= !completion_model->isEmpty ();
-		any_hint |= !file_completion_model->isEmpty ();
-		any_hint |= kate_keyword_completion_model && (kate_keyword_completion_model->rowCount () > 0);
+		// TODO: To avoid flicker, we should only start the models that still need starting, but how to figure out which ones are those?
+		any_hint |= startModel (cc_iface, completion_model, symbol_range);
+		any_hint |= startModel (cc_iface, file_completion_model, symbol_range);
+		if (kate_keyword_completion_model) any_hint |= startModel (cc_iface, kate_keyword_completion_model, symbol_range);
 	}
-	any_hint |= !callhint_model->isEmpty ();
+// NOTE: Freaky bug in KF 5.44.0: Call hint will not show for the first time, if logically above the primary screen. TODO: provide patch for kateargumenthinttree.cpp:166pp
+	any_hint |= startModel (cc_iface, callhint_model, currentCallRange ());
 
 	if (any_hint) {
-//		if (!cc_iface->isCompletionActive ()) { // TODO: To avoid flicker, we should only start the models that still need starting, but how to figure out which ones are those?
-			cc_iface->startCompletion (symbol_range, callhint_model);
-			cc_iface->startCompletion (symbol_range, completion_model);
-			cc_iface->startCompletion (symbol_range, file_completion_model);
-			if (kate_keyword_completion_model) cc_iface->startCompletion (symbol_range, kate_keyword_completion_model);
-//		}
 		active = true;
 	} else {
 		cc_iface->abortCompletion ();
@@ -1361,7 +1361,7 @@ void RKCompletionManager::updateVisibility () {
 
 void RKCompletionManager::textInserted(KTextEditor::Document*, const KTextEditor::Cursor& position, const QString& text) {
 	if (active) {
-		if (call_opening.isValid () && position < call_opening) update_call = true;
+		if (position < call_opening) update_call = true;
 		else if (text.contains (QChar ('(')) || text.contains (QChar (')'))) update_call = true;
 	}
 	tryCompletionProxy();
@@ -1369,7 +1369,7 @@ void RKCompletionManager::textInserted(KTextEditor::Document*, const KTextEditor
 
 void RKCompletionManager::textRemoved(KTextEditor::Document*, const KTextEditor::Range& range, const QString& text) {
 	if (active) {
-		if (call_opening.isValid () && range.start () < call_opening) update_call = true;
+		if (range.start () < call_opening) update_call = true;
 		else if (text.contains (QChar ('(')) || text.contains (QChar (')'))) update_call = true;
 	}
 	tryCompletionProxy();
@@ -1388,6 +1388,10 @@ void RKCompletionManager::lineUnwrapped(KTextEditor::Document* , int ) {
 void RKCompletionManager::cursorPositionChanged(KTextEditor::View* view, const KTextEditor::Cursor& newPosition) {
 	// TODO!!
 	tryCompletionProxy();
+}
+
+KTextEditor::Range RKCompletionManager::currentCallRange () const {
+	return KTextEditor::Range (call_opening, view->cursorPosition ());
 }
 
 
@@ -1464,13 +1468,8 @@ void RKCodeCompletionModel::updateCompletionList (const QString& symbol) {
 	endResetModel ();
 }
 
-KTextEditor::Range RKCodeCompletionModel::completionRange (KTextEditor::View *view, const KTextEditor::Cursor &position) {
-	if (!position.isValid ()) return KTextEditor::Range ();
-	QString current_line = view->document ()->line (position.line ());
-	int start;
-	int end;
-	RKCommonFunctions::getCurrentSymbolOffset (current_line, position.column (), false, &start, &end);
-	return KTextEditor::Range (position.line (), start, position.line (), end);
+KTextEditor::Range RKCodeCompletionModel::completionRange (KTextEditor::View *, const KTextEditor::Cursor&) {
+	return manager->currentSymbolRange ();
 }
 
 void RKCodeCompletionModel::executeCompletionItem (KTextEditor::View *view, const KTextEditor::Range &word, const QModelIndex &index) const {
@@ -1549,6 +1548,10 @@ QVariant RKCallHintModel::data (const QModelIndex& index, int role) const {
 	}
 
 	return QVariant ();
+}
+
+KTextEditor::Range RKCallHintModel::completionRange (KTextEditor::View *, const KTextEditor::Cursor&) {
+	return manager->currentCallRange ();
 }
 
 //////////////////////// RKFileCompletionModel ////////////////////
