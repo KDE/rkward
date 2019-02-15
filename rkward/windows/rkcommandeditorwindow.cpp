@@ -1257,8 +1257,7 @@ void RKCompletionManager::tryCompletion () {
 	QString current_line = doc->line (para);
 	int start;
 	int end;
-	RKCommonFunctions::getCurrentSymbolOffset (current_line, cursor_pos, false, &start, &end);
-	symbol_range = KTextEditor::Range (para, start, para, end);
+	RKCommonFunctions::getCurrentSymbolOffset (current_line, cursor_pos-1, false, &start, &end);
 	if (end > cursor_pos) {
 		symbol_range = KTextEditor::Range (-1, -1, -1, -1);   // Only hint when at the end of a word/symbol: https://mail.kde.org/pipermail/rkward-devel/2015-April/004122.html
 	} else if (current_line.lastIndexOf ("#", cursor_pos) >= 0) symbol_range = KTextEditor::Range ();	// do not hint while in comments
@@ -1297,7 +1296,7 @@ void RKCompletionManager::updateCallHint () {
 		full_context.prepend (context_line);
 
 		int pos = context_line.length () - 1;
-		if (line == cached_position.line ()) pos = cached_position.column ();
+		if (line == cached_position.line ()) pos = cached_position.column () - 1;
 		for (int i = pos; i >= 0; --i) {
 			QChar c = context_line.at (i);
 			if (c == '(') {
