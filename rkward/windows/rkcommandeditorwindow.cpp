@@ -180,7 +180,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 	preview = new RKXMLGUIPreviewArea (QString(), this);
 	preview_manager = new RKPreviewManager (this);
 	connect (preview_manager, &RKPreviewManager::statusChanged, [this]() { preview_timer.start (500); });
-	m_view = m_doc->createView (0);
+	m_view = m_doc->createView (this);
 	RKWorkplace::mainWorkplace()->registerNamedWindow (preview_manager->previewId(), this, preview);
 	if (!url.isEmpty ()) {
 		KConfigGroup viewconf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptViewSettings %1").arg (RKWorkplace::mainWorkplace ()->portableUrl (url)));
@@ -202,8 +202,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 	QHBoxLayout *layout = new QHBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
 	QSplitter* preview_splitter = new QSplitter (this);
-//	preview_splitter->addWidget (m_view);
-m_view->show();
+	preview_splitter->addWidget (m_view);
 	QWidget *preview_widget = preview->wrapperWidget ();
 	preview_splitter->addWidget (preview_widget);
 	preview_widget->hide ();
@@ -1345,12 +1344,12 @@ void RKCompletionManager::updateVisibility () {
 	any_hint |= !callhint_model->isEmpty ();
 
 	if (any_hint) {
-		if (!cc_iface->isCompletionActive ()) {
+//		if (!cc_iface->isCompletionActive ()) { // TODO: To avoid flicker, we should only start the models that still need starting, but how to figure out which ones are those?
 			cc_iface->startCompletion (symbol_range, callhint_model);
 			cc_iface->startCompletion (symbol_range, completion_model);
 			cc_iface->startCompletion (symbol_range, file_completion_model);
 			if (kate_keyword_completion_model) cc_iface->startCompletion (symbol_range, kate_keyword_completion_model);
-		}
+//		}
 		active = true;
 	} else {
 		cc_iface->abortCompletion ();
