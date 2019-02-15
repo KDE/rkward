@@ -1197,6 +1197,7 @@ RKCompletionManager::RKCompletionManager (KTextEditor::View* view) : QObject (vi
 		completion_model = new RKCodeCompletionModel (this);
 		file_completion_model = new RKFileCompletionModel (this);
 		callhint_model = new RKCallHintModel (this);
+		arghint_model = new RKArgumentHintModel (this);
 		cc_iface->registerCompletionModel (callhint_model);
 		completion_timer = new QTimer (this);
 		completion_timer->setSingleShot (true);
@@ -1276,6 +1277,24 @@ void RKCompletionManager::tryCompletion () {
 	}
 
 	updateCallHint ();
+
+	// update ArgHint.
+	argname_range = KTextEditor::Range (-1, -1, -1, -1);
+	// Named arguments are just like regular symbols, *but* we must require that they are preceeded by either a ',', or the opening '(', immediately.
+	// Otherwise, they are an argument value expression, for sure.
+	if (callhint_model->currentFunction ()) {
+		for (int i = symbol_range.start ().column () - 1; i >= 0; --i) {
+			QChar c = current_line.at (i);
+			if (c == ',' || c == '(') {
+				argname_range = symbol_range;
+				break;
+			} else if (!c.isSpace ()) {
+				break;
+			}
+		}
+	}
+	arghint_model->updateCompletionList (callhint_model->currentFunction (), argname_range.isValid () ? doc->text (argname_range) : QString ());
+
 	updateVisibility ();
 }
 
@@ -1350,9 +1369,14 @@ void RKCompletionManager::updateVisibility () {
 	bool min_len = (currentCompletionWord ().length () >= RKSettingsModuleCommandEditor::completionMinChars ());
 	startModel (cc_iface, completion_model, min_len, symbol_range, &active_models);
 	startModel (cc_iface, file_completion_model, min_len, symbol_range, &active_models);
-	if (kate_keyword_completion_model) startModel (cc_iface, kate_keyword_completion_model, min_len, symbol_range, &active_models);
+	if (kate_keyword_completion_model) {
+		// Model needs to update, first, as we have not handled it in tryCompletion:
+		if (min_len) kate_keyword_completion_model->completionInvoked (view (), symbol_range, KTextEditor::CodeCompletionModel::ManualInvocation);
+		startModel (cc_iface, kate_keyword_completion_model, min_len, symbol_range, &active_models);
+	}
 // NOTE: Freaky bug in KF 5.44.0: Call hint will not show for the first time, if logically above the primary screen. TODO: provide patch for kateargumenthinttree.cpp:166pp
 	startModel (cc_iface, callhint_model, true, currentCallRange (), &active_models);
+	startModel (cc_iface, arghint_model, true, argname_range, &active_models);
 
 	if (!active_models.isEmpty ()) {
 		active = true;
@@ -1487,14 +1511,14 @@ void RKCodeCompletionModel::executeCompletionItem (KTextEditor::View *view, cons
 	RK_TRACE (COMMANDEDITOR);
 
 	RK_ASSERT (names.size () > index.row ());
-
-	view->document ()->replaceText (word, names[index.row ()]);
+	view->document ()->replaceText (word, names.value (index.row ()));
 }
 
 QVariant RKCodeCompletionModel::data (const QModelIndex& index, int role) const {
 	if (isHeaderItem (index)) {
 		if (role == Qt::DisplayRole) return i18n ("Objects on search path");
 		if (role == KTextEditor::CodeCompletionModel::GroupRole) return Qt::DisplayRole;
+		if (role == KTextEditor::CodeCompletionModel::InheritanceDepth) return 1;  // sort below arghint model
 		return QVariant ();
 	}
 
@@ -1599,6 +1623,80 @@ KTextEditor::Range RKCallHintModel::completionRange (KTextEditor::View *, const 
 	return manager->currentCallRange ();
 }
 
+//////////////////////// RKArgumentHintModel //////////////////////
+RKArgumentHintModel::RKArgumentHintModel (RKCompletionManager* manager) : RKCompletionModelBase (manager) {
+	RK_TRACE (COMMANDEDITOR);
+
+	function = 0;
+}
+
+void RKArgumentHintModel::updateCompletionList (RObject* _function, const QString &argument) {
+	RK_TRACE (COMMANDEDITOR);
+
+	bool changed = false;
+	if (function != _function) {
+		beginResetModel ();
+		function = _function;
+		if (function && function->isType (RObject::Function)) {
+			// initialize hint
+			RFunctionObject *fo = static_cast<RFunctionObject*> (function);
+			args = fo->argumentNames ();
+			defs = fo->argumentDefaults ();
+		} else {
+			args.clear ();
+			defs.clear ();
+		}
+	}
+
+	if (changed || (argument != fragment)) {
+		if (!changed) {
+			changed = true;
+			beginResetModel ();
+		}
+		fragment = argument;
+		matches.clear ();
+		for (int i = 0; i < args.size (); ++i) {
+			if (args[i].startsWith (fragment)) matches.append (i);
+		}
+	}
+
+	if (changed) {
+		n_completions = matches.size ();
+		endResetModel ();
+	}
+}
+
+QVariant RKArgumentHintModel::data (const QModelIndex& index, int role) const {
+	if (isHeaderItem (index)) {
+		if (role == Qt::DisplayRole) return i18n ("Function arguments");
+		if (role == KTextEditor::CodeCompletionModel::GroupRole) return Qt::DisplayRole;
+		if (role == KTextEditor::CodeCompletionModel::InheritanceDepth) return 0; // Sort above other models (except calltip)
+		return QVariant ();
+	}
+
+	int col = index.column ();
+	int row = index.row ();
+	if (role == Qt::DisplayRole) {
+		if (col == KTextEditor::CodeCompletionModel::Name) return (args.value (matches.value (row)));
+		if (col == KTextEditor::CodeCompletionModel::Postfix) {
+			QString def = defs.value (matches.value (row));
+			if (!def.isEmpty ()) return (QString ('=' + def));
+		}
+	} else if (role == KTextEditor::CodeCompletionModel::InheritanceDepth) {
+		return row;  // disable sorting
+	} else if (role == KTextEditor::CodeCompletionModel::CompletionRole) {
+		return KTextEditor::CodeCompletionModel::Function;
+	} else if (role == KTextEditor::CodeCompletionModel::MatchQuality) {
+		return (20);
+	}
+
+	return QVariant ();
+}
+
+KTextEditor::Range RKArgumentHintModel::completionRange (KTextEditor::View*, const KTextEditor::Cursor&) {
+	return manager->currentArgnameRange ();
+}
+
 //////////////////////// RKFileCompletionModel ////////////////////
 #include <KUrlCompletion>
 RKFileCompletionModelWorker::RKFileCompletionModelWorker (const QString &_string) : QThread () {
@@ -1672,6 +1770,7 @@ QVariant RKFileCompletionModel::data (const QModelIndex& index, int role) const 
 	if (isHeaderItem (index)) {
 		if (role == Qt::DisplayRole) return i18n ("Local file names");
 		if (role == KTextEditor::CodeCompletionModel::GroupRole) return Qt::DisplayRole;
+		if (role == KTextEditor::CodeCompletionModel::InheritanceDepth) return 1; // Sort below arghint model
 		return QVariant ();
 	}
 

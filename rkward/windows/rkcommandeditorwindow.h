@@ -107,6 +107,7 @@ private:
 class RKCodeCompletionModel;
 class RKFileCompletionModel;
 class RKCallHintModel;
+class RKArgumentHintModel;
 class RKCompletionManager : public QObject {
 	Q_OBJECT
 public:
@@ -115,6 +116,7 @@ public:
 
 	QString currentCompletionWord () const;
 	KTextEditor::Range currentSymbolRange () const { return symbol_range; };
+	KTextEditor::Range currentArgnameRange () const { return argname_range; };
 	KTextEditor::Range currentCallRange () const;
 	KTextEditor::View* view () const { return (_view); };
 private slots:
@@ -134,6 +136,7 @@ private:
 	RKCodeCompletionModel *completion_model;
 	RKFileCompletionModel *file_completion_model;
 	RKCallHintModel *callhint_model;
+	RKArgumentHintModel *arghint_model;
 	KTextEditor::CodeCompletionModel* kate_keyword_completion_model;
 	QTimer *completion_timer;
 
@@ -142,6 +145,7 @@ private:
 
 	KTextEditor::Range symbol_range;
 	KTextEditor::Cursor call_opening;
+	KTextEditor::Range argname_range;
 
 	bool update_call;
 	bool active;
@@ -201,11 +205,28 @@ public:
 
 	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const override;
 	KTextEditor::Range completionRange (KTextEditor::View *view, const KTextEditor::Cursor &position) override;
+	RObject *currentFunction () const { return function; };
 private:
 	RObject *function;
 	QString name;
 	QString formals;
 	QVariantList formatting;
+};
+
+class RKArgumentHintModel : public RKCompletionModelBase {
+	Q_OBJECT
+public:
+	explicit RKArgumentHintModel (RKCompletionManager *manager);
+	void updateCompletionList (RObject *function, const QString& argument);
+
+	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const override;
+	KTextEditor::Range completionRange (KTextEditor::View *view, const KTextEditor::Cursor &position) override;
+private:
+	RObject *function;
+	QStringList args;
+	QStringList defs;
+	QString fragment;
+	QList<int> matches;
 };
 
 #include <QThread>
