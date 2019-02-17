@@ -128,11 +128,11 @@ private slots:
 /** show a code completion box if appropriate. Use tryCompletionProxy () instead, which will call this function after a timeout */
 	void tryCompletion ();
 private:
+	bool eventFilter (QObject *watched, QEvent *event) override;
 /** called whenever it might be appropriate to show a code completion box. The box is not shown immediately, but only after a timeout (if at all) */
 	void tryCompletionProxy ();
 	void updateVisibility ();
 	void updateCallHint ();
-	void completeToNextUnambigous ();
 	KTextEditor::CodeCompletionInterface *cc_iface;
 	RKCodeCompletionModel *completion_model;
 	RKFileCompletionModel *file_completion_model;
@@ -190,8 +190,8 @@ public:
 	KTextEditor::Range completionRange (KTextEditor::View *view, const KTextEditor::Cursor &position) override;
 
 	void updateCompletionList (const QString& symbol);
-	void executeCompletionItem (KTextEditor::View *view, const KTextEditor::Range &word, const QModelIndex &index) const override;
 	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const override;
+	QString partialCompletion (bool* exact_match);
 private:
 	QList<QIcon> icons;
 	QStringList names;
@@ -222,6 +222,7 @@ public:
 
 	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const override;
 	KTextEditor::Range completionRange (KTextEditor::View *view, const KTextEditor::Cursor &position) override;
+	QString partialCompletion (bool *exact);
 private:
 	RObject *function;
 	QStringList args;
@@ -250,6 +251,7 @@ public:
 
 	void updateCompletionList (const QString& fragment);
 	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const override;
+	QString partialCompletion (bool *exact);
 private slots:
 	void completionsReady (const QString &string, const QStringList &exes, const QStringList &files);
 private:

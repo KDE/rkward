@@ -1207,12 +1207,17 @@ RKCompletionManager::RKCompletionManager (KTextEditor::View* view) : QObject (vi
 		connect (view->document (), &KTextEditor::Document::lineWrapped, this, &RKCompletionManager::lineWrapped);
 		connect (view->document (), &KTextEditor::Document::lineUnwrapped, this, &RKCompletionManager::lineUnwrapped);
 		connect (view, &KTextEditor::View::cursorPositionChanged, this, &RKCompletionManager::cursorPositionChanged);
+		const QObjectList children = _view->children ();
+		for (QObjectList::const_iterator it = children.constBegin(); it != children.constEnd (); ++it) {
+			(*it)->installEventFilter (this);  // to handle Tab-key; installing on the view, alone, is not enough.
+		}
 
 		// HACK: I just can't see to make the object name completion model play nice with automatic invocation.
 		//       However, there is no official way to invoke all registered models, manually. So we try to hack our way
 		//       to a pointer to the default kate keyword completion model
 		kate_keyword_completion_model = KTextEditor::Editor::instance ()->findChild<KTextEditor::CodeCompletionModel *> ();
 		if (!kate_keyword_completion_model) kate_keyword_completion_model = view->findChild<KTextEditor::CodeCompletionModel *> (QString());
+
 	} else {
 		RK_ASSERT (false);  // Not a katepart?
 	}
@@ -1434,43 +1439,43 @@ KTextEditor::Range RKCompletionManager::currentCallRange () const {
 	return KTextEditor::Range (call_opening, _view->cursorPosition ());
 }
 
-void RKCompletionManager::completeToNextUnambigous () {
-	RK_TRACE (COMMANDEDITOR);
+bool RKCompletionManager::eventFilter (QObject* watched, QEvent* event) {
+	if (event->type () == QEvent::KeyPress || event->type () == QEvent::ShortcutOverride) {
+		RK_TRACE (COMMANDEDITOR);	// avoid loads of empty traces, putting this here
+		QKeyEvent *k = static_cast<QKeyEvent *> (event);
 
-	/*
-	
-		// do all entries have a common start?
-		QString common;
-		bool done = false;
-		int i = 0;
-		while (!done) {
-			bool ok = true;
-			QChar current;
-			for (it = entries.constBegin (); it != entries.constEnd (); ++it) {
-				if ((*it).length () <= i) {
-					ok = false;
-					break;
-				}
-				if (it == entries.constBegin ()) {
-					current = (*it).at(i);
-				} else if ((*it).at(i) != current) {
-					ok = false;
-					break;
-				}
+		if (k->key () == Qt::Key_Tab && (!k->modifiers ())) {
+			// TODO: It is not quite clear, what behavior is desirable, in case more than one completion model is active at a time.
+			//       For now, we use the simplest solution (implemenation-wise), and complete from the topmost-model, only
+			// TODO: Handle the ktexteditor builtin models, too.
+			bool exact = false;
+			QString comp;
+			bool handled = false;
+			if (active_models.contains (arghint_model)) {
+				comp = arghint_model->partialCompletion (&exact);
+				handled = true;
+			} else if (active_models.contains (completion_model)) {
+				comp = completion_model->partialCompletion (&exact);
+				handled = true;
+			} else if (active_models.contains (file_completion_model)) {
+				comp = file_completion_model->partialCompletion (&exact);
+				handled = true;
 			}
-			if (ok) common.append (current);
-			else break;
-			++i;
-		}
-		if (i > 0) {
-			if ((int) common.length() > (word_end - word_start)) {		// more than there already is
-				insertCompletion (line_num, word_start, word_end, common);
-				return false;	// will beep to signal completion is not complete
+
+			if (handled) {
+				RK_DEBUG(COMMANDEDITOR, DL_DEBUG, "Tab completion: %s", qPrintable (comp));
+				view ()->document ()->insertText (view ()->cursorPosition (), comp);
+				if (exact) cc_iface->abortCompletion ();
+				else if (comp.isEmpty ()) {
+					QApplication::beep (); // TODO: unfortunately, we catch *two* tab events, so this is not good, yet
+				}
+				return true;
 			}
 		}
-*/
+	}
+
+	return false;
 }
-
 
 //////////////////////// RKCompletionModelBase ////////////////////
 
@@ -1545,15 +1550,8 @@ void RKCodeCompletionModel::updateCompletionList (const QString& symbol) {
 	endResetModel ();
 }
 
-KTextEditor::Range RKCodeCompletionModel::completionRange (KTextEditor::View *, const KTextEditor::Cursor&) {
+KTextEditor::Range RKCodeCompletionModel::completionRange (KTextEditor::View *, const KTextEditor::Cursor&c) {
 	return manager->currentSymbolRange ();
-}
-
-void RKCodeCompletionModel::executeCompletionItem (KTextEditor::View *view, const KTextEditor::Range &word, const QModelIndex &index) const {
-	RK_TRACE (COMMANDEDITOR);
-
-	RK_ASSERT (names.size () > index.row ());
-	view->document ()->replaceText (word, names.value (index.row ()));
 }
 
 QVariant RKCodeCompletionModel::data (const QModelIndex& index, int role) const {
@@ -1582,6 +1580,62 @@ QVariant RKCodeCompletionModel::data (const QModelIndex& index, int role) const 
 	}
 
 	return QVariant ();
+}
+
+QString findCommonCompletion (const QStringList &list, const QString &lead, bool *exact_match) {
+	RK_TRACE (COMMANDEDITOR);
+	RK_DEBUG(COMMANDEDITOR, DL_DEBUG, "Looking for commong completion among set of %d, starting with %s", list.size (), qPrintable (lead));
+
+	*exact_match = true;
+	QString ret;
+	bool first = true;
+	int lead_size = lead.count ();
+	for (int i = list.size () - 1; i >= 0; --i) {
+		if (!list[i].startsWith (lead)) continue;
+
+		QString candidate = list[i].mid (lead_size);
+		if (first) {
+			ret = candidate;
+			first = false;
+		} else {
+			if (ret.length () > candidate.length ()) {
+				ret = ret.left (candidate.length ());
+				*exact_match = false;
+			}
+
+			for (int c = 0; c < ret.length(); ++c) {
+				if (ret[c] != candidate[c]) {
+					*exact_match = false;
+					if (!c) return QString ();
+
+					ret = ret.left (c);
+					break;
+				}
+			}
+		}
+	}
+
+	return ret;
+}
+
+QString RKCodeCompletionModel::partialCompletion (bool* exact_match) {
+	RK_TRACE (COMMANDEDITOR);
+
+	// Here, we need to do completion on the *last* portion of the object-path, only, so we will be able to complete "obj" to "object", even if "object" is present as
+	// both packageA::object and packageB::object.
+	// Thus as a first step, we look up the short names. We do this, lazily, as this function is only called on demand.
+	QStringList objectpath = RObject::parseObjectPath (current_symbol);
+	if (objectpath.isEmpty () || objectpath[0].isEmpty ()) return (QString ());
+	RObject::ObjectList matches = RObjectList::getObjectList ()->findObjectsMatching (current_symbol);
+
+	QStringList shortnames;
+	for (int i = 0; i < matches.count (); ++i) {
+		shortnames.append (matches[i]->getShortName ());
+	}
+	QString lead = objectpath.last ();
+	if (!shortnames.value (0).startsWith (lead)) lead.clear ();  // This could happen if the current path ends with '$', for instance
+
+	return (findCommonCompletion (shortnames, lead, exact_match));
 }
 
 //////////////////////// RKCallHintModel //////////////////////////
@@ -1739,6 +1793,12 @@ KTextEditor::Range RKArgumentHintModel::completionRange (KTextEditor::View*, con
 	return manager->currentArgnameRange ();
 }
 
+QString RKArgumentHintModel::partialCompletion (bool* exact) {
+	RK_TRACE (COMMANDEDITOR);
+
+	return (findCommonCompletion (args, fragment, exact));
+}
+
 //////////////////////// RKFileCompletionModel ////////////////////
 #include <KUrlCompletion>
 RKFileCompletionModelWorker::RKFileCompletionModelWorker (const QString &_string) : QThread () {
@@ -1832,6 +1892,13 @@ QVariant RKFileCompletionModel::data (const QModelIndex& index, int role) const 
 	}
 	return QVariant ();
 }
+
+QString RKFileCompletionModel::partialCompletion (bool* exact) {
+	RK_TRACE (COMMANDEDITOR);
+
+	return (findCommonCompletion (names, current_fragment, exact));
+}
+
 
 // static
 KTextEditor::Document* RKCommandHighlighter::_doc = 0;
