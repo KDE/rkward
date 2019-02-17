@@ -1266,11 +1266,16 @@ void RKCompletionManager::tryCompletion () {
 
 	QString word = currentCompletionWord ();
 	if (word.length () >= RKSettingsModuleCommandEditor::completionMinChars ()) {
+		QString filename;
 		// as a very simple heuristic: If the current symbol starts with a quote, we should probably attempt file name completion, instead of symbol name completion
-		bool filename_completion = (word.startsWith ('\"') || word.startsWith ('\'') || word.startsWith ('`'));
+		if (word.startsWith ('\"') || word.startsWith ('\'') || word.startsWith ('`')) {
+			symbol_range.setStart (KTextEditor::Cursor (symbol_range.start ().line (), symbol_range.start ().column () + 1));   // confine range to inside the quotes.
+			filename = word.mid (1);
+			word.clear ();
+		}
 
-		completion_model->updateCompletionList (filename_completion ? QString () : word);
-		file_completion_model->updateCompletionList (filename_completion ? word.mid (1) : QString ());
+		completion_model->updateCompletionList (word);
+		file_completion_model->updateCompletionList (filename);
 	} else {
 		completion_model->updateCompletionList (QString ());
 		file_completion_model->updateCompletionList (QString ());
@@ -1427,6 +1432,43 @@ void RKCompletionManager::cursorPositionChanged (KTextEditor::View* view, const 
 
 KTextEditor::Range RKCompletionManager::currentCallRange () const {
 	return KTextEditor::Range (call_opening, _view->cursorPosition ());
+}
+
+void RKCompletionManager::completeToNextUnambigous () {
+	RK_TRACE (COMMANDEDITOR);
+
+	/*
+	
+		// do all entries have a common start?
+		QString common;
+		bool done = false;
+		int i = 0;
+		while (!done) {
+			bool ok = true;
+			QChar current;
+			for (it = entries.constBegin (); it != entries.constEnd (); ++it) {
+				if ((*it).length () <= i) {
+					ok = false;
+					break;
+				}
+				if (it == entries.constBegin ()) {
+					current = (*it).at(i);
+				} else if ((*it).at(i) != current) {
+					ok = false;
+					break;
+				}
+			}
+			if (ok) common.append (current);
+			else break;
+			++i;
+		}
+		if (i > 0) {
+			if ((int) common.length() > (word_end - word_start)) {		// more than there already is
+				insertCompletion (line_num, word_start, word_end, common);
+				return false;	// will beep to signal completion is not complete
+			}
+		}
+*/
 }
 
 
@@ -1713,11 +1755,14 @@ void RKFileCompletionModelWorker::run () {
 	comp.makeCompletion (string);
 	QStringList files = comp.allMatches ();
 
-	comp.setMode (KUrlCompletion::ExeCompletion);
-	comp.makeCompletion (string);
-	QStringList exes = comp.allMatches ();
+	QStringList exes;
+	if (!QDir (string).isAbsolute ()) {  // NOTE: KUrlCompletion does not handle this well, returns, e.g. "/home/me/firefox" when given "/home/me/f"; KF5 5.44.0
+		comp.setMode (KUrlCompletion::ExeCompletion);
+		comp.makeCompletion (string);
+		exes = comp.allMatches ();
+	}
 
-	emit (completionsReady (string, exes, comp.allMatches ()));
+	emit (completionsReady (string, exes, files));
 }
 
 RKFileCompletionModel::RKFileCompletionModel (RKCompletionManager* manager) : RKCompletionModelBase (manager) {

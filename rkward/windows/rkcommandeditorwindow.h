@@ -132,6 +132,7 @@ private:
 	void tryCompletionProxy ();
 	void updateVisibility ();
 	void updateCallHint ();
+	void completeToNextUnambigous ();
 	KTextEditor::CodeCompletionInterface *cc_iface;
 	RKCodeCompletionModel *completion_model;
 	RKFileCompletionModel *file_completion_model;
