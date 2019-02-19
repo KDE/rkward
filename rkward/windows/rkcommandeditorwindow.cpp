@@ -1471,6 +1471,26 @@ bool RKCompletionManager::eventFilter (QObject* watched, QEvent* event) {
 				}
 				return true;
 			}
+		} else if ((k->key () == Qt::Key_Up || k->key () == Qt::Key_Down) && cc_iface->isCompletionActive ()) {
+			// Make up / down-keys (without alt) navigate in the document (aborting the completion)
+			// Meke alt+up / alt+down naviate in the completion list
+			if (k->modifiers () & Qt::AltModifier) {
+				if (k->type() != QKeyEvent::KeyPress) return true;  // eat the release event
+
+				// No, we cannot just send a fake key event, easily...
+				KActionCollection *kate_edit_actions = view ()->findChild<KActionCollection*> ("edit_actions");
+				QAction *action = kate_edit_actions ? (kate_edit_actions->action (k->key () == Qt::Key_Up ? "move_line_up" : "move_line_down")) : 0;
+				if (!action) {
+					kate_edit_actions = view ()->actionCollection ();
+					action = kate_edit_actions ? (kate_edit_actions->action (k->key () == Qt::Key_Up ? "move_line_up" : "move_line_down")) : 0;
+				}
+				if (action) action->trigger ();
+				else RK_ASSERT (action);
+				return true;
+			} else {
+				cc_iface->abortCompletion ();
+				return false;
+			}
 		}
 	}
 
