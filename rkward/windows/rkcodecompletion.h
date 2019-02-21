@@ -43,6 +43,7 @@ public:
 	KTextEditor::Range currentArgnameRange () const { return argname_range; };
 	KTextEditor::Range currentCallRange () const;
 	KTextEditor::View* view () const { return (_view); };
+	void userTriggeredCompletion ();
 private slots:
 	void lineWrapped (KTextEditor::Document *document, const KTextEditor::Cursor &position);
 	void lineUnwrapped (KTextEditor::Document *document, int line);
@@ -74,6 +75,7 @@ private:
 
 	bool update_call;
 	bool active;
+	bool user_triggered;
 
 	QList<KTextEditor::CodeCompletionModel*> active_models;
 };
@@ -112,6 +114,8 @@ public:
 	~RKCodeCompletionModel ();
 
 	KTextEditor::Range completionRange (KTextEditor::View *view, const KTextEditor::Cursor &position) override;
+	/** reimplemented in one of the models, in order to receive notification, when completion is invoked manually. */
+	void completionInvoked (KTextEditor::View* view, const KTextEditor::Range& range, KTextEditor::CodeCompletionModel::InvocationType invocationType) override;
 
 	void updateCompletionList (const QString& symbol);
 	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const override;

@@ -24,9 +24,6 @@
 
 #include <ktexteditor/view.h>
 #include <ktexteditor/document.h>
-#include <ktexteditor/codecompletionmodel.h>
-#include <ktexteditor/codecompletioninterface.h>
-#include <ktexteditor/codecompletionmodelcontrollerinterface.h>
 #include <ktexteditor/movingrange.h>
 #include <ktexteditor/movinginterface.h>
 

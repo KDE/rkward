@@ -42,6 +42,7 @@ RKCompletionManager::RKCompletionManager (KTextEditor::View* view) : QObject (vi
 
 	_view = view;
 	active = false;
+	user_triggered = false;
 	update_call = true;
 	cached_position = KTextEditor::Cursor (-1, -1);
 
@@ -52,7 +53,7 @@ RKCompletionManager::RKCompletionManager (KTextEditor::View* view) : QObject (vi
 		file_completion_model = new RKFileCompletionModel (this);
 		callhint_model = new RKCallHintModel (this);
 		arghint_model = new RKArgumentHintModel (this);
-		cc_iface->registerCompletionModel (callhint_model);
+		cc_iface->registerCompletionModel (completion_model);  // (at least) one model needs to be registerd, so we will know, when completion was triggered by the user (shortcut)
 		completion_timer = new QTimer (this);
 		completion_timer->setSingleShot (true);
 		connect (completion_timer, &QTimer::timeout, this, &RKCompletionManager::tryCompletion);
@@ -100,6 +101,16 @@ QString RKCompletionManager::currentCompletionWord () const {
 	return QString ();
 }
 
+void RKCompletionManager::userTriggeredCompletion () {
+	RK_TRACE (COMMANDEDITOR);
+
+	user_triggered = true;
+	completion_timer->stop ();
+	tryCompletion ();
+	user_triggered = false;
+	// NOTE: Sometimes (non-determinate) the completion window will disappear directly after this. It does not seem to be our fault, here, according to the tests I did.
+}
+
 void RKCompletionManager::tryCompletion () {
 	// TODO: merge this with RKConsole::doTabCompletion () somehow
 	RK_TRACE (COMMANDEDITOR);
@@ -118,13 +129,15 @@ void RKCompletionManager::tryCompletion () {
 	int start;
 	int end;
 	RKCommonFunctions::getCurrentSymbolOffset (current_line, cursor_pos-1, false, &start, &end);
-	if (end > cursor_pos) {
-		symbol_range = KTextEditor::Range (-1, -1, -1, -1);   // Only hint when at the end of a word/symbol: https://mail.kde.org/pipermail/rkward-devel/2015-April/004122.html
-	} else if (current_line.lastIndexOf ("#", cursor_pos) >= 0) symbol_range = KTextEditor::Range ();	// do not hint while in comments
-	else symbol_range = KTextEditor::Range (para, start, para, end);
+	symbol_range = KTextEditor::Range (para, start, para, end);
+	if (!user_triggered) {
+		if (end > cursor_pos) {
+			symbol_range = KTextEditor::Range (-1, -1, -1, -1);   // Only hint when at the end of a word/symbol: https://mail.kde.org/pipermail/rkward-devel/2015-April/004122.html
+		} else if (current_line.lastIndexOf ("#", cursor_pos) >= 0) symbol_range = KTextEditor::Range ();	// do not hint while in comments
+	}
 
 	QString word = currentCompletionWord ();
-	if (word.length () >= RKSettingsModuleCommandEditor::completionMinChars ()) {
+	if (user_triggered || (word.length () >= RKSettingsModuleCommandEditor::completionMinChars ())) {
 		QString filename;
 		// as a very simple heuristic: If the current symbol starts with a quote, we should probably attempt file name completion, instead of symbol name completion
 		if (word.startsWith ('\"') || word.startsWith ('\'') || word.startsWith ('`')) {
@@ -226,11 +239,11 @@ void startModel (KTextEditor::CodeCompletionInterface* iface, KTextEditor::CodeC
 void RKCompletionManager::updateVisibility () {
 	RK_TRACE (COMMANDEDITOR);
 
-	if (!cc_iface->isCompletionActive ()) {
+	if (user_triggered || !cc_iface->isCompletionActive ()) {
 		active_models.clear ();
 	}
 
-	bool min_len = (currentCompletionWord ().length () >= RKSettingsModuleCommandEditor::completionMinChars ());
+	bool min_len = (currentCompletionWord ().length () >= RKSettingsModuleCommandEditor::completionMinChars ()) || user_triggered;
 	startModel (cc_iface, completion_model, min_len, symbol_range, &active_models);
 	startModel (cc_iface, file_completion_model, min_len, symbol_range, &active_models);
 	if (kate_keyword_completion_model) {
@@ -513,6 +526,15 @@ QString RKCodeCompletionModel::partialCompletion (bool* exact_match) {
 	return (findCommonCompletion (shortnames, lead, exact_match));
 }
 
+void RKCodeCompletionModel::completionInvoked (KTextEditor::View* view, const KTextEditor::Range& range, KTextEditor::CodeCompletionModel::InvocationType invocationType) {
+	RK_TRACE (COMMANDEDITOR);
+
+	if (invocationType == KTextEditor::CodeCompletionModel::UserInvocation) {
+		manager->userTriggeredCompletion ();
+	}
+}
+
+
 //////////////////////// RKCallHintModel //////////////////////////
 RKCallHintModel::RKCallHintModel (RKCompletionManager* manager) : RKCompletionModelBase (manager) {
 	RK_TRACE (COMMANDEDITOR);
@@ -634,7 +656,6 @@ void RKArgumentHintModel::updateCompletionList (RObject* _function, const QStrin
 
 	if (changed) {
 		n_completions = matches.size ();
-RK_DEBUG(COMMANDEDITOR, DL_ERROR, "%d matches", n_completions);
 		endResetModel ();
 	}
 }

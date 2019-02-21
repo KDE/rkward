@@ -43,6 +43,7 @@
 #include <kshellcompletion.h>
 #include <ktexteditor/editor.h>
 #include <ktexteditor/configinterface.h>
+#include <ktexteditor/codecompletioninterface.h>
 #include <ktexteditor/markinterface.h>
 #include <ktexteditor_version.h>
 #include <kxmlguifactory.h>
