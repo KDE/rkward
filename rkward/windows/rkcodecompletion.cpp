@@ -132,8 +132,10 @@ void RKCompletionManager::tryCompletion () {
 	symbol_range = KTextEditor::Range (para, start, para, end);
 	if (!user_triggered) {
 		if (end > cursor_pos) {
-			symbol_range = KTextEditor::Range (-1, -1, -1, -1);   // Only hint when at the end of a word/symbol: https://mail.kde.org/pipermail/rkward-devel/2015-April/004122.html
-		} else if (current_line.lastIndexOf ("#", cursor_pos) >= 0) symbol_range = KTextEditor::Range ();	// do not hint while in comments
+			symbol_range = KTextEditor::Range ();   // Only hint when at the end of a word/symbol: https://mail.kde.org/pipermail/rkward-devel/2015-April/004122.html
+		} else {
+			if (doc->defaultStyleAt (c) == KTextEditor::dsComment) symbol_range = KTextEditor::Range ();	// do not hint while in comments
+		}
 	}
 
 	QString word = currentCompletionWord ();
