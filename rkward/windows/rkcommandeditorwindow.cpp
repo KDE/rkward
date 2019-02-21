@@ -1489,6 +1489,7 @@ bool RKCompletionManager::eventFilter (QObject* watched, QEvent* event) {
 				return true;
 			} else {
 				cc_iface->abortCompletion ();
+				active = false;
 				return false;
 			}
 		}
