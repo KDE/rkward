@@ -21,6 +21,7 @@ SET(windows_STAT_SRCS
 	rktoolwindowlist.cpp
 	robjectbrowser.cpp
 	rkdebugmessagewindow.cpp
+	rkcodecompletion.cpp
 )
 
 ADD_LIBRARY(windows STATIC ${windows_STAT_SRCS})
