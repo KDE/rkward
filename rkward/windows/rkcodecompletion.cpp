@@ -607,6 +607,7 @@ void RKArgumentHintModel::updateCompletionList (RObject* _function, const QStrin
 	bool changed = false;
 	if (function != _function) {
 		beginResetModel ();
+		changed = true;
 		function = _function;
 		if (function && function->isType (RObject::Function)) {
 			// initialize hint
