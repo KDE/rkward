@@ -161,14 +161,15 @@ void RKCompletionManager::tryCompletion () {
 	argname_range = KTextEditor::Range (-1, -1, -1, -1);
 	// Named arguments are just like regular symbols, *but* we must require that they are preceeded by either a ',', or the opening '(', immediately.
 	// Otherwise, they are an argument value expression, for sure.
+	// We also assume (foolishly), that if we are on a new line, we're probably starting a new arg. TODO: Actually check this!
 	if (callhint_model->currentFunction ()) {
+		argname_range = symbol_range;
 		for (int i = symbol_range.start ().column () - 1; i >= 0; --i) {
 			QChar c = current_line.at (i);
 			if (c == ',' || c == '(') {
-				argname_range = symbol_range;
 				break;
 			} else if (!c.isSpace ()) {
-				break;
+				argname_range = KTextEditor::Range (-1, -1, -1, -1);
 			}
 		}
 	}
@@ -228,7 +229,11 @@ void RKCompletionManager::updateCallHint () {
 }
 
 void startModel (KTextEditor::CodeCompletionInterface* iface, KTextEditor::CodeCompletionModel *model, bool start, const KTextEditor::Range &range, QList<KTextEditor::CodeCompletionModel*> *active_models) {
-	if (start && model->rowCount () > 0) {
+	if (start) {
+		if (model->rowCount () == 0) start = false;
+		if (!range.isValid ()) start = false;
+	}
+	if (start) {
 		if (!active_models->contains (model)) {
 			iface->startCompletion (range, model);
 			active_models->append (model);
@@ -314,6 +319,14 @@ bool RKCompletionManager::eventFilter (QObject* watched, QEvent* event) {
 		QKeyEvent *k = static_cast<QKeyEvent *> (event);
 
 		if (k->key () == Qt::Key_Tab && (!k->modifiers ())) {
+			// If only the calltip is active, make sure the tab-key behaves as a regular key. There is no completion in this case.
+			if (active_models.count () == 1 && active_models[0] == callhint_model) {
+				cc_iface->abortCompletion (); // That's a bit lame, but the least hacky way to get the key into the document. Note that we keep active==true, so
+				                              // the completion window should come back up, without delay
+				return false;
+			}
+
+			// Otherwise, try to do partial completion.
 			// TODO: It is not quite clear, what behavior is desirable, in case more than one completion model is active at a time.
 			//       For now, we use the simplest solution (implemenation-wise), and complete from the topmost-model, only
 			// TODO: Handle the ktexteditor builtin models, too.
