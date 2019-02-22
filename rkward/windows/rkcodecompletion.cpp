@@ -180,15 +180,24 @@ void RKCompletionManager::tryCompletion () {
 	updateVisibility ();
 }
 
+bool isCode (KTextEditor::Document* doc, int line, int column) {
+	KTextEditor::DefaultStyle style = doc->defaultStyleAt (KTextEditor::Cursor (line, column));
+	if (style == KTextEditor::dsComment) return false;
+	if (style == KTextEditor::dsString) return false;
+	if (style == KTextEditor::dsChar) return false;
+	return true;
+}
+
 void RKCompletionManager::updateCallHint () {
 	RK_TRACE (COMMANDEDITOR);
 
-	if (!update_call) return;
+	if (active && !update_call) return;
 	update_call = false;
 
 	int line = cached_position.line () + 1;
 	QString full_context;
 	int potential_symbol_end = -2;
+	int parenthesis_level = 0;
 	KTextEditor::Document *doc = _view->document ();
 	while (potential_symbol_end < -1 && line >= 0) {
 		--line;
@@ -201,10 +210,15 @@ void RKCompletionManager::updateCallHint () {
 		for (int i = pos; i >= 0; --i) {
 			QChar c = context_line.at (i);
 			if (c == '(') {
-				KTextEditor::DefaultStyle style = doc->defaultStyleAt (KTextEditor::Cursor (line, i));
-				if (style != KTextEditor::dsComment && style != KTextEditor::dsString && style != KTextEditor::dsChar) {
-					potential_symbol_end = i - 1;
-					break;
+				if (isCode (doc, line, i)) {
+					if (--parenthesis_level < 0) {
+						potential_symbol_end = i - 1;
+						break;
+					}
+				}
+			} else if (c == ')') {
+				if (isCode (doc, line, i)) {
+					++parenthesis_level;
 				}
 			}
 		}
@@ -270,8 +284,6 @@ void RKCompletionManager::updateVisibility () {
 		cc_iface->abortCompletion ();
 		active = false;
 	}
-
-	if (!active) update_call = true;
 }
 
 void RKCompletionManager::textInserted (KTextEditor::Document*, const KTextEditor::Cursor& position, const QString& text) {
