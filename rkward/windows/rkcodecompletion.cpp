@@ -260,7 +260,7 @@ void RKCompletionManager::updateVisibility () {
 	}
 // NOTE: Freaky bug in KF 5.44.0: Call hint will not show for the first time, if logically above the primary screen. TODO: provide patch for kateargumenthinttree.cpp:166pp
 	startModel (cc_iface, callhint_model, true, currentCallRange (), &active_models);
-	startModel (cc_iface, arghint_model, true, argname_range, &active_models);
+	startModel (cc_iface, arghint_model, (currentCompletionWord ().length () >= RKSettingsModuleCommandEditor::completionMinChars ()) || user_triggered, argname_range, &active_models);
 
 	if (!active_models.isEmpty ()) {
 		active = true;
