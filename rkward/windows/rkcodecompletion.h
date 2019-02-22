@@ -76,6 +76,7 @@ private:
 	bool update_call;
 	bool active;
 	bool user_triggered;
+	bool ignore_next_trigger;
 
 	QList<KTextEditor::CodeCompletionModel*> active_models;
 };

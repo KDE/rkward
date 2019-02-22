@@ -43,6 +43,7 @@ RKCompletionManager::RKCompletionManager (KTextEditor::View* view) : QObject (vi
 	_view = view;
 	active = false;
 	user_triggered = false;
+	ignore_next_trigger = false;
 	update_call = true;
 	cached_position = KTextEditor::Cursor (-1, -1);
 
@@ -114,6 +115,10 @@ void RKCompletionManager::tryCompletion () {
 	if (!cc_iface) {
 		// NOTE: This should not be possible, because the connections  have not been set up in the constructor, in this case.
 		RK_ASSERT (cc_iface);
+		return;
+	}
+	if (ignore_next_trigger) {
+		ignore_next_trigger = false;
 		return;
 	}
 
@@ -316,6 +321,7 @@ bool RKCompletionManager::eventFilter (QObject* watched, QEvent* event) {
 		QKeyEvent *k = static_cast<QKeyEvent *> (event);
 
 		if (k->key () == Qt::Key_Tab && (!k->modifiers ())) {
+			RK_DEBUG(COMMANDEDITOR, DL_ERROR, "%d", k->type ());
 			// If only the calltip is active, make sure the tab-key behaves as a regular key. There is no completion in this case.
 			if (active_models.count () == 1 && active_models[0] == callhint_model) {
 				cc_iface->abortCompletion (); // That's a bit lame, but the least hacky way to get the key into the document. Note that we keep active==true, so
@@ -343,8 +349,18 @@ bool RKCompletionManager::eventFilter (QObject* watched, QEvent* event) {
 
 			if (handled) {
 				RK_DEBUG(COMMANDEDITOR, DL_DEBUG, "Tab completion: %s", qPrintable (comp));
+				if (k->type () == QEvent::ShortcutOverride) {
+					// Too bad for all the duplicate work, but the event will re-trigger as a keypress event, and we need to intercept that one, too.
+					return true;
+				}
 				view ()->document ()->insertText (view ()->cursorPosition (), comp);
-				if (exact) cc_iface->abortCompletion ();
+				if (exact) {
+					// Ouch, how messy. We want to make sure completion stops, and is not re-triggered by the insertion, itself
+					active_models.clear ();
+					active = false;
+					cc_iface->abortCompletion ();
+					if (RKSettingsModuleCommandEditor::autoCompletionEnabled ()) ignore_next_trigger = true;
+				}
 				else if (comp.isEmpty ()) {
 					QApplication::beep (); // TODO: unfortunately, we catch *two* tab events, so this is not good, yet
 				}
