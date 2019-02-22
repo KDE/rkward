@@ -24,6 +24,7 @@ class QCheckBox;
 class QLineEdit;
 class QGroupBox;
 class QComboBox;
+class QGridLayout;
 
 /**
 configuration for the Command Editor windows
@@ -45,12 +46,23 @@ public:
 
 	QString caption () override;
 
+	enum CompletionCategories {
+		Calltip = 0,
+		Arghint,
+		Object,
+		Filename,
+		AutoWord,
+		N_COMPLETION_CATEGORIES
+	};
+
 /// min number of character to try code completion
-	static int completionMinChars () { return completion_min_chars; };
-	static int completionTimeout () { return completion_timeout; };
-	static bool completionEnabled () { return completion_enabled; };
-	static bool argHintingEnabled () { return arghinting_enabled; };
+	static int autoCompletionMinChars () { return auto_completion_min_chars; };
+	static int autoCompletionTimeout () { return auto_completion_timeout; };
+	static bool autoCompletionEnabled () { return auto_completion_enabled; };
+	static bool argHintingEnabled () { return isCompletionEnabled (Arghint); };  // TODO: remove me
 	static int completionOptions () { return completion_options; };
+	static bool isCompletionEnabled (CompletionCategories cat) { return completion_type_enabled[cat]; };
+	static bool cursorNavigatesCompletions () { return cursor_navigates_completions; };
 
 	static bool autosaveEnabled () { return autosave_enabled; };
 	static bool autosaveKeep () { return autosave_keep; };
@@ -63,16 +75,22 @@ public:
 public slots:
 	void settingChanged ();
 private:
-	static int completion_min_chars;
-	static int completion_timeout;
-	static bool completion_enabled;
-	static bool arghinting_enabled;
+	void makeCompletionTypeBoxes (const QStringList& label, QGridLayout* layout);
+
+	static int auto_completion_min_chars;
+	static int auto_completion_timeout;
+	static bool auto_completion_enabled;
+	static bool completion_type_enabled[N_COMPLETION_CATEGORIES];
+	static bool cursor_navigates_completions;
+
+	RKSpinBox* auto_completion_min_chars_box;
+	RKSpinBox* auto_completion_timeout_box;
+	QGroupBox* auto_completion_enabled_box;
+	QCheckBox* completion_type_enabled_box[N_COMPLETION_CATEGORIES];
+	QCheckBox* cursor_navigates_completions_box;
+
 	static int completion_options;
 
-	RKSpinBox* completion_min_chars_box;
-	RKSpinBox* completion_timeout_box;
-	QCheckBox* completion_enabled_box;
-	QCheckBox* arghinting_enabled_box;
 	QComboBox* completion_list_member_operator_box;
 	QComboBox* completion_slot_operator_box;
 	QComboBox* completion_object_qualification_box;

@@ -83,14 +83,11 @@ RKCompletionManager::~RKCompletionManager () {
 }
 
 void RKCompletionManager::tryCompletionProxy () {
-	if (RKSettingsModuleCommandEditor::completionEnabled ()) {
-		if (active) {
-			// Handle this in the next event cycle, as more than one event may trigger
-			completion_timer->start (0);
-			// TODO: Actually, in this case we should try to _update_ the existing completion, i.e. try to save some CPU cycles.
-			tryCompletion ();
-		}
-		completion_timer->start (RKSettingsModuleCommandEditor::completionTimeout ());
+	if (active) {
+		// Handle this in the next event cycle, as more than one event may trigger
+		completion_timer->start (0);
+	} else if (RKSettingsModuleCommandEditor::autoCompletionEnabled ()) {
+		completion_timer->start (RKSettingsModuleCommandEditor::autoCompletionTimeout ());
 	}
 }
 
@@ -139,7 +136,7 @@ void RKCompletionManager::tryCompletion () {
 	}
 
 	QString word = currentCompletionWord ();
-	if (user_triggered || (word.length () >= RKSettingsModuleCommandEditor::completionMinChars ())) {
+	if (user_triggered || (word.length () >= RKSettingsModuleCommandEditor::autoCompletionMinChars ())) {
 		QString filename;
 		// as a very simple heuristic: If the current symbol starts with a quote, we should probably attempt file name completion, instead of symbol name completion
 		if (word.startsWith ('\"') || word.startsWith ('\'') || word.startsWith ('`')) {
@@ -250,17 +247,17 @@ void RKCompletionManager::updateVisibility () {
 		active_models.clear ();
 	}
 
-	bool min_len = (currentCompletionWord ().length () >= RKSettingsModuleCommandEditor::completionMinChars ()) || user_triggered;
-	startModel (cc_iface, completion_model, min_len, symbol_range, &active_models);
-	startModel (cc_iface, file_completion_model, min_len, symbol_range, &active_models);
-	if (kate_keyword_completion_model) {
+	bool min_len = (currentCompletionWord ().length () >= RKSettingsModuleCommandEditor::autoCompletionMinChars ()) || user_triggered;
+	startModel (cc_iface, completion_model, min_len && RKSettingsModuleCommandEditor::isCompletionEnabled (RKSettingsModuleCommandEditor::Object), symbol_range, &active_models);
+	startModel (cc_iface, file_completion_model, min_len && RKSettingsModuleCommandEditor::isCompletionEnabled (RKSettingsModuleCommandEditor::Filename), symbol_range, &active_models);
+	if (kate_keyword_completion_model && RKSettingsModuleCommandEditor::isCompletionEnabled (RKSettingsModuleCommandEditor::AutoWord)) {
 		// Model needs to update, first, as we have not handled it in tryCompletion:
 		if (min_len) kate_keyword_completion_model->completionInvoked (view (), symbol_range, KTextEditor::CodeCompletionModel::ManualInvocation);
 		startModel (cc_iface, kate_keyword_completion_model, min_len, symbol_range, &active_models);
 	}
 // NOTE: Freaky bug in KF 5.44.0: Call hint will not show for the first time, if logically above the primary screen. TODO: provide patch for kateargumenthinttree.cpp:166pp
-	startModel (cc_iface, callhint_model, true, currentCallRange (), &active_models);
-	startModel (cc_iface, arghint_model, (currentCompletionWord ().length () >= RKSettingsModuleCommandEditor::completionMinChars ()) || user_triggered, argname_range, &active_models);
+	startModel (cc_iface, callhint_model, true && RKSettingsModuleCommandEditor::isCompletionEnabled (RKSettingsModuleCommandEditor::Calltip), currentCallRange (), &active_models);
+	startModel (cc_iface, arghint_model, min_len && RKSettingsModuleCommandEditor::isCompletionEnabled (RKSettingsModuleCommandEditor::Arghint), argname_range, &active_models);
 
 	if (!active_models.isEmpty ()) {
 		active = true;
@@ -354,6 +351,8 @@ bool RKCompletionManager::eventFilter (QObject* watched, QEvent* event) {
 				return true;
 			}
 		} else if ((k->key () == Qt::Key_Up || k->key () == Qt::Key_Down) && cc_iface->isCompletionActive ()) {
+			if (RKSettingsModuleCommandEditor::cursorNavigatesCompletions ()) return false;
+
 			// Make up / down-keys (without alt) navigate in the document (aborting the completion)
 			// Meke alt+up / alt+down naviate in the completion list
 			if (k->modifiers () & Qt::AltModifier) {
