@@ -32,6 +32,8 @@ class RKCodeCompletionModel;
 class RKFileCompletionModel;
 class RKCallHintModel;
 class RKArgumentHintModel;
+/** Provides code completions / hints for a KTextEditor::View . Several model are managed, here, with most of the common logic for parsing context, and starting completions is
+ *  handled in this class. To use, simply construct a manager as child of the view to provide completions for. */
 class RKCompletionManager : public QObject {
 	Q_OBJECT
 public:
@@ -43,6 +45,7 @@ public:
 	KTextEditor::Range currentArgnameRange () const { return argname_range; };
 	KTextEditor::Range currentCallRange () const;
 	KTextEditor::View* view () const { return (_view); };
+public slots:
 	void userTriggeredCompletion ();
 private slots:
 	void lineWrapped (KTextEditor::Document *document, const KTextEditor::Cursor &position);
@@ -74,7 +77,7 @@ private:
 	KTextEditor::Range argname_range;
 
 	bool update_call;
-	bool active;
+	bool keep_active;
 	bool user_triggered;
 	bool ignore_next_trigger;
 
@@ -115,8 +118,6 @@ public:
 	~RKCodeCompletionModel ();
 
 	KTextEditor::Range completionRange (KTextEditor::View *view, const KTextEditor::Cursor &position) override;
-	/** reimplemented in one of the models, in order to receive notification, when completion is invoked manually. */
-	void completionInvoked (KTextEditor::View* view, const KTextEditor::Range& range, KTextEditor::CodeCompletionModel::InvocationType invocationType) override;
 
 	void updateCompletionList (const QString& symbol);
 	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const override;
