@@ -321,7 +321,6 @@ bool RKCompletionManager::eventFilter (QObject* watched, QEvent* event) {
 		QKeyEvent *k = static_cast<QKeyEvent *> (event);
 
 		if (k->key () == Qt::Key_Tab && (!k->modifiers ())) {
-			RK_DEBUG(COMMANDEDITOR, DL_ERROR, "%d", k->type ());
 			// If only the calltip is active, make sure the tab-key behaves as a regular key. There is no completion in this case.
 			if (active_models.count () == 1 && active_models[0] == callhint_model) {
 				cc_iface->abortCompletion (); // That's a bit lame, but the least hacky way to get the key into the document. Note that we keep active==true, so
