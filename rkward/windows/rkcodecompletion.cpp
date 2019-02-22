@@ -332,15 +332,17 @@ bool RKCompletionManager::eventFilter (QObject* watched, QEvent* event) {
 		RK_TRACE (COMMANDEDITOR);	// avoid loads of empty traces, putting this here
 		QKeyEvent *k = static_cast<QKeyEvent *> (event);
 
-		if (k->key () == Qt::Key_Tab && (!k->modifiers ())) {
-			// If only the calltip is active, make sure the tab-key behaves as a regular key. There is no completion in this case.
-			if (active_models.count () == 1 && active_models[0] == callhint_model) {
+		// If only the calltip is active, make sure the tab-key and enter behave as a regular keys. There is no completion in this case.
+		if (active_models.count () == 1 && active_models[0] == callhint_model) {
+			if ((k->key () == Qt::Key_Tab) || (k->key () == Qt::Key_Return) || (k->key () == Qt::Key_Enter) && (!k->modifiers ())) {
 				cc_iface->abortCompletion (); // That's a bit lame, but the least hacky way to get the key into the document. Note that we keep active==true, so
 				                              // the completion window should come back up, without delay
 				return false;
 			}
+		}
 
-			// Otherwise, try to do partial completion.
+		if (k->key () == Qt::Key_Tab && (!k->modifiers ())) {
+			// Try to do partial completion. Unfortunately, the base implementation in ktexteditor is totally broken (inserts the whole partial completion, without removing the start).
 			// TODO: It is not quite clear, what behavior is desirable, in case more than one completion model is active at a time.
 			//       For now, we use the simplest solution (implemenation-wise), and complete from the topmost-model, only
 			// TODO: Handle the ktexteditor builtin models, too.
