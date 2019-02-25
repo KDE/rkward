@@ -25,6 +25,7 @@
 #include <QKeyEvent>
 #include <QIcon>
 #include <QDir>
+#include <QAction>
 
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkstandardicons.h"
