@@ -39,6 +39,7 @@
 int RKSettingsModuleCommandEditor::auto_completion_min_chars;
 int RKSettingsModuleCommandEditor::auto_completion_timeout;
 bool RKSettingsModuleCommandEditor::auto_completion_enabled;
+bool RKSettingsModuleCommandEditor::auto_completion_cursor_activated;
 bool RKSettingsModuleCommandEditor::completion_type_enabled[RKSettingsModuleCommandEditor::N_COMPLETION_CATEGORIES];
 int RKSettingsModuleCommandEditor::completion_options;
 bool RKSettingsModuleCommandEditor::cursor_navigates_completions;
@@ -73,15 +74,18 @@ RKSettingsModuleCommandEditor::RKSettingsModuleCommandEditor (RKSettings *gui, Q
 	QFormLayout* form_layout = new QFormLayout (auto_completion_enabled_box);
 	auto_completion_min_chars_box = new RKSpinBox (auto_completion_enabled_box);
 	auto_completion_min_chars_box->setIntMode (1, INT_MAX, auto_completion_min_chars);
-	auto_completion_min_chars_box->setEnabled (auto_completion_enabled);
 	connect (auto_completion_min_chars_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleCommandEditor::settingChanged);
 	form_layout->addRow ("Minimum number of characters", auto_completion_min_chars_box);
 
 	auto_completion_timeout_box = new RKSpinBox (auto_completion_enabled_box);
 	auto_completion_timeout_box->setIntMode (0, INT_MAX, auto_completion_timeout);
-	auto_completion_timeout_box->setEnabled (auto_completion_enabled);
 	connect (auto_completion_timeout_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleCommandEditor::settingChanged);
 	form_layout->addRow (i18n ("Timeout (milliseconds)"), auto_completion_timeout_box);
+
+	auto_completion_cursor_activated_box = new QCheckBox (auto_completion_enabled_box);
+	auto_completion_cursor_activated_box->setChecked (auto_completion_cursor_activated);
+	connect (auto_completion_cursor_activated_box, &QCheckBox::stateChanged, this, &RKSettingsModuleCommandEditor::settingChanged);
+	form_layout->addRow (i18n ("(Attempt to) start completion whenever the cursor position changes"), auto_completion_cursor_activated_box);
 
 	form_layout = new QFormLayout ();
 	box_layout->addLayout (form_layout);
@@ -191,6 +195,7 @@ void RKSettingsModuleCommandEditor::applyChanges () {
 	auto_completion_enabled = auto_completion_enabled_box->isChecked ();
 	auto_completion_min_chars = auto_completion_min_chars_box->intValue ();
 	auto_completion_timeout = auto_completion_timeout_box->intValue ();
+	auto_completion_cursor_activated = auto_completion_cursor_activated_box->isChecked ();
 	for (int i = 0; i < N_COMPLETION_CATEGORIES; ++i) {
 		completion_type_enabled[i] = completion_type_enabled_box[i]->isChecked ();
 	}
@@ -233,6 +238,7 @@ void RKSettingsModuleCommandEditor::saveSettings (KConfig *config) {
 	cg.writeEntry ("Completion enabled", auto_completion_enabled);
 	cg.writeEntry ("Completion min chars", auto_completion_min_chars);
 	cg.writeEntry ("Completion timeout", auto_completion_timeout);
+	cg.writeEntry ("Auto completion on cursor navigation", auto_completion_cursor_activated);
 	cg.writeEntry ("Completion option flags", completion_options);
 	cg.writeEntry ("Cursor navigate completions", cursor_navigates_completions);
 	for (int i = 0; i < N_COMPLETION_CATEGORIES; ++i) {
@@ -254,6 +260,7 @@ void RKSettingsModuleCommandEditor::loadSettings (KConfig *config) {
 	auto_completion_enabled = cg.readEntry ("Completion enabled", true);
 	auto_completion_min_chars = cg.readEntry ("Completion min chars", 2);
 	auto_completion_timeout = cg.readEntry ("Completion timeout", 250);
+	auto_completion_cursor_activated = cg.readEntry ("Auto completion on cursor navigation", false);
 	completion_options = cg.readEntry ("Completion option flags", (int) RObject::IncludeEnvirIfMasked);
 	cursor_navigates_completions = cg.readEntry ("Cursor navigate completions", false);
 	for (int i = 0; i < N_COMPLETION_CATEGORIES; ++i) {

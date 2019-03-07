@@ -59,6 +59,7 @@ public:
 	static int autoCompletionMinChars () { return auto_completion_min_chars; };
 	static int autoCompletionTimeout () { return auto_completion_timeout; };
 	static bool autoCompletionEnabled () { return auto_completion_enabled; };
+	static bool autoCompletionCursorActivated () { return (auto_completion_enabled && auto_completion_cursor_activated); };
 	static bool argHintingEnabled () { return isCompletionEnabled (Arghint); };  // TODO: remove me
 	static int completionOptions () { return completion_options; };
 	static bool isCompletionEnabled (CompletionCategories cat) { return completion_type_enabled[cat]; };
@@ -80,12 +81,14 @@ private:
 	static int auto_completion_min_chars;
 	static int auto_completion_timeout;
 	static bool auto_completion_enabled;
+	static bool auto_completion_cursor_activated;
 	static bool completion_type_enabled[N_COMPLETION_CATEGORIES];
 	static bool cursor_navigates_completions;
 
 	RKSpinBox* auto_completion_min_chars_box;
 	RKSpinBox* auto_completion_timeout_box;
 	QGroupBox* auto_completion_enabled_box;
+	QCheckBox* auto_completion_cursor_activated_box;
 	QCheckBox* completion_type_enabled_box[N_COMPLETION_CATEGORIES];
 	QCheckBox* cursor_navigates_completions_box;
 

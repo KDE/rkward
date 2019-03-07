@@ -336,8 +336,10 @@ void RKCompletionManager::cursorPositionChanged (KTextEditor::View* view, const 
 			QString text = view->document ()->text (KTextEditor::Range (newPosition, cached_position));
 			if (text.contains (QChar ('(')) || text.contains (QChar (')'))) update_call = true;
 		}
+		tryCompletionProxy ();
+	} else if (RKSettingsModuleCommandEditor::autoCompletionCursorActivated ()) {
+		tryCompletionProxy ();
 	}
-	tryCompletionProxy ();
 }
 
 KTextEditor::Range RKCompletionManager::currentCallRange () const {
