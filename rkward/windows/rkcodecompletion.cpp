@@ -353,7 +353,7 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 
 		// If only the calltip is active, make sure the tab-key and enter behave as a regular keys. There is no completion in this case.
 		if (active_models.count () == 1 && active_models[0] == callhint_model) {
-			if (((k->key () == Qt::Key_Tab) || (k->key () == Qt::Key_Return) || (k->key () == Qt::Key_Enter)) && (!k->modifiers ())) {
+			if (((k->key () == Qt::Key_Tab) || (k->key () == Qt::Key_Return) || (k->key () == Qt::Key_Enter)) || (k->key () == Qt::Key_Backtab)) {
 				keep_active = true;
 				cc_iface->abortCompletion (); // That's a bit lame, but the least hacky way to get the key into the document. keep_active=true, so
 				                              // the completion window should come back up, without delay
