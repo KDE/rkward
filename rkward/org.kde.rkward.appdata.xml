@@ -68,6 +68,14 @@
   <launchable type="desktop-id">org.kde.rkward.desktop</launchable>
   <screenshots>
     <screenshot type="default">
+      <caption>Application main window, with object browser, data editor, file browser, and interactive R console visible. Window placement can be re-arranged and all windows can also detached from the main window.</caption>
+      <image>https://cdn.kde.org/screenshots/rkward/main_window.png</image>
+    </screenshot>
+    <screenshot type="default">
+      <caption>Script editor with active preview.</caption>
+      <image>https://cdn.kde.org/screenshots/rkward/script_preview.png</image>
+    </screenshot>
+    <screenshot type="default">
       <caption>Working with data in RKward</caption>
       <caption xml:lang="ca">Treballant amb dades al RKward</caption>
       <caption xml:lang="ca-valencia">Treballant amb dades al RKward</caption>
@@ -86,6 +94,10 @@
       <caption xml:lang="uk">Робота з даними у RKward</caption>
       <caption xml:lang="x-test">xxWorking with data in RKwardxx</caption>
       <image>https://rkward.kde.org/images/4/46/EditorDataFrame.png</image>
+    </screenshot>
+    <screenshot type="default">
+      <caption>Searching objects by name, searching for help pages, and in-app help viewer.</caption>
+      <image>https://cdn.kde.org/screenshots/rkward/object_and_help_search.png</image>
     </screenshot>
   </screenshots>
   <provides>
