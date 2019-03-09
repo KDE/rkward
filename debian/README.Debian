@@ -1,0 +1,9 @@
+About this debian package of RKWard
+-----------------------------------
+
+This is *not* an official debian package of RKWard. It is provided to allow quick and easy, fully automated builds
+on a variety to different debian based distributions, including, for example, some legacy Ubuntu releases that have
+been supplemented with updated R packages from CRAN.
+
+To achieve this goal, this package does *not* adhere to all packaging best practices. If you are looking for official
+packaging, please refert to https://salsa.debian.org/qt-kde-team/extras/rkward as a starting point.

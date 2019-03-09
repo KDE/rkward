@@ -1,3 +1,0 @@
-# The rkward executable is contained in the rkward binary package, built from the same source
-rkward-data binary: desktop-command-not-in-package usr/share/applications/org.kde.rkward.desktop rkward
-rkward-data binary: desktop-command-not-in-package usr/share/applications/org.kde.rkward-open.desktop rkward
