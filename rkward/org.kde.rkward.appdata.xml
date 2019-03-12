@@ -71,6 +71,7 @@
       <caption>Application main window, with object browser, data editor, file browser, and interactive R console visible. Window placement can be re-arranged and all windows can also detached from the main window.</caption>
       <caption xml:lang="ca">Finestra principal de l'aplicació, amb navegador d'objectes, editor de dades, navegador de fitxers, i una consola visible d'R interactiva. La col·locació de les finestres es pot reconfigurar i també totes les finestres es poden separar de la finestra principal.</caption>
       <caption xml:lang="ca-valencia">Finestra principal de l'aplicació, amb navegador d'objectes, editor de dades, navegador de fitxers, i una consola visible d'R interactiva. La col·locació de les finestres es pot reconfigurar i també totes les finestres es poden separar de la finestra principal.</caption>
+      <caption xml:lang="gl">Xanela principal do aplicativo, co navegador de obxectos, o editor de datos, o navegador de ficheiros e a consola interactiva de R visíbeis. A colocación das xanelas pode reorganizarse e todas as xanelas poden despregarse da xanela principal.</caption>
       <caption xml:lang="sv">Huvudfönster i programmet, med objektbläddrare, dataeditor, filbläddrare och interaktiv R-terminal synliga. Fönsterplaceringen kan arrangeras om och alla fönster kan också kopplas loss från huvudfönstret.</caption>
       <caption xml:lang="uk">Головне вікно програми із панеллю навігації об'єктами, редактором даних, панеллю навігації файловою системою та інтерактивною консоллю R. Розташування панелей можна змінювати, усі панелі також можна від'єднувати від головного вікна.</caption>
       <caption xml:lang="x-test">xxApplication main window, with object browser, data editor, file browser, and interactive R console visible. Window placement can be re-arranged and all windows can also detached from the main window.xx</caption>
@@ -80,6 +81,7 @@
       <caption>Script editor with active preview.</caption>
       <caption xml:lang="ca">Un editor de scripts amb vista prèvia activa.</caption>
       <caption xml:lang="ca-valencia">Un editor de scripts amb vista prèvia activa.</caption>
+      <caption xml:lang="gl">Editor de scripts con vista previa activa.</caption>
       <caption xml:lang="sv">Skripteditor med aktiv förhandsgranskning.</caption>
       <caption xml:lang="uk">Редактор скриптів із активним попереднім переглядом.</caption>
       <caption xml:lang="x-test">xxScript editor with active preview.xx</caption>
@@ -109,6 +111,7 @@
       <caption>Searching objects by name, searching for help pages, and in-app help viewer.</caption>
       <caption xml:lang="ca">Cerca objectes per nom, cerca de les pàgines d'ajuda, i visor d'ajuda integrat a l'aplicació.</caption>
       <caption xml:lang="ca-valencia">Cerca objectes per nom, cerca de les pàgines d'ajuda, i visor d'ajuda integrat a l'aplicació.</caption>
+      <caption xml:lang="gl">Buscar obxectos por nome, buscar páxinas de axuda, e visor de axuda dentro do aplicativo.</caption>
       <caption xml:lang="sv">Sökning efter objekt enligt namn, sökning efter hjälpsidor, och hjälpvisning i programmet.</caption>
       <caption xml:lang="uk">Пошук об'єктів за назвою, пошук сторінок довідки та вбудована панель перегляду довідки.</caption>
       <caption xml:lang="x-test">xxSearching objects by name, searching for help pages, and in-app help viewer.xx</caption>
