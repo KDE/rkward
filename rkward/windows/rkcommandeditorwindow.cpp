@@ -875,7 +875,7 @@ void RKCommandEditorWindow::doRenderPreview () {
 		          "    exprs <- parse (%1, keep.source=TRUE)\n"
 		          "})\n"
 		          ".rk.cat.output(rk.end.capture.output(TRUE))\n"
-		          "for (i in 1:length (exprs)) {\n"
+		          "for (i in seq_len(length(exprs))) {\n"
 		          "    rk.print.code(as.character(attr(exprs, \"srcref\")[[i]]))\n"
 		          "    rk.capture.output(suppress.messages=TRUE)\n"
 		          "    try({\n"
