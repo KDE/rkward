@@ -98,7 +98,7 @@ bool RKWebPage::acceptNavigationRequest (QWebFrame* frame, const QNetworkRequest
 	}
 
 	if (frame != mainFrame ()) {
-		if (request.url ().isLocalFile () && (QMimeDatabase ().mimeTypeForUrl (request.url ()).inherits ("text/html"))) return true;
+		if (request.url ().isLocalFile () && supportsContentType(QMimeDatabase ().mimeTypeForUrl (request.url ()).name ())) return true;
 	}
 
 	if (QUrl (mainFrame ()->url ()).matches (request.url (), QUrl::NormalizePathSegments | QUrl::StripTrailingSlash)) {
@@ -364,6 +364,7 @@ bool RKHTMLWindow::openURL (const QUrl &url) {
 
 	if (handleRKWardURL (url, this)) return true;
 
+	QMimeType mtype = QMimeDatabase ().mimeTypeForUrl (url);
 	if (window_mode == HTMLOutputWindow) {
 		if (url != current_url) {
 			// output window should not change url after initialization open any links in new windows
@@ -377,7 +378,7 @@ bool RKHTMLWindow::openURL (const QUrl &url) {
 		}
 	}
 
-	if (url.isLocalFile () && (QMimeDatabase ().mimeTypeForUrl (url).inherits ("text/html") || window_mode == HTMLOutputWindow)) {
+	if (url.isLocalFile () && (page->supportsContentType (mtype.name ()) || window_mode == HTMLOutputWindow)) {
 		changeURL (url);
 		QFileInfo out_file (url.toLocalFile ());
 		bool ok = out_file.exists();
@@ -407,7 +408,7 @@ bool RKHTMLWindow::openURL (const QUrl &url) {
 		}
 	}
 
-	RKWorkplace::mainWorkplace ()->openAnyUrl (url, QString (), QMimeDatabase ().mimeTypeForUrl (url).inherits ("text/html"));	// NOTE: text/html type urls, which we have not handled, above, are forced to be opened externally, to avoid recursion. E.g. help:// protocol urls.
+	RKWorkplace::mainWorkplace ()->openAnyUrl (url, QString (), page->supportsContentType (mtype.name ()));	// NOTE: text/html type urls, which we have not handled, above, are forced to be opened externally, to avoid recursion. E.g. help:// protocol urls.
 	return true;
 }
 
@@ -449,7 +450,7 @@ void RKHTMLWindow::mimeTypeDetermined (KIO::Job* job, const QString& type) {
 	KIO::TransferJob* tj = static_cast<KIO::TransferJob*> (job);
 	QUrl url = tj->url ();
 	tj->putOnHold ();
-	if (type == "text/html") {
+	if (page->supportsContentType (type)) {
 		changeURL (url);
 		page->load (url);
 	} else {
