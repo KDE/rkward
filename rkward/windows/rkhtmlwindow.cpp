@@ -383,7 +383,15 @@ bool RKHTMLWindow::openURL (const QUrl &url) {
 		QFileInfo out_file (url.toLocalFile ());
 		bool ok = out_file.exists();
 		if (ok)  {
-			page->load (url);
+			if (!mtype.inherits ("text/html")) {
+				RK_DEBUG (APP, DL_WARNING, "Applying workaround for https://bugs.kde.org/show_bug.cgi?id=405386");
+				QFile f (url.toLocalFile ());
+				f.open (QIODevice::ReadOnly);
+				page->mainFrame ()->setHtml (f.readAll());
+				f.close ();
+			} else {
+				page->load (url);
+			}
 		} else {
 			fileDoesNotExistMessage ();
 		}
