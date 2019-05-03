@@ -50,6 +50,7 @@
     <p xml:lang="ca">El RKWard pretén esdevenir un frontal fàcil d'usar i transparent per a l'R, un potent sistema de càlcul estadístic i de gràfics. A més d'una IGU còmoda per a les característiques estadístiques més importants, les futures versions també proporcionaran una perfecta integració amb una suite d'oficina.</p>
     <p xml:lang="ca-valencia">El RKWard pretén esdevenir un frontal fàcil d'usar i transparent per a l'R, un potent sistema de càlcul estadístic i de gràfics. A més d'una IGU còmoda per a les característiques estadístiques més importants, les futures versions també proporcionaran una perfecta integració amb una suite d'oficina.</p>
     <p xml:lang="en-GB">RKWard aims to become an easy to use, transparent frontend to R, a powerful system for statistical computation and graphics. Besides a convenient GUI for the most important statistical functions, future versions will also provide seamless integration with an office-suite.</p>
+    <p xml:lang="es">RKWard pretende convertirse en una interfaz transparente a R fácil de usar, un potente sistema para cálculos estadísticos y gráficos. Además de una interfaz gráfica de usuario conveniente para la mayoría de las funciones estadísticas importantes, las versiones futuras también proporcionarán una integración sin fisuras con una suite de ofimática.</p>
     <p xml:lang="fi">RKward pyrkii olemaan helppokäyttöinen ja läpinäkyvä käyttöliittymä tehokkaalle tilastolaskenta- ja kaaviojärjestelmälle R:lle. Paitsi kätevän graafisen käyttöliittymän tärkeimpiin tilastofunktioihin tulevat versiot tarjoavat myös saumattoman integroinnin toimisto-ohjelmiin.</p>
     <p xml:lang="gl">RKWard pretende converterse nunha interface para R fácil de usar e transparente, un potente sistema de computación estatística e gráficas. Ademais de fornecer unha interface gráfica cómoda para as funcións estatísticas máis importantes, versión futuras fornecerán integración transparente cunha suite de ofimática.</p>
     <p xml:lang="id">RKWard ditujukan untuk menjadi yang mudah digunakan, frontend transparan untuk R, sebuah sistem yang unggul untuk grafik dan komputasi statistik. Selain GUI yang nyaman untuk beberapa fungsi statistik yang penting, versi masa depan juga akan menyediakan integrasi yang sama dengan office suite.</p>
@@ -72,6 +73,7 @@
       <caption xml:lang="ca">Finestra principal de l'aplicació, amb navegador d'objectes, editor de dades, navegador de fitxers, i una consola visible d'R interactiva. La col·locació de les finestres es pot reconfigurar i també totes les finestres es poden separar de la finestra principal.</caption>
       <caption xml:lang="ca-valencia">Finestra principal de l'aplicació, amb navegador d'objectes, editor de dades, navegador de fitxers, i una consola visible d'R interactiva. La col·locació de les finestres es pot reconfigurar i també totes les finestres es poden separar de la finestra principal.</caption>
       <caption xml:lang="en-GB">Application main window, with object browser, data editor, file browser, and interactive R console visible. Window placement can be re-arranged and all windows can also detached from the main window.</caption>
+      <caption xml:lang="es">Ventana principal de la aplicación, con explorador de objetos, editor de datos, navegador de archivos y consola interactiva de R visible. La posición de la ventana se puede reorganizar y también es posible desprender todas las ventanas de la ventana principal.</caption>
       <caption xml:lang="gl">Xanela principal do aplicativo, co navegador de obxectos, o editor de datos, o navegador de ficheiros e a consola interactiva de R visíbeis. A colocación das xanelas pode reorganizarse e todas as xanelas poden despregarse da xanela principal.</caption>
       <caption xml:lang="it">Finestra principale dell'applicazione con navigatore degli oggetti, editor di dati, navigatore dei file e console interattiva di R visibile. Il posizionamento delle finestre può essere modificato, inoltre tutte le finestre possono essere staccate dalla principale.</caption>
       <caption xml:lang="nl">Hoofdvenster, met hierin objectbrowser, gegevenseditor, bestandsbrowser, en interactieve console van R. Plaatsing van venster kan worden gewijzigd, en all vensters kunnen ook worden losgemaakt van het hoofdvenster.</caption>
@@ -86,6 +88,7 @@
       <caption xml:lang="ca">Un editor de scripts amb vista prèvia activa.</caption>
       <caption xml:lang="ca-valencia">Un editor de scripts amb vista prèvia activa.</caption>
       <caption xml:lang="en-GB">Script editor with active preview.</caption>
+      <caption xml:lang="es">Editor de scripts con vista previa activa.</caption>
       <caption xml:lang="gl">Editor de scripts con vista previa activa.</caption>
       <caption xml:lang="it">Editor di script con anteprima attiva.</caption>
       <caption xml:lang="nl">Scripteditor met actieve preview.</caption>
@@ -120,6 +123,7 @@
       <caption xml:lang="ca">Cerca objectes per nom, cerca de les pàgines d'ajuda, i visor d'ajuda integrat a l'aplicació.</caption>
       <caption xml:lang="ca-valencia">Cerca objectes per nom, cerca de les pàgines d'ajuda, i visor d'ajuda integrat a l'aplicació.</caption>
       <caption xml:lang="en-GB">Searching objects by name, searching for help pages, and in-app help viewer.</caption>
+      <caption xml:lang="es">Búsqueda de objetos por nombre, búsqueda de páginas de ayuda y visor de ayuda integrado en la aplicación.</caption>
       <caption xml:lang="gl">Buscar obxectos por nome, buscar páxinas de axuda, e visor de axuda dentro do aplicativo.</caption>
       <caption xml:lang="it">Ricerca di oggetti in base al nome, ricerca di pagine di aiuto e visualizzatore di aiuto all'interno dell'applicazione.</caption>
       <caption xml:lang="nl">Objecten zoeken op naam, zoeken naar helppagina's, en in-app helpviewer.</caption>
