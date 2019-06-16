@@ -78,13 +78,16 @@ void* RKRBackend::default_global_context = 0;
 #ifdef Q_OS_WIN
 #	include <R_ext/RStartup.h>
 #	include <R_ext/Utils.h>
+#	include <R_ext/libextern.h>
 
 	structRstart RK_R_Params;
 
-	// why oh why isn't Rinterface.h available on Windows?
-	LibExtern void* R_GlobalContext;
-	LibExtern uintptr_t R_CStackLimit;
-	extern "C" void R_SaveGlobalEnvToFile(char*);
+	extern "C" {
+		// why oh why isn't Rinterface.h available on Windows?
+		LibExtern void* R_GlobalContext;
+		LibExtern uintptr_t R_CStackLimit;
+		LibExtern void R_SaveGlobalEnvToFile(char*);
+	}
 #else
 #	include <Rinterface.h>
 #endif
