@@ -78,6 +78,7 @@
       <caption xml:lang="id">Window utama aplikasi, dengan penelusur objek, pengedit data, penelusur file, dan interaktif konsol R yang terlihat. penempatan window bisa diatur ulang dan semua window juga bisa dilepas dari window utama.</caption>
       <caption xml:lang="it">Finestra principale dell'applicazione con navigatore degli oggetti, editor di dati, navigatore dei file e console interattiva di R visibile. Il posizionamento delle finestre può essere modificato, inoltre tutte le finestre possono essere staccate dalla principale.</caption>
       <caption xml:lang="nl">Hoofdvenster, met hierin objectbrowser, gegevenseditor, bestandsbrowser, en interactieve console van R. Plaatsing van venster kan worden gewijzigd, en all vensters kunnen ook worden losgemaakt van het hoofdvenster.</caption>
+      <caption xml:lang="pl">Główne okno aplikacji z przeglądarką obiektów, edytorem danych, przeglądarką plików i interaktywną konsolą R. Umieszczenie okien można zmienić i każde okno można odczepić od głównego okna.</caption>
       <caption xml:lang="pt">Janela principal da aplicação, com um navegador de objectos, um editor de dados, um navegador de ficheiros e uma consola de R interactiva visíveis. A colocação das janelas pode ser reorganizada e todas as janelas poder-se-ão destacar da janela principal.</caption>
       <caption xml:lang="sv">Huvudfönster i programmet, med objektbläddrare, dataeditor, filbläddrare och interaktiv R-terminal synliga. Fönsterplaceringen kan arrangeras om och alla fönster kan också kopplas loss från huvudfönstret.</caption>
       <caption xml:lang="uk">Головне вікно програми із панеллю навігації об'єктами, редактором даних, панеллю навігації файловою системою та інтерактивною консоллю R. Розташування панелей можна змінювати, усі панелі також можна від'єднувати від головного вікна.</caption>
@@ -94,6 +95,7 @@
       <caption xml:lang="id">Pengedit skrip dengan pratinjau yang aktif.</caption>
       <caption xml:lang="it">Editor di script con anteprima attiva.</caption>
       <caption xml:lang="nl">Scripteditor met actieve preview.</caption>
+      <caption xml:lang="pl">Edytor skryptów z podglądem na żywo.</caption>
       <caption xml:lang="pt">Editor de programas com uma antevisão activa.</caption>
       <caption xml:lang="sv">Skripteditor med aktiv förhandsgranskning.</caption>
       <caption xml:lang="uk">Редактор скриптів із активним попереднім переглядом.</caption>
@@ -130,6 +132,7 @@
       <caption xml:lang="id">Pencarian objek berdasarkan nama, pencarian halaman bantuan, dan penampil bantuan dalam-apl.</caption>
       <caption xml:lang="it">Ricerca di oggetti in base al nome, ricerca di pagine di aiuto e visualizzatore di aiuto all'interno dell'applicazione.</caption>
       <caption xml:lang="nl">Objecten zoeken op naam, zoeken naar helppagina's, en in-app helpviewer.</caption>
+      <caption xml:lang="pl">Wyszukiwanie obiektów po nazwie, wyszukiwanie na stronach pomocy i wbudowana przeglądarka pomocy w aplikacji.</caption>
       <caption xml:lang="pt">Pesquisa de objectos por nome, pesquisa nas páginas de ajuda e visualizador de ajuda na aplicação.</caption>
       <caption xml:lang="sv">Sökning efter objekt enligt namn, sökning efter hjälpsidor, och hjälpvisning i programmet.</caption>
       <caption xml:lang="uk">Пошук об'єктів за назвою, пошук сторінок довідки та вбудована панель перегляду довідки.</caption>
