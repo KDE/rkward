@@ -2,7 +2,7 @@
                           rkworkplace  -  description
                              -------------------
     begin                : Thu Sep 21 2006
-    copyright            : (C) 2006-2016 by Thomas Friedrichsmeier
+    copyright            : (C) 2006-2019 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -31,6 +31,7 @@
 #include <QDir>
 #include <QApplication>
 #include <QMimeDatabase>
+#include <QLayout>
 
 #include "detachedwindowcontainer.h"
 #include "rkcommandeditorwindow.h"
