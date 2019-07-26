@@ -2,7 +2,7 @@
                           rktoolwindowbar  -  description
                              -------------------
     begin                : Fri Oct 12 2007
-    copyright            : (C) 2007-2018 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2019 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -27,6 +27,7 @@
 
 #include <QSplitter>
 #include <QContextMenuEvent>
+#include <QHBoxLayout>
 
 #include "rkworkplace.h"
 #include "rkworkplaceview.h"
