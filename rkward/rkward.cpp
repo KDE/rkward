@@ -2,7 +2,7 @@
                           rkward.cpp  -  description
                              -------------------
     begin                : Tue Oct 29 20:06:08 CET 2002
-    copyright            : (C) 2002-2018 by Thomas Friedrichsmeier
+    copyright            : (C) 2002-2019 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -26,6 +26,9 @@
 #include <QMenuBar>
 #include <QStatusBar>
 #include <QInputDialog>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QIcon>
 
 // include files for KDE
 #include <kmessagebox.h>
@@ -41,7 +44,6 @@
 #include <krecentfilesaction.h>
 #include <ktoolbar.h>
 #include <kactionmenu.h>
-#include <QIcon>
 #include <KSharedConfig>
 #include <KConfigGroup>
 
