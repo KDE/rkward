@@ -73,7 +73,9 @@
 #include <QTime>
 #include <QSettings>
 #include <QStandardPaths>
-#include <QVersionNumber>
+#if defined(Q_OS_MACOS) || defined(Q_OS_WINDOWS)
+#	include <QVersionNumber>
+#endif
 
 #ifdef Q_OS_MACOS
 	// Needed to allow execution of launchctl
