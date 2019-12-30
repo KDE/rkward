@@ -2,7 +2,7 @@
                           main.cpp  -  description
                              -------------------
     begin                : Tue Oct 29 20:06:08 CET 2002
-    copyright            : (C) 2002-2018 by Thomas Friedrichsmeier
+    copyright            : (C) 2002-2019 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -72,6 +72,8 @@
 #include <QDBusReply>
 #include <QTime>
 #include <QSettings>
+#include <QStandardPaths>
+#include <QVersionNumber>
 
 #ifdef Q_OS_MACOS
 	// Needed to allow execution of launchctl
@@ -166,6 +168,70 @@ void RKDebug (int flags, int level, const char *fmt, ...) {
 	}
 }
 
+/** Check if the given path to R (or "auto") is executable, and fail with an appropriate message, otherwise. If "auto" is given as input, try to auto-locate an R installation at the standard
+installation path(s) for this platform. */
+QString resolveRSpecOrFail (QString input, QString message) {
+	if (input == QLatin1String ("auto")) {
+		QString ret;
+#ifdef Q_OS_MACOS
+		QString instroot ("/Library/Frameworks/R.framework/Versions");
+		if (QFileInfo (instroot).isReadable ()) {
+			QDir dir (instroot);
+			QStringList candidates = dir.entryList ();
+			QVersionNumber highest (0, 0, 0);
+			for (int i = candidates.count (); i >= 0; --i) {
+				QString found = findExeAtPath ("Resoures/bin/R", dir.absoluteFilePath (candidates[i]));
+				if (!found.isNull()) {
+					QVersionNumber version = QVersionNumber::fromString (candidates[i]);
+					if (version > highest) {
+						ret = found;
+					}
+				}
+			}
+		}
+#endif
+#ifdef Q_OS_WIN
+		QString instroot = QString (getenv ("PROGRAMFILES")) + "/R";
+		if (!QFileInfo (instroot).isReadable ()) instroot = QString (getenv ("PROGRAMFILES(x86)")) + "/R";
+		if (QFileInfo (instroot).isReadable ()) {
+			QDir dir (instroot);
+			QStringList candidates = dir.entryList (QStringList ("R-*"), QDir::Dirs);
+			QVersionNumber highest (0, 0, 0);
+			for (int i = candidates.count (); i >= 0; --i) {
+				QString found = findExeAtPath ("bin/R", dir.absoluteFilePath (candidates[i]));
+				if (!found.isNull()) {
+					QVersionNumber version = QVersionNumber::fromString (candidates[i].mid (2));
+					if (version > highest) {
+						ret = found;
+					}
+				}
+			}
+		}
+#endif
+		// On Unix, but also, if R was not found in the default locations on Windows or Mac,
+		// try to find R in the system path.
+		if (ret.isNull ()) ret = QStandardPaths::findExecutable ("R");
+
+		if (ret.isNull() || !QFileInfo (ret).isExecutable()) {
+			QMessageBox::critical (0, i18n ("Unable to detect R installation"), i18n ("RKWard failed to detect an R installation on this system. Either R is not installed, or not at one of the standard installation locations. You can use the command line parameter '--r-executable <i>auto / PATH_TO_R</i>', or supply an rkward.ini file to specify a non-standard location."));
+			exit (1);
+		}
+
+		RK_DEBUG (APP, DL_DEBUG, "Using auto-detected R at %s", qPrintable (ret));
+		return ret;
+	} else {
+		if (QFileInfo (input).isExecutable ()) {
+			return input;
+		}
+
+		// TODO, while fixing krazy2 warnings: KMessageBox layout for static messages is quirky in that it has squeezed caption, and does not allow resize -> Submit a patch.
+		//KMessageBox::error (0, QString ("The R executable specified on the command line (%1) does not exist or is not executable.").arg (r_exe), "Specified R executable does not exist");
+		QMessageBox::critical (0, i18n ("Specified R executable does not exist"), message);
+		exit(1);
+	}
+	return QString(); // not reached
+}
+
 int main (int argc, char *argv[]) {
 	RK_Debug::RK_Debug_Level = DL_WARNING;
 	QApplication app (argc, argv);
@@ -178,7 +244,7 @@ int main (int argc, char *argv[]) {
 	KUrlAuthorized::allowUrlAction ("redirect", QUrl("rkward://"), QUrl ("help:"));
 
 	KLocalizedString::setApplicationDomain ("rkward");
-	KAboutData aboutData ("rkward", i18n ("RKWard"), RKWARD_VERSION, i18n ("Frontend to the R statistics language"), KAboutLicense::GPL, i18n ("(c) 2002, 2004 - 2018"), QString (), "http://rkward.kde.org");
+	KAboutData aboutData ("rkward", i18n ("RKWard"), RKWARD_VERSION, i18n ("Frontend to the R statistics language"), KAboutLicense::GPL, i18n ("(c) 2002, 2004 - 2019"), QString (), "http://rkward.kde.org");
 	aboutData.addAuthor (i18n ("Thomas Friedrichsmeier"), i18n ("Project leader / main developer"));
 	aboutData.addAuthor (i18n ("Pierre Ecochard"), i18n ("C++ developer between 2004 and 2007"));
 	aboutData.addAuthor (i18n ("Prasenjit Kapat"), i18n ("Many plugins, suggestions, plot history feature"));
@@ -290,12 +356,7 @@ int main (int argc, char *argv[]) {
 	//- compile-time default
 	QString r_exe = parser.value ("r-executable");
 	if (!r_exe.isNull ()) {
-		if (!QFileInfo (r_exe).isExecutable ()) {
-			// TODO, while fixing krazy2 warnings: KMessageBox layout for static messages is quirky in that it has squeezed caption, and does not allow resize -> Submit a patch.
-			//KMessageBox::error (0, QString ("The R executable specified on the command line (%1) does not exist or is not executable.").arg (r_exe), "Specified R executable does not exist");
-			QMessageBox::critical (0, "Specified R executable does not exist", QString ("The R executable specified on the command line (%1) does not exist or is not executable.").arg (r_exe));
-			exit (1);
-		}
+		r_exe = resolveRSpecOrFail (r_exe, i18n ("The R executable specified on the command line (%1) does not exist or is not executable.", r_exe));
 		RK_DEBUG (APP, DL_DEBUG, "Using R specified on command line");
 	} else {
 		QDir frontend_path = app.applicationDirPath ();
@@ -304,22 +365,15 @@ int main (int argc, char *argv[]) {
 			QSettings rkward_ini (rkward_ini_file.absoluteFilePath (), QSettings::IniFormat);
 			r_exe = rkward_ini.value ("R executable").toString ();
 			if (!r_exe.isNull ()) {
-				if (QDir::isRelativePath (r_exe)) {
+				if (QDir::isRelativePath (r_exe) && r_exe != QStringLiteral ("auto")) {
 					r_exe = frontend_path.absoluteFilePath (r_exe);
 				}
-				if (!QFileInfo (r_exe).isExecutable ()) {
-					QMessageBox::critical (0, "Specified R executable does not exist", QString ("The R executable specified in the rkward.ini file (%1) does not exist or is not executable.").arg (rkward_ini_file.absoluteFilePath ()));
-					exit (1);
-				}
+				r_exe = resolveRSpecOrFail (r_exe, i18n ("The R executable (%1) specified in the rkward.ini file (%2) does not exist or is not executable.", r_exe, rkward_ini_file.absoluteFilePath ()));
 			}
 			RK_DEBUG (APP, DL_DEBUG, "Using R as configured in config file %s", qPrintable (rkward_ini_file.absoluteFilePath ()));
 		}
 		if (r_exe.isNull ()) {
-			r_exe = R_EXECUTABLE;
-			if (!QFileInfo (r_exe).isExecutable ()) {
-				QMessageBox::critical (0, "Specified R executable does not exist", QString ("The R executable specified at compile time (%1) does not exist or is not executable. Probably the installation of R has moved. You can use the command line parameter '--r-executable <i>PATH_TO_R</i>', or supply an rkward.ini file to specify the new location.").arg (r_exe));
-				exit (1);
-			}
+			r_exe = resolveRSpecOrFail (R_EXECUTABLE, i18n ("The R executable specified at compile time (%1) does not exist or is not executable. Probably the installation of R has moved. You can use the command line parameter '--r-executable <i>auto / PATH_TO_R</i>', or supply an rkward.ini file to specify the new location.", QString (R_EXECUTABLE)));
 			RK_DEBUG (APP, DL_DEBUG, "Using R as configured at compile time");
 		}
 	}
