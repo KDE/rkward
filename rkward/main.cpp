@@ -319,8 +319,6 @@ int main (int argc, char *argv[]) {
 		qputenv ("PATH", QString ("%1/bin:%1/sbin:%2").arg (INSTALL_PATH).arg (oldpath).toLocal8Bit ());
 		if (RK_Debug::RK_Debug_Level > 3) qDebug ("Adjusting system path to %s", qPrintable (qgetenv ("PATH")));
 	}
-	// ensure that RKWard finds its own packages
-	qputenv ("R_LIBS", R_LIBS);
 	if (!qEnvironmentVariableIsSet ("DBUS_LAUNCHD_SESSION_BUS_SOCKET")) {
 		// try to ensure that DBus is running before trying to connect
 		QProcess::execute ("launchctl", QStringList () << "load" << "/Library/LaunchAgents/org.freedesktop.dbus-session.plist");
