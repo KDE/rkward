@@ -80,7 +80,7 @@
 </varlistentry>
 <varlistentry>
 <term><option>--r-executable</option> <replaceable>command</replaceable></term>
-<listitem><para>In the case of several R installations, specify the installation to use, &eg; <filename>/usr/bin/R</filename>. Note that the &rkward; R library must have been installed to this installation of R, or startup will fail.</para></listitem>
+<listitem><para>In the case of several R installations, specify the installation to use, &eg; <filename>/usr/bin/R</filename>. You can also use the string <replaceable>"auto"</replaceable>, in  which case RKWard will try to find R at one of the known standard installation paths. <emphasis>NOTE</emphasis> that while RKWard will <emphasis>often</emphasis> work with newer versions of R, it will <emphasis>sometimes</emphasis> need to be re-compiled for that version, or it may be incompatible altogether.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term><option>--reuse</option></term>

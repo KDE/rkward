@@ -2,7 +2,7 @@
                           rkrbackend  -  description
                              -------------------
     begin                : Sun Jul 25 2004
-    copyright            : (C) 2004 - 2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2004 - 2019 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -1646,9 +1646,24 @@ void RKRBackend::initialize (const char *locale_dir) {
 
 	bool lib_load_fail = false;
 	bool sink_fail = false;
-	if (!runDirectCommand ("library (\"rkward\")\n")) lib_load_fail = true;
+	// Try to load rkward package. If that fails, or is the wrong version, try to install
+	// rkward package, then load again.
+	QString libloc = RKRBackendProtocolBackend::dataDir () + "/.rkward_packages/" + QString::number (r_version / 10);
+	QString versioncheck = QString ("stopifnot(.rk.app.version==\"%1\")\n").arg (RKWARD_VERSION);
+	QString command = "local({\n"
+	                  "  libloc <- " + RKRSharedFunctionality::quote (libloc) + "\n"
+	                  "  if (!dir.exists (libloc)) dir.create(libloc, recursive=TRUE)\n"
+	                  "  ok <- FALSE\n"
+	                  "  suppressWarnings (try ({library (\"rkward\", lib.loc=libloc); " + versioncheck + "; ok <- TRUE}))\n"
+					  "  if (!ok) {\n"
+					  "    suppressWarnings (try (detach(\"package:rkward\")))\n"
+					  "    install.packages(normalizePath(paste(libloc, \"..\", c (\"rkward.tgz\", \"rkwardtests.tgz\"), sep=\"/\")), lib=libloc, repos=NULL)\n"
+					  "    library (\"rkward\",  lib.loc=libloc)\n"
+					  "  }\n"
+					  "})\n";
+	if (!runDirectCommand (command)) lib_load_fail = true;
 	RK_setupGettext (locale_dir);	// must happen *after* package loading, since R will re-set it
-	if (!runDirectCommand (QString ("stopifnot(.rk.app.version==\"%1\")\n").arg (RKWARD_VERSION))) lib_load_fail = true;
+	if (!runDirectCommand (versioncheck)) lib_load_fail = true;
 	if (!runDirectCommand (".rk.fix.assignments ()\n")) sink_fail = true;
 
 // error/output sink and help browser

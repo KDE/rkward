@@ -1,8 +1,14 @@
-INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}    )
+MACRO(createRpackage name)
+	FILE(GLOB_RECURSE rkwardfiles${name} LIST_DIRECTORIES true CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/${name}/*")
+	MESSAGE(STATUS ${rkwardfiles${name}})
+	ADD_CUSTOM_COMMAND(OUTPUT ${name}.tgz
+		COMMAND ${CMAKE_COMMAND} -E tar "cfz" "${CMAKE_CURRENT_BINARY_DIR}/${name}.tgz" "${name}"
+		WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+		DEPENDS ${rkwardfiles${name}})
+ENDMACRO()
 
-CONFIGURE_FILE(
-	"${CMAKE_CURRENT_SOURCE_DIR}/rpackage_install.cmake.in"
-	"${CMAKE_CURRENT_BINARY_DIR}/rpackage_install.cmake"
-	@ONLY)
+createRpackage(rkward)
+createRpackage(rkwardtests)
+ADD_CUSTOM_TARGET(rpackages ALL DEPENDS rkward.tgz rkwardtests.tgz)
 
-INSTALL(SCRIPT ${CMAKE_CURRENT_BINARY_DIR}/rpackage_install.cmake -DDESTDIR=${DESTDIR} -DBUILD_TIMESTAMP=${BUILD_TIMESTAMP})
+INSTALL(FILES "${CMAKE_CURRENT_BINARY_DIR}/rkward.tgz" "${CMAKE_CURRENT_BINARY_DIR}/rkwardtests.tgz" DESTINATION ${DATA_INSTALL_DIR}/rkward/rpackages)

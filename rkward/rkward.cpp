@@ -360,8 +360,27 @@ void RKWardMainWindow::startR () {
 	RK_ASSERT (!RKGlobals::rInterface ());
 
 	// make sure our general purpose files directory exists
-	bool ok = QDir ().mkpath (RKSettingsModuleGeneral::filesPath());
+	QString packages_path = RKSettingsModuleGeneral::filesPath() + "/.rkward_packages";
+	bool ok = QDir ().mkpath (packages_path);
 	RK_ASSERT (ok);
+
+	// Copy RKWard R source packages to general  purpose files directory (if still needed).
+	// This may look redundant at first (since the package still needs to be installed from the
+	// backend. However, if frontend and backend are on different machines (eventually), only  the
+	// filesPath is shared between both.
+	QStringList packages;
+	packages << "rkward.tgz" << "rkwardtests.tgz";
+	for (int i = 0; i < packages.size (); ++i) {
+		QString package = QDir (packages_path).absoluteFilePath (packages[i]);
+		if (RKSettingsModuleGeneral::rkwardVersionChanged ()) {
+			RK_DEBUG(APP, DL_INFO, "RKWard version changed. Discarding cached package at %s", qPrintable (package));
+			QFile::remove (package);
+		}
+		if (!QFileInfo (package).exists()) {
+			RK_DEBUG(APP, DL_INFO, "Copying rkward R source package to %s", qPrintable (package));
+			RK_ASSERT(QFile::copy (RKCommonFunctions::getRKWardDataDir () + "/rpackages/" + packages[i], package));
+		}
+	}
 
 	RKGlobals::rinter = new RInterface ();
 	new RObjectList ();
@@ -946,4 +965,5 @@ void RKWardMainWindow::setCaption (const QString &) {
 	if (window) wcaption.append (" - " + window->fullCaption ());
 	KParts::MainWindow::setCaption (wcaption);
 }
+
 
