@@ -118,6 +118,16 @@ void RKFrontendTransmitter::run () {
 	if (!debugger.isEmpty ()) {
 		args = debugger.split (' ') + args;
 	}
+#ifdef Q_OS_MACOS
+	// Resolving libR.dylib and friends is a pain on MacOS, and running through R CMD does not always seem to be enough.
+	// (Apparently DYLIB_FALLBACK_LIBRARY_PATH is ignored on newer versions of MacOS). Safest best seems to be to startin the lib directory, itself.
+	// TODO fix working directory, afterwards
+	QProcess dummy;
+	dummy.start (qgetenv ("R_BINARY"), QStringList() << "--slave" << "--no-save" << "--no-init-file" << "-e" << "cat(R.home('lib'))");
+	dummy.waitForFinished ();
+	QString r_home = QString::fromLocal8Bit (dummy.readAllStandardOutput ());
+	backend->setWorkingDirectory (r_home);
+#endif
 	args.prepend ("CMD");
 	if (DL_DEBUG >= RK_Debug::RK_Debug_Level) {
 		qDebug ("%s", qPrintable (qgetenv ("R_BINARY")));
