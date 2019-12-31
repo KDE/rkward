@@ -1657,7 +1657,7 @@ void RKRBackend::initialize (const char *locale_dir) {
 	                  "  suppressWarnings (try ({library (\"rkward\", lib.loc=libloc); " + versioncheck + "; ok <- TRUE}))\n"
 					  "  if (!ok) {\n"
 					  "    suppressWarnings (try (detach(\"package:rkward\")))\n"
-					  "    install.packages(normalizePath(paste(libloc, \"..\", c (\"rkward.tgz\", \"rkwardtests.tgz\"), sep=\"/\")), lib=libloc, repos=NULL)\n"
+					  "    install.packages(normalizePath(paste(libloc, \"..\", c (\"rkward.tgz\", \"rkwardtests.tgz\"), sep=\"/\")), lib=libloc, repos=NULL, type=\"source\")\n"
 					  "    library (\"rkward\",  lib.loc=libloc)\n"
 					  "  }\n"
 					  "})\n";
