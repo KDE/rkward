@@ -118,7 +118,6 @@ QString findExeAtPath (const QString appname, const QString &path) {
 #ifdef Q_OS_WIN
 	if (QFileInfo (dir.filePath (appname + ".exe")).isExecutable ()) return dir.filePath (appname + ".exe");
 	if (QFileInfo (dir.filePath (appname + ".com")).isExecutable ()) return dir.filePath (appname + ".com");
-	if (QFileInfo (dir.filePath (appname + ".bat")).isExecutable ()) return dir.filePath (appname + ".bat");
 #endif
 	return QString ();
 }
