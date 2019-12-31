@@ -181,8 +181,8 @@ QString resolveRSpecOrFail (QString input, QString message) {
 			QDir dir (instroot);
 			QStringList candidates = dir.entryList ();
 			QVersionNumber highest (0, 0, 0);
-			for (int i = candidates.count (); i >= 0; --i) {
-				QString found = findExeAtPath ("Resoures/bin/R", dir.absoluteFilePath (candidates[i]));
+			for (int i = candidates.count () - 1; i >= 0; --i) {
+				QString found = findExeAtPath ("Resources/bin/R", dir.absoluteFilePath (candidates[i]));
 				if (!found.isNull()) {
 					QVersionNumber version = QVersionNumber::fromString (candidates[i]);
 					if (version > highest) {
@@ -199,7 +199,7 @@ QString resolveRSpecOrFail (QString input, QString message) {
 			QDir dir (instroot);
 			QStringList candidates = dir.entryList (QStringList ("R-*"), QDir::Dirs);
 			QVersionNumber highest (0, 0, 0);
-			for (int i = candidates.count (); i >= 0; --i) {
+			for (int i = candidates.count () - 1; i >= 0; --i) {
 				QString found = findExeAtPath ("bin/R", dir.absoluteFilePath (candidates[i]));
 				if (!found.isNull()) {
 					QVersionNumber version = QVersionNumber::fromString (candidates[i].mid (2));
