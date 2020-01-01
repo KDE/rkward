@@ -2,7 +2,7 @@
                           rkfrontendtransmitter  -  description
                              -------------------
     begin                : Thu Nov 04 2010
-    copyright            : (C) 2010-2018 by Thomas Friedrichsmeier
+    copyright            : (C) 2010-2019 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -120,12 +120,13 @@ void RKFrontendTransmitter::run () {
 	}
 #ifdef Q_OS_MACOS
 	// Resolving libR.dylib and friends is a pain on MacOS, and running through R CMD does not always seem to be enough.
-	// (Apparently DYLIB_FALLBACK_LIBRARY_PATH is ignored on newer versions of MacOS). Safest best seems to be to startin the lib directory, itself.
+	// (Apparently DYLIB_FALLBACK_LIBRARY_PATH is ignored on newer versions of MacOS). Safest best seems to be to start in the lib directory, itself.
 	// TODO fix working directory, afterwards
 	QProcess dummy;
 	dummy.start (qgetenv ("R_BINARY"), QStringList() << "--slave" << "--no-save" << "--no-init-file" << "-e" << "cat(R.home('lib'))");
 	dummy.waitForFinished ();
 	QString r_home = QString::fromLocal8Bit (dummy.readAllStandardOutput ());
+	RK_DEBUG(RBACKEND, DL_INFO, "Setting working directory to %s", qPrintable (r_home));
 	backend->setWorkingDirectory (r_home);
 #endif
 	args.prepend ("CMD");
