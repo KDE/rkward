@@ -8,43 +8,80 @@ TXT_GREEN="\033[0;32m"
 TXT_BOLD="\033[1m"
 TXT_ITALIC="\033[3m"
 TXT_UNDERSCORE="\033[4m"
+TXT_ORANGE_ON_GREY="\033[48;5;240;38;5;202m"
 OFF="\033[0m"
+
+error() {
+  # $1: message to print
+  echo -e "${TXT_RED}error:${OFF} $1"
+  exit 1
+}
+
+warning() {
+  # $1: message to print
+  echo -e "${TXT_ORANGE_ON_GREY}warning:${OFF} $1"
+}
+
+alldone() {
+  echo -e " ${TXT_GREEN}done! ${OFF}"
+}
+
+appendconfig () {
+  # appends given text as a new line to given file
+  # $1: file name, full path
+  # $2: stuff to grep for in $1 to check whether the entry is already there
+  # $3: full line to add to $1 otherwise
+  # $4: the key word "sudo" if sudo is needed for the operation, "config" to silence skips
+  if ! [[ $(grep "$2" "$1") ]] ; then
+    echo -en "appending ${TXT_BLUE}$2${OFF} to ${TXT_BLUE}$1${OFF}..."
+    if [[ $4 == "sudo" ]] ; then
+      echo -e "$3" | sudo tee --append "$1" > /dev/null || error "failed!"
+    else
+      echo -e "$3" >> "$1" || error "failed!"
+    fi
+    alldone
+  elif ! [[ $4 == "config" ]] ; then
+    echo -e "exists, ${TXT_BOLD}skip${OFF} appending to ${TXT_BLUE}$1${OFF} (${TXT_BLUE}$2${OFF})"
+  fi
+}
+
+mkmissingdir() {
+  # $1: path to check
+  if [ ! -d "${1}" ] ; then
+    echo -en "create missing directory ${TXT_BLUE}$1${OFF}..."
+    mkdir -p "${1}" || error "failed!"
+    alldone
+  fi
+}
 
 # poor man's configuration
 CONFIGDIR="${HOME}/.config/bash_scripts_${USER}"
 CONFIGFILE="${CONFIGDIR}/update_bundle.conf"
 if ! [ -f "${CONFIGFILE}" ] ; then
- mkdir -p "${CONFIGDIR}"
- cat <<EOF > "${CONFIGFILE}"
-SRCDATE=\$(date +%Y-%m-%d)
-SRCPATH="/opt/ports"
-# specify git root path
-GITROOT="/opt/git"
-# specify macports installation path
-MPTINST="/opt/rkward"
-# specify the target port
-PTARGET="kf5-rkward"
-BINARY=true
-DEVEL=true
-DEBUG=false
-RKUSER="${USER}"
-USERBIN="${HOME}/bin"
-OSXVERSION=\$(sw_vers -productVersion | sed -e "s/.[[:digit:]]*\$//")
-PVARIANT=""
-GITBRANCH="master"
-# specify work directory
-WORKDIR="\${SRCPATH}/kf5/\${PTARGET}/work"
-# specify local public directory
-LPUBDIR="${HOME}/Public/rkward"
-# specify application dir used
-APPLDIR="/Applications/RKWard"
-# specify the prefix for build directories below \${MPTINST}/var/macports/build
-BLDPRFX=_opt_rkward_var_macports_sources_rsync.macports.org_release_tarballs_ports_
-GITREPO="git://anongit.kde.org/rkward.git"
-GITREPOKDE="git@git.kde.org:rkward.git"
-RJVBREPO="https://github.com/mkae/macstrop.git"
-EOF
+ mkmissingdir "${CONFIGDIR}"
+ touch "${CONFIGFILE}"
 fi
+appendconfig "${CONFIGFILE}" "^SRCDATE=" "SRCDATE=\$(date +%Y-%m-%d)" "config"
+appendconfig "${CONFIGFILE}" "^SRCPATH=" "SRCPATH=\"/opt/ports\"" "config"
+appendconfig "${CONFIGFILE}" "^GITROOT=" "# specify git root path\nGITROOT=\"/opt/git\"" "config"
+appendconfig "${CONFIGFILE}" "^MPTINST=" "# specify macports installation path\nMPTINST=\"/opt/rkward\"" "config"
+appendconfig "${CONFIGFILE}" "^PTARGET=" "# specify the target port\nPTARGET=\"kf5-rkward\"" "config"
+appendconfig "${CONFIGFILE}" "^BINARY=" "BINARY=true" "config"
+appendconfig "${CONFIGFILE}" "^DEVEL=" "DEVEL=true" "config"
+appendconfig "${CONFIGFILE}" "^DEBUG=" "DEBUG=false" "config"
+appendconfig "${CONFIGFILE}" "^RKUSER=" "RKUSER=\"${USER}\"" "config"
+appendconfig "${CONFIGFILE}" "^USERBIN=" "USERBIN=\"${HOME}/bin\"" "config"
+appendconfig "${CONFIGFILE}" "^OSXVERSION=" "OSXVERSION=\$(sw_vers -productVersion | sed -e \"s/.[[:digit:]]*\$//\")" "config"
+appendconfig "${CONFIGFILE}" "^PVARIANT=" "PVARIANT=\"\"" "config"
+appendconfig "${CONFIGFILE}" "^GITBRANCH=" "GITBRANCH=\"master\"" "config"
+appendconfig "${CONFIGFILE}" "^WORKDIR=" "# specify work directory\nWORKDIR=\"\${SRCPATH}/kf5/kf5-rkward-binary/work\"" "config"
+appendconfig "${CONFIGFILE}" "^LPUBDIR=" "# specify local public directory\nLPUBDIR=\"${HOME}/Public/rkward\"" "config"
+appendconfig "${CONFIGFILE}" "^APPLDIR=" "# specify application dir used\nAPPLDIR=\"/Applications/RKWard\"" "config"
+appendconfig "${CONFIGFILE}" "^BLDPRFX=" "# specify the prefix for build directories below \${MPTINST}/var/macports/build\nBLDPRFX=_opt_rkward_var_macports_sources_rsync.macports.org_release_tarballs_ports_" "config"
+appendconfig "${CONFIGFILE}" "^BNDLTMP=" "# a temporary directory to use for cleaning up the bundle archive\nBNDLTMP=\"/tmp/rkward_bundle\"" "config"
+appendconfig "${CONFIGFILE}" "^GITREPO=" "GITREPO=\"git://anongit.kde.org/rkward.git\"" "config"
+appendconfig "${CONFIGFILE}" "^GITREPOKDE=" "GITREPOKDE=\"git@git.kde.org:rkward.git\"" "config"
+appendconfig "${CONFIGFILE}" "^RJVBREPO=" "RJVBREPO=\"https://github.com/mkae/macstrop.git\"" "config"
 
 . "${CONFIGFILE}"
 
@@ -81,6 +118,9 @@ WIPEDSTF=false
 WIPEINST=false
 GETTARGVERS=true
 PORTGROUPS=false
+LISTRDEPENDS=false
+SHOWBUNDLESIZE=false
+POSTINST=false
 
 # this array holds all packages who should not be included in the bundle
 declare -a EXCLPKG=(audio_lame audio_libmodplug audio_libopus \
@@ -95,6 +135,9 @@ declare -a EXCLPKG=(audio_lame audio_libmodplug audio_libopus \
   x11_xorg-libXrandr x11_xorg-libXt x11_xorg-libXtst x11_xorg-randrproto x11_xorg-recordproto x11_xorg-renderproto \
   x11_xorg-util-macros x11_xorg-xcb-proto x11_xorg-xcb-util x11_xorg-xcmiscproto x11_xorg-xextproto \
   x11_xorg-xf86bigfontproto x11_xorg-xineramaproto x11_xorg-xproto x11_xorg-xtrans x11_xrender )
+
+# this array lists ports which usually write something in ./Applications, which we're trying to avoid
+declare -a RMAPPLICATIONS=( kf5-rkward python27 pinentry-mac qt5-kde )
 
 #LLVMFIX="configure.compiler=llvm-gcc-4.2"
 
@@ -114,6 +157,7 @@ if [[ $1 == "" ]] ; then
     ${TXT_DGRAY}3.${OFF} build Qt (${TXT_BOLD}-Q${OFF})
     ${TXT_DGRAY}4.${OFF} build RKWard using CRAN R (${TXT_BOLD}-r${OFF})
     ${TXT_DGRAY}5.${OFF} remove static libs & create binary bundle (${TXT_BOLD}-lm${OFF})
+    ${TXT_DGRAY}6.${OFF} customize the bundle (${TXT_BOLD}-L${OFF} ${TXT_ITALIC}<path to bundle>${OFF})
 
   ${TXT_UNDERSCORE}OPTIONS${OFF}:
 
@@ -133,6 +177,9 @@ if [[ $1 == "" ]] ; then
 
            ${TXT_BOLD}-q${OFF}  manually update/fix PortGroups from RJVB repo
            ${TXT_BOLD}-f${OFF}  list disk usage for all includable ports
+           ${TXT_BOLD}-a${OFF} ${TXT_LRED}${TXT_ITALIC}<.pkg/.mpkg file>${OFF}
+               show file size of a given .pkg/.mpkg file and the full disk usage if installed
+           ${TXT_BOLD}-R${OFF}  list recursive dependencies of port ${TXT_BLUE}${PTARGET}${OFF}
            ${TXT_BOLD}-S${OFF} ${TXT_LRED}${TXT_ITALIC}<comment>${OFF}
                generate new ssh key pair to register with ${TXT_BLUE}https://identity.kde.org${OFF}
                comment could be ${TXT_BLUE}${TXT_ITALIC}\"<yourusername>@<yourmachine>\"${OFF}
@@ -145,6 +192,12 @@ if [[ $1 == "" ]] ; then
 
        ${TXT_DGRAY}building & bundling (can be combined with${OFF} ${TXT_BOLD}-D${OFF}${TXT_DGRAY}/${OFF}${TXT_BOLD}-d${OFF}${TXT_DGRAY}/${OFF}${TXT_BOLD}-b${OFF}${TXT_DGRAY}):${OFF}
            ${TXT_BOLD}-l${OFF}  remove static port libraries
+           ${TXT_BOLD}-L${OFF} ${TXT_LRED}${TXT_ITALIC}<.pkg/.mpkg file>${OFF}
+               remove probably superfluous parts from the given bundle, re-brand installer
+               temporary directory: ${TXT_BLUE}${BNDLTMP}${OFF}
+           ${TXT_BOLD}-P${OFF} ${TXT_LRED}${TXT_ITALIC}<postinstall file>${OFF}
+               replace bundle postinstall script with customized file
+               (for testing; only effective in combination with ${TXT_BOLD}-L${OFF})
            ${TXT_BOLD}-p${OFF}  update macports, remove inactive
            ${TXT_BOLD}-r${OFF}  update port ${TXT_BLUE}${PTARGET}${OFF}
            ${TXT_BOLD}-m${OFF}  create .mpkg of ${TXT_BLUE}${PTARGET}${OFF}
@@ -164,13 +217,14 @@ if [[ $1 == "" ]] ; then
   ${TXT_BLUE}${CONFIGFILE}${OFF}
 "
 # off for the moment:
-#            ${TXT_BOLD}-L${OFF}  don't bundle probably superfluous ports
 exit 0
 fi
 
 # get the options
-while getopts ":CD:E:d:b:fGlLprQqmsS:cU:xXF:t:" OPT; do
+while getopts ":a:CD:E:d:b:fGlL:pP:rRQqmsS:cU:xXF:t:" OPT; do
   case $OPT in
+    a) SHOWBUNDLESIZE=true >&2
+       SHOWMPKGFILE=$OPTARG >&2 ;;
     U) GITUSER=$OPTARG >&2 ;;
     E) GITMAIL=$OPTARG >&2 ;;
     G) BLDSETUP=true >&2
@@ -203,9 +257,19 @@ while getopts ":CD:E:d:b:fGlLprQqmsS:cU:xXF:t:" OPT; do
        MCPVERS=$OPTARG >&2 ;;
     f) LSDSKUSG=true >&2 ;;
     l) RMSTLIBS=true >&2 ;;
-    L) DOEXCPCK=true >&2 ;;
+    L) DOEXCPCK=true >&2
+       MPKGNAME=$OPTARG >&2
+       STRPMPKGFILE="$(basename ${MPKGNAME})" >&2
+       STRPMPKGDIR="$(dirname ${MPKGNAME})" >&2
+       CLEANSTRPMPKGFILE="$(echo ${STRPMPKGFILE} | sed -e "s/^orig_//")"
+       TMPSTRPBUNDLE="${STRPMPKGDIR}/stripped_${CLEANSTRPMPKGFILE}" >&2
+       TARGETSTRPBUNDLE="${STRPMPKGDIR}/${CLEANSTRPMPKGFILE}" >&2
+       NEWORIGBUNDLE="${STRPMPKGDIR}/orig_${CLEANSTRPMPKGFILE}" >&2 ;;
     p) UPMPORTS=true >&2 ;;
+    P) POSTINST=true >&2
+       POSTINSTFILE=$OPTARG >&2 ;;
     r) UPRKWARD=true >&2 ;;
+    R) LISTRDEPENDS=true >&2 ;;
     m) RPATHFIX=true >&2
        MAKEMDMD=true >&2 ;;
     s) MKSRCTAR=true >&2 ;;
@@ -227,7 +291,6 @@ while getopts ":CD:E:d:b:fGlLprQqmsS:cU:xXF:t:" OPT; do
 done
 
 if $BINARY ; then
-  WORKDIR="${SRCPATH}/kf5/kf5-rkward-binary/work"
   BINSTRING="-binary"
 else
   BINARY=false
@@ -236,7 +299,6 @@ fi
 if $DEVEL ; then
   DEVSTRING="-devel"
 else
-  WORKDIR="${SRCPATH}/kf5/kf5-rkward/work"
   DEVSTRING=""
 fi
 if $DEBUG ; then
@@ -248,16 +310,6 @@ fi
 
 PNSUFFX="${BINSTRING}${DBGSTRING}${DEVSTRING}"
 PTARGET="kf5-rkward${PNSUFFX}"
-
-error() {
-  # $1: message to print
-  echo -e "${TXT_RED}error:${OFF} $1"
-  exit 1
-}
-
-alldone() {
-  echo -e " ${TXT_GREEN}done! ${OFF}"
-}
 
 linkbuildscript () {
   # create a hardlink of the buildscript
@@ -278,19 +330,25 @@ rmdirv () {
   fi
 }
 
-mkmissingdir() {
-  # $1: path to check
-  if [ ! -d "${1}" ] ; then
-    echo -en "create missing directory ${TXT_BLUE}$1${OFF}..."
-    mkdir -p "${1}" || exit 1
-    alldone
-  fi
-}
-
 updatePortGrous() {
   echo "syncing PortGroup files..."
   sudo rsync -av "${GITROOT}/macstrop/_resources/port1.0/"  "${MPTINST}/var/macports/sources/rsync.macports.org/macports/release/tarballs/ports/_resources/port1.0/" || exit 1
   alldone
+}
+
+bundlesize() {
+  # $1: path to .mpkg/.pkg file
+  if [ -f "$1" ] ; then
+    SIZEINSTALLED=$(installer -pkginfo -verbose -pkg "$1" | grep -m 1 Size | awk '{print $3}')
+    SIZEARCHIVE=$(($(ls -l "$1" | awk '{print $5}') / 1024))
+    echo -e "\n${TXT_BOLD}bundle size${OFF}\n      ${TXT_DGRAY}file:${OFF} ${TXT_BLUE}$1${OFF}\n   ${TXT_DGRAY}archive:${OFF}  ${TXT_BLUE}$((${SIZEARCHIVE} / 1024)) MB${OFF} (${TXT_BLUE}${SIZEARCHIVE} KB${OFF})\n ${TXT_DGRAY}installed:${OFF} ${TXT_BLUE}$((${SIZEINSTALLED} / 1024)) MB${OFF} (${TXT_BLUE}${SIZEINSTALLED} KB${OFF})\n"
+  else
+    warning "file not found: ${TXT_BLUE}$1${OFF}"
+  fi
+}
+
+portversion() {
+  "${MPTINST}/bin/port" list $1 | sed -e "s/.*@//;s/[[:space:]].*//"
 }
 
 # correct setting of RPATHFIX workaround, it's not needed
@@ -328,7 +386,10 @@ if $WIPEINST ; then
     sudo rm "${SRCPATH}" || exit 1
     alldone
   fi
-  # ensure ${USERBIN}/update_bundle.sh
+  # ensure ${USERBIN}/update_bundle.sh is most recent before we remove all
+  echo -e "updating ${TXT_BLUE}~/bin/update_bundle.sh${OFF}..."
+  cd "${GITROOT}" && git pull --rebase origin || warning "couldn't pull from git repo!"
+  cd "${OLDWD}"
   linkbuildscript "${USERBIN}"
   rmdirv "${GITROOT}"
   echo -e "${TXT_GREEN}successfully wiped RKWard from this machine!${OFF}"
@@ -388,18 +449,11 @@ if $BLDSETUP ; then
     alldone
   fi
   linkbuildscript "${USERBIN}"
-  if [ -f "${HOME}/.bash_profile" ] ; then
-    BPFPATH=$(grep "^PATH" "${HOME}/.bash_profile")
-    if ! $(echo "${BPFPATH}" | grep -q "${USERBIN}/:${MPTINST}/bin/:") ; then
-      echo "PATH=${USERBIN}/:${MPTINST}/bin/:\$PATH" >> "${HOME}/.bash_profile"
-    fi
-    if ! $(echo "${BPFPATH}" | grep -q "KDE_SESSION_VERSION") ; then
-      echo "export KDE_SESSION_VERSION=5" >> "${HOME}/.bash_profile"
-    fi
-  else
-    echo "PATH=${USERBIN}/:${MPTINST}/bin/:\$PATH" > "${HOME}/.bash_profile"
-    echo "export KDE_SESSION_VERSION=5" >> "${HOME}/.bash_profile"
+  if ! [ -f "${HOME}/.bash_profile" ] ; then
+    touch "${HOME}/.bash_profile"
   fi
+  appendconfig "${HOME}/.bash_profile" "${USERBIN}/:${MPTINST}/bin/:" "PATH=${USERBIN}/:${MPTINST}/bin/:\$PATH"
+  appendconfig "${HOME}/.bash_profile" "KDE_SESSION_VERSION" "export KDE_SESSION_VERSION=5"
   . "${HOME}/.bash_profile"
   cd "${OLDWD}" || exit 1
   echo -e "${TXT_GREEN}successfully completed reincarnation of${OFF} ${TXT_BLUE}${GITROOT}${OFF} -- you can now invoke the \"-F\" option!"
@@ -432,12 +486,15 @@ if $FRESHMCP ; then
   sudo sed -i -e "s+#\(portautoclean[[:space:]]*\)yes+\1no+" "${MPTINST}/etc/macports/macports.conf"
   sudo sed -i -e "s+\(applications_dir[[:space:]]*\)/Applications/MacPorts+\1${APPLDIR}+" "${MPTINST}/etc/macports/macports.conf"
   sudo "${MPTINST}/bin/port" -v selfupdate || exit 1
-  echo -e "adding local portfiles to ${TXT_BLUE}${MPTINST}/etc/macports/sources.conf${OFF}..."
+  echo -en "adding local portfiles to ${TXT_BLUE}${MPTINST}/etc/macports/sources.conf${OFF}..."
   # sudo sed -i -e "s+rsync://rsync.macports.org.*\[default\]+file://${SRCPATH}/\\`echo -e '\n\r'`&+" "${MPTINST}/etc/macports/sources.conf" || exit 1
   # adding newlines with sed in macOS is totally f**ked up, here's an ugly workaround in three steps
   sudo sed -i -e $'s+rsync://rsync.macports.org.*\[default\]+file://_GITROOT_/macstrop/\\\nfile://_SRCPATH_/\\\n&+' "${MPTINST}/etc/macports/sources.conf" || exit 1
   sudo sed -i -e "s+file://_SRCPATH_+file://${SRCPATH}+" "${MPTINST}/etc/macports/sources.conf" || exit 1
   sudo sed -i -e "s+file://_GITROOT_+file://${GITROOT}+" "${MPTINST}/etc/macports/sources.conf" || exit 1
+  alldone
+  appendconfig "${MPTINST}/etc/macports/variants.conf" "^[[:space:]]*-x11 +no_x11 +quartz" "-x11 +no_x11 +quartz +replace_cocoa" "sudo"
+  appendconfig "${MPTINST}/etc/macports/variants.conf" "^[[:space:]]*+replace_cocoa" "+replace_cocoa" "sudo"
   # install a needed gcc/clang first?
   if [[ $CMPLR ]] ; then
     sudo "${MPTINST}/bin/port" -v install "${CMPLR}" "${LLVMFIX}" || exit 1
@@ -464,8 +521,8 @@ fi
 if $BUILDQT ; then
   echo -e "sudo ${TXT_BLUE}${MPTINST}/bin/port${OFF} -v install qt5-kde"
   sudo "${MPTINST}/bin/port" -v install qt5-kde || exit 1
-  echo -e "sudo ${TXT_BLUE}${MPTINST}/bin/port${OFF} -v install kf5-osx-integration"
-  sudo "${MPTINST}/bin/port" -v install kf5-osx-integration || exit 1
+  echo -e "sudo ${TXT_BLUE}${MPTINST}/bin/port${OFF} -v install kf5-osx-integration-devel +replace_cocoa"
+  sudo "${MPTINST}/bin/port" -v install kf5-osx-integration-devel +replace_cocoa || exit 1
   alldone
 fi
 
@@ -486,8 +543,13 @@ if $UPMPORTS ; then
   sudo "${MPTINST}/bin/port" clean inactive
   echo -e "sudo ${TXT_BLUE}${MPTINST}/bin/port${OFF} -f uninstall inactive"
   sudo "${MPTINST}/bin/port" -f uninstall inactive
+  # this uninstalls way too many ports:
+  # echo -e "sudo ${TXT_BLUE}${MPTINST}/bin/port${OFF} uninstall --follow-dependencies leaves ${TXT_DGRAY}# remove orphaned dependencies${OFF}"
+  # sudo "${MPTINST}/bin/port" uninstall --follow-dependencies leaves
   echo -e "sudo ${TXT_BLUE}${MPTINST}/bin/port${OFF} reclaim ${TXT_DGRAY}# remove unused distfiles${OFF}"
   sudo "${MPTINST}/bin/port" reclaim
+  # somehow the port groups keep disappearing
+  updatePortGrous
   alldone
 fi
 
@@ -512,27 +574,38 @@ fi
 # remove static libraries, they're a waste of disk space
 if $RMSTLIBS ; then
   echo -e "deleting all static libs in ${TXT_BLUE}${MPTINST}/lib/${OFF}..."
-  sudo rm ${MPTINST}/lib/*.a
+  sudo rm ${MPTINST}/lib/*.a 2>/dev/null
   echo -e "deleting all static libs in ${TXT_BLUE}${MPTINST}/var/macports/build${OFF}..."
   #find "${MPTINST}/var/macports/build" -name "*.a" -exec sudo rm \{\} \;
   # only remove libs in destroot/libs/
-  find -E "${MPTINST}/var/macports/build" -type f -regex '.*/destroot'${MPTINST}'/lib/[^/]*\.a' -exec sudo rm \{\} \;
+  find -E "${MPTINST}/var/macports/build" -type f -regex '.*/destroot'${MPTINST}'/lib/[^/]*\.a' -exec sudo rm \{\} 2>/dev/null \;
   alldone
 fi
 
 # list disk usage of ports
 if $LSDSKUSG ; then
   cd "${MPTINST}/var/macports/build/"
-  SBFLDRS=$(ls)
-  for i in ${SBFLDRS} ; do
-    echo $(du -sh ${i}/$(ls ${i}/)/work/destroot | sed -e "s+\(${BLDPRFX}\)\(.*\)\(/work/destroot\)+\2+")
+  DESTROOTS=$(find . -type d -name "destroot" 2>/dev/null)
+  for i in ${DESTROOTS} ; do
+    echo $(du -sh ${i} | sed -e "s+\(${BLDPRFX}\)\(.*\)\(/work/destroot\)+\2+")
   done
+fi
+
+# show bundle size and disk usage if installed
+if $SHOWBUNDLESIZE ; then
+  bundlesize "${SHOWMPKGFILE}"
+fi
+       
+# show all dependencies of our port recursively
+if $LISTRDEPENDS ; then
+  echo -e "${TXT_BLUE}${MPTINST}/bin/port${OFF} rdeps ${PTARGET}"
+  "${MPTINST}/bin/port" rdeps "${PTARGET}"
 fi
 
 # set some variables
 if $COPYMDMD ; then
   # get version information of installed ports
-  PORTVERS=$("${MPTINST}/bin/port" list $PTARGET | sed -e "s/.*@//;s/[[:space:]].*//")
+  PORTVERS=$(portversion "${PTARGET}")
   if $GETTARGVERS ; then
     if $DEVEL ; then
       # we moved to git
@@ -605,45 +678,10 @@ if $MAKEMDMD ; then
       cd "${OLDWD}" || exit 1
     fi
   fi
-  if $DOEXCPCK ; then
-    # before we build the bundle package, replace the destroot folder of the packages
-    # defined in the array EXCLPKG with empty ones, so their stuff is not included
-    for i in ${EXCLPKG[@]} ; do
-      THISPKG=${MPTINST}/var/macports/build/${BLDPRFX}${i}
-      if [ -d "${THISPKG}" ] ; then
-        SUBFLDR=$(ls $THISPKG)
-        if [ -d "${THISPKG}/${SUBFLDR}/work/destroot" ] && [ ! -d "${THISPKG}/${SUBFLDR}/work/destroot_off" ]; then
-          sudo mv "${THISPKG}/${SUBFLDR}/work/destroot" "${THISPKG}/${SUBFLDR}/work/destroot_off"
-          sudo mkdir "${THISPKG}/${SUBFLDR}/work/destroot"
-        fi
-        unset SUBFLDR
-      else
-        echo -e "${TXT_RED}warning: can't find ${THISPKG}!${OFF}"
-      fi
-      unset THISPKG
-    done
-  fi
 
-#  # cleaning boost, the avahi port somehow gets installed in two varaints...
-#  sudo port clean boost
   echo -e "sudo ${TXT_BLUE}${MPTINST}/bin/port${OFF} -v mpkg ${PTARGET}"
   sudo "${MPTINST}/bin/port" -v mpkg ${PTARGET} || exit 1
 
-  if $DOEXCPCK ; then
-    # restore original destroot directories
-    for i in ${EXCLPKG[@]} ; do
-      THISPKG="${MPTINST}/var/macports/build/${BLDPRFX}${i}"
-      if [ -d "${THISPKG}" ] ; then
-        SUBFLDR="$(ls $THISPKG)"
-        if [ -d "${THISPKG}/${SUBFLDR}/work/destroot_off" ] ; then
-          sudo rmdir "${THISPKG}/${SUBFLDR}/work/destroot"
-          sudo mv "${THISPKG}/${SUBFLDR}/work/destroot_off" "${THISPKG}/${SUBFLDR}/work/destroot"
-        fi
-        unset SUBFLDR
-      fi
-      unset THISPKG
-    done
-  fi
   if $RPATHFIX ; then
     if [ -d "${RKWRFWPATH}/Versions" ] ; then
       cd "${RKWRFWPATH}" || exit 1
@@ -654,10 +692,9 @@ if $MAKEMDMD ; then
     fi
   fi
 
-
   # copy the image file to a public directory
+  MPKGFILE="${WORKDIR}/${PTARGET}-$(portversion "${PTARGET}").mpkg"
   if $COPYMDMD ; then
-    MPKGFILE="${WORKDIR}/${PTARGET}-${PORTVERS}.mpkg"
     if $BINARY ; then
       TRGTFILE="${LPUBDIR}/RKWard${PNSUFFX}-${TARGETVERS}_OSX${OSXVERSION}_KF5-${KDEVERS}_needs_CRAN_R-${RVERS}.pkg"
     else
@@ -668,6 +705,9 @@ if $MAKEMDMD ; then
     sudo mv "${MPKGFILE}" "${TRGTFILE}" || exit 1
     sudo chown ${RKUSER} "${TRGTFILE}" || exit 1
     alldone
+    bundlesize ${TRGTFILE}
+  else
+    bundlesize ${MPKGFILE}
   fi
 fi
 
@@ -677,7 +717,7 @@ if $MKSRCTAR ; then
   sudo "${MPTINST}/bin/port" reclaim
   if ! $COPYMDMD ; then
     # get version information of installed ports
-    PORTVERS=$("${MPTINST}/bin/port" list ${PTARGET} | sed -e "s/.*@//;s/[[:space:]].*//")
+    PORTVERS=$(portversion "${PTARGET}")
   fi
   SRCFILE="${SRCPATH}/sources_bundle_RKWard-${PORTVERS}_${SRCDATE}.tar"
   if [ -f "${SRCFILE}" ] ; then
@@ -696,6 +736,96 @@ if $MKSRCTAR ; then
     sudo mv "${SRCFILE}" "${TRGSFILE}" || exit 1
     sudo chown ${RKUSER} "${TRGSFILE}" || exit 1
     alldone
+  fi
+fi
+
+# clean up .pkg/.mpkg archive
+if $DOEXCPCK ; then
+  if ! [ -d "${BNDLTMP}" ] ; then
+    mkmissingdir "${BNDLTMP}"
+    echo -en "unpacking ${TXT_BLUE}$(basename ${MPKGNAME})${OFF}..."
+    pkgutil --expand "${MPKGNAME}" "${BNDLTMP}/bundle"
+    alldone
+    for i in ${RMAPPLICATIONS[@]} ; do
+      cd "${BNDLTMP}/bundle"
+      THISPKG=$(find . -type d -name "${i}-*-component.pkg")
+      if [ -d "${THISPKG}" ] ; then
+        echo -en "\n  unrolling Payload of ${TXT_BLUE}$(basename ${THISPKG})${OFF}..."
+        mkdir -p "${BNDLTMP}/bundle/${THISPKG}/Payload_new" || error "can't create ${THISPKG}/Payload_new"
+        cd "${BNDLTMP}/bundle/${THISPKG}/Payload_new"
+        cat "${BNDLTMP}/bundle/${THISPKG}/Payload" | gzip -d | cpio -id 2>/dev/null
+        alldone
+        if [ -d "${BNDLTMP}/bundle/${THISPKG}/Payload_new/Applications/RKWard/rkward.app" ] ; then
+          # move rkward.app to a proper place
+          echo -en "    moving ${TXT_BLUE}rkward.app${OFF} directory..."
+          mv "${BNDLTMP}/bundle/${THISPKG}/Payload_new/Applications/RKWard/rkward.app" "${BNDLTMP}/bundle/${THISPKG}/Payload_new/Applications/rkward.app" || warning "failed!"
+          alldone
+          echo -en "    removing empty ${TXT_BLUE}Applications/RKWard${OFF} directory..."
+          rm -rf "${BNDLTMP}/bundle/${THISPKG}/Payload_new/Applications/RKWard" 2>/dev/null || warning "failed!"
+          alldone
+          if $POSTINST ; then
+            echo -en "    replacing ${TXT_BLUE}postinstall${OFF}..."
+            if [ -f "${POSTINSTFILE}" ] ; then
+              mkmissingdir "${BNDLTMP}/bundle/${THISPKG}/Scripts"
+              cp "/Users/rkward/bin/postinstall_with_uninstall" "${BNDLTMP}/bundle/${THISPKG}/Scripts/postinstall"
+              chmod 755 "${BNDLTMP}/bundle/${THISPKG}/Scripts/postinstall"
+              alldone
+            else
+              warning "failed, file not found: ${TXT_BLUE}${POSTINSTFILE}${OFF}"
+            fi
+          fi
+        elif [ -d "${BNDLTMP}/bundle/${THISPKG}/Payload_new/Applications" ] ; then
+          echo -en "    removing ${TXT_BLUE}Applications${OFF} directory..."
+          rm -rf "${BNDLTMP}/bundle/${THISPKG}/Payload_new/Applications" 2>/dev/null || warning "failed!"
+          alldone
+        fi
+        echo -en "    compressing new Payload..."
+        find . | cpio -o --format odc 2>/dev/null | gzip -c > "${BNDLTMP}/bundle/${THISPKG}/Payload" 2>/dev/null
+        alldone
+        cd ..
+        echo -en "    removing ${TXT_BLUE}Payload_new${OFF}..."
+        rm -rf "${BNDLTMP}/bundle/${THISPKG}/Payload_new" 2>/dev/null || error "failed!"
+        alldone
+      fi
+      unset THISPKG
+    done
+    cd "${OLDWD}"
+    if [ -f "${SRCPATH}/background.tiff" ] && [ -f "${BNDLTMP}/bundle/Resources/background.tiff" ] ; then
+      echo -en "\nreplacing ${TXT_BLUE}background.tiff${OFF}..."
+      cp "${SRCPATH}/background.tiff" "${BNDLTMP}/bundle/Resources/background.tiff" || warning "failed!"
+      alldone
+    else
+      echo -e ""
+    fi
+    if [ -f "${BNDLTMP}/bundle/Resources/Welcome.html" ] ; then
+      echo -en "fixing ${TXT_BLUE}Welcome.html${OFF}..."
+      sed -i -e "s/kf5-rkward[-binarydevl]*/RKWard/g" "${BNDLTMP}/bundle/Resources/Welcome.html" || warning "failed!"
+      alldone
+    fi
+    if [ -f "${BNDLTMP}/bundle/Distribution" ] ; then
+      echo -en "fixing ${TXT_BLUE}Distribution${OFF}..."
+      sed -i -e "s|<title>kf5-rkward[-binarydevl]*</title>|<title>RKWard</title>|g" "${BNDLTMP}/bundle/Distribution" || warning "failed!"
+      sed -i -e "s|Applications/RKWard/rkward.app|Applications/rkward.app|g" "${BNDLTMP}/bundle/Distribution" || warning "failed!"
+      sed -i -e $'s|</allowed-os-versions>|</allowed-os-versions>\\\n    <domains enable_anywhere="false" enable_currentUserHome="false" enable_localSystem="true"/>|' "${BNDLTMP}/bundle/Distribution"
+      alldone
+    fi
+    echo -en "re-packing ${TXT_BLUE}stripped_${CLEANSTRPMPKGFILE}${OFF}..."
+    pkgutil --flatten "${BNDLTMP}/bundle" "${TMPSTRPBUNDLE}" || error "failed!"
+    alldone
+    if ! [ $(echo "${STRPMPKGFILE}" | grep "^orig_") ] ; then
+      echo -en "replacing ${TXT_BLUE}${STRPMPKGFILE}${OFF} with ${TXT_BLUE}stripped_${CLEANSTRPMPKGFILE}${OFF}..."
+      mv "${MPKGNAME}" "${NEWORIGBUNDLE}" || error "failed!"
+    else
+      echo -en "moving ${TXT_BLUE}stripped_${CLEANSTRPMPKGFILE}${OFF}..."
+    fi
+    mv "${TMPSTRPBUNDLE}" "${TARGETSTRPBUNDLE}" || error "failed!"
+    alldone
+    echo -en "\nremoving temporary dir ${TXT_BLUE}${BNDLTMP}${OFF}..."
+    rm -rf "${BNDLTMP}" 2>/dev/null || error "failed!"
+    alldone
+    bundlesize "${TARGETSTRPBUNDLE}"
+  else
+    error "${TXT_BLUE}${BNDLTMP}${OFF} exists, can't unpack the bundle archive!"
   fi
 fi
 

@@ -36,12 +36,11 @@ environments (see examples).
 rk.sync (rkward::rk.record.plot)
 
 }
-\author{
-Thomas Friedrichsmeier \email{rkward-devel@kde.org}
-}
 \seealso{
 \url{rkward://page/rkward_workspace_browser}
 }
+\author{
+Thomas Friedrichsmeier \email{rkward-devel@kde.org}
+}
 \keyword{misc}
 \keyword{utilities}
-

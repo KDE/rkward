@@ -2,7 +2,7 @@
                           rkloadlibsdialog  -  description
                              -------------------
     begin                : Mon Sep 6 2004
-    copyright            : (C) 2004 - 2016 by Thomas Friedrichsmeier
+    copyright            : (C) 2004 - 2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -174,6 +174,7 @@ void RKLoadLibsDialog::rCommandDone (RCommand *command) {
 	if (command->getFlags () == GET_CURRENT_LIBLOCS_COMMAND) {
 		RK_ASSERT (command->getDataType () == RData::StringVector);
 		RK_ASSERT (command->getDataLength () > 0);
+		// NOTE: The problem is that e.g. R_LIBS_USER is not in .libPaths() if it does not exist, yet. But it should be available as an option, of course
 		library_locations = command->stringVector ();
 		emit (libraryLocationsChanged (library_locations));
 	} else {
@@ -261,7 +262,9 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, QString to_
 	if (packages.isEmpty ()) return false;
 
 	bool as_root = false;
-	QString altlibloc = QDir (RKSettingsModuleGeneral::filesPath ()).absoluteFilePath ("library");
+	// It is ok, if the selected location does not yet exist. In order to know, whether we can write to it, we have to create it first.
+	QDir().mkpath (to_libloc);
+	QString altlibloc = RKSettingsModuleRPackages::addUserLibLocTo (library_locations).value (0);
 #ifdef Q_OS_WIN
 	extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 	qt_ntfs_permission_lookup++;
@@ -291,11 +294,11 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, QString to_
 
 	addLibraryLocation (to_libloc);
 
-	QString command_string = "install.packages (c (\"" + packages.join ("\", \"") + "\")" + ", lib=\"" + to_libloc + "\"";
+	QString command_string = "install.packages (c (\"" + packages.join ("\", \"") + "\")" + ", lib=" + RObject::rQuote (to_libloc);
 	QString downloaddir = QDir (RKSettingsModuleGeneral::filesPath ()).filePath ("package_archive");
 	if (RKSettingsModuleRPackages::archivePackages ()) {
 		QDir (RKSettingsModuleGeneral::filesPath ()).mkdir ("package_archive");
-		command_string += ", destdir=\"" + downloaddir + "\"";
+		command_string += ", destdir=" + RObject::rQuote (downloaddir);
 	}
 	if (install_suggested_packages) command_string += ", dependencies=TRUE";
 	command_string += ")\n";
@@ -648,21 +651,16 @@ public:
 	void initStyleOption (QStyleOptionViewItem* option, const QModelIndex& index) const override {
 		QStyledItemDelegate::initStyleOption (option, index);
 		if (!index.parent ().isValid ()) {
-			QStyleOptionViewItemV4 *v4 = qstyleoption_cast<QStyleOptionViewItemV4 *> (option);
-			if (!v4) {
-				RK_ASSERT (false);
-				return;
-			}
 			int ccount = index.model ()->rowCount (index);
-			v4->text = v4->text + " (" + QString::number (ccount) + ')';
+			option->text = option->text + " (" + QString::number (ccount) + ')';
 			if (ccount) {
-				v4->icon = table->isExpanded (index) ? expanded : collapsed;
+				option->icon = table->isExpanded (index) ? expanded : collapsed;
 			} else {
-				v4->icon = QIcon ();    // empty dummy icon to reserve space
+				option->icon = QIcon ();    // empty dummy icon to reserve space
 			}
-			v4->features |= QStyleOptionViewItemV2::HasDecoration;
-			v4->font.setBold (true);
-			v4->backgroundBrush = table->palette ().mid ();
+			option->features |= QStyleOptionViewItem::HasDecoration;
+			option->font.setBold (true);
+			option->backgroundBrush = table->palette ().mid ();
 		}
 	}
 	QTreeView* table;
@@ -764,6 +762,7 @@ void InstallPackagesWidget::initialize () {
 	for (int i = 0; i < model->rowCount (); ++i) {
 		packages_view->setFirstColumnSpanned (i, QModelIndex (), true);
 	}
+	window()->raise(); // needed on Mac, otherwise the dialog may go hiding behind the main app window, after the progress control window closes, for some reason
 }
 
 void InstallPackagesWidget::rowClicked (const QModelIndex& row) {
@@ -893,7 +892,7 @@ void PackageInstallParamsWidget::liblocsChanged (const QStringList &newlist) {
 	RK_TRACE (DIALOGS);
 
 	libloc_selector->clear ();
-	libloc_selector->insertItems (0, newlist);
+	libloc_selector->insertItems (0, RKSettingsModuleRPackages::addUserLibLocTo (newlist));
 }
 
 /////////// RKRPackageInstallationStatus /////////////////
@@ -951,7 +950,7 @@ void RKRPackageInstallationStatus::initialize (RCommandChain *chain) {
 
 	_initialized = true;	// will be re-set to false, should the command fail / be cancelled
 
-	RCommand *command = new RCommand (".rk.get.package.intallation.state ()", RCommand::App | RCommand::GetStructuredData);
+	RCommand *command = new RCommand (".rk.get.package.installation.state ()", RCommand::App | RCommand::GetStructuredData);
 	connect (command->notifier (), &RCommandNotifier::commandFinished, this, &RKRPackageInstallationStatus::statusCommandFinished);
 	RKProgressControl *control = new RKProgressControl (this, i18n ("<p>Please stand by while searching for installed and available packages.</p><p><strong>Note:</strong> This requires a working internet connection, and may take some time, esp. if one or more repositories are temporarily unavailable.</p>"), i18n ("Searching for packages"), RKProgressControl::CancellableProgress | RKProgressControl::AutoCancelCommands);
 	control->addRCommand (command, true);
@@ -1012,7 +1011,7 @@ void RKRPackageInstallationStatus::clearStatus () {
 QVariant RKRPackageInstallationStatus::headerData (int section, Qt::Orientation orientation, int role) const {
 	if (orientation != Qt::Horizontal) return QVariant ();
 
-	if ((role == Qt::DecorationRole) && (section == EnhancesRKWard)) return QApplication::windowIcon ();
+	if ((role == Qt::DecorationRole) && (section == EnhancesRKWard)) return RKStandardIcons::getIcon (RKStandardIcons::RKWardIcon);
 
 	if (role == Qt::DisplayRole) {
 		if (section == InstallationStatus) return QVariant (i18n ("Status"));
@@ -1097,7 +1096,7 @@ QVariant RKRPackageInstallationStatus::data (const QModelIndex &index, int role)
 				if (prow == InstalledPackages) enhance_rk = enhance_rk_in_installed.value (irow);
 				else enhance_rk = enhance_rk_in_available.value (arow);
 				if (role == Qt::UserRole) return QVariant (enhance_rk);
-				if (enhance_rk) return QApplication::windowIcon ();
+				if (enhance_rk) return RKStandardIcons::getIcon (RKStandardIcons::RKWardIcon);
 			}
 		} else if (col == PackageName) {
 			if (role == Qt::DisplayRole) {
@@ -1138,12 +1137,12 @@ Qt::ItemFlags RKRPackageInstallationStatus::flags (const QModelIndex &index) con
 }
 
 QModelIndex RKRPackageInstallationStatus::index (int row, int column, const QModelIndex &parent) const {
-	if (!parent.isValid ()) return createIndex (row, column, -1);	// toplevel items
+	if (!parent.isValid ()) return createIndex (row, column, (quintptr) std::numeric_limits<quintptr>::max);	// toplevel items
 	return createIndex (row, column, parent.row ());				// parent.row () identifies, which toplevel item is the parent.
 }
 
 QModelIndex RKRPackageInstallationStatus::parent (const QModelIndex& index) const {
-	if (index.internalId () == -1) return QModelIndex ();
+	if (index.internalId () == (quintptr) std::numeric_limits<quintptr>::max) return QModelIndex ();
 	return (RKRPackageInstallationStatus::index (index.internalId (), 0, QModelIndex ()));
 }
 

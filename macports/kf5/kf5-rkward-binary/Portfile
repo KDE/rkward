@@ -26,9 +26,9 @@ conflicts           port:rkward rkward-devel rkward-binary rkward-devel-binary k
 homepage            https://rkward.kde.org/
 
 subport ${name}-devel {
-    description     ${description} This port follows git/frameworks
+    description     ${description}
     long_description \
-                    ${long_description} This port follows git/frameworks
+                    ${long_description}
 }
 
 ############
@@ -37,29 +37,21 @@ subport ${name}-devel {
 if {${subport} eq "${name}-devel"} {
     conflicts-append \
                     ${name}
-    fetch.type      git
-#    git.url         git://anongit.kde.org/rkward
-#     v0.6.5-201-g9585a62
     git.branch      master
-    version         0.6.9z
+    version         0.7.0z
     distname        ${kf5.project}-5
 } else {
 ############
 # stable release, subport used for binary bundles
     conflicts-append \
                     ${name}-devel
-    description     ${description} This port doesn't have a release version yet.
+    description     ${description}
     long_description \
-                    ${long_description} This port doesn't have a release version yet.
+                    ${long_description}
     use_xz          yes
-    pre-fetch {
-        ui_error "This port doesn't have a release version yet."
-        return -code error "This port doesn't have a release version yet."
-    }
-    checksums       rmd160  0 \
-                    sha256  0
-    version             0.7.0
-    git.url             http://anongit.kde.org/rkward.git
+#    checksums       rmd160  0 \
+#                    sha256  0
+    version             0.7.0b
     git.branch          releases/0.7.0
 }
 
@@ -71,8 +63,8 @@ configure.args-append \
         -DRKVERSION_NUMBER=${version} \
         -DUSE_BINARY_PACKAGES=1 \
         -DR_EXECUTABLE=/Library/Frameworks/R.framework/Resources/R \
-        -DR_LIBDIR=${frameworks_dir}/R.framework/Resources/library
-#        -DBUNDLE_INSTALL_DIR=${applications_dir} \
+        -DR_LIBDIR=${frameworks_dir}/R.framework/Resources/library \
+        -DBUNDLE_INSTALL_DIR=${applications_dir}
 
 # create libdir if it doesn't exist
 file mkdir ${frameworks_dir}/R.framework/Resources/library
@@ -85,7 +77,9 @@ kf5.depends_frameworks \
                     ktexteditor kwidgetsaddons kwindowsystem kxmlgui
 
 depends_lib-append \
-                    port:gettext
+                    port:gettext \
+                    port:kf5-osx-integration-devel \
+                    port:ciment-icons
 
 depends_lib-delete \
                     port:R

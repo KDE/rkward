@@ -2,7 +2,7 @@
                           rkrinterface.h  -  description
                              -------------------
     begin                : Fri Nov 1 2002
-    copyright            : (C) 2002 - 2017 by Thomas Friedrichsmeier
+    copyright            : (C) 2002 - 2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -98,7 +98,7 @@ private:
 
 /** A list of all commands that have entered, and not yet left, the backend thread */
 	QList<RCommand*> all_current_commands;
-/** NOTE: processsing R events while waiting for the next command may, conceivably, lead to new requests, which may also wait for sub-commands! Thus we keep a simple stack of requests. */
+/** NOTE: processing R events while waiting for the next command may, conceivably, lead to new requests, which may also wait for sub-commands! Thus we keep a simple stack of requests. */
 	QList<RBackendRequest*> command_requests;
 	RBackendRequest* currentCommandRequest () const { return (command_requests.isEmpty () ? 0 : command_requests.last ()); };
 	void tryNextCommand ();
@@ -123,9 +123,6 @@ private:
 
 	QString startup_errors;
 	bool startup_phase2_error;
-	int num_active_output_record_requests;
-	ROutput::ROutputType previous_output_type;
-	QString recorded_output;
 	RCommand *dummy_command_on_stack;
 friend class RKRBackendProtocolFrontend;
 	bool backend_dead;
@@ -136,6 +133,8 @@ friend class RCommand;
 protected:
 	void handleRequest (RBackendRequest *request);
 	void rCommandDone (RCommand *command) override;
+signals:
+	void backendWorkdirChanged();
 };
 
 /**

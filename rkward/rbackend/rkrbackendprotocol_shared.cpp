@@ -94,12 +94,75 @@ RKROutputBuffer::RKROutputBuffer () {
 
 RKROutputBuffer::~RKROutputBuffer () {
 	RK_TRACE (RBACKEND);
+
+	if (!output_captures.isEmpty ()) RK_DEBUG (RBACKEND, DL_WARNING, "%d requests for recording output still active on interface shutdown", output_captures.size ());
+}
+
+void RKROutputBuffer::pushOutputCapture (int capture_mode) {
+	RK_TRACE (RBACKEND);
+
+	OutputCapture capture;
+	capture.mode = capture_mode;
+	output_captures.append (capture);
+}
+
+QString RKROutputBuffer::popOutputCapture (bool highlighted) {
+	RK_TRACE (RBACKEND);
+
+	if (output_captures.isEmpty ()) {
+		RK_ASSERT (!output_captures.isEmpty ());
+		return QString ();
+	}
+	OutputCapture capture = output_captures.takeLast ();
+	if (capture.recorded.isEmpty ()) return QString ();
+
+	QString ret;
+	ROutput::ROutputType previous_type = ROutput::NoOutput;
+	for (int i = 0; i < capture.recorded.length (); ++i) {
+		const ROutput * output = capture.recorded[i];
+		if (output->output.isEmpty ()) continue;
+
+		if (output->type != ROutput::Error) {	// NOTE: skip error output. It has already been written as a warning.
+			if (highlighted && (output->type != previous_type)) {
+				if (!ret.isEmpty ()) ret.append ("</pre>\n");
+
+				if (output->type == ROutput::Output) ret.append ("<pre class=\"output_normal\">");
+				else if (output->type == ROutput::Warning) ret.append ("<pre class=\"output_warning\">");
+				else {
+					RK_ASSERT (false);
+					ret.append ("<pre>");
+				}
+			}
+			if (highlighted) ret.append (output->output.toHtmlEscaped ());
+			else ret.append (output->output);
+
+			previous_type = output->type;
+		}
+	}
+	if (highlighted && !ret.isEmpty ()) ret.append ("</pre>\n");
+	return ret;
+}
+
+void appendToOutputList (ROutputList *list, const QString &output, ROutput::ROutputType output_type) {
+// No trace
+	ROutput *current_output = 0;
+	if (!list->isEmpty ()) {
+		// Merge with previous output fragment, if of the same type
+		current_output = list->last ();
+		if (current_output->type != output_type) current_output = 0;
+	}
+	if (!current_output) {
+		current_output = new ROutput;
+		current_output->type = output_type;
+		current_output->output.reserve (OUTPUT_STRING_RESERVE);
+		list->append (current_output);
+	}
+	current_output->output.append (output);
 }
 
 bool RKROutputBuffer::handleOutput (const QString &output, int buf_length, ROutput::ROutputType output_type, bool allow_blocking) {
 	if (!buf_length) return false;
 	RK_TRACE (RBACKEND);
-
 	RK_DEBUG (RBACKEND, DL_DEBUG, "Output type %d: %s", output_type, qPrintable (output));
 
 	// wait while the output buffer is exceeded to give downstream threads a chance to catch up
@@ -107,25 +170,23 @@ bool RKROutputBuffer::handleOutput (const QString &output, int buf_length, ROutp
 		if (!doMSleep (10)) break;
 	}
 
-	output_buffer_mutex.lock ();
+	QMutexLocker lock (&output_buffer_mutex);
 	bool previously_empty = (out_buf_len <= 0);
 
-	ROutput *current_output = 0;
-	if (!output_buffer.isEmpty ()) {
-		// Merge with previous output fragment, if of the same type
-		current_output = output_buffer.last ();
-		if (current_output->type != output_type) current_output = 0;
+	for (int i = output_captures.length () - 1; i >= 0; --i) {
+		OutputCapture &cap = output_captures[i];
+		if (output_type == ROutput::Output) {
+			if (cap.mode & RecordOutput) appendToOutputList (&(cap.recorded), output, output_type);
+			if (cap.mode & SuppressOutput) return previously_empty;
+		} else {
+			if (cap.mode & RecordMessages) appendToOutputList (&(cap.recorded), output, output_type);
+			if (cap.mode & SuppressMessages) return previously_empty;
+		}
 	}
-	if (!current_output) {
-		current_output = new ROutput;
-		current_output->type = output_type;
-		current_output->output.reserve (OUTPUT_STRING_RESERVE);
-		output_buffer.append (current_output);
-	}
-	current_output->output.append (output);
+
+	appendToOutputList (&output_buffer, output, output_type);
 	out_buf_len += buf_length;
 
-	output_buffer_mutex.unlock ();
 	return previously_empty;
 }
 

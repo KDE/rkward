@@ -2,7 +2,7 @@
                           rkvarslot.h  -  description
                              -------------------
     begin                : Thu Nov 7 2002
-    copyright            : (C) 2002 - 2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2002 - 2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -40,11 +40,11 @@ class RKVarSlot : public RKComponent {
 public: 
 	RKVarSlot (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
 	~RKVarSlot ();
-	int type () {return ComponentVarSlot; };
-	QVariant value (const QString &modifier=QString ()) { return (available->value (modifier)); };
-	QStringList getUiLabelPair () const;
+	int type () override {return ComponentVarSlot; };
+	QVariant value (const QString &modifier=QString ()) override { return (available->value (modifier)); };
+	QStringList getUiLabelPair () const override;
 /** reimplemented to call updateLook (), in case enabledness changed */
-	void changed () { updateLook (); RKComponent::changed (); };
+	void changed () override { updateLook (); RKComponent::changed (); };
 	void updateLook ();
 public slots:
 /** Called when the select-button is pressed */

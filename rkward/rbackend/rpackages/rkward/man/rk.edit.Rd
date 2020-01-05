@@ -59,13 +59,12 @@ and \code{getOption("browser")}.
 x <- data.frame (a=c(1:3), b=c(2:4))
 rk.edit(x)
 }
-\author{
-Thomas Friedrichsmeier \email{rkward-devel@kde.org}
-}
 \seealso{
 \code{\link{edit}}, \code{\link{file.edit}},
   \code{\link{file.show}}, \code{\link{browseURL}}
 }
+\author{
+Thomas Friedrichsmeier \email{rkward-devel@kde.org}
+}
 \keyword{IO}
 \keyword{utilities}
-

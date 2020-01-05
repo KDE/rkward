@@ -2,29 +2,36 @@
 % Please edit documentation in R/rkward-package.R
 \docType{package}
 \name{rkward-package}
+\alias{rkward}
 \alias{rkward-package}
-\title{The rkward Package}
+\title{\packageTitle{rkward}}
 \description{
-Provides functions related to the RKWard GUI.
+\packageDescription{rkward}
 }
 \details{
+The DESCRIPTION file:
 \tabular{ll}{
 Package: \tab rkward\cr
 Type: \tab Package\cr
-Version: \tab 0.6.3\cr
-Date: \tab 2014-10-30\cr
+Version: \tab 0.7.1\cr
+Date: \tab 2018-10-11\cr
 Depends: \tab R (>= 2.9.0),methods\cr
 Encoding: \tab UTF-8\cr
 License: \tab GPL (>= 2)\cr
 LazyLoad: \tab yes\cr
-URL: \tab http://rkward.kde.org\cr
+URL: \tab https://rkward.kde.org\cr
+}
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://rkward.kde.org}
+  \item Report bugs at \url{https://rkward.kde.org/Bugs}
 }
 
-This package contains functions which are useful in combination with the RKWard GUI. Many of these
-functions only needed for the internal communication between RKWard and R, but some are also useful in user scripts.
 }
 \author{
-Thomas Friedrichsmeier, with contributions from RKWard-devel mailing list
-}
-\keyword{package}
+\packageAuthor{rkward}
 
+Maintainer: \packageMaintainer{rkward}
+}

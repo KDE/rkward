@@ -2,7 +2,7 @@
                           rkcommandeditorwindow  -  description
                              -------------------
     begin                : Mon Aug 30 2004
-    copyright            : (C) 2004-2017 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2019 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -35,7 +35,9 @@
 #include <QMenu>
 #include <QAction>
 #include <QTemporaryFile>
+#include <QTemporaryDir>
 #include <QDir>
+#include <QSplitter>
 
 #include <KLocalizedString>
 #include <kmessagebox.h>
@@ -52,6 +54,7 @@
 #include "../misc/rkstandardactions.h"
 #include "../misc/rkxmlguisyncer.h"
 #include "../misc/rkjobsequence.h"
+#include "../misc/rkxmlguipreviewarea.h"
 #include "../core/robjectlist.h"
 #include "../rbackend/rkrinterface.h"
 #include "../settings/rksettings.h"
@@ -60,8 +63,10 @@
 #include "../rkglobals.h"
 #include "../rkward.h"
 #include "rkhelpsearchwindow.h"
+#include "rkhtmlwindow.h"
 #include "rkworkplace.h"
 #include "katepluginintegration.h"
+#include "rkcodecompletion.h"
 
 #include "../debug.h"
 
@@ -93,6 +98,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 
 	QUrl url = _url;
 	m_doc = 0;
+	preview_dir = 0;
 
 	// Lookup of existing text editor documents: First, if no url is given at all, create a new document, and register an id, in case this window will get split, later
 	if (url.isEmpty ()) {
@@ -174,6 +180,11 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 	if (em_iface) em_iface->setModifiedOnDiskWarning (true);
 	else RK_ASSERT (false);
 	m_view = m_doc->createView (this, RKWardMainWindow::getMain ()->katePluginIntegration ()->mainWindow ());
+	preview = new RKXMLGUIPreviewArea (QString(), this);
+	preview_manager = new RKPreviewManager (this);
+	connect (preview_manager, &RKPreviewManager::statusChanged, [this]() { preview_timer.start (500); });
+	m_view = m_doc->createView (this);
+	RKWorkplace::mainWorkplace()->registerNamedWindow (preview_manager->previewId(), this, preview);
 	if (!url.isEmpty ()) {
 		KConfigGroup viewconf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptViewSettings %1").arg (RKWorkplace::mainWorkplace ()->portableUrl (url)));
 		m_view->readSessionConfig (viewconf);
@@ -193,35 +204,32 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 
 	QHBoxLayout *layout = new QHBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
-	layout->addWidget(m_view);
+	QSplitter* preview_splitter = new QSplitter (this);
+	preview_splitter->addWidget (m_view);
+	QWidget *preview_widget = preview->wrapperWidget ();
+	preview_splitter->addWidget (preview_widget);
+	preview_widget->hide ();
+	connect (m_doc, &KTextEditor::Document::documentSavedOrUploaded, this, &RKCommandEditorWindow::documentSaved);
+	layout->addWidget(preview_splitter);
 
-	connect (m_doc, &KTextEditor::Document::documentUrlChanged, this, &RKCommandEditorWindow::updateCaption);
+	setGlobalContextProperty ("current_filename", m_doc->url ().url ());
+	connect (m_doc, &KTextEditor::Document::documentUrlChanged, [this]() { updateCaption(); setGlobalContextProperty ("current_filename", m_doc->url ().url ()); });
 	connect (m_doc, &KTextEditor::Document::modifiedChanged, this, &RKCommandEditorWindow::updateCaption);                // of course most of the time this causes a redundant call to updateCaption. Not if a modification is undone, however.
+#ifdef __GNUC__
 #warning remove this in favor of KTextEditor::Document::restore()
+#endif
 	connect (m_doc, &KTextEditor::Document::modifiedChanged, this, &RKCommandEditorWindow::autoSaveHandlerModifiedChanged);
-	connect (m_doc, &KTextEditor::Document::textChanged, this, &RKCommandEditorWindow::autoSaveHandlerTextChanged);
+	connect (m_doc, &KTextEditor::Document::textChanged, this, &RKCommandEditorWindow::textChanged);
 	connect (m_view, &KTextEditor::View::selectionChanged, this, &RKCommandEditorWindow::selectionChanged);
 	// somehow the katepart loses the context menu each time it loses focus
 	connect (m_view, &KTextEditor::View::focusIn, this, &RKCommandEditorWindow::focusIn);
 
-	completion_model = 0;
-	cc_iface = 0;
 	hinter = 0;
 	if (use_r_highlighting) {
 		RKCommandHighlighter::setHighlighting (m_doc, RKCommandHighlighter::RScript);
 		if (use_codehinting) {
-			cc_iface = qobject_cast<KTextEditor::CodeCompletionInterface*> (m_view);
-			if (cc_iface) {
-				cc_iface->setAutomaticInvocationEnabled (true);
-				completion_model = new RKCodeCompletionModel (this);
-				completion_timer = new QTimer (this);
-				completion_timer->setSingleShot (true);
-				connect (completion_timer, &QTimer::timeout, this, &RKCommandEditorWindow::tryCompletion);
-				connect (m_doc, &KTextEditor::Document::textChanged, this, &RKCommandEditorWindow::tryCompletionProxy);
-			} else {
-				RK_ASSERT (false);
-			}
-			hinter = new RKFunctionArgHinter (this, m_view);
+			new RKCompletionManager (m_view);
+			//hinter = new RKFunctionArgHinter (this, m_view);
 		}
 	} else {
 		RKCommandHighlighter::setHighlighting (m_doc, RKCommandHighlighter::Automatic);
@@ -231,8 +239,8 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 	initBlocks ();
 	RK_ASSERT (smart_iface);
 
-	autosave_timer = new QTimer (this);
-	connect (autosave_timer, &QTimer::timeout, this, &RKCommandEditorWindow::doAutoSave);
+	connect (&autosave_timer, &QTimer::timeout, this, &RKCommandEditorWindow::doAutoSave);
+	connect (&preview_timer, &QTimer::timeout, this, &RKCommandEditorWindow::doRenderPreview);
 
 	updateCaption ();	// initialize
 	QTimer::singleShot (0, this, SLOT (setPopupMenu()));
@@ -251,6 +259,7 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 	}
 
 	delete hinter;
+	discardPreview ();
 	delete m_view;
 	QList<KTextEditor::View*> views = m_doc->views ();
 	if (views.isEmpty ()) {
@@ -318,6 +327,36 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	action_setwd_to_script->setStatusTip (i18n ("Change the working directory to the directory of this script"));
 	action_setwd_to_script->setToolTip (action_setwd_to_script->statusTip ());
 	action_setwd_to_script->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionCDToScript));
+
+	KActionMenu* actionmenu_preview = new KActionMenu (QIcon::fromTheme ("view-preview"), i18n ("Preview"), this);
+	actionmenu_preview->setDelayed (false);
+	preview_modes = new QActionGroup (this);
+	actionmenu_preview->addAction (action_no_preview = new QAction (RKStandardIcons::getIcon (RKStandardIcons::ActionDelete), i18n ("No preview"), preview_modes));
+	actionmenu_preview->addAction (new QAction (QIcon::fromTheme ("preview_math"), i18n ("R Markdown"), preview_modes));
+	actionmenu_preview->addAction (new QAction (RKStandardIcons::getIcon (RKStandardIcons::WindowOutput), i18n ("RKWard Output"), preview_modes));
+	actionmenu_preview->addAction (new QAction (RKStandardIcons::getIcon (RKStandardIcons::WindowX11), i18n ("Plot"), preview_modes));
+	actionmenu_preview->addAction (new QAction (RKStandardIcons::getIcon (RKStandardIcons::WindowConsole), i18n ("R Console"), preview_modes));
+	QList<QAction*> preview_actions = preview_modes->actions ();
+	preview_actions[NoPreview]->setToolTip (i18n ("Disable preview"));
+	preview_actions[RMarkdownPreview]->setToolTip (i18n ("Preview the script as rendered from RMarkdown format (appropriate for .Rmd files)."));
+	preview_actions[ConsolePreview]->setToolTip (i18n ("Preview the script as if it was run in the interactive R Console"));
+	preview_actions[GraphPreview]->setToolTip (i18n ("Preview any onscreen graphics produced by running this script. This preview will be empty, if there is no call to <i>plot()</i> or other graphics commands."));
+	preview_actions[OutputWindow]->setToolTip (i18n ("Preview any output to the RKWard Output Window. This preview will be empty, if there is no call to <i>rk.print()</i> or other RKWard output commands."));
+	for (int i = 0; i < preview_actions.size (); ++i) {
+		preview_actions[i]->setCheckable (true);
+		preview_actions[i]->setStatusTip (preview_actions[i]->toolTip ());
+	}
+	action_no_preview->setChecked (true);
+	connect (preview, &RKXMLGUIPreviewArea::previewClosed, this, &RKCommandEditorWindow::discardPreview);
+	connect (preview_modes, &QActionGroup::triggered, this, &RKCommandEditorWindow::changePreviewMode);
+
+	actionmenu_preview->addSeparator ();
+	action_preview_as_you_type = new QAction (QIcon::fromTheme ("input-keyboard"), i18nc ("Checkable action: the preview gets updated while typing", "Update as you type"), ac);
+	action_preview_as_you_type->setToolTip (i18n ("When this option is enabled, an update of the preview will be triggered every time you modify the script. When this option is disabled, the preview will be updated whenever you save the script, only."));
+	action_preview_as_you_type->setCheckable (true);
+	action_preview_as_you_type->setChecked (m_doc->url ().isEmpty ());  // By default, update as you type for unsaved "quick and dirty" scripts, preview on save for saved scripts
+	actionmenu_preview->addAction (action_preview_as_you_type);
+	ac->addAction ("render_preview", actionmenu_preview);
 
 	file_save = findAction (m_view, "file_save");
 	if (file_save) file_save->setText (i18n ("Save Script..."));
@@ -454,7 +493,7 @@ void RKCommandEditorWindow::autoSaveHandlerModifiedChanged () {
 	RK_TRACE (COMMANDEDITOR);
 
 	if (!isModified ()) {
-		autosave_timer->stop ();
+		autosave_timer.stop ();
 
 		if (RKSettingsModuleCommandEditor::autosaveKeep ()) return;
 		if (!previous_autosave_url.isValid ()) return;
@@ -470,13 +509,66 @@ void RKCommandEditorWindow::autoSaveHandlerModifiedChanged () {
 	}
 }
 
-void RKCommandEditorWindow::autoSaveHandlerTextChanged () {
+void RKCommandEditorWindow::changePreviewMode (QAction *mode) {
 	RK_TRACE (COMMANDEDITOR);
 
+	if (mode != action_no_preview) {
+		if (!preview_dir) {  // triggered on change from no preview to some preview, but not between previews
+			if (KMessageBox::warningContinueCancel (this, i18n ("<p>The preview feature <b>tries</b> to avoid making any lasting changes to your workspace (technically, by making use of a <i>local()</i> evaluation environment). <b>However, there are cases where using the preview feature may cause unexpected side-effects</b>.</p><p>In particular, this is the case for scripts that contain explicit assignments to <i>globalenv()</i>, or to scripts that alter files on your filesystem. Further, attaching/detaching packages or package namespaces will affect the entire running R session.</p><p>Please keep this in mind when using the preview feature, and especially when using the feature on scripts originating from untrusted sources.</p>"), i18n ("Potential side-effects of previews"), KStandardGuiItem::cont (), KStandardGuiItem::cancel (), QStringLiteral ("preview_side_effects")) != KMessageBox::Continue) {
+				discardPreview ();
+			}
+		}
+		preview_manager->setUpdatePending ();
+		preview_timer.start (0);
+	} else {
+		discardPreview ();
+	}
+}
+
+void RKCommandEditorWindow::discardPreview () {
+	RK_TRACE (COMMANDEDITOR);
+
+	if (preview_dir) {
+		preview->wrapperWidget ()->hide ();
+		preview_manager->setPreviewDisabled ();
+		RKGlobals::rInterface ()->issueCommand (QString (".rk.killPreviewDevice(%1)\nrk.discard.preview.data (%1)").arg (RObject::rQuote(preview_manager->previewId ())), RCommand::App | RCommand::Sync);
+		delete preview_dir;
+		preview_dir = 0;
+		delete preview_input_file;
+		preview_input_file = 0;
+	}
+	action_no_preview->setChecked (true);
+}
+
+void RKCommandEditorWindow::documentSaved () {
+	RK_TRACE (COMMANDEDITOR);
+
+	if (!action_preview_as_you_type->isChecked ()) {
+		if (!action_no_preview->isChecked ()) {
+			preview_manager->setUpdatePending ();
+			preview_timer.start (0);
+		}
+	}
+}
+
+void RKCommandEditorWindow::textChanged () {
+	RK_TRACE (COMMANDEDITOR);
+
+	// render preview
+	if (!action_no_preview->isChecked ()) {
+		if (action_preview_as_you_type->isChecked ()) {
+			preview_manager->setUpdatePending ();
+			preview_timer.start (500);              // brief delay to buffer keystrokes
+		}
+	} else {
+		discardPreview ();
+	}
+
+	// auto save
 	if (!isModified ()) return;		// may happen after load or undo
 	if (!RKSettingsModuleCommandEditor::autosaveEnabled ()) return;
-	if (!autosave_timer->isActive ()) {
-		autosave_timer->start (RKSettingsModuleCommandEditor::autosaveInterval () * 60 * 1000);
+	if (!autosave_timer.isActive ()) {
+		autosave_timer.start (RKSettingsModuleCommandEditor::autosaveInterval () * 60 * 1000);
 	}
 }
 
@@ -538,7 +630,7 @@ void RKCommandEditorWindow::doAutoSave () {
 	alljobs->start ();
 
 	// do not create any more autosaves until the text is changed, again
-	autosave_timer->stop ();
+	autosave_timer.stop ();
 }
 
 void RKCommandEditorWindow::autoSaveHandlerJobFinished (RKJobSequence* seq) {
@@ -632,74 +724,6 @@ void RKCommandEditorWindow::currentHelpContext (QString *symbol, QString *packag
 	*symbol = RKCommonFunctions::getCurrentSymbol (line, c.column ());
 }
 
-void RKCommandEditorWindow::tryCompletionProxy (KTextEditor::Document*) {
-	if (RKSettingsModuleCommandEditor::completionEnabled ()) {
-		if (cc_iface && cc_iface->isCompletionActive ()) {
-			tryCompletion ();
-		} else if (cc_iface) {
-			completion_timer->start (RKSettingsModuleCommandEditor::completionTimeout ());
-		}
-	}
-}
-
-QString RKCommandEditorWindow::currentCompletionWord () const {
-	RK_TRACE (COMMANDEDITOR);
-// KDE4 TODO: This may no longer be needed, if the katepart gets fixed not to abort completions when the range
-// contains dots or other special characters
-	KTextEditor::Cursor c = m_view->cursorPosition();
-	if (!c.isValid ()) return QString ();
-	uint para=c.line(); uint cursor_pos=c.column();
-
-	QString current_line = m_doc->line (para);
-	if (current_line.lastIndexOf ("#", cursor_pos) >= 0) return QString ();	// do not hint while in comments
-
-	return RKCommonFunctions::getCurrentSymbol (current_line, cursor_pos, false);
-}
-
-KTextEditor::Range RKCodeCompletionModel::completionRange (KTextEditor::View *view, const KTextEditor::Cursor &position) {
-	if (!position.isValid ()) return KTextEditor::Range ();
-	QString current_line = view->document ()->line (position.line ());
-	int start;
-	int end;
-	RKCommonFunctions::getCurrentSymbolOffset (current_line, position.column (), false, &start, &end);
-	return KTextEditor::Range (position.line (), start, position.line (), end);
-}
-
-void RKCommandEditorWindow::tryCompletion () {
-	// TODO: merge this with RKConsole::doTabCompletion () somehow
-	RK_TRACE (COMMANDEDITOR);
-	if ((!cc_iface) || (!completion_model)) {
-		RK_ASSERT (false);
-		return;
-	}
-
-	KTextEditor::Cursor c = m_view->cursorPosition();
-	uint para=c.line(); uint cursor_pos=c.column();
-
-	QString current_line = m_doc->line (para);
-	int start;
-	int end;
-	RKCommonFunctions::getCurrentSymbolOffset (current_line, cursor_pos, false, &start, &end);
-	if (end > cursor_pos) return;   // Only hint when at the end of a word/symbol: https://mail.kde.org/pipermail/rkward-devel/2015-April/004122.html
-
-	KTextEditor::Range range = KTextEditor::Range (para, start, para, end);
-	QString word;
-	if (range.isValid ()) word = m_doc->text (range);
-	if (current_line.lastIndexOf ("#", cursor_pos) >= 0) word.clear ();	// do not hint while in comments
-	if (word.length () >= RKSettingsModuleCommandEditor::completionMinChars ()) {
-		completion_model->updateCompletionList (word);
-		if (completion_model->isEmpty ()) {
-			cc_iface->abortCompletion ();
-		} else {
-			if (!cc_iface->isCompletionActive ()) {
-				cc_iface->startCompletion (range, completion_model);
-			}
-		}
-	} else {
-		cc_iface->abortCompletion ();
-	}
-}
-
 QString RKCommandEditorWindow::provideContext (int line_rev) {
 	RK_TRACE (COMMANDEDITOR);
 
@@ -761,6 +785,117 @@ void RKCommandEditorWindow::copyLinesToOutput () {
 	RK_TRACE (COMMANDEDITOR);
 
 	RKCommandHighlighter::copyLinesToOutput (m_view, RKCommandHighlighter::RScript);
+}
+
+void RKCommandEditorWindow::doRenderPreview () {
+	RK_TRACE (COMMANDEDITOR);
+
+	if (action_no_preview->isChecked ()) return;
+	if (!preview_manager->needsCommand ()) return;
+	int mode = preview_modes->actions ().indexOf (preview_modes->checkedAction ());
+
+	if (!preview_dir) {
+		preview_dir = new QTemporaryDir ();
+		preview_input_file = 0;
+	}
+	if (preview_input_file) {
+		// When switching between .Rmd and .R previews, discard input file
+		if ((mode == RMarkdownPreview) != (preview_input_file->fileName().endsWith (".Rmd"))) {
+			delete preview_input_file;
+			preview_input_file = 0;
+		} else {
+			preview_input_file->remove ();  // If re-using an existing filename, remove it first. Somehow, contrary to documentation, this does not happen in open(WriteOnly), below.
+		}
+	}
+	if (!preview_input_file) { // NOT an else!
+		if (m_doc->url ().isEmpty () || !m_doc->url ().isLocalFile ()) {
+			preview_input_file = new QFile (QDir (preview_dir->path()).absoluteFilePath (mode == RMarkdownPreview ? "script.Rmd" : "script.R"));
+		} else {
+			// If the file is already saved, save the preview input as a temp file in the same folder.
+			// esp. .Rmd files might try to include other files by relative path.
+			QString tempfiletemplate = m_doc->url ().toLocalFile ();
+			tempfiletemplate.append ("_XXXXXX.rkward_preview.R");
+			if (mode == RMarkdownPreview) tempfiletemplate.append ("md");
+			preview_input_file = new QTemporaryFile (tempfiletemplate);
+		}
+	}
+
+	QString output_file = QDir (preview_dir->path()).absoluteFilePath ("output.html");  // NOTE: not needed by all types of preview
+
+	if (mode != GraphPreview && !preview->findChild<RKMDIWindow*>()) {
+		// (lazily) initialize the preview window with _something_, as an RKMDIWindow is needed to display messages (important, if there is an error during the first preview)
+		RKGlobals::rInterface()->issueCommand (".rk.with.window.hints (rk.show.html(" + RObject::rQuote (output_file) + "), \"\", " + RObject::rQuote (preview_manager->previewId ()) + ", style=\"preview\")", RCommand::App | RCommand::Sync);
+	}
+
+	RK_ASSERT (preview_input_file->open (QIODevice::WriteOnly));
+	QTextStream out (preview_input_file);
+	out.setCodec ("UTF-8");     // make sure that all characters can be saved, without nagging the user
+	out << m_doc->text ();
+	preview_input_file->close ();
+
+	QString command;
+	if (mode == RMarkdownPreview) {
+		preview->setLabel (i18n ("Preview of rendered R Markdown"));
+
+		command = "if (!nzchar(Sys.which(\"pandoc\"))) {\n"
+		           "	output <- rk.set.output.html.file(%2, silent=TRUE)\n"
+		           "	rk.header (" + RObject::rQuote (i18n ("Pandoc is not installed")) + ")\n"
+		           "	rk.print (" + RObject::rQuote (i18n ("The software <tt>pandoc</tt>, required to rendering R markdown files, is not installed, or not in the system path of "
+		                         "the running R session. You will need to install pandoc from <a href=\"https://pandoc.org/\">https://pandoc.org/</a>.</br>"
+		                         "If it is installed, but cannot be found, try adding it to the system path of the running R session at "
+		                         "<a href=\"rkward://settings/rbackend\">Settings->Configure RKward->R-backend</a>.")) + ")\n"
+		           "	rk.set.output.html.file(output, silent=TRUE)\n"
+		           "} else {\n"
+		           "	require(rmarkdown)\n"
+		           "	rmarkdown::render (%1, output_format=\"html_document\", output_file=%2, quiet=TRUE)\n"
+		           "}\n"
+		           "rk.show.html(%2)\n";
+		command = command.arg (RObject::rQuote (preview_input_file->fileName ()), RObject::rQuote (output_file));
+	} else if (mode == RKOutputPreview) {
+		preview->setLabel (i18n ("Preview of generated RKWard output"));
+		command = "output <- rk.set.output.html.file(%2, silent=TRUE)\n"
+		          "try(rk.flush.output(ask=FALSE, style=\"preview\", silent=TRUE))\n"
+		          "try(source(%1, local=TRUE))\n"
+		          "rk.set.output.html.file(output, silent=TRUE)\n"
+		          "rk.show.html(%2)\n";
+		command = command.arg (RObject::rQuote (preview_input_file->fileName ()), RObject::rQuote (output_file));
+	} else if (mode == GraphPreview) {
+		preview->setLabel (i18n ("Preview of generated plot"));
+		command = "olddev <- dev.cur()\n"
+		          ".rk.startPreviewDevice(%2)\n"
+		          "try(source(%1, local=TRUE))\n"
+		          "if (olddev != 1) dev.set(olddev)\n";
+		command = command.arg (RObject::rQuote (preview_input_file->fileName ()), RObject::rQuote (preview_manager->previewId ()));
+	} else if (mode == ConsolePreview) {
+		preview->setLabel (i18n ("Preview of script running in interactive R Console"));
+		command = "output <- rk.set.output.html.file(%2, silent=TRUE)\n"
+		          "on.exit(rk.set.output.html.file(output, silent=TRUE))\n"
+		          "try(rk.flush.output(ask=FALSE, style=\"preview\", silent=TRUE))\n"
+		          "exprs <- expression(NULL)\n"
+		          "rk.capture.output(suppress.messages=TRUE)\n"
+		          "try({\n"
+		          "    exprs <- parse (%1, keep.source=TRUE)\n"
+		          "})\n"
+		          ".rk.cat.output(rk.end.capture.output(TRUE))\n"
+		          "for (i in seq_len(length(exprs))) {\n"
+		          "    rk.print.code(as.character(attr(exprs, \"srcref\")[[i]]))\n"
+		          "    rk.capture.output(suppress.messages=TRUE)\n"
+		          "    try({\n"
+		          "        withAutoprint(exprs[[i]], evaluated=TRUE, echo=FALSE)\n"
+		          "    })\n"
+		          "    .rk.cat.output(rk.end.capture.output(TRUE))\n"
+		          "}\n"
+		          "rk.set.output.html.file(output, silent=TRUE)\n"
+		          "rk.show.html(%2)\n";
+		command = command.arg (RObject::rQuote (preview_input_file->fileName ())).arg (RObject::rQuote (output_file));
+	} else {
+		RK_ASSERT (false);
+	}
+
+	preview->wrapperWidget ()->show ();
+
+	RCommand *rcommand = new RCommand (".rk.with.window.hints (local ({\n" + command + QStringLiteral ("}), \"\", ") + RObject::rQuote (preview_manager->previewId ()) + ", style=\"preview\")", RCommand::App);
+	preview_manager->setCommand (rcommand);
 }
 
 void RKCommandEditorWindow::runAll () {
@@ -992,7 +1127,7 @@ void RKFunctionArgHinter::tryArgHintNow () {
 	}
 
 	// now identify the symbol and object (if any)
-	QString effective_symbol = RKCommonFunctions::getCurrentSymbol (full_context, potential_symbol_end+1);
+	QString effective_symbol = RKCommonFunctions::getCurrentSymbol (full_context, potential_symbol_end);
 	if (effective_symbol.isEmpty ()) {
 		hideArgHint ();
 		return;
@@ -1049,87 +1184,6 @@ bool RKFunctionArgHinter::eventFilter (QObject *, QEvent *e) {
 	return false;
 }
 
-//////////////////////// RKCodeCompletionModel ////////////////////
-
-RKCodeCompletionModel::RKCodeCompletionModel (RKCommandEditorWindow *parent) : KTextEditor::CodeCompletionModel (parent) {
-	RK_TRACE (COMMANDEDITOR);
-
-	setRowCount (0);
-	command_editor = parent;
-}
-
-RKCodeCompletionModel::~RKCodeCompletionModel () {
-	RK_TRACE (COMMANDEDITOR);
-}
-
-void RKCodeCompletionModel::updateCompletionList (const QString& symbol) {
-	RK_TRACE (COMMANDEDITOR);
-
-	if (current_symbol == symbol) return;	// already up to date
-	beginResetModel ();
-
-	RObject::RObjectSearchMap map;
-	RObjectList::getObjectList ()->findObjectsMatching (symbol, &map);
-
-	int count = map.size ();
-	icons.clear ();
-	names.clear ();
-	icons.reserve (count);
-	names.reserve (count);
-
-	// copy the map to two lists. For one thing, we need an int indexable storage, for another, caching this information is safer
-	// in case objects are removed while the completion mode is active.
-	for (RObject::RObjectSearchMap::const_iterator it = map.constBegin (); it != map.constEnd (); ++it) {
-		icons.append (RKStandardIcons::iconForObject (it.value ()));
-		names.append (it.value ()->getBaseName ());
-	}
-
-	setRowCount (count);
-	current_symbol = symbol;
-
-	endResetModel ();
-}
-
-void RKCodeCompletionModel::completionInvoked (KTextEditor::View*, const KTextEditor::Range&, InvocationType) {
-	RK_TRACE (COMMANDEDITOR);
-
-	// we totally ignore whichever range the katepart thinks we should offer a completion on.
-	// it is often wrong, esp, when there are dots in the symbol
-// KDE4 TODO: This may no longer be needed, if the katepart gets fixed not to abort completions when the range
-// contains dots or other special characters
-	updateCompletionList (command_editor->currentCompletionWord ());
-}
-
-void RKCodeCompletionModel::executeCompletionItem (KTextEditor::View *view, const KTextEditor::Range &word, const QModelIndex &index) const {
-	RK_TRACE (COMMANDEDITOR);
-
-	RK_ASSERT (names.size () > index.row ());
-
-	view->document ()->replaceText (word, names[index.row ()]);
-}
-
-QVariant RKCodeCompletionModel::data (const QModelIndex& index, int role) const {
-
-	int col = index.column ();
-	int row = index.row ();
-
-	if (index.parent ().isValid ()) return QVariant ();
-
-	if ((role == Qt::DisplayRole) || (role==KTextEditor::CodeCompletionModel::CompletionRole)) {
-		if (col == KTextEditor::CodeCompletionModel::Name) {
-			return (names.value (row));
-		}
-	} else if (role == Qt::DecorationRole) {
-		if (col == KTextEditor::CodeCompletionModel::Icon) {
-			return (icons.value (row));
-		}
-	}
-
-	return QVariant ();
-}
-
-
-
 // static
 KTextEditor::Document* RKCommandHighlighter::_doc = 0;
 KTextEditor::View* RKCommandHighlighter::_view = 0;
@@ -1154,6 +1208,9 @@ KTextEditor::View* RKCommandHighlighter::getView () {
 }
 
 #include <QTextDocument>
+#include "rkhtmlwindow.h"
+#include "rkhtmlwindow.h"
+#include "rkhtmlwindow.h"
 
 //////////
 // NOTE: Most of the exporting code is copied from the katepart HTML exporter plugin more or less verbatim! (Source license: LGPL v2)
@@ -1284,9 +1341,9 @@ void RKCommandHighlighter::setHighlighting (KTextEditor::Document *doc, Highligh
 	else if (mode == RInteractiveSession) mode_string = "R interactive session";
 	else {
 		QString fn = doc->url ().fileName ().toLower ();
-		if (fn.endsWith (".pluginmap") || fn.endsWith (".rkh") || fn.endsWith (".xml") || fn.endsWith (".inc")) {
+		if (fn.endsWith (QLatin1String (".pluginmap")) || fn.endsWith (QLatin1String (".rkh")) || fn.endsWith (QLatin1String (".xml")) || fn.endsWith (QLatin1String (".inc"))) {
 			mode_string = "XML";
-		} else if (fn.endsWith (".js")) {
+		} else if (fn.endsWith (QLatin1String (".js"))) {
 			mode_string = "JavaScript";
 		} else {
 			return;
@@ -1316,4 +1373,5 @@ void RKCommandHighlighter::copyLinesToOutput (KTextEditor::View *view, Highlight
 		RKGlobals::rInterface ()->issueCommand (".rk.cat.output (" + RObject::rQuote (highlighted) + ")\n", RCommand::App | RCommand::Silent);
 	}
 }
+
 

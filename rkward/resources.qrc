@@ -1,0 +1,19 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/kxmlgui5/rkward">
+	<file>rkwardui.rc</file>
+	<file>rkconsolepart.rc</file>
+
+        <file alias="rkcommandeditorwindowpart.rc">windows/rkcommandeditorwindowpart.rc</file>
+	<file alias="rkoutputwindow.rc">windows/rkoutputwindow.rc</file>
+	<file alias="rkhelpwindow.rc">windows/rkhelpwindow.rc</file>
+	<file alias="detachedwindowcontainer.rc">windows/detachedwindowcontainer.rc</file>
+	<file alias="rkcatchedx11windowpart.rc">windows/rkcatchedx11windowpart.rc</file>
+	<file alias="rkcommandlogpart.rc">windows/rkcommandlogpart.rc</file>
+	<file alias="rktoplevelwindowgui.rc">windows/rktoplevelwindowgui.rc</file>
+	<file alias="rkstandardactions.rc">windows/rkstandardactions.rc</file>
+
+	<file alias="rkeditordataframepart.rc">dataeditor/rkeditordataframepart.rc</file>
+
+	<file alias="rkdummypart.rc">misc/rkdummypart.rc</file>
+</qresource>
+</RCC>

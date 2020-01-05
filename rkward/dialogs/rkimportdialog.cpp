@@ -2,7 +2,7 @@
                           rkimportdialog  -  description
                              -------------------
     begin                : Tue Jan 30 2007
-    copyright            : (C) 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -40,7 +40,6 @@ RKImportDialog::RKImportDialog (const QString &context_id, QWidget *parent) : QF
 	}
 
 	component_ids = context->components ();
-	int format_count = 0;
 	for (QStringList::const_iterator it = component_ids.constBegin (); it != component_ids.constEnd (); ++it) {
 		RKComponentHandle *handle = RKComponentMap::getComponentHandle (*it);
 		if (!handle) {

@@ -48,7 +48,7 @@ bool QtScriptBackend::initialize (RKComponentPropertyCode *code_property, bool a
 	RK_TRACE (PHP);
 
 	if (script_thread) {
-		RK_DEBUG (PHP, DL_ERROR, "another template is already openend in this backend");
+		RK_DEBUG (PHP, DL_ERROR, "another template is already opened in this backend");
 		return false;
 	}
 

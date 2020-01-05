@@ -1,0 +1,42 @@
+<!DOCTYPE rkhelp >
+<document>
+  <!-- this code was generated using the rkwarddev package.
+    perhaps don't make changes here, but in the rkwarddev script instead!
+    
+    look for a file called: ../../rkwarddev_scripts/rkwarddev_rk.RMarkdown_plugin_script.R -->
+  <summary>
+  </summary>
+  <usage>
+  </usage>
+  <!-- <section id="sct_EDITORDE" title="EDIT OR DELETE ME">
+        EDIT OR DELETE ME
+      </section> -->
+  <settings>
+    <caption id="tabSourceAndTarget" />
+    <setting id="markdownFile">
+      Choose the file to be exported.
+    </setting>
+    <setting id="targetFormat">
+      Set the target format for exported files. If you choose either "All formats defined in document" or "First format defined in document", the formats defined via output_format will be used, see the documentation on rmarkdown::render().
+    </setting>
+    <setting id="targetFile">
+      Choose the target file name to export to.
+    </setting>
+    <setting id="targetDir">
+      Choose the target directory to export to, file names are automatically generated according to the formats defined in the document.
+    </setting>
+    <caption id="tabAdvancedOptions" />
+    <setting id="markdownVersion">
+      Set the markdown version to use. Older v1 documents are rendered into HTML format only, using the markdown package. If in doubt, leave it to the newer v2; those documents are rendered using pandoc, which allows you to choose between various output formats. But be aware that some formats may require special configuration or templates to produce proper results.
+    </setting>
+  </settings>
+  <!-- <related>
+        <ul>
+          <li>
+            <link href="rkward://rhelp/..." />
+          </li>
+        </ul>
+      </related> -->
+  <technical>
+  </technical>
+</document>

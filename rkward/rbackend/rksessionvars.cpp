@@ -67,6 +67,11 @@ void RKSessionVars::setRVersion (const QString& version_string) {
 	r_version = parseVersionString (version_string, 0);
 }
 
+QString RKSessionVars::RVersion(bool abbridged) {
+	if (!abbridged) return r_version_string;
+	return r_version_string.section ('.', 0, 1);
+}
+
 quint32 RKSessionVars::parseVersionString (const QString &version, QString *suffix) {
 	quint32 ret = 0;
 	int pos = -1;

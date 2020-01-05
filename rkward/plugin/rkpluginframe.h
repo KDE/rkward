@@ -2,7 +2,7 @@
                           rkpluginframe.cpp  -  description
                              -------------------
     begin                : Sat Jun 4 2011
-    copyright            : (C) 2011, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2011-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -35,7 +35,7 @@ public:
 	~RKPluginFrame ();
 
 /** returns the page child elements should be drawn in */
-	QWidget *getPage () { return page; };
+	QWidget *getPage ();
 	int type () { return ComponentFrame; };
 /** reimplemented to return the value of the checked property by default */
 	QVariant value (const QString &modifier=QString ());
@@ -49,7 +49,6 @@ private slots:
 private:
 	void initCheckedProperty ();
 	RKComponentPropertyBool *checked;
-	QWidget *page;
 	QGroupBox *frame;
 };
 

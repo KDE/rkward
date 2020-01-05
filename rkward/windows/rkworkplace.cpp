@@ -2,7 +2,7 @@
                           rkworkplace  -  description
                              -------------------
     begin                : Thu Sep 21 2006
-    copyright            : (C) 2006-2016 by Thomas Friedrichsmeier
+    copyright            : (C) 2006-2019 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -31,6 +31,7 @@
 #include <QDir>
 #include <QApplication>
 #include <QMimeDatabase>
+#include <QLayout>
 
 #include "detachedwindowcontainer.h"
 #include "rkcommandeditorwindow.h"
@@ -258,7 +259,7 @@ void RKWorkplace::addWindow (RKMDIWindow *window, bool attached) {
 				break;
 			}
 		}
-		if (pos < 0) {   // not yet known: implicit registration -> create corresponing named_window_spec on the fly.
+		if (pos < 0) {   // not yet known: implicit registration -> create corresponding named_window_spec on the fly.
 			registerNamedWindow (window_name_override, 0, attached ? RKWardMainWindow::getMain () : 0);
 			pos = named_windows.size () - 1;
 		}
@@ -415,7 +416,7 @@ bool RKWorkplace::openAnyUrl (const QUrl &url, const QString &known_mimetype, bo
 			openHelpWindow (url, true);
 			return true;	// TODO
 		}
-		if (url.fileName ().toLower ().endsWith (".rdata") || url.fileName ().toLower ().endsWith (".rda")) {
+		if (url.fileName ().toLower ().endsWith (QLatin1String (".rdata")) || url.fileName ().toLower ().endsWith (QLatin1String (".rda"))) {
 			RKWardMainWindow::getMain ()->askOpenWorkspace (url);
 			return true;	// TODO
 		}
@@ -476,6 +477,22 @@ RKMDIWindow* RKWorkplace::openHelpWindow (const QUrl &url, bool only_once) {
 			}
 		}
 	}
+	// if we're working with a window hint, try to _reuse_ the existing window, even if it did not get found, above
+	if (!window_name_override.isEmpty ()) {
+		int pos = -1;
+		for (int i = 0; i < named_windows.size (); ++i) {
+			if (named_windows[i].id == window_name_override) {
+				RKHTMLWindow *w = dynamic_cast<RKHTMLWindow*> (named_windows[i].window);
+				if (w) {
+					w->openURL (url);
+//					w->activate ();   // HACK: Keep preview windows from stealing focus
+					return w;
+				}
+				break;
+			}
+		}
+	}
+
 
 	RKHTMLWindow *hw = new RKHTMLWindow (view (), RKHTMLWindow::HTMLHelpWindow);
 	hw->openURL (url);
@@ -921,11 +938,11 @@ void RKWorkplace::restoreWorkplace (const QStringList &description) {
 		// apply generic window parameters
 		if (win) {
 			for (int p = 0; p < spec.params.size (); ++p) {
-				if (spec.params[p].startsWith ("sidebar")) {
+				if (spec.params[p].startsWith (QLatin1String ("sidebar"))) {
 					int position = spec.params[p].section (',', 1).toInt ();
 					placeInToolWindowBar (win, position);
 				}
-				if (spec.params[p].startsWith ("detached")) {
+				if (spec.params[p].startsWith (QLatin1String ("detached"))) {
 					QStringList geom = spec.params[p].split (',');
 					win->hide ();
 					win->setGeometry (geom.value (1).toInt (), geom.value (2).toInt (), geom.value (3).toInt (), geom.value (4).toInt ());
@@ -944,7 +961,7 @@ void RKWorkplace::splitAndAttachWindow (RKMDIWindow* source) {
 
 	if (source->isType (RKMDIWindow::CommandEditorWindow)) {
 		QUrl url = static_cast<RKCommandEditorWindow*> (source)->url ();
-		openScriptEditor (url, QString (), RKSettingsModuleCommandEditor::matchesScriptFileFilter (url.fileName()));
+		openScriptEditor (url, QString (), url.isEmpty () || RKSettingsModuleCommandEditor::matchesScriptFileFilter (url.fileName()));
 	} else if (source->isType (RKMDIWindow::HelpWindow)) {
 		openHelpWindow (static_cast<RKHTMLWindow*> (source)->url ());
 	} else if (source->isType (RKMDIWindow::OutputWindow)) {

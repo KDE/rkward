@@ -2,7 +2,7 @@
                           rkrbackendprotocol  -  description
                              -------------------
     begin                : Thu Nov 04 2010
-    copyright            : (C) 2010, 2011, 2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2010-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -134,6 +134,15 @@ public:
     returns true, if a *new* piece of output started, i.e. the buffer was empty before this. */
 	bool handleOutput (const QString &output, int len, ROutput::ROutputType type, bool allow_blocking=true);
 
+	enum CaptureMode {
+		RecordMessages = 1,
+		RecordOutput = 2,
+		SuppressMessages = 4,
+		SuppressOutput = 8
+	};
+	void pushOutputCapture (int capture_mode);
+	QString popOutputCapture (bool highlighted);
+
 /** Flushes current output buffer. Meant to be called from RInterface::flushOutput, only.
 @param forcibly: if true, will always flush the output. If false, will flush the output only if the mutex can be locked without waiting. */
 	ROutputList flushOutput (bool forcibly=false);
@@ -147,6 +156,12 @@ private:
 	QMutex output_buffer_mutex;
 /** current length of output. If the backlog of output which has not yet been processed by the frontend becomes too long, output will be paused, automatically */
 	int out_buf_len;
+
+	struct OutputCapture {
+		ROutputList recorded;
+		int mode;
+	};
+	QList<OutputCapture> output_captures;
 };
 
 namespace RKRSharedFunctionality {

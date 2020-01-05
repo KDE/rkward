@@ -119,7 +119,7 @@ friend class RKConsolePart;
 /** This string stores the continuation prefix. */
 	QString iprefix;
 
-/** Create a proxy for the katepart action of the same name. The action is added to the actioncollection, automatically. Also any icon and label (but not shorcut) is copied.
+/** Create a proxy for the katepart action of the same name. The action is added to the actioncollection, automatically. Also any icon and label (but not shortcut) is copied.
 @param actionName Identifier of the action in katepartui.rc and rkconsolepart.rc
 @param label Label for the proxy action. If empty (default) copy the label from the katepartui
 @returns a pointer to the proxy action */

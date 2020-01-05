@@ -27,13 +27,12 @@ the specification of a topic is mandatory.
 ## Not run
 rk.demo("graphics")
 }
-\author{
-Thomas Friedrichsmeier \email{rkward-devel@kde.org}
-}
 \seealso{
 \code{\link{rk.edit.files}}, \code{\link{rk.show.files}},
   \code{\link{demo}}
 }
+\author{
+Thomas Friedrichsmeier \email{rkward-devel@kde.org}
+}
 \keyword{IO}
 \keyword{utilities}
-

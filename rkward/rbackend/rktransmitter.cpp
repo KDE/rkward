@@ -135,7 +135,7 @@ RData* RKRBackendSerializer::unserializeData (QDataStream &stream) {
 		ret->setData (data);
 	} else if (type == RData::RealVector) {
 		RData::RealStorage data;
-		stream >> data;;
+		stream >> data;
 		ret->setData (data);
 	} else if (type == RData::StructureVector) {
 		RData::RDataStorage data;

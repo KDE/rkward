@@ -2,7 +2,7 @@
                           rkpluginbrowser  -  description
                              -------------------
     begin                : Sat Mar 10 2005
-    copyright            : (C) 2005, 2006, 2007, 2009, 2010, 2012, 2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -20,6 +20,7 @@
 #include <QVBoxLayout>
 #include <QUrl>
 #include <QDir>
+#include <QCheckBox>
 
 #include <KLocalizedString>
 
@@ -56,12 +57,17 @@ RKPluginBrowser::RKPluginBrowser (const QDomElement &element, RKComponent *paren
 	selector = new GetFileNameWidget (this, mode, only_local, label_string, i18n ("Select"), xml->getStringAttribute (element, "initial", QString (), DL_INFO));
 	QString filter = xml->getStringAttribute (element, "filter", QString (), DL_INFO);
 	if (!filter.isEmpty ()) {
-		filter.append ("\nAll files (*)");
+		filter.append ("\n*|All files (*)");
 		selector->setFilter (filter);
 	}
 	connect (selector, &GetFileNameWidget::locationChanged, this, &RKPluginBrowser::textChangedFromUi);
 
 	vbox->addWidget (selector);
+
+	overwrite_confirm = new QCheckBox (this);
+	connect (overwrite_confirm, &QCheckBox::toggled, this, &RKPluginBrowser::validateInput);
+	vbox->addWidget (overwrite_confirm);
+	overwrite_confirm->setVisible (mode == GetFileNameWidget::SaveFile);
 
 	validation_timer.setSingleShot (true);
 	connect (&validation_timer, &QTimer::timeout, this, &RKPluginBrowser::validateInput);
@@ -73,6 +79,12 @@ RKPluginBrowser::RKPluginBrowser (const QDomElement &element, RKComponent *paren
 
 RKPluginBrowser::~RKPluginBrowser () {
 	RK_TRACE (PLUGIN);
+}
+
+RKComponentBase::ComponentStatus RKPluginBrowser::recursiveStatus () {
+	if (status == RKComponentBase::Processing) return status;
+	if (isInactive () || !required) return RKComponentBase::Satisfied;
+	return status;
 }
 
 void RKPluginBrowser::textChanged (RKComponentPropertyBase *) {
@@ -131,6 +143,8 @@ void RKPluginBrowser::validateInput () {
 				}
 			} else {
 				RK_ASSERT (mode == GetFileNameWidget::SaveFile);
+				overwrite_confirm->setText (i18n ("Overwrite?"));
+				overwrite_confirm->setEnabled (false);
 				if (!(fi.isWritable () || (!fi.exists () && QFileInfo (fi.dir ().absolutePath ()).isWritable ()))) {
 					tip = i18n ("The specified file is not writable.");
 					status = RKComponentBase::Unsatisfied;
@@ -138,9 +152,11 @@ void RKPluginBrowser::validateInput () {
 					tip = i18n ("You have to specify a filename (not directory) to write to.");
 					status = RKComponentBase::Unsatisfied;
 				} else if (fi.exists ()) {
+					overwrite_confirm->setText ("Overwrite? (The given file already exists)");
+					overwrite_confirm->setEnabled (true);
 					// TODO: soft warning (icon)
 					tip = i18n ("<b>Note:</b> The given file already exists, and will be modified / overwritten.");
-					status = RKComponentBase::Satisfied;
+					status = overwrite_confirm->isChecked () ? RKComponentBase::Satisfied : RKComponentBase::Unsatisfied;
 				} else {
 					status = RKComponentBase::Satisfied;
 				}

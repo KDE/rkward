@@ -366,6 +366,7 @@ void RKGraphicsDevice::stopGettingEvents () {
 }
 
 bool RKGraphicsDevice::eventFilter (QObject *watched, QEvent *event) {
+	if (!view) return false; // view was killed, but events may still be pending
 	RK_ASSERT (watched == view);
 
 	if (interaction_opcode == RKDLocator) {

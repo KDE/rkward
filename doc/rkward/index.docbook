@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
   <!ENTITY rkward '<application>RKWard</application>'>
-  <!ENTITY kapp "&rkward;"><!-- replace rkward here -->
+  <!ENTITY R '<application>R</application>'>
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % English "INCLUDE"><!-- change language only here -->
   
@@ -37,7 +37,6 @@ thanks ;-).
 
 <book lang="&language;">
 
-
 <bookinfo>
 <title>The RKWard Handbook</title>
 
@@ -64,21 +63,31 @@ thanks ;-).
      and in the FDL itself on how to use it. -->
 <legalnotice>&FDLNotice;</legalnotice>
 
-<!-- Date and version information of the documentation
-Don't forget to include this last date and this last revision number, we
-need them for translation coordination !
-Please respect the format of the date (DD/MM/YYYY) and of the version
-(V.MM.LL), it could be used by automation scripts.
-Do NOT change these in the translation. -->
+<!-- Date of the documentation
+Change date/releaseinfo only if
+   docbook is updated and verified to be valid for the current app version
+   or
+   docbook is proofread and verified to be valid for the current app version
+Don't forget to include this last date.
+Please respect the format of the date (YYYY-MM-DD),it is used by scripts.
+-->
+<date>2007-02-04</date>
 
-<date>04/02/2007</date>
+<!--version information of Frameworks/Plasma/Applications this documentation is valid for.
+Example:
+Frameworks xx.yy for docbooks in frameworks
+Plasma xx.yy for docbooks in plasma workspace
+Applications xx.yy for docbooks released as Applications
+xx.yy (Applications xx.yy) for docbooks with own version released as Applications
+$applicationname xx.yy for applications with independent release schedule (extragear/playground)
+-->
 <releaseinfo>0.4.6</releaseinfo>
 
 <!-- Abstract about this handbook -->
 
 <abstract>
 <para>
-&rkward; is a GUI frontend to the powerful R language for statistical computing.
+&rkward; is a GUI frontend to the powerful &R; language for statistical computing.
 </para>
 </abstract>
 
@@ -95,34 +104,33 @@ Please at least include KDE, the KDE package it is in, the name
 
 </bookinfo>
 
-
 <chapter id="introduction">
 <title>Introduction</title>
 <para>
-&kapp; is meant to be(come) an easy to use graphical frontend to the powerful R language for statistical computing. Since R is a full featured programming language, &kapp; will never be able to offer a complete GUI for everything in R. However, &kapp; strives to make common task simple, to provide an easy entry point for newcomers, while at the same time, transparent access to the full power of the underlying R language is provided for advanced users.
+&rkward; is meant to be(come) an easy to use graphical frontend to the powerful &R; language for statistical computing. Since &R; is a full featured programming language, &rkward; will never be able to offer a complete GUI for everything in &R;. However, &rkward; strives to make common task simple, to provide an easy entry point for newcomers, while at the same time, transparent access to the full power of the underlying &R; language is provided for advanced users.
 </para>
 </chapter>
 
 <chapter id="using-kapp">
-<title>Using &kapp;</title>
+<title>Using &rkward;</title>
 
 <para>
-Most documentation is available from inside RKWard itself by selecting Help->Help on RKWard from the Menu, NOT in this document!
+Most documentation is available from inside &rkward; itself by selecting <menuchoice><guimenu>Help</guimenu><guimenuitem>Help</guimenuitem></menuchoice> in &rkward; from the menu, <emphasis>not</emphasis> in this document.
 </para>
 <para>
-A useful guide to getting started with &kapp; is <ulink url="http://rkward.kde.org/User_Documentation">User Documentation Section in the &kapp; wiki</ulink>.
+A useful guide to getting started with &rkward; is <ulink url="https://rkward.kde.org/User_Documentation">User Documentation Section in the &rkward; wiki</ulink>.
 </para>
 <para>
-Please go there for an introduction to &kapp;, and contact us, if you can help with creating user documentation.
+Please go there for an introduction to &rkward;, and contact us, if you can help with creating user documentation.
 </para>
 
 </chapter>
 
 <chapter id="developers">
-<title>Developer's Guide to &kapp;</title>
+<title>Developer's Guide to &rkward;</title>
 
 <para>
-&kapp; can be extended without the need to recompile using plugins. Extensive documentation on this should be included with &kapp; in docbook format, and is available in HTML format <ulink url="http://api.kde.org/doc/rkwardplugins">here</ulink>. (TODO: figure out, how to include this in the docs).
+&rkward; can be extended without the need to recompile using plugins. Extensive documentation on this should be included with &rkward; in DocBook format, and is available in &HTML; format <ulink url="https://api.kde.org/doc/rkwardplugins">here</ulink>. (TODO: figure out, how to include this in the documentation).
 </para>
 
 <!-- Use refentries to describe APIs.  Refentries are fairly complicated and you
@@ -172,16 +180,3 @@ sgml-indent-step:0
 sgml-indent-data:nil
 End:
 -->
-
-
-
-
-
-
-
-
-
-
-
-
-

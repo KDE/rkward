@@ -439,14 +439,14 @@ public:
 /** reimplemented for setRequireTrue ()*/
 	bool isValid () override;
 
-/** string represenation of the options in ConvertMode. For use in XMLHelper::getMultiChoiceAttribute */
+/** string representation of the options in ConvertMode. For use in XMLHelper::getMultiChoiceAttribute */
 	static QString convertModeOptionString () { return ("equals;notequals;range;and;or"); };
 /** reimplemented to do raise a warning, and do nothing else. */
 	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString (), bool reconcile_requirements=true) override;
 /** reimplemented to do raise a warning, and do nothing else. */
 	bool setValue (const QString &value) override;
 public slots:
-/** unfortuntely, as the parent component likely does not know about us, we have to notify it manually of any changes. That's done from this slot */
+/** unfortunately, as the parent component likely does not know about us, we have to notify it manually of any changes. That's done from this slot */
 	void selfChanged (RKComponentPropertyBase *);
 /** a source property changed. Check the state */
 	void sourcePropertyChanged (RKComponentPropertyBase *);

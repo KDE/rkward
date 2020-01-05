@@ -28,13 +28,12 @@ plot (rnorm (10))
 dev.print (rk.printer.device)
 
 }
-\author{
-Thomas Friedrichsmeier \email{rkward-devel@kde.org}
-}
 \seealso{
 \code{\link{postscript}}, \code{\link{dev.print}},
   \code{\link{rk.graph.on}}
 }
+\author{
+Thomas Friedrichsmeier \email{rkward-devel@kde.org}
+}
 \keyword{device}
 \keyword{utilities}
-

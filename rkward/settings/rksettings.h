@@ -2,7 +2,7 @@
                           rksettings  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -55,7 +55,9 @@ public:
 
 	static void loadSettings (KConfig *config);
 	static void saveSettings (KConfig *config);
-	
+	/** Perform any settings validation that may need user interaction (and should happen after a GUI is available, and R has started up) */
+	static void validateSettingsInteractive ();
+
 	void enableApply ();
 	
 	static RKSettingsTracker* tracker () { return settings_tracker; };

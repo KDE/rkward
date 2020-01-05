@@ -22,7 +22,7 @@
 
 #include <kjob.h>
 
-/** Simple class to queue up a sequnce of KJob that will be executed one after the other */
+/** Simple class to queue up a sequence of KJob that will be executed one after the other */
 class RKJobSequence : public QObject {
 	Q_OBJECT
 public:

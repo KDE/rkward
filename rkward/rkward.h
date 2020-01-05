@@ -37,7 +37,7 @@ The main class of rkward. This is where all strings are tied together, controls 
 class RKWardMainWindow : public KParts::MainWindow {
 	Q_OBJECT
 public:
-/** construtor */
+/** constructor */
 	RKWardMainWindow ();
 /** destructor */
 	~RKWardMainWindow ();

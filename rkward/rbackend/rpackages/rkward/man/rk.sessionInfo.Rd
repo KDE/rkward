@@ -23,12 +23,11 @@ from the menu. Internally, this will call \code{rk.sessionInfo()}.
 
 rk.sessionInfo()
 }
-\author{
-Thomas Friedrichsmeier \email{rkward-devel@kde.org}
-}
 \seealso{
 \code{\link{sessionInfo}}
 }
+\author{
+Thomas Friedrichsmeier \email{rkward-devel@kde.org}
+}
 \keyword{misc}
 \keyword{utilities}
-

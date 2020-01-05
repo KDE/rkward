@@ -2,7 +2,7 @@
                           rcontainerobject  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004-2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2019 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -56,7 +56,7 @@ public:
 	type and with the name (if necessary) changed to a legal value. TODO: checking for and changing illegal names is not yet implemented */
 	RObject *createPendingChild (const QString &name, int position=-1, bool container=false, bool data_frame=false);
 
-	/** given child_name, constructs a name which is as close as possible to the orginial but valid (i.e. not already in use, not contaning illegal characters */
+	/** given child_name, constructs a name which is as close as possible to the orginial but valid (i.e. not already in use, not containing illegal characters */
 	QString validizeName (const QString &child_name, bool unique=true) const;
 
 	void moveChild (RObject* child, int from_index, int to_index);
@@ -72,7 +72,7 @@ private:
 	void updateRowNamesObject ();
 protected:
 	/** reimplemented from RObject to actually search for matching objects among the children */
-	RObject *findObjects (const QStringList &path, RObjectSearchMap *matches, const QString &op) override;
+	RObject::ObjectList findObjects (const QStringList &path, bool partial, const QString &op) override;
 
 	void updateChildren (RData *new_children);
 	RObjectMap childmap;

@@ -2,7 +2,7 @@
                           rkpluginbrowser  -  description
                              -------------------
     begin                : Sat Mar 10 2005
-    copyright            : (C) 2005, 2006, 2007, 2012, 2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2005 - 2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -26,10 +26,11 @@
 
 class GetFileNameWidget;
 class QDomElement;
+class QCheckBox;
 
 /** RKComponent to select one or more file(s) or directories
 
-TODO: Rename to somehting like RKComponentFileSelect or a similarilly ugly name
+TODO: Rename to something like RKComponentFileSelect or a similarly ugly name
 TODO: I ripped out multiple file selection for now. GetFileNameWidget should be extended to handle that internally (tfry)
 
 @author Adrien d'Hardemare
@@ -43,9 +44,9 @@ public:
 
 	RKComponentPropertyBase *selection;
 	QVariant value (const QString &modifier=QString ()) override { return (selection->value (modifier)); };
-	QStringList getUiLabelPair () const;
+	QStringList getUiLabelPair () const override;
 	int type () override { return ComponentBrowser; };
-	ComponentStatus recursiveStatus () override { return status; };
+	ComponentStatus recursiveStatus () override;
 public slots:
 	void textChangedFromUi ();
 	void textChanged (RKComponentPropertyBase *);
@@ -58,6 +59,7 @@ private:
 	bool updating;
 	bool only_local;
 	QString label_string;
+	QCheckBox* overwrite_confirm;
 };
 
 #endif

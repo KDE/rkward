@@ -10,6 +10,8 @@ rk.call.plugin(plugin, ..., submit.mode = c("manual", "auto", "submit"))
 \item{plugin}{character string, giving the name of the plugin to call. See
 Details.}
 
+\item{\dots}{arguments passed to the \code{plugin}}
+
 \item{submit.mode}{character string, specifying the submission mode:
 \code{"manual"} will open the plugin GUI and leave it to the user to
 submit it manually, \code{"auto"} will try to submit the plugin, if it can
@@ -21,8 +23,6 @@ generate an error, if it cannot be submitted. \code{"manual"} will always
 return immediately, \code{"auto"} may or may not return immediately, and
 \code{"submit"} will always wait until the plugin has been run, or produce
 an error.}
-
-\item{\dots}{arguments passed to the \code{plugin}}
 }
 \value{
 \code{rk.call.plugin} returns \code{TRUE} invisibly.
@@ -58,17 +58,17 @@ x1 <- rnorm (100)
 x2 <- rnorm (100, 2)
 
 rk.call.plugin ("rkward::t_test_two_vars", 
-  confint.state="1", conflevel.real="0.95", hypothesis.string="greater", paired.state="0", varequal.state="0", 
+  confint.state="1", conflevel.real="0.95", hypothesis.string="greater", paired.state="0",
+      varequal.state="0", 
   x.available="x1", y.available="x2", 
   submit.mode="submit")
 })
 
 }
-\author{
-Thomas Friedrichsmeier \email{rkward-devel@kde.org}
-}
 \seealso{
 \code{\link{rk.results}}, \url{rkward://page/rkward_output}
 }
+\author{
+Thomas Friedrichsmeier \email{rkward-devel@kde.org}
+}
 \keyword{utilities}
-
