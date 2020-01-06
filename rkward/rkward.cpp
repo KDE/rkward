@@ -470,6 +470,8 @@ void RKWardMainWindow::initToolViewsAndR () {
 	RKToolWindowList::registerToolWindow (RKDebugMessageWindow::instance (), "rkdebugmessages", RKToolWindowList::Nowhere, 0);
 
 	RKWorkplace::mainWorkplace ()->placeToolWindows ();
+	katePluginIntegration ()->loadPlugin ("katesearchplugin");
+//	insertChildClient (katePluginIntegration ());
 }
 
 void RKWardMainWindow::initActions() {  

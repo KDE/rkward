@@ -2,7 +2,7 @@
                           katepluginintegration  -  description
                              -------------------
     begin                : Mon Jun 12 2017
-    copyright            : (C) 2017 by Thomas Friedrichsmeier
+    copyright            : (C) 2017-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -18,17 +18,26 @@
 #ifndef KATEPLUGININTEGRATION_H
 #define KATEPLUGININTEGRATION_H
 
-#include <ktexteditor/mainwindow.h>
+#include <KTextEditor/MainWindow>
+#include <KPluginMetaData>
+#include <KXMLGUIClient>
 
-class KatePluginIntegration : public QObject {
+#include <QMap>
+
+class KatePluginIntegration : public QObject, public KXMLGUIClient {
 Q_OBJECT
 public:
 	KatePluginIntegration (QObject *parent);
 	KTextEditor::MainWindow *mainWindow () const { return main; };
+	QObject* loadPlugin (const QString& identifier);
 public slots:
 	QWidget *createToolView (KTextEditor::Plugin *plugin, const QString &identifier, KTextEditor::MainWindow::ToolViewPosition pos, const QIcon &icon, const QString &text);
+	KXMLGUIFactory *guiFactory ();
+	bool showToolView (QWidget *widget);
 private:
 	KTextEditor::MainWindow *main;
+	QMap<QString, KPluginMetaData> known_plugins;
+	QString idForPlugin(const KPluginMetaData &plugin) const;
 };
 
 #endif
