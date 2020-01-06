@@ -2,7 +2,7 @@
                           rkcommandeditorwindow  -  description
                              -------------------
     begin                : Mon Aug 30 2004
-    copyright            : (C) 2004-2019 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -152,6 +152,8 @@ public:
 	void currentHelpContext (QString* symbol, QString* package) override;
 
 	void highlightLine (int linenum);
+/** Returns the (main, non-preview) texteditor view in this editor. */
+	KTextEditor::View* getView () const { return m_view; };
 public slots:
 /** update Tab caption according to the current url. Display the filename-component of the URL, or - if not available - a more elaborate description of the url. Also appends a "[modified]" if appropriate */
 	void updateCaption ();

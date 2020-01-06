@@ -154,7 +154,9 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 	setHelpMenuEnabled (false);
 	setXMLFile ("rkwardui.rc");
 	insertChildClient (toplevel_actions = new RKTopLevelWindowGUI (this));
+	insertChildClient (katePluginIntegration ());
 	createShellGUI (true);
+	katePluginIntegration ()->loadPlugin ("katesearchplugin");
 	RKXMLGUISyncer::self ()->watchXMLGUIClientUIrc (this);
 
 	// replicate File->import and export menus into the Open/Save toolbar button menus
@@ -470,8 +472,6 @@ void RKWardMainWindow::initToolViewsAndR () {
 	RKToolWindowList::registerToolWindow (RKDebugMessageWindow::instance (), "rkdebugmessages", RKToolWindowList::Nowhere, 0);
 
 	RKWorkplace::mainWorkplace ()->placeToolWindows ();
-	katePluginIntegration ()->loadPlugin ("katesearchplugin");
-//	insertChildClient (katePluginIntegration ());
 }
 
 void RKWardMainWindow::initActions() {  
