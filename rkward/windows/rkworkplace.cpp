@@ -2,7 +2,7 @@
                           rkworkplace  -  description
                              -------------------
     begin                : Thu Sep 21 2006
-    copyright            : (C) 2006-2019 by Thomas Friedrichsmeier
+    copyright            : (C) 2006-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -627,14 +627,15 @@ void RKWorkplace::flushAllData () {
 	}
 }
 
-void RKWorkplace::closeWindow (RKMDIWindow *window) {
+bool RKWorkplace::closeWindow (RKMDIWindow *window) {
 	RK_TRACE (APP);
 	RK_ASSERT (windows.contains (window));
 
 	bool tool_window = window->isToolWindow ();
-	window->close (true);		// all the rest should happen in removeWindow ()
-	
-	if (tool_window) windowRemoved ();	// for regular windows, this happens in removeWindow(), already
+	bool closed = window->close (true);		// all the rest should happen in removeWindow ()
+
+	if (closed && tool_window) windowRemoved ();	// for regular windows, this happens in removeWindow(), already
+	return closed;
 }
 
 void RKWorkplace::closeActiveWindow () {
@@ -662,14 +663,16 @@ void RKWorkplace::closeAll (int type, int state) {
 	closeWindows (getObjectList (type, state));
 }
 
-void RKWorkplace::closeWindows (QList<RKMDIWindow*> windows) {
+bool RKWorkplace::closeWindows (QList<RKMDIWindow*> windows) {
 	RK_TRACE (APP);
 
+	bool allclosed = true;
 	RKWardMainWindow::getMain ()->lockGUIRebuild (true);
 	for (int i = windows.size () - 1; i >= 0; --i) {
-		closeWindow (windows[i]);
+		if (!closeWindow (windows[i])) allclosed = false;
 	}
 	RKWardMainWindow::getMain ()->lockGUIRebuild (false);
+	return allclosed;
 }
 
 void RKWorkplace::removeWindow (QObject *object) {

@@ -57,6 +57,11 @@ private slots:
 private:
 friend class KatePluginIntegration2;
 	KTextEditor::MainWindow *main;
+/*
+	struct ActivePlugin {
+		QWidget *inner;
+		RKMDIWindow *outer;
+	}; */
 	QMap<QString, KPluginMetaData> known_plugins;
 	QString idForPlugin(const KPluginMetaData &plugin) const;
 };

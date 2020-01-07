@@ -2,7 +2,7 @@
                           rkworkplace  -  description
                              -------------------
     begin                : Thu Sep 21 2006
-    copyright            : (C) 2006-2016 by Thomas Friedrichsmeier
+    copyright            : (C) 2006-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -136,11 +136,13 @@ public:
 /** Close the active (attached) window. Safe to call even if there is no current active window (no effect in that case) */
 	void closeActiveWindow ();
 /** Close the given window, whether it is attached or detached.
-@param window window to close */
-	void closeWindow (RKMDIWindow *window);
+@param window window to close
+@returns true, if the window was actually closed (not cancelled) */
+	bool closeWindow (RKMDIWindow *window);
 /** Close the given windows, whether they are attached or detached. TODO: Be smart about asking what to save.
-@param windows list windows to close */
-	void closeWindows (QList<RKMDIWindow*> windows);
+@param windows list windows to close
+@returns true, if _all_ windows were actually closed. */
+	bool closeWindows (QList<RKMDIWindow*> windows);
 /** Closes all windows of the given type(s). Default call (no arguments) closes all windows
 @param type: A bitwise OR of RKWorkplaceObjectType
 @param state: A bitwise OR of RKWorkplaceObjectState */
@@ -219,6 +221,7 @@ private:
 
 	RKToolWindowBar* tool_window_bars[TOOL_WINDOW_BAR_COUNT];
 friend class RKToolWindowBar;
+friend class KatePluginIntegration;
 	void placeInToolWindowBar (RKMDIWindow *window, int position);
 
 	/** Control placement of windows from R */
