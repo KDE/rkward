@@ -29,7 +29,7 @@ class RKTopLevelWindowGUI;
 class KRecentFilesAction;
 class KSqueezedTextLabel;
 class QAction;
-class KatePluginIntegration;
+class KatePluginIntegrationApp;
 
 /**
 The main class of rkward. This is where all strings are tied together, controls the initialization, and there are some of the most important slots for user actions. All real work is done elsewhere.
@@ -60,7 +60,7 @@ public:
 /** Merge files to be loaded, instead of closing windows / clearing workspace */
 	void setMergeLoads (bool merge) { merge_loads = merge; };
 
-	KatePluginIntegration *katePluginIntegration ();
+	KatePluginIntegrationApp *katePluginIntegration ();
 protected:
 	/** save Options/Settings. Includes general Options like all bar positions and status as well as the geometry and the recent file list */
 	void saveOptions();
@@ -203,7 +203,7 @@ private:
 	bool workspace_modified;
 	bool merge_loads;
 
-	KatePluginIntegration *katepluginintegration;
+	KatePluginIntegrationApp *katepluginintegration;
 };
 
 #endif // RKWARD_H

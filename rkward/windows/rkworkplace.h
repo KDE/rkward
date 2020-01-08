@@ -221,7 +221,7 @@ private:
 
 	RKToolWindowBar* tool_window_bars[TOOL_WINDOW_BAR_COUNT];
 friend class RKToolWindowBar;
-friend class KatePluginIntegration;
+friend class KatePluginIntegrationWindow;
 	void placeInToolWindowBar (RKMDIWindow *window, int position);
 
 	/** Control placement of windows from R */

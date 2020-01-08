@@ -25,15 +25,52 @@
 
 #include <QMap>
 
-class KatePluginIntegration : public QObject, public KXMLGUIClient {
-Q_OBJECT
+class KatePluginIntegrationWindow;
+
+/** This class provides implementations for the KTextEditor::Application interface.
+ *  Note that there is a separate interface KatePluginIntegrationWindow / KTextEditor::MainWindow that serves
+ *  as an abstraction of main windows. Even though - for now - we will be creating (detachable) plugins only in
+ *  one "main" window, we follow this separation to be on the safe side for future extensions (and also there is
+ *  a name-clash in on of the slots (openUrl()), otherwise. */
+class KatePluginIntegrationApp : public QObject {
+	Q_OBJECT
 public:
-	KatePluginIntegration(QObject *parent);
-	KTextEditor::MainWindow *mainWindow() const { return main; };
+	KatePluginIntegrationApp(QObject *parent);
+	~KatePluginIntegrationApp();
 	QObject* loadPlugin(const QString& identifier);
+	KatePluginIntegrationWindow *mainWindow() const { return window; };
+private slots:
+friend class KatePluginIntegrationWindow;
+	// These are the implementations of the KTextEditor::Application interface.
+	// NOTE that they are not technically overrides, but get invoked via QMetaObject::invokeMethod()
+	QList<KTextEditor::MainWindow *> mainWindows();
+	KTextEditor::MainWindow *activeMainWindow();
+	QList<KTextEditor::Document *> documents();
+	KTextEditor::Document *findUrl(const QUrl &url);
+	KTextEditor::Document *openUrl(const QUrl &url, const QString &encoding = QString());
+	bool closeDocument(KTextEditor::Document *document);
+	bool closeDocuments(const QList<KTextEditor::Document *> &documents);
+	KTextEditor::Plugin *plugin(const QString &name);
+private:
+	KatePluginIntegrationWindow *window;  // For now, only one main window
+	KTextEditor::Application *app;
+
+	struct PluginInfo {
+		KPluginMetaData data;
+		KTextEditor::Plugin *plugin;
+	};
+	QMap<QString, PluginInfo> known_plugins;
+	QString idForPlugin(const KPluginMetaData &plugin) const;
+};
+
+class KatePluginIntegrationWindow : public QObject, public KXMLGUIClient {
+	Q_OBJECT
+public:
+	KatePluginIntegrationWindow(KatePluginIntegrationApp *parent);
+	KTextEditor::MainWindow *mainWindow() const { return main; };
 private slots:
 	// These are the implementations of the KTextEditor::MainWindow interface.
-	// NOTE that they  are not technically overrides, but get invoked via QMetaObject::invokeMethod()
+	// NOTE that they are not technically overrides, but get invoked via QMetaObject::invokeMethod()
 	QWidget *createToolView(KTextEditor::Plugin *plugin, const QString &identifier, KTextEditor::MainWindow::ToolViewPosition pos, const QIcon &icon, const QString &text);
 	KXMLGUIFactory *guiFactory();
 	QWidget *window();
@@ -45,49 +82,24 @@ private slots:
 	void splitView(Qt::Orientation orientation);
 	bool closeSplitView(KTextEditor::View *view);
 	bool viewsInSameSplitView(KTextEditor::View *view1, KTextEditor::View *view2);
-	QWidget *createViewBar(KTextEditor::View *view);
-	void deleteViewBar(KTextEditor::View *view);
-	void addWidgetToViewBar(KTextEditor::View *view, QWidget *bar);
-	void showViewBar(KTextEditor::View *view);
-	void hideViewBar(KTextEditor::View *view);
 	bool moveToolView(QWidget *widget, KTextEditor::MainWindow::ToolViewPosition pos);
 	bool showToolView(QWidget *widget);
 	bool hideToolView(QWidget *widget);
 	QObject *pluginView(const QString &name);
-private:
-friend class KatePluginIntegration2;
-	KTextEditor::MainWindow *main;
-/*
-	struct ActivePlugin {
-		QWidget *inner;
-		RKMDIWindow *outer;
-	}; */
-	QMap<QString, KPluginMetaData> known_plugins;
-	QString idForPlugin(const KPluginMetaData &plugin) const;
-};
 
-/** This class provides implementations for the KTextEditor::Application interface. I'd love to merge it into
- *  KatePluginIntegration, but this is not possible due to a name clash in one of the slots (openUrl()). */
-class KatePluginIntegration2 : public QObject {
-	Q_OBJECT
-public:
-	KatePluginIntegration2(KatePluginIntegration *_buddy);
-	~KatePluginIntegration2();
-private slots:
-	// And these are the implementations of the KTextEditor::Application interface.
-	// NOTE that they are not technically overrides, but get invoked via QMetaObject::invokeMethod()
-	QList<KTextEditor::MainWindow *> mainWindows();
-	KTextEditor::MainWindow *activeMainWindow();
-	QList<KTextEditor::Document *> documents();
-	KTextEditor::Document *findUrl(const QUrl &url);
-	KTextEditor::Document *openUrl(const QUrl &url, const QString &encoding = QString());
-	bool closeDocument(KTextEditor::Document *document);
-	bool closeDocuments(const QList<KTextEditor::Document *> &documents);
-	KTextEditor::Plugin *plugin(const QString &name);
+/* Apparently, these are truely optional, so let's disable them for the time being
+	QWidget *createViewBar(KTextEditor::View *view);
+	void deleteViewBar(KTextEditor::View *view);
+	void showViewBar(KTextEditor::View *view);
+	void hideViewBar(KTextEditor::View *view);
+	void addWidgetToViewBar(KTextEditor::View *view, QWidget *bar); */
 private:
-friend class KatePluginIntegration;
-	KatePluginIntegration *buddy;
-	KTextEditor::Application *app;
+friend class KatePluginIntegrationApp;
+	KTextEditor::MainWindow *main;
+	void createPluginView(KTextEditor::Plugin* plugin);
+	QHash<KTextEditor::Plugin*, QObject*> plugin_views;
+
+	KatePluginIntegrationApp *app;
 };
 
 #endif

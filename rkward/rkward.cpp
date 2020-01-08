@@ -154,7 +154,7 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 	setHelpMenuEnabled (false);
 	setXMLFile ("rkwardui.rc");
 	insertChildClient (toplevel_actions = new RKTopLevelWindowGUI (this));
-	insertChildClient (katePluginIntegration ());
+	insertChildClient (katePluginIntegration ()->mainWindow ());
 	createShellGUI (true);
 	katePluginIntegration ()->loadPlugin ("katesearchplugin");
 	RKXMLGUISyncer::self ()->watchXMLGUIClientUIrc (this);
@@ -187,11 +187,11 @@ RKWardMainWindow::~RKWardMainWindow() {
 	delete RKComponentMap::getMap ();
 }
 
-KatePluginIntegration* RKWardMainWindow::katePluginIntegration () {
+KatePluginIntegrationApp* RKWardMainWindow::katePluginIntegration () {
 	RK_TRACE (APP);
 
 	if (!katepluginintegration) {
-		katepluginintegration = new KatePluginIntegration (this);
+		katepluginintegration = new KatePluginIntegrationApp (this);
 	}
 	return katepluginintegration;
 }

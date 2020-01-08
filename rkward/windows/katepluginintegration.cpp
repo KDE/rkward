@@ -33,28 +33,186 @@
 #include "rkworkplaceview.h"
 #include "rkcommandeditorwindow.h"
 #include "../misc/rkdummypart.h"
+#include "../settings/rksettingsmodulecommandeditor.h"
 
 #include "../debug.h"
 
-KatePluginIntegration::KatePluginIntegration (QObject *parent) : QObject (parent), KXMLGUIClient () {
+///  BEGIN  KTextEditor::Application interface
+
+KatePluginIntegrationApp::KatePluginIntegrationApp(QObject *parent) : QObject (parent) {
+	RK_TRACE (APP);
+
+	window = new KatePluginIntegrationWindow(this);
+	app = new KTextEditor::Application(this);
+	KTextEditor::Editor::instance()->setApplication(app);
+
+	// enumerate all available kate plugins
+	QVector<KPluginMetaData> plugins = KPluginLoader::findPlugins(QStringLiteral ("ktexteditor"), [](const KPluginMetaData &md) { return md.serviceTypes().contains(QLatin1String("KTextEditor/Plugin")); });
+    for (int i = plugins.size() -1; i >= 0; --i) {
+		PluginInfo info;
+		info.plugin = 0;
+		info.data = plugins[i];
+		// Note: creates a lookup-table *and* eliminates potential dupes later in the search path
+		known_plugins.insert(idForPlugin(info.data), info);
+
+		// TODO: remove me
+		qDebug ("%s", qPrintable(info.data.fileName()));
+	}
+}
+
+KatePluginIntegrationApp::~KatePluginIntegrationApp() {
+	RK_TRACE (APP);
+}
+
+QString KatePluginIntegrationApp::idForPlugin(const KPluginMetaData &plugin) const {
+	return QFileInfo(plugin.fileName()).baseName();
+}
+
+QObject* KatePluginIntegrationApp::loadPlugin (const QString& identifier) {
+	RK_TRACE (APP);
+
+	if (!known_plugins.contains (identifier)) {
+		RK_DEBUG (APP, DL_WARNING, "Plugin %s is not known", qPrintable (identifier));
+		return 0;
+	}
+
+	KPluginFactory *factory = KPluginLoader(known_plugins[identifier].data.fileName ()).factory ();
+	if (factory) {
+		KTextEditor::Plugin *plugin = factory->create<KTextEditor::Plugin>(this, QVariantList () << identifier);
+		if (plugin) {
+			known_plugins[identifier].plugin = plugin;
+			emit KTextEditor::Editor::instance()->application()->pluginCreated(identifier, plugin);
+			mainWindow()->createPluginView(plugin);
+			return plugin;
+		}
+	}
+
+    return 0;
+	// TODO load config, create gui?
+}
+
+QList<KTextEditor::MainWindow *> KatePluginIntegrationApp::mainWindows() {
+	RK_TRACE (APP);
+	QList<KTextEditor::MainWindow *> ret;
+	ret.append (window->main);
+	return ret;
+}
+
+KTextEditor::MainWindow *KatePluginIntegrationApp::activeMainWindow() {
+	RK_TRACE (APP);
+	return window->main;
+}
+
+RKCommandEditorWindow* findWindowForView(KTextEditor::View *view) {
+	RK_TRACE (APP);
+
+	QList<RKMDIWindow*> w = RKWorkplace::mainWorkplace()->getObjectList(RKMDIWindow::CommandEditorWindow);
+	for (int i = 0; i < w.size(); ++i) {
+		KTextEditor::View *v = static_cast<RKCommandEditorWindow*>(w[i])->getView();
+		if (v && (v == view)) {
+			return static_cast<RKCommandEditorWindow*>(w[i]);
+		}
+	}
+	return 0;
+}
+
+RKCommandEditorWindow* findWindowForDocument(KTextEditor::Document *document) {
+	RK_TRACE (APP);
+
+	QList<RKMDIWindow*> w = RKWorkplace::mainWorkplace()->getObjectList(RKMDIWindow::CommandEditorWindow);
+	for (int i = 0; i < w.size(); ++i) {
+		KTextEditor::View *v = static_cast<RKCommandEditorWindow*>(w[i])->getView();
+		if (v && (v->document() == document)) {
+			return static_cast<RKCommandEditorWindow*>(w[i]);
+		}
+	}
+	return 0;
+}
+
+QList<KTextEditor::Document *> KatePluginIntegrationApp::documents() {
+	RK_TRACE (APP);
+
+	QList<RKMDIWindow*> w = RKWorkplace::mainWorkplace()->getObjectList(RKMDIWindow::CommandEditorWindow);
+	QList<KTextEditor::Document*> ret;
+	for (int i = 0; i < w.size (); ++i) {
+		KTextEditor::View *v = static_cast<RKCommandEditorWindow*>(w[i])->getView();
+		if (v) ret.append (v->document());
+	}
+	return ret;
+}
+
+KTextEditor::Document *KatePluginIntegrationApp::findUrl(const QUrl &url) {
+	RK_TRACE (APP);
+
+	QUrl _url = url.adjusted(QUrl::NormalizePathSegments);  // Needed?
+	QList<RKMDIWindow*> w = RKWorkplace::mainWorkplace()->getObjectList(RKMDIWindow::CommandEditorWindow);
+	for (int i = 0; i < w.size (); ++i) {
+		if (_url == static_cast<RKCommandEditorWindow*>(w[i])->url().adjusted(QUrl::NormalizePathSegments)) {
+			KTextEditor::View *v = static_cast<RKCommandEditorWindow*>(w[i])->getView();
+			if (v) return v->document();
+		}
+	}
+	return 0;
+}
+
+KTextEditor::Document *KatePluginIntegrationApp::openUrl(const QUrl &url, const QString &encoding) {
+	RK_TRACE (APP);
+
+	KTextEditor::View *v = window->openUrl(url, encoding);
+	if (v) return v->document();
+	return 0;
+}
+
+bool KatePluginIntegrationApp::closeDocument(KTextEditor::Document *document) {
+	RK_TRACE (APP);
+
+	RKMDIWindow *w = findWindowForDocument(document);
+	if (w) return RKWorkplace::mainWorkplace()->closeWindow(w); // NOTE: Closes only a single view of the document
+	return false;
+}
+
+bool KatePluginIntegrationApp::closeDocuments(const QList<KTextEditor::Document *> &documents) {
+	RK_TRACE (APP);
+
+	bool allfound = true;
+	QList<RKMDIWindow*> w = RKWorkplace::mainWorkplace()->getObjectList(RKMDIWindow::CommandEditorWindow);
+	QList<RKMDIWindow*> toclose;
+	for (int i = 0; i < documents.size(); ++i) {
+		bool found = false;
+		for (int j = 0; j < w.size(); ++j) {
+			KTextEditor::View *v = static_cast<RKCommandEditorWindow*>(w[j])->getView();
+			if (v && v->document() == documents[i]) {
+				toclose.append(w[i]);
+				found = true;
+				break;
+			}
+		}
+		if (!found) allfound = false;
+	}
+
+	return RKWorkplace::mainWorkplace()->closeWindows(toclose) && allfound;
+}
+
+KTextEditor::Plugin *KatePluginIntegrationApp::plugin(const QString &name) {
+	RK_TRACE (APP);
+
+	if (known_plugins.contains(name)) {
+		return known_plugins[name].plugin;
+	}
+	return 0;
+}
+
+///  END  KTextEditor::Application interface
+///  BEGIN  KTextEditor::MainWindow interface
+
+
+KatePluginIntegrationWindow::KatePluginIntegrationWindow (KatePluginIntegrationApp *parent) : QObject (parent), KXMLGUIClient () {
 	RK_TRACE (APP);
 
 	// This one is passed to each created plugin
 	main = new KTextEditor::MainWindow(this);
 	// While this one may be accessed from plugins via KTextEditor::Editor::instance()->application()
-	KatePluginIntegration2 *buddy = new KatePluginIntegration2(this);
-	KTextEditor::Editor::instance()->setApplication (buddy->app);
-
-	// enumerate all available kate plugins
-	QVector<KPluginMetaData> plugins = KPluginLoader::findPlugins (QStringLiteral ("ktexteditor"), [](const KPluginMetaData &md) { return md.serviceTypes().contains(QLatin1String("KTextEditor/Plugin")); });
-    for (int i = plugins.size() -1; i >= 0; --i) {
-		KPluginMetaData &plugin = plugins[i];
-		// Note: creates a lookup-table *and* eliminates potential dupes later in the search path 
-		known_plugins.insert (idForPlugin (plugin), plugin);
-
-		qDebug ("%s", qPrintable(plugin.fileName()));
-	}
-	// TODO
+	app = parent;
 }
 
 /** This is a bit lame, but the plugin does not add itself to the parent widget's layout by itself. So we need this class
@@ -95,11 +253,9 @@ public:
 	QWidget* wrapper;
 };
 
-QWidget * KatePluginIntegration::createToolView (KTextEditor::Plugin *plugin, const QString &identifier, KTextEditor::MainWindow::ToolViewPosition pos, const QIcon &icon, const QString &text) {
+QWidget * KatePluginIntegrationWindow::createToolView (KTextEditor::Plugin *plugin, const QString &identifier, KTextEditor::MainWindow::ToolViewPosition pos, const QIcon &icon, const QString &text) {
 	RK_TRACE (APP);
-	RKDebug (APP, DL_ERROR, "createToolView");
 
-	// TODO: Save reference
 	// TODO: Set proper RKMDIWindow:type
 	KatePluginToolWindow *window = new KatePluginToolWindow(RKWorkplace::mainWorkplace()->view(), RKMDIWindow::ConsoleWindow);
 	window->setCaption(text);
@@ -109,41 +265,18 @@ QWidget * KatePluginIntegration::createToolView (KTextEditor::Plugin *plugin, co
 	return window->wrapper;
 }
 
-bool KatePluginIntegration::showToolView (QWidget *widget) {
+bool KatePluginIntegrationWindow::showToolView (QWidget *widget) {
 	RK_TRACE (APP);
-	RKDebug (APP, DL_ERROR, "showToolView");
-	widget->show ();
+	RKMDIWindow *w = qobject_cast<RKMDIWindow*>(widget);
+	if (w) w->activate();
+	else {
+		RK_ASSERT(w);
+		widget->show();
+	}
 	return true;
-	// TODO
 }
 
-QString KatePluginIntegration::idForPlugin(const KPluginMetaData &plugin) const {
-	return QFileInfo(plugin.fileName()).baseName();
-}
-
-QObject* KatePluginIntegration::loadPlugin (const QString& identifier) {
-	RK_TRACE (APP);
-
-	if (!known_plugins.contains (identifier)) {
-		RK_DEBUG (APP, DL_WARNING, "Plugin %s is not known", qPrintable (identifier));
-		return 0;
-	}
-
-	KPluginFactory *factory = KPluginLoader (known_plugins[identifier].fileName ()).factory ();
-	if (factory) {
-		KTextEditor::Plugin *plugin = factory->create<KTextEditor::Plugin> (this, QVariantList () << identifier);
-		if (plugin) {
-			emit KTextEditor::Editor::instance ()->application ()->pluginCreated (identifier, plugin);
-			plugin->createView (main);
-			return plugin;
-		}
-	}
-
-    return 0;
-	// TODO
-}
-
-KXMLGUIFactory *KatePluginIntegration::guiFactory () {
+KXMLGUIFactory *KatePluginIntegrationWindow::guiFactory () {
 	RK_TRACE (APP);
 
 	// We'd rather like to add the plugin to our own RKMDIWindows, rather than
@@ -153,13 +286,13 @@ KXMLGUIFactory *KatePluginIntegration::guiFactory () {
 	// TODO
 }
 
-QWidget *KatePluginIntegration::window() {
+QWidget *KatePluginIntegrationWindow::window() {
 	RK_TRACE (APP);
-	return 0;
-	// TODO
+
+	return RKWorkplace::mainWorkplace()->view()->window();
 }
 
-QList<KTextEditor::View *> KatePluginIntegration::views() {
+QList<KTextEditor::View *> KatePluginIntegrationWindow::views() {
 	RK_TRACE (APP);
 
 	QList<RKMDIWindow*> w = RKWorkplace::mainWorkplace()->getObjectList(RKMDIWindow::CommandEditorWindow);
@@ -170,7 +303,7 @@ QList<KTextEditor::View *> KatePluginIntegration::views() {
 	return ret;
 }
 
-KTextEditor::View *KatePluginIntegration::activeView() {
+KTextEditor::View *KatePluginIntegrationWindow::activeView() {
 	RK_TRACE (APP);
 
 	RKMDIWindow *w = RKWorkplace::mainWorkplace()->activeWindow(RKMDIWindow::AnyWindowState);
@@ -180,36 +313,10 @@ KTextEditor::View *KatePluginIntegration::activeView() {
 	return 0;
 	// TODO: This probably isn't right: As far as RKWard is concerned, the active window will most likely be the tool window
 	//       at this point, while the intention will be to get an active window that the tool should operate on.
-	// TODO: Further, it looks like some plugins assume this cannot return 0, so maybe wee need to create a new window on the fly, if needed.
+	// TODO: Further, it looks like some plugins assume this cannot return 0, so maybe wee need to create a new window on the fly, if needed. It's a bug in those plugins, but one that seems likely enough, as kate always has an active view.
 }
 
-RKCommandEditorWindow* findWindowForView(KTextEditor::View *view) {
-	RK_TRACE (APP);
-
-	QList<RKMDIWindow*> w = RKWorkplace::mainWorkplace()->getObjectList(RKMDIWindow::CommandEditorWindow);
-	for (int i = 0; i < w.size(); ++i) {
-		KTextEditor::View *v = static_cast<RKCommandEditorWindow*>(w[i])->getView();
-		if (v && (v == view)) {
-			return static_cast<RKCommandEditorWindow*>(w[i]);
-		}
-	}
-	return 0;
-}
-
-RKCommandEditorWindow* findWindowForDocument(KTextEditor::Document *document) {
-	RK_TRACE (APP);
-
-	QList<RKMDIWindow*> w = RKWorkplace::mainWorkplace()->getObjectList(RKMDIWindow::CommandEditorWindow);
-	for (int i = 0; i < w.size(); ++i) {
-		KTextEditor::View *v = static_cast<RKCommandEditorWindow*>(w[i])->getView();
-		if (v && (v->document() == document)) {
-			return static_cast<RKCommandEditorWindow*>(w[i]);
-		}
-	}
-	return 0;
-}
-
-KTextEditor::View *KatePluginIntegration::activateView(KTextEditor::Document *document) {
+KTextEditor::View *KatePluginIntegrationWindow::activateView(KTextEditor::Document *document) {
 	RK_TRACE (APP);
 
 	RKCommandEditorWindow* w = findWindowForDocument(document);
@@ -220,36 +327,28 @@ KTextEditor::View *KatePluginIntegration::activateView(KTextEditor::Document *do
 	return 0;
 }
 
-KTextEditor::View *KatePluginIntegration::openUrl(const QUrl &url, const QString &encoding) {
+KTextEditor::View *KatePluginIntegrationWindow::openUrl(const QUrl &url, const QString &encoding) {
 	RK_TRACE (APP);
+	RKMDIWindow *w = RKWorkplace::mainWorkplace()->openScriptEditor(url, encoding, RKSettingsModuleCommandEditor::matchesScriptFileFilter(url.fileName()));
+	if (w) return static_cast<RKCommandEditorWindow*>(w)->getView();
+
+	RK_ASSERT(w);  // should not happen
 	return 0;
-	// TODO
 }
 
-QWidget *KatePluginIntegration::createViewBar(KTextEditor::View *view) {
+QObject *KatePluginIntegrationWindow::pluginView(const QString &name) {
 	RK_TRACE (APP);
-	return 0;
-	// TODO
+
+	return plugin_views.value(app->plugin(name));
 }
 
-QObject *KatePluginIntegration::pluginView(const QString &name) {
-	RK_TRACE (APP);
-	return 0;
-	// TODO
-}
-
-void KatePluginIntegration::addWidgetToViewBar(KTextEditor::View* view, QWidget* bar) {
-	RK_TRACE (APP);
-	// TODO
-}
-
-bool KatePluginIntegration::closeSplitView(KTextEditor::View* view) {
+bool KatePluginIntegrationWindow::closeSplitView(KTextEditor::View* view) {
 	RK_TRACE (APP);
 	return false;
 	// TODO
 }
 
-bool KatePluginIntegration::closeView(KTextEditor::View* view) {
+bool KatePluginIntegrationWindow::closeView(KTextEditor::View* view) {
 	RK_TRACE (APP);
 
 	RKMDIWindow *w = findWindowForView(view);
@@ -257,136 +356,58 @@ bool KatePluginIntegration::closeView(KTextEditor::View* view) {
 	return false;
 }
 
-void KatePluginIntegration::deleteViewBar(KTextEditor::View* view) {
-	RK_TRACE (APP);
-	// TODO
-}
 
-bool KatePluginIntegration::hideToolView(QWidget* widget) {
-	RK_TRACE (APP);
-	return false;
-	// TODO
-}
-
-void KatePluginIntegration::hideViewBar(KTextEditor::View* view) {
-	RK_TRACE (APP);
-	// TODO
-}
-
-bool KatePluginIntegration::moveToolView(QWidget* widget, KTextEditor::MainWindow::ToolViewPosition pos) {
-	RK_TRACE (APP);
-	// TODO
-	return false;
-}
-
-void KatePluginIntegration::showViewBar(KTextEditor::View* view) {
-	RK_TRACE (APP);
-	// TODO
-}
-
-void KatePluginIntegration::splitView(Qt::Orientation orientation) {
-	RK_TRACE (APP);
-	// TODO
-}
-
-bool KatePluginIntegration::viewsInSameSplitView(KTextEditor::View* view1, KTextEditor::View* view2) {
-	RK_TRACE (APP);
-	// TODO
-	return false;
-}
-
-///  BEGIN  KTextEditor::Application interface
-
-KatePluginIntegration2::KatePluginIntegration2(KatePluginIntegration *_buddy) : QObject (_buddy) {
-	RK_TRACE (APP);
-	buddy = _buddy;
-	app = new KTextEditor::Application (this);
-}
-
-KatePluginIntegration2::~KatePluginIntegration2() {
-	RK_TRACE (APP);
-}
-
-QList<KTextEditor::MainWindow *> KatePluginIntegration2::mainWindows() {
-	RK_TRACE (APP);
-	QList<KTextEditor::MainWindow *> ret;
-	ret.append (buddy->main);
-	return ret;
-}
-
-KTextEditor::MainWindow *KatePluginIntegration2::activeMainWindow() {
-	RK_TRACE (APP);
-	return buddy->main;
-}
-
-QList<KTextEditor::Document *> KatePluginIntegration2::documents() {
+bool KatePluginIntegrationWindow::hideToolView(QWidget* widget) {
 	RK_TRACE (APP);
 
-	QList<RKMDIWindow*> w = RKWorkplace::mainWorkplace()->getObjectList(RKMDIWindow::CommandEditorWindow);
-	QList<KTextEditor::Document*> ret;
-	for (int i = 0; i < w.size (); ++i) {
-		KTextEditor::View *v = static_cast<RKCommandEditorWindow*>(w[i])->getView(); 
-		if (v) ret.append (v->document());
+	RKMDIWindow *w = qobject_cast<RKMDIWindow*>(widget);
+	if (w) w->close(false);
+	else {
+		RK_ASSERT(w);
+		widget->hide();
 	}
-	return ret;
+	return true;
 }
 
-KTextEditor::Document *KatePluginIntegration2::findUrl(const QUrl &url) {
+/* These appear to be truly optional, so let's disable them for now.
+void KatePluginIntegrationWindow::hideViewBar(KTextEditor::View* view) {}
+void KatePluginIntegrationWindow::showViewBar(KTextEditor::View* view) {}
+void KatePluginIntegrationWindow::deleteViewBar(KTextEditor::View* view) {}
+void KatePluginIntegrationWindow::addWidgetToViewBar(KTextEditor::View* view, QWidget* bar) {}
+QWidget *KatePluginIntegrationWindow::createViewBar(KTextEditor::View *view) {} */
+
+bool KatePluginIntegrationWindow::moveToolView(QWidget* widget, KTextEditor::MainWindow::ToolViewPosition pos) {
 	RK_TRACE (APP);
 
-	QUrl _url = url.adjusted(QUrl::NormalizePathSegments);  // Needed?
-	QList<RKMDIWindow*> w = RKWorkplace::mainWorkplace()->getObjectList(RKMDIWindow::CommandEditorWindow);
-	for (int i = 0; i < w.size (); ++i) {
-		if (_url == static_cast<RKCommandEditorWindow*>(w[i])->url().adjusted(QUrl::NormalizePathSegments)) {
-			KTextEditor::View *v = static_cast<RKCommandEditorWindow*>(w[i])->getView(); 
-			if (v) return v->document();
-		}
+	RKMDIWindow *w = qobject_cast<RKMDIWindow*>(widget);
+	if (w) {
+		RKWorkplace::mainWorkplace ()->placeInToolWindowBar (w, pos);
+		return true;
 	}
-	return 0;
-}
-
-KTextEditor::Document *KatePluginIntegration2::openUrl(const QUrl &url, const QString &encoding) {
-	RK_TRACE (APP);
-
-	KTextEditor::View *v = buddy->openUrl(url, encoding);
-	if (v) return v->document();
-	return 0;
-}
-
-bool KatePluginIntegration2::closeDocument(KTextEditor::Document *document) {
-	RK_TRACE (APP);
-
-	RKMDIWindow *w = findWindowForDocument(document);
-	if (w) return RKWorkplace::mainWorkplace()->closeWindow(w); // NOTE: Closes only a single view of the document
 	return false;
 }
 
-bool KatePluginIntegration2::closeDocuments(const QList<KTextEditor::Document *> &documents) {
+void KatePluginIntegrationWindow::splitView(Qt::Orientation orientation) {
 	RK_TRACE (APP);
-
-	bool allfound = true;
-	QList<RKMDIWindow*> w = RKWorkplace::mainWorkplace()->getObjectList(RKMDIWindow::CommandEditorWindow);
-	QList<RKMDIWindow*> toclose;
-	for (int i = 0; i < documents.size(); ++i) {
-		bool found = false;
-		for (int j = 0; j < w.size(); ++j) {
-			KTextEditor::View *v = static_cast<RKCommandEditorWindow*>(w[j])->getView();
-			if (v && v->document() == documents[i]) {
-				toclose.append(w[i]);
-				found = true;
-				break;
-			}
-		}
-		if (!found) allfound = false;
-	}
-
-	return RKWorkplace::mainWorkplace()->closeWindows(toclose) && allfound;
-}
-
-KTextEditor::Plugin *KatePluginIntegration2::plugin(const QString &name) {
-	RK_TRACE (APP);
-	return 0;
 	// TODO
 }
+
+bool KatePluginIntegrationWindow::viewsInSameSplitView(KTextEditor::View* view1, KTextEditor::View* view2) {
+	RK_TRACE (APP);
+	// TODO
+	return false;
+}
+
+void KatePluginIntegrationWindow::createPluginView(KTextEditor::Plugin* plugin) {
+	RK_TRACE (APP);
+
+	QObject *view = plugin->createView(main);
+	plugin_views.insert(plugin, view);
+	connect(plugin, &QObject::destroyed, [&]() { plugin_views.remove(plugin); });
+}
+
+// TODO: Don't forget to make sure to emit all the signals!
+
+///  END  KTextEditor::MainWindow interface
 
 #include "katepluginintegration.moc"
