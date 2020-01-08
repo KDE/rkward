@@ -136,9 +136,10 @@ QList<KTextEditor::Document *> KatePluginIntegrationApp::documents() {
 	QList<KTextEditor::Document*> ret;
 	for (int i = 0; i < w.size (); ++i) {
 		KTextEditor::View *v = static_cast<RKCommandEditorWindow*>(w[i])->getView();
-		if (v) ret.append (v->document());
+		if (v) ret.append(v->document());
 	}
 	return ret;
+	// TODO: This should never return an empty list, as some plugins depend on it. See activeView().
 }
 
 KTextEditor::Document *KatePluginIntegrationApp::findUrl(const QUrl &url) {
@@ -344,8 +345,10 @@ QObject *KatePluginIntegrationWindow::pluginView(const QString &name) {
 
 bool KatePluginIntegrationWindow::closeSplitView(KTextEditor::View* view) {
 	RK_TRACE (APP);
-	return false;
-	// TODO
+
+	// TODO: This should close the area that this view is in, not necessarily the view itself. However, if the same doc
+	//       is also present in the area to merge into, then close this view, keeping the other.
+	return closeView(view);
 }
 
 bool KatePluginIntegrationWindow::closeView(KTextEditor::View* view) {
@@ -389,12 +392,13 @@ bool KatePluginIntegrationWindow::moveToolView(QWidget* widget, KTextEditor::Mai
 
 void KatePluginIntegrationWindow::splitView(Qt::Orientation orientation) {
 	RK_TRACE (APP);
-	// TODO
+	RKWorkplace::mainWorkplace()->view()->splitView(orientation);
 }
 
 bool KatePluginIntegrationWindow::viewsInSameSplitView(KTextEditor::View* view1, KTextEditor::View* view2) {
 	RK_TRACE (APP);
-	// TODO
+	// TODO not sure what the semantics of this really are. The two views are in the same view area (not visible, simultaneously), or in two areas split side-by-side?
+	// However, this is essentially unused in kate.
 	return false;
 }
 
