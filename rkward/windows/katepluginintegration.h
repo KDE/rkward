@@ -41,6 +41,7 @@ public:
 	KatePluginIntegrationWindow *mainWindow() const { return window; };
 private slots:
 friend class KatePluginIntegrationWindow;
+	void savePluginConfig();
 	// These are the implementations of the KTextEditor::Application interface.
 	// NOTE that they are not technically overrides, but get invoked via QMetaObject::invokeMethod()
 	QList<KTextEditor::MainWindow *> mainWindows();
@@ -54,6 +55,9 @@ friend class KatePluginIntegrationWindow;
 private:
 	KatePluginIntegrationWindow *window;  // For now, only one main window
 	KTextEditor::Application *app;
+/** Provides a hidden dummy view (created on the fly as needed), for plugins that assume there is always at least one view/document around. */
+	KTextEditor::View *dummyView();
+	KTextEditor::View *dummy_view;
 
 	struct PluginInfo {
 		KPluginMetaData data;

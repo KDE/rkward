@@ -27,6 +27,9 @@
 #include <KTextEditor/Editor>
 #include <KTextEditor/Application>
 #include <KTextEditor/Plugin>
+#include <KTextEditor/SessionConfigInterface>
+#include <KSharedConfig>
+#include <KConfigGroup>
 
 #include "../rkward.h"
 #include "rkworkplace.h"
@@ -42,6 +45,7 @@
 KatePluginIntegrationApp::KatePluginIntegrationApp(QObject *parent) : QObject (parent) {
 	RK_TRACE (APP);
 
+	dummy_view = 0;
 	window = new KatePluginIntegrationWindow(this);
 	app = new KTextEditor::Application(this);
 	KTextEditor::Editor::instance()->setApplication(app);
@@ -64,6 +68,18 @@ KatePluginIntegrationApp::~KatePluginIntegrationApp() {
 	RK_TRACE (APP);
 }
 
+KTextEditor::View *KatePluginIntegrationApp::dummyView() {
+	if (!dummy_view) {
+		RK_TRACE (APP);
+		KTextEditor::Document *doc = KTextEditor::Editor::instance()->createDocument (this);
+		dummy_view = doc->createView(0);
+		dummy_view->hide();
+		// Make sure it does not accumulate cruft.
+		connect(doc, &KTextEditor::Document::textChanged, doc, &KTextEditor::Document::clear);
+	}
+	return dummy_view;
+}
+
 QString KatePluginIntegrationApp::idForPlugin(const KPluginMetaData &plugin) const {
 	return QFileInfo(plugin.fileName()).baseName();
 }
@@ -83,12 +99,33 @@ QObject* KatePluginIntegrationApp::loadPlugin (const QString& identifier) {
 			known_plugins[identifier].plugin = plugin;
 			emit KTextEditor::Editor::instance()->application()->pluginCreated(identifier, plugin);
 			mainWindow()->createPluginView(plugin);
+			QObject* created = mainWindow()->pluginView(identifier);
+			if (created) {
+				KTextEditor::SessionConfigInterface *interface = qobject_cast<KTextEditor::SessionConfigInterface *>(created);
+				if (interface) {
+					// NOTE: Some plugins (noteably the Search in files plugin) will misbehave, unless readSessionConfig has been called!
+					KConfigGroup group = KSharedConfig::openConfig()->group(QStringLiteral("KatePlugin:%1:").arg(identifier));
+					interface->readSessionConfig(group);
+				}
+			}
 			return plugin;
 		}
 	}
 
     return 0;
-	// TODO load config, create gui?
+}
+
+void KatePluginIntegrationApp::savePluginConfig() {
+	RK_TRACE (APP);
+
+	for (auto it = known_plugins.constBegin(); it !=  known_plugins.constEnd(); ++it) {
+		KTextEditor::Plugin* plugin = it.value().plugin;
+		if (!plugin) continue;
+		KTextEditor::SessionConfigInterface * interface = qobject_cast<KTextEditor::SessionConfigInterface *>(mainWindow()->pluginView(it.key()));
+		if (!interface) continue;
+		KConfigGroup group = KSharedConfig::openConfig()->group(QStringLiteral("KatePlugin:%1:").arg(it.key()));
+		interface->writeSessionConfig(group);
+	}
 }
 
 QList<KTextEditor::MainWindow *> KatePluginIntegrationApp::mainWindows() {
@@ -138,8 +175,11 @@ QList<KTextEditor::Document *> KatePluginIntegrationApp::documents() {
 		KTextEditor::View *v = static_cast<RKCommandEditorWindow*>(w[i])->getView();
 		if (v) ret.append(v->document());
 	}
+	if (ret.isEmpty()) {
+		// See the NOTE in KatePluginIntegrationWindow::activeView()
+		ret.append(dummyView()->document());
+	}
 	return ret;
-	// TODO: This should never return an empty list, as some plugins depend on it. See activeView().
 }
 
 KTextEditor::Document *KatePluginIntegrationApp::findUrl(const QUrl &url) {
@@ -268,7 +308,7 @@ QWidget * KatePluginIntegrationWindow::createToolView (KTextEditor::Plugin *plug
 
 bool KatePluginIntegrationWindow::showToolView (QWidget *widget) {
 	RK_TRACE (APP);
-	RKMDIWindow *w = qobject_cast<RKMDIWindow*>(widget);
+	RKMDIWindow *w = qobject_cast<RKMDIWindow*>(widget->parentWidget());
 	if (w) w->activate();
 	else {
 		RK_ASSERT(w);
@@ -282,7 +322,6 @@ KXMLGUIFactory *KatePluginIntegrationWindow::guiFactory () {
 
 	// We'd rather like to add the plugin to our own RKMDIWindows, rather than
 	// allowing it direct access to the guiFactory()
-	qDebug ("%p", sender());
 	return factory ();
 	// TODO
 }
@@ -311,10 +350,13 @@ KTextEditor::View *KatePluginIntegrationWindow::activeView() {
 	if (w && w->isType (RKMDIWindow::CommandEditorWindow)) {
 		return static_cast<RKCommandEditorWindow*>(w)->getView();
 	}
-	return 0;
+	// NOTE: It looks like some plugins assume this cannot return 0. That's a bug in the plugin, but still one that could
+	//       be quite prevalent, as in kate, that assumption holds. So, to be safe, we create a dummy window on the fly.
+	RKMDIWindow* candidate =  RKWorkplace::getHistory()->previousDocumentWindow();
+	if (candidate && candidate->isType(RKMDIWindow::CommandEditorWindow)) return static_cast<RKCommandEditorWindow*>(candidate)->getView();
+	return app->dummyView();
 	// TODO: This probably isn't right: As far as RKWard is concerned, the active window will most likely be the tool window
 	//       at this point, while the intention will be to get an active window that the tool should operate on.
-	// TODO: Further, it looks like some plugins assume this cannot return 0, so maybe wee need to create a new window on the fly, if needed. It's a bug in those plugins, but one that seems likely enough, as kate always has an active view.
 }
 
 KTextEditor::View *KatePluginIntegrationWindow::activateView(KTextEditor::Document *document) {
@@ -325,6 +367,7 @@ KTextEditor::View *KatePluginIntegrationWindow::activateView(KTextEditor::Docume
 		w->activate();
 		return w->getView();
 	}
+	if (app->dummy_view && document == app->dummy_view->document()) return app->dummy_view;
 	return 0;
 }
 
