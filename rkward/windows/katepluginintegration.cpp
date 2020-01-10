@@ -62,6 +62,8 @@ KatePluginIntegrationApp::KatePluginIntegrationApp(QObject *parent) : QObject (p
 		// TODO: remove me
 		qDebug ("%s", qPrintable(info.data.fileName()));
 	}
+	// NOTE: Destructor is too late for this, esp. As plugin destructors will try to unregister from the guiFactory(), and such.
+	connect(RKWardMainWindow::getMain(), &RKWardMainWindow::aboutToQuitRKWard, this, &KatePluginIntegrationApp::saveConfigAndUnload);
 }
 
 KatePluginIntegrationApp::~KatePluginIntegrationApp() {
@@ -98,9 +100,9 @@ QObject* KatePluginIntegrationApp::loadPlugin (const QString& identifier) {
 		if (plugin) {
 			known_plugins[identifier].plugin = plugin;
 			emit KTextEditor::Editor::instance()->application()->pluginCreated(identifier, plugin);
-			mainWindow()->createPluginView(plugin);
-			QObject* created = mainWindow()->pluginView(identifier);
+			QObject* created = mainWindow()->createPluginView(plugin);
 			if (created) {
+				emit mainWindow()->main->pluginViewCreated(identifier, created);
 				KTextEditor::SessionConfigInterface *interface = qobject_cast<KTextEditor::SessionConfigInterface *>(created);
 				if (interface) {
 					// NOTE: Some plugins (noteably the Search in files plugin) will misbehave, unless readSessionConfig has been called!
@@ -115,17 +117,26 @@ QObject* KatePluginIntegrationApp::loadPlugin (const QString& identifier) {
     return 0;
 }
 
-void KatePluginIntegrationApp::savePluginConfig() {
+void KatePluginIntegrationApp::saveConfigAndUnload() {
 	RK_TRACE (APP);
 
-	for (auto it = known_plugins.constBegin(); it !=  known_plugins.constEnd(); ++it) {
+	for (auto it = known_plugins.constBegin(); it != known_plugins.constEnd(); ++it) {
 		KTextEditor::Plugin* plugin = it.value().plugin;
 		if (!plugin) continue;
-		KTextEditor::SessionConfigInterface * interface = qobject_cast<KTextEditor::SessionConfigInterface *>(mainWindow()->pluginView(it.key()));
-		if (!interface) continue;
-		KConfigGroup group = KSharedConfig::openConfig()->group(QStringLiteral("KatePlugin:%1:").arg(it.key()));
-		interface->writeSessionConfig(group);
+		QObject* view = mainWindow()->pluginView(it.key());
+		if (view) {
+			KTextEditor::SessionConfigInterface* interface = qobject_cast<KTextEditor::SessionConfigInterface *>(view);
+			if (interface) {
+				KConfigGroup group = KSharedConfig::openConfig()->group(QStringLiteral("KatePlugin:%1:").arg(it.key()));
+				interface->writeSessionConfig(group);
+			}
+			emit mainWindow()->main->pluginViewDeleted(it.key(), view);
+			delete view;
+		}
+		emit app->pluginDeleted(it.key(), plugin);
+		delete plugin;
 	}
+	known_plugins.clear();
 }
 
 QList<KTextEditor::MainWindow *> KatePluginIntegrationApp::mainWindows() {
@@ -350,13 +361,15 @@ KTextEditor::View *KatePluginIntegrationWindow::activeView() {
 	if (w && w->isType (RKMDIWindow::CommandEditorWindow)) {
 		return static_cast<RKCommandEditorWindow*>(w)->getView();
 	}
-	// NOTE: It looks like some plugins assume this cannot return 0. That's a bug in the plugin, but still one that could
-	//       be quite prevalent, as in kate, that assumption holds. So, to be safe, we create a dummy window on the fly.
+	// NOTE: As far as RKWard is concerned, the active window will most likely be the tool window at this point, while the
+	//       intention will be to get an active window that the tool should operate on. So get the last used window from
+	//       history. (Another option would be to check which window is on top in the view area, but this will be difficult
+	//       for split views.
 	RKMDIWindow* candidate =  RKWorkplace::getHistory()->previousDocumentWindow();
 	if (candidate && candidate->isType(RKMDIWindow::CommandEditorWindow)) return static_cast<RKCommandEditorWindow*>(candidate)->getView();
+	// NOTE: It looks like some plugins assume this cannot return 0. That's a bug in the plugin, but still one that could
+	//       be quite prevalent, as in kate, that assumption holds. So, to be safe, we create a dummy window on the fly.
 	return app->dummyView();
-	// TODO: This probably isn't right: As far as RKWard is concerned, the active window will most likely be the tool window
-	//       at this point, while the intention will be to get an active window that the tool should operate on.
 }
 
 KTextEditor::View *KatePluginIntegrationWindow::activateView(KTextEditor::Document *document) {
@@ -445,12 +458,13 @@ bool KatePluginIntegrationWindow::viewsInSameSplitView(KTextEditor::View* view1,
 	return false;
 }
 
-void KatePluginIntegrationWindow::createPluginView(KTextEditor::Plugin* plugin) {
+QObject* KatePluginIntegrationWindow::createPluginView(KTextEditor::Plugin* plugin) {
 	RK_TRACE (APP);
 
 	QObject *view = plugin->createView(main);
 	plugin_views.insert(plugin, view);
 	connect(plugin, &QObject::destroyed, [&]() { plugin_views.remove(plugin); });
+	return view;
 }
 
 // TODO: Don't forget to make sure to emit all the signals!

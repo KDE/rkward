@@ -41,7 +41,7 @@ public:
 	KatePluginIntegrationWindow *mainWindow() const { return window; };
 private slots:
 friend class KatePluginIntegrationWindow;
-	void savePluginConfig();
+	void saveConfigAndUnload();
 	// These are the implementations of the KTextEditor::Application interface.
 	// NOTE that they are not technically overrides, but get invoked via QMetaObject::invokeMethod()
 	QList<KTextEditor::MainWindow *> mainWindows();
@@ -100,7 +100,7 @@ private slots:
 private:
 friend class KatePluginIntegrationApp;
 	KTextEditor::MainWindow *main;
-	void createPluginView(KTextEditor::Plugin* plugin);
+	QObject* createPluginView(KTextEditor::Plugin* plugin);
 	QHash<KTextEditor::Plugin*, QObject*> plugin_views;
 
 	KatePluginIntegrationApp *app;

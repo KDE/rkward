@@ -157,6 +157,7 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 	insertChildClient (katePluginIntegration ()->mainWindow ());
 	createShellGUI (true);
 	katePluginIntegration ()->loadPlugin ("katesearchplugin");
+	katePluginIntegration ()->loadPlugin ("katesnippetsplugin");
 	RKXMLGUISyncer::self ()->watchXMLGUIClientUIrc (this);
 
 	// replicate File->import and export menus into the Open/Save toolbar button menus
