@@ -30,6 +30,7 @@
 #include <KTextEditor/SessionConfigInterface>
 #include <KSharedConfig>
 #include <KConfigGroup>
+#include <KXMLGUIFactory>
 
 #include "../rkward.h"
 #include "rkworkplace.h"
@@ -267,26 +268,6 @@ KatePluginIntegrationWindow::KatePluginIntegrationWindow (KatePluginIntegrationA
 	app = parent;
 }
 
-/** This is a bit lame, but the plugin does not add itself to the parent widget's layout by itself. So we need this class
- *  to do that. Where did the good old KVBox go? */
-class KatePluginWrapperWidget : public QWidget {
-	Q_OBJECT
-public:
-	KatePluginWrapperWidget(QWidget *parent) : QWidget(parent) {
-		QVBoxLayout *layout = new QVBoxLayout(this);
-		setLayout(layout);
-		setFocusPolicy (Qt::StrongFocus);
-	}
-	void childEvent(QChildEvent *ev) override {
-		if ((ev->type() == QEvent::ChildAdded) && qobject_cast<QWidget *>(ev->child())) {
-			QWidget *widget = qobject_cast<QWidget *>(ev->child());
-			setFocusProxy(widget);
-			layout()->addWidget(widget);
-		}
-		QWidget::childEvent(ev);
-	}
-};
-
 class KatePluginToolWindow : public RKMDIWindow {
 	Q_OBJECT
 public:
@@ -295,14 +276,24 @@ public:
 
 		QVBoxLayout *layout = new QVBoxLayout(this);
 		layout->setContentsMargins(0, 0, 0, 0);
-		wrapper = new KatePluginWrapperWidget(this);
-		layout->addWidget (wrapper);
-		setPart(new RKDummyPart(this, wrapper));
+		setPart(new RKDummyPart(this, this));
+		initializeActivationSignals();
+		setFocusPolicy(Qt::ClickFocus);
 	}
 	~KatePluginToolWindow() {
 		RK_TRACE (APP);
 	}
-	QWidget* wrapper;
+
+/** This is a bit lame, but the plugin does not add itself to the parent widget's layout by itself. So we need this override
+ *  to do that. Where did the good old KVBox go? */
+	void childEvent(QChildEvent *ev) override {
+		if ((ev->type() == QEvent::ChildAdded) && qobject_cast<QWidget *>(ev->child())) {
+			QWidget *widget = qobject_cast<QWidget *>(ev->child());
+			layout()->addWidget(widget);
+			setFocusProxy(widget);
+		}
+		QWidget::childEvent(ev);
+	}
 };
 
 QWidget * KatePluginIntegrationWindow::createToolView (KTextEditor::Plugin *plugin, const QString &identifier, KTextEditor::MainWindow::ToolViewPosition pos, const QIcon &icon, const QString &text) {
@@ -313,15 +304,17 @@ QWidget * KatePluginIntegrationWindow::createToolView (KTextEditor::Plugin *plug
 	window->setCaption(text);
 	window->setWindowIcon(icon);
 	RKWorkplace::mainWorkplace()->placeInToolWindowBar(window, pos);
+	created_tool_views.append(window->getPart());
 
-	return window->wrapper;
+	return window;
 }
 
 bool KatePluginIntegrationWindow::showToolView (QWidget *widget) {
 	RK_TRACE (APP);
-	RKMDIWindow *w = qobject_cast<RKMDIWindow*>(widget->parentWidget());
+	RKMDIWindow *w = qobject_cast<RKMDIWindow*>(widget);
 	if (w) w->activate();
 	else {
+		RK_DEBUG(APP, DL_ERROR, "Failed to find mdi window for (plugin) tool view %p", widget);
 		RK_ASSERT(w);
 		widget->show();
 	}
@@ -331,10 +324,10 @@ bool KatePluginIntegrationWindow::showToolView (QWidget *widget) {
 KXMLGUIFactory *KatePluginIntegrationWindow::guiFactory () {
 	RK_TRACE (APP);
 
-	// We'd rather like to add the plugin to our own RKMDIWindows, rather than
+	// NOTE: We'd rather like to add the plugin to our own RKMDIWindows, rather than
 	// allowing it direct access to the guiFactory()
+	// See the HACK in createPluginView().
 	return factory ();
-	// TODO
 }
 
 QWidget *KatePluginIntegrationWindow::window() {
@@ -461,13 +454,35 @@ bool KatePluginIntegrationWindow::viewsInSameSplitView(KTextEditor::View* view1,
 QObject* KatePluginIntegrationWindow::createPluginView(KTextEditor::Plugin* plugin) {
 	RK_TRACE (APP);
 
+	// HACK: Currently, plugins will add themselves to the main window's UI, without asking. We don't want that, as
+	//       our MDI windows are enabled / disabled on activation. To hack around this, the catch the added clients,
+	//       and put them, where they belong.
+	connect(factory(), &KXMLGUIFactory::clientAdded, this, &KatePluginIntegrationWindow::catchXMLGUIClientsHack);
 	QObject *view = plugin->createView(main);
+	disconnect(factory(), &KXMLGUIFactory::clientAdded, this, &KatePluginIntegrationWindow::catchXMLGUIClientsHack);
+	KXMLGUIClient* hacked_parent = this;
+	for (int i = 0; i < caught_clients.size(); ++i) {
+		if (i < created_tool_views.size()) {
+			hacked_parent = created_tool_views[i];
+		}
+		factory()->removeClient(caught_clients[i]);
+		hacked_parent->insertChildClient(caught_clients[i]);
+	}
+	caught_clients.clear();
+	created_tool_views.clear();
+
 	plugin_views.insert(plugin, view);
 	connect(plugin, &QObject::destroyed, [&]() { plugin_views.remove(plugin); });
 	return view;
 }
 
+void KatePluginIntegrationWindow::catchXMLGUIClientsHack(KXMLGUIClient* client) {
+	RK_TRACE (APP);
+	caught_clients.append(client);
+}
+
 // TODO: Don't forget to make sure to emit all the signals!
+// TODO: Apply plugin specific hacks as needed (e.g. moving "Tool" menu, removing broken actions)
 
 ///  END  KTextEditor::MainWindow interface
 

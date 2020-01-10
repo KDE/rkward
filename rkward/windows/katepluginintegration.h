@@ -104,6 +104,11 @@ friend class KatePluginIntegrationApp;
 	QHash<KTextEditor::Plugin*, QObject*> plugin_views;
 
 	KatePluginIntegrationApp *app;
+private slots:
+	void catchXMLGUIClientsHack(KXMLGUIClient* client);
+private:
+	QList<KXMLGUIClient*> caught_clients;
+	QList<KXMLGUIClient*> created_tool_views;
 };
 
 #endif
