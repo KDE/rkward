@@ -83,6 +83,13 @@ KTextEditor::View *KatePluginIntegrationApp::dummyView() {
 	return dummy_view;
 }
 
+QString KatePluginIntegrationApp::idForPlugin(const KTextEditor::Plugin *plugin) const {
+	for (auto it = known_plugins.constBegin(); it != known_plugins.constEnd(); ++it) {
+		if (it.value().plugin == plugin) return it.key();
+	}
+	return QString();
+}
+
 QString KatePluginIntegrationApp::idForPlugin(const KPluginMetaData &plugin) const {
 	return QFileInfo(plugin.fileName()).baseName();
 }
@@ -266,12 +273,13 @@ KatePluginIntegrationWindow::KatePluginIntegrationWindow (KatePluginIntegrationA
 	main = new KTextEditor::MainWindow(this);
 	// While this one may be accessed from plugins via KTextEditor::Editor::instance()->application()
 	app = parent;
+	active_plugin = 0;
 }
 
 class KatePluginToolWindow : public RKMDIWindow {
 	Q_OBJECT
 public:
-	KatePluginToolWindow(QWidget *parent, RKMDIWindow::Type type) : RKMDIWindow(parent, type, true) {
+	KatePluginToolWindow(QWidget *parent) : RKMDIWindow(parent, RKMDIWindow::KatePluginWindow, true) {
 		RK_TRACE (APP);
 
 		QVBoxLayout *layout = new QVBoxLayout(this);
@@ -296,15 +304,17 @@ public:
 	}
 };
 
-QWidget * KatePluginIntegrationWindow::createToolView (KTextEditor::Plugin *plugin, const QString &identifier, KTextEditor::MainWindow::ToolViewPosition pos, const QIcon &icon, const QString &text) {
+QWidget* KatePluginIntegrationWindow::createToolView (KTextEditor::Plugin *plugin, const QString &identifier, KTextEditor::MainWindow::ToolViewPosition pos, const QIcon &icon, const QString &text) {
 	RK_TRACE (APP);
 
+	RK_DEBUG(APP, DL_DEBUG, "createToolView for %p, %s, position %d, %s", plugin, qPrintable(identifier), pos, qPrintable(text));
 	// TODO: Set proper RKMDIWindow:type
-	KatePluginToolWindow *window = new KatePluginToolWindow(RKWorkplace::mainWorkplace()->view(), RKMDIWindow::ConsoleWindow);
+	KatePluginToolWindow *window = new KatePluginToolWindow(RKWorkplace::mainWorkplace()->view());
 	window->setCaption(text);
 	window->setWindowIcon(icon);
 	RKWorkplace::mainWorkplace()->placeInToolWindowBar(window, pos);
-	created_tool_views.append(window->getPart());
+	RKToolWindowList::registerToolWindow(window, identifier, (RKToolWindowList::Placement) pos, 0);
+	plugin_resources[plugin].windows.append(window);
 
 	return window;
 }
@@ -389,7 +399,7 @@ KTextEditor::View *KatePluginIntegrationWindow::openUrl(const QUrl &url, const Q
 QObject *KatePluginIntegrationWindow::pluginView(const QString &name) {
 	RK_TRACE (APP);
 
-	return plugin_views.value(app->plugin(name));
+	return plugin_resources.value(app->plugin(name)).view;
 }
 
 bool KatePluginIntegrationWindow::closeSplitView(KTextEditor::View* view) {
@@ -451,6 +461,17 @@ bool KatePluginIntegrationWindow::viewsInSameSplitView(KTextEditor::View* view1,
 	return false;
 }
 
+void fixupPluginUI(const QString &id, int num_of_client, KXMLGUIClient* client, RKMDIWindow* window) {
+	RK_TRACE (APP);
+
+	if (num_of_client == 0) {
+		if (id == QStringLiteral("katesearchplugin")) {
+			window->setCaption("Search in Scripts");
+			// TODO
+		}
+	}
+}
+
 QObject* KatePluginIntegrationWindow::createPluginView(KTextEditor::Plugin* plugin) {
 	RK_TRACE (APP);
 
@@ -458,27 +479,37 @@ QObject* KatePluginIntegrationWindow::createPluginView(KTextEditor::Plugin* plug
 	//       our MDI windows are enabled / disabled on activation. To hack around this, the catch the added clients,
 	//       and put them, where they belong.
 	connect(factory(), &KXMLGUIFactory::clientAdded, this, &KatePluginIntegrationWindow::catchXMLGUIClientsHack);
-	QObject *view = plugin->createView(main);
+	active_plugin = plugin;
+	PluginResources& resources = plugin_resources.insert(plugin, PluginResources()).value();
+	resources.view = plugin->createView(main);
+	active_plugin = 0;
 	disconnect(factory(), &KXMLGUIFactory::clientAdded, this, &KatePluginIntegrationWindow::catchXMLGUIClientsHack);
 	KXMLGUIClient* hacked_parent = this;
-	for (int i = 0; i < caught_clients.size(); ++i) {
-		if (i < created_tool_views.size()) {
-			hacked_parent = created_tool_views[i];
+	QString id = app->idForPlugin(plugin);
+	for (int i = 0; i < resources.clients.size(); ++i) {
+		KXMLGUIClient* client = resources.clients[i];
+		RKMDIWindow* window = resources.windows.value(i);
+		if (window) {
+			hacked_parent = window->getPart();;
 		}
-		factory()->removeClient(caught_clients[i]);
-		hacked_parent->insertChildClient(caught_clients[i]);
+		factory()->removeClient(client);
+		fixupPluginUI(id, i, client, window);
+		hacked_parent->insertChildClient(client);
 	}
-	caught_clients.clear();
-	created_tool_views.clear();
+	// TODO: If child clients were added to the window, itself, we need to tell the main window to rebuild.
 
-	plugin_views.insert(plugin, view);
-	connect(plugin, &QObject::destroyed, [&]() { plugin_views.remove(plugin); });
-	return view;
+	connect(plugin, &QObject::destroyed, [&]() { plugin_resources.remove(plugin); });
+	return resources.view;
 }
 
 void KatePluginIntegrationWindow::catchXMLGUIClientsHack(KXMLGUIClient* client) {
 	RK_TRACE (APP);
-	caught_clients.append(client);
+	if (active_plugin) {
+		RK_ASSERT(plugin_resources.contains(active_plugin));
+		plugin_resources[active_plugin].clients.append(client);
+	} else {
+		RK_DEBUG(APP, DL_DEBUG, "XML client created by unknown kate plugin");
+	}
 }
 
 // TODO: Don't forget to make sure to emit all the signals!

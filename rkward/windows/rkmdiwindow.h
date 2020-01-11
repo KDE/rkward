@@ -2,7 +2,7 @@
                           rkmdiwindow  -  description
                              -------------------
     begin                : Tue Sep 26 2006
-    copyright            : (C) 2006 - 2017 by Thomas Friedrichsmeier
+    copyright            : (C) 2006 - 2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -59,6 +59,7 @@ public:
 		DebugConsoleWindow=1 << 16,
 		CallstackViewerWindow=1 << 17,
 		DebugMessageWindow=1 << 18,
+		KatePluginWindow=1 << 19,
 
 		DocumentWindow=1 << 29,
 		ToolWindow=1 << 30,

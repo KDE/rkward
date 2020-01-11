@@ -26,6 +26,7 @@
 #include <QMap>
 
 class KatePluginIntegrationWindow;
+class RKMDIWindow;
 
 /** This class provides implementations for the KTextEditor::Application interface.
  *  Note that there is a separate interface KatePluginIntegrationWindow / KTextEditor::MainWindow that serves
@@ -64,6 +65,7 @@ private:
 		KTextEditor::Plugin *plugin;
 	};
 	QMap<QString, PluginInfo> known_plugins;
+	QString idForPlugin(const KTextEditor::Plugin *plugin) const;
 	QString idForPlugin(const KPluginMetaData &plugin) const;
 };
 
@@ -101,14 +103,19 @@ private:
 friend class KatePluginIntegrationApp;
 	KTextEditor::MainWindow *main;
 	QObject* createPluginView(KTextEditor::Plugin* plugin);
-	QHash<KTextEditor::Plugin*, QObject*> plugin_views;
+	struct PluginResources {
+		PluginResources() : view(0) {};
+		QObject *view;
+		QList<KXMLGUIClient*> clients;
+		QList<RKMDIWindow*> windows;
+	};
+	QHash<KTextEditor::Plugin*, PluginResources> plugin_resources;
 
 	KatePluginIntegrationApp *app;
 private slots:
 	void catchXMLGUIClientsHack(KXMLGUIClient* client);
 private:
-	QList<KXMLGUIClient*> caught_clients;
-	QList<KXMLGUIClient*> created_tool_views;
+	KTextEditor::Plugin* active_plugin;
 };
 
 #endif

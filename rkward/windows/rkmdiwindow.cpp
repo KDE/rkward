@@ -2,7 +2,7 @@
                           rkmdiwindow  -  description
                              -------------------
     begin                : Tue Sep 26 2006
-    copyright            : (C) 2006 - 2017 by Thomas Friedrichsmeier
+    copyright            : (C) 2006 - 2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -73,7 +73,7 @@ RKMDIWindow::RKMDIWindow (QWidget *parent, int type, bool tool_window, const cha
 	status_popup = 0;
 	status_popup_container = 0;
 
-	setWindowIcon (RKStandardIcons::iconForWindow (this));
+	if (!(type & KatePluginWindow)) setWindowIcon (RKStandardIcons::iconForWindow (this));
 }
 
 RKMDIWindow::~RKMDIWindow () {
@@ -109,6 +109,7 @@ void RKMDIWindow::setCaption (const QString &caption) {
 	RK_TRACE (APP);
 	QWidget::setWindowTitle (caption);
 	emit (captionChanged (this));
+	if (tool_window_bar) tool_window_bar->captionChanged(this);
 }
 
 bool RKMDIWindow::isActive () {
