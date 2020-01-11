@@ -68,6 +68,18 @@ private:
 	RKMDIWindowHistoryWidget *getSwitcher (QAction *prev_action, QAction *next_action);
 };
 
+/** Or'able enum of flags to pass the RKCommandEditorWindow c'tor. Logically, these would belong to the RKCommandEditor-class,
+    but are defined, here for technical reasons (trouble including texteditor includes from some places). */
+enum RKCommandEditorFlags {
+	DefaultToRHighlighting = 1, ///< Apply R highlighting, also if the url is empty
+	ForceRHighlighting = 1 << 1,///< Apply R highlighting, even if the url does not match R script extension
+	UseCodeHinting = 1 << 2,    ///< The file is (probably) an editable R script file, and should show code hints
+	ReadOnly = 1 << 3,          ///< Open the file in read-only mode
+	DeleteOnClose = 1 << 4,     ///< The file to show should be deleted when closing the window. Only respected with read_only=true
+	VisibleToKTextEditorPlugins = 1 << 5,
+	DefaultFlags = DefaultToRHighlighting | UseCodeHinting | VisibleToKTextEditorPlugins
+};
+
 /** This class (only one instance will probably be around) keeps track of which windows are opened in the workplace, which are detached, etc. Also it is responsible for creating and manipulating those windows.
 It also provides a QWidget (RKWorkplace::view ()), which actually manages the document windows (only those, so far. I.e. this is a half-replacement for KMdi, which will be gone in KDE 4). Currently layout of the document windows is always tabbed. */
 class RKWorkplace : public QWidget {
@@ -106,7 +118,7 @@ public:
 @param read_only Open the document read only? Default is false, i.e. Read-write
 @param force_caption Usually the caption is determined from the url of the file. If you specify a non-empty string here, that is used instead.
 @returns false if a local url could not be opened, true for all remote urls, and on success */
-	RKMDIWindow* openScriptEditor (const QUrl &url=QUrl (), const QString& encoding=QString (), bool use_r_highlighting=true, bool read_only=false, const QString &force_caption = QString (), bool delete_on_close=false);
+	RKMDIWindow* openScriptEditor (const QUrl &url=QUrl (), const QString& encoding=QString (), int flags = RKCommandEditorFlags::DefaultFlags, const QString &force_caption = QString ());
 /** Opens a new help window, starting at the given url
 @param url URL to open
 @param only_once if true, checks whether any help window already shows this URL. If so, raise it, but do not open a new window. Else show the new window */

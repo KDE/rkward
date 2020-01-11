@@ -389,7 +389,7 @@ KTextEditor::View *KatePluginIntegrationWindow::activateView(KTextEditor::Docume
 
 KTextEditor::View *KatePluginIntegrationWindow::openUrl(const QUrl &url, const QString &encoding) {
 	RK_TRACE (APP);
-	RKMDIWindow *w = RKWorkplace::mainWorkplace()->openScriptEditor(url, encoding, RKSettingsModuleCommandEditor::matchesScriptFileFilter(url.fileName()));
+	RKMDIWindow *w = RKWorkplace::mainWorkplace()->openScriptEditor(url, encoding);
 	if (w) return static_cast<RKCommandEditorWindow*>(w)->getView();
 
 	RK_ASSERT(w);  // should not happen
@@ -513,7 +513,12 @@ void KatePluginIntegrationWindow::catchXMLGUIClientsHack(KXMLGUIClient* client) 
 }
 
 // TODO: Don't forget to make sure to emit all the signals!
+//       - MainWindow signals
+//       - pluginDeleted
 // TODO: Apply plugin specific hacks as needed (e.g. moving "Tool" menu, removing broken actions)
+// TODO: new RKToplevelWindowGUI should be called after all plugins are loaded (and have registered their tool views). However
+//       that may be a problem, if there is no KXMLGUIFactory around, yet. So, annoyingly, we need to create the GUI, before we
+//       have everything to populate it.
 
 ///  END  KTextEditor::MainWindow interface
 

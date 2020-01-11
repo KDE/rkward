@@ -157,6 +157,7 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 	insertChildClient (katePluginIntegration ()->mainWindow ());
 	createShellGUI (true);
 	katePluginIntegration ()->loadPlugin ("katesearchplugin");
+	katePluginIntegration ()->loadPlugin ("kateprojectplugin");
 	katePluginIntegration ()->loadPlugin ("katesnippetsplugin");
 	RKXMLGUISyncer::self ()->watchXMLGUIClientUIrc (this);
 
@@ -955,7 +956,7 @@ void RKWardMainWindow::addScriptUrl (const QUrl &url) {
 void RKWardMainWindow::slotOpenCommandEditor (const QUrl &url, const QString &encoding) {
 	RK_TRACE (APP);
 
-	RKWorkplace::mainWorkplace ()->openScriptEditor (url, encoding, url.isEmpty() || RKSettingsModuleCommandEditor::matchesScriptFileFilter (url.fileName()));
+	RKWorkplace::mainWorkplace ()->openScriptEditor (url, encoding);
 }
 
 void RKWardMainWindow::slotOpenCommandEditor () {

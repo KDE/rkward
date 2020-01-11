@@ -110,7 +110,7 @@ RKCallstackViewerWidget::RKCallstackViewerWidget (QWidget *parent) : QWidget (pa
 	frame_info->setWordWrap (true);
 	v_layout->addWidget (frame_info);
 
-	frame_source = new RKCommandEditorWindow (this, QUrl (), QString (), true);
+	frame_source = new RKCommandEditorWindow (this, QUrl (), QString (), RKCommandEditorFlags::DefaultToRHighlighting | RKCommandEditorFlags::ReadOnly);
 	v_layout->addWidget (frame_source);
 
 	updateState ();
