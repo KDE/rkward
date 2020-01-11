@@ -112,8 +112,8 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 	QUrl url = _url;
 	m_doc = 0;
 	preview_dir = 0;
-	visible_to_kateplugins = flags & VisibleToKTextEditorPlugins;
-	bool use_r_highlighting = (flags & ForceRHighlighting) || (url.isEmpty() && (flags & DefaultToRHighlighting)) || RKSettingsModuleCommandEditor::matchesScriptFileFilter (url.fileName ());
+	visible_to_kateplugins = flags & RKCommandEditorFlags::VisibleToKTextEditorPlugins;
+	bool use_r_highlighting = (flags & RKCommandEditorFlags::ForceRHighlighting) || (url.isEmpty() && (flags & RKCommandEditorFlags::DefaultToRHighlighting)) || RKSettingsModuleCommandEditor::matchesScriptFileFilter (url.fileName ());
 
 	// Lookup of existing text editor documents: First, if no url is given at all, create a new document, and register an id, in case this window will get split, later
 	if (url.isEmpty ()) {
@@ -158,7 +158,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 		if (!url.isEmpty ()) {
 			if (m_doc->openUrl (url)) {
 				// KF5 TODO: Check which parts of this are still needed in KF5, and which no longer work
-				if (!(flags & DeleteOnClose)) {	// don't litter config with temporary files
+				if (!(flags & RKCommandEditorFlags::DeleteOnClose)) {	// don't litter config with temporary files
 					QString p_url = RKWorkplace::mainWorkplace ()->portableUrl (m_doc->url ());
 					KConfigGroup conf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptDocumentSettings %1").arg (p_url));
 					// HACK: Hmm. KTextEditor::Document's readSessionConfig() simply restores too much. Yes, I want to load bookmarks and stuff.
@@ -177,10 +177,10 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 		}
 	}
 
-	setReadOnly (flags & ReadOnly);
+	setReadOnly (flags & RKCommandEditorFlags::ReadOnly);
 
-	if (flags & DeleteOnClose) {
-		if (flags & ReadOnly) {
+	if (flags & RKCommandEditorFlags::DeleteOnClose) {
+		if (flags & RKCommandEditorFlags::ReadOnly) {
 			RKCommandEditorWindow::delete_on_close = url;
 		} else {
 			RK_ASSERT (false);
@@ -242,7 +242,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 	hinter = 0;
 	if (use_r_highlighting) {
 		RKCommandHighlighter::setHighlighting (m_doc, RKCommandHighlighter::RScript);
-		if (flags & UseCodeHinting) {
+		if (flags & RKCommandEditorFlags::UseCodeHinting) {
 			new RKCompletionManager (m_view);
 			//hinter = new RKFunctionArgHinter (this, m_view);
 		}

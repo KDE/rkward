@@ -68,16 +68,18 @@ private:
 	RKMDIWindowHistoryWidget *getSwitcher (QAction *prev_action, QAction *next_action);
 };
 
+struct RKCommandEditorFlags {
 /** Or'able enum of flags to pass the RKCommandEditorWindow c'tor. Logically, these would belong to the RKCommandEditor-class,
     but are defined, here for technical reasons (trouble including texteditor includes from some places). */
-enum RKCommandEditorFlags {
-	DefaultToRHighlighting = 1, ///< Apply R highlighting, also if the url is empty
-	ForceRHighlighting = 1 << 1,///< Apply R highlighting, even if the url does not match R script extension
-	UseCodeHinting = 1 << 2,    ///< The file is (probably) an editable R script file, and should show code hints
-	ReadOnly = 1 << 3,          ///< Open the file in read-only mode
-	DeleteOnClose = 1 << 4,     ///< The file to show should be deleted when closing the window. Only respected with read_only=true
-	VisibleToKTextEditorPlugins = 1 << 5,
-	DefaultFlags = DefaultToRHighlighting | UseCodeHinting | VisibleToKTextEditorPlugins
+	enum Flags {
+		DefaultToRHighlighting = 1, ///< Apply R highlighting, also if the url is empty
+		ForceRHighlighting = 1 << 1,///< Apply R highlighting, even if the url does not match R script extension
+		UseCodeHinting = 1 << 2,    ///< The file is (probably) an editable R script file, and should show code hints
+		ReadOnly = 1 << 3,          ///< Open the file in read-only mode
+		DeleteOnClose = 1 << 4,     ///< The file to show should be deleted when closing the window. Only respected with read_only=true
+		VisibleToKTextEditorPlugins = 1 << 5,
+		DefaultFlags = DefaultToRHighlighting | UseCodeHinting | VisibleToKTextEditorPlugins
+	};
 };
 
 /** This class (only one instance will probably be around) keeps track of which windows are opened in the workplace, which are detached, etc. Also it is responsible for creating and manipulating those windows.
