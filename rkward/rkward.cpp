@@ -159,6 +159,10 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 	katePluginIntegration ()->loadPlugin ("katesearchplugin");
 	katePluginIntegration ()->loadPlugin ("kateprojectplugin");
 	katePluginIntegration ()->loadPlugin ("katesnippetsplugin");
+	// This is pretty silly, but while loading plugins the katePluginIntegration-client may gain new actions and thus needs
+	// to be reloaded. We cannot - currently, KF5.65 - delay loading it, because plugins rely on it having a GUI factory.
+	factory()->removeClient (katePluginIntegration ()->mainWindow ());
+	factory()->addClient (katePluginIntegration ()->mainWindow ());
 	RKXMLGUISyncer::self ()->watchXMLGUIClientUIrc (this);
 
 	// replicate File->import and export menus into the Open/Save toolbar button menus
