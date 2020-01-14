@@ -2,7 +2,7 @@ PROJECT(rkward)
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8.12)	# As required by KF5
 IF(NOT "${CMAKE_VERSION}" VERSION_LESS 3.3.0)
-	CMAKE_POLICY(SET CMP0063 OLD)  # No symbol visibility in any of our static libraries needed
+	CMAKE_POLICY(SET CMP0063 NEW)  # Shut up cmake warning
 ENDIF()
 
 IF(NOT CMAKE_VERBOSE_MAKEFILE)
