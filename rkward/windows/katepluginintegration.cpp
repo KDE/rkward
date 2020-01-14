@@ -37,6 +37,7 @@
 #include "rkworkplaceview.h"
 #include "rkcommandeditorwindow.h"
 #include "../misc/rkdummypart.h"
+#include "../misc/rkcommonfunctions.h"
 #include "../settings/rksettingsmodulecommandeditor.h"
 
 #include "../debug.h"
@@ -467,9 +468,10 @@ void fixupPluginUI(const QString &id, int num_of_client, KXMLGUIClient* client, 
 	if (num_of_client == 0) {
 		if (id == QStringLiteral("katesearchplugin")) {
 			window->setCaption("Search in Scripts");
-			// TODO
+			RKCommonFunctions::removeContainers(client, QStringList() << "search_in_files", true);
 		}
 	}
+	RKCommonFunctions::moveContainer(client, "Menu", "tools", "edit", true, true);
 }
 
 QObject* KatePluginIntegrationWindow::createPluginView(KTextEditor::Plugin* plugin) {
@@ -514,7 +516,6 @@ void KatePluginIntegrationWindow::catchXMLGUIClientsHack(KXMLGUIClient* client) 
 
 // TODO: Don't forget to make sure to emit all the signals!
 //       - MainWindow signals
-//       - pluginDeleted
 // TODO: Apply plugin specific hacks as needed (e.g. moving "Tool" menu, removing broken actions)
 // TODO: new RKToplevelWindowGUI should be called after all plugins are loaded (and have registered their tool views). However
 //       that may be a problem, if there is no KXMLGUIFactory around, yet. So, annoyingly, we need to create the GUI, before we
