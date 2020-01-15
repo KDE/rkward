@@ -31,6 +31,7 @@
 #include <KSharedConfig>
 #include <KConfigGroup>
 #include <KXMLGUIFactory>
+#include <KLocalizedString>
 
 #include "../rkward.h"
 #include "rkworkplace.h"
@@ -467,7 +468,7 @@ void fixupPluginUI(const QString &id, int num_of_client, KXMLGUIClient* client, 
 
 	if (num_of_client == 0) {
 		if (id == QStringLiteral("katesearchplugin")) {
-			window->setCaption("Search in Scripts");
+			window->setCaption(i18nc("Tab title", "Search in Scripts"));
 			RKCommonFunctions::removeContainers(client, QStringList() << "search_in_files", true);
 		}
 	}

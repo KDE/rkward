@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward_toplevel" version="610">
+<kpartgui name="rkward_toplevel" version="710">
 	<MenuBar>
 		<Merge/>
 		<Menu name="window"><text>&amp;Window</text>
@@ -10,15 +10,8 @@
 				<Action name="prev_window"/>
 				<Action name="next_window"/>
 				<Separator/>
-				<Action name="window_show_workspace"/>
-				<Action name="window_show_filebrowser"/>
-				<Action name="window_show_commandlog"/>
-				<Action name="window_show_pendingjobs"/>
-				<Action name="window_show_console"/>
-				<Action name="window_show_helpsearch"/>
-				<Action name="window_show_debugconsole"/>
-				<Action name="window_show_debugframes"/>
-				<Action name="window_show_rkdebugmessages"/>
+				<!-- NOTE: Actions for showing / hiding the various tool views are added below this placeholder, dynamically. Since some of those are plugins, their ids cannot be hardcoded, here. -->
+				<Action name="window_show_PLACEHOLDER"/>
 				<Separator/>
 				<Action name="window_activate_docview"/>
 			</Menu>
