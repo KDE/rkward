@@ -31,7 +31,7 @@
 #include <QDir>
 #include <QApplication>
 #include <QMimeDatabase>
-#include <QLayout>
+#include <QVBoxLayout>
 
 #include "detachedwindowcontainer.h"
 #include "rkcommandeditorwindow.h"
