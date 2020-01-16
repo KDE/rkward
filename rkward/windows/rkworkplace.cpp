@@ -32,6 +32,7 @@
 #include <QApplication>
 #include <QMimeDatabase>
 #include <QVBoxLayout>
+#include <QHBoxLayout>
 
 #include "detachedwindowcontainer.h"
 #include "rkcommandeditorwindow.h"
