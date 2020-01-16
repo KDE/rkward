@@ -2,10 +2,10 @@ Requirements
 ===================
 
 RKWard requires:
-- KDE-libraries and headers (>= 4.0) (http://www.kde.org)
-- Qt-libraries and headers (>= 4.3) (http://www.trolltech.com)
-- R and headers (http://www.r-project.org)
-- CMake (http://cmake.org)
+- Several KF5-libraries and headers (>= 5.4) (https://www.kde.org)
+- Qt-libraries and headers (>= 5.2) (http://www.trolltech.com)
+- R and headers (https://www.r-project.org)
+- CMake (https://cmake.org)
 
 
 Compilation

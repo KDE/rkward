@@ -1,5 +1,5 @@
---- Version 0.7.1 - UNRELEASED
-- Instead of installing rkward R packages at build time, install them at runtime, when needed     TODO: Testing, document removal of -DR_LIBDIR for packagers
+--- Version 0.7.1 - Jan-23-2020
+- Instead of installing rkward R packages at build time, install them at runtime, when needed
 - Add new commandline option "--r-executable=auto" for auto-detection of R installation
 - Fixed: Underscore (_) was not accepted in names of newly created data.frames
 - <browser> element in save file mode gains checkbox to control overwriting of existing files
@@ -8,7 +8,7 @@
 - Add command-line option --autoreuse to avoid shipping two separate .desktop files
 - <select> elements in plugin dialogs can be set to accept only a single selection
 - New R functions rk.capture.output() and and rk.end.capture.output()
-- Allow to reference current script file in plugins      TODO: Test this
+- Allow to reference current script file in plugins
 - Add various live-preview options for R scripts, including a preview of R markdown rendering
 - Make it possible to "link" to specific settings pages from the internal documentation
 - Slighlty less confusing output in case a package is installed from require(), such as in many plugins
