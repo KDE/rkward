@@ -1655,12 +1655,12 @@ void RKRBackend::initialize (const char *locale_dir) {
 	                  "  if (!dir.exists (libloc)) dir.create(libloc, recursive=TRUE)\n"
 	                  "  ok <- FALSE\n"
 	                  "  suppressWarnings (try ({library (\"rkward\", lib.loc=libloc); " + versioncheck + "; ok <- TRUE}))\n"
-					  "  if (!ok) {\n"
-					  "    suppressWarnings (try (detach(\"package:rkward\")))\n"
-					  "    install.packages(normalizePath(paste(libloc, \"..\", c (\"rkward.tgz\", \"rkwardtests.tgz\"), sep=\"/\")), lib=libloc, repos=NULL, type=\"source\")\n"
-					  "    library (\"rkward\",  lib.loc=libloc)\n"
-					  "  }\n"
-					  "})\n";
+	                  "  if (!ok) {\n"
+	                  "    suppressWarnings (try (detach(\"package:rkward\", unload=TRUE)))\n"
+	                  "    install.packages(normalizePath(paste(libloc, \"..\", c (\"rkward.tgz\", \"rkwardtests.tgz\"), sep=\"/\")), lib=libloc, repos=NULL, type=\"source\")\n"
+	                  "    library (\"rkward\", lib.loc=libloc)\n"
+	                  "  }\n"
+	                  "})\n";
 	if (!runDirectCommand (command)) lib_load_fail = true;
 	RK_setupGettext (locale_dir);	// must happen *after* package loading, since R will re-set it
 	if (!runDirectCommand (versioncheck)) lib_load_fail = true;
