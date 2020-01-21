@@ -116,6 +116,7 @@ private slots:
 	void catchXMLGUIClientsHack(KXMLGUIClient* client);
 private:
 	KTextEditor::Plugin* active_plugin;
+	void fixUpPluginUI(const QString &id, const PluginResources &resources);
 };
 
 #endif

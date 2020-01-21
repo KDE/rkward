@@ -463,16 +463,40 @@ bool KatePluginIntegrationWindow::viewsInSameSplitView(KTextEditor::View* view1,
 	return false;
 }
 
-void fixupPluginUI(const QString &id, int num_of_client, KXMLGUIClient* client, RKMDIWindow* window) {
+void KatePluginIntegrationWindow::fixupPluginUI(const QString &id, const PluginResources &resources) {
 	RK_TRACE (APP);
 
-	if (num_of_client == 0) {
-		if (id == QStringLiteral("katesearchplugin")) {
+	KXMLGUIClient* hacked_parent = this;
+	// KF6 TODO: In KF6, plugins will probably be limited to one UI client, in the first place.
+	for (int i = 0; i < resources.clients.size(); ++i) {
+		KXMLGUIClient* client = resources.clients[i];
+		RKMDIWindow* window = resources.windows.value(i);
+		if (window) {
+			hacked_parent = window->getPart();;
+		}
+		factory()->removeClient(client);
+
+		if (i == 0 && id == QStringLiteral("katesearchplugin")) {
 			window->setCaption(i18nc("Tab title", "Search in Scripts"));
 			RKCommonFunctions::removeContainers(client, QStringList() << "search_in_files", true);
+			// TODO: Rename "Search more" to "Search in Scripts". These should still be accessible, globally.
+		} else if (i == 0 && id == QStringLiteral("kateprojectplugin")) {
+			RKCommonFunctions::moveContainer(client, "Menu", "project", "edit", true, false);
 		}
+
+		RKCommonFunctions::moveContainer(client, "Menu", "tools", "edit", true, true);
+		hacked_parent->insertChildClient(client);
 	}
-	RKCommonFunctions::moveContainer(client, "Menu", "tools", "edit", true, true);
+
+/* TODO: Ok, I guess we need even more specialization.
+kateprojectplugin:
+ - "Project" menu should go to "View"?
+ - Actions should probably be accessible, globally
+katesearchplugin:
+ - should go to next / previous match be accessible, globally?
+katesnippetsplugin:
+ - ok as is, I think
+*/
 }
 
 QObject* KatePluginIntegrationWindow::createPluginView(KTextEditor::Plugin* plugin) {
@@ -500,6 +524,7 @@ QObject* KatePluginIntegrationWindow::createPluginView(KTextEditor::Plugin* plug
 		hacked_parent->insertChildClient(client);
 	}
 	// TODO: If child clients were added to the window, itself, we need to tell the main window to rebuild.
+	//       Right now, this is handled during startup, only.
 
 	connect(plugin, &QObject::destroyed, [&]() { plugin_resources.remove(plugin); });
 	return resources.view;
