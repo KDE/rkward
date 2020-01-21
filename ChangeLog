@@ -1,4 +1,8 @@
+--- Version 0.7.2 - UNRELEASED
+* TODO: Bring new code hinting features to the console window!
+
 --- Version 0.7.1 - Jan-23-2020
+- Code hinting in script editor windows has been reworked, and now also completes argument names
 - Instead of installing rkward R packages at build time, install them at runtime, when needed
 - Add new commandline option "--r-executable=auto" for auto-detection of R installation
 - Fixed: Underscore (_) was not accepted in names of newly created data.frames
@@ -53,7 +57,7 @@
 - File selection fields in plugin dialogs remember the last used directory (per session), and check for a valid selection
 - Better handling of text drag-and-drop inside the R console window
 
---- Version 0.6.5a - UNRELEASED
+--- Version 0.6.5a - UNRELEASED - This is the last version available for KDE 4, git branch kde4
 - Fix NAs introduced by editing data containing characters that cannot be encoded in the system locale
 - Fixed: Preview boxes followed by a <stretch/> element would not work under some circumstances
 - Fixed: Setting an output CSS file via the GUI did not work
