@@ -2,7 +2,7 @@
                           rktoplevelwindowgui  -  description
                              -------------------
     begin                : Tue Apr 24 2007
-    copyright            : (C) 2007, 2009, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -26,6 +26,8 @@
 #include <kshortcutsdialog.h>
 
 #include <QWhatsThis>
+#include <QDomDocument>
+#include <QDomElement>
 
 #include "../rkconsole.h"
 #include "../windows/robjectbrowser.h"
@@ -82,15 +84,7 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI (KXmlGuiWindow *for_window) : QObject (
 	next_action->setIcon (QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/window_forward.png"));
 	actionCollection ()->setDefaultShortcut (next_action, Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_Tab);
 
-	QAction *action;
-	foreach (const RKToolWindowList::ToolWindowRepresentation& rep, RKToolWindowList::registeredToolWindows ()) {
-		action = actionCollection ()->addAction ("window_show_" + rep.id, this, SLOT (toggleToolView()));
-		action->setText (i18n ("Show/Hide %1", rep.window->shortCaption ()));
-		action->setIcon (rep.window->windowIcon ());
-		actionCollection ()->setDefaultShortcut (action, rep.default_shortcut);
-		action->setProperty ("rk_toolwindow_id", rep.id);
-	}
-	action = actionCollection ()->addAction ("window_activate_docview", this, SLOT(activateDocumentView()));
+	QAction* action = actionCollection ()->addAction ("window_activate_docview", this, SLOT(activateDocumentView()));
 	action->setText (i18n ("Activate Document view"));
 	actionCollection ()->setDefaultShortcut (action, Qt::AltModifier + Qt::Key_0);
 
@@ -105,6 +99,34 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI (KXmlGuiWindow *for_window) : QObject (
 
 RKTopLevelWindowGUI::~RKTopLevelWindowGUI () {
 	RK_TRACE (APP);
+}
+
+void RKTopLevelWindowGUI::initToolWindowActions () {
+	RK_TRACE (APP);
+
+	// Tool window actions
+	QString action_tag ("Action");
+	QString name_attr ("name");
+	QDomDocument doc = xmlguiBuildDocument ();
+	if  (doc.documentElement ().isNull ()) doc = domDocument ();
+	QDomElement menu = doc.elementsByTagName("Menu").at (1).toElement (); // NOTE: this is known to be the "Windows"-Menu
+	QDomElement ref = menu.firstChildElement (action_tag);
+	while (!ref.isNull() && ref.attribute (name_attr) != QLatin1String ("window_show_PLACEHOLDER")) {
+		ref = ref.nextSiblingElement (action_tag);
+	}
+	QAction *action;
+	foreach (const RKToolWindowList::ToolWindowRepresentation& rep, RKToolWindowList::registeredToolWindows ()) {
+		QString id = QLatin1String ("window_show_") + rep.id;
+		action = actionCollection ()->addAction (id, this, SLOT (toggleToolView()));
+		action->setText (i18n ("Show/Hide %1", rep.window->shortCaption ()));
+		action->setIcon (rep.window->windowIcon ());
+		actionCollection ()->setDefaultShortcut (action, rep.default_shortcut);
+		action->setProperty ("rk_toolwindow_id", rep.id);
+		QDomElement e = doc.createElement (action_tag);
+		e.setAttribute (name_attr, id);
+		menu.insertBefore (e, ref);
+	}
+	setXMLGUIBuildDocument (doc);
 }
 
 void RKTopLevelWindowGUI::configureShortcuts () {

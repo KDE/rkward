@@ -84,6 +84,7 @@
 #include "windows/rkdebugconsole.h"
 #include "windows/rkcallstackviewer.h"
 #include "windows/rkdebugmessagewindow.h"
+#include "windows/katepluginintegration.h"
 #include "rkconsole.h"
 #include "debug.h"
 
@@ -121,6 +122,7 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 	workspace_modified = false;
 	merge_loads = false;
 	rkward_mainwin = this;
+	katepluginintegration = 0;
 	RKGlobals::rinter = 0;
 	RKCommonFunctions::getRKWardDataDir(); // call this before any forking, in order to avoid potential race conditions during initialization of data dir
 	RKSettings::settings_tracker = new RKSettingsTracker (this);
@@ -152,7 +154,18 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 	setHelpMenuEnabled (false);
 	setXMLFile ("rkwardui.rc");
 	insertChildClient (toplevel_actions = new RKTopLevelWindowGUI (this));
+	insertChildClient (katePluginIntegration ()->mainWindow ());
 	createShellGUI (true);
+	katePluginIntegration ()->loadPlugin ("katesearchplugin");
+	katePluginIntegration ()->loadPlugin ("kateprojectplugin");
+	katePluginIntegration ()->loadPlugin ("katesnippetsplugin");
+	// This is pretty convoluted, but while loading plugins the katePluginIntegration-client may gain new actions and thus needs
+	// to be reloaded. We cannot - currently, KF5.65 - delay loading the UI defintion(s), because plugins rely on it having a GUI factory.
+	factory()->removeClient (katePluginIntegration ()->mainWindow ());
+	factory()->addClient (katePluginIntegration ()->mainWindow ());
+	toplevel_actions->initToolWindowActions ();
+	factory()->removeClient (toplevel_actions);
+	factory()->addClient (toplevel_actions);
 	RKXMLGUISyncer::self ()->watchXMLGUIClientUIrc (this);
 
 	// replicate File->import and export menus into the Open/Save toolbar button menus
@@ -181,6 +194,15 @@ RKWardMainWindow::~RKWardMainWindow() {
 	delete RControlWindow::getControl ();
 	factory ()->removeClient (RKComponentMap::getMap ());
 	delete RKComponentMap::getMap ();
+}
+
+KatePluginIntegrationApp* RKWardMainWindow::katePluginIntegration () {
+	RK_TRACE (APP);
+
+	if (!katepluginintegration) {
+		katepluginintegration = new KatePluginIntegrationApp (this);
+	}
+	return katepluginintegration;
 }
 
 void RKWardMainWindow::closeEvent (QCloseEvent *e) {
@@ -941,7 +963,7 @@ void RKWardMainWindow::addScriptUrl (const QUrl &url) {
 void RKWardMainWindow::slotOpenCommandEditor (const QUrl &url, const QString &encoding) {
 	RK_TRACE (APP);
 
-	RKWorkplace::mainWorkplace ()->openScriptEditor (url, encoding, url.isEmpty() || RKSettingsModuleCommandEditor::matchesScriptFileFilter (url.fileName()));
+	RKWorkplace::mainWorkplace ()->openScriptEditor (url, encoding);
 }
 
 void RKWardMainWindow::slotOpenCommandEditor () {

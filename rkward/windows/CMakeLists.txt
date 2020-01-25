@@ -21,6 +21,7 @@ SET(windows_STAT_SRCS
 	rktoolwindowlist.cpp
 	robjectbrowser.cpp
 	rkdebugmessagewindow.cpp
+	katepluginintegration.cpp
 	rkcodecompletion.cpp
 )
 

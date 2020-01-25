@@ -2,7 +2,7 @@
                           rkcommandeditorwindow  -  description
                              -------------------
     begin                : Mon Aug 30 2004
-    copyright            : (C) 2004-2019 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -21,6 +21,7 @@
 #include <ktexteditor/editor.h>
 #include <ktexteditor/modificationinterface.h>
 #include <ktexteditor/markinterface.h>
+#include <KTextEditor/Application>
 
 #include <qapplication.h>
 #include <qfile.h>
@@ -65,6 +66,7 @@
 #include "rkhelpsearchwindow.h"
 #include "rkhtmlwindow.h"
 #include "rkworkplace.h"
+#include "katepluginintegration.h"
 #include "rkcodecompletion.h"
 
 #include "../debug.h"
@@ -87,7 +89,19 @@ RKCommandEditorWindowPart::~RKCommandEditorWindowPart () {
 //static
 QMap<QString, KTextEditor::Document*> RKCommandEditorWindow::unnamed_documents;
 
-RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, const QString& encoding, bool use_r_highlighting, bool use_codehinting, bool read_only, bool delete_on_close) : RKMDIWindow (parent, RKMDIWindow::CommandEditorWindow) {
+KTextEditor::Document* createDocument(bool with_signals) {
+	if (with_signals) {
+		emit KTextEditor::Editor::instance()->application()->aboutToCreateDocuments();
+	}
+	KTextEditor::Document* ret = KTextEditor::Editor::instance()->createDocument (RKWardMainWindow::getMain ());
+	if (with_signals) {
+		emit KTextEditor::Editor::instance()->application()->documentCreated(ret);
+		emit KTextEditor::Editor::instance()->application()->documentsCreated(QList<KTextEditor::Document*>() << ret);
+	}
+	return ret;
+}
+
+RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, const QString& encoding, int flags) : RKMDIWindow (parent, RKMDIWindow::CommandEditorWindow) {
 	RK_TRACE (COMMANDEDITOR);
 
 	QString id_header = QStringLiteral ("unnamedscript://");
@@ -98,10 +112,12 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 	QUrl url = _url;
 	m_doc = 0;
 	preview_dir = 0;
+	visible_to_kateplugins = flags & RKCommandEditorFlags::VisibleToKTextEditorPlugins;
+	bool use_r_highlighting = (flags & RKCommandEditorFlags::ForceRHighlighting) || (url.isEmpty() && (flags & RKCommandEditorFlags::DefaultToRHighlighting)) || RKSettingsModuleCommandEditor::matchesScriptFileFilter (url.fileName ());
 
 	// Lookup of existing text editor documents: First, if no url is given at all, create a new document, and register an id, in case this window will get split, later
 	if (url.isEmpty ()) {
-		m_doc = editor->createDocument (RKWardMainWindow::getMain ());
+		m_doc = createDocument (visible_to_kateplugins);
 		_id = id_header + KRandom::randomString (16).toLower ();
 		RK_ASSERT (!unnamed_documents.contains (_id));
 		unnamed_documents.insert (_id, m_doc);
@@ -110,7 +126,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 		m_doc = unnamed_documents.value (_id);
 		url.clear ();
 		if (!m_doc) {  // can happen while restoring saved workplace.
-			m_doc = editor->createDocument (RKWardMainWindow::getMain ());
+			m_doc = createDocument (visible_to_kateplugins);
 			unnamed_documents.insert (_id, m_doc);
 		}
 	} else {   // regular url given. Try to find an existing document for that url
@@ -125,7 +141,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 		}
 	}
 
-	// if an existing document is re-used, try to honor decoding.
+	// if an existing document is re-used, try to honor encoding.
 	if (m_doc) {
 		if (!encoding.isEmpty () && (m_doc->encoding () != encoding)) {
 			m_doc->setEncoding (encoding);
@@ -135,14 +151,14 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 
 	// no existing document was found, so create one and load the url
 	if (!m_doc) {
-		m_doc = editor->createDocument (RKWardMainWindow::getMain ()); // The document may have to outlive this window
+		m_doc = createDocument (visible_to_kateplugins); // The document may have to outlive this window
 
 		// encoding must be set *before* loading the file
 		if (!encoding.isEmpty ()) m_doc->setEncoding (encoding);
 		if (!url.isEmpty ()) {
 			if (m_doc->openUrl (url)) {
 				// KF5 TODO: Check which parts of this are still needed in KF5, and which no longer work
-				if (!delete_on_close) {	// don't litter config with temporary files
+				if (!(flags & RKCommandEditorFlags::DeleteOnClose)) {	// don't litter config with temporary files
 					QString p_url = RKWorkplace::mainWorkplace ()->portableUrl (m_doc->url ());
 					KConfigGroup conf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptDocumentSettings %1").arg (p_url));
 					// HACK: Hmm. KTextEditor::Document's readSessionConfig() simply restores too much. Yes, I want to load bookmarks and stuff.
@@ -161,10 +177,10 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 		}
 	}
 
-	setReadOnly (read_only);
+	setReadOnly (flags & RKCommandEditorFlags::ReadOnly);
 
-	if (delete_on_close) {
-		if (read_only) {
+	if (flags & RKCommandEditorFlags::DeleteOnClose) {
+		if (flags & RKCommandEditorFlags::ReadOnly) {
 			RKCommandEditorWindow::delete_on_close = url;
 		} else {
 			RK_ASSERT (false);
@@ -178,6 +194,10 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 	KTextEditor::ModificationInterface* em_iface = qobject_cast<KTextEditor::ModificationInterface*> (m_doc);
 	if (em_iface) em_iface->setModifiedOnDiskWarning (true);
 	else RK_ASSERT (false);
+	m_view = m_doc->createView (this, RKWardMainWindow::getMain ()->katePluginIntegration ()->mainWindow ()->mainWindow());
+	if (visible_to_kateplugins) {
+		emit RKWardMainWindow::getMain ()->katePluginIntegration ()->mainWindow ()->mainWindow()->viewCreated (m_view);
+	}
 	preview = new RKXMLGUIPreviewArea (QString(), this);
 	preview_manager = new RKPreviewManager (this);
 	connect (preview_manager, &RKPreviewManager::statusChanged, [this]() { preview_timer.start (500); });
@@ -225,7 +245,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 	hinter = 0;
 	if (use_r_highlighting) {
 		RKCommandHighlighter::setHighlighting (m_doc, RKCommandHighlighter::RScript);
-		if (use_codehinting) {
+		if (flags & RKCommandEditorFlags::UseCodeHinting) {
 			new RKCompletionManager (m_view);
 			//hinter = new RKFunctionArgHinter (this, m_view);
 		}
@@ -261,7 +281,15 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 	delete m_view;
 	QList<KTextEditor::View*> views = m_doc->views ();
 	if (views.isEmpty ()) {
+		if (visible_to_kateplugins) {
+			emit KTextEditor::Editor::instance()->application()->documentWillBeDeleted(m_doc);
+			emit KTextEditor::Editor::instance()->application()->aboutToDeleteDocuments(QList<KTextEditor::Document*>() << m_doc);
+		}
 		delete m_doc;
+		if (visible_to_kateplugins) {
+			emit KTextEditor::Editor::instance()->application()->documentDeleted(m_doc);
+			emit KTextEditor::Editor::instance()->application()->documentsDeleted(QList<KTextEditor::Document*>() << m_doc);
+		}
 		if (!delete_on_close.isEmpty ()) KIO::del (delete_on_close)->start ();
 		unnamed_documents.remove (_id);
 	}

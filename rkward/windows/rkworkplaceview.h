@@ -2,7 +2,7 @@
                           rkworkplaceview  -  description
                              -------------------
     begin                : Tue Sep 26 2006
-    copyright            : (C) 2006 - 2017 by Thomas Friedrichsmeier
+    copyright            : (C) 2006 - 2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -99,6 +99,7 @@ public:
 	void restoreLayout (const QString& desc);
 /** For use right after workplace restoration: Purge any panes set up by restoreLayout(), but left empty */
 	void purgeEmptyPanes ();
+	void splitView(Qt::Orientation orientation) { splitView (orientation, QString()); };
 signals:
 /** a new page / window was activated
 @param widget the newly activated window */
@@ -123,7 +124,7 @@ private:
 	void updateActions ();
 	RKWorkplaceViewPane *createPane (bool init_actions = true);
 	RKWorkplaceViewPane *findWindow (RKMDIWindow *window) const;
-	void splitView (Qt::Orientation orientation, const QString &description=QString (), const QString &base=QString ());
+	void splitView (Qt::Orientation orientation, const QString &description, const QString &base=QString ());
 
 	QAction *action_page_left;
 	QAction *action_page_right;

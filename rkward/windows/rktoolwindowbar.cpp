@@ -2,7 +2,7 @@
                           rktoolwindowbar  -  description
                              -------------------
     begin                : Fri Oct 12 2007
-    copyright            : (C) 2007-2019 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -50,6 +50,13 @@ RKToolWindowBar::RKToolWindowBar (KMultiTabBarPosition position, QWidget *parent
 
 RKToolWindowBar::~RKToolWindowBar () {
 	RK_TRACE (APP);
+}
+
+void RKToolWindowBar::captionChanged (RKMDIWindow* window) {
+	RK_TRACE (APP);
+
+	int id = widget_to_id.value (window);
+	tab (id)->setText (window->shortCaption ());
 }
 
 void RKToolWindowBar::restoreSize (const KConfigGroup &cg) {

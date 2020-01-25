@@ -2,7 +2,7 @@
                           rkworkplace  -  description
                              -------------------
     begin                : Thu Sep 21 2006
-    copyright            : (C) 2006-2019 by Thomas Friedrichsmeier
+    copyright            : (C) 2006-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -422,7 +422,7 @@ bool RKWorkplace::openAnyUrl (const QUrl &url, const QString &known_mimetype, bo
 			return true;	// TODO
 		}
 		if (mimetype.inherits ("text/plain")) {
-			return (openScriptEditor (url, QString (), RKSettingsModuleCommandEditor::matchesScriptFileFilter (url.fileName())));
+			return (openScriptEditor (url, QString ()));
 		}
 		RK_DEBUG (APP, DL_INFO, "Don't know how to handle mimetype %s.", qPrintable (mimetype.name ()));
 	}
@@ -435,7 +435,7 @@ bool RKWorkplace::openAnyUrl (const QUrl &url, const QString &known_mimetype, bo
 	return false;
 }
 
-RKMDIWindow* RKWorkplace::openScriptEditor (const QUrl &url, const QString& encoding, bool use_r_highlighting, bool read_only, const QString &force_caption, bool delete_on_close) {
+RKMDIWindow* RKWorkplace::openScriptEditor (const QUrl &url, const QString& encoding, int flags, const QString &force_caption) {
 	RK_TRACE (APP);
 
 // is this url already opened?
@@ -452,7 +452,7 @@ RKMDIWindow* RKWorkplace::openScriptEditor (const QUrl &url, const QString& enco
 		}
 	}
 
-	RKCommandEditorWindow *editor = new RKCommandEditorWindow (view (), url, encoding, use_r_highlighting, use_r_highlighting, read_only, delete_on_close);
+	RKCommandEditorWindow *editor = new RKCommandEditorWindow (view (), url, encoding, flags);
 
 	if (!force_caption.isEmpty ()) editor->setCaption (force_caption);
 	addWindow (editor);
@@ -628,14 +628,15 @@ void RKWorkplace::flushAllData () {
 	}
 }
 
-void RKWorkplace::closeWindow (RKMDIWindow *window) {
+bool RKWorkplace::closeWindow (RKMDIWindow *window) {
 	RK_TRACE (APP);
 	RK_ASSERT (windows.contains (window));
 
 	bool tool_window = window->isToolWindow ();
-	window->close (true);		// all the rest should happen in removeWindow ()
-	
-	if (tool_window) windowRemoved ();	// for regular windows, this happens in removeWindow(), already
+	bool closed = window->close (true);		// all the rest should happen in removeWindow ()
+
+	if (closed && tool_window) windowRemoved ();	// for regular windows, this happens in removeWindow(), already
+	return closed;
 }
 
 void RKWorkplace::closeActiveWindow () {
@@ -663,14 +664,16 @@ void RKWorkplace::closeAll (int type, int state) {
 	closeWindows (getObjectList (type, state));
 }
 
-void RKWorkplace::closeWindows (QList<RKMDIWindow*> windows) {
+bool RKWorkplace::closeWindows (QList<RKMDIWindow*> windows) {
 	RK_TRACE (APP);
 
+	bool allclosed = true;
 	RKWardMainWindow::getMain ()->lockGUIRebuild (true);
 	for (int i = windows.size () - 1; i >= 0; --i) {
-		closeWindow (windows[i]);
+		if (!closeWindow (windows[i])) allclosed = false;
 	}
 	RKWardMainWindow::getMain ()->lockGUIRebuild (false);
+	return allclosed;
 }
 
 void RKWorkplace::removeWindow (QObject *object) {
@@ -851,7 +854,7 @@ RKMDIWindow* restoreDocumentWindowInternal (RKWorkplace* wp, ItemSpecification s
 		if (object) win = wp->editObject (object);
 	} else if (spec.type == "script") {
 		QUrl url = checkAdjustRestoredUrl (spec.specification, base);
-		win = wp->openScriptEditor (url, QString (), RKSettingsModuleCommandEditor::matchesScriptFileFilter (url.fileName()));
+		win = wp->openScriptEditor (url, QString ());
 	} else if (spec.type == "output") {
 		win = wp->openOutputWindow (checkAdjustRestoredUrl (spec.specification, base));
 	} else if (spec.type == "help") {
@@ -962,7 +965,7 @@ void RKWorkplace::splitAndAttachWindow (RKMDIWindow* source) {
 
 	if (source->isType (RKMDIWindow::CommandEditorWindow)) {
 		QUrl url = static_cast<RKCommandEditorWindow*> (source)->url ();
-		openScriptEditor (url, QString (), url.isEmpty () || RKSettingsModuleCommandEditor::matchesScriptFileFilter (url.fileName()));
+		openScriptEditor (url, QString ());
 	} else if (source->isType (RKMDIWindow::HelpWindow)) {
 		openHelpWindow (static_cast<RKHTMLWindow*> (source)->url ());
 	} else if (source->isType (RKMDIWindow::OutputWindow)) {
@@ -1092,6 +1095,8 @@ void RKMDIWindowHistory::windowActivated (RKMDIWindow *window) {
 	recent_windows.append (window);
 
 	updateSwitcher ();
+
+	emit activeWindowChanged (window);
 }
 
 void RKMDIWindowHistory::next (QAction* prev_action, QAction *next_action) {

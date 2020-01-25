@@ -63,7 +63,16 @@ namespace RKCommonFunctions {
 		}
 	}
 
-	void moveContainer (KXMLGUIClient *client, const QString &tagname, const QString &name, const QString &to_name, bool recursive) {
+	void moveContainer (KXMLGUIClient *client, const QString &tagname, const QString &name, const QString &to_name, bool recursive, bool flatten) {
+		// recurse first
+		if (recursive) {
+			QList<KXMLGUIClient*> children = client->childClients ();
+			QList<KXMLGUIClient*>::const_iterator it;
+			for (it = children.constBegin (); it != children.constEnd (); ++it) {
+				moveContainer (*it, tagname, name, to_name, true);
+			}
+		}
+
 		QDomDocument doc = client->xmlguiBuildDocument ();
 		if  (doc.documentElement ().isNull ()) doc = client->domDocument ();
 	
@@ -73,33 +82,37 @@ namespace RKCommonFunctions {
 		QDomElement from_elem;
 		QDomElement to_elem;
 
-		QDomNodeList list = e.elementsByTagName (tagname);
+		const QString name_attr ("name");
+		const QDomNodeList list = e.elementsByTagName (tagname);
 		int count = list.count ();
 		for (int i = 0; i < count; ++i) {
-			QDomElement elem = list.item (i).toElement ();
+			const QDomElement elem = list.item (i).toElement ();
 			if (elem.isNull ()) continue;
-			if (elem.attribute ("name") == name) {
+			if (elem.attribute (name_attr) == name) {
 				from_elem = elem;
-			} else if (elem.attribute ("name") == to_name) {
+			} else if (elem.attribute (name_attr) == to_name) {
 				to_elem = elem;
 			}
 		}
 
+		if (from_elem.isNull ()) return;
+		if (to_elem.isNull ()) {  // if no place to move to, just rename (Note: children will be moved, below)
+			to_elem = from_elem.cloneNode (false).toElement ();
+			to_elem.setAttribute (name_attr, to_name);
+			from_elem.parentNode().appendChild(to_elem);
+		}
 		// move
 		from_elem.parentNode ().removeChild (from_elem);
-		to_elem.appendChild (from_elem);
+		if (flatten) {
+			while (from_elem.hasChildNodes()) {
+				to_elem.appendChild (from_elem.firstChild());
+			}
+		} else {
+			to_elem.appendChild (from_elem);
+		}
 
 		// set result
 		client->setXMLGUIBuildDocument (doc);
-
-		// recurse
-		if (recursive) {
-			QList<KXMLGUIClient*> children = client->childClients ();
-			QList<KXMLGUIClient*>::const_iterator it;
-			for (it = children.constBegin (); it != children.constEnd (); ++it) {
-				moveContainer (*it, tagname, name, to_name, true);
-			}
-		}
 	}
 
 	QString getCurrentSymbol (const QString &context_line, int cursor_pos, bool strict) {

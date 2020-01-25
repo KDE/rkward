@@ -2,7 +2,7 @@
                           rktoplevelwindowgui  -  description
                              -------------------
     begin                : Tue Apr 24 2007
-    copyright            : (C) 2007, 2009, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -32,6 +32,7 @@ class RKTopLevelWindowGUI : public QObject, public KXMLGUIClient {
 public:
 	explicit RKTopLevelWindowGUI (KXmlGuiWindow *for_window);
 	~RKTopLevelWindowGUI ();
+	void initToolWindowActions ();
 public slots:
 	// windows menu
 	/** Raise the help search window */

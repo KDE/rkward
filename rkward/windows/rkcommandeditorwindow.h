@@ -2,7 +2,7 @@
                           rkcommandeditorwindow  -  description
                              -------------------
     begin                : Mon Aug 30 2004
-    copyright            : (C) 2004-2019 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -29,7 +29,8 @@
 
 #include <QUrl>
 
-#include "../windows/rkmdiwindow.h"
+#include "rkmdiwindow.h"
+#include "rkworkplace.h"
 
 class QEvent;
 class QCloseEvent;
@@ -119,10 +120,8 @@ class RKCommandEditorWindow : public RKMDIWindow, public RKScriptContextProvider
 public:
 /** constructor
 @param encoding encoding to use. If QString (), the default encoding is used.
-@param read_only Open the file in read-only mode
-@param delete_on_close File should be deleted when closing the window. Only respected with read_only=true.
-@param use_r_highlighting Initialize the view to use R syntax highlighting. Use, if you're going to edit an R syntax file */
-	explicit RKCommandEditorWindow (QWidget *parent, const QUrl url, const QString& encoding=QString (), bool use_r_highlighting=true, bool use_codehinting=true, bool read_only=false, bool delete_on_close=false);
+@param flags @See Combination of RKCommandEditorFlags */
+	explicit RKCommandEditorWindow (QWidget *parent, const QUrl url, const QString& encoding=QString (), int flags=RKCommandEditorFlags::DefaultFlags);
 /** destructor */
 	~RKCommandEditorWindow ();
 /** returns, whether the document was modified since the last save */
@@ -152,6 +151,8 @@ public:
 	void currentHelpContext (QString* symbol, QString* package) override;
 
 	void highlightLine (int linenum);
+/** Returns the (main, non-preview) texteditor view in this editor. */
+	KTextEditor::View* getView () const { return m_view; };
 public slots:
 /** update Tab caption according to the current url. Display the filename-component of the URL, or - if not available - a more elaborate description of the url. Also appends a "[modified]" if appropriate */
 	void updateCaption ();
@@ -249,6 +250,7 @@ private:
 	QTimer autosave_timer;
 
 	QUrl delete_on_close;
+	bool visible_to_kateplugins;
 
 	QString _id;
 	static QMap<QString, KTextEditor::Document*> unnamed_documents;
