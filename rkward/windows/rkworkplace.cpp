@@ -1094,6 +1094,8 @@ void RKMDIWindowHistory::windowActivated (RKMDIWindow *window) {
 	recent_windows.append (window);
 
 	updateSwitcher ();
+
+	emit activeWindowChanged (window);
 }
 
 void RKMDIWindowHistory::next (QAction* prev_action, QAction *next_action) {

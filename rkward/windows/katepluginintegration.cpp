@@ -276,6 +276,8 @@ KatePluginIntegrationWindow::KatePluginIntegrationWindow (KatePluginIntegrationA
 	// While this one may be accessed from plugins via KTextEditor::Editor::instance()->application()
 	app = parent;
 	active_plugin = 0;
+
+	connect(RKWorkplace::getHistory(), &RKMDIWindowHistory::activeWindowChanged, this, &KatePluginIntegrationWindow::activeWindowChanged);
 }
 
 class KatePluginToolWindow : public RKMDIWindow {
@@ -357,6 +359,14 @@ QList<KTextEditor::View *> KatePluginIntegrationWindow::views() {
 		ret.append (static_cast<RKCommandEditorWindow*>(w[i])->getView());
 	}
 	return ret;
+}
+
+void KatePluginIntegrationWindow::activeWindowChanged(RKMDIWindow* window) {
+	RK_TRACE (APP);
+
+	if (window->isType(RKMDIWindow::CommandEditorWindow)) {
+		emit main->viewChanged(static_cast<RKCommandEditorWindow *>(window)->getView());
+	}
 }
 
 KTextEditor::View *KatePluginIntegrationWindow::activeView() {
@@ -463,7 +473,7 @@ bool KatePluginIntegrationWindow::viewsInSameSplitView(KTextEditor::View* view1,
 	return false;
 }
 
-void KatePluginIntegrationWindow::fixupPluginUI(const QString &id, const PluginResources &resources) {
+void KatePluginIntegrationWindow::fixUpPluginUI(const QString &id, const PluginResources &resources) {
 	RK_TRACE (APP);
 
 	KXMLGUIClient* hacked_parent = this;
@@ -481,7 +491,7 @@ void KatePluginIntegrationWindow::fixupPluginUI(const QString &id, const PluginR
 			RKCommonFunctions::removeContainers(client, QStringList() << "search_in_files", true);
 			// TODO: Rename "Search more" to "Search in Scripts". These should still be accessible, globally.
 		} else if (i == 0 && id == QStringLiteral("kateprojectplugin")) {
-			RKCommonFunctions::moveContainer(client, "Menu", "project", "edit", true, false);
+			RKCommonFunctions::moveContainer(client, "Menu", "projects", "view", true, false);
 		}
 
 		RKCommonFunctions::moveContainer(client, "Menu", "tools", "edit", true, true);
@@ -490,13 +500,15 @@ void KatePluginIntegrationWindow::fixupPluginUI(const QString &id, const PluginR
 
 /* TODO: Ok, I guess we need even more specialization.
 kateprojectplugin:
- - "Project" menu should go to "View"?
  - Actions should probably be accessible, globally
 katesearchplugin:
  - should go to next / previous match be accessible, globally?
 katesnippetsplugin:
  - ok as is, I think
 */
+	// TODO: If child clients were added to the window, itself, we need to tell the main window to rebuild.
+	//       Right now, this is handled during startup, only.
+
 }
 
 QObject* KatePluginIntegrationWindow::createPluginView(KTextEditor::Plugin* plugin) {
@@ -511,21 +523,7 @@ QObject* KatePluginIntegrationWindow::createPluginView(KTextEditor::Plugin* plug
 	resources.view = plugin->createView(main);
 	active_plugin = 0;
 	disconnect(factory(), &KXMLGUIFactory::clientAdded, this, &KatePluginIntegrationWindow::catchXMLGUIClientsHack);
-	KXMLGUIClient* hacked_parent = this;
-	QString id = app->idForPlugin(plugin);
-	for (int i = 0; i < resources.clients.size(); ++i) {
-		KXMLGUIClient* client = resources.clients[i];
-		RKMDIWindow* window = resources.windows.value(i);
-		if (window) {
-			hacked_parent = window->getPart();;
-		}
-		factory()->removeClient(client);
-		fixupPluginUI(id, i, client, window);
-		hacked_parent->insertChildClient(client);
-	}
-	// TODO: If child clients were added to the window, itself, we need to tell the main window to rebuild.
-	//       Right now, this is handled during startup, only.
-
+	fixUpPluginUI(app->idForPlugin(plugin), resources);
 	connect(plugin, &QObject::destroyed, [&]() { plugin_resources.remove(plugin); });
 	return resources.view;
 }
@@ -540,9 +538,6 @@ void KatePluginIntegrationWindow::catchXMLGUIClientsHack(KXMLGUIClient* client) 
 	}
 }
 
-// TODO: Don't forget to make sure to emit all the signals!
-//       - MainWindow signals
-// TODO: Apply plugin specific hacks as needed (e.g. moving "Tool" menu, removing broken actions)
 // TODO: new RKToplevelWindowGUI should be called after all plugins are loaded (and have registered their tool views). However
 //       that may be a problem, if there is no KXMLGUIFactory around, yet. So, annoyingly, we need to create the GUI, before we
 //       have everything to populate it.

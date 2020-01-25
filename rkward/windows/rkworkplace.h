@@ -59,6 +59,8 @@ public:
 	void prev (QAction *prev_action, QAction *next_action);
 public slots:
 	void windowActivated (RKMDIWindow *window);
+signals:
+	void activeWindowChanged (RKMDIWindow *window);
 private slots:
 	void switcherDestroyed ();
 private:

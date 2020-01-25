@@ -114,6 +114,7 @@ friend class KatePluginIntegrationApp;
 	KatePluginIntegrationApp *app;
 private slots:
 	void catchXMLGUIClientsHack(KXMLGUIClient* client);
+	void activeWindowChanged(RKMDIWindow *window);
 private:
 	KTextEditor::Plugin* active_plugin;
 	void fixUpPluginUI(const QString &id, const PluginResources &resources);
