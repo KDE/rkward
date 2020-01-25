@@ -191,6 +191,10 @@ void RKSettingsModulePlugins::loadSettings (KConfig *config) {
 		// Note that in the case of installationMoved(), checkAdjustLoadedPath() has already kicked in, above, but rescanning is still useful
 		// e.g. if users have installed to a new location, because they had botched their previous installation
 		QDir def_plugindir (RKCommonFunctions::getRKWardDataDir ());
+		if (def_plugindir.dirName() == QStringLiteral ("rkwardinstall")) {
+			// For running from build-dir: Work around bad design choice of installation layout
+			def_plugindir.cd ("plugins");
+		}
 		QStringList def_pluginmaps = def_plugindir.entryList (QStringList ("*.pluginmap"));
 		for (int i = 0; i < def_pluginmaps.size (); ++i) {
 			def_pluginmaps[i] = def_plugindir.absoluteFilePath (def_pluginmaps[i]);

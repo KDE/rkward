@@ -2,7 +2,7 @@
                           rkcommonfunctions  -  description
                              -------------------
     begin                : Mon Oct 17 2005
-    copyright            : (C) 2005-2018 by Thomas Friedrichsmeier
+    copyright            : (C) 2005-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -21,6 +21,7 @@
 #include <qregexp.h>
 #include <QDir>
 #include <QStandardPaths>
+#include <QCoreApplication>
 
 #include <KLocalizedString>
 #include <kxmlguiclient.h>
@@ -172,6 +173,11 @@ namespace RKCommonFunctions {
 	QString getRKWardDataDir () {
 		static QString rkward_data_dir;
 		if (rkward_data_dir.isNull ()) {
+			QString inside_build_tree = QCoreApplication::applicationDirPath() + "/rkwardinstall/";
+			if (QFileInfo(inside_build_tree).isReadable()) {
+				rkward_data_dir = inside_build_tree;
+				return rkward_data_dir;
+			}
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 4, 0))
 			QStringList candidates = QStandardPaths::locateAll (QStandardPaths::AppDataLocation, "resource.ver");
 			candidates += QStandardPaths::locateAll (QStandardPaths::AppDataLocation, "rkward/resource.ver");  // Well, isn't this just silly? AppDataLocation may or may not contain the application name (on Mac)
