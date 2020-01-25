@@ -785,7 +785,6 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 		QDialog* dialog = new QDialog ();
 		dialog->setResult (-1);  // We use this to stand for cancelled
 		QDialogButtonBox *button_box = new QDialogButtonBox (dialog);
-		QPushButton *button;
 		int button_count = 0;
 		button_count += addButtonToBox (dialog, button_box, QDialogButtonBox::Yes, button_yes, "yes", def_button == button_yes);
 		button_count += addButtonToBox (dialog, button_box, QDialogButtonBox::No, button_no, "no", def_button == button_no);
