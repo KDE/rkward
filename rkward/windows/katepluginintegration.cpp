@@ -20,6 +20,7 @@
 #include <QWidget>
 #include <QFileInfo>
 #include <QVBoxLayout>
+#include <QChildEvent>
 
 #include <KPluginFactory>
 #include <KPluginLoader>
