@@ -84,7 +84,7 @@ public:
 	virtual void enableSubmit (bool enable);
 	virtual void updateCode ();
 /** reimplemented from QWidget to take care of showing the code display if needed */
-	void showEvent (QShowEvent *e);
+	void showEvent (QShowEvent *e) override;
 	RKXMLGUIPreviewArea* addDockedPreview (RKComponentPropertyBool *controller, const QString& label, const QString &id=QString (), bool bottom = false);
 /** Do anything needed after the dialog is created and its contents have been built. Base class adds the preview regions to the splitter */
 	virtual void finalize ();
@@ -109,7 +109,7 @@ private:
 	QCheckBox *toggle_code_box;
 	QPushButton *ok_button;
 protected:
-	void closeEvent (QCloseEvent *e);
+	void closeEvent (QCloseEvent *e) override;
 	RKStandardComponent *component;
 	QTimer *code_update_timer;
 	// common widgets

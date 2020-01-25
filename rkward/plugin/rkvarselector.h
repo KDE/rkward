@@ -40,7 +40,7 @@ class RKVarSelector : public RKComponent {
 public: 
 	RKVarSelector (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
 	~RKVarSelector ();
-	int type () { return ComponentVarSelector; };
+	int type () override { return ComponentVarSelector; };
 private slots:
 	void objectSelectionChanged ();
 	void rootChanged ();

@@ -31,12 +31,12 @@ class RKRadio : public RKAbstractOptionSelector {
 public: 
 	RKRadio (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
 	~RKRadio ();
-	int type () { return ComponentRadio; };
+	int type () override { return ComponentRadio; };
 protected:
-	void setItemInGUI (int id);
-	void addOptionToGUI (const QString &label, int id);
-	void setItemEnabledInGUI (int id, bool enabled);
-	QStringList getUiLabelPair () const;
+	void setItemInGUI (int id) override;
+	void addOptionToGUI (const QString &label, int id) override;
+	void setItemEnabledInGUI (int id, bool enabled) override;
+	QStringList getUiLabelPair () const override;
 private:
 	QButtonGroup* group;
 	QGroupBox* group_box;

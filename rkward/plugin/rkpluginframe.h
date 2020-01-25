@@ -36,12 +36,12 @@ public:
 
 /** returns the page child elements should be drawn in */
 	QWidget *getPage ();
-	int type () { return ComponentFrame; };
+	int type () override { return ComponentFrame; };
 /** reimplemented to return the value of the checked property by default */
-	QVariant value (const QString &modifier=QString ());
+	QVariant value (const QString &modifier=QString ()) override;
 
 /** re-implemented to create "checked" property on demand. */
-	RKComponentBase* lookupComponent (const QString &identifier, QString *remainder);
+	RKComponentBase* lookupComponent (const QString &identifier, QString *remainder) override;
 private slots:
 /** called when checked property changes */
 	void propertyChanged (RKComponentPropertyBase *property);
