@@ -1118,21 +1118,22 @@ bool RKRBackend::startR () {
 
 // register our functions
 	R_CallMethodDef callMethods [] = {
-		{ "ws", (DL_FUNC) &doWs, 1 },
-		{ "rk.do.error", (DL_FUNC) &doError, 1 },
-		{ "rk.do.command", (DL_FUNC) &doSubstackCall, 1 },
-		{ "rk.do.generic.request", (DL_FUNC) &doPlainGenericRequest, 2 },
-		{ "rk.get.structure", (DL_FUNC) &doGetStructure, 4 },
-		{ "rk.get.structure.global", (DL_FUNC) &doGetGlobalEnvStructure, 3 },
-		{ "rk.copy.no.eval", (DL_FUNC) &doCopyNoEval, 4 },
-		{ "rk.edit.files", (DL_FUNC) &doEditFiles, 4 },
-		{ "rk.show.files", (DL_FUNC) &doShowFiles, 5 },
-		{ "rk.dialog", (DL_FUNC) &doDialog, 7 },
-		{ "rk.update.locale", (DL_FUNC) &doUpdateLocale, 0 },
-		{ "rk.locale.name", (DL_FUNC) &doLocaleName, 0 },
-		{ "rk.capture.output", (DL_FUNC) &doCaptureOutput, 5 },
-		{ "rk.graphics.device", (DL_FUNC) &RKStartGraphicsDevice, 7},
-		{ "rk.graphics.device.resize", (DL_FUNC) &RKD_AdjustSize, 1},
+		// NOTE: Intermediate cast to void* to avoid compiler warning
+		{ "ws", (DL_FUNC) (void*) &doWs, 1 },
+		{ "rk.do.error", (DL_FUNC) (void*) &doError, 1 },
+		{ "rk.do.command", (DL_FUNC) (void*) &doSubstackCall, 1 },
+		{ "rk.do.generic.request", (DL_FUNC) (void*) &doPlainGenericRequest, 2 },
+		{ "rk.get.structure", (DL_FUNC) (void*) &doGetStructure, 4 },
+		{ "rk.get.structure.global", (DL_FUNC) (void*) &doGetGlobalEnvStructure, 3 },
+		{ "rk.copy.no.eval", (DL_FUNC) (void*) &doCopyNoEval, 4 },
+		{ "rk.edit.files", (DL_FUNC) (void*) &doEditFiles, 4 },
+		{ "rk.show.files", (DL_FUNC) (void*) &doShowFiles, 5 },
+		{ "rk.dialog", (DL_FUNC) (void*) &doDialog, 7 },
+		{ "rk.update.locale", (DL_FUNC) (void*) &doUpdateLocale, 0 },
+		{ "rk.locale.name", (DL_FUNC) (void*) &doLocaleName, 0 },
+		{ "rk.capture.output", (DL_FUNC) (void*) &doCaptureOutput, 5 },
+		{ "rk.graphics.device", (DL_FUNC) (void*) &RKStartGraphicsDevice, 7},
+		{ "rk.graphics.device.resize", (DL_FUNC) (void*) &RKD_AdjustSize, 1},
 		{ 0, 0, 0 }
 	};
 	R_registerRoutines (R_getEmbeddingDllInfo(), NULL, callMethods, NULL, NULL);
