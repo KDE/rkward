@@ -13,11 +13,13 @@ rk.switch.frontend.language(LANG = "C")
 This feature is mostly intended for the purpose of automated testing, which needs a
 defined language to work. It might also be useful for translators, or e.g. to look up
 some terms untranslated in special cases where you are more familiar with the English terms than
-your native language terms. Note that this will only strings that are translated after the call., only those which get
-translated after the call. Most new dialogs you open, and importantly new plugin dialogs should
+your native language terms. Note that this will only strings that are translated after the call.,
+      only those which get
+translated after the call. Most new dialogs you open,
+      and importantly new plugin dialogs should
 show strings in the new lanuage, however.
 }
 \details{
-To change the language in the backend, use \code{Sys.setenv(LANGUAGE=...)} or \code{Sys.setlocale()}.
+To change the language in the backend,
+      use \code{Sys.setenv(LANGUAGE=...)} or \code{Sys.setlocale()}.
 }
-

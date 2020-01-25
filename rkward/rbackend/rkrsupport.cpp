@@ -2,7 +2,7 @@
                           rkrsupport  -  description
                              -------------------
     begin                : Mon Oct 25 2010
-    copyright            : (C) 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2010-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -238,7 +238,10 @@ RData *RKRSupport::SEXPToRData (SEXP from_exp) {
 				R_ClearExternalPtr (from_exp);
 				break;
 			}
-		case STRSXP:
+#if (QT_VERSION >= QT_VERSION_CHECK(5,8,0))
+		Q_FALLTHROUGH();
+#endif
+		//case STRSXP: // intentional fallthrough, conversion to stringlist is the default handling
 		default:
 			data->setData (SEXPToStringList (from_exp));
 	}

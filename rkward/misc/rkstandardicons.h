@@ -2,7 +2,7 @@
                           rkstandardicons  -  description
                              -------------------
     begin                : Wed Oct 24 2007
-    copyright            : (C) 2007-2016 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -25,7 +25,7 @@ class RKMDIWindow;
 
 /** This class (it's a namespace, really, except I did not figure out how to put the storage array in it as a "private" member) provides easy access to the icons used in RKWard. This helps staying consistent across the whole application.
 
-Also, since QIcons are only loaded on demand, and implicitely shared, this should save some resources for icons that are used often.
+Also, since QIcons are only loaded on demand, and implicitly shared, this should save some resources for icons that are used often.
 
 Eventually all icons (even those that are only used once, so far) should be added, here. All direct constructions of QIcons (or KIconLoader) should be removed elsewhere.
 
@@ -116,6 +116,8 @@ public:
 		StatusWaitingUpdating,
 
 		DocumentPDF,
+
+		RKWardIcon,
 
 		Last	/**< not really an item, only the count of items available. Do not use. */
 	};

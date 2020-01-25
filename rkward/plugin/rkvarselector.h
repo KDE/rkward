@@ -2,7 +2,7 @@
                           rkvarselector.h  -  description
                              -------------------
     begin                : Thu Nov 7 2002
-    copyright            : (C) 2002-2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2002-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -25,6 +25,7 @@ class RKObjectListView;
 class QDomElement;
 class QAction;
 class QVBoxLayout;
+class QToolButton;
 
 /** This is an especially important RK-plugin-widget. It provides a list of variables, that
 can be selected for statistical analysis.
@@ -44,6 +45,7 @@ private slots:
 	void objectSelectionChanged ();
 	void rootChanged ();
 	void showFilterWidget ();
+	void toggleLevel1 ();
 private:
 	RKObjectListView *list_view;
 	RKComponentPropertyRObjects *selected;
@@ -52,6 +54,8 @@ private:
 	QAction *show_all_envs_action;
 	QWidget *filter_widget;
 	QVBoxLayout *filter_widget_placeholder;
+	QToolButton *expand_collapse_button;
+	static bool expanded;
 };
 
 #endif

@@ -189,14 +189,14 @@ public:
 	explicit RKHelpRenderer (QIODevice *_device) { device = _device; help_xml = 0; component_xml = 0; };
 /** destructor */
 	~RKHelpRenderer () {};
-
+// for dealing with rkward://[page|component]-pages
+	bool renderRKHelp (const QUrl &url);
+private:
 	XMLHelper *help_xml;
 	XMLHelper *component_xml;
 	QDomElement help_doc_element;
 	QDomElement component_doc_element;
 
-	// for dealing with rkward://[page|component]-pages
-	bool renderRKHelp (const QUrl &url);
 	QString renderHelpFragment (QDomElement &fragment);
 	QString resolveLabel (const QString &id) const;
 	QString prepareHelpLink (const QString &href, const QString &text);

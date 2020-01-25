@@ -54,7 +54,7 @@ Based on some simple heuristics, RKWard will try to complete file names instead 
 	</section>
 
 	<section id="settings" title="Configurable Settings">
-To configure the behavior of the console, select "Configure" from the context menu. The following options are configurable:
+To configure the behavior of the console, select <a href="rkward://settings/console">Settings->Configure RKWard->R Console</a> or "Configure" from the context menu. The following options are configurable:
 
 <ul>
 	<li><b>Load/save command history</b>: Whether the <link href="#command_history">command history</link> is saved when closing RKWard, and reloaded when next starting RKWard again. If this is not checked, each session of RKWard will start out with an empty command history.</li>

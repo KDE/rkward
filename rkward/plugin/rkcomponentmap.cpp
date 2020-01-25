@@ -68,6 +68,8 @@ RKComponentGUIXML::RKComponentGUIXML (const QString &context_id) {
 
 RKComponentGUIXML::~RKComponentGUIXML () {
 	RK_TRACE (PLUGIN);
+
+	toplevel_menu.clear ();
 }
 
 void RKComponentGUIXML::clearGUIDescription () {
@@ -159,7 +161,8 @@ void RKComponentGUIXML::finalize () {
 
 RKComponentGUIXML::Group::~Group () {
 	for (int i = 0; i < entries.size (); ++i) {
-		delete (entries[i]);
+		if (entries[i]->is_menu) delete (static_cast<RKComponentGUIXML::Menu*> (entries[i]));   // NOTE: No virtual d'tor in base-class Entry
+		else delete (entries[i]);
 	}
 }
 
@@ -574,7 +577,7 @@ RKPluginMapParseResult RKComponentMap::addPluginMap (const QString& plugin_map_f
 
 	QDomElement document_element = xml.openXMLFile (DL_ERROR);
 	if (document_element.isNull ()) {
-		ret.addAndPrintError (DL_ERROR, i18n ("Could not open plugin map file %1. (Is not readble, or failed to parse)", plugin_map_file_abs));
+		ret.addAndPrintError (DL_ERROR, i18n ("Could not open plugin map file %1. (Is not readable, or failed to parse)", plugin_map_file_abs));
 		return ret;
 	}
 

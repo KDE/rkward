@@ -2,7 +2,7 @@
                           rkpluginframe.cpp  -  description
                              -------------------
     begin                : Sat Jun 4 2011
-    copyright            : (C) 2011, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2011-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -31,14 +31,11 @@ RKPluginFrame::RKPluginFrame (const QDomElement &element, RKComponent *parent_co
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
-	frame = new QGroupBox (xml->i18nStringAttribute (element, "label", QString(), DL_INFO), this);
+	frame = new QGroupBox (xml->i18nStringAttribute (element, "label", QString(), DL_INFO));
 	layout->addWidget (frame);
-	layout = new QVBoxLayout (frame);
-	page = new QWidget (frame);
-	QVBoxLayout *pagelayout = new QVBoxLayout (page);
-	pagelayout->setContentsMargins (0, 0, 0, 0);
-	pagelayout->setSpacing (RKGlobals::spacingHint ());
-	layout->addWidget (page);
+
+	QVBoxLayout *inner = new QVBoxLayout (frame);
+	inner->setSpacing (RKGlobals::spacingHint ());
 
 	checked = 0;
 	if (xml->getBoolAttribute (element, "checkable", false, DL_INFO)) {
@@ -63,6 +60,10 @@ void RKPluginFrame::initCheckedProperty () {
 
 	addChild ("checked", checked = new RKComponentPropertyBool (this, false, frame->isChecked (), "1", "0"));
 	connect (checked, &RKComponentPropertyBase::valueChanged, this, &RKPluginFrame::propertyChanged);
+}
+
+QWidget* RKPluginFrame::getPage () {
+	return frame;
 }
 
 RKComponentBase* RKPluginFrame::lookupComponent (const QString& identifier, QString* remainder) {

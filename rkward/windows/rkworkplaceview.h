@@ -33,7 +33,7 @@ private:
 	explicit RKWorkplaceViewPane (RKWorkplaceView *parent);
 	~RKWorkplaceViewPane ();
 	RKWorkplaceView* workplace_view;
-/** Close a page given the correspoding widget */
+/** Close a page given the corresponding widget */
 	void closePage (QWidget* page);
 /** Close a page given its index */
 	void closePage (int page);

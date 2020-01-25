@@ -2,7 +2,7 @@
                           rkrinterface.cpp  -  description
                              -------------------
     begin                : Fri Nov 1 2002
-    copyright            : (C) 2002-2017 by Thomas Friedrichsmeier
+    copyright            : (C) 2002-2019 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -61,6 +61,7 @@
 #include <stdlib.h>
 #include <QFileDialog>
 #include <QApplication>
+#include <QPushButton>
 
 // flush new pieces of output after this period of time:
 #define FLUSH_INTERVAL 100
@@ -70,6 +71,7 @@
 #define SET_RUNTIME_OPTS 3
 #define STARTUP_PHASE2_COMPLETE 4
 #define GET_R_VERSION 5
+#define RSTARTUP_COMPLETE 6
 
 // statics
 double RInterface::na_real;
@@ -85,8 +87,6 @@ RInterface::RInterface () {
 	previously_idle = false;
 	locked = 0;
 	backend_dead = false;
-	num_active_output_record_requests = 0;
-	previous_output_type = ROutput::NoOutput;
 	flush_timer_id = 0;
 	dummy_command_on_stack = 0;
 
@@ -102,6 +102,8 @@ RInterface::RInterface () {
 	/////// Further initialization commands, which do not necessarily have to run before everything else can be queued, here. ///////
 	// NOTE: will receive the list as a call plain generic request from the backend ("updateInstalledPackagesList")
 	issueCommand (".rk.get.installed.packages()", RCommand::App | RCommand::Sync);
+
+	issueCommand (new RCommand (QString (), RCommand::App | RCommand::Sync | RCommand::EmptyCommand, QString (), this, RSTARTUP_COMPLETE));
 }
 
 void RInterface::issueCommand (const QString &command, int type, const QString &rk_equiv, RCommandReceiver *receiver, int flags, RCommandChain *chain) {
@@ -112,7 +114,6 @@ void RInterface::issueCommand (const QString &command, int type, const QString &
 RInterface::~RInterface(){
 	RK_TRACE (RBACKEND);
 
-	if (num_active_output_record_requests) RK_DEBUG (RBACKEND, DL_WARNING, "%d requests for recording output still active on interface shutdown", num_active_output_record_requests);
 	RKWindowCatcher::discardInstance ();
 }
 
@@ -300,7 +301,8 @@ void RInterface::rCommandDone (RCommand *command) {
 
 	if (command->getFlags () == GET_LIB_PATHS) {
 		RK_ASSERT (command->getDataType () == RData::StringVector);
-		RKSettingsModuleRPackages::defaultliblocs += command->stringVector ();
+		RKSettingsModuleRPackages::r_libs_user = command->stringVector ().value (0);
+		RKSettingsModuleRPackages::defaultliblocs += command->stringVector ().mid (1);
 
 		RCommandChain *chain = command->parent;
 		RK_ASSERT (chain);
@@ -313,7 +315,10 @@ void RInterface::rCommandDone (RCommand *command) {
 		}
 		// initialize output file
 		issueCommand ("rk.set.output.html.file (\"" + RKSettingsModuleGeneral::filesPath () + "/rk_out.html\")\n", RCommand::App | RCommand::Sync, QString (), this, SET_RUNTIME_OPTS, chain);
-
+#ifdef Q_OS_MACOS
+		// On MacOS, the backend is started from inside R home to allow resolution of dynamic libs. Re-set to frontend wd, here.
+		issueCommand ("setwd (" + RKRSharedFunctionality::quote (QDir::currentPath ()) + ")\n", RCommand::App | RCommand::Sync, QString (), this, SET_RUNTIME_OPTS, chain);
+#endif
 		closeChain (chain);
 	} else if (command->getFlags () == GET_R_VERSION) {
 		RK_ASSERT (command->getDataType () == RData::StringVector);
@@ -341,6 +346,8 @@ void RInterface::rCommandDone (RCommand *command) {
 		}
 
 		startup_errors.clear ();
+	} else if (command->getFlags () == RSTARTUP_COMPLETE) {
+		RKSettings::validateSettingsInteractive ();
 	}
 }
 
@@ -398,7 +405,7 @@ void RInterface::handleRequest (RBackendRequest* request) {
 
 		issueCommand ("paste (R.version[c (\"major\", \"minor\")], collapse=\".\")\n", RCommand::GetStringVector | RCommand::App | RCommand::Sync, QString (), this, GET_R_VERSION, chain);
 		// find out about standard library locations
-		issueCommand (".libPaths ()\n", RCommand::GetStringVector | RCommand::App | RCommand::Sync, QString (), this, GET_LIB_PATHS, chain);
+		issueCommand ("c(path.expand(Sys.getenv(\"R_LIBS_USER\")), .libPaths())\n", RCommand::GetStringVector | RCommand::App | RCommand::Sync, QString (), this, GET_LIB_PATHS, chain);
 		// start help server / determined help base url
 		issueCommand (".rk.getHelpBaseUrl ()\n", RCommand::GetStringVector | RCommand::App | RCommand::Sync, QString (), this, GET_HELP_BASE, chain);
 
@@ -433,24 +440,6 @@ void RInterface::flushOutput (bool forced) {
 			continue;	// to delete the other output pointers, too
 		} else {
 			RK_DEBUG (RBACKEND, DL_DEBUG, "output '%s'", qPrintable (output->output));
-		}
-
-		if (num_active_output_record_requests) {
-			if (output->type != ROutput::Error) {	// NOTE: skip error output. It has already been written as a warning.
-				if (output->type != previous_output_type) {
-					if (!recorded_output.isEmpty ()) recorded_output.append ("</pre>\n");
-
-					if (output->type == ROutput::Output) recorded_output.append ("<pre class=\"output_normal\">");
-					else if (output->type == ROutput::Warning) recorded_output.append ("<pre class=\"output_warning\">");
-					else {
-						RK_ASSERT (false);
-						recorded_output.append ("<pre>");
-					}
-
-					previous_output_type = output->type;
-				}
-				recorded_output.append (output->output.toHtmlEscaped ());
-			}
 		}
 
 		bool first = true;
@@ -520,10 +509,10 @@ void RInterface::cancelAll () {
 bool RInterface::softCancelCommand (RCommand* command) {
 	RK_TRACE (RBACKEND);
 
-	if (!(command->type () && RCommand::Running)) {
+	if (!(command->type () & RCommand::Running)) {
 		cancelCommand (command);
 	}
-	return command->status && RCommand::Canceled;
+	return command->status & RCommand::Canceled;
 }
 
 void RInterface::cancelCommand (RCommand *command) {
@@ -531,7 +520,7 @@ void RInterface::cancelCommand (RCommand *command) {
 
 	if (!(command->type () & RCommand::Sync)) {
 		command->status |= RCommand::Canceled;
-		if (command->type () && RCommand::Running) {
+		if (command->type () & RCommand::Running) {
 			if ((RKDebugHandler::instance ()->state () == RKDebugHandler::InDebugPrompt) && (command == RKDebugHandler::instance ()->command ())) {
 				RKDebugHandler::instance ()->sendCancel ();
 			} else {
@@ -564,7 +553,7 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 	} else if (call == "wdChange") {
 		// in case of separate processes, apply new working directory in frontend, too.
 		QDir::setCurrent (calllist.value (1));
-		RKWardMainWindow::getMain ()->updateCWD ();
+		emit (backendWorkdirChanged());
 	} else if (call == "highlightRCode") {
 		return (QStringList (RKCommandHighlighter::commandToHTML (calllist.value (1))));
 	} else if (call == "quit") {
@@ -656,20 +645,6 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 					return (QStringList ("Could not open file for writing. Not recording commands"));
 				}
 			}
-		}
-	} else if (call == "recordOutput") {
-		// NOTE: requests to record output can overlap (i.e. several can be active at the same time). However, we always clear the buffer, each time a request ends, i.e. then
-		// recorded output does NOT overlap.
-		if (calllist.value (1) == "end") {
-			RK_ASSERT (num_active_output_record_requests > 0);
-			--num_active_output_record_requests;
-			QString dummy = recorded_output;
-			recorded_output.clear ();
-			if (!dummy.isEmpty ()) dummy.append ("</pre>\n");
-			previous_output_type = ROutput::NoOutput;
-			return QStringList (dummy);
-		} else {
-			++num_active_output_record_requests;
 		}
 	} else if (call == "printPreview") {
 		RKPrintAgent::printPostscript (calllist.value (1), true);
@@ -775,6 +750,15 @@ void RInterface::processHistoricalSubstackRequest (const QStringList &calllist, 
 	closeChain (in_chain);
 }
 
+int addButtonToBox (QDialog *dialog, QDialogButtonBox *box, QDialogButtonBox::StandardButton which, const QString &text, const QString &def_text, bool is_default) {
+	if (text.isEmpty ()) return 0;
+	QPushButton *button = box->addButton (which);
+	if (text != def_text) button->setText (text);
+	if (is_default) button->setDefault (true);
+	QObject::connect (button, &QPushButton::clicked, [dialog, which]() { dialog->done (which); });
+	return 1;
+}
+
 void RInterface::processRBackendRequest (RBackendRequest *request) {
 	RK_TRACE (RBACKEND);
 
@@ -792,44 +776,43 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 	} else if (type == RBackendRequest::ShowMessage) {
 		QString caption = request->params["caption"].toString ();
 		QString message = request->params["message"].toString ();
-		QString button_yes = request->params["button_yes"].toString ();;
-		QString button_no = request->params["button_no"].toString ();;
-		QString button_cancel = request->params["button_cancel"].toString ();;
+		QString button_yes = request->params["button_yes"].toString ();
+		QString button_no = request->params["button_no"].toString ();
+		QString button_cancel = request->params["button_cancel"].toString ();
+		QString def_button = request->params["default"].toString ();
 
-		KGuiItem button_yes_item = KStandardGuiItem::yes ();
-		if (button_yes != "yes") button_yes_item.setText (button_yes);
-		KGuiItem button_no_item = KStandardGuiItem::no ();
-		if (button_no != "no") button_no_item.setText (button_no);
-		KGuiItem button_cancel_item = KStandardGuiItem::cancel ();
-		if (button_cancel != "cancel") button_cancel_item.setText (button_cancel);
-
-		KMessageBox::DialogType dialog_type = KMessageBox::QuestionYesNoCancel;
-		if (button_cancel.isEmpty ()) dialog_type = KMessageBox::QuestionYesNo;
-		if (button_no.isEmpty () && button_cancel.isEmpty ()) {
-			dialog_type = KMessageBox::Information;
-			if (!request->synchronous) {	// non-modal dialogs are not supported out of the box by KMessageBox;
-				QDialog* dialog = new QDialog ();
-				QDialogButtonBox *buttonBox = new QDialogButtonBox (dialog);
-				buttonBox->setStandardButtons (QDialogButtonBox::Ok);
-				KMessageBox::createKMessageBox (dialog, buttonBox, QMessageBox::Information, message, QStringList (), QString (), 0, KMessageBox::Notify | KMessageBox::NoExec);
-				dialog->setWindowTitle (caption);
-				dialog->setAttribute (Qt::WA_DeleteOnClose);
-				dialog->show();
-
-				RKRBackendProtocolFrontend::setRequestCompleted (request);
-				return;
-			}
+		// NOTE: In order to support non-modal (information) dialogs, we cannot use KMessageBox or QMessgaeBox, below.
+		QDialog* dialog = new QDialog ();
+		dialog->setResult (-1);  // We use this to stand for cancelled
+		QDialogButtonBox *button_box = new QDialogButtonBox (dialog);
+		QPushButton *button;
+		int button_count = 0;
+		button_count += addButtonToBox (dialog, button_box, QDialogButtonBox::Yes, button_yes, "yes", def_button == button_yes);
+		button_count += addButtonToBox (dialog, button_box, QDialogButtonBox::No, button_no, "no", def_button == button_no);
+		button_count += addButtonToBox (dialog, button_box, QDialogButtonBox::Cancel, button_cancel, "cancel", def_button == button_cancel);
+		if (!button_count) { // cannot have no button defined at all
+			button_count += addButtonToBox (dialog, button_box, QDialogButtonBox::Ok, "ok", "ok", true);
 		}
 
-		int result = KMessageBox::messageBox (0, dialog_type, message, caption, button_yes_item, button_no_item, button_cancel_item);
+		bool synchronous = request->synchronous || (button_count > 1);
+		KMessageBox::createKMessageBox (dialog, button_box, button_count < 2 ? QMessageBox::Information : QMessageBox::Question, message, QStringList (), QString (), 0, KMessageBox::Notify | KMessageBox::NoExec);
+		dialog->setWindowTitle (caption);
 
-		QString result_string;
-		if ((result == KMessageBox::Yes) || (result == KMessageBox::Ok)) result_string = "yes";
-		else if (result == KMessageBox::No) result_string = "no";
-		else if (result == KMessageBox::Cancel) result_string = "cancel";
-		else RK_ASSERT (false);
+		if (!synchronous) {
+			dialog->setAttribute (Qt::WA_DeleteOnClose);
+			dialog->show();
 
-		request->params["result"] = result_string;
+			RKRBackendProtocolFrontend::setRequestCompleted (request);
+			return;
+		} else {
+			int result = dialog->exec ();
+			QString result_string;
+			if (result == QDialogButtonBox::Yes || result == QDialogButtonBox::Ok) result_string = "yes";
+			else if (result == QDialogButtonBox::No) result_string = "no";
+			else result_string = "cancel";
+			request->params["result"] = result_string;
+			delete dialog;
+		}
 	} else if (type == RBackendRequest::ReadLine) {
 		QString result;
 

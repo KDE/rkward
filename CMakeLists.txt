@@ -2,7 +2,7 @@ PROJECT(rkward)
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8.12)	# As required by KF5
 IF(NOT "${CMAKE_VERSION}" VERSION_LESS 3.3.0)
-	CMAKE_POLICY(SET CMP0063 OLD)  # No symbol visibility in any of our static libraries needed
+	CMAKE_POLICY(SET CMP0063 NEW)  # Shut up cmake warning
 ENDIF()
 
 IF(NOT CMAKE_VERBOSE_MAKEFILE)
@@ -22,7 +22,7 @@ INCLUDE(ECMMarkNonGuiExecutable)
 INCLUDE(FeatureSummary)
 
 FIND_PACKAGE(Qt5 5.2 CONFIG REQUIRED COMPONENTS Widgets Core Xml Network WebKitWidgets Script PrintSupport)
-FIND_PACKAGE(KF5 5.2 REQUIRED COMPONENTS CoreAddons DocTools I18n XmlGui TextEditor WidgetsAddons WebKit Parts Config Notifications WindowSystem OPTIONAL_COMPONENTS Crash)
+FIND_PACKAGE(KF5 5.4 REQUIRED COMPONENTS CoreAddons DocTools I18n XmlGui TextEditor WidgetsAddons WebKit Parts Config Notifications WindowSystem OPTIONAL_COMPONENTS Crash)
 FIND_PACKAGE(Gettext REQUIRED)
 
 # FindIntl in cmake is broken for MSVC on Windows, (and only included from 3.2.3 upwards).

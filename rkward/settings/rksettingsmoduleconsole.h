@@ -2,7 +2,7 @@
                           rksettingsmoduleconsole  -  description
                              -------------------
     begin                : Sun Oct 16 2005
-    copyright            : (C) 2005, 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2005-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -34,12 +34,12 @@ class RKSettingsModuleConsole : public RKSettingsModule {
 Q_OBJECT
 public:
 	RKSettingsModuleConsole (RKSettings *gui, QWidget *parent);
-
 	~RKSettingsModuleConsole ();
-	
+
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
-	
+	static void validateSettingsInteractive (QList<RKSettingsWizardPage*>*) {};
+
 	void applyChanges () override;
 	void save (KConfig *config) override;
 

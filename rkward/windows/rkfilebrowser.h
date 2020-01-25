@@ -2,7 +2,7 @@
                           rkfilebrowser  -  description
                              -------------------
     begin                : Thu Apr 26 2007
-    copyright            : (C) 2007-2016 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -41,8 +41,6 @@ public:
 /** reimplemented to create the real file browser widget only when the file browser is shown for the first time */
 	void showEvent (QShowEvent *e) override;
 	static RKFileBrowser *getMainBrowser() { return main_browser; };
-public slots:
-	void currentWDChanged ();
 private:
 	RKFileBrowserWidget *real_widget;
 	QWidget *layout_widget;
@@ -51,7 +49,7 @@ friend class RKWardMainWindow;
 };
 
 /** The internal widget used in RKFileBrowser 
-TODO: KDE4: check whether there is a ready widget for this. Much of the implementation is a modified copy from Kate / kdevelop.
+Much of the implementation is a modified copy from Kate / kdevelop.
 */
 class RKFileBrowserWidget : public QWidget {
 	Q_OBJECT
@@ -59,9 +57,9 @@ public:
 	explicit RKFileBrowserWidget (QWidget *widget);
 	~RKFileBrowserWidget ();
 
-	void setURL (const QUrl &url);
 	bool eventFilter (QObject* o, QEvent* e) override;
 public slots:
+	void setURL (const QUrl &url);
 	void urlChangedInView (const QUrl &url);
 	void stringChangedInCombo (const QString &url);
 	void urlChangedInCombo (const QUrl &url);
@@ -69,6 +67,7 @@ public slots:
 	void saveConfig ();
 	void contextMenuHook (const KFileItem &item, QMenu *menu);
 	void rename ();
+	void syncToWD ();
 private:
 	QList<QAction*> added_service_actions;
 	KDirOperator *dir;
@@ -76,6 +75,7 @@ private:
 	KFileItemActions *fi_actions;
 	QAction *rename_action;
 	QUrl context_menu_url;
+	bool follow_working_directory;
 };
 
 #endif

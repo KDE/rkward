@@ -2,7 +2,7 @@
                           rktoolwindowbar  -  description
                              -------------------
     begin                : Fri Oct 12 2007
-    copyright            : (C) 2007, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2019 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -23,9 +23,11 @@
 #include <KLocalizedString>
 #include <kparts/partmanager.h>
 #include <kselectaction.h>
+#include <kwidgetsaddons_version.h>
 
 #include <QSplitter>
 #include <QContextMenuEvent>
+#include <QHBoxLayout>
 
 #include "rkworkplace.h"
 #include "rkworkplaceview.h"
@@ -136,7 +138,11 @@ void RKToolWindowBar::addWidget (RKMDIWindow *window) {
 		window->tool_window_bar->removeWidget (window);
 	}
 
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5,13,0)
+	appendTab (window->windowIcon (), id, window->shortCaption ());
+#else
 	appendTab (window->windowIcon ().pixmap (QSize (16, 16)), id, window->shortCaption ());
+#endif
 
 	window->tool_window_bar = this;
 	widget_to_id.insert (window, id);

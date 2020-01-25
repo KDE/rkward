@@ -74,7 +74,7 @@ appendconfig "${CONFIGFILE}" "^USERBIN=" "USERBIN=\"${HOME}/bin\"" "config"
 appendconfig "${CONFIGFILE}" "^OSXVERSION=" "OSXVERSION=\$(sw_vers -productVersion | sed -e \"s/.[[:digit:]]*\$//\")" "config"
 appendconfig "${CONFIGFILE}" "^PVARIANT=" "PVARIANT=\"\"" "config"
 appendconfig "${CONFIGFILE}" "^GITBRANCH=" "GITBRANCH=\"master\"" "config"
-appendconfig "${CONFIGFILE}" "^WORKDIR=" "# specify work directory\nWORKDIR=\"\${SRCPATH}/kf5/\${PTARGET}/work\"" "config"
+appendconfig "${CONFIGFILE}" "^WORKDIR=" "# specify work directory\nWORKDIR=\"\${SRCPATH}/kf5/kf5-rkward-binary/work\"" "config"
 appendconfig "${CONFIGFILE}" "^LPUBDIR=" "# specify local public directory\nLPUBDIR=\"${HOME}/Public/rkward\"" "config"
 appendconfig "${CONFIGFILE}" "^APPLDIR=" "# specify application dir used\nAPPLDIR=\"/Applications/RKWard\"" "config"
 appendconfig "${CONFIGFILE}" "^BLDPRFX=" "# specify the prefix for build directories below \${MPTINST}/var/macports/build\nBLDPRFX=_opt_rkward_var_macports_sources_rsync.macports.org_release_tarballs_ports_" "config"
@@ -257,8 +257,14 @@ while getopts ":a:CD:E:d:b:fGlL:pP:rRQqmsS:cU:xXF:t:" OPT; do
        MCPVERS=$OPTARG >&2 ;;
     f) LSDSKUSG=true >&2 ;;
     l) RMSTLIBS=true >&2 ;;
-    L) DOEXCPCK=true
-       MPKGNAME=$OPTARG >&2 ;;
+    L) DOEXCPCK=true >&2
+       MPKGNAME=$OPTARG >&2
+       STRPMPKGFILE="$(basename ${MPKGNAME})" >&2
+       STRPMPKGDIR="$(dirname ${MPKGNAME})" >&2
+       CLEANSTRPMPKGFILE="$(echo ${STRPMPKGFILE} | sed -e "s/^orig_//")"
+       TMPSTRPBUNDLE="${STRPMPKGDIR}/stripped_${CLEANSTRPMPKGFILE}" >&2
+       TARGETSTRPBUNDLE="${STRPMPKGDIR}/${CLEANSTRPMPKGFILE}" >&2
+       NEWORIGBUNDLE="${STRPMPKGDIR}/orig_${CLEANSTRPMPKGFILE}" >&2 ;;
     p) UPMPORTS=true >&2 ;;
     P) POSTINST=true >&2
        POSTINSTFILE=$OPTARG >&2 ;;
@@ -285,7 +291,6 @@ while getopts ":a:CD:E:d:b:fGlL:pP:rRQqmsS:cU:xXF:t:" OPT; do
 done
 
 if $BINARY ; then
-  WORKDIR="${SRCPATH}/kf5/kf5-rkward-binary/work"
   BINSTRING="-binary"
 else
   BINARY=false
@@ -294,7 +299,6 @@ fi
 if $DEVEL ; then
   DEVSTRING="-devel"
 else
-  WORKDIR="${SRCPATH}/kf5/kf5-rkward/work"
   DEVSTRING=""
 fi
 if $DEBUG ; then
@@ -790,26 +794,36 @@ if $DOEXCPCK ; then
       echo -en "\nreplacing ${TXT_BLUE}background.tiff${OFF}..."
       cp "${SRCPATH}/background.tiff" "${BNDLTMP}/bundle/Resources/background.tiff" || warning "failed!"
       alldone
+    else
+      echo -e ""
     fi
     if [ -f "${BNDLTMP}/bundle/Resources/Welcome.html" ] ; then
-      echo -en "\nfixing ${TXT_BLUE}Welcome.html${OFF}..."
+      echo -en "fixing ${TXT_BLUE}Welcome.html${OFF}..."
       sed -i -e "s/kf5-rkward[-binarydevl]*/RKWard/g" "${BNDLTMP}/bundle/Resources/Welcome.html" || warning "failed!"
       alldone
     fi
     if [ -f "${BNDLTMP}/bundle/Distribution" ] ; then
-      echo -en "\nfixing ${TXT_BLUE}Distribution${OFF}..."
+      echo -en "fixing ${TXT_BLUE}Distribution${OFF}..."
       sed -i -e "s|<title>kf5-rkward[-binarydevl]*</title>|<title>RKWard</title>|g" "${BNDLTMP}/bundle/Distribution" || warning "failed!"
       sed -i -e "s|Applications/RKWard/rkward.app|Applications/rkward.app|g" "${BNDLTMP}/bundle/Distribution" || warning "failed!"
       sed -i -e $'s|</allowed-os-versions>|</allowed-os-versions>\\\n    <domains enable_anywhere="false" enable_currentUserHome="false" enable_localSystem="true"/>|' "${BNDLTMP}/bundle/Distribution"
       alldone
     fi
-    echo -en "\nre-packing ${TXT_BLUE}stripped_$(basename ${MPKGNAME})${OFF}..."
-    pkgutil --flatten "${BNDLTMP}/bundle" "$(dirname ${MPKGNAME})/stripped_$(basename ${MPKGNAME})" || error "failed!"
+    echo -en "re-packing ${TXT_BLUE}stripped_${CLEANSTRPMPKGFILE}${OFF}..."
+    pkgutil --flatten "${BNDLTMP}/bundle" "${TMPSTRPBUNDLE}" || error "failed!"
     alldone
-    echo -en "removing temporary dir ${TXT_BLUE}${BNDLTMP}${OFF}..."
+    if ! [ $(echo "${STRPMPKGFILE}" | grep "^orig_") ] ; then
+      echo -en "replacing ${TXT_BLUE}${STRPMPKGFILE}${OFF} with ${TXT_BLUE}stripped_${CLEANSTRPMPKGFILE}${OFF}..."
+      mv "${MPKGNAME}" "${NEWORIGBUNDLE}" || error "failed!"
+    else
+      echo -en "moving ${TXT_BLUE}stripped_${CLEANSTRPMPKGFILE}${OFF}..."
+    fi
+    mv "${TMPSTRPBUNDLE}" "${TARGETSTRPBUNDLE}" || error "failed!"
+    alldone
+    echo -en "\nremoving temporary dir ${TXT_BLUE}${BNDLTMP}${OFF}..."
     rm -rf "${BNDLTMP}" 2>/dev/null || error "failed!"
     alldone
-    bundlesize "$(dirname ${MPKGNAME})/stripped_$(basename ${MPKGNAME})"
+    bundlesize "${TARGETSTRPBUNDLE}"
   else
     error "${TXT_BLUE}${BNDLTMP}${OFF} exists, can't unpack the bundle archive!"
   fi

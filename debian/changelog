@@ -1,12 +1,23 @@
-rkward (0.7.0b-1) unstable; urgency=low
+rkward (0.7.0z+0.7.1+devel1-1) UNRELEASED; urgency=low
+  * New upstream release
   * THIS IS AN INOFFICIAL PACKAGE
     We use this to build debian packages for a variety to Debian/Ubuntu
     releases, automatically and manually. It is close to the official packages, but due
     to the need to cover more divergent systems, it is not identical to those.
     All changelog entries below cover only the official debian package, not the changes
     made to this inofficial packaging.
+
+ -- Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>  Sat, 14 Apr 2018 14:00:00 +0100
+
+rkward (0.7.0b-1) unstable; urgency=low
   * New upstream release
     Includes missing translation files in rkward-data
+  * Replace kdoctools-dev dependency with libkf5doctools-dev
+    closes: #895875
+  * Depend on r-api-3.5 when built against r-base-core >= 3.5.0
+  * Do not depend on r-api-3.4 when built against r-base-core < 3.4.0
+  * Remove explicit specification of C compiler
+    closes: #900591
 
  -- Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>  Mon, 16 Apr 2018 20:00:00 +0100
 

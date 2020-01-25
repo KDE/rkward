@@ -2,7 +2,7 @@
                           rkerrordialog  -  description
                              -------------------
     begin                : Thu Apr 25 2013
-    copyright            : (C) 2013, 2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2013-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -56,7 +56,7 @@ public:
 		                                  "<a href=\"%1\">KDE bugtracking system</a>. Note that you need a user account for this, so that we will be able to contact you, "
 		                                  "for follow-up questions. <b>If you do not have an account, please <a href=\"%2\">create one</a>, first.</b></p>"
 		                                  "<p>In case this is not possible for some reason, refer to <a href=\"%3\">%3</a> for alternative ways of reporting issues.</p>",
-		                         QString ("http://bugs.kde.org"), QString ("https://bugs.kde.org/createaccount.cgi"), QString ("http://rkward.kde.org/bugs/"))
+		                         QString ("https://bugs.kde.org"), QString ("https://bugs.kde.org/createaccount.cgi"), QString ("https://rkward.kde.org/Bugs.html"))
 		                          + i18n ("<p><b>What information should I provide, and how?</b></p>Clicking \"Report issue\" will take you to the "
 		                                  "KDE bugtracking system. After logging in, some information will already be pre-filled into the report form. Please make sure "
 		                                  "to fill in the missing bits - in English - where indicated, especially in the \"Comment\" field.</p>"), this);

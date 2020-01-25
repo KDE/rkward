@@ -41,7 +41,7 @@ public:
 		EmptyWorkspace=0,			/**< start with an empty workspace */
 		EmptyTable=1,				/**< start with an empty table */
 		ChoseFile=2,				/**< chose file to open */
-		NoSavedSetting=3,			/**< not acutally returned as a result. Used in RKSettingsModuleGeneral. This is saved, if user wants to be asked on every startup */
+		NoSavedSetting=3,			/**< not actually returned as a result. Used in RKSettingsModuleGeneral. This is saved, if user wants to be asked on every startup */
 		OpenFile=4,					/**< open a recent file (already specified) */
 		RestoreFromWD=5				/**< load workspace from current directory, if available (R option --restore). */
 	};

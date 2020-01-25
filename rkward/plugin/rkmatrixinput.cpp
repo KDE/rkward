@@ -127,7 +127,7 @@ QVariant RKMatrixInput::value (const QString& modifier) {
 			ret.append ("\tc (" + makeColumnString (i, ", ") + ')');
 		}
 		return QString ("cbind (\n" + ret.join (",\n") + "\n)");
-	} else if (modifier.startsWith ("row.")) {
+	} else if (modifier.startsWith (QLatin1String ("row."))) {
 		bool ok;
 		int row = modifier.mid (4).toInt (&ok);
 		if ((row >= 0) && ok) {

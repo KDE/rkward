@@ -5,9 +5,9 @@ ENDIF(NOT ${PROJECT_NAME} STREQUAL "rkward")
 INCLUDE(SetVersionNumber.cmake)
 
 IF(APPLE)
-    SET(CPACK_BUNDLE_ICON rkward.icns)
-    SET(CPACK_BUNDLE_NAME RKWard)
-    SET(CPACK_BUNDLE_STARTUP_COMMAND rkward)
+	SET(CPACK_BUNDLE_ICON rkward.icns)
+	SET(CPACK_BUNDLE_NAME RKWard)
+	SET(CPACK_BUNDLE_STARTUP_COMMAND rkward)
 ENDIF()
 
 # once tested and working this could become the default on Mac:
@@ -36,6 +36,7 @@ SET(RKWard_Sources
 	robjectviewer.cpp
 	rkconsole.cpp
 )
+QT5_ADD_RESOURCES(RKWard_Sources resources.qrc)
 
 # somehow the detected R paths from FindR.cmake do not get passed down automatically
 GET_DIRECTORY_PROPERTY(R_EXECUTABLE DIRECTORY rbackend DEFINITION R_EXECUTABLE)
@@ -60,7 +61,6 @@ ENDIF()
 # We should switch with to target_compile_definitions once we require CMAKE 2.6+
 ADD_DEFINITIONS(-DR_EXECUTABLE="${R_EXECUTABLE}")
 ADD_DEFINITIONS(-DINSTALL_PATH="${CMAKE_INSTALL_PREFIX}")
-ADD_DEFINITIONS(-DR_LIBS="${R_LIBDIR}")
 SET_TARGET_PROPERTIES(rkward PROPERTIES
         MACOSX_BUNDLE_BUNDLE_NAME "RKWard")
 
@@ -84,7 +84,6 @@ ENDIF(KF5Crash_FOUND)
 INSTALL(DIRECTORY plugins/ pages DESTINATION ${DATA_INSTALL_DIR}/rkward
 	PATTERN .svn EXCLUDE)
 
-INSTALL(FILES rkwardui.rc rkconsolepart.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/rkward)
 INSTALL(FILES resource.ver DESTINATION ${DATA_INSTALL_DIR}/rkward)
 
 IF(APPLE)
@@ -110,6 +109,7 @@ ELSE()
     INSTALL(TARGETS rkward DESTINATION ${BIN_INSTALL_DIR})
 ENDIF()
 
-INSTALL(FILES org.kde.rkward.desktop org.kde.rkward-open.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+INSTALL(FILES org.kde.rkward.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+INSTALL(FILES org.kde.rkward.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
 INSTALL(FILES vnd.rkward.r.xml DESTINATION ${XDG_MIME_INSTALL_DIR})
 INSTALL(FILES rkward.protocol DESTINATION ${SERVICES_INSTALL_DIR})

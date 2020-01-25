@@ -41,7 +41,7 @@ public:
 @param max maximum acceptable value
 @param initial initial value
 @param default_precision default precision of steps. E.g. 2 to make the second sub-decimal digit the one that is change by pressing up/down arrows, when the value is 0
-@param max_precison maximum acceptable precision */
+@param max_precision maximum acceptable precision */
 	void setRealMode (double min, double max, double initial, int default_precision, int max_precision);
 /** set the spinbox to operate on integer numbers (like a regular QSpinBox, but step sizes are adjusted automatically
 @param min minimum acceptable value

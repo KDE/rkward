@@ -8,7 +8,7 @@ Build-Depends: cmake,
                debhelper (>= 9.0.0),
                libkf5webkit-dev,
                libkf5texteditor-dev,
-               kdoctools-dev,
+               libkf5doctools-dev | kdoctools-dev,
                r-base-dev (>= 2.8.0)
 Standards-Version: 4.1.4
 Homepage: http://rkward.kde.org

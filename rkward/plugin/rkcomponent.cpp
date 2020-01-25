@@ -245,7 +245,7 @@ RKComponentBase::ComponentStatus RKComponentBase::recursiveStatus () {
 
 	bool processing = false;
 	bool children_satisfied = true;
-	// we always need to interate over all children, since we need to make sure to find any which are dead or processing.
+	// we always need to iterate over all children, since we need to make sure to find any which are dead or processing.
 	for (QHash<QString, RKComponentBase*>::const_iterator it = child_map.constBegin (); it != child_map.constEnd (); ++it) {
 		ComponentStatus s = it.value ()->recursiveStatus ();
 		if (s == Dead) return Dead;
@@ -299,7 +299,7 @@ RKComponent::~RKComponent () {
 void RKComponent::propertyValueChanged (RKComponentPropertyBase *property) {
 	RK_TRACE (PLUGIN);
 
-	// slightly more elaborat than necessary on first thought, to prevent loops
+	// slightly more elaborate than necessary on first thought, to prevent loops
 	if (property == visibility_property) {
 		if (visibility_property->boolValue ()) {
 			if (isHidden ()) show ();

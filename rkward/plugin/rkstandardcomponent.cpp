@@ -2,7 +2,7 @@
                           rkstandardcomponent  -  description
                              -------------------
     begin                : Sun Feb 19 2006
-    copyright            : (C) 2006-2016 by Thomas Friedrichsmeier
+    copyright            : (C) 2006-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -80,13 +80,19 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 
 	RKComponentPropertyRObjects *current_object_property = new RKComponentPropertyRObjects (this, false);
 	RKComponentPropertyRObjects *current_dataframe_property = new RKComponentPropertyRObjects (this, false);
+	RKComponentPropertyBase *current_filename_property = new RKComponentPropertyBase (this, false);
 	current_object_property->setInternal (true);
 	current_dataframe_property->setInternal (true);
+	current_filename_property->setInternal (false);
 	RKMDIWindow *w = RKWorkplace::mainWorkplace ()->activeWindow (RKMDIWindow::AnyWindowState);
-	if (w) current_object_property->setValue (w->globalContextProperty ("current_object"));
+	if (w) {
+		current_object_property->setValue (w->globalContextProperty ("current_object"));
+		current_filename_property->setValue (w->globalContextProperty ("current_filename"));
+	}
 	if (current_object_property->objectValue () && current_object_property->objectValue ()->isDataFrame ()) current_dataframe_property->setObjectValue (current_object_property->objectValue ());
 	addChild ("current_object", current_object_property);
 	addChild ("current_dataframe", current_dataframe_property);
+	addChild ("current_filename", current_filename_property);
 
 	// open the main description file for parsing
 	XMLHelper* xml = getXmlHelper ();
@@ -596,6 +602,7 @@ void RKComponentBuilder::buildElement (const QDomElement &element, XMLHelper &xm
 		} else if (e.tagName () == QLatin1String ("stretch")) {
 			QWidget *stretch = new QWidget (parent_widget);
 			stretch->setSizePolicy (QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+			parent_widget->layout ()->addWidget (stretch);
 			QBoxLayout *box = dynamic_cast<QBoxLayout *> (parent_widget->layout ());
 			// RK_ASSERT (box);  <- NO, also meaningful in a <frame>
 			if (box) box->setStretchFactor (stretch, 100);

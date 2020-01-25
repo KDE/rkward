@@ -31,7 +31,7 @@ class QKeyEvent;
 /**
 This is the main editor used in the TwinTableMembers
 
-TODO: the acutal editor will have to be separated from the value_list-popup in order to allow showing the popup, even if the list does not have strong
+TODO: the actual editor will have to be separated from the value_list-popup in order to allow showing the popup, even if the list does not have strong
 focus.
 
 @author Thomas Friedrichsmeier

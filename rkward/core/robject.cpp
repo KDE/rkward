@@ -2,7 +2,7 @@
                           robject  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004-2016 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2019 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -71,14 +71,9 @@ bool RObject::irregularShortName (const QString &name) {
 	return (name.contains (invalidChars));
 }
 
-QString RObject::getFullName () const {
+QString RObject::getFullName (int options) const {
 	RK_TRACE (OBJECTS);
-	return parent->makeChildName (RObject::name, type & Misplaced);
-}
-
-QString RObject::getBaseName () const {
-	RK_TRACE (OBJECTS);
-	return parent->makeChildBaseName (RObject::name);
+	return parent->makeChildName (RObject::name, type & Misplaced, options);
 }
 
 QString RObject::getLabel () const {
@@ -86,13 +81,13 @@ QString RObject::getLabel () const {
 	return getMetaProperty ("label");
 }
 
-RObject* RObject::findObjects (const QStringList &path, RObjectSearchMap *matches, const QString &op) {
+RObject::ObjectList RObject::findObjects (const QStringList &path, bool partial, const QString &op) {
 	RK_TRACE (OBJECTS);
 	// not a container
 	if (op == "@") {
-		if (slotsPseudoObject ()) return (slotsPseudoObject ()->findObjects (path, matches, "$"));
+		if (slotsPseudoObject ()) return (slotsPseudoObject ()->findObjects (path, partial, "$"));
 	}
-	return 0;
+	return ObjectList();
 }
 
 QString RObject::getMetaProperty (const QString &id) const {
@@ -107,7 +102,7 @@ QString RObject::getDescription () const {
 		QString label = meta_map->value ("label");
 		if (!label.isEmpty ()) return (getShortName () + " (" + label + ')');
 	}
-	return getShortName ();;
+	return getShortName ();
 }
 
 QString RObject::getObjectDescription () const {
@@ -189,14 +184,13 @@ bool RObject::inherits (const QString &class_name) const {
 	return (classnames.contains (class_name));
 }
 
-QString RObject::makeChildName (const QString &short_child_name, bool) const {
+QString RObject::makeChildName (const QString &short_child_name, bool, int options) const {
 	RK_TRACE (OBJECTS);
-	return (getFullName () + "[[" + rQuote (short_child_name) + "]]");
-}
-
-QString RObject::makeChildBaseName (const QString &short_child_name) const {
-	RK_TRACE (OBJECTS);
-	return (getBaseName () + "[[" + rQuote (short_child_name) + "]]");
+	if (options & DollarExpansion) {
+		if (irregularShortName (short_child_name)) return (getFullName (options) + '$' + rQuote (short_child_name));
+		return (getFullName (options) + '$' + short_child_name);  // Do not return list$"member", unless necessary
+	}
+	return (getFullName (options) + "[[" + rQuote (short_child_name) + "]]");
 }
 
 void RObject::writeMetaData (RCommandChain *chain) {

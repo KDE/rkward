@@ -2,7 +2,7 @@
                           rksettingsmoduleplugins  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004-2016 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -41,12 +41,13 @@ public:
 
 	void applyChanges () override;
 	void save (KConfig *config) override;
-	
+
 	enum PluginPrefs { PreferDialog=0, PreferRecommended=1, PreferWizard=2 };
-	
+
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
-	
+	static void validateSettingsInteractive (QList<RKSettingsWizardPage*>*) {};
+
 	QString caption () override;
 
 	/** @returns a list of active plugin maps */

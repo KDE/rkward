@@ -27,9 +27,7 @@ public:
 	explicit RKRowNames (RContainerObject *parent);
 	~RKRowNames ();
 
-	QString getFullName () const override;
-/** Reimplemented to return "row.names" */
-	QString getBaseName () const override { return QString ("row.names"); };
+	QString getFullName (int) const override;
 /** Reimplemented to do nothing. There is no metadata on the rownames. */
 	void writeMetaData (RCommandChain *) override {};
 

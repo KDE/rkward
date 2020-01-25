@@ -44,7 +44,7 @@ public:
 	unsigned int getDataLength () const;
 /** returns a vector of double, if that is the type of data contained (else, an assert is raised, and an empty vector is returned). Can be used safely on a null RData pointer (but raises an assert in this case). @see RCommand::GetRealVector @see RData::getDataType () */
 	const RealStorage realVector () const {
-		if (this && (datatype == RealVector)) {
+		if (datatype == RealVector) {
 			return (*static_cast<RealStorage *> (data));
 		}
 		doAssert (RealVector);
@@ -52,7 +52,7 @@ public:
 	}
 /** returns a vector of int, if that is the type of data contained (else, an assert is raised, and an empty vector is returned). Can be used safely on a null RData pointer (but raises an assert in this case). @see RCommand::GetIntVector @see RData::getDataType () */
 	const IntStorage intVector () const {
-		if (this && (datatype == IntVector)) {
+		if (datatype == IntVector) {
 			return (*static_cast<IntStorage *> (data));
 		}
 		doAssert (IntVector);
@@ -60,7 +60,7 @@ public:
 	}
 /** returns a QStringList, if that is the type of data contained (else, an assert is raised, and an empty vector is returned). Can be used safely on a null RData pointer (but raises an assert in this case). @see RCommand::GetStringVector @see RData::getDataType () */
 	const StringStorage stringVector () const {
-		if (this && (datatype == StringVector)) {
+		if (datatype == StringVector) {
 			return (*static_cast<StringStorage *> (data));
 		}
 		doAssert (StringVector);
@@ -68,7 +68,7 @@ public:
 	}
 /** returns a vector of RData*, if that is the type of data contained (else, an assert is raised, and an empty vector is returned). Can be used safely on a null RData pointer (but raises an assert in this case). @see RCommand::GetStructureVector @see RData::getDataType () */
 	const RDataStorage structureVector () const {
-		if (this && (datatype == StructureVector)) {
+		if (datatype == StructureVector) {
 			return (*static_cast<RDataStorage *> (data));
 		}
 		doAssert (StructureVector);
