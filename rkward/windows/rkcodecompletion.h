@@ -2,7 +2,7 @@
                           rkcodecompletion  -  description
                              -------------------
     begin                : Thu Feb 21 2019
-    copyright            : (C) 2004-2019 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -37,7 +37,11 @@ class RKArgumentHintModel;
 class RKCompletionManager : public QObject {
 	Q_OBJECT
 public:
-	RKCompletionManager (KTextEditor::View *view);
+	enum Mode {
+		Script,
+		Console
+	};
+	RKCompletionManager (KTextEditor::View *view, Mode=Script);
 	~RKCompletionManager ();
 
 	QString currentCompletionWord () const;
@@ -71,6 +75,7 @@ private:
 
 	KTextEditor::View *_view;
 	KTextEditor::Cursor cached_position;
+	Mode mode;
 
 	KTextEditor::Range symbol_range;
 	KTextEditor::Cursor call_opening;

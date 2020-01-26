@@ -2,7 +2,7 @@
                           rkcodecompletion  -  description
                              -------------------
     begin                : Thu Feb 21 2019
-    copyright            : (C) 2004-2019 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -58,10 +58,11 @@ public:
 
 //////////////////////// RKCompletionManager //////////////////////
 
-RKCompletionManager::RKCompletionManager (KTextEditor::View* view) : QObject (view) {
+RKCompletionManager::RKCompletionManager (KTextEditor::View* view, Mode _mode) : QObject (view) {
 	RK_TRACE (COMMANDEDITOR);
 
 	_view = view;
+	mode = _mode;
 	keep_active = false;
 	user_triggered = false;
 	ignore_next_trigger = false;
@@ -89,12 +90,11 @@ RKCompletionManager::RKCompletionManager (KTextEditor::View* view) : QObject (vi
 			(*it)->installEventFilter (this);  // to handle Tab-key; installing on the view, alone, is not enough.
 		}
 
-		// HACK: I just can't see to make the object name completion model play nice with automatic invocation.
+		// HACK: I just can't seem to make the object name completion model play nice with automatic invocation.
 		//       However, there is no official way to invoke all registered models, manually. So we try to hack our way
 		//       to a pointer to the default kate keyword completion model
 		kate_keyword_completion_model = KTextEditor::Editor::instance ()->findChild<KTextEditor::CodeCompletionModel *> ();
 		if (!kate_keyword_completion_model) kate_keyword_completion_model = view->findChild<KTextEditor::CodeCompletionModel *> (QString());
-
 	} else {
 		RK_ASSERT (false);  // Not a katepart?
 	}
@@ -222,7 +222,7 @@ void RKCompletionManager::updateCallHint () {
 	while (potential_symbol_end < -1 && line >= 0) {
 		--line;
 		QString context_line = doc->line (line);
-		if (context_line.startsWith ('>')) continue; // For console: TODO limit to console
+		if (mode == Console && !context_line.startsWith ('>')) continue; // skip output lines
 		full_context.prepend (context_line);
 
 		int pos = context_line.length () - 1;

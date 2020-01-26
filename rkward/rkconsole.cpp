@@ -2,7 +2,7 @@
                           rkconsole  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004-2019 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -54,6 +54,7 @@
 #include "rkglobals.h"
 #include "rkward.h"
 #include "windows/rkhelpsearchwindow.h"
+#include "windows/rkcodecompletion.h"
 #include "rbackend/rkrinterface.h"
 #include "rbackend/rcommand.h"
 #include "settings/rksettings.h"
@@ -63,7 +64,6 @@
 #include "misc/rkstandardicons.h"
 #include "misc/rkstandardactions.h"
 #include "core/robjectlist.h"
-#include "core/rfunctionobject.h"
 
 #include "debug.h"
 
@@ -143,7 +143,7 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 
 	doc->setModified (false);
 
-	hinter = new RKFunctionArgHinter (this, view);
+	new RKCompletionManager (view);
 	
 	setCaption (i18n ("R Console"));
 	console_part = new RKConsolePart (this);
@@ -175,7 +175,6 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 RKConsole::~RKConsole () {
 	RK_TRACE (APP);
 
-	delete hinter;
 	RKSettingsModuleConsole::saveCommandHistory (commands_history.getHistory ());
 }
 
@@ -332,8 +331,8 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 			iface->forceCompletion ();
 			return true;
 		}
-
-		hinter->hideArgHint ();
+#warning TODO
+//		hinter->hideArgHint ();
 		commands_history.append (currentEditingLine ());
 		submitCommand ();
 		return true;
