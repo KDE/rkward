@@ -426,6 +426,12 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 	return false;
 }
 
+void RKCompletionManager::stopCompletion () {
+	RK_TRACE (COMMANDEDITOR);
+	cc_iface->abortCompletion ();
+	completion_timer->stop ();
+}
+
 //////////////////////// RKCompletionModelBase ////////////////////
 
 RKCompletionModelBase::RKCompletionModelBase (RKCompletionManager *manager) : KTextEditor::CodeCompletionModel (manager) {
@@ -459,6 +465,16 @@ int RKCompletionModelBase::rowCount (const QModelIndex& parent) const {
 	if (isHeaderItem (parent)) return n_completions;
 	return 0;  // no children on completion entries
 }
+
+void RKCompletionModelBase::executeCompletionItem (KTextEditor::View* view, const KTextEditor::Range& word, const QModelIndex& index) const {
+	RK_TRACE (COMMANDEDITOR);
+
+	// When a completion gets executed, stop the completion. Unfortunately, this does not happen automatically for us, because
+	// a) we have to invoke completion "manually", and b) we don't want to hide completions, whenever there is *any* exact match.
+	KTextEditor::CodeCompletionModel::executeCompletionItem (view, word, index);
+	manager->stopCompletion ();
+}
+
 
 //////////////////////// RKCodeCompletionModel ////////////////////
 
@@ -533,7 +549,7 @@ QVariant RKCodeCompletionModel::data (const QModelIndex& index, int role) const 
 
 QString findCommonCompletion (const QStringList &list, const QString &lead, bool *exact_match) {
 	RK_TRACE (COMMANDEDITOR);
-	RK_DEBUG(COMMANDEDITOR, DL_DEBUG, "Looking for commong completion among set of %d, starting with %s", list.size (), qPrintable (lead));
+	RK_DEBUG(COMMANDEDITOR, DL_DEBUG, "Looking for common completion among set of %d, starting with %s", list.size (), qPrintable (lead));
 
 	*exact_match = true;
 	QString ret;
