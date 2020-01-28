@@ -21,6 +21,7 @@
 #include <QFileInfo>
 #include <QVBoxLayout>
 #include <QChildEvent>
+#include <QComboBox>
 
 #include <KPluginFactory>
 #include <KPluginLoader>
@@ -488,9 +489,19 @@ void KatePluginIntegrationWindow::fixUpPluginUI(const QString &id, const PluginR
 		factory()->removeClient(client);
 
 		if (i == 0 && id == QStringLiteral("katesearchplugin")) {
-			window->setCaption(i18nc("Tab title", "Search in Scripts"));
+			// Try to avoid confusion regarding where the plugin will search:
+			// https://mail.kde.org/pipermail/rkward-devel/2020-January/005393.html
+			// window->setCaption(i18nc("Tab title", "Search in Scripts"));
+			if (!resources.windows.isEmpty()) {
+				// I wonder how long this HACK will work...
+				QComboBox *box = resources.windows.first()->findChild<QComboBox*>("searchPlaceCombo");
+				if (box && (box->count() > 1)) {
+					box->setItemText(0, i18nc("where to search", "in Current Script"));
+					box->setItemText(1, i18nc("where to search", "in Open Scripts"));
+				}
+			}
 			RKCommonFunctions::removeContainers(client, QStringList() << "search_in_files", true);
-			// TODO: Rename "Search more" to "Search in Scripts". These should still be accessible, globally.
+			// TODO: Rename "Search more" to something sensible. These actions should still be accessible, globally.
 		} else if (i == 0 && id == QStringLiteral("kateprojectplugin")) {
 			RKCommonFunctions::moveContainer(client, "Menu", "projects", "view", true, false);
 		}
