@@ -66,6 +66,7 @@ private:
 friend class RKWorkplace;
 	void reclaimDetached (RKMDIWindow *window);
 	void closeOthers (RKMDIWindow *window);
+	void windowDestroyed (QObject *window);
 
 	int getSplitterSize () const;
 	void setSplitterSize (int new_size);

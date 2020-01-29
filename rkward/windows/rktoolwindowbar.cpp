@@ -154,6 +154,7 @@ void RKToolWindowBar::addWidget (RKMDIWindow *window) {
 
 	window->tool_window_bar = this;
 	widget_to_id.insert (window, id);
+	connect (window, &QObject::destroyed, this, &RKToolWindowBar::windowDestroyed);
 
 	connect (tab (id), &KMultiTabBarTab::clicked, this, &RKToolWindowBar::tabClicked);
 	tab (id)->installEventFilter (this);
@@ -173,6 +174,13 @@ void RKToolWindowBar::reclaimDetached (RKMDIWindow *window) {
 	container->layout ()->addWidget (window);
 }
 
+void RKToolWindowBar::windowDestroyed(QObject* window) {
+	RK_TRACE (APP);
+
+	int id = widget_to_id.take (static_cast<RKMDIWindow *> (window));
+	removeTab (id);
+}
+
 void RKToolWindowBar::removeWidget (RKMDIWindow *widget) {
 	RK_TRACE (APP);
 	RK_ASSERT (widget_to_id.contains (widget));
@@ -182,6 +190,7 @@ void RKToolWindowBar::removeWidget (RKMDIWindow *widget) {
 
 	removeTab (id);
 	widget_to_id.remove (widget);
+	disconnect (widget, &QObject::destroyed, this, &RKToolWindowBar::windowDestroyed);
 	widget->tool_window_bar = 0;
 
 	if (widget->isAttached ()) {
