@@ -144,6 +144,7 @@ void RKToolWindowBar::addWidget (RKMDIWindow *window) {
 	if (window->tool_window_bar) {
 		window->tool_window_bar->removeWidget (window);
 	}
+	closeOthers (window);
 
 #if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5,13,0)
 	appendTab (window->windowIcon (), id, window->shortCaption ());
@@ -196,13 +197,9 @@ void RKToolWindowBar::removeWidget (RKMDIWindow *widget) {
 	if (widget_to_id.isEmpty ()) hide ();
 }
 
-void RKToolWindowBar::showWidget (RKMDIWindow *widget) {
+void RKToolWindowBar::closeOthers (RKMDIWindow* widget) {
 	RK_TRACE (APP);
-	RK_ASSERT (widget_to_id.contains (widget));
 
-	int id = widget_to_id[widget];
-
-	// close any others
 	for (QMap<RKMDIWindow*, int>::const_iterator it = widget_to_id.constBegin (); it != widget_to_id.constEnd (); ++it) {
 		RKMDIWindow *cur = it.key ();
 		if (cur != widget) {
@@ -213,6 +210,16 @@ void RKToolWindowBar::showWidget (RKMDIWindow *widget) {
 			setTab (it.value (), false);
 		}
 	}
+}
+
+void RKToolWindowBar::showWidget (RKMDIWindow *widget) {
+	RK_TRACE (APP);
+	RK_ASSERT (widget_to_id.contains (widget));
+
+	int id = widget_to_id[widget];
+
+	// close any others
+	closeOthers (widget);
 
 	widget->show ();
 	if (widget->isAttached ()) {
