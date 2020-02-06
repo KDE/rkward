@@ -109,6 +109,7 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 	KTextEditor::ConfigInterface *confint = qobject_cast<KTextEditor::ConfigInterface*> (view);
 	RK_ASSERT (view);
 	confint->setConfigValue ("dynamic-word-wrap", false);
+	confint->setConfigValue ("scrollbar-minimap", false);
 
 	KTextEditor::CodeCompletionInterface *iface = qobject_cast<KTextEditor::CodeCompletionInterface*> (view);
 	if (iface) iface->setAutomaticInvocationEnabled (false);
