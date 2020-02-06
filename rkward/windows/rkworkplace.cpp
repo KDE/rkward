@@ -214,7 +214,7 @@ void RKWorkplace::attachWindow (RKMDIWindow *window) {
 	}
 
 	RK_ASSERT (window->getPart ());
-	RKWardMainWindow::getMain ()->partManager ()->addPart (window->getPart ());
+	RKWardMainWindow::getMain ()->partManager ()->addPart (window->getPart (), false);
 }
 
 void RKWorkplace::detachWindow (RKMDIWindow *window, bool was_attached) {
@@ -304,7 +304,6 @@ void RKWorkplace::placeToolWindows() {
 
 	foreach (const RKToolWindowList::ToolWindowRepresentation& rep, RKToolWindowList::registeredToolWindows ()) {
 		placeInToolWindowBar (rep.window, rep.default_placement);
-		getHistory ()->popLastWindow (rep.window);	// windows send a spurious activation signal triggered from KPartsManager::addPart(), so we pop them, again
 	}
 }
 

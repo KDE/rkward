@@ -144,7 +144,6 @@ void RKToolWindowBar::addWidget (RKMDIWindow *window) {
 	if (window->tool_window_bar) {
 		window->tool_window_bar->removeWidget (window);
 	}
-	closeOthers (window);
 
 #if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5,13,0)
 	appendTab (window->windowIcon (), id, window->shortCaption ());
@@ -168,6 +167,8 @@ void RKToolWindowBar::addWidget (RKMDIWindow *window) {
 
 void RKToolWindowBar::reclaimDetached (RKMDIWindow *window) {
 	RK_TRACE (APP);
+
+	if (window->parent () == container) return;
 
 	window->hide();
 	window->setParent (container);

@@ -318,8 +318,8 @@ QWidget* KatePluginIntegrationWindow::createToolView (KTextEditor::Plugin *plugi
 	KatePluginToolWindow *window = new KatePluginToolWindow(RKWorkplace::mainWorkplace()->view());
 	window->setCaption(text);
 	window->setWindowIcon(icon);
-	RKWorkplace::mainWorkplace()->placeInToolWindowBar(window, pos);
 	RKToolWindowList::registerToolWindow(window, identifier, (RKToolWindowList::Placement) pos, 0);
+	RKWorkplace::mainWorkplace()->placeInToolWindowBar(window, pos);
 	plugin_resources[plugin].windows.append(window);
 
 	return window;
