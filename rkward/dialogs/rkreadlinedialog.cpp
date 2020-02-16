@@ -31,6 +31,7 @@
 
 #include "../rbackend/rcommand.h"
 #include "../misc/rkdialogbuttonbox.h"
+#include "../misc/rkcommonfunctions.h"
 
 #include "../debug.h"
 
@@ -68,7 +69,7 @@ RKReadLineDialog::RKReadLineDialog (QWidget *parent, const QString &caption, con
 		layout->setStretchFactor (output, 10);
 	}
 
-	QLabel *promptl = new QLabel (prompt, this);
+	QLabel *promptl = RKCommonFunctions::wordWrappedLabel (prompt);
 	promptl->setWordWrap (true);
 	layout->addWidget (promptl);
 

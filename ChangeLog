@@ -1,4 +1,5 @@
 --- Version 0.7.2 - UNRELEASED
+- <text> elements in plugins may now also contain clickable links, including rkward://-scheme links
 * TODO: Bring new code hinting features to the console window!
 - On unix-systems, RKWard can now be run without installation
 - Kate addons are now supported within RKWard. Intially, search-in-files, snippets, and projects are loaded by default

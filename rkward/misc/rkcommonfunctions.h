@@ -24,6 +24,7 @@ class QString;
 class QDomNode;
 class KXMLGUIClient;
 class QWidget;
+class QLabel;
 
 /** Some common static helper functions that don't really belong to any class in particular. If ever we have more than a dozen or so functions in here,
 we should probably split this file up. Until then, there's no real need.
@@ -61,6 +62,11 @@ namespace RKCommonFunctions {
 	QString noteSettingsTakesEffectAfterRestart ();
 /** Passing commands as part of arguments to windows shell scripts will fail miserably for paths with spaces or special characters. Transform to short path names for safety. No-op on sane platforms.*/
 	QString windowsShellScriptSafeCommand (const QString &orig);
+
+/** create a QLabel that has wordwarp enabled, in a single line of code. */
+	QLabel* wordWrappedLabel (const QString &text);
+/** create a QLabel that has wordwarp enabled, *and* clickable links (opened inside RKWard), in a single line of code. */
+	QLabel* linkedWrappedLabel (const QString &text);
 };
 
 #endif

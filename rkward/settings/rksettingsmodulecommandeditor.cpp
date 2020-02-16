@@ -53,9 +53,7 @@ RKSettingsModuleCommandEditor::RKSettingsModuleCommandEditor (RKSettings *gui, Q
 	RK_TRACE (SETTINGS);
 
 	QVBoxLayout* main_vbox = new QVBoxLayout (this);
-	QLabel *label = new QLabel (i18n ("Settings marked with (*) do not take effect until you restart RKWard"), this);
-	label->setWordWrap (true);
-	main_vbox->addWidget (label);
+	main_vbox->addWidget (RKCommonFunctions::wordWrappedLabel (i18n ("Settings marked with (*) do not take effect until you restart RKWard")));
 	main_vbox->addSpacing (2 * RKGlobals::spacingHint ());
 
 	QGroupBox* group = new QGroupBox (i18n ("Code Completion / Code Hints"), this);
@@ -149,13 +147,13 @@ RKSettingsModuleCommandEditor::RKSettingsModuleCommandEditor (RKSettings *gui, Q
 	form_layout = new QFormLayout (group);
 	num_recent_files_box = new RKSpinBox (group);
 	num_recent_files_box->setIntMode (1, INT_MAX, num_recent_files);
-	RKCommonFunctions::setTips (i18n ("<p>The number of recent files to remember (in the Open Recent R Script File menu).</p>") + RKCommonFunctions::noteSettingsTakesEffectAfterRestart (), num_recent_files_box, label);
+	RKCommonFunctions::setTips (i18n ("<p>The number of recent files to remember (in the Open Recent R Script File menu).</p>") + RKCommonFunctions::noteSettingsTakesEffectAfterRestart (), num_recent_files_box, group);
 	connect (num_recent_files_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleCommandEditor::settingChanged);
 	form_layout->addRow (i18n ("Number of scripts in recent file lists (*)"), num_recent_files_box);
 
 	script_file_filter_box = new QLineEdit (group);
 	script_file_filter_box->setText (script_file_filter);
-	RKCommonFunctions::setTips (i18n ("<p>A list of filters (file name extensions) that should be treated as R script files. Most importantly, files matching one of these filters will always be opened with R syntax highlighting.</p><p>Filters are case insensitive.</p>"), script_file_filter_box, label);
+	RKCommonFunctions::setTips (i18n ("<p>A list of filters (file name extensions) that should be treated as R script files. Most importantly, files matching one of these filters will always be opened with R syntax highlighting.</p><p>Filters are case insensitive.</p>"), script_file_filter_box);
 	connect (script_file_filter_box, &QLineEdit::textChanged, this, &RKSettingsModuleCommandEditor::settingChanged);
 	form_layout->addRow (i18n ("R script file filters (separated by spaces)"), script_file_filter_box);
 

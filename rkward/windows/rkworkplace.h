@@ -114,6 +114,9 @@ public:
 
 /** Opens the given url in the appropriate way. */
 	bool openAnyUrl (const QUrl &url, const QString &known_mimetype = QString (), bool force_external=false);
+/** Convenience alternative to openAnyUrl. You will usually use openAnyUrl, unless
+ *  connecting to signals that pass the url as string. */
+	bool openAnyUrlString (const QString &urlstring) { return openAnyUrl (QUrl (urlstring)); };
 
 /** Opens a new script editor
 @param url URL to load. Default option is to open an empty document

@@ -532,14 +532,10 @@ void RKStandardComponentWizard::finalize () {
 		vbox->setContentsMargins (0, 0, 0, 0);
 		if (previews.size () < 2) {
 			RK_ASSERT (previews.size () == 1);
-			QLabel *label = new QLabel (i18n ("Below you can preview the R commands corresponding to the settings you made. Click 'Submit' to run the commands."), last_page);
-			label->setWordWrap (true);
-			vbox->addWidget (label);
+			vbox->addWidget (RKCommonFunctions::wordWrappedLabel (i18n ("Below you can preview the R commands corresponding to the settings you made. Click 'Submit' to run the commands.")));
 			vbox->addWidget (code_display);
 		} else {
-			QLabel *label = new QLabel (i18n ("Below you can preview the result of your settings, and the R commands to be run. Click 'Submit' to run the commands."), last_page);
-			label->setWordWrap (true);
-			vbox->addWidget (label);
+			vbox->addWidget (RKCommonFunctions::wordWrappedLabel (i18n ("Below you can preview the result of your settings, and the R commands to be run. Click 'Submit' to run the commands.")));
 			QTabWidget *previews_widget = new QTabWidget (last_page);
 			vbox->addWidget (previews_widget);
 			for (int i = 0; i < previews.size (); ++i) {

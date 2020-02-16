@@ -70,9 +70,7 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 
-	QLabel *label = new QLabel (i18n ("The following settings mostly affect R behavior in the console. It is generally safe to keep these unchanged."), this);
-	label->setWordWrap (true);
-	main_vbox->addWidget (label);
+	main_vbox->addWidget (RKCommonFunctions::wordWrappedLabel (i18n ("The following settings mostly affect R behavior in the console. It is generally safe to keep these unchanged.")));
 
 	QGridLayout *grid = new QGridLayout ();
 	main_vbox->addLayout (grid);
@@ -267,9 +265,7 @@ void RKSettingsModuleR::addPaths(QStringList* string_list) {
 	QDialog dialog (this);
 	dialog.setWindowTitle (i18n ("Add System Path Directory"));
 	QVBoxLayout *layout = new QVBoxLayout (&dialog);
-	QLabel *label = new QLabel (i18n ("Specify or select directory to add to the system file path of the running R session"));
-	label->setWordWrap (true);
-	layout->addWidget (label);
+	layout->addWidget (RKCommonFunctions::wordWrappedLabel (i18n ("Specify or select directory to add to the system file path of the running R session")));
 
 	KUrlRequester *req = new KUrlRequester ();
 	req->setMode (KFile::Directory);
@@ -490,11 +486,9 @@ void RKSettingsModuleRPackages::addLibLoc (QStringList *string_list) {
 	QDialog dialog (this);
 	dialog.setWindowTitle (i18n ("Add R Library Directory"));
 	QVBoxLayout *layout = new QVBoxLayout (&dialog);
-	QLabel *label = new QLabel (i18n ("Specify or select library location to add.\nNote that locations may contain a '%v', which will expand to the first "
+	layout->addWidget (RKCommonFunctions::wordWrappedLabel (i18n ("Specify or select library location to add.\nNote that locations may contain a '%v', which will expand to the first "
 	                                  "two components of the R version number (e.g. to 3.5), automatically. Including this is recommended, because R packages "
-	                                  "compiled for one version of R will often fail to work correctly in a different version of R."));
-	label->setWordWrap (true);
-	layout->addWidget (label);
+	                                  "compiled for one version of R will often fail to work correctly in a different version of R.")));
 
 	KUrlRequester *req = new KUrlRequester ();
 	req->setText (QDir (RKSettingsModuleGeneral::filesPath ()).absoluteFilePath ("library/%v"));
@@ -691,13 +685,11 @@ void RKSettingsModuleRPackages::validateSettingsInteractive (QList<RKSettingsWiz
 			RKSettingsWizardPage *page = new RKSettingsWizardPage ();
 			page->setWindowTitle (i18n ("Unversioned library location"));
 			QVBoxLayout *layout = new QVBoxLayout (page);
-			QLabel *label = new QLabel (i18n ("The configured library locations (where R packages will be installed on this system) contains the directory '%1', "
+			layout->addWidget (RKCommonFunctions::wordWrappedLabel (i18n ("The configured library locations (where R packages will be installed on this system) contains the directory '%1', "
 			                                  "which was suggested as a default library location in earlier versions of RKWard. Use of this directory is no longer "
 			                                  "recommended, as it is not accessible R sessions outside of RKWard (unless configured, explicitly). Also due to the lack "
 			                                  "of an R version number in the directory name, it offers no protection against using packages built for an incompatible "
-			                                  "version of R.", legacy_libloc));
-			label->setWordWrap (true);
-			layout->addWidget (label);
+			                                  "version of R.")));
 			// D'uh. QRadioButton supports neither wordwrap nor formatting. Why?
 			QGroupBox *group = new QGroupBox (i18n ("What do you want to do?"));
 			QRadioButton *removebutton = new QRadioButton ();
@@ -705,12 +697,10 @@ void RKSettingsModuleRPackages::validateSettingsInteractive (QList<RKSettingsWiz
 			                                        "re-install any packages that you want to keep."));
 			removelabel->setWordWrap (true);
 			QRadioButton *renamebutton = new QRadioButton ();
-			QLabel *renamelabel = new QLabel (i18n ("<b>Rename</b> this location to include the version number of the currently running R. Packages will continue "
+			QLabel *renamelabel = RKCommonFunctions::wordWrappedLabel (i18n ("<b>Rename</b> this location to include the version number of the currently running R. Packages will continue "
 			                                        "to work (if they are compatible with this version of R)."));
-			renamelabel->setWordWrap (true);
 			QRadioButton *keepbutton = new QRadioButton ();
-			QLabel *keeplabel = new QLabel (i18n ("<b>Keep</b> this location (do not change anything)."));
-			keeplabel->setWordWrap (true);
+			QLabel *keeplabel = RKCommonFunctions::wordWrappedLabel (i18n ("<b>Keep</b> this location (do not change anything)."));
 			QGridLayout *group_layout = new QGridLayout (group);
 			group_layout->addWidget (removebutton, 0, 0);
 			group_layout->addWidget (removelabel, 0, 1);

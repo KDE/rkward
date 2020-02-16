@@ -31,6 +31,7 @@
 #include "../core/rkvariable.h"
 #include "../dataeditor/rktextmatrix.h"
 #include "../misc/rkdialogbuttonbox.h"
+#include "../misc/rkcommonfunctions.h"
 #include "celleditor.h"
 
 #include "../debug.h"
@@ -213,9 +214,7 @@ EditLabelsDialog::EditLabelsDialog (QWidget *parent, const RObject::ValueLabels&
 	setWindowTitle (i18n ("Levels / Value labels for '%1'", varname));
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
-	QLabel *label = new QLabel (i18n ("Levels can be assigned only to consecutive integers starting with 1 (the index column is read only). To remove levels at the end of the list, just set them to empty."), this);
-	label->setWordWrap (true);
-	layout->addWidget (label);
+	layout->addWidget (RKCommonFunctions::wordWrappedLabel (i18n ("Levels can be assigned only to consecutive integers starting with 1 (the index column is read only). To remove levels at the end of the list, just set them to empty.")));
 
 	table = new RKVarLevelsTable (this, labels);
 	layout->addWidget (table);

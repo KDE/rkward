@@ -25,6 +25,7 @@
 
 #include "../rkglobals.h"
 #include "../misc/xmlhelper.h"
+#include "../misc/rkcommonfunctions.h"
 #include "../debug.h"
 
 RKText::RKText (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
@@ -37,8 +38,7 @@ RKText::RKText (const QDomElement &element, RKComponent *parent_component, QWidg
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
 
-	label = new QLabel (QString (), this);
-	label->setWordWrap (true);
+	label = RKCommonFunctions::linkedWrappedLabel (QString ());
 	vbox->addWidget (label);
 
 	int type = xml->getMultiChoiceAttribute (element, "type", "normal;warning;error", 0, DL_INFO);

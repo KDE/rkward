@@ -22,11 +22,13 @@
 #include <QDir>
 #include <QStandardPaths>
 #include <QCoreApplication>
+#include <QLabel>
 
 #include <KLocalizedString>
 #include <kxmlguiclient.h>
 
 #include "../settings/rksettingsmodulegeneral.h"
+#include "../windows/rkworkplace.h"
 #include "../version.h"
 #include "../debug.h"
 
@@ -279,4 +281,17 @@ namespace RKCommonFunctions {
 		return orig;
 #endif
 	}
+
+	QLabel* wordWrappedLabel (const QString& text) {
+		QLabel* ret = new QLabel (text);
+		ret->setWordWrap (true);
+		return ret;
+	}
+
+	QLabel* linkedWrappedLabel (const QString& text) {
+		QLabel* ret = wordWrappedLabel (text);
+		QObject::connect (ret, &QLabel::linkActivated, RKWorkplace::mainWorkplace (), &RKWorkplace::openAnyUrlString);
+		return ret;
+	}
+
 }	// namespace

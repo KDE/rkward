@@ -28,6 +28,7 @@
 #include "../rbackend/rkrinterface.h"
 #include "../misc/xmlhelper.h"
 #include "../misc/rkxmlguipreviewarea.h"
+#include "../misc/rkcommonfunctions.h"
 #include "../windows/rkwindowcatcher.h"
 #include "../windows/rkworkplace.h"
 #include "rkstandardcomponent.h"
@@ -64,8 +65,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	connect (toggle_preview_box, &QCheckBox::stateChanged, this, &RKPreviewBox::changedStateFromUi);
 
 	// status label
-	status_label = new QLabel (QString (), this);
-	status_label->setWordWrap (true);
+	status_label = RKCommonFunctions::wordWrappedLabel (QString ());
 	vbox->addWidget (status_label);
 
 	// prepare placement
