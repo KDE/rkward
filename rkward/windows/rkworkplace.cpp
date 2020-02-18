@@ -214,7 +214,7 @@ void RKWorkplace::attachWindow (RKMDIWindow *window) {
 	}
 
 	RK_ASSERT (window->getPart ());
-	RKWardMainWindow::getMain ()->partManager ()->addPart (window->getPart (), false);
+	RKWardMainWindow::getMain ()->partManager ()->addPart (window->getPart (), !window->isToolWindow ());
 }
 
 void RKWorkplace::detachWindow (RKMDIWindow *window, bool was_attached) {
