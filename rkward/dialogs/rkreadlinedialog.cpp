@@ -70,7 +70,6 @@ RKReadLineDialog::RKReadLineDialog (QWidget *parent, const QString &caption, con
 	}
 
 	QLabel *promptl = RKCommonFunctions::wordWrappedLabel (prompt);
-	promptl->setWordWrap (true);
 	layout->addWidget (promptl);
 
 	input = new QLineEdit (QString (), this);

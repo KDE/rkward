@@ -693,9 +693,8 @@ void RKSettingsModuleRPackages::validateSettingsInteractive (QList<RKSettingsWiz
 			// D'uh. QRadioButton supports neither wordwrap nor formatting. Why?
 			QGroupBox *group = new QGroupBox (i18n ("What do you want to do?"));
 			QRadioButton *removebutton = new QRadioButton ();
-			QLabel *removelabel = new QLabel (i18n ("<b>Remove</b> this location from the configuration (it will not be deleted on disk). You will have to "
+			QLabel *removelabel = RKCommonFunctions::wordWrappedLabel (i18n ("<b>Remove</b> this location from the configuration (it will not be deleted on disk). You will have to "
 			                                        "re-install any packages that you want to keep."));
-			removelabel->setWordWrap (true);
 			QRadioButton *renamebutton = new QRadioButton ();
 			QLabel *renamelabel = RKCommonFunctions::wordWrappedLabel (i18n ("<b>Rename</b> this location to include the version number of the currently running R. Packages will continue "
 			                                        "to work (if they are compatible with this version of R)."));

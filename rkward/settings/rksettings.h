@@ -2,7 +2,7 @@
                           rksettings  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004-2018 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -37,7 +37,9 @@ class RKSettings : public KPageDialog {
 public:
 	enum SettingsPage {
 		NoPage=0,
+		SuperPageAddons,
 		PagePlugins,
+		PageKatePlugins,
 		PageR,
 		PageRPackages,
 		PageGeneral,
@@ -83,6 +85,8 @@ private:
 	static RKSettings *settings_dialog;
 friend class RKWardMainWindow;
 	static RKSettingsTracker *settings_tracker;
+
+	void registerPageModule(SettingsPage super, SettingsPage child);
 };
 
 /** This class represents a very simple QObject. It's only purpose is to emit signals when certain settings have changed. Classes that need to

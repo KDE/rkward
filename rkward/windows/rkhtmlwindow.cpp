@@ -2,7 +2,7 @@
                           rkhtmlwindow  -  description
                              -------------------
     begin                : Wed Oct 12 2005
-    copyright            : (C) 2005-2018 by Thomas Friedrichsmeier
+    copyright            : (C) 2005-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -347,6 +347,8 @@ bool RKHTMLWindow::handleRKWardURL (const QUrl &url, RKHTMLWindow *window) {
 				RKSettings::configureSettings (RKSettings::PageX11);
 			} else if (path == QStringLiteral ("browser")) {
 				RKSettings::configureSettings (RKSettings::PageObjectBrowser);
+			} else if (path == QStringLiteral ("rpackages")) {
+				RKSettings::configureSettings (RKSettings::PageRPackages);
 			} else {
 				RKSettings::configureSettings (RKSettings::NoPage);
 			}
