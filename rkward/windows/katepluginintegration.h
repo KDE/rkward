@@ -39,7 +39,9 @@ public:
 	KatePluginIntegrationApp(QObject *parent);
 	~KatePluginIntegrationApp();
 	QObject* loadPlugin(const QString& identifier);
+	/** Loads the given plugins, *and* unloads all others. */
 	void unloadPlugin(const QString& identifier);
+	void loadPlugins(const QStringList &plugins);
 	KatePluginIntegrationWindow *mainWindow() const { return window; };
 private slots:
 friend class KatePluginIntegrationWindow;

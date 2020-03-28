@@ -39,7 +39,7 @@ RKSettingsModuleKatePlugins::RKSettingsModuleKatePlugins(RKSettings *gui, QWidge
 
 	QVBoxLayout *vbox = new QVBoxLayout(this);
 	vbox->setContentsMargins(0, 0, 0, 0);
-	vbox->addWidget(RKCommonFunctions::wordWrappedLabel(i18n("Kate plugins to load in RKWard. Note that some loaded plugins will not become visible until certain conditions are met, e.g. you are loading a version controlled file for the <i>Project</i> plugin. Also, not all plugins listed here may make much sense in the context of RKWard.")));
+	vbox->addWidget(RKCommonFunctions::wordWrappedLabel(i18n("Kate plugins to load in RKWard. Note that some loaded plugins will not become visible until certain conditions are met, e.g. you are loading a version controlled file for the <i>Project</i> plugin. Also, many of the plugins listed here do not make a whole lot of sense in the context of RKWard.")));
 
 	plugin_table = new QTreeWidget();
 	plugin_table->setHeaderLabels(QStringList() << QString() << i18n("Name") << i18n("Description"));
@@ -77,25 +77,7 @@ void RKSettingsModuleKatePlugins::applyChanges() {
 			plugins_to_load.append (item->data(1, Qt::UserRole).toString());
 		}
 	}
-	loadPlugins();
-}
-
-void RKSettingsModuleKatePlugins::loadPlugins() {
-	RK_TRACE(SETTINGS);
-
-	KatePluginIntegrationApp *pluginapp = RKWardMainWindow::getMain()->katePluginIntegration();
-	foreach (const QString &key, pluginapp->known_plugins.keys()) {
-		auto info = pluginapp->known_plugins.value(key);
-		if (plugins_to_load.contains(key)) {
-			if (!info.plugin) {
-				pluginapp->loadPlugin(key);
-			}
-		} else {
-			if (info.plugin) {
-				pluginapp->unloadPlugin(key);
-			}
-		}
-	}
+	RKWardMainWindow::getMain()->katePluginIntegration()->loadPlugins(plugins_to_load);
 }
 
 void RKSettingsModuleKatePlugins::save(KConfig *config) {

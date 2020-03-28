@@ -129,6 +129,30 @@ QObject* KatePluginIntegrationApp::loadPlugin (const QString& identifier) {
     return 0;
 }
 
+void KatePluginIntegrationApp::loadPlugins(const QStringList& plugins) {
+	RK_TRACE (APP);
+
+	bool changes = false;
+	foreach (const QString &key, known_plugins.keys()) {
+		auto info = known_plugins.value(key);
+		if (plugins.contains(key)) {
+			if (!info.plugin) {
+				loadPlugin(key);
+				changes = true;
+			}
+		} else {
+			if (info.plugin) {
+				unloadPlugin(key);
+				changes = true;
+			}
+		}
+	}
+
+	if (!changes) return;
+	RKWardMainWindow::getMain()->factory()->removeClient(mainWindow());
+	RKWardMainWindow::getMain()->factory()->addClient(mainWindow());
+}
+
 void KatePluginIntegrationApp::unloadPlugin(const QString &identifier) {
 	RK_TRACE (APP);
 
@@ -536,7 +560,7 @@ QObject* KatePluginIntegrationWindow::createPluginView(KTextEditor::Plugin* plug
 	RK_TRACE (APP);
 
 	// HACK: Currently, plugins will add themselves to the main window's UI, without asking. We don't want that, as
-	//       our MDI windows are enabled / disabled on activation. To hack around this, the catch the added clients,
+	//       our MDI windows are enabled / disabled on activation. To hack around this, we catch the added clients,
 	//       and put them, where they belong.
 	connect(factory(), &KXMLGUIFactory::clientAdded, this, &KatePluginIntegrationWindow::catchXMLGUIClientsHack);
 	active_plugin = plugin;

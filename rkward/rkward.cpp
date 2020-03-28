@@ -157,11 +157,9 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 	insertChildClient (toplevel_actions = new RKTopLevelWindowGUI (this));
 	insertChildClient (katePluginIntegration ()->mainWindow ());
 	createShellGUI (true);
-	RKSettingsModuleKatePlugins::loadPlugins ();
 	// This is pretty convoluted, but while loading plugins the katePluginIntegration-client may gain new actions and thus needs
 	// to be reloaded. We cannot - currently, KF5.65 - delay loading the UI defintion(s), because plugins rely on it having a GUI factory.
-	factory()->removeClient (katePluginIntegration ()->mainWindow ());
-	factory()->addClient (katePluginIntegration ()->mainWindow ());
+	katePluginIntegration ()->loadPlugins (RKSettingsModuleKatePlugins::pluginsToLoad ());
 	toplevel_actions->initToolWindowActions ();
 	factory()->removeClient (toplevel_actions);
 	factory()->addClient (toplevel_actions);

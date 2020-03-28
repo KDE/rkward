@@ -41,7 +41,6 @@ public:
 	QString caption() override;
 
 	static QStringList pluginsToLoad() { return plugins_to_load; };
-	static void loadPlugins();
 private:
 	QTreeWidget *plugin_table;
 
