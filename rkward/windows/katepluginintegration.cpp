@@ -129,24 +129,33 @@ QObject* KatePluginIntegrationApp::loadPlugin (const QString& identifier) {
     return 0;
 }
 
+void KatePluginIntegrationApp::unloadPlugin(const QString &identifier) {
+	RK_TRACE (APP);
+
+	if (!known_plugins.contains(identifier)) return;
+	PluginInfo &info = known_plugins[identifier];
+	if (!info.plugin) return;
+
+	QObject* view = mainWindow()->pluginView(identifier);
+	if (view) {
+		KTextEditor::SessionConfigInterface* interface = qobject_cast<KTextEditor::SessionConfigInterface *>(view);
+		if (interface) {
+			KConfigGroup group = KSharedConfig::openConfig()->group(QStringLiteral("KatePlugin:%1:").arg(identifier));
+			interface->writeSessionConfig(group);
+		}
+		emit mainWindow()->main->pluginViewDeleted(identifier, view);
+		delete view;
+	}
+	emit app->pluginDeleted(identifier, info.plugin);
+	delete info.plugin;
+	info.plugin = 0;
+}
+
 void KatePluginIntegrationApp::saveConfigAndUnload() {
 	RK_TRACE (APP);
 
 	for (auto it = known_plugins.constBegin(); it != known_plugins.constEnd(); ++it) {
-		KTextEditor::Plugin* plugin = it.value().plugin;
-		if (!plugin) continue;
-		QObject* view = mainWindow()->pluginView(it.key());
-		if (view) {
-			KTextEditor::SessionConfigInterface* interface = qobject_cast<KTextEditor::SessionConfigInterface *>(view);
-			if (interface) {
-				KConfigGroup group = KSharedConfig::openConfig()->group(QStringLiteral("KatePlugin:%1:").arg(it.key()));
-				interface->writeSessionConfig(group);
-			}
-			emit mainWindow()->main->pluginViewDeleted(it.key(), view);
-			delete view;
-		}
-		emit app->pluginDeleted(it.key(), plugin);
-		delete plugin;
+		unloadPlugin (it.key());
 	}
 	known_plugins.clear();
 }

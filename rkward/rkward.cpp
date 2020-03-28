@@ -55,6 +55,7 @@
 #include "settings/rksettingsmodulegeneral.h"
 #include "settings/rksettingsmoduleoutput.h"
 #include "settings/rksettingsmodulecommandeditor.h"
+#include "settings/rksettingsmodulekateplugins.h"
 #include "rbackend/rkrinterface.h"
 #include "core/robjectlist.h"
 #include "core/renvironmentobject.h"
@@ -156,9 +157,7 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 	insertChildClient (toplevel_actions = new RKTopLevelWindowGUI (this));
 	insertChildClient (katePluginIntegration ()->mainWindow ());
 	createShellGUI (true);
-	katePluginIntegration ()->loadPlugin ("katesearchplugin");
-	katePluginIntegration ()->loadPlugin ("kateprojectplugin");
-	katePluginIntegration ()->loadPlugin ("katesnippetsplugin");
+	RKSettingsModuleKatePlugins::loadPlugins ();
 	// This is pretty convoluted, but while loading plugins the katePluginIntegration-client may gain new actions and thus needs
 	// to be reloaded. We cannot - currently, KF5.65 - delay loading the UI defintion(s), because plugins rely on it having a GUI factory.
 	factory()->removeClient (katePluginIntegration ()->mainWindow ());

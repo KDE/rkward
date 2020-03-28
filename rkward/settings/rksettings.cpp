@@ -204,6 +204,7 @@ void RKSettings::enableApply () {
 
 #define FOREACH_SETTINGS_MODULE(X)           \
 	RKSettingsModuleGeneral::X;  /* always handle this first (esp., when loading settings), as it contains the base path for rkward files */ \
+	RKSettingsModuleKatePlugins::X;          \
 	RKSettingsModulePlugins::X;          \
 	RKSettingsModuleR::X;                \
 	RKSettingsModuleRPackages::X;        \

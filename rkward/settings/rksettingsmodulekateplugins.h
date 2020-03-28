@@ -27,23 +27,21 @@ class QTreeWidget;
 @author Thomas Friedrichsmeier
 */
 class RKSettingsModuleKatePlugins : public RKSettingsModule {
-	Q_OBJECT
 public:
-	RKSettingsModuleKatePlugins (RKSettings *gui, QWidget *parent);
-	~RKSettingsModuleKatePlugins ();
+	RKSettingsModuleKatePlugins(RKSettings *gui, QWidget *parent);
+	~RKSettingsModuleKatePlugins();
 
-	void applyChanges () override;
-	void save (KConfig *config) override;
+	void applyChanges() override;
+	void save(KConfig *config) override;
 
-	static void saveSettings (KConfig *config);
-	static void loadSettings (KConfig *config);
-	static void validateSettingsInteractive (QList<RKSettingsWizardPage*>*) {};
+	static void saveSettings(KConfig *config);
+	static void loadSettings(KConfig *config);
+	static void validateSettingsInteractive(QList<RKSettingsWizardPage*>*) {};
 
-	QString caption () override;
+	QString caption() override;
 
-	static QStringList pluginsToLoad () { return plugins_to_load; };
-public slots:
-	void settingChanged ();
+	static QStringList pluginsToLoad() { return plugins_to_load; };
+	static void loadPlugins();
 private:
 	QTreeWidget *plugin_table;
 
