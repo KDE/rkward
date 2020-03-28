@@ -261,7 +261,6 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 	connect (&preview_timer, &QTimer::timeout, this, &RKCommandEditorWindow::doRenderPreview);
 
 	updateCaption ();	// initialize
-	QTimer::singleShot (0, this, SLOT (setPopupMenu()));
 }
 
 RKCommandEditorWindow::~RKCommandEditorWindow () {
@@ -458,17 +457,6 @@ void RKCommandEditorWindow::initBlocks () {
 void RKCommandEditorWindow::focusIn (KTextEditor::View* v) {
 	RK_TRACE (COMMANDEDITOR);
 	RK_ASSERT (v == m_view);
-
-	setPopupMenu ();
-}
-
-/** NOTE: this function still needed?
-- Still needed in KDE 4.3.4. */
-void RKCommandEditorWindow::setPopupMenu () {
-	RK_TRACE (COMMANDEDITOR);
-
-	if (!getPart ()->factory ()) return;
-	m_view->setContextMenu (static_cast<QMenu *> (getPart ()->factory ()->container ("ktexteditor_popup", getPart ())));
 }
 
 QString RKCommandEditorWindow::fullCaption () {
