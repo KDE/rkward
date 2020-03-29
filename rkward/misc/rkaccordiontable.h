@@ -26,7 +26,7 @@ class RKAccordionDummyModel;
 class RKAccordionTable : public QTreeView {
 	Q_OBJECT
 public:
-	RKAccordionTable (QWidget *parent);
+	explicit RKAccordionTable (QWidget *parent);
 	~RKAccordionTable ();
 
 	QWidget *editorWidget () const { return editor_widget; };

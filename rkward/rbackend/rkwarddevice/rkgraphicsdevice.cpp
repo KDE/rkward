@@ -28,7 +28,7 @@
 #include <sys/stat.h>
 
 #include "rkgraphicsdevice_protocol_shared.h"
-#include "../rinterface.h"
+#include "../rkrinterface.h"
 #include "../../rkglobals.h"
 #include "../../misc/rkdialogbuttonbox.h"
 
@@ -366,6 +366,7 @@ void RKGraphicsDevice::stopGettingEvents () {
 }
 
 bool RKGraphicsDevice::eventFilter (QObject *watched, QEvent *event) {
+	if (!view) return false; // view was killed, but events may still be pending
 	RK_ASSERT (watched == view);
 
 	if (interaction_opcode == RKDLocator) {

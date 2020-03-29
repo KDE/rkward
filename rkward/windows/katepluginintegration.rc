@@ -1,0 +1,8 @@
+<!DOCTYPE kpartgui>
+<kpartgui name="rkward_katepluginintegration" version="710">
+	<MenuBar>
+		<Menu name="window"><text>&amp;Window</text>
+			<Menu name="window_activate"><text>&amp;Activate</text></Menu>
+		</Menu>
+	</MenuBar>
+</kpartgui>

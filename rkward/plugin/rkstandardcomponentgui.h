@@ -2,7 +2,7 @@
                           rkstandardcomponentgui  -  description
                              -------------------
     begin                : Sun Mar 19 2006
-    copyright            : (C) 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2006-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -84,7 +84,7 @@ public:
 	virtual void enableSubmit (bool enable);
 	virtual void updateCode ();
 /** reimplemented from QWidget to take care of showing the code display if needed */
-	void showEvent (QShowEvent *e);
+	void showEvent (QShowEvent *e) override;
 	RKXMLGUIPreviewArea* addDockedPreview (RKComponentPropertyBool *controller, const QString& label, const QString &id=QString (), bool bottom = false);
 /** Do anything needed after the dialog is created and its contents have been built. Base class adds the preview regions to the splitter */
 	virtual void finalize ();
@@ -99,7 +99,7 @@ public slots:
 	void copyCode ();
 private slots:
 	void previewVisibilityChanged (RKComponentPropertyBase*);
-	void previewCloseButtonClicked ();
+	void previewCloseButtonClicked (RKXMLGUIPreviewArea *area);
 	void doPostShowCleanup ();
 private:
 	RKComponentPropertyCode *code_property;
@@ -109,7 +109,7 @@ private:
 	QCheckBox *toggle_code_box;
 	QPushButton *ok_button;
 protected:
-	void closeEvent (QCloseEvent *e);
+	void closeEvent (QCloseEvent *e) override;
 	RKStandardComponent *component;
 	QTimer *code_update_timer;
 	// common widgets
@@ -129,9 +129,9 @@ friend class RKComponentBuilder;
 	bool enslaved;
 
 	struct PreviewArea {
-		QWidget *area;
+		QWidget *widget;
+		RKXMLGUIPreviewArea *preview_area;
 		RKComponentPropertyBool *controller;
-		QString label;
 		Qt::Orientation position;
 	};
 	QList<PreviewArea> previews;
@@ -146,8 +146,8 @@ public:
 	RKStandardComponentWizard (RKStandardComponent *component, RKComponentPropertyCode *code_property, bool enslaved);
 	~RKStandardComponentWizard ();
 
-	void enableSubmit (bool enable);
-	void updateCode ();
+	void enableSubmit (bool enable) override;
+	void updateCode () override;
 	void createWizard (bool switchable);
 /** Adds a standard last page in the wizard, and initializes the view to the first page */
 	void finalize () override;

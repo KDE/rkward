@@ -26,6 +26,7 @@
 #include <QTextDocument>
 
 #include "../misc/rkdummypart.h"
+#include "../misc/rkcommonfunctions.h"
 #include "../agents/rkdebughandler.h"
 #include "rkcommandeditorwindow.h"
 
@@ -106,11 +107,10 @@ RKCallstackViewerWidget::RKCallstackViewerWidget (QWidget *parent) : QWidget (pa
 	h_layout->addLayout (v_layout);
 	h_layout->setStretchFactor (v_layout, 2);
 
-	frame_info = new QLabel (this);
-	frame_info->setWordWrap (true);
+	frame_info = RKCommonFunctions::wordWrappedLabel (QString ());
 	v_layout->addWidget (frame_info);
 
-	frame_source = new RKCommandEditorWindow (this, true);
+	frame_source = new RKCommandEditorWindow (this, QUrl (), QString (), RKCommandEditorFlags::DefaultToRHighlighting | RKCommandEditorFlags::ReadOnly);
 	v_layout->addWidget (frame_source);
 
 	updateState ();

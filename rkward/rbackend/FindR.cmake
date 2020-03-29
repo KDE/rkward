@@ -4,6 +4,7 @@ MESSAGE(STATUS "Looking for R executable")
 IF(R_EXECUTABLE)
 	MESSAGE(STATUS "Specified by user")
 ENDIF(R_EXECUTABLE)
+SET(CMAKE_FIND_APPBUNDLE NEVER)  # Do not get fooled by R GUI on Mac
 FIND_PROGRAM(R_EXECUTABLE R)
 
 IF(R_EXECUTABLE-NOTFOUND)
@@ -14,19 +15,22 @@ ENDIF(R_EXECUTABLE-NOTFOUND)
 
 # find out about R architecture (needed for some paths)
 EXECUTE_PROCESS(
-	COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "-e" "cat(R.version$arch)"
+	COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "--no-init-file" "-e" "cat(R.version$arch)"
 	OUTPUT_VARIABLE R_ARCH)
+	IF (${R_ARCH} STREQUAL "x86_64")
+		SET (R_ARCH "x64")
+	ENDIF (${R_ARCH} STREQUAL "x86_64")
 MESSAGE (STATUS "R architecture is ${R_ARCH}")
 
 # check R version.
 SET (R_MIN_VERSION "2.10.0")
 MESSAGE (STATUS "Checking R version")
 EXECUTE_PROCESS(
-	COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "-e" "cat (paste(R.version$major, R.version$minor, sep='.'))"
+	COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "--no-init-file" "-e" "cat (paste(R.version$major, R.version$minor, sep='.'))"
 	OUTPUT_VARIABLE R_VERSION)
 MESSAGE (STATUS "R version is ${R_VERSION}")
 EXECUTE_PROCESS(
-	COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "-e" "min_ver <- '${R_MIN_VERSION}'; if (compareVersion ('${R_VERSION}', min_ver) < 0) cat ('At least R version', min_ver, 'is required')"
+	COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "--no-init-file" "-e" "min_ver <- '${R_MIN_VERSION}'; if (compareVersion ('${R_VERSION}', min_ver) < 0) cat ('At least R version', min_ver, 'is required')"
 	OUTPUT_VARIABLE R_VERSION_STATUS)
 IF (R_VERSION_STATUS)
 	MESSAGE (FATAL_ERROR ${R_VERSION_STATUS})
@@ -37,7 +41,7 @@ ENDIF (R_VERSION_STATUS)
 MESSAGE(STATUS "Looking for R_HOME")
 IF(NOT R_HOME)
 	EXECUTE_PROCESS(
-		COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "-e" "cat(R.home())"
+		COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "--no-init-file" "-e" "cat(R.home())"
 		OUTPUT_VARIABLE R_HOME)
 ELSE(NOT R_HOME)
 	MESSAGE(STATUS "Specified by user")
@@ -54,7 +58,7 @@ MESSAGE(STATUS "Looking for R include files")
 IF(NOT R_INCLUDEDIR)
 	IF(WIN32 OR APPLE)	# This version of the test will not work with R < 2.9.0, but the other version (in the else part) will not work on windows or apple (but we do not really need to support ancient versions of R, there).
 		EXECUTE_PROCESS(
-			COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "-e" "cat(R.home('include'))"
+			COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "--no-init-file" "-e" "cat(R.home('include'))"
 			OUTPUT_VARIABLE R_INCLUDEDIR)
 	ELSE(WIN32 OR APPLE)
 		EXECUTE_PROCESS(
@@ -140,65 +144,3 @@ ELSE(NOT LIBR_BLAS)
 	MESSAGE(STATUS "Yes, ${LIBR_BLAS} exists")
 	SET(R_USED_LIBS ${R_USED_LIBS} Rblas)
 ENDIF(NOT LIBR_BLAS)
-
-# find R package library location
-IF(WIN32)
-	SET(PATH_SEP ";")
-ELSE(WIN32)
-	SET(PATH_SEP ":")
-ENDIF(WIN32)
-
-MESSAGE(STATUS "Checking for R package library location to use")
-IF(NOT R_LIBDIR)
-	EXECUTE_PROCESS(
-		COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "-e" "cat(paste(unique (c(.Library.site, .Library)), collapse='${PATH_SEP}'))"
-		OUTPUT_VARIABLE R_LIBDIR)
-ELSE(NOT R_LIBDIR)
-	MESSAGE(STATUS "Location specified by user")
-ENDIF(NOT R_LIBDIR)
-
-# strip whitespace
-STRING(REGEX REPLACE "[ \n]+"
-	"" R_LIBDIR
-	"${R_LIBDIR}")
-
-# strip leading colon(s)
-STRING(REGEX REPLACE "^${PATH_SEP}+"
-	"" R_LIBDIR
-	"${R_LIBDIR}")
-
-# strip trailing colon(s)
-STRING(REGEX REPLACE "${PATH_SEP}+$"
-	"" R_LIBDIR
-	"${R_LIBDIR}")
-
-# find first path
-STRING(REGEX REPLACE "${PATH_SEP}"
-	" " R_LIBDIR
-	"${R_LIBDIR}")
-
-IF(NOT R_LIBDIR)
-	MESSAGE(STATUS "Not reliably determined or specified. Guessing.")
-	SET(R_LIBDIR ${R_HOME}/library)
-ENDIF(NOT R_LIBDIR)
-
-SET(R_LIBDIRS ${R_LIBDIR})
-SEPARATE_ARGUMENTS(R_LIBDIRS)
-
-SET(R_LIBDIR)
-FOREACH(CURRENTDIR ${R_LIBDIRS})
-	IF(NOT USE_R_LIBDIR)
-		IF(EXISTS ${CURRENTDIR})
-			SET(R_LIBDIR ${CURRENTDIR})
-			SET(USE_R_LIBDIR 1)
-		ELSE(EXISTS ${CURRENTDIR})
-			MESSAGE(STATUS "${CURRENTDIR} does not exist. Skipping")
-		ENDIF(EXISTS ${CURRENTDIR})
-	ENDIF(NOT USE_R_LIBDIR)
-ENDFOREACH(CURRENTDIR ${R_LIBDIRS})
-
-IF(NOT EXISTS ${R_LIBDIR})
-	MESSAGE(FATAL_ERROR "No existing library location found")
-ELSE(NOT EXISTS ${R_LIBDIR})
-	MESSAGE(STATUS "Will use ${R_LIBDIR}")
-ENDIF(NOT EXISTS ${R_LIBDIR})

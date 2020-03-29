@@ -29,25 +29,22 @@
 #include <QTemporaryFile>
 
 #include "../misc/rkspinbox.h"
+#include "../misc/rkcommonfunctions.h"
 #include "../rkglobals.h"
 #include "../debug.h"
-
-QTemporaryFile* RKSettingsModuleDebug::debug_file = 0;
 
 RKSettingsModuleDebug::RKSettingsModuleDebug (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
 
 	QVBoxLayout* main_vbox = new QVBoxLayout (this);
 
-	QLabel* label = new QLabel (i18n ("<b>These settings are for debugging purposes, only.</b> It is safe to leave them untouched. Also, these settings will only apply to the current session, and will not be saved."), this);
-	label->setWordWrap (true);
-	main_vbox->addWidget (label);
+	main_vbox->addWidget (RKCommonFunctions::wordWrappedLabel (i18n ("<b>These settings are for debugging purposes, only.</b> It is safe to leave them untouched. Also, these settings will only apply to the current session, and will not be saved.")));
 
 	main_vbox->addSpacing (2 * RKGlobals::spacingHint ());
 
-	label = new QLabel (i18n ("Debug level"), this);
+	QLabel* label = new QLabel (i18n ("Debug level"), this);
 	debug_level_box = new RKSpinBox (this);
-	debug_level_box->setIntMode (DL_TRACE, DL_FATAL, DL_FATAL - RK_Debug_Level);
+	debug_level_box->setIntMode (DL_TRACE, DL_FATAL, DL_FATAL - RK_Debug::RK_Debug_Level);
 	connect (debug_level_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleDebug::settingChanged);
 	main_vbox->addWidget (label);
 	main_vbox->addWidget (debug_level_box);
@@ -75,7 +72,7 @@ RKSettingsModuleDebug::RKSettingsModuleDebug (RKSettings *gui, QWidget *parent) 
 	QList<QAbstractButton*> buttons = debug_flags_group->buttons ();
 	for (QList<QAbstractButton*>::const_iterator it = buttons.constBegin (); it != buttons.constEnd (); ++it) {
 		box_layout->addWidget (*it);
-		(*it)->setChecked (RK_Debug_Flags & debug_flags_group->id (*it));
+		(*it)->setChecked (RK_Debug::RK_Debug_Flags & debug_flags_group->id (*it));
 	}
 	connect (debug_flags_group, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &RKSettingsModuleDebug::settingChanged);
 	main_vbox->addWidget (group);
@@ -83,15 +80,15 @@ RKSettingsModuleDebug::RKSettingsModuleDebug (RKSettings *gui, QWidget *parent) 
 
 	label = new QLabel (i18n ("Command timeout"), this);
 	command_timeout_box = new RKSpinBox (this);
-	command_timeout_box->setIntMode (0, 10000, RK_Debug_CommandStep);
+	command_timeout_box->setIntMode (0, 10000, RK_Debug::RK_Debug_CommandStep);
 	connect (command_timeout_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleDebug::settingChanged);
 	main_vbox->addWidget (label);
 	main_vbox->addWidget (command_timeout_box);
 
 	main_vbox->addStretch ();
 
-	if (debug_file) {
-		label = new QLabel (i18n ("<i>Note:</i> Debug output is written to %1", debug_file->fileName ()));
+	if (RK_Debug::debug_file) {
+		label = new QLabel (i18n ("<i>Note:</i> Debug output is written to %1", RK_Debug::debug_file->fileName ()));
 		main_vbox->addWidget (label);
 		main_vbox->addStretch ();
 	}
@@ -114,14 +111,14 @@ QString RKSettingsModuleDebug::caption () {
 void RKSettingsModuleDebug::applyChanges () {
 	RK_TRACE (SETTINGS);
 
-	RK_Debug_Level = DL_FATAL - debug_level_box->intValue ();
-	RK_Debug_CommandStep = command_timeout_box->intValue ();
+	RK_Debug::RK_Debug_Level = DL_FATAL - debug_level_box->intValue ();
+	RK_Debug::RK_Debug_CommandStep = command_timeout_box->intValue ();
 	int flags = 0;
 	QList<QAbstractButton*> buttons = debug_flags_group->buttons ();
 	for (QList<QAbstractButton*>::const_iterator it = buttons.constBegin (); it != buttons.constEnd (); ++it) {
 		if ((*it)->isChecked ()) flags |= debug_flags_group->id (*it);
 	}
-	RK_Debug_Flags = flags;
+	RK_Debug::RK_Debug_Flags = flags;
 }
 
 void RKSettingsModuleDebug::save (KConfig *config) {

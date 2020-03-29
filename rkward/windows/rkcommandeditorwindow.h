@@ -2,7 +2,7 @@
                           rkcommandeditorwindow  -  description
                              -------------------
     begin                : Mon Aug 30 2004
-    copyright            : (C) 2004-2016 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -24,22 +24,22 @@
 
 #include <ktexteditor/view.h>
 #include <ktexteditor/document.h>
-#include <ktexteditor/codecompletionmodel.h>
-#include <ktexteditor/codecompletioninterface.h>
-#include <ktexteditor/codecompletionmodelcontrollerinterface.h>
 #include <ktexteditor/movingrange.h>
 #include <ktexteditor/movinginterface.h>
 
 #include <QUrl>
 
-#include "../windows/rkmdiwindow.h"
+#include "rkmdiwindow.h"
+#include "rkworkplace.h"
 
 class QEvent;
 class QCloseEvent;
 class QFrame;
 class QLabel;
 class QAction;
-class QAction;
+class QActionGroup;
+class QTemporaryDir;
+class QFile;
 class KActionMenu;
 class RKCommandEditorWindow;
 class KActionCollection;
@@ -102,31 +102,10 @@ private:
 	QLabel *arghints_popup;
 };
 
-class RKCodeCompletionModel : public KTextEditor::CodeCompletionModel, public KTextEditor::CodeCompletionModelControllerInterface {
-	Q_OBJECT
-	Q_INTERFACES(KTextEditor::CodeCompletionModelControllerInterface)
-public:
-	explicit RKCodeCompletionModel (RKCommandEditorWindow* parent);
-	~RKCodeCompletionModel ();
-
-	KTextEditor::Range completionRange (KTextEditor::View *view, const KTextEditor::Cursor &position) override;
-	QString filterString (KTextEditor::View *, const KTextEditor::Range &, const KTextEditor::Cursor &) override { return QString (); };
-
-	void updateCompletionList (const QString& symbol);
-	void completionInvoked (KTextEditor::View *, const KTextEditor::Range &, InvocationType) override;
-	void executeCompletionItem (KTextEditor::View *view, const KTextEditor::Range &word, const QModelIndex &index) const override;
-	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const override;
-
-	bool isEmpty () const { return names.isEmpty (); };
-private:
-	QList<QIcon> icons;
-	QStringList names;
-	QString current_symbol;
-	RKCommandEditorWindow *command_editor;
-};
-
-class QTimer;
 class RKJobSequence;
+class RKXMLGUIPreviewArea;
+class RKPreviewManager;
+class RKCompletionManager;
 
 /**
 	\brief Provides an editor window for R-commands, as well as a text-editor window in general.
@@ -140,16 +119,11 @@ class RKCommandEditorWindow : public RKMDIWindow, public RKScriptContextProvider
 	Q_OBJECT
 public:
 /** constructor
-@param use_r_highlighting Initialize the view to use R syntax highlighting. Use, if you're going to edit an R syntax file */
-	explicit RKCommandEditorWindow (QWidget *parent = 0, bool use_r_highlighting=true, bool use_codehinting=true);
+@param encoding encoding to use. If QString (), the default encoding is used.
+@param flags @See Combination of RKCommandEditorFlags */
+	explicit RKCommandEditorWindow (QWidget *parent, const QUrl url, const QString& encoding=QString (), int flags=RKCommandEditorFlags::DefaultFlags);
 /** destructor */
 	~RKCommandEditorWindow ();
-/** open given URL. 
-@param use_r_highlighting Initialize the view to use R syntax highlighting. Use, if you're going to edit an R syntax file
-@param encoding encoding to use. If QString (), the default encoding is used.
-@param read_only Open the file in read-only mode
-@param delete_on_close File should be deleted when closing the window. Only respected with read_only=true. */
-	bool openURL (const QUrl url, const QString& encoding=QString (), bool use_r_highlighting=true, bool read_only=false, bool delete_on_close=false);
 /** returns, whether the document was modified since the last save */
 	bool isModified () override;
 /** insert the given text into the document at the current cursor position. Additionally, focuses the view */
@@ -169,21 +143,19 @@ public:
 	void setReadOnly (bool ro);
 
 /** Return current url */
-	QUrl url ();
+	QUrl url () const;
+/** Returns an id string for this document. Meaningful, only when url is empty. For keeping track of split views on unnamed/unsaved windows */
+	QString id () const { return _id; };
 
 	QString provideContext (int line_rev) override;
 	void currentHelpContext (QString* symbol, QString* package) override;
-	QString currentCompletionWord () const;
 
 	void highlightLine (int linenum);
+/** Returns the (main, non-preview) texteditor view in this editor. */
+	KTextEditor::View* getView () const { return m_view; };
 public slots:
 /** update Tab caption according to the current url. Display the filename-component of the URL, or - if not available - a more elaborate description of the url. Also appends a "[modified]" if appropriate */
 	void updateCaption ();
-/** called whenever it might be appropriate to show a code completion box. The box is not shown immediately, but only after a timeout (if at all) */
-	void tryCompletionProxy (KTextEditor::Document*);
-/** show a code completion box if appropriate. Use tryCompletionProxy () instead, which will call this function after a timeout */
-	void tryCompletion ();
-	void setPopupMenu ();
 	void focusIn (KTextEditor::View *);
 /** run the currently selected command(s) or line */
 	void runCurrent ();
@@ -217,24 +189,24 @@ private slots:
 /** run a block */
 	void runBlock ();
 	void clearUnusedBlocks ();
+/** handler to control when autosaves should be created, preview should be updated */
+	void textChanged ();
+/** Render the (.Rmd) current script */
+	void doRenderPreview ();
 /** creates an autosave file */
 	void doAutoSave ();
 /** handler to control when autosaves should be created */
 	void autoSaveHandlerModifiedChanged ();
-/** handler to control when autosaves should be created */
-	void autoSaveHandlerTextChanged ();
 /** handle any errors during auto-saving */
 	void autoSaveHandlerJobFinished (RKJobSequence* seq);
+/** document was saved. Update preview, if appropriate */
+	void documentSaved ();
 private:
 	KTextEditor::Cursor saved_scroll_position;
 	KTextEditor::Document *m_doc;
 	KTextEditor::View *m_view;
-	KTextEditor::CodeCompletionInterface *cc_iface;
 	KTextEditor::MovingInterface *smart_iface;
 	RKFunctionArgHinter *hinter;
-	RKCodeCompletionModel *completion_model;
-
-	QTimer *completion_timer;
 
 	void initializeActions (KActionCollection* ac);
 
@@ -259,13 +231,36 @@ private:
 
 	QAction* action_run_all;
 	QAction* action_run_current;
+	QActionGroup* preview_modes;
+	QAction* action_no_preview;
+	QAction* action_preview_as_you_type;
+
+	enum PreviewMode {
+		NoPreview,
+		RMarkdownPreview,
+		RKOutputPreview,
+		GraphPreview,
+		ConsolePreview,
+	};
 
 	QAction* action_setwd_to_script;
 
 	QUrl previous_autosave_url;
-	QTimer* autosave_timer;
+	QTimer autosave_timer;
 
 	QUrl delete_on_close;
+	bool visible_to_kateplugins;
+
+	QString _id;
+	static QMap<QString, KTextEditor::Document*> unnamed_documents;
+
+	RKXMLGUIPreviewArea *preview;
+	QTimer preview_timer;
+	RKPreviewManager *preview_manager;
+	QTemporaryDir *preview_dir;
+	QFile *preview_input_file;
+	void changePreviewMode (QAction* mode);
+	void discardPreview ();
 };
 
 /** Simple class to provide HTML highlighting for arbitrary R code. */

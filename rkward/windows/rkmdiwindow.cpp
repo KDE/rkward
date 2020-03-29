@@ -2,7 +2,7 @@
                           rkmdiwindow  -  description
                              -------------------
     begin                : Tue Sep 26 2006
-    copyright            : (C) 2006, 2007, 2008, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2006 - 2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -23,12 +23,13 @@
 #include <QEvent>
 #include <QPaintEvent>
 #include <QAction>
+#include <QVBoxLayout>
 
 #include <kparts/partactivateevent.h>
 #include <kxmlguifactory.h>
 #include <kactioncollection.h>
 #include <KLocalizedString>
-#include <kpassivepopup.h>
+#include <kmessagewidget.h>
 
 #include "rkworkplace.h"
 #include "rkworkplaceview.h"
@@ -70,8 +71,9 @@ RKMDIWindow::RKMDIWindow (QWidget *parent, int type, bool tool_window, const cha
 	no_border_when_active = false;
 	standard_client = 0;
 	status_popup = 0;
+	status_popup_container = 0;
 
-	setWindowIcon (RKStandardIcons::iconForWindow (this));
+	if (!(type & KatePluginWindow)) setWindowIcon (RKStandardIcons::iconForWindow (this));
 }
 
 RKMDIWindow::~RKMDIWindow () {
@@ -79,7 +81,6 @@ RKMDIWindow::~RKMDIWindow () {
 
 	if (isToolWindow ()) RKToolWindowList::unregisterToolWindow (this);
 	delete standard_client;
-	delete status_popup;
 }
 
 KActionCollection *RKMDIWindow::standardActionCollection () {
@@ -108,12 +109,18 @@ void RKMDIWindow::setCaption (const QString &caption) {
 	RK_TRACE (APP);
 	QWidget::setWindowTitle (caption);
 	emit (captionChanged (this));
+	if (tool_window_bar) tool_window_bar->captionChanged(this);
 }
 
 bool RKMDIWindow::isActive () {
 	// don't trace, called pretty often
 
 	if (!topLevelWidget ()->isActiveWindow ()) return false;
+	return isActiveInsideToplevelWindow ();
+}
+
+bool RKMDIWindow::isActiveInsideToplevelWindow () {
+	// don't trace, called pretty often
 	return (active || (!isAttached ()));
 }
 
@@ -130,7 +137,7 @@ void RKMDIWindow::activate (bool with_focus) {
 			topLevelWidget ()->raise ();
 		}
 	} else {
-		if (isAttached ()) RKWorkplace::mainWorkplace ()->view ()->setCurrentWidget (this);
+		if (isAttached ()) RKWorkplace::mainWorkplace ()->view ()->showWindow (this);
 		else {
 			topLevelWidget ()->show ();
 			topLevelWidget ()->raise ();
@@ -251,11 +258,8 @@ void RKMDIWindow::paintEvent (QPaintEvent *e) {
 
 	if (isActive () && !no_border_when_active) {
 		QPainter paint (this);
-		paint.setPen (QColor (255, 0, 0));
-		paint.drawLine (0, 0, 0, height ()-1);
-		paint.drawLine (0, height ()-1, width ()-1, height ()-1);
-		paint.drawLine (0, 0, width ()-1, 0);
-		paint.drawLine (width ()-1, 0, width ()-1, height ()-1);
+		paint.setPen (QApplication::palette ().color(QPalette::Highlight));
+		paint.drawRect (0, 0, width ()-1, height ()-1);
 	}
 }
 
@@ -329,19 +333,40 @@ void RKMDIWindow::setStatusMessage (const QString& message, RCommand *command) {
 	RK_TRACE (MISC);
 
 	if (!status_popup) {
-		status_popup = new KPassivePopup (this);
-		disconnect (status_popup, SIGNAL (clicked()), status_popup, SLOT (hide()));   // no auto-hiding, please, either SIGNAL / SLOT mechanism
-		disconnect (status_popup, static_cast<void (KPassivePopup::*)()>(&KPassivePopup::clicked), status_popup, &QWidget::hide);
+		// NOTE: Yes, this clearly goes against the explicit recommendation, but we do want the status message as an overlay to the main widget.
+		//       This is especially important for plots, where changing the plot area geometry will trigger redraws of the plot.
+		//       Note that these messages are mostly used on previews, so far, where they will either be a) transient ("preview updating"),
+		//       or b) in case of errors, the place of interest will be outside the preview widget _and_ the preview will generally be invalid.
+		status_popup_container = new QWidget (this);
+		QVBoxLayout *layout = new QVBoxLayout (status_popup_container);
+		layout->setContentsMargins (10, 10, 10, 10);
+		status_popup = new KMessageWidget (status_popup_container);
+		status_popup->setCloseButtonVisible (true);
+		status_popup->setMessageType (KMessageWidget::Warning);
+		layout->addWidget (status_popup);
+		layout->addStretch ();
+
+		// when animation is finished, squeeze the popup-container, so as not to interfere with mouse events in the main window
+		connect (status_popup, &KMessageWidget::showAnimationFinished, [this]() { status_popup_container->resize (QSize(width(), status_popup->height () + 20)); });
+		connect (status_popup, &KMessageWidget::hideAnimationFinished, status_popup_container, &QWidget::hide);
 	}
 
 	if (command) connect (command->notifier (), &RCommandNotifier::commandFinished, this, &RKMDIWindow::clearStatusMessage);
 	if (!message.isEmpty ()) {
-		status_popup->setView (QString (), message);
-		status_popup->show (this->mapToGlobal (QPoint (20, 20)));
-		status_popup->setTimeout (0);
+		status_popup_container->resize (size ());
+		status_popup_container->show ();
+		if (status_popup->text () == message) {
+			if (!status_popup->isVisible ()) status_popup->animatedShow ();  // it might have been closed by user. And no, simply show() is _not_ good enough. KF5 (5.15.0)
+		}
+		if (status_popup->text () != message) {
+			if (status_popup->isVisible ()) status_popup->hide (); // otherwise, the KMessageWidget does not update geometry (KF5, 5.15.0)
+			status_popup->setText (message);
+			status_popup->animatedShow ();
+		}
 	} else {
+		status_popup_container->hide ();
 		status_popup->hide ();
-		status_popup->setTimeout (10);  // this is a lame way to keep track of whether the popup is empty. See showEvent()
+		status_popup->setText (QString ());
 	}
 }
 
@@ -351,16 +376,8 @@ void RKMDIWindow::clearStatusMessage () {
 	setStatusMessage (QString ());
 }
 
-void RKMDIWindow::hideEvent (QHideEvent* ev) {
-	if (status_popup) {
-		status_popup->hide ();
-	}
-	QWidget::hideEvent (ev);
-}
-
-void RKMDIWindow::showEvent (QShowEvent* ev) {
-	if (status_popup && (status_popup->timeout () == 0)) status_popup->show (this->mapToGlobal (QPoint (20, 20)));
-	QWidget::showEvent (ev);
+void RKMDIWindow::resizeEvent (QResizeEvent*) {
+	if (status_popup_container && status_popup_container->isVisible ()) status_popup_container->resize (QSize(width(), status_popup->height () + 20));
 }
 
 

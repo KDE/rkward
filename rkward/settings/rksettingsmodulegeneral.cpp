@@ -59,9 +59,7 @@ RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *pare
 	RK_TRACE (SETTINGS);
 
 	QVBoxLayout *main_vbox = new QVBoxLayout (this);
-	QLabel *label = new QLabel (i18n ("Settings marked with (*) do not take effect until you restart RKWard"), this);
-	label->setWordWrap (true);
-	main_vbox->addWidget (label);
+	main_vbox->addWidget (RKCommonFunctions::wordWrappedLabel (i18n ("Settings marked with (*) do not take effect until you restart RKWard")));
 
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 
@@ -109,9 +107,7 @@ RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *pare
 
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 
-	label = new QLabel (i18n ("The workplace layout (i.e. which script-, data-, help-windows are open) may be saved (and loaded) per R workspace, or independent of the R workspace. Which do you prefer?"), this);
-	label->setWordWrap (true);
-	main_vbox->addWidget (label);
+	main_vbox->addWidget (RKCommonFunctions::wordWrappedLabel (i18n ("The workplace layout (i.e. which script-, data-, help-windows are open) may be saved (and loaded) per R workspace, or independent of the R workspace. Which do you prefer?")));
 
 	workplace_save_chooser = new QButtonGroup (this);
 	group_box = new QGroupBox (this);
@@ -140,7 +136,7 @@ RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *pare
 
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 
-	label = new QLabel (i18n ("Warn when editing objects with more than this number of fields (0 for no limit):"), this);
+	QLabel* label = new QLabel (i18n ("Warn when editing objects with more than this number of fields (0 for no limit):"), this);
 	warn_size_object_edit_box = new RKSpinBox (this);
 	warn_size_object_edit_box->setIntMode (0, INT_MAX, warn_size_object_edit);
 	warn_size_object_edit_box->setSpecialValueText (i18n ("No limit"));

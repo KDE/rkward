@@ -17,12 +17,15 @@
 
 #include "rksessionvars.h"
 
-#include "rinterface.h"
+#include "rkrinterface.h"
 #include "../settings/rksettingsmoduledebug.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../version.h"
 
-#include <kxmlgui_version.h>
+#include <kcoreaddons_version.h>
+#if KCOREADDONS_VERSION >= QT_VERSION_CHECK(5,20,0)
+#include <kcoreaddons.h>
+#endif
 
 #include <QTemporaryFile>
 #include <QStandardPaths>
@@ -62,6 +65,11 @@ void RKSessionVars::setRVersion (const QString& version_string) {
 	}
 	r_version_string = version_string;
 	r_version = parseVersionString (version_string, 0);
+}
+
+QString RKSessionVars::RVersion(bool abbridged) {
+	if (!abbridged) return r_version_string;
+	return r_version_string.section ('.', 0, 1);
 }
 
 quint32 RKSessionVars::parseVersionString (const QString &version, QString *suffix) {
@@ -122,12 +130,14 @@ QStringList RKSessionVars::frontendSessionInfo () {
 	QStringList lines;
 	lines.append ("RKWard version: " RKWARD_VERSION);
 	// KF5 TODO: find replacement for line below
-	//lines.append ("KDE version (runtime): " + QString (KDE::versionString ()));
-	lines.append ("KDE version (compile time): " KXMLGUI_VERSION_STRING);
+#if KCOREADDONS_VERSION >= QT_VERSION_CHECK(5,20,0)
+	lines.append ("KDE Frameworks version (runtime): " + QString (KCoreAddons::versionString ()));
+#endif
+	lines.append ("KDE Frameworks version (compile time): " KCOREADDONS_VERSION_STRING);
 	lines.append (QString ("Qt version (runtime): ") + qVersion ());
 #if defined Q_OS_WIN
 	lines.append ("Windows runtime version (refer to QSysInfo documentation to translate code into human readable form): 0x" + QString::number (QSysInfo::windowsVersion (), 16));
-#elif defined Q_OS_MAC
+#elif defined Q_OS_MACOS
 	lines.append ("MacOS runtime version (refer to QSysInfo documentation to translate code into human readable form): 0x" + QString::number (QSysInfo::MacintoshVersion, 16));
 #endif
 	lines.append ("Local config directory: " + QStandardPaths::writableLocation (QStandardPaths::GenericConfigLocation));
@@ -135,7 +145,7 @@ QStringList RKSessionVars::frontendSessionInfo () {
 	lines.append ("Backend version (as known to the frontend): " + r_version_string);
 	lines.append (QString());
 	lines.append ("Debug message file (this may contain relevant diagnostic output in case of trouble):");
-	lines.append (RKSettingsModuleDebug::debug_file->fileName ());
+	lines.append (RK_Debug::debug_file->fileName ());
 	return lines;
 }
 

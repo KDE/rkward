@@ -1,150 +1,63 @@
 #!/usr/bin/make -f
-# -*- makefile -*-
-# Based on the sample debian/rules of dh_make
-
-# Uncomment this to turn on verbose mode.
-#export DH_VERBOSE=1
-
-# For CXXFLAGS and CFLAGS.
-# See http://lists.debian.org/debian-devel-announce/2011/09/msg00001.html 
-DPKG_EXPORT_BUILDFLAGS = 1
--include /usr/share/dpkg/buildflags.mk
-
-CFLAGS += -Wall
-
-# Workaround for cmake not handling CPPFLAGS (https://wiki.debian.org/HardeningWalkthrough):
-CFLAGS += $(CPPFLAGS)
-CXXFLAGS += $(CPPFLAGS)
-
-# These are used for cross-compiling and for saving the configure script
-# from having to guess our platform (since we know it already)
-DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
-DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
+include /usr/share/dpkg/pkg-info.mk
 
 #we need to know the R version
 RVERS = $(shell dpkg-query -W --showformat='$${Version}' r-base-core)
 RMAJOR = $(shell echo $(RVERS) | awk -F. '{print $$1}')
 RMINOR = $(shell echo $(RVERS) | awk -F. '{print $$2}')
 
-# set built-time of GNUR packages to time of created binary package based on stamp in changelog
-builttime = $(shell dpkg-parsechangelog -l$(CURDIR)/debian/changelog | awk -F': ' '/Date/ {print $$2}')
+# Workaround for cmake not handling CPPFLAGS (https://wiki.debian.org/HardeningWalkthrough):
+# As we cannot easily use dh for configuring, we have to merge flags, manually.
+CFLAGS += $(CPPFLAGS)
+CXXFLAGS += $(CPPFLAGS)
 
 # easier typing
 DESTDIR = $(CURDIR)/debian/tmp
+BUILDDIR = $(CURDIR)/debian/build
 
-ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
-	CFLAGS += -O0
-else
-	CFLAGS += -O2
-endif
+%:
+	dh $@ --buildsystem=cmake --builddirectory=$(BUILDDIR)
 
-build: build-arch build-indep
-build-arch: build-stamp
-build-indep: build-stamp
+override_dh_auto_configure:
+	mkdir -p $(BUILDDIR)
 
-build-stamp:
-	dh_testdir
-
-	mkdir -p $(CURDIR)/build
-
-	# Some installations of R need a specific version of the compiler(s)
-	# R CMD config provides info on which compiler to use
-	cd $(CURDIR)/build && \
-	CC="`/usr/bin/R CMD config CC`" \
-	CXX="`/usr/bin/R CMD config CXX`" \
-	F77="`/usr/bin/R CMD config F77`" \
-	cmake .. \
-		-DCMAKE_INSTALL_PREFIX=/usr \
-		-DDATA_INSTALL_DIR=/usr/share \
-		-DHTML_INSTALL_DIR=/usr/share/doc/HTML \
-		-DMAN_INSTALL_DIR=/usr/share/man \
-		-DCMAKE_SKIP_RPATH=true \
-		-DCMAKE_CXX_FLAGS="$(CXXFLAGS)" \
-		-DCMAKE_C_FLAGS="$(CFLAGS)" \
-		-DCMAKE_EXE_LINKER_FLAGS="$(LDFLAGS)" \
-		-DCMAKE_MODULE_LINKER_FLAGS="$(LDFLAGS)" \
-		-DCMAKE_SHARED_LINKER_FLAGS="$(LDFLAGS)" \
-		-DCMAKE_VERBOSE_MAKEFILE=ON \
+	dh_auto_configure '--buildsystem=kf5' --parallel -- \
 		-DR_EXECUTABLE=/usr/bin/R/ \
 		-DR_LIBDIR=/usr/lib/R/site-library/ \
-		-DBUILD_TIMESTAMP="$(builttime)"
+		-DCMAKE_SKIP_RPATH=YES \
+		-DBUILD_TIMESTAMP="$(shell date --utc --date='@$(SOURCE_DATE_EPOCH)')"
 
-	# Add here commands to compile the package.
-	cd $(CURDIR)/build && $(MAKE)
+override_dh_auto_install:
+	dh_auto_install
 
-	touch build-stamp
-
-clean:
-	dh_testdir
-	dh_testroot
-	rm -f build-stamp
-	# remove any .svn subdir included by accident
-	rm -rf $(CURDIR)/debian/.svn
-
-	# Add here commands to clean up after the build process.
-	rm -rf $(CURDIR)/build/
-
-	dh_clean 
-
-install: build
-	dh_testdir
-	dh_testroot
-	dh_prep
-	dh_installdirs
-
-	# Install into debian/tmp, first
-	cd $(CURDIR)/build && $(MAKE) install DESTDIR=$(DESTDIR)
 	# dirty hack to get rid of conflicting r.xml file without adjusting all makefiles
 	rm -vf $(DESTDIR)/usr/share/katepart/syntax/r.xml
-	
 	# remove unneeded R package files
 	rm -vf $(DESTDIR)/usr/lib/R/site-library/R.css $(DESTDIR)/usr/lib/R/site-library/rkward/COPYING
+	# remove x-test locale
+	rm -rvf $(DESTDIR)/usr/share/rkward/po/x-test $(DESTDIR)/usr/share/locale/x-test
 
-	# remove x-test locale KF5 TODO FIXME
-	rm -rvf $(DESTDIR)/usr/share/kde4/apps/rkward/po/x-test $(DESTDIR)/usr/share/locale/x-test
-
-	# Sort the remaining bits into rkward and rkward-data subpackages
-	dh_install --sourcedir=$(DESTDIR)
-
-# Build architecture-independent files here.
-binary-indep: build install
-# We have nothing to do by default.
-
-# Build architecture-dependent files here.
-binary-arch: build install
-	dh_testdir
-	dh_testroot
-	dh_installchangelogs ChangeLog
-	dh_installdocs
-	dh_installexamples
-	dh_installmenu
-	dh_installman
-	dh_link
-	dh_strip
+override_dh_compress:
 	# do not compress KDE HTML help
-	dh_compress -Xusr/share/doc/kde/HTML
-	dh_fixperms
-	dh_installdeb
+	dh_compress -Xusr/share/doc/HTML
+
+override_dh_shlibdeps:
 	dh_shlibdeps
 	# unfortunately, the r-base-core dependency can not be found by dh_shlibdeps, so we need to get at the version manually
-	@if [ "$(RMAJOR)" -eq "3" ] && [ "$(RMINOR)" -ge "0" ] ; then \
+	@if [ "$(RMAJOR)" -eq "3" ] && [ "$(RMINOR)" -ge "5" ] ; then \
 		echo "rvers=r-base-core (>= $(RVERS))" >> $(CURDIR)/debian/rkward.substvars ; \
+		echo "rapivers=r-api-3.5" >> $(CURDIR)/debian/rkward.substvars ; \
+	else \
+		if [ "$(RMAJOR)" -eq "3" ] && [ "$(RMINOR)" -ge "4" ] ; then \
+		echo "rvers=r-base-core (>= $(RVERS)), r-base-core (<< 3.5.0)" >> $(CURDIR)/debian/rkward.substvars ; \
+		echo "rapivers=r-api-3.4" >> $(CURDIR)/debian/rkward.substvars ; \
+	else \
+		if [ "$(RMAJOR)" -eq "3" ] ; then \
+		echo "rvers=r-base-core (>= $(RVERS)), r-base-core (<< 3.5.0)" >> $(CURDIR)/debian/rkward.substvars ; \
 	else \
 		if [ "$(RMAJOR)" -eq "2" ] && [ "$(RMINOR)" -ge "14" ] ; then \
 		echo "rvers=r-base-core (>= 2.9.0), r-base-core (<< 3.0.0)" >> $(CURDIR)/debian/rkward.substvars ; \
 	else \
 		if [ "$(RMAJOR)" -eq "2" ] && [ "$(RMINOR)" -ge "9" ] ; then \
 		echo "rvers=r-base-core (<< 2.14.0), r-base-core (>= 2.9.0)" >> $(CURDIR)/debian/rkward.substvars ; \
-	else \
-		if [ "$(RMAJOR)" -eq "2" ] && [ "$(RMINOR)" -ge "8" ] ; then \
-		echo "rvers=r-base-core (<< 2.9.0), r-base-core (>= 2.8.0)" >> $(CURDIR)/debian/rkward.substvars ; \
-	else \
-		if [ "$(RMAJOR)" -eq "2" ] && [ "$(RMINOR)" -ge "7" ] ; then \
-		echo "rvers=r-base-core (<< 2.8.0), r-base-core (>= 2.7.0)" >> $(CURDIR)/debian/rkward.substvars ; \
-	fi; fi ; fi ; fi ; fi
-	dh_gencontrol
-	dh_md5sums
-	dh_builddeb
-
-binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install
+	fi; fi; fi; fi; fi

@@ -2,7 +2,7 @@
                           rkmessagecatalog  -  description
                              -------------------
     begin                : Mon Jun 24 2013
-    copyright            : (C) 2013, 2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2013-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -25,9 +25,7 @@
 #include "../debug.h"
 
 // statics
-QHash<QString, RKMessageCatalog*> RKMessageCatalog::catalogs;
-QMutex RKMessageCatalog::setup_mutex;
-RKMessageCatalog* RKMessageCatalog::null_catalog = 0;
+RKMessageCatalog::CatalogHash RKMessageCatalog::catalogs;
 
 RKMessageCatalog::RKMessageCatalog (const QString &name, const QString& path) {
 	RK_TRACE (MISC);
@@ -84,8 +82,7 @@ QString RKMessageCatalog::translate (const QString &msgid_singular, const QStrin
 	return QString::fromUtf8 (dngettext (catalog_name, msgid_singular.toUtf8 (), msgid_plural.toUtf8 (), count)).replace (QLatin1String ("%1"), QString::number (count));
 }
 
-// static
-RKMessageCatalog* RKMessageCatalog::getCatalog (const QString& name, const QString& pathhint) {
+RKMessageCatalog* RKMessageCatalog::CatalogHash::getCatalog (const QString& name, const QString& pathhint) {
 	RK_TRACE (MISC);
 
 	RKMessageCatalog *ret = catalogs.value (name, 0);
@@ -101,10 +98,25 @@ RKMessageCatalog* RKMessageCatalog::getCatalog (const QString& name, const QStri
 	return ret;
 }
 
+RKMessageCatalog::CatalogHash::~CatalogHash() {
+	RK_TRACE (MISC);
+
+	QHash<QString, RKMessageCatalog*>::const_iterator it;
+	for (it = catalogs.constBegin (); it != catalogs.constEnd (); ++it) {
+		delete (it.value ());
+	}
+}
+
+// static
+RKMessageCatalog* RKMessageCatalog::getCatalog (const QString& name, const QString& pathhint) {
+	RK_TRACE (MISC);
+
+	return catalogs.getCatalog (name, pathhint);
+}
+
 RKMessageCatalog* RKMessageCatalog::nullCatalog () {
 	// ok, not thread-safe, here, but the worst that can happen is creating more than one dummy catalog.
-	if (!null_catalog) null_catalog = getCatalog  ("rkward_dummy", QString ());
-	return null_catalog;
+	return (getCatalog  ("rkward_dummy", QString ()));
 }
 
 #ifdef Q_OS_WIN

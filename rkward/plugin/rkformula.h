@@ -40,12 +40,12 @@ public:
 	RKFormula (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
 	~RKFormula ();
 
-	QVariant value (const QString &modifier=QString ()) { return model->value (modifier); };
-	QStringList getUiLabelPair () const;
-	bool isValid ();
+	QVariant value (const QString &modifier=QString ()) override { return model->value (modifier); };
+	QStringList getUiLabelPair () const override;
+	bool isValid () override;
 
 /** RTTI */
-	int type () { return ComponentFormula; };
+	int type () override { return ComponentFormula; };
 public slots:
 	void typeChange (int id);
 	void addButtonClicked ();

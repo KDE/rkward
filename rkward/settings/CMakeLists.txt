@@ -9,6 +9,7 @@ SET(settings_STAT_SRCS
    rksettingsmodulegeneral.cpp
    rksettingsmoduleoutput.cpp
    rksettingsmodulegraphics.cpp
+   rksettingsmodulekateplugins.cpp
    rksettingsmoduleplugins.cpp
    rksettingsmoduler.cpp
    rksettingsmodulewatch.cpp
@@ -28,4 +29,4 @@ IF (WIN32 OR USE_BINARY_PACKAGES)
 ENDIF (WIN32 OR USE_BINARY_PACKAGES)
 
 ADD_LIBRARY(settings STATIC ${settings_STAT_SRCS})
-TARGET_LINK_LIBRARIES(settings Qt5::Widgets KF5::WidgetsAddons Qt5::Xml KF5::ConfigCore KF5::Parts)
+TARGET_LINK_LIBRARIES(settings Qt5::Widgets KF5::WidgetsAddons Qt5::Xml KF5::ConfigCore KF5::Parts KF5::TextEditor)

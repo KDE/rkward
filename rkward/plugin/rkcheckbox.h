@@ -35,13 +35,13 @@ class RKCheckBox : public RKComponent  {
 public: 
 	RKCheckBox (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
 	~RKCheckBox ();
-	int type () { return ComponentCheckBox; };
+	int type () override { return ComponentCheckBox; };
 	RKComponentPropertyBool *state;
-	QVariant value (const QString &modifier=QString ()) {
+	QVariant value (const QString &modifier=QString ()) override {
 		if (modifier.isEmpty ()) return state->value ("labeled");
 		return (state->value (modifier));
 	};
-	QStringList getUiLabelPair () const;
+	QStringList getUiLabelPair () const override;
 public slots:
 	void changedStateFromUi (int);
 	void changedState (RKComponentPropertyBase *);

@@ -2,7 +2,7 @@
                           rksettingsmoduleplugins  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004-2016 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -57,9 +57,7 @@ RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *pare
 	
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 	
-	QLabel *label = new QLabel (i18n ("Some plugins are available with both, a wizard-like interface and a traditional dialog interface. If both are available, which mode of presentation do you prefer?"), this);
-	label->setWordWrap (true);
-	main_vbox->addWidget (label);
+	main_vbox->addWidget (RKCommonFunctions::wordWrappedLabel (i18n ("Some plugins are available with both, a wizard-like interface and a traditional dialog interface. If both are available, which mode of presentation do you prefer?")));
 
 
 	QGroupBox* button_box = new QGroupBox (this);
@@ -101,7 +99,7 @@ void RKSettingsModulePlugins::settingChanged () {
 
 QString RKSettingsModulePlugins::caption () {
 	RK_TRACE (SETTINGS);
-	return (i18n ("Plugins"));
+	return (i18n ("RKWard Plugins"));
 }
 
 void RKSettingsModulePlugins::applyChanges () {
@@ -186,9 +184,15 @@ void RKSettingsModulePlugins::loadSettings (KConfig *config) {
 			known_plugin_maps.append (inf);
 		}
 	}
-	if (RKSettingsModuleGeneral::rkwardVersionChanged ()) {
-		// if it is the first start this version, scan the installation for new pluginmaps
+	if (RKSettingsModuleGeneral::rkwardVersionChanged () || RKSettingsModuleGeneral::installationMoved ()) {
+		// if it is the first start this version or from a new path, scan the installation for new pluginmaps
+		// Note that in the case of installationMoved(), checkAdjustLoadedPath() has already kicked in, above, but rescanning is still useful
+		// e.g. if users have installed to a new location, because they had botched their previous installation
 		QDir def_plugindir (RKCommonFunctions::getRKWardDataDir ());
+		if (def_plugindir.dirName() == QStringLiteral ("rkwardinstall")) {
+			// For running from build-dir: Work around bad design choice of installation layout
+			def_plugindir.cd ("plugins");
+		}
 		QStringList def_pluginmaps = def_plugindir.entryList (QStringList ("*.pluginmap"));
 		for (int i = 0; i < def_pluginmaps.size (); ++i) {
 			def_pluginmaps[i] = def_plugindir.absoluteFilePath (def_pluginmaps[i]);
@@ -224,7 +228,7 @@ QString RKSettingsModulePlugins::findPluginMapById (const QString &id) {
 		if (known_plugin_maps[i].id == id) return known_plugin_maps[i].filename;
 	}
 	// for "rkward::" namespace, try a little harded:
-	if (id.startsWith ("rkward::")) {
+	if (id.startsWith (QLatin1String ("rkward::"))) {
 		QFileInfo info (RKCommonFunctions::getRKWardDataDir () + '/' + id.mid (8));
 		if (info.isReadable ()) return info.absoluteFilePath ();
 	}
@@ -321,11 +325,11 @@ void RKSettingsModulePlugins::fixPluginMapLists () {
 	RK_TRACE (SETTINGS);
 
 	// Users who installed versions before 0.6.3, manually, are likely to have all.pluginmap left over. Let's handle this, on the fly.
-	const QString obosolete_map = RKCommonFunctions::getRKWardDataDir () + "all.pluginmap";
+	const QString obsolete_map = RKCommonFunctions::getRKWardDataDir () + "all.pluginmap";
 	for (int i = 0; i < known_plugin_maps.size (); ++i) {
 		PluginMapStoredInfo &inf = known_plugin_maps[i];
 		QFileInfo info (inf.filename);
-		if ((!info.isReadable ()) || (inf.filename == obosolete_map)) {
+		if ((!info.isReadable ()) || (inf.filename == obsolete_map)) {
 			known_plugin_maps.removeAt (i);
 			--i;
 			continue;

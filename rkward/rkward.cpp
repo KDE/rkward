@@ -2,7 +2,7 @@
                           rkward.cpp  -  description
                              -------------------
     begin                : Tue Oct 29 20:06:08 CET 2002
-    copyright            : (C) 2002-2013 by Thomas Friedrichsmeier 
+    copyright            : (C) 2002-2019 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -15,6 +15,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include "rkward.h"
+
 // include files for QT
 #include <qtimer.h>
 #include <QDesktopWidget>
@@ -24,6 +26,9 @@
 #include <QMenuBar>
 #include <QStatusBar>
 #include <QInputDialog>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QIcon>
 
 // include files for KDE
 #include <kmessagebox.h>
@@ -39,12 +44,10 @@
 #include <krecentfilesaction.h>
 #include <ktoolbar.h>
 #include <kactionmenu.h>
-#include <QIcon>
 #include <KSharedConfig>
 #include <KConfigGroup>
 
 // application specific includes
-#include "rkward.h"
 #include "core/rkmodificationtracker.h"
 #include "plugin/rkcomponentmap.h"
 #include "settings/rksettings.h"
@@ -52,7 +55,8 @@
 #include "settings/rksettingsmodulegeneral.h"
 #include "settings/rksettingsmoduleoutput.h"
 #include "settings/rksettingsmodulecommandeditor.h"
-#include "rbackend/rinterface.h"
+#include "settings/rksettingsmodulekateplugins.h"
+#include "rbackend/rkrinterface.h"
 #include "core/robjectlist.h"
 #include "core/renvironmentobject.h"
 #include "misc/rkstandardicons.h"
@@ -81,10 +85,9 @@
 #include "windows/rkdebugconsole.h"
 #include "windows/rkcallstackviewer.h"
 #include "windows/rkdebugmessagewindow.h"
+#include "windows/katepluginintegration.h"
 #include "rkconsole.h"
 #include "debug.h"
-#include "version.h"
-
 
 #include "agents/showedittextfileagent.h"	// TODO: see below: needed purely for linking!
 #include "dialogs/rkreadlinedialog.h"	// TODO: see below: needed purely for linking!
@@ -120,7 +123,9 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 	workspace_modified = false;
 	merge_loads = false;
 	rkward_mainwin = this;
+	katepluginintegration = 0;
 	RKGlobals::rinter = 0;
+	RKCommonFunctions::getRKWardDataDir(); // call this before any forking, in order to avoid potential race conditions during initialization of data dir
 	RKSettings::settings_tracker = new RKSettingsTracker (this);
 
 	///////////////////////////////////////////////////////////////////
@@ -130,7 +135,7 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 	initStatusBar();
 
 	new RKWorkplace (this);
-	RKWorkplace::mainWorkplace ()->initActions (actionCollection (), "left_window", "right_window");
+	RKWorkplace::mainWorkplace ()->initActions (actionCollection ());
 	setCentralWidget (RKWorkplace::mainWorkplace ());
 	connect (RKWorkplace::mainWorkplace ()->view (), &RKWorkplaceView::captionChanged, this, static_cast<void (RKWardMainWindow::*)(const QString&)>(&RKWardMainWindow::setCaption));
 	connect (RKWorkplace::mainWorkplace (), &RKWorkplace::workspaceUrlChanged, this, &RKWardMainWindow::addWorkspaceUrl);
@@ -150,11 +155,25 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 	setHelpMenuEnabled (false);
 	setXMLFile ("rkwardui.rc");
 	insertChildClient (toplevel_actions = new RKTopLevelWindowGUI (this));
+	insertChildClient (katePluginIntegration ()->mainWindow ());
 	createShellGUI (true);
+	// This is pretty convoluted, but while loading plugins the katePluginIntegration-client may gain new actions and thus needs
+	// to be reloaded. We cannot - currently, KF5.65 - delay loading the UI defintion(s), because plugins rely on it having a GUI factory.
+	katePluginIntegration ()->loadPlugins (RKSettingsModuleKatePlugins::pluginsToLoad ());
+// TODO: initToolWindowActions() should be called after all plugins are loaded (and have registered their tool views). However
+//       that may be a problem, if there is no KXMLGUIFactory around, yet. So, annoyingly, we need to create the GUI, before we
+//       have everything to populate it. Therefore, after init, the client is removed and re-added in order to trigger a UI
+//       refresh.
+	toplevel_actions->initToolWindowActions ();
+	factory()->removeClient (toplevel_actions);
+	factory()->addClient (toplevel_actions);
 	RKXMLGUISyncer::self ()->watchXMLGUIClientUIrc (this);
 
-	proxy_import->setMenu (dynamic_cast<QMenu*>(guiFactory ()->container ("import", this)));
-	proxy_export->setMenu (dynamic_cast<QMenu*>(guiFactory ()->container ("export", this)));
+	// replicate File->import and export menus into the Open/Save toolbar button menus
+	QMenu *menu = dynamic_cast<QMenu*>(guiFactory ()->container ("import", this));
+	if (menu) open_any_action->addAction (menu->menuAction ());
+	menu = dynamic_cast<QMenu*>(guiFactory ()->container ("export", this));
+	if (menu) save_any_action->addAction (menu->menuAction ());
 
 	RKComponentMap::initialize ();
 
@@ -174,6 +193,17 @@ RKWardMainWindow::~RKWardMainWindow() {
 	delete RKGlobals::tracker ();
 	delete RKGlobals::rInterface ();
 	delete RControlWindow::getControl ();
+	factory ()->removeClient (RKComponentMap::getMap ());
+	delete RKComponentMap::getMap ();
+}
+
+KatePluginIntegrationApp* RKWardMainWindow::katePluginIntegration () {
+	RK_TRACE (APP);
+
+	if (!katepluginintegration) {
+		katepluginintegration = new KatePluginIntegrationApp (this);
+	}
+	return katepluginintegration;
 }
 
 void RKWardMainWindow::closeEvent (QCloseEvent *e) {
@@ -195,8 +225,7 @@ void RKWardMainWindow::doPostInit () {
 	RK_TRACE (APP);
 
 	// Check installation first
-	QFile resource_ver (RKCommonFunctions::getRKWardDataDir () + "resource.ver");
-	if (!(resource_ver.open (QIODevice::ReadOnly) && (resource_ver.read (100).trimmed () == RKWARD_VERSION))) {
+	if (RKCommonFunctions::getRKWardDataDir ().isEmpty ()) {
 		KMessageBox::error (this, i18n ("<p>RKWard either could not find its resource files at all, or only an old version of those files. The most likely cause is that the last installation failed to place the files in the correct place. This can lead to all sorts of problems, from single missing features to complete failure to function.</p><p><b>You should quit RKWard, now, and fix your installation</b>. For help with that, see <a href=\"http://rkward.kde.org/compiling\">http://rkward.kde.org/compiling</a>.</p>"), i18n ("Broken installation"), KMessageBox::Notify | KMessageBox::AllowLink);
 	}
 
@@ -226,6 +255,7 @@ void RKWardMainWindow::doPostInit () {
 	QString cd_to = RKSettingsModuleGeneral::initialWorkingDirectory ();
 	if (!cd_to.isEmpty ()) {
 		RKGlobals::rInterface ()->issueCommand ("setwd (" + RObject::rQuote (cd_to) + ")\n", RCommand::App);
+		QDir::setCurrent (cd_to);
 	}
 
 	if (!open_urls.isEmpty()) {
@@ -263,6 +293,8 @@ void RKWardMainWindow::doPostInit () {
 	connect (this, &RKWardMainWindow::aboutToQuitRKWard, dbus, &RKDBusAPI::deleteLater);
 	// around on the bus in this case.
 
+	updateCWD ();
+	connect (RKGlobals::rInterface (), &RInterface::backendWorkdirChanged, this, &RKWardMainWindow::updateCWD);
 	setCaption (QString ());	// our version of setCaption takes care of creating a correct caption, so we do not need to provide it here
 }
 
@@ -351,8 +383,27 @@ void RKWardMainWindow::startR () {
 	RK_ASSERT (!RKGlobals::rInterface ());
 
 	// make sure our general purpose files directory exists
-	bool ok = QDir ().mkpath (RKSettingsModuleGeneral::filesPath());
+	QString packages_path = RKSettingsModuleGeneral::filesPath() + "/.rkward_packages";
+	bool ok = QDir ().mkpath (packages_path);
 	RK_ASSERT (ok);
+
+	// Copy RKWard R source packages to general  purpose files directory (if still needed).
+	// This may look redundant at first (since the package still needs to be installed from the
+	// backend. However, if frontend and backend are on different machines (eventually), only  the
+	// filesPath is shared between both.
+	QStringList packages;
+	packages << "rkward.tgz" << "rkwardtests.tgz";
+	for (int i = 0; i < packages.size (); ++i) {
+		QString package = QDir (packages_path).absoluteFilePath (packages[i]);
+		if (RKSettingsModuleGeneral::rkwardVersionChanged ()) {
+			RK_DEBUG(APP, DL_INFO, "RKWard version changed. Discarding cached package at %s", qPrintable (package));
+			QFile::remove (package);
+		}
+		if (!QFileInfo (package).exists()) {
+			RK_DEBUG(APP, DL_INFO, "Copying rkward R source package to %s", qPrintable (package));
+			RK_ASSERT(QFile::copy (RKCommonFunctions::getRKWardDataDir () + "/rpackages/" + packages[i], package));
+		}
+	}
 
 	RKGlobals::rinter = new RInterface ();
 	new RObjectList ();
@@ -533,7 +584,7 @@ void RKWardMainWindow::initActions() {
 	view_menu_dummy->setEnabled (false);
 
 	// collections for the toolbar:
-	KActionMenu* open_any_action = new KActionMenu (QIcon::fromTheme("document-open-folder"), i18n ("Open..."), this);
+	open_any_action = new KActionMenu (QIcon::fromTheme("document-open-folder"), i18n ("Open..."), this);
 	open_any_action->setDelayed (false);
 	actionCollection ()->addAction ("open_any", open_any_action);
 
@@ -543,8 +594,7 @@ void RKWardMainWindow::initActions() {
 	open_any_action->addAction (fileOpen);
 	open_any_action->addAction (fileOpenRecent);
 	open_any_action->addSeparator ();
-	proxy_import = new QAction (i18n ("Import"), this);
-	open_any_action->addAction (proxy_import);
+	//open_any_action->addAction (proxy_import); -> later
 
 	KActionMenu* new_any_action = new KActionMenu (QIcon::fromTheme("document-new"), i18n ("Create..."), this);
 	new_any_action->setDelayed (false);
@@ -557,13 +607,12 @@ void RKWardMainWindow::initActions() {
 	save_any_action->setDelayed (false);
 	actionCollection ()->addAction ("save_any", save_any_action);
 
-	proxy_export = new QAction (i18n ("Export"), this);
 	save_any_action->addAction (fileSaveWorkspace);
 	save_any_action->addAction (fileSaveWorkspaceAs);
 	save_any_action->addSeparator ();
 // TODO: A way to add R-script-save actions, dynamically, would be nice
 	save_actions_plug_point = save_any_action->addSeparator ();
-	save_any_action->addAction (proxy_export);
+	//save_any_action->addAction (proxy_export); -> later
 }
 
 /*
@@ -759,7 +808,7 @@ bool RKWardMainWindow::doQueryQuit () {
 				return false;
 			}
 		}
-		lockGUIRebuild (false);
+		gui_rebuild_locked = false; // like lockGUIRebuild (false), but does not trigger an immediate rebuild, as we are about to leave, anyway.
 	}
 
 	return true;
@@ -939,4 +988,5 @@ void RKWardMainWindow::setCaption (const QString &) {
 	if (window) wcaption.append (" - " + window->fullCaption ());
 	KParts::MainWindow::setCaption (wcaption);
 }
+
 

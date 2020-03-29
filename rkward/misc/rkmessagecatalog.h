@@ -2,7 +2,7 @@
                           rkmessagecatalog  -  description
                              -------------------
     begin                : Mon Jun 24 2013
-    copyright            : (C) 2013, 2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2013-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -38,7 +38,7 @@ public:
 /** Get the catalog identified by name. This could be an already open catalog, or a new one. In the latter case, the catalog is expected at pathhint. In the former case, pathhint is ignored. This function is guaranteed to return a non-null RKMessageCatalog, although that does not imply the catalog could actually be loaded. */
 	static RKMessageCatalog *getCatalog (const QString &name, const QString &pathhint);
 /** Returns a dummy null-catalog */
-	static RKMessageCatalog *nullCatalog ();
+       static RKMessageCatalog *nullCatalog ();
 /** Switch language to use for any coming translations */
 	static void switchLanguage (const QString &new_language_code);
 private:
@@ -47,9 +47,15 @@ private:
 
 	QByteArray catalog_name;
 
-	static QHash<QString, RKMessageCatalog*> catalogs;
-	static QMutex setup_mutex;
-	static RKMessageCatalog *null_catalog;
+	class CatalogHash {
+		QHash<QString, RKMessageCatalog*> catalogs;
+		QMutex setup_mutex;
+	public:
+		CatalogHash () {};
+		~CatalogHash ();
+		RKMessageCatalog* getCatalog (const QString& name, const QString& pathhint);
+	};
+	static CatalogHash catalogs;
 };
 
 #endif

@@ -23,7 +23,7 @@
 
 #include "rcontainerobject.h"
 #include "../rkglobals.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "rkmodificationtracker.h"
 
 #include "../debug.h"
@@ -38,7 +38,7 @@ RKRowNames::RKRowNames (RContainerObject *parent) : RKVariable (parent, QString 
 	check_duplicates = true;
 	is_sequential_up_to_row = -1;
 
-	name = i18n ("row names");
+	name = QString ("row.names");
 }
 
 RKRowNames::~RKRowNames () {
@@ -62,17 +62,17 @@ void RKRowNames::beginEdit () {
 	}
 }
 
-QString RKRowNames::getFullName () const {
+QString RKRowNames::getFullName (int options) const {
 //	RK_TRACE (OBJECTS);
 
-	return ("row.names (" + parent->getFullName () + ')');
+	return ("row.names (" + parent->getFullName (options) + ')');
 }
 
 void RKRowNames::writeData (int from_row, int to_row, RCommandChain *chain) {
 	RK_TRACE (OBJECTS);
 
 	if (isSequential ()) {
-		RKGlobals::rInterface ()->issueCommand (getFullName () + " <- NULL", RCommand::App | RCommand::Sync, QString (), 0,0, chain);
+		RKGlobals::rInterface ()->issueCommand (getFullName (DefaultObjectNameOptions) + " <- NULL", RCommand::App | RCommand::Sync, QString (), 0,0, chain);
 	} else {
 		// unfortunately, we always need to write the whole data, as row.names<- does not support indexing.
 		QString data_string = "c (";
@@ -84,7 +84,7 @@ void RKRowNames::writeData (int from_row, int to_row, RCommandChain *chain) {
 			}
 		}
 		data_string.append (")");
-		RKGlobals::rInterface ()->issueCommand (getFullName () + " <- " + data_string, RCommand::App | RCommand::Sync, QString (), 0, 0, chain);
+		RKGlobals::rInterface ()->issueCommand (getFullName (DefaultObjectNameOptions) + " <- " + data_string, RCommand::App | RCommand::Sync, QString (), 0, 0, chain);
 	}
 
 	ChangeSet *set = new ChangeSet;

@@ -2,7 +2,7 @@
                           rktoolwindowbar  -  description
                              -------------------
     begin                : Fri Oct 12 2007
-    copyright            : (C) 2007, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -50,6 +50,7 @@ public:
 
 	void restoreSize (const KConfigGroup &cg);
 	void saveSize (KConfigGroup &cg) const;
+	void captionChanged(RKMDIWindow* window);
 private slots:
 	void tabClicked (int id);
 	void changeAttachment ();
@@ -64,6 +65,8 @@ protected:
 private:
 friend class RKWorkplace;
 	void reclaimDetached (RKMDIWindow *window);
+	void closeOthers (RKMDIWindow *window);
+	void windowDestroyed (QObject *window);
 
 	int getSplitterSize () const;
 	void setSplitterSize (int new_size);

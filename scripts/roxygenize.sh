@@ -3,14 +3,21 @@
 
 cd `dirname $0`/..
 BASEDIR=`pwd`
+PACKAGESDIR="${BASEDIR}/rkward/rbackend/rpackages"
+
 
 if [ "$#" = 0 ]; then
-	PACKAGES="'${BASEDIR}/rkward/rbackend/rpackages/rkward/'"
+	PACKAGES="'${PACKAGESDIR}/rkward/'"
 	# currently excluded due to missing support for slots in roxygen2:
-	# '${BASEDIR}/rkward/rbackend/rpackages/rkwardtests/'
+	# '${PACKAGESDIR}/rkward/tests/'
 else
 	PACKAGES="'$1'"
 	shift
+fi
+
+if [ ! -f "${PACKAGESDIR}/rkward/R/ver.R" ]; then
+	echo "ver.R does not exist in rkward package. Run cmake, first."
+	exit 1
 fi
 
 while (( "$#" )); do

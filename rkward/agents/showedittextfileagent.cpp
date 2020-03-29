@@ -21,7 +21,7 @@
 #include <KMessageWidget>
 
 #include "../windows/rkcommandeditorwindow.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../rbackend/rkrbackendprotocol_frontend.h"
 #include "../windows/rkworkplace.h"
 #include "../rkglobals.h"
@@ -82,13 +82,11 @@ void ShowEditTextFileAgent::showEditFiles (RBackendRequest *request) {
 		display_titles.append (title);
 	}
 
-	bool r_highlighting = false;
-	bool read_only = true;
-	bool delete_files = false;
+	int flags = RKCommandEditorFlags::ReadOnly;
 	if (request->type == RBackendRequest::ShowFiles) {
 		RK_ASSERT (!request->synchronous);
 
-		delete_files = request->params["delete"].toBool ();
+		if (request->params["delete"].toBool ()) flags +=  RKCommandEditorFlags::DeleteOnClose;
 		RKRBackendProtocolFrontend::setRequestCompleted (request);
 
 		if (prompt) {
@@ -101,14 +99,14 @@ void ShowEditTextFileAgent::showEditFiles (RBackendRequest *request) {
 			RKRBackendProtocolFrontend::setRequestCompleted (request);
 		}
 
-		r_highlighting = true;
-		read_only = false;
+		flags += RKCommandEditorFlags::DefaultToRHighlighting;
+		flags -= RKCommandEditorFlags::ReadOnly;
 	} else {
 		RK_ASSERT (false);
 	}
 
 	// do this last, as it may produce error messages, if some of the files could not be opened.
 	for (int n = 0; n < count; ++n) {
-		RKWorkplace::mainWorkplace ()->openScriptEditor (QUrl::fromLocalFile (files[n]), QString (), r_highlighting, read_only, display_titles[n], delete_files);
+		RKWorkplace::mainWorkplace ()->openScriptEditor (QUrl::fromLocalFile (files[n]), QString (), flags, display_titles[n]);
 	}
 }

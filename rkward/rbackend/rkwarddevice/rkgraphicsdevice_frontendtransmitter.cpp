@@ -49,6 +49,7 @@ RKGraphicsDeviceFrontendTransmitter::~RKGraphicsDeviceFrontendTransmitter () {
 	RK_TRACE (GRAPHICS_DEVICE);
 
 	if (connection) connection->close ();
+	if (local_server->isListening ()) local_server->close ();
 }
 
 void RKGraphicsDeviceFrontendTransmitter::setupServer () {
@@ -70,9 +71,8 @@ void RKGraphicsDeviceFrontendTransmitter::newConnection () {
 
 	// handshake
 	QString token = RKFrontendTransmitter::instance ()->connectionToken ();
-	if (!con->canReadLine ()) con->waitForReadyRead (1000);
-	QString token_c = QString::fromLocal8Bit (con->readLine ());
-	token_c.chop (1);
+	RKFrontendTransmitter::waitForCanReadLine (con, 2000);
+	QString token_c = QString::fromLocal8Bit (con->readLine ()).trimmed ();
 	if (token_c != token) {
 		KMessageBox::detailedError (0, QString ("<p>%1</p>").arg (i18n ("There has been an error while trying to connect the on-screen graphics backend. This means, on-screen graphics using the RKWard device will not work in this session.")), i18n ("Expected connection token %1, but read connection token %2", token, token_c), i18n ("Error while connection graphics backend"));
 		con->close ();
@@ -207,7 +207,7 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 					// Actually, this is only needed once, but where to put it...
 					RKGraphicsDeviceFrontendTransmitter::lwdscale = desktop->physicalDpiX () / 96;   // taken from devX11.c
 				} else {
-					if (devnum) RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Received transmission of type %d for unknown device number %d. Skippping.", opcode, devnum+1);
+					if (devnum) RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Received transmission of type %d for unknown device number %d. Skipping.", opcode, devnum+1);
 					sendDummyReply (opcode);
 				}
 				continue;
@@ -338,7 +338,7 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 		} else if (opcode == RKDNewPageConfirm) {
 			device->confirmNewPage ();
 		} else {
-			RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Unhandled operation of type %d for device number %d. Skippping.", opcode, devnum+1);
+			RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Unhandled operation of type %d for device number %d. Skipping.", opcode, devnum+1);
 		}
 
 		if (!streamer.instream.atEnd ()) {

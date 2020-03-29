@@ -2,7 +2,7 @@
                           robjectlist  -  description
                              -------------------
     begin                : Wed Aug 18 2004
-    copyright            : (C) 2004-2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2019 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -36,7 +36,7 @@ class RKOrphanNamespacesObject;
 
 /**
 This class is responsible for keeping and updating a list of objects in the R-workspace.
-Acutally it kind of represents the R-workspace, including methods to save and load the workspace.
+Actually it kind of represents the R-workspace, including methods to save and load the workspace.
 It acts as the "document".
 
 @author Thomas Friedrichsmeier
@@ -51,9 +51,8 @@ public:
 	/** like updateFromR, but only adjusts to new / missing environments, but does not update the .GlobalEnv. Designed to be used from the backend, when packages were loaded/unloaded . */
 	void updateFromR (RCommandChain *chain, const QStringList &current_searchpath, const QStringList &current_namespaces);
 	
-	QString getFullName () const override { return QString (); };
-	QString getBaseName () const override { return QString (); };
-	QString makeChildName (const QString &short_child_name, bool) const override { return short_child_name; };
+	QString getFullName (int) const override { return QString (); };
+	QString makeChildName (const QString &short_child_name, bool, int) const override { return short_child_name; };
 	/** reimplemented from RContainerObject: do nothing. The object-list has no meta data. */
 	void writeMetaData (RCommandChain *) override {};
 
@@ -77,7 +76,7 @@ signals:
 	void updateComplete ();
 protected:
 /** reimplemented from RContainerObject to search the environments in search order */
-	RObject *findObjects (const QStringList &path, RObjectSearchMap *matches, const QString &op) override;
+	RObject::ObjectList findObjects (const QStringList &path, bool partial, const QString &op) override;
 
 /// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"
 	QString removeChildCommand (RObject *object) const override;

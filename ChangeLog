@@ -1,13 +1,73 @@
+--- Version 0.7.2 - UNRELEASED
+- <text> elements in plugins may now also contain clickable links, including rkward://-scheme links
+* TODO: Bring new code hinting features to the console window!
+- On unix-systems, RKWard can now be run without installation
+- Kate addons are now supported within RKWard. Intially, search-in-files, snippets, and projects are loaded by default
+  * TODO: Some plugins still have UI issues. E.g.:
+    - SQL plugin fails to add toplevel menu
+    - Text filter plugin always shows menu entry, but should be limited to script windows
+
+--- Version 0.7.1 - Jan-23-2020
+- Code hinting in script editor windows has been reworked, and now also completes argument names
+- Instead of installing rkward R packages at build time, install them at runtime, when needed
+- Add new commandline option "--r-executable=auto" for auto-detection of R installation
+- Fixed: Underscore (_) was not accepted in names of newly created data.frames
+- <browser> element in save file mode gains checkbox to control overwriting of existing files
+- Fixed: <browser> element could not be set to not required
+- Fixed: max.print option was not saved, correctly, when set from RKWard settings
+- Add command-line option --autoreuse to avoid shipping two separate .desktop files
+- <select> elements in plugin dialogs can be set to accept only a single selection
+- New R functions rk.capture.output() and and rk.end.capture.output()
+- Allow to reference current script file in plugins
+- Add various live-preview options for R scripts, including a preview of R markdown rendering
+- Make it possible to "link" to specific settings pages from the internal documentation
+- Slighlty less confusing output in case a package is installed from require(), such as in many plugins
+- Fixed: RKWard icon was missing for the "enhances RKWard" column in package installation dialog
+- Fixed a layout issue in plugins using <stretch>-elements that would sometimes also render top-left aligned UI-elements unsuable.
+- Remove a bit of unused empty space around the main area of plugin dialogs
+- Expand root level objects (esp. data.frames) by default in plugin object lists. Add button to toggle back to collapsed.
+- Allow Tab-key to advance to the next row of data in data editor
+- Fix highlighting of "trailing" rows and columns in data editor
+- Fixed: Loading existing workspace from startup dialog failed silently.
+- Support handling of help:/ pages (e.g. RKWard plugins documentation) inside the RKWard help window, again.
+- Do not attempt object name hinting behind empty quoted strings or spaces.
+- rk.show.question() gains a parameter to allow setting a default button other than "yes"
+- new function rk.askYesNo() combines the functionality of askYesNo() (R >= 3.5.0) with rk.show.question() and is the default option for askYesNo() calls
+- Compile in ui definitions, instead of providing them as separate files
+- Fix printing of strings with R 3.5.0 on Windows in the console
+- Offer R_LIBS_USER, instead of ~/.rkward/library as standard library installation location
+- Support R version placeholder (%v) in custom library locations.
+- File browser tool window follows changes in current working directory (while showing current working directory)
+- Show focus indication in highlighted item color (usually blue), instead of hardcoded red
+- On Mac, do not attempt to start DBus, if it is already running
+- Fix most compiler warnings
+- File tool window gains button to switch to current working directory
+- Fix a crash when closing a plugin dialog with an active plot preview
+- Do not throw an error on objects that return non-numeric/non-scalar dim()
+
+--- Version 0.7.0b - Apr-16-2018
+- Fix failure to install translations
+
+--- Version 0.7.0 - Apr-16-2018
+- Fix crash with R 3.5.x due to use to STRING_PTR
+- Double click on object in Workspace browser tries to open reference page, not object viewer, if the object is outside of .GlobalEnv
+- Implement "split view" feature, allowing to partion the main window, and to hvae several views of the same files / data side-by-side
+- Fixed: Creating trellis on-screen plots, while package lattice is not on the search path would produce errors in plot history mechanism
+- Limit the number of debug log-files to keep (at most three, each, for frontend and backend)
+- Remove Windows-only UI for setInternet2()-option (no longer available in R, with setInternet2(TRUE) the default since R 3.2.2)
+- Remove startup wrapper script (moving the still-needed functionality into the main executable)
+- Function argument hinting is less easily fooled by braces inside quotes
+- Preview status messages can now be closed
 - Show the message accompanying rk.show.files() or rk.edit.files() inside the main window, instead of a separate dialog
 - File browser gains "Rename" context menu action
 - File selection fields in plugin dialogs remember the last used directory (per session), and check for a valid selection
 - Better handling of text drag-and-drop inside the R console window
 
---- Version 0.6.5a - UNRELEASED
-- EXPERIMENTAL: Fix NAs introduced by editing data containing characters that cannot be encoded in the system locale
+--- Version 0.6.5a - UNRELEASED - This is the last version available for KDE 4, git branch kde4
+- Fix NAs introduced by editing data containing characters that cannot be encoded in the system locale
 - Fixed: Preview boxes followed by a <stretch/> element would not work under some circumstances
 - Fixed: Setting an output CSS file via the GUI did not work
-- Fixed: Bug report feature on Windows did nothing 		TODO: Really test this!
+- Fixed: Bug report feature on Windows did nothing
 - Avoid some potential encoding issues, that could cause graphical select.list to fail for certain strings, under some circumstances
 
 --- Version 0.6.5 - Apr-02-2016

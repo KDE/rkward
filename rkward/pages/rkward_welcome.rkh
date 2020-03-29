@@ -27,7 +27,7 @@
 	</section>
 
 	<section title="Still missing something?" id="writing_plugins">
-	Check out the <link href="help:rkwardplugins">Introduction to Writing Plugins for RKWard</link> to learn how easy it is to enhance RKWard with your custom dialogs. And if you like, how to share your work with the community of RKWard users. See the <link href="rkward://rhelp/rkward-package">rkward package overview</link> for RKWard specific function for development and scripting. As another way of contributing, consider supporting the development of RKWard with money. One easy way to give a small amount is <a href="http://flattr.com/thing/1092073/RKWard">donating via <i>Flattr</i></a>.
+	Check out the <link href="help:/rkwardplugins/index.html">Introduction to Writing Plugins for RKWard</link> (<link href="http://api.kde.org/doc/rkwardplugins/">most recent version online</link>) to learn how easy it is to enhance RKWard with your custom dialogs. And if you like, how to share your work with the community of RKWard users. See the <link href="rkward://rhelp/rkward-package">rkward package overview</link> for RKWard specific function for development and scripting. As another way of contributing, consider supporting the development of RKWard with money. One easy way to give a small amount is <a href="http://flattr.com/thing/1092073/RKWard">donating via <i>Flattr</i></a>.
 	</section>
 
 	<section title="General Information" id="further_info">

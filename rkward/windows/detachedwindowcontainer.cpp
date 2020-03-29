@@ -143,6 +143,7 @@ void DetachedWindowContainer::slotReattach () {
 	RK_TRACE (APP);
 
 	RKWorkplace::mainWorkplace ()->attachWindow (captured);
+	captured->activate ();
 }
 
 void DetachedWindowContainer::closeEvent (QCloseEvent *e) {

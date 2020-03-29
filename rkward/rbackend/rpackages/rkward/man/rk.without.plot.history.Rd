@@ -11,4 +11,3 @@ rk.without.plot.history(expr)
 Run a (plotting) action, without recording anything in the plot history.
 Internally, the plot history option is turned off for the duration of the action.
 }
-

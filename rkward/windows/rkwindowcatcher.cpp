@@ -129,7 +129,7 @@ void RKWindowCatcher::stop (int new_cur_device) {
 			QWindow *window = QWindow::fromWinId (created_window);
 			RKWorkplace::mainWorkplace ()->newX11Window (window, new_cur_device);
 		} else {
-#if defined Q_OS_MAC
+#if defined Q_OS_MACOS
 			KMessageBox::information (0, i18n ("You have tried to embed a new R graphics device window in RKWard. However, this is not currently supported in this build of RKWard on Mac OS X. See http://rkward.kde.org/mac for more information."), i18n ("Could not embed R X11 window"), "embed_x11_device_not_supported");
 #else
 			RKErrorDialog::reportableErrorMessage (0, i18n ("You have tried to embed a new R graphics device window in RKWard. However, either no window was created, or RKWard failed to detect the new window. If you think RKWard should have done better, consider reporting this as a bug. Alternatively, you may want to adjust Settings->Configure RKWard->Onscreen Graphics."), QString (), i18n ("Could not embed R X11 window"), "failure_to_detect_x11_device");
@@ -223,7 +223,7 @@ void RKWindowCatcher::killDevice (int device_number) {
 #include <kactioncollection.h>
 
 #include "../rkglobals.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../rbackend/rkwarddevice/rkgraphicsdevice.h"
 #include "../core/robject.h"
 #include "../misc/rkprogresscontrol.h"
@@ -289,6 +289,7 @@ RKCaughtX11Window::RKCaughtX11Window (RKGraphicsDevice* rkward_device, int devic
 void RKCaughtX11Window::commonInit (int device_number) {
 	RK_TRACE (MISC);
 
+	in_destructor = false;
 	capture = 0;
 	embedded = 0;
 	embedding_complete = false;
@@ -340,7 +341,7 @@ void RKCaughtX11Window::doEmbed () {
 	if (!isAttached ()) {
 		// make xembed_container resizable, again, now that it actually has a content
 		dynamic_size_action->setChecked (true);
-		QTimer::singleShot (0, this, SLOT (fixedSizeToggled ())); // For whatever reason, apparently we have to wait for the next event loop with this.
+		QTimer::singleShot (0, this, SLOT (fixedSizeToggled())); // For whatever reason, apparently we have to wait for the next event loop with this.
 	}
 
 	// try to be helpful when the window is too large to fit on screen
@@ -356,6 +357,7 @@ RKCaughtX11Window::~RKCaughtX11Window () {
 	RK_ASSERT (device_windows.contains (device_number));
 	device_windows.remove (device_number);
 
+	in_destructor = true;
 	close (false);
 	if (embedded) RKWindowCatcher::instance ()->unregisterWatcher (embedded->winId ());
 	error_dialog->autoDeleteWhenDone ();
@@ -375,7 +377,7 @@ void RKCaughtX11Window::setWindowStyleHint (const QString& hint) {
 void RKCaughtX11Window::forceClose () {
 	killed_in_r = true;
 	if (embedded) {
-		// HACK: Somehow (R 3.0.0alpha), the X11() window is surpisingly die-hard, if it is not closed "the regular way".
+		// HACK: Somehow (R 3.0.0alpha), the X11() window is surprisingly die-hard, if it is not closed "the regular way".
 		// So we expurge it, and leave the rest to the user.
 		embedded->setParent (0);
 		qApp->processEvents ();
@@ -395,7 +397,7 @@ bool RKCaughtX11Window::close (bool also_delete) {
 	QString status = i18n ("Closing device (saving history)");
 	if (!close_attempted) {
 		RCommand* c = new RCommand ("dev.off (" + QString::number (device_number) + ')', RCommand::App, i18n ("Shutting down device number %1", device_number));
-		setStatusMessage (status, c);
+		if (!in_destructor) setStatusMessage (status, c);
 		RKGlobals::rInterface ()->issueCommand (c);
 		close_attempted = true;
 	} else {

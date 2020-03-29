@@ -2,7 +2,7 @@
                           rkaccordiontable  -  description
                              -------------------
     begin                : Fri Oct 24 2015
-    copyright            : (C) 2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2015-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -231,13 +231,8 @@ public:
 	void initStyleOption (QStyleOptionViewItem* option, const QModelIndex& index) const override {
 		QStyledItemDelegate::initStyleOption (option, index);
 		if (!pmodel->isFake (index)) {
-			QStyleOptionViewItemV4 *v4 = qstyleoption_cast<QStyleOptionViewItemV4 *> (option);
-			if (!v4) {
-				RK_ASSERT (false);
-				return;
-			}
-			v4->icon = table->isExpanded (index) ? expanded : collapsed;
-			v4->features |= QStyleOptionViewItemV2::HasDecoration;
+			option->icon = table->isExpanded (index) ? expanded : collapsed;
+			option->features |= QStyleOptionViewItem::HasDecoration;
 		}
 	}
 	RKAccordionDummyModel *pmodel;
@@ -246,7 +241,6 @@ public:
 	QIcon collapsed;
 };
 
-#include <QPainter>
 #include <QScrollBar>
 #include <QHeaderView>
 RKAccordionTable::RKAccordionTable (QWidget* parent) : QTreeView (parent) {
@@ -319,7 +313,7 @@ void RKAccordionTable::setShowAddRemoveButtons (bool show) {
 QSize RKAccordionTable::sizeHintWithoutEditor () const {
 	RK_TRACE (MISC);
 
-	// NOTE: This is not totally correct, but seems to be, roughly. We can't use sizeHintForRow(0) for height calcuation, as the model may be empty
+	// NOTE: This is not totally correct, but seems to be, roughly. We can't use sizeHintForRow(0) for height calculation, as the model may be empty
 	// (for "driven" optionsets.
 	return (QSize (minimumSizeHint ().width (), header ()->sizeHint().height () + horizontalScrollBar ()->sizeHint ().height () + QFontMetrics (QFont ()).lineSpacing () * 4));
 }

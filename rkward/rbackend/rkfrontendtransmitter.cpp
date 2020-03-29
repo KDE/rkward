@@ -2,7 +2,7 @@
                           rkfrontendtransmitter  -  description
                              -------------------
     begin                : Thu Nov 04 2010
-    copyright            : (C) 2010-2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2010-2019 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -77,12 +77,12 @@ void RKFrontendTransmitter::run () {
 	RK_TRACE (RBACKEND);
 
 	// start server
+	qsrand (QTime::currentTime ().msec ()); // Workaround for some versions of kcoreaddons (5.21.0 through at least 5.34.0). See https://phabricator.kde.org/D5966
 	server = new QLocalServer (this);
 	// we add a bit of randomness to the servername, as in general the servername must be unique
 	// there could be conflicts with concurrent or with previous crashed rkward sessions.
 	if (!server->listen ("rkward" + KRandom::randomString (8))) handleTransmissionError ("Failure to start frontend server: " + server->errorString ());
 	connect (server, &QLocalServer::newConnection, this, &RKFrontendTransmitter::connectAndEnterLoop, Qt::QueuedConnection);
-
 	// start backend
 	backend = new QProcess (this);
 
@@ -94,50 +94,74 @@ void RKFrontendTransmitter::run () {
 	backend->setEnvironment (env);
 
 	QStringList args;
-	args.append ("--debug-level=" + QString::number (RK_Debug_Level));
-	args.append ("--server-name=" + server->fullServerName ());
-	args.append ("--rkd-server-name=" + rkd_transmitter->serverName ());
-	args.append ("--data-dir=" + RKSettingsModuleGeneral::filesPath ());
-	args.append ("--locale-dir=" + localeDir ());
+	args.append ("--debug-level=" + QString::number (RK_Debug::RK_Debug_Level));
+	// NOTE: QProcess quotes its arguments, *but* properly passing all spaces and quotes through the R CMD wrapper, seems near(?) impossible on Windows. Instead, we use percent encoding, internally.
+	args.append ("--server-name=" + server->fullServerName ().toUtf8 ().toPercentEncoding ());
+	args.append ("--rkd-server-name=" + rkd_transmitter->serverName ().toUtf8 ().toPercentEncoding ());
+	args.append ("--data-dir=" + RKSettingsModuleGeneral::filesPath ().toUtf8 ().toPercentEncoding ());
+	args.append ("--locale-dir=" + localeDir ().toUtf8 ().toPercentEncoding ());
 	connect (backend, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), this, &RKFrontendTransmitter::backendExit);
 	QString backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath ());
-	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "/rbackend");	// for running directly from the build-dir
-#ifdef Q_OS_MAC
-        if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "/../../../rbackend");
+#ifdef Q_OS_MACOS
+	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "../Resources"); // an appropriate location in a standalone app-bundle
 #endif
+	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "/rbackend");	// for running directly from the build-dir
+	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "../lib/libexec");
+#ifdef Q_OS_MACOS
+	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "/../../../rbackend");
+	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "/../Frameworks/libexec");  // For running from .dmg created by craft --package rkward
+#endif
+	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (RKWARD_BACKEND_PATH);
 	if (backend_executable.isEmpty ()) handleTransmissionError (i18n ("The backend executable could not be found. This is likely to be a problem with your installation."));
 	QString debugger = RKGlobals::startup_options["backend-debugger"].toString ();
+	args.prepend (RKCommonFunctions::windowsShellScriptSafeCommand (backend_executable));
 	if (!debugger.isEmpty ()) {
-		args.prepend (backend_executable);
-		QStringList l = debugger.split (' ');
-		args = l.mid (1) + args;
-		backend->start (l.first (), args, QIODevice::ReadOnly);
-	} else {
-		backend->start (backend_executable, args, QIODevice::ReadOnly);
+		args = debugger.split (' ') + args;
 	}
+#ifdef Q_OS_MACOS
+	// Resolving libR.dylib and friends is a pain on MacOS, and running through R CMD does not always seem to be enough.
+	// (Apparently DYLIB_FALLBACK_LIBRARY_PATH is ignored on newer versions of MacOS). Safest best seems to be to start in the lib directory, itself.
+	QProcess dummy;
+	dummy.start (qgetenv ("R_BINARY"), QStringList() << "--slave" << "--no-save" << "--no-init-file" << "-e" << "cat(R.home('lib'))");
+	dummy.waitForFinished ();
+	QString r_home = QString::fromLocal8Bit (dummy.readAllStandardOutput ());
+	RK_DEBUG(RBACKEND, DL_INFO, "Setting working directory to %s", qPrintable (r_home));
+	backend->setWorkingDirectory (r_home);
+#endif
+	args.prepend ("CMD");
+	if (DL_DEBUG >= RK_Debug::RK_Debug_Level) {
+		qDebug ("%s", qPrintable (qgetenv ("R_BINARY")));
+		qDebug ("%s", qPrintable (args.join ("\n")));
+	}
+	backend->start (qgetenv ("R_BINARY"), args, QIODevice::ReadOnly);
 
 	if (!backend->waitForStarted ()) {
 		handleTransmissionError (i18n ("The backend executable could not be started. Error message was: %1", backend->errorString ()));
 	}
 
-	// fetch security token
-	{
-		// NOTE: On Qt5+Windows, readyReady may actually come in char by char, so calling waitForReadyRead() does not guaranteed we will
-		//       see the full line, at all. But also, of course, we want to put some cap on trying. Using a time threshold for this.
-		QTime time;
-		time.start ();
-		while ((!backend->canReadLine ()) && (time.elapsed () < 3000)) backend->waitForReadyRead ();
-	}
+	waitForCanReadLine (backend, 3000);
 	token = QString::fromLocal8Bit (backend->readLine ()).trimmed ();
 	backend->closeReadChannel (QProcess::StandardError);
 	backend->closeReadChannel (QProcess::StandardOutput);
 
 	exec ();
 
+	backend->waitForFinished ();
+
 	if (!connection) {
 		RK_ASSERT (false);
 		return;
 	}
+}
+
+void RKFrontendTransmitter::waitForCanReadLine (QIODevice* con, int msecs) {
+	RK_TRACE (RBACKEND);
+
+	// NOTE: On Qt5+Windows, readyReady may actually come in char by char, so calling waitForReadyRead() does not guarantee we will
+	//       see the full line, at all. But also, of course, we want to put some cap on trying. Using a time threshold for this.
+	QTime time;
+	time.start ();
+	while ((!con->canReadLine ()) && (time.elapsed () < msecs)) con->waitForReadyRead (500);
 }
 
 void RKFrontendTransmitter::connectAndEnterLoop () {
@@ -148,13 +172,11 @@ void RKFrontendTransmitter::connectAndEnterLoop () {
 	server->close ();
 
 	// handshake
-	if (!con->canReadLine ()) con->waitForReadyRead (1000);
-	QString token_c = QString::fromLocal8Bit (con->readLine ());
-	token_c.chop (1);
+	waitForCanReadLine (con, 1000);
+	QString token_c = QString::fromLocal8Bit (con->readLine ()). trimmed ();
 	if (token_c != token) handleTransmissionError (i18n ("Error during handshake with backend process. Expected token '%1', received token '%2'", token, token_c));
-	if (!con->canReadLine ()) con->waitForReadyRead (1000);
-	QString version_c = QString::fromLocal8Bit (con->readLine ());
-	version_c.chop (1);
+	waitForCanReadLine (con, 1000);
+	QString version_c = QString::fromLocal8Bit (con->readLine ().trimmed ());
 	if (version_c != RKWARD_VERSION) handleTransmissionError (i18n ("Version mismatch during handshake with backend process. Frontend is version '%1' while backend is '%2'.\nPlease fix your installation.", QString (RKWARD_VERSION), version_c));
 
 	setConnection (con);

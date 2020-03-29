@@ -34,11 +34,7 @@ RData::~RData () {
 }
 
 void RData::doAssert(RData::RDataType requested_type) const {
-	if (this == 0) {
-		RK_DEBUG (RBACKEND, DL_ERROR, "Requested data from a NULL RData");
-	} else { 
-		RK_DEBUG (RBACKEND, DL_ERROR, "Reqeusted data of type %d, while %p has type %d", requested_type, this, datatype);
-	}
+	RK_DEBUG (RBACKEND, DL_ERROR, "Requested data of type %d, while %p has type %d", requested_type, this, datatype);
 }
 
 void RData::discardData () {
@@ -65,7 +61,6 @@ void RData::discardData () {
 }
 
 unsigned int RData::getDataLength() const {
-	if (!this) return 0;
 	if (datatype == RealVector) return (static_cast<RealStorage *> (data)->size ());
 	if (datatype == IntVector) return (static_cast<IntStorage *> (data)->size ());
 	if (datatype == StringVector) return (static_cast<StringStorage *> (data)->size ());

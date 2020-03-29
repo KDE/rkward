@@ -22,7 +22,7 @@
 #include <qapplication.h>
 #include <QFileDialog>
 
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../core/robjectlist.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
@@ -57,9 +57,47 @@ RKSaveAgent::~RKSaveAgent () {
 	RK_TRACE (APP);
 }
 
+// We save to several files at once, meaning the standard overwrite check is not quite good enough for us.
+// More importantly, it is entirely broken in KF5 < 5.22.0 (https://bugs.kde.org/show_bug.cgi?id=360666)
+// So check for overwriting ourselves.
+bool checkOverwriteWorkspace (QUrl url, QWidget *parent) {
+	if (url.isEmpty () || !url.isLocalFile ()) {
+		return true;
+	}
+
+	QString mainfile = url.toLocalFile ();
+//	QString addfile = mainfile.left (mainfile.lastIndexOf ('.')) + ".rkward";
+	QString addfile = mainfile + ".rkworkplace";
+	QFileInfo info (mainfile);
+	if (!info.exists ()) mainfile.clear (); // signifies: not a problem
+	else mainfile = info.fileName ();
+
+	info.setFile (addfile);
+	if (!info.exists ()) addfile.clear ();
+	else addfile = info.fileName ();
+
+	if (mainfile.isEmpty () && addfile.isEmpty ()) {
+		return true;
+	}
+
+	QString warning;
+	if (addfile.isEmpty ()) {
+		warning = i18n ("A file named \"%1\" already exists. Are you sure you want to overwrite it?", mainfile);
+	} else if (mainfile.isEmpty ()) {
+		warning = i18n ("A file named \"%1\" already exists, and will be overwritten when saving to \"%2\". Are you sure you want to overwrite it?", addfile, mainfile);
+	} else {
+		warning = i18n ("Files named \"%1\" and \"%2\" already exist, and will both be overwritten. Are you sure you want to overwrite them?", mainfile, addfile);
+	}
+
+	return KMessageBox::Cancel != KMessageBox::warningContinueCancel (parent, warning, i18n ("Overwrite File?"), KStandardGuiItem::overwrite (),
+	                                                                  KStandardGuiItem::cancel (), QString (), KMessageBox::Options (KMessageBox::Notify | KMessageBox::Dangerous));
+}
+
 bool RKSaveAgent::askURL () {
 	RK_TRACE (APP);
-	save_url = QUrl::fromLocalFile (QFileDialog::getSaveFileName (RKWardMainWindow::getMain (), QString (), save_url.toLocalFile (), i18n ("R Workspace Files [%1](%1);;All files [*](*)", RKSettingsModuleGeneral::workspaceFilenameFilter ())));
+	save_url = QUrl::fromLocalFile (QFileDialog::getSaveFileName (RKWardMainWindow::getMain (), QString (), save_url.toLocalFile (), i18n ("R Workspace Files [%1](%1);;All files [*](*)", RKSettingsModuleGeneral::workspaceFilenameFilter ()), 0, QFileDialog::DontConfirmOverwrite));
+	if (!checkOverwriteWorkspace (save_url, RKWardMainWindow::getMain ())) save_url.clear ();
+
 	if (save_url.isEmpty ()) {
 		if (when_done != DoNothing) {
 			if (KMessageBox::warningYesNo (0, i18n ("No filename given. Your data was NOT saved. Do you still want to proceed?")) != KMessageBox::Yes) when_done = DoNothing;

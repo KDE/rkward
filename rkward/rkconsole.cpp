@@ -2,7 +2,7 @@
                           rkconsole  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2019 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -43,6 +43,7 @@
 #include <kshellcompletion.h>
 #include <ktexteditor/editor.h>
 #include <ktexteditor/configinterface.h>
+#include <ktexteditor/codecompletioninterface.h>
 #include <ktexteditor/markinterface.h>
 #include <ktexteditor_version.h>
 #include <kxmlguifactory.h>
@@ -53,7 +54,7 @@
 #include "rkglobals.h"
 #include "rkward.h"
 #include "windows/rkhelpsearchwindow.h"
-#include "rbackend/rinterface.h"
+#include "rbackend/rkrinterface.h"
 #include "rbackend/rcommand.h"
 #include "settings/rksettings.h"
 #include "settings/rksettingsmoduleconsole.h"
@@ -490,10 +491,10 @@ void RKConsole::doTabCompletion () {
 
 		if (doTabCompletionHelper (current_line_num, current_line, word_start + 1, word_end, comp.allMatches ())) return;
 	} else if (!current_symbol.isEmpty ()) {
-		RObject::RObjectSearchMap map;
-		RObjectList::getObjectList ()->findObjectsMatching (current_symbol, &map);
-
-		if (doTabCompletionHelper (current_line_num, current_line, word_start, word_end, map.keys ())) return;
+		RObject::ObjectList matches;
+		matches = RObjectList::getObjectList ()->findObjectsMatching (current_symbol);
+		QStringList match_names = RObject::getFullNames (matches, RObject::IncludeEnvirIfMasked);
+		if (doTabCompletionHelper (current_line_num, current_line, word_start, word_end, match_names)) return;
 	}
 
 	// no completion was possible
@@ -827,7 +828,7 @@ void RKConsole::userLoadHistory (const QUrl &_url) {
 		KIO::Job* getjob = KIO::file_copy (url, QUrl::fromLocalFile (tmpfile->fileName()));
 		KJobWidgets::setWindow (getjob, RKWardMainWindow::getMain ());
 		if (!getjob->exec ()) {
-			getjob->ui ()->showErrorMessage();
+			getjob->uiDelegate ()->showErrorMessage();
 			delete (tmpfile);
 			return;
 		}
@@ -861,7 +862,7 @@ void RKConsole::userSaveHistory (const QUrl &_url) {
 	KIO::Job* getjob = KIO::file_copy (QUrl::fromLocalFile (tempfile.fileName()), url);
 	KJobWidgets::setWindow (getjob, RKWardMainWindow::getMain ());
 	if (!getjob->exec ()) {
-		getjob->ui ()->showErrorMessage();
+		getjob->uiDelegate ()->showErrorMessage();
 		return;
 	}
 }
@@ -957,7 +958,7 @@ void RKConsole::currentHelpContext (QString* symbol, QString* package) {
 
 void RKConsole::initializeActions (KActionCollection *ac) {
 	RK_TRACE (APP);
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
 #	define REAL_CTRL_KEY Qt::MetaModifier
 #	define REAL_CMD_KEY Qt::ControlModifier
 #else

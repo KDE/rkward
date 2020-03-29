@@ -17,7 +17,7 @@
 #include "rcommandreceiver.h"
 
 #include "../rkglobals.h"
-#include "rinterface.h"
+#include "rkrinterface.h"
 
 #include "../debug.h"
 

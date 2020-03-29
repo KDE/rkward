@@ -40,30 +40,37 @@ rk.duplicate.device(devId = dev.cur())
 }
 
 \arguments{
-  \item{devId, which}{ an integer, the screen device on which an action is to be performed.}
+  \item{devId, which}{ an integer,
+      the screen device on which an action is to be performed.}
   \item{x}{ a logical (not NA), whether to enable the screen device history.}
   \item{index}{ an integer, which plot to jump to?}
-  \item{type}{ a string, either \code{"devices"} or \code{"history"}, the type of summary to be printed.}
+  \item{type}{ a string, either \code{"devices"} or \code{"history"},
+      the type of summary to be printed.}
 }
 
 \details{
   TODO TODO
   
-  \code{rk.record.plot} is an environment to store the screen device history. You should not use the functions / variables in this environment directly, instead use the many wrapper functions as described below.
+  \code{rk.record.plot} is an environment to store the screen device history. You should not use the functions / variables in this environment directly,
+      instead use the many wrapper functions as described below.
   
-  \code{rk.toggle.plot.history} enables or disables the screen device history. You should not use this function. Instead use the checkbox in Settings->Configure RKWard->Onscreen Graphics->Screen device history. After the needed initialization / clean up,  it sets the option variable \code{"rk.enable.graphics.history"}  to \code{x}.
+  \code{rk.toggle.plot.history} enables or disables the screen device history. You should not use this function. Instead use the checkbox in Settings->Configure RKWard->Onscreen Graphics->Screen device history. After the needed initialization / clean up,
+       it sets the option variable \code{"rk.enable.graphics.history"}  to \code{x}.
   
-  \code{rk.first.plot}, \code{rk.previous.plot}, \code{rk.next.plot}, \code{rk.last.plot} these functions provide browing actions to respective plots saved in the history on the specified device (\code{devId}).
+  \code{rk.first.plot}, \code{rk.previous.plot}, \code{rk.next.plot},
+      \code{rk.last.plot} these functions provide browing actions to respective plots saved in the history on the specified device (\code{devId}).
   
   \code{rk.goto.plot} this function provides a one step jump action to the plot specified by \code{index} on the specified device (\code{devId}).
   
-  \code{rk.force.append.plot} forcefully append the currently displayed plot to the history. This function ignores the type of plot (graphics / lattice) and by-passes the general recording mechanism, as a result the plot call can not be identified.
+  \code{rk.force.append.plot} forcefully append the currently displayed plot to the history. This function ignores the type of plot (graphics / lattice) and by-passes the general recording mechanism,
+      as a result the plot call can not be identified.
   
   \code{rk.removethis.plot} removes the plot displayed on the specified device from history. If there are more than one device showing the same plot then removing from one device does not wipe it from the other devices. They can be re-added to the history from the other devices.
   
   \code{rk.clear.plot.history} clears the screen device history.
   
-  \code{rk.show.plot.info} when available, shows some extra information regarding the displayed plot on the specified device.
+  \code{rk.show.plot.info} when available,
+      shows some extra information regarding the displayed plot on the specified device.
   
   \code{rk.plot.history.summary} provides some summaries of the screen device history. \code{type = "devices"} provides summary of all or one device(s) depending on whether \code{which = NULL} or \code{which} is a single number identifying the device. \code{type = "history"} provides summary of the entire stored history. 
   

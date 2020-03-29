@@ -2,7 +2,7 @@
                           rkhtmlwindow  -  description
                              -------------------
     begin                : Wed Oct 12 2005
-    copyright            : (C) 2005, 2006, 2007, 2009, 2011, 2014, 2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2005-2017 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -206,14 +206,14 @@ public:
 	explicit RKHelpRenderer (QIODevice *_device) { device = _device; help_xml = 0; component_xml = 0; };
 /** destructor */
 	~RKHelpRenderer () {};
-
+// for dealing with rkward://[page|component]-pages
+	bool renderRKHelp (const QUrl &url);
+private:
 	XMLHelper *help_xml;
 	XMLHelper *component_xml;
 	QDomElement help_doc_element;
 	QDomElement component_doc_element;
 
-	// for dealing with rkward://[page|component]-pages
-	bool renderRKHelp (const QUrl &url);
 	QString renderHelpFragment (QDomElement &fragment);
 	QString resolveLabel (const QString &id) const;
 	QString prepareHelpLink (const QString &href, const QString &text);
@@ -238,8 +238,10 @@ public:
 	void registerWindow (RKHTMLWindow *window);
 /** R may produce output while no output window is active. This allows to set the file that should be monitored for such changes (called from within rk.set.html.output.file()). */
 	void setCurrentOutputPath (const QString &path);
-/** return a pointer to the current output. If there is no output window, one will be created (and shown) automatically */
-	RKHTMLWindow* getCurrentOutputWindow ();
+/** returns a list (possibly empty) of pointers to existing output windows (for the current output path, only). */
+	QList<RKHTMLWindow*> existingOutputWindows () const;
+/** Create (and show) a new output window, and @return the pointer */
+	RKHTMLWindow* newOutputWindow ();
 private:
 	RKOutputWindowManager ();
 	~RKOutputWindowManager ();

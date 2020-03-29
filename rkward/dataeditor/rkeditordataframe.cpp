@@ -19,7 +19,7 @@
 #include <kmessagebox.h>
 #include <KLocalizedString>
 
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../rkglobals.h"
 #include "twintable.h"
 #include "twintablemember.h"

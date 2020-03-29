@@ -28,8 +28,9 @@
 #include <KLocalizedString>
 
 #include "../rkglobals.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../settings/rksettingsmoduler.h"
+#include "../misc/rkcommonfunctions.h"
 
 #include "../debug.h"
 
@@ -105,7 +106,7 @@ void RKProgressControl::doNonModal (bool autodelete) {
 	RK_ASSERT (!dialog);
 
 	RKProgressControl::autodelete = autodelete;
-	if ((!dialog) && (mode & ShowAtOnce)) {		// actually, dialog should alway be 0 at this point
+	if ((!dialog) && (mode & ShowAtOnce)) {		// actually, dialog should always be 0 at this point
 		createDialog ();
 		dialog->show ();
 	}
@@ -249,9 +250,7 @@ RKProgressControlDialog::RKProgressControlDialog (const QString &text, const QSt
 	mainbox->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
 	mainboxlayout->setContentsMargins (0, 0, 0, 0);
 
-	QLabel *label = new QLabel (text, mainbox);
-	label->setWordWrap (true);
-	mainboxlayout->addWidget (label);
+	mainboxlayout->addWidget (RKCommonFunctions::linkedWrappedLabel (text));
 
 	error_indicator = new QLabel (i18n ("<b>There have been errors and / or warnings. See below for a transcript</b>"), mainbox);
 	QPalette palette = error_indicator->palette ();
@@ -272,7 +271,7 @@ RKProgressControlDialog::RKProgressControlDialog (const QString &text, const QSt
 		output_button_text = i18n ("Errors / Warnings");
 		ocaption = i18n ("Errors / Warnings:");
 	}
-	label = new QLabel (ocaption, detailsbox);
+	QLabel* label = new QLabel (ocaption, detailsbox);
 	detailsboxlayout->addWidget (label);
 
 	output_text = new QTextEdit (detailsbox);

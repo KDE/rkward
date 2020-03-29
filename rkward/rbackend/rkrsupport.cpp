@@ -2,7 +2,7 @@
                           rkrsupport  -  description
                              -------------------
     begin                : Mon Oct 25 2010
-    copyright            : (C) 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2010-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -114,11 +114,11 @@ QStringList RKRSupport::SEXPToStringList (SEXP from_exp) {
 				list.append (QString ());
 			} else {
 				if (IS_UTF8 (dummy)) {
-					list.append (QString::fromUtf8 ((char *) STRING_PTR (dummy)));
+					list.append (QString::fromUtf8 (CHAR (dummy)));
 				} else if (IS_LATIN1 (dummy)) {
-					list.append (QString::fromLatin1 ((char *) STRING_PTR (dummy)));
+					list.append (QString::fromLatin1 (CHAR (dummy)));
 				} else {
-					list.append (RKRBackend::this_pointer->current_locale_codec->toUnicode ((char *) STRING_PTR (dummy)));
+					list.append (RKRBackend::toUtf8 (CHAR (dummy)));
 				}
 			}
 		}
@@ -136,7 +136,7 @@ SEXP RKRSupport::StringListToSEXP (const QStringList& list) {
 		SET_STRING_ELT (ret, i, Rf_mkCharCE (list[i].toUtf8 (), CE_UTF8));
 #else
 		// TODO Rf_mkCharCE _might_ have been introduced earlier. Check if still an ongoing concern.
-		SET_STRING_ELT (ret, i, Rf_mkChar (RKRBackend::this_pointer->current_locale_codec->fromUnicode (list[i]).data ()));
+		SET_STRING_ELT (ret, i, Rf_mkChar (RKRBackend::fromUtf8 (list[i]).data ()));
 #endif
 	}
 	return ret;
@@ -238,7 +238,10 @@ RData *RKRSupport::SEXPToRData (SEXP from_exp) {
 				R_ClearExternalPtr (from_exp);
 				break;
 			}
-		case STRSXP:
+#if (QT_VERSION >= QT_VERSION_CHECK(5,8,0))
+		Q_FALLTHROUGH();
+#endif
+		//case STRSXP: // intentional fallthrough, conversion to stringlist is the default handling
 		default:
 			data->setData (SEXPToStringList (from_exp));
 	}

@@ -18,7 +18,7 @@ mkdir $DISTDIR
 $BASEDIR/scripts/set_dist_version.sh $VERSION
 
 # update roxygen documentation just in case we forgot:
-$BASEDIR/scripts/roxygenize.sh
+$BASEDIR/scripts/roxygenize.sh || exit 1
 
 cp -a AUTHORS CMakeLists.txt COPYING ChangeLog TODO INSTALL NOTES README configure VERSION.cmake $DISTDIR
 mkdir $DISTDIR/doc

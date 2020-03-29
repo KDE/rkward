@@ -2,7 +2,7 @@
                           rkworkplace  -  description
                              -------------------
     begin                : Thu Sep 21 2006
-    copyright            : (C) 2006-2016 by Thomas Friedrichsmeier
+    copyright            : (C) 2006-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -59,6 +59,8 @@ public:
 	void prev (QAction *prev_action, QAction *next_action);
 public slots:
 	void windowActivated (RKMDIWindow *window);
+signals:
+	void activeWindowChanged (RKMDIWindow *window);
 private slots:
 	void switcherDestroyed ();
 private:
@@ -66,6 +68,20 @@ private:
 	QList<RKMDIWindow *> recent_windows;
 	RKMDIWindowHistoryWidget *switcher;
 	RKMDIWindowHistoryWidget *getSwitcher (QAction *prev_action, QAction *next_action);
+};
+
+struct RKCommandEditorFlags {
+/** Or'able enum of flags to pass the RKCommandEditorWindow c'tor. Logically, these would belong to the RKCommandEditor-class,
+    but are defined, here for technical reasons (trouble including texteditor includes from some places). */
+	enum Flags {
+		DefaultToRHighlighting = 1, ///< Apply R highlighting, also if the url is empty
+		ForceRHighlighting = 1 << 1,///< Apply R highlighting, even if the url does not match R script extension
+		UseCodeHinting = 1 << 2,    ///< The file is (probably) an editable R script file, and should show code hints
+		ReadOnly = 1 << 3,          ///< Open the file in read-only mode
+		DeleteOnClose = 1 << 4,     ///< The file to show should be deleted when closing the window. Only respected with read_only=true
+		VisibleToKTextEditorPlugins = 1 << 5,
+		DefaultFlags = DefaultToRHighlighting | UseCodeHinting | VisibleToKTextEditorPlugins
+	};
 };
 
 /** This class (only one instance will probably be around) keeps track of which windows are opened in the workplace, which are detached, etc. Also it is responsible for creating and manipulating those windows.
@@ -77,7 +93,7 @@ public:
 @param parent: The parent widget for the workspace view (see view ()) */
 	explicit RKWorkplace (QWidget *parent);
 	~RKWorkplace ();
-	void initActions (KActionCollection *ac, const char *left_id, const char *right_id);
+	void initActions (KActionCollection *ac);
 
 /** @returns a pointer to the view of the workplace. Since possibly the workplace layout might change, better not rely on this pointer being valid for long */
 	RKWorkplaceView *view () { return wview; };
@@ -98,26 +114,29 @@ public:
 
 /** Opens the given url in the appropriate way. */
 	bool openAnyUrl (const QUrl &url, const QString &known_mimetype = QString (), bool force_external=false);
+/** Convenience alternative to openAnyUrl. You will usually use openAnyUrl, unless
+ *  connecting to signals that pass the url as string. */
+	bool openAnyUrlString (const QString &urlstring) { return openAnyUrl (QUrl (urlstring)); };
 
 /** Opens a new script editor
 @param url URL to load. Default option is to open an empty document
 @param encoding encoding to use. If QString (), the default encoding is used.
-@param use_r_highlighting Set R highlighting mode (vs. no highlighting)? Default is yes
+@param use_r_highlighting Force R highlighting mode? Default is no
 @param read_only Open the document read only? Default is false, i.e. Read-write
 @param force_caption Usually the caption is determined from the url of the file. If you specify a non-empty string here, that is used instead.
 @returns false if a local url could not be opened, true for all remote urls, and on success */
-	RKMDIWindow* openScriptEditor (const QUrl &url=QUrl (), const QString& encoding=QString (), bool use_r_highlighting=true, bool read_only=false, const QString &force_caption = QString (), bool delete_on_close=false);
+	RKMDIWindow* openScriptEditor (const QUrl &url=QUrl (), const QString& encoding=QString (), int flags = RKCommandEditorFlags::DefaultFlags, const QString &force_caption = QString ());
 /** Opens a new help window, starting at the given url
 @param url URL to open
 @param only_once if true, checks whether any help window already shows this URL. If so, raise it, but do not open a new window. Else show the new window */
 	RKMDIWindow* openHelpWindow (const QUrl &url=QUrl (), bool only_once=false);
-/** Opens a new output window. Currently only a single output window will ever be created. Subsequent calls to the function will not create additional windows right now (but will raise / refresh the output window
+/** Opens a new output window, or raise / refresh the current output window.
 @param url currently ignored! */
 	RKMDIWindow* openOutputWindow (const QUrl &url=QUrl ());
 
 	void newX11Window (QWindow* window_to_embed, int device_number);
 	void newRKWardGraphisWindow (RKGraphicsDevice *dev, int device_number);
-	void newObjectViewer (RObject *object);
+	RKMDIWindow* newObjectViewer (RObject *object);
 
 /** @returns true if there is a known editor for this type of object, false otherwise */
 	bool canEditObject (RObject *object);
@@ -136,8 +155,13 @@ public:
 /** Close the active (attached) window. Safe to call even if there is no current active window (no effect in that case) */
 	void closeActiveWindow ();
 /** Close the given window, whether it is attached or detached.
-@param window window to close */
-	void closeWindow (RKMDIWindow *window);
+@param window window to close
+@returns true, if the window was actually closed (not cancelled) */
+	bool closeWindow (RKMDIWindow *window);
+/** Close the given windows, whether they are attached or detached. TODO: Be smart about asking what to save.
+@param windows list windows to close
+@returns true, if _all_ windows were actually closed. */
+	bool closeWindows (QList<RKMDIWindow*> windows);
 /** Closes all windows of the given type(s). Default call (no arguments) closes all windows
 @param type: A bitwise OR of RKWorkplaceObjectType
 @param state: A bitwise OR of RKWorkplaceObjectState */
@@ -155,6 +179,9 @@ Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsMod
 	void restoreWorkplace (const QStringList &description);
 
 	QStringList makeWorkplaceDescription ();
+	QString makeItemDescription (RKMDIWindow *) const;
+/** Restore a document window given its description. Returns true, if a window was restored, false otherwise (e.g. invalid/unsupported description). */
+	bool restoreDocumentWindow (const QString &description, const QString &base=QString ());
 
 /** In the current design there is only ever one workplace. Use this static function to reference it.
 @returns a pointer to the workplace */
@@ -177,6 +204,9 @@ Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsMod
 /** Inserts the given message widget above the central area. While technically, the workplace becomes the parent widget of the message widget, it is the caller's responsibility to
  *  delete the widget, when appropriate. */
 	void addMessageWidget (KMessageWidget *message);
+
+/** For window splitting: Copy the given window (or, if that is not possible, create a placeholder window), and attach it to the main view. */
+	void splitAndAttachWindow (RKMDIWindow *source);
 signals:
 /** emitted when the workspace Url has changed */
 	void workspaceUrlChanged (const QUrl &url);
@@ -210,6 +240,7 @@ private:
 
 	RKToolWindowBar* tool_window_bars[TOOL_WINDOW_BAR_COUNT];
 friend class RKToolWindowBar;
+friend class KatePluginIntegrationWindow;
 	void placeInToolWindowBar (RKMDIWindow *window, int position);
 
 	/** Control placement of windows from R */

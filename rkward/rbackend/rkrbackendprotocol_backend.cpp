@@ -31,23 +31,24 @@
 
 #include "rkbackendtransmitter.h"
 #include <QUuid>		// mis-used as a random-string generator
-#include <QTemporaryFile>
 #include <QDir>
+#include <QUrl>
+
+#ifdef Q_OS_MACOS
+#include <CoreFoundation/CoreFoundation.h>
+#endif
 
 	void RK_setupGettext (const char*);
-	int RK_Debug_Level = 2;
-	int RK_Debug_Flags = DEBUG_ALL;
 	QMutex RK_Debug_Mutex;
-	QTemporaryFile* RK_Debug_File;
 
 	void RKDebugMessageOutput (QtMsgType type, const QMessageLogContext &, const QString &msg) {
 		RK_Debug_Mutex.lock ();
 		if (type == QtFatalMsg) {
 			fprintf (stderr, "%s\n", qPrintable (msg));
 		}
-		RK_Debug_File->write (qPrintable (msg));
-		RK_Debug_File->write ("\n");
-		RK_Debug_File->flush ();
+		RK_Debug::debug_file->write (qPrintable (msg));
+		RK_Debug::debug_file->write ("\n");
+		RK_Debug::debug_file->flush ();
 		RK_Debug_Mutex.unlock ();
 	}
 
@@ -67,32 +68,42 @@
 	}
 
 	int main(int argc, char *argv[]) {
+#ifdef Q_OS_MACOS
+		CFBundleRef mainBundle = CFBundleGetMainBundle();
+		if (mainBundle) {
+			// get the application's Info Dictionary. For app bundles this would live in the bundle's Info.plist,
+			// for regular executables it is obtained in another way.
+			CFMutableDictionaryRef infoDict = (CFMutableDictionaryRef) CFBundleGetInfoDictionary(mainBundle);
+			if (infoDict) {
+				// Add or set the "LSUIElement" key with/to value "1". This can simply be a CFString.
+				CFDictionarySetValue(infoDict, CFSTR("LSUIElement"), CFSTR("1"));
+				// That's it. We're now considered as an "agent" by the window server, and thus will have
+				// neither menubar nor presence in the Dock or App Switcher.
+			}
+		}
+#endif
 		QCoreApplication app (argc, argv);
 
 		setvbuf (stdout, NULL, _IONBF, 0);
 		setvbuf (stderr, NULL, _IONBF, 0);
 
-		RK_Debug_File = new QTemporaryFile (QDir::tempPath () + "/rkward.rbackend");
-		RK_Debug_File->setAutoRemove (false);
-		if (RK_Debug_File->open ()) qInstallMessageHandler (RKDebugMessageOutput);
+		RK_Debug::RK_Debug_Flags = RBACKEND;
+		if (RK_Debug::setupLogFile (QDir::tempPath () + "/rkward.rbackend")) qInstallMessageHandler (RKDebugMessageOutput);
 
 		QString servername, rkd_server_name;
 		QString data_dir, locale_dir;
 		QStringList args = app.arguments ();
 		for (int i = 1; i < args.count (); ++i) {
-			if (args[i].startsWith ("--debug-level")) {
-				RK_Debug_Level = args[i].section ('=', 1).toInt ();
-			} else if (args[i].startsWith ("--server-name")) {
-				servername = args[i].section ('=', 1);
-			} else if (args[i].startsWith ("--data-dir")) {
-#ifdef __GNUC__
-#	warning What about paths with spaces?!
-#endif
-				data_dir = args[i].section ('=', 1);
-			} else if (args[i].startsWith ("--locale-dir")) {
-				locale_dir = args[i].section ('=', 1);
-			} else if (args[i].startsWith ("--rkd-server-name")) {
-				rkd_server_name = args[i].section ('=', 1);
+			if (args[i].startsWith (QLatin1String ("--debug-level"))) {
+				RK_Debug::RK_Debug_Level = args[i].section ('=', 1).toInt ();
+			} else if (args[i].startsWith (QLatin1String ("--server-name"))) {
+				servername = QUrl::fromPercentEncoding (args[i].section ('=', 1).toUtf8 ());
+			} else if (args[i].startsWith (QLatin1String ("--data-dir"))) {
+				data_dir = QUrl::fromPercentEncoding (args[i].section ('=', 1).toUtf8 ());
+			} else if (args[i].startsWith (QLatin1String ("--locale-dir"))) {
+				locale_dir = QUrl::fromPercentEncoding (args[i].section ('=', 1).toUtf8 ());
+			} else if (args[i].startsWith (QLatin1String ("--rkd-server-name"))) {
+				rkd_server_name = QUrl::fromPercentEncoding (args[i].section ('=', 1).toUtf8 ());
 			} else {
 				printf ("unknown argument %s", qPrintable (args[i]));
 			}
@@ -158,5 +169,5 @@ void RKRBackendProtocolBackend::msleep (int delay) {
 }
 
 QString RKRBackendProtocolBackend::backendDebugFile () {
-	return RK_Debug_File->fileName ();
+	return RK_Debug::debug_file->fileName ();
 }

@@ -277,7 +277,7 @@ int XMLHelper::getIntAttribute (const QDomElement &element, const QString &name,
 
 	QString res = getStringAttribute (element, name, QString::number (def), debug_level);
 
-	bool valid_number;;
+	bool valid_number;
 	int ret = res.toInt (&valid_number);
 
 	if (!valid_number) {
@@ -293,7 +293,7 @@ double XMLHelper::getDoubleAttribute (const QDomElement &element, const QString 
 
 	QString res = getStringAttribute (element, name, QString::number (def), debug_level);
 
-	bool valid_number;;
+	bool valid_number;
 	double ret = res.toDouble (&valid_number);
 
 	if (!valid_number) {
@@ -387,7 +387,7 @@ void XMLHelper::displayError (const QDomNode *in_node, const QString &message, i
 
 	if (message_level < debug_level) message_level = debug_level;
 
-	if ((RK_Debug_Flags & XML) && (message_level >= RK_Debug_Level)) {
+	if ((RK_Debug::RK_Debug_Flags & XML) && (message_level >= RK_Debug::RK_Debug_Level)) {
 		QString backtrace = i18n ("XML-parsing '%1' ", filename);
 		// create a "backtrace"
 		QStringList list;

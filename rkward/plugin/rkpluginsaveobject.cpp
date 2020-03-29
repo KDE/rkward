@@ -99,7 +99,7 @@ void RKPluginSaveObject::externalChange () {
 		groupbox->setChecked (active->boolValue ());
 	}
 
-	// call internalChange, now, in case one or more setings could not be applied
+	// call internalChange, now, in case one or more settings could not be applied
 	internalChange ();
 }
 

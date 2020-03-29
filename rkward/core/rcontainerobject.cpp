@@ -2,7 +2,7 @@
                           rcontainerobject  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004-2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2019 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -18,7 +18,7 @@
 
 #include <qregexp.h>
 
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "robjectlist.h"
 #include "rkpseudoobjects.h"
 #include "rkvariable.h"
@@ -260,33 +260,35 @@ void RContainerObject::updateRowNamesObject () {
 	}
 }
 
-RObject *RContainerObject::findObjects (const QStringList &path, RObjectSearchMap *matches, const QString &op) {
+RObject::ObjectList RContainerObject::findObjects (const QStringList &path, bool partial, const QString &op) {
 	RK_TRACE (OBJECTS);
 
 	fetchMoreIfNeeded ();
 
-	if (op != "$") return RObject::findObjects (path, matches, op);
+	if (op != "$") return RObject::findObjects (path, partial, op);
 
 	if (path.length () > 1) {
 		RObject* found = findChildByName (path.value (0));
-		if (found) return found->findObjects (path.mid (2), matches, path.value (1));
+		if (found) return found->findObjects (path.mid (2), partial, path.value (1));
 	} else {
-		if (!matches) return findChildByName (path.value (0));
-
-		QString partial = path.value (0);
-		for (int i = 0; i < childmap.size (); ++i) {
-			RObject* child = childmap[i];
-			if (partial.isEmpty () || child->getShortName ().startsWith (partial)) {
-				QString base_name = child->getBaseName ();
-				if (matches->contains (base_name) || irregularShortName (base_name)) {
-					matches->insert (child->getFullName (), child);
-				} else {
-					matches->insert (base_name, child);
+		RObject::ObjectList ret;
+		if (!partial) {
+			RObject* found = findChildByName (path.value (0));
+			if (found) ret.append (found);
+		} else {
+			QString partial_name = path.value (0);
+			if (partial_name.isEmpty ()) {
+				ret = childmap;
+			} else {
+				for (int i = 0; i < childmap.size (); ++i) {
+					RObject* child = childmap[i];
+					if (child->getShortName ().startsWith (partial_name)) ret.append (child);
 				}
 			}
 		}
+		return ret;
 	}
-	return 0;
+	return RObject::ObjectList();
 }
 
 RObject *RContainerObject::createPendingChild (const QString &name, int position, bool container, bool data_frame) {
@@ -384,7 +386,7 @@ QString RContainerObject::validizeName (const QString &child_name, bool unique) 
 	QString ret = child_name;
 	if (ret.isEmpty ()) ret = "var";
 	else {
-		ret = ret.replace (QRegExp ("[^a-zA-Z0-9]"), ".");
+		ret = ret.replace (QRegExp ("[^a-zA-Z0-9_]"), ".");
 		ret = ret.replace (QRegExp ("^\\.*[0-9]+"), ".");
 	}
 	if (!unique) return ret;

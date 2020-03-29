@@ -17,7 +17,7 @@
 
 #include "rkcommandlog.h"
 
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../rkglobals.h"
 #include "../rkconsole.h"
 #include "../settings/rksettingsmodulewatch.h"
@@ -266,7 +266,6 @@ void RKCommandLogView::selectAll () {
 #include <kxmlguifactory.h>
 #include <QAction>
 #include <QGuiApplication>
-#include <QFontDatabase>
 
 RKCommandLogPart::RKCommandLogPart (RKCommandLog *for_log) : KParts::Part (0) {
 	RK_TRACE (APP);

@@ -76,8 +76,10 @@ GetFileNameWidget::GetFileNameWidget (QWidget *parent, FileType mode, bool only_
 		initial_url = initial_url.adjusted (QUrl::NormalizePathSegments);
 	}
 	if (initial_url.isLocalFile () || !only_local) {
-		edit->setUrl (initial_url);
+		if (!initial.isEmpty ()) edit->setUrl (initial_url);
+		else edit->setStartDir (initial_url);
 	}
+
 	connect (edit, &KUrlRequester::textChanged, this, &GetFileNameWidget::locationEditChanged);
 	connect (edit, &KUrlRequester::urlSelected, this, &GetFileNameWidget::updateLastUsedUrl);
 

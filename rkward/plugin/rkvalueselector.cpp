@@ -2,7 +2,7 @@
                           rkvalueselector  -  description
                              -------------------
     begin                : Weg May 8 2013
-    copyright            : (C) 2013, 2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2013-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -55,7 +55,11 @@ RKValueSelector::RKValueSelector (const QDomElement &element, RKComponent *paren
 
 	list_view = new QTreeView (this);
 	list_view->setHeaderHidden (true);
-	list_view->setSelectionMode (QAbstractItemView::ExtendedSelection);
+	if (standalone && xml->getBoolAttribute (element, "single", false, DL_INFO)) {
+		list_view->setSelectionMode (QAbstractItemView::SingleSelection);
+	} else {
+		list_view->setSelectionMode (QAbstractItemView::ExtendedSelection);
+	}
 	list_view->setRootIsDecorated (false);
 	model = new QStringListModel (this);
 	list_view->setModel (model);

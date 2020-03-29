@@ -29,6 +29,7 @@ class RKTopLevelWindowGUI;
 class KRecentFilesAction;
 class KSqueezedTextLabel;
 class QAction;
+class KatePluginIntegrationApp;
 
 /**
 The main class of rkward. This is where all strings are tied together, controls the initialization, and there are some of the most important slots for user actions. All real work is done elsewhere.
@@ -36,7 +37,7 @@ The main class of rkward. This is where all strings are tied together, controls 
 class RKWardMainWindow : public KParts::MainWindow {
 	Q_OBJECT
 public:
-/** construtor */
+/** constructor */
 	RKWardMainWindow ();
 /** destructor */
 	~RKWardMainWindow ();
@@ -58,6 +59,8 @@ public:
 	void setWorkspaceMightBeModified (bool modified) { workspace_modified = modified; };
 /** Merge files to be loaded, instead of closing windows / clearing workspace */
 	void setMergeLoads (bool merge) { merge_loads = merge; };
+
+	KatePluginIntegrationApp *katePluginIntegration ();
 protected:
 	/** save Options/Settings. Includes general Options like all bar positions and status as well as the geometry and the recent file list */
 	void saveOptions();
@@ -168,7 +171,7 @@ private:
 	/** used so that if the menu is empty, there is a note in it, explaining that fact */
 	QAction* view_menu_dummy;
 
-	QAction* proxy_export, *proxy_import;
+	KActionMenu* open_any_action;
 	KActionMenu* save_any_action;
 	QAction* save_actions_plug_point;
 	QList<QPointer <QAction> > plugged_save_actions;
@@ -199,6 +202,8 @@ private:
 	bool no_ask_save;
 	bool workspace_modified;
 	bool merge_loads;
+
+	KatePluginIntegrationApp *katepluginintegration;
 };
 
 #endif // RKWARD_H

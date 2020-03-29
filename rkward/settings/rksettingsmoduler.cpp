@@ -2,7 +2,7 @@
                           rksettingsmoduler  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004-2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -19,6 +19,7 @@
 #include <KLocalizedString>
 #include <KSharedConfig>
 #include <KConfigGroup>
+#include <KUrlRequester>
 
 #include <qlabel.h>
 #include <qcheckbox.h>
@@ -28,7 +29,7 @@
 #include <QGridLayout>
 #include <QPushButton>
 #include <QTextEdit>
-#include <QFileDialog>
+#include <QDialogButtonBox>
 #include <QSpinBox>
 #include <QInputDialog>
 
@@ -37,7 +38,7 @@
 #include "../misc/multistringselector.h"
 #include "../misc/rkprogresscontrol.h"
 #include "../misc/rkcommonfunctions.h"
-#include "../rbackend/rinterface.h"
+#include "../rbackend/rkrinterface.h"
 #include "../rbackend/rksessionvars.h"
 #include "../rkglobals.h"
 #include "../debug.h"
@@ -56,7 +57,7 @@ bool RKSettingsModuleR::options_checkbounds;
 QString RKSettingsModuleR::options_editor;
 QString RKSettingsModuleR::options_pager;
 QString RKSettingsModuleR::options_further;
-bool RKSettingsModuleR::options_internet2;
+QStringList RKSettingsModuleR::options_addpaths;
 // static constants
 QString RKSettingsModuleR::builtin_editor = "<rkward>";
 // session constants
@@ -69,9 +70,7 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 
-	QLabel *label = new QLabel (i18n ("The following settings mostly affect R behavior in the console. It is generally safe to keep these unchanged."), this);
-	label->setWordWrap (true);
-	main_vbox->addWidget (label);
+	main_vbox->addWidget (RKCommonFunctions::wordWrappedLabel (i18n ("The following settings mostly affect R behavior in the console. It is generally safe to keep these unchanged.")));
 
 	QGridLayout *grid = new QGridLayout ();
 	main_vbox->addLayout (grid);
@@ -198,17 +197,6 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 	connect (pager_input, &QComboBox::editTextChanged, this, &RKSettingsModuleR::settingChanged);
 	grid->addWidget (pager_input, row, 1);
 
-#ifdef Q_OS_WIN
-	grid->addWidget (label = new QLabel (i18n ("Use Internet Explorer functions for internet access"), this), ++row, 0);
-	internet2_input = new QCheckBox (this);
-	internet2_input->setChecked (options_internet2);
-	connect (internet2_input, &QCheckBox::stateChanged, this, &RKSettingsModuleR::settingChanged);
-	grid->addWidget (internet2_input, row, 1);
-	RKCommonFunctions::setTips (i18n ("<p>Use Internet Explorer functions for accessing the internet from R. "
-									"Enabling this option may help in case of problems with accessing the internet from R (e.g. for "
-									"installing packages).</p>"), internet2_input, label);
-#endif
-
 	grid->addWidget (new QLabel (i18n ("Further (option) commands to run in each session"), this), ++row, 0, 1, 2);
 	further_input = new QTextEdit (this);
 	further_input->setWordWrapMode (QTextOption::NoWrap);
@@ -218,6 +206,12 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 	grid->addWidget (further_input, ++row, 0, 1, 2);
 
 	main_vbox->addStretch ();
+
+	addpaths_selector = new MultiStringSelector (i18n ("Addition search paths for utilities used by R"), this);
+	addpaths_selector->setValues (options_addpaths);
+	connect (addpaths_selector, &MultiStringSelector::listChanged, this, &RKSettingsModuleR::settingChanged);
+	connect (addpaths_selector, &MultiStringSelector::getNewStrings, this, &RKSettingsModuleR::addPaths);
+	main_vbox->addWidget (addpaths_selector);
 }
 
 RKSettingsModuleR::~RKSettingsModuleR() {
@@ -250,14 +244,41 @@ void RKSettingsModuleR::applyChanges () {
 	options_editor = editor_input->currentText ();
 	options_pager = pager_input->currentText ();
 	options_further = further_input->toPlainText ();
-#ifdef Q_OS_WIN
-	options_internet2 = internet2_input->isChecked ();
-#endif
+	// normalize system paths before adding
+	QStringList paths = addpaths_selector->getValues ();
+	options_addpaths.clear ();
+	for (int i = 0; i < paths.count (); ++i) {
+		QString path = QDir::cleanPath (paths[i]);
+		if (!options_addpaths.contains (path)) options_addpaths.append (path);
+	}
 
 // apply run time options in R
 	QStringList commands = makeRRunTimeOptionCommands ();
 	for (QStringList::const_iterator it = commands.begin (); it != commands.end (); ++it) {
 		RKGlobals::rInterface ()->issueCommand (*it, RCommand::App, QString (), 0, 0, commandChain ());
+	}
+}
+
+void RKSettingsModuleR::addPaths(QStringList* string_list) {
+	RK_TRACE (SETTINGS);
+
+	QDialog dialog (this);
+	dialog.setWindowTitle (i18n ("Add System Path Directory"));
+	QVBoxLayout *layout = new QVBoxLayout (&dialog);
+	layout->addWidget (RKCommonFunctions::wordWrappedLabel (i18n ("Specify or select directory to add to the system file path of the running R session")));
+
+	KUrlRequester *req = new KUrlRequester ();
+	req->setMode (KFile::Directory);
+	layout->addWidget (req);
+
+	QDialogButtonBox *buttons = new QDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+	buttons->button(QDialogButtonBox::Ok)->setText (i18nc ("Add directory to list", "Add"));
+	connect (buttons, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+	connect (buttons, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+	layout->addWidget (buttons);
+
+	if (dialog.exec () == QDialog::Accepted) {
+		if (!req->text ().isEmpty ()) (*string_list).append (req->text ());
 	}
 }
 
@@ -285,9 +306,13 @@ QStringList RKSettingsModuleR::makeRRunTimeOptionCommands () {
 	if (options_pager == builtin_editor) list.append ("options (pager=rk.show.files)\n");
 	else list.append ("options (pager=\"" + options_pager + "\")\n");
 	if (!options_further.isEmpty ()) list.append (options_further + '\n');
-#ifdef Q_OS_WIN
-	list.append (QString ("setInternet2 (") + (options_internet2 ? "TRUE)\n" : "FALSE)\n"));
-#endif
+	if (!options_addpaths.isEmpty ()) {
+		QString command = "rk.adjust.system.path (add=c(";
+		foreach (const QString &p, options_addpaths) {
+			command.append (RObject::rQuote (p));
+		}
+		list.append (command + "))\n");
+	}
 
 #ifdef __GNUC__
 #	warning TODO make the following options configurable
@@ -295,6 +320,7 @@ QStringList RKSettingsModuleR::makeRRunTimeOptionCommands () {
 	list.append ("options (help_type=\"html\")\n");		// for R 2.10.0 and above
 	list.append ("try ({options (htmlhelp=TRUE); options (chmhelp=FALSE)})\n");	// COMPAT: for R 2.9.x and below
 	list.append ("options (browser=rk.show.html)\n");
+	list.append ("options (askYesNo=rk.askYesNo)\n"); // for R 3.5.0 and above
 
 	return list;
 }
@@ -312,7 +338,7 @@ void RKSettingsModuleR::saveSettings (KConfig *config) {
 	cg.writeEntry ("OutDec", options_outdec);
 	cg.writeEntry ("width", options_width);
 	cg.writeEntry ("warn", options_warn);
-	cg.writeEntry ("maxprint", options_maxprint);
+	cg.writeEntry ("max.print", options_maxprint);
 	cg.writeEntry ("warnings.length", options_warningslength);
 	cg.writeEntry ("keep.source", options_keepsource);
 	cg.writeEntry ("keep.source.pkgs", options_keepsourcepkgs);
@@ -322,9 +348,7 @@ void RKSettingsModuleR::saveSettings (KConfig *config) {
 	cg.writeEntry ("editor", options_editor);
 	cg.writeEntry ("pager", options_pager);
 	cg.writeEntry ("further init commands", options_further);
-#ifdef Q_OS_WIN
-	cg.writeEntry ("internet2", options_internet2);
-#endif
+	cg.writeEntry ("addsyspaths", options_addpaths);
 }
 
 void RKSettingsModuleR::loadSettings (KConfig *config) {
@@ -344,10 +368,7 @@ void RKSettingsModuleR::loadSettings (KConfig *config) {
 	options_editor = cg.readEntry ("editor", builtin_editor);
 	options_pager = cg.readEntry ("pager", builtin_editor);
 	options_further = cg.readEntry ("further init commands", QString ());
-#ifdef Q_OS_WIN
-	options_internet2 = cg.readEntry ("internet2", true);
-	if (RKSettingsModuleGeneral::storedConfigVersion () < RKSettingsModuleGeneral::RKWardConfig_0_6_4) options_internet2 = true;
-#endif
+	options_addpaths = cg.readEntry ("addsyspaths", QStringList ());
 }
 
 //#################################################
@@ -357,6 +378,7 @@ void RKSettingsModuleR::loadSettings (KConfig *config) {
 // static members
 QStringList RKSettingsModuleRPackages::liblocs;
 QStringList RKSettingsModuleRPackages::defaultliblocs;
+QString RKSettingsModuleRPackages::r_libs_user;
 bool RKSettingsModuleRPackages::archive_packages;
 bool RKSettingsModuleRPackages::source_packages;
 QStringList RKSettingsModuleRPackages::package_repositories;
@@ -392,7 +414,7 @@ RKSettingsModuleRPackages::RKSettingsModuleRPackages (RKSettings *gui, QWidget *
 	connect (archive_packages_box, &QCheckBox::stateChanged, this, &RKSettingsModuleRPackages::settingChanged);
 	main_vbox->addWidget (archive_packages_box);
 
-#if defined Q_OS_WIN || defined Q_OS_MAC
+#if defined Q_OS_WIN || defined Q_OS_MACOS
 	source_packages_box = new QCheckBox (i18n ("Build packages from source"), this);
 	source_packages_box->setChecked (source_packages);
 #else
@@ -430,6 +452,29 @@ void RKSettingsModuleRPackages::addLibraryLocation (const QString& new_loc, RCom
 	RKGlobals::rInterface ()->issueCommand (".libPaths (unique (c (" + RObject::rQuote (new_loc) + ", .libPaths ())))", RCommand::App | RCommand::Sync, QString (), 0, 0, chain);
 }
 
+QStringList expandLibLocs (const QStringList &in) {
+	QStringList ret;
+	for (int i = 0; i < in.size (); ++i) {
+		QString dummy = in[i];
+		ret.append (dummy.replace (QLatin1String ("%v"), RKSessionVars::RVersion (true)));
+	}
+	return ret;
+}
+
+QString RKSettingsModuleRPackages::userLibraryLocation () {
+	if (!r_libs_user.isEmpty()) return r_libs_user;
+	return QDir (RKSettingsModuleGeneral::filesPath ()).absoluteFilePath ("library/" + RKSessionVars::RVersion (true));
+}
+
+QStringList RKSettingsModuleRPackages::libraryLocations () {
+	return (QStringList (userLibraryLocation ()) + expandLibLocs (liblocs + defaultliblocs));
+}
+
+QStringList RKSettingsModuleRPackages::addUserLibLocTo (const QStringList& liblocs) {
+	if (!liblocs.contains(userLibraryLocation ())) return (QStringList (userLibraryLocation ()) + liblocs);
+	return liblocs;
+}
+
 void RKSettingsModuleRPackages::settingChanged () {
 	RK_TRACE (SETTINGS);
 	change ();
@@ -437,21 +482,27 @@ void RKSettingsModuleRPackages::settingChanged () {
 
 void RKSettingsModuleRPackages::addLibLoc (QStringList *string_list) {
 	RK_TRACE (SETTINGS);
-#ifdef Q_OS_WIN
-	// KF5 TODO: Still needed?
-	// TODO: Hang on Windows when trying to select any dir using (K|Q)FileDialog::getExistingDirectory (). KDE 4.10
-	QFileDialog dummy (this, i18n ("Add R Library Directory"));
-	dummy.setFileMode (QFileDialog::Directory);
-	dummy.setOptions (QFileDialog::ShowDirsOnly);
-	QString new_string;
-	if (dummy.exec ()) {
-		new_string = dummy.selectedFiles ().value (0);
-	}
-#else
-	QString new_string = QFileDialog::getExistingDirectory (this, i18n ("Add R Library Directory"));
-#endif
-	if (!new_string.isEmpty ()) {
-		(*string_list).append (new_string);
+
+	QDialog dialog (this);
+	dialog.setWindowTitle (i18n ("Add R Library Directory"));
+	QVBoxLayout *layout = new QVBoxLayout (&dialog);
+	layout->addWidget (RKCommonFunctions::wordWrappedLabel (i18n ("Specify or select library location to add.\nNote that locations may contain a '%v', which will expand to the first "
+	                                  "two components of the R version number (e.g. to 3.5), automatically. Including this is recommended, because R packages "
+	                                  "compiled for one version of R will often fail to work correctly in a different version of R.")));
+
+	KUrlRequester *req = new KUrlRequester ();
+	req->setText (QDir (RKSettingsModuleGeneral::filesPath ()).absoluteFilePath ("library/%v"));
+	req->setMode (KFile::Directory);
+	layout->addWidget (req);
+
+	QDialogButtonBox *buttons = new QDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+	buttons->button(QDialogButtonBox::Ok)->setText (i18nc ("Add file to list", "Add"));
+	connect (buttons, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+	connect (buttons, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+	layout->addWidget (buttons);
+
+	if (dialog.exec () == QDialog::Accepted) {
+		if (!req->text ().isEmpty ()) (*string_list).append (req->text ());
 	}
 }
 
@@ -512,7 +563,7 @@ QString RKSettingsModuleRPackages::libLocsCommand () {
 //static
 QString RKSettingsModuleRPackages::pkgTypeOption () {
 	QString ret;
-#if defined Q_OS_WIN || defined Q_OS_MAC
+#if defined Q_OS_WIN || defined Q_OS_MACOS
 	ret.append ("options (pkgType=\"");
 	if (source_packages) ret.append ("source");
 	else if (RKSessionVars::compareRVersion ("3.1.3") <= 0) ret.append ("binary");   // "automatically select appropriate binary", unfortunately it's only available from R 3.1.3. onwards.
@@ -543,7 +594,7 @@ QStringList RKSettingsModuleRPackages::makeRRunTimeOptionCommands () {
 	}
 	list.append (command + "))\n");
 
-#if defined Q_OS_WIN || defined Q_OS_MAC
+#if defined Q_OS_WIN || defined Q_OS_MACOS
 	list.append (pkgTypeOption ());
 #endif
 
@@ -606,7 +657,7 @@ void RKSettingsModuleRPackages::loadSettings (KConfig *config) {
 
 	liblocs = cg.readEntry ("LibraryLocations", QStringList ());
 	archive_packages = cg.readEntry ("archive packages", false);
-#if defined Q_OS_WIN || defined Q_OS_MAC
+#if defined Q_OS_WIN || defined Q_OS_MACOS
 #	if defined USE_BINARY_PACKAGES
 #		define USE_SOURCE_PACKAGES false
 #	else
@@ -622,3 +673,58 @@ void RKSettingsModuleRPackages::loadSettings (KConfig *config) {
 #endif
 }
 
+#include <QGroupBox>
+#include <QRadioButton>
+
+void RKSettingsModuleRPackages::validateSettingsInteractive (QList<RKSettingsWizardPage*>* pages) {
+	RK_TRACE (SETTINGS);
+
+	if (RKSettingsModuleGeneral::storedConfigVersion () < RKSettingsModuleGeneral::RKWardConfig_0_7_1) {
+		QString legacy_libloc = QDir (RKSettingsModuleGeneral::filesPath ()).absoluteFilePath ("library");
+		if (liblocs.contains (legacy_libloc)) {
+			RKSettingsWizardPage *page = new RKSettingsWizardPage ();
+			page->setWindowTitle (i18n ("Unversioned library location"));
+			QVBoxLayout *layout = new QVBoxLayout (page);
+			layout->addWidget (RKCommonFunctions::wordWrappedLabel (i18n ("The configured library locations (where R packages will be installed on this system) contains the directory '%1', "
+			                                  "which was suggested as a default library location in earlier versions of RKWard. Use of this directory is no longer "
+			                                  "recommended, as it is not accessible R sessions outside of RKWard (unless configured, explicitly). Also due to the lack "
+			                                  "of an R version number in the directory name, it offers no protection against using packages built for an incompatible "
+			                                  "version of R.")));
+			// D'uh. QRadioButton supports neither wordwrap nor formatting. Why?
+			QGroupBox *group = new QGroupBox (i18n ("What do you want to do?"));
+			QRadioButton *removebutton = new QRadioButton ();
+			QLabel *removelabel = RKCommonFunctions::wordWrappedLabel (i18n ("<b>Remove</b> this location from the configuration (it will not be deleted on disk). You will have to "
+			                                        "re-install any packages that you want to keep."));
+			QRadioButton *renamebutton = new QRadioButton ();
+			QLabel *renamelabel = RKCommonFunctions::wordWrappedLabel (i18n ("<b>Rename</b> this location to include the version number of the currently running R. Packages will continue "
+			                                        "to work (if they are compatible with this version of R)."));
+			QRadioButton *keepbutton = new QRadioButton ();
+			QLabel *keeplabel = RKCommonFunctions::wordWrappedLabel (i18n ("<b>Keep</b> this location (do not change anything)."));
+			QGridLayout *group_layout = new QGridLayout (group);
+			group_layout->addWidget (removebutton, 0, 0);
+			group_layout->addWidget (removelabel, 0, 1);
+			group_layout->addWidget (renamebutton, 1, 0);
+			group_layout->addWidget (renamelabel, 1, 1);
+			group_layout->addWidget (keepbutton, 2, 0);
+			group_layout->addWidget (keeplabel, 2, 1);
+			group_layout->setColumnStretch (1, 1);
+			renamebutton->setChecked (true);
+			layout->addWidget (group);
+
+			page->setApplyCallback([keepbutton, renamebutton, legacy_libloc]() {
+				if (keepbutton->isChecked ()) return;
+
+				liblocs.removeAll (legacy_libloc);
+				if (renamebutton->isChecked ()) {
+					QString new_loc = legacy_libloc + '-' + RKSessionVars::RVersion (true);
+					RKGlobals::rInterface ()->issueCommand (QString ("file.rename(%1, %2)\n").arg (RObject::rQuote (legacy_libloc)).arg (RObject::rQuote (new_loc)), RCommand::App);
+					liblocs.prepend (legacy_libloc + QStringLiteral ("-%v"));
+				}
+
+				RKGlobals::rInterface ()->issueCommand (libLocsCommand(), RCommand::App);
+			});
+
+			pages->append (page);
+		}
+	}
+}
