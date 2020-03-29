@@ -160,6 +160,10 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 	// This is pretty convoluted, but while loading plugins the katePluginIntegration-client may gain new actions and thus needs
 	// to be reloaded. We cannot - currently, KF5.65 - delay loading the UI defintion(s), because plugins rely on it having a GUI factory.
 	katePluginIntegration ()->loadPlugins (RKSettingsModuleKatePlugins::pluginsToLoad ());
+// TODO: initToolWindowActions() should be called after all plugins are loaded (and have registered their tool views). However
+//       that may be a problem, if there is no KXMLGUIFactory around, yet. So, annoyingly, we need to create the GUI, before we
+//       have everything to populate it. Therefore, after init, the client is removed and re-added in order to trigger a UI
+//       refresh.
 	toplevel_actions->initToolWindowActions ();
 	factory()->removeClient (toplevel_actions);
 	factory()->addClient (toplevel_actions);

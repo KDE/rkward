@@ -579,13 +579,9 @@ void KatePluginIntegrationWindow::catchXMLGUIClientsHack(KXMLGUIClient* client) 
 		RK_ASSERT(plugin_resources.contains(active_plugin));
 		plugin_resources[active_plugin].clients.append(client);
 	} else {
-		RK_DEBUG(APP, DL_DEBUG, "XML client created by unknown kate plugin");
+		RK_DEBUG(APP, DL_INFO, "XML client created by unknown kate plugin");
 	}
 }
-
-// TODO: new RKToplevelWindowGUI should be called after all plugins are loaded (and have registered their tool views). However
-//       that may be a problem, if there is no KXMLGUIFactory around, yet. So, annoyingly, we need to create the GUI, before we
-//       have everything to populate it.
 
 ///  END  KTextEditor::MainWindow interface
 
