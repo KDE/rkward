@@ -4,7 +4,6 @@
     - Restore scroll position (needs to happen *after* page load)
     - Support help:// protocol
     - Support pdf
-    - Support Ctrl+scrollwheel
 - <text> elements in plugins may now also contain clickable links, including rkward://-scheme links
 * TODO: Bring new code hinting features to the console window!
 - On unix-systems, RKWard can now be run without installation

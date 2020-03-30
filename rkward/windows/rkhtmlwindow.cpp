@@ -202,6 +202,7 @@ class RKWebView : public KWebView {
 public:
 	RKWebView (QWidget *parent) : KWebView (parent, false) {};
 #else
+#include <QWheelEvent>
 class RKWebView : public QWebEngineView {
 public:
 	RKWebView (QWidget *parent) : QWebEngineView (parent) {};
@@ -209,6 +210,14 @@ public:
 		if (!page ()) return;
 		page ()->print (printer, [](bool){});
 	};
+protected:
+	void wheelEvent (QWheelEvent *event) override {
+		if (event->modifiers () & Qt::ControlModifier) {
+			setZoomFactor (zoomFactor () + event->angleDelta ().y () / 1200.0);
+			event->accept ();
+		}
+		else QWebEngineView::wheelEvent (event);
+	}
 #endif
 };
 
