@@ -2,7 +2,7 @@
                           rkhtmlwindow  -  description
                              -------------------
     begin                : Wed Oct 12 2005
-    copyright            : (C) 2005-2017 by Thomas Friedrichsmeier
+    copyright            : (C) 2005-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -23,6 +23,7 @@
 #include <kio/jobclasses.h>
 
 #include <QDomElement>
+#include <QNetworkRequest>
 
 #include "../windows/rkmdiwindow.h"
 
@@ -35,39 +36,8 @@ class RKHTMLWindowPart;
 class QTemporaryFile;
 class RKHTMLWindow;
 class RKFindBar;
-
-#ifdef NO_QT_WEBENGINE
-#	include <kwebpage.h>
-class KWebView;
-class RKWebPage : public KWebPage {
-#else
-#	include <QWebEnginePage>
-class QWebEngineView;
-class RKWebPage : public QWebEnginePage {
-#endif
-	Q_OBJECT
-public:
-	explicit RKWebPage (RKHTMLWindow* window);
-	void load (const QUrl& url);
-signals:
-	void pageInternalNavigation (const QUrl& url);
-protected:
-#ifdef NO_QT_WEBENGINE
-/** reimplemented to always emit linkClicked() for pages that need special handling (importantly, rkward://-urls). */
-	bool acceptNavigationRequest (QWebFrame* frame, const QNetworkRequest& request, NavigationType type) override;
-/** reimplemented to schedule new window creation for the next page to load */
-	QWebPage* createWindow (WebWindowType type) override;
-#else
-/** reimplemented to always emit linkClicked() for pages that need special handling (importantly, rkward://-urls). */
-	bool acceptNavigationRequest (const QUrl &url, NavigationType type, bool isMainFrame) override;
-/** reimplemented to schedule new window creation for the next page to load */
-	QWebEnginePage* createWindow (WebWindowType type) override;
-#endif
-private:
-	RKHTMLWindow *window;
-	bool new_window;
-	bool direct_load;
-};
+class RKWebPage;
+class RKWebView;
 
 /**
 	\brief Show html files.
@@ -111,7 +81,6 @@ public:
 public slots:
 	void slotPrint ();
 	void slotSave ();
-	void saveRequested (const QNetworkRequest& request);
 	void slotForward ();
 	void slotBack ();
 	void selectionChanged ();
@@ -133,11 +102,7 @@ private slots:
 	void findRequest (const QString& text, bool backwards, const RKFindBar *findbar, bool* found);
 private:
 friend class RKHTMLWindowPart;
-#ifdef NO_QT_WEBENGINE
-	KWebView* view;
-#else
-	QWebEngineView* view;
-#endif
+	RKWebView* view;
 	RKWebPage* page;
 	RKFindBar* findbar;
 	bool have_highlight;
@@ -150,7 +115,7 @@ friend class RKHTMLWindowPart;
 
 	struct VisitedLocation {
 		QUrl url;
-		QPoint scroll_position;
+		QPointF scroll_position;
 	};
 	QList<VisitedLocation> url_history;
 	void openLocationFromHistory (VisitedLocation &loc);
