@@ -114,11 +114,14 @@ public:
 	QUrl url () {
 		return mainFrame ()->url ();
 	}
-	void setHTML (const QString &html) {
-		mainFrame ()->setHTML (html);
+	void setHtml (const QString &html) {
+		mainFrame ()->setHtml (html);
 	}
-	QPointF scroll_position () const {
-		return mainFrame ()->scrollPosition();
+	QPointF scrollPosition () const {
+		return mainFrame ()->scrollPosition ();
+	}
+	void setScrollPosition (const QPoint &pos)  {
+		mainFrame ()->setScrollPosition (pos);
 	}
 #else
 	bool supportsContentType (const QString &name) {
@@ -130,6 +133,7 @@ public:
 		download (url);
 	}
 	void setScrollPosition (const QPoint &point) {
+		RK_DEBUG(APP, DL_DEBUG, "scrolling to %d, %d", point.x (), point.y ());
 		runJavaScript (QString ("window.scrollTo(%1, %2);").arg (point.x ()).arg(point.y ()));
 	}
 #endif
@@ -243,7 +247,7 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 	// We have to connect this in order to allow browsing.
 	connect (page, &RKWebPage::pageInternalNavigation, this, &RKHTMLWindow::internalNavigation);
 #ifdef NO_QT_WEBENGINE
-	connect (page, &QWebPage::downloadRequested, [page](const QNetworkRequest &request) { page->downloadUrl (request.url ()); });
+	connect (page, &QWebPage::downloadRequested, [this](const QNetworkRequest &request) { page->downloadUrl (request.url ()); });
 #else
 	connect (page->profile (), &QWebEngineProfile::downloadRequested, [this](QWebEngineDownloadItem* item) { page->downloadUrl (item->url ()); });
 #endif
@@ -307,7 +311,7 @@ void RKHTMLWindow::runSelection () {
 void RKHTMLWindow::findRequest (const QString& text, bool backwards, const RKFindBar* findbar, bool* found) {
 	RK_TRACE (APP);
 
-#ifdef QT_NO_WEBENGINE
+#ifdef NO_QT_WEBENGINE
 	QWebPage::FindFlags flags = QWebPage::FindWrapsAroundDocument;
 	if (backwards) flags |= QWebPage::FindBackward;
 	bool highlight = findbar->isOptionSet (RKFindBar::HighlightAll);
