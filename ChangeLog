@@ -2,6 +2,7 @@
 - Support using QWebEngine instead of QtWebKit (still supported)
   - TODO:
     - Should all KIO-schemes be supported (not too hard to do, help:/ already supported)?
+    - fix context menu quirks
     - Support pdf
 - <text> elements in plugins may now also contain clickable links, including rkward://-scheme links
 * TODO: Bring new code hinting features to the console window!

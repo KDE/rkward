@@ -132,6 +132,9 @@ friend class RKHTMLWindowPart;
 	void fileDoesNotExistMessage ();
 
 	void saveBrowserState (VisitedLocation *state);
+
+friend class RKWebPage;
+	static RKWebPage *new_window;
 };
 
 class RKHTMLWindowPart : public KParts::Part {

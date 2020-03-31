@@ -89,7 +89,6 @@ public:
 #endif
 		RK_TRACE (APP);
 		RKWebPage::window = window;
-		new_window = false;
 		direct_load = false;
 #ifdef NO_QT_WEBENGINE
 		settings ()->setFontFamily (QWebSettings::StandardFont, QFontDatabase::systemFont(QFontDatabase::GeneralFont).family ());
@@ -160,11 +159,15 @@ protected:
 			return true;
 		}
 
-		if (new_window) {
-			new_window = false;
+		if (RKHTMLWindow::new_window) {
+			RK_ASSERT (RKHTMLWindow::new_window == this);
+			RK_ASSERT (!window);
 			RKWorkplace::mainWorkplace ()->openAnyUrl (navurl);
+			RKHTMLWindow::new_window = nullptr;
+			if (!window) deleteLater ();  // this page was _not_ reused
 			return false;
 		}
+		RK_ASSERT(window);
 
 		if (!is_main_frame) {
 			if (navurl.isLocalFile () && supportsContentType(QMimeDatabase ().mimeTypeForUrl (navurl).name ())) return true;
@@ -187,13 +190,22 @@ protected:
 	QWebEnginePage* createWindow (QWebEnginePage::WebWindowType) override {
 #endif
 		RK_TRACE (APP);
-		new_window = true;         // Don't actually create the window, until we know which URL we're talking about.
-		return (this);
+		RKWebPage *ret = new RKWebPage (nullptr);
+		RKHTMLWindow::new_window = ret; // Don't actually create a full window, until we know which URL we're talking about.
+#ifndef NO_QT_WEBENGINE
+		// sigh: acceptNavigationRequest() does  not get called on the new page...
+		QMetaObject::Connection * const connection = new QMetaObject::Connection;
+		*connection = connect (ret, &RKWebPage::loadStarted, [ret, connection]() {
+			QObject::disconnect(*connection);
+			delete connection;
+			ret->acceptNavigationRequest (ret->url (), QWebEnginePage::NavigationTypeLinkClicked, true);
+		});
+#endif
+		return (ret);
 	}
 
-private:
+friend class RKHTMLWindow;
 	RKHTMLWindow *window;
-	bool new_window;
 	bool direct_load;
 };
 
@@ -251,6 +263,9 @@ private:
 };
 #endif
 
+
+RKWebPage* RKHTMLWindow::new_window = nullptr;
+
 RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (parent, RKMDIWindow::HelpWindow) {
 	RK_TRACE (APP);
 
@@ -259,7 +274,13 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 	QVBoxLayout* layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
 	view = new RKWebView (this);
-	page = new RKWebPage (this);
+	if (new_window) {
+		page = new_window;
+		page->window = this;
+		new_window = nullptr;
+	} else {
+		page = new RKWebPage (this);
+	}
 	view->setPage (page);
 	view->setContextMenuPolicy (Qt::CustomContextMenu);
 	layout->addWidget (view, 1);
@@ -787,6 +808,13 @@ void RKHTMLWindowPart::initActions () {
 	window->page->action (RKWebPage::Forward)->setVisible (false);
 	// For now we won't bother with this one: Does not behave well, in particular (but not only) WRT to rkward://-links
 	window->page->action (RKWebPage::DownloadLinkToDisk)->setVisible (false);
+#ifndef NO_QT_WEBENGINE
+	// Not really useful for us, and cannot easily be made to work, as all new pages go through RKWorkplace::openAnyUrl()
+	window->page->action (RKWebPage::ViewSource)->setVisible (false);
+	// Well, technically, all our windows are tabs, but we're calling them "window".
+	// At any rate, we don't need both "open link in new tab" and "open link in new window".
+	window->page->action (RKWebPage::OpenLinkInNewTab)->setVisible (false);
+#endif
 
 	// common actions
 	actionCollection ()->addAction (KStandardAction::Copy, "copy", window->view->pageAction (RKWebPage::Copy), SLOT (trigger()));
