@@ -1,7 +1,6 @@
 --- Version 0.7.2 - UNRELEASED
 - Support using QWebEngine instead of QtWebKit (still supported)
   - TODO:
-    - Restore scroll position (needs to happen *after* page load)
     - Should all KIO-schemes be supported (not too hard to do, help:/ already supported)?
     - Support pdf
 - <text> elements in plugins may now also contain clickable links, including rkward://-scheme links

@@ -184,7 +184,7 @@ protected:
 /** reimplemented to schedule new window creation for the next page to load */
 	QWebPage* createWindow (QWebPage::WebWindowType) override {
 #else
-	QWebEnginePage* createWindow (QWebEnginePage::WebWindowType) {
+	QWebEnginePage* createWindow (QWebEnginePage::WebWindowType) override {
 #endif
 		RK_TRACE (APP);
 		new_window = true;         // Don't actually create the window, until we know which URL we're talking about.
@@ -228,7 +228,7 @@ protected:
 class RKWebEngineKIOForwarder : public QWebEngineUrlSchemeHandler {
 public:
 	RKWebEngineKIOForwarder (QObject *parent) : QWebEngineUrlSchemeHandler (parent) {}
-	void requestStarted (QWebEngineUrlRequestJob *request) {
+	void requestStarted (QWebEngineUrlRequestJob *request) override {
 		KIO::StoredTransferJob *job = KIO::storedGet(request->requestUrl (), KIO::NoReload, KIO::HideProgressInfo);
 		connect (job, &KIO::StoredTransferJob::result, this, [this, job](){ kioJobFinished(job); });
 		jobs.insert (job, request);
@@ -400,12 +400,21 @@ void RKHTMLWindow::openLocationFromHistory (VisitedLocation &loc) {
 	int history_last = url_history.count () - 1;
 	RK_ASSERT (current_history_position >= 0);
 	RK_ASSERT (current_history_position <= history_last);
+	QPoint scroll_pos = loc.scroll_position.toPoint ();
 	if (loc.url == current_url) {
-		restoreBrowserState (&loc);
+		page->setScrollPosition (scroll_pos);
 	} else {
 		url_change_is_from_history = true;
 		openURL (loc.url);            // TODO: merge into restoreBrowserState()?
-		restoreBrowserState (&loc);
+#ifndef NO_QT_WEBENGINE
+		QMetaObject::Connection * const connection = new QMetaObject::Connection;
+		*connection = connect(view, &QWebEngineView::loadFinished, [this, scroll_pos, connection](){
+			QObject::disconnect(*connection);
+			delete connection;
+			page->setScrollPosition (scroll_pos);
+		});
+#endif
+		page->setScrollPosition (scroll_pos);
 		url_change_is_from_history = false;
 	}
 
@@ -761,14 +770,6 @@ void RKHTMLWindow::saveBrowserState (VisitedLocation* state) {
 	} else {
 		state->scroll_position = QPoint ();
 	}
-}
-
-void RKHTMLWindow::restoreBrowserState (VisitedLocation* state) {
-	RK_TRACE (APP);
-
-	if (state->scroll_position.isNull ()) return;
-	RK_ASSERT (page);
-	page->setScrollPosition (state->scroll_position.toPoint ());
 }
 
 RKHTMLWindowPart::RKHTMLWindowPart (RKHTMLWindow* window) : KParts::Part (window) {
