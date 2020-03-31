@@ -25,7 +25,7 @@ FIND_PACKAGE(Qt5 5.2 CONFIG REQUIRED COMPONENTS Widgets Core Xml Network Script 
 FIND_PACKAGE(KF5 5.2 REQUIRED COMPONENTS CoreAddons DocTools I18n XmlGui TextEditor WidgetsAddons Parts Config Notifications WindowSystem OPTIONAL_COMPONENTS Crash)
 IF(NOT NO_QT_WEBENGINE)
 	FIND_PACKAGE(Qt5 5.2 OPTIONAL_COMPONENTS WebEngineWidgets)
-	IF(NOT Qt5WebEngineWidgets_FOUND OR Qt5WebEngineWidgets_VERSION VERSION_LESS "5.14.0")
+	IF(NOT Qt5WebEngineWidgets_FOUND OR Qt5WebEngineWidgets_VERSION VERSION_LESS "5.12.0")
 		MESSAGE(STATUS "QWebEngine not available (or version < 5.12). Falling back to QtWebKit")
 		SET(NO_QT_WEBENGINE 1)
 	ENDIF()

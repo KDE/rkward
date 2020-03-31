@@ -233,8 +233,19 @@ QString resolveRSpecOrFail (QString input, QString message) {
 	return QString(); // not reached
 }
 
+#ifndef NO_QT_WEBENGINE
+#include <QWebEngineUrlScheme>
+#endif
+
 int main (int argc, char *argv[]) {
 	RK_Debug::RK_Debug_Level = DL_WARNING;
+#ifndef NO_QT_WEBENGINE
+	// annoingly, QWebEngineUrlSchemes have to be registered before creating the app.
+	QWebEngineUrlScheme scheme("help");
+	scheme.setSyntax (QWebEngineUrlScheme::Syntax::Path);
+	scheme.setFlags (QWebEngineUrlScheme::LocalScheme|QWebEngineUrlScheme::LocalAccessAllowed);
+	QWebEngineUrlScheme::registerScheme (scheme);
+#endif
 	QApplication app (argc, argv);
 #ifdef WITH_KCRASH
 	KCrash::setDrKonqiEnabled (true);

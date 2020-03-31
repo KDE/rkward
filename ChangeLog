@@ -2,7 +2,7 @@
 - Support using QWebEngine instead of QtWebKit (still supported)
   - TODO:
     - Restore scroll position (needs to happen *after* page load)
-    - Support help:// protocol
+    - Should all KIO-schemes be supported (not too hard to do, help:/ already supported)?
     - Support pdf
 - <text> elements in plugins may now also contain clickable links, including rkward://-scheme links
 * TODO: Bring new code hinting features to the console window!

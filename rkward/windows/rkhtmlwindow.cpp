@@ -221,6 +221,35 @@ protected:
 #endif
 };
 
+#ifndef NO_QT_WEBENGINE
+#include <QWebEngineUrlSchemeHandler>
+#include <QWebEngineUrlRequestJob>
+#include <QBuffer>
+class RKWebEngineKIOForwarder : public QWebEngineUrlSchemeHandler {
+public:
+	RKWebEngineKIOForwarder (QObject *parent) : QWebEngineUrlSchemeHandler (parent) {}
+	void requestStarted (QWebEngineUrlRequestJob *request) {
+		KIO::StoredTransferJob *job = KIO::storedGet(request->requestUrl (), KIO::NoReload, KIO::HideProgressInfo);
+		connect (job, &KIO::StoredTransferJob::result, this, [this, job](){ kioJobFinished(job); });
+		jobs.insert (job, request);
+	}
+private:
+	void kioJobFinished (KIO::StoredTransferJob* job) {
+		QWebEngineUrlRequestJob* request = jobs.take (job);
+		if (!request) {
+			return;
+		}
+		if (job->error ()) {
+			request->fail (QWebEngineUrlRequestJob::UrlInvalid);  // TODO
+			return;
+		}
+		QBuffer *buf = new QBuffer (request);
+		buf->setData (job->data ());
+		request->reply (QMimeDatabase ().mimeTypeForData (job->data ()).name ().toUtf8 (), buf);
+	}
+	QMap<KIO::StoredTransferJob*,QPointer<QWebEngineUrlRequestJob>> jobs;
+};
+#endif
 
 RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (parent, RKMDIWindow::HelpWindow) {
 	RK_TRACE (APP);
@@ -239,6 +268,9 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 #else
 	findbar = new RKFindBar (this, true);
 	findbar->setPrimaryOptions (QList<QWidget*>() << findbar->getOption (RKFindBar::FindAsYouType) << findbar->getOption (RKFindBar::MatchCase));
+	if (!QWebEngineProfile::defaultProfile ()->urlSchemeHandler ("help")) {
+		QWebEngineProfile::defaultProfile ()->installUrlSchemeHandler ("help", new RKWebEngineKIOForwarder (RKWardMainWindow::getMain()));
+	}
 #endif
 	layout->addWidget (findbar);
 	findbar->hide ();
