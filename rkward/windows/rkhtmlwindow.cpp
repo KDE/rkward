@@ -41,6 +41,7 @@
 #include <QIcon>
 #include <QMimeDatabase>
 #include <QCheckBox>
+#include <QFileDialog>
 
 #include "../rkglobals.h"
 #include "../rbackend/rkrinterface.h"
@@ -311,7 +312,12 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 #ifdef NO_QT_WEBENGINE
 	connect (page, &QWebPage::downloadRequested, [this](const QNetworkRequest &request) { page->downloadUrl (request.url ()); });
 #else
-	connect (page->profile (), &QWebEngineProfile::downloadRequested, [this](QWebEngineDownloadItem* item) { page->downloadUrl (item->url ()); });
+	connect (page->profile (), &QWebEngineProfile::downloadRequested, [this](QWebEngineDownloadItem* item) {
+		QString path = QFileDialog::getSaveFileName (this, i18n ("Save as"), item->path ());
+		if (path.isEmpty ()) return;
+		item->setPath (path);
+		item->accept ();
+	});
 #endif
 	connect (page, &RKWebPage::printRequested, this, &RKHTMLWindow::slotPrint);
 	connect (view, &QWidget::customContextMenuRequested, this, &RKHTMLWindow::makeContextMenu);
