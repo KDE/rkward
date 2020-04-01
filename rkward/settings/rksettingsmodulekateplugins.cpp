@@ -37,17 +37,23 @@ QStringList RKSettingsModuleKatePlugins::plugins_to_load;
 RKSettingsModuleKatePlugins::RKSettingsModuleKatePlugins(RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
 	RK_TRACE(SETTINGS);
 
+/* Known kate plugins at the time of this writing (March 2020): katesearchplugin katexmltoolsplugin katexmlcheckplugin katectagsplugin katefiletreeplugin katecloseexceptplugin katebacktracebrowserplugin tabswitcherplugin kterustcompletionplugin katekonsoleplugin katesnippetsplugin katefilebrowserplugin katereplicodeplugin ktexteditor_lumen kateprojectplugin kateopenheaderplugin katesymbolviewerplugin ktexteditorpreviewplugin katesqlplugin kategdbplugin katebuildplugin textfilterplugin */
+	QStringList recommended_plugins = QStringList () << "katesearchplugin" << "katecloseexceptplugin" << "katekonsoleplugin" << "katesnippetsplugin" << "katefiletreeplugin" << "kateprojectplugin" << "ktexteditorpreviewplugin" << "textfilterplugin";
+
 	QVBoxLayout *vbox = new QVBoxLayout(this);
 	vbox->setContentsMargins(0, 0, 0, 0);
-	vbox->addWidget(RKCommonFunctions::wordWrappedLabel(i18n("Kate plugins to load in RKWard. Note that some loaded plugins will not become visible until certain conditions are met, e.g. you are loading a version controlled file for the <i>Project</i> plugin. Also, many of the plugins listed here do not make a whole lot of sense in the context of RKWard.")));
+	vbox->addWidget(RKCommonFunctions::wordWrappedLabel(i18n("<p>Kate plugins to load in RKWard. Note that some loaded plugins will not become visible until certain conditions are met, e.g. you are loading a version controlled file for the <i>Project</i> plugin.</p><p>The plugins listed here have not been developed specifically for RKWard, and several do not make a whole lot of sense in the context of RKWard. Plugins shown in <b>bold</b> have been reported as \"useful\" by RKWard users.</p>")));
 
 	plugin_table = new QTreeWidget();
+	QFont boldfont = plugin_table->font();
+	boldfont.setBold(true);
 	plugin_table->setHeaderLabels(QStringList() << QString() << i18n("Name") << i18n("Description"));
 	KatePluginIntegrationApp *pluginapp = RKWardMainWindow::getMain()->katePluginIntegration();
 	foreach (const QString &key, pluginapp->known_plugins.keys()) {
 		QTreeWidgetItem *item = new QTreeWidgetItem();
 		KPluginMetaData plugindata = pluginapp->known_plugins.value(key).data;
 		item->setData(1, Qt::DisplayRole, plugindata.name());
+		if (recommended_plugins.contains(key)) item->setData(1, Qt::FontRole, boldfont); 
 		item->setData(2, Qt::DisplayRole, plugindata.description());
 		item->setData(1, Qt::DecorationRole, QIcon::fromTheme(plugindata.iconName()));
 		item->setData(1, Qt::UserRole, key);

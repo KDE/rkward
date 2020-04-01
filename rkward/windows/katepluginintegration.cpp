@@ -63,9 +63,6 @@ KatePluginIntegrationApp::KatePluginIntegrationApp(QObject *parent) : QObject (p
 		info.data = plugins[i];
 		// Note: creates a lookup-table *and* eliminates potential dupes later in the search path
 		known_plugins.insert(idForPlugin(info.data), info);
-
-		// TODO: remove me
-		qDebug ("%s", qPrintable(info.data.fileName()));
 	}
 	// NOTE: Destructor is too late for this, esp. As plugin destructors will try to unregister from the guiFactory(), and such.
 	connect(RKWardMainWindow::getMain(), &RKWardMainWindow::aboutToQuitRKWard, this, &KatePluginIntegrationApp::saveConfigAndUnload);
