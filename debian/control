@@ -6,7 +6,7 @@ Build-Depends: cmake,
                extra-cmake-modules,
                pkg-kde-tools | pkg-kf5-tools,
                debhelper (>= 9.0.0),
-               libkf5webkit-dev,
+               libkf5webkit-dev | qtwebengine5-dev (>= 5.12.0),
                libkf5texteditor-dev,
                libkf5doctools-dev | kdoctools-dev,
                r-base-dev (>= 2.8.0)
