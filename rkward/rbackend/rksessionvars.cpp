@@ -2,7 +2,7 @@
                           rksessionvars  -  description
                              -------------------
     begin                : Thu Sep 08 2011
-    copyright            : (C) 2011, 2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2011-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -135,6 +135,12 @@ QStringList RKSessionVars::frontendSessionInfo () {
 #endif
 	lines.append ("KDE Frameworks version (compile time): " KCOREADDONS_VERSION_STRING);
 	lines.append (QString ("Qt version (runtime): ") + qVersion ());
+	lines.append ("Qt version (compile time): " QT_VERSION_STR);
+#ifdef NO_QT_WEBENGINE
+	lines.append ("Using QtWebKit for HTML rendering");
+#else
+	lines.append ("Using QWebEngine for HTML rendering");
+#endif
 #if defined Q_OS_WIN
 	lines.append ("Windows runtime version (refer to QSysInfo documentation to translate code into human readable form): 0x" + QString::number (QSysInfo::windowsVersion (), 16));
 #elif defined Q_OS_MACOS
