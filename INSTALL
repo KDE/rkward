@@ -32,6 +32,9 @@ The cmake command offers a number of parameters to control the build process. So
 
 In some cases you may want to set the following options:
 
+-DNO_QT_WEBENGINE
+	By default QWebEngine is used for HTML rendering, if available in version >= 5.12.0. Otherwise QtWebKit is used. You can
+	force compilation for QtWebKit by setting: -DNO_QT_WEBENGINE=1
 -DR_EXECUTABLE
 	path to the R executable. You may want to set this, if you have multiple versions of R installed, or R is not in your path. Example: -DR_EXECUTABLE=/usr/bin/R
 -DR_HOME
