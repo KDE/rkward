@@ -1,4 +1,4 @@
-rkward (0.7.1z+0.7.2+devel1-1) UNRELEASED; urgency=low
+rkward (0.7.1z+0.7.2+devel2-1) UNRELEASED; urgency=low
   * New upstream release
   * THIS IS AN INOFFICIAL PACKAGE
     We use this to build debian packages for a variety to Debian/Ubuntu
