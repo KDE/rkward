@@ -15,6 +15,7 @@
   <name xml:lang="gl">RKWard</name>
   <name xml:lang="id">RKward</name>
   <name xml:lang="it">RKWard</name>
+  <name xml:lang="ko">RKward</name>
   <name xml:lang="nl">RKward</name>
   <name xml:lang="pl">RKward</name>
   <name xml:lang="pt">RKward</name>
@@ -35,6 +36,7 @@
   <summary xml:lang="gl">Interface de KDE para a linguaxe de estatística R</summary>
   <summary xml:lang="id">Frontend KDE untuk bahasa statistik R</summary>
   <summary xml:lang="it">Interfaccia di KDE per il linguaggio statistico R</summary>
+  <summary xml:lang="ko">R 통계 언어의 KDE 프론트엔드</summary>
   <summary xml:lang="nl">KDE frontend naar de statistische taal R</summary>
   <summary xml:lang="pl">Nakładka KDE na język statystyczny R</summary>
   <summary xml:lang="pt">Interface para o KDE da linguagem de estatísticas R</summary>
@@ -59,6 +61,7 @@
     <p xml:lang="gl">RKWard pretende converterse nunha interface para R fácil de usar e transparente, un potente sistema de computación estatística e gráficas. Ademais de fornecer unha interface gráfica cómoda para as funcións estatísticas máis importantes, versión futuras fornecerán integración transparente cunha suite de ofimática.</p>
     <p xml:lang="id">RKWard ditujukan untuk menjadi yang mudah digunakan, frontend transparan untuk R, sebuah sistem yang unggul untuk grafik dan komputasi statistik. Selain GUI yang nyaman untuk beberapa fungsi statistik yang penting, versi masa depan juga akan menyediakan integrasi yang sama dengan office suite.</p>
     <p xml:lang="it">RKWard mira a diventare un'interfaccia trasparente per R, facile da usare, un potente sistema per il calcolo statistico e la grafica. Oltre a una comoda interfaccia per le funzioni statistiche più importanti, le versioni future forniranno anche una perfetta integrazione con una suite per ufficio.</p>
+    <p xml:lang="ko">RKWard는 강력한 통계 계산 및 그래픽 시스템인 R의 사용하기 쉽고 투명한 프론트엔드입니다. 가장 중요한 편리한 통계 기능 GUI 외에도 이후 버전은 사무용 도구와 완벽하게 통합됩니다.</p>
     <p xml:lang="nl">Het doel van RKWard is een gemakkelijk te gebruiken, transparante frontend naar R, een krachtig systeem voor statistische berekeningen en grafieken te worden. En ernaast een gemakkelijke GUI voor de meest belangrijke statistische functies, toekomstige versies zullen ook naadloze integratie bieden met een kantoor-suite.</p>
     <p xml:lang="pl">RKWard dąży do tego, aby stać się łatwą w użyciu i przejrzystą nakładką na R, zaawansowany system do obliczeń statystycznych i obrazowania. Poza wygodnym interfejsem użytkownika dla większości z ważnych funkcji, przyszłe wydania dostarczą także integrację z pakietem biurowym.</p>
     <p xml:lang="pt">O RKWard pretende tornar-se uma interface simples de usar e transparente para o R, um sistema poderoso para cálculos estatísticos e gráficos. Para além de uma interface adequada para as funções estatísticas mais importantes, as futuras versões também irão oferecer uma integração transparente com os pacotes de aplicações de escritório.</p>
@@ -82,6 +85,7 @@
       <caption xml:lang="gl">Xanela principal da aplicación, co navegador de obxectos, o editor de datos, o navegador de ficheiros e a consola interactiva de R visíbeis. A colocación das xanelas pode reorganizarse e todas as xanelas poden despregarse da xanela principal.</caption>
       <caption xml:lang="id">Window utama aplikasi, dengan penelusur objek, pengedit data, penelusur file, dan interaktif konsol R yang terlihat. penempatan window bisa diatur ulang dan semua window juga bisa dilepas dari window utama.</caption>
       <caption xml:lang="it">Finestra principale dell'applicazione con navigatore degli oggetti, editor di dati, navigatore dei file e console interattiva di R visibile. Il posizionamento delle finestre può essere modificato, inoltre tutte le finestre possono essere staccate dalla principale.</caption>
+      <caption xml:lang="ko">프로그램 주 창. 객체 탐색기, 데이터 편집기, 파일 탐색기 및 대화식 R 콘솔이 표시되어 있습니다. 창 배치는 사용자 정의 가능하며 모든 창을 주 창에서 분리할 수도 있습니다.</caption>
       <caption xml:lang="nl">Hoofdvenster, met hierin objectbrowser, gegevenseditor, bestandsbrowser, en interactieve console van R. Plaatsing van venster kan worden gewijzigd, en all vensters kunnen ook worden losgemaakt van het hoofdvenster.</caption>
       <caption xml:lang="pl">Główne okno aplikacji z przeglądarką obiektów, edytorem danych, przeglądarką plików i interaktywną konsolą R. Umieszczenie okien można zmienić i każde okno można odczepić od głównego okna.</caption>
       <caption xml:lang="pt">Janela principal da aplicação, com um navegador de objectos, um editor de dados, um navegador de ficheiros e uma consola de R interactiva visíveis. A colocação das janelas pode ser reorganizada e todas as janelas poder-se-ão destacar da janela principal.</caption>
@@ -101,6 +105,7 @@
       <caption xml:lang="gl">Editor de scripts con vista previa activa.</caption>
       <caption xml:lang="id">Pengedit skrip dengan pratinjau yang aktif.</caption>
       <caption xml:lang="it">Editor di script con anteprima attiva.</caption>
+      <caption xml:lang="ko">스크립트를 미리 보여 주는 편집기.</caption>
       <caption xml:lang="nl">Scripteditor met actieve preview.</caption>
       <caption xml:lang="pl">Edytor skryptów z podglądem na żywo.</caption>
       <caption xml:lang="pt">Editor de programas com uma antevisão activa.</caption>
@@ -121,6 +126,7 @@
       <caption xml:lang="gl">Traballando con datos en RKWard</caption>
       <caption xml:lang="id">Bekerja dengan data di RKward</caption>
       <caption xml:lang="it">Lavorare coi dati in RKward</caption>
+      <caption xml:lang="ko">RKward에서 데이터 작업</caption>
       <caption xml:lang="nl">Met gegevens werken in RKward</caption>
       <caption xml:lang="pl">Praca z danymi w RKward</caption>
       <caption xml:lang="pt">Lidar com dados no RKward</caption>
@@ -140,6 +146,7 @@
       <caption xml:lang="gl">Buscar obxectos por nome, buscar páxinas de axuda, e visor de axuda dentro do aplicativo.</caption>
       <caption xml:lang="id">Pencarian objek berdasarkan nama, pencarian halaman bantuan, dan penampil bantuan dalam-apl.</caption>
       <caption xml:lang="it">Ricerca di oggetti in base al nome, ricerca di pagine di aiuto e visualizzatore di aiuto all'interno dell'applicazione.</caption>
+      <caption xml:lang="ko">이름으로 객체 검색, 도움말 페이지 검색 및 프로그램 내장 도움말 뷰어.</caption>
       <caption xml:lang="nl">Objecten zoeken op naam, zoeken naar helppagina's, en in-app helpviewer.</caption>
       <caption xml:lang="pl">Wyszukiwanie obiektów po nazwie, wyszukiwanie na stronach pomocy i wbudowana przeglądarka pomocy w aplikacji.</caption>
       <caption xml:lang="pt">Pesquisa de objectos por nome, pesquisa nas páginas de ajuda e visualizador de ajuda na aplicação.</caption>

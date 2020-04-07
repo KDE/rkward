@@ -13,6 +13,7 @@
     <comment xml:lang="fr">Fichier source R</comment>
     <comment xml:lang="gl">Ficheiro de código R</comment>
     <comment xml:lang="it">File sorgente di R</comment>
+    <comment xml:lang="ko">R 소스 파일</comment>
     <comment xml:lang="nl">R-bronbestand</comment>
     <comment xml:lang="pl">Plik źródłowy R</comment>
     <comment xml:lang="pt">Ficheiro de código em R</comment>
@@ -43,6 +44,7 @@
     <comment xml:lang="fr">Fichier de données ou d'espace de travail R</comment>
     <comment xml:lang="gl">Ficheiro de dato ou espazo de traballo de R</comment>
     <comment xml:lang="it">File di dati/spazio di lavoro di R</comment>
+    <comment xml:lang="ko">R 데이터/작업 공간 파일</comment>
     <comment xml:lang="nl">R-gegevens/werkruimtebestand</comment>
     <comment xml:lang="pl">Plik danych/przestrzeni roboczej R</comment>
     <comment xml:lang="pt">Ficheiro de dados/área de trabalho do R</comment>
