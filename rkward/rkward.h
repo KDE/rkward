@@ -139,6 +139,8 @@ public slots:
 private slots:
 	void partChanged (KParts::Part *new_part);
 private:
+/** Prompt for a local file to open, providing a choice of how to open the file (as R script, text, workspace, auto) */
+	void openAnyFile ();
 /** Opens a new workspace, without asking or closing anything. */
 	void openWorkspace (const QUrl &url);
 

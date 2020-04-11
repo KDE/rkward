@@ -29,6 +29,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QIcon>
+#include <QComboBox>
 
 // include files for KDE
 #include <kmessagebox.h>
@@ -501,6 +502,12 @@ void RKWardMainWindow::initActions() {
 	fileOpen = actionCollection ()->addAction (KStandardAction::Open, "file_openy", this, SLOT(slotOpenCommandEditor()));
 	fileOpen->setText (i18n ("Open R Script File..."));
 
+	QAction *file_open_any = actionCollection ()->addAction (KStandardAction::Open, "file_open_any");
+	connect (file_open_any, &QAction::triggered, this, &RKWardMainWindow::openAnyFile);
+
+	file_open_any->setText (i18n ("Open any File..."));
+	actionCollection ()->setDefaultShortcut (file_open_any, Qt::ControlModifier + Qt::AltModifier + Qt::Key_O);
+
 	fileOpenRecent = static_cast<KRecentFilesAction*> (actionCollection ()->addAction (KStandardAction::OpenRecent, "file_open_recenty", this, SLOT(slotOpenCommandEditor(QUrl))));
 	fileOpenRecent->setText (i18n ("Open Recent R Script File"));
 
@@ -959,6 +966,47 @@ void RKWardMainWindow::addScriptUrl (const QUrl &url) {
 	RK_TRACE (APP);
 
 	if (!url.isEmpty ()) fileOpenRecent->addUrl (url);
+}
+
+void RKWardMainWindow::openAnyFile () {
+	RK_TRACE (APP);
+
+	QFileDialog dialog (0, QString (), RKSettingsModuleGeneral::lastUsedUrlFor ("rscripts").toLocalFile (), QString ("*|All Files (*)\n%1|R Script Files (%1)").arg (RKSettingsModuleCommandEditor::scriptFileFilter ()));
+	dialog.setFileMode (QFileDialog::ExistingFiles);
+
+// Create a type selection widget, and hack it into the dialog:
+	QFrame dummy (this);
+	dummy.setWindowTitle (i18n ("Open"));
+	QVBoxLayout layout (&dummy);
+	QHBoxLayout hbox;
+	layout.addLayout (&hbox);
+	hbox.addWidget (new QLabel (i18n ("Opening mode:")));
+	QComboBox open_mode;
+	open_mode.addItems (QStringList () << i18n ("Guess file type, automatically") << i18n ("Open as text / script file") << i18n ("Open as text file and force R highlighting") << ("Open as R workspace"));
+	hbox.addWidget (&open_mode);
+	hbox.setStretchFactor (&open_mode, 100);
+
+	dummy.setWindowFlags (dialog.windowFlags ());
+	dialog.setOption (QFileDialog::DontUseNativeDialog);
+	dialog.setWindowFlags (Qt::Widget);
+	layout.addWidget (&dialog);
+	dummy.show ();
+	auto res = dialog.exec ();
+
+	if (res != QDialog::Accepted) return;
+	QUrl url = QUrl::fromLocalFile (dialog.selectedFiles ().value (0));
+	if (open_mode.currentIndex () == 0) {
+		RKWorkplace::mainWorkplace ()->openAnyUrl (url);
+	} else if (open_mode.currentIndex () == 1) {
+		RKWorkplace::mainWorkplace ()->openScriptEditor (url);
+		RKSettingsModuleGeneral::updateLastUsedUrl ("rscripts", url.adjusted (QUrl::RemoveFilename));
+	} else if (open_mode.currentIndex () == 2) {
+		RKWorkplace::mainWorkplace ()->openScriptEditor (url, QString (), RKCommandEditorFlags::DefaultFlags | RKCommandEditorFlags::ForceRHighlighting);
+		RKSettingsModuleGeneral::updateLastUsedUrl ("rscripts", url.adjusted (QUrl::RemoveFilename));
+	} else if (open_mode.currentIndex () == 3) {
+		openWorkspace (url);
+		RKSettingsModuleGeneral::updateLastUsedUrl ("workspaces", url.adjusted (QUrl::RemoveFilename));
+	}
 }
 
 void RKWardMainWindow::slotOpenCommandEditor (const QUrl &url, const QString &encoding) {
