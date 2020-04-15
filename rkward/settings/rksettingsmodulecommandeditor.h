@@ -26,6 +26,44 @@ class QGroupBox;
 class QComboBox;
 class QGridLayout;
 
+class RKCodeCompletionSettingsWidget;
+class RKCodeCompletionSettings {
+public:
+	RKCodeCompletionSettings() {};
+	~RKCodeCompletionSettings() {};
+
+	void loadSettings(KConfigGroup &config);
+	void saveSettings(KConfigGroup &config);
+
+	enum CompletionCategories {
+		Calltip = 0,
+		Arghint,
+		Object,
+		Filename,
+		AutoWord,
+		N_COMPLETION_CATEGORIES
+	};
+
+/// min number of character to try code completion
+	int autoMinChars () const { return auto_completion_min_chars; };
+	int autoTimeout () const { return auto_completion_timeout; };
+	bool autoEnabled () const { return auto_completion_enabled; };
+	bool autoCursorActivated () const { return (auto_completion_enabled && auto_completion_cursor_activated); };
+	bool argHintingEnabled () const { return isEnabled (Arghint); };  // TODO: remove me
+	int options () const { return completion_options; };
+	bool isEnabled (CompletionCategories cat) const { return completion_type_enabled[cat]; };
+	bool cursorNavigatesCompletions () const { return cursor_navigates_completions; };
+private:
+friend class RKCodeCompletionSettingsWidget;
+	int auto_completion_min_chars;
+	int auto_completion_timeout;
+	bool auto_completion_enabled;
+	bool auto_completion_cursor_activated;
+	bool completion_type_enabled[N_COMPLETION_CATEGORIES];
+	bool cursor_navigates_completions;
+	int completion_options;
+};
+
 /**
 configuration for the Command Editor windows
 
@@ -46,24 +84,7 @@ public:
 
 	QString caption () override;
 
-	enum CompletionCategories {
-		Calltip = 0,
-		Arghint,
-		Object,
-		Filename,
-		AutoWord,
-		N_COMPLETION_CATEGORIES
-	};
-
-/// min number of character to try code completion
-	static int autoCompletionMinChars () { return auto_completion_min_chars; };
-	static int autoCompletionTimeout () { return auto_completion_timeout; };
-	static bool autoCompletionEnabled () { return auto_completion_enabled; };
-	static bool autoCompletionCursorActivated () { return (auto_completion_enabled && auto_completion_cursor_activated); };
-	static bool argHintingEnabled () { return isCompletionEnabled (Arghint); };  // TODO: remove me
-	static int completionOptions () { return completion_options; };
-	static bool isCompletionEnabled (CompletionCategories cat) { return completion_type_enabled[cat]; };
-	static bool cursorNavigatesCompletions () { return cursor_navigates_completions; };
+	static const RKCodeCompletionSettings* completionSettings() { return &completion_settings; };
 
 	static bool autosaveEnabled () { return autosave_enabled; };
 	static bool autosaveKeep () { return autosave_keep; };
@@ -76,32 +97,12 @@ public:
 public slots:
 	void settingChanged ();
 private:
-	void makeCompletionTypeBoxes (const QStringList& label, QGridLayout* layout);
-
-	static int auto_completion_min_chars;
-	static int auto_completion_timeout;
-	static bool auto_completion_enabled;
-	static bool auto_completion_cursor_activated;
-	static bool completion_type_enabled[N_COMPLETION_CATEGORIES];
-	static bool cursor_navigates_completions;
-
-	RKSpinBox* auto_completion_min_chars_box;
-	RKSpinBox* auto_completion_timeout_box;
-	QGroupBox* auto_completion_enabled_box;
-	QCheckBox* auto_completion_cursor_activated_box;
-	QCheckBox* completion_type_enabled_box[N_COMPLETION_CATEGORIES];
-	QCheckBox* cursor_navigates_completions_box;
-
-	static int completion_options;
-
-	QComboBox* completion_list_member_operator_box;
-	QComboBox* completion_slot_operator_box;
-	QComboBox* completion_object_qualification_box;
-
+	static RKCodeCompletionSettings completion_settings;
 	static bool autosave_enabled;
 	static bool autosave_keep;
 	static int autosave_interval;
 
+	RKCodeCompletionSettingsWidget *completion_settings_widget;
 	QGroupBox* autosave_enabled_box;
 	QCheckBox* autosave_keep_box;
 	RKSpinBox* autosave_interval_box;

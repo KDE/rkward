@@ -20,6 +20,7 @@
 #include <qstring.h>
 #include <qwidget.h>
 #include <QUrl>
+#include <KConfigGroup>
 
 class KConfig;
 class RKSettings;
@@ -46,6 +47,7 @@ be inserted into this chain. It's safe to use this unconditionally, as if there 
 
 	virtual QUrl helpURL () { return QUrl (); };
 protected:
+friend class RKSettingsModuleWidget;
 	void change ();
 
 	bool changed;
@@ -53,6 +55,18 @@ private:
 	RKSettings *gui;
 friend class RKSettings;
 	static RCommandChain *chain;
+};
+
+/** Base class for UI widgets operating on an RKSettingsModule. For now this is used, only where similar settings are shared across modules (e.g. code completion). Eventually, this could be used to disentangle RKSettingsModule from QWidget. */
+class RKSettingsModuleWidget : public QWidget {
+public:
+	RKSettingsModuleWidget(QWidget *parent, RKSettingsModule *_module) : QWidget(parent), module(_module) {};
+	~RKSettingsModuleWidget() {};
+	virtual void applyChanges() = 0;
+protected:
+	void change() { module->change(); }
+private:
+	RKSettingsModule *module;
 };
 
 #include <functional>
