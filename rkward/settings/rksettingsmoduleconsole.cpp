@@ -2,7 +2,7 @@
                           rksettingsmoduleconsole  -  description
                              -------------------
     begin                : Sun Oct 16 2005
-    copyright            : (C) 2005, 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2005-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -33,6 +33,8 @@
 #include "../debug.h"
 
 // static
+
+RKCodeCompletionSettings RKSettingsModuleConsole::completion_settings;
 bool RKSettingsModuleConsole::save_history;
 uint RKSettingsModuleConsole::max_history_length;
 uint RKSettingsModuleConsole::max_console_lines;
@@ -44,6 +46,8 @@ RKSettingsModuleConsole::RKSettingsModuleConsole (RKSettings *gui, QWidget *pare
 	RK_TRACE (SETTINGS);
 
 	QVBoxLayout *vbox = new QVBoxLayout (this);
+
+	vbox->addWidget (completion_settings_widget = new RKCodeCompletionSettingsWidget (this, this, &completion_settings));
 
 	save_history_box = new QCheckBox (i18n ("Load/Save command history"), this);
 	save_history_box->setChecked (save_history);
@@ -164,6 +168,7 @@ void RKSettingsModuleConsole::saveCommandHistory (const QStringList &list) {
 void RKSettingsModuleConsole::applyChanges () {
 	RK_TRACE (SETTINGS);
 
+	completion_settings_widget->applyChanges();
 	save_history = save_history_box->isChecked ();
 	max_history_length = max_history_length_spinner->value ();
 	max_console_lines = max_console_lines_spinner->value ();

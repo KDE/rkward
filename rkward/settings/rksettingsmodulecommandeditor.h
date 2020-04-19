@@ -64,6 +64,27 @@ friend class RKCodeCompletionSettingsWidget;
 	int completion_options;
 };
 
+class RKCodeCompletionSettingsWidget : public RKSettingsModuleWidget {
+public:
+	RKCodeCompletionSettingsWidget(QWidget *parent, RKSettingsModule *module, RKCodeCompletionSettings *settings);
+	~RKCodeCompletionSettingsWidget() {};
+	void applyChanges() override;
+private:
+	void makeCompletionTypeBoxes (const QStringList& labels, QGridLayout* layout);
+
+	RKSpinBox* auto_completion_min_chars_box;
+	RKSpinBox* auto_completion_timeout_box;
+	QGroupBox* auto_completion_enabled_box;
+	QCheckBox* auto_completion_cursor_activated_box;
+	QCheckBox* completion_type_enabled_box[RKCodeCompletionSettings::N_COMPLETION_CATEGORIES];
+	QCheckBox* cursor_navigates_completions_box;
+	QComboBox* completion_list_member_operator_box;
+	QComboBox* completion_slot_operator_box;
+	QComboBox* completion_object_qualification_box;
+
+	RKCodeCompletionSettings *settings;
+};
+
 /**
 configuration for the Command Editor windows
 
