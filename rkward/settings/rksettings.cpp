@@ -52,7 +52,7 @@ void RKSettings::configureSettings (SettingsPage page, QWidget *parent, RCommand
 		settings_dialog = new RKSettings (parent);
 	}
 
-	settings_dialog->raisePage (page);
+	if (page != NoPage) settings_dialog->raisePage (page);
 	settings_dialog->show ();
 	settings_dialog->raise ();
 }
@@ -74,6 +74,7 @@ void RKSettings::configureSettings (const QString& page, QWidget *parent, RComma
 	} else if (page == QStringLiteral ("rpackages")) {
 		RKSettings::configureSettings (RKSettings::PageRPackages, parent, chain);
 	} else {
+		RK_ASSERT(page.isEmpty());
 		RKSettings::configureSettings (RKSettings::NoPage, parent, chain);
 	}
 }

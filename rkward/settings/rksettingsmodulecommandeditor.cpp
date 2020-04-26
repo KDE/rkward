@@ -80,11 +80,13 @@ RKCodeCompletionSettingsWidget::RKCodeCompletionSettingsWidget(QWidget *parent, 
 	form_layout = new QFormLayout ();
 	box_layout->addLayout (form_layout);
 
-	cursor_navigates_completions_box = new QCheckBox (i18n ("Up/down cursor keys navigate completion items"));
-	cursor_navigates_completions_box->setChecked (settings->cursor_navigates_completions);
-	RKCommonFunctions::setTips (i18n ("Should the up / down cursor keys be used to navigate among the completion items, while code completion is active? If this option is unchecked, Alt+up/down will navigate completion items, while up / down will behave as if no completion was active."), cursor_navigates_completions_box);
-	connect (cursor_navigates_completions_box, &QCheckBox::stateChanged, this, &RKCodeCompletionSettingsWidget::change);
-	form_layout->addRow (cursor_navigates_completions_box);
+	cursor_navigates_completions_box = new QComboBox(group);
+	cursor_navigates_completions_box->addItem(i18n("Up/down cursor keys"));
+	cursor_navigates_completions_box->addItem(i18n("Alt+Up/down cursor keys"));
+	cursor_navigates_completions_box->setCurrentIndex(settings->cursor_navigates_completions ? 0 : 1);
+	RKCommonFunctions::setTips (i18n ("If you wish to avoid ambiguity between navigation completion options and navigating the document, you can set the behavior such that completion items are navigate using Alt+up / Alt+down, instead of just the up/down cursor keys."), cursor_navigates_completions_box);
+	connect (cursor_navigates_completions_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &RKCodeCompletionSettingsWidget::change);
+	form_layout->addRow (i18n ("Keyboard navigation of completion items"), cursor_navigates_completions_box);
 
 	if (show_common) {
 		completion_list_member_operator_box = new QComboBox (group);
@@ -126,7 +128,7 @@ void RKCodeCompletionSettingsWidget::applyChanges() {
 	for (int i = 0; i < RKCodeCompletionSettings::N_COMPLETION_CATEGORIES; ++i) {
 		settings->completion_type_enabled[i] = completion_type_enabled_box[i]->isChecked ();
 	}
-	settings->cursor_navigates_completions = cursor_navigates_completions_box->isChecked ();
+	settings->cursor_navigates_completions = (cursor_navigates_completions_box->currentIndex() == 0);
 
 	if (show_common) {
 		settings->completion_options = 0;

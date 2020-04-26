@@ -6,6 +6,9 @@
     - Support pdf?
 - <text> elements in plugins may now also contain clickable links, including rkward://-scheme links
 * TODO: Bring new code hinting features to the console window!
+  - Tab key (+option)
+  - Clean up unused code
+  - Enter key behavior
 - On unix-systems, RKWard can now be run without installation
   - TODO: common.js is not found in plugins!
 - Kate addons are now supported within RKWard. Intially, search-in-files, snippets, and projects are loaded by default

@@ -218,15 +218,25 @@ void RKCompletionManager::updateCallHint () {
 	QString full_context;
 	int potential_symbol_end = -2;
 	int parenthesis_level = 0;
+	int prefix_offset = 0;
 	KTextEditor::Document *doc = _view->document ();
 	while (potential_symbol_end < -1 && line >= 0) {
 		--line;
 		QString context_line = doc->line (line);
-		if (context_line.startsWith ('>')) continue; // For console: TODO limit to console
+		if (!prefix.isEmpty()) {   // For skipping interactive output sections in console. Empty for RKCommandEditorWindow
+			if (context_line.startsWith(prefix)) {
+				prefix_offset = prefix.length();
+			} else if (context_line.startsWith(continuation_prefix)) {
+				prefix_offset = continuation_prefix.length();
+			} else {
+				continue;
+			}
+			context_line = context_line.mid(prefix_offset);
+		}
 		full_context.prepend (context_line);
 
 		int pos = context_line.length () - 1;
-		if (line == cached_position.line ()) pos = cached_position.column () - 1;
+		if (line == cached_position.line ()) pos = cached_position.column () - 1 - prefix_offset;   // when on current line, look backward from cursor position, not line end
 		for (int i = pos; i >= 0; --i) {
 			QChar c = context_line.at (i);
 			if (c == '(') {
@@ -399,11 +409,11 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 				return true;
 			}
 		} else if ((k->key () == Qt::Key_Up || k->key () == Qt::Key_Down) && cc_iface->isCompletionActive ()) {
-			if (settings->cursorNavigatesCompletions ()) return false;
+			bool navigate = (settings->cursorNavigatesCompletions() && k->modifiers() == Qt::NoModifier) || (!settings->cursorNavigatesCompletions() && k->modifiers() == Qt::AltModifier);
 
 			// Make up / down-keys (without alt) navigate in the document (aborting the completion)
 			// Make alt+up / alt+down navigate in the completion list
-			if (k->modifiers () & Qt::AltModifier) {
+			if (navigate) {
 				if (k->type() != QKeyEvent::KeyPress) return true;  // eat the release event
 
 				// No, we cannot just send a fake key event, easily...

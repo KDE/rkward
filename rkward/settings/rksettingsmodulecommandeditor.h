@@ -77,7 +77,7 @@ private:
 	QGroupBox* auto_completion_enabled_box;
 	QCheckBox* auto_completion_cursor_activated_box;
 	QCheckBox* completion_type_enabled_box[RKCodeCompletionSettings::N_COMPLETION_CATEGORIES];
-	QCheckBox* cursor_navigates_completions_box;
+	QComboBox* cursor_navigates_completions_box;
 	QComboBox* completion_list_member_operator_box;
 	QComboBox* completion_slot_operator_box;
 	QComboBox* completion_object_qualification_box;

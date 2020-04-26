@@ -2,7 +2,7 @@
                           rkconsole  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004-2019 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -54,6 +54,7 @@
 #include "rkglobals.h"
 #include "rkward.h"
 #include "windows/rkhelpsearchwindow.h"
+#include "windows/rkcodecompletion.h"
 #include "rbackend/rkrinterface.h"
 #include "rbackend/rcommand.h"
 #include "settings/rksettings.h"
@@ -110,9 +111,6 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 	RK_ASSERT (view);
 	confint->setConfigValue ("dynamic-word-wrap", false);
 
-	KTextEditor::CodeCompletionInterface *iface = qobject_cast<KTextEditor::CodeCompletionInterface*> (view);
-	if (iface) iface->setAutomaticInvocationEnabled (false);
-
 	setFocusProxy (view);
 	setFocusPolicy (Qt::StrongFocus);
 	
@@ -140,11 +138,11 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 
 	if (view->focusProxy ()) view->focusProxy()->installEventFilter(this);
 	view->installEventFilter(this);
+	auto manager = new RKCompletionManager (view, RKSettingsModuleConsole::completionSettings());  // Must be instantiated _after_ our event filter, so that it will apply its filter first
+	manager->setLinePrefixes(nprefix, iprefix);
 
 	doc->setModified (false);
 
-	hinter = new RKFunctionArgHinter (this, view);
-	
 	setCaption (i18n ("R Console"));
 	console_part = new RKConsolePart (this);
 	setPart (console_part);
@@ -175,7 +173,6 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 RKConsole::~RKConsole () {
 	RK_TRACE (APP);
 
-	delete hinter;
 	RKSettingsModuleConsole::saveCommandHistory (commands_history.getHistory ());
 }
 
@@ -271,21 +268,8 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 	Qt::KeyboardModifiers modifier = e->modifiers () & modifier_mask;
 
 	if ((key == Qt::Key_Up) || (key == Qt::Key_Down)) {
-		KTextEditor::CodeCompletionInterface *iface = qobject_cast<KTextEditor::CodeCompletionInterface*> (view);
-		if (iface && iface->isCompletionActive ()) {
-			if (key == Qt::Key_Up) triggerEditAction ("move_line_up");
-			else triggerEditAction ("move_line_down");
-			return true;
-		}
-
-		// showing completion list during history navigation is not a good idea, since it uses the same keys
-		bool auto_inv = (iface && iface->isAutomaticInvocationEnabled ());
-		if (iface) iface->setAutomaticInvocationEnabled (false);
-
 		if (key == Qt::Key_Up) commandsListUp (RKSettingsModuleConsole::shouldDoHistoryContextSensitive (modifier));
 		else commandsListDown (RKSettingsModuleConsole::shouldDoHistoryContextSensitive (modifier));
-
-		if (iface) iface->setAutomaticInvocationEnabled (auto_inv);
 		return true;
 	}
 
@@ -326,14 +310,6 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 		cursorAtTheEnd ();
 		return true;
 	} else if (key == Qt::Key_Enter || key == Qt::Key_Return) {
-		// currently, these are auto-text hints, only
-		KTextEditor::CodeCompletionInterface *iface = qobject_cast<KTextEditor::CodeCompletionInterface*> (view);
-		if (iface && iface->isCompletionActive ()) {
-			iface->forceCompletion ();
-			return true;
-		}
-
-		hinter->hideArgHint ();
 		commands_history.append (currentEditingLine ());
 		submitCommand ();
 		return true;
@@ -377,6 +353,7 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 		}
 		return true;
 	} else if (key == Qt::Key_Tab) {
+#warning TODO
 		KTextEditor::CodeCompletionInterface *iface = qobject_cast<KTextEditor::CodeCompletionInterface*> (view);
 		if (iface && iface->isCompletionActive ()) {
 			return false;

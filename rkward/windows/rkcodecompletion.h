@@ -46,6 +46,7 @@ public:
 	KTextEditor::Range currentArgnameRange () const { return argname_range; };
 	KTextEditor::Range currentCallRange () const;
 	KTextEditor::View* view () const { return (_view); };
+	void setLinePrefixes(const QString &_prefix, const QString &_continuation_prefix) { prefix = _prefix; continuation_prefix = _continuation_prefix; };
 public slots:
 	void userTriggeredCompletion ();
 private slots:
@@ -82,6 +83,8 @@ private:
 	bool keep_active;
 	bool user_triggered;
 	bool ignore_next_trigger;
+	QString prefix;
+	QString continuation_prefix;
 
 	QList<KTextEditor::CodeCompletionModel*> active_models;
 };
