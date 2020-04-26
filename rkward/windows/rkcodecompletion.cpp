@@ -359,6 +359,7 @@ KTextEditor::Range RKCompletionManager::currentCallRange () const {
 bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 	if (event->type () == QEvent::KeyPress || event->type () == QEvent::ShortcutOverride) {
 		RK_TRACE (COMMANDEDITOR);	// avoid loads of empty traces, putting this here
+		if (!cc_iface->isCompletionActive()) return false;
 		QKeyEvent *k = static_cast<QKeyEvent *> (event);
 
 		// If only the calltip is active, make sure the tab-key and enter behave as a regular keys. There is no completion in this case.
@@ -369,6 +370,16 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 				                              // the completion window should come back up, without delay
 				return false;
 			}
+		}
+
+		if ((k->modifiers() == Qt::NoModifier) && ((k->key () == Qt::Key_Return) || (k->key () == Qt::Key_Enter))) {
+			if (k->type () == QEvent::ShortcutOverride) {
+				// Too bad for all the duplicate work, but the event will re-trigger as a keypress event, and we need to intercept that one, too.
+				return true;
+			}
+			cc_iface->forceCompletion();
+			if (settings->autoEnabled ()) ignore_next_trigger = true;
+			return true;
 		}
 
 		if (k->key () == Qt::Key_Tab && (!k->modifiers ())) {
