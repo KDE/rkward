@@ -236,6 +236,12 @@ void RKWorkplace::detachWindow (RKMDIWindow *window, bool was_attached) {
 	if (!was_attached) window->activate ();
 }
 
+void RKWorkplace::setWindowNotManaged(RKMDIWindow* window) {
+	RK_TRACE (APP);
+	RK_ASSERT(window->state == RKMDIWindow::Attached);
+	window->state = RKMDIWindow::Detached;
+}
+
 void RKWorkplace::addWindow (RKMDIWindow *window, bool attached) {
 	RK_TRACE (APP);
 
