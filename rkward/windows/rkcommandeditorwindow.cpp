@@ -246,7 +246,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 	if (use_r_highlighting) {
 		RKCommandHighlighter::setHighlighting (m_doc, RKCommandHighlighter::RScript);
 		if (flags & RKCommandEditorFlags::UseCodeHinting) {
-			new RKCompletionManager (m_view);
+			new RKCompletionManager (m_view, RKSettingsModuleCommandEditor::completionSettings());
 			//hinter = new RKFunctionArgHinter (this, m_view);
 		}
 	} else {

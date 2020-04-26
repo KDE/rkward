@@ -47,7 +47,7 @@ RKSettingsModuleConsole::RKSettingsModuleConsole (RKSettings *gui, QWidget *pare
 
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 
-	vbox->addWidget (completion_settings_widget = new RKCodeCompletionSettingsWidget (this, this, &completion_settings));
+	vbox->addWidget (completion_settings_widget = new RKCodeCompletionSettingsWidget (this, this, &completion_settings, false));
 
 	save_history_box = new QCheckBox (i18n ("Load/Save command history"), this);
 	save_history_box->setChecked (save_history);
@@ -131,6 +131,7 @@ void RKSettingsModuleConsole::saveSettings (KConfig *config) {
 	cg.writeEntry ("pipe user commands through console", pipe_user_commands_through_console);
 	cg.writeEntry ("add piped commands to history", (int) add_piped_commands_to_history);
 	cg.writeEntry ("command history defaults to context sensitive", context_sensitive_history_by_default);
+	completion_settings.saveSettings(cg);
 }
 
 //static
@@ -144,6 +145,7 @@ void RKSettingsModuleConsole::loadSettings (KConfig *config) {
 	pipe_user_commands_through_console = cg.readEntry ("pipe user commands through console", true);
 	add_piped_commands_to_history = (PipedCommandsHistoryMode) cg.readEntry ("add piped commands to history", (int) AddSingleLine);
 	context_sensitive_history_by_default = cg.readEntry ("command history defaults to context sensitive", false);
+	completion_settings.loadSettings(cg);
 }
 
 //static

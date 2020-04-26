@@ -58,7 +58,7 @@ public:
 
 //////////////////////// RKCompletionManager //////////////////////
 
-RKCompletionManager::RKCompletionManager (KTextEditor::View* view) : QObject (view) {
+RKCompletionManager::RKCompletionManager(KTextEditor::View* view, const RKCodeCompletionSettings *settings) : QObject(view), settings(settings) {
 	RK_TRACE (COMMANDEDITOR);
 
 	_view = view;
@@ -108,8 +108,8 @@ void RKCompletionManager::tryCompletionProxy () {
 	if (cc_iface->isCompletionActive () || keep_active) {
 		// Handle this in the next event cycle, as more than one event may trigger
 		completion_timer->start (0);
-	} else if (RKSettingsModuleCommandEditor::completionSettings()->autoEnabled ()) {
-		completion_timer->start (RKSettingsModuleCommandEditor::completionSettings()->autoTimeout ());
+	} else if (settings->autoEnabled ()) {
+		completion_timer->start (settings->autoTimeout ());
 	}
 }
 
@@ -161,7 +161,7 @@ void RKCompletionManager::tryCompletion () {
 	}
 
 	QString word = currentCompletionWord ();
-	if (user_triggered || (word.length () >= RKSettingsModuleCommandEditor::completionSettings()->autoMinChars ())) {
+	if (user_triggered || (word.length () >= settings->autoMinChars ())) {
 		QString filename;
 		// as a very simple heuristic: If the current symbol starts with a quote, we should probably attempt file name completion, instead of symbol name completion
 		if (word.startsWith ('\"') || word.startsWith ('\'') || word.startsWith ('`')) {
@@ -286,17 +286,17 @@ void RKCompletionManager::updateVisibility () {
 		active_models.clear ();
 	}
 
-	bool min_len = (currentCompletionWord ().length () >= RKSettingsModuleCommandEditor::completionSettings()->autoMinChars ()) || user_triggered;
-	startModel (cc_iface, completion_model, min_len && RKSettingsModuleCommandEditor::completionSettings()->isEnabled (RKCodeCompletionSettings::Object), symbol_range, &active_models);
-	startModel (cc_iface, file_completion_model, min_len && RKSettingsModuleCommandEditor::completionSettings()->isEnabled (RKCodeCompletionSettings::Filename), symbol_range, &active_models);
-	if (kate_keyword_completion_model && RKSettingsModuleCommandEditor::completionSettings()->isEnabled (RKCodeCompletionSettings::AutoWord)) {
+	bool min_len = (currentCompletionWord ().length () >= settings->autoMinChars ()) || user_triggered;
+	startModel (cc_iface, completion_model, min_len && settings->isEnabled (RKCodeCompletionSettings::Object), symbol_range, &active_models);
+	startModel (cc_iface, file_completion_model, min_len && settings->isEnabled (RKCodeCompletionSettings::Filename), symbol_range, &active_models);
+	if (kate_keyword_completion_model && settings->isEnabled (RKCodeCompletionSettings::AutoWord)) {
 		// Model needs to update, first, as we have not handled it in tryCompletion:
 		if (min_len) kate_keyword_completion_model->completionInvoked (view (), symbol_range, KTextEditor::CodeCompletionModel::ManualInvocation);
 		startModel (cc_iface, kate_keyword_completion_model, min_len, symbol_range, &active_models);
 	}
 // NOTE: Freaky bug in KF 5.44.0: Call hint will not show for the first time, if logically above the primary screen. TODO: provide patch for kateargumenthinttree.cpp:166pp
-	startModel (cc_iface, callhint_model, true && RKSettingsModuleCommandEditor::completionSettings()->isEnabled (RKCodeCompletionSettings::Calltip), currentCallRange (), &active_models);
-	startModel (cc_iface, arghint_model, min_len && RKSettingsModuleCommandEditor::completionSettings()->isEnabled (RKCodeCompletionSettings::Arghint), argname_range, &active_models);
+	startModel (cc_iface, callhint_model, true && settings->isEnabled (RKCodeCompletionSettings::Calltip), currentCallRange (), &active_models);
+	startModel (cc_iface, arghint_model, min_len && settings->isEnabled (RKCodeCompletionSettings::Arghint), argname_range, &active_models);
 
 	if (active_models.isEmpty ()) {
 		cc_iface->abortCompletion ();
@@ -337,7 +337,7 @@ void RKCompletionManager::cursorPositionChanged (KTextEditor::View* view, const 
 			if (text.contains (QChar ('(')) || text.contains (QChar (')'))) update_call = true;
 		}
 		tryCompletionProxy ();
-	} else if (RKSettingsModuleCommandEditor::completionSettings()->autoCursorActivated ()) {
+	} else if (settings->autoCursorActivated ()) {
 		tryCompletionProxy ();
 	}
 }
@@ -391,7 +391,7 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 					// Ouch, how messy. We want to make sure completion stops, and is not re-triggered by the insertion, itself
 					active_models.clear ();
 					cc_iface->abortCompletion ();
-					if (RKSettingsModuleCommandEditor::completionSettings()->autoEnabled ()) ignore_next_trigger = true;
+					if (settings->autoEnabled ()) ignore_next_trigger = true;
 				}
 				else if (comp.isEmpty ()) {
 					QApplication::beep (); // TODO: unfortunately, we catch *two* tab events, so this is not good, yet
@@ -399,10 +399,10 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 				return true;
 			}
 		} else if ((k->key () == Qt::Key_Up || k->key () == Qt::Key_Down) && cc_iface->isCompletionActive ()) {
-			if (RKSettingsModuleCommandEditor::completionSettings()->cursorNavigatesCompletions ()) return false;
+			if (settings->cursorNavigatesCompletions ()) return false;
 
 			// Make up / down-keys (without alt) navigate in the document (aborting the completion)
-			// Meke alt+up / alt+down naviate in the completion list
+			// Make alt+up / alt+down navigate in the completion list
 			if (k->modifiers () & Qt::AltModifier) {
 				if (k->type() != QKeyEvent::KeyPress) return true;  // eat the release event
 
@@ -489,7 +489,7 @@ void RKCodeCompletionModel::updateCompletionList (const QString& symbol) {
 	n_completions = matches.size ();
 	icons.clear ();
 	icons.reserve (n_completions);
-	names = RObject::getFullNames (matches, RKSettingsModuleCommandEditor::completionSettings()->options());
+	names = RObject::getFullNames (matches, RKSettingsModuleCommandEditor::completionSettings()->options());  // NOTE: Intentionally using the script editor completion settings object, here. the completion options are shared with the console!
 	for (int i = 0; i < n_completions; ++i) {
 		icons.append (RKStandardIcons::iconForObject (matches[i]));
 	}

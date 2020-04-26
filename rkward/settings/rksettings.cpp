@@ -58,6 +58,27 @@ void RKSettings::configureSettings (SettingsPage page, QWidget *parent, RCommand
 }
 
 //static
+void RKSettings::configureSettings (const QString& page, QWidget *parent, RCommandChain *chain) {
+	RK_TRACE (SETTINGS);
+
+	if (page == QStringLiteral ("rbackend")) {
+		RKSettings::configureSettings (RKSettings::PageR, parent, chain);
+	} else if (page == QStringLiteral ("console")) {
+		RKSettings::configureSettings (RKSettings::PageConsole, parent, chain);
+	} else if (page == QStringLiteral ("editor")) {
+		RKSettings::configureSettings (RKSettings::PageCommandEditor, parent, chain);
+	} else if (page == QStringLiteral ("graphics")) {
+		RKSettings::configureSettings (RKSettings::PageX11, parent, chain);
+	} else if (page == QStringLiteral ("browser")) {
+		RKSettings::configureSettings (RKSettings::PageObjectBrowser, parent, chain);
+	} else if (page == QStringLiteral ("rpackages")) {
+		RKSettings::configureSettings (RKSettings::PageRPackages, parent, chain);
+	} else {
+		RKSettings::configureSettings (RKSettings::NoPage, parent, chain);
+	}
+}
+
+//static
 void RKSettings::dialogClosed () {
 	RK_TRACE (SETTINGS);
 	settings_dialog = 0;

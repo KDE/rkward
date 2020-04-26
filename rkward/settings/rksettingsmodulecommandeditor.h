@@ -66,7 +66,7 @@ friend class RKCodeCompletionSettingsWidget;
 
 class RKCodeCompletionSettingsWidget : public RKSettingsModuleWidget {
 public:
-	RKCodeCompletionSettingsWidget(QWidget *parent, RKSettingsModule *module, RKCodeCompletionSettings *settings);
+	RKCodeCompletionSettingsWidget(QWidget *parent, RKSettingsModule *module, RKCodeCompletionSettings *settings, bool show_common);
 	~RKCodeCompletionSettingsWidget() {};
 	void applyChanges() override;
 private:
@@ -83,6 +83,7 @@ private:
 	QComboBox* completion_object_qualification_box;
 
 	RKCodeCompletionSettings *settings;
+	bool show_common;
 };
 
 /**

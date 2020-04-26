@@ -43,7 +43,7 @@ int RKSettingsModuleCommandEditor::autosave_interval;
 int RKSettingsModuleCommandEditor::num_recent_files;
 QString RKSettingsModuleCommandEditor::script_file_filter;
 
-RKCodeCompletionSettingsWidget::RKCodeCompletionSettingsWidget(QWidget *parent, RKSettingsModule *module, RKCodeCompletionSettings *settings) : RKSettingsModuleWidget(parent, module), settings(settings) {
+RKCodeCompletionSettingsWidget::RKCodeCompletionSettingsWidget(QWidget *parent, RKSettingsModule *module, RKCodeCompletionSettings *settings, bool show_common) : RKSettingsModuleWidget(parent, module), settings(settings), show_common(show_common) {
 	RK_TRACE (SETTINGS);
 	QVBoxLayout* main_vbox = new QVBoxLayout (this);
 	main_vbox->setContentsMargins(0,0,0,0);
@@ -86,30 +86,34 @@ RKCodeCompletionSettingsWidget::RKCodeCompletionSettingsWidget(QWidget *parent, 
 	connect (cursor_navigates_completions_box, &QCheckBox::stateChanged, this, &RKCodeCompletionSettingsWidget::change);
 	form_layout->addRow (cursor_navigates_completions_box);
 
-	completion_list_member_operator_box = new QComboBox (group);
-	completion_list_member_operator_box->addItem (i18n ("'$'-operator (list$member)"));
-	completion_list_member_operator_box->addItem (i18n ("'[['-operator (list[[\"member\"]])"));
-	completion_list_member_operator_box->setCurrentIndex ((settings->completion_options & RObject::DollarExpansion) ? 0 : 1);
-	connect (completion_list_member_operator_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &RKCodeCompletionSettingsWidget::change);
-	form_layout->addRow (i18nc ("Note: list() and data.frame() are programming terms in R, and should not be translated, here", "Operator for access to members of list() and data.frame() objects"), completion_list_member_operator_box);
+	if (show_common) {
+		completion_list_member_operator_box = new QComboBox (group);
+		completion_list_member_operator_box->addItem (i18n ("'$'-operator (list$member)"));
+		completion_list_member_operator_box->addItem (i18n ("'[['-operator (list[[\"member\"]])"));
+		completion_list_member_operator_box->setCurrentIndex ((settings->completion_options & RObject::DollarExpansion) ? 0 : 1);
+		connect (completion_list_member_operator_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &RKCodeCompletionSettingsWidget::change);
+		form_layout->addRow (i18nc ("Note: list() and data.frame() are programming terms in R, and should not be translated, here", "Operator for access to members of list() and data.frame() objects"), completion_list_member_operator_box);
 
-	completion_slot_operator_box = new QComboBox (group);
-	completion_slot_operator_box->addItem (i18n ("'@'-operator (object@smember)"));
-	completion_slot_operator_box->addItem (i18n ("'slot()'-function (slot(object, member))"));
-	completion_slot_operator_box->setCurrentIndex ((settings->completion_options & RObject::ExplicitSlotsExpansion) ? 1 : 0);
-	connect (completion_slot_operator_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &RKCodeCompletionSettingsWidget::change);
-	form_layout->addRow (i18nc ("Note: S4-slot() is a programming term in R, and should not be translated, here", "Operator for access to S4-slot()s"), completion_slot_operator_box);
+		completion_slot_operator_box = new QComboBox (group);
+		completion_slot_operator_box->addItem (i18n ("'@'-operator (object@smember)"));
+		completion_slot_operator_box->addItem (i18n ("'slot()'-function (slot(object, member))"));
+		completion_slot_operator_box->setCurrentIndex ((settings->completion_options & RObject::ExplicitSlotsExpansion) ? 1 : 0);
+		connect (completion_slot_operator_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &RKCodeCompletionSettingsWidget::change);
+		form_layout->addRow (i18nc ("Note: S4-slot() is a programming term in R, and should not be translated, here", "Operator for access to S4-slot()s"), completion_slot_operator_box);
 
-	completion_object_qualification_box = new QComboBox (group);
-	completion_object_qualification_box->addItem (i18n ("For masked objects, only"));
-	completion_object_qualification_box->addItem (i18n ("For objects outside of <i>.GlobalEnv</i>, only"));
-	completion_object_qualification_box->addItem (i18n ("Always"));
-	if (settings->completion_options & (RObject::IncludeEnvirIfNotGlobalEnv)) {
-		if (settings->completion_options & (RObject::IncludeEnvirIfNotGlobalEnv)) completion_object_qualification_box->setCurrentIndex (2);
-		else completion_object_qualification_box->setCurrentIndex (1);
+		completion_object_qualification_box = new QComboBox (group);
+		completion_object_qualification_box->addItem (i18n ("For masked objects, only"));
+		completion_object_qualification_box->addItem (i18n ("For objects outside of <i>.GlobalEnv</i>, only"));
+		completion_object_qualification_box->addItem (i18n ("Always"));
+		if (settings->completion_options & (RObject::IncludeEnvirIfNotGlobalEnv)) {
+			if (settings->completion_options & (RObject::IncludeEnvirIfNotGlobalEnv)) completion_object_qualification_box->setCurrentIndex (2);
+			else completion_object_qualification_box->setCurrentIndex (1);
+		}
+		connect (completion_object_qualification_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &RKCodeCompletionSettingsWidget::change);
+		form_layout->addRow (i18n ("Include environment for objects on the search path:"), completion_object_qualification_box);
+	} else {
+		box_layout->addWidget(RKCommonFunctions::linkedWrappedLabel(i18n("<b>Note: </b>Additional (common) completion options are available at the <a href=\"rkward://settings/editor\">script editor settings</a>")));
 	}
-	connect (completion_object_qualification_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &RKCodeCompletionSettingsWidget::change);
-	form_layout->addRow (i18n ("Include environment for objects on the search path:"), completion_object_qualification_box);
 
 	main_vbox->addWidget(group);
 }
@@ -124,12 +128,14 @@ void RKCodeCompletionSettingsWidget::applyChanges() {
 	}
 	settings->cursor_navigates_completions = cursor_navigates_completions_box->isChecked ();
 
-	settings->completion_options = 0;
-	if (completion_list_member_operator_box->currentIndex () == 0) settings->completion_options += RObject::DollarExpansion;
-	if (completion_slot_operator_box->currentIndex () == 1) settings->completion_options += RObject::ExplicitSlotsExpansion;
-	if (completion_object_qualification_box->currentIndex () == 2) settings->completion_options += RObject::IncludeEnvirForGlobalEnv | RObject::IncludeEnvirIfNotGlobalEnv;
-	else if (completion_object_qualification_box->currentIndex () == 1) settings->completion_options += RObject::IncludeEnvirIfNotGlobalEnv;
-	else settings->completion_options += RObject::IncludeEnvirIfMasked;
+	if (show_common) {
+		settings->completion_options = 0;
+		if (completion_list_member_operator_box->currentIndex () == 0) settings->completion_options += RObject::DollarExpansion;
+		if (completion_slot_operator_box->currentIndex () == 1) settings->completion_options += RObject::ExplicitSlotsExpansion;
+		if (completion_object_qualification_box->currentIndex () == 2) settings->completion_options += RObject::IncludeEnvirForGlobalEnv | RObject::IncludeEnvirIfNotGlobalEnv;
+		else if (completion_object_qualification_box->currentIndex () == 1) settings->completion_options += RObject::IncludeEnvirIfNotGlobalEnv;
+		else settings->completion_options += RObject::IncludeEnvirIfMasked;
+	}
 }
 
 void RKCodeCompletionSettingsWidget::makeCompletionTypeBoxes (const QStringList& labels, QGridLayout* layout) {
@@ -150,7 +156,7 @@ RKSettingsModuleCommandEditor::RKSettingsModuleCommandEditor (RKSettings *gui, Q
 	main_vbox->addWidget (RKCommonFunctions::wordWrappedLabel (i18n ("Settings marked with (*) do not take effect until you restart RKWard")));
 	main_vbox->addSpacing (2 * RKGlobals::spacingHint ());
 
-	main_vbox->addWidget (completion_settings_widget = new RKCodeCompletionSettingsWidget (this, this, &completion_settings));
+	main_vbox->addWidget (completion_settings_widget = new RKCodeCompletionSettingsWidget (this, this, &completion_settings, true));
 
 	main_vbox->addSpacing (2 * RKGlobals::spacingHint ());
 

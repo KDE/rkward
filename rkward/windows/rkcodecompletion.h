@@ -28,6 +28,7 @@
 #include <ktexteditor/codecompletionmodelcontrollerinterface.h>
 
 class QEvent;
+class RKCodeCompletionSettings;
 class RKCodeCompletionModel;
 class RKFileCompletionModel;
 class RKCallHintModel;
@@ -37,7 +38,7 @@ class RKArgumentHintModel;
 class RKCompletionManager : public QObject {
 	Q_OBJECT
 public:
-	RKCompletionManager (KTextEditor::View *view);
+	RKCompletionManager (KTextEditor::View *view, const RKCodeCompletionSettings *settings);
 	~RKCompletionManager ();
 
 	QString currentCompletionWord () const;
@@ -69,6 +70,7 @@ private:
 	KTextEditor::CodeCompletionModel* kate_keyword_completion_model;
 	QTimer *completion_timer;
 
+	const RKCodeCompletionSettings *settings;
 	KTextEditor::View *_view;
 	KTextEditor::Cursor cached_position;
 
