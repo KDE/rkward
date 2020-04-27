@@ -45,20 +45,22 @@ public:
 	};
 
 /// min number of character to try code completion
-	int autoMinChars () const { return auto_completion_min_chars; };
-	int autoTimeout () const { return auto_completion_timeout; };
-	bool autoEnabled () const { return auto_completion_enabled; };
-	bool autoCursorActivated () const { return (auto_completion_enabled && auto_completion_cursor_activated); };
-	bool argHintingEnabled () const { return isEnabled (Arghint); };  // TODO: remove me
-	int options () const { return completion_options; };
-	bool isEnabled (CompletionCategories cat) const { return completion_type_enabled[cat]; };
-	bool cursorNavigatesCompletions () const { return cursor_navigates_completions; };
+	int autoMinChars() const { return auto_completion_min_chars; };
+	int autoTimeout() const { return auto_completion_timeout; };
+	bool autoEnabled() const { return auto_completion_enabled; };
+	bool autoCursorActivated() const { return (auto_completion_enabled && auto_completion_cursor_activated); };
+	bool argHintingEnabled() const { return isEnabled(Arghint); };  // TODO: remove me
+	int options() const { return completion_options; };
+	bool isEnabled(CompletionCategories cat) const { return completion_type_enabled[cat]; };
+	bool cursorNavigatesCompletions() const { return cursor_navigates_completions; };
+	bool tabKeyInvokesCompletion() const { return tabkey_invokes_completion; };
 private:
 friend class RKCodeCompletionSettingsWidget;
 	int auto_completion_min_chars;
 	int auto_completion_timeout;
 	bool auto_completion_enabled;
 	bool auto_completion_cursor_activated;
+	bool tabkey_invokes_completion;
 	bool completion_type_enabled[N_COMPLETION_CATEGORIES];
 	bool cursor_navigates_completions;
 	int completion_options;
@@ -76,6 +78,7 @@ private:
 	RKSpinBox* auto_completion_timeout_box;
 	QGroupBox* auto_completion_enabled_box;
 	QCheckBox* auto_completion_cursor_activated_box;
+	QCheckBox* tabkey_invokes_completion_box;
 	QCheckBox* completion_type_enabled_box[RKCodeCompletionSettings::N_COMPLETION_CATEGORIES];
 	QComboBox* cursor_navigates_completions_box;
 	QComboBox* completion_list_member_operator_box;

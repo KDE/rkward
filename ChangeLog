@@ -6,7 +6,7 @@
     - Support pdf?
 - <text> elements in plugins may now also contain clickable links, including rkward://-scheme links
 * TODO: Bring new code hinting features to the console window!
-  - Tab key (+option)
+  - Tab key-option should default to on in console, but not script editor
   - Clean up unused code
 - On unix-systems, RKWard can now be run without installation
   - TODO: common.js is not found in plugins!

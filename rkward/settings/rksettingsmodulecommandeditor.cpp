@@ -80,6 +80,12 @@ RKCodeCompletionSettingsWidget::RKCodeCompletionSettingsWidget(QWidget *parent, 
 	form_layout = new QFormLayout ();
 	box_layout->addLayout (form_layout);
 
+	tabkey_invokes_completion_box = new QCheckBox(group);
+	tabkey_invokes_completion_box->setChecked(settings->tabkey_invokes_completion);
+	RKCommonFunctions::setTips (i18n ("Note: Further shorcuts can be assigned, and by default, Ctlr+Space invokes completions, in addition to this. Further, Pressing the tab key, while completions are shown, performs partial completion (if possible), independent of this setting."), tabkey_invokes_completion_box);
+	connect (tabkey_invokes_completion_box, &QCheckBox::stateChanged, this, &RKCodeCompletionSettingsWidget::change);
+	form_layout->addRow (i18n ("Tab key invokes code completion"), tabkey_invokes_completion_box);
+
 	cursor_navigates_completions_box = new QComboBox(group);
 	cursor_navigates_completions_box->addItem(i18n("Up/down cursor keys"));
 	cursor_navigates_completions_box->addItem(i18n("Alt+Up/down cursor keys"));
@@ -129,6 +135,7 @@ void RKCodeCompletionSettingsWidget::applyChanges() {
 		settings->completion_type_enabled[i] = completion_type_enabled_box[i]->isChecked ();
 	}
 	settings->cursor_navigates_completions = (cursor_navigates_completions_box->currentIndex() == 0);
+	settings->tabkey_invokes_completion = tabkey_invokes_completion_box->isChecked();
 
 	if (show_common) {
 		settings->completion_options = 0;
@@ -251,6 +258,7 @@ void RKCodeCompletionSettings::saveSettings(KConfigGroup& cg) {
 	cg.writeEntry ("Auto completion on cursor navigation", auto_completion_cursor_activated);
 	cg.writeEntry ("Completion option flags", completion_options);
 	cg.writeEntry ("Cursor navigate completions", cursor_navigates_completions);
+	cg.writeEntry ("Tabkey invokes completion", tabkey_invokes_completion);
 	for (int i = 0; i < N_COMPLETION_CATEGORIES; ++i) {
 		cg.writeEntry (completionTypeToConfigKey (i), completion_type_enabled[i]);
 	}
@@ -279,6 +287,7 @@ void RKCodeCompletionSettings::loadSettings(KConfigGroup& cg) {
 	auto_completion_cursor_activated = cg.readEntry ("Auto completion on cursor navigation", false);
 	completion_options = cg.readEntry ("Completion option flags", (int) RObject::IncludeEnvirIfMasked);
 	cursor_navigates_completions = cg.readEntry ("Cursor navigate completions", false);
+	tabkey_invokes_completion = cg.readEntry ("Tabkey invokes completion", false);
 	for (int i = 0; i < N_COMPLETION_CATEGORIES; ++i) {
 		completion_type_enabled[i] = cg.readEntry (completionTypeToConfigKey (i), true);
 	}

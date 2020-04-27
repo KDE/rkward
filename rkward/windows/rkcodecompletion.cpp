@@ -2,7 +2,7 @@
                           rkcodecompletion  -  description
                              -------------------
     begin                : Thu Feb 21 2019
-    copyright            : (C) 2004-2019 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -359,8 +359,16 @@ KTextEditor::Range RKCompletionManager::currentCallRange () const {
 bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 	if (event->type () == QEvent::KeyPress || event->type () == QEvent::ShortcutOverride) {
 		RK_TRACE (COMMANDEDITOR);	// avoid loads of empty traces, putting this here
-		if (!cc_iface->isCompletionActive()) return false;
 		QKeyEvent *k = static_cast<QKeyEvent *> (event);
+
+		if (!cc_iface->isCompletionActive()) {
+			if (k->type () == QEvent::ShortcutOverride) return true; // retriggered as key event
+			if (settings->tabKeyInvokesCompletion() && k->key() == Qt::Key_Tab && k->modifiers() == Qt::NoModifier) {
+				userTriggeredCompletion();
+				return true;
+			}
+			return false;
+		}
 
 		// If only the calltip is active, make sure the tab-key and enter behave as a regular keys. There is no completion in this case.
 		if (active_models.count () == 1 && active_models[0] == callhint_model) {

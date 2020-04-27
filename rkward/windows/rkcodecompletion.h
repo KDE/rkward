@@ -2,7 +2,7 @@
                           rkcodecompletion  -  description
                              -------------------
     begin                : Thu Feb 21 2019
-    copyright            : (C) 2004-2019 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
