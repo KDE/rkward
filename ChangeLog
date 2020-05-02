@@ -13,8 +13,7 @@
   * TODO: Some plugins still have UI issues. E.g.:
     - SQL plugin fails to add toplevel menu
     - Text filter plugin always shows menu entry, but should be limited to script windows
-- TODO:
-  - Ctrl+Enter action now clashes with kate part...
+- Fixed: Avoid shorcut clash with kate part by removing conflicting (default) shortcuts, automatically
 
 --- Version 0.7.1 - Jan-23-2020
 - Code hinting in script editor windows has been reworked, and now also completes argument names

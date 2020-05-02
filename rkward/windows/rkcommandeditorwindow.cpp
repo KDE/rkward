@@ -217,6 +217,35 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 	fixupPartGUI ();
 	setMetaInfo (i18n ("Script Editor"), QUrl (), RKSettings::PageCommandEditor);
 	initializeActions (part->actionCollection ());
+	// The kate part is quite a beast to embed, when it comes to shortcuts. New ones get added, conflicting with ours.
+	// In this context we show no mercy, and rip out any conflicting shortcuts.
+	auto kate_acs = m_view->findChildren<KActionCollection*>();
+	kate_acs.append(m_view->actionCollection());
+	QList<KActionCollection*> own_acs;
+	own_acs.append(part->actionCollection());
+	own_acs.append(standardActionCollection());
+	auto own_actions = part->actionCollection()->actions();
+	// How's this for a nested for loop...
+	for (const auto ac : own_acs) {
+		auto own_actions = ac->actions();
+		for (const auto a : own_actions) {
+			for (const auto k : ac->defaultShortcuts(a)) {
+				for (const auto kac : kate_acs) {
+					for (auto ka : kac->actions()) {
+						auto action_shortcuts = kac->defaultShortcuts(ka);
+						for (const auto kk : action_shortcuts) {
+							if (k.matches(kk) != QKeySequence::NoMatch || kk.matches(k) != QKeySequence::NoMatch) {
+								RK_DEBUG(EDITOR, DL_WARNING, "Removing conflicting shortcut %s in kate part (%s, conflicting with %s)", qPrintable(kk.toString()), qPrintable(ka->objectName()), qPrintable(a->objectName()));
+								action_shortcuts.removeAll(k);
+								kac->setDefaultShortcuts(ka, action_shortcuts);
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 	initializeActivationSignals ();
 	RKXMLGUISyncer::self()->registerChangeListener (m_view, this, SLOT (fixupPartGUI()));
 
