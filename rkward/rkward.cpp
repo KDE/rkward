@@ -658,6 +658,7 @@ void RKWardMainWindow::partChanged (KParts::Part *part) {
 	RK_TRACE (APP);
 
 	if (gui_rebuild_locked) return;
+	if (!part) return;
 	createGUI (part);
 
 	if (!guiFactory ()) {
