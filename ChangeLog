@@ -1,5 +1,6 @@
 --- Version 0.7.1b - UNRELEASED
 - Workaround to avoid bug in R 4.0.0 when using for loop on top level context
+- Fixed: Hang when opening an empty workplace
 
 --- Version 0.7.1 - Jan-23-2020
 - Instead of installing rkward R packages at build time, install them at runtime, when needed

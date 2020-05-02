@@ -586,7 +586,7 @@ void RKWorkplaceView::purgeEmptyPanes () {
 
 	newpane = 0; // just in case of broken specifications during workplace restoration
 	for (int i = 0; i < panes.count (); ++i) {
-		if (panes[i]->count () < 1) {
+		if (panes.count() > 1 && panes[i]->count() < 1) {
 			purgePane (panes[i]);
 			--i;
 		}
