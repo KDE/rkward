@@ -139,11 +139,11 @@ void RKCodeCompletionSettingsWidget::applyChanges() {
 
 	if (show_common) {
 		settings->completion_options = 0;
-		if (completion_list_member_operator_box->currentIndex () == 0) settings->completion_options += RObject::DollarExpansion;
-		if (completion_slot_operator_box->currentIndex () == 1) settings->completion_options += RObject::ExplicitSlotsExpansion;
-		if (completion_object_qualification_box->currentIndex () == 2) settings->completion_options += RObject::IncludeEnvirForGlobalEnv | RObject::IncludeEnvirIfNotGlobalEnv;
-		else if (completion_object_qualification_box->currentIndex () == 1) settings->completion_options += RObject::IncludeEnvirIfNotGlobalEnv;
-		else settings->completion_options += RObject::IncludeEnvirIfMasked;
+		if (completion_list_member_operator_box->currentIndex () == 0) settings->completion_options = settings->completion_options + RObject::DollarExpansion;
+		if (completion_slot_operator_box->currentIndex () == 1) settings->completion_options = settings->completion_options + RObject::ExplicitSlotsExpansion;
+		if (completion_object_qualification_box->currentIndex () == 2) settings->completion_options = settings->completion_options + (RObject::IncludeEnvirForGlobalEnv | RObject::IncludeEnvirIfNotGlobalEnv);
+		else if (completion_object_qualification_box->currentIndex () == 1) settings->completion_options = settings->completion_options + RObject::IncludeEnvirIfNotGlobalEnv;
+		else settings->completion_options = settings->completion_options + RObject::IncludeEnvirIfMasked;
 	}
 }
 
@@ -250,20 +250,6 @@ QString completionTypeToConfigKey (int cat) {
 	return QString ();
 }
 
-void RKCodeCompletionSettings::saveSettings(KConfigGroup& cg) {
-	RK_TRACE (SETTINGS);
-	cg.writeEntry ("Completion enabled", auto_completion_enabled);
-	cg.writeEntry ("Completion min chars", auto_completion_min_chars);
-	cg.writeEntry ("Completion timeout", auto_completion_timeout);
-	cg.writeEntry ("Auto completion on cursor navigation", auto_completion_cursor_activated);
-	cg.writeEntry ("Completion option flags", completion_options);
-	cg.writeEntry ("Cursor navigate completions", cursor_navigates_completions);
-	cg.writeEntry ("Tabkey invokes completion", tabkey_invokes_completion);
-	for (int i = 0; i < N_COMPLETION_CATEGORIES; ++i) {
-		cg.writeEntry (completionTypeToConfigKey (i), completion_type_enabled[i]);
-	}
-}
-
 void RKSettingsModuleCommandEditor::saveSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
@@ -276,21 +262,6 @@ void RKSettingsModuleCommandEditor::saveSettings (KConfig *config) {
 
 	cg.writeEntry ("Max number of recent files", num_recent_files);
 	cg.writeEntry ("Script file filter", script_file_filter);
-}
-
-void RKCodeCompletionSettings::loadSettings(KConfigGroup& cg) {
-	RK_TRACE (SETTINGS);
-
-	auto_completion_enabled = cg.readEntry ("Completion enabled", true);
-	auto_completion_min_chars = cg.readEntry ("Completion min chars", 2);
-	auto_completion_timeout = cg.readEntry ("Completion timeout", 250);
-	auto_completion_cursor_activated = cg.readEntry ("Auto completion on cursor navigation", false);
-	completion_options = cg.readEntry ("Completion option flags", (int) RObject::IncludeEnvirIfMasked);
-	cursor_navigates_completions = cg.readEntry ("Cursor navigate completions", false);
-	tabkey_invokes_completion = cg.readEntry ("Tabkey invokes completion", false);
-	for (int i = 0; i < N_COMPLETION_CATEGORIES; ++i) {
-		completion_type_enabled[i] = cg.readEntry (completionTypeToConfigKey (i), true);
-	}
 }
 
 void RKSettingsModuleCommandEditor::loadSettings (KConfig *config) {

@@ -2,7 +2,7 @@
                           rksettingsmodulecommandeditor  -  description
                              -------------------
     begin                : Tue Oct 23 2007
-    copyright            : (C) 2007-2019 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -18,6 +18,7 @@
 #define RKSETTINGSMODULECOMMANDEDITOR_H
 
 #include "rksettingsmodule.h"
+#include "../core/robject.h"
 
 class RKSpinBox;
 class QCheckBox;
@@ -32,9 +33,10 @@ public:
 	RKCodeCompletionSettings() {};
 	~RKCodeCompletionSettings() {};
 
-	void loadSettings(KConfigGroup &config);
-	void saveSettings(KConfigGroup &config);
+	void loadSettings(KConfigGroup &config) { group.loadConfig(config); };
+	void saveSettings(KConfigGroup &config) { group.saveConfig(config); };
 
+	// NOTE: Don't insert values inbetween existing values, without also adjusting the sloppy config load/save/apply code
 	enum CompletionCategories {
 		Calltip = 0,
 		Arghint,
@@ -56,14 +58,17 @@ public:
 	bool tabKeyInvokesCompletion() const { return tabkey_invokes_completion; };
 private:
 friend class RKCodeCompletionSettingsWidget;
-	int auto_completion_min_chars;
-	int auto_completion_timeout;
-	bool auto_completion_enabled;
-	bool auto_completion_cursor_activated;
-	bool tabkey_invokes_completion;
-	bool completion_type_enabled[N_COMPLETION_CATEGORIES];
-	bool cursor_navigates_completions;
-	int completion_options;
+friend class RKSettingsModuleConsole;
+	RKConfigValue<bool> auto_completion_enabled {"Completion enabled", true};
+	RKConfigValue<int> auto_completion_min_chars {"Completion min chars", 2};
+	RKConfigValue<int> auto_completion_timeout {"Completion timeout", 250};
+	RKConfigValue<bool> auto_completion_cursor_activated {"Auto completion on cursor navigation", false};
+	RKConfigValue<bool> tabkey_invokes_completion {"Tabkey invokes completion", false};
+	RKConfigValue<bool> completion_type_enabled[N_COMPLETION_CATEGORIES] {{"Calltips", true}, {"Argument completion", true}, {"Object completion", true}, {"Filename completion", true}, {"Auto word completion", true}};
+	RKConfigValue<bool> cursor_navigates_completions {"Cursor navigate completions", false};
+	RKConfigValue<int> completion_options {"Completion option flags", (int) RObject::IncludeEnvirIfMasked};
+	RKConfigGroup dummyoptions = RKConfigGroup(0, N_COMPLETION_CATEGORIES, completion_type_enabled);
+	RKConfigGroup group {"Completion", { &dummyoptions, &auto_completion_enabled, &auto_completion_min_chars, &auto_completion_timeout, &auto_completion_cursor_activated, &tabkey_invokes_completion, &cursor_navigates_completions, &completion_options }};
 };
 
 class RKCodeCompletionSettingsWidget : public RKSettingsModuleWidget {

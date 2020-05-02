@@ -145,6 +145,7 @@ void RKSettingsModuleConsole::loadSettings (KConfig *config) {
 	pipe_user_commands_through_console = cg.readEntry ("pipe user commands through console", true);
 	add_piped_commands_to_history = (PipedCommandsHistoryMode) cg.readEntry ("add piped commands to history", (int) AddSingleLine);
 	context_sensitive_history_by_default = cg.readEntry ("command history defaults to context sensitive", false);
+	completion_settings.tabkey_invokes_completion = true;
 	completion_settings.loadSettings(cg);
 }
 
