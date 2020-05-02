@@ -130,7 +130,6 @@ void RKCompletionManager::userTriggeredCompletion () {
 }
 
 void RKCompletionManager::tryCompletion () {
-	// TODO: merge this with RKConsole::doTabCompletion () somehow
 	RK_TRACE (COMMANDEDITOR);
 	if (!cc_iface) {
 		// NOTE: This should not be possible, because the connections  have not been set up in the constructor, in this case.
@@ -176,6 +175,7 @@ void RKCompletionManager::tryCompletion () {
 		completion_model->updateCompletionList (QString ());
 		file_completion_model->updateCompletionList (QString ());
 	}
+	RK_DEBUG(EDITOR, DL_DEBUG, "completion symbol range %d, %d -> %d, %d", symbol_range.start().line(), symbol_range.start().column(), symbol_range.end().line(), symbol_range.end().column());
 
 	updateCallHint ();
 
@@ -489,6 +489,12 @@ int RKCompletionModelBase::rowCount (const QModelIndex& parent) const {
 	return 0;  // no children on completion entries
 }
 
+void RKCompletionModelBase::executeCompletionItem (KTextEditor::View *view, const KTextEditor::Range & word, const QModelIndex &index) const {
+// I have no idea, why this is needed at all, but sometimes (and inconsitently!) the default implementation will replace the wrong range, without this.
+// Importantly, the RKFileCompletionModel replaces with the wrong range, the *second* time it gets called.
+	KTextEditor::CodeCompletionModel::executeCompletionItem(view, const_cast<RKCompletionModelBase*>(this)->completionRange(view, word.end()), index);
+}
+
 //////////////////////// RKCodeCompletionModel ////////////////////
 
 RKCodeCompletionModel::RKCodeCompletionModel (RKCompletionManager *manager) : RKCompletionModelBase (manager) {
@@ -793,6 +799,9 @@ void RKFileCompletionModelWorker::run () {
 	KUrlCompletion comp;
 	comp.setDir (QUrl::fromLocalFile (QDir::currentPath ()));
 	comp.makeCompletion (string);
+	while (comp.isRunning()) {
+		msleep(50);
+	}
 	QStringList files = comp.allMatches ();
 
 	QStringList exes;
@@ -849,6 +858,10 @@ void RKFileCompletionModel::completionsReady (const QString& string, const QStri
 	} else {
 		launchThread ();
 	}
+}
+
+KTextEditor::Range RKFileCompletionModel::completionRange (KTextEditor::View *, const KTextEditor::Cursor &) {
+	return manager->currentSymbolRange ();
 }
 
 QVariant RKFileCompletionModel::data (const QModelIndex& index, int role) const {

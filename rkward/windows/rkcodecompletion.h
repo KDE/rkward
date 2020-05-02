@@ -98,7 +98,7 @@ public:
 	QString filterString (KTextEditor::View *, const KTextEditor::Range &, const KTextEditor::Cursor &) override { return QString (); };
 	bool shouldAbortCompletion (KTextEditor::View *, const KTextEditor::Range &, const QString &) override { return false; }
 	KTextEditor::CodeCompletionModelControllerInterface::MatchReaction matchingItem (const QModelIndex &) override { return KTextEditor::CodeCompletionModelControllerInterface::None; };
-
+	void executeCompletionItem (KTextEditor::View *view, const KTextEditor::Range & word, const QModelIndex &index) const override;
 	int rowCount (const QModelIndex &parent) const override;
 	QModelIndex index (int row, int column, const QModelIndex &parent = QModelIndex ()) const override;
 	QModelIndex parent (const QModelIndex &index) const override;
@@ -185,6 +185,7 @@ public:
 	explicit RKFileCompletionModel (RKCompletionManager *manager);
 	~RKFileCompletionModel ();
 
+	KTextEditor::Range completionRange (KTextEditor::View *view, const KTextEditor::Cursor &position) override;
 	void updateCompletionList (const QString& fragment);
 	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const override;
 	QString partialCompletion (bool *exact);
