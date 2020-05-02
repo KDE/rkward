@@ -60,7 +60,6 @@ public:
 	QString currentEditingLine () const;
 /** Returns the current cursor position, within the current command (without taking into account the prefix). Returns -1 if the cursor is not on the line containing the command. */
 	int currentCursorPositionInCommand ();
-	void doTabCompletion ();
 	QString provideContext (int line_rev) override;
 	void currentHelpContext (QString *symbol, QString *package) override;
 
@@ -88,9 +87,6 @@ protected:
 private:
 friend class RKConsolePart;
 	bool eventFilter (QObject *o, QEvent *e) override;
-	bool doTabCompletionHelper (int line_num, const QString &line, int word_start, int word_end, const QStringList &entries);
-/** a helper function to doTabCompletionHelper */
-	void insertCompletion (int line_num, int word_start, int word_end, const QString &completion);
 	QString incomplete_command;
 /** A list to store previous commands */
 	RKCommandHistory commands_history;

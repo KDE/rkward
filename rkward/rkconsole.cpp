@@ -352,14 +352,6 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 			doc->removeText (KTextEditor::Range (para, pos, para, pos + 1));
 		}
 		return true;
-	} else if (key == Qt::Key_Tab) {
-#warning TODO
-		KTextEditor::CodeCompletionInterface *iface = qobject_cast<KTextEditor::CodeCompletionInterface*> (view);
-		if (iface && iface->isCompletionActive ()) {
-			return false;
-		}
-		doTabCompletion ();
-		return true;
 	}
 
 	return false;
@@ -377,105 +369,6 @@ QString RKConsole::provideContext (int line_rev) {
 		}
 	}
 	return ret;
-}
-
-void RKConsole::insertCompletion (int line_num, int word_start, int word_end, const QString &completion) {
-	RK_TRACE (APP);
-
-	int offset = prefix.length ();
-	doc->replaceText (KTextEditor::Range (line_num, offset + word_start, line_num, offset + word_end), completion);
-}
-
-bool RKConsole::doTabCompletionHelper (int line_num, const QString &line, int word_start, int word_end, const QStringList &entries) {
-	RK_TRACE (APP);
-
-	int count = entries.count ();
-	QStringList::const_iterator it;
-	if (!count) return false;
-
-	if (count == 1) {
-		it = entries.constBegin ();
-		insertCompletion (line_num, word_start, word_end, *it);
-	} else if (tab_key_pressed_before) {
-		int i=0;
-		for (it = entries.constBegin (); it != entries.constEnd (); ++it) {
-			if (i % 3) {
-				doc->insertText (KTextEditor::Cursor (doc->lines () - 1, 0), (*it).leftJustified (35));
-			} else {
-				doc->insertLine (doc->lines (), *it);
-			}
-			++i;
-		}
-		doc->insertLine (doc->lines (), prefix + line);
-		cursorAtTheEnd ();
-	} else {
-		tab_key_pressed_before = true;
-
-		// do all entries have a common start?
-		QString common;
-		bool done = false;
-		int i = 0;
-		while (!done) {
-			bool ok = true;
-			QChar current;
-			for (it = entries.constBegin (); it != entries.constEnd (); ++it) {
-				if ((*it).length () <= i) {
-					ok = false;
-					break;
-				}
-				if (it == entries.constBegin ()) {
-					current = (*it).at(i);
-				} else if ((*it).at(i) != current) {
-					ok = false;
-					break;
-				}
-			}
-			if (ok) common.append (current);
-			else break;
-			++i;
-		}
-		if (i > 0) {
-			if ((int) common.length() > (word_end - word_start)) {		// more than there already is
-				insertCompletion (line_num, word_start, word_end, common);
-				return false;	// will beep to signal completion is not complete
-			}
-		}
-
-		return true;
-	}
-	tab_key_pressed_before = false;
-	return true;
-}
-
-
-void RKConsole::doTabCompletion () {
-	RK_TRACE (APP);
-
-	QString current_line = currentEditingLine ();
-	int current_line_num = doc->lines () - 1;
-	int word_start;
-	int word_end;
-	int cursor_pos = currentCursorPositionInCommand ();
-	if (cursor_pos < 0) cursor_pos = current_line.length ();
-	RKCommonFunctions::getCurrentSymbolOffset (current_line, cursor_pos, false, &word_start, &word_end);
-	QString current_symbol = current_line.mid (word_start, word_end - word_start);
-
-	// as a very simple heuristic: If the current symbol starts with a quote, we should probably attempt file name completion, instead of symbol name completion
-	if (current_symbol.startsWith ('\"') || current_symbol.startsWith ('\'') || current_symbol.startsWith ('`')) {
-		KUrlCompletion comp (KUrlCompletion::FileCompletion);
-		comp.setDir (QUrl::fromLocalFile (QDir::currentPath ()));
-		comp.makeCompletion (current_symbol.mid (1));
-
-		if (doTabCompletionHelper (current_line_num, current_line, word_start + 1, word_end, comp.allMatches ())) return;
-	} else if (!current_symbol.isEmpty ()) {
-		RObject::ObjectList matches;
-		matches = RObjectList::getObjectList ()->findObjectsMatching (current_symbol);
-		QStringList match_names = RObject::getFullNames (matches, RObject::IncludeEnvirIfMasked);
-		if (doTabCompletionHelper (current_line_num, current_line, word_start, word_end, match_names)) return;
-	}
-
-	// no completion was possible
-	qApp->beep ();
 }
 
 bool RKConsole::eventFilter (QObject *o, QEvent *e) {
