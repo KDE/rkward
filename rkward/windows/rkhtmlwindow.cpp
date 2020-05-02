@@ -521,19 +521,7 @@ bool RKHTMLWindow::handleRKWardURL (const QUrl &url, RKHTMLWindow *window) {
 		} else if (url.host () == "settings") {
 			QString path = url.path ();
 			if (path.startsWith ('/')) path = path.mid (1);
-			if (path == QStringLiteral ("rbackend")) {
-				RKSettings::configureSettings (RKSettings::PageR);
-			} else if (path == QStringLiteral ("console")) {
-				RKSettings::configureSettings (RKSettings::PageConsole);
-			} else if (path == QStringLiteral ("graphics")) {
-				RKSettings::configureSettings (RKSettings::PageX11);
-			} else if (path == QStringLiteral ("browser")) {
-				RKSettings::configureSettings (RKSettings::PageObjectBrowser);
-			} else if (path == QStringLiteral ("rpackages")) {
-				RKSettings::configureSettings (RKSettings::PageRPackages);
-			} else {
-				RKSettings::configureSettings (RKSettings::NoPage);
-			}
+			RKSettings::configureSettings(path);
 		} else {
 			if (window) window->openRKHPage (url);
 			else RKWorkplace::mainWorkplace ()->openHelpWindow (url);	// will recurse with window set, via openURL()

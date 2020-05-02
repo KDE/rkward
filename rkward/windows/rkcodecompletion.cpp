@@ -2,7 +2,7 @@
                           rkcodecompletion  -  description
                              -------------------
     begin                : Thu Feb 21 2019
-    copyright            : (C) 2004-2019 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -58,7 +58,7 @@ public:
 
 //////////////////////// RKCompletionManager //////////////////////
 
-RKCompletionManager::RKCompletionManager (KTextEditor::View* view) : QObject (view) {
+RKCompletionManager::RKCompletionManager(KTextEditor::View* view, const RKCodeCompletionSettings *settings) : QObject(view), settings(settings) {
 	RK_TRACE (COMMANDEDITOR);
 
 	_view = view;
@@ -108,8 +108,8 @@ void RKCompletionManager::tryCompletionProxy () {
 	if (cc_iface->isCompletionActive () || keep_active) {
 		// Handle this in the next event cycle, as more than one event may trigger
 		completion_timer->start (0);
-	} else if (RKSettingsModuleCommandEditor::autoCompletionEnabled ()) {
-		completion_timer->start (RKSettingsModuleCommandEditor::autoCompletionTimeout ());
+	} else if (settings->autoEnabled ()) {
+		completion_timer->start (settings->autoTimeout ());
 	}
 }
 
@@ -161,7 +161,7 @@ void RKCompletionManager::tryCompletion () {
 	}
 
 	QString word = currentCompletionWord ();
-	if (user_triggered || (word.length () >= RKSettingsModuleCommandEditor::autoCompletionMinChars ())) {
+	if (user_triggered || (word.length () >= settings->autoMinChars ())) {
 		QString filename;
 		// as a very simple heuristic: If the current symbol starts with a quote, we should probably attempt file name completion, instead of symbol name completion
 		if (word.startsWith ('\"') || word.startsWith ('\'') || word.startsWith ('`')) {
@@ -218,15 +218,25 @@ void RKCompletionManager::updateCallHint () {
 	QString full_context;
 	int potential_symbol_end = -2;
 	int parenthesis_level = 0;
+	int prefix_offset = 0;
 	KTextEditor::Document *doc = _view->document ();
 	while (potential_symbol_end < -1 && line >= 0) {
 		--line;
 		QString context_line = doc->line (line);
-		if (context_line.startsWith ('>')) continue; // For console: TODO limit to console
+		if (!prefix.isEmpty()) {   // For skipping interactive output sections in console. Empty for RKCommandEditorWindow
+			if (context_line.startsWith(prefix)) {
+				prefix_offset = prefix.length();
+			} else if (context_line.startsWith(continuation_prefix)) {
+				prefix_offset = continuation_prefix.length();
+			} else {
+				continue;
+			}
+			context_line = context_line.mid(prefix_offset);
+		}
 		full_context.prepend (context_line);
 
 		int pos = context_line.length () - 1;
-		if (line == cached_position.line ()) pos = cached_position.column () - 1;
+		if (line == cached_position.line ()) pos = cached_position.column () - 1 - prefix_offset;   // when on current line, look backward from cursor position, not line end
 		for (int i = pos; i >= 0; --i) {
 			QChar c = context_line.at (i);
 			if (c == '(') {
@@ -286,17 +296,17 @@ void RKCompletionManager::updateVisibility () {
 		active_models.clear ();
 	}
 
-	bool min_len = (currentCompletionWord ().length () >= RKSettingsModuleCommandEditor::autoCompletionMinChars ()) || user_triggered;
-	startModel (cc_iface, completion_model, min_len && RKSettingsModuleCommandEditor::isCompletionEnabled (RKSettingsModuleCommandEditor::Object), symbol_range, &active_models);
-	startModel (cc_iface, file_completion_model, min_len && RKSettingsModuleCommandEditor::isCompletionEnabled (RKSettingsModuleCommandEditor::Filename), symbol_range, &active_models);
-	if (kate_keyword_completion_model && RKSettingsModuleCommandEditor::isCompletionEnabled (RKSettingsModuleCommandEditor::AutoWord)) {
+	bool min_len = (currentCompletionWord ().length () >= settings->autoMinChars ()) || user_triggered;
+	startModel (cc_iface, completion_model, min_len && settings->isEnabled (RKCodeCompletionSettings::Object), symbol_range, &active_models);
+	startModel (cc_iface, file_completion_model, min_len && settings->isEnabled (RKCodeCompletionSettings::Filename), symbol_range, &active_models);
+	if (kate_keyword_completion_model && settings->isEnabled (RKCodeCompletionSettings::AutoWord)) {
 		// Model needs to update, first, as we have not handled it in tryCompletion:
 		if (min_len) kate_keyword_completion_model->completionInvoked (view (), symbol_range, KTextEditor::CodeCompletionModel::ManualInvocation);
 		startModel (cc_iface, kate_keyword_completion_model, min_len, symbol_range, &active_models);
 	}
 // NOTE: Freaky bug in KF 5.44.0: Call hint will not show for the first time, if logically above the primary screen. TODO: provide patch for kateargumenthinttree.cpp:166pp
-	startModel (cc_iface, callhint_model, true && RKSettingsModuleCommandEditor::isCompletionEnabled (RKSettingsModuleCommandEditor::Calltip), currentCallRange (), &active_models);
-	startModel (cc_iface, arghint_model, min_len && RKSettingsModuleCommandEditor::isCompletionEnabled (RKSettingsModuleCommandEditor::Arghint), argname_range, &active_models);
+	startModel (cc_iface, callhint_model, true && settings->isEnabled (RKCodeCompletionSettings::Calltip), currentCallRange (), &active_models);
+	startModel (cc_iface, arghint_model, min_len && settings->isEnabled (RKCodeCompletionSettings::Arghint), argname_range, &active_models);
 
 	if (active_models.isEmpty ()) {
 		cc_iface->abortCompletion ();
@@ -337,7 +347,7 @@ void RKCompletionManager::cursorPositionChanged (KTextEditor::View* view, const 
 			if (text.contains (QChar ('(')) || text.contains (QChar (')'))) update_call = true;
 		}
 		tryCompletionProxy ();
-	} else if (RKSettingsModuleCommandEditor::autoCompletionCursorActivated ()) {
+	} else if (settings->autoCursorActivated ()) {
 		tryCompletionProxy ();
 	}
 }
@@ -351,6 +361,15 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 		RK_TRACE (COMMANDEDITOR);	// avoid loads of empty traces, putting this here
 		QKeyEvent *k = static_cast<QKeyEvent *> (event);
 
+		if (!cc_iface->isCompletionActive()) {
+			if (k->type () == QEvent::ShortcutOverride) return true; // retriggered as key event
+			if (settings->tabKeyInvokesCompletion() && k->key() == Qt::Key_Tab && k->modifiers() == Qt::NoModifier) {
+				userTriggeredCompletion();
+				return true;
+			}
+			return false;
+		}
+
 		// If only the calltip is active, make sure the tab-key and enter behave as a regular keys. There is no completion in this case.
 		if (active_models.count () == 1 && active_models[0] == callhint_model) {
 			if (((k->key () == Qt::Key_Tab) || (k->key () == Qt::Key_Return) || (k->key () == Qt::Key_Enter)) || (k->key () == Qt::Key_Backtab)) {
@@ -359,6 +378,16 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 				                              // the completion window should come back up, without delay
 				return false;
 			}
+		}
+
+		if ((k->modifiers() == Qt::NoModifier) && ((k->key () == Qt::Key_Return) || (k->key () == Qt::Key_Enter))) {
+			if (k->type () == QEvent::ShortcutOverride) {
+				// Too bad for all the duplicate work, but the event will re-trigger as a keypress event, and we need to intercept that one, too.
+				return true;
+			}
+			cc_iface->forceCompletion();
+			if (settings->autoEnabled ()) ignore_next_trigger = true;
+			return true;
 		}
 
 		if (k->key () == Qt::Key_Tab && (!k->modifiers ())) {
@@ -391,7 +420,7 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 					// Ouch, how messy. We want to make sure completion stops, and is not re-triggered by the insertion, itself
 					active_models.clear ();
 					cc_iface->abortCompletion ();
-					if (RKSettingsModuleCommandEditor::autoCompletionEnabled ()) ignore_next_trigger = true;
+					if (settings->autoEnabled ()) ignore_next_trigger = true;
 				}
 				else if (comp.isEmpty ()) {
 					QApplication::beep (); // TODO: unfortunately, we catch *two* tab events, so this is not good, yet
@@ -399,11 +428,11 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 				return true;
 			}
 		} else if ((k->key () == Qt::Key_Up || k->key () == Qt::Key_Down) && cc_iface->isCompletionActive ()) {
-			if (RKSettingsModuleCommandEditor::cursorNavigatesCompletions ()) return false;
+			bool navigate = (settings->cursorNavigatesCompletions() && k->modifiers() == Qt::NoModifier) || (!settings->cursorNavigatesCompletions() && k->modifiers() == Qt::AltModifier);
 
 			// Make up / down-keys (without alt) navigate in the document (aborting the completion)
-			// Meke alt+up / alt+down naviate in the completion list
-			if (k->modifiers () & Qt::AltModifier) {
+			// Make alt+up / alt+down navigate in the completion list
+			if (navigate) {
 				if (k->type() != QKeyEvent::KeyPress) return true;  // eat the release event
 
 				// No, we cannot just send a fake key event, easily...
@@ -489,7 +518,7 @@ void RKCodeCompletionModel::updateCompletionList (const QString& symbol) {
 	n_completions = matches.size ();
 	icons.clear ();
 	icons.reserve (n_completions);
-	names = RObject::getFullNames (matches, RKSettingsModuleCommandEditor::completionOptions());
+	names = RObject::getFullNames (matches, RKSettingsModuleCommandEditor::completionSettings()->options());  // NOTE: Intentionally using the script editor completion settings object, here. the completion options are shared with the console!
 	for (int i = 0; i < n_completions; ++i) {
 		icons.append (RKStandardIcons::iconForObject (matches[i]));
 	}

@@ -242,11 +242,10 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 	// somehow the katepart loses the context menu each time it loses focus
 	connect (m_view, &KTextEditor::View::focusIn, this, &RKCommandEditorWindow::focusIn);
 
-	hinter = 0;
 	if (use_r_highlighting) {
 		RKCommandHighlighter::setHighlighting (m_doc, RKCommandHighlighter::RScript);
 		if (flags & RKCommandEditorFlags::UseCodeHinting) {
-			new RKCompletionManager (m_view);
+			new RKCompletionManager (m_view, RKSettingsModuleCommandEditor::completionSettings());
 			//hinter = new RKFunctionArgHinter (this, m_view);
 		}
 	} else {
@@ -275,7 +274,6 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 		m_view->writeSessionConfig (viewconf);
 	}
 
-	delete hinter;
 	discardPreview ();
 	delete m_view;
 	QList<KTextEditor::View*> views = m_doc->views ();
@@ -1036,166 +1034,6 @@ void RKCommandEditorWindow::selectionChanged (KTextEditor::View* view) {
 	} else {
 		actionmenu_mark_block->setEnabled (false);
 	}
-}
-
-//////////////////////// RKFunctionArgHinter //////////////////////////////
-
-#include <QToolTip>
-#include <QStyle>
-
-#include "../core/rfunctionobject.h"
-
-RKFunctionArgHinter::RKFunctionArgHinter (RKScriptContextProvider *provider, KTextEditor::View* view) {
-	RK_TRACE (COMMANDEDITOR);
-
-	RKFunctionArgHinter::provider = provider;
-	RKFunctionArgHinter::view = view;
-
-	const QObjectList children = view->children ();
-	for (QObjectList::const_iterator it = children.constBegin(); it != children.constEnd (); ++it) {
-		QObject *obj = *it;
-		obj->installEventFilter (this);
-	}
-
-	arghints_popup = new QLabel (0, Qt::ToolTip);
-	arghints_popup->setMargin (2);
-	// HACK trying hard to trick the style into using the correct color
-	// ... and sometimes we still get white on yellow in some styles. Sigh...
-	// A simple heuristic tries to detect the worst cases of unreasonably low contrast, and forces black on light blue, then.
-	QPalette p = QToolTip::palette ();
-	QColor b = p.color (QPalette::Inactive, QPalette::ToolTipBase);
-	QColor f = p.color (QPalette::Inactive, QPalette::ToolTipText);
-	if ((qAbs (f.greenF () - b.greenF ()) + qAbs (f.redF () -  b.redF ()) + qAbs (f.yellowF () - b.yellowF ())) < .6) {
-		f = Qt::black;
-		b = QColor (192, 219, 255);
-	}
-	p.setColor (QPalette::Inactive, QPalette::WindowText, f);
-	p.setColor (QPalette::Inactive, QPalette::Window, b);
-	p.setColor (QPalette::Inactive, QPalette::ToolTipText, f);
-	p.setColor (QPalette::Inactive, QPalette::ToolTipBase, b);
-	arghints_popup->setForegroundRole (QPalette::ToolTipText);
-	arghints_popup->setBackgroundRole (QPalette::ToolTipBase);
-	arghints_popup->setPalette (p);
-	arghints_popup->setFrameStyle (QFrame::Box);
-	arghints_popup->setLineWidth (1);
-	arghints_popup->setWordWrap (true);
-	arghints_popup->setWindowOpacity (arghints_popup->style ()->styleHint (QStyle::SH_ToolTipLabel_Opacity, 0, arghints_popup) / 255.0);
-	arghints_popup->hide ();
-	active = false;
-
-	connect (&updater, &QTimer::timeout, this, &RKFunctionArgHinter::updateArgHintWindow);
-}
-
-RKFunctionArgHinter::~RKFunctionArgHinter () {
-	RK_TRACE (COMMANDEDITOR);
-	delete arghints_popup;
-}
-
-void RKFunctionArgHinter::tryArgHint () {
-	RK_TRACE (COMMANDEDITOR);
-
-	if (!RKSettingsModuleCommandEditor::argHintingEnabled ()) return;
-
-	// do this in the next event cycle to make sure any inserted characters have truly been inserted
-	QTimer::singleShot (0, this, SLOT (tryArgHintNow()));
-}
-
-void RKFunctionArgHinter::tryArgHintNow () {
-	RK_TRACE (COMMANDEDITOR);
-
-	// find the active opening brace
-	int line_rev = -1;
-	QList<int> unclosed_braces;
-	QString full_context;
-	while (unclosed_braces.isEmpty ()) {
-		QString context_line = provider->provideContext (++line_rev);
-		if (context_line.isNull ()) break;
-		full_context.prepend (context_line);
-		for (int i = 0; i < context_line.length (); ++i) {
-			QChar c = context_line.at (i);
-			if (c == '"' || c == '\'' || c == '`') {  // NOTE: this algo does not produce good results on string constants spanning newlines.
-				i = RKCommonFunctions::quoteEndPosition (c, context_line, i + 1);
-				if (i < 0) break;
-				continue;
-			} else if (c == '\\') {
-				++i;
-				continue;
-			} else if (c == '(') {
-				unclosed_braces.append (i);
-			} else if (c == ')') {
-				if (!unclosed_braces.isEmpty()) unclosed_braces.pop_back ();
-			}
-		}
-	}
-
-	int potential_symbol_end = unclosed_braces.isEmpty () ? -1 : unclosed_braces.last () - 1;
-
-	// now find out where the symbol to the left of the opening brace ends
-	// there cannot be a line-break between the opening brace, and the symbol name (or can there?), so no need to fetch further context
-	while ((potential_symbol_end >= 0) && full_context.at (potential_symbol_end).isSpace ()) {
-		--potential_symbol_end;
-	}
-	if (potential_symbol_end <= 0) {
-		hideArgHint ();
-		return;
-	}
-
-	// now identify the symbol and object (if any)
-	QString effective_symbol = RKCommonFunctions::getCurrentSymbol (full_context, potential_symbol_end);
-	if (effective_symbol.isEmpty ()) {
-		hideArgHint ();
-		return;
-	}
-
-	RObject *object = RObjectList::getObjectList ()->findObject (effective_symbol);
-	if ((!object) || (!object->isType (RObject::Function))) {
-		hideArgHint ();
-		return;
-	}
-
-	// initialize and show popup
-	arghints_popup->setText (effective_symbol + " (" + static_cast<RFunctionObject*> (object)->printArgs () + ')');
-	arghints_popup->resize (arghints_popup->sizeHint () + QSize (2, 2));
-	active = true;
-	updater.start (50);
-	updateArgHintWindow ();
-}
-
-void RKFunctionArgHinter::updateArgHintWindow () {
-	RK_TRACE (COMMANDEDITOR);
-
-	if (!active) return;
-
-	arghints_popup->move (view->mapToGlobal (view->cursorPositionCoordinates () + QPoint (0, arghints_popup->fontMetrics ().lineSpacing () + arghints_popup->margin ()*2)));
-	if (view->hasFocus ()) arghints_popup->show ();
-	else arghints_popup->hide ();
-}
-
-void RKFunctionArgHinter::hideArgHint () {
-	RK_TRACE (COMMANDEDITOR);
-	arghints_popup->hide ();
-	active = false;
-	updater.stop ();
-}
-
-bool RKFunctionArgHinter::eventFilter (QObject *, QEvent *e) {
-	if (e->type () == QEvent::KeyPress || e->type () == QEvent::ShortcutOverride) {
-		RK_TRACE (COMMANDEDITOR);	// avoid loads of empty traces, putting this here
-		QKeyEvent *k = static_cast<QKeyEvent *> (e);
-
-		if (k->key() == Qt::Key_Enter || k->key() == Qt::Key_Return || k->key () == Qt::Key_Up || k->key () == Qt::Key_Down || k->key () == Qt::Key_Left || k->key () == Qt::Key_Right || k->key () == Qt::Key_Home || k->key () == Qt::Key_Tab) {
-			hideArgHint ();
-		} else if (k->key () == Qt::Key_Backspace || k->key () == Qt::Key_Delete){
-			tryArgHint ();
-		} else {
-			QString text = k->text ();
-			if ((text == "(") || (text == ")") || (text == ",")) {
-				tryArgHint ();
-			}
-		}
-	}
-
-	return false;
 }
 
 // static

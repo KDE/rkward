@@ -2,7 +2,7 @@
                           rkcodecompletion  -  description
                              -------------------
     begin                : Thu Feb 21 2019
-    copyright            : (C) 2004-2019 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -28,6 +28,7 @@
 #include <ktexteditor/codecompletionmodelcontrollerinterface.h>
 
 class QEvent;
+class RKCodeCompletionSettings;
 class RKCodeCompletionModel;
 class RKFileCompletionModel;
 class RKCallHintModel;
@@ -37,7 +38,7 @@ class RKArgumentHintModel;
 class RKCompletionManager : public QObject {
 	Q_OBJECT
 public:
-	RKCompletionManager (KTextEditor::View *view);
+	RKCompletionManager (KTextEditor::View *view, const RKCodeCompletionSettings *settings);
 	~RKCompletionManager ();
 
 	QString currentCompletionWord () const;
@@ -45,6 +46,7 @@ public:
 	KTextEditor::Range currentArgnameRange () const { return argname_range; };
 	KTextEditor::Range currentCallRange () const;
 	KTextEditor::View* view () const { return (_view); };
+	void setLinePrefixes(const QString &_prefix, const QString &_continuation_prefix) { prefix = _prefix; continuation_prefix = _continuation_prefix; };
 public slots:
 	void userTriggeredCompletion ();
 private slots:
@@ -69,6 +71,7 @@ private:
 	KTextEditor::CodeCompletionModel* kate_keyword_completion_model;
 	QTimer *completion_timer;
 
+	const RKCodeCompletionSettings *settings;
 	KTextEditor::View *_view;
 	KTextEditor::Cursor cached_position;
 
@@ -80,6 +83,8 @@ private:
 	bool keep_active;
 	bool user_triggered;
 	bool ignore_next_trigger;
+	QString prefix;
+	QString continuation_prefix;
 
 	QList<KTextEditor::CodeCompletionModel*> active_models;
 };

@@ -54,6 +54,7 @@ public:
 	};
 
 	static void configureSettings (SettingsPage page=NoPage, QWidget *parent=0, RCommandChain *chain=0);
+	static void configureSettings (const QString& page, QWidget *parent=0, RCommandChain *chain=0);
 
 	static void loadSettings (KConfig *config);
 	static void saveSettings (KConfig *config);

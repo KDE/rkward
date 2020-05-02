@@ -55,7 +55,7 @@ friend class RKCommandEditorWindow;
 	~RKCommandEditorWindowPart ();
 };
 
-/** classes wishing to use RKFunctionArgHinter should derive from this, and implement provideContext () */
+/** classes wishing to use context help should derive from this, and implement provideContext () */
 class RKScriptContextProvider {
 public:
 	RKScriptContextProvider () {};
@@ -70,36 +70,6 @@ public:
 	};
 	/** to be implemented in subclasses. Provide current context for help searches (based on current selection / current cursor position). If not package information is known, leave that empty. */
 	virtual void currentHelpContext (QString *symbol, QString *package) = 0;
-};
-
-class RObject;
-/** function argument hinting for RKCommandEditorWindow and RKConsole */
-class RKFunctionArgHinter : public QObject {
-	Q_OBJECT
-public:
-	RKFunctionArgHinter (RKScriptContextProvider *provider, KTextEditor::View* view);
-	~RKFunctionArgHinter ();
-
-	/** Try to show an arg hint now */
-	void tryArgHint ();
-	/** Hide the arg hint (if shown) */
-	void hideArgHint ();
-public slots:
-	/** Internal worker function for tryArgHint () */
-	void tryArgHintNow ();
-
-	void updateArgHintWindow ();
-protected:
-	/** The (keypress) events of the view are filtered to determine, when to show / hide an argument hint */
-	bool eventFilter (QObject *, QEvent *e) override;
-private:
-	RKScriptContextProvider *provider;
-	KTextEditor::View *view;
-
-	/** A timer to refresh the hint window periodically. This is a bit sorry, but it's really hard to find out, when the view has been moved, or gains/loses focus. While possible, this approach uses much less code. */
-	QTimer updater;
-	bool active;
-	QLabel *arghints_popup;
 };
 
 class RKJobSequence;
@@ -206,7 +176,6 @@ private:
 	KTextEditor::Document *m_doc;
 	KTextEditor::View *m_view;
 	KTextEditor::MovingInterface *smart_iface;
-	RKFunctionArgHinter *hinter;
 
 	void initializeActions (KActionCollection* ac);
 

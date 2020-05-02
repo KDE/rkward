@@ -7,12 +7,15 @@
     - Should all KIO-schemes be supported (not too hard to do, help:/ already supported)?
     - Support pdf?
 - <text> elements in plugins may now also contain clickable links, including rkward://-scheme links
-* TODO: Bring new code hinting features to the console window!
+- The new code hinting features from version 0.7.1 are now also available in the console
 - On unix-systems, RKWard can now be run without installation
+  - TODO: common.js is not found in plugins!
 - Kate addons are now supported within RKWard. Intially, search-in-files, snippets, and projects are loaded by default
   * TODO: Some plugins still have UI issues. E.g.:
     - SQL plugin fails to add toplevel menu
     - Text filter plugin always shows menu entry, but should be limited to script windows
+- TODO:
+  - Ctrl+Enter action now clashes with kate part...
 
 --- Version 0.7.1 - Jan-23-2020
 - Code hinting in script editor windows has been reworked, and now also completes argument names
