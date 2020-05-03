@@ -82,7 +82,7 @@ RKCodeCompletionSettingsWidget::RKCodeCompletionSettingsWidget(QWidget *parent, 
 
 	tabkey_invokes_completion_box = new QCheckBox(group);
 	tabkey_invokes_completion_box->setChecked(settings->tabkey_invokes_completion);
-	RKCommonFunctions::setTips (i18n ("Note: Further shorcuts can be assigned, and by default, Ctlr+Space invokes completions, in addition to this. Further, Pressing the tab key, while completions are shown, performs partial completion (if possible), independent of this setting."), tabkey_invokes_completion_box);
+	RKCommonFunctions::setTips (i18n ("Note: Further shortcuts can be assigned, and by default, Ctlr+Space invokes completions, in addition to this. Further, pressing the Tab key, while completions are shown, performs partial completion (if possible), independent of this setting."), tabkey_invokes_completion_box);
 	connect (tabkey_invokes_completion_box, &QCheckBox::stateChanged, this, &RKCodeCompletionSettingsWidget::change);
 	form_layout->addRow (i18n ("Tab key invokes code completion"), tabkey_invokes_completion_box);
 
