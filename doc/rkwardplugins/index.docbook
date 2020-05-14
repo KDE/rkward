@@ -44,15 +44,7 @@ as Authors, publish date, the abstract, and Keywords -->
 
 
 <copyright>
-<year>2006</year>
-<year>2007</year>
-<year>2008</year>
-<year>2010</year>
-<year>2011</year>
-<year>2012</year>
-<year>2013</year>
-<year>2014</year>
-<year>2015</year>
+<year>2006-2020</year>
 <holder>Thomas Friedrichsmeier</holder>
 </copyright>
 <!-- Translators: put here the copyright notice of the translation -->
@@ -60,8 +52,8 @@ as Authors, publish date, the abstract, and Keywords -->
      and in the FDL itself on how to use it. -->
 <legalnotice>&FDLNotice;</legalnotice>
 
-<date>2015-11-05</date>
-<releaseinfo>0.6.400</releaseinfo>
+<date>2020-05-11</date>
+<releaseinfo>0.7.2</releaseinfo>
 
 <abstract>
 <para>
