@@ -3,16 +3,15 @@
 - Fixed: Crash when mousing over code preview window with focus-follows-mouse enabled
 - Add menu action to open any supported file type, directly
 - Support using QWebEngine instead of QtWebKit (still supported)
-  - TODO:
-    - Should all KIO-schemes be supported (not too hard to do, help:/ already supported)?
-    - Support pdf?
 - <text> elements in plugins may now also contain clickable links, including rkward://-scheme links
 - The new code hinting features from version 0.7.1 are now also available in the console
+  * TODO: I'm not quite happy with the behavior e.g. when typing "?print<Enter>", yet (requires <Enter> twice)
 - On unix-systems, RKWard can now be run without installation
 - Kate addons are now supported within RKWard. Intially, search-in-files, snippets, and projects are loaded by default
   * TODO: Some plugins still have UI issues. E.g.:
     - SQL plugin fails to add toplevel menu
     - Text filter plugin always shows menu entry, but should be limited to script windows
+  * TODO: Instruct packagers that they should add a dependency on kate, or at least kate plugins
 - Fixed: Avoid shorcut clash with kate part by removing conflicting (default) shortcuts, automatically
 
 --- Version 0.7.1 - Jan-23-2020

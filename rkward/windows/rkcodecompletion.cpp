@@ -386,6 +386,7 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 				return true;
 			}
 			cc_iface->forceCompletion();
+// TODO: If nothing was actually modified, should return press should be sent? Configurable?
 			if (settings->autoEnabled ()) ignore_next_trigger = true;
 			return true;
 		}
