@@ -2,7 +2,7 @@
                           rksettingsmoduleplugins  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004-2018 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -52,6 +52,7 @@ public:
 
 	/** @returns a list of active plugin maps */
 	static QStringList pluginMaps ();
+	static int uniqueUsablePluginMapCount ();
 	static PluginPrefs getInterfacePreference () { return interface_pref; };
 	static bool showCodeByDefault () { return show_code; };
 	static void setShowCodeByDefault (bool shown) { show_code = shown; };

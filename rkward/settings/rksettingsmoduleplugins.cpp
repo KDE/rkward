@@ -286,6 +286,17 @@ QStringList RKSettingsModulePlugins::pluginMaps () {
 }
 
 // static
+int RKSettingsModulePlugins::uniqueUsablePluginMapCount() {
+	RK_TRACE (SETTINGS);
+	QSet<QString> ids;
+	for (int i = 0; i < known_plugin_maps.size (); ++i) {
+		if (known_plugin_maps[i].broken_in_this_version) return false;
+		ids.insert(known_plugin_maps[i].id);
+	}
+	return ids.size();
+}
+
+// static
 void RKSettingsModulePlugins::registerPluginMaps (const QStringList &maps, bool force_add, bool force_reload, bool suppress_reload) {
 	RK_TRACE (SETTINGS);
 

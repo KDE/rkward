@@ -2,7 +2,7 @@
                           rkward.cpp  -  description
                              -------------------
     begin                : Tue Oct 29 20:06:08 CET 2002
-    copyright            : (C) 2002-2019 by Thomas Friedrichsmeier
+    copyright            : (C) 2002-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -70,6 +70,7 @@
 #include "dialogs/rkloadlibsdialog.h"
 #include "dialogs/rkimportdialog.h"
 #include "dialogs/rkrecoverdialog.h"
+#include "dialogs/rksetupwizard.h"
 #include "agents/rksaveagent.h"
 #include "agents/rkloadagent.h"
 #include "agents/rkquitagent.h"
@@ -225,11 +226,6 @@ void RKWardMainWindow::closeEvent (QCloseEvent *e) {
 void RKWardMainWindow::doPostInit () {
 	RK_TRACE (APP);
 
-	// Check installation first
-	if (RKCommonFunctions::getRKWardDataDir ().isEmpty ()) {
-		KMessageBox::error (this, i18n ("<p>RKWard either could not find its resource files at all, or only an old version of those files. The most likely cause is that the last installation failed to place the files in the correct place. This can lead to all sorts of problems, from single missing features to complete failure to function.</p><p><b>You should quit RKWard, now, and fix your installation</b>. For help with that, see <a href=\"http://rkward.kde.org/compiling\">http://rkward.kde.org/compiling</a>.</p>"), i18n ("Broken installation"), KMessageBox::Notify | KMessageBox::AllowLink);
-	}
-
 	QStringList open_urls = RKGlobals::startup_options.take ("initial_urls").toStringList ();
 	bool warn_external = RKGlobals::startup_options.take ("warn_external").toBool ();
 	QString evaluate_code = RKGlobals::startup_options.take ("evaluate").toString ();
@@ -238,6 +234,7 @@ void RKWardMainWindow::doPostInit () {
 	gui_rebuild_locked = false;
 
 	show ();
+	RKSetupWizard::doAutoCheck();
 	KMessageBox::enableMessage ("external_link_warning");  // can only be disabled per session
 
 	QUrl recover_url = RKRecoverDialog::checkRecoverCrashedWorkspace ();
@@ -330,10 +327,6 @@ void RKWardMainWindow::initPlugins (const QStringList &automatically_added) {
 	slotSetStatusBarText(i18n("Setting up plugins..."));
 
 	QStringList all_maps = RKSettingsModulePlugins::pluginMaps ();
-	if (all_maps.isEmpty()) {
-		KMessageBox::information (0, i18n ("Plugins are needed: you may manage these through \"Settings->Manage R package and plugins\".\n"), i18n ("No active plugin maps"));
-		return;
-	}
 
 	factory ()->removeClient (RKComponentMap::getMap ());
 	RKComponentMap::getMap ()->clearAll ();
@@ -730,7 +723,8 @@ void RKWardMainWindow::initStatusBar () {
 	boxl->addWidget (dummy);
 
 	statusBar ()->addPermanentWidget (box, 0);
-	setRStatus (Starting);
+	setRStatus (RInterface::Starting);
+	connect(RKGlobals::rInterface(), &RInterface::backendStatusChanged, this, &RKWardMainWindow::setRStatus);
 }
 
 void RKWardMainWindow::openWorkspace (const QUrl &url) {
@@ -930,21 +924,25 @@ void RKWardMainWindow::slotDetachWindow () {
 	RKWorkplace::mainWorkplace ()->detachWindow (RKWorkplace::mainWorkplace ()->activeWindow (RKMDIWindow::Attached));
 }
 
-void RKWardMainWindow::setRStatus (RStatus status) {
+void RKWardMainWindow::setRStatus (int status) {
 	RK_TRACE (APP);
 
 	QColor status_color;
-	if (status == Busy) {
+	if (status == RInterface::Busy) {
 		status_color = QColor (255, 0, 0);
 		statusbar_r_status->setToolTip (i18n ("The <b>R</b> engine is busy."));
 		interrupt_all_commands->setEnabled (true);
-	} else if (status == Idle) {
+	} else if (status == RInterface::Idle) {
 		status_color = QColor (0, 255, 0);
 		statusbar_r_status->setToolTip (i18n ("The <b>R</b> engine is idle."));
 		interrupt_all_commands->setEnabled (false);
-	} else {
+	} else if (status == RInterface::Starting) {
 		status_color = QColor (255, 255, 0);
 		statusbar_r_status->setToolTip (i18n ("The <b>R</b> engine is being initialized."));
+	} else {
+		status_color = QColor (255, 0, 0);
+		statusbar_r_status->setToolTip (i18n ("The <b>R</b> engine is unavailable."));
+		interrupt_all_commands->setEnabled (false);
 	}
 	QPalette palette = statusbar_r_status->palette ();
 	palette.setBrush (statusbar_r_status->backgroundRole(), QBrush (status_color));

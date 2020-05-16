@@ -43,6 +43,7 @@ public:
 	void unloadPlugin(const QString& identifier);
 	void loadPlugins(const QStringList &plugins);
 	KatePluginIntegrationWindow *mainWindow() const { return window; };
+	int knownPluginCount() const { return known_plugins.size(); };
 private slots:
 friend class KatePluginIntegrationWindow;
 	void saveConfigAndUnload();

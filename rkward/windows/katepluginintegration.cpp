@@ -123,7 +123,7 @@ QObject* KatePluginIntegrationApp::loadPlugin (const QString& identifier) {
 		}
 	}
 
-    return 0;
+	return 0;
 }
 
 void KatePluginIntegrationApp::loadPlugins(const QStringList& plugins) {

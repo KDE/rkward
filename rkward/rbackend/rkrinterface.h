@@ -73,7 +73,14 @@ not be interrupted. */
 /** returns the command currently running in the thread. Be careful when using the returned pointer! */
 	RCommand *runningCommand () const { return (all_current_commands.isEmpty () ? 0 : all_current_commands.last ()); };
 
-	bool backendIsDead () { return backend_dead; };
+	enum RStatus {
+		Busy,
+		Idle,
+		Starting,
+		Dead
+	};
+
+	bool backendIsDead () const { return backend_dead; };
 	bool backendIsIdle ();
 	static bool isNaReal (double value) { return na_real == value; };
 	static bool isNaInt (int value) { return na_int == value; };
@@ -135,6 +142,8 @@ protected:
 	void rCommandDone (RCommand *command) override;
 signals:
 	void backendWorkdirChanged();
+/** Note: status is actually RInterface::RStatus */
+	void backendStatusChanged(int new_status);
 };
 
 /**

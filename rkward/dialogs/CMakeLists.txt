@@ -8,6 +8,7 @@ SET(dialogs_STAT_SRCS
    rkselectlistdialog.cpp
    rkrecoverdialog.cpp
    rkerrordialog.cpp
+   rksetupwizard.cpp
    )
 
 ADD_LIBRARY(dialogs STATIC ${dialogs_STAT_SRCS})

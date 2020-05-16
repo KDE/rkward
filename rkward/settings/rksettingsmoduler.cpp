@@ -687,7 +687,7 @@ void RKSettingsModuleRPackages::validateSettingsInteractive (QList<RKSettingsWiz
 			QVBoxLayout *layout = new QVBoxLayout (page);
 			layout->addWidget (RKCommonFunctions::wordWrappedLabel (i18n ("The configured library locations (where R packages will be installed on this system) contains the directory '%1', "
 			                                  "which was suggested as a default library location in earlier versions of RKWard. Use of this directory is no longer "
-			                                  "recommended, as it is not accessible R sessions outside of RKWard (unless configured, explicitly). Also due to the lack "
+			                                  "recommended, as it is not accessible to R sessions outside of RKWard (unless configured, explicitly). Also due to the lack "
 			                                  "of an R version number in the directory name, it offers no protection against using packages built for an incompatible "
 			                                  "version of R.")));
 			// D'uh. QRadioButton supports neither wordwrap nor formatting. Why?

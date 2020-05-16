@@ -2,7 +2,7 @@
                           rkrinterface.cpp  -  description
                              -------------------
     begin                : Fri Nov 1 2002
-    copyright            : (C) 2002-2019 by Thomas Friedrichsmeier
+    copyright            : (C) 2002-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -193,7 +193,7 @@ void RInterface::tryNextCommand () {
 				return;
 			}
 
-			if (previously_idle) RKWardMainWindow::getMain ()->setRStatus (RKWardMainWindow::Busy);
+			if (previously_idle) emit backendStatusChanged(Busy);
 			previously_idle = false;
 
 			doNextCommand (command);
@@ -202,7 +202,7 @@ void RInterface::tryNextCommand () {
 	}
 
 	if (on_top_level) {
-		if (!previously_idle) RKWardMainWindow::getMain ()->setRStatus (RKWardMainWindow::Idle);
+		if (!previously_idle) emit backendStatusChanged(Idle);
 		previously_idle = true;
 	}
 }
@@ -853,6 +853,7 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 			QString message = request->params["message"].toString ();
 			message += i18n ("\nThe R backend will be shut down immediately. This means, you can not use any more functions that rely on it. I.e. you can do hardly anything at all, not even save the workspace (but if you're lucky, R already did that). What you can do, however, is save any open command-files, the output, or copy data out of open data editors. Quit RKWard after that. Sorry!");
 			RKErrorDialog::reportableErrorMessage (0, message, QString (), i18n ("R engine has died"), "r_engine_has_died");
+			emit backendStatusChanged(Dead);
 		}
 	} else {
 		RK_ASSERT (false);
