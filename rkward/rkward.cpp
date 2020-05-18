@@ -400,6 +400,7 @@ void RKWardMainWindow::startR () {
 	}
 
 	RKGlobals::rinter = new RInterface ();
+	connect(RKGlobals::rInterface(), &RInterface::backendStatusChanged, this, &RKWardMainWindow::setRStatus);
 	new RObjectList ();
 
 	RObjectBrowser::mainBrowser ()->unlock ();
@@ -724,7 +725,6 @@ void RKWardMainWindow::initStatusBar () {
 
 	statusBar ()->addPermanentWidget (box, 0);
 	setRStatus (RInterface::Starting);
-	connect(RKGlobals::rInterface(), &RInterface::backendStatusChanged, this, &RKWardMainWindow::setRStatus);
 }
 
 void RKWardMainWindow::openWorkspace (const QUrl &url) {
