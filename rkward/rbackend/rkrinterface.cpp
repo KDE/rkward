@@ -577,7 +577,7 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 	} else if (call == "loadPluginMaps") {
 		bool force = (calllist.value (1) == "force");
 		bool reload = (calllist.value (2) == "reload");
-		RKSettingsModulePlugins::registerPluginMaps (calllist.mid (3), force, reload);
+		RKSettingsModulePlugins::registerPluginMaps (calllist.mid (3), force ? RKSettingsModulePlugins::ManualAddition : RKSettingsModulePlugins::AddIfNewAndDefault, reload);
 	} else if (call == "updateInstalledPackagesList") {
 		RKSessionVars::instance ()->setInstalledPackages (calllist.mid (1));
 	} else if (call == "showHTML") {

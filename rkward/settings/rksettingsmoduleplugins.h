@@ -60,13 +60,18 @@ public:
 	static void setDefaultCodeHeight (int new_height) { code_size = new_height; }
 	static int defaultSidePreviewWidth () { return side_preview_width; };
 	static void setDefaultSidePreviewWidth (int new_width) { side_preview_width = new_width; }
+	enum AddMode {
+		ManualAddition,
+		AddIfDefault,
+		AddIfNewAndDefault
+	};
 	/** register a list of available plugin-maps (which may or may not already be known). New maps are activated, automatically.
 	 * @param maps Plugin maps (filenames) to add
-	 * @param force_add If true, maps are added, even if they are not "new", and had previously been disabled by the user
+	 * @param add_mode Controls whether to activate maps that have low priority, or had previously been disabled by the user
 	 * @param force_reload If true, plugin maps are always reloaded, even if no maps were added
 	 * @param suppress_reload If true (and force_reload is false), do not reload plugin maps, even if maps were added
 	 */
-	static void registerPluginMaps (const QStringList &maps, bool force_add, bool force_reload, bool suppress_reload=false);
+	static void registerPluginMaps (const QStringList &maps, AddMode add_mode, bool force_reload, bool suppress_reload=false);
 	/** Looks for the given id among known plugin maps */
 	static QString findPluginMapById (const QString &id);
 	/** marks given map as broken (in this version), and deactivates it. @Returns false is the map was already known to be broken, true otherwise. */
@@ -91,6 +96,9 @@ public:
 	typedef QList<PluginMapStoredInfo> PluginMapList;
 	static PluginMapList knownPluginmaps () { return known_plugin_maps; };
 	static void parsePluginMapBasics (const QString &filename, QString *id, int *priority);
+	/** Registers the plugin maps that are shipped with RKWard.
+	 * @param force_add All default maps are also activated, even if they were already known, and disabled by the user. */
+	static void registerDefaultPluginMaps (AddMode add_mode);
 public slots:
 	void settingChanged ();
 	void configurePluginmaps ();

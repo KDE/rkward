@@ -34,7 +34,6 @@
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkstandardicons.h"
 #include "../windows/katepluginintegration.h"
-#include "../plugin/rkcomponentmap.h"
 #include "../rbackend/rkrinterface.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
@@ -63,8 +62,12 @@ public:
 
 		layout->addWidget(new QLabel(shortlabel + ": " + shortstatuslabel), row, 1);
 
-		box = new QComboBox();
-		if (!options.isEmpty()) {
+		if (options.isEmpty()) {
+			layout->addWidget(new QLabel(i18n("No action needed.")), row, 2);
+		} else if (options.length() == 1) {
+			layout->addWidget(new QLabel(options[0].shortlabel), row, 2);
+		} else {
+			box = new QComboBox();
 			for (int i = 0; i < options.size(); ++i) {
 				box->addItem(options[i].shortlabel);
 			}
@@ -82,12 +85,21 @@ public:
 			layout->addWidget(info, row, 3);
 		}
 	}
-	void addOption(const QString &shortlabel, const QString &longlabel, std::function<void()> callback);
+	void addOption(const QString &shortlabel, const QString &longlabel, std::function<void()> callback) {
+		options.append(Option(shortlabel, longlabel, callback));
+	}
 	void setStatus(Status _status, const QString &_shortstatuslabel) { status = _status; shortstatuslabel = _shortstatuslabel; };
 	void setShortLabel(const QString &label) { shortlabel = label; };
 	void setLongLabel(const QString &label) { longlabel = label; };
+	void apply() {
+		if (options.isEmpty()) return;
+		int opt = 0;
+		if (box) opt = box->currentIndex();
+		options[opt].callback();
+	};
 private:
 	struct Option {
+		Option(const QString &shortlabel, const QString &longlabel, std::function<void()> callback) : shortlabel(shortlabel), longlabel(longlabel), callback(callback) {};
 		QString shortlabel;
 		QString longlabel;
 		std::function<void()> callback;
@@ -120,7 +132,7 @@ RKSetupWizard::~RKSetupWizard() {
 void RKSetupWizard::doAutoCheck() {
 	RK_TRACE (DIALOGS);
 
-	if (RKCommonFunctions::getRKWardDataDir ().isEmpty () || RKComponentMap::getMap()->isEmpty() || (RKWardMainWindow::getMain()->katePluginIntegration()->knownPluginCount() == 0)) {
+	if (RKCommonFunctions::getRKWardDataDir ().isEmpty () || RKSettingsModulePlugins::pluginMaps().isEmpty() || (RKWardMainWindow::getMain()->katePluginIntegration()->knownPluginCount() == 0)) {
 		fullInteractiveCheck(ProblemsDetected);
 	} else if (RKSettingsModuleGeneral::rkwardVersionChanged()) {
 		fullInteractiveCheck(NewVersionRKWard);
@@ -160,24 +172,45 @@ void RKSetupWizard::fullInteractiveCheck(InvokationReason reason) {
 	layout->setColumnStretch(1, 2);
 	layout->setColumnStretch(2, 1);
 
+	bool reinstallation_required = false;
 	RKSetupWizardItem idir(i18n("Installation directory"));
 	if (RKCommonFunctions::getRKWardDataDir ().isEmpty ()) {
 		idir.setStatus(RKSetupWizardItem::Error, i18n("Not found."));
 		// TODO: test, whether links work, here
 		idir.setLongLabel("<p>RKWard either could not find its resource files at all, or only an old version of those files. The most likely cause is that the last installation failed to place the files in the correct place. This can lead to all sorts of problems, from single missing features to complete failure to function.</p><p><b>You should quit RKWard, now, and fix your installation</b>. For help with that, see <a href=\"http://rkward.kde.org/compiling\">http://rkward.kde.org/compiling</a>.</p>");
+		idir.addOption(i18n("Reinstallation required"), i18n("This problem cannot be corrected, automatically. You will have to reinstall RKWard."), []() {});
+		reinstallation_required = true;
 	} else {
 		idir.setStatus(RKSetupWizardItem::Good, i18n("Found."));
 	}
 	idir.createWidget(layout, ++row);
 
-/*
 	RKSetupWizardItem pluginmaps(i18n("RKWard plugins"));
-	if (RKComponentMap::getMap()->isEmpty()) {
-		pluginmaps.setStatus(RKSetupWizardItem::Error, i18n("None selected"));
+	if (RKSettingsModulePlugins::pluginMaps().isEmpty()) {
+		// TODO: Move to RKSettingsModulePlugins::validateSettingsInteractive
+		pluginmaps.setLongLabel(i18n("<p>No plugins are enabled. This is probably not intended.</p>"));
+		pluginmaps.setStatus(RKSetupWizardItem::Warning, i18n("None selected"));
+		pluginmaps.addOption(i18n("Restore defaults"), i18n("Enable the default plugins"), []() { RKSettingsModulePlugins::registerDefaultPluginMaps(RKSettingsModulePlugins::AddIfDefault); });
+		pluginmaps.addOption(i18n("No change"), i18n("Proceed without plugins"), []() {});
+
+		// TODO: Also offer help, if a suspicioulsy small share of plugins is active? RKSettingsModulePlugins::knownUsablePluginCount();
 	} else {
 		pluginmaps.setStatus(RKSetupWizardItem::Good, i18n("Found."));
 	}
-	pluginmaps.createWidget(layout, ++row); */
+	pluginmaps.createWidget(layout, ++row);
+
+	RKSetupWizardItem kateplugins(i18n("Kate plugins"));
+	int kateplugincount = RKWardMainWindow::getMain()->katePluginIntegration()->knownPluginCount();
+	if (kateplugincount < 1) {
+		// TODO: Move to RKSettingsModuleKatePlugins::validateSettingsInteractive
+		kateplugins.setLongLabel(i18n("<p>Important functionality in RKWard is provided by kate plugins. It looks like none are installed on this system. On Linux/BSD, this can usually be fixed by installing kate.</p>"));
+		kateplugins.setStatus(RKSetupWizardItem::Error, i18n("None found"));
+		kateplugins.addOption(i18n("(Attempt to) install kate"), i18n("Attempt to install kate using the muon package manager. If this is not available, please install kate, manuelly"), []() {}); // TODO
+		kateplugins.addOption(i18n("No change"), i18n("Proceed without plugins"), []() {});
+	} else {
+		kateplugins.setStatus(RKSetupWizardItem::Good, i18n("Found %1 plugins.", kateplugincount));
+	}
+	kateplugins.createWidget(layout, ++row);
 
 	layout->setRowStretch(++row, 1);
 	wizard->addPage(page, i18n("Basic installation"));
@@ -195,6 +228,10 @@ void RKSetupWizard::fullInteractiveCheck(InvokationReason reason) {
 	wizard->setValid(firstpageref, true);
 
 	wizard->exec();
+
+	// TODO: apply all
+	pluginmaps.apply();
+
 	delete wizard;
 /* TODO
 	RKSettingsModulePlugins::knownUsablePluginCount();
