@@ -20,8 +20,10 @@
 
 #include <KAssistantDialog>
 
+class QGridLayout;
+class RKSetupWizardItem;
 class RKSetupWizard : public KAssistantDialog {
-public:
+protected:
 	RKSetupWizard(QWidget* parent);
 	~RKSetupWizard();
 
@@ -31,10 +33,21 @@ public:
 		NewVersionR,
 		ManualCheck
 	};
-
+	static bool has_been_run;
+public:
 	static void doAutoCheck();
 	static void fullInteractiveCheck(InvokationReason reason);
-	static bool has_been_run;
+
+	void markExternalPackageForInstallation(const QString &name, bool install);
+	void markRPackageForInstallation(const QString &name, bool install);
+private:
+	QStringList software_to_install;
+	QStringList packages_to_install;
+	void createStandardPage();
+	QWidget *current_page;
+	int current_row;
+	QGridLayout* current_layout;
+	void appendItem(RKSetupWizardItem& item);
 };
 
 #endif
