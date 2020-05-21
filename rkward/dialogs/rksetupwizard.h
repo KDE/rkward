@@ -47,7 +47,8 @@ private:
 	QWidget *current_page;
 	int current_row;
 	QGridLayout* current_layout;
-	void appendItem(RKSetupWizardItem& item);
+	void appendItem(RKSetupWizardItem* item);
+	QList<RKSetupWizardItem*> items;
 };
 
 #endif

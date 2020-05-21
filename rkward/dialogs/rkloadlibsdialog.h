@@ -2,7 +2,7 @@
                           rkloadlibsdialog  -  description
                              -------------------
     begin                : Mon Sep 6 2004
-    copyright            : (C) 2004 - 2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2004 - 2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -63,7 +63,7 @@ public:
 @param parent parent QWidget. The dialog will be centered there
 @param chain RCommandChain to run the necessary commands in
 @param package_name name of the required package */
-	static void showInstallPackagesModal (QWidget *parent, RCommandChain *chain, const QString &package_name);
+	static void showInstallPackagesModal (QWidget *parent, RCommandChain *chain, const QStringList &package_names);
 	static void showPluginmapConfig (QWidget *parent=0, RCommandChain *chain=0);
 	QStringList currentLibraryLocations ()  const { return library_locations; };
 	void accept () override;
@@ -83,7 +83,7 @@ protected slots:
 	void processExited (int exitCode, QProcess::ExitStatus exitStatus);
 	void installationProcessOutput ();
 	void installationProcessError ();
-	void automatedInstall ();
+	void automatedInstall (const QStringList &packages);
 	void slotPageChanged ();
 private:
 	void addLibraryLocation (const QString &new_loc);
@@ -100,7 +100,6 @@ friend class InstallPackagesWidget;
 
 	QStringList library_locations;
 
-	QString auto_install_package;
 	int num_child_widgets;
 	bool was_accepted;
 
@@ -243,7 +242,7 @@ public:
 	explicit InstallPackagesWidget (RKLoadLibsDialog *dialog);
 	
 	~InstallPackagesWidget ();
-	void trySelectPackage (const QString &package_name);
+	void trySelectPackages (const QStringList &package_names);
 	void initialize ();
 public slots:
 	void ok ();
