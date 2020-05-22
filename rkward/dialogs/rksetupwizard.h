@@ -51,4 +51,39 @@ private:
 	QList<RKSetupWizardItem*> items;
 };
 
+class QComboBox;
+class RKSetupWizardItem {
+public:
+	enum Status {
+		Error,
+		Warning,
+		Good
+	};
+	RKSetupWizardItem(const QString &shortlabel, const QString &longlabel=QString(), Status status=Good, const QString &shortstatuslabel=QString()) : status(status), shortlabel(shortlabel), longlabel(longlabel), shortstatuslabel(shortstatuslabel), box(nullptr) {};
+	~RKSetupWizardItem() {};
+	void addOption(const QString &shortlabel, const QString &longlabel, std::function<void(RKSetupWizard*)> callback) {
+		options.append(Option(shortlabel, longlabel, callback));
+	}
+	void setStatus(Status _status, const QString &_shortstatuslabel) { status = _status; shortstatuslabel = _shortstatuslabel; };
+	void setShortLabel(const QString &label) { shortlabel = label; };
+	void setLongLabel(const QString &label) { longlabel = label; };
+private:
+friend class RKSetupWizard;
+	void createWidget(QGridLayout *layout, int row);
+	void apply(RKSetupWizard *wizard);
+
+	struct Option {
+		Option(const QString &shortlabel, const QString &longlabel, std::function<void(RKSetupWizard*)> callback) : shortlabel(shortlabel), longlabel(longlabel), callback(callback) {};
+		QString shortlabel;
+		QString longlabel;
+		std::function<void(RKSetupWizard*)> callback;
+	};
+	QList<Option> options;
+	Status status;
+	QString shortlabel;
+	QString longlabel;
+	QString shortstatuslabel;
+	QComboBox *box;
+};
+
 #endif

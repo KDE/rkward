@@ -44,79 +44,49 @@
 
 bool RKSetupWizard::has_been_run = false;
 
-class RKSetupWizardItem {
-public:
-	enum Status {
-		Error,
-		Warning,
-		Good
-	};
-	RKSetupWizardItem(const QString &shortlabel, const QString &longlabel=QString(), Status status=Good, const QString &shortstatuslabel=QString()) : status(status), shortlabel(shortlabel), longlabel(longlabel), shortstatuslabel(shortstatuslabel), box(nullptr) {};
-	~RKSetupWizardItem() {};
-	void addOption(const QString &shortlabel, const QString &longlabel, std::function<void(RKSetupWizard*)> callback) {
-		options.append(Option(shortlabel, longlabel, callback));
-	}
-	void setStatus(Status _status, const QString &_shortstatuslabel) { status = _status; shortstatuslabel = _shortstatuslabel; };
-	void setShortLabel(const QString &label) { shortlabel = label; };
-	void setLongLabel(const QString &label) { longlabel = label; };
-private:
-friend class RKSetupWizard;
-	void createWidget(QGridLayout *layout, int row) {
-		QString icon_id;
-		if (status == Good) icon_id = QLatin1String("dialog-positive");
-		else if (status == Warning) icon_id = QLatin1String("dialog-warning");
-		else icon_id = QLatin1String("dialog-error");
-		auto label = new QLabel();
-		label->setPixmap(QIcon::fromTheme(icon_id).pixmap(32, 32));  // TODO: Correct way to not hardcode size?
-		layout->addWidget(label, row, 0);
+void RKSetupWizardItem::createWidget(QGridLayout *layout, int row) {
+	QString icon_id;
+	if (status == Good) icon_id = QLatin1String("dialog-positive");
+	else if (status == Warning) icon_id = QLatin1String("dialog-warning");
+	else icon_id = QLatin1String("dialog-error");
+	auto label = new QLabel();
+	label->setPixmap(QIcon::fromTheme(icon_id).pixmap(32, 32));  // TODO: Correct way to not hardcode size?
+	layout->addWidget(label, row, 0);
 
-		layout->addWidget(new QLabel(shortlabel + ": " + shortstatuslabel), row, 1);
+	layout->addWidget(new QLabel(shortlabel + ": " + shortstatuslabel), row, 1);
 
-		if (options.isEmpty()) {
-			layout->addWidget(new QLabel(i18n("No action needed.")), row, 2);
-		} else if (options.length() == 1) {
-			layout->addWidget(new QLabel(options[0].shortlabel), row, 2);
-		} else {
-			box = new QComboBox();
-			for (int i = 0; i < options.size(); ++i) {
-				box->addItem(options[i].shortlabel);
-			}
-			layout->addWidget(box, row, 2);
+	if (options.isEmpty()) {
+		layout->addWidget(new QLabel(i18n("No action needed.")), row, 2);
+	} else if (options.length() == 1) {
+		layout->addWidget(new QLabel(options[0].shortlabel), row, 2);
+	} else {
+		box = new QComboBox();
+		for (int i = 0; i < options.size(); ++i) {
+			box->addItem(options[i].shortlabel);
 		}
-
-		if (!(longlabel.isEmpty() && options.isEmpty())) {
-			QString details = longlabel;
-			for (int i = 0; i < options.size(); ++i) {
-				details += QString("<p><b>%1</b>: %2</p>").arg(options[i].shortlabel).arg(options[i].longlabel);
-			}
-			auto info = new QPushButton();
-			info->setIcon(RKStandardIcons::getIcon(RKStandardIcons::WindowHelp));
-			QObject::connect(info, &QPushButton::clicked, [details, layout]() { KMessageBox::information(layout->parentWidget(), details); });
-			layout->addWidget(info, row, 3);
-		}
+		layout->addWidget(box, row, 2);
 	}
-	void apply(RKSetupWizard *wizard) {
-		if (options.isEmpty()) return;
-		int opt = 0;
-		if (box) opt = box->currentIndex();
-		options[opt].callback(wizard);
-	};
 
-	struct Option {
-		Option(const QString &shortlabel, const QString &longlabel, std::function<void(RKSetupWizard*)> callback) : shortlabel(shortlabel), longlabel(longlabel), callback(callback) {};
-		QString shortlabel;
-		QString longlabel;
-		std::function<void(RKSetupWizard*)> callback;
-	};
-	QList<Option> options;
-	Status status;
-	QString shortstatuslabel;
-	QString shortlabel;
-	QString longlabel;
-	QComboBox *box;
+	if (!(longlabel.isEmpty() && options.isEmpty())) {
+		QString details = longlabel;
+		for (int i = 0; i < options.size(); ++i) {
+			details += QString("<p><b>%1</b>: %2</p>").arg(options[i].shortlabel).arg(options[i].longlabel);
+		}
+		auto info = new QPushButton();
+		info->setIcon(RKStandardIcons::getIcon(RKStandardIcons::WindowHelp));
+		QObject::connect(info, &QPushButton::clicked, [details, layout]() { KMessageBox::information(layout->parentWidget(), details); });
+		layout->addWidget(info, row, 3);
+	}
+}
+
+void RKSetupWizardItem::apply(RKSetupWizard *wizard) {
+	if (options.isEmpty()) return;
+	int opt = 0;
+	if (box) opt = box->currentIndex();
+	options[opt].callback(wizard);
 };
 
-RKSetupWizardItem* makeRPackageCheck(const QString &packagename, const QString &explanation, RKSetupWizardItem::Status status_if_missing, RKSetupWizard* wizard) {
+RKSetupWizardItem* makeRPackageCheck(const QString &packagename, const QString &explanation, RKSetupWizardItem::Status status_if_missing) {
 	RK_TRACE (DIALOGS);
 
 	auto ret = new RKSetupWizardItem(packagename, explanation);
@@ -241,9 +211,9 @@ void RKSetupWizard::fullInteractiveCheck(InvokationReason reason) {
 	// This must be created _after_ the backend has started, for obvious reasons.
 	wizard->createStandardPage();
 
-	auto r2htmlpackage = makeRPackageCheck("R2HTML", i18n("The R2HTML package is used by nearly all RKWard output functions, and thus required."), RKSetupWizardItem::Error, wizard);
+	auto r2htmlpackage = makeRPackageCheck("R2HTML", i18n("The R2HTML package is used by nearly all RKWard output functions, and thus required."), RKSetupWizardItem::Error);
 	wizard->appendItem(r2htmlpackage);
-	auto rmarkdownpackage = makeRPackageCheck("rmarkdown", i18n("The rmarkdown package is required for rendering .Rmd files (including preview rendering), which is an optional but recommended feature."), RKSetupWizardItem::Warning, wizard);
+	auto rmarkdownpackage = makeRPackageCheck("rmarkdown", i18n("The rmarkdown package is required for rendering .Rmd files (including preview rendering), which is an optional but recommended feature."), RKSetupWizardItem::Warning);
 	wizard->appendItem(rmarkdownpackage);
 
 	wizard->current_layout->setRowStretch(++wizard->current_row, 1);
@@ -258,6 +228,8 @@ void RKSetupWizard::fullInteractiveCheck(InvokationReason reason) {
 	if (!wizard->packages_to_install.isEmpty()) {
 		RKLoadLibsDialog::showInstallPackagesModal(wizard, 0, wizard->packages_to_install);
 	}
+
+	// TODO: external software
 
 	delete wizard;
 /* TODO

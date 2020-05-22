@@ -676,7 +676,7 @@ void RKSettingsModuleRPackages::loadSettings (KConfig *config) {
 #include <QGroupBox>
 #include <QRadioButton>
 
-void RKSettingsModuleRPackages::validateSettingsInteractive (QList<RKSettingsWizardPage*>* pages) {
+void RKSettingsModuleRPackages::validateSettingsInteractive (QList<RKSettingsWizardItem*>* items) {
 	RK_TRACE (SETTINGS);
 
 	if (RKSettingsModuleGeneral::storedConfigVersion () < RKSettingsModuleGeneral::RKWardConfig_0_7_1) {

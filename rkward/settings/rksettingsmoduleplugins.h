@@ -46,7 +46,7 @@ public:
 
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
-	static void validateSettingsInteractive (QList<RKSettingsWizardPage*>*) {};
+	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
 
 	QString caption () override;
 

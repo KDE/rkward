@@ -49,7 +49,7 @@ public:
 
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
-	static void validateSettingsInteractive (QList<RKSettingsWizardPage*>*) {};
+	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
 
 	QString caption () override;
 	QUrl helpURL () override { return QUrl ("rkward://page/rkward_plot_history#scd_settings"); };
