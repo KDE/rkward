@@ -222,74 +222,6 @@
 #	.Internal (.addCondHands (c ("message", "warning", "error"), list (function (m) { .Call ("rk.do.condition", c ("m", conditionMessage (m))) }, function (w) { .Call ("rk.do.condition", c ("w", conditionMessage (w))) }, function (e) { .Call ("rk.do.condition", c ("e", conditionMessage (e))) }), globalenv (), NULL, TRUE))
 #}
 
-# these functions can be used to track assignments to R objects. The main interfaces are .rk.watch.symbol (k) and .rk.unwatch.symbol (k). This works by copying the symbol to a local environment, removing it, and replacing it by an active binding to the backup location
-".rk.watched.symbols" <- new.env ()
-
-#' @export
-".rk.make.watch.f" <- function (k) {
-	# we need to make sure, the functions we use are *not* looked up as symbols in .GlobalEnv.
-	# else, for instance, if the user names a symbol "missing", and we try to resolve it in the
-	# wrapper function below, evaluation would recurse to look up "missing" in the .GlobalEnv
-	# due to the call to "if (!missing(value))".
-	missing <- base::missing
-	.Call <- base::.Call
-
-	# NOTE: - Another _small_ speedup (~10%) _could_ be achieved by pre-compiling the returned function (compiler::cmpfun()).
-	#       - Limiting the .Call()s (by keeping/clearing a flag of whether change has been signalled, before) does not have any measurable effect, but adds complexity
-	function (value) {
-		if (missing (value)) {
-			x
-		} else {
-			.Call ("ws", k, PACKAGE="(embedding)");
-			x <<- value
-		}
-	}
-}
-
-#' @export
-".rk.watch.symbol" <- function (k) {
-	if (bindingIsActive(k, globalenv())) {
-		# If the symbol already is an active binding, give up for now, as there is not currently a user-accessible way to copy an active binding (not just its value)
-		message("Note: RKWard cannot watch active binding ", k, " for changes.")
-	} else {
-		f <- .rk.make.watch.f (k)
-		.Call ("rk.copy.no.eval", k, globalenv(), "x", environment (f), PACKAGE="(embedding)");
-		rm (list=k, envir=globalenv ())
-		.rk.makeActiveBinding.default (k, f, globalenv ())
-	}
-	.rk.watched.symbols[[k]] <- TRUE
-
-	invisible (TRUE)
-}
-
-# not needed by rkward but provided for completeness
-#' @export
-".rk.unwatch.symbol" <- function (k) {
-	x <- get(k, envir=globalenv ())
-	rm (list=k, envir=globalenv ())
-	assign (k, x, envir=globalenv ())
-	rm (k, envir=.rk.watched.symbols);
-
-	invisible (TRUE)
-}
-
-#' @export
-".rk.watch.globalenv" <- function () {
-	newlist <- ls (globalenv (), all.names=TRUE)
-	oldlist <- ls (.rk.watched.symbols, all.names=TRUE)
-	for (old in oldlist) {		# unwatch no longer present items
-		if (!(old %in% newlist)) {
-			rm (list=old, envir=.rk.watched.symbols);
-		}
-	}
-
-	for (new in newlist) {		# watch new items
-		if (!(new %in% oldlist)) {
-			.rk.watch.symbol (new)
-		}
-	}
-}
-
 #' @export
 ".rk.get.vector.data" <- function (x) {
 	ret <- list ();
@@ -388,6 +320,7 @@ assign(".rk.active.device", 1, envir=.rk.variables)
 assign(".rk.output.html.file", NULL, envir=.rk.variables)
 assign(".rk.rkreply", NULL, envir=.rk.variables)
 assign("available.packages.cache", NULL, envir=.rk.variables)
+assign(".rk.shadow.envs", new.env(parent=emptyenv()), envir=.rk.variables)
 
 #' @export
 ".rk.backups" <- new.env ()

@@ -53,6 +53,7 @@ private:
 	SEXP baseenvir;
 	SEXP shadowenvir;
 	static QMap<SEXP, RKRShadowEnvironment*> environments;
+	static SEXP shadowenvbase;
 };
 
 #endif

@@ -928,14 +928,6 @@ SEXP doError (SEXP call) {
 	return R_NilValue;
 }
 
-SEXP doWs (SEXP name) {
-	if ((!RKRBackend::this_pointer->current_command) || (RKRBackend::this_pointer->current_command->type & RCommand::ObjectListUpdate) || (!(RKRBackend::this_pointer->current_command->type & RCommand::Sync))) {		// ignore Sync commands that are not flagged as ObjectListUpdate
-		QString sym = RKRSupport::SEXPToString(name);
-		if (!RKRBackend::this_pointer->changed_symbol_names.contains (sym)) RKRBackend::this_pointer->changed_symbol_names.append (sym);  // schedule symbol update for later
-	}
-	return R_NilValue;
-}
-
 SEXP doSubstackCall (SEXP call) {
 	RK_TRACE (RBACKEND);
 
@@ -1043,7 +1035,6 @@ SEXP doCaptureOutput (SEXP mode, SEXP capture_messages, SEXP capture_output, SEX
 
 SEXP RKStartGraphicsDevice (SEXP width, SEXP height, SEXP pointsize, SEXP family, SEXP bg, SEXP title, SEXP antialias);
 SEXP RKD_AdjustSize (SEXP devnum);
-SEXP doWs (SEXP name);
 void doPendingPriorityCommands ();
 
 SEXP checkEnv(SEXP a) {
@@ -1123,7 +1114,7 @@ bool RKRBackend::startR () {
 // register our functions
 	R_CallMethodDef callMethods [] = {
 		// NOTE: Intermediate cast to void* to avoid compiler warning
-		{ "ws", (DL_FUNC) (void*) &doWs, 1 },
+		{ "rk.check.env", (DL_FUNC) (void*) &checkEnv, 1 },
 		{ "rk.do.error", (DL_FUNC) (void*) &doError, 1 },
 		{ "rk.do.command", (DL_FUNC) (void*) &doSubstackCall, 1 },
 		{ "rk.do.generic.request", (DL_FUNC) (void*) &doPlainGenericRequest, 2 },
@@ -1138,7 +1129,6 @@ bool RKRBackend::startR () {
 		{ "rk.capture.output", (DL_FUNC) (void*) &doCaptureOutput, 5 },
 		{ "rk.graphics.device", (DL_FUNC) (void*) &RKStartGraphicsDevice, 7},
 		{ "rk.graphics.device.resize", (DL_FUNC) (void*) &RKD_AdjustSize, 1},
-		{ "rk.check.env", (DL_FUNC) (void*) &checkEnv, 1 },
 		{ 0, 0, 0 }
 	};
 	R_registerRoutines (R_getEmbeddingDllInfo(), NULL, callMethods, NULL, NULL);

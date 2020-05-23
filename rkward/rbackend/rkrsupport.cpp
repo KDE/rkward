@@ -249,15 +249,29 @@ RData *RKRSupport::SEXPToRData (SEXP from_exp) {
 	return data;
 }
 
+SEXP RKRShadowEnvironment::shadowenvbase = nullptr;
 QMap<SEXP, RKRShadowEnvironment*> RKRShadowEnvironment::environments;
 RKRShadowEnvironment* RKRShadowEnvironment::environmentFor(SEXP baseenvir) {
+	// TODO: probably R_GlobalEnv should be special-cased, as this is what we'll check most often (or exclusively?)
 	if (!environments.contains(baseenvir)) {
-		// TODO: Of course this is still wrong!
-Rprintf("new shadow environment for %p\n", baseenvir);
-	SEXP tr = Rf_allocVector(INTSXP, 1);
-	INTEGER (tr)[0] = TRUE;
-		Rf_defineVar(Rf_install("shadow_hide_me"), RKRSupport::callSimpleFun2(Rf_install("new.env"), tr, R_EmptyEnv, R_GlobalEnv), R_GlobalEnv);
-		SEXP shadowenvir = Rf_findVar(Rf_install("shadow_hide_me"), R_GlobalEnv);
+		RK_DEBUG(RBACKEND, DL_DEBUG, "creating new shadow environment for %p\n", baseenvir);
+		if (!shadowenvbase) {
+			SEXP rkn = Rf_allocVector(STRSXP, 1);
+			SET_STRING_ELT(rkn, 0, Rf_mkChar("package:rkward"));
+			SEXP rkwardenv = RKRSupport::callSimpleFun(Rf_install("as.environment"), rkn, R_GlobalEnv);
+			RK_ASSERT(Rf_isEnvironment(rkwardenv));
+			SEXP rkwardvars = Rf_eval(Rf_findVar(Rf_install(".rk.variables"), rkwardenv), R_BaseEnv);  // NOTE: Rf_eval to resolve promise
+			RK_ASSERT(Rf_isEnvironment(rkwardvars));
+			shadowenvbase = Rf_findVar(Rf_install(".rk.shadow.envs"), rkwardvars);
+			RK_ASSERT(Rf_isEnvironment(shadowenvbase));
+		}
+
+		char name[sizeof(void*)*2+3];
+		sprintf(name, "%p", baseenvir);
+		SEXP tr = Rf_allocVector(LGLSXP, 1);
+		LOGICAL(tr)[0] = true;
+		Rf_defineVar(Rf_install(name), RKRSupport::callSimpleFun2(Rf_install("new.env"), tr, R_EmptyEnv, R_GlobalEnv), shadowenvbase);
+		SEXP shadowenvir = Rf_findVar(Rf_install(name), shadowenvbase);
 		environments.insert(baseenvir, new RKRShadowEnvironment(baseenvir, shadowenvir));
 	}
 	return environments[baseenvir];
@@ -303,7 +317,7 @@ QStringList RKRShadowEnvironment::diffAndUpdate() {
 
 	UNPROTECT(2);
 
-	Rprintf("changed %s\n", qPrintable(diffs.join(", ")));
-	Rprintf("removed %s\n", qPrintable(removed.join(", ")));
+	RK_DEBUG(RBACKEND, DL_DEBUG, "changed %s\n", qPrintable(diffs.join(", ")));
+	RK_DEBUG(RBACKEND, DL_DEBUG, "removed %s\n", qPrintable(removed.join(", ")));
 	return diffs + removed;
 }
