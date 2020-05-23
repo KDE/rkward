@@ -31,6 +31,7 @@
 
 #include "../settings/rksettingsmoduleplugins.h"
 #include "../settings/rksettingsmodulegeneral.h"
+#include "../settings/rksettings.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkstandardicons.h"
 #include "../dialogs/rkloadlibsdialog.h"
@@ -74,7 +75,7 @@ void RKSetupWizardItem::createWidget(QGridLayout *layout, int row) {
 		}
 		auto info = new QPushButton();
 		info->setIcon(RKStandardIcons::getIcon(RKStandardIcons::WindowHelp));
-		QObject::connect(info, &QPushButton::clicked, [details, layout]() { KMessageBox::information(layout->parentWidget(), details); });
+		QObject::connect(info, &QPushButton::clicked, [details, layout]() { KMessageBox::information(layout->parentWidget(), details, QString(), QString(), KMessageBox::Notify | KMessageBox::AllowLink); });
 		layout->addWidget(info, row, 3);
 	}
 }
@@ -114,17 +115,20 @@ RKSetupWizard::~RKSetupWizard() {
 void RKSetupWizard::doAutoCheck() {
 	RK_TRACE (DIALOGS);
 
-	if (RKCommonFunctions::getRKWardDataDir ().isEmpty () || RKSettingsModulePlugins::pluginMaps().isEmpty() || (RKWardMainWindow::getMain()->katePluginIntegration()->knownPluginCount() == 0)) {
-		fullInteractiveCheck(ProblemsDetected);
+	// query settings modules for any problems
+	QList<RKSetupWizardItem*> settings_items = RKSettings::validateSettingsInteractive();
+	// check for those, and some cheap-but-important basics
+	if (RKCommonFunctions::getRKWardDataDir ().isEmpty () || RKSettingsModulePlugins::pluginMaps().isEmpty() || (RKWardMainWindow::getMain()->katePluginIntegration()->knownPluginCount() == 0) || !settings_items.isEmpty()) {
+		fullInteractiveCheck(ProblemsDetected, settings_items);
 	} else if (RKSettingsModuleGeneral::rkwardVersionChanged()) {
-		fullInteractiveCheck(NewVersionRKWard);
+		fullInteractiveCheck(NewVersionRKWard, settings_items);
 	}
 
 	// TODO: remove me
-	fullInteractiveCheck(ProblemsDetected);
+	fullInteractiveCheck(ProblemsDetected, settings_items);
 }
 
-void RKSetupWizard::fullInteractiveCheck(InvokationReason reason) {
+void RKSetupWizard::fullInteractiveCheck(InvokationReason reason, const QList<RKSetupWizardItem*> &settings_items) {
 	RK_TRACE (DIALOGS);
 
 	if (has_been_run && reason != ManualCheck) return;
@@ -156,8 +160,7 @@ void RKSetupWizard::fullInteractiveCheck(InvokationReason reason) {
 	auto idir = new RKSetupWizardItem(i18n("Installation directory"));
 	if (RKCommonFunctions::getRKWardDataDir ().isEmpty ()) {
 		idir->setStatus(RKSetupWizardItem::Error, i18n("Not found."));
-		// TODO: test, whether links work, here
-		idir->setLongLabel("<p>RKWard either could not find its resource files at all, or only an old version of those files. The most likely cause is that the last installation failed to place the files in the correct place. This can lead to all sorts of problems, from single missing features to complete failure to function.</p><p><b>You should quit RKWard, now, and fix your installation</b>. For help with that, see <a href=\"http://rkward.kde.org/compiling\">http://rkward.kde.org/compiling</a>.</p>");
+		idir->setLongLabel("<p>RKWard either could not find its resource files at all, or only an old version of those files. The most likely cause is that the last installation failed to place the files in the correct place. This can lead to all sorts of problems, from single missing features to complete failure to function.</p><p><b>You should quit RKWard, now, and fix your installation</b>. For help with that, see <a href=\"https://rkward.kde.org/Building_RKWard_From_Source.html\">https://rkward.kde.org/Building_RKWard_From_Source.html</a>.</p>");
 		idir->addOption(i18n("Reinstallation required"), i18n("This problem cannot be corrected, automatically. You will have to reinstall RKWard."), [](RKSetupWizard*) {});
 		reinstallation_required = true;
 	} else {
@@ -167,7 +170,6 @@ void RKSetupWizard::fullInteractiveCheck(InvokationReason reason) {
 
 	auto pluginmaps = new RKSetupWizardItem(i18n("RKWard plugins"));
 	if (RKSettingsModulePlugins::pluginMaps().isEmpty()) {
-		// TODO: Move to RKSettingsModulePlugins::validateSettingsInteractive
 		pluginmaps->setLongLabel(i18n("<p>No plugins are enabled. This is probably not intended.</p>"));
 		pluginmaps->setStatus(RKSetupWizardItem::Warning, i18n("None selected"));
 		pluginmaps->addOption(i18n("Restore defaults"), i18n("Enable the default plugins"), [](RKSetupWizard*) { RKSettingsModulePlugins::registerDefaultPluginMaps(RKSettingsModulePlugins::AddIfDefault); });
@@ -182,7 +184,6 @@ void RKSetupWizard::fullInteractiveCheck(InvokationReason reason) {
 	auto kateplugins = new RKSetupWizardItem(i18n("Kate plugins"));
 	int kateplugincount = RKWardMainWindow::getMain()->katePluginIntegration()->knownPluginCount();
 	if (kateplugincount < 1) {
-		// TODO: Move to RKSettingsModuleKatePlugins::validateSettingsInteractive
 		kateplugins->setLongLabel(i18n("<p>Important functionality in RKWard is provided by kate plugins. It looks like none are installed on this system. On Linux/BSD, this can usually be fixed by installing kate.</p>"));
 		kateplugins->setStatus(RKSetupWizardItem::Error, i18n("None found"));
 		kateplugins->addOption(i18n("(Attempt to) install kate"), i18n("Attempt to install kate using the muon package manager. If this is not available, please install kate, manuelly"), [](RKSetupWizard* wizard) { wizard->markExternalPackageForInstallation(QStringLiteral("kate"), true); });
@@ -192,10 +193,15 @@ void RKSetupWizard::fullInteractiveCheck(InvokationReason reason) {
 	}
 	wizard->appendItem(kateplugins);
 
+	for (int i = 0; i < settings_items.size(); ++i) {
+		wizard->appendItem(settings_items[i]);
+	}
+
 	wizard->current_layout->setRowStretch(++wizard->current_row, 1);
 	wizard->addPage(wizard->current_page, i18n("Basic installation"));
 
 	// Wait for R Interface, then start dialog
+	wizard->setWindowModality(Qt::ApplicationModal);
 	wizard->show();
 	while (!RKGlobals::rInterface()->backendIsIdle()) {
 		if (RKGlobals::rInterface()->backendIsDead()) {
@@ -219,25 +225,20 @@ void RKSetupWizard::fullInteractiveCheck(InvokationReason reason) {
 	wizard->current_layout->setRowStretch(++wizard->current_row, 1);
 	wizard->addPage(wizard->current_layout->parentWidget(), i18n("R Packages"));
 
-	wizard->exec();
+	auto res = wizard->exec();
+	if (res == QDialog::Accepted) {
+		for(int i = 0; i < wizard->items.size(); ++i) {
+			wizard->items[i]->apply(wizard);
+		}
 
-	for(int i = 0; i < wizard->items.size(); ++i) {
-		wizard->items[i]->apply(wizard);
+		if (!wizard->packages_to_install.isEmpty()) {
+			RKLoadLibsDialog::showInstallPackagesModal(wizard, 0, wizard->packages_to_install);
+		}
+
+		// TODO: external software
 	}
-
-	if (!wizard->packages_to_install.isEmpty()) {
-		RKLoadLibsDialog::showInstallPackagesModal(wizard, 0, wizard->packages_to_install);
-	}
-
-	// TODO: external software
 
 	delete wizard;
-/* TODO
-	RKSettingsModulePlugins::knownUsablePluginCount();
-	RKWardMainWindow::getMain()->katePluginIntegration()->knownPluginCount(); */
-
-/* TODO
- * consolidate with RKSettings::validateSettingsInteractive */
 }
 
 void RKSetupWizard::createStandardPage() {

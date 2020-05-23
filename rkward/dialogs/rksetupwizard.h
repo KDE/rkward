@@ -36,7 +36,7 @@ protected:
 	static bool has_been_run;
 public:
 	static void doAutoCheck();
-	static void fullInteractiveCheck(InvokationReason reason);
+	static void fullInteractiveCheck(InvokationReason reason, const QList<RKSetupWizardItem*> &settings_items = QList<RKSetupWizardItem*>());
 
 	void markExternalPackageForInstallation(const QString &name, bool install);
 	void markRPackageForInstallation(const QString &name, bool install);
