@@ -43,4 +43,16 @@ namespace RKRSupport {
 	RData* SEXPToRData (SEXP from_exp);
 };
 
+class RKRShadowEnvironment {
+public:
+	QStringList diffAndUpdate();
+	static RKRShadowEnvironment* environmentFor(SEXP baseenvir);
+private:
+	RKRShadowEnvironment(SEXP baseenvir, SEXP shadowenvir) : baseenvir(baseenvir), shadowenvir(shadowenvir) {};
+	~RKRShadowEnvironment();
+	SEXP baseenvir;
+	SEXP shadowenvir;
+	static QMap<SEXP, RKRShadowEnvironment*> environments;
+};
+
 #endif

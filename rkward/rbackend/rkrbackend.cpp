@@ -1046,6 +1046,10 @@ SEXP RKD_AdjustSize (SEXP devnum);
 SEXP doWs (SEXP name);
 void doPendingPriorityCommands ();
 
+SEXP checkEnv(SEXP a) {
+	return RKRSupport::StringListToSEXP(RKRShadowEnvironment::environmentFor(a)->diffAndUpdate());
+}
+
 bool RKRBackend::startR () {
 	RK_TRACE (RBACKEND);
 
@@ -1134,6 +1138,7 @@ bool RKRBackend::startR () {
 		{ "rk.capture.output", (DL_FUNC) (void*) &doCaptureOutput, 5 },
 		{ "rk.graphics.device", (DL_FUNC) (void*) &RKStartGraphicsDevice, 7},
 		{ "rk.graphics.device.resize", (DL_FUNC) (void*) &RKD_AdjustSize, 1},
+		{ "rk.check.env", (DL_FUNC) (void*) &checkEnv, 1 },
 		{ 0, 0, 0 }
 	};
 	R_registerRoutines (R_getEmbeddingDllInfo(), NULL, callMethods, NULL, NULL);

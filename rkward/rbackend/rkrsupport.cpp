@@ -248,3 +248,62 @@ RData *RKRSupport::SEXPToRData (SEXP from_exp) {
 
 	return data;
 }
+
+QMap<SEXP, RKRShadowEnvironment*> RKRShadowEnvironment::environments;
+RKRShadowEnvironment* RKRShadowEnvironment::environmentFor(SEXP baseenvir) {
+	if (!environments.contains(baseenvir)) {
+		// TODO: Of course this is still wrong!
+Rprintf("new shadow environment for %p\n", baseenvir);
+	SEXP tr = Rf_allocVector(INTSXP, 1);
+	INTEGER (tr)[0] = TRUE;
+		Rf_defineVar(Rf_install("shadow_hide_me"), RKRSupport::callSimpleFun2(Rf_install("new.env"), tr, R_EmptyEnv, R_GlobalEnv), R_GlobalEnv);
+		SEXP shadowenvir = Rf_findVar(Rf_install("shadow_hide_me"), R_GlobalEnv);
+		environments.insert(baseenvir, new RKRShadowEnvironment(baseenvir, shadowenvir));
+	}
+	return environments[baseenvir];
+}
+
+QStringList RKRShadowEnvironment::diffAndUpdate() {
+	QStringList diffs;
+	QStringList removed;
+
+	Rprintf("%p %p\n", baseenvir, shadowenvir);
+	// find the changed symbols, and copy them to the shadow environment
+	SEXP symbols = R_lsInternal(baseenvir, TRUE);
+	PROTECT(symbols);
+	int count = Rf_length(symbols);
+	for (int i = 0; i < count; ++i) {
+		SEXP name = Rf_installChar(STRING_ELT(symbols, i));
+		PROTECT(name);
+		SEXP main = Rf_findVar(name, baseenvir);
+		SEXP cached = Rf_findVar(name, shadowenvir);
+		if (main != cached) {
+			Rf_defineVar(name, Rf_findVar(name, baseenvir), shadowenvir);
+			diffs.append(RKRSupport::SEXPToString(name));
+		}
+		UNPROTECT(1);
+	}
+
+	// find the symbols only in the shadow environment (those that were removed)
+	SEXP symbols2 = R_lsInternal(shadowenvir, TRUE);
+	PROTECT(symbols2);
+	int count2 = Rf_length (symbols2);
+	for (int i = 0; i < count2; ++i) {
+		bool found = false;
+		for (int j = 0; j < count; ++j) {
+			if (STRING_ELT(symbols, j) == STRING_ELT(symbols2, i)) {
+				found = true;
+				break;
+			}
+		}
+		if (!found) {
+			removed.append(RKRSupport::SEXPToString(Rf_installChar(STRING_ELT(symbols2, i))));
+		}
+	}
+
+	UNPROTECT(2);
+
+	Rprintf("changed %s\n", qPrintable(diffs.join(", ")));
+	Rprintf("removed %s\n", qPrintable(removed.join(", ")));
+	return diffs + removed;
+}
