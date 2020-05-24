@@ -319,6 +319,11 @@ void RInterface::rCommandDone (RCommand *command) {
 		// On MacOS, the backend is started from inside R home to allow resolution of dynamic libs. Re-set to frontend wd, here.
 		issueCommand ("setwd (" + RKRSharedFunctionality::quote (QDir::currentPath ()) + ")\n", RCommand::App | RCommand::Sync, QString (), this, SET_RUNTIME_OPTS, chain);
 #endif
+		// Workaround for https://bugs.kde.org/show_bug.cgi?id=421958
+		if (RKSessionVars::compareRVersion("4.0.0") < 1 && RKSessionVars::compareRVersion("4.0.1") > 0) {
+			issueCommand ("if(compiler::enableJIT(-1) > 2) compiler::enableJIT(2)\n", RCommand::App | RCommand::Sync, QString (), this, SET_RUNTIME_OPTS, chain);
+		}
+
 		closeChain (chain);
 	} else if (command->getFlags () == GET_R_VERSION) {
 		RK_ASSERT (command->getDataType () == RData::StringVector);
