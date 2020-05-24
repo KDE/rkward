@@ -17,7 +17,7 @@ Authors@R: c(person(given="Thomas", family="Friedrichsmeier",
         email="thomas.friedrichsmeier@ruhr-uni-bochum.de",
         role=c("aut")), person(given="the RKWard team",
         email="rkward-devel@kde.org", role=c("cre","ctb")))
-Version: 0.7.1b
+Version: 0.7.1
 Date: 2020-05-24
 RoxygenNote: 6.1.0
 Collate: 
