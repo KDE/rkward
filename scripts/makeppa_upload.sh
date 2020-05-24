@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## begin: These may need adjusting!
-TARGETS="xenial artful bionic"
+TARGETS="xenial bionic focal eoan"
 AUTHOR="Thomas Friedrichsmeier <tfry@users.sourceforge.net>"
 ## end: These may need adjusting!
 

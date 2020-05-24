@@ -96,6 +96,14 @@ FIND_LIBRARY(LIBR_SO
 	PATHS ${R_HOME}/lib ${R_SHAREDLIBDIR} ${R_HOME}/bin ${R_HOME}/bin/${R_ARCH} ${R_HOME}/lib/${R_ARCH} ${PROJECT_BINARY_DIR}
 	NO_DEFAULT_PATH)
 IF(NOT LIBR_SO)
+# NOTE: Workaround for strange bug with cmake 3.17 failing to find existing R.dll, when MinGW is used.
+# Remove when cmake is working properly, again
+FIND_FILE(LIBR_SO
+	R.dll
+	PATHS ${R_HOME}/lib ${R_SHAREDLIBDIR} ${R_HOME}/bin ${R_HOME}/bin/${R_ARCH} ${R_HOME}/lib/${R_ARCH} ${PROJECT_BINARY_DIR}
+	NO_CMAKE_SYSTEM_PATH)
+ENDIF(NOT LIBR_SO)
+IF(NOT LIBR_SO)
 	MESSAGE(FATAL_ERROR "Not found. Make sure the location of R was detected correctly, above, and R was compiled with the --enable-R-shlib option")
 ELSE(NOT LIBR_SO)
 	MESSAGE(STATUS "Exists at ${LIBR_SO}")

@@ -126,7 +126,7 @@ bool RKMDIWindow::isActiveInsideToplevelWindow () {
 void RKMDIWindow::activate (bool with_focus) {
 	RK_TRACE (APP);
 
-	QWidget *old_focus = qApp->focusWidget ();
+	QPointer<QWidget> old_focus = qApp->focusWidget ();
 
 	if (isToolWindow ()) {
 		if (tool_window_bar) tool_window_bar->showWidget (this);

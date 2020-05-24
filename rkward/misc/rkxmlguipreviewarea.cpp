@@ -30,6 +30,7 @@
 #include <KLocalizedString>
 
 #include "../windows/rkmdiwindow.h"
+#include "../windows/rkworkplace.h"
 #include "../rbackend/rcommand.h"
 #include "../rbackend/rkrinterface.h"
 #include "../rkglobals.h"
@@ -128,6 +129,7 @@ void RKXMLGUIPreviewArea::childEvent (QChildEvent *event) {
 			// avoid shortcut conflicts
 			QList<QAction*> acts = actions ();
 			for (int i = 0; i < acts.size (); ++i) acts[i]->setShortcutContext(Qt::WidgetWithChildrenShortcut);
+			RKWorkplace::mainWorkplace()->setWindowNotManaged(child);
 		}
 	}
 	QObject::childEvent (event);
