@@ -1,7 +1,4 @@
 --- Version 0.7.2 - UNRELEASED
-- Workaround to avoid bug in R 4.0.0 when using for loop on top level context
-- Fixed: Hang when opening an empty workplace
-- Fixed: Crash when mousing over code preview window with focus-follows-mouse enabled
 - Add menu action to open any supported file type, directly
 - Support using QWebEngine instead of QtWebKit (still supported)
 - <text> elements in plugins may now also contain clickable links, including rkward://-scheme links
@@ -14,6 +11,11 @@
     - Text filter plugin always shows menu entry, but should be limited to script windows
   * TODO: Instruct packagers that they should add a dependency on kate, or at least kate plugins
 - Fixed: Avoid shorcut clash with kate part by removing conflicting (default) shortcuts, automatically
+
+--- Version 0.7.1b - May-25-2020
+- Workaround to avoid bug in R 4.0.0 when using for loop on top level context
+- Fixed: Hang when opening an empty workplace
+- Fixed: Crash when mousing over code preview window with focus-follows-mouse enabled
 
 --- Version 0.7.1 - Jan-23-2020
 - Code hinting in script editor windows has been reworked, and now also completes argument names
