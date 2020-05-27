@@ -1661,6 +1661,7 @@ void RKRBackend::initialize (const char *locale_dir) {
 	                  "    install.packages(normalizePath(paste(libloc, \"..\", c (\"rkward.tgz\", \"rkwardtests.tgz\"), sep=\"/\")), lib=libloc, repos=NULL, type=\"source\")\n"
 	                  "    library (\"rkward\", lib.loc=libloc)\n"
 	                  "  }\n"
+	                  "  .libPaths(c(.libPaths(), libloc))\n" // Add to end search path: Will be avaiable for help serach, but hopefully, not get into the way, otherwise
 	                  "})\n";
 	if (!runDirectCommand (command)) lib_load_fail = true;
 	RK_setupGettext (locale_dir);	// must happen *after* package loading, since R will re-set it

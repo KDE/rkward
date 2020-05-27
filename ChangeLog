@@ -1,4 +1,5 @@
 --- Version 0.7.2 - UNRELEASED
+- Add rkward internal package location to end of library search path, to make it accessible to help.search()
 - Add menu action to open any supported file type, directly
 - Support using QWebEngine instead of QtWebKit (still supported)
 - <text> elements in plugins may now also contain clickable links, including rkward://-scheme links
