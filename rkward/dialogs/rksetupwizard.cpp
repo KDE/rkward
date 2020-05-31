@@ -105,7 +105,7 @@ RKSetupWizardItem* makeRPackageCheck(const QString &packagename, const QString &
 void addSoftwareInstallOptions(RKSetupWizardItem* item, const QString &exename, const QString &downloadurl) {
 	RK_TRACE (DIALOGS);
 
-	item->addOption(i18n("Install %1", exename), i18n("Mark %1 for installation (actual installation only supported on Linux/BSD platforms that have the <i>muon</i> package manager installed; you will be prompted, otherwise)", exename), [exename, downloadurl](RKSetupWizard *wizard) { wizard->markSoftwareForInstallation(exename, downloadurl, true); });
+	item->addOption(i18n("Install %1", exename), i18n("Mark %1 for installation (actual installation is not yet supported, but you will be prompted with a link to a download page at the last page of this dialog)", exename), [exename, downloadurl](RKSetupWizard *wizard) { wizard->markSoftwareForInstallation(exename, downloadurl, true); });
 	item->addOption(i18n("No change"), i18n("Proceed without %1. You will be missing some functionality.", exename), [exename, downloadurl](RKSetupWizard *wizard) { wizard->markSoftwareForInstallation(exename, downloadurl, false); });
 }
 
@@ -263,7 +263,25 @@ void RKSetupWizard::fullInteractiveCheck(InvokationReason reason, const QList<RK
 		}
 
 		if (!wizard->software_to_install.isEmpty()) {
-			// TODO: external software
+			bool didinstall = false;
+#if 0 && (defined(Q_OS_LINUX) || defined(Q_OS_UNIX))  // D'uh: muon (5.8.0) does not have an "install" command line option or equivalent
+			QString muonexe = QStandardPaths::findExecutable("muon");
+			if(!muonexe.isEmpty()) {
+				auto proc = new QProcess::startDetached("muon", QStringList() << "install" << wizard->software_to_install);
+				didinstall = true;
+			}
+#endif
+			if (!didinstall) {
+				QString install_info;
+				for (int i = 0; i < wizard->software_to_install.size(); ++i) {
+					install_info.append("<ul><a href=\"");
+					install_info.append(wizard->software_to_install_urls.value(i));
+					install_info.append("\">");
+					install_info.append(wizard->software_to_install[i]);
+					install_info.append("</a></ul>");
+				}
+				KMessageBox::information(wizard, i18n("</p>The following software is recommended for installation, but automatic installation is not (yet) supported. Click on the links for download information:</p><li>%1</li>", install_info), QString(), QString(), KMessageBox::Notify | KMessageBox::AllowLink);
+			}
 		}
 	}
 
