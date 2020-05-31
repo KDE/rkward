@@ -226,6 +226,9 @@ public:
 /** clears out (and deletes) all components / plugins */
 	void clearAll ();
 
+/** returns true, if no plugin maps are loaded. */
+	bool isEmpty() const { return pluginmapfiles.isEmpty(); }
+
 /** returns the component identified by id, 0 if not found */
 	static RKComponentHandle* getComponentHandle (const QString &id);
 /** look up the id of a component, empty string, if not found */

@@ -2,7 +2,7 @@
                           rkloadlibsdialog  -  description
                              -------------------
     begin                : Mon Sep 6 2004
-    copyright            : (C) 2004 - 2018 by Thomas Friedrichsmeier
+    copyright            : (C) 2004 - 2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -106,12 +106,11 @@ void RKLoadLibsDialog::slotPageChanged () {
 }
 
 //static
-void RKLoadLibsDialog::showInstallPackagesModal (QWidget *parent, RCommandChain *chain, const QString &package_name) {
+void RKLoadLibsDialog::showInstallPackagesModal (QWidget *parent, RCommandChain *chain, const QStringList &package_names) {
 	RK_TRACE (DIALOGS);
 
 	RKLoadLibsDialog *dialog = new RKLoadLibsDialog (parent, chain, true);
-	dialog->auto_install_package = package_name;
-	QTimer::singleShot (0, dialog, SLOT (automatedInstall()));		// to get past the dialog->exec, below
+	QTimer::singleShot (0, [dialog, package_names]() { dialog->automatedInstall(package_names); });		// to get past the dialog->exec, below
 	dialog->setCurrentPage (dialog->install_packages_pageitem);
 	dialog->exec ();
 	RK_TRACE (DIALOGS);
@@ -126,11 +125,11 @@ void RKLoadLibsDialog::showPluginmapConfig (QWidget* parent, RCommandChain* chai
 	dialog->show ();
 }
 
-void RKLoadLibsDialog::automatedInstall () {
+void RKLoadLibsDialog::automatedInstall(const QStringList &packages) {
 	RK_TRACE (DIALOGS);
 
-	install_packages_widget->initialize ();
-	install_packages_widget->trySelectPackage (auto_install_package);
+	install_packages_widget->initialize();
+	install_packages_widget->trySelectPackages(packages);
 }
 
 void RKLoadLibsDialog::tryDestruct () {
@@ -783,14 +782,20 @@ void InstallPackagesWidget::filterChanged () {
 	// NOTE: filter string already set by RKDynamicSearchLine
 }
 
-void InstallPackagesWidget::trySelectPackage (const QString &package_name) {
+void InstallPackagesWidget::trySelectPackages (const QStringList &package_names) {
 	RK_TRACE (DIALOGS);
 
-	QModelIndex index = packages_status->markPackageForInstallation (package_name);
-	if (!index.isValid ()) {
-		KMessageBox::sorry (0, i18n ("The package requested by the backend (\"%1\") was not found in the package repositories. Maybe the package name was mis-spelled. Or maybe you need to add additional repositories via the \"Configure Repositories\" button.", package_name), i18n ("Package not available"));
-	} else {
-		packages_view->scrollTo (model->mapFromSource (index));
+	QStringList failed_names;
+	for (int i = 0; i < package_names.size(); ++i) {
+		QModelIndex index = packages_status->markPackageForInstallation(package_names[i]);
+		if (!index.isValid()) {
+			failed_names.append(package_names[i]);
+		} else {
+			packages_view->scrollTo(model->mapFromSource(index));
+		}
+	}
+	if (!failed_names.isEmpty()) {
+		KMessageBox::sorry (0, i18n ("The following package(s) requested by the backend have not been found in the package repositories: \"%1\". Maybe the package name was mis-spelled. Or maybe you need to add additional repositories via the \"Configure Repositories\" button.", failed_names.join("\", \"")), i18n ("Package not available"));
 	}
 }
 

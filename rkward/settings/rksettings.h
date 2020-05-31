@@ -26,6 +26,7 @@ class KConfig;
 class RKWardMainWindow;
 class RKSettingsTracker;
 class RCommandChain;
+class RKSetupWizardItem;
 
 /**
 The main settings-dialog. Contains subsections (tabs) for different modules. Use configureSettings () to invoke or raise the settings dialog
@@ -59,7 +60,7 @@ public:
 	static void loadSettings (KConfig *config);
 	static void saveSettings (KConfig *config);
 	/** Perform any settings validation that may need user interaction (and should happen after a GUI is available, and R has started up) */
-	static void validateSettingsInteractive ();
+	static QList<RKSetupWizardItem*> validateSettingsInteractive ();
 
 	void enableApply ();
 	

@@ -46,7 +46,7 @@ public:
 
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
-	static void validateSettingsInteractive (QList<RKSettingsWizardPage*>*) {};
+	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
 
 	static bool isDefaultForWorkspace (RKObjectListViewSettings::PersistentSettings setting) { return workspace_settings[setting]; };
 	static bool isDefaultForVarselector (RKObjectListViewSettings::PersistentSettings setting) { return varselector_settings[setting]; };

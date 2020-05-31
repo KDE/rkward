@@ -250,24 +250,12 @@ void RKSettings::saveSettings (KConfig *config) {
 }
 
 #include <KAssistantDialog>
-void RKSettings::validateSettingsInteractive () {
+QList<RKSetupWizardItem*> RKSettings::validateSettingsInteractive () {
 	RK_TRACE (SETTINGS);
 
-	QList<RKSettingsWizardPage*> interaction_pages;
-	FOREACH_SETTINGS_MODULE(validateSettingsInteractive(&interaction_pages));
-	if (!interaction_pages.isEmpty ()) {
-		KAssistantDialog dialog ((QWidget*) 0);
-		for (int i = 0; i < interaction_pages.size (); ++i) {
-			dialog.addPage (interaction_pages[i], interaction_pages[i]->windowTitle ());
-		}
-		QPushButton *help_button = dialog.button (QDialogButtonBox::Help);
-		if (help_button) help_button->hide ();
-		if (dialog.exec () == QDialog::Accepted) {
-			for (int i = 0; i < interaction_pages.size (); ++i) {
-				interaction_pages[i]->apply ();
-			}
-		}
-	}
+	QList<RKSetupWizardItem*> interaction_items;
+	FOREACH_SETTINGS_MODULE(validateSettingsInteractive(&interaction_items));
+	return interaction_items;
 }
 
 //############ END RKSettings ##################

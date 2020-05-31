@@ -133,23 +133,6 @@ private:
 	RKSettingsModule *module;
 };
 
-#include <functional>
-/** Simple helper class to formalize the API of widgets used for the interactive validation of settings.
- *  (For quering about settings that may need adjusting on startup. Possibly to be expanded to a "first-run-wizard", in the future). */
-class RKSettingsWizardPage : public QWidget {
-public:
-	RKSettingsWizardPage (QWidget* parent=0) : QWidget (parent) {
-		apply_callback = 0;
-	}
-	~RKSettingsWizardPage () {};
-	void apply () {
-		if (apply_callback) apply_callback();
-	}
-	void setApplyCallback (std::function<void()> callback) {
-		apply_callback = callback;
-	};
-private:
-	std::function<void()> apply_callback;
-};
+class RKSetupWizardItem;
 
 #endif

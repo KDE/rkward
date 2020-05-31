@@ -95,6 +95,9 @@ void RKSettingsModuleKatePlugins::save(KConfig *config) {
 void RKSettingsModuleKatePlugins::saveSettings(KConfig *config) {
 	RK_TRACE(SETTINGS);
 
+	// if no kate plugins are known (installation problem), don't save any config
+	if (!RKWardMainWindow::getMain()->katePluginIntegration()->knownPluginCount()) return;
+
 	KConfigGroup cg = config->group("Kate Plugins");
 	cg.writeEntry("Plugins to load", plugins_to_load);
 }

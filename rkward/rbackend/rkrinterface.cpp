@@ -2,7 +2,7 @@
                           rkrinterface.cpp  -  description
                              -------------------
     begin                : Fri Nov 1 2002
-    copyright            : (C) 2002-2019 by Thomas Friedrichsmeier
+    copyright            : (C) 2002-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -193,7 +193,7 @@ void RInterface::tryNextCommand () {
 				return;
 			}
 
-			if (previously_idle) RKWardMainWindow::getMain ()->setRStatus (RKWardMainWindow::Busy);
+			if (previously_idle) emit backendStatusChanged(Busy);
 			previously_idle = false;
 
 			doNextCommand (command);
@@ -202,7 +202,7 @@ void RInterface::tryNextCommand () {
 	}
 
 	if (on_top_level) {
-		if (!previously_idle) RKWardMainWindow::getMain ()->setRStatus (RKWardMainWindow::Idle);
+		if (!previously_idle) emit backendStatusChanged(Idle);
 		previously_idle = true;
 	}
 }
@@ -582,7 +582,7 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 	} else if (call == "loadPluginMaps") {
 		bool force = (calllist.value (1) == "force");
 		bool reload = (calllist.value (2) == "reload");
-		RKSettingsModulePlugins::registerPluginMaps (calllist.mid (3), force, reload);
+		RKSettingsModulePlugins::registerPluginMaps (calllist.mid (3), force ? RKSettingsModulePlugins::ManualAddition : RKSettingsModulePlugins::AddIfNewAndDefault, reload);
 	} else if (call == "updateInstalledPackagesList") {
 		RKSessionVars::instance ()->setInstalledPackages (calllist.mid (1));
 	} else if (call == "showHTML") {
@@ -726,7 +726,7 @@ void RInterface::processHistoricalSubstackRequest (const QStringList &calllist, 
 		if (calllist.count () >= 2) {
 			QString lib_name = calllist[1];
 			KMessageBox::information (0, i18n ("The R-backend has indicated that in order to carry out the current task it needs the package '%1', which is not currently installed. We will open the package-management tool, and there you can try to locate and install the needed package.", lib_name), i18n ("Require package '%1'", lib_name));
-			RKLoadLibsDialog::showInstallPackagesModal (0, in_chain, lib_name);
+			RKLoadLibsDialog::showInstallPackagesModal (0, in_chain, QStringList(lib_name));
 			issueCommand (".rk.set.reply (\"\")", RCommand::App | RCommand::Sync, QString (), 0, 0, in_chain);
 		} else {
 			issueCommand (".rk.set.reply (\"Too few arguments in call to require.\")", RCommand::App | RCommand::Sync, QString (), 0, 0, in_chain);
@@ -858,6 +858,7 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 			QString message = request->params["message"].toString ();
 			message += i18n ("\nThe R backend will be shut down immediately. This means, you can not use any more functions that rely on it. I.e. you can do hardly anything at all, not even save the workspace (but if you're lucky, R already did that). What you can do, however, is save any open command-files, the output, or copy data out of open data editors. Quit RKWard after that. Sorry!");
 			RKErrorDialog::reportableErrorMessage (0, message, QString (), i18n ("R engine has died"), "r_engine_has_died");
+			emit backendStatusChanged(Dead);
 		}
 	} else {
 		RK_ASSERT (false);
