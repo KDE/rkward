@@ -28,6 +28,7 @@
 
 #include <KLocalizedString>
 #include <KMessageBox>
+#include <QStandardPaths>
 
 #include "../settings/rksettingsmoduleplugins.h"
 #include "../settings/rksettingsmodulegeneral.h"
@@ -95,6 +96,26 @@ RKSetupWizardItem* makeRPackageCheck(const QString &packagename, const QString &
 		ret->setStatus(status_if_missing, i18n("Not installed"));
 		ret->addOption(i18n("Install %1", packagename), i18n("(Attempt to) install the package %1 and its dependencies for this version of R. In most cases, this requires a working internet connection.", packagename), [packagename](RKSetupWizard *wizard) { wizard->markRPackageForInstallation(packagename, true); });
 		ret->addOption(i18n("No change"), i18n("Proceed without the package. You will again be given the option to install the package, when the pacakge is needed."), [packagename](RKSetupWizard *wizard) { wizard->markRPackageForInstallation(packagename, false); });
+	} else {
+		ret->setStatus(RKSetupWizardItem::Good, i18n("Installed"));
+	}
+	return ret;
+}
+
+void addSoftwareInstallOptions(RKSetupWizardItem* item, const QString &exename, const QString &downloadurl) {
+	RK_TRACE (DIALOGS);
+
+	item->addOption(i18n("Install %1", exename), i18n("Mark %1 for installation (actual installation only supported on Linux/BSD platforms that have the <i>muon</i> package manager installed; you will be prompted, otherwise)", exename), [exename, downloadurl](RKSetupWizard *wizard) { wizard->markSoftwareForInstallation(exename, downloadurl, true); });
+	item->addOption(i18n("No change"), i18n("Proceed without %1. You will be missing some functionality.", exename), [exename, downloadurl](RKSetupWizard *wizard) { wizard->markSoftwareForInstallation(exename, downloadurl, false); });
+}
+
+RKSetupWizardItem* makeSoftwareCheck(const QString &exename, const QString& explanation, const QString &downloadurl, RKSetupWizardItem::Status status_if_missing) {
+	RK_TRACE (DIALOGS);
+
+	auto ret = new RKSetupWizardItem(exename, explanation);
+	if (QStandardPaths::findExecutable(exename).isEmpty()) {
+		ret->setStatus(status_if_missing, i18n("Not found"));
+		addSoftwareInstallOptions(ret, exename, downloadurl);
 	} else {
 		ret->setStatus(RKSetupWizardItem::Good, i18n("Installed"));
 	}
@@ -186,8 +207,7 @@ void RKSetupWizard::fullInteractiveCheck(InvokationReason reason, const QList<RK
 	if (kateplugincount < 1) {
 		kateplugins->setLongLabel(i18n("<p>Important functionality in RKWard is provided by kate plugins. It looks like none are installed on this system. On Linux/BSD, this can usually be fixed by installing kate.</p>"));
 		kateplugins->setStatus(RKSetupWizardItem::Error, i18n("None found"));
-		kateplugins->addOption(i18n("(Attempt to) install kate"), i18n("Attempt to install kate using the muon package manager. If this is not available, please install kate, manuelly"), [](RKSetupWizard* wizard) { wizard->markExternalPackageForInstallation(QStringLiteral("kate"), true); });
-		kateplugins->addOption(i18n("No change"), i18n("Proceed without plugins"), [](RKSetupWizard* wizard) { wizard->markExternalPackageForInstallation(QStringLiteral("kate"), false); });
+		addSoftwareInstallOptions(kateplugins, QStringLiteral("kate"), "https://kate.kde.org");
 	} else {
 		kateplugins->setStatus(RKSetupWizardItem::Good, i18n("Found %1 plugins.", kateplugincount));
 	}
@@ -217,13 +237,20 @@ void RKSetupWizard::fullInteractiveCheck(InvokationReason reason, const QList<RK
 	// This must be created _after_ the backend has started, for obvious reasons.
 	wizard->createStandardPage();
 
-	auto r2htmlpackage = makeRPackageCheck("R2HTML", i18n("The R2HTML package is used by nearly all RKWard output functions, and thus required."), RKSetupWizardItem::Error);
-	wizard->appendItem(r2htmlpackage);
-	auto rmarkdownpackage = makeRPackageCheck("rmarkdown", i18n("The rmarkdown package is required for rendering .Rmd files (including preview rendering), which is an optional but recommended feature."), RKSetupWizardItem::Warning);
-	wizard->appendItem(rmarkdownpackage);
+	wizard->appendItem(makeRPackageCheck("R2HTML", i18n("The R2HTML package is used by nearly all RKWard output functions, and thus required."), RKSetupWizardItem::Error));
+	wizard->appendItem(makeRPackageCheck("rmarkdown", i18n("The rmarkdown package is required for rendering .Rmd files (including preview rendering), which is an optional but recommended feature."), RKSetupWizardItem::Warning));
 
 	wizard->current_layout->setRowStretch(++wizard->current_row, 1);
 	wizard->addPage(wizard->current_layout->parentWidget(), i18n("R Packages"));
+
+	// external software page
+	wizard->createStandardPage();
+
+	wizard->appendItem(makeSoftwareCheck("pandoc", i18n("The pandoc software is needed for rendering (or previewing) R markdown (.Rmd) files. This is optional but recommended."), "https://pandoc.org/installing.html", RKSetupWizardItem::Warning));
+	wizard->appendItem(makeSoftwareCheck("kbibtex", i18n("The kbibtex software is useful for managing citations while writing articles. It integrates into RKWard via the Document Preview kate plugin."), "https://userbase.kde.org/KBibTeX", RKSetupWizardItem::Warning));
+
+	wizard->current_layout->setRowStretch(++wizard->current_row, 1);
+	wizard->addPage(wizard->current_layout->parentWidget(), i18n("External software"));
 
 	auto res = wizard->exec();
 	if (res == QDialog::Accepted) {
@@ -235,7 +262,9 @@ void RKSetupWizard::fullInteractiveCheck(InvokationReason reason, const QList<RK
 			RKLoadLibsDialog::showInstallPackagesModal(wizard, 0, wizard->packages_to_install);
 		}
 
-		// TODO: external software
+		if (!wizard->software_to_install.isEmpty()) {
+			// TODO: external software
+		}
 	}
 
 	delete wizard;
@@ -256,11 +285,17 @@ void RKSetupWizard::appendItem(RKSetupWizardItem* item) {
 	items.append(item);
 }
 
-void RKSetupWizard::markExternalPackageForInstallation(const QString& name, bool install) {
+void RKSetupWizard::markSoftwareForInstallation(const QString& name, const QString& downloadurl, bool install) {
 	RK_TRACE (DIALOGS);
 	bool present = software_to_install.contains(name);
-	if (install && !present) software_to_install.append(name);
-	if (present && !install) software_to_install.removeAll(name);
+	if (install && !present) {
+		software_to_install.append(name);
+		software_to_install_urls.append(downloadurl);
+	}
+	if (present && !install) {
+		software_to_install.removeAll(name);
+		software_to_install_urls.removeAll(downloadurl);
+	}
 }
 
 void RKSetupWizard::markRPackageForInstallation(const QString& name, bool install) {
