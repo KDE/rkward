@@ -53,6 +53,7 @@ private:
 	QGridLayout* current_layout;
 	void appendItem(RKSetupWizardItem* item);
 	QList<RKSetupWizardItem*> items;
+	bool reinstallation_required;
 
 	void next() override;
 	KPageWidgetItem *second_to_last_page_ref;

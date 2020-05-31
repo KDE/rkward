@@ -145,7 +145,7 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 
 	// Basic installation page
 	createStandardPage();
-	bool reinstallation_required = false;
+	reinstallation_required = false;
 	auto idir = new RKSetupWizardItem(i18n("Installation directory"));
 	if (RKCommonFunctions::getRKWardDataDir ().isEmpty ()) {
 		idir->setStatus(RKSetupWizardItem::Error, i18n("Not found."));
@@ -244,8 +244,12 @@ void RKSetupWizard::next() {
 		for(int i = 0; i < items.size(); ++i) {
 			items[i]->apply(this);
 		}
+		QString label_text;
+		if (reinstallation_required) {
+			label_text.append(i18n("<h1>Reinstallation required</h1><p>Your installation of RKWard is broken, and cannot be fixed, automatically. You will have to reinstall RKWard!</p>"));
+		}
 
-		QString label_text = i18n("<h2>Software to install</h2>");
+		label_text = i18n("<h2>Software to install</h2>");
 		if (!software_to_install.isEmpty()) {
 			QString install_info;
 			for (int i = 0; i < software_to_install.size(); ++i) {
