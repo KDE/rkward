@@ -18,6 +18,7 @@
 #ifndef RKSETUPWIZARD_H
 #define RKSETUPWIZARD_H
 
+#include <functional>
 #include <KAssistantDialog>
 
 class QGridLayout;
