@@ -122,8 +122,103 @@ RKSetupWizardItem* makeSoftwareCheck(const QString &exename, const QString& expl
 	return ret;
 }
 
-RKSetupWizard::RKSetupWizard(QWidget* parent) : KAssistantDialog(parent) {
+RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QList<RKSetupWizardItem*> &settings_items) : KAssistantDialog(parent) {
 	RK_TRACE (DIALOGS);
+
+	// Cover page
+	auto firstpage = new QWidget();
+	auto l = new QVBoxLayout(firstpage);
+	QString intro = i18n("<p>This dialog will guide you through a quick check of the basic setup of the required (or recommended) components.</p>");
+	if (reason == NewVersionRKWard) {
+		intro += i18n("<p>The setup assistant has been invoked, automatically, because a new version of RKWard has been detected.</p");
+	} else if (reason == NewVersionR) {
+		// TODO: invoke this!
+		intro += i18n("<p>The setup assistant has been invoked, automatically, because a new version of R has been detected.</p");
+	} else if (reason == ProblemsDetected) {
+		intro += i18n("<p>The setup assistant has been invoked, automatically, because a problem has been detected in your setup.</p");
+	}
+	l->addWidget(RKCommonFunctions::wordWrappedLabel(intro));
+	auto waiting_to_start_label = RKCommonFunctions::wordWrappedLabel(i18n("<b>Waiting for R backend...</b>") + "<p>&nbsp;</p><p>&nbsp;</p>");
+	l->addWidget(waiting_to_start_label);
+	auto firstpageref = addPage (firstpage, i18n("RKWard Setup Assistant"));
+	setValid(firstpageref, false);
+
+	// Basic installation page
+	createStandardPage();
+	bool reinstallation_required = false;
+	auto idir = new RKSetupWizardItem(i18n("Installation directory"));
+	if (RKCommonFunctions::getRKWardDataDir ().isEmpty ()) {
+		idir->setStatus(RKSetupWizardItem::Error, i18n("Not found."));
+		idir->setLongLabel("<p>RKWard either could not find its resource files at all, or only an old version of those files. The most likely cause is that the last installation failed to place the files in the correct place. This can lead to all sorts of problems, from single missing features to complete failure to function.</p><p><b>You should quit RKWard, now, and fix your installation</b>. For help with that, see <a href=\"https://rkward.kde.org/Building_RKWard_From_Source.html\">https://rkward.kde.org/Building_RKWard_From_Source.html</a>.</p>");
+		idir->addOption(i18n("Reinstallation required"), i18n("This problem cannot be corrected, automatically. You will have to reinstall RKWard."), [](RKSetupWizard*) {});
+		reinstallation_required = true;
+	} else {
+		idir->setStatus(RKSetupWizardItem::Good, i18n("Found."));
+	}
+	appendItem(idir);
+
+	auto pluginmaps = new RKSetupWizardItem(i18n("RKWard plugins"));
+	if (RKSettingsModulePlugins::pluginMaps().isEmpty()) {
+		pluginmaps->setLongLabel(i18n("<p>No plugins are enabled. This is probably not intended.</p>"));
+		pluginmaps->setStatus(RKSetupWizardItem::Warning, i18n("None selected"));
+		pluginmaps->addOption(i18n("Restore defaults"), i18n("Enable the default plugins"), [](RKSetupWizard*) { RKSettingsModulePlugins::registerDefaultPluginMaps(RKSettingsModulePlugins::AddIfDefault); });
+		pluginmaps->addOption(i18n("No change"), i18n("Proceed without plugins"), [](RKSetupWizard*) {});
+
+		// TODO: Also offer help, if a suspicioulsy small share of plugins is active? RKSettingsModulePlugins::knownUsablePluginCount();
+	} else {
+		pluginmaps->setStatus(RKSetupWizardItem::Good, i18n("Found."));
+	}
+	appendItem(pluginmaps);
+
+	auto kateplugins = new RKSetupWizardItem(i18n("Kate plugins"));
+	int kateplugincount = RKWardMainWindow::getMain()->katePluginIntegration()->knownPluginCount();
+	if (kateplugincount < 1) {
+		kateplugins->setLongLabel(i18n("<p>Important functionality in RKWard is provided by kate plugins. It looks like none are installed on this system. On Linux/BSD, this can usually be fixed by installing kate.</p>"));
+		kateplugins->setStatus(RKSetupWizardItem::Error, i18n("None found"));
+		addSoftwareInstallOptions(kateplugins, QStringLiteral("kate"), "https://kate.kde.org");
+	} else {
+		kateplugins->setStatus(RKSetupWizardItem::Good, i18n("Found %1 plugins.", kateplugincount));
+	}
+	appendItem(kateplugins);
+
+	for (int i = 0; i < settings_items.size(); ++i) {
+		appendItem(settings_items[i]);
+	}
+
+	current_layout->setRowStretch(++current_row, 1);
+	addPage(current_page, i18n("Basic installation"));
+
+	// Wait for R Interface, then start dialog
+	setWindowModality(Qt::ApplicationModal);
+	show();
+	while (!RKGlobals::rInterface()->backendIsIdle()) {
+		if (RKGlobals::rInterface()->backendIsDead()) {
+			waiting_to_start_label->setText(i18n("<b>R backend has crashed. Click \"Cancel\" to exit setup assitant.</b>"));
+		} else {
+			QApplication::processEvents(QEventLoop::AllEvents, 1000);
+		}
+	}
+	waiting_to_start_label->setText(i18n("<b>R backend has started. Click \"Next\" to continue.</b>"));
+	setValid(firstpageref, true);
+
+	// R packages page
+	// This must be created _after_ the backend has started, for obvious reasons.
+	createStandardPage();
+
+	appendItem(makeRPackageCheck("R2HTML", i18n("The R2HTML package is used by nearly all RKWard output functions, and thus required."), RKSetupWizardItem::Error));
+	appendItem(makeRPackageCheck("rmarkdown", i18n("The rmarkdown package is required for rendering .Rmd files (including preview rendering), which is an optional but recommended feature."), RKSetupWizardItem::Warning));
+
+	current_layout->setRowStretch(++current_row, 1);
+	addPage(current_layout->parentWidget(), i18n("R Packages"));
+
+	// external software page
+	createStandardPage();
+
+	appendItem(makeSoftwareCheck("pandoc", i18n("The pandoc software is needed for rendering (or previewing) R markdown (.Rmd) files. This is optional but recommended."), "https://pandoc.org/installing.html", RKSetupWizardItem::Warning));
+	appendItem(makeSoftwareCheck("kbibtex", i18n("The kbibtex software is useful for managing citations while writing articles. It integrates into RKWard via the Document Preview kate plugin."), "https://userbase.kde.org/KBibTeX", RKSetupWizardItem::Warning));
+
+	current_layout->setRowStretch(++current_row, 1);
+	addPage(current_layout->parentWidget(), i18n("External software"));
 }
 
 RKSetupWizard::~RKSetupWizard() {
@@ -155,102 +250,7 @@ void RKSetupWizard::fullInteractiveCheck(InvokationReason reason, const QList<RK
 	if (has_been_run && reason != ManualCheck) return;
 	has_been_run = true;
 
-	auto wizard = new RKSetupWizard(RKWardMainWindow::getMain());
-
-	// Cover page
-	auto firstpage = new QWidget();
-	auto l = new QVBoxLayout(firstpage);
-	QString intro = i18n("<p>This dialog will guide you through a quick check of the basic setup of the required (or recommended) components.</p>");
-	if (reason == NewVersionRKWard) {
-		intro += i18n("<p>The setup assistant has been invoked, automatically, because a new version of RKWard has been detected.</p");
-	} else if (reason == NewVersionR) {
-		// TODO: invoke this!
-		intro += i18n("<p>The setup assistant has been invoked, automatically, because a new version of R has been detected.</p");
-	} else if (reason == ProblemsDetected) {
-		intro += i18n("<p>The setup assistant has been invoked, automatically, because a problem has been detected in your setup.</p");
-	}
-	l->addWidget(RKCommonFunctions::wordWrappedLabel(intro));
-	auto waiting_to_start_label = RKCommonFunctions::wordWrappedLabel(i18n("<b>Waiting for R backend...</b>") + "<p>&nbsp;</p><p>&nbsp;</p>");
-	l->addWidget(waiting_to_start_label);
-	auto firstpageref = wizard->addPage (firstpage, i18n("RKWard Setup Assistant"));
-	wizard->setValid(firstpageref, false);
-
-	// Basic installation page
-	wizard->createStandardPage();
-	bool reinstallation_required = false;
-	auto idir = new RKSetupWizardItem(i18n("Installation directory"));
-	if (RKCommonFunctions::getRKWardDataDir ().isEmpty ()) {
-		idir->setStatus(RKSetupWizardItem::Error, i18n("Not found."));
-		idir->setLongLabel("<p>RKWard either could not find its resource files at all, or only an old version of those files. The most likely cause is that the last installation failed to place the files in the correct place. This can lead to all sorts of problems, from single missing features to complete failure to function.</p><p><b>You should quit RKWard, now, and fix your installation</b>. For help with that, see <a href=\"https://rkward.kde.org/Building_RKWard_From_Source.html\">https://rkward.kde.org/Building_RKWard_From_Source.html</a>.</p>");
-		idir->addOption(i18n("Reinstallation required"), i18n("This problem cannot be corrected, automatically. You will have to reinstall RKWard."), [](RKSetupWizard*) {});
-		reinstallation_required = true;
-	} else {
-		idir->setStatus(RKSetupWizardItem::Good, i18n("Found."));
-	}
-	wizard->appendItem(idir);
-
-	auto pluginmaps = new RKSetupWizardItem(i18n("RKWard plugins"));
-	if (RKSettingsModulePlugins::pluginMaps().isEmpty()) {
-		pluginmaps->setLongLabel(i18n("<p>No plugins are enabled. This is probably not intended.</p>"));
-		pluginmaps->setStatus(RKSetupWizardItem::Warning, i18n("None selected"));
-		pluginmaps->addOption(i18n("Restore defaults"), i18n("Enable the default plugins"), [](RKSetupWizard*) { RKSettingsModulePlugins::registerDefaultPluginMaps(RKSettingsModulePlugins::AddIfDefault); });
-		pluginmaps->addOption(i18n("No change"), i18n("Proceed without plugins"), [](RKSetupWizard*) {});
-
-		// TODO: Also offer help, if a suspicioulsy small share of plugins is active? RKSettingsModulePlugins::knownUsablePluginCount();
-	} else {
-		pluginmaps->setStatus(RKSetupWizardItem::Good, i18n("Found."));
-	}
-	wizard->appendItem(pluginmaps);
-
-	auto kateplugins = new RKSetupWizardItem(i18n("Kate plugins"));
-	int kateplugincount = RKWardMainWindow::getMain()->katePluginIntegration()->knownPluginCount();
-	if (kateplugincount < 1) {
-		kateplugins->setLongLabel(i18n("<p>Important functionality in RKWard is provided by kate plugins. It looks like none are installed on this system. On Linux/BSD, this can usually be fixed by installing kate.</p>"));
-		kateplugins->setStatus(RKSetupWizardItem::Error, i18n("None found"));
-		addSoftwareInstallOptions(kateplugins, QStringLiteral("kate"), "https://kate.kde.org");
-	} else {
-		kateplugins->setStatus(RKSetupWizardItem::Good, i18n("Found %1 plugins.", kateplugincount));
-	}
-	wizard->appendItem(kateplugins);
-
-	for (int i = 0; i < settings_items.size(); ++i) {
-		wizard->appendItem(settings_items[i]);
-	}
-
-	wizard->current_layout->setRowStretch(++wizard->current_row, 1);
-	wizard->addPage(wizard->current_page, i18n("Basic installation"));
-
-	// Wait for R Interface, then start dialog
-	wizard->setWindowModality(Qt::ApplicationModal);
-	wizard->show();
-	while (!RKGlobals::rInterface()->backendIsIdle()) {
-		if (RKGlobals::rInterface()->backendIsDead()) {
-			waiting_to_start_label->setText(i18n("<b>R backend has crashed. Click \"Cancel\" to exit setup assitant.</b>"));
-		} else {
-			QApplication::processEvents(QEventLoop::AllEvents, 1000);
-		}
-	}
-	waiting_to_start_label->setText(i18n("<b>R backend has started. Click \"Next\" to continue.</b>"));
-	wizard->setValid(firstpageref, true);
-
-	// R packages page
-	// This must be created _after_ the backend has started, for obvious reasons.
-	wizard->createStandardPage();
-
-	wizard->appendItem(makeRPackageCheck("R2HTML", i18n("The R2HTML package is used by nearly all RKWard output functions, and thus required."), RKSetupWizardItem::Error));
-	wizard->appendItem(makeRPackageCheck("rmarkdown", i18n("The rmarkdown package is required for rendering .Rmd files (including preview rendering), which is an optional but recommended feature."), RKSetupWizardItem::Warning));
-
-	wizard->current_layout->setRowStretch(++wizard->current_row, 1);
-	wizard->addPage(wizard->current_layout->parentWidget(), i18n("R Packages"));
-
-	// external software page
-	wizard->createStandardPage();
-
-	wizard->appendItem(makeSoftwareCheck("pandoc", i18n("The pandoc software is needed for rendering (or previewing) R markdown (.Rmd) files. This is optional but recommended."), "https://pandoc.org/installing.html", RKSetupWizardItem::Warning));
-	wizard->appendItem(makeSoftwareCheck("kbibtex", i18n("The kbibtex software is useful for managing citations while writing articles. It integrates into RKWard via the Document Preview kate plugin."), "https://userbase.kde.org/KBibTeX", RKSetupWizardItem::Warning));
-
-	wizard->current_layout->setRowStretch(++wizard->current_row, 1);
-	wizard->addPage(wizard->current_layout->parentWidget(), i18n("External software"));
+	auto wizard = new RKSetupWizard(RKWardMainWindow::getMain(), reason, settings_items);
 
 	auto res = wizard->exec();
 	if (res == QDialog::Accepted) {
@@ -274,13 +274,13 @@ void RKSetupWizard::fullInteractiveCheck(InvokationReason reason, const QList<RK
 			if (!didinstall) {
 				QString install_info;
 				for (int i = 0; i < wizard->software_to_install.size(); ++i) {
-					install_info.append("<ul><a href=\"");
+					install_info.append("<ul>* <a href=\"");
 					install_info.append(wizard->software_to_install_urls.value(i));
 					install_info.append("\">");
 					install_info.append(wizard->software_to_install[i]);
 					install_info.append("</a></ul>");
 				}
-				KMessageBox::information(wizard, i18n("</p>The following software is recommended for installation, but automatic installation is not (yet) supported. Click on the links for download information:</p><li>%1</li>", install_info), QString(), QString(), KMessageBox::Notify | KMessageBox::AllowLink);
+				KMessageBox::information(wizard, i18n("<p>The following software is recommended for installation, but automatic installation is not (yet) supported.</p><p>Click on the links, below, for download information:</p><li>%1</li>", install_info), QString(), QString(), KMessageBox::Notify | KMessageBox::AllowLink);
 			}
 		}
 	}

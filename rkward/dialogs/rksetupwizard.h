@@ -24,15 +24,16 @@ class QGridLayout;
 class RKSetupWizardItem;
 class RKSetupWizard : public KAssistantDialog {
 protected:
-	RKSetupWizard(QWidget* parent);
-	~RKSetupWizard();
-
 	enum InvokationReason {
 		ProblemsDetected,
 		NewVersionRKWard,
 		NewVersionR,
 		ManualCheck
 	};
+
+	RKSetupWizard(QWidget* parent, InvokationReason reason, const QList<RKSetupWizardItem*> &settings_items);
+	~RKSetupWizard();
+
 	static bool has_been_run;
 public:
 	static void doAutoCheck();
