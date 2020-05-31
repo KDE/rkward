@@ -209,7 +209,7 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 	appendItem(makeRPackageCheck("rmarkdown", i18n("The rmarkdown package is required for rendering .Rmd files (including preview rendering), which is an optional but recommended feature."), RKSetupWizardItem::Warning));
 
 	current_layout->setRowStretch(++current_row, 1);
-	addPage(current_layout->parentWidget(), i18n("R Packages"));
+	addPage(current_page, i18n("R Packages"));
 
 	// external software page
 	createStandardPage();
@@ -218,7 +218,14 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 	appendItem(makeSoftwareCheck("kbibtex", i18n("The kbibtex software is useful for managing citations while writing articles. It integrates into RKWard via the Document Preview kate plugin."), "https://userbase.kde.org/KBibTeX", RKSetupWizardItem::Warning));
 
 	current_layout->setRowStretch(++current_row, 1);
-	addPage(current_layout->parentWidget(), i18n("External software"));
+	second_to_last_page_ref = addPage(current_page, i18n("External software"));
+
+	// summary page
+	createStandardPage();
+	last_page_label = RKCommonFunctions::linkedWrappedLabel("");
+	current_layout->addWidget(last_page_label, 0, 0, 0, 3);
+	current_layout->setRowStretch(1, 1);
+	addPage(current_page, i18n("Summary of the next steps"));
 }
 
 RKSetupWizard::~RKSetupWizard() {
@@ -226,6 +233,46 @@ RKSetupWizard::~RKSetupWizard() {
 	for(int i = 0; i < items.size(); ++i) {
 		delete items[i];
 	}
+}
+
+void RKSetupWizard::next() {
+	RK_TRACE (DIALOGS);
+
+	if (currentPage() == second_to_last_page_ref) {
+		// NOTE: This is not quite clean: Some settings get applied before clicking finish, this way.
+		//       However, I don't really want to pop up a separate dialog for a summary page, either.
+		for(int i = 0; i < items.size(); ++i) {
+			items[i]->apply(this);
+		}
+
+		QString label_text = i18n("<h2>Software to install</h2>");
+		if (!software_to_install.isEmpty()) {
+			QString install_info;
+			for (int i = 0; i < software_to_install.size(); ++i) {
+				install_info.append("<ul>* <a href=\"");
+				install_info.append(software_to_install_urls.value(i));
+				install_info.append("\">");
+				install_info.append(software_to_install[i]);
+				install_info.append("</a></ul>");
+			}
+			label_text.append(i18n("<p>The following software is recommended for installation, but automatic installation is not (yet) supported. Click on the links, below, for download information:</p><li>%1</li>", install_info));
+		} else {
+			label_text.append(i18n("No software to install"));
+		}
+		label_text.append(i18n("<h2>R packages to install</h2>"));
+		if (!packages_to_install.isEmpty()) {
+			label_text.append(i18n("<p>%1 R packages are marked for installation. The R package installation dialog will be started when you press finish. You may be prompted to select a download mirror.</p>", packages_to_install.size()));
+		} else {
+			label_text.append(i18n("No R packages to install"));
+		}
+
+		// TODO: This height calculation is not quite correct, somehow, but good enough for now.
+		int spare_height = height() - last_page_label->parentWidget()->sizeHint().height();
+		last_page_label->setText(label_text);
+		int new_height = qMax(height(), spare_height+last_page_label->minimumSizeHint().height());
+		resize(width(), new_height);
+	}
+	KAssistantDialog::next();
 }
 
 void RKSetupWizard::doAutoCheck() {
@@ -239,9 +286,11 @@ void RKSetupWizard::doAutoCheck() {
 	} else if (RKSettingsModuleGeneral::rkwardVersionChanged()) {
 		fullInteractiveCheck(NewVersionRKWard, settings_items);
 	}
+}
 
-	// TODO: remove me
-	fullInteractiveCheck(ProblemsDetected, settings_items);
+void RKSetupWizard::manualCheck() {
+	RK_TRACE (DIALOGS);
+	fullInteractiveCheck(ManualCheck);
 }
 
 void RKSetupWizard::fullInteractiveCheck(InvokationReason reason, const QList<RKSetupWizardItem*> &settings_items) {
@@ -254,35 +303,18 @@ void RKSetupWizard::fullInteractiveCheck(InvokationReason reason, const QList<RK
 
 	auto res = wizard->exec();
 	if (res == QDialog::Accepted) {
-		for(int i = 0; i < wizard->items.size(); ++i) {
-			wizard->items[i]->apply(wizard);
-		}
-
 		if (!wizard->packages_to_install.isEmpty()) {
 			RKLoadLibsDialog::showInstallPackagesModal(wizard, 0, wizard->packages_to_install);
 		}
 
-		if (!wizard->software_to_install.isEmpty()) {
-			bool didinstall = false;
 #if 0 && (defined(Q_OS_LINUX) || defined(Q_OS_UNIX))  // D'uh: muon (5.8.0) does not have an "install" command line option or equivalent
+		if (!wizard->software_to_install.isEmpty()) {
 			QString muonexe = QStandardPaths::findExecutable("muon");
 			if(!muonexe.isEmpty()) {
 				auto proc = new QProcess::startDetached("muon", QStringList() << "install" << wizard->software_to_install);
-				didinstall = true;
-			}
-#endif
-			if (!didinstall) {
-				QString install_info;
-				for (int i = 0; i < wizard->software_to_install.size(); ++i) {
-					install_info.append("<ul>* <a href=\"");
-					install_info.append(wizard->software_to_install_urls.value(i));
-					install_info.append("\">");
-					install_info.append(wizard->software_to_install[i]);
-					install_info.append("</a></ul>");
-				}
-				KMessageBox::information(wizard, i18n("<p>The following software is recommended for installation, but automatic installation is not (yet) supported.</p><p>Click on the links, below, for download information:</p><li>%1</li>", install_info), QString(), QString(), KMessageBox::Notify | KMessageBox::AllowLink);
 			}
 		}
+#endif
 	}
 
 	delete wizard;

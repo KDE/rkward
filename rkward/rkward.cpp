@@ -576,6 +576,9 @@ void RKWardMainWindow::initActions() {
 	window_detach->setText (i18n ("Detach"));
 
 	configure = actionCollection ()->addAction (KStandardAction::Preferences, "options_configure", this, SLOT (slotConfigure()));
+	action = actionCollection()->addAction("setup_wizard");
+	action->setText(i18n("Check installation"));
+	connect(action, &QAction::triggered, &RKSetupWizard::manualCheck);
 
 	edit_menu_dummy = actionCollection ()->addAction ("edit_menu_dummy", this);
 	edit_menu_dummy->setText (i18n ("[No actions available for current view]"));

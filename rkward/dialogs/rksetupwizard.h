@@ -21,6 +21,7 @@
 #include <KAssistantDialog>
 
 class QGridLayout;
+class QLabel;
 class RKSetupWizardItem;
 class RKSetupWizard : public KAssistantDialog {
 protected:
@@ -38,6 +39,7 @@ protected:
 public:
 	static void doAutoCheck();
 	static void fullInteractiveCheck(InvokationReason reason, const QList<RKSetupWizardItem*> &settings_items = QList<RKSetupWizardItem*>());
+	static void manualCheck();
 
 	void markSoftwareForInstallation(const QString &name, const QString &download_url, bool install);
 	void markRPackageForInstallation(const QString &name, bool install);
@@ -51,6 +53,10 @@ private:
 	QGridLayout* current_layout;
 	void appendItem(RKSetupWizardItem* item);
 	QList<RKSetupWizardItem*> items;
+
+	void next() override;
+	KPageWidgetItem *second_to_last_page_ref;
+	QLabel* last_page_label;
 };
 
 class QComboBox;
