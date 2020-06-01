@@ -95,7 +95,7 @@ RKSetupWizardItem* makeRPackageCheck(const QString &packagename, const QString &
 	if (!RKSessionVars::instance()->installedPackages().contains(packagename)) {
 		ret->setStatus(status_if_missing, i18n("Not installed"));
 		ret->addOption(i18n("Install %1", packagename), i18n("(Attempt to) install the package %1 and its dependencies for this version of R. In most cases, this requires a working internet connection.", packagename), [packagename](RKSetupWizard *wizard) { wizard->markRPackageForInstallation(packagename, true); });
-		ret->addOption(i18n("No change"), i18n("Proceed without the package. You will again be given the option to install the package, when the pacakge is needed."), [packagename](RKSetupWizard *wizard) { wizard->markRPackageForInstallation(packagename, false); });
+		ret->addOption(i18n("No change"), i18n("Proceed without the package. You will again be given the option to install the package, when the package is needed."), [packagename](RKSetupWizard *wizard) { wizard->markRPackageForInstallation(packagename, false); });
 	} else {
 		ret->setStatus(RKSetupWizardItem::Good, i18n("Installed"));
 	}
@@ -177,7 +177,7 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 		kateplugins->setStatus(RKSetupWizardItem::Error, i18n("None found"));
 		addSoftwareInstallOptions(kateplugins, QStringLiteral("kate"), "https://kate.kde.org");
 	} else {
-		kateplugins->setStatus(RKSetupWizardItem::Good, i18n("Found %1 plugins.", kateplugincount));
+		kateplugins->setStatus(RKSetupWizardItem::Good, i18np("Found %1 plugin.", "Found %1 plugins.", kateplugincount));
 	}
 	appendItem(kateplugins);
 
@@ -193,7 +193,7 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 	show();
 	while (!RKGlobals::rInterface()->backendIsIdle()) {
 		if (RKGlobals::rInterface()->backendIsDead()) {
-			waiting_to_start_label->setText(i18n("<b>R backend has crashed. Click \"Cancel\" to exit setup assitant.</b>"));
+			waiting_to_start_label->setText(i18n("<b>R backend has crashed. Click \"Cancel\" to exit setup assistant.</b>"));
 		} else {
 			QApplication::processEvents(QEventLoop::AllEvents, 1000);
 		}
