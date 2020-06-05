@@ -289,6 +289,21 @@ void startModel (KTextEditor::CodeCompletionInterface* iface, KTextEditor::CodeC
 	}
 }
 
+// returns false if and only if the given model contains something besides one item matching the filter
+bool modelSkippable(KTextEditor::CodeCompletionModel *model, const QString& filter, bool is_autoword_model) {
+	if (model->rowCount() < 1) return true;
+	QModelIndex parent = model->index(0,0);
+	if (!model->rowCount(parent)) {
+		parent = QModelIndex();
+	}
+	if (model->rowCount(parent) != 1) {
+RK_DEBUG(APP, DL_ERROR, "rowCount %d", model->rowCount(parent));
+		return false;
+	}
+RK_DEBUG(APP, DL_ERROR, "word %s - %s", qPrintable(filter), qPrintable(model->data(model->index(0, KTextEditor::CodeCompletionModel::Name, parent)).toString()));
+	return (model->data(model->index(0, KTextEditor::CodeCompletionModel::Name, parent)).toString() == filter);
+}
+
 void RKCompletionManager::updateVisibility () {
 	RK_TRACE (COMMANDEDITOR);
 
@@ -296,7 +311,8 @@ void RKCompletionManager::updateVisibility () {
 		active_models.clear ();
 	}
 
-	bool min_len = (currentCompletionWord ().length () >= settings->autoMinChars ()) || user_triggered;
+	auto word = currentCompletionWord();
+	bool min_len = (word.length () >= settings->autoMinChars ()) || user_triggered;
 	startModel (cc_iface, completion_model, min_len && settings->isEnabled (RKCodeCompletionSettings::Object), symbol_range, &active_models);
 	startModel (cc_iface, file_completion_model, min_len && settings->isEnabled (RKCodeCompletionSettings::Filename), symbol_range, &active_models);
 	if (kate_keyword_completion_model && settings->isEnabled (RKCodeCompletionSettings::AutoWord)) {
@@ -308,8 +324,17 @@ void RKCompletionManager::updateVisibility () {
 	startModel (cc_iface, callhint_model, true && settings->isEnabled (RKCodeCompletionSettings::Calltip), currentCallRange (), &active_models);
 	startModel (cc_iface, arghint_model, min_len && settings->isEnabled (RKCodeCompletionSettings::Arghint), argname_range, &active_models);
 
-	if (active_models.isEmpty ()) {
-		cc_iface->abortCompletion ();
+	// hide list if there are no active completion models, *or* only one model is active with exactly one completion matching the current completion word.
+	// the latter is important, e.g. when entering "?example" in the console. To complicate matters, grouped models may be active while having no matches...
+	int models_not_skipped = 0;
+	for (int i = 0; i < active_models.count(); ++i) {
+		auto m = active_models[i];
+		if (!modelSkippable(active_models[i], word, m == kate_keyword_completion_model)) {
+			++models_not_skipped;
+		}
+	}
+	if (!models_not_skipped) {
+		cc_iface->abortCompletion();
 	}
 }
 
