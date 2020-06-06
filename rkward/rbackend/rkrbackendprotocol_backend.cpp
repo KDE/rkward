@@ -125,11 +125,11 @@
 		RKRBackend::this_pointer->run (locale_dir);
 		RK_DEBUG(RBACKEND, DL_DEBUG, "Main loop finished");
 
-		QMetaObject::invokeMethod(&transmitter, [&transmitter]() { transmitter.doExit(); }, Qt::QueuedConnection);
+		QMetaObject::invokeMethod(&transmitter, "doExit", Qt::QueuedConnection);
 		transmitter.wait (5000);
 
 		if (!RKRBackend::this_pointer->isKilled ()) RKRBackend::tryToDoEmergencySave ();
-		QMetaObject::invokeMethod(&app, [&app]() { app.quit(); }, Qt::QueuedConnection);
+		QMetaObject::invokeMethod(&app, "quit", Qt::QueuedConnection);
 		exit(0);
 	}
 
