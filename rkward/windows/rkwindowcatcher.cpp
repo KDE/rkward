@@ -750,7 +750,7 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KPart
 	action->setText (i18n ("Last plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveLast));
 	window->plot_last_action = (QAction *) action;
-	action = window->plot_list_action = new KSelectAction (i18n ("Go to plot"), 0);
+	action = window->plot_list_action = new KSelectAction (i18n ("Go to plot"), window);
 	window->actions_not_for_preview.append (action);
 	window->plot_list_action->setToolBarMode (KSelectAction::MenuMode);
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionListPlots));
