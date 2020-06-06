@@ -388,7 +388,7 @@ void RInterface::handleRequest (RBackendRequest* request) {
 		}
 		tryNextCommand ();
 	} else if (request->type == RBackendRequest::HistoricalSubstackRequest) {
-		RCommandProxy *cproxy = request->command;
+		RCommandProxy *cproxy = request->takeCommand();
 		RCommand *parent = 0;
 		for (int i = all_current_commands.size () - 1; i >= 0; --i) {
 			if (all_current_commands[i]->id () == cproxy->id) {
@@ -396,6 +396,7 @@ void RInterface::handleRequest (RBackendRequest* request) {
 				break;
 			}
 		}
+		delete cproxy;
 		command_requests.append (request);
 		processHistoricalSubstackRequest (request->params["call"].toStringList (), parent);
 	} else if (request->type == RBackendRequest::PlainGenericRequest) {
