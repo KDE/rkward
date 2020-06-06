@@ -114,6 +114,9 @@ void RInterface::issueCommand (const QString &command, int type, const QString &
 RInterface::~RInterface(){
 	RK_TRACE (RBACKEND);
 
+	// Don't wait for QObject d'tor to destroy the backend transmitter. It might still try to call functions in the RInterface
+	// (noteably, it does call qApp->processEvents().
+	delete RKRBackendProtocolFrontend::instance ();
 	RKWindowCatcher::discardInstance ();
 }
 

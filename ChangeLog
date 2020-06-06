@@ -1,5 +1,6 @@
 --- Version 0.7.2 - UNRELEASED
-- Avoid some logged warnings from the R backend on exit
+- Fix several small memory leaks
+- Clean some logged warnings and potential issues during R backend shutdown
 - Add "Check installation" wizard to test for several common basic instation issues all in one place
 - Add rkward internal package location to end of library search path, to make it accessible to help.search()
 - Add menu action to open any supported file type, directly
