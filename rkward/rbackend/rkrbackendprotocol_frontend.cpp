@@ -42,6 +42,7 @@ RKRBackendProtocolFrontend::~RKRBackendProtocolFrontend () {
 	RKFrontendTransmitter::instance ()->wait(1000);  // Wait for thread to catch the backend's exit request, and exit()
 	RKFrontendTransmitter::instance ()->quit();      // Tell it to quit, otherwise
 	RKFrontendTransmitter::instance ()->wait(3000);  // Wait for thread to quit and clean up.
+	qApp->processEvents();                           // Not strictly needed, but avoids some mem leaks on exit by handling all posted BackendExit events
 	delete RKFrontendTransmitter::instance ();
 }
 

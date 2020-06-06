@@ -100,7 +100,7 @@ public:
 		RKWardEvent = QEvent::User + 1
 	};
 	explicit RKRBackendEvent (RBackendRequest* data=0) : QEvent ((QEvent::Type) RKWardEvent) { _data = data; };
-	RKRBackendEvent ();
+	~RKRBackendEvent () {};
 
 	RBackendRequest* data () { return _data; };
 private:

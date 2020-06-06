@@ -56,7 +56,7 @@ void RKGraphicsDeviceFrontendTransmitter::setupServer () {
 	RK_TRACE (GRAPHICS_DEVICE);
 
 	RK_ASSERT (!local_server);
-	local_server = new QLocalServer ();
+	local_server = new QLocalServer(this);
 	RK_ASSERT (local_server->listen ("rkd" + KRandom::randomString (8)));
 	connect (local_server, &QLocalServer::newConnection, this, &RKGraphicsDeviceFrontendTransmitter::newConnection);
 	server_name = local_server->fullServerName ();

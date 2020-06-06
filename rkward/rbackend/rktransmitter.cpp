@@ -165,6 +165,7 @@ void RKRBackendSerializer::serializeProxy (const RCommandProxy &proxy, QDataStre
 	serializeData (proxy, stream);
 }
 
+
 RCommandProxy* RKRBackendSerializer::unserializeProxy (QDataStream &stream) {
 	RK_TRACE (RBACKEND);
 
