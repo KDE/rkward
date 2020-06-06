@@ -23,9 +23,9 @@
 
 #include <QCoreApplication>
 #include <QThread>
-
 #include <QLocalSocket>
 #include <QMutex>
+
 #include "rktransmitter.h"
 #include <iostream>
 
@@ -123,10 +123,14 @@
 		RKRBackendProtocolBackend backend (data_dir, rkd_server_name);
 		transmitter.start ();
 		RKRBackend::this_pointer->run (locale_dir);
-		transmitter.quit ();
+		RK_DEBUG(RBACKEND, DL_DEBUG, "Main loop finished");
+
+		QMetaObject::invokeMethod(&transmitter, [&transmitter]() { transmitter.doExit(); }, Qt::QueuedConnection);
 		transmitter.wait (5000);
 
 		if (!RKRBackend::this_pointer->isKilled ()) RKRBackend::tryToDoEmergencySave ();
+		QMetaObject::invokeMethod(&app, [&app]() { app.quit(); }, Qt::QueuedConnection);
+		exit(0);
 	}
 
 RKRBackendProtocolBackend* RKRBackendProtocolBackend::_instance = 0;

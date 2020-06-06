@@ -146,7 +146,8 @@ void RKFrontendTransmitter::run () {
 
 	exec ();
 
-	backend->waitForFinished ();
+	// It's ok to only give backend a short time to finish. We only get here, after QuitCommand has been handled by the backend
+	backend->waitForFinished(1000);
 
 	if (!connection) {
 		RK_ASSERT (false);

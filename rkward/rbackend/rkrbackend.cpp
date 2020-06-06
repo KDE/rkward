@@ -622,6 +622,7 @@ void RKRBackend::tryToDoEmergencySave () {
 		// If we are in the wrong thread, things are a lot more tricky. We need to cause the R thread to exit, and wait for it to finish saving.
 		// Fortunately, if we are in the wrong thread, that probably means, the R thread did *not* crash, and will thus still be functional
 		this_pointer->killed = EmergencySaveThenExit;
+		return;
 		RK_scheduleIntr ();
 		for (int i = 0; i < 100; ++i) {		// give it up to ten seconds to interrupt and exit the loop
 			if (!this_pointer->r_running) break;
@@ -1214,6 +1215,7 @@ void RKRBackend::enterEventLoop () {
 
 	run_Rmainloop ();
 	// NOTE: Do NOT run Rf_endEmbeddedR(). It does more that we want. We rely on RCleanup, instead.
+	RK_DEBUG(RBACKEND, DL_DEBUG, "R loop finished");
 }
 
 struct SafeParseWrap {
@@ -1497,7 +1499,7 @@ void RKRBackend::run (const QString &locale_dir) {
 
 	initialize (QFile::encodeName (locale_dir));
 
-	enterEventLoop ();
+	enterEventLoop();
 }
 
 void RKRBackend::commandFinished (bool check_object_updates_needed) {
