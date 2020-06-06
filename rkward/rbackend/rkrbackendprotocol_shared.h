@@ -115,9 +115,9 @@ friend class RKRBackend;
 friend class RKRBackendSerializer;
 friend class RBackendRequest;
 	RCommandProxy ();
-	~RCommandProxy ();
 	RCommandProxy (const QString &command, int type);
 public:		// all these are public for technical reasons, only.
+	~RCommandProxy ();
 	QString command;
 	int type;
 	int id;
