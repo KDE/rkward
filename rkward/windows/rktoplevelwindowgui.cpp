@@ -24,6 +24,7 @@
 #include <kactioncollection.h>
 #include <kxmlguifactory.h>
 #include <kshortcutsdialog.h>
+#include <KHelpMenu>
 
 #include <QWhatsThis>
 #include <QDomDocument>
@@ -50,7 +51,7 @@
 
 #include "../debug.h"
 
-RKTopLevelWindowGUI::RKTopLevelWindowGUI (KXmlGuiWindow *for_window) : QObject (for_window), KXMLGUIClient () {
+RKTopLevelWindowGUI::RKTopLevelWindowGUI(KXmlGuiWindow *for_window) : QObject(for_window), KXMLGUIClient(), help_menu_dummy(nullptr) {
 	RK_TRACE (APP);
 
 	RKTopLevelWindowGUI::for_window = for_window;
@@ -65,9 +66,10 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI (KXmlGuiWindow *for_window) : QObject (
 	QAction *show_rkward_help = actionCollection ()->addAction (KStandardAction::HelpContents, "rkward_help", this, SLOT (showRKWardHelp()));
 	show_rkward_help->setText (i18n ("Help on RKWard"));
 
-	actionCollection ()->addAction (KStandardAction::AboutApp, "about_app", this, SLOT (showAboutApplication()));
-	actionCollection ()->addAction (KStandardAction::WhatsThis, "whats_this", this, SLOT (startWhatsThis()));
-	actionCollection ()->addAction (KStandardAction::ReportBug, "report_bug", this, SLOT (reportRKWardBug()));
+	actionCollection()->addAction(KStandardAction::AboutApp, "about_app", this, SLOT(showAboutApplication()));
+	actionCollection()->addAction(KStandardAction::WhatsThis, "whats_this", this, SLOT(startWhatsThis()));
+	actionCollection()->addAction(KStandardAction::ReportBug, "report_bug", this, SLOT(reportRKWardBug()));
+	actionCollection()->addAction(KStandardAction::SwitchApplicationLanguage, "switch_language", this, SLOT(showSwitchApplicationLanguage()));
 
 	help_invoke_r_help->setStatusTip (i18n ("Shows the R help index"));
 	show_help_search->setStatusTip (i18n ("Shows/raises the R Help Search window"));
@@ -99,6 +101,7 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI (KXmlGuiWindow *for_window) : QObject (
 
 RKTopLevelWindowGUI::~RKTopLevelWindowGUI () {
 	RK_TRACE (APP);
+	delete help_menu_dummy;
 }
 
 void RKTopLevelWindowGUI::initToolWindowActions () {
@@ -172,6 +175,14 @@ void RKTopLevelWindowGUI::showAboutApplication () {
 
 	KAboutApplicationDialog about (KAboutData::applicationData ());
 	about.exec ();
+}
+
+void RKTopLevelWindowGUI::showSwitchApplicationLanguage() {
+	RK_TRACE (APP);
+
+	// Uggh. No direct or static access to KSwitchLanguageDialog...
+	if (!help_menu_dummy) help_menu_dummy = new KHelpMenu(for_window, QString(), false);
+	help_menu_dummy->switchApplicationLanguage();
 }
 
 void RKTopLevelWindowGUI::toggleToolView (RKMDIWindow *tool_window) {

@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward_toplevel" version="710">
+<kpartgui name="rkward_toplevel" version="720">
 	<MenuBar>
 		<Merge/>
 		<Menu name="window"><text>&amp;Window</text>
@@ -30,6 +30,9 @@
 			<Action name="show_help_search" group="posthelp_actions_merge"/>
 			<Separator group="posthelp_actions_merge"/>
 			<Action name="report_bug" group="posthelp_actions_merge"/>
+			<Separator group="posthelp_actions_merge"/>
+			<Action name="switch_language" group="posthelp_actions_merge"/>
+			<Separator group="posthelp_actions_merge"/>
 			<Action name="about_app" group="posthelp_actions_merge"/>
 		</Menu>
 	</MenuBar>

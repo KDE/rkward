@@ -1,4 +1,5 @@
 --- Version 0.7.2 - UNRELEASED
+- Add menu option to switch application language
 - Fix several small memory leaks
 - Clean some logged warnings and potential issues during R backend shutdown
 - Add "Check installation" wizard to test for several common basic instation issues all in one place

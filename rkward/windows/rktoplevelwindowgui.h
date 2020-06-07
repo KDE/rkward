@@ -25,6 +25,7 @@
 class KXmlGuiWindow;
 class RKMDIWindow;
 class QAction;
+class KHelpMenu;
 
 /** represents the common portions of the GUI for top level windows: The help menu, and the windows menu */
 class RKTopLevelWindowGUI : public QObject, public KXMLGUIClient {
@@ -53,6 +54,8 @@ public slots:
 	void reportRKWardBug ();
 	/** not quite sure, why I have to reimplement this from KMainWindow */
 	void showAboutApplication ();
+	/** Language switching dialog */
+	void showSwitchApplicationLanguage();
 
 	// settings menu
 	/** configure key bindings. Reimplemented to show notice before the actual dialog. */
@@ -68,6 +71,7 @@ private:
 	QAction *prev_action;
 	QAction *next_action;
 	void toggleToolView (RKMDIWindow *tool_window);
+	KHelpMenu *help_menu_dummy;
 };
 
 #endif
