@@ -69,7 +69,7 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI(KXmlGuiWindow *for_window) : QObject(fo
 	actionCollection()->addAction(KStandardAction::AboutApp, "about_app", this, SLOT(showAboutApplication()));
 	actionCollection()->addAction(KStandardAction::WhatsThis, "whats_this", this, SLOT(startWhatsThis()));
 	actionCollection()->addAction(KStandardAction::ReportBug, "report_bug", this, SLOT(reportRKWardBug()));
-	actionCollection()->addAction(KStandardAction::SwitchApplicationLanguage, "switch_language", this, SLOT(showSwitchApplicationLanguage()));
+	actionCollection()->addAction(KStandardAction::SwitchApplicationLanguage, "switch_application_language", this, SLOT(showSwitchApplicationLanguage()));
 
 	help_invoke_r_help->setStatusTip (i18n ("Shows the R help index"));
 	show_help_search->setStatusTip (i18n ("Shows/raises the R Help Search window"));
