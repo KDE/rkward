@@ -10,6 +10,14 @@ BASEDIR=`pwd`
 PPATEMPDIR=$BASEDIR/ppatemp
 mkdir $PPATEMPDIR
 
+if [ ! -d "$DIRECTORY" ]; then
+	git clone https://invent.kde.org/tfry/rkward-ppa-support.git debian
+else
+	cd debian
+	git pull
+	cd ..
+fi
+
 if [ "${1}" == "--stable" ]; then
 	shift
 	PPAIDS="rkward-stable rkward-stable-cran rkward-stable-backports-cran"
