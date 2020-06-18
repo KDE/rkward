@@ -521,6 +521,9 @@ while i < len (toplevel_sources):
   handleSubFile (toplevel_sources[i])  # Some duplication of parsing, instead of duplication of code
   i += 1
 
+# make sure the latest outfile has been synced to disc, before running xgettext
+outfile.close()
+
 #######
 # Run xgettext on all generated .pot.cpp files, and - unless --extract-only - merge, compile, install
 for po_id in initialized_pot_files:
