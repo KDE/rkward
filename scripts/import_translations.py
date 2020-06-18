@@ -30,10 +30,11 @@ import codecs
 import re
 
 SVNROOT = "svn://anonsvn.kde.org/home/kde/trunk/l10n-kf5/"
-RKWARDSVNPATH = "messages/playground-edu/"
+RKWARDSVNPATH = "messages/rkward"
 SCRIPTDIR = os.path.dirname (os.path.realpath (sys.argv[0]))
 TMPDIR = os.path.join (SCRIPTDIR, "tmp")
 EXPORTDIR = os.path.join (SCRIPTDIR, "..", "i18n", "po")
+IGNOREDPONAMES = {'org.kde.rkward.appdata.po', 'rkward._desktop_.po', 'rkward_xml_mimetypes.po'}
 if not os.path.exists (TMPDIR):
     os.makedirs (TMPDIR)
 if not os.path.exists (EXPORTDIR):
@@ -46,37 +47,23 @@ else:
 LANGUAGES = LANGUAGES
 print ("Languages: " + ", ".join (LANGUAGES))
 
-PONAMES = []
-messagessh = codecs.open (os.path.join (SCRIPTDIR, "..", "Messages.sh"), 'r', 'utf-8')
-for line in messagessh:
-    match = re.search ("(rkward[^\s]*)\.pot", line)
-    if (match != None):
-        PONAMES.append (match.group (1) + ".po")
-print ("POs: " + ", ".join (PONAMES))
-PONAMES = set (PONAMES)
-messagessh.close ()
-
 for lang in LANGUAGES:
     os.chdir (TMPDIR)
-    try:
-        pofiles = subprocess.check_output (["svn", "list", SVNROOT + lang + "/" + RKWARDSVNPATH]).split ('\n')
-    except:
-        continue
-    pofiles = list (set (pofiles) & PONAMES)
-    if (len (pofiles) < 1):
-        continue
     langdir = os.path.join (TMPDIR, lang)
     if not os.path.exists (langdir):
-        subprocess.call (["svn", "co", SVNROOT + lang + "/" + RKWARDSVNPATH, lang, "--depth", "empty"])
-    os.chdir (langdir)
-    subprocess.call (["svn", "up"] + pofiles)
-    os.chdir (TMPDIR)
+        subprocess.call (["svn", "co", SVNROOT + lang + "/" + RKWARDSVNPATH, lang])
+        if not os.path.exists (langdir):
+            continue
+    else:
+        os.chdir (langdir)
+        subprocess.call (["svn", "up"])
+        os.chdir (TMPDIR)
+    pofiles = [fn for fn in os.listdir (langdir) if fn.endswith ('.po') and fn not in IGNOREDPONAMES]
+    if (len (pofiles) < 1):
+        continue
     for pofile in pofiles:
         outfile = os.path.join (EXPORTDIR, re.sub ("po$", lang + ".po", pofile))
         infile = os.path.join (langdir, pofile)
-        if not os.path.isfile (infile):
-            print ("###### svn up failed to create " + infile + " #######")
-            continue
 
         # copy to destination, and strip unneeded comments
         print ("writing " + outfile)
