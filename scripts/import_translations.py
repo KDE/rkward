@@ -29,6 +29,7 @@ import shutil
 
 SVNROOT = "svn://anonsvn.kde.org/home/kde/trunk/l10n-kf5/"
 RKWARDSVNPATH = "messages/rkward"
+RKWARDSVNDOCSPATH = "docs/rkward"
 SCRIPTDIR = os.path.dirname (os.path.realpath (sys.argv[0]))
 TMPDIR = os.path.join (SCRIPTDIR, "tmp")
 EXPORTDIR = os.path.join (SCRIPTDIR, "..", "i18n", "po")
@@ -76,3 +77,28 @@ for lang in LANGUAGES:
         # copy to destination
         print ("writing " + outfile)
         shutil.copyfile (infile, outfile)
+
+for lang in LANGUAGES:
+    os.chdir (TMPDIR)
+    docsdir = os.path.join (TMPDIR, "docs-" + lang)
+    if not os.path.exists (docsdir):
+        subprocess.call (["svn", "co", SVNROOT + lang + "/" + RKWARDSVNDOCSPATH, "docs-" + lang])
+        if not os.path.exists (docsdir):
+            continue
+    else:
+        os.chdir (docsdir)
+        subprocess.call (["svn", "up"])
+        os.chdir (TMPDIR)
+    docdirs = [fn for fn in os.listdir (docsdir) if fn[0] != '.' and os.path.isdir (os.path.join (docsdir, fn))]
+    if (len (docdirs) < 1):
+        continue
+    langdocdir = os.path.join (PODIR, lang, "docs")
+    for docdir in docdirs:
+        indir = os.path.join (docsdir, docdir)
+        outdir = os.path.join (langdocdir, docdir)
+
+        # copy to destination
+        print ("copying " + outdir)
+        if os.path.exists (outdir):
+            shutil.rmtree (outdir)
+        shutil.copytree (indir, outdir)
