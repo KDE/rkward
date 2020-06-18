@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#! /usr/bin/env python3
 # ***************************************************************************
 #                          import_translations  -  description
 #                             -------------------
@@ -41,7 +41,7 @@ if not os.path.exists (EXPORTDIR):
 if (len (sys.argv) > 1):
     LANGUAGES = sys.argv[1:]
 else:
-    LANGUAGES = subprocess.check_output (["svn", "cat", SVNROOT + "subdirs"]).split ()
+    LANGUAGES = subprocess.check_output (["svn", "cat", SVNROOT + "subdirs"]).decode ('utf-8').split ()
     LANGUAGES.remove ('x-test')
 LANGUAGES = LANGUAGES
 print ("Languages: " + ", ".join (LANGUAGES))
