@@ -24,7 +24,6 @@
 import sys
 import subprocess
 import os
-import re
 import shutil
 
 SVNROOT = "svn://anonsvn.kde.org/home/kde/trunk/l10n-kf5/"
@@ -32,14 +31,15 @@ RKWARDSVNPATH = "messages/rkward"
 RKWARDSVNDOCSPATH = "docs/rkward"
 SCRIPTDIR = os.path.dirname (os.path.realpath (sys.argv[0]))
 TMPDIR = os.path.join (SCRIPTDIR, "tmp")
-EXPORTDIR = os.path.join (SCRIPTDIR, "..", "i18n", "po")
+I18NDIR = os.path.join (SCRIPTDIR, "..", "i18n")
+EXPORTDIR = os.path.join (I18NDIR, "po")
 PODIR = os.path.join (SCRIPTDIR, "..", "po")
 IGNOREDPONAMES = {'org.kde.rkward.appdata.po', 'rkward._desktop_.po', 'rkward_xml_mimetypes.po'}
 
 if not os.path.exists (TMPDIR):
     os.makedirs (TMPDIR)
-if not os.path.exists (EXPORTDIR):
-    os.makedirs (os.path.join (EXPORTDIR))
+if os.path.exists (EXPORTDIR):
+    shutil.rmtree (os.path.join (EXPORTDIR))
 
 if (len (sys.argv) > 1):
     LANGUAGES = sys.argv[1:]
@@ -64,15 +64,19 @@ for lang in LANGUAGES:
     if (len (pofiles) < 1):
         continue
     langpodir = os.path.join (PODIR, lang)
+    exportlangpodir = os.path.join (EXPORTDIR, lang)
     for pofile in pofiles:
         is_main = pofile == "rkward.po"
         if is_main:
-            if not os.path.exists (langpodir):
-                os.makedirs (langpodir)
-            outfile = os.path.join (langpodir, pofile)
+            outdir = langpodir
         else:
-            outfile = os.path.join (EXPORTDIR, re.sub ("po$", lang + ".po", pofile))
+            outdir = exportlangpodir
         infile = os.path.join (messagesdir, pofile)
+        outfile = os.path.join (outdir, pofile)
+        if not os.path.exists (outdir):
+            os.makedirs (outdir)
+            if not is_main:
+                shutil.copyfile (os.path.join (I18NDIR, "compile_lang.cmake"), os.path.join (outdir, "CMakeLists.txt"))
 
         # copy to destination
         print ("writing " + outfile)
