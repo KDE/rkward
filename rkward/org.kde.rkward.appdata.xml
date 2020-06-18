@@ -25,6 +25,7 @@
   <name xml:lang="sk">RKward</name>
   <name xml:lang="sv">RKward</name>
   <name xml:lang="uk">RKward</name>
+  <name xml:lang="x-test">xxRKwardxx</name>
   <summary>KDE frontend to the R statistics language</summary>
   <summary xml:lang="ca">Frontal del KDE pel llenguatge estadístic R</summary>
   <summary xml:lang="ca-valencia">Frontal del KDE pel llenguatge estadístic R</summary>
@@ -44,6 +45,7 @@
   <summary xml:lang="sk">KDE frontend pre štatistický jazyk R</summary>
   <summary xml:lang="sv">KDE-gränssnitt till statistikspråket R</summary>
   <summary xml:lang="uk">Оболонка KDE до мови для статичних обчислень R</summary>
+  <summary xml:lang="x-test">xxKDE frontend to the R statistics languagexx</summary>
   <description>
     <p>
       RKWard aims to become an easy to use, transparent frontend to R,
@@ -68,6 +70,7 @@
     <p xml:lang="pt">O RKWard pretende tornar-se uma interface simples de usar e transparente para o R, um sistema poderoso para cálculos estatísticos e gráficos. Para além de uma interface adequada para as funções estatísticas mais importantes, as futuras versões também irão oferecer uma integração transparente com os pacotes de aplicações de escritório.</p>
     <p xml:lang="sv">RKward har som mål att bli ett lättanvänt, transparent gränssnitt till R, ett kraftfullt system för statistiska beräkningar och grafik. Förutom ett praktiskt grafiskt användargränssnitt för de viktigaste statistikfunktionerna, kommer framtida versioner också att tillhandahålla sömlös integrering med en kontorssvit.</p>
     <p xml:lang="uk">RKWard — проста у користуванні, прозора оболонка до R — потужної системи для статистичних обчислень та побудови графіків. Окрім зручного графічного інтерфейсу до більшості статистичних функцій, у майбутніх версіях буде реалізовано безшовну інтеграцію із комплексами офісних програм.</p>
+    <p xml:lang="x-test">xxRKWard aims to become an easy to use, transparent frontend to R, a powerful system for statistical computation and graphics. Besides a convenient GUI for the most important statistical functions, future versions will also provide seamless integration with an office-suite.xx</p>
   </description>
   <url type="homepage">https://rkward.kde.org</url>
   <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=rkward</url>
@@ -92,6 +95,7 @@
       <caption xml:lang="pt">Janela principal da aplicação, com um navegador de objectos, um editor de dados, um navegador de ficheiros e uma consola de R interactiva visíveis. A colocação das janelas pode ser reorganizada e todas as janelas poder-se-ão destacar da janela principal.</caption>
       <caption xml:lang="sv">Huvudfönster i programmet, med objektbläddrare, dataeditor, filbläddrare och interaktiv R-terminal synliga. Fönsterplaceringen kan arrangeras om och alla fönster kan också kopplas loss från huvudfönstret.</caption>
       <caption xml:lang="uk">Головне вікно програми із панеллю навігації об'єктами, редактором даних, панеллю навігації файловою системою та інтерактивною консоллю R. Розташування панелей можна змінювати, усі панелі також можна від'єднувати від головного вікна.</caption>
+      <caption xml:lang="x-test">xxApplication main window, with object browser, data editor, file browser, and interactive R console visible. Window placement can be re-arranged and all windows can also detached from the main window.xx</caption>
       <image>https://cdn.kde.org/screenshots/rkward/main_window.png</image>
     </screenshot>
     <screenshot type="default">
@@ -112,6 +116,7 @@
       <caption xml:lang="pt">Editor de programas com uma antevisão activa.</caption>
       <caption xml:lang="sv">Skripteditor med aktiv förhandsgranskning.</caption>
       <caption xml:lang="uk">Редактор скриптів із активним попереднім переглядом.</caption>
+      <caption xml:lang="x-test">xxScript editor with active preview.xx</caption>
       <image>https://cdn.kde.org/screenshots/rkward/script_preview.png</image>
     </screenshot>
     <screenshot type="default">
@@ -134,6 +139,7 @@
       <caption xml:lang="sk">Práca s dátami v RKward</caption>
       <caption xml:lang="sv">Arbeta med data i RKward</caption>
       <caption xml:lang="uk">Робота з даними у RKward</caption>
+      <caption xml:lang="x-test">xxWorking with data in RKwardxx</caption>
       <image>https://rkward.kde.org/assets/img/EditorDataFrame.png</image>
     </screenshot>
     <screenshot type="default">
@@ -153,6 +159,7 @@
       <caption xml:lang="pt">Pesquisa de objectos por nome, pesquisa nas páginas de ajuda e visualizador de ajuda na aplicação.</caption>
       <caption xml:lang="sv">Sökning efter objekt enligt namn, sökning efter hjälpsidor, och hjälpvisning i programmet.</caption>
       <caption xml:lang="uk">Пошук об'єктів за назвою, пошук сторінок довідки та вбудована панель перегляду довідки.</caption>
+      <caption xml:lang="x-test">xxSearching objects by name, searching for help pages, and in-app help viewer.xx</caption>
       <image>https://cdn.kde.org/screenshots/rkward/object_and_help_search.png</image>
     </screenshot>
   </screenshots>
