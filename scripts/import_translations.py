@@ -49,21 +49,21 @@ print ("Languages: " + ", ".join (LANGUAGES))
 
 for lang in LANGUAGES:
     os.chdir (TMPDIR)
-    langdir = os.path.join (TMPDIR, lang)
-    if not os.path.exists (langdir):
-        subprocess.call (["svn", "co", SVNROOT + lang + "/" + RKWARDSVNPATH, lang])
-        if not os.path.exists (langdir):
+    messagesdir = os.path.join (TMPDIR, "messages-" + lang)
+    if not os.path.exists (messagesdir):
+        subprocess.call (["svn", "co", SVNROOT + lang + "/" + RKWARDSVNPATH, "messages-" + lang])
+        if not os.path.exists (messagesdir):
             continue
     else:
-        os.chdir (langdir)
+        os.chdir (messagesdir)
         subprocess.call (["svn", "up"])
         os.chdir (TMPDIR)
-    pofiles = [fn for fn in os.listdir (langdir) if fn.endswith ('.po') and fn not in IGNOREDPONAMES]
+    pofiles = [fn for fn in os.listdir (messagesdir) if fn.endswith ('.po') and fn not in IGNOREDPONAMES]
     if (len (pofiles) < 1):
         continue
     for pofile in pofiles:
         outfile = os.path.join (EXPORTDIR, re.sub ("po$", lang + ".po", pofile))
-        infile = os.path.join (langdir, pofile)
+        infile = os.path.join (messagesdir, pofile)
 
         # copy to destination
         print ("writing " + outfile)
