@@ -18,16 +18,14 @@
 #
 # Somewhat experimental script to import translations from KDE l10n infrastructure.
 # Imports specified - or all - languages to tmp/export .
-# Imported po-files are renamed according to rkward's naming scheme, and all
-# po-file comments are stripped / replaced with a message to discourage accidental
-# editing.
+# Imported po-files are renamed according to rkward's naming scheme.
 # Modelled - to some degree - after l10n.rb from releaseme.
 
 import sys
 import subprocess
 import os
-import codecs
 import re
+import shutil
 
 SVNROOT = "svn://anonsvn.kde.org/home/kde/trunk/l10n-kf5/"
 RKWARDSVNPATH = "messages/rkward"
@@ -65,23 +63,6 @@ for lang in LANGUAGES:
         outfile = os.path.join (EXPORTDIR, re.sub ("po$", lang + ".po", pofile))
         infile = os.path.join (langdir, pofile)
 
-        # copy to destination, and strip unneeded comments
+        # copy to destination
         print ("writing " + outfile)
-        pf = codecs.open (infile, 'r', 'utf-8')
-        of = codecs.open (outfile, 'w', 'utf-8')
-        prev_was_comment = False
-        for line in pf:
-            if (line.startswith ("#")):
-                if (line.startswith ("#:")):
-                    if not prev_was_comment:
-                        of.write ("#: translation_export.do_not_modify_here:0\n")
-                        prev_was_comment = True
-                elif (line.startswith ("#,")):
-                    of.write (line)
-                else:
-                    continue
-            else:
-                of.write (line)
-                prev_was_comment = False
-        pf.close ()
-        of.close ()
+        shutil.copyfile (infile, outfile)
