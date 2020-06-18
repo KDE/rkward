@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#! /usr/bin/env python
 # ***************************************************************************
 #                          update_plugin_messages  -  description
 #                             -------------------
@@ -28,7 +28,7 @@ import codecs
 import sys
 import subprocess
 from xml.dom import minidom
-import HTMLParser
+import html.parser
 import copy
 import re
 
@@ -59,7 +59,7 @@ attributes_to_extract_for_tag={
 LINE_DUMMY_ATTR = '_DUMMY_LINE'
 
 def usage ():
-  print ("Usage: " + sys.argv[0] + " [--default_po=PO_ID] [--outdir=DIR] files")
+  print("Usage: " + sys.argv[0] + " [--default_po=PO_ID] [--outdir=DIR] files")
   exit (1)
 
 # initialize globals, and parse args
@@ -147,11 +147,7 @@ def writeouti18n (call):
   outfile.write (call + "\n")
 
 def quote (text):
-  try:
-     text = text.decode ('utf-8', 'ignore')
-  except:
-     print ("Python has trouble decoding this text: " + text.encode('utf-8'))
-  text = HTMLParser.HTMLParser ().unescape (text)	# unescape character entities, Qt does so while parsing the xml
+  text = html.unescape (text)	# unescape character entities, Qt does so while parsing the xml
   return "\"" + text.replace ("\\", "\\\\").replace ("\"", "\\\"") + "\""
 
 def stripLineDummy (text):
@@ -185,7 +181,7 @@ def getFullText (element):
     if (cn.nodeType == cn.ELEMENT_NODE) and (cn.tagName in text_splitting_elements):
       rc.append ("\n\n" + getFullText (cn) + "\n\n")
     elif cn.nodeType != cn.COMMENT_NODE:
-      rc.append(stripLineDummy (cn.toxml ("utf-8")))
+      rc.append(stripLineDummy (cn.toxml ()))
   return ''.join (rc).strip ().replace ("&amp;", "&")
 
 # get the content of all text nodes inside this node (does not include xml tags)
@@ -500,7 +496,7 @@ def initialize_pot_file (po_id, po_loc):
   if (p_outdir == ""):
     p_outdir = po_file_install_locations[po_id]
   if (not os.path.exists (p_outdir)):
-    os.makedirs (p_outdir, 0755)
+    os.makedirs (p_outdir, 0o755)
   outfile = codecs.open (os.path.join (p_outdir, po_id + '.pot.cpp'), mode, 'utf-8')
   if (mode == 'w'):	# just created
     outfile.write ('i18nc("NAME OF TRANSLATORS","Your names");\n');
@@ -561,7 +557,7 @@ for po_id in initialized_pot_files:
         os.rename (abstrans + ".new", abstrans)
       m_outdir = os.path.join (po_file_install_locations[po_id], lang, "LC_MESSAGES")
       if (not os.path.exists (m_outdir)):
-        os.makedirs (m_outdir, 0755)
+        os.makedirs (m_outdir, 0o755)
       res = subprocess.call (MSGFMT.split () + [abstrans, "-o", os.path.join (m_outdir, templatename + ".mo")])
       if (res):
         sys.stderr.write ("calling msgfmt on " + abstrans + " failed with exit code " + str (res))
