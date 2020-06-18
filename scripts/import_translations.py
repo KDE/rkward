@@ -32,6 +32,7 @@ RKWARDSVNPATH = "messages/rkward"
 SCRIPTDIR = os.path.dirname (os.path.realpath (sys.argv[0]))
 TMPDIR = os.path.join (SCRIPTDIR, "tmp")
 EXPORTDIR = os.path.join (SCRIPTDIR, "..", "i18n", "po")
+PODIR = os.path.join (SCRIPTDIR, "..", "po")
 IGNOREDPONAMES = {'org.kde.rkward.appdata.po', 'rkward._desktop_.po', 'rkward_xml_mimetypes.po'}
 
 if not os.path.exists (TMPDIR):
@@ -61,8 +62,15 @@ for lang in LANGUAGES:
     pofiles = [fn for fn in os.listdir (messagesdir) if fn.endswith ('.po') and fn not in IGNOREDPONAMES]
     if (len (pofiles) < 1):
         continue
+    langpodir = os.path.join (PODIR, lang)
     for pofile in pofiles:
-        outfile = os.path.join (EXPORTDIR, re.sub ("po$", lang + ".po", pofile))
+        is_main = pofile == "rkward.po"
+        if is_main:
+            if not os.path.exists (langpodir):
+                os.makedirs (langpodir)
+            outfile = os.path.join (langpodir, pofile)
+        else:
+            outfile = os.path.join (EXPORTDIR, re.sub ("po$", lang + ".po", pofile))
         infile = os.path.join (messagesdir, pofile)
 
         # copy to destination

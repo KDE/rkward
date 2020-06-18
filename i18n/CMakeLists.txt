@@ -11,11 +11,7 @@ MACRO(RKHandlePO _PO_FILES)
 
 		# Sort files into a proper tree layout during generation, so they can be installed using INSTALL(DIRECTORY ...)
 		# INSTALL(FILES ... OPTIONAL) will leave empty directories, if file does not exist (was not generated)
-		IF(${_poid} STREQUAL "rkward")
-			SET(_gmoFile ${CMAKE_CURRENT_BINARY_DIR}/main/${_lang}/LC_MESSAGES/rkward.mo)
-		ELSE(${_poid} STREQUAL "rkward")
-			SET(_gmoFile ${CMAKE_CURRENT_BINARY_DIR}/plugins/${_lang}/LC_MESSAGES/${_poid}.mo)
-		ENDIF(${_poid} STREQUAL "rkward")
+		SET(_gmoFile ${CMAKE_CURRENT_BINARY_DIR}/plugins/${_lang}/LC_MESSAGES/${_poid}.mo)
 
 		# making the gmo be re-built, when the po changes, but not every time is surprsingly difficult
 		# (since the gmo file is only built for translations which are complete enough)
@@ -57,7 +53,6 @@ Should you have installed translations to a non-standard directory, you can spec
    cmake [...] -DTRANSLATION_SRC_DIR=/x/y/z
 ------")
 	ELSE(NOT PO_FILES)
-		INSTALL(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/main/ DESTINATION ${LOCALE_INSTALL_DIR} OPTIONAL)
 		INSTALL(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/plugins/ DESTINATION ${DATA_INSTALL_DIR}/rkward/po OPTIONAL)
 	ENDIF(NOT PO_FILES)
 ENDIF(NOT GETTEXT_MSGFMT_EXECUTABLE)
