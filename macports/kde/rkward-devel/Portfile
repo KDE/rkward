@@ -29,7 +29,6 @@ depends_lib         port:kdelibs4 \
                     port:R
 
 configure.args-append \
-        -DNO_R_XML=1 \
         -DRKVERSION_NUMBER=${version} \
         -DBUNDLE_INSTALL_DIR=${applications_dir} \
         -DR_EXECUTABLE=${frameworks_dir}/R.framework/Resources/R

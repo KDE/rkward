@@ -59,7 +59,6 @@ configure.args-delete \
         -DR_EXECUTABLE=${frameworks_dir}/R.framework/Resources/R
 
 configure.args-append \
-        -DNO_R_XML=1 \
         -DRKVERSION_NUMBER=${version} \
         -DUSE_BINARY_PACKAGES=1 \
         -DR_EXECUTABLE=/Library/Frameworks/R.framework/Resources/R \
