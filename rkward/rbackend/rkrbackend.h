@@ -85,7 +85,7 @@ public:
 
 /** initializes the R-backend. Emits an RCallbackType::Started-request (with any error messages) when done.
 Note that you should call initialize only once in a application */
-	void initialize (const char* locale_dir);
+	void initialize (const QString &locale_dir);
 
 	void enterEventLoop ();
 protected:
