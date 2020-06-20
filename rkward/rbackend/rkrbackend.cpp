@@ -100,19 +100,14 @@ void* RKRBackend::default_global_context = 0;
 #endif
 
 ///// i18n
-#if (defined ENABLE_NLS)		// ENABLE_NLS is from Rconfig.h
-#	include <libintl.h>
-#	define RK_MSG_DOMAIN "rkward"
-	// define i18n to be compatible with the easiest usage in KDE
-#	define i18n(msgid) QString::fromUtf8(dgettext(RK_MSG_DOMAIN, msgid))
-	void RK_setupGettext (const char* locale_dir) {
-		bindtextdomain (RK_MSG_DOMAIN, locale_dir);
-		bind_textdomain_codeset (RK_MSG_DOMAIN, "UTF-8");
-	}
-#else
-#	define i18n(msgid) QString(msgid)
-	void RK_setupGettext (const char*) {};
-#endif
+#include <libintl.h>
+#define RK_MSG_DOMAIN "rkward"
+// define i18n to be compatible with the easiest usage in KDE
+#define i18n(msgid) QString::fromUtf8(dgettext(RK_MSG_DOMAIN, msgid))
+void RK_setupGettext (const char* locale_dir) {
+	bindtextdomain (RK_MSG_DOMAIN, locale_dir);
+	bind_textdomain_codeset (RK_MSG_DOMAIN, "UTF-8");
+}
 
 
 ///// interrupting R
