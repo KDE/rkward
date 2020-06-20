@@ -17,9 +17,7 @@
 
 #include "rkmessagecatalog.h"
 
-#include <libintl.h>
 #include <QFile>
-#include <QLocale>
 #include <KLocalizedString>
 
 #include "../debug.h"
@@ -40,10 +38,6 @@ RKMessageCatalog::RKMessageCatalog (const QString &name, const QString& path) {
 RKMessageCatalog::~RKMessageCatalog () {
 	RK_TRACE (MISC);
 }
-
-// Adopted from KDE's gettext.h
-/* The separator between msgctxt and msgid in a .mo file. */
-#define GETTEXT_CONTEXT_GLUE "\004"
 
 QString RKMessageCatalog::translate (const QString &msgctxt, const QString &msgid) const {
 	RK_TRACE (MISC);
@@ -105,10 +99,6 @@ RKMessageCatalog* RKMessageCatalog::nullCatalog () {
 	// ok, not thread-safe, here, but the worst that can happen is creating more than one dummy catalog.
 	return (getCatalog  ("rkward_dummy", QString ()));
 }
-
-#ifdef Q_OS_WIN
-	extern "C" int __declspec(dllimport) _nl_msg_cat_cntr;
-#endif
 
 // static
 void RKMessageCatalog::switchLanguage (const QString &new_language_code) {

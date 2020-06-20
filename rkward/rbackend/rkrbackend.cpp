@@ -101,7 +101,6 @@ void* RKRBackend::default_global_context = 0;
 
 ///// i18n
 #include <KLocalizedString>
-#include <libintl.h>
 #define RK_MSG_DOMAIN "rkward"
 void RK_setupGettext (const QString &locale_dir) {
 	KLocalizedString::setApplicationDomain (RK_MSG_DOMAIN);
