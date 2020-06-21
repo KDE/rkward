@@ -38,7 +38,7 @@
 #include <CoreFoundation/CoreFoundation.h>
 #endif
 
-	void RK_setupGettext (const char*);
+	void RK_setupGettext (const QString &);
 	QMutex RK_Debug_Mutex;
 
 	void RKDebugMessageOutput (QtMsgType type, const QMessageLogContext &, const QString &msg) {

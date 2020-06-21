@@ -73,7 +73,7 @@ IF(APPLE)
 		@ONLY)
 ENDIF(APPLE)
 
-TARGET_LINK_LIBRARIES(rkward windows ${RKWARD_ADDLIBS} agents dialogs plugin settings dataeditor core scriptbackends rbackend misc KF5::WindowSystem Qt5::Widgets KF5::XmlGui ${LibIntl_LIBRARIES})
+TARGET_LINK_LIBRARIES(rkward windows ${RKWARD_ADDLIBS} agents dialogs plugin settings dataeditor core scriptbackends rbackend misc KF5::WindowSystem Qt5::Widgets KF5::XmlGui)
 IF(KF5Crash_FOUND)
 	TARGET_LINK_LIBRARIES(rkward KF5::Crash)
 	SET_SOURCE_FILES_PROPERTIES(main.cpp PROPERTIES COMPILE_DEFINITIONS WITH_KCRASH=1)

@@ -100,19 +100,14 @@ void* RKRBackend::default_global_context = 0;
 #endif
 
 ///// i18n
-#if (defined ENABLE_NLS)		// ENABLE_NLS is from Rconfig.h
-#	include <libintl.h>
-#	define RK_MSG_DOMAIN "rkward"
-	// define i18n to be compatible with the easiest usage in KDE
-#	define i18n(msgid) QString::fromUtf8(dgettext(RK_MSG_DOMAIN, msgid))
-	void RK_setupGettext (const char* locale_dir) {
-		bindtextdomain (RK_MSG_DOMAIN, locale_dir);
-		bind_textdomain_codeset (RK_MSG_DOMAIN, "UTF-8");
+#include <KLocalizedString>
+#define RK_MSG_DOMAIN "rkward"
+void RK_setupGettext (const QString &locale_dir) {
+	KLocalizedString::setApplicationDomain (RK_MSG_DOMAIN);
+	if (!locale_dir.isEmpty ()) {
+		KLocalizedString::addDomainLocaleDir (RK_MSG_DOMAIN, locale_dir);
 	}
-#else
-#	define i18n(msgid) QString(msgid)
-	void RK_setupGettext (const char*) {};
-#endif
+}
 
 
 ///// interrupting R
@@ -582,7 +577,7 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 	if (saveact != SA_SUICIDE) {
 		if (!RKRBackend::this_pointer->isKilled ()) {
 			RBackendRequest request (true, RBackendRequest::BackendExit);
-			request.params["message"] = QVariant (i18n ("The R engine has shut down with status: %1").arg (status)); // krazy:exclude=i18ncheckarg
+			request.params["message"] = QVariant (i18n ("The R engine has shut down with status: %1", status));
 			RKRBackend::this_pointer->handleRequest (&request);
 		}
 
@@ -601,7 +596,7 @@ void RSuicide (const char* message) {
 
 	if (!RKRBackend::this_pointer->isKilled ()) {
 		RBackendRequest request (true, RBackendRequest::BackendExit);
-		request.params["message"] = QVariant (i18n ("The R engine has encountered a fatal error:\n%1").arg (message)); // krazy:exclude=i18ncheckarg
+		request.params["message"] = QVariant (i18n ("The R engine has encountered a fatal error:\n%1", message));
 		RKRBackend::this_pointer->handleRequest (&request);
 		RKRBackend::this_pointer->killed = RKRBackend::EmergencySaveThenExit;
 		RCleanUp (SA_SUICIDE, 1, 0);
@@ -1497,7 +1492,7 @@ void RKRBackend::run (const QString &locale_dir) {
 	killed = NotKilled;
 	previous_command = 0;
 
-	initialize (QFile::encodeName (locale_dir));
+	initialize (locale_dir);
 
 	enterEventLoop();
 }
@@ -1638,7 +1633,7 @@ QStringList RKRBackend::handlePlainGenericRequest (const QStringList &parameters
 	return request.params.value ("return").toStringList ();
 }
 
-void RKRBackend::initialize (const char *locale_dir) {
+void RKRBackend::initialize (const QString &locale_dir) {
 	RK_TRACE (RBACKEND);
 
 	// in RInterface::RInterface() we have created a fake RCommand to capture all the output/errors during startup. Fetch it
