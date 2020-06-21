@@ -25,8 +25,8 @@ import sys
 import subprocess
 import os
 import re
-import codecs
 import shutil
+import polib
 
 SVNROOT = "svn://anonsvn.kde.org/home/kde/trunk/l10n-kf5/"
 RKWARDSVNPATH = "messages/rkward"
@@ -36,36 +36,22 @@ EXPORTDIR = os.path.join (SCRIPTDIR, "..", "i18n", "po")
 IGNOREDPONAMES = {'org.kde.rkward.appdata.po', 'rkward._desktop_.po', 'rkward_xml_mimetypes.po'}
 
 def checkCompleteness(filename):
-    f = codecs.open(filename, 'r', 'utf-8')
-    seek = 1
-    skip = 2
-    read = 0
-    status = seek
+    po = polib.pofile(filename)
     stringcount = 0
     transcount = 0
-    for line in f:
-      if status == seek and line.startswith('#, fuzzy'):
-        status = skip
-      elif line.startswith('msgid'):
+    for entry in po:
+        if entry.obsolete:
+            continue
         stringcount += 1
-      elif line.startswith('msgstr'):
-        if status == skip:
-          status = seek
-        else:
-          status = read
-          line = line[7:]
-
-      if status == read:
-        if line.startswith('"'):
-          if line[1] != '"':   # Otherwise it's empty
+        if entry.translated():
             transcount += 1
-            status = seek
-        else:
-          status = seek
-    f.close ()
+    if transcount == 0:
+        sys.stderr.write("SKIP: %s has no translated messages.\n" % filename)
+        return False
     if stringcount > 0 and (transcount / stringcount) < .8:
-      sys.stderr.write("WARNING: " + filename + " only has " + str(transcount) + " out of " + str(stringcount) + " strings translated.\n")
-      return False
+        sys.stderr.write("WARNING: %s only has %d messages translated out of %d (%.2f%%).\n" % (filename, transcount, stringcount, (transcount / stringcount) * 100.0))
+        # Uncomment this line to purge badly incomplete translations:
+        #return False
     return True
 
 if not os.path.exists (TMPDIR):
@@ -99,11 +85,8 @@ for lang in LANGUAGES:
         outfile = os.path.join (EXPORTDIR, re.sub ("po$", lang + ".po", pofile))
         infile = os.path.join (langdir, pofile)
         goodenough = checkCompleteness(infile)
-        # Uncomment these lines to purge badly incomplete translations:
-        #if not goodenough:
-          #os.remove(infile)
-          #print ("NOT writing " + outfile)
-          #continue
+        if not goodenough:
+            continue
 
         # copy to destination
         print ("writing " + outfile)
