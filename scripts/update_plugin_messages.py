@@ -531,18 +531,21 @@ for po_id in initialized_pot_files:
   if (p_outdir == ""):
     p_outdir = po_file_install_locations[po_id]
   potcppfile = os.path.join (p_outdir, po_id + ".pot.cpp")
+  # rename the temporary .pot.cpp to rc.cpp, so scripty (repack-pot.pl, in particular)
+  # will replace the rc.cpp locations with the real ones provided in i18n comments
+  rccppfile = os.path.join (p_outdir, "rc.cpp")
+  os.rename (potcppfile, rccppfile)
   templatename = "rkward__" + po_id
   finalpotfile = os.path.join (p_outdir, templatename + ".pot")
-  # NOTE: using --no-location, as that just adds meaningless references to the temporary .pot.cpp-file.
   # subprocess.Popen and bash -c are used here because the default value
   # of XGETTEXT set by scripty is an function defined in the environment.
   # Using subprocess.call with shell=True uses sh, which does not pass
   # the function defined with export -f, so let's be explicit
   # and depend on bash.
-  res = subprocess.Popen (['bash', '-c', ' '.join(XGETTEXT_CALL.split () + ["--no-location", "-o", finalpotfile, potcppfile])]).wait()
+  res = subprocess.Popen (['bash', '-c', ' '.join(XGETTEXT_CALL.split () + ["-o", finalpotfile, rccppfile])]).wait()
   if (res):
     sys.stderr.write ("calling xgettext failed with exit code " + str (res))
-  os.remove (potcppfile)
+  os.remove (rccppfile)
   if (not do_merge_install):
     continue
   # merge existing translations
