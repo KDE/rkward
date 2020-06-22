@@ -26,33 +26,13 @@ import subprocess
 import os
 import re
 import shutil
-import polib
 
 SVNROOT = "svn://anonsvn.kde.org/home/kde/trunk/l10n-kf5/"
 RKWARDSVNPATH = "messages/rkward"
 SCRIPTDIR = os.path.dirname (os.path.realpath (sys.argv[0]))
 TMPDIR = os.path.join (SCRIPTDIR, "tmp")
-EXPORTDIR = os.path.join (SCRIPTDIR, "..", "i18n", "po")
+EXPORTDIR = os.path.join (SCRIPTDIR, "..", "i18n")
 IGNOREDPONAMES = {'org.kde.rkward.appdata.po', 'rkward._desktop_.po', 'rkward_xml_mimetypes.po'}
-
-def checkCompleteness(filename):
-    po = polib.pofile(filename)
-    stringcount = 0
-    transcount = 0
-    for entry in po:
-        if entry.obsolete:
-            continue
-        stringcount += 1
-        if entry.translated():
-            transcount += 1
-    if transcount == 0:
-        sys.stderr.write("SKIP: %s has no translated messages.\n" % filename)
-        return False
-    if stringcount > 0 and (transcount / stringcount) < .8:
-        sys.stderr.write("WARNING: %s only has %d messages translated out of %d (%.2f%%).\n" % (filename, transcount, stringcount, (transcount / stringcount) * 100.0))
-        # Uncomment this line to purge badly incomplete translations:
-        #return False
-    return True
 
 if not os.path.exists (TMPDIR):
     os.makedirs (TMPDIR)
@@ -84,9 +64,6 @@ for lang in LANGUAGES:
     for pofile in pofiles:
         outfile = os.path.join (EXPORTDIR, re.sub ("po$", lang + ".po", pofile))
         infile = os.path.join (langdir, pofile)
-        goodenough = checkCompleteness(infile)
-        if not goodenough:
-            continue
 
         # copy to destination
         print ("writing " + outfile)
