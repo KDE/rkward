@@ -28,12 +28,23 @@ EXPORTDIR = os.path.join (SCRIPTDIR, "..", "i18n", "po")
 
 def checkCompleteness(filename):
     po = polib.pofile(filename)
-    percentage = po.percent_translated()
-    if percentage == 0:
+    # do not use po.percent_translated(), because it returns an integer
+    # percentage, so we cannot distiguish between 0 translated messages
+    # and e.g. 0.9% translated
+    stringcount = 0
+    transcount = 0
+    for entry in po:
+        if entry.obsolete:
+            continue
+        stringcount += 1
+        if entry.translated():
+            transcount += 1
+    if transcount == 0:
         sys.stderr.write("PURGE: %s has no translated messages.\n" % filename)
         return False
+    percentage = (transcount / stringcount) * 100.0
     if percentage < 80:
-        sys.stderr.write("WARNING: %s only has %d%% messages translated.\n" % (filename, percentage))
+        sys.stderr.write("WARNING: %s only has %.2f%% messages translated.\n" % (filename, percentage))
         # Uncomment this line to purge badly incomplete translations:
         #return False
     return True
