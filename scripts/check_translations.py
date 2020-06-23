@@ -23,9 +23,6 @@ import sys
 import glob
 import polib
 
-SCRIPTDIR = os.path.dirname (os.path.realpath (sys.argv[0]))
-EXPORTDIR = os.path.join (SCRIPTDIR, "..", "i18n", "po")
-
 def checkCompleteness(filename):
     po = polib.pofile(filename)
     # do not use po.percent_translated(), because it returns an integer
@@ -49,7 +46,9 @@ def checkCompleteness(filename):
         #return False
     return True
 
-pofiles = glob.glob(os.path.join(EXPORTDIR, '**', '*.po'), recursive=True)
-for pofile in pofiles:
-    if not checkCompleteness(pofile):
-        os.remove(pofile)
+for path in sys.argv[1:]:
+    if os.path.isdir(path):
+        pofiles = glob.glob(os.path.join(path, '**', '*.po'), recursive=True)
+        for pofile in pofiles:
+            if not checkCompleteness(pofile):
+                os.remove(pofile)
