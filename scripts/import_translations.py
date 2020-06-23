@@ -31,7 +31,7 @@ SVNROOT = "svn://anonsvn.kde.org/home/kde/trunk/l10n-kf5/"
 RKWARDSVNPATH = "messages/rkward"
 SCRIPTDIR = os.path.dirname (os.path.realpath (sys.argv[0]))
 TMPDIR = os.path.join (SCRIPTDIR, "tmp")
-EXPORTDIR = os.path.join (SCRIPTDIR, "..", "i18n")
+EXPORTDIR = os.path.join (SCRIPTDIR, "..", "i18n", "po")
 IGNOREDPONAMES = {'org.kde.rkward.appdata.po', 'rkward._desktop_.po', 'rkward_xml_mimetypes.po'}
 
 if not os.path.exists (TMPDIR):
