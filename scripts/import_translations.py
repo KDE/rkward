@@ -35,6 +35,7 @@ I18NDIR = os.path.join (SCRIPTDIR, "..", "i18n")
 EXPORTDIR = os.path.join (I18NDIR, "po")
 PODIR = os.path.join (SCRIPTDIR, "..", "po")
 IGNOREDPONAMES = {'org.kde.rkward.appdata.po', 'rkward._desktop_.po', 'rkward_xml_mimetypes.po'}
+SVNCMD = shutil.which("svn")  # could be svn.BAT on Windows/craft, and that won't be found by subprocess.call
 
 if not os.path.exists (TMPDIR):
     os.makedirs (TMPDIR)
@@ -44,7 +45,7 @@ if os.path.exists (EXPORTDIR):
 if (len (sys.argv) > 1):
     LANGUAGES = sys.argv[1:]
 else:
-    LANGUAGES = subprocess.check_output (["svn", "cat", SVNROOT + "subdirs"]).decode ('utf-8').split ()
+    LANGUAGES = subprocess.check_output ([SVNCMD, "cat", SVNROOT + "subdirs"]).decode ('utf-8').split ()
     LANGUAGES.remove ('x-test')
 LANGUAGES = LANGUAGES
 print ("Languages: " + ", ".join (LANGUAGES))
@@ -53,12 +54,12 @@ for lang in LANGUAGES:
     os.chdir (TMPDIR)
     messagesdir = os.path.join (TMPDIR, "messages-" + lang)
     if not os.path.exists (messagesdir):
-        subprocess.call (["svn", "co", SVNROOT + lang + "/" + RKWARDSVNPATH, "messages-" + lang])
+        subprocess.call ([SVNCMD, "co", SVNROOT + lang + "/" + RKWARDSVNPATH, "messages-" + lang])
         if not os.path.exists (messagesdir):
             continue
     else:
         os.chdir (messagesdir)
-        subprocess.call (["svn", "up"])
+        subprocess.call ([SVNCMD, "up"])
         os.chdir (TMPDIR)
     pofiles = [fn for fn in os.listdir (messagesdir) if fn.endswith ('.po') and fn not in IGNOREDPONAMES]
     if (len (pofiles) < 1):
