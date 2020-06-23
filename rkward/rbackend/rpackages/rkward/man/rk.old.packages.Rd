@@ -4,10 +4,16 @@
 \alias{rk.old.packages}
 \title{Slightly smarter variant of old.packages()}
 \usage{
-rk.old.packages(lib.loc = NULL, repos = getOption("repos"),
+rk.old.packages(
+  lib.loc = NULL,
+  repos = getOption("repos"),
   contriburl = contrib.url(repos, type),
-  instPkgs = installed.packages(lib.loc = lib.loc), method,
-  available = NULL, checkBuilt = FALSE, type = getOption("pkgType"))
+  instPkgs = installed.packages(lib.loc = lib.loc),
+  method,
+  available = NULL,
+  checkBuilt = FALSE,
+  type = getOption("pkgType")
+)
 }
 \value{
 a character vector of packages which are really old
@@ -16,8 +22,7 @@ a character vector of packages which are really old
 For most purposes, this function is identical to old.packages(). However, if the same
 package is installed to different locations, in different versions, old.packages() will
 treat each of these installations separately. Thus, e.g. if lib.loc == c("A", "B") and
-package X is installed in B at an outdated version 0.1,
-      but in A at the most recent version 0.2,
+package X is installed in B at an outdated version 0.1, but in A at the most recent version 0.2,
 old.packages() will report package X at B as old. In contrast rk.old.packages() will recognize
 that the current version is higher up in the path, and not report package X as old.
 }

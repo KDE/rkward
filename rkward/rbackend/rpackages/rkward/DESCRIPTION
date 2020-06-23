@@ -18,8 +18,8 @@ Authors@R: c(person(given="Thomas", family="Friedrichsmeier",
         role=c("aut")), person(given="the RKWard team",
         email="rkward-devel@kde.org", role=c("cre","ctb")))
 Version: 0.7.2
-Date: 2020-05-31
-RoxygenNote: 6.1.0
+Date: 2020-06-23
+RoxygenNote: 7.1.0
 Collate: 
     'base_overrides.R'
     'internal.R'

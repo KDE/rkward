@@ -1609,6 +1609,10 @@ void RKRBackend::handleHistoricalSubstackRequest (const QStringList &list) {
 	handleRequest (&request);
 }
 
+QString getLibLoc() {
+	return RKRBackendProtocolBackend::dataDir () + "/.rkward_packages/" + QString::number (RKRBackend::this_pointer->r_version / 10);
+}
+
 QStringList RKRBackend::handlePlainGenericRequest (const QStringList &parameters, bool synchronous) {
 	RK_TRACE (RBACKEND);
 
@@ -1626,6 +1630,11 @@ QStringList RKRBackend::handlePlainGenericRequest (const QStringList &parameters
 			return QStringList ();		// For automated testing and previews. The frontend should not be notified, here
 		}
 		request.params["call"] = parameters;
+	} else if (parameters.value(0) == "home") {
+		QStringList ret;
+		if (parameters.value(1) == "home") ret << RKRBackendProtocolBackend::dataDir();
+		else if (parameters.value(1) == "lib") ret << getLibLoc();
+		return ret;
 	} else {
 		request.params["call"] = parameters;
 	}
@@ -1646,7 +1655,7 @@ void RKRBackend::initialize (const QString &locale_dir) {
 	bool sink_fail = false;
 	// Try to load rkward package. If that fails, or is the wrong version, try to install
 	// rkward package, then load again.
-	QString libloc = RKRBackendProtocolBackend::dataDir () + "/.rkward_packages/" + QString::number (r_version / 10);
+	QString libloc = getLibLoc();
 	QString versioncheck = QString ("stopifnot(.rk.app.version==\"%1\")\n").arg (RKWARD_VERSION);
 	QString command = "local({\n"
 	                  "  libloc <- " + RKRSharedFunctionality::quote (libloc) + "\n"

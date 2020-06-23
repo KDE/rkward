@@ -19,12 +19,18 @@
 #' is note affected by running \code{load} in R, only by loading R workspaces
 #' via the RKWard GUI.
 #' 
+#' \code{rk.home} returns the filename of the specified component similar to
+#' \link{R.home}.
+#'
 #' @aliases rk.get.tempfile.name rk.get.workspace.url rk.get.output.html.file
-#'   rk.set.output.html.file
+#'   rk.set.output.html.file rk.home
 #' @param prefix a string, used as a filename prefix when saving images to the
 #'   output file
 #' @param extension a string, used as a filename extension when saving images
 #'   to the output file
+#' @param component a string specifying the desired path. "home" (the default value) means to
+#'        return the generic data dir used by RKWard. "lib" means to return the directory where
+#'        the rkward R library is installed.
 #' @param x a string, giving the filename of the of the output file
 #' @param additional.header.contents NULL or an additional string to add to the HTML header section.
 #'        This could be scripts or additional CSS definitions, for example. Note that
@@ -37,8 +43,8 @@
 #' @param flush.images. If true, any images used in the output file will be deleted as well.
 #' @param ask Logical: Whether to ask before flushing the output file.
 #' @param ... Further parameters passed to rk.set.output.html.file()
-#' @return \code{rk.get.tempfile.name}, \code{rk.get.output.html.file}, and
-#'   \code{rk.get.workspace.url} return a string while
+#' @return \code{rk.get.tempfile.name}, \code{rk.get.output.html.file}, \code{rk.get.workspace.url}, and
+#'   \code{rk.home} return a string while
 #'   \code{rk.set.output.html.file} returns the \bold{previous} output html file.
 #' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
 #' @seealso \url{rkward://page/rkward_output}, \link{tempfile}, \link{file},
@@ -73,6 +79,12 @@
 	res <- .rk.do.plain.call ("getWorkspaceUrl")
 	if (length (res)) res
 	else NULL
+}
+
+#' @export
+#' @rdname rk.get.tempfile.name
+"rk.home" <- function (component="home") {
+	normalizePath (.rk.do.plain.call ("home", component))
 }
 
 #' @export

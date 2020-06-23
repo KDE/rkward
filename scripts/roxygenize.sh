@@ -29,7 +29,7 @@ echo "
 	library (roxygen2)
 	packages <- c ($PACKAGES)
 	for (package in packages) {
-		dummy <- roxygen2:::source_package (package) # See https://github.com/klutometis/roxygen/issues/167
+#		dummy <- roxygen2:::source_package (package) # See https://github.com/klutometis/roxygen/issues/167
 		roxygenize (package)
 		possibly_empty_dirs <- paste (package, c ('inst/doc', 'inst'), sep='/')
 		for (dir in possibly_empty_dirs) {

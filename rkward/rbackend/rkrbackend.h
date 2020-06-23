@@ -2,7 +2,7 @@
                           rkrbackend  -  description
                              -------------------
     begin                : Sun Jul 25 2004
-    copyright            : (C) 2004 - 2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2004 - 2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -201,6 +201,7 @@ handleHistoricalSubstackRequest(). Exactly which requests get handled by which f
 	void setPriorityCommand (RCommandProxy *command);
 	RCommandProxy *pending_priority_command;
 	QMutex priority_command_mutex;
+	int r_version;
 private:
 	void clearPendingInterrupt ();
 protected:
@@ -212,7 +213,6 @@ private:
 /** connect R standard callbacks */
 	void connectCallbacks ();
 
-	int r_version;
 	QString output_file;
 /** A copy of the names of the toplevel environments (as returned by "search ()"). */
 	QStringList toplevel_env_names;

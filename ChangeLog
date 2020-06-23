@@ -1,4 +1,6 @@
 --- Version 0.7.2 - UNRELEASED
+- Add function rk.home() for retrieving applicaiton paths, similar to R.home()
+- Remove direct dependency on libintl
 - Add menu option to switch application language
 - Fix several small memory leaks
 - Clean some logged warnings and potential issues during R backend shutdown
