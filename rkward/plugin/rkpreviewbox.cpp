@@ -2,7 +2,7 @@
                           rkpreviewbox  -  description
                              -------------------
     begin                : Wed Jan 24 2007
-    copyright            : (C) 2007-2016 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -54,7 +54,6 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	// create and add property
 	addChild ("state", state = new RKComponentPropertyBool (this, true, preview_active, "active", "inactive"));
 	state->setInternal (true);	// restoring this does not make sense.
-	connect (state, &RKComponentPropertyBase::valueChanged, this, &RKPreviewBox::changedState);
 
 	// create checkbox
 	QVBoxLayout *vbox = new QVBoxLayout (this);
@@ -98,10 +97,11 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 			// A bit of a hack: For now, in wizards, docked previews are always active, and control boxes are meaningless.
 			if (uicomp->isWizardish ()) {
 				hide ();
-				toggle_preview_box->setChecked (true);
+				state->setBoolValue(true);
 			}
 		}
 	}
+	connect (state, &RKComponentPropertyBase::valueChanged, this, &RKPreviewBox::changedState);  // AFTER state->setBoolValue(), above!
 
 	// find and connect to code property of the parent
 	QString dummy;
