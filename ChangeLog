@@ -1,4 +1,5 @@
 --- Version 0.7.2 - UNRELEASED
+- Fix some problems with plot preview in wizard-type plugins
 - Add function rk.home() for retrieving applicaiton paths, similar to R.home()
 - Remove direct dependency on libintl
 - Add menu option to switch application language

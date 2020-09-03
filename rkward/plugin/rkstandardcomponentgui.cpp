@@ -637,6 +637,7 @@ void RKStandardComponentWizard::enableSubmit (bool enable) {
 
 RKStandardComponentStack::RKStandardComponentStack (QWidget *parent) : QStackedWidget (parent) {
 	RK_TRACE (PLUGIN);
+	// We want minimumExpanding, intially, as it makes better use of available space when first showing the window ...
 	setSizePolicy (QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 }
 
@@ -664,6 +665,11 @@ void RKStandardComponentStack::movePage (bool next) {
 	int id;
 	if (next) {
 		id = nextVisiblePage ();
+		if (id < (count() - 1)) {
+			// ... but on the last (preview) page, minimumExpanding causes nasty layout fluctuation (https://bugs.kde.org/show_bug.cgi?id=425885)
+			// Not quite sure, where the bug is at, here, but this papers over the worst symptoms.
+			setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Preferred);
+		}
 	} else {
 		id = previousVisiblePage ();
 	}
