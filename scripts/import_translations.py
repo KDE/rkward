@@ -47,7 +47,6 @@ if (len (sys.argv) > 1):
 else:
     LANGUAGES = subprocess.check_output ([SVNCMD, "cat", SVNROOT + "subdirs"]).decode ('utf-8').split ()
     LANGUAGES.remove ('x-test')
-LANGUAGES = LANGUAGES
 print ("Languages: " + ", ".join (LANGUAGES))
 
 for lang in LANGUAGES:
@@ -87,12 +86,12 @@ for lang in LANGUAGES:
     os.chdir (TMPDIR)
     docsdir = os.path.join (TMPDIR, "docs-" + lang)
     if not os.path.exists (docsdir):
-        subprocess.call (["svn", "co", SVNROOT + lang + "/" + RKWARDSVNDOCSPATH, "docs-" + lang])
+        subprocess.call ([SVNCMD, "co", SVNROOT + lang + "/" + RKWARDSVNDOCSPATH, "docs-" + lang])
         if not os.path.exists (docsdir):
             continue
     else:
         os.chdir (docsdir)
-        subprocess.call (["svn", "up"])
+        subprocess.call ([SVNCMD, "up"])
         os.chdir (TMPDIR)
     docdirs = [fn for fn in os.listdir (docsdir) if fn[0] != '.' and os.path.isdir (os.path.join (docsdir, fn))]
     if (len (docdirs) < 1):
