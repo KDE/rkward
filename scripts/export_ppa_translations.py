@@ -37,9 +37,11 @@ else:
     subprocess.call (["git", "pull", "--rebase"])
 
 for dir in COPYDIRS:
-    shutil.rmtree(os.path.join(EXPORTDIR, dir),ignore_errors=True)
-    shutil.copytree(os.path.join(BASEDIR, dir), os.path.join(EXPORTDIR, dir))
+    dest = os.path.join(EXPORTDIR, dir)
+    shutil.rmtree(dest, ignore_errors=True)
+    shutil.copytree(os.path.join(BASEDIR, dir), dest)
+    subprocess.call([sys.executable, os.path.join(SCRIPTDIR, "check_translations.py"), dest]) #, "--strict"
 
-subprocess.call (["git", "add", "-all"])
+subprocess.call (["git", "add", "--all"])
 subprocess.call (["git", "commit", "-m", "\"Translation update\""])
 subprocess.call (["git", "push"])

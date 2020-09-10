@@ -23,6 +23,19 @@ import sys
 import glob
 import polib
 
+SCRIPTDIR = os.path.dirname(os.path.realpath(sys.argv[0]))
+BASEDIR = os.path.join(SCRIPTDIR, "..")
+
+strictmode = False
+paths = []
+for arg in sys.argv[1:]:
+    if arg == "--strict":
+        strictmode = True
+    else:
+        paths.append(arg)
+if (len(paths) < 1):
+    paths = [os.path.join(BASEDIR, "po"), os.path.join(BASEDIR, "i18n", "po")]
+
 def checkCompleteness(filename):
     po = polib.pofile(filename)
     # do not use po.percent_translated(), because it returns an integer
@@ -42,11 +55,12 @@ def checkCompleteness(filename):
     percentage = (transcount / stringcount) * 100.0
     if percentage < 80:
         sys.stderr.write("WARNING: %s only has %.2f%% messages translated.\n" % (filename, percentage))
-        # Uncomment this line to purge badly incomplete translations:
-        #return False
+        if (strictmode):
+            sys.stderr.write("PURGE: %s\n" % filename)
+            return False
     return True
 
-for path in sys.argv[1:]:
+for path in paths:
     if os.path.isdir(path):
         pofiles = glob.glob(os.path.join(path, '**', '*.po'), recursive=True)
         for pofile in pofiles:
