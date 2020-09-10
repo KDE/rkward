@@ -30,11 +30,11 @@ function rangeCommand(command, def) {
 }
 </script>
  <item>
-  <match>Headline1</match>
+  <match>Heading1</match>
   <fillin>${lineCommand("#")}</fillin>
  </item>
  <item>
-  <match>Headline2</match>
+  <match>Heading2</match>
   <fillin>${lineCommand("##")}</fillin>
  </item>
  <item>
