@@ -1,9 +1,9 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 # ***************************************************************************
 #                          update_plugin_messages  -  description
 #                             -------------------
 #    begin                : Oct 2014
-#    copyright            : (C) 2014 by Thomas Friedrichsmeier
+#    copyright            : (C) 2014-2020 by Thomas Friedrichsmeier
 #    email                : tfry@users.sourceforge.net
 # ***************************************************************************
 #
