@@ -52,7 +52,7 @@ as Authors, publish date, the abstract, and Keywords -->
      and in the FDL itself on how to use it. -->
 <legalnotice>&FDLNotice;</legalnotice>
 
-<date>2020-05-11</date>
+<date>2020-09-26</date>
 <releaseinfo>0.7.2</releaseinfo>
 
 <abstract>
@@ -1989,9 +1989,9 @@ x	&lt;/components ...&gt;
 		<para>
 			For &rkward;'s &XML; files, i18n will mostly just work. If you are writing your own <command>.pluginmap</command> (&eg; for an <link linkend="external_plugins">external plugin</link>),
 			you will have to specify a <replaceable>po_id</replaceable> next to the pluginmap's <replaceable>id</replaceable>. This defines the "message catalog" to use. In general this should
-			be set identical to the <replaceable>id</replaceable> of your <command>.pluginmap</command>, but if you provide several <command>.pluginmap</command>s and want to control, how
-			message catalogs are divided up, this allows you to do so. The <replaceable>po_id</replaceable> is inherited by any <command>.pluginmap</command> you include, unless that declares
-			a different <replaceable>po_id</replaceable>, and by all plugins declared in it.
+			be set identical to the <replaceable>id</replaceable> of your <command>.pluginmap</command>, but if you provide several related <command>.pluginmap</command>s in a single package, you will
+			probaly want to specify a common <replaceable>po_id</replaceable> in your maps. The <replaceable>po_id</replaceable> of a <command>.pluginmap</command> file is inherited by all plugins
+			declared in it, unless unless that declares a different <replaceable>po_id</replaceable>.
 		</para>
 		<para>
 			For plugins and help pages, you do not need to tell &rkward; which strings are to be translated, because that is generally evident from their usage. However, as explained above,
@@ -2107,46 +2107,15 @@ user (selection from a list of values shown next to this element) --&gt;
 				E.g. if an unsuspecting translator translates a string meant as a variable name in two distinct words with a space in between.
 			</para>
 		</sect2>
-
-		<sect2 id="i18n_js_compatibility"><title>i18n and backwards compatibility</title>
-			<para>
-				One unfortunate aspect of the lack of <command>i18n()</command>-support in &rkward; versions up to 0.6.2 is that adding <command>i18n()</command> calls will make the plugin require
-				&rkward; version 0.6.3. If your plugin is developed outside &rkward;'s official release, this may be a problem. Here are some possible options on how to handle this:
-			</para>
-		<itemizedlist>
-			<listitem><para>Provide the plugin in two versions for &rkward; &gt;= 0.6.3 and &rkward; &lt; 0.6.3, as described in the chapter on 
-					<link linkend="sect_dependencies_rkward_version">handling dependencies</link></para></listitem>
-			<listitem><para>Simply do not translate the strings in the .js-file, yet. Obviously this is an easy, but rather inelegant solution.</para></listitem>
-			<listitem><para>Include some support code in your .js-file(s) like shown below:</para></listitem>
-		</itemizedlist>
-		<programlisting>
-			// js-function "comment" was not defined before 0.6.3
-			if (typeof (comment) == 'undefined) {
-				// define function i18n(), and any others you may need. Note that your implementation could actually be simpler than
-				// shown, here, &eg; if you do not make use of placeholders.
-				i18n = function (msgid) {
-					var ret = msgid;
-					for (var i = 1; i &lt; arguments.length; i++) {
-						ret = ret.replace(new RegExp("%" + i, 'g'), arguments[i]);
-					}
-					if (msgid.noquote) {
-						ret.noquote = msgid.noquote;
-						return (ret);
-					}
-					return (noquote (quote (ret)));
-				}
-			}
-		</programlisting>
-		</sect2>
 	</sect1>
 	<sect1 id="i18n_workflow"><title>Translation maintainance</title>
 		<para>
 			Now that you have made your plugin translatable, how do you actually get it translated? In general you only need to worry about this, when developing an <link linkend="external_plugins">
-			external plugin</link>. For plugins in &rkward;'s main repository, all the magic is done for you. Here is the basic workflow. Note that you need the "gettext" tools, installed:
+			external plugin</link>. For plugins in &rkward;'s main repository, all the magic is done for you. Here is the basic workflow for a external plugins. Note that you need the "gettext" tools, installed:
 		</para>
 		<itemizedlist>
 			<listitem><para>Mark up all strings, providing context and comments as needed</para></listitem>
-			<listitem><para>Run <command>python scripts/update_plugin_messages.py --extract-only /path/to/my.pluginmap</command>. scripts/update_plugin_messages.py is not currently part of the source
+			<listitem><para>Run <command>python3 scripts/update_plugin_messages.py --extract-only /path/to/my.pluginmap</command>. scripts/update_plugin_messages.py is not currently part of the source
 					releases, but can be found in a source repository checkout.</para></listitem>
 			<listitem><para>Distribute the resulting <command>rkward__<replaceable>POID</replaceable>.pot</command> file to your translators. For external plugins, it is recommended to place it
 					in a subfolder "po" in inst/rkward.</para></listitem>
@@ -2155,13 +2124,13 @@ user (selection from a list of values shown next to this element) --&gt;
 			<listitem><para>Translator saves the translation as <command>rkward__<replaceable>POID</replaceable>.<replaceable>xx</replaceable>.po</command> (where
 					<replaceable>xx</replaceable> is the language code), and sends it back to you.</para></listitem>
 			<listitem><para>Copy <command>rkward__<replaceable>POID</replaceable>.<replaceable>xx</replaceable>.po</command> to your sources, next to
-					<command>rkward__<replaceable>POID</replaceable>.pot</command>. Run <command>python scripts/update_plugin_messages.py /path/to/my.pluginmap</command> (Note: without
+					<command>rkward__<replaceable>POID</replaceable>.pot</command>. Run <command>python3 scripts/update_plugin_messages.py /path/to/my.pluginmap</command> (Note: without
 					<replaceable>--extract-only</replaceable>, this time). This will merge the translation with any interim string changes, compile the translation, and install it into
 					<command><replaceable>DIR_OF_PLUGINMAP</replaceable>/po/<replaceable>xx</replaceable>/LC_MESSAGES/rkward__<replaceable>POID</replaceable>.mo</command> (where
 					<replaceable>xx</replaceable> is the language code, again).</para></listitem>
 			<listitem><para>You should also include the non-compiled translation (&ie; <command>rkward__<replaceable>POID</replaceable>.<replaceable>xx</replaceable>.po</command>) in
 					your distribution, in the "po" subdirectory.</para></listitem>
-      <listitem><para>For any update of your plugin, run <command>python scripts/update_plugin_messages.py /path/to/my.pluginmap</command> to update the .pot file, but also the
+			<listitem><para>For any update of your plugin, run <command>python3 scripts/update_plugin_messages.py /path/to/my.pluginmap</command> to update the .pot file, but also the
 					existing .po-files, and the compiled message catalogs.</para></listitem>
 		</itemizedlist>
 	</sect1>
@@ -2178,9 +2147,6 @@ user (selection from a list of values shown next to this element) --&gt;
 					be to leave the term untranslated, or to include the English term in parentheses. Do not focus too much on the 100% mark of translated strings, focus on providing
 					a good translation, even if that means skipping some strings (or even skipping some message catalogs as a whole). Other users may be able to fill in any gaps in technical
 					terms.</para></listitem>
-			<listitem><para>At the time of this writing, &rkward;'s project hosting is about to change, and this also affect the translation workflow. Do read comments accompanying
-					the .pot-files, on how translations should be handled. If in doubt, it is never wrong to send your work the rkward-devel mailing list, or to ask for up-to-date instructions,
-					there.</para></listitem>
 		</itemizedlist>
 	</sect1>
 </chapter>
