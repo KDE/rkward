@@ -164,7 +164,7 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 		pluginmaps->addOption(i18n("Restore defaults"), i18n("Enable the default plugins"), [](RKSetupWizard*) { RKSettingsModulePlugins::registerDefaultPluginMaps(RKSettingsModulePlugins::AddIfDefault); });
 		pluginmaps->addOption(i18n("No change"), i18n("Proceed without plugins"), [](RKSetupWizard*) {});
 
-		// TODO: Also offer help, if a suspicioulsy small share of plugins is active? RKSettingsModulePlugins::knownUsablePluginCount();
+		// TODO: Also offer help, if a suspiciously small share of plugins is active? RKSettingsModulePlugins::knownUsablePluginCount();
 	} else {
 		pluginmaps->setStatus(RKSetupWizardItem::Good, i18n("Found."));
 	}

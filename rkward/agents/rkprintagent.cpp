@@ -70,7 +70,7 @@ void RKPrintAgent::printPostscript (const QString &file, bool delete_file) {
 	}
 
 	if (!provider) {
-		RK_DEBUG (APP, DL_WARNING, "No valid postscript postscript provider was found");
+		RK_DEBUG (APP, DL_WARNING, "No valid postscript provider was found");
 		KMessageBox::sorry (RKWardMainWindow::getMain (), i18n ("No service was found to provide a KDE print dialog for PostScript files. We will try to open a generic PostScript viewer (if any), instead.<br><br>Consider installing 'okular', or configure RKWard not to attempt to print using a KDE print dialog."), i18n ("Unable to open KDE print dialog"));
 		// fallback: If we can't find a proper part, try to invoke a standalone PS reader, instead
 #if KIO_VERSION < QT_VERSION_CHECK(5, 31, 0)

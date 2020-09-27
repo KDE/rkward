@@ -334,7 +334,7 @@ void RKComponent::updateEnablednessRecursive (bool parent_enabled) {
 
 bool RKComponent::isInactive () {
 	if (!isEnabled ()) return true;
-	if (parentWidget () && isHidden ()) return true;	// Note: Components embedded as button may be "hidden" without being inaccessible
+	if (parentWidget () && isHidden ()) return true;	// Note: Components embedded as button may be "hidden" without being unaccessible
 	if (!visibility_property->boolValue ()) return true;	// Note for those, this is the appropriate check
 	return false;
 }

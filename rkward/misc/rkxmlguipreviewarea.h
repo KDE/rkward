@@ -38,7 +38,7 @@ public:
 	void setLabel (const QString &label);
 protected:
 	/** build / destroy menu, when child is added removed. Note that we are in the fortunate situation that RKMDIWindow-children only ever get to the
-	 *  preview area via reparenting, i.e. contrary to usual QEvent::ChildAdded semnatics, they are always fully constructed, when added. */
+	 *  preview area via reparenting, i.e. contrary to usual QEvent::ChildAdded semantics, they are always fully constructed, when added. */
 	void childEvent (QChildEvent *event) override;
 protected slots:
 	void prepareMenu ();

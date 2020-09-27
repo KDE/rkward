@@ -264,7 +264,7 @@ So far we've discussed RInterface:issueCommand () and RCommandReceiver::rCommand
 
 First the RCommand is placed in a first-in-first-out stack. This stack is needed, since - as discussed - the commands get executed in a separate thread, so several command may get stacked up, before the first one gets run.
 
-Then, in the backend thread (RThread) there is a loop running, which fetches those commands from the stack and executes them one by one. Whenver a command has been executed in this thread, it gets updated with information on any errors that occurred and of course also with the result of running the command. Next, a QCustomEvent is being posted. What this does is - rougly speaking -, transfer the pointer to the command back to the main thread in a safe way.
+Then, in the backend thread (RThread) there is a loop running, which fetches those commands from the stack and executes them one by one. Whenever a command has been executed in this thread, it gets updated with information on any errors that occurred and of course also with the result of running the command. Next, a QCustomEvent is being posted. What this does is - rougly speaking -, transfer the pointer to the command back to the main thread in a safe way.
 
 Whenever the main thread becomes active again, it will find that QCustomEvent and handle it in RInterface::customEvent.
 

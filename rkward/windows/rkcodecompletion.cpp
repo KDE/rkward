@@ -75,7 +75,7 @@ RKCompletionManager::RKCompletionManager(KTextEditor::View* view, const RKCodeCo
 		file_completion_model = new RKFileCompletionModel (this);
 		callhint_model = new RKCallHintModel (this);
 		arghint_model = new RKArgumentHintModel (this);
-		cc_iface->registerCompletionModel (new RKCompletionNotifierModel (this));  // (at least) one model needs to be registerd, so we will know, when completion was triggered by the user (shortcut)
+		cc_iface->registerCompletionModel (new RKCompletionNotifierModel (this));  // (at least) one model needs to be registered, so we will know, when completion was triggered by the user (shortcut)
 		completion_timer = new QTimer (this);
 		completion_timer->setSingleShot (true);
 		connect (completion_timer, &QTimer::timeout, this, &RKCompletionManager::tryCompletion);
@@ -394,7 +394,7 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 		if (k->key () == Qt::Key_Tab && (!k->modifiers ())) {
 			// Try to do partial completion. Unfortunately, the base implementation in ktexteditor is totally broken (inserts the whole partial completion, without removing the start).
 			// TODO: It is not quite clear, what behavior is desirable, in case more than one completion model is active at a time.
-			//       For now, we use the simplest solution (implemenation-wise), and complete from the topmost-model, only
+			//       For now, we use the simplest solution (implementation-wise), and complete from the topmost-model, only
 			// TODO: Handle the ktexteditor builtin models, too.
 			bool exact = false;
 			QString comp;
@@ -569,7 +569,7 @@ QVariant RKCodeCompletionModel::data (const QModelIndex& index, int role) const 
 
 QString findCommonCompletion (const QStringList &list, const QString &lead, bool *exact_match) {
 	RK_TRACE (COMMANDEDITOR);
-	RK_DEBUG(COMMANDEDITOR, DL_DEBUG, "Looking for commong completion among set of %d, starting with %s", list.size (), qPrintable (lead));
+	RK_DEBUG(COMMANDEDITOR, DL_DEBUG, "Looking for common completion among set of %d, starting with %s", list.size (), qPrintable (lead));
 
 	*exact_match = true;
 	QString ret;

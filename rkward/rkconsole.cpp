@@ -419,7 +419,7 @@ bool RKConsole::eventFilter (QObject *o, QEvent *e) {
 			return true;
 		} else {
 			if (e->type () == QEvent::DragMove) {
-				// Not sure why this is needed, here, but without this, the move will remain permanently inacceptable,
+				// Not sure why this is needed, here, but without this, the move will remain permanently unacceptable,
 				// once it has been ignored, above, once. KF5 5.9.0
 				e->accept ();
 				// But also _not_ filtering it.

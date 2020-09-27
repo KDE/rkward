@@ -107,7 +107,7 @@ public:
 
 /** Attach an already created window. */
 	void attachWindow (RKMDIWindow *window);
-/** Dettach a window (it is removed from the view (), and placed in a top-level DetachedWindowContainer instead. */
+/** Detouch a window (it is removed from the view (), and placed in a top-level DetachedWindowContainer instead. */
 	void detachWindow (RKMDIWindow *window, bool was_attached=true);
 /** @returns a pointer to the current window. state specifies, which windows should be considered. */
 	RKMDIWindow *activeWindow (RKMDIWindow::State state);

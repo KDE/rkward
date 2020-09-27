@@ -400,7 +400,7 @@ static void RKD_Mode (int mode, pDevDesc dev) {
 
 	RKGraphicsDataStreamWriteGuard guard;
 	RKD_OUT_STREAM << WRITE_HEADER (RKDMode, dev);
-	connectoin << (qint8) mode; */
+	connection << (qint8) mode; */
 }
 
 static void RKD_Raster (unsigned int *raster, int w, int h, double x, double y, double width, double height, double rot, Rboolean interpolate, const pGEcontext gc, pDevDesc dev) {

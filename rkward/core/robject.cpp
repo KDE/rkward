@@ -202,7 +202,7 @@ void RObject::writeMetaData (RCommandChain *chain) {
 	if (meta_map->isEmpty ()) {
 		map_string.append ("NULL");
 
-		delete meta_map;	// now that is is synced, delete it
+		delete meta_map;	// now that it is synced, delete it
 		meta_map = 0;
 	} else {
 		for (MetaMap::const_iterator it = meta_map->constBegin (); it != meta_map->constEnd (); ++it) {

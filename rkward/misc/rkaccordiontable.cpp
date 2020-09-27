@@ -292,7 +292,7 @@ RKAccordionTable::~RKAccordionTable () {
 
 void RKAccordionTable::drawRow (QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const {
 	if (index.parent ().isValid ()) {    // must be the editor widget
-		painter->fillRect (option.rect, palette ().background ());  // fill to paper over any padding around the widget (whereever it comes from)
+		painter->fillRect (option.rect, palette ().background ());  // fill to paper over any padding around the widget (wherever it comes from)
 		QTreeView::drawRow (painter, option, index);
 		painter->drawLine (option.rect.bottomLeft (), option.rect.bottomRight ());
 	} else {

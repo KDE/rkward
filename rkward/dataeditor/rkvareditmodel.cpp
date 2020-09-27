@@ -160,7 +160,7 @@ void RKVarEditModel::objectDataChanged (RObject* object, const RObject::ChangeSe
 	RK_TRACE (EDITOR);
 
 	int cindex = objects.indexOf (static_cast<RKVariable*> (object));	// no check for isVariable needed. we only need to look up, if we have this object, and where.
-	if (cindex < 0) return;	// none of our buisiness
+	if (cindex < 0) return;	// none of our business
 
 	RK_ASSERT (changes);
 

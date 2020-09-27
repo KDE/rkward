@@ -13,7 +13,7 @@ rk.adjust.system.path(add)
 A vector of the directories in the file sytem path after the adjustment
 }
 \description{
-Add the given path to to the "PATH" environment variable of the running R session. This
+Add the given path to the "PATH" environment variable of the running R session. This
 can be useful to make sure external binaries are found by Sys.which. Paths are normalized
 before being added, and duplicates are stripped from the path.
 }

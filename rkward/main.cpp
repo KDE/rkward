@@ -240,7 +240,7 @@ QString resolveRSpecOrFail (QString input, QString message) {
 int main (int argc, char *argv[]) {
 	RK_Debug::RK_Debug_Level = DL_WARNING;
 #ifndef NO_QT_WEBENGINE
-	// annoingly, QWebEngineUrlSchemes have to be registered before creating the app.
+	// annoyingly, QWebEngineUrlSchemes have to be registered before creating the app.
 	QWebEngineUrlScheme scheme("help");
 	scheme.setSyntax (QWebEngineUrlScheme::Syntax::Path);
 	scheme.setFlags (QWebEngineUrlScheme::LocalScheme|QWebEngineUrlScheme::LocalAccessAllowed);
@@ -264,7 +264,7 @@ int main (int argc, char *argv[]) {
 	aboutData.addAuthor (i18n ("Stefan Roediger"), i18n ("Many plugins, suggestions, marketing, translations"));
 	aboutData.addCredit (i18n ("Contributors in alphabetical order"));
 	aboutData.addCredit (i18n ("Björn Balazs"), i18n ("Extensive usability feedback"));
-	aboutData.addCredit (i18n ("Aaron Batty"), i18n ("Whealth of feedback, hardware donations"));
+	aboutData.addCredit (i18n ("Aaron Batty"), i18n ("Wealth of feedback, hardware donations"));
 	aboutData.addCredit (i18n ("Jan Dittrich"), i18n ("Extensive usability feedback"));
 	aboutData.addCredit (i18n ("Philippe Grosjean"), i18n ("Several helpful comments and discussions"));
 	aboutData.addCredit (i18n ("Adrien d'Hardemare"), i18n ("Plugins and patches"));

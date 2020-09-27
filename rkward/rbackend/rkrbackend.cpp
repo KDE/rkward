@@ -546,7 +546,7 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 
 	if (RKRBackend::this_pointer->killed == RKRBackend::AlreadyDead) return;	// Nothing to clean up
 	if (!RKRBackend::this_pointer->r_running) return;			// prevent recursion (if an error occurs, here, we get jumped to the console repl, again!)
-	R_CheckUserInterrupt ();	// if there are any user interrupts pendinging, we want them handled *NOW*
+	R_CheckUserInterrupt ();	// if there are any user interrupts pending, we want them handled *NOW*
 	RKRBackend::this_pointer->r_running = false;
 
 	// we could be in a signal handler, and the stack base may have changed.

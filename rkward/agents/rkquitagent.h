@@ -28,7 +28,7 @@ class RKProgressControl;
 class RKQuitAgent : public QObject, public RCommandReceiver {
 	Q_OBJECT
 public:
-/** Constructor. As soon as you contruct an object of this type, the RKWard application *will* quit (but maybe with a short delay)! */
+/** Constructor. As soon as you construct an object of this type, the RKWard application *will* quit (but maybe with a short delay)! */
 	explicit RKQuitAgent (QObject *parent);
 	~RKQuitAgent ();
 

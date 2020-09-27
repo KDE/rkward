@@ -115,7 +115,7 @@ public:
 /** currently valid? default implementation always returns true. @see recursiveStatus()
   * reimplement this in subclasses, if components may become invalid.
   * 
-  * @note: A component will be "satisfied" even when invalid, if is is not required. Also, a required component is implicitly not satisfied, if any of its children are not satisfied.
+  * @note: A component will be "satisfied" even when invalid, if it is not required. Also, a required component is implicitly not satisfied, if any of its children are not satisfied.
   * In general, use isSatisfied() to query the status of components, not isValid(). */
 	virtual bool isValid () { return true; };
 /** set to required: will only be satisfied if it is valid (and all it's children). Else: always satisfied (but subclasses might override to always be dissatisfied on really bad values. By default RKComponentBase is required at construction */

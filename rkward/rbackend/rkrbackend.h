@@ -135,7 +135,7 @@ handleHistoricalSubstackRequest(). Exactly which requests get handled by which f
 		EmergencySaveThenExit = 2,
 		AlreadyDead = 3
 	} killed;
-/** "Kills" the backend. Actually this just tells the thread that is is about to be terminated. Allows the thread to terminate gracefully */
+/** "Kills" the backend. Actually this just tells the thread that it is about to be terminated. Allows the thread to terminate gracefully */
 	void kill () { killed = ExitNow; };
 	bool isKilled () { return (killed != NotKilled); };
 

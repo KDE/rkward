@@ -1990,8 +1990,8 @@ x	&lt;/components ...&gt;
 			For &rkward;'s &XML; files, i18n will mostly just work. If you are writing your own <command>.pluginmap</command> (&eg; for an <link linkend="external_plugins">external plugin</link>),
 			you will have to specify a <replaceable>po_id</replaceable> next to the pluginmap's <replaceable>id</replaceable>. This defines the "message catalog" to use. In general this should
 			be set identical to the <replaceable>id</replaceable> of your <command>.pluginmap</command>, but if you provide several related <command>.pluginmap</command>s in a single package, you will
-			probaly want to specify a common <replaceable>po_id</replaceable> in your maps. The <replaceable>po_id</replaceable> of a <command>.pluginmap</command> file is inherited by all plugins
-			declared in it, unless unless that declares a different <replaceable>po_id</replaceable>.
+			probably want to specify a common <replaceable>po_id</replaceable> in your maps. The <replaceable>po_id</replaceable> of a <command>.pluginmap</command> file is inherited by all plugins
+			declared in it, unless that declares a different <replaceable>po_id</replaceable>.
 		</para>
 		<para>
 			For plugins and help pages, you do not need to tell &rkward; which strings are to be translated, because that is generally evident from their usage. However, as explained above,
