@@ -2,7 +2,7 @@
                           rksettingsmodulewatch  -  description
                              -------------------
     begin                : Thu Aug 26 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -34,12 +34,12 @@ class RKSettingsModuleWatch : public RKSettingsModule
 Q_OBJECT
 public:
 	RKSettingsModuleWatch (RKSettings *gui, QWidget *parent);
-
 	~RKSettingsModuleWatch ();
-	
+
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
-	
+	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
+
 	void applyChanges () override;
 	void save (KConfig *config) override;
 	void validateGUI ();

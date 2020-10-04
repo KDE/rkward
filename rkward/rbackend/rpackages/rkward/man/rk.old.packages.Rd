@@ -4,10 +4,16 @@
 \alias{rk.old.packages}
 \title{Slightly smarter variant of old.packages()}
 \usage{
-rk.old.packages(lib.loc = NULL, repos = getOption("repos"),
+rk.old.packages(
+  lib.loc = NULL,
+  repos = getOption("repos"),
   contriburl = contrib.url(repos, type),
-  instPkgs = installed.packages(lib.loc = lib.loc), method,
-  available = NULL, checkBuilt = FALSE, type = getOption("pkgType"))
+  instPkgs = installed.packages(lib.loc = lib.loc),
+  method,
+  available = NULL,
+  checkBuilt = FALSE,
+  type = getOption("pkgType")
+)
 }
 \value{
 a character vector of packages which are really old
@@ -32,4 +38,3 @@ Thomas Friedrichsmeier \email{rkward-devel@kde.org}
 \keyword{attribute}
 \keyword{misc}
 \keyword{utilities}
-

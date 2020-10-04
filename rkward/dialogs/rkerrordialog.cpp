@@ -2,7 +2,7 @@
                           rkerrordialog  -  description
                              -------------------
     begin                : Thu Apr 25 2013
-    copyright            : (C) 2013, 2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2013-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -35,6 +35,7 @@
 #include "../rbackend/rksessionvars.h"
 #include "../misc/rkprogresscontrol.h"
 #include "../misc/rkdialogbuttonbox.h"
+#include "../misc/rkcommonfunctions.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
 #include "../version.h"
@@ -51,16 +52,15 @@ public:
 		RKBugzillaReportDialog::report_template = report_template;
 		setWindowTitle (i18n ("Reporting bugs in RKWard"));
 		QVBoxLayout *layout = new QVBoxLayout (this);
-		QLabel *label = new QLabel (i18n ("<p><b>Where should I report bugs or wishes?</b></p><p>Thank you for taking the time to help improve RKWard. To help us "
+		QLabel *label = RKCommonFunctions::wordWrappedLabel (i18n ("<p><b>Where should I report bugs or wishes?</b></p><p>Thank you for taking the time to help improve RKWard. To help us "
 		                                  "handle your request, efficiently, please submit your bug reports or wishes in the "
 		                                  "<a href=\"%1\">KDE bugtracking system</a>. Note that you need a user account for this, so that we will be able to contact you, "
 		                                  "for follow-up questions. <b>If you do not have an account, please <a href=\"%2\">create one</a>, first.</b></p>"
 		                                  "<p>In case this is not possible for some reason, refer to <a href=\"%3\">%3</a> for alternative ways of reporting issues.</p>",
-		                         QString ("http://bugs.kde.org"), QString ("https://bugs.kde.org/createaccount.cgi"), QString ("http://rkward.kde.org/bugs/"))
+		                         QString ("https://bugs.kde.org"), QString ("https://bugs.kde.org/createaccount.cgi"), QString ("https://rkward.kde.org/Bugs.html"))
 		                          + i18n ("<p><b>What information should I provide, and how?</b></p>Clicking \"Report issue\" will take you to the "
 		                                  "KDE bugtracking system. After logging in, some information will already be pre-filled into the report form. Please make sure "
-		                                  "to fill in the missing bits - in English - where indicated, especially in the \"Comment\" field.</p>"), this);
-		label->setWordWrap (true);
+		                                  "to fill in the missing bits - in English - where indicated, especially in the \"Comment\" field.</p>"));
 		label->setOpenExternalLinks (true);
 		layout->addWidget (label);
 

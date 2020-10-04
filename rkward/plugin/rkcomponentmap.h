@@ -115,7 +115,7 @@ class QDomElement;
 class XMLHelper;
 class RKContextHandler;
 
-/** This class keeps a QDomDocument that is a represenation of the GUI using KDEs XML-GUI format (a ui.rc). Use createMenus () to have it parse the menu descriptions from a .pluginmap file. It will adjust the XML description accordingly. When done, you can use to generated gui_xml to set it as the xmlGUIBuildDocument of a KXMLGUIClient. 
+/** This class keeps a QDomDocument that is a representation of the GUI using KDEs XML-GUI format (a ui.rc). Use createMenus () to have it parse the menu descriptions from a .pluginmap file. It will adjust the XML description accordingly. When done, you can use to generated gui_xml to set it as the xmlGUIBuildDocument of a KXMLGUIClient. 
 
 One instance of this class is generally around, persistently: The RKComonentMap (with context "global"). Further instances are around one for each context.
 
@@ -225,6 +225,9 @@ public:
 
 /** clears out (and deletes) all components / plugins */
 	void clearAll ();
+
+/** returns true, if no plugin maps are loaded. */
+	bool isEmpty() const { return pluginmapfiles.isEmpty(); }
 
 /** returns the component identified by id, 0 if not found */
 	static RKComponentHandle* getComponentHandle (const QString &id);

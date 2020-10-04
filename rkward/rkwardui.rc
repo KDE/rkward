@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward_main" version="700">
+<kpartgui name="rkward_main" version="721">
 <MenuBar>
 	<!-- The Main Window ui.rc is the only one, where merging happens, reliably. That is, why we need to define
 	     a lot of merge points, here, which can then be used be mdi windows and their children.
@@ -10,6 +10,7 @@
 			<Action name="new_command_editor"/>
 		</Menu>
 		<Action name="file_openy"/>
+		<Action name="file_open_any"/>
 		<Action name="file_open_recenty"/>
 		<Separator/>
 		<Menu name="import"><text>&amp;Import</text>
@@ -83,6 +84,7 @@
 	<Menu name="settings"><text>&amp;Settings</text>
 		<DefineGroup name="configure_merge_group" append="configure_merge"/>
 		<Separator append="configure_merge"/>
+		<Action name="setup_wizard" append="configure_merge"/>
 		<Action name="configure_packages" append="configure_merge"/>
 	</Menu>
 

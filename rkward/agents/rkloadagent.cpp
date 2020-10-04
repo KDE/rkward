@@ -2,7 +2,7 @@
                           rkloadagent  -  description
                              -------------------
     begin                : Sun Sep 5 2004
-    copyright            : (C) 2004, 2007, 2009, 2011, 2012, 2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -51,7 +51,7 @@ RKLoadAgent::RKLoadAgent (const QUrl &url, bool merge) {
 		KIO::Job* getjob = KIO::file_copy (url, QUrl::fromLocalFile (tmpfile->fileName()));
 		KJobWidgets::setWindow (getjob, RKWardMainWindow::getMain ());
 		if (!getjob->exec ()) {
-			getjob->ui ()->showErrorMessage();
+			getjob->uiDelegate ()->showErrorMessage();
 			return;
 		}
 		filename = tmpfile->fileName ();

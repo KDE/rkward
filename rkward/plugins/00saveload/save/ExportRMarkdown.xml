@@ -1,0 +1,104 @@
+<!DOCTYPE rkplugin >
+<document>
+  <!-- this code was generated using the rkwarddev package.
+    perhaps don't make changes here, but in the rkwarddev script instead!
+    
+    look for a file called: ../../rkwarddev_scripts/rkwarddev_rk.RMarkdown_plugin_script.R -->
+  <code file="ExportRMarkdown.js" />
+  <help file="ExportRMarkdown.rkh" />
+  <!-- <dependencies>
+      </dependencies> -->
+  <about name="Export RMarkdown" shortinfo="RKWard GUI to export RMarkdown documents in various formats" longinfo="RKWard GUI to export RMarkdown documents in various formats" version="0.01-1" releasedate="2018-11-01" url="https://rkward.kde.org" license="GPL (&gt;= 3)">
+    <author given="Meik" family="Michalke" email="meik.michalke@hhu.de" role="aut, cre" />
+  </about>
+  <logic>
+    <convert id="logicMDVersion" sources="markdownVersion.string" mode="equals" standard="2" />
+    <connect governor="logicMDVersion" client="targetFormat.enabled" />
+    <connect governor="current_filename" client="markdownFile.selection" />
+    <convert id="logicMDAllFormats" sources="targetFormat.string" mode="equals" standard="all" />
+    <convert id="logicMDFirstFormat" sources="targetFormat.string" mode="equals" standard="first" />
+    <convert id="logicMDAllOrFirst" sources="logicMDAllFormats;logicMDFirstFormat" mode="or" />
+    <connect governor="logicMDAllOrFirst.not" client="targetFile.visible" />
+    <connect governor="logicMDAllOrFirst.not" client="targetFile.required" />
+    <connect governor="logicMDAllOrFirst" client="targetDir.visible" />
+    <connect governor="logicMDAllOrFirst" client="targetDir.required" />
+    <script>
+      <![CDATA[ 
+        gui.addChangeCommand("markdownFile.selection", "dataChanged()");
+  gui.addChangeCommand("targetFormat.string", "dataChanged()");
+  gui.addChangeCommand("markdownVersion.string", "dataChanged()");
+  // this function is called whenever a new source file
+  // is selected or the target format changes
+  dataChanged = function(){
+    var fromFile = gui.getString("markdownFile");
+    var toFile = "";
+    var fileExt = gui.getString("targetFormat");
+    if(fileExt == "all" || fileExt == "first"){
+      toFile = fromFile.substr(0, fromFile.lastIndexOf("/"));
+      gui.setValue("targetDir.selection", toFile);
+    } else {
+      var mdVers = gui.getString("markdownVersion");
+      if(mdVers == "1" || fileExt == "html5" || fileExt == "html_vignette"){
+        fileExt = "html";
+      } else if(fileExt == "beamer" || fileExt == "latex"){
+        fileExt = "pdf";
+      } else if(fileExt == "markdown" || fileExt == "markdown_github" || fileExt == "gfm"){
+        fileExt = "md";
+      } else {};
+      var fex = fromFile.lastIndexOf(".");
+      toFile = fromFile.substr(0, fex < 0 ? fromFile.length : fex) + "." + fileExt;
+      // prevent overwriting source with target
+      if(fromFile == toFile){
+        toFile = fromFile.substr(0, fex < 0 ? fromFile.length : fex) + "_new." + fileExt;
+      } else {}
+      gui.setValue("targetFile.selection", toFile);
+    }
+  }
+  dataChanged (); // initialize 
+      ]]>
+    </script>
+  </logic>
+  <dialog label="Export RMarkdown">
+    <tabbook id="exportTabbook" label="Export RMarkdown">
+      <tab label="Source and target" id="tabSourceAndTarget">
+        <row id="row_cRMFFTAFBD">
+          <column id="clm_bRMFFTAFBD">
+            <browser label="RMarkdown file" type="file" id="markdownFile" filter="*.rmd *.md" />
+            <dropdown id="targetFormat" label="Target format">
+              <option label="All formats defined in document" value="all" />
+              <option label="First format defined in document" value="first" checked="true" />
+              <option label="Beamer presentation" value="beamer" />
+              <option label="DokuWiki" value="dokuwiki" />
+              <option label="HTML" value="html" />
+              <option label="HTML 5" value="html5" />
+              <option label="Markdown" value="markdown" />
+              <option label="Markdown (GitHub, old)" value="markdown_github" />
+              <option label="Markdown (GitHub)" value="gfm" />
+              <option label="MediaWiki" value="mediawiki" />
+              <option label="ODT" value="odt" />
+              <option label="PDF" value="latex" />
+              <option label="PowerPoint" value="pptx" />
+              <option label="RTF" value="rtf" />
+              <option label="Vignette (HTML)" value="html_vignette" />
+              <option label="Word" value="docx" />
+            </dropdown>
+            <browser label="Save as" type="savefile" id="targetFile" required="false" />
+            <browser label="Save to" type="dir" id="targetDir" required="false" />
+            <stretch />
+          </column>
+        </row>
+      </tab>
+      <tab label="Advanced options" id="tabAdvancedOptions">
+        <row id="row_cVM1122VM1">
+          <column id="clm_rddmVM1122">
+            <radio id="markdownVersion" label="Markdown version">
+              <option label="v1" value="1" />
+              <option label="v2" value="2" checked="true" />
+            </radio>
+            <stretch />
+          </column>
+        </row>
+      </tab>
+    </tabbook>
+  </dialog>
+</document>

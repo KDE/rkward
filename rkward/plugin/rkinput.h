@@ -2,7 +2,7 @@
                           rkinput  -  description
                              -------------------
     begin                : Sat Mar 10 2005
-    copyright            : (C) 2005, 2006, 2007, 2012, 2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2005-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -37,10 +37,10 @@ public:
 	~RKInput ();
 
 	RKComponentPropertyBase *text;
-	QVariant value (const QString &modifier=QString ()) { return (text->value (modifier)); };
-	QStringList getUiLabelPair () const;
-	int type () { return ComponentInput; };
-	bool isValid ();
+	QVariant value (const QString &modifier=QString ()) override { return (text->value (modifier)); };
+	QStringList getUiLabelPair () const override;
+	int type () override { return ComponentInput; };
+	bool isValid () override;
 public slots:
 	void textChanged ();
 	void textChangedFromUi ();

@@ -49,4 +49,3 @@ it will remain in place, with compatible parameters.
 Thomas Friedrichsmeier \email{rkward-devel@kde.org}
 }
 \keyword{utilities}
-

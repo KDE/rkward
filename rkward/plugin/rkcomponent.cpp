@@ -245,7 +245,7 @@ RKComponentBase::ComponentStatus RKComponentBase::recursiveStatus () {
 
 	bool processing = false;
 	bool children_satisfied = true;
-	// we always need to interate over all children, since we need to make sure to find any which are dead or processing.
+	// we always need to iterate over all children, since we need to make sure to find any which are dead or processing.
 	for (QHash<QString, RKComponentBase*>::const_iterator it = child_map.constBegin (); it != child_map.constEnd (); ++it) {
 		ComponentStatus s = it.value ()->recursiveStatus ();
 		if (s == Dead) return Dead;
@@ -299,7 +299,7 @@ RKComponent::~RKComponent () {
 void RKComponent::propertyValueChanged (RKComponentPropertyBase *property) {
 	RK_TRACE (PLUGIN);
 
-	// slightly more elaborat than necessary on first thought, to prevent loops
+	// slightly more elaborate than necessary on first thought, to prevent loops
 	if (property == visibility_property) {
 		if (visibility_property->boolValue ()) {
 			if (isHidden ()) show ();
@@ -334,7 +334,7 @@ void RKComponent::updateEnablednessRecursive (bool parent_enabled) {
 
 bool RKComponent::isInactive () {
 	if (!isEnabled ()) return true;
-	if (parentWidget () && isHidden ()) return true;	// Note: Components embedded as button may be "hidden" without being inaccessible
+	if (parentWidget () && isHidden ()) return true;	// Note: Components embedded as button may be "hidden" without being unaccessible
 	if (!visibility_property->boolValue ()) return true;	// Note for those, this is the appropriate check
 	return false;
 }

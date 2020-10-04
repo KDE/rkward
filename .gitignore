@@ -6,11 +6,13 @@ rkward/plugins/po/
 # Generated from cmake
 rkward/resource.ver
 rkward/version.h
+rkward/rbackend/rpackages/rkward/R/ver.R
 # Log files from testing
 tests/make_plugintests.txt
 # Message templates and imported translations should not be in the repo
 *.pot
 i18n/po/
+po/
 # General purpose temp directory for scripts
 scripts/tmp/
 # More (legacy) temp dirs

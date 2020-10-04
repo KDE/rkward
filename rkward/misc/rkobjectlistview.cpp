@@ -2,7 +2,7 @@
                           rkobjectlistview  -  description
                              -------------------
     begin                : Wed Sep 1 2004
-    copyright            : (C) 2004-2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -51,23 +51,18 @@ public:
 	void initStyleOption (QStyleOptionViewItem* option, const QModelIndex& index) const override {
 		QStyledItemDelegate::initStyleOption (option, index);
 		if (!index.parent ().isValid ()) {
-			QStyleOptionViewItemV4 *v4 = qstyleoption_cast<QStyleOptionViewItemV4 *> (option);
-			if (!v4) {
-				RK_ASSERT (false);
-				return;
-			}
-			v4->icon = tree->isExpanded (index) ? expanded : collapsed;
+			option->icon = tree->isExpanded (index) ? expanded : collapsed;
 			//v4->decorationPosition = QStyleOptionViewItemV4::Right;  // easily gets out of the picture, thus using left-align
-			v4->features |= QStyleOptionViewItemV2::HasDecoration;
+			option->features |= QStyleOptionViewItem::HasDecoration;
 
 			RObject* object = static_cast<RObject*> (tree->settings->mapToSource (index).internalPointer ());
-			v4->font.setBold (true);
-			v4->backgroundBrush = tree->palette ().mid ();
+			option->font.setBold (true);
+			option->backgroundBrush = tree->palette ().mid ();
 			if (object == RObjectList::getObjectList ()) {
-				v4->text = i18n ("Other Environments");
+				option->text = i18n ("Other Environments");
 			} else {
-				if (tree->model ()->hasChildren (index)) v4->text = i18n ("My Workspace");
-				else v4->text = i18n ("My Workspace (no objects matching filter)");
+				if (tree->model ()->hasChildren (index)) option->text = i18n ("My Workspace");
+				else option->text = i18n ("My Workspace (no objects matching filter)");
 			}
 		}
 	}
@@ -99,7 +94,7 @@ void RKObjectListView::itemClicked (const QModelIndex& index) {
 	RK_TRACE (APP);
 
 	if (!index.parent ().isValid ()) {  // root level (pseudo) items expand on click
-		QModelIndex fixed_index = model ()->index (index.row (), 0, index.parent ());;
+		QModelIndex fixed_index = model ()->index (index.row (), 0, index.parent ());
 		if (!isExpanded (fixed_index)) {
 			expand (fixed_index);
 			resizeColumnToContents (0);

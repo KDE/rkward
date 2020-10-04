@@ -32,18 +32,21 @@ RSlotsPseudoObject::~RSlotsPseudoObject () {
 	pseudo_object_types.remove (this);
 }
 
-QString RSlotsPseudoObject::getFullName () const {
+QString RSlotsPseudoObject::getFullName (int options) const {
 	RK_TRACE (OBJECTS);
 
-	return (".rk.get.slots (" + parent->getFullName () + ')');
+	return (".rk.get.slots (" + parent->getFullName (options) + ')');
 }
 
-QString RSlotsPseudoObject::makeChildName (const QString &short_child_name, bool) const {
+QString RSlotsPseudoObject::makeChildName (const QString &short_child_name, bool, int options) const {
 	RK_TRACE (OBJECTS);
 
+	if (options & ExplicitSlotsExpansion) {
+		return (QStringLiteral("slot(") + parent->getFullName (options) + QStringLiteral(", ") + rQuote(short_child_name) + ')');
+	}
 	QString safe_name = short_child_name;
 	if (irregularShortName (safe_name)) safe_name = rQuote (short_child_name);
-	return (parent->getFullName () + '@' + safe_name);
+	return (parent->getFullName (options) + '@' + safe_name);
 }
 
 RKNamespaceObject::RKNamespaceObject (REnvironmentObject* package, const QString name) : REnvironmentObject (package, name.isNull () ? "NAMESPACE" : name) {
@@ -59,22 +62,16 @@ RKNamespaceObject::~RKNamespaceObject () {
 	pseudo_object_types.remove (this);
 }
 
-QString RKNamespaceObject::getFullName () const {
+QString RKNamespaceObject::getFullName (int) const {
 	RK_TRACE (OBJECTS);
 	return ("asNamespace (" + rQuote (namespace_name) + ')');
 }
 
-QString RKNamespaceObject::makeChildName (const QString& short_child_name, bool) const {
+QString RKNamespaceObject::makeChildName (const QString& short_child_name, bool, int) const {
 	RK_TRACE (OBJECTS);
 	QString safe_name = short_child_name;
 	if (irregularShortName (safe_name)) safe_name = rQuote (short_child_name);
 	return (namespace_name + ":::" + safe_name);
-}
-
-QString RKNamespaceObject::makeChildBaseName (const QString& short_child_name) const {
-	RK_TRACE (OBJECTS);
-	// since namespaces reside at top level, this is the same as makeChildName()
-	return (makeChildName (short_child_name, false));
 }
 
 #include "robjectlist.h"
@@ -92,19 +89,14 @@ RKOrphanNamespacesObject::~RKOrphanNamespacesObject () {
 	pseudo_object_types.remove (this);
 }
 
-QString RKOrphanNamespacesObject::getFullName () const {
+QString RKOrphanNamespacesObject::getFullName (int) const {
 	RK_TRACE (OBJECTS);
 	return ("loadedNamespaces ()");
 }
 
-QString RKOrphanNamespacesObject::makeChildName (const QString& short_child_name, bool) const {
+QString RKOrphanNamespacesObject::makeChildName (const QString& short_child_name, bool, int) const {
 	RK_TRACE (OBJECTS);
 	return ("asNamespace (" + rQuote (short_child_name) + ')');
-}
-
-QString RKOrphanNamespacesObject::makeChildBaseName (const QString& short_child_name) const {
-	RK_TRACE (OBJECTS);
-	return (makeChildName (short_child_name, false));
 }
 
 void RKOrphanNamespacesObject::updateFromR (RCommandChain* chain) {

@@ -2,7 +2,7 @@
                           rkrbackend  -  description
                              -------------------
     begin                : Sun Jul 25 2004
-    copyright            : (C) 2004 - 2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2004 - 2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -85,7 +85,7 @@ public:
 
 /** initializes the R-backend. Emits an RCallbackType::Started-request (with any error messages) when done.
 Note that you should call initialize only once in a application */
-	void initialize (const char* locale_dir);
+	void initialize (const QString &locale_dir);
 
 	void enterEventLoop ();
 protected:
@@ -135,7 +135,7 @@ handleHistoricalSubstackRequest(). Exactly which requests get handled by which f
 		EmergencySaveThenExit = 2,
 		AlreadyDead = 3
 	} killed;
-/** "Kills" the backend. Actually this just tells the thread that is is about to be terminated. Allows the thread to terminate gracefully */
+/** "Kills" the backend. Actually this just tells the thread that it is about to be terminated. Allows the thread to terminate gracefully */
 	void kill () { killed = ExitNow; };
 	bool isKilled () { return (killed != NotKilled); };
 
@@ -201,6 +201,7 @@ handleHistoricalSubstackRequest(). Exactly which requests get handled by which f
 	void setPriorityCommand (RCommandProxy *command);
 	RCommandProxy *pending_priority_command;
 	QMutex priority_command_mutex;
+	int r_version;
 private:
 	void clearPendingInterrupt ();
 protected:
@@ -212,7 +213,6 @@ private:
 /** connect R standard callbacks */
 	void connectCallbacks ();
 
-	int r_version;
 	QString output_file;
 /** A copy of the names of the toplevel environments (as returned by "search ()"). */
 	QStringList toplevel_env_names;

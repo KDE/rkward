@@ -35,8 +35,8 @@ public:
 	explicit RSlotsPseudoObject (RObject *parent);
 	~RSlotsPseudoObject ();
 
-	QString getFullName () const override;
-	QString makeChildName (const QString &short_child_name, bool misplaced=false) const override;
+	QString getFullName (int) const override;
+	QString makeChildName (const QString &short_child_name, bool misplaced, int) const override;
 };
 
 /**
@@ -51,9 +51,8 @@ public:
 	explicit RKNamespaceObject (REnvironmentObject* package, const QString name = QString ());
 	~RKNamespaceObject ();
 
-	QString getFullName () const override;
-	QString makeChildName (const QString &short_child_name, bool misplaced=false) const override;
-	QString makeChildBaseName (const QString &short_child_name) const override;
+	QString getFullName (int) const override;
+	QString makeChildName (const QString &short_child_name, bool misplaced, int) const override;
 	QString namespaceName () const { return namespace_name; };
 private:
 	QString namespace_name;
@@ -75,9 +74,8 @@ public:
 	explicit RKOrphanNamespacesObject (RObjectList *parent);
 	~RKOrphanNamespacesObject ();
 
-	QString getFullName () const override;
-	QString makeChildName (const QString &short_child_name, bool misplaced=false) const override;
-	QString makeChildBaseName (const QString &short_child_name) const override;
+	QString getFullName (int options) const override;
+	QString makeChildName (const QString &short_child_name, bool misplaced, int options) const override;
 	QString getObjectDescription () const override;
 
 	RKNamespaceObject *findOrphanNamespace (const QString &name) const;

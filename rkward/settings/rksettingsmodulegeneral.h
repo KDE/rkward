@@ -2,7 +2,7 @@
                           rksettingsmodulegeneral  -  description
                              -------------------
     begin                : Fri Jul 30 2004
-    copyright            : (C) 2004-2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -33,7 +33,6 @@ class RKSettingsModuleGeneral : public RKSettingsModule {
 	Q_OBJECT
 public:
 	RKSettingsModuleGeneral (RKSettings *gui, QWidget *parent);
-
 	~RKSettingsModuleGeneral ();
 
 	enum WorkplaceSaveMode {	// don't change the int values of this enum, or you'll ruin users saved settings. Append new values at the end
@@ -57,10 +56,11 @@ public:
 
 	void applyChanges () override;
 	void save (KConfig *config) override;
-	
+
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
-	
+	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
+
 	QString caption () override;
 
 /// returns the directory-name where the logfiles should reside
@@ -95,6 +95,7 @@ public:
 		RKWardConfig_0_6_1,
 		RKWardConfig_0_6_3,
 		RKWardConfig_0_6_4,
+		RKWardConfig_0_7_1,
 		RKWardConfig_Next,		/**< add new configuration versions above / before this entry */
 		RKWardConfig_Latest = RKWardConfig_Next - 1
 	};
@@ -106,6 +107,8 @@ public:
 	static bool anyExistingConfig () { return config_exists; };
 	/** Returns true, if the runtime version of RKWard has changed since the previous session. */
 	static bool rkwardVersionChanged () { return rkward_version_changed; };
+	/** Returns true, if rkward seems to have started from a different path than on the previous run. */
+	static bool installationMoved () { return installation_moved; };
 public slots:
 	void settingChanged ();
 private:

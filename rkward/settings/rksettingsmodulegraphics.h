@@ -2,7 +2,7 @@
                           rksettingsmodulegraphics  -  description
                              -------------------
     begin                : Mon Sep 13 2010
-    copyright            : (C) 2010, 2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2010-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -49,7 +49,8 @@ public:
 
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
-	
+	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
+
 	QString caption () override;
 	QUrl helpURL () override { return QUrl ("rkward://page/rkward_plot_history#scd_settings"); };
 

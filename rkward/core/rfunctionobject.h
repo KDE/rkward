@@ -2,7 +2,7 @@
                           rfunctionobject  -  description
                              -------------------
     begin                : Wed Apr 26 2006
-    copyright            : (C) 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2006-2019 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -35,6 +35,8 @@ public:
 /** reimplemented from RObject to handle function arguments */
 	bool updateStructure (RData *new_data) override;
 	QString printArgs () const;
+	QStringList argumentNames () const { return argnames; }
+	QStringList argumentDefaults () const { return argvalues; }
 protected:
 	QStringList argnames;
 	QStringList argvalues;

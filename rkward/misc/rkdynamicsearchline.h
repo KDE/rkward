@@ -30,7 +30,7 @@ class QAction;
 class RKDynamicSearchLine : public QLineEdit {
 	Q_OBJECT
 public:
-	RKDynamicSearchLine (QWidget *parent);
+	explicit RKDynamicSearchLine (QWidget *parent);
 	virtual ~RKDynamicSearchLine ();
 
 /** If a model is set, will call setFilterRegExp() when the search string is changed. */

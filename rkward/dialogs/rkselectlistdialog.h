@@ -23,7 +23,7 @@
 class QListWidget;
 class QDialogButtonBox;
 
-/** This class represent a dialog asking for a choice among several optiosn. It is used, when the backend calls select.list() / menu().
+/** This class represent a dialog asking for a choice among several options. It is used, when the backend calls select.list() / menu().
 
 @author Thomas Friedrichsmeier
 */

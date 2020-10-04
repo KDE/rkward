@@ -2,7 +2,7 @@
                           rkmessagecatalog  -  description
                              -------------------
     begin                : Mon Jun 24 2013
-    copyright            : (C) 2013, 2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2013-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -17,75 +17,53 @@
 
 #include "rkmessagecatalog.h"
 
-#include <libintl.h>
 #include <QFile>
-#include <QLocale>
 #include <KLocalizedString>
 
 #include "../debug.h"
 
 // statics
-QHash<QString, RKMessageCatalog*> RKMessageCatalog::catalogs;
-QMutex RKMessageCatalog::setup_mutex;
-RKMessageCatalog* RKMessageCatalog::null_catalog = 0;
+RKMessageCatalog::CatalogHash RKMessageCatalog::catalogs;
 
 RKMessageCatalog::RKMessageCatalog (const QString &name, const QString& path) {
 	RK_TRACE (MISC);
 
 	catalog_name = QFile::encodeName (name);
-	char *res = bindtextdomain (catalog_name, QFile::encodeName (path));
-	RK_DEBUG (MISC, DL_DEBUG, "Opening catalog %s, expected at %s, found at %s", qPrintable (name), qPrintable (path), res);
-	bind_textdomain_codeset (catalog_name, "UTF-8");
+	if (!path.isEmpty ()) {
+		RK_DEBUG (MISC, DL_DEBUG, "Registering the path %s for catalog %s", qPrintable (path), qPrintable (name));
+		KLocalizedString::addDomainLocaleDir (catalog_name, path);
+	}
 }
 
 RKMessageCatalog::~RKMessageCatalog () {
 	RK_TRACE (MISC);
 }
 
-// Adopted from KDE's gettext.h
-/* The separator between msgctxt and msgid in a .mo file. */
-#define GETTEXT_CONTEXT_GLUE "\004"
-
 QString RKMessageCatalog::translate (const QString &msgctxt, const QString &msgid) const {
 	RK_TRACE (MISC);
 
-	QByteArray key = (msgctxt + GETTEXT_CONTEXT_GLUE + msgid).toUtf8 ();
-	const char *trans = dgettext (catalog_name, key);
-	if (trans == key) return msgid;
-	return QString::fromUtf8 (trans);
+	return i18ndc (catalog_name, msgctxt.toUtf8 (), msgid.toUtf8 ());
 }
 
 QString RKMessageCatalog::translate (const QString &msgctxt, const QString &msgid_singular, const QString &msgid_plural, unsigned long int count) const {
 	RK_TRACE (MISC);
 
-	QString ret;
-	QByteArray key = (msgctxt + GETTEXT_CONTEXT_GLUE + msgid_singular).toUtf8 ();
-	QByteArray pkey = msgid_plural.toUtf8 ();
-	const char *trans = dngettext (catalog_name, key, pkey, count);
-	if ((trans == key) || (trans == pkey)) {
-		if (count == 1) ret = msgid_singular;
-		else ret = msgid_plural;
-	} else {
-		ret = QString::fromUtf8 (trans);
-	}
-	return ret.replace (QLatin1String ("%1"), QString::number (count));	// NOTE: Not using .arg(count), as "%1" may not be given in both singular and plural form.
-																		// .arg() would go replacing "%2", then.
+	return i18ndcp (catalog_name, msgctxt.toUtf8 (), msgid_singular.toUtf8 (), msgid_plural.toUtf8 (), count);
 }
 
 QString RKMessageCatalog::translate (const QString &msgid) const {
 	RK_TRACE (MISC);
 
-	return QString::fromUtf8 (dgettext (catalog_name, msgid.toUtf8 ()));
+	return i18nd (catalog_name, msgid.toUtf8 ());
 }
 
 QString RKMessageCatalog::translate (const QString &msgid_singular, const QString &msgid_plural, unsigned long int count) const {
 	RK_TRACE (MISC);
 
-	return QString::fromUtf8 (dngettext (catalog_name, msgid_singular.toUtf8 (), msgid_plural.toUtf8 (), count)).replace (QLatin1String ("%1"), QString::number (count));
+	return i18ndp (catalog_name, msgid_singular.toUtf8 (), msgid_plural.toUtf8 (), count);
 }
 
-// static
-RKMessageCatalog* RKMessageCatalog::getCatalog (const QString& name, const QString& pathhint) {
+RKMessageCatalog* RKMessageCatalog::CatalogHash::getCatalog (const QString& name, const QString& pathhint) {
 	RK_TRACE (MISC);
 
 	RKMessageCatalog *ret = catalogs.value (name, 0);
@@ -101,26 +79,30 @@ RKMessageCatalog* RKMessageCatalog::getCatalog (const QString& name, const QStri
 	return ret;
 }
 
-RKMessageCatalog* RKMessageCatalog::nullCatalog () {
-	// ok, not thread-safe, here, but the worst that can happen is creating more than one dummy catalog.
-	if (!null_catalog) null_catalog = getCatalog  ("rkward_dummy", QString ());
-	return null_catalog;
+RKMessageCatalog::CatalogHash::~CatalogHash() {
+	RK_TRACE (MISC);
+
+	QHash<QString, RKMessageCatalog*>::const_iterator it;
+	for (it = catalogs.constBegin (); it != catalogs.constEnd (); ++it) {
+		delete (it.value ());
+	}
 }
 
-#ifdef Q_OS_WIN
-	extern "C" int __declspec(dllimport) _nl_msg_cat_cntr;
-#endif
+// static
+RKMessageCatalog* RKMessageCatalog::getCatalog (const QString& name, const QString& pathhint) {
+	RK_TRACE (MISC);
+
+	return catalogs.getCatalog (name, pathhint);
+}
+
+RKMessageCatalog* RKMessageCatalog::nullCatalog () {
+	// ok, not thread-safe, here, but the worst that can happen is creating more than one dummy catalog.
+	return (getCatalog  ("rkward_dummy", QString ()));
+}
 
 // static
 void RKMessageCatalog::switchLanguage (const QString &new_language_code) {
 	RK_TRACE (MISC);
 
-	qputenv ("LANGUAGE", new_language_code.toLatin1 ().data ());
-	// KF5 TODO: correct?
-	QLocale::setDefault (QLocale (new_language_code));
-	// magic to make gettext discard cache
-#ifndef _MSC_VER
-	extern int _nl_msg_cat_cntr;
-#endif
-	++_nl_msg_cat_cntr;
+	KLocalizedString::setLanguages (QStringList () << new_language_code);
 }

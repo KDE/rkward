@@ -1,12 +1,14 @@
-
 # override makeActiveBinding: If active bindings are created in globalenv (), watch them properly
+# Ideally this would not be needed, but there seems to be no user-accessible way to copy unevaluated active bindings.
 .rk.makeActiveBinding.default <- base::makeActiveBinding
 #' @export
 "makeActiveBinding" <- function (sym, fun, env, ...) {
 	if (identical (env, globalenv ())) {
-		.rk.makeActiveBinding.default (sym, fun, .rk.watched.symbols, ...)
 		f <- .rk.make.watch.f (sym)
-		.rk.makeActiveBinding.default (sym, f, globalenv (), ...)
+		.rk.makeActiveBinding.default ("x", fun, environment(f), ...)
+		ret <- .rk.makeActiveBinding.default (sym, f, globalenv ())
+		.rk.watched.symbols[[sym]] <- TRUE
+		invisible(ret)
 	} else {
 		.rk.makeActiveBinding.default (sym, fun, env, ...)
 	}
@@ -19,7 +21,7 @@
 	if (!character.only) {
 		package <- as.character(substitute(package))
 	}
-	if (!base::require(as.character(package), quietly = quietly, character.only = TRUE, ...)) {
+	if (!suppressWarnings(base::require(as.character(package), quietly = quietly, character.only = TRUE, ...))) {
 		if (missing (package)) stop ("No package name given")
 		.rk.do.call("require", as.character(package))
 		invisible(base::require(as.character(package), quietly = TRUE, character.only = TRUE, ...))

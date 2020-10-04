@@ -43,17 +43,17 @@ public:
 /** set the VarType. If sync, the change will be communicated to the backend immediately. See RObject::RDataType */
 	void setVarType (RObject::RDataType, bool sync=true);
 
-/** reimplemented from RObject to also store value labels/factor levels (and in the future probably futher info) */
+/** reimplemented from RObject to also store value labels/factor levels (and in the future probably further info) */
 	void writeMetaData (RCommandChain *chain) override;
 friend class RContainerObject;
 	void rCommandDone (RCommand *command) override;
 public:
 ////////////// BEGIN: data handling ////////////////////////
-/** the Status enum is used for both keeping track of the entire row and inidvidual cells. For single cells the meaning should be obvious. The entire row
+/** the Status enum is used for both keeping track of the entire row and individual cells. For single cells the meaning should be obvious. The entire row
 is set to Unused, if _no_ cell in the row is used, Valid if _all_ cells in the row are valid and Invalid if _one or more_ cells in the row are invalid, Unknown if _all_ cells in the row are unknown/updating. */
 	enum Status { ValueUnused=0, ValueValid=1, ValueInvalid=2, ValueUnknown=4 };
 
-/** sets whether changed data should be synced immediately or not. Set this to off for large paste operations. Rember to call setSyncing (true) and syncDataToR () after the paste is complete */
+/** sets whether changed data should be synced immediately or not. Set this to off for large paste operations. Remember to call setSyncing (true) and syncDataToR () after the paste is complete */
 	void lockSyncing (bool lock);
 /** syncs pending data changes to the backend */
 	void syncDataToR ();
@@ -125,7 +125,7 @@ is set to Unused, if _no_ cell in the row is used, Valid if _all_ cells in the r
 	static FormattingOptions parseFormattingOptionsString (const QString &string);
 /** inverse of parseFormattingOptionsString () */
 	static QString formattingOptionsToString (const FormattingOptions& options);
-/** changes the allocated storage to contain a least length elements. More data may be allocated than acutally needed. This function only ever does upsizing. */
+/** changes the allocated storage to contain a least length elements. More data may be allocated than actually needed. This function only ever does upsizing. */
 	void extendToLength (int length);
 protected:
 /** Discards pending unsynced changes. */

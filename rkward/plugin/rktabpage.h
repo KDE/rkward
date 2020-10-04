@@ -39,7 +39,7 @@ public:
 	/** @returns the page child elements should be drawn in */
 	QWidget *getPage () { return this; };
 
-	int type () { return ComponentTab; };
+	int type () override { return ComponentTab; };
 
 public slots:
 /** called when visibile or enabled properties change */

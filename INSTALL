@@ -2,10 +2,10 @@ Requirements
 ===================
 
 RKWard requires:
-- KDE-libraries and headers (>= 4.0) (http://www.kde.org)
-- Qt-libraries and headers (>= 4.3) (http://www.trolltech.com)
-- R and headers (http://www.r-project.org)
-- CMake (http://cmake.org)
+- Several KF5-libraries and headers (>= 5.4) (https://www.kde.org)
+- Qt-libraries and headers (>= 5.2) (http://www.trolltech.com)
+- R and headers (https://www.r-project.org)
+- CMake (https://cmake.org)
 
 
 Compilation
@@ -32,20 +32,20 @@ The cmake command offers a number of parameters to control the build process. So
 
 In some cases you may want to set the following options:
 
+-DNO_QT_WEBENGINE
+	By default QWebEngine is used for HTML rendering, if available in version >= 5.12.0. Otherwise QtWebKit is used. You can
+	force compilation for QtWebKit by setting: -DNO_QT_WEBENGINE=1
 -DR_EXECUTABLE
 	path to the R executable. You may want to set this, if you have multiple versions of R installed, or R is not in your path. Example: -DR_EXECUTABLE=/usr/bin/R
--DR_LIBDIR
-	directory where R packages should be installed. Generally, this option is only of interest to packagers.
 -DR_HOME
 	R home directory. Almost certainly this option is not needed.
 -DR_INCLUDEDIR
 	path to R include files. Almost certainly this option is not needed.
--DNO_R_XML
-	When packaging RKWard for binary distribution, it may be necessary to exclude the R syntax highlighting defintion "r.xml"
-	from installation, as it may already be provided other packages. In this case, you can use: -DNO_R_XML=1
 -DUSE_BINARY_PACKAGES
 	Currently only interpreted on Mac OS: If RKWard should default to installing binary R packages (if available) use
 	-DUSE_BINARY_PACKAGE=1. Otherwise, RKWard will default to building R packages from source.
+-DTRANSLATION_SRC_CIR
+	If you have imported translation source files (.po-files) to a separate directory, you can specify this, here.
 
 Further generic options are listed on http://www.cmake.org/Wiki/CMake_Useful_Variables .
 

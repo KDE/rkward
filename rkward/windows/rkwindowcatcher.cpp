@@ -289,6 +289,7 @@ RKCaughtX11Window::RKCaughtX11Window (RKGraphicsDevice* rkward_device, int devic
 void RKCaughtX11Window::commonInit (int device_number) {
 	RK_TRACE (MISC);
 
+	in_destructor = false;
 	capture = 0;
 	embedded = 0;
 	embedding_complete = false;
@@ -340,7 +341,7 @@ void RKCaughtX11Window::doEmbed () {
 	if (!isAttached ()) {
 		// make xembed_container resizable, again, now that it actually has a content
 		dynamic_size_action->setChecked (true);
-		QTimer::singleShot (0, this, SLOT (fixedSizeToggled ())); // For whatever reason, apparently we have to wait for the next event loop with this.
+		QTimer::singleShot (0, this, SLOT (fixedSizeToggled())); // For whatever reason, apparently we have to wait for the next event loop with this.
 	}
 
 	// try to be helpful when the window is too large to fit on screen
@@ -356,7 +357,9 @@ RKCaughtX11Window::~RKCaughtX11Window () {
 	RK_ASSERT (device_windows.contains (device_number));
 	device_windows.remove (device_number);
 
+	in_destructor = true;
 	close (NoAskSaveModified);
+
 	if (embedded) RKWindowCatcher::instance ()->unregisterWatcher (embedded->winId ());
 	error_dialog->autoDeleteWhenDone ();
 }
@@ -375,7 +378,7 @@ void RKCaughtX11Window::setWindowStyleHint (const QString& hint) {
 void RKCaughtX11Window::forceClose () {
 	killed_in_r = true;
 	if (embedded) {
-		// HACK: Somehow (R 3.0.0alpha), the X11() window is surpisingly die-hard, if it is not closed "the regular way".
+		// HACK: Somehow (R 3.0.0alpha), the X11() window is surprisingly die-hard, if it is not closed "the regular way".
 		// So we expurge it, and leave the rest to the user.
 		embedded->setParent (0);
 		qApp->processEvents ();
@@ -395,7 +398,7 @@ bool RKCaughtX11Window::close (CloseWindowMode ask_save) {
 	QString status = i18n ("Closing device (saving history)");
 	if (!close_attempted) {
 		RCommand* c = new RCommand ("dev.off (" + QString::number (device_number) + ')', RCommand::App, i18n ("Shutting down device number %1", device_number));
-		setStatusMessage (status, c);
+		if (!in_destructor) setStatusMessage (status, c);
 		RKGlobals::rInterface ()->issueCommand (c);
 		close_attempted = true;
 	} else {
@@ -748,7 +751,7 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KPart
 	action->setText (i18n ("Last plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveLast));
 	window->plot_last_action = (QAction *) action;
-	action = window->plot_list_action = new KSelectAction (i18n ("Go to plot"), 0);
+	action = window->plot_list_action = new KSelectAction (i18n ("Go to plot"), window);
 	window->actions_not_for_preview.append (action);
 	window->plot_list_action->setToolBarMode (KSelectAction::MenuMode);
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionListPlots));

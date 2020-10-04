@@ -2,7 +2,7 @@
                           rksessionvars  -  description
                              -------------------
     begin                : Thu Sep 08 2011
-    copyright            : (C) 2011, 2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2011-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -67,6 +67,11 @@ void RKSessionVars::setRVersion (const QString& version_string) {
 	r_version = parseVersionString (version_string, 0);
 }
 
+QString RKSessionVars::RVersion(bool abbridged) {
+	if (!abbridged) return r_version_string;
+	return r_version_string.section ('.', 0, 1);
+}
+
 quint32 RKSessionVars::parseVersionString (const QString &version, QString *suffix) {
 	quint32 ret = 0;
 	int pos = -1;
@@ -126,10 +131,16 @@ QStringList RKSessionVars::frontendSessionInfo () {
 	lines.append ("RKWard version: " RKWARD_VERSION);
 	// KF5 TODO: find replacement for line below
 #if KCOREADDONS_VERSION >= QT_VERSION_CHECK(5,20,0)
-	lines.append ("KDE version (runtime): " + QString (KCoreAddons::versionString ()));
+	lines.append ("KDE Frameworks version (runtime): " + QString (KCoreAddons::versionString ()));
 #endif
-	lines.append ("KDE version (compile time): " KCOREADDONS_VERSION_STRING);
+	lines.append ("KDE Frameworks version (compile time): " KCOREADDONS_VERSION_STRING);
 	lines.append (QString ("Qt version (runtime): ") + qVersion ());
+	lines.append ("Qt version (compile time): " QT_VERSION_STR);
+#ifdef NO_QT_WEBENGINE
+	lines.append ("Using QtWebKit for HTML rendering");
+#else
+	lines.append ("Using QWebEngine for HTML rendering");
+#endif
 #if defined Q_OS_WIN
 	lines.append ("Windows runtime version (refer to QSysInfo documentation to translate code into human readable form): 0x" + QString::number (QSysInfo::windowsVersion (), 16));
 #elif defined Q_OS_MACOS

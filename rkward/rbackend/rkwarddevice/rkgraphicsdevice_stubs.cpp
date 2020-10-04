@@ -359,7 +359,7 @@ static void RKD_Close (pDevDesc dev) {
 	RKGraphicsDataStreamWriteGuard guard;
 	WRITE_HEADER (RKDClose, dev);
 #ifdef _MSC_VER
-	// Ok, this is a terribly crude HACK, obivously, and it's just waiting to come back to bite us. However:
+	// Ok, this is a terribly crude HACK, obviously, and it's just waiting to come back to bite us. However:
 	// We had to allocate the DevDesc in our own (MSVC-compiled) code (that's the way it is done), but if we allow R to delete
 	// it (also, as usual; in its MinGW-compiled code), we get a crash. Whatever the _exact_ reason. So what we do here is
 	// reset R's pointer, and do the free, ourselves. Fortunately, we can do this, and fortunately, the pointer is no longer
@@ -400,7 +400,7 @@ static void RKD_Mode (int mode, pDevDesc dev) {
 
 	RKGraphicsDataStreamWriteGuard guard;
 	RKD_OUT_STREAM << WRITE_HEADER (RKDMode, dev);
-	connectoin << (qint8) mode; */
+	connection << (qint8) mode; */
 }
 
 static void RKD_Raster (unsigned int *raster, int w, int h, double x, double y, double width, double height, double rot, Rboolean interpolate, const pGEcontext gc, pDevDesc dev) {

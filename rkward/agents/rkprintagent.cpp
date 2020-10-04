@@ -2,7 +2,7 @@
                           rkprintagent  -  description
                              -------------------
     begin                : Mon Aug 01 2011
-    copyright            : (C) 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2011-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -24,6 +24,7 @@
 #include <krun.h>
 #include <kservice.h>
 #include <kmessagebox.h>
+#include <kio_version.h>
 #include <KLocalizedString>
 #include <QUrl>
 
@@ -69,10 +70,14 @@ void RKPrintAgent::printPostscript (const QString &file, bool delete_file) {
 	}
 
 	if (!provider) {
-		RK_DEBUG (APP, DL_WARNING, "No valid postscript postscript provider was found");
+		RK_DEBUG (APP, DL_WARNING, "No valid postscript provider was found");
 		KMessageBox::sorry (RKWardMainWindow::getMain (), i18n ("No service was found to provide a KDE print dialog for PostScript files. We will try to open a generic PostScript viewer (if any), instead.<br><br>Consider installing 'okular', or configure RKWard not to attempt to print using a KDE print dialog."), i18n ("Unable to open KDE print dialog"));
 		// fallback: If we can't find a proper part, try to invoke a standalone PS reader, instead
-		KRun::runUrl (QUrl::fromLocalFile (file), "appication/postscript", RKWardMainWindow::getMain ());
+#if KIO_VERSION < QT_VERSION_CHECK(5, 31, 0)
+		KRun::runUrl (QUrl::fromLocalFile (file), "application/postscript", RKWardMainWindow::getMain ());
+#else
+		KRun::runUrl (QUrl::fromLocalFile (file), "application/postscript", RKWardMainWindow::getMain (), KRun::RunFlags());
+#endif
 		return;
 	}
 
@@ -81,7 +86,7 @@ void RKPrintAgent::printPostscript (const QString &file, bool delete_file) {
 	agent->delete_file = delete_file;
 	agent->provider = provider;
 
-	// very hacky heuristic to try to find out, whether the print action is synchronous or asnchronous. If the latter, delete after half an hour. If the former delete after printing.
+	// very hacky heuristic to try to find out, whether the print action is synchronous or asynchronous. If the latter, delete after half an hour. If the former delete after printing.
 	QTime ts;
 	ts.start ();
 	printaction->trigger ();

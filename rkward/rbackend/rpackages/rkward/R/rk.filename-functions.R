@@ -26,8 +26,11 @@
 #' is note affected by running \code{load} in R, only by loading R workspaces
 #' via the RKWard GUI.
 #' 
+#' \code{rk.home} returns the filename of the specified component similar to
+#' \link{R.home}.
+#'
 #' @aliases rk.get.tempfile.name rk.get.workspace.url rk.get.output.html.file
-#'   rk.set.output.html.file rk.tempdir
+#'   rk.set.output.html.file rk.tempdir rk.home
 #' @param prefix a string, used as a filename prefix when saving images to the
 #'   output file. This is usually just a plain file name, but can also be a relative or absolute
 #'   path. Relative paths are resolved with the default output directory as base, absolute paths
@@ -36,6 +39,9 @@
 #'   to the output file
 #' @param directory a string, The base directory for the file. If left empty, this will default to the
 #'   write directory of the current output file (usually "~.rkward)
+#' @param component a string specifying the desired path. "home" (the default value) means to
+#'        return the generic data dir used by RKWard. "lib" means to return the directory where
+#'        the rkward R library is installed.
 #' @param x a string, giving the filename of the of the output file
 #' @param additional.header.contents NULL or an additional string to add to the HTML header section.
 #'        This could be scripts or additional CSS definitions, for example. Note that
@@ -44,11 +50,12 @@
 #' @param css Local file name of CSS file to use, or NULL for no CSS file. The CSS file will be
 #'            placed next to x, with file name extension ".css". Only effective when initializing a
 #'            (non-existing) output file.
+#' @param silent Set to true to avoid the output window being raised in the frontend.
 #' @param flush.images. If true, any images used in the output file will be deleted as well.
 #' @param ask Logical: Whether to ask before flushing the output file.
 #' @param ... Further parameters passed to rk.set.output.html.file()
-#' @return \code{rk.get.tempfile.name}, \code{rk.get.output.html.file}, and
-#'   \code{rk.get.workspace.url} return a string while
+#' @return \code{rk.get.tempfile.name}, \code{rk.get.output.html.file}, \code{rk.get.workspace.url}, and
+#'   \code{rk.home} return a string while
 #'   \code{rk.set.output.html.file} returns the \bold{previous} output html file.
 #' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
 #' @seealso \url{rkward://page/rkward_output}, \link{tempfile}, \link{file},
@@ -95,13 +102,19 @@
 
 #' @export
 #' @rdname rk.get.tempfile.name
+"rk.home" <- function (component="home") {
+	normalizePath (.rk.do.plain.call ("home", component))
+}
+
+#' @export
+#' @rdname rk.get.tempfile.name
 "rk.get.output.html.file" <- function () {
 	return (.rk.variables$.rk.output.html.file)
 }
 
 #' @export
 #' @rdname rk.get.tempfile.name
-"rk.set.output.html.file" <- function (x, additional.header.contents = getOption ("rk.html.header.additions"), style=c ("regular", "preview"), css = getOption ("rk.output.css.file")) {
+"rk.set.output.html.file" <- function (x, additional.header.contents = getOption ("rk.html.header.additions"), style=c ("regular", "preview"), css = getOption ("rk.output.css.file"), silent=FALSE) {
 	stopifnot (is.character (x))
 	style <- match.arg (style)
 	oldfile <- rk.get.output.html.file ()
@@ -198,7 +211,7 @@
 	}
 
 	# needs to come after initialization, so initialization alone does not trigger an update during startup
-	.rk.do.plain.call ("set.output.file", x, synchronous=FALSE)
+	.rk.do.plain.call ("set.output.file", c (x, if (isTRUE (silent)) "SILENT" else NULL), synchronous=FALSE)
 	invisible (oldfile)
 }
 

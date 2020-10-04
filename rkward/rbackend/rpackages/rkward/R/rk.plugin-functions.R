@@ -237,7 +237,7 @@ assign(".rk.preview.data", list (), envir=.rk.variables)
 #' @rdname rk.assign.preview.data
 "rk.discard.preview.data" <- function (id) {
 	pdata <- .rk.variables$.rk.preview.data
-	if (!is.null (pdata[[id]]) && !is.null (pdata[[id]]$on.exit)) pdata[[id]]$on.delete (id)
+	if (is.list (pdata[[id]]) && !is.null (pdata[[id]]$on.delete)) pdata[[id]]$on.delete (id)
 	pdata[[id]] <- NULL
 	assign (".rk.preview.data", pdata, envir=.rk.variables)
 	rk.sync (.rk.variables$.rk.preview.data)

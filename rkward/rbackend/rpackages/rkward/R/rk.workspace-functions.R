@@ -108,6 +108,6 @@
 ".rk.with.window.hints" <- function (expr, placement="", name="", style="") {
 	.rk.do.plain.call ("set.window.placement.hint", as.character (c (placement, name, style)), FALSE)
 	on.exit (.rk.do.plain.call ("set.window.placement.hint", c ("", "", ""), FALSE))
-	eval.parent (substitute (eval (quote (expr), parent.frame ())))
+	eval.parent (expr)
 	invisible (NULL)
 }

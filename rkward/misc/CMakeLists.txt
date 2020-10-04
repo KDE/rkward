@@ -1,4 +1,4 @@
-INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${LibIntl_INCLUDE_DIRS} )
+INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} )
 
 SET(misc_STAT_SRCS
    rkspinbox.cpp
@@ -31,9 +31,3 @@ SET(misc_STAT_SRCS
 
 ADD_LIBRARY(misc STATIC ${misc_STAT_SRCS})
 TARGET_LINK_LIBRARIES(misc Qt5::Widgets KF5::WidgetsAddons KF5::KIOWidgets Qt5::Xml KF5::ConfigCore KF5::Parts KF5::WindowSystem KF5::TextEditor)
-
-########### install files ###############
-
-INSTALL(FILES
-	rkdummypart.rc
-	DESTINATION ${KXMLGUI_INSTALL_DIR}/rkward)

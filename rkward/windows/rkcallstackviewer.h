@@ -33,7 +33,7 @@ public:
 	~RKCallstackViewer ();
 
 /** reimplemented to create the real widget only when the viewer is shown for the first time */
-	void showEvent (QShowEvent *e);
+	void showEvent (QShowEvent *e) override;
 	static RKCallstackViewer *instance () { return _instance; };
 public slots:
 	void newDebugState ();

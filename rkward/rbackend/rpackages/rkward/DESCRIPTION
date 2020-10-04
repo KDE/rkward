@@ -1,26 +1,26 @@
 Package: rkward
 Type: Package
 Title: Provides functions related to the RKWard GUI
-Author: Thomas Friedrichsmeier <thomas.friedrichsmeier@ruhr-uni-bochum.de> and
-    the RKWard Team <rkward-devel@kde.org>
+Description: This package contains functions which are useful in
+        combination with the RKWard GUI. Many of these functions only
+        needed for the internal communication between RKWard and R, but
+        some are also useful in user scripts.
+Author: Thomas Friedrichsmeier and the RKWard Team
 Maintainer: RKWard-devel mailing list <rkward-devel@kde.org>
-Depends:
-    R (>= 2.9.0),methods
-Description: This package contains functions which are useful in combination
-    with the RKWard GUI. Many of these functions only needed for the internal
-    communication between RKWard and R, but some are also useful in user
-    scripts.
+Depends: R (>= 2.9.0),methods
+URL: https://rkward.kde.org
+BugReports: https://rkward.kde.org/Bugs
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyLoad: yes
-URL: http://rkward.kde.org
 Authors@R: c(person(given="Thomas", family="Friedrichsmeier",
-    email="thomas.friedrichsmeier@ruhr-uni-bochum.de", role=c("aut")),
-    person(given="RKWard-devel", family="mailing list",
-    email="rkward-devel@kde.org", role=c("cre","ctb")))
-Version: 0.6.6
-Date: 2016-03-12
-Collate:
+        email="thomas.friedrichsmeier@ruhr-uni-bochum.de",
+        role=c("aut")), person(given="the RKWard team",
+        email="rkward-devel@kde.org", role=c("cre","ctb")))
+Version: 0.7.2
+Date: 2020-06-23
+RoxygenNote: 7.1.0
+Collate: 
     'base_overrides.R'
     'internal.R'
     'internal_debugger.R'
@@ -28,6 +28,7 @@ Collate:
     'internal_help.R'
     'public_graphics.R'
     'rk.KDE_GUI-functions.R'
+    'rk.check.for.pandoc.R'
     'rk.demo.R'
     'rk.edit-functions.R'
     'rk.filename-functions.R'
@@ -41,4 +42,3 @@ Collate:
     'rk.workspace-functions.R'
     'rkward-package.R'
     'ver.R'
-RoxygenNote: 5.0.1

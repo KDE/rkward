@@ -2,7 +2,7 @@
                           rkrinterface.h  -  description
                              -------------------
     begin                : Fri Nov 1 2002
-    copyright            : (C) 2002 - 2017 by Thomas Friedrichsmeier
+    copyright            : (C) 2002 - 2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -73,7 +73,14 @@ not be interrupted. */
 /** returns the command currently running in the thread. Be careful when using the returned pointer! */
 	RCommand *runningCommand () const { return (all_current_commands.isEmpty () ? 0 : all_current_commands.last ()); };
 
-	bool backendIsDead () { return backend_dead; };
+	enum RStatus {
+		Busy,
+		Idle,
+		Starting,
+		Dead
+	};
+
+	bool backendIsDead () const { return backend_dead; };
 	bool backendIsIdle ();
 	static bool isNaReal (double value) { return na_real == value; };
 	static bool isNaInt (int value) { return na_int == value; };
@@ -101,7 +108,7 @@ private:
 
 /** A list of all commands that have entered, and not yet left, the backend thread */
 	QList<RCommand*> all_current_commands;
-/** NOTE: processsing R events while waiting for the next command may, conceivably, lead to new requests, which may also wait for sub-commands! Thus we keep a simple stack of requests. */
+/** NOTE: processing R events while waiting for the next command may, conceivably, lead to new requests, which may also wait for sub-commands! Thus we keep a simple stack of requests. */
 	QList<RBackendRequest*> command_requests;
 	RBackendRequest* currentCommandRequest () const { return (command_requests.isEmpty () ? 0 : command_requests.last ()); };
 	void tryNextCommand ();
@@ -126,9 +133,6 @@ private:
 
 	QString startup_errors;
 	bool startup_phase2_error;
-	int num_active_output_record_requests;
-	ROutput::ROutputType previous_output_type;
-	QString recorded_output;
 	RCommand *dummy_command_on_stack;
 friend class RKRBackendProtocolFrontend;
 	bool backend_dead;
@@ -139,6 +143,10 @@ friend class RCommand;
 protected:
 	void handleRequest (RBackendRequest *request);
 	void rCommandDone (RCommand *command) override;
+signals:
+	void backendWorkdirChanged();
+/** Note: status is actually RInterface::RStatus */
+	void backendStatusChanged(int new_status);
 };
 
 /**
@@ -259,7 +267,7 @@ So far we've discussed RInterface:issueCommand () and RCommandReceiver::rCommand
 
 First the RCommand is placed in a first-in-first-out stack. This stack is needed, since - as discussed - the commands get executed in a separate thread, so several command may get stacked up, before the first one gets run.
 
-Then, in the backend thread (RThread) there is a loop running, which fetches those commands from the stack and executes them one by one. Whenver a command has been executed in this thread, it gets updated with information on any errors that occurred and of course also with the result of running the command. Next, a QCustomEvent is being posted. What this does is - rougly speaking -, transfer the pointer to the command back to the main thread in a safe way.
+Then, in the backend thread (RThread) there is a loop running, which fetches those commands from the stack and executes them one by one. Whenever a command has been executed in this thread, it gets updated with information on any errors that occurred and of course also with the result of running the command. Next, a QCustomEvent is being posted. What this does is - rougly speaking -, transfer the pointer to the command back to the main thread in a safe way.
 
 Whenever the main thread becomes active again, it will find that QCustomEvent and handle it in RInterface::customEvent.
 

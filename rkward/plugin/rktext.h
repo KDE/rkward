@@ -36,8 +36,8 @@ public:
 	~RKText ();
 
 	RKComponentPropertyBase *text;
-	QVariant value (const QString &modifier=QString ()) { return (text->value (modifier)); };
-	int type () { return ComponentText; };
+	QVariant value (const QString &modifier=QString ()) override { return (text->value (modifier)); };
+	int type () override { return ComponentText; };
 public slots:
 	void textChanged (RKComponentPropertyBase *);
 private:

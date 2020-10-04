@@ -7,7 +7,7 @@ ENDIF(NOT WIN32)
 ADD_SUBDIRECTORY( rpackages )
 ADD_SUBDIRECTORY( rkwarddevice )
 
-INCLUDE_DIRECTORIES( ${R_INCLUDEDIR} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR} ${LibIntl_INCLUDE_DIRS} )
+INCLUDE_DIRECTORIES( ${R_INCLUDEDIR} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR} )
 
 SET (
 	rbackend_shared_SRCS
@@ -43,7 +43,7 @@ SET (
 	rktransmitter.cpp
 )
 ADD_LIBRARY(rbackend STATIC ${rbackend_FRONTEND_SRCS})
-TARGET_LINK_LIBRARIES(rbackend rkgraphicsdevice.frontend Qt5::Widgets KF5::TextEditor KF5::WebKit KF5::WindowSystem)
+TARGET_LINK_LIBRARIES(rbackend rkgraphicsdevice.frontend Qt5::Widgets KF5::TextEditor KF5::WindowSystem)
 
 SET (
 	rbackend_BACKEND_SRCS
@@ -57,7 +57,7 @@ ADD_DEFINITIONS (-DRKWARD_BACKEND_PATH="${KDE_INSTALL_FULL_LIBEXECDIR}")
 LINK_DIRECTORIES(${R_SHAREDLIBDIR})
 ADD_EXECUTABLE(rkward.rbackend ${rbackend_BACKEND_SRCS})
 ECM_MARK_NONGUI_EXECUTABLE(rkward.rbackend)
-TARGET_LINK_LIBRARIES(rkward.rbackend rkgraphicsdevice.backend ${R_USED_LIBS} ${CMAKE_THREAD_LIBS_INIT} Qt5::Network Qt5::Core ${LibIntl_LIBRARIES})
+TARGET_LINK_LIBRARIES(rkward.rbackend rkgraphicsdevice.backend ${R_USED_LIBS} ${CMAKE_THREAD_LIBS_INIT} Qt5::Network Qt5::Core KF5::I18n)
 IF(APPLE)
     TARGET_LINK_LIBRARIES(rkward.rbackend "-framework CoreFoundation")
 ENDIF()

@@ -29,6 +29,7 @@
 #include <QTemporaryFile>
 
 #include "../misc/rkspinbox.h"
+#include "../misc/rkcommonfunctions.h"
 #include "../rkglobals.h"
 #include "../debug.h"
 
@@ -37,13 +38,11 @@ RKSettingsModuleDebug::RKSettingsModuleDebug (RKSettings *gui, QWidget *parent) 
 
 	QVBoxLayout* main_vbox = new QVBoxLayout (this);
 
-	QLabel* label = new QLabel (i18n ("<b>These settings are for debugging purposes, only.</b> It is safe to leave them untouched. Also, these settings will only apply to the current session, and will not be saved."), this);
-	label->setWordWrap (true);
-	main_vbox->addWidget (label);
+	main_vbox->addWidget (RKCommonFunctions::wordWrappedLabel (i18n ("<b>These settings are for debugging purposes, only.</b> It is safe to leave them untouched. Also, these settings will only apply to the current session, and will not be saved.")));
 
 	main_vbox->addSpacing (2 * RKGlobals::spacingHint ());
 
-	label = new QLabel (i18n ("Debug level"), this);
+	QLabel* label = new QLabel (i18n ("Debug level"), this);
 	debug_level_box = new RKSpinBox (this);
 	debug_level_box->setIntMode (DL_TRACE, DL_FATAL, DL_FATAL - RK_Debug::RK_Debug_Level);
 	connect (debug_level_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleDebug::settingChanged);

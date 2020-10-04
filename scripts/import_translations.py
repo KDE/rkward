@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#! /usr/bin/env python3
 # ***************************************************************************
 #                          import_translations  -  description
 #                             -------------------
@@ -18,79 +18,91 @@
 #
 # Somewhat experimental script to import translations from KDE l10n infrastructure.
 # Imports specified - or all - languages to tmp/export .
-# Imported po-files are renamed according to rkward's naming scheme, and all
-# po-file comments are stripped / replaced with a message to discourage accidental
-# editing.
+# Imported po-files are renamed according to rkward's naming scheme.
 # Modelled - to some degree - after l10n.rb from releaseme.
 
 import sys
 import subprocess
 import os
-import codecs
-import re
+import shutil
 
-SVNROOT = "svn://anonsvn.kde.org/home/kde/trunk/l10n-kde4/"
-RKWARDSVNPATH = "messages/playground-edu/"
+SVNROOT = "svn://anonsvn.kde.org/home/kde/trunk/l10n-kf5/"
+RKWARDSVNPATH = "messages/rkward"
+RKWARDSVNDOCSPATH = "docs/rkward"
 SCRIPTDIR = os.path.dirname (os.path.realpath (sys.argv[0]))
 TMPDIR = os.path.join (SCRIPTDIR, "tmp")
-EXPORTDIR = os.path.join (SCRIPTDIR, "..", "i18n", "po")
+I18NDIR = os.path.join (SCRIPTDIR, "..", "i18n")
+EXPORTDIR = os.path.join (I18NDIR, "po")
+PODIR = os.path.join (SCRIPTDIR, "..", "po")
+IGNOREDPONAMES = {'org.kde.rkward.appdata.po', 'rkward._desktop_.po', 'rkward_xml_mimetypes.po'}
+SVNCMD = shutil.which("svn")  # could be svn.BAT on Windows/craft, and that won't be found by subprocess.call
+
 if not os.path.exists (TMPDIR):
     os.makedirs (TMPDIR)
-if not os.path.exists (EXPORTDIR):
-    os.makedirs (os.path.join (EXPORTDIR))
+if os.path.exists (EXPORTDIR):
+    shutil.rmtree (os.path.join (EXPORTDIR))
 
 if (len (sys.argv) > 1):
     LANGUAGES = sys.argv[1:]
 else:
-    LANGUAGES = subprocess.check_output (["svn", "cat", SVNROOT + "subdirs"]).split ()
-LANGUAGES = LANGUAGES
+    LANGUAGES = subprocess.check_output ([SVNCMD, "cat", SVNROOT + "subdirs"]).decode ('utf-8').split ()
+    LANGUAGES.remove ('x-test')
 print ("Languages: " + ", ".join (LANGUAGES))
-
-PONAMES = []
-messagessh = codecs.open (os.path.join (SCRIPTDIR, "..", "Messages.sh"), 'r', 'utf-8')
-for line in messagessh:
-    match = re.search ("(rkward[^\s]*)\.pot", line)
-    if (match != None):
-        PONAMES.append (match.group (1) + ".po")
-print ("POs: " + ", ".join (PONAMES))
-PONAMES = set (PONAMES)
-messagessh.close ()
 
 for lang in LANGUAGES:
     os.chdir (TMPDIR)
-    try:
-        pofiles = subprocess.check_output (["svn", "list", SVNROOT + lang + "/" + RKWARDSVNPATH]).split ('\n')
-    except:
-        continue
-    pofiles = list (set (pofiles) & PONAMES)
+    messagesdir = os.path.join (TMPDIR, "messages-" + lang)
+    if not os.path.exists (messagesdir):
+        subprocess.call ([SVNCMD, "co", SVNROOT + lang + "/" + RKWARDSVNPATH, "messages-" + lang])
+        if not os.path.exists (messagesdir):
+            continue
+    else:
+        os.chdir (messagesdir)
+        subprocess.call ([SVNCMD, "up"])
+        os.chdir (TMPDIR)
+    pofiles = [fn for fn in os.listdir (messagesdir) if fn.endswith ('.po') and fn not in IGNOREDPONAMES]
     if (len (pofiles) < 1):
         continue
-    langdir = os.path.join (TMPDIR, lang)
-    if not os.path.exists (langdir):
-        subprocess.call (["svn", "co", SVNROOT + lang + "/" + RKWARDSVNPATH, lang, "--depth", "empty"])
-    os.chdir (langdir)
-    subprocess.call (["svn", "up"] + pofiles)
-    os.chdir (TMPDIR)
+    langpodir = os.path.join (PODIR, lang)
+    exportlangpodir = os.path.join (EXPORTDIR, lang)
     for pofile in pofiles:
-        outfile = os.path.join (EXPORTDIR, re.sub ("po$", lang + ".po", pofile))
+        is_main = pofile == "rkward.po"
+        if is_main:
+            outdir = langpodir
+        else:
+            outdir = exportlangpodir
+        infile = os.path.join (messagesdir, pofile)
+        outfile = os.path.join (outdir, pofile)
+        if not os.path.exists (outdir):
+            os.makedirs (outdir)
+            if not is_main:
+                shutil.copyfile (os.path.join (I18NDIR, "compile_lang.cmake"), os.path.join (outdir, "CMakeLists.txt"))
 
-        # copy to destination, and strip unneeded comments
+        # copy to destination
         print ("writing " + outfile)
-        pf = codecs.open (os.path.join (langdir, pofile), 'r', 'utf-8')
-        of = codecs.open (outfile, 'w', 'utf-8')
-        prev_was_comment = False
-        for line in pf:
-            if (line.startswith ("#")):
-                if (line.startswith ("#:")):
-                    if not prev_was_comment:
-                        of.write ("#: translation_export.do_not_modify_here:0\n")
-                        prev_was_comment = True
-                elif (line.startswith ("#,")):
-                    of.write (line)
-                else:
-                    continue
-            else:
-                of.write (line)
-                prev_was_comment = False
-        pf.close ()
-        of.close ()
+        shutil.copyfile (infile, outfile)
+
+for lang in LANGUAGES:
+    os.chdir (TMPDIR)
+    docsdir = os.path.join (TMPDIR, "docs-" + lang)
+    if not os.path.exists (docsdir):
+        subprocess.call ([SVNCMD, "co", SVNROOT + lang + "/" + RKWARDSVNDOCSPATH, "docs-" + lang])
+        if not os.path.exists (docsdir):
+            continue
+    else:
+        os.chdir (docsdir)
+        subprocess.call ([SVNCMD, "up"])
+        os.chdir (TMPDIR)
+    docdirs = [fn for fn in os.listdir (docsdir) if fn[0] != '.' and os.path.isdir (os.path.join (docsdir, fn))]
+    if (len (docdirs) < 1):
+        continue
+    langdocdir = os.path.join (PODIR, lang, "docs")
+    for docdir in docdirs:
+        indir = os.path.join (docsdir, docdir)
+        outdir = os.path.join (langdocdir, docdir)
+
+        # copy to destination
+        print ("copying " + outdir)
+        if os.path.exists (outdir):
+            shutil.rmtree (outdir)
+        shutil.copytree (indir, outdir)

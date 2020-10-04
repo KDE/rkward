@@ -2,7 +2,7 @@
                           rksettingsmoduleoutput  -  description
                              -------------------
     begin                : Fri Jul 30 2004
-    copyright            : (C) 2004, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -76,16 +76,17 @@ class RKSettingsModuleOutput : public RKSettingsModule {
 public:
 	RKSettingsModuleOutput (RKSettings *gui, QWidget *parent);
 	~RKSettingsModuleOutput ();
-	
+
 	void applyChanges () override;
 	void save (KConfig *config) override;
 
 /** generate the commands needed to set the R run time options */
 	static QStringList makeRRunTimeOptionCommands ();
-	
+
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
-	
+	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
+
 	QString caption () override;
 	
 	static bool autoShow () { return auto_show; };

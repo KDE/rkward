@@ -2,7 +2,7 @@
                           rkhtmlwindow  -  description
                              -------------------
     begin                : Wed Oct 12 2005
-    copyright            : (C) 2005-2017 by Thomas Friedrichsmeier
+    copyright            : (C) 2005-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -21,9 +21,9 @@
 #include <QUrl>
 #include <kparts/part.h>
 #include <kio/jobclasses.h>
-#include <kwebpage.h>
 
 #include <QDomElement>
+#include <QNetworkRequest>
 
 #include "../windows/rkmdiwindow.h"
 
@@ -33,29 +33,12 @@ class QAction;
 class RKComponentHandle;
 class XMLHelper;
 class RKHTMLWindowPart;
-class KWebView;
 class QTemporaryFile;
 class RKHTMLWindow;
 class RKFindBar;
 class RCommandChain;
-
-class RKWebPage : public KWebPage {
-	Q_OBJECT
-public:
-	explicit RKWebPage (RKHTMLWindow* window);
-	void load (const QUrl& url);
-signals:
-	void pageInternalNavigation (const QUrl& url);
-protected:
-/** reimplemented to always emit linkClicked() for pages that need special handling (importantly, rkward://-urls). */
-	bool acceptNavigationRequest (QWebFrame* frame, const QNetworkRequest& request, NavigationType type) override;
-/** reimplemented to schedule new window creation for the next page to load */
-	QWebPage* createWindow (WebWindowType type) override;
-private:
-	RKHTMLWindow *window;
-	bool new_window;
-	bool direct_load;
-};
+class RKWebPage;
+class RKWebView;
 
 /**
 	\brief Show html files.
@@ -99,7 +82,6 @@ public:
 public slots:
 	void slotPrint ();
 	void slotSave ();
-	void saveRequested (const QNetworkRequest& request);
 	void slotForward ();
 	void slotBack ();
 	void selectionChanged ();
@@ -121,7 +103,7 @@ private slots:
 	void findRequest (const QString& text, bool backwards, const RKFindBar *findbar, bool* found);
 private:
 friend class RKHTMLWindowPart;
-	KWebView* view;
+	RKWebView* view;
 	RKWebPage* page;
 	RKFindBar* findbar;
 	bool have_highlight;
@@ -134,7 +116,7 @@ friend class RKHTMLWindowPart;
 
 	struct VisitedLocation {
 		QUrl url;
-		QPoint scroll_position;
+		QPointF scroll_position;
 	};
 	QList<VisitedLocation> url_history;
 	void openLocationFromHistory (VisitedLocation &loc);
@@ -151,7 +133,9 @@ friend class RKHTMLWindowPart;
 	void fileDoesNotExistMessage ();
 
 	void saveBrowserState (VisitedLocation *state);
-	void restoreBrowserState (VisitedLocation *state);
+
+friend class RKWebPage;
+	static RKWebPage *new_window;
 };
 
 class RKHTMLWindowPart : public KParts::Part {
@@ -190,14 +174,14 @@ public:
 	explicit RKHelpRenderer (QIODevice *_device) { device = _device; help_xml = 0; component_xml = 0; };
 /** destructor */
 	~RKHelpRenderer () {};
-
+// for dealing with rkward://[page|component]-pages
+	bool renderRKHelp (const QUrl &url);
+private:
 	XMLHelper *help_xml;
 	XMLHelper *component_xml;
 	QDomElement help_doc_element;
 	QDomElement component_doc_element;
 
-	// for dealing with rkward://[page|component]-pages
-	bool renderRKHelp (const QUrl &url);
 	QString renderHelpFragment (QDomElement &fragment);
 	QString resolveLabel (const QString &id) const;
 	QString prepareHelpLink (const QString &href, const QString &text);
@@ -245,7 +229,9 @@ public:
 /** Save the given output directory to the given location. Does not ask for overwrite confirmation.
     @param dir output directory to save
     @returns error message, if any, an empty string in case of success */
-	QString saveOutputDirectory (const QString& dir, const QString& dest, RCommandChain* chain = 0);
+	QString saveOutputDirectory (const QString& dir, const QString& dest=QString(), RCommandChain* chain = 0) {
+		return exportOutputDirectoryAs (dir, dest, false, chain);
+	}
 /** Create a new empty output directory.
     @returns path of the new directory */
 	QString createOutputDirectory (RCommandChain* chain = 0);

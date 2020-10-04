@@ -56,7 +56,7 @@ void RKGraphicsDeviceFrontendTransmitter::setupServer () {
 	RK_TRACE (GRAPHICS_DEVICE);
 
 	RK_ASSERT (!local_server);
-	local_server = new QLocalServer ();
+	local_server = new QLocalServer(this);
 	RK_ASSERT (local_server->listen ("rkd" + KRandom::randomString (8)));
 	connect (local_server, &QLocalServer::newConnection, this, &RKGraphicsDeviceFrontendTransmitter::newConnection);
 	server_name = local_server->fullServerName ();
@@ -207,7 +207,7 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 					// Actually, this is only needed once, but where to put it...
 					RKGraphicsDeviceFrontendTransmitter::lwdscale = desktop->physicalDpiX () / 96;   // taken from devX11.c
 				} else {
-					if (devnum) RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Received transmission of type %d for unknown device number %d. Skippping.", opcode, devnum+1);
+					if (devnum) RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Received transmission of type %d for unknown device number %d. Skipping.", opcode, devnum+1);
 					sendDummyReply (opcode);
 				}
 				continue;
@@ -338,7 +338,7 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 		} else if (opcode == RKDNewPageConfirm) {
 			device->confirmNewPage ();
 		} else {
-			RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Unhandled operation of type %d for device number %d. Skippping.", opcode, devnum+1);
+			RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Unhandled operation of type %d for device number %d. Skipping.", opcode, devnum+1);
 		}
 
 		if (!streamer.instream.atEnd ()) {

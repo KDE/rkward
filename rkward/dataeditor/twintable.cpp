@@ -138,10 +138,10 @@ void TwinTable::initActions () {
 
 	// global actions
 	action_show_rownames = actionCollection ()->addAction ("show_rownames", this, SLOT (showRownames(bool)));
-	action_show_rownames->setText ("Show / Edit row names");
+	action_show_rownames->setText (i18n("Show / Edit row names"));
 	action_show_rownames->setCheckable (true);
 	action_enable_editing = actionCollection ()->addAction ("enable_editing", this, SLOT (enableEditing(bool)));
-	action_enable_editing->setText ("Enable editing");
+	action_enable_editing->setText (i18n("Enable editing"));
 	action_enable_editing->setCheckable (true);
 	// these actually do the same thing, but are designed to work well in the toolbar
 	QActionGroup *lockactions = new QActionGroup (this);
@@ -205,7 +205,7 @@ void TwinTable::setWindowStyleHint (const QString& hint) {
 		metaview->horizontalHeader ()->hide ();
 		metaview->setMinimumHeight (metaview->rowHeight (0));
 		// Now, I just don't understand QSplitter sizing, here... Despite stretch factors being set, metaview continues to be the first to grow.
-		// Forcing minimum heigt of dataview help allocating initial size to the dataview, though.
+		// Forcing minimum height of dataview helps allocating initial size to the dataview, though.
 		dataview->setMinimumHeight (dataview->rowHeight (0) * 5);
 	}
 	RKMDIWindow::setWindowStyleHint (hint);

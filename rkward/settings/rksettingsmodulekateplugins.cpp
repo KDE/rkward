@@ -1,0 +1,116 @@
+/***************************************************************************
+                          rksettingsmodulekateplugins  -  description
+                             -------------------
+    begin                : Thu Mar 26 2010
+    copyright            : (C) 2020 by Thomas Friedrichsmeier
+    email                : thomas.friedrichsmeier@kdemail.net
+ ***************************************************************************/
+
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
+
+#include "rksettingsmodulekateplugins.h"
+
+#include <QTreeWidget>
+#include <QVBoxLayout>
+#include <QLabel>
+
+#include <KPluginMetaData>
+#include <KLocalizedString>
+#include <KConfigGroup>
+#include <KConfig>
+
+#include "../windows/katepluginintegration.h"
+#include "../misc/rkcommonfunctions.h"
+#include "../rkward.h"
+
+#include "../debug.h"
+
+QStringList RKSettingsModuleKatePlugins::plugins_to_load;
+
+RKSettingsModuleKatePlugins::RKSettingsModuleKatePlugins(RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
+	RK_TRACE(SETTINGS);
+
+/* Known kate plugins at the time of this writing (March 2020): katesearchplugin katexmltoolsplugin katexmlcheckplugin katectagsplugin katefiletreeplugin katecloseexceptplugin katebacktracebrowserplugin tabswitcherplugin kterustcompletionplugin katekonsoleplugin katesnippetsplugin katefilebrowserplugin katereplicodeplugin ktexteditor_lumen kateprojectplugin kateopenheaderplugin katesymbolviewerplugin ktexteditorpreviewplugin katesqlplugin kategdbplugin katebuildplugin textfilterplugin */
+	QStringList recommended_plugins = QStringList () << "katesearchplugin" << "katecloseexceptplugin" << "katekonsoleplugin" << "katesnippetsplugin" << "katefiletreeplugin" << "kateprojectplugin" << "ktexteditorpreviewplugin" << "textfilterplugin";
+
+	QVBoxLayout *vbox = new QVBoxLayout(this);
+	vbox->setContentsMargins(0, 0, 0, 0);
+	vbox->addWidget(RKCommonFunctions::wordWrappedLabel(i18n("<p>Kate plugins to load in RKWard. Note that some loaded plugins will not become visible until certain conditions are met, e.g. you are loading a version controlled file for the <i>Project</i> plugin.</p><p>The plugins listed here have not been developed specifically for RKWard, and several do not make a whole lot of sense in the context of RKWard. Plugins shown in <b>bold</b> have been reported as \"useful\" by RKWard users.</p>")));
+
+	plugin_table = new QTreeWidget();
+	QFont boldfont = plugin_table->font();
+	boldfont.setBold(true);
+	plugin_table->setHeaderLabels(QStringList() << QString() << i18n("Name") << i18n("Description"));
+	KatePluginIntegrationApp *pluginapp = RKWardMainWindow::getMain()->katePluginIntegration();
+	foreach (const QString &key, pluginapp->known_plugins.keys()) {
+		QTreeWidgetItem *item = new QTreeWidgetItem();
+		KPluginMetaData plugindata = pluginapp->known_plugins.value(key).data;
+		item->setData(1, Qt::DisplayRole, plugindata.name());
+		if (recommended_plugins.contains(key)) item->setData(1, Qt::FontRole, boldfont); 
+		item->setData(2, Qt::DisplayRole, plugindata.description());
+		item->setData(1, Qt::DecorationRole, QIcon::fromTheme(plugindata.iconName()));
+		item->setData(1, Qt::UserRole, key);
+		item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsUserCheckable);
+		item->setCheckState(0, plugins_to_load.contains(key) ? Qt::Checked : Qt::Unchecked);
+		plugin_table->addTopLevelItem(item);
+	}
+	plugin_table->resizeColumnToContents(0);
+	plugin_table->resizeColumnToContents(1);
+	plugin_table->sortItems(1, Qt::AscendingOrder);
+	vbox->addWidget(plugin_table);
+
+	connect(plugin_table, &QTreeWidget::itemChanged, this, &RKSettingsModuleKatePlugins::change);
+}
+
+RKSettingsModuleKatePlugins::~RKSettingsModuleKatePlugins() {
+	RK_TRACE(SETTINGS);
+}
+
+void RKSettingsModuleKatePlugins::applyChanges() {
+	RK_TRACE(SETTINGS);
+
+	plugins_to_load.clear();
+	for (int i = plugin_table->topLevelItemCount() - 1; i >= 0; --i) {
+		QTreeWidgetItem *item = plugin_table->topLevelItem(i);
+		if (item->checkState(0) == Qt::Checked) {
+			plugins_to_load.append (item->data(1, Qt::UserRole).toString());
+		}
+	}
+	RKWardMainWindow::getMain()->katePluginIntegration()->loadPlugins(plugins_to_load);
+}
+
+void RKSettingsModuleKatePlugins::save(KConfig *config) {
+	RK_TRACE(SETTINGS);
+
+	saveSettings(config);
+}
+
+void RKSettingsModuleKatePlugins::saveSettings(KConfig *config) {
+	RK_TRACE(SETTINGS);
+
+	// if no kate plugins are known (installation problem), don't save any config
+	if (!RKWardMainWindow::getMain()->katePluginIntegration()->knownPluginCount()) return;
+
+	KConfigGroup cg = config->group("Kate Plugins");
+	cg.writeEntry("Plugins to load", plugins_to_load);
+}
+
+void RKSettingsModuleKatePlugins::loadSettings(KConfig *config) {
+	RK_TRACE(SETTINGS);
+
+	KConfigGroup cg = config->group("Kate Plugins");
+	plugins_to_load = cg.readEntry("Plugins to load", QStringList() << "katesearchplugin" << "kateprojectplugin" << "katesnippetsplugin");
+}
+
+QString RKSettingsModuleKatePlugins::caption() {
+	RK_TRACE(SETTINGS);
+
+	return i18n("Kate Plugins");
+}

@@ -177,3 +177,25 @@
 "rk.switch.frontend.language" <- function (LANG="C") {
    .rk.do.plain.call ("switchLanguage", as.character (LANG))
 }
+
+#' Add one or more paths to the filesystem search path used in this session
+#'
+#' Add the given path to the "PATH" environment variable of the running R session. This
+#' can be useful to make sure external binaries are found by Sys.which. Paths are normalized
+#' before being added, and duplicates are stripped from the path.
+#'
+#' @param add Paths to add. May be missing, in which case the path will no be touched.
+#'
+#' @return A vector of the directories in the file sytem path after the adjustment
+#'
+#' @export
+"rk.adjust.system.path" <- function (add) {
+	if (!missing (add)) {
+		oldpath <- unlist (strsplit(Sys.getenv("PATH"), .Platform$path.sep))
+		newpath <- paste (unlist (unique (c (oldpath, normalizePath (add)))), collapse=.Platform$path.sep)
+		Sys.setenv("PATH"=newpath)
+	}
+
+	# return
+	unlist (strsplit(Sys.getenv("PATH"), .Platform$path.sep))
+}

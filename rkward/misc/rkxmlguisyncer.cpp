@@ -146,7 +146,7 @@ void RKXMLGUISyncerPrivate::actionCollectionDestroyed (QObject *object) {
 	QString path_key = client_map.key (static_cast<KActionCollection*> (object));
 	client_map.remove (path_key, ac);
 
-	// if there are no futher clients with this path, stop watching it.
+	// if there are no further clients with this path, stop watching it.
 	if (!client_map.contains (path_key)) {
 		file_watcher->removeFile (path_key);
 	}

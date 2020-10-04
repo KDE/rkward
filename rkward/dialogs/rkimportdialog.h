@@ -31,7 +31,7 @@ class RKImportDialog : public QFileDialog {
 public:
 /** constructor
 @param context_id The id of the context containing the relevant plugins
-@param parent Parent widget (dialog will be centered on this widget, if non-zeor */
+@param parent Parent widget (dialog will be centered on this widget, if non-zero */
 	RKImportDialog (const QString &context_id, QWidget *parent);
 /** dtor */
 	~RKImportDialog ();

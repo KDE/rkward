@@ -2,7 +2,7 @@
                           rkfrontendtransmitter  -  description
                              -------------------
     begin                : Thu Nov 04 2010
-    copyright            : (C) 2010-2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2010-2019 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -103,20 +103,31 @@ void RKFrontendTransmitter::run () {
 	connect (backend, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), this, &RKFrontendTransmitter::backendExit);
 	QString backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath ());
 #ifdef Q_OS_MACOS
-	if (backend_executable.isNull ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "../Resources"); // an appropriate location in a standalone app-bundle
+	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "../Resources"); // an appropriate location in a standalone app-bundle
 #endif
 	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "/rbackend");	// for running directly from the build-dir
-	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (RKWARD_BACKEND_PATH);
-	if (backend_executable.isNull ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "../lib/libexec");
+	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "../lib/libexec");
 #ifdef Q_OS_MACOS
-        if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "/../../../rbackend");
+	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "/../../../rbackend");
+	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "/../Frameworks/libexec");  // For running from .dmg created by craft --package rkward
 #endif
+	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (RKWARD_BACKEND_PATH);
 	if (backend_executable.isEmpty ()) handleTransmissionError (i18n ("The backend executable could not be found. This is likely to be a problem with your installation."));
 	QString debugger = RKGlobals::startup_options["backend-debugger"].toString ();
 	args.prepend (RKCommonFunctions::windowsShellScriptSafeCommand (backend_executable));
 	if (!debugger.isEmpty ()) {
 		args = debugger.split (' ') + args;
 	}
+#ifdef Q_OS_MACOS
+	// Resolving libR.dylib and friends is a pain on MacOS, and running through R CMD does not always seem to be enough.
+	// (Apparently DYLIB_FALLBACK_LIBRARY_PATH is ignored on newer versions of MacOS). Safest best seems to be to start in the lib directory, itself.
+	QProcess dummy;
+	dummy.start (qgetenv ("R_BINARY"), QStringList() << "--slave" << "--no-save" << "--no-init-file" << "-e" << "cat(R.home('lib'))");
+	dummy.waitForFinished ();
+	QString r_home = QString::fromLocal8Bit (dummy.readAllStandardOutput ());
+	RK_DEBUG(RBACKEND, DL_INFO, "Setting working directory to %s", qPrintable (r_home));
+	backend->setWorkingDirectory (r_home);
+#endif
 	args.prepend ("CMD");
 	if (DL_DEBUG >= RK_Debug::RK_Debug_Level) {
 		qDebug ("%s", qPrintable (qgetenv ("R_BINARY")));
@@ -135,7 +146,8 @@ void RKFrontendTransmitter::run () {
 
 	exec ();
 
-	backend->waitForFinished ();
+	// It's ok to only give backend a short time to finish. We only get here, after QuitCommand has been handled by the backend
+	backend->waitForFinished(1000);
 
 	if (!connection) {
 		RK_ASSERT (false);

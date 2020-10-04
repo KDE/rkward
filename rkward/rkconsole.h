@@ -2,7 +2,7 @@
                           rkconsole  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006, 2007, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -60,7 +60,6 @@ public:
 	QString currentEditingLine () const;
 /** Returns the current cursor position, within the current command (without taking into account the prefix). Returns -1 if the cursor is not on the line containing the command. */
 	int currentCursorPositionInCommand ();
-	void doTabCompletion ();
 	QString provideContext (int line_rev) override;
 	void currentHelpContext (QString *symbol, QString *package) override;
 
@@ -88,9 +87,6 @@ protected:
 private:
 friend class RKConsolePart;
 	bool eventFilter (QObject *o, QEvent *e) override;
-	bool doTabCompletionHelper (int line_num, const QString &line, int word_start, int word_end, const QStringList &entries);
-/** a helper function to doTabCompletionHelper */
-	void insertCompletion (int line_num, int word_start, int word_end, const QString &completion);
 	QString incomplete_command;
 /** A list to store previous commands */
 	RKCommandHistory commands_history;
@@ -119,7 +115,7 @@ friend class RKConsolePart;
 /** This string stores the continuation prefix. */
 	QString iprefix;
 
-/** Create a proxy for the katepart action of the same name. The action is added to the actioncollection, automatically. Also any icon and label (but not shorcut) is copied.
+/** Create a proxy for the katepart action of the same name. The action is added to the actioncollection, automatically. Also any icon and label (but not shortcut) is copied.
 @param actionName Identifier of the action in katepartui.rc and rkconsolepart.rc
 @param label Label for the proxy action. If empty (default) copy the label from the katepartui
 @returns a pointer to the proxy action */
@@ -130,7 +126,6 @@ friend class RKConsolePart;
 	RCommand *current_command;
 	KTextEditor::Document *doc;
 	KTextEditor::View *view;
-	RKFunctionArgHinter *hinter;
 
 	static RKConsole *main_console;
 

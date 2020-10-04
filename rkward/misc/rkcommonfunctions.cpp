@@ -2,7 +2,7 @@
                           rkcommonfunctions  -  description
                              -------------------
     begin                : Mon Oct 17 2005
-    copyright            : (C) 2005, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2005-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -21,11 +21,16 @@
 #include <qregexp.h>
 #include <QDir>
 #include <QStandardPaths>
+#include <QCoreApplication>
+#include <QLabel>
 
 #include <KLocalizedString>
 #include <kxmlguiclient.h>
 
 #include "../settings/rksettingsmodulegeneral.h"
+#include "../windows/rkworkplace.h"
+#include "../version.h"
+#include "../debug.h"
 
 namespace RKCommonFunctions {
 	void removeNamedElementsRecursive (const QStringList &names, QDomNode &parent) {
@@ -61,7 +66,16 @@ namespace RKCommonFunctions {
 		}
 	}
 
-	void moveContainer (KXMLGUIClient *client, const QString &tagname, const QString &name, const QString &to_name, bool recursive) {
+	void moveContainer (KXMLGUIClient *client, const QString &tagname, const QString &name, const QString &to_name, bool recursive, bool flatten) {
+		// recurse first
+		if (recursive) {
+			QList<KXMLGUIClient*> children = client->childClients ();
+			QList<KXMLGUIClient*>::const_iterator it;
+			for (it = children.constBegin (); it != children.constEnd (); ++it) {
+				moveContainer (*it, tagname, name, to_name, true);
+			}
+		}
+
 		QDomDocument doc = client->xmlguiBuildDocument ();
 		if  (doc.documentElement ().isNull ()) doc = client->domDocument ();
 	
@@ -71,33 +85,37 @@ namespace RKCommonFunctions {
 		QDomElement from_elem;
 		QDomElement to_elem;
 
-		QDomNodeList list = e.elementsByTagName (tagname);
+		const QString name_attr ("name");
+		const QDomNodeList list = e.elementsByTagName (tagname);
 		int count = list.count ();
 		for (int i = 0; i < count; ++i) {
-			QDomElement elem = list.item (i).toElement ();
+			const QDomElement elem = list.item (i).toElement ();
 			if (elem.isNull ()) continue;
-			if (elem.attribute ("name") == name) {
+			if (elem.attribute (name_attr) == name) {
 				from_elem = elem;
-			} else if (elem.attribute ("name") == to_name) {
+			} else if (elem.attribute (name_attr) == to_name) {
 				to_elem = elem;
 			}
 		}
 
+		if (from_elem.isNull ()) return;
+		if (to_elem.isNull ()) {  // if no place to move to, just rename (Note: children will be moved, below)
+			to_elem = from_elem.cloneNode (false).toElement ();
+			to_elem.setAttribute (name_attr, to_name);
+			from_elem.parentNode().appendChild(to_elem);
+		}
 		// move
 		from_elem.parentNode ().removeChild (from_elem);
-		to_elem.appendChild (from_elem);
+		if (flatten) {
+			while (from_elem.hasChildNodes()) {
+				to_elem.appendChild (from_elem.firstChild());
+			}
+		} else {
+			to_elem.appendChild (from_elem);
+		}
 
 		// set result
 		client->setXMLGUIBuildDocument (doc);
-
-		// recurse
-		if (recursive) {
-			QList<KXMLGUIClient*> children = client->childClients ();
-			QList<KXMLGUIClient*>::const_iterator it;
-			for (it = children.constBegin (); it != children.constEnd (); ++it) {
-				moveContainer (*it, tagname, name, to_name, true);
-			}
-		}
 	}
 
 	QString getCurrentSymbol (const QString &context_line, int cursor_pos, bool strict) {
@@ -146,7 +164,7 @@ namespace RKCommonFunctions {
 			}
 
 			// if we did not hit a continue, yet, that means we are on a potential symbol boundary
-			if (i < cursor_pos) *start = i+1;
+			if (i <= cursor_pos) *start = i+1;
 			else {
 				*end = i;
 				break;
@@ -155,7 +173,30 @@ namespace RKCommonFunctions {
 	}
 
 	QString getRKWardDataDir () {
-		return (QStandardPaths::locate (QStandardPaths::GenericDataLocation, "rkward/resource.ver").replace ("resource.ver", QString ()));
+		static QString rkward_data_dir;
+		if (rkward_data_dir.isNull ()) {
+			QString inside_build_tree = QCoreApplication::applicationDirPath() + "/rkwardinstall/";
+			if (QFileInfo(inside_build_tree).isReadable()) {
+				rkward_data_dir = inside_build_tree;
+				return rkward_data_dir;
+			}
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 4, 0))
+			QStringList candidates = QStandardPaths::locateAll (QStandardPaths::AppDataLocation, "resource.ver");
+			candidates += QStandardPaths::locateAll (QStandardPaths::AppDataLocation, "rkward/resource.ver");  // Well, isn't this just silly? AppDataLocation may or may not contain the application name (on Mac)
+#else
+			QStringList candidates = QStandardPaths::locateAll (QStandardPaths::GenericDataLocation, "resource.ver");  // Fails on Mac with unpatched Qt 5.10 (and before). See https://mail.kde.org/pipermail/kde-frameworks-devel/2018-May/063151.html
+#endif
+			for (int i = 0; i < candidates.size (); ++i) {
+				QFile resource_ver (candidates[i]);
+				if (resource_ver.open (QIODevice::ReadOnly) && (resource_ver.read (100).trimmed () == RKWARD_VERSION)) {
+					rkward_data_dir = candidates[i].replace ("resource.ver", QString ());
+					return rkward_data_dir;
+				}
+			}
+			rkward_data_dir = "";   // prevents checking again
+			RK_DEBUG(APP, DL_WARNING, "resource.ver not found. Data path(s): %s", qPrintable (QStandardPaths::standardLocations (QStandardPaths::AppDataLocation).join (':')));
+		}
+		return rkward_data_dir;
 	}
 
 	QString escape (const QString &in) {
@@ -227,4 +268,17 @@ namespace RKCommonFunctions {
 		return orig;
 #endif
 	}
+
+	QLabel* wordWrappedLabel (const QString& text) {
+		QLabel* ret = new QLabel (text);
+		ret->setWordWrap (true);
+		return ret;
+	}
+
+	QLabel* linkedWrappedLabel (const QString& text) {
+		QLabel* ret = wordWrappedLabel (text);
+		QObject::connect (ret, &QLabel::linkActivated, RKWorkplace::mainWorkplace (), &RKWorkplace::openAnyUrlString);
+		return ret;
+	}
+
 }	// namespace

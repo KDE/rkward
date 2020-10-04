@@ -2,7 +2,7 @@
                           rkstandardactions  -  description
                              -------------------
     begin                : Sun Nov 18 2007
-    copyright            : (C) 2007-2016 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -83,7 +83,6 @@ public:
 		RK_TRACE (MISC);
 		provider = context_provider;
 		setText (i18n ("&Function reference"));
-		setShortcut (Qt::Key_F2);
 		connect (this, &QAction::triggered, this, &RKSearchRHelpAction::doSearch);
 	};
 public slots:
@@ -102,6 +101,7 @@ QAction* RKStandardActions::functionHelp (RKMDIWindow *window, RKScriptContextPr
 
 	QAction* ret = new RKSearchRHelpAction (window, context_provider);
 	window->standardActionCollection ()->addAction ("function_reference", ret);
+	window->standardActionCollection ()->setDefaultShortcut (ret, Qt::Key_F2);
 	return ret;
 }
 

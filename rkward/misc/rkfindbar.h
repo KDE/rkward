@@ -45,6 +45,7 @@ However, these can't be inserted into anything other than QToolBar or QMenu... *
 
 	QCheckBox* getOption (const FindOptions option);
 	bool isOptionSet (const FindOptions option) const;
+	void indicateSearchFail ();
 public slots:
 	void activate ();
 	void activateWithFindAsYouType ();

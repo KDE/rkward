@@ -4,9 +4,15 @@
 \alias{RK}
 \title{Plot graphics to RKWard native device}
 \usage{
-RK(width = getOption("rk.screendevice.width"),
-  height = getOption("rk.screendevice.height"), pointsize = 12,
-  family = NULL, bg = "white", title = "", antialias = TRUE)
+RK(
+  width = getOption("rk.screendevice.width"),
+  height = getOption("rk.screendevice.height"),
+  pointsize = 12,
+  family = NULL,
+  bg = "white",
+  title = "",
+  antialias = TRUE
+)
 }
 \arguments{
 \item{width}{Width of the device in inches. The default is to use the heigth configured in Settings -> Configure RKWard -> Onscreen Graphics.}
@@ -30,4 +36,3 @@ including the device independent fonts names "sans", "serif", and "mono"}
 The default settings for \code{width}, and \code{height} can be modified from Settings -> Configure RKWard -> Onscreen Graphics.
 }
 \keyword{devices}
-

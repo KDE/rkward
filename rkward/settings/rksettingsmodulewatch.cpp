@@ -27,6 +27,7 @@
 #include <QSpinBox>
 
 #include "../rbackend/rcommand.h"
+#include "../misc/rkcommonfunctions.h"
 #include "rksettings.h"
 #include "../rkglobals.h"
 
@@ -120,25 +121,20 @@ RKSettingsModuleWatch::RKSettingsModuleWatch (RKSettings *gui, QWidget *parent) 
 
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 
-	QLabel *label = new QLabel (i18n ("For now, settings only apply to new commands. All previous commands remain visible/invisible."), this);
-	label->setWordWrap (true);
+	QLabel *label = RKCommonFunctions::wordWrappedLabel (i18n ("For now, settings only apply to new commands. All previous commands remain visible/invisible."));
 	vbox->addWidget (label);
 	vbox->addSpacing (10);
 	
 	QGridLayout *grid = new QGridLayout ();
 	vbox->addLayout (grid);
 
-	label = new QLabel (i18n ("always show command"), this);
-	label->setWordWrap (true);
+	label = RKCommonFunctions::wordWrappedLabel (i18n ("always show command"));
 	grid->addWidget (label, 0, 1);
-	label = new QLabel (i18n ("always show result"), this);
-	label->setWordWrap (true);
+	label = RKCommonFunctions::wordWrappedLabel (i18n ("always show result"));
 	grid->addWidget (label, 0, 2);
-	label = new QLabel (i18n ("show errors"), this);
-	label->setWordWrap (true);
+	label = RKCommonFunctions::wordWrappedLabel (i18n ("show errors"));
 	grid->addWidget (label, 0, 3);
-	label = new QLabel (i18n ("show/raise window"), this);
-	label->setWordWrap (true);
+	label = RKCommonFunctions::wordWrappedLabel (i18n ("show/raise window"));
 	grid->addWidget (label, 0, 4);
 	
 	user_filter_boxes = addFilterSettings (this, grid, 1, i18n ("User commands"), user_filter);

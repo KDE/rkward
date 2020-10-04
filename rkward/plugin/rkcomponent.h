@@ -115,7 +115,7 @@ public:
 /** currently valid? default implementation always returns true. @see recursiveStatus()
   * reimplement this in subclasses, if components may become invalid.
   * 
-  * @note: A component will be "satisfied" even when invalid, if is is not required. Also, a required component is implictily not satisfied, if any of its children are not statisfied.
+  * @note: A component will be "satisfied" even when invalid, if it is not required. Also, a required component is implicitly not satisfied, if any of its children are not satisfied.
   * In general, use isSatisfied() to query the status of components, not isValid(). */
 	virtual bool isValid () { return true; };
 /** set to required: will only be satisfied if it is valid (and all it's children). Else: always satisfied (but subclasses might override to always be dissatisfied on really bad values. By default RKComponentBase is required at construction */
@@ -126,7 +126,7 @@ public:
 	typedef QMap<QString, QString> PropertyValueMap;
 	static QString valueMapToString (const PropertyValueMap &map);
 	static bool stringListToValueMap (const QStringList &strings, PropertyValueMap *map);
-/** serialize the state of this component / property and all its children. Note: Only the non-internal property-values are serialzed, not the components / properties themselves. @see fetchPropertyValuesRecursive() */
+/** serialize the state of this component / property and all its children. Note: Only the non-internal property-values are serialized, not the components / properties themselves. @see fetchPropertyValuesRecursive() */
 	void serializeState (PropertyValueMap *map) const { fetchPropertyValuesRecursive (map, true); };
 /** set values from a map as created with serializeState(). @see serializeState (), @see setPropertyValues ().
 @returns status code */
@@ -229,7 +229,7 @@ protected:
 	void createDefaultProperties ();
 /** This function is needed internally, to set the Qt enabledness of this widget, and all child component widgets. Note that the enabledness as stored in the enabledness_property is not necessarily the same as the enabledness in the GUI (and is not affected by this call). In general, a component is enabled in the GUI, if and only if a) it's enabledness_property is set to true, b) its parent widget is enabled in Qt, and c) it's parent component is also enabled. */
 	void updateEnablednessRecursive (bool parent_component_enabled);
-/** Helper for getUiLabelPair(): Strips accelator key markup ("&") from strings */
+/** Helper for getUiLabelPair(): Strips accelerator key markup ("&") from strings */
 	static QString stripAccelerators (const QString &in);
 };
 

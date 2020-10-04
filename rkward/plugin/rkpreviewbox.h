@@ -2,7 +2,7 @@
                           rkpreviewbox  -  description
                              -------------------
     begin                : Wed Jan 24 2007
-    copyright            : (C) 2007-2016 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -28,18 +28,19 @@ class QCheckBox;
 class QDomElement;
 class QLabel;
 class QTimer;
+class RKPreviewManager;
 
 /**
 This RKComponent provides a (togglable) automatic graphical preview. WARNING: This component violates some standards of "good component behavior", esp. by assuming several things about the nature of the parent component. So please do not take this as an example for basing other components on.
 
 @author Thomas Friedrichsmeier
 */
-class RKPreviewBox : public RKComponent, public RCommandReceiver {
+class RKPreviewBox : public RKComponent {
 	Q_OBJECT
 public: 
 	RKPreviewBox (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
 	~RKPreviewBox ();
-	int type () { return ComponentPreviewBox; };
+	int type () override { return ComponentPreviewBox; };
 	RKComponentPropertyBool *state;
 	QVariant value (const QString &modifier=QString ()) override;
 public slots:
@@ -47,17 +48,12 @@ public slots:
 	void changedState (RKComponentPropertyBase *);
 	void changedCode (RKComponentPropertyBase *);
 	void tryPreviewNow ();
-protected:
-	void rCommandDone (RCommand *);
 private:
 	bool updating;		// prevent recursion
 	bool preview_active;
-	bool prior_preview_done;
-	bool new_preview_pending;
 	void tryPreview ();
 	void killPreview (bool cleanup = false);
-	void updateStatusLabel ();
-	void setStatusMessage (const QString& status);
+	RKPreviewManager *manager;
 	enum PreviewMode {
 		PlotPreview,
 		DataPreview,

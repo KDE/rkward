@@ -2,7 +2,7 @@ PROJECT(rkward)
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8.12)	# As required by KF5
 IF(NOT "${CMAKE_VERSION}" VERSION_LESS 3.3.0)
-	CMAKE_POLICY(SET CMP0063 OLD)  # No symbol visibility in any of our static libraries needed
+	CMAKE_POLICY(SET CMP0063 NEW)  # Shut up cmake warning
 ENDIF()
 
 IF(NOT CMAKE_VERBOSE_MAKEFILE)
@@ -21,25 +21,22 @@ INCLUDE(ECMAddAppIcon)
 INCLUDE(ECMMarkNonGuiExecutable)
 INCLUDE(FeatureSummary)
 
-FIND_PACKAGE(Qt5 5.2 CONFIG REQUIRED COMPONENTS Widgets Core Xml Network WebKit Script PrintSupport)
-FIND_PACKAGE(KF5 5.2 REQUIRED COMPONENTS CoreAddons DocTools I18n XmlGui TextEditor WidgetsAddons WebKit Parts Config Notifications WindowSystem OPTIONAL_COMPONENTS Crash)
+FIND_PACKAGE(Qt5 5.2 CONFIG REQUIRED COMPONENTS Widgets Core Xml Network Script PrintSupport)
+FIND_PACKAGE(KF5 5.2 REQUIRED COMPONENTS CoreAddons DocTools I18n XmlGui TextEditor WidgetsAddons Parts Config Notifications WindowSystem OPTIONAL_COMPONENTS Crash)
+IF(NOT NO_QT_WEBENGINE)
+	FIND_PACKAGE(Qt5 5.2 OPTIONAL_COMPONENTS WebEngineWidgets)
+	IF(NOT Qt5WebEngineWidgets_FOUND OR Qt5WebEngineWidgets_VERSION VERSION_LESS "5.12.0")
+		MESSAGE(STATUS "QWebEngine not available (or version < 5.12). Falling back to QtWebKit")
+		SET(NO_QT_WEBENGINE 1)
+	ENDIF()
+ENDIF(NOT NO_QT_WEBENGINE)
+IF(NO_QT_WEBENGINE)
+	FIND_PACKAGE(KF5 5.2 REQUIRED COMPONENTS WebKit)
+	ADD_DEFINITIONS(-DNO_QT_WEBENGINE)  # TODO: rather set it for rkhtmlwindow, only
+ELSE(NO_QT_WEBENGINE)
+	MESSAGE(STATUS "QtWebEngine will be used for rendering HTML. To use KF5WebKit, instead (if available), pass -DNO_QT_WEBENGINE=1 in your call to cmake.")
+ENDIF(NO_QT_WEBENGINE)
 FIND_PACKAGE(Gettext REQUIRED)
-
-# FindIntl in cmake is broken for MSVC on Windows, (and only included from 3.2.3 upwards).
-# Borrowing some code from ki18n instead (originally BSD licensed, copyright Copyright 2014 Alex Richardson <arichardson.kde@gmail.com>)
-FIND_PATH(LibIntl_INCLUDE_DIRS NAMES libintl.h)
-FIND_LIBRARY(LibIntl_LIBRARIES NAMES intl libintl)
-INCLUDE(CheckCXXSymbolExists)
-CHECK_CXX_SYMBOL_EXISTS(dngettext libintl.h LibIntl_SYMBOL_FOUND)
-INCLUDE(FindPackageHandleStandardArgs)
-IF(LibIntl_SYMBOL_FOUND)
-    MESSAGE(STATUS "libintl is part of libc, no extra library is required.")
-    SET(LibIntl_LIBRARIES "")
-    FIND_PACKAGE_HANDLE_STANDARD_ARGS(LibIntl REQUIRED_VARS LibIntl_INCLUDE_DIRS)
-ELSE()
-    MESSAGE(STATUS "libintl is a separate library.")
-    FIND_PACKAGE_HANDLE_STANDARD_ARGS(LibIntl REQUIRED_VARS LibIntl_INCLUDE_DIRS LibIntl_LIBRARIES)
-ENDIF()
 
 IF(FORCE_PRETTY_MAKEFILE)
 	SET(CMAKE_VERBOSE_MAKEFILE OFF)
@@ -56,5 +53,7 @@ ADD_SUBDIRECTORY(rkward)
 ADD_SUBDIRECTORY(i18n)
 ADD_SUBDIRECTORY(doc)
 ADD_SUBDIRECTORY(tests)
+KI18N_INSTALL(po)
+KDOCTOOLS_INSTALL(po)
 
 FEATURE_SUMMARY(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)

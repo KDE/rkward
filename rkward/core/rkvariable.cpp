@@ -79,7 +79,7 @@ void RKVariable::setVarType (RObject::RDataType new_type, bool sync) {
 		setDataType (new_type);
 		allocateEditData ();
 
-		// re-set presistent aspects of the edit data
+		// re-set persistent aspects of the edit data
 		data->value_labels = value_labels;
 		data->formatting_options = formatting_options;
 		data->num_listeners = num_listeners;

@@ -2,7 +2,7 @@
                           rksessionvars  -  description
                              -------------------
     begin                : Thu Sep 08 2011
-    copyright            : (C) 2011, 2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2011-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -31,6 +31,9 @@ public:
 	QStringList installedPackages () const { return installed_packages; };
 	void setInstalledPackages (const QStringList &new_list);
 	static void setRVersion (const QString &version_string);
+/** Return version number of currently running R.
+@param abbridged If true, return Major.Minor, only (e.g. 3.5), otherwise, return full version string. */
+	static QString RVersion (bool abbridged);
 /** compare given version string against the running version of RKWard. Returns -1 for earlier than current, 0 for equal, 1 for later than current version */
 	static int compareRKWardVersion (const QString &version);
 /** compare given version string against the running version of R. Returns -1 for earlier than current, 0 for equal, 1 for later than current version. NOTE: The version of R is not known until the R backend has been started. In this case, 0 is always returned */

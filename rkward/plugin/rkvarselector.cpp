@@ -2,7 +2,7 @@
                           rkvarselector.cpp  -  description
                              -------------------
     begin                : Thu Nov 7 2002
-    copyright            : (C) 2002-2015 by Thomas Friedrichsmeier
+    copyright            : (C) 2002-2018 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -30,10 +30,13 @@
 #include "../rkglobals.h"
 #include "../misc/rkobjectlistview.h"
 #include "../misc/rkstandardicons.h"
+#include "../misc/rkcommonfunctions.h"
 #include "../core/robjectlist.h"
 #include "../core/renvironmentobject.h"
 
 #include "../debug.h"
+
+bool RKVarSelector::expanded = true;
 
 RKVarSelector::RKVarSelector (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
 	RK_TRACE (PLUGIN);
@@ -55,6 +58,11 @@ RKVarSelector::RKVarSelector (const QDomElement &element, RKComponent *parent_co
 	vbox->addLayout (hbox);
 	QLabel *label = new QLabel (xml->i18nStringAttribute (element, "label", i18n ("Select Variable(s)"), DL_INFO), this);
 	hbox->addWidget (label);
+	expand_collapse_button = new QToolButton (this);
+	expand_collapse_button->setPopupMode (QToolButton::InstantPopup);
+	expand_collapse_button->setAutoRaise (true);
+	connect (expand_collapse_button, &QToolButton::clicked, this, &RKVarSelector::toggleLevel1);
+	hbox->addWidget (expand_collapse_button);
 	QToolButton *advanced_button = new QToolButton (this);
 	advanced_button->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionConfigureGeneric));
 	advanced_button->setPopupMode (QToolButton::InstantPopup);
@@ -89,6 +97,8 @@ RKVarSelector::RKVarSelector (const QDomElement &element, RKComponent *parent_co
 	advanced_button->setMenu (list_view->contextMenu ());
 
 	rootChanged ();
+	expanded = !expanded; // toggled right back, below
+	toggleLevel1 ();
 }
 
 RKVarSelector::~RKVarSelector () {
@@ -118,6 +128,21 @@ void RKVarSelector::rootChanged () {
 		if (!show_all_envs_action->isChecked ()) object = RObjectList::getGlobalEnv ();
 	}
 	list_view->setRootObject (object);
+}
+
+void RKVarSelector::toggleLevel1 () {
+	RK_TRACE (PLUGIN);
+
+	if (expanded) {
+		expand_collapse_button->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionExpandDown));
+		RKCommonFunctions::setTips (i18n ("Expand all root level objects (show columns of data.frames)"), expand_collapse_button);
+		list_view->collapseAll ();
+	} else {
+		expand_collapse_button->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionCollapseUp));
+		RKCommonFunctions::setTips (i18n ("Collapse all root level objects (hide columns of data.frames)"), expand_collapse_button);
+		list_view->expandToDepth (1);
+	}
+	expanded = !expanded;
 }
 
 void RKVarSelector::objectSelectionChanged () {

@@ -367,7 +367,7 @@ void RKWorkplaceView::splitView (Qt::Orientation orientation, const QString &des
 	if (splitter->count () == 1) {
 		splitter->setOrientation (orientation);
 	}
-	if (splitter->orientation () == orientation) {  // not the same as above: Also, if an existing larger splitter is suitably oriented, arleady
+	if (splitter->orientation () == orientation) {  // not the same as above: Also, if an existing larger splitter is suitably oriented, already
 		// First calculate the size of the new and the old elements.
 		// This is not pixel perfect, but reasonably close.
 		for (int i = sizes.count () - 1; i >= 0; --i) {
@@ -586,7 +586,7 @@ void RKWorkplaceView::purgeEmptyPanes () {
 
 	newpane = 0; // just in case of broken specifications during workplace restoration
 	for (int i = 0; i < panes.count (); ++i) {
-		if (panes[i]->count () < 1) {
+		if (panes.count() > 1 && panes[i]->count() < 1) {
 			purgePane (panes[i]);
 			--i;
 		}

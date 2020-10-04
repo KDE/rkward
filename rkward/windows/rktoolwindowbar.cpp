@@ -2,7 +2,7 @@
                           rktoolwindowbar  -  description
                              -------------------
     begin                : Fri Oct 12 2007
-    copyright            : (C) 2007, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -23,9 +23,11 @@
 #include <KLocalizedString>
 #include <kparts/partmanager.h>
 #include <kselectaction.h>
+#include <kwidgetsaddons_version.h>
 
 #include <QSplitter>
 #include <QContextMenuEvent>
+#include <QHBoxLayout>
 
 #include "rkworkplace.h"
 #include "rkworkplaceview.h"
@@ -48,6 +50,13 @@ RKToolWindowBar::RKToolWindowBar (KMultiTabBarPosition position, QWidget *parent
 
 RKToolWindowBar::~RKToolWindowBar () {
 	RK_TRACE (APP);
+}
+
+void RKToolWindowBar::captionChanged (RKMDIWindow* window) {
+	RK_TRACE (APP);
+
+	int id = widget_to_id.value (window);
+	tab (id)->setText (window->shortCaption ());
 }
 
 void RKToolWindowBar::restoreSize (const KConfigGroup &cg) {
@@ -136,10 +145,15 @@ void RKToolWindowBar::addWidget (RKMDIWindow *window) {
 		window->tool_window_bar->removeWidget (window);
 	}
 
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5,13,0)
+	appendTab (window->windowIcon (), id, window->shortCaption ());
+#else
 	appendTab (window->windowIcon ().pixmap (QSize (16, 16)), id, window->shortCaption ());
+#endif
 
 	window->tool_window_bar = this;
 	widget_to_id.insert (window, id);
+	connect (window, &QObject::destroyed, this, &RKToolWindowBar::windowDestroyed);
 
 	connect (tab (id), &KMultiTabBarTab::clicked, this, &RKToolWindowBar::tabClicked);
 	tab (id)->installEventFilter (this);
@@ -154,9 +168,18 @@ void RKToolWindowBar::addWidget (RKMDIWindow *window) {
 void RKToolWindowBar::reclaimDetached (RKMDIWindow *window) {
 	RK_TRACE (APP);
 
+	if (window->parent () == container) return;
+
 	window->hide();
 	window->setParent (container);
 	container->layout ()->addWidget (window);
+}
+
+void RKToolWindowBar::windowDestroyed(QObject* window) {
+	RK_TRACE (APP);
+
+	int id = widget_to_id.take (static_cast<RKMDIWindow *> (window));
+	removeTab (id);
 }
 
 void RKToolWindowBar::removeWidget (RKMDIWindow *widget) {
@@ -168,6 +191,7 @@ void RKToolWindowBar::removeWidget (RKMDIWindow *widget) {
 
 	removeTab (id);
 	widget_to_id.remove (widget);
+	disconnect (widget, &QObject::destroyed, this, &RKToolWindowBar::windowDestroyed);
 	widget->tool_window_bar = 0;
 
 	if (widget->isAttached ()) {
@@ -183,13 +207,9 @@ void RKToolWindowBar::removeWidget (RKMDIWindow *widget) {
 	if (widget_to_id.isEmpty ()) hide ();
 }
 
-void RKToolWindowBar::showWidget (RKMDIWindow *widget) {
+void RKToolWindowBar::closeOthers (RKMDIWindow* widget) {
 	RK_TRACE (APP);
-	RK_ASSERT (widget_to_id.contains (widget));
 
-	int id = widget_to_id[widget];
-
-	// close any others
 	for (QMap<RKMDIWindow*, int>::const_iterator it = widget_to_id.constBegin (); it != widget_to_id.constEnd (); ++it) {
 		RKMDIWindow *cur = it.key ();
 		if (cur != widget) {
@@ -200,6 +220,16 @@ void RKToolWindowBar::showWidget (RKMDIWindow *widget) {
 			setTab (it.value (), false);
 		}
 	}
+}
+
+void RKToolWindowBar::showWidget (RKMDIWindow *widget) {
+	RK_TRACE (APP);
+	RK_ASSERT (widget_to_id.contains (widget));
+
+	int id = widget_to_id[widget];
+
+	// close any others
+	closeOthers (widget);
 
 	widget->show ();
 	if (widget->isAttached ()) {

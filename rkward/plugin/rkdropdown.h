@@ -32,15 +32,15 @@ class RKDropDown : public RKAbstractOptionSelector {
 public: 
 	RKDropDown (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
 	~RKDropDown ();
-	int type () { return ComponentDropDown; };
+	int type () override { return ComponentDropDown; };
 public slots:
 	// workaround for a qt bug (3.3.7)
 	void comboItemActivated (int id);
 protected:
-	void setItemInGUI (int id);
-	void addOptionToGUI (const QString &label, int id);
-	void setItemEnabledInGUI (int id, bool enabled);
-	QStringList getUiLabelPair () const;
+	void setItemInGUI (int id) override;
+	void addOptionToGUI (const QString &label, int id) override;
+	void setItemEnabledInGUI (int id, bool enabled) override;
+	QStringList getUiLabelPair () const override;
 private:
 	QComboBox *box;
 	QListWidget *listwidget;

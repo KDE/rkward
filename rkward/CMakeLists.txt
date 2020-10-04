@@ -5,9 +5,9 @@ ENDIF(NOT ${PROJECT_NAME} STREQUAL "rkward")
 INCLUDE(SetVersionNumber.cmake)
 
 IF(APPLE)
-    SET(CPACK_BUNDLE_ICON rkward.icns)
-    SET(CPACK_BUNDLE_NAME RKWard)
-    SET(CPACK_BUNDLE_STARTUP_COMMAND rkward)
+	SET(CPACK_BUNDLE_ICON rkward.icns)
+	SET(CPACK_BUNDLE_NAME RKWard)
+	SET(CPACK_BUNDLE_STARTUP_COMMAND rkward)
 ENDIF()
 
 # once tested and working this could become the default on Mac:
@@ -27,7 +27,7 @@ ADD_SUBDIRECTORY( icons )
 ADD_SUBDIRECTORY( windows )
 ADD_SUBDIRECTORY( syntax )
 
-INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}   ${QT_QTWEBKIT_INCLUDE_DIR} )
+INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} )
 
 SET(RKWard_Sources
 	rkward.cpp
@@ -36,6 +36,7 @@ SET(RKWard_Sources
 	robjectviewer.cpp
 	rkconsole.cpp
 )
+QT5_ADD_RESOURCES(RKWard_Sources resources.qrc)
 
 # somehow the detected R paths from FindR.cmake do not get passed down automatically
 GET_DIRECTORY_PROPERTY(R_EXECUTABLE DIRECTORY rbackend DEFINITION R_EXECUTABLE)
@@ -60,7 +61,6 @@ ENDIF()
 # We should switch with to target_compile_definitions once we require CMAKE 2.6+
 ADD_DEFINITIONS(-DR_EXECUTABLE="${R_EXECUTABLE}")
 ADD_DEFINITIONS(-DINSTALL_PATH="${CMAKE_INSTALL_PREFIX}")
-ADD_DEFINITIONS(-DR_LIBS="${R_LIBDIR}")
 SET_TARGET_PROPERTIES(rkward PROPERTIES
         MACOSX_BUNDLE_BUNDLE_NAME "RKWard")
 
@@ -73,7 +73,7 @@ IF(APPLE)
 		@ONLY)
 ENDIF(APPLE)
 
-TARGET_LINK_LIBRARIES(rkward windows ${RKWARD_ADDLIBS} agents dialogs plugin settings dataeditor core scriptbackends rbackend misc KF5::WindowSystem Qt5::Widgets KF5::XmlGui ${LibIntl_LIBRARIES})
+TARGET_LINK_LIBRARIES(rkward windows ${RKWARD_ADDLIBS} agents dialogs plugin settings dataeditor core scriptbackends rbackend misc KF5::WindowSystem Qt5::Widgets KF5::XmlGui)
 IF(KF5Crash_FOUND)
 	TARGET_LINK_LIBRARIES(rkward KF5::Crash)
 	SET_SOURCE_FILES_PROPERTIES(main.cpp PROPERTIES COMPILE_DEFINITIONS WITH_KCRASH=1)
@@ -81,11 +81,20 @@ ENDIF(KF5Crash_FOUND)
 
 ########### install files ###############
 
-INSTALL(DIRECTORY plugins/ pages DESTINATION ${DATA_INSTALL_DIR}/rkward
-	PATTERN .svn EXCLUDE)
-
-INSTALL(FILES rkwardui.rc rkconsolepart.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/rkward)
+INSTALL(DIRECTORY plugins/ pages DESTINATION ${DATA_INSTALL_DIR}/rkward)
 INSTALL(FILES resource.ver DESTINATION ${DATA_INSTALL_DIR}/rkward)
+IF(NOT WIN32)
+	# This is for running directly from the build tree. Not on windows for now (until cmake supports symlinks, there)
+	ADD_CUSTOM_TARGET(local_install ALL
+		COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/rkwardinstall
+		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_CURRENT_SOURCE_DIR}/pages ${CMAKE_CURRENT_BINARY_DIR}/rkwardinstall/pages
+		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_CURRENT_SOURCE_DIR}/plugins ${CMAKE_CURRENT_BINARY_DIR}/rkwardinstall/plugins
+		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_CURRENT_SOURCE_DIR}/resource.ver ${CMAKE_CURRENT_BINARY_DIR}/rkwardinstall/resource.ver
+		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_CURRENT_SOURCE_DIR}/scriptbackends ${CMAKE_CURRENT_BINARY_DIR}/rkwardinstall/phpfiles
+		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_CURRENT_BINARY_DIR}/rbackend/rpackages ${CMAKE_CURRENT_BINARY_DIR}/rkwardinstall/rpackages
+	)
+ENDIF(NOT WIN32)
+
 
 IF(APPLE)
     INSTALL(TARGETS rkward DESTINATION ${BUNDLE_INSTALL_DIR})
@@ -110,6 +119,9 @@ ELSE()
     INSTALL(TARGETS rkward DESTINATION ${BIN_INSTALL_DIR})
 ENDIF()
 
-INSTALL(FILES org.kde.rkward.desktop org.kde.rkward-open.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+INSTALL(FILES org.kde.rkward.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+INSTALL(FILES org.kde.rkward.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
 INSTALL(FILES vnd.rkward.r.xml DESTINATION ${XDG_MIME_INSTALL_DIR})
 INSTALL(FILES rkward.protocol DESTINATION ${SERVICES_INSTALL_DIR})
+
+INSTALL(FILES RKWardRMd.xml DESTINATION ${DATA_INSTALL_DIR}/ktexteditor_snippets/data)

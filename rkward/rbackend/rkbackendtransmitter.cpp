@@ -64,9 +64,21 @@ void RKRBackendTransmitter::run () {
 	connection->write ("\n");
 	connection->waitForBytesWritten ();
 
-	startTimer (200);	// calls flushOutput(false), periodically. See timerEvent()
+	flushtimerid = startTimer (200);	// calls flushOutput(false), periodically. See timerEvent()
 
 	exec ();
+}
+
+void RKRBackendTransmitter::doExit(){
+	RK_TRACE (RBACKEND);
+	auto con = connection;
+	killTimer(flushtimerid);
+	connection->waitForBytesWritten (1000);
+	connection = 0; // See handleTransmissionError
+	RK_DEBUG(RBACKEND, DL_DEBUG, "Aborting connection to frontend");
+	con->abort();  // TODO: This never seems to complete!
+	RK_DEBUG(RBACKEND, DL_DEBUG, "Done aborting connection to frontend");
+	exit(0);
 }
 
 void RKRBackendTransmitter::writeRequest (RBackendRequest *request) {
@@ -137,6 +149,7 @@ void RKRBackendTransmitter::flushOutput (bool force) {
 void RKRBackendTransmitter::handleTransmissionError (const QString &message) {
 	RK_TRACE (RBACKEND);
 
+	if (!connection) return;  // regular exit, or we did not even get to the point of setting up the connection.
 	RK_DEBUG (RBACKEND, DL_ERROR, "%s", qPrintable ("Transmission error " + message));
 	RKRBackend::tryToDoEmergencySave ();
 }

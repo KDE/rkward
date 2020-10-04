@@ -37,10 +37,10 @@ public:
 	RKPluginSaveObject (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
 	~RKPluginSaveObject ();
 
-	QVariant value (const QString &modifier=QString ());
-	QStringList getUiLabelPair () const;
-	int type () { return ComponentSaveObject; };
-	bool isValid ();
+	QVariant value (const QString &modifier=QString ()) override;
+	QStringList getUiLabelPair () const override;
+	int type () override { return ComponentSaveObject; };
+	bool isValid () override;
 public slots:
 	void externalChange ();
 	void internalChange ();

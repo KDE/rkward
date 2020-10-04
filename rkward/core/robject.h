@@ -2,7 +2,7 @@
                           robject  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004-2016 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2019 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -114,8 +114,16 @@ public:
 	static bool isMatchingType (int old_type, int new_type) { return ((old_type & ROBJECT_TYPE_INTERNAL_MASK) == (new_type & ROBJECT_TYPE_INTERNAL_MASK)); };
 	
 	QString getShortName () const { return name; };
-	virtual QString getFullName () const;
-	virtual QString getBaseName () const;
+	enum ObjectNameOptions {
+		DollarExpansion = 1,              /**< Return list members as list$member, instead of list[["member"]]  */
+		IncludeEnvirIfNotGlobalEnv = 2,   /**< Include package name for objects on the search path  */
+		IncludeEnvirForGlobalEnv = 4,     /**< Include ".GlobalEnv" for objects inside globalenv  */
+		IncludeEnvirIfMasked = 8,         /**< Include package name for objects that are masked (only applicable for object lists, i.e. getFullNames()) */
+		ExplicitSlotsExpansion = 16,      /**< Return slots as slot(object, member), intead of object\@member */
+		NoIncludeEnvir = 0,               /**< Label for missing include-envirs */
+		DefaultObjectNameOptions = IncludeEnvirIfNotGlobalEnv
+	};
+	virtual QString getFullName (int name_options = DefaultObjectNameOptions) const;
 	QString getLabel () const;
 	QString getMetaProperty (const QString &id) const;
 	QString getDescription () const;
@@ -130,8 +138,8 @@ public:
 	bool isType (int type) const { return (RObject::type & type); };
 	bool isPseudoObject () const { return isType (PseudoObject); };
 	PseudoObjectType getPseudoObjectType () const { return pseudo_object_types.value (this, InvalidPseudoObject); };
-	bool isSlotsPseudoObject () const { return (this && isPseudoObject () && (getPseudoObjectType () == SlotsObject)); };
-	bool isPackageNamespace () const { return (this && isPseudoObject () && (getPseudoObjectType () == NamespaceObject)); };
+	bool isSlotsPseudoObject () const { return (isPseudoObject () && (getPseudoObjectType () == SlotsObject)); };
+	bool isPackageNamespace () const { return (isPseudoObject () && (getPseudoObjectType () == NamespaceObject)); };
 	bool hasPseudoObject (const PseudoObjectType type) const { return (contained_objects & type); };
 	bool hasMetaObject () const { return (meta_map); };
 	/** see RObjectType::Pending */
@@ -152,7 +160,7 @@ public:
 	bool canRemove () const;
 /** returns true, if this object is inside the .GlobalEnv. The .GlobalEnv is not considered to be inside itself. */
 	bool isInGlobalEnv () const;
-/** returns the toplevel environment that this object is in. May the the same as the object. */
+/** returns the toplevel environment that this object is in. May the same as the object. */
 	REnvironmentObject *toplevelEnvironment () const;
 
 	void rename (const QString &new_short_name);
@@ -176,7 +184,6 @@ public:
 
 /** A QList of RObjects. Internally the same as RObjectMap, but can be considered "public" */
 	typedef QList<RObject*> ObjectList;
-	typedef QMap<QString, RObject*> RObjectSearchMap;
 
 /** A map of values to labels. This is used both in regular objects, in which it just represents a map of named values, if any. The more important use is in factors, where it represents the factor levels. Here, the key is always a string representation of a positive integer. */
 	typedef QMap<QString, QString> ValueLabels;
@@ -209,11 +216,12 @@ public:
 /** try to find the object as a child object of this object.
 @param name of the object (relative to this object)
 @returns a pointer to the object (if found) or 0 if not found */
-	RObject *findObject (const QString &name) { return findObjects (parseObjectPath (name), 0, "$"); };
-	/** Function for code completion: given the partial name, find all objects matching this partial name
-@param partial_name The partial name to look up
-@param current_list A pointer to a valid (but probably initially empty) RObjectMap. Matches will be added to this list */
-	void findObjectsMatching (const QString &partial_name, RObjectSearchMap *current_list) { findObjects (parseObjectPath (partial_name), current_list, "$"); };
+	RObject *findObject (const QString &name) { return findObjects (parseObjectPath (name), false, "$").value (0); };
+/** Function for code completion: given the partial name, find all objects matching this partial name
+@param partial_name The partial name to look up */
+	RObject::ObjectList findObjectsMatching (const QString &partial_name) { return findObjects (parseObjectPath (partial_name), true, "$"); };
+/** Get full-qualified object names for a list of objects as returned by findObjectsMatching */
+	static QStringList getFullNames (const RObject::ObjectList &objects, int options);
 
 /** Fetch more levels of object representation (if needed). Note: Data is fetched asynchronously. 
 @param levels levels to recurse (0 = only direct children). */
@@ -229,7 +237,7 @@ public:
 	};
 
 /** generates a (full) name for a child of this object with the given name. */
-	virtual QString makeChildName (const QString &short_child_name, bool misplaced=false) const;
+	virtual QString makeChildName (const QString &short_child_name, bool misplaced=false, int object_name_options=DefaultObjectNameOptions) const;
 protected:
 // why do I need those to compile? I thought they were derived classes!
 	friend class RContainerObject;
@@ -251,10 +259,9 @@ protected:
 	REnvironmentObject* namespaceEnvironment () const { return (hasPseudoObject (NamespaceObject) ? namespace_objects.value (this) : 0); };
 	void setSpecialChildObject (RObject *special, PseudoObjectType special_type);
 
-/** Worker function for findObject() and findObjectsMatching(). If matches != 0, look for partial matches, and store them in the map (findObjectsMatching()). Else look for exact matches and return the first match (findObject()). */
-	virtual RObject *findObjects (const QStringList &path, RObjectSearchMap *matches, const QString &op);
-
-	virtual QString makeChildBaseName (const QString &short_child_name) const;
+/** Worker function for findObject() and findObjectsMatching().
+ *  @If partial true: Look for partial matches (objects starting with the given pattern), false: look for exact matches, only. */
+	virtual ObjectList findObjects (const QStringList &path, bool partial, const QString &op);
 
 /** Update object to reflect the structure passed in the new_data argument. If the data is mismatching (i.e. can not be accommodated by this type of object) false is returned (calls canAccommodateStructure () internally). In this case you should delete the object, and create a new one.
 @returns true if the changes could be done, false if this  */

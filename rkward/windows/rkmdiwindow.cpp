@@ -2,7 +2,7 @@
                           rkmdiwindow  -  description
                              -------------------
     begin                : Tue Sep 26 2006
-    copyright            : (C) 2006 - 2017 by Thomas Friedrichsmeier
+    copyright            : (C) 2006 - 2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -74,7 +74,7 @@ RKMDIWindow::RKMDIWindow (QWidget *parent, int type, bool tool_window, const cha
 	status_popup = 0;
 	status_popup_container = 0;
 
-	setWindowIcon (RKStandardIcons::iconForWindow (this));
+	if (!(type & KatePluginWindow)) setWindowIcon (RKStandardIcons::iconForWindow (this));
 }
 
 RKMDIWindow::~RKMDIWindow () {
@@ -110,6 +110,7 @@ void RKMDIWindow::setCaption (const QString &caption) {
 	RK_TRACE (APP);
 	QWidget::setWindowTitle (caption);
 	emit (captionChanged (this));
+	if (tool_window_bar) tool_window_bar->captionChanged(this);
 }
 
 bool RKMDIWindow::isActive () {
@@ -127,7 +128,7 @@ bool RKMDIWindow::isActiveInsideToplevelWindow () {
 void RKMDIWindow::activate (bool with_focus) {
 	RK_TRACE (APP);
 
-	QWidget *old_focus = qApp->focusWidget ();
+	QPointer<QWidget> old_focus = qApp->focusWidget ();
 
 	if (isToolWindow ()) {
 		if (tool_window_bar) tool_window_bar->showWidget (this);
@@ -255,11 +256,8 @@ void RKMDIWindow::paintEvent (QPaintEvent *e) {
 
 	if (isActive () && !no_border_when_active) {
 		QPainter paint (this);
-		paint.setPen (QColor (255, 0, 0));
-		paint.drawLine (0, 0, 0, height ()-1);
-		paint.drawLine (0, height ()-1, width ()-1, height ()-1);
-		paint.drawLine (0, 0, width ()-1, 0);
-		paint.drawLine (width ()-1, 0, width ()-1, height ()-1);
+		paint.setPen (QApplication::palette ().color(QPalette::Highlight));
+		paint.drawRect (0, 0, width ()-1, height ()-1);
 	}
 }
 
@@ -333,8 +331,11 @@ void RKMDIWindow::setStatusMessage (const QString& message, RCommand *command) {
 	RK_TRACE (MISC);
 
 	if (!status_popup) {
+		// NOTE: Yes, this clearly goes against the explicit recommendation, but we do want the status message as an overlay to the main widget.
+		//       This is especially important for plots, where changing the plot area geometry will trigger redraws of the plot.
+		//       Note that these messages are mostly used on previews, so far, where they will either be a) transient ("preview updating"),
+		//       or b) in case of errors, the place of interest will be outside the preview widget _and_ the preview will generally be invalid.
 		status_popup_container = new QWidget (this);
-		status_popup_container->resize (size ());
 		QVBoxLayout *layout = new QVBoxLayout (status_popup_container);
 		layout->setContentsMargins (10, 10, 10, 10);
 		status_popup = new KMessageWidget (status_popup_container);
@@ -342,13 +343,18 @@ void RKMDIWindow::setStatusMessage (const QString& message, RCommand *command) {
 		status_popup->setMessageType (KMessageWidget::Warning);
 		layout->addWidget (status_popup);
 		layout->addStretch ();
+
+		// when animation is finished, squeeze the popup-container, so as not to interfere with mouse events in the main window
+		connect (status_popup, &KMessageWidget::showAnimationFinished, [this]() { status_popup_container->resize (QSize(width(), status_popup->height () + 20)); });
+		connect (status_popup, &KMessageWidget::hideAnimationFinished, status_popup_container, &QWidget::hide);
 	}
 
 	if (command) connect (command->notifier (), &RCommandNotifier::commandFinished, this, &RKMDIWindow::clearStatusMessage);
 	if (!message.isEmpty ()) {
+		status_popup_container->resize (size ());
 		status_popup_container->show ();
 		if (status_popup->text () == message) {
-			if (!status_popup->isVisible ()) status_popup->animatedShow ();  // it might have been close by user. And no, simply show() is _not_ good enough. KF5 (5.15.0)
+			if (!status_popup->isVisible ()) status_popup->animatedShow ();  // it might have been closed by user. And no, simply show() is _not_ good enough. KF5 (5.15.0)
 		}
 		if (status_popup->text () != message) {
 			if (status_popup->isVisible ()) status_popup->hide (); // otherwise, the KMessageWidget does not update geometry (KF5, 5.15.0)
@@ -358,7 +364,7 @@ void RKMDIWindow::setStatusMessage (const QString& message, RCommand *command) {
 	} else {
 		status_popup_container->hide ();
 		status_popup->hide ();
-		status_popup->setText (QString ());  // this is a lame way to keep track of whether the popup is empty. See resizeEvent()
+		status_popup->setText (QString ());
 	}
 }
 
@@ -369,9 +375,7 @@ void RKMDIWindow::clearStatusMessage () {
 }
 
 void RKMDIWindow::resizeEvent (QResizeEvent*) {
-	if (status_popup_container && !status_popup->text ().isEmpty ()) {
-		status_popup_container->resize (size ());
-	}
+	if (status_popup_container && status_popup_container->isVisible ()) status_popup_container->resize (QSize(width(), status_popup->height () + 20));
 }
 
 

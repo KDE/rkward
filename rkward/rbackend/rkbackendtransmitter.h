@@ -35,11 +35,14 @@ public:
 	void writeRequest (RBackendRequest *request) override;
 	void requestReceived (RBackendRequest *request) override;
 	void handleTransmissionError (const QString &message) override;
+public slots:
+	void doExit(); // To be called from main thread via QMetaMethod::invoke
 private:
 	void timerEvent (QTimerEvent *event) override;
 	void flushOutput (bool force);
 	QList<RBackendRequest*> current_sync_requests;	// pointers to the request that we expect a reply for. Yes, internally, this can be several requests.
 	QString servername;
+	int flushtimerid;
 };
 
 #endif

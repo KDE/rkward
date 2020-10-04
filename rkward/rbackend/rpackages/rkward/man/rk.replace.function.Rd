@@ -4,8 +4,12 @@
 \alias{rk.replace.function}
 \title{Replace a function inside its package environment / namespace}
 \usage{
-rk.replace.function(functionname, environment, replacement,
-  copy.formals = TRUE)
+rk.replace.function(
+  functionname,
+  environment,
+  replacement,
+  copy.formals = TRUE
+)
 }
 \arguments{
 \item{functionname}{name of the function to be replaced (character).}
@@ -44,18 +48,17 @@ functions in arbitrary ways. You better know what you are doing.
 ## Not run
 rk.replace.function ("history", as.environment ("package:utils"),
   function () {
-    cat ("This is what you typed:\\n")
+    cat ("This is what you typed:\n")
     eval (body (.rk.backups$history))
   })
 ## End not run
 
 }
-\author{
-Thomas Friedrichsmeier \email{rkward-devel@kde.org}
-}
 \seealso{
 \code{\link{assignInNamespace}}, \code{\link{debug}}
 }
+\author{
+Thomas Friedrichsmeier \email{rkward-devel@kde.org}
+}
 \keyword{IO}
 \keyword{utilities}
-

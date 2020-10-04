@@ -31,6 +31,7 @@
 #include "rkglobals.h"
 #include "core/robject.h"
 #include "misc/rkdummypart.h"
+#include "../misc/rkcommonfunctions.h"
 
 #include "debug.h"
 
@@ -47,8 +48,7 @@ RObjectViewer::RObjectViewer (QWidget *parent, RObject *object, ViewerPage initi
 	QVBoxLayout *layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
 
-	description_label = new QLabel (this);
-	description_label->setWordWrap (true);
+	description_label = RKCommonFunctions::wordWrappedLabel (QString ());
 	layout->addWidget (description_label);
 	status_label = new QLabel (this);
 	status_label->hide ();

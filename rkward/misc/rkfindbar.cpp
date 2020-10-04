@@ -138,7 +138,12 @@ void RKFindBar::doSearch (bool backward) {
 	bool found = false;
 	QString term = term_edit->currentText ();
 	findRequest (term, backward, this, &found);
-	if (!(found || term.isEmpty ())) term_edit->lineEdit ()->setPalette (nomatch_palette);
+	if (!(found || term.isEmpty ())) indicateSearchFail();
+}
+
+void RKFindBar::indicateSearchFail () {
+	RK_TRACE (APP);
+	term_edit->lineEdit ()->setPalette (nomatch_palette);
 }
 
 void RKFindBar::activate () {

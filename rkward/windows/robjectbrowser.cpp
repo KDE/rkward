@@ -2,7 +2,7 @@
                           robjectbrowser  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004 - 2016 by Thomas Friedrichsmeier
+    copyright            : (C) 2004 - 2017 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -275,10 +275,13 @@ void RObjectBrowserInternal::doubleClicked (const QModelIndex& index) {
 	if (!object) return;
 	if (object == RObjectList::getObjectList ()) return;
 
-	if (RKWorkplace::mainWorkplace ()->canEditObject (object)) {
-		RKWorkplace::mainWorkplace ()->editObject (object);
+	if (object->isInGlobalEnv ()) {
+		if (RKWorkplace::mainWorkplace ()->canEditObject (object)) {
+			RKWorkplace::mainWorkplace ()->editObject (object);
+		} else {
+			RKWorkplace::mainWorkplace ()->newObjectViewer (object);
+		}
 	} else {
-		RKWorkplace::mainWorkplace ()->flushAllData ();
-		RKWorkplace::mainWorkplace ()->newObjectViewer (object);
+		RKHelpSearchWindow::mainHelpSearch ()->getFunctionHelp (object->getShortName (), object->toplevelEnvironment ()->packageName ());
 	}
 }

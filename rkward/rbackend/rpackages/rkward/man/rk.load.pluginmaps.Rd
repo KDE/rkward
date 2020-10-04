@@ -4,8 +4,11 @@
 \alias{rk.load.pluginmaps}
 \title{(Re-)load the given pluginmap files into the RKWard GUI}
 \usage{
-rk.load.pluginmaps(pluginmap.files = NULL, force.add = TRUE,
-  force.reload = TRUE)
+rk.load.pluginmaps(
+  pluginmap.files = NULL,
+  force.add = TRUE,
+  force.reload = TRUE
+)
 }
 \arguments{
 \item{pluginmap.files}{a character vector of file names to add. This may be left empty,
@@ -37,11 +40,10 @@ rk.load.pluginmaps()
 
 ## END NOT RUN
 }
-\author{
-Thomas Friedrichsmeier \email{rkward-devel@kde.org}
-}
 \seealso{
 \code{\link{rk.call.plugin}}, @seealso \code{\link{rkwarddev::rk.plugin.skeleton}}
 }
+\author{
+Thomas Friedrichsmeier \email{rkward-devel@kde.org}
+}
 \keyword{utilities}
-

@@ -25,7 +25,7 @@
 #include <QLabel>
 #include <QPointer>
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "../windows/rkworkplace.h"
 #include "../windows/rkhtmlwindow.h"
@@ -34,8 +34,6 @@
 
 bool RKSaveModifiedDialog::askSaveModified (QWidget* parent, QList <RKMDIWindow*> windows, bool project) {
 	RK_TRACE (APP);
-
-	save_project_check = 0;
 
 	QList<RKMDIWindow*> modified_wins;
 	for (int i = 0; i < windows.size (); ++i) {
@@ -80,6 +78,7 @@ RKSaveModifiedDialog::RKSaveModifiedDialog (QWidget* parent, QList<RKMDIWindow*>
 	QTreeWidget *tree = new QTreeWidget ();
 	v_layout->addWidget (tree);
 
+	save_project_check = 0;
 	tree->header ()->hide ();
 #warning TODO: remove me
 project = true;
@@ -93,11 +92,12 @@ project = true;
 		header->addChild (save_project_check);
 		save_project_check->setCheckState (0, Qt::Checked);
 
-		QStringList modified_outputs = RKOutputWindowManager::modifiedOutputDirectories ();
+		QStringList modified_outputs = RKOutputWindowManager::self()->modifiedOutputDirectories();
 		if (!modified_outputs.isEmpty ()) {
 			QTreeWidgetItem *header = makeHeaderItem (i18n ("Output files"), tree);
 			for (int i = 0; i < modified_outputs.size (); ++i) {
-				QTreeWidgetItem *item = new QTreeWidgetItem (RKOutputWindowManager::outputCaption (modified_outputs[i]));
+				QTreeWidgetItem *item = new QTreeWidgetItem();
+				item->setText(0, RKOutputWindowManager::self()->outputCaption(modified_outputs[i]));
 				item->setFirstColumnSpanned (true);
 				header->addChild (item);
 				item->setCheckState (0, Qt::Checked);
@@ -157,7 +157,7 @@ void RKSaveModifiedDialog::saveSelected () {
 
 	for (QMap<QTreeWidgetItem *, QString>::const_iterator it = outputdir_checklist.constBegin (); it != outputdir_checklist.constEnd (); ++it) {
 		if (it.key ()->checkState (0) != Qt::Checked) continue;
-		RKOutputWindowManager::saveOutputDirectory (it.value ());
+		RKOutputWindowManager::self()->saveOutputDirectory(it.value());
 	}
 
 	if (all_ok) accept ();
