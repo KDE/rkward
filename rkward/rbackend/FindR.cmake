@@ -13,28 +13,30 @@ ELSE(R_EXECUTABLE-NOTFOUND)
 	MESSAGE(STATUS "Using R at ${R_EXECUTABLE}")
 ENDIF(R_EXECUTABLE-NOTFOUND)
 
-# find out about R architecture (needed for some paths)
-EXECUTE_PROCESS(
-	COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "--no-init-file" "-e" "cat(R.version$arch)"
-	OUTPUT_VARIABLE R_ARCH)
-	IF (${R_ARCH} STREQUAL "x86_64")
-		SET (R_ARCH "x64")
-	ENDIF (${R_ARCH} STREQUAL "x86_64")
-MESSAGE (STATUS "R architecture is ${R_ARCH}")
+IF(NOT NO_CHECK_R)
+    # find out about R architecture (needed for some paths)
+    EXECUTE_PROCESS(
+        COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "--no-init-file" "-e" "cat(R.version$arch)"
+        OUTPUT_VARIABLE R_ARCH)
+        IF (${R_ARCH} STREQUAL "x86_64")
+            SET (R_ARCH "x64")
+        ENDIF (${R_ARCH} STREQUAL "x86_64")
+    MESSAGE (STATUS "R architecture is ${R_ARCH}")
 
-# check R version.
-SET (R_MIN_VERSION "2.10.0")
-MESSAGE (STATUS "Checking R version")
-EXECUTE_PROCESS(
-	COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "--no-init-file" "-e" "cat (paste(R.version$major, R.version$minor, sep='.'))"
-	OUTPUT_VARIABLE R_VERSION)
-MESSAGE (STATUS "R version is ${R_VERSION}")
-EXECUTE_PROCESS(
-	COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "--no-init-file" "-e" "min_ver <- '${R_MIN_VERSION}'; if (compareVersion ('${R_VERSION}', min_ver) < 0) cat ('At least R version', min_ver, 'is required')"
-	OUTPUT_VARIABLE R_VERSION_STATUS)
-IF (R_VERSION_STATUS)
-	MESSAGE (FATAL_ERROR ${R_VERSION_STATUS})
-ENDIF (R_VERSION_STATUS)
+    # check R version.
+    SET (R_MIN_VERSION "2.10.0")
+    MESSAGE (STATUS "Checking R version")
+    EXECUTE_PROCESS(
+        COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "--no-init-file" "-e" "cat (paste(R.version$major, R.version$minor, sep='.'))"
+        OUTPUT_VARIABLE R_VERSION)
+    MESSAGE (STATUS "R version is ${R_VERSION}")
+    EXECUTE_PROCESS(
+        COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "--no-init-file" "-e" "min_ver <- '${R_MIN_VERSION}'; if (compareVersion ('${R_VERSION}', min_ver) < 0) cat ('At least R version', min_ver, 'is required')"
+        OUTPUT_VARIABLE R_VERSION_STATUS)
+    IF (R_VERSION_STATUS)
+        MESSAGE (FATAL_ERROR ${R_VERSION_STATUS})
+    ENDIF (R_VERSION_STATUS)
+ENDIF(NOT NO_CHECK_R)
 
 # find R_HOME
 
