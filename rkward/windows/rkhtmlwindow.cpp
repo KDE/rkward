@@ -123,6 +123,14 @@ public:
 	void setScrollPosition (const QPoint &pos)  {
 		mainFrame ()->setScrollPosition (pos);
 	}
+	void setScrollPositionWhenDone(const QPoint &pos)  {
+		QMetaObject::Connection * const connection = new QMetaObject::Connection;
+		*connection = connect(this, &QWebPage::loadFinished, [this, pos, connection](){
+			QObject::disconnect(*connection);
+			delete connection;
+			setScrollPosition(pos);
+		});
+	}
 #else
 	bool supportsContentType (const QString &name) {
 		if (name.startsWith("text")) return true;
@@ -137,6 +145,14 @@ public:
 	void setScrollPosition (const QPoint &point) {
 		RK_DEBUG(APP, DL_DEBUG, "scrolling to %d, %d", point.x (), point.y ());
 		runJavaScript (QString ("window.scrollTo(%1, %2);").arg (point.x ()).arg(point.y ()));
+	}
+	void setScrollPositionWhenDone(const QPoint &pos)  {
+		QMetaObject::Connection * const connection = new QMetaObject::Connection;
+		*connection = connect(this, &QWebEnginePage::loadFinished, [this, pos, connection](){
+			QObject::disconnect(*connection);
+			delete connection;
+			setScrollPosition(pos);
+		});
 	}
 #endif
 
@@ -435,15 +451,7 @@ void RKHTMLWindow::openLocationFromHistory (VisitedLocation &loc) {
 	} else {
 		url_change_is_from_history = true;
 		openURL (loc.url);            // TODO: merge into restoreBrowserState()?
-#ifndef NO_QT_WEBENGINE
-		QMetaObject::Connection * const connection = new QMetaObject::Connection;
-		*connection = connect(view, &QWebEngineView::loadFinished, [this, scroll_pos, connection](){
-			QObject::disconnect(*connection);
-			delete connection;
-			page->setScrollPosition (scroll_pos);
-		});
-#endif
-		page->setScrollPosition (scroll_pos);
+		page->setScrollPositionWhenDone(scroll_pos);
 		url_change_is_from_history = false;
 	}
 
@@ -536,6 +544,9 @@ bool RKHTMLWindow::openURL (const QUrl &url) {
 
 	if (handleRKWardURL (url, this)) return true;
 
+	QPoint restore_position;
+	if (url == current_url) restore_position = page->scrollPosition().toPoint();
+
 	QMimeType mtype = QMimeDatabase ().mimeTypeForUrl (url);
 	if (window_mode == HTMLOutputWindow) {
 		if (url != current_url) {
@@ -564,6 +575,7 @@ bool RKHTMLWindow::openURL (const QUrl &url) {
 			} else {
 				page->load (url);
 			}
+			if (!restore_position.isNull()) page->setScrollPositionWhenDone(restore_position);
 		} else {
 			fileDoesNotExistMessage ();
 		}
