@@ -1141,7 +1141,7 @@ bool RKRBackend::startR () {
 	R_CallMethodDef callMethods [] = {
 		// NOTE: Intermediate cast to void* to avoid compiler warning
 		{ "ws", (DL_FUNC) (void*) &doWs, 1 },
-		{ "rk.simple", (DL_FUNC) &doSimpleBackendCall, 1},
+		{ "rk.simple", (DL_FUNC) (void*) &doSimpleBackendCall, 1},
 		{ "rk.do.command", (DL_FUNC) (void*) &doSubstackCall, 1 },
 		{ "rk.do.generic.request", (DL_FUNC) (void*) &doPlainGenericRequest, 2 },
 		{ "rk.get.structure", (DL_FUNC) (void*) &doGetStructure, 4 },
