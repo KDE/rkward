@@ -1,7 +1,8 @@
 --- Version 0.7.2 - UNRELEASED
+- Script preview keeps vertical scroll position when updating
 - Python development scripts have been ported to python3
 - Fix some problems with plot preview in wizard-type plugins
-- Add function rk.home() for retrieving applicaiton paths, similar to R.home()
+- Add function rk.home() for retrieving applicaton paths, similar to R.home()
 - Remove direct dependency on libintl
 - Add menu option to switch application language
 - Fix several small memory leaks
