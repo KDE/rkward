@@ -19,7 +19,7 @@ Authors@R: c(person(given="Thomas", family="Friedrichsmeier",
         email="rkward-devel@kde.org", role=c("cre","ctb")))
 Version: 0.7.2
 Date: 2020-10-10
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Collate: 
     'base_overrides.R'
     'internal.R'
