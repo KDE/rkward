@@ -269,7 +269,58 @@
 	rk.set.output.html.file (x, ...)
 }
 
+
 ## TODO move the following functions (and some others to a dedicated file/help page)
+
+#' A Reference Class to represent an RKWard Output directory.
+#' @name RK.Output
+#' @description Reference class to represent an RKWard Output directory.
+#' \code{activate} Set this output directory as the one where output will be appended.
+#' @param index if specified: Write to a specific HTML file within the output directory, instead of the default.
+#' @returns NULL
+#' @import methods
+#' @exportClass RK.Output
+"RK.Output"<-setRefClass(Class="RK.Output",
+	fields=list(id="character"),
+	methods=list(
+		activate=function() {
+			.rk.do.call("output", c ("activate", id))
+		},
+		isEmpty=function() {
+			isTRUE(.rk.do.call("output", c ("isEmpty", id)))
+		},
+		isModified=function() {
+			isTRUE(.rk.do.call("output", c ("isModified", id)))
+		},
+		load=function(url, overwrite=FALSE, ask=FALSE) {
+			if (missing(url)) stop("No url specified")
+			.rk.do.call("output", c ("load", id, url, isTRUE(overwrite), isTRUE(ask)))
+		},
+		save=function(url, overwrite=FALSE, ask=FALSE) {
+			.rk.do.call("output", c ("save", id, url, isTRUE(overwrite), isTRUE(ask)))
+		},
+		export=function(url, overwrite=FALSE, ask=FALSE) {
+			if (missing(url)) stop("No url specified")
+			.rk.do.call("output", c ("export", id, url, isTRUE(overwrite), isTRUE(ask)))
+		},
+		clear=function(ask=TRUE) {
+			.rk.do.call("output", c ("clear", id, isTRUE(ask)))
+		},
+		close=function(discard=FALSE, ask=FALSE) {
+			.rk.do.call("output", c ("close", isTRUE(discard), isTRUE(ask)))
+		},
+		view=function(raise=TRUE) {
+			.rk.do.call("output", c ("view", isTRUE(raise)))
+		},
+		.workingDir=function() {
+			.rk.do.call("output", c ("workingDir"))
+		},
+		.targetDir=function() {
+			.rk.do.call("output", c ("targetDir"))
+		}
+	))
+
+
 # 
 # .rk.purge.target.dir (target, ask) {
 # 	if (dir.exists (target)) {

@@ -29,8 +29,8 @@ echo "
 	library (roxygen2)
 	packages <- c ($PACKAGES)
 	for (package in packages) {
-#		dummy <- roxygen2:::source_package (package) # See https://github.com/klutometis/roxygen/issues/167
-		roxygenize (package)
+		#dummy <- roxygen2:::source_package (package) # See https://github.com/klutometis/roxygen/issues/167
+		roxygenize (package, load_code=load_source)
 		possibly_empty_dirs <- paste (package, c ('inst/doc', 'inst'), sep='/')
 		for (dir in possibly_empty_dirs) {
 			if (file.exists (dir)) suppressWarnings (try (file.remove (dir)))
