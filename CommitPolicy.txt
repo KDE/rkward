@@ -30,8 +30,11 @@ Branches and policies
   * merge your commit to master, unless it is really specific to the release-branch (or unless you cherry-picked it from master)
 * released:
   This will be updated for each new stable release, but _only_ for each new stable release. Meant to allow tracking released versions. In general, please don't commit / push anything, here, unless you are the release manager.
+* devel/*
+  For longer, experimental, or disruptive work, consider creating a branch named "devel/feature_description". Do let us know, when the feature is merged (or discarded), and the branch can be removed.
 * work/*
-  For longer, experimental, or disruptive work, consider creating a branch named "work/feature_description". Do let us know, when the feature is merged (or discarded), and the branch can be removed.
+  The KDE git infrastructure special-cases branches under the prefix "work". Among other things these will allow history-rewrites, and will not produce commit notifications, i.e. the rules are much like for a personal fork.
+  Most of the time, please use a "devel" branch (see above), instead of a "work" branch, as this allows better collaboration.
 * kde4:
   The latest KDE4 based development version of RKWard. There may or may not be future bugfix releases for KDE4, but no active development is expected on this branch.
 

@@ -1,4 +1,4 @@
---- Version 0.7.2 - UNRELEASED
+--- Version 0.7.2 - Oct-16-2020
 - Script preview keeps vertical scroll position when updating
 - Python development scripts have been ported to python3
 - Fix some problems with plot preview in wizard-type plugins
@@ -15,7 +15,6 @@
 - The new code hinting features from version 0.7.1 are now also available in the console
 - On unix-systems, RKWard can now be run without installation
 - Kate addons are now supported within RKWard. Intially, search-in-files, snippets, and projects are loaded by default
-  * TODO: Instruct packagers that they should add a dependency on kate, or at least kate plugins
 - Fixed: Avoid shorcut clash with kate part by removing conflicting (default) shortcuts, automatically
 
 --- Version 0.7.1b - May-25-2020
