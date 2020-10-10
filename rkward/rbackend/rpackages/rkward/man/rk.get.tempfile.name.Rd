@@ -8,9 +8,6 @@
 \alias{rk.tempdir}
 \alias{rk.home}
 \alias{rk.flush.output}
-\alias{rk.export.output.dir}
-\alias{rk.import.output.dir}
-\alias{rk.create.output.dir}
 \title{RKWard file names}
 \usage{
 rk.get.tempfile.name(
@@ -39,21 +36,6 @@ rk.flush.output(
   ask = TRUE,
   ...
 )
-
-rk.export.output.dir(
-  source.dir = basename(rk.get.output.html.file()),
-  target.dir,
-  ask = TRUE
-)
-
-rk.import.output.dir(
-  source.dir,
-  activate = "index.html",
-  mode = c("ask", "integrate", "keep.separate"),
-  ask = TRUE
-)
-
-rk.create.output.dir()
 }
 \arguments{
 \item{prefix}{a string, used as a filename prefix when saving images to the

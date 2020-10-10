@@ -33,6 +33,7 @@ Collate:
     'rk.edit-functions.R'
     'rk.filename-functions.R'
     'rk.label-functions.R'
+    'rk.output.R'
     'rk.plugin-functions.R'
     'rk.print-functions.R'
     'rk.replace.function.R'

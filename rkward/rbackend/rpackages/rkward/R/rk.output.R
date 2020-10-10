@@ -1,0 +1,107 @@
+#' Class and functions for organizing RKWard output.
+#' @name RK.Output
+#'
+#' @description Since version 0.7.5, RKWard supports more than one piece of output. While dealing with only a single output page, there will be no need for the user to call any of
+#'              these functions, directly, as exactly one output
+#'              is always opened for writing in RKWard. However, these functions allow to manage several distinct output pages, programmatically.
+#'
+#'              The primary entry point is the function \code{rk.output}, which allows to retrieve the current output directly, or to load or create a new one. This will return
+#'              an instance of the \code{RK.Output} reference class, which has methods for subsequent manipulation. Two instances of this class may be pointing to the same
+#'              logical output file/directory (e.g. when loading the same output file, twice), in which case any operation will affect both instances the same.
+#'
+#'              Internally, outputs are managed by the RKWard frontend. The frontend will ask to save any unsaved modified output pages on exit.
+#'
+#'              At the time of this writing, output is stored in directories containing an HTML index file, and, usually, several image files, and possibly more.
+#'              However other types of output may be supported in the future, and therefore assumptions about the details of the output storage should be avoided.
+#'
+#'              \code{rk.output} can be used to create or load output files, as well as to obtain a reference to an already loaded output file. After that, use the class methods
+#'              to operate on the reference obtained.
+#'
+#' @param filename The location where an existing output directory is loaded from or saved/exported to. Note that this is usually not the same location where functions such as
+#'                 \link{rk.print} will write to (these operate on a temporary "working copy", but rather the target directory, where changes should eventually be saved
+#'                 back, to.
+#'
+#' @param create If \code{TRUE}, create a new output directory. The parameter \code{filename}, if specified, is the target save file/directory, in this case. Should this already exist,
+#'               an error will be raised. If \code{FALSE}, load or re-use an existing output directory. If the parameter \code{filename} is left \code{NULL}, \code{rk.output} will
+#'               return the currently active output.
+#'
+#' @param all If \code{TRUE}, return a list of all currently loaded output directories.
+#'
+#' @param overwrite If \code{TRUE}, RKWard will overwrite any existing output when saving, or discard any existing modifications when closing or reverting an output. If \code{FALSE}, trying
+#'                  to overwrite/discard existing files/modifications will result in an error. If \code{NULL} (the default), the frontend will ask what to do in this case.
+#'
+#' @param discard See \code{overwrite} for the meaning.
+#'
+#' @param ask Prompt the user for confirmation before potentially desctrucitve operations such as closing or reverting a modified output.
+#'
+#' @param raise Raise the output window, if it is already visble.
+#'
+#' @returns NULL
+#' @field id An internal identifier. NULL for a closed output. This should be treated as read-only, but you can use this to test whether two output handles are the same.
+#' @import methods
+#' @exportClass RK.Output
+RK.Output <- setRefClass(Class="RK.Output", fields=list(id="character"),
+	methods=list(
+	# The implementation of most of these is not terribly complex, but we need an implementation in the frontend, anyway, so we use that.
+		activate=function() {
+"Set this output as the one that rk.print and other RKWard Output functions will write to."
+			.rk.do.call("output", c ("activate", .checkId()))
+		},
+		isEmpty=function() {
+"Returns TRUE, if the output is currently empty."
+			isTRUE(.rk.do.call("output", c ("isEmpty", .checkId())))
+		},
+		isModified=function() {
+"Returns TRUE, if this output has any changes that may need saving."
+			isTRUE(.rk.do.call("output", c ("isModified", .checkId())))
+		},
+		revert=function(ask=TRUE) {
+"Revert this output to the last saved state. If no previous state is available (never saved, before), clears the output."
+			.rk.do.call("output", c ("revert", .checkId(), isTRUE(ask)))
+		},
+		save=function(filename, overwrite=NULL) {
+"Save this output, either to the last known save location (if no filename is specified) or to a new location (\"save as\")."
+			.rk.do.call("output", c ("save", .checkId(), filename, if (is.Null(overwrite)) "ask" else isTRUE(overwrite)))
+		},
+		export=function(filename, overwrite=NULL) {
+"Save this output, to the specified location, but keep it associated with the previous location (\"save a copy\")."
+			if (missing(filename)) stop("No file name specified")
+			.rk.do.call("output", c ("export", .checkId(), filename, if (is.Null(overwrite)) "ask" else isTRUE(overwrite)))
+		},
+		clear=function(ask=TRUE) {
+"Clear all content from this output. As with any function in this class, this affects the working copy, only, until you call save. Therefore, by default, the user will be prompted for confirmation
+if and only if there are unsaved changes pending."
+			.rk.do.call("output", c ("clear", .checkId(), isTRUE(ask)))
+		},
+		close=function(discard=NULL) {
+"Forget about this output file, also closing any open views. Note: Trying to call any further methods on this object will fail."
+			.rk.do.call("output", c ("close", .checkId(), isTRUE(discard), isTRUE(ask)))
+			id=NULL
+		},
+		view=function(raise=TRUE) {
+"Open this output for viewing in the frontend."
+			.rk.do.call("output", c ("view", .checkId(), isTRUE(raise)))
+		},
+		.workingDir=function() {
+"The path of the working copy of this object. Please don't use this except for automated tests. The internals may be subject to change."
+			.rk.do.call("output", c ("workingDir", .checkId()))
+		},
+		filename=function() {
+"Return the target filename for this output, i.e. the location where it will be saved, to. This will be an empty string for newly created outputs that have not been saved, yet.
+Do not write anything to the target filename, directly! This is purely for information."
+			.rk.do.call("output", c ("filename", .checkId()))
+		},
+		.checkId=function() {
+"For internal use: Throws an error, if the id parameter is NULL or too long, returns a length one character vector otherwise."
+			i <- as.character(id)
+			if (length(i) != 1) stop ("Invalid output id. Use rk.output() to obtain a valid output handle.")
+			i
+		}
+	))
+
+#' @export
+#' @rdname RK.Output
+"rk.output" <- function(filename=NULL, create=FALSE, all=FALSE) {
+	if(all && (!is.Null(filename) || create)) stop("'all' cannot be combined with 'create' or 'filename'")
+	.rk.do.call("output", c ("get", as.character(isTRUE(create)), as.character(isTRUE(all)), as.character(load)))
+}
