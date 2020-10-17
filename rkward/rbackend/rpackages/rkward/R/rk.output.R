@@ -22,7 +22,7 @@
 #'                 back, to.
 #'
 #' @param create If \code{TRUE}, create a new output directory. The parameter \code{filename}, if specified, is the target save file/directory, in this case. Should this already exist,
-#'               an error will be raised. If \code{FALSE}, load or re-use an existing output directory. If the parameter \code{filename} is left \code{NULL}, \code{rk.output} will
+#'               an error will be raised. If \code{create=FALSE}, load or re-use an existing output directory. If the parameter \code{filename} is left \code{NULL}, \code{rk.output} will
 #'               return the currently active output.
 #'
 #' @param all If \code{TRUE}, return a list of all currently loaded output directories.
