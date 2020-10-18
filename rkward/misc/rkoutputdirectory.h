@@ -22,11 +22,12 @@
 #include <QUrl>
 #include <QVariant>
 #include <QDateTime>
+#include <QPointer>
+#include <QObject>
 
-class RKOutputDirectory {
+class RKOutputDirectory : public QObject {
+	Q_OBJECT
 public:
-	RKOutputDirectory();
-	~RKOutputDirectory();
 #warning TODO: Move me to backend
 	/** Standard wrapper for the result of a "generic" API call, such that we need less special-casing in the backend. The conventions are simple:
 	 *  - If @param error is non-null, stop() will be called in the backend, with the given message.
@@ -49,10 +50,8 @@ public:
 		Ask,
 		Fail
 	};
-	void activate(RCommandChain* chain=0);
-	bool isEmpty();
+	GenericRCallResult activate(RCommandChain* chain=0);
 	GenericRCallResult revert(bool ask);
-	GenericRCallResult createOrImport(const QUrl from);
 	GenericRCallResult save(const QString& dest=QString(), OverwriteBehavior overwrite=Ask);
 	GenericRCallResult exportAs(const QString& dest=QString(), OverwriteBehavior overwrite=Ask);
 	GenericRCallResult clear(OverwriteBehavior discard=Ask);
@@ -62,23 +61,28 @@ public:
 	QString filename();
 	QString workDir();
 	static GenericRCallResult handleRCall(const QStringList& params);
-	static RKOutputDirectory* getOpenDirectory(const QString id, GenericCallResult* result);
+	static RKOutputDirectory* getOutputById(const QString& id, GenericCallResult* result);
+	static RKOutputDirectory* getOutputBySaveUrl(const QString& dest, bool create=false);
 private:
+	RKOutputDirectory();
+	~RKOutputDirectory();
+	void updateSavedHash();
+
 	QString saved_hash;
 	QDateTime save_timestamp;
 	QString work_dir;
 	QString save_dir;
 	QString id;
 	bool initialized;
+	QPointer<RKMDIWindow> window;
 	/** map of outputs. */
-	static QMap<QString, RKOutputDirectory> outputs;
+	static QMap<QString, RKOutputDirectory*> outputs;
 
-	void backendActivateOutputDirectory (const QString& dir, RCommandChain* chain);
-	QString createOutputDirectoryInternal ();
+	GenericRCallResult import(const QString& from);
+	static RKOutputDirectory* createOutputDirectoryInternal();
 	static bool isRKWwardOutputDirectory (const QString &dir);
 	static bool isOutputDirectoryModified (const QString &dir);
 	QString dropOutputDirectoryInternal (const QString& dir);
-
 };
 
 #endif

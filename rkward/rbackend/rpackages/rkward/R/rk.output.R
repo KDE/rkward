@@ -75,7 +75,7 @@ if and only if there are unsaved changes pending."
 		},
 		close=function(discard=NULL) {
 "Forget about this output file, also closing any open views. Note: Trying to call any further methods on this object will fail."
-			.rk.do.call("output", c ("close", .checkId(), isTRUE(discard), isTRUE(ask)))
+			.rk.do.call("output", c ("close", .checkId(), if (is.Null(discard)) "ask" else isTRUE(discard)))
 			id=NULL
 		},
 		view=function(raise=TRUE) {
