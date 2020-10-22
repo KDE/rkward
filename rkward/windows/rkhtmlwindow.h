@@ -207,6 +207,7 @@ public:
 	void registerWindow (RKHTMLWindow *window);
 /** R may produce output while no output window is active. This allows to set the file that should be monitored for such changes (called from within rk.set.html.output.file()). */
 	void setCurrentOutputPath (const QString &path);
+	QString currentOutputPath() const;
 /** returns a list (possibly empty) of pointers to existing output windows for the given path (for the current output path, if no path given). */
 	QList<RKHTMLWindow*> existingOutputWindows (const QString &path = QString ()) const;
 /** Create (and show) a new output window (for the current output path, unless path is specified), and @return the pointer */
@@ -216,8 +217,6 @@ public:
 	RKOutputDirectory* getCurrentOutput(const QString& filename=QString(), bool create=false);
 	QList<RKOutputDirectory*> allOutputs();
 
-/** Return a list of all current output directories that have been modified. Used for asking for save during shutdown. */
-	QStringList modifiedOutputDirectories () const;
 /** Return the name / caption of the given output directory */
 	QString outputCaption (const QString &dir) const;
 /** Use with care! Purges all current output directories, saved or not. You should query modifiedOutputDirectories (), and make sure to prompt for saving, before calling this. For use during shutdown. */

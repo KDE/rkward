@@ -29,6 +29,7 @@
 
 #include "../windows/rkworkplace.h"
 #include "../windows/rkhtmlwindow.h"
+#include "../misc/rkoutputdirectory.h"
 
 #include "../debug.h"
 
@@ -92,7 +93,7 @@ project = true;
 		header->addChild (save_project_check);
 		save_project_check->setCheckState (0, Qt::Checked);
 
-		QStringList modified_outputs = RKOutputWindowManager::self()->modifiedOutputDirectories();
+		QStringList modified_outputs = RKOutputDirectory::modifiedOutputDirectories();
 		if (!modified_outputs.isEmpty ()) {
 			QTreeWidgetItem *header = makeHeaderItem (i18n ("Output files"), tree);
 			for (int i = 0; i < modified_outputs.size (); ++i) {
@@ -155,9 +156,11 @@ void RKSaveModifiedDialog::saveSelected () {
 #warning TODO
 	}
 
-	for (QMap<QTreeWidgetItem *, QString>::const_iterator it = outputdir_checklist.constBegin (); it != outputdir_checklist.constEnd (); ++it) {
+	for (auto it = outputdir_checklist.constBegin (); it != outputdir_checklist.constEnd (); ++it) {
 		if (it.key ()->checkState (0) != Qt::Checked) continue;
-		RKOutputWindowManager::self()->saveOutputDirectory(it.value());
+		RKOutputDirectory *dir = RKOutputDirectory::getOutputById(it.value(), nullptr);
+		if (dir) dir->save();
+		else RK_ASSERT(dir);
 	}
 
 	if (all_ok) accept ();

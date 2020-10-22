@@ -20,13 +20,17 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QFileDialog>
-#include <KLocalizedString>
 
+#include <KLocalizedString>
 #include <KMessageBox>
 
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../rbackend/rcommand.h"
+#include "../rbackend/rkrinterface.h"
+#include "../windows/rkmdiwindow.h"
+#include "../windows/rkhtmlwindow.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../agents/rkquitagent.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
 
@@ -85,16 +89,15 @@ RKOutputDirectory::RKOutputDirectory() : initialized(false), window(nullptr) {
 	RK_TRACE(APP);
 }
 
-~RKOutputDirectory::RKOutputDirectory() {
+RKOutputDirectory::~RKOutputDirectory() {
 	RK_TRACE(APP);
 }
 
 RKOutputDirectory* RKOutputDirectory::getOutputById(const QString& id, GenericRCallResult* result) {
 	RK_TRACE (APP);
-	RK_ASSERT (result);
 
 	if (!outputs.contains(id)) {
-		result->error = i18n("The output identified by '%1' is not loaded in this session.", id);
+		if (result) result->error = i18n("The output identified by '%1' is not loaded in this session.", id);
 		return 0;
 	}
 	return outputs[id];
@@ -104,7 +107,7 @@ RKOutputDirectory* RKOutputDirectory::getOutputBySaveUrl(const QString& _dest, b
 	RK_TRACE (APP);
 
 	if (_dest.isEmpty()) {
-		if (!create) return getActiveOutput();
+		if (!create) return RKOutputWindowManager::self()->getCurrentOutput();
 		return createOutputDirectoryInternal();
 	}
 
@@ -162,13 +165,13 @@ RKOutputDirectory::GenericRCallResult RKOutputDirectory::exportAs (const QString
 		if (!isRKWwardOutputDirectory(dest)) {
 			return GenericRCallResult::makeError(i18n("The directory %1 exists, but does not appear to be an RKWard output directory. Refusing to overwrite it.", dest));
 		}
-		if (isOutputDirectoryModified(dest)) {
+/*		if (isOutputDirectoryModified(dest)) {
 			return GenericRCallResult::makeError(i18n("The output directory %1 has been modified by an external process. Refusing to overwrite it.", dest));
-		}
+		} */
 		if (overwrite == Ask) {
 			const QString warning = i18n("Are you sure you want to overwrite the existing directory '%1'? All current contents, <b>including subdirectories</b> will be lost.", dest);
 			KMessageBox::ButtonCode res = KMessageBox::warningContinueCancel(RKWardMainWindow::getMain(), warning, i18n("Overwrite Directory?"), KStandardGuiItem::overwrite(),
-												KStandardGuiItem::cance (), QString(), KMessageBox::Options(KMessageBox::Notify | KMessageBox::Dangerous));
+												KStandardGuiItem::cancel(), QString(), KMessageBox::Options(KMessageBox::Notify | KMessageBox::Dangerous));
 			if (KMessageBox::Continue != res) return GenericRCallResult::makeError(i18n("User cancelled"));
 		} else if (overwrite != Force) {
 			return GenericRCallResult::makeError(i18n("Not overwriting existing output"));
@@ -239,7 +242,7 @@ RKOutputDirectory* RKOutputDirectory::createOutputDirectoryInternal() {
 	marker.close();
 
 	auto d = new RKOutputDirectory();
-	d->work_dir = QFileInfo(ddir.absoluteFilePAth(destname)).canonicalFilePath();
+	d->work_dir = QFileInfo(ddir.absoluteFilePath(destname)).canonicalFilePath();
 	d->id = d->work_dir;
 	d->initialized = false;
 	outputs.insert(d->id, d);
@@ -254,7 +257,7 @@ RKOutputDirectory::GenericRCallResult RKOutputDirectory::activate(RCommandChain*
 	if(!initialized) {
 		// when an output directory is first initialized, we don't want that to count as a "modification". Therefore, update the "saved hash" _after_ initialization
 		RCommand *command = new RCommand(QString(), RCommand::App | RCommand::Sync | RCommand::EmptyCommand);
-		connect (command->notifier(), &RCommandNotifier::commandFinished, this, &RKOutputDirectory::updateSavedHash);
+		connect(command->notifier(), &RCommandNotifier::commandFinished, this, &RKOutputDirectory::updateSavedHash);
 		RKGlobals::rInterface()->issueCommand(command, chain);
 		initialized = true;
 	}
@@ -262,107 +265,93 @@ RKOutputDirectory::GenericRCallResult RKOutputDirectory::activate(RCommandChain*
 	return GenericRCallResult(QVariant(index_file));
 }
 
+RKOutputDirectory::GenericRCallResult RKOutputDirectory::clear(OverwriteBehavior discard) {
+	RK_TRACE(APP);
 
-
-
-
-
-
-
-
-
-
-
-
-QString RKOutputDirectory::dropOutputDirectory (const QString& dir, bool ask, RCommandChain* chain) {
-	RK_TRACE (APP);
-
-	OutputDirectory od = outputs[work_dir];
-	if (ask) {
-		if (od.saved_hash != hashDirectoryState (work_dir)) {
-			if (KMessageBox::warningContinueCancel (RKWardMainWindow::getMain (), i18n ("The output directory %1 has unsaved changes, which will be lost by dropping it. Are you sure you want to proceed?", work_dir)) != KMessageBox::Continue) return i18n ("Cancelled");
-		}
-	}
-
-	QString error = dropOutputDirectoryInternal (work_dir);
-	if (!error.isEmpty ()) return error;
-
-	if (current_default_path.startsWith (work_dir)) {
-		if (!outputs.isEmpty ()) {
-			backendActivateOutputDirectory (outputs.constBegin ().key (), chain);
-		} else {
-			createOutputDirectory (chain);
-		}
-	}
-
-	return QString ();
-}
-
-QString RKOutputDirectory::dropOutputDirectoryInternal (const QString& dir) {
-	RK_TRACE (APP);
-
-	if (!isRKWwardOutputDirectory (dir)) {
-		RK_ASSERT (false); // this should not happen unless user messes with the temporary file, but we better play it safe.
-		return (i18n ("The directory %1 does not appear to be an RKWard output directory. Refusing to remove it.", dir));
-	}
-	outputs.remove (dir);
-	QDir (dir).removeRecursively ();
-
-	QStringList paths = windows.keys ();
-	for (int i = 0; i < paths.size (); ++i) {
-		if (paths[i].startsWith (dir)) {
-//			RKWorkplace::closeWindows (windows.values (paths[i]));  // NOTE: Won't work with current compilers
-			QList<RKHTMLWindow*> wins = windows.values (paths[i]);
-			for (int j = 0; j < wins.size (); ++j) {
-				RKWorkplace::mainWorkplace ()->closeWindow (wins[j]);
+	if (!isEmpty()) {
+		if (discard == Ask) {
+			if (KMessageBox::warningContinueCancel(RKWardMainWindow::getMain(), i18n("Clearing will destroy any unsaved changes, and - upon saving - also saved changes. Are you sure you want to proceed?")) == KMessageBox::Continue) {
+				discard = Force;
+			}
+			if (discard != Force) {
+				return GenericRCallResult::makeError(i18n("Output is not empty. Not clearing it."));
 			}
 		}
 	}
 
-	return QString ();
+	QDir dir(work_dir);
+	dir.removeRecursively();
+	dir.mkpath(".");
+	initialized = false;
+	if (isActive()) activate();
 }
 
-void RKOutputDirectory::purgeAllOututputDirectories () {
-	RK_TRACE (APP);
+bool RKOutputDirectory::isEmpty() const {
+	RK_TRACE(APP);
 
-	QStringList output_dirs = outputs.keys ();
-	for (int i = output_dirs.size () - 1; i >= 0; --i) {
-		if (i > 0) dropOutputDirectoryInternal (output_dirs[i]);
-		else dropOutputDirectory (output_dirs[i], false);
+	if (!save_dir.isEmpty()) return false;  // we _could_ have saved an empty output, of course, but no worries about corner cases. In any doubt we return false.
+
+	if (!initialized) return true;
+	if (!isModified()) return true;   // because we have not saved/loaded this file, before, see above
+	return false;
+}
+
+RKOutputDirectory::GenericRCallResult RKOutputDirectory::purge(RKOutputDirectory::OverwriteBehavior discard) {
+	RK_TRACE(APP);
+
+	if (isModified()) {
+		if (discard == Fail) {
+			return GenericRCallResult::nakeError(i18n("Output has been modified. Not closing it."));
+		}
+		if (discard == Ask) {
+			auto res = KMessageBox::questionYesNoCancel(RKWardMainWindow::getMain(), i18n("The output has been modified, and closing it will discard all changes. What do you want to do?"), i18n("Discard unsaved changes?"), KStandardGuiItem::discard(), KStandardGuiItem::save(), KStandardGuiItem::cancel());
+			if (res == KMessageBox::Cancel) {
+				return GenericRCallResult::nakeError(i18n("User cancelled"));
+			}
+			if (res == KMessageBox::No) {
+				auto ret = save();
+				if (ret.failed()) return ret;
+			}
+		}
 	}
+
+	QDir dir(work_dir);
+	dir.removeRecursively();
+	if (isActive()) {
+		if (RKQuitAgent::quittingInProgress()) {
+			RK_DEBUG(APP, DEBUG, "Skipping activation of new output file: quitting in progress");
+		} else {
+			activateDefault();
+		}
+	}
+	outputs.remove(id);
+	deleteLater();
+	return GenericRCallResult();
+}
+
+bool RKOutputDirectory::isActive() const {
+	RK_TRACE(APP);
+
+	return RKOutputWindowManager::self()->currentDefaultPath().startsWith(work_dir);
 }
 
 QStringList RKOutputDirectory::modifiedOutputDirectories() const {
 	RK_TRACE (APP);
 
 	QStringList ret;
-	for (QMap<QString, OutputDirectory>::const_iterator it = outputs.constBegin (); it != outputs.constEnd (); ++it) {
-		if (it.value ().saved_hash != hashDirectoryState (it.key ())) ret.append (it.key ());
+	for (auto it = outputs.constBegin (); it != outputs.constEnd (); ++it) {
+		if (it.value()->isModified()) ret.append(it.key());
 	}
 	return ret;
 }
 
-QString RKOutputDirectory::outputCaption (const QString& dir) const {
-	RK_TRACE (APP);
-
-	// TODO: real implementation!
-	return (dir);
-}
-
-bool RKOutputDirectory::isRKWwardOutputDirectory (const QString& dir) {
+bool RKOutputDirectory::isRKWwardOutputDirectory(const QString& dir) {
 	RK_TRACE (APP);
 
 	return (QDir(dir).exists(QStringLiteral("rkward_output_marker.txt")));
 }
 
-bool RKOutputDirectory::isOutputDirectoryModified(const QString dir) {
-	RK_TRACE (APP);
-
-#warning TODO
-	return true;
-}
-
-void RKOutputDirectory::updateSavedHash () {
+void RKOutputDirectory::updateSavedHash() {
 	RK_TRACE (APP);
 
 	saved_hash = hashDirectoryState(work_dir);

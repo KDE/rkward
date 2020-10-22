@@ -25,6 +25,9 @@
 #include <QPointer>
 #include <QObject>
 
+class RKMDIWindow;
+class RCommandChain;
+
 class RKOutputDirectory : public QObject {
 	Q_OBJECT
 public:
@@ -42,7 +45,7 @@ public:
 		QString error;
 		QString warning;
 		QVariant ret;
-		bool failed() { !error.isEmpty(); }
+		bool failed() { return !error.isEmpty(); }
 		bool toBool() { return ret.toBool(); }
 	};
 	enum OverwriteBehavior {
@@ -57,12 +60,17 @@ public:
 	GenericRCallResult clear(OverwriteBehavior discard=Ask);
 	GenericRCallResult purge(OverwriteBehavior discard=Ask);
 	QString getId() const { return id; };
+	bool isEmpty() const;
+	bool isActive() const;
+	bool isModified() const;
 	void view(bool raise);
-	QString filename();
-	QString workDir();
+	QString filename() const;
+	QString workDir() const;
 	static GenericRCallResult handleRCall(const QStringList& params);
-	static RKOutputDirectory* getOutputById(const QString& id, GenericCallResult* result);
+	static RKOutputDirectory* getOutputById(const QString& id, GenericRCallResult* result);
 	static RKOutputDirectory* getOutputBySaveUrl(const QString& dest, bool create=false);
+/** Return a list of all current output directories that have been modified. Used for asking for save during shutdown. */
+	static QStringList modifiedOutputDirectories();
 private:
 	RKOutputDirectory();
 	~RKOutputDirectory();
@@ -74,6 +82,7 @@ private:
 	QString save_dir;
 	QString id;
 	bool initialized;
+
 	QPointer<RKMDIWindow> window;
 	/** map of outputs. */
 	static QMap<QString, RKOutputDirectory*> outputs;
@@ -81,8 +90,6 @@ private:
 	GenericRCallResult import(const QString& from);
 	static RKOutputDirectory* createOutputDirectoryInternal();
 	static bool isRKWwardOutputDirectory (const QString &dir);
-	static bool isOutputDirectoryModified (const QString &dir);
-	QString dropOutputDirectoryInternal (const QString& dir);
 };
 
 #endif
