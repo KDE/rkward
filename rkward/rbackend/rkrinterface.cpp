@@ -44,6 +44,7 @@
 #include "../plugin/rkcomponentmap.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkmessagecatalog.h"
+#include "../misc/rkoutputdirectory.h"
 #include "rksessionvars.h"
 
 #include "../windows/rkwindowcatcher.h"

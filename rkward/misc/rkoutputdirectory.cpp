@@ -29,6 +29,7 @@
 #include "../rbackend/rkrinterface.h"
 #include "../windows/rkmdiwindow.h"
 #include "../windows/rkhtmlwindow.h"
+#include "../windows/rkworkplace.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../agents/rkquitagent.h"
 #include "../rkglobals.h"
@@ -187,12 +188,9 @@ RKOutputDirectory::GenericRCallResult RKOutputDirectory::exportAs (const QString
 	return GenericRCallResult(QVariant(dest));  // return effective destination path. Needed by save()
 }
 
-RKOutputDirectory::GenericRCallResult RKOutputDirectory::import(const QString& _dir) {
+RKOutputDirectory::GenericRCallResult RKOutputDirectory::importInternal(const QString &_dir) {
 	RK_TRACE (APP);
 
-	if (initialized) {
-		return GenericRCallResult::makeError(i18n("Output directory %1 is already in use.", work_dir));
-	}
 	QFileInfo fi(_dir);
 	if (!fi.isDir()) {
 		return GenericRCallResult::makeError(i18n("The path %1 does not exist or is not a directory.", _dir));
@@ -209,6 +207,35 @@ RKOutputDirectory::GenericRCallResult RKOutputDirectory::import(const QString& _
 	initialized = true;
 
 	return GenericRCallResult(QVariant(id));
+}
+
+RKOutputDirectory::GenericRCallResult RKOutputDirectory::import(const QString& _dir) {
+	RK_TRACE (APP);
+
+	if (initialized) {
+		return GenericRCallResult::makeError(i18n("Output directory %1 is already in use.", id));
+	}
+
+	return importInternal(_dir);
+}
+
+RKOutputDirectory::GenericRCallResult RKOutputDirectory::revert(OverwriteBehavior discard) {
+	RK_TRACE (APP);
+
+	if (save_dir.isEmpty()) {
+		return GenericRCallResult::makeError(i18n("Output directory %1 has not previously been saved. Cannot revert.", id));
+	}
+	if (!isModified()) return GenericRCallResult(id, i18n("Output directory %1 had no modifications. Nothing reverted.", id));
+	if (discard == Ask) {
+		if (KMessageBox::warningContinueCancel(RKWardMainWindow::getMain(), i18n("Reverting will destroy any changes, since the last time you saved (%1). Are you sure you want to proceed?"), save_timestamp.toString()) == KMessageBox::Continue) {
+			discard = Force;
+		}
+	}
+	if (discard != Force) {
+		return GenericRCallResult::makeError(i18n("User cancelled."));
+	}
+
+	return importInternal(save_dir);
 }
 
 RKOutputDirectory* RKOutputDirectory::createOutputDirectoryInternal() {
@@ -291,6 +318,12 @@ bool RKOutputDirectory::isModified() const {
 	return saved_hash == hashDirectoryState(work_dir);
 }
 
+QString RKOutputDirectory::caption() const {
+	RK_TRACE(APP);
+	if (!save_dir.isEmpty()) return QFileInfo(save_dir).fileName();
+	return i18n("Unsaved output");
+}
+
 RKOutputDirectory::GenericRCallResult RKOutputDirectory::purge(RKOutputDirectory::OverwriteBehavior discard, RCommandChain* chain) {
 	RK_TRACE(APP);
 
@@ -338,12 +371,12 @@ bool RKOutputDirectory::isActive() const {
 	return RKOutputWindowManager::self()->currentOutputPath() == workPath();
 }
 
-QStringList RKOutputDirectory::modifiedOutputDirectories() {
+QList<RKOutputDirectory*> RKOutputDirectory::modifiedOutputDirectories() {
 	RK_TRACE (APP);
 
-	QStringList ret;
-	for (auto it = outputs.constBegin (); it != outputs.constEnd (); ++it) {
-		if (it.value()->isModified()) ret.append(it.key());
+	QList<RKOutputDirectory*> ret;
+	for (auto it = outputs.constBegin(); it != outputs.constEnd(); ++it) {
+		if (it.value()->isModified()) ret.append(it.value());
 	}
 	return ret;
 }
@@ -407,7 +440,7 @@ RKOutputDirectory::GenericRCallResult RKOutputDirectory::view(bool raise) {
 			list[0]->activate();
 		}
 	} else {
-		RKOutputWindowManager::self()->newOutputWindow(workPath());
+		RKWorkplace::mainWorkplace()->openOutputWindow(QUrl::fromLocalFile(workPath()));
 	}
 	return GenericRCallResult(id);
 }
@@ -415,9 +448,9 @@ RKOutputDirectory::GenericRCallResult RKOutputDirectory::view(bool raise) {
 RKOutputDirectory::GenericRCallResult RKOutputDirectory::handleRCall(const QStringList& params, RCommandChain *chain) {
 	RK_TRACE(APP);
 
-	QString command = params.value(1);
+	QString command = params.value(0);
 	if (command == QStringLiteral("get")) {
-		if (params.value(2) == QStringLiteral("all")) {
+		if (params.value(1) == QStringLiteral("all")) {
 			QStringList ret;
 			auto all = allOutputs();
 			for (int i=0; i < all.size(); ++i) {
@@ -426,8 +459,8 @@ RKOutputDirectory::GenericRCallResult RKOutputDirectory::handleRCall(const QStri
 			return GenericRCallResult(ret);
 		}
 
-		QString filename = params.value(4);
-		bool create = params.value(3) == QStringLiteral("create");
+		QString filename = params.value(3);
+		bool create = (params.value(2) == QStringLiteral("create"));
 		RKOutputDirectory *out = nullptr;
 		if (filename.isEmpty()) {
 			if (create) {
@@ -450,8 +483,8 @@ RKOutputDirectory::GenericRCallResult RKOutputDirectory::handleRCall(const QStri
 		return GenericRCallResult(out->getId());
 	} else {
 		// all other commands pass the output id as second parameter. Look that up, first
-		QString id = params.value(2);
-		auto out = getOutputById(params.value(2));
+		QString id = params.value(1);
+		auto out = getOutputById(id);
 		if (!out) {
 			return GenericRCallResult::makeError(i18n("The output identified by '%1' is not loaded in this session.", id));
 		}
@@ -463,17 +496,17 @@ RKOutputDirectory::GenericRCallResult RKOutputDirectory::handleRCall(const QStri
 		} else if (command == QStringLiteral("isModified")) {
 			return GenericRCallResult(out->isModified());
 		} else if (command == QStringLiteral("revert")) {
-			return out->revert(parseOverwrite(params.value(3)));
+			return out->revert(parseOverwrite(params.value(2)));
 		} else if (command == QStringLiteral("save")) {
-			return out->save(params.value(3), parseOverwrite(params.value(4)));
+			return out->save(params.value(2), parseOverwrite(params.value(3)));
 		} else if (command == QStringLiteral("export")) {
-			return out->exportAs(params.value(3), parseOverwrite(params.value(4)));
+			return out->exportAs(params.value(2), parseOverwrite(params.value(3)));
 		} else if (command == QStringLiteral("clear")) {
-			return out->clear(parseOverwrite(params.value(3)));
+			return out->clear(parseOverwrite(params.value(2)));
 		} else if (command == QStringLiteral("close")) {
-			return out->purge(parseOverwrite(params.value(3)), chain);
+			return out->purge(parseOverwrite(params.value(2)), chain);
 		} else if (command == QStringLiteral("view")) {
-			return out->view(params.value(3) == QStringLiteral("raise"));
+			return out->view(params.value(2) == QStringLiteral("raise"));
 		} else if (command == QStringLiteral("workingDir")) {
 			return GenericRCallResult(out->workDir());
 		} else if (command == QStringLiteral("filename")) {

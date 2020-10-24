@@ -196,7 +196,6 @@ private:
 #include <QMultiHash>
 
 #include <kdirwatch.h>
-#include "../misc/rkoutputdirectory.h"
 
 /** Takes care of showing / refreshing output windows as needed. */
 class RKOutputWindowManager : public QObject {
@@ -207,14 +206,11 @@ public:
 	void registerWindow (RKHTMLWindow *window);
 /** R may produce output while no output window is active. This allows to set the file that should be monitored for such changes (called from within rk.set.html.output.file()). */
 	void setCurrentOutputPath (const QString &path);
-	QString currentOutputPath() const;
+	QString currentOutputPath() const { return current_default_path; };
 /** returns a list (possibly empty) of pointers to existing output windows for the given path (for the current output path, if no path given). */
 	QList<RKHTMLWindow*> existingOutputWindows (const QString &path = QString ()) const;
 /** Create (and show) a new output window (for the current output path, unless path is specified), and @return the pointer */
 	RKHTMLWindow* newOutputWindow (const QString& path = QString ());
-
-/** Return the name / caption of the given output directory */
-	QString outputCaption (const QString &dir) const;
 private:
 	RKOutputWindowManager ();
 	~RKOutputWindowManager ();

@@ -55,30 +55,30 @@ RK.Output <- setRefClass(Class="RK.Output", fields=list(id="character"),
 		},
 		revert=function(discard=NULL) {
 "Revert this output to the last saved state. If no previous state is available (never saved, before), clears the output."
-			.rk.do.call("output", c ("revert", .checkId(), if (is.Null(discard)) "ask" else isTRUE(discard) ? "force" : "fail"))
+			.rk.do.call("output", c ("revert", .checkId(), if(is.null(discard)) "ask" else if(isTRUE(discard)) "force" else "fail"))
 		},
 		save=function(filename, overwrite=NULL) {
 "Save this output, either to the last known save location (if no filename is specified) or to a new location (\"save as\")."
-			.rk.do.call("output", c ("save", .checkId(), filename, if (is.Null(overwrite)) "ask" else isTRUE(overwrite) ? "force" : "fail"))
+			.rk.do.call("output", c ("save", .checkId(), filename, if(is.null(overwrite)) "ask" else if(isTRUE(overwrite)) "force" else "fail"))
 		},
 		export=function(filename, overwrite=NULL) {
 "Save this output, to the specified location, but keep it associated with the previous location (\"save a copy\")."
 			if (missing(filename)) stop("No file name specified")
-			.rk.do.call("output", c ("export", .checkId(), filename, if (is.Null(overwrite)) "ask" else isTRUE(overwrite) ? "force" : "fail"))
+			.rk.do.call("output", c ("export", .checkId(), filename, if(is.null(overwrite)) "ask" else if(isTRUE(overwrite)) "force" else "fail"))
 		},
 		clear=function(discard=NULL) {
 "Clear all content from this output. As with any function in this class, this affects the working copy, only, until you call save. Therefore, by default, the user will be prompted for confirmation
 if and only if there are unsaved changes pending."
-			.rk.do.call("output", c ("clear", .checkId(), if (is.Null(discard)) "ask" else isTRUE(discard) ? "force" : "fail"))
+			.rk.do.call("output", c ("clear", .checkId(), if(is.null(discard)) "ask" else if(isTRUE(discard)) "force" else "fail"))
 		},
 		close=function(discard=NULL) {
 "Forget about this output file, also closing any open views. Note: Trying to call any further methods on this object will fail."
-			.rk.do.call("output", c ("close", .checkId(), if (is.Null(discard)) "ask" else isTRUE(discard) ? "force" : "fail"))
+			.rk.do.call("output", c ("close", .checkId(), if(is.null(discard)) "ask" else if(isTRUE(discard)) "force" else "fail"))
 			id=NULL
 		},
 		view=function(raise=TRUE) {
 "Open this output for viewing in the frontend."
-			.rk.do.call("output", c ("view", .checkId(), isTRUE(raise) ? "raise" : ""))
+			.rk.do.call("output", c ("view", .checkId(), if(isTRUE(raise)) "raise" else ""))
 		},
 		.workingDir=function() {
 "The path of the working copy of this object. Please don't use this except for automated tests. The internals may be subject to change."
@@ -89,7 +89,7 @@ if and only if there are unsaved changes pending."
 Do not write anything to the target filename, directly! This is purely for information."
 			.rk.do.call("output", c ("filename", .checkId()))
 		},
-		.checkId=function(id) {
+		.checkId=function() {
 "For internal use: Throws an error, if the id parameter is NULL or too long, returns a length one character vector otherwise."
 			i <- as.character(id)
 			if (length(i) != 1) stop ("Invalid output id. Use rk.output() to obtain a valid output handle.")
@@ -100,6 +100,7 @@ Do not write anything to the target filename, directly! This is purely for infor
 #' @export
 #' @rdname RK.Output
 "rk.output" <- function(filename=NULL, create=FALSE, all=FALSE) {
-	if(all && (!is.Null(filename) || create)) stop("'all' cannot be combined with 'create' or 'filename'")
-	.rk.do.call("output", c ("get", isTRUE(all) ? "all" : "one", isTRUE(create) ? "create" : "get", as.character(filename)))
+	if(all && (!is.null(filename) || create)) stop("'all' cannot be combined with 'create' or 'filename'")
+	id <- .rk.do.call("output", c ("get", if(isTRUE(all)) "all" else "one", if(isTRUE(create)) "create" else "", if(is.null(filename)) "" else as.character(filename)))
+	RK.Output(id=id)
 }

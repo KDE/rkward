@@ -93,16 +93,16 @@ project = true;
 		header->addChild (save_project_check);
 		save_project_check->setCheckState (0, Qt::Checked);
 
-		QStringList modified_outputs = RKOutputDirectory::modifiedOutputDirectories();
-		if (!modified_outputs.isEmpty ()) {
+		auto modified_outputs = RKOutputDirectory::modifiedOutputDirectories();
+		if (!modified_outputs.isEmpty()) {
 			QTreeWidgetItem *header = makeHeaderItem (i18n ("Output files"), tree);
 			for (int i = 0; i < modified_outputs.size (); ++i) {
 				QTreeWidgetItem *item = new QTreeWidgetItem();
-				item->setText(0, RKOutputWindowManager::self()->outputCaption(modified_outputs[i]));
-				item->setFirstColumnSpanned (true);
-				header->addChild (item);
-				item->setCheckState (0, Qt::Checked);
-				outputdir_checklist.insert (item, modified_outputs[i]);
+				item->setText(0, modified_outputs[i]->caption());
+				item->setFirstColumnSpanned(true);
+				header->addChild(item);
+				item->setCheckState(0, Qt::Checked);
+				outputdir_checklist.insert(item, modified_outputs[i]->getId());
 			}
 		}
 	}

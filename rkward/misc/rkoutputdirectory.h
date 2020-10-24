@@ -54,7 +54,7 @@ public:
 		Fail
 	};
 	GenericRCallResult activate(RCommandChain* chain=0);
-	GenericRCallResult revert(bool ask);
+	GenericRCallResult revert(OverwriteBehavior discard=Ask);
 	GenericRCallResult save(const QString& dest=QString(), OverwriteBehavior overwrite=Ask);
 	GenericRCallResult exportAs(const QString& dest=QString(), OverwriteBehavior overwrite=Ask);
 	GenericRCallResult clear(OverwriteBehavior discard=Ask);
@@ -67,11 +67,12 @@ public:
 	QString filename() const { return save_dir; };
 	QString workDir() const { return work_dir; }
 	QString workPath() const;
+	QString caption() const;
 	static GenericRCallResult handleRCall(const QStringList& params, RCommandChain *chain);
 	static RKOutputDirectory* getOutputById(const QString& id);
 	static RKOutputDirectory* getOutputBySaveUrl(const QString& dest);
 /** Return a list of all current output directories that have been modified. Used for asking for save during shutdown. */
-	static QStringList modifiedOutputDirectories();
+	static QList<RKOutputDirectory*> modifiedOutputDirectories();
 
 	static RKOutputDirectory::GenericRCallResult R_rk_Output(const QString& filename=QString(), bool create=false, bool all=false);
 /** Returns the active output (in case there is one).
@@ -99,6 +100,7 @@ private:
 	GenericRCallResult import(const QString& from);
 	static RKOutputDirectory* createOutputDirectoryInternal();
 	static bool isRKWwardOutputDirectory (const QString &dir);
+	GenericRCallResult importInternal(const QString &dir);
 };
 
 #endif

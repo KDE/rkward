@@ -177,6 +177,7 @@ namespace RKCommonFunctions {
 		if (rkward_data_dir.isNull ()) {
 			QString inside_build_tree = QCoreApplication::applicationDirPath() + "/rkwardinstall/";
 			if (QFileInfo(inside_build_tree).isReadable()) {
+				RK_DEBUG(APP, DL_INFO, "Running from inside build tree");
 				rkward_data_dir = inside_build_tree;
 				return rkward_data_dir;
 			}
