@@ -2,7 +2,7 @@
                           rkrsupport  -  description
                              -------------------
     begin                : Mon Oct 25 2010
-    copyright            : (C) 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2010-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -20,6 +20,7 @@
 
 #include <limits.h>
 
+#include <QVariant>
 #include <QStringList>
 
 #include "rdata.h"
@@ -36,6 +37,7 @@ namespace RKRSupport {
 
 	QStringList SEXPToStringList (SEXP from_exp);
 	SEXP StringListToSEXP (const QStringList &list);
+	SEXP QVariantToSEXP(const QVariant &val);
 	QString SEXPToString (SEXP from_exp);
 	RData::IntStorage SEXPToIntArray (SEXP from_exp);
 	int SEXPToInt (SEXP from_exp, int def_value = INT_MIN);

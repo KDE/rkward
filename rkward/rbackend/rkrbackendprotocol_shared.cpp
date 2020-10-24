@@ -81,6 +81,16 @@ RBackendRequest* RBackendRequest::duplicate () {
 	return ret;
 }
 
+void RBackendRequest::setResult(const GenericRRequestResult& res) {
+	if (!res.warning.isNull()) params[".w"] = res.warning;
+	if (!res.error.isNull()) params[".e"] = res.error;
+	else params[".r"] = res.ret;
+}
+
+GenericRRequestResult RBackendRequest::getResult() const {
+	return GenericRRequestResult(params.value(".r"), params.value(".w").toString(), params.value(".e").toString());
+}
+
 
 
 #define MAX_BUF_LENGTH 16000

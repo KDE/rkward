@@ -115,9 +115,9 @@ RKOutputDirectory* RKOutputDirectory::getOutputBySaveUrl(const QString& _dest) {
 	return nullptr;
 }
 
-RKOutputDirectory::GenericRCallResult RKOutputDirectory::save(const QString& dest, RKOutputDirectory::OverwriteBehavior overwrite) {
+GenericRRequestResult RKOutputDirectory::save(const QString& dest, RKOutputDirectory::OverwriteBehavior overwrite) {
 	RK_TRACE (APP);
-	GenericRCallResult res = exportAs(dest, overwrite);
+	GenericRRequestResult res = exportAs(dest, overwrite);
 	if (!res.failed()) {
 		updateSavedHash();
 		save_dir = res.ret.toString(); // might by different from dest, notably, if dest was empty
@@ -125,7 +125,7 @@ RKOutputDirectory::GenericRCallResult RKOutputDirectory::save(const QString& des
 	return res;
 }
 
-RKOutputDirectory::GenericRCallResult RKOutputDirectory::exportAs (const QString& _dest, RKOutputDirectory::OverwriteBehavior overwrite) {
+GenericRRequestResult RKOutputDirectory::exportAs (const QString& _dest, RKOutputDirectory::OverwriteBehavior overwrite) {
 	RK_TRACE (APP);
 
 	QString dest = _dest;
@@ -137,7 +137,7 @@ RKOutputDirectory::GenericRCallResult RKOutputDirectory::exportAs (const QString
 		dialog.setOption(QFileDialog::DontConfirmOverwrite, true);  // custom handling below
 
 		if (dialog.exec () != QDialog::Accepted) {
-			return GenericRCallResult::makeError(i18n("File selection cancelled"));
+			return GenericRRequestResult::makeError(i18n("File selection cancelled"));
 		}
 
 		dest = QDir::cleanPath(dialog.selectedFiles().value(0));
@@ -151,18 +151,18 @@ RKOutputDirectory::GenericRCallResult RKOutputDirectory::exportAs (const QString
 	if (exists) {
 #warning TODO Check terminology ("output directory") once finalized
 		if (!isRKWwardOutputDirectory(dest)) {
-			return GenericRCallResult::makeError(i18n("The directory %1 exists, but does not appear to be an RKWard output directory. Refusing to overwrite it.", dest));
+			return GenericRRequestResult::makeError(i18n("The directory %1 exists, but does not appear to be an RKWard output directory. Refusing to overwrite it.", dest));
 		}
 /*		if (isOutputDirectoryModified(dest)) {
-			return GenericRCallResult::makeError(i18n("The output directory %1 has been modified by an external process. Refusing to overwrite it.", dest));
+			return GenericRRequestResult::makeError(i18n("The output directory %1 has been modified by an external process. Refusing to overwrite it.", dest));
 		} */
 		if (overwrite == Ask) {
 			const QString warning = i18n("Are you sure you want to overwrite the existing directory '%1'? All current contents, <b>including subdirectories</b> will be lost.", dest);
 			KMessageBox::ButtonCode res = KMessageBox::warningContinueCancel(RKWardMainWindow::getMain(), warning, i18n("Overwrite Directory?"), KStandardGuiItem::overwrite(),
 												KStandardGuiItem::cancel(), QString(), KMessageBox::Options(KMessageBox::Notify | KMessageBox::Dangerous));
-			if (KMessageBox::Continue != res) return GenericRCallResult::makeError(i18n("User cancelled"));
+			if (KMessageBox::Continue != res) return GenericRRequestResult::makeError(i18n("User cancelled"));
 		} else if (overwrite != Force) {
-			return GenericRCallResult::makeError(i18n("Not overwriting existing output"));
+			return GenericRRequestResult::makeError(i18n("Not overwriting existing output"));
 		}
 
 		tempname = dest + '~';
@@ -170,7 +170,7 @@ RKOutputDirectory::GenericRCallResult RKOutputDirectory::exportAs (const QString
 			tempname.append('~');
 		}
 		if (!QDir().rename(dest, tempname)) {
-			return GenericRCallResult::makeError(i18n("Failed to create temporary backup file %1.", tempname));
+			return GenericRRequestResult::makeError(i18n("Failed to create temporary backup file %1.", tempname));
 		}
 	}
 
@@ -179,60 +179,60 @@ RKOutputDirectory::GenericRCallResult RKOutputDirectory::exportAs (const QString
 		if (!tempname.isEmpty()) {
 			QDir().rename(tempname, dest);
 		}
-		return GenericRCallResult::makeError(i18n("Error while copying %1 to %2", work_dir, dest));
+		return GenericRRequestResult::makeError(i18n("Error while copying %1 to %2", work_dir, dest));
 	}
 	if (!tempname.isEmpty()) {
 		QDir(tempname).removeRecursively();
 	}
 
-	return GenericRCallResult(QVariant(dest));  // return effective destination path. Needed by save()
+	return GenericRRequestResult(QVariant(dest));  // return effective destination path. Needed by save()
 }
 
-RKOutputDirectory::GenericRCallResult RKOutputDirectory::importInternal(const QString &_dir) {
+GenericRRequestResult RKOutputDirectory::importInternal(const QString &_dir) {
 	RK_TRACE (APP);
 
 	QFileInfo fi(_dir);
 	if (!fi.isDir()) {
-		return GenericRCallResult::makeError(i18n("The path %1 does not exist or is not a directory.", _dir));
+		return GenericRRequestResult::makeError(i18n("The path %1 does not exist or is not a directory.", _dir));
 	}
 	QString dir = fi.canonicalFilePath ();
 
 	if (!copyDirRecursively(dir, work_dir)) {
 		QDir(work_dir).removeRecursively();
-		return GenericRCallResult::makeError(i18n("The path %1 could not be imported (copy failure).", _dir));
+		return GenericRRequestResult::makeError(i18n("The path %1 could not be imported (copy failure).", _dir));
 	}
 
 	save_dir = dir;
 	updateSavedHash();
 	initialized = true;
 
-	return GenericRCallResult(QVariant(id));
+	return GenericRRequestResult(QVariant(id));
 }
 
-RKOutputDirectory::GenericRCallResult RKOutputDirectory::import(const QString& _dir) {
+GenericRRequestResult RKOutputDirectory::import(const QString& _dir) {
 	RK_TRACE (APP);
 
 	if (initialized) {
-		return GenericRCallResult::makeError(i18n("Output directory %1 is already in use.", id));
+		return GenericRRequestResult::makeError(i18n("Output directory %1 is already in use.", id));
 	}
 
 	return importInternal(_dir);
 }
 
-RKOutputDirectory::GenericRCallResult RKOutputDirectory::revert(OverwriteBehavior discard) {
+GenericRRequestResult RKOutputDirectory::revert(OverwriteBehavior discard) {
 	RK_TRACE (APP);
 
 	if (save_dir.isEmpty()) {
-		return GenericRCallResult::makeError(i18n("Output directory %1 has not previously been saved. Cannot revert.", id));
+		return GenericRRequestResult::makeError(i18n("Output directory %1 has not previously been saved. Cannot revert.", id));
 	}
-	if (!isModified()) return GenericRCallResult(id, i18n("Output directory %1 had no modifications. Nothing reverted.", id));
+	if (!isModified()) return GenericRRequestResult(id, i18n("Output directory %1 had no modifications. Nothing reverted.", id));
 	if (discard == Ask) {
 		if (KMessageBox::warningContinueCancel(RKWardMainWindow::getMain(), i18n("Reverting will destroy any changes, since the last time you saved (%1). Are you sure you want to proceed?"), save_timestamp.toString()) == KMessageBox::Continue) {
 			discard = Force;
 		}
 	}
 	if (discard != Force) {
-		return GenericRCallResult::makeError(i18n("User cancelled."));
+		return GenericRRequestResult::makeError(i18n("User cancelled."));
 	}
 
 	return importInternal(save_dir);
@@ -263,7 +263,7 @@ RKOutputDirectory* RKOutputDirectory::createOutputDirectoryInternal() {
 	return d;
 }
 
-RKOutputDirectory::GenericRCallResult RKOutputDirectory::activate(RCommandChain* chain) {
+GenericRRequestResult RKOutputDirectory::activate(RCommandChain* chain) {
 	RK_TRACE (APP);
 
 	QString index_file = work_dir + "/index.html";
@@ -276,10 +276,10 @@ RKOutputDirectory::GenericRCallResult RKOutputDirectory::activate(RCommandChain*
 		initialized = true;
 	}
 
-	return GenericRCallResult(QVariant(index_file));
+	return GenericRRequestResult(QVariant(index_file));
 }
 
-RKOutputDirectory::GenericRCallResult RKOutputDirectory::clear(OverwriteBehavior discard) {
+GenericRRequestResult RKOutputDirectory::clear(OverwriteBehavior discard) {
 	RK_TRACE(APP);
 
 	if (!isEmpty()) {
@@ -288,7 +288,7 @@ RKOutputDirectory::GenericRCallResult RKOutputDirectory::clear(OverwriteBehavior
 				discard = Force;
 			}
 			if (discard != Force) {
-				return GenericRCallResult::makeError(i18n("Output is not empty. Not clearing it."));
+				return GenericRRequestResult::makeError(i18n("Output is not empty. Not clearing it."));
 			}
 		}
 	}
@@ -299,7 +299,7 @@ RKOutputDirectory::GenericRCallResult RKOutputDirectory::clear(OverwriteBehavior
 	initialized = false;
 	if (isActive()) activate();
 
-	return GenericRCallResult();
+	return GenericRRequestResult();
 }
 
 bool RKOutputDirectory::isEmpty() const {
@@ -324,17 +324,17 @@ QString RKOutputDirectory::caption() const {
 	return i18n("Unsaved output");
 }
 
-RKOutputDirectory::GenericRCallResult RKOutputDirectory::purge(RKOutputDirectory::OverwriteBehavior discard, RCommandChain* chain) {
+GenericRRequestResult RKOutputDirectory::purge(RKOutputDirectory::OverwriteBehavior discard, RCommandChain* chain) {
 	RK_TRACE(APP);
 
 	if (isModified()) {
 		if (discard == Fail) {
-			return GenericRCallResult::makeError(i18n("Output has been modified. Not closing it."));
+			return GenericRRequestResult::makeError(i18n("Output has been modified. Not closing it."));
 		}
 		if (discard == Ask) {
 			auto res = KMessageBox::questionYesNoCancel(RKWardMainWindow::getMain(), i18n("The output has been modified, and closing it will discard all changes. What do you want to do?"), i18n("Discard unsaved changes?"), KStandardGuiItem::discard(), KStandardGuiItem::save(), KStandardGuiItem::cancel());
 			if (res == KMessageBox::Cancel) {
-				return GenericRCallResult::makeError(i18n("User cancelled"));
+				return GenericRRequestResult::makeError(i18n("User cancelled"));
 			}
 			if (res == KMessageBox::No) {
 				auto ret = save();
@@ -355,7 +355,7 @@ RKOutputDirectory::GenericRCallResult RKOutputDirectory::purge(RKOutputDirectory
 			getCurrentOutput(chain)->activate(chain);
 		}
 	}
-	return GenericRCallResult();
+	return GenericRRequestResult();
 }
 
 QString RKOutputDirectory::workPath() const {
@@ -430,7 +430,7 @@ RKOutputDirectory::OverwriteBehavior parseOverwrite(const QString &param) {
 	return RKOutputDirectory::Fail;
 }
 
-RKOutputDirectory::GenericRCallResult RKOutputDirectory::view(bool raise) {
+GenericRRequestResult RKOutputDirectory::view(bool raise) {
 	RK_TRACE(APP);
 
 	auto list = RKOutputWindowManager::self()->existingOutputWindows(workPath());
@@ -442,10 +442,10 @@ RKOutputDirectory::GenericRCallResult RKOutputDirectory::view(bool raise) {
 	} else {
 		RKWorkplace::mainWorkplace()->openOutputWindow(QUrl::fromLocalFile(workPath()));
 	}
-	return GenericRCallResult(id);
+	return GenericRRequestResult(id);
 }
 
-RKOutputDirectory::GenericRCallResult RKOutputDirectory::handleRCall(const QStringList& params, RCommandChain *chain) {
+GenericRRequestResult RKOutputDirectory::handleRCall(const QStringList& params, RCommandChain *chain) {
 	RK_TRACE(APP);
 
 	QString command = params.value(0);
@@ -456,7 +456,7 @@ RKOutputDirectory::GenericRCallResult RKOutputDirectory::handleRCall(const QStri
 			for (int i=0; i < all.size(); ++i) {
 				ret.append(all[i]->getId());
 			}
-			return GenericRCallResult(ret);
+			return GenericRRequestResult(ret);
 		}
 
 		QString filename = params.value(3);
@@ -472,29 +472,29 @@ RKOutputDirectory::GenericRCallResult RKOutputDirectory::handleRCall(const QStri
 			filename = QFileInfo(filename).canonicalFilePath();
 			out = getOutputBySaveUrl(filename);
 			if (create) {
-				if (out) return GenericRCallResult::makeError(i18n("Output '1%' is already loaded in this session. Cannot create it.", filename));
-				if (QFileInfo(filename).exists()) return GenericRCallResult::makeError(i18n("As file named '1%' already exists. Cannot create it.", filename));
+				if (out) return GenericRRequestResult::makeError(i18n("Output '1%' is already loaded in this session. Cannot create it.", filename));
+				if (QFileInfo(filename).exists()) return GenericRRequestResult::makeError(i18n("As file named '1%' already exists. Cannot create it.", filename));
 				out = createOutputDirectoryInternal();
 				return (out->import(filename));
 			} else {
 				if (!out) return (out->import(filename));
 			}
 		}
-		return GenericRCallResult(out->getId());
+		return GenericRRequestResult(out->getId());
 	} else {
 		// all other commands pass the output id as second parameter. Look that up, first
 		QString id = params.value(1);
 		auto out = getOutputById(id);
 		if (!out) {
-			return GenericRCallResult::makeError(i18n("The output identified by '%1' is not loaded in this session.", id));
+			return GenericRRequestResult::makeError(i18n("The output identified by '%1' is not loaded in this session.", id));
 		}
 
 		if (command == QStringLiteral("activate")) {
 			return out->activate(chain);
 		} else if (command == QStringLiteral("isEmpty")) {
-			return GenericRCallResult(out->isEmpty());
+			return GenericRRequestResult(out->isEmpty());
 		} else if (command == QStringLiteral("isModified")) {
-			return GenericRCallResult(out->isModified());
+			return GenericRRequestResult(out->isModified());
 		} else if (command == QStringLiteral("revert")) {
 			return out->revert(parseOverwrite(params.value(2)));
 		} else if (command == QStringLiteral("save")) {
@@ -508,12 +508,12 @@ RKOutputDirectory::GenericRCallResult RKOutputDirectory::handleRCall(const QStri
 		} else if (command == QStringLiteral("view")) {
 			return out->view(params.value(2) == QStringLiteral("raise"));
 		} else if (command == QStringLiteral("workingDir")) {
-			return GenericRCallResult(out->workDir());
+			return GenericRRequestResult(out->workDir());
 		} else if (command == QStringLiteral("filename")) {
-			return GenericRCallResult(out->filename());
+			return GenericRRequestResult(out->filename());
 		}
 	}
-	return GenericRCallResult::makeError(i18n("Unhandled output command '%1'", command));
+	return GenericRRequestResult::makeError(i18n("Unhandled output command '%1'", command));
 }
 
 

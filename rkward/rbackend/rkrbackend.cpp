@@ -946,10 +946,11 @@ SEXP doSubstackCall (SEXP call) {
 	} */
 
 
-	QStringList ret = RKRBackend::this_pointer->handleHistoricalSubstackRequest (list).toStringList ();
+	auto ret = RKRBackend::this_pointer->handleHistoricalSubstackRequest(list);
+	if (!ret.warning.isEmpty()) Rf_warning(RKRBackend::fromUtf8(ret.warning));  // print warnings, first, as errors are - an error
+	if (!ret.error.isEmpty()) Rf_error(RKRBackend::fromUtf8(ret.error));
 
-	if (ret.isEmpty ()) return R_NilValue;
-	return RKRSupport::StringListToSEXP (ret);
+	return RKRSupport::QVariantToSEXP(ret.ret);
 }
 
 SEXP doPlainGenericRequest (SEXP call, SEXP synchronous) {
@@ -1624,14 +1625,14 @@ RCommandProxy* RKRBackend::fetchNextCommand () {
 	return (handleRequest (&req, false));
 }
 
-QVariant RKRBackend::handleHistoricalSubstackRequest (const QStringList &list) {
+GenericRRequestResult RKRBackend::handleHistoricalSubstackRequest (const QStringList &list) {
 	RK_TRACE (RBACKEND);
 
 	RBackendRequest request (true, RBackendRequest::HistoricalSubstackRequest);
 	request.params["call"] = list;
 	request.command = current_command;
 	handleRequest (&request);
-	return request.params.value ("return");
+	return request.getResult();
 }
 
 QString getLibLoc() {

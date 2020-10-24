@@ -75,6 +75,8 @@ public:
 	RCommandProxy *command;
 /** Any other parameters, esp. for RCallbackType::OtherRequest. Can be used in both directions. */
 	QVariantMap params;
+	void setResult(const GenericRRequestResult &res);
+	GenericRRequestResult getResult() const;
 /** NOTE: only used for separate process backend. See RCallbackType::Output */
 	ROutputList *output;
 /** NOTE: this does @em not copy merge the "done" flag. Do that manually, @em after merging (and don't touch the request from the transmitter thread, after that). */

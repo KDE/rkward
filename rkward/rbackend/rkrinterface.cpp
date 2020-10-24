@@ -405,7 +405,7 @@ void RInterface::handleRequest (RBackendRequest* request) {
 		command_requests.append (request);
 		processHistoricalSubstackRequest (request->params["call"].toStringList (), parent, request);
 	} else if (request->type == RBackendRequest::PlainGenericRequest) {
-		request->params["return"] = QVariant (processPlainGenericRequest (request->params["call"].toStringList ()));
+		request->setResult(QVariant(processPlainGenericRequest(request->params["call"].toStringList())));
 		RKRBackendProtocolFrontend::setRequestCompleted (request);
 	} else if (request->type == RBackendRequest::Started) {
 		// The backend thread has finished basic initialization, but we still have more to do...
@@ -551,6 +551,7 @@ void RInterface::pauseProcessing (bool pause) {
 	else locked -= locked & User;
 }
 
+#warning Convert this to GenericRRequestResult
 QStringList RInterface::processPlainGenericRequest (const QStringList &calllist) {
 	RK_TRACE (RBACKEND);
 
@@ -740,21 +741,15 @@ void RInterface::processHistoricalSubstackRequest (const QStringList &calllist, 
 			ok = RKComponentMap::invokeComponent (calllist[1], calllist.mid (3), mode, &message, in_chain);
 
 			if (!message.isEmpty ()) {
-				request->params["return"] = QVariant (QStringList (ok ? QStringLiteral ("warning") : QStringLiteral ("error")) << message);
+				request->setResult(GenericRRequestResult(QVariant(), ok ? message : QString(), !ok ? message : QString()));
 			}
 		} else {
 			RK_ASSERT (false);
 		}
 	} else if (call == QStringLiteral ("output")) {
-		RKOutputDirectory::GenericRCallResult res = RKOutputDirectory::handleRCall(calllist.mid(1), in_chain);
-#warning TODO
-		if (res.failed()) {
-			request->params["return"] = QVariant(QStringList(QStringLiteral("error")) << res.error);
-		} else {
-			request->params["return"] = QVariant(res.ret);
-		}
+		request->setResult(RKOutputDirectory::handleRCall(calllist.mid(1), in_chain));
 	} else {
-		request->params["return"] = QVariant (QStringList (QStringLiteral ("error")) << i18n ("Unrecognized call '%1'", call));
+		request->setResult(GenericRRequestResult::makeError(i18n("Unrecognized call '%1'", call)));
 	}
 	
 	closeChain (in_chain);

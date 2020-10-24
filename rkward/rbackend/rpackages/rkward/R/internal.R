@@ -122,12 +122,9 @@
 }
 
 ".rk.do.call" <- function (x, args=NULL) {
-	ret <- .Call ("rk.do.command", c (x, args), PACKAGE="(embedding)");
-	if (!is.null (ret)) {
-		if (ret[1] == "warning") warning (ret[2])
-		else if (ret[1] == "error") stop (ret[2])
-		else ret[1:length(ret)]
-	}
+	x <- .Call ("rk.do.command", c (x, args), PACKAGE="(embedding)");
+	if (is.null(x)) invisible(NULL)
+	else x
 }
 
 ".rk.do.plain.call" <- function (x, args=NULL, synchronous=TRUE) {

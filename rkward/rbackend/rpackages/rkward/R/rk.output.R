@@ -47,11 +47,11 @@ RK.Output <- setRefClass(Class="RK.Output", fields=list(id="character"),
 		},
 		isEmpty=function() {
 "Returns TRUE, if the output is currently empty."
-			isTRUE(.rk.do.call("output", c ("isEmpty", .checkId())))
+			.rk.do.call("output", c ("isEmpty", .checkId()))
 		},
 		isModified=function() {
 "Returns TRUE, if this output has any changes that may need saving."
-			isTRUE(.rk.do.call("output", c ("isModified", .checkId())))
+			.rk.do.call("output", c ("isModified", .checkId()))
 		},
 		revert=function(discard=NULL) {
 "Revert this output to the last saved state. If no previous state is available (never saved, before), clears the output."
