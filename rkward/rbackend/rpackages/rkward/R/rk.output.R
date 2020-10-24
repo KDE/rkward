@@ -23,7 +23,7 @@
 #'
 #' @param create If \code{TRUE}, create a new output directory. The parameter \code{filename}, if specified, is the target save file/directory, in this case. Should this already exist,
 #'               an error will be raised. If \code{create=FALSE}, load or re-use an existing output directory. If the parameter \code{filename} is left \code{NULL}, \code{rk.output} will
-#'               return the currently active output.
+#'               return the currently active output in this case (creating and/or activating an output file, in case all outputs have been closed or deactivated).
 #'
 #' @param all If \code{TRUE}, return a list of all currently loaded output directories.
 #'
@@ -31,8 +31,6 @@
 #'                  to overwrite/discard existing files/modifications will result in an error. If \code{NULL} (the default), the frontend will ask what to do in this case.
 #'
 #' @param discard See \code{overwrite} for the meaning.
-#'
-#' @param ask Prompt the user for confirmation before potentially desctrucitve operations such as closing or reverting a modified output.
 #'
 #' @param raise Raise the output window, if it is already visble.
 #'
@@ -55,32 +53,32 @@ RK.Output <- setRefClass(Class="RK.Output", fields=list(id="character"),
 "Returns TRUE, if this output has any changes that may need saving."
 			isTRUE(.rk.do.call("output", c ("isModified", .checkId())))
 		},
-		revert=function(ask=TRUE) {
+		revert=function(discard=NULL) {
 "Revert this output to the last saved state. If no previous state is available (never saved, before), clears the output."
-			.rk.do.call("output", c ("revert", .checkId(), isTRUE(ask)))
+			.rk.do.call("output", c ("revert", .checkId(), if (is.Null(discard)) "ask" else isTRUE(discard) ? "force" : "fail"))
 		},
 		save=function(filename, overwrite=NULL) {
 "Save this output, either to the last known save location (if no filename is specified) or to a new location (\"save as\")."
-			.rk.do.call("output", c ("save", .checkId(), filename, if (is.Null(overwrite)) "ask" else isTRUE(overwrite)))
+			.rk.do.call("output", c ("save", .checkId(), filename, if (is.Null(overwrite)) "ask" else isTRUE(overwrite) ? "force" : "fail"))
 		},
 		export=function(filename, overwrite=NULL) {
 "Save this output, to the specified location, but keep it associated with the previous location (\"save a copy\")."
 			if (missing(filename)) stop("No file name specified")
-			.rk.do.call("output", c ("export", .checkId(), filename, if (is.Null(overwrite)) "ask" else isTRUE(overwrite)))
+			.rk.do.call("output", c ("export", .checkId(), filename, if (is.Null(overwrite)) "ask" else isTRUE(overwrite) ? "force" : "fail"))
 		},
-		clear=function(ask=TRUE) {
+		clear=function(discard=NULL) {
 "Clear all content from this output. As with any function in this class, this affects the working copy, only, until you call save. Therefore, by default, the user will be prompted for confirmation
 if and only if there are unsaved changes pending."
-			.rk.do.call("output", c ("clear", .checkId(), isTRUE(ask)))
+			.rk.do.call("output", c ("clear", .checkId(), if (is.Null(discard)) "ask" else isTRUE(discard) ? "force" : "fail"))
 		},
 		close=function(discard=NULL) {
 "Forget about this output file, also closing any open views. Note: Trying to call any further methods on this object will fail."
-			.rk.do.call("output", c ("close", .checkId(), if (is.Null(discard)) "ask" else isTRUE(discard)))
+			.rk.do.call("output", c ("close", .checkId(), if (is.Null(discard)) "ask" else isTRUE(discard) ? "force" : "fail"))
 			id=NULL
 		},
 		view=function(raise=TRUE) {
 "Open this output for viewing in the frontend."
-			.rk.do.call("output", c ("view", .checkId(), isTRUE(raise)))
+			.rk.do.call("output", c ("view", .checkId(), isTRUE(raise) ? "raise" : ""))
 		},
 		.workingDir=function() {
 "The path of the working copy of this object. Please don't use this except for automated tests. The internals may be subject to change."
@@ -91,7 +89,7 @@ if and only if there are unsaved changes pending."
 Do not write anything to the target filename, directly! This is purely for information."
 			.rk.do.call("output", c ("filename", .checkId()))
 		},
-		.checkId=function() {
+		.checkId=function(id) {
 "For internal use: Throws an error, if the id parameter is NULL or too long, returns a length one character vector otherwise."
 			i <- as.character(id)
 			if (length(i) != 1) stop ("Invalid output id. Use rk.output() to obtain a valid output handle.")
@@ -103,5 +101,5 @@ Do not write anything to the target filename, directly! This is purely for infor
 #' @rdname RK.Output
 "rk.output" <- function(filename=NULL, create=FALSE, all=FALSE) {
 	if(all && (!is.Null(filename) || create)) stop("'all' cannot be combined with 'create' or 'filename'")
-	.rk.do.call("output", c ("get", as.character(isTRUE(create)), as.character(isTRUE(all)), as.character(load)))
+	.rk.do.call("output", c ("get", isTRUE(all) ? "all" : "one", isTRUE(create) ? "create" : "get", as.character(filename)))
 }

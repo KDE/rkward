@@ -58,19 +58,28 @@ public:
 	GenericRCallResult save(const QString& dest=QString(), OverwriteBehavior overwrite=Ask);
 	GenericRCallResult exportAs(const QString& dest=QString(), OverwriteBehavior overwrite=Ask);
 	GenericRCallResult clear(OverwriteBehavior discard=Ask);
-	GenericRCallResult purge(OverwriteBehavior discard=Ask);
+	GenericRCallResult purge(OverwriteBehavior discard=Ask, RCommandChain* chain=0);
 	QString getId() const { return id; };
 	bool isEmpty() const;
 	bool isActive() const;
 	bool isModified() const;
-	void view(bool raise);
-	QString filename() const;
-	QString workDir() const;
-	static GenericRCallResult handleRCall(const QStringList& params);
-	static RKOutputDirectory* getOutputById(const QString& id, GenericRCallResult* result);
-	static RKOutputDirectory* getOutputBySaveUrl(const QString& dest, bool create=false);
+	GenericRCallResult view(bool raise);
+	QString filename() const { return save_dir; };
+	QString workDir() const { return work_dir; }
+	QString workPath() const;
+	static GenericRCallResult handleRCall(const QStringList& params, RCommandChain *chain);
+	static RKOutputDirectory* getOutputById(const QString& id);
+	static RKOutputDirectory* getOutputBySaveUrl(const QString& dest);
 /** Return a list of all current output directories that have been modified. Used for asking for save during shutdown. */
 	static QStringList modifiedOutputDirectories();
+
+	static RKOutputDirectory::GenericRCallResult R_rk_Output(const QString& filename=QString(), bool create=false, bool all=false);
+/** Returns the active output (in case there is one).
+ *  If no output is active, find an activate the next output without a save url.
+ *  If that does not exist, activate and return the next existing output.
+ *  If that does not exist, create a new output, activate and return it. */
+	static RKOutputDirectory* getCurrentOutput(RCommandChain *chain=0);
+	static QList<RKOutputDirectory*> allOutputs();
 private:
 	RKOutputDirectory();
 	~RKOutputDirectory();

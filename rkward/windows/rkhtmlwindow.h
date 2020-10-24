@@ -213,14 +213,8 @@ public:
 /** Create (and show) a new output window (for the current output path, unless path is specified), and @return the pointer */
 	RKHTMLWindow* newOutputWindow (const QString& path = QString ());
 
-	RKOutputDirectory::GenericRCallResult R_rk_Output(const QString& filename=QString(), bool create=false, bool all=false);
-	RKOutputDirectory* getCurrentOutput(const QString& filename=QString(), bool create=false);
-	QList<RKOutputDirectory*> allOutputs();
-
 /** Return the name / caption of the given output directory */
 	QString outputCaption (const QString &dir) const;
-/** Use with care! Purges all current output directories, saved or not. You should query modifiedOutputDirectories (), and make sure to prompt for saving, before calling this. For use during shutdown. */
-	void purgeAllOututputDirectories ();
 private:
 	RKOutputWindowManager ();
 	~RKOutputWindowManager ();
@@ -233,8 +227,6 @@ private slots:
 	void fileChanged (const QString &path);
 	void windowDestroyed (QObject *window);
 	void rewatchOutput ();
-
-	void updateOutputSavedHash (RCommand *command);
 };
 
 #endif

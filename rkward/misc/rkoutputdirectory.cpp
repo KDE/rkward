@@ -85,6 +85,8 @@ bool copyDirRecursively(const QString& _source_dir, const QString& _dest_dir) {
 	return ok;
 }
 
+QMap<QString, RKOutputDirectory*> RKOutputDirectory::outputs;
+
 RKOutputDirectory::RKOutputDirectory() : initialized(false), window(nullptr) {
 	RK_TRACE(APP);
 }
@@ -93,38 +95,23 @@ RKOutputDirectory::~RKOutputDirectory() {
 	RK_TRACE(APP);
 }
 
-RKOutputDirectory* RKOutputDirectory::getOutputById(const QString& id, GenericRCallResult* result) {
+RKOutputDirectory* RKOutputDirectory::getOutputById(const QString& id) {
 	RK_TRACE (APP);
 
-	if (!outputs.contains(id)) {
-		if (result) result->error = i18n("The output identified by '%1' is not loaded in this session.", id);
-		return 0;
-	}
-	return outputs[id];
+	return outputs.value(id);
 }
 
-RKOutputDirectory* RKOutputDirectory::getOutputBySaveUrl(const QString& _dest, bool create) {
+RKOutputDirectory* RKOutputDirectory::getOutputBySaveUrl(const QString& _dest) {
 	RK_TRACE (APP);
 
-	if (_dest.isEmpty()) {
-		if (!create) return RKOutputWindowManager::self()->getCurrentOutput();
-		return createOutputDirectoryInternal();
-	}
-
 	QString dest = QFileInfo(_dest).canonicalFilePath();
-
 	auto it = outputs.constBegin();
 	while (it != outputs.constEnd()) {
 		if (it.value()->save_dir == dest) {
 			return(it.value());
 		}
 	}
-
-# error move to handleRCall
-	// not returned, yet? We need to create and import an output
-	auto ret = createOutputDirectoryInternal();
-	ret->import(_dest);
-	return ret;
+	return nullptr;
 }
 
 RKOutputDirectory::GenericRCallResult RKOutputDirectory::save(const QString& dest, RKOutputDirectory::OverwriteBehavior overwrite) {
@@ -284,6 +271,8 @@ RKOutputDirectory::GenericRCallResult RKOutputDirectory::clear(OverwriteBehavior
 	dir.mkpath(".");
 	initialized = false;
 	if (isActive()) activate();
+
+	return GenericRCallResult();
 }
 
 bool RKOutputDirectory::isEmpty() const {
@@ -296,17 +285,23 @@ bool RKOutputDirectory::isEmpty() const {
 	return false;
 }
 
-RKOutputDirectory::GenericRCallResult RKOutputDirectory::purge(RKOutputDirectory::OverwriteBehavior discard) {
+bool RKOutputDirectory::isModified() const {
+	RK_TRACE(APP);
+
+	return saved_hash == hashDirectoryState(work_dir);
+}
+
+RKOutputDirectory::GenericRCallResult RKOutputDirectory::purge(RKOutputDirectory::OverwriteBehavior discard, RCommandChain* chain) {
 	RK_TRACE(APP);
 
 	if (isModified()) {
 		if (discard == Fail) {
-			return GenericRCallResult::nakeError(i18n("Output has been modified. Not closing it."));
+			return GenericRCallResult::makeError(i18n("Output has been modified. Not closing it."));
 		}
 		if (discard == Ask) {
 			auto res = KMessageBox::questionYesNoCancel(RKWardMainWindow::getMain(), i18n("The output has been modified, and closing it will discard all changes. What do you want to do?"), i18n("Discard unsaved changes?"), KStandardGuiItem::discard(), KStandardGuiItem::save(), KStandardGuiItem::cancel());
 			if (res == KMessageBox::Cancel) {
-				return GenericRCallResult::nakeError(i18n("User cancelled"));
+				return GenericRCallResult::makeError(i18n("User cancelled"));
 			}
 			if (res == KMessageBox::No) {
 				auto ret = save();
@@ -317,25 +312,33 @@ RKOutputDirectory::GenericRCallResult RKOutputDirectory::purge(RKOutputDirectory
 
 	QDir dir(work_dir);
 	dir.removeRecursively();
-	if (isActive()) {
-		if (RKQuitAgent::quittingInProgress()) {
-			RK_DEBUG(APP, DEBUG, "Skipping activation of new output file: quitting in progress");
-		} else {
-			activateDefault();
-		}
-	}
+	bool active = isActive();
 	outputs.remove(id);
 	deleteLater();
+	if (active) {
+		if (RKQuitAgent::quittingInProgress()) {
+			RK_DEBUG(APP, DL_DEBUG, "Skipping activation of new output file: quitting in progress");
+		} else {
+			getCurrentOutput(chain)->activate(chain);
+		}
+	}
 	return GenericRCallResult();
+}
+
+QString RKOutputDirectory::workPath() const {
+	RK_TRACE(APP);
+
+	// hardcoded for now, might be made to support several files in the future
+	return (QDir(work_dir).absoluteFilePath("index.html"));
 }
 
 bool RKOutputDirectory::isActive() const {
 	RK_TRACE(APP);
 
-	return RKOutputWindowManager::self()->currentDefaultPath().startsWith(work_dir);
+	return RKOutputWindowManager::self()->currentOutputPath() == workPath();
 }
 
-QStringList RKOutputDirectory::modifiedOutputDirectories() const {
+QStringList RKOutputDirectory::modifiedOutputDirectories() {
 	RK_TRACE (APP);
 
 	QStringList ret;
@@ -357,5 +360,128 @@ void RKOutputDirectory::updateSavedHash() {
 	saved_hash = hashDirectoryState(work_dir);
 	save_timestamp = QDateTime::currentDateTime();
 }
+
+QList<RKOutputDirectory *> RKOutputDirectory::allOutputs() {
+	RK_TRACE(APP);
+
+	QList<RKOutputDirectory*> ret;
+	for (auto it = outputs.constBegin (); it != outputs.constEnd (); ++it) {
+		ret.append(it.value());
+	}
+	return ret;
+}
+
+RKOutputDirectory* RKOutputDirectory::getCurrentOutput(RCommandChain* chain) {
+	RK_TRACE(APP);
+
+	if (outputs.isEmpty()) {
+		auto n = createOutputDirectoryInternal();
+		n->activate(chain);
+		return n;
+	}
+
+	RKOutputDirectory* candidate = nullptr;
+	for (auto it = outputs.constBegin(); it != outputs.constEnd(); ++it) {
+		if (it.value()->isActive()) return it.value();
+		if (it.value()->filename().isEmpty()) candidate = it.value();
+	}
+#warning generate a warning, when a new output is created or activated
+	if (!candidate) candidate = outputs[0];
+	candidate->activate(chain);
+	return candidate;
+}
+
+RKOutputDirectory::OverwriteBehavior parseOverwrite(const QString &param) {
+	if (param == QStringLiteral("ask")) return RKOutputDirectory::Ask;
+	if (param == QStringLiteral("force")) return RKOutputDirectory::Force;
+	return RKOutputDirectory::Fail;
+}
+
+RKOutputDirectory::GenericRCallResult RKOutputDirectory::view(bool raise) {
+	RK_TRACE(APP);
+
+	auto list = RKOutputWindowManager::self()->existingOutputWindows(workPath());
+	if (!list.isEmpty()) {
+		auto w = list[0];
+		if (!w->isActiveWindow() || raise) {
+			list[0]->activate();
+		}
+	} else {
+		RKOutputWindowManager::self()->newOutputWindow(workPath());
+	}
+	return GenericRCallResult(id);
+}
+
+RKOutputDirectory::GenericRCallResult RKOutputDirectory::handleRCall(const QStringList& params, RCommandChain *chain) {
+	RK_TRACE(APP);
+
+	QString command = params.value(1);
+	if (command == QStringLiteral("get")) {
+		if (params.value(2) == QStringLiteral("all")) {
+			QStringList ret;
+			auto all = allOutputs();
+			for (int i=0; i < all.size(); ++i) {
+				ret.append(all[i]->getId());
+			}
+			return GenericRCallResult(ret);
+		}
+
+		QString filename = params.value(4);
+		bool create = params.value(3) == QStringLiteral("create");
+		RKOutputDirectory *out = nullptr;
+		if (filename.isEmpty()) {
+			if (create) {
+				out = createOutputDirectoryInternal();
+			} else {
+				out = getCurrentOutput(chain);
+			}
+		} else {
+			filename = QFileInfo(filename).canonicalFilePath();
+			out = getOutputBySaveUrl(filename);
+			if (create) {
+				if (out) return GenericRCallResult::makeError(i18n("Output '1%' is already loaded in this session. Cannot create it.", filename));
+				if (QFileInfo(filename).exists()) return GenericRCallResult::makeError(i18n("As file named '1%' already exists. Cannot create it.", filename));
+				out = createOutputDirectoryInternal();
+				return (out->import(filename));
+			} else {
+				if (!out) return (out->import(filename));
+			}
+		}
+		return GenericRCallResult(out->getId());
+	} else {
+		// all other commands pass the output id as second parameter. Look that up, first
+		QString id = params.value(2);
+		auto out = getOutputById(params.value(2));
+		if (!out) {
+			return GenericRCallResult::makeError(i18n("The output identified by '%1' is not loaded in this session.", id));
+		}
+
+		if (command == QStringLiteral("activate")) {
+			return out->activate(chain);
+		} else if (command == QStringLiteral("isEmpty")) {
+			return GenericRCallResult(out->isEmpty());
+		} else if (command == QStringLiteral("isModified")) {
+			return GenericRCallResult(out->isModified());
+		} else if (command == QStringLiteral("revert")) {
+			return out->revert(parseOverwrite(params.value(3)));
+		} else if (command == QStringLiteral("save")) {
+			return out->save(params.value(3), parseOverwrite(params.value(4)));
+		} else if (command == QStringLiteral("export")) {
+			return out->exportAs(params.value(3), parseOverwrite(params.value(4)));
+		} else if (command == QStringLiteral("clear")) {
+			return out->clear(parseOverwrite(params.value(3)));
+		} else if (command == QStringLiteral("close")) {
+			return out->purge(parseOverwrite(params.value(3)), chain);
+		} else if (command == QStringLiteral("view")) {
+			return out->view(params.value(3) == QStringLiteral("raise"));
+		} else if (command == QStringLiteral("workingDir")) {
+			return GenericRCallResult(out->workDir());
+		} else if (command == QStringLiteral("filename")) {
+			return GenericRCallResult(out->filename());
+		}
+	}
+	return GenericRCallResult::makeError(i18n("Unhandled output command '%1'", command));
+}
+
 
 #include "rkoutputdirectory.moc"

@@ -158,7 +158,7 @@ void RKSaveModifiedDialog::saveSelected () {
 
 	for (auto it = outputdir_checklist.constBegin (); it != outputdir_checklist.constEnd (); ++it) {
 		if (it.key ()->checkState (0) != Qt::Checked) continue;
-		RKOutputDirectory *dir = RKOutputDirectory::getOutputById(it.value(), nullptr);
+		RKOutputDirectory *dir = RKOutputDirectory::getOutputById(it.value());
 		if (dir) dir->save();
 		else RK_ASSERT(dir);
 	}

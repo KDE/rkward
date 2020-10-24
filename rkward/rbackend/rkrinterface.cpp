@@ -317,7 +317,7 @@ void RInterface::rCommandDone (RCommand *command) {
 			issueCommand (*it, RCommand::App | RCommand::Sync, QString (), this, SET_RUNTIME_OPTS, chain);
 		}
 		// initialize output file
-		RKOutputWindowManager::self ()->createOutputDirectory (chain);
+		RKOutputDirectory::getCurrentOutput(chain);
 
 #ifdef Q_OS_MACOS
 		// On MacOS, the backend is started from inside R home to allow resolution of dynamic libs. Re-set to frontend wd, here.
@@ -745,23 +745,12 @@ void RInterface::processHistoricalSubstackRequest (const QStringList &calllist, 
 			RK_ASSERT (false);
 		}
 	} else if (call == QStringLiteral ("output")) {
-		const QString &subcall = calllist.value (1);
-		QString error;
-		if (subcall == QStringLiteral ("export")) {
-			error = RKOutputWindowManager::self()->exportOutputDirectoryAs(calllist.value(2), calllist.value(3), calllist.value(4) == QStringLiteral ("TRUE"), in_chain);
-		} else if (subcall == QStringLiteral ("import")) {
-			RKOutputWindowManager::ImportMode mode = RKOutputWindowManager::Ask;
-			if (calllist.value (4) == "integrate") mode = RKOutputWindowManager::Integrate;
-			else if (calllist.value (4) == "keep.separate") mode = RKOutputWindowManager::KeepSeparate;
-#warning TODO mode
-			error = RKOutputWindowManager::self()->importOutputDirectory(calllist.value(2), calllist.value(3), calllist.value(5) == QStringLiteral ("TRUE"), in_chain);
-		} else if (subcall == QStringLiteral ("create")) {
-			RKOutputWindowManager::self ()->createOutputDirectory (in_chain);
+		RKOutputDirectory::GenericRCallResult res = RKOutputDirectory::handleRCall(calllist.mid(1), in_chain);
+#warning TODO
+		if (res.failed()) {
+			request->params["return"] = QVariant(QStringList(QStringLiteral("error")) << res.error);
 		} else {
-			RK_ASSERT (false);
-		}
-		if (!error.isEmpty ()) {
-			request->params["return"] = QVariant (QStringList (QStringLiteral ("error")) << error);
+			request->params["return"] = QVariant(res.ret);
 		}
 	} else {
 		request->params["return"] = QVariant (QStringList (QStringLiteral ("error")) << i18n ("Unrecognized call '%1'", call));
