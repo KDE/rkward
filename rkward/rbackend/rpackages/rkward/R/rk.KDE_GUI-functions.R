@@ -164,7 +164,7 @@
 	params <- list ()
 
 	# serialize all parameters
-	params[1] <- as.character (title)
+	params[1] <- if(is.null(title)) "" else as.character (title)
 	if (multiple) params[2] <- "multi"
 	else params[2] <- "single"
 	params[3] <- as.character (preselect.len)

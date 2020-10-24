@@ -1,3 +1,4 @@
+- Fixed: Calling (rk.)select.list() without a title would fail
 - Hide or remove several purely internal functions (most can still be assessed from the rkward namespace as rkward:::xyz())
 
 --- Version 0.7.2 - UNRELEASED

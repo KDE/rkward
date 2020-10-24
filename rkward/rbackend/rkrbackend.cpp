@@ -2,7 +2,7 @@
                           rkrbackend  -  description
                              -------------------
     begin                : Sun Jul 25 2004
-    copyright            : (C) 2004 - 2019 by Thomas Friedrichsmeier
+    copyright            : (C) 2004 - 2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -947,7 +947,7 @@ SEXP doSubstackCall (SEXP call) {
 
 
 	auto ret = RKRBackend::this_pointer->handleHistoricalSubstackRequest(list);
-	if (!ret.warning.isEmpty()) Rf_warning(RKRBackend::fromUtf8(ret.warning));  // print warnings, first, as errors are - an error
+	if (!ret.warning.isEmpty()) Rf_warning(RKRBackend::fromUtf8(ret.warning));  // print warnings, first, as errors will cause a stop
 	if (!ret.error.isEmpty()) Rf_error(RKRBackend::fromUtf8(ret.error));
 
 	return RKRSupport::QVariantToSEXP(ret.ret);
@@ -958,8 +958,11 @@ SEXP doPlainGenericRequest (SEXP call, SEXP synchronous) {
 
 	R_CheckUserInterrupt ();
 
-	QStringList ret = RKRBackend::this_pointer->handlePlainGenericRequest (RKRSupport::SEXPToStringList (call), RKRSupport::SEXPToInt (synchronous));
-	return RKRSupport::StringListToSEXP (ret);
+	auto ret = RKRBackend::this_pointer->handlePlainGenericRequest(RKRSupport::SEXPToStringList(call), RKRSupport::SEXPToInt(synchronous));
+	if (!ret.warning.isEmpty()) Rf_warning(RKRBackend::fromUtf8(ret.warning));  // print warnings, first, as errors will cause a stop
+	if (!ret.error.isEmpty()) Rf_error(RKRBackend::fromUtf8(ret.error));
+
+	return RKRSupport::QVariantToSEXP(ret.ret);
 }
 
 // Function to handle several simple calls from R code, that do not need any special arguments, or interaction with the frontend process.
@@ -1492,7 +1495,7 @@ void RKRBackend::printCommand (const QString &command) {
 
 	QStringList params ("highlightRCode");
 	params.append (command);
-	QString highlighted = handlePlainGenericRequest (params, true).value (0);
+	QString highlighted = handlePlainGenericRequest(params, true).ret.toString();
 	catToOutputFile (highlighted);
 }
 
@@ -1639,7 +1642,7 @@ QString getLibLoc() {
 	return RKRBackendProtocolBackend::dataDir () + "/.rkward_packages/" + QString::number (RKRBackend::this_pointer->r_version / 10);
 }
 
-QStringList RKRBackend::handlePlainGenericRequest (const QStringList &parameters, bool synchronous) {
+GenericRRequestResult RKRBackend::handlePlainGenericRequest (const QStringList &parameters, bool synchronous) {
 	RK_TRACE (RBACKEND);
 
 	RBackendRequest request (synchronous, RBackendRequest::PlainGenericRequest);
@@ -1653,19 +1656,17 @@ QStringList RKRBackend::handlePlainGenericRequest (const QStringList &parameters
 		output_file = parameters.value (1);
 		if (parameters.length () > 2) {
 			RK_ASSERT (parameters.value (2) == "SILENT");
-			return QStringList ();		// For automated testing and previews. The frontend should not be notified, here
+			return GenericRRequestResult();  // For automated testing and previews. The frontend should not be notified, here
 		}
 		request.params["call"] = parameters;
 	} else if (parameters.value(0) == "home") {
-		QStringList ret;
-		if (parameters.value(1) == "home") ret << RKRBackendProtocolBackend::dataDir();
-		else if (parameters.value(1) == "lib") ret << getLibLoc();
-		return ret;
+		if (parameters.value(1) == "home") return GenericRRequestResult(RKRBackendProtocolBackend::dataDir());
+		else if (parameters.value(1) == "lib") return GenericRRequestResult(getLibLoc());
 	} else {
 		request.params["call"] = parameters;
 	}
 	handleRequest (&request);
-	return request.params.value ("return").toStringList ();
+	return request.getResult();
 }
 
 void RKRBackend::initialize (const QString &locale_dir) {
