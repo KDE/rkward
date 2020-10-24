@@ -42,7 +42,7 @@ void listDirectoryState(const QString& _dir, QString *list, const QString prefix
 	RK_TRACE(APP);
 
 	QDir dir(_dir);
-	QFileInfoList entries = dir.entryInfoList(QDir::NoDotAndDotDot, QDir::Name | QDir::DirsLast);
+	QFileInfoList entries = dir.entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot, QDir::Name | QDir::DirsLast);
 	for (int i = 0; i < entries.size(); ++i) {
 		const QFileInfo fi = entries[i];
 		if (fi.isDir()) {
@@ -68,11 +68,11 @@ bool copyDirRecursively(const QString& _source_dir, const QString& _dest_dir) {
 
 	QDir dest_dir(_dest_dir);
 	QDir source_dir(_source_dir);
-	if (!QDir().mkpath(_dest_dir)) return false;
+	if (dest_dir.mkpath(".")) return false;
 	if (!source_dir.exists()) return false;
 
 	bool ok = true;
-	QFileInfoList entries = source_dir.entryInfoList(QDir::NoDotAndDotDot);
+	QFileInfoList entries = source_dir.entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
 	for (int i = 0; i < entries.size (); ++i) {
 		const QFileInfo fi = entries[i];
 		if (fi.isDir()) {
@@ -315,7 +315,7 @@ bool RKOutputDirectory::isEmpty() const {
 bool RKOutputDirectory::isModified() const {
 	RK_TRACE(APP);
 
-	return saved_hash == hashDirectoryState(work_dir);
+	return saved_hash != hashDirectoryState(work_dir);
 }
 
 QString RKOutputDirectory::caption() const {
@@ -389,7 +389,6 @@ bool RKOutputDirectory::isRKWwardOutputDirectory(const QString& dir) {
 
 void RKOutputDirectory::updateSavedHash() {
 	RK_TRACE (APP);
-
 	saved_hash = hashDirectoryState(work_dir);
 	save_timestamp = QDateTime::currentDateTime();
 }
