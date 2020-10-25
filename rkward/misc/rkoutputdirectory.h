@@ -49,7 +49,7 @@ public:
 	bool isActive() const;
 	bool isModified() const;
 	GenericRRequestResult view(bool raise);
-	QString filename() const { return save_dir; };
+	QString filename() const { return save_filename; };
 	QString workDir() const { return work_dir; }
 	QString workPath() const;
 	QString caption() const;
@@ -74,7 +74,7 @@ private:
 	QString saved_hash;
 	QDateTime save_timestamp;
 	QString work_dir;
-	QString save_dir;
+	QString save_filename;
 	QString id;
 	bool initialized;
 
@@ -84,8 +84,8 @@ private:
 
 	GenericRRequestResult import(const QString& from);
 	static RKOutputDirectory* createOutputDirectoryInternal();
-	static bool isRKWwardOutputDirectory (const QString &dir);
-	GenericRRequestResult importInternal(const QString &dir);
+	GenericRRequestResult importZipInternal(const QString &from);
+	GenericRRequestResult exportZipInternal(const QString &dest);
 };
 
 #endif

@@ -63,29 +63,6 @@ QString hashDirectoryState(const QString& dir) {
 //	return QCryptographicHash::hash (list.toUtf8 (), QCryptographicHash::Md5);
 }
 
-bool copyDirRecursively(const QString& _source_dir, const QString& _dest_dir) {
-	RK_TRACE(APP);
-
-	QDir dest_dir(_dest_dir);
-	QDir source_dir(_source_dir);
-	if (dest_dir.mkpath(".")) return false;
-	if (!source_dir.exists()) return false;
-
-	bool ok = true;
-	QFileInfoList entries = source_dir.entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
-	for (int i = 0; i < entries.size (); ++i) {
-		const QFileInfo fi = entries[i];
-		if (fi.isDir()) {
-			ok = ok && copyDirRecursively(fi.absoluteFilePath(), dest_dir.absoluteFilePath(fi.fileName ()));
-		} else {
-			// NOTE: this does not overwrite existing target files, but in our use case, we're always writing into empty targets
-			ok = ok && QFile::copy(fi.absoluteFilePath(), dest_dir.absoluteFilePath(fi.fileName ()));
-		}
-	}
-
-	return ok;
-}
-
 QMap<QString, RKOutputDirectory*> RKOutputDirectory::outputs;
 
 RKOutputDirectory::RKOutputDirectory() : initialized(false), window(nullptr) {
@@ -108,19 +85,25 @@ RKOutputDirectory* RKOutputDirectory::getOutputBySaveUrl(const QString& _dest) {
 	QString dest = QFileInfo(_dest).canonicalFilePath();
 	auto it = outputs.constBegin();
 	while (it != outputs.constEnd()) {
-		if (it.value()->save_dir == dest) {
+		if (it.value()->save_filename == dest) {
 			return(it.value());
 		}
 	}
 	return nullptr;
 }
 
-GenericRRequestResult RKOutputDirectory::save(const QString& dest, RKOutputDirectory::OverwriteBehavior overwrite) {
+GenericRRequestResult RKOutputDirectory::save(const QString& _dest, RKOutputDirectory::OverwriteBehavior overwrite) {
 	RK_TRACE (APP);
+
+	QString dest = _dest;
+	if (dest.isEmpty()) {
+		dest = filename();  // might still be empty, in which case exportAs will ask for destination
+		if (!dest.isEmpty()) overwrite = Force;  // don't prompt when writing to same file
+	}
 	GenericRRequestResult res = exportAs(dest, overwrite);
 	if (!res.failed()) {
 		updateSavedHash();
-		save_dir = res.ret.toString(); // might by different from dest, notably, if dest was empty
+		save_filename = res.ret.toString();  // might by different from dest, notably, if dest was empty
 	}
 	return res;
 }
@@ -130,9 +113,9 @@ GenericRRequestResult RKOutputDirectory::exportAs (const QString& _dest, RKOutpu
 
 	QString dest = _dest;
 	if (dest.isEmpty()) {
-		QFileDialog dialog(RKWardMainWindow::getMain(), i18n("Specify directory where to export output"), save_dir);
-		dialog.setFileMode(QFileDialog::Directory);
-		dialog.setOption(QFileDialog::ShowDirsOnly, true);
+		QFileDialog dialog(RKWardMainWindow::getMain(), i18n("Select destination file name"), QFileInfo(save_filename).absolutePath());
+		dialog.setFileMode(QFileDialog::AnyFile);
+		dialog.setNameFilters(QStringList() << i18n("RKWard Output Files (*.rko)") << i18n("All Files (*)"));
 		dialog.setAcceptMode(QFileDialog::AcceptSave);
 		dialog.setOption(QFileDialog::DontConfirmOverwrite, true);  // custom handling below
 
@@ -143,66 +126,72 @@ GenericRRequestResult RKOutputDirectory::exportAs (const QString& _dest, RKOutpu
 		dest = QDir::cleanPath(dialog.selectedFiles().value(0));
 	}
 
-	// If destination already exists, rename it before copying, so we can restore the save in case of an error
-	QString tempname;
-
-	dest = QFileInfo(dest).canonicalFilePath();
 	bool exists = QFileInfo(dest).exists();
 	if (exists) {
-#warning TODO Check terminology ("output directory") once finalized
-		if (!isRKWwardOutputDirectory(dest)) {
-			return GenericRRequestResult::makeError(i18n("The directory %1 exists, but does not appear to be an RKWard output directory. Refusing to overwrite it.", dest));
-		}
-/*		if (isOutputDirectoryModified(dest)) {
-			return GenericRRequestResult::makeError(i18n("The output directory %1 has been modified by an external process. Refusing to overwrite it.", dest));
-		} */
 		if (overwrite == Ask) {
-			const QString warning = i18n("Are you sure you want to overwrite the existing directory '%1'? All current contents, <b>including subdirectories</b> will be lost.", dest);
-			KMessageBox::ButtonCode res = KMessageBox::warningContinueCancel(RKWardMainWindow::getMain(), warning, i18n("Overwrite Directory?"), KStandardGuiItem::overwrite(),
+			const QString warning = i18n("Are you sure you want to overwrite the existing file '%1'?", dest);
+			KMessageBox::ButtonCode res = KMessageBox::warningContinueCancel(RKWardMainWindow::getMain(), warning, i18n("Overwrite?"), KStandardGuiItem::overwrite(),
 												KStandardGuiItem::cancel(), QString(), KMessageBox::Options(KMessageBox::Notify | KMessageBox::Dangerous));
 			if (KMessageBox::Continue != res) return GenericRRequestResult::makeError(i18n("User cancelled"));
 		} else if (overwrite != Force) {
-			return GenericRRequestResult::makeError(i18n("Not overwriting existing output"));
-		}
-
-		tempname = dest + '~';
-		while (QFileInfo(tempname).exists()) {
-			tempname.append('~');
-		}
-		if (!QDir().rename(dest, tempname)) {
-			return GenericRRequestResult::makeError(i18n("Failed to create temporary backup file %1.", tempname));
+			return GenericRRequestResult::makeError(i18n("Not overwriting existing file"));
 		}
 	}
 
-	bool error = copyDirRecursively(work_dir, dest);
-	if (error) {
-		if (!tempname.isEmpty()) {
-			QDir().rename(tempname, dest);
-		}
-		return GenericRRequestResult::makeError(i18n("Error while copying %1 to %2", work_dir, dest));
-	}
-	if (!tempname.isEmpty()) {
-		QDir(tempname).removeRecursively();
-	}
-
-	return GenericRRequestResult(QVariant(dest));  // return effective destination path. Needed by save()
+	return exportZipInternal(dest);
 }
 
-GenericRRequestResult RKOutputDirectory::importInternal(const QString &_dir) {
+#include <KZip>
+GenericRRequestResult RKOutputDirectory::exportZipInternal(const QString &dest) {
 	RK_TRACE (APP);
 
-	QFileInfo fi(_dir);
-	if (!fi.isDir()) {
-		return GenericRRequestResult::makeError(i18n("The path %1 does not exist or is not a directory.", _dir));
-	}
-	QString dir = fi.canonicalFilePath ();
-
-	if (!copyDirRecursively(dir, work_dir)) {
-		QDir(work_dir).removeRecursively();
-		return GenericRRequestResult::makeError(i18n("The path %1 could not be imported (copy failure).", _dir));
+	// write to a temporary location, first, then - if successful - copy to final destination
+	QString tempname = dest + '~';
+	while (QFileInfo(tempname).exists()) {
+		tempname.append('~');
 	}
 
-	save_dir = dir;
+	KZip zip(tempname);
+	bool ok = zip.open(QIODevice::WriteOnly);
+	zip.addLocalDirectory(work_dir, "rkward_output");
+	ok = ok && zip.close();
+	if (!ok) {
+		QFile(tempname).remove();
+		return GenericRRequestResult::makeError(i18n("Error while writing temporary output archive %1", tempname));
+	}
+
+	if (QFile(dest).exists()) {
+		if (!QFile(dest).remove()) return GenericRRequestResult::makeError(i18n("Failure to remove existing file %1. Missing permissions?s", dest));
+	}
+	ok = QFile(tempname).copy(dest);
+	QFile(tempname).remove();
+	if (!ok) {
+		return GenericRRequestResult::makeError(i18n("Failure while copying output archive to %1", dest));
+	}
+
+	return GenericRRequestResult(QFileInfo(dest).canonicalFilePath()); // return effective destination path. Needed by save()
+}
+
+#include <KArchiveDirectory>
+GenericRRequestResult RKOutputDirectory::importZipInternal(const QString &_from) {
+	RK_TRACE (APP);
+
+	QFileInfo fi(_from);
+	if (!fi.isFile()) {
+		return GenericRRequestResult::makeError(i18n("The path %1 does not exist or is not a file.", _from));
+	}
+	QString from = fi.canonicalFilePath();
+
+	KZip zip(from);
+	bool ok = zip.open(QIODevice::ReadOnly);
+	if (ok) {
+		auto dir = zip.directory()->entry("rkward_output");
+		if (!(dir && dir->isDirectory())) ok = false;
+		if (ok && !static_cast<const KArchiveDirectory*>(dir)->copyTo(work_dir, true)) ok = false;
+	}
+	if (!ok) return GenericRRequestResult::makeError(i18n("Failure to open %1. Not an rkward output file?", from));
+
+	save_filename = from;
 	updateSavedHash();
 	initialized = true;
 
@@ -216,18 +205,18 @@ GenericRRequestResult RKOutputDirectory::import(const QString& _dir) {
 		return GenericRRequestResult::makeError(i18n("Output directory %1 is already in use.", id));
 	}
 
-	return importInternal(_dir);
+	return importZipInternal(_dir);
 }
 
 GenericRRequestResult RKOutputDirectory::revert(OverwriteBehavior discard) {
 	RK_TRACE (APP);
 
-	if (save_dir.isEmpty()) {
+	if (save_filename.isEmpty()) {
 		return GenericRRequestResult::makeError(i18n("Output directory %1 has not previously been saved. Cannot revert.", id));
 	}
 	if (!isModified()) return GenericRRequestResult(id, i18n("Output directory %1 had no modifications. Nothing reverted.", id));
 	if (discard == Ask) {
-		if (KMessageBox::warningContinueCancel(RKWardMainWindow::getMain(), i18n("Reverting will destroy any changes, since the last time you saved (%1). Are you sure you want to proceed?"), save_timestamp.toString()) == KMessageBox::Continue) {
+		if (KMessageBox::warningContinueCancel(RKWardMainWindow::getMain(), i18n("Reverting will destroy any changes, since the last time you saved (%1). Are you sure you want to proceed?", save_timestamp.toString())) == KMessageBox::Continue) {
 			discard = Force;
 		}
 	}
@@ -235,7 +224,7 @@ GenericRRequestResult RKOutputDirectory::revert(OverwriteBehavior discard) {
 		return GenericRRequestResult::makeError(i18n("User cancelled."));
 	}
 
-	return importInternal(save_dir);
+	return importZipInternal(save_filename);
 }
 
 RKOutputDirectory* RKOutputDirectory::createOutputDirectoryInternal() {
@@ -249,11 +238,6 @@ RKOutputDirectory* RKOutputDirectory::createOutputDirectoryInternal() {
 		destname = prefix + QString::number(x++);
 	}
 	ddir.mkpath(destname);
-
-	QFile marker(destname + QStringLiteral("/rkward_output_marker.txt"));
-	marker.open(QIODevice::WriteOnly);
-	marker.write(i18n("This file is used to indicate that this directory is an ouptut directory created by RKWard (http://rkward.kde.org). Do not place any other contents in this directory, as the entire directory will be purged if/when overwriting the output.\nRKWard will ask you before purging this directory (unless explicitly told otherwise), but if you remove this file, RKWard will not purge this directory.\n").toLocal8Bit());
-	marker.close();
 
 	auto d = new RKOutputDirectory();
 	d->work_dir = QFileInfo(ddir.absoluteFilePath(destname)).canonicalFilePath();
@@ -305,7 +289,7 @@ GenericRRequestResult RKOutputDirectory::clear(OverwriteBehavior discard) {
 bool RKOutputDirectory::isEmpty() const {
 	RK_TRACE(APP);
 
-	if (!save_dir.isEmpty()) return false;  // we _could_ have saved an empty output, of course, but no worries about corner cases. In any doubt we return false.
+	if (!save_filename.isEmpty()) return false;  // we _could_ have saved an empty output, of course, but no worries about corner cases. In any doubt we return false.
 
 	if (!initialized) return true;
 	if (!isModified()) return true;   // because we have not saved/loaded this file, before, see above
@@ -320,7 +304,7 @@ bool RKOutputDirectory::isModified() const {
 
 QString RKOutputDirectory::caption() const {
 	RK_TRACE(APP);
-	if (!save_dir.isEmpty()) return QFileInfo(save_dir).fileName();
+	if (!save_filename.isEmpty()) return QFileInfo(save_filename).fileName();
 	return i18n("Unsaved output");
 }
 
@@ -379,12 +363,6 @@ QList<RKOutputDirectory*> RKOutputDirectory::modifiedOutputDirectories() {
 		if (it.value()->isModified()) ret.append(it.value());
 	}
 	return ret;
-}
-
-bool RKOutputDirectory::isRKWwardOutputDirectory(const QString& dir) {
-	RK_TRACE (APP);
-
-	return (QDir(dir).exists(QStringLiteral("rkward_output_marker.txt")));
 }
 
 void RKOutputDirectory::updateSavedHash() {
@@ -497,9 +475,9 @@ GenericRRequestResult RKOutputDirectory::handleRCall(const QStringList& params, 
 		} else if (command == QStringLiteral("revert")) {
 			return out->revert(parseOverwrite(params.value(2)));
 		} else if (command == QStringLiteral("save")) {
-			return out->save(params.value(2), parseOverwrite(params.value(3)));
+			return out->save(params.value(3), parseOverwrite(params.value(2)));
 		} else if (command == QStringLiteral("export")) {
-			return out->exportAs(params.value(2), parseOverwrite(params.value(3)));
+			return out->exportAs(params.value(3), parseOverwrite(params.value(2)));
 		} else if (command == QStringLiteral("clear")) {
 			return out->clear(parseOverwrite(params.value(2)));
 		} else if (command == QStringLiteral("close")) {

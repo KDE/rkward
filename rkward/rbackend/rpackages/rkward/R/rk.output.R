@@ -2,8 +2,8 @@
 #' @name RK.Output
 #'
 #' @description Since version 0.7.5, RKWard supports more than one piece of output. While dealing with only a single output page, there will be no need for the user to call any of
-#'              these functions, directly, as exactly one output
-#'              is always opened for writing in RKWard. However, these functions allow to manage several distinct output pages, programmatically.
+#'              these functions, directly, as exactly one output is always opened for writing in RKWard (unless rk.set.output.html.file() has been called, explicitly).
+#'              However, these functions allow to manage several distinct output pages, programmatically.
 #'
 #'              The primary entry point is the function \code{rk.output}, which allows to retrieve the current output directly, or to load or create a new one. This will return
 #'              an instance of the \code{RK.Output} reference class, which has methods for subsequent manipulation. Two instances of this class may be pointing to the same
@@ -59,12 +59,13 @@ RK.Output <- setRefClass(Class="RK.Output", fields=list(id="character"),
 		},
 		save=function(filename, overwrite=NULL) {
 "Save this output, either to the last known save location (if no filename is specified) or to a new location (\"save as\")."
-			.rk.do.call("output", c ("save", .checkId(), filename, if(is.null(overwrite)) "ask" else if(isTRUE(overwrite)) "force" else "fail"))
+			if (missing(filename)) filename <- ""
+			.rk.do.call("output", c ("save", .checkId(), if(is.null(overwrite)) "ask" else if(isTRUE(overwrite)) "force" else "fail", filename))
 		},
 		export=function(filename, overwrite=NULL) {
 "Save this output, to the specified location, but keep it associated with the previous location (\"save a copy\")."
 			if (missing(filename)) stop("No file name specified")
-			.rk.do.call("output", c ("export", .checkId(), filename, if(is.null(overwrite)) "ask" else if(isTRUE(overwrite)) "force" else "fail"))
+			.rk.do.call("output", c ("export", .checkId(), if(is.null(overwrite)) "ask" else if(isTRUE(overwrite)) "force" else "fail", filename))
 		},
 		clear=function(discard=NULL) {
 "Clear all content from this output. As with any function in this class, this affects the working copy, only, until you call save. Therefore, by default, the user will be prompted for confirmation
