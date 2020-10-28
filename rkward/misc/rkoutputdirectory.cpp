@@ -115,7 +115,7 @@ GenericRRequestResult RKOutputDirectory::exportAs (const QString& _dest, RKOutpu
 	if (dest.isEmpty()) {
 		QFileDialog dialog(RKWardMainWindow::getMain(), i18n("Select destination file name"), QFileInfo(save_filename).absolutePath());
 		dialog.setFileMode(QFileDialog::AnyFile);
-		dialog.setNameFilters(QStringList() << i18n("RKWard Output Files (*.rko)") << i18n("All Files (*)"));
+		dialog.setNameFilters(QStringList() << i18n("RKWard Output Files [*.rko](*.rko)") << i18n("All Files [*](*)"));
 		dialog.setAcceptMode(QFileDialog::AcceptSave);
 		dialog.setOption(QFileDialog::DontConfirmOverwrite, true);  // custom handling below
 

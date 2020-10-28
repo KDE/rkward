@@ -2,7 +2,7 @@
                           rksaveagent  -  description
                              -------------------
     begin                : Sun Aug 29 2004
-    copyright            : (C) 2004, 2009, 2010, 2011, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -23,6 +23,7 @@
 #include <QFileDialog>
 
 #include "../rbackend/rkrinterface.h"
+#include "../misc/rkprogresscontrol.h"
 #include "../core/robjectlist.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
@@ -30,32 +31,6 @@
 #include "../windows/rkworkplace.h"
 
 #include "../debug.h"
-
-RKSaveAgent::RKSaveAgent (QUrl url, bool save_file_as, DoneAction when_done, QUrl load_url) : QObject () {
-	RK_TRACE (APP);
-	save_url = url;
-	RKSaveAgent::when_done = when_done;
-	RKSaveAgent::load_url = load_url;
-	previous_url = RKWorkplace::mainWorkplace ()->workspaceURL ();
-	save_chain = 0;
-	if (save_url.isEmpty () || save_file_as) {
-		if (!askURL ()) {
-			deleteLater();
-			return;
-		}
-	}
-	
-	RKWorkplace::mainWorkplace ()->flushAllData ();
-	save_chain = RKGlobals::rInterface ()->startChain (0);
-	
-	RKWorkplace::mainWorkplace ()->setWorkspaceURL (save_url, true);
-	RKWorkplace::mainWorkplace ()->saveWorkplace (save_chain);
-	RKGlobals::rInterface ()->issueCommand (new RCommand ("save.image (" + RObject::rQuote (save_url.toLocalFile ()) + ')', RCommand::App, QString (), this), save_chain);
-}
-
-RKSaveAgent::~RKSaveAgent () {
-	RK_TRACE (APP);
-}
 
 // We save to several files at once, meaning the standard overwrite check is not quite good enough for us.
 // More importantly, it is entirely broken in KF5 < 5.22.0 (https://bugs.kde.org/show_bug.cgi?id=360666)
@@ -93,56 +68,38 @@ bool checkOverwriteWorkspace (QUrl url, QWidget *parent) {
 	                                                                  KStandardGuiItem::cancel (), QString (), KMessageBox::Options (KMessageBox::Notify | KMessageBox::Dangerous));
 }
 
-bool RKSaveAgent::askURL () {
-	RK_TRACE (APP);
-	save_url = QUrl::fromLocalFile (QFileDialog::getSaveFileName (RKWardMainWindow::getMain (), QString (), save_url.toLocalFile (), i18n ("R Workspace Files [%1](%1);;All files [*](*)", RKSettingsModuleGeneral::workspaceFilenameFilter ()), 0, QFileDialog::DontConfirmOverwrite));
-	if (!checkOverwriteWorkspace (save_url, RKWardMainWindow::getMain ())) save_url.clear ();
+bool RKSaveAgent::saveWorkspaceAs(const QUrl& previous_url) {
+	RK_TRACE(APP);
 
-	if (save_url.isEmpty ()) {
-		if (when_done != DoNothing) {
-			if (KMessageBox::warningYesNo (0, i18n ("No filename given. Your data was NOT saved. Do you still want to proceed?")) != KMessageBox::Yes) when_done = DoNothing;
-		}
-		return false;
-	}
-	return true;
+	QUrl save_url = QUrl::fromLocalFile(QFileDialog::getSaveFileName(RKWardMainWindow::getMain(), QString(), previous_url.toLocalFile(), i18n("R Workspace Files [%1](%1);;All files [*](*)", RKSettingsModuleGeneral::workspaceFilenameFilter()), 0, QFileDialog::DontConfirmOverwrite));
+	if (save_url.isEmpty()) return false;
+	if (!checkOverwriteWorkspace(save_url, RKWardMainWindow::getMain())) return false;
+
+	return saveWorkspace(save_url);
 }
 
-void RKSaveAgent::rCommandDone (RCommand *command) {
-	RK_TRACE (APP);
-	if (command->hasError ()) {
-		RKWorkplace::mainWorkplace ()->setWorkspaceURL (previous_url);
+bool RKSaveAgent::saveWorkspace(const QUrl& _url) {
+	RK_TRACE(APP);
 
-		int res;
-		if (when_done != DoNothing) {
-			res = KMessageBox::warningYesNoCancel (0, i18n ("Saving to file '%1' failed. What do you want to do?", save_url.path ()), i18n ("Save failed"), KGuiItem (i18n ("Try saving with a different filename")), KGuiItem (i18n ("Saving failed")));
-		} else {
-			res = KMessageBox::warningYesNo (0, i18n ("Saving to file '%1' failed. Do you want to try saving to a different filename?", save_url.path ()));
-		}
+	QUrl url = _url;
+	if (url.isEmpty()) url = RKWorkplace::mainWorkplace()->workspaceURL();
+	if (url.isEmpty()) return saveWorkspaceAs();
 
-		if (res == KMessageBox::Yes) {
-			if (askURL ()) {
-				RKGlobals::rInterface ()->issueCommand (new RCommand ("save.image (\"" + save_url.toLocalFile () + "\")", RCommand::App, QString (), this), save_chain);
-				return;
-			}
-		} else if (res == KMessageBox::No) {
-			done ();
-			return;
-		}
+	RKWorkplace::mainWorkplace()->flushAllData();
+	auto save_chain = RKGlobals::rInterface()->startChain(0);
 
-		// else
-		when_done = DoNothing;
-	}
-	done ();
-}
+	RKWorkplace::mainWorkplace()->saveWorkplace(url, save_chain);
+	auto command = new RCommand("save.image(" + RObject::rQuote(url.toLocalFile()) + ')', RCommand::App);
+	RKProgressControl control(RKWardMainWindow::getMain(), i18n("Workspace is being saved. <b>Hint:</b>Should this take an unusually long time, on a regular sized workspace, this may be due to other commands still pending completion in the R backend."), i18n("Saving workspace"), RKProgressControl::CancellableNoProgress);
+	control.addRCommand(command, true);
+	bool success = false;
+	QObject::connect(command->notifier(), &RCommandNotifier::commandFinished, [&success, command]() { success = command->succeeded(); });
+	RKGlobals::rInterface()->issueCommand(command, save_chain);
+	control.doModal(false);
+	RKGlobals::rInterface()->closeChain(save_chain);
 
-void RKSaveAgent::done () {
-	RK_TRACE (APP);
-	RKWardMainWindow::getMain ()->setWorkspaceMightBeModified (false);
-	if (save_chain) {
-		RKGlobals::rInterface ()->closeChain (save_chain);
-	}
-	if (when_done == Load) {
-		RKWardMainWindow::getMain ()->askOpenWorkspace (load_url);
-	}
-	deleteLater ();
+	if (!success) KMessageBox::error(RKWardMainWindow::getMain(), i18n("Save failed"), i18n("An error occured while trying to save the workspace. You data was <b>not</b> saved."));
+	RKWorkplace::mainWorkplace()->setWorkspaceURL(url, true);
+
+	return success;
 }

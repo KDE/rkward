@@ -30,6 +30,7 @@
 #include "../windows/rkworkplace.h"
 #include "../windows/rkhtmlwindow.h"
 #include "../misc/rkoutputdirectory.h"
+#include "../agents/rksaveagent.h"
 
 #include "../debug.h"
 
@@ -81,15 +82,14 @@ RKSaveModifiedDialog::RKSaveModifiedDialog (QWidget* parent, QList<RKMDIWindow*>
 
 	save_project_check = 0;
 	tree->header ()->hide ();
-#warning TODO: remove me
-project = true;
+
 	if (project) {
 		QTreeWidgetItem *header = makeHeaderItem (i18n ("R Workspace (Data and Functions)"), tree);
 		QString url = RKWorkplace::mainWorkplace ()->workspaceURL ().toDisplayString ();
 		if (url.isEmpty ()) {
 			url = i18n ("Not previously saved");
 		}
-		QTreeWidgetItem *save_project_check = new QTreeWidgetItem (QStringList (url));
+		save_project_check = new QTreeWidgetItem (QStringList (url));
 		header->addChild (save_project_check);
 		save_project_check->setCheckState (0, Qt::Checked);
 
@@ -142,7 +142,8 @@ void RKSaveModifiedDialog::saveWorkplaceChanged () {
 // TODO: enable / disable "save with workplace" option for Output windows
 }
 
-void RKSaveModifiedDialog::saveSelected () {
+#include <KMessageBox>
+void RKSaveModifiedDialog::saveSelected() {
 	RK_TRACE (APP);
 
 	bool all_ok = true;
@@ -152,17 +153,19 @@ void RKSaveModifiedDialog::saveSelected () {
 		if (!it.value ()->save ()) all_ok = false; // but we proceed with the others
 	}
 
-	if (save_project_check && save_project_check->checkState (0) == Qt::Checked) {
-#warning TODO
+	if (save_project_check && save_project_check->checkState(0) == Qt::Checked) {
+		if (!RKSaveAgent::saveWorkspace()) all_ok = false;
 	}
 
-	for (auto it = outputdir_checklist.constBegin (); it != outputdir_checklist.constEnd (); ++it) {
+	for (auto it = outputdir_checklist.constBegin(); it != outputdir_checklist.constEnd(); ++it) {
 		if (it.key ()->checkState (0) != Qt::Checked) continue;
 		RKOutputDirectory *dir = RKOutputDirectory::getOutputById(it.value());
-		if (dir) dir->save();
+		if (dir) {
+			if (dir->save().failed()) all_ok = false;
+		}
 		else RK_ASSERT(dir);
 	}
 
-	if (all_ok) accept ();
-	else reject ();
+	if (all_ok) accept();
+	else reject();
 }

@@ -663,26 +663,25 @@ RKWorkplace::RKWorkplaceObjectList RKWorkplace::getObjectList (int type, int sta
 	return ret;
 }
 
-bool RKWorkplace::closeAll (int type, int state) {
-	RK_TRACE (APP);
+bool RKWorkplace::closeAll(int type, int state, bool ask_close_project) {
+	RK_TRACE(APP);
 
-	return closeWindows (windows);
+	return closeWindows(getObjectList(type, state), ask_close_project);
 }
 
-bool RKWorkplace::closeWindows (QList<RKMDIWindow*> windows) {
-	RK_TRACE (APP);
+bool RKWorkplace::closeWindows(QList<RKMDIWindow*> windows, bool ask_close_project) {
+	RK_TRACE(APP);
 
 	bool allclosed = true;
-	RKWardMainWindow::getMain ()->lockGUIRebuild (true);
+	RKWardMainWindow::getMain()->lockGUIRebuild(true);
 
-	bool ok = RKSaveModifiedDialog::askSaveModified (this, windows, false);
+	bool ok = RKSaveModifiedDialog::askSaveModified(this, windows, ask_close_project);
 	if (ok) {
-		for (int i = windows.size () - 1; i >= 0; --i) {
-			RK_ASSERT(closeWindow (windows[i], RKMDIWindow::NoAskSaveModified));
-			// TODO: Do not ask for saving _again_
+		for (int i = windows.size() - 1; i >= 0; --i) {
+			RK_ASSERT(closeWindow(windows[i], RKMDIWindow::NoAskSaveModified));
 		}
 	}
-	RKWardMainWindow::getMain ()->lockGUIRebuild (false);
+	RKWardMainWindow::getMain()->lockGUIRebuild(false);
 	return ok;
 }
 
@@ -909,13 +908,15 @@ QStringList RKWorkplace::makeWorkplaceDescription () {
 	return workplace_description;
 }
 
-void RKWorkplace::saveWorkplace (RCommandChain *chain) {
+void RKWorkplace::saveWorkplace(const QUrl& for_url, RCommandChain *chain) {
 	RK_TRACE (APP);
 // TODO: This is still a mess. All workplace-related settings, including the workspaceConfig(), should be saved to a single place, and in 
 // standard KConfig format.
-	if (RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace) return;
+	if (RKSettingsModuleGeneral::workplaceSaveMode() != RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace) return;
 
-	RKGlobals::rInterface ()->issueCommand ("rk.save.workplace(description=" + RObject::rQuote (makeWorkplaceDescription().join ("\n")) + ')', RCommand::App, i18n ("Save Workplace layout"), 0, 0, chain);
+	QString file_param;
+	if (!for_url.isEmpty()) file_param = QString("file=") + RObject::rQuote(for_url.toLocalFile()) + QStringLiteral(", ");
+	RKGlobals::rInterface()->issueCommand("rk.save.workplace(" + file_param + "description=" + RObject::rQuote (makeWorkplaceDescription().join ("\n")) + ')', RCommand::App, i18n ("Save Workplace layout"), 0, 0, chain);
 }
 
 void RKWorkplace::restoreWorkplace (RCommandChain *chain, bool merge) {

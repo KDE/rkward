@@ -71,6 +71,7 @@
 #include "dialogs/rkimportdialog.h"
 #include "dialogs/rkrecoverdialog.h"
 #include "dialogs/rksetupwizard.h"
+#include "dialogs/rksavemodifieddialog.h"
 #include "agents/rksaveagent.h"
 #include "agents/rkloadagent.h"
 #include "agents/rkquitagent.h"
@@ -791,26 +792,10 @@ bool RKWardMainWindow::doQueryQuit () {
 	if (RKSettingsModuleGeneral::workplaceSaveMode () == RKSettingsModuleGeneral::SaveWorkplaceWithSession) {
 		RKSettingsModuleGeneral::setSavedWorkplace (RKWorkplace::mainWorkplace ()->makeWorkplaceDescription ().join ("\n"), KSharedConfig::openConfig ().data ());
 	}
-
-//	if (!RObjectList::getGlobalEnv ()->isEmpty ()) {
-	int res;
-	res = KMessageBox::questionYesNoCancel (this, i18n ("Quitting RKWard: Do you want to save the workspace?"), i18n ("Save Workspace?"), KStandardGuiItem::save (), KStandardGuiItem::discard (), KGuiItem (i18n ("Do Not Quit")));
-	if (res == KMessageBox::Yes) {
-		new RKSaveAgent (RKWorkplace::mainWorkplace ()->workspaceURL (), false, RKSaveAgent::DoNothing);
-	} else if (res == KMessageBox::Cancel) {
+	if (!RKWorkplace::mainWorkplace()->closeAll(RKMDIWindow::AnyType, RKMDIWindow::AnyWindowState, true)) {
 		slotSetStatusReady ();
 		return false;
 	}
-//	}
-
-	lockGUIRebuild (true);
-	if (!RKWorkplace::mainWorkplace ()->closeAll ()) {
-		// User cancelled closing, when asked to save changes
-		slotSetStatusReady ();
-		lockGUIRebuild (false);
-		return false;
-	}
-//	lockGUIRebuild (false);  // No need to update GUI anymore (and doing so is potentially asking for trouble, anyway)
 
 	return true;
 }
@@ -827,28 +812,25 @@ void RKWardMainWindow::slotNewDataFrame () {
 void RKWardMainWindow::askOpenWorkspace (const QUrl &url) {
 	RK_TRACE (APP);
 
-	if (!no_ask_save && ((!RObjectList::getGlobalEnv ()->isEmpty () && workspace_modified) || !RKGlobals::rInterface ()->backendIsIdle ())) {
+	if (!no_ask_save && ((!RObjectList::getGlobalEnv()->isEmpty() && workspace_modified) || !RKGlobals::rInterface()->backendIsIdle())) {
 		int res;
-		res = KMessageBox::questionYesNoCancel (this, i18n ("Do you want to save the current workspace?"), i18n ("Save Workspace?"));
-		if (res == KMessageBox::Yes) {
-			new RKSaveAgent (RKWorkplace::mainWorkplace ()->workspaceURL (), false, RKSaveAgent::Load, url);
-		} else if (res != KMessageBox::No) { // Cancel
-			return;
-		}
+		res = KMessageBox::questionYesNoCancel (this, i18n("Do you want to save the current workspace?"), i18n("Save Workspace?"));
+		if (res != KMessageBox::No) return;  // Cancel
+		if (!RKSaveAgent::saveWorkspace()) return; // Save failed
 	}
 
-	slotCloseAllEditors ();
+	slotCloseAllEditors();
 
 	slotSetStatusBarText(i18n("Opening workspace..."));
 	QUrl lurl = url;
 	if (lurl.isEmpty ()) {
-		lurl = QFileDialog::getOpenFileUrl (this, i18n("Select workspace to open..."), RKSettingsModuleGeneral::lastUsedUrlFor ("workspaces"), i18n ("R Workspace Files [%1](%1);;All files [*](*)", RKSettingsModuleGeneral::workspaceFilenameFilter ()));
+		lurl = QFileDialog::getOpenFileUrl(this, i18n("Select workspace to open..."), RKSettingsModuleGeneral::lastUsedUrlFor("workspaces"), i18n("R Workspace Files [%1](%1);;All files [*](*)", RKSettingsModuleGeneral::workspaceFilenameFilter()));
 	}
 	if (!lurl.isEmpty ()) {
-		RKSettingsModuleGeneral::updateLastUsedUrl ("workspaces", lurl.adjusted (QUrl::RemoveFilename));
-		openWorkspace (lurl);
+		RKSettingsModuleGeneral::updateLastUsedUrl("workspaces", lurl.adjusted(QUrl::RemoveFilename));
+		openWorkspace(lurl);
 	}
-	slotSetStatusReady ();
+	slotSetStatusReady();
 }
 
 void RKWardMainWindow::slotFileOpenWorkspace () {
@@ -864,12 +846,12 @@ void RKWardMainWindow::slotFileLoadLibs () {
 
 void RKWardMainWindow::slotFileSaveWorkspace () {
 	RK_TRACE (APP);
-	new RKSaveAgent (RKWorkplace::mainWorkplace ()->workspaceURL ());
+	RKSaveAgent::saveWorkspace();
 }
 
 void RKWardMainWindow::slotFileSaveWorkspaceAs () {
 	RK_TRACE (APP);
-	new RKSaveAgent (RKWorkplace::mainWorkplace ()->workspaceURL (), true);
+	RKSaveAgent::saveWorkspaceAs();
 }
 
 void RKWardMainWindow::addWorkspaceUrl (const QUrl &url) {

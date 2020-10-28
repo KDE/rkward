@@ -161,16 +161,17 @@ public:
 /** Close the given windows, whether they are attached or detached.
 @param windows list windows to close
 @returns true, if _all_ windows were actually closed. */
-	bool closeWindows (QList<RKMDIWindow*> windows);
+	bool closeWindows (QList<RKMDIWindow*> windows, bool ask_close_project=false);
 /** Closes all windows of the given type(s). Default call (no arguments) closes all windows
 @param type: A bitwise OR of RKWorkplaceObjectType
 @param state: A bitwise OR of RKWorkplaceObjectState
 @returns false if cancelled by user (user was prompted for saving, and chose cancel) */
-	bool closeAll (int type=RKMDIWindow::AnyType, int state=RKMDIWindow::AnyWindowState);
+	bool closeAll(int type=RKMDIWindow::AnyType, int state=RKMDIWindow::AnyWindowState, bool ask_close_project=false);
 
 /** Write a description of all current windows to the R backend. This can later be read by restoreWorkplace (). Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace
+@param url the url to use. Can be left null, in which case the current workspace url will be used.
 @param chain command chain to place the command in */
-	void saveWorkplace (RCommandChain *chain=0);
+	void saveWorkplace (const QUrl &for_url=QUrl(), RCommandChain *chain=0);
 /** Load a description of windows from the R backend (created by saveWorkplace ()), and (try to) restore all windows accordingly
 Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace
 @param chain command chain to place the command in */
