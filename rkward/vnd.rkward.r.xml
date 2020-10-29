@@ -4,9 +4,11 @@
     <comment>R source file</comment>
     <comment xml:lang="ca">Fitxer de codi font en R</comment>
     <comment xml:lang="ca@valencia">Fitxer de codi font en R</comment>
+    <comment xml:lang="eu">R sorburu fitxategia</comment>
     <comment xml:lang="lt">R šaltinio failas</comment>
     <comment xml:lang="nl">Bronbestand R</comment>
     <comment xml:lang="pt">Ficheiro de código em R</comment>
+    <comment xml:lang="sl">R izvorni program</comment>
     <comment xml:lang="sv">R-källkodsfil</comment>
     <comment xml:lang="uk">файл коду R</comment>
     <acronym>R</acronym>
@@ -20,9 +22,11 @@
     <comment>R data/workspace file</comment>
     <comment xml:lang="ca">Fitxer de dades/espai de treball de l'R</comment>
     <comment xml:lang="ca@valencia">Fitxer de dades/espai de treball de l'R</comment>
+    <comment xml:lang="eu">R datu/langune fitxategia</comment>
     <comment xml:lang="lt">R duomenų/darbo aplinkos failas</comment>
     <comment xml:lang="nl">Gegevens/werkruimtebestand R</comment>
     <comment xml:lang="pt">Ficheiro de dados/área de trabalho do R</comment>
+    <comment xml:lang="sl">R datoteka data/workspace</comment>
     <comment xml:lang="sv">R-datafil/arbetsrymdsfil</comment>
     <comment xml:lang="uk">файл даних/робочого простору R</comment>
     <acronym>RData</acronym>
