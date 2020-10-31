@@ -157,16 +157,19 @@ public:
 /** Close the given window, whether it is attached or detached.
 @param window window to close
 @returns true, if the window was actually closed (not cancelled) */
-	bool closeWindow (RKMDIWindow *window, RKMDIWindow::CloseWindowMode ask_save = RKMDIWindow::AutoAskSaveModified);
+	bool closeWindow(RKMDIWindow *window, RKMDIWindow::CloseWindowMode ask_save = RKMDIWindow::AutoAskSaveModified);
 /** Close the given windows, whether they are attached or detached.
 @param windows list windows to close
 @returns true, if _all_ windows were actually closed. */
-	bool closeWindows (QList<RKMDIWindow*> windows, bool ask_close_project=false);
+	bool closeWindows(QList<RKMDIWindow*> windows, RKMDIWindow::CloseWindowMode ask_save = RKMDIWindow::AutoAskSaveModified);
+/** Close all windows and all outputs (aksing to save workspace)
+@returns true, if the workspace really was closed. */
+	bool closeWorkspace();
 /** Closes all windows of the given type(s). Default call (no arguments) closes all windows
 @param type: A bitwise OR of RKWorkplaceObjectType
 @param state: A bitwise OR of RKWorkplaceObjectState
 @returns false if cancelled by user (user was prompted for saving, and chose cancel) */
-	bool closeAll(int type=RKMDIWindow::AnyType, int state=RKMDIWindow::AnyWindowState, bool ask_close_project=false);
+	bool closeAll(int type=RKMDIWindow::AnyType, int state=RKMDIWindow::AnyWindowState);
 
 /** Write a description of all current windows to the R backend. This can later be read by restoreWorkplace (). Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace
 @param url the url to use. Can be left null, in which case the current workspace url will be used.

@@ -62,7 +62,7 @@ RKLoadAgent::RKLoadAgent (const QUrl &url, bool merge) {
 	RCommand *command;
 	
 	if (!merge) {
-		RKWardMainWindow::getMain ()->slotCloseAllWindows ();
+		RKWorkplace::mainWorkplace()->closeWorkspace();
 		command = new RCommand ("remove (list=ls (all.names=TRUE))", RCommand::App | RCommand::ObjectListUpdate);
 		RKGlobals::rInterface ()->issueCommand (command);
 	}

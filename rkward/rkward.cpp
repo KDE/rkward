@@ -792,7 +792,7 @@ bool RKWardMainWindow::doQueryQuit () {
 	if (RKSettingsModuleGeneral::workplaceSaveMode () == RKSettingsModuleGeneral::SaveWorkplaceWithSession) {
 		RKSettingsModuleGeneral::setSavedWorkplace (RKWorkplace::mainWorkplace ()->makeWorkplaceDescription ().join ("\n"), KSharedConfig::openConfig ().data ());
 	}
-	if (!RKWorkplace::mainWorkplace()->closeAll(RKMDIWindow::AnyType, RKMDIWindow::AnyWindowState, true)) {
+	if (!RKWorkplace::mainWorkplace()->closeWorkspace()) {
 		slotSetStatusReady ();
 		return false;
 	}

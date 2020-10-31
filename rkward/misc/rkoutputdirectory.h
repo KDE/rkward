@@ -66,6 +66,7 @@ public:
  *  If that does not exist, create a new output, activate and return it. */
 	static RKOutputDirectory* getCurrentOutput(RCommandChain *chain=0);
 	static QList<RKOutputDirectory*> allOutputs();
+	static void purgeAllNoAsk();
 private:
 	RKOutputDirectory();
 	~RKOutputDirectory();

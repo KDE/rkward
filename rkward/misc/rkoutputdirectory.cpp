@@ -327,9 +327,9 @@ GenericRRequestResult RKOutputDirectory::purge(RKOutputDirectory::OverwriteBehav
 		}
 	}
 
+	bool active = isActive();
 	QDir dir(work_dir);
 	dir.removeRecursively();
-	bool active = isActive();
 	outputs.remove(id);
 	deleteLater();
 	if (active) {
@@ -340,6 +340,16 @@ GenericRRequestResult RKOutputDirectory::purge(RKOutputDirectory::OverwriteBehav
 		}
 	}
 	return GenericRRequestResult();
+}
+
+void RKOutputDirectory::purgeAllNoAsk() {
+	RK_TRACE(APP);
+
+	auto outputs_copy = outputs;
+	for (auto it = outputs_copy.constBegin(); it != outputs_copy.constEnd(); ++it) {
+		auto res = outputs.constBegin().value()->purge(Force);
+		RK_ASSERT(!res.failed());
+	}
 }
 
 QString RKOutputDirectory::workPath() const {
@@ -397,6 +407,7 @@ RKOutputDirectory* RKOutputDirectory::getCurrentOutput(RCommandChain* chain) {
 	}
 #warning generate a warning, when a new output is created or activated
 	if (!candidate) candidate = outputs[0];
+	RK_ASSERT(candidate);
 	candidate->activate(chain);
 	return candidate;
 }

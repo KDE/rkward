@@ -53,6 +53,7 @@
 #include "../windows/rkwindowcatcher.h"
 #include "../rbackend/rcommand.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkoutputdirectory.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
 
@@ -663,19 +664,18 @@ RKWorkplace::RKWorkplaceObjectList RKWorkplace::getObjectList (int type, int sta
 	return ret;
 }
 
-bool RKWorkplace::closeAll(int type, int state, bool ask_close_project) {
+bool RKWorkplace::closeAll(int type, int state) {
 	RK_TRACE(APP);
 
-	return closeWindows(getObjectList(type, state), ask_close_project);
+	return closeWindows(getObjectList(type, state));
 }
 
-bool RKWorkplace::closeWindows(QList<RKMDIWindow*> windows, bool ask_close_project) {
+bool RKWorkplace::closeWindows(QList<RKMDIWindow*> windows, RKMDIWindow::CloseWindowMode ask_save) {
 	RK_TRACE(APP);
 
-	bool allclosed = true;
 	RKWardMainWindow::getMain()->lockGUIRebuild(true);
 
-	bool ok = RKSaveModifiedDialog::askSaveModified(this, windows, ask_close_project);
+	bool ok = (ask_save == RKMDIWindow::NoAskSaveModified) || RKSaveModifiedDialog::askSaveModified(this, windows, false);
 	if (ok) {
 		for (int i = windows.size() - 1; i >= 0; --i) {
 			RK_ASSERT(closeWindow(windows[i], RKMDIWindow::NoAskSaveModified));
@@ -683,6 +683,15 @@ bool RKWorkplace::closeWindows(QList<RKMDIWindow*> windows, bool ask_close_proje
 	}
 	RKWardMainWindow::getMain()->lockGUIRebuild(false);
 	return ok;
+}
+
+bool RKWorkplace::closeWorkspace() {
+	RK_TRACE(APP);
+
+	bool ok = RKSaveModifiedDialog::askSaveModified(this, windows, true);
+	if (!ok) return false;
+	RKOutputDirectory::purgeAllNoAsk();
+	return closeWindows(windows, RKMDIWindow::NoAskSaveModified);
 }
 
 void RKWorkplace::removeWindow (QObject *object) {
