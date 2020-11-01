@@ -738,20 +738,27 @@ void RKWorkplace::windowRemoved () {
 	// give up
 }
 
-RKMDIWindow *RKWorkplace::activeWindow (RKMDIWindow::State state) {
+RKMDIWindow *RKWorkplace::activeWindow(RKMDIWindow::State state) const {
 	RK_TRACE (APP);
 
-	RKMDIWindow *ret = 0;
-	for (RKWorkplaceObjectList::const_iterator it = windows.constBegin (); it != windows.constEnd (); ++it) {
+	for (auto it = windows.constBegin (); it != windows.constEnd (); ++it) {
 		if (!(state & ((*it)->state))) continue;
 
 		if ((*it)->isActive ()) {
-			ret = *it;
-			break;
+			return *it;
 		}
 	}
+	return nullptr;
+}
 
-	return (ret);
+RKMDIWindow * RKWorkplace::windowForPart(KParts::Part* part) const {
+	RKMDIWindow *ret = 0;
+	for (auto it = windows.constBegin(); it != windows.constEnd(); ++it) {
+		if ((*it)->getPart() == part) {
+			return *it;
+		}
+	}
+	return nullptr;
 }
 
 QUrl checkAdjustRestoredUrl (const QString &_url, const QString old_base) {

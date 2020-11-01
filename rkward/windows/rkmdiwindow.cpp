@@ -65,13 +65,14 @@ RKMDIWindow::RKMDIWindow (QWidget *parent, int type, bool tool_window, const cha
 	}
 	RKMDIWindow::type = type;
 	state = Attached;
-	tool_window_bar = 0;
-	part = 0;
+	tool_window_bar = nullptr;
+	part = nullptr;
 	active = false;
 	no_border_when_active = false;
-	standard_client = 0;
-	status_popup = 0;
-	status_popup_container = 0;
+	standard_client = nullptr;
+	status_popup = nullptr;
+	status_popup_container = nullptr;
+	ui_buddy = nullptr;
 
 	if (!(type & KatePluginWindow)) setWindowIcon (RKStandardIcons::iconForWindow (this));
 }
@@ -428,4 +429,9 @@ void RKMDIWindow::showWindowSettings () {
 	RKSettings::configureSettings (settings_page, this);
 }
 
+void RKMDIWindow::addUiBuddy(KXMLGUIClient* buddy) {
+	RK_TRACE(APP);
+	RK_ASSERT(!ui_buddy);
+	ui_buddy = buddy;
+}
 

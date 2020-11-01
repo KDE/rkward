@@ -78,7 +78,10 @@ class KatePluginIntegrationWindow : public QObject, public KXMLGUIClient {
 	Q_OBJECT
 public:
 	KatePluginIntegrationWindow(KatePluginIntegrationApp *parent);
+	~KatePluginIntegrationWindow();
 	KTextEditor::MainWindow *mainWindow() const { return main; };
+	KXMLGUIClient* persistentGuiClient() { return this; }
+	KXMLGUIClient* dynamicGuiClient() const { return dynamic_actions_client; }
 private slots:
 	// These are the implementations of the KTextEditor::MainWindow interface.
 	// NOTE that they are not technically overrides, but get invoked via QMetaObject::invokeMethod()
@@ -117,6 +120,7 @@ friend class KatePluginIntegrationApp;
 	QHash<KTextEditor::Plugin*, PluginResources> plugin_resources;
 
 	KatePluginIntegrationApp *app;
+	KXMLGUIClient *dynamic_actions_client;
 private slots:
 	void catchXMLGUIClientsHack(KXMLGUIClient* client);
 	void activeWindowChanged(RKMDIWindow *window);

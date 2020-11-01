@@ -122,6 +122,11 @@ is simply busy (e.g. when saving the current plot to history). */
 	KActionCollection *standardActionCollection ();
 /** plugin-accessible properties of this object in the global context. Currently used only by RKEditorDataFrame to give information on the currently active data.frame. NOTE: ATM, you cannot set arbitrary properties. Only those supported in RKStandardComponent will have an effect. */
 	QString globalContextProperty (const QString& property) { return global_context_properties.value (property); };
+
+/** Add an xml client that should be active, whenever this window is active. Noteably the KatePluginIntegrationWindow for kate related windows.
+ *  For the time being, only a single buddy is allowed, and it must outlive all mdi windows. */
+	void addUiBuddy(KXMLGUIClient* buddy);
+	KXMLGUIClient* uiBuddy() const { return ui_buddy; };
 signals:
 /** This signal is emitted, whenever the window caption was changed.
 @param RKMDIWindow* a pointer to this window */
@@ -138,6 +143,7 @@ protected:
 	void initializeActivationSignals ();
 	void paintEvent (QPaintEvent *e) override;
 	void changeEvent (QEvent *event) override;
+	void removeUiBuddy(QObject* buddy);
 
 /** reimplemented from QWidget to emulate focus-follows-mouse behavior */
 	void enterEvent (QEvent *event) override;
@@ -167,6 +173,7 @@ friend class RKToolWindowBar;
 	QString generic_window_name;
 	QUrl help_url;
 	RKSettings::SettingsPage settings_page;
+	KXMLGUIClient* ui_buddy;
 };
 
 #endif

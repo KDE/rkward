@@ -200,6 +200,7 @@ private:
 	bool merge_loads;
 
 	KatePluginIntegrationApp *katepluginintegration;
+	KXMLGUIClient *active_ui_buddy;
 };
 
 #endif // RKWARD_H
