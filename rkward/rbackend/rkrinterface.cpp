@@ -392,7 +392,7 @@ void RInterface::handleRequest (RBackendRequest* request) {
 			handleCommandOut (command);
 		}
 		tryNextCommand ();
-	} else if (request->type == RBackendRequest::HistoricalSubstackRequest) {
+	} else if (request->type == RBackendRequest::GenericRequestWithSubcommands) {
 		RCommandProxy *cproxy = request->takeCommand();
 		RCommand *parent = 0;
 		for (int i = all_current_commands.size () - 1; i >= 0; --i) {
@@ -402,8 +402,11 @@ void RInterface::handleRequest (RBackendRequest* request) {
 			}
 		}
 		delete cproxy;
-		command_requests.append (request);
-		processHistoricalSubstackRequest (request->params["call"].toStringList (), parent, request);
+		RK_ASSERT(request->subcommandrequest);
+		command_requests.append(request->subcommandrequest);
+		request->subcommandrequest = nullptr;  // it is now a separate request. Make sure we won't try to send it back as part of this one.
+		processHistoricalSubstackRequest(request->params["call"].toStringList(), parent, request);
+		RKRBackendProtocolFrontend::setRequestCompleted(request);
 	} else if (request->type == RBackendRequest::PlainGenericRequest) {
 		request->setResult(processPlainGenericRequest(request->params["call"].toStringList()));
 		RKRBackendProtocolFrontend::setRequestCompleted (request);

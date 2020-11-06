@@ -946,7 +946,7 @@ SEXP doSubstackCall (SEXP call) {
 	} */
 
 
-	auto ret = RKRBackend::this_pointer->handleHistoricalSubstackRequest(list);
+	auto ret = RKRBackend::this_pointer->handleRequestWithSubcommands(list);
 	if (!ret.warning.isEmpty()) Rf_warning(RKRBackend::fromUtf8(ret.warning));  // print warnings, first, as errors will cause a stop
 	if (!ret.error.isEmpty()) Rf_error(RKRBackend::fromUtf8(ret.error));
 
@@ -1562,14 +1562,25 @@ void RKRBackend::commandFinished (bool check_object_updates_needed) {
 	}
 }
 
-RCommandProxy* RKRBackend::handleRequest (RBackendRequest *request, bool mayHandleSubstack) {
+RCommandProxy* RKRBackend::handleRequest(RBackendRequest *request, bool mayHandleSubstack) {
 	RK_TRACE (RBACKEND);
 	RK_ASSERT (request);
 
-	RKRBackendProtocolBackend::instance ()->sendRequest (request);
+	// Seed docs for RBackendRequest for hints to make sense of this mess (and eventually to fix it)
+
+	RKRBackendProtocolBackend::instance ()->sendRequest(request);
+	if (request->subcommandrequest) {
+		handleRequest2(request->subcommandrequest, true);
+	}
+	return handleRequest2(request, mayHandleSubstack);
+}
+
+RCommandProxy * RKRBackend::handleRequest2(RBackendRequest* request, bool mayHandleSubstack) {
+	RK_TRACE(RBACKEND);
 
 	if ((!request->synchronous) && (!isKilled ())) {
-		RK_ASSERT (mayHandleSubstack);	// i.e. not called from fetchNextCommand
+		RK_ASSERT(mayHandleSubstack);	// i.e. not called from fetchNextCommand
+		RK_ASSERT(!request->subcommandrequest);
 		return 0;
 	}
 
@@ -1628,13 +1639,15 @@ RCommandProxy* RKRBackend::fetchNextCommand () {
 	return (handleRequest (&req, false));
 }
 
-GenericRRequestResult RKRBackend::handleHistoricalSubstackRequest (const QStringList &list) {
+GenericRRequestResult RKRBackend::handleRequestWithSubcommands(const QStringList &list) {
 	RK_TRACE (RBACKEND);
 
-	RBackendRequest request (true, RBackendRequest::HistoricalSubstackRequest);
+	RBackendRequest request(true, RBackendRequest::GenericRequestWithSubcommands);
 	request.params["call"] = list;
 	request.command = current_command;
-	handleRequest (&request);
+	request.subcommandrequest = new RBackendRequest(true, RBackendRequest::OtherRequest);
+	handleRequest(&request);
+	delete request.subcommandrequest;
 	return request.getResult();
 }
 
@@ -1767,12 +1780,12 @@ void RKRBackend::checkObjectUpdatesNeeded (bool check_list) {
 			dummy = runDirectCommand ("loadedNamespaces ()\n", RCommand::GetStringVector);
 			call.append (dummy->stringVector ());
 			delete dummy;
-			handleHistoricalSubstackRequest (call);
+			handleRequestWithSubcommands (call);
 		} 
 		if (globalenv_update_needed) {
 			QStringList call = global_env_toplevel_names;
 			call.prepend ("syncglobal");	// should be faster than the reverse
-			handleHistoricalSubstackRequest (call);
+			handleRequestWithSubcommands (call);
 		}
 	}
 
@@ -1784,7 +1797,7 @@ void RKRBackend::checkObjectUpdatesNeeded (bool check_list) {
 	if (!changed_symbol_names.isEmpty ()) {
 		QStringList call = changed_symbol_names;
 		call.prepend (QString ("sync"));	// should be faster than reverse
-		handleHistoricalSubstackRequest (call);
+		handleRequestWithSubcommands (call);
 		changed_symbol_names.clear ();
 	}
 }

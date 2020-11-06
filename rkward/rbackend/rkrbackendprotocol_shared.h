@@ -2,7 +2,7 @@
                           rkrbackendprotocol  -  description
                              -------------------
     begin                : Thu Nov 04 2010
-    copyright            : (C) 2010-2018 by Thomas Friedrichsmeier
+    copyright            : (C) 2010-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -24,6 +24,17 @@
 
 class RCommandProxy;
 
+/** Class to represent an "event" sent between backend and frontend. This encapuslates all communication sent between the two processes (actually the graphics device uses a separate channel, but that's not the point, here).
+ *
+ *  - Most, but not all requests originate in the backend.
+ *  - Some requests are "asynchronous" in the sense of fire and forget, i.e. the backend notifies the frontend of some condition, but does not wait for a reply.
+ *  - Many requests are synchronous, in that they will block what the backend is currently doing, until the frontend posted the event back (with or without some kind of return value)). Notably, however, while waiting for a synchronous request to
+ *  complete, the backend will still do event processing, which may include running further R commands (which may again involve sending requests to the frontend).
+ *  - Some requests contain a "subcommandrequest". This allows the frontend to (optionally) send commands that will be executed _before_ the original/main request is completed.
+ *  - All of this means that requests and their answers are not necessarily send/received in a sorted order.
+ *  - In an attempt to streamline communication, the next command to process is generally sent as part of the answer to a request. This should probably be reconsidered.
+ *  - The real mess, however, is that the whole mechanism has grown over time, and contains strange termms and ad-hoc additions. Parts of it should probably be re-designed from the ground up. Hopefully, these notes, help with that.
+ */
 class RBackendRequest {
 public:
 	enum RCallbackType {
@@ -37,7 +48,7 @@ public:
 		Started,
 		EvalRequest,
 		CallbackRequest,
-		HistoricalSubstackRequest,   // 10
+		GenericRequestWithSubcommands,   // 10
 		PlainGenericRequest,
 		SetParamsFromBackend,
 		Debugger,
@@ -64,6 +75,7 @@ public:
 		return ret;
 	}
 
+	RBackendRequest *subcommandrequest;
 /** Should this request be handled synchronously? False by default. */
 	bool synchronous;
 /** For synchronous requests, only: The frontend-thread will set this to true (using completed()), once the request has been "completed". Important: The backend thread MUST NOT touch a request after it has been sent, and before "done" has been set to true. */

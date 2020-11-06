@@ -43,8 +43,9 @@ RBackendRequest::RBackendRequest (bool synchronous, RCallbackType type) {
 	RBackendRequest::type = type;
 	id = ++_id;
 	done = false;
-	command = 0;
-	output = 0;
+	command = nullptr;
+	output = nullptr;
+	subcommandrequest = nullptr;
 }
 
 RBackendRequest::~RBackendRequest () {

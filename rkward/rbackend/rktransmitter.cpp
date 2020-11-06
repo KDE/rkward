@@ -40,6 +40,12 @@ void RKRBackendSerializer::serialize (const RBackendRequest &request, QDataStrea
 		stream << false;
 	}
 	stream << request.params;
+	if (request.subcommandrequest) {
+		stream << true;
+		serialize(*(request.subcommandrequest), stream);
+	} else {
+		stream << false;
+	}
 }
 
 RBackendRequest *RKRBackendSerializer::unserialize (QDataStream &stream) {
@@ -63,6 +69,8 @@ RBackendRequest *RKRBackendSerializer::unserialize (QDataStream &stream) {
 	stream >> dummyb;
 	if (dummyb) request->output = unserializeOutput (stream);
 	stream >> request->params;
+	stream >> dummyb;
+	if (dummyb) request->subcommandrequest = unserialize(stream);
 
 	return request;
 }
