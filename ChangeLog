@@ -5,7 +5,8 @@ TODOS for output directories:
   - UI
   - remove explicit warnings
 
-- Internal: Allow R-levels calls to support both subcommands, and a return value at the same time
+- rkwardtests library gains helper functions for checking for expected errors
+- Internal: Allow R-level calls to support both subcommands, and a return value at the same time
 - Fixed: Calling (rk.)select.list() without a title would fail
 - Hide or remove several purely internal functions (most can still be assessed from the rkward namespace as rkward:::xyz())
 

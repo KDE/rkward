@@ -1,0 +1,44 @@
+#' Helper functions to check for expected errors
+#'
+#' @description
+#' \code{rktest.commandFailed()} runs the given statement(s), which is expected to produce an error. Returns TRUE, if the command failed, FALSE, if it succeeded.
+#' \code{rktest.exptectError()} runs the given statement(s), which is expected to produce an error. If the command succeeds, and error is produced.
+#'
+#' @note In both cases, the error message of the original command will still be printed (as a warning), but execution will continue afterwards.
+#' 
+#' @aliases rktest.commandFailed rktest.expectError
+#' @param expr Expression to evaluate
+#' @param message Error message to generate, if the expected error failed to occur. If NULL, the deparsed expression itself is cited.
+#' @rdname rktest.expectError
+#' @return TRUE if the command failed. rktest.commandFailed() returns FALSE, if the command did not fail.
+#' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
+#' @keywords utilities
+#' @seealso \code{\link[rkwardtests:rktest.makeplugintests]{rktest.makeplugintests}}
+#' @examples
+#' if(!rktest.commandFailed(stop("Expected error"))) stop("Failed to generate error")
+#' @export
+rktest.commandFailed <- function(expr){
+  failed = TRUE
+  try({
+    eval.parent(expr)
+    failed = FALSE
+  })
+  failed
+}
+
+#' @export
+#' @rdname rktest.expectError
+rktest.expectError <- function(expr, message=NULL){
+  failed = TRUE
+  try({
+    eval.parent(expr)
+    failed = FALSE
+  })
+  if(!failed) {
+    if(is.null(message)) {
+      message = deparse(substitute(expr))
+    }
+    stop(paste("Failed to generate expected error for: ", message))
+  }
+  invisible(TRUE)
+}
