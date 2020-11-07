@@ -5,12 +5,14 @@
 \alias{rktest.expectError}
 \title{Helper functions to check for expected errors}
 \usage{
-rktest.commandFailed(expr)
+rktest.commandFailed(expr, silent = FALSE)
 
-rktest.expectError(expr, message = NULL)
+rktest.expectError(expr, message = NULL, silent = FALSE)
 }
 \arguments{
 \item{expr}{Expression to evaluate}
+
+\item{silent}{if TRUE suppress the error message itself (and any warnings).}
 
 \item{message}{Error message to generate, if the expected error failed to occur. If NULL, the deparsed expression itself is cited.}
 }
@@ -22,7 +24,7 @@ TRUE if the command failed. rktest.commandFailed() returns FALSE, if the command
 \code{rktest.exptectError()} runs the given statement(s), which is expected to produce an error. If the command succeeds, and error is produced.
 }
 \note{
-In both cases, the error message of the original command will still be printed (as a warning), but execution will continue afterwards.
+In both cases, the error message of the original command will still be printed, unless silent=TRUE (as a warning), but execution will continue afterwards.
 }
 \examples{
 if(!rktest.commandFailed(stop("Expected error"))) stop("Failed to generate error")

@@ -27,6 +27,7 @@ rktest.runRKTestSuite <- function (suite, testroot=getwd (), test.id=NULL) {
 	  on.exit(rktest.resetEnvironment())
 	}
 
+	testroot <- testroot  # Need to force this, before calling setwd(), below (in case it's left at the default getwd())
 	result <- new ("RKTestResult")		# FALSE by default
 
 	if (!inherits (suite, "RKTestSuite")) return (result)

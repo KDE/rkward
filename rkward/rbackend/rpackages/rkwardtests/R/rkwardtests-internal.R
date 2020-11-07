@@ -162,13 +162,24 @@ rktest.runRKTest <- function (test, standard.path, suite.id) {
 	rktest.cleanTestFile (code_file)
 	rktest.cleanTestFile (message_file)
 
-	result@output_match = rktest.compare.against.standard (output_file, standard.path, test@fuzzy_output)
-	if (result@output_match == "MISMATCH") passed <- FALSE
-	result@message_match = rktest.compare.against.standard (message_file, standard.path)
-	if (result@message_match == "MISMATCH") passed <- FALSE
-	result@code_match = rktest.compare.against.standard (code_file, standard.path)
-	if (result@code_match == "MISMATCH") passed <- FALSE
-
+	if ("output" %in% test@ignore) {
+		result@output_match <- "ignored"
+	} else {
+		result@output_match = rktest.compare.against.standard (output_file, standard.path, test@fuzzy_output)
+		if (result@output_match == "MISMATCH") passed <- FALSE
+	}
+	if ("message" %in% test@ignore) {
+		result@message_match <- "ignored"
+	} else {
+		result@message_match = rktest.compare.against.standard (message_file, standard.path)
+		if (result@message_match == "MISMATCH") passed <- FALSE
+	}
+	if ("code" %in% test@ignore) {
+		result@code_match <- "ignored"
+	} else {
+		result@code_match = rktest.compare.against.standard (code_file, standard.path)
+		if (result@code_match == "MISMATCH") passed <- FALSE
+	}
 	result@passed <- passed
 
 	result

@@ -1,7 +1,7 @@
 #' Set RKWard plugin test suite standards
 #'
 #' @description
-#' Use this function after you plugin passed all tests to set the resulting code,
+#' Use this function after your plugin passed all tests to set the resulting code,
 #' output and R messages as the standard that will be compared to during following tests.
 #' 
 #' @title Set RKWard suite standards

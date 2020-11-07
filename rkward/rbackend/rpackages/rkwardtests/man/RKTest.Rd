@@ -23,6 +23,8 @@ This class is used internally by \code{\link[rkwardtests:rktest.makeplugintests]
 \item{\code{files}}{A character vector naming needed files, path relative to the test standards directory}
 
 \item{\code{record.all.commands}}{Should synchronization commands and commands to generate run-again-links be included in the command recording? Generally, this should be FALSE (the default).}
+
+\item{\code{ignore}}{May include one of more of "output", "messages", "commands", for skipping comparison of these against the standard, completely.}
 }}
 
 \author{
