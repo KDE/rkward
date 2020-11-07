@@ -1,7 +1,6 @@
 TODOS for output directories:
   - Make sure not to activate default output while quitting (abouttoquit is too late)
   - save outputs to .rkworkplace and restore them
-  - automated tests
   - UI
   - remove explicit warnings
 
