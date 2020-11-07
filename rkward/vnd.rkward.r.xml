@@ -4,6 +4,7 @@
     <comment>R source file</comment>
     <comment xml:lang="ca">Fitxer de codi font en R</comment>
     <comment xml:lang="ca@valencia">Fitxer de codi font en R</comment>
+    <comment xml:lang="en_GB">R source file</comment>
     <comment xml:lang="eu">R sorburu fitxategia</comment>
     <comment xml:lang="fr">Fichier source R</comment>
     <comment xml:lang="lt">R šaltinio failas</comment>
@@ -25,6 +26,7 @@
     <comment>R data/workspace file</comment>
     <comment xml:lang="ca">Fitxer de dades/espai de treball de l'R</comment>
     <comment xml:lang="ca@valencia">Fitxer de dades/espai de treball de l'R</comment>
+    <comment xml:lang="en_GB">R data/workspace file</comment>
     <comment xml:lang="eu">R datu/langune fitxategia</comment>
     <comment xml:lang="fr">Fichier de données ou d'espace de travail R</comment>
     <comment xml:lang="lt">R duomenų/darbo aplinkos failas</comment>
