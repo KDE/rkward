@@ -1,5 +1,6 @@
 #' Run a single RKWard plugin test suite
 #'
+#' @description
 #' This function can be called to run a single plugin test suite.
 #' 
 #' @title Run RKWard plugin test suite

@@ -1,18 +1,15 @@
-## temporarily turned off most of the roxygen comments
-## class docs will remain static until roxygen2 supports "@slot"
-
 #' S4 class RKTest
 #' 
+#' @description
 #' This class is used internally by \code{\link[rkwardtests:rktest.makeplugintests]{rktest.makeplugintests}}.
 #'
-#' @noRd
-# @slot id A unique character string
-# @slot call A function to be called
-# @slot fuzzy_output Allow fuzzy results
-# @slot expect_error Expect errors
-# @slot libraries A charcter vector naming needed libraries
-# @slot files A character vector naming needed files, path relative to the test standards directory
-# @slot record.all.commands Should synchronization commands and commands to generate run-again-links be included in the command recording? Generally, this should be FALSE (the default).
+#' @slot id A unique character string
+#' @slot call A function to be called
+#' @slot fuzzy_output Allow fuzzy results
+#' @slot expect_error Expect errors
+#' @slot libraries A charcter vector naming needed libraries
+#' @slot files A character vector naming needed files, path relative to the test standards directory
+#' @slot record.all.commands Should synchronization commands and commands to generate run-again-links be included in the command recording? Generally, this should be FALSE (the default).
 #' @name RKTest
 #' @import methods
 #' @keywords classes

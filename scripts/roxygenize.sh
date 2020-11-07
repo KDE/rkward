@@ -7,9 +7,7 @@ PACKAGESDIR="${BASEDIR}/rkward/rbackend/rpackages"
 
 
 if [ "$#" = 0 ]; then
-	PACKAGES="'${PACKAGESDIR}/rkward/'"
-	# currently excluded due to missing support for slots in roxygen2:
-	# '${PACKAGESDIR}/rkward/tests/'
+	PACKAGES="'${PACKAGESDIR}/rkward/', '${PACKAGESDIR}/rkwardtests/'"
 else
 	PACKAGES="'$1'"
 	shift

@@ -1,18 +1,15 @@
-## temporarily turned off most of the roxygen comments
-## class docs will remain static until roxygen2 supports "@slot"
-
 #' S4 Class RKTestResult
 #'
+#' @description
 #' This class is used internally by \code{\link[rkwardtests:rktest.makeplugintests]{rktest.makeplugintests}}.
 #'
-#' @noRd
-# @slot id A unique character string naming a test.
-# @slot code_match A character string indicating whether the run code matched the standard.
-# @slot output_match A character string indicating whether the resulting output matched the standard.
-# @slot message_match A character string indicating whether the resulting R messages matched the standard.
-# @slot error A character string indicating errors.
-# @slot missing_libs A character string indicating missing libraries.
-# @slot passed Logical: Did the test pass?
+#' @slot id A unique character string naming a test.
+#' @slot code_match A character string indicating whether the run code matched the standard.
+#' @slot output_match A character string indicating whether the resulting output matched the standard.
+#' @slot message_match A character string indicating whether the resulting R messages matched the standard.
+#' @slot error A character string indicating errors.
+#' @slot missing_libs A character string indicating missing libraries.
+#' @slot passed Logical: Did the test pass?
 #' @name RKTestResult
 #' @import methods
 #' @keywords classes

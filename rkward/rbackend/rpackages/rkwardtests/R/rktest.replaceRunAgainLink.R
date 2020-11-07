@@ -1,5 +1,6 @@
 #' Replace "Run again" link in RKWard with code
 #'
+#' @description
 #' You can use this to temporarily replace .rk.rerun.plugin.link (see example below).
 #' This way, after running a plugin, you are shown the call needed to run this
 #' plugin with those settings, instead of the link.

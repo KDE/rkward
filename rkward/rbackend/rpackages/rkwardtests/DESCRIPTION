@@ -16,8 +16,8 @@ Authors@R: c(person(given="Thomas", family="Friedrichsmeier",
     email="thomas.friedrichsmeier@ruhr-uni-bochum.de", role=c("aut", "cre")),
     person(given="Meik", family="Michalke", email="meik.michalke@hhu.de",
     role=c("aut", "cre")))
-Version: 0.6.1
-Date: 2012-09-28
+Version: 0.7.2
+Date: 2020-11-07
 Collate:
     'RKTest-class.R'
     'rktest.getTempDir.R'
@@ -25,8 +25,10 @@ Collate:
     'rktest.replaceRunAgainLink.R'
     'RKTestResult-class.R'
     'rktest.runRKTestSuite.R'
+    'rktest.expectError.R'
     'rktest.setSuiteStandards.R'
     'RKTestSuite-class.R'
     'rkwardtests-internal.R'
     'rkwardtests-package.R'
     'show-method.R'
+RoxygenNote: 7.1.1

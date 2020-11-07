@@ -14,8 +14,8 @@ rk.output(filename = NULL, create = FALSE, all = FALSE)
 back, to.}
 
 \item{create}{If \code{TRUE}, create a new output directory. The parameter \code{filename}, if specified, is the target save file/directory, in this case. Should this already exist,
-an error will be raised. If \code{FALSE}, load or re-use an existing output directory. If the parameter \code{filename} is left \code{NULL}, \code{rk.output} will
-return the currently active output.}
+an error will be raised. If \code{create=FALSE}, load or re-use an existing output directory. If the parameter \code{filename} is left \code{NULL}, \code{rk.output} will
+return the currently active output in this case (creating and/or activating an output file, in case all outputs have been closed or deactivated).}
 
 \item{all}{If \code{TRUE}, return a list of all currently loaded output directories.}
 
@@ -24,14 +24,12 @@ to overwrite/discard existing files/modifications will result in an error. If \c
 
 \item{discard}{See \code{overwrite} for the meaning.}
 
-\item{ask}{Prompt the user for confirmation before potentially desctrucitve operations such as closing or reverting a modified output.}
-
 \item{raise}{Raise the output window, if it is already visble.}
 }
 \description{
 Since version 0.7.5, RKWard supports more than one piece of output. While dealing with only a single output page, there will be no need for the user to call any of
-             these functions, directly, as exactly one output
-             is always opened for writing in RKWard. However, these functions allow to manage several distinct output pages, programmatically.
+             these functions, directly, as exactly one output is always opened for writing in RKWard (unless rk.set.output.html.file() has been called, explicitly).
+             However, these functions allow to manage several distinct output pages, programmatically.
 
              The primary entry point is the function \code{rk.output}, which allows to retrieve the current output directly, or to load or create a new one. This will return
              an instance of the \code{RK.Output} reference class, which has methods for subsequent manipulation. Two instances of this class may be pointing to the same
@@ -42,7 +40,7 @@ Since version 0.7.5, RKWard supports more than one piece of output. While dealin
              At the time of this writing, output is stored in directories containing an HTML index file, and, usually, several image files, and possibly more.
              However other types of output may be supported in the future, and therefore assumptions about the details of the output storage should be avoided.
 
-             \code{rk.output} can be used to create or load output files, as well as to obtain a reference an already loaded output file. After that, use the class methods
+             \code{rk.output} can be used to create or load output files, as well as to obtain a reference to an already loaded output file. After that, use the class methods
              to operate on the reference obtained.
 }
 \section{Fields}{
@@ -56,7 +54,7 @@ Since version 0.7.5, RKWard supports more than one piece of output. While dealin
 \describe{
 \item{\code{activate()}}{Set this output as the one that rk.print and other RKWard Output functions will write to.}
 
-\item{\code{clear(ask = TRUE)}}{Clear all content from this output. As with any function in this class, this affects the working copy, only, until you call save. Therefore, by default, the user will be prompted for confirmation
+\item{\code{clear(discard = NULL)}}{Clear all content from this output. As with any function in this class, this affects the working copy, only, until you call save. Therefore, by default, the user will be prompted for confirmation
 if and only if there are unsaved changes pending.}
 
 \item{\code{close(discard = NULL)}}{Forget about this output file, also closing any open views. Note: Trying to call any further methods on this object will fail.}
@@ -71,7 +69,7 @@ Do not write anything to the target filename, directly! This is purely for infor
 
 \item{\code{isModified()}}{Returns TRUE, if this output has any changes that may need saving.}
 
-\item{\code{revert(ask = TRUE)}}{Revert this output to the last saved state. If no previous state is available (never saved, before), clears the output.}
+\item{\code{revert(discard = NULL)}}{Revert this output to the last saved state. If no previous state is available (never saved, before), clears the output.}
 
 \item{\code{save(filename, overwrite = NULL)}}{Save this output, either to the last known save location (if no filename is specified) or to a new location ("save as").}
 

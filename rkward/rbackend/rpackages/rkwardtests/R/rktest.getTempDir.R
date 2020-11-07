@@ -1,5 +1,6 @@
 #' Get the path to the recent temporary directory, if one exists.
 #'
+#' @description
 #' This function will return either the local path to the temporary directory where
 #' all test results have been saved to, or FALSE if none exitsts.
 #' 
@@ -13,7 +14,6 @@
 #' @export
 #' @examples
 #' rktest.getTempDir()
-
 rktest.getTempDir <- function(){
   if(exists(".rktest.temp.dir", where=.rktest.tmp.storage)){
     temp.dir <- get(".rktest.temp.dir", pos=.rktest.tmp.storage)
