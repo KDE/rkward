@@ -268,6 +268,69 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 				}
 			', submit.mode="submit")
 		}),
+		new ("RKTest", id="rk_output_test", call=function () {
+			sync_outfile <- function() {
+				# Manually notify frontend of current output file.  This is usually suppressed for auto-texting, but important, here, since
+				# the frontend uses this to detect, which output is active.
+				rkward:::.rk.do.plain.call ("set.output.file", c (rk.get.output.html.file()), synchronous=FALSE)
+			}
+
+			x <- rk.output()            # get active output
+
+			l1 <- length(rk.output(all=TRUE))
+
+			y <- rk.output(create=TRUE) # create new output
+			l2 <- length(rk.output(all=TRUE))
+			stopifnot(l1 == l2-1)
+			stopifnot(x$id != y$id)
+			stopifnot(!y$isModified())
+			y$activate()
+			sync_outfile()
+			stopifnot(!y$isModified())  # initialization shall not count as modification
+			stopifnot(y$isEmpty())
+
+			rk.print("y")
+			stopifnot(y$isModified())
+			stopifnot(!y$isEmpty())
+
+			z <- rk.output()            # rk.output() without parameters shall return active output
+			stopifnot(y$id == z$id)
+			rktest.expectError(z$close(discard=FALSE))
+			rktest.expectError(z$revert(discard=FALSE))
+			rktest.expectError(z$clear(discard=FALSE))
+
+			f <- tempfile()             # saving shall mark the output as non-modified
+			y$save(f)
+			stopifnot(!y$isModified())
+			stopifnot(!y$isEmpty())
+			y$close(discard=FALSE)
+
+			z <- rk.output(f)           # a freshly loaded output shall not count as modified
+			stopifnot(!z$isModified())
+			stopifnot(!z$isEmpty())
+
+			z$activate()                # exporting shall not mark the output as non-modified
+			sync_outfile()
+			rk.print("z")
+			g <- tempfile()
+			z$export(g)
+			stopifnot(z$isModified())
+
+			z$revert(discard=TRUE)      # revert shall mark output as non-modified
+			stopifnot(!z$isModified())
+
+			rk.print("z2")              # dicard=TRUE shall allow closing modified output
+			z$close(discard=TRUE)
+
+			rktest.expectError(z$view(), silent=TRUE) # closed output shall be invalid; silent, because error message will contain id
+
+			sync_outfile()
+			a <- rk.output()            # When closing, the previous output shall be re-activated
+			stopifnot(a$id == x$id)
+
+			unlink(f)
+			unlink(g)
+		}, ignore=c("code")),
 		new ("RKTest", id="run_again_links", call=function () {
 			# usually, commands to generate run-again-links are not included in the command recording, since these can sometimes change at a large scale (e.g. if the plot-options plugin gains a new option), and this is rarely of interest. Here, we do include a test to catch any grave problems. For this purpose, we simply call some complex plugins.
 			rk.call.plugin ("rkward::plot_beta_clt", a.real="2.00", b.real="2.00", drawnorm.state="1", function.string="hist", histogram_opt.addtoplot.state="", histogram_opt.barlabels.state="1", histogram_opt.density.real="-1.00", histogram_opt.doborder.state="1", histogram_opt.freq.state="0", histogram_opt.histbordercol.color.string="", histogram_opt.histbreaksFunction.string="Sturges", histogram_opt.histfillcol.color.string="azure", histogram_opt.histlinetype.string="solid", histogram_opt.rightclosed.state="1", histogram_opt.usefillcol.state="1", nAvg.real="10.00", nDist.real="1000.00", normlinecol.color.string="red", normpointtype.string="l", plotoptions.add_grid.state="0", plotoptions.asp.real="0.00", plotoptions.main.text="", plotoptions.pointcolor.color.string="", plotoptions.pointtype.string="", plotoptions.sub.text="", plotoptions.xaxt.state="", plotoptions.xlab.text="", plotoptions.xlog.state="", plotoptions.xmaxvalue.text="", plotoptions.xminvalue.text="", plotoptions.yaxt.state="", plotoptions.ylab.text="", plotoptions.ylog.state="", plotoptions.ymaxvalue.text="", plotoptions.yminvalue.text="", scalenorm.state="0", submit.mode="submit")

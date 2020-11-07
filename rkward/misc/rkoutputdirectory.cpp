@@ -83,8 +83,7 @@ RKOutputDirectory* RKOutputDirectory::getOutputBySaveUrl(const QString& _dest) {
 	RK_TRACE (APP);
 
 	QString dest = QFileInfo(_dest).canonicalFilePath();
-	auto it = outputs.constBegin();
-	while (it != outputs.constEnd()) {
+	for (auto it = outputs.constBegin(); it != outputs.constEnd(); ++it) {
 		if (it.value()->save_filename == dest) {
 			return(it.value());
 		}
@@ -212,9 +211,9 @@ GenericRRequestResult RKOutputDirectory::revert(OverwriteBehavior discard) {
 	RK_TRACE (APP);
 
 	if (save_filename.isEmpty()) {
-		return GenericRRequestResult::makeError(i18n("Output directory %1 has not previously been saved. Cannot revert.", id));
+		return GenericRRequestResult::makeError(i18n("Output has not previously been saved. Cannot revert."));
 	}
-	if (!isModified()) return GenericRRequestResult(id, i18n("Output directory %1 had no modifications. Nothing reverted.", id));
+	if (!isModified()) return GenericRRequestResult(id, i18n("Output had no modifications. Nothing reverted."));
 	if (discard == Ask) {
 		if (KMessageBox::warningContinueCancel(RKWardMainWindow::getMain(), i18n("Reverting will destroy any changes, since the last time you saved (%1). Are you sure you want to proceed?", save_timestamp.toString())) == KMessageBox::Continue) {
 			discard = Force;
@@ -271,9 +270,9 @@ GenericRRequestResult RKOutputDirectory::clear(OverwriteBehavior discard) {
 			if (KMessageBox::warningContinueCancel(RKWardMainWindow::getMain(), i18n("Clearing will destroy any unsaved changes, and - upon saving - also saved changes. Are you sure you want to proceed?")) == KMessageBox::Continue) {
 				discard = Force;
 			}
-			if (discard != Force) {
-				return GenericRRequestResult::makeError(i18n("Output is not empty. Not clearing it."));
-			}
+		}
+		if (discard != Force) {
+			return GenericRRequestResult::makeError(i18n("Output is not empty. Not clearing it."));
 		}
 	}
 
@@ -465,7 +464,10 @@ GenericRRequestResult RKOutputDirectory::handleRCall(const QStringList& params, 
 				out = createOutputDirectoryInternal();
 				return (out->import(filename));
 			} else {
-				if (!out) return (out->import(filename));
+				if (!out) {
+					out = createOutputDirectoryInternal();
+					return (out->import(filename));
+				}
 			}
 		}
 		return GenericRRequestResult(out->getId());

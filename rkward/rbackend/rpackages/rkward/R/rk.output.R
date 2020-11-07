@@ -103,5 +103,7 @@ Do not write anything to the target filename, directly! This is purely for infor
 "rk.output" <- function(filename=NULL, create=FALSE, all=FALSE) {
 	if(all && (!is.null(filename) || create)) stop("'all' cannot be combined with 'create' or 'filename'")
 	id <- .rk.do.call("output", c ("get", if(isTRUE(all)) "all" else "one", if(isTRUE(create)) "create" else "", if(is.null(filename)) "" else as.character(filename)))
-	RK.Output(id=id)
+	ret <- lapply(id, function(id) RK.Output(id=id))
+	if (all) ret
+	else ret[[1]]
 }
