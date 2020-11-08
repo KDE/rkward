@@ -331,14 +331,15 @@ GenericRRequestResult RKOutputDirectory::purge(RKOutputDirectory::OverwriteBehav
 	dir.removeRecursively();
 	outputs.remove(id);
 	deleteLater();
+	GenericRRequestResult messages;
 	if (active) {
 		if (RKQuitAgent::quittingInProgress()) {
 			RK_DEBUG(APP, DL_DEBUG, "Skipping activation of new output file: quitting in progress");
 		} else {
-			getCurrentOutput(chain)->activate(chain);
+			getCurrentOutput(chain, &messages)->activate(chain);
 		}
 	}
-	return GenericRRequestResult();
+	return messages;
 }
 
 void RKOutputDirectory::purgeAllNoAsk() {
@@ -390,12 +391,13 @@ QList<RKOutputDirectory *> RKOutputDirectory::allOutputs() {
 	return ret;
 }
 
-RKOutputDirectory* RKOutputDirectory::getCurrentOutput(RCommandChain* chain) {
+RKOutputDirectory* RKOutputDirectory::getCurrentOutput(RCommandChain* chain, GenericRRequestResult* message_res) {
 	RK_TRACE(APP);
 
 	if (outputs.isEmpty()) {
 		auto n = createOutputDirectoryInternal();
 		n->activate(chain);
+		if (message_res) message_res->addMessages(GenericRRequestResult(QVariant(), i18n("New empty output directory has been created, automatically")));
 		return n;
 	}
 
@@ -404,10 +406,11 @@ RKOutputDirectory* RKOutputDirectory::getCurrentOutput(RCommandChain* chain) {
 		if (it.value()->isActive()) return it.value();
 		if (it.value()->filename().isEmpty()) candidate = it.value();
 	}
-#warning generate a warning, when a new output is created or activated
+
 	if (!candidate) candidate = outputs[0];
 	RK_ASSERT(candidate);
 	candidate->activate(chain);
+	if (message_res) message_res->addMessages(GenericRRequestResult(QVariant(), i18n("Output has been activated, automatically")));
 	return candidate;
 }
 
@@ -449,11 +452,12 @@ GenericRRequestResult RKOutputDirectory::handleRCall(const QStringList& params, 
 		QString filename = params.value(3);
 		bool create = (params.value(2) == QStringLiteral("create"));
 		RKOutputDirectory *out = nullptr;
+		GenericRRequestResult messages;
 		if (filename.isEmpty()) {
 			if (create) {
 				out = createOutputDirectoryInternal();
 			} else {
-				out = getCurrentOutput(chain);
+				out = getCurrentOutput(chain, &messages);
 			}
 		} else {
 			filename = QFileInfo(filename).canonicalFilePath();
@@ -470,7 +474,7 @@ GenericRRequestResult RKOutputDirectory::handleRCall(const QStringList& params, 
 				}
 			}
 		}
-		return GenericRRequestResult(out->getId());
+		return GenericRRequestResult(out->getId()).addMessages(messages);
 	} else {
 		// all other commands pass the output id as second parameter. Look that up, first
 		QString id = params.value(1);

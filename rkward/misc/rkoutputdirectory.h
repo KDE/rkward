@@ -64,7 +64,7 @@ public:
  *  If no output is active, find an activate the next output without a save url.
  *  If that does not exist, activate and return the next existing output.
  *  If that does not exist, create a new output, activate and return it. */
-	static RKOutputDirectory* getCurrentOutput(RCommandChain *chain=0);
+	static RKOutputDirectory* getCurrentOutput(RCommandChain *chain=0, GenericRRequestResult* message_res=0);
 	static QList<RKOutputDirectory*> allOutputs();
 	static void purgeAllNoAsk();
 private:

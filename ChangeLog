@@ -1,8 +1,11 @@
+TODOS for autotests:
+  - Check an update the standards.
+  - Use options(warn=1), in order to get warnings into the test?
+
 TODOS for output directories:
   - Make sure not to activate default output while quitting (abouttoquit is too late)
   - save outputs to .rkworkplace and restore them
   - UI
-  - remove explicit warnings
 
 - rkwardtests library gains helper functions for checking for expected errors
 - Internal: Allow R-level calls to support both subcommands, and a return value at the same time

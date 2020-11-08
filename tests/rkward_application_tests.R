@@ -1,4 +1,5 @@
 ## definition of the test suite
+library("rkwardtests", lib.loc=rk.home("lib"))
 suite <- new ("RKTestSuite", id="rkward_application_tests",
 	# place here libraries that are required for *all* tests in this suite, or highly likely to be installed
 	libraries = character (0),

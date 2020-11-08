@@ -244,6 +244,17 @@ struct GenericRRequestResult {
 	static GenericRRequestResult makeError(const QString& error) {
 		return GenericRRequestResult(QVariant(), QString(), error);
 	}
+	GenericRRequestResult& addMessages(const GenericRRequestResult &other) {
+		if (!other.error.isEmpty()) {
+			if (!error.isEmpty()) error.append('\n');
+			error.append(other.error);
+		}
+		if (!other.warning.isEmpty()) {
+			if (!warning.isEmpty()) warning.append('\n');
+			warning.append(other.warning);
+		}
+		return *this;
+	}
 	QString error;
 	QString warning;
 	QVariant ret;

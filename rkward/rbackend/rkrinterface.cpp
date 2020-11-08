@@ -749,7 +749,6 @@ void RInterface::processHistoricalSubstackRequest (const QStringList &calllist, 
 			RK_ASSERT (false);
 		}
 	} else if (call == QStringLiteral ("output")) {
-#warning Gaaah. This does not work, if a subcommand has been run (request is "used up" in that case)
 		request->setResult(RKOutputDirectory::handleRCall(calllist.mid(1), in_chain));
 	} else {
 		request->setResult(GenericRRequestResult::makeError(i18n("Unrecognized call '%1'", call)));
