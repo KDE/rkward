@@ -105,6 +105,11 @@ QObject* KatePluginIntegrationApp::loadPlugin (const QString& identifier) {
 
 	KPluginFactory *factory = KPluginLoader(known_plugins[identifier].data.fileName ()).factory ();
 	if (factory) {
+		if (identifier == "katekonsoleplugin") {
+			// Workaround until https://invent.kde.org/utilities/kate/-/commit/cf11bcbf1f36e2a82b1a1b14090a3f0a2b09ecf4 can be assumed to be present (should be removed in KF6)
+			if (qgetenv("EDITOR").isNull()) qputenv("EDITOR", "vi");
+		}
+
 		KTextEditor::Plugin *plugin = factory->create<KTextEditor::Plugin>(this, QVariantList () << identifier);
 		if (plugin) {
 			known_plugins[identifier].plugin = plugin;
