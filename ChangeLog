@@ -1,9 +1,8 @@
 TODOS for autotests:
-  - Check an update the standards.
+  - Check and update the standards files
   - Use options(warn=1), in order to get warnings into the test?
 
 TODOS for output directories:
-  - Make sure not to activate default output while quitting (abouttoquit is too late)
   - save outputs to .rkworkplace and restore them
   - UI
 

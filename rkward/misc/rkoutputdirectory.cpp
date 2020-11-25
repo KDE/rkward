@@ -307,7 +307,7 @@ QString RKOutputDirectory::caption() const {
 	return i18n("Unsaved output");
 }
 
-GenericRRequestResult RKOutputDirectory::purge(RKOutputDirectory::OverwriteBehavior discard, RCommandChain* chain) {
+GenericRRequestResult RKOutputDirectory::purge(RKOutputDirectory::OverwriteBehavior discard, RCommandChain* chain, bool activate_other) {
 	RK_TRACE(APP);
 
 	if (isModified()) {
@@ -326,19 +326,13 @@ GenericRRequestResult RKOutputDirectory::purge(RKOutputDirectory::OverwriteBehav
 		}
 	}
 
-	bool active = isActive();
+	bool activate = activate_other && isActive();
 	QDir dir(work_dir);
 	dir.removeRecursively();
 	outputs.remove(id);
 	deleteLater();
 	GenericRRequestResult messages;
-	if (active) {
-		if (RKQuitAgent::quittingInProgress()) {
-			RK_DEBUG(APP, DL_DEBUG, "Skipping activation of new output file: quitting in progress");
-		} else {
-			getCurrentOutput(chain, &messages)->activate(chain);
-		}
-	}
+	if (activate) getCurrentOutput(chain, &messages);
 	return messages;
 }
 
@@ -347,7 +341,7 @@ void RKOutputDirectory::purgeAllNoAsk() {
 
 	auto outputs_copy = outputs;
 	for (auto it = outputs_copy.constBegin(); it != outputs_copy.constEnd(); ++it) {
-		auto res = outputs.constBegin().value()->purge(Force);
+		auto res = outputs.constBegin().value()->purge(Force, nullptr, false);
 		RK_ASSERT(!res.failed());
 	}
 }

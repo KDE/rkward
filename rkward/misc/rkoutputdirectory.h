@@ -43,7 +43,7 @@ public:
 	GenericRRequestResult save(const QString& dest=QString(), OverwriteBehavior overwrite=Ask);
 	GenericRRequestResult exportAs(const QString& dest=QString(), OverwriteBehavior overwrite=Ask);
 	GenericRRequestResult clear(OverwriteBehavior discard=Ask);
-	GenericRRequestResult purge(OverwriteBehavior discard=Ask, RCommandChain* chain=0);
+	GenericRRequestResult purge(OverwriteBehavior discard=Ask, RCommandChain* chain=0, bool activate_other=true);
 	QString getId() const { return id; };
 	bool isEmpty() const;
 	bool isActive() const;
