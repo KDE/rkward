@@ -83,7 +83,7 @@
   <screenshots>
     <screenshot type="default">
       <caption>Application main window, with object browser, data editor, file browser, and interactive R console visible. Window placement can be re-arranged and all windows can also detached from the main window.</caption>
-      <caption xml:lang="ca">Finestra principal de l'aplicació, amb navegador d'objectes, editor de dades, navegador de fitxers, i una consola visible d'R interactiva. La col·locació de les finestres es pot reconfigurar i també totes les finestres es poden separar de la finestra principal.</caption>
+      <caption xml:lang="ca">Finestra principal de l'aplicació, amb navegador d'objectes, editor de dades, navegador de fitxers, i una consola visible d'R interactiva. La col·locació de les finestres es pot reconfigurar i també totes les finestres es poden separar de la finestra principal</caption>
       <caption xml:lang="ca-valencia">Finestra principal de l'aplicació, amb navegador d'objectes, editor de dades, navegador de fitxers, i una consola visible d'R interactiva. La col·locació de les finestres es pot reconfigurar i també totes les finestres es poden separar de la finestra principal.</caption>
       <caption xml:lang="en-GB">Application main window, with object browser, data editor, file browser, and interactive R console visible. Window placement can be re-arranged and all windows can also detached from the main window.</caption>
       <caption xml:lang="es">Ventana principal de la aplicación, con explorador de objetos, editor de datos, navegador de archivos y consola interactiva de R visible. La posición de la ventana se puede reorganizar y también es posible desprender todas las ventanas de la ventana principal.</caption>
@@ -104,7 +104,7 @@
     </screenshot>
     <screenshot type="default">
       <caption>Script editor with active preview.</caption>
-      <caption xml:lang="ca">Un editor de scripts amb vista prèvia activa.</caption>
+      <caption xml:lang="ca">Un editor de scripts amb vista prèvia activa</caption>
       <caption xml:lang="ca-valencia">Un editor de scripts amb vista prèvia activa.</caption>
       <caption xml:lang="cs">Editor skriptů s aktivním náhledem.</caption>
       <caption xml:lang="en-GB">Script editor with active preview.</caption>
@@ -150,7 +150,7 @@
     </screenshot>
     <screenshot type="default">
       <caption>Searching objects by name, searching for help pages, and in-app help viewer.</caption>
-      <caption xml:lang="ca">Cerca objectes per nom, cerca a les pàgines d'ajuda, i visor d'ajuda integrat a l'aplicació.</caption>
+      <caption xml:lang="ca">Cerca objectes per nom, cerca a les pàgines d'ajuda, i visor d'ajuda integrat a l'aplicació</caption>
       <caption xml:lang="ca-valencia">Cerca objectes per nom, cerca a les pàgines d'ajuda, i visor d'ajuda integrat a l'aplicació.</caption>
       <caption xml:lang="en-GB">Searching objects by name, searching for help pages, and in-app help viewer.</caption>
       <caption xml:lang="es">Búsqueda de objetos por nombre, búsqueda de páginas de ayuda y visor de ayuda integrado en la aplicación.</caption>
