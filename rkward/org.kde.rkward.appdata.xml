@@ -83,10 +83,20 @@
   <screenshots>
     <screenshot type="default">
       <caption>Application main window, with object browser, data editor, file browser, and interactive R console visible. Window placement can be re-arranged and all windows can also detached from the main window</caption>
+      <caption xml:lang="ca">Finestra principal de l'aplicació, amb navegador d'objectes, editor de dades, navegador de fitxers, i una consola visible d'R interactiva. La col·locació de les finestres es pot reconfigurar i també totes les finestres es poden separar de la finestra principal</caption>
+      <caption xml:lang="pt">A janela principal da aplicação, com um navegador de objectos, um editor de dados, um navegador de ficheiros e uma consola de R interactiva visíveis. A colocação das janelas pode ser reorganizada e todas as janelas poder-se-ão destacar da janela principal</caption>
+      <caption xml:lang="sv">Huvudfönster i programmet, med objektbläddrare, dataeditor, filbläddrare och interaktiv R-terminal synliga. Fönsterplaceringen kan arrangeras om och alla fönster kan också kopplas loss från huvudfönstret</caption>
+      <caption xml:lang="uk">Головне вікно програми із панеллю навігації об'єктами, редактором даних, панеллю навігації файловою системою та інтерактивною консоллю R. Розташування панелей можна змінювати, усі панелі також можна від'єднувати від головного вікна</caption>
+      <caption xml:lang="x-test">xxApplication main window, with object browser, data editor, file browser, and interactive R console visible. Window placement can be re-arranged and all windows can also detached from the main windowxx</caption>
       <image>https://cdn.kde.org/screenshots/rkward/main_window.png</image>
     </screenshot>
     <screenshot type="default">
       <caption>Script editor with active preview</caption>
+      <caption xml:lang="ca">Un editor de scripts amb vista prèvia activa</caption>
+      <caption xml:lang="pt">Editor de programas com uma antevisão activa</caption>
+      <caption xml:lang="sv">Skripteditor med aktiv förhandsgranskning</caption>
+      <caption xml:lang="uk">Редактор скриптів із активним попереднім переглядом</caption>
+      <caption xml:lang="x-test">xxScript editor with active previewxx</caption>
       <image>https://cdn.kde.org/screenshots/rkward/script_preview.png</image>
     </screenshot>
     <screenshot type="default">
@@ -115,6 +125,11 @@
     </screenshot>
     <screenshot type="default">
       <caption>Searching objects by name, searching for help pages, and in-app help viewer</caption>
+      <caption xml:lang="ca">Cerca objectes per nom, cerca a les pàgines d'ajuda, i visor d'ajuda integrat a l'aplicació</caption>
+      <caption xml:lang="pt">Pesquisa de objectos por nome, pesquisa nas páginas de ajuda e visualizador de ajuda na aplicação</caption>
+      <caption xml:lang="sv">Sökning efter objekt enligt namn, sökning efter hjälpsidor, och hjälpvisning i programmet</caption>
+      <caption xml:lang="uk">Пошук об'єктів за назвою, пошук сторінок довідки та вбудована панель перегляду довідки</caption>
+      <caption xml:lang="x-test">xxSearching objects by name, searching for help pages, and in-app help viewerxx</caption>
       <image>https://cdn.kde.org/screenshots/rkward/object_and_help_search.png</image>
     </screenshot>
   </screenshots>
