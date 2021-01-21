@@ -86,6 +86,7 @@
       <caption xml:lang="ca">Finestra principal de l'aplicació, amb navegador d'objectes, editor de dades, navegador de fitxers, i una consola visible d'R interactiva. La col·locació de les finestres es pot reconfigurar i també totes les finestres es poden separar de la finestra principal</caption>
       <caption xml:lang="ca-valencia">Finestra principal de l'aplicació, amb navegador d'objectes, editor de dades, navegador de fitxers, i una consola visible d'R interactiva. La col·locació de les finestres es pot reconfigurar i també totes les finestres es poden separar de la finestra principal</caption>
       <caption xml:lang="es">Ventana principal de la aplicación, con explorador de objetos, editor de datos, navegador de archivos y consola interactiva de R visible. La posición de la ventana se puede reorganizar y también es posible desprender todas las ventanas de la ventana principal</caption>
+      <caption xml:lang="it">Finestra principale dell'applicazione con navigatore degli oggetti, editor di dati, navigatore dei file e console interattiva di R visibile. Il posizionamento delle finestre può essere modificato, inoltre tutte le finestre possono essere sganciate dalla principale</caption>
       <caption xml:lang="nl">Hoofdvenster, met hierin objectbrowser, gegevenseditor, bestandsbrowser, en interactieve console van R. Plaatsing van venster kan worden gewijzigd, en all vensters kunnen ook worden losgemaakt van het hoofdvenster.</caption>
       <caption xml:lang="pt">A janela principal da aplicação, com um navegador de objectos, um editor de dados, um navegador de ficheiros e uma consola de R interactiva visíveis. A colocação das janelas pode ser reorganizada e todas as janelas poder-se-ão destacar da janela principal</caption>
       <caption xml:lang="sl">Glavno okno aplikacije z brskalnikom predmetov, urejevalnikom podatkov, brskalnikom datotek in vidno interaktivno konzolo R. Namestitev oken lahko preuredite in vsa okna se lahko odlepijo tudi od glavnega okna</caption>
@@ -99,6 +100,7 @@
       <caption xml:lang="ca">Un editor de scripts amb vista prèvia activa</caption>
       <caption xml:lang="ca-valencia">Un editor de scripts amb vista prèvia activa</caption>
       <caption xml:lang="es">Editor de scripts con vista previa activa</caption>
+      <caption xml:lang="it">Editor di script con anteprima attiva</caption>
       <caption xml:lang="nl">Scripteditor met actieve preview.</caption>
       <caption xml:lang="pt">Editor de programas com uma antevisão activa</caption>
       <caption xml:lang="sl">Urejevalnik skriptov z aktivnim predogledom</caption>
@@ -136,6 +138,7 @@
       <caption xml:lang="ca">Cerca objectes per nom, cerca a les pàgines d'ajuda, i visor d'ajuda integrat a l'aplicació</caption>
       <caption xml:lang="ca-valencia">Cerca objectes per nom, cerca a les pàgines d'ajuda, i visor d'ajuda integrat a l'aplicació</caption>
       <caption xml:lang="es">Búsqueda de objetos por nombre, búsqueda de páginas de ayuda y visor de ayuda integrado en la aplicación</caption>
+      <caption xml:lang="it">Ricerca di oggetti in base al nome, ricerca di pagine di aiuto e visualizzatore di aiuto all'interno dell'applicazione</caption>
       <caption xml:lang="nl">Objecten zoeken op naam, zoeken naar helppagina's, en in-app helpviewer.</caption>
       <caption xml:lang="pt">Pesquisa de objectos por nome, pesquisa nas páginas de ajuda e visualizador de ajuda na aplicação</caption>
       <caption xml:lang="sl">Iskanje predmetov po imenu, iskanje strani s pomočjo in pregledovalnik pomoči v aplikaciji</caption>
