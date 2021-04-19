@@ -11,6 +11,7 @@
     <comment xml:lang="lt">R šaltinio failas</comment>
     <comment xml:lang="nl">Bronbestand R</comment>
     <comment xml:lang="nn">R-kjeldefil</comment>
+    <comment xml:lang="pl">Plik źródłowy R</comment>
     <comment xml:lang="pt">Ficheiro de código em R</comment>
     <comment xml:lang="pt_BR">Arquivo de código do R</comment>
     <comment xml:lang="sl">R izvorni program</comment>
@@ -34,6 +35,7 @@
     <comment xml:lang="lt">R duomenų/darbo aplinkos failas</comment>
     <comment xml:lang="nl">Gegevens/werkruimtebestand R</comment>
     <comment xml:lang="nn">R-data-/arbeidsområde-fil</comment>
+    <comment xml:lang="pl">Plik danych/przestrzeni pracy R</comment>
     <comment xml:lang="pt">Ficheiro de dados/área de trabalho do R</comment>
     <comment xml:lang="pt_BR">Arquivo de dados/espaço de trabalho do R</comment>
     <comment xml:lang="sl">R datoteka data/workspace</comment>
