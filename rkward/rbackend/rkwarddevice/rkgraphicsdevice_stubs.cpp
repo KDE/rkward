@@ -579,5 +579,41 @@ void RKD_onExit (pDevDesc dev) {
 	}
 	dev->gettingEvent = (Rboolean) false;
 }
+#endif
+
+#if R_VERSION >= R_Version (2, 14, 0)
+int RKD_HoldFlush (pDevDesc dev, int level) {
+#warning implement me
+	return 0;
+}
+#endif
+
+#if R_VERSION >= R_Version (4, 1, 0)
+SEXP RKD_SetPattern (SEXP pattern, pDevDesc dd) {
+#warning implement me
+	return R_NilValue;
+}
+
+void RKD_ReleasePattern (SEXP ref, pDevDesc dd) {
+#warning implement me
+}
+
+SEXP RKD_SetClipPath (SEXP path, SEXP ref, pDevDesc dd) {
+#warning implement me
+	return R_NilValue;
+}
+
+void RKD_ReleaseClipPath (SEXP ref, pDevDesc dd) {
+#warning implement me
+}
+
+SEXP RKD_SetMask (SEXP path, SEXP ref, pDevDesc dd) {
+#warning implement me
+	return R_NilValue;
+}
+
+void RKD_ReleaseMask (SEXP ref, pDevDesc dd) {
+#warning implement me
+}
 
 #endif
