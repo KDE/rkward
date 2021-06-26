@@ -216,6 +216,19 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 #endif
 	dev->newFrameConfirm = RKD_NewFrameConfirm;
 
+#if R_VERSION >= R_Version (2, 14, 0)
+	dev->holdflush = RKD_HoldFlush;
+#endif
+
+#if R_VERSION >= R_Version (4, 1, 0)
+	dev->setPattern = RKD_SetPattern;
+	dev->releasePattern = RKD_ReleasePattern;
+	dev->setClipPath = RKD_SetClipPath;
+	dev->releaseClipPath = RKD_ReleaseClipPath;
+	dev->setMask = RKD_SetMask;
+	dev->releaseMask = RKD_ReleaseMask;
+	dev->deviceVersion = 14;
+	dev->deviceClip = FALSE; // for now
+#endif
 	return true;
 }
- 
