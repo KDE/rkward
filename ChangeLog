@@ -2,6 +2,9 @@
 - kate plugin related actions are now active whenever a script window is active (not only the corresponding tool window)
   - TODO: support kate plugins in detached windows
 
+--- Version 0.7.2b - UNRELEASED
+- Fixed: Crash when attempting to use new graphics features in R 4.1.0 (esp. plotting using ggplot2)
+
 --- Version 0.7.2 - Oct-16-2020
 - Script preview keeps vertical scroll position when updating
 - Python development scripts have been ported to python3
