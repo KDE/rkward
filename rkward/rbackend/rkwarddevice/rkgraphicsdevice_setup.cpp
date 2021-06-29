@@ -2,7 +2,7 @@
                           rkgraphicsdevice_setup  -  description
                              -------------------
     begin                : Mon Mar 18 20:06:08 CET 2013
-    copyright            : (C) 2013-2014 by Thomas Friedrichsmeier 
+    copyright            : (C) 2013-2021 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -227,7 +227,7 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 	dev->releaseClipPath = RKD_ReleaseClipPath;
 	dev->setMask = RKD_SetMask;
 	dev->releaseMask = RKD_ReleaseMask;
-	dev->deviceVersion = 14;
+	dev->deviceVersion = qMin(14, R_GE_version);
 	dev->deviceClip = FALSE; // for now
 #endif
 	return true;

@@ -2,7 +2,7 @@
                           rkgraphicsdevice_stubs  -  description
                              -------------------
     begin                : Mon Mar 18 20:06:08 CET 2013
-    copyright            : (C) 2013-2014 by Thomas Friedrichsmeier 
+    copyright            : (C) 2013-2021 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
