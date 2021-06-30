@@ -548,7 +548,23 @@ void RKSettingsModuleRPackages::rCommandDone (RCommand *command) {
 QString RKSettingsModuleRPackages::libLocsCommand () {
 	RK_TRACE (SETTINGS);
 
-	QString command = ".libPaths (unique (c (";
+	// For additional library locations configured inside RKWard, try to create them, as needed.
+	// This is especially important for versioned dirs (which will not exist after upgrading R, for instance)
+	QString command;
+	if (!liblocs.isEmpty()) {
+		bool first = true;
+		command = "local({\naddpaths <- unique (c(";
+		QStringList ll = expandLibLocs(liblocs);
+		foreach (const QString& libloc, ll) {
+			if (first) first = false;
+			else command.append (", ");
+			command.append (RObject::rQuote (libloc));
+		}
+		command.append ("))\nlapply(addpaths, function(p) { if (!dir.exists(p)) try(dir.create(p, recursive=TRUE)) })\n})\n");
+	}
+
+	// For add library locations set "the R way", try to interfere as little as possible.
+	command.append(".libPaths (unique (c (");
 	bool first = true;
 	QStringList ll = libraryLocations ();
 	foreach (const QString& libloc, ll) {
