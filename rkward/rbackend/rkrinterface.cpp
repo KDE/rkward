@@ -413,7 +413,7 @@ void RInterface::handleRequest (RBackendRequest* request) {
 		RCommandChain *chain = openSubcommandChain (runningCommand ());
 
 		issueCommand ("paste (R.version[c (\"major\", \"minor\")], collapse=\".\")\n", RCommand::GetStringVector | RCommand::App | RCommand::Sync, QString (), this, GET_R_VERSION, chain);
-		issueCommand ("try({userdir<-path.expand(Sys.getenv(\"R_LIBS_USER\")); if(length(userdir)==1L && !file.exists(userdir)) dir.create(userdir) })\n", RCommand::App | RCommand::Sync, QString (), this, 0, chain);
+//		issueCommand ("try({userdir<-path.expand(Sys.getenv(\"R_LIBS_USER\")); if(length(userdir)==1L && !file.exists(userdir)) dir.create(userdir) })\n", RCommand::App | RCommand::Sync, QString (), this, 0, chain);
 		// find out about standard library locations
 		issueCommand ("c(path.expand(Sys.getenv(\"R_LIBS_USER\")), .libPaths())\n", RCommand::GetStringVector | RCommand::App | RCommand::Sync, QString (), this, GET_LIB_PATHS, chain);
 		// start help server / determined help base url
