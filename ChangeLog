@@ -1,3 +1,4 @@
+- Use top alignment button to close (warning) messages in preview windows/areas
 - (Try to) automatically create custom R library locations, if they do not exist
 - Workaround for invalid EDITOR variable set by Kate Terminal plugin (also fixed in recent kate)
 - kate plugin related actions are now active whenever a script window is active (not only the corresponding tool window)
