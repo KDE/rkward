@@ -82,8 +82,8 @@ RKPluginSaveObject::~RKPluginSaveObject () {
 void RKPluginSaveObject::update () {
 	RK_TRACE (PLUGIN);
 
-	if (isSatisfied ()) selector->setBackgroundColor (QColor (255, 255, 255));
-	else selector->setBackgroundColor (QColor (255, 0, 0));
+	if (isSatisfied ()) selector->setStyleSheet(QString(""));
+	else selector->setStyleSheet(QString("background: red; color: black"));
 	changed ();
 }
 

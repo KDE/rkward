@@ -184,14 +184,14 @@ void RKPluginBrowser::updateColor () {
 
 	if (isEnabled ()) {
 		if (status == RKComponentBase::Satisfied) {
-			selector->setBackgroundColor (QColor (255, 255, 255));
+			selector->setStyleSheet (QString (""));
 		} else if (status == RKComponentBase::Processing) {
-			selector->setBackgroundColor (QColor (255, 255, 0));
+			selector->setStyleSheet (QString ("background: yellow; color: black"));
 		} else {
-			selector->setBackgroundColor (QColor (255, 0, 0));
+			selector->setStyleSheet (QString ("background: red; color: black"));
 		}
 	} else {
-		selector->setBackgroundColor (QColor (200, 200, 200));
+		selector->setStyleSheet (QString ("background: rgb(200, 200, 200); color: black"));
 	}
 }
 
