@@ -592,8 +592,8 @@
 		else if (!.unsavedPlot$is.os)
 			ret <- TRUE
 		else 
-			ret <- rk.show.question ("Large plot!\nDo you still want to store it in the history?", 
-				"WARNING!", button.cancel = "")
+			ret <- rk.askYesNo ("Large plot!\nDo you still want to store it in the history?",
+				prompts = c("Yes", "No", ""), caption="Save large plot?")
 		ret
 	}
 	.check.identical <- function (.st., pkg=NA_character_) {
@@ -626,8 +626,8 @@
 			n <- len.sP + 1
 		} else if (len.sP == ml) {
 			if (.pop.notify)
-				.pop.notify <<- rk.show.question ("History limit reached, removing the first plot. Limits can be changed at Settings > RKWard > Output.\n\nDo you want to be notified in future?", 
-					"WARNING!", button.cancel = "")
+				.pop.notify <<- rk.askYesNo ("History limit reached, removing the first plot. Limits can be changed at Settings > RKWard > Output.\n\nDo you want to be notified in future?",
+					prompts=c("Yes", "No", ""), caption="History limit reached")
 			remove (devId = NULL, pos = 1) # sP.length changes at this point
 			n <- len.sP
 		} else {
@@ -961,10 +961,9 @@
 		# this is called from settings/rksettingsmoduleoutput.cpp ~199
 		# Length restriction:
 		if (len.max < sP.length) {
-			ans <- rk.show.question (paste ("Current plot history has more plots than the specified limit.\nIf you continue then _",
+			ans <- rk.askYesNo (paste ("Current plot history has more plots than the specified limit.\nIf you continue then _",
 				sP.length - len.max, "_ of the foremost plots will be removed.\nInstead, if you ignore then the new limit will be effective only after restarting RKWard.", sep =""), 
-				"WARNING!",
-				button.yes = "Continue", button.no = "Ignore for this session", button.cancel = "")
+				prompts= c("Continue", "Ignore for this session", ""), caption="WARNING!")
 			if (ans) {
 				options ("rk.graphics.hist.max.length" = len.max)
 				remove (devId = NULL, pos = 1:(sP.length - len.max))
