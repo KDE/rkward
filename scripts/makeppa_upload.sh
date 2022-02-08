@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## begin: These may need adjusting!
-TARGETS="xenial bionic focal eoan"
+TARGETS="jammy focal bionic"
 AUTHOR="Thomas Friedrichsmeier <tfry@users.sourceforge.net>"
 ## end: These may need adjusting!
 
@@ -10,7 +10,7 @@ BASEDIR=`pwd`
 PPATEMPDIR=$BASEDIR/ppatemp
 mkdir $PPATEMPDIR
 
-if [ ! -d "$DIRECTORY" ]; then
+if [ ! -d "$BASEDIR/debian" ]; then
 	git clone https://invent.kde.org/tfry/rkward-ppa-support.git debian
 else
 	cd debian
@@ -21,13 +21,12 @@ fi
 if [ "${1}" == "--stable" ]; then
 	shift
 	PPAIDS="rkward-stable rkward-stable-cran rkward-stable-backports-cran"
-	PPAVERSIONSTRING=".1rkward.stable"
-	VERSION=`${BASEDIR}/scripts/getversion.sh ${2}`
+	PPAVERSIONSTRING=".2rkward.stable"
 else
 	PPAIDS="rkward-devel rkward-devel-cran"
 	PPAVERSIONSTRING=".0rkward.devel"
-	VERSION=`${BASEDIR}/scripts/getversion.sh ${1}`
 fi
+VERSION=`${BASEDIR}/scripts/getversion.sh ${1}`
 
 if [ ! -f "${BASEDIR}/rkward-$VERSION.tar.gz" ]; then
   echo "${BASEDIR}/rkward-$VERSION.tar.gz not found. Run makedist.sh, first."
