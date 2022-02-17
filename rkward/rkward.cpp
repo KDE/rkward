@@ -266,7 +266,8 @@ void RKWardMainWindow::doPostInit () {
 	} else {
 		StartupDialog::StartupDialogResult result = StartupDialog::getStartupAction (this, fileOpenRecentWorkspace);
 		if (!result.open_url.isEmpty ()) {
-			openWorkspace (result.open_url);
+			// setNoAskSave(true); was called earlier
+			askOpenWorkspace(result.open_url);
 		} else {
 			if (result.result == StartupDialog::ChoseFile) {
 				askOpenWorkspace (QUrl());
@@ -731,13 +732,6 @@ void RKWardMainWindow::initStatusBar () {
 	setRStatus (RInterface::Starting);
 }
 
-void RKWardMainWindow::openWorkspace (const QUrl &url) {
-	RK_TRACE (APP);
-	if (url.isEmpty ()) return;
-
-	new RKLoadAgent (url, merge_loads);
-}
-
 void RKWardMainWindow::saveOptions () {
 	RK_TRACE (APP);
 	KSharedConfig::Ptr config = KSharedConfig::openConfig ();
@@ -812,14 +806,9 @@ void RKWardMainWindow::slotNewDataFrame () {
 void RKWardMainWindow::askOpenWorkspace (const QUrl &url) {
 	RK_TRACE (APP);
 
-	if (!no_ask_save && ((!RObjectList::getGlobalEnv()->isEmpty() && workspace_modified) || !RKGlobals::rInterface()->backendIsIdle())) {
-		int res;
-		res = KMessageBox::questionYesNoCancel (this, i18n("Do you want to save the current workspace?"), i18n("Save Workspace?"));
-		if (res != KMessageBox::No) return;  // Cancel
-		if (!RKSaveAgent::saveWorkspace()) return; // Save failed
+	if (!no_ask_save && !merge_loads) {
+		if (!RKWorkplace::mainWorkplace()->closeWorkspace()) return;
 	}
-
-	slotCloseAllEditors();
 
 	slotSetStatusBarText(i18n("Opening workspace..."));
 	QUrl lurl = url;
@@ -828,7 +817,7 @@ void RKWardMainWindow::askOpenWorkspace (const QUrl &url) {
 	}
 	if (!lurl.isEmpty ()) {
 		RKSettingsModuleGeneral::updateLastUsedUrl("workspaces", lurl.adjusted(QUrl::RemoveFilename));
-		openWorkspace(lurl);
+		new RKLoadAgent (url, merge_loads);
 	}
 	slotSetStatusReady();
 }
@@ -986,7 +975,7 @@ void RKWardMainWindow::openAnyFile () {
 		RKWorkplace::mainWorkplace ()->openScriptEditor (url, QString (), RKCommandEditorFlags::DefaultFlags | RKCommandEditorFlags::ForceRHighlighting);
 		RKSettingsModuleGeneral::updateLastUsedUrl ("rscripts", url.adjusted (QUrl::RemoveFilename));
 	} else if (mode == 3) {
-		openWorkspace (url);
+		askOpenWorkspace(url);
 		RKSettingsModuleGeneral::updateLastUsedUrl ("workspaces", url.adjusted (QUrl::RemoveFilename));
 	}
 }

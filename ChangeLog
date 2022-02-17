@@ -3,7 +3,7 @@ TODOS for autotests:
   - Use options(warn=1), in order to get warnings into the test?
 
 TODOS for output directories:
-  - save outputs to .rkworkplace and restore them
+  - save outputs to .rkworkplace and restore them (create default output, if there is none)
   - UI
 
 - rkwardtests library gains helper functions for checking for expected errors

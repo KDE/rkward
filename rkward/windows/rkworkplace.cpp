@@ -924,7 +924,7 @@ void RKWorkplace::saveWorkplace(const QUrl& for_url, RCommandChain *chain) {
 	if (RKSettingsModuleGeneral::workplaceSaveMode() != RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace) return;
 
 	QString file_param;
-	if (!for_url.isEmpty()) file_param = QString("file=") + RObject::rQuote(for_url.toLocalFile()) + QStringLiteral(", ");
+	if (!for_url.isEmpty()) file_param = QString("file=") + RObject::rQuote(for_url.toLocalFile() + QStringLiteral(".rkworkplace")) + QStringLiteral(", ");
 	RKGlobals::rInterface()->issueCommand("rk.save.workplace(" + file_param + "description=" + RObject::rQuote (makeWorkplaceDescription().join ("\n")) + ')', RCommand::App, i18n ("Save Workplace layout"), 0, 0, chain);
 }
 
