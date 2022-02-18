@@ -9,7 +9,11 @@
 #'              an instance of the \code{RK.Output} reference class, which has methods for subsequent manipulation. Two instances of this class may be pointing to the same
 #'              logical output file/directory (e.g. when loading the same output file, twice), in which case any operation will affect both instances the same.
 #'
-#'              Internally, outputs are managed by the RKWard frontend. The frontend will ask to save any unsaved modified output pages on exit.
+#'              Internally, outputs are managed by the RKWard frontend. The frontend will ask to save any unsaved modified output pages on exit, even if those are not currently shown.
+#'
+#'              Output references can be assigned to a symbol, which may be useful when writing to several output files in turn. However, such references should be considered
+#'              short-lived. Importantly, they will not currently remain valid across sessions. Where this may be a concern, code should obtain a new reference using
+#'              rk.output(filename="something") at relevant entry points to subsequent code.
 #'
 #'              At the time of this writing, output is stored in directories containing an HTML index file, and, usually, several image files, and possibly more.
 #'              However other types of output may be supported in the future, and therefore assumptions about the details of the output storage should be avoided.

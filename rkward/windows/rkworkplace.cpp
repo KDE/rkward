@@ -800,8 +800,15 @@ QString RKWorkplace::makeItemDescription (RKMDIWindow *win) const {
 		specification = static_cast<RKCommandEditorWindow*> (win)->url ().url ();
 		if (specification.isEmpty ()) specification = static_cast<RKCommandEditorWindow*> (win)->id ();
 	} else if (win->isType (RKMDIWindow::OutputWindow)) {
-		type = "output";
-		specification = static_cast<RKHTMLWindow*> (win)->url ().url ();
+		RKOutputDirectory *dir = RKOutputDirectory::getOutputByWindow(win);
+		if (dir) {
+			type = "rkoutput";
+			specification = dir->filename();
+		} else {
+			// legacy support for rk.set.html.output.file()
+			type = "output";
+			specification = static_cast<RKHTMLWindow*> (win)->url ().url ();
+		}
 	} else if (win->isType (RKMDIWindow::HelpWindow)) {
 		type = "help";
 		specification = static_cast<RKHTMLWindow*> (win)->restorableUrl ().url ();

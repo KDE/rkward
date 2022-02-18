@@ -65,7 +65,7 @@ QString hashDirectoryState(const QString& dir) {
 
 QMap<QString, RKOutputDirectory*> RKOutputDirectory::outputs;
 
-RKOutputDirectory::RKOutputDirectory() : initialized(false), window(nullptr) {
+RKOutputDirectory::RKOutputDirectory() : initialized(false) {
 	RK_TRACE(APP);
 }
 
@@ -85,6 +85,19 @@ RKOutputDirectory* RKOutputDirectory::getOutputBySaveUrl(const QString& _dest) {
 	QString dest = QFileInfo(_dest).canonicalFilePath();
 	for (auto it = outputs.constBegin(); it != outputs.constEnd(); ++it) {
 		if (it.value()->save_filename == dest) {
+			return(it.value());
+		}
+	}
+	return nullptr;
+}
+
+RKOutputDirectory* RKOutputDirectory::getOutputByWindow(const RKMDIWindow *window) {
+	RK_TRACE (APP);
+
+	if (!window) return nullptr;
+	if (!window->isType(RKMDIWindow::OutputWindow)) return nullptr;
+	for (auto it = outputs.constBegin(); it != outputs.constEnd(); ++it) {
+		if (it.value()->workPath() == static_cast<const RKHTMLWindow*>(window)->url().toLocalFile()) {
 			return(it.value());
 		}
 	}

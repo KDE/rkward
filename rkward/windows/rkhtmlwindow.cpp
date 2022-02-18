@@ -593,10 +593,6 @@ bool RKHTMLWindow::openURL (const QUrl &url) {
 	return true;
 }
 
-QUrl RKHTMLWindow::url () {
-	return current_url;
-}
-
 void RKHTMLWindow::mimeTypeJobFail (KJob* job) {
 	RK_TRACE (APP);
 	

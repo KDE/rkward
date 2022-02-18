@@ -56,6 +56,7 @@ public:
 	static GenericRRequestResult handleRCall(const QStringList& params, RCommandChain *chain);
 	static RKOutputDirectory* getOutputById(const QString& id);
 	static RKOutputDirectory* getOutputBySaveUrl(const QString& dest);
+	static RKOutputDirectory* getOutputByWindow(const RKMDIWindow* window);
 /** Return a list of all current output directories that have been modified. Used for asking for save during shutdown. */
 	static QList<RKOutputDirectory*> modifiedOutputDirectories();
 
@@ -79,7 +80,6 @@ private:
 	QString id;
 	bool initialized;
 
-	QPointer<RKMDIWindow> window;
 	/** map of outputs. */
 	static QMap<QString, RKOutputDirectory*> outputs;
 
