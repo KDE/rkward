@@ -264,23 +264,16 @@ RKOutputDirectory* RKOutputDirectory::createOutputDirectoryInternal() {
 	return d;
 }
 
-RKOutputDirectory::initializeIfNeeded(RCommandChain *chain) {
-	if(!initialized) {
-		RK_TRACE (APP);
-		// when an output directory is first initialized, we don't want that to count as a "modification". Therefore, update the "saved hash" _after_ initialization
-		RCommand *command = new RCommand(QString(), RCommand::App | RCommand::Sync | RCommand::EmptyCommand);
-		connect(command->notifier(), &RCommandNotifier::commandFinished, this, &RKOutputDirectory::updateSavedHash);
-		RKGlobals::rInterface()->issueCommand(command, chain);
-		initialized = true;
-	}
-}
-
 GenericRRequestResult RKOutputDirectory::activate(RCommandChain* chain) {
 	RK_TRACE (APP);
 
 	QString index_file = work_dir + "/index.html";
 	RKGlobals::rInterface()->issueCommand(QStringLiteral("rk.set.output.html.file(\"") + RKCommonFunctions::escape(index_file) + QStringLiteral("\")\n"), RCommand::App, QString(), 0, 0, chain);
-	initializeIfNeeded(chain);
+	// when an output directory is first initialized, we don't want that to count as a "modification". Therefore, update the "saved hash" _after_ initialization
+	RCommand *command = new RCommand(QString(), RCommand::App | RCommand::Sync | RCommand::EmptyCommand);
+	connect(command->notifier(), &RCommandNotifier::commandFinished, this, &RKOutputDirectory::updateSavedHash);
+	RKGlobals::rInterface()->issueCommand(command, chain);
+	initialized = true;
 
 	return GenericRRequestResult(QVariant(index_file));
 }
@@ -445,9 +438,24 @@ RKOutputDirectory::OverwriteBehavior parseOverwrite(const QString &param) {
 	return RKOutputDirectory::Fail;
 }
 
-GenericRRequestResult RKOutputDirectory::view(bool raise) {
+RKOutputDirectory* RKOutputDirectory::activeOutput() {
+	for (auto it = outputs.constBegin(); it != outputs.constEnd(); ++it) {
+		if (it.value()->isActive()) {
+			return it.value();
+		}
+	}
+	return nullptr;
+}
+
+GenericRRequestResult RKOutputDirectory::view(bool raise, RCommandChain* chain) {
 	RK_TRACE(APP);
 
+	if (!initialized) {
+		// currently, activating is the only way to init. That's a bit lame, but then, viewing an uninitialzed output is rather a corner case, anyway.
+		RKOutputDirectory *active = activeOutput();
+		activate(chain);
+		if (active) active->activate();
+	}
 	auto list = RKOutputWindowManager::self()->existingOutputWindows(workPath());
 	if (!list.isEmpty()) {
 		auto w = list[0];
@@ -455,7 +463,6 @@ GenericRRequestResult RKOutputDirectory::view(bool raise) {
 			list[0]->activate();
 		}
 	} else {
-		initializeIfNeeded(chain);
 		RKWorkplace::mainWorkplace()->openOutputWindow(QUrl::fromLocalFile(workPath()));
 	}
 	return GenericRRequestResult(id);
@@ -531,7 +538,7 @@ GenericRRequestResult RKOutputDirectory::handleRCall(const QStringList& params, 
 		} else if (command == QStringLiteral("close")) {
 			return out->purge(parseOverwrite(params.value(2)), chain);
 		} else if (command == QStringLiteral("view")) {
-			return out->view(params.value(2) == QStringLiteral("raise"));
+			return out->view(params.value(2) == QStringLiteral("raise"), chain);
 		} else if (command == QStringLiteral("workingDir")) {
 			return GenericRRequestResult(out->workDir());
 		} else if (command == QStringLiteral("filename")) {

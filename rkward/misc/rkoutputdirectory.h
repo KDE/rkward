@@ -60,7 +60,7 @@ public:
 	bool isEmpty() const;
 	bool isActive() const;
 	bool isModified() const;
-	GenericRRequestResult view(bool raise);
+	GenericRRequestResult view(bool raise, RCommandChain* chain=0);
 	QString filename() const { return save_filename; };
 	QString workDir() const { return work_dir; }
 	QString workPath() const;
@@ -85,7 +85,8 @@ private:
 	RKOutputDirectory();
 	~RKOutputDirectory();
 	void updateSavedHash();
-	void initializeIfNeeded(RCommandChain *chain);
+	/** Currently active output. Could be nullptr in corner cases! */
+	RKOutputDirectory* activeOutput();
 
 	QString saved_hash;
 	QDateTime save_timestamp;
