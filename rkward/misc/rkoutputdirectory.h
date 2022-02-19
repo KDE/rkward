@@ -31,8 +31,8 @@ class RKMDIWindow;
 class RCommandChain;
 class RKOutputDirectory;
 
-// convenience struct to avoid defining separate functions for R API and C++ API;
-// this struct encapsulates the relevant results for both
+/** Convenience struct to avoid defining separate functions for R API and C++ API in RKOutputDirectory.
+ *  This struct encapsulates the relevant results for both */
 struct RKOutputDirectoryCallResult : public GenericRRequestResult {
 	RKOutputDirectoryCallResult() : GenericRRequestResult(), _dir(nullptr) {};
 	RKOutputDirectoryCallResult(const GenericRRequestResult &other) : GenericRRequestResult(other), _dir(nullptr) {};
@@ -67,6 +67,7 @@ public:
 	QString caption() const;
 	static GenericRRequestResult handleRCall(const QStringList& params, RCommandChain *chain);
 	static RKOutputDirectory* getOutputById(const QString& id);
+	static RKOutputDirectory* getOutputByWorkPath(const QString& workpath) { return getOutputById(workpath); };
 	static RKOutputDirectory* getOutputBySaveUrl(const QString& dest);
 	static RKOutputDirectory* getOutputByWindow(const RKMDIWindow* window);
 /** Return a list of all current output directories that have been modified. Used for asking for save during shutdown. */
@@ -84,6 +85,7 @@ private:
 	RKOutputDirectory();
 	~RKOutputDirectory();
 	void updateSavedHash();
+	void initializeIfNeeded(RCommandChain *chain);
 
 	QString saved_hash;
 	QDateTime save_timestamp;

@@ -3,7 +3,6 @@ TODOS for autotests:
   - Use options(warn=1), in order to get warnings into the test?
 
 TODOS for output directories:
-  - save outputs to .rkworkplace and restore them (create default output, if there is none)
   - UI
   - migration support (existing old standard output should be converted to "default.rko"; setting, when opening workspace with no attached active output file:
     - create new empty file

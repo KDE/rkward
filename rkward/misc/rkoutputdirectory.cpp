@@ -264,18 +264,23 @@ RKOutputDirectory* RKOutputDirectory::createOutputDirectoryInternal() {
 	return d;
 }
 
-GenericRRequestResult RKOutputDirectory::activate(RCommandChain* chain) {
-	RK_TRACE (APP);
-
-	QString index_file = work_dir + "/index.html";
-	RKGlobals::rInterface()->issueCommand(QStringLiteral("rk.set.output.html.file(\"") + RKCommonFunctions::escape(index_file) + QStringLiteral("\")\n"), RCommand::App, QString(), 0, 0, chain);
+RKOutputDirectory::initializeIfNeeded(RCommandChain *chain) {
 	if(!initialized) {
+		RK_TRACE (APP);
 		// when an output directory is first initialized, we don't want that to count as a "modification". Therefore, update the "saved hash" _after_ initialization
 		RCommand *command = new RCommand(QString(), RCommand::App | RCommand::Sync | RCommand::EmptyCommand);
 		connect(command->notifier(), &RCommandNotifier::commandFinished, this, &RKOutputDirectory::updateSavedHash);
 		RKGlobals::rInterface()->issueCommand(command, chain);
 		initialized = true;
 	}
+}
+
+GenericRRequestResult RKOutputDirectory::activate(RCommandChain* chain) {
+	RK_TRACE (APP);
+
+	QString index_file = work_dir + "/index.html";
+	RKGlobals::rInterface()->issueCommand(QStringLiteral("rk.set.output.html.file(\"") + RKCommonFunctions::escape(index_file) + QStringLiteral("\")\n"), RCommand::App, QString(), 0, 0, chain);
+	initializeIfNeeded(chain);
 
 	return GenericRRequestResult(QVariant(index_file));
 }
@@ -322,7 +327,7 @@ bool RKOutputDirectory::isModified() const {
 QString RKOutputDirectory::caption() const {
 	RK_TRACE(APP);
 	if (!save_filename.isEmpty()) return QFileInfo(save_filename).fileName();
-	return i18n("Unsaved output");
+	return i18n("Not previously saved");
 }
 
 GenericRRequestResult RKOutputDirectory::purge(RKOutputDirectory::OverwriteBehavior discard, RCommandChain* chain, bool activate_other) {
@@ -342,6 +347,10 @@ GenericRRequestResult RKOutputDirectory::purge(RKOutputDirectory::OverwriteBehav
 				if (ret.failed()) return ret;
 			}
 		}
+	}
+	auto list = RKOutputWindowManager::self()->existingOutputWindows(workPath());
+	for (int i = 0; i < list.size(); ++i) {
+		list[i]->close(RKMDIWindow::NoAskSaveModified);
 	}
 
 	QDir dir(work_dir);
@@ -422,7 +431,7 @@ RKOutputDirectoryCallResult RKOutputDirectory::getCurrentOutput(RCommandChain* c
 		if (it.value()->filename().isEmpty()) candidate = it.value();
 	}
 
-	if (!candidate) candidate = outputs[0];
+	if (!candidate) candidate = outputs.constBegin().value();
 	RK_ASSERT(candidate);
 	candidate->activate(chain);
 	ret.addMessages(GenericRRequestResult(QVariant(), i18n("Output has been activated, automatically")));
@@ -446,12 +455,15 @@ GenericRRequestResult RKOutputDirectory::view(bool raise) {
 			list[0]->activate();
 		}
 	} else {
+		initializeIfNeeded(chain);
 		RKWorkplace::mainWorkplace()->openOutputWindow(QUrl::fromLocalFile(workPath()));
 	}
 	return GenericRRequestResult(id);
 }
 
 RKOutputDirectoryCallResult RKOutputDirectory::get(const QString &_filename, bool create, RCommandChain *chain) {
+	RK_TRACE(APP);
+
 	RKOutputDirectoryCallResult ret;
 	if (_filename.isEmpty()) {
 		if (create) {
