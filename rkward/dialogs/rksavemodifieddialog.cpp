@@ -153,10 +153,6 @@ void RKSaveModifiedDialog::saveSelected() {
 		if (!it.value ()->save ()) all_ok = false; // but we proceed with the others
 	}
 
-	if (save_project_check && save_project_check->checkState(0) == Qt::Checked) {
-		if (!RKSaveAgent::saveWorkspace()) all_ok = false;
-	}
-
 	for (auto it = outputdir_checklist.constBegin(); it != outputdir_checklist.constEnd(); ++it) {
 		if (it.key ()->checkState (0) != Qt::Checked) continue;
 		RKOutputDirectory *dir = RKOutputDirectory::getOutputById(it.value());
@@ -164,6 +160,11 @@ void RKSaveModifiedDialog::saveSelected() {
 			if (dir->save().failed()) all_ok = false;
 		}
 		else RK_ASSERT(dir);
+	}
+
+	// Save workspace (+ workplace!) last, as some urls may still have changed, above.
+	if (save_project_check && save_project_check->checkState(0) == Qt::Checked) {
+		if (!RKSaveAgent::saveWorkspace()) all_ok = false;
 	}
 
 	if (all_ok) accept();

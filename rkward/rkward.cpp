@@ -783,6 +783,7 @@ bool RKWardMainWindow::doQueryQuit () {
 
 	slotSetStatusBarText (i18n ("Exiting..."));
 	saveOptions ();
+	// TODO: This may not be correct, some urls may still change while closing Workspace (due to save as)!
 	if (RKSettingsModuleGeneral::workplaceSaveMode () == RKSettingsModuleGeneral::SaveWorkplaceWithSession) {
 		RKSettingsModuleGeneral::setSavedWorkplace (RKWorkplace::mainWorkplace ()->makeWorkplaceDescription ().join ("\n"), KSharedConfig::openConfig ().data ());
 	}

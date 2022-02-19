@@ -507,20 +507,20 @@ RKMDIWindow* RKWorkplace::openHelpWindow (const QUrl &url, bool only_once) {
 	return (hw);
 }
 
-RKMDIWindow* RKWorkplace::openOutputWindow (const QUrl &url) {
+RKMDIWindow* RKWorkplace::openOutputWindow(const QUrl &url) {
 	RK_TRACE (APP);
 
-	QList<RKHTMLWindow*> owins = RKOutputWindowManager::self ()->existingOutputWindows ();
+	QList<RKHTMLWindow*> owins = RKOutputWindowManager::self()->existingOutputWindows(url.toLocalFile());
 	for (int i = 0; i < owins.size (); ++i) {
-		if (view ()->windowInActivePane (owins[i])) {
-			owins[i]->activate ();
-			return (owins[i]);
+		if (view()->windowInActivePane(owins[i])) {
+			owins[i]->activate();
+			return owins[i];
 		}
 	}
 
-	RKHTMLWindow* ret = RKOutputWindowManager::self ()->newOutputWindow ();
-	addWindow (ret);
-	return (ret);
+	RKHTMLWindow* ret = RKOutputWindowManager::self()->newOutputWindow(url.toLocalFile());
+	addWindow(ret);
+	return ret;
 }
 
 void RKWorkplace::newX11Window (QWindow* window_to_embed, int device_number) {
@@ -803,7 +803,8 @@ QString RKWorkplace::makeItemDescription (RKMDIWindow *win) const {
 		RKOutputDirectory *dir = RKOutputDirectory::getOutputByWindow(win);
 		if (dir) {
 			type = "rkoutput";
-			specification = dir->filename();
+			specification = QUrl::fromLocalFile(dir->filename()).url();
+			if (dir->isActive()) type.append(QStringLiteral(".active"));
 		} else {
 			// legacy support for rk.set.html.output.file()
 			type = "output";
@@ -873,7 +874,7 @@ ItemSpecification parseItemDescription (const QString &description) {
 RKMDIWindow* restoreDocumentWindowInternal (RKWorkplace* wp, ItemSpecification spec, const QString &base) {
 	RK_TRACE (APP);
 
-	RKMDIWindow *win = 0;
+	RKMDIWindow *win = nullptr;
 	if (spec.type == "data") {
 		RObject *object = RObjectList::getObjectList ()->findObject (spec.specification);
 		if (object) win = wp->editObject (object);
@@ -881,7 +882,12 @@ RKMDIWindow* restoreDocumentWindowInternal (RKWorkplace* wp, ItemSpecification s
 		QUrl url = checkAdjustRestoredUrl (spec.specification, base);
 		win = wp->openScriptEditor (url, QString ());
 	} else if (spec.type == "output") {
-		win = wp->openOutputWindow (checkAdjustRestoredUrl (spec.specification, base));
+		win = wp->openOutputWindow (checkAdjustRestoredUrl(spec.specification, base));
+	} else if (spec.type.startsWith("rkoutput")) {
+		RKOutputDirectory *dir = RKOutputDirectory::get(checkAdjustRestoredUrl(spec.specification, base).toLocalFile(), false).dir();
+		if (!dir) return nullptr;
+		if (spec.type.endsWith(".active")) dir->activate();
+		win = RKWorkplace::mainWorkplace()->openOutputWindow(QUrl::fromLocalFile(dir->workPath()));
 	} else if (spec.type == "help") {
 		win = wp->openHelpWindow (checkAdjustRestoredUrl (spec.specification, base), true);
 	} else if (spec.type == "object") {

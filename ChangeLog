@@ -5,6 +5,9 @@ TODOS for autotests:
 TODOS for output directories:
   - save outputs to .rkworkplace and restore them (create default output, if there is none)
   - UI
+  - migration support (existing old standard output should be converted to "default.rko"; setting, when opening workspace with no attached active output file:
+    - create new empty file
+    - open "default.rko" <- default setting?)
 
 - rkwardtests library gains helper functions for checking for expected errors
 - Internal: Allow R-level calls to support both subcommands, and a return value at the same time

@@ -63,6 +63,11 @@ QString hashDirectoryState(const QString& dir) {
 //	return QCryptographicHash::hash (list.toUtf8 (), QCryptographicHash::Md5);
 }
 
+void RKOutputDirectoryCallResult::setDir(RKOutputDirectory *d) {
+	_dir = d;
+	if (d) ret = d->getId();
+}
+
 QMap<QString, RKOutputDirectory*> RKOutputDirectory::outputs;
 
 RKOutputDirectory::RKOutputDirectory() : initialized(false) {
@@ -339,14 +344,12 @@ GenericRRequestResult RKOutputDirectory::purge(RKOutputDirectory::OverwriteBehav
 		}
 	}
 
-	bool activate = activate_other && isActive();
 	QDir dir(work_dir);
 	dir.removeRecursively();
 	outputs.remove(id);
 	deleteLater();
-	GenericRRequestResult messages;
-	if (activate) getCurrentOutput(chain, &messages);
-	return messages;
+	if (activate_other) return getCurrentOutput(chain);
+	return GenericRRequestResult();
 }
 
 void RKOutputDirectory::purgeAllNoAsk() {
@@ -398,27 +401,33 @@ QList<RKOutputDirectory *> RKOutputDirectory::allOutputs() {
 	return ret;
 }
 
-RKOutputDirectory* RKOutputDirectory::getCurrentOutput(RCommandChain* chain, GenericRRequestResult* message_res) {
+RKOutputDirectoryCallResult RKOutputDirectory::getCurrentOutput(RCommandChain* chain) {
 	RK_TRACE(APP);
 
+	RKOutputDirectoryCallResult ret;
 	if (outputs.isEmpty()) {
 		auto n = createOutputDirectoryInternal();
 		n->activate(chain);
-		if (message_res) message_res->addMessages(GenericRRequestResult(QVariant(), i18n("New empty output directory has been created, automatically")));
-		return n;
+		ret.addMessages(GenericRRequestResult(QVariant(), i18n("New empty output directory has been created, automatically")));
+		ret.setDir(n);
+		return ret;
 	}
 
 	RKOutputDirectory* candidate = nullptr;
 	for (auto it = outputs.constBegin(); it != outputs.constEnd(); ++it) {
-		if (it.value()->isActive()) return it.value();
+		if (it.value()->isActive()) {
+			ret.setDir(it.value());
+			return ret;
+		}
 		if (it.value()->filename().isEmpty()) candidate = it.value();
 	}
 
 	if (!candidate) candidate = outputs[0];
 	RK_ASSERT(candidate);
 	candidate->activate(chain);
-	if (message_res) message_res->addMessages(GenericRRequestResult(QVariant(), i18n("Output has been activated, automatically")));
-	return candidate;
+	ret.addMessages(GenericRRequestResult(QVariant(), i18n("Output has been activated, automatically")));
+	ret.setDir(candidate);
+	return ret;
 }
 
 RKOutputDirectory::OverwriteBehavior parseOverwrite(const QString &param) {
@@ -442,6 +451,32 @@ GenericRRequestResult RKOutputDirectory::view(bool raise) {
 	return GenericRRequestResult(id);
 }
 
+RKOutputDirectoryCallResult RKOutputDirectory::get(const QString &_filename, bool create, RCommandChain *chain) {
+	RKOutputDirectoryCallResult ret;
+	if (_filename.isEmpty()) {
+		if (create) {
+			ret.setDir(createOutputDirectoryInternal());
+		} else {
+			return (getCurrentOutput(chain));
+		}
+	} else {
+		QString filename = QFileInfo(_filename).canonicalFilePath();
+		ret.setDir(getOutputBySaveUrl(filename));
+		if (create) {
+			if (ret.dir()) return GenericRRequestResult::makeError(i18n("Output '1%' is already loaded in this session. Cannot create it.", filename));
+			if (QFileInfo(filename).exists()) return GenericRRequestResult::makeError(i18n("A file named '1%' already exists. Cannot create it.", filename));
+			ret.setDir(createOutputDirectoryInternal());
+			ret.addMessages(ret.dir()->import(filename));
+		} else {
+			if (!ret.dir()) {
+				ret.setDir(createOutputDirectoryInternal());
+				ret.addMessages(ret.dir()->import(filename));
+			}
+		}
+	}
+	return ret;
+}
+
 GenericRRequestResult RKOutputDirectory::handleRCall(const QStringList& params, RCommandChain *chain) {
 	RK_TRACE(APP);
 
@@ -458,30 +493,7 @@ GenericRRequestResult RKOutputDirectory::handleRCall(const QStringList& params, 
 
 		QString filename = params.value(3);
 		bool create = (params.value(2) == QStringLiteral("create"));
-		RKOutputDirectory *out = nullptr;
-		GenericRRequestResult messages;
-		if (filename.isEmpty()) {
-			if (create) {
-				out = createOutputDirectoryInternal();
-			} else {
-				out = getCurrentOutput(chain, &messages);
-			}
-		} else {
-			filename = QFileInfo(filename).canonicalFilePath();
-			out = getOutputBySaveUrl(filename);
-			if (create) {
-				if (out) return GenericRRequestResult::makeError(i18n("Output '1%' is already loaded in this session. Cannot create it.", filename));
-				if (QFileInfo(filename).exists()) return GenericRRequestResult::makeError(i18n("As file named '1%' already exists. Cannot create it.", filename));
-				out = createOutputDirectoryInternal();
-				return (out->import(filename));
-			} else {
-				if (!out) {
-					out = createOutputDirectoryInternal();
-					return (out->import(filename));
-				}
-			}
-		}
-		return GenericRRequestResult(out->getId()).addMessages(messages);
+		return get(filename, create);
 	} else {
 		// all other commands pass the output id as second parameter. Look that up, first
 		QString id = params.value(1);

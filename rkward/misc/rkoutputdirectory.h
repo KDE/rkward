@@ -29,6 +29,18 @@
 
 class RKMDIWindow;
 class RCommandChain;
+class RKOutputDirectory;
+
+// convenience struct to avoid defining separate functions for R API and C++ API;
+// this struct encapsulates the relevant results for both
+struct RKOutputDirectoryCallResult : public GenericRRequestResult {
+	RKOutputDirectoryCallResult() : GenericRRequestResult(), _dir(nullptr) {};
+	RKOutputDirectoryCallResult(const GenericRRequestResult &other) : GenericRRequestResult(other), _dir(nullptr) {};
+	void setDir(RKOutputDirectory *d);
+	RKOutputDirectory* dir() const { return _dir; }
+private:
+	RKOutputDirectory* _dir;
+};
 
 class RKOutputDirectory : public QObject {
 	Q_OBJECT
@@ -60,12 +72,12 @@ public:
 /** Return a list of all current output directories that have been modified. Used for asking for save during shutdown. */
 	static QList<RKOutputDirectory*> modifiedOutputDirectories();
 
-	static GenericRRequestResult R_rk_Output(const QString& filename=QString(), bool create=false, bool all=false);
 /** Returns the active output (in case there is one).
- *  If no output is active, find an activate the next output without a save url.
+ *  If no output is active, find and activate the next output without a save url.
  *  If that does not exist, activate and return the next existing output.
  *  If that does not exist, create a new output, activate and return it. */
-	static RKOutputDirectory* getCurrentOutput(RCommandChain *chain=0, GenericRRequestResult* message_res=0);
+	static RKOutputDirectoryCallResult getCurrentOutput(RCommandChain *chain=0);
+	static RKOutputDirectoryCallResult get(const QString &filename=QString(), bool create=false, RCommandChain *chain=0);
 	static QList<RKOutputDirectory*> allOutputs();
 	static void purgeAllNoAsk();
 private:
