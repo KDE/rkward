@@ -2,7 +2,7 @@
                           rkoutputdirectory  -  description
                              -------------------
     begin                : Mon Oct 12 2020
-    copyright            : (C) 2020 by Thomas Friedrichsmeier
+    copyright            : (C) 2020-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -70,7 +70,7 @@ void RKOutputDirectoryCallResult::setDir(RKOutputDirectory *d) {
 
 QMap<QString, RKOutputDirectory*> RKOutputDirectory::outputs;
 
-RKOutputDirectory::RKOutputDirectory() : initialized(false) {
+RKOutputDirectory::RKOutputDirectory() : initialized(false), known_modified(false) {
 	RK_TRACE(APP);
 }
 
@@ -82,6 +82,16 @@ RKOutputDirectory* RKOutputDirectory::getOutputById(const QString& id) {
 	RK_TRACE (APP);
 
 	return outputs.value(id);
+}
+
+RKOutputDirectory* RKOutputDirectory::getOutputByWorkPath(const QString& workpath) {
+	RK_TRACE (APP);
+
+	if (workpath.endsWith("index.html")) {
+		QString wp = workpath;
+		return(outputs.value(wp.chopped(11)));  // index.html, including pathsep
+	}
+	return nullptr;
 }
 
 RKOutputDirectory* RKOutputDirectory::getOutputBySaveUrl(const QString& _dest) {
@@ -119,8 +129,9 @@ GenericRRequestResult RKOutputDirectory::save(const QString& _dest, RKOutputDire
 	}
 	GenericRRequestResult res = exportAs(dest, overwrite);
 	if (!res.failed()) {
-		updateSavedHash();
 		save_filename = res.ret.toString();  // might by different from dest, notably, if dest was empty
+		known_modified = true;  // dirty trick to ensure that updateSavedHash() will trigger a stateChange()->update caption in views, even if using SaveAs on an unmodified directory
+		updateSavedHash();
 	}
 	return res;
 }
@@ -231,7 +242,7 @@ GenericRRequestResult RKOutputDirectory::revert(OverwriteBehavior discard) {
 	if (save_filename.isEmpty()) {
 		return GenericRRequestResult::makeError(i18n("Output has not previously been saved. Cannot revert."));
 	}
-	if (!isModified()) return GenericRRequestResult(id, i18n("Output had no modifications. Nothing reverted."));
+	if (!isModifiedAccurate()) return GenericRRequestResult(id, i18n("Output had no modifications. Nothing reverted."));
 	if (discard == Ask) {
 		if (KMessageBox::warningContinueCancel(RKWardMainWindow::getMain(), i18n("Reverting will destroy any changes, since the last time you saved (%1). Are you sure you want to proceed?", save_timestamp.toString())) == KMessageBox::Continue) {
 			discard = Force;
@@ -259,7 +270,6 @@ RKOutputDirectory* RKOutputDirectory::createOutputDirectoryInternal() {
 	auto d = new RKOutputDirectory();
 	d->work_dir = QFileInfo(ddir.absoluteFilePath(destname)).canonicalFilePath();
 	d->id = d->work_dir;
-	d->initialized = false;
 	outputs.insert(d->id, d);
 	return d;
 }
@@ -269,11 +279,13 @@ GenericRRequestResult RKOutputDirectory::activate(RCommandChain* chain) {
 
 	QString index_file = work_dir + "/index.html";
 	RKGlobals::rInterface()->issueCommand(QStringLiteral("rk.set.output.html.file(\"") + RKCommonFunctions::escape(index_file) + QStringLiteral("\")\n"), RCommand::App, QString(), 0, 0, chain);
-	// when an output directory is first initialized, we don't want that to count as a "modification". Therefore, update the "saved hash" _after_ initialization
-	RCommand *command = new RCommand(QString(), RCommand::App | RCommand::Sync | RCommand::EmptyCommand);
-	connect(command->notifier(), &RCommandNotifier::commandFinished, this, &RKOutputDirectory::updateSavedHash);
-	RKGlobals::rInterface()->issueCommand(command, chain);
-	initialized = true;
+	if (!initialized) {
+		// when an output directory is first initialized, we don't want that to count as a "modification". Therefore, update the "saved hash" _after_ initialization
+		RCommand *command = new RCommand(QString(), RCommand::App | RCommand::Sync | RCommand::EmptyCommand);
+		connect(command->notifier(), &RCommandNotifier::commandFinished, this, &RKOutputDirectory::updateSavedHash);
+		RKGlobals::rInterface()->issueCommand(command, chain);
+		initialized = true;
+	}
 
 	return GenericRRequestResult(QVariant(index_file));
 }
@@ -290,6 +302,7 @@ GenericRRequestResult RKOutputDirectory::clear(OverwriteBehavior discard) {
 		if (discard != Force) {
 			return GenericRRequestResult::makeError(i18n("Output is not empty. Not clearing it."));
 		}
+		known_modified = true;
 	}
 
 	QDir dir(work_dir);
@@ -307,11 +320,11 @@ bool RKOutputDirectory::isEmpty() const {
 	if (!save_filename.isEmpty()) return false;  // we _could_ have saved an empty output, of course, but no worries about corner cases. In any doubt we return false.
 
 	if (!initialized) return true;
-	if (!isModified()) return true;   // because we have not saved/loaded this file, before, see above
+	if (!isModifiedAccurate()) return true;   // because we have not saved/loaded this file, before, see above
 	return false;
 }
 
-bool RKOutputDirectory::isModified() const {
+bool RKOutputDirectory::isModifiedAccurate() const {
 	RK_TRACE(APP);
 
 	return saved_hash != hashDirectoryState(work_dir);
@@ -320,13 +333,13 @@ bool RKOutputDirectory::isModified() const {
 QString RKOutputDirectory::caption() const {
 	RK_TRACE(APP);
 	if (!save_filename.isEmpty()) return QFileInfo(save_filename).fileName();
-	return i18n("Not previously saved");
+	return i18n("[Not saved]");
 }
 
 GenericRRequestResult RKOutputDirectory::purge(RKOutputDirectory::OverwriteBehavior discard, RCommandChain* chain, bool activate_other) {
 	RK_TRACE(APP);
 
-	if (isModified()) {
+	if (isModifiedAccurate()) {
 		if (discard == Fail) {
 			return GenericRRequestResult::makeError(i18n("Output has been modified. Not closing it."));
 		}
@@ -382,7 +395,7 @@ QList<RKOutputDirectory*> RKOutputDirectory::modifiedOutputDirectories() {
 
 	QList<RKOutputDirectory*> ret;
 	for (auto it = outputs.constBegin(); it != outputs.constEnd(); ++it) {
-		if (it.value()->isModified()) ret.append(it.value());
+		if (it.value()->isModifiedAccurate()) ret.append(it.value());
 	}
 	return ret;
 }
@@ -391,6 +404,7 @@ void RKOutputDirectory::updateSavedHash() {
 	RK_TRACE (APP);
 	saved_hash = hashDirectoryState(work_dir);
 	save_timestamp = QDateTime::currentDateTime();
+	setKnownModified(false);
 }
 
 QList<RKOutputDirectory *> RKOutputDirectory::allOutputs() {
@@ -463,8 +477,10 @@ GenericRRequestResult RKOutputDirectory::view(bool raise, RCommandChain* chain) 
 			list[0]->activate();
 		}
 	} else {
+		if (!known_modified) known_modified = isModifiedAccurate();
 		RKWorkplace::mainWorkplace()->openOutputWindow(QUrl::fromLocalFile(workPath()));
 	}
+
 	return GenericRRequestResult(id);
 }
 
@@ -526,7 +542,7 @@ GenericRRequestResult RKOutputDirectory::handleRCall(const QStringList& params, 
 		} else if (command == QStringLiteral("isEmpty")) {
 			return GenericRRequestResult(out->isEmpty());
 		} else if (command == QStringLiteral("isModified")) {
-			return GenericRRequestResult(out->isModified());
+			return GenericRRequestResult(out->isModifiedAccurate());
 		} else if (command == QStringLiteral("revert")) {
 			return out->revert(parseOverwrite(params.value(2)));
 		} else if (command == QStringLiteral("save")) {
@@ -546,6 +562,18 @@ GenericRRequestResult RKOutputDirectory::handleRCall(const QStringList& params, 
 		}
 	}
 	return GenericRRequestResult::makeError(i18n("Unhandled output command '%1'", command));
+}
+
+void RKOutputDirectory::setKnownModified(bool modified) {
+	RK_TRACE(APP);
+	if (known_modified != modified) {
+		known_modified = modified;
+		stateChange(isActive(), modified);
+	}
+}
+
+bool RKOutputDirectory::isModifiedFast() const {
+	return known_modified;
 }
 
 

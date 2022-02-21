@@ -2,7 +2,7 @@
                           rkoutputdirectory  -  description
                              -------------------
     begin                : Mon Oct 12 2020
-    copyright            : (C) 2020 by Thomas Friedrichsmeier
+    copyright            : (C) 2020-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -59,7 +59,10 @@ public:
 	QString getId() const { return id; };
 	bool isEmpty() const;
 	bool isActive() const;
-	bool isModified() const;
+	/** This function is guaranteed to be accurate, but relatively slow. At least too slow to be called on every update of caption. */
+	bool isModifiedAccurate() const;
+	/** This function may not always be accurate, but is fast. It is fairly reliable as long as there is an active view, but should not be used when there is not.  */
+	bool isModifiedFast() const;
 	GenericRRequestResult view(bool raise, RCommandChain* chain=0);
 	QString filename() const { return save_filename; };
 	QString workDir() const { return work_dir; }
@@ -67,7 +70,7 @@ public:
 	QString caption() const;
 	static GenericRRequestResult handleRCall(const QStringList& params, RCommandChain *chain);
 	static RKOutputDirectory* getOutputById(const QString& id);
-	static RKOutputDirectory* getOutputByWorkPath(const QString& workpath) { return getOutputById(workpath); };
+	static RKOutputDirectory* getOutputByWorkPath(const QString& workpath);
 	static RKOutputDirectory* getOutputBySaveUrl(const QString& dest);
 	static RKOutputDirectory* getOutputByWindow(const RKMDIWindow* window);
 /** Return a list of all current output directories that have been modified. Used for asking for save during shutdown. */
@@ -81,6 +84,10 @@ public:
 	static RKOutputDirectoryCallResult get(const QString &filename=QString(), bool create=false, RCommandChain *chain=0);
 	static QList<RKOutputDirectory*> allOutputs();
 	static void purgeAllNoAsk();
+
+	void setKnownModified(bool modified);
+signals:
+	void stateChange(bool active, bool modified);
 private:
 	RKOutputDirectory();
 	~RKOutputDirectory();
@@ -94,6 +101,7 @@ private:
 	QString save_filename;
 	QString id;
 	bool initialized;
+	bool known_modified;  // TODO: needed?
 
 	/** map of outputs. */
 	static QMap<QString, RKOutputDirectory*> outputs;

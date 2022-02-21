@@ -61,6 +61,7 @@
 #include "../misc/rkprogresscontrol.h"
 #include "../misc/rkmessagecatalog.h"
 #include "../misc/rkfindbar.h"
+#include "../misc/rkoutputdirectory.h"
 #include "../plugin/rkcomponentmap.h"
 #include "../windows/rkworkplace.h"
 #include "../windows/rkworkplaceview.h"
@@ -548,6 +549,8 @@ bool RKHTMLWindow::openURL (const QUrl &url) {
 
 			current_url = url;	// needs to be set before registering
 			RKOutputWindowManager::self ()->registerWindow (this);
+			dir = RKOutputDirectory::getOutputByWorkPath(url.toLocalFile());
+			connect(dir, &RKOutputDirectory::stateChange, this, &RKHTMLWindow::updateState);
 		}
 	}
 
@@ -671,10 +674,30 @@ void RKHTMLWindow::changeURL (const QUrl &url) {
 	}
 }
 
+void RKHTMLWindow::updateState(){
+	updateCaption(current_url);
+}
+
 void RKHTMLWindow::updateCaption (const QUrl &url) {
 	RK_TRACE (APP);
 
-	if (window_mode == HTMLOutputWindow) setCaption (i18n ("Output %1", url.fileName ()));
+	if (window_mode == HTMLOutputWindow) {
+		if (dir) {
+			QString name = QFileInfo(dir->filename()).fileName();
+			if (name.isEmpty()) name = i18n("New Output");
+			QString mods;
+			if (dir->isActive()) mods.append(i18n("[Active]"));
+			// TODO: use icon(s), instead
+			if (dir->isModifiedFast()) mods.append("(*)");
+			if (!mods.isEmpty()) {
+				name.append(' ');
+				name.append(mods);
+			}
+			setCaption(name);
+		} else {
+			setCaption (i18n ("Output %1", url.fileName ()));
+		}
+	}
 	else setCaption (url.fileName ());
 }
 
@@ -1296,24 +1319,10 @@ void RKOutputWindowManager::rewatchOutput () {
 	file_watcher->addFile (current_default_path);
 }
 
-QList<RKHTMLWindow*> RKOutputWindowManager::existingOutputWindows (const QString &path) const {
+QList<RKHTMLWindow*> RKOutputWindowManager::existingOutputWindows(const QString &path) const {
 	RK_TRACE (APP);
 
-	if (!path.isNull ()) return (windows.values (path));
-	return (windows.values (current_default_path));
-}
-
-RKHTMLWindow* RKOutputWindowManager::newOutputWindow (const QString& _path) {
-	RK_TRACE (APP);
-
-	QString path = _path;
-	if (path.isNull ()) path = current_default_path;
-
-	RKHTMLWindow* current_output = new RKHTMLWindow (RKWorkplace::mainWorkplace ()->view (), RKHTMLWindow::HTMLOutputWindow);
-	current_output->openURL (QUrl::fromLocalFile (path));
-	RK_ASSERT (current_output->url ().toLocalFile () == path);
-
-	return current_output;
+	return (windows.values(path));
 }
 
 void RKOutputWindowManager::fileChanged (const QString &path) {
@@ -1329,6 +1338,7 @@ void RKOutputWindowManager::fileChanged (const QString &path) {
 
 	if (w) {
 		if (RKSettingsModuleOutput::autoRaise ()) w->activate ();
+		if (w->outputDirectory()) w->outputDirectory()->setKnownModified(true);
 	} else {
 		RK_ASSERT (path == current_default_path);
 		if (RKSettingsModuleOutput::autoShow ()) RKWorkplace::mainWorkplace ()->openOutputWindow (QUrl::fromUserInput (path, QString (), QUrl::AssumeLocalFile));
@@ -1339,15 +1349,15 @@ void RKOutputWindowManager::windowDestroyed (QObject *window) {
 	RK_TRACE (APP);
 
 	// warning: Do not call any methods on the window. It is half-destroyed, already.
-	RKHTMLWindow *w = static_cast<RKHTMLWindow*> (window);
+	RKHTMLWindow *w = static_cast<RKHTMLWindow*>(window);
 
-	QString path = windows.key (w);
-	windows.remove (path, w);
+	QString path = windows.key(w);
+	windows.remove(path, w);
 
 	// if there are no further windows for this file, stop listening
-	if ((path != current_default_path) && (!windows.contains (path))) {
-		RK_DEBUG (APP, DL_DEBUG, "no longer watching %s for changes", qPrintable (path));
-		file_watcher->removeFile (path);
+	if ((path != current_default_path) && (!windows.contains(path))) {
+		RK_DEBUG(APP, DL_DEBUG, "no longer watching %s for changes", qPrintable(path));
+		file_watcher->removeFile(path);
 	}
 }
 

@@ -84,19 +84,19 @@ RKSaveModifiedDialog::RKSaveModifiedDialog (QWidget* parent, QList<RKMDIWindow*>
 	tree->header ()->hide ();
 
 	if (project) {
-		QTreeWidgetItem *header = makeHeaderItem (i18n ("R Workspace (Data and Functions)"), tree);
-		QString url = RKWorkplace::mainWorkplace ()->workspaceURL ().toDisplayString ();
-		if (url.isEmpty ()) {
-			url = i18n ("Not previously saved");
+		QTreeWidgetItem *header = makeHeaderItem(i18n("R Workspace (Data and Functions)"), tree);
+		QString url = RKWorkplace::mainWorkplace()->workspaceURL().toDisplayString();
+		if (url.isEmpty()) {
+			url = i18n("[Not saved]");
 		}
-		save_project_check = new QTreeWidgetItem (QStringList (url));
-		header->addChild (save_project_check);
-		save_project_check->setCheckState (0, Qt::Checked);
+		save_project_check = new QTreeWidgetItem(QStringList(url));
+		header->addChild(save_project_check);
+		save_project_check->setCheckState(0, Qt::Checked);
 
 		auto modified_outputs = RKOutputDirectory::modifiedOutputDirectories();
 		if (!modified_outputs.isEmpty()) {
-			QTreeWidgetItem *header = makeHeaderItem (i18n ("Output files"), tree);
-			for (int i = 0; i < modified_outputs.size (); ++i) {
+			QTreeWidgetItem *header = makeHeaderItem(i18n("Output files"), tree);
+			for (int i = 0; i < modified_outputs.size(); ++i) {
 				QTreeWidgetItem *item = new QTreeWidgetItem();
 				item->setText(0, modified_outputs[i]->caption());
 				item->setFirstColumnSpanned(true);

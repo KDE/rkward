@@ -227,9 +227,9 @@ void RKTopLevelWindowGUI::activateDocumentView () {
 }
 
 void RKTopLevelWindowGUI::slotOutputShow () {
-	RK_TRACE (APP);
+	RK_TRACE(APP);
 
-	RKWorkplace::mainWorkplace ()->openOutputWindow (QUrl ());
+	RKWorkplace::mainWorkplace()->openOutputWindow(QUrl());
 }
 
 void RKTopLevelWindowGUI::nextWindow () {

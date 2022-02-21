@@ -510,6 +510,9 @@ RKMDIWindow* RKWorkplace::openHelpWindow (const QUrl &url, bool only_once) {
 RKMDIWindow* RKWorkplace::openOutputWindow(const QUrl &url) {
 	RK_TRACE (APP);
 
+	QString path = url.toLocalFile();
+	if (path.isNull()) path = RKOutputWindowManager::self()->currentOutputPath();
+
 	QList<RKHTMLWindow*> owins = RKOutputWindowManager::self()->existingOutputWindows(url.toLocalFile());
 	for (int i = 0; i < owins.size (); ++i) {
 		if (view()->windowInActivePane(owins[i])) {
@@ -518,9 +521,11 @@ RKMDIWindow* RKWorkplace::openOutputWindow(const QUrl &url) {
 		}
 	}
 
-	RKHTMLWindow* ret = RKOutputWindowManager::self()->newOutputWindow(url.toLocalFile());
-	addWindow(ret);
-	return ret;
+	RKHTMLWindow* win = new RKHTMLWindow(view(), RKHTMLWindow::HTMLOutputWindow);
+	win->openURL(QUrl::fromLocalFile(path));
+	RK_ASSERT(win->url().toLocalFile() == path);
+	addWindow(win);
+	return win;
 }
 
 void RKWorkplace::newX11Window (QWindow* window_to_embed, int device_number) {

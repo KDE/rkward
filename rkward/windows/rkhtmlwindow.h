@@ -39,6 +39,7 @@ class RKFindBar;
 class RCommandChain;
 class RKWebPage;
 class RKWebView;
+class RKOutputDirectory;
 
 /**
 	\brief Show html files.
@@ -77,6 +78,8 @@ public:
 	QUrl url () const { return current_url; };
 /** Return current url in a restorable way, i.e. for help pages, abstract the session specific part of the path */
 	QUrl restorableUrl ();
+/** Return the RKOutpuDirectory shown in this view (if any) */
+	RKOutputDirectory *outputDirectory() const { return dir; };
 
 	WindowMode mode () { return window_mode; };
 public slots:
@@ -93,6 +96,7 @@ public slots:
 	void zoomIn ();
 	void zoomOut ();
 	void setTextEncoding (QTextCodec* encoding);
+	void updateState();
 private slots:
 	void scrollToBottom ();
 	void mimeTypeDetermined (KIO::Job*, const QString& type);
@@ -133,7 +137,8 @@ friend class RKHTMLWindowPart;
 	void fileDoesNotExistMessage ();
 
 	void saveBrowserState (VisitedLocation *state);
-
+/** the RKOutpuDirectory viewed in this window (if any) */
+	RKOutputDirectory *dir;
 friend class RKWebPage;
 	static RKWebPage *new_window;
 };
@@ -197,7 +202,9 @@ private:
 
 #include <kdirwatch.h>
 
-/** Takes care of showing / refreshing output windows as needed. */
+/** Takes care of showing / refreshing output windows as needed.
+ *
+ *  For historical reasons, not all output windows refer to RKOutpuDirectories, which is why this separate class takes care of the mapping (for now). */
 class RKOutputWindowManager : public QObject {
 Q_OBJECT
 public:
@@ -207,10 +214,8 @@ public:
 /** R may produce output while no output window is active. This allows to set the file that should be monitored for such changes (called from within rk.set.html.output.file()). */
 	void setCurrentOutputPath (const QString &path);
 	QString currentOutputPath() const { return current_default_path; };
-/** returns a list (possibly empty) of pointers to existing output windows for the given path (for the current output path, if no path given). */
-	QList<RKHTMLWindow*> existingOutputWindows (const QString &path = QString ()) const;
-/** Create (and show) a new output window (for the current output path, unless path is specified), and @return the pointer */
-	RKHTMLWindow* newOutputWindow (const QString& path = QString ());
+/** returns a list (possibly empty) of pointers to existing output windows for the given path. */
+	QList<RKHTMLWindow*> existingOutputWindows (const QString &path) const;
 private:
 	RKOutputWindowManager ();
 	~RKOutputWindowManager ();
