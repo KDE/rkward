@@ -2,7 +2,7 @@
                           rkward.cpp  -  description
                              -------------------
     begin                : Tue Oct 29 20:06:08 CET 2002
-    copyright            : (C) 2002-2020 by Thomas Friedrichsmeier
+    copyright            : (C) 2002-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -677,10 +677,10 @@ void RKWardMainWindow::partChanged (KParts::Part *part) {
 	plugged_save_actions.clear ();
 
 	RKMDIWindow *w = RKWorkplace::mainWorkplace ()->activeWindow (RKMDIWindow::Attached);
-	if (w && (w->isType (RKMDIWindow::CommandEditorWindow))) {
-		QAction *a = static_cast<RKCommandEditorWindow*>(w)->fileSaveAction ();
+	if (w) {
+		QAction *a = w->fileSaveAction ();
 		if (a) plugged_save_actions.append (a);
-		a = static_cast<RKCommandEditorWindow*>(w)->fileSaveAsAction ();
+		a = w->fileSaveAsAction ();
 		if (a) plugged_save_actions.append (a);
 	}
 	for (int i = 0; i < plugged_save_actions.size (); ++i) {

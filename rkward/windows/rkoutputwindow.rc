@@ -1,7 +1,9 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward_outputwindow" version="641">
+<kpartgui name="rkward_outputwindow" version="721">
 	<MenuBar>
 		<Menu name="file"><text>&amp;File</text>
+			<Action name="file_save"/>
+			<Action name="file_save_as"/>
 			<Action name="print_html"/>
 			<Action name="save_html"/>
 		</Menu>
@@ -15,6 +17,7 @@
 			<Action name="select_all"/>
 			<Separator/>
 			<Action name="output_flush"/>
+			<Action name="output_revert"/>
 		</Menu>
 		<Menu name="view"><text>&amp;View</text>
 			<Action name="zoom_in"/>
@@ -26,6 +29,7 @@
 	</MenuBar>
 	<ToolBar fullWidth="true" name="mainToolBar">
 		<Action name="output_flush"/>
+		<Action name="output_revert"/>
 		<Action name="output_refresh"/>
 	</ToolBar>
 </kpartgui>

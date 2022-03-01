@@ -2,7 +2,7 @@
                           rkhtmlwindow  -  description
                              -------------------
     begin                : Wed Oct 12 2005
-    copyright            : (C) 2005-2020 by Thomas Friedrichsmeier
+    copyright            : (C) 2005-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -83,8 +83,11 @@ public:
 
 	WindowMode mode () { return window_mode; };
 public slots:
-	void slotPrint ();
-	void slotSave ();
+	void slotPrint();
+	void slotExport();
+	void slotSave();
+	void slotSaveAs();
+	void slotRevert();
 	void slotForward ();
 	void slotBack ();
 	void selectionChanged ();
@@ -149,23 +152,25 @@ public:
 	explicit RKHTMLWindowPart (RKHTMLWindow *window);
 	~RKHTMLWindowPart () {};
 
-	void setOutputWindowSkin ();
-	void setHelpWindowSkin ();
-	void initActions ();
+	void setOutputDirectoryActionsEnabled(bool enable);
+	void setOutputWindowSkin();
+	void setHelpWindowSkin();
+	void initActions();
 private:
 friend class RKHTMLWindow;
 	RKHTMLWindow *window;
 
 	// general actions
-	QAction *run_selection;
+	QAction* run_selection;
 	QAction* print;
 	// actions in output window mode
 	QAction* outputFlush;
 	QAction* outputRefresh;
 	// actions in help window mode
-	QAction *back;
-	QAction *forward;
-	QAction* save_page;
+	QAction* back;
+	QAction* forward;
+	QAction* export_page;
+	QAction* revert;
 };
 
 /**

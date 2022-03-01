@@ -239,12 +239,13 @@ GenericRRequestResult RKOutputDirectory::import(const QString& _dir) {
 GenericRRequestResult RKOutputDirectory::revert(OverwriteBehavior discard) {
 	RK_TRACE (APP);
 
-	if (save_filename.isEmpty()) {
-		return GenericRRequestResult::makeError(i18n("Output has not previously been saved. Cannot revert."));
-	}
 	if (!isModifiedAccurate()) return GenericRRequestResult(id, i18n("Output had no modifications. Nothing reverted."));
 	if (discard == Ask) {
-		if (KMessageBox::warningContinueCancel(RKWardMainWindow::getMain(), i18n("Reverting will destroy any changes, since the last time you saved (%1). Are you sure you want to proceed?", save_timestamp.toString())) == KMessageBox::Continue) {
+		if (save_filename.isEmpty()) {
+			if (KMessageBox::warningContinueCancel(RKWardMainWindow::getMain(), i18n("This output has not been saved before. Reverting will clear it, entirely. Are you sure you want to proceed?")) == KMessageBox::Continue) {
+				discard = Force;
+			}
+		} else if (KMessageBox::warningContinueCancel(RKWardMainWindow::getMain(), i18n("Reverting will destroy any changes, since the last time you saved (%1). Are you sure you want to proceed?", save_timestamp.toString())) == KMessageBox::Continue) {
 			discard = Force;
 		}
 	}
@@ -333,7 +334,7 @@ bool RKOutputDirectory::isModifiedAccurate() const {
 QString RKOutputDirectory::caption() const {
 	RK_TRACE(APP);
 	if (!save_filename.isEmpty()) return QFileInfo(save_filename).fileName();
-	return i18n("[Not saved]");
+	return i18n("[Unnamed]");
 }
 
 GenericRRequestResult RKOutputDirectory::purge(RKOutputDirectory::OverwriteBehavior discard, RCommandChain* chain, bool activate_other) {

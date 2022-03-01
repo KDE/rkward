@@ -2,7 +2,7 @@
                           rkmdiwindow  -  description
                              -------------------
     begin                : Tue Sep 26 2006
-    copyright            : (C) 2006 - 2020 by Thomas Friedrichsmeier
+    copyright            : (C) 2006 - 2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -73,6 +73,8 @@ RKMDIWindow::RKMDIWindow (QWidget *parent, int type, bool tool_window, const cha
 	standard_client = 0;
 	status_popup = 0;
 	status_popup_container = 0;
+	file_save_action = 0;
+	file_save_as_action = 0;
 
 	if (!(type & KatePluginWindow)) setWindowIcon (RKStandardIcons::iconForWindow (this));
 }

@@ -2,7 +2,7 @@
                           rkmdiwindow  -  description
                              -------------------
     begin                : Tue Sep 26 2006
-    copyright            : (C) 2006 - 2020 by Thomas Friedrichsmeier
+    copyright            : (C) 2006 - 2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -130,6 +130,10 @@ is simply busy (e.g. when saving the current plot to history). */
 	KActionCollection *standardActionCollection ();
 /** plugin-accessible properties of this object in the global context. Currently used only by RKEditorDataFrame to give information on the currently active data.frame. NOTE: ATM, you cannot set arbitrary properties. Only those supported in RKStandardComponent will have an effect. */
 	QString globalContextProperty (const QString& property) { return global_context_properties.value (property); };
+/** @returns the save action applicable for this window (if any). Will be plugged into the save dropdown */
+	QAction* fileSaveAction () { return file_save_action; };
+/** @returns the save as action applicable for this window (if any). Will be plugged into the save dropdown */
+	QAction* fileSaveAsAction () { return file_save_as_action; };
 signals:
 /** This signal is emitted, whenever the window caption was changed.
 @param RKMDIWindow* a pointer to this window */
@@ -161,6 +165,9 @@ friend class RKWorkplace;
 	int type;
 private slots:
 	void slotActivateForFocusFollowsMouse ();
+protected:
+	QAction* file_save_as_action;
+	QAction* file_save_action;
 private:
 friend class RKToolWindowBar;
 /** state of this window (attached / detached). This is usually set from the RKWorkplace */
