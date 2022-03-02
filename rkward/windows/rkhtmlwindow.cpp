@@ -567,7 +567,7 @@ bool RKHTMLWindow::openURL (const QUrl &url) {
 
 			current_url = url;	// needs to be set before registering
 			RKOutputWindowManager::self ()->registerWindow (this);
-			dir = RKOutputDirectory::getOutputByWorkPath(url.toLocalFile());
+			dir = RKOutputDirectory::findOutputByWorkPath(url.toLocalFile());
 			part->setOutputDirectoryActionsEnabled(dir != nullptr);
 			if (dir) {
 				connect(dir, &RKOutputDirectory::stateChange, this, &RKHTMLWindow::updateState);

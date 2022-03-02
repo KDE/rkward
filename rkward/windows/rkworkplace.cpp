@@ -424,9 +424,20 @@ bool RKWorkplace::openAnyUrl (const QUrl &url, const QString &known_mimetype, bo
 			openHelpWindow (url, true);
 			return true;	// TODO
 		}
-		if (url.fileName ().toLower ().endsWith (QLatin1String (".rdata")) || url.fileName ().toLower ().endsWith (QLatin1String (".rda"))) {
-			RKWardMainWindow::getMain ()->askOpenWorkspace (url);
+		QString lname = url.fileName().toLower();
+		if (lname.endsWith(QLatin1String(".rdata")) || lname.endsWith(QLatin1String(".rda"))) {
+			RKWardMainWindow::getMain()->askOpenWorkspace(url);
 			return true;	// TODO
+		}
+		if (lname.endsWith(".rko")) {
+			auto ret = RKOutputDirectory::get(url.toLocalFile(), false);
+			if (!ret.failed()) {
+				ret.dir()->view(true);
+				return true;
+			} else {
+				KMessageBox::sorry(this, i18n("Failed to open output file. Error message was '%1'", ret.error));
+				return false;
+			}
 		}
 		if (mimetype.inherits ("text/plain")) {
 			return (openScriptEditor (url, QString ()));
@@ -805,7 +816,7 @@ QString RKWorkplace::makeItemDescription (RKMDIWindow *win) const {
 		specification = static_cast<RKCommandEditorWindow*> (win)->url ().url ();
 		if (specification.isEmpty ()) specification = static_cast<RKCommandEditorWindow*> (win)->id ();
 	} else if (win->isType (RKMDIWindow::OutputWindow)) {
-		RKOutputDirectory *dir = RKOutputDirectory::getOutputByWindow(win);
+		RKOutputDirectory *dir = RKOutputDirectory::findOutputByWindow(win);
 		if (dir) {
 			type = "rkoutput";
 			specification = QUrl::fromLocalFile(dir->filename()).url();

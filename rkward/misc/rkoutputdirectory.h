@@ -69,10 +69,9 @@ public:
 	QString workPath() const;
 	QString caption() const;
 	static GenericRRequestResult handleRCall(const QStringList& params, RCommandChain *chain);
-	static RKOutputDirectory* getOutputById(const QString& id);
-	static RKOutputDirectory* getOutputByWorkPath(const QString& workpath);
-	static RKOutputDirectory* getOutputBySaveUrl(const QString& dest);
-	static RKOutputDirectory* getOutputByWindow(const RKMDIWindow* window);
+	static RKOutputDirectory* findOutputById(const QString& id);
+	static RKOutputDirectory* findOutputByWorkPath(const QString& workpath);
+	static RKOutputDirectory* findOutputByWindow(const RKMDIWindow* window);
 /** Return a list of all current output directories that have been modified. Used for asking for save during shutdown. */
 	static QList<RKOutputDirectory*> modifiedOutputDirectories();
 
@@ -94,6 +93,8 @@ private:
 	void updateSavedHash();
 	/** Currently active output. Could be nullptr in corner cases! */
 	RKOutputDirectory* activeOutput();
+	/** Note dest must be normalized. Hiding as private to avoid mis-use. */
+	static RKOutputDirectory* findOutputBySaveUrl(const QString& dest);
 
 	QString saved_hash;
 	QDateTime save_timestamp;

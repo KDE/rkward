@@ -78,13 +78,13 @@ RKOutputDirectory::~RKOutputDirectory() {
 	RK_TRACE(APP);
 }
 
-RKOutputDirectory* RKOutputDirectory::getOutputById(const QString& id) {
+RKOutputDirectory* RKOutputDirectory::findOutputById(const QString& id) {
 	RK_TRACE (APP);
 
 	return outputs.value(id);
 }
 
-RKOutputDirectory* RKOutputDirectory::getOutputByWorkPath(const QString& workpath) {
+RKOutputDirectory* RKOutputDirectory::findOutputByWorkPath(const QString& workpath) {
 	RK_TRACE (APP);
 
 	if (workpath.endsWith("index.html")) {
@@ -94,10 +94,9 @@ RKOutputDirectory* RKOutputDirectory::getOutputByWorkPath(const QString& workpat
 	return nullptr;
 }
 
-RKOutputDirectory* RKOutputDirectory::getOutputBySaveUrl(const QString& _dest) {
+RKOutputDirectory* RKOutputDirectory::findOutputBySaveUrl(const QString& dest) {
 	RK_TRACE (APP);
 
-	QString dest = QFileInfo(_dest).canonicalFilePath();
 	for (auto it = outputs.constBegin(); it != outputs.constEnd(); ++it) {
 		if (it.value()->save_filename == dest) {
 			return(it.value());
@@ -106,7 +105,7 @@ RKOutputDirectory* RKOutputDirectory::getOutputBySaveUrl(const QString& _dest) {
 	return nullptr;
 }
 
-RKOutputDirectory* RKOutputDirectory::getOutputByWindow(const RKMDIWindow *window) {
+RKOutputDirectory* RKOutputDirectory::findOutputByWindow(const RKMDIWindow *window) {
 	RK_TRACE (APP);
 
 	if (!window) return nullptr;
@@ -129,7 +128,7 @@ GenericRRequestResult RKOutputDirectory::save(const QString& _dest, RKOutputDire
 	}
 	GenericRRequestResult res = exportAs(dest, overwrite);
 	if (!res.failed()) {
-		save_filename = res.ret.toString();  // might by different from dest, notably, if dest was empty
+		save_filename = res.ret.toString();  // might by different from dest, notably, if dest was empty or not yet normalized
 		known_modified = true;  // dirty trick to ensure that updateSavedHash() will trigger a stateChange()->update caption in views, even if using SaveAs on an unmodified directory
 		updateSavedHash();
 	}
@@ -495,19 +494,32 @@ RKOutputDirectoryCallResult RKOutputDirectory::get(const QString &_filename, boo
 		} else {
 			return (getCurrentOutput(chain));
 		}
-	} else {
-		QString filename = QFileInfo(_filename).canonicalFilePath();
-		ret.setDir(getOutputBySaveUrl(filename));
+	} else {  // filename not empty
+		QFileInfo fi(_filename);
+		bool file_exists = fi.exists();
+		QString filename = file_exists ? fi.canonicalFilePath() : _filename;
+		RKOutputDirectory *dir = file_exists ? findOutputBySaveUrl(filename) : nullptr;
+		// NOTE: annoyingly QFileInfo::canonicalFilePath() returns an empty string, if the file does not exist
 		if (create) {
-			if (ret.dir()) return GenericRRequestResult::makeError(i18n("Output '1%' is already loaded in this session. Cannot create it.", filename));
-			if (QFileInfo(filename).exists()) return GenericRRequestResult::makeError(i18n("A file named '1%' already exists. Cannot create it.", filename));
+			if (dir) return GenericRRequestResult::makeError(i18n("Output '1%' is already loaded in this session. Cannot create it.", filename));
+			if (file_exists) return GenericRRequestResult::makeError(i18n("A file named '1%' already exists. Cannot create it.", filename));
+
 			ret.setDir(createOutputDirectoryInternal());
-			ret.addMessages(ret.dir()->import(filename));
+			ret.addMessages(dir->save(filename));  // NOTE: save() takes care of normalizing
 		} else {
+			if (!file_exists) return GenericRRequestResult::makeError(i18n("File '%1' does not exist.", filename));
+
+			ret.setDir(findOutputBySaveUrl(filename));
 			if (!ret.dir()) {
-				ret.setDir(createOutputDirectoryInternal());
-				ret.addMessages(ret.dir()->import(filename));
+				auto dir = createOutputDirectoryInternal();
+				ret.addMessages(dir->import(filename));
+				if (ret.failed()) {
+					dir->purge(Force);
+				} else {
+					ret.setDir(dir);
+				}
 			}
+			// else we have already set the loaded dir as ret.dir()
 		}
 	}
 	return ret;
@@ -533,7 +545,7 @@ GenericRRequestResult RKOutputDirectory::handleRCall(const QStringList& params, 
 	} else {
 		// all other commands pass the output id as second parameter. Look that up, first
 		QString id = params.value(1);
-		auto out = getOutputById(id);
+		auto out = findOutputById(id);
 		if (!out) {
 			return GenericRRequestResult::makeError(i18n("The output identified by '%1' is not loaded in this session.", id));
 		}
