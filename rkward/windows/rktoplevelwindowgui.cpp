@@ -29,6 +29,7 @@
 #include <QWhatsThis>
 #include <QDomDocument>
 #include <QDomElement>
+#include <QMenu>
 
 #include "../rkconsole.h"
 #include "../windows/robjectbrowser.h"
@@ -43,6 +44,7 @@
 #include "../misc/rkstandardicons.h"
 #include "../misc/rkprogresscontrol.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkoutputdirectory.h"
 #include "../plugin/rkcomponentmap.h"
 #include "../dialogs/rkerrordialog.h"
 #include "../rbackend/rkrinterface.h"
@@ -90,9 +92,12 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI(KXmlGuiWindow *for_window) : QObject(fo
 	action->setText (i18n ("Activate Document view"));
 	actionCollection ()->setDefaultShortcut (action, Qt::AltModifier + Qt::Key_0);
 
-	action = actionCollection ()->addAction ("output_show", this, SLOT (slotOutputShow()));
-	action->setText (i18n ("Show &Output"));
-	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowOutput));
+	action = new QAction(i18n("Show Output"));
+	action->setMenu(output_windows_menu = new QMenu());
+	connect(output_windows_menu, &QMenu::aboutToShow, this, &RKTopLevelWindowGUI::populateOutputWindowsMenu);
+	connect(output_windows_menu, &QMenu::triggered, this, &RKTopLevelWindowGUI::slotOutputShow);
+	action->setIcon(RKStandardIcons::getIcon(RKStandardIcons::WindowOutput));
+	actionCollection()->addAction("output_show", action);
 
 	// settings
 	KStandardAction::keyBindings (this, SLOT (configureShortcuts()), actionCollection ());
@@ -226,10 +231,30 @@ void RKTopLevelWindowGUI::activateDocumentView () {
 	if (window) window->activate ();
 }
 
-void RKTopLevelWindowGUI::slotOutputShow () {
+void RKTopLevelWindowGUI::slotOutputShow(QAction *action) {
 	RK_TRACE(APP);
 
-	RKWorkplace::mainWorkplace()->openOutputWindow(QUrl());
+	QString id = action->data().toString();
+	RKOutputDirectory *dir = RKOutputDirectory::findOutputById(id);
+	if (!dir) return; // Could happen in corner case, if dir got deleted, while menu is shown
+	dir->view(true);
+}
+
+void RKTopLevelWindowGUI::populateOutputWindowsMenu() {
+	RK_TRACE(APP);
+
+	output_windows_menu->clear();
+	auto outputs = RKOutputDirectory::allOutputs();
+	for (int i = 0; i < outputs.size(); ++i) {
+		auto dir = outputs[i];
+		QString title = dir->caption();
+		if (dir->isActive()) {
+			title.append(' ');
+			title.append(i18n("[Active]"));
+		}
+		QAction* action = output_windows_menu->addAction(title);
+		action->setData(dir->getId());
+	}
 }
 
 void RKTopLevelWindowGUI::nextWindow () {
