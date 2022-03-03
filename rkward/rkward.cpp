@@ -495,14 +495,17 @@ void RKWardMainWindow::initActions() {
 	new_command_editor->setText (i18n ("Script File"));
 	new_command_editor->setIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowCommandEditor));
 
-	fileOpen = actionCollection ()->addAction (KStandardAction::Open, "file_openy", this, SLOT(slotOpenCommandEditor()));
-	fileOpen->setText (i18n ("Open R Script File..."));
+	fileOpenScript = actionCollection()->addAction(KStandardAction::Open, "file_open_script", this, SLOT(slotOpenCommandEditor()));
+	actionCollection()->setDefaultShortcut(fileOpenScript, Qt::ControlModifier + Qt::AltModifier + Qt::Key_O);
+	fileOpenScript->setText(i18n("Open R Script File..."));
+
+	fileOpenOutput = actionCollection()->addAction(KStandardAction::Open, "file_open_output", this, SLOT(slotOpenOutput()));
+	actionCollection()->setDefaultShortcut(fileOpenOutput, QKeySequence());
+	fileOpenOutput->setText(i18n("Open RKWard Output File..."));
 
 	QAction *file_open_any = actionCollection ()->addAction (KStandardAction::Open, "file_open_any");
 	connect (file_open_any, &QAction::triggered, this, &RKWardMainWindow::openAnyFile);
-
 	file_open_any->setText (i18n ("Open any File..."));
-	actionCollection ()->setDefaultShortcut (file_open_any, Qt::ControlModifier + Qt::AltModifier + Qt::Key_O);
 
 	fileOpenRecent = static_cast<KRecentFilesAction*> (actionCollection ()->addAction (KStandardAction::OpenRecent, "file_open_recenty", this, SLOT(slotOpenCommandEditor(QUrl))));
 	fileOpenRecent->setText (i18n ("Open Recent R Script File"));
@@ -597,7 +600,9 @@ void RKWardMainWindow::initActions() {
 	open_any_action->addAction (fileOpenWorkspace);
 	open_any_action->addAction (fileOpenRecentWorkspace);
 	open_any_action->addSeparator ();
-	open_any_action->addAction (fileOpen);
+	open_any_action->addAction (fileOpenScript);
+	open_any_action->addAction (fileOpenOutput);
+	open_any_action->addSeparator ();
 	open_any_action->addAction (fileOpenRecent);
 	open_any_action->addAction (file_open_any);
 	open_any_action->addSeparator ();
@@ -979,6 +984,19 @@ void RKWardMainWindow::openAnyFile () {
 		askOpenWorkspace(url);
 		RKSettingsModuleGeneral::updateLastUsedUrl ("workspaces", url.adjusted (QUrl::RemoveFilename));
 	}
+}
+
+void RKWardMainWindow::slotNewOutput() {
+	RK_TRACE (APP);
+
+	RKWorkplace::mainWorkplace()->openOutputWindow(QUrl(), true);
+}
+
+void RKWardMainWindow::slotOpenOutput() {
+	RK_TRACE (APP);
+
+	QUrl url = QFileDialog::getOpenFileUrl(this, i18n("Select RKWard Output file to open..."), RKSettingsModuleGeneral::lastUsedUrlFor("output"), i18n("RKWard Output Files [*.rko](*.rko);;All files [*](*)"));
+	RKWorkplace::mainWorkplace()->openOutputWindow(url);
 }
 
 void RKWardMainWindow::slotOpenCommandEditor (const QUrl &url, const QString &encoding) {

@@ -430,14 +430,8 @@ bool RKWorkplace::openAnyUrl (const QUrl &url, const QString &known_mimetype, bo
 			return true;	// TODO
 		}
 		if (lname.endsWith(".rko")) {
-			auto ret = RKOutputDirectory::get(url.toLocalFile(), false);
-			if (!ret.failed()) {
-				ret.dir()->view(true);
-				return true;
-			} else {
-				KMessageBox::sorry(this, i18n("Failed to open output file. Error message was '%1'", ret.error));
-				return false;
-			}
+			auto win = openOutputWindow(url, false);
+			return win != nullptr;
 		}
 		if (mimetype.inherits ("text/plain")) {
 			return (openScriptEditor (url, QString ()));
@@ -518,23 +512,33 @@ RKMDIWindow* RKWorkplace::openHelpWindow (const QUrl &url, bool only_once) {
 	return (hw);
 }
 
-RKMDIWindow* RKWorkplace::openOutputWindow(const QUrl &url) {
+RKMDIWindow* RKWorkplace::openHTMLWindow(const QUrl &url) {
 	RK_TRACE (APP);
 
-	QString path = url.toLocalFile();
-	if (path.isNull()) path = RKOutputWindowManager::self()->currentOutputPath();
+	// special treatment, for now
+	return openHelpWindow(url, true);
+}
 
-	QList<RKHTMLWindow*> owins = RKOutputWindowManager::self()->existingOutputWindows(url.toLocalFile());
-	for (int i = 0; i < owins.size (); ++i) {
-		if (view()->windowInActivePane(owins[i])) {
-			owins[i]->activate();
-			return owins[i];
-		}
+RKMDIWindow* RKWorkplace::openOutputWindow(const QUrl &url, bool create) {
+	RK_TRACE (APP);
+
+	if (create) RK_ASSERT(url.isEmpty());
+
+	RKOutputDirectoryCallResult res = RKOutputDirectory::get(url.toLocalFile(), create);
+	if (res.failed()) {
+		KMessageBox::sorry(this, i18n("Failed to open output file. Error message was '%1'", res.error));
+		return nullptr;
 	}
+	RK_ASSERT(res.dir());
+	return res.dir()->getOrCreateView(true); // Will call openNewOutputWindow(), unless a view alredy exists
+}
+
+RKMDIWindow* RKWorkplace::openNewOutputWindow(RKOutputDirectory* dir) {
+	RK_TRACE (APP);
 
 	RKHTMLWindow* win = new RKHTMLWindow(view(), RKHTMLWindow::HTMLOutputWindow);
-	win->openURL(QUrl::fromLocalFile(path));
-	RK_ASSERT(win->url().toLocalFile() == path);
+	win->openURL(QUrl::fromLocalFile(dir->workPath()));
+	RK_ASSERT(win->url().toLocalFile() == dir->workPath());
 	addWindow(win);
 	return win;
 }

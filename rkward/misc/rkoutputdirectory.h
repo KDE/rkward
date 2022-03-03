@@ -64,6 +64,7 @@ public:
 	/** This function may not always be accurate, but is fast. It is fairly reliable as long as there is an active view, but should not be used when there is not.  */
 	bool isModifiedFast() const;
 	GenericRRequestResult view(bool raise, RCommandChain* chain=0);
+	RKMDIWindow* getOrCreateView(bool raise, RCommandChain* chain=0);
 	QString filename() const { return save_filename; };
 	QString workDir() const { return work_dir; }
 	QString workPath() const;

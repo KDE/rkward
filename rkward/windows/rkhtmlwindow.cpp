@@ -709,12 +709,14 @@ void RKHTMLWindow::updateCaption (const QUrl &url) {
 			QString mods;
 			if (dir->isActive()) mods.append(i18n("[Active]"));
 			// TODO: use icon(s), instead
-			if (dir->isModifiedFast()) mods.append("(*)");
+			bool mod = dir->isModifiedFast();
+			if (mod) mods.append("(*)");
 			if (!mods.isEmpty()) {
 				name.append(' ');
 				name.append(mods);
 			}
 			setCaption(name);
+			part->revert->setEnabled(mod);
 		} else {
 			setCaption (i18n ("Output %1", url.fileName ()));
 		}
@@ -1384,7 +1386,14 @@ void RKOutputWindowManager::fileChanged (const QString &path) {
 		if (w->outputDirectory()) w->outputDirectory()->setKnownModified(true);
 	} else {
 		RK_ASSERT (path == current_default_path);
-		if (RKSettingsModuleOutput::autoShow ()) RKWorkplace::mainWorkplace ()->openOutputWindow (QUrl::fromUserInput (path, QString (), QUrl::AssumeLocalFile));
+		if (RKSettingsModuleOutput::autoShow ()) {
+			RKOutputDirectory* dir = RKOutputDirectory::findOutputByWorkPath(path);
+			if (dir) {
+				dir->view(true);
+			} else {
+				RKWorkplace::mainWorkplace()->openHTMLWindow(QUrl::fromUserInput(path, QString(), QUrl::AssumeLocalFile));
+			}
+		}
 	}
 }
 

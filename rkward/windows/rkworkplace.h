@@ -41,6 +41,7 @@ class RKMDIWindowHistoryWidget;
 class RKGraphicsDevice;
 class KMessageWidget;
 class QWindow;
+class RKOutputDirectory;
 
 #define TOOL_WINDOW_BAR_COUNT 4
 
@@ -131,8 +132,14 @@ public:
 @param only_once if true, checks whether any help window already shows this URL. If so, raise it, but do not open a new window. Else show the new window */
 	RKMDIWindow* openHelpWindow (const QUrl &url=QUrl (), bool only_once=false);
 /** Opens a new output window, or raise / refresh the current output window.
-@param url currently ignored! */
-	RKMDIWindow* openOutputWindow (const QUrl &url=QUrl ());
+@param url Ouput file to load. If empty, the active output is opened/raised.
+@param create Create a new output, instead of showing an existing one. */
+	RKMDIWindow* openOutputWindow(const QUrl &url, bool create=false);
+/** Opens a new output window, for the given existing output directory. Generally, you should call RKOutputDirectory::view(), instead. */
+	RKMDIWindow* openNewOutputWindow(RKOutputDirectory* dir);
+/** Opens an HTML window / legacy output file
+@param url Ouput file to load. */
+	RKMDIWindow* openHTMLWindow(const QUrl &url);
 
 	void newX11Window (QWindow* window_to_embed, int device_number);
 	void newRKWardGraphisWindow (RKGraphicsDevice *dev, int device_number);

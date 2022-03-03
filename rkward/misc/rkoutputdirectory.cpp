@@ -241,8 +241,8 @@ GenericRRequestResult RKOutputDirectory::revert(OverwriteBehavior discard) {
 	if (!isModifiedAccurate()) return GenericRRequestResult(id, i18n("Output had no modifications. Nothing reverted."));
 	if (discard == Ask) {
 		if (save_filename.isEmpty()) {
-			if (KMessageBox::warningContinueCancel(RKWardMainWindow::getMain(), i18n("This output has not been saved before. Reverting will clear it, entirely. Are you sure you want to proceed?")) == KMessageBox::Continue) {
-				discard = Force;
+			if (KMessageBox::warningContinueCancel(RKWardMainWindow::getMain(), i18n("This output has not been saved before. Reverting will clear it, entirely. Are you sure you want to proceed?"), QString(), KStandardGuiItem::clear()) == KMessageBox::Continue) {
+				return clear(Force);
 			}
 		} else if (KMessageBox::warningContinueCancel(RKWardMainWindow::getMain(), i18n("Reverting will destroy any changes, since the last time you saved (%1). Are you sure you want to proceed?", save_timestamp.toString())) == KMessageBox::Continue) {
 			discard = Force;
@@ -461,7 +461,7 @@ RKOutputDirectory* RKOutputDirectory::activeOutput() {
 	return nullptr;
 }
 
-GenericRRequestResult RKOutputDirectory::view(bool raise, RCommandChain* chain) {
+RKMDIWindow * RKOutputDirectory::getOrCreateView(bool raise, RCommandChain* chain) {
 	RK_TRACE(APP);
 
 	if (!initialized) {
@@ -476,11 +476,18 @@ GenericRRequestResult RKOutputDirectory::view(bool raise, RCommandChain* chain) 
 		if (!w->isActiveWindow() || raise) {
 			list[0]->activate();
 		}
-	} else {
-		if (!known_modified) known_modified = isModifiedAccurate();
-		RKWorkplace::mainWorkplace()->openOutputWindow(QUrl::fromLocalFile(workPath()));
+
+		return w;
 	}
 
+	if (!known_modified) known_modified = isModifiedAccurate();
+	return RKWorkplace::mainWorkplace()->openNewOutputWindow(this);
+}
+
+GenericRRequestResult RKOutputDirectory::view(bool raise, RCommandChain* chain) {
+	RK_TRACE(APP);
+
+	getOrCreateView(raise, chain);
 	return GenericRRequestResult(id);
 }
 
@@ -502,8 +509,9 @@ RKOutputDirectoryCallResult RKOutputDirectory::get(const QString &_filename, boo
 		// NOTE: annoyingly QFileInfo::canonicalFilePath() returns an empty string, if the file does not exist
 		if (create) {
 			if (dir) return GenericRRequestResult::makeError(i18n("Output '1%' is already loaded in this session. Cannot create it.", filename));
-			if (file_exists) return GenericRRequestResult::makeError(i18n("A file named '1%' already exists. Cannot create it.", filename));
+			if (file_exists) return GenericRRequestResult::makeError(i18n("A file named '%1' already exists. Cannot create it.", filename));
 
+			// NOTE: This is a bit of an unusual case: Creating a fresh output with save file name already specified. To avoid issues (esp. around canonicalFilePath()), we make sure to actually save the new output, right away (much like "touch"), instead of only setting the save file name for later usage
 			ret.setDir(createOutputDirectoryInternal());
 			ret.addMessages(dir->save(filename));  // NOTE: save() takes care of normalizing
 		} else {
