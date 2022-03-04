@@ -213,8 +213,8 @@ void RKFrontendTransmitter::backendExit (int exitcode) {
 	RK_TRACE (RBACKEND);
 
 	if (!exitcode && token.isEmpty ()) handleTransmissionError (i18n ("The backend process could not be started. Please check your installation."));
-	else if (token.isEmpty ()) handleTransmissionError (i18n ("The backend process failed to start with exit code %1.", exitcode));
-	else handleTransmissionError (i18n ("Backend process has exited with code %1.", exitcode));
+	else if (token.isEmpty ()) handleTransmissionError (i18n ("The backend process failed to start with exit code %1, message: '%2'.", exitcode, QString::fromLocal8Bit(backend->readAllStandardError())));
+	else handleTransmissionError (i18n ("Backend process has exited with code %1, message: '%2'.", exitcode, QString::fromLocal8Bit(backend->readAllStandardError())));
 }
 
 void RKFrontendTransmitter::writeRequest (RBackendRequest *request) {
