@@ -442,6 +442,12 @@ void RKHTMLWindow::slotRevert() {
 	dir->revert();
 }
 
+void RKHTMLWindow::slotActivate() {
+	RK_TRACE (APP);
+	RK_ASSERT(dir);
+	dir->activate();
+}
+
 void RKHTMLWindow::openLocationFromHistory (VisitedLocation &loc) {
 	RK_TRACE (APP);
 	RK_ASSERT (window_mode == HTMLHelpWindow);
@@ -704,8 +710,7 @@ void RKHTMLWindow::updateCaption (const QUrl &url) {
 
 	if (window_mode == HTMLOutputWindow) {
 		if (dir) {
-			QString name = QFileInfo(dir->filename()).fileName();
-			if (name.isEmpty()) name = i18n("Unnamed");
+			QString name = dir->caption();
 			QString mods;
 			if (dir->isActive()) mods.append(i18n("[Active]"));
 			// TODO: use icon(s), instead
@@ -901,7 +906,12 @@ void RKHTMLWindowPart::initActions () {
 
 	revert = actionCollection()->addAction("output_revert", window, SLOT(slotRevert()));
 	revert->setText(i18n("&Revert to last saved state"));
-	revert->setIcon (QIcon::fromTheme("edit-undo"));
+	revert->setIcon(QIcon::fromTheme("edit-undo"));
+
+	activate = actionCollection()->addAction("output_activate", window, SLOT(slotActivate()));
+	activate->setText(i18n("Set Output as &Active"));
+	activate->setIcon(QIcon::fromTheme("emblem-favorite"));
+	activate->setStatusTip(i18n("Set this output as the file to append output to."));
 
 	actionCollection ()->addAction (KStandardAction::Find, "find", window->findbar, SLOT (activate()));
 	QAction* findAhead = actionCollection ()->addAction ("find_ahead", new QAction (i18n ("Find as you type"), this));
@@ -917,6 +927,7 @@ void RKHTMLWindowPart::setOutputDirectoryActionsEnabled(bool enable) {
 	window->file_save_action->setVisible(enable);
 	window->file_save_as_action->setVisible(enable);
 	revert->setVisible(enable);
+	activate->setVisible(enable);
 }
 
 void RKHTMLWindowPart::setOutputWindowSkin() {
@@ -1343,18 +1354,23 @@ void RKOutputWindowManager::setCurrentOutputPath (const QString &_path) {
 #endif
 	if (path == current_default_path) return;
 
-	if (!windows.contains (path)) {
-		RK_DEBUG (APP, DL_DEBUG, "starting to watch %s for changes, KDirWatch method %d", qPrintable (path), file_watcher->internalMethod ());
-		file_watcher->addFile (path);
+	auto old_win = windows.value(current_default_path);
+	auto new_win = windows.value(path);
+
+	if (!new_win) {
+		RK_DEBUG(APP, DL_DEBUG, "starting to watch %s for changes, KDirWatch method %d", qPrintable(path), file_watcher->internalMethod());
+		file_watcher->addFile(path);
 	}
-	if (!windows.contains (current_default_path)) {
-		if (!current_default_path.isEmpty ()) {
-			RK_DEBUG (APP, DL_DEBUG, "no longer watching %s for changes", qPrintable (current_default_path));
-			file_watcher->removeFile (current_default_path);
+	if (!old_win) {
+		if (!current_default_path.isEmpty()) {
+			RK_DEBUG(APP, DL_DEBUG, "no longer watching %s for changes", qPrintable(current_default_path));
+			file_watcher->removeFile(current_default_path);
 		}
 	}
 
 	current_default_path = path;
+	if (old_win) old_win->updateState();
+	if (new_win) new_win->updateState();
 }
 
 void RKOutputWindowManager::rewatchOutput () {

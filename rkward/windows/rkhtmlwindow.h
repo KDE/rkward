@@ -88,6 +88,7 @@ public slots:
 	void slotSave();
 	void slotSaveAs();
 	void slotRevert();
+	void slotActivate();
 	void slotForward ();
 	void slotBack ();
 	void selectionChanged ();
@@ -171,6 +172,7 @@ friend class RKHTMLWindow;
 	QAction* forward;
 	QAction* export_page;
 	QAction* revert;
+	QAction* activate;
 };
 
 /**

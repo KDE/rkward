@@ -18,6 +18,7 @@
 			<Separator/>
 			<Action name="output_flush"/>
 			<Action name="output_revert"/>
+			<Action name="output_activate"/>
 		</Menu>
 		<Menu name="view"><text>&amp;View</text>
 			<Action name="zoom_in"/>
@@ -28,8 +29,8 @@
 		</Menu>
 	</MenuBar>
 	<ToolBar fullWidth="true" name="mainToolBar">
-		<Action name="output_flush"/>
 		<Action name="output_revert"/>
 		<Action name="output_refresh"/>
+		<Action name="output_activate"/>
 	</ToolBar>
 </kpartgui>
