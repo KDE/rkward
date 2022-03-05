@@ -21,6 +21,8 @@
 #'              \code{rk.output} can be used to create or load output files, as well as to obtain a reference to an already loaded output file. After that, use the class methods
 #'              to operate on the reference obtained.
 #'
+#'              \code{rk.import.legacy.output} can be used to import an legacy (pre 0.7.3) output file to .rko-format. This function is going to be removed after some time.
+#'
 #' @param filename The location where an existing output directory is loaded from or saved/exported to. Note that this is usually not the same location where functions such as
 #'                 \link{rk.print} will write to (these operate on a temporary "working copy", but rather the target directory, where changes should eventually be saved
 #'                 back, to.
@@ -121,4 +123,32 @@ Do not write anything to the target filename, directly! This is purely for infor
 	ret <- lapply(id, function(id) RK.Output(id=id))
 	if (all) ret
 	else ret[[1]]
+}
+
+#' @export
+#' @rdname RK.Output
+"rk.import.legacy.output" <- function(filename=file.path(rk.home(), "rk_out.html"), import=TRUE, delete=FALSE) {
+	f <- filename
+	stopifnot(file.exists(f))
+	files <- rkward:::.rk.get.images.in.html.file(f)
+	css <- file.path(rk.home(), "rk_out.css")
+	if (file.exists(css)) files <- c(files, css)
+
+	if(import) {
+		out <- rk.output(create=TRUE)
+		out$activate()
+		wd = out$.workingDir()   # Don't do this at home, please. For internal use, only, and might change
+
+		stopifnot(file.copy(f, file.path(wd, "index.html"), overwrite=TRUE))
+		stopifnot(all(file.copy(files, file.path(wd, basename(files)), overwrite=TRUE)))
+		wd$save(save_filename)
+		out$view()
+
+		rk.show.message("The legacy output file has been imported. If satisfied with the result, you now save it in the new format. To remove the old output file, run rk.import.legacy.output(import=FALSE,delete=TRUE)")
+	}
+
+	if (delete) {
+		unlink(f)
+		unlink(files)
+	}
 }
