@@ -130,12 +130,12 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 	auto l = new QVBoxLayout(firstpage);
 	QString intro = i18n("<p>This dialog will guide you through a quick check of the basic setup of the required (or recommended) components.</p>");
 	if (reason == NewVersionRKWard) {
-		intro += i18n("<p>The setup assistant has been invoked, automatically, because a new version of RKWard has been detected.</p");
+		intro += i18n("<p>The setup assistant has been invoked, automatically, because a new version of RKWard has been detected.</p>");
 	} else if (reason == NewVersionR) {
 		// TODO: invoke this!
-		intro += i18n("<p>The setup assistant has been invoked, automatically, because a new version of R has been detected.</p");
+		intro += i18n("<p>The setup assistant has been invoked, automatically, because a new version of R has been detected.</p>");
 	} else if (reason == ProblemsDetected) {
-		intro += i18n("<p>The setup assistant has been invoked, automatically, because a problem has been detected in your setup.</p");
+		intro += i18n("<p>The setup assistant has been invoked, automatically, because a problem has been detected in your setup.</p>");
 	}
 	l->addWidget(RKCommonFunctions::wordWrappedLabel(intro));
 	auto waiting_to_start_label = RKCommonFunctions::wordWrappedLabel(i18n("<b>Waiting for R backend...</b>") + "<p>&nbsp;</p><p>&nbsp;</p>");

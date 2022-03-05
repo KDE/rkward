@@ -37,7 +37,7 @@ public:
 	QString currentBaseName () const;
 	bool isOk () const;
 	void setBaseName (const QString &name);
-	void setBackgroundColor (const QColor &color);
+	void setStyleSheet (const QString &style);
 	RObject* rootObject () const { return root_object; };
 	void setRootObject (RObject* new_root);
 private slots:

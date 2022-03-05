@@ -194,12 +194,10 @@ void RKSaveObjectChooser::updateState () {
 	}
 }
 
-void RKSaveObjectChooser::setBackgroundColor (const QColor &color) {
+void RKSaveObjectChooser::setStyleSheet (const QString &style) {
 	RK_TRACE (MISC);
 
-	QPalette palette = name_edit->palette ();
-	palette.setColor (name_edit->backgroundRole (), color);
-	name_edit->setPalette (palette);
+	name_edit->setStyleSheet(style);
 }
 
 QString RKSaveObjectChooser::currentBaseName () const {

@@ -2,7 +2,7 @@
                           rkgraphicsdevice_stubs  -  description
                              -------------------
     begin                : Mon Mar 18 20:06:08 CET 2013
-    copyright            : (C) 2013-2014 by Thomas Friedrichsmeier 
+    copyright            : (C) 2013-2021 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -578,6 +578,56 @@ void RKD_onExit (pDevDesc dev) {
 		WRITE_HEADER (RKDStopGettingEvents, dev);
 	}
 	dev->gettingEvent = (Rboolean) false;
+}
+#endif
+
+#if R_VERSION >= R_Version (2, 14, 0)
+int RKD_HoldFlush (pDevDesc dev, int level) {
+#ifdef __GNUC__
+#warning implement me
+#endif
+	return 0;
+}
+#endif
+
+#if R_VERSION >= R_Version (4, 1, 0)
+SEXP RKD_SetPattern (SEXP pattern, pDevDesc dd) {
+#ifdef __GNUC__
+#warning implement me
+#endif
+	return R_NilValue;
+}
+
+void RKD_ReleasePattern (SEXP ref, pDevDesc dd) {
+#ifdef __GNUC__
+#warning implement me
+#endif
+}
+
+SEXP RKD_SetClipPath (SEXP path, SEXP ref, pDevDesc dd) {
+#ifdef __GNUC__
+#warning implement me
+#endif
+	return R_NilValue;
+}
+
+void RKD_ReleaseClipPath (SEXP ref, pDevDesc dd) {
+#ifdef __GNUC__
+#warning implement me
+#endif
+}
+
+SEXP RKD_SetMask (SEXP path, SEXP ref, pDevDesc dd) {
+#ifdef __GNUC__
+#warning implement me
+#endif
+	return R_NilValue;
+}
+
+void RKD_ReleaseMask (SEXP ref, pDevDesc dd) {
+#ifdef __GNUC__
+#warning implement me
+#endif
 }
 
 #endif

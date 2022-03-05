@@ -145,7 +145,7 @@ RKSettingsModuleGraphics::RKSettingsModuleGraphics (RKSettings *gui, QWidget *pa
 	group_layout->addLayout (h_layout);
 	h_layout->addWidget (new QLabel (i18n ("Maximum size of a single recorded plot (in KB):"), graphics_hist_box));
 	h_layout->addWidget (graphics_hist_max_plotsize_box = new QSpinBox(graphics_hist_box));
-	graphics_hist_max_plotsize_box->setMaximum(20000);
+	graphics_hist_max_plotsize_box->setMaximum(50000);
 	graphics_hist_max_plotsize_box->setMinimum(4);
 	graphics_hist_max_plotsize_box->setSingleStep(4);
 	graphics_hist_max_plotsize_box->setValue(graphics_hist_max_plotsize);
@@ -235,7 +235,7 @@ void RKSettingsModuleGraphics::loadSettings (KConfig *config) {
 	graphics_height = cg.readEntry ("graphics_height", 7.0);
 	graphics_hist_enable = cg.readEntry ("graphics_hist_enable", true);
 	graphics_hist_max_length = cg.readEntry ("graphics_hist_max_length", 20);
-	graphics_hist_max_plotsize = cg.readEntry ("graphics_hist_max_plotsize", 1024);
+	graphics_hist_max_plotsize = cg.readEntry ("graphics_hist_max_plotsize", 4096);
 	options_kde_printing = cg.readEntry ("kde printing", true);
 }
 

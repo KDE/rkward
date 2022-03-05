@@ -41,7 +41,7 @@ public:
 /** set the filename/location from outside */
 	void setLocation (const QString &new_location);
 
-	void setBackgroundColor (const QColor & color);
+	void setStyleSheet (const QString &style);
 
 /** retrieves the current location */
 	QString getLocation ();

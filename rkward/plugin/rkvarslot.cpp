@@ -183,15 +183,14 @@ void RKVarSlot::updateLook () {
 
 	QPalette palette = list->palette ();
 	if (!isSatisfied ()) {		// implies that it is enabled
-		palette.setColor (QPalette::Base, QColor (255, 0, 0));
+		list->setStyleSheet(QString("background: red; color: black"));
 	} else {
 		if (isEnabled ()) {
-			palette.setColor (QPalette::Base, QColor (255, 255, 255));
+			list->setStyleSheet(QString(""));
 		} else {
-			palette.setColor (QPalette::Base, QColor (200, 200, 200));
+			list->setStyleSheet(QString("background: rgb(200, 200, 200); color: black"));
 		}
 	}
-	list->setPalette(palette);
 }
 
 void RKVarSlot::changeEvent (QEvent* event) {

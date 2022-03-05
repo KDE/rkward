@@ -105,6 +105,11 @@ QObject* KatePluginIntegrationApp::loadPlugin (const QString& identifier) {
 
 	KPluginFactory *factory = KPluginLoader(known_plugins[identifier].data.fileName ()).factory ();
 	if (factory) {
+		if (identifier == "katekonsoleplugin") {
+			// Workaround until https://invent.kde.org/utilities/kate/-/commit/cf11bcbf1f36e2a82b1a1b14090a3f0a2b09ecf4 can be assumed to be present (should be removed in KF6)
+			if (qgetenv("EDITOR").isNull()) qputenv("EDITOR", "vi");
+		}
+
 		KTextEditor::Plugin *plugin = factory->create<KTextEditor::Plugin>(this, QVariantList () << identifier);
 		if (plugin) {
 			known_plugins[identifier].plugin = plugin;
@@ -146,8 +151,18 @@ void KatePluginIntegrationApp::loadPlugins(const QStringList& plugins) {
 	}
 
 	if (!changes) return;
-	RKWardMainWindow::getMain()->factory()->removeClient(mainWindow());
-	RKWardMainWindow::getMain()->factory()->addClient(mainWindow());
+
+	auto w = mainWindow();
+	auto pf = w->persistentGuiClient()->factory();
+	if (pf) {
+		pf->removeClient(w->persistentGuiClient());
+		pf->addClient(w->persistentGuiClient());
+	}
+	auto df = w->dynamicGuiClient()->factory();
+	if (df) {
+		df->removeClient(w->dynamicGuiClient());
+		df->addClient(w->dynamicGuiClient());
+	}
 }
 
 void KatePluginIntegrationApp::unloadPlugin(const QString &identifier) {
@@ -176,7 +191,7 @@ void KatePluginIntegrationApp::saveConfigAndUnload() {
 	RK_TRACE (APP);
 
 	for (auto it = known_plugins.constBegin(); it != known_plugins.constEnd(); ++it) {
-		unloadPlugin (it.key());
+		unloadPlugin(it.key());
 	}
 	known_plugins.clear();
 }
@@ -300,17 +315,24 @@ KTextEditor::Plugin *KatePluginIntegrationApp::plugin(const QString &name) {
 ///  BEGIN  KTextEditor::MainWindow interface
 
 
-KatePluginIntegrationWindow::KatePluginIntegrationWindow (KatePluginIntegrationApp *parent) : QObject (parent), KXMLGUIClient () {
-	RK_TRACE (APP);
+KatePluginIntegrationWindow::KatePluginIntegrationWindow(KatePluginIntegrationApp *parent) : QObject(parent), KXMLGUIClient() {
+	RK_TRACE(APP);
 
 	// This one is passed to each created plugin
 	main = new KTextEditor::MainWindow(this);
 	// While this one may be accessed from plugins via KTextEditor::Editor::instance()->application()
 	app = parent;
-	active_plugin = 0;
+	active_plugin = nullptr;
+	dynamic_actions_client = new KXMLGUIClient();
 
 	connect(RKWorkplace::getHistory(), &RKMDIWindowHistory::activeWindowChanged, this, &KatePluginIntegrationWindow::activeWindowChanged);
 }
+
+KatePluginIntegrationWindow::~KatePluginIntegrationWindow() {
+	RK_TRACE(APP);
+	delete dynamic_actions_client;
+}
+
 
 class KatePluginToolWindow : public RKMDIWindow {
 	Q_OBJECT
@@ -508,13 +530,12 @@ bool KatePluginIntegrationWindow::viewsInSameSplitView(KTextEditor::View* view1,
 void KatePluginIntegrationWindow::fixUpPluginUI(const QString &id, const PluginResources &resources) {
 	RK_TRACE (APP);
 
-	KXMLGUIClient* hacked_parent = this;
 	// KF6 TODO: In KF6, plugins will probably be limited to one UI client, in the first place.
 	for (int i = 0; i < resources.clients.size(); ++i) {
 		KXMLGUIClient* client = resources.clients[i];
 		RKMDIWindow* window = resources.windows.value(i);
 		if (window) {
-			hacked_parent = window->getPart();;
+			window->addUiBuddy(dynamic_actions_client);
 		}
 		factory()->removeClient(client);
 
@@ -534,10 +555,12 @@ void KatePluginIntegrationWindow::fixUpPluginUI(const QString &id, const PluginR
 			// TODO: Rename "Search more" to something sensible. These actions should still be accessible, globally.
 		} else if (i == 0 && id == QStringLiteral("kateprojectplugin")) {
 			RKCommonFunctions::moveContainer(client, "Menu", "projects", "view", true, false);
+		} else if (i == 0 && id == QStringLiteral("katectagsplugin")) {
+			RKCommonFunctions::moveContainer(client, "Menu", "CTags Menubar", "view", true, false);
 		}
 
 		RKCommonFunctions::moveContainer(client, "Menu", "tools", "edit", true, true);
-		hacked_parent->insertChildClient(client);
+		dynamic_actions_client->insertChildClient(client);
 	}
 
 /* TODO: Ok, I guess we need even more specialization.

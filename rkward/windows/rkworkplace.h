@@ -111,7 +111,9 @@ public:
 /** Detouch a window (it is removed from the view (), and placed in a top-level DetachedWindowContainer instead. */
 	void detachWindow (RKMDIWindow *window, bool was_attached=true);
 /** @returns a pointer to the current window. state specifies, which windows should be considered. */
-	RKMDIWindow *activeWindow (RKMDIWindow::State state);
+	RKMDIWindow *activeWindow (RKMDIWindow::State state) const;
+/** @returns the RKMDIWindow holding the given part */
+	RKMDIWindow *windowForPart(KParts::Part *part) const;
 
 /** Opens the given url in the appropriate way. */
 	bool openAnyUrl (const QUrl &url, const QString &known_mimetype = QString (), bool force_external=false);

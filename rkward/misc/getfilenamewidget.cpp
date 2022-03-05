@@ -137,11 +137,7 @@ QString GetFileNameWidget::getLocation () {
 	return (edit->url ().url ());
 }
 
-void GetFileNameWidget::setBackgroundColor (const QColor & color) {
+void GetFileNameWidget::setStyleSheet (const QString & style) {
 	RK_TRACE (MISC);
-
-	QPalette palette = edit->lineEdit ()->palette ();
-	palette.setColor (edit->lineEdit ()->backgroundRole (), color);
-	edit->lineEdit ()->setPalette (palette);
+	edit->setStyleSheet(style);
 }
-

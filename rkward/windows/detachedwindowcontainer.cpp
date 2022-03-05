@@ -2,7 +2,7 @@
                           detachedwindowcontainer  -  description
                              -------------------
     begin                : Wed Oct 21 2005
-    copyright            : (C) 2005-2016 by Thomas Friedrichsmeier
+    copyright            : (C) 2005-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -76,7 +76,8 @@ DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture
 	widget_to_capture->setParent (this);
 	setCentralWidget (widget_to_capture);
 	widget_to_capture->show ();
-	createGUI (widget_to_capture->getPart ());
+	createGUI(widget_to_capture->getPart());
+//	if (widget_to_capture->uiBuddy()) factory()->addClient(widget_to_capture->uiBuddy());
 	captured = widget_to_capture;
 
 	hideEmptyMenus ();

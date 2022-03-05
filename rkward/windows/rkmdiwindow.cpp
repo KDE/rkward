@@ -31,6 +31,7 @@
 #include <kactioncollection.h>
 #include <KLocalizedString>
 #include <kmessagewidget.h>
+#include <kwidgetsaddons_version.h>
 
 #include "rkworkplace.h"
 #include "rkworkplaceview.h"
@@ -66,15 +67,16 @@ RKMDIWindow::RKMDIWindow (QWidget *parent, int type, bool tool_window, const cha
 	}
 	RKMDIWindow::type = type;
 	state = Attached;
-	tool_window_bar = 0;
-	part = 0;
+	tool_window_bar = nullptr;
+	part = nullptr;
 	active = false;
 	no_border_when_active = false;
-	standard_client = 0;
-	status_popup = 0;
-	status_popup_container = 0;
-	file_save_action = 0;
-	file_save_as_action = 0;
+	standard_client = nullptr;
+	status_popup = nullptr;
+	status_popup_container = nullptr;
+	ui_buddy = nullptr;
+	file_save_action = nullptr;
+	file_save_as_action = nullptr;
 
 	if (!(type & KatePluginWindow)) setWindowIcon (RKStandardIcons::iconForWindow (this));
 }
@@ -342,6 +344,10 @@ void RKMDIWindow::setStatusMessage (const QString& message, RCommand *command) {
 		layout->setContentsMargins (10, 10, 10, 10);
 		status_popup = new KMessageWidget (status_popup_container);
 		status_popup->setCloseButtonVisible (true);
+#if KWIDGETSADDONS_VERSION < QT_VERSION_CHECK(6,0,0)
+		// see below
+		status_popup->setWordWrap(true);
+#endif
 		status_popup->setMessageType (KMessageWidget::Warning);
 		layout->addWidget (status_popup);
 		layout->addStretch ();
@@ -360,7 +366,15 @@ void RKMDIWindow::setStatusMessage (const QString& message, RCommand *command) {
 		}
 		if (status_popup->text () != message) {
 			if (status_popup->isVisible ()) status_popup->hide (); // otherwise, the KMessageWidget does not update geometry (KF5, 5.15.0)
+#if KWIDGETSADDONS_VERSION < QT_VERSION_CHECK(6,0,0)
+			// silly workaround: KMessageWidget does not specify top-alignment for its buttons unless in wordwrap mode.
+			// we don't want actual word wrap, but we do want top alignment
+			QString dummy = message;
+			if (!dummy.startsWith("<")) dummy = "<p>" + dummy + "</p>";
+			status_popup->setText (dummy.replace(" ", "&nbsp;"));
+#else
 			status_popup->setText (message);
+#endif
 			status_popup->animatedShow ();
 		}
 	} else {
@@ -428,4 +442,9 @@ void RKMDIWindow::showWindowSettings () {
 	RKSettings::configureSettings (settings_page, this);
 }
 
+void RKMDIWindow::addUiBuddy(KXMLGUIClient* buddy) {
+	RK_TRACE(APP);
+	RK_ASSERT(!ui_buddy);
+	ui_buddy = buddy;
+}
 

@@ -126,8 +126,9 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 	workspace_modified = false;
 	merge_loads = false;
 	rkward_mainwin = this;
-	katepluginintegration = 0;
-	RKGlobals::rinter = 0;
+	katepluginintegration = nullptr;
+	active_ui_buddy = nullptr;
+	RKGlobals::rinter = nullptr;
 	RKCommonFunctions::getRKWardDataDir(); // call this before any forking, in order to avoid potential race conditions during initialization of data dir
 	RKSettings::settings_tracker = new RKSettingsTracker (this);
 
@@ -658,38 +659,44 @@ void updateEmptyMenuIndicator (QAction* indicator, const QMenu *menu) {
 	indicator->setVisible (true);
 }
 
-void RKWardMainWindow::partChanged (KParts::Part *part) {
+void RKWardMainWindow::partChanged(KParts::Part *part) {
 	RK_TRACE (APP);
 
 	if (gui_rebuild_locked) return;
 	if (!part) return;
-	createGUI (part);
+	createGUI(part);
 
-	if (!guiFactory ()) {
+	if (!guiFactory()) {
 		RK_ASSERT (false);
 		return;
 	}
+	// Check for additional "buddy" that should be loaded
+	RKMDIWindow *w = RKWorkplace::mainWorkplace()->windowForPart(part);
+	KXMLGUIClient* buddy = w->uiBuddy();
+	// NOTE: Even if the buddy stays the same, we have to remove and re-add it to keep the order of menu actions stable
+	if (active_ui_buddy) factory()->removeClient(active_ui_buddy);
+	if (buddy) factory()->addClient(buddy);
+	active_ui_buddy = buddy;
 
-	updateEmptyMenuIndicator (edit_menu_dummy, dynamic_cast<QMenu*>(guiFactory ()->container ("edit", this)));
-	updateEmptyMenuIndicator (view_menu_dummy, dynamic_cast<QMenu*>(guiFactory ()->container ("view", this)));
+	updateEmptyMenuIndicator(edit_menu_dummy, dynamic_cast<QMenu*>(guiFactory()->container("edit", this)));
+	updateEmptyMenuIndicator(view_menu_dummy, dynamic_cast<QMenu*>(guiFactory()->container("view", this)));
 
 	// plug save file actions into the toolbar collections
-	RK_ASSERT (save_any_action);
-	for (int i = 0; i < plugged_save_actions.size (); ++i) {
-		QAction* a = plugged_save_actions[i].data ();
-		if (a) save_any_action->removeAction (a);
+	RK_ASSERT(save_any_action);
+	for (int i = 0; i < plugged_save_actions.size(); ++i) {
+		QAction* a = plugged_save_actions[i].data();
+		if (a) save_any_action->removeAction(a);
 	}
 	plugged_save_actions.clear ();
 
-	RKMDIWindow *w = RKWorkplace::mainWorkplace ()->activeWindow (RKMDIWindow::Attached);
 	if (w) {
 		QAction *a = w->fileSaveAction ();
 		if (a) plugged_save_actions.append (a);
 		a = w->fileSaveAsAction ();
 		if (a) plugged_save_actions.append (a);
 	}
-	for (int i = 0; i < plugged_save_actions.size (); ++i) {
-		save_any_action->insertAction (save_actions_plug_point, plugged_save_actions[i]);
+	for (int i = 0; i < plugged_save_actions.size(); ++i) {
+		save_any_action->insertAction(save_actions_plug_point, plugged_save_actions[i]);
 	}
 /*
 	// debug code: prints out all current actions

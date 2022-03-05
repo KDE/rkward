@@ -96,17 +96,15 @@ void RKInput::updateColor () {
 	if (!widget) widget = textedit;
 	RK_ASSERT (widget);
 
-	QPalette palette = widget->palette ();
 	if (isEnabled ()) {
 		if (isSatisfied ()) {
-			palette.setColor (widget->backgroundRole (), QColor (255, 255, 255));
+			widget->setStyleSheet("");
 		} else {
-			palette.setColor (widget->backgroundRole (), QColor (255, 0, 0));
+			widget->setStyleSheet("background: red; color: black");
 		}
 	} else {
-		palette.setColor (widget->backgroundRole (), QColor (200, 200, 200));
+		widget->setStyleSheet("background: rgb(200, 200, 200); color: black");
 	}
-	widget->setPalette (palette);
 }
 
 void RKInput::requirednessChanged (RKComponentPropertyBase *) {

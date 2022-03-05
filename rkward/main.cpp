@@ -239,6 +239,7 @@ QString resolveRSpecOrFail (QString input, QString message) {
 
 int main (int argc, char *argv[]) {
 	RK_Debug::RK_Debug_Level = DL_WARNING;
+	QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 #ifndef NO_QT_WEBENGINE
 	// annoyingly, QWebEngineUrlSchemes have to be registered before creating the app.
 	QWebEngineUrlScheme scheme("help");
