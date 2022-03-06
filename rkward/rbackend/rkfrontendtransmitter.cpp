@@ -111,8 +111,12 @@ void RKFrontendTransmitter::run () {
 	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "/../../../rbackend");
 	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "/../Frameworks/libexec");  // For running from .dmg created by craft --package rkward
 #endif
-	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (RKWARD_BACKEND_PATH);
-	if (backend_executable.isEmpty ()) handleTransmissionError (i18n ("The backend executable could not be found. This is likely to be a problem with your installation."));
+	if (backend_executable.isEmpty()) backend_executable = findBackendAtPath(RKWARD_BACKEND_PATH);
+	if (backend_executable.isEmpty()) {
+		handleTransmissionError(i18n("The backend executable could not be found. This is likely to be a problem with your installation."));
+		exec();   // To actually show the transmission error
+		return;
+	}
 	QString debugger = RKGlobals::startup_options["backend-debugger"].toString ();
 	args.prepend (RKCommonFunctions::windowsShellScriptSafeCommand (backend_executable));
 	if (!debugger.isEmpty ()) {
@@ -135,14 +139,14 @@ void RKFrontendTransmitter::run () {
 	}
 	backend->start (qgetenv ("R_BINARY"), args, QIODevice::ReadOnly);
 
-	if (!backend->waitForStarted ()) {
-		handleTransmissionError (i18n ("The backend executable could not be started. Error message was: %1", backend->errorString ()));
+	if (!backend->waitForStarted()) {
+		handleTransmissionError(i18n("The backend executable could not be started. Error message was: %1", backend->errorString()));
+	} else {
+		waitForCanReadLine(backend, 3000);
+		token = QString::fromLocal8Bit(backend->readLine()).trimmed();
+		backend->closeReadChannel(QProcess::StandardError);
+		backend->closeReadChannel(QProcess::StandardOutput);
 	}
-
-	waitForCanReadLine (backend, 3000);
-	token = QString::fromLocal8Bit (backend->readLine ()).trimmed ();
-	backend->closeReadChannel (QProcess::StandardError);
-	backend->closeReadChannel (QProcess::StandardOutput);
 
 	exec ();
 
