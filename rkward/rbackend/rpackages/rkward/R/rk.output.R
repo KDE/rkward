@@ -130,7 +130,7 @@ Do not write anything to the target filename, directly! This is purely for infor
 "rk.import.legacy.output" <- function(filename=file.path(rk.home(), "rk_out.html"), import=TRUE, delete=FALSE) {
 	f <- filename
 	stopifnot(file.exists(f))
-	files <- rkward:::.rk.get.images.in.html.file(f)
+	files <- .rk.get.images.in.html.file(f)
 	css <- file.path(rk.home(), "rk_out.css")
 	if (file.exists(css)) files <- c(files, css)
 
@@ -141,10 +141,9 @@ Do not write anything to the target filename, directly! This is purely for infor
 
 		stopifnot(file.copy(f, file.path(wd, "index.html"), overwrite=TRUE))
 		stopifnot(all(file.copy(files, file.path(wd, basename(files)), overwrite=TRUE)))
-		wd$save(save_filename)
 		out$view()
 
-		rk.show.message("The legacy output file has been imported. If satisfied with the result, you now save it in the new format. To remove the old output file, run rk.import.legacy.output(import=FALSE,delete=TRUE)")
+		rk.show.message("The legacy output file has been imported. If satisfied with the result, you can now save it in the new format. To remove the old output file, run rk.import.legacy.output(import=FALSE,delete=TRUE)")
 	}
 
 	if (delete) {

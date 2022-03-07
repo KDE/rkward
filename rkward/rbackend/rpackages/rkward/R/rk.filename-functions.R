@@ -228,16 +228,15 @@
 			if (substring (toupper(sline), 0, 3) == "IMG") {
 				parts <- strsplit (sline, "[Ss][Rr][Cc]")[[1]]
 				if (length (parts) < 2) next
-				parts <- strsplit (parts[2], "\"")[[1]]
-				if (length (parts) < 2) next
-				files <- c (files, parts[2])
 			} else if (substring (toupper(sline), 0, 6) == "OBJECT") {
 				parts <- strsplit (sline, "[Dd][Aa][Tt][Aa]")[[1]]
 				if (length (parts) < 2) next
-				parts <- strsplit (parts[2], "\"")[[1]]
-				if (length (parts) < 2) next
-				files <- c (files, parts[2])
+			} else {
+				next
 			}
+			parts <- strsplit (parts[2], "\"")[[1]]
+			if (length (parts) < 2) next
+			files <- c (files, sub("^file://", "", parts[2]))
 		}
 	}
 	files
