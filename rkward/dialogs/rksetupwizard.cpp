@@ -25,6 +25,7 @@
 #include <QGridLayout>
 #include <QIcon>
 #include <QPushButton>
+#include <QTimer>
 
 #include <KLocalizedString>
 #include <KMessageBox>
@@ -138,9 +139,9 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 		intro += i18n("<p>The setup assistant has been invoked, automatically, because a problem has been detected in your setup.</p>");
 	}
 	l->addWidget(RKCommonFunctions::wordWrappedLabel(intro));
-	auto waiting_to_start_label = RKCommonFunctions::wordWrappedLabel(i18n("<b>Waiting for R backend...</b>") + "<p>&nbsp;</p><p>&nbsp;</p>");
+	waiting_to_start_label = RKCommonFunctions::wordWrappedLabel(i18n("<b>Waiting for R backend...</b>") + "<p>&nbsp;</p><p>&nbsp;</p>");
 	l->addWidget(waiting_to_start_label);
-	auto firstpageref = addPage (firstpage, i18n("RKWard Setup Assistant"));
+	firstpageref = addPage (firstpage, i18n("RKWard Setup Assistant"));
 	setValid(firstpageref, false);
 
 	// Basic installation page
@@ -188,16 +189,23 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 	current_layout->setRowStretch(++current_row, 1);
 	addPage(current_page, i18n("Basic installation"));
 
-	// Wait for R Interface, then start dialog
-	setWindowModality(Qt::ApplicationModal);
-	show();
-	while (!RKGlobals::rInterface()->backendIsIdle()) {
+	// Next we'll want to wait for the R backend to start up. Previous solution was to set Qt::ApplicationModal, and wait, calling processEvents().
+	// This does not seem to work well on mac, however, so instead we return, here, so exec will be called from outside, then fire a timer to finish constuction.
+	QTimer::singleShot(10, this, &RKSetupWizard::setupWizardPhase2);
+}
+
+void RKSetupWizard::setupWizardPhase2() {
+	// Wait for R Interface, then enable dialog
+	if (!RKGlobals::rInterface()->backendIsIdle()) {
 		if (RKGlobals::rInterface()->backendIsDead()) {
 			waiting_to_start_label->setText(i18n("<b>R backend has crashed. Click \"Cancel\" to exit setup assistant.</b>"));
 		} else {
-			QApplication::processEvents(QEventLoop::AllEvents, 1000);
+			QTimer::singleShot(100, this, &RKSetupWizard::setupWizardPhase2);
 		}
+		return;
 	}
+	RK_TRACE(APP);
+
 	waiting_to_start_label->setText(i18n("<b>R backend has started. Click \"Next\" to continue.</b>"));
 	setValid(firstpageref, true);
 
