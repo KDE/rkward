@@ -52,6 +52,7 @@ private:
 	QStringList software_to_install;
 	QStringList software_to_install_urls;
 	QStringList packages_to_install;
+	QStringList r_commands_to_run;
 	void createStandardPage();
 	QWidget *current_page;
 	int current_row;

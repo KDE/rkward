@@ -3,9 +3,9 @@ TODOS for autotests:
   - Use options(warn=1), in order to get warnings into the test?
 
 TODOS for output directories:
-  - migration support (existing old standard output should be converted to "default.rko"; setting, when opening workspace with no attached active output file:
+  - setting, when opening workspace with no attached active output file:
     - create new empty file
-    - open "default.rko" <- default setting?)
+    - open "default.rko" <- default setting?
 
 - Fixed: Cursor navigation in completion list
 - rkwardtests library gains helper functions for checking for expected errors

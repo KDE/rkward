@@ -26,10 +26,11 @@
 #include <QIcon>
 #include <QPushButton>
 #include <QTimer>
+#include <QFileInfo>
+#include <QStandardPaths>
 
 #include <KLocalizedString>
 #include <KMessageBox>
-#include <QStandardPaths>
 
 #include "../settings/rksettingsmoduleplugins.h"
 #include "../settings/rksettingsmodulegeneral.h"
@@ -182,6 +183,19 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 	}
 	appendItem(kateplugins);
 
+	// TODO: Remove, eventually
+	auto legacy_output = new RKSetupWizardItem(i18n("Pre 0.7.3 output file"));
+	QString legacy_output_path = RKSettingsModuleGeneral::filesPath() + "rk_out.html";
+	if (QFileInfo(legacy_output_path).exists()) {
+		legacy_output->setStatus(RKSetupWizardItem::Warning, i18n("Exists"));
+		legacy_output->setLongLabel(QString("<p>An output file from before RKWard version 0.7.3 was found (%1). You will probably want to convert this to the new format. Alternatively, if it is no longer needed, you can delete it, manually.</p>").arg(legacy_output_path));
+		legacy_output->addOption(i18n("Import"), i18n("Import to the session, so you can save in the new output format."), [](RKSetupWizard* wizard) { wizard->r_commands_to_run.append("rk.import.legacy.output()\n"); });
+		legacy_output->addOption(i18n("No action"), i18n("Ignore (and keep) the file. You can import it manually, at any time, using rk.import.legacy.output()"), [](RKSetupWizard*) {});
+	} else {
+		legacy_output->setStatus(RKSetupWizardItem::Good, i18n("Found."));
+	}
+	appendItem(legacy_output);
+
 	for (int i = 0; i < settings_items.size(); ++i) {
 		appendItem(settings_items[i]);
 	}
@@ -327,6 +341,9 @@ void RKSetupWizard::fullInteractiveCheck(InvokationReason reason, const QList<RK
 			}
 		}
 #endif
+		for(int i = 0; i < wizard->r_commands_to_run.size(); ++i) {
+			RKGlobals::rInterface()->issueCommand(wizard->r_commands_to_run[i], RCommand::App);
+		}
 	}
 
 	delete wizard;
