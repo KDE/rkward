@@ -88,9 +88,10 @@ public:
 	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
 
 	QString caption () override;
-	
+
 	static bool autoShow () { return auto_show; };
 	static bool autoRaise () { return auto_raise; };
+	static bool sharedDefaultOutput() { return shared_default_output; };
 public slots:
 	void boxChanged ();
 private:
@@ -102,6 +103,7 @@ private:
 	QSpinBox *graphics_jpg_quality_box;
 	RKCarbonCopySettings *cc_settings;
 	GetFileNameWidget *custom_css_file_box;
+	QCheckBox* shared_default_output_box;
 
 	static bool auto_show;
 	static bool auto_raise;
@@ -110,6 +112,7 @@ private:
 	static int graphics_height;
 	static int graphics_jpg_quality;
 	static QString custom_css_file;
+	static RKConfigValue<bool> shared_default_output;
 };
 
 #endif

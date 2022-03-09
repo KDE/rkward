@@ -25,6 +25,7 @@
 #include <KMessageBox>
 
 #include "../settings/rksettingsmodulegeneral.h"
+#include "../settings/rksettingsmoduleoutput.h"
 #include "../rbackend/rcommand.h"
 #include "../rbackend/rkrinterface.h"
 #include "../windows/rkmdiwindow.h"
@@ -46,11 +47,11 @@ void listDirectoryState(const QString& _dir, QString *list, const QString prefix
 	for (int i = 0; i < entries.size(); ++i) {
 		const QFileInfo fi = entries[i];
 		if (fi.isDir()) {
-			listDirectoryState(fi.absolutePath (), list, prefix + '/' + fi.fileName());
+			listDirectoryState(fi.absolutePath(), list, prefix + '/' + fi.fileName());
 		} else {
-			list->append(fi.fileName () + '\t');
-			list->append(fi.lastModified ().toString ("dd.hh.mm.ss.zzz") + '\t');
-			list->append(QString::number (fi.size()) + '\n');
+			list->append(fi.fileName() + '\t');
+			list->append(fi.lastModified().toString("dd.hh.mm.ss.zzz") + '\t');
+			list->append(QString::number(fi.size()) + '\n');
 		}
 	}
 }
@@ -339,7 +340,7 @@ QString RKOutputDirectory::caption() const {
 GenericRRequestResult RKOutputDirectory::purge(RKOutputDirectory::OverwriteBehavior discard, RCommandChain* chain, bool activate_other) {
 	RK_TRACE(APP);
 
-	if (isModifiedAccurate()) {
+	if ((discard != Force) && isModifiedAccurate()) {
 		if (discard == Fail) {
 			return GenericRRequestResult::makeError(i18n("Output has been modified. Not closing it."));
 		}
@@ -422,6 +423,16 @@ RKOutputDirectoryCallResult RKOutputDirectory::getCurrentOutput(RCommandChain* c
 
 	RKOutputDirectoryCallResult ret;
 	if (outputs.isEmpty()) {
+		if (RKSettingsModuleOutput::sharedDefaultOutput()) {
+			QString filename = RKSettingsModuleGeneral::filesPath() + "default.rko";
+			auto ret = get(filename, !QFileInfo(filename).exists(), chain);
+			if (ret.dir()) {
+				ret.dir()->activate(chain);
+				return ret;
+			}
+			// otherwise: fallthrough to below, just in case
+		}
+
 		auto n = createOutputDirectoryInternal();
 		n->activate(chain);
 		ret.addMessages(GenericRRequestResult(QVariant(), i18n("New empty output directory has been created, automatically")));
@@ -505,29 +516,34 @@ RKOutputDirectoryCallResult RKOutputDirectory::get(const QString &_filename, boo
 		QFileInfo fi(_filename);
 		bool file_exists = fi.exists();
 		QString filename = file_exists ? fi.canonicalFilePath() : _filename;
-		RKOutputDirectory *dir = file_exists ? findOutputBySaveUrl(filename) : nullptr;
+		RKOutputDirectory *dir = findOutputBySaveUrl(filename);
 		// NOTE: annoyingly QFileInfo::canonicalFilePath() returns an empty string, if the file does not exist
 		if (create) {
 			if (dir) return GenericRRequestResult::makeError(i18n("Output '1%' is already loaded in this session. Cannot create it.", filename));
 			if (file_exists) return GenericRRequestResult::makeError(i18n("A file named '%1' already exists. Cannot create it.", filename));
 
-			// NOTE: This is a bit of an unusual case: Creating a fresh output with save file name already specified. To avoid issues (esp. around canonicalFilePath()), we make sure to actually save the new output, right away (much like "touch"), instead of only setting the save file name for later usage
-			ret.setDir(createOutputDirectoryInternal());
-			ret.addMessages(dir->save(filename));  // NOTE: save() takes care of normalizing
+			// NOTE: This may seem a bit of an unusual case: Creating a fresh output with save file name already specified.
+			// However, this actually happens, when using a shared default output file.
+			// To avoid issues (esp. around canonicalFilePath()), we make sure to initialize and save the new output, right away (much like "touch"), instead of only setting the save file name for later usage
+			ret.setDir(dir = createOutputDirectoryInternal());
+			dir->save_filename = filename;
+			// this is a bit cumbersome. TODO: create a dedicated function to init an output.
+			RCommand *command = new RCommand(QStringLiteral("local({o <- rk.output(); n <- rk.output(\"") + RKCommonFunctions::escape(filename) + QStringLiteral("\"); n$activate(); n$save(); try(o$activate(), silent=TRUE); o$save() })\n"), RCommand::App);
+			RKGlobals::rInterface()->issueCommand(command, chain);
 		} else {
-			if (!file_exists) return GenericRRequestResult::makeError(i18n("File '%1' does not exist.", filename));
+			if (!(file_exists || dir)) return GenericRRequestResult::makeError(i18n("File '%1' does not exist.", filename));
 
-			ret.setDir(findOutputBySaveUrl(filename));
-			if (!ret.dir()) {
-				auto dir = createOutputDirectoryInternal();
+			if (dir) {
+				ret.setDir(dir);
+			} else {
+				dir = createOutputDirectoryInternal();
 				ret.addMessages(dir->import(filename));
 				if (ret.failed()) {
-					dir->purge(Force);
+					dir->purge(Force, chain, false);
 				} else {
 					ret.setDir(dir);
 				}
 			}
-			// else we have already set the loaded dir as ret.dir()
 		}
 	}
 	return ret;

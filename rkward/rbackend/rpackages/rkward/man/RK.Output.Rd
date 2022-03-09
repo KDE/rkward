@@ -34,8 +34,8 @@ to overwrite/discard existing files/modifications will result in an error. If \c
 \item{raise}{Raise the output window, if it is already visble.}
 }
 \description{
-Since version 0.7.5, RKWard supports more than one piece of output. While dealing with only a single output page, there will be no need for the user to call any of
-             these functions, directly, as exactly one output is always opened for writing in RKWard (unless rk.set.output.html.file() has been called, explicitly).
+Since version 0.7.3, RKWard supports more than one output document. While dealing with only a single output page, there will be no need for the user to call any of
+             the following functions, directly, as exactly one output is always opened for writing in RKWard (unless rk.set.output.html.file() has been called, explicitly).
              However, these functions allow to manage several distinct output pages, programmatically.
 
              The primary entry point is the function \code{rk.output}, which allows to retrieve the current output directly, or to load or create a new one. This will return
