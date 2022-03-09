@@ -117,23 +117,22 @@
 ".rk.do.error" <- function () {
 # comment in R sources says, it may not be good to query options during error handling. But what can we do, if R_ShowErrorMessages is not longer exported?
 	if (getOption ("show.error.messages")) {
-		.Call ("rk.do.error", c (geterrmessage ()), PACKAGE="(embedding)");
+		.rk.do.simple.call ("error", geterrmessage ())
 	}
 }
 
-#' @export
-".rk.set.reply" <- function (x) .rk.variables$.rk.rkreply <- x
-
-#' @export
 ".rk.do.call" <- function (x, args=NULL) {
-	.rk.set.reply (NULL)
-	.Call ("rk.do.command", c (x, args), PACKAGE="(embedding)");
-	return (.rk.variables$.rk.rkreply)
+	x <- .Call ("rk.do.command", c (x, args), PACKAGE="(embedding)");
+	if (is.null(x)) invisible(NULL)
+	else x
 }
 
-#' @export
 ".rk.do.plain.call" <- function (x, args=NULL, synchronous=TRUE) {
 	.Call ("rk.do.generic.request", c (x, args), isTRUE (synchronous), PACKAGE="(embedding)")
+}
+
+".rk.do.simple.call" <- function (x, args=NULL) {
+	.Call ("rk.simple", c (x, args), PACKAGE="(embedding)")
 }
 
 #' @export
@@ -225,7 +224,6 @@
 # these functions can be used to track assignments to R objects. The main interfaces are .rk.watch.symbol (k) and .rk.unwatch.symbol (k). This works by copying the symbol to a local environment, removing it, and replacing it by an active binding to the backup location
 ".rk.watched.symbols" <- new.env ()
 
-#' @export
 ".rk.make.watch.f" <- function (k) {
 	# we need to make sure, the functions we use are *not* looked up as symbols in .GlobalEnv.
 	# else, for instance, if the user names a symbol "missing", and we try to resolve it in the
@@ -338,30 +336,6 @@
 	slotnames <- methods::slotNames (class (x))
 	ret <- lapply (slotnames, function (slotname) slot (x, slotname))
 	names (ret) <- slotnames
-	ret
-}
-
-#' @export
-".rk.get.environment.children" <- function (x, envlevel=0, namespacename=NULL) {
-	ret <- list ()
-
-	if (envlevel < 2) {		# prevent infinite recursion
-		lst <- ls (x, all.names=TRUE)
-		if (is.null (namespacename)) {
-			for (childname in lst) {
-				ret[[childname]] <- .rk.get.structure (name=childname, envlevel=envlevel, envir=x)
-			}
-		} else {
-			# for R 2.4.0 or greater: operator "::" works if package has no namespace at all, or has a namespace with the symbol in it
-			ns <- tryCatch (asNamespace (namespacename), error = function(e) NULL)
-			for (childname in lst) {
-				misplaced <- FALSE
-				if ((!is.null (ns)) && (!exists (childname, envir=ns, inherits=FALSE))) misplaced <- TRUE
-				ret[[childname]] <- .rk.get.structure (name=childname, envlevel=envlevel, misplaced=misplaced, envir=x)
-			}
-		}
-	}
-
 	ret
 }
 

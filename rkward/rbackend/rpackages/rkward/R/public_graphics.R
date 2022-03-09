@@ -50,7 +50,7 @@
 			paste ("file:///", filename, sep="")
 		} else if (substr (filename, 1, 1) == "/") {
 			paste ("file://", filename, sep="")
-		} else { # relative path: return unchanged. NOTE that this will currently happen during automated tesing, only. Usually rk.get.tempfile.name() always returns absolute paths.
+		} else { # The common case: a relative path. Return unchanged.
 			filename
 		}
 	}
@@ -65,7 +65,7 @@
 	if (device.type == "PNG") {
 		filename <- rk.get.tempfile.name(prefix = "graph", extension = ".png")
 		ret <- png(filename = file.path(filename), width = width, height = height, ...)
-		.rk.cat.output(paste("<img src=\"", make.url (filename), "\" width=\"", width,
+		.rk.cat.output(paste("<img src=\"", make.url (names (filename)), "\" width=\"", width,
 			"\" height=\"", height, "\"><br>", sep = ""))
 	} else if (device.type == "JPG") {
 		if (missing (quality)) {
@@ -74,7 +74,7 @@
 		}
 		filename <- rk.get.tempfile.name(prefix = "graph", extension = ".jpg")
 		ret <- jpeg(filename = file.path(filename), width = width, height = height, "quality"=quality, ...)
-		.rk.cat.output(paste("<img src=\"", make.url (filename), "\" width=\"", width,
+		.rk.cat.output(paste("<img src=\"", make.url (names (filename)), "\" width=\"", width,
 			"\" height=\"", height, "\"><br>", sep = ""))
 	} else if (device.type == "SVG") {
 		if (!capabilities ("cairo")) {	# cairo support is not always compiled in
@@ -83,9 +83,9 @@
 		}
 		filename <- rk.get.tempfile.name(prefix = "graph", extension = ".svg")
 		ret <- svg(filename = file.path(filename), ...)
-		.rk.cat.output(paste("<object data=\"", make.url (filename), "\" type=\"image/svg+xml\" width=\"", width,
+		.rk.cat.output(paste("<object data=\"", make.url (names (filename)), "\" type=\"image/svg+xml\" width=\"", width,
 			"\" height=\"", height, "\">\n", sep = ""))
-		.rk.cat.output(paste("<param name=\"src\" value=\"", make.url (filename), "\">\n", sep = ""))
+		.rk.cat.output(paste("<param name=\"src\" value=\"", make.url (names (filename)), "\">\n", sep = ""))
 		.rk.cat.output(paste("This browser appears incapable of displaying SVG object. The SVG source is at:", filename))
 		.rk.cat.output("</object>")
 	} else {

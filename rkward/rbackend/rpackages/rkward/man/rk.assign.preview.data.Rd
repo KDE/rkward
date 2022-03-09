@@ -42,7 +42,7 @@ code, such as removing temporary files, etc.}
 ## NOT RUN
 pdata &lt;- rk.get.preview.data("SOMEID")
 if (is.null (pdata)) {
-  outfile &lt;- rk.get.tempfile.name(prefix="preview", extension=".txt")
+  outfile &lt;- rk.get.tempfile.name(prefix="preview", extension=".txt", directory=rk.tempdir ())
   pdata &lt;- list(filename=outfile, on.delete=function (id) {
     unlink(rk.get.preview.data(id)$filename)
   })

@@ -2,7 +2,7 @@
                           rkmdiwindow  -  description
                              -------------------
     begin                : Tue Sep 26 2006
-    copyright            : (C) 2006 - 2020 by Thomas Friedrichsmeier
+    copyright            : (C) 2006 - 2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -26,6 +26,7 @@
 #include <QVBoxLayout>
 
 #include <kparts/partactivateevent.h>
+#include <kparts/readwritepart.h>
 #include <kxmlguifactory.h>
 #include <kactioncollection.h>
 #include <KLocalizedString>
@@ -74,6 +75,8 @@ RKMDIWindow::RKMDIWindow (QWidget *parent, int type, bool tool_window, const cha
 	status_popup = nullptr;
 	status_popup_container = nullptr;
 	ui_buddy = nullptr;
+	file_save_action = nullptr;
+	file_save_as_action = nullptr;
 
 	if (!(type & KatePluginWindow)) setWindowIcon (RKStandardIcons::iconForWindow (this));
 }
@@ -159,7 +162,7 @@ void RKMDIWindow::activate (bool with_focus) {
 	}
 }
 
-bool RKMDIWindow::close (bool also_delete) {
+bool RKMDIWindow::close (CloseWindowMode ask_save) {
 	RK_TRACE (APP);
 
 	if (isToolWindow ()) {
@@ -176,27 +179,24 @@ bool RKMDIWindow::close (bool also_delete) {
 
 		if (tool_window_bar) tool_window_bar->hideWidget (this);
 		else hide ();
+
 		return true;
 	}
 
-	if (also_delete) {
-		bool closed = QWidget::close ();
-		if (closed) {
-			// WORKAROUND for https://bugs.kde.org/show_bug.cgi?id=170806
-			// NOTE: can't move this to the d'tor, since the part is already partially deleted, then
-			// TODO: use version check / remove once fixed in kdelibs
-			if (part && part->factory ()) {
-				part->factory ()->removeClient (part);
-			}
-			// WORKAROUND end
+	bool ok_to_close = (ask_save == NoAskSaveModified) || QWidget::close ();
+	if (!ok_to_close) return false;
 
-			delete this;	// Note: using deleteLater(), here does not work well while restoring workplaces (window is not fully removed from workplace before restoring)
-		}
-		return closed;
-	} else {
-		RK_ASSERT (!testAttribute (Qt::WA_DeleteOnClose));
-		return QWidget::close ();
+	// WORKAROUND for https://bugs.kde.org/show_bug.cgi?id=170806
+	// NOTE: can't move this to the d'tor, since the part is already partially deleted, then
+	// TODO: use version check / remove once fixed in kdelibs
+	if (part && part->factory ()) {
+		part->factory ()->removeClient (part);
 	}
+	// WORKAROUND end
+
+	delete this;	// Note: using deleteLater(), here does not work well while restoring workplaces (window is not fully removed from workplace before restoring)
+
+	return true;
 }
 
 void RKMDIWindow::prepareToBeAttached () {

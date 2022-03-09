@@ -22,6 +22,7 @@
 		package <- as.character(substitute(package))
 	}
 	if (!suppressWarnings(base::require(as.character(package), quietly = quietly, character.only = TRUE, ...))) {
+		if (missing (package)) stop ("No package name given")
 		.rk.do.call("require", as.character(package))
 		invisible(base::require(as.character(package), quietly = TRUE, character.only = TRUE, ...))
 	} else {
@@ -35,8 +36,7 @@
 "q" <- function (save = "default", status = 0, runLast = TRUE, ...) {
 	# test if this is running in RKWard, otherwise pass through to the actual q()
 	if (isTRUE(.rk.inside.rkward.session())){
-		res <- .rk.do.plain.call ("quit")
-		if (length (res) && (res == "FALSE")) stop ("Quitting was cancelled")
+		.rk.do.plain.call ("quit")
 	} else {
 		base:::q(save = save, status = status, runLast = runLast)
 	}
@@ -52,8 +52,7 @@
 #' @export
 "Sys.setlocale" <- function (category = "LC_ALL", locale = "", ...) {
 	if (category == "LC_ALL" || category == "LC_CTYPE" || category == "LANG") {
-		allow <- .rk.do.plain.call ("preLocaleChange", NULL)
-		if (length (allow) && (allow == "FALSE")) stop ("Changing the locale was cancelled by user")
+		 .rk.do.plain.call ("preLocaleChange", NULL)
 
 		ret <- base::Sys.setlocale (category, locale, ...)
 

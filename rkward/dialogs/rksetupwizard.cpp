@@ -25,10 +25,12 @@
 #include <QGridLayout>
 #include <QIcon>
 #include <QPushButton>
+#include <QTimer>
+#include <QFileInfo>
+#include <QStandardPaths>
 
 #include <KLocalizedString>
 #include <KMessageBox>
-#include <QStandardPaths>
 
 #include "../settings/rksettingsmoduleplugins.h"
 #include "../settings/rksettingsmodulegeneral.h"
@@ -138,9 +140,9 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 		intro += i18n("<p>The setup assistant has been invoked, automatically, because a problem has been detected in your setup.</p>");
 	}
 	l->addWidget(RKCommonFunctions::wordWrappedLabel(intro));
-	auto waiting_to_start_label = RKCommonFunctions::wordWrappedLabel(i18n("<b>Waiting for R backend...</b>") + "<p>&nbsp;</p><p>&nbsp;</p>");
+	waiting_to_start_label = RKCommonFunctions::wordWrappedLabel(i18n("<b>Waiting for R backend...</b>") + "<p>&nbsp;</p><p>&nbsp;</p>");
 	l->addWidget(waiting_to_start_label);
-	auto firstpageref = addPage (firstpage, i18n("RKWard Setup Assistant"));
+	firstpageref = addPage (firstpage, i18n("RKWard Setup Assistant"));
 	setValid(firstpageref, false);
 
 	// Basic installation page
@@ -181,6 +183,19 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 	}
 	appendItem(kateplugins);
 
+	// TODO: Remove, eventually
+	auto legacy_output = new RKSetupWizardItem(i18n("Pre 0.7.3 output file"));
+	QString legacy_output_path = RKSettingsModuleGeneral::filesPath() + "rk_out.html";
+	if (QFileInfo(legacy_output_path).exists()) {
+		legacy_output->setStatus(RKSetupWizardItem::Warning, i18n("Exists"));
+		legacy_output->setLongLabel(QString("<p>An output file from before RKWard version 0.7.3 was found (%1). You will probably want to convert this to the new format. Alternatively, if it is no longer needed, you can delete it, manually.</p>").arg(legacy_output_path));
+		legacy_output->addOption(i18n("Import"), i18n("Import to the session, so you can save in the new output format."), [](RKSetupWizard* wizard) { wizard->r_commands_to_run.append("rk.import.legacy.output()\n"); });
+		legacy_output->addOption(i18n("No action"), i18n("Ignore (and keep) the file. You can import it manually, at any time, using rk.import.legacy.output()"), [](RKSetupWizard*) {});
+	} else {
+		legacy_output->setStatus(RKSetupWizardItem::Good, i18n("Found."));
+	}
+	appendItem(legacy_output);
+
 	for (int i = 0; i < settings_items.size(); ++i) {
 		appendItem(settings_items[i]);
 	}
@@ -188,16 +203,23 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 	current_layout->setRowStretch(++current_row, 1);
 	addPage(current_page, i18n("Basic installation"));
 
-	// Wait for R Interface, then start dialog
-	setWindowModality(Qt::ApplicationModal);
-	show();
-	while (!RKGlobals::rInterface()->backendIsIdle()) {
+	// Next we'll want to wait for the R backend to start up. Previous solution was to set Qt::ApplicationModal, and wait, calling processEvents().
+	// This does not seem to work well on mac, however, so instead we return, here, so exec will be called from outside, then fire a timer to finish constuction.
+	QTimer::singleShot(10, this, &RKSetupWizard::setupWizardPhase2);
+}
+
+void RKSetupWizard::setupWizardPhase2() {
+	// Wait for R Interface, then enable dialog
+	if (!RKGlobals::rInterface()->backendIsIdle()) {
 		if (RKGlobals::rInterface()->backendIsDead()) {
 			waiting_to_start_label->setText(i18n("<b>R backend has crashed. Click \"Cancel\" to exit setup assistant.</b>"));
 		} else {
-			QApplication::processEvents(QEventLoop::AllEvents, 1000);
+			QTimer::singleShot(100, this, &RKSetupWizard::setupWizardPhase2);
 		}
+		return;
 	}
+	RK_TRACE(APP);
+
 	waiting_to_start_label->setText(i18n("<b>R backend has started. Click \"Next\" to continue.</b>"));
 	setValid(firstpageref, true);
 
@@ -319,6 +341,9 @@ void RKSetupWizard::fullInteractiveCheck(InvokationReason reason, const QList<RK
 			}
 		}
 #endif
+		for(int i = 0; i < wizard->r_commands_to_run.size(); ++i) {
+			RKGlobals::rInterface()->issueCommand(wizard->r_commands_to_run[i], RCommand::App);
+		}
 	}
 
 	delete wizard;

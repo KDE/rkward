@@ -2,7 +2,7 @@
                           rkrbackend  -  description
                              -------------------
     begin                : Sun Jul 25 2004
-    copyright            : (C) 2004 - 2019 by Thomas Friedrichsmeier
+    copyright            : (C) 2004 - 2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -899,7 +899,7 @@ extern "C" int R_interrupts_pending;
 #else
 LibExtern int R_interrupts_pending;
 #endif
-SEXP doError (SEXP call) {
+void doError (QString callstring) {
 	RK_TRACE (RBACKEND);
 
 	if ((RKRBackend::repl_status.eval_depth == 0) && (!RKRBackend::repl_status.browser_context) && (!RKRBackend::this_pointer->isKilled ()) && (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::ReplIterationKilled) && (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::NoUserCommand)) {
@@ -917,11 +917,9 @@ SEXP doError (SEXP call) {
 			}
 		}
 	} else if (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::ReplIterationKilled) {
-		QString string = RKRSupport::SEXPToString (call);
-		RKRBackend::this_pointer->handleOutput (string, string.length (), ROutput::Error);
-		RK_DEBUG (RBACKEND, DL_DEBUG, "error '%s'", qPrintable (string));
+		RKRBackend::this_pointer->handleOutput (callstring, callstring.length (), ROutput::Error);
+		RK_DEBUG (RBACKEND, DL_DEBUG, "error '%s'", qPrintable (callstring));
 	}
-	return R_NilValue;
 }
 
 SEXP doWs (SEXP name) {
@@ -948,9 +946,11 @@ SEXP doSubstackCall (SEXP call) {
 	} */
 
 
-	RKRBackend::this_pointer->handleHistoricalSubstackRequest (list);
+	auto ret = RKRBackend::this_pointer->handleRequestWithSubcommands(list);
+	if (!ret.warning.isEmpty()) Rf_warning(RKRBackend::fromUtf8(ret.warning));  // print warnings, first, as errors will cause a stop
+	if (!ret.error.isEmpty()) Rf_error(RKRBackend::fromUtf8(ret.error));
 
-	return R_NilValue;
+	return RKRSupport::QVariantToSEXP(ret.ret);
 }
 
 SEXP doPlainGenericRequest (SEXP call, SEXP synchronous) {
@@ -958,8 +958,49 @@ SEXP doPlainGenericRequest (SEXP call, SEXP synchronous) {
 
 	R_CheckUserInterrupt ();
 
-	QStringList ret = RKRBackend::this_pointer->handlePlainGenericRequest (RKRSupport::SEXPToStringList (call), RKRSupport::SEXPToInt (synchronous));
-	return RKRSupport::StringListToSEXP (ret);
+	auto ret = RKRBackend::this_pointer->handlePlainGenericRequest(RKRSupport::SEXPToStringList(call), RKRSupport::SEXPToInt(synchronous));
+	if (!ret.warning.isEmpty()) Rf_warning(RKRBackend::fromUtf8(ret.warning));  // print warnings, first, as errors will cause a stop
+	if (!ret.error.isEmpty()) Rf_error(RKRBackend::fromUtf8(ret.error));
+
+	return RKRSupport::QVariantToSEXP(ret.ret);
+}
+
+// Function to handle several simple calls from R code, that do not need any special arguments, or interaction with the frontend process.
+SEXP doSimpleBackendCall (SEXP _call) {
+	RK_TRACE (RBACKEND);
+
+	QStringList list = RKRSupport::SEXPToStringList (_call);
+	QString call = list[0];
+
+	if (call == QStringLiteral ("unused.filename")) {
+		QString prefix = list.value (1);
+		QString extension = list.value (2);
+		QString dirs = list.value (3);
+		QDir  dir (dirs);
+		if (dirs.isEmpty ()) {
+			dir = QDir (RKRBackendProtocolBackend::dataDir ());
+		}
+
+		int i = 0;
+		while (true) {
+			QString candidate = prefix + QString::number (i) + extension;
+			if (!dir.exists (candidate)) {
+				return (RKRSupport::StringListToSEXP (QStringList (candidate) << dir.absoluteFilePath (candidate))); // return as c (relpath, abspath)
+			}
+			i++;
+		}
+	} else if (call == QStringLiteral ("error")) {  // capture error message
+		doError (list.value (1));
+		return R_NilValue;
+	} else if (call == QStringLiteral ("locale.name")) {
+		RK_ASSERT (QTextCodec::codecForLocale());
+		return (RKRSupport::StringListToSEXP (QStringList (QTextCodec::codecForLocale()->name ().data ())));
+	} else if (call == QStringLiteral ("tempdir")) {
+		return (RKRSupport::StringListToSEXP (QStringList (RKRBackendProtocolBackend::dataDir ())));
+	}
+
+	RK_ASSERT (false);  // Unhandled call.
+	return R_NilValue;
 }
 
 void R_CheckStackWrapper (void *) {
@@ -981,18 +1022,6 @@ SEXP doUpdateLocale () {
 	RK_DEBUG (RBACKEND, DL_WARNING, "New locale codec is %s", QTextCodec::codecForLocale ()->name ().data ());
 
 	return R_NilValue;
-}
-
-// returns the MIME-name of the current locale encoding (from Qt)
-SEXP doLocaleName () {
-	RK_TRACE (RBACKEND);
-
-	RK_ASSERT (QTextCodec::codecForLocale());
-	SEXP res = Rf_allocVector(STRSXP, 1);
-	PROTECT (res);
-	SET_STRING_ELT (res, 0, Rf_mkChar (QTextCodec::codecForLocale()->name ().data ()));
-	UNPROTECT (1);
-	return res;
 }
 
 SEXP doGetStructure (SEXP toplevel, SEXP name, SEXP envlevel, SEXP namespacename) {
@@ -1116,7 +1145,7 @@ bool RKRBackend::startR () {
 	R_CallMethodDef callMethods [] = {
 		// NOTE: Intermediate cast to void* to avoid compiler warning
 		{ "ws", (DL_FUNC) (void*) &doWs, 1 },
-		{ "rk.do.error", (DL_FUNC) (void*) &doError, 1 },
+		{ "rk.simple", (DL_FUNC) (void*) &doSimpleBackendCall, 1},
 		{ "rk.do.command", (DL_FUNC) (void*) &doSubstackCall, 1 },
 		{ "rk.do.generic.request", (DL_FUNC) (void*) &doPlainGenericRequest, 2 },
 		{ "rk.get.structure", (DL_FUNC) (void*) &doGetStructure, 4 },
@@ -1126,7 +1155,6 @@ bool RKRBackend::startR () {
 		{ "rk.show.files", (DL_FUNC) (void*) &doShowFiles, 5 },
 		{ "rk.dialog", (DL_FUNC) (void*) &doDialog, 7 },
 		{ "rk.update.locale", (DL_FUNC) (void*) &doUpdateLocale, 0 },
-		{ "rk.locale.name", (DL_FUNC) (void*) &doLocaleName, 0 },
 		{ "rk.capture.output", (DL_FUNC) (void*) &doCaptureOutput, 5 },
 		{ "rk.graphics.device", (DL_FUNC) (void*) &RKStartGraphicsDevice, 7},
 		{ "rk.graphics.device.resize", (DL_FUNC) (void*) &RKD_AdjustSize, 1},
@@ -1467,7 +1495,7 @@ void RKRBackend::printCommand (const QString &command) {
 
 	QStringList params ("highlightRCode");
 	params.append (command);
-	QString highlighted = handlePlainGenericRequest (params, true).value (0);
+	QString highlighted = handlePlainGenericRequest(params, true).ret.toString();
 	catToOutputFile (highlighted);
 }
 
@@ -1534,14 +1562,25 @@ void RKRBackend::commandFinished (bool check_object_updates_needed) {
 	}
 }
 
-RCommandProxy* RKRBackend::handleRequest (RBackendRequest *request, bool mayHandleSubstack) {
+RCommandProxy* RKRBackend::handleRequest(RBackendRequest *request, bool mayHandleSubstack) {
 	RK_TRACE (RBACKEND);
 	RK_ASSERT (request);
 
-	RKRBackendProtocolBackend::instance ()->sendRequest (request);
+	// Seed docs for RBackendRequest for hints to make sense of this mess (and eventually to fix it)
+
+	RKRBackendProtocolBackend::instance ()->sendRequest(request);
+	if (request->subcommandrequest) {
+		handleRequest2(request->subcommandrequest, true);
+	}
+	return handleRequest2(request, mayHandleSubstack);
+}
+
+RCommandProxy * RKRBackend::handleRequest2(RBackendRequest* request, bool mayHandleSubstack) {
+	RK_TRACE(RBACKEND);
 
 	if ((!request->synchronous) && (!isKilled ())) {
-		RK_ASSERT (mayHandleSubstack);	// i.e. not called from fetchNextCommand
+		RK_ASSERT(mayHandleSubstack);	// i.e. not called from fetchNextCommand
+		RK_ASSERT(!request->subcommandrequest);
 		return 0;
 	}
 
@@ -1600,20 +1639,23 @@ RCommandProxy* RKRBackend::fetchNextCommand () {
 	return (handleRequest (&req, false));
 }
 
-void RKRBackend::handleHistoricalSubstackRequest (const QStringList &list) {
+GenericRRequestResult RKRBackend::handleRequestWithSubcommands(const QStringList &list) {
 	RK_TRACE (RBACKEND);
 
-	RBackendRequest request (true, RBackendRequest::HistoricalSubstackRequest);
+	RBackendRequest request(true, RBackendRequest::GenericRequestWithSubcommands);
 	request.params["call"] = list;
 	request.command = current_command;
-	handleRequest (&request);
+	request.subcommandrequest = new RBackendRequest(true, RBackendRequest::OtherRequest);
+	handleRequest(&request);
+	delete request.subcommandrequest;
+	return request.getResult();
 }
 
 QString getLibLoc() {
 	return RKRBackendProtocolBackend::dataDir () + "/.rkward_packages/" + QString::number (RKRBackend::this_pointer->r_version / 10);
 }
 
-QStringList RKRBackend::handlePlainGenericRequest (const QStringList &parameters, bool synchronous) {
+GenericRRequestResult RKRBackend::handlePlainGenericRequest (const QStringList &parameters, bool synchronous) {
 	RK_TRACE (RBACKEND);
 
 	RBackendRequest request (synchronous, RBackendRequest::PlainGenericRequest);
@@ -1627,19 +1669,17 @@ QStringList RKRBackend::handlePlainGenericRequest (const QStringList &parameters
 		output_file = parameters.value (1);
 		if (parameters.length () > 2) {
 			RK_ASSERT (parameters.value (2) == "SILENT");
-			return QStringList ();		// For automated testing and previews. The frontend should not be notified, here
+			return GenericRRequestResult();  // For automated testing and previews. The frontend should not be notified, here
 		}
 		request.params["call"] = parameters;
 	} else if (parameters.value(0) == "home") {
-		QStringList ret;
-		if (parameters.value(1) == "home") ret << RKRBackendProtocolBackend::dataDir();
-		else if (parameters.value(1) == "lib") ret << getLibLoc();
-		return ret;
+		if (parameters.value(1) == "home") return GenericRRequestResult(RKRBackendProtocolBackend::dataDir());
+		else if (parameters.value(1) == "lib") return GenericRRequestResult(getLibLoc());
 	} else {
 		request.params["call"] = parameters;
 	}
 	handleRequest (&request);
-	return request.params.value ("return").toStringList ();
+	return request.getResult();
 }
 
 void RKRBackend::initialize (const QString &locale_dir) {
@@ -1740,12 +1780,12 @@ void RKRBackend::checkObjectUpdatesNeeded (bool check_list) {
 			dummy = runDirectCommand ("loadedNamespaces ()\n", RCommand::GetStringVector);
 			call.append (dummy->stringVector ());
 			delete dummy;
-			handleHistoricalSubstackRequest (call);
+			handleRequestWithSubcommands (call);
 		} 
 		if (globalenv_update_needed) {
 			QStringList call = global_env_toplevel_names;
 			call.prepend ("syncglobal");	// should be faster than the reverse
-			handleHistoricalSubstackRequest (call);
+			handleRequestWithSubcommands (call);
 		}
 	}
 
@@ -1757,7 +1797,7 @@ void RKRBackend::checkObjectUpdatesNeeded (bool check_list) {
 	if (!changed_symbol_names.isEmpty ()) {
 		QStringList call = changed_symbol_names;
 		call.prepend (QString ("sync"));	// should be faster than reverse
-		handleHistoricalSubstackRequest (call);
+		handleRequestWithSubcommands (call);
 		changed_symbol_names.clear ();
 	}
 }

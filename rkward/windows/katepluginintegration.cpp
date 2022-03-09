@@ -489,7 +489,7 @@ bool KatePluginIntegrationWindow::hideToolView(QWidget* widget) {
 	RK_TRACE (APP);
 
 	RKMDIWindow *w = qobject_cast<RKMDIWindow*>(widget);
-	if (w) w->close(false);
+	if (w) w->close(RKMDIWindow::NoAskSaveModified);
 	else {
 		RK_ASSERT(w);
 		widget->hide();

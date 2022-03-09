@@ -2,7 +2,7 @@
                           rwindowcatcher.cpp  -  description
                              -------------------
     begin                : Wed May 4 2005
-    copyright            : (C) 2005 - 2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2005 - 2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -202,7 +202,7 @@ void RKWindowCatcher::killDevice (int device_number) {
 	RKCaughtX11Window* window = RKCaughtX11Window::getWindow (device_number);
 	if (window) {
 		window->setKilledInR ();
-		window->close (true);
+		window->close (RKMDIWindow::AutoAskSaveModified);
 		QApplication::sync ();
 	}
 }
@@ -289,7 +289,6 @@ RKCaughtX11Window::RKCaughtX11Window (RKGraphicsDevice* rkward_device, int devic
 void RKCaughtX11Window::commonInit (int device_number) {
 	RK_TRACE (MISC);
 
-	in_destructor = false;
 	capture = 0;
 	embedded = 0;
 	embedding_complete = false;
@@ -357,10 +356,30 @@ RKCaughtX11Window::~RKCaughtX11Window () {
 	RK_ASSERT (device_windows.contains (device_number));
 	device_windows.remove (device_number);
 
-	in_destructor = true;
-	close (false);
+	commonClose(true);
+
 	if (embedded) RKWindowCatcher::instance ()->unregisterWatcher (embedded->winId ());
 	error_dialog->autoDeleteWhenDone ();
+}
+
+void RKCaughtX11Window::commonClose(bool in_destructor) {
+	RK_TRACE(MISC);
+
+	if (rk_native_device) rk_native_device->stopInteraction();
+
+	QString status = i18n("Closing device (saving history)");
+	if (!close_attempted) {
+		RCommand* c = new RCommand("dev.off (" + QString::number(device_number) + ')', RCommand::App, i18n("Shutting down device number %1", device_number));
+		if (!in_destructor) setStatusMessage(status, c);
+		RKGlobals::rInterface()->issueCommand(c);
+		close_attempted = true;
+	} else {
+		if (KMessageBox::questionYesNo(this, i18n("<p>The graphics device is being closed, saving the last plot to the plot history. This may take a while, if the R backend is still busy. You can close the graphics device immediately, in case it is stuck. However, the last plot may be missing from the plot history, if you do this.</p>")
+#if !defined Q_OS_WIN
+		+ i18n("<p>Note: On X11, the embedded window may be expurged, and you will have to close it manually in this case.</p>")
+#endif
+		, status, KGuiItem(i18n("Close immediately")), KGuiItem(i18n("Keep waiting"))) == KMessageBox::Yes) forceClose();
+	}
 }
 
 void RKCaughtX11Window::setWindowStyleHint (const QString& hint) {
@@ -374,40 +393,25 @@ void RKCaughtX11Window::setWindowStyleHint (const QString& hint) {
 	RKMDIWindow::setWindowStyleHint (hint);
 }
 
-void RKCaughtX11Window::forceClose () {
+void RKCaughtX11Window::forceClose() {
 	killed_in_r = true;
 	if (embedded) {
 		// HACK: Somehow (R 3.0.0alpha), the X11() window is surprisingly die-hard, if it is not closed "the regular way".
 		// So we expurge it, and leave the rest to the user.
-		embedded->setParent (0);
-		qApp->processEvents ();
+		embedded->setParent(0);
+		qApp->processEvents();
 	}
-	RKMDIWindow::close (true);
+	RKMDIWindow::close(NoAskSaveModified);
 }
 
-bool RKCaughtX11Window::close (bool also_delete) {
-	RK_TRACE (MISC);
+bool RKCaughtX11Window::close(CloseWindowMode ask_save) {
+	RK_TRACE(MISC);
 
-	if (killed_in_r || RKGlobals::rInterface ()->backendIsDead ()) {
-		return RKMDIWindow::close (also_delete);
+	if (killed_in_r || RKGlobals::rInterface()->backendIsDead()) {
+		return RKMDIWindow::close(ask_save);
 	}
 
-	if (rk_native_device) rk_native_device->stopInteraction ();
-
-	QString status = i18n ("Closing device (saving history)");
-	if (!close_attempted) {
-		RCommand* c = new RCommand ("dev.off (" + QString::number (device_number) + ')', RCommand::App, i18n ("Shutting down device number %1", device_number));
-		if (!in_destructor) setStatusMessage (status, c);
-		RKGlobals::rInterface ()->issueCommand (c);
-		close_attempted = true;
-	} else {
-		if (KMessageBox::questionYesNo (this, i18n ("<p>The graphics device is being closed, saving the last plot to the plot history. This may take a while, if the R backend is still busy. You can close the graphics device immediately, in case it is stuck. However, the last plot may be missing from the plot history, if you do this.</p>")
-#if !defined Q_OS_WIN
-		+ i18n ("<p>Note: On X11, the embedded window may be expurged, and you will have to close it manually in this case.</p>")
-#endif
-		, status, KGuiItem (i18n ("Close immediately")), KGuiItem (i18n ("Keep waiting"))) == KMessageBox::Yes) forceClose ();
-	}
-
+	commonClose(false);
 	return false;
 }
 

@@ -104,13 +104,13 @@ public:
 @returns a pointer to the RCommandProxy-instance that was created and used, internally. You can query this pointer for status and data. Be sure to delete it, when done. */
 	RCommandProxy *runDirectCommand (const QString &command, RCommand::CommandTypes datatype); 
 
-	void handleRequest (RBackendRequest *request) { handleRequest (request, true); };
+	void handleRequest(RBackendRequest *request) { handleRequest (request, true); };
 /** A relic of history. In contrast to handlePlainGenericRequest(), these requests support running sub-commands. However, the remaining requests which are currently handled this way
 should probably be converted to dedicated RKRBackendRequest's in the future. See also handlePlainGenericRequest(). */
-	void handleHistoricalSubstackRequest (const QStringList &list);
-/** Sends a request to the frontend and returns the result (an empty QStringList in case of asynchronous requests). Note that this function has considerable overlap with
+	GenericRRequestResult handleRequestWithSubcommands(const QStringList &list);
+/** Sends a request to the frontend and returns the result (empty in case of asynchronous requests). Note that this function has considerable overlap with
 handleHistoricalSubstackRequest(). Exactly which requests get handled by which function is somewhat arbitrary, ATM. However, request that do not need sub-commands to be run, should generally be converted to use handlePlainGenericRequest(). (And probably all historicalSubstackRequests should be replaced!) */
-	QStringList handlePlainGenericRequest (const QStringList &parameters, bool synchronous);
+	GenericRRequestResult handlePlainGenericRequest(const QStringList &parameters, bool synchronous);
 	RCommandProxy* fetchNextCommand ();
 
 /** The command currently being executed. */
@@ -205,7 +205,8 @@ handleHistoricalSubstackRequest(). Exactly which requests get handled by which f
 private:
 	void clearPendingInterrupt ();
 protected:
-	RCommandProxy* handleRequest (RBackendRequest *request, bool mayHandleSubstack);
+	RCommandProxy* handleRequest(RBackendRequest *request, bool mayHandleSubstack);
+	RCommandProxy* handleRequest2(RBackendRequest *request, bool mayHandleSubstack);
 private:
 	int stdout_stderr_fd;
 /** set up R standard callbacks */

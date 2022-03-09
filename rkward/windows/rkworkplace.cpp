@@ -45,6 +45,7 @@
 #include "../core/robjectlist.h"
 #include "../dataeditor/rkeditor.h"
 #include "../dataeditor/rkeditordataframe.h"
+#include "../dialogs/rksavemodifieddialog.h"
 #include "../robjectviewer.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../settings/rksettingsmodulecommandeditor.h"
@@ -52,6 +53,7 @@
 #include "../windows/rkwindowcatcher.h"
 #include "../rbackend/rcommand.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkoutputdirectory.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
 
@@ -422,9 +424,14 @@ bool RKWorkplace::openAnyUrl (const QUrl &url, const QString &known_mimetype, bo
 			openHelpWindow (url, true);
 			return true;	// TODO
 		}
-		if (url.fileName ().toLower ().endsWith (QLatin1String (".rdata")) || url.fileName ().toLower ().endsWith (QLatin1String (".rda"))) {
-			RKWardMainWindow::getMain ()->askOpenWorkspace (url);
+		QString lname = url.fileName().toLower();
+		if (lname.endsWith(QLatin1String(".rdata")) || lname.endsWith(QLatin1String(".rda"))) {
+			RKWardMainWindow::getMain()->askOpenWorkspace(url);
 			return true;	// TODO
+		}
+		if (lname.endsWith(".rko")) {
+			auto win = openOutputWindow(url, false);
+			return win != nullptr;
 		}
 		if (mimetype.inherits ("text/plain")) {
 			return (openScriptEditor (url, QString ()));
@@ -505,20 +512,35 @@ RKMDIWindow* RKWorkplace::openHelpWindow (const QUrl &url, bool only_once) {
 	return (hw);
 }
 
-RKMDIWindow* RKWorkplace::openOutputWindow (const QUrl &url) {
+RKMDIWindow* RKWorkplace::openHTMLWindow(const QUrl &url) {
 	RK_TRACE (APP);
 
-	QList<RKHTMLWindow*> owins = RKOutputWindowManager::self ()->existingOutputWindows ();
-	for (int i = 0; i < owins.size (); ++i) {
-		if (view ()->windowInActivePane (owins[i])) {
-			owins[i]->activate ();
-			return (owins[i]);
-		}
-	}
+	// special treatment, for now
+	return openHelpWindow(url, true);
+}
 
-	RKHTMLWindow* ret = RKOutputWindowManager::self ()->newOutputWindow ();
-	addWindow (ret);
-	return (ret);
+RKMDIWindow* RKWorkplace::openOutputWindow(const QUrl &url, bool create) {
+	RK_TRACE (APP);
+
+	if (create) RK_ASSERT(url.isEmpty());
+
+	RKOutputDirectoryCallResult res = RKOutputDirectory::get(url.toLocalFile(), create);
+	if (res.failed()) {
+		KMessageBox::sorry(this, i18n("Failed to open output file. Error message was '%1'", res.error));
+		return nullptr;
+	}
+	RK_ASSERT(res.dir());
+	return res.dir()->getOrCreateView(true); // Will call openNewOutputWindow(), unless a view alredy exists
+}
+
+RKMDIWindow* RKWorkplace::openNewOutputWindow(RKOutputDirectory* dir) {
+	RK_TRACE (APP);
+
+	RKHTMLWindow* win = new RKHTMLWindow(view(), RKHTMLWindow::HTMLOutputWindow);
+	win->openURL(QUrl::fromLocalFile(dir->workPath()));
+	RK_ASSERT(win->url().toLocalFile() == dir->workPath());
+	addWindow(win);
+	return win;
 }
 
 void RKWorkplace::newX11Window (QWindow* window_to_embed, int device_number) {
@@ -632,12 +654,12 @@ void RKWorkplace::flushAllData () {
 	}
 }
 
-bool RKWorkplace::closeWindow (RKMDIWindow *window) {
+bool RKWorkplace::closeWindow (RKMDIWindow *window, RKMDIWindow::CloseWindowMode ask_save) {
 	RK_TRACE (APP);
 	RK_ASSERT (windows.contains (window));
 
 	bool tool_window = window->isToolWindow ();
-	bool closed = window->close (true);		// all the rest should happen in removeWindow ()
+	bool closed = window->close (ask_save);		// all the rest should happen in removeWindow ()
 
 	if (closed && tool_window) windowRemoved ();	// for regular windows, this happens in removeWindow(), already
 	return closed;
@@ -662,22 +684,34 @@ RKWorkplace::RKWorkplaceObjectList RKWorkplace::getObjectList (int type, int sta
 	return ret;
 }
 
-void RKWorkplace::closeAll (int type, int state) {
-	RK_TRACE (APP);
+bool RKWorkplace::closeAll(int type, int state) {
+	RK_TRACE(APP);
 
-	closeWindows (getObjectList (type, state));
+	return closeWindows(getObjectList(type, state));
 }
 
-bool RKWorkplace::closeWindows (QList<RKMDIWindow*> windows) {
-	RK_TRACE (APP);
+bool RKWorkplace::closeWindows(QList<RKMDIWindow*> windows, RKMDIWindow::CloseWindowMode ask_save) {
+	RK_TRACE(APP);
 
-	bool allclosed = true;
-	RKWardMainWindow::getMain ()->lockGUIRebuild (true);
-	for (int i = windows.size () - 1; i >= 0; --i) {
-		if (!closeWindow (windows[i])) allclosed = false;
+	RKWardMainWindow::getMain()->lockGUIRebuild(true);
+
+	bool ok = (ask_save == RKMDIWindow::NoAskSaveModified) || RKSaveModifiedDialog::askSaveModified(this, windows, false);
+	if (ok) {
+		for (int i = windows.size() - 1; i >= 0; --i) {
+			RK_ASSERT(closeWindow(windows[i], RKMDIWindow::NoAskSaveModified));
+		}
 	}
-	RKWardMainWindow::getMain ()->lockGUIRebuild (false);
-	return allclosed;
+	RKWardMainWindow::getMain()->lockGUIRebuild(false);
+	return ok;
+}
+
+bool RKWorkplace::closeWorkspace() {
+	RK_TRACE(APP);
+
+	bool ok = RKSaveModifiedDialog::askSaveModified(this, windows, true);
+	if (!ok) return false;
+	RKOutputDirectory::purgeAllNoAsk();
+	return closeWindows(windows, RKMDIWindow::NoAskSaveModified);
 }
 
 void RKWorkplace::removeWindow (QObject *object) {
@@ -793,8 +827,16 @@ QString RKWorkplace::makeItemDescription (RKMDIWindow *win) const {
 		specification = static_cast<RKCommandEditorWindow*> (win)->url ().url ();
 		if (specification.isEmpty ()) specification = static_cast<RKCommandEditorWindow*> (win)->id ();
 	} else if (win->isType (RKMDIWindow::OutputWindow)) {
-		type = "output";
-		specification = static_cast<RKHTMLWindow*> (win)->url ().url ();
+		RKOutputDirectory *dir = RKOutputDirectory::findOutputByWindow(win);
+		if (dir) {
+			type = "rkoutput";
+			specification = QUrl::fromLocalFile(dir->filename()).url();
+			if (dir->isActive()) type.append(QStringLiteral(".active"));
+		} else {
+			// legacy support for rk.set.html.output.file()
+			type = "output";
+			specification = static_cast<RKHTMLWindow*> (win)->url ().url ();
+		}
 	} else if (win->isType (RKMDIWindow::HelpWindow)) {
 		type = "help";
 		specification = static_cast<RKHTMLWindow*> (win)->restorableUrl ().url ();
@@ -859,7 +901,7 @@ ItemSpecification parseItemDescription (const QString &description) {
 RKMDIWindow* restoreDocumentWindowInternal (RKWorkplace* wp, ItemSpecification spec, const QString &base) {
 	RK_TRACE (APP);
 
-	RKMDIWindow *win = 0;
+	RKMDIWindow *win = nullptr;
 	if (spec.type == "data") {
 		RObject *object = RObjectList::getObjectList ()->findObject (spec.specification);
 		if (object) win = wp->editObject (object);
@@ -867,7 +909,12 @@ RKMDIWindow* restoreDocumentWindowInternal (RKWorkplace* wp, ItemSpecification s
 		QUrl url = checkAdjustRestoredUrl (spec.specification, base);
 		win = wp->openScriptEditor (url, QString ());
 	} else if (spec.type == "output") {
-		win = wp->openOutputWindow (checkAdjustRestoredUrl (spec.specification, base));
+		win = wp->openOutputWindow (checkAdjustRestoredUrl(spec.specification, base));
+	} else if (spec.type.startsWith("rkoutput")) {
+		RKOutputDirectory *dir = RKOutputDirectory::get(checkAdjustRestoredUrl(spec.specification, base).toLocalFile(), false).dir();
+		if (!dir) return nullptr;
+		if (spec.type.endsWith(".active")) dir->activate();
+		win = RKWorkplace::mainWorkplace()->openOutputWindow(QUrl::fromLocalFile(dir->workPath()));
 	} else if (spec.type == "help") {
 		win = wp->openHelpWindow (checkAdjustRestoredUrl (spec.specification, base), true);
 	} else if (spec.type == "object") {
@@ -910,13 +957,15 @@ QStringList RKWorkplace::makeWorkplaceDescription () {
 	return workplace_description;
 }
 
-void RKWorkplace::saveWorkplace (RCommandChain *chain) {
+void RKWorkplace::saveWorkplace(const QUrl& for_url, RCommandChain *chain) {
 	RK_TRACE (APP);
 // TODO: This is still a mess. All workplace-related settings, including the workspaceConfig(), should be saved to a single place, and in 
 // standard KConfig format.
-	if (RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace) return;
+	if (RKSettingsModuleGeneral::workplaceSaveMode() != RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace) return;
 
-	RKGlobals::rInterface ()->issueCommand ("rk.save.workplace(description=" + RObject::rQuote (makeWorkplaceDescription().join ("\n")) + ')', RCommand::App, i18n ("Save Workplace layout"), 0, 0, chain);
+	QString file_param;
+	if (!for_url.isEmpty()) file_param = QString("file=") + RObject::rQuote(for_url.toLocalFile() + QStringLiteral(".rkworkplace")) + QStringLiteral(", ");
+	RKGlobals::rInterface()->issueCommand("rk.save.workplace(" + file_param + "description=" + RObject::rQuote (makeWorkplaceDescription().join ("\n")) + ')', RCommand::App, i18n ("Save Workplace layout"), 0, 0, chain);
 }
 
 void RKWorkplace::restoreWorkplace (RCommandChain *chain, bool merge) {

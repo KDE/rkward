@@ -8,6 +8,7 @@ SET(dialogs_STAT_SRCS
    rkselectlistdialog.cpp
    rkrecoverdialog.cpp
    rkerrordialog.cpp
+   rksavemodifieddialog.cpp
    rksetupwizard.cpp
    )
 

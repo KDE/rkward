@@ -35,7 +35,7 @@ public:
 	static RKDebugConsole *instance () { return _instance; };
 
 	// reimplemented to refuse closing while inside the debugger
-	bool close (bool auto_delete) override;
+	bool close (CloseWindowMode ask_save) override;
 public slots:
 	void newDebugState ();
 private slots:

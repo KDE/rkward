@@ -27,6 +27,7 @@
 
 #include "../rkglobals.h"
 #include "../core/robjectlist.h"
+#include "../misc/rkoutputdirectory.h"
 #include "../rbackend/rkrinterface.h"
 #include "../rkward.h"
 #include "../windows/rkworkplace.h"
@@ -62,7 +63,6 @@ RKLoadAgent::RKLoadAgent (const QUrl &url, bool merge) {
 	RCommand *command;
 	
 	if (!merge) {
-		RKWardMainWindow::getMain ()->slotCloseAllWindows ();
 		command = new RCommand ("remove (list=ls (all.names=TRUE))", RCommand::App | RCommand::ObjectListUpdate);
 		RKGlobals::rInterface ()->issueCommand (command);
 	}
@@ -91,12 +91,13 @@ void RKLoadAgent::rCommandDone (RCommand *command) {
 					RKGlobals::rInterface ()->issueCommand ("setwd (" + RObject::rQuote (RKWorkplace::mainWorkplace ()->workspaceURL ().adjusted (QUrl::RemoveFilename).path ()) + ')', RCommand::App);
 				}
 			}
-			RKGlobals::rInterface ()->issueCommand (QString (), RCommand::EmptyCommand | RCommand::App, QString (), this, WORKSPACE_LOAD_COMPLETE_COMMAND);
 		}
+		RKGlobals::rInterface()->issueCommand(QString(), RCommand::EmptyCommand | RCommand::App, QString(), this, WORKSPACE_LOAD_COMPLETE_COMMAND);
 		RKWardMainWindow::getMain ()->setCaption (QString ());	// trigger update of caption
 	} else if (command->getFlags () == WORKSPACE_LOAD_COMPLETE_COMMAND) {
 		RKWardMainWindow::getMain ()->slotSetStatusReady ();
 		RKWardMainWindow::getMain ()->setWorkspaceMightBeModified (false);
+		RKOutputDirectory::getCurrentOutput();  // make sure some output file exists
 
 		delete this;
 		return;

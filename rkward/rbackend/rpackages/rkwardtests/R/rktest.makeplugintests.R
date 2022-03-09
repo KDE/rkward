@@ -1,5 +1,6 @@
 #' Run a whole RKWard plugin test suite
 #'
+#' @description
 #' The function \code{rktest.makeplugintests} will run a whole test suite that was prepared to check one or several RKWard plugins.
 #' 
 #' @title Run RKWard plugin test suite

@@ -177,6 +177,7 @@ namespace RKCommonFunctions {
 		if (rkward_data_dir.isNull ()) {
 			QString inside_build_tree = QCoreApplication::applicationDirPath() + "/rkwardinstall/";
 			if (QFileInfo(inside_build_tree).isReadable()) {
+				RK_DEBUG(APP, DL_INFO, "Running from inside build tree");
 				rkward_data_dir = inside_build_tree;
 				return rkward_data_dir;
 			}
@@ -197,19 +198,6 @@ namespace RKCommonFunctions {
 			RK_DEBUG(APP, DL_WARNING, "resource.ver not found. Data path(s): %s", qPrintable (QStandardPaths::standardLocations (QStandardPaths::AppDataLocation).join (':')));
 		}
 		return rkward_data_dir;
-	}
-
-	QString getUseableRKWardSavefileName (const QString &prefix, const QString &postfix) {
-		QDir dir (RKSettingsModuleGeneral::filesPath ());
-
-		int i=0;
-		while (true) {
-			QString candidate = prefix + QString::number (i) + postfix;
-			if (!dir.exists (candidate)) {
-				return dir.filePath (candidate);
-			}
-			i++;
-		}
 	}
 
 	QString escape (const QString &in) {

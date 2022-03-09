@@ -2,7 +2,7 @@
                           rkcommandeditorwindow  -  description
                              -------------------
     begin                : Mon Aug 30 2004
-    copyright            : (C) 2004-2020 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -306,6 +306,7 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 
 	discardPreview ();
 	delete m_view;
+	m_doc->waitSaveComplete ();
 	QList<KTextEditor::View*> views = m_doc->views ();
 	if (views.isEmpty ()) {
 		if (visible_to_kateplugins) {
@@ -411,10 +412,10 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	actionmenu_preview->addAction (action_preview_as_you_type);
 	ac->addAction ("render_preview", actionmenu_preview);
 
-	file_save = findAction (m_view, "file_save");
-	if (file_save) file_save->setText (i18n ("Save Script..."));
-	file_save_as = findAction (m_view, "file_save_as");
-	if (file_save_as) file_save_as->setText (i18n ("Save Script As..."));
+	file_save_action = findAction (m_view, "file_save");
+	if (file_save_action) file_save_action->setText (i18n ("Save Script..."));
+	file_save_as_action = findAction (m_view, "file_save_as");
+	if (file_save_as_action) file_save_as_action->setText (i18n ("Save Script As..."));
 }
 
 void RKCommandEditorWindow::initBlocks () {
@@ -690,7 +691,12 @@ QUrl RKCommandEditorWindow::url () const {
 
 bool RKCommandEditorWindow::isModified () {
 	RK_TRACE (COMMANDEDITOR);
-	return m_doc->isModified();
+	return m_doc->isModified ();
+}
+
+bool RKCommandEditorWindow::save () {
+	RK_TRACE (COMMANDEDITOR);
+	return m_doc->documentSave ();
 }
 
 void RKCommandEditorWindow::insertText (const QString &text) {

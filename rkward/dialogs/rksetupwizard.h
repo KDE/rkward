@@ -45,9 +45,14 @@ public:
 	void markSoftwareForInstallation(const QString &name, const QString &download_url, bool install);
 	void markRPackageForInstallation(const QString &name, bool install);
 private:
+	void setupWizardPhase2();
+	KPageWidgetItem* firstpageref;
+	QLabel* waiting_to_start_label;
+
 	QStringList software_to_install;
 	QStringList software_to_install_urls;
 	QStringList packages_to_install;
+	QStringList r_commands_to_run;
 	void createStandardPage();
 	QWidget *current_page;
 	int current_row;

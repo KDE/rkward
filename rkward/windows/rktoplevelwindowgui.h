@@ -2,7 +2,7 @@
                           rktoplevelwindowgui  -  description
                              -------------------
     begin                : Tue Apr 24 2007
-    copyright            : (C) 2007-2020 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -26,6 +26,7 @@ class KXmlGuiWindow;
 class RKMDIWindow;
 class QAction;
 class KHelpMenu;
+class QMenu;
 
 /** represents the common portions of the GUI for top level windows: The help menu, and the windows menu */
 class RKTopLevelWindowGUI : public QObject, public KXMLGUIClient {
@@ -40,8 +41,9 @@ public slots:
 	void showHelpSearch ();
 	/** Activate the current (non tools) window in the workspace */
 	void activateDocumentView ();
-	/** ensure output window is shown. */
-	void slotOutputShow ();
+	/** Show an output window */
+	void slotOutputShow(QAction *action);
+	void populateOutputWindowsMenu();
 
 	// help menu
 	/** Show the starting page of RKWard help */
@@ -72,6 +74,7 @@ private:
 	QAction *next_action;
 	void toggleToolView (RKMDIWindow *tool_window);
 	KHelpMenu *help_menu_dummy;
+	QMenu* output_windows_menu;
 };
 
 #endif

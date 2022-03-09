@@ -2,7 +2,7 @@
                           rkward.cpp  -  description
                              -------------------
     begin                : Tue Oct 29 20:06:08 CET 2002
-    copyright            : (C) 2002-2020 by Thomas Friedrichsmeier
+    copyright            : (C) 2002-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -71,6 +71,7 @@
 #include "dialogs/rkimportdialog.h"
 #include "dialogs/rkrecoverdialog.h"
 #include "dialogs/rksetupwizard.h"
+#include "dialogs/rksavemodifieddialog.h"
 #include "agents/rksaveagent.h"
 #include "agents/rkloadagent.h"
 #include "agents/rkquitagent.h"
@@ -266,7 +267,8 @@ void RKWardMainWindow::doPostInit () {
 	} else {
 		StartupDialog::StartupDialogResult result = StartupDialog::getStartupAction (this, fileOpenRecentWorkspace);
 		if (!result.open_url.isEmpty ()) {
-			openWorkspace (result.open_url);
+			// setNoAskSave(true); was called earlier
+			askOpenWorkspace(result.open_url);
 		} else {
 			if (result.result == StartupDialog::ChoseFile) {
 				askOpenWorkspace (QUrl());
@@ -494,14 +496,22 @@ void RKWardMainWindow::initActions() {
 	new_command_editor->setText (i18n ("Script File"));
 	new_command_editor->setIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowCommandEditor));
 
-	fileOpen = actionCollection ()->addAction (KStandardAction::Open, "file_openy", this, SLOT(slotOpenCommandEditor()));
-	fileOpen->setText (i18n ("Open R Script File..."));
+	new_output = actionCollection ()->addAction("new_output", this, SLOT(slotNewOutput()));
+	new_output->setText(i18n("Output document"));
+	new_output->setIcon(RKStandardIcons::getIcon(RKStandardIcons::WindowOutput));
+	new_output->setStatusTip(i18n("Creates and activates a new output docuemnt"));
+
+	fileOpenScript = actionCollection()->addAction(KStandardAction::Open, "file_open_script", this, SLOT(slotOpenCommandEditor()));
+	actionCollection()->setDefaultShortcut(fileOpenScript, Qt::ControlModifier + Qt::AltModifier + Qt::Key_O);
+	fileOpenScript->setText(i18n("Open R Script File..."));
+
+	fileOpenOutput = actionCollection()->addAction(KStandardAction::Open, "file_open_output", this, SLOT(slotOpenOutput()));
+	actionCollection()->setDefaultShortcut(fileOpenOutput, QKeySequence());
+	fileOpenOutput->setText(i18n("Open RKWard Output File..."));
 
 	QAction *file_open_any = actionCollection ()->addAction (KStandardAction::Open, "file_open_any");
 	connect (file_open_any, &QAction::triggered, this, &RKWardMainWindow::openAnyFile);
-
 	file_open_any->setText (i18n ("Open any File..."));
-	actionCollection ()->setDefaultShortcut (file_open_any, Qt::ControlModifier + Qt::AltModifier + Qt::Key_O);
 
 	fileOpenRecent = static_cast<KRecentFilesAction*> (actionCollection ()->addAction (KStandardAction::OpenRecent, "file_open_recenty", this, SLOT(slotOpenCommandEditor(QUrl))));
 	fileOpenRecent->setText (i18n ("Open Recent R Script File"));
@@ -596,7 +606,9 @@ void RKWardMainWindow::initActions() {
 	open_any_action->addAction (fileOpenWorkspace);
 	open_any_action->addAction (fileOpenRecentWorkspace);
 	open_any_action->addSeparator ();
-	open_any_action->addAction (fileOpen);
+	open_any_action->addAction (fileOpenScript);
+	open_any_action->addAction (fileOpenOutput);
+	open_any_action->addSeparator ();
 	open_any_action->addAction (fileOpenRecent);
 	open_any_action->addAction (file_open_any);
 	open_any_action->addSeparator ();
@@ -608,6 +620,7 @@ void RKWardMainWindow::initActions() {
 
 	new_any_action->addAction (new_data_frame);
 	new_any_action->addAction (new_command_editor);
+	new_any_action->addAction (new_output);
 
 	save_any_action = new KActionMenu (QIcon::fromTheme("document-save"), i18n ("Save..."), this);
 	save_any_action->setDelayed (false);
@@ -680,13 +693,13 @@ void RKWardMainWindow::partChanged(KParts::Part *part) {
 		QAction* a = plugged_save_actions[i].data();
 		if (a) save_any_action->removeAction(a);
 	}
-	plugged_save_actions.clear();
+	plugged_save_actions.clear ();
 
-	if (w && (w->isType(RKMDIWindow::CommandEditorWindow))) {
-		QAction *a = static_cast<RKCommandEditorWindow*>(w)->fileSaveAction();
-		if (a) plugged_save_actions.append(a);
-		a = static_cast<RKCommandEditorWindow*>(w)->fileSaveAsAction();
-		if (a) plugged_save_actions.append(a);
+	if (w) {
+		QAction *a = w->fileSaveAction ();
+		if (a) plugged_save_actions.append (a);
+		a = w->fileSaveAsAction ();
+		if (a) plugged_save_actions.append (a);
 	}
 	for (int i = 0; i < plugged_save_actions.size(); ++i) {
 		save_any_action->insertAction(save_actions_plug_point, plugged_save_actions[i]);
@@ -735,13 +748,6 @@ void RKWardMainWindow::initStatusBar () {
 
 	statusBar ()->addPermanentWidget (box, 0);
 	setRStatus (RInterface::Starting);
-}
-
-void RKWardMainWindow::openWorkspace (const QUrl &url) {
-	RK_TRACE (APP);
-	if (url.isEmpty ()) return;
-
-	new RKLoadAgent (url, merge_loads);
 }
 
 void RKWardMainWindow::saveOptions () {
@@ -795,33 +801,13 @@ bool RKWardMainWindow::doQueryQuit () {
 
 	slotSetStatusBarText (i18n ("Exiting..."));
 	saveOptions ();
+	// TODO: This may not be correct, some urls may still change while closing Workspace (due to save as)!
 	if (RKSettingsModuleGeneral::workplaceSaveMode () == RKSettingsModuleGeneral::SaveWorkplaceWithSession) {
 		RKSettingsModuleGeneral::setSavedWorkplace (RKWorkplace::mainWorkplace ()->makeWorkplaceDescription ().join ("\n"), KSharedConfig::openConfig ().data ());
 	}
-
-//	if (!RObjectList::getGlobalEnv ()->isEmpty ()) {
-	int res;
-	res = KMessageBox::questionYesNoCancel (this, i18n ("Quitting RKWard: Do you want to save the workspace?"), i18n ("Save Workspace?"), KStandardGuiItem::save (), KStandardGuiItem::discard (), KGuiItem (i18n ("Do Not Quit")));
-	if (res == KMessageBox::Yes) {
-		new RKSaveAgent (RKWorkplace::mainWorkplace ()->workspaceURL (), false, RKSaveAgent::DoNothing);
-	} else if (res == KMessageBox::Cancel) {
+	if (!RKWorkplace::mainWorkplace()->closeWorkspace()) {
 		slotSetStatusReady ();
 		return false;
-	}
-//	}
-
-	RKWorkplace::RKWorkplaceObjectList map = RKWorkplace::mainWorkplace ()->getObjectList ();
-	for (RKWorkplace::RKWorkplaceObjectList::const_iterator it = map.constBegin (); it != map.constEnd (); ++it) {
-		lockGUIRebuild (true);
-		if (!(*it)->close (true)) {
-			if (!(*it)->isType (RKMDIWindow::X11Window)) {	// X11 windows have a delayed close
-				// If a child refuses to close, we return false.
-				slotSetStatusReady ();
-				lockGUIRebuild (false);
-				return false;
-			}
-		}
-		gui_rebuild_locked = false; // like lockGUIRebuild (false), but does not trigger an immediate rebuild, as we are about to leave, anyway.
 	}
 
 	return true;
@@ -839,28 +825,20 @@ void RKWardMainWindow::slotNewDataFrame () {
 void RKWardMainWindow::askOpenWorkspace (const QUrl &url) {
 	RK_TRACE (APP);
 
-	if (!no_ask_save && ((!RObjectList::getGlobalEnv ()->isEmpty () && workspace_modified) || !RKGlobals::rInterface ()->backendIsIdle ())) {
-		int res;
-		res = KMessageBox::questionYesNoCancel (this, i18n ("Do you want to save the current workspace?"), i18n ("Save Workspace?"));
-		if (res == KMessageBox::Yes) {
-			new RKSaveAgent (RKWorkplace::mainWorkplace ()->workspaceURL (), false, RKSaveAgent::Load, url);
-		} else if (res != KMessageBox::No) { // Cancel
-			return;
-		}
+	if (!no_ask_save && !merge_loads) {
+		if (!RKWorkplace::mainWorkplace()->closeWorkspace()) return;
 	}
-
-	slotCloseAllEditors ();
 
 	slotSetStatusBarText(i18n("Opening workspace..."));
 	QUrl lurl = url;
 	if (lurl.isEmpty ()) {
-		lurl = QFileDialog::getOpenFileUrl (this, i18n("Select workspace to open..."), RKSettingsModuleGeneral::lastUsedUrlFor ("workspaces"), i18n ("R Workspace Files [%1](%1);;All files [*](*)", RKSettingsModuleGeneral::workspaceFilenameFilter ()));
+		lurl = QFileDialog::getOpenFileUrl(this, i18n("Select workspace to open..."), RKSettingsModuleGeneral::lastUsedUrlFor("workspaces"), i18n("R Workspace Files [%1](%1);;All files [*](*)", RKSettingsModuleGeneral::workspaceFilenameFilter()));
 	}
 	if (!lurl.isEmpty ()) {
-		RKSettingsModuleGeneral::updateLastUsedUrl ("workspaces", lurl.adjusted (QUrl::RemoveFilename));
-		openWorkspace (lurl);
+		RKSettingsModuleGeneral::updateLastUsedUrl("workspaces", lurl.adjusted(QUrl::RemoveFilename));
+		new RKLoadAgent (url, merge_loads);
 	}
-	slotSetStatusReady ();
+	slotSetStatusReady();
 }
 
 void RKWardMainWindow::slotFileOpenWorkspace () {
@@ -876,12 +854,12 @@ void RKWardMainWindow::slotFileLoadLibs () {
 
 void RKWardMainWindow::slotFileSaveWorkspace () {
 	RK_TRACE (APP);
-	new RKSaveAgent (RKWorkplace::mainWorkplace ()->workspaceURL ());
+	RKSaveAgent::saveWorkspace();
 }
 
 void RKWardMainWindow::slotFileSaveWorkspaceAs () {
 	RK_TRACE (APP);
-	new RKSaveAgent (RKWorkplace::mainWorkplace ()->workspaceURL (), true);
+	RKSaveAgent::saveWorkspaceAs();
 }
 
 void RKWardMainWindow::addWorkspaceUrl (const QUrl &url) {
@@ -1016,9 +994,22 @@ void RKWardMainWindow::openAnyFile () {
 		RKWorkplace::mainWorkplace ()->openScriptEditor (url, QString (), RKCommandEditorFlags::DefaultFlags | RKCommandEditorFlags::ForceRHighlighting);
 		RKSettingsModuleGeneral::updateLastUsedUrl ("rscripts", url.adjusted (QUrl::RemoveFilename));
 	} else if (mode == 3) {
-		openWorkspace (url);
+		askOpenWorkspace(url);
 		RKSettingsModuleGeneral::updateLastUsedUrl ("workspaces", url.adjusted (QUrl::RemoveFilename));
 	}
+}
+
+void RKWardMainWindow::slotNewOutput() {
+	RK_TRACE (APP);
+
+	RKWorkplace::mainWorkplace()->openOutputWindow(QUrl(), true);
+}
+
+void RKWardMainWindow::slotOpenOutput() {
+	RK_TRACE (APP);
+
+	QUrl url = QFileDialog::getOpenFileUrl(this, i18n("Select RKWard Output file to open..."), RKSettingsModuleGeneral::lastUsedUrlFor("output"), i18n("RKWard Output Files [*.rko](*.rko);;All files [*](*)"));
+	RKWorkplace::mainWorkplace()->openOutputWindow(url);
 }
 
 void RKWardMainWindow::slotOpenCommandEditor (const QUrl &url, const QString &encoding) {

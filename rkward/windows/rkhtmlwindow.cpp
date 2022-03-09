@@ -2,7 +2,7 @@
                           rkhtmlwindow  -  description
                              -------------------
     begin                : Wed Oct 12 2005
-    copyright            : (C) 2005-2020 by Thomas Friedrichsmeier
+    copyright            : (C) 2005-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -34,6 +34,7 @@
 #include <QHostInfo>
 #include <QPrintDialog>
 #include <QMenu>
+#include <QFileDialog>
 #include <QTextCodec>
 #include <QFontDatabase>
 #include <QTemporaryFile>
@@ -60,6 +61,7 @@
 #include "../misc/rkprogresscontrol.h"
 #include "../misc/rkmessagecatalog.h"
 #include "../misc/rkfindbar.h"
+#include "../misc/rkoutputdirectory.h"
 #include "../plugin/rkcomponentmap.h"
 #include "../windows/rkworkplace.h"
 #include "../windows/rkworkplaceview.h"
@@ -432,10 +434,34 @@ void RKHTMLWindow::slotPrint () {
 	delete dlg;
 }
 
-void RKHTMLWindow::slotSave () {
-	RK_TRACE (APP);
+void RKHTMLWindow::slotExport() {
+	RK_TRACE(APP);
 
-	page->downloadUrl (page->url ());
+	page->downloadUrl(page->url());
+}
+
+void RKHTMLWindow::slotSave() {
+	RK_TRACE(APP);
+	RK_ASSERT(dir);
+	dir->save(dir->filename());
+}
+
+void RKHTMLWindow::slotSaveAs() {
+	RK_TRACE (APP);
+	RK_ASSERT(dir);
+	dir->save();
+}
+
+void RKHTMLWindow::slotRevert() {
+	RK_TRACE (APP);
+	RK_ASSERT(dir);
+	dir->revert();
+}
+
+void RKHTMLWindow::slotActivate() {
+	RK_TRACE (APP);
+	RK_ASSERT(dir);
+	dir->activate();
 }
 
 void RKHTMLWindow::openLocationFromHistory (VisitedLocation &loc) {
@@ -558,6 +584,11 @@ bool RKHTMLWindow::openURL (const QUrl &url) {
 
 			current_url = url;	// needs to be set before registering
 			RKOutputWindowManager::self ()->registerWindow (this);
+			dir = RKOutputDirectory::findOutputByWorkPath(url.toLocalFile());
+			part->setOutputDirectoryActionsEnabled(dir != nullptr);
+			if (dir) {
+				connect(dir, &RKOutputDirectory::stateChange, this, &RKHTMLWindow::updateState);
+			}
 		}
 	}
 
@@ -602,10 +633,6 @@ bool RKHTMLWindow::openURL (const QUrl &url) {
 
 	RKWorkplace::mainWorkplace ()->openAnyUrl (url, QString (), page->supportsContentType (mtype.name ()));	// NOTE: text/html type urls, which we have not handled, above, are forced to be opened externally, to avoid recursion. E.g. help:// protocol urls.
 	return true;
-}
-
-QUrl RKHTMLWindow::url () {
-	return current_url;
 }
 
 void RKHTMLWindow::mimeTypeJobFail (KJob* job) {
@@ -686,10 +713,31 @@ void RKHTMLWindow::changeURL (const QUrl &url) {
 	}
 }
 
+void RKHTMLWindow::updateState(){
+	updateCaption(current_url);
+}
+
 void RKHTMLWindow::updateCaption (const QUrl &url) {
 	RK_TRACE (APP);
 
-	if (window_mode == HTMLOutputWindow) setCaption (i18n ("Output %1", url.fileName ()));
+	if (window_mode == HTMLOutputWindow) {
+		if (dir) {
+			QString name = dir->caption();
+			QString mods;
+			if (dir->isActive()) mods.append(i18n("[Active]"));
+			// TODO: use icon(s), instead
+			bool mod = dir->isModifiedFast();
+			if (mod) mods.append("(*)");
+			if (!mods.isEmpty()) {
+				name.append(' ');
+				name.append(mods);
+			}
+			setCaption(name);
+			part->revert->setEnabled(mod);
+		} else {
+			setCaption (i18n ("Output %1", url.fileName ()));
+		}
+	}
 	else setCaption (url.fileName ());
 }
 
@@ -779,6 +827,12 @@ void RKHTMLWindow::fileDoesNotExistMessage () {
 void RKHTMLWindow::flushOutput () {
 	RK_TRACE (APP);
 
+	if (dir) {
+		dir->clear();
+		return;
+	}
+
+	// TODO: remove legacy code below, eventually
 	int res = KMessageBox::questionYesNo (this, i18n ("Do you really want to clear the output? This will also remove all image files used in the output. It will not be possible to restore it."), i18n ("Flush output?"));
 	if (res==KMessageBox::Yes) {
 		QFile out_file (current_url.toLocalFile ());
@@ -837,8 +891,9 @@ void RKHTMLWindowPart::initActions () {
 	actionCollection ()->addAction ("view_encoding", encoding);
 	connect (encoding, static_cast<void (KCodecAction::*)(QTextCodec *)>(&KCodecAction::triggered), window, &RKHTMLWindow::setTextEncoding);
 
-	print = actionCollection ()->addAction (KStandardAction::Print, "print_html", window, SLOT (slotPrint()));
-	save_page = actionCollection ()->addAction (KStandardAction::Save, "save_html", window, SLOT (slotSave()));
+	print = actionCollection()->addAction(KStandardAction::Print, "print_html", window, SLOT (slotPrint()));
+	export_page = actionCollection()->addAction("save_html", new QAction(QIcon::fromTheme("file-save"), i18n("Export Page as HTML"), this));
+	connect(export_page, &QAction::triggered, window, &RKHTMLWindow::slotExport);
 
 	run_selection = RKStandardActions::runCurrent (window, window, SLOT (runSelection()));
 
@@ -850,11 +905,25 @@ void RKHTMLWindowPart::initActions () {
 	forward->setEnabled (false);
 
 	// output window actions
+	window->file_save_action = actionCollection()->addAction(KStandardAction::Save, window, SLOT(slotSave()));
+	window->file_save_action->setText(i18n("Save Output"));
+	window->file_save_as_action = actionCollection()->addAction(KStandardAction::SaveAs, window, SLOT(slotSaveAs()));
+	window->file_save_action->setText(i18n("Save Output As"));
+
 	outputFlush = actionCollection ()->addAction ("output_flush", window, SLOT (flushOutput()));
-	outputFlush->setText (i18n ("&Flush Output"));
+	outputFlush->setText (i18n ("&Clear Output"));
 	outputFlush->setIcon (QIcon::fromTheme("edit-delete"));
 
-	outputRefresh = actionCollection ()->addAction ("output_refresh", window->page->action (RKWebPage::Reload));
+	outputRefresh = actionCollection()->addAction("output_refresh", window->page->action(RKWebPage::Reload));
+
+	revert = actionCollection()->addAction("output_revert", window, SLOT(slotRevert()));
+	revert->setText(i18n("&Revert to last saved state"));
+	revert->setIcon(QIcon::fromTheme("edit-undo"));
+
+	activate = actionCollection()->addAction("output_activate", window, SLOT(slotActivate()));
+	activate->setText(i18n("Set Output as &Active"));
+	activate->setIcon(QIcon::fromTheme("emblem-favorite"));
+	activate->setStatusTip(i18n("Set this output as the file to append output to."));
 
 	actionCollection ()->addAction (KStandardAction::Find, "find", window->findbar, SLOT (activate()));
 	QAction* findAhead = actionCollection ()->addAction ("find_ahead", new QAction (i18n ("Find as you type"), this));
@@ -864,22 +933,29 @@ void RKHTMLWindowPart::initActions () {
 	actionCollection ()->addAction (KStandardAction::FindPrev, "find_previous", window->findbar, SLOT (backward()));
 }
 
-void RKHTMLWindowPart::setOutputWindowSkin () {
-	RK_TRACE (APP);
+void RKHTMLWindowPart::setOutputDirectoryActionsEnabled(bool enable) {
+	RK_TRACE(APP);
 
-	print->setText (i18n ("Print output"));
-	save_page->setText (i18n ("Save Output as HTML"));
-	setXMLFile ("rkoutputwindow.rc");
-	run_selection->setVisible (false);
+	window->file_save_action->setVisible(enable);
+	window->file_save_as_action->setVisible(enable);
+	revert->setVisible(enable);
+	activate->setVisible(enable);
 }
 
-void RKHTMLWindowPart::setHelpWindowSkin () {
-	RK_TRACE (APP);
+void RKHTMLWindowPart::setOutputWindowSkin() {
+	RK_TRACE(APP);
 
-	print->setText (i18n ("Print page"));
-	save_page->setText (i18n ("Export page as HTML"));
-	setXMLFile ("rkhelpwindow.rc");
-	run_selection->setVisible (true);
+	print->setText(i18n("Print output"));
+	setXMLFile("rkoutputwindow.rc");
+	run_selection->setVisible(false);
+}
+
+void RKHTMLWindowPart::setHelpWindowSkin() {
+	RK_TRACE(APP);
+
+	print->setText(i18n("Print page"));
+	setXMLFile("rkhelpwindow.rc");
+	run_selection->setVisible(true);
 }
 
 //////////////////////////////////////////
@@ -1202,6 +1278,10 @@ void RKHelpRenderer::writeHTML (const QString& string) {
 /////////////////////////////////////
 /////////////////////////////////////
 
+#include <QDir>
+#include <QFileInfo>
+#include <QCryptographicHash>
+#include <KIO/CopyJob>
 
 // static
 RKOutputWindowManager* RKOutputWindowManager::_self = 0;
@@ -1286,18 +1366,23 @@ void RKOutputWindowManager::setCurrentOutputPath (const QString &_path) {
 #endif
 	if (path == current_default_path) return;
 
-	if (!windows.contains (path)) {
-		RK_DEBUG (APP, DL_DEBUG, "starting to watch %s for changes, KDirWatch method %d", qPrintable (path), file_watcher->internalMethod ());
-		file_watcher->addFile (path);
+	auto old_win = windows.value(current_default_path);
+	auto new_win = windows.value(path);
+
+	if (!new_win) {
+		RK_DEBUG(APP, DL_DEBUG, "starting to watch %s for changes, KDirWatch method %d", qPrintable(path), file_watcher->internalMethod());
+		file_watcher->addFile(path);
 	}
-	if (!windows.contains (current_default_path)) {
-		if (!current_default_path.isEmpty ()) {
-			RK_DEBUG (APP, DL_DEBUG, "no longer watching %s for changes", qPrintable (current_default_path));
-			file_watcher->removeFile (current_default_path);
+	if (!old_win) {
+		if (!current_default_path.isEmpty()) {
+			RK_DEBUG(APP, DL_DEBUG, "no longer watching %s for changes", qPrintable(current_default_path));
+			file_watcher->removeFile(current_default_path);
 		}
 	}
 
 	current_default_path = path;
+	if (old_win) old_win->updateState();
+	if (new_win) new_win->updateState();
 }
 
 void RKOutputWindowManager::rewatchOutput () {
@@ -1307,20 +1392,10 @@ void RKOutputWindowManager::rewatchOutput () {
 	file_watcher->addFile (current_default_path);
 }
 
-QList<RKHTMLWindow*> RKOutputWindowManager::existingOutputWindows () const {
+QList<RKHTMLWindow*> RKOutputWindowManager::existingOutputWindows(const QString &path) const {
 	RK_TRACE (APP);
 
-	return (windows.values (current_default_path));
-}
-
-RKHTMLWindow* RKOutputWindowManager::newOutputWindow () {
-	RK_TRACE (APP);
-
-	RKHTMLWindow* current_output = new RKHTMLWindow (RKWorkplace::mainWorkplace ()->view (), RKHTMLWindow::HTMLOutputWindow);
-	current_output->openURL (QUrl::fromLocalFile (current_default_path));
-	RK_ASSERT (current_output->url ().toLocalFile () == current_default_path);
-
-	return current_output;
+	return (windows.values(path));
 }
 
 void RKOutputWindowManager::fileChanged (const QString &path) {
@@ -1336,9 +1411,17 @@ void RKOutputWindowManager::fileChanged (const QString &path) {
 
 	if (w) {
 		if (RKSettingsModuleOutput::autoRaise ()) w->activate ();
+		if (w->outputDirectory()) w->outputDirectory()->setKnownModified(true);
 	} else {
 		RK_ASSERT (path == current_default_path);
-		if (RKSettingsModuleOutput::autoShow ()) RKWorkplace::mainWorkplace ()->openOutputWindow (QUrl::fromUserInput (path, QString (), QUrl::AssumeLocalFile));
+		if (RKSettingsModuleOutput::autoShow ()) {
+			RKOutputDirectory* dir = RKOutputDirectory::findOutputByWorkPath(path);
+			if (dir) {
+				dir->view(true);
+			} else {
+				RKWorkplace::mainWorkplace()->openHTMLWindow(QUrl::fromUserInput(path, QString(), QUrl::AssumeLocalFile));
+			}
+		}
 	}
 }
 
@@ -1346,15 +1429,15 @@ void RKOutputWindowManager::windowDestroyed (QObject *window) {
 	RK_TRACE (APP);
 
 	// warning: Do not call any methods on the window. It is half-destroyed, already.
-	RKHTMLWindow *w = static_cast<RKHTMLWindow*> (window);
+	RKHTMLWindow *w = static_cast<RKHTMLWindow*>(window);
 
-	QString path = windows.key (w);
-	windows.remove (path, w);
+	QString path = windows.key(w);
+	windows.remove(path, w);
 
 	// if there are no further windows for this file, stop listening
-	if ((path != current_default_path) && (!windows.contains (path))) {
-		RK_DEBUG (APP, DL_DEBUG, "no longer watching %s for changes", qPrintable (path));
-		file_watcher->removeFile (path);
+	if ((path != current_default_path) && (!windows.contains(path))) {
+		RK_DEBUG(APP, DL_DEBUG, "no longer watching %s for changes", qPrintable(path));
+		file_watcher->removeFile(path);
 	}
 }
 

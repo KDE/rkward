@@ -12,6 +12,7 @@
 #' URL: \tab http://rkward.kde.org\cr
 #' }
 #'
+#' @description
 #' A set of functions, classes and methods to test plugins that were written for RKWard.
 #'
 #' @aliases rkwardtests-package rkwardtests

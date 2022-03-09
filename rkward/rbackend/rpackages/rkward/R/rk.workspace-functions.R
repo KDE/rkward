@@ -38,8 +38,9 @@
 #' @export
 "rk.save.workplace" <- function (file=NULL, description=NULL) {
 	if (is.null (file)) {
-		file <- URLdecode (rk.get.workspace.url ())
-		if (is.null (file)) file <- rk.get.tempfile.name (prefix="unsaved", extension=".RData")
+		file <- rk.get.workspace.url ()
+		if (is.null(file)) file <- rk.get.tempfile.name (prefix="unsaved", extension=".RData", directory=rk.tempdir ())
+		else file <- URLdecode(file)
 		file <- paste (file, "rkworkplace", sep=".")
 	}
 	if (is.null (description)) lines <- .rk.do.plain.call ("workplace.layout", "get")
@@ -58,7 +59,7 @@
 			rm (list = c (".rk.workplace.save"), envir=globalenv ())
 		} else {
 			file <- URLdecode (rk.get.workspace.url ())
-			if (is.null (file)) file <- rk.get.tempfile.name (prefix="unsaved", extension=".RData")
+			if (is.null (file)) file <- rk.get.tempfile.name (prefix="unsaved", extension=".RData", directory=rk.tempdir ())
 			file <- paste (file, "rkworkplace", sep=".")
 		}
 	}

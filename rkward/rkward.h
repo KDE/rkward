@@ -124,6 +124,11 @@ public slots:
 /** open a new command editor (load given url) */
 	void slotOpenCommandEditor (const QUrl &url, const QString& encoding = QString ());
 
+/** create and show a new output window */
+	void slotNewOutput();
+/** load an output Window (ask for file to open) */
+	void slotOpenOutput();
+
 /** close current window (Windows->Close). */
 	void slotCloseWindow ();
 /** close all windows (Windows->Close All) */
@@ -141,8 +146,6 @@ private slots:
 private:
 /** Prompt for a local file to open, providing a choice of how to open the file (as R script, text, workspace, auto) */
 	void openAnyFile ();
-/** Opens a new workspace, without asking or closing anything. */
-	void openWorkspace (const QUrl &url);
 
 	QLabel* statusbar_r_status;
 	KSqueezedTextLabel* statusbar_cwd;
@@ -150,9 +153,10 @@ private:
 	KParts::PartManager *part_manager;
 
 	// QAction pointers to enable/disable actions
-	QAction* fileOpen;
+	QAction* fileOpenScript;
+	QAction* fileOpenOutput;
 	KRecentFilesAction* fileOpenRecent;
-	
+
 	QAction* fileOpenWorkspace;
 	KRecentFilesAction* fileOpenRecentWorkspace;
 	QAction* fileSaveWorkspace;
@@ -162,6 +166,7 @@ private:
 	QAction* close_all_editors;
 	QAction* new_data_frame;
 	QAction* new_command_editor;
+	QAction* new_output;
 
 	QAction* window_close_all;
 	QAction* window_detach;

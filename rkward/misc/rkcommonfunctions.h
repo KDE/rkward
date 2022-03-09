@@ -41,8 +41,6 @@ namespace RKCommonFunctions {
 
 /** Get the base directory where RKWard data files are stored */
 	QString getRKWardDataDir ();
-/** Get a suitable file name in the RKWard data directory */
-	QString getUseableRKWardSavefileName (const QString &prefix, const QString &postfix);
 
 /** given a context line, find the end of a quote started by quote_char. @returns -1 if not end of quote was found. */
 	int quoteEndPosition (const QChar& quote_char, const QString& haystack, int from = 0);

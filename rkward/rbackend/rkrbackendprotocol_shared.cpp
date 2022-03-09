@@ -43,8 +43,9 @@ RBackendRequest::RBackendRequest (bool synchronous, RCallbackType type) {
 	RBackendRequest::type = type;
 	id = ++_id;
 	done = false;
-	command = 0;
-	output = 0;
+	command = nullptr;
+	output = nullptr;
+	subcommandrequest = nullptr;
 }
 
 RBackendRequest::~RBackendRequest () {
@@ -79,6 +80,16 @@ RBackendRequest* RBackendRequest::duplicate () {
 	command = 0;
 	output = 0;
 	return ret;
+}
+
+void RBackendRequest::setResult(const GenericRRequestResult& res) {
+	if (!res.warning.isNull()) params[".w"] = res.warning;
+	if (!res.error.isNull()) params[".e"] = res.error;
+	else params[".r"] = res.ret;
+}
+
+GenericRRequestResult RBackendRequest::getResult() const {
+	return GenericRRequestResult(params.value(".r"), params.value(".w").toString(), params.value(".e").toString());
 }
 
 

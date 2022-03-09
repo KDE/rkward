@@ -41,6 +41,7 @@ class RKMDIWindowHistoryWidget;
 class RKGraphicsDevice;
 class KMessageWidget;
 class QWindow;
+class RKOutputDirectory;
 
 #define TOOL_WINDOW_BAR_COUNT 4
 
@@ -133,8 +134,14 @@ public:
 @param only_once if true, checks whether any help window already shows this URL. If so, raise it, but do not open a new window. Else show the new window */
 	RKMDIWindow* openHelpWindow (const QUrl &url=QUrl (), bool only_once=false);
 /** Opens a new output window, or raise / refresh the current output window.
-@param url currently ignored! */
-	RKMDIWindow* openOutputWindow (const QUrl &url=QUrl ());
+@param url Ouput file to load. If empty, the active output is opened/raised.
+@param create Create a new output, instead of showing an existing one. */
+	RKMDIWindow* openOutputWindow(const QUrl &url, bool create=false);
+/** Opens a new output window, for the given existing output directory. Generally, you should call RKOutputDirectory::view(), instead. */
+	RKMDIWindow* openNewOutputWindow(RKOutputDirectory* dir);
+/** Opens an HTML window / legacy output file
+@param url Ouput file to load. */
+	RKMDIWindow* openHTMLWindow(const QUrl &url);
 
 	void newX11Window (QWindow* window_to_embed, int device_number);
 	void newRKWardGraphisWindow (RKGraphicsDevice *dev, int device_number);
@@ -159,19 +166,24 @@ public:
 /** Close the given window, whether it is attached or detached.
 @param window window to close
 @returns true, if the window was actually closed (not cancelled) */
-	bool closeWindow (RKMDIWindow *window);
-/** Close the given windows, whether they are attached or detached. TODO: Be smart about asking what to save.
+	bool closeWindow(RKMDIWindow *window, RKMDIWindow::CloseWindowMode ask_save = RKMDIWindow::AutoAskSaveModified);
+/** Close the given windows, whether they are attached or detached.
 @param windows list windows to close
 @returns true, if _all_ windows were actually closed. */
-	bool closeWindows (QList<RKMDIWindow*> windows);
+	bool closeWindows(QList<RKMDIWindow*> windows, RKMDIWindow::CloseWindowMode ask_save = RKMDIWindow::AutoAskSaveModified);
+/** Close all windows and all outputs (aksing to save workspace)
+@returns true, if the workspace really was closed. */
+	bool closeWorkspace();
 /** Closes all windows of the given type(s). Default call (no arguments) closes all windows
 @param type: A bitwise OR of RKWorkplaceObjectType
-@param state: A bitwise OR of RKWorkplaceObjectState */
-	void closeAll (int type=RKMDIWindow::AnyType, int state=RKMDIWindow::AnyWindowState);
+@param state: A bitwise OR of RKWorkplaceObjectState
+@returns false if cancelled by user (user was prompted for saving, and chose cancel) */
+	bool closeAll(int type=RKMDIWindow::AnyType, int state=RKMDIWindow::AnyWindowState);
 
 /** Write a description of all current windows to the R backend. This can later be read by restoreWorkplace (). Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace
+@param url the url to use. Can be left null, in which case the current workspace url will be used.
 @param chain command chain to place the command in */
-	void saveWorkplace (RCommandChain *chain=0);
+	void saveWorkplace (const QUrl &for_url=QUrl(), RCommandChain *chain=0);
 /** Load a description of windows from the R backend (created by saveWorkplace ()), and (try to) restore all windows accordingly
 Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace
 @param chain command chain to place the command in */

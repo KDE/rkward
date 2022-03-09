@@ -96,6 +96,7 @@ public:
 		RKWardConfig_0_6_3,
 		RKWardConfig_0_6_4,
 		RKWardConfig_0_7_1,
+		RKWardConfig_0_7_3,
 		RKWardConfig_Next,		/**< add new configuration versions above / before this entry */
 		RKWardConfig_Latest = RKWardConfig_Next - 1
 	};

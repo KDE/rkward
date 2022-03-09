@@ -434,7 +434,12 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 			// Make up / down-keys (without alt) navigate in the document (aborting the completion)
 			// Make alt+up / alt+down navigate in the completion list
 			if (navigate) {
-				if (k->type() != QKeyEvent::KeyPress) return true;  // eat the release event
+				if (k->type() == QKeyEvent::ShortcutOverride) {
+					k->accept();  // -> will be re-sent as a regular key event, then handled, below
+					return true;
+				} else {
+					if (k->type() != QKeyEvent::KeyPress) return true;  // eat the release event
+				}
 
 				// No, we cannot just send a fake key event, easily...
 				KActionCollection *kate_edit_actions = view ()->findChild<KActionCollection*> ("edit_actions");

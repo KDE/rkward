@@ -19,7 +19,7 @@ Authors@R: c(person(given="Thomas", family="Friedrichsmeier",
         email="rkward-devel@kde.org", role=c("cre","ctb")))
 Version: 0.7.3
 Date: 2020-10-17
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.2
 Collate: 
     'base_overrides.R'
     'internal.R'
@@ -33,6 +33,7 @@ Collate:
     'rk.edit-functions.R'
     'rk.filename-functions.R'
     'rk.label-functions.R'
+    'rk.output.R'
     'rk.plugin-functions.R'
     'rk.print-functions.R'
     'rk.replace.function.R'

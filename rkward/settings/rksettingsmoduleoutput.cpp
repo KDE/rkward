@@ -23,7 +23,7 @@
 #include <qlayout.h>
 #include <qlabel.h>
 #include <QGroupBox>
-#include <qcheckbox.h>
+#include <QCheckBox>
 #include <QVBoxLayout>
 #include <QComboBox>
 #include <QSpinBox>
@@ -150,6 +150,7 @@ int RKSettingsModuleOutput::graphics_width;
 int RKSettingsModuleOutput::graphics_height;
 int RKSettingsModuleOutput::graphics_jpg_quality;
 QString RKSettingsModuleOutput::custom_css_file;
+RKConfigValue<bool> RKSettingsModuleOutput::shared_default_output {"Shared default output", false};
 
 RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -167,6 +168,11 @@ RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent
 	connect (auto_raise_box, &QCheckBox::stateChanged, this, &RKSettingsModuleOutput::boxChanged);
 
 	main_vbox->addWidget (group);
+
+	shared_default_output_box = new QCheckBox(i18n("Default output (used, while no other output has been set, explicitly) is shared across workspaces(*)."), this);
+	shared_default_output_box->setChecked(shared_default_output);
+	connect(shared_default_output_box, &QCheckBox::stateChanged, this, &RKSettingsModuleOutput::boxChanged);
+	main_vbox->addWidget(shared_default_output_box);
 
 	custom_css_file_box = new GetFileNameWidget (this, GetFileNameWidget::ExistingFile, true, i18n ("CSS file to use for output (leave empty for default)"), i18n ("Select CSS file"), custom_css_file);
 	connect (custom_css_file_box, &GetFileNameWidget::locationChanged, this, &RKSettingsModuleOutput::boxChanged);
@@ -246,6 +252,7 @@ void RKSettingsModuleOutput::applyChanges () {
 
 	auto_show = auto_show_box->isChecked ();
 	auto_raise = auto_raise_box->isChecked ();
+	shared_default_output = shared_default_output_box->isChecked();
 
 	custom_css_file = custom_css_file_box->getLocation ();
 
@@ -279,6 +286,7 @@ void RKSettingsModuleOutput::saveSettings (KConfig *config) {
 	cg.writeEntry ("graphics_height", graphics_height);
 	cg.writeEntry ("graphics_jpg_quality", graphics_jpg_quality);
 	cg.writeEntry ("custom css file", custom_css_file);
+	shared_default_output.saveConfig(cg);
 
 	RKCarbonCopySettings::saveSettings (config);
 }
@@ -294,6 +302,7 @@ void RKSettingsModuleOutput::loadSettings (KConfig *config) {
 	graphics_height = cg.readEntry ("graphics_height", 480);
 	graphics_jpg_quality = cg.readEntry ("graphics_jpg_quality", 75);
 	custom_css_file = cg.readEntry ("custom css file", QString ());
+	shared_default_output.loadConfig(cg);
 
 	RKCarbonCopySettings::loadSettings (config);
 }

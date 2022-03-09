@@ -132,7 +132,7 @@ void RKWorkplaceViewPane::closePage (QWidget* page) {
 		RK_ASSERT (false);
 		return;
 	}
-	static_cast<RKMDIWindow*>(page)->close (true);
+	static_cast<RKMDIWindow*>(page)->close (RKMDIWindow::AutoAskSaveModified);
 }
 
 void RKWorkplaceViewPane::tabRemoved (int index) {

@@ -88,9 +88,13 @@ void RKRBackendTransmitter::writeRequest (RBackendRequest *request) {
 	transmitRequest (request);
 	connection->flush ();
 
+	if (request->subcommandrequest) {
+		current_sync_requests.append(request->subcommandrequest);
+		RK_DEBUG(RBACKEND, DL_DEBUG, "Expecting replies for %d requests (added subrequest %p)", current_sync_requests.size(), request);
+	}
 	if (request->synchronous) {
-		current_sync_requests.append (request);
-		RK_DEBUG (RBACKEND, DL_DEBUG, "Expecting replies for %d requests (added %p)", current_sync_requests.size (), request);
+		current_sync_requests.append(request);
+		RK_DEBUG(RBACKEND, DL_DEBUG, "Expecting replies for %d requests (added %p)", current_sync_requests.size(), request);
 	} else {
 		delete request;
 	}

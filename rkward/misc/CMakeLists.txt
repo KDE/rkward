@@ -27,7 +27,8 @@ SET(misc_STAT_SRCS
    rkaccordiontable.cpp
    rkxmlguipreviewarea.cpp
    rkdialogbuttonbox.cpp
+   rkoutputdirectory.cpp
    )
 
 ADD_LIBRARY(misc STATIC ${misc_STAT_SRCS})
-TARGET_LINK_LIBRARIES(misc Qt5::Widgets KF5::WidgetsAddons KF5::KIOWidgets Qt5::Xml KF5::ConfigCore KF5::Parts KF5::WindowSystem KF5::TextEditor)
+TARGET_LINK_LIBRARIES(misc Qt5::Widgets KF5::WidgetsAddons KF5::KIOWidgets Qt5::Xml KF5::ConfigCore KF5::Parts KF5::WindowSystem KF5::TextEditor KF5::Archive)

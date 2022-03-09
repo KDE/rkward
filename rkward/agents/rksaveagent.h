@@ -2,7 +2,7 @@
                           rksaveagent  -  description
                              -------------------
     begin                : Sun Aug 29 2004
-    copyright            : (C) 2004, 2009, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2020 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -20,33 +20,21 @@
 #include "../rbackend/rcommandreceiver.h"
 
 #include <QUrl>
-#include <QObject>
 
 class RCommandChain;
 
 /**
-This class basically provides a mechanism to let the user save a workspace, find out whether saving was successful and - if it was not - to ask for a new filename or the like.
+This class used to have much more (over-)complexity. It could probably be merged into RKWorkplace, today. Used to control workspace saving.
 
 @author Thomas Friedrichsmeier
 */
-class RKSaveAgent : public RCommandReceiver, public QObject {
+class RKSaveAgent {
 public:
-	enum DoneAction { DoNothing=0, Load=1 };
-
-/** creates a new RKSaveAgent. If when_done == Quit, the RKSaveAgent will quit the application as soon as saving was successful (or it asked to by the user). Similarly, if when_done==Load, it will load a new workspace after saving (specify the url in load_url). If url is given (not empty), and not save_file_as, the agent will try to save to the given url, else it will ask the user to specify a url. RKSaveAgent will self destruct when done. */
-	explicit RKSaveAgent (QUrl url, bool save_file_as=false, DoneAction when_done=DoNothing, QUrl load_url=QUrl());
-	
-	~RKSaveAgent ();
-protected:
-	void rCommandDone (RCommand *command) override;
-private:
-	bool askURL ();
-	void done ();
-	RCommandChain *save_chain;
-	QUrl save_url;
-	QUrl load_url;
-	QUrl previous_url;
-	DoneAction when_done;
+/** Save the workspace. If no URL is given use the last known save url. If the workspace has not been saved, previously, ask for url to save to. */
+	static bool saveWorkspace(const QUrl &url=QUrl());
+/** Save the workspace, asking for a (new) file name.
+ @param previous_url If given, specified the default directory and file name. */
+	static bool saveWorkspaceAs(const QUrl &previous_url=QUrl());
 };
 
 #endif
