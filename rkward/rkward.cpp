@@ -496,6 +496,11 @@ void RKWardMainWindow::initActions() {
 	new_command_editor->setText (i18n ("Script File"));
 	new_command_editor->setIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowCommandEditor));
 
+	new_output = actionCollection ()->addAction("new_output", this, SLOT(slotNewOutput()));
+	new_output->setText(i18n("Output document"));
+	new_output->setIcon(RKStandardIcons::getIcon(RKStandardIcons::WindowOutput));
+	new_output->setStatusTip(i18n("Creates and activates a new output docuemnt"));
+
 	fileOpenScript = actionCollection()->addAction(KStandardAction::Open, "file_open_script", this, SLOT(slotOpenCommandEditor()));
 	actionCollection()->setDefaultShortcut(fileOpenScript, Qt::ControlModifier + Qt::AltModifier + Qt::Key_O);
 	fileOpenScript->setText(i18n("Open R Script File..."));
@@ -615,6 +620,7 @@ void RKWardMainWindow::initActions() {
 
 	new_any_action->addAction (new_data_frame);
 	new_any_action->addAction (new_command_editor);
+	new_any_action->addAction (new_output);
 
 	save_any_action = new KActionMenu (QIcon::fromTheme("document-save"), i18n ("Save..."), this);
 	save_any_action->setDelayed (false);
