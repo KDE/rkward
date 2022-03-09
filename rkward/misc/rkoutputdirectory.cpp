@@ -90,7 +90,12 @@ RKOutputDirectory* RKOutputDirectory::findOutputByWorkPath(const QString& workpa
 
 	if (workpath.endsWith("index.html")) {
 		QString wp = workpath;
+#if QT_VERSION >= QT_VERSION_CHECK(5,10,0)
 		return(outputs.value(wp.chopped(11)));  // index.html, including pathsep
+#else
+		wp.chop(11);
+		return(outputs.value(wp));
+#endif
 	}
 	return nullptr;
 }
