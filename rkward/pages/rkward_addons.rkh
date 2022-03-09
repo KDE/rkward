@@ -1,0 +1,40 @@
+<!DOCTYPE rkhelp>
+<document>
+	<title>RKWard Add-Ons</title>
+	<summary>
+To offer you the best features, RKWard combines different technologies. Arguably this can make it a bit confusing on where to find the addon features you are looking for.
+
+In a nutshell:
+<ul>
+<li><strong>R packages</strong> offer a sheer incredible amount of data algorithms and tools. This functionality is (mostly) provided in the form of additional R functions that you can use
+in scripts, or in the interactive R console.</li>
+<li><strong>Kate add-ons</strong>: Kate is the engine behind RKWard's script editor. It comes with many add-ons features from various indentation scripts to elaborate support for
+git-projects, to name just two concepts. Many of these should come pre-installed with RKWard, but due to their sheer number, not all are activated by default. Additional scripts,
+color-schemes, etc. are available for download, separately.</li>
+<li><strong>RKWard plugins</strong>: If you are looking for a graphical dialog to help you import/convert/analyse/visualize your data, such dialogs are mostly implemented as plugin-ins in
+RKWard. Many such plugins are available for download, separately.</li>
+</ul>
+
+The following sections deal with these, in turn, showing you how to find / install, what you need.
+	</summary>
+
+	<section title="R packages" id="r_packages_in_rkward">
+	TODO: Write this
+	</section>
+
+	<section title="Kate Add-ons" id="kate_addons_in_rkward">
+	TODO: Write this
+	</section>
+
+	<section title="RKWard Plugins" id="rkward_plugins">
+	TODO: Extend this
+
+	Are you missing a particular GUI dialog in the current menu? A growing number of plugins is available for separate download as R packages. See what's available for installation at Settings-&gt;Manage R packages and plugins. In the R package installation section, you can select to show packages providing graphics dialogs for RKWard.
+	</section>
+
+	<section title="Creating your own RKWard Plugins" id="writing_plugins">
+	Still missing something?
+
+	Check out the <link href="help:/rkwardplugins/index.html">Introduction to Writing Plugins for RKWard</link> (<link href="http://api.kde.org/doc/rkwardplugins/">most recent version online</link>) to learn how easy it is to enhance RKWard with your custom dialogs. And if you like, how to share your work with the community of RKWard users. See the <link href="rkward://rhelp/rkward-package">rkward package overview</link> for RKWard specific function for development and scripting.
+	</section>
+</document>

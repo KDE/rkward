@@ -61,21 +61,25 @@ void RKSettings::configureSettings (SettingsPage page, QWidget *parent, RCommand
 void RKSettings::configureSettings (const QString& page, QWidget *parent, RCommandChain *chain) {
 	RK_TRACE (SETTINGS);
 
-	if (page == QStringLiteral ("rbackend")) {
-		RKSettings::configureSettings (RKSettings::PageR, parent, chain);
-	} else if (page == QStringLiteral ("console")) {
-		RKSettings::configureSettings (RKSettings::PageConsole, parent, chain);
-	} else if (page == QStringLiteral ("editor")) {
-		RKSettings::configureSettings (RKSettings::PageCommandEditor, parent, chain);
-	} else if (page == QStringLiteral ("graphics")) {
-		RKSettings::configureSettings (RKSettings::PageX11, parent, chain);
-	} else if (page == QStringLiteral ("browser")) {
-		RKSettings::configureSettings (RKSettings::PageObjectBrowser, parent, chain);
-	} else if (page == QStringLiteral ("rpackages")) {
-		RKSettings::configureSettings (RKSettings::PageRPackages, parent, chain);
+	if (page == QStringLiteral("rbackend")) {
+		RKSettings::configureSettings(RKSettings::PageR, parent, chain);
+	} else if (page == QStringLiteral("console")) {
+		RKSettings::configureSettings(RKSettings::PageConsole, parent, chain);
+	} else if (page == QStringLiteral("editor")) {
+		RKSettings::configureSettings(RKSettings::PageCommandEditor, parent, chain);
+	} else if (page == QStringLiteral("graphics")) {
+		RKSettings::configureSettings(RKSettings::PageX11, parent, chain);
+	} else if (page == QStringLiteral("browser")) {
+		RKSettings::configureSettings(RKSettings::PageObjectBrowser, parent, chain);
+	} else if (page == QStringLiteral("rpackages")) {
+		RKSettings::configureSettings(RKSettings::PageRPackages, parent, chain);
+	} else if (page == QStringLiteral("output")) {
+		RKSettings::configureSettings(RKSettings::PageOutput, parent, chain);
+	} else if (page == QStringLiteral("general")) {
+		RKSettings::configureSettings(RKSettings::PageGeneral, parent, chain);
 	} else {
 		RK_ASSERT(page.isEmpty());
-		RKSettings::configureSettings (RKSettings::NoPage, parent, chain);
+		RKSettings::configureSettings(RKSettings::NoPage, parent, chain);
 	}
 }
 

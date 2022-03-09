@@ -5,7 +5,7 @@
 	<summary>
 	This help page gives a rough overview of the most important parts of RKWard.
 
-	By default, this page is shown each time RKWard is started. You can disable or re-enable this behavior under Settings->Configure RKWard->General.
+	By default, this page is shown each time RKWard is started (configurable in <link href="rkward://settings/general">Settings->Configure RKWard->General</link>).
 	</summary>
 
 	<section title="Introduction to RKWard" id="introduction">
@@ -13,21 +13,17 @@
 	</section>
 
 	<section title="Getting Started" id="getting_started">
-	Due to the large differences in prior knowledge of R, we provide two different guides for getting started with RKWard. The first is aimed at users with some knowledge of the R language, and focuses on introducing the IDE features of RKWard: <link href="rkward://page/rkward_for_r_users" />.
+	If you have used neither R nor RKWard before, you should start with the following guide: <link href="rkward://page/rkward_for_new_users" />.
 
-	The second gives a more hands on introduction to getting started with RKWard, but does not go quite as deep. If you have never used R or RKWard before, you should start with this guide, then later read the above page link: <link href="rkward://page/rkward_for_new_users" />.
+	After that, or for users with some knowledge of R, but new to RKWard, here is a guide focused on introducing the IDE features of RKWard: <link href="rkward://page/rkward_for_r_users" />.
+	</section>
+
+	<section title="Installing Add-Ons" id="add-ons">
+	Missing something? Many features are available as separate add-ons. Please refer to <link href="rkward://page/rkward_addons" /> for more information.
 	</section>
 
 	<section title="Trouble Shooting" id="Trouble Shooting">
-	If you encounter problems please feel free to search in <link href="rkward://page/rkward_trouble_shooting">Trouble Shooting</link> first.
-	</section>
-
-	<section title="Missing something?" id="missing_something">
-	Are you missing a particular GUI dialog in the current menu? A growing number of plugins is available for separate download as R packages. See what's available for installation at Settings-&gt;Manage R packages and plugins. In the R package installation section, you can select to show packages providing graphics dialogs for RKWard.
-	</section>
-
-	<section title="Still missing something?" id="writing_plugins">
-	Check out the <link href="help:/rkwardplugins/index.html">Introduction to Writing Plugins for RKWard</link> (<link href="http://api.kde.org/doc/rkwardplugins/">most recent version online</link>) to learn how easy it is to enhance RKWard with your custom dialogs. And if you like, how to share your work with the community of RKWard users. See the <link href="rkward://rhelp/rkward-package">rkward package overview</link> for RKWard specific function for development and scripting. As another way of contributing, consider supporting the development of RKWard with money. One easy way to give a small amount is <a href="http://flattr.com/thing/1092073/RKWard">donating via <i>Flattr</i></a>.
+	If you encounter problems please take a look in <link href="rkward://page/rkward_trouble_shooting">Trouble Shooting / FAQ</link> first. The preferred way to report a bug is using "Report Bug" from the "Help"-menu.
 	</section>
 
 	<section title="General Information" id="further_info">
