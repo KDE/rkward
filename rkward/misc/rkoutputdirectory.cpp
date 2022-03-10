@@ -524,7 +524,7 @@ RKOutputDirectoryCallResult RKOutputDirectory::get(const QString &_filename, boo
 		RKOutputDirectory *dir = findOutputBySaveUrl(filename);
 		// NOTE: annoyingly QFileInfo::canonicalFilePath() returns an empty string, if the file does not exist
 		if (create) {
-			if (dir) return GenericRRequestResult::makeError(i18n("Output '1%' is already loaded in this session. Cannot create it.", filename));
+			if (dir) return GenericRRequestResult::makeError(i18n("Output '%1' is already loaded in this session. Cannot create it.", filename));
 			if (file_exists) return GenericRRequestResult::makeError(i18n("A file named '%1' already exists. Cannot create it.", filename));
 
 			// NOTE: This may seem a bit of an unusual case: Creating a fresh output with save file name already specified.
