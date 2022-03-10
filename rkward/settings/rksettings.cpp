@@ -210,19 +210,17 @@ void RKSettings::helpClicked () {
 	RKWorkplace::mainWorkplace ()->openHelpWindow (current_module->helpURL ());
 }
 
-void RKSettings::applyAll () {
+void RKSettings::applyAll() {
 	RK_TRACE (SETTINGS);
 
-	ModuleMap::const_iterator it;
-	for (it = modules.constBegin (); it != modules.constEnd (); ++it) {
-		if (it.value ()->hasChanges ()) {
-			it.value ()->applyChanges ();
-			it.value ()->changed = false;
-			it.value ()->save (KSharedConfig::openConfig ().data ());
-			tracker ()->signalSettingsChange (it.key ());
+	for (auto it = modules.constBegin(); it != modules.constEnd(); ++it) {
+		if (it.value()->hasChanges()) {
+			it.value()->doApply();
+			it.value()->save (KSharedConfig::openConfig().data());
+			tracker()->signalSettingsChange(it.key());
 		}
 	}
-	button (QDialogButtonBox::Apply)->setEnabled (false);
+	button(QDialogButtonBox::Apply)->setEnabled(false);
 }
 
 void RKSettings::enableApply () {

@@ -2,7 +2,7 @@
                           rksettingsmoduleconsole  -  description
                              -------------------
     begin                : Sun Oct 16 2005
-    copyright            : (C) 2005-2020 by Thomas Friedrichsmeier
+    copyright            : (C) 2005-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -22,7 +22,6 @@
 #include "rksettingsmodulecommandeditor.h"  // For RKCodeCompletionSettings
 #include <qnamespace.h>
 
-class QCheckBox;
 class QComboBox;
 class QSpinBox;
 
@@ -70,17 +69,14 @@ public slots:
 	void changedSetting (int);
 private:
 	static RKCodeCompletionSettings completion_settings;
-	static bool save_history;
+	static RKConfigValue<bool> save_history;
 	static uint max_history_length;
 	static uint max_console_lines;
-	static bool pipe_user_commands_through_console;
+	static RKConfigValue<bool> pipe_user_commands_through_console;
 	static PipedCommandsHistoryMode add_piped_commands_to_history;
-	static bool context_sensitive_history_by_default;
+	static RKConfigValue<bool> context_sensitive_history_by_default;
 
 	RKCodeCompletionSettingsWidget *completion_settings_widget;
-	QCheckBox *save_history_box;
-	QCheckBox *reverse_context_mode_box;
-	QCheckBox *pipe_user_commands_through_console_box;
 	QComboBox *add_piped_commands_to_history_box;
 	QSpinBox *max_history_length_spinner;
 	QSpinBox *max_console_lines_spinner;

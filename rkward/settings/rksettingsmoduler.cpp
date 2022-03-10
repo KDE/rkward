@@ -2,7 +2,7 @@
                           rksettingsmoduler  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004-2018 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -380,8 +380,17 @@ void RKSettingsModuleR::loadSettings (KConfig *config) {
 QStringList RKSettingsModuleRPackages::liblocs;
 QStringList RKSettingsModuleRPackages::defaultliblocs;
 QString RKSettingsModuleRPackages::r_libs_user;
-bool RKSettingsModuleRPackages::archive_packages;
-bool RKSettingsModuleRPackages::source_packages;
+RKConfigValue<bool> RKSettingsModuleRPackages::archive_packages {"archive packages", false};
+#if (defined Q_OS_WIN || defined Q_OS_MACOS)
+#	if (defined USE_BINARY_PACKAGES)
+#		define USE_SOURCE_PACKAGES false
+#	else
+#		define USE_SOURCE_PACKAGES true
+#	endif
+#else
+#	define USE_SOURCE_PACKAGES true
+#endif
+RKConfigValue<bool> RKSettingsModuleRPackages::source_packages {"source_packages", USE_SOURCE_PACKAGES};
 QStringList RKSettingsModuleRPackages::package_repositories;
 QString RKSettingsModuleRPackages::essential_packages = QString ("base\nmethods\nutils\ngrDevices\ngraphics\nrkward");
 QString RKSettingsModuleRPackages::cran_mirror_url;
@@ -410,21 +419,15 @@ RKSettingsModuleRPackages::RKSettingsModuleRPackages (RKSettings *gui, QWidget *
 	connect (repository_selector, &MultiStringSelector::getNewStrings, this, &RKSettingsModuleRPackages::addRepository);
 	main_vbox->addWidget (repository_selector);
 
-	archive_packages_box = new QCheckBox (i18n ("Archive downloaded packages"), this);
-	archive_packages_box->setChecked (archive_packages);
-	connect (archive_packages_box, &QCheckBox::stateChanged, this, &RKSettingsModuleRPackages::settingChanged);
-	main_vbox->addWidget (archive_packages_box);
+	main_vbox->addWidget(archive_packages.makeCheckbox(i18n("Archive downloaded packages"), this));
 
-#if defined Q_OS_WIN || defined Q_OS_MACOS
-	source_packages_box = new QCheckBox (i18n ("Build packages from source"), this);
-	source_packages_box->setChecked (source_packages);
-#else
-	source_packages_box = new QCheckBox (i18n ("Build packages from source (not configurable on this platform)"), this);
+	auto source_packages_box = source_packages.makeCheckbox(i18n ("Build packages from source"), this);
+#if !defined Q_OS_WIN || defined Q_OS_MACOS
+	source_packages_box->setText(i18n("Build packages from source (not configurable on this platform)"));
 	source_packages_box->setChecked (true);
 	source_packages_box->setEnabled (false);
 #endif
 	RKCommonFunctions::setTips (QString ("<p>%1</p>").arg (i18n ("Installing packages from pre-compiled binaries (if available) is generally faster, and does not require an installation of development tools and libraries. On the other hand, building packages from source provides best compatibility. On Mac OS X and Linux, building packages from source is currently recommended.")), source_packages_box);
-	connect (source_packages_box, &QCheckBox::stateChanged, this, &RKSettingsModuleRPackages::settingChanged);
 	main_vbox->addWidget (source_packages_box);
 
 	main_vbox->addStretch ();
@@ -627,8 +630,6 @@ void RKSettingsModuleRPackages::applyChanges () {
 	cran_mirror_url = cran_mirror_input->text ();
 	if (cran_mirror_url.isEmpty ()) cran_mirror_url = "@CRAN@";
 
-	archive_packages = archive_packages_box->isChecked ();
-	source_packages = source_packages_box->isChecked ();
 	package_repositories = repository_selector->getValues ();
 	liblocs = libloc_selector->getValues ();
 
@@ -650,8 +651,8 @@ void RKSettingsModuleRPackages::saveSettings (KConfig *config) {
 
 	KConfigGroup cg = config->group ("R Settings");
 	cg.writeEntry ("CRAN mirror url", cran_mirror_url);
-	cg.writeEntry ("archive packages", archive_packages);
-	cg.writeEntry ("source_packages", source_packages);
+	archive_packages.saveConfig(cg);
+	source_packages.saveConfig(cg);
 	cg.writeEntry ("Repositories", package_repositories);
 	cg.writeEntry ("LibraryLocations", liblocs);
 }
@@ -673,21 +674,12 @@ void RKSettingsModuleRPackages::loadSettings (KConfig *config) {
 	}
 
 	liblocs = cg.readEntry ("LibraryLocations", QStringList ());
-	archive_packages = cg.readEntry ("archive packages", false);
-#if defined Q_OS_WIN || defined Q_OS_MACOS
-#	if defined USE_BINARY_PACKAGES
-#		define USE_SOURCE_PACKAGES false
-#	else
-#		define USE_SOURCE_PACKAGES true
-#endif
-	source_packages = cg.readEntry ("source packages", USE_SOURCE_PACKAGES);
+	archive_packages.loadConfig(cg);
+	source_packages.loadConfig(cg);  // NOTE: does not take effect on Linux, see pkgTypeOption
 	if (USE_SOURCE_PACKAGES && (RKSettingsModuleGeneral::storedConfigVersion () < RKSettingsModuleGeneral::RKWardConfig_0_6_1)) {
 		// revert default on MacOSX, even if a previous stored setting exists
 		source_packages = true;
 	}
-#else
-	source_packages = true;
-#endif
 }
 
 #include <QGroupBox>

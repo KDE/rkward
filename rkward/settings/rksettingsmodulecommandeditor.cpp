@@ -2,7 +2,7 @@
                           rksettingsmodulecommandeditor  -  description
                              -------------------
     begin                : Tue Oct 23 2007
-    copyright            : (C) 2007-2019 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -38,7 +38,7 @@
 // static members
 RKCodeCompletionSettings RKSettingsModuleCommandEditor::completion_settings;
 bool RKSettingsModuleCommandEditor::autosave_enabled;
-bool RKSettingsModuleCommandEditor::autosave_keep;
+RKConfigValue<bool> RKSettingsModuleCommandEditor::autosave_keep { "Autosave keep saves", false };
 int RKSettingsModuleCommandEditor::autosave_interval;
 int RKSettingsModuleCommandEditor::num_recent_files;
 QString RKSettingsModuleCommandEditor::script_file_filter;
@@ -72,19 +72,14 @@ RKCodeCompletionSettingsWidget::RKCodeCompletionSettingsWidget(QWidget *parent, 
 	connect (auto_completion_timeout_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKCodeCompletionSettingsWidget::change);
 	form_layout->addRow (i18n ("Timeout (milliseconds)"), auto_completion_timeout_box);
 
-	auto_completion_cursor_activated_box = new QCheckBox (auto_completion_enabled_box);
-	auto_completion_cursor_activated_box->setChecked (settings->auto_completion_cursor_activated);
-	connect (auto_completion_cursor_activated_box, &QCheckBox::stateChanged, this, &RKCodeCompletionSettingsWidget::change);
-	form_layout->addRow (i18n ("(Attempt to) start completion whenever the cursor position changes"), auto_completion_cursor_activated_box);
+	form_layout->addRow(i18n("(Attempt to) start completion whenever the cursor position changes"), settings->auto_completion_cursor_activated.makeCheckbox(QString(), this));
 
 	form_layout = new QFormLayout ();
 	box_layout->addLayout (form_layout);
 
-	tabkey_invokes_completion_box = new QCheckBox(group);
-	tabkey_invokes_completion_box->setChecked(settings->tabkey_invokes_completion);
-	RKCommonFunctions::setTips (i18n ("Note: Further shortcuts can be assigned, and by default, Ctlr+Space invokes completions, in addition to this. Further, pressing the Tab key, while completions are shown, performs partial completion (if possible), independent of this setting."), tabkey_invokes_completion_box);
-	connect (tabkey_invokes_completion_box, &QCheckBox::stateChanged, this, &RKCodeCompletionSettingsWidget::change);
-	form_layout->addRow (i18n ("Tab key invokes code completion"), tabkey_invokes_completion_box);
+	auto tabkey_invokes_completion_box = settings->tabkey_invokes_completion.makeCheckbox(QString(), this);
+	RKCommonFunctions::setTips(i18n("Note: Further shortcuts can be assigned, and by default, Ctlr+Space invokes completions, in addition to this. Further, pressing the Tab key, while completions are shown, performs partial completion (if possible), independent of this setting."), tabkey_invokes_completion_box);
+	form_layout->addRow(i18n("Tab key invokes code completion"), tabkey_invokes_completion_box);
 
 	cursor_navigates_completions_box = new QComboBox(group);
 	cursor_navigates_completions_box->addItem(i18n("Up/down cursor keys"));
@@ -130,12 +125,7 @@ void RKCodeCompletionSettingsWidget::applyChanges() {
 	settings->auto_completion_enabled = auto_completion_enabled_box->isChecked ();
 	settings->auto_completion_min_chars = auto_completion_min_chars_box->intValue ();
 	settings->auto_completion_timeout = auto_completion_timeout_box->intValue ();
-	settings->auto_completion_cursor_activated = auto_completion_cursor_activated_box->isChecked ();
-	for (int i = 0; i < RKCodeCompletionSettings::N_COMPLETION_CATEGORIES; ++i) {
-		settings->completion_type_enabled[i] = completion_type_enabled_box[i]->isChecked ();
-	}
 	settings->cursor_navigates_completions = (cursor_navigates_completions_box->currentIndex() == 0);
-	settings->tabkey_invokes_completion = tabkey_invokes_completion_box->isChecked();
 
 	if (show_common) {
 		settings->completion_options = 0;
@@ -147,14 +137,11 @@ void RKCodeCompletionSettingsWidget::applyChanges() {
 	}
 }
 
-void RKCodeCompletionSettingsWidget::makeCompletionTypeBoxes (const QStringList& labels, QGridLayout* layout) {
-	RK_ASSERT (labels.count () == RKCodeCompletionSettings::N_COMPLETION_CATEGORIES);
+void RKCodeCompletionSettingsWidget::makeCompletionTypeBoxes(const QStringList& labels, QGridLayout* layout) {
+	RK_ASSERT(labels.count() == RKCodeCompletionSettings::N_COMPLETION_CATEGORIES);
 	for (int i = 0; i < RKCodeCompletionSettings::N_COMPLETION_CATEGORIES; ++i) {
-		QCheckBox *box = new QCheckBox(labels[i]);
-		box->setChecked (settings->completion_type_enabled[i]);
-		completion_type_enabled_box[i] = box;
-		layout->addWidget (completion_type_enabled_box[i], i / 2, i % 2);
-		connect (box, &QCheckBox::stateChanged, this, &RKCodeCompletionSettingsWidget::change);
+		auto *box = settings->completion_type_enabled[i].makeCheckbox(labels[i], this);
+		layout->addWidget(box, i / 2, i % 2);
 	}
 }
 
@@ -172,18 +159,15 @@ RKSettingsModuleCommandEditor::RKSettingsModuleCommandEditor (RKSettings *gui, Q
 	QGroupBox *group = autosave_enabled_box = new QGroupBox (i18n ("Autosaves"), this);
 	autosave_enabled_box->setCheckable (true);
 	autosave_enabled_box->setChecked (autosave_enabled);
-	connect (autosave_enabled_box, &QGroupBox::toggled, this, &RKSettingsModuleCommandEditor::settingChanged);
+	connect (autosave_enabled_box, &QGroupBox::toggled, this, &RKSettingsModule::change);
 	QFormLayout *form_layout = new QFormLayout (group);
 
 	autosave_interval_box = new RKSpinBox (group);
 	autosave_interval_box->setIntMode (1, INT_MAX, autosave_interval);
-	connect (autosave_interval_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleCommandEditor::settingChanged);
+	connect (autosave_interval_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModule::change);
 	form_layout->addRow (i18n ("Autosave interval (minutes)"), autosave_interval_box);
 
-	autosave_keep_box = new QCheckBox (i18n ("Keep autosave file after manual save"), group);
-	autosave_keep_box->setChecked (autosave_keep);
-	connect (autosave_keep_box, &QCheckBox::stateChanged, this, &RKSettingsModuleCommandEditor::settingChanged);
-	form_layout->addRow (autosave_keep_box);
+	form_layout->addRow(autosave_keep.makeCheckbox(i18n("Keep autosave file after manual save"), this));
 
 	main_vbox->addWidget (group);
 
@@ -194,13 +178,13 @@ RKSettingsModuleCommandEditor::RKSettingsModuleCommandEditor (RKSettings *gui, Q
 	num_recent_files_box = new RKSpinBox (group);
 	num_recent_files_box->setIntMode (1, INT_MAX, num_recent_files);
 	RKCommonFunctions::setTips (i18n ("<p>The number of recent files to remember (in the Open Recent R Script File menu).</p>") + RKCommonFunctions::noteSettingsTakesEffectAfterRestart (), num_recent_files_box, group);
-	connect (num_recent_files_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleCommandEditor::settingChanged);
+	connect (num_recent_files_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModule::change);
 	form_layout->addRow (i18n ("Number of scripts in recent file lists (*)"), num_recent_files_box);
 
 	script_file_filter_box = new QLineEdit (group);
 	script_file_filter_box->setText (script_file_filter);
 	RKCommonFunctions::setTips (i18n ("<p>A list of filters (file name extensions) that should be treated as R script files. Most importantly, files matching one of these filters will always be opened with R syntax highlighting.</p><p>Filters are case insensitive.</p>"), script_file_filter_box);
-	connect (script_file_filter_box, &QLineEdit::textChanged, this, &RKSettingsModuleCommandEditor::settingChanged);
+	connect (script_file_filter_box, &QLineEdit::textChanged, this, &RKSettingsModule::change);
 	form_layout->addRow (i18n ("R script file filters (separated by spaces)"), script_file_filter_box);
 
 	main_vbox->addWidget (group);
@@ -210,11 +194,6 @@ RKSettingsModuleCommandEditor::RKSettingsModuleCommandEditor (RKSettings *gui, Q
 
 RKSettingsModuleCommandEditor::~RKSettingsModuleCommandEditor () {
 	RK_TRACE (SETTINGS);
-}
-
-void RKSettingsModuleCommandEditor::settingChanged () {
-	RK_TRACE (SETTINGS);
-	change ();
 }
 
 QString RKSettingsModuleCommandEditor::caption () {
@@ -228,7 +207,6 @@ void RKSettingsModuleCommandEditor::applyChanges () {
 	completion_settings_widget->applyChanges ();
 
 	autosave_enabled = autosave_enabled_box->isChecked ();
-	autosave_keep = autosave_keep_box->isChecked ();
 	autosave_interval = autosave_interval_box->intValue ();
 
 	num_recent_files = num_recent_files_box->intValue ();
@@ -257,7 +235,7 @@ void RKSettingsModuleCommandEditor::saveSettings (KConfig *config) {
 	completion_settings.saveSettings(cg);
 
 	cg.writeEntry ("Autosave enabled", autosave_enabled);
-	cg.writeEntry ("Autosave keep saves", autosave_keep);
+	autosave_keep.saveConfig(cg);
 	cg.writeEntry ("Autosave interval", autosave_interval);
 
 	cg.writeEntry ("Max number of recent files", num_recent_files);
@@ -271,7 +249,7 @@ void RKSettingsModuleCommandEditor::loadSettings (KConfig *config) {
 	completion_settings.loadSettings(cg);
 
 	autosave_enabled = cg.readEntry ("Autosave enabled", true);
-	autosave_keep = cg.readEntry ("Autosave keep saves", false);
+	autosave_keep.loadConfig(cg);
 	autosave_interval = cg.readEntry ("Autosave interval", 5);
 
 	num_recent_files = cg.readEntry ("Max number of recent files", 10);

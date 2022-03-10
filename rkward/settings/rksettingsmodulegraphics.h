@@ -2,7 +2,7 @@
                           rksettingsmodulegraphics  -  description
                              -------------------
     begin                : Mon Sep 13 2010
-    copyright            : (C) 2010-2018 by Thomas Friedrichsmeier
+    copyright            : (C) 2010-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -25,7 +25,6 @@ class QLineEdit;
 class QGroupBox;
 class RKSpinBox;
 class QSpinBox;
-class QCheckBox;
 class QButtonGroup;
 class QRadioButton;
 
@@ -82,8 +81,6 @@ private:
 	RKSpinBox *graphics_height_box;
 	RKSpinBox *graphics_width_box;
 
-	QCheckBox *kde_printing_box;
-
 	static DefaultDevice default_device;
 	static QString default_device_other;
 	static StandardDevicesMode replace_standard_devices;
@@ -95,7 +92,7 @@ private:
 	static double graphics_height;
 	static double graphics_width;
 
-	static bool options_kde_printing;
+	static RKConfigValue<bool> options_kde_printing;
 };
 
 #endif

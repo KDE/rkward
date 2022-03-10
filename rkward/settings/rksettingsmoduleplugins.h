@@ -2,7 +2,7 @@
                           rksettingsmoduleplugins  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004-2020 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -27,7 +27,6 @@
 class RKMultiStringSelectorV2;
 class RKSettingsModulePluginsModel;
 class QButtonGroup;
-class QCheckBox;
 class RKSpinBox;
 
 /** The settings-module for plugin specific settings

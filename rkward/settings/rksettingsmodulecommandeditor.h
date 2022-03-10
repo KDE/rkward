@@ -2,7 +2,7 @@
                           rksettingsmodulecommandeditor  -  description
                              -------------------
     begin                : Tue Oct 23 2007
-    copyright            : (C) 2007-2020 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -21,7 +21,6 @@
 #include "../core/robject.h"
 
 class RKSpinBox;
-class QCheckBox;
 class QLineEdit;
 class QGroupBox;
 class QComboBox;
@@ -82,9 +81,6 @@ private:
 	RKSpinBox* auto_completion_min_chars_box;
 	RKSpinBox* auto_completion_timeout_box;
 	QGroupBox* auto_completion_enabled_box;
-	QCheckBox* auto_completion_cursor_activated_box;
-	QCheckBox* tabkey_invokes_completion_box;
-	QCheckBox* completion_type_enabled_box[RKCodeCompletionSettings::N_COMPLETION_CATEGORIES];
 	QComboBox* cursor_navigates_completions_box;
 	QComboBox* completion_list_member_operator_box;
 	QComboBox* completion_slot_operator_box;
@@ -124,17 +120,14 @@ public:
 	static int maxNumRecentFiles () { return num_recent_files; };
 	static QString scriptFileFilter () { return script_file_filter; };
 	static bool matchesScriptFileFilter (const QString &filename);
-public slots:
-	void settingChanged ();
 private:
 	static RKCodeCompletionSettings completion_settings;
 	static bool autosave_enabled;
-	static bool autosave_keep;
+	static RKConfigValue<bool> autosave_keep;
 	static int autosave_interval;
 
 	RKCodeCompletionSettingsWidget *completion_settings_widget;
 	QGroupBox* autosave_enabled_box;
-	QCheckBox* autosave_keep_box;
 	RKSpinBox* autosave_interval_box;
 
 	RKSpinBox* num_recent_files_box;

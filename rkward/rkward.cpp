@@ -426,7 +426,7 @@ void RKWardMainWindow::configureCarbonCopy () {
 	QDialog *dialog = new QDialog ();
 	dialog->setWindowTitle (i18n ("Carbon Copy Settings"));
 	QVBoxLayout *layout = new QVBoxLayout (dialog);
-	RKCarbonCopySettings *settings = new RKCarbonCopySettings (dialog);
+	RKCarbonCopySettings *settings = new RKCarbonCopySettings (dialog, nullptr);
 	layout->addWidget (settings);
 
 	RKDialogButtonBox *box = new RKDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Apply | QDialogButtonBox::Cancel, dialog);

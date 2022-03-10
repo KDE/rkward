@@ -2,7 +2,7 @@
                           rksettingsmoduleconsole  -  description
                              -------------------
     begin                : Sun Oct 16 2005
-    copyright            : (C) 2005-2020 by Thomas Friedrichsmeier
+    copyright            : (C) 2005-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -21,7 +21,7 @@
 #include <KSharedConfig>
 
 #include <qlayout.h>
-#include <qcheckbox.h>
+#include <QCheckBox>
 #include <qlabel.h>
 #include <QVBoxLayout>
 #include <QComboBox>
@@ -35,12 +35,12 @@
 // static
 
 RKCodeCompletionSettings RKSettingsModuleConsole::completion_settings;
-bool RKSettingsModuleConsole::save_history;
+RKConfigValue<bool> RKSettingsModuleConsole::save_history {"save history", true};
 uint RKSettingsModuleConsole::max_history_length;
 uint RKSettingsModuleConsole::max_console_lines;
-bool RKSettingsModuleConsole::pipe_user_commands_through_console;
+RKConfigValue<bool> RKSettingsModuleConsole::pipe_user_commands_through_console {"pipe user commands through console", true};
 RKSettingsModuleConsole::PipedCommandsHistoryMode RKSettingsModuleConsole::add_piped_commands_to_history;
-bool RKSettingsModuleConsole::context_sensitive_history_by_default;
+RKConfigValue<bool> RKSettingsModuleConsole::context_sensitive_history_by_default {"command history defaults to context sensitive", false};
 
 RKSettingsModuleConsole::RKSettingsModuleConsole (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -49,10 +49,7 @@ RKSettingsModuleConsole::RKSettingsModuleConsole (RKSettings *gui, QWidget *pare
 
 	vbox->addWidget (completion_settings_widget = new RKCodeCompletionSettingsWidget (this, this, &completion_settings, false));
 
-	save_history_box = new QCheckBox (i18n ("Load/Save command history"), this);
-	save_history_box->setChecked (save_history);
-	connect (save_history_box, &QCheckBox::stateChanged, this, &RKSettingsModuleConsole::changedSetting);
-	vbox->addWidget (save_history_box);
+	vbox->addWidget (save_history.makeCheckbox(i18n("Load/Save command history"), this));
 
 	vbox->addWidget (new QLabel (i18n ("Maximum length of command history"), this));
 	max_history_length_spinner = new QSpinBox(this);
@@ -76,10 +73,8 @@ RKSettingsModuleConsole::RKSettingsModuleConsole (RKSettings *gui, QWidget *pare
 
 	vbox->addSpacing (2*RKGlobals::spacingHint ());
 
-	pipe_user_commands_through_console_box = new QCheckBox (i18n ("Run commands from script editor through console"), this);
-	pipe_user_commands_through_console_box->setChecked (pipe_user_commands_through_console);
-	connect (pipe_user_commands_through_console_box, &QCheckBox::stateChanged, this, &RKSettingsModuleConsole::changedSetting);
-	vbox->addWidget (pipe_user_commands_through_console_box);
+	auto pipe_user_commands_through_console_box = pipe_user_commands_through_console.makeCheckbox(i18n("Run commands from script editor through console"), this);
+	vbox->addWidget(pipe_user_commands_through_console_box);
 
 	vbox->addWidget (new QLabel (i18n ("Also add those commands to console history"), this));
 	add_piped_commands_to_history_box = new QComboBox (this);
@@ -88,15 +83,13 @@ RKSettingsModuleConsole::RKSettingsModuleConsole (RKSettings *gui, QWidget *pare
 	add_piped_commands_to_history_box->insertItem ((int) AlwaysAdd, i18n ("Add all commands"));
 	add_piped_commands_to_history_box->setCurrentIndex ((int) add_piped_commands_to_history);
 	connect (add_piped_commands_to_history_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &RKSettingsModuleConsole::changedSetting);
-	add_piped_commands_to_history_box->setEnabled (pipe_user_commands_through_console_box->isChecked ());
+	add_piped_commands_to_history_box->setEnabled(pipe_user_commands_through_console_box->isChecked());
+	connect(pipe_user_commands_through_console_box, &QCheckBox::stateChanged, add_piped_commands_to_history_box, &QCheckBox::setEnabled);
 	vbox->addWidget (add_piped_commands_to_history_box);
 
 	vbox->addSpacing (2*RKGlobals::spacingHint ());
 
-	reverse_context_mode_box = new QCheckBox (i18n ("Command history is context sensitive by default"), this);
-	connect (reverse_context_mode_box, &QCheckBox::stateChanged, this, &RKSettingsModuleConsole::changedSetting);
-	reverse_context_mode_box->setChecked (context_sensitive_history_by_default);
-	vbox->addWidget (reverse_context_mode_box);
+	vbox->addWidget (context_sensitive_history_by_default.makeCheckbox(i18n("Command history is context sensitive by default"), this));
 
 	vbox->addStretch ();
 }
@@ -108,8 +101,6 @@ RKSettingsModuleConsole::~RKSettingsModuleConsole () {
 void RKSettingsModuleConsole::changedSetting (int) {
 	RK_TRACE (SETTINGS);
 	change ();
-
-	add_piped_commands_to_history_box->setEnabled (pipe_user_commands_through_console_box->isChecked ());
 }
 
 //static
@@ -125,12 +116,12 @@ void RKSettingsModuleConsole::saveSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
 	KConfigGroup cg = config->group ("Console Settings");
-	cg.writeEntry ("save history", save_history);
+	save_history.saveConfig(cg);
 	cg.writeEntry ("max history length", max_history_length);
 	cg.writeEntry ("max console lines", max_console_lines);
-	cg.writeEntry ("pipe user commands through console", pipe_user_commands_through_console);
+	pipe_user_commands_through_console.saveConfig(cg);
 	cg.writeEntry ("add piped commands to history", (int) add_piped_commands_to_history);
-	cg.writeEntry ("command history defaults to context sensitive", context_sensitive_history_by_default);
+	context_sensitive_history_by_default.saveConfig(cg);
 	completion_settings.saveSettings(cg);
 }
 
@@ -139,12 +130,12 @@ void RKSettingsModuleConsole::loadSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
 	KConfigGroup cg = config->group ("Console Settings");
-	save_history = cg.readEntry ("save history", true);
+	save_history.loadConfig(cg);
 	max_history_length = cg.readEntry ("max history length", 100);
 	max_console_lines = cg.readEntry ("max console lines", 500);
-	pipe_user_commands_through_console = cg.readEntry ("pipe user commands through console", true);
+	pipe_user_commands_through_console.loadConfig(cg);
 	add_piped_commands_to_history = (PipedCommandsHistoryMode) cg.readEntry ("add piped commands to history", (int) AddSingleLine);
-	context_sensitive_history_by_default = cg.readEntry ("command history defaults to context sensitive", false);
+	context_sensitive_history_by_default.loadConfig(cg);
 	completion_settings.tabkey_invokes_completion = true;
 	completion_settings.loadSettings(cg);
 }
@@ -172,12 +163,9 @@ void RKSettingsModuleConsole::applyChanges () {
 	RK_TRACE (SETTINGS);
 
 	completion_settings_widget->applyChanges();
-	save_history = save_history_box->isChecked ();
 	max_history_length = max_history_length_spinner->value ();
 	max_console_lines = max_console_lines_spinner->value ();
-	pipe_user_commands_through_console = pipe_user_commands_through_console_box->isChecked ();
 	add_piped_commands_to_history = (PipedCommandsHistoryMode) add_piped_commands_to_history_box->currentIndex ();
-	context_sensitive_history_by_default = reverse_context_mode_box->isChecked ();
 }
 
 void RKSettingsModuleConsole::save (KConfig *config) {

@@ -2,7 +2,7 @@
                           rksettingsmoduler  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004-2018 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -22,7 +22,6 @@
 #include <qstring.h>
 #include <qstringlist.h>
 
-class QCheckBox;
 class QComboBox;
 class QLineEdit;
 class MultiStringSelector;
@@ -145,15 +144,13 @@ private:
 	static QString libLocsCommand ();
 
 	MultiStringSelector *libloc_selector;
-	QCheckBox *archive_packages_box;
-	QCheckBox *source_packages_box;
 	MultiStringSelector *repository_selector;
 	QLineEdit* cran_mirror_input;
 
 	static QString cran_mirror_url;
 	static QStringList liblocs;
-	static bool archive_packages;
-	static bool source_packages;
+	static RKConfigValue<bool> archive_packages;
+	static RKConfigValue<bool> source_packages;
 	static QStringList package_repositories;
 
 	friend class RInterface;

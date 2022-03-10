@@ -2,7 +2,7 @@
                           rksettingsmoduledebug -  description
                              -------------------
     begin                : Tue Oct 23 2007
-    copyright            : (C) 2007-2018 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 

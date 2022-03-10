@@ -2,7 +2,7 @@
                           rksettingsmodulegeneral  -  description
                              -------------------
     begin                : Fri Jul 30 2004
-    copyright            : (C) 2004-2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -42,8 +42,8 @@ QString RKSettingsModuleGeneral::files_path;
 QString RKSettingsModuleGeneral::new_files_path;
 StartupDialog::Result RKSettingsModuleGeneral::startup_action;
 RKSettingsModuleGeneral::WorkplaceSaveMode RKSettingsModuleGeneral::workplace_save_mode;
-bool RKSettingsModuleGeneral::cd_to_workspace_dir_on_load;
-bool RKSettingsModuleGeneral::show_help_on_startup;
+RKConfigValue<bool> RKSettingsModuleGeneral::cd_to_workspace_dir_on_load {"cd to workspace on load", true};
+RKConfigValue<bool> RKSettingsModuleGeneral::show_help_on_startup {"show help on startup", true};
 int RKSettingsModuleGeneral::warn_size_object_edit;
 RKSettingsModuleGeneral::RKMDIFocusPolicy RKSettingsModuleGeneral::mdi_focus_policy;
 RKSettingsModuleGeneral::RKWardConfigVersion RKSettingsModuleGeneral::stored_config_version;
@@ -81,10 +81,7 @@ RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *pare
 	connect (startup_action_choser, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), this, &RKSettingsModuleGeneral::settingChanged);
 	main_vbox->addWidget (startup_action_choser);
 
-	show_help_on_startup_box = new QCheckBox (i18n ("Show RKWard Help on Startup"), this);
-	show_help_on_startup_box->setChecked (show_help_on_startup);
-	connect (show_help_on_startup_box, &QCheckBox::stateChanged, this, &RKSettingsModuleGeneral::settingChanged);
-	main_vbox->addWidget (show_help_on_startup_box);
+	main_vbox->addWidget(show_help_on_startup.makeCheckbox(i18n("Show RKWard Help on Startup"), this));
 
 	QGroupBox* group_box = new QGroupBox (i18n ("Initial working directory (*)"), this);
 	QHBoxLayout *hlayout = new QHBoxLayout (group_box);
@@ -129,10 +126,7 @@ RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *pare
 
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 
-	cd_to_workspace_dir_on_load_box = new QCheckBox (i18n ("When loading a workspace, change to the corresponding directory."), this);
-	cd_to_workspace_dir_on_load_box->setChecked (cd_to_workspace_dir_on_load);
-	connect (cd_to_workspace_dir_on_load_box, &QCheckBox::stateChanged, this, &RKSettingsModuleGeneral::settingChanged);
-	main_vbox->addWidget (cd_to_workspace_dir_on_load_box);
+	main_vbox->addWidget(cd_to_workspace_dir_on_load.makeCheckbox(i18n("When loading a workspace, change to the corresponding directory."), this));
 
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 
@@ -208,9 +202,7 @@ void RKSettingsModuleGeneral::applyChanges () {
 	RK_TRACE (SETTINGS);
 	new_files_path = files_choser->getLocation ();
 	startup_action = static_cast<StartupDialog::Result> (startup_action_choser->itemData (startup_action_choser->currentIndex ()).toInt ());
-	show_help_on_startup = show_help_on_startup_box->isChecked ();
 	workplace_save_mode = static_cast<WorkplaceSaveMode> (workplace_save_chooser->checkedId ());
-	cd_to_workspace_dir_on_load = cd_to_workspace_dir_on_load_box->isChecked ();
 	warn_size_object_edit = warn_size_object_edit_box->intValue ();
 	mdi_focus_policy = static_cast<RKMDIFocusPolicy> (mdi_focus_policy_chooser->currentIndex ());
 	initial_dir = static_cast<InitialDirectory> (initial_dir_chooser->itemData (initial_dir_chooser->currentIndex ()).toInt ());
@@ -231,14 +223,14 @@ void RKSettingsModuleGeneral::saveSettings (KConfig *config) {
 
 	cg = config->group ("General");
 	cg.writeEntry ("startup action", (int) startup_action);
-	cg.writeEntry ("show help on startup", show_help_on_startup);
+	show_help_on_startup.saveConfig(cg);
 	cg.writeEntry ("initial dir mode", (int) initial_dir);
 	cg.writeEntry ("initial dir spec", (initial_dir == LastUsedDirectory) ? QDir::currentPath() : initial_dir_specification);
 	cg.writeEntry ("last known data dir", RKCommonFunctions::getRKWardDataDir ());
 
 	cg = config->group ("Workplace");
 	cg.writeEntry ("save mode", (int) workplace_save_mode);
-	cg.writeEntry ("cd to workspace on load", cd_to_workspace_dir_on_load);
+	cd_to_workspace_dir_on_load.saveConfig(cg);
 
 	cg = config->group ("Editor");
 	cg.writeEntry ("large object warning limit", warn_size_object_edit);
@@ -261,7 +253,7 @@ void RKSettingsModuleGeneral::loadSettings (KConfig *config) {
 	previous_rkward_data_dir = cg.readEntry ("last known data dir", RKCommonFunctions::getRKWardDataDir ());
 	installation_moved = (previous_rkward_data_dir != RKCommonFunctions::getRKWardDataDir ()) && !previous_rkward_data_dir.isEmpty ();
 	startup_action = (StartupDialog::Result) cg.readEntry ("startup action", (int) StartupDialog::NoSavedSetting);
-	show_help_on_startup = cg.readEntry ("show help on startup", true);
+	show_help_on_startup.loadConfig(cg);
 	initial_dir = (InitialDirectory) cg.readEntry ("initial dir mode",
 #ifndef Q_OS_WIN
 		(int) CurrentDirectory
@@ -276,7 +268,7 @@ void RKSettingsModuleGeneral::loadSettings (KConfig *config) {
 
 	cg = config->group ("Workplace");
 	workplace_save_mode = (WorkplaceSaveMode) cg.readEntry ("save mode", (int) SaveWorkplaceWithWorkspace);
-	cd_to_workspace_dir_on_load = cg.readEntry ("cd to workspace on load", true);
+	cd_to_workspace_dir_on_load.loadConfig(cg);
 
 	cg = config->group ("Editor");
 	warn_size_object_edit = cg.readEntry ("large object warning limit", 250000);

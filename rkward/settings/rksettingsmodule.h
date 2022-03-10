@@ -2,7 +2,7 @@
                           rksettingsmodule  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004-2018 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -25,6 +25,10 @@
 class KConfig;
 class RKSettings;
 class RCommandChain;
+class QCheckBox;
+class RKSettingsModule;
+class RKSettingsModuleWidget;
+class RKSetupWizardItem;
 
 /** Base class for RKWard config settings.
  *
@@ -56,6 +60,9 @@ public:
 	void setDefaultValue(const T& value) { RKConfigValue<T>::value = value; }
 	operator T() const { return(value); }
 	RKConfigValue& operator= (const T v) { value = v; return *this; };
+
+/** Only for bool values: convenience function to create a fully connected checkbox for this option */
+	template<typename TT = T, typename std::enable_if<std::is_same<TT, bool>::value>::type* = nullptr> QCheckBox* makeCheckbox(const QString& label, RKSettingsModuleWidget* module);
 private:
 	T value;
 };
@@ -90,18 +97,39 @@ private:
 	std::vector<RKConfigBase*> values;
 };
 
+/** Base class for UI widgets operating on an RKSettingsModule. For now this is used, only where similar settings are shared across modules (e.g. code completion). Eventually, this could be used to disentangle RKSettingsModule from QWidget. */
+class RKSettingsModuleWidget : public QWidget {
+	Q_OBJECT
+public:
+	RKSettingsModuleWidget(QWidget *parent, RKSettingsModule *parent_module);
+	~RKSettingsModuleWidget() {};
+	virtual void applyChanges() = 0;
+/** Mark this module as "changed" (propagates to parent module) */
+	void change ();
+	bool hasChanges () { return changed; };
+signals:
+	void settingsChanged();
+	void apply();
+protected:
+	bool changed;
+/** temporary indirection until applyChanges() has been obsolete, everywhere */
+	void doApply() {
+		applyChanges();
+		emit(apply());
+		changed = false;
+	}
+};
+
 /**
 Base class for settings modules. Provides some pure virtual calls.
 
 @author Thomas Friedrichsmeier
 */
-class RKSettingsModule : public QWidget {
+class RKSettingsModule : public RKSettingsModuleWidget {
 public:
 	RKSettingsModule (RKSettings *gui, QWidget *parent);
 	virtual ~RKSettingsModule ();
 
-	bool hasChanges () { return changed; };
-	virtual void applyChanges () = 0;
 	virtual void save (KConfig *config) = 0;
 	
 	virtual QString caption () = 0;
@@ -110,29 +138,9 @@ be inserted into this chain. It's safe to use this unconditionally, as if there 
 	RCommandChain *commandChain () { return chain; };
 
 	virtual QUrl helpURL () { return QUrl (); };
-protected:
-friend class RKSettingsModuleWidget;
-	void change ();
-
-	bool changed;
 private:
-	RKSettings *gui;
 friend class RKSettings;
 	static RCommandChain *chain;
 };
-
-/** Base class for UI widgets operating on an RKSettingsModule. For now this is used, only where similar settings are shared across modules (e.g. code completion). Eventually, this could be used to disentangle RKSettingsModule from QWidget. */
-class RKSettingsModuleWidget : public QWidget {
-public:
-	RKSettingsModuleWidget(QWidget *parent, RKSettingsModule *_module) : QWidget(parent), module(_module) {};
-	~RKSettingsModuleWidget() {};
-	virtual void applyChanges() = 0;
-protected:
-	void change() { module->change(); }
-private:
-	RKSettingsModule *module;
-};
-
-class RKSetupWizardItem;
 
 #endif
