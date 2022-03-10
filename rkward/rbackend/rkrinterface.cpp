@@ -645,7 +645,7 @@ GenericRRequestResult RInterface::processPlainGenericRequest(const QStringList &
 			command_logfile.close ();
 		} else {
 			if (command_logfile_mode != NotRecordingCommands) {
-				return GenericRRequestResult(QVariant(), i18n("Attempt to start recording, while already recording commands. Ignoring.)"));
+				return GenericRRequestResult(QVariant(), i18n("Attempt to start recording, while already recording commands. Ignoring."));
 			} else {
 				command_logfile.setFileName (filename);
 				bool ok = command_logfile.open (QIODevice::WriteOnly | QIODevice::Truncate);
