@@ -90,7 +90,7 @@ bool RKSaveAgent::saveWorkspace(const QUrl& _url) {
 
 	RKWorkplace::mainWorkplace()->saveWorkplace(url, save_chain);
 	auto command = new RCommand("save.image(" + RObject::rQuote(url.toLocalFile()) + ')', RCommand::App);
-	RKProgressControl control(RKWardMainWindow::getMain(), i18n("Workspace is being saved. <b>Hint:</b>Should this take an unusually long time, on a regular sized workspace, this may be due to other commands still pending completion in the R backend."), i18n("Saving workspace"), RKProgressControl::CancellableNoProgress);
+	RKProgressControl control(RKWardMainWindow::getMain(), i18n("Workspace is being saved. <b>Hint:</b> Should this take an unusually long time, on a regular sized workspace, this may be due to other commands still pending completion in the R backend."), i18n("Saving workspace"), RKProgressControl::CancellableNoProgress);
 	control.addRCommand(command, true);
 	bool success = false;
 	QObject::connect(command->notifier(), &RCommandNotifier::commandFinished, [&success, command]() { success = command->succeeded(); });
