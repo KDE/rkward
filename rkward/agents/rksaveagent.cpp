@@ -98,7 +98,7 @@ bool RKSaveAgent::saveWorkspace(const QUrl& _url) {
 	control.doModal(false);
 	RKGlobals::rInterface()->closeChain(save_chain);
 
-	if (!success) KMessageBox::error(RKWardMainWindow::getMain(), i18n("Save failed"), i18n("An error occured while trying to save the workspace. You data was <b>not</b> saved."));
+	if (!success) KMessageBox::error(RKWardMainWindow::getMain(), i18n("Save failed"), i18n("An error occurred while trying to save the workspace. You data was <b>not</b> saved."));
 	RKWorkplace::mainWorkplace()->setWorkspaceURL(url, true);
 
 	return success;

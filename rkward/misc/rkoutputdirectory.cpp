@@ -153,7 +153,7 @@ GenericRRequestResult RKOutputDirectory::exportAs (const QString& _dest, RKOutpu
 		dialog.setOption(QFileDialog::DontConfirmOverwrite, true);  // custom handling below
 
 		if (dialog.exec () != QDialog::Accepted) {
-			return GenericRRequestResult::makeError(i18n("File selection cancelled"));
+			return GenericRRequestResult::makeError(i18n("File selection canceled"));
 		}
 
 		dest = QDir::cleanPath(dialog.selectedFiles().value(0));
@@ -165,7 +165,7 @@ GenericRRequestResult RKOutputDirectory::exportAs (const QString& _dest, RKOutpu
 			const QString warning = i18n("Are you sure you want to overwrite the existing file '%1'?", dest);
 			KMessageBox::ButtonCode res = KMessageBox::warningContinueCancel(RKWardMainWindow::getMain(), warning, i18n("Overwrite?"), KStandardGuiItem::overwrite(),
 												KStandardGuiItem::cancel(), QString(), KMessageBox::Options(KMessageBox::Notify | KMessageBox::Dangerous));
-			if (KMessageBox::Continue != res) return GenericRRequestResult::makeError(i18n("User cancelled"));
+			if (KMessageBox::Continue != res) return GenericRRequestResult::makeError(i18n("User canceled"));
 		} else if (overwrite != Force) {
 			return GenericRRequestResult::makeError(i18n("Not overwriting existing file"));
 		}
@@ -194,7 +194,7 @@ GenericRRequestResult RKOutputDirectory::exportZipInternal(const QString &dest) 
 	}
 
 	if (QFile(dest).exists()) {
-		if (!QFile(dest).remove()) return GenericRRequestResult::makeError(i18n("Failure to remove existing file %1. Missing permissions?s", dest));
+		if (!QFile(dest).remove()) return GenericRRequestResult::makeError(i18n("Failure to remove existing file %1. Missing permissions?", dest));
 	}
 	ok = QFile(tempname).copy(dest);
 	QFile(tempname).remove();
@@ -255,7 +255,7 @@ GenericRRequestResult RKOutputDirectory::revert(OverwriteBehavior discard) {
 		}
 	}
 	if (discard != Force) {
-		return GenericRRequestResult::makeError(i18n("User cancelled."));
+		return GenericRRequestResult::makeError(i18n("User canceled."));
 	}
 
 	return importZipInternal(save_filename);
@@ -352,7 +352,7 @@ GenericRRequestResult RKOutputDirectory::purge(RKOutputDirectory::OverwriteBehav
 		if (discard == Ask) {
 			auto res = KMessageBox::questionYesNoCancel(RKWardMainWindow::getMain(), i18n("The output has been modified, and closing it will discard all changes. What do you want to do?"), i18n("Discard unsaved changes?"), KStandardGuiItem::discard(), KStandardGuiItem::save(), KStandardGuiItem::cancel());
 			if (res == KMessageBox::Cancel) {
-				return GenericRRequestResult::makeError(i18n("User cancelled"));
+				return GenericRRequestResult::makeError(i18n("User canceled"));
 			}
 			if (res == KMessageBox::No) {
 				auto ret = save();

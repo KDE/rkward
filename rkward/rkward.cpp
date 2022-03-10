@@ -499,7 +499,7 @@ void RKWardMainWindow::initActions() {
 	new_output = actionCollection ()->addAction("new_output", this, SLOT(slotNewOutput()));
 	new_output->setText(i18n("Output document"));
 	new_output->setIcon(RKStandardIcons::getIcon(RKStandardIcons::WindowOutput));
-	new_output->setStatusTip(i18n("Creates and activates a new output docuemnt"));
+	new_output->setStatusTip(i18n("Creates and activates a new output document"));
 
 	fileOpenScript = actionCollection()->addAction(KStandardAction::Open, "file_open_script", this, SLOT(slotOpenCommandEditor()));
 	actionCollection()->setDefaultShortcut(fileOpenScript, Qt::ControlModifier + Qt::AltModifier + Qt::Key_O);

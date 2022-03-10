@@ -569,11 +569,11 @@ GenericRRequestResult RInterface::processPlainGenericRequest(const QStringList &
 		return GenericRRequestResult(RKCommandHighlighter::commandToHTML(calllist.value(1)));
 	} else if (call == "quit") {
 		RKWardMainWindow::getMain ()->close ();
-		// if we're still alive, quitting was cancelled
-		return GenericRRequestResult::makeError(i18n("Quitting was cancelled"));
+		// if we're still alive, quitting was canceled
+		return GenericRRequestResult::makeError(i18n("Quitting was canceled"));
 	} else if (call == "preLocaleChange") {
 		int res = KMessageBox::warningContinueCancel (0, i18n ("A command in the R backend is trying to change the character encoding. While RKWard offers support for this, and will try to adjust to the new locale, this operation may cause subtle bugs, if data windows are currently open. Also the feature is not well tested, yet, and it may be advisable to save your workspace before proceeding.\nIf you have any data editor opened, or in any doubt, it is recommended to close those first (this will probably be auto-detected in later versions of RKWard). In this case, please choose 'Cancel' now, then close the data windows, save, and retry."), i18n ("Locale change"));
-		if (res != KMessageBox::Continue) return GenericRRequestResult::makeError(i18n("Changing the locale was cancelled by user"));
+		if (res != KMessageBox::Continue) return GenericRRequestResult::makeError(i18n("Changing the locale was canceled by user"));
 	} else if (call == "listPlugins") {
 		RK_ASSERT (calllist.count () == 1);
 		return GenericRRequestResult(RKComponentMap::getMap()->listPlugins());

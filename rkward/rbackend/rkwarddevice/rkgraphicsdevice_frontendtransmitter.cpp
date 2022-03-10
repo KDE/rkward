@@ -197,7 +197,7 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			if (devnum) device = RKGraphicsDevice::devices.value (devnum);
 			if (!device) {
 				if (opcode == RKDCancel) {
-					RK_DEBUG (GRAPHICS_DEVICE, DL_WARNING, "Graphics operation cancelled");
+					RK_DEBUG (GRAPHICS_DEVICE, DL_WARNING, "Graphics operation canceled");
 					emit (stopInteraction());
 				} else if (opcode == RKDQueryResolution) {
 					QDesktopWidget *desktop = QApplication::desktop ();
