@@ -2,7 +2,7 @@
                           rksettings  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004-2020 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -77,6 +77,8 @@ void RKSettings::configureSettings (const QString& page, QWidget *parent, RComma
 		RKSettings::configureSettings(RKSettings::PageOutput, parent, chain);
 	} else if (page == QStringLiteral("general")) {
 		RKSettings::configureSettings(RKSettings::PageGeneral, parent, chain);
+	} else if (page == QStringLiteral("addons")) {
+		RKSettings::configureSettings(RKSettings::SuperPageAddons, parent, chain);
 	} else {
 		RK_ASSERT(page.isEmpty());
 		RKSettings::configureSettings(RKSettings::NoPage, parent, chain);
