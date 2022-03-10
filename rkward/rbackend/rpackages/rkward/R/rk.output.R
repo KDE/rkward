@@ -139,7 +139,7 @@ Do not write anything to the target filename, directly! This is purely for infor
 		out$activate()
 		wd = out$.workingDir()   # Don't do this at home, please. For internal use, only, and might change
 
-		stopifnot(file.copy(f, file.path(wd, "index.html"), overwrite=TRUE))
+		cat(gsub(paste("file://", rk.home(), sep=""), "./", readLines(f)), file=file.path(wd, "index.html"), sep="\n")
 		stopifnot(all(file.copy(files, file.path(wd, basename(files)), overwrite=TRUE)))
 		out$view()
 
