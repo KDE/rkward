@@ -36,12 +36,11 @@ public:
 	RKSettingsModuleWatch (RKSettings *gui, QWidget *parent);
 	~RKSettingsModuleWatch ();
 
-	static void saveSettings (KConfig *config);
-	static void loadSettings (KConfig *config);
+	void save(KConfig *config) override { syncConfig(config, RKConfigBase::SaveConfig); };
+	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a);
 	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
 
 	void applyChanges () override;
-	void save (KConfig *config) override;
 	void validateGUI ();
 
 	static bool shouldShowInput (RCommand *command);
@@ -57,10 +56,10 @@ public slots:
 private:
 	enum FilterType { ShowInput=1, ShowOutput=2, ShowError=4, RaiseWindow=8 };
 
-	static int plugin_filter;
-	static int app_filter;
-	static int sync_filter;
-	static int user_filter;
+	static RKConfigValue<int> plugin_filter;
+	static RKConfigValue<int> app_filter;
+	static RKConfigValue<int> sync_filter;
+	static RKConfigValue<int> user_filter;
 	
 	struct FilterBoxes {
 		QCheckBox *input;
@@ -77,7 +76,7 @@ private:
 	int getFilterSettings (FilterBoxes *boxes);
 	FilterBoxes *addFilterSettings (QWidget *parent, QGridLayout *layout, int row, const QString &label, int state);
 
-	static uint max_log_lines;
+	static RKConfigValue<uint> max_log_lines;
 
 	QSpinBox *max_log_lines_spinner;
 };

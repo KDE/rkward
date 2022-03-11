@@ -32,8 +32,7 @@ public:
 	RKCodeCompletionSettings() {};
 	~RKCodeCompletionSettings() {};
 
-	void loadSettings(KConfigGroup &config) { group.loadConfig(config); };
-	void saveSettings(KConfigGroup &config) { group.saveConfig(config); };
+	void syncConfig(KConfigGroup &cg, RKConfigBase::ConfigSyncAction a) { group.syncConfig(cg, a); };
 
 	// NOTE: Don't insert values inbetween existing values, without also adjusting the sloppy config load/save/apply code
 	enum CompletionCategories {
@@ -102,10 +101,8 @@ public:
 	~RKSettingsModuleCommandEditor ();
 	
 	void applyChanges () override;
-	void save (KConfig *config) override;
-
-	static void saveSettings (KConfig *config);
-	static void loadSettings (KConfig *config);
+	void save (KConfig *config) override { syncConfig(config, RKConfigBase::SaveConfig); };
+	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction);
 	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
 
 	QString caption () override;
@@ -122,9 +119,9 @@ public:
 	static bool matchesScriptFileFilter (const QString &filename);
 private:
 	static RKCodeCompletionSettings completion_settings;
-	static bool autosave_enabled;
+	static RKConfigValue<bool> autosave_enabled;
 	static RKConfigValue<bool> autosave_keep;
-	static int autosave_interval;
+	static RKConfigValue<int> autosave_interval;
 
 	RKCodeCompletionSettingsWidget *completion_settings_widget;
 	QGroupBox* autosave_enabled_box;
@@ -132,8 +129,8 @@ private:
 
 	RKSpinBox* num_recent_files_box;
 	QLineEdit* script_file_filter_box;
-	static int num_recent_files;
-	static QString script_file_filter;
+	static RKConfigValue<int> num_recent_files;
+	static RKConfigValue<QString> script_file_filter;
 };
 
 #endif

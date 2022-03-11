@@ -54,10 +54,8 @@ public:
 	};
 
 	void applyChanges () override;
-	void save (KConfig *config) override;
-
-	static void saveSettings (KConfig *config);
-	static void loadSettings (KConfig *config);
+	void save(KConfig *config) override { syncConfig(config, RKConfigBase::SaveConfig); };
+	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a);
 	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
 
 	QString caption () override;
@@ -120,21 +118,21 @@ private:
 	QComboBox *initial_dir_chooser;
 	GetFileNameWidget *initial_dir_custom_chooser;
 
-	static StartupDialog::Result startup_action;
+	static RKConfigValue<StartupDialog::Result, int> startup_action;
 	static QString files_path;
 /** since changing the files_path can not easily be done while in an active session, the setting should only take effect on the next start. This string stores a changed setting, while keeping the old one intact as long as RKWard is running */
-	static QString new_files_path;
-	static WorkplaceSaveMode workplace_save_mode;
+	static RKConfigValue<QString> new_files_path;
+	static RKConfigValue<WorkplaceSaveMode, int> workplace_save_mode;
 	static RKConfigValue<bool> cd_to_workspace_dir_on_load;
 	static RKConfigValue<bool> show_help_on_startup;
-	static int warn_size_object_edit;
-	static RKMDIFocusPolicy mdi_focus_policy;
-	static RKWardConfigVersion stored_config_version;
-	static bool config_exists;
-	static InitialDirectory initial_dir;
-	static QString initial_dir_specification;
-	static bool rkward_version_changed;
+	static RKConfigValue<int> warn_size_object_edit;
+	static RKConfigValue<RKMDIFocusPolicy, int> mdi_focus_policy;
+	static RKConfigValue<InitialDirectory, int> initial_dir;
+	static RKConfigValue<QString> initial_dir_specification;
 	static QString previous_rkward_data_dir;
+	static RKWardConfigVersion stored_config_version;
+	static bool rkward_version_changed;
+	static bool config_exists;
 	static bool installation_moved;
 	static QUrl generic_filedialog_start_url;
 };

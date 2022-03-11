@@ -40,10 +40,8 @@ public:
 	~RKSettingsModuleR ();
 
 	void applyChanges () override;
-	void save (KConfig *config) override;
-
-	static void saveSettings (KConfig *config);
-	static void loadSettings (KConfig *config);
+	void save(KConfig *config) override { syncConfig(config, RKConfigBase::SaveConfig); };
+	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a);
 	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
 
 	QString caption () override;
@@ -75,20 +73,20 @@ private:
 	QTextEdit *further_input;
 	MultiStringSelector *addpaths_selector;
 
-	static QString options_outdec;
-	static int options_width;
-	static int options_warn;
-	static int options_warningslength;
-	static int options_maxprint;
-	static bool options_keepsource;
-	static bool options_keepsourcepkgs;
-	static int options_expressions;
-	static int options_digits;
-	static bool options_checkbounds;
-	static QString options_editor;
-	static QString options_pager;
-	static QString options_further;
-	static QStringList options_addpaths;
+	static RKConfigValue<QString> options_outdec;
+	static RKConfigValue<int> options_width;
+	static RKConfigValue<int> options_warn;
+	static RKConfigValue<int> options_warningslength;
+	static RKConfigValue<int> options_maxprint;
+	static RKConfigValue<bool> options_keepsource;
+	static RKConfigValue<bool> options_keepsourcepkgs;
+	static RKConfigValue<int> options_expressions;
+	static RKConfigValue<int> options_digits;
+	static RKConfigValue<bool> options_checkbounds;
+	static RKConfigValue<QString> options_editor;
+	static RKConfigValue<QString> options_pager;
+	static RKConfigValue<QString> options_further;
+	static RKConfigValue<QStringList> options_addpaths;
 
 // constants
 	static QString builtin_editor;
@@ -112,10 +110,8 @@ public:
 	~RKSettingsModuleRPackages ();
 
 	void applyChanges () override;
-	void save (KConfig *config) override;
-
-	static void saveSettings (KConfig *config);
-	static void loadSettings (KConfig *config);
+	void save(KConfig *config) override { syncConfig(config, RKConfigBase::SaveConfig); };
+	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a);
 	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*);
 
 /** generate the commands needed to set the R run time options */
@@ -147,11 +143,11 @@ private:
 	MultiStringSelector *repository_selector;
 	QLineEdit* cran_mirror_input;
 
-	static QString cran_mirror_url;
-	static QStringList liblocs;
+	static RKConfigValue<QString> cran_mirror_url;
+	static RKConfigValue<QStringList> liblocs;
 	static RKConfigValue<bool> archive_packages;
 	static RKConfigValue<bool> source_packages;
-	static QStringList package_repositories;
+	static RKConfigValue<QStringList> package_repositories;
 
 	friend class RInterface;
 	static QString r_libs_user;

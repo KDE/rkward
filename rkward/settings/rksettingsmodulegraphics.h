@@ -38,7 +38,6 @@ public:
 	~RKSettingsModuleGraphics ();
 	
 	void applyChanges () override;
-	void save (KConfig *config) override;
 
 /** generate the commands needed to set the R run time options */
 	static QStringList makeRRunTimeOptionCommands ();
@@ -46,8 +45,8 @@ public:
 /** Configured to (attempt to) use KDE printing dialog? */
 	static bool kdePrintingEnabled () { return options_kde_printing; };
 
-	static void saveSettings (KConfig *config);
-	static void loadSettings (KConfig *config);
+	void save(KConfig *config) override { syncConfig(config, RKConfigBase::SaveConfig); };
+	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a);
 	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
 
 	QString caption () override;
@@ -81,16 +80,16 @@ private:
 	RKSpinBox *graphics_height_box;
 	RKSpinBox *graphics_width_box;
 
-	static DefaultDevice default_device;
-	static QString default_device_other;
-	static StandardDevicesMode replace_standard_devices;
+	static RKConfigValue<DefaultDevice, int> default_device;
+	static RKConfigValue<QString> default_device_other;
+	static RKConfigValue<StandardDevicesMode, int> replace_standard_devices;
 
-	static bool graphics_hist_enable;
-	static int graphics_hist_max_length;
-	static int graphics_hist_max_plotsize;
+	static RKConfigValue<bool> graphics_hist_enable;
+	static RKConfigValue<int> graphics_hist_max_length;
+	static RKConfigValue<int> graphics_hist_max_plotsize;
 
-	static double graphics_height;
-	static double graphics_width;
+	static RKConfigValue<double> graphics_height;
+	static RKConfigValue<double> graphics_width;
 
 	static RKConfigValue<bool> options_kde_printing;
 };

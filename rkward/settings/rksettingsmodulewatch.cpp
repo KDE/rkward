@@ -34,11 +34,11 @@
 #include "../debug.h"
 
 //static
-int RKSettingsModuleWatch::plugin_filter;
-int RKSettingsModuleWatch::app_filter;
-int RKSettingsModuleWatch::sync_filter;
-int RKSettingsModuleWatch::user_filter;
-uint RKSettingsModuleWatch::max_log_lines;
+RKConfigValue<int> RKSettingsModuleWatch::plugin_filter {"plugin command filter", ShowInput | ShowError};
+RKConfigValue<int> RKSettingsModuleWatch::app_filter {"app command filter", ShowInput | ShowError};
+RKConfigValue<int> RKSettingsModuleWatch::sync_filter {"sync command filter", ShowError};
+RKConfigValue<int> RKSettingsModuleWatch::user_filter {"user command filter", ShowInput | ShowOutput | ShowError | RaiseWindow};
+RKConfigValue<uint> RKSettingsModuleWatch::max_log_lines {"max log lines", 1000};
 
 //static
 bool RKSettingsModuleWatch::shouldShowInput (RCommand *command) {
@@ -227,29 +227,15 @@ void RKSettingsModuleWatch::validateGUI () {
 }
 
 //static
-void RKSettingsModuleWatch::saveSettings (KConfig *config) {
+void RKSettingsModuleWatch::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {
 	RK_TRACE (SETTINGS);
 
-	KConfigGroup cg = config->group ("RInterface Watch Settings");
-	cg.writeEntry ("user command filter", user_filter);
-	cg.writeEntry ("plugin command filter", plugin_filter);
-	cg.writeEntry ("app command filter", app_filter);
-	cg.writeEntry ("sync command filter", sync_filter);
-
-	cg.writeEntry ("max log lines", max_log_lines);
-}
-
-//static
-void RKSettingsModuleWatch::loadSettings (KConfig *config) {
-	RK_TRACE (SETTINGS);
-
-	KConfigGroup cg = config->group ("RInterface Watch Settings");
-	user_filter = cg.readEntry ("user command filter", static_cast<int> (ShowInput | ShowOutput | ShowError | RaiseWindow));
-	plugin_filter = cg.readEntry ("plugin command filter", static_cast<int> (ShowInput | ShowError));
-	app_filter = cg.readEntry ("app command filter", static_cast<int> (ShowInput | ShowError));
-	sync_filter = cg.readEntry ("sync command filter", static_cast<int> (ShowError));
-
-	max_log_lines = cg.readEntry ("max log lines", 1000);
+	KConfigGroup cg = config->group("RInterface Watch Settings");
+	user_filter.syncConfig(cg, a);
+	plugin_filter.syncConfig(cg, a);
+	app_filter.syncConfig(cg, a);
+	sync_filter.syncConfig(cg, a);
+	max_log_lines.syncConfig(cg, a);
 }
 
 void RKSettingsModuleWatch::applyChanges () {
@@ -261,12 +247,6 @@ void RKSettingsModuleWatch::applyChanges () {
 	sync_filter = getFilterSettings (sync_filter_boxes);
 
 	max_log_lines = max_log_lines_spinner->value ();
-}
-
-void RKSettingsModuleWatch::save (KConfig *config) {
-	RK_TRACE (SETTINGS);
-
-	saveSettings (config);
 }
 	
 QString RKSettingsModuleWatch::caption () {

@@ -36,10 +36,10 @@
 
 RKCodeCompletionSettings RKSettingsModuleConsole::completion_settings;
 RKConfigValue<bool> RKSettingsModuleConsole::save_history {"save history", true};
-uint RKSettingsModuleConsole::max_history_length;
-uint RKSettingsModuleConsole::max_console_lines;
+RKConfigValue<uint> RKSettingsModuleConsole::max_history_length {"max history length", 100};
+RKConfigValue<uint> RKSettingsModuleConsole::max_console_lines {"max console lines", 500};
 RKConfigValue<bool> RKSettingsModuleConsole::pipe_user_commands_through_console {"pipe user commands through console", true};
-RKSettingsModuleConsole::PipedCommandsHistoryMode RKSettingsModuleConsole::add_piped_commands_to_history;
+RKConfigValue<RKSettingsModuleConsole::PipedCommandsHistoryMode, int> RKSettingsModuleConsole::add_piped_commands_to_history {"add piped commands to history", RKSettingsModuleConsole::AddSingleLine };
 RKConfigValue<bool> RKSettingsModuleConsole::context_sensitive_history_by_default {"command history defaults to context sensitive", false};
 
 RKSettingsModuleConsole::RKSettingsModuleConsole (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
@@ -112,32 +112,20 @@ bool RKSettingsModuleConsole::shouldDoHistoryContextSensitive (Qt::KeyboardModif
 }
 
 //static
-void RKSettingsModuleConsole::saveSettings (KConfig *config) {
+void RKSettingsModuleConsole::syncConfig(KConfig* config, RKConfigBase::ConfigSyncAction a) {
 	RK_TRACE (SETTINGS);
 
 	KConfigGroup cg = config->group ("Console Settings");
-	save_history.saveConfig(cg);
-	cg.writeEntry ("max history length", max_history_length);
-	cg.writeEntry ("max console lines", max_console_lines);
-	pipe_user_commands_through_console.saveConfig(cg);
-	cg.writeEntry ("add piped commands to history", (int) add_piped_commands_to_history);
-	context_sensitive_history_by_default.saveConfig(cg);
-	completion_settings.saveSettings(cg);
-}
-
-//static
-void RKSettingsModuleConsole::loadSettings (KConfig *config) {
-	RK_TRACE (SETTINGS);
-
-	KConfigGroup cg = config->group ("Console Settings");
-	save_history.loadConfig(cg);
-	max_history_length = cg.readEntry ("max history length", 100);
-	max_console_lines = cg.readEntry ("max console lines", 500);
-	pipe_user_commands_through_console.loadConfig(cg);
-	add_piped_commands_to_history = (PipedCommandsHistoryMode) cg.readEntry ("add piped commands to history", (int) AddSingleLine);
-	context_sensitive_history_by_default.loadConfig(cg);
-	completion_settings.tabkey_invokes_completion = true;
-	completion_settings.loadSettings(cg);
+	save_history.syncConfig(cg, a);
+	max_history_length.syncConfig(cg, a);
+	max_console_lines.syncConfig(cg, a);
+	pipe_user_commands_through_console.syncConfig(cg, a);
+	add_piped_commands_to_history.syncConfig(cg, a);
+	context_sensitive_history_by_default.syncConfig(cg, a);
+	if (a == RKConfigBase::LoadConfig) {
+		completion_settings.tabkey_invokes_completion = true;
+	}
+	completion_settings.syncConfig(cg, a);
 }
 
 //static
@@ -166,12 +154,6 @@ void RKSettingsModuleConsole::applyChanges () {
 	max_history_length = max_history_length_spinner->value ();
 	max_console_lines = max_console_lines_spinner->value ();
 	add_piped_commands_to_history = (PipedCommandsHistoryMode) add_piped_commands_to_history_box->currentIndex ();
-}
-
-void RKSettingsModuleConsole::save (KConfig *config) {
-	RK_TRACE (SETTINGS);
-
-	saveSettings (config);
 }
 	
 QString RKSettingsModuleConsole::caption () {

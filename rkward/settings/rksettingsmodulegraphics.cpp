@@ -2,7 +2,7 @@
                           rksettingsmodulegraphics  -  description
                              -------------------
     begin                : Mon Sep 13 2010
-    copyright            : (C) 2010, 2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2010-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -38,15 +38,15 @@
 #include "../core/robject.h"
 
 // static members
-double RKSettingsModuleGraphics::graphics_width;
-double RKSettingsModuleGraphics::graphics_height;
-bool RKSettingsModuleGraphics::graphics_hist_enable;
-int RKSettingsModuleGraphics::graphics_hist_max_length;
-int RKSettingsModuleGraphics::graphics_hist_max_plotsize;
+RKConfigValue<double> RKSettingsModuleGraphics::graphics_width {"graphics_width", 7.0};
+RKConfigValue<double> RKSettingsModuleGraphics::graphics_height {"graphics_height", 7.0};
+RKConfigValue<bool> RKSettingsModuleGraphics::graphics_hist_enable {"graphics_hist_enable", true};
+RKConfigValue<int> RKSettingsModuleGraphics::graphics_hist_max_length {"graphics_hist_max_length", 20};
+RKConfigValue<int> RKSettingsModuleGraphics::graphics_hist_max_plotsize {"graphics_hist_max_plotsize", 4096};
 RKConfigValue<bool> RKSettingsModuleGraphics::options_kde_printing {"kde printing", true};
-RKSettingsModuleGraphics::DefaultDevice RKSettingsModuleGraphics::default_device;
-QString RKSettingsModuleGraphics::default_device_other;
-RKSettingsModuleGraphics::StandardDevicesMode RKSettingsModuleGraphics::replace_standard_devices;
+RKConfigValue<RKSettingsModuleGraphics::DefaultDevice, int> RKSettingsModuleGraphics::default_device {"default_device", RKDevice};
+RKConfigValue<QString> RKSettingsModuleGraphics::default_device_other {"default_device_custom", QString("cairoDevice")};
+RKConfigValue<RKSettingsModuleGraphics::StandardDevicesMode, int> RKSettingsModuleGraphics::replace_standard_devices {"replace_device", ReplaceDevice};
 
 RKSettingsModuleGraphics::RKSettingsModuleGraphics (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -198,40 +198,19 @@ void RKSettingsModuleGraphics::applyChanges () {
 	}
 }
 
-void RKSettingsModuleGraphics::save (KConfig *config) {
-	RK_TRACE (SETTINGS);
+void RKSettingsModuleGraphics::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {
+	RK_TRACE(SETTINGS);
 
-	saveSettings (config);
-}
-
-void RKSettingsModuleGraphics::saveSettings (KConfig *config) {
-	RK_TRACE (SETTINGS);
-
-	KConfigGroup cg = config->group ("Graphics Device Windows");
-	cg.writeEntry ("default_device", (int) default_device);
-	cg.writeEntry ("default_device_custom", default_device_other);
-	cg.writeEntry ("replace_device", (int) replace_standard_devices);
-	cg.writeEntry ("graphics_width", graphics_width);
-	cg.writeEntry ("graphics_height", graphics_height);
-	cg.writeEntry ("graphics_hist_enable", graphics_hist_enable);
-	cg.writeEntry ("graphics_hist_max_length", graphics_hist_max_length);
-	cg.writeEntry ("graphics_hist_max_plotsize", graphics_hist_max_plotsize);
-	options_kde_printing.saveConfig(cg);
-}
-
-void RKSettingsModuleGraphics::loadSettings (KConfig *config) {
-	RK_TRACE (SETTINGS);
-
-	KConfigGroup cg = config->group ("Graphics Device Windows");
-	default_device = (DefaultDevice) cg.readEntry ("default_device", (int) RKDevice);
-	default_device_other = cg.readEntry ("default_device_custom", QString ("cairoDevice"));
-	replace_standard_devices = (StandardDevicesMode) cg.readEntry ("replace_device", (int) ReplaceDevice);
-	graphics_width = cg.readEntry ("graphics_width", 7.0);
-	graphics_height = cg.readEntry ("graphics_height", 7.0);
-	graphics_hist_enable = cg.readEntry ("graphics_hist_enable", true);
-	graphics_hist_max_length = cg.readEntry ("graphics_hist_max_length", 20);
-	graphics_hist_max_plotsize = cg.readEntry ("graphics_hist_max_plotsize", 4096);
-	options_kde_printing.loadConfig(cg);
+	KConfigGroup cg = config->group("Graphics Device Windows");
+	default_device.syncConfig(cg, a);
+	default_device_other.syncConfig(cg, a);
+	replace_standard_devices.syncConfig(cg, a);
+	graphics_width.syncConfig(cg, a);
+	graphics_height.syncConfig(cg, a);
+	graphics_hist_enable.syncConfig(cg, a);
+	graphics_hist_max_length.syncConfig(cg, a);
+	graphics_hist_max_plotsize.syncConfig(cg, a);
+	options_kde_printing.syncConfig(cg, a);
 }
 
 //static

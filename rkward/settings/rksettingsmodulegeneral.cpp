@@ -39,17 +39,23 @@
 
 // static members
 QString RKSettingsModuleGeneral::files_path;
-QString RKSettingsModuleGeneral::new_files_path;
-StartupDialog::Result RKSettingsModuleGeneral::startup_action;
-RKSettingsModuleGeneral::WorkplaceSaveMode RKSettingsModuleGeneral::workplace_save_mode;
+RKConfigValue<QString> RKSettingsModuleGeneral::new_files_path { "logfile dir", QString() }; // NOTE: default initialized at runtime!
+RKConfigValue<StartupDialog::Result, int> RKSettingsModuleGeneral::startup_action { "startup action", StartupDialog::NoSavedSetting };
+RKConfigValue<RKSettingsModuleGeneral::WorkplaceSaveMode, int> RKSettingsModuleGeneral::workplace_save_mode { "save mode", SaveWorkplaceWithWorkspace };
 RKConfigValue<bool> RKSettingsModuleGeneral::cd_to_workspace_dir_on_load {"cd to workspace on load", true};
 RKConfigValue<bool> RKSettingsModuleGeneral::show_help_on_startup {"show help on startup", true};
-int RKSettingsModuleGeneral::warn_size_object_edit;
-RKSettingsModuleGeneral::RKMDIFocusPolicy RKSettingsModuleGeneral::mdi_focus_policy;
+RKConfigValue<int> RKSettingsModuleGeneral::warn_size_object_edit {"large object warning limit", 250000};
+RKConfigValue<RKSettingsModuleGeneral::RKMDIFocusPolicy, int> RKSettingsModuleGeneral::mdi_focus_policy {"focus policy", RKMDIClickFocus};
 RKSettingsModuleGeneral::RKWardConfigVersion RKSettingsModuleGeneral::stored_config_version;
 bool RKSettingsModuleGeneral::config_exists;
-RKSettingsModuleGeneral::InitialDirectory RKSettingsModuleGeneral::initial_dir;
-QString RKSettingsModuleGeneral::initial_dir_specification;
+RKConfigValue<RKSettingsModuleGeneral::InitialDirectory, int> RKSettingsModuleGeneral::initial_dir {"initial dir mode",
+#ifndef Q_OS_WIN
+	CurrentDirectory
+#else
+	RKWardDirectory
+#endif
+};
+RKConfigValue<QString> RKSettingsModuleGeneral::initial_dir_specification { "initial dir spec", QString() };
 bool RKSettingsModuleGeneral::rkward_version_changed;
 bool RKSettingsModuleGeneral::installation_moved = false;
 QString RKSettingsModuleGeneral::previous_rkward_data_dir;
@@ -77,7 +83,7 @@ RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *pare
 	startup_action_choser->addItem (i18n ("Start with an empty table"), (int) StartupDialog::EmptyTable);
 	startup_action_choser->addItem (i18n ("Ask for a file to open"), (int) StartupDialog::ChoseFile);
 	startup_action_choser->addItem (i18n ("Show selection dialog (default)"), (int) StartupDialog::NoSavedSetting);
-	startup_action_choser->setCurrentIndex (startup_action_choser->findData (startup_action));
+	startup_action_choser->setCurrentIndex (startup_action_choser->findData (startup_action.get()));
 	connect (startup_action_choser, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), this, &RKSettingsModuleGeneral::settingChanged);
 	main_vbox->addWidget (startup_action_choser);
 
@@ -209,76 +215,59 @@ void RKSettingsModuleGeneral::applyChanges () {
 	initial_dir_specification = initial_dir_custom_chooser->getLocation ();
 }
 
-void RKSettingsModuleGeneral::save (KConfig *config) {
+void RKSettingsModuleGeneral::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {
 	RK_TRACE (SETTINGS);
-	saveSettings (config);
-}
 
-void RKSettingsModuleGeneral::saveSettings (KConfig *config) {
-	RK_TRACE (SETTINGS);
+	if (a == RKConfigBase::LoadConfig) {
+		config_exists = config->hasGroup("General");	// one of the very oldest groups in the config
+	}
 
 	KConfigGroup cg;
-	cg = config->group ("Logfiles");
-	cg.writeEntry ("logfile dir", new_files_path);
+	cg = config->group("Logfiles");
+	if (a == RKConfigBase::LoadConfig) {
+		// default not yet set, first time loading config
+		if (new_files_path.get().isNull()) new_files_path = QString(QDir().homePath() + "/.rkward/");
 
-	cg = config->group ("General");
-	cg.writeEntry ("startup action", (int) startup_action);
-	show_help_on_startup.saveConfig(cg);
-	cg.writeEntry ("initial dir mode", (int) initial_dir);
-	cg.writeEntry ("initial dir spec", (initial_dir == LastUsedDirectory) ? QDir::currentPath() : initial_dir_specification);
-	cg.writeEntry ("last known data dir", RKCommonFunctions::getRKWardDataDir ());
+		new_files_path.loadConfig(cg);
+		files_path = new_files_path;
+	} else {
+		new_files_path.saveConfig(cg);
+	}
 
-	cg = config->group ("Workplace");
-	cg.writeEntry ("save mode", (int) workplace_save_mode);
-	cd_to_workspace_dir_on_load.saveConfig(cg);
-
-	cg = config->group ("Editor");
-	cg.writeEntry ("large object warning limit", warn_size_object_edit);
-
-	cg = config->group ("MDI");
-	cg.writeEntry ("focus policy", (int) mdi_focus_policy);
-
-	cg = config->group ("Internal");
-	cg.writeEntry ("config file version", (int) RKWardConfig_Latest);
-	cg.writeEntry ("previous runtime version", QString (RKWARD_VERSION));
-}
-
-void RKSettingsModuleGeneral::loadSettings (KConfig *config) {
-	RK_TRACE (SETTINGS);
-
-	config_exists = config->hasGroup ("General");	// one of the very oldest groups in the config
-
-	KConfigGroup cg;
-	cg = config->group ("General");
-	previous_rkward_data_dir = cg.readEntry ("last known data dir", RKCommonFunctions::getRKWardDataDir ());
-	installation_moved = (previous_rkward_data_dir != RKCommonFunctions::getRKWardDataDir ()) && !previous_rkward_data_dir.isEmpty ();
-	startup_action = (StartupDialog::Result) cg.readEntry ("startup action", (int) StartupDialog::NoSavedSetting);
-	show_help_on_startup.loadConfig(cg);
-	initial_dir = (InitialDirectory) cg.readEntry ("initial dir mode",
-#ifndef Q_OS_WIN
-		(int) CurrentDirectory
-#else
-		(int) RKWardDirectory
-#endif
-	);
-	initial_dir_specification = checkAdjustLoadedPath (cg.readEntry ("initial dir spec", QString ()));
-
-	cg = config->group ("Logfiles");
-	files_path = new_files_path = checkAdjustLoadedPath (cg.readEntry ("logfile dir", QString (QDir ().homePath () + "/.rkward/")));
+	cg = config->group("General");
+	if (a == RKConfigBase::LoadConfig) {
+		previous_rkward_data_dir = cg.readEntry("last known data dir", RKCommonFunctions::getRKWardDataDir());
+		installation_moved = (previous_rkward_data_dir != RKCommonFunctions::getRKWardDataDir ()) && !previous_rkward_data_dir.isEmpty ();
+	} else {
+		cg.writeEntry("last known data dir", RKCommonFunctions::getRKWardDataDir());
+	}
+	startup_action.syncConfig(cg, a);
+	show_help_on_startup.syncConfig(cg, a);
+	initial_dir.syncConfig(cg, a);
+	if ((a == RKConfigBase::SaveConfig) && (initial_dir = LastUsedDirectory)) {
+		cg.writeEntry(initial_dir_specification.key(), QDir::currentPath());
+	} else {
+		initial_dir_specification.syncConfig(cg, a);
+	}
 
 	cg = config->group ("Workplace");
-	workplace_save_mode = (WorkplaceSaveMode) cg.readEntry ("save mode", (int) SaveWorkplaceWithWorkspace);
-	cd_to_workspace_dir_on_load.loadConfig(cg);
+	workplace_save_mode.syncConfig(cg, a);
+	cd_to_workspace_dir_on_load.syncConfig(cg, a);
 
 	cg = config->group ("Editor");
-	warn_size_object_edit = cg.readEntry ("large object warning limit", 250000);
+	warn_size_object_edit.syncConfig(cg, a);
 
 	cg = config->group ("MDI");
-	mdi_focus_policy = (RKMDIFocusPolicy) cg.readEntry ("focus policy", (int) RKMDIClickFocus);
+	mdi_focus_policy.syncConfig(cg, a);
 
 	cg = config->group ("Internal");
-	stored_config_version = (RKWardConfigVersion) cg.readEntry ("config file version", (int) RKWardConfig_Pre0_5_7);
-	rkward_version_changed = (cg.readEntry ("previous runtime version", QString ()) != RKWARD_VERSION);
+	if (a == RKConfigBase::LoadConfig) {
+		stored_config_version = (RKWardConfigVersion) cg.readEntry("config file version", (int) RKWardConfig_Pre0_5_7);
+		rkward_version_changed = (cg.readEntry("previous runtime version", QString()) != RKWARD_VERSION);
+	} else {
+		cg.writeEntry("config file version", (int) RKWardConfig_Latest);
+		cg.writeEntry("previous runtime version", QString(RKWARD_VERSION));
+	}
 }
 
 QString RKSettingsModuleGeneral::getSavedWorkplace (KConfig *config) {

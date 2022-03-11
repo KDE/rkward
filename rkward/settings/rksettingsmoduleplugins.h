@@ -39,12 +39,11 @@ public:
 	~RKSettingsModulePlugins ();
 
 	void applyChanges () override;
-	void save (KConfig *config) override;
 
 	enum PluginPrefs { PreferDialog=0, PreferRecommended=1, PreferWizard=2 };
 
-	static void saveSettings (KConfig *config);
-	static void loadSettings (KConfig *config);
+	void save(KConfig *config) override { syncConfig(config, RKConfigBase::SaveConfig); };
+	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a);
 	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
 
 	QString caption () override;
@@ -107,10 +106,10 @@ private:
 	/** plugin maps which are not necessarily active, but have been encountered, before. @see plugin_maps */
 	static PluginMapList known_plugin_maps;
 
-	static PluginPrefs interface_pref;
-	static bool show_code;
-	static int code_size;
-	static int side_preview_width;
+	static RKConfigValue<PluginPrefs,int> interface_pref;
+	static RKConfigValue<bool> show_code;
+	static RKConfigValue<int> code_size;
+	static RKConfigValue<int> side_preview_width;
 
 /* TODO: This one is currently unused (leftover of GHNS-based plugin installation), but might still be of interest */
 	static QStringList findPluginMapsRecursive (const QString &basedir);

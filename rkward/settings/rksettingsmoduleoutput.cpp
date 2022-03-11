@@ -35,7 +35,7 @@
 #include "../debug.h"
 
 // static members
-bool RKCarbonCopySettings::cc_globally_enabled;
+RKConfigValue<bool> RKCarbonCopySettings::cc_globally_enabled {"CC enabled", false};
 RKConfigValue<bool> RKCarbonCopySettings::cc_console_commands {"CC console commands", true};
 RKConfigValue<bool> RKCarbonCopySettings::cc_script_commands {"CC script commands", false};
 RKConfigValue<bool> RKCarbonCopySettings::cc_app_plugin_commands {"CC app/plugin commands", false};
@@ -78,26 +78,15 @@ void RKCarbonCopySettings::update() {
 	cc_command_output_box->setChecked (cc_command_output);
 }
 
-void RKCarbonCopySettings::saveSettings (KConfig *config) {
-	RK_TRACE (SETTINGS);
+void RKCarbonCopySettings::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {
+	RK_TRACE(SETTINGS);
 
-	KConfigGroup cg = config->group ("Carbon Copy Settings");
-	cg.writeEntry ("CC enabled", cc_globally_enabled);
-	cc_console_commands.saveConfig(cg);
-	cc_script_commands.saveConfig(cg);
-	cc_app_plugin_commands.saveConfig(cg);
-	cc_command_output.saveConfig(cg);
-}
-
-void RKCarbonCopySettings::loadSettings (KConfig *config) {
-	RK_TRACE (SETTINGS);
-
-	KConfigGroup cg = config->group ("Carbon Copy Settings");
-	cc_globally_enabled = cg.readEntry ("CC enabled", false);
-	cc_console_commands.loadConfig(cg);
-	cc_script_commands.loadConfig(cg);
-	cc_app_plugin_commands.loadConfig(cg);
-	cc_command_output.loadConfig(cg);
+	KConfigGroup cg = config->group("Carbon Copy Settings");
+	cc_globally_enabled.syncConfig(cg, a);
+	cc_console_commands.syncConfig(cg, a);
+	cc_script_commands.syncConfig(cg, a);
+	cc_app_plugin_commands.syncConfig(cg, a);
+	cc_command_output.syncConfig(cg, a);
 }
 
 bool RKCarbonCopySettings::shouldCarbonCopyCommand (const RCommand *command) {
@@ -124,11 +113,11 @@ void RKCarbonCopySettings::applyChanges() {
 // static members
 RKConfigValue<bool> RKSettingsModuleOutput::auto_show {"auto_show", true};
 RKConfigValue<bool> RKSettingsModuleOutput::auto_raise {"auto_raise", true};
-QString RKSettingsModuleOutput::graphics_type;
-int RKSettingsModuleOutput::graphics_width;
-int RKSettingsModuleOutput::graphics_height;
-int RKSettingsModuleOutput::graphics_jpg_quality;
-QString RKSettingsModuleOutput::custom_css_file;
+RKConfigValue<QString> RKSettingsModuleOutput::graphics_type {"graphics_type", "NULL"};
+RKConfigValue<int> RKSettingsModuleOutput::graphics_width {"graphics_width", 480};
+RKConfigValue<int> RKSettingsModuleOutput::graphics_height {"graphics_height", 480};
+RKConfigValue<int> RKSettingsModuleOutput::graphics_jpg_quality {"graphics_jpg_quality", 75};
+RKConfigValue<QString> RKSettingsModuleOutput::custom_css_file {"custom css file", QString()};
 RKConfigValue<bool> RKSettingsModuleOutput::shared_default_output {"Shared default output", false};
 
 RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
@@ -164,7 +153,7 @@ RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent
 	graphics_type_box->addItem (i18n ("PNG"), QString ("\"PNG\""));
 	graphics_type_box->addItem (i18n ("SVG"), QString ("\"SVG\""));
 	graphics_type_box->addItem (i18n ("JPG"), QString ("\"JPG\""));
-	graphics_type_box->setCurrentIndex (graphics_type_box->findData (graphics_type));
+	graphics_type_box->setCurrentIndex (graphics_type_box->findData (graphics_type.get()));
 	graphics_type_box->setEditable (false);
 	connect (graphics_type_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &RKSettingsModuleOutput::boxChanged);
 	h_layout->addSpacing (2*RKGlobals::spacingHint ());
@@ -238,42 +227,20 @@ void RKSettingsModuleOutput::applyChanges () {
 	cc_settings->applyChanges ();
 }
 
-void RKSettingsModuleOutput::save (KConfig *config) {
-	RK_TRACE (SETTINGS);
-
-	saveSettings (config);
-}
-
-void RKSettingsModuleOutput::saveSettings (KConfig *config) {
+void RKSettingsModuleOutput::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {
 	RK_TRACE (SETTINGS);
 
 	KConfigGroup cg = config->group ("Output Window");
-	auto_show.saveConfig(cg);
-	auto_raise.saveConfig(cg);
-	cg.writeEntry ("graphics_type", graphics_type);
-	cg.writeEntry ("graphics_width", graphics_width);
-	cg.writeEntry ("graphics_height", graphics_height);
-	cg.writeEntry ("graphics_jpg_quality", graphics_jpg_quality);
-	cg.writeEntry ("custom css file", custom_css_file);
-	shared_default_output.saveConfig(cg);
+	auto_show.syncConfig(cg, a);
+	auto_raise.syncConfig(cg, a);
+	graphics_type.syncConfig(cg, a);
+	graphics_width.syncConfig(cg, a);
+	graphics_height.syncConfig(cg, a);
+	graphics_jpg_quality.syncConfig(cg, a);
+	custom_css_file.syncConfig(cg, a);
+	shared_default_output.syncConfig(cg, a);
 
-	RKCarbonCopySettings::saveSettings (config);
-}
-
-void RKSettingsModuleOutput::loadSettings (KConfig *config) {
-	RK_TRACE (SETTINGS);
-
-	KConfigGroup cg = config->group ("Output Window");
-	auto_show.loadConfig(cg);
-	auto_raise.loadConfig(cg);
-	graphics_type = cg.readEntry ("graphics_type", "NULL");
-	graphics_width = cg.readEntry ("graphics_width", 480);
-	graphics_height = cg.readEntry ("graphics_height", 480);
-	graphics_jpg_quality = cg.readEntry ("graphics_jpg_quality", 75);
-	custom_css_file = cg.readEntry ("custom css file", QString ());
-	shared_default_output.loadConfig(cg);
-
-	RKCarbonCopySettings::loadSettings (config);
+	RKCarbonCopySettings::syncConfig(config, a);
 }
 
 //static
@@ -282,11 +249,11 @@ QStringList RKSettingsModuleOutput::makeRRunTimeOptionCommands () {
 	QStringList list;
 
 // output format options
-	QString command = "options (\"rk.graphics.type\"=" + graphics_type;
+	QString command = "options (\"rk.graphics.type\"=" + graphics_type.get();
 	command.append (", \"rk.graphics.width\"=" + QString::number (graphics_width));
 	command.append (", \"rk.graphics.height\"=" + QString::number (graphics_height));
 	if (graphics_type == "\"JPG\"") command.append (", \"rk.graphics.jpg.quality\"=" + QString::number (graphics_jpg_quality));
-	command.append (", \"rk.output.css.file\"=\"" + (custom_css_file.isEmpty () ? RKCommonFunctions::getRKWardDataDir () + "pages/rkward_output.css" : custom_css_file) + '\"');
+	command.append (", \"rk.output.css.file\"=\"" + (custom_css_file.get().isEmpty () ? RKCommonFunctions::getRKWardDataDir () + "pages/rkward_output.css" : custom_css_file.get()) + '\"');
 	list.append (command + ")\n");
 
 	return (list);

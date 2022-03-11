@@ -32,7 +32,7 @@
 
 #include "../debug.h"
 
-QStringList RKSettingsModuleKatePlugins::plugins_to_load;
+RKConfigValue<QStringList> RKSettingsModuleKatePlugins::plugins_to_load {"Plugins to load", QStringList() << "katesearchplugin" << "kateprojectplugin" << "katesnippetsplugin"};
 
 RKSettingsModuleKatePlugins::RKSettingsModuleKatePlugins(RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
 	RK_TRACE(SETTINGS);
@@ -58,7 +58,7 @@ RKSettingsModuleKatePlugins::RKSettingsModuleKatePlugins(RKSettings *gui, QWidge
 		item->setData(1, Qt::DecorationRole, QIcon::fromTheme(plugindata.iconName()));
 		item->setData(1, Qt::UserRole, key);
 		item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsUserCheckable);
-		item->setCheckState(0, plugins_to_load.contains(key) ? Qt::Checked : Qt::Unchecked);
+		item->setCheckState(0, plugins_to_load.get().contains(key) ? Qt::Checked : Qt::Unchecked);
 		plugin_table->addTopLevelItem(item);
 	}
 	plugin_table->resizeColumnToContents(0);
@@ -76,37 +76,27 @@ RKSettingsModuleKatePlugins::~RKSettingsModuleKatePlugins() {
 void RKSettingsModuleKatePlugins::applyChanges() {
 	RK_TRACE(SETTINGS);
 
-	plugins_to_load.clear();
+	QStringList p;
 	for (int i = plugin_table->topLevelItemCount() - 1; i >= 0; --i) {
 		QTreeWidgetItem *item = plugin_table->topLevelItem(i);
 		if (item->checkState(0) == Qt::Checked) {
-			plugins_to_load.append (item->data(1, Qt::UserRole).toString());
+			p.append (item->data(1, Qt::UserRole).toString());
 		}
 	}
+	plugins_to_load = p;
 	RKWardMainWindow::getMain()->katePluginIntegration()->loadPlugins(plugins_to_load);
 }
 
-void RKSettingsModuleKatePlugins::save(KConfig *config) {
+void RKSettingsModuleKatePlugins::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {
 	RK_TRACE(SETTINGS);
 
-	saveSettings(config);
-}
-
-void RKSettingsModuleKatePlugins::saveSettings(KConfig *config) {
-	RK_TRACE(SETTINGS);
-
-	// if no kate plugins are known (installation problem), don't save any config
-	if (!RKWardMainWindow::getMain()->katePluginIntegration()->knownPluginCount()) return;
+	if (a == RKConfigBase::SaveConfig) {
+		// if no kate plugins are known (installation problem), don't save any config
+		if (!RKWardMainWindow::getMain()->katePluginIntegration()->knownPluginCount()) return;
+	}
 
 	KConfigGroup cg = config->group("Kate Plugins");
-	cg.writeEntry("Plugins to load", plugins_to_load);
-}
-
-void RKSettingsModuleKatePlugins::loadSettings(KConfig *config) {
-	RK_TRACE(SETTINGS);
-
-	KConfigGroup cg = config->group("Kate Plugins");
-	plugins_to_load = cg.readEntry("Plugins to load", QStringList() << "katesearchplugin" << "kateprojectplugin" << "katesnippetsplugin");
+	plugins_to_load.syncConfig(cg, a);
 }
 
 QString RKSettingsModuleKatePlugins::caption() {

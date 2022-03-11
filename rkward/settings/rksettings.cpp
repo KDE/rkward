@@ -216,7 +216,7 @@ void RKSettings::applyAll() {
 	for (auto it = modules.constBegin(); it != modules.constEnd(); ++it) {
 		if (it.value()->hasChanges()) {
 			it.value()->doApply();
-			it.value()->save (KSharedConfig::openConfig().data());
+			it.value()->save(KSharedConfig::openConfig().data());
 			tracker()->signalSettingsChange(it.key());
 		}
 	}
@@ -244,13 +244,13 @@ void RKSettings::enableApply () {
 void RKSettings::loadSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
-	FOREACH_SETTINGS_MODULE(loadSettings(config));
+	FOREACH_SETTINGS_MODULE(syncConfig(config, RKConfigBase::LoadConfig));
 }
 
 void RKSettings::saveSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
-	FOREACH_SETTINGS_MODULE(saveSettings(config));
+	FOREACH_SETTINGS_MODULE(syncConfig(config, RKConfigBase::SaveConfig));
 }
 
 #include <KAssistantDialog>

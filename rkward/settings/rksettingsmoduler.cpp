@@ -44,25 +44,25 @@
 #include "../rkglobals.h"
 #include "../debug.h"
 
-// static members
-QString RKSettingsModuleR::options_outdec;
-int RKSettingsModuleR::options_width;
-int RKSettingsModuleR::options_warn;
-int RKSettingsModuleR::options_warningslength;
-int RKSettingsModuleR::options_maxprint;
-bool RKSettingsModuleR::options_keepsource;
-bool RKSettingsModuleR::options_keepsourcepkgs;
-int RKSettingsModuleR::options_expressions;
-int RKSettingsModuleR::options_digits;
-bool RKSettingsModuleR::options_checkbounds;
-QString RKSettingsModuleR::options_editor;
-QString RKSettingsModuleR::options_pager;
-QString RKSettingsModuleR::options_further;
-QStringList RKSettingsModuleR::options_addpaths;
 // static constants
 QString RKSettingsModuleR::builtin_editor = "<rkward>";
 // session constants
 QString RKSettingsModuleR::help_base_url;
+// static members
+RKConfigValue<QString> RKSettingsModuleR::options_outdec {"OutDec", "."};
+RKConfigValue<int> RKSettingsModuleR::options_width {"width", 80};
+RKConfigValue<int> RKSettingsModuleR::options_warn {"warn", 0};
+RKConfigValue<int> RKSettingsModuleR::options_warningslength {"warnings.length", 1000};
+RKConfigValue<int> RKSettingsModuleR::options_maxprint {"max.print", 99999};
+RKConfigValue<bool> RKSettingsModuleR::options_keepsource {"keep.source", true};
+RKConfigValue<bool> RKSettingsModuleR::options_keepsourcepkgs {"keep.source.pkgs", false};
+RKConfigValue<int> RKSettingsModuleR::options_expressions {"expressions", 5000};
+RKConfigValue<int> RKSettingsModuleR::options_digits {"digits", 7};
+RKConfigValue<bool> RKSettingsModuleR::options_checkbounds {"check.bounds", false};
+RKConfigValue<QString> RKSettingsModuleR::options_editor {"editor", builtin_editor};
+RKConfigValue<QString> RKSettingsModuleR::options_pager {"pager", builtin_editor};
+RKConfigValue<QString> RKSettingsModuleR::options_further {"further init commands", QString()};
+RKConfigValue<QStringList> RKSettingsModuleR::options_addpaths {"addsyspaths", QStringList()};
 
 RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -247,11 +247,12 @@ void RKSettingsModuleR::applyChanges () {
 	options_further = further_input->toPlainText ();
 	// normalize system paths before adding
 	QStringList paths = addpaths_selector->getValues ();
-	options_addpaths.clear ();
-	for (int i = 0; i < paths.count (); ++i) {
-		QString path = QDir::cleanPath (paths[i]);
-		if (!options_addpaths.contains (path)) options_addpaths.append (path);
+	QStringList cleanpaths;
+	for (int i = 0; i < paths.count(); ++i) {
+		QString path = QDir::cleanPath(paths[i]);
+		if (!cleanpaths.contains(path)) cleanpaths.append(path);
 	}
+	options_addpaths = cleanpaths;
 
 // apply run time options in R
 	QStringList commands = makeRRunTimeOptionCommands ();
@@ -289,7 +290,7 @@ QStringList RKSettingsModuleR::makeRRunTimeOptionCommands () {
 	QStringList list;
 
 	QString tf;
-	list.append ("options (OutDec=\"" + options_outdec.left (1) + "\")\n");
+	list.append ("options (OutDec=\"" + options_outdec.get().left (1) + "\")\n");
 	list.append ("options (width=" + QString::number (options_width) + ")\n");
 	list.append ("options (warn=" + QString::number (options_warn) + ")\n");
 	list.append ("options (max.print=" + QString::number (options_maxprint) + ")\n");
@@ -303,13 +304,13 @@ QStringList RKSettingsModuleR::makeRRunTimeOptionCommands () {
 	if (options_checkbounds) tf = "TRUE"; else tf = "FALSE";
 	list.append ("options (checkbounds=" + tf + ")\n");
 	if (options_editor == builtin_editor) list.append ("options (editor=rk.edit.files)\n");
-	else list.append ("options (editor=\"" + options_editor + "\")\n");
+	else list.append ("options (editor=\"" + options_editor.get() + "\")\n");
 	if (options_pager == builtin_editor) list.append ("options (pager=rk.show.files)\n");
-	else list.append ("options (pager=\"" + options_pager + "\")\n");
-	if (!options_further.isEmpty ()) list.append (options_further + '\n');
-	if (!options_addpaths.isEmpty ()) {
+	else list.append ("options (pager=\"" + options_pager.get() + "\")\n");
+	if (!options_further.get().isEmpty ()) list.append (options_further.get() + '\n');
+	if (!options_addpaths.get().isEmpty ()) {
 		QString command = "rk.adjust.system.path (add=c(";
-		foreach (const QString &p, options_addpaths) {
+		foreach (const QString &p, options_addpaths.get()) {
 			command.append (RObject::rQuote (p));
 		}
 		list.append (command + "))\n");
@@ -326,50 +327,24 @@ QStringList RKSettingsModuleR::makeRRunTimeOptionCommands () {
 	return list;
 }
 
-void RKSettingsModuleR::save (KConfig *config) {
-	RK_TRACE (SETTINGS);
+void RKSettingsModuleR::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {
+	RK_TRACE(SETTINGS);
 
-	saveSettings (config);
-}
-
-void RKSettingsModuleR::saveSettings (KConfig *config) {
-	RK_TRACE (SETTINGS);
-
-	KConfigGroup cg = config->group ("R Settings");
-	cg.writeEntry ("OutDec", options_outdec);
-	cg.writeEntry ("width", options_width);
-	cg.writeEntry ("warn", options_warn);
-	cg.writeEntry ("max.print", options_maxprint);
-	cg.writeEntry ("warnings.length", options_warningslength);
-	cg.writeEntry ("keep.source", options_keepsource);
-	cg.writeEntry ("keep.source.pkgs", options_keepsourcepkgs);
-	cg.writeEntry ("expressions", options_expressions);
-	cg.writeEntry ("digits", options_digits);
-	cg.writeEntry ("check.bounds", options_checkbounds);
-	cg.writeEntry ("editor", options_editor);
-	cg.writeEntry ("pager", options_pager);
-	cg.writeEntry ("further init commands", options_further);
-	cg.writeEntry ("addsyspaths", options_addpaths);
-}
-
-void RKSettingsModuleR::loadSettings (KConfig *config) {
-	RK_TRACE (SETTINGS);
-
-	KConfigGroup cg = config->group ("R Settings");
-	options_outdec = cg.readEntry ("OutDec", ".");
-	options_width = cg.readEntry ("width", 80);
-	options_warn = cg.readEntry ("warn", 0);
-	options_maxprint = cg.readEntry ("max.print", 99999);
-	options_warningslength = cg.readEntry ("warnings.length", 1000);
-	options_keepsource = cg.readEntry ("keep.source", true);
-	options_keepsourcepkgs = cg.readEntry ("keep.source.pkgs", false);
-	options_expressions = cg.readEntry ("expressions", 5000);
-	options_digits = cg.readEntry ("digits", 7);
-	options_checkbounds = cg.readEntry ("check.bounds", false);
-	options_editor = cg.readEntry ("editor", builtin_editor);
-	options_pager = cg.readEntry ("pager", builtin_editor);
-	options_further = cg.readEntry ("further init commands", QString ());
-	options_addpaths = cg.readEntry ("addsyspaths", QStringList ());
+	KConfigGroup cg = config->group("R Settings");
+	options_outdec.syncConfig(cg, a);
+	options_width.syncConfig(cg, a);
+	options_warn.syncConfig(cg, a);
+	options_maxprint.syncConfig(cg, a);
+	options_warningslength.syncConfig(cg, a);
+	options_keepsource.syncConfig(cg, a);
+	options_keepsourcepkgs.syncConfig(cg, a);
+	options_expressions.syncConfig(cg, a);
+	options_digits.syncConfig(cg, a);
+	options_checkbounds.syncConfig(cg, a);
+	options_editor.syncConfig(cg, a);
+	options_pager.syncConfig(cg, a);
+	options_further.syncConfig(cg, a);
+	options_addpaths.syncConfig(cg, a);
 }
 
 //#################################################
@@ -377,9 +352,7 @@ void RKSettingsModuleR::loadSettings (KConfig *config) {
 //#################################################
 
 // static members
-QStringList RKSettingsModuleRPackages::liblocs;
-QStringList RKSettingsModuleRPackages::defaultliblocs;
-QString RKSettingsModuleRPackages::r_libs_user;
+RKConfigValue<QStringList> RKSettingsModuleRPackages::liblocs {"LibraryLocations", QStringList()};
 RKConfigValue<bool> RKSettingsModuleRPackages::archive_packages {"archive packages", false};
 #if (defined Q_OS_WIN || defined Q_OS_MACOS)
 #	if (defined USE_BINARY_PACKAGES)
@@ -391,9 +364,12 @@ RKConfigValue<bool> RKSettingsModuleRPackages::archive_packages {"archive packag
 #	define USE_SOURCE_PACKAGES true
 #endif
 RKConfigValue<bool> RKSettingsModuleRPackages::source_packages {"source_packages", USE_SOURCE_PACKAGES};
-QStringList RKSettingsModuleRPackages::package_repositories;
+#define RKWARD_REPO "http://files.kde.org/rkward/R/"
+RKConfigValue<QStringList> RKSettingsModuleRPackages::package_repositories {"Repositories", QStringList(RKWARD_REPO)};
 QString RKSettingsModuleRPackages::essential_packages = QString ("base\nmethods\nutils\ngrDevices\ngraphics\nrkward");
-QString RKSettingsModuleRPackages::cran_mirror_url;
+RKConfigValue<QString> RKSettingsModuleRPackages::cran_mirror_url {"CRAN mirror url", "@CRAN@"};
+QStringList RKSettingsModuleRPackages::defaultliblocs;
+QString RKSettingsModuleRPackages::r_libs_user;
 
 RKSettingsModuleRPackages::RKSettingsModuleRPackages (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent), RCommandReceiver () {
 	RK_TRACE (SETTINGS);
@@ -450,7 +426,7 @@ RKSettingsModuleRPackages::~RKSettingsModuleRPackages () {
 void RKSettingsModuleRPackages::addLibraryLocation (const QString& new_loc, RCommandChain *chain) {
 	RK_TRACE (SETTINGS);
 
-	if (!libraryLocations ().contains (new_loc)) liblocs.prepend (new_loc);
+	if (!libraryLocations ().contains (new_loc)) liblocs.get().prepend (new_loc);
 
 	// update the backend in any case. User might have changed liblocs, there.
 	RKGlobals::rInterface ()->issueCommand (".libPaths (unique (c (" + RObject::rQuote (new_loc) + ", .libPaths ())))", RCommand::App | RCommand::Sync, QString (), 0, 0, chain);
@@ -554,7 +530,7 @@ QString RKSettingsModuleRPackages::libLocsCommand () {
 	// For additional library locations configured inside RKWard, try to create them, as needed.
 	// This is especially important for versioned dirs (which will not exist after upgrading R, for instance)
 	QString command;
-	if (!liblocs.isEmpty()) {
+	if (!liblocs.get().isEmpty()) {
 		bool first = true;
 		command = "local({\naddpaths <- unique (c(";
 		QStringList ll = expandLibLocs(liblocs);
@@ -609,7 +585,7 @@ QStringList RKSettingsModuleRPackages::makeRRunTimeOptionCommands () {
 
 // package repositories
 	QString command = "options (repos=c (CRAN=" + RObject::rQuote (cran_mirror_url);
-	for (QStringList::const_iterator it = package_repositories.begin (); it != package_repositories.end (); ++it) {
+	for (auto it = package_repositories.get().constBegin (); it != package_repositories.get().constEnd(); ++it) {
 		command.append (", " + RObject::rQuote (*it));
 	}
 	list.append (command + "))\n");
@@ -628,7 +604,7 @@ void RKSettingsModuleRPackages::applyChanges () {
 	RK_TRACE (SETTINGS);
 
 	cran_mirror_url = cran_mirror_input->text ();
-	if (cran_mirror_url.isEmpty ()) cran_mirror_url = "@CRAN@";
+	if (cran_mirror_url.get().isEmpty ()) cran_mirror_url = "@CRAN@";
 
 	package_repositories = repository_selector->getValues ();
 	liblocs = libloc_selector->getValues ();
@@ -640,45 +616,34 @@ void RKSettingsModuleRPackages::applyChanges () {
 	}
 }
 
-void RKSettingsModuleRPackages::save (KConfig *config) {
-	RK_TRACE (SETTINGS);
+void RKSettingsModuleRPackages::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {
+	RK_TRACE(SETTINGS);
 
-	saveSettings (config);
-}
+	KConfigGroup cg = config->group("R Settings");
+	cran_mirror_url.syncConfig(cg, a);
+	liblocs.syncConfig(cg, a);
+	archive_packages.syncConfig(cg, a);
+	source_packages.syncConfig(cg, a);  // NOTE: does not take effect on Linux, see pkgTypeOption
+	package_repositories.syncConfig(cg, a);
 
-void RKSettingsModuleRPackages::saveSettings (KConfig *config) {
-	RK_TRACE (SETTINGS);
+	if (a == RKConfigBase::LoadConfig) {
+		const QString rkward_repo (RKWARD_REPO);
+		if (RKSettingsModuleGeneral::storedConfigVersion () <= RKSettingsModuleGeneral::RKWardConfig_Pre0_5_7) {
+			auto v = package_repositories.get();
+			v.removeAll ("@CRAN@");	// COMPAT: Cran mirror was part of this list before 0.5.3
+			if (v.isEmpty ()) v.append(rkward_repo);
+			package_repositories = v;
+		} else if (RKSettingsModuleGeneral::storedConfigVersion () < RKSettingsModuleGeneral::RKWardConfig_0_6_3) {
+			auto v = package_repositories.get();
+			v.removeAll("http://rkward.sf.net/R");
+			v.append(rkward_repo);
+			package_repositories = v;
+		}
 
-	KConfigGroup cg = config->group ("R Settings");
-	cg.writeEntry ("CRAN mirror url", cran_mirror_url);
-	archive_packages.saveConfig(cg);
-	source_packages.saveConfig(cg);
-	cg.writeEntry ("Repositories", package_repositories);
-	cg.writeEntry ("LibraryLocations", liblocs);
-}
-
-void RKSettingsModuleRPackages::loadSettings (KConfig *config) {
-	RK_TRACE (SETTINGS);
-
-	KConfigGroup cg = config->group ("R Settings");
-
-	cran_mirror_url = cg.readEntry ("CRAN mirror url", "@CRAN@");
-	const QString rkward_repo ("http://files.kde.org/rkward/R/");
-	package_repositories = cg.readEntry ("Repositories", QStringList (rkward_repo));
-	if (RKSettingsModuleGeneral::storedConfigVersion () <= RKSettingsModuleGeneral::RKWardConfig_Pre0_5_7) {
-		package_repositories.removeAll ("@CRAN@");	// COMPAT: Cran mirror was part of this list before 0.5.3
-		if (package_repositories.isEmpty ()) package_repositories.append (rkward_repo);
-	} else if (RKSettingsModuleGeneral::storedConfigVersion () < RKSettingsModuleGeneral::RKWardConfig_0_6_3) {
-		package_repositories.removeAll ("http://rkward.sf.net/R");
-		package_repositories.append (rkward_repo);
-	}
-
-	liblocs = cg.readEntry ("LibraryLocations", QStringList ());
-	archive_packages.loadConfig(cg);
-	source_packages.loadConfig(cg);  // NOTE: does not take effect on Linux, see pkgTypeOption
-	if (USE_SOURCE_PACKAGES && (RKSettingsModuleGeneral::storedConfigVersion () < RKSettingsModuleGeneral::RKWardConfig_0_6_1)) {
-		// revert default on MacOSX, even if a previous stored setting exists
-		source_packages = true;
+		if (USE_SOURCE_PACKAGES && (RKSettingsModuleGeneral::storedConfigVersion () < RKSettingsModuleGeneral::RKWardConfig_0_6_1)) {
+			// revert default on MacOSX, even if a previous stored setting exists
+			source_packages = true;
+		}
 	}
 }
 
@@ -690,7 +655,7 @@ void RKSettingsModuleRPackages::validateSettingsInteractive (QList<RKSetupWizard
 
 	if (RKSettingsModuleGeneral::storedConfigVersion () < RKSettingsModuleGeneral::RKWardConfig_0_7_1) {
 		QString legacy_libloc = QDir (RKSettingsModuleGeneral::filesPath ()).absoluteFilePath ("library");
-		if (liblocs.contains (legacy_libloc)) {
+		if (liblocs.get().contains(legacy_libloc)) {
 			auto item = new RKSetupWizardItem(i18n("Unversioned library location"), i18n("The configured library locations (where R packages will be installed on this system) contains the directory '%1', "
 			                                  "which was suggested as a default library location in earlier versions of RKWard. Use of this directory is no longer "
 			                                  "recommended, as it is not accessible to R sessions outside of RKWard (unless configured, explicitly). Also due to the lack "
@@ -698,15 +663,15 @@ void RKSettingsModuleRPackages::validateSettingsInteractive (QList<RKSetupWizard
 			                                  "version of R.", legacy_libloc), RKSetupWizardItem::Warning);
 			item->addOption(i18nc("verb", "Rename"), i18n("Rename this location to include the version number of the currently running R. Packages will continue "
 			                                        "to work (if they are compatible with this version of R)."), [legacy_libloc](RKSetupWizard*) {
-									liblocs.removeAll(legacy_libloc);
+									liblocs.get().removeAll(legacy_libloc);
 									QString new_loc = legacy_libloc + '-' + RKSessionVars::RVersion (true);
 									RKGlobals::rInterface ()->issueCommand (QString ("file.rename(%1, %2)\n").arg (RObject::rQuote (legacy_libloc)).arg (RObject::rQuote (new_loc)), RCommand::App);
-									liblocs.prepend (legacy_libloc + QStringLiteral ("-%v"));
+									liblocs.get().prepend (legacy_libloc + QStringLiteral ("-%v"));
 									RKGlobals::rInterface ()->issueCommand (libLocsCommand(), RCommand::App);
 								});
 			item->addOption(i18nc("verb", "Remove"), i18n("Remove this location from the configuration (it will not be deleted on disk). You will have to "
 			                                        "re-install any packages that you want to keep."), [legacy_libloc](RKSetupWizard*) {
-									liblocs.removeAll(legacy_libloc);
+									liblocs.get().removeAll(legacy_libloc);
 									RKGlobals::rInterface ()->issueCommand (libLocsCommand(), RCommand::App);
 								});
 			item->addOption(i18nc("verb", "Keep"), i18n("Keep this location (do not change anything)"), [](RKSetupWizard*) {});

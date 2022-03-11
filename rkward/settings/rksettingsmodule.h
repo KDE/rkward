@@ -37,6 +37,16 @@ class RKConfigBase {
 public:
 	virtual void loadConfig(KConfigGroup &cg) = 0;
 	virtual void saveConfig(KConfigGroup &cg) const = 0;
+	enum ConfigSyncAction {
+		SaveConfig,
+		LoadConfig
+	};
+	/** Save or load config value (a somewhat dirty trick that saves a lot of tying... */
+	void syncConfig(KConfigGroup &cg, ConfigSyncAction a) {
+		if (a == SaveConfig) saveConfig(cg);
+		else loadConfig(cg);
+	};
+	const char *key() { return name; }
 protected:
 	RKConfigBase(const char* name) : name(name) {};
 	virtual ~RKConfigBase() {};
@@ -46,19 +56,20 @@ protected:
 /** A single value stored in the RKWard config file.
  *
  *  The value set initially (in the constructor or via setDefaultValue() represents the default value. */
-template<typename T> class RKConfigValue : public RKConfigBase {
+template<typename T, typename STORAGE_T=T> class RKConfigValue : public RKConfigBase {
 public:
 	RKConfigValue(const char* name, const T &default_value) : RKConfigBase(name), value(default_value) {};
 	~RKConfigValue() {};
 
 	void loadConfig(KConfigGroup &cg) override {
-		value = cg.readEntry(name, value);
+		value = (T) cg.readEntry(name, (STORAGE_T) value);
 	}
 	void saveConfig(KConfigGroup &cg) const override {
-		cg.writeEntry(name, value);
+		cg.writeEntry(name, (STORAGE_T) value);
 	}
 	void setDefaultValue(const T& value) { RKConfigValue<T>::value = value; }
 	operator T() const { return(value); }
+	T& get() { return(value); }
 	RKConfigValue& operator= (const T v) { value = v; return *this; };
 
 /** Only for bool values: convenience function to create a fully connected checkbox for this option */

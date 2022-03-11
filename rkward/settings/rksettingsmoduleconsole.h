@@ -36,12 +36,10 @@ public:
 	RKSettingsModuleConsole (RKSettings *gui, QWidget *parent);
 	~RKSettingsModuleConsole ();
 
-	static void saveSettings (KConfig *config);
-	static void loadSettings (KConfig *config);
+	void save(KConfig *config) override { syncConfig(config, RKConfigBase::SaveConfig); };
+	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction);
 	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
-
 	void applyChanges () override;
-	void save (KConfig *config) override;
 
 	static bool saveHistory () { return save_history; };
 	static uint maxHistoryLength () { return max_history_length; };
@@ -70,10 +68,10 @@ public slots:
 private:
 	static RKCodeCompletionSettings completion_settings;
 	static RKConfigValue<bool> save_history;
-	static uint max_history_length;
-	static uint max_console_lines;
+	static RKConfigValue<uint> max_history_length;
+	static RKConfigValue<uint> max_console_lines;
 	static RKConfigValue<bool> pipe_user_commands_through_console;
-	static PipedCommandsHistoryMode add_piped_commands_to_history;
+	static RKConfigValue<PipedCommandsHistoryMode, int> add_piped_commands_to_history;
 	static RKConfigValue<bool> context_sensitive_history_by_default;
 
 	RKCodeCompletionSettingsWidget *completion_settings_widget;

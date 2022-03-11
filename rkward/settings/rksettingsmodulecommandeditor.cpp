@@ -37,11 +37,11 @@
 
 // static members
 RKCodeCompletionSettings RKSettingsModuleCommandEditor::completion_settings;
-bool RKSettingsModuleCommandEditor::autosave_enabled;
+RKConfigValue<bool> RKSettingsModuleCommandEditor::autosave_enabled { "Autosave enabled", true };
 RKConfigValue<bool> RKSettingsModuleCommandEditor::autosave_keep { "Autosave keep saves", false };
-int RKSettingsModuleCommandEditor::autosave_interval;
-int RKSettingsModuleCommandEditor::num_recent_files;
-QString RKSettingsModuleCommandEditor::script_file_filter;
+RKConfigValue<int> RKSettingsModuleCommandEditor::autosave_interval {"Autosave interval", 5 };
+RKConfigValue<int> RKSettingsModuleCommandEditor::num_recent_files { "Max number of recent files", 10 };
+RKConfigValue<QString> RKSettingsModuleCommandEditor::script_file_filter { "Script file filter", "*.R *.S *.q *.Rhistory" };
 
 RKCodeCompletionSettingsWidget::RKCodeCompletionSettingsWidget(QWidget *parent, RKSettingsModule *module, RKCodeCompletionSettings *settings, bool show_common) : RKSettingsModuleWidget(parent, module), settings(settings), show_common(show_common) {
 	RK_TRACE (SETTINGS);
@@ -213,11 +213,6 @@ void RKSettingsModuleCommandEditor::applyChanges () {
 	script_file_filter = script_file_filter_box->text ();
 }
 
-void RKSettingsModuleCommandEditor::save (KConfig *config) {
-	RK_TRACE (SETTINGS);
-	saveSettings (config);
-}
-
 QString completionTypeToConfigKey (int cat) {
 	if (cat == RKCodeCompletionSettings::Calltip) return "Calltips";
 	if (cat == RKCodeCompletionSettings::Arghint) return "Argument completion";
@@ -228,39 +223,25 @@ QString completionTypeToConfigKey (int cat) {
 	return QString ();
 }
 
-void RKSettingsModuleCommandEditor::saveSettings (KConfig *config) {
-	RK_TRACE (SETTINGS);
+void RKSettingsModuleCommandEditor::syncConfig(KConfig* config, RKConfigBase::ConfigSyncAction a) {
+	RK_TRACE(SETTINGS);
 
-	KConfigGroup cg = config->group ("Command Editor Windows");
-	completion_settings.saveSettings(cg);
+	KConfigGroup cg = config->group("Command Editor Windows");
+	completion_settings.syncConfig(cg, a);
 
-	cg.writeEntry ("Autosave enabled", autosave_enabled);
-	autosave_keep.saveConfig(cg);
-	cg.writeEntry ("Autosave interval", autosave_interval);
+	autosave_enabled.syncConfig(cg, a);
+	autosave_keep.syncConfig(cg, a);
+	autosave_interval.syncConfig(cg, a);
 
-	cg.writeEntry ("Max number of recent files", num_recent_files);
-	cg.writeEntry ("Script file filter", script_file_filter);
-}
-
-void RKSettingsModuleCommandEditor::loadSettings (KConfig *config) {
-	RK_TRACE (SETTINGS);
-
-	KConfigGroup cg = config->group ("Command Editor Windows");
-	completion_settings.loadSettings(cg);
-
-	autosave_enabled = cg.readEntry ("Autosave enabled", true);
-	autosave_keep.loadConfig(cg);
-	autosave_interval = cg.readEntry ("Autosave interval", 5);
-
-	num_recent_files = cg.readEntry ("Max number of recent files", 10);
-	script_file_filter = cg.readEntry ("Script file filter", "*.R *.S *.q *.Rhistory");
+	num_recent_files.syncConfig(cg, a);
+	script_file_filter.syncConfig(cg, a);
 }
 
 // static
 bool RKSettingsModuleCommandEditor::matchesScriptFileFilter (const QString &filename) {
 	RK_TRACE (SETTINGS);
 
-	const QStringList exts = script_file_filter.split (' ');
+	const QStringList exts = script_file_filter.get().split(' ');
 	foreach (const QString& ext, exts) {
 		QRegExp reg (ext, Qt::CaseInsensitive, QRegExp::Wildcard);
 		if (reg.exactMatch (filename)) return true;

@@ -39,13 +39,12 @@ public:
 	explicit RKCarbonCopySettings (QWidget* parent, RKSettingsModule* module);
 	~RKCarbonCopySettings ();
 
-	static void saveSettings (KConfig *config);
-	static void loadSettings (KConfig *config);
+	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a);
 
 	static bool shouldCarbonCopyCommand (const RCommand *command);
 	static bool includeOutputInCarbonCopy () { return (cc_globally_enabled && cc_command_output); };
 public slots:
-	void applyChanges ();
+	void applyChanges() override;
 private:
 	// There can be multiple instances of this widget, which need to be kept in sync.
 	static QList<RKCarbonCopySettings*> instances;
@@ -57,7 +56,7 @@ private:
 	QCheckBox *cc_app_plugin_commands_box;
 	QCheckBox *cc_command_output_box;
 
-	static bool cc_globally_enabled;
+	static RKConfigValue<bool> cc_globally_enabled;
 	static RKConfigValue<bool> cc_console_commands;
 	static RKConfigValue<bool> cc_script_commands;
 	static RKConfigValue<bool> cc_app_plugin_commands;
@@ -74,13 +73,12 @@ public:
 	~RKSettingsModuleOutput ();
 
 	void applyChanges () override;
-	void save (KConfig *config) override;
+	void save(KConfig *config) override { syncConfig(config, RKConfigBase::SaveConfig); };
+	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a);
 
 /** generate the commands needed to set the R run time options */
 	static QStringList makeRRunTimeOptionCommands ();
 
-	static void saveSettings (KConfig *config);
-	static void loadSettings (KConfig *config);
 	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
 
 	QString caption () override;
@@ -100,11 +98,11 @@ private:
 
 	static RKConfigValue<bool> auto_show;
 	static RKConfigValue<bool> auto_raise;
-	static QString graphics_type;
-	static int graphics_width;
-	static int graphics_height;
-	static int graphics_jpg_quality;
-	static QString custom_css_file;
+	static RKConfigValue<QString> graphics_type;
+	static RKConfigValue<int> graphics_width;
+	static RKConfigValue<int> graphics_height;
+	static RKConfigValue<int> graphics_jpg_quality;
+	static RKConfigValue<QString> custom_css_file;
 	static RKConfigValue<bool> shared_default_output;
 };
 
