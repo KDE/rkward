@@ -28,6 +28,7 @@
 
 #include "../rbackend/rcommand.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkspinbox.h"
 #include "rksettings.h"
 #include "../rkglobals.h"
 
@@ -144,15 +145,8 @@ RKSettingsModuleWatch::RKSettingsModuleWatch (RKSettings *gui, QWidget *parent) 
 
 	vbox->addSpacing (2*RKGlobals::spacingHint ());
 
-	vbox->addWidget (new QLabel (i18n ("Maximum number of paragraphs/lines to display in the Command Log"), this));
-	max_log_lines_spinner = new QSpinBox(this);
-	max_log_lines_spinner->setMaximum(10000);
-	max_log_lines_spinner->setMinimum(0);
-	max_log_lines_spinner->setSingleStep(10);
-	max_log_lines_spinner->setValue(max_log_lines);
-	max_log_lines_spinner->setSpecialValueText (i18n ("Unlimited"));
-	connect (max_log_lines_spinner, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleWatch::changedSetting);
-	vbox->addWidget (max_log_lines_spinner);
+	vbox->addWidget(new QLabel(i18n("Maximum number of paragraphs/lines to display in the Command Log (0 for no limit)")));
+	vbox->addWidget(max_log_lines.makeSpinBox(0, INT_MAX, this));
 
 	vbox->addStretch ();
 
@@ -245,8 +239,6 @@ void RKSettingsModuleWatch::applyChanges () {
 	plugin_filter = getFilterSettings (plugin_filter_boxes);
 	app_filter = getFilterSettings (app_filter_boxes);
 	sync_filter = getFilterSettings (sync_filter_boxes);
-
-	max_log_lines = max_log_lines_spinner->value ();
 }
 	
 QString RKSettingsModuleWatch::caption () {

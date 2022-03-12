@@ -90,9 +90,7 @@ public slots:
 	void boxChanged ();
 private:
 	QComboBox *graphics_type_box;
-	QSpinBox *graphics_width_box;
-	QSpinBox *graphics_height_box;
-	QSpinBox *graphics_jpg_quality_box;
+	RKSpinBox *graphics_jpg_quality_box;
 	RKCarbonCopySettings *cc_settings;
 	GetFileNameWidget *custom_css_file_box;
 

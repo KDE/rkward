@@ -70,40 +70,29 @@ RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *pare
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 
 	files_choser = new GetFileNameWidget (this, GetFileNameWidget::ExistingDirectory, true, i18n ("Directory where rkward may store files (*)"), QString (), new_files_path);
-	connect (files_choser, &GetFileNameWidget::locationChanged, this, &RKSettingsModuleGeneral::settingChanged);
+	connect (files_choser, &GetFileNameWidget::locationChanged, this, &RKSettingsModuleGeneral::change);
 	main_vbox->addWidget (files_choser);
 
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 
-	main_vbox->addWidget (new QLabel (i18n ("Startup Action (*)"), this));
-	startup_action_choser = new QComboBox (this);
-	startup_action_choser->setEditable (false);
-	startup_action_choser->addItem (i18n ("Start with an empty workspace"), (int) StartupDialog::EmptyWorkspace);
-	startup_action_choser->addItem (i18n ("Load .RData-file from current directory, if available (R option '--restore')"), (int) StartupDialog::RestoreFromWD);
-	startup_action_choser->addItem (i18n ("Start with an empty table"), (int) StartupDialog::EmptyTable);
-	startup_action_choser->addItem (i18n ("Ask for a file to open"), (int) StartupDialog::ChoseFile);
-	startup_action_choser->addItem (i18n ("Show selection dialog (default)"), (int) StartupDialog::NoSavedSetting);
-	startup_action_choser->setCurrentIndex (startup_action_choser->findData (startup_action.get()));
-	connect (startup_action_choser, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), this, &RKSettingsModuleGeneral::settingChanged);
-	main_vbox->addWidget (startup_action_choser);
+	main_vbox->addWidget(new QLabel(i18n("Startup Action (*)")));
+	auto startup_action_choser = startup_action.makeDropDown(RKConfigBase::LabelList(
+		{{StartupDialog::EmptyWorkspace, i18n("Start with an empty workspace")}, {StartupDialog::RestoreFromWD, i18n("Load .RData-file from current directory, if available (R option '--restore')")}, {StartupDialog::EmptyTable, i18n("Start with an empty table")}, {StartupDialog::ChoseFile, i18n("Ask for a file to open")}, {StartupDialog::NoSavedSetting, i18n("Show selection dialog (default)")}}
+	), this);
+	main_vbox->addWidget(startup_action_choser);
 
 	main_vbox->addWidget(show_help_on_startup.makeCheckbox(i18n("Show RKWard Help on Startup"), this));
 
 	QGroupBox* group_box = new QGroupBox (i18n ("Initial working directory (*)"), this);
 	QHBoxLayout *hlayout = new QHBoxLayout (group_box);
-	initial_dir_chooser = new QComboBox (group_box);
-	initial_dir_chooser->setEditable (false);
-	initial_dir_chooser->addItem (i18n ("Do not change current directory on startup"), (int) CurrentDirectory);
-	initial_dir_chooser->addItem (i18n ("RKWard files directory (as specified, above)"), (int) RKWardDirectory);
-	initial_dir_chooser->addItem (i18n ("User home directory"), (int) UserHomeDirectory);
-	initial_dir_chooser->addItem (i18n ("Last used directory"), (int) LastUsedDirectory);
-	initial_dir_chooser->addItem (i18n ("The following directory (please specify):"), (int) CustomDirectory);
-	initial_dir_chooser->setCurrentIndex (initial_dir_chooser->findData ((int) initial_dir));
-	connect (initial_dir_chooser, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), this, &RKSettingsModuleGeneral::settingChanged);
+	auto initial_dir_chooser = initial_dir.makeDropDown(RKConfigBase::LabelList(
+		{{CurrentDirectory, i18n("Do not change current directory on startup")}, {RKWardDirectory, i18n("RKWard files directory (as specified, above)")}, {UserHomeDirectory, i18n("User home directory")}, {LastUsedDirectory, i18n("Last used directory")}, {CustomDirectory, i18n("The following directory (please specify):")}}
+	), this);
 	hlayout->addWidget (initial_dir_chooser);
 	initial_dir_custom_chooser = new GetFileNameWidget (group_box, GetFileNameWidget::ExistingDirectory, true, QString(), i18n ("Initial working directory"), initial_dir_specification);
 	initial_dir_custom_chooser->setEnabled (initial_dir == CustomDirectory);
-	connect (initial_dir_custom_chooser, &GetFileNameWidget::locationChanged, this, &RKSettingsModuleGeneral::settingChanged);
+	connect (initial_dir_custom_chooser, &GetFileNameWidget::locationChanged, this, &RKSettingsModuleGeneral::change);
+	connect(initial_dir_chooser, QOverload<int>::of(&QComboBox::currentIndexChanged), [initial_dir_chooser, this]() { this->initial_dir_custom_chooser->setEnabled(initial_dir_chooser->currentData()==CustomDirectory); });
 	hlayout->addWidget (initial_dir_custom_chooser);
 	RKCommonFunctions::setTips (i18n ("<p>The initial working directory to use. Note that if you are loading a workspace on startup, and you have configured RKWard to change to the directory of loaded workspaces, that directory will take precedence.</p>"), group_box, initial_dir_chooser, initial_dir_custom_chooser);
 	main_vbox->addWidget (group_box);
@@ -127,7 +116,7 @@ RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *pare
 	group_layout->addWidget (button);
 	workplace_save_chooser->addButton (button, DontSaveWorkplace);	
 	if ((button = workplace_save_chooser->button (workplace_save_mode))) button->setChecked (true);
-	connect (workplace_save_chooser, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &RKSettingsModuleGeneral::settingChanged);
+	connect (workplace_save_chooser, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &RKSettingsModuleGeneral::change);
 	main_vbox->addWidget (group_box);
 
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
@@ -136,25 +125,16 @@ RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *pare
 
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 
-	QLabel* label = new QLabel (i18n ("Warn when editing objects with more than this number of fields (0 for no limit):"), this);
-	warn_size_object_edit_box = new RKSpinBox (this);
-	warn_size_object_edit_box->setIntMode (0, INT_MAX, warn_size_object_edit);
-	warn_size_object_edit_box->setSpecialValueText (i18n ("No limit"));
-	connect (warn_size_object_edit_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleGeneral::settingChanged);
-	main_vbox->addWidget (label);
-	main_vbox->addWidget (warn_size_object_edit_box);
+	main_vbox->addWidget (new QLabel(i18n("Warn when editing objects with more than this number of fields (0 for no limit):")));
+	main_vbox->addWidget (warn_size_object_edit.makeSpinBox(0, INT_MAX, this));
 
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 
-	label = new QLabel (i18n ("MDI window focus behavior"), this);
-	mdi_focus_policy_chooser = new QComboBox (this);
-	mdi_focus_policy_chooser->setEditable (false);
-	mdi_focus_policy_chooser->insertItem (RKMDIClickFocus, i18n ("Click to focus"));
-	mdi_focus_policy_chooser->insertItem (RKMDIFocusFollowsMouse, i18n ("Focus follows mouse"));
-	mdi_focus_policy_chooser->setCurrentIndex (mdi_focus_policy);
-	connect (mdi_focus_policy_chooser, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), this, &RKSettingsModuleGeneral::settingChanged);
-	main_vbox->addWidget (label);
-	main_vbox->addWidget (mdi_focus_policy_chooser);
+	main_vbox->addWidget(new QLabel(i18n("MDI window focus behavior"), this));
+	auto mdi_focus_policy_chooser = mdi_focus_policy.makeDropDown(RKConfigBase::LabelList(
+		{{RKMDIClickFocus, i18n("Click to focus")}, {RKMDIFocusFollowsMouse, i18n("Focus follows mouse")}}
+	), this);
+	main_vbox->addWidget(mdi_focus_policy_chooser);
 
 	main_vbox->addStretch ();
 }
@@ -192,13 +172,6 @@ void RKSettingsModuleGeneral::updateLastUsedUrl (const QString& thing, const QUr
 	}
 }
 
-void RKSettingsModuleGeneral::settingChanged () {
-	RK_TRACE (SETTINGS);
-	int dummy = initial_dir_chooser->itemData (initial_dir_chooser->currentIndex ()).toInt ();
-	initial_dir_custom_chooser->setEnabled (dummy == CustomDirectory);
-	change ();
-}
-
 QString RKSettingsModuleGeneral::caption () {
 	RK_TRACE (SETTINGS);
 	return (i18n ("General"));
@@ -207,11 +180,7 @@ QString RKSettingsModuleGeneral::caption () {
 void RKSettingsModuleGeneral::applyChanges () {
 	RK_TRACE (SETTINGS);
 	new_files_path = files_choser->getLocation ();
-	startup_action = static_cast<StartupDialog::Result> (startup_action_choser->itemData (startup_action_choser->currentIndex ()).toInt ());
 	workplace_save_mode = static_cast<WorkplaceSaveMode> (workplace_save_chooser->checkedId ());
-	warn_size_object_edit = warn_size_object_edit_box->intValue ();
-	mdi_focus_policy = static_cast<RKMDIFocusPolicy> (mdi_focus_policy_chooser->currentIndex ());
-	initial_dir = static_cast<InitialDirectory> (initial_dir_chooser->itemData (initial_dir_chooser->currentIndex ()).toInt ());
 	initial_dir_specification = initial_dir_custom_chooser->getLocation ();
 }
 

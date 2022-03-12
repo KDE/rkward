@@ -39,6 +39,7 @@
 #include "../misc/multistringselector.h"
 #include "../misc/rkprogresscontrol.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkspinbox.h"
 #include "../rbackend/rkrinterface.h"
 #include "../rbackend/rksessionvars.h"
 #include "../rkglobals.h"
@@ -78,11 +79,11 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 	int row = -1;
 
 	// options (warn)
-	grid->addWidget (new QLabel (i18n ("Display warnings"), this), ++row, 0);
+	grid->addWidget(new QLabel(i18n("Display warnings")), ++row, 0);
 	auto warn_input = options_warn.makeDropDown(RKConfigBase::LabelList(
 		{{-1, i18n("Suppress warnings")}, {0, i18n("Print warnings later (default)")}, {1, i18n("Print warnings immediately")}, {2, i18n ("Convert warnings to errors")}}
 	), this);
-	grid->addWidget (warn_input, row, 1);
+	grid->addWidget(warn_input, row, 1);
 
 	// options (OutDec)
 	grid->addWidget (new QLabel (i18n ("Decimal character (only for printing)"), this), ++row, 0);
@@ -92,69 +93,39 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 	grid->addWidget (outdec_input, row, 1);
 
 	// options (width)
-	grid->addWidget (new QLabel (i18n ("Output width (characters)"), this), ++row, 0);
-	width_input = new QSpinBox(this);
-	width_input->setMaximum(10000);
-	width_input->setMinimum(10);
-	width_input->setSingleStep(1);
-	width_input->setValue(options_width);
-	connect (width_input, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleR::settingChanged);
-	grid->addWidget (width_input, row, 1);
+	grid->addWidget(new QLabel(i18n("Output width (characters)")), ++row, 0);
+	grid->addWidget(options_width.makeSpinBox(10, 10000, this), row, 1);
 
 	// options (max.print)
-	grid->addWidget (new QLabel (i18n ("Maximum number of elements shown in print"), this), ++row, 0);
-	maxprint_input = new QSpinBox(this);
-	maxprint_input->setMaximum(INT_MAX);
-	maxprint_input->setMinimum(100);
-	maxprint_input->setSingleStep(1);
-	maxprint_input->setValue(options_maxprint);
-	connect (maxprint_input, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleR::settingChanged);
-	grid->addWidget (maxprint_input, row, 1);
+	grid->addWidget(new QLabel(i18n("Maximum number of elements shown in print")), ++row, 0);
+	grid->addWidget(options_maxprint.makeSpinBox(100, INT_MAX, this), row, 1);
 
 	// options (warnings.length)
-	grid->addWidget (new QLabel (i18n ("Maximum length of warnings/errors to print"), this), ++row, 0);
-	warningslength_input = new QSpinBox(this);
-	warningslength_input->setMaximum(8192);
-	warningslength_input->setMinimum(100);
-	warningslength_input->setSingleStep(1);
-	warningslength_input->setValue(options_warningslength);
-	connect (warningslength_input, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleR::settingChanged);
-	grid->addWidget (warningslength_input, row, 1);
+	grid->addWidget(new QLabel(i18n("Maximum length of warnings/errors to print")), ++row, 0);
+	grid->addWidget(options_warningslength.makeSpinBox(100, 8192, this), row, 1);
 
 	// options (keep.source)
-	grid->addWidget (new QLabel (i18n ("Keep comments in functions"), this), ++row, 0);
+	grid->addWidget(new QLabel(i18n("Keep comments in functions")), ++row, 0);
 	auto keepsource_input = options_keepsource.makeDropDown(RKConfigBase::LabelList({{1, i18n("TRUE (default)")}, {0, i18n("FALSE")}}), this);
-	grid->addWidget (keepsource_input, row, 1);
+	grid->addWidget(keepsource_input, row, 1);
 
 	// options (keep.source.pkgs)
-	grid->addWidget (new QLabel (i18n ("Keep comments in packages"), this), ++row, 0);
+	grid->addWidget(new QLabel(i18n("Keep comments in packages")), ++row, 0);
 	auto keepsourcepkgs_input = options_keepsourcepkgs.makeDropDown(RKConfigBase::LabelList({{1, i18n("TRUE")}, {0, i18n("FALSE (default)")}}), this);
-	grid->addWidget (keepsourcepkgs_input, row, 1);
+	grid->addWidget(keepsourcepkgs_input, row, 1);
 
 	// options (expressions)
-	grid->addWidget (new QLabel (i18n ("Maximum level of nested expressions"), this), ++row, 0);
-	expressions_input = new QSpinBox(this);
-	expressions_input->setMaximum(500000);
-	expressions_input->setMinimum(25);
-	expressions_input->setSingleStep(1);
-	expressions_input->setValue(options_expressions);
-	connect (expressions_input, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleR::settingChanged);
-	grid->addWidget (expressions_input, row, 1);
+	grid->addWidget(new QLabel(i18n("Maximum level of nested expressions")), ++row, 0);
+	grid->addWidget(options_expressions.makeSpinBox(25, 500000, this), row, 1);
 
 	// options (digits)
-	grid->addWidget (new QLabel (i18n ("Default decimal precision in print ()"), this), ++row, 0);
-	digits_input = new QSpinBox(this);
-	digits_input->setMaximum(22);
-	digits_input->setMinimum(1);
-	digits_input->setSingleStep(1);
-	digits_input->setValue(options_digits);
-	connect (digits_input, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleR::settingChanged);
-	grid->addWidget (digits_input, row, 1);
+	grid->addWidget(new QLabel(i18n("Default decimal precision in print ()")), ++row, 0);
+	grid->addWidget(options_digits.makeSpinBox(1, 22, this), row, 1);
 
 	// options (check.bounds)
-	grid->addWidget (new QLabel (i18n ("Check vector bounds (warn)"), this), ++row, 0);
+	grid->addWidget(new QLabel(i18n("Check vector bounds (warn)")), ++row, 0);
 	auto checkbounds_input = options_checkbounds.makeDropDown(RKConfigBase::LabelList({{1, i18n("TRUE")}, {0, i18n("FALSE (default)")}}), this);
-	grid->addWidget (checkbounds_input, row, 1);
+	grid->addWidget(checkbounds_input, row, 1);
 
 	grid->addWidget (new QLabel (i18n ("Editor command"), this), ++row, 0);
 	editor_input = new QComboBox (this);
@@ -213,11 +184,6 @@ void RKSettingsModuleR::applyChanges () {
 	RK_TRACE (SETTINGS);
 
 	options_outdec = outdec_input->text ();
-	options_width = width_input->value ();
-	options_warningslength = warningslength_input->value ();
-	options_maxprint = maxprint_input->value ();
-	options_expressions = expressions_input->value ();
-	options_digits = digits_input->value ();
 	options_editor = editor_input->currentText ();
 	options_pager = pager_input->currentText ();
 	options_further = further_input->toPlainText ();

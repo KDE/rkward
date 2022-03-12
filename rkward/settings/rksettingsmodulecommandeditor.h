@@ -77,8 +77,6 @@ public:
 private:
 	void makeCompletionTypeBoxes (const QStringList& labels, QGridLayout* layout);
 
-	RKSpinBox* auto_completion_min_chars_box;
-	RKSpinBox* auto_completion_timeout_box;
 	QGroupBox* auto_completion_enabled_box;
 
 	RKCodeCompletionSettings *settings;
@@ -121,10 +119,8 @@ private:
 
 	RKCodeCompletionSettingsWidget *completion_settings_widget;
 	QGroupBox* autosave_enabled_box;
-	RKSpinBox* autosave_interval_box;
-
-	RKSpinBox* num_recent_files_box;
 	QLineEdit* script_file_filter_box;
+
 	static RKConfigValue<int> num_recent_files;
 	static RKConfigValue<QString> script_file_filter;
 };

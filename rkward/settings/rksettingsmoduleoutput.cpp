@@ -26,11 +26,11 @@
 #include <QCheckBox>
 #include <QVBoxLayout>
 #include <QComboBox>
-#include <QSpinBox>
 
 #include "../rkglobals.h"
 #include "../misc/getfilenamewidget.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkspinbox.h"
 #include "../rbackend/rkrinterface.h"
 #include "../debug.h"
 
@@ -158,33 +158,18 @@ RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent
 	connect (graphics_type_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &RKSettingsModuleOutput::boxChanged);
 	h_layout->addSpacing (2*RKGlobals::spacingHint ());
 	h_layout->addWidget (new QLabel (i18n ("JPG quality"), group));
-	h_layout->addWidget (graphics_jpg_quality_box = new QSpinBox(group));
-	graphics_jpg_quality_box->setMaximum(100);
-	graphics_jpg_quality_box->setMinimum(1);
-	graphics_jpg_quality_box->setSingleStep(1);
-	graphics_jpg_quality_box->setValue(graphics_jpg_quality);
+	h_layout->addWidget (graphics_jpg_quality_box = graphics_jpg_quality.makeSpinBox(1, 100, this));
 	graphics_jpg_quality_box->setEnabled (graphics_type == "\"JPG\"");
-	connect (graphics_jpg_quality_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleOutput::boxChanged);
 	h_layout->addStretch ();
 
 	h_layout = new QHBoxLayout ();
 	group_layout->addLayout (h_layout);
 	h_layout->addWidget (new QLabel (i18n ("Width:"), group));
-	h_layout->addWidget (graphics_width_box = new QSpinBox(group));
-	graphics_width_box->setMaximum(INT_MAX);
-	graphics_width_box->setMinimum(1);
-	graphics_width_box->setSingleStep(1);
-	graphics_width_box->setValue(graphics_width);
+	h_layout->addWidget (graphics_width.makeSpinBox(1, INT_MAX, this));
 	h_layout->addSpacing (2*RKGlobals::spacingHint ());
 	h_layout->addWidget (new QLabel (i18n ("Height:"), group));
-	h_layout->addWidget (graphics_height_box = new QSpinBox(group));
-	graphics_height_box->setMaximum(INT_MAX);
-	graphics_height_box->setMinimum(1);
-	graphics_height_box->setSingleStep(1);
-	graphics_height_box->setValue(graphics_height);
+	h_layout->addWidget (graphics_height.makeSpinBox(1, INT_MAX, this));
 	h_layout->addStretch ();
-	connect (graphics_width_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleOutput::boxChanged);
-	connect (graphics_height_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleOutput::boxChanged);
 
 	main_vbox->addWidget (group);
 
@@ -215,9 +200,6 @@ void RKSettingsModuleOutput::applyChanges () {
 	custom_css_file = custom_css_file_box->getLocation ();
 
 	graphics_type = graphics_type_box->itemData (graphics_type_box->currentIndex ()).toString ();
-	graphics_width = graphics_width_box->value ();
-	graphics_height = graphics_height_box->value ();
-	graphics_jpg_quality = graphics_jpg_quality_box->value ();
 
 	QStringList commands = makeRRunTimeOptionCommands ();
 	for (QStringList::const_iterator it = commands.begin (); it != commands.end (); ++it) {

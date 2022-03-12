@@ -30,6 +30,7 @@ class QComboBox;
 class RKSettingsModule;
 class RKSettingsModuleWidget;
 class RKSetupWizardItem;
+class RKSpinBox;
 
 /** Base class for RKWard config settings.
  *
@@ -93,6 +94,7 @@ public:
 			return makeDropDownHelper(entries, _module, (std::is_same<STORAGE_T, bool>::value && value) ? 1 : (int) value, [this](int val){this->value = (T) val;});
 		}
 	}
+	RKSpinBox* makeSpinBox(T min, T max, RKSettingsModuleWidget* _module);
 private:
 	T value;
 };

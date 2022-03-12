@@ -74,11 +74,6 @@ private:
 	QButtonGroup *replace_standard_devices_group;
 
 	QGroupBox *graphics_hist_box;
-	QSpinBox *graphics_hist_max_length_box;
-	QSpinBox *graphics_hist_max_plotsize_box;
-
-	RKSpinBox *graphics_height_box;
-	RKSpinBox *graphics_width_box;
 
 	static RKConfigValue<DefaultDevice, int> default_device;
 	static RKConfigValue<QString> default_device_other;

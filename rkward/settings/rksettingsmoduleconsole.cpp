@@ -25,9 +25,9 @@
 #include <qlabel.h>
 #include <QVBoxLayout>
 #include <QComboBox>
-#include <QSpinBox>
 
 #include "../rbackend/rcommand.h"
+#include "../misc/rkspinbox.h"
 #include "../rkglobals.h"
 
 #include "../debug.h"
@@ -51,24 +51,12 @@ RKSettingsModuleConsole::RKSettingsModuleConsole (RKSettings *gui, QWidget *pare
 
 	vbox->addWidget (save_history.makeCheckbox(i18n("Load/Save command history"), this));
 
-	vbox->addWidget (new QLabel (i18n ("Maximum length of command history"), this));
-	max_history_length_spinner = new QSpinBox(this);
-	max_history_length_spinner->setMaximum(10000);
-	max_history_length_spinner->setMinimum(0);
-	max_history_length_spinner->setSingleStep(10);
-	max_history_length_spinner->setValue(max_history_length);
-	max_history_length_spinner->setSpecialValueText (i18n ("Unlimited"));
-	connect (max_history_length_spinner, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleConsole::changedSetting);
+	vbox->addWidget (new QLabel (i18n ("Maximum length of command history (0 for no limit)"), this));
+	auto max_history_length_spinner = max_history_length.makeSpinBox(0, 10000, this);
 	vbox->addWidget (max_history_length_spinner);
 
-	vbox->addWidget (new QLabel (i18n ("Maximum number of paragraphs/lines to display in the console"), this));
-	max_console_lines_spinner = new QSpinBox(this);
-	max_console_lines_spinner->setMaximum(10000);
-	max_console_lines_spinner->setMinimum(0);
-	max_console_lines_spinner->setSingleStep(10);
-	max_console_lines_spinner->setValue(max_console_lines);
-	max_console_lines_spinner->setSpecialValueText (i18n ("Unlimited"));
-	connect (max_console_lines_spinner, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleConsole::changedSetting);
+	vbox->addWidget (new QLabel (i18n ("Maximum number of paragraphs/lines to display in the console (0 for not limit)"), this));
+	auto max_console_lines_spinner = max_console_lines.makeSpinBox(0, 10000, this);
 	vbox->addWidget (max_console_lines_spinner);
 
 	vbox->addSpacing (2*RKGlobals::spacingHint ());
@@ -93,11 +81,6 @@ RKSettingsModuleConsole::RKSettingsModuleConsole (RKSettings *gui, QWidget *pare
 
 RKSettingsModuleConsole::~RKSettingsModuleConsole () {
 	RK_TRACE (SETTINGS);
-}
-
-void RKSettingsModuleConsole::changedSetting (int) {
-	RK_TRACE (SETTINGS);
-	change ();
 }
 
 //static
@@ -148,8 +131,6 @@ void RKSettingsModuleConsole::applyChanges () {
 	RK_TRACE (SETTINGS);
 
 	completion_settings_widget->applyChanges();
-	max_history_length = max_history_length_spinner->value ();
-	max_console_lines = max_console_lines_spinner->value ();
 }
 	
 QString RKSettingsModuleConsole::caption () {

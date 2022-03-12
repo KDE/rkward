@@ -107,15 +107,9 @@ public:
 	static bool rkwardVersionChanged () { return rkward_version_changed; };
 	/** Returns true, if rkward seems to have started from a different path than on the previous run. */
 	static bool installationMoved () { return installation_moved; };
-public slots:
-	void settingChanged ();
 private:
 	GetFileNameWidget *files_choser;
-	QComboBox *startup_action_choser;
 	QButtonGroup *workplace_save_chooser;
-	RKSpinBox *warn_size_object_edit_box;
-	QComboBox *mdi_focus_policy_chooser;
-	QComboBox *initial_dir_chooser;
 	GetFileNameWidget *initial_dir_custom_chooser;
 
 	static RKConfigValue<StartupDialog::Result, int> startup_action;

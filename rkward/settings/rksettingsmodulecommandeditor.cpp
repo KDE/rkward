@@ -62,14 +62,10 @@ RKCodeCompletionSettingsWidget::RKCodeCompletionSettingsWidget(QWidget *parent, 
 	box_layout->addWidget (auto_completion_enabled_box);
 
 	QFormLayout* form_layout = new QFormLayout (auto_completion_enabled_box);
-	auto_completion_min_chars_box = new RKSpinBox (auto_completion_enabled_box);
-	auto_completion_min_chars_box->setIntMode (1, INT_MAX, settings->auto_completion_min_chars);
-	connect (auto_completion_min_chars_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKCodeCompletionSettingsWidget::change);
+	auto auto_completion_min_chars_box = settings->auto_completion_min_chars.makeSpinBox(1, INT_MAX, this);
 	form_layout->addRow (i18n("Minimum number of characters"), auto_completion_min_chars_box);
 
-	auto_completion_timeout_box = new RKSpinBox (auto_completion_enabled_box);
-	auto_completion_timeout_box->setIntMode (0, INT_MAX, settings->auto_completion_timeout);
-	connect (auto_completion_timeout_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKCodeCompletionSettingsWidget::change);
+	auto auto_completion_timeout_box = settings->auto_completion_timeout.makeSpinBox(0, INT_MAX, this);
 	form_layout->addRow (i18n ("Timeout (milliseconds)"), auto_completion_timeout_box);
 
 	form_layout->addRow(i18n("(Attempt to) start completion whenever the cursor position changes"), settings->auto_completion_cursor_activated.makeCheckbox(QString(), this));
@@ -111,8 +107,6 @@ RKCodeCompletionSettingsWidget::RKCodeCompletionSettingsWidget(QWidget *parent, 
 
 void RKCodeCompletionSettingsWidget::applyChanges() {
 	settings->auto_completion_enabled = auto_completion_enabled_box->isChecked ();
-	settings->auto_completion_min_chars = auto_completion_min_chars_box->intValue ();
-	settings->auto_completion_timeout = auto_completion_timeout_box->intValue ();
 }
 
 void RKCodeCompletionSettingsWidget::makeCompletionTypeBoxes(const QStringList& labels, QGridLayout* layout) {
@@ -140,10 +134,7 @@ RKSettingsModuleCommandEditor::RKSettingsModuleCommandEditor (RKSettings *gui, Q
 	connect (autosave_enabled_box, &QGroupBox::toggled, this, &RKSettingsModule::change);
 	QFormLayout *form_layout = new QFormLayout (group);
 
-	autosave_interval_box = new RKSpinBox (group);
-	autosave_interval_box->setIntMode (1, INT_MAX, autosave_interval);
-	connect (autosave_interval_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModule::change);
-	form_layout->addRow (i18n ("Autosave interval (minutes)"), autosave_interval_box);
+	form_layout->addRow(i18n("Autosave interval (minutes)"), autosave_interval.makeSpinBox(1, INT_MAX, this));
 
 	form_layout->addRow(autosave_keep.makeCheckbox(i18n("Keep autosave file after manual save"), this));
 
@@ -153,10 +144,9 @@ RKSettingsModuleCommandEditor::RKSettingsModuleCommandEditor (RKSettings *gui, Q
 
 	group = new QGroupBox (i18n ("Opening script files"), this);
 	form_layout = new QFormLayout (group);
-	num_recent_files_box = new RKSpinBox (group);
-	num_recent_files_box->setIntMode (1, INT_MAX, num_recent_files);
+
+	auto num_recent_files_box = num_recent_files.makeSpinBox(1, INT_MAX, this);
 	RKCommonFunctions::setTips (i18n ("<p>The number of recent files to remember (in the Open Recent R Script File menu).</p>") + RKCommonFunctions::noteSettingsTakesEffectAfterRestart (), num_recent_files_box, group);
-	connect (num_recent_files_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModule::change);
 	form_layout->addRow (i18n ("Number of scripts in recent file lists (*)"), num_recent_files_box);
 
 	script_file_filter_box = new QLineEdit (group);
@@ -183,11 +173,7 @@ void RKSettingsModuleCommandEditor::applyChanges () {
 	RK_TRACE (SETTINGS);
 
 	completion_settings_widget->applyChanges ();
-
 	autosave_enabled = autosave_enabled_box->isChecked ();
-	autosave_interval = autosave_interval_box->intValue ();
-
-	num_recent_files = num_recent_files_box->intValue ();
 	script_file_filter = script_file_filter_box->text ();
 }
 

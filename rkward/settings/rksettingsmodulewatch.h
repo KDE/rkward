@@ -77,8 +77,6 @@ private:
 	FilterBoxes *addFilterSettings (QWidget *parent, QGridLayout *layout, int row, const QString &label, int state);
 
 	static RKConfigValue<uint> max_log_lines;
-
-	QSpinBox *max_log_lines_spinner;
 };
 
 #endif

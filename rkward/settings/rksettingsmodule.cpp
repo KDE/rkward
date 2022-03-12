@@ -19,6 +19,7 @@
 #include "../rkward.h"
 #include "../debug.h"
 #include "rksettings.h"
+#include "../misc/rkspinbox.h"
 
 #include <QCheckBox>
 #include <QComboBox>
@@ -57,6 +58,33 @@ template<typename TT, typename std::enable_if<std::is_same<TT, bool>::value>::ty
 	return ret;
 }
 
+template<>
+RKSpinBox* RKConfigValue<double, double>::makeSpinBox(double min, double max, RKSettingsModuleWidget* module) {
+	RKSpinBox* ret = new RKSpinBox();
+	ret->setRealMode(min, max, value, 1, 2);
+	QObject::connect(ret, QOverload<int>::of(&QSpinBox::valueChanged), module, &RKSettingsModuleWidget::change);
+	QObject::connect(module, &RKSettingsModuleWidget::apply, [ret, this]() { this->value = ret->realValue(); });
+	return ret;
+}
+
+template<>
+RKSpinBox* RKConfigValue<int, int>::makeSpinBox(int min, int max, RKSettingsModuleWidget* module) {
+	RKSpinBox* ret = new RKSpinBox();
+	ret->setIntMode(min, max, value);
+	QObject::connect(ret, QOverload<int>::of(&QSpinBox::valueChanged), module, &RKSettingsModuleWidget::change);
+	QObject::connect(module, &RKSettingsModuleWidget::apply, [ret, this]() { this->value = ret->intValue(); });
+	return ret;
+}
+// Hmm... Boring dupe of the above
+template<>
+RKSpinBox* RKConfigValue<uint, uint>::makeSpinBox(uint min, uint max, RKSettingsModuleWidget* module) {
+	RKSpinBox* ret = new RKSpinBox();
+	ret->setIntMode(min, max, value);
+	QObject::connect(ret, QOverload<int>::of(&QSpinBox::valueChanged), module, &RKSettingsModuleWidget::change);
+	QObject::connect(module, &RKSettingsModuleWidget::apply, [ret, this]() { this->value = ret->intValue(); });
+	return ret;
+}
+
 QComboBox* RKConfigBase::makeDropDownHelper(const LabelList &entries, RKSettingsModuleWidget* module, int initial, std::function<void(int)> setter) {
 	RK_TRACE(SETTINGS);
 
@@ -80,4 +108,7 @@ QComboBox* RKConfigBase::makeDropDownHelper(const LabelList &entries, RKSettings
 
 void linkHelperDummy() {
 	RKConfigValue<bool>("", true).makeCheckbox(QString(), nullptr);
+	RKConfigValue<int>("", 0).makeSpinBox(0, 1, nullptr);
+	RKConfigValue<uint>("", 0).makeSpinBox(0, 1, nullptr);
+	RKConfigValue<double>("", 0.0).makeSpinBox(0.0, 1.0, nullptr);
 }

@@ -63,8 +63,6 @@ public:
 	QString caption () override;
 
 	QUrl helpURL () override { return QUrl ("rkward://page/rkward_console#settings"); };
-public slots:
-	void changedSetting (int);
 private:
 	static RKCodeCompletionSettings completion_settings;
 	static RKConfigValue<bool> save_history;
@@ -75,8 +73,6 @@ private:
 	static RKConfigValue<bool> context_sensitive_history_by_default;
 
 	RKCodeCompletionSettingsWidget *completion_settings_widget;
-	QSpinBox *max_history_length_spinner;
-	QSpinBox *max_console_lines_spinner;
 };
 
 #endif

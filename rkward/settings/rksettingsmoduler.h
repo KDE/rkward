@@ -59,11 +59,6 @@ private slots:
 	void addPaths (QStringList *string_list);
 private:
 	QLineEdit *outdec_input;
-	QSpinBox *width_input;
-	QSpinBox *warningslength_input;
-	QSpinBox *maxprint_input;
-	QSpinBox *expressions_input;
-	QSpinBox *digits_input;
 	QComboBox *editor_input;
 	QComboBox *pager_input;
 	QTextEdit *further_input;
