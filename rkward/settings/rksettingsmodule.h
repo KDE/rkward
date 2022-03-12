@@ -26,6 +26,7 @@ class KConfig;
 class RKSettings;
 class RCommandChain;
 class QCheckBox;
+class QComboBox;
 class RKSettingsModule;
 class RKSettingsModuleWidget;
 class RKSetupWizardItem;
@@ -47,10 +48,18 @@ public:
 		else loadConfig(cg);
 	};
 	const char *key() { return name; }
+
+	struct ValueLabel {
+		int key;
+		QString label;
+	};
+	typedef QList<ValueLabel> LabelList;
 protected:
 	RKConfigBase(const char* name) : name(name) {};
 	virtual ~RKConfigBase() {};
 	const char* name;
+
+	static QComboBox* makeDropDownHelper(const LabelList &entries, RKSettingsModuleWidget* module, int initial, std::function<void(int)> setter);
 };
 
 /** A single value stored in the RKWard config file.
@@ -74,6 +83,16 @@ public:
 
 /** Only for bool values: convenience function to create a fully connected checkbox for this option */
 	template<typename TT = T, typename std::enable_if<std::is_same<TT, bool>::value>::type* = nullptr> QCheckBox* makeCheckbox(const QString& label, RKSettingsModuleWidget* module);
+/** Currently only for boolean or int options: Make a dropdown selector (QComboBox). If bit_flag_mask is set, the selector operates on (part of) an OR-able set of flags, instead of
+ *  plain values. */
+	QComboBox* makeDropDown(const LabelList &entries, RKSettingsModuleWidget* _module, int bit_flag_mask = 0) {
+		static_assert(std::is_same<STORAGE_T, int>::value || std::is_same<STORAGE_T, bool>::value, "makeDropDown can only be used for int or bool");
+		if (bit_flag_mask) {
+			return makeDropDownHelper(entries, _module, value & bit_flag_mask, [this, bit_flag_mask](int val){this->value = (T) ((this->value & ~bit_flag_mask) + val);});
+		} else {
+			return makeDropDownHelper(entries, _module, (std::is_same<STORAGE_T, bool>::value && value) ? 1 : (int) value, [this](int val){this->value = (T) val;});
+		}
+	}
 private:
 	T value;
 };

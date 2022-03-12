@@ -80,10 +80,6 @@ private:
 	RKSpinBox* auto_completion_min_chars_box;
 	RKSpinBox* auto_completion_timeout_box;
 	QGroupBox* auto_completion_enabled_box;
-	QComboBox* cursor_navigates_completions_box;
-	QComboBox* completion_list_member_operator_box;
-	QComboBox* completion_slot_operator_box;
-	QComboBox* completion_object_qualification_box;
 
 	RKCodeCompletionSettings *settings;
 	bool show_common;

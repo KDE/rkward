@@ -60,14 +60,10 @@ private slots:
 private:
 	QLineEdit *outdec_input;
 	QSpinBox *width_input;
-	QComboBox *warn_input;
 	QSpinBox *warningslength_input;
 	QSpinBox *maxprint_input;
-	QComboBox *keepsource_input;
-	QComboBox *keepsourcepkgs_input;
 	QSpinBox *expressions_input;
 	QSpinBox *digits_input;
-	QComboBox *checkbounds_input;
 	QComboBox *editor_input;
 	QComboBox *pager_input;
 	QTextEdit *further_input;

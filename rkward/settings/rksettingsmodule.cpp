@@ -17,9 +17,13 @@
 #include "rksettingsmodule.h"
 
 #include "../rkward.h"
+#include "../debug.h"
 #include "rksettings.h"
 
 #include <QCheckBox>
+#include <QComboBox>
+
+#include <functional>
 
 //static
 RCommandChain* RKSettingsModule::chain = 0;
@@ -50,6 +54,27 @@ template<typename TT, typename std::enable_if<std::is_same<TT, bool>::value>::ty
 	ret->setChecked(value);
 	QObject::connect(ret, &QCheckBox::stateChanged, module, &RKSettingsModuleWidget::change);
 	QObject::connect(module, &RKSettingsModuleWidget::apply, [ret, this]() { this->value = ret->isChecked(); });
+	return ret;
+}
+
+QComboBox* RKConfigBase::makeDropDownHelper(const LabelList &entries, RKSettingsModuleWidget* module, int initial, std::function<void(int)> setter) {
+	RK_TRACE(SETTINGS);
+
+	QComboBox *ret = new QComboBox();
+	int index = -1;
+	for (int i = 0; i < entries.size(); ++i) {
+		auto key = entries[i].key;
+		auto label = entries[i].label;
+		ret->addItem(label, key);
+		if (key == initial) index = i;
+	}
+	RK_ASSERT(index >= 0);
+	ret->setCurrentIndex(index);
+	QObject::connect(ret, QOverload<int>::of(&QComboBox::currentIndexChanged), [ret, setter, module]() {
+		module->change();
+		setter(ret->currentData().toInt());
+	});
+
 	return ret;
 }
 

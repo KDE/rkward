@@ -77,12 +77,9 @@ RKSettingsModuleConsole::RKSettingsModuleConsole (RKSettings *gui, QWidget *pare
 	vbox->addWidget(pipe_user_commands_through_console_box);
 
 	vbox->addWidget (new QLabel (i18n ("Also add those commands to console history"), this));
-	add_piped_commands_to_history_box = new QComboBox (this);
-	add_piped_commands_to_history_box->insertItem ((int) DontAdd, i18n ("Do not add"));
-	add_piped_commands_to_history_box->insertItem ((int) AddSingleLine, i18n ("Add only if single line"));
-	add_piped_commands_to_history_box->insertItem ((int) AlwaysAdd, i18n ("Add all commands"));
-	add_piped_commands_to_history_box->setCurrentIndex ((int) add_piped_commands_to_history);
-	connect (add_piped_commands_to_history_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &RKSettingsModuleConsole::changedSetting);
+	auto add_piped_commands_to_history_box = add_piped_commands_to_history.makeDropDown(RKConfigBase::LabelList(
+		{{(int) DontAdd, i18n("Do not add")}, {(int) AddSingleLine, i18n("Add only if single line")}, {(int) AlwaysAdd, i18n("Add all commands")}}
+	), this);
 	add_piped_commands_to_history_box->setEnabled(pipe_user_commands_through_console_box->isChecked());
 	connect(pipe_user_commands_through_console_box, &QCheckBox::stateChanged, add_piped_commands_to_history_box, &QCheckBox::setEnabled);
 	vbox->addWidget (add_piped_commands_to_history_box);
@@ -153,7 +150,6 @@ void RKSettingsModuleConsole::applyChanges () {
 	completion_settings_widget->applyChanges();
 	max_history_length = max_history_length_spinner->value ();
 	max_console_lines = max_console_lines_spinner->value ();
-	add_piped_commands_to_history = (PipedCommandsHistoryMode) add_piped_commands_to_history_box->currentIndex ();
 }
 	
 QString RKSettingsModuleConsole::caption () {

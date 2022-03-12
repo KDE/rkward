@@ -65,7 +65,7 @@ RKCodeCompletionSettingsWidget::RKCodeCompletionSettingsWidget(QWidget *parent, 
 	auto_completion_min_chars_box = new RKSpinBox (auto_completion_enabled_box);
 	auto_completion_min_chars_box->setIntMode (1, INT_MAX, settings->auto_completion_min_chars);
 	connect (auto_completion_min_chars_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKCodeCompletionSettingsWidget::change);
-	form_layout->addRow ("Minimum number of characters", auto_completion_min_chars_box);
+	form_layout->addRow (i18n("Minimum number of characters"), auto_completion_min_chars_box);
 
 	auto_completion_timeout_box = new RKSpinBox (auto_completion_enabled_box);
 	auto_completion_timeout_box->setIntMode (0, INT_MAX, settings->auto_completion_timeout);
@@ -81,38 +81,26 @@ RKCodeCompletionSettingsWidget::RKCodeCompletionSettingsWidget(QWidget *parent, 
 	RKCommonFunctions::setTips(i18n("Note: Further shortcuts can be assigned, and by default, Ctlr+Space invokes completions, in addition to this. Further, pressing the Tab key, while completions are shown, performs partial completion (if possible), independent of this setting."), tabkey_invokes_completion_box);
 	form_layout->addRow(i18n("Tab key invokes code completion"), tabkey_invokes_completion_box);
 
-	cursor_navigates_completions_box = new QComboBox(group);
-	cursor_navigates_completions_box->addItem(i18n("Up/down cursor keys"));
-	cursor_navigates_completions_box->addItem(i18n("Alt+Up/down cursor keys"));
-	cursor_navigates_completions_box->setCurrentIndex(settings->cursor_navigates_completions ? 0 : 1);
+	auto cursor_navigates_completions_box = settings->cursor_navigates_completions.makeDropDown(RKConfigBase::LabelList(
+		{{1, i18n("Up/down cursor keys")}, {0, i18n("Alt+Up/down cursor keys")}}
+	), this);
 	RKCommonFunctions::setTips (i18n ("If you wish to avoid ambiguity between navigation completion options and navigating the document, you can set the behavior such that completion items are navigate using Alt+up / Alt+down, instead of just the up/down cursor keys."), cursor_navigates_completions_box);
-	connect (cursor_navigates_completions_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &RKCodeCompletionSettingsWidget::change);
 	form_layout->addRow (i18n ("Keyboard navigation of completion items"), cursor_navigates_completions_box);
 
 	if (show_common) {
-		completion_list_member_operator_box = new QComboBox (group);
-		completion_list_member_operator_box->addItem (i18n ("'$'-operator (list$member)"));
-		completion_list_member_operator_box->addItem (i18n ("'[['-operator (list[[\"member\"]])"));
-		completion_list_member_operator_box->setCurrentIndex ((settings->completion_options & RObject::DollarExpansion) ? 0 : 1);
-		connect (completion_list_member_operator_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &RKCodeCompletionSettingsWidget::change);
+		auto completion_list_member_operator_box = settings->completion_options.makeDropDown(RKConfigBase::LabelList(
+			{{RObject::DollarExpansion, i18n("'$'-operator (list$member)")}, {0, i18n("'[['-operator (list[[\"member\"]])")}}
+		), this, RObject::DollarExpansion);
 		form_layout->addRow (i18nc ("Note: list() and data.frame() are programming terms in R, and should not be translated, here", "Operator for access to members of list() and data.frame() objects"), completion_list_member_operator_box);
 
-		completion_slot_operator_box = new QComboBox (group);
-		completion_slot_operator_box->addItem (i18n ("'@'-operator (object@smember)"));
-		completion_slot_operator_box->addItem (i18n ("'slot()'-function (slot(object, member))"));
-		completion_slot_operator_box->setCurrentIndex ((settings->completion_options & RObject::ExplicitSlotsExpansion) ? 1 : 0);
-		connect (completion_slot_operator_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &RKCodeCompletionSettingsWidget::change);
+		auto completion_slot_operator_box = settings->completion_options.makeDropDown(RKConfigBase::LabelList(
+			{{0, i18n("'@'-operator (object@member)")}, {RObject::ExplicitSlotsExpansion, i18n("'slot()'-function (slot(object, member))")}}
+		), this, RObject::ExplicitSlotsExpansion);
 		form_layout->addRow (i18nc ("Note: S4-slot() is a programming term in R, and should not be translated, here", "Operator for access to S4-slot()s"), completion_slot_operator_box);
 
-		completion_object_qualification_box = new QComboBox (group);
-		completion_object_qualification_box->addItem (i18n ("For masked objects, only"));
-		completion_object_qualification_box->addItem (i18n ("For objects outside of <i>.GlobalEnv</i>, only"));
-		completion_object_qualification_box->addItem (i18n ("Always"));
-		if (settings->completion_options & (RObject::IncludeEnvirIfNotGlobalEnv)) {
-			if (settings->completion_options & (RObject::IncludeEnvirIfNotGlobalEnv)) completion_object_qualification_box->setCurrentIndex (2);
-			else completion_object_qualification_box->setCurrentIndex (1);
-		}
-		connect (completion_object_qualification_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &RKCodeCompletionSettingsWidget::change);
+		auto completion_object_qualification_box = settings->completion_options.makeDropDown(RKConfigBase::LabelList(
+			{{RObject::IncludeEnvirIfMasked, i18n("For masked objects, only")}, {RObject::IncludeEnvirIfNotGlobalEnv, i18n("For objects outside of <i>.GlobalEnv</i>, only")}, {RObject::IncludeEnvirIfNotGlobalEnv | RObject::IncludeEnvirForGlobalEnv, i18n("Always")}}
+		), this, RObject::IncludeEnvirIfNotGlobalEnv | RObject::IncludeEnvirForGlobalEnv | RObject::IncludeEnvirIfMasked);
 		form_layout->addRow (i18n ("Include environment for objects on the search path:"), completion_object_qualification_box);
 	} else {
 		box_layout->addWidget(RKCommonFunctions::linkedWrappedLabel(i18n("<b>Note: </b>Additional (common) completion options are available at the <a href=\"rkward://settings/editor\">script editor settings</a>")));
@@ -125,16 +113,6 @@ void RKCodeCompletionSettingsWidget::applyChanges() {
 	settings->auto_completion_enabled = auto_completion_enabled_box->isChecked ();
 	settings->auto_completion_min_chars = auto_completion_min_chars_box->intValue ();
 	settings->auto_completion_timeout = auto_completion_timeout_box->intValue ();
-	settings->cursor_navigates_completions = (cursor_navigates_completions_box->currentIndex() == 0);
-
-	if (show_common) {
-		settings->completion_options = 0;
-		if (completion_list_member_operator_box->currentIndex () == 0) settings->completion_options = settings->completion_options + RObject::DollarExpansion;
-		if (completion_slot_operator_box->currentIndex () == 1) settings->completion_options = settings->completion_options + RObject::ExplicitSlotsExpansion;
-		if (completion_object_qualification_box->currentIndex () == 2) settings->completion_options = settings->completion_options + (RObject::IncludeEnvirForGlobalEnv | RObject::IncludeEnvirIfNotGlobalEnv);
-		else if (completion_object_qualification_box->currentIndex () == 1) settings->completion_options = settings->completion_options + RObject::IncludeEnvirIfNotGlobalEnv;
-		else settings->completion_options = settings->completion_options + RObject::IncludeEnvirIfMasked;
-	}
 }
 
 void RKCodeCompletionSettingsWidget::makeCompletionTypeBoxes(const QStringList& labels, QGridLayout* layout) {

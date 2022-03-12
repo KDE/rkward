@@ -75,7 +75,6 @@ private:
 	static RKConfigValue<bool> context_sensitive_history_by_default;
 
 	RKCodeCompletionSettingsWidget *completion_settings_widget;
-	QComboBox *add_piped_commands_to_history_box;
 	QSpinBox *max_history_length_spinner;
 	QSpinBox *max_console_lines_spinner;
 };
