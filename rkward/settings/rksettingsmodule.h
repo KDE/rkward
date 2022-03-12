@@ -20,6 +20,7 @@
 #include <qstring.h>
 #include <qwidget.h>
 #include <QUrl>
+#include <QIcon>
 #include <KConfigGroup>
 
 class KConfig;
@@ -164,7 +165,9 @@ public:
 
 	virtual void save (KConfig *config) = 0;
 	
-	virtual QString caption () = 0;
+	virtual QString caption() const = 0;
+	virtual QString longCaption() const { return caption(); };
+	virtual QIcon icon() const { return QIcon(); };
 /** Some settings modules execute R commands on "apply". If an RCommandChain is specified for the RKSettings-dialog, those commands should
 be inserted into this chain. It's safe to use this unconditionally, as if there is no chain, this will return 0, which corresponds to using the top-level chain */
 	RCommandChain *commandChain () { return chain; };

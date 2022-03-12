@@ -89,9 +89,9 @@ void RKSettingsModuleObjectBrowser::applyChanges () {
 	getstructure_blacklist = blacklist_choser->getValues();
 }
 
-QString RKSettingsModuleObjectBrowser::caption () {
-	RK_TRACE (SETTINGS);
-	return (i18n ("Workspace"));
+QString RKSettingsModuleObjectBrowser::caption() const {
+	RK_TRACE(SETTINGS);
+	return(i18n("Workspace"));
 }
 
 void writeSettings (KConfigGroup &cg, bool *settings) {

@@ -175,9 +175,9 @@ void RKSettingsModuleR::settingChanged () {
 	change ();
 }
 
-QString RKSettingsModuleR::caption () {
-	RK_TRACE (SETTINGS);
-	return (i18n ("R-Backend"));
+QString RKSettingsModuleR::caption() const {
+	RK_TRACE(SETTINGS);
+	return(i18n("R-Backend"));
 }
 
 void RKSettingsModuleR::applyChanges () {
@@ -435,9 +435,9 @@ void RKSettingsModuleRPackages::addRepository (QStringList *string_list) {
 	if (ok) (*string_list).append (new_string);
 }
 
-QString RKSettingsModuleRPackages::caption () {
-	RK_TRACE (SETTINGS);
-	return (i18n ("R-Packages"));
+QString RKSettingsModuleRPackages::caption() const {
+	RK_TRACE(SETTINGS);
+	return(i18n("R-Packages"));
 }
 
 #define SELECT_CRAN_MIRROR_COMMAND 123

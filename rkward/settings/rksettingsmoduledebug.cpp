@@ -103,9 +103,9 @@ void RKSettingsModuleDebug::settingChanged (int) {
 	change ();
 }
 
-QString RKSettingsModuleDebug::caption () {
-	RK_TRACE (SETTINGS);
-	return (i18n ("Debug"));
+QString RKSettingsModuleDebug::caption() const {
+	RK_TRACE(SETTINGS);
+	return(i18n("Debug"));
 }
 
 void RKSettingsModuleDebug::applyChanges () {

@@ -58,7 +58,7 @@ public:
 	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a);
 	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
 
-	QString caption () override;
+	QString caption() const override;
 
 /// returns the directory-name where the logfiles should reside
 	static QString &filesPath () { return files_path; };

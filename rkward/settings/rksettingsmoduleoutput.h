@@ -81,7 +81,7 @@ public:
 
 	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
 
-	QString caption () override;
+	QString caption() const override;
 
 	static bool autoShow () { return auto_show; };
 	static bool autoRaise () { return auto_raise; };

@@ -189,9 +189,9 @@ void RKSettingsModuleOutput::boxChanged () {
 	graphics_jpg_quality_box->setEnabled (graphics_type_box->itemData (graphics_type_box->currentIndex ()).toString () == "\"JPG\"");
 }
 
-QString RKSettingsModuleOutput::caption () {
-	RK_TRACE (SETTINGS);
-	return (i18n ("Output"));
+QString RKSettingsModuleOutput::caption() const {
+	RK_TRACE(SETTINGS);
+	return(i18n("Output"));
 }
 
 void RKSettingsModuleOutput::applyChanges () {

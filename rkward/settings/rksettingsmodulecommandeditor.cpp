@@ -19,6 +19,8 @@
 #include <KLocalizedString>
 #include <kconfig.h>
 #include <kconfiggroup.h>
+#include <KTextEditor/Editor>
+#include <KTextEditor/ConfigPage>
 
 #include <QLabel>
 #include <QVBoxLayout>
@@ -164,9 +166,9 @@ RKSettingsModuleCommandEditor::~RKSettingsModuleCommandEditor () {
 	RK_TRACE (SETTINGS);
 }
 
-QString RKSettingsModuleCommandEditor::caption () {
-	RK_TRACE (SETTINGS);
-	return (i18n ("Script editor"));
+QString RKSettingsModuleCommandEditor::caption() const {
+	RK_TRACE(SETTINGS);
+	return(i18n("Script editor"));
 }
 
 void RKSettingsModuleCommandEditor::applyChanges () {
@@ -213,3 +215,44 @@ bool RKSettingsModuleCommandEditor::matchesScriptFileFilter (const QString &file
 	return false;
 }
 
+
+QList<RKSettingsModuleKTextEditorConfigWrapper *> RKSettingsModuleCommandEditor::kateConfigPages(RKSettings* gui, QWidget* parent) {
+	RK_TRACE(SETTINGS);
+
+	QList<RKSettingsModuleKTextEditorConfigWrapper *> ret;
+	auto ed = KTextEditor::Editor::instance();
+	int n = ed->configPages();
+	for (int i = 0; i < n; ++i) {
+		ret.append(new RKSettingsModuleKTextEditorConfigWrapper(gui, parent, ed->configPage(i, parent)));
+	}
+	return ret;
+}
+
+
+RKSettingsModuleKTextEditorConfigWrapper::RKSettingsModuleKTextEditorConfigWrapper(RKSettings* gui, QWidget* parent, KTextEditor::ConfigPage* wrapped) : RKSettingsModule(gui, parent), page(wrapped) {
+	RK_TRACE(SETTINGS);
+	auto vbox = new QVBoxLayout(this);
+	vbox->setContentsMargins(0,0,0,0);
+	vbox->addWidget(wrapped);
+	connect(wrapped, &KTextEditor::ConfigPage::changed, this, &RKSettingsModuleKTextEditorConfigWrapper::change);
+}
+
+RKSettingsModuleKTextEditorConfigWrapper::~RKSettingsModuleKTextEditorConfigWrapper() {
+	RK_TRACE(SETTINGS);
+}
+
+void RKSettingsModuleKTextEditorConfigWrapper::applyChanges() {
+	page->apply();
+}
+
+QString RKSettingsModuleKTextEditorConfigWrapper::caption() const {
+	return page->name();
+}
+
+QString RKSettingsModuleKTextEditorConfigWrapper::longCaption() const {
+	return page->fullName();
+}
+
+QIcon RKSettingsModuleKTextEditorConfigWrapper::icon() const {
+	return page->icon();
+}

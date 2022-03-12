@@ -158,9 +158,9 @@ void RKSettingsModuleGraphics::boxChanged () {
 	change ();
 }
 
-QString RKSettingsModuleGraphics::caption () {
-	RK_TRACE (SETTINGS);
-	return (i18n ("Onscreen Graphics"));
+QString RKSettingsModuleGraphics::caption() const {
+	RK_TRACE(SETTINGS);
+	return(i18n("Onscreen Graphics"));
 }
 
 void RKSettingsModuleGraphics::applyChanges () {

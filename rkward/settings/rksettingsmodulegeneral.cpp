@@ -172,9 +172,9 @@ void RKSettingsModuleGeneral::updateLastUsedUrl (const QString& thing, const QUr
 	}
 }
 
-QString RKSettingsModuleGeneral::caption () {
-	RK_TRACE (SETTINGS);
-	return (i18n ("General"));
+QString RKSettingsModuleGeneral::caption() const {
+	RK_TRACE(SETTINGS);
+	return(i18n("General"));
 }
 
 void RKSettingsModuleGeneral::applyChanges () {

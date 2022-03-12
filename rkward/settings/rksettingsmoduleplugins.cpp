@@ -97,9 +97,9 @@ void RKSettingsModulePlugins::settingChanged () {
 	change ();
 }
 
-QString RKSettingsModulePlugins::caption () {
-	RK_TRACE (SETTINGS);
-	return (i18n ("RKWard Plugins"));
+QString RKSettingsModulePlugins::caption() const {
+	RK_TRACE(SETTINGS);
+	return(i18n("RKWard Plugins"));
 }
 
 void RKSettingsModulePlugins::applyChanges () {

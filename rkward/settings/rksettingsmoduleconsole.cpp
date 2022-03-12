@@ -133,9 +133,9 @@ void RKSettingsModuleConsole::applyChanges () {
 	completion_settings_widget->applyChanges();
 }
 	
-QString RKSettingsModuleConsole::caption () {
-	RK_TRACE (SETTINGS);
+QString RKSettingsModuleConsole::caption() const {
+	RK_TRACE(SETTINGS);
 
-	return (i18n ("Console"));
+	return(i18n("Console"));
 }
 

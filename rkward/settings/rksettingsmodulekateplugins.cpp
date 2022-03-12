@@ -99,7 +99,7 @@ void RKSettingsModuleKatePlugins::syncConfig(KConfig *config, RKConfigBase::Conf
 	plugins_to_load.syncConfig(cg, a);
 }
 
-QString RKSettingsModuleKatePlugins::caption() {
+QString RKSettingsModuleKatePlugins::caption() const {
 	RK_TRACE(SETTINGS);
 
 	return i18n("Kate Plugins");

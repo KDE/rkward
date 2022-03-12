@@ -91,13 +91,12 @@ void RKSettings::dialogClosed () {
 	settings_dialog = 0;
 }
 
-RKSettings::RKSettings (QWidget *parent) : KPageDialog (parent) {
+RKSettings::RKSettings (QWidget *parent) : KPageDialog (parent), pages(nullptr) {
 	RK_TRACE (SETTINGS);
 
 	setFaceType (KPageDialog::Tree);
 	setWindowTitle (i18n ("Settings"));
 	buttonBox ()->setStandardButtons (QDialogButtonBox::Ok | QDialogButtonBox::Apply | QDialogButtonBox::Cancel | QDialogButtonBox::Help);
-	// KF5 TODO: connect buttons
 	button (QDialogButtonBox::Apply)->setEnabled (false);
 	connect (button(QDialogButtonBox::Apply), &QPushButton::clicked, this, &RKSettings::applyAll);
 	connect (button(QDialogButtonBox::Help), &QPushButton::clicked, this, &RKSettings::helpClicked);
@@ -118,11 +117,12 @@ RKSettings::~RKSettings() {
 		delete *it;
 	}
 	modules.clear ();
-	
+	delete pages;
+
 	dialogClosed ();
 }
 
-void RKSettings::registerPageModule(RKSettings::SettingsPage super, RKSettings::SettingsPage child) {
+void RKSettings::registerPageModule(RKSettings::SettingsPage super, int child) {
 	RK_TRACE (SETTINGS);
 
 	RKSettingsModule *childm = modules[child];
@@ -131,6 +131,8 @@ void RKSettings::registerPageModule(RKSettings::SettingsPage super, RKSettings::
 	} else {
 		pages[child] = addSubPage(pages[super], childm, childm->caption());
 	}
+	pages[child]->setHeader(childm->longCaption());
+	pages[child]->setIcon(childm->icon());
 }
 
 #include <QLabel>
@@ -138,6 +140,8 @@ void RKSettings::registerPageModule(RKSettings::SettingsPage super, RKSettings::
 void RKSettings::initModules () {
 	RK_TRACE (SETTINGS);
 
+	auto ktexteditorpages = RKSettingsModuleCommandEditor::kateConfigPages(this, 0);
+	pages = new KPageWidgetItem*[(NumPages + ktexteditorpages.size())];
 	modules.insert (PagePlugins, new RKSettingsModulePlugins (this, 0));
 	modules.insert (PageKatePlugins, new RKSettingsModuleKatePlugins (this, 0));
 	modules.insert (PageR, new RKSettingsModuleR (this, 0));
@@ -150,6 +154,9 @@ void RKSettings::initModules () {
 	modules.insert (PageCommandEditor, new RKSettingsModuleCommandEditor (this, 0));
 	modules.insert (PageObjectBrowser, new RKSettingsModuleObjectBrowser (this, 0));
 	modules.insert (PageDebug, new RKSettingsModuleDebug (this, 0));
+	for (int i = 0; i < ktexteditorpages.size(); ++i) {
+		modules.insert(NumPages+i, ktexteditorpages[i]);
+	}
 
 	QLabel *l = new QLabel(i18n("<h1>Add-ons</h1><p>RKWard add-ons come in a variety of forms, each with their own configuration options:</p><h2>R packages</h2><p><a href=\"rkward://settings/rpackages\">Add-ons to the R language itself</a>. These are usually downloaded from \"CRAN\". Some of these add-on packages may additionally contain RKWard plugins.</p><h2>RKWard plugins</h2><p><a href=\"rkward://settings/plugins\">Graphical dialogs to R functionality</a>. These plugins are usually pre-installed with RKWard, or with an R package. However, they can be activated/deactivated to help keep the menus manageable. Note that it is relatively easy to <a href=\"https://api.kde.org/doc/rkwardplugins/\">create your own custom dialogs as plugins</a>!</p><h2>Kate plugins</h2><p><a href=\"rkward://settings/kateplugins\">Plugins developed for Kate / KTextEditor</a>. These provide shared functionality that is useful in the context of text editing and IDE applications. These plugins are usually found pre-installed on your system. You can configure to load the plugins that are useful to your own workflow.</p>"));
 	l->setWordWrap(true);
@@ -167,6 +174,9 @@ void RKSettings::initModules () {
 	registerPageModule(NoPage, PageCommandEditor);
 	registerPageModule(NoPage, PageObjectBrowser);
 	registerPageModule(NoPage, PageDebug);
+	for (int i = 0; i < ktexteditorpages.size(); ++i) {
+		registerPageModule(PageCommandEditor, NumPages+i);
+	}
 }
 
 void RKSettings::raisePage (SettingsPage page) {
@@ -217,7 +227,7 @@ void RKSettings::applyAll() {
 		if (it.value()->hasChanges()) {
 			it.value()->doApply();
 			it.value()->save(KSharedConfig::openConfig().data());
-			tracker()->signalSettingsChange(it.key());
+			tracker()->signalSettingsChange(RKSettings::SettingsPage(it.key()));
 		}
 	}
 	button(QDialogButtonBox::Apply)->setEnabled(false);

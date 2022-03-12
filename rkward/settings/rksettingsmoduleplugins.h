@@ -46,7 +46,7 @@ public:
 	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a);
 	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
 
-	QString caption () override;
+	QString caption() const override;
 
 	/** @returns a list of active plugin maps */
 	static QStringList pluginMaps ();

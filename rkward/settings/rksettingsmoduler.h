@@ -44,7 +44,7 @@ public:
 	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a);
 	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
 
-	QString caption () override;
+	QString caption() const override;
 	
 /** generate the commands needed to set the R run time options */
 	static QStringList makeRRunTimeOptionCommands ();
@@ -119,7 +119,7 @@ public:
 /** returns the list of packages which are essential to rkward. This is hard-coded. */
 	static QStringList essentialPackages () { return essential_packages.split ("\n"); };
 
-	QString caption () override;
+	QString caption() const override;
 public slots:
 	void settingChanged ();
 	void addLibLoc (QStringList *string_list);

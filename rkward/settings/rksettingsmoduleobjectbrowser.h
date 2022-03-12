@@ -39,7 +39,7 @@ public:
 	void applyChanges () override;
 
 /** @returns the caption ("Workspace Browser") */
-	QString caption () override;
+	QString caption() const override;
 
 	void save(KConfig *config) override { syncConfig(config, RKConfigBase::SaveConfig); };
 	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a);

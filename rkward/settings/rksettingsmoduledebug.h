@@ -39,7 +39,7 @@ public:
 	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a);
 	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
 
-	QString caption () override;
+	QString caption() const override;
 
 	// static members are declared in debug.h and defined in main.cpp
 public slots:

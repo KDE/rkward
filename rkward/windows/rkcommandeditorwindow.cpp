@@ -331,7 +331,7 @@ void RKCommandEditorWindow::fixupPartGUI () {
 	RK_TRACE (COMMANDEDITOR);
 
 	// strip down the katepart's GUI. remove some stuff we definitely don't need.
-	RKCommonFunctions::removeContainers (m_view, QString ("bookmarks,tools_spelling,tools_spelling_from_cursor,tools_spelling_selection,switch_to_cmd_line").split (','), true);
+	RKCommonFunctions::removeContainers (m_view, QString ("bookmarks,tools_spelling,tools_spelling_from_cursor,tools_spelling_selection,switch_to_cmd_line,set_confdlg").split (','), true);
 	RKCommonFunctions::moveContainer (m_view, "Menu", "tools", "edit", true);
 }
 

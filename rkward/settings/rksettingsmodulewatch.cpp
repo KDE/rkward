@@ -241,9 +241,9 @@ void RKSettingsModuleWatch::applyChanges () {
 	sync_filter = getFilterSettings (sync_filter_boxes);
 }
 	
-QString RKSettingsModuleWatch::caption () {
-	RK_TRACE (SETTINGS);
+QString RKSettingsModuleWatch::caption() const {
+	RK_TRACE(SETTINGS);
 
-	return (i18n ("Command log"));
+	return(i18n("Command log"));
 }
 

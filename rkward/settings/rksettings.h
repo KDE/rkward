@@ -80,15 +80,15 @@ private:
 	void raisePage (SettingsPage page);
 	static void dialogClosed ();
 
-	typedef QMap<SettingsPage, RKSettingsModule *> ModuleMap;
+	typedef QMap<int, RKSettingsModule *> ModuleMap;
 	ModuleMap modules;
-	KPageWidgetItem *pages[NumPages];
+	KPageWidgetItem** pages;
 
 	static RKSettings *settings_dialog;
 friend class RKWardMainWindow;
 	static RKSettingsTracker *settings_tracker;
 
-	void registerPageModule(SettingsPage super, SettingsPage child);
+	void registerPageModule(SettingsPage super, int child);
 };
 
 /** This class represents a very simple QObject. It's only purpose is to emit signals when certain settings have changed. Classes that need to

@@ -25,6 +25,7 @@ class QLineEdit;
 class QGroupBox;
 class QComboBox;
 class QGridLayout;
+namespace KTextEditor { class ConfigPage; }
 
 class RKCodeCompletionSettingsWidget;
 class RKCodeCompletionSettings {
@@ -83,6 +84,20 @@ private:
 	bool show_common;
 };
 
+class RKSettingsModuleKTextEditorConfigWrapper : public RKSettingsModule {
+public:
+	RKSettingsModuleKTextEditorConfigWrapper(RKSettings* gui, QWidget* parent, KTextEditor::ConfigPage* wrapped);
+	~RKSettingsModuleKTextEditorConfigWrapper();
+	void applyChanges() override;
+	void save(KConfig *) override { };
+	static void validateSettingsInteractive(QList<RKSetupWizardItem*>*) {};
+	QString caption() const override;
+	QString longCaption() const override;
+	QIcon icon() const override;
+private:
+	KTextEditor::ConfigPage* page;
+};
+
 /**
 configuration for the Command Editor windows
 
@@ -99,7 +114,7 @@ public:
 	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction);
 	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
 
-	QString caption () override;
+	QString caption() const override;
 
 	static const RKCodeCompletionSettings* completionSettings() { return &completion_settings; };
 
@@ -111,6 +126,8 @@ public:
 	static int maxNumRecentFiles () { return num_recent_files; };
 	static QString scriptFileFilter () { return script_file_filter; };
 	static bool matchesScriptFileFilter (const QString &filename);
+
+	static QList<RKSettingsModuleKTextEditorConfigWrapper*> kateConfigPages(RKSettings* gui, QWidget* parent);
 private:
 	static RKCodeCompletionSettings completion_settings;
 	static RKConfigValue<bool> autosave_enabled;
