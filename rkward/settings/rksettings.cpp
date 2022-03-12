@@ -107,7 +107,7 @@ RKSettings::RKSettings (QWidget *parent) : KPageDialog (parent) {
 	initModules ();
 
 	connect (this, &KPageDialog::currentPageChanged, this, &RKSettings::pageChange);
-	pageChange (currentPage (), currentPage ());	// init
+	setCurrentPage(pages[0]); // init -> see pageChange
 }
 
 RKSettings::~RKSettings() {
