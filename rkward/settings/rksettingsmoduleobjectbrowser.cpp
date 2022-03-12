@@ -34,9 +34,9 @@
 #include "../debug.h"
 
 // static
-bool RKSettingsModuleObjectBrowser::workspace_settings[RKObjectListViewSettings::SettingsCount];
-bool RKSettingsModuleObjectBrowser::varselector_settings[RKObjectListViewSettings::SettingsCount];
-QStringList RKSettingsModuleObjectBrowser::getstructure_blacklist;
+RKConfigValue<bool> RKSettingsModuleObjectBrowser::workspace_settings[RKObjectListViewSettings::SettingsCount] {{"show hidden vars", false},{"show type field", true},{"show class field", true},{"show label field", true}};
+RKConfigValue<bool> RKSettingsModuleObjectBrowser::varselector_settings[RKObjectListViewSettings::SettingsCount] { RKSettingsModuleObjectBrowser::workspace_settings[0],RKSettingsModuleObjectBrowser::workspace_settings[1],RKSettingsModuleObjectBrowser::workspace_settings[2],RKSettingsModuleObjectBrowser::workspace_settings[3]};
+RKConfigValue<QStringList> RKSettingsModuleObjectBrowser::getstructure_blacklist {"package blacklist", QStringList("GO")};
 
 RKSettingsModuleObjectBrowser::RKSettingsModuleObjectBrowser (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -73,7 +73,7 @@ void RKSettingsModuleObjectBrowser::setDefaultForVarselector (RKObjectListViewSe
 //static
 bool RKSettingsModuleObjectBrowser::isPackageBlacklisted (const QString &package_name) {
 	RK_TRACE (SETTINGS);
-	return getstructure_blacklist.contains (package_name);
+	return getstructure_blacklist.get().contains (package_name);
 }
 
 void RKSettingsModuleObjectBrowser::addBlackList (QStringList *string_list) {
@@ -89,14 +89,9 @@ void RKSettingsModuleObjectBrowser::applyChanges () {
 	getstructure_blacklist = blacklist_choser->getValues();
 }
 
-void RKSettingsModuleObjectBrowser::save (KConfig *config) {
-	RK_TRACE (SETTINGS);
-	saveSettings (config);
-}
-
-QString RKSettingsModuleObjectBrowser::caption () {
-	RK_TRACE (SETTINGS);
-	return (i18n ("Workspace"));
+QString RKSettingsModuleObjectBrowser::caption() const {
+	RK_TRACE(SETTINGS);
+	return(i18n("Workspace"));
 }
 
 void writeSettings (KConfigGroup &cg, bool *settings) {
@@ -106,35 +101,21 @@ void writeSettings (KConfigGroup &cg, bool *settings) {
 	cg.writeEntry ("show class field", settings[RKObjectListViewSettings::ShowFieldsClass]);
 }
 
-//static
-void RKSettingsModuleObjectBrowser::saveSettings (KConfig *config) {
-	RK_TRACE (SETTINGS);
-
-	KConfigGroup cg = config->group ("Object Browser");
-	cg.writeEntry ("package blacklist", getstructure_blacklist);
-
-	KConfigGroup toolgroup = cg.group ("Tool window");
-	writeSettings (toolgroup, workspace_settings);
-	KConfigGroup varselgroup = cg.group ("Varselector");
-	writeSettings (varselgroup, varselector_settings);
-}
-
-void readSettings (const KConfigGroup &cg, bool *settings) {
-	settings[RKObjectListViewSettings::ShowObjectsHidden] = cg.readEntry ("show hidden vars", false);
-	settings[RKObjectListViewSettings::ShowFieldsLabel] = cg.readEntry ("show label field", true);
-	settings[RKObjectListViewSettings::ShowFieldsType] = cg.readEntry ("show type field", true);
-	settings[RKObjectListViewSettings::ShowFieldsClass] = cg.readEntry ("show class field", true);
+void syncSettings(KConfigGroup cg, RKConfigBase::ConfigSyncAction a, RKConfigValue<bool> *settings) {
+	for (int i = 0; i < RKObjectListViewSettings::SettingsCount; ++i) {
+		settings[i].syncConfig(cg, a);
+	}
 }
 
 //static
-void RKSettingsModuleObjectBrowser::loadSettings (KConfig *config) {
-	RK_TRACE (SETTINGS);
+void RKSettingsModuleObjectBrowser::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {
+	RK_TRACE(SETTINGS);
 
-	KConfigGroup cg = config->group ("Object Browser");
-	getstructure_blacklist = cg.readEntry ("package blacklist", QStringList ("GO"));
+	KConfigGroup cg = config->group("Object Browser");
+	getstructure_blacklist.syncConfig(cg, a);
 
-	readSettings (cg.group ("Tool window"), workspace_settings);
-	readSettings (cg.group ("Varselector"), varselector_settings);
+	syncSettings (cg.group("Tool window"), a, workspace_settings);
+	syncSettings (cg.group("Varselector"), a, varselector_settings);
 }
 
 void RKSettingsModuleObjectBrowser::boxChanged (int) {

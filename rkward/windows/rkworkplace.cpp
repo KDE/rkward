@@ -786,7 +786,6 @@ RKMDIWindow *RKWorkplace::activeWindow(RKMDIWindow::State state) const {
 }
 
 RKMDIWindow * RKWorkplace::windowForPart(KParts::Part* part) const {
-	RKMDIWindow *ret = 0;
 	for (auto it = windows.constBegin(); it != windows.constEnd(); ++it) {
 		if ((*it)->getPart() == part) {
 			return *it;

@@ -45,10 +45,10 @@
 
 // static members
 QList<RKSettingsModulePlugins::PluginMapStoredInfo> RKSettingsModulePlugins::known_plugin_maps;
-RKSettingsModulePlugins::PluginPrefs RKSettingsModulePlugins::interface_pref;
-bool RKSettingsModulePlugins::show_code;
-int RKSettingsModulePlugins::code_size;
-int RKSettingsModulePlugins::side_preview_width;
+RKConfigValue<RKSettingsModulePlugins::PluginPrefs, int> RKSettingsModulePlugins::interface_pref {"Interface Preferences", RKSettingsModulePlugins::PreferRecommended};
+RKConfigValue<bool> RKSettingsModulePlugins::show_code {"Code display default", false};
+RKConfigValue<int> RKSettingsModulePlugins::code_size {"Code display size", 250};
+RKConfigValue<int> RKSettingsModulePlugins::side_preview_width {"Other preview size", 250};
 
 RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -97,9 +97,9 @@ void RKSettingsModulePlugins::settingChanged () {
 	change ();
 }
 
-QString RKSettingsModulePlugins::caption () {
-	RK_TRACE (SETTINGS);
-	return (i18n ("RKWard Plugins"));
+QString RKSettingsModulePlugins::caption() const {
+	RK_TRACE(SETTINGS);
+	return(i18n("RKWard Plugins"));
 }
 
 void RKSettingsModulePlugins::applyChanges () {
@@ -123,82 +123,75 @@ void RKSettingsModulePlugins::configurePluginmaps () {
 	RKLoadLibsDialog::showPluginmapConfig (this, commandChain ());
 }
 
-void RKSettingsModulePlugins::save (KConfig *config) {
-	RK_TRACE (SETTINGS);
-	saveSettings (config);
-}
+void savePluginMaps(KConfigGroup &cg, const RKSettingsModulePlugins::PluginMapList &known_plugin_maps) {
+	RK_TRACE(SETTINGS);
 
-void RKSettingsModulePlugins::saveSettings (KConfig *config) {
-	RK_TRACE (SETTINGS);
-
-	KConfigGroup cg = config->group ("Plugin Settings");
-	cg.deleteGroup ("Known Plugin maps");	// always start from scratch to remove cruft from pluginmaps
-	KConfigGroup pmg = cg.group ("Known Plugin maps");
+	cg.deleteGroup("Known Plugin maps");	// always start from scratch to remove cruft from pluginmaps
+	KConfigGroup pmg = cg.group("Known Plugin maps");
 	QStringList all_known_maps;
 	for (int i = 0; i < known_plugin_maps.size (); ++i) {
-		const PluginMapStoredInfo &inf = known_plugin_maps[i];
+		const RKSettingsModulePlugins::PluginMapStoredInfo &inf = known_plugin_maps[i];
 		KConfigGroup ppmg = pmg.group (inf.filename);
-		ppmg.writeEntry ("Active", inf.active);
-		ppmg.writeEntry ("Broken", inf.broken_in_this_version);
-		ppmg.writeEntry ("Quirky", inf.quirky_in_this_version);
-		ppmg.writeEntry ("timestamp", inf.last_modified);
-		ppmg.writeEntry ("id", inf.id);
-		ppmg.writeEntry ("priority", inf.priority);
-		all_known_maps.append (inf.filename);
+		ppmg.writeEntry("Active", inf.active);
+		ppmg.writeEntry("Broken", inf.broken_in_this_version);
+		ppmg.writeEntry("Quirky", inf.quirky_in_this_version);
+		ppmg.writeEntry("timestamp", inf.last_modified);
+		ppmg.writeEntry("id", inf.id);
+		ppmg.writeEntry("priority", inf.priority);
+		all_known_maps.append(inf.filename);
 	}
 	// NOTE: The group list is always sorted alphabetically, which is why we need a separate list setting for saving info on order.
-	cg.writeEntry ("All known plugin maps", all_known_maps);
-
-	cg.writeEntry ("Interface Preferences", static_cast<int> (interface_pref));
-	cg.writeEntry ("Code display default", show_code);
-	cg.writeEntry ("Code display size", code_size);
-	cg.writeEntry ("Other preview size", side_preview_width);
+	cg.writeEntry("All known plugin maps", all_known_maps);
 }
 
-void RKSettingsModulePlugins::loadSettings (KConfig *config) {
+void RKSettingsModulePlugins::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {
 	RK_TRACE (SETTINGS);
 
-	KConfigGroup cg = config->group ("Plugin Settings");
-	if (RKSettingsModuleGeneral::storedConfigVersion () < RKSettingsModuleGeneral::RKWardConfig_0_6_1) {
-		QStringList plugin_maps = cg.readEntry ("Plugin Maps", QStringList ());
-		QStringList kplugin_maps = cg.readEntry ("All known plugin maps", QStringList ());
-		for (int i = 0; i < kplugin_maps.size (); ++i) {
-			PluginMapStoredInfo inf (RKSettingsModuleGeneral::checkAdjustLoadedPath (kplugin_maps[i]));
-			inf.active = plugin_maps.contains (kplugin_maps[i]);	// comparing unadjusted path on purpose!
-			// state info will be properly initialized in fixPluginMapLists()
-			known_plugin_maps.append (inf);
-		}
+	KConfigGroup cg = config->group("Plugin Settings");
+	interface_pref.syncConfig(cg, a);
+	show_code.syncConfig(cg, a);
+	code_size.syncConfig(cg, a);
+	side_preview_width.syncConfig(cg, a);
+
+	if (a == RKConfigBase::SaveConfig) {
+		savePluginMaps(cg, known_plugin_maps);
 	} else {
-		KConfigGroup pmg = cg.group ("Known Plugin maps");
-		QStringList kplugin_maps = cg.readEntry ("All known plugin maps", QStringList ());
-		for (int i = 0; i < kplugin_maps.size (); ++i) {
-			KConfigGroup ppmg = pmg.group (kplugin_maps[i]);	// unadjusted path on purpose!
-			PluginMapStoredInfo inf (RKSettingsModuleGeneral::checkAdjustLoadedPath (kplugin_maps[i]));
-			inf.active = ppmg.readEntry ("Active", false);
-			// Pluginmaps which are broken with one version of RKWard may be alright with other versions. So reset flags, if version has changed.
-			inf.broken_in_this_version = ppmg.readEntry ("Broken", false) && !RKSettingsModuleGeneral::rkwardVersionChanged ();
-			inf.quirky_in_this_version = ppmg.readEntry ("Quirky", false) && !RKSettingsModuleGeneral::rkwardVersionChanged ();
-			inf.last_modified = ppmg.readEntry ("timestamp", QDateTime ());
-			inf.id = ppmg.readEntry ("id");
-			inf.priority = ppmg.readEntry ("priority", (int) PriorityMedium);
-			known_plugin_maps.append (inf);
+		if (RKSettingsModuleGeneral::storedConfigVersion () < RKSettingsModuleGeneral::RKWardConfig_0_6_1) {
+			QStringList plugin_maps = cg.readEntry ("Plugin Maps", QStringList ());
+			QStringList kplugin_maps = cg.readEntry ("All known plugin maps", QStringList ());
+			for (int i = 0; i < kplugin_maps.size (); ++i) {
+				PluginMapStoredInfo inf (RKSettingsModuleGeneral::checkAdjustLoadedPath (kplugin_maps[i]));
+				inf.active = plugin_maps.contains (kplugin_maps[i]);	// comparing unadjusted path on purpose!
+				// state info will be properly initialized in fixPluginMapLists()
+				known_plugin_maps.append (inf);
+			}
+		} else {
+			KConfigGroup pmg = cg.group ("Known Plugin maps");
+			QStringList kplugin_maps = cg.readEntry ("All known plugin maps", QStringList ());
+			for (int i = 0; i < kplugin_maps.size (); ++i) {
+				KConfigGroup ppmg = pmg.group (kplugin_maps[i]);	// unadjusted path on purpose!
+				PluginMapStoredInfo inf (RKSettingsModuleGeneral::checkAdjustLoadedPath (kplugin_maps[i]));
+				inf.active = ppmg.readEntry ("Active", false);
+				// Pluginmaps which are broken with one version of RKWard may be alright with other versions. So reset flags, if version has changed.
+				inf.broken_in_this_version = ppmg.readEntry ("Broken", false) && !RKSettingsModuleGeneral::rkwardVersionChanged ();
+				inf.quirky_in_this_version = ppmg.readEntry ("Quirky", false) && !RKSettingsModuleGeneral::rkwardVersionChanged ();
+				inf.last_modified = ppmg.readEntry ("timestamp", QDateTime ());
+				inf.id = ppmg.readEntry ("id");
+				inf.priority = ppmg.readEntry ("priority", (int) PriorityMedium);
+				known_plugin_maps.append (inf);
+			}
 		}
-	}
-	if (RKSettingsModuleGeneral::rkwardVersionChanged () || RKSettingsModuleGeneral::installationMoved ()) {
-		// if it is the first start this version or from a new path, scan the installation for new pluginmaps
-		// Note that in the case of installationMoved(), checkAdjustLoadedPath() has already kicked in, above, but rescanning is still useful
-		// e.g. if users have installed to a new location, because they had botched their previous installation
-		registerDefaultPluginMaps(AddIfNewAndDefault);
-	}
-	fixPluginMapLists ();	// removes any maps which don't exist any more
+		if (RKSettingsModuleGeneral::rkwardVersionChanged () || RKSettingsModuleGeneral::installationMoved ()) {
+			// if it is the first start this version or from a new path, scan the installation for new pluginmaps
+			// Note that in the case of installationMoved(), checkAdjustLoadedPath() has already kicked in, above, but rescanning is still useful
+			// e.g. if users have installed to a new location, because they had botched their previous installation
+			registerDefaultPluginMaps(AddIfNewAndDefault);
+		}
+		fixPluginMapLists ();	// removes any maps which don't exist any more
 
-	interface_pref = static_cast<PluginPrefs> (cg.readEntry ("Interface Preferences", static_cast<int> (PreferRecommended)));
-	show_code = cg.readEntry ("Code display default", false);
-	code_size = cg.readEntry ("Code display size", 250);
-	side_preview_width = cg.readEntry ("Other preview size", 250);
-
-	if (RKSettingsModuleGeneral::storedConfigVersion () <= RKSettingsModuleGeneral::RKWardConfig_Pre0_5_7) {
-		if (code_size == 40) code_size = 250;	// previous default untouched.
+		if (RKSettingsModuleGeneral::storedConfigVersion () <= RKSettingsModuleGeneral::RKWardConfig_Pre0_5_7) {
+			if (code_size == 40) code_size = 250;	// previous default untouched.
+		}
 	}
 }
 

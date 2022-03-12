@@ -2,7 +2,7 @@
                           rksettingsmoduleoutput  -  description
                              -------------------
     begin                : Fri Jul 30 2004
-    copyright            : (C) 2004-2018 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -33,23 +33,18 @@ Allows to configure which types of commands should be "carbon copied" to the out
 and a widget to configure the settings.
 @author Thomas Friedrichsmeier
 */
-class RKCarbonCopySettings : public QWidget {
+class RKCarbonCopySettings : public RKSettingsModuleWidget {
 	Q_OBJECT
 public:
-	explicit RKCarbonCopySettings (QWidget* parent);
+	explicit RKCarbonCopySettings (QWidget* parent, RKSettingsModule* module);
 	~RKCarbonCopySettings ();
 
-	static void saveSettings (KConfig *config);
-	static void loadSettings (KConfig *config);
+	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a);
 
 	static bool shouldCarbonCopyCommand (const RCommand *command);
 	static bool includeOutputInCarbonCopy () { return (cc_globally_enabled && cc_command_output); };
 public slots:
-	void applyChanges ();
-signals:
-	void changed ();
-private slots:
-	void settingChanged ();
+	void applyChanges() override;
 private:
 	// There can be multiple instances of this widget, which need to be kept in sync.
 	static QList<RKCarbonCopySettings*> instances;
@@ -61,11 +56,11 @@ private:
 	QCheckBox *cc_app_plugin_commands_box;
 	QCheckBox *cc_command_output_box;
 
-	static bool cc_globally_enabled;
-	static bool cc_console_commands;
-	static bool cc_script_commands;
-	static bool cc_app_plugin_commands;
-	static bool cc_command_output;
+	static RKConfigValue<bool> cc_globally_enabled;
+	static RKConfigValue<bool> cc_console_commands;
+	static RKConfigValue<bool> cc_script_commands;
+	static RKConfigValue<bool> cc_app_plugin_commands;
+	static RKConfigValue<bool> cc_command_output;
 };
 
 /**
@@ -78,16 +73,15 @@ public:
 	~RKSettingsModuleOutput ();
 
 	void applyChanges () override;
-	void save (KConfig *config) override;
+	void save(KConfig *config) override { syncConfig(config, RKConfigBase::SaveConfig); };
+	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a);
 
 /** generate the commands needed to set the R run time options */
 	static QStringList makeRRunTimeOptionCommands ();
 
-	static void saveSettings (KConfig *config);
-	static void loadSettings (KConfig *config);
 	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
 
-	QString caption () override;
+	QString caption() const override;
 
 	static bool autoShow () { return auto_show; };
 	static bool autoRaise () { return auto_raise; };
@@ -95,23 +89,18 @@ public:
 public slots:
 	void boxChanged ();
 private:
-	QCheckBox *auto_show_box;
-	QCheckBox *auto_raise_box;
 	QComboBox *graphics_type_box;
-	QSpinBox *graphics_width_box;
-	QSpinBox *graphics_height_box;
-	QSpinBox *graphics_jpg_quality_box;
+	RKSpinBox *graphics_jpg_quality_box;
 	RKCarbonCopySettings *cc_settings;
 	GetFileNameWidget *custom_css_file_box;
-	QCheckBox* shared_default_output_box;
 
-	static bool auto_show;
-	static bool auto_raise;
-	static QString graphics_type;
-	static int graphics_width;
-	static int graphics_height;
-	static int graphics_jpg_quality;
-	static QString custom_css_file;
+	static RKConfigValue<bool> auto_show;
+	static RKConfigValue<bool> auto_raise;
+	static RKConfigValue<QString> graphics_type;
+	static RKConfigValue<int> graphics_width;
+	static RKConfigValue<int> graphics_height;
+	static RKConfigValue<int> graphics_jpg_quality;
+	static RKConfigValue<QString> custom_css_file;
 	static RKConfigValue<bool> shared_default_output;
 };
 

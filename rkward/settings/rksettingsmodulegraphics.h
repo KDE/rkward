@@ -2,7 +2,7 @@
                           rksettingsmodulegraphics  -  description
                              -------------------
     begin                : Mon Sep 13 2010
-    copyright            : (C) 2010-2018 by Thomas Friedrichsmeier
+    copyright            : (C) 2010-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -25,7 +25,6 @@ class QLineEdit;
 class QGroupBox;
 class RKSpinBox;
 class QSpinBox;
-class QCheckBox;
 class QButtonGroup;
 class QRadioButton;
 
@@ -39,7 +38,6 @@ public:
 	~RKSettingsModuleGraphics ();
 	
 	void applyChanges () override;
-	void save (KConfig *config) override;
 
 /** generate the commands needed to set the R run time options */
 	static QStringList makeRRunTimeOptionCommands ();
@@ -47,11 +45,11 @@ public:
 /** Configured to (attempt to) use KDE printing dialog? */
 	static bool kdePrintingEnabled () { return options_kde_printing; };
 
-	static void saveSettings (KConfig *config);
-	static void loadSettings (KConfig *config);
+	void save(KConfig *config) override { syncConfig(config, RKConfigBase::SaveConfig); };
+	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a);
 	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
 
-	QString caption () override;
+	QString caption() const override;
 	QUrl helpURL () override { return QUrl ("rkward://page/rkward_plot_history#scd_settings"); };
 
 	enum DefaultDevice {
@@ -76,26 +74,19 @@ private:
 	QButtonGroup *replace_standard_devices_group;
 
 	QGroupBox *graphics_hist_box;
-	QSpinBox *graphics_hist_max_length_box;
-	QSpinBox *graphics_hist_max_plotsize_box;
 
-	RKSpinBox *graphics_height_box;
-	RKSpinBox *graphics_width_box;
+	static RKConfigValue<DefaultDevice, int> default_device;
+	static RKConfigValue<QString> default_device_other;
+	static RKConfigValue<StandardDevicesMode, int> replace_standard_devices;
 
-	QCheckBox *kde_printing_box;
+	static RKConfigValue<bool> graphics_hist_enable;
+	static RKConfigValue<int> graphics_hist_max_length;
+	static RKConfigValue<int> graphics_hist_max_plotsize;
 
-	static DefaultDevice default_device;
-	static QString default_device_other;
-	static StandardDevicesMode replace_standard_devices;
+	static RKConfigValue<double> graphics_height;
+	static RKConfigValue<double> graphics_width;
 
-	static bool graphics_hist_enable;
-	static int graphics_hist_max_length;
-	static int graphics_hist_max_plotsize;
-
-	static double graphics_height;
-	static double graphics_width;
-
-	static bool options_kde_printing;
+	static RKConfigValue<bool> options_kde_printing;
 };
 
 #endif

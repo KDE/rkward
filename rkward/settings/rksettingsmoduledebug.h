@@ -2,7 +2,7 @@
                           rksettingsmoduledebug -  description
                              -------------------
     begin                : Tue Oct 23 2007
-    copyright            : (C) 2007-2018 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -35,13 +35,11 @@ public:
 	~RKSettingsModuleDebug ();
 
 	void applyChanges () override;
-	void save (KConfig *config) override;
-
-	static void saveSettings (KConfig *config);
-	static void loadSettings (KConfig *config);
+	void save(KConfig *config) override { syncConfig(config, RKConfigBase::SaveConfig); };
+	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a);
 	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
 
-	QString caption () override;
+	QString caption() const override;
 
 	// static members are declared in debug.h and defined in main.cpp
 public slots:

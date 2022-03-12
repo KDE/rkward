@@ -37,15 +37,12 @@ public:
 
 /** applies current settings in this RKSettingsModule. This will only be called, if hasChanges () is true */
 	void applyChanges () override;
-/** saves current changes to the given KConfig
-@param config probably always RKGlobals::rkApp ()->config. But passing this as an argument is both more flexible and saves #including files.*/
-	void save (KConfig *config) override;
 
 /** @returns the caption ("Workspace Browser") */
-	QString caption () override;
+	QString caption() const override;
 
-	static void saveSettings (KConfig *config);
-	static void loadSettings (KConfig *config);
+	void save(KConfig *config) override { syncConfig(config, RKConfigBase::SaveConfig); };
+	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a);
 	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
 
 	static bool isDefaultForWorkspace (RKObjectListViewSettings::PersistentSettings setting) { return workspace_settings[setting]; };
@@ -63,10 +60,10 @@ public slots:
 	void addBlackList (QStringList *string_list);
 private:
 	MultiStringSelector *blacklist_choser;
-	static QStringList getstructure_blacklist;
+	static RKConfigValue<QStringList> getstructure_blacklist;
 
-	static bool workspace_settings[RKObjectListViewSettings::SettingsCount];
-	static bool varselector_settings[RKObjectListViewSettings::SettingsCount];
+	static RKConfigValue<bool> workspace_settings[RKObjectListViewSettings::SettingsCount];
+	static RKConfigValue<bool> varselector_settings[RKObjectListViewSettings::SettingsCount];
 };
 
 #endif

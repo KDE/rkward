@@ -28,17 +28,18 @@
 
 #include "../rbackend/rcommand.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkspinbox.h"
 #include "rksettings.h"
 #include "../rkglobals.h"
 
 #include "../debug.h"
 
 //static
-int RKSettingsModuleWatch::plugin_filter;
-int RKSettingsModuleWatch::app_filter;
-int RKSettingsModuleWatch::sync_filter;
-int RKSettingsModuleWatch::user_filter;
-uint RKSettingsModuleWatch::max_log_lines;
+RKConfigValue<int> RKSettingsModuleWatch::plugin_filter {"plugin command filter", ShowInput | ShowError};
+RKConfigValue<int> RKSettingsModuleWatch::app_filter {"app command filter", ShowInput | ShowError};
+RKConfigValue<int> RKSettingsModuleWatch::sync_filter {"sync command filter", ShowError};
+RKConfigValue<int> RKSettingsModuleWatch::user_filter {"user command filter", ShowInput | ShowOutput | ShowError | RaiseWindow};
+RKConfigValue<uint> RKSettingsModuleWatch::max_log_lines {"max log lines", 1000};
 
 //static
 bool RKSettingsModuleWatch::shouldShowInput (RCommand *command) {
@@ -144,15 +145,8 @@ RKSettingsModuleWatch::RKSettingsModuleWatch (RKSettings *gui, QWidget *parent) 
 
 	vbox->addSpacing (2*RKGlobals::spacingHint ());
 
-	vbox->addWidget (new QLabel (i18n ("Maximum number of paragraphs/lines to display in the Command Log"), this));
-	max_log_lines_spinner = new QSpinBox(this);
-	max_log_lines_spinner->setMaximum(10000);
-	max_log_lines_spinner->setMinimum(0);
-	max_log_lines_spinner->setSingleStep(10);
-	max_log_lines_spinner->setValue(max_log_lines);
-	max_log_lines_spinner->setSpecialValueText (i18n ("Unlimited"));
-	connect (max_log_lines_spinner, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleWatch::changedSetting);
-	vbox->addWidget (max_log_lines_spinner);
+	vbox->addWidget(new QLabel(i18n("Maximum number of paragraphs/lines to display in the Command Log (0 for no limit)")));
+	vbox->addWidget(max_log_lines.makeSpinBox(0, INT_MAX, this));
 
 	vbox->addStretch ();
 
@@ -227,29 +221,15 @@ void RKSettingsModuleWatch::validateGUI () {
 }
 
 //static
-void RKSettingsModuleWatch::saveSettings (KConfig *config) {
+void RKSettingsModuleWatch::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {
 	RK_TRACE (SETTINGS);
 
-	KConfigGroup cg = config->group ("RInterface Watch Settings");
-	cg.writeEntry ("user command filter", user_filter);
-	cg.writeEntry ("plugin command filter", plugin_filter);
-	cg.writeEntry ("app command filter", app_filter);
-	cg.writeEntry ("sync command filter", sync_filter);
-
-	cg.writeEntry ("max log lines", max_log_lines);
-}
-
-//static
-void RKSettingsModuleWatch::loadSettings (KConfig *config) {
-	RK_TRACE (SETTINGS);
-
-	KConfigGroup cg = config->group ("RInterface Watch Settings");
-	user_filter = cg.readEntry ("user command filter", static_cast<int> (ShowInput | ShowOutput | ShowError | RaiseWindow));
-	plugin_filter = cg.readEntry ("plugin command filter", static_cast<int> (ShowInput | ShowError));
-	app_filter = cg.readEntry ("app command filter", static_cast<int> (ShowInput | ShowError));
-	sync_filter = cg.readEntry ("sync command filter", static_cast<int> (ShowError));
-
-	max_log_lines = cg.readEntry ("max log lines", 1000);
+	KConfigGroup cg = config->group("RInterface Watch Settings");
+	user_filter.syncConfig(cg, a);
+	plugin_filter.syncConfig(cg, a);
+	app_filter.syncConfig(cg, a);
+	sync_filter.syncConfig(cg, a);
+	max_log_lines.syncConfig(cg, a);
 }
 
 void RKSettingsModuleWatch::applyChanges () {
@@ -259,19 +239,11 @@ void RKSettingsModuleWatch::applyChanges () {
 	plugin_filter = getFilterSettings (plugin_filter_boxes);
 	app_filter = getFilterSettings (app_filter_boxes);
 	sync_filter = getFilterSettings (sync_filter_boxes);
-
-	max_log_lines = max_log_lines_spinner->value ();
-}
-
-void RKSettingsModuleWatch::save (KConfig *config) {
-	RK_TRACE (SETTINGS);
-
-	saveSettings (config);
 }
 	
-QString RKSettingsModuleWatch::caption () {
-	RK_TRACE (SETTINGS);
+QString RKSettingsModuleWatch::caption() const {
+	RK_TRACE(SETTINGS);
 
-	return (i18n ("Command log"));
+	return(i18n("Command log"));
 }
 

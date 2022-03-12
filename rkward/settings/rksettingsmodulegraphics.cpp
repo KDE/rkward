@@ -2,7 +2,7 @@
                           rksettingsmodulegraphics  -  description
                              -------------------
     begin                : Mon Sep 13 2010
-    copyright            : (C) 2010, 2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2010-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -38,15 +38,15 @@
 #include "../core/robject.h"
 
 // static members
-double RKSettingsModuleGraphics::graphics_width;
-double RKSettingsModuleGraphics::graphics_height;
-bool RKSettingsModuleGraphics::graphics_hist_enable;
-int RKSettingsModuleGraphics::graphics_hist_max_length;
-int RKSettingsModuleGraphics::graphics_hist_max_plotsize;
-bool RKSettingsModuleGraphics::options_kde_printing;
-RKSettingsModuleGraphics::DefaultDevice RKSettingsModuleGraphics::default_device;
-QString RKSettingsModuleGraphics::default_device_other;
-RKSettingsModuleGraphics::StandardDevicesMode RKSettingsModuleGraphics::replace_standard_devices;
+RKConfigValue<double> RKSettingsModuleGraphics::graphics_width {"graphics_width", 7.0};
+RKConfigValue<double> RKSettingsModuleGraphics::graphics_height {"graphics_height", 7.0};
+RKConfigValue<bool> RKSettingsModuleGraphics::graphics_hist_enable {"graphics_hist_enable", true};
+RKConfigValue<int> RKSettingsModuleGraphics::graphics_hist_max_length {"graphics_hist_max_length", 20};
+RKConfigValue<int> RKSettingsModuleGraphics::graphics_hist_max_plotsize {"graphics_hist_max_plotsize", 4096};
+RKConfigValue<bool> RKSettingsModuleGraphics::options_kde_printing {"kde printing", true};
+RKConfigValue<RKSettingsModuleGraphics::DefaultDevice, int> RKSettingsModuleGraphics::default_device {"default_device", RKDevice};
+RKConfigValue<QString> RKSettingsModuleGraphics::default_device_other {"default_device_custom", QString("cairoDevice")};
+RKConfigValue<RKSettingsModuleGraphics::StandardDevicesMode, int> RKSettingsModuleGraphics::replace_standard_devices {"replace_device", ReplaceDevice};
 
 RKSettingsModuleGraphics::RKSettingsModuleGraphics (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -110,23 +110,16 @@ RKSettingsModuleGraphics::RKSettingsModuleGraphics (RKSettings *gui, QWidget *pa
 	connect (replace_standard_devices_group, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &RKSettingsModuleGraphics::boxChanged);
 	h_layout1->addWidget (group);
 
-	group = new QGroupBox (i18n ("Default window size (for RK(), or embedded device windows)"), this);
-	group_layout = new QVBoxLayout (group);
-	group_layout->addWidget (new QLabel (i18n ("Default width (inches):"), group));
-	group_layout->addWidget (graphics_width_box = new RKSpinBox (group));
-	graphics_width_box->setRealMode (1, 100.0, graphics_width, 1, 3);
-	group_layout->addSpacing (2*RKGlobals::spacingHint ());
-	group_layout->addWidget (new QLabel (i18n ("Default height (inches)"), group));
-	group_layout->addWidget (graphics_height_box = new RKSpinBox (group));
-	graphics_height_box->setRealMode (1, 100.0, graphics_height, 1, 3);
-	connect (graphics_width_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleGraphics::boxChanged);
-	connect (graphics_height_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleGraphics::boxChanged);
+	group = new QGroupBox(i18n("Default window size (for RK(), or embedded device windows)"));
+	group_layout = new QVBoxLayout(group);
+	group_layout->addWidget(new QLabel(i18n("Default width (inches):")));
+	group_layout->addWidget(graphics_width.makeSpinBox(1, 100.0, this));
+	group_layout->addSpacing(2*RKGlobals::spacingHint());
+	group_layout->addWidget(new QLabel(i18n("Default height (inches)")));
+	group_layout->addWidget(graphics_height.makeSpinBox(1, 100.0, this));
 	main_vbox->addWidget (group);
 
-	kde_printing_box = new QCheckBox (i18n ("Use KDE printer dialog for printing devices (if available)"), this);
-	kde_printing_box->setChecked (options_kde_printing);
-	connect (kde_printing_box, &QCheckBox::stateChanged, this, &RKSettingsModuleGraphics::boxChanged);
-	main_vbox->addWidget (kde_printing_box);
+	main_vbox->addWidget(options_kde_printing.makeCheckbox(i18n("Use KDE printer dialog for printing devices (if available)"), this));
 
 	graphics_hist_box = new QGroupBox (i18n ("Screen device history"), this);
 	graphics_hist_box->setCheckable (true);
@@ -136,22 +129,11 @@ RKSettingsModuleGraphics::RKSettingsModuleGraphics (RKSettings *gui, QWidget *pa
 	h_layout = new QHBoxLayout ();
 	group_layout->addLayout (h_layout);
 	h_layout->addWidget (new QLabel (i18n ("Maximum number of recorded plots:"), graphics_hist_box));
-	h_layout->addWidget (graphics_hist_max_length_box = new QSpinBox(graphics_hist_box));
-	graphics_hist_max_length_box->setMaximum(200);
-	graphics_hist_max_length_box->setMinimum(1);
-	graphics_hist_max_length_box->setSingleStep(1);
-	graphics_hist_max_length_box->setValue(graphics_hist_max_length);
+	h_layout->addWidget (graphics_hist_max_length.makeSpinBox(1, 200, this));
 	h_layout = new QHBoxLayout ();
 	group_layout->addLayout (h_layout);
 	h_layout->addWidget (new QLabel (i18n ("Maximum size of a single recorded plot (in KB):"), graphics_hist_box));
-	h_layout->addWidget (graphics_hist_max_plotsize_box = new QSpinBox(graphics_hist_box));
-	graphics_hist_max_plotsize_box->setMaximum(50000);
-	graphics_hist_max_plotsize_box->setMinimum(4);
-	graphics_hist_max_plotsize_box->setSingleStep(4);
-	graphics_hist_max_plotsize_box->setValue(graphics_hist_max_plotsize);
-	connect (graphics_hist_max_length_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleGraphics::boxChanged);
-	connect (graphics_hist_max_plotsize_box, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleGraphics::boxChanged);
-
+	h_layout->addWidget (graphics_hist_max_plotsize.makeSpinBox(4, 50000, this));
 	main_vbox->addWidget (graphics_hist_box);
 
 	main_vbox->addStretch ();
@@ -176,9 +158,9 @@ void RKSettingsModuleGraphics::boxChanged () {
 	change ();
 }
 
-QString RKSettingsModuleGraphics::caption () {
-	RK_TRACE (SETTINGS);
-	return (i18n ("Onscreen Graphics"));
+QString RKSettingsModuleGraphics::caption() const {
+	RK_TRACE(SETTINGS);
+	return(i18n("Onscreen Graphics"));
 }
 
 void RKSettingsModuleGraphics::applyChanges () {
@@ -187,15 +169,8 @@ void RKSettingsModuleGraphics::applyChanges () {
 	default_device = (DefaultDevice) default_device_group->checkedId ();
 	default_device_other = default_device_other_edit->text ();
 	replace_standard_devices = (StandardDevicesMode) replace_standard_devices_group->checkedId ();
-	
-	graphics_width = graphics_width_box->realValue ();
-	graphics_height = graphics_height_box->realValue ();
 
 	graphics_hist_enable = graphics_hist_box->isChecked ();
-	graphics_hist_max_length = graphics_hist_max_length_box->value ();
-	graphics_hist_max_plotsize = graphics_hist_max_plotsize_box->value ();
-
-	options_kde_printing = kde_printing_box->isChecked ();
 
 	QStringList commands = makeRRunTimeOptionCommands ();
 	for (QStringList::const_iterator it = commands.begin (); it != commands.end (); ++it) {
@@ -203,40 +178,19 @@ void RKSettingsModuleGraphics::applyChanges () {
 	}
 }
 
-void RKSettingsModuleGraphics::save (KConfig *config) {
-	RK_TRACE (SETTINGS);
+void RKSettingsModuleGraphics::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {
+	RK_TRACE(SETTINGS);
 
-	saveSettings (config);
-}
-
-void RKSettingsModuleGraphics::saveSettings (KConfig *config) {
-	RK_TRACE (SETTINGS);
-
-	KConfigGroup cg = config->group ("Graphics Device Windows");
-	cg.writeEntry ("default_device", (int) default_device);
-	cg.writeEntry ("default_device_custom", default_device_other);
-	cg.writeEntry ("replace_device", (int) replace_standard_devices);
-	cg.writeEntry ("graphics_width", graphics_width);
-	cg.writeEntry ("graphics_height", graphics_height);
-	cg.writeEntry ("graphics_hist_enable", graphics_hist_enable);
-	cg.writeEntry ("graphics_hist_max_length", graphics_hist_max_length);
-	cg.writeEntry ("graphics_hist_max_plotsize", graphics_hist_max_plotsize);
-	cg.writeEntry ("kde printing", options_kde_printing);
-}
-
-void RKSettingsModuleGraphics::loadSettings (KConfig *config) {
-	RK_TRACE (SETTINGS);
-
-	KConfigGroup cg = config->group ("Graphics Device Windows");
-	default_device = (DefaultDevice) cg.readEntry ("default_device", (int) RKDevice);
-	default_device_other = cg.readEntry ("default_device_custom", QString ("cairoDevice"));
-	replace_standard_devices = (StandardDevicesMode) cg.readEntry ("replace_device", (int) ReplaceDevice);
-	graphics_width = cg.readEntry ("graphics_width", 7.0);
-	graphics_height = cg.readEntry ("graphics_height", 7.0);
-	graphics_hist_enable = cg.readEntry ("graphics_hist_enable", true);
-	graphics_hist_max_length = cg.readEntry ("graphics_hist_max_length", 20);
-	graphics_hist_max_plotsize = cg.readEntry ("graphics_hist_max_plotsize", 4096);
-	options_kde_printing = cg.readEntry ("kde printing", true);
+	KConfigGroup cg = config->group("Graphics Device Windows");
+	default_device.syncConfig(cg, a);
+	default_device_other.syncConfig(cg, a);
+	replace_standard_devices.syncConfig(cg, a);
+	graphics_width.syncConfig(cg, a);
+	graphics_height.syncConfig(cg, a);
+	graphics_hist_enable.syncConfig(cg, a);
+	graphics_hist_max_length.syncConfig(cg, a);
+	graphics_hist_max_plotsize.syncConfig(cg, a);
+	options_kde_printing.syncConfig(cg, a);
 }
 
 //static

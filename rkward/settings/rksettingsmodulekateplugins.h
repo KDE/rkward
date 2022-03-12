@@ -32,19 +32,17 @@ public:
 	~RKSettingsModuleKatePlugins();
 
 	void applyChanges() override;
-	void save(KConfig *config) override;
-
-	static void saveSettings(KConfig *config);
-	static void loadSettings(KConfig *config);
+	void save(KConfig *config) override { syncConfig(config, RKConfigBase::SaveConfig); };
+	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a);
 	static void validateSettingsInteractive(QList<RKSetupWizardItem*>*) {};
 
-	QString caption() override;
+	QString caption() const override;
 
 	static QStringList pluginsToLoad() { return plugins_to_load; };
 private:
 	QTreeWidget *plugin_table;
 
-	static QStringList plugins_to_load;
+	static RKConfigValue<QStringList> plugins_to_load;
 };
 
 #endif

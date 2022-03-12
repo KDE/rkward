@@ -2,7 +2,7 @@
                           rksettingsmodule  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004-2018 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -20,11 +20,18 @@
 #include <qstring.h>
 #include <qwidget.h>
 #include <QUrl>
+#include <QIcon>
 #include <KConfigGroup>
 
 class KConfig;
 class RKSettings;
 class RCommandChain;
+class QCheckBox;
+class QComboBox;
+class RKSettingsModule;
+class RKSettingsModuleWidget;
+class RKSetupWizardItem;
+class RKSpinBox;
 
 /** Base class for RKWard config settings.
  *
@@ -33,29 +40,62 @@ class RKConfigBase {
 public:
 	virtual void loadConfig(KConfigGroup &cg) = 0;
 	virtual void saveConfig(KConfigGroup &cg) const = 0;
+	enum ConfigSyncAction {
+		SaveConfig,
+		LoadConfig
+	};
+	/** Save or load config value (a somewhat dirty trick that saves a lot of tying... */
+	void syncConfig(KConfigGroup &cg, ConfigSyncAction a) {
+		if (a == SaveConfig) saveConfig(cg);
+		else loadConfig(cg);
+	};
+	const char *key() { return name; }
+
+	struct ValueLabel {
+		int key;
+		QString label;
+	};
+	typedef QList<ValueLabel> LabelList;
 protected:
 	RKConfigBase(const char* name) : name(name) {};
 	virtual ~RKConfigBase() {};
 	const char* name;
+
+	static QComboBox* makeDropDownHelper(const LabelList &entries, RKSettingsModuleWidget* module, int initial, std::function<void(int)> setter);
 };
 
 /** A single value stored in the RKWard config file.
  *
  *  The value set initially (in the constructor or via setDefaultValue() represents the default value. */
-template<typename T> class RKConfigValue : public RKConfigBase {
+template<typename T, typename STORAGE_T=T> class RKConfigValue : public RKConfigBase {
 public:
 	RKConfigValue(const char* name, const T &default_value) : RKConfigBase(name), value(default_value) {};
 	~RKConfigValue() {};
 
 	void loadConfig(KConfigGroup &cg) override {
-		value = cg.readEntry(name, value);
+		value = (T) cg.readEntry(name, (STORAGE_T) value);
 	}
 	void saveConfig(KConfigGroup &cg) const override {
-		cg.writeEntry(name, value);
+		cg.writeEntry(name, (STORAGE_T) value);
 	}
 	void setDefaultValue(const T& value) { RKConfigValue<T>::value = value; }
 	operator T() const { return(value); }
+	T& get() { return(value); }
 	RKConfigValue& operator= (const T v) { value = v; return *this; };
+
+/** Only for bool values: convenience function to create a fully connected checkbox for this option */
+	template<typename TT = T, typename std::enable_if<std::is_same<TT, bool>::value>::type* = nullptr> QCheckBox* makeCheckbox(const QString& label, RKSettingsModuleWidget* module);
+/** Currently only for boolean or int options: Make a dropdown selector (QComboBox). If bit_flag_mask is set, the selector operates on (part of) an OR-able set of flags, instead of
+ *  plain values. */
+	QComboBox* makeDropDown(const LabelList &entries, RKSettingsModuleWidget* _module, int bit_flag_mask = 0) {
+		static_assert(std::is_same<STORAGE_T, int>::value || std::is_same<STORAGE_T, bool>::value, "makeDropDown can only be used for int or bool");
+		if (bit_flag_mask) {
+			return makeDropDownHelper(entries, _module, value & bit_flag_mask, [this, bit_flag_mask](int val){this->value = (T) ((this->value & ~bit_flag_mask) + val);});
+		} else {
+			return makeDropDownHelper(entries, _module, (std::is_same<STORAGE_T, bool>::value && value) ? 1 : (int) value, [this](int val){this->value = (T) val;});
+		}
+	}
+	RKSpinBox* makeSpinBox(T min, T max, RKSettingsModuleWidget* _module);
 private:
 	T value;
 };
@@ -90,49 +130,52 @@ private:
 	std::vector<RKConfigBase*> values;
 };
 
+/** Base class for UI widgets operating on an RKSettingsModule. For now this is used, only where similar settings are shared across modules (e.g. code completion). Eventually, this could be used to disentangle RKSettingsModule from QWidget. */
+class RKSettingsModuleWidget : public QWidget {
+	Q_OBJECT
+public:
+	RKSettingsModuleWidget(QWidget *parent, RKSettingsModule *parent_module);
+	~RKSettingsModuleWidget() {};
+	virtual void applyChanges() = 0;
+/** Mark this module as "changed" (propagates to parent module) */
+	void change ();
+	bool hasChanges () { return changed; };
+signals:
+	void settingsChanged();
+	void apply();
+protected:
+	bool changed;
+/** temporary indirection until applyChanges() has been obsolete, everywhere */
+	void doApply() {
+		applyChanges();
+		emit(apply());
+		changed = false;
+	}
+};
+
 /**
 Base class for settings modules. Provides some pure virtual calls.
 
 @author Thomas Friedrichsmeier
 */
-class RKSettingsModule : public QWidget {
+class RKSettingsModule : public RKSettingsModuleWidget {
 public:
 	RKSettingsModule (RKSettings *gui, QWidget *parent);
 	virtual ~RKSettingsModule ();
 
-	bool hasChanges () { return changed; };
-	virtual void applyChanges () = 0;
 	virtual void save (KConfig *config) = 0;
 	
-	virtual QString caption () = 0;
+	virtual QString caption() const = 0;
+	virtual QString longCaption() const { return caption(); };
+	virtual QIcon icon() const { return QIcon(); };
 /** Some settings modules execute R commands on "apply". If an RCommandChain is specified for the RKSettings-dialog, those commands should
 be inserted into this chain. It's safe to use this unconditionally, as if there is no chain, this will return 0, which corresponds to using the top-level chain */
 	RCommandChain *commandChain () { return chain; };
 
 	virtual QUrl helpURL () { return QUrl (); };
-protected:
-friend class RKSettingsModuleWidget;
-	void change ();
-
-	bool changed;
 private:
-	RKSettings *gui;
 friend class RKSettings;
 	static RCommandChain *chain;
 };
-
-/** Base class for UI widgets operating on an RKSettingsModule. For now this is used, only where similar settings are shared across modules (e.g. code completion). Eventually, this could be used to disentangle RKSettingsModule from QWidget. */
-class RKSettingsModuleWidget : public QWidget {
-public:
-	RKSettingsModuleWidget(QWidget *parent, RKSettingsModule *_module) : QWidget(parent), module(_module) {};
-	~RKSettingsModuleWidget() {};
-	virtual void applyChanges() = 0;
-protected:
-	void change() { module->change(); }
-private:
-	RKSettingsModule *module;
-};
-
-class RKSetupWizardItem;
 
 #endif

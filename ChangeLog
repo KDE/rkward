@@ -2,11 +2,9 @@ TODOS for autotests:
   - Check and update the standards files
   - Use options(warn=1), in order to get warnings into the test?
 
-TODOS for output directories:
-  - setting, when opening workspace with no attached active output file:
-    - create new empty file
-    - open "default.rko" <- default setting?
-
+- Merge ktexteditor (script) settings into the main settings dialog
+- Internal: Code cleanup around settings
+- Output file handling has been reworked, entirely
 - Fixed: Cursor navigation in completion list
 - rkwardtests library gains helper functions for checking for expected errors
 - Internal: Allow R-level calls to support both subcommands, and a return value at the same time

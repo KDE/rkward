@@ -2,7 +2,7 @@
                           rksettingsmoduledebug  description
                              -------------------
     begin                : Tue Oct 23 2007
-    copyright            : (C) 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -103,9 +103,9 @@ void RKSettingsModuleDebug::settingChanged (int) {
 	change ();
 }
 
-QString RKSettingsModuleDebug::caption () {
-	RK_TRACE (SETTINGS);
-	return (i18n ("Debug"));
+QString RKSettingsModuleDebug::caption() const {
+	RK_TRACE(SETTINGS);
+	return(i18n("Debug"));
 }
 
 void RKSettingsModuleDebug::applyChanges () {
@@ -121,18 +121,7 @@ void RKSettingsModuleDebug::applyChanges () {
 	RK_Debug::RK_Debug_Flags = flags;
 }
 
-void RKSettingsModuleDebug::save (KConfig *config) {
-	RK_TRACE (SETTINGS);
-	saveSettings (config);
-}
-
-void RKSettingsModuleDebug::saveSettings (KConfig *) {
-	RK_TRACE (SETTINGS);
-
-	// left empty on purpose
-}
-
-void RKSettingsModuleDebug::loadSettings (KConfig *) {
+void RKSettingsModuleDebug::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) {
 	RK_TRACE (SETTINGS);
 
 	// left empty on purpose
