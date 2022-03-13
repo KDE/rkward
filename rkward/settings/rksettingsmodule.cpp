@@ -50,7 +50,7 @@ void RKSettingsModuleWidget::change() {
 
 
 template<>
-template<typename TT, typename std::enable_if<std::is_same<TT, bool>::value>::type* = nullptr> QCheckBox* RKConfigValue<bool>::makeCheckbox(const QString& label, RKSettingsModuleWidget* module) {
+QCheckBox* RKConfigValue<bool, bool>::makeCheckbox(const QString& label, RKSettingsModuleWidget* module) {
 	QCheckBox *ret = new QCheckBox(label);
 	ret->setChecked(value);
 	QObject::connect(ret, &QCheckBox::stateChanged, module, &RKSettingsModuleWidget::change);

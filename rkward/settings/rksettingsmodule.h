@@ -84,7 +84,7 @@ public:
 	RKConfigValue& operator= (const T v) { value = v; return *this; };
 
 /** Only for bool values: convenience function to create a fully connected checkbox for this option */
-	template<typename TT = T, typename std::enable_if<std::is_same<TT, bool>::value>::type* = nullptr> QCheckBox* makeCheckbox(const QString& label, RKSettingsModuleWidget* module);
+	QCheckBox* makeCheckbox(const QString& label, RKSettingsModuleWidget* module);
 /** Currently only for boolean or int options: Make a dropdown selector (QComboBox). If bit_flag_mask is set, the selector operates on (part of) an OR-able set of flags, instead of
  *  plain values. */
 	QComboBox* makeDropDown(const LabelList &entries, RKSettingsModuleWidget* _module, int bit_flag_mask = 0) {
