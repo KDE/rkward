@@ -34,8 +34,9 @@
 #include "../rbackend/rkrinterface.h"
 #include "../misc/rkspinbox.h"
 #include "../misc/rkcommonfunctions.h"
-#include "../debug.h"
+#include "../misc/rkstandardicons.h"
 #include "../core/robject.h"
+#include "../debug.h"
 
 // static members
 RKConfigValue<double> RKSettingsModuleGraphics::graphics_width {"graphics_width", 7.0};
@@ -161,6 +162,11 @@ void RKSettingsModuleGraphics::boxChanged () {
 QString RKSettingsModuleGraphics::caption() const {
 	RK_TRACE(SETTINGS);
 	return(i18n("Onscreen Graphics"));
+}
+
+QIcon RKSettingsModuleGraphics::icon() const {
+	RK_TRACE(SETTINGS);
+	return RKStandardIcons::getIcon(RKStandardIcons::WindowX11);
 }
 
 void RKSettingsModuleGraphics::applyChanges () {

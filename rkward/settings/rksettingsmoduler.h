@@ -45,7 +45,8 @@ public:
 	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
 
 	QString caption() const override;
-	
+	QIcon icon() const override;
+
 /** generate the commands needed to set the R run time options */
 	static QStringList makeRRunTimeOptionCommands ();
 
@@ -120,6 +121,7 @@ public:
 	static QStringList essentialPackages () { return essential_packages.split ("\n"); };
 
 	QString caption() const override;
+	QIcon icon() const override;
 public slots:
 	void settingChanged ();
 	void addLibLoc (QStringList *string_list);

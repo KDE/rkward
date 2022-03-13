@@ -40,6 +40,7 @@
 #include "../misc/rkprogresscontrol.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkspinbox.h"
+#include "../misc/rkstandardicons.h"
 #include "../rbackend/rkrinterface.h"
 #include "../rbackend/rksessionvars.h"
 #include "../rkglobals.h"
@@ -178,6 +179,11 @@ void RKSettingsModuleR::settingChanged () {
 QString RKSettingsModuleR::caption() const {
 	RK_TRACE(SETTINGS);
 	return(i18n("R-Backend"));
+}
+
+QIcon RKSettingsModuleR::icon() const {
+	RK_TRACE(SETTINGS);
+	return QIcon::fromTheme("emblem-system-symbolic");
 }
 
 void RKSettingsModuleR::applyChanges () {
@@ -438,6 +444,11 @@ void RKSettingsModuleRPackages::addRepository (QStringList *string_list) {
 QString RKSettingsModuleRPackages::caption() const {
 	RK_TRACE(SETTINGS);
 	return(i18n("R-Packages"));
+}
+
+QIcon RKSettingsModuleRPackages::icon() const {
+	RK_TRACE(SETTINGS);
+	return RKStandardIcons::getIcon(RKStandardIcons::ObjectPackageEnvironment);
 }
 
 #define SELECT_CRAN_MIRROR_COMMAND 123

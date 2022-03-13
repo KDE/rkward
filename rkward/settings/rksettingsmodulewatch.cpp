@@ -29,6 +29,7 @@
 #include "../rbackend/rcommand.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkspinbox.h"
+#include "../misc/rkstandardicons.h"
 #include "rksettings.h"
 #include "../rkglobals.h"
 
@@ -243,7 +244,11 @@ void RKSettingsModuleWatch::applyChanges () {
 	
 QString RKSettingsModuleWatch::caption() const {
 	RK_TRACE(SETTINGS);
-
 	return(i18n("Command log"));
+}
+
+QIcon RKSettingsModuleWatch::icon() const {
+	RK_TRACE(SETTINGS);
+	return RKStandardIcons::getIcon(RKStandardIcons::WindowCommandLog);
 }
 

@@ -51,6 +51,7 @@ public:
 	static uint maxLogLines () { return max_log_lines; };
 
 	QString caption() const override;
+	QIcon icon() const override;
 public slots:
 	void changedSetting (int);
 private:

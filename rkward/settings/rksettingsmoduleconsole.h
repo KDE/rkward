@@ -61,6 +61,7 @@ public:
 	static void saveCommandHistory (const QStringList &list);
 
 	QString caption() const override;
+	QIcon icon() const override;
 
 	QUrl helpURL () override { return QUrl ("rkward://page/rkward_console#settings"); };
 private:

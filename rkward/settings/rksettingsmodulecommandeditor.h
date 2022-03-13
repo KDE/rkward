@@ -115,6 +115,7 @@ public:
 	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
 
 	QString caption() const override;
+	QIcon icon() const override;
 
 	static const RKCodeCompletionSettings* completionSettings() { return &completion_settings; };
 

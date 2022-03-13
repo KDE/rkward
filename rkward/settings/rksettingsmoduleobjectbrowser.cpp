@@ -29,6 +29,7 @@
 
 #include "../rkglobals.h"
 #include "../misc/multistringselector.h"
+#include "../misc/rkstandardicons.h"
 #include "rksettings.h"
 #include "rksettingsmodulegeneral.h"
 #include "../debug.h"
@@ -92,6 +93,11 @@ void RKSettingsModuleObjectBrowser::applyChanges () {
 QString RKSettingsModuleObjectBrowser::caption() const {
 	RK_TRACE(SETTINGS);
 	return(i18n("Workspace"));
+}
+
+QIcon RKSettingsModuleObjectBrowser::icon() const {
+	RK_TRACE(SETTINGS);
+	return RKStandardIcons::getIcon(RKStandardIcons::WindowWorkspaceBrowser);
 }
 
 void writeSettings (KConfigGroup &cg, bool *settings) {

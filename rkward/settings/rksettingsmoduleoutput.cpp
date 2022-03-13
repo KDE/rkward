@@ -31,6 +31,7 @@
 #include "../misc/getfilenamewidget.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkspinbox.h"
+#include "../misc/rkstandardicons.h"
 #include "../rbackend/rkrinterface.h"
 #include "../debug.h"
 
@@ -192,6 +193,11 @@ void RKSettingsModuleOutput::boxChanged () {
 QString RKSettingsModuleOutput::caption() const {
 	RK_TRACE(SETTINGS);
 	return(i18n("Output"));
+}
+
+QIcon RKSettingsModuleOutput::icon() const{
+	RK_TRACE(SETTINGS);
+	return RKStandardIcons::getIcon(RKStandardIcons::WindowOutput);
 }
 
 void RKSettingsModuleOutput::applyChanges () {

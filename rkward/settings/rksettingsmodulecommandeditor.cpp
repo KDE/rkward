@@ -33,6 +33,7 @@
 
 #include "../misc/rkspinbox.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkstandardicons.h"
 #include "../core/robject.h"
 #include "../rkglobals.h"
 #include "../debug.h"
@@ -169,6 +170,11 @@ RKSettingsModuleCommandEditor::~RKSettingsModuleCommandEditor () {
 QString RKSettingsModuleCommandEditor::caption() const {
 	RK_TRACE(SETTINGS);
 	return(i18n("Script editor"));
+}
+
+QIcon RKSettingsModuleCommandEditor::icon() const {
+	RK_TRACE(SETTINGS);
+	return RKStandardIcons::getIcon(RKStandardIcons::WindowCommandEditor);
 }
 
 void RKSettingsModuleCommandEditor::applyChanges () {

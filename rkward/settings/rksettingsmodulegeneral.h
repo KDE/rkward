@@ -59,6 +59,7 @@ public:
 	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
 
 	QString caption() const override;
+	QIcon icon() const override;
 
 /// returns the directory-name where the logfiles should reside
 	static QString &filesPath () { return files_path; };

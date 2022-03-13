@@ -30,6 +30,7 @@
 #include <QVBoxLayout>
 #include <QPushButton>
 #include <QFileDialog>
+#include <QIcon>
 
 #include "../rkward.h"
 #include "../rkglobals.h"
@@ -100,6 +101,11 @@ void RKSettingsModulePlugins::settingChanged () {
 QString RKSettingsModulePlugins::caption() const {
 	RK_TRACE(SETTINGS);
 	return(i18n("RKWard Plugins"));
+}
+
+QIcon RKSettingsModulePlugins::icon() const {
+	RK_TRACE(SETTINGS);
+	return QIcon::fromTheme("plugins");
 }
 
 void RKSettingsModulePlugins::applyChanges () {

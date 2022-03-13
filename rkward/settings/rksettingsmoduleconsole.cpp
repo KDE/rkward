@@ -28,6 +28,7 @@
 
 #include "../rbackend/rcommand.h"
 #include "../misc/rkspinbox.h"
+#include "../misc/rkstandardicons.h"
 #include "../rkglobals.h"
 
 #include "../debug.h"
@@ -137,5 +138,11 @@ QString RKSettingsModuleConsole::caption() const {
 	RK_TRACE(SETTINGS);
 
 	return(i18n("Console"));
+}
+
+QIcon RKSettingsModuleConsole::icon() const {
+	RK_TRACE(SETTINGS);
+
+	return RKStandardIcons::getIcon(RKStandardIcons::WindowConsole);
 }
 

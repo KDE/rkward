@@ -33,6 +33,7 @@
 #include "../misc/getfilenamewidget.h"
 #include "../misc/rkspinbox.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkstandardicons.h"
 #include "../rkglobals.h"
 #include "../version.h"
 #include "../debug.h"
@@ -175,6 +176,11 @@ void RKSettingsModuleGeneral::updateLastUsedUrl (const QString& thing, const QUr
 QString RKSettingsModuleGeneral::caption() const {
 	RK_TRACE(SETTINGS);
 	return(i18n("General"));
+}
+
+QIcon RKSettingsModuleGeneral::icon() const {
+	RK_TRACE(SETTINGS);
+	return RKStandardIcons::getIcon(RKStandardIcons::RKWardIcon);
 }
 
 void RKSettingsModuleGeneral::applyChanges () {

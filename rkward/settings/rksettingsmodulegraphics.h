@@ -50,6 +50,7 @@ public:
 	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
 
 	QString caption() const override;
+	QIcon icon() const override;
 	QUrl helpURL () override { return QUrl ("rkward://page/rkward_plot_history#scd_settings"); };
 
 	enum DefaultDevice {

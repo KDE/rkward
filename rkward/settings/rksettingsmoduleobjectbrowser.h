@@ -40,6 +40,7 @@ public:
 
 /** @returns the caption ("Workspace Browser") */
 	QString caption() const override;
+	QIcon icon() const override;
 
 	void save(KConfig *config) override { syncConfig(config, RKConfigBase::SaveConfig); };
 	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a);

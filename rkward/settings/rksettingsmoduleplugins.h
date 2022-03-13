@@ -47,6 +47,7 @@ public:
 	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
 
 	QString caption() const override;
+	QIcon icon() const override;
 
 	/** @returns a list of active plugin maps */
 	static QStringList pluginMaps ();

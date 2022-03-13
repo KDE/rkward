@@ -25,6 +25,7 @@
 #include <KLocalizedString>
 #include <KConfigGroup>
 #include <KConfig>
+#include <QIcon>
 
 #include "../windows/katepluginintegration.h"
 #include "../misc/rkcommonfunctions.h"
@@ -101,6 +102,10 @@ void RKSettingsModuleKatePlugins::syncConfig(KConfig *config, RKConfigBase::Conf
 
 QString RKSettingsModuleKatePlugins::caption() const {
 	RK_TRACE(SETTINGS);
-
 	return i18n("Kate Plugins");
+}
+
+QIcon RKSettingsModuleKatePlugins::icon() const {
+	RK_TRACE(SETTINGS);
+	return QIcon::fromTheme("kate");
 }
