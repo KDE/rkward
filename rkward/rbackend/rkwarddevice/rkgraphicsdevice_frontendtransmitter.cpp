@@ -135,10 +135,62 @@ static QPen readPen (QDataStream &instream) {
 	return ret;
 }
 
-static QBrush readBrush (QDataStream &instream) {
-	QColor col = readColor (instream);
-	if (!col.isValid ()) return QBrush ();
-	return QBrush (col);
+static QBrush readBrush(QDataStream &instream, RKGraphicsDevice *dev) {
+	qint8 filltype;
+	instream >> filltype;
+	if (filltype  == ColorFill) {
+		QColor col = readColor(instream);
+		if (!col.isValid()) return QBrush();
+		return QBrush(col);
+	} else {
+		qint16 pattern_num;
+		instream >> pattern_num;
+		return dev->getPattern(pattern_num);
+	}
+}
+
+static void readGradientStopsAndExtent(QDataStream &instream, QGradient* g) {
+	QGradientStops stops;
+	qint16 nstops;
+	instream >> nstops;
+	for (int i = 0; i < nstops; ++i) {
+		double pos;
+		QColor col = readColor(instream);
+		instream >> pos;
+		stops.append(QGradientStop(pos, col));
+	}
+	qint8 extend;
+	instream >> extend;
+	if (extend == GradientExtendPad) g->setSpread(QGradient::PadSpread);
+	else if (extend == GradientExtendReflect) g->setSpread(QGradient::ReflectSpread);
+	else if (extend == GradientExtendRepeat) g->setSpread(QGradient::RepeatSpread);
+	else {
+		// Qt does not provide extend "none", so emulate by adding transparent before the first and after the last stop
+		stops.prepend(QGradientStop(0.oo, Qt::transparent));
+		stops.append(QGradientStop(1.0, Qt::transparent));
+	}
+	g->setStops(stops);
+}
+
+static int readNewPattern(QDataStream &instream, RKGraphicsDevice *device) {
+	qint8 patterntype;
+	instream >> patterntype;
+
+	if (patterntype == LinearPattern) {
+		double x1, x2, y1, y2;
+		instream >> x1 >> x2 >> y1 >> y2;
+		QLinearGradient g(x1, y1, x2, y2);
+		readGradientStopsAndExtent(instream, &g);
+		return device->registerPattern(QBrush(g));
+	} else if (patterntype == RadialPattern) {
+		double cx1, cy1, r1, cx2, cy2, r2;
+		instream >> cx1 >> cy1 >> r1 >> cx2 >> cy2 >> r2;
+		QRadialGradient g(cx1, cy1, r1, cx2, cy2, r2);
+		readGradientStopsAndExtent(instream, &g);
+		return device->registerPattern(QBrush(g));
+	} else {
+		return -1;
+	}
 }
 
 static QFont readFont (QDataStream &instream) {
@@ -219,7 +271,7 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			double x, y, r;
 			streamer.instream >> x >> y >> r;
 			QPen pen = readSimplePen (streamer.instream);
-			device->circle (x, y, r, pen, readBrush (streamer.instream));
+			device->circle(x, y, r, pen, readBrush(streamer.instream, device));
 		} else if (opcode == RKDLine) {
 			double x1, y1, x2, y2;
 			streamer.instream >> x1 >> y1 >> x2 >> y2;
@@ -227,7 +279,7 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 		} else if (opcode == RKDPolygon) {
 			QPolygonF pol (readPoints (streamer.instream));
 			QPen pen = readPen (streamer.instream);
-			device->polygon (pol, pen, readBrush (streamer.instream));
+			device->polygon(pol, pen, readBrush(streamer.instream, device));
 		} else if (opcode == RKDPolyline) {
 			QPolygonF pol (readPoints (streamer.instream));
 			device->polyline (pol, readPen (streamer.instream));
@@ -242,12 +294,12 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			bool winding;
 			streamer.instream >> winding;
 			QPen pen = readPen (streamer.instream);
-			device->polypath (polygons, winding, pen, readBrush (streamer.instream));
+			device->polypath(polygons, winding, pen, readBrush(streamer.instream, device));
 		} else if (opcode == RKDRect) {
 			QRectF rect;
 			streamer.instream >> rect;
 			QPen pen = readPen (streamer.instream);
-			device->rect (rect, pen, readBrush (streamer.instream));
+			device->rect(rect, pen, readBrush(streamer.instream, device));
 		} else if (opcode == RKDStrWidthUTF8) {
 			QString out;
 			streamer.instream >> out;
@@ -268,7 +320,7 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			QColor col = readColor (streamer.instream);
 			device->text (x, y, out, rot, hadj, col, readFont (streamer.instream));
 		} else if (opcode == RKDNewPage) {
-			device->clear (readColor (streamer.instream));
+			device->clear(readBrush(streamer.instream, device));
 		} else if (opcode == RKDClose) {
 			RKGraphicsDevice::closeDevice (devnum);
 		} else if (opcode == RKDActivate) {
@@ -297,6 +349,13 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			bool interpolate;
 			streamer.instream >> target >> rotation >> interpolate;
 			device->image (image, target.normalized (), rotation, interpolate);
+		} else if (opcode == RKDSetPattern) {
+			streamer.outstream << (qint32) readNewPattern(streamer.instream, device);
+			streamer.writeOutBuffer();
+		} else if (opcode == RKDReleasePattern) {
+			qint32 index;
+			streamer.instream >> index;
+			device->destroyPattern(index);
 		} else if (opcode == RKDCapture) {
 			QImage image = device->capture ();
 			quint32 w = image.width ();

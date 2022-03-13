@@ -121,12 +121,15 @@ void RKGraphicsDevice::closeDevice (int devnum) {
 	devices.take (devnum)->deleteLater ();
 }
 
-void RKGraphicsDevice::clear (const QColor& col) {
+void RKGraphicsDevice::clear(const QBrush& brush) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
-	if (painter.isActive ()) painter.end ();
-	if (col.isValid ()) area.fill (col);
-	else area.fill (QColor (255, 255, 255, 255));
+	if (painter.isActive()) painter.end();
+	if (brush.style() == Qt::NoBrush) area.fill(QColor(255, 255, 255, 255));
+	else {
+		painter.setBrush(brush);
+		painter.drawRect(0, 0, area.width(), area.height());
+	}
 
 	updateNow ();
 	setClip (area.rect ());	// R's devX11.c resets clip on clear, so we do this, too.
@@ -141,6 +144,20 @@ void RKGraphicsDevice::setAreaSize (const QSize& size) {
 	area = QPixmap (size.width (), size.height ());
 #endif
 	clear ();
+}
+
+
+int RKGraphicsDevice::registerPattern(const QBrush& brush) {
+	RK_TRACE (GRAPHICS_DEVICE);
+	static int id = 0;
+	patterns.insert(++id, brush);
+	return id;
+}
+
+void RKGraphicsDevice::destroyPattern(int id) {
+	RK_TRACE (GRAPHICS_DEVICE);
+	if (id == 0) patterns.clear();
+	else patterns.remove(id);
 }
 
 void RKGraphicsDevice::setClip (const QRectF& new_clip) {

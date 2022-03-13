@@ -164,8 +164,15 @@ public:
 // actually lmitre is only needed if linejoin is GE_MITRE_JOIN, so we could optimize a bit
 #define WRITE_LINE_ENDS() \
 	RKD_OUT_STREAM << SAFE_LINE_END (gc->lend) << SAFE_LINE_JOIN (gc->ljoin) << gc->lmitre
-#define WRITE_FILL() \
-	WRITE_COLOR_BYTES (gc->fill)
+#if R_VERSION >= R_Version(4, 1, 0)
+#  define WRITE_FILL() \
+	if (gc->patternFill != R_NilValue) RKD_OUT_STREAM << (qint8) PatternFill << (qint16) (INTEGER(gc->patternFill)[0]); \
+	else { \
+		RKD_OUT_STREAM << (qint8) ColorFill; WRITE_COLOR_BYTES (gc->fill); \
+	}
+#else
+	RKD_OUT_STREAM << (qint8) ColorFill; WRITE_COLOR_BYTES (gc->fill);
+#endif
 #define WRITE_FONT(dev) \
 	RKD_OUT_STREAM << gc->cex << gc->ps << gc->lineheight << (quint8) gc->fontface << (gc->fontfamily[0] ? QString (gc->fontfamily) : (static_cast<RKGraphicsDeviceDesc*> (dev->deviceSpecific)->getFontFamily (gc->fontface == 5)))
 
@@ -591,17 +598,70 @@ int RKD_HoldFlush (pDevDesc dev, int level) {
 #endif
 
 #if R_VERSION >= R_Version (4, 1, 0)
-SEXP RKD_SetPattern (SEXP pattern, pDevDesc dd) {
-#ifdef __GNUC__
-#warning implement me
-#endif
-	return R_NilValue;
+qint8 getGradientExtend(int Rextent) {
+	if (Rextent == R_GE_patternExtendPad) return GradientExtendPad;
+	if (Rextent == R_GE_patternExtendReflect) return GradientExtendReflect;
+	if (Rextent == R_GE_patternExtendRepeat) return GradientExtendRepeat;
+	/* if (Rextent == R_GE_patternExtendNone) */ return GradientExtendNone;
 }
 
-void RKD_ReleasePattern (SEXP ref, pDevDesc dd) {
-#ifdef __GNUC__
-#warning implement me
-#endif
+SEXP RKD_SetPattern (SEXP pattern, pDevDesc dev) {
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER (RKDSetPattern, dev);
+		auto ptype = R_GE_patternType(pattern);
+		if (ptype == R_GE_linearGradientPattern) {
+			RKD_OUT_STREAM << (qint8) RKDPatternType::LinearPattern;
+			RKD_OUT_STREAM << (double) R_GE_linearGradientX1(pattern) << (double) R_GE_linearGradientX2(pattern) << (double) R_GE_linearGradientY1(pattern) << (double) R_GE_linearGradientY2(pattern);
+			qint16 nstops = R_GE_linearGradientNumStops(pattern);
+			RKD_OUT_STREAM << nstops;
+			for (int i = 0; i < nstops; ++i) {
+				WRITE_COLOR_BYTES(R_GE_linearGradientColour(pattern, i));
+				RKD_OUT_STREAM << (double) R_GE_linearGradientStop(pattern, i);
+			}
+			RKD_OUT_STREAM << getGradientExtend(R_GE_linearGradientExtend(pattern));
+		} else if (ptype == R_GE_radialGradientPattern) {
+			RKD_OUT_STREAM << (qint8) RKDPatternType::RadialPattern;
+			RKD_OUT_STREAM << (double) R_GE_radialGradientCX1(pattern) << (double) R_GE_radialGradientCY1(pattern) << (double) R_GE_radialGradientR1(pattern);
+			RKD_OUT_STREAM << (double) R_GE_radialGradientCX2(pattern) << (double) R_GE_radialGradientCY2(pattern) << (double) R_GE_radialGradientR2(pattern);
+			qint16 nstops = R_GE_radialGradientNumStops(pattern);
+			RKD_OUT_STREAM << nstops;
+			for (int i = 0; i < nstops; ++i) {
+				WRITE_COLOR_BYTES(R_GE_radialGradientColour(pattern, i));
+				RKD_OUT_STREAM << (double) R_GE_radialGradientStop(pattern, i);
+			}
+			RKD_OUT_STREAM << getGradientExtend(R_GE_radialGradientExtend(pattern));
+		} else if (ptype == R_GE_tilingPattern) {
+			RKD_OUT_STREAM << (qint8) RKDPatternType::TilingPattern;
+		} else {
+			RKD_OUT_STREAM << (qint8) RKDPatternType::UnknonwnPattern;
+		}
+	}
+
+	qint32 index;
+	{
+		RKGraphicsDataStreamReadGuard rguard;
+		RKD_IN_STREAM >> index;
+	}
+
+	// NOTE: we are free to chose a return value of our liking. It is used as an identifier for this pattern.
+	if (index < 0) Rf_warning("Pattern type not (yet) supported");
+	SEXP ret;
+	PROTECT(ret = Rf_allocVector(INTSXP, 1));
+	INTEGER(ret)[0] = index;
+	UNPROTECT(1);
+	return ret;
+}
+
+void RKD_ReleasePattern (SEXP ref, pDevDesc dev) {
+	qint32 index;
+	if (ref == R_NilValue) index = 0;  // means: destroy all patterns
+	else index = INTEGER(ref)[0];
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDReleasePattern, dev);
+		RKD_OUT_STREAM << index;
+	}
 }
 
 SEXP RKD_SetClipPath (SEXP path, SEXP ref, pDevDesc dd) {

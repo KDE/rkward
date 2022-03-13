@@ -65,7 +65,7 @@ public:
 	void polygon (const QPolygonF& pol, const QPen& pen, const QBrush &brush);
 	void polyline (const QPolygonF& pol, const QPen& pen);
 	void polypath (const QVector<QPolygonF>& polygons, bool winding, const QPen& pen, const QBrush& brush);
-	void clear (const QColor& col=QColor());
+	void clear(const QBrush& col=QBrush());
 	void image (const QImage &image, const QRectF &target_rect, double rot, bool interpolate);
 	QImage capture () const;
 	void setActive (bool active);
@@ -91,6 +91,11 @@ public:
  	QWidget* viewPort () const { return view; };
 	QSizeF currentSize () const { return view->size (); }
 	void setAreaSize (const QSize &size);
+
+/** Patterns / gradients are registered per device in R */
+	int registerPattern(const QBrush &brush);
+	void destroyPattern(int id);
+	QBrush getPattern(int id) const { return patterns.value(id); };
 public slots:
 	void stopInteraction ();
 signals:
@@ -118,6 +123,7 @@ private:
 	QLabel *view;
 	QString base_title;
 	QDialog *dialog;
+	QHash<int, QBrush> patterns;
 
 	int interaction_opcode;	/**< Current interactive operation (from RKDOpcodes enum), or -1 is there is no current interactive operation */
 
