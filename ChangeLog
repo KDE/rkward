@@ -2,6 +2,7 @@ TODOS for autotests:
   - Check and update the standards files
   - Use options(warn=1), in order to get warnings into the test?
 
+- Add icons to settings dialog for quick visual orientation
 - Merge ktexteditor (script) settings into the main settings dialog
 - Internal: Code cleanup around settings
 - Output file handling has been reworked, entirely
