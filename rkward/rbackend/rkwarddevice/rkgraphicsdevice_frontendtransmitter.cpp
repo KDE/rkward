@@ -149,15 +149,17 @@ static QBrush readBrush(QDataStream &instream, RKGraphicsDevice *dev) {
 	}
 }
 
-static void readGradientStopsAndExtent(QDataStream &instream, QGradient* g) {
+static void readGradientStopsAndExtent(QDataStream &instream, QGradient* g, bool reverse) {
 	QGradientStops stops;
 	qint16 nstops;
 	instream >> nstops;
+	stops.reserve(nstops);
 	for (int i = 0; i < nstops; ++i) {
 		double pos;
 		QColor col = readColor(instream);
 		instream >> pos;
-		stops.append(QGradientStop(pos, col));
+		if (reverse) stops.prepend(QGradientStop(1.0-pos, col));  // lousy efficiency should be tolerable at this point
+		else stops.append(QGradientStop(pos, col));
 	}
 	qint8 extend;
 	instream >> extend;
@@ -166,7 +168,7 @@ static void readGradientStopsAndExtent(QDataStream &instream, QGradient* g) {
 	else if (extend == GradientExtendRepeat) g->setSpread(QGradient::RepeatSpread);
 	else {
 		// Qt does not provide extend "none", so emulate by adding transparent before the first and after the last stop
-		stops.prepend(QGradientStop(0.oo, Qt::transparent));
+		stops.prepend(QGradientStop(0.0, Qt::transparent));
 		stops.append(QGradientStop(1.0, Qt::transparent));
 	}
 	g->setStops(stops);
@@ -180,13 +182,20 @@ static int readNewPattern(QDataStream &instream, RKGraphicsDevice *device) {
 		double x1, x2, y1, y2;
 		instream >> x1 >> x2 >> y1 >> y2;
 		QLinearGradient g(x1, y1, x2, y2);
-		readGradientStopsAndExtent(instream, &g);
+		readGradientStopsAndExtent(instream, &g, false);
 		return device->registerPattern(QBrush(g));
 	} else if (patterntype == RadialPattern) {
 		double cx1, cy1, r1, cx2, cy2, r2;
 		instream >> cx1 >> cy1 >> r1 >> cx2 >> cy2 >> r2;
-		QRadialGradient g(cx1, cy1, r1, cx2, cy2, r2);
-		readGradientStopsAndExtent(instream, &g);
+		QRadialGradient g;
+		// Apparently, Qt needs the focal radius to be smaller than the radius. Reverse, if needed.
+		if (r2 > r1) {
+			g = QRadialGradient(cx2, cy2, r2, cx1, cy1, r1);
+			readGradientStopsAndExtent(instream, &g, false);
+		} else {
+			g = QRadialGradient(cx1, cy1, r1, cx2, cy2, r2);
+			readGradientStopsAndExtent(instream, &g, true);
+		}
 		return device->registerPattern(QBrush(g));
 	} else {
 		return -1;
