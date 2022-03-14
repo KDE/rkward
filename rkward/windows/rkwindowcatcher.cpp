@@ -374,6 +374,7 @@ void RKCaughtX11Window::commonClose(bool in_destructor) {
 		RKGlobals::rInterface()->issueCommand(c);
 		close_attempted = true;
 	} else {
+		if (in_destructor) return;
 		if (KMessageBox::questionYesNo(this, i18n("<p>The graphics device is being closed, saving the last plot to the plot history. This may take a while, if the R backend is still busy. You can close the graphics device immediately, in case it is stuck. However, the last plot may be missing from the plot history, if you do this.</p>")
 #if !defined Q_OS_WIN
 		+ i18n("<p>Note: On X11, the embedded window may be expurged, and you will have to close it manually in this case.</p>")
