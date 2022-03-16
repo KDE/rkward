@@ -365,6 +365,16 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			qint32 index;
 			streamer.instream >> index;
 			device->destroyPattern(index);
+		} else if (opcode == RKDStartRecordTilingPattern) {
+			double width, height, x, y;
+			streamer.instream >> width >> height;
+			streamer.instream >> x >> y;
+			device->startRecordTilingPattern(width, height, x, y);
+		} else if (opcode == RKDEndRecordTilingPattern) {
+			qint8 extend;
+			streamer.instream >> extend;
+			streamer.outstream << (qint32) device->finalizeTilingPattern((RKDGradientExtend) extend);
+			streamer.writeOutBuffer();
 		} else if (opcode == RKDCapture) {
 			QImage image = device->capture ();
 			quint32 w = image.width ();

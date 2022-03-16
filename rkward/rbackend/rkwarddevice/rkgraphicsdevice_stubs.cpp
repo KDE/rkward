@@ -605,11 +605,19 @@ qint8 getGradientExtend(int Rextent) {
 	/* if (Rextent == R_GE_patternExtendNone) */ return GradientExtendNone;
 }
 
+SEXP makeInt(int val) {
+	SEXP ret;
+	PROTECT(ret = Rf_allocVector(INTSXP, 1));
+	INTEGER(ret)[0] = val;
+	UNPROTECT(1);
+	return ret;
+}
+
 SEXP RKD_SetPattern (SEXP pattern, pDevDesc dev) {
-	{
+	auto ptype = R_GE_patternType(pattern);
+	if ((ptype == R_GE_linearGradientPattern) || (ptype == R_GE_radialGradientPattern)) {
 		RKGraphicsDataStreamWriteGuard wguard;
-		WRITE_HEADER (RKDSetPattern, dev);
-		auto ptype = R_GE_patternType(pattern);
+		WRITE_HEADER(RKDSetPattern, dev);
 		if (ptype == R_GE_linearGradientPattern) {
 			RKD_OUT_STREAM << (qint8) RKDPatternType::LinearPattern;
 			RKD_OUT_STREAM << (double) R_GE_linearGradientX1(pattern) << (double) R_GE_linearGradientX2(pattern) << (double) R_GE_linearGradientY1(pattern) << (double) R_GE_linearGradientY2(pattern);
@@ -631,11 +639,28 @@ SEXP RKD_SetPattern (SEXP pattern, pDevDesc dev) {
 				RKD_OUT_STREAM << (double) R_GE_radialGradientStop(pattern, i);
 			}
 			RKD_OUT_STREAM << getGradientExtend(R_GE_radialGradientExtend(pattern));
-		} else if (ptype == R_GE_tilingPattern) {
-			RKD_OUT_STREAM << (qint8) RKDPatternType::TilingPattern;
-		} else {
-			RKD_OUT_STREAM << (qint8) RKDPatternType::UnknonwnPattern;
 		}
+	} else if (ptype == R_GE_tilingPattern) {
+		{
+			RKGraphicsDataStreamWriteGuard wguard;
+			WRITE_HEADER(RKDStartRecordTilingPattern, dev);
+			RKD_OUT_STREAM << (double) R_GE_tilingPatternWidth(pattern) << (double) R_GE_tilingPatternHeight(pattern);
+			RKD_OUT_STREAM << (double) R_GE_tilingPatternX(pattern) << (double) R_GE_tilingPatternY(pattern);
+		}
+		// Play the pattern generator function. Contrary to cairo device, we use tryEval, here, to avoid getting into a
+		// bad device state in case of errors
+		int error;
+		SEXP pattern_func = PROTECT(Rf_lang1(R_GE_tilingPatternFunction(pattern)));
+		R_tryEval(pattern_func, R_GlobalEnv, &error);
+		UNPROTECT(1);
+		{
+			RKGraphicsDataStreamWriteGuard wguard;
+			WRITE_HEADER(RKDEndRecordTilingPattern, dev);
+			RKD_OUT_STREAM << getGradientExtend(R_GE_tilingPatternExtend(pattern));
+		}
+	} else {
+		Rf_warning("Pattern type not (yet) supported");
+		return makeInt(-1);
 	}
 
 	qint32 index;
@@ -646,11 +671,7 @@ SEXP RKD_SetPattern (SEXP pattern, pDevDesc dev) {
 
 	// NOTE: we are free to chose a return value of our liking. It is used as an identifier for this pattern.
 	if (index < 0) Rf_warning("Pattern type not (yet) supported");
-	SEXP ret;
-	PROTECT(ret = Rf_allocVector(INTSXP, 1));
-	INTEGER(ret)[0] = index;
-	UNPROTECT(1);
-	return ret;
+	return makeInt(index);
 }
 
 void RKD_ReleasePattern (SEXP ref, pDevDesc dev) {

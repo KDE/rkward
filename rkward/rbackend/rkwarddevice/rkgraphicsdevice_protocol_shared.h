@@ -101,6 +101,7 @@ enum RKDOpcodes {
 	RKDStartGettingEvents,
 	RKDStopGettingEvents,
 	RKDReleasePattern,
+	RKDStartRecordTilingPattern,      // part of setPattern in R
 
 	// Synchronous operations
 	RKDFetchNextEvent      = 100,
@@ -112,6 +113,7 @@ enum RKDOpcodes {
 	RKDQueryResolution,
 	RKDGetSize,
 	RKDSetPattern,
+	RKDEndRecordTilingPattern,       // part of setPattern in R
 
 	// Protocol operations
 	RKDCancel              = 200

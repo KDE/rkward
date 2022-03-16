@@ -96,6 +96,8 @@ public:
 	int registerPattern(const QBrush &brush);
 	void destroyPattern(int id);
 	QBrush getPattern(int id) const { return patterns.value(id); };
+	void startRecordTilingPattern(double width, double height, double x, double y);
+	int finalizeTilingPattern(int extend);
 public slots:
 	void stopInteraction ();
 signals:
@@ -128,6 +130,18 @@ private:
 	int interaction_opcode;	/**< Current interactive operation (from RKDOpcodes enum), or -1 is there is no current interactive operation */
 
 	QList<StoredEvent> stored_events;
+
+	struct PaintContext {
+		// TODO: this probably also needs info like clipping paths, transforms, add mode, etc. Just an initial attempt.
+		QImage surface;
+		QTransform transform;
+		QRect capture_coords;
+	};
+	QList<PaintContext> contexts;
+	// make sure the painter is active on the current context
+	void beginPainter();
+	void pushContext(double width, double height, double x, double y);
+	PaintContext popContext();
 };
 
 #endif

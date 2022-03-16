@@ -1,3 +1,7 @@
+TODO:
+- RKDClose needs to be synchronous to avoid race-condition while closing device
+- Sometimes pattern takes bits from main paint area? Some syncing needed?
+
 TODOS for autotests:
   - Check and update the standards files
   - Use options(warn=1), in order to get warnings into the test?

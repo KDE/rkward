@@ -69,6 +69,91 @@ RKGraphicsDevice::~RKGraphicsDevice () {
 	delete view;
 }
 
+void RKGraphicsDevice::beginPainter() {
+	if(!painter.isActive()) {
+		if (contexts.isEmpty()) {
+			painter.begin(&area);  // plain old painting on the canvas itself
+		} else {
+			auto &c = contexts.last();
+			painter.begin(&(c.surface));
+			painter.setTransform(c.transform);
+		}
+	}
+}
+
+void RKGraphicsDevice::pushContext(double width, double height, double x, double y) {
+	RK_TRACE (GRAPHICS_DEVICE);
+	painter.end();
+	PaintContext c;
+// NOTE: R cairo device uses an all different method for pattern capture:
+// drawing is scaled up to full device coordinates, the shrunk and offset back to pattern size.
+// probably due to cairo internals, somehow. Here, instead we paint on a separate surface with the same coords,
+// the extract the rectangle of interest.
+	c.surface = QImage(area.width(), area.height(), QImage::Format_ARGB32);
+	if (width < 0) { // may happen, at least in R 4.1.2
+		width = -width;
+		x -= width;
+	}
+	if (height < 0) {
+		height = -height;
+		y -= height;
+	}
+	c.capture_coords = QRect(x, y, width, height);
+	contexts.push_back(c);
+	beginPainter();
+}
+
+RKGraphicsDevice::PaintContext RKGraphicsDevice::popContext() {
+	RK_TRACE (GRAPHICS_DEVICE);
+
+	if (contexts.isEmpty()) {
+		RK_ASSERT(!contexts.isEmpty());
+		return PaintContext();
+	}
+
+	painter.end();
+	auto ret = contexts.takeLast();
+	beginPainter();
+	return ret;
+}
+
+void RKGraphicsDevice::startRecordTilingPattern(double width, double height, double x, double y) {
+	RK_TRACE (GRAPHICS_DEVICE);
+	pushContext(width, height, x, y);
+}
+
+int RKGraphicsDevice::finalizeTilingPattern(int extend) {
+	RK_TRACE (GRAPHICS_DEVICE);
+
+	auto c = popContext();
+	if (extend == GradientExtendNone || extend == GradientExtendPad) {
+		// For extend type pad it is unclear, what that should even mean, we simply treat it the same as none.
+		// For none, obviously, we want to not repeat the pattern. This is not so easy to achieve in QBrush, but also, it does
+		// look like a very like use of a tiling pattern. What we do, therefore, is to simply copy the _full_ surface, rather than
+		// just the reqion of interest. This way, we will - usually - not see any repeats.
+		return (registerPattern(QBrush(c.surface)));
+	}
+	if (extend == GradientExtendReflect) {
+		QImage single = c.surface.copy(c.capture_coords);
+		QImage reflected(single.width()*2, single.height()*2, single.format());
+		QPainter p(&reflected);
+		p.drawImage(0, 0, single);
+		p.drawImage(single.width(), 0, single.mirrored(true, false));
+		p.drawImage(0, single.height(), single.mirrored(false, true));
+		p.drawImage(single.width(), single.height(), single.mirrored(true, true));
+		p.end();
+		QBrush brush(reflected);
+		brush.setTransform(QTransform().translate(c.capture_coords.left(), c.capture_coords.top()));
+		return registerPattern(brush);
+	}
+
+	// else: GradientExtendRepeat
+	QImage img = c.surface.copy(c.capture_coords);
+	QBrush brush(img);
+	brush.setTransform(QTransform().translate(c.capture_coords.left(), c.capture_coords.top()));
+	return registerPattern(brush);
+}
+
 void RKGraphicsDevice::viewKilled () {
 	RK_TRACE (GRAPHICS_DEVICE);
 	view = 0;
@@ -92,7 +177,7 @@ void RKGraphicsDevice::updateNow () {
 		view->show ();
 	}
 	checkSize ();
-	painter.begin (&area);
+	beginPainter();
 }
 
 void RKGraphicsDevice::checkSize() {
@@ -163,7 +248,7 @@ void RKGraphicsDevice::destroyPattern(int id) {
 void RKGraphicsDevice::setClip (const QRectF& new_clip) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
-	if (!painter.isActive ()) painter.begin (&area);
+	beginPainter();
 	painter.setClipRect (new_clip);
 }
 
@@ -201,26 +286,27 @@ void RKGraphicsDevice::rect (const QRectF& rec, const QPen& pen, const QBrush& b
 	triggerUpdate ();
 }
 
-QSizeF RKGraphicsDevice::strSize (const QString& text, const QFont& font) {
-	RK_TRACE (GRAPHICS_DEVICE);
+QSizeF RKGraphicsDevice::strSize(const QString& text, const QFont& font) {
+	RK_TRACE(GRAPHICS_DEVICE);
 
-	painter.setFont (font);
-	QSizeF size = painter.boundingRect (QRectF (area.rect ()), text).size ();
+	painter.setFont(font);
+	QSizeF size = painter.fontMetrics().boundingRect(text).size();
 	return size;
 }
 
-void RKGraphicsDevice::text (double x, double y, const QString& text, double rot, double hadj, const QColor& col, const QFont& font) {
-	RK_TRACE (GRAPHICS_DEVICE);
+void RKGraphicsDevice::text(double x, double y, const QString& text, double rot, double hadj, const QColor& col, const QFont& font) {
+	RK_TRACE(GRAPHICS_DEVICE);
 
-	painter.save ();
-	QSizeF size = strSize (text, font);	// NOTE: side-effect of setting font!
-//	painter.setFont (font);
-	painter.setPen (QPen (col));
-	painter.translate (x, y);
-	painter.rotate (-rot);
-	painter.drawText (-(hadj * size.width ()), 0, text);
-	painter.restore ();	// undo rotation / translation
-	triggerUpdate ();
+	painter.save();
+	QSizeF size = strSize(text, font);  // NOTE: side-effect of setting font!
+//	painter.setFont(font);
+	painter.setPen(QPen(col));
+	painter.translate(x-(hadj * size.width()), y);
+	painter.rotate(-rot);
+	painter.drawText(0, 0, text);
+//	painter.drawRect(painter.fontMetrics().boundingRect(text));  // for debugging
+	painter.restore();  // undo rotation / translation
+	triggerUpdate();
 }
 
 void RKGraphicsDevice::metricInfo (const QChar& c, const QFont& font, double* ascent, double* descent, double* width) {
@@ -236,7 +322,6 @@ void RKGraphicsDevice::metricInfo (const QChar& c, const QFont& font, double* as
 
 void RKGraphicsDevice::polygon (const QPolygonF& pol, const QPen& pen, const QBrush& brush) {
 	RK_TRACE (GRAPHICS_DEVICE);
-
 	painter.setPen (pen);
 	painter.setBrush (brush);
 	painter.drawPolygon (pol);
