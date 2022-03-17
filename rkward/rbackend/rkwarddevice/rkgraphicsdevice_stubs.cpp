@@ -676,7 +676,7 @@ SEXP RKD_SetPattern (SEXP pattern, pDevDesc dev) {
 
 void RKD_ReleasePattern (SEXP ref, pDevDesc dev) {
 	qint32 index;
-	if (ref == R_NilValue) index = 0;  // means: destroy all patterns
+	if (Rf_isNull(ref)) index = 0;  // means: destroy all patterns
 	else index = INTEGER(ref)[0];
 	{
 		RKGraphicsDataStreamWriteGuard wguard;
@@ -685,17 +685,69 @@ void RKD_ReleasePattern (SEXP ref, pDevDesc dev) {
 	}
 }
 
-SEXP RKD_SetClipPath (SEXP path, SEXP ref, pDevDesc dd) {
-#ifdef __GNUC__
-#warning implement me
+SEXP RKD_SetClipPath (SEXP path, SEXP ref, pDevDesc dev) {
+	qint32 index = -1;
+	if (!Rf_isNull(ref)) index = INTEGER(ref)[0];
+	// NOTE: just because we have a reference, doesn't mean, it's also valid, according to R sources
+	if (index >= 0) {
+		{
+			RKGraphicsDataStreamWriteGuard wguard;
+			WRITE_HEADER(RKDSetClipPath, dev);
+			RKD_OUT_STREAM << index;
+		}
+		{
+			RKGraphicsDataStreamReadGuard rguard;
+			bool ok;
+			RKD_IN_STREAM >> ok;
+			if (!ok) Rf_warning("Invalid reference to clipping path");
+			else return R_NilValue;
+		}
+	}
+
+	// No index, or not a valid index: create new path
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDStartRecordClipPath, dev);
+	}
+	// Play generator function
+	int error;
+	SEXP path_func = PROTECT(Rf_lang1(path));
+	R_tryEval(path_func, R_GlobalEnv, &error);
+	UNPROTECT(1);
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDEndRecordClipPath, dev);
+#if R_VERSION >= R_Version(4, 2, 0)
+		if (R_GE_clipPathFillRule(path) == R_GE_nonZeroWindingRule) {
+			RKD_OUT_STREAM << (qint8) NonZeroWindingRule;
+		} else {
+			RKD_OUT_STREAM << (qint8) EvenOddRule;
+		}
+#else
+		RKD_OUT_STREAM << (qint8) EvenOddRule;
 #endif
-	return R_NilValue;
+	}
+	{
+		RKGraphicsDataStreamReadGuard rguard;
+		RKD_IN_STREAM >> index;
+	}
+	return makeInt(index);
 }
 
-void RKD_ReleaseClipPath (SEXP ref, pDevDesc dd) {
-#ifdef __GNUC__
-#warning implement me
-#endif
+void RKD_ReleaseClipPath (SEXP ref, pDevDesc dev) {
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDReleaseClipPath, dev);
+		if (Rf_isNull(ref)) {
+			RKD_OUT_STREAM << (qint32) -1; // means: destroy all clippaths
+		} else {
+			qint32 len = LENGTH(ref);
+			RKD_OUT_STREAM << len;
+			for (int i = 0; i < len; ++i) {
+				RKD_OUT_STREAM << (qint32) INTEGER(ref)[i];
+			}
+		}
+	}
 }
 
 SEXP RKD_SetMask (SEXP path, SEXP ref, pDevDesc dd) {

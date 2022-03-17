@@ -79,6 +79,11 @@ enum RKDGradientExtend {
 	GradientExtendRepeat
 };
 
+enum RKDFillRule {
+	NonZeroWindingRule,
+	EvenOddRule
+};
+
 enum RKDOpcodes {
 	// NOTE: the only point of the assigned int values is to ease debugging in case of trouble
 	// Asynchronous operations
@@ -102,6 +107,8 @@ enum RKDOpcodes {
 	RKDStopGettingEvents,
 	RKDReleasePattern,
 	RKDStartRecordTilingPattern,      // part of setPattern in R
+	RKDReleaseClipPath,
+	RKDStartRecordClipPath,
 
 	// Synchronous operations
 	RKDFetchNextEvent      = 100,
@@ -114,6 +121,8 @@ enum RKDOpcodes {
 	RKDGetSize,
 	RKDSetPattern,
 	RKDEndRecordTilingPattern,       // part of setPattern in R
+	RKDSetClipPath,       // 110
+	RKDEndRecordClipPath,
 
 	// Protocol operations
 	RKDCancel              = 200

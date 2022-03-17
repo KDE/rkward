@@ -98,6 +98,11 @@ public:
 	QBrush getPattern(int id) const { return patterns.value(id); };
 	void startRecordTilingPattern(double width, double height, double x, double y);
 	int finalizeTilingPattern(int extend);
+	void startRecordPath();
+	QPainterPath endRecordPath(int fillrule);
+	int cachePath(QPainterPath &path);
+	void destroyCachedPath(int index);
+	bool setClipToCachedPath(int index);
 public slots:
 	void stopInteraction ();
 signals:
@@ -126,6 +131,11 @@ private:
 	QString base_title;
 	QDialog *dialog;
 	QHash<int, QBrush> patterns;
+	QHash<int, QPainterPath> cached_paths;
+	// NOTE on path recording: In principle, we could really do _all_ painting on QPainterPath, but in regular operation stroke and fill right away.
+	// However, that is noticably slower.
+	QPainterPath recorded_path;
+	bool recording_path;
 
 	int interaction_opcode;	/**< Current interactive operation (from RKDOpcodes enum), or -1 is there is no current interactive operation */
 
@@ -136,11 +146,13 @@ private:
 		QImage surface;
 		QTransform transform;
 		QRect capture_coords;
+		QPainterPath path_below;
+		bool record_path;
 	};
 	QList<PaintContext> contexts;
 	// make sure the painter is active on the current context
 	void beginPainter();
-	void pushContext(double width, double height, double x, double y);
+	void pushContext(double width, double height, double x, double y, bool record_path);
 	PaintContext popContext();
 };
 

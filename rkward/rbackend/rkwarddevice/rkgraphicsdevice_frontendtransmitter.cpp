@@ -375,6 +375,31 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			streamer.instream >> extend;
 			streamer.outstream << (qint32) device->finalizeTilingPattern((RKDGradientExtend) extend);
 			streamer.writeOutBuffer();
+		} else if (opcode == RKDSetClipPath) {
+			qint32 index;
+			streamer.instream >> index;
+			bool ok = device->setClipToCachedPath(index);
+			streamer.outstream << ok;
+			streamer.writeOutBuffer();
+		} else if (opcode == RKDReleaseClipPath) {
+			qint32 len;
+			streamer.instream >> len;
+			if (len < 0) device->destroyCachedPath(-1);
+			for (int i = 0; i < len; ++i) {
+				qint32 index;
+				streamer.instream >> index;
+				device->destroyCachedPath(index);
+			}
+		} else if (opcode == RKDStartRecordClipPath) {
+			device->startRecordPath();
+		} else if (opcode == RKDEndRecordClipPath) {
+			qint8 fillrule;
+			streamer.instream >> fillrule;
+			QPainterPath p = device->endRecordPath(fillrule);
+			qint32 index = device->cachePath(p);
+			device->setClipToCachedPath(index);
+			streamer.outstream << (qint32) index;
+			streamer.writeOutBuffer();
 		} else if (opcode == RKDCapture) {
 			QImage image = device->capture ();
 			quint32 w = image.width ();
