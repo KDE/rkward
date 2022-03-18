@@ -613,6 +613,20 @@ SEXP makeInt(int val) {
 	return ret;
 }
 
+void forceSync(pDevDesc dev) {
+// NOTE: See commen7 in RKGraphicsDevice::forceSync();
+// KF6 TODO: Still neded with Qt6?
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDForceSync, dev);
+	}
+	{
+		RKGraphicsDataStreamReadGuard rguard;
+		qint8 dummy;
+		RKD_IN_STREAM >> dummy;
+	}
+}
+
 SEXP RKD_SetPattern (SEXP pattern, pDevDesc dev) {
 	auto ptype = R_GE_patternType(pattern);
 	if ((ptype == R_GE_linearGradientPattern) || (ptype == R_GE_radialGradientPattern)) {
@@ -641,6 +655,7 @@ SEXP RKD_SetPattern (SEXP pattern, pDevDesc dev) {
 			RKD_OUT_STREAM << getGradientExtend(R_GE_radialGradientExtend(pattern));
 		}
 	} else if (ptype == R_GE_tilingPattern) {
+		forceSync(dev);
 		{
 			RKGraphicsDataStreamWriteGuard wguard;
 			WRITE_HEADER(RKDStartRecordTilingPattern, dev);
@@ -653,6 +668,7 @@ SEXP RKD_SetPattern (SEXP pattern, pDevDesc dev) {
 		SEXP pattern_func = PROTECT(Rf_lang1(R_GE_tilingPatternFunction(pattern)));
 		R_tryEval(pattern_func, R_GlobalEnv, &error);
 		UNPROTECT(1);
+		forceSync(dev);
 		{
 			RKGraphicsDataStreamWriteGuard wguard;
 			WRITE_HEADER(RKDEndRecordTilingPattern, dev);

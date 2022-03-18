@@ -440,6 +440,10 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			streamer.writeOutBuffer ();
 		} else if (opcode == RKDNewPageConfirm) {
 			device->confirmNewPage ();
+		} else if (opcode == RKDForceSync) {
+			device->forceSync();
+			streamer.outstream << (qint8) 0;
+			streamer.writeOutBuffer();
 		} else {
 			RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Unhandled operation of type %d for device number %d. Skipping.", opcode, devnum+1);
 		}

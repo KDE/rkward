@@ -123,6 +123,7 @@ enum RKDOpcodes {
 	RKDEndRecordTilingPattern,       // part of setPattern in R
 	RKDSetClipPath,       // 110
 	RKDEndRecordClipPath,
+	RKDForceSync,
 
 	// Protocol operations
 	RKDCancel              = 200

@@ -186,6 +186,22 @@ void RKGraphicsDevice::updateNow () {
 	beginPainter();
 }
 
+/** This is definitely lame, but at least as of Qt 5.12.8, calling QPainter::end() does _not_ mean, changes are synced to the
+ *  paint device. They will be synced, eventually, but when trying to capture a tiling pattern, we want a clean separation
+ *  between the paints going to the main canvas and those going to the pattern space, immediately.
+ *
+ *  This function achieves that. Note that it is also implemented as a synchronous operation on the stream, so Qt will definitely
+ *  get around to process some events after this was called, which is probably also needed.
+ *
+ *  Without this function artifacts will occur inside tiling patterns some, but not all of the time.
+ *
+ *  KF6 TODO: check if still needed with Qt6. */
+void RKGraphicsDevice::forceSync() {
+	RK_TRACE (GRAPHICS_DEVICE);
+	updateNow();
+	if(painter.isActive()) painter.end();
+}
+
 void RKGraphicsDevice::checkSize() {
 	RK_TRACE (GRAPHICS_DEVICE);
 	if (view->size () != area.size ()) {

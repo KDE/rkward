@@ -103,6 +103,7 @@ public:
 	int cachePath(QPainterPath &path);
 	void destroyCachedPath(int index);
 	bool setClipToCachedPath(int index);
+	void forceSync();
 public slots:
 	void stopInteraction ();
 signals:
