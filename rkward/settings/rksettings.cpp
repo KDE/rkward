@@ -91,7 +91,7 @@ void RKSettings::dialogClosed () {
 	settings_dialog = 0;
 }
 
-RKSettings::RKSettings (QWidget *parent) : KPageDialog (parent), pages(nullptr) {
+RKSettings::RKSettings (QWidget *parent) : KPageDialog (parent) {
 	RK_TRACE (SETTINGS);
 
 	setFaceType (KPageDialog::Tree);
@@ -117,7 +117,6 @@ RKSettings::~RKSettings() {
 		delete *it;
 	}
 	modules.clear ();
-	delete pages;
 
 	dialogClosed ();
 }
@@ -141,7 +140,7 @@ void RKSettings::initModules () {
 	RK_TRACE (SETTINGS);
 
 	auto ktexteditorpages = RKSettingsModuleCommandEditor::kateConfigPages(this, 0);
-	pages = new KPageWidgetItem*[(NumPages + ktexteditorpages.size())];
+	pages.resize(NumPages + ktexteditorpages.size());
 	modules.insert (PagePlugins, new RKSettingsModulePlugins (this, 0));
 	modules.insert (PageKatePlugins, new RKSettingsModuleKatePlugins (this, 0));
 	modules.insert (PageR, new RKSettingsModuleR (this, 0));

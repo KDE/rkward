@@ -82,7 +82,7 @@ private:
 
 	typedef QMap<int, RKSettingsModule *> ModuleMap;
 	ModuleMap modules;
-	KPageWidgetItem** pages;
+	std::vector<KPageWidgetItem*> pages;
 
 	static RKSettings *settings_dialog;
 friend class RKWardMainWindow;
