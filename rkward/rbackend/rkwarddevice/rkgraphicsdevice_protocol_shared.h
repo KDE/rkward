@@ -60,9 +60,34 @@ enum RKLineJoinStyles {
 	BevelJoin = 3
 };
 
+enum RKDFillType {
+	ColorFill,
+	PatternFill
+};
+
+enum RKDPatternType {
+	LinearPattern,
+	RadialPattern,
+	TilingPattern,
+	UnknonwnPattern
+};
+
+enum RKDGradientExtend {
+	GradientExtendNone,
+	GradientExtendPad,
+	GradientExtendReflect,
+	GradientExtendRepeat
+};
+
+enum RKDFillRule {
+	NonZeroWindingRule,
+	EvenOddRule
+};
+
 enum RKDOpcodes {
+	// NOTE: the only point of the assigned int values is to ease debugging in case of trouble
 	// Asynchronous operations
-	RKDCreate,             // 0
+	RKDCreate               = 0,
 	RKDCircle,
 	RKDLine,
 	RKDPolygon,
@@ -80,19 +105,28 @@ enum RKDOpcodes {
 	RKDSetSize,            // 15
 	RKDStartGettingEvents,
 	RKDStopGettingEvents,
+	RKDReleasePattern,
+	RKDStartRecordTilingPattern,      // part of setPattern in R
+	RKDReleaseClipPath,
+	RKDStartRecordClipPath,
 
 	// Synchronous operations
-	RKDFetchNextEvent,
+	RKDFetchNextEvent      = 100,
 	RKDStrWidthUTF8,
-	RKDMetricInfo,         // 20
+	RKDMetricInfo,
 	RKDLocator,
 	RKDNewPageConfirm,
-	RKDCapture,
+	RKDCapture,           // 105
 	RKDQueryResolution,
-	RKDGetSize,            // 25
+	RKDGetSize,
+	RKDSetPattern,
+	RKDEndRecordTilingPattern,       // part of setPattern in R
+	RKDSetClipPath,       // 110
+	RKDEndRecordClipPath,
+	RKDForceSync,
 
 	// Protocol operations
-	RKDCancel
+	RKDCancel              = 200
 };
 
 enum RKDEventCodes {

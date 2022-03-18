@@ -228,7 +228,7 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 	dev->setMask = RKD_SetMask;
 	dev->releaseMask = RKD_ReleaseMask;
 	dev->deviceVersion = qMin(14, R_GE_version);
-	dev->deviceClip = FALSE; // for now
+	dev->deviceClip = TRUE; // for now
 #endif
 	return true;
 }

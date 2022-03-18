@@ -164,8 +164,15 @@ public:
 // actually lmitre is only needed if linejoin is GE_MITRE_JOIN, so we could optimize a bit
 #define WRITE_LINE_ENDS() \
 	RKD_OUT_STREAM << SAFE_LINE_END (gc->lend) << SAFE_LINE_JOIN (gc->ljoin) << gc->lmitre
-#define WRITE_FILL() \
-	WRITE_COLOR_BYTES (gc->fill)
+#if R_VERSION >= R_Version(4, 1, 0)
+#  define WRITE_FILL() \
+	if (gc->patternFill != R_NilValue) RKD_OUT_STREAM << (qint8) PatternFill << (qint16) (INTEGER(gc->patternFill)[0]); \
+	else { \
+		RKD_OUT_STREAM << (qint8) ColorFill; WRITE_COLOR_BYTES (gc->fill); \
+	}
+#else
+	RKD_OUT_STREAM << (qint8) ColorFill; WRITE_COLOR_BYTES (gc->fill);
+#endif
 #define WRITE_FONT(dev) \
 	RKD_OUT_STREAM << gc->cex << gc->ps << gc->lineheight << (quint8) gc->fontface << (gc->fontfamily[0] ? QString (gc->fontfamily) : (static_cast<RKGraphicsDeviceDesc*> (dev->deviceSpecific)->getFontFamily (gc->fontface == 5)))
 
@@ -591,30 +598,172 @@ int RKD_HoldFlush (pDevDesc dev, int level) {
 #endif
 
 #if R_VERSION >= R_Version (4, 1, 0)
-SEXP RKD_SetPattern (SEXP pattern, pDevDesc dd) {
-#ifdef __GNUC__
-#warning implement me
-#endif
-	return R_NilValue;
+qint8 getGradientExtend(int Rextent) {
+	if (Rextent == R_GE_patternExtendPad) return GradientExtendPad;
+	if (Rextent == R_GE_patternExtendReflect) return GradientExtendReflect;
+	if (Rextent == R_GE_patternExtendRepeat) return GradientExtendRepeat;
+	/* if (Rextent == R_GE_patternExtendNone) */ return GradientExtendNone;
 }
 
-void RKD_ReleasePattern (SEXP ref, pDevDesc dd) {
-#ifdef __GNUC__
-#warning implement me
-#endif
+SEXP makeInt(int val) {
+	SEXP ret;
+	PROTECT(ret = Rf_allocVector(INTSXP, 1));
+	INTEGER(ret)[0] = val;
+	UNPROTECT(1);
+	return ret;
 }
 
-SEXP RKD_SetClipPath (SEXP path, SEXP ref, pDevDesc dd) {
-#ifdef __GNUC__
-#warning implement me
-#endif
-	return R_NilValue;
+void forceSync(pDevDesc dev) {
+// NOTE: See commen7 in RKGraphicsDevice::forceSync();
+// KF6 TODO: Still neded with Qt6?
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDForceSync, dev);
+	}
+	{
+		RKGraphicsDataStreamReadGuard rguard;
+		qint8 dummy;
+		RKD_IN_STREAM >> dummy;
+	}
 }
 
-void RKD_ReleaseClipPath (SEXP ref, pDevDesc dd) {
-#ifdef __GNUC__
-#warning implement me
+SEXP RKD_SetPattern (SEXP pattern, pDevDesc dev) {
+	auto ptype = R_GE_patternType(pattern);
+	if ((ptype == R_GE_linearGradientPattern) || (ptype == R_GE_radialGradientPattern)) {
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDSetPattern, dev);
+		if (ptype == R_GE_linearGradientPattern) {
+			RKD_OUT_STREAM << (qint8) RKDPatternType::LinearPattern;
+			RKD_OUT_STREAM << (double) R_GE_linearGradientX1(pattern) << (double) R_GE_linearGradientX2(pattern) << (double) R_GE_linearGradientY1(pattern) << (double) R_GE_linearGradientY2(pattern);
+			qint16 nstops = R_GE_linearGradientNumStops(pattern);
+			RKD_OUT_STREAM << nstops;
+			for (int i = 0; i < nstops; ++i) {
+				WRITE_COLOR_BYTES(R_GE_linearGradientColour(pattern, i));
+				RKD_OUT_STREAM << (double) R_GE_linearGradientStop(pattern, i);
+			}
+			RKD_OUT_STREAM << getGradientExtend(R_GE_linearGradientExtend(pattern));
+		} else if (ptype == R_GE_radialGradientPattern) {
+			RKD_OUT_STREAM << (qint8) RKDPatternType::RadialPattern;
+			RKD_OUT_STREAM << (double) R_GE_radialGradientCX1(pattern) << (double) R_GE_radialGradientCY1(pattern) << (double) R_GE_radialGradientR1(pattern);
+			RKD_OUT_STREAM << (double) R_GE_radialGradientCX2(pattern) << (double) R_GE_radialGradientCY2(pattern) << (double) R_GE_radialGradientR2(pattern);
+			qint16 nstops = R_GE_radialGradientNumStops(pattern);
+			RKD_OUT_STREAM << nstops;
+			for (int i = 0; i < nstops; ++i) {
+				WRITE_COLOR_BYTES(R_GE_radialGradientColour(pattern, i));
+				RKD_OUT_STREAM << (double) R_GE_radialGradientStop(pattern, i);
+			}
+			RKD_OUT_STREAM << getGradientExtend(R_GE_radialGradientExtend(pattern));
+		}
+	} else if (ptype == R_GE_tilingPattern) {
+		forceSync(dev);
+		{
+			RKGraphicsDataStreamWriteGuard wguard;
+			WRITE_HEADER(RKDStartRecordTilingPattern, dev);
+			RKD_OUT_STREAM << (double) R_GE_tilingPatternWidth(pattern) << (double) R_GE_tilingPatternHeight(pattern);
+			RKD_OUT_STREAM << (double) R_GE_tilingPatternX(pattern) << (double) R_GE_tilingPatternY(pattern);
+		}
+		// Play the pattern generator function. Contrary to cairo device, we use tryEval, here, to avoid getting into a
+		// bad device state in case of errors
+		int error;
+		SEXP pattern_func = PROTECT(Rf_lang1(R_GE_tilingPatternFunction(pattern)));
+		R_tryEval(pattern_func, R_GlobalEnv, &error);
+		UNPROTECT(1);
+		forceSync(dev);
+		{
+			RKGraphicsDataStreamWriteGuard wguard;
+			WRITE_HEADER(RKDEndRecordTilingPattern, dev);
+			RKD_OUT_STREAM << getGradientExtend(R_GE_tilingPatternExtend(pattern));
+		}
+	} else {
+		Rf_warning("Pattern type not (yet) supported");
+		return makeInt(-1);
+	}
+
+	qint32 index;
+	{
+		RKGraphicsDataStreamReadGuard rguard;
+		RKD_IN_STREAM >> index;
+	}
+
+	// NOTE: we are free to chose a return value of our liking. It is used as an identifier for this pattern.
+	if (index < 0) Rf_warning("Pattern type not (yet) supported");
+	return makeInt(index);
+}
+
+void RKD_ReleasePattern (SEXP ref, pDevDesc dev) {
+	qint32 index;
+	if (Rf_isNull(ref)) index = 0;  // means: destroy all patterns
+	else index = INTEGER(ref)[0];
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDReleasePattern, dev);
+		RKD_OUT_STREAM << index;
+	}
+}
+
+SEXP RKD_SetClipPath (SEXP path, SEXP ref, pDevDesc dev) {
+	qint32 index = -1;
+	if (!Rf_isNull(ref)) index = INTEGER(ref)[0];
+	// NOTE: just because we have a reference, doesn't mean, it's also valid, according to R sources
+	if (index >= 0) {
+		{
+			RKGraphicsDataStreamWriteGuard wguard;
+			WRITE_HEADER(RKDSetClipPath, dev);
+			RKD_OUT_STREAM << index;
+		}
+		{
+			RKGraphicsDataStreamReadGuard rguard;
+			bool ok;
+			RKD_IN_STREAM >> ok;
+			if (!ok) Rf_warning("Invalid reference to clipping path");
+			else return R_NilValue;
+		}
+	}
+
+	// No index, or not a valid index: create new path
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDStartRecordClipPath, dev);
+	}
+	// Play generator function
+	int error;
+	SEXP path_func = PROTECT(Rf_lang1(path));
+	R_tryEval(path_func, R_GlobalEnv, &error);
+	UNPROTECT(1);
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDEndRecordClipPath, dev);
+#if R_VERSION >= R_Version(4, 2, 0)
+		if (R_GE_clipPathFillRule(path) == R_GE_nonZeroWindingRule) {
+			RKD_OUT_STREAM << (qint8) NonZeroWindingRule;
+		} else {
+			RKD_OUT_STREAM << (qint8) EvenOddRule;
+		}
+#else
+		RKD_OUT_STREAM << (qint8) EvenOddRule;
 #endif
+	}
+	{
+		RKGraphicsDataStreamReadGuard rguard;
+		RKD_IN_STREAM >> index;
+	}
+	return makeInt(index);
+}
+
+void RKD_ReleaseClipPath (SEXP ref, pDevDesc dev) {
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDReleaseClipPath, dev);
+		if (Rf_isNull(ref)) {
+			RKD_OUT_STREAM << (qint32) -1; // means: destroy all clippaths
+		} else {
+			qint32 len = LENGTH(ref);
+			RKD_OUT_STREAM << len;
+			for (int i = 0; i < len; ++i) {
+				RKD_OUT_STREAM << (qint32) INTEGER(ref)[i];
+			}
+		}
+	}
 }
 
 SEXP RKD_SetMask (SEXP path, SEXP ref, pDevDesc dd) {

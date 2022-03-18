@@ -50,6 +50,7 @@ RKGraphicsDevice::RKGraphicsDevice (double width, double height, const QString &
 
 	interaction_opcode = -1;
 	dialog = 0;
+	recording_path = false;
 	view = new QLabel ();
 	view->installEventFilter (this);
 	view->setScaledContents (true);    // this is just for preview during scaling. The area will be re-sized and re-drawn from R.
@@ -67,6 +68,96 @@ RKGraphicsDevice::~RKGraphicsDevice () {
 	painter.end ();
 	stopInteraction ();
 	delete view;
+}
+
+void RKGraphicsDevice::beginPainter() {
+	if(!painter.isActive()) {
+		if (contexts.isEmpty()) {
+			painter.begin(&area);  // plain old painting on the canvas itself
+			recording_path = false;
+		} else {
+			auto &c = contexts.last();
+			painter.begin(&(c.surface));
+			painter.setTransform(c.transform);
+			recording_path = c.record_path;
+		}
+	}
+}
+
+void RKGraphicsDevice::pushContext(double width, double height, double x, double y, bool record_path) {
+	RK_TRACE (GRAPHICS_DEVICE);
+	painter.end();
+	PaintContext c;
+	c.record_path = record_path;
+	c.path_below = recorded_path;
+// NOTE: R cairo device uses an all different method for pattern capture:
+// drawing is scaled up to full device coordinates, the shrunk and offset back to pattern size.
+// probably due to cairo internals, somehow. Here, instead we paint on a separate surface with the same coords,
+// the extract the rectangle of interest.
+	c.surface = QImage(area.width(), area.height(), QImage::Format_ARGB32);
+	if (width < 0) { // may happen, at least in R 4.1.2
+		width = -width;
+		x -= width;
+	}
+	if (height < 0) {
+		height = -height;
+		y -= height;
+	}
+	c.capture_coords = QRect(x, y, width, height);
+	contexts.push_back(c);
+	beginPainter();
+}
+
+RKGraphicsDevice::PaintContext RKGraphicsDevice::popContext() {
+	RK_TRACE (GRAPHICS_DEVICE);
+
+	if (contexts.isEmpty()) {
+		RK_ASSERT(!contexts.isEmpty());
+		return PaintContext();
+	}
+
+	painter.end();
+	auto ret = contexts.takeLast();
+	recorded_path = ret.path_below;
+	beginPainter();
+	return ret;
+}
+
+void RKGraphicsDevice::startRecordTilingPattern(double width, double height, double x, double y) {
+	RK_TRACE (GRAPHICS_DEVICE);
+	pushContext(width, height, x, y, false);
+}
+
+int RKGraphicsDevice::finalizeTilingPattern(int extend) {
+	RK_TRACE (GRAPHICS_DEVICE);
+
+	auto c = popContext();
+	if (extend == GradientExtendNone || extend == GradientExtendPad) {
+		// For extend type pad it is unclear, what that should even mean, we simply treat it the same as none.
+		// For none, obviously, we want to not repeat the pattern. This is not so easy to achieve in QBrush, but also, it does
+		// look like a very like use of a tiling pattern. What we do, therefore, is to simply copy the _full_ surface, rather than
+		// just the reqion of interest. This way, we will - usually - not see any repeats.
+		return (registerPattern(QBrush(c.surface)));
+	}
+	if (extend == GradientExtendReflect) {
+		QImage single = c.surface.copy(c.capture_coords);
+		QImage reflected(single.width()*2, single.height()*2, single.format());
+		QPainter p(&reflected);
+		p.drawImage(0, 0, single);
+		p.drawImage(single.width(), 0, single.mirrored(true, false));
+		p.drawImage(0, single.height(), single.mirrored(false, true));
+		p.drawImage(single.width(), single.height(), single.mirrored(true, true));
+		p.end();
+		QBrush brush(reflected);
+		brush.setTransform(QTransform().translate(c.capture_coords.left(), c.capture_coords.top()));
+		return registerPattern(brush);
+	}
+
+	// else: GradientExtendRepeat. This is the standard QBrush behavior
+	QImage img = c.surface.copy(c.capture_coords);
+	QBrush brush(img);
+	brush.setTransform(QTransform().translate(c.capture_coords.left(), c.capture_coords.top()));
+	return registerPattern(brush);
 }
 
 void RKGraphicsDevice::viewKilled () {
@@ -92,7 +183,23 @@ void RKGraphicsDevice::updateNow () {
 		view->show ();
 	}
 	checkSize ();
-	painter.begin (&area);
+	beginPainter();
+}
+
+/** This is definitely lame, but at least as of Qt 5.12.8, calling QPainter::end() does _not_ mean, changes are synced to the
+ *  paint device. They will be synced, eventually, but when trying to capture a tiling pattern, we want a clean separation
+ *  between the paints going to the main canvas and those going to the pattern space, immediately.
+ *
+ *  This function achieves that. Note that it is also implemented as a synchronous operation on the stream, so Qt will definitely
+ *  get around to process some events after this was called, which is probably also needed.
+ *
+ *  Without this function artifacts will occur inside tiling patterns some, but not all of the time.
+ *
+ *  KF6 TODO: check if still needed with Qt6. */
+void RKGraphicsDevice::forceSync() {
+	RK_TRACE (GRAPHICS_DEVICE);
+	updateNow();
+	if(painter.isActive()) painter.end();
 }
 
 void RKGraphicsDevice::checkSize() {
@@ -121,12 +228,21 @@ void RKGraphicsDevice::closeDevice (int devnum) {
 	devices.take (devnum)->deleteLater ();
 }
 
-void RKGraphicsDevice::clear (const QColor& col) {
+void RKGraphicsDevice::clear(const QBrush& brush) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
-	if (painter.isActive ()) painter.end ();
-	if (col.isValid ()) area.fill (col);
-	else area.fill (QColor (255, 255, 255, 255));
+	if (recording_path) {
+		recorded_path = QPainterPath();
+		setClip(area.rect());	// R's devX11.c resets clip on clear, so we do this, too.
+		return;
+	}
+
+	if (painter.isActive()) painter.end();
+	if (brush.style() == Qt::NoBrush) area.fill(QColor(255, 255, 255, 255));
+	else {
+		painter.setBrush(brush);
+		painter.drawRect(0, 0, area.width(), area.height());
+	}
 
 	updateNow ();
 	setClip (area.rect ());	// R's devX11.c resets clip on clear, so we do this, too.
@@ -143,16 +259,71 @@ void RKGraphicsDevice::setAreaSize (const QSize& size) {
 	clear ();
 }
 
+int RKGraphicsDevice::registerPattern(const QBrush& brush) {
+	RK_TRACE(GRAPHICS_DEVICE);
+	static int id = 0;
+	patterns.insert(++id, brush);
+	return id;
+}
+
+void RKGraphicsDevice::destroyPattern(int id) {
+	RK_TRACE(GRAPHICS_DEVICE);
+	if (id == 0) patterns.clear();
+	else patterns.remove(id);
+}
+
+void RKGraphicsDevice::startRecordPath() {
+	RK_TRACE(GRAPHICS_DEVICE);
+	pushContext(0, 0, 0, 0, true);
+}
+
+QPainterPath RKGraphicsDevice::endRecordPath(int fillrule) {
+	RK_TRACE(GRAPHICS_DEVICE);
+
+	QPainterPath ret = recorded_path;
+	if (fillrule == NonZeroWindingRule) ret.setFillRule(Qt::WindingFill);
+	else ret.setFillRule(Qt::OddEvenFill);
+
+	popContext();
+	return ret;
+}
+
+int RKGraphicsDevice::cachePath(QPainterPath& path) {
+	RK_TRACE(GRAPHICS_DEVICE);
+	static int id = 0;
+	cached_paths.insert(++id, path);
+	return id;
+}
+
+void RKGraphicsDevice::destroyCachedPath(int index) {
+	RK_TRACE(GRAPHICS_DEVICE);
+	if (index < 0) cached_paths.clear();
+	else cached_paths.remove(index);
+}
+
+bool RKGraphicsDevice::setClipToCachedPath(int index){
+	RK_TRACE(GRAPHICS_DEVICE);
+	if (cached_paths.contains(index)) {
+		painter.setClipPath(cached_paths[index]);
+		return true;
+	}
+	return false;
+}
+
 void RKGraphicsDevice::setClip (const QRectF& new_clip) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
-	if (!painter.isActive ()) painter.begin (&area);
+	beginPainter();
 	painter.setClipRect (new_clip);
 }
 
 void RKGraphicsDevice::circle (double x, double y, double r, const QPen& pen, const QBrush& brush) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
+	if (recording_path) {
+		recorded_path.addEllipse(x-r, y-r, r+r, r+r);
+		return;
+	}
 	painter.setPen (pen);
 	painter.setBrush (brush);
 	painter.drawEllipse (x - r, y - r, r+r, r+r);
@@ -162,6 +333,11 @@ void RKGraphicsDevice::circle (double x, double y, double r, const QPen& pen, co
 void RKGraphicsDevice::line (double x1, double y1, double x2, double y2, const QPen& pen) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
+	if (recording_path) {
+		recorded_path.moveTo(x1,y1);
+		recorded_path.lineTo(x2, y2);
+		return;
+	}
 	painter.setPen (pen);
 	// HACK: There seems to be a bug in QPainter (Qt 4.8.4), which can shift connected lines (everything but the first polyline)
 	//       towards the direction where the previous line came from. The result is that line drawn via drawLine() and drawPolyline() do
@@ -178,32 +354,46 @@ void RKGraphicsDevice::line (double x1, double y1, double x2, double y2, const Q
 void RKGraphicsDevice::rect (const QRectF& rec, const QPen& pen, const QBrush& brush) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
+	if (recording_path) {
+		recorded_path.addRect(rec);
+		return;
+	}
 	painter.setPen (pen);
 	painter.setBrush (brush);
 	painter.drawRect (rec);
 	triggerUpdate ();
 }
 
-QSizeF RKGraphicsDevice::strSize (const QString& text, const QFont& font) {
-	RK_TRACE (GRAPHICS_DEVICE);
+QSizeF RKGraphicsDevice::strSize(const QString& text, const QFont& font) {
+	RK_TRACE(GRAPHICS_DEVICE);
 
-	painter.setFont (font);
-	QSizeF size = painter.boundingRect (QRectF (area.rect ()), text).size ();
+	painter.setFont(font);
+	QSizeF size = painter.fontMetrics().boundingRect(text).size();
 	return size;
 }
 
-void RKGraphicsDevice::text (double x, double y, const QString& text, double rot, double hadj, const QColor& col, const QFont& font) {
-	RK_TRACE (GRAPHICS_DEVICE);
+void RKGraphicsDevice::text(double x, double y, const QString& text, double rot, double hadj, const QColor& col, const QFont& font) {
+	RK_TRACE(GRAPHICS_DEVICE);
 
-	painter.save ();
-	QSizeF size = strSize (text, font);	// NOTE: side-effect of setting font!
-//	painter.setFont (font);
-	painter.setPen (QPen (col));
-	painter.translate (x, y);
-	painter.rotate (-rot);
-	painter.drawText (-(hadj * size.width ()), 0, text);
-	painter.restore ();	// undo rotation / translation
-	triggerUpdate ();
+	painter.save();
+	QSizeF size = strSize(text, font);  // NOTE: side-effect of setting font!
+	if (recording_path) {
+		QPainterPath sub;
+		sub.addText(-(hadj * size.width()), y, font, text);
+		QMatrix trans;
+		trans.translate(x, y);
+		trans.rotate(-rot);
+		recorded_path.addPath(trans.map(sub));
+		return;
+	}
+//	painter.setFont(font);
+	painter.setPen(QPen(col));
+	painter.translate(x, y);
+	painter.rotate(-rot);
+	painter.drawText(-(hadj * size.width()), 0, text);
+//	painter.drawRect(painter.fontMetrics().boundingRect(text));  // for debugging
+	painter.restore();  // undo rotation / translation
+	triggerUpdate();
 }
 
 void RKGraphicsDevice::metricInfo (const QChar& c, const QFont& font, double* ascent, double* descent, double* width) {
@@ -220,6 +410,10 @@ void RKGraphicsDevice::metricInfo (const QChar& c, const QFont& font, double* as
 void RKGraphicsDevice::polygon (const QPolygonF& pol, const QPen& pen, const QBrush& brush) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
+	if (recording_path) {
+		recorded_path.addPolygon(pol);
+		return;
+	}
 	painter.setPen (pen);
 	painter.setBrush (brush);
 	painter.drawPolygon (pol);
@@ -229,6 +423,10 @@ void RKGraphicsDevice::polygon (const QPolygonF& pol, const QPen& pen, const QBr
 void RKGraphicsDevice::polyline (const QPolygonF& pol, const QPen& pen) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
+	if (recording_path) {
+		recorded_path.addPolygon(pol);
+		return;
+	}
 	painter.setPen (pen);
 	painter.drawPolyline (pol);
 	triggerUpdate ();
@@ -237,14 +435,20 @@ void RKGraphicsDevice::polyline (const QPolygonF& pol, const QPen& pen) {
 void RKGraphicsDevice::polypath (const QVector<QPolygonF>& polygons, bool winding, const QPen& pen, const QBrush& brush) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
-	painter.setPen (pen);
-	painter.setBrush (brush);
 	QPainterPath path;
 	if (winding) path.setFillRule (Qt::WindingFill);
 	for (int i = 0; i < polygons.size (); ++i) {
 		path.addPolygon (polygons[i]);
 		path.closeSubpath ();
 	}
+
+	if (recording_path) {
+		recorded_path.addPath(path);
+		return;
+	}
+
+	painter.setPen (pen);
+	painter.setBrush (brush);
 	painter.drawPath (path);
 	triggerUpdate ();
 }

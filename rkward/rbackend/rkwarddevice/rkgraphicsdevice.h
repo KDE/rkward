@@ -65,7 +65,7 @@ public:
 	void polygon (const QPolygonF& pol, const QPen& pen, const QBrush &brush);
 	void polyline (const QPolygonF& pol, const QPen& pen);
 	void polypath (const QVector<QPolygonF>& polygons, bool winding, const QPen& pen, const QBrush& brush);
-	void clear (const QColor& col=QColor());
+	void clear(const QBrush& col=QBrush());
 	void image (const QImage &image, const QRectF &target_rect, double rot, bool interpolate);
 	QImage capture () const;
 	void setActive (bool active);
@@ -91,6 +91,19 @@ public:
  	QWidget* viewPort () const { return view; };
 	QSizeF currentSize () const { return view->size (); }
 	void setAreaSize (const QSize &size);
+
+/** Patterns / gradients are registered per device in R */
+	int registerPattern(const QBrush &brush);
+	void destroyPattern(int id);
+	QBrush getPattern(int id) const { return patterns.value(id); };
+	void startRecordTilingPattern(double width, double height, double x, double y);
+	int finalizeTilingPattern(int extend);
+	void startRecordPath();
+	QPainterPath endRecordPath(int fillrule);
+	int cachePath(QPainterPath &path);
+	void destroyCachedPath(int index);
+	bool setClipToCachedPath(int index);
+	void forceSync();
 public slots:
 	void stopInteraction ();
 signals:
@@ -118,10 +131,30 @@ private:
 	QLabel *view;
 	QString base_title;
 	QDialog *dialog;
+	QHash<int, QBrush> patterns;
+	QHash<int, QPainterPath> cached_paths;
+	// NOTE on path recording: In principle, we could really do _all_ painting on QPainterPath, but in regular operation stroke and fill right away.
+	// However, that is noticably slower.
+	QPainterPath recorded_path;
+	bool recording_path;
 
 	int interaction_opcode;	/**< Current interactive operation (from RKDOpcodes enum), or -1 is there is no current interactive operation */
 
 	QList<StoredEvent> stored_events;
+
+	struct PaintContext {
+		// TODO: this probably also needs info like clipping paths, transforms, add mode, etc. Just an initial attempt.
+		QImage surface;
+		QTransform transform;
+		QRect capture_coords;
+		QPainterPath path_below;
+		bool record_path;
+	};
+	QList<PaintContext> contexts;
+	// make sure the painter is active on the current context
+	void beginPainter();
+	void pushContext(double width, double height, double x, double y, bool record_path);
+	PaintContext popContext();
 };
 
 #endif
