@@ -208,7 +208,7 @@ void RKSettingsModuleOutput::applyChanges () {
 	graphics_type = graphics_type_box->itemData (graphics_type_box->currentIndex ()).toString ();
 
 	QStringList commands = makeRRunTimeOptionCommands ();
-	for (QStringList::const_iterator it = commands.begin (); it != commands.end (); ++it) {
+	for (QStringList::const_iterator it = commands.cbegin (); it != commands.cend (); ++it) {
 		RKGlobals::rInterface ()->issueCommand (*it, RCommand::App, QString (), 0, 0, commandChain ());
 	}
 

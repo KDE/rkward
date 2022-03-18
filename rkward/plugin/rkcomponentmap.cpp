@@ -641,7 +641,7 @@ RKPluginMapParseResult RKComponentMap::addPluginMap (const QString& plugin_map_f
 	QSet<QString> local_components;
 	QSet<QString> depfailed_local_components;
 
-	for (XMLChildList::const_iterator it=list.begin (); it != list.end (); ++it) {
+	for (XMLChildList::const_iterator it=list.cbegin (); it != list.cend (); ++it) {
 		QString id = cnamespace + xml.getStringAttribute((*it), "id", QString (), DL_WARNING);
 
 		// check dependencies, first
@@ -670,7 +670,7 @@ RKPluginMapParseResult RKComponentMap::addPluginMap (const QString& plugin_map_f
 			// create and initialize component handle
 			RKComponentHandle *handle = new RKComponentHandle (pluginmap_file_desc, filename, label);
 			XMLChildList attributes_list = xml.getChildElements (*it, "attribute", DL_DEBUG);
-			for (XMLChildList::const_iterator ait=attributes_list.begin (); ait != attributes_list.end (); ++ait) {
+			for (XMLChildList::const_iterator ait=attributes_list.cbegin (); ait != attributes_list.cend (); ++ait) {
 				handle->addAttribute (xml.getStringAttribute (*ait, "id", "noid", DL_WARNING), xml.getStringAttribute (*ait, "value", QString (), DL_ERROR), xml.i18nStringAttribute (*ait, "label", QString (), DL_ERROR));
 			}
 			if (!cdependencies.isNull ()) handle->addDependencies (RKComponentDependency::parseDependencies (cdependencies, xml));
@@ -800,7 +800,7 @@ RKStandardComponent *RKComponentHandle::invoke (RKComponent *parent_component, Q
 QString RKComponentHandle::getAttributeValue (const QString &attribute_id) {
 	RK_TRACE (PLUGIN);
 
-	QMap<QString, RKComponentMap::AttributeValueMap>::const_iterator it = RKComponentMap::getMap ()->component_attributes.find (attribute_id);
+	QMap<QString, RKComponentMap::AttributeValueMap>::const_iterator it = RKComponentMap::getMap ()->component_attributes.constFind (attribute_id);
 	if (it == RKComponentMap::getMap ()->component_attributes.constEnd ()) return QString ();
 	return (*it).valuemap.value (this);
 }
@@ -808,7 +808,7 @@ QString RKComponentHandle::getAttributeValue (const QString &attribute_id) {
 QString RKComponentHandle::getAttributeLabel (const QString &attribute_id) {
 	RK_TRACE (PLUGIN);
 
-	QMap<QString, RKComponentMap::AttributeValueMap>::const_iterator it = RKComponentMap::getMap ()->component_attributes.find (attribute_id);
+	QMap<QString, RKComponentMap::AttributeValueMap>::const_iterator it = RKComponentMap::getMap ()->component_attributes.constFind (attribute_id);
 	if (it == RKComponentMap::getMap ()->component_attributes.constEnd ()) return QString ();
 	return (*it).labelmap.value (this);
 }
@@ -832,7 +832,7 @@ QList <RKComponentDependency> RKComponentHandle::getDependencies () {
 	RK_TRACE (PLUGIN);
 
 	QList <RKComponentDependency> ret = plugin_map->getDependencies ();
-	QHash<RKComponentHandle*, QList<RKComponentDependency> >::const_iterator it = RKComponentMap::getMap ()->component_dependencies.find (this);
+	QHash<RKComponentHandle*, QList<RKComponentDependency> >::const_iterator it = RKComponentMap::getMap ()->component_dependencies.constFind (this);
 	if (it == RKComponentMap::getMap ()->component_dependencies.constEnd ()) return ret;
 	return (ret + (*it));
 }

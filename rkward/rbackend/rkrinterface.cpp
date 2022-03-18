@@ -314,7 +314,7 @@ void RInterface::rCommandDone (RCommand *command) {
 
 		// apply user configurable run time options
 		QStringList commands = RKSettingsModuleR::makeRRunTimeOptionCommands () + RKSettingsModuleRPackages::makeRRunTimeOptionCommands () + RKSettingsModuleOutput::makeRRunTimeOptionCommands () + RKSettingsModuleGraphics::makeRRunTimeOptionCommands ();
-		for (QStringList::const_iterator it = commands.begin (); it != commands.end (); ++it) {
+		for (QStringList::const_iterator it = commands.cbegin (); it != commands.cend (); ++it) {
 			issueCommand (*it, RCommand::App | RCommand::Sync, QString (), this, SET_RUNTIME_OPTS, chain);
 		}
 		// initialize output file

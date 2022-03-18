@@ -1022,7 +1022,7 @@ bool RKComponentPropertyRObjects::isStringValid (const QString &value) {
 
 	QStringList slist = value.split (sep, QString::SkipEmptyParts);
 
-	for (QStringList::const_iterator it = slist.begin (); it != slist.end (); ++it) {
+	for (QStringList::const_iterator it = slist.cbegin (); it != slist.cend (); ++it) {
 		RObject *obj = RObjectList::getObjectList ()->findObject (*it);
 		if (!(obj && checkObjectProblems (obj).isEmpty ())) {
 			return false;

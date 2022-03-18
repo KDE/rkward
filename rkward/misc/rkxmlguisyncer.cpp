@@ -85,7 +85,7 @@ void RKXMLGUISyncerPrivate::uiRcFileChanged (const QString &path)  {
 	RK_ASSERT (client_map.contains (path));
 
 	// find affected clients and reload them
-	QMultiHash<QString, KActionCollection*>::const_iterator i = client_map.find(path);
+	QMultiHash<QString, KActionCollection*>::const_iterator i = client_map.constFind(path);
 	while (i != client_map.constEnd() && i.key() == path) {
 		KXMLGUIClient *client = const_cast<KXMLGUIClient*> (i.value ()->parentGUIClient ());
 		if (!client) {
@@ -101,7 +101,7 @@ void RKXMLGUISyncerPrivate::uiRcFileChanged (const QString &path)  {
 		}
 
 		// find notifiers listening for this client
-		QMultiHash<KActionCollection*, RKXMLGUISyncerNotifier*>::const_iterator n = notifier_map.find(i.value ());
+		QMultiHash<KActionCollection*, RKXMLGUISyncerNotifier*>::const_iterator n = notifier_map.constFind(i.value ());
 		while (n != notifier_map.constEnd() && n.key() == i.value ()) {
 			n.value ()->emitChangeSignal (client);
 			++n;

@@ -204,7 +204,7 @@ void RKSettingsModuleR::applyChanges () {
 
 // apply run time options in R
 	QStringList commands = makeRRunTimeOptionCommands ();
-	for (QStringList::const_iterator it = commands.begin (); it != commands.end (); ++it) {
+	for (QStringList::const_iterator it = commands.cbegin (); it != commands.cend (); ++it) {
 		RKGlobals::rInterface ()->issueCommand (*it, RCommand::App, QString (), 0, 0, commandChain ());
 	}
 }
@@ -564,7 +564,7 @@ void RKSettingsModuleRPackages::applyChanges () {
 
 // apply options in R
 	QStringList commands = makeRRunTimeOptionCommands ();
-	for (QStringList::const_iterator it = commands.begin (); it != commands.end (); ++it) {
+	for (QStringList::const_iterator it = commands.cbegin (); it != commands.cend (); ++it) {
 		RKGlobals::rInterface ()->issueCommand (*it, RCommand::App, QString (), 0, 0, commandChain ());
 	}
 }

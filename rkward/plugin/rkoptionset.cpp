@@ -609,7 +609,7 @@ void RKOptionSet::handleKeycolumnUpdate () {
 
 		// adjust all positions that have changed
 		for (int pos = 0; pos < new_keys.size (); ++pos) {
-			QMap<int, int>::const_iterator pit = position_changes.find (pos);
+			QMap<int, int>::const_iterator pit = position_changes.constFind (pos);
 			if (pit != position_changes.constEnd ()) {	// some change
 				int old_pos = pit.value ();
 				if (old_pos < 0) {	// a new key
@@ -630,7 +630,7 @@ void RKOptionSet::handleKeycolumnUpdate () {
 	QList<RowInfo> new_row_info = rows;
 	for (int i = (new_keys.size () - new_row_info.size ()); i > 0; --i) new_row_info.append (RowInfo (default_row_state));
 	for (int pos = 0; pos < new_keys.size (); ++pos) {
-		QMap<int, int>::const_iterator pit = position_changes.find (pos);
+		QMap<int, int>::const_iterator pit = position_changes.constFind (pos);
 		if (pit != position_changes.constEnd ()) {	// some change
 			int old_pos = pit.value ();
 			if (old_pos < 0) {	// a new key (but it might have been known, formerly)

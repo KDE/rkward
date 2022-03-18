@@ -179,7 +179,7 @@ void RKSettingsModuleGraphics::applyChanges () {
 	graphics_hist_enable = graphics_hist_box->isChecked ();
 
 	QStringList commands = makeRRunTimeOptionCommands ();
-	for (QStringList::const_iterator it = commands.begin (); it != commands.end (); ++it) {
+	for (QStringList::const_iterator it = commands.cbegin (); it != commands.cend (); ++it) {
 		RKGlobals::rInterface ()->issueCommand (*it, RCommand::App, QString (), 0, 0, commandChain ());
 	}
 }

@@ -36,7 +36,7 @@ RKAbstractOptionSelector::RKAbstractOptionSelector (RKComponent *parent_componen
 RKAbstractOptionSelector::~RKAbstractOptionSelector(){
 	RK_TRACE (PLUGIN);
 
-	for (OptionsMap::const_iterator it = options.begin(); it != options.end(); ++it) {
+	for (OptionsMap::const_iterator it = options.cbegin(); it != options.cend(); ++it) {
 		delete (it.value ());
 	}
 }
@@ -51,7 +51,7 @@ void RKAbstractOptionSelector::addOptionsAndInit (const QDomElement &element) {
 	XMLChildList option_elements = xml->getChildElements (element, "option", DL_ERROR);	
 	int selected = 0;
 	int i = 0;
-	for (XMLChildList::const_iterator it = option_elements.begin (); it != option_elements.end (); ++it) {
+	for (XMLChildList::const_iterator it = option_elements.cbegin (); it != option_elements.cend (); ++it) {
 		QString label = xml->i18nStringAttribute (*it, "label", QString (), DL_ERROR);
 		QString value = xml->getStringAttribute (*it, "value", QString (), DL_WARNING);
 		QString name = xml->getStringAttribute (*it, "id", QString (), DL_INFO);
@@ -145,7 +145,7 @@ void RKAbstractOptionSelector::ItemPropertyChanged (RKComponentPropertyBase *pro
 
 	Option *opt = 0;
 	int id = -1;
-	for (OptionsMap::const_iterator it = options.begin(); it != options.end(); ++it) {
+	for (OptionsMap::const_iterator it = options.cbegin(); it != options.cend(); ++it) {
 		RK_ASSERT (it.value ());
 		if (it.value ()->enabledness_prop == property) {
 			opt = it.value ();
@@ -165,7 +165,7 @@ void RKAbstractOptionSelector::ItemPropertyChanged (RKComponentPropertyBase *pro
 	if (!enabled) {
 		if (id == number->intValue ()) {	// current item was disabled
 			int settable_opt = -1;
-			for (OptionsMap::const_iterator it = options.begin(); it != options.end(); ++it) {
+			for (OptionsMap::const_iterator it = options.cbegin(); it != options.cend(); ++it) {
 				RK_ASSERT (it.value ());
 
 				if ((!(it.value ()->enabledness_prop)) || (it.value ()->enabledness_prop->boolValue ())) {
@@ -195,7 +195,7 @@ void RKAbstractOptionSelector::itemSelected (int id) {
 int RKAbstractOptionSelector::findOption (const QString &option_string) {
 	RK_TRACE (PLUGIN);
 
-	for (OptionsMap::const_iterator it = options.begin(); it != options.end(); ++it) {
+	for (OptionsMap::const_iterator it = options.cbegin(); it != options.cend(); ++it) {
 		RK_ASSERT (it.value ());
 		if (it.value ()->value == option_string) return (it.key ());
 	}

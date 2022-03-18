@@ -173,7 +173,7 @@ void RKFormula::makeModelString () {
 	} else if (!vlist.empty ()) {
 		container = vlist.first ()->parentObject ();
 	}
-	for (RObject::ObjectList::const_iterator it = vlist.begin (); it != vlist.end (); ++it) {
+	for (RObject::ObjectList::const_iterator it = vlist.cbegin (); it != vlist.cend (); ++it) {
 		if ((*it)->parentObject () != container) {
 			multitable = true;
 			break;
@@ -182,7 +182,7 @@ void RKFormula::makeModelString () {
 	if (multitable) {
 		table_string = "data.frame (";
 		if (dep_var) table_string.append (mangleName (dep_var) + '=' + dep_var->getFullName ());
-		for (RObject::ObjectList::const_iterator it = vlist.begin (); it != vlist.end (); ++it) {
+		for (RObject::ObjectList::const_iterator it = vlist.cbegin (); it != vlist.cend (); ++it) {
 			table_string.append (", " + mangleName ((*it)) + '=' + (*it)->getFullName ());
 		}
 		table_string.append (")");
@@ -193,13 +193,13 @@ void RKFormula::makeModelString () {
 	// construct model string
 	model_string = mangleName (dep_var) + " ~ ";
 	if (model_type == FullModel) {
-		for (RObject::ObjectList::const_iterator it = vlist.begin (); it != vlist.end (); ++it) {
-			if (it != vlist.begin ()) model_string.append (" * ");
+		for (RObject::ObjectList::const_iterator it = vlist.cbegin (); it != vlist.cend (); ++it) {
+			if (it != vlist.cbegin ()) model_string.append (" * ");
 			model_string.append (mangleName (*it));
 		}
 	} else if (model_type == MainEffects) {
-		for (RObject::ObjectList::const_iterator it = vlist.begin (); it != vlist.end (); ++it) {
-			if (it != vlist.begin ()) model_string.append (" + ");
+		for (RObject::ObjectList::const_iterator it = vlist.cbegin (); it != vlist.cend (); ++it) {
+			if (it != vlist.cbegin ()) model_string.append (" + ");
 			model_string.append (mangleName (*it));
 		}
 	} else if (model_type == Custom) {	
@@ -220,8 +220,8 @@ void RKFormula::makeModelString () {
 	// labels
 	labels_string = "list (";
 	MangledNames::const_iterator it;
-	for (it = mangled_names.begin (); it != mangled_names.end (); ++it) {
-		if (it != mangled_names.begin ()) {
+	for (it = mangled_names.cbegin (); it != mangled_names.cend (); ++it) {
+		if (it != mangled_names.cbegin ()) {
 			labels_string.append (", ");
 		}
 		labels_string.append (it.key () + "=\"" + it.value ()->getDescription () + "\"");
