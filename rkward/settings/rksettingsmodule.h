@@ -147,8 +147,8 @@ protected:
 	bool changed;
 /** temporary indirection until applyChanges() has been obsolete, everywhere */
 	void doApply() {
-		applyChanges();
 		emit(apply());
+		applyChanges();
 		changed = false;
 	}
 };
