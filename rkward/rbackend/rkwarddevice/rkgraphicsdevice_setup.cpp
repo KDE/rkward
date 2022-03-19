@@ -44,6 +44,7 @@
 struct RKGraphicsDeviceDesc {
 	bool init (pDevDesc dev, double pointsize, const QStringList &family, rcolor bg);
 	int devnum;
+	quint32 id;
 	double width, height;
 	int dpix, dpiy;
 	QString getFontFamily (bool symbolfont) const {
@@ -66,6 +67,7 @@ struct RKGraphicsDeviceDesc {
 #define RKGD_DPI 72.0
 
 void RKStartGraphicsDevice (double width, double height, double pointsize, const QStringList &family, rcolor bg, const char* title, bool antialias) {
+	static quint32 id = 0;
 	if (width <= 0 || height <= 0) {
 		Rf_error ("Invalid width or height: (%g, %g)", width, height);
 	}
@@ -89,12 +91,14 @@ void RKStartGraphicsDevice (double width, double height, double pointsize, const
 			delete (desc);
 			desc = 0;
 		} else {
-			desc->devnum = 0;	// graphics engine will send an Activate-event, before we were even
-								// able to see our own devnum and call RKD_Create. Therefore, initialize
-								// devnum to 0, so as not to confuse the frontend
-			pGEDevDesc gdd = GEcreateDevDesc (dev);
+			desc->devnum = 0;  // graphics engine will send an Activate-event, before we were even
+			                   // able to see our own devnum and call RKD_Create. Therefore, initialize
+			                   // devnum to 0, so as not to confuse the frontend
+			desc->id = id++;   // extra identifier to make sure, R and the frontend are really talking about the same device
+			                   // in case of potentially out-of-sync operations (notably RKDADjustSize)
+			pGEDevDesc gdd = GEcreateDevDesc(dev);
 			gdd->displayList = R_NilValue;
-			GEaddDevice2 (gdd, "RKGraphicsDevice");
+			GEaddDevice2(gdd, "RKGraphicsDevice");
 #ifdef _MSC_VER
 			// See RKD_Close()
 			desc->rgdevdesc = gdd;
@@ -104,7 +108,7 @@ void RKStartGraphicsDevice (double width, double height, double pointsize, const
 
 	if (desc) {
 		desc->devnum = curDevice ();
-		RKD_Create (desc->width, desc->height, dev, title, antialias);
+		RKD_Create (desc->width, desc->height, dev, title, antialias, desc->id);
 	} else {
 		Rf_error("unable to start device");
 	}

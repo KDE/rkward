@@ -1067,7 +1067,7 @@ SEXP doCaptureOutput (SEXP mode, SEXP capture_messages, SEXP capture_output, SEX
 }
 
 SEXP RKStartGraphicsDevice (SEXP width, SEXP height, SEXP pointsize, SEXP family, SEXP bg, SEXP title, SEXP antialias);
-SEXP RKD_AdjustSize (SEXP devnum);
+SEXP RKD_AdjustSize (SEXP devnum, SEXP id);
 SEXP doWs (SEXP name);
 void doPendingPriorityCommands ();
 
@@ -1157,7 +1157,7 @@ bool RKRBackend::startR () {
 		{ "rk.update.locale", (DL_FUNC) (void*) &doUpdateLocale, 0 },
 		{ "rk.capture.output", (DL_FUNC) (void*) &doCaptureOutput, 5 },
 		{ "rk.graphics.device", (DL_FUNC) (void*) &RKStartGraphicsDevice, 7},
-		{ "rk.graphics.device.resize", (DL_FUNC) (void*) &RKD_AdjustSize, 1},
+		{ "rk.graphics.device.resize", (DL_FUNC) (void*) &RKD_AdjustSize, 2},
 		{ 0, 0, 0 }
 	};
 	R_registerRoutines (R_getEmbeddingDllInfo(), NULL, callMethods, NULL, NULL);

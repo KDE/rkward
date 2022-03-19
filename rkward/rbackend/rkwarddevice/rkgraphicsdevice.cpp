@@ -50,6 +50,7 @@ RKGraphicsDevice::RKGraphicsDevice (double width, double height, const QString &
 
 	interaction_opcode = -1;
 	dialog = 0;
+	id = 0;
 	recording_path = false;
 	view = new QLabel ();
 	view->installEventFilter (this);
@@ -163,7 +164,7 @@ int RKGraphicsDevice::finalizeTilingPattern(int extend) {
 void RKGraphicsDevice::viewKilled () {
 	RK_TRACE (GRAPHICS_DEVICE);
 	view = 0;
-	closeDevice (devices.key (this));
+//	closeDevice(devices.key(this));  // Do not do this, here. Don't mark the device as dead until R thinks so, too, and tells us about it.
 }
 
 void RKGraphicsDevice::triggerUpdate () {
@@ -204,12 +205,13 @@ void RKGraphicsDevice::forceSync() {
 
 void RKGraphicsDevice::checkSize() {
 	RK_TRACE (GRAPHICS_DEVICE);
+	if(!view) return;
 	if (view->size () != area.size ()) {
-		RKGlobals::rInterface ()->issueCommand (new RCommand ("rkward:::RK.resize (" + QString::number (devices.key (this) + 1) + ')', RCommand::PriorityCommand));
+		RKGlobals::rInterface()->issueCommand(new RCommand ("rkward:::RK.resize(" + QString::number(devices.key(this) + 1) + ',' + QString::number(id) + ')', RCommand::PriorityCommand));
 	}
 }
 
-RKGraphicsDevice* RKGraphicsDevice::newDevice (int devnum, double width, double height, const QString &title, bool antialias) {
+RKGraphicsDevice* RKGraphicsDevice::newDevice (int devnum, double width, double height, const QString &title, bool antialias, quint32 id) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
 	if (devices.contains (devnum)) {
@@ -217,6 +219,7 @@ RKGraphicsDevice* RKGraphicsDevice::newDevice (int devnum, double width, double 
 		closeDevice (devnum);
 	}
 	RKGraphicsDevice* dev = new RKGraphicsDevice (width, height, title.isEmpty () ? i18n ("Graphics Device Number %1", QString::number (devnum+1)) : title, antialias);
+	dev->id = id;
 	devices.insert (devnum, dev);
 	return (dev);
 }
@@ -479,6 +482,7 @@ QImage RKGraphicsDevice::capture () const {
 void RKGraphicsDevice::setActive (bool active) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
+	if (!view) return;
 	if (active) view->setWindowTitle (i18nc ("Window title", "%1 (Active)", base_title));
 	else view->setWindowTitle (i18nc ("Window title", "%1 (Inactive)", base_title));
 	emit (activeChanged (active));

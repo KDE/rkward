@@ -96,14 +96,13 @@ enum RKDOpcodes {
 	RKDRect,
 	RKDTextUTF8,
 	RKDNewPage,
-	RKDClose,
+	RKDStartGettingEvents,
 	RKDActivate,           // 10
 	RKDDeActivate,
 	RKDClip,
 	RKDMode,
 	RKDRaster,
 	RKDSetSize,            // 15
-	RKDStartGettingEvents,
 	RKDStopGettingEvents,
 	RKDReleasePattern,
 	RKDStartRecordTilingPattern,      // part of setPattern in R
@@ -124,6 +123,7 @@ enum RKDOpcodes {
 	RKDSetClipPath,       // 110
 	RKDEndRecordClipPath,
 	RKDForceSync,
+	RKDClose,
 
 	// Protocol operations
 	RKDCancel              = 200

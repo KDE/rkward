@@ -368,7 +368,7 @@ void RKCaughtX11Window::commonClose(bool in_destructor) {
 	if (rk_native_device) rk_native_device->stopInteraction();
 
 	QString status = i18n("Closing device (saving history)");
-	if (!close_attempted) {
+	if (!(close_attempted || killed_in_r)) {
 		RCommand* c = new RCommand("dev.off (" + QString::number(device_number) + ')', RCommand::App, i18n("Shutting down device number %1", device_number));
 		if (!in_destructor) setStatusMessage(status, c);
 		RKGlobals::rInterface()->issueCommand(c);

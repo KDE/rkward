@@ -245,8 +245,9 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			double width, height;
 			QString title;
 			bool antialias;
-			streamer.instream >> width >> height >> title >> antialias;
-			device = RKGraphicsDevice::newDevice (devnum, width, height, title, antialias);
+			quint32 id;
+			streamer.instream >> width >> height >> title >> antialias >> id;
+			device = RKGraphicsDevice::newDevice (devnum, width, height, title, antialias, id);
 			RKWorkplace::mainWorkplace ()->newRKWardGraphisWindow (device, devnum+1);
 			connect (device, &RKGraphicsDevice::locatorDone, this, &RKGraphicsDeviceFrontendTransmitter::locatorDone);
 			connect (device, &RKGraphicsDevice::newPageConfirmDone, this, &RKGraphicsDeviceFrontendTransmitter::newPageConfirmDone);
@@ -331,7 +332,8 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 		} else if (opcode == RKDNewPage) {
 			device->clear(readBrush(streamer.instream, device));
 		} else if (opcode == RKDClose) {
-			RKGraphicsDevice::closeDevice (devnum);
+			RKGraphicsDevice::closeDevice(devnum);
+			sendDummyReply(devnum);
 		} else if (opcode == RKDActivate) {
 			device->setActive (true);
 		} else if (opcode == RKDDeActivate) {
@@ -378,7 +380,7 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 		} else if (opcode == RKDSetClipPath) {
 			qint32 index;
 			streamer.instream >> index;
-			bool ok = device->setClipToCachedPath(index);
+			qint8 ok = device->setClipToCachedPath(index) ? 1 : 0;
 			streamer.outstream << ok;
 			streamer.writeOutBuffer();
 		} else if (opcode == RKDReleaseClipPath) {
@@ -442,8 +444,7 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			device->confirmNewPage ();
 		} else if (opcode == RKDForceSync) {
 			device->forceSync();
-			streamer.outstream << (qint8) 0;
-			streamer.writeOutBuffer();
+			sendDummyReply(devnum);
 		} else {
 			RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Unhandled operation of type %d for device number %d. Skipping.", opcode, devnum+1);
 		}
@@ -472,9 +473,19 @@ void RKGraphicsDeviceFrontendTransmitter::sendDummyReply (quint8 opcode) {
 	} else if (opcode == RKDStrWidthUTF8) {
 		double width = 1;
 		streamer.outstream << width;
+	} else if (opcode == RKDCapture) {
+		streamer.outstream << (quint32) 0 << (quint32) 0;
+//	} else if (opcode == RKDQueryResolution) {
+//		streamer.outstream << (qint32) 0;
 	} else if (opcode == RKDGetSize) {
 		streamer.outstream << QSizeF ();
+	} else if (opcode == RKDSetPattern || opcode == RKDEndRecordTilingPattern || opcode == RKDEndRecordClipPath) {
+		streamer.outstream << (qint32) -1;
+	} else if (opcode == RKDSetClipPath) {
+		streamer.outstream << (qint32) 0;
 	} else if (opcode == RKDFetchNextEvent) {
+		streamer.outstream << (qint8) RKDNothing;
+	} else if (opcode == RKDClose || opcode == RKDForceSync) {
 		streamer.outstream << (qint8) RKDNothing;
 	} else {
 		return;	// nothing to write

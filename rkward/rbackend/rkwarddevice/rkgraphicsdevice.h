@@ -51,7 +51,7 @@ protected:
 	RKGraphicsDevice (double width, double height, const QString &title, bool antialias);
 	~RKGraphicsDevice ();
 public:
-	static RKGraphicsDevice* newDevice (int devnum, double width, double height, const QString &title, bool antialias);
+	static RKGraphicsDevice* newDevice (int devnum, double width, double height, const QString &title, bool antialias, quint32 id);
 	static void closeDevice (int devnum);
 	static QHash<int, RKGraphicsDevice*> devices;
 
@@ -89,7 +89,7 @@ public:
 	void stopGettingEvents ();
 
  	QWidget* viewPort () const { return view; };
-	QSizeF currentSize () const { return view->size (); }
+	QSizeF currentSize () const { return view ? view->size() : QSizeF(); }
 	void setAreaSize (const QSize &size);
 
 /** Patterns / gradients are registered per device in R */
@@ -139,6 +139,7 @@ private:
 	bool recording_path;
 
 	int interaction_opcode;	/**< Current interactive operation (from RKDOpcodes enum), or -1 is there is no current interactive operation */
+	quint32 id;
 
 	QList<StoredEvent> stored_events;
 
