@@ -273,8 +273,6 @@ RKCaughtX11Window::RKCaughtX11Window (RKGraphicsDevice* rkward_device, int devic
 
 	commonInit (device_number);
 	rk_native_device = rkward_device;
-	xembed_container->setFixedSize (rk_native_device->viewPort ()->size ());
-	resize (xembed_container->size ());
 	rk_native_device->viewPort ()->setParent (xembed_container);
 	xembed_container->layout ()->addWidget (rk_native_device->viewPort ());
 	connect (rkward_device, &RKGraphicsDevice::captionChanged, this, &RKCaughtX11Window::setCaption);
@@ -282,6 +280,8 @@ RKCaughtX11Window::RKCaughtX11Window (RKGraphicsDevice* rkward_device, int devic
 	stop_interaction->setVisible (true);
 	stop_interaction->setEnabled (false);
 	setCaption (rkward_device->viewPort ()->windowTitle ());
+	rkward_device->viewPort()->setFixedSize(rkward_device->viewPort()->size()); // Prevent resizing *before* the window is shown. Will be re-enabled later
+	setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
 	QTimer::singleShot (0, this, SLOT (doEmbed()));
 }
@@ -335,6 +335,11 @@ void RKCaughtX11Window::doEmbed () {
 		capture = QWidget::createWindowContainer (embedded, xembed_container);
 		xembed_container->layout ()->addWidget (capture);
 		xembed_container->show ();
+	}
+	if (rk_native_device) {
+		rk_native_device->viewPort()->setMinimumSize(5,5);
+		rk_native_device->viewPort()->setMaximumSize(32768,32768);
+		setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 	}
 
 	if (!isAttached ()) {

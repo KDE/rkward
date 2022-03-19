@@ -79,6 +79,12 @@ DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture
 	createGUI(widget_to_capture->getPart());
 //	if (widget_to_capture->uiBuddy()) factory()->addClient(widget_to_capture->uiBuddy());
 	captured = widget_to_capture;
+	// Special case for graph windows: We don't want to touch their default size before showing. So tell the toolbars to step back, if needed.
+	if (widget_to_capture->isType(RKMDIWindow::X11Window)) {
+		foreach (KToolBar *bar, toolBars()) {
+			bar->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
+		}
+	}
 
 	hideEmptyMenus ();
 	// hide empty menus now, and after any reloads
