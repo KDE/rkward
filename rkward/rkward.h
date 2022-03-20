@@ -2,7 +2,7 @@
                           rkward.h  -  description
                              -------------------
     begin                : Tue Oct 29 20:06:08 CET 2002
-    copyright            : (C) 2002-2020 by Thomas Friedrichsmeier
+    copyright            : (C) 2002-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -149,7 +149,6 @@ private:
 
 	QLabel* statusbar_r_status;
 	KSqueezedTextLabel* statusbar_cwd;
-	QLabel* statusbar_ready;
 	KParts::PartManager *part_manager;
 
 	// QAction pointers to enable/disable actions

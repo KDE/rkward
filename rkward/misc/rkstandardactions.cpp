@@ -54,7 +54,7 @@ QAction* RKStandardActions::runCurrent (RKMDIWindow *window, const QObject *rece
 	QAction* ret = window->standardActionCollection ()->addAction ("run_current", receiver, member);
 	if (current_or_line) {
 		ret->setText (i18n ("Run line / selection"));
-		ret->setStatusTip (i18n ("Runs the current selection (if any) or the current line (if there is no selection)"));
+		ret->setWhatsThis(i18n ("Runs the current selection (if any) or the current line (if there is no selection)"));
 		ret->setToolTip (ret->statusTip ());
 	} else {
 		ret->setText (i18n ("Run selection"));

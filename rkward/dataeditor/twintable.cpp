@@ -106,22 +106,22 @@ void TwinTable::initActions () {
 	RK_TRACE (EDITOR);
 
 	editCut = actionCollection ()->addAction (KStandardAction::Cut, "cut", this, SLOT(cut()));
-	editCut->setStatusTip (i18n("Cuts the selected section and puts it to the clipboard"));
+	editCut->setWhatsThis(i18n("Cuts the selected section and puts it to the clipboard"));
 	editCopy = actionCollection ()->addAction (KStandardAction::Copy, "copy", this, SLOT(copy()));
-	editCopy->setStatusTip (i18n("Copies the selected section to the clipboard"));
+	editCopy->setWhatsThis(i18n("Copies the selected section to the clipboard"));
 //	editor->editActions ()->addAction (editCopy);	// this is a read-only action, not an "edit" action
 	editPaste = actionCollection ()->addAction (KStandardAction::Paste, "paste", this, SLOT(paste()));
-	editPaste->setStatusTip (i18n("Pastes the clipboard contents to current position"));
+	editPaste->setWhatsThis(i18n("Pastes the clipboard contents to current position"));
 
 	editPasteToTable = actionCollection ()->addAction ("paste_to_table", this, SLOT(pasteToTable()));
 	editPasteToTable->setText (i18n("Paste inside table"));
 	editPasteToTable->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionPasteInsideTable));
-	editPasteToTable->setStatusTip (i18n("Pastes the clipboard contents to current position, but not beyond the table's boundaries"));
+	editPasteToTable->setWhatsThis(i18n("Pastes the clipboard contents to current position, but not beyond the table's boundaries"));
 
 	editPasteToSelection = actionCollection ()->addAction ("paste_to_selection", this, SLOT(pasteToSelection()));
 	editPasteToSelection->setText (i18n("Paste inside selection"));
 	editPasteToSelection->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionPasteInsideSelection));
-	editPasteToSelection->setStatusTip (i18n("Pastes the clipboard contents to current position, but not beyond the boundaries of the current selection"));
+	editPasteToSelection->setWhatsThis(i18n("Pastes the clipboard contents to current position, but not beyond the boundaries of the current selection"));
 
 	// header menus
 	action_insert_col_left = actionCollection ()->addAction ("insert_col_left", this, SLOT (insertColumn()));
@@ -149,12 +149,12 @@ void TwinTable::initActions () {
 	action_tb_lock_editing = new KToggleAction (i18nc ("verb: switch to read-only state. Make this short.", "Lock"), this);
 	action_tb_lock_editing->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionLock));
 	action_tb_lock_editing->setActionGroup (lockactions);
-	action_tb_lock_editing->setStatusTip (i18n ("Disable editing (to prevent accidental modification of data)"));
+	action_tb_lock_editing->setWhatsThis(i18n ("Disable editing (to prevent accidental modification of data)"));
 	actionCollection ()->addAction ("lock_editing", action_tb_lock_editing);
 	action_tb_unlock_editing = new KToggleAction (i18nc ("verb: switch to read-write state. Make this short.", "Unlock"), this);
 	action_tb_unlock_editing->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionUnlock));
 	action_tb_unlock_editing->setActionGroup (lockactions);
-	action_tb_unlock_editing->setStatusTip (i18n ("Enable editing"));
+	action_tb_unlock_editing->setWhatsThis(i18n ("Enable editing"));
 	actionCollection ()->addAction ("unlock_editing", action_tb_unlock_editing);
 	connect (action_tb_unlock_editing, &QAction::toggled, this, &TwinTable::enableEditing);
 	// NOTE: No need to connect lock_editing, too, as they are radio-exclusive

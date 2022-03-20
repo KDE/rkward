@@ -2,6 +2,7 @@ TODOS for autotests:
   - Check and update the standards files
   - Use options(warn=1), in order to get warnings into the test?
 
+- Space-saving placement of main window status bar, and display more tips in it
 - Fixed: Intial graphics window size would be (mostly) ignored
 - Fix some buglets around closing on-screen devices
 - Implement new R graphics functions: gradients, patterns, clip paths

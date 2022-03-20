@@ -887,7 +887,7 @@ void RKHTMLWindowPart::initActions () {
 	actionCollection ()->addAction (KStandardAction::SelectAll, "select_all", window->view->pageAction (RKWebPage::SelectAll), SLOT (trigger()));
 	// unfortunately, this will only affect the default encoding, not necessarily the "real" encoding
 	KCodecAction *encoding = new KCodecAction (QIcon::fromTheme("character-set"), i18n ("Default &Encoding"), this, true);
-	encoding->setStatusTip (i18n ("Set the encoding to assume in case no explicit encoding has been set in the page or in the HTTP headers."));
+	encoding->setWhatsThis(i18n ("Set the encoding to assume in case no explicit encoding has been set in the page or in the HTTP headers."));
 	actionCollection ()->addAction ("view_encoding", encoding);
 	connect (encoding, static_cast<void (KCodecAction::*)(QTextCodec *)>(&KCodecAction::triggered), window, &RKHTMLWindow::setTextEncoding);
 
@@ -923,7 +923,7 @@ void RKHTMLWindowPart::initActions () {
 	activate = actionCollection()->addAction("output_activate", window, SLOT(slotActivate()));
 	activate->setText(i18n("Set Output as &Active"));
 	activate->setIcon(QIcon::fromTheme("emblem-favorite"));
-	activate->setStatusTip(i18n("Set this output as the file to append output to."));
+	activate->setWhatsThis(i18n("Set this output as the file to append output to."));
 
 	actionCollection ()->addAction (KStandardAction::Find, "find", window->findbar, SLOT (activate()));
 	QAction* findAhead = actionCollection ()->addAction ("find_ahead", new QAction (i18n ("Find as you type"), this));

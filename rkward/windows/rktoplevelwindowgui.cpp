@@ -73,9 +73,9 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI(KXmlGuiWindow *for_window) : QObject(fo
 	actionCollection()->addAction(KStandardAction::ReportBug, "report_bug", this, SLOT(reportRKWardBug()));
 	actionCollection()->addAction(KStandardAction::SwitchApplicationLanguage, "switch_application_language", this, SLOT(showSwitchApplicationLanguage()));
 
-	help_invoke_r_help->setStatusTip (i18n ("Shows the R help index"));
-	show_help_search->setStatusTip (i18n ("Shows/raises the R Help Search window"));
-	show_rkward_help->setStatusTip (i18n ("Show help on RKWard"));
+	help_invoke_r_help->setWhatsThis(i18n ("Shows the R help index"));
+	show_help_search->setWhatsThis(i18n ("Shows/raises the R Help Search window"));
+	show_rkward_help->setWhatsThis(i18n ("Show help on RKWard"));
 
 	// window menu
 	// NOTE: enabling / disabling the prev/next actions is not a good idea. It will cause the script windows to "accept" their shortcuts, when disabled

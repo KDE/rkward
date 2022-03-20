@@ -2,7 +2,7 @@
                           rkworkplace  -  description
                              -------------------
     begin                : Thu Sep 21 2006
-    copyright            : (C) 2006-2020 by Thomas Friedrichsmeier
+    copyright            : (C) 2006-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -42,6 +42,7 @@ class RKGraphicsDevice;
 class KMessageWidget;
 class QWindow;
 class RKOutputDirectory;
+class QStatusBar;
 
 #define TOOL_WINDOW_BAR_COUNT 4
 
@@ -218,6 +219,7 @@ Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsMod
 /** Inserts the given message widget above the central area. While technically, the workplace becomes the parent widget of the message widget, it is the caller's responsibility to
  *  delete the widget, when appropriate. */
 	void addMessageWidget (KMessageWidget *message);
+	QStatusBar* statusBar() { return status_bar; };
 
 /** For window splitting: Copy the given window (or, if that is not possible, create a placeholder window), and attach it to the main view. */
 	void splitAndAttachWindow (RKMDIWindow *source);
@@ -260,6 +262,7 @@ private:
 friend class RKToolWindowBar;
 friend class KatePluginIntegrationWindow;
 	void placeInToolWindowBar (RKMDIWindow *window, int position);
+	QStatusBar *status_bar;
 
 	/** Control placement of windows from R */
 	struct NamedWindow {

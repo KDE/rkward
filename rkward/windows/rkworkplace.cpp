@@ -2,7 +2,7 @@
                           rkworkplace  -  description
                              -------------------
     begin                : Thu Sep 21 2006
-    copyright            : (C) 2006-2020 by Thomas Friedrichsmeier
+    copyright            : (C) 2006-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -33,6 +33,7 @@
 #include <QMimeDatabase>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QStatusBar>
 
 #include "detachedwindowcontainer.h"
 #include "rkcommandeditorwindow.h"
@@ -61,6 +62,8 @@
 
 // static
 RKWorkplace *RKWorkplace::main_workplace = 0;
+
+#include <QLabel> // remove ME
 
 RKWorkplace::RKWorkplace (QWidget *parent) : QWidget (parent) {
 	RK_TRACE (APP);
@@ -109,7 +112,11 @@ RKWorkplace::RKWorkplace (QWidget *parent) : QWidget (parent) {
 	tool_window_bars[RKToolWindowList::Bottom]->setSplitter (vert_splitter);
 	vbox->addWidget (tool_window_bars[RKToolWindowList::Top]);
 	vbox->addWidget (vert_splitter);
-	vbox->addWidget (tool_window_bars[RKToolWindowList::Bottom]);
+	auto bottom_box = new QHBoxLayout();
+	vbox->addLayout(bottom_box);
+	bottom_box->addWidget (tool_window_bars[RKToolWindowList::Bottom]);
+	status_bar = new QStatusBar();
+	bottom_box->addWidget(status_bar, 0, Qt::AlignRight);
 
 	KConfigGroup toolbar_config = KSharedConfig::openConfig ()->group ("ToolwindowBars");
 	for (int i = 0; i < TOOL_WINDOW_BAR_COUNT; ++i) tool_window_bars[i]->restoreSize (toolbar_config);

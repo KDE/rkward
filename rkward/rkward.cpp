@@ -136,13 +136,13 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 	// call inits to invoke all other construction parts
 	RKStandardIcons::initIcons ();
 	initActions();
-	initStatusBar();
 
 	new RKWorkplace (this);
 	RKWorkplace::mainWorkplace ()->initActions (actionCollection ());
 	setCentralWidget (RKWorkplace::mainWorkplace ());
 	connect (RKWorkplace::mainWorkplace ()->view (), &RKWorkplaceView::captionChanged, this, static_cast<void (RKWardMainWindow::*)(const QString&)>(&RKWardMainWindow::setCaption));
 	connect (RKWorkplace::mainWorkplace (), &RKWorkplace::workspaceUrlChanged, this, &RKWardMainWindow::addWorkspaceUrl);
+	initStatusBar();
 
 	part_manager = new KParts::PartManager (this);
 	// When the manager says the active part changes,
@@ -490,7 +490,7 @@ void RKWardMainWindow::initActions() {
 	new_data_frame = actionCollection ()->addAction ("new_data_frame", this, SLOT (slotNewDataFrame()));
 	new_data_frame->setText (i18n ("Dataset"));
 	new_data_frame->setIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowDataFrameEditor));
-	new_data_frame->setStatusTip (i18n ("Creates new empty dataset and opens it for editing"));
+	new_data_frame->setWhatsThis(i18n ("Creates new empty dataset and opens it for editing"));
 
 	new_command_editor = actionCollection ()->addAction (KStandardAction::New, "new_command_editor", this, SLOT(slotNewCommandEditor()));
 	new_command_editor->setText (i18n ("Script File"));
@@ -499,7 +499,7 @@ void RKWardMainWindow::initActions() {
 	new_output = actionCollection ()->addAction("new_output", this, SLOT(slotNewOutput()));
 	new_output->setText(i18n("Output document"));
 	new_output->setIcon(RKStandardIcons::getIcon(RKStandardIcons::WindowOutput));
-	new_output->setStatusTip(i18n("Creates and activates a new output document"));
+	new_output->setWhatsThis(i18n("Creates and activates a new output document"));
 
 	fileOpenScript = actionCollection()->addAction(KStandardAction::Open, "file_open_script", this, SLOT(slotOpenCommandEditor()));
 	actionCollection()->setDefaultShortcut(fileOpenScript, Qt::ControlModifier + Qt::AltModifier + Qt::Key_O);
@@ -526,31 +526,31 @@ void RKWardMainWindow::initActions() {
 #else
 	action = actionCollection ()->addAction ("import_data", this, SLOT (importData()));
 	action->setText (i18n ("Import Data"));
-	action->setStatusTip (i18n ("Import data from a variety of file formats"));
+	action->setWhatsThis(i18n ("Import data from a variety of file formats"));
 #endif
 #endif
 
 	fileOpenWorkspace = actionCollection ()->addAction (KStandardAction::Open, "file_openx", this, SLOT(slotFileOpenWorkspace()));
 	fileOpenWorkspace->setText (i18n ("Open Workspace..."));
 	actionCollection ()->setDefaultShortcut (fileOpenWorkspace, Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_O);
-	fileOpenWorkspace->setStatusTip (i18n ("Opens an existing document"));
+	fileOpenWorkspace->setWhatsThis(i18n ("Opens an existing document"));
 
 	fileOpenRecentWorkspace = static_cast<KRecentFilesAction*> (actionCollection ()->addAction (KStandardAction::OpenRecent, "file_open_recentx", this, SLOT(askOpenWorkspace(QUrl))));
 	fileOpenRecentWorkspace->setText (i18n ("Open Recent Workspace"));
-	fileOpenRecentWorkspace->setStatusTip (i18n ("Opens a recently used file"));
+	fileOpenRecentWorkspace->setWhatsThis(i18n ("Opens a recently used file"));
 
 	fileSaveWorkspace = actionCollection ()->addAction (KStandardAction::Save, "file_savex", this, SLOT(slotFileSaveWorkspace()));
 	fileSaveWorkspace->setText (i18n ("Save Workspace"));
 	actionCollection ()->setDefaultShortcut (fileSaveWorkspace, Qt::ControlModifier + Qt::AltModifier + Qt::Key_S);
-	fileSaveWorkspace->setStatusTip (i18n ("Saves the actual document"));
+	fileSaveWorkspace->setWhatsThis(i18n ("Saves the actual document"));
 
 	fileSaveWorkspaceAs = actionCollection ()->addAction (KStandardAction::SaveAs, "file_save_asx", this, SLOT(slotFileSaveWorkspaceAs()));
 	actionCollection ()->setDefaultShortcut (fileSaveWorkspaceAs, Qt::ControlModifier + Qt::AltModifier + Qt::ShiftModifier + Qt::Key_S);
 	fileSaveWorkspaceAs->setText (i18n ("Save Workspace As"));
-	fileSaveWorkspaceAs->setStatusTip (i18n ("Saves the actual document as..."));
+	fileSaveWorkspaceAs->setWhatsThis(i18n ("Saves the actual document as..."));
 
 	fileQuit = actionCollection ()->addAction (KStandardAction::Quit, "file_quitx", this, SLOT(close()));
-	fileQuit->setStatusTip (i18n ("Quits the application"));
+	fileQuit->setWhatsThis(i18n ("Quits the application"));
 
 	interrupt_all_commands = actionCollection ()->addAction ("cancel_all_commands", this, SLOT (slotCancelAllCommands()));
 	interrupt_all_commands->setText (i18n ("Interrupt all commands"));
@@ -575,7 +575,7 @@ void RKWardMainWindow::initActions() {
 
 	close_all_editors = actionCollection ()->addAction ("close_all_editors", this, SLOT (slotCloseAllEditors()));
 	close_all_editors->setText (i18n ("Close All Data"));
-	close_all_editors->setStatusTip (i18n ("Closes all open data editors"));
+	close_all_editors->setWhatsThis(i18n ("Closes all open data editors"));
 
 	action = actionCollection ()->addAction (KStandardAction::Close, "window_close", this, SLOT (slotCloseWindow()));
 
@@ -671,6 +671,9 @@ void RKWardMainWindow::partChanged(KParts::Part *part) {
 	if (gui_rebuild_locked) return;
 	if (!part) return;
 	createGUI(part);
+	foreach (QAction *a, actions()) {
+		if (a->statusTip().isEmpty()) a->setStatusTip(a->whatsThis());
+	}
 
 	if (!guiFactory()) {
 		RK_ASSERT (false);
@@ -725,29 +728,37 @@ void RKWardMainWindow::lockGUIRebuild (bool lock) {
 void RKWardMainWindow::initStatusBar () {
 	RK_TRACE (APP);
 
-	statusbar_ready = new QLabel (i18n ("Ready."), statusBar ());
-	statusBar ()->addWidget (statusbar_ready);
-	statusbar_cwd = new KSqueezedTextLabel (statusBar ());
-	statusbar_cwd->setAlignment (Qt::AlignRight);
-	statusbar_cwd->setToolTip (i18n ("Current working directory"));
-	statusBar ()->addWidget (statusbar_cwd, 10);
-	updateCWD ();
+	// The regular status bar is broken in KF5 (since when? At least 5.68.0), but also it takes up too much space.
+	// Instead, we use a right-aligned bar merged into the bottom toolbar -> no space wasted.
+	statusBar()->hide();
+	auto realbar = RKWorkplace::mainWorkplace()->statusBar();
+	connect(statusBar(), &QStatusBar::messageChanged, [this](const QString &message) {
+		if(message.isEmpty()) updateCWD();
+		else statusbar_cwd->setText(message);
+		// realbar->showMessage(message);  // why doesn't this work, instead? Qt 5.12.8
+	});
 
-	QWidget *box = new QWidget (statusBar ());
-	QHBoxLayout *boxl = new QHBoxLayout (box);
-	boxl->setSpacing (0);
-	statusbar_r_status = new QLabel ("&nbsp;<b>R</b>&nbsp;", box);
-	statusbar_r_status->setFixedHeight (statusBar ()->fontMetrics ().height () + 2);
-	boxl->addWidget (statusbar_r_status);
+	statusbar_cwd = new KSqueezedTextLabel();
+	statusbar_cwd->setAlignment(Qt::AlignRight);
+	statusbar_cwd->setToolTip(i18n("Current working directory"));
+	realbar->addWidget(statusbar_cwd, 10);
+	updateCWD();
 
-	QToolButton* dummy = new QToolButton (box);
-	dummy->setDefaultAction (interrupt_all_commands);
-	dummy->setFixedHeight (statusbar_r_status->height ());
-	dummy->setAutoRaise (true);
-	boxl->addWidget (dummy);
+	auto box = new QWidget();
+	QHBoxLayout *boxl = new QHBoxLayout(box);
+	boxl->setSpacing(0);
+	statusbar_r_status = new QLabel("&nbsp;<b>R</b>&nbsp;");
+	statusbar_r_status->setFixedHeight(realbar->fontMetrics().height() + 2);
+	boxl->addWidget(statusbar_r_status);
 
-	statusBar ()->addPermanentWidget (box, 0);
-	setRStatus (RInterface::Starting);
+	QToolButton* dummy = new QToolButton();
+	dummy->setDefaultAction(interrupt_all_commands);
+	dummy->setFixedHeight(statusbar_r_status->height());
+	dummy->setAutoRaise(true);
+	boxl->addWidget(dummy);
+
+	realbar->addPermanentWidget(box, 0);
+	setRStatus(RInterface::Starting);
 }
 
 void RKWardMainWindow::saveOptions () {

@@ -198,7 +198,7 @@ QAction* RKConsole::addProxyAction (const QString& actionName, const QString& la
 		ret->setIcon (found->icon ());
 		ret->setIconText (found->iconText ());
 		ret->setToolTip (found->toolTip ());
-		ret->setStatusTip (found->statusTip ());
+		ret->setWhatsThis(found->statusTip ());
 		ret->setCheckable (found->isCheckable ());
 		ret->setChecked (found->isChecked ());
 		// TODO: ideally, we'd also relay enabledness, checked state, etc. That would probably require a separate class,

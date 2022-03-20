@@ -378,7 +378,7 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 
 	action_setwd_to_script = ac->addAction ("setwd_to_script", this, SLOT (setWDToScript()));
 	action_setwd_to_script->setText (i18n ("CD to script directory"));
-	action_setwd_to_script->setStatusTip (i18n ("Change the working directory to the directory of this script"));
+	action_setwd_to_script->setWhatsThis(i18n ("Change the working directory to the directory of this script"));
 	action_setwd_to_script->setToolTip (action_setwd_to_script->statusTip ());
 	action_setwd_to_script->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionCDToScript));
 
@@ -398,7 +398,7 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	preview_actions[OutputWindow]->setToolTip (i18n ("Preview any output to the RKWard Output Window. This preview will be empty, if there is no call to <i>rk.print()</i> or other RKWard output commands."));
 	for (int i = 0; i < preview_actions.size (); ++i) {
 		preview_actions[i]->setCheckable (true);
-		preview_actions[i]->setStatusTip (preview_actions[i]->toolTip ());
+		preview_actions[i]->setWhatsThis(preview_actions[i]->toolTip ());
 	}
 	action_no_preview->setChecked (true);
 	connect (preview, &RKXMLGUIPreviewArea::previewClosed, this, &RKCommandEditorWindow::discardPreview);
