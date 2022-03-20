@@ -22,6 +22,7 @@
 #include <QPen>
 #include <QTimer>
 #include <QPainter>
+#include <QPainterPath>
 #include <QLabel>
 
 #ifndef Q_OS_WIN
