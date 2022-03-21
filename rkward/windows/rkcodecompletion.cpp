@@ -467,6 +467,7 @@ RKCompletionModelBase::RKCompletionModelBase (RKCompletionManager *manager) : KT
 	RK_TRACE (COMMANDEDITOR);
 	n_completions = 0;
 	RKCompletionModelBase::manager = manager;
+	setHasGroups(true);
 }
 
 RKCompletionModelBase::~RKCompletionModelBase () {
@@ -505,8 +506,6 @@ void RKCompletionModelBase::executeCompletionItem (KTextEditor::View *view, cons
 
 RKCodeCompletionModel::RKCodeCompletionModel (RKCompletionManager *manager) : RKCompletionModelBase (manager) {
 	RK_TRACE (COMMANDEDITOR);
-
-	setHasGroups (true);
 }
 
 RKCodeCompletionModel::~RKCodeCompletionModel () {
