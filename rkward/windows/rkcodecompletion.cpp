@@ -57,6 +57,21 @@ public:
 };
 
 //////////////////////// RKCompletionManager //////////////////////
+#include <KAboutData>
+#include <KMessageBox>
+bool checkSaneVersion() {
+	static bool complaint_shown = false;
+	KAboutData d = KTextEditor::Editor::instance()->aboutData();
+	if (d.version() == "5.92.0") {
+		if (!complaint_shown) {
+			KMessageBox::information(nullptr, i18n("Due to a bug in version 5.92.0 of ktexteditor (the version in use, right now), the function call tip feature would"
+			                                 " crash, and has been disabled in this session. To enable the call tip, install any other (earlier or later) version of (lib|kf5)ktexteditor."), i18n("Incompatible version of ktexteditor"), "ktexteditor_v5.92.0");
+			complaint_shown = true;
+		}
+		return false;
+	}
+	return true;
+}
 
 RKCompletionManager::RKCompletionManager(KTextEditor::View* view, const RKCodeCompletionSettings *settings) : QObject(view), settings(settings) {
 	RK_TRACE (COMMANDEDITOR);
@@ -305,7 +320,7 @@ void RKCompletionManager::updateVisibility () {
 		startModel (cc_iface, kate_keyword_completion_model, min_len, symbol_range, &active_models);
 	}
 // NOTE: Freaky bug in KF 5.44.0: Call hint will not show for the first time, if logically above the primary screen. TODO: provide patch for kateargumenthinttree.cpp:166pp
-	startModel (cc_iface, callhint_model, true && settings->isEnabled (RKCodeCompletionSettings::Calltip), currentCallRange (), &active_models);
+	startModel (cc_iface, callhint_model, checkSaneVersion() && settings->isEnabled (RKCodeCompletionSettings::Calltip), currentCallRange (), &active_models);
 	startModel (cc_iface, arghint_model, min_len && settings->isEnabled (RKCodeCompletionSettings::Arghint), argname_range, &active_models);
 
 	if (active_models.isEmpty ()) {
