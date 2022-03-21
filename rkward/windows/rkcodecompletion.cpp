@@ -60,17 +60,19 @@ public:
 #include <KAboutData>
 #include <KMessageBox>
 bool checkSaneVersion() {
-	static bool complaint_shown = false;
-	KAboutData d = KTextEditor::Editor::instance()->aboutData();
-	if (d.version() == "5.92.0") {
-		if (!complaint_shown) {
+	static enum { Unknown, Ok, Bad } version_check = Unknown;
+	if (version_check == Unknown) {
+		KAboutData d = KTextEditor::Editor::instance()->aboutData();
+		if (d.version() == "5.92.0") {
 			KMessageBox::information(nullptr, i18n("Due to a bug in version 5.92.0 of ktexteditor (the version in use, right now), the function call tip feature would"
-			                                 " crash, and has been disabled in this session. To enable the call tip, install any other (earlier or later) version of (lib|kf5)ktexteditor."), i18n("Incompatible version of ktexteditor"), "ktexteditor_v5.92.0");
-			complaint_shown = true;
+			                         " crash, and has been disabled in this session. To enable the call tip, install any other (earlier or later) version of (lib|kf5)ktexteditor."),
+			                         i18n("Incompatible version of ktexteditor"), "ktexteditor_v5.92.0");
+			version_check = Bad;
+		} else {
+			version_check = Ok;
 		}
-		return false;
 	}
-	return true;
+	return version_check == Ok;
 }
 
 RKCompletionManager::RKCompletionManager(KTextEditor::View* view, const RKCodeCompletionSettings *settings) : QObject(view), settings(settings) {
