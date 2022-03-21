@@ -187,6 +187,7 @@ public:
 		RKD_OUT_STREAM << (qint8) ColorFill; WRITE_COLOR_BYTES (gc->fill); \
 	}
 #else
+#  define WRITE_FILL() \
 	RKD_OUT_STREAM << (qint8) ColorFill; WRITE_COLOR_BYTES (gc->fill);
 #endif
 #define WRITE_FONT(dev) \
