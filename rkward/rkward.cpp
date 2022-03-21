@@ -730,7 +730,7 @@ void RKWardMainWindow::initStatusBar () {
 
 	// The regular status bar is broken in KF5 (since when? At least 5.68.0), but also it takes up too much space.
 	// Instead, we use a right-aligned bar merged into the bottom toolbar -> no space wasted.
-	statusBar()->hide();
+	//statusBar()->hide(); -> after geomtry has been set
 	auto realbar = RKWorkplace::mainWorkplace()->statusBar();
 	connect(statusBar(), &QStatusBar::messageChanged, [this](const QString &message) {
 		if(message.isEmpty()) updateCWD();
@@ -804,6 +804,7 @@ void RKWardMainWindow::readOptions () {
 	fileOpenRecentWorkspace->loadEntries (config->group ("Recent Files"));
 	fileOpenRecent->setMaxItems (RKSettingsModuleCommandEditor::maxNumRecentFiles ());
 	fileOpenRecent->loadEntries (config->group ("Recent Command Files"));
+	statusBar()->hide();
 }
 
 
