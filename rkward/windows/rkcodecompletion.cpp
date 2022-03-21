@@ -742,8 +742,10 @@ void RKArgumentHintModel::updateCompletionList (RObject* _function, const QStrin
 		}
 		fragment = argument;
 		matches.clear ();
-		for (int i = 0; i < args.size (); ++i) {
-			if (args[i].startsWith (fragment)) matches.append (i);
+		if (!fragment.isNull()) {  // meaning were not on an argument name for sure
+			for (int i = 0; i < args.size (); ++i) {
+				if (args[i].startsWith (fragment)) matches.append (i);
+			}
 		}
 	}
 
