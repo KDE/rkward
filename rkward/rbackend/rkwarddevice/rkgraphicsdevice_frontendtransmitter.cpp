@@ -400,6 +400,31 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			device->setClipToCachedPath(index);
 			streamer.outstream << (qint32) index;
 			streamer.writeOutBuffer();
+		} else if (opcode == RKDSetMask) {
+			qint32 index;
+			streamer.instream >> index;
+			qint8 ok = device->setMask(index) ? 1 : 0;
+			streamer.outstream << ok;
+			streamer.writeOutBuffer();
+		} else if (opcode == RKDReleaseMask) {
+			qint32 len;
+			streamer.instream >> len;
+			if (len < 0) device->destroyMask(-1);
+			for (int i = 0; i < len; ++i) {
+				qint32 index;
+				streamer.instream >> index;
+				device->destroyMask(index);
+			}
+		} else if (opcode == RKDStartRecordMask) {
+			device->startRecordMask();
+		} else if (opcode == RKDEndRecordMask) {
+			qint8 luminance_mask;
+			streamer.instream >> luminance_mask;
+			QImage m = device->endRecordMask((bool) luminance_mask);
+			qint32 index = device->registerMask(m);
+			device->setMask(index);
+			streamer.outstream << (qint32) index;
+			streamer.writeOutBuffer();
 		} else if (opcode == RKDCapture) {
 			QImage image = device->capture ();
 			quint32 w = image.width ();

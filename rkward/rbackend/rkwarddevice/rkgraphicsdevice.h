@@ -105,6 +105,11 @@ public:
 	void destroyCachedPath(int index);
 	bool setClipToCachedPath(int index);
 	void forceSync();
+	void startRecordMask();
+	QImage endRecordMask(bool luminance);
+	int registerMask(const QImage &mask);
+	void destroyMask(int index);
+	bool setMask(int index);
 public slots:
 	void stopInteraction ();
 signals:
@@ -134,10 +139,12 @@ private:
 	QDialog *dialog;
 	QHash<int, QBrush> patterns;
 	QHash<int, QPainterPath> cached_paths;
+	QHash<int, QImage> cached_masks;
 	// NOTE on path recording: In principle, we could really do _all_ painting on QPainterPath, but in regular operation stroke and fill right away.
 	// However, that is noticably slower.
 	QPainterPath recorded_path;
 	bool recording_path;
+	int current_mask;
 
 	int interaction_opcode;	/**< Current interactive operation (from RKDOpcodes enum), or -1 is there is no current interactive operation */
 	quint32 id;

@@ -19,6 +19,8 @@
  * not a compilation unit of its own.
  * It is meant to be included, there. */
 
+#define RKD_BACKEND_CODE
+#define RKD_RGE_VERSION R_GE_version
 #include "rkgraphicsdevice_protocol_shared.h"
 #include "rkgraphicsdevice_backendtransmitter.h"
 #include "../rkrbackend.h"
@@ -166,6 +168,7 @@ public:
 #define SAFE_LINE_JOIN(ljoin) (quint8) (ljoin == GE_ROUND_JOIN ? RoundJoin : (ljoin == GE_BEVEL_JOIN ? BevelJoin : MitreJoin))
 
 // I'd love to convert to QColor, directly, but that's in QtGui, not QtCore. QRgb used different byte ordering
+// TODO: is the check against NA_INTEGER needed at all?
 #define WRITE_COLOR_BYTES(col) \
 	RKD_OUT_STREAM << (quint8) R_RED (col) << (quint8) R_GREEN (col) << (quint8) R_BLUE (col) << (quint8) R_ALPHA (col)
 #define WRITE_HEADER_NUM(x,devnum) \
@@ -826,11 +829,51 @@ void RKD_ReleaseClipPath (SEXP ref, pDevDesc dev) {
 	}
 }
 
-SEXP RKD_SetMask (SEXP path, SEXP ref, pDevDesc dd) {
+SEXP RKD_SetMask (SEXP mask, SEXP ref, pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
-#ifdef __GNUC__
-#warning implement me
+	// Same logic as RKD_SetClipPath
+
+	qint32 index = 0;
+	if (!Rf_isNull(ref)) index = INTEGER(ref)[0];  // ref==NULL means the mask is not yet registered, will be recorded, below
+	if (index > 0 || Rf_isNull(mask)) {  // mask==NULL means to unset the current mask. signalled to the frontend as index=0
+		{
+			RKGraphicsDataStreamWriteGuard wguard;
+			WRITE_HEADER(RKDSetMask, dev);
+			RKD_OUT_STREAM << index;
+		}
+		{
+			RKGraphicsDataStreamReadGuard rguard;
+			qint8 ok;
+			RKD_IN_STREAM >> ok;
+			if (!ok) Rf_warning("Invalid reference to mask");
+			else return R_NilValue;
+		}
+	}
+
+	// No index, or not a valid index: create new mask
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDStartRecordMask, dev);
+	}
+	// Play generator function
+	int error;
+	SEXP mask_func = PROTECT(Rf_lang1(mask));
+	R_tryEval(mask_func, R_GlobalEnv, &error);
+	UNPROTECT(1);
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDEndRecordMask, dev);
+#if R_VERSION >= R_Version(4,2,0)
+		RKD_OUT_STREAM << (qint8) R_GE_maskType(mask) == R_GE_luminanceMask ? 1 : 0;
+#else
+		RKD_OUT_STREAM << 0;
 #endif
+	}
+	{
+		RKGraphicsDataStreamReadGuard rguard;
+		RKD_IN_STREAM >> index;
+	}
+	return makeInt(index);
 	return R_NilValue;
 }
 

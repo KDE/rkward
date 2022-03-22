@@ -107,7 +107,9 @@ enum RKDOpcodes {
 	RKDReleasePattern,
 	RKDStartRecordTilingPattern,      // part of setPattern in R
 	RKDReleaseClipPath,
-	RKDStartRecordClipPath,
+	RKDStartRecordClipPath,//20
+	RKDReleaseMask,
+	RKDStartRecordMask,
 
 	// Synchronous operations
 	RKDFetchNextEvent      = 100,
@@ -122,8 +124,10 @@ enum RKDOpcodes {
 	RKDEndRecordTilingPattern,       // part of setPattern in R
 	RKDSetClipPath,       // 110
 	RKDEndRecordClipPath,
+	RKDSetMask,
+	RKDEndRecordMask,
 	RKDForceSync,
-	RKDClose,
+	RKDClose,             // 115
 
 	// Protocol operations
 	RKDCancel              = 200
@@ -145,7 +149,61 @@ enum RKDEventCodes {
 //	RKDMouseX2Button = 16
 };
 
-#include <QtGlobal>
-typedef quint32 RKGraphicsDeviceTransmittionLengthType;
+/** Common problem is that we need to map an R parameter enum onto the corresponding Qt parameter enum, e.g. line ending style, etc.
+ * While in most cases there _is_ a direct correspondence, the underlying int values cannot be assumed to be the same (and in many cases differ).
+ * Thus we need a lot of code along the lines "if(value = r_enum_value) return qt_enum_value;".
+ *
+ * As a further complication, we cannot easily include R headers in frontend code, and not easily (arbitray) Qt headers in backend code, thus the
+ * above pseudo code will lack either the Qt or the R defintion. At some point we need to map to a value we set ourselves, either a third, rk-specific, enum,
+ * or a naked int.
+ *
+ * To make this readable and easy to handle, the MapEnum() macro helps with the mapping. Since only _either_ the left hand side (R) or the right hand side (Qt)
+ * is actually expanded, it allows us to write a readable mapping that can be included in both frontend and backend code.
+ *
+ * We still need to provide an interim value (naked int). By convention this uses the same value as the Qt enum, and this is checked by a static_assert, helping
+ * to catch conceivable mistakes at compile time.
+ */
+#if defined(RKD_BACKEND_CODE)
+#define MapEnum(Rval,Ival,Qval) case Rval: return Ival;
+#define MapDefault(Ival,Qval) return Ival;
+#else
+#define MapEnum(Rval,Ival,Qval) case Ival: static_assert(Ival == (int) Qval, "Enum mismatch"); return Qval;
+#define MapDefault(Ival,Qval) return Qval;
+#define RKD_RGE_VERSION 99999
+#endif
+
+#if RKD_RGE_VERSION >= 15
+static int mapCompostionModeEnum(int from) {
+	switch(from) {
+		MapEnum(R_GE_compositeClear, 2, QPainter::CompositionMode_Clear);
+		MapEnum(R_GE_compositeSource, 3, QPainter::CompositionMode_Source);
+		MapEnum(R_GE_compositeOver, 0, QPainter::CompositionMode_SourceOver);
+		MapEnum(R_GE_compositeIn, 5, QPainter::CompositionMode_SourceIn);
+		MapEnum(R_GE_compositeOut, 7, QPainter::CompositionMode_SourceOut);
+		MapEnum(R_GE_compositeAtop, 9, QPainter::CompositionMode_SourceAtop);
+		MapEnum(R_GE_compositeDest, 4, QPainter::CompositionMode_Destination);
+		MapEnum(R_GE_compositeDestOver, 1, QPainter::CompositionMode_DestinationOver);
+		MapEnum(R_GE_compositeDestIn, 6, QPainter::CompositionMode_DestinationIn);
+		MapEnum(R_GE_compositeDestOut, 8, QPainter::CompositionMode_DestinationOut);
+		MapEnum(R_GE_compositeDestAtop, 10, QPainter::CompositionMode_DestinationAtop);
+		MapEnum(R_GE_compositeXor, 11, QPainter::CompositionMode_Xor);
+		MapEnum(R_GE_compositeAdd, 12, QPainter::CompositionMode_Plus);
+		MapEnum(R_GE_compositeMultiply, 13, QPainter::CompositionMode_Multiply);
+		MapEnum(R_GE_compositeScreen, 14, QPainter::CompositionMode_Screen);
+		MapEnum(R_GE_compositeOverlay, 15, QPainter::CompositionMode_Overlay);
+		MapEnum(R_GE_compositeDarken, 16, QPainter::CompositionMode_Darken);
+		MapEnum(R_GE_compositeLighten, 17, QPainter::CompositionMode_Lighten);
+		MapEnum(R_GE_compositeColorDodge, 18, QPainter::CompositionMode_ColorDodge);
+		MapEnum(R_GE_compositeColorBurn, 19, QPainter::CompositionMode_ColorBurn);
+		MapEnum(R_GE_compositeHardLight, 20, QPainter::CompositionMode_HardLight);
+		MapEnum(R_GE_compositeSoftLight, 21, QPainter::CompositionMode_SoftLight);
+		MapEnum(R_GE_compositeDifference, 22, QPainter::CompositionMode_Difference);
+		MapEnum(R_GE_compositeExclusion, 23, QPainter::CompositionMode_Exclusion);
+// Unsupported in Qt:
+// MapEnum(R_GE_compositeSaturate, xx, yy)
+	}
+	MapDefault(0, QPainter::CompositionMode_SourceOver);
+}
+#endif
 
 #endif

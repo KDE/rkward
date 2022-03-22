@@ -17,9 +17,6 @@
 
 #include "rkgraphicsdevice.h"
 
-#include <QGraphicsScene>
-#include <QGraphicsView>
-#include <QGraphicsRectItem>
 #include <QHBoxLayout>
 #include <QMouseEvent>
 #include <QDialog>
@@ -92,9 +89,9 @@ void RKGraphicsDevice::pushContext(double width, double height, double x, double
 	c.record_path = record_path;
 	c.path_below = recorded_path;
 // NOTE: R cairo device uses an all different method for pattern capture:
-// drawing is scaled up to full device coordinates, the shrunk and offset back to pattern size.
+// drawing is scaled up to full device coordinates, then shrunk and offset back to pattern size.
 // probably due to cairo internals, somehow. Here, instead we paint on a separate surface with the same coords,
-// the extract the rectangle of interest.
+// then extract the rectangle of interest.
 	c.surface = QImage(area.width(), area.height(), QImage::Format_ARGB32);
 	if (width < 0) { // may happen, at least in R 4.1.2
 		width = -width;
@@ -313,6 +310,51 @@ bool RKGraphicsDevice::setClipToCachedPath(int index){
 	return false;
 }
 
+void RKGraphicsDevice::startRecordMask() {
+	RK_TRACE (GRAPHICS_DEVICE);
+	pushContext(area.width(), area.height(), 0, 0, false);
+}
+
+QImage RKGraphicsDevice::endRecordMask(bool luminance) {
+	RK_TRACE (GRAPHICS_DEVICE);
+
+	QImage ret = popContext().surface;
+	// KF6 TODO: instead paint on a grayscale surface from the start?
+	if (luminance) {
+		for (int x = ret.width(); x >= 0; --x) {
+			for (int y = ret.height(); y >= 0; --y) {
+				// warning! inefficient!
+				QColor px = ret.pixelColor(x, y);
+				px.setAlpha(px.lightness());
+				ret.setPixelColor(x, y, px);
+			}
+		}
+	}
+	return ret;
+}
+
+int RKGraphicsDevice::registerMask(const QImage& mask) {
+	RK_TRACE (GRAPHICS_DEVICE);
+	static int id = 0;
+	cached_masks.insert(++id, mask);
+	return id;
+}
+
+void RKGraphicsDevice::destroyMask(int index) {
+	RK_TRACE (GRAPHICS_DEVICE);
+	if (index < 0) cached_paths.clear();
+	else cached_paths.remove(index);
+}
+
+bool RKGraphicsDevice::setMask(int index) {
+	RK_TRACE (GRAPHICS_DEVICE);
+
+	int set = 0;
+	if (index > 0 && cached_masks.contains(index)) set = index;
+	current_mask = set;
+	return set == index;
+}
+
 void RKGraphicsDevice::setClip (const QRectF& new_clip) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
@@ -357,6 +399,10 @@ void RKGraphicsDevice::line (double x1, double y1, double x2, double y2, const Q
 void RKGraphicsDevice::rect (const QRectF& rec, const QPen& pen, const QBrush& brush) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
+	if (current_mask) {
+		pushContext(area.width(), area.height(), 0, 0, false);
+	}
+
 	if (recording_path) {
 		recorded_path.addRect(rec);
 		return;
@@ -364,6 +410,21 @@ void RKGraphicsDevice::rect (const QRectF& rec, const QPen& pen, const QBrush& b
 	painter.setPen (pen);
 	painter.setBrush (brush);
 	painter.drawRect (rec);
+
+	if (current_mask) {
+		QImage mask = cached_masks.value(current_mask);
+		QImage masked = popContext().surface;
+		for (int x = masked.width(); x >= 0; --x) {
+			for (int y = masked.height(); y >= 0; --y) {
+				// warning! inefficient!
+				QColor px = masked.pixelColor(x, y);
+				px.setAlpha(qMin(px.alpha(), mask.pixelColor(x, y).alpha()));
+				masked.setPixelColor(x, y, px);
+			}
+		}
+		painter.drawImage(0, 0, masked);
+	}
+
 	triggerUpdate ();
 }
 
@@ -377,6 +438,10 @@ QSizeF RKGraphicsDevice::strSize(const QString& text, const QFont& font) {
 
 void RKGraphicsDevice::text(double x, double y, const QString& text, double rot, double hadj, const QColor& col, const QFont& font) {
 	RK_TRACE(GRAPHICS_DEVICE);
+
+	if (current_mask) {
+		pushContext(area.width(), area.height(), 0, 0, false);
+	}
 
 	painter.save();
 	QSizeF size = strSize(text, font);  // NOTE: side-effect of setting font!
@@ -396,6 +461,13 @@ void RKGraphicsDevice::text(double x, double y, const QString& text, double rot,
 	painter.drawText(-(hadj * size.width()), 0, text);
 //	painter.drawRect(painter.fontMetrics().boundingRect(text));  // for debugging
 	painter.restore();  // undo rotation / translation
+
+	if (current_mask) {
+		painter.setCompositionMode(QPainter::CompositionMode_DestinationIn);
+		painter.drawImage(0, 0, cached_masks.value(current_mask));
+		QImage masked = popContext().surface;
+		painter.drawImage(0, 0, masked);
+	}
 	triggerUpdate();
 }
 
