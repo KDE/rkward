@@ -146,7 +146,7 @@
     <screenshot type="default">
       <caption>Searching objects by name, searching for help pages, and in-app help viewer</caption>
       <caption xml:lang="ca">Cerca objectes per nom, cerca a les pàgines d'ajuda, i visor d'ajuda integrat a l'aplicació</caption>
-      <caption xml:lang="ca-valencia">Cerca objectes per nom, cerca a les pàgines d'ajuda, i visor d'ajuda integrat a l'aplicació</caption>
+      <caption xml:lang="ca-valencia">Busca objectes per nom, busca a les pàgines d'ajuda, i visor d'ajuda integrat a l'aplicació</caption>
       <caption xml:lang="en-GB">Searching objects by name, searching for help pages, and in-app help viewer</caption>
       <caption xml:lang="es">Búsqueda de objetos por nombre, búsqueda de páginas de ayuda y visor de ayuda integrado en la aplicación</caption>
       <caption xml:lang="fr">Recherche d'objets par nom, de pages d'aide ou recherche dans l'afficheur d'aide intégré.</caption>
