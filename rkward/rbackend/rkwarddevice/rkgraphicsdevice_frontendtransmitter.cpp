@@ -333,7 +333,7 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			device->clear(readBrush(streamer.instream, device));
 		} else if (opcode == RKDClose) {
 			RKGraphicsDevice::closeDevice(devnum);
-			sendDummyReply(devnum);
+			sendDummyReply(opcode);
 		} else if (opcode == RKDActivate) {
 			device->setActive (true);
 		} else if (opcode == RKDDeActivate) {
@@ -444,7 +444,7 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			device->confirmNewPage ();
 		} else if (opcode == RKDForceSync) {
 			device->forceSync();
-			sendDummyReply(devnum);
+			sendDummyReply(opcode);
 		} else {
 			RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Unhandled operation of type %d for device number %d. Skipping.", opcode, devnum+1);
 		}
