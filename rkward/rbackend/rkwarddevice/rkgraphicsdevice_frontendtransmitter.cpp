@@ -94,8 +94,7 @@ static QRgb readRgb (QDataStream &instream) {
 static QColor readColor (QDataStream &instream) {
 	quint8 r, g, b, a;
 	instream >> r >> g >> b >> a;
-	if (a == 0x00) return QColor ();
-	return QColor (r, g, b, a);
+	return QColor(r, g, b, a);
 }
 
 static QPen readSimplePen (QDataStream &instream) {
@@ -103,7 +102,7 @@ static QPen readSimplePen (QDataStream &instream) {
 	double lwd;
 	qint32 lty;
 	instream >> lwd >> lty;
-	if (!col.isValid () || (lty == -1L)) return QPen (Qt::NoPen);
+	if ((col.alpha() == 0) || (lty == -1L)) return QPen(Qt::NoPen);
 
 	lwd = qMax (double(qreal(1.0)), lwd);	// minimum 1 px as in X11 device
 	QPen ret;
@@ -140,7 +139,6 @@ static QBrush readBrush(QDataStream &instream, RKGraphicsDevice *dev) {
 	instream >> filltype;
 	if (filltype  == ColorFill) {
 		QColor col = readColor(instream);
-		if (!col.isValid()) return QBrush();
 		return QBrush(col);
 	} else {
 		qint16 pattern_num;

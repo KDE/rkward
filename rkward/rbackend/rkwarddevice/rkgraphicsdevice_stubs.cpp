@@ -167,8 +167,7 @@ public:
 
 // I'd love to convert to QColor, directly, but that's in QtGui, not QtCore. QRgb used different byte ordering
 #define WRITE_COLOR_BYTES(col) \
-	if (col == NA_INTEGER) RKD_OUT_STREAM << (quint8) 0xFF << (quint8) 0xFF << (quint8) 0xFF << (quint8) 0x00; \
-	else RKD_OUT_STREAM << (quint8) R_RED (col) << (quint8) R_GREEN (col) << (quint8) R_BLUE (col) << (quint8) R_ALPHA (col)
+	RKD_OUT_STREAM << (quint8) R_RED (col) << (quint8) R_GREEN (col) << (quint8) R_BLUE (col) << (quint8) R_ALPHA (col)
 #define WRITE_HEADER_NUM(x,devnum) \
 	RKD_OUT_STREAM << (qint8) x << (quint8) devnum
 #define WRITE_HEADER(x,dev) \
@@ -467,14 +466,13 @@ static void RKD_Raster (unsigned int *raster, int w, int h, double x, double y, 
 	RKGraphicsDataStreamWriteGuard wguard;
 	WRITE_HEADER (RKDRaster, dev);
 
-	int *_raster = reinterpret_cast<int*> (raster);	// shut up warning in WRITE_COLOR_BYTES. It's just four separate bytes, anyway
 	quint32 _w = qMin (w, 1 << 15);	// skip stuff exceeding reasonable limits to keep protocol simple
 	RKD_OUT_STREAM << _w;
 	quint32 _h = qMin (h, 1 << 15);
 	RKD_OUT_STREAM << _h;
 	for (quint32 col = 0; col < _h; ++col) {
 		for (quint32 row = 0; row < _w; ++row) {
-			WRITE_COLOR_BYTES (_raster[(col*_w) + row]);
+			WRITE_COLOR_BYTES (raster[(col*_w) + row]);
 		}
 	}
 	RKD_OUT_STREAM << QRectF (x, y, width, height) << rot << (bool) interpolate;
