@@ -432,7 +432,7 @@ static void RKD_Close (pDevDesc dev) {
 		delete static_cast<RKGraphicsDeviceDesc*> (dev->deviceSpecific);
 	}
 	{
-		RKGraphicsDataStreamWriteGuard rguard;
+		RKGraphicsDataStreamReadGuard rguard;
 		qint8 dummy;
 		RKD_IN_STREAM >> dummy;
 	}
