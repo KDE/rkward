@@ -49,6 +49,7 @@ RKGraphicsDevice::RKGraphicsDevice (double width, double height, const QString &
 	dialog = 0;
 	id = 0;
 	recording_path = false;
+	current_mask = 0;
 	view = new QLabel ();
 	view->installEventFilter (this);
 	view->setScaledContents (true);    // this is just for preview during scaling. The area will be re-sized and re-drawn from R.
@@ -123,6 +124,19 @@ RKGraphicsDevice::PaintContext RKGraphicsDevice::popContext() {
 	return ret;
 }
 
+void RKGraphicsDevice::initMaskedDraw(){
+	RK_ASSERT(current_mask);
+	pushContext(area.width(), area.height(), 0, 0, false);
+}
+
+void RKGraphicsDevice::commitMaskedDraw() {
+	RK_ASSERT(current_mask);
+	QImage mask = cached_masks.value(current_mask);
+	QImage masked = popContext().surface;
+	masked.setAlphaChannel(mask); // NOTE: Qt docs: "If the image already has an alpha channel, the existing alpha channel is multiplied with the new one."
+	painter.drawImage(0, 0, masked);
+}
+
 void RKGraphicsDevice::startRecordTilingPattern(double width, double height, double x, double y) {
 	RK_TRACE (GRAPHICS_DEVICE);
 	pushContext(width, height, x, y, false);
@@ -187,22 +201,6 @@ void RKGraphicsDevice::updateNow () {
 	beginPainter();
 }
 
-/** This is definitely lame, but at least as of Qt 5.12.8, calling QPainter::end() does _not_ mean, changes are synced to the
- *  paint device. They will be synced, eventually, but when trying to capture a tiling pattern, we want a clean separation
- *  between the paints going to the main canvas and those going to the pattern space, immediately.
- *
- *  This function achieves that. Note that it is also implemented as a synchronous operation on the stream, so Qt will definitely
- *  get around to process some events after this was called, which is probably also needed.
- *
- *  Without this function artifacts will occur inside tiling patterns some, but not all of the time.
- *
- *  KF6 TODO: check if still needed with Qt6. */
-void RKGraphicsDevice::forceSync() {
-	RK_TRACE (GRAPHICS_DEVICE);
-	updateNow();
-	if(painter.isActive()) painter.end();
-}
-
 void RKGraphicsDevice::checkSize() {
 	RK_TRACE (GRAPHICS_DEVICE);
 	if(!view) return;
@@ -240,12 +238,14 @@ void RKGraphicsDevice::clear(const QBrush& brush) {
 		return;
 	}
 
-	if (painter.isActive()) painter.end();
-	if (brush.style() == Qt::NoBrush) area.fill(QColor(255, 255, 255, 255));
-	else {
+	if (current_mask) initMaskedDraw();
+	if (brush.style() == Qt::NoBrush) {
+		painter.setBrush(QColor(255, 255, 255, 255));
+	} else {
 		painter.setBrush(brush);
-		painter.drawRect(0, 0, area.width(), area.height());
 	}
+	painter.drawRect(0, 0, area.width(), area.height());
+	if (current_mask) commitMaskedDraw();
 
 	updateNow ();
 	setClip (area.rect ());	// R's devX11.c resets clip on clear, so we do this, too.
@@ -365,9 +365,11 @@ void RKGraphicsDevice::circle (double x, double y, double r, const QPen& pen, co
 		recorded_path.addEllipse(x-r, y-r, r+r, r+r);
 		return;
 	}
+	if (current_mask) initMaskedDraw();
 	painter.setPen (pen);
 	painter.setBrush (brush);
 	painter.drawEllipse (x - r, y - r, r+r, r+r);
+	if (current_mask) commitMaskedDraw();
 	triggerUpdate ();
 }
 
@@ -379,6 +381,8 @@ void RKGraphicsDevice::line (double x1, double y1, double x2, double y2, const Q
 		recorded_path.lineTo(x2, y2);
 		return;
 	}
+
+	if (current_mask) initMaskedDraw();
 	painter.setPen (pen);
 	// HACK: There seems to be a bug in QPainter (Qt 4.8.4), which can shift connected lines (everything but the first polyline)
 	//       towards the direction where the previous line came from. The result is that line drawn via drawLine() and drawPolyline() do
@@ -389,30 +393,24 @@ void RKGraphicsDevice::line (double x1, double y1, double x2, double y2, const Q
 	points[1] = QPointF (x2, y2);
 	painter.drawPolyline (points, 2);
 //	painter.drawLine (x1, y1, x2, y2);
+	if (current_mask) commitMaskedDraw();
+
 	triggerUpdate ();
 }
 
 void RKGraphicsDevice::rect (const QRectF& rec, const QPen& pen, const QBrush& brush) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
-	if (current_mask) {
-		pushContext(area.width(), area.height(), 0, 0, false);
-	}
-
 	if (recording_path) {
 		recorded_path.addRect(rec);
 		return;
 	}
+
+	if (current_mask) initMaskedDraw();
 	painter.setPen (pen);
 	painter.setBrush (brush);
 	painter.drawRect (rec);
-
-	if (current_mask) {
-		QImage mask = cached_masks.value(current_mask);
-		QImage masked = popContext().surface;
-		masked.setAlphaChannel(mask); // NOTE: QT docs: "If the image already has an alpha channel, the existing alpha channel is multiplied with the new one."
-		painter.drawImage(0, 0, masked);
-	}
+	if (current_mask) commitMaskedDraw();
 
 	triggerUpdate ();
 }
@@ -428,14 +426,9 @@ QSizeF RKGraphicsDevice::strSize(const QString& text, const QFont& font) {
 void RKGraphicsDevice::text(double x, double y, const QString& text, double rot, double hadj, const QColor& col, const QFont& font) {
 	RK_TRACE(GRAPHICS_DEVICE);
 
-	if (current_mask) {
-		pushContext(area.width(), area.height(), 0, 0, false);
-	}
-
-	painter.save();
-	QSizeF size = strSize(text, font);  // NOTE: side-effect of setting font!
 	if (recording_path) {
 		QPainterPath sub;
+		QSizeF size = strSize(text, font);
 		sub.addText(-(hadj * size.width()), y, font, text);
 		QMatrix trans;
 		trans.translate(x, y);
@@ -443,6 +436,10 @@ void RKGraphicsDevice::text(double x, double y, const QString& text, double rot,
 		recorded_path.addPath(trans.map(sub));
 		return;
 	}
+
+	if (current_mask) initMaskedDraw();
+	painter.save();
+	QSizeF size = strSize(text, font);  // NOTE: side-effect of setting font!
 //	painter.setFont(font);
 	painter.setPen(QPen(col));
 	painter.translate(x, y);
@@ -450,13 +447,8 @@ void RKGraphicsDevice::text(double x, double y, const QString& text, double rot,
 	painter.drawText(-(hadj * size.width()), 0, text);
 //	painter.drawRect(painter.fontMetrics().boundingRect(text));  // for debugging
 	painter.restore();  // undo rotation / translation
+	if (current_mask) commitMaskedDraw();
 
-	if (current_mask) {
-		painter.setCompositionMode(QPainter::CompositionMode_DestinationIn);
-		painter.drawImage(0, 0, cached_masks.value(current_mask));
-		QImage masked = popContext().surface;
-		painter.drawImage(0, 0, masked);
-	}
 	triggerUpdate();
 }
 
@@ -478,9 +470,11 @@ void RKGraphicsDevice::polygon (const QPolygonF& pol, const QPen& pen, const QBr
 		recorded_path.addPolygon(pol);
 		return;
 	}
+	if (current_mask) initMaskedDraw();
 	painter.setPen (pen);
 	painter.setBrush (brush);
 	painter.drawPolygon (pol);
+	if (current_mask) commitMaskedDraw();
 	triggerUpdate ();
 }
 
@@ -491,8 +485,11 @@ void RKGraphicsDevice::polyline (const QPolygonF& pol, const QPen& pen) {
 		recorded_path.addPolygon(pol);
 		return;
 	}
+
+	if (current_mask) initMaskedDraw();
 	painter.setPen (pen);
 	painter.drawPolyline (pol);
+	if (current_mask) commitMaskedDraw();
 	triggerUpdate ();
 }
 
@@ -511,15 +508,18 @@ void RKGraphicsDevice::polypath (const QVector<QPolygonF>& polygons, bool windin
 		return;
 	}
 
+	if (current_mask) initMaskedDraw();
 	painter.setPen (pen);
 	painter.setBrush (brush);
 	painter.drawPath (path);
+	if (current_mask) commitMaskedDraw();
 	triggerUpdate ();
 }
 
 void RKGraphicsDevice::image (const QImage& image, const QRectF& target_rect, double rot, bool interpolate) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
+	if (current_mask) initMaskedDraw();
 	painter.save ();
 	QRectF tr = target_rect;
 	painter.translate (tr.x (), tr.y ());
@@ -528,6 +528,7 @@ void RKGraphicsDevice::image (const QImage& image, const QRectF& target_rect, do
 	painter.setRenderHint (QPainter::SmoothPixmapTransform, interpolate);
 	painter.drawImage (tr, image, image.rect ());
 	painter.restore ();
+	if (current_mask) commitMaskedDraw();
 	triggerUpdate ();
 }
 

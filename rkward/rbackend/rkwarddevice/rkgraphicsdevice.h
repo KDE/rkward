@@ -164,6 +164,8 @@ private:
 	void beginPainter();
 	void pushContext(double width, double height, double x, double y, bool record_path);
 	PaintContext popContext();
+	void initMaskedDraw();
+	void commitMaskedDraw();
 };
 
 #endif
