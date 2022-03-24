@@ -78,17 +78,14 @@ void RKGraphicsDevice::beginPainter() {
 			auto &c = contexts.last();
 			painter.begin(&(c.surface));
 			painter.setTransform(c.transform);
-			recording_path = c.record_path;
 		}
 	}
 }
 
-void RKGraphicsDevice::pushContext(double width, double height, double x, double y, bool record_path) {
+void RKGraphicsDevice::pushContext(double width, double height, double x, double y) {
 	RK_TRACE (GRAPHICS_DEVICE);
 	painter.end();
 	PaintContext c;
-	c.record_path = record_path;
-	c.path_below = recorded_path;
 // NOTE: R cairo device uses an all different method for pattern capture:
 // drawing is scaled up to full device coordinates, then shrunk and offset back to pattern size.
 // probably due to cairo internals, somehow. Here, instead we paint on a separate surface with the same coords,
@@ -117,16 +114,14 @@ RKGraphicsDevice::PaintContext RKGraphicsDevice::popContext() {
 	}
 
 	painter.end();
-
 	auto ret = contexts.takeLast();
-	recorded_path = ret.path_below;
 	beginPainter();
 	return ret;
 }
 
 void RKGraphicsDevice::initMaskedDraw(){
 	RK_ASSERT(current_mask);
-	pushContext(area.width(), area.height(), 0, 0, false);
+	pushContext(area.width(), area.height(), 0, 0);
 }
 
 void RKGraphicsDevice::commitMaskedDraw() {
@@ -139,7 +134,7 @@ void RKGraphicsDevice::commitMaskedDraw() {
 
 void RKGraphicsDevice::startRecordTilingPattern(double width, double height, double x, double y) {
 	RK_TRACE (GRAPHICS_DEVICE);
-	pushContext(width, height, x, y, false);
+	pushContext(width, height, x, y);
 }
 
 int RKGraphicsDevice::finalizeTilingPattern(int extend) {
@@ -277,7 +272,10 @@ void RKGraphicsDevice::destroyPattern(int id) {
 
 void RKGraphicsDevice::startRecordPath() {
 	RK_TRACE(GRAPHICS_DEVICE);
-	pushContext(0, 0, 0, 0, true);
+
+	stashed_paths.append(recorded_path);
+	recorded_path = QPainterPath();
+	recording_path = true;
 }
 
 QPainterPath RKGraphicsDevice::endRecordPath(int fillrule) {
@@ -287,7 +285,9 @@ QPainterPath RKGraphicsDevice::endRecordPath(int fillrule) {
 	if (fillrule == NonZeroWindingRule) ret.setFillRule(Qt::WindingFill);
 	else ret.setFillRule(Qt::OddEvenFill);
 
-	popContext();
+	RK_ASSERT(!stashed_paths.isEmpty());
+	recorded_path = stashed_paths.takeLast();
+	recording_path = !stashed_paths.isEmpty();
 	return ret;
 }
 
@@ -315,7 +315,7 @@ bool RKGraphicsDevice::setClipToCachedPath(int index){
 
 void RKGraphicsDevice::startRecordMask() {
 	RK_TRACE (GRAPHICS_DEVICE);
-	pushContext(area.width(), area.height(), 0, 0, false);
+	pushContext(area.width(), area.height(), 0, 0);
 }
 
 QImage RKGraphicsDevice::endRecordMask(bool luminance) {

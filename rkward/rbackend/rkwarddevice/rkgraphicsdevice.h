@@ -143,6 +143,7 @@ private:
 	// NOTE on path recording: In principle, we could really do _all_ painting on QPainterPath, but in regular operation stroke and fill right away.
 	// However, that is noticably slower.
 	QPainterPath recorded_path;
+	QList<QPainterPath> stashed_paths;
 	bool recording_path;
 	int current_mask;
 
@@ -152,17 +153,14 @@ private:
 	QList<StoredEvent> stored_events;
 
 	struct PaintContext {
-		// TODO: this probably also needs info like clipping paths, transforms, add mode, etc. Just an initial attempt.
 		QImage surface;
 		QTransform transform;
 		QRect capture_coords;
-		QPainterPath path_below;
-		bool record_path;
 	};
 	QList<PaintContext> contexts;
 	// make sure the painter is active on the current context
 	void beginPainter();
-	void pushContext(double width, double height, double x, double y, bool record_path);
+	void pushContext(double width, double height, double x, double y);
 	PaintContext popContext();
 	void initMaskedDraw();
 	void commitMaskedDraw();
