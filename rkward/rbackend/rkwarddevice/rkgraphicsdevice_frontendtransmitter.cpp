@@ -465,9 +465,6 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			streamer.writeOutBuffer ();
 		} else if (opcode == RKDNewPageConfirm) {
 			device->confirmNewPage ();
-		} else if (opcode == RKDForceSync) {
-			device->forceSync();
-			sendDummyReply(opcode);
 		} else {
 			RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Unhandled operation of type %d for device number %d. Skipping.", opcode, devnum+1);
 		}
@@ -508,7 +505,7 @@ void RKGraphicsDeviceFrontendTransmitter::sendDummyReply (quint8 opcode) {
 		streamer.outstream << (qint32) 0;
 	} else if (opcode == RKDFetchNextEvent) {
 		streamer.outstream << (qint8) RKDNothing;
-	} else if (opcode == RKDClose || opcode == RKDForceSync) {
+	} else if (opcode == RKDClose) {
 		streamer.outstream << (qint8) RKDNothing;
 	} else {
 		return;	// nothing to write

@@ -671,21 +671,6 @@ SEXP makeInt(int val) {
 	return ret;
 }
 
-void forceSync(pDevDesc dev) {
-	RK_TRACE(GRAPHICS_DEVICE);
-// NOTE: See comment in RKGraphicsDevice::forceSync();
-// KF6 TODO: Still neded with Qt6?
-	{
-		RKGraphicsDataStreamWriteGuard wguard;
-		WRITE_HEADER(RKDForceSync, dev);
-	}
-	{
-		RKGraphicsDataStreamReadGuard rguard;
-		qint8 dummy;
-		RKD_IN_STREAM >> dummy;
-	}
-}
-
 SEXP RKD_SetPattern (SEXP pattern, pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	auto ptype = R_GE_patternType(pattern);
@@ -715,7 +700,6 @@ SEXP RKD_SetPattern (SEXP pattern, pDevDesc dev) {
 			RKD_OUT_STREAM << getGradientExtend(R_GE_radialGradientExtend(pattern));
 		}
 	} else if (ptype == R_GE_tilingPattern) {
-		forceSync(dev);
 		{
 			RKGraphicsDataStreamWriteGuard wguard;
 			WRITE_HEADER(RKDStartRecordTilingPattern, dev);
@@ -728,7 +712,6 @@ SEXP RKD_SetPattern (SEXP pattern, pDevDesc dev) {
 		SEXP pattern_func = PROTECT(Rf_lang1(R_GE_tilingPatternFunction(pattern)));
 		R_tryEval(pattern_func, R_GlobalEnv, &error);
 		UNPROTECT(1);
-		forceSync(dev);
 		{
 			RKGraphicsDataStreamWriteGuard wguard;
 			WRITE_HEADER(RKDEndRecordTilingPattern, dev);
@@ -866,7 +849,7 @@ SEXP RKD_SetMask (SEXP mask, SEXP ref, pDevDesc dev) {
 #if R_VERSION >= R_Version(4,2,0)
 		RKD_OUT_STREAM << (qint8) R_GE_maskType(mask) == R_GE_luminanceMask ? 1 : 0;
 #else
-		RKD_OUT_STREAM << 0;
+		RKD_OUT_STREAM << (qint8) 0;
 #endif
 	}
 	{

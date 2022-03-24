@@ -93,6 +93,7 @@ void RKGraphicsDevice::pushContext(double width, double height, double x, double
 // probably due to cairo internals, somehow. Here, instead we paint on a separate surface with the same coords,
 // then extract the rectangle of interest.
 	c.surface = QImage(area.width(), area.height(), QImage::Format_ARGB32);
+	c.surface.fill(Qt::transparent);
 	if (width < 0) { // may happen, at least in R 4.1.2
 		width = -width;
 		x -= width;
@@ -115,6 +116,7 @@ RKGraphicsDevice::PaintContext RKGraphicsDevice::popContext() {
 	}
 
 	painter.end();
+
 	auto ret = contexts.takeLast();
 	recorded_path = ret.path_below;
 	beginPainter();
@@ -140,6 +142,7 @@ int RKGraphicsDevice::finalizeTilingPattern(int extend) {
 	if (extend == GradientExtendReflect) {
 		QImage single = c.surface.copy(c.capture_coords);
 		QImage reflected(single.width()*2, single.height()*2, single.format());
+		reflected.fill(Qt::transparent);
 		QPainter p(&reflected);
 		p.drawImage(0, 0, single);
 		p.drawImage(single.width(), 0, single.mirrored(true, false));
@@ -321,16 +324,9 @@ QImage RKGraphicsDevice::endRecordMask(bool luminance) {
 	QImage ret = popContext().surface;
 	// KF6 TODO: instead paint on a grayscale surface from the start?
 	if (luminance) {
-		for (int x = ret.width(); x >= 0; --x) {
-			for (int y = ret.height(); y >= 0; --y) {
-				// warning! inefficient!
-				QColor px = ret.pixelColor(x, y);
-				px.setAlpha(px.lightness());
-				ret.setPixelColor(x, y, px);
-			}
-		}
+		return ret.convertToFormat(QImage::Format_Grayscale8);
 	}
-	return ret;
+	return ret.convertToFormat(QImage::Format_Alpha8);
 }
 
 int RKGraphicsDevice::registerMask(const QImage& mask) {
@@ -414,14 +410,7 @@ void RKGraphicsDevice::rect (const QRectF& rec, const QPen& pen, const QBrush& b
 	if (current_mask) {
 		QImage mask = cached_masks.value(current_mask);
 		QImage masked = popContext().surface;
-		for (int x = masked.width(); x >= 0; --x) {
-			for (int y = masked.height(); y >= 0; --y) {
-				// warning! inefficient!
-				QColor px = masked.pixelColor(x, y);
-				px.setAlpha(qMin(px.alpha(), mask.pixelColor(x, y).alpha()));
-				masked.setPixelColor(x, y, px);
-			}
-		}
+		masked.setAlphaChannel(mask); // NOTE: QT docs: "If the image already has an alpha channel, the existing alpha channel is multiplied with the new one."
 		painter.drawImage(0, 0, masked);
 	}
 

@@ -126,8 +126,7 @@ enum RKDOpcodes {
 	RKDEndRecordClipPath,
 	RKDSetMask,
 	RKDEndRecordMask,
-	RKDForceSync,
-	RKDClose,             // 115
+	RKDClose,
 
 	// Protocol operations
 	RKDCancel              = 200
