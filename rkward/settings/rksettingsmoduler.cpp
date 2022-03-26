@@ -232,25 +232,28 @@ void RKSettingsModuleR::addPaths(QStringList* string_list) {
 	}
 }
 
+static QLatin1String RTrueFalse(bool val) {
+	if (val) return QLatin1String("TRUE");
+	return QLatin1String("FALSE");
+}
+
 //static
 QStringList RKSettingsModuleR::makeRRunTimeOptionCommands () {
 	RK_TRACE (SETTINGS);
 	QStringList list;
 
-	QString tf;
-	list.append ("options (OutDec=\"" + options_outdec.get().left (1) + "\")\n");
+	QString outdec = options_outdec;
+	if (outdec.isEmpty()) outdec = '.';
+	list.append ("options (OutDec=\"" + outdec + "\")\n");
 	list.append ("options (width=" + QString::number (options_width) + ")\n");
 	list.append ("options (warn=" + QString::number (options_warn) + ")\n");
 	list.append ("options (max.print=" + QString::number (options_maxprint) + ")\n");
 	list.append ("options (warnings.length=" + QString::number (options_warningslength) + ")\n");
-	if (options_keepsource) tf = "TRUE"; else tf = "FALSE";
-	list.append ("options (keep.source=" + tf + ")\n");
-	if (options_keepsourcepkgs) tf = "TRUE"; else tf = "FALSE";
-	list.append ("options (keep.source.pkgs=" + tf + ")\n");
+	list.append ("options (keep.source=" + RTrueFalse(options_keepsource) + ")\n");
+	list.append ("options (keep.source.pkgs=" + RTrueFalse(options_keepsourcepkgs) + ")\n");
 	list.append ("options (expressions=" + QString::number (options_expressions) + ")\n");
 	list.append ("options (digits=" + QString::number (options_digits) + ")\n");
-	if (options_checkbounds) tf = "TRUE"; else tf = "FALSE";
-	list.append ("options (checkbounds=" + tf + ")\n");
+	list.append ("options (checkbounds=" + RTrueFalse(options_checkbounds) + ")\n");
 	if (options_editor == builtin_editor) list.append ("options (editor=rk.edit.files)\n");
 	else list.append ("options (editor=\"" + options_editor.get() + "\")\n");
 	if (options_pager == builtin_editor) list.append ("options (pager=rk.show.files)\n");
@@ -264,11 +267,7 @@ QStringList RKSettingsModuleR::makeRRunTimeOptionCommands () {
 		list.append (command + "))\n");
 	}
 
-#ifdef __GNUC__
-#	warning TODO make the following options configurable
-#endif
 	list.append ("options (help_type=\"html\")\n");		// for R 2.10.0 and above
-	list.append ("try ({options (htmlhelp=TRUE); options (chmhelp=FALSE)})\n");	// COMPAT: for R 2.9.x and below
 	list.append ("options (browser=rk.show.html)\n");
 	list.append ("options (askYesNo=rk.askYesNo)\n"); // for R 3.5.0 and above
 
