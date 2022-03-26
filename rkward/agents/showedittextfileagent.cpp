@@ -34,8 +34,8 @@ ShowEditTextFileAgent::ShowEditTextFileAgent (RBackendRequest *request, const QS
 
 	ShowEditTextFileAgent::request = request;
 
-	message = new KMessageWidget (0);
-	message->setText (QString ("<p><strong>%1<strong></p><p>%2</p>").arg (caption).arg (text));
+	message = new KMessageWidget(nullptr);
+	message->setText(QString("<p><strong>%1<strong></p><p>%2</p>").arg(caption, text));
 	if (request) {
 		message->setCloseButtonVisible (false);
 		QAction *done_action = new QAction (QIcon::fromTheme ("dialog-ok"), i18n ("Done"), message);

@@ -159,7 +159,7 @@ GenericRRequestResult RKOutputDirectory::exportAs (const QString& _dest, RKOutpu
 		dest = QDir::cleanPath(dialog.selectedFiles().value(0));
 	}
 
-	bool exists = QFileInfo(dest).exists();
+	bool exists = QFileInfo::exists(dest);
 	if (exists) {
 		if (overwrite == Ask) {
 			const QString warning = i18n("Are you sure you want to overwrite the existing file '%1'?", dest);
@@ -180,7 +180,7 @@ GenericRRequestResult RKOutputDirectory::exportZipInternal(const QString &dest) 
 
 	// write to a temporary location, first, then - if successful - copy to final destination
 	QString tempname = dest + '~';
-	while (QFileInfo(tempname).exists()) {
+	while (QFileInfo::exists(tempname)) {
 		tempname.append('~');
 	}
 
@@ -430,7 +430,7 @@ RKOutputDirectoryCallResult RKOutputDirectory::getCurrentOutput(RCommandChain* c
 	if (outputs.isEmpty()) {
 		if (RKSettingsModuleOutput::sharedDefaultOutput()) {
 			QString filename = RKSettingsModuleGeneral::filesPath() + "default.rko";
-			auto ret = get(filename, !QFileInfo(filename).exists(), chain);
+			auto ret = get(filename, !QFileInfo::exists(filename), chain);
 			if (ret.dir()) {
 				ret.dir()->activate(chain);
 				return ret;
@@ -610,7 +610,7 @@ void RKOutputDirectory::setKnownModified(bool modified) {
 	RK_TRACE(APP);
 	if (known_modified != modified) {
 		known_modified = modified;
-		stateChange(isActive(), modified);
+		emit stateChange(isActive(), modified);
 	}
 }
 
@@ -618,5 +618,3 @@ bool RKOutputDirectory::isModifiedFast() const {
 	return known_modified;
 }
 
-
-#include "rkoutputdirectory.moc"

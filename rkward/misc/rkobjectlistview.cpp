@@ -140,7 +140,7 @@ RObject* RKObjectListView::objectAtIndex (const QModelIndex& index) const {
 void RKObjectListView::selectionChanged (const QItemSelection&, const QItemSelection&) {
 	RK_TRACE (APP);
 
-	emit (selectionChanged ());
+	emit selectionChanged();
 }
 
 RObject::ObjectList RKObjectListView::selectedObjects () const {
@@ -162,7 +162,7 @@ void RKObjectListView::contextMenuEvent (QContextMenuEvent* event) {
 
 	menu_object = objectAtIndex (indexAt (event->pos ()));
 	bool suppress = false;
-	emit (aboutToShowContextMenu (menu_object, &suppress));
+	emit aboutToShowContextMenu(menu_object, &suppress);
 
 	if (!suppress) menu->popup (event->globalPos ());
 }
@@ -515,5 +515,5 @@ void RKObjectListViewSettings::updateSelfNow () {
 
 	invalidateFilter ();
 
-	emit (settingsChanged ());
+	emit settingsChanged();
 }

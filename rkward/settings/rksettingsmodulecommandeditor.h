@@ -81,7 +81,6 @@ private:
 	QGroupBox* auto_completion_enabled_box;
 
 	RKCodeCompletionSettings *settings;
-	bool show_common;
 };
 
 class RKSettingsModuleKTextEditorConfigWrapper : public RKSettingsModule {

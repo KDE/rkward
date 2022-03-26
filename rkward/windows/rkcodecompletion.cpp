@@ -835,7 +835,7 @@ void RKFileCompletionModelWorker::run () {
 		exes = comp.allMatches ();
 	}
 
-	emit (completionsReady (string, exes, files));
+	emit completionsReady(string, exes, files);
 }
 
 RKFileCompletionModel::RKFileCompletionModel (RKCompletionManager* manager) : RKCompletionModelBase (manager) {

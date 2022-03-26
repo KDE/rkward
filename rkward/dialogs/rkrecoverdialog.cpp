@@ -89,7 +89,7 @@ QString RKRecoverDialog::saveFileFor (const QString& recovery_file) {
 		QString num;
 		if (i > 0) num = '_' + QString::number (i+1);
 		new_name = dir.absoluteFilePath ("recovered_workspace_" + mtime.toString ("yyyy-MM-dd_hh:mm") + num + ".RData");
-		if (!QFileInfo (new_name).exists ()) break;
+		if (!QFileInfo::exists(new_name)) break;
 	}
 	return new_name;
 }

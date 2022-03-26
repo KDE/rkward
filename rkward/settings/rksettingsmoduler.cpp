@@ -618,7 +618,7 @@ void RKSettingsModuleRPackages::validateSettingsInteractive (QList<RKSetupWizard
 			                                        "to work (if they are compatible with this version of R)."), [legacy_libloc](RKSetupWizard*) {
 									liblocs.get().removeAll(legacy_libloc);
 									QString new_loc = legacy_libloc + '-' + RKSessionVars::RVersion (true);
-									RKGlobals::rInterface ()->issueCommand (QString ("file.rename(%1, %2)\n").arg (RObject::rQuote (legacy_libloc)).arg (RObject::rQuote (new_loc)), RCommand::App);
+									RKGlobals::rInterface ()->issueCommand (QString ("file.rename(%1, %2)\n").arg(RObject::rQuote(legacy_libloc), RObject::rQuote (new_loc)), RCommand::App);
 									liblocs.get().prepend (legacy_libloc + QStringLiteral ("-%v"));
 									RKGlobals::rInterface ()->issueCommand (libLocsCommand(), RCommand::App);
 								});

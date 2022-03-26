@@ -564,7 +564,7 @@ GenericRRequestResult RInterface::processPlainGenericRequest(const QStringList &
 	} else if (call == "wdChange") {
 		// in case of separate processes, apply new working directory in frontend, too.
 		QDir::setCurrent (calllist.value (1));
-		emit (backendWorkdirChanged());
+		emit backendWorkdirChanged();
 	} else if (call == "highlightRCode") {
 		return GenericRRequestResult(RKCommandHighlighter::commandToHTML(calllist.value(1)));
 	} else if (call == "quit") {
@@ -762,7 +762,7 @@ int addButtonToBox (QDialog *dialog, QDialogButtonBox *box, QDialogButtonBox::St
 	QPushButton *button = box->addButton (which);
 	if (text != def_text) button->setText (text);
 	if (is_default) button->setDefault (true);
-	QObject::connect (button, &QPushButton::clicked, [dialog, which]() { dialog->done (which); });
+	QObject::connect(button, &QPushButton::clicked, dialog, [dialog, which]() { dialog->done(which); });
 	return 1;
 }
 

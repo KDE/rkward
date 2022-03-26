@@ -121,9 +121,8 @@ void RKSettingsModuleDebug::applyChanges () {
 	RK_Debug::RK_Debug_Flags = flags;
 }
 
-void RKSettingsModuleDebug::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) {
-	RK_TRACE (SETTINGS);
-
+void RKSettingsModuleDebug::syncConfig(KConfig*, RKConfigBase::ConfigSyncAction) {
+	RK_TRACE(SETTINGS);
 	// left empty on purpose
 }
 

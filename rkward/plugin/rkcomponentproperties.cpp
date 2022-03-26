@@ -124,7 +124,7 @@ bool RKComponentPropertyBase::setValue (const QString &string) {
 	RK_TRACE (PLUGIN);
 
 	_value = string;
-	emit (valueChanged (this));
+	emit valueChanged(this);
 	return true;
 }
 
@@ -309,7 +309,7 @@ void RKComponentPropertyStringList::doChange () {
 	RK_TRACE (PLUGIN);
 	is_valid = checkListLength ();
 	_value.clear ();
-	emit (valueChanged (this));
+	emit valueChanged(this);
 }
 
 ///////////////////////////////////////////// Bool //////////////////////////////////////////
@@ -408,7 +408,7 @@ void RKComponentPropertyBool::setBoolValue (bool new_value) {
 	RK_TRACE (PLUGIN);
 
 	internalSetValue (new_value);
-	emit (valueChanged (this));
+	emit valueChanged(this);
 }
 
 bool RKComponentPropertyBool::boolValue () {
@@ -437,7 +437,7 @@ bool RKComponentPropertyBool::setValue (const QString &string) {
 	RK_TRACE (PLUGIN);
 
 	internalSetValue (string);
-	emit (valueChanged (this));
+	emit valueChanged(this);
 	return isValid ();
 }
 
@@ -461,7 +461,7 @@ void RKComponentPropertyBool::governorValueChanged (RKComponentPropertyBase *pro
 	} else {	// fallback for lists, and other stuff that really should not have been connected to a bool property, in the first place
 		internalSetValue (value.toString ());
 	}
-	emit (valueChanged (this));
+	emit valueChanged(this);
 }
 
 
@@ -482,7 +482,7 @@ bool RKComponentPropertyInt::setIntValue (int new_value) {
 	RK_TRACE (PLUGIN);
 
 	internalSetValue (new_value);
-	emit (valueChanged (this));
+	emit valueChanged(this);
 	return (isValid ());
 }
 
@@ -490,7 +490,7 @@ bool RKComponentPropertyInt::setValue (const QString &string) {
 	RK_TRACE (PLUGIN);
 
 	internalSetValue (string);
-	emit (valueChanged (this));
+	emit valueChanged(this);
 	return (isValid ());
 }
 
@@ -592,7 +592,7 @@ void RKComponentPropertyInt::governorValueChanged (RKComponentPropertyBase *prop
 	if (isValid ()) internalSetValue ((int) val);
 	else internalSetValue (value.toString ());
 
-	emit (valueChanged (this));
+	emit valueChanged(this);
 }
 
 QIntValidator *RKComponentPropertyInt::getValidator () {
@@ -637,7 +637,7 @@ bool RKComponentPropertyDouble::setDoubleValue (double new_value) {
 	RK_TRACE (PLUGIN);
 
 	internalSetValue (new_value);
-	emit (valueChanged (this));
+	emit valueChanged(this);
 	return (isValid ());
 }
 
@@ -645,7 +645,7 @@ bool RKComponentPropertyDouble::setValue (const QString &string) {
 	RK_TRACE (PLUGIN);
 
 	internalSetValue (string);
-	emit (valueChanged (this));
+	emit valueChanged(this);
 	return (isValid ());
 }
 
@@ -747,7 +747,7 @@ void RKComponentPropertyDouble::governorValueChanged (RKComponentPropertyBase *p
 	if (is_valid) internalSetValue (val);
 	else internalSetValue (value.toString ());
 
-	emit (valueChanged (this));
+	emit valueChanged(this);
 }
 
 QDoubleValidator *RKComponentPropertyDouble::getValidator () {
@@ -818,7 +818,7 @@ bool RKComponentPropertyRObjects::addObjectValue (RObject *object) {
 
 	if (addObjectValueSilent (object)) {
 		updateValidity ();
-		emit (valueChanged (this));
+		emit valueChanged(this);
 		return isValid ();
 	}
 	return false;
@@ -846,7 +846,7 @@ void RKComponentPropertyRObjects::objectRemoved (RObject *object) {
 		problems.remove (object);
 		stopListenForObject (object);
 		updateValidity ();
-		emit (valueChanged (this));
+		emit valueChanged(this);
 	}
 }
 
@@ -860,7 +860,7 @@ void RKComponentPropertyRObjects::removeAt (int index) {
 	problems.remove (obj);
 	if (!object_list.contains (obj)) stopListenForObject (obj);
 	updateValidity ();
-	emit (valueChanged (this));
+	emit valueChanged(this);
 }
 
 void RKComponentPropertyRObjects::setClassFilter (const QStringList &classes) {
@@ -901,7 +901,7 @@ bool RKComponentPropertyRObjects::setObjectValueSilent (RObject* object) {
 bool RKComponentPropertyRObjects::setObjectValue (RObject *object) {
 	setObjectValueSilent (object);
 	updateValidity ();
-	emit (valueChanged (this));
+	emit valueChanged(this);
 	return isValid ();
 }
 
@@ -914,7 +914,7 @@ void RKComponentPropertyRObjects::setObjectList (const RObject::ObjectList &newl
 			addObjectValueSilent (newlist[i]);
 		}
 		updateValidity ();
-		emit (valueChanged (this));
+		emit valueChanged(this);
 	}
 }
 
@@ -1007,7 +1007,7 @@ bool RKComponentPropertyRObjects::setValueList (const QStringList& values) {
 	}
 
 	updateValidity ();
-	emit (valueChanged (this));
+	emit valueChanged(this);
 	return (isValid () && ok);
 }
 
@@ -1132,7 +1132,7 @@ void RKComponentPropertyRObjects::objectMetaChanged (RObject *object) {
 			if (probs.isEmpty ()) problems.remove (object);
 			else problems.insert (object, probs);
 			updateValidity ();
-			emit (valueChanged (this));
+			emit valueChanged(this);
 		}
 	}
 }
@@ -1154,7 +1154,7 @@ void RKComponentPropertyRObjects::validizeAll (bool silent) {
 
 	updateValidity ();		// we should do this even if there are no changes in the list. There might have still been changes in the filter!
 	if (changes) {
-		if (!silent) emit (valueChanged (this));
+		if (!silent) emit valueChanged(this);
 	}
 }
 
@@ -1387,7 +1387,7 @@ void RKComponentPropertySwitch::selfChanged (RKComponentPropertyBase *) {
 
 void RKComponentPropertySwitch::sourcePropertyChanged (RKComponentPropertyBase*) {
 	RK_TRACE (PLUGIN);
-	valueChanged (this);	// new value will be pulled by anyone interested
+	emit valueChanged(this);	// new value will be pulled by anyone interested
 }
 
 QVariant RKComponentPropertySwitch::value (const QString& modifier) {

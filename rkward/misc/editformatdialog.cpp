@@ -142,9 +142,9 @@ void EditFormatDialogProxy::dialogDone (int result) {
 
 	if (result == QDialog::Accepted) {
 		options = dialog->options;
-		emit (done (this, RKItemDelegate::EditorExit));
+		emit done(this, RKItemDelegate::EditorExit);
 	} else {
-		emit (done (this, RKItemDelegate::EditorReject));
+		emit done(this, RKItemDelegate::EditorReject);
 	}
 	dialog->deleteLater ();
 	dialog = 0;

@@ -182,7 +182,7 @@ void RKWorkplace::setWorkspaceURL (const QUrl &url, bool keep_config) {
 			delete _workspace_config;
 			_workspace_config = 0;
 		}
-		emit (workspaceUrlChanged (url));
+		emit workspaceUrlChanged(url);
 	}
 }
 
@@ -814,11 +814,11 @@ QUrl checkAdjustRestoredUrl (const QString &_url, const QString old_base) {
 	if (!(old_base_url.isLocalFile () && new_base_url.isLocalFile () && url.isLocalFile ())) return (url);
 
 	// if the file exists, unadjusted, return it.
-	if (QFileInfo (url.toLocalFile ()).exists ()) return (url);
+	if (QFileInfo::exists(url.toLocalFile())) return (url);
 
 	// check whether a file exists for the adjusted url
 	QString relative = QDir (new_base_url.path ()).absoluteFilePath (QDir (old_base_url.path ()).relativeFilePath (url.path ()));
-	if (QFileInfo (relative).exists ()) return (QUrl::fromLocalFile (relative));
+	if (QFileInfo::exists(relative)) return (QUrl::fromLocalFile(relative));
 	return (url);
 }
 

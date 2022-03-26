@@ -104,7 +104,7 @@ QValidator::State RKSpinBox::validate (QString &input, int &pos) const {
 void RKSpinBox::emitValueChange () {
 	RK_TRACE (MISC);
 
-	emit (valueChanged (0));
+	emit valueChanged(0);
 }
 
 void RKSpinBox::updateValue (int change) {

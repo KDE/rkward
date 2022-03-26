@@ -508,7 +508,7 @@ bool RKSettingsModulePluginsModel::setData (const QModelIndex& index, const QVar
 	if (role == Qt::CheckStateRole) {
 		if (index.isValid () && (index.column () == COLUMN_CHECKED)) {
 			plugin_maps[index.row ()].active = value.toBool ();
-			emit (dataChanged (index, index));
+			emit dataChanged(index, index);
 			return true;
 		}
 	}
@@ -527,7 +527,7 @@ void RKSettingsModulePluginsModel::insertNewStrings (int above_row) {
 		if (pos >= 0) {
 			if (!plugin_maps[pos].active) {
 				plugin_maps[pos].active = true;
-				emit (dataChanged (index (pos, 0), index (pos, COLUMN_COUNT - 1)));
+				emit dataChanged(index(pos, 0), index(pos, COLUMN_COUNT - 1));
 			}
 			files.removeAt (i);
 		}

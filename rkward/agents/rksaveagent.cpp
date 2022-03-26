@@ -93,7 +93,7 @@ bool RKSaveAgent::saveWorkspace(const QUrl& _url) {
 	RKProgressControl control(RKWardMainWindow::getMain(), i18n("Workspace is being saved. <b>Hint:</b> Should this take an unusually long time, on a regular sized workspace, this may be due to other commands still pending completion in the R backend."), i18n("Saving workspace"), RKProgressControl::CancellableNoProgress);
 	control.addRCommand(command, true);
 	bool success = false;
-	QObject::connect(command->notifier(), &RCommandNotifier::commandFinished, [&success, command]() { success = command->succeeded(); });
+	QObject::connect(command->notifier(), &RCommandNotifier::commandFinished, [&success, command]() { success = command->succeeded(); });  // clazy:exclude=lambda-in-connect (-> doModal(), below)
 	RKGlobals::rInterface()->issueCommand(command, save_chain);
 	control.doModal(false);
 	RKGlobals::rInterface()->closeChain(save_chain);

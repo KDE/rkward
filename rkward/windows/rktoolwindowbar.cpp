@@ -79,7 +79,7 @@ int RKToolWindowBar::getSplitterSize () const {
 		RK_ASSERT (false);
 		return 0;
 	}
-	return (splitter->sizes ()[pos]);
+	return (splitter->sizes().at(pos));
 }
 
 void RKToolWindowBar::setSplitterSize (int new_size) {

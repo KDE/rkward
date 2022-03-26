@@ -284,6 +284,6 @@ RKSettingsTracker::~RKSettingsTracker () {
 
 void RKSettingsTracker::signalSettingsChange (RKSettings::SettingsPage page) {
 	RK_TRACE (SETTINGS);
-	emit (settingsChanged (page));
+	emit settingsChanged(page);
 }
 

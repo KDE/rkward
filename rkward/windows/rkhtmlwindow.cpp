@@ -196,7 +196,7 @@ protected:
 
 		if (cururl.matches (navurl, QUrl::NormalizePathSegments | QUrl::StripTrailingSlash)) {
 			RK_DEBUG (APP, DL_DEBUG, "Page internal navigation request from %s to %s", qPrintable (cururl.toString ()), qPrintable (navurl.toString ()));
-			emit (pageInternalNavigation (navurl));
+			emit pageInternalNavigation(navurl);
 			return true;
 		}
 
@@ -332,7 +332,7 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 #ifdef NO_QT_WEBENGINE
 	connect (page, &QWebPage::downloadRequested, [this](const QNetworkRequest &request) { page->downloadUrl (request.url ()); });
 #else
-	connect (page->profile (), &QWebEngineProfile::downloadRequested, [this](QWebEngineDownloadItem* item) {
+	connect (page->profile (), &QWebEngineProfile::downloadRequested, this, [this](QWebEngineDownloadItem* item) {
 		QString path = QFileDialog::getSaveFileName (this, i18n ("Save as"), item->path ());
 		if (path.isEmpty ()) return;
 		item->setPath (path);
@@ -1162,7 +1162,7 @@ QString RKHelpRenderer::renderHelpFragment (QDomElement &fragment) {
 	int npos;
 	QString ret;
 	while ((npos = text.indexOf ("<link", pos)) >= 0) {
-		ret += text.mid (pos, npos - pos);
+		ret += text.midRef(pos, npos - pos);
 
 		QString href;
 		int href_start = text.indexOf (" href=\"", npos + 5);
@@ -1182,14 +1182,14 @@ QString RKHelpRenderer::renderHelpFragment (QDomElement &fragment) {
 		ret += prepareHelpLink (href, linktext);
 		pos = end;
 	}
-	ret += text.mid (pos);
+	ret += text.midRef(pos);
 
 	if (component_xml) {
 		text = ret;
 		ret.clear ();
 		pos = 0;
 		while ((npos = text.indexOf ("<label ", pos)) >= 0) {
-			ret += text.mid (pos, npos - pos);
+			ret += text.midRef(pos, npos - pos);
 
 			QString id;
 			int id_start = text.indexOf ("id=\"", npos + 6);
@@ -1201,7 +1201,7 @@ QString RKHelpRenderer::renderHelpFragment (QDomElement &fragment) {
 			}
 			ret += resolveLabel (id);
 		}
-		ret += text.mid (pos);
+		ret += text.midRef(pos);
 	}
 
 	RK_DEBUG (APP, DL_DEBUG, "%s", qPrintable (ret));
@@ -1425,7 +1425,7 @@ void RKOutputWindowManager::fileChanged (const QString &path) {
 	}
 }
 
-void RKOutputWindowManager::windowDestroyed (QObject *window) {
+void RKOutputWindowManager::windowDestroyed(QObject *window) {
 	RK_TRACE (APP);
 
 	// warning: Do not call any methods on the window. It is half-destroyed, already.

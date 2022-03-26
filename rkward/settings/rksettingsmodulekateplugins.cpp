@@ -50,7 +50,8 @@ RKSettingsModuleKatePlugins::RKSettingsModuleKatePlugins(RKSettings *gui, QWidge
 	boldfont.setBold(true);
 	plugin_table->setHeaderLabels(QStringList() << QString() << i18n("Name") << i18n("Description"));
 	KatePluginIntegrationApp *pluginapp = RKWardMainWindow::getMain()->katePluginIntegration();
-	foreach (const QString &key, pluginapp->known_plugins.keys()) {
+	const auto keys = pluginapp->known_plugins.keys();
+	for (const QString &key : keys) {
 		QTreeWidgetItem *item = new QTreeWidgetItem();
 		KPluginMetaData plugindata = pluginapp->known_plugins.value(key).data;
 		item->setData(1, Qt::DisplayRole, plugindata.name());

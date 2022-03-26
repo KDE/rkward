@@ -110,10 +110,10 @@ public:
 		}
 	};
 
-	void saveSize () {
-		if (extension->isVisible ()) {
-			if (orientation () == Qt::Horizontal) RKSettingsModulePlugins::setDefaultSidePreviewWidth (sizes ()[1]);
-			else RKSettingsModulePlugins::setDefaultCodeHeight (sizes ()[1]);
+	void saveSize() {
+		if (extension->isVisible()) {
+			if (orientation() == Qt::Horizontal) RKSettingsModulePlugins::setDefaultSidePreviewWidth(sizes().at(1));
+			else RKSettingsModulePlugins::setDefaultCodeHeight(sizes().at(1));
 		}
 	}
 

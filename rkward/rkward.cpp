@@ -218,10 +218,10 @@ void RKWardMainWindow::closeEvent (QCloseEvent *e) {
 		return;
 	}
 
-	e->ignore ();
-	if (doQueryQuit ()) {
-		emit (aboutToQuitRKWard());
-		new RKQuitAgent (this);
+	e->ignore();
+	if (doQueryQuit()) {
+		emit aboutToQuitRKWard();
+		new RKQuitAgent(this);
 	}
 }
 
@@ -365,11 +365,11 @@ void RKWardMainWindow::initPlugins (const QStringList &automatically_added) {
 	}
 	if (!completely_broken_maps.isEmpty ()) {
 		QString maplist = "<ul><li>" + completely_broken_maps.join ("</li>\n<li>") + "</li></ul>";
-		KMessageBox::detailedError (0, QString ("<p>%1</p><p>%2</p>").arg (i18n ("The following RKWard pluginmap files could not be loaded, and have been disabled. This could be because they are broken, not compatible with this version of RKWard, or not meant for direct loading (see the 'Details' for more information). They have been disabled.")).arg (maplist), completely_broken_maps_details.join ("\n"), i18n ("Failed to load some plugin maps"));
+		KMessageBox::detailedError (0, QString ("<p>%1</p><p>%2</p>").arg (i18n ("The following RKWard pluginmap files could not be loaded, and have been disabled. This could be because they are broken, not compatible with this version of RKWard, or not meant for direct loading (see the 'Details' for more information). They have been disabled."), maplist), completely_broken_maps_details.join ("\n"), i18n ("Failed to load some plugin maps"));
 	}
 	if (!somewhat_broken_maps.isEmpty ()) {
 		QString maplist = "<ul><li>" + somewhat_broken_maps.join ("</li>\n<li>") + "</li></ul>";
-		KMessageBox::detailedError (0, QString ("<p>%1</p><p>%2</p><p>%3</p>").arg (i18n ("Some errors were encountered while loading the following RKWard pluginmap files. This could be because individual plugins are broken or not compatible with this version of RKWard (see the 'Details' for more information). Other plugins were loaded, successfully, however.")).arg (maplist).arg (i18n ("Note: You will not be warned about these pluginmap files again, until you upgrade RKWard, or remove and re-add them in Settings->Configure RKWard->Plugins.")), somewhat_broken_maps_details.join ("\n"), i18n ("Failed to load some plugin maps"));
+		KMessageBox::detailedError (0, QString ("<p>%1</p><p>%2</p><p>%3</p>").arg (i18n ("Some errors were encountered while loading the following RKWard pluginmap files. This could be because individual plugins are broken or not compatible with this version of RKWard (see the 'Details' for more information). Other plugins were loaded, successfully, however."), maplist, i18n ("Note: You will not be warned about these pluginmap files again, until you upgrade RKWard, or remove and re-add them in Settings->Configure RKWard->Plugins.")), somewhat_broken_maps_details.join ("\n"), i18n ("Failed to load some plugin maps"));
 	}
 
 	slotSetStatusReady ();
@@ -396,7 +396,7 @@ void RKWardMainWindow::startR () {
 			RK_DEBUG(APP, DL_INFO, "RKWard version changed. Discarding cached package at %s", qPrintable (package));
 			QFile::remove (package);
 		}
-		if (!QFileInfo (package).exists()) {
+		if (!QFileInfo::exists(package)) {
 			RK_DEBUG(APP, DL_INFO, "Copying rkward R source package to %s", qPrintable (package));
 			RK_ASSERT(QFile::copy (RKCommonFunctions::getRKWardDataDir () + "/rpackages/" + packages[i], package));
 		}
@@ -732,7 +732,7 @@ void RKWardMainWindow::initStatusBar () {
 	// Instead, we use a right-aligned bar merged into the bottom toolbar -> no space wasted.
 	//statusBar()->hide(); -> after geomtry has been set
 	auto realbar = RKWorkplace::mainWorkplace()->statusBar();
-	connect(statusBar(), &QStatusBar::messageChanged, [this](const QString &message) {
+	connect(statusBar(), &QStatusBar::messageChanged, this, [this](const QString &message) {
 		if(message.isEmpty()) updateCWD();
 		else statusbar_cwd->setText(message);
 		// realbar->showMessage(message);  // why doesn't this work, instead? Qt 5.12.8

@@ -120,7 +120,7 @@ void SimpleBackend::processCall () {
 		RK_ASSERT (token_end >= 0);
 		QString token = current_template.mid (next_token + 3, token_end - (next_token + 3));
 		template_pos = token_end + 3;
-		emit (requestValue (token, RKStandardComponent::StringValue));
+		emit requestValue(token, RKStandardComponent::StringValue);
 		return;
 	}
 

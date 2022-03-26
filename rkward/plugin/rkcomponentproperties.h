@@ -385,13 +385,13 @@ public:
 
 /** set the preprocess code.
 @param code The code to set. If this is QString (), the property is seen to lack preprocess code and hence is not valid (see isValid ()). In contrast, empty strings are seen as valid */
-	void setPreprocess (const QString &code) { preprocess_code = code; emit (valueChanged (this)); };
+	void setPreprocess (const QString &code) { preprocess_code = code; emit valueChanged(this); };
 /** see setPreprocess () */
-	void setCalculate (const QString &code) { calculate_code = code; emit (valueChanged (this)); };
+	void setCalculate (const QString &code) { calculate_code = code; emit valueChanged(this); };
 /** see setPreprocess () */
-	void setPrintout (const QString &code) { printout_code = code; emit (valueChanged (this)); };
+	void setPrintout (const QString &code) { printout_code = code; emit valueChanged(this); };
 /** see setPreview () */
-	void setPreview (const QString &code) { preview_code = code; emit (valueChanged (this)); };
+	void setPreview (const QString &code) { preview_code = code; emit valueChanged(this); };
 
 	bool isValid () override { return (!(preprocess_code.isNull () || calculate_code.isNull () || printout_code.isNull ())); };
 

@@ -55,7 +55,7 @@ void RKJobSequence::nextJob () {
 	RK_TRACE (MISC);
 
 	if (outstanding_jobs.isEmpty ()) {
-		emit (finished (this));
+		emit finished(this);
 		deleteLater ();
 		return;
 	}

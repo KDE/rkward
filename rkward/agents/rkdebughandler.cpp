@@ -54,7 +54,7 @@ void RKDebugHandler::debugCall (RBackendRequest *request, RCommand *command) {
 	for (int i = 0; i < dummy.size (); ++i) _rel_src_lines.append (dummy.at (i).toInt ());
 
 	_state = InDebugPrompt;
-	newDebugState ();
+	emit newDebugState();
 }
 
 void RKDebugHandler::sendCancel () {
@@ -78,7 +78,7 @@ void RKDebugHandler::submitDebugString (const QString &command) {
 
 	_command = 0;
 	_state = InDebugRun;
-	newDebugState ();
+	emit newDebugState();
 }
 
 void RKDebugHandler::endDebug () {
@@ -87,6 +87,6 @@ void RKDebugHandler::endDebug () {
 	_command = 0;
 	_request = 0;
 	_state = NotInDebugger;
-	newDebugState ();
+	emit newDebugState();
 }
 

@@ -46,7 +46,7 @@ RKConfigValue<int> RKSettingsModuleCommandEditor::autosave_interval {"Autosave i
 RKConfigValue<int> RKSettingsModuleCommandEditor::num_recent_files { "Max number of recent files", 10 };
 RKConfigValue<QString> RKSettingsModuleCommandEditor::script_file_filter { "Script file filter", "*.R *.S *.q *.Rhistory" };
 
-RKCodeCompletionSettingsWidget::RKCodeCompletionSettingsWidget(QWidget *parent, RKSettingsModule *module, RKCodeCompletionSettings *settings, bool show_common) : RKSettingsModuleWidget(parent, module), settings(settings), show_common(show_common) {
+RKCodeCompletionSettingsWidget::RKCodeCompletionSettingsWidget(QWidget *parent, RKSettingsModule *module, RKCodeCompletionSettings *settings, bool show_common) : RKSettingsModuleWidget(parent, module), settings(settings) {
 	RK_TRACE (SETTINGS);
 	QVBoxLayout* main_vbox = new QVBoxLayout (this);
 	main_vbox->setContentsMargins(0,0,0,0);

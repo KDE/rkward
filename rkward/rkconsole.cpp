@@ -476,11 +476,11 @@ void RKConsole::submitCommand () {
 			last_line_end = 0;
 			RK_ASSERT (false);
 		}
-		command.append (input_buffer.left (last_line_end));
-		if (last_line_end < (input_buffer.size () - 1)) {
-			input_buffer = input_buffer.mid (last_line_end + 1);
+		command.append(input_buffer.leftRef(last_line_end));
+		if (last_line_end < (input_buffer.size() - 1)) {
+			input_buffer = input_buffer.mid(last_line_end + 1);
 		} else {
-			input_buffer.clear ();
+			input_buffer.clear();
 		}
 	} else {
 		RK_ASSERT (!command.endsWith ('\n'));
@@ -613,8 +613,8 @@ void RKConsole::submitBatch (const QString &batch) {
 		QString line = currentEditingLine ();
 		int pos = currentCursorPositionInCommand ();
 		if (pos >= 0) {
-			setCurrentEditingLine (line.left (pos));
-			input_buffer.append (line.mid (pos));
+			setCurrentEditingLine(line.left(pos));
+			input_buffer.append(line.midRef(pos));
 		}
 	}
 	if (!current_command) tryNextInBuffer ();
@@ -744,12 +744,12 @@ QString RKConsole::cleanSelection (const QString &origin) {
 	ret.reserve (origin.length ());
 	QStringList lines = origin.split ('\n');
 	foreach (const QString& line, lines) {
-		if (line.startsWith (nprefix)) {
-			ret.append (line.mid (nprefix.length ()));
-		} else if (line.startsWith (iprefix)) {
-			ret.append (line.mid (iprefix.length ()));
+		if (line.startsWith(nprefix)) {
+			ret.append(line.midRef(nprefix.length()));
+		} else if (line.startsWith(iprefix)) {
+			ret.append(line.midRef(iprefix.length()));
 		} else {
-			ret.append (line);
+			ret.append(line);
 		}
 		ret.append ('\n');
 	}

@@ -123,9 +123,9 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	if (!backend->initialize (code, parent_component == 0)) return;
 
 	// check for existence of help file
-	element = xml->getChildElement (doc_element, "help", DL_WARNING);
-	QString dummy = QFileInfo (filename).path() + '/' + xml->getStringAttribute (element, "file", "::nosuchfile::", DL_INFO);
-	have_help = QFileInfo (dummy).exists ();
+	element = xml->getChildElement(doc_element, "help", DL_WARNING);
+	QString dummy = QFileInfo(filename).path() + '/' + xml->getStringAttribute(element, "file", "::nosuchfile::", DL_INFO);
+	have_help = QFileInfo::exists(dummy);
 
 	update_pending = false;
 
@@ -362,7 +362,7 @@ void RKStandardComponent::buildAndInitialize (const QDomElement &doc_element, co
 		QTimer::singleShot (0, gui, SLOT (show()));
 	}
 	changed ();
-	standardInitializationComplete ();
+	emit standardInitializationComplete();
 }
 
 RKXMLGUIPreviewArea* RKStandardComponent::addDockedPreview (RKComponentPropertyBool* controller, const QString& label, const QString &id) {
@@ -720,7 +720,7 @@ void RKComponentBuilder::parseLogic (const QDomElement &element, XMLHelper &xml,
 
 	if (element.isNull ()) return;
 
-	QMap<RKComponentPropertyBase*, QStringList> switch_convert_sources;
+	QHash<RKComponentPropertyBase*, QStringList> switch_convert_sources;
 
 	const XMLChildList children = xml.getChildElements (element, QString (), DL_ERROR);
 	for (int i = 0; i < children.size (); ++i) {
@@ -813,7 +813,7 @@ void RKComponentBuilder::parseLogic (const QDomElement &element, XMLHelper &xml,
 	}
 
 	// resolve source properties for switch and convert elements, *after* all properties have been created
-	for (QMap<RKComponentPropertyBase*, QStringList>::const_iterator it = switch_convert_sources.constBegin (); it != switch_convert_sources.constEnd (); ++it) {
+	for (auto it = switch_convert_sources.constBegin(); it != switch_convert_sources.constEnd(); ++it) {
 		if (it.key ()->type () == RKComponentBase::PropertyConvert) {
 			static_cast<RKComponentPropertyConvert*> (it.key ())->setSources (it.value ());
 		} else {

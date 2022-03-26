@@ -45,7 +45,7 @@ RKSettingsModuleWidget::RKSettingsModuleWidget(QWidget *parent, RKSettingsModule
 
 void RKSettingsModuleWidget::change() {
 	changed = true;
-	settingsChanged();
+	emit settingsChanged();
 }
 
 
@@ -54,7 +54,7 @@ QCheckBox* RKConfigValue<bool, bool>::makeCheckbox(const QString& label, RKSetti
 	QCheckBox *ret = new QCheckBox(label);
 	ret->setChecked(value);
 	QObject::connect(ret, &QCheckBox::stateChanged, module, &RKSettingsModuleWidget::change);
-	QObject::connect(module, &RKSettingsModuleWidget::apply, [ret, this]() { this->value = ret->isChecked(); });
+	QObject::connect(module, &RKSettingsModuleWidget::apply, module, [ret, this]() { this->value = ret->isChecked(); });
 	return ret;
 }
 
@@ -63,7 +63,7 @@ RKSpinBox* RKConfigValue<double, double>::makeSpinBox(double min, double max, RK
 	RKSpinBox* ret = new RKSpinBox();
 	ret->setRealMode(min, max, value, 1, 2);
 	QObject::connect(ret, QOverload<int>::of(&QSpinBox::valueChanged), module, &RKSettingsModuleWidget::change);
-	QObject::connect(module, &RKSettingsModuleWidget::apply, [ret, this]() { this->value = ret->realValue(); });
+	QObject::connect(module, &RKSettingsModuleWidget::apply, module, [ret, this]() { this->value = ret->realValue(); });
 	return ret;
 }
 
@@ -72,7 +72,7 @@ RKSpinBox* RKConfigValue<int, int>::makeSpinBox(int min, int max, RKSettingsModu
 	RKSpinBox* ret = new RKSpinBox();
 	ret->setIntMode(min, max, value);
 	QObject::connect(ret, QOverload<int>::of(&QSpinBox::valueChanged), module, &RKSettingsModuleWidget::change);
-	QObject::connect(module, &RKSettingsModuleWidget::apply, [ret, this]() { this->value = ret->intValue(); });
+	QObject::connect(module, &RKSettingsModuleWidget::apply, module, [ret, this]() { this->value = ret->intValue(); });
 	return ret;
 }
 // Hmm... Boring dupe of the above
@@ -81,7 +81,7 @@ RKSpinBox* RKConfigValue<uint, uint>::makeSpinBox(uint min, uint max, RKSettings
 	RKSpinBox* ret = new RKSpinBox();
 	ret->setIntMode(min, max, value);
 	QObject::connect(ret, QOverload<int>::of(&QSpinBox::valueChanged), module, &RKSettingsModuleWidget::change);
-	QObject::connect(module, &RKSettingsModuleWidget::apply, [ret, this]() { this->value = ret->intValue(); });
+	QObject::connect(module, &RKSettingsModuleWidget::apply, module, [ret, this]() { this->value = ret->intValue(); });
 	return ret;
 }
 
@@ -98,7 +98,7 @@ QComboBox* RKConfigBase::makeDropDownHelper(const LabelList &entries, RKSettings
 	}
 	RK_ASSERT(index >= 0);
 	ret->setCurrentIndex(index);
-	QObject::connect(ret, QOverload<int>::of(&QComboBox::currentIndexChanged), [ret, setter, module]() {
+	QObject::connect(ret, QOverload<int>::of(&QComboBox::currentIndexChanged), module, [ret, setter, module]() {
 		module->change();
 		setter(ret->currentData().toInt());
 	});

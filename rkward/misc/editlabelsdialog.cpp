@@ -182,7 +182,7 @@ bool RKVarLevelsTableModel::setData (const QModelIndex& index, const QVariant& v
 		endInsertRows ();
 	} else {
 		labels.insert (QString::number (index.row () + 1), text);
-		emit (dataChanged (index, index));
+		emit dataChanged(index, index);
 	}
 
 	if (text.isEmpty ()) {	// remove trailing empty rows
@@ -263,9 +263,9 @@ void EditLabelsDialogProxy::dialogDone (int result) {
 
 	if (result == QDialog::Accepted) {
 		labels = dialog->table->lmodel->labels;
-		emit (done (this, RKItemDelegate::EditorExit));
+		emit done(this, RKItemDelegate::EditorExit);
 	} else {
-		emit (done (this, RKItemDelegate::EditorReject));
+		emit done(this, RKItemDelegate::EditorReject);
 	}
 	dialog->deleteLater ();
 	dialog = 0;

@@ -246,11 +246,11 @@ RKCommandLogView::~RKCommandLogView () {
 	RK_TRACE (APP);
 }
 
-void RKCommandLogView::contextMenuEvent (QContextMenuEvent *event) {
-	RK_TRACE (APP);
+void RKCommandLogView::contextMenuEvent(QContextMenuEvent *event) {
+	RK_TRACE(APP);
 
-	emit (popupMenuRequest (event->globalPos ()));
-	event->accept ();
+	emit popupMenuRequest(event->globalPos());
+	event->accept();
 }
 
 void RKCommandLogView::selectAll () {

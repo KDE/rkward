@@ -82,7 +82,7 @@ void RKComponentScriptingProxy::handleScriptError (const QString& current_file) 
 		QString message = i18n ("Script Error at '%1' line %2: %3\n", file.isEmpty() ? i18n ("inlined code") : file, engine.uncaughtExceptionLineNumber (), engine.uncaughtException ().toString ());
 		KMessageBox::detailedError (0, message, engine.uncaughtExceptionBacktrace ().join ("\n"));
 		engine.clearExceptions ();
-		emit (haveError());
+		emit haveError();
 	}
 }
 

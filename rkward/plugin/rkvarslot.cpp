@@ -181,7 +181,6 @@ void RKVarSlot::availablePropertyChanged (RKComponentPropertyBase *) {
 void RKVarSlot::updateLook () {
 	RK_TRACE (PLUGIN);
 
-	QPalette palette = list->palette ();
 	if (!isSatisfied ()) {		// implies that it is enabled
 		list->setStyleSheet(QString("background: red; color: black"));
 	} else {

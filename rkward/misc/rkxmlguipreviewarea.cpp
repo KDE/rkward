@@ -88,7 +88,7 @@ QWidget* RKXMLGUIPreviewArea::wrapperWidget () {
 	QToolButton *tb = new QToolButton (wrapper_widget);
 	tb->setAutoRaise (true);
 	tb->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDelete));
-	connect (tb, &QAbstractButton::clicked, [this]() { wrapper_widget->hide (); emit (previewClosed(this)); });
+	connect (tb, &QAbstractButton::clicked, this, [this]() { wrapper_widget->hide(); emit previewClosed(this); });
 
 	QToolButton *menu_button = new QToolButton (this);
 	menu_button->setPopupMode (QToolButton::InstantPopup);
@@ -197,7 +197,7 @@ void RKPreviewManager::previewCommandDone (RCommand* command) {
 		setNoPreviewAvailable ();
 	} else {
 		QString warnings = command->warnings () + command->error ();
-		if (!warnings.isEmpty ()) warnings = QString ("<b>%1</b>\n<pre>%2</pre>").arg (i18n ("Warnings or Errors:")).arg (warnings.toHtmlEscaped ());
+		if (!warnings.isEmpty ()) warnings = QString("<b>%1</b>\n<pre>%2</pre>").arg(i18n("Warnings or Errors:"), warnings.toHtmlEscaped());
 		setStatusMessage (warnings);
 	}
 }
@@ -212,7 +212,7 @@ void RKPreviewManager::setCommand (RCommand* command) {
 
 	// Send an empty dummy command first. This is to sync up with any commands that should have been run _before_ the preview (e.g. to set up the preview area, so that status labels can be shown)
 	RCommand *dummy = new RCommand (QString (), RCommand::App | RCommand::Sync | RCommand::EmptyCommand);
-	connect (dummy->notifier(), &RCommandNotifier::commandFinished, [this]() { setStatusMessage (shortStatusLabel ()); });
+	connect(dummy->notifier(), &RCommandNotifier::commandFinished, this, [this]() { setStatusMessage(shortStatusLabel()); });
 	RKGlobals::rInterface ()->issueCommand (dummy);
 
 	RKGlobals::rInterface ()->issueCommand (command);
@@ -249,7 +249,7 @@ void RKPreviewManager::setStatusMessage (const QString& message) {
 	RKMDIWindow *window = RKWorkplace::mainWorkplace ()->getNamedWindow (id);
 	if (window) window->setStatusMessage (message);
 
-	emit (statusChanged());
+	emit statusChanged();
 }
 
 QString RKPreviewManager::shortStatusLabel() const {
@@ -266,4 +266,3 @@ QString RKPreviewManager::shortStatusLabel() const {
 	}
 }
 
-#include "rkxmlguipreviewarea.moc"

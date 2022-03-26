@@ -122,7 +122,7 @@ void QtScriptBackend::threadError (const QString &message) {
 
 	KMessageBox::error (0, i18n ("The QtScript-backend has reported an error:\n%1", message), i18n ("Scripting error"));
 
-	emit (haveError ());
+	emit haveError();
 	destroy ();
 }
 
@@ -135,7 +135,7 @@ void QtScriptBackend::commandDone (const QString &result) {
 void QtScriptBackend::needData (const QString &identifier, const int hint) {
 	RK_TRACE (PHP);
 
-	emit (requestValue (identifier, hint));
+	emit requestValue(identifier, hint);
 }
 
 
@@ -195,7 +195,7 @@ void QtScriptBackendThread::setData (const QVariant &data) {
 QVariant QtScriptBackendThread::getValue (const QString &identifier, const int hint) {
 	RK_TRACE (PHP);
 
-	emit (needData (identifier, hint));
+	emit needData(identifier, hint);
 
 	QVariant ret;
 	while (1) {
@@ -242,7 +242,7 @@ bool QtScriptBackendThread::scriptError () {
 
 	QString message = i18n ("Script Error: %1\nBacktrace:\n%2", engine.uncaughtException ().toString (), engine.uncaughtExceptionBacktrace ().join ("\n"));
 	engine.clearExceptions ();
-	emit (error (message));
+	emit error(message);
 
 	return true;
 }
@@ -258,7 +258,7 @@ bool QtScriptBackendThread::includeFile (const QString &filename) {
 
 		QFile file (_filename);
 		if (!file.open (QIODevice::ReadOnly | QIODevice::Text)) {
-		emit (error (i18n ("The file \"%1\" (needed by \"%2\") could not be found. Please check your installation.", _filename, _scriptfile)));
+		emit error(i18n("The file \"%1\" (needed by \"%2\") could not be found. Please check your installation.", _filename, _scriptfile));
 		return false;
 	}
 
@@ -293,7 +293,7 @@ void QtScriptBackendThread::run () {
 #endif
 	if (!includeFile (_scriptfile)) return;
 
-	emit (commandDone ("startup complete"));
+	emit commandDone("startup complete");
 
 	QString command;
 	while (1) {
@@ -318,7 +318,7 @@ void QtScriptBackendThread::run () {
 		// do it!
 		QScriptValue result = engine.evaluate (command);
 		if (scriptError ()) return;
-		emit (commandDone (result.toString ()));
+		emit commandDone(result.toString());
 
 		command.clear ();
 	}

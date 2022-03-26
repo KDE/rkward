@@ -107,7 +107,7 @@ QObject* KatePluginIntegrationApp::loadPlugin (const QString& identifier) {
 	if (factory) {
 		if (identifier == "katekonsoleplugin") {
 			// Workaround until https://invent.kde.org/utilities/kate/-/commit/cf11bcbf1f36e2a82b1a1b14090a3f0a2b09ecf4 can be assumed to be present (should be removed in KF6)
-			if (qgetenv("EDITOR").isNull()) qputenv("EDITOR", "vi");
+			if (qEnvironmentVariableIsEmpty("EDITOR")) qputenv("EDITOR", "vi");
 		}
 
 		KTextEditor::Plugin *plugin = factory->create<KTextEditor::Plugin>(this, QVariantList () << identifier);
@@ -135,7 +135,8 @@ void KatePluginIntegrationApp::loadPlugins(const QStringList& plugins) {
 	RK_TRACE (APP);
 
 	bool changes = false;
-	foreach (const QString &key, known_plugins.keys()) {
+	const auto keys = known_plugins.keys();
+	for(const QString &key : keys) {
 		auto info = known_plugins.value(key);
 		if (plugins.contains(key)) {
 			if (!info.plugin) {
@@ -589,7 +590,7 @@ QObject* KatePluginIntegrationWindow::createPluginView(KTextEditor::Plugin* plug
 	active_plugin = 0;
 	disconnect(factory(), &KXMLGUIFactory::clientAdded, this, &KatePluginIntegrationWindow::catchXMLGUIClientsHack);
 	fixUpPluginUI(app->idForPlugin(plugin), resources);
-	connect(plugin, &QObject::destroyed, [this, plugin]() { plugin_resources.remove(plugin); });
+	connect(plugin, &QObject::destroyed, this, [this, plugin]() { plugin_resources.remove(plugin); });
 	return resources.view;
 }
 

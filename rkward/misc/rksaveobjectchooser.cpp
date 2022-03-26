@@ -190,7 +190,7 @@ void RKSaveObjectChooser::updateState () {
 
 	if ((new_name != current_full_name) || (sender () == overwrite_confirm)) {
 		current_full_name = new_name;
-		emit (changed (isOk ()));
+		emit changed(isOk());
 	}
 }
 

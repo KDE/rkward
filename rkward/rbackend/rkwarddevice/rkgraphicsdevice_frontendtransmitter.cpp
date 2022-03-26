@@ -258,7 +258,7 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			if (!device) {
 				if (opcode == RKDCancel) {
 					RK_DEBUG (GRAPHICS_DEVICE, DL_WARNING, "Graphics operation canceled");
-					emit (stopInteraction());
+					emit stopInteraction();
 				} else if (opcode == RKDQueryResolution) {
 					QDesktopWidget *desktop = QApplication::desktop ();
 					streamer.outstream << (qint32) desktop->physicalDpiX () << (qint32) desktop->physicalDpiY ();

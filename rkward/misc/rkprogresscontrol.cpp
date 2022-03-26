@@ -173,7 +173,7 @@ void RKProgressControl::dialogDestroyed () {
 				RKGlobals::rInterface ()->cancelCommand (*it);
 			}
 		}
-		emit (cancelled ());
+		emit cancelled();
 	}
 }
 

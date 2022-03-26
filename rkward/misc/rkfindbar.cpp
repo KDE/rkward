@@ -137,7 +137,7 @@ void RKFindBar::doSearch (bool backward) {
 	show ();
 	bool found = false;
 	QString term = term_edit->currentText ();
-	findRequest (term, backward, this, &found);
+	emit findRequest(term, backward, this, &found);
 	if (!(found || term.isEmpty ())) indicateSearchFail();
 }
 

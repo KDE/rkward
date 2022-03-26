@@ -106,14 +106,14 @@ void RKLoadLibsDialog::slotPageChanged () {
 }
 
 //static
-void RKLoadLibsDialog::showInstallPackagesModal (QWidget *parent, RCommandChain *chain, const QStringList &package_names) {
-	RK_TRACE (DIALOGS);
+void RKLoadLibsDialog::showInstallPackagesModal(QWidget *parent, RCommandChain *chain, const QStringList &package_names) {
+	RK_TRACE(DIALOGS);
 
-	RKLoadLibsDialog *dialog = new RKLoadLibsDialog (parent, chain, true);
-	QTimer::singleShot (0, [dialog, package_names]() { dialog->automatedInstall(package_names); });		// to get past the dialog->exec, below
-	dialog->setCurrentPage (dialog->install_packages_pageitem);
-	dialog->exec ();
-	RK_TRACE (DIALOGS);
+	RKLoadLibsDialog *dialog = new RKLoadLibsDialog(parent, chain, true);
+	QTimer::singleShot(0, dialog, [dialog, package_names]() { dialog->automatedInstall(package_names); });   // to get past the dialog->exec, below
+	dialog->setCurrentPage(dialog->install_packages_pageitem);
+	dialog->exec();
+	RK_TRACE(DIALOGS);
 }
 
 // static
@@ -158,14 +158,14 @@ void RKLoadLibsDialog::accept () {
 	was_accepted = true;
 	hide ();
 	// will self-destruct once all children are done
-	emit (accepted());
+	emit accepted();
 }
 
 void RKLoadLibsDialog::reject () {
 	was_accepted = false;
 	hide ();
 	// will self-destruct once all children are done
-	emit (rejected());
+	emit rejected();
 }
 
 void RKLoadLibsDialog::rCommandDone (RCommand *command) {
@@ -175,7 +175,7 @@ void RKLoadLibsDialog::rCommandDone (RCommand *command) {
 		RK_ASSERT (command->getDataLength () > 0);
 		// NOTE: The problem is that e.g. R_LIBS_USER is not in .libPaths() if it does not exist, yet. But it should be available as an option, of course
 		library_locations = command->stringVector ();
-		emit (libraryLocationsChanged (library_locations));
+		emit libraryLocationsChanged(library_locations);
 	} else {
 		RK_ASSERT (false);
 	}
@@ -188,7 +188,7 @@ void RKLoadLibsDialog::addLibraryLocation (const QString& new_loc) {
 
 	if (QDir ().mkpath (new_loc)) RKSettingsModuleRPackages::addLibraryLocation (new_loc, chain);
 	library_locations.prepend (new_loc);
-	emit (libraryLocationsChanged (library_locations));
+	emit libraryLocationsChanged(library_locations);
 }
 
 bool RKLoadLibsDialog::removePackages (QStringList packages, QStringList from_liblocs) {
@@ -378,31 +378,31 @@ void RKLoadLibsDialog::runInstallationCommand (const QString& command, bool as_r
 	file.remove ();
 	delete installation_process;
 	installation_process = 0;
-	emit (installedPackagesChanged ());
+	emit installedPackagesChanged();
 }
 
 void RKLoadLibsDialog::installationProcessOutput () {
 	RK_TRACE (DIALOGS);
 	RK_ASSERT (installation_process);
 
-	emit (installationOutput (QString::fromLocal8Bit (installation_process->readAllStandardOutput())));
+	emit installationOutput(QString::fromLocal8Bit(installation_process->readAllStandardOutput()));
 }
 
 void RKLoadLibsDialog::installationProcessError () {
 	RK_TRACE (DIALOGS);
 	RK_ASSERT (installation_process);
 
-	emit (installationError (QString::fromLocal8Bit (installation_process->readAllStandardError ())));
+	emit installationError(QString::fromLocal8Bit(installation_process->readAllStandardError()));
 }
 
 void RKLoadLibsDialog::processExited (int exitCode, QProcess::ExitStatus exitStatus) {
 	RK_TRACE (DIALOGS);
 
 	if (exitCode || (exitStatus != QProcess::NormalExit)) {
-		installationError ('\n' + i18n ("Installation process died with exit code %1", exitCode));
+		emit installationError('\n' + i18n ("Installation process died with exit code %1", exitCode));
 	}
 
-	emit (installationComplete ());
+	emit installationComplete();
 }
 
 ////////////////////// LoadUnloadWidget ////////////////////////////
@@ -512,7 +512,7 @@ void LoadUnloadWidget::rCommandDone (RCommand *command) {
 		loaded_view->sortItems (0, Qt::AscendingOrder);
 		updateCurrentList ();
 	} else if (command->getFlags () == LOAD_PACKAGE_COMMAND) {
-		emit (loadUnloadDone ());
+		emit loadUnloadDone();
 	} else {
 		RK_ASSERT (false);
 	}
@@ -1190,8 +1190,8 @@ bool RKRPackageInstallationStatus::setData (const QModelIndex &index, const QVar
 	if (irow >= 0) installed_status[irow] = stat;
 	if (arow >= 0) available_status[arow] = stat;
 
-	dataChanged (index, index);
-	if (bindex.isValid ()) dataChanged (bindex, bindex);
+	emit dataChanged(index, index);
+	if (bindex.isValid ()) emit dataChanged(bindex, bindex);
 
 	return true;
 }

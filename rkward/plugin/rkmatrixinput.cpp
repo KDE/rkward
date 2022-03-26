@@ -129,7 +129,7 @@ QVariant RKMatrixInput::value (const QString& modifier) {
 		return QString ("cbind (\n" + ret.join (",\n") + "\n)");
 	} else if (modifier.startsWith (QLatin1String ("row."))) {
 		bool ok;
-		int row = modifier.mid (4).toInt (&ok);
+		int row = modifier.midRef(4).toInt(&ok);
 		if ((row >= 0) && ok) {
 			return (rowStrings (row));
 		}
@@ -187,7 +187,7 @@ void RKMatrixInput::setCellValue (int row, int column, const QString& value) {
 	}
 	col.storage[row] = value;
 	updateColumn (column);
-	model->dataChanged (model->index (row, column), model->index (row, column));
+	emit model->dataChanged(model->index(row, column), model->index(row, column));
 }
 
 void RKMatrixInput::setColumnValue (int column, const QString& value) {
@@ -196,7 +196,7 @@ void RKMatrixInput::setColumnValue (int column, const QString& value) {
 	if (!expandStorageForColumn (column)) return;
 	columns[column].storage = value.split ('\t', QString::KeepEmptyParts);
 	updateColumn (column);
-	model->dataChanged (model->index (0, column), model->index (row_count->intValue () + trailing_rows, column));
+	emit model->dataChanged (model->index(0, column), model->index(row_count->intValue() + trailing_rows, column));
 }
 
 void RKMatrixInput::updateColumn (int column) {
@@ -310,7 +310,7 @@ void RKMatrixInput::updateAll () {
 	}
 	if (new_valid != is_valid) {
 		is_valid = new_valid;
-		model->headerDataChanged (Qt::Horizontal, 0, column_count->intValue () - 1);
+		emit model->headerDataChanged(Qt::Horizontal, 0, column_count->intValue() - 1);
 	}
 	changed ();
 }
@@ -332,9 +332,9 @@ void RKMatrixInput::dimensionPropertyChanged (RKComponentPropertyBase *property)
 		}
 	}
 
-	model->layoutAboutToBeChanged ();
-	updateAll ();
-	model->layoutChanged ();
+	emit model->layoutAboutToBeChanged();
+	updateAll();
+	emit model->layoutChanged();
 }
 
 void RKMatrixInput::tsvPropertyChanged () {

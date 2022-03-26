@@ -74,11 +74,11 @@ void RKSetupWizardItem::createWidget(QGridLayout *layout, int row) {
 	if (!(longlabel.isEmpty() && options.isEmpty())) {
 		QString details = longlabel;
 		for (int i = 0; i < options.size(); ++i) {
-			details += QString("<p><b>%1</b>: %2</p>").arg(options[i].shortlabel).arg(options[i].longlabel);
+			details += QString("<p><b>%1</b>: %2</p>").arg(options[i].shortlabel, options[i].longlabel);
 		}
 		auto info = new QPushButton();
 		info->setIcon(RKStandardIcons::getIcon(RKStandardIcons::WindowHelp));
-		QObject::connect(info, &QPushButton::clicked, [details, layout]() { KMessageBox::information(layout->parentWidget(), details, QString(), QString(), KMessageBox::Notify | KMessageBox::AllowLink); });
+		QObject::connect(info, &QPushButton::clicked, layout, [details, layout]() { KMessageBox::information(layout->parentWidget(), details, QString(), QString(), KMessageBox::Notify | KMessageBox::AllowLink); });
 		layout->addWidget(info, row, 3);
 	}
 }
@@ -186,7 +186,7 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 	// TODO: Remove, eventually
 	auto legacy_output = new RKSetupWizardItem(i18n("Pre 0.7.3 output file"));
 	QString legacy_output_path = RKSettingsModuleGeneral::filesPath() + "rk_out.html";
-	if (QFileInfo(legacy_output_path).exists()) {
+	if (QFileInfo::exists(legacy_output_path)) {
 		legacy_output->setStatus(RKSetupWizardItem::Warning, i18n("Exists"));
 		legacy_output->setLongLabel(QString("<p>An output file from before RKWard version 0.7.3 was found (%1). You will probably want to convert this to the new format. Alternatively, if it is no longer needed, you can delete it, manually.</p>").arg(legacy_output_path));
 		legacy_output->addOption(i18n("Import"), i18n("Import to the session, so you can save in the new output format."), [](RKSetupWizard* wizard) { wizard->r_commands_to_run.append("rk.import.legacy.output()\n"); });

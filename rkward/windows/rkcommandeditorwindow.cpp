@@ -201,7 +201,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 	}
 	preview = new RKXMLGUIPreviewArea (QString(), this);
 	preview_manager = new RKPreviewManager (this);
-	connect (preview_manager, &RKPreviewManager::statusChanged, [this]() { preview_timer.start (500); });
+	connect (preview_manager, &RKPreviewManager::statusChanged, this, [this]() { preview_timer.start (500); });
 	m_view = m_doc->createView (this);
 	RKWorkplace::mainWorkplace()->registerNamedWindow (preview_manager->previewId(), this, preview);
 	if (!url.isEmpty ()) {
@@ -225,16 +225,15 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 	QList<KActionCollection*> own_acs;
 	own_acs.append(part->actionCollection());
 	own_acs.append(standardActionCollection());
-	auto own_actions = part->actionCollection()->actions();
 	// How's this for a nested for loop...
 	for (const auto ac : own_acs) {
-		auto own_actions = ac->actions();
+		const auto own_actions = ac->actions();
 		for (const auto a : own_actions) {
-			for (const auto k : ac->defaultShortcuts(a)) {
+			for (const auto &k : ac->defaultShortcuts(a)) {
 				for (const auto kac : kate_acs) {
 					for (auto ka : kac->actions()) {
 						auto action_shortcuts = kac->defaultShortcuts(ka);
-						for (const auto kk : action_shortcuts) {
+						for (const auto &kk : action_shortcuts) {
 							if (k.matches(kk) != QKeySequence::NoMatch || kk.matches(k) != QKeySequence::NoMatch) {
 								RK_DEBUG(EDITOR, DL_WARNING, "Removing conflicting shortcut %s in kate part (%s, conflicting with %s)", qPrintable(kk.toString()), qPrintable(ka->objectName()), qPrintable(a->objectName()));
 								action_shortcuts.removeAll(k);
@@ -261,7 +260,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 	layout->addWidget(preview_splitter);
 
 	setGlobalContextProperty ("current_filename", m_doc->url ().url ());
-	connect (m_doc, &KTextEditor::Document::documentUrlChanged, [this]() { updateCaption(); setGlobalContextProperty ("current_filename", m_doc->url ().url ()); });
+	connect (m_doc, &KTextEditor::Document::documentUrlChanged, this, [this]() { updateCaption(); setGlobalContextProperty ("current_filename", m_doc->url ().url ()); });
 	connect (m_doc, &KTextEditor::Document::modifiedChanged, this, &RKCommandEditorWindow::updateCaption);                // of course most of the time this causes a redundant call to updateCaption. Not if a modification is undone, however.
 #ifdef __GNUC__
 #warning remove this in favor of KTextEditor::Document::restore()
@@ -935,7 +934,7 @@ void RKCommandEditorWindow::doRenderPreview () {
 		          "}\n"
 		          "rk.set.output.html.file(output, silent=TRUE)\n"
 		          "rk.show.html(%2)\n";
-		command = command.arg (RObject::rQuote (preview_input_file->fileName ())).arg (RObject::rQuote (output_file));
+		command = command.arg (RObject::rQuote (preview_input_file->fileName ()), RObject::rQuote (output_file));
 	} else {
 		RK_ASSERT (false);
 	}
@@ -1123,8 +1122,8 @@ QString exportText(const QString& text, const KTextEditor::Attribute::Ptr& attri
 
 	if ( writeForeground || writeBackground ) {
 		ret.append (QString("<span style='%1%2'>")
-					.arg(writeForeground ? QString(QLatin1String("color:") + attrib->foreground().color().name() + QLatin1Char(';')) : QString())
-					.arg(writeBackground ? QString(QLatin1String("background:") + attrib->background().color().name() + QLatin1Char(';')) : QString()));
+					.arg(writeForeground ? QString(QLatin1String("color:") + attrib->foreground().color().name() + QLatin1Char(';')) : QString(),
+					     writeBackground ? QString(QLatin1String("background:") + attrib->background().color().name() + QLatin1Char(';')) : QString()));
 	}
 
 	ret.append (text.toHtmlEscaped());
@@ -1156,8 +1155,8 @@ QString RKCommandHighlighter::commandToHTML (const QString r_command, Highlighti
 		opening = "<pre class=\"%3\">";
 	} else {
 		opening = QString("<pre style='%1%2' class=\"%3\">")
-				.arg(m_defaultAttribute->fontBold() ? "font-weight:bold;" : "")
-				.arg(m_defaultAttribute->fontItalic() ? "text-style:italic;" : "");
+				.arg(m_defaultAttribute->fontBold() ? "font-weight:bold;" : "",
+				     m_defaultAttribute->fontItalic() ? "text-style:italic;" : "");
 				// Note: copying the default text/background colors is pointless in our case, and leads to subtle inconsistencies.
 	}
 

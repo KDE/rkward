@@ -20,7 +20,7 @@
 #include "rkcomponent.h"
 
 #include <qstring.h>
-#include <qmap.h>
+#include <QHash>
 #include "../core/robject.h"
 
 class QPushButton;
@@ -80,7 +80,7 @@ private:
 	void makeModelString ();
 	QString mangleName (RObject *var);
 	
-	typedef QMap<QTreeWidgetItem*, RObject*> ItemMap;
+	typedef QHash<QTreeWidgetItem*, RObject*> ItemMap;
 	ItemMap predictors_map;
 	
 	struct Interaction {
@@ -88,7 +88,7 @@ private:
 		RObject::ObjectList vars;
 	};
 	
-	typedef QMap<QTreeWidgetItem*, Interaction> InteractionMap;
+	typedef QHash<QTreeWidgetItem*, Interaction> InteractionMap;
 	InteractionMap interaction_map;
 	
 	/** recursively cross the given source variables on level level. Returns the resulting terms in an QList */

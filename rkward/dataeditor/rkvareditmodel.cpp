@@ -97,7 +97,7 @@ void RKVarEditModel::objectRemoved (RObject* object) {
 	if (meta_model) meta_model->endRemoveDataObject ();
 	endRemoveColumns ();
 
-	if (objects.size () <= var_col_offset) emit (modelDepleted ());	// editor may or may want to auto-destruct
+	if (objects.size () <= var_col_offset) emit modelDepleted();	// editor may or may want to auto-destruct
 }
 
 void RKVarEditModel::checkDuplicates () {
@@ -126,7 +126,7 @@ void RKVarEditModel::checkDuplicatesNow () {
 		}
 	}
 
-	if (!dupes.isEmpty ()) emit (hasDuplicates (dupes));
+	if (!dupes.isEmpty ()) emit hasDuplicates(dupes);
 }
 
 void RKVarEditModel::objectMetaChanged (RObject* changed) {
@@ -168,7 +168,7 @@ void RKVarEditModel::objectDataChanged (RObject* object, const RObject::ChangeSe
 		scheduleReset ();
 		return;
 	}
-	emit (dataChanged (index (changes->from_index, cindex), index (changes->to_index, cindex)));
+	emit dataChanged(index(changes->from_index, cindex), index(changes->to_index, cindex));
 }
 
 void RKVarEditModel::doInsertColumns (int, int) {
@@ -514,8 +514,8 @@ void RKVarEditMetaModel::endRemoveDataObject () {
 void RKVarEditMetaModel::objectMetaChanged (int atcolumn) {
 	RK_TRACE (EDITOR);
 
-	emit (dataChanged (index (0, atcolumn), index (RowCount - 1, atcolumn)));
-	emit (headerDataChanged (Qt::Horizontal, atcolumn, atcolumn));
+	emit dataChanged(index(0, atcolumn), index(RowCount - 1, atcolumn));
+	emit headerDataChanged (Qt::Horizontal, atcolumn, atcolumn);
 }
 
 int RKVarEditMetaModel::rowCount (const QModelIndex& parent) const {
@@ -916,7 +916,7 @@ void RKVarEditDataFrameModel::objectRemoved (RObject* object) {
 
 	// if the dataframe is gone, the editor will most certainly want to auto-destruct.
 	// since the model will be taken down as well, this has to come last in the function.
-	if (!dataframe) emit (modelObjectDestroyed ());
+	if (!dataframe) emit modelObjectDestroyed();
 }
 
 void RKVarEditDataFrameModel::childAdded (int index, RObject* parent) {

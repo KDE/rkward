@@ -168,7 +168,7 @@ public slots:
 	void showPlotInfo ();
 
 /** reimplemented to keep window alive while saving history */
-	bool close (CloseWindowMode ask_save) override;
+	bool close (RKMDIWindow::CloseWindowMode ask_save) override;
 	void setKilledInR () { killed_in_r = true; };
 	void setWindowStyleHint (const QString& hint) override;
 private slots:

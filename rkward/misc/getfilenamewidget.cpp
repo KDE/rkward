@@ -129,7 +129,7 @@ void GetFileNameWidget::hackOverrideDirDialog () {
 
 void GetFileNameWidget::locationEditChanged (const QString &) {
 	RK_TRACE (MISC);
-	emit (locationChanged ());
+	emit locationChanged();
 }
 
 QString GetFileNameWidget::getLocation () {

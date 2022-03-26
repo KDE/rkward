@@ -89,22 +89,22 @@ void CellEditor::keyPressEvent (QKeyEvent *e) {
 	if (e->modifiers () == Qt::NoModifier) {
 		if ((e->key () == Qt::Key_Left) || (e->key () == Qt::Key_Backspace)) {
 			if (cursorPosition () < 1) {
-				emit (done (this, RKItemDelegate::EditorExitLeft));
+				emit done(this, RKItemDelegate::EditorExitLeft);
 				return;
 			}
 		}
 		if (e->key () == Qt::Key_Right) {
 			if (cursorPosition () >= (int) text ().length ()) {
-				emit (done (this, RKItemDelegate::EditorExitRight));
+				emit done(this, RKItemDelegate::EditorExitRight);
 				return;
 			}
 		}
 		if (e->key () == Qt::Key_Up) {
-			emit (done (this, RKItemDelegate::EditorExitUp));
+			emit done(this, RKItemDelegate::EditorExitUp);
 			return;
 		}
 		if (e->key () == Qt::Key_Down) {
-			emit (done (this, RKItemDelegate::EditorExitDown));
+			emit done(this, RKItemDelegate::EditorExitDown);
 			return;
 		}
 	}

@@ -110,10 +110,10 @@ QString RKMDIWindow::shortCaption () {
 	return windowTitle ();
 }
 
-void RKMDIWindow::setCaption (const QString &caption) {
-	RK_TRACE (APP);
-	QWidget::setWindowTitle (caption);
-	emit (captionChanged (this));
+void RKMDIWindow::setCaption(const QString &caption) {
+	RK_TRACE(APP);
+	QWidget::setWindowTitle(caption);
+	emit captionChanged(this);
 	if (tool_window_bar) tool_window_bar->captionChanged(this);
 }
 
@@ -149,7 +149,7 @@ void RKMDIWindow::activate (bool with_focus) {
 		}
 	}
 
-	emit (windowActivated (this));
+	emit windowActivated(this);
 	if (with_focus) {
 		if (old_focus) old_focus->clearFocus ();
 		topLevelWidget ()->activateWindow ();
@@ -218,12 +218,12 @@ bool RKMDIWindow::eventFilter (QObject *watched, QEvent *e) {
 
 	if (watched == getPart ()) {
 		if (KParts::PartActivateEvent::test (e)) {
-			RK_TRACE (APP);		// trace only the "interesting" calls to this function
+			RK_TRACE(APP);           // trace only the "interesting" calls to this function
 
-			KParts::PartActivateEvent *ev = static_cast<KParts::PartActivateEvent *> (e);
-			if (ev->activated ()) {
-				emit (windowActivated (this));
-				setFocus ();		// focus doesn't always work correctly for the kate part
+			KParts::PartActivateEvent *ev = static_cast<KParts::PartActivateEvent *>(e);
+			if (ev->activated()) {
+				emit windowActivated(this);
+				setFocus();      // focus doesn't always work correctly for the kate part
 				active = true;
 			} else {
 				active = false;
@@ -353,7 +353,7 @@ void RKMDIWindow::setStatusMessage (const QString& message, RCommand *command) {
 		layout->addStretch ();
 
 		// when animation is finished, squeeze the popup-container, so as not to interfere with mouse events in the main window
-		connect (status_popup, &KMessageWidget::showAnimationFinished, [this]() { status_popup_container->resize (QSize(width(), status_popup->height () + 20)); });
+		connect (status_popup, &KMessageWidget::showAnimationFinished, this, [this]() { status_popup_container->resize (QSize(width(), status_popup->height () + 20)); });
 		connect (status_popup, &KMessageWidget::hideAnimationFinished, status_popup_container, &QWidget::hide);
 	}
 

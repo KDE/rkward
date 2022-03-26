@@ -149,7 +149,7 @@ void RKModificationTracker::renameObject (RObject *object, const QString &new_na
 		sendListenerNotification (RObjectListener::MetaChanged, object, 0, 0, 0);
 
 		QModelIndex object_index = indexFor (object);
-		emit (dataChanged (object_index, object_index));
+		emit dataChanged(object_index, object_index);
 	}
 }
 
@@ -179,7 +179,7 @@ void RKModificationTracker::objectMetaChanged (RObject *object) {
 		sendListenerNotification (RObjectListener::MetaChanged, object, 0, 0, 0);
 
 		QModelIndex object_index = indexFor (object);
-		emit (dataChanged (object_index, object_index));
+		emit dataChanged(object_index, object_index);
 	}
 }
 
@@ -191,7 +191,7 @@ void RKModificationTracker::objectDataChanged (RObject *object, RObject::ChangeS
 		delete changes;
 
 		QModelIndex object_index = indexFor (object);
-		emit (dataChanged (object_index, object_index));	// might have changed dimensions, for instance
+		emit dataChanged(object_index, object_index);	// might have changed dimensions, for instance
 	}
 }
 

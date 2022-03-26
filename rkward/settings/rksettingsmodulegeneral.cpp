@@ -93,7 +93,7 @@ RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *pare
 	initial_dir_custom_chooser = new GetFileNameWidget (group_box, GetFileNameWidget::ExistingDirectory, true, QString(), i18n ("Initial working directory"), initial_dir_specification);
 	initial_dir_custom_chooser->setEnabled (initial_dir == CustomDirectory);
 	connect (initial_dir_custom_chooser, &GetFileNameWidget::locationChanged, this, &RKSettingsModuleGeneral::change);
-	connect(initial_dir_chooser, QOverload<int>::of(&QComboBox::currentIndexChanged), [initial_dir_chooser, this]() { this->initial_dir_custom_chooser->setEnabled(initial_dir_chooser->currentData()==CustomDirectory); });
+	connect(initial_dir_chooser, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [initial_dir_chooser, this]() { this->initial_dir_custom_chooser->setEnabled(initial_dir_chooser->currentData()==CustomDirectory); });
 	hlayout->addWidget (initial_dir_custom_chooser);
 	RKCommonFunctions::setTips (i18n ("<p>The initial working directory to use. Note that if you are loading a workspace on startup, and you have configured RKWard to change to the directory of loaded workspaces, that directory will take precedence.</p>"), group_box, initial_dir_chooser, initial_dir_custom_chooser);
 	main_vbox->addWidget (group_box);
