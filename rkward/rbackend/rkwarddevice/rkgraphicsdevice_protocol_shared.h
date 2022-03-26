@@ -44,6 +44,13 @@
  * 
  */
 
+enum RKDCachedResourceType {
+	RKDPattern,
+	RKDClipPath,
+	RKDMask,
+	RKDGroup
+};
+
 enum RKDFillType {
 	ColorFill,
 	PatternFill
@@ -88,12 +95,10 @@ enum RKDOpcodes {
 	RKDRaster,
 	RKDSetSize,            // 15
 	RKDStopGettingEvents,
-	RKDReleasePattern,
+	RKDReleaseCachedResource,
 	RKDStartRecordTilingPattern,      // part of setPattern in R
-	RKDReleaseClipPath,
-	RKDStartRecordClipPath,//20
-	RKDReleaseMask,
-	RKDStartRecordMask,
+	RKDStartRecordClipPath,
+	RKDStartRecordMask,    // 20
 
 	// Synchronous operations
 	RKDFetchNextEvent      = 100,

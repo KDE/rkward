@@ -266,7 +266,7 @@ int RKGraphicsDevice::registerPattern(const QBrush& brush) {
 
 void RKGraphicsDevice::destroyPattern(int id) {
 	RK_TRACE(GRAPHICS_DEVICE);
-	if (id == 0) patterns.clear();
+	if (id < 0) patterns.clear();
 	else patterns.remove(id);
 }
 

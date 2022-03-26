@@ -361,10 +361,6 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 		} else if (opcode == RKDSetPattern) {
 			streamer.outstream << (qint32) readNewPattern(streamer.instream, device);
 			streamer.writeOutBuffer();
-		} else if (opcode == RKDReleasePattern) {
-			qint32 index;
-			streamer.instream >> index;
-			device->destroyPattern(index);
 		} else if (opcode == RKDStartRecordTilingPattern) {
 			double width, height, x, y;
 			streamer.instream >> width >> height;
@@ -381,14 +377,17 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			qint8 ok = device->setClipToCachedPath(index) ? 1 : 0;
 			streamer.outstream << ok;
 			streamer.writeOutBuffer();
-		} else if (opcode == RKDReleaseClipPath) {
+		} else if (opcode == RKDReleaseCachedResource) {
+			quint8 type;
 			qint32 len;
-			streamer.instream >> len;
-			if (len < 0) device->destroyCachedPath(-1);
+			streamer.instream >> type >> len;
 			for (int i = 0; i < len; ++i) {
 				qint32 index;
 				streamer.instream >> index;
-				device->destroyCachedPath(index);
+				if (type == RKDPattern) device->destroyPattern(index);
+				else if (type == RKDClipPath) device->destroyCachedPath(index);
+				else if (type == RKDMask) device->destroyMask(index);
+				else RK_ASSERT(false);
 			}
 		} else if (opcode == RKDStartRecordClipPath) {
 			device->startRecordPath();
@@ -406,15 +405,6 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			qint8 ok = device->setMask(index) ? 1 : 0;
 			streamer.outstream << ok;
 			streamer.writeOutBuffer();
-		} else if (opcode == RKDReleaseMask) {
-			qint32 len;
-			streamer.instream >> len;
-			if (len < 0) device->destroyMask(-1);
-			for (int i = 0; i < len; ++i) {
-				qint32 index;
-				streamer.instream >> index;
-				device->destroyMask(index);
-			}
 		} else if (opcode == RKDStartRecordMask) {
 			device->startRecordMask();
 		} else if (opcode == RKDEndRecordMask) {

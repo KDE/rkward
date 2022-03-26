@@ -728,16 +728,27 @@ SEXP RKD_SetPattern (SEXP pattern, pDevDesc dev) {
 	return makeInt(index);
 }
 
-void RKD_ReleasePattern (SEXP ref, pDevDesc dev) {
+void releaseCachedResource(RKDCachedResourceType type, SEXP ref, pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
-	qint32 index;
-	if (Rf_isNull(ref)) index = 0;  // means: destroy all patterns
-	else index = INTEGER(ref)[0];
 	{
 		RKGraphicsDataStreamWriteGuard wguard;
-		WRITE_HEADER(RKDReleasePattern, dev);
-		RKD_OUT_STREAM << index;
+		WRITE_HEADER(RKDReleaseCachedResource, dev);
+		RKD_OUT_STREAM << (quint8) type;
+		if (Rf_isNull(ref)) {
+			RKD_OUT_STREAM << (qint32) 1 << (qint32) -1; // means: destroy all objects of that type
+		} else {
+			qint32 len = LENGTH(ref);
+			RKD_OUT_STREAM << len;
+			for (int i = 0; i < len; ++i) {
+				RKD_OUT_STREAM << (qint32) INTEGER(ref)[i];
+			}
+		}
 	}
+}
+
+void RKD_ReleasePattern (SEXP ref, pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
+	releaseCachedResource(RKDPattern, ref, dev);
 }
 
 SEXP RKD_SetClipPath (SEXP path, SEXP ref, pDevDesc dev) {
@@ -792,19 +803,7 @@ SEXP RKD_SetClipPath (SEXP path, SEXP ref, pDevDesc dev) {
 
 void RKD_ReleaseClipPath (SEXP ref, pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
-	{
-		RKGraphicsDataStreamWriteGuard wguard;
-		WRITE_HEADER(RKDReleaseClipPath, dev);
-		if (Rf_isNull(ref)) {
-			RKD_OUT_STREAM << (qint32) -1; // means: destroy all clippaths
-		} else {
-			qint32 len = LENGTH(ref);
-			RKD_OUT_STREAM << len;
-			for (int i = 0; i < len; ++i) {
-				RKD_OUT_STREAM << (qint32) INTEGER(ref)[i];
-			}
-		}
-	}
+	releaseCachedResource(RKDClipPath, ref, dev);
 }
 
 SEXP RKD_SetMask (SEXP mask, SEXP ref, pDevDesc dev) {
@@ -855,11 +854,9 @@ SEXP RKD_SetMask (SEXP mask, SEXP ref, pDevDesc dev) {
 	return R_NilValue;
 }
 
-void RKD_ReleaseMask (SEXP ref, pDevDesc dd) {
+void RKD_ReleaseMask (SEXP ref, pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
-#ifdef __GNUC__
-#warning implement me
-#endif
+	releaseCachedResource(RKDMask, ref, dev);
 }
 
 #endif
