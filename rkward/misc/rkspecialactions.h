@@ -2,7 +2,7 @@
                           rkspecialactions  -  description
                              -------------------
     begin                : Mon Mar 15 2010
-    copyright            : (C) 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2010-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -18,12 +18,12 @@
 #ifndef RKSPECIALACTIONS_H
 #define RKSPECIALACTIONS_H
 
-#include <kpastetextaction.h>
+#include <QAction>
 
 /** This namespace provides functions to generate some standard actions, i.e. actions which are needed at more than one place.
 
 @author Thomas Friedrichsmeier */
-class RKPasteSpecialAction : public KPasteTextAction {
+class RKPasteSpecialAction : public QAction {
 	Q_OBJECT
 public:
 	explicit RKPasteSpecialAction (QObject* parent);

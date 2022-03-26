@@ -2,7 +2,7 @@
                           rkspecialactions  -  description
                              -------------------
     begin                : Mon Mar 15 2010
-    copyright            : (C) 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2010-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -21,26 +21,28 @@
 
 #include "../debug.h"
 
-RKPasteSpecialAction::RKPasteSpecialAction (QObject* parent) : KPasteTextAction (parent) {
-	RK_TRACE (MISC);
+RKPasteSpecialAction::RKPasteSpecialAction(QObject* parent) : QAction(parent) {
+	RK_TRACE(MISC);
 
-	setText (i18n ("Paste special..."));
-	connect (this, &QAction::triggered, this, &RKPasteSpecialAction::doSpecialPaste);
+	setText(i18n("Paste special..."));
+	connect(this, &QAction::triggered, this, &RKPasteSpecialAction::doSpecialPaste);
 }
 
-RKPasteSpecialAction::~RKPasteSpecialAction () {
-	RK_TRACE (MISC);
+RKPasteSpecialAction::~RKPasteSpecialAction() {
+	RK_TRACE(MISC);
 }
 
-void RKPasteSpecialAction::doSpecialPaste () {
-	RK_TRACE (MISC);
+void RKPasteSpecialAction::doSpecialPaste() {
+	RK_TRACE(MISC);
 
-	RKPasteSpecialDialog* dialog = new RKPasteSpecialDialog (associatedWidgets ().first ());
-	int res = dialog->exec ();
+	QWidget *pwin = nullptr;
+	if (!associatedWidgets().isEmpty()) pwin = associatedWidgets().at(0);
+	RKPasteSpecialDialog* dialog = new RKPasteSpecialDialog(pwin);
+	int res = dialog->exec();
 	if (res == QDialog::Accepted) {
 		emit pasteText(dialog->resultingText());
 	}
-	dialog->deleteLater ();
+	dialog->deleteLater();
 }
 
 #include <QCheckBox>
