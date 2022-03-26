@@ -92,12 +92,12 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI(KXmlGuiWindow *for_window) : QObject(fo
 	action->setText (i18n ("Activate Document view"));
 	actionCollection ()->setDefaultShortcut (action, Qt::AltModifier + Qt::Key_0);
 
-	action = new QAction(i18n("Show Output"));
+	action = actionCollection()->addAction("output_show");
+	action->setText(i18n("Show Output"));
+	action->setIcon(RKStandardIcons::getIcon(RKStandardIcons::WindowOutput));
 	action->setMenu(output_windows_menu = new QMenu());
 	connect(output_windows_menu, &QMenu::aboutToShow, this, &RKTopLevelWindowGUI::populateOutputWindowsMenu);
 	connect(output_windows_menu, &QMenu::triggered, this, &RKTopLevelWindowGUI::slotOutputShow);
-	action->setIcon(RKStandardIcons::getIcon(RKStandardIcons::WindowOutput));
-	actionCollection()->addAction("output_show", action);
 
 	// settings
 	KStandardAction::keyBindings (this, SLOT (configureShortcuts()), actionCollection ());
@@ -107,6 +107,7 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI(KXmlGuiWindow *for_window) : QObject(fo
 RKTopLevelWindowGUI::~RKTopLevelWindowGUI () {
 	RK_TRACE (APP);
 	delete help_menu_dummy;
+	delete output_windows_menu;
 }
 
 void RKTopLevelWindowGUI::initToolWindowActions () {
