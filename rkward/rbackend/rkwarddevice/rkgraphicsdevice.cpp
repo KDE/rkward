@@ -273,6 +273,7 @@ void RKGraphicsDevice::destroyPattern(int id) {
 void RKGraphicsDevice::startRecordPath() {
 	RK_TRACE(GRAPHICS_DEVICE);
 
+	// Not really sure whether R uses nested clipping paths at all, but not a big deal to support them, here.
 	stashed_paths.append(recorded_path);
 	recorded_path = QPainterPath();
 	recording_path = true;

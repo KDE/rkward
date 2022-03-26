@@ -128,16 +128,16 @@ static QPen readPen (QDataStream &instream) {
 	quint8 lends, ljoin;
 	double lmitre;
 	instream >> lends >> ljoin >> lmitre;
-	ret.setCapStyle (lends == RoundLineCap ? Qt::RoundCap : (lends == ButtLineCap ? Qt::FlatCap : Qt::SquareCap));
-	ret.setJoinStyle (ljoin == RoundJoin ? Qt::RoundJoin : (ljoin == BevelJoin ? Qt::BevelJoin : Qt::MiterJoin));
-	ret.setMiterLimit (lmitre);
+	ret.setCapStyle((Qt::PenCapStyle) mapLineEndStyle(lends));
+	ret.setJoinStyle((Qt::PenJoinStyle) mapLineJoinStyle(ljoin));
+	ret.setMiterLimit(lmitre);
 	return ret;
 }
 
 static QBrush readBrush(QDataStream &instream, RKGraphicsDevice *dev) {
 	qint8 filltype;
 	instream >> filltype;
-	if (filltype  == ColorFill) {
+	if (filltype == ColorFill) {
 		QColor col = readColor(instream);
 		return QBrush(col);
 	} else {

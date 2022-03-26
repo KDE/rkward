@@ -162,11 +162,6 @@ public:
 #include <QRectF>
 #include <QSizeF>
 
-// This ought to be optimized away by the compiler:
-#define SAFE_LINE_END(lend) (quint8) (lend == GE_ROUND_CAP ? RoundLineCap : (lend == GE_BUTT_CAP ? ButtLineCap : SquareLineCap))
-// This ought to be optimized away by the compiler:
-#define SAFE_LINE_JOIN(ljoin) (quint8) (ljoin == GE_ROUND_JOIN ? RoundJoin : (ljoin == GE_BEVEL_JOIN ? BevelJoin : MitreJoin))
-
 // I'd love to convert to QColor, directly, but that's in QtGui, not QtCore. QRgb used different byte ordering
 // TODO: is the check against NA_INTEGER needed at all?
 #define WRITE_COLOR_BYTES(col) \
@@ -181,7 +176,7 @@ public:
 	WRITE_COL(); RKD_OUT_STREAM << (double) gc->lwd << (qint32) gc->lty
 // actually lmitre is only needed if linejoin is GE_MITRE_JOIN, so we could optimize a bit
 #define WRITE_LINE_ENDS() \
-	RKD_OUT_STREAM << SAFE_LINE_END (gc->lend) << SAFE_LINE_JOIN (gc->ljoin) << gc->lmitre
+	RKD_OUT_STREAM << (quint8) mapLineEndStyle(gc->lend) << (quint8) mapLineJoinStyle(gc->ljoin) << gc->lmitre
 #if R_VERSION >= R_Version(4, 1, 0)
 #  define WRITE_FILL() \
 	if (gc->patternFill != R_NilValue) RKD_OUT_STREAM << (qint8) PatternFill << (qint16) (INTEGER(gc->patternFill)[0]); \

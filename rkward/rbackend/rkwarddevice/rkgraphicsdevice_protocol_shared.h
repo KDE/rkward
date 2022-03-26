@@ -44,22 +44,6 @@
  * 
  */
 
-/** This enum simply repeats R's line end definitions. It is used to ensure compatibility, without the need to include
- * any R headers in the frontend. */
-enum RKLineEndStyles {
-	RoundLineCap = 1,
-	ButtLineCap = 2,
-	SquareLineCap = 3
-};
-
-/** This enum simply repeats R's line join definitions. It is used to ensure compatibility, without the need to include
- * any R headers in the frontend. */
-enum RKLineJoinStyles {
-	RoundJoin = 1,
-	MitreJoin = 2,
-	BevelJoin = 3
-};
-
 enum RKDFillType {
 	ColorFill,
 	PatternFill
@@ -152,7 +136,7 @@ enum RKDEventCodes {
  * While in most cases there _is_ a direct correspondence, the underlying int values cannot be assumed to be the same (and in many cases differ).
  * Thus we need a lot of code along the lines "if(value = r_enum_value) return qt_enum_value;".
  *
- * As a further complication, we cannot easily include R headers in frontend code, and not easily (arbitray) Qt headers in backend code, thus the
+ * As a further complication, we cannot easily include R headers in frontend code, or (arbitray) Qt headers in backend code, thus the
  * above pseudo code will lack either the Qt or the R defintion. At some point we need to map to a value we set ourselves, either a third, rk-specific, enum,
  * or a naked int.
  *
@@ -164,15 +148,39 @@ enum RKDEventCodes {
  */
 #if defined(RKD_BACKEND_CODE)
 #define MapEnum(Rval,Ival,Qval) case Rval: return Ival;
-#define MapDefault(Ival,Qval) return Ival;
+#define MapDefault(Message,Ival,Qval) Message; return Ival;
+#define RKD_IN_FRONTEND false
 #else
 #define MapEnum(Rval,Ival,Qval) case Ival: static_assert(Ival == (int) Qval, "Enum mismatch"); return Qval;
-#define MapDefault(Ival,Qval) return Qval;
+#define MapDefault(Message,Ival,Qval) return Qval;
+#define RKD_IN_FRONTEND true
 #define RKD_RGE_VERSION 99999
 #endif
 
+static inline quint8 mapLineEndStyle(quint8 from) {
+	if (RKD_IN_FRONTEND) return from;
+	switch(from) {
+		MapEnum(GE_BUTT_CAP, 0x00, Qt::FlatCap);
+		MapEnum(GE_SQUARE_CAP, 0x10, Qt::SquareCap);
+		MapEnum(GE_ROUND_CAP, 0x20, Qt::RoundCap);
+	}
+	MapDefault({}, 0x00, Qt::FlatCap);
+}
+
+static inline quint8 mapLineJoinStyle(quint8 from) {
+	if (RKD_IN_FRONTEND) return from;
+	switch(from) {
+		MapEnum(GE_MITRE_JOIN, 0x00, Qt::MiterJoin);
+		MapEnum(GE_BEVEL_JOIN, 0x40, Qt::BevelJoin);
+		MapEnum(GE_ROUND_JOIN, 0x80, Qt::RoundJoin);
+		//MapEnum(GE_ROUND_JOIN, 0x100, Qt::SvgMiterJoin);  // not available in R, and wouldn't fit in quint8
+	}
+	MapDefault({}, 0x00, Qt::MiterJoin);
+}
+
 #if RKD_RGE_VERSION >= 15
-static int mapCompostionModeEnum(int from) {
+static inline int mapCompostionModeEnum(int from) {
+	if (RKD_IN_FRONTEND) return from;
 	switch(from) {
 		MapEnum(R_GE_compositeClear, 2, QPainter::CompositionMode_Clear);
 		MapEnum(R_GE_compositeSource, 3, QPainter::CompositionMode_Source);
@@ -201,7 +209,7 @@ static int mapCompostionModeEnum(int from) {
 // Unsupported in Qt:
 // MapEnum(R_GE_compositeSaturate, xx, yy)
 	}
-	MapDefault(0, QPainter::CompositionMode_SourceOver);
+	MapDefault(Rf_warning("Unsupported enumeration value %d", from), 0, QPainter::CompositionMode_SourceOver);
 }
 #endif
 
