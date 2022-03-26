@@ -117,7 +117,7 @@ friend class KatePluginIntegrationApp;
 		QList<KXMLGUIClient*> clients;
 		QList<RKMDIWindow*> windows;
 	};
-	QHash<KTextEditor::Plugin*, PluginResources> plugin_resources;
+	QHash<QObject*, PluginResources> plugin_resources;
 
 	KatePluginIntegrationApp *app;
 	KXMLGUIClient *dynamic_actions_client;
