@@ -341,6 +341,8 @@ void RKGraphicsDevice::destroyMask(int index) {
 	RK_TRACE (GRAPHICS_DEVICE);
 	if (index < 0) cached_paths.clear();
 	else cached_paths.remove(index);
+
+	if (index < 0 || current_mask == index) current_mask = 0;
 }
 
 bool RKGraphicsDevice::setMask(int index) {
