@@ -57,6 +57,7 @@ RKGraphicsDevice::RKGraphicsDevice (double width, double height, const QString &
 	connect (view, &QLabel::destroyed, this, &RKGraphicsDevice::viewKilled);
 	connect (&updatetimer, &QTimer::timeout, this, &RKGraphicsDevice::updateNow);
 	updatetimer.setSingleShot (true);
+	beginPainter();
 	clear ();
 	if (antialias) painter.setRenderHints (QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
 	setActive (true);	// sets window title
