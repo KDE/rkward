@@ -91,11 +91,11 @@ QWidget* RKXMLGUIPreviewArea::wrapperWidget () {
 	tb->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDelete));
 	connect (tb, &QAbstractButton::clicked, this, [this]() { wrapper_widget->hide(); emit previewClosed(this); });
 
-	QToolButton *menu_button = new QToolButton (this);
-	menu_button->setPopupMode (QToolButton::InstantPopup);
-	menu_button->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionShowMenu));
-	menu_button->setMenu (menu = new QMenu ());
-	connect (menu, &QMenu::aboutToShow, this, &RKXMLGUIPreviewArea::prepareMenu);
+	QToolButton *menu_button = new QToolButton(this);
+	menu_button->setPopupMode(QToolButton::InstantPopup);
+	menu_button->setIcon(RKStandardIcons::getIcon(RKStandardIcons::ActionShowMenu));
+	menu_button->setMenu(menu = new QMenu(wrapper_widget));
+	connect(menu, &QMenu::aboutToShow, this, &RKXMLGUIPreviewArea::prepareMenu);
 
 	hl->addWidget (menu_button);
 	hl->addStretch ();
