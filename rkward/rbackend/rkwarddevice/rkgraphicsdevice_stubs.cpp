@@ -476,7 +476,7 @@ static void RKD_Raster (unsigned int *raster, int w, int h, double x, double y, 
 	RKD_OUT_STREAM << QRectF (x, y, width, height) << rot << (bool) interpolate;
 }
 
-static SEXP RKD_Capture (pDevDesc dev) {
+static SEXP RKD_Capture(pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	{
 		RKGraphicsDataStreamWriteGuard wguard;
@@ -485,36 +485,33 @@ static SEXP RKD_Capture (pDevDesc dev) {
 
 	quint32 w, h;
 	quint32 size;
-	int *buffer;
+	QVector<int> buffer;
 	{
 		RKGraphicsDataStreamReadGuard rguard;
 		quint8 r, g, b, a;
 		RKD_IN_STREAM >> w >> h;
 		size = w*h;
- 		buffer = new int[size];// Although unlikely, allocVector below could fail. We don't want to be left with a locked mutex (from the rguard) in this case. (Being left with a dead pointer looks benign in comparison; Note that the vector may easily be too large for allocation on the stack)
-		quint32 i = 0;
-		for (quint32 col = 0; col < h; ++col) {
-			for (quint32 row = 0; row < w; ++row) {
+		buffer.reserve(size);// Although unlikely, allocVector below could fail. We don't want to be left with a locked mutex (from the rguard) in this case. (Being left with a dead pointer looks benign in comparison; Note that the vector may easily be too large for allocation on the stack)
+		for (quint32 row = 0; row < h; ++row) {
+			for (quint32 col = 0; col < w; ++col) {
 				RKD_IN_STREAM >> r >> g >> b >> a;
-				buffer[i++] = R_RGBA (r, g, b, a);
+				buffer.append(R_RGBA(r, g, b, a));
 			}
 		}
 	}
 	SEXP ret, dim;
-	PROTECT (ret = Rf_allocVector (INTSXP, size));
-	int* ret_vals = INTEGER (ret);
+	PROTECT(ret = Rf_allocVector(INTSXP, size));
 	for (quint32 i = 0; i < size; ++i) {
-		ret_vals[i] = buffer[i];
+		INTEGER(ret)[i] = buffer[i];
 	}
-	delete (buffer);
 
 	// Documentation does not mention it, but cap expects dim information to be returned
-	PROTECT(dim = Rf_allocVector (INTSXP, 2));
-	INTEGER (dim)[0] = w;
-	INTEGER (dim)[1] = h;
-	Rf_setAttrib (ret, R_DimSymbol, dim);
+	PROTECT(dim = Rf_allocVector(INTSXP, 2));
+	INTEGER(dim)[0] = w;
+	INTEGER(dim)[1] = h;
+	Rf_setAttrib(ret, R_DimSymbol, dim);
 
-	UNPROTECT (2);
+	UNPROTECT(2);
 	return ret;
 }
 
