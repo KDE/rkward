@@ -157,7 +157,7 @@ RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, 
 		code_display = new RKCommandEditorWindow (0, QUrl (), QString (), RKCommandEditorFlags::DefaultToRHighlighting);
 		code_display->setReadOnly (true);
 		code_display_visibility.setBoolValue (!enslaved && RKSettingsModulePlugins::showCodeByDefault ());
-		code_display->setParent (area);  // hm, mysterious breakage when adding via constructor. Whatever...
+		area->setWindow(code_display);
 
 		KActionCollection *action_collection = new KActionCollection (this);
 		action_collection->addAction (KStandardAction::Copy, this, SLOT (copyCode()));

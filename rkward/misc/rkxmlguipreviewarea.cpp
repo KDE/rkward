@@ -2,7 +2,7 @@
                           rkxmlguipreviewarea  -  description
                              -------------------
     begin                : Wed Feb 03 2016
-    copyright            : (C) 2016 by Thomas Friedrichsmeier
+    copyright            : (C) 2016-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -56,6 +56,7 @@ RKXMLGUIPreviewArea::~RKXMLGUIPreviewArea () {
 		removeChildClient (current);
 		current->setFactory (0);
 	}
+	if (wrapper_widget) wrapper_widget->deleteLater();  // technically, the wrapper widget is the parent of this, not the other way around
 }
 
 void RKXMLGUIPreviewArea::setLabel (const QString& label) {
@@ -108,31 +109,23 @@ QWidget* RKXMLGUIPreviewArea::wrapperWidget () {
 	return wrapper_widget;
 }
 
-void RKXMLGUIPreviewArea::childEvent (QChildEvent *event) {
-	RK_TRACE (PLUGIN);
-
-	if (event->type () == QEvent::ChildAdded) {
-		RKMDIWindow *child = qobject_cast<RKMDIWindow*> (event->child ());
-		if (child) {
-			if (current) {
-				removeChildClient (current);
-				factory ()->removeClient (current);  // _always_ remove before adding, or the previous child will be leaked in the factory
-			}
-			child->setWindowStyleHint ("preview");
-			current = child->getPart ();
-			insertChildClient (current);
-			setCentralWidget (child);
-			createGUI ("rkwrapper_widgetpart.rc");
-			menuBar ()->hide ();
-			QList<KToolBar*> tbars = toolBars ();
-			for (int i = 0; i < tbars.size (); ++i) tbars[i]->hide ();
-			// avoid shortcut conflicts
-			QList<QAction*> acts = actions ();
-			for (int i = 0; i < acts.size (); ++i) acts[i]->setShortcutContext(Qt::WidgetWithChildrenShortcut);
-			RKWorkplace::mainWorkplace()->setWindowNotManaged(child);
-		}
+void RKXMLGUIPreviewArea::setWindow(RKMDIWindow* window) {
+	if (current) {
+		removeChildClient(current);
+		factory()->removeClient(current);  // _always_ remove before adding, or the previous child will be leaked in the factory
 	}
-	QObject::childEvent (event);
+	window->setWindowStyleHint("preview");
+	current = window->getPart();
+	insertChildClient(current);
+	setCentralWidget(window);
+	createGUI("rkwrapper_widgetpart.rc");
+	menuBar()->hide();
+	QList<KToolBar*> tbars = toolBars();
+	for (int i = 0; i < tbars.size(); ++i) tbars[i]->hide();
+	// avoid shortcut conflicts
+	QList<QAction*> acts = actions();
+	for (int i = 0; i < acts.size (); ++i) acts[i]->setShortcutContext(Qt::WidgetWithChildrenShortcut);
+	RKWorkplace::mainWorkplace()->setWindowNotManaged(window);
 }
 
 void RKXMLGUIPreviewArea::prepareMenu () {

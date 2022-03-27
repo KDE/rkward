@@ -2,7 +2,7 @@
                           rkxmlguipreviewarea  -  description
                              -------------------
     begin                : Wed Feb 03 2016
-    copyright            : (C) 2016-2018 by Thomas Friedrichsmeier
+    copyright            : (C) 2016-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -26,6 +26,7 @@
 class QMenu;
 class QToolButton;
 class QLabel;
+class RKMDIWindow;
 
 class RKXMLGUIPreviewArea : public KXmlGuiWindow {
 	Q_OBJECT
@@ -36,10 +37,7 @@ public:
 	QWidget *wrapperWidget ();
 	QString label () const { return _label; };
 	void setLabel (const QString &label);
-protected:
-	/** build / destroy menu, when child is added removed. Note that we are in the fortunate situation that RKMDIWindow-children only ever get to the
-	 *  preview area via reparenting, i.e. contrary to usual QEvent::ChildAdded semantics, they are always fully constructed, when added. */
-	void childEvent (QChildEvent *event) override;
+	void setWindow(RKMDIWindow* window);
 protected slots:
 	void prepareMenu ();
 signals:

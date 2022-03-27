@@ -55,6 +55,7 @@
 #include "../rbackend/rcommand.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkoutputdirectory.h"
+#include "../misc/rkxmlguipreviewarea.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
 
@@ -296,8 +297,13 @@ void RKWorkplace::addWindow (RKMDIWindow *window, bool attached) {
 		if (nw.parent == RKWardMainWindow::getMain ()) attached = true;
 		else if (nw.parent == 0) attached = false;
 		else { // custom parent
-			window->prepareToBeAttached ();
-			window->setParent (nw.parent);
+			RKXMLGUIPreviewArea* area = qobject_cast<RKXMLGUIPreviewArea*>(nw.parent);
+			if (!area) {
+				RK_ASSERT(area);
+				return;
+			}
+			window->prepareToBeAttached();
+			area->setWindow(window);
 			// TODO: do this is somewhat inconsistent. But such windows are not attached to the main workplace view, which makes them rather behave detached.
 			window->state = RKMDIWindow::Detached;
 			// NOTE: The window is _not_ added to the window list/window history in this case.
