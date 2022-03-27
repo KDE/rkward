@@ -281,6 +281,8 @@ RKCaughtX11Window::RKCaughtX11Window (RKGraphicsDevice* rkward_device, int devic
 	stop_interaction->setEnabled (false);
 	setCaption (rkward_device->viewPort ()->windowTitle ());
 	rkward_device->viewPort()->setFixedSize(rkward_device->viewPort()->size()); // Prevent resizing *before* the window is shown. Will be re-enabled later
+	xembed_container->setFixedSize(rk_native_device->viewPort()->size());
+	xembed_container->show();
 	setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
 	QTimer::singleShot (0, this, SLOT (doEmbed()));
@@ -318,8 +320,11 @@ void RKCaughtX11Window::commonInit (int device_number) {
 	scroll_widget->setWidget (xembed_container);
 	xembed_container->hide (); // it seems to be important that the parent of a captured / embedded window is invisible prior to embedding.
 
-	dynamic_size = false;
 	dynamic_size_action->setChecked (false);
+}
+
+bool RKCaughtX11Window::dynamicSize() const {
+	return (xembed_container->parentWidget() == scroll_widget);
 }
 
 void RKCaughtX11Window::doEmbed () {
@@ -463,18 +468,16 @@ void RKCaughtX11Window::fixedSizeToggled () {
 	RK_TRACE (MISC);
 
 	if (embedded && !capture) return;  // while in the middle of embedding, don't mess with any of this, it seems to cause trouble
-	if (dynamic_size == dynamic_size_action->isChecked ()) return;
-	dynamic_size = dynamic_size_action->isChecked ();
+	if (dynamicSize() == dynamic_size_action->isChecked ()) return;
 
 	if (dynamic_size_action->isChecked ()) {
-		scroll_widget->takeWidget ();
+		if (scroll_widget->widget()) scroll_widget->takeWidget();
 		scroll_widget->hide ();
 		layout ()->addWidget (xembed_container);
 		xembed_container->show ();
 		xembed_container->setMinimumSize (5, 5);
 		xembed_container->setMaximumSize (32767, 32767);
 	} else {
-		xembed_container->setFixedSize (xembed_container->size ());
 		layout ()->removeWidget (xembed_container);
 		scroll_widget->setWidget (xembed_container);
 		scroll_widget->show ();

@@ -191,7 +191,7 @@ private:
 	QWidget *capture;  // The captured window (0, if using an rk native device)
 	RKGraphicsDevice *rk_native_device;
 
-	bool dynamic_size;
+	bool dynamicSize() const;
 	KToggleAction *dynamic_size_action;
 	QAction *plot_prev_action;
 	QAction *plot_next_action;
