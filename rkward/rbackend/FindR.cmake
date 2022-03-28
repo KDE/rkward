@@ -120,23 +120,39 @@ ENDIF(NOT LIBR_SO)
 # as this is not available in some configurations of R
 
 MESSAGE(STATUS "Checking whether we should link against Rlapack library")
-FIND_LIBRARY(LIBR_LAPACK
-	Rlapack
-	PATHS ${R_SHAREDLIBDIR}
-	NO_DEFAULT_PATH)
-IF(NOT LIBR_LAPACK)
-	MESSAGE(STATUS "No, it does not exist in ${R_SHAREDLIBDIR}")
-ELSE(NOT LIBR_LAPACK)
-	MESSAGE(STATUS "Yes, ${LIBR_LAPACK} exists")
-	SET(R_USED_LIBS ${R_USED_LIBS} Rlapack)
-	IF(WIN32 OR APPLE)
-	ELSE(WIN32 OR APPLE)
-		# needed when linking to Rlapack on linux for some unknown reason.
-		# apparently not needed on windows (let's see, when it comes back to bite us, though)
+FIND_LIBRARY(R_LAPACK_LIBRARY Rlapack HINTS ${R_SHARED_LIB_DIR} )
+IF(NOT R_LAPACK_LIBRARY)
+	MESSAGE(STATUS "No, it does not exist in ${R_SHARED_LIB_DIR}")
+ELSE(NOT R_LAPACK_LIBRARY)
+	MESSAGE(STATUS "Yes, ${R_LAPACK_LIBRARY} exists")
+	SET(R_LIBRARIES ${R_LIBRARIES} ${R_LAPACK_LIBRARY})
+	IF(UNIX)
+		# libgfortran is needed when linking to Rlapack on linux for some unknown reason.
+		# apparently not needed on windows or Mac (let's see, when it comes back to bite us, though)
 		# and compiling on windows is hard enough even without requiring libgfortran, too.
-		SET(R_USED_LIBS ${R_USED_LIBS} gfortran)
-	ENDIF(WIN32 OR APPLE)
-ENDIF(NOT LIBR_LAPACK)
+		# Query gfortran to get the libgfortran.so path
+		FIND_PROGRAM(_GFORTRAN_EXECUTABLE NAMES gfortran)
+		IF(_GFORTRAN_EXECUTABLE)
+				EXECUTE_PROCESS(COMMAND ${_GFORTRAN_EXECUTABLE} -print-file-name=libgfortran.so
+				OUTPUT_VARIABLE _libgfortran_path
+				OUTPUT_STRIP_TRAILING_WHITESPACE
+				)
+		ENDIF()
+		IF(EXISTS ${_libgfortran_path})
+			SET(GFORTRAN_LIBRARY ${_libgfortran_path})
+		ELSE()
+			# if libgfortran wasn't found at this point, the installation is probably broken
+			# Let's try to find the library nonetheless.
+			FIND_LIBRARY(GFORTRAN_LIBRARY gfortran)
+		ENDIF()
+		IF (GFORTRAN_LIBRARY)
+			SET(R_LIBRARIES ${R_LIBRARIES} ${GFORTRAN_LIBRARY})
+		ELSE (GFORTRAN_LIBRARY)
+			MESSAGE(STATUS "gfortran is needed for Rlapack but it could not be found")
+			SET(ABORT_CONFIG TRUE)
+		ENDIF (GFORTRAN_LIBRARY)
+	ENDIF(UNIX)
+ENDIF(NOT R_LAPACK_LIBRARY)
 
 # for at least some versions of R, we seem to have to link against -lRlapack. Else loading some
 # R packages will fail due to unresolved symbols, or we can't link against -lR.
