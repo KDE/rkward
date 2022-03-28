@@ -3,7 +3,7 @@ Committing to the RKWard repository
 
 This is a very short guideline, primarily for those who have KDE developer access, and are wondering whether, and how to commit to the RKWard repository, directly.
 
-If you do not have KDE developer access, contact us on the mailing list (rkward-devel@kde.org), or submit patches via phabricator (see below).
+If you do not have KDE developer access, contact us on the mailing list (rkward-devel@kde.org), or submit patches invent.kde.org (see below).
 
 Library dependencies
 ====================
@@ -11,10 +11,10 @@ Library dependencies
 It is important to note that RKWard makes a point of _not_ requiring the latest KDE / QT libraries. If you want to use the latest and greatest, be sure to use #ifdef's, and make a best
 effort to support features for older versions of libraries, too. For the moment, in the KF5 versions of RKWard, we're trying to support:
 
-Oldest library versions to support:
-* Qt: 5.2.1 (= Ubuntu Trusty)
-* KDE: 5.2.0 -- TODO: What version would be readily accessible for Trusty (if any)
-* R: 3.0.0? (= Ubuntu Trusty)
+Oldest library versions to support (= Ubuntu Bionic / 18.04; we generally try to support the two most recent LTS releases)
+* Qt: 5.9.5
+* KDE: 5.44.0
+* R: 3.4.4
 
 Note: This is not set in stone, may change according to whatever is included in important distributions.
 
@@ -34,7 +34,7 @@ Branches and policies
   For longer, experimental, or disruptive work, consider creating a branch named "devel/feature_description". Do let us know, when the feature is merged (or discarded), and the branch can be removed.
 * work/*
   The KDE git infrastructure special-cases branches under the prefix "work". Among other things these will allow history-rewrites, and will not produce commit notifications, i.e. the rules are much like for a personal fork.
-  Most of the time, please use a "devel" branch (see above), instead of a "work" branch, as this allows better collaboration.
+  If you want other people to pariticipate on the branch, please use a "devel" branch (see above), instead of a "work" branch, as this allows better collaboration.
 * kde4:
   The latest KDE4 based development version of RKWard. There may or may not be future bugfix releases for KDE4, but no active development is expected on this branch.
 
@@ -52,4 +52,4 @@ and after your changes. If in any doubt, ask on the mailing list rkward-devel@kd
 Review
 ======
 
-There is no strict policy on code reviews. It is never wrong to ask for review on Phabricator: https://phabricator.kde.org/differential/diff/create/ . Always select repository "RKward".
+There is no strict policy on code reviews. It is never wrong to ask for review on https://invent.kde.org/education/rkward

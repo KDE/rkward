@@ -1,9 +1,6 @@
 PROJECT(rkward)
 
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8.12)	# As required by KF5
-IF(NOT "${CMAKE_VERSION}" VERSION_LESS 3.3.0)
-	CMAKE_POLICY(SET CMP0063 NEW)  # Shut up cmake warning
-ENDIF()
+CMAKE_MINIMUM_REQUIRED(VERSION 3.10.0)
 
 IF(NOT CMAKE_VERBOSE_MAKEFILE)
 	SET (FORCE_PRETTY_MAKEFILE ON)
@@ -21,17 +18,17 @@ INCLUDE(ECMAddAppIcon)
 INCLUDE(ECMMarkNonGuiExecutable)
 INCLUDE(FeatureSummary)
 
-FIND_PACKAGE(Qt5 5.5 CONFIG REQUIRED COMPONENTS Widgets Core Xml Network Script PrintSupport)
-FIND_PACKAGE(KF5 5.2 REQUIRED COMPONENTS CoreAddons DocTools I18n XmlGui TextEditor WidgetsAddons Parts Config Notifications WindowSystem Archive OPTIONAL_COMPONENTS Crash)
+FIND_PACKAGE(Qt5 5.9 CONFIG REQUIRED COMPONENTS Widgets Core Xml Network Script PrintSupport)
+FIND_PACKAGE(KF5 5.44 REQUIRED COMPONENTS CoreAddons DocTools I18n XmlGui TextEditor WidgetsAddons Parts Config Notifications WindowSystem Archive OPTIONAL_COMPONENTS Crash)
 IF(NOT NO_QT_WEBENGINE)
-	FIND_PACKAGE(Qt5 5.5 OPTIONAL_COMPONENTS WebEngineWidgets)
+	FIND_PACKAGE(Qt5 5.9 OPTIONAL_COMPONENTS WebEngineWidgets)
 	IF(NOT Qt5WebEngineWidgets_FOUND OR Qt5WebEngineWidgets_VERSION VERSION_LESS "5.12.0")
 		MESSAGE(STATUS "QWebEngine not available (or version < 5.12). Falling back to QtWebKit")
 		SET(NO_QT_WEBENGINE 1)
 	ENDIF()
 ENDIF(NOT NO_QT_WEBENGINE)
 IF(NO_QT_WEBENGINE)
-	FIND_PACKAGE(KF5 5.2 REQUIRED COMPONENTS WebKit)
+	FIND_PACKAGE(KF5 5.44 REQUIRED COMPONENTS WebKit)
 	ADD_DEFINITIONS(-DNO_QT_WEBENGINE)  # TODO: rather set it for rkhtmlwindow, only
 ELSE(NO_QT_WEBENGINE)
 	MESSAGE(STATUS "QtWebEngine will be used for rendering HTML. To use KF5WebKit, instead (if available), pass -DNO_QT_WEBENGINE=1 in your call to cmake.")
