@@ -196,9 +196,8 @@ QVariant QtScriptBackendThread::getValue (const QString &identifier, const int h
 	RK_TRACE (PHP);
 
 	emit needData(identifier, hint);
-
 	QVariant ret;
-	while (1) {
+	while (true) {
 		if (killed) return QVariant ();
 
 		mutex.lock ();
@@ -296,7 +295,7 @@ void QtScriptBackendThread::run () {
 	emit commandDone("startup complete");
 
 	QString command;
-	while (1) {
+	while (true) {
 		if (killed) return;
 		if (sleeping) {
 			sleep_mutex.lock ();

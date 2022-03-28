@@ -77,7 +77,7 @@ quint32 RKSessionVars::parseVersionString (const QString &version, QString *suff
 	int pos = -1;
 	int opos = 0;
 	for (int i = 3; i >= 0; --i) {
-		while (1) {
+		while (true) {
 			++pos;
 			if (!(pos < version.size () && version[pos].isDigit ())) {
 				int val = version.midRef(opos, pos - opos).toInt();

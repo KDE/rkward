@@ -274,7 +274,7 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 	}
 	
 	if ((!RKRBackend::repl_status.browser_context) && (RKRBackend::repl_status.eval_depth == 0)) {
-		while (1) {
+		while (true) {
 			if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::NoUserCommand) {
 				RCommandProxy *command = RKRBackend::this_pointer->fetchNextCommand ();
 				if (!command) {
