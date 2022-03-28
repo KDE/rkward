@@ -881,7 +881,7 @@ bool RKOptionSetDisplayModel::dropMimeData (const QMimeData* data, Qt::DropActio
 }
 
 Qt::ItemFlags RKOptionSetDisplayModel::flags (const QModelIndex& index) const {
-	return QAbstractItemModel::flags (index) | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
+	return QAbstractTableModel::flags (index) | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
 }
 
 Qt::DropActions RKOptionSetDisplayModel::supportedDropActions () const {

@@ -483,7 +483,7 @@ QVariant RKSettingsModulePluginsModel::data (const QModelIndex& index, int role)
 
 Qt::ItemFlags RKSettingsModulePluginsModel::flags (const QModelIndex& index) const {
 	// RK_TRACE (SETTINGS);
-	Qt::ItemFlags flags = QAbstractItemModel::flags (index);
+	Qt::ItemFlags flags = QAbstractTableModel::flags (index);
 	if (index.isValid () && (index.column () == COLUMN_CHECKED)) {
 		if (plugin_maps[index.row ()].priority > RKSettingsModulePlugins::PriorityHidden) flags |= Qt::ItemIsUserCheckable | Qt::ItemIsEditable;
 	}

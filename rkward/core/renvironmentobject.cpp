@@ -153,7 +153,7 @@ bool REnvironmentObject::updateStructure (RData *new_data) {
 	RK_ASSERT (new_data->getDataLength () >= StorageSizeBasicInfo);
 
 	if (!(type & ToplevelEnv)) {
-		if (!RObject::updateStructure (new_data)) return false;
+		if (!RContainerObject::updateStructure(new_data)) return false;
 	}
 
 	RData::RDataStorage new_data_data = new_data->structureVector ();
