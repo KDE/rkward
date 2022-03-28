@@ -35,7 +35,7 @@
 
 #include "../../debug.h"
 
-double RKGraphicsDeviceFrontendTransmitter::lwdscale = 72/96;
+double RKGraphicsDeviceFrontendTransmitter::lwdscale = 72.0/96;
 RKGraphicsDeviceFrontendTransmitter::RKGraphicsDeviceFrontendTransmitter () : QObject () {
 	RK_TRACE (GRAPHICS_DEVICE);
 
@@ -265,7 +265,7 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 					RK_DEBUG (GRAPHICS_DEVICE, DL_INFO, "DPI for device %d: %d by %d", devnum+1, desktop->physicalDpiX (), desktop->physicalDpiY ());
 					streamer.writeOutBuffer ();
 					// Actually, this is only needed once, but where to put it...
-					RKGraphicsDeviceFrontendTransmitter::lwdscale = desktop->physicalDpiX () / 96;   // taken from devX11.c
+					RKGraphicsDeviceFrontendTransmitter::lwdscale = ((double) desktop->physicalDpiX()) / 96;   // taken from devX11.c
 				} else {
 					if (devnum) RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Received transmission of type %d for unknown device number %d. Skipping.", opcode, devnum+1);
 					sendDummyReply (opcode);
