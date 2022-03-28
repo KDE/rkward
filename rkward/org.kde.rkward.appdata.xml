@@ -170,7 +170,7 @@
     <release version="0.7.2" date="2020-10-16">
       <artifacts>
         <artifact type="binary" platform="win64">
-          <location>https://download.kde.org/stable/rkward/0.7.2/win32/rkward-0.7.2-1-R-4.0.2.exe/location>
+          <location>https://download.kde.org/stable/rkward/0.7.2/win32/rkward-0.7.2-1-R-4.0.2.exe</location>
           <checksum type="sha256">b74e160f94598f51332b0efbbdef330a9b7bc1d5573335d5e5be50ed0094d73b</checksum>
           <size type="download">255938384</size>
         </artifact>
