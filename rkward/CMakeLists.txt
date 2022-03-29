@@ -43,19 +43,10 @@ GET_DIRECTORY_PROPERTY(R_EXECUTABLE DIRECTORY rbackend DEFINITION R_EXECUTABLE)
 GET_DIRECTORY_PROPERTY(R_SHAREDLIBDIR DIRECTORY rbackend LINK_DIRECTORIES)
 LINK_DIRECTORIES(${R_SHAREDLIBDIR})
 
-IF(APPLE)
-    # create the application icon from the available sources. This should work on MS Windows
-    # too but I don't want to start modifying things I cannot test.
-    FILE(GLOB ICON_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/icons/app-icon/*-apps-rkward.png") 
-    # recent ECM versions will prefer the scalable version: prepend it to the icon source list:
-    ECM_ADD_APP_ICON(RKWard_Sources ICONS ${CMAKE_CURRENT_SOURCE_DIR}/icons/app-icon/sc-apps-rkward.svgz ${ICON_SRCS})
-    ADD_EXECUTABLE(rkward ${RKWard_Sources})
-ELSE()
-    ADD_CUSTOM_COMMAND (OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/rkward.ico"
-			COMMAND cmake -E copy "${CMAKE_CURRENT_SOURCE_DIR}/icons/app-icon/rkward.ico"
-			"${CMAKE_CURRENT_BINARY_DIR}/rkward.ico")
-    ADD_EXECUTABLE(rkward ${RKWard_Sources} rkward_windows_icon.rc rkward.ico)
-ENDIF()
+FILE(GLOB ICON_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/icons/app-icon/*-apps-rkward.png")
+# recent ECM versions will prefer the scalable version: prepend it to the icon source list:
+ECM_ADD_APP_ICON(RKWard_Sources ICONS ${CMAKE_CURRENT_SOURCE_DIR}/icons/app-icon/sc-apps-rkward.svgz ${ICON_SRCS})
+ADD_EXECUTABLE(rkward ${RKWard_Sources})
 
 # NOTE: These definitions are needed for the startup procedure (main.cpp), only.
 # We should switch with to target_compile_definitions once we require CMAKE 2.6+
