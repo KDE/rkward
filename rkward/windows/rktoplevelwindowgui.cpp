@@ -25,6 +25,8 @@
 #include <kxmlguifactory.h>
 #include <kshortcutsdialog.h>
 #include <KHelpMenu>
+#include <KColorSchemeManager>
+#include <KActionMenu>
 
 #include <QWhatsThis>
 #include <QDomDocument>
@@ -102,6 +104,10 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI(KXmlGuiWindow *for_window) : QObject(fo
 	// settings
 	KStandardAction::keyBindings (this, SLOT (configureShortcuts()), actionCollection ());
 	KStandardAction::configureToolbars (this, SLOT (configureToolbars()), actionCollection ());
+	KColorSchemeManager *manager = new KColorSchemeManager(this);
+	actionCollection()->addAction(QStringLiteral("colorscheme_menu"), manager->createSchemeSelectionMenu(QString(), this));
+	QAction *a = for_window->action("options_show_statusbar");
+	if (a) a->setVisible(false);
 }
 
 RKTopLevelWindowGUI::~RKTopLevelWindowGUI () {
