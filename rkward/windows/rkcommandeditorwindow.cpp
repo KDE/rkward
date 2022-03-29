@@ -228,16 +228,19 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 	// How's this for a nested for loop...
 	for (const auto ac : own_acs) {
 		const auto own_actions = ac->actions();
-		for (const auto a : own_actions) {
-			for (const auto &k : ac->defaultShortcuts(a)) {
-				for (const auto kac : kate_acs) {
-					for (auto ka : kac->actions()) {
-						auto action_shortcuts = kac->defaultShortcuts(ka);
-						for (const auto &kk : action_shortcuts) {
-							if (k.matches(kk) != QKeySequence::NoMatch || kk.matches(k) != QKeySequence::NoMatch) {
-								RK_DEBUG(EDITOR, DL_WARNING, "Removing conflicting shortcut %s in kate part (%s, conflicting with %s)", qPrintable(kk.toString()), qPrintable(ka->objectName()), qPrintable(a->objectName()));
-								action_shortcuts.removeAll(k);
-								kac->setDefaultShortcuts(ka, action_shortcuts);
+		for (const auto own_action : own_actions) {
+			const auto own_scs = ac->defaultShortcuts(own_action);
+			for (const auto &own_sc : own_scs) {
+				for (const auto kate_ac : qAsConst(kate_acs)) {
+					const auto kate_actions = kate_ac->actions();
+					for (auto kate_action : kate_actions) {
+						auto action_shortcuts = kate_ac->defaultShortcuts(kate_action);
+						for (int pos = 0; pos < action_shortcuts.size(); ++pos) {
+							const auto &kate_sc = action_shortcuts[pos];
+							if (own_sc.matches(kate_sc) != QKeySequence::NoMatch || kate_sc.matches(own_sc) != QKeySequence::NoMatch) {
+								RK_DEBUG(EDITOR, DL_WARNING, "Removing conflicting shortcut %s in kate part (%s, conflicting with %s)", qPrintable(kate_sc.toString()), qPrintable(kate_action->objectName()), qPrintable(own_action->objectName()));
+								action_shortcuts.removeAt(pos);
+								kate_ac->setDefaultShortcuts(kate_action, action_shortcuts);
 								break;
 							}
 						}
