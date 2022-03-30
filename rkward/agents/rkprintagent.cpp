@@ -19,7 +19,7 @@
 
 #include <QFile>
 #include <QTimer>
-#include <QDateTime>
+#include <QElapsedTimer>
 
 #include <krun.h>
 #include <kservice.h>
@@ -87,10 +87,10 @@ void RKPrintAgent::printPostscript (const QString &file, bool delete_file) {
 	agent->provider = provider;
 
 	// very hacky heuristic to try to find out, whether the print action is synchronous or asynchronous. If the latter, delete after half an hour. If the former delete after printing.
-	QTime ts;
-	ts.start ();
-	printaction->trigger ();
-	if (ts.elapsed () < 5000) {
+	QElapsedTimer ts;
+	ts.start();
+	printaction->trigger();
+	if (ts.elapsed() < 5000) {
 		QTimer::singleShot (1800000, agent, SLOT (deleteLater()));
 	} else {
 		agent->deleteLater ();

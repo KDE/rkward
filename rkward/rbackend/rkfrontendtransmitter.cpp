@@ -32,7 +32,7 @@
 #include <QLocalSocket>
 #include <QDir>
 #include <QStandardPaths>
-#include <QTime>
+#include <QElapsedTimer>
 
 #include "../version.h"
 #include "../debug.h"
@@ -164,9 +164,9 @@ void RKFrontendTransmitter::waitForCanReadLine (QIODevice* con, int msecs) {
 
 	// NOTE: On Qt5+Windows, readyReady may actually come in char by char, so calling waitForReadyRead() does not guarantee we will
 	//       see the full line, at all. But also, of course, we want to put some cap on trying. Using a time threshold for this.
-	QTime time;
-	time.start ();
-	while ((!con->canReadLine ()) && (time.elapsed () < msecs)) con->waitForReadyRead (500);
+	QElapsedTimer time;
+	time.start();
+	while ((!con->canReadLine()) && (time.elapsed() < msecs)) con->waitForReadyRead(500);
 }
 
 void RKFrontendTransmitter::connectAndEnterLoop () {

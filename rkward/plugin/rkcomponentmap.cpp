@@ -19,7 +19,7 @@
 
 #include <qfileinfo.h>
 #include <qdir.h>
-#include <QTime>
+#include <QElapsedTimer>
 #include <QObjectCleanupHandler>
 #include <QSet>
 #include <QGuiApplication>
@@ -499,10 +499,10 @@ bool RKComponentMap::invokeComponent (const QString &component_id, const QString
 	// if the plugin takes longer than 5 seconds to settle, than that really is sort of buggy...
 	const int max_wait = 5000;
 
-	QTime t;
-	t.start ();
+	QElapsedTimer t;
+	t.start();
 	RKComponentBase::ComponentStatus status;
-	while ((!chandler.isEmpty ()) && ((status = component->recursiveStatus ()) == RKComponentBase::Processing) && (t.elapsed () < max_wait)) {
+	while ((!chandler.isEmpty()) && ((status = component->recursiveStatus()) == RKComponentBase::Processing) && (t.elapsed() < max_wait)) {
 		QCoreApplication::processEvents (QEventLoop::ExcludeUserInputEvents, (max_wait / 2));
 	}
 	if (chandler.isEmpty ()) status = RKComponentBase::Dead;

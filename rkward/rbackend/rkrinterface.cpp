@@ -63,6 +63,7 @@
 #include <QFileDialog>
 #include <QApplication>
 #include <QPushButton>
+#include <QElapsedTimer>
 
 // flush new pieces of output after this period of time:
 #define FLUSH_INTERVAL 100
@@ -256,9 +257,9 @@ void RInterface::doNextCommand (RCommand *command) {
 	// importantly, this point is not reached for the fake startup command
 
 	if (RK_Debug::RK_Debug_CommandStep) {
-		QTime t;
-		t.start ();
-		while (t.elapsed () < RK_Debug::RK_Debug_CommandStep) {}
+		QElapsedTimer t;
+		t.start();
+		while (t.elapsed() < RK_Debug::RK_Debug_CommandStep) {}
 	}
 
 	flushOutput (true);
