@@ -47,6 +47,7 @@
 #include <kactionmenu.h>
 #include <KSharedConfig>
 #include <KConfigGroup>
+#include <KColorScheme>
 
 // application specific includes
 #include "core/rkmodificationtracker.h"
@@ -924,30 +925,34 @@ void RKWardMainWindow::slotDetachWindow () {
 	RKWorkplace::mainWorkplace ()->detachWindow (RKWorkplace::mainWorkplace ()->activeWindow (RKMDIWindow::Attached));
 }
 
+void setIndictatorColor(QWidget *widget, KColorScheme::ForegroundRole fg, KColorScheme::BackgroundRole bg) {
+	KColorScheme color_scheme;
+	QPalette palette = widget->palette();
+	palette.setBrush(widget->backgroundRole(), color_scheme.background(bg));
+	palette.setBrush(widget->foregroundRole(), color_scheme.foreground(fg));
+	widget->setAutoFillBackground(true);
+	widget->setPalette(palette);
+}
+
 void RKWardMainWindow::setRStatus (int status) {
 	RK_TRACE (APP);
 
-	QColor status_color;
 	if (status == RInterface::Busy) {
-		status_color = QColor (255, 0, 0);
-		statusbar_r_status->setToolTip (i18n ("The <b>R</b> engine is busy."));
-		interrupt_all_commands->setEnabled (true);
+		setIndictatorColor(statusbar_r_status, KColorScheme::NegativeText, KColorScheme::NegativeBackground);
+		statusbar_r_status->setToolTip(i18n("The <b>R</b> engine is busy."));
+		interrupt_all_commands->setEnabled(true);
 	} else if (status == RInterface::Idle) {
-		status_color = QColor (0, 255, 0);
-		statusbar_r_status->setToolTip (i18n ("The <b>R</b> engine is idle."));
-		interrupt_all_commands->setEnabled (false);
+		setIndictatorColor(statusbar_r_status, KColorScheme::PositiveText, KColorScheme::PositiveBackground);
+		statusbar_r_status->setToolTip(i18n("The <b>R</b> engine is idle."));
+		interrupt_all_commands->setEnabled(false);
 	} else if (status == RInterface::Starting) {
-		status_color = QColor (255, 255, 0);
-		statusbar_r_status->setToolTip (i18n ("The <b>R</b> engine is being initialized."));
+		setIndictatorColor(statusbar_r_status, KColorScheme::NeutralText, KColorScheme::NeutralBackground);
+		statusbar_r_status->setToolTip(i18n("The <b>R</b> engine is being initialized."));
 	} else {
-		status_color = QColor (255, 0, 0);
-		statusbar_r_status->setToolTip (i18n ("The <b>R</b> engine is unavailable."));
-		interrupt_all_commands->setEnabled (false);
+		setIndictatorColor(statusbar_r_status, KColorScheme::NegativeText, KColorScheme::NegativeBackground);
+		statusbar_r_status->setToolTip(i18n("The <b>R</b> engine is unavailable."));
+		interrupt_all_commands->setEnabled(false);
 	}
-	QPalette palette = statusbar_r_status->palette ();
-	palette.setBrush (statusbar_r_status->backgroundRole(), QBrush (status_color));
-	statusbar_r_status->setAutoFillBackground (true);
-	statusbar_r_status->setPalette (palette);
 }
 
 void RKWardMainWindow::importData () {
