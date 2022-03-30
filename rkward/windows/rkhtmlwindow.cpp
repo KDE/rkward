@@ -286,12 +286,13 @@ private:
 
 
 RKWebPage* RKHTMLWindow::new_window = nullptr;
-
+#include <QWebEngineScript>
+#include <QWebEngineScriptCollection>
+#include <KColorScheme>
 RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (parent, RKMDIWindow::HelpWindow) {
 	RK_TRACE (APP);
 
 	current_cache_file = 0;
-
 	QVBoxLayout* layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
 	view = new RKWebView (this);
@@ -312,6 +313,26 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 	findbar->setPrimaryOptions (QList<QWidget*>() << findbar->getOption (RKFindBar::FindAsYouType) << findbar->getOption (RKFindBar::MatchCase));
 	if (!QWebEngineProfile::defaultProfile ()->urlSchemeHandler ("help")) {
 		QWebEngineProfile::defaultProfile ()->installUrlSchemeHandler ("help", new RKWebEngineKIOForwarder (RKWardMainWindow::getMain()));
+	}
+	// See https://bugreports.qt.io/browse/QTBUG-89753
+	// Our CSS files try to support dark mode, automatically, but important versions of QWebEnginePage fail to honor the prefers-color-scheme selector
+	// To help those, apply the corresponding color values via javascript.
+	bool is_dark = (KColorScheme().background().color().lightnessF() < .5);
+	if (is_dark) {
+		auto p = QWebEngineProfile::defaultProfile();
+		QWebEngineScript fix_color_scheme;
+		QString id = QStringLiteral("fix_color_scheme");
+		if (p->scripts()->findScript(id).isNull()) {
+			fix_color_scheme.setName(id);
+			fix_color_scheme.setInjectionPoint(QWebEngineScript::DocumentReady);
+			fix_color_scheme.setSourceCode(QStringLiteral("function rksetcolor(name, value) { document.querySelector(':root').style.setProperty(name, value); }\n"
+									"rksetcolor('--regular-text-color', 'white');\n"
+									"rksetcolor('--background-color', 'black');\n"
+									"rksetcolor('--header-color', 'darkgray');\n"
+									"rksetcolor('--anchor-color', '#3366ff');"));
+			p->scripts()->insert(fix_color_scheme);
+		}
+		//page->setBackgroundColor(Qt::black);  // avoids brief white blink while loading, but is too risky on pages that are not dark scheme aware.
 	}
 #endif
 	layout->addWidget (findbar);

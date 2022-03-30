@@ -1,3 +1,28 @@
+:root {
+  --regular-text-color: black;
+  --background-color: white;
+  --header-color: darkgray;
+  --anchor-color: #0022cc;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --regular-text-color: white;
+    --background-color: black;
+    --header-color: darkgray;
+    --anchor-color: #3366ff;
+  }
+}
+
+body {
+	color: var(--regular-text-color);
+	background: var(--background-color);
+}
+
+a:link {
+	color: var(--anchor-color);
+}
+
 pre.code {
 	margin-left: 2em;
 }

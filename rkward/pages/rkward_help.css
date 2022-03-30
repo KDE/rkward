@@ -1,10 +1,35 @@
+:root {
+  --regular-text-color: black;
+  --background-color: white;
+  --header-color: darkgray;
+  --anchor-color: #0022cc;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --regular-text-color: white;
+    --background-color: black;
+    --header-color: darkgray;
+    --anchor-color: #3366ff;
+  }
+}
+
+body {
+	background: var(--background-color);
+	color: var(--regular-text-color);
+}
+
+a:link {
+	color: var(--anchor-color);
+}
+
 #main {
 	margin-right: 11em;
 }
 
 #main h1 {
 	font-size: 1.5em;
-	color: gray;
+	color: var(--header-color);
 	text-align: center;
 	margin-top: 1em;
 	margin-bottom: 1em;
@@ -13,7 +38,7 @@
 
 #main h2 {
 	font-size: 1.2em;
-	color: gray;
+	color: var(--header-color);
 	margin-top: 1em;
 	margin-bottom: 0.5em;
 	padding: 0;
@@ -21,7 +46,7 @@
 
 #main h3 {
 	font-size: 1.1em;
-	color: gray;
+	color: var(--header-color);
 	margin-top: 1em;
 	margin-bottom: 0em;
 	padding: 0;
@@ -30,7 +55,7 @@
 #main h4 {
 	font-size: 1em;
 	font-weight: bold;
-	color: gray;
+	color: var(--header-color);
 	margin-top: 0.5em;
 	margin-bottom: 0em;
 	padding: 0;
@@ -39,6 +64,7 @@
 #main p {
 	margin-top: 0em;
 	margin-bottom: 0.5em;
+	color: var(--text-color);
 	padding: 0;
 }
 
@@ -52,7 +78,7 @@
 
 #navigation h1 {
 	font-size: 1em;
-	color: gray;
+	color: var(--header-color);
 	margin-top: 0em;
 	margin-bottom: 0.5em;
 }
