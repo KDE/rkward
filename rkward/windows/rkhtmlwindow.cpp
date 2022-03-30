@@ -317,7 +317,7 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 	// See https://bugreports.qt.io/browse/QTBUG-89753
 	// Our CSS files try to support dark mode, automatically, but important versions of QWebEnginePage fail to honor the prefers-color-scheme selector
 	// To help those, apply the corresponding color values via javascript.
-	bool is_dark = (KColorScheme().background().color().lightnessF() < .5);
+	bool is_dark = (KColorScheme().background().color().lightnessF() < .5);  // <<- HACK to detect dark mode
 	if (is_dark) {
 		auto p = QWebEngineProfile::defaultProfile();
 		QWebEngineScript fix_color_scheme;

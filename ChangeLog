@@ -2,6 +2,7 @@ TODOS for autotests:
   - Check and update the standards files
   - Use options(warn=1), in order to get warnings into the test?
 
+- Support for switching color themes, including basic support for dark theme
 - Fix crash in dev.capture()
 - Fix plot window not showing when created attached
 - Space-saving placement of main window status bar, and display more tips in it
