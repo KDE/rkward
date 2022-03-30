@@ -27,6 +27,7 @@
 #include <KHelpMenu>
 #include <KColorSchemeManager>
 #include <KActionMenu>
+#include <kconfigwidgets_version.h>
 
 #include <QWhatsThis>
 #include <QDomDocument>
@@ -106,7 +107,11 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI(KXmlGuiWindow *for_window) : QObject(fo
 	KStandardAction::configureToolbars (this, SLOT (configureToolbars()), actionCollection ());
 	// Color scheme action. NOTE: selection is non-permanent for KF5 <= 5.87.0, auto-saved afterwards. Apparently, auto-save cannot be implemented for earlier versions within a few lines of code
 	KColorSchemeManager *manager = new KColorSchemeManager(this);
-	actionCollection()->addAction(QStringLiteral("colorscheme_menu"), manager->createSchemeSelectionMenu(QString(), this));
+#if KCONFIGWIDGETS_VERSION < QT_VERSION_CHECK(5, 67, 0)
+	actionCollection()->addAction(QStringLiteral("colorscheme_menu"), manager->createSchemeSelectionMenu(QString(), this))
+#else
+	actionCollection()->addAction(QStringLiteral("colorscheme_menu"), manager->createSchemeSelectionMenu(this));
+#endif
 	// our "status bar" is inlined, and always visible. Action below would only hide and show a useless proxy
 	// KF6 TODO: Still needed at all?
 	QAction *a = for_window->action("options_show_statusbar");
