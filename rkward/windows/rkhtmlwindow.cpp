@@ -78,6 +78,9 @@ class RKWebPage : public KWebPage {
 #	include <QWebEngineView>
 #	include <QWebEngineSettings>
 #	include <QWebEngineProfile>
+#	include <QWebEngineScript>
+#	include <QWebEngineScriptCollection>
+#	include <KColorScheme>
 class RKWebPage : public QWebEnginePage {
 #endif
 	Q_OBJECT
@@ -286,9 +289,6 @@ private:
 
 
 RKWebPage* RKHTMLWindow::new_window = nullptr;
-#include <QWebEngineScript>
-#include <QWebEngineScriptCollection>
-#include <KColorScheme>
 RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (parent, RKMDIWindow::HelpWindow) {
 	RK_TRACE (APP);
 
