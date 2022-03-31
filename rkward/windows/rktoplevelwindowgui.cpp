@@ -108,7 +108,7 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI(KXmlGuiWindow *for_window) : QObject(fo
 	// Color scheme action. NOTE: selection is non-permanent for KF5 <= 5.87.0, auto-saved afterwards. Apparently, auto-save cannot be implemented for earlier versions within a few lines of code
 	KColorSchemeManager *manager = new KColorSchemeManager(this);
 #if KCONFIGWIDGETS_VERSION < QT_VERSION_CHECK(5, 67, 0)
-	actionCollection()->addAction(QStringLiteral("colorscheme_menu"), manager->createSchemeSelectionMenu(QString(), this));
+	actionCollection()->addAction(QStringLiteral("colorscheme_menu"), manager->createSchemeSelectionMenu(i18n("Color Scheme"), QString(), this));
 #else
 	actionCollection()->addAction(QStringLiteral("colorscheme_menu"), manager->createSchemeSelectionMenu(this));
 #endif
