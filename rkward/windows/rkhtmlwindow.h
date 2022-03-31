@@ -197,8 +197,8 @@ private:
 	QString renderHelpFragment (QDomElement &fragment);
 	QString resolveLabel (const QString &id) const;
 	QString prepareHelpLink (const QString &href, const QString &text);
-	QString componentPathToId (QString path);
-	RKComponentHandle *componentPathToHandle (QString path);
+	QString componentPathToId (const QString &path);
+	RKComponentHandle *componentPathToHandle (const QString &path);
 	QString startSection (const QString &name, const QString &title, const QString &shorttitle, QStringList *anchors, QStringList *anchor_names);
 
 	QIODevice *device;

@@ -35,7 +35,7 @@
 // We save to several files at once, meaning the standard overwrite check is not quite good enough for us.
 // More importantly, it is entirely broken in KF5 < 5.22.0 (https://bugs.kde.org/show_bug.cgi?id=360666)
 // So check for overwriting ourselves.
-bool checkOverwriteWorkspace (QUrl url, QWidget *parent) {
+bool checkOverwriteWorkspace (const QUrl &url, QWidget *parent) {
 	if (url.isEmpty () || !url.isLocalFile ()) {
 		return true;
 	}

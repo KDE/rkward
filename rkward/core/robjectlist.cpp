@@ -217,7 +217,7 @@ void RObjectList::updateEnvironments (const QStringList &_env_names, bool force_
 	RK_DO (RK_ASSERT (childmap == newchildmap), OBJECTS, DL_DEBUG);	// this is an expensive assert, hence wrapping it inside RK_DO
 }
 
-void RObjectList::updateNamespaces (const QStringList namespace_names) {
+void RObjectList::updateNamespaces (const QStringList &namespace_names) {
 	RK_TRACE (OBJECTS);
 
 	QStringList orphan_namespace_names;

@@ -111,7 +111,7 @@
 #	define PATH_VAR_SEP ':'
 #endif
 
-QString findExeAtPath (const QString appname, const QString &path) {
+QString findExeAtPath (const QString &appname, const QString &path) {
 	QDir dir (path);
 	dir.makeAbsolute ();
 	if (QFileInfo (dir.filePath (appname)).isExecutable ()) return dir.filePath (appname);
@@ -171,7 +171,7 @@ void RKDebug (int flags, int level, const char *fmt, ...) {
 
 /** Check if the given path to R (or "auto") is executable, and fail with an appropriate message, otherwise. If "auto" is given as input, try to auto-locate an R installation at the standard
 installation path(s) for this platform. */
-QString resolveRSpecOrFail (QString input, QString message) {
+QString resolveRSpecOrFail (QString input, const QString &message) {
 	if (input == QLatin1String ("auto")) {
 		QString ret;
 #ifdef Q_OS_MACOS

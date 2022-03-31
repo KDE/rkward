@@ -39,7 +39,7 @@
 #include "../debug.h"
 
 /** much like `ls -Rl`. List directory contents including timestamps and sizes, recursively. Used to detect whether an output directory has any changes. */
-void listDirectoryState(const QString& _dir, QString *list, const QString prefix) {
+void listDirectoryState(const QString& _dir, QString *list, const QString &prefix) {
 	RK_TRACE(APP);
 
 	QDir dir(_dir);

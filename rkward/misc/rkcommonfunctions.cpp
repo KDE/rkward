@@ -235,7 +235,7 @@ namespace RKCommonFunctions {
 		return out;
 	}
 
-	void setTips (const QString tip, QWidget *first, QWidget *second, QWidget *third) {
+	void setTips (const QString &tip, QWidget *first, QWidget *second, QWidget *third) {
 		for (int i=0; i < 3; ++i) {
 			QWidget *w = first;
 			if (i == 1) w = second;

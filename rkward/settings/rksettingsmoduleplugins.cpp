@@ -114,7 +114,7 @@ void RKSettingsModulePlugins::applyChanges () {
 	interface_pref = static_cast<PluginPrefs> (button_group->checkedId ());
 }
 
-RKSettingsModulePlugins::PluginMapList RKSettingsModulePlugins::setPluginMaps (const RKSettingsModulePlugins::PluginMapList new_list) {
+RKSettingsModulePlugins::PluginMapList RKSettingsModulePlugins::setPluginMaps (const RKSettingsModulePlugins::PluginMapList &new_list) {
 	RK_TRACE (SETTINGS);
 
 	known_plugin_maps = new_list;

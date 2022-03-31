@@ -108,7 +108,7 @@ private:
 #define USE_Q_SCRIPT_PROGRAM
 #include <QScriptProgram>
 namespace RKPrecompiledQtScripts {
-	bool loadCommonScript (QScriptEngine *engine, QString scriptfile);
+	bool loadCommonScript (QScriptEngine *engine, const QString &scriptfile);
 };
 
 #endif

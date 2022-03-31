@@ -101,7 +101,7 @@ KTextEditor::Document* createDocument(bool with_signals) {
 	return ret;
 }
 
-RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, const QString& encoding, int flags) : RKMDIWindow (parent, RKMDIWindow::CommandEditorWindow) {
+RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl &_url, const QString& encoding, int flags) : RKMDIWindow (parent, RKMDIWindow::CommandEditorWindow) {
 	RK_TRACE (COMMANDEDITOR);
 
 	QString id_header = QStringLiteral ("unnamedscript://");
@@ -1144,7 +1144,7 @@ QString exportText(const QString& text, const KTextEditor::Attribute::Ptr& attri
 	return ret;
 }
 
-QString RKCommandHighlighter::commandToHTML (const QString r_command, HighlightingMode mode) {
+QString RKCommandHighlighter::commandToHTML (const QString &r_command, HighlightingMode mode) {
 	KTextEditor::Document* doc = getDoc ();
 	KTextEditor::View* view = getView ();
 	doc->setText (r_command);

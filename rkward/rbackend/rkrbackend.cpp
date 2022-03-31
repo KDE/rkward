@@ -660,7 +660,7 @@ int RChooseFile (int isnew, char *buf, int len) {
 /* There are about one million possible entry points to editing / showing files. We try to cover them all, using the
 following bunch of functions (REditFilesHelper() and doShowEditFiles() are helpers, only) */
 
-void REditFilesHelper (QStringList files, QStringList titles, QString wtitle, RBackendRequest::RCallbackType edit, bool delete_files, bool prompt) {
+void REditFilesHelper (const QStringList &files, const QStringList &titles, const QString &wtitle, RBackendRequest::RCallbackType edit, bool delete_files, bool prompt) {
 	RK_TRACE (RBACKEND);
 
 	RK_ASSERT ((edit == RBackendRequest::ShowFiles) || (edit == RBackendRequest::EditFiles));
@@ -733,7 +733,7 @@ int RShowFiles (int nfile, const char **file, const char **headers, const char *
 
 /* FROM R_ext/RStartup.h: "Return value here is expected to be 1 for Yes, -1 for No and 0 for Cancel:
    symbolic constants in graphapp.h" */
-int doDialogHelper (QString caption, QString message, QString button_yes, QString button_no, QString button_cancel, QString default_button, bool wait) {
+int doDialogHelper (const QString &caption, const QString &message, const QString &button_yes, const QString &button_no, const QString &button_cancel, const QString &default_button, bool wait) {
 	RK_TRACE (RBACKEND);
 
 	RBackendRequest request (wait, RBackendRequest::ShowMessage);
@@ -899,7 +899,7 @@ extern "C" int R_interrupts_pending;
 #else
 LibExtern int R_interrupts_pending;
 #endif
-void doError (QString callstring) {
+void doError (const QString &callstring) {
 	RK_TRACE (RBACKEND);
 
 	if ((RKRBackend::repl_status.eval_depth == 0) && (!RKRBackend::repl_status.browser_context) && (!RKRBackend::this_pointer->isKilled ()) && (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::ReplIterationKilled) && (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::NoUserCommand)) {

@@ -154,7 +154,7 @@ public:
 private:
 /** internal convenience function to schedule a property connection */
 	void addConnection (const QString &client_id, const QString &client_property, const QString &governor_id, const QString &governor_property, bool reconcile, const QDomElement &origin);
-	QDomElement doElementCopy (const QString id, XMLHelper &xml, const QDomElement &copy);
+	QDomElement doElementCopy (const QString &id, XMLHelper &xml, const QDomElement &copy);
 	QDomElement doc_elem;
 	RKComponent *parent;
 	struct RKComponentPropertyConnection {

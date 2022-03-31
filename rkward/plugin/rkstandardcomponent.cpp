@@ -537,7 +537,7 @@ RKComponentBuilder::~RKComponentBuilder () {
 	RK_TRACE (PLUGIN);
 }
 
-QDomElement RKComponentBuilder::doElementCopy (const QString id, XMLHelper &xml, const QDomElement &copy) {
+QDomElement RKComponentBuilder::doElementCopy (const QString &id, XMLHelper &xml, const QDomElement &copy) {
 	RK_TRACE (PLUGIN);
 
 	QDomElement res;

@@ -48,7 +48,7 @@ rather call it a "special" object, instead).
 */
 class RKNamespaceObject : public REnvironmentObject {
 public:
-	explicit RKNamespaceObject (REnvironmentObject* package, const QString name = QString ());
+	explicit RKNamespaceObject (REnvironmentObject* package, const QString &name = QString ());
 	~RKNamespaceObject ();
 
 	QString getFullName (int) const override;

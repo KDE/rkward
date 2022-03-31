@@ -87,7 +87,7 @@ protected:
 	bool updateStructure (RData *new_data) override;
 	void rCommandDone (RCommand *command) override;
 	void updateEnvironments (const QStringList &env_names, bool force_globalenv_update);
-	void updateNamespaces (const QStringList namespace_names);
+	void updateNamespaces (const QStringList &namespace_names);
 private:
 	friend class RKLoadAgent;
 	friend class RKSaveAgent;

@@ -173,7 +173,7 @@ void RKComponentGUIXML::Menu::clear () {
 	groups.clear ();
 }
 
-RKComponentGUIXML::Group *findOrCreateGroup (RKComponentGUIXML::Menu *parent, const QString group) {
+RKComponentGUIXML::Group *findOrCreateGroup (RKComponentGUIXML::Menu *parent, const QString &group) {
 	// try to find group
 	int bottom_index = -1;
 	QList<RKComponentGUIXML::Group*> &list = parent->groups;
@@ -204,7 +204,7 @@ RKComponentGUIXML::Group *findOrCreateGroup (RKComponentGUIXML::Menu *parent, co
 	return new_group;
 }
 
-void insertGroup (RKComponentGUIXML::Menu *parent, const QString &group_id, bool separated, const QString after_group) {
+void insertGroup (RKComponentGUIXML::Menu *parent, const QString &group_id, bool separated, const QString &after_group) {
 	RK_TRACE (PLUGIN);
 	RK_ASSERT (parent);
 
@@ -231,7 +231,7 @@ void insertGroup (RKComponentGUIXML::Menu *parent, const QString &group_id, bool
 	}
 }
 
-void insertEntry (RKComponentGUIXML::Menu *parent, RKComponentGUIXML::Entry *entry, const QString in_group) {
+void insertEntry (RKComponentGUIXML::Menu *parent, RKComponentGUIXML::Entry *entry, const QString &in_group) {
 	RK_TRACE (PLUGIN);
 	RK_ASSERT (parent);
 
@@ -242,7 +242,7 @@ void insertEntry (RKComponentGUIXML::Menu *parent, RKComponentGUIXML::Entry *ent
 	}
 }
 
-RKComponentGUIXML::Menu *findMenu (RKComponentGUIXML::Menu *parent, const QString id) {
+RKComponentGUIXML::Menu *findMenu (RKComponentGUIXML::Menu *parent, const QString &id) {
 	RK_TRACE (PLUGIN);
 
 	RK_ASSERT (parent);
@@ -257,7 +257,7 @@ RKComponentGUIXML::Menu *findMenu (RKComponentGUIXML::Menu *parent, const QStrin
 	return 0;
 }
 
-int RKComponentGUIXML::addEntries (RKComponentGUIXML::Menu *menu, XMLHelper &xml, const QDomElement description, const QString& cnamespace) {
+int RKComponentGUIXML::addEntries (RKComponentGUIXML::Menu *menu, XMLHelper &xml, const QDomElement &description, const QString& cnamespace) {
 	RK_TRACE (PLUGIN);
 
 	int leaves = 0;
@@ -544,7 +544,7 @@ bool RKComponentMap::invokeComponent (const QString &component_id, const QString
 	return true;
 }
 
-void RKPluginMapParseResult::addAndPrintError (int level, const QString message) {
+void RKPluginMapParseResult::addAndPrintError (int level, const QString &message) {
 	detailed_problems.append (message);
 	RK_DEBUG (PLUGIN, level, qPrintable (message));
 }

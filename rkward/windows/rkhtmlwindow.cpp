@@ -1263,7 +1263,7 @@ QString RKHelpRenderer::prepareHelpLink (const QString &href, const QString &tex
 	return (ret + "</a>");
 }
 
-QString RKHelpRenderer::componentPathToId (QString path) {
+QString RKHelpRenderer::componentPathToId (const QString &path) {
 	RK_TRACE (APP);
 
 	QStringList path_segments = path.split ('/', QString::SkipEmptyParts);
@@ -1275,7 +1275,7 @@ QString RKHelpRenderer::componentPathToId (QString path) {
 	return (path_segments.join ("::"));
 }
 
-RKComponentHandle *RKHelpRenderer::componentPathToHandle (QString path) {
+RKComponentHandle *RKHelpRenderer::componentPathToHandle (const QString &path) {
 	RK_TRACE (APP);
 
 	return (RKComponentMap::getComponentHandle (componentPathToId (path)));

@@ -49,7 +49,7 @@ QString RSlotsPseudoObject::makeChildName (const QString &short_child_name, bool
 	return (parent->getFullName (options) + '@' + safe_name);
 }
 
-RKNamespaceObject::RKNamespaceObject (REnvironmentObject* package, const QString name) : REnvironmentObject (package, name.isNull () ? "NAMESPACE" : name) {
+RKNamespaceObject::RKNamespaceObject (REnvironmentObject* package, const QString &name) : REnvironmentObject (package, name.isNull () ? "NAMESPACE" : name) {
 	RK_TRACE (OBJECTS);
 	type |= PseudoObject;
 	pseudo_object_types.insert (this, NamespaceObject);

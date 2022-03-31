@@ -328,7 +328,7 @@ namespace RKPrecompiledQtScripts {
 	QMap<QString, QScriptProgram> compiled_includes;
 	QMutex compiled_includes_mutex;
 
-	bool loadCommonScript (QScriptEngine* engine, QString scriptfile) {
+	bool loadCommonScript (QScriptEngine* engine, const QString &scriptfile) {
 		RK_TRACE (PHP);
 
 		// NOTE: QScriptProgram cannot be evaluated concurrently in several threads (see https://bugreports.qt-project.org/browse/QTBUG-29246).

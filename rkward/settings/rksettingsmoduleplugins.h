@@ -117,7 +117,7 @@ private:
 	static void fixPluginMapLists ();
 friend class RKPluginMapSelectionWidget;
 /** Sets the new list of plugins. Potentially removes unreadable ones, and returns the effective list. */
-	static PluginMapList setPluginMaps (const PluginMapList new_list);
+	static PluginMapList setPluginMaps (const PluginMapList &new_list);
 };
 
 class RKSettingsModulePluginsModel : public QAbstractTableModel {

@@ -807,7 +807,7 @@ RKMDIWindow * RKWorkplace::windowForPart(KParts::Part* part) const {
 	return nullptr;
 }
 
-QUrl checkAdjustRestoredUrl (const QString &_url, const QString old_base) {
+QUrl checkAdjustRestoredUrl (const QString &_url, const QString &old_base) {
 	QUrl url = QUrl::fromUserInput (_url, QString (), QUrl::AssumeLocalFile);
 
 	if (old_base.isEmpty ()) return (url);
@@ -910,7 +910,7 @@ ItemSpecification parseItemDescription (const QString &description) {
 	return ret;
 }
 
-RKMDIWindow* restoreDocumentWindowInternal (RKWorkplace* wp, ItemSpecification spec, const QString &base) {
+RKMDIWindow* restoreDocumentWindowInternal (RKWorkplace* wp, const ItemSpecification &spec, const QString &base) {
 	RK_TRACE (APP);
 
 	RKMDIWindow *win = nullptr;
@@ -1072,13 +1072,13 @@ public:
 		RK_TRACE (APP);
 	}
 
-	void update (const QList<RKMDIWindow*> windows) {
+	void update (const QList<RKMDIWindow*> &windows) {
 		RK_TRACE (APP);
 
 		clear ();
 		_windows = windows;
-		for (int i = windows.count () - 1; i >= 0; --i) {		// most recent top
-			RKMDIWindow *win = windows[i];
+		for (int i = windows.count() - 1; i >= 0; --i) {  // most recent first / on top
+			RKMDIWindow *win = _windows.at(i);
 			QListWidgetItem *item = new QListWidgetItem (this);
 			item->setIcon (RKStandardIcons::iconForWindow (win));
 			item->setText (win->windowTitle ());

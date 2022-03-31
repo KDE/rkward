@@ -56,7 +56,7 @@ namespace RKCommonFunctions {
 	QString unescape (const QString &in);
 
 /** simultaneously sets tool tips and what's this tips on up to three QWidgets */
-	void setTips (const QString tip, QWidget *first, QWidget *second=0, QWidget *third=0);
+	void setTips (const QString &tip, QWidget *first, QWidget *second=0, QWidget *third=0);
 	QString noteSettingsTakesEffectAfterRestart ();
 /** Passing commands as part of arguments to windows shell scripts will fail miserably for paths with spaces or special characters. Transform to short path names for safety. No-op on sane platforms.*/
 	QString windowsShellScriptSafeCommand (const QString &orig);

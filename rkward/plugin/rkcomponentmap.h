@@ -174,7 +174,7 @@ friend class RKComponentMap;
 /** Clear component overrides (see addOverride()). */
 	static void clearOverrides ();
 private:
-	int addEntries (RKComponentGUIXML::Menu *menu, XMLHelper &xml, const QDomElement description, const QString& cnamespace);
+	int addEntries (RKComponentGUIXML::Menu *menu, XMLHelper &xml, const QDomElement &description, const QString& cnamespace);
 	void menuItemsToXml (const RKComponentGUIXML::Menu *menu, QDomElement &xml);
 	void resolveComponentLabelsAndSortMenu (Menu *menu, const QString &menu_path=QString ());
 	struct ComponentOverride {
@@ -196,7 +196,7 @@ public:
 		detailed_problems.append (other.detailed_problems);
 		valid_plugins += other.valid_plugins;
 	};
-	void addAndPrintError (int level, const QString message);
+	void addAndPrintError (int level, const QString &message);
 	QStringList detailed_problems;
 	int valid_plugins;
 };

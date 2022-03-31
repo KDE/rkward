@@ -213,7 +213,7 @@ QAction* RKConsole::addProxyAction (const QString& actionName, const QString& la
 	}
 }
 
-void RKConsole::triggerEditAction (QString name) {
+void RKConsole::triggerEditAction (const QString &name) {
 	RK_TRACE (APP);
 
 	if (!kate_edit_actions) return;

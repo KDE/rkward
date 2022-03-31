@@ -91,7 +91,7 @@ public:
 /** constructor
 @param encoding encoding to use. If QString (), the default encoding is used.
 @param flags @See Combination of RKCommandEditorFlags */
-	explicit RKCommandEditorWindow (QWidget *parent, const QUrl url, const QString& encoding=QString (), int flags=RKCommandEditorFlags::DefaultFlags);
+	explicit RKCommandEditorWindow (QWidget *parent, const QUrl &url, const QString& encoding=QString (), int flags=RKCommandEditorFlags::DefaultFlags);
 /** destructor */
 	~RKCommandEditorWindow ();
 /** returns, whether the document was modified since the last save */
@@ -239,7 +239,7 @@ public:
 	};
 	static void copyLinesToOutput (KTextEditor::View *view, HighlightingMode mode);
 	static void setHighlighting (KTextEditor::Document *doc, HighlightingMode mode);
-	static QString commandToHTML (const QString r_command, HighlightingMode mode=RScript);
+	static QString commandToHTML (const QString &r_command, HighlightingMode mode=RScript);
 private:
 	static KTextEditor::Document* getDoc ();
 	static KTextEditor::Document* _doc;

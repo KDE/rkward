@@ -138,7 +138,7 @@ friend class RKConsolePart;
 	QAction* paste_action;
 
 	KActionCollection *kate_edit_actions;
-	void triggerEditAction (QString name);
+	void triggerEditAction (const QString &name);
 	void setCursorClear (int line, int col);
 
 	void initializeActions (KActionCollection *ac);
