@@ -926,7 +926,7 @@ void RKWardMainWindow::slotDetachWindow () {
 }
 
 void setIndictatorColor(QWidget *widget, KColorScheme::ForegroundRole fg, KColorScheme::BackgroundRole bg) {
-	KColorScheme color_scheme;
+	KColorScheme color_scheme(QPalette::Normal); // default parameter in more recent versions of KColorScheme (->KF6: remove)
 	QPalette palette = widget->palette();
 	palette.setBrush(widget->backgroundRole(), color_scheme.background(bg));
 	palette.setBrush(widget->foregroundRole(), color_scheme.foreground(fg));
