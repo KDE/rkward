@@ -13,6 +13,7 @@ SET (
 	rbackend_shared_SRCS
 	rkrbackendprotocol_shared.cpp
 	rdata.cpp
+	rktransmitter.cpp
 )
 
 SET (
@@ -23,6 +24,7 @@ SET (
 	rkstructuregetter.cpp
 	rkrbackendprotocol_backend.cpp
 	rkreventloop.cpp
+	rkbackendtransmitter.cpp
 )
 
 SET (
@@ -33,29 +35,15 @@ SET (
 	rcommandstack.cpp
 	rkrbackendprotocol_frontend.cpp
 	rksessionvars.cpp
+	rkfrontendtransmitter.cpp
 )
 
-SET (
-	rbackend_FRONTEND_SRCS
-	${rbackend_frontend_SRCS}
-	${rbackend_shared_SRCS}
-	rkfrontendtransmitter.cpp
-	rktransmitter.cpp
-)
-ADD_LIBRARY(rbackend STATIC ${rbackend_FRONTEND_SRCS})
+ADD_LIBRARY(rbackend STATIC ${rbackend_frontend_SRCS} ${rbackend_shared_SRCS})
 TARGET_LINK_LIBRARIES(rbackend rkgraphicsdevice.frontend Qt5::Widgets KF5::TextEditor KF5::WindowSystem)
 
-SET (
-	rbackend_BACKEND_SRCS
-	${rbackend_backend_SRCS}
-	${rbackend_shared_SRCS}
-	rkbackendtransmitter.cpp
-	rktransmitter.cpp
-)
-ADD_DEFINITIONS (-DRKWARD_SPLIT_PROCESS)
 ADD_DEFINITIONS (-DRKWARD_BACKEND_PATH="${KDE_INSTALL_FULL_LIBEXECDIR}")
 LINK_DIRECTORIES(${R_SHAREDLIBDIR})
-ADD_EXECUTABLE(rkward.rbackend ${rbackend_BACKEND_SRCS})
+ADD_EXECUTABLE(rkward.rbackend ${rbackend_backend_SRCS} ${rbackend_shared_SRCS})
 ECM_MARK_NONGUI_EXECUTABLE(rkward.rbackend)
 TARGET_LINK_LIBRARIES(rkward.rbackend rkgraphicsdevice.backend ${R_USED_LIBS} ${CMAKE_THREAD_LIBS_INIT} Qt5::Network Qt5::Core KF5::I18n)
 IF(APPLE)
