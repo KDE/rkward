@@ -24,6 +24,7 @@
 #include <kio/job.h>
 #include <kservice.h>
 #include <kcodecaction.h>
+#include <KColorScheme>
 
 #include <qfileinfo.h>
 #include <qwidget.h>
@@ -80,7 +81,6 @@ class RKWebPage : public KWebPage {
 #	include <QWebEngineProfile>
 #	include <QWebEngineScript>
 #	include <QWebEngineScriptCollection>
-#	include <KColorScheme>
 class RKWebPage : public QWebEnginePage {
 #endif
 	Q_OBJECT
@@ -314,27 +314,35 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 	if (!QWebEngineProfile::defaultProfile ()->urlSchemeHandler ("help")) {
 		QWebEngineProfile::defaultProfile ()->installUrlSchemeHandler ("help", new RKWebEngineKIOForwarder (RKWardMainWindow::getMain()));
 	}
+#endif
 	// See https://bugreports.qt.io/browse/QTBUG-89753
 	// Our CSS files try to support dark mode, automatically, but important versions of QWebEnginePage fail to honor the prefers-color-scheme selector
 	// To help those, apply the corresponding color values via javascript.
-	bool is_dark = (KColorScheme().background().color().lightnessF() < .5);  // <<- HACK to detect dark mode
+	bool is_dark = (KColorScheme(QPalette::Normal).background().color().lightnessF() < .5);  // <<- HACK to detect dark mode
 	if (is_dark) {
+		QString color_scheme_js = QStringLiteral("function rksetcolor(name, value) { document.querySelector(':root').style.setProperty(name, value); }\n"
+									"rksetcolor('--regular-text-color', 'white');\n"
+									"rksetcolor('--background-color', 'black');\n"
+									"rksetcolor('--header-color', 'darkgray');\n"
+									"rksetcolor('--anchor-color', '#3366ff');");
+#ifdef NO_QT_WEBENGINE
+		connect(page, &RKWebPage::loadFinished, [this, color_scheme_js](){
+			page->mainFrame()->evaluateJavaScript(color_scheme_js);
+		});
+#else
 		auto p = QWebEngineProfile::defaultProfile();
 		QWebEngineScript fix_color_scheme;
 		QString id = QStringLiteral("fix_color_scheme");
 		if (p->scripts()->findScript(id).isNull()) {
 			fix_color_scheme.setName(id);
 			fix_color_scheme.setInjectionPoint(QWebEngineScript::DocumentReady);
-			fix_color_scheme.setSourceCode(QStringLiteral("function rksetcolor(name, value) { document.querySelector(':root').style.setProperty(name, value); }\n"
-									"rksetcolor('--regular-text-color', 'white');\n"
-									"rksetcolor('--background-color', 'black');\n"
-									"rksetcolor('--header-color', 'darkgray');\n"
-									"rksetcolor('--anchor-color', '#3366ff');"));
+			fix_color_scheme.setSourceCode(color_scheme_js);
 			p->scripts()->insert(fix_color_scheme);
 		}
 		//page->setBackgroundColor(Qt::black);  // avoids brief white blink while loading, but is too risky on pages that are not dark scheme aware.
-	}
 #endif
+	}
+
 	layout->addWidget (findbar);
 	findbar->hide ();
 	connect (findbar, &RKFindBar::findRequest, this, &RKHTMLWindow::findRequest);
