@@ -27,9 +27,10 @@ still have to install additional libraries or other software for the compilation
 	</section>
 
 	<section title="Kate Add-ons" id="kate_addons_in_rkward">
-	TODO: Write this
-
-	<link href="rkward://settings/addons">Addon settings</link>
+<link href="https://kate.kde.org">Kate</link> is a very powerful text editor using the same text editing component that is also used in RKWard. It also comes with a variety
+of add-ons, e.g. for creating code snippets, or for managing projects in a git repository. Some of these - like e.g. the C++ backtrace navigation tool  do not make much
+sense in the context of RKWard, but many do. To explore what is available, make sure you have kate installed, then visit <link href="rkward://settings/addons">Settings->Addons</link>.
+Addons shown in bold have been reported to be useful and work well in RKWard, but feel free to explore the others, too.
 	</section>
 
 	<section title="RKWard Plugins" id="rkward_plugins">

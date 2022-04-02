@@ -10,10 +10,8 @@
 
 	<section title="Introduction to RKWard" id="introduction">
 	RKWard is a GUI frontend and IDE to <link href="http://www.r-project.org">R</link>, a powerful scripting language for statistical computing. It aims to provide useful features both to experienced users of R, wishing to exploit R's scripting capabilities, as well as to users new to R, looking for an easy way to carry out statistical computation tasks.
-	</section>
 
-	<section title="Getting Started" id="getting_started">
-	If you have used neither R nor RKWard before, you should start with the following guide: <link href="rkward://page/rkward_for_new_users" />.
+	If you have used neither R nor RKWard before, you may want to start by reading the following guide: <link href="rkward://page/rkward_for_new_users" />.
 
 	After that, or for users with some knowledge of R, but new to RKWard, here is a guide focused on introducing the IDE features of RKWard: <link href="rkward://page/rkward_for_r_users" />.
 	</section>

@@ -17,6 +17,7 @@
 #include "rksettings.h"
 
 #include <QPushButton>
+#include <QVBoxLayout>
 
 #include <KLocalizedString>
 #include <KSharedConfig>
@@ -157,10 +158,14 @@ void RKSettings::initModules () {
 		modules.insert(NumPages+i, ktexteditorpages[i]);
 	}
 
+	QWidget *page = new QWidget();
+	auto layout = new QVBoxLayout(page);
 	QLabel *l = new QLabel(i18n("<h1>Add-ons</h1><p>RKWard add-ons come in a variety of forms, each with their own configuration options:</p><h2>R packages</h2><p><a href=\"rkward://settings/rpackages\">Add-ons to the R language itself</a>. These are usually downloaded from \"CRAN\". Some of these add-on packages may additionally contain RKWard plugins.</p><h2>RKWard plugins</h2><p><a href=\"rkward://settings/plugins\">Graphical dialogs to R functionality</a>. These plugins are usually pre-installed with RKWard, or with an R package. However, they can be activated/deactivated to help keep the menus manageable. Note that it is relatively easy to <a href=\"https://api.kde.org/doc/rkwardplugins/\">create your own custom dialogs as plugins</a>!</p><h2>Kate plugins</h2><p><a href=\"rkward://settings/kateplugins\">Plugins developed for Kate / KTextEditor</a>. These provide shared functionality that is useful in the context of text editing and IDE applications. These plugins are usually found pre-installed on your system. You can configure to load the plugins that are useful to your own workflow.</p>"));
 	l->setWordWrap(true);
 	connect(l, &QLabel::linkActivated, [=](const QString &url) { RKWorkplace::mainWorkplace()->openAnyUrl(QUrl(url)); });
-	pages[SuperPageAddons] = addPage(l, i18n("Add-ons"));
+	layout->addWidget(l);
+	layout->addStretch();
+	pages[SuperPageAddons] = addPage(page, i18n("Add-ons"));
 	registerPageModule(SuperPageAddons, PageRPackages);
 	registerPageModule(SuperPageAddons, PagePlugins);
 	registerPageModule(SuperPageAddons, PageKatePlugins);
