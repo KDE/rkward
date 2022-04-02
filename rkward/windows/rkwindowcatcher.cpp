@@ -19,15 +19,14 @@
 
 #ifndef DISABLE_RKWINDOWCATCHER
 
-#include <qlayout.h>
-#include <qapplication.h>
-#include <QDesktopWidget>
+#include <QLayout>
+#include <QApplication>
 #include <QPushButton>
 #include <QDialogButtonBox>
 #include <QDialog>
 #include <QWindow>
 
-#include <kmessagebox.h>
+#include <KMessageBox>
 #include <KLocalizedString>
 #include <KWindowSystem>
 #include <KWindowInfo>
@@ -36,6 +35,7 @@
 #include "../dialogs/rkerrordialog.h"
 #include "rkworkplace.h"
 #include "../misc/rkstandardicons.h"
+#include "../misc/rkcommonfunctions.h"
 #include "../debug.h"
 
 RKWindowCatcher *RKWindowCatcher::_instance = 0;
@@ -355,7 +355,7 @@ void RKCaughtX11Window::doEmbed () {
 
 	// try to be helpful when the window is too large to fit on screen
 	QRect dims = window ()->frameGeometry ();
-	QRect avail = QApplication::desktop ()->availableGeometry (window ());
+	QRect avail = RKCommonFunctions::availableGeometry(window());
 	if ((dims.width () > avail.width ()) || (dims.height () > avail.height ())) {
 		KMessageBox::information (this, i18n ("The current window appears too large to fit on the screen. If this happens regularly, you may want to adjust the default graphics window size in Settings->Configure RKWard->Onscreen Graphics."), i18n ("Large window"), "dont_ask_again_large_x11_window");
 	}

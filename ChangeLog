@@ -3,7 +3,7 @@ TODOS for autotests:
   - Use options(warn=1), in order to get warnings into the test?
 
 - Fix compilation with the upcoming R 4.2.0
-- Support for switching color themes, including basic support for dark theme
+- Support for switching color schemes, including basic support for dark mode
 - Fix crash in dev.capture()
 - Fix plot window not showing when created attached
 - Space-saving placement of main window status bar, and display more tips in it

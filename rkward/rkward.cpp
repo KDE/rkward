@@ -19,7 +19,6 @@
 
 // include files for QT
 #include <qtimer.h>
-#include <QDesktopWidget>
 #include <QCloseEvent>
 #include <QPointer>
 #include <QApplication>
@@ -795,7 +794,7 @@ void RKWardMainWindow::readOptions () {
 	KConfigGroup cg = config->group ("General Options");
 	QSize size = cg.readEntry ("Geometry", QSize ());
 	if (size.isEmpty ()) {
-		size = QApplication::desktop ()->availableGeometry ().size ();
+		size = RKCommonFunctions::availableGeometry(this).size();
 	}
 	resize (size);
 

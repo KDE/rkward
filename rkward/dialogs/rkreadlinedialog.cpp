@@ -20,8 +20,6 @@
 #include <qlineedit.h>
 #include <QTextEdit>
 #include <qlabel.h>
-#include <qapplication.h>
-#include <qdesktopwidget.h>
 #include <QScrollBar>
 #include <QTimer>
 #include <QVBoxLayout>
@@ -47,7 +45,7 @@ RKReadLineDialog::RKReadLineDialog (QWidget *parent, const QString &caption, con
 
 	layout->addWidget (new QLabel (caption, this));
 
-	int screen_width = qApp->desktop ()->availableGeometry (this).width ();
+	int screen_width = RKCommonFunctions::availableGeometry(this).width();
 
 	QString context = command->fullOutput ();
 	if (!context.isEmpty ()) {

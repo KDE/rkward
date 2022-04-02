@@ -28,10 +28,8 @@
 #include <QSplitter>
 #include <QHBoxLayout>
 #include <QToolButton>
-#include <QDesktopWidget>
 #include <QAction>
 #include <QUrl>
-#include <QApplication>
 
 #include "rkcomponentmap.h"
 #include "../misc/rkcommonfunctions.h"
@@ -86,7 +84,7 @@ public:
 		setSizes (sizes);
 
 		if (QSplitter::window ()->isVisible ()) {
-			QRect boundary = QApplication::desktop ()->availableGeometry (this);
+			QRect boundary = RKCommonFunctions::availableGeometry(this);
 			int new_width = window->width ();
 			int new_height = window->height ();
 			int new_x = window->x ();

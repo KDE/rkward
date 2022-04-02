@@ -651,7 +651,6 @@ RKCallHintModel::RKCallHintModel (RKCompletionManager* manager) : RKCompletionMo
 	function = 0;
 }
 
-#include <QDesktopWidget>
 // TODO: There could be more than one function by a certain name, and we could support this!
 void RKCallHintModel::setFunction(RObject* _function) {
 	RK_TRACE (COMMANDEDITOR);

@@ -2,7 +2,7 @@
                           rkcommonfunctions  -  description
                              -------------------
     begin                : Mon Oct 17 2005
-    copyright            : (C) 2005-2020 by Thomas Friedrichsmeier
+    copyright            : (C) 2005-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -18,6 +18,7 @@
 #define RKCOMMONFUNCTIONS_H
 
 #include <QChar>
+#include <QRect>
 
 class QStringList;
 class QString;
@@ -65,6 +66,9 @@ namespace RKCommonFunctions {
 	QLabel* wordWrappedLabel (const QString &text);
 /** create a QLabel that has wordwarp enabled, *and* clickable links (opened inside RKWard), in a single line of code. */
 	QLabel* linkedWrappedLabel (const QString &text);
+
+/** Small wrapper around QScreen::availableGeometry(), mostly to ease porting */
+	QRect availableGeometry(QWidget *for_widget);
 };
 
 #endif

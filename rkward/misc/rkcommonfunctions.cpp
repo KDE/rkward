@@ -2,7 +2,7 @@
                           rkcommonfunctions  -  description
                              -------------------
     begin                : Mon Oct 17 2005
-    copyright            : (C) 2005-2020 by Thomas Friedrichsmeier
+    copyright            : (C) 2005-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -21,7 +21,12 @@
 #include <qregexp.h>
 #include <QDir>
 #include <QStandardPaths>
-#include <QCoreApplication>
+#include <QApplication>
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
+#	include <QDesktopWidget>
+#else
+#	include <QScreen>
+#endif
 #include <QLabel>
 
 #include <KLocalizedString>
@@ -280,6 +285,16 @@ namespace RKCommonFunctions {
 		QLabel* ret = wordWrappedLabel (text);
 		QObject::connect (ret, &QLabel::linkActivated, RKWorkplace::mainWorkplace (), &RKWorkplace::openAnyUrlString);
 		return ret;
+	}
+
+	QRect availableGeometry(QWidget* for_widget) {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+		auto screen = for_widget->screen();
+		if (screen) return screen->availableGeometry();
+		return QApplication::primaryScreen()->availableGeometry();
+#else
+		return ::QApplication::desktop()->availableGeometry(for_widget);
+#endif
 	}
 
 }	// namespace

@@ -137,6 +137,11 @@ void RKStructureGetter::getStructureWrapper (GetStructureWorkerArgs *data) {
 	data->getter->getStructureWorker (data->toplevel, data->name, data->add_type_flags, data->storage, data->nesting_depth);
 }
 
+/** Temporarily resolve a promise, usually without keeping its value (unless keep_evalled_promises is set, which it never is, at the time of this writing).
+ *  This is useful for peeking into large objects while building the object tree, without permanently using lots of RAM.
+ *
+ *  @note This is is not quite perfect, however. E.g. if we have two promises a and b, where b takes a slice out of a, then
+ *        evaluating b will force a, permanently. */
 SEXP RKStructureGetter::resolvePromise (SEXP from) {
 	RK_TRACE (RBACKEND);
 

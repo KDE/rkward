@@ -25,8 +25,8 @@
 #include <KLocalizedString>
 
 // for screen resolution
-#include <QApplication>
-#include <QDesktopWidget>
+#include <QGuiApplication>
+#include <QScreen>
 
 #include "../rkfrontendtransmitter.h"
 #include "../../windows/rkworkplace.h"
@@ -260,12 +260,12 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 					RK_DEBUG (GRAPHICS_DEVICE, DL_WARNING, "Graphics operation canceled");
 					emit stopInteraction();
 				} else if (opcode == RKDQueryResolution) {
-					QDesktopWidget *desktop = QApplication::desktop ();
-					streamer.outstream << (qint32) desktop->physicalDpiX () << (qint32) desktop->physicalDpiY ();
-					RK_DEBUG (GRAPHICS_DEVICE, DL_INFO, "DPI for device %d: %d by %d", devnum+1, desktop->physicalDpiX (), desktop->physicalDpiY ());
+					auto screen = QGuiApplication::primaryScreen();
+					streamer.outstream << (qint32) screen->logicalDotsPerInchX() << (qint32) screen->logicalDotsPerInchY();
+					RK_DEBUG (GRAPHICS_DEVICE, DL_INFO, "DPI for device %d: %d by %d", devnum+1, screen->logicalDotsPerInchX(), screen->logicalDotsPerInchY());
 					streamer.writeOutBuffer ();
 					// Actually, this is only needed once, but where to put it...
-					RKGraphicsDeviceFrontendTransmitter::lwdscale = ((double) desktop->physicalDpiX()) / 96;   // taken from devX11.c
+					RKGraphicsDeviceFrontendTransmitter::lwdscale = ((double) screen->logicalDotsPerInchX()) / 96;   // taken from devX11.c
 				} else {
 					if (devnum) RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Received transmission of type %d for unknown device number %d. Skipping.", opcode, devnum+1);
 					sendDummyReply (opcode);
