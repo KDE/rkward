@@ -147,9 +147,10 @@ SEXP RKStructureGetter::resolvePromise (SEXP from) {
 			RK_DEBUG (RBACKEND, DL_DEBUG, "temporarily resolving unbound promise");
 
 			PROTECT (from);
-			SET_PRSEEN(from, 1);
+			//SET_PRSEEN(from, 1);  // NOTE: SET_PRSEEN was removed from Rinternals.h in R 4.2.0. Its only use is to prevent recursion, however.
+			                        //       Not setting it from here, only means, any recursion will be detected one level later.
 			ret = Rf_eval(PRCODE(from), PRENV(from));
-			SET_PRSEEN(from, 0);
+			//SET_PRSEEN(from, 0);
 			if (keep_evalled_promises) {
 				SET_PRVALUE(from, ret);
 				SET_PRENV(from, R_NilValue);

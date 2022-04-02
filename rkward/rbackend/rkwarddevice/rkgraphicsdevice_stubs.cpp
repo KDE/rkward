@@ -838,7 +838,7 @@ SEXP RKD_SetMask (SEXP mask, SEXP ref, pDevDesc dev) {
 		RKGraphicsDataStreamWriteGuard wguard;
 		WRITE_HEADER(RKDEndRecordMask, dev);
 #if R_VERSION >= R_Version(4,2,0)
-		RKD_OUT_STREAM << (qint8) R_GE_maskType(mask) == R_GE_luminanceMask ? 1 : 0;
+		RKD_OUT_STREAM << (qint8) (R_GE_maskType(mask) == R_GE_luminanceMask ? 1 : 0);
 #else
 		RKD_OUT_STREAM << (qint8) 0;
 #endif
