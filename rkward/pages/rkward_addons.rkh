@@ -8,9 +8,7 @@ In a nutshell:
 <ul>
 <li><strong>R packages</strong> offer a sheer incredible amount of data algorithms and tools. This functionality is (mostly) provided in the form of additional R functions that you can use
 in scripts, or in the interactive R console.</li>
-<li><strong>Kate add-ons</strong>: Kate is the engine behind RKWard's script editor. It comes with many add-ons features from various indentation scripts to elaborate support for
-git-projects, to name just two concepts. Many of these should come pre-installed with RKWard, but due to their sheer number, not all are activated by default. Additional scripts,
-color-schemes, etc. are available for download, separately.</li>
+<li><strong>Kate add-ons</strong>: Kate is the engine behind RKWard's script editor. It comes with powerful add-on feaures, many of which should come pre-installed with RKWard. However, due to their sheer number, not all are activated by default. It can further be extended with custom scripts, or color-schemes.</li>
 <li><strong>RKWard plugins</strong>: If you are looking for a graphical dialog to help you import/convert/analyse/visualize your data, such dialogs are mostly implemented as plugin-ins in
 RKWard. Many such plugins are available for download, separately.</li>
 </ul>
