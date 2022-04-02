@@ -546,7 +546,6 @@ static Rboolean RKD_NewFrameConfirm (pDevDesc dev) {
 	// Return value FALSE: Let R ask, instead
 }
 
-#if R_VERSION >= R_Version (2, 12, 0)
 void RKD_EventHelper (pDevDesc dev, int code) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	{
@@ -635,9 +634,7 @@ void RKD_onExit (pDevDesc dev) {
 	}
 	dev->gettingEvent = (Rboolean) false;
 }
-#endif
 
-#if R_VERSION >= R_Version (2, 14, 0)
 int RKD_HoldFlush (pDevDesc dev, int level) {
 	RK_TRACE(GRAPHICS_DEVICE);
 #ifdef __GNUC__
@@ -645,7 +642,6 @@ int RKD_HoldFlush (pDevDesc dev, int level) {
 #endif
 	return 0;
 }
-#endif
 
 #if R_VERSION >= R_Version (4, 1, 0)
 qint8 getGradientExtend(int Rextent) {
@@ -856,4 +852,31 @@ void RKD_ReleaseMask (SEXP ref, pDevDesc dev) {
 	releaseCachedResource(RKDMask, ref, dev);
 }
 
+#endif
+
+#if R_VERSION >= R_Version(4,2,0)
+SEXP RKD_DefineGroup(SEXP source, int op, SEXP destination, pDevDesc dev) {
+	return R_NilValue;
+}
+
+void RKD_UseGroup(SEXP ref, SEXP trans, pDevDesc dev) {
+}
+
+void RKD_ReleaseGroup(SEXP ref, pDevDesc dev) {
+}
+
+void doFillAndOrStroke(SEXP path, const pGEcontext g, pDevDesc dev, bool fill, bool stroke) {
+}
+
+void RKD_Stroke(SEXP path, const pGEcontext gc, pDevDesc dev) {
+	doFillAndOrStroke(path, gc, dev, false, true);
+}
+
+void RKD_Fill(SEXP path, int rule, const pGEcontext gc, pDevDesc dev) {
+	doFillAndOrStroke(path, gc, dev, true, false);
+}
+
+void RKD_FillStroke(SEXP path, int rule, const pGEcontext gc, pDevDesc dev) {
+	doFillAndOrStroke(path, gc, dev, true, true);
+}
 #endif
