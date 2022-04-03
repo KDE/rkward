@@ -780,7 +780,7 @@ SEXP RKD_SetClipPath (SEXP path, SEXP ref, pDevDesc dev) {
 #if R_VERSION >= R_Version(4, 2, 0)
 		RKD_OUT_STREAM << (qint8) mapFillRule(R_GE_clipPathFillRule(path));
 #else
-		RKD_OUT_STREAM << (qint8) EvenOddRule;
+		RKD_OUT_STREAM << (qint8) 0;  // NOTE: 0 == Qt::OddEvenFill
 #endif
 	}
 	{
