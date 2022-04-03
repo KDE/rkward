@@ -219,7 +219,7 @@ static void RKD_Create (double width, double height, pDevDesc dev, const char *t
 	}
 }
 
-static void RKD_Size (double *left, double *right, double *top, double *bottom, pDevDesc dev) {
+static void RKD_Size (double *left, double *right, double *bottom, double *top, pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
 // NOTE: This does *not* query the frontend for the current size. This is only done on request
 	*left = dev->left;
@@ -459,7 +459,7 @@ static void RKD_Mode (int mode, pDevDesc dev) {
 
 static void RKD_Raster (unsigned int *raster, int w, int h, double x, double y, double width, double height, double rot, Rboolean interpolate, const pGEcontext gc, pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
-	Q_UNUSED (gc);
+	Q_UNUSED(gc); // No idea what this is supposed to be good for. R's own cairo device ignores it.
 
 	RKGraphicsDataStreamWriteGuard wguard;
 	WRITE_HEADER (RKDRaster, dev);
@@ -546,7 +546,6 @@ static Rboolean RKD_NewFrameConfirm (pDevDesc dev) {
 	// Return value FALSE: Let R ask, instead
 }
 
-#if R_VERSION >= R_Version (2, 12, 0)
 void RKD_EventHelper (pDevDesc dev, int code) {
 	RK_TRACE(GRAPHICS_DEVICE);
 	{
@@ -635,9 +634,7 @@ void RKD_onExit (pDevDesc dev) {
 	}
 	dev->gettingEvent = (Rboolean) false;
 }
-#endif
 
-#if R_VERSION >= R_Version (2, 14, 0)
 int RKD_HoldFlush (pDevDesc dev, int level) {
 	RK_TRACE(GRAPHICS_DEVICE);
 #ifdef __GNUC__
@@ -645,7 +642,6 @@ int RKD_HoldFlush (pDevDesc dev, int level) {
 #endif
 	return 0;
 }
-#endif
 
 #if R_VERSION >= R_Version (4, 1, 0)
 qint8 getGradientExtend(int Rextent) {
@@ -782,13 +778,9 @@ SEXP RKD_SetClipPath (SEXP path, SEXP ref, pDevDesc dev) {
 		RKGraphicsDataStreamWriteGuard wguard;
 		WRITE_HEADER(RKDEndRecordClipPath, dev);
 #if R_VERSION >= R_Version(4, 2, 0)
-		if (R_GE_clipPathFillRule(path) == R_GE_nonZeroWindingRule) {
-			RKD_OUT_STREAM << (qint8) NonZeroWindingRule;
-		} else {
-			RKD_OUT_STREAM << (qint8) EvenOddRule;
-		}
+		RKD_OUT_STREAM << (qint8) mapFillRule(R_GE_clipPathFillRule(path));
 #else
-		RKD_OUT_STREAM << (qint8) EvenOddRule;
+		RKD_OUT_STREAM << (qint8) 0;  // NOTE: 0 == Qt::OddEvenFill
 #endif
 	}
 	{
@@ -848,7 +840,6 @@ SEXP RKD_SetMask (SEXP mask, SEXP ref, pDevDesc dev) {
 		RKD_IN_STREAM >> index;
 	}
 	return makeInt(index);
-	return R_NilValue;
 }
 
 void RKD_ReleaseMask (SEXP ref, pDevDesc dev) {
@@ -856,4 +847,114 @@ void RKD_ReleaseMask (SEXP ref, pDevDesc dev) {
 	releaseCachedResource(RKDMask, ref, dev);
 }
 
+#endif
+
+#if R_VERSION >= R_Version(4,2,0)
+SEXP RKD_DefineGroup(SEXP source, int op, SEXP destination, pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDDefineGroupBegin, dev);
+	}
+
+	// Play generator function for destination
+	int error;
+	if (destination != R_NilValue) {
+		SEXP dest_func = PROTECT(Rf_lang1(destination));
+		R_tryEval(dest_func, R_GlobalEnv, &error);
+		UNPROTECT(1);
+	}
+
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDDefineGroupStep2, dev);
+		RKD_OUT_STREAM << (qint8) mapCompositionModeEnum(op);
+	}
+
+	// Play generator function for source
+	SEXP src_func = PROTECT(Rf_lang1(source));
+	R_tryEval(src_func, R_GlobalEnv, &error);
+	UNPROTECT(1);
+
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDDefineGroupEnd, dev);
+	}
+	qint32 index = -1;
+	{
+		RKGraphicsDataStreamReadGuard rguard;
+		RKD_IN_STREAM >> index;
+	}
+	return makeInt(index);
+}
+
+void RKD_UseGroup(SEXP ref, SEXP trans, pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
+
+	// NOTE: chaching parameters before starting the write, in case they are ill-formed and produce errors
+	qint32 index = 0;
+	if (!Rf_isNull(ref)) index = INTEGER(ref)[0];
+	bool have_trans = (trans != R_NilValue);
+	double matrix[6];
+	if (have_trans) {
+		for (int i = 0; i < 6; ++i) matrix[i] = REAL(trans)[i];  // order in cairo terms: xx, xy, x0, yx, yy, y0
+	}
+
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDUseGroup, dev);
+		RKD_OUT_STREAM << index;
+		if (have_trans) {
+			RKD_OUT_STREAM << (qint8) 1;
+			for (int i = 0; i < 6; ++i) RKD_OUT_STREAM << matrix[i];
+		} else {
+			RKD_OUT_STREAM << (qint8) 0;
+		}
+	}
+}
+
+void RKD_ReleaseGroup(SEXP ref, pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
+	releaseCachedResource(RKDGroup, ref, dev);
+}
+
+void doFillAndOrStroke(SEXP path, const pGEcontext gc, pDevDesc dev, bool fill, int rule, bool stroke) {
+	RK_TRACE(GRAPHICS_DEVICE);
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDFillStrokePathBegin, dev);
+	}
+
+	// record the actual path
+	int error;
+	SEXP path_func = PROTECT(Rf_lang1(path));
+	R_tryEval(path_func, R_GlobalEnv, &error);
+	UNPROTECT(1);
+
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDFillStrokePathEnd, dev);
+		RKD_OUT_STREAM << (quint8) fill;
+		if (fill) {
+			RKD_OUT_STREAM << (qint8) mapFillRule(rule);
+			WRITE_FILL();
+		}
+		RKD_OUT_STREAM << (quint8) stroke;
+		if (stroke) {
+			WRITE_PEN();
+		}
+	}
+}
+
+void RKD_Stroke(SEXP path, const pGEcontext gc, pDevDesc dev) {
+	doFillAndOrStroke(path, gc, dev, false, 0, true);
+}
+
+void RKD_Fill(SEXP path, int rule, const pGEcontext gc, pDevDesc dev) {
+	doFillAndOrStroke(path, gc, dev, true, rule, false);
+}
+
+void RKD_FillStroke(SEXP path, int rule, const pGEcontext gc, pDevDesc dev) {
+	doFillAndOrStroke(path, gc, dev, true, rule, true);
+}
 #endif

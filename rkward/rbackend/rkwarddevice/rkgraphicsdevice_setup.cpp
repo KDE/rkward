@@ -95,7 +95,7 @@ void RKStartGraphicsDevice (double width, double height, double pointsize, const
 			                   // able to see our own devnum and call RKD_Create. Therefore, initialize
 			                   // devnum to 0, so as not to confuse the frontend
 			desc->id = id++;   // extra identifier to make sure, R and the frontend are really talking about the same device
-			                   // in case of potentially out-of-sync operations (notably RKDADjustSize)
+			                   // in case of potentially out-of-sync operations (notably RKDAdjustSize)
 			pGEDevDesc gdd = GEcreateDevDesc(dev);
 			gdd->displayList = R_NilValue;
 			GEaddDevice2(gdd, "RKGraphicsDevice");
@@ -170,15 +170,12 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 	dev->wantSymbolUTF8 = TRUE;
 	dev->useRotatedTextInContour = TRUE;
 
-#if R_VERSION >= R_Version (2, 14, 0)
 	dev->haveTransparency = 2;
 	dev->haveTransparentBg = 2; // FIXME. Do we really? Check.
 	dev->haveRaster = 2;
 	dev->haveCapture = 2;
 	dev->haveLocator = 2;
-#endif
 
-#if R_VERSION >= R_Version (2, 12, 0)
 	/*
 	* Mouse events
 	*/
@@ -191,7 +188,6 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 	// looking for events
 	dev->eventHelper = RKD_EventHelper;
 	dev->onExit = RKD_onExit;
-#endif
 
 	/*
 	* Device functions
@@ -208,31 +204,39 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 	dev->newPage = RKD_NewPage;
 	dev->polygon = RKD_Polygon;
 	dev->polyline = RKD_Polyline;
-#if R_VERSION >= R_Version (2, 12, 0)
 	dev->path = RKD_Path;
-#endif
 	dev->rect = RKD_Rect;
 	dev->size = RKD_Size;
 	// dev->onexit = RKD_OnExit; Called on user interrupts. NULL is OK.
-#if R_VERSION >= R_Version (2, 11, 0)
 	dev->raster = RKD_Raster;
 	dev->cap = RKD_Capture;
-#endif
 	dev->newFrameConfirm = RKD_NewFrameConfirm;
-
-#if R_VERSION >= R_Version (2, 14, 0)
 	dev->holdflush = RKD_HoldFlush;
-#endif
 
 #if R_VERSION >= R_Version (4, 1, 0)
+	// patterns and gradients
 	dev->setPattern = RKD_SetPattern;
 	dev->releasePattern = RKD_ReleasePattern;
+	// clipping paths
 	dev->setClipPath = RKD_SetClipPath;
 	dev->releaseClipPath = RKD_ReleaseClipPath;
+	// masks
 	dev->setMask = RKD_SetMask;
 	dev->releaseMask = RKD_ReleaseMask;
-	dev->deviceVersion = qMin(14, R_GE_version);
+	dev->deviceVersion = qMin(15, R_GE_version);
 	dev->deviceClip = TRUE; // for now
+#endif
+
+#if R_VERSION >= R_Version (4, 2, 0)
+	// groups
+	dev->defineGroup = RKD_DefineGroup;
+	dev->useGroup = RKD_UseGroup;
+	dev->releaseGroup = RKD_ReleaseGroup;
+
+	// stroked / filled paths
+	dev->stroke = RKD_Stroke;
+	dev->fill = RKD_Fill;
+	dev->fillStroke = RKD_FillStroke;
 #endif
 	return true;
 }

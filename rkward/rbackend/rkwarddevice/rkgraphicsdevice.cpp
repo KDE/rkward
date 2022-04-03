@@ -285,8 +285,7 @@ QPainterPath RKGraphicsDevice::endRecordPath(int fillrule) {
 	RK_TRACE(GRAPHICS_DEVICE);
 
 	QPainterPath ret = recorded_path;
-	if (fillrule == NonZeroWindingRule) ret.setFillRule(Qt::WindingFill);
-	else ret.setFillRule(Qt::OddEvenFill);
+	ret.setFillRule((Qt::FillRule) fillrule);
 
 	RK_ASSERT(!stashed_paths.isEmpty());
 	recorded_path = stashed_paths.takeLast();
@@ -354,6 +353,54 @@ bool RKGraphicsDevice::setMask(int index) {
 	if (index > 0 && cached_masks.contains(index)) set = index;
 	current_mask = set;
 	return set == index;
+}
+
+void RKGraphicsDevice::startRecordGroup(){
+	RK_TRACE (GRAPHICS_DEVICE);
+
+	pushContext(area.width(), area.height(), 0, 0);
+}
+
+void RKGraphicsDevice::recordGroupStage2(int compositing_op) {
+	RK_TRACE (GRAPHICS_DEVICE);
+	painter.setCompositionMode((QPainter::CompositionMode) compositing_op);
+}
+
+int RKGraphicsDevice::endRecordGroup() {
+	RK_TRACE (GRAPHICS_DEVICE);
+	static int id = 0;
+	auto c = popContext();
+	cached_groups.insert(++id, c.surface);
+	return id;
+}
+
+void RKGraphicsDevice::destroyGroup(int index) {
+	RK_TRACE (GRAPHICS_DEVICE);
+	if (index < 0) cached_groups.clear();
+	else cached_groups.remove(index);
+}
+
+void RKGraphicsDevice::useGroup(int index, const QTransform& matrix) {
+	RK_TRACE (GRAPHICS_DEVICE);
+
+	if (current_mask) initMaskedDraw();
+	painter.save();
+	painter.setTransform(matrix);
+	painter.drawImage(0, 0, cached_groups.value(index));
+	painter.restore();
+	if (current_mask) commitMaskedDraw();
+	triggerUpdate ();
+}
+
+void RKGraphicsDevice::fillStrokePath(const QPainterPath& path, const QBrush& brush, const QPen& pen) {
+	RK_TRACE (GRAPHICS_DEVICE);
+
+	if (current_mask) initMaskedDraw();
+	painter.setBrush(brush);
+	painter.setPen(pen);
+	painter.drawPath(path);
+	if (current_mask) commitMaskedDraw();
+	triggerUpdate ();
 }
 
 void RKGraphicsDevice::setClip (const QRectF& new_clip) {
@@ -434,7 +481,7 @@ void RKGraphicsDevice::text(double x, double y, const QString& text, double rot,
 	if (recording_path) {
 		QPainterPath sub;
 		QSizeF size = strSize(text, font);
-		sub.addText(-(hadj * size.width()), y, font, text);
+		sub.addText(-(hadj * size.width()), 0, font, text);
 		QMatrix trans;
 		trans.translate(x, y);
 		trans.rotate(-rot);

@@ -70,11 +70,6 @@ enum RKDGradientExtend {
 	GradientExtendRepeat
 };
 
-enum RKDFillRule {
-	NonZeroWindingRule,
-	EvenOddRule
-};
-
 enum RKDOpcodes {
 	// NOTE: the only point of the assigned int values is to ease debugging in case of trouble
 	// Asynchronous operations
@@ -99,6 +94,11 @@ enum RKDOpcodes {
 	RKDStartRecordTilingPattern,      // part of setPattern in R
 	RKDStartRecordClipPath,
 	RKDStartRecordMask,    // 20
+	RKDFillStrokePathBegin,
+	RKDFillStrokePathEnd,
+	RKDDefineGroupBegin,
+	RKDDefineGroupStep2,
+	RKDUseGroup,           // 25
 
 	// Synchronous operations
 	RKDFetchNextEvent      = 100,
@@ -115,7 +115,8 @@ enum RKDOpcodes {
 	RKDEndRecordClipPath,
 	RKDSetMask,
 	RKDEndRecordMask,
-	RKDClose,
+	RKDDefineGroupEnd,
+	RKDClose,             // 115
 
 	// Protocol operations
 	RKDCancel              = 200
@@ -184,7 +185,7 @@ static inline quint8 mapLineJoinStyle(quint8 from) {
 }
 
 #if RKD_RGE_VERSION >= 15
-static inline int mapCompostionModeEnum(int from) {
+static inline int mapCompositionModeEnum(int from) {
 	if (RKD_IN_FRONTEND) return from;
 	switch(from) {
 		MapEnum(R_GE_compositeClear, 2, QPainter::CompositionMode_Clear);
@@ -215,6 +216,15 @@ static inline int mapCompostionModeEnum(int from) {
 // MapEnum(R_GE_compositeSaturate, xx, yy)
 	}
 	MapDefault(Rf_warning("Unsupported enumeration value %d", from), 0, QPainter::CompositionMode_SourceOver);
+}
+
+static inline quint8 mapFillRule(quint8 from) {
+	if (RKD_IN_FRONTEND) return from;
+	switch(from) {
+		MapEnum(R_GE_evenOddRule, 0, Qt::OddEvenFill);
+		MapEnum(R_GE_nonZeroWindingRule, 1, Qt::WindingFill);
+	}
+	MapDefault({}, 0x00, Qt::OddEvenFill);
 }
 #endif
 

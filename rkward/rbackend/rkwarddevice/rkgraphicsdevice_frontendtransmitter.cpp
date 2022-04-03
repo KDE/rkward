@@ -387,6 +387,7 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 				if (type == RKDPattern) device->destroyPattern(index);
 				else if (type == RKDClipPath) device->destroyCachedPath(index);
 				else if (type == RKDMask) device->destroyMask(index);
+				else if (type == RKDGroup) device->destroyGroup(index);
 				else RK_ASSERT(false);
 			}
 		} else if (opcode == RKDStartRecordClipPath) {
@@ -394,7 +395,7 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 		} else if (opcode == RKDEndRecordClipPath) {
 			qint8 fillrule;
 			streamer.instream >> fillrule;
-			QPainterPath p = device->endRecordPath(fillrule);
+			QPainterPath p = device->endRecordPath(mapFillRule(fillrule));
 			qint32 index = device->cachePath(p);
 			device->setClipToCachedPath(index);
 			streamer.outstream << (qint32) index;
@@ -415,6 +416,49 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			device->setMask(index);
 			streamer.outstream << (qint32) index;
 			streamer.writeOutBuffer();
+		} else if (opcode == RKDFillStrokePathBegin) {
+			device->startRecordPath();
+		} else if (opcode == RKDFillStrokePathEnd) {
+			quint8 fill, stroke;
+			qint8 fillrule = Qt::OddEvenFill;
+			QBrush brush;
+			QPen pen(Qt::NoPen);
+			streamer.instream >> fill;
+			if (fill) {
+				streamer.instream >> fillrule;
+				fillrule = mapFillRule(fillrule);
+				brush = readBrush(streamer.instream, device);
+			}
+			streamer.instream >> stroke;
+			if (stroke) {
+				pen = readPen(streamer.instream);
+			}
+			QPainterPath p = device->endRecordPath(fillrule);
+			device->fillStrokePath(p, brush, pen);
+		} else if (opcode == RKDDefineGroupBegin) {
+			device->startRecordGroup();
+		} else if (opcode == RKDDefineGroupStep2) {
+			qint8 compositing_operator;
+			streamer.instream >> compositing_operator;
+			device->recordGroupStage2(compositing_operator);
+		} else if (opcode == RKDDefineGroupEnd) {
+			qint32 index = device->endRecordGroup();
+			streamer.outstream << index;
+			streamer.writeOutBuffer();
+		} else if (opcode == RKDUseGroup) {
+			qint32 index;
+			qint8 have_trans;
+			streamer.instream >> index;
+			streamer.instream >> have_trans;
+			QTransform matrix;
+			if (have_trans) {
+				double m[6];
+				for (int i = 0; i < 6; ++i) streamer.instream >> m[i];
+				// order in cairo terms: xx, xy, x0, yx, yy, y0
+				//                       11, 21, 31, 12, 22, 32
+				matrix = QTransform(m[0], m[3], m[1], m[4], m[2], m[5]);
+			}
+			device->useGroup(index, matrix);
 		} else if (opcode == RKDCapture) {
 			QImage image = device->capture ();
 			quint32 w = image.width ();
