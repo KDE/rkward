@@ -202,6 +202,8 @@ handleHistoricalSubstackRequest(). Exactly which requests get handled by which f
 	RCommandProxy *pending_priority_command;
 	QMutex priority_command_mutex;
 	int r_version;
+
+	bool graphicsEngineMismatchMessage(int compiled_version, int runtime_version);
 private:
 	void clearPendingInterrupt ();
 protected:

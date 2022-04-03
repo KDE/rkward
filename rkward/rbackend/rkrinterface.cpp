@@ -2,7 +2,7 @@
                           rkrinterface.cpp  -  description
                              -------------------
     begin                : Fri Nov 1 2002
-    copyright            : (C) 2002-2020 by Thomas Friedrichsmeier
+    copyright            : (C) 2002-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -802,7 +802,7 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 		}
 
 		bool synchronous = request->synchronous || (button_count > 1);
-		KMessageBox::createKMessageBox (dialog, button_box, button_count < 2 ? QMessageBox::Information : QMessageBox::Question, message, QStringList (), QString (), 0, KMessageBox::Notify | KMessageBox::NoExec);
+		KMessageBox::createKMessageBox (dialog, button_box, button_count < 2 ? QMessageBox::Information : QMessageBox::Question, message, QStringList (), QString (), 0, KMessageBox::Notify | KMessageBox::NoExec | KMessageBox::AllowLink);
 		dialog->setWindowTitle (caption);
 
 		if (!synchronous) {

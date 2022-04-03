@@ -24,6 +24,7 @@
  ***************************************************************************/
 
 #include "../rkrsupport.h"
+#include "../rkrbackend.h"
 
 #ifdef TRUE
 #	undef TRUE
@@ -75,7 +76,10 @@ void RKStartGraphicsDevice (double width, double height, double pointsize, const
 	desc->width = width;
 	desc->height = height;
 
-	R_GE_checkVersionOrDie (R_GE_version);
+	if (R_GE_getVersion() == R_GE_version) {
+		RKRBackend::this_pointer->graphicsEngineMismatchMessage(R_GE_version, R_GE_getVersion());
+		Rf_error("Graphics version mismatch");
+	}
 	R_CheckDeviceAvailable ();
 	pDevDesc dev;
 	BEGIN_SUSPEND_INTERRUPTS {
@@ -183,6 +187,7 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 	dev->canGenMouseMove = TRUE;
 	dev->canGenMouseUp = TRUE; 
 	dev->canGenKeybd = TRUE;
+	dev->canGenIdle = TRUE;
 
 	// gettingEvent; This is set while getGraphicsEvent is actively
 	// looking for events

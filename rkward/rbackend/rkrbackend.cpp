@@ -1809,3 +1809,11 @@ bool RKRBackend::doMSleep (int msecs) {
 	return true;
 }
 
+bool RKRBackend::graphicsEngineMismatchMessage(int compiled_version, int runtime_version) {
+	static bool shown = false;
+	if (!shown) {
+		shown = true;
+		doDialogHelper(i18n("Graphics version mismatch"), i18n("R Graphics Engine version has changed (from %1 to %2).<br>This change requires a recompilation.<br><a href=\"rkward://page/rkward_incompatible_version\">Additional information</a>", compiled_version, runtime_version), i18n("Ok"), QString(), QString(), QString(), true);
+	}
+	return false;
+}

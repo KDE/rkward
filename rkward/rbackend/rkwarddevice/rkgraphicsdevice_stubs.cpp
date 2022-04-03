@@ -592,8 +592,10 @@ void RKD_EventHelper (pDevDesc dev, int code) {
 		Rf_error ("Interrupted by user");
 		return;  // not reached
 	}
-	if (event_code == RKDNothing) return;
-	else if (event_code == RKDKeyPress) {
+	if (event_code == RKDNothing) {
+		if (Rf_doesIdle(dev)) Rf_doIdle(dev);
+		return;
+	} else if (event_code == RKDKeyPress) {
 		if (modifiers - (modifiers & Qt::ShiftModifier)) {  // any other modifier than Shift, alone. NOTE: devX11.c and devWindows.c handle Ctrl, only as of R 3.0.0
 			QString mod_text;
 			if (modifiers & Qt::ControlModifier) mod_text.append ("ctrl-");
