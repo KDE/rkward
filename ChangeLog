@@ -1,7 +1,4 @@
-TODOS for autotests:
-  - Check and update the standards files
-  - Use options(warn=1), in order to get warnings into the test?
-
+--- Version 0.7.3 - UNRELEASED
 - Fix compilation with the upcoming R 4.2.0
 - Support for switching color schemes, including basic support for dark mode
 - Fix crash in dev.capture()
@@ -13,7 +10,7 @@ TODOS for autotests:
 - Implement R 4.1 graphics functions: gradients, patterns, clip paths, masks
 - Add icons to settings dialog for quick visual orientation
 - Merge ktexteditor (script) settings into the main settings dialog
-- Internal: Code cleanup around settings
+- Internal: Code cleanup around settings, and in many other places
 - Output file handling has been reworked, entirely
 - Fixed: Cursor navigation in completion list
 - rkwardtests library gains helper functions for checking for expected errors
@@ -24,9 +21,6 @@ TODOS for autotests:
 - (Try to) automatically create custom R library locations, if they do not exist
 - Workaround for invalid EDITOR variable set by Kate Terminal plugin (also fixed in recent kate)
 - kate plugin related actions are now active whenever a script window is active (not only the corresponding tool window)
-  - TODO: support kate plugins in detached windows
-
---- Version 0.7.2b - UNRELEASED
 - Fixed: Crash when attempting to use new graphics features in R 4.1.0 (esp. plotting using ggplot2)
 
 --- Version 0.7.2 - Oct-16-2020

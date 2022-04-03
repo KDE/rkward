@@ -76,7 +76,7 @@ void RKStartGraphicsDevice (double width, double height, double pointsize, const
 	desc->width = width;
 	desc->height = height;
 
-	if (R_GE_getVersion() == R_GE_version) {
+	if (R_GE_getVersion() != R_GE_version) {
 		RKRBackend::this_pointer->graphicsEngineMismatchMessage(R_GE_version, R_GE_getVersion());
 		Rf_error("Graphics version mismatch");
 	}
