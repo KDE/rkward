@@ -394,7 +394,7 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 		} else if (opcode == RKDEndRecordClipPath) {
 			qint8 fillrule;
 			streamer.instream >> fillrule;
-			QPainterPath p = device->endRecordPath(fillrule);
+			QPainterPath p = device->endRecordPath(mapFillRule(fillrule));
 			qint32 index = device->cachePath(p);
 			device->setClipToCachedPath(index);
 			streamer.outstream << (qint32) index;
@@ -415,6 +415,25 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			device->setMask(index);
 			streamer.outstream << (qint32) index;
 			streamer.writeOutBuffer();
+		} else if (opcode == RKDFillStrokePathBegin) {
+			device->startRecordPath();
+		} else if (opcode == RKDFillStrokePathEnd) {
+			quint8 fill, stroke;
+			qint8 fillrule = Qt::OddEvenFill;
+			QBrush brush;
+			QPen pen(Qt::NoPen);
+			streamer.instream >> fill;
+			if (fill) {
+				streamer.instream >> fillrule;
+				fillrule = mapFillRule(fillrule);
+				brush = readBrush(streamer.instream, device);
+			}
+			streamer.instream >> stroke;
+			if (stroke) {
+				pen = readPen(streamer.instream);
+			}
+			QPainterPath p = device->endRecordPath(fillrule);
+			device->fillStrokePath(p, brush, pen);
 		} else if (opcode == RKDCapture) {
 			QImage image = device->capture ();
 			quint32 w = image.width ();

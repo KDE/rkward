@@ -459,7 +459,7 @@ static void RKD_Mode (int mode, pDevDesc dev) {
 
 static void RKD_Raster (unsigned int *raster, int w, int h, double x, double y, double width, double height, double rot, Rboolean interpolate, const pGEcontext gc, pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
-	Q_UNUSED (gc);
+	Q_UNUSED(gc); // No idea what this is supposed to be good for. R's own cairo device ignores it.
 
 	RKGraphicsDataStreamWriteGuard wguard;
 	WRITE_HEADER (RKDRaster, dev);
@@ -778,11 +778,7 @@ SEXP RKD_SetClipPath (SEXP path, SEXP ref, pDevDesc dev) {
 		RKGraphicsDataStreamWriteGuard wguard;
 		WRITE_HEADER(RKDEndRecordClipPath, dev);
 #if R_VERSION >= R_Version(4, 2, 0)
-		if (R_GE_clipPathFillRule(path) == R_GE_nonZeroWindingRule) {
-			RKD_OUT_STREAM << (qint8) NonZeroWindingRule;
-		} else {
-			RKD_OUT_STREAM << (qint8) EvenOddRule;
-		}
+		RKD_OUT_STREAM << (qint8) mapFillRule(R_GE_clipPathFillRule(path));
 #else
 		RKD_OUT_STREAM << (qint8) EvenOddRule;
 #endif
@@ -865,18 +861,43 @@ void RKD_UseGroup(SEXP ref, SEXP trans, pDevDesc dev) {
 void RKD_ReleaseGroup(SEXP ref, pDevDesc dev) {
 }
 
-void doFillAndOrStroke(SEXP path, const pGEcontext g, pDevDesc dev, bool fill, bool stroke) {
+void doFillAndOrStroke(SEXP path, const pGEcontext gc, pDevDesc dev, bool fill, int rule, bool stroke) {
+	RK_TRACE(GRAPHICS_DEVICE);
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDFillStrokePathBegin, dev);
+	}
+
+	// record the actual path
+	int error;
+	SEXP path_func = PROTECT(Rf_lang1(path));
+	R_tryEval(path_func, R_GlobalEnv, &error);
+	UNPROTECT(1);
+
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDFillStrokePathEnd, dev);
+		RKD_OUT_STREAM << (quint8) fill;
+		if (fill) {
+			RKD_OUT_STREAM << (qint8) mapFillRule(rule);
+			WRITE_FILL();
+		}
+		RKD_OUT_STREAM << (quint8) stroke;
+		if (stroke) {
+			WRITE_PEN();
+		}
+	}
 }
 
 void RKD_Stroke(SEXP path, const pGEcontext gc, pDevDesc dev) {
-	doFillAndOrStroke(path, gc, dev, false, true);
+	doFillAndOrStroke(path, gc, dev, false, 0, true);
 }
 
 void RKD_Fill(SEXP path, int rule, const pGEcontext gc, pDevDesc dev) {
-	doFillAndOrStroke(path, gc, dev, true, false);
+	doFillAndOrStroke(path, gc, dev, true, rule, false);
 }
 
 void RKD_FillStroke(SEXP path, int rule, const pGEcontext gc, pDevDesc dev) {
-	doFillAndOrStroke(path, gc, dev, true, true);
+	doFillAndOrStroke(path, gc, dev, true, rule, true);
 }
 #endif

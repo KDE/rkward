@@ -104,12 +104,12 @@ public:
 	int cachePath(QPainterPath &path);
 	void destroyCachedPath(int index);
 	bool setClipToCachedPath(int index);
-	void forceSync();
 	void startRecordMask();
 	QImage endRecordMask(bool luminance);
 	int registerMask(const QImage &mask);
 	void destroyMask(int index);
 	bool setMask(int index);
+	void fillStrokePath(const QPainterPath &path, const QBrush &brush, const QPen &pen);
 public slots:
 	void stopInteraction ();
 signals:

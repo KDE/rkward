@@ -70,11 +70,6 @@ enum RKDGradientExtend {
 	GradientExtendRepeat
 };
 
-enum RKDFillRule {
-	NonZeroWindingRule,
-	EvenOddRule
-};
-
 enum RKDOpcodes {
 	// NOTE: the only point of the assigned int values is to ease debugging in case of trouble
 	// Asynchronous operations
@@ -99,6 +94,8 @@ enum RKDOpcodes {
 	RKDStartRecordTilingPattern,      // part of setPattern in R
 	RKDStartRecordClipPath,
 	RKDStartRecordMask,    // 20
+	RKDFillStrokePathBegin,
+	RKDFillStrokePathEnd,
 
 	// Synchronous operations
 	RKDFetchNextEvent      = 100,
@@ -215,6 +212,15 @@ static inline int mapCompostionModeEnum(int from) {
 // MapEnum(R_GE_compositeSaturate, xx, yy)
 	}
 	MapDefault(Rf_warning("Unsupported enumeration value %d", from), 0, QPainter::CompositionMode_SourceOver);
+}
+
+static inline quint8 mapFillRule(quint8 from) {
+	if (RKD_IN_FRONTEND) return from;
+	switch(from) {
+		MapEnum(R_GE_evenOddRule, 0, Qt::OddEvenFill);
+		MapEnum(R_GE_nonZeroWindingRule, 1, Qt::WindingFill);
+	}
+	MapDefault({}, 0x00, Qt::OddEvenFill);
 }
 #endif
 
