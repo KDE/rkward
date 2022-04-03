@@ -219,7 +219,7 @@ static void RKD_Create (double width, double height, pDevDesc dev, const char *t
 	}
 }
 
-static void RKD_Size (double *left, double *right, double *top, double *bottom, pDevDesc dev) {
+static void RKD_Size (double *left, double *right, double *bottom, double *top, pDevDesc dev) {
 	RK_TRACE(GRAPHICS_DEVICE);
 // NOTE: This does *not* query the frontend for the current size. This is only done on request
 	*left = dev->left;

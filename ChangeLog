@@ -9,7 +9,7 @@ TODOS for autotests:
 - Space-saving placement of main window status bar, and display more tips in it
 - Fixed: Intial graphics window size would be (mostly) ignored
 - Fix some buglets around closing on-screen devices
-- Impelment R 4.2 graphics functions: stroked and filled paths
+- Impelment R 4.2 graphics functions: stroked and filled paths, groups, lumincance masks
 - Implement R 4.1 graphics functions: gradients, patterns, clip paths, masks
 - Add icons to settings dialog for quick visual orientation
 - Merge ktexteditor (script) settings into the main settings dialog

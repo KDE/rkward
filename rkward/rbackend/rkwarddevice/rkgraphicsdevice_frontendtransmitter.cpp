@@ -456,7 +456,6 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 				for (int i = 0; i < 6; ++i) streamer.instream >> m[i];
 				// order in cairo terms: xx, xy, x0, yx, yy, y0
 				//                       11, 21, 31, 12, 22, 32
-				// TODO: somehow this still differs from the result in the Cairo device
 				matrix = QTransform(m[0], m[3], m[1], m[4], m[2], m[5]);
 			}
 			device->useGroup(index, matrix);
