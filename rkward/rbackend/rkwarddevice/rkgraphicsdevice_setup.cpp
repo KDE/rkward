@@ -95,7 +95,7 @@ void RKStartGraphicsDevice (double width, double height, double pointsize, const
 			                   // able to see our own devnum and call RKD_Create. Therefore, initialize
 			                   // devnum to 0, so as not to confuse the frontend
 			desc->id = id++;   // extra identifier to make sure, R and the frontend are really talking about the same device
-			                   // in case of potentially out-of-sync operations (notably RKDADjustSize)
+			                   // in case of potentially out-of-sync operations (notably RKDAdjustSize)
 			pGEDevDesc gdd = GEcreateDevDesc(dev);
 			gdd->displayList = R_NilValue;
 			GEaddDevice2(gdd, "RKGraphicsDevice");

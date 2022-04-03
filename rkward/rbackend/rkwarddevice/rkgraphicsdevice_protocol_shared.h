@@ -96,6 +96,9 @@ enum RKDOpcodes {
 	RKDStartRecordMask,    // 20
 	RKDFillStrokePathBegin,
 	RKDFillStrokePathEnd,
+	RKDDefineGroupBegin,
+	RKDDefineGroupStep2,
+	RKDUseGroup,           // 25
 
 	// Synchronous operations
 	RKDFetchNextEvent      = 100,
@@ -112,7 +115,8 @@ enum RKDOpcodes {
 	RKDEndRecordClipPath,
 	RKDSetMask,
 	RKDEndRecordMask,
-	RKDClose,
+	RKDDefineGroupEnd,
+	RKDClose,             // 115
 
 	// Protocol operations
 	RKDCancel              = 200
@@ -181,7 +185,7 @@ static inline quint8 mapLineJoinStyle(quint8 from) {
 }
 
 #if RKD_RGE_VERSION >= 15
-static inline int mapCompostionModeEnum(int from) {
+static inline int mapCompositionModeEnum(int from) {
 	if (RKD_IN_FRONTEND) return from;
 	switch(from) {
 		MapEnum(R_GE_compositeClear, 2, QPainter::CompositionMode_Clear);

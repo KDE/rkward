@@ -355,6 +355,43 @@ bool RKGraphicsDevice::setMask(int index) {
 	return set == index;
 }
 
+void RKGraphicsDevice::startRecordGroup(){
+	RK_TRACE (GRAPHICS_DEVICE);
+
+	pushContext(area.width(), area.height(), 0, 0);
+}
+
+void RKGraphicsDevice::recordGroupStage2(int compositing_op) {
+	RK_TRACE (GRAPHICS_DEVICE);
+	painter.setCompositionMode((QPainter::CompositionMode) compositing_op);
+}
+
+int RKGraphicsDevice::endRecordGroup() {
+	RK_TRACE (GRAPHICS_DEVICE);
+	static int id = 0;
+	auto c = popContext();
+	cached_groups.insert(++id, c.surface);
+	return id;
+}
+
+void RKGraphicsDevice::destroyGroup(int index) {
+	RK_TRACE (GRAPHICS_DEVICE);
+	if (index < 0) cached_groups.clear();
+	else cached_groups.remove(index);
+}
+
+void RKGraphicsDevice::useGroup(int index, const QTransform& matrix) {
+	RK_TRACE (GRAPHICS_DEVICE);
+
+	if (current_mask) initMaskedDraw();
+	painter.save();
+	painter.setTransform(matrix);
+	painter.drawImage(0, 0, cached_groups.value(index));
+	painter.restore();
+	if (current_mask) commitMaskedDraw();
+	triggerUpdate ();
+}
+
 void RKGraphicsDevice::fillStrokePath(const QPainterPath& path, const QBrush& brush, const QPen& pen) {
 	RK_TRACE (GRAPHICS_DEVICE);
 

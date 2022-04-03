@@ -387,6 +387,7 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 				if (type == RKDPattern) device->destroyPattern(index);
 				else if (type == RKDClipPath) device->destroyCachedPath(index);
 				else if (type == RKDMask) device->destroyMask(index);
+				else if (type == RKDGroup) device->destroyGroup(index);
 				else RK_ASSERT(false);
 			}
 		} else if (opcode == RKDStartRecordClipPath) {
@@ -434,6 +435,31 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			}
 			QPainterPath p = device->endRecordPath(fillrule);
 			device->fillStrokePath(p, brush, pen);
+		} else if (opcode == RKDDefineGroupBegin) {
+			device->startRecordGroup();
+		} else if (opcode == RKDDefineGroupStep2) {
+			qint8 compositing_operator;
+			streamer.instream >> compositing_operator;
+			device->recordGroupStage2(compositing_operator);
+		} else if (opcode == RKDDefineGroupEnd) {
+			qint32 index = device->endRecordGroup();
+			streamer.outstream << index;
+			streamer.writeOutBuffer();
+		} else if (opcode == RKDUseGroup) {
+			qint32 index;
+			qint8 have_trans;
+			streamer.instream >> index;
+			streamer.instream >> have_trans;
+			QTransform matrix;
+			if (have_trans) {
+				double m[6];
+				for (int i = 0; i < 6; ++i) streamer.instream >> m[i];
+				// order in cairo terms: xx, xy, x0, yx, yy, y0
+				//                       11, 21, 31, 12, 22, 32
+				// TODO: somehow this still differs from the result in the Cairo device
+				matrix = QTransform(m[0], m[3], m[1], m[4], m[2], m[5]);
+			}
+			device->useGroup(index, matrix);
 		} else if (opcode == RKDCapture) {
 			QImage image = device->capture ();
 			quint32 w = image.width ();

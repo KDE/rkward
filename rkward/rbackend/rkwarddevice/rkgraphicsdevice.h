@@ -110,6 +110,11 @@ public:
 	void destroyMask(int index);
 	bool setMask(int index);
 	void fillStrokePath(const QPainterPath &path, const QBrush &brush, const QPen &pen);
+	void startRecordGroup();
+	void recordGroupStage2(int compositing_op);
+	int endRecordGroup();
+	void useGroup(int index, const QTransform &matrix);
+	void destroyGroup(int index);
 public slots:
 	void stopInteraction ();
 signals:
@@ -140,6 +145,7 @@ private:
 	QHash<int, QBrush> patterns;
 	QHash<int, QPainterPath> cached_paths;
 	QHash<int, QImage> cached_masks;
+	QHash<int, QImage> cached_groups;
 	// NOTE on path recording: In principle, we could really do _all_ painting on QPainterPath, but in regular operation stroke and fill right away.
 	// However, that is noticably slower.
 	QPainterPath recorded_path;

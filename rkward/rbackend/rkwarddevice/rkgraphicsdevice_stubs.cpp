@@ -840,7 +840,6 @@ SEXP RKD_SetMask (SEXP mask, SEXP ref, pDevDesc dev) {
 		RKD_IN_STREAM >> index;
 	}
 	return makeInt(index);
-	return R_NilValue;
 }
 
 void RKD_ReleaseMask (SEXP ref, pDevDesc dev) {
@@ -852,13 +851,71 @@ void RKD_ReleaseMask (SEXP ref, pDevDesc dev) {
 
 #if R_VERSION >= R_Version(4,2,0)
 SEXP RKD_DefineGroup(SEXP source, int op, SEXP destination, pDevDesc dev) {
-	return R_NilValue;
+	RK_TRACE(GRAPHICS_DEVICE);
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDDefineGroupBegin, dev);
+	}
+
+	// Play generator function for destination
+	int error;
+	if (destination != R_NilValue) {
+		SEXP dest_func = PROTECT(Rf_lang1(destination));
+		R_tryEval(dest_func, R_GlobalEnv, &error);
+		UNPROTECT(1);
+	}
+
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDDefineGroupStep2, dev);
+		RKD_OUT_STREAM << (qint8) mapCompositionModeEnum(op);
+	}
+
+	// Play generator function for source
+	SEXP src_func = PROTECT(Rf_lang1(source));
+	R_tryEval(src_func, R_GlobalEnv, &error);
+	UNPROTECT(1);
+
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDDefineGroupEnd, dev);
+	}
+	qint32 index = -1;
+	{
+		RKGraphicsDataStreamReadGuard rguard;
+		RKD_IN_STREAM >> index;
+	}
+	return makeInt(index);
 }
 
 void RKD_UseGroup(SEXP ref, SEXP trans, pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
+
+	// NOTE: chaching parameters before starting the write, in case they are ill-formed and produce errors
+	qint32 index = 0;
+	if (!Rf_isNull(ref)) index = INTEGER(ref)[0];
+	bool have_trans = (trans != R_NilValue);
+	double matrix[6];
+	if (have_trans) {
+		for (int i = 0; i < 6; ++i) matrix[i] = REAL(trans)[i];  // order in cairo terms: xx, xy, x0, yx, yy, y0
+	}
+
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDUseGroup, dev);
+		RKD_OUT_STREAM << index;
+		if (have_trans) {
+			RKD_OUT_STREAM << (qint8) 1;
+			for (int i = 0; i < 6; ++i) RKD_OUT_STREAM << matrix[i];
+		} else {
+			RKD_OUT_STREAM << (qint8) 0;
+		}
+	}
 }
 
 void RKD_ReleaseGroup(SEXP ref, pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
+	releaseCachedResource(RKDGroup, ref, dev);
 }
 
 void doFillAndOrStroke(SEXP path, const pGEcontext gc, pDevDesc dev, bool fill, int rule, bool stroke) {
