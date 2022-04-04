@@ -44,7 +44,7 @@ public:
 		ChooseFile,
 		EditFiles,
 		ReadLine,      // 5
-		CommandOut,
+		CommandOut,                  /**< Request the next command, and notify about the result of the previus. TODO split. */
 		Started,
 		EvalRequest,
 		CallbackRequest,

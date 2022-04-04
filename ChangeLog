@@ -1,4 +1,5 @@
 --- Version 0.7.3 - UNRELEASED
+- "Spontaneous" output, such as from running examples in the enhanced help system in R 4.2.0, is shown in the R Console
 - Fix compilation with the upcoming R 4.2.0
 - Support for switching color schemes, including basic support for dark mode
 - Fix crash in dev.capture()

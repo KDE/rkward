@@ -450,7 +450,8 @@ void RInterface::flushOutput (bool forced) {
 
 	foreach (ROutput *output, list) {
 		if (all_current_commands.isEmpty ()) {
-			RK_DEBUG (RBACKEND, DL_WARNING, "output without receiver'%s'", qPrintable (output->output));
+			RK_DEBUG (RBACKEND, DL_DEBUG, "output without receiver'%s'", qPrintable (output->output));
+			RKConsole::mainConsole()->insertSpontaneousROutput(output);
 			delete output;
 			continue;	// to delete the other output pointers, too
 		} else {

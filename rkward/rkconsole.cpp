@@ -2,7 +2,7 @@
                           rkconsole  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004-2020 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -541,10 +541,17 @@ void RKConsole::rCommandDone (RCommand *command) {
 	tryNextInBuffer ();
 }
 
-void RKConsole::newOutput (RCommand *, ROutput *output) {
+void RKConsole::newOutput (RCommand *command, ROutput *output) {
 	RK_TRACE (APP);
 
-	int start_line = doc->lines () -1;
+	int first_line = doc->lines () -1;
+	QString popped_line;
+	if (!command) {
+		// spontanteous R output, to be inserted _above_ the current command
+		// as a shortcut, we pop the last line, and reinsert in, later
+		popped_line = doc->line(doc->lines() - 1);
+		doc->removeLine(doc->lines() - 1);
+	}
 
 	// split by and handle carriage returns
 	const QString outstr = output->output;
@@ -567,11 +574,11 @@ void RKConsole::newOutput (RCommand *, ROutput *output) {
 	if (start_pos <= end_pos) doc->insertText (doc->documentEnd (), outstr.mid (start_pos, end_pos - start_pos + 1));
 
 	int end_line = doc->lines () -1;
-	if (output->type != ROutput::Output) {
+	if (output->type != ROutput::Output || (!command)) {
 		KTextEditor::MarkInterface *markiface = qobject_cast<KTextEditor::MarkInterface*> (doc);
 		RK_ASSERT (markiface);
-		for (int line = start_line; line < end_line; ++line) {
-			markiface->addMark (line, KTextEditor::MarkInterface::BreakpointActive);
+		for (int line = first_line; line < end_line; ++line) {
+			markiface->addMark (line, command ? KTextEditor::MarkInterface::BreakpointActive : KTextEditor::MarkInterface::BreakpointDisabled);
 		}
 	}
 
@@ -585,6 +592,11 @@ void RKConsole::newOutput (RCommand *, ROutput *output) {
 			view->setUpdatesEnabled (true);
 		}
 	}
+
+	if (!command) {
+		doc->insertLine(doc->lines(), popped_line);
+	}
+
 	cursorAtTheEnd ();
 }
 
@@ -904,6 +916,12 @@ void RKConsole::pipeCommandThroughConsoleLocal (const QString &command_string) {
 	cursorAtTheEnd ();
 	submitBatch (command_string + '\n');
 	previous_chunk_was_piped = true;
+}
+
+void RKConsole::insertSpontaneousROutput(ROutput* output) {
+	RK_TRACE (APP);
+	RK_ASSERT(!current_command);
+	newOutput(nullptr, output);
 }
 
 void RKConsole::contextMenuEvent (QContextMenuEvent * event) {

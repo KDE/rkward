@@ -2,7 +2,7 @@
                           rkconsole  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004-2020 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2022 by Thomas Friedrichsmeier
     email                : thomas.friedrichsmeier@kdemail.net
  ***************************************************************************/
 
@@ -75,6 +75,7 @@ public:
 	void setCommandHistory (const QStringList &new_history, bool append);
 	QStringList commandHistory () const { return commands_history.getHistory (); };
 	void addCommandToHistory (const QString& text) { commands_history.append (text); };
+	void insertSpontaneousROutput(ROutput *output);
 protected:
 /** Handle keystrokes before they reach the kate-part. Return TRUE if we want the kate-part to ignore it
 \param e the QKeyEvent */
