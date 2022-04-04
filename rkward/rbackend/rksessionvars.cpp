@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rksessionvars  -  description
-                             -------------------
-    begin                : Thu Sep 08 2011
-    copyright            : (C) 2011-2020 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rksessionvars - This file is part of RKWard (https://rkward.kde.org). Created: Thu Sep 08 2011
+SPDX-FileCopyrightText: 2011-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rksessionvars.h"
 

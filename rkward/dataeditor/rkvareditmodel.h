@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkvareditmodel  -  description
-                             -------------------
-    begin                : Mon Nov 05 2007
-    copyright            : (C) 2007, 2010, 2011 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkvareditmodel - This file is part of the RKWard project. Created: Mon Nov 05 2007
+SPDX-FileCopyrightText: 2007-2011 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef RKVAREDITMODEL
 #define RKVAREDITMODEL

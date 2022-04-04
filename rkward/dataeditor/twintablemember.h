@@ -1,19 +1,9 @@
-/***************************************************************************
-                          twintablemember.h  -  description
-                             -------------------
-    begin                : Tue Oct 29 2002
-    copyright            : (C) 2002, 2006, 2007, 2010, 2012 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+twintablemember.h - This file is part of the RKWard project. Created: Tue Oct 29 2002
+SPDX-FileCopyrightText: 2002-2012 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef TWINTABLEMEMBER_H
 #define TWINTABLEMEMBER_H

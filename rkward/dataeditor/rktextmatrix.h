@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rktextmatrix  -  description
-                             -------------------
-    begin                : Thu Nov 08 2007
-    copyright            : (C) 2007, 2010, 2012 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rktextmatrix - This file is part of the RKWard project. Created: Thu Nov 08 2007
+SPDX-FileCopyrightText: 2007-2012 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef RKTEXTMATRIX_H
 #define RKTEXTMATRIX_H
