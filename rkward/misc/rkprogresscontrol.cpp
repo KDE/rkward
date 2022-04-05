@@ -16,6 +16,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QDialogButtonBox>
 
 #include <KLocalizedString>
+#include <KColorScheme>
 
 #include "../rkglobals.h"
 #include "../rbackend/rkrinterface.h"
@@ -52,6 +53,7 @@ private:
 	ROutput::ROutputType last_output_type;
 	bool prevent_close;
 	bool is_done;
+	KColorScheme color_scheme;
 };
 
 
@@ -226,7 +228,7 @@ QString RKProgressControl::fullCommandOutput() {
 
 #include <kstandardguiitem.h>
 
-RKProgressControlDialog::RKProgressControlDialog (const QString &text, const QString &caption, int mode_flags, bool modal) : QDialog (0) {
+RKProgressControlDialog::RKProgressControlDialog(const QString &text, const QString &caption, int mode_flags, bool modal) : QDialog(nullptr), color_scheme(QPalette::Normal) {
 	RK_TRACE (MISC);
 
 	setAttribute (Qt::WA_DeleteOnClose, true);
@@ -313,9 +315,9 @@ void RKProgressControlDialog::addOutput (const ROutput *output) {
 		output_text->insertPlainText ("\n");
 
 		if (output->type == ROutput::Output) {
-			output_text->setTextColor (Qt::black);
+			output_text->setTextColor(color_scheme.foreground(KColorScheme::NormalText).color());
 		} else {
-			output_text->setTextColor (Qt::red);
+			output_text->setTextColor(color_scheme.foreground(KColorScheme::NegativeText).color());
 			if (!detailsbox->isVisible ()) toggleDetails ();
 			error_indicator->show ();
 		}
