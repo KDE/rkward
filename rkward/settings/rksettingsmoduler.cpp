@@ -335,7 +335,7 @@ RKSettingsModuleRPackages::RKSettingsModuleRPackages (RKSettings *gui, QWidget *
 	main_vbox->addWidget(archive_packages.makeCheckbox(i18n("Archive downloaded packages"), this));
 
 	auto source_packages_box = source_packages.makeCheckbox(i18n ("Build packages from source"), this);
-#if !defined Q_OS_WIN || defined Q_OS_MACOS
+#if !(defined Q_OS_WIN || defined Q_OS_MACOS)
 	source_packages_box->setText(i18n("Build packages from source (not configurable on this platform)"));
 	source_packages_box->setChecked (true);
 	source_packages_box->setEnabled (false);
@@ -502,20 +502,10 @@ QString RKSettingsModuleRPackages::libLocsCommand () {
 QString RKSettingsModuleRPackages::pkgTypeOption () {
 	QString ret;
 #if defined Q_OS_WIN || defined Q_OS_MACOS
-	ret.append ("options (pkgType=\"");
-	if (source_packages) ret.append ("source");
-	else if (RKSessionVars::compareRVersion ("3.1.3") <= 0) ret.append ("binary");   // "automatically select appropriate binary", unfortunately it's only available from R 3.1.3. onwards.
-#	if defined Q_OS_WIN
-	else ret.append ("win.binary");
-#	else
-	else if (RKSessionVars::compareRVersion ("3.0.0") > 0) {
-		ret.append ("mac.binary.leopard");
-	} else {
-		// OS X binary packages have switched repo locations and package type in R >= 3.0.0
-		ret.append ("mac.binary");
-	}
-#	endif
-	ret.append ("\")\n");
+	ret.append("options (pkgType=\"");
+	if (source_packages) ret.append("source");
+	else ret.append("binary");   // "automatically select appropriate binary"
+	ret.append("\")\n");
 #endif
 	return ret;
 }
