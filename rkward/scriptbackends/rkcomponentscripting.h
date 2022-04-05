@@ -10,7 +10,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <QObject>
 #include <QHash>
-#include <QScriptEngine>
+
+#include "qtscriptbackend.h"  // TODO: For RKJSEngine, only
 
 #include "../rbackend/rcommand.h"
 
@@ -57,7 +58,7 @@ private slots:
 	void scriptRCommandFinished (RCommand* command);
 private:
 	RKComponent* component;
-	QScriptEngine engine;
+	RKJSEngine engine;
 	struct OutstandingCommand {
 		RCommand *command;
 		QString callback;
@@ -69,7 +70,7 @@ private:
 	void handleChange (RKComponentBase* changed);
 	QHash<RKComponentBase*, QString> component_commands;
 
-	void handleScriptError (const QString& current_file=QString ());
+	void handleScriptError (const RKJSValue &val, const QString& current_file=QString ());
 };
 
 #endif

@@ -10,9 +10,10 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <QObject>
 
+#include "qtscriptbackend.h"  // TODO: For RKJSEngine, only. Move back to .cpp-file
+
 #include "../misc/rkmessagecatalog.h"
 
-class QScriptEngine;
 /** A QObject wrapper around RKMessageCatalog. Meant for use in RKComponentScripting and QtScriptBackend */
 class RKMessageCatalogObject : public QObject {
 	Q_OBJECT
@@ -33,7 +34,7 @@ public:
 		return (catalog->translate (msgctxt, msgid_singular, msgid_plural, count));
 	};
 /** Add an RKMessageCatalog, and the required glue code to the given QScriptEngine. */
-	static void addI18nToScriptEngine (QScriptEngine *engine, const RKMessageCatalog *catalog);
+	static void addI18nToScriptEngine (RKJSEngine *engine, const RKMessageCatalog *catalog);
 private:
 	const RKMessageCatalog *catalog;
 };

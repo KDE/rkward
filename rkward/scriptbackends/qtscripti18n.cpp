@@ -7,12 +7,10 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "qtscripti18n.h"
 
-#include <QScriptEngine>
-
 #include "../debug.h"
 
-void RKMessageCatalogObject::addI18nToScriptEngine (QScriptEngine* engine, const RKMessageCatalog* catalog) {
-	QScriptValue handle = engine->newQObject (new RKMessageCatalogObject (catalog, engine));
+void RKMessageCatalogObject::addI18nToScriptEngine (RKJSEngine* engine, const RKMessageCatalog* catalog) {
+	auto handle = engine->newQObject (new RKMessageCatalogObject (catalog, engine));
 	engine->globalObject ().setProperty ("_i18n", handle);
 }
 

@@ -49,7 +49,29 @@ private:
 
 #include <QThread>
 #include <QMutex>
+
+#ifdef USE_QJSENGINE
+#include <QtQml/QJSEngine>
+#define RKJSEngine QJSEngine
+#define RKJSValue QJSValue
+#define RKJSValueList QJSValueList
+template<typename T> RKJSValue rkJSMakeArray(RKJSEngine *engine, QVector<T> list) {
+	auto ret = engine->newArray(list.size());
+	for(int i = 0; i < list.size(); ++i) ret.setProperty(i, list.at(i));
+	return ret;
+}
+template<typename T> RKJSValue rkJSMakeArray(RKJSEngine *engine, QList<T> list) {
+	auto ret = engine->newArray(list.size());
+	for(int i = 0; i < list.size(); ++i) ret.setProperty(i, list.at(i));
+	return ret;
+}
+#else
 #include <QScriptEngine>
+#define RKJSEngine QScriptEngine
+#define RKJSValue QScriptValue
+#define RKJSValueList QScriptValueList
+#define rkJSMakeArray(engine, val) qScriptValueFromSequence(engine, val)
+#endif
 
 class QtScriptBackendThread : public QThread {
 	Q_OBJECT
@@ -75,8 +97,8 @@ protected slots:
 protected:
 	void run () override;
 private:
-	/** for any script error in the last evaluation. If there was an error, a message is generated, and this function return true (and the thread should be made to exit!) */
-	bool scriptError ();
+	/** for any script error in the last evaluation. If there was an error, a message is generated, and this function returns true (and the thread should be made to exit!) */
+	bool scriptError(const RKJSValue &val);
 	QVariant getValue (const QString &identifier, const int hint);
 
 	QString _command;
@@ -84,7 +106,7 @@ private:
 	QString _commonfile;
 	QString _scriptfile;
 
-	QScriptEngine engine;
+	RKJSEngine engine;
 	const RKMessageCatalog *catalog;
 
 	bool killed;
@@ -95,10 +117,13 @@ private:
 	bool sleeping;
 };
 
+#ifndef USE_QJSENGINE
+// TODO: support some level of pre-parsing with QJSEngine
 #define USE_Q_SCRIPT_PROGRAM
 #include <QScriptProgram>
 namespace RKPrecompiledQtScripts {
 	bool loadCommonScript (QScriptEngine *engine, const QString &scriptfile);
 };
+#endif
 
 #endif

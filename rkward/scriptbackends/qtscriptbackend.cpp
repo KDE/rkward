@@ -224,8 +224,21 @@ QVariant QtScriptBackendThread::getUiLabelPair (const QString &identifier) {
 	return getValue (identifier, RKStandardComponent::UiLabelPair);
 }
 
-bool QtScriptBackendThread::scriptError () {
+#ifdef USE_QJSENGINE
+bool QtScriptBackendThread::scriptError(const QJSValue &val) {
 	RK_TRACE (PHP);
+
+	if (!val.isError()) return false;
+
+	QString message = i18n("Script Error in %1, line %2: %3\nBacktrace:\n%4", val.property("fileName").toString(), val.property("lineNumber").toInt(), val.toString(), val.property("stack").toString());  // TODO: correct?
+	emit error(message);
+
+	return true;
+}
+#else
+bool QtScriptBackendThread::scriptError(const RKJSValue &val) {
+	RK_TRACE (PHP);
+	Q_UNUSED(val);
 
 	if (!engine.hasUncaughtException ()) return false;
 
@@ -235,6 +248,7 @@ bool QtScriptBackendThread::scriptError () {
 
 	return true;
 }
+#endif
 
 bool QtScriptBackendThread::includeFile (const QString &filename) {
 	RK_TRACE (PHP);
@@ -251,11 +265,12 @@ bool QtScriptBackendThread::includeFile (const QString &filename) {
 		return false;
 	}
 
+#ifndef USE_QJSENGINE
 	// evaluate in global context
 	engine.currentContext ()->setActivationObject (engine.globalObject ());
-	QScriptValue result = engine.evaluate (QString::fromUtf8 (file.readAll ()), _filename);
-
-	if (scriptError ()) return false;
+#endif
+	RKJSValue result = engine.evaluate (QString::fromUtf8 (file.readAll ()), _filename);
+	if (scriptError(result)) return false;
 
 	return true;
 }
@@ -263,17 +278,16 @@ bool QtScriptBackendThread::includeFile (const QString &filename) {
 void QtScriptBackendThread::run () {
 	RK_TRACE (PHP);
 
-	QScriptValue backend_object = engine.newQObject (this);
+	RKJSValue backend_object = engine.newQObject (this);
 	engine.globalObject ().setProperty ("_RK_backend", backend_object);
 	RKMessageCatalogObject::addI18nToScriptEngine (&engine, catalog);
-	if (scriptError ()) return;
 
 #ifdef USE_Q_SCRIPT_PROGRAM
 	if (!RKPrecompiledQtScripts::loadCommonScript (&engine, _commonfile)) {
 		if (!engine.hasUncaughtException ()) {
 			emit error (i18n ("Could not open common script file \"%1\"", _commonfile));
 		} else {
-			scriptError ();
+			scriptError (QScriptValue());
 		}
 		return;
 	}
@@ -305,8 +319,8 @@ void QtScriptBackendThread::run () {
 		}
 
 		// do it!
-		QScriptValue result = engine.evaluate (command);
-		if (scriptError ()) return;
+		RKJSValue result = engine.evaluate (command);
+		if (scriptError(result)) return;
 		emit commandDone(result.toString());
 
 		command.clear ();
