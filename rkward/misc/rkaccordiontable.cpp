@@ -68,7 +68,8 @@ public:
 			if (index.internalId () == trailing_item_id) return (Qt::ItemIsEnabled);
 			return (Qt::NoItemFlags);
 		}
-		return (QAbstractProxyModel::flags (index));
+		auto ret = QAbstractProxyModel::flags(index).setFlag(Qt::ItemNeverHasChildren, false);
+		return ret;
 	}
 
 	int rowCount (const QModelIndex& parent = QModelIndex ()) const override {
@@ -77,7 +78,7 @@ public:
 		return sourceModel ()->rowCount (mapToSource (parent)) + add_trailing_rows;
 	}
 
-    QVariant data (const QModelIndex& proxyIndex, int role = Qt::DisplayRole) const override {
+	QVariant data (const QModelIndex& proxyIndex, int role = Qt::DisplayRole) const override {
 		if (isFake (proxyIndex)) {
 			if (proxyIndex.internalId () == trailing_item_id) {
 				if (role == Qt::DisplayRole) {

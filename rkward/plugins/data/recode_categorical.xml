@@ -105,7 +105,6 @@
 				<option value="custom" label="Custom value:"/>
 			</radio>
 			<embed id="other_custom" component="rkward::multi_input"/>
-			<stretch/>
 		</tab>
 	</tabbook></dialog>
 </document>
