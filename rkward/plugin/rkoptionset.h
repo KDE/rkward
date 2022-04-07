@@ -1,6 +1,6 @@
 /*
 rkoptionset - This file is part of the RKWard project. Created: Mon Oct 31 2011
-SPDX-FileCopyrightText: 2011-2012 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2011-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -20,7 +20,6 @@ class RKAccordionTable;
 class QTreeView;
 class QPushButton;
 class RKOptionSetDisplayModel;
-class QStackedWidget;
 
 /** An RKOptionSet provides a group of options for an arbitrary number of "rows". E.g. different line colors for each of a group of variables.
  * 
@@ -104,7 +103,6 @@ friend class RKOptionSetDisplayModel;
 	RKOptionSetDisplayModel* model;
 	RKAccordionTable *accordion;
 
-	QStackedWidget *switcher;
 	QWidget *updating_notice;
 	void updateUnfinishedRows ();
 	int return_to_row;

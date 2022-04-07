@@ -1,6 +1,6 @@
 /*
 rkoptionset - This file is part of RKWard (https://rkward.kde.org). Created: Mon Oct 31 2011
-SPDX-FileCopyrightText: 2011-2014 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2011-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -11,7 +11,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QTreeWidget>
 #include <QHeaderView>
 #include <QPushButton>
-#include <QStackedWidget>
 #include <QLabel>
 #include <QMimeData>
 
@@ -42,17 +41,15 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	// build UI framework
 	QVBoxLayout *layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
-	switcher = new QStackedWidget (this);
-	layout->addWidget (switcher);
 	accordion = new RKAccordionTable (this);
-	switcher->addWidget (accordion);
+	layout->addWidget (accordion);
 
 	connect (accordion, static_cast<void (RKAccordionTable::*)(int)>(&RKAccordionTable::activated), this, &RKOptionSet::currentRowChanged);
 	connect (accordion, &RKAccordionTable::addRow, this, &RKOptionSet::addRow);
 	connect (accordion, &RKAccordionTable::removeRow, this, &RKOptionSet::removeRow);
 
 	updating_notice = new QLabel (i18n ("Updating status, please wait"), this);
-	switcher->addWidget (updating_notice);
+	layout->addWidget (updating_notice);
 	update_timer.setInterval (0);
 	update_timer.setSingleShot (true);
 	connect (&update_timer, &QTimer::timeout, this, &RKOptionSet::slotUpdateUnfinishedRows);
@@ -165,6 +162,10 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	model->column_labels = visible_column_labels;
 	accordion->setShowAddRemoveButtons (!keycolumn);
 	accordion->setModel (model);
+	updating_notice->hide();
+	QSizePolicy pol(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+	pol.setVerticalStretch(1);  // For some reason, this apparently defaults to 0 - no stretch, unless absolutely necessary - for this widget, although I have no idea, why.
+	setSizePolicy(pol);
 }
 
 RKOptionSet::~RKOptionSet () {
@@ -342,14 +343,16 @@ void RKOptionSet::updateUnfinishedRows () {
 	RK_TRACE (PLUGIN);
 
 	if (!n_unfinished_rows) {	// done
-		if (switcher->currentWidget () != updating_notice) return;
+		if (!updating_notice->isVisible()) return;
 		current_row->setIntValue (return_to_row);
-		switcher->setCurrentWidget (accordion);
+		accordion->show();
+		updating_notice->hide();
 		return;
 	}
 
-	if (switcher->currentWidget () != updating_notice) {
-		switcher->setCurrentWidget (updating_notice);
+	if (!updating_notice->isVisible()) {
+		updating_notice->show();
+		accordion->hide();
 		return_to_row = active_row;
 	}
 	for (int i = 0; i < rows.size (); ++i) {
