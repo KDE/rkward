@@ -404,18 +404,6 @@ static void RKD_Close (pDevDesc dev) {
 	{
 		RKGraphicsDataStreamWriteGuard guard;
 		WRITE_HEADER (RKDClose, dev);
-#ifdef _MSC_VER
-	// Ok, this is a terribly crude HACK, obviously, and it's just waiting to come back to bite us. However:
-	// We had to allocate the DevDesc in our own (MSVC-compiled) code (that's the way it is done), but if we allow R to delete
-	// it (also, as usual; in its MinGW-compiled code), we get a crash. Whatever the _exact_ reason. So what we do here is
-	// reset R's pointer, and do the free, ourselves. Fortunately, we can do this, and fortunately, the pointer is no longer
-	// needed at this point. At least not in R 3.2.3...
-	// If (or when) this breaks, we could try to just call some other device's init-routine, then hijack that device. Or out-source
-	// the RKGraphicsDevice backend init code into an R package...
-	// Or can we use R's Calloc/Malloc, instead? -> Manual caution not to use free() (only Free()), on that, though.
-		static_cast<RKGraphicsDeviceDesc*> (dev->deviceSpecific)->rgdevdesc->dev = NULL;
-	free (dev);
-#endif
 		delete static_cast<RKGraphicsDeviceDesc*> (dev->deviceSpecific);
 	}
 	{

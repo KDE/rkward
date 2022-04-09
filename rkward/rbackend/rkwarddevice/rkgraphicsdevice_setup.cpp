@@ -45,10 +45,6 @@ struct RKGraphicsDeviceDesc {
 	QString default_family;
 	QString default_symbol_family;
 	pDevDesc rdevdesc;
-#ifdef _MSC_VER
-	// See RKD_Close()
-	pGEDevDesc rgdevdesc;
-#endif
 };
 
 #include "rkgraphicsdevice_stubs.cpp"
@@ -74,14 +70,10 @@ void RKStartGraphicsDevice (double width, double height, double pointsize, const
 	pDevDesc dev;
 	BEGIN_SUSPEND_INTERRUPTS {
 		/* Allocate and initialize the device driver data */
-#ifdef _MSC_VER
-		dev = (pDevDesc) malloc (sizeof (DevDesc));
-#else
-		dev = (pDevDesc) calloc (1, sizeof (DevDesc)); // don't really understand this, but R needs it this way (while MSVC hates it)
-#endif
+		dev = (pDevDesc) R_Calloc(1, DevDesc);
 		// NOTE: The call to RKGraphicsDeviceBackendTransmitter::instance(), here is important beyond error checking. It might *create* the instance and connection, if this is the first use.
 		if (!(dev && RKGraphicsDeviceBackendTransmitter::instance () && desc->init (dev, pointsize, family, bg))) {
-			free (dev);
+			R_Free (dev);
 			delete (desc);
 			desc = 0;
 		} else {
@@ -93,10 +85,6 @@ void RKStartGraphicsDevice (double width, double height, double pointsize, const
 			pGEDevDesc gdd = GEcreateDevDesc(dev);
 			gdd->displayList = R_NilValue;
 			GEaddDevice2(gdd, "RKGraphicsDevice");
-#ifdef _MSC_VER
-			// See RKD_Close()
-			desc->rgdevdesc = gdd;
-#endif
 		}
 	} END_SUSPEND_INTERRUPTS;
 
