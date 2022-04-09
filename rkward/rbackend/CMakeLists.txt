@@ -54,6 +54,11 @@ IF(APPLE)
     COMMENT "Adding entitlment for rkward.rbackend to link to external R lib..."
 )
 ENDIF()
+IF(MSVC)
+FIND_PACKAGE(Python3 COMPONENTS Interpreter REQUIRED)
+ADD_CUSTOM_TARGET(R_lib COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/GenLibFile.py ${LIBR_SO} ${CMAKE_BINARY_DIR} ${CMAKE_SYSTEM_PROCESSOR})
+ADD_DEPENDENCIES(rkward.rbackend R_lib)
+ENDIF(MSVC)
 
 IF(WIN32)
 	# on Widows, we install to the rbackend subdirectory, because 1) LIBEXEC_INSTALL_DIR == BIN_INSTALL_DIR and 2) we don't want the backend to pick up
