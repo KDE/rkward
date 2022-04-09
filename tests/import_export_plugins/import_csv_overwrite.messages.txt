@@ -1,3 +1,2 @@
-Error in rk.call.plugin("rkward::import_csv", allow_escapes.state = "0",  : 
-  
+Error in .rk.do.call("doPlugin", callstrings) : 
 The plugin could not be auto-submitted with these settings.

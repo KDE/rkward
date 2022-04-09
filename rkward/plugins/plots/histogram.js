@@ -18,7 +18,7 @@ function doPrintout (full) {
 	if (full) {
 		echo ('rk.header (' + i18n ("Histogram") + ', list (' + i18n ("Variable") + '=rk.get.description (' + x + ')' + getValue ("histogram_opt.code.preprocess") + '))\n');
 		if ((densityscaled) && getValue ("density")) {
-			new Header (i18n ("Density curve", 3)).addFromUI ("bw").addFromUI ("adjust").addFromUI ("n").addFromUI ("narm").print ();
+			new Header (i18n ("Density curve"), 3).addFromUI ("bw").addFromUI ("adjust").addFromUI ("n").addFromUI ("narm").print ();
 		}
 		echo ('\n');
 		echo ('rk.graph.on ()\n');

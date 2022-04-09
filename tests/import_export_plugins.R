@@ -36,11 +36,14 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 			oldwd <- getwd ()
 			on.exit (setwd (oldwd))
 
-			rk.call.plugin ("rkward::setworkdir", dir.selection=file.path (getwd(), ".."), submit.mode="submit")
+			newwd = file.path (getwd(), "testdir")
+			dir.create(newwd)
+			rk.call.plugin ("rkward::setworkdir", dir.selection=newwd, submit.mode="submit")
 			stopifnot (oldwd != getwd ())
 
-			rk.call.plugin ("rkward::setworkdir", dir.selection=file.path (getwd(), "import_export_plugins"), submit.mode="submit")
+			rk.call.plugin ("rkward::setworkdir", dir.selection=oldwd, submit.mode="submit")
 			stopifnot (oldwd == getwd ())
+			unlink(newwd)
 		}),
 		new ("RKTest", id="import_spss", call=function () {
 # NOTE: read.spss currently failing when run in non iso8859-1 locale. See http://r.789695.n4.nabble.com/read-spss-locale-and-encodings-td881149.html
@@ -102,20 +105,24 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 		new ("RKTest", id="write_vector_matrix", call=function () {
 			assign ("testx", c (1:10), globalenv())
 			rk.sync.global()
+			file <- file.path (getwd(), "data")
 
-			rk.call.plugin ("rkward::save_variables", append.state="FALSE", data.available="testx", file.selection=file.path (getwd(), "data"), ncolumns.real="2.", sep.string=",", submit.mode="submit")
+			rk.call.plugin ("rkward::save_variables", append.state="FALSE", data.available="testx", file.selection=file, ncolumns.real="2.", sep.string=",", submit.mode="submit")
 
 			x <- readLines ("data")
 			for (line in x) rk.print (line)
+			unlink(file)
 		}),
 		new ("RKTest", id="write_csv", call=function () {
 			assign ("women", datasets::women, globalenv())
 			rk.sync.global()
+			file <- file.path (getwd(), "data")
 
-			rk.call.plugin ("rkward::save_csv", dec.string=".", encoding.string="", eol.string="\\n", file.selection=file.path (getwd(), "data"), na.text="NA", qmethod.string="double", quick.string="csv", quote.state="1", rowname.string="TRUE", sep.string=",", x.available="women", submit.mode="submit")
+			rk.call.plugin ("rkward::save_csv", dec.string=".", encoding.string="", eol.string="\\n", file.selection=file, na.text="NA", qmethod.string="double", quick.string="csv", quote.state="1", rowname.string="TRUE", sep.string=",", x.available="women", submit.mode="submit")
 
 			x <- readLines ("data")
 			for (line in x) rk.print (line)
+			unlink(file)
 		}),
 		new ("RKTest", id="package_skeleton", call=function () {
 			# create two functions to use

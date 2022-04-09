@@ -1,6 +1,6 @@
 <h1>Import SPSS data</h1>
 <h2>Parameters</h2>
-<ul><li>File name: import_export_plugins_testfile.sav</li>
+<ul><li>File name: PATH/import_export_plugins_testfile.sav</li>
 <li>Object to save to: my.spss.data</li>
 </ul>
 DATE<br />
@@ -15,7 +15,7 @@ DATE<br />
 	<tr class= firstline > 
 		<th>&nbsp;  </th>
 		<th>A_long_variable_name  </th>
-		<th>‰ˆ¸ﬂÈ»  </th>
+		<th>√§√∂√º√ü√©√à  </th>
 		<th>Value_labels</th> 
 	</tr> 
 <tr> 

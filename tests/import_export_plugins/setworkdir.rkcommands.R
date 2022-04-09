@@ -1,6 +1,6 @@
 local({
 ## Compute
-setwd("PATH/..")
+setwd("PATH/testdir")
 })
 local({
 ## Compute
