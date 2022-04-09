@@ -99,7 +99,8 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 
 	KTextEditor::ConfigInterface *confint = qobject_cast<KTextEditor::ConfigInterface*> (view);
 	RK_ASSERT (view);
-	confint->setConfigValue ("dynamic-word-wrap", false);
+	confint->setConfigValue("dynamic-word-wrap", false);
+	confint->setConfigValue("scrollbar-minimap", RKSettingsModuleConsole::showMinimap());
 
 	setFocusProxy (view);
 	setFocusPolicy (Qt::StrongFocus);
