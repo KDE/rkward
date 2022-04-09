@@ -164,6 +164,7 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 RKConsole::~RKConsole () {
 	RK_TRACE (APP);
 
+	if (this == main_console) main_console = nullptr;
 	RKSettingsModuleConsole::saveCommandHistory (commands_history.getHistory ());
 }
 
