@@ -1,6 +1,6 @@
 /*
 rkloadlibsdialog - This file is part of the RKWard project. Created: Mon Sep 6 2004
-SPDX-FileCopyrightText: 2004-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2004-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -39,7 +39,7 @@ Dialog which excapsulates widgets to load/unload, update and install R packages
 
 // TODO: add a static member to create (single) instance of the dialog
 
-class RKLoadLibsDialog : public KPageDialog, public RCommandReceiver {
+class RKLoadLibsDialog : public KPageDialog {
 Q_OBJECT
 public:
 	RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool modal=false);
@@ -66,7 +66,6 @@ signals:
 	void installationError (const QString &error);
 	void installedPackagesChanged ();
 protected:
-	void rCommandDone (RCommand *command) override;
 	void closeEvent (QCloseEvent *e) override;
 protected slots:
 	void childDeleted ();
@@ -102,7 +101,7 @@ To be used in RKLoadLibsDialog
 
 @author Thomas Friedrichsmeier
 */
-class LoadUnloadWidget : public QWidget, public RCommandReceiver {
+class LoadUnloadWidget : public QWidget {
 Q_OBJECT
 public:
 	explicit LoadUnloadWidget (RKLoadLibsDialog *dialog);
@@ -119,8 +118,6 @@ public slots:
 	void updateInstalledPackages ();
 	void updateButtons ();
 	void activated ();
-protected:
-	void rCommandDone (RCommand *command) override;
 private:
 	void updateCurrentList ();
 	void doLoadUnload ();

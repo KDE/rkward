@@ -1,6 +1,6 @@
 /*
 rkloadlibsdialog - This file is part of RKWard (https://rkward.kde.org). Created: Mon Sep 6 2004
-SPDX-FileCopyrightText: 2004-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2004-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -41,8 +41,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <stdlib.h>
 
 
-#define GET_CURRENT_LIBLOCS_COMMAND 1
-
 RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool modal) : KPageDialog (parent) {
 	RK_TRACE (DIALOGS);
 	RKLoadLibsDialog::chain = chain;
@@ -67,14 +65,19 @@ RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool 
 	num_child_widgets = 4;
 	was_accepted = false;
 
-	RKGlobals::rInterface ()->issueCommand (".libPaths ()", RCommand::App | RCommand::GetStringVector, QString (), this, GET_CURRENT_LIBLOCS_COMMAND, chain);
+	RCommand *command = new RCommand(".libPaths()", RCommand::App | RCommand::GetStringVector);
+	connect(command->notifier(), &RCommandNotifier::commandFinished, this, [this](RCommand *command) {
+		RK_ASSERT (command->getDataType() == RData::StringVector);
+		RK_ASSERT (command->getDataLength() > 0);
+		// NOTE: The problem is that e.g. R_LIBS_USER is not in .libPaths() if it does not exist, yet. But it should be available as an option, of course
+		library_locations = command->stringVector();
+		emit libraryLocationsChanged(library_locations);
+	});
+	RKGlobals::rInterface()->issueCommand (command);
 }
 
 RKLoadLibsDialog::~RKLoadLibsDialog () {
 	RK_TRACE (DIALOGS);
-
-	if (was_accepted) KPageDialog::accept ();
-	else KPageDialog::reject ();
 }
 
 KPageWidgetItem* RKLoadLibsDialog::addChild (QWidget *child_page, const QString &caption) {
@@ -156,19 +159,6 @@ void RKLoadLibsDialog::reject () {
 	hide ();
 	// will self-destruct once all children are done
 	emit rejected();
-}
-
-void RKLoadLibsDialog::rCommandDone (RCommand *command) {
-	RK_TRACE (DIALOGS);
-	if (command->getFlags () == GET_CURRENT_LIBLOCS_COMMAND) {
-		RK_ASSERT (command->getDataType () == RData::StringVector);
-		RK_ASSERT (command->getDataLength () > 0);
-		// NOTE: The problem is that e.g. R_LIBS_USER is not in .libPaths() if it does not exist, yet. But it should be available as an option, of course
-		library_locations = command->stringVector ();
-		emit libraryLocationsChanged(library_locations);
-	} else {
-		RK_ASSERT (false);
-	}
 }
 
 void RKLoadLibsDialog::addLibraryLocation (const QString& new_loc) {
@@ -397,10 +387,6 @@ void RKLoadLibsDialog::processExited (int exitCode, QProcess::ExitStatus exitSta
 
 ////////////////////// LoadUnloadWidget ////////////////////////////
 
-#define GET_INSTALLED_PACKAGES 1
-#define GET_LOADED_PACKAGES 2
-#define LOAD_PACKAGE_COMMAND 3
-
 LoadUnloadWidget::LoadUnloadWidget (RKLoadLibsDialog *dialog) : QWidget (0) {
 	RK_TRACE (DIALOGS);
 	LoadUnloadWidget::parent = dialog;
@@ -461,10 +447,15 @@ void LoadUnloadWidget::activated () {
 	installed_view->setFocus ();
 }
 
-void LoadUnloadWidget::rCommandDone (RCommand *command) {
+void LoadUnloadWidget::updateInstalledPackages () {
 	RK_TRACE (DIALOGS);
-	if (command->failed ()) return;
-	if (command->getFlags () == GET_INSTALLED_PACKAGES) {
+
+	installed_view->clear ();
+	loaded_view->clear ();
+
+	auto command = new RCommand(".rk.get.installed.packages()", RCommand::App | RCommand::Sync | RCommand::GetStructuredData);
+	connect(command->notifier(), &RCommandNotifier::commandFinished, this, [this](RCommand *command) {
+		if (command->failed()) return;
 		RK_ASSERT (command->getDataLength () == 5);
 
 		RData::RDataStorage data = command->structureVector ();
@@ -487,7 +478,12 @@ void LoadUnloadWidget::rCommandDone (RCommand *command) {
 		installed_view->resizeColumnToContents (0);
 		installed_view->setSortingEnabled (true);
 		installed_view->sortItems (0, Qt::AscendingOrder);
-	} else if (command->getFlags () == GET_LOADED_PACKAGES) {
+	});
+	RKGlobals::rInterface ()->issueCommand(command, parent->chain);
+
+	command = new RCommand(".packages()", RCommand::App | RCommand::Sync | RCommand::GetStringVector);
+	connect(command->notifier(), &RCommandNotifier::commandFinished, this, [this](RCommand *command) {
+		if (command->failed()) return;
 		RK_ASSERT (command->getDataType () == RData::StringVector);
 		QStringList data = command->stringVector ();
 		for (int i=0; i < data.size (); ++i) {
@@ -501,21 +497,8 @@ void LoadUnloadWidget::rCommandDone (RCommand *command) {
 		loaded_view->setSortingEnabled (true);
 		loaded_view->sortItems (0, Qt::AscendingOrder);
 		updateCurrentList ();
-	} else if (command->getFlags () == LOAD_PACKAGE_COMMAND) {
-		emit loadUnloadDone();
-	} else {
-		RK_ASSERT (false);
-	}
-}
-
-void LoadUnloadWidget::updateInstalledPackages () {
-	RK_TRACE (DIALOGS);
-
-	installed_view->clear ();
-	loaded_view->clear ();
-
-	RKGlobals::rInterface ()->issueCommand (".rk.get.installed.packages ()", RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString (), this, GET_INSTALLED_PACKAGES, parent->chain);
-	RKGlobals::rInterface ()->issueCommand (".packages ()", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString (), this, GET_LOADED_PACKAGES, parent->chain);
+	});
+	RKGlobals::rInterface()->issueCommand(command, parent->chain);
 }
 
 void LoadUnloadWidget::loadButtonClicked () {
@@ -607,10 +590,13 @@ void LoadUnloadWidget::doLoadUnload () {
 	}
 
 	// find out, when we're done
-	RCommand *command = new RCommand (QString (), RCommand::EmptyCommand, QString (), this, LOAD_PACKAGE_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command, parent->chain);
+	RCommand *command = new RCommand(QString(), RCommand::EmptyCommand);
+	connect(command->notifier(), &RCommandNotifier::commandFinished, this, [this](RCommand *) {
+		emit loadUnloadDone();
+	});
+	RKGlobals::rInterface()->issueCommand(command, parent->chain);
 
-	control->doNonModal (true);
+	control->doNonModal(true);
 }
 
 void LoadUnloadWidget::apply () {
