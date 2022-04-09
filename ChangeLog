@@ -1,4 +1,5 @@
 --- Version 0.7.3 - UNRELEASED
+- Fixed: Spurious string I18N_ARGUMENT_MISMATCH in several plugins
 - Add setting to allow hiding R Console scrollbar minimap
 - Fixed: Accordeon control (used in "Recode categorical data") never expanded
 - "Spontaneous" output, such as from running examples in the enhanced help system in R 4.2.0, is shown in the R Console

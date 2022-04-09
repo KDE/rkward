@@ -1,6 +1,6 @@
 /*
 rkmessagecatalog - This file is part of RKWard (https://rkward.kde.org). Created: Mon Jun 24 2013
-SPDX-FileCopyrightText: 2013-2018 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2013-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -29,28 +29,32 @@ RKMessageCatalog::~RKMessageCatalog () {
 	RK_TRACE (MISC);
 }
 
-QString RKMessageCatalog::translate (const QString &msgctxt, const QString &msgid) const {
-	RK_TRACE (MISC);
-
-	return i18ndc (catalog_name, msgctxt.toUtf8 (), msgid.toUtf8 ());
+QString RKMessageCatalog::translate(const QString &msgctxt, const QString &msgid, const QStringList &args) const {
+	RK_TRACE(MISC);
+	auto ret = ki18ndc(catalog_name, msgctxt.toUtf8(), msgid.toUtf8());
+	for(int i = 0; i < args.size(); ++i) ret = ret.subs(args[i]);
+	return ret.toString();
 }
 
-QString RKMessageCatalog::translate (const QString &msgctxt, const QString &msgid_singular, const QString &msgid_plural, unsigned long int count) const {
-	RK_TRACE (MISC);
-
-	return i18ndcp (catalog_name, msgctxt.toUtf8 (), msgid_singular.toUtf8 (), msgid_plural.toUtf8 (), count);
+QString RKMessageCatalog::translate(const QString &msgctxt, const QString &msgid_singular, const QString &msgid_plural, unsigned long int count, const QStringList &args) const {
+	RK_TRACE(MISC);
+	auto ret = ki18ndcp(catalog_name, msgctxt.toUtf8(), msgid_singular.toUtf8(), msgid_plural.toUtf8()).subs(count);
+	for(int i = 0; i < args.size(); ++i) ret = ret.subs(args[i]);
+	return ret.toString();
 }
 
-QString RKMessageCatalog::translate (const QString &msgid) const {
-	RK_TRACE (MISC);
-
-	return i18nd (catalog_name, msgid.toUtf8 ());
+QString RKMessageCatalog::translate(const QString &msgid, const QStringList &args) const {
+	RK_TRACE(MISC);
+	auto ret = ki18nd(catalog_name, msgid.toUtf8());
+	for(int i = 0; i < args.size(); ++i) ret = ret.subs(args[i]);
+	return ret.toString();
 }
 
-QString RKMessageCatalog::translate (const QString &msgid_singular, const QString &msgid_plural, unsigned long int count) const {
-	RK_TRACE (MISC);
-
-	return i18ndp (catalog_name, msgid_singular.toUtf8 (), msgid_plural.toUtf8 (), count);
+QString RKMessageCatalog::translate(const QString &msgid_singular, const QString &msgid_plural, unsigned long int count, const QStringList &args) const {
+	RK_TRACE(MISC);
+	auto ret = ki18ndp(catalog_name, msgid_singular.toUtf8(), msgid_plural.toUtf8()).subs(count);
+	for(int i = 0; i < args.size(); ++i) ret = ret.subs(args[i]);
+	return ret.toString();
 }
 
 RKMessageCatalog* RKMessageCatalog::CatalogHash::getCatalog (const QString& name, const QString& pathhint) {

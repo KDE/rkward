@@ -1,6 +1,6 @@
 /*
 rkmessagecatalog - This file is part of the RKWard project. Created: Mon Jun 24 2013
-SPDX-FileCopyrightText: 2013-2018 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2013-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -20,10 +20,10 @@ SPDX-License-Identifier: GPL-2.0-or-later
  */
 class RKMessageCatalog {
 public:
-	QString translate (const QString &msgid) const;
-	QString translate (const QString &msgctxt, const QString &msgid) const;
-	QString translate (const QString &msgid_singular, const QString &msgid_plural, unsigned long int count) const;
-	QString translate (const QString &msgctxt, const QString &msgid_singular, const QString &msgid_plural, unsigned long int count) const;
+	QString translate(const QString &msgid, const QStringList &args=QStringList()) const;
+	QString translate(const QString &msgctxt, const QString &msgid, const QStringList &args=QStringList()) const;
+	QString translate(const QString &msgid_singular, const QString &msgid_plural, unsigned long int count, const QStringList &args=QStringList()) const;
+	QString translate(const QString &msgctxt, const QString &msgid_singular, const QString &msgid_plural, unsigned long int count, const QStringList &args=QStringList()) const;
 
 /** Get the catalog identified by name. This could be an already open catalog, or a new one. In the latter case, the catalog is expected at pathhint. In the former case, pathhint is ignored. This function is guaranteed to return a non-null RKMessageCatalog, although that does not imply the catalog could actually be loaded. */
 	static RKMessageCatalog *getCatalog (const QString &name, const QString &pathhint);
