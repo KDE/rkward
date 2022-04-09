@@ -2,6 +2,11 @@ import subprocess
 import os
 import sys
 
+# Generate a .lib file for a given .dll
+# This assumed dumpbin and lib to be in the path, which they should be, when compiling with MSVC (and that's what this is needed for)
+#
+# Usage: python3 GenLibFile.py XYZ.dll output_directory architecture
+
 dllfile = sys.argv[1]
 workdir = sys.argv[2]
 arch = sys.argv[3]

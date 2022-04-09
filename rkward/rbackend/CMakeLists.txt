@@ -51,12 +51,13 @@ IF(APPLE)
     ADD_CUSTOM_COMMAND(TARGET rkward.rbackend POST_BUILD
     COMMAND codesign -d --force --options runtime --verbose=4 -s - --entitlements "${CMAKE_CURRENT_SOURCE_DIR}/rkward.rbackend.entitlements" ${CMAKE_CURRENT_BINARY_DIR}/rkward.rbackend
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-    COMMENT "Adding entitlment for rkward.rbackend to link to external R lib..."
-)
+    COMMENT "Adding entitlment for rkward.rbackend to link to external R lib...")
 ENDIF()
 IF(MSVC)
+# When compiling with MSVC, we have to create a .lib file for R.dll, first
 FIND_PACKAGE(Python3 COMPONENTS Interpreter REQUIRED)
-ADD_CUSTOM_TARGET(R_lib COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/GenLibFile.py ${LIBR_SO} ${CMAKE_BINARY_DIR} ${CMAKE_SYSTEM_PROCESSOR})
+ADD_CUSTOM_TARGET(R_lib COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/GenLibFile.py ${LIBR_SO} ${CMAKE_BINARY_DIR} ${CMAKE_SYSTEM_PROCESSOR}
+                        COMMENT "Generate .lib file for R.dll")
 ADD_DEPENDENCIES(rkward.rbackend R_lib)
 ENDIF(MSVC)
 
