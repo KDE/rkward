@@ -45,7 +45,8 @@ public:
 	@param current_state the current button state
 	@returns true, if a the search should be context sensitive, false for a normal search */
 	static bool shouldDoHistoryContextSensitive (Qt::KeyboardModifiers current_state);
-	static bool showMinimap() { return show_minimap; };
+	static RKConfigValue<bool> *showMinimap() { return &show_minimap; };
+	static RKConfigValue<bool> *wordWrap() { return &word_wrap; };
 	static const RKCodeCompletionSettings* completionSettings() { return &completion_settings; }
 
 	static QStringList loadCommandHistory ();
@@ -64,6 +65,7 @@ private:
 	static RKConfigValue<PipedCommandsHistoryMode, int> add_piped_commands_to_history;
 	static RKConfigValue<bool> context_sensitive_history_by_default;
 	static RKConfigValue<bool> show_minimap;
+	static RKConfigValue<bool> word_wrap;
 
 	RKCodeCompletionSettingsWidget *completion_settings_widget;
 };

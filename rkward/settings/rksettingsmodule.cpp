@@ -49,6 +49,17 @@ QCheckBox* RKConfigValue<bool, bool>::makeCheckbox(const QString& label, RKSetti
 }
 
 template<>
+QAction* RKConfigValue<bool, bool>::makeAction(QObject *parent, const QString &label, std::function<void(bool)> handler) {
+	QAction *ret = new QAction(label, parent);
+	ret->setCheckable(true);
+	ret->setChecked(value);
+	QObject::connect(ret, &QAction::triggered, handler);
+	QObject::connect(ret, &QAction::triggered, parent, [this](bool val) { value=val; });
+	handler(value);
+	return ret;
+}
+
+template<>
 RKSpinBox* RKConfigValue<double, double>::makeSpinBox(double min, double max, RKSettingsModuleWidget* module) {
 	RKSpinBox* ret = new RKSpinBox();
 	ret->setRealMode(min, max, value, 1, 2);

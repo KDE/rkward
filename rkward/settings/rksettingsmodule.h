@@ -22,6 +22,7 @@ class RKSettingsModule;
 class RKSettingsModuleWidget;
 class RKSetupWizardItem;
 class RKSpinBox;
+class QAction;
 
 /** Base class for RKWard config settings.
  *
@@ -86,6 +87,9 @@ public:
 		}
 	}
 	RKSpinBox* makeSpinBox(T min, T max, RKSettingsModuleWidget* _module);
+/** For settings to be used outside the settings dialog: Create an appropriate action connected to this value. Call @param handler with the new value, whenever the action is triggered,
+ *  and - for convenience - once while creating the action (for intialization) */
+	QAction* makeAction(QObject *parent, const QString &label, std::function<void(T)> handler);
 private:
 	T value;
 };

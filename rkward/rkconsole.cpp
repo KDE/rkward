@@ -96,12 +96,6 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 	view = doc->createView (this);
 	layout->addWidget (view);
 	view->setStatusBarEnabled (false);
-
-	KTextEditor::ConfigInterface *confint = qobject_cast<KTextEditor::ConfigInterface*> (view);
-	RK_ASSERT (view);
-	confint->setConfigValue("dynamic-word-wrap", false);
-	confint->setConfigValue("scrollbar-minimap", RKSettingsModuleConsole::showMinimap());
-
 	setFocusProxy (view);
 	setFocusPolicy (Qt::StrongFocus);
 	
@@ -140,6 +134,12 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 	setMetaInfo (shortCaption (), QUrl ("rkward://page/rkward_console"), RKSettings::PageConsole);
 	initializeActivationSignals ();
 	initializeActions (getPart ()->actionCollection ());
+	KTextEditor::ConfigInterface *confint = qobject_cast<KTextEditor::ConfigInterface*> (view);
+	RK_ASSERT(confint);
+	QAction* action = RKSettingsModuleConsole::showMinimap()->makeAction(this, i18n("Scrollbar minimap"), [confint](bool val) { confint->setConfigValue("scrollbar-minimap", val); });
+	getPart()->actionCollection()->addAction("view_show_minimap", action);
+	action = RKSettingsModuleConsole::wordWrap()->makeAction(this, i18n("Dynamic word wrap"), [confint](bool val) { confint->setConfigValue("dynamic-word-wrap", val); });
+	getPart()->actionCollection()->addAction("view_dynamic_word_wrap", action);
 
 	nprefix = "> ";
 	iprefix = "+ ";
@@ -863,7 +863,6 @@ void RKConsole::initializeActions (KActionCollection *ac) {
 
 	addProxyAction ("file_print", i18n ("Print Console"));
 	addProxyAction ("file_export_html");
-	addProxyAction ("view_dynamic_word_wrap");
 	addProxyAction ("view_inc_font_sizes");
 	addProxyAction ("view_dec_font_sizes");
 

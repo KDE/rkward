@@ -33,6 +33,7 @@ RKConfigValue<bool> RKSettingsModuleConsole::pipe_user_commands_through_console 
 RKConfigValue<RKSettingsModuleConsole::PipedCommandsHistoryMode, int> RKSettingsModuleConsole::add_piped_commands_to_history {"add piped commands to history", RKSettingsModuleConsole::AddSingleLine };
 RKConfigValue<bool> RKSettingsModuleConsole::context_sensitive_history_by_default {"command history defaults to context sensitive", false};
 RKConfigValue<bool> RKSettingsModuleConsole::show_minimap {"show minimap", true};
+RKConfigValue<bool> RKSettingsModuleConsole::word_wrap {"dynamic word wrap", false};
 
 RKSettingsModuleConsole::RKSettingsModuleConsole (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -50,8 +51,6 @@ RKSettingsModuleConsole::RKSettingsModuleConsole (RKSettings *gui, QWidget *pare
 	vbox->addWidget (new QLabel (i18n ("Maximum number of paragraphs/lines to display in the console (0 for not limit)"), this));
 	auto max_console_lines_spinner = max_console_lines.makeSpinBox(0, 10000, this);
 	vbox->addWidget (max_console_lines_spinner);
-
-	vbox->addWidget(show_minimap.makeCheckbox(i18n("Show scrollbar mini map (setting takes effect after restart)"), this));
 
 	vbox->addSpacing (2*RKGlobals::spacingHint ());
 
@@ -97,6 +96,7 @@ void RKSettingsModuleConsole::syncConfig(KConfig* config, RKConfigBase::ConfigSy
 	add_piped_commands_to_history.syncConfig(cg, a);
 	context_sensitive_history_by_default.syncConfig(cg, a);
 	show_minimap.syncConfig(cg, a);
+	word_wrap.syncConfig(cg, a);
 	if (a == RKConfigBase::LoadConfig) {
 		completion_settings.tabkey_invokes_completion = true;
 	}
