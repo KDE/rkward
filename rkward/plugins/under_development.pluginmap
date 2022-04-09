@@ -1,6 +1,6 @@
 <!DOCTYPE rkpluginmap>
 
-<document base_prefix="" namespace="rkward" priority="low" id="under_development">
+<document base_prefix="" namespace="rkward" priority="low" id="under_development" priority="low">
 	<include file="pluginmap_meta.inc"/>
 	<about
 		name="Plugins under development"

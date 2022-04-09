@@ -1,6 +1,6 @@
 <!DOCTYPE rkpluginmap>
 
-<document base_prefix="" namespace="rkward" id="data" po_id="data">
+<document base_prefix="" namespace="rkward" id="data" po_id="data" priority="medium">
 	<include file="pluginmap_meta.inc"/>
 	<about
 		name="Data transformation and conversion"

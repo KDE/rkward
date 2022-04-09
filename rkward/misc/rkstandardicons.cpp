@@ -178,6 +178,7 @@ QIcon RKStandardIcons::iconForWindow (const RKMDIWindow* window) {
 	if (window->isType (RKMDIWindow::FileBrowserWindow)) return getIcon (WindowFileBrowser);
 	if (window->isType (RKMDIWindow::DebugConsoleWindow)) return getIcon (WindowDebugConsole);
 	if (window->isType (RKMDIWindow::CallstackViewerWindow)) return getIcon (WindowCallstackViewer);
+	if (window->isType (RKMDIWindow::DebugMessageWindow)) return QIcon();
 
 	RK_ASSERT (false);
 	return QIcon ();
