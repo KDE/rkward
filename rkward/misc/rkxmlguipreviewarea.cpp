@@ -108,7 +108,7 @@ void RKXMLGUIPreviewArea::setWindow(RKMDIWindow* window) {
 	current = window->getPart();
 	insertChildClient(current);
 	setCentralWidget(window);
-	createGUI("rkwrapper_widgetpart.rc");
+	createGUI();
 	menuBar()->hide();
 	QList<KToolBar*> tbars = toolBars();
 	for (int i = 0; i < tbars.size(); ++i) tbars[i]->hide();

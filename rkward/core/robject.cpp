@@ -217,8 +217,7 @@ void RObject::updateFromR (RCommandChain *chain) {
 // We handle objects directly in .GlobalEnv differently. That's to avoid forcing promises, when addressing the object directly. In the long run, .rk.get.structure should be reworked to simply not need the value-argument in any case.
 		 command = new RCommand (".rk.get.structure.global (" + rQuote (getShortName ()) + ')', RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString (), this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
 	} else {
-		RK_ASSERT (false);	// non-catastrophic, but do we get here?
-
+// This is the less common branch, but we do call .rk.get.structure on sub-object, e.g. when fetching more levels in the Workspace Browser, or when calling rk.sync(), explicitly
 		command = new RCommand (".rk.get.structure (" + getFullName () + ", " + rQuote (getShortName ()) + ')', RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString (), this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
 	}
 	RKGlobals::rInterface ()->issueCommand (command, chain);
