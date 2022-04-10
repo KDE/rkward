@@ -1,9 +1,10 @@
 local({
 ## Print result
 x <- swiss[["Catholic"]]
-# barplot is a bit picky about attributes, so we need to convert to vector explicitly
-if(!is.matrix(x)) x <- as.vector(x)
-if(!is.matrix(x) && is.data.frame(x)) x <- data.matrix(x)
+# barplot is a bit picky about attributes, so we need to convert to vector or matrix explicitly
+if(!is.matrix(x)) {
+	if (is.data.frame(x)) x <- data.matrix(x) else x <- as.vector(x)
+}
 names(x) <- rownames (swiss)
 rk.header ("Barplot", parameters=list ("Variable"=rk.get.description (swiss[["Catholic"]]), "colors"="rainbow", "Type"="juxtaposed", "Legend"="FALSE"))
 
@@ -21,9 +22,10 @@ rk.graph.off ()
 local({
 ## Print result
 x <- test_table
-# barplot is a bit picky about attributes, so we need to convert to vector explicitly
-if(!is.matrix(x)) x <- as.vector(x)
-if(!is.matrix(x) && is.data.frame(x)) x <- data.matrix(x)
+# barplot is a bit picky about attributes, so we need to convert to vector or matrix explicitly
+if(!is.matrix(x)) {
+	if (is.data.frame(x)) x <- data.matrix(x) else x <- as.vector(x)
+}
 rk.header ("Barplot", parameters=list ("Variable"=rk.get.description (test_table), "colors"="default", "Type"="stacked", "Legend"="TRUE"))
 
 rk.graph.on ()
