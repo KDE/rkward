@@ -344,12 +344,14 @@ public:
 /** This is a bit lame, but the plugin does not add itself to the parent widget's layout by itself. So we need this override
  *  to do that. Where did the good old KVBox go? */
 	void childEvent(QChildEvent *ev) override {
-		if ((ev->type() == QEvent::ChildAdded) && qobject_cast<QWidget *>(ev->child())) {
-			QWidget *widget = qobject_cast<QWidget *>(ev->child());
-			layout()->addWidget(widget);
-			setFocusProxy(widget);
+		if ((ev->type() == QEvent::ChildAdded) && ev->child()->isWidgetType()) {
+			QWidget *widget = qobject_cast<QWidget *>(ev->child()); // clazy:exclude=child-event-qobject-cast - Cast to QWidget is ok, we checked for widgetType(), above
+			if (widget) {
+				layout()->addWidget(widget);
+				setFocusProxy(widget);
+			}
 		}
-		QWidget::childEvent(ev);
+		RKMDIWindow::childEvent(ev);
 	}
 };
 
