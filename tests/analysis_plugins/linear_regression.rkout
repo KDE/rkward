@@ -16,13 +16,13 @@ Call:<font class='call'>     warpbreaks[["wool"]])</font>
 <tr><td>
 	<table border=0 class=dataframe>
 	<tbody> <tr class= firstline > <th></th><th>Min</th><th>1Q</th><th>Median</th><th>3Q</th><th>Max</th> </tr>
- 
+ <tr> 
 <tr><td class=firstcolumn></td>
 <td class=cellinside>-19.5</td>
 <td class=cellinside> -8.1</td>
 <td class=cellinside> -2.1</td>
 <td class=cellinside>  6.5</td>
-<td class=cellinside> 30.7</td></tr>
+<td class=cellinside> 30.7</td> </tr>
  
 	</tbody>
 </table>
@@ -38,34 +38,34 @@ Call:<font class='call'>     warpbreaks[["wool"]])</font>
 <tr><td>
 	<table border=0 class=dataframe>
 	<tbody> <tr class= firstline > <th></th><th>Estimate</th><th>Std. Error</th><th>t value</th><th>Pr(>|t|)</th><th></th> </tr>
- 
+ <tr> 
 <tr><td class=firstcolumn>(Intercept)</td>
 <td class=cellinside> 39.28 </td>
 <td class=cellinside>  3.16 </td>
 <td class=cellinside>12.42  </td>
 <td class=cellinside>< 2e-16</td>
-<td class=cellinside>***    </td></tr>
- 
+<td class=cellinside>***    </td> </tr>
+ <tr> 
 <tr><td class=firstcolumn>warpbreaks[["tension"]]M</td>
 <td class=cellinside>-10.00 </td>
 <td class=cellinside>  3.87 </td>
 <td class=cellinside>-2.58  </td>
 <td class=cellinside>0.01279</td>
-<td class=cellinside>  *    </td></tr>
- 
+<td class=cellinside>  *    </td> </tr>
+ <tr> 
 <tr><td class=firstcolumn>warpbreaks[["tension"]]H</td>
 <td class=cellinside>-14.72 </td>
 <td class=cellinside>  3.87 </td>
 <td class=cellinside>-3.80  </td>
 <td class=cellinside>0.00039</td>
-<td class=cellinside>***    </td></tr>
- 
+<td class=cellinside>***    </td> </tr>
+ <tr> 
 <tr><td class=firstcolumn>warpbreaks[["wool"]]B</td>
 <td class=cellinside> -5.78 </td>
 <td class=cellinside>  3.16 </td>
 <td class=cellinside>-1.83  </td>
 <td class=cellinside>0.07361</td>
-<td class=cellinside>  .    </td></tr>
+<td class=cellinside>  .    </td> </tr>
  
 	</tbody>
 </table>
