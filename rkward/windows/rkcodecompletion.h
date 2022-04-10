@@ -1,6 +1,6 @@
 /*
 rkcodecompletion - This file is part of the RKWard project. Created: Thu Feb 21 2019
-SPDX-FileCopyrightText: 2004-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2004-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -70,7 +70,6 @@ private:
 	KTextEditor::Range argname_range;
 
 	bool update_call;
-	bool keep_active;
 	bool user_triggered;
 	bool ignore_next_trigger;
 	QString prefix;

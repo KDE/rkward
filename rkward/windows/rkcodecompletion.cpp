@@ -1,6 +1,6 @@
 /*
 rkcodecompletion - This file is part of RKWard (https://rkward.kde.org). Created: Thu Feb 21 2019
-SPDX-FileCopyrightText: 2004-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2004-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -69,7 +69,6 @@ RKCompletionManager::RKCompletionManager(KTextEditor::View* view, const RKCodeCo
 	RK_TRACE (COMMANDEDITOR);
 
 	_view = view;
-	keep_active = false;
 	user_triggered = false;
 	ignore_next_trigger = false;
 	update_call = true;
@@ -112,7 +111,7 @@ RKCompletionManager::~RKCompletionManager () {
 }
 
 void RKCompletionManager::tryCompletionProxy () {
-	if (cc_iface->isCompletionActive () || keep_active) {
+	if (cc_iface->isCompletionActive ()) {
 		// Handle this in the next event cycle, as more than one event may trigger
 		completion_timer->start (0);
 	} else if (settings->autoEnabled ()) {
@@ -379,10 +378,10 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 
 		// If only the calltip is active, make sure the tab-key and enter behave as a regular keys. There is no completion in this case.
 		if (active_models.count () == 1 && active_models[0] == callhint_model) {
-			if (((k->key () == Qt::Key_Tab) || (k->key () == Qt::Key_Return) || (k->key () == Qt::Key_Enter)) || (k->key () == Qt::Key_Backtab)) {
-				keep_active = true;
-				cc_iface->abortCompletion (); // That's a bit lame, but the least hacky way to get the key into the document. keep_active=true, so
-				                              // the completion window should come back up, without delay
+			if (((k->key() == Qt::Key_Tab) || (k->key() == Qt::Key_Return) || (k->key() == Qt::Key_Enter)) || (k->key() == Qt::Key_Backtab) || (k->key() == Qt::Key_Up) || (k->key() == Qt::Key_Down)) {
+				completion_timer->start(0);
+				cc_iface->abortCompletion(); // That's a bit lame, but the least hacky way to get the key into the document. completion_timer was started, so
+				                             // the completion window should come back up, without delay
 				return false;
 			}
 		}
