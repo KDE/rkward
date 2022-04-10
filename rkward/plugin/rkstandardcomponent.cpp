@@ -71,9 +71,9 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	RKComponentPropertyRObjects *current_object_property = new RKComponentPropertyRObjects (this, false);
 	RKComponentPropertyRObjects *current_dataframe_property = new RKComponentPropertyRObjects (this, false);
 	RKComponentPropertyBase *current_filename_property = new RKComponentPropertyBase (this, false);
-	current_object_property->setInternal (true);
-	current_dataframe_property->setInternal (true);
-	current_filename_property->setInternal (false);
+	current_object_property->setInternal(true);
+	current_dataframe_property->setInternal(true);
+	current_filename_property->setInternal(true);
 	RKMDIWindow *w = RKWorkplace::mainWorkplace ()->activeWindow (RKMDIWindow::AnyWindowState);
 	if (w) {
 		current_object_property->setValue (w->globalContextProperty ("current_object"));
