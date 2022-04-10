@@ -76,6 +76,7 @@ void RKEditorDataFrame::commonInit () {
 
 RKEditorDataFrame::~RKEditorDataFrame () {
 	RK_TRACE (EDITOR);
+	if (open_chain) RKGlobals::rInterface()->closeChain(open_chain);
 }
 
 void RKEditorDataFrame::detachModel () {
