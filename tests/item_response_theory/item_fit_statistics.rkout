@@ -16,26 +16,26 @@ DATE<br />
 <tr><td>
 	<table border=0 class=dataframe>
 	<tbody> <tr class= firstline > <th></th><th>X^2</th><th>Pr (&gt;X^2)</th> </tr>
- 
+ <tr> 
 <tr><td class=firstcolumn>Item 1</td>
 <td class=cellinside>61.929 </td>
-<td class=cellinside>0.000  </td></tr>
- 
+<td class=cellinside>0.000  </td> </tr>
+ <tr> 
 <tr><td class=firstcolumn>Item 2</td>
 <td class=cellinside>159.01 </td>
-<td class=cellinside>0.000  </td></tr>
- 
+<td class=cellinside>0.000  </td> </tr>
+ <tr> 
 <tr><td class=firstcolumn>Item 3</td>
 <td class=cellinside>233.787</td>
-<td class=cellinside>0.000  </td></tr>
- 
+<td class=cellinside>0.000  </td> </tr>
+ <tr> 
 <tr><td class=firstcolumn>Item 4</td>
 <td class=cellinside>132.473</td>
-<td class=cellinside>0.000  </td></tr>
- 
+<td class=cellinside>0.000  </td> </tr>
+ <tr> 
 <tr><td class=firstcolumn>Item 5</td>
 <td class=cellinside>84.76  </td>
-<td class=cellinside>0.000  </td></tr>
+<td class=cellinside>0.000  </td> </tr>
  
 	</tbody>
 </table>

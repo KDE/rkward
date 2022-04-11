@@ -1,3 +1,7 @@
 Warning in LRtest.Rm(estimates.pcm, se = TRUE) :
   
-The following items were excluded due to inappropriate response patterns within subgroups: 
+The following items were excluded due to inappropriate response patterns within
+subgroups:
+I2 I4 I1 I5
+
+Full and subgroup models are estimated without these items!

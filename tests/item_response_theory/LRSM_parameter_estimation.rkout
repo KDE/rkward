@@ -12,26 +12,26 @@ DATE<br />
 <tr><td>
 	<table border=0 class=dataframe>
 	<tbody> <tr class= firstline > <th></th><th>Eta</th><th>StdErr</th> </tr>
- 
+ <tr> 
 <tr><td class=firstcolumn>eta 1</td>
 <td class=cellinside>-0.046</td>
-<td class=cellinside>    NA</td></tr>
- 
+<td class=cellinside>    NA</td> </tr>
+ <tr> 
 <tr><td class=firstcolumn>eta 2</td>
 <td class=cellinside> 0.114</td>
-<td class=cellinside>    NA</td></tr>
- 
+<td class=cellinside>    NA</td> </tr>
+ <tr> 
 <tr><td class=firstcolumn>eta 3</td>
 <td class=cellinside> 0.197</td>
-<td class=cellinside>    NA</td></tr>
- 
+<td class=cellinside>    NA</td> </tr>
+ <tr> 
 <tr><td class=firstcolumn>eta 4</td>
 <td class=cellinside>-0.042</td>
-<td class=cellinside>    NA</td></tr>
- 
+<td class=cellinside>    NA</td> </tr>
+ <tr> 
 <tr><td class=firstcolumn>eta 5</td>
 <td class=cellinside> 0.346</td>
-<td class=cellinside>    NA</td></tr>
+<td class=cellinside>    NA</td> </tr>
  
 	</tbody>
 </table>

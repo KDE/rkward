@@ -1,7 +1,3 @@
 <h1>Andersen's LR test</h1>
 DATE<br />
 <img src="graph.png" width="480" height="480"><br>
-<h2>Messages, warnings, or errors:</h2>
-<pre class="output_normal">I2 I4 I1 I5 
-Full and subgroup models are estimated without these items!
-</pre>

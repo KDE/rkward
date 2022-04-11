@@ -1,13 +1,13 @@
 <h1>Goodness of Fit for Rasch Models (estimates.rasch)</h1>
-DATE<br>
+DATE<br />
 
 <p class='character'>Call:</p>
 <pre>rasch(data = LSAT)</pre>
 <h4>Parametric Bootstrap test:</h4>
-<br>
+<br />
 
 <p class='character'>Chi-squared statistic: 18.345</p>
 
 <p class='character'>Bootstrap samples: 49</p>
 
-<p class='character'>p-value: 0.78</p>
+<p class='character'>p-value: 0.84</p>

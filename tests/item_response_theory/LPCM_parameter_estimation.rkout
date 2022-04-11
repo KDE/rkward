@@ -12,46 +12,46 @@ DATE<br />
 <tr><td>
 	<table border=0 class=dataframe>
 	<tbody> <tr class= firstline > <th></th><th>Eta</th><th>StdErr</th> </tr>
- 
+ <tr> 
 <tr><td class=firstcolumn>eta 1</td>
 <td class=cellinside> 0.412</td>
-<td class=cellinside> 0.397</td></tr>
- 
+<td class=cellinside> 0.397</td> </tr>
+ <tr> 
 <tr><td class=firstcolumn>eta 2</td>
 <td class=cellinside>-0.299</td>
-<td class=cellinside> 0.494</td></tr>
- 
+<td class=cellinside> 0.494</td> </tr>
+ <tr> 
 <tr><td class=firstcolumn>eta 3</td>
 <td class=cellinside>-0.135</td>
-<td class=cellinside> 0.409</td></tr>
- 
+<td class=cellinside> 0.409</td> </tr>
+ <tr> 
 <tr><td class=firstcolumn>eta 4</td>
 <td class=cellinside> 0.035</td>
-<td class=cellinside> 0.394</td></tr>
- 
+<td class=cellinside> 0.394</td> </tr>
+ <tr> 
 <tr><td class=firstcolumn>eta 5</td>
 <td class=cellinside>-0.429</td>
-<td class=cellinside> 0.478</td></tr>
- 
+<td class=cellinside> 0.478</td> </tr>
+ <tr> 
 <tr><td class=firstcolumn>eta 6</td>
 <td class=cellinside>-0.286</td>
-<td class=cellinside> 0.449</td></tr>
- 
+<td class=cellinside> 0.449</td> </tr>
+ <tr> 
 <tr><td class=firstcolumn>eta 7</td>
 <td class=cellinside> 0.164</td>
-<td class=cellinside> 0.399</td></tr>
- 
+<td class=cellinside> 0.399</td> </tr>
+ <tr> 
 <tr><td class=firstcolumn>eta 8</td>
 <td class=cellinside> 0.101</td>
-<td class=cellinside> 0.435</td></tr>
- 
+<td class=cellinside> 0.435</td> </tr>
+ <tr> 
 <tr><td class=firstcolumn>eta 9</td>
 <td class=cellinside>-0.201</td>
-<td class=cellinside> 0.261</td></tr>
- 
+<td class=cellinside> 0.261</td> </tr>
+ <tr> 
 <tr><td class=firstcolumn>eta 10</td>
 <td class=cellinside> 1.094</td>
-<td class=cellinside> 0.387</td></tr>
+<td class=cellinside> 0.387</td> </tr>
  
 	</tbody>
 </table>
