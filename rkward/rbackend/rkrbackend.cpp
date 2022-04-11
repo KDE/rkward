@@ -1525,6 +1525,7 @@ void RKRBackend::commandFinished (bool check_object_updates_needed) {
 	}
 	clearPendingInterrupt ();	// Mutex must be unlocked for this!
 
+	fetchStdoutStderr(true);
 	if (current_command->type & RCommand::CCOutput) printAndClearCapturedMessages (current_command->type & RCommand::Plugin);
 	current_command->status -= (current_command->status & RCommand::Running);
 	current_command->status |= RCommand::WasTried;
