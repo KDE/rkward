@@ -73,7 +73,7 @@ RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool 
 		library_locations = command->stringVector();
 		emit libraryLocationsChanged(library_locations);
 	});
-	RKGlobals::rInterface()->issueCommand (command);
+	RKGlobals::rInterface()->issueCommand(command, chain);
 }
 
 RKLoadLibsDialog::~RKLoadLibsDialog () {
