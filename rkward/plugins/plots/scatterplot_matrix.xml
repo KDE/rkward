@@ -16,11 +16,11 @@
 			</tab>
 			<tab label="Options" id="tab_options">
 				<radio id="diag" label="Diagonal panels">
-					<option value="density" label="Density plot"/>
-					<option value="boxplot" label="Boxplot"/>
-					<option checked="true" value="histogram" label="Histogram"/>	
-					<option value="qqplot" label="QQplot"/>
-					<option value="none" label="No plot"/>
+					<option value="TRUE" label="Density plot"/>
+					<option value="list(method=&quot;boxplot&quot;)" label="Boxplot"/>
+					<option checked="true" value="list(method=&quot;histogram&quot;)" label="Histogram"/>
+					<option value="list(method=&quot;qqplot&quot;)" label="QQplot"/>
+					<option value="FALSE" label="No plot"/>
 				</radio>
 				<checkbox id="plot_points" label="Plot points" value="TRUE" value_unchecked="FALSE" checked="true"/>
 				<checkbox id="smooth" label="Plot smooth" value="TRUE" value_unchecked="FALSE" checked="false"/>

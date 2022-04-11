@@ -71,7 +71,7 @@ suite <- new ("RKTestSuite", id="plots",
 			rk.call.plugin ("rkward::scatterplot", cex.text="1", col.text="c ('black', 'red')", color.string="each", isCex.string="all", isPch.string="all", pch.text="1", plotoptions.add_grid.state="0", plotoptions.asp.real="0.00", plotoptions.main.text="", plotoptions.pointcolor.color.string="", plotoptions.pointtype.string="", plotoptions.sub.text="", plotoptions.xaxt.state="", plotoptions.xlab.text="", plotoptions.xlog.state="", plotoptions.xmaxvalue.text="", plotoptions.xminvalue.text="", plotoptions.yaxt.state="", plotoptions.ylab.text="", plotoptions.ylog.state="", plotoptions.ymaxvalue.text="", plotoptions.yminvalue.text="", pointtype.string="p", type_mode.string="all", x.available="women[[\"weight\"]]\nswiss[[\"Education\"]]", y.available="women[[\"height\"]]\nswiss[[\"Catholic\"]]", submit.mode="submit")
 		}),
 		new ("RKTest", id="scatterplot_matrix", call=function () {
-			rk.call.plugin ("rkward::scatterplot_matrix", diag.string="histogram", ellipse.state="FALSE", plot_points.state="TRUE", smooth.state="FALSE", x.available="swiss", submit.mode="submit")
+			rk.call.plugin ("rkward::scatterplot_matrix", diag.string="list(method=\"histogram\")", ellipse.state="FALSE", plot_points.state="TRUE", smooth.state="FALSE", x.available="swiss", submit.mode="submit")
 		}, libraries=c ("car")),
 		new ("RKTest", id="stem_leaf_plot", call=function () {
 			rk.call.plugin ("rkward::stem", atom.real="0.01", scale.real="1.50", width.real="80.00", x.available="swiss[[\"Fertility\"]]", submit.mode="submit")
