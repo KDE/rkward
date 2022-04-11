@@ -219,9 +219,9 @@ void RKGraphicsDevice::closeDevice (int devnum) {
 void RKGraphicsDevice::clear(const QBrush& brush) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
+	setClip(area.rect ());	// R's devX11.c resets clip on clear, so we do this, too.
 	if (recording_path) {
 		recorded_path = QPainterPath();
-		setClip(area.rect());	// R's devX11.c resets clip on clear, so we do this, too.
 		return;
 	}
 
@@ -235,7 +235,6 @@ void RKGraphicsDevice::clear(const QBrush& brush) {
 	if (current_mask) commitMaskedDraw();
 
 	updateNow ();
-	setClip (area.rect ());	// R's devX11.c resets clip on clear, so we do this, too.
 }
 
 void RKGraphicsDevice::setAreaSize (const QSize& size) {
