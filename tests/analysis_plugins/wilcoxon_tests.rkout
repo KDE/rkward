@@ -1,4 +1,4 @@
-<h1>Wilcoxon signed rank test</h1>
+<h1>Wilcoxon signed rank exact test</h1>
 <h2>Parameters</h2>
 <ul><li>Comparing: test50x</li>
 <li>H1: true location is not equal to 0</li>
