@@ -209,7 +209,7 @@ void RKSettingsModuleGeneral::syncConfig(KConfig *config, RKConfigBase::ConfigSy
 	startup_action.syncConfig(cg, a);
 	show_help_on_startup.syncConfig(cg, a);
 	initial_dir.syncConfig(cg, a);
-	if ((a == RKConfigBase::SaveConfig) && (initial_dir = LastUsedDirectory)) {
+	if ((a == RKConfigBase::SaveConfig) && (initial_dir == LastUsedDirectory)) {
 		cg.writeEntry(initial_dir_specification.key(), QDir::currentPath());
 	} else {
 		initial_dir_specification.syncConfig(cg, a);
