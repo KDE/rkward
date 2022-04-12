@@ -140,11 +140,11 @@ void RKErrorDialog::reportBug (QWidget* parent_widget, const QString& message_in
 
 	report_template.append ("\n---Session Info---\n");
 	bool ok = false;
-	if (!RKGlobals::rInterface ()->backendIsDead ()) {
+	if (!RInterface::instance()->backendIsDead ()) {
 		RCommand *command = new RCommand ("rk.sessionInfo()", RCommand::App);
 		RKProgressControl *control = new RKProgressControl (parent_widget, i18n ("Please stand by while gathering some information on your setup.\nIn case the backend has died or hung up, you may want to press 'Cancel' to skip this step."), i18n ("Gathering setup information"), RKProgressControl::CancellableNoProgress);
 		control->addRCommand (command, true);
-		RKGlobals::rInterface ()->issueCommand (command);
+		RInterface::issueCommand(command);
 		ok = control->doModal (false);
 		// NOTE: command is already deleted at this point
 		report_template.append (control->fullCommandOutput ());

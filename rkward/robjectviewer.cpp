@@ -267,7 +267,7 @@ void RObjectSummaryWidget::update () {
 	RObjectViewerWidget::update ();
 
 	RCommand *command = new RCommand ("print(summary(" + _object->getFullName () + "))", RCommand::App, QString (), this);
-	RKGlobals::rInterface ()->issueCommand (command, 0);
+	RInterface::issueCommand (command, 0);
 }
 
 ////////////////// print widget /////////////////
@@ -289,7 +289,7 @@ void RObjectPrintWidget::update () {
 	                                  "\ton.exit(options(width=rk.temp.width.save))\n"
 	                                  "\tprint(" + _object->getFullName () + ")\n"
 	                                  "})", RCommand::App, QString (), this);
-	RKGlobals::rInterface ()->issueCommand (command, 0);
+	RInterface::issueCommand (command, 0);
 }
 
 ////////////////// structure widget /////////////////
@@ -305,6 +305,6 @@ void RObjectStructureWidget::update () {
 	RObjectViewerWidget::update ();
 
 	RCommand *command = new RCommand ("str(" + _object->getFullName () + ')', RCommand::App, QString (), this);
-	RKGlobals::rInterface ()->issueCommand (command, 0);
+	RInterface::issueCommand (command, 0);
 }
 

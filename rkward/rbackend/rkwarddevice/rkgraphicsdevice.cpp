@@ -192,7 +192,7 @@ void RKGraphicsDevice::checkSize() {
 	if(!view) return;
 	if (view->size () != area.size ()) {
 		if(view->size().isEmpty()) return;
-		RKGlobals::rInterface()->issueCommand(new RCommand ("rkward:::RK.resize(" + QString::number(devices.key(this) + 1) + ',' + QString::number(id) + ')', RCommand::PriorityCommand));
+		RInterface::issueCommand(new RCommand ("rkward:::RK.resize(" + QString::number(devices.key(this) + 1) + ',' + QString::number(id) + ')', RCommand::PriorityCommand));
 	}
 }
 

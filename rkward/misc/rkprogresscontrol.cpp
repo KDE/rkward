@@ -162,7 +162,7 @@ void RKProgressControl::dialogDestroyed () {
 		is_done = true;
 		if (mode & AutoCancelCommands) {
 			for (RCommandList::const_iterator it = outstanding_commands.cbegin (); it != outstanding_commands.cend (); ++it) {
-				RKGlobals::rInterface ()->cancelCommand (*it);
+				RInterface::instance()->cancelCommand(*it);
 			}
 		}
 		emit cancelled();

@@ -54,11 +54,11 @@ RKLoadAgent::RKLoadAgent (const QUrl &url, bool merge) {
 	
 	if (!merge) {
 		command = new RCommand ("remove (list=ls (all.names=TRUE))", RCommand::App | RCommand::ObjectListUpdate);
-		RKGlobals::rInterface ()->issueCommand (command);
+		RInterface::issueCommand (command);
 	}
 
 	command = new RCommand ("load (\"" + filename + "\")", RCommand::App | RCommand::ObjectListUpdate, QString (), this, WORKSPACE_LOAD_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command);
+	RInterface::issueCommand (command);
 
 	RKWorkplace::mainWorkplace ()->setWorkspaceURL (url);
 }
@@ -78,11 +78,11 @@ void RKLoadAgent::rCommandDone (RCommand *command) {
 			RKWorkplace::mainWorkplace ()->restoreWorkplace (0, _merge);
 			if (RKSettingsModuleGeneral::cdToWorkspaceOnLoad ()) {
 				if (RKWorkplace::mainWorkplace ()->workspaceURL ().isLocalFile ()) {
-					RKGlobals::rInterface ()->issueCommand ("setwd (" + RObject::rQuote (RKWorkplace::mainWorkplace ()->workspaceURL ().adjusted (QUrl::RemoveFilename).path ()) + ')', RCommand::App);
+					RInterface::issueCommand ("setwd (" + RObject::rQuote (RKWorkplace::mainWorkplace ()->workspaceURL ().adjusted (QUrl::RemoveFilename).path ()) + ')', RCommand::App);
 				}
 			}
 		}
-		RKGlobals::rInterface()->issueCommand(QString(), RCommand::EmptyCommand | RCommand::App, QString(), this, WORKSPACE_LOAD_COMPLETE_COMMAND);
+		RInterface::issueCommand(QString(), RCommand::EmptyCommand | RCommand::App, QString(), this, WORKSPACE_LOAD_COMPLETE_COMMAND);
 		RKWardMainWindow::getMain ()->setCaption (QString ());	// trigger update of caption
 	} else if (command->getFlags () == WORKSPACE_LOAD_COMPLETE_COMMAND) {
 		RKWardMainWindow::getMain ()->slotSetStatusReady ();

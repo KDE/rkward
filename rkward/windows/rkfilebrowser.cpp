@@ -132,7 +132,7 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : QWidget (parent) {
 	connect (urlbox, &KUrlComboBox::urlActivated, this, &RKFileBrowserWidget::urlChangedInCombo);
 
 	connect (dir, &KDirOperator::fileSelected, this, &RKFileBrowserWidget::fileActivated);
-	connect (RKGlobals::rInterface (), &RInterface::backendWorkdirChanged, this, &RKFileBrowserWidget::syncToWD);
+	connect (RInterface::instance(), &RInterface::backendWorkdirChanged, this, &RKFileBrowserWidget::syncToWD);
 
 	setURL (QUrl::fromLocalFile (QDir::currentPath ()));
 }

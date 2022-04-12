@@ -26,8 +26,6 @@ TODO: move the static members to the respective classes instead. There's no poin
 */
 class RKGlobals{
 public:
-/// static pointer to the RInterface
-	static RInterface *rInterface () { return rinter; };
 /// static pointer to the RKModificationTracker
 	static RKModificationTracker *tracker () { return mtracker; };
 
@@ -39,7 +37,6 @@ public:
 	static QVariantMap startup_options;
 private:
 	friend class RKWardMainWindow;
-	static RInterface *rinter;
 	static RKModificationTracker *mtracker;
 };
 

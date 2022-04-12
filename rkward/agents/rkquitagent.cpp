@@ -32,17 +32,17 @@ RKQuitAgent::RKQuitAgent (QObject *parent) : QObject (parent) {
 	cancel_dialog->addRCommand (command, true);
 	connect (cancel_dialog, &RKProgressControl::cancelled, this, &RKQuitAgent::doQuitNow);
 
-	if (RKGlobals::rInterface ()->backendIsDead ()) {	// nothing to loose
+	if (RInterface::instance()->backendIsDead()) {	// nothing to loose
 		QTimer::singleShot (0, this, SLOT (doQuitNow()));
 		return;
-	} else if (RKGlobals::rInterface ()->backendIsIdle ()) {
+	} else if (RInterface::instance()->backendIsIdle()) {
 		// there should be no problem while quitting. If there is, show the dialog after 300 msec
 		QTimer::singleShot (300, this, SLOT (showWaitDialog()));
 	} else {
 		showWaitDialog ();
 	}
 
-	RKGlobals::rInterface ()->issueCommand (command);
+	RInterface::issueCommand (command);
 }
 
 RKQuitAgent::~RKQuitAgent () {

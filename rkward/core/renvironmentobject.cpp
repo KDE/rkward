@@ -105,7 +105,7 @@ void REnvironmentObject::updateFromR (RCommandChain *chain) {
 	if (type & PackageEnv) options.append (", namespacename=" + rQuote (packageName ()));
 
 	RCommand *command = new RCommand (".rk.get.structure (" + getFullName (DefaultObjectNameOptions) + ", " + rQuote (getShortName ()) + options + ')', RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString (), this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command, chain);
+	RInterface::issueCommand (command, chain);
 
 	type |= Updating;
 }

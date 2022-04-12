@@ -166,7 +166,7 @@ void RKTopLevelWindowGUI::configureToolbars () {
 void RKTopLevelWindowGUI::invokeRHelp () {
 	RK_TRACE (APP);
 
-	RKGlobals::rInterface ()->issueCommand ("help.start ()", RCommand::App);
+	RInterface::issueCommand ("help.start ()", RCommand::App);
 	RKWardMainWindow::getMain ()->topLevelWidget ()->raise ();
 }
 

@@ -857,7 +857,7 @@ void RKHTMLWindow::flushOutput () {
 		RKProgressControl *status = new RKProgressControl (this, i18n ("Flushing output"), i18n ("Flushing output"), RKProgressControl::CancellableNoProgress);
 		status->addRCommand (c, true);
 		status->doNonModal (true);
-		RKGlobals::rInterface ()->issueCommand (c);
+		RInterface::issueCommand (c);
 	}
 }
 

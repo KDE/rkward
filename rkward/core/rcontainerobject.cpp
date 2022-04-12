@@ -318,7 +318,7 @@ void RContainerObject::renameChild (RObject *object, const QString &new_name) {
 	}
 
 	RCommand *command = new RCommand (renameChildCommand (object, new_name), RCommand::App | RCommand::Sync);
-	RKGlobals::rInterface ()->issueCommand (command, 0);
+	RInterface::issueCommand (command, 0);
 
 	object->name = new_name;
 }
@@ -350,7 +350,7 @@ void RContainerObject::removeChild (RObject *object, bool removed_in_workspace) 
 		}
 
 		RCommand *command = new RCommand (removeChildCommand (object), RCommand::App | RCommand::Sync | RCommand::ObjectListUpdate);
-		RKGlobals::rInterface ()->issueCommand (command, 0);
+		RInterface::issueCommand (command, 0);
 	}
 
 	removeChildNoDelete (object);

@@ -200,8 +200,8 @@ RKSetupWizard::RKSetupWizard(QWidget* parent, InvokationReason reason, const QLi
 
 void RKSetupWizard::setupWizardPhase2() {
 	// Wait for R Interface, then enable dialog
-	if (!RKGlobals::rInterface()->backendIsIdle()) {
-		if (RKGlobals::rInterface()->backendIsDead()) {
+	if (!RInterface::instance()->backendIsIdle()) {
+		if (RInterface::instance()->backendIsDead()) {
 			waiting_to_start_label->setText(i18n("<b>R backend has crashed. Click \"Cancel\" to exit setup assistant.</b>"));
 		} else {
 			QTimer::singleShot(100, this, &RKSetupWizard::setupWizardPhase2);
@@ -332,7 +332,7 @@ void RKSetupWizard::fullInteractiveCheck(InvokationReason reason, const QList<RK
 		}
 #endif
 		for(int i = 0; i < wizard->r_commands_to_run.size(); ++i) {
-			RKGlobals::rInterface()->issueCommand(wizard->r_commands_to_run[i], RCommand::App);
+			RInterface::issueCommand(wizard->r_commands_to_run[i], RCommand::App);
 		}
 	}
 

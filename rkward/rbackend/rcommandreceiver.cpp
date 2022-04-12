@@ -29,7 +29,7 @@ void RCommandReceiver::cancelOutstandingCommands () {
 	RK_TRACE (RBACKEND);
 
 	for (RCommandList::const_iterator it = outstanding_commands.constBegin (); it != outstanding_commands.constEnd (); ++it) {
-		RKGlobals::rInterface()->cancelCommand (*it);
+		RInterface::instance()->cancelCommand(*it);
 	}
 }
 

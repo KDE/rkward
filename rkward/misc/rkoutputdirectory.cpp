@@ -274,12 +274,12 @@ GenericRRequestResult RKOutputDirectory::activate(RCommandChain* chain) {
 	RK_TRACE (APP);
 
 	QString index_file = work_dir + "/index.html";
-	RKGlobals::rInterface()->issueCommand(QStringLiteral("rk.set.output.html.file(\"") + RKCommonFunctions::escape(index_file) + QStringLiteral("\")\n"), RCommand::App, QString(), 0, 0, chain);
+	RInterface::issueCommand(QStringLiteral("rk.set.output.html.file(\"") + RKCommonFunctions::escape(index_file) + QStringLiteral("\")\n"), RCommand::App, QString(), 0, 0, chain);
 	if (!initialized) {
 		// when an output directory is first initialized, we don't want that to count as a "modification". Therefore, update the "saved hash" _after_ initialization
 		RCommand *command = new RCommand(QString(), RCommand::App | RCommand::Sync | RCommand::EmptyCommand);
 		connect(command->notifier(), &RCommandNotifier::commandFinished, this, &RKOutputDirectory::updateSavedHash);
-		RKGlobals::rInterface()->issueCommand(command, chain);
+		RInterface::issueCommand(command, chain);
 		initialized = true;
 	}
 
@@ -524,7 +524,7 @@ RKOutputDirectoryCallResult RKOutputDirectory::get(const QString &_filename, boo
 			dir->save_filename = filename;
 			// this is a bit cumbersome. TODO: create a dedicated function to init an output.
 			RCommand *command = new RCommand(QStringLiteral("local({o <- rk.output(); n <- rk.output(\"") + RKCommonFunctions::escape(filename) + QStringLiteral("\"); n$activate(); n$save(); try(o$activate(), silent=TRUE); o$save() })\n"), RCommand::App);
-			RKGlobals::rInterface()->issueCommand(command, chain);
+			RInterface::issueCommand(command, chain);
 		} else {
 			if (!(file_exists || dir)) return GenericRRequestResult::makeError(i18n("File '%1' does not exist.", filename));
 

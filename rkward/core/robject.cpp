@@ -203,7 +203,7 @@ void RObject::writeMetaData (RCommandChain *chain) {
 	}
 
 	RCommand *command = new RCommand (".rk.set.meta (" + getFullName () + ", " + map_string + ')', RCommand::App | RCommand::Sync);
-	RKGlobals::rInterface ()->issueCommand (command, chain);
+	RInterface::issueCommand (command, chain);
 }
 
 void RObject::updateFromR (RCommandChain *chain) {
@@ -220,7 +220,7 @@ void RObject::updateFromR (RCommandChain *chain) {
 // This is the less common branch, but we do call .rk.get.structure on sub-object, e.g. when fetching more levels in the Workspace Browser, or when calling rk.sync(), explicitly
 		command = new RCommand (".rk.get.structure (" + getFullName () + ", " + rQuote (getShortName ()) + ')', RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString (), this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
 	}
-	RKGlobals::rInterface ()->issueCommand (command, chain);
+	RInterface::issueCommand (command, chain);
 
 	type |= Updating;	// will be cleared, implicitly, when the new structure gets set
 }

@@ -371,7 +371,7 @@ void RKCaughtX11Window::commonClose(bool in_destructor) {
 	if (!(close_attempted || killed_in_r)) {
 		RCommand* c = new RCommand("dev.off (" + QString::number(device_number) + ')', RCommand::App, i18n("Shutting down device number %1", device_number));
 		if (!in_destructor) setStatusMessage(status, c);
-		RKGlobals::rInterface()->issueCommand(c);
+		RInterface::issueCommand(c);
 		close_attempted = true;
 	} else {
 		if (in_destructor) return;
@@ -408,7 +408,7 @@ void RKCaughtX11Window::forceClose() {
 bool RKCaughtX11Window::close(CloseWindowMode ask_save) {
 	RK_TRACE(MISC);
 
-	if (killed_in_r || RKGlobals::rInterface()->backendIsDead()) {
+	if (killed_in_r || RInterface::instance()->backendIsDead()) {
 		return RKMDIWindow::close(ask_save);
 	}
 
@@ -475,7 +475,7 @@ void RKCaughtX11Window::fixedSizeToggled () {
 
 	if (embedded && !embedding_complete) {
 		embedding_complete = true;
-		RKGlobals::rInterface ()->issueCommand ("assign ('devembedded', TRUE, rkward:::.rk.variables)", RCommand::App | RCommand::Sync | RCommand::PriorityCommand);
+		RInterface::issueCommand ("assign ('devembedded', TRUE, rkward:::.rk.variables)", RCommand::App | RCommand::Sync | RCommand::PriorityCommand);
 	}
 }
 
@@ -552,13 +552,13 @@ void RKCaughtX11Window::setFixedSizeManual () {
 void RKCaughtX11Window::activateDevice () {
 	RK_TRACE (MISC);
 
-	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ')', RCommand::App, i18n ("Activate graphics device number %1", device_number), error_dialog);
+	RInterface::issueCommand ("dev.set (" + QString::number (device_number) + ')', RCommand::App, i18n ("Activate graphics device number %1", device_number), error_dialog);
 }
 
 void RKCaughtX11Window::copyDeviceToOutput () {
 	RK_TRACE (MISC);
 
-	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\ndev.copy (device=rk.graph.on)\nrk.graph.off ()", RCommand::App | RCommand::CCOutput, i18n ("Copy contents of graphics device number %1 to output", device_number), error_dialog);
+	RInterface::issueCommand ("dev.set (" + QString::number (device_number) + ")\ndev.copy (device=rk.graph.on)\nrk.graph.off ()", RCommand::App | RCommand::CCOutput, i18n ("Copy contents of graphics device number %1 to output", device_number), error_dialog);
 }
 
 void RKCaughtX11Window::printDevice () {
@@ -566,7 +566,7 @@ void RKCaughtX11Window::printDevice () {
 
 	QString printer_device;
 	if (RKSettingsModuleGraphics::kdePrintingEnabled ()) printer_device = "rk.printer.device";
-	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\ndev.print (" + printer_device + ')', RCommand::App, i18n ("Print contents of graphics device number %1", device_number), error_dialog);
+	RInterface::issueCommand ("dev.set (" + QString::number (device_number) + ")\ndev.print (" + printer_device + ')', RCommand::App, i18n ("Print contents of graphics device number %1", device_number), error_dialog);
 }
 
 void RKCaughtX11Window::copyDeviceToRObject () {
@@ -598,7 +598,7 @@ void RKCaughtX11Window::copyDeviceToRObject () {
 
 		QString name = chooser->currentFullName ();
 
-		RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\n" + name + " <- recordPlot ()", RCommand::App | RCommand::ObjectListUpdate, i18n ("Save contents of graphics device number %1 to object '%2'", device_number, name), error_dialog);
+		RInterface::issueCommand ("dev.set (" + QString::number (device_number) + ")\n" + name + " <- recordPlot ()", RCommand::App | RCommand::ObjectListUpdate, i18n ("Save contents of graphics device number %1 to object '%2'", device_number, name), error_dialog);
 	}
 
 	delete dialog;
@@ -607,7 +607,7 @@ void RKCaughtX11Window::copyDeviceToRObject () {
 void RKCaughtX11Window::duplicateDevice () {
 	RK_TRACE (MISC);
 
-	RKGlobals::rInterface ()->issueCommand ("rk.duplicate.device (" + QString::number (device_number) + ')', RCommand::App, i18n ("Duplicate graphics device number %1", device_number), error_dialog);
+	RInterface::issueCommand ("rk.duplicate.device (" + QString::number (device_number) + ')', RCommand::App, i18n ("Duplicate graphics device number %1", device_number), error_dialog);
 }
 
 void RKCaughtX11Window::nextPlot () {
@@ -615,7 +615,7 @@ void RKCaughtX11Window::nextPlot () {
 
 	RCommand* c = new RCommand ("rk.next.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Load next plot in device number %1", device_number), error_dialog);
 	setStatusMessage (i18n ("Loading plot from history"), c);
-	RKGlobals::rInterface ()->issueCommand (c);
+	RInterface::issueCommand (c);
 }
 
 void RKCaughtX11Window::previousPlot () {
@@ -623,7 +623,7 @@ void RKCaughtX11Window::previousPlot () {
 
 	RCommand* c = new RCommand ("rk.previous.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Load previous plot in device number %1", device_number), error_dialog);
 	setStatusMessage (i18n ("Loading plot from history"), c);
-	RKGlobals::rInterface ()->issueCommand (c);
+	RInterface::issueCommand (c);
 }
 
 void RKCaughtX11Window::firstPlot () {
@@ -631,7 +631,7 @@ void RKCaughtX11Window::firstPlot () {
 
 	RCommand* c = new RCommand ("rk.first.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Load first plot in device number %1", device_number), error_dialog);
 	setStatusMessage (i18n ("Loading plot from history"), c);
-	RKGlobals::rInterface ()->issueCommand (c);
+	RInterface::issueCommand (c);
 }
 
 void RKCaughtX11Window::lastPlot () {
@@ -639,7 +639,7 @@ void RKCaughtX11Window::lastPlot () {
 
 	RCommand* c = new RCommand ("rk.last.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Load last plot in device number %1", device_number), error_dialog);
 	setStatusMessage (i18n ("Loading plot from history"), c);
-	RKGlobals::rInterface ()->issueCommand (c);
+	RInterface::issueCommand (c);
 }
 
 void RKCaughtX11Window::gotoPlot (int index) {
@@ -647,19 +647,19 @@ void RKCaughtX11Window::gotoPlot (int index) {
 
 	RCommand* c = new RCommand ("rk.goto.plot (" + QString::number (device_number) + ", " + QString::number (index+1) + ')', RCommand::App, i18n ("Load plot %1 in device number %2", index, device_number), error_dialog);
 	setStatusMessage (i18n ("Loading plot from history"), c);
-	RKGlobals::rInterface ()->issueCommand (c);
+	RInterface::issueCommand (c);
 }
 
 void RKCaughtX11Window::forceAppendCurrentPlot () {
 	RK_TRACE (MISC);
 
-	RKGlobals::rInterface ()->issueCommand ("rk.force.append.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Append this plot to history (device number %1)", device_number), error_dialog);
+	RInterface::issueCommand ("rk.force.append.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Append this plot to history (device number %1)", device_number), error_dialog);
 }
 
 void RKCaughtX11Window::removeCurrentPlot () {
 	RK_TRACE (MISC);
 
-	RKGlobals::rInterface ()->issueCommand ("rk.removethis.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Remove current plot from history (device number %1)", device_number), error_dialog);
+	RInterface::issueCommand ("rk.removethis.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Remove current plot from history (device number %1)", device_number), error_dialog);
 }
 
 void RKCaughtX11Window::clearHistory () {
@@ -667,13 +667,13 @@ void RKCaughtX11Window::clearHistory () {
 
 	if (KMessageBox::warningContinueCancel (this, i18n ("This will clear the plot history for all device windows, not just this one. If this is not your intent, press cancel, below.")) != KMessageBox::Continue) return;
 
-	RKGlobals::rInterface ()->issueCommand ("rk.clear.plot.history ()", RCommand::App, i18n ("Clear plot history"), error_dialog);
+	RInterface::issueCommand ("rk.clear.plot.history ()", RCommand::App, i18n ("Clear plot history"), error_dialog);
 }
 
 void RKCaughtX11Window::showPlotInfo () {
 	RK_TRACE (MISC);
 
-	RKGlobals::rInterface ()->issueCommand ("rk.show.plot.info (" + QString::number (device_number) + ')', RCommand::App, i18n ("Plot properties (device number %1)", device_number), error_dialog);
+	RInterface::issueCommand ("rk.show.plot.info (" + QString::number (device_number) + ')', RCommand::App, i18n ("Plot properties (device number %1)", device_number), error_dialog);
 }
 
 void RKCaughtX11Window::updateHistoryActions (int history_length, int position, const QStringList &labels) {
