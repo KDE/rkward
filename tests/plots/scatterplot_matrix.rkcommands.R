@@ -10,6 +10,6 @@ rk.header ("Scatterplot Matrix", parameters=list("Diagonal panels"="Histogram",
 	"Plot data concentration ellipses"="no"))
 
 rk.graph.on ()
-try (scatterplotMatrix(data, diagonal="histogram", plot.points=TRUE, smooth=FALSE, ellipse=FALSE))
+try (scatterplotMatrix(data, diagonal=list(method="histogram"), plot.points=TRUE, smooth=FALSE, ellipse=FALSE))
 rk.graph.off ()
 })

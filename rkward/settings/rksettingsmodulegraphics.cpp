@@ -81,7 +81,7 @@ RKSettingsModuleGraphics::RKSettingsModuleGraphics (RKSettings *gui, QWidget *pa
 	button = new QRadioButton (i18n ("Embed original device"), group);
 	replace_standard_devices_group->addButton (button, (int) EmbedDevice);
 	group_layout->addWidget (button);
-#ifndef Q_OS_MACOS
+#ifdef Q_OS_MACOS
 	button->setEnabled (false);
 #endif
 	button = new QRadioButton (i18n ("No device integration"), group);

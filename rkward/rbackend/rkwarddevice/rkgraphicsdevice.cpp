@@ -219,7 +219,7 @@ void RKGraphicsDevice::closeDevice (int devnum) {
 void RKGraphicsDevice::clear(const QBrush& brush) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
-	setClip(area.rect ());	// R's devX11.c resets clip on clear, so we do this, too.
+	setClip(area.rect());	// R's devX11.c resets clip on clear, so we do this, too.
 	if (recording_path) {
 		recorded_path = QPainterPath();
 		return;

@@ -9,9 +9,6 @@
 <li>Character for missing values: NA</li>
 </ul>
 DATE<br />
-<h2>Messages, warnings, or errors:</h2>
-<pre class="output_warning">Calling POSIX::isdigit() is deprecated at /home/thomas/.rkward/library/gdata/perl/xls2csv.pl line 118.
-</pre>
 
 
 <p align= center >
