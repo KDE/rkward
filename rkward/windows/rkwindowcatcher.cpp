@@ -212,7 +212,7 @@ void RKWindowCatcher::killDevice (int device_number) {
 #include <kselectaction.h>
 #include <kactioncollection.h>
 
-#include "../rkglobals.h"
+
 #include "../rbackend/rkrinterface.h"
 #include "../rbackend/rkwarddevice/rkgraphicsdevice.h"
 #include "../core/robject.h"

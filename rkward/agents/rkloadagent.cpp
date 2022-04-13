@@ -15,7 +15,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <qstring.h>
 #include <QTemporaryFile>
 
-#include "../rkglobals.h"
 #include "../core/robjectlist.h"
 #include "../misc/rkoutputdirectory.h"
 #include "../rbackend/rkrinterface.h"

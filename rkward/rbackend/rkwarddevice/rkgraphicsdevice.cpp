@@ -16,7 +16,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rkgraphicsdevice_protocol_shared.h"
 #include "../rkrinterface.h"
-#include "../../rkglobals.h"
+
 #include "../../misc/rkdialogbuttonbox.h"
 
 #include "../../debug.h"

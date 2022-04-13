@@ -16,7 +16,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KLocalizedString>
 
 #include "../misc/xmlhelper.h"
-#include "../rkglobals.h"
+
 #include "../debug.h"
 
 RKInput::RKInput (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {

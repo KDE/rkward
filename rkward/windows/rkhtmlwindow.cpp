@@ -35,7 +35,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QCheckBox>
 #include <QFileDialog>
 
-#include "../rkglobals.h"
 #include "../rbackend/rkrinterface.h"
 #include "rkhelpsearchwindow.h"
 #include "../rkward.h"

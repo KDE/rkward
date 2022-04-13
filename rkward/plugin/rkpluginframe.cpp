@@ -10,7 +10,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QVBoxLayout>
 #include <QGroupBox>
 
-#include "../rkglobals.h"
+#include "../misc/rkstyle.h"
 #include "../misc/xmlhelper.h"
 #include "../debug.h"
 
@@ -25,7 +25,7 @@ RKPluginFrame::RKPluginFrame (const QDomElement &element, RKComponent *parent_co
 	layout->addWidget (frame);
 
 	QVBoxLayout *inner = new QVBoxLayout (frame);
-	inner->setSpacing (RKGlobals::spacingHint ());
+	inner->setSpacing(RKStyle::spacingHint());
 
 	checked = 0;
 	if (xml->getBoolAttribute (element, "checkable", false, DL_INFO)) {

@@ -13,7 +13,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QStringListModel>
 
 #include "../misc/xmlhelper.h"
-#include "../rkglobals.h"
 
 #include "../debug.h"
 

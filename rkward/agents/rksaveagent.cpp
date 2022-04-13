@@ -15,7 +15,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../rbackend/rkrinterface.h"
 #include "../misc/rkprogresscontrol.h"
 #include "../core/robjectlist.h"
-#include "../rkglobals.h"
 #include "../rkward.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../windows/rkworkplace.h"

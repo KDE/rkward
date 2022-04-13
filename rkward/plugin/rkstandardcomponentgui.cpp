@@ -25,12 +25,13 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkstandardicons.h"
 #include "../misc/rkxmlguipreviewarea.h"
+#include "../misc/rkstyle.h"
 #include "../windows/rkworkplace.h"
 #include "../windows/rkcommandeditorwindow.h"
 #include "../rbackend/rkrinterface.h"
 #include "../rkward.h"
 #include "../settings/rksettingsmoduleplugins.h"
-#include "../rkglobals.h"
+
 #include "../debug.h"
 
 class RKExtensionSplitter : public QSplitter {
@@ -178,7 +179,7 @@ void RKStandardComponentGUI::createDialog (bool switchable) {
 	QVBoxLayout* vbox = new QVBoxLayout ();
 	hbox->addLayout (vbox);
 	vbox->setContentsMargins (0, 0, 0, 0);
-	vbox->setSpacing (RKGlobals::spacingHint ());
+	vbox->setSpacing (RKStyle::spacingHint ());
 	ok_button = new QPushButton (i18n ("Submit"), central_widget);
 	connect (ok_button, &QPushButton::clicked, this, &RKStandardComponentGUI::ok);
 	vbox->addWidget (ok_button);

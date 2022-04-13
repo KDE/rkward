@@ -778,7 +778,7 @@ void RKComponentPropertyDouble::internalSetValue (const QString &new_value) {
 
 ///////////////////////////////////////////////// RObjects ////////////////////////////////////////////////////////
 
-#include "../rkglobals.h"
+
 #include "../core/robjectlist.h"
 #include "../core/rkvariable.h"
 #include "../core/rcontainerobject.h"

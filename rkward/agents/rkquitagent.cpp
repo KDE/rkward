@@ -11,7 +11,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <qtimer.h>
 
-#include "../rkglobals.h"
 #include "../rbackend/rkrinterface.h"
 #include "../rkward.h"
 #include "../misc/rkprogresscontrol.h"

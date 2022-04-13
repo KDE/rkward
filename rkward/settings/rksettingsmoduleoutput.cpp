@@ -17,7 +17,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QVBoxLayout>
 #include <QComboBox>
 
-#include "../rkglobals.h"
+#include "../misc/rkstyle.h"
 #include "../misc/getfilenamewidget.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkspinbox.h"
@@ -147,7 +147,7 @@ RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent
 	graphics_type_box->setCurrentIndex (graphics_type_box->findData (graphics_type.get()));
 	graphics_type_box->setEditable (false);
 	connect (graphics_type_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &RKSettingsModuleOutput::boxChanged);
-	h_layout->addSpacing (2*RKGlobals::spacingHint ());
+	h_layout->addSpacing (2*RKStyle::spacingHint ());
 	h_layout->addWidget (new QLabel (i18n ("JPG quality"), group));
 	h_layout->addWidget (graphics_jpg_quality_box = graphics_jpg_quality.makeSpinBox(1, 100, this));
 	graphics_jpg_quality_box->setEnabled (graphics_type == "\"JPG\"");
@@ -157,7 +157,7 @@ RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent
 	group_layout->addLayout (h_layout);
 	h_layout->addWidget (new QLabel (i18n ("Width:"), group));
 	h_layout->addWidget (graphics_width.makeSpinBox(1, INT_MAX, this));
-	h_layout->addSpacing (2*RKGlobals::spacingHint ());
+	h_layout->addSpacing (2*RKStyle::spacingHint ());
 	h_layout->addWidget (new QLabel (i18n ("Height:"), group));
 	h_layout->addWidget (graphics_height.makeSpinBox(1, INT_MAX, this));
 	h_layout->addStretch ();

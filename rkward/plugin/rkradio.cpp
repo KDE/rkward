@@ -16,7 +16,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <KLocalizedString>
 
-#include "../rkglobals.h"
 #include "../misc/xmlhelper.h"
 #include "../debug.h"
 

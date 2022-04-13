@@ -32,7 +32,6 @@ void* RKRBackend::default_global_context = 0;
 #include "../core/robject.h"
 #include "../version.h"
 #include "../debug.h"
-
 #include "rkrsupport.h"
 #include "rkstructuregetter.h"
 #include "rksignalsupport.h"

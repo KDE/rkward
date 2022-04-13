@@ -23,7 +23,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../windows/rkworkplace.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../agents/rkquitagent.h"
-#include "../rkglobals.h"
 #include "../rkward.h"
 
 #include "../debug.h"

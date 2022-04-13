@@ -46,7 +46,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkoutputdirectory.h"
 #include "../misc/rkxmlguipreviewarea.h"
-#include "../rkglobals.h"
 #include "../rkward.h"
 
 #include "../debug.h"

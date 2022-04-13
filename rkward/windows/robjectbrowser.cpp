@@ -18,7 +18,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../rkward.h"
 #include "rkhelpsearchwindow.h"
-#include "../rkglobals.h"
 #include "../core/robjectlist.h"
 #include "../core/renvironmentobject.h"
 #include "../core/rkmodificationtracker.h"

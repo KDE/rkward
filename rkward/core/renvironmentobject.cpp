@@ -15,7 +15,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../rbackend/rkrinterface.h"
 #include "../settings/rksettingsmoduleobjectbrowser.h"
 #include "rkmodificationtracker.h"
-#include "../rkglobals.h"
 
 #include "../debug.h"
 

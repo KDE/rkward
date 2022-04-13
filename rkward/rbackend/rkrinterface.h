@@ -161,7 +161,7 @@ happens (whether the command runs successfully, or what the output is). For this
 code:
 
 \code
-#include "rkglobals.h"
+
 #include "rbackend/rinterface.h"
 
 RInterface::issueCommand ("print (\"hello world!\")", RCommand::User);
@@ -186,7 +186,7 @@ want to handle the results of RCommands from RCommandReceiver. When finished, th
 The corresponding code would look something like this:
 
 \code
-#include "rkglobals.h"
+
 #include "rbackend/rinterface.h"
 #include "rbackend/rcommandreceiver.h"
 

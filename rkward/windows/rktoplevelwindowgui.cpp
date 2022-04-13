@@ -41,7 +41,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../plugin/rkcomponentmap.h"
 #include "../dialogs/rkerrordialog.h"
 #include "../rbackend/rkrinterface.h"
-#include "../rkglobals.h"
 #include "../rkward.h"
 
 #include "../debug.h"

@@ -17,7 +17,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../core/rkmodificationtracker.h"
 #include "../core/rkrownames.h"
 #include "../rbackend/rkrinterface.h"
-#include "../rkglobals.h"
 
 #include "../debug.h"
 

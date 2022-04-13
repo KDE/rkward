@@ -36,10 +36,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rkmessagecatalog.h"
 #include "../misc/rkoutputdirectory.h"
 #include "rksessionvars.h"
-
 #include "../windows/rkwindowcatcher.h"
 
-#include "../rkglobals.h"
 #include "../version.h"
 #include "../debug.h"
 

@@ -66,7 +66,7 @@ QString RKNamespaceObject::makeChildName (const QString& short_child_name, bool,
 
 #include "robjectlist.h"
 #include "rkmodificationtracker.h"
-#include "../rkglobals.h"
+
 
 RKOrphanNamespacesObject::RKOrphanNamespacesObject (RObjectList* parent) : REnvironmentObject (parent, i18nc ("Note: 'namespace' is a technical term, should not be translated", "Orphan Namespaces")) {
 	RK_TRACE (OBJECTS);

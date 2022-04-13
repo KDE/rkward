@@ -9,7 +9,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <kmessagebox.h>
 #include <KLocalizedString>
 
-#include "../rkglobals.h"
 #include "../dataeditor/rkeditor.h"
 #include "../dataeditor/rkvareditmodel.h"
 #include "rcontainerobject.h"

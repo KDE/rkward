@@ -51,7 +51,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../settings/rksettings.h"
 #include "../settings/rksettingsmodulecommandeditor.h"
 #include "../rkconsole.h"
-#include "../rkglobals.h"
 #include "../rkward.h"
 #include "rkhelpsearchwindow.h"
 #include "rkhtmlwindow.h"

@@ -19,7 +19,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../rbackend/rcommand.h"
 #include "../misc/rkspinbox.h"
 #include "../misc/rkstandardicons.h"
-#include "../rkglobals.h"
+#include "../misc/rkstyle.h"
 
 #include "../debug.h"
 
@@ -52,7 +52,7 @@ RKSettingsModuleConsole::RKSettingsModuleConsole (RKSettings *gui, QWidget *pare
 	auto max_console_lines_spinner = max_console_lines.makeSpinBox(0, 10000, this);
 	vbox->addWidget (max_console_lines_spinner);
 
-	vbox->addSpacing (2*RKGlobals::spacingHint ());
+	vbox->addSpacing (2*RKStyle::spacingHint ());
 
 	auto pipe_user_commands_through_console_box = pipe_user_commands_through_console.makeCheckbox(i18n("Run commands from script editor through console"), this);
 	vbox->addWidget(pipe_user_commands_through_console_box);
@@ -65,7 +65,7 @@ RKSettingsModuleConsole::RKSettingsModuleConsole (RKSettings *gui, QWidget *pare
 	connect(pipe_user_commands_through_console_box, &QCheckBox::stateChanged, add_piped_commands_to_history_box, &QCheckBox::setEnabled);
 	vbox->addWidget (add_piped_commands_to_history_box);
 
-	vbox->addSpacing (2*RKGlobals::spacingHint ());
+	vbox->addSpacing (2*RKStyle::spacingHint ());
 
 	vbox->addWidget (context_sensitive_history_by_default.makeCheckbox(i18n("Command history is context sensitive by default"), this));
 

@@ -12,7 +12,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KLocalizedString>
 
 #include "rcontainerobject.h"
-#include "../rkglobals.h"
 #include "../rbackend/rkrinterface.h"
 #include "rkmodificationtracker.h"
 

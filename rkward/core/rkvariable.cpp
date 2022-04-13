@@ -12,9 +12,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rcontainerobject.h"
 #include "robjectlist.h"
-
 #include "../rbackend/rkrinterface.h"
-#include "../rkglobals.h"
+
 #include "rkmodificationtracker.h"
 
 #define GET_DATA_COMMAND 11

@@ -41,7 +41,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KJobWidgets>
 #include <KJobUiDelegate>
 
-#include "rkglobals.h"
+
 #include "rkward.h"
 #include "windows/rkhelpsearchwindow.h"
 #include "windows/rkcodecompletion.h"

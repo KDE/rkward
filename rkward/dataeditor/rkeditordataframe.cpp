@@ -10,7 +10,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KLocalizedString>
 
 #include "../rbackend/rkrinterface.h"
-#include "../rkglobals.h"
 #include "twintable.h"
 #include "twintablemember.h"
 #include "rkvareditmodel.h"

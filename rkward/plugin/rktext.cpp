@@ -13,7 +13,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <qdom.h>
 #include <QVBoxLayout>
 
-#include "../rkglobals.h"
 #include "../misc/xmlhelper.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../debug.h"

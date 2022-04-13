@@ -27,7 +27,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../rbackend/rcommandreceiver.h"
 #include "../rbackend/rksessionvars.h"
 #include "../debug.h"
-#include "../rkglobals.h"
+
 #include "../rkward.h"
 #include "../core/robject.h"
 #include "../misc/rkcommonfunctions.h"

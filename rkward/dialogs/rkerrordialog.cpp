@@ -26,7 +26,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rkprogresscontrol.h"
 #include "../misc/rkdialogbuttonbox.h"
 #include "../misc/rkcommonfunctions.h"
-#include "../rkglobals.h"
+
 #include "../rkward.h"
 #include "../version.h"
 

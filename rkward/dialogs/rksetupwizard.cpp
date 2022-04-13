@@ -31,7 +31,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../windows/katepluginintegration.h"
 #include "../rbackend/rksessionvars.h"
 #include "../rbackend/rkrinterface.h"
-#include "../rkglobals.h"
+
 #include "../rkward.h"
 
 #include "../debug.h"

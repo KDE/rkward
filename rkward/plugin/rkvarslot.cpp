@@ -21,7 +21,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rkvarselector.h"
 #include "../core/robject.h"
-#include "../rkglobals.h"
 #include "../debug.h"
 #include "../misc/xmlhelper.h"
 #include "../misc/rkstandardicons.h"

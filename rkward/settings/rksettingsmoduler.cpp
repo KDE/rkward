@@ -33,7 +33,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rkstandardicons.h"
 #include "../rbackend/rkrinterface.h"
 #include "../rbackend/rksessionvars.h"
-#include "../rkglobals.h"
+#include "../misc/rkstyle.h"
+
 #include "../debug.h"
 
 // static constants
@@ -61,7 +62,7 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 
 	QVBoxLayout *main_vbox = new QVBoxLayout (this);
 
-	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
+	main_vbox->addSpacing (2*RKStyle::spacingHint ());
 
 	main_vbox->addWidget (RKCommonFunctions::wordWrappedLabel (i18n ("The following settings mostly affect R behavior in the console. It is generally safe to keep these unchanged.")));
 
@@ -313,7 +314,7 @@ RKSettingsModuleRPackages::RKSettingsModuleRPackages (RKSettings *gui, QWidget *
 
 	QVBoxLayout *main_vbox = new QVBoxLayout (this);
 
-	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
+	main_vbox->addSpacing (2*RKStyle::spacingHint ());
 
 	main_vbox->addWidget (new QLabel (i18n ("CRAN download mirror (leave empty to be prompted once each session):"), this));
 	QHBoxLayout* hbox = new QHBoxLayout ();

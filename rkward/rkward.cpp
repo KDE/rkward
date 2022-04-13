@@ -55,7 +55,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "misc/rkxmlguisyncer.h"
 #include "misc/rkdbusapi.h"
 #include "misc/rkdialogbuttonbox.h"
-#include "rkglobals.h"
+
 #include "dialogs/startupdialog.h"
 #include "dialogs/rkloadlibsdialog.h"
 #include "dialogs/rkimportdialog.h"

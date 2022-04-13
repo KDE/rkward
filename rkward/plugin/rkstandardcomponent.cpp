@@ -47,8 +47,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rkoptionset.h"
 #include "rkvalueselector.h"
 
-#include "../rkglobals.h"
-
 #include "../debug.h"
 
 

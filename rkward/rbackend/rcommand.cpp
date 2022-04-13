@@ -13,7 +13,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../core/robject.h"
 
 #include "../debug.h"
-#include "../rkglobals.h"
+
 
 RCommand* RCommandChain::toCommand() {
 	return (is_command ? static_cast<RCommand*> (this) : 0);

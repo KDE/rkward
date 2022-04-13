@@ -6,7 +6,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "rcommandreceiver.h"
 
-#include "../rkglobals.h"
 #include "rkrinterface.h"
 
 #include "../debug.h"

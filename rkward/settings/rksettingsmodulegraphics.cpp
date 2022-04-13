@@ -20,7 +20,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QRadioButton>
 #include <QSpinBox>
 
-#include "../rkglobals.h"
+#include "../misc/rkstyle.h"
 #include "../rbackend/rkrinterface.h"
 #include "../misc/rkspinbox.h"
 #include "../misc/rkcommonfunctions.h"
@@ -105,7 +105,7 @@ RKSettingsModuleGraphics::RKSettingsModuleGraphics (RKSettings *gui, QWidget *pa
 	group_layout = new QVBoxLayout(group);
 	group_layout->addWidget(new QLabel(i18n("Default width (inches):")));
 	group_layout->addWidget(graphics_width.makeSpinBox(1, 100.0, this));
-	group_layout->addSpacing(2*RKGlobals::spacingHint());
+	group_layout->addSpacing(2*RKStyle::spacingHint());
 	group_layout->addWidget(new QLabel(i18n("Default height (inches)")));
 	group_layout->addWidget(graphics_height.makeSpinBox(1, 100.0, this));
 	main_vbox->addWidget (group);

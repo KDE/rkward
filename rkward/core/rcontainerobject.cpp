@@ -15,8 +15,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rfunctionobject.h"
 #include "renvironmentobject.h"
 #include "rkrownames.h"
-
-#include "../rkglobals.h"
 #include "rkmodificationtracker.h"
 
 #include "../debug.h"

@@ -23,7 +23,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../windows/rkworkplace.h"
 #include "../rbackend/rcommand.h"
 #include "../rbackend/rkrinterface.h"
-#include "../rkglobals.h"
 #include "rkstandardicons.h"
 
 #include "../debug.h"

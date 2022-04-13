@@ -23,8 +23,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../settings/rksettingsmoduler.h"
 #include "rkpseudoobjects.h"
 
-#include "../rkglobals.h"
-
 #include "../debug.h"
 
 // static

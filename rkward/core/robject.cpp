@@ -13,7 +13,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../rbackend/rkrinterface.h"
 #include "../rbackend/rkrbackendprotocol_shared.h"
-#include "../rkglobals.h"
 #include "robjectlist.h"
 #include "rcontainerobject.h"
 #include "rkpseudoobjects.h"

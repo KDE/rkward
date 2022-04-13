@@ -9,7 +9,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../rbackend/rdata.h"
 #include "rkmodificationtracker.h"
-#include "../rkglobals.h"
+
 #include "../debug.h"
 
 RFunctionObject::RFunctionObject (RObject *parent, const QString &name) : RObject (parent, name) {

@@ -18,7 +18,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KLocalizedString>
 #include <KColorScheme>
 
-#include "../rkglobals.h"
 #include "../rbackend/rkrinterface.h"
 #include "../settings/rksettingsmoduler.h"
 #include "../misc/rkcommonfunctions.h"
