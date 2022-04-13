@@ -9,9 +9,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rkrbackendprotocol_frontend.h"
 #include "rkwarddevice/rkgraphicsdevice_frontendtransmitter.h"
+#include "rksessionvars.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../settings/rksettingsmodulegeneral.h"
-#include "../rkglobals.h"
 
 #include <KLocalizedString>
 #include <krandom.h>
@@ -107,7 +107,7 @@ void RKFrontendTransmitter::run () {
 		exec();   // To actually show the transmission error
 		return;
 	}
-	QString debugger = RKGlobals::startup_options["backend-debugger"].toString ();
+	QString debugger = RKSettingsModuleGeneral::startupOption("backend-debugger").toString();
 	args.prepend (RKCommonFunctions::windowsShellScriptSafeCommand (backend_executable));
 	if (!debugger.isEmpty ()) {
 		args = debugger.split (' ') + args;
@@ -116,7 +116,7 @@ void RKFrontendTransmitter::run () {
 	// Resolving libR.dylib and friends is a pain on MacOS, and running through R CMD does not always seem to be enough.
 	// (Apparently DYLIB_FALLBACK_LIBRARY_PATH is ignored on newer versions of MacOS). Safest best seems to be to start in the lib directory, itself.
 	QProcess dummy;
-	dummy.start (qgetenv ("R_BINARY"), QStringList() << "--slave" << "--no-save" << "--no-init-file" << "-e" << "cat(R.home('lib'))");
+	dummy.start(RKSessionVars::RBinary(), QStringList() << "--slave" << "--no-save" << "--no-init-file" << "-e" << "cat(R.home('lib'))");
 	dummy.waitForFinished ();
 	QString r_home = QString::fromLocal8Bit (dummy.readAllStandardOutput ());
 	RK_DEBUG(RBACKEND, DL_INFO, "Setting working directory to %s", qPrintable (r_home));
@@ -124,10 +124,10 @@ void RKFrontendTransmitter::run () {
 #endif
 	args.prepend ("CMD");
 	if (DL_DEBUG >= RK_Debug::RK_Debug_Level) {
-		qDebug ("%s", qPrintable (qgetenv ("R_BINARY")));
-		qDebug ("%s", qPrintable (args.join ("\n")));
+		qDebug("%s", qPrintable(RKSessionVars::RBinary()));
+		qDebug("%s", qPrintable(args.join("\n")));
 	}
-	backend->start (qgetenv ("R_BINARY"), args, QIODevice::ReadOnly);
+	backend->start(RKSessionVars::RBinary(), args, QIODevice::ReadOnly);
 
 	if (!backend->waitForStarted()) {
 		handleTransmissionError(i18n("The backend executable could not be started. Error message was: %1", backend->errorString()));

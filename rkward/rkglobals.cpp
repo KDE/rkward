@@ -8,8 +8,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <qstring.h>
 
-QVariantMap RKGlobals::startup_options;
-
 #include <QApplication>
 #include <QStyle>
 

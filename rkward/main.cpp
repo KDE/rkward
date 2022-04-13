@@ -76,8 +76,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <stdlib.h>
 
 #include "rkward.h"
-#include "rkglobals.h"
 #include "settings/rksettingsmoduledebug.h"
+#include "settings/rksettingsmodulegeneral.h"
+#include "rbackend/rksessionvars.h"
 #include "windows/rkdebugmessagewindow.h"
 #include "misc/rkdbusapi.h"
 #include "misc/rkcommonfunctions.h"
@@ -313,11 +314,11 @@ int main (int argc, char *argv[]) {
 		for (int i = 0; i < url_args.size (); ++i) {
 			url_args[i] = QUrl::fromUserInput (url_args[i], QDir::currentPath (), QUrl::AssumeLocalFile).toString ();
 		}
-		RKGlobals::startup_options["initial_urls"] = url_args;
-		RKGlobals::startup_options["warn_external"] = !parser.isSet ("nowarn-external");
+		RKSettingsModuleGeneral::setStartupOption("initial_urls", url_args);
+		RKSettingsModuleGeneral::setStartupOption("warn_external", !parser.isSet("nowarn-external"));
 	}
-	RKGlobals::startup_options["evaluate"] = parser.value ("evaluate");
-	RKGlobals::startup_options["backend-debugger"] = parser.value ("backend-debugger");
+	RKSettingsModuleGeneral::setStartupOption("evaluate", parser.value("evaluate"));
+	RKSettingsModuleGeneral::setStartupOption("backend-debugger", parser.value("backend-debugger"));
 
 	// MacOS may need some path adjustments, first
 #ifdef Q_OS_MACOS
@@ -383,8 +384,7 @@ int main (int argc, char *argv[]) {
 			RK_DEBUG (APP, DL_DEBUG, "Using R as configured at compile time");
 		}
 	}
-	// TODO: Store somewhere else
-	qputenv ("R_BINARY", r_exe.toLocal8Bit ());
+	RKSessionVars::r_binary = r_exe;
 
 	qsrand (QTime::currentTime ().msec ()); // Workaround for some versions of kcoreaddons (5.21.0 through at least 5.34.0). See https://phabricator.kde.org/D5966
 	if (app.isSessionRestored ()) {

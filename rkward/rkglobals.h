@@ -30,8 +30,6 @@ public:
 	static int marginHint ();
 /// returns KDialog::spacingHint (), without the need to include kdialog.h in all the sources
 	static int spacingHint ();
-
-	static QVariantMap startup_options;
 };
 
 #endif

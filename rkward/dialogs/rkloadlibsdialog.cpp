@@ -26,8 +26,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <kmessagebox.h>
 #include <kuser.h>
 
-#include "../rkglobals.h"
 #include "../rbackend/rkrinterface.h"
+#include "../rbackend/rksessionvars.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../settings/rksettings.h"
 #include "../core/robjectlist.h"
@@ -319,19 +319,18 @@ void RKLoadLibsDialog::runInstallationCommand (const QString& command, bool as_r
 		RK_ASSERT (false);
 	}
 
-	QString R_binary (getenv ("R_BINARY"));
 	QString call;
 	QStringList params;
 #ifdef Q_OS_WIN
 	RK_ASSERT (!as_root);
-	call = R_binary;
+	call = RKSessionVars::RBinary();
 #else
 	if (as_root) {
 		call = QStandardPaths::findExecutable ("kdesu");
 		if (call.isEmpty ()) call = QStandardPaths::findExecutable ("kdesudo");
-		params << "-t" << "--" << R_binary;
+		params << "-t" << "--" << RKSessionVars::RBinary();
 	} else {
-		call = R_binary;
+		call = RKSessionVars::RBinary();
 	}
 #endif
 	params << "--no-save" << "--no-restore" << "--file=" + file.fileName ();

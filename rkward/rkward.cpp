@@ -216,9 +216,9 @@ void RKWardMainWindow::closeEvent (QCloseEvent *e) {
 void RKWardMainWindow::doPostInit () {
 	RK_TRACE (APP);
 
-	QStringList open_urls = RKGlobals::startup_options.take ("initial_urls").toStringList ();
-	bool warn_external = RKGlobals::startup_options.take ("warn_external").toBool ();
-	QString evaluate_code = RKGlobals::startup_options.take ("evaluate").toString ();
+	QStringList open_urls = RKSettingsModuleGeneral::takeStartupOption("initial_urls").toStringList();
+	bool warn_external = RKSettingsModuleGeneral::takeStartupOption("warn_external").toBool();
+	QString evaluate_code = RKSettingsModuleGeneral::takeStartupOption("evaluate").toString();
 
 	initPlugins ();
 	gui_rebuild_locked = false;
