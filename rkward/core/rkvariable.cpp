@@ -178,8 +178,8 @@ void RKVariable::rCommandDone (RCommand *command) {
 		data->formatting_options = parseFormattingOptionsString (getMetaProperty ("format"));
 
 		ChangeSet *set = new ChangeSet (0, getLength (), true);
-		RKGlobals::tracker ()->objectDataChanged (this, set);
-		RKGlobals::tracker ()->objectMetaChanged (this);
+		RKModificationTracker::instance()->objectDataChanged (this, set);
+		RKModificationTracker::instance()->objectMetaChanged (this);
 		type -= (type & NeedDataUpdate);
 		discardUnsyncedChanges ();
 		lockSyncing (false);
@@ -368,7 +368,7 @@ void RKVariable::writeInvalidFields (QList<int> rows, RCommandChain *chain) {
 
 	if (data->previously_valid != data->invalid_fields.isEmpty ()) {
 		data->previously_valid = data->invalid_fields.isEmpty ();
-		RKGlobals::tracker ()->objectMetaChanged (this);
+		RKModificationTracker::instance()->objectMetaChanged (this);
 	}
 }
 
@@ -399,7 +399,7 @@ void RKVariable::writeData (int from_row, int to_row, RCommandChain *chain) {
 	if (!changed_invalids.isEmpty ()) writeInvalidFields (changed_invalids, chain);
 
 	ChangeSet *set = new ChangeSet (from_row, to_row);
-	RKGlobals::tracker ()->objectDataChanged (this, set);
+	RKModificationTracker::instance()->objectDataChanged (this, set);
 }
 
 void RKVariable::cellsChanged (int from_row, int to_row) {
@@ -713,7 +713,7 @@ void RKVariable::updateValueLabels () {
 	RK_TRACE (OBJECTS);
 
 	writeValueLabels (0);
-	RKGlobals::tracker ()->objectMetaChanged (this);
+	RKModificationTracker::instance()->objectMetaChanged (this);
 
 	ValueLabels *labels = data->value_labels;
 
@@ -734,7 +734,7 @@ void RKVariable::updateValueLabels () {
 
 	// also update display of all values:
 	ChangeSet *set = new ChangeSet (0, getLength () - 1);
-	RKGlobals::tracker ()->objectDataChanged (this, set);
+	RKModificationTracker::instance()->objectDataChanged (this, set);
 
 	// TODO: find out whether the object is valid after the operation and update accordingly!
 }
@@ -814,7 +814,7 @@ void RKVariable::setFormattingOptions (const FormattingOptions new_options) {
 
 	// also update display of all values:
 	ChangeSet *set = new ChangeSet (0, getLength () -1);
-	RKGlobals::tracker ()->objectDataChanged (this, set);
+	RKModificationTracker::instance()->objectDataChanged (this, set);
 }
 
 QString RKVariable::getFormattingOptionsString () const {

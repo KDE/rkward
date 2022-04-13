@@ -139,8 +139,8 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 	connect (partManager (), &KParts::PartManager::activePartChanged, this, &RKWardMainWindow::partChanged);
 
 	readOptions();
-	RKGlobals::mtracker = new RKModificationTracker (this);
-	initToolViewsAndR ();
+	new RKModificationTracker(this);
+	initToolViewsAndR();
 
 	///////////////////////////////////////////////////////////////////
 	// build the interface
@@ -177,13 +177,12 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 RKWardMainWindow::~RKWardMainWindow() {
 	RK_TRACE (APP);
 
-	// these would not be strictly necessary, as we're exiting the app, anyway.
+	// these would not be strictly necessary, as we're exiting the app, anyway. (TODO: some deleted as QObject children, anyway. Clean up.)
 	delete RObjectList::getObjectList ();
 	delete RObjectBrowser::mainBrowser ();
 	delete RKCommandLog::getLog ();
 	delete RKConsole::mainConsole ();
 	delete RKHelpSearchWindow::mainHelpSearch ();
-	delete RKGlobals::tracker ();
 	delete RInterface::instance();
 	delete RControlWindow::getControl ();
 	factory ()->removeClient (RKComponentMap::getMap ());

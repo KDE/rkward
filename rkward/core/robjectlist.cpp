@@ -50,9 +50,9 @@ RObjectList::RObjectList () : RContainerObject (0, QString ()) {
 
    // TODO: Do we really need tracker notification at this stage?
 	RKOrphanNamespacesObject *obj = new RKOrphanNamespacesObject (this);
-	RKGlobals::tracker ()->beginAddObject (obj, this, 0);      // first child after GlobalEnv
+	RKModificationTracker::instance()->beginAddObject (obj, this, 0);      // first child after GlobalEnv
 	orphan_namespaces = obj;
-	RKGlobals::tracker ()->endAddObject (obj, this, 0);
+	RKModificationTracker::instance()->endAddObject (obj, this, 0);
 }
 
 RObjectList::~RObjectList () {
@@ -182,9 +182,9 @@ void RObjectList::updateEnvironments (const QStringList &_env_names, bool force_
 		}
 		if (!obj) {
 			obj = createTopLevelEnvironment (name);
-			RKGlobals::tracker ()->beginAddObject (obj, this, i);
+			RKModificationTracker::instance()->beginAddObject (obj, this, i);
 			childmap.insert (i, obj);
-			RKGlobals::tracker ()->endAddObject (obj, this, i);
+			RKModificationTracker::instance()->endAddObject (obj, this, i);
 		}
 		newchildmap.insert (i, obj);
 	}
@@ -196,7 +196,7 @@ void RObjectList::updateEnvironments (const QStringList &_env_names, bool force_
 		
 		if (new_pos < 0) {	// environment is gone
 			RK_DEBUG (OBJECTS, DL_INFO, "removing toplevel environment %s from list", obj->getShortName ().toLatin1 ().data ());
-			if (RKGlobals::tracker ()->removeObject (obj, 0, true)) --i;
+			if (RKModificationTracker::instance()->removeObject (obj, 0, true)) --i;
 			else (newchildmap.insert (i, obj));
 		} else if (new_pos != i) {
 			// this call is rather expensive, all in all, but fortunately called very rarely

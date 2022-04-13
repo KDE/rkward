@@ -43,7 +43,7 @@ bool RFunctionObject::updateStructure (RData *new_data) {
 
 	if (!RObject::updateStructure (new_data)) return false;
 
-	if (updateArguments (new_data)) RKGlobals::tracker ()->objectMetaChanged (this);
+	if (updateArguments (new_data)) RKModificationTracker::instance()->objectMetaChanged (this);
 
 	return true;
 }

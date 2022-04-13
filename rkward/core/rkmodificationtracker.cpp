@@ -20,9 +20,12 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
+RKModificationTracker* RKModificationTracker::_instance = nullptr;
+
 RKModificationTracker::RKModificationTracker (QObject *parent) : RKObjectListModel (parent) {
 	RK_TRACE (OBJECTS);
-
+	RK_ASSERT(_instance == nullptr);  // singleton for now
+	_instance = this;
 	updates_locked = 0;
 }
 
@@ -446,13 +449,13 @@ void RObjectListener::objectDataChanged (RObject*, const RObject::ChangeSet *) {
 void RObjectListener::listenForObject (RObject* object) {
 	RK_TRACE (OBJECTS);
 
-	RKGlobals::tracker ()->addObjectListener (object, this);
+	RKModificationTracker::instance()->addObjectListener (object, this);
 	++num_watched_objects;
 }
 
 void RObjectListener::stopListenForObject (RObject* object) {
 	RK_TRACE (OBJECTS);
 
-	RKGlobals::tracker ()->removeObjectListener (object, this);
+	RKModificationTracker::instance()->removeObjectListener (object, this);
 	--num_watched_objects;
 }

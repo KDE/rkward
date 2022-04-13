@@ -80,7 +80,7 @@ void RKRowNames::writeData (int from_row, int to_row, RCommandChain *chain) {
 	ChangeSet *set = new ChangeSet;
 	set->from_index = from_row;
 	set->to_index = to_row;
-	RKGlobals::tracker ()->objectDataChanged (this, set);
+	RKModificationTracker::instance()->objectDataChanged (this, set);
 }
 
 void RKRowNames::setText (int row, const QString &text) {

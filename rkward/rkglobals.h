@@ -26,18 +26,12 @@ TODO: move the static members to the respective classes instead. There's no poin
 */
 class RKGlobals{
 public:
-/// static pointer to the RKModificationTracker
-	static RKModificationTracker *tracker () { return mtracker; };
-
 /// returns KDialog::marginHint (), without the need to include kdialog.h in all the sources
 	static int marginHint ();
 /// returns KDialog::spacingHint (), without the need to include kdialog.h in all the sources
 	static int spacingHint ();
 
 	static QVariantMap startup_options;
-private:
-	friend class RKWardMainWindow;
-	static RKModificationTracker *mtracker;
 };
 
 #endif

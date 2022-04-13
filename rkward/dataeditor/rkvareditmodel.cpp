@@ -621,7 +621,7 @@ bool RKVarEditMetaModel::setData (const QModelIndex& index, const QVariant& valu
 		if (var->getShortName () != value.toString ()) {
 			if (!var->canRename ()) return false;
 			if (var->parentObject ()->isContainer ()) {
-				RKGlobals::tracker ()->renameObject (var, static_cast<RContainerObject*> (var->parentObject ())->validizeName (value.toString ()));
+				RKModificationTracker::instance()->renameObject (var, static_cast<RContainerObject*> (var->parentObject ())->validizeName (value.toString ()));
 			} else return false;
 		}
 	} else if (row == LabelRow) {
@@ -870,7 +870,7 @@ bool RKVarEditDataFrameModel::removeColumns (int column, int count, const QModel
 
 	while ((column + count) > objects.size ()) --count;
 	for (int i = column + count - 1; i >= column; --i) {	// we start at the end so that the index remains valid
-		RKGlobals::tracker ()->removeObject (objects[i]);
+		RKModificationTracker::instance()->removeObject (objects[i]);
 		// the comment in insertColumns, above: The object will be removed from our list in objectRemoved().
 	}
 	return true;

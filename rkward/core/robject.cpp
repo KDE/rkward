@@ -160,7 +160,7 @@ void RObject::setMetaProperty (const QString &id, const QString &value, bool syn
 	}
 
 	if (sync) writeMetaData (0);
-	RKGlobals::tracker ()->objectMetaChanged (this);
+	RKModificationTracker::instance()->objectMetaChanged (this);
 }
 
 QString RObject::makeClassString (const QString &sep) const {
@@ -251,7 +251,7 @@ void RObject::rCommandDone (RCommand *command) {
 		if (command->failed ()) {
 			RK_DEBUG (OBJECTS, DL_INFO, "command failed while trying to update object '%s'. No longer present?", getShortName ().toLatin1 ().data ());
 			// this may happen, if the object has been removed in the workspace in between
-			RKGlobals::tracker ()->removeObject (this, 0, true);
+			RKModificationTracker::instance()->removeObject (this, 0, true);
 			return;
 		}
 		if (parent && parent->isContainer ()) static_cast<RContainerObject*> (parent)->updateChildStructure (this, command);		// this may result in a delete, so nothing after this!
@@ -288,7 +288,7 @@ bool RObject::updateStructure (RData *new_data) {
 	properties_change = updateDimensions (new_data_data.at (StoragePositionDims));
 	properties_change = updateSlots (new_data_data.at (StoragePositionSlots));
 
-	if (properties_change) RKGlobals::tracker ()->objectMetaChanged (this);
+	if (properties_change) RKModificationTracker::instance()->objectMetaChanged (this);
 	if (type & NeedDataUpdate) updateDataFromR (0);
 
 	if (type & Incomplete) {
@@ -472,11 +472,11 @@ bool RObject::updateSlots (RData *new_data) {
 		if (!spo) {
 			spo = new RSlotsPseudoObject (this);
 			added = true;
-			RKGlobals::tracker ()->lockUpdates (true);
+			RKModificationTracker::instance()->lockUpdates (true);
 		}
 		bool ret = spo->updateStructure (new_data->structureVector ().at (0));
 		if (added) {
-			RKGlobals::tracker ()->lockUpdates (false);
+			RKModificationTracker::instance()->lockUpdates (false);
 			setSpecialChildObject (spo, SlotsObject);
 		}
 		return ret;
@@ -542,7 +542,7 @@ RObject *RObject::findChildByObjectModelIndex (int index) const {
 }
 
 QList <RKEditor*> RObject::editors () const {
-	return (RKGlobals::tracker ()->objectEditors (this));
+	return (RKModificationTracker::instance()->objectEditors (this));
 }
 
 void RObject::rename (const QString &new_short_name) {
@@ -563,7 +563,7 @@ void RObject::setSpecialChildObject (RObject* special, PseudoObjectType special_
 	if (special == old_special) return;
 
 	if (old_special) {
-		RKGlobals::tracker ()->removeObject (old_special, 0, true);
+		RKModificationTracker::instance()->removeObject (old_special, 0, true);
 		RK_ASSERT (!hasPseudoObject (special_type));	// should have been removed in the above statement via RObject::remove()
 	}
 
@@ -578,9 +578,9 @@ void RObject::setSpecialChildObject (RObject* special, PseudoObjectType special_
 		int index = getObjectModelIndexOf (special);
 		// HACK: Newly added object must not be included in the index before beginAddObject (but must be included above for getObjectModelIncexOf() to work)
 		contained_objects -= special_type;
-		RKGlobals::tracker ()->beginAddObject (special, this, index);
+		RKModificationTracker::instance()->beginAddObject (special, this, index);
 		contained_objects |= special_type;
-		RKGlobals::tracker ()->endAddObject (special, this, index);
+		RKModificationTracker::instance()->endAddObject (special, this, index);
 	}
 }
 

@@ -99,7 +99,7 @@ void RKObjectListView::setObjectCurrent (RObject *object, bool only_if_none_curr
 	if (!object) return;
 	if (only_if_none_current && currentIndex ().isValid ()) return;
 
-	QModelIndex index = settings->mapFromSource (RKGlobals::tracker ()->indexFor (object));
+	QModelIndex index = settings->mapFromSource (RKModificationTracker::instance()->indexFor (object));
 	if (index.isValid ()) {
 		scrollTo (index);
 		setCurrentIndex (index);
@@ -113,7 +113,7 @@ void RKObjectListView::setRootObject (RObject *root) {
 	RK_TRACE (APP);
 
 	root_object = root;
-	QModelIndex index = settings->mapFromSource (RKGlobals::tracker ()->indexFor (root));
+	QModelIndex index = settings->mapFromSource (RKModificationTracker::instance()->indexFor (root));
 	if (index != rootIndex ()) {
 		setRootIndex (index);
 		settingsChanged ();    // Updates column sizes. Note: Recurses into this function, but with index == rootIndex()
@@ -162,10 +162,10 @@ void RKObjectListView::initialize () {
 
 	setUniformRowHeights (true);
 
-	settings->setSourceModel (RKGlobals::tracker ());
+	settings->setSourceModel (RKModificationTracker::instance());
 	setModel (settings);
 
-	QModelIndex genv = settings->mapFromSource (RKGlobals::tracker ()->indexFor (RObjectList::getGlobalEnv ()));
+	QModelIndex genv = settings->mapFromSource (RKModificationTracker::instance()->indexFor (RObjectList::getGlobalEnv ()));
 	setExpanded (genv, true);
 	setMinimumHeight (rowHeight (genv) * 5);
 	settingsChanged ();

@@ -206,7 +206,7 @@ void RObjectBrowserInternal::popupView () {
 
 void RObjectBrowserInternal::popupDelete () {
 	RK_TRACE (APP);
-	RKGlobals::tracker ()->removeObject (list_view->menuObject ());
+	RKModificationTracker::instance()->removeObject (list_view->menuObject ());
 }
 
 void RObjectBrowserInternal::popupUnload () {
@@ -229,7 +229,7 @@ void RObjectBrowserInternal::popupRename () {
 	if (ok) {
 		QString valid = static_cast<RContainerObject*> (list_view->menuObject ()->parentObject ())->validizeName (name);
 		if (valid != name) KMessageBox::sorry (this, i18n ("The name you specified was already in use or not valid. Renamed to %1", valid), i18n ("Invalid Name"));
-		RKGlobals::tracker ()->renameObject (list_view->menuObject (), valid);
+		RKModificationTracker::instance()->renameObject (list_view->menuObject (), valid);
 	}
 }
 
