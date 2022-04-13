@@ -62,6 +62,7 @@ RKEditorDataFrame::RKEditorDataFrame (const QString& new_object_name, QWidget* p
 	connect (model, &RKVarEditDataFrameModel::modelObjectDestroyed, this, &RKEditorDataFrame::deleteLater);
 
 	RKGlobals::rInterface ()->closeChain (open_chain);
+	open_chain = nullptr;
 }
 
 void RKEditorDataFrame::commonInit () {
@@ -107,7 +108,7 @@ void RKEditorDataFrame::rCommandDone (RCommand *command) {
 
 	if (command->getFlags () == LOAD_COMPLETE_COMMAND) {
 		RKGlobals::rInterface ()->closeChain (open_chain);
-		open_chain = 0;
+		open_chain = nullptr;
 
 		enableEditing (true);
 	}
