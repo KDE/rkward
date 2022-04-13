@@ -1,3 +1,7 @@
+function preprocess() {
+	if (getBoolean("beta")) echo ('require("lm.beta")\n');
+}
+
 function calculate () {
 	var vars = trim (getValue ("x")).replace (/\n/g, " + ");
 	var intercept = "";
@@ -11,9 +15,10 @@ function calculate () {
 	model = 'lm (' + getValue ("y") + ' ~ ' + intercept + vars;
 	if (!simple_mode) model += ', na.action=na.exclude';	// default action of na.omit is a nuisance for fitted values
 	model += ')';
+	if (getBoolean("beta")) model = 'lm.beta (' + model + ')';
 
 	if (simple_mode) {
-		echo ('results <- summary.lm (' + model + ')\n');
+		echo ('results <- summary (' + model + ')\n');
 	} else {
 		echo ('model <- ' + model + '\n');
 		if (savemodel) echo ('.GlobalEnv$' + getString ('savemodel') + ' <- model\n');
