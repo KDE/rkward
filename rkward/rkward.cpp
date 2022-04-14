@@ -55,7 +55,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "misc/rkxmlguisyncer.h"
 #include "misc/rkdbusapi.h"
 #include "misc/rkdialogbuttonbox.h"
-
+#include "misc/rkstyle.h"
 #include "dialogs/startupdialog.h"
 #include "dialogs/rkloadlibsdialog.h"
 #include "dialogs/rkimportdialog.h"
@@ -187,6 +187,7 @@ RKWardMainWindow::~RKWardMainWindow() {
 	delete RControlWindow::getControl ();
 	factory ()->removeClient (RKComponentMap::getMap ());
 	delete RKComponentMap::getMap ();
+	RKStyle::cleanResources();
 }
 
 KatePluginIntegrationApp* RKWardMainWindow::katePluginIntegration () {
@@ -912,10 +913,9 @@ void RKWardMainWindow::slotDetachWindow () {
 }
 
 void setIndictatorColor(QWidget *widget, KColorScheme::ForegroundRole fg, KColorScheme::BackgroundRole bg) {
-	KColorScheme color_scheme(QPalette::Normal); // default parameter in more recent versions of KColorScheme (->KF6: remove)
 	QPalette palette = widget->palette();
-	palette.setBrush(widget->backgroundRole(), color_scheme.background(bg));
-	palette.setBrush(widget->foregroundRole(), color_scheme.foreground(fg));
+	palette.setBrush(widget->backgroundRole(), RKStyle::viewScheme()->background(bg));
+	palette.setBrush(widget->foregroundRole(), RKStyle::viewScheme()->foreground(fg));
 	widget->setAutoFillBackground(true);
 	widget->setPalette(palette);
 }

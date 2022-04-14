@@ -7,6 +7,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #ifndef RKSTYLE_H
 #define RKSTYLE_H
 
+class KColorScheme;
+
 /**
 Namespace to hold common styling options: Spacing and color scheme.
 
@@ -14,10 +16,15 @@ Namespace to hold common styling options: Spacing and color scheme.
 */
 class RKStyle{
 public:
-/// returns KDialog::marginHint (), without the need to include kdialog.h in all the sources
+/// @returns KDialog::marginHint (), without the need to include kdialog.h in all the sources
 	static int marginHint ();
-/// returns KDialog::spacingHint (), without the need to include kdialog.h in all the sources
+/// @returns KDialog::spacingHint (), without the need to include kdialog.h in all the sources
 	static int spacingHint ();
+/// @returns a cached instance of the color scheme for normal views. Particularly useful for setting specials colors in item models
+	static KColorScheme* viewScheme();
+	static void cleanResources();
+private:
+	static KColorScheme* _view_scheme;
 };
 
 #endif

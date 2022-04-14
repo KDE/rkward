@@ -52,6 +52,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rkmessagecatalog.h"
 #include "../misc/rkfindbar.h"
 #include "../misc/rkoutputdirectory.h"
+#include "../misc/rkstyle.h"
 #include "../plugin/rkcomponentmap.h"
 #include "../windows/rkworkplace.h"
 #include "../windows/rkworkplaceview.h"
@@ -307,12 +308,12 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 	// Apply current color scheme to page. This needs support in the CSS of the page, so will only work for RKWard help and output pages.
 	// Note that the CSS in those pages also has "automatic" support for dark mode ("prefers-color-scheme: dark"; but see https://bugreports.qt.io/browse/QTBUG-89753), however, 
 	// for a seamless appearance, the only option is to set the theme colors dynamically, via javascript.
-	auto scheme = KColorScheme(QPalette::Normal);
+	auto scheme = RKStyle::viewScheme();
 	QString color_scheme_js = QStringLiteral("function rksetcolor(name, value) { document.querySelector(':root').style.setProperty(name, value); }\n"
 	                                                "rksetcolor('--regular-text-color', '%1');\n"
 	                                                "rksetcolor('--background-color', '%2');\n"
 	                                                "rksetcolor('--header-color', '%3');\n"
-	                                                "rksetcolor('--anchor-color', '%4');").arg(scheme.foreground().color().name(), scheme.background().color().name(), scheme.foreground(KColorScheme::VisitedText).color().name(), scheme.foreground(KColorScheme::LinkText).color().name());
+	                                                "rksetcolor('--anchor-color', '%4');").arg(scheme->foreground().color().name(), scheme->background().color().name(), scheme->foreground(KColorScheme::VisitedText).color().name(), scheme->foreground(KColorScheme::LinkText).color().name());
 #ifdef NO_QT_WEBENGINE
 	connect(page, &RKWebPage::loadFinished, [this, color_scheme_js](){
 		page->mainFrame()->evaluateJavaScript(color_scheme_js);
