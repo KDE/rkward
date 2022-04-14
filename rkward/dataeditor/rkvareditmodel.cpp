@@ -17,7 +17,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../core/rkmodificationtracker.h"
 #include "../core/rkrownames.h"
 #include "../rbackend/rkrinterface.h"
-#include "../rkglobals.h"
 
 #include "../debug.h"
 
@@ -621,7 +620,7 @@ bool RKVarEditMetaModel::setData (const QModelIndex& index, const QVariant& valu
 		if (var->getShortName () != value.toString ()) {
 			if (!var->canRename ()) return false;
 			if (var->parentObject ()->isContainer ()) {
-				RKGlobals::tracker ()->renameObject (var, static_cast<RContainerObject*> (var->parentObject ())->validizeName (value.toString ()));
+				RKModificationTracker::instance()->renameObject (var, static_cast<RContainerObject*> (var->parentObject ())->validizeName (value.toString ()));
 			} else return false;
 		}
 	} else if (row == LabelRow) {
@@ -849,7 +848,7 @@ bool RKVarEditDataFrameModel::insertColumns (int column, int count, const QModel
 		RK_ASSERT (obj->isVariable ());
 //		addObject (col, obj);	// the object will be added via RKModificationTracker::addObject -> this::childAdded. That will also take care of calling beginInsertColumns()/endInsertColumns()
 	
-		RKGlobals::rInterface ()->issueCommand (new RCommand (".rk.data.frame.insert.column (" + dataframe->getFullName () + ", \"" + obj->getShortName () + "\", " + QString::number (col+1-var_col_offset) + ")", RCommand::App | RCommand::Sync));
+		RInterface::issueCommand (new RCommand (".rk.data.frame.insert.column (" + dataframe->getFullName () + ", \"" + obj->getShortName () + "\", " + QString::number (col+1-var_col_offset) + ")", RCommand::App | RCommand::Sync));
 	}
 
 	return true;
@@ -870,7 +869,7 @@ bool RKVarEditDataFrameModel::removeColumns (int column, int count, const QModel
 
 	while ((column + count) > objects.size ()) --count;
 	for (int i = column + count - 1; i >= column; --i) {	// we start at the end so that the index remains valid
-		RKGlobals::tracker ()->removeObject (objects[i]);
+		RKModificationTracker::instance()->removeObject (objects[i]);
 		// the comment in insertColumns, above: The object will be removed from our list in objectRemoved().
 	}
 	return true;
@@ -881,7 +880,7 @@ void RKVarEditDataFrameModel::doInsertRowsInBackend (int row, int count) {
 
 	// TODO: most of the time we're only adding one row at a time, still we should have a function to add multiple rows at once.
 	for (int i = row; i < row + count; ++i) {
-		RKGlobals::rInterface ()->issueCommand (new RCommand (".rk.data.frame.insert.row (" + dataframe->getFullName () + ", " + QString::number (i+1) + ')', RCommand::App | RCommand::Sync));
+		RInterface::issueCommand (new RCommand (".rk.data.frame.insert.row (" + dataframe->getFullName () + ", " + QString::number (i+1) + ')', RCommand::App | RCommand::Sync));
 	}
 }
 
@@ -889,7 +888,7 @@ void RKVarEditDataFrameModel::doRemoveRowsInBackend (int row, int count) {
 	RK_TRACE (EDITOR);
 
 	for (int i = row + count - 1; i >= row; --i) {
-		RKGlobals::rInterface ()->issueCommand (new RCommand (".rk.data.frame.delete.row (" + dataframe->getFullName () + ", " + QString::number (i+1) + ')', RCommand::App | RCommand::Sync));
+		RInterface::issueCommand (new RCommand (".rk.data.frame.delete.row (" + dataframe->getFullName () + ", " + QString::number (i+1) + ')', RCommand::App | RCommand::Sync));
 	}
 }
 
@@ -964,7 +963,7 @@ void RKVarEditDataFrameModel::pushTable (RCommandChain *sync_chain) {
 	command.append (")");
 
 	// push all children
-	RKGlobals::rInterface ()->issueCommand (new RCommand (command, RCommand::Sync), sync_chain);
+	RInterface::issueCommand (new RCommand (command, RCommand::Sync), sync_chain);
 	for (int col=0; col < objects.size (); ++col) {
 		objects[col]->restore (sync_chain);
 	}
@@ -972,7 +971,7 @@ void RKVarEditDataFrameModel::pushTable (RCommandChain *sync_chain) {
 	// now store the meta-data
 	dataframe->writeMetaData (sync_chain);
 
-	RKGlobals::rInterface ()->issueCommand (new RCommand (QString (), RCommand::Sync | RCommand::EmptyCommand | RCommand::ObjectListUpdate), sync_chain);
+	RInterface::issueCommand (new RCommand (QString (), RCommand::Sync | RCommand::EmptyCommand | RCommand::ObjectListUpdate), sync_chain);
 }
 
 void RKVarEditDataFrameModel::restoreObject (RObject* object, RCommandChain* chain) {

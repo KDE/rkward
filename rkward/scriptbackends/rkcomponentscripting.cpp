@@ -15,7 +15,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../core/robjectlist.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/xmlhelper.h"
-#include "../rkglobals.h"
 #include "../rbackend/rkrinterface.h"
 #include "qtscriptbackend.h"
 #include "qtscripti18n.h"
@@ -37,7 +36,7 @@ RKComponentScriptingProxy::~RKComponentScriptingProxy () {
 	RK_TRACE (PHP);
 
 	for (int i = 0; i < outstanding_commands.size (); ++i) {
-		RKGlobals::rInterface ()->cancelCommand (outstanding_commands[i].command);
+		RInterface::instance()->cancelCommand(outstanding_commands[i].command);
 	}
 }
 
@@ -140,7 +139,7 @@ QVariant RKComponentScriptingProxy::doRCommand (const QString& command, const QS
 	for (int i = 0; i < outstanding_commands.size (); ++i) {
 		const OutstandingCommand &oc = outstanding_commands[i];
 		if (oc.callback == callback) {
-			if (RKGlobals::rInterface ()->softCancelCommand (oc.command)) {
+			if (RInterface::instance()->softCancelCommand(oc.command)) {
 				outstanding_commands.removeAt (i);
 				--i;
 				continue;
@@ -154,7 +153,7 @@ QVariant RKComponentScriptingProxy::doRCommand (const QString& command, const QS
 	com.callback = callback;
 	outstanding_commands.append (com);
 
-	RKGlobals::rInterface ()->issueCommand (com.command);
+	RInterface::issueCommand (com.command);
 	return (QVariant (com.command->id ()));
 }
 

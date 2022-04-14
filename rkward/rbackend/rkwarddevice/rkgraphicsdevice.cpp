@@ -16,7 +16,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rkgraphicsdevice_protocol_shared.h"
 #include "../rkrinterface.h"
-#include "../../rkglobals.h"
+
 #include "../../misc/rkdialogbuttonbox.h"
 
 #include "../../debug.h"
@@ -192,7 +192,7 @@ void RKGraphicsDevice::checkSize() {
 	if(!view) return;
 	if (view->size () != area.size ()) {
 		if(view->size().isEmpty()) return;
-		RKGlobals::rInterface()->issueCommand(new RCommand ("rkward:::RK.resize(" + QString::number(devices.key(this) + 1) + ',' + QString::number(id) + ')', RCommand::PriorityCommand));
+		RInterface::issueCommand(new RCommand ("rkward:::RK.resize(" + QString::number(devices.key(this) + 1) + ',' + QString::number(id) + ')', RCommand::PriorityCommand));
 	}
 }
 

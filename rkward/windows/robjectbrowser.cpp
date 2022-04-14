@@ -18,7 +18,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../rkward.h"
 #include "rkhelpsearchwindow.h"
-#include "../rkglobals.h"
 #include "../core/robjectlist.h"
 #include "../core/renvironmentobject.h"
 #include "../core/rkmodificationtracker.h"
@@ -183,7 +182,7 @@ void RObjectBrowserInternal::popupCopy () {
 	if (ok) {
 		QString valid = RObjectList::getGlobalEnv ()->validizeName (name);
 		if (valid != name) KMessageBox::sorry (this, i18n ("The name you specified was already in use or not valid. Renamed to %1", valid), i18n ("Invalid Name"));
-		RKGlobals::rInterface ()->issueCommand (RObject::rQuote (valid) + " <- " + object->getFullName (), RCommand::App | RCommand::ObjectListUpdate);
+		RInterface::issueCommand (RObject::rQuote (valid) + " <- " + object->getFullName (), RCommand::App | RCommand::ObjectListUpdate);
 	}
 }
 
@@ -195,7 +194,7 @@ void RObjectBrowserInternal::popupCopyToGlobalEnv () {
 
 	QString valid = RObjectList::getGlobalEnv ()->validizeName (name);
 	if (valid != name) KMessageBox::sorry (this, i18n ("An object named '%1' already exists in the GlobalEnv. Created the copy as '%2' instead.", name, valid), i18n ("Name already in use"));
-	RKGlobals::rInterface ()->issueCommand (RObject::rQuote (valid) + " <- " + object->getFullName (), RCommand::App | RCommand::ObjectListUpdate);
+	RInterface::issueCommand (RObject::rQuote (valid) + " <- " + object->getFullName (), RCommand::App | RCommand::ObjectListUpdate);
 }
 
 void RObjectBrowserInternal::popupView () {
@@ -206,7 +205,7 @@ void RObjectBrowserInternal::popupView () {
 
 void RObjectBrowserInternal::popupDelete () {
 	RK_TRACE (APP);
-	RKGlobals::tracker ()->removeObject (list_view->menuObject ());
+	RKModificationTracker::instance()->removeObject (list_view->menuObject ());
 }
 
 void RObjectBrowserInternal::popupUnload () {
@@ -229,7 +228,7 @@ void RObjectBrowserInternal::popupRename () {
 	if (ok) {
 		QString valid = static_cast<RContainerObject*> (list_view->menuObject ()->parentObject ())->validizeName (name);
 		if (valid != name) KMessageBox::sorry (this, i18n ("The name you specified was already in use or not valid. Renamed to %1", valid), i18n ("Invalid Name"));
-		RKGlobals::tracker ()->renameObject (list_view->menuObject (), valid);
+		RKModificationTracker::instance()->renameObject (list_view->menuObject (), valid);
 	}
 }
 

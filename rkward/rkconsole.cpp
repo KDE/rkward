@@ -41,7 +41,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KJobWidgets>
 #include <KJobUiDelegate>
 
-#include "rkglobals.h"
+
 #include "rkward.h"
 #include "windows/rkhelpsearchwindow.h"
 #include "windows/rkcodecompletion.h"
@@ -487,7 +487,7 @@ void RKConsole::submitCommand () {
 	doc->insertLine (doc->lines (), QString ());
 	if (!command.isEmpty ()) {
 		current_command = new RCommand (command, RCommand::User | RCommand::Console, QString (), this);
-		RKGlobals::rInterface ()->issueCommand (current_command);
+		RInterface::issueCommand (current_command);
 		interrupt_command_action->setEnabled (true);
 	} else {
 		showPrompt ();
@@ -801,7 +801,7 @@ void RKConsole::resetConsole () {
 
 	input_buffer.clear ();
 	if (current_command) {
-		RKGlobals::rInterface ()->cancelCommand (current_command);
+		RInterface::instance()->cancelCommand(current_command);
 	} else {
 		prefix = nprefix;
 		incomplete_command.clear ();
@@ -880,7 +880,7 @@ void RKConsole::pipeUserCommand (const QString &command) {
 		RKConsole::mainConsole ()->pipeCommandThroughConsoleLocal (command);
 	} else {
 		RCommand *cmd = new RCommand (command, RCommand::User);
-		RKGlobals::rInterface ()->issueCommand (cmd);
+		RInterface::issueCommand (cmd);
 	}
 }
 

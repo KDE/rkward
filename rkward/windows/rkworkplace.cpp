@@ -46,7 +46,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkoutputdirectory.h"
 #include "../misc/rkxmlguipreviewarea.h"
-#include "../rkglobals.h"
 #include "../rkward.h"
 
 #include "../debug.h"
@@ -967,7 +966,7 @@ void RKWorkplace::saveWorkplace(const QUrl& for_url, RCommandChain *chain) {
 
 	QString file_param;
 	if (!for_url.isEmpty()) file_param = QString("file=") + RObject::rQuote(for_url.toLocalFile() + QStringLiteral(".rkworkplace")) + QStringLiteral(", ");
-	RKGlobals::rInterface()->issueCommand("rk.save.workplace(" + file_param + "description=" + RObject::rQuote (makeWorkplaceDescription().join ("\n")) + ')', RCommand::App, i18n ("Save Workplace layout"), 0, 0, chain);
+	RInterface::issueCommand("rk.save.workplace(" + file_param + "description=" + RObject::rQuote (makeWorkplaceDescription().join ("\n")) + ')', RCommand::App, i18n ("Save Workplace layout"), 0, 0, chain);
 }
 
 void RKWorkplace::restoreWorkplace (RCommandChain *chain, bool merge) {
@@ -976,7 +975,7 @@ void RKWorkplace::restoreWorkplace (RCommandChain *chain, bool merge) {
 
 	QString no_close_windows;
 	if (merge) no_close_windows = "close.windows = FALSE";
-	RKGlobals::rInterface ()->issueCommand ("rk.restore.workplace(" + no_close_windows + ')', RCommand::App, i18n ("Restore Workplace layout"), 0, 0, chain);
+	RInterface::issueCommand ("rk.restore.workplace(" + no_close_windows + ')', RCommand::App, i18n ("Restore Workplace layout"), 0, 0, chain);
 }
 
 void RKWorkplace::restoreWorkplace (const QStringList &description) {

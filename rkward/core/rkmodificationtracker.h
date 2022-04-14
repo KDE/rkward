@@ -113,6 +113,7 @@ class RKModificationTracker : public RKObjectListModel {
 public:
 	explicit RKModificationTracker (QObject *parent);
 	~RKModificationTracker ();
+	static RKModificationTracker* instance() { return _instance; };
 	
 /** the given object should be removed (either it was removed in the R-workspace, or the user requests removal of the object in an editor or the RObjectList). First, if the object is being edited somewhere, the user will get a chance to object to the removal. If the user does not object, the RKModificationTracker will remove the object and notify all interested listeners that the object really was removed. When calling from the RObjectList, you will likely set removed_in_workspace to true, to signal that the object-data is already gone in the workspace. */
 	bool removeObject (RObject *object, RKEditor *editor=0, bool removed_in_workspace=false);
@@ -146,6 +147,7 @@ friend class RObjectList;
 	void endAddObject (RObject *object, RObject* parent, int position);
 /** essentially like the above function(s). All objects listening for child position changed on the parent will be notified */
 	void moveObject (RContainerObject *parent, RObject* child, int old_index, int new_index);
+	static RKModificationTracker* _instance;
 };
 
 #endif

@@ -6,7 +6,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "rcommandreceiver.h"
 
-#include "../rkglobals.h"
 #include "rkrinterface.h"
 
 #include "../debug.h"
@@ -29,7 +28,7 @@ void RCommandReceiver::cancelOutstandingCommands () {
 	RK_TRACE (RBACKEND);
 
 	for (RCommandList::const_iterator it = outstanding_commands.constBegin (); it != outstanding_commands.constEnd (); ++it) {
-		RKGlobals::rInterface()->cancelCommand (*it);
+		RInterface::instance()->cancelCommand(*it);
 	}
 }
 

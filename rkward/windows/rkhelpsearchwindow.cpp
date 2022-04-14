@@ -27,7 +27,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../rbackend/rcommandreceiver.h"
 #include "../rbackend/rksessionvars.h"
 #include "../debug.h"
-#include "../rkglobals.h"
+
 #include "../rkward.h"
 #include "../core/robject.h"
 #include "../misc/rkcommonfunctions.h"
@@ -158,7 +158,7 @@ void RKHelpSearchWindow::getFunctionHelp (const QString &function_name, const QS
 	command.append (")");
 	if (type == "vignette") command.append (")");
 
-	RKGlobals::rInterface ()->issueCommand (command, RCommand::App | RCommand::GetStringVector, i18n ("Find HTML help for %1", function_name), this, GET_HELP);
+	RInterface::issueCommand (command, RCommand::App | RCommand::GetStringVector, i18n ("Find HTML help for %1", function_name), this, GET_HELP);
 }
 
 void RKHelpSearchWindow::slotFindButtonClicked () {
@@ -191,7 +191,7 @@ void RKHelpSearchWindow::slotFindButtonClicked () {
 
 	QString s = ".rk.get.search.results (" + RObject::rQuote (field->currentText ()) + ", agrep=" + agrep + ", ignore.case=" + ignoreCase + package + ", fields=" + fields + ')';
 	
-	RKGlobals::rInterface ()->issueCommand (s, RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString (), this, HELP_SEARCH, 0);
+	RInterface::issueCommand (s, RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString (), this, HELP_SEARCH, 0);
 	setEnabled (false);
 	field->addItem (field->currentText ());
 }

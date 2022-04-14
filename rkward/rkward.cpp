@@ -55,7 +55,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "misc/rkxmlguisyncer.h"
 #include "misc/rkdbusapi.h"
 #include "misc/rkdialogbuttonbox.h"
-#include "rkglobals.h"
+#include "misc/rkstyle.h"
 #include "dialogs/startupdialog.h"
 #include "dialogs/rkloadlibsdialog.h"
 #include "dialogs/rkimportdialog.h"
@@ -118,7 +118,6 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 	rkward_mainwin = this;
 	katepluginintegration = nullptr;
 	active_ui_buddy = nullptr;
-	RKGlobals::rinter = nullptr;
 	RKCommonFunctions::getRKWardDataDir(); // call this before any forking, in order to avoid potential race conditions during initialization of data dir
 	RKSettings::settings_tracker = new RKSettingsTracker (this);
 
@@ -140,8 +139,8 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 	connect (partManager (), &KParts::PartManager::activePartChanged, this, &RKWardMainWindow::partChanged);
 
 	readOptions();
-	RKGlobals::mtracker = new RKModificationTracker (this);
-	initToolViewsAndR ();
+	new RKModificationTracker(this);
+	initToolViewsAndR();
 
 	///////////////////////////////////////////////////////////////////
 	// build the interface
@@ -178,17 +177,17 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 RKWardMainWindow::~RKWardMainWindow() {
 	RK_TRACE (APP);
 
-	// these would not be strictly necessary, as we're exiting the app, anyway.
+	// these would not be strictly necessary, as we're exiting the app, anyway. (TODO: some deleted as QObject children, anyway. Clean up.)
 	delete RObjectList::getObjectList ();
 	delete RObjectBrowser::mainBrowser ();
 	delete RKCommandLog::getLog ();
 	delete RKConsole::mainConsole ();
 	delete RKHelpSearchWindow::mainHelpSearch ();
-	delete RKGlobals::tracker ();
-	delete RKGlobals::rInterface ();
+	delete RInterface::instance();
 	delete RControlWindow::getControl ();
 	factory ()->removeClient (RKComponentMap::getMap ());
 	delete RKComponentMap::getMap ();
+	RKStyle::cleanResources();
 }
 
 KatePluginIntegrationApp* RKWardMainWindow::katePluginIntegration () {
@@ -218,9 +217,9 @@ void RKWardMainWindow::closeEvent (QCloseEvent *e) {
 void RKWardMainWindow::doPostInit () {
 	RK_TRACE (APP);
 
-	QStringList open_urls = RKGlobals::startup_options.take ("initial_urls").toStringList ();
-	bool warn_external = RKGlobals::startup_options.take ("warn_external").toBool ();
-	QString evaluate_code = RKGlobals::startup_options.take ("evaluate").toString ();
+	QStringList open_urls = RKSettingsModuleGeneral::takeStartupOption("initial_urls").toStringList();
+	bool warn_external = RKSettingsModuleGeneral::takeStartupOption("warn_external").toBool();
+	QString evaluate_code = RKSettingsModuleGeneral::takeStartupOption("evaluate").toString();
 
 	initPlugins ();
 	gui_rebuild_locked = false;
@@ -244,7 +243,7 @@ void RKWardMainWindow::doPostInit () {
 
 	QString cd_to = RKSettingsModuleGeneral::initialWorkingDirectory ();
 	if (!cd_to.isEmpty ()) {
-		RKGlobals::rInterface ()->issueCommand ("setwd (" + RObject::rQuote (cd_to) + ")\n", RCommand::App);
+		RInterface::issueCommand ("setwd (" + RObject::rQuote (cd_to) + ")\n", RCommand::App);
 		QDir::setCurrent (cd_to);
 	}
 
@@ -277,7 +276,7 @@ void RKWardMainWindow::doPostInit () {
 	// up to this point, no "real" save-worthy stuff can be pending in the backend. So mark this point as "clean".
 	RCommand *command = new RCommand (QString (), RCommand::EmptyCommand | RCommand::Sync | RCommand::App);
 	connect (command->notifier (), &RCommandNotifier::commandFinished, this, &RKWardMainWindow::setWorkspaceUnmodified);
-	RKGlobals::rInterface ()->issueCommand (command);
+	RInterface::issueCommand (command);
 
 	if (!evaluate_code.isEmpty ()) RKConsole::pipeUserCommand (evaluate_code);
 	RKDBusAPI *dbus = new RKDBusAPI (this);
@@ -285,7 +284,7 @@ void RKWardMainWindow::doPostInit () {
 	// around on the bus in this case.
 
 	updateCWD ();
-	connect (RKGlobals::rInterface (), &RInterface::backendWorkdirChanged, this, &RKWardMainWindow::updateCWD);
+	connect (RInterface::instance(), &RInterface::backendWorkdirChanged, this, &RKWardMainWindow::updateCWD);
 	setCaption (QString ());	// our version of setCaption takes care of creating a correct caption, so we do not need to provide it here
 }
 
@@ -367,7 +366,6 @@ void RKWardMainWindow::initPlugins (const QStringList &automatically_added) {
 
 void RKWardMainWindow::startR () {
 	RK_TRACE (APP);
-	RK_ASSERT (!RKGlobals::rInterface ());
 
 	// make sure our general purpose files directory exists
 	QString packages_path = RKSettingsModuleGeneral::filesPath() + "/.rkward_packages";
@@ -392,8 +390,8 @@ void RKWardMainWindow::startR () {
 		}
 	}
 
-	RKGlobals::rinter = new RInterface ();
-	connect(RKGlobals::rInterface(), &RInterface::backendStatusChanged, this, &RKWardMainWindow::setRStatus);
+	RInterface::create();
+	connect(RInterface::instance(), &RInterface::backendStatusChanged, this, &RKWardMainWindow::setRStatus);
 	new RObjectList ();
 
 	RObjectBrowser::mainBrowser ()->unlock ();
@@ -405,9 +403,9 @@ void RKWardMainWindow::slotConfigure () {
 }
 
 void RKWardMainWindow::slotCancelAllCommands () {
-	RK_TRACE (APP);
-	RK_ASSERT (RKGlobals::rInterface ());
-	RKGlobals::rInterface ()->cancelAll ();
+	RK_TRACE(APP);
+	RK_ASSERT(RInterface::instance());
+	RInterface::instance()->cancelAll();
 }
 
 void RKWardMainWindow::configureCarbonCopy () {
@@ -915,10 +913,9 @@ void RKWardMainWindow::slotDetachWindow () {
 }
 
 void setIndictatorColor(QWidget *widget, KColorScheme::ForegroundRole fg, KColorScheme::BackgroundRole bg) {
-	KColorScheme color_scheme(QPalette::Normal); // default parameter in more recent versions of KColorScheme (->KF6: remove)
 	QPalette palette = widget->palette();
-	palette.setBrush(widget->backgroundRole(), color_scheme.background(bg));
-	palette.setBrush(widget->foregroundRole(), color_scheme.foreground(fg));
+	palette.setBrush(widget->backgroundRole(), RKStyle::viewScheme()->background(bg));
+	palette.setBrush(widget->foregroundRole(), RKStyle::viewScheme()->foreground(fg));
 	widget->setAutoFillBackground(true);
 	widget->setPalette(palette);
 }

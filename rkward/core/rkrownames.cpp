@@ -12,7 +12,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KLocalizedString>
 
 #include "rcontainerobject.h"
-#include "../rkglobals.h"
 #include "../rbackend/rkrinterface.h"
 #include "rkmodificationtracker.h"
 
@@ -62,7 +61,7 @@ void RKRowNames::writeData (int from_row, int to_row, RCommandChain *chain) {
 	RK_TRACE (OBJECTS);
 
 	if (isSequential ()) {
-		RKGlobals::rInterface ()->issueCommand (getFullName (DefaultObjectNameOptions) + " <- NULL", RCommand::App | RCommand::Sync, QString (), 0,0, chain);
+		RInterface::issueCommand (getFullName (DefaultObjectNameOptions) + " <- NULL", RCommand::App | RCommand::Sync, QString (), 0,0, chain);
 	} else {
 		// unfortunately, we always need to write the whole data, as row.names<- does not support indexing.
 		QString data_string = "c (";
@@ -74,13 +73,13 @@ void RKRowNames::writeData (int from_row, int to_row, RCommandChain *chain) {
 			}
 		}
 		data_string.append (")");
-		RKGlobals::rInterface ()->issueCommand (getFullName (DefaultObjectNameOptions) + " <- " + data_string, RCommand::App | RCommand::Sync, QString (), 0, 0, chain);
+		RInterface::issueCommand (getFullName (DefaultObjectNameOptions) + " <- " + data_string, RCommand::App | RCommand::Sync, QString (), 0, 0, chain);
 	}
 
 	ChangeSet *set = new ChangeSet;
 	set->from_index = from_row;
 	set->to_index = to_row;
-	RKGlobals::tracker ()->objectDataChanged (this, set);
+	RKModificationTracker::instance()->objectDataChanged (this, set);
 }
 
 void RKRowNames::setText (int row, const QString &text) {

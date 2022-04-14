@@ -9,7 +9,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KLocalizedString>
 #include <KSharedConfig>
 #include <KConfigGroup>
-
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qdir.h>
@@ -24,7 +23,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rkspinbox.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkstandardicons.h"
-#include "../rkglobals.h"
+#include "../misc/rkstyle.h"
+
 #include "../version.h"
 #include "../debug.h"
 
@@ -52,19 +52,21 @@ bool RKSettingsModuleGeneral::installation_moved = false;
 QString RKSettingsModuleGeneral::previous_rkward_data_dir;
 QUrl RKSettingsModuleGeneral::generic_filedialog_start_url;
 
+QVariantMap RKSettingsModuleGeneral::startup_options;
+
 RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
 
 	QVBoxLayout *main_vbox = new QVBoxLayout (this);
 	main_vbox->addWidget (RKCommonFunctions::wordWrappedLabel (i18n ("Settings marked with (*) do not take effect until you restart RKWard")));
 
-	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
+	main_vbox->addSpacing (2*RKStyle::spacingHint ());
 
 	files_choser = new GetFileNameWidget (this, GetFileNameWidget::ExistingDirectory, true, i18n ("Directory where rkward may store files (*)"), QString (), new_files_path);
 	connect (files_choser, &GetFileNameWidget::locationChanged, this, &RKSettingsModuleGeneral::change);
 	main_vbox->addWidget (files_choser);
 
-	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
+	main_vbox->addSpacing (2*RKStyle::spacingHint ());
 
 	main_vbox->addWidget(new QLabel(i18n("Startup Action (*)")));
 	auto startup_action_choser = startup_action.makeDropDown(RKConfigBase::LabelList(
@@ -88,7 +90,7 @@ RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *pare
 	RKCommonFunctions::setTips (i18n ("<p>The initial working directory to use. Note that if you are loading a workspace on startup, and you have configured RKWard to change to the directory of loaded workspaces, that directory will take precedence.</p>"), group_box, initial_dir_chooser, initial_dir_custom_chooser);
 	main_vbox->addWidget (group_box);
 
-	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
+	main_vbox->addSpacing (2*RKStyle::spacingHint ());
 
 	main_vbox->addWidget (RKCommonFunctions::wordWrappedLabel (i18n ("The workplace layout (i.e. which script-, data-, help-windows are open) may be saved (and loaded) per R workspace, or independent of the R workspace. Which do you prefer?")));
 
@@ -110,16 +112,16 @@ RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *pare
 	connect (workplace_save_chooser, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &RKSettingsModuleGeneral::change);
 	main_vbox->addWidget (group_box);
 
-	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
+	main_vbox->addSpacing (2*RKStyle::spacingHint ());
 
 	main_vbox->addWidget(cd_to_workspace_dir_on_load.makeCheckbox(i18n("When loading a workspace, change to the corresponding directory."), this));
 
-	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
+	main_vbox->addSpacing (2*RKStyle::spacingHint ());
 
 	main_vbox->addWidget (new QLabel(i18n("Warn when editing objects with more than this number of fields (0 for no limit):")));
 	main_vbox->addWidget (warn_size_object_edit.makeSpinBox(0, INT_MAX, this));
 
-	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
+	main_vbox->addSpacing (2*RKStyle::spacingHint ());
 
 	main_vbox->addWidget(new QLabel(i18n("MDI window focus behavior"), this));
 	auto mdi_focus_policy_chooser = mdi_focus_policy.makeDropDown(RKConfigBase::LabelList(

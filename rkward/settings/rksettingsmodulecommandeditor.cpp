@@ -25,7 +25,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkstandardicons.h"
 #include "../core/robject.h"
-#include "../rkglobals.h"
+#include "../misc/rkstyle.h"
+
 #include "../debug.h"
 
 // static members
@@ -115,11 +116,11 @@ RKSettingsModuleCommandEditor::RKSettingsModuleCommandEditor (RKSettings *gui, Q
 
 	QVBoxLayout* main_vbox = new QVBoxLayout (this);
 	main_vbox->addWidget (RKCommonFunctions::wordWrappedLabel (i18n ("Settings marked with (*) do not take effect until you restart RKWard")));
-	main_vbox->addSpacing (2 * RKGlobals::spacingHint ());
+	main_vbox->addSpacing (2 * RKStyle::spacingHint ());
 
 	main_vbox->addWidget (completion_settings_widget = new RKCodeCompletionSettingsWidget (this, this, &completion_settings, true));
 
-	main_vbox->addSpacing (2 * RKGlobals::spacingHint ());
+	main_vbox->addSpacing (2 * RKStyle::spacingHint ());
 
 	QGroupBox *group = autosave_enabled_box = new QGroupBox (i18n ("Autosaves"), this);
 	autosave_enabled_box->setCheckable (true);
@@ -133,7 +134,7 @@ RKSettingsModuleCommandEditor::RKSettingsModuleCommandEditor (RKSettings *gui, Q
 
 	main_vbox->addWidget (group);
 
-	main_vbox->addSpacing (2 * RKGlobals::spacingHint ());
+	main_vbox->addSpacing (2 * RKStyle::spacingHint ());
 
 	group = new QGroupBox (i18n ("Opening script files"), this);
 	form_layout = new QFormLayout (group);

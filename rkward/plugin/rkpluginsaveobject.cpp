@@ -14,7 +14,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../misc/xmlhelper.h"
 #include "../misc/rksaveobjectchooser.h"
-#include "../rkglobals.h"
+
 #include "../debug.h"
 
 RKPluginSaveObject::RKPluginSaveObject (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {

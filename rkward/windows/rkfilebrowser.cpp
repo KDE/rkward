@@ -29,7 +29,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QInputDialog>
 
 #include "rkworkplace.h"
-#include "../rkglobals.h"
 #include "../rbackend/rkrinterface.h"
 #include "../rkward.h"
 #include "../misc/rkdummypart.h"
@@ -132,7 +131,7 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : QWidget (parent) {
 	connect (urlbox, &KUrlComboBox::urlActivated, this, &RKFileBrowserWidget::urlChangedInCombo);
 
 	connect (dir, &KDirOperator::fileSelected, this, &RKFileBrowserWidget::fileActivated);
-	connect (RKGlobals::rInterface (), &RInterface::backendWorkdirChanged, this, &RKFileBrowserWidget::syncToWD);
+	connect (RInterface::instance(), &RInterface::backendWorkdirChanged, this, &RKFileBrowserWidget::syncToWD);
 
 	setURL (QUrl::fromLocalFile (QDir::currentPath ()));
 }

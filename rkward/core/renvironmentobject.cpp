@@ -15,7 +15,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../rbackend/rkrinterface.h"
 #include "../settings/rksettingsmoduleobjectbrowser.h"
 #include "rkmodificationtracker.h"
-#include "../rkglobals.h"
 
 #include "../debug.h"
 
@@ -105,7 +104,7 @@ void REnvironmentObject::updateFromR (RCommandChain *chain) {
 	if (type & PackageEnv) options.append (", namespacename=" + rQuote (packageName ()));
 
 	RCommand *command = new RCommand (".rk.get.structure (" + getFullName (DefaultObjectNameOptions) + ", " + rQuote (getShortName ()) + options + ')', RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString (), this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command, chain);
+	RInterface::issueCommand (command, chain);
 
 	type |= Updating;
 }
@@ -120,7 +119,7 @@ void REnvironmentObject::updateFromR (RCommandChain *chain, const QStringList &c
 	for (int i = childmap.size () - 1; i >= 0; --i) {
 		RObject *object = childmap[i];
 		if (!current_symbols.contains (object->getShortName ())) {
-			if (object->isPending () || (!(RKGlobals::tracker ()->removeObject (object, 0, true)))) debug_baseline++;
+			if (object->isPending () || (!(RKModificationTracker::instance()->removeObject (object, 0, true)))) debug_baseline++;
 		}
 	}
 
@@ -177,11 +176,11 @@ void REnvironmentObject::updateNamespace (RData* new_data) {
 	if (!namespace_envir) {
 		namespace_envir = new RKNamespaceObject (this);
 		added = true;
-		RKGlobals::tracker ()->lockUpdates (true);
+		RKModificationTracker::instance()->lockUpdates (true);
 	}
 	namespace_envir->updateStructure (new_data->structureVector ().at (0));
 	if (added) {
-		RKGlobals::tracker ()->lockUpdates (false);
+		RKModificationTracker::instance()->lockUpdates (false);
 		setSpecialChildObject (namespace_envir, NamespaceObject);
 	}
 }

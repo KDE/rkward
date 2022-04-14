@@ -20,7 +20,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../rbackend/rkrinterface.h"
 #include "../rbackend/rcommand.h"
 #include "../rbackend/rcommandstack.h"
-#include "../rkglobals.h"
 #include "../rkward.h"
 #include "../debug.h"
 
@@ -112,7 +111,7 @@ void RControlWindow::cancelButtonClicked () {
 		RCommand* command = coc->toCommand ();
 		if (command) {
 			if (!(command->type () & RCommand::Sync)) {
-				RKGlobals::rInterface ()->cancelCommand (command);
+				RInterface::instance()->cancelCommand(command);
 			} else {
 				some_not_cancelable = true;
 			}
@@ -128,11 +127,11 @@ void RControlWindow::pauseButtonClicked () {
 	RK_TRACE (APP);
 
 	if (paused) {
-		RKGlobals::rInterface ()->pauseProcessing (false);
+		RInterface::instance()->pauseProcessing(false);
 		pause_button->setText (i18n ("Pause execution"));
 		paused = false;
 	} else {
-		RKGlobals::rInterface ()->pauseProcessing (true);
+		RInterface::instance()->pauseProcessing(true);
 		pause_button->setText (i18n ("Resume execution"));
 		paused = true;
 	}

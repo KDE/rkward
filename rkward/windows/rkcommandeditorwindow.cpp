@@ -51,7 +51,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../settings/rksettings.h"
 #include "../settings/rksettingsmodulecommandeditor.h"
 #include "../rkconsole.h"
-#include "../rkglobals.h"
 #include "../rkward.h"
 #include "rkhelpsearchwindow.h"
 #include "rkhtmlwindow.h"
@@ -566,7 +565,7 @@ void RKCommandEditorWindow::discardPreview () {
 	if (preview_dir) {
 		preview->wrapperWidget ()->hide ();
 		preview_manager->setPreviewDisabled ();
-		RKGlobals::rInterface ()->issueCommand (QString (".rk.killPreviewDevice(%1)\nrk.discard.preview.data (%1)").arg (RObject::rQuote(preview_manager->previewId ())), RCommand::App | RCommand::Sync);
+		RInterface::issueCommand (QString (".rk.killPreviewDevice(%1)\nrk.discard.preview.data (%1)").arg (RObject::rQuote(preview_manager->previewId ())), RCommand::App | RCommand::Sync);
 		delete preview_dir;
 		preview_dir = 0;
 		delete preview_input_file;
@@ -864,7 +863,7 @@ void RKCommandEditorWindow::doRenderPreview () {
 
 	if (mode != GraphPreview && !preview->findChild<RKMDIWindow*>()) {
 		// (lazily) initialize the preview window with _something_, as an RKMDIWindow is needed to display messages (important, if there is an error during the first preview)
-		RKGlobals::rInterface()->issueCommand (".rk.with.window.hints (rk.show.html(" + RObject::rQuote (output_file) + "), \"\", " + RObject::rQuote (preview_manager->previewId ()) + ", style=\"preview\")", RCommand::App | RCommand::Sync);
+		RInterface::issueCommand (".rk.with.window.hints (rk.show.html(" + RObject::rQuote (output_file) + "), \"\", " + RObject::rQuote (preview_manager->previewId ()) + ", style=\"preview\")", RCommand::App | RCommand::Sync);
 	}
 
 	RK_ASSERT (preview_input_file->open (QIODevice::WriteOnly));
@@ -1250,7 +1249,7 @@ void RKCommandHighlighter::copyLinesToOutput (KTextEditor::View *view, Highlight
 	// highlight and submit
 	QString highlighted = commandToHTML (doc->text (sel), mode);
 	if (!highlighted.isEmpty ()) {
-		RKGlobals::rInterface ()->issueCommand (".rk.cat.output (" + RObject::rQuote (highlighted) + ")\n", RCommand::App | RCommand::Silent);
+		RInterface::issueCommand (".rk.cat.output (" + RObject::rQuote (highlighted) + ")\n", RCommand::App | RCommand::Silent);
 	}
 }
 

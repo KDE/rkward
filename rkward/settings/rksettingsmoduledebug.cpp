@@ -20,7 +20,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../misc/rkspinbox.h"
 #include "../misc/rkcommonfunctions.h"
-#include "../rkglobals.h"
+#include "../misc/rkstyle.h"
+
 #include "../debug.h"
 
 RKSettingsModuleDebug::RKSettingsModuleDebug (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
@@ -30,7 +31,7 @@ RKSettingsModuleDebug::RKSettingsModuleDebug (RKSettings *gui, QWidget *parent) 
 
 	main_vbox->addWidget (RKCommonFunctions::wordWrappedLabel (i18n ("<b>These settings are for debugging purposes, only.</b> It is safe to leave them untouched. Also, these settings will only apply to the current session, and will not be saved.")));
 
-	main_vbox->addSpacing (2 * RKGlobals::spacingHint ());
+	main_vbox->addSpacing (2 * RKStyle::spacingHint ());
 
 	QLabel* label = new QLabel (i18n ("Debug level"), this);
 	debug_level_box = new RKSpinBox (this);

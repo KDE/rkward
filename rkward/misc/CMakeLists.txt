@@ -28,6 +28,7 @@ SET(misc_STAT_SRCS
    rkxmlguipreviewarea.cpp
    rkdialogbuttonbox.cpp
    rkoutputdirectory.cpp
+   rkstyle.cpp
    )
 
 ADD_LIBRARY(misc STATIC ${misc_STAT_SRCS})

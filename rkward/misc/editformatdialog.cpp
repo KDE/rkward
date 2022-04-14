@@ -19,7 +19,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KLocalizedString>
 
 #include "../core/rkvariable.h"
-#include "../rkglobals.h"
 #include "../misc/rkdialogbuttonbox.h"
 
 #include "../debug.h"

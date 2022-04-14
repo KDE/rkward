@@ -14,7 +14,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../rbackend/rkrinterface.h"
 #include "../rbackend/rkrbackendprotocol_frontend.h"
 #include "../windows/rkworkplace.h"
-#include "../rkglobals.h"
 #include "../rkward.h"
 
 #include "../debug.h"

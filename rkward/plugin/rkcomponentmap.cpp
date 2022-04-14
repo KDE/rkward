@@ -23,7 +23,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/xmlhelper.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../debug.h"
-#include "../rkglobals.h"
 #include "../rkward.h"
 #include "../settings/rksettingsmoduleplugins.h"
 #include "../rbackend/rksessionvars.h"

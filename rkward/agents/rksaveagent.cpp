@@ -15,7 +15,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../rbackend/rkrinterface.h"
 #include "../misc/rkprogresscontrol.h"
 #include "../core/robjectlist.h"
-#include "../rkglobals.h"
 #include "../rkward.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../windows/rkworkplace.h"
@@ -76,7 +75,7 @@ bool RKSaveAgent::saveWorkspace(const QUrl& _url) {
 	if (url.isEmpty()) return saveWorkspaceAs();
 
 	RKWorkplace::mainWorkplace()->flushAllData();
-	auto save_chain = RKGlobals::rInterface()->startChain(0);
+	auto save_chain = RInterface::startChain(0);
 
 	RKWorkplace::mainWorkplace()->saveWorkplace(url, save_chain);
 	auto command = new RCommand("save.image(" + RObject::rQuote(url.toLocalFile()) + ')', RCommand::App);
@@ -84,9 +83,9 @@ bool RKSaveAgent::saveWorkspace(const QUrl& _url) {
 	control.addRCommand(command, true);
 	bool success = false;
 	QObject::connect(command->notifier(), &RCommandNotifier::commandFinished, [&success, command]() { success = command->succeeded(); });  // clazy:exclude=lambda-in-connect (-> doModal(), below)
-	RKGlobals::rInterface()->issueCommand(command, save_chain);
+	RInterface::issueCommand(command, save_chain);
 	control.doModal(false);
-	RKGlobals::rInterface()->closeChain(save_chain);
+	RInterface::closeChain(save_chain);
 
 	if (!success) KMessageBox::error(RKWardMainWindow::getMain(), i18n("Save failed"), i18n("An error occurred while trying to save the workspace. You data was <b>not</b> saved."));
 	RKWorkplace::mainWorkplace()->setWorkspaceURL(url, true);

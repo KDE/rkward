@@ -11,11 +11,11 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QLabel>
 #include <QHeaderView>
 
+#include <KLocalizedString>
+#include <KStandardAction>
+
 #include "../misc/rktableview.h"
 #include "../dataeditor/rktextmatrix.h"
-#include "kstandardaction.h"
-#include "KLocalizedString"
-
 #include "../misc/xmlhelper.h"
 
 #include "../debug.h"

@@ -26,8 +26,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <kmessagebox.h>
 #include <kuser.h>
 
-#include "../rkglobals.h"
 #include "../rbackend/rkrinterface.h"
+#include "../rbackend/rksessionvars.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../settings/rksettings.h"
 #include "../core/robjectlist.h"
@@ -73,7 +73,7 @@ RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool 
 		library_locations = command->stringVector();
 		emit libraryLocationsChanged(library_locations);
 	});
-	RKGlobals::rInterface()->issueCommand(command, chain);
+	RInterface::issueCommand(command, chain);
 }
 
 RKLoadLibsDialog::~RKLoadLibsDialog () {
@@ -319,19 +319,18 @@ void RKLoadLibsDialog::runInstallationCommand (const QString& command, bool as_r
 		RK_ASSERT (false);
 	}
 
-	QString R_binary (getenv ("R_BINARY"));
 	QString call;
 	QStringList params;
 #ifdef Q_OS_WIN
 	RK_ASSERT (!as_root);
-	call = R_binary;
+	call = RKSessionVars::RBinary();
 #else
 	if (as_root) {
 		call = QStandardPaths::findExecutable ("kdesu");
 		if (call.isEmpty ()) call = QStandardPaths::findExecutable ("kdesudo");
-		params << "-t" << "--" << R_binary;
+		params << "-t" << "--" << RKSessionVars::RBinary();
 	} else {
-		call = R_binary;
+		call = RKSessionVars::RBinary();
 	}
 #endif
 	params << "--no-save" << "--no-restore" << "--file=" + file.fileName ();
@@ -479,7 +478,7 @@ void LoadUnloadWidget::updateInstalledPackages () {
 		installed_view->setSortingEnabled (true);
 		installed_view->sortItems (0, Qt::AscendingOrder);
 	});
-	RKGlobals::rInterface ()->issueCommand(command, parent->chain);
+	RInterface::issueCommand(command, parent->chain);
 
 	command = new RCommand(".packages()", RCommand::App | RCommand::Sync | RCommand::GetStringVector);
 	connect(command->notifier(), &RCommandNotifier::commandFinished, this, [this](RCommand *command) {
@@ -498,7 +497,7 @@ void LoadUnloadWidget::updateInstalledPackages () {
 		loaded_view->sortItems (0, Qt::AscendingOrder);
 		updateCurrentList ();
 	});
-	RKGlobals::rInterface()->issueCommand(command, parent->chain);
+	RInterface::issueCommand(command, parent->chain);
 }
 
 void LoadUnloadWidget::loadButtonClicked () {
@@ -572,7 +571,7 @@ void LoadUnloadWidget::doLoadUnload () {
 		if (!prev_packages.contains (loaded->text (0))) {
 			RCommand *command = new RCommand ("library (\"" + loaded->text (0) + "\")", RCommand::App | RCommand::ObjectListUpdate);
 			control->addRCommand (command);
-			RKGlobals::rInterface ()->issueCommand (command, parent->chain);
+			RInterface::issueCommand (command, parent->chain);
 		}
 	}
 	
@@ -594,7 +593,7 @@ void LoadUnloadWidget::doLoadUnload () {
 	connect(command->notifier(), &RCommandNotifier::commandFinished, this, [this](RCommand *) {
 		emit loadUnloadDone();
 	});
-	RKGlobals::rInterface()->issueCommand(command, parent->chain);
+	RInterface::issueCommand(command, parent->chain);
 
 	control->doNonModal(true);
 }
@@ -935,7 +934,7 @@ void RKRPackageInstallationStatus::initialize (RCommandChain *chain) {
 	connect (command->notifier (), &RCommandNotifier::commandFinished, this, &RKRPackageInstallationStatus::statusCommandFinished);
 	RKProgressControl *control = new RKProgressControl (this, i18n ("<p>Please stand by while searching for installed and available packages.</p><p><strong>Note:</strong> This requires a working internet connection, and may take some time, esp. if one or more repositories are temporarily unavailable.</p>"), i18n ("Searching for packages"), RKProgressControl::CancellableProgress | RKProgressControl::AutoCancelCommands);
 	control->addRCommand (command, true);
-	RKGlobals::rInterface ()->issueCommand (command, chain);
+	RInterface::issueCommand (command, chain);
 	control->doModal (true);
 }
 

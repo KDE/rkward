@@ -10,7 +10,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KLocalizedString>
 
 #include "../rbackend/rkrinterface.h"
-#include "../rkglobals.h"
 #include "twintable.h"
 #include "twintablemember.h"
 #include "rkvareditmodel.h"
@@ -61,7 +60,7 @@ RKEditorDataFrame::RKEditorDataFrame (const QString& new_object_name, QWidget* p
 	initTable (model, object);
 	connect (model, &RKVarEditDataFrameModel::modelObjectDestroyed, this, &RKEditorDataFrame::deleteLater);
 
-	RKGlobals::rInterface ()->closeChain (open_chain);
+	RInterface::closeChain (open_chain);
 	open_chain = nullptr;
 }
 
@@ -72,12 +71,12 @@ void RKEditorDataFrame::commonInit () {
 	getPart ()->insertChildClient (this);
 	initializeActivationSignals ();
 
-	open_chain = RKGlobals::rInterface ()->startChain (0);
+	open_chain = RInterface::startChain (0);
 }
 
 RKEditorDataFrame::~RKEditorDataFrame () {
 	RK_TRACE (EDITOR);
-	if (open_chain) RKGlobals::rInterface()->closeChain(open_chain);
+	if (open_chain) RInterface::closeChain(open_chain);
 }
 
 void RKEditorDataFrame::detachModel () {
@@ -100,16 +99,15 @@ void RKEditorDataFrame::waitForLoad () {
 	enableEditing (false);
 
 	RCommand *command = new RCommand (QString (), RCommand::EmptyCommand | RCommand::Sync | RCommand::GetStringVector, QString (), this, LOAD_COMPLETE_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command, open_chain);
+	RInterface::issueCommand (command, open_chain);
 }
 
 void RKEditorDataFrame::rCommandDone (RCommand *command) {
 	RK_TRACE (EDITOR);
 
 	if (command->getFlags () == LOAD_COMPLETE_COMMAND) {
-		RKGlobals::rInterface ()->closeChain (open_chain);
+		RInterface::closeChain (open_chain);
 		open_chain = nullptr;
-
 		enableEditing (true);
 	}
 }

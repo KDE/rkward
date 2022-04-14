@@ -22,7 +22,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../core/rcontainerobject.h"
 #include "../misc/xmlhelper.h"
 #include "../misc/rkstandardicons.h"
-#include "../rkglobals.h"
 
 #include "../debug.h"
 

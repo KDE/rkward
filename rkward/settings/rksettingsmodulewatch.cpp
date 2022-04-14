@@ -21,7 +21,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rkspinbox.h"
 #include "../misc/rkstandardicons.h"
 #include "rksettings.h"
-#include "../rkglobals.h"
+#include "../misc/rkstyle.h"
 
 #include "../debug.h"
 
@@ -134,7 +134,7 @@ RKSettingsModuleWatch::RKSettingsModuleWatch (RKSettings *gui, QWidget *parent) 
 	app_filter_boxes = addFilterSettings (this, grid, 3, i18n ("Application commands"), app_filter);
 	sync_filter_boxes = addFilterSettings (this, grid, 4, i18n ("Synchronization commands"), sync_filter);
 
-	vbox->addSpacing (2*RKGlobals::spacingHint ());
+	vbox->addSpacing (2*RKStyle::spacingHint ());
 
 	vbox->addWidget(new QLabel(i18n("Maximum number of paragraphs/lines to display in the Command Log (0 for no limit)")));
 	vbox->addWidget(max_log_lines.makeSpinBox(0, INT_MAX, this));

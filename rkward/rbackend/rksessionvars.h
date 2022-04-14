@@ -33,6 +33,7 @@ Anything else (everything after the fourth dot, or after the first character tha
 is returned as suffix (via the suffix pointer; if that is 0, an error is reported, instead). */
 	static quint32 parseVersionString (const QString &version, QString *suffix);
 	static QStringList frontendSessionInfo ();
+	static QString RBinary() { return r_binary; }
 signals:
 	void installedPackagesChanged ();
 protected:
@@ -47,6 +48,8 @@ private:
 	static QString rkward_version_suffix;
 	static quint32 r_version;
 	static QString r_version_string;
+friend int main(int, char**);
+	static QString r_binary;
 };
 
 #endif

@@ -18,10 +18,10 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KLocalizedString>
 #include <KColorScheme>
 
-#include "../rkglobals.h"
 #include "../rbackend/rkrinterface.h"
 #include "../settings/rksettingsmoduler.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkstyle.h"
 
 #include "../debug.h"
 
@@ -53,7 +53,6 @@ private:
 	ROutput::ROutputType last_output_type;
 	bool prevent_close;
 	bool is_done;
-	KColorScheme color_scheme;
 };
 
 
@@ -162,7 +161,7 @@ void RKProgressControl::dialogDestroyed () {
 		is_done = true;
 		if (mode & AutoCancelCommands) {
 			for (RCommandList::const_iterator it = outstanding_commands.cbegin (); it != outstanding_commands.cend (); ++it) {
-				RKGlobals::rInterface ()->cancelCommand (*it);
+				RInterface::instance()->cancelCommand(*it);
 			}
 		}
 		emit cancelled();
@@ -228,7 +227,7 @@ QString RKProgressControl::fullCommandOutput() {
 
 #include <kstandardguiitem.h>
 
-RKProgressControlDialog::RKProgressControlDialog(const QString &text, const QString &caption, int mode_flags, bool modal) : QDialog(nullptr), color_scheme(QPalette::Normal) {
+RKProgressControlDialog::RKProgressControlDialog(const QString &text, const QString &caption, int mode_flags, bool modal) : QDialog(nullptr) {
 	RK_TRACE (MISC);
 
 	setAttribute (Qt::WA_DeleteOnClose, true);
@@ -315,9 +314,9 @@ void RKProgressControlDialog::addOutput (const ROutput *output) {
 		output_text->insertPlainText ("\n");
 
 		if (output->type == ROutput::Output) {
-			output_text->setTextColor(color_scheme.foreground(KColorScheme::NormalText).color());
+			output_text->setTextColor(RKStyle::viewScheme()->foreground(KColorScheme::NormalText).color());
 		} else {
-			output_text->setTextColor(color_scheme.foreground(KColorScheme::NegativeText).color());
+			output_text->setTextColor(RKStyle::viewScheme()->foreground(KColorScheme::NegativeText).color());
 			if (!detailsbox->isVisible ()) toggleDetails ();
 			error_indicator->show ();
 		}

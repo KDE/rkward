@@ -32,7 +32,6 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} )
 SET(RKWard_Sources
 	rkward.cpp
 	main.cpp
-	rkglobals.cpp
 	robjectviewer.cpp
 	rkconsole.cpp
 )

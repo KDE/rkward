@@ -17,7 +17,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QVBoxLayout>
 #include <QInputDialog>
 
-#include "../rkglobals.h"
 #include "../misc/multistringselector.h"
 #include "../misc/rkstandardicons.h"
 #include "rksettings.h"

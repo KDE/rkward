@@ -28,6 +28,7 @@ quint32 RKSessionVars::rkward_version = 0;
 QString RKSessionVars::rkward_version_suffix;
 quint32 RKSessionVars::r_version = 0;
 QString RKSessionVars::r_version_string;
+QString RKSessionVars::r_binary;
 
 RKSessionVars::RKSessionVars (RInterface *parent) : QObject (parent) {
 	RK_TRACE (RBACKEND);

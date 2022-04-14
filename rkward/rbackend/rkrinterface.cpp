@@ -36,10 +36,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rkmessagecatalog.h"
 #include "../misc/rkoutputdirectory.h"
 #include "rksessionvars.h"
-
 #include "../windows/rkwindowcatcher.h"
 
-#include "../rkglobals.h"
 #include "../version.h"
 #include "../debug.h"
 
@@ -68,6 +66,13 @@ SPDX-License-Identifier: GPL-2.0-or-later
 // statics
 double RInterface::na_real;
 int RInterface::na_int;
+RInterface *RInterface::_instance = nullptr;
+
+void RInterface::create() {
+	RK_TRACE (RBACKEND);
+	RK_ASSERT(_instance == nullptr);
+	_instance = new RInterface();
+}
 
 RInterface::RInterface () {
 	RK_TRACE (RBACKEND);
@@ -84,7 +89,7 @@ RInterface::RInterface () {
 
 	// create a fake init command
 	RCommand *fake = new RCommand (i18n ("R Startup"), RCommand::App | RCommand::Sync | RCommand::ObjectListUpdate, i18n ("R Startup"), this, STARTUP_PHASE2_COMPLETE);
-	issueCommand (fake);
+	_issueCommand(fake);
 
 	new RKSessionVars (this);
 	new RKDebugHandler (this);
@@ -93,9 +98,9 @@ RInterface::RInterface () {
 
 	/////// Further initialization commands, which do not necessarily have to run before everything else can be queued, here. ///////
 	// NOTE: will receive the list as a call plain generic request from the backend ("updateInstalledPackagesList")
-	issueCommand (".rk.get.installed.packages()", RCommand::App | RCommand::Sync);
+	_issueCommand(new RCommand(".rk.get.installed.packages()", RCommand::App | RCommand::Sync));
 
-	issueCommand (new RCommand (QString (), RCommand::App | RCommand::Sync | RCommand::EmptyCommand, QString (), this, RSTARTUP_COMPLETE));
+	_issueCommand(new RCommand(QString(), RCommand::App | RCommand::Sync | RCommand::EmptyCommand, QString(), this, RSTARTUP_COMPLETE));
 }
 
 void RInterface::issueCommand (const QString &command, int type, const QString &rk_equiv, RCommandReceiver *receiver, int flags, RCommandChain *chain) {
@@ -480,7 +485,11 @@ void RInterface::flushOutput (bool forced) {
 	}
 }
 
-void RInterface::issueCommand (RCommand *command, RCommandChain *chain) { 
+void RInterface::issueCommand (RCommand *command, RCommandChain *chain) {
+	instance()->_issueCommand(command, chain);
+}
+
+void RInterface::_issueCommand(RCommand *command, RCommandChain *chain) { 
 	RK_TRACE (RBACKEND);
 
 	if (command->command ().isEmpty ()) command->_type |= RCommand::EmptyCommand;
@@ -492,17 +501,17 @@ void RInterface::issueCommand (RCommand *command, RCommandChain *chain) {
 	tryNextCommand ();
 }
 
-RCommandChain *RInterface::startChain (RCommandChain *parent) {
+RCommandChain *RInterface::startChain(RCommandChain *parent) {
 	RK_TRACE (RBACKEND);
 
-	return RCommandStack::startChain (parent);
+	return RCommandStack::startChain(parent);
 };
 
-void RInterface::closeChain (RCommandChain *chain) {
-	RK_TRACE (RBACKEND);
+void RInterface::closeChain(RCommandChain *chain) {
+	RK_TRACE(RBACKEND);
 
-	RCommandStack::closeChain (chain);
-	tryNextCommand ();
+	RCommandStack::closeChain(chain);
+	instance()->tryNextCommand();
 };
 
 void RInterface::cancelAll () {

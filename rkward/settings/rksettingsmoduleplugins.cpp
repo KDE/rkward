@@ -23,7 +23,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QIcon>
 
 #include "../rkward.h"
-#include "../rkglobals.h"
+#include "../misc/rkstyle.h"
 #include "../misc/multistringselector.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkspinbox.h"
@@ -46,7 +46,7 @@ RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *pare
 
 	QVBoxLayout *main_vbox = new QVBoxLayout (this);
 	
-	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
+	main_vbox->addSpacing (2*RKStyle::spacingHint ());
 	
 	main_vbox->addWidget (RKCommonFunctions::wordWrappedLabel (i18n ("Some plugins are available with both, a wizard-like interface and a traditional dialog interface. If both are available, which mode of presentation do you prefer?")));
 
@@ -70,7 +70,7 @@ RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *pare
 	connect (button_group, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &RKSettingsModulePlugins::settingChanged);
 	main_vbox->addWidget (button_box);
 
-	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
+	main_vbox->addSpacing (2*RKStyle::spacingHint ());
 
 	QPushButton *pluginmap_config_button = new QPushButton (i18n ("Configure Active Plugins"), this);
 	connect (pluginmap_config_button, &QPushButton::clicked, this, &RKSettingsModulePlugins::configurePluginmaps);

@@ -33,7 +33,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rkstandardicons.h"
 #include "../rbackend/rkrinterface.h"
 #include "../rbackend/rksessionvars.h"
-#include "../rkglobals.h"
+#include "../misc/rkstyle.h"
+
 #include "../debug.h"
 
 // static constants
@@ -61,7 +62,7 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 
 	QVBoxLayout *main_vbox = new QVBoxLayout (this);
 
-	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
+	main_vbox->addSpacing (2*RKStyle::spacingHint ());
 
 	main_vbox->addWidget (RKCommonFunctions::wordWrappedLabel (i18n ("The following settings mostly affect R behavior in the console. It is generally safe to keep these unchanged.")));
 
@@ -195,7 +196,7 @@ void RKSettingsModuleR::applyChanges () {
 // apply run time options in R
 	QStringList commands = makeRRunTimeOptionCommands ();
 	for (QStringList::const_iterator it = commands.cbegin (); it != commands.cend (); ++it) {
-		RKGlobals::rInterface ()->issueCommand (*it, RCommand::App, QString (), 0, 0, commandChain ());
+		RInterface::issueCommand (*it, RCommand::App, QString (), 0, 0, commandChain ());
 	}
 }
 
@@ -313,7 +314,7 @@ RKSettingsModuleRPackages::RKSettingsModuleRPackages (RKSettings *gui, QWidget *
 
 	QVBoxLayout *main_vbox = new QVBoxLayout (this);
 
-	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
+	main_vbox->addSpacing (2*RKStyle::spacingHint ());
 
 	main_vbox->addWidget (new QLabel (i18n ("CRAN download mirror (leave empty to be prompted once each session):"), this));
 	QHBoxLayout* hbox = new QHBoxLayout ();
@@ -366,7 +367,7 @@ void RKSettingsModuleRPackages::addLibraryLocation (const QString& new_loc, RCom
 	if (!libraryLocations ().contains (new_loc)) liblocs.get().prepend (new_loc);
 
 	// update the backend in any case. User might have changed liblocs, there.
-	RKGlobals::rInterface ()->issueCommand (".libPaths (unique (c (" + RObject::rQuote (new_loc) + ", .libPaths ())))", RCommand::App | RCommand::Sync, QString (), 0, 0, chain);
+	RInterface::issueCommand (".libPaths (unique (c (" + RObject::rQuote (new_loc) + ", .libPaths ())))", RCommand::App | RCommand::Sync, QString (), 0, 0, chain);
 }
 
 QStringList expandLibLocs (const QStringList &in) {
@@ -449,7 +450,7 @@ void RKSettingsModuleRPackages::selectCRANMirror () {
 
 	RKProgressControl* control = new RKProgressControl (this, title, title, RKProgressControl::CancellableProgress);
 	control->addRCommand (command, true);
-	RKGlobals::rInterface ()->issueCommand (command, commandChain ());
+	RInterface::issueCommand (command, commandChain ());
 	control->doModal (true);
 }
 
@@ -544,7 +545,7 @@ void RKSettingsModuleRPackages::applyChanges () {
 // apply options in R
 	QStringList commands = makeRRunTimeOptionCommands ();
 	for (QStringList::const_iterator it = commands.cbegin (); it != commands.cend (); ++it) {
-		RKGlobals::rInterface ()->issueCommand (*it, RCommand::App, QString (), 0, 0, commandChain ());
+		RInterface::issueCommand (*it, RCommand::App, QString (), 0, 0, commandChain ());
 	}
 }
 
@@ -597,14 +598,14 @@ void RKSettingsModuleRPackages::validateSettingsInteractive (QList<RKSetupWizard
 			                                        "to work (if they are compatible with this version of R)."), [legacy_libloc](RKSetupWizard*) {
 									liblocs.get().removeAll(legacy_libloc);
 									QString new_loc = legacy_libloc + '-' + RKSessionVars::RVersion (true);
-									RKGlobals::rInterface ()->issueCommand (QString ("file.rename(%1, %2)\n").arg(RObject::rQuote(legacy_libloc), RObject::rQuote (new_loc)), RCommand::App);
+									RInterface::issueCommand (QString ("file.rename(%1, %2)\n").arg(RObject::rQuote(legacy_libloc), RObject::rQuote (new_loc)), RCommand::App);
 									liblocs.get().prepend (legacy_libloc + QStringLiteral ("-%v"));
-									RKGlobals::rInterface ()->issueCommand (libLocsCommand(), RCommand::App);
+									RInterface::issueCommand (libLocsCommand(), RCommand::App);
 								});
 			item->addOption(i18nc("verb", "Remove"), i18n("Remove this location from the configuration (it will not be deleted on disk). You will have to "
 			                                        "re-install any packages that you want to keep."), [legacy_libloc](RKSetupWizard*) {
 									liblocs.get().removeAll(legacy_libloc);
-									RKGlobals::rInterface ()->issueCommand (libLocsCommand(), RCommand::App);
+									RInterface::issueCommand (libLocsCommand(), RCommand::App);
 								});
 			item->addOption(i18nc("verb", "Keep"), i18n("Keep this location (do not change anything)"), [](RKSetupWizard*) {});
 
