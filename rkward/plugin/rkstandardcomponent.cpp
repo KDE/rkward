@@ -157,6 +157,9 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 		}
 		buildAndInitialize (doc_element, gui_element, parent_widget, build_wizard);
 	}
+#ifdef JSBACKEND_PERFORMANCE_TEST
+	QtScriptBackend::_performanceTest();
+#endif
 }
 
 RKStandardComponent::~RKStandardComponent () {

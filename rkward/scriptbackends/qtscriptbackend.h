@@ -13,6 +13,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 class QtScriptBackendThread;
 class RKMessageCatalog;
 
+//#define JSBACKEND_PERFORMANCE_TEST
+
 /** This class allows to use QtScript as a scripting backend in RKWard.
 
 The script itself is run in a separate thread to ensure good performance even for complex scripts. This is especially important for spinboxes, where the value is changes many times in quick succession. Note that this is also the reason not to use Kross, which appears to be not thread safe.
@@ -33,6 +35,9 @@ public:
 	void printout (int flags) override { callFunction ("do_printout ();\n", flags, Printout); };
 	void preview (int flags) override { callFunction ("do_preview ();\n", flags, Preview); };
 	void writeData (const QVariant &data) override;
+#ifdef JSBACKEND_PERFORMANCE_TEST
+	static void _performanceTest();
+#endif
 public slots:
 	void threadError (const QString &message);
 	void commandDone (const QString &result);
@@ -50,6 +55,7 @@ private:
 #include <QThread>
 #include <QMutex>
 
+//#define USE_QJSENGINE
 #ifdef USE_QJSENGINE
 #include <QtQml/QJSEngine>
 #define RKJSEngine QJSEngine

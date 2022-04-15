@@ -28,7 +28,7 @@ public:
 /** Get the catalog identified by name. This could be an already open catalog, or a new one. In the latter case, the catalog is expected at pathhint. In the former case, pathhint is ignored. This function is guaranteed to return a non-null RKMessageCatalog, although that does not imply the catalog could actually be loaded. */
 	static RKMessageCatalog *getCatalog (const QString &name, const QString &pathhint);
 /** Returns a dummy null-catalog */
-       static RKMessageCatalog *nullCatalog ();
+	static RKMessageCatalog *nullCatalog ();
 /** Switch language to use for any coming translations */
 	static void switchLanguage (const QString &new_language_code);
 private:

@@ -34,6 +34,31 @@ QtScriptBackend::~QtScriptBackend () {
 	if (script_thread && script_thread->isRunning ()) script_thread->terminate ();
 }
 
+#ifdef JSBACKEND_PERFORMANCE_TEST
+#include <QElapsedTimer>
+#include <QApplication>
+#include <QObjectCleanupHandler>
+#include "../misc/rkmessagecatalog.h"
+void QtScriptBackend::_performanceTest() {
+	RK_DEBUG(PHP, DL_WARNING, "Starting QtScriptBackend performance test");
+	QElapsedTimer t;
+	QObjectCleanupHandler h;
+	t.start();
+	for (int i = 0; i < 1000; ++i) {
+		auto b = new QtScriptBackend(QString(), RKMessageCatalog::nullCatalog());
+		b->dead = true; // so it doesn't try to show an error message
+		h.add(b);
+		b->initialize(nullptr, false);
+		connect(b->script_thread, &QtScriptBackendThread::error, b, &QObject::deleteLater);  // thread will throw an error, when trying to include non-existent script file
+	}
+	while (!h.isEmpty()) {
+		qApp->processEvents();
+	}
+	RK_DEBUG(PHP, DL_WARNING, "Time to init 100 backends: %d", t.elapsed());
+	RK_DEBUG(PHP, DL_WARNING, "QtScriptBackend performance test end");
+}
+#endif
+
 bool QtScriptBackend::initialize (RKComponentPropertyCode *code_property, bool add_headings) {
 	RK_TRACE (PHP);
 
