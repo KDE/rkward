@@ -58,7 +58,7 @@ private slots:
 	void scriptRCommandFinished (RCommand* command);
 private:
 	RKComponent* component;
-	RKJSEngine engine;
+	QJSEngine engine;
 	struct OutstandingCommand {
 		RCommand *command;
 		QString callback;
@@ -70,7 +70,7 @@ private:
 	void handleChange (RKComponentBase* changed);
 	QHash<RKComponentBase*, QString> component_commands;
 
-	void handleScriptError (const RKJSValue &val, const QString& current_file=QString ());
+	void handleScriptError (const QJSValue &val, const QString& current_file=QString ());
 };
 
 #endif

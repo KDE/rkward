@@ -249,7 +249,6 @@ QVariant QtScriptBackendThread::getUiLabelPair (const QString &identifier) {
 	return getValue (identifier, RKStandardComponent::UiLabelPair);
 }
 
-#ifdef USE_QJSENGINE
 bool QtScriptBackendThread::scriptError(const QJSValue &val) {
 	RK_TRACE (PHP);
 
@@ -260,20 +259,6 @@ bool QtScriptBackendThread::scriptError(const QJSValue &val) {
 
 	return true;
 }
-#else
-bool QtScriptBackendThread::scriptError(const RKJSValue &val) {
-	RK_TRACE (PHP);
-	Q_UNUSED(val);
-
-	if (!engine.hasUncaughtException ()) return false;
-
-	QString message = i18n ("Script Error: %1\nBacktrace:\n%2", engine.uncaughtException ().toString (), engine.uncaughtExceptionBacktrace ().join ("\n"));
-	engine.clearExceptions ();
-	emit error(message);
-
-	return true;
-}
-#endif
 
 bool QtScriptBackendThread::includeFile (const QString &filename) {
 	RK_TRACE (PHP);
@@ -284,17 +269,13 @@ bool QtScriptBackendThread::includeFile (const QString &filename) {
 		_filename = script_path.toLocalFile ();
 	}
 
-		QFile file (_filename);
-		if (!file.open (QIODevice::ReadOnly | QIODevice::Text)) {
+	QFile file(_filename);
+	if (!file.open (QIODevice::ReadOnly | QIODevice::Text)) {
 		emit error(i18n("The file \"%1\" (needed by \"%2\") could not be found. Please check your installation.", _filename, _scriptfile));
 		return false;
 	}
 
-#ifndef USE_QJSENGINE
-	// evaluate in global context
-	engine.currentContext ()->setActivationObject (engine.globalObject ());
-#endif
-	RKJSValue result = engine.evaluate (QString::fromUtf8 (file.readAll ()), _filename);
+	QJSValue result = engine.evaluate (QString::fromUtf8 (file.readAll ()), _filename);
 	if (scriptError(result)) return false;
 
 	return true;
@@ -303,22 +284,11 @@ bool QtScriptBackendThread::includeFile (const QString &filename) {
 void QtScriptBackendThread::run () {
 	RK_TRACE (PHP);
 
-	RKJSValue backend_object = engine.newQObject (this);
+	QJSValue backend_object = engine.newQObject (this);
 	engine.globalObject ().setProperty ("_RK_backend", backend_object);
 	RKMessageCatalogObject::addI18nToScriptEngine (&engine, catalog);
 
-#ifdef USE_Q_SCRIPT_PROGRAM
-	if (!RKPrecompiledQtScripts::loadCommonScript (&engine, _commonfile)) {
-		if (!engine.hasUncaughtException ()) {
-			emit error (i18n ("Could not open common script file \"%1\"", _commonfile));
-		} else {
-			scriptError (QScriptValue());
-		}
-		return;
-	}
-#else
-	if (!includeFile (_commonfile)) return;
-#endif
+	if (!includeFile (_commonfile)) return;  // TODO: import this as a module and re-use the engine in the next thread?
 	if (!includeFile (_scriptfile)) return;
 
 	emit commandDone("startup complete");
@@ -344,48 +314,10 @@ void QtScriptBackendThread::run () {
 		}
 
 		// do it!
-		RKJSValue result = engine.evaluate (command);
+		QJSValue result = engine.evaluate (command);
 		if (scriptError(result)) return;
 		emit commandDone(result.toString());
 
 		command.clear ();
 	}
 }
-
-#ifdef USE_Q_SCRIPT_PROGRAM
-namespace RKPrecompiledQtScripts {
-	QMap<QString, QScriptProgram> compiled_includes;
-	QMutex compiled_includes_mutex;
-
-	bool loadCommonScript (QScriptEngine* engine, const QString &scriptfile) {
-		RK_TRACE (PHP);
-
-		// NOTE: QScriptProgram cannot be evaluated concurrently in several threads (see https://bugreports.qt-project.org/browse/QTBUG-29246).
-		// Neither would our QMap caching logic work in concurrent threads. Thus the mutex. This clearly has the drawback that QScript evaluation threads
-		// may be waiting for each other during initialization. However, we assume that
-		// - Typically only few such threads are running
-		// - Responsiveness (i.e. UI startup speed), not throughput is the main goal, here.
-		// - The important script engines are those running in the UI thread (and thus necessarily sequentially). As long as these are initialized before
-		//   the other threads, they will clearly profit from pre-compiling
-		QMutexLocker ml (&compiled_includes_mutex);
-		if (!compiled_includes.contains (scriptfile)) {
-			RK_DEBUG (PHP, DL_DEBUG, "Compiling common script file %s", qPrintable (scriptfile));
-			QFile file (scriptfile);
-			if (!file.open (QIODevice::ReadOnly | QIODevice::Text)) {
-				return false;
-			}
-			compiled_includes.insert (scriptfile, QScriptProgram (QString::fromUtf8 (file.readAll ()), scriptfile));
-			file.close ();
-		} else {
-			RK_DEBUG (PHP, DL_DEBUG, "Script file %s is already compiled", qPrintable (scriptfile));
-		}
-		engine->evaluate (compiled_includes[scriptfile]);
-		if (engine->hasUncaughtException ()) {
-			compiled_includes.remove (scriptfile);
-			return false;
-		}
-		return true;
-	}
-}
-#endif
-

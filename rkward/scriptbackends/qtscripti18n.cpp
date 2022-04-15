@@ -9,7 +9,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-void RKMessageCatalogObject::addI18nToScriptEngine (RKJSEngine* engine, const RKMessageCatalog* catalog) {
+void RKMessageCatalogObject::addI18nToScriptEngine (QJSEngine* engine, const RKMessageCatalog* catalog) {
 	auto handle = engine->newQObject (new RKMessageCatalogObject (catalog, engine));
 	engine->globalObject ().setProperty ("_i18n", handle);
 }

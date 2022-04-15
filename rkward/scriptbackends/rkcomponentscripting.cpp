@@ -27,7 +27,7 @@ RKComponentScriptingProxy::RKComponentScriptingProxy (RKComponent *component) : 
 	RK_ASSERT (component);
 	RKComponentScriptingProxy::component = component;
 
-	RKJSValue backend_object = engine.newQObject(this);
+	QJSValue backend_object = engine.newQObject(this);
 	engine.globalObject ().setProperty ("_rkward", backend_object);
 	RKMessageCatalogObject::addI18nToScriptEngine (&engine, component->xmlHelper ()->messageCatalog ());
 }
@@ -62,25 +62,16 @@ void RKComponentScriptingProxy::initialize (const QString& file, const QString& 
 	evaluate (_command);
 }
 
-void RKComponentScriptingProxy::handleScriptError(const RKJSValue &val, const QString& current_file) {
+void RKComponentScriptingProxy::handleScriptError(const QJSValue &val, const QString& current_file) {
 	RK_TRACE (PHP);
 
 	QString file = current_file;
 	if (file.isEmpty ()) file = _scriptfile;
-#ifdef USE_QJSENGINE
 	if (val.isError()) {
 		QString message = i18n("Script Error at '%1' line %2: %3\n", file.isEmpty() ? i18n("inlined code") : file, val.property("lineNumber").toInt(), val.toString());
 		KMessageBox::detailedError (0, message, val.property("stack").toString());
 		emit haveError();
 	}
-#else
-	if (engine.hasUncaughtException ()) {
-		QString message = i18n ("Script Error at '%1' line %2: %3\n", file.isEmpty() ? i18n ("inlined code") : file, engine.uncaughtExceptionLineNumber (), engine.uncaughtException ().toString ());
-		KMessageBox::detailedError (0, message, engine.uncaughtExceptionBacktrace ().join ("\n"));
-		engine.clearExceptions ();
-		emit haveError();
-	}
-#endif
 }
 
 void RKComponentScriptingProxy::include (const QString& filename) {
@@ -105,11 +96,7 @@ void RKComponentScriptingProxy::include (const QString& filename) {
 void RKComponentScriptingProxy::evaluate (const QString &code) {
 	RK_TRACE (PHP);
 
-#ifndef USE_QJSENGINE
-	// evaluate in global context
-	engine.currentContext ()->setActivationObject (engine.globalObject ());
-#endif
-	RKJSValue result = engine.evaluate (code, _scriptfile);
+	QJSValue result = engine.evaluate (code, _scriptfile);
 
 	handleScriptError(result);
 }
@@ -157,7 +144,7 @@ QVariant RKComponentScriptingProxy::doRCommand (const QString& command, const QS
 	return (QVariant (com.command->id ()));
 }
 
-static RKJSValue marshall (RKJSEngine *engine, RData *data) {
+static QJSValue marshall (QJSEngine *engine, RData *data) {
 	RK_TRACE (PHP);
 
 	if (data->getDataType() == RData::StringVector) {
@@ -168,7 +155,7 @@ static RKJSValue marshall (RKJSEngine *engine, RData *data) {
 		return (rkJSMakeArray(engine, data->realVector()));
 	} else if (data->getDataType() == RData::StructureVector) {
 		const RData::RDataStorage& rs = data->structureVector();
-		RKJSValue ret = engine->newArray (rs.size ());
+		QJSValue ret = engine->newArray (rs.size ());
 		for (int i = 0; i < rs.size (); ++i) {
 			ret.setProperty (i, marshall (engine, rs[i]));
 		}
@@ -176,7 +163,7 @@ static RKJSValue marshall (RKJSEngine *engine, RData *data) {
 	} else {
 		RK_ASSERT (false);
 	}
-	return RKJSValue ();
+	return QJSValue ();
 }
 
 void RKComponentScriptingProxy::scriptRCommandFinished (RCommand* command) {
@@ -196,15 +183,11 @@ void RKComponentScriptingProxy::scriptRCommandFinished (RCommand* command) {
 	if (command->wasCanceled ()) return;
 	if (command->failed ()) RK_DEBUG (PHP, DL_ERROR, "Plugin script R command %s failed. Full output wsa %s", qPrintable (command->command ()), qPrintable (command->fullOutput ()));
 
-	RKJSValueList args;
+	QJSValueList args;
 	args.append (marshall (&engine, command));
-	args.append (RKJSValue (command->id ()));
-	RKJSValue callback_obj = engine.globalObject ().property (callback);
-#ifdef USE_QJSENGINE
+	args.append (QJSValue (command->id ()));
+	QJSValue callback_obj = engine.globalObject ().property (callback);
 	auto res = callback_obj.call(args);
-#else
-	auto res = callback_obj.call(engine.globalObject(), args);
-#endif
 	handleScriptError(res);
 }
 
