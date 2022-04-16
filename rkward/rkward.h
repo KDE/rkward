@@ -15,8 +15,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 class QLabel;
 class QCloseEvent;
 class KActionMenu;
-class RKTopLevelWindowGUI;
 class KRecentFilesAction;
+class RKTopLevelWindowGUI;
 class KSqueezedTextLabel;
 class QAction;
 class KatePluginIntegrationApp;
@@ -98,11 +98,6 @@ public slots:
 
 /** configures RKward-settings */
 	void slotConfigure ();
-
-/** Add the given url to the list of recent scripts */
-	void addScriptUrl (const QUrl &url);
-/** Add the given url to the list of recent workspaces */
-	void addWorkspaceUrl (const QUrl &url);
 
 	/** Init-procedures to be done after the exec-loop was started */
 	void doPostInit ();

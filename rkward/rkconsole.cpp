@@ -49,7 +49,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rbackend/rcommand.h"
 #include "settings/rksettings.h"
 #include "settings/rksettingsmoduleconsole.h"
-#include "settings/rksettingsmodulegeneral.h"
+#include "settings/rkrecenturls.h"
 #include "misc/rkcommonfunctions.h"
 #include "misc/rkstandardicons.h"
 #include "misc/rkstandardactions.h"
@@ -690,9 +690,8 @@ void RKConsole::userLoadHistory (const QUrl &_url) {
 
 	QUrl url = _url;
 	if (url.isEmpty ()) {
-		url = QFileDialog::getOpenFileUrl (this, i18n ("Select command history file to load"), RKSettingsModuleGeneral::lastUsedUrlFor ("rscripts"), i18n ("R history files [*.Rhistory](*.Rhistory);;All files [*](*)"));
+		url = QFileDialog::getOpenFileUrl (this, i18n ("Select command history file to load"), RKRecentUrls::mostRecentUrl(RKRecentUrls::scriptsId()).adjusted(QUrl::RemoveFilename), i18n ("R history files [*.Rhistory](*.Rhistory);;All files [*](*)"));
 		if (url.isEmpty ()) return;
-		RKSettingsModuleGeneral::updateLastUsedUrl ("rscripts", url.adjusted (QUrl::RemoveFilename));
 	}
 
 	QTemporaryFile *tmpfile = 0;

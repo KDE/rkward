@@ -39,7 +39,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rkhelpsearchwindow.h"
 #include "../rkward.h"
 #include "../rkconsole.h"
-#include "../settings/rksettingsmodulegeneral.h"
+#include "../settings/rkrecenturls.h"
 #include "../settings/rksettingsmoduler.h"
 #include "../settings/rksettings.h"
 #include "../settings/rksettingsmoduleoutput.h"
@@ -599,6 +599,7 @@ bool RKHTMLWindow::openURL (const QUrl &url) {
 			}
 
 			current_url = url;	// needs to be set before registering
+			RKRecentUrls::addRecentUrl(RKRecentUrls::outputId(), url);
 			RKOutputWindowManager::self ()->registerWindow (this);
 			dir = RKOutputDirectory::findOutputByWorkPath(url.toLocalFile());
 			part->setOutputDirectoryActionsEnabled(dir != nullptr);

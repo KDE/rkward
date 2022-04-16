@@ -14,7 +14,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <kurlrequester.h>
 #include <KLineEdit>
 
-#include "../settings/rksettingsmodulegeneral.h"
+#include "../settings/rkrecenturls.h"
 
 #include "../debug.h"
 
@@ -56,7 +56,7 @@ GetFileNameWidget::GetFileNameWidget (QWidget *parent, FileType mode, bool only_
 		storage_key = initial.section ('>', 0, 0).mid (1);
 		append = initial.section ('>', 1);
 	}
-	QUrl initial_url = RKSettingsModuleGeneral::lastUsedUrlFor (storage_key);  // storage_key == QString () in the default case is intended
+	QUrl initial_url = RKRecentUrls::mostRecentUrl(storage_key);  // storage_key == QString () in the default case is intended
 	if (!append.isEmpty ()) {
 		if (initial_url.isLocalFile ()) {
 			initial_url = QUrl::fromUserInput (append, initial_url.toLocalFile (), QUrl::AssumeLocalFile);
@@ -92,8 +92,7 @@ void GetFileNameWidget::updateLastUsedUrl (const QUrl& url) {
 	RK_TRACE (MISC);
 
 	if (!url.isValid ()) return;
-	if (edit->mode () & KFile::Directory) RKSettingsModuleGeneral::updateLastUsedUrl (storage_key, url);
-	else RKSettingsModuleGeneral::updateLastUsedUrl (storage_key, url.adjusted (QUrl::RemoveFilename));
+	RKRecentUrls::addRecentUrl(storage_key, url);
 }
 
 void GetFileNameWidget::setLocation (const QString &new_location) {

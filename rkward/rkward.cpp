@@ -47,6 +47,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "settings/rksettingsmoduleoutput.h"
 #include "settings/rksettingsmodulecommandeditor.h"
 #include "settings/rksettingsmodulekateplugins.h"
+#include "settings/rkrecenturls.h"
 #include "rbackend/rkrinterface.h"
 #include "core/robjectlist.h"
 #include "core/renvironmentobject.h"
@@ -130,7 +131,7 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 	RKWorkplace::mainWorkplace ()->initActions (actionCollection ());
 	setCentralWidget (RKWorkplace::mainWorkplace ());
 	connect (RKWorkplace::mainWorkplace ()->view (), &RKWorkplaceView::captionChanged, this, static_cast<void (RKWardMainWindow::*)(const QString&)>(&RKWardMainWindow::setCaption));
-	connect (RKWorkplace::mainWorkplace (), &RKWorkplace::workspaceUrlChanged, this, &RKWardMainWindow::addWorkspaceUrl);
+	connect (RKWorkplace::mainWorkplace (), &RKWorkplace::workspaceUrlChanged, [this](const QUrl &url) { RKRecentUrls::addRecentUrl(RKRecentUrls::workspaceId(), url); setCaption(QString()); });
 	initStatusBar();
 
 	part_manager = new KParts::PartManager (this);
@@ -501,8 +502,10 @@ void RKWardMainWindow::initActions() {
 	connect (file_open_any, &QAction::triggered, this, &RKWardMainWindow::openAnyFile);
 	file_open_any->setText (i18n ("Open any File..."));
 
-	fileOpenRecent = static_cast<KRecentFilesAction*> (actionCollection ()->addAction (KStandardAction::OpenRecent, "file_open_recenty", this, SLOT(slotOpenCommandEditor(QUrl))));
-	fileOpenRecent->setText (i18n ("Open Recent R Script File"));
+	fileOpenRecent = RKRecentUrls::claimAction(RKRecentUrls::scriptsId());
+	actionCollection ()->addAction("file_open_recenty", fileOpenRecent);
+	connect(fileOpenRecent, &KRecentFilesAction::urlSelected, this, [this](const QUrl &url) { slotOpenCommandEditor(url); });
+	fileOpenRecent->setText(i18n("Open Recent R Script File"));
 
 #if 0
 	// TODO: Fix import dialog and re-enable it: https://mail.kde.org/pipermail/rkward-devel/2015-June/004156.html
@@ -523,7 +526,9 @@ void RKWardMainWindow::initActions() {
 	actionCollection ()->setDefaultShortcut (fileOpenWorkspace, Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_O);
 	fileOpenWorkspace->setWhatsThis(i18n ("Opens an existing document"));
 
-	fileOpenRecentWorkspace = static_cast<KRecentFilesAction*> (actionCollection ()->addAction (KStandardAction::OpenRecent, "file_open_recentx", this, SLOT(askOpenWorkspace(QUrl))));
+	fileOpenRecentWorkspace = RKRecentUrls::claimAction(RKRecentUrls::workspaceId());
+	actionCollection ()->addAction("file_open_recentx", fileOpenRecentWorkspace);
+	connect(fileOpenRecentWorkspace, &KRecentFilesAction::urlSelected, this, &RKWardMainWindow::askOpenWorkspace);
 	fileOpenRecentWorkspace->setText (i18n ("Open Recent Workspace"));
 	fileOpenRecentWorkspace->setWhatsThis(i18n ("Opens a recently used file"));
 
@@ -760,10 +765,8 @@ void RKWardMainWindow::saveOptions () {
 // TODO: WORKAROUND. See corresponding line in readOptions ()
 	cg.writeEntry("Geometry", size ());
 
-	fileOpenRecentWorkspace->saveEntries (config->group ("Recent Files"));
-	fileOpenRecent->saveEntries (config->group ("Recent Command Files"));
-
-	RKSettings::saveSettings (config.data ());
+	RKRecentUrls::saveConfig();
+	RKSettings::saveSettings(config.data());
 
 	config->sync ();
 }
@@ -788,10 +791,6 @@ void RKWardMainWindow::readOptions () {
 
 	RKSettings::loadSettings (config.data ());
 
-	// initialize the recent file list
-	fileOpenRecentWorkspace->loadEntries (config->group ("Recent Files"));
-	fileOpenRecent->setMaxItems (RKSettingsModuleCommandEditor::maxNumRecentFiles ());
-	fileOpenRecent->loadEntries (config->group ("Recent Command Files"));
 	statusBar()->hide();
 }
 
@@ -832,11 +831,10 @@ void RKWardMainWindow::askOpenWorkspace (const QUrl &url) {
 	slotSetStatusBarText(i18n("Opening workspace..."));
 	QUrl lurl = url;
 	if (lurl.isEmpty ()) {
-		lurl = QFileDialog::getOpenFileUrl(this, i18n("Select workspace to open..."), RKSettingsModuleGeneral::lastUsedUrlFor("workspaces"), i18n("R Workspace Files [%1](%1);;All files [*](*)", RKSettingsModuleGeneral::workspaceFilenameFilter()));
+		lurl = QFileDialog::getOpenFileUrl(this, i18n("Select workspace to open..."), RKRecentUrls::mostRecentUrl(RKRecentUrls::workspaceId()).adjusted(QUrl::RemoveFilename), i18n("R Workspace Files [%1](%1);;All files [*](*)", RKSettingsModuleGeneral::workspaceFilenameFilter()));
 	}
 	if (!lurl.isEmpty ()) {
-		RKSettingsModuleGeneral::updateLastUsedUrl("workspaces", lurl.adjusted(QUrl::RemoveFilename));
-		new RKLoadAgent (url, merge_loads);
+		new RKLoadAgent (lurl, merge_loads);
 	}
 	slotSetStatusReady();
 }
@@ -860,13 +858,6 @@ void RKWardMainWindow::slotFileSaveWorkspace () {
 void RKWardMainWindow::slotFileSaveWorkspaceAs () {
 	RK_TRACE (APP);
 	RKSaveAgent::saveWorkspaceAs();
-}
-
-void RKWardMainWindow::addWorkspaceUrl (const QUrl &url) {
-	RK_TRACE (APP);
-
-	if (!url.isEmpty ()) fileOpenRecentWorkspace->addUrl (url);
-	setCaption (QString ());	// trigger update of caption
 }
 
 void RKWardMainWindow::updateCWD () {
@@ -953,16 +944,10 @@ void RKWardMainWindow::slotNewCommandEditor () {
 	slotOpenCommandEditor (QUrl ());
 }
 
-void RKWardMainWindow::addScriptUrl (const QUrl &url) {
-	RK_TRACE (APP);
-
-	if (!url.isEmpty ()) fileOpenRecent->addUrl (url);
-}
-
 void RKWardMainWindow::openAnyFile () {
 	RK_TRACE (APP);
 
-	QFileDialog* dialog = new QFileDialog (0, QString (), RKSettingsModuleGeneral::lastUsedUrlFor ("rscripts").toLocalFile (), QString ("*|All Files (*)\n%1|R Script Files (%1)").arg (RKSettingsModuleCommandEditor::scriptFileFilter ()));
+	QFileDialog* dialog = new QFileDialog (0, QString (), RKRecentUrls::mostRecentUrl(RKRecentUrls::scriptsId()).adjusted(QUrl::RemoveFilename).toLocalFile(), QString ("*|All Files (*)\n%1|R Script Files (%1)").arg (RKSettingsModuleCommandEditor::scriptFileFilter ()));
 	dialog->setFileMode (QFileDialog::ExistingFiles);
 
 // Create a type selection widget, and hack it into the dialog:
@@ -992,13 +977,10 @@ void RKWardMainWindow::openAnyFile () {
 		RKWorkplace::mainWorkplace ()->openAnyUrl (url);
 	} else if (mode == 1) {
 		RKWorkplace::mainWorkplace ()->openScriptEditor (url);
-		RKSettingsModuleGeneral::updateLastUsedUrl ("rscripts", url.adjusted (QUrl::RemoveFilename));
 	} else if (mode == 2) {
 		RKWorkplace::mainWorkplace ()->openScriptEditor (url, QString (), RKCommandEditorFlags::DefaultFlags | RKCommandEditorFlags::ForceRHighlighting);
-		RKSettingsModuleGeneral::updateLastUsedUrl ("rscripts", url.adjusted (QUrl::RemoveFilename));
 	} else if (mode == 3) {
 		askOpenWorkspace(url);
-		RKSettingsModuleGeneral::updateLastUsedUrl ("workspaces", url.adjusted (QUrl::RemoveFilename));
 	}
 }
 
@@ -1011,7 +993,7 @@ void RKWardMainWindow::slotNewOutput() {
 void RKWardMainWindow::slotOpenOutput() {
 	RK_TRACE (APP);
 
-	QUrl url = QFileDialog::getOpenFileUrl(this, i18n("Select RKWard Output file to open..."), RKSettingsModuleGeneral::lastUsedUrlFor("output"), i18n("RKWard Output Files [*.rko](*.rko);;All files [*](*)"));
+	QUrl url = QFileDialog::getOpenFileUrl(this, i18n("Select RKWard Output file to open..."), RKRecentUrls::mostRecentUrl(RKRecentUrls::outputId()).adjusted(QUrl::RemoveFilename), i18n("RKWard Output Files [*.rko](*.rko);;All files [*](*)"));
 	RKWorkplace::mainWorkplace()->openOutputWindow(url);
 }
 
@@ -1025,9 +1007,8 @@ void RKWardMainWindow::slotOpenCommandEditor () {
 	RK_TRACE (APP);
 	KEncodingFileDialog::Result res;
 
-	res = KEncodingFileDialog::getOpenUrlsAndEncoding (QString (), RKSettingsModuleGeneral::lastUsedUrlFor ("rscripts"), QString ("%1|R Script Files (%1)\n*|All Files (*)").arg (RKSettingsModuleCommandEditor::scriptFileFilter ()), this, i18n ("Open script file(s)"));
+	res = KEncodingFileDialog::getOpenUrlsAndEncoding (QString (), RKRecentUrls::mostRecentUrl(RKRecentUrls::scriptsId()).adjusted(QUrl::RemoveFilename), QString ("%1|R Script Files (%1)\n*|All Files (*)").arg (RKSettingsModuleCommandEditor::scriptFileFilter ()), this, i18n ("Open script file(s)"));
 	for (int i = 0; i < res.URLs.size (); ++i) {
-		if (i == 0) RKSettingsModuleGeneral::updateLastUsedUrl ("rscripts", res.URLs[i].adjusted (QUrl::RemoveFilename));
 		slotOpenCommandEditor (res.URLs[i], res.encoding);
 	}
 };

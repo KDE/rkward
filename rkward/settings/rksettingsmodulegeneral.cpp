@@ -143,28 +143,6 @@ QString RKSettingsModuleGeneral::initialWorkingDirectory () {
 	return initial_dir_specification;
 }
 
-QUrl RKSettingsModuleGeneral::lastUsedUrlFor (const QString& thing) {
-	RK_TRACE (SETTINGS);
-
-	if (thing.isEmpty ()) {
-		if (generic_filedialog_start_url.isEmpty ()) return QUrl::fromLocalFile (QDir::currentPath ());
-		return generic_filedialog_start_url;
-	}
-	KConfigGroup cg (KSharedConfig::openConfig (), "FileDialogUrls");
-	return (cg.readEntry (thing, QUrl ()));
-}
-
-void RKSettingsModuleGeneral::updateLastUsedUrl (const QString& thing, const QUrl& new_path) {
-	RK_TRACE (SETTINGS);
-
-	if (thing.isEmpty ()) {
-		generic_filedialog_start_url = new_path;
-	} else {
-		KConfigGroup cg (KSharedConfig::openConfig (), "FileDialogUrls");
-		cg.writeEntry (thing, new_path);
-	}
-}
-
 QString RKSettingsModuleGeneral::caption() const {
 	RK_TRACE(SETTINGS);
 	return(i18n("General"));
