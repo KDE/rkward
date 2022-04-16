@@ -8,6 +8,8 @@
 	By default, this page is shown each time RKWard is started (configurable in <link href="rkward://settings/general">Settings->Configure RKWard->General</link>).
 	</summary>
 
+	<section title="My recent script files" id="recent-scripts" special="recentfiles" category="rscripts" />
+
 	<section title="Introduction to RKWard" id="introduction">
 	RKWard is a GUI frontend and IDE to <link href="http://www.r-project.org">R</link>, a powerful scripting language for statistical computing. It aims to provide useful features both to experienced users of R, wishing to exploit R's scripting capabilities, as well as to users new to R, looking for an easy way to carry out statistical computation tasks.
 

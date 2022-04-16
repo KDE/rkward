@@ -490,7 +490,8 @@ void RKWardMainWindow::initActions() {
 	new_output->setIcon(RKStandardIcons::getIcon(RKStandardIcons::WindowOutput));
 	new_output->setWhatsThis(i18n("Creates and activates a new output document"));
 
-	fileOpenScript = actionCollection()->addAction(KStandardAction::Open, "file_open_script", this, SLOT(slotOpenCommandEditor()));
+	fileOpenScript = actionCollection()->addAction(KStandardAction::Open, "file_open_script");
+	connect(fileOpenScript, &QAction::triggered, this, [this]() { slotOpenCommandEditor(); });
 	actionCollection()->setDefaultShortcut(fileOpenScript, Qt::ControlModifier + Qt::AltModifier + Qt::Key_O);
 	fileOpenScript->setText(i18n("Open R Script File..."));
 
@@ -521,7 +522,8 @@ void RKWardMainWindow::initActions() {
 #endif
 #endif
 
-	fileOpenWorkspace = actionCollection ()->addAction (KStandardAction::Open, "file_openx", this, SLOT(slotFileOpenWorkspace()));
+	fileOpenWorkspace = actionCollection()->addAction(KStandardAction::Open, "file_openx");
+	connect(fileOpenWorkspace, &QAction::triggered, this, [this](){ askOpenWorkspace(); });
 	fileOpenWorkspace->setText (i18n ("Open Workspace..."));
 	actionCollection ()->setDefaultShortcut (fileOpenWorkspace, Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_O);
 	fileOpenWorkspace->setWhatsThis(i18n ("Opens an existing document"));
@@ -839,11 +841,6 @@ void RKWardMainWindow::askOpenWorkspace (const QUrl &url) {
 	slotSetStatusReady();
 }
 
-void RKWardMainWindow::slotFileOpenWorkspace () {
-	RK_TRACE (APP);
-	askOpenWorkspace (QUrl ());
-}
-
 void RKWardMainWindow::slotFileLoadLibs () {
 	RK_TRACE (APP);
 	RKLoadLibsDialog *dial = new RKLoadLibsDialog (this, 0);
@@ -990,28 +987,28 @@ void RKWardMainWindow::slotNewOutput() {
 	RKWorkplace::mainWorkplace()->openOutputWindow(QUrl(), true);
 }
 
-void RKWardMainWindow::slotOpenOutput() {
+void RKWardMainWindow::slotOpenOutput(const QUrl &_url) {
 	RK_TRACE (APP);
 
-	QUrl url = QFileDialog::getOpenFileUrl(this, i18n("Select RKWard Output file to open..."), RKRecentUrls::mostRecentUrl(RKRecentUrls::outputId()).adjusted(QUrl::RemoveFilename), i18n("RKWard Output Files [*.rko](*.rko);;All files [*](*)"));
+	QUrl url(_url);
+	if (url.isEmpty()) {
+		url = QFileDialog::getOpenFileUrl(this, i18n("Select RKWard Output file to open..."), RKRecentUrls::mostRecentUrl(RKRecentUrls::outputId()).adjusted(QUrl::RemoveFilename), i18n("RKWard Output Files [*.rko](*.rko);;All files [*](*)"));
+	}
 	RKWorkplace::mainWorkplace()->openOutputWindow(url);
 }
 
 void RKWardMainWindow::slotOpenCommandEditor (const QUrl &url, const QString &encoding) {
 	RK_TRACE (APP);
 
-	RKWorkplace::mainWorkplace ()->openScriptEditor (url, encoding);
-}
-
-void RKWardMainWindow::slotOpenCommandEditor () {
-	RK_TRACE (APP);
-	KEncodingFileDialog::Result res;
-
-	res = KEncodingFileDialog::getOpenUrlsAndEncoding (QString (), RKRecentUrls::mostRecentUrl(RKRecentUrls::scriptsId()).adjusted(QUrl::RemoveFilename), QString ("%1|R Script Files (%1)\n*|All Files (*)").arg (RKSettingsModuleCommandEditor::scriptFileFilter ()), this, i18n ("Open script file(s)"));
-	for (int i = 0; i < res.URLs.size (); ++i) {
-		slotOpenCommandEditor (res.URLs[i], res.encoding);
+	if (url.isEmpty()) {
+		auto res = KEncodingFileDialog::getOpenUrlsAndEncoding(QString(), RKRecentUrls::mostRecentUrl(RKRecentUrls::scriptsId()).adjusted(QUrl::RemoveFilename), QString("%1|R Script Files (%1)\n*|All Files (*)").arg(RKSettingsModuleCommandEditor::scriptFileFilter()), this, i18n("Open script file(s)"));
+		for (int i = 0; i < res.URLs.size(); ++i) {
+				RKWorkplace::mainWorkplace ()->openScriptEditor(res.URLs[i], res.encoding);
+		}
+	} else {
+		RKWorkplace::mainWorkplace ()->openScriptEditor(url, encoding);
 	}
-};
+}
 
 void RKWardMainWindow::setCaption (const QString &) {
 	RK_TRACE (APP);

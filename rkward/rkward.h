@@ -72,11 +72,9 @@ public slots:
 	/** open a workspace. If the current workspace is not empty, ask whether to save first.
     @see setNoAskSave ()
     @see setWorkspaceMightBeModified () */
-	void askOpenWorkspace (const QUrl &url);
+	void askOpenWorkspace (const QUrl &url=QUrl());
 	/** creates a new (empty) data.frame */
 	void slotNewDataFrame ();
-	/** open a file and load it into the document*/
-	void slotFileOpenWorkspace();
 	/** save a document */
 	void slotFileSaveWorkspace();
 	/** save a document by a new filename*/
@@ -104,15 +102,13 @@ public slots:
 
 /** open a new command editor (blank file) */
 	void slotNewCommandEditor();
-/** open a new command editor (ask for file to open) */
-	void slotOpenCommandEditor ();
-/** open a new command editor (load given url) */
-	void slotOpenCommandEditor (const QUrl &url, const QString& encoding = QString ());
+/** open a new command editor (load given url, ask for url to load, if empty) */
+	void slotOpenCommandEditor (const QUrl &url = QUrl(), const QString& encoding = QString());
 
 /** create and show a new output window */
 	void slotNewOutput();
 /** load an output Window (ask for file to open) */
-	void slotOpenOutput();
+	void slotOpenOutput(const QUrl &url=QUrl());
 
 /** close current window (Windows->Close). */
 	void slotCloseWindow ();
