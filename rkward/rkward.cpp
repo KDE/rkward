@@ -836,7 +836,7 @@ void RKWardMainWindow::askOpenWorkspace (const QUrl &url) {
 	}
 	if (!lurl.isEmpty ()) {
 		RKSettingsModuleGeneral::updateLastUsedUrl("workspaces", lurl.adjusted(QUrl::RemoveFilename));
-		new RKLoadAgent (url, merge_loads);
+		new RKLoadAgent(lurl, merge_loads);
 	}
 	slotSetStatusReady();
 }
