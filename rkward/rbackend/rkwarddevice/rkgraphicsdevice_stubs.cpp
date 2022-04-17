@@ -627,11 +627,9 @@ void RKD_onExit (pDevDesc dev) {
 	dev->gettingEvent = (Rboolean) false;
 }
 
-int RKD_HoldFlush (pDevDesc dev, int level) {
+int RKD_HoldFlush (pDevDesc, int) {
 	RK_TRACE(GRAPHICS_DEVICE);
-#ifdef __GNUC__
-#warning implement me
-#endif
+	// deliberately left unimplemented: Drawing is in a separte thread, anyway, and only done after a timeout
 	return 0;
 }
 
