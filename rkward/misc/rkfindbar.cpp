@@ -92,6 +92,7 @@ QCheckBox* RKFindBar::getOption (const RKFindBar::FindOptions option) {
 			action = new QCheckBox (i18n ("Highlight all matches"), this);
 		} else {
 			RK_ASSERT (false);
+			return nullptr;
 		}
 		connect (action, &QCheckBox::stateChanged, this, &RKFindBar::searchChanged);
 		default_actions.insert (option, action);

@@ -20,8 +20,8 @@ public:
 	 *  @param delete_file : Try to delete the file after printing. Note: This is not guaranteed to work. */
 	static void printPostscript (const QString &file, bool delete_file=false);
 protected:
-	RKPrintAgent ();
-	~RKPrintAgent ();
+	RKPrintAgent(const QString &file, KParts::ReadOnlyPart *provider, bool delete_file);
+	~RKPrintAgent();
 
 	QString file;
 	KParts::ReadOnlyPart *provider;

@@ -22,7 +22,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-RKPrintAgent::RKPrintAgent () : QObject () {
+RKPrintAgent::RKPrintAgent(const QString &file, KParts::ReadOnlyPart *provider, bool delete_file) : QObject(), file(file), provider(provider), delete_file(delete_file) {
 	RK_TRACE (APP)
 }
 
@@ -71,10 +71,7 @@ void RKPrintAgent::printPostscript (const QString &file, bool delete_file) {
 		return;
 	}
 
-	RKPrintAgent *agent = new RKPrintAgent ();
-	agent->file = file;
-	agent->delete_file = delete_file;
-	agent->provider = provider;
+	RKPrintAgent *agent = new RKPrintAgent(file, provider, delete_file);
 
 	// very hacky heuristic to try to find out, whether the print action is synchronous or asynchronous. If the latter, delete after half an hour. If the former delete after printing.
 	QElapsedTimer ts;

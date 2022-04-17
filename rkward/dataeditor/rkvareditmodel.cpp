@@ -25,7 +25,6 @@ RKVarEditModel::RKVarEditModel (QObject *parent) : RKVarEditModelBase (parent), 
 
 	meta_model = 0;
 	trailing_rows = trailing_cols = 0;
-	var_col_offset = 0;
 	edit_blocks = 0;
 	rownames = 0;
 	header_locked = false;
