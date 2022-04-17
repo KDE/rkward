@@ -10,20 +10,23 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QFile>
 #include <QTimer>
 #include <QElapsedTimer>
+#include <QUrl>
 
 #include <krun.h>
 #include <kservice.h>
 #include <kmessagebox.h>
 #include <kio_version.h>
 #include <KLocalizedString>
-#include <QUrl>
+#include <KPluginFactory>
+#include <KPluginLoader>
 
 #include "../rkward.h"
 
 #include "../debug.h"
 
 RKPrintAgent::RKPrintAgent(const QString &file, KParts::ReadOnlyPart *provider, bool delete_file) : QObject(), file(file), provider(provider), delete_file(delete_file) {
-	RK_TRACE (APP)
+	RK_TRACE (APP);
+	//provider->widget()->show(); // not very helpful as a preview, unfortunately
 }
 
 RKPrintAgent::~RKPrintAgent () {
@@ -36,12 +39,17 @@ RKPrintAgent::~RKPrintAgent () {
 void RKPrintAgent::printPostscript (const QString &file, bool delete_file) {
 	RK_TRACE (APP)
 
-	KService::Ptr service = KService::serviceByDesktopPath ("okular_part.desktop");
-	if (!service) service = KService::serviceByDesktopPath ("kpdf_part.desktop");
-
-	KParts::ReadOnlyPart *provider = 0;
-	if (service) provider = service->createInstance<KParts::ReadOnlyPart> (0);
-	else RK_DEBUG (APP, DL_WARNING, "No KDE service found for postscript printing");
+	KParts::ReadOnlyPart *provider = nullptr;
+	KService::Ptr service = KService::serviceByDesktopPath("okular_part.desktop");
+	if (!service) service = KService::serviceByDesktopPath("kpdf_part.desktop");
+	if (service) {
+		auto factory = KPluginLoader(service->library()).factory();
+		if (factory) {
+			provider = factory->create<KParts::ReadOnlyPart>(nullptr);
+		}
+	} else {
+		RK_DEBUG (APP, DL_WARNING, "No KDE service found for postscript printing");
+	}
 
 	QAction *printaction = 0;
 	if (provider) {
