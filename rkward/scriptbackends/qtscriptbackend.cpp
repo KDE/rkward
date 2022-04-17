@@ -99,26 +99,27 @@ void QtScriptBackend::destroy () {
 void QtScriptBackend::tryNextFunction () {
 	RK_TRACE (PHP);
 
-	if (script_thread && (!busy) && (!command_stack.isEmpty ())) {
+	if (script_thread && (!busy) && (!command_stack.empty())) {
 	/// clean up previous command if applicable
-		if (command_stack.first ()->complete) {
-			delete command_stack.takeFirst ();
+		if (command_stack.front()->complete) {
+			delete command_stack.front();
+			command_stack.pop_front();
 			
-			if (command_stack.isEmpty ()) {
+			if (command_stack.empty ()) {
 				script_thread->goToSleep (true);
 				return;
 			}
 		}
 		
-		RK_DEBUG (PHP, DL_DEBUG, "submitting QtScript code: %s", command_stack.first ()->command.toLatin1 ().data ());
+		RK_DEBUG(PHP, DL_DEBUG, "submitting QtScript code: %s", qPrintable(command_stack.front()->command));
 		if (script_thread) script_thread->goToSleep (false);
-		script_thread->setCommand (command_stack.first ()->command);
+		script_thread->setCommand(command_stack.front()->command);
 		busy = true;
-		command_stack.first ()->complete = true;
-		current_flags = command_stack.first ()->flags;
-		current_type = command_stack.first ()->type;
+		command_stack.front()->complete = true;
+		current_flags = command_stack.front()->flags;
+		current_type = command_stack.front()->type;
 	} else {
-		if (script_thread && command_stack.isEmpty ()) script_thread->goToSleep (true);
+		if (script_thread && command_stack.empty()) script_thread->goToSleep (true);
 	}
 }
 

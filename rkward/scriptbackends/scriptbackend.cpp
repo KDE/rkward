@@ -19,8 +19,9 @@ ScriptBackend::ScriptBackend () : QObject() {
 }
 
 ScriptBackend::~ScriptBackend () {
-	while (command_stack.count ()) {
-		delete command_stack.takeFirst ();
+	while (!command_stack.empty()) {
+		delete command_stack.front();
+		command_stack.pop_front();
 	}
 }
 
@@ -47,7 +48,7 @@ void ScriptBackend::callFunction (const QString &function, int flags, int type) 
 		invalidateCalls (type);
 	}
 
-	command_stack.append (command);
+	command_stack.push_back(command);
 	tryNextFunction ();
 }
 
@@ -58,8 +59,8 @@ void ScriptBackend::invalidateCalls (int type) {
 		current_type = Ignore;
 	}
 
-	QLinkedList<ScriptCommand *>::iterator it = command_stack.begin ();
-	while (it != command_stack.end ()) {
+	auto it = command_stack.begin();
+	while (it != command_stack.end()) {
 		if ((*it)->type == type) {
 			delete (*it);
 			it = command_stack.erase (it);		// it now points to next item

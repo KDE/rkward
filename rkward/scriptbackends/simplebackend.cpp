@@ -67,19 +67,19 @@ void SimpleBackend::writeData (const QVariant &data) {
 void SimpleBackend::tryNextFunction () {
 	RK_TRACE (PHP);
 
-	if ((!busy) && (!command_stack.isEmpty ())) {
+	if ((!busy) && (!command_stack.empty())) {
 		// clean up previous command if applicable
-		if (command_stack.first ()->complete) {
-			delete command_stack.first ();
-			command_stack.pop_front ();
+		if (command_stack.front()->complete) {
+			delete command_stack.front();
+			command_stack.pop_front();
 
-			if (!command_stack.count ()) return;
+			if (command_stack.empty()) return;
 		}
 
 		busy = true;
-		command_stack.first ()->complete = true;
-		current_flags = command_stack.first ()->flags;
-		current_type = command_stack.first ()->type;
+		command_stack.front()->complete = true;
+		current_flags = command_stack.front()->flags;
+		current_type = command_stack.front()->type;
 
 		current_values.clear ();
 		template_pos = 0;

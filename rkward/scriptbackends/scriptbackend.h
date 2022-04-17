@@ -7,10 +7,10 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #ifndef SCRIPTBACKEND_H
 #define SCRIPTBACKEND_H
 
-#include <qobject.h>
+#include <list>
 
-#include <qstring.h>
-#include <QLinkedList>
+#include <QObject>
+#include <QString>
 
 #include "../plugin/rkstandardcomponent.h"
 
@@ -72,7 +72,7 @@ protected:
 	/// whether command has finished
 		bool complete;
 	};
-	QLinkedList<ScriptCommand *> command_stack;
+	std::list<ScriptCommand *> command_stack;
 
 	int current_flags;
 	int current_type;
