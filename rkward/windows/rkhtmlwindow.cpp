@@ -520,18 +520,22 @@ void RKHTMLWindow::slotBack () {
 	openLocationFromHistory (url_history[current_history_position]);
 }
 
+static bool isRKWardUrl(const QUrl &url) {
+	return url.scheme() == QStringLiteral("rkward");
+}
+
 void RKHTMLWindow::openRKHPage (const QUrl &url) {
 	RK_TRACE (APP);
 
-	RK_ASSERT (url.scheme () == "rkward");
-	changeURL (url);
+	RK_ASSERT(isRKWardUrl(url));
+	if (url != this->url()) changeURL(url);  // see ::refresh()
 	bool ok = false;
 	if ((url.host () == "component") || (url.host () == "page")) {
 		useMode (HTMLHelpWindow);
 
 		startNewCacheFile ();
 		RKHelpRenderer render (current_cache_file);
-		ok = render.renderRKHelp (url);
+		ok = render.renderRKHelp(url, this);
 		current_cache_file->close ();
 
 		QUrl cache_url = QUrl::fromLocalFile (current_cache_file->fileName ());
@@ -553,7 +557,7 @@ void RKHTMLWindow::openRKHPage (const QUrl &url) {
 bool RKHTMLWindow::handleRKWardURL (const QUrl &url, RKHTMLWindow *window) {
 	RK_TRACE (APP);
 
-	if (url.scheme () == "rkward") {
+	if (isRKWardUrl(url)) {
 		if (url.host () == "runplugin") {
 			QString path = url.path ();
 			if (path.startsWith ('/')) path = path.mid (1);
@@ -777,8 +781,14 @@ void RKHTMLWindow::updateCaption (const QUrl &url) {
 
 void RKHTMLWindow::refresh () {
 	RK_TRACE (APP);
+	RK_DEBUG(APP, DL_DEBUG, "reload %s", qPrintable(url().url()));
 
-	view->reload ();
+	if (isRKWardUrl(url())) {
+		// need to re-render the page
+		openRKHPage(url());
+	} else {
+		view->reload();
+	}
 }
 
 void RKHTMLWindow::scrollToBottom () {
@@ -995,10 +1005,10 @@ void RKHTMLWindowPart::setHelpWindowSkin() {
 //////////////////////////////////////////
 //////////////////////////////////////////
 
-bool RKHelpRenderer::renderRKHelp (const QUrl &url) {
+bool RKHelpRenderer::renderRKHelp (const QUrl &url, RKHTMLWindow* container) {
 	RK_TRACE (APP);
 
-	if (url.scheme () != "rkward") {
+	if (!isRKWardUrl(url)) {
 		RK_ASSERT (false);
 		return (false);
 	}
@@ -1105,6 +1115,7 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url) {
 				}
 				writeHTML(QString("<li>&lt;<a href=\"rkward://open/%1/\">%2</a>&gt;</li>\n").arg(category, i18n("Choose another file")));
 				writeHTML("</ul>\n");
+				if (container) QObject::connect(RKRecentUrls::notifier(), &RKRecentUrls::recentUrlsChanged, container, &RKHTMLWindow::refresh);
 			}
 		}
 		writeHTML (renderHelpFragment (*it));
@@ -1264,7 +1275,7 @@ QString RKHelpRenderer::prepareHelpLink (const QString &href, const QString &tex
 	} else {
 		QString ltext;
 		QUrl url (href);
-		if (url.scheme () == "rkward") {
+		if (isRKWardUrl(url)) {
 			if (url.host () == "component") {
 				RKComponentHandle *chandle = componentPathToHandle (url.path ());
 				if (chandle) ltext = chandle->getLabel ();

@@ -15,6 +15,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <kconfigwidgets_version.h>
 
 #include "rksettingsmodulecommandeditor.h"
+#include "../rkward.h"
 
 #include "../debug.h"
 
@@ -26,10 +27,12 @@ static QString _output_id("rkoutput");
 QString RKRecentUrls::outputId() { return _output_id; }
 
 QHash<QString, KRecentFilesAction*> RKRecentUrls::actions;
+RKRecentUrls* RKRecentUrls::_notifier = nullptr;
 
 void RKRecentUrls::addRecentUrl(const QString& id, const QUrl& url) {
 	RK_TRACE(SETTINGS);
 	action(id)->addUrl(url);
+	notifyChangeProxy();
 }
 
 QUrl RKRecentUrls::mostRecentUrl(const QString& id) {
@@ -62,7 +65,23 @@ QList<QUrl> RKRecentUrls::allRecentUrls(const QString& id) {
 #endif
 }
 
-RKRecentUrls::RKRecentUrls() {
+RKRecentUrls* RKRecentUrls::notifier() {
+	RK_TRACE(SETTINGS);
+	if (!_notifier) {
+		_notifier = new RKRecentUrls(RKWardMainWindow::getMain());
+	}
+	return _notifier;
+}
+
+void RKRecentUrls::notifyChangeProxy() {
+	if (_notifier) _notifier->notifyChange();
+}
+
+void RKRecentUrls::notifyChange() {
+	emit recentUrlsChanged();
+}
+
+RKRecentUrls::RKRecentUrls(QObject* parent) : QObject(parent) {
 	RK_TRACE(SETTINGS);
 	// Not currrently used
 }
@@ -100,6 +119,7 @@ KRecentFilesAction * RKRecentUrls::action(const QString& id) {
 		if (!id.isEmpty()) act->loadEntries(cg.group(id));
 		act->setMaxItems(RKSettingsModuleCommandEditor::maxNumRecentFiles());  // TODO: Move setting somewhere else
 		QObject::connect(act, &QObject::destroyed, [id]() { RKRecentUrls::actions.remove(id); });
+		QObject::connect(act, &KRecentFilesAction::recentListCleared, &RKRecentUrls::notifyChangeProxy);
 		actions.insert(id, act);
 	}
 	return actions[id];
@@ -111,3 +131,5 @@ void RKRecentUrls::cleanup() {
 	}
 	actions.clear();
 }
+
+#include "rkrecenturls.moc"

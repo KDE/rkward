@@ -176,8 +176,9 @@ public:
 	explicit RKHelpRenderer (QIODevice *_device) { device = _device; help_xml = 0; component_xml = 0; };
 /** destructor */
 	~RKHelpRenderer () {};
-// for dealing with rkward://[page|component]-pages
-	bool renderRKHelp (const QUrl &url);
+/** render an rkward://[page|component]-page to the device given in the ctor.
+ * @param container : Should be page contain dynamic elements, connections will be set up to call refresh(), on the container, as appropriate. May be nullptr. */
+	bool renderRKHelp(const QUrl &url, RKHTMLWindow* container);
 private:
 	XMLHelper *help_xml;
 	XMLHelper *component_xml;

@@ -10,12 +10,13 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QString>
 #include <QHash>
 #include <QUrl>
-#include <QPointer>
+#include <QObject>
 
 class KRecentFilesAction;
 
 /** A wrapper around KRecentFilesAction to have a uniform handling across all the places where we remember the last used urls. */
-class RKRecentUrls {
+class RKRecentUrls : public QObject {
+	Q_OBJECT
 public:
 /** @see mostRecentUrl() */
 	static void addRecentUrl(const QString &id, const QUrl &url);
@@ -30,11 +31,17 @@ public:
 	static QString scriptsId();
 	static QString workspaceId();
 	static QString outputId();
+	static RKRecentUrls* notifier();
+signals:
+	void recentUrlsChanged();
 private:
-	RKRecentUrls();
+	RKRecentUrls(QObject* parent);
 	~RKRecentUrls();
+	void notifyChange();
+	static void notifyChangeProxy();
 	static QHash<QString, KRecentFilesAction*> actions;
 	static KRecentFilesAction* action(const QString &id);
+	static RKRecentUrls* _notifier;
 };
 
 #endif
