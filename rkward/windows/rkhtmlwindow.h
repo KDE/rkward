@@ -190,7 +190,8 @@ private:
 	QString prepareHelpLink (const QString &href, const QString &text);
 	QString componentPathToId (const QString &path);
 	RKComponentHandle *componentPathToHandle (const QString &path);
-	QString startSection (const QString &name, const QString &title, const QString &shorttitle, QStringList *anchors, QStringList *anchor_names);
+	QString startSection(const QString &name, const QString &title, const QString &shorttitle, QStringList *anchors, QStringList *anchor_names);
+	QString endSection();
 
 	QIODevice *device;
 	void writeHTML (const QString &string);

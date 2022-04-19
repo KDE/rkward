@@ -1090,12 +1090,14 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url, RKHTMLWindow* container) {
 	if (!element.isNull ()) {
 		writeHTML (startSection ("summary", i18n ("Summary"), QString (), &anchors, &anchornames));
 		writeHTML (renderHelpFragment (element));
+		writeHTML(endSection());
 	}
 
 	element = help_xml_helper.getChildElement (help_doc_element, "usage", DL_INFO);
 	if (!element.isNull ()) {
 		writeHTML (startSection ("usage", i18n ("Usage"), QString (), &anchors, &anchornames));
 		writeHTML (renderHelpFragment (element));
+		writeHTML(endSection());
 	}
 
 	XMLChildList section_elements = help_xml_helper.getChildElements (help_doc_element, "section", DL_INFO);
@@ -1119,6 +1121,7 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url, RKHTMLWindow* container) {
 			}
 		}
 		writeHTML (renderHelpFragment (*it));
+		writeHTML(endSection());
 	}
 
 	// the section "settings" is the most complicated, as the labels of the individual GUI items has to be fetched from the component description. Of course it is only meaningful for component help, and not rendered for top level help pages.
@@ -1143,6 +1146,7 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url, RKHTMLWindow* container) {
 					help_xml_helper.displayError (&(*it), "Tag not allowed, here", DL_WARNING);
 				}
 			}
+			writeHTML(endSection());
 		}
 	}
 
@@ -1151,6 +1155,7 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url, RKHTMLWindow* container) {
 	if (!element.isNull ()) {
 		writeHTML (startSection ("related", i18n ("Related functions and pages"), QString (), &anchors, &anchornames));
 		writeHTML (renderHelpFragment (element));
+		writeHTML(endSection());
 	}
 
 	// "technical" section
@@ -1158,6 +1163,7 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url, RKHTMLWindow* container) {
 	if (!element.isNull ()) {
 		writeHTML (startSection ("technical", i18n ("Technical details"), QString (), &anchors, &anchornames));
 		writeHTML (renderHelpFragment (element));
+		writeHTML(endSection());
 	}
 
 	if (for_component) {
@@ -1166,6 +1172,7 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url, RKHTMLWindow* container) {
 		if (!deps.isEmpty ()) {
 			writeHTML (startSection ("dependencies", i18n ("Dependencies"), QString (), &anchors, &anchornames));
 			writeHTML (RKComponentDependency::depsToHtml (deps));
+			writeHTML(endSection());
 		}
 	}
 
@@ -1179,6 +1186,7 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url, RKHTMLWindow* container) {
 	if (about.valid) {
 		writeHTML (startSection ("about", i18n ("About"), QString (), &anchors, &anchornames));
 		writeHTML (about.toHtml ());
+		writeHTML(endSection());
 	}
 
 	// create a navigation bar
@@ -1319,12 +1327,16 @@ RKComponentHandle *RKHelpRenderer::componentPathToHandle (const QString &path) {
 }
 
 QString RKHelpRenderer::startSection (const QString &name, const QString &title, const QString &shorttitle, QStringList *anchors, QStringList *anchor_names) {
-	QString ret = "<a name=\"" + name + "\">";
+	QString ret = "<div id=\"" + name + "\"><a name=\"" + name + "\">";
 	ret.append ("<h2>" + title + "</h2>\n");
 	anchors->append (name);
 	if (!shorttitle.isNull ()) anchor_names->append (shorttitle);
 	else anchor_names->append (title);
 	return (ret);
+}
+
+QString RKHelpRenderer::endSection() {
+	return("</div>\n");
 }
 
 void RKHelpRenderer::writeHTML (const QString& string) {
