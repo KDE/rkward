@@ -1061,8 +1061,9 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url, RKHTMLWindow* container) {
 		element = help_xml_helper.getChildElement (help_doc_element, "title", DL_WARNING);
 		page_title = help_xml_helper.i18nElementText (element, false, DL_WARNING);
 	}
-	writeHTML ("<html><head><title>" + page_title + "</title><link rel=\"stylesheet\" type=\"text/css\" href=\"" + css_filename + "\">"
-	           "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"></head>\n<body><div id=\"main\">\n<h1>" + page_title + "</h1>\n");
+	writeHTML("<html><head><title>" + page_title + "</title><link rel=\"stylesheet\" type=\"text/css\" href=\"" + css_filename + "\">"
+	          "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"></head>\n"
+	          "<body id=\"" + help_xml_helper.getStringAttribute(help_doc_element, "pageid", "standard", DL_INFO) + "\"><div id=\"main\">\n<h1>" + page_title + "</h1>\n");
 
 	if (help_doc_element.isNull ()) {
 		RK_ASSERT (for_component);

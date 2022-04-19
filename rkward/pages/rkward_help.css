@@ -23,6 +23,21 @@ a:link {
 	color: var(--anchor-color);
 }
 
+#rkward_welcome #main {
+	width: 95%;
+}
+
+#rkward_welcome #navigation {
+	display: none;
+}
+
+#rkward_welcome div {
+	display: inline-block;
+	width: 40%;
+	padding: 2.5%;
+	float: left;
+}
+
 #main {
 	margin-right: 11em;
 }
