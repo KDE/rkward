@@ -16,6 +16,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../settings/rksettingsmoduleoutput.h"
+#include "../settings/rkrecenturls.h"
 #include "../rbackend/rcommand.h"
 #include "../rbackend/rkrinterface.h"
 #include "../windows/rkmdiwindow.h"
@@ -113,19 +114,15 @@ RKOutputDirectory* RKOutputDirectory::findOutputByWindow(const RKMDIWindow *wind
 	return nullptr;
 }
 
-GenericRRequestResult RKOutputDirectory::save(const QString& _dest, RKOutputDirectory::OverwriteBehavior overwrite) {
+GenericRRequestResult RKOutputDirectory::save(const QString& dest, RKOutputDirectory::OverwriteBehavior overwrite) {
 	RK_TRACE (APP);
 
-	QString dest = _dest;
-	if (dest.isEmpty()) {
-		dest = filename();  // might still be empty, in which case exportAs will ask for destination
-		if (!dest.isEmpty()) overwrite = Force;  // don't prompt when writing to same file
-	}
 	GenericRRequestResult res = exportAs(dest, overwrite);
 	if (!res.failed()) {
 		save_filename = res.ret.toString();  // might by different from dest, notably, if dest was empty or not yet normalized
 		known_modified = true;  // dirty trick to ensure that updateSavedHash() will trigger a stateChange()->update caption in views, even if using SaveAs on an unmodified directory
 		updateSavedHash();
+		RKRecentUrls::addRecentUrl(RKRecentUrls::outputId(), QUrl::fromLocalFile(save_filename));
 	}
 	return res;
 }
@@ -149,7 +146,7 @@ GenericRRequestResult RKOutputDirectory::exportAs (const QString& _dest, RKOutpu
 	}
 
 	bool exists = QFileInfo::exists(dest);
-	if (exists) {
+	if (exists && (dest != save_filename)) {
 		if (overwrite == Ask) {
 			const QString warning = i18n("Are you sure you want to overwrite the existing file '%1'?", dest);
 			KMessageBox::ButtonCode res = KMessageBox::warningContinueCancel(RKWardMainWindow::getMain(), warning, i18n("Overwrite?"), KStandardGuiItem::overwrite(),
@@ -227,6 +224,7 @@ GenericRRequestResult RKOutputDirectory::import(const QString& _dir) {
 		return GenericRRequestResult::makeError(i18n("Output directory %1 is already in use.", id));
 	}
 
+	RKRecentUrls::addRecentUrl(RKRecentUrls::outputId(), QUrl::fromLocalFile(_dir));
 	return importZipInternal(_dir);
 }
 
@@ -344,7 +342,7 @@ GenericRRequestResult RKOutputDirectory::purge(RKOutputDirectory::OverwriteBehav
 				return GenericRRequestResult::makeError(i18n("User canceled"));
 			}
 			if (res == KMessageBox::No) {
-				auto ret = save();
+				auto ret = save(save_filename);
 				if (ret.failed()) return ret;
 			}
 		}
@@ -577,7 +575,9 @@ GenericRRequestResult RKOutputDirectory::handleRCall(const QStringList& params, 
 		} else if (command == QStringLiteral("revert")) {
 			return out->revert(parseOverwrite(params.value(2)));
 		} else if (command == QStringLiteral("save")) {
-			return out->save(params.value(3), parseOverwrite(params.value(2)));
+			QString filename = params.value(3);
+			if (filename.isEmpty()) filename = out->filename();
+			return out->save(filename, parseOverwrite(params.value(2)));
 		} else if (command == QStringLiteral("export")) {
 			return out->exportAs(params.value(3), parseOverwrite(params.value(2)));
 		} else if (command == QStringLiteral("clear")) {

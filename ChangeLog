@@ -1,3 +1,5 @@
+- Fix quirks around "Save as" for rkward output documents
+
 --- Version 0.7.3 - Apr-21-2022
 - Add option to show standardized coefficients for linear regression
 - Fixed: Possible backend hang when closing a data editor before it was done fetching its data

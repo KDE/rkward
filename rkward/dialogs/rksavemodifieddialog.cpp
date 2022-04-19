@@ -147,7 +147,7 @@ void RKSaveModifiedDialog::saveSelected() {
 		if (it.key ()->checkState (0) != Qt::Checked) continue;
 		RKOutputDirectory *dir = RKOutputDirectory::findOutputById(it.value());
 		if (dir) {
-			if (dir->save().failed()) all_ok = false;
+			if (dir->save(dir->filename()).failed()) all_ok = false;
 		}
 		else RK_ASSERT(dir);
 	}

@@ -620,7 +620,6 @@ bool RKHTMLWindow::openURL (const QUrl &url) {
 			}
 
 			current_url = url;	// needs to be set before registering
-			RKRecentUrls::addRecentUrl(RKRecentUrls::outputId(), url);
 			RKOutputWindowManager::self ()->registerWindow (this);
 			dir = RKOutputDirectory::findOutputByWorkPath(url.toLocalFile());
 			part->setOutputDirectoryActionsEnabled(dir != nullptr);
@@ -952,7 +951,7 @@ void RKHTMLWindowPart::initActions () {
 	window->file_save_action = actionCollection()->addAction(KStandardAction::Save, window, SLOT(slotSave()));
 	window->file_save_action->setText(i18n("Save Output"));
 	window->file_save_as_action = actionCollection()->addAction(KStandardAction::SaveAs, window, SLOT(slotSaveAs()));
-	window->file_save_action->setText(i18n("Save Output As"));
+	window->file_save_as_action->setText(i18n("Save Output As"));
 
 	outputFlush = actionCollection ()->addAction ("output_flush", window, SLOT (flushOutput()));
 	outputFlush->setText (i18n ("&Clear Output"));
