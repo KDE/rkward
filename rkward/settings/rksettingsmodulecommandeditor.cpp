@@ -34,7 +34,6 @@ RKCodeCompletionSettings RKSettingsModuleCommandEditor::completion_settings;
 RKConfigValue<bool> RKSettingsModuleCommandEditor::autosave_enabled { "Autosave enabled", true };
 RKConfigValue<bool> RKSettingsModuleCommandEditor::autosave_keep { "Autosave keep saves", false };
 RKConfigValue<int> RKSettingsModuleCommandEditor::autosave_interval {"Autosave interval", 5 };
-RKConfigValue<int> RKSettingsModuleCommandEditor::num_recent_files { "Max number of recent files", 10 };
 RKConfigValue<QString> RKSettingsModuleCommandEditor::script_file_filter { "Script file filter", "*.R *.S *.q *.Rhistory" };
 
 RKCodeCompletionSettingsWidget::RKCodeCompletionSettingsWidget(QWidget *parent, RKSettingsModule *module, RKCodeCompletionSettings *settings, bool show_common) : RKSettingsModuleWidget(parent, module), settings(settings) {
@@ -136,20 +135,12 @@ RKSettingsModuleCommandEditor::RKSettingsModuleCommandEditor (RKSettings *gui, Q
 
 	main_vbox->addSpacing (2 * RKStyle::spacingHint ());
 
-	group = new QGroupBox (i18n ("Opening script files"), this);
-	form_layout = new QFormLayout (group);
-
-	auto num_recent_files_box = num_recent_files.makeSpinBox(1, INT_MAX, this);
-	RKCommonFunctions::setTips (i18n ("<p>The number of recent files to remember (in the Open Recent R Script File menu).</p>") + RKCommonFunctions::noteSettingsTakesEffectAfterRestart (), num_recent_files_box, group);
-	form_layout->addRow (i18n ("Number of scripts in recent file lists (*)"), num_recent_files_box);
-
-	script_file_filter_box = new QLineEdit (group);
-	script_file_filter_box->setText (script_file_filter);
-	RKCommonFunctions::setTips (i18n ("<p>A list of filters (file name extensions) that should be treated as R script files. Most importantly, files matching one of these filters will always be opened with R syntax highlighting.</p><p>Filters are case insensitive.</p>"), script_file_filter_box);
-	connect (script_file_filter_box, &QLineEdit::textChanged, this, &RKSettingsModule::change);
-	form_layout->addRow (i18n ("R script file filters (separated by spaces)"), script_file_filter_box);
-
-	main_vbox->addWidget (group);
+	script_file_filter_box = new QLineEdit();
+	script_file_filter_box->setText(script_file_filter);
+	RKCommonFunctions::setTips(i18n("<p>A list of filters (file name extensions) that should be treated as R script files. Most importantly, files matching one of these filters will always be opened with R syntax highlighting.</p><p>Filters are case insensitive.</p>"), script_file_filter_box);
+	connect(script_file_filter_box, &QLineEdit::textChanged, this, &RKSettingsModule::change);
+	main_vbox->addWidget(new QLabel(i18n("R script file filters (separated by spaces)")));
+	main_vbox->addWidget(script_file_filter_box);
 
 	main_vbox->addStretch ();
 }
@@ -196,7 +187,6 @@ void RKSettingsModuleCommandEditor::syncConfig(KConfig* config, RKConfigBase::Co
 	autosave_keep.syncConfig(cg, a);
 	autosave_interval.syncConfig(cg, a);
 
-	num_recent_files.syncConfig(cg, a);
 	script_file_filter.syncConfig(cg, a);
 }
 

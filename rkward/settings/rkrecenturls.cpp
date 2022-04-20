@@ -14,7 +14,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KRecentFilesAction>
 #include <kconfigwidgets_version.h>
 
-#include "rksettingsmodulecommandeditor.h"
+#include "rksettingsmodulegeneral.h"
 #include "../rkward.h"
 
 #include "../debug.h"
@@ -117,7 +117,7 @@ KRecentFilesAction * RKRecentUrls::action(const QString& id) {
 		auto cg = config();
 		auto act = new KRecentFilesAction(nullptr);
 		if (!id.isEmpty()) act->loadEntries(cg.group(id));
-		act->setMaxItems(RKSettingsModuleCommandEditor::maxNumRecentFiles());  // TODO: Move setting somewhere else
+		act->setMaxItems(RKSettingsModuleGeneral::maxNumRecentFiles());  // TODO: Move setting somewhere else
 		QObject::connect(act, &QObject::destroyed, [id]() { RKRecentUrls::actions.remove(id); });
 		QObject::connect(act, &KRecentFilesAction::recentListCleared, &RKRecentUrls::notifyChangeProxy);
 		actions.insert(id, act);

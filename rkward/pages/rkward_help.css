@@ -30,6 +30,7 @@ a:link {
 	margin: auto;
 	display: flex;
 	flex-flow: row wrap;
+	justify-content: center;
 }
 
 #rkward_welcome #main h1 {
@@ -41,9 +42,9 @@ a:link {
 }
 
 #rkward_welcome div {
-	width: 40%;
-	margin: 0% 2.5%;
-	padding: 1em;
+	width: 45%;
+	margin: 1em;
+	padding: 0em 1em;
 }
 
 #rkward_welcome div div {
