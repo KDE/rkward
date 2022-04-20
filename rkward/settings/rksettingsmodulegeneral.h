@@ -66,12 +66,7 @@ public:
 	static RKMDIFocusPolicy mdiFocusPolicy () { return mdi_focus_policy; }
 	static QString workspaceFilenameFilter () { return ("*.RData *.RDA"); };
 	static QString initialWorkingDirectory ();
-/** get the url last used for @param thing, where thing is simply a key string.
-    Urls are saved and restored across sessions, _except_ for the empty key, which will keep track of the last used
-    "generic" url within a session (and defaults to the current working directory, while not set). */
-	static QUrl lastUsedUrlFor (const QString& thing);
-/** update the url used for @param thing, @see lastUsedUrlFor(). */
-	static void updateLastUsedUrl (const QString& thing, const QUrl& new_path);
+	static int maxNumRecentFiles () { return num_recent_files; };
 /** if the installation-path of KDE seems to have moved since the last startup, *and* the given path is relative to the
  *  KDE data path, adjust the given path (probably loaded from config), accordingly. @See RKCommonFunctions::getRKWardDataDir()
  *  TODO: similar, but not quite identical functionality in rkworkplace.cpp checkAdjustRestoredUrl(). Might be mergeable. */
@@ -85,6 +80,7 @@ public:
 		RKWardConfig_0_6_4,
 		RKWardConfig_0_7_1,
 		RKWardConfig_0_7_3,
+		RKWardConfig_0_7_4,
 		RKWardConfig_Next,		/**< add new configuration versions above / before this entry */
 		RKWardConfig_Latest = RKWardConfig_Next - 1
 	};
@@ -123,7 +119,7 @@ private:
 	static bool rkward_version_changed;
 	static bool config_exists;
 	static bool installation_moved;
-	static QUrl generic_filedialog_start_url;
+	static RKConfigValue<int> num_recent_files;
 
 	static QVariantMap startup_options;
 };

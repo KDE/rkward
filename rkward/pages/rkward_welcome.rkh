@@ -1,30 +1,35 @@
 <!DOCTYPE rkhelp>
-<document>
+<document pageid="rkward_welcome">
 	<title>Welcome to RKWard</title>
 
-	<summary>
-	This help page gives a rough overview of the most important parts of RKWard.
+	<section title="My recent script files" id="recent-scripts" special="recentfiles" category="rscripts" />
 
-	By default, this page is shown each time RKWard is started (configurable in <link href="rkward://settings/general">Settings->Configure RKWard->General</link>).
-	</summary>
+	<section title="My recent workspaces" id="recent-workspaces" special="recentfiles" category="workspaces" />
 
-	<section title="Introduction to RKWard" id="introduction">
-	RKWard is a GUI frontend and IDE to <link href="http://www.r-project.org">R</link>, a powerful scripting language for statistical computing. It aims to provide useful features both to experienced users of R, wishing to exploit R's scripting capabilities, as well as to users new to R, looking for an easy way to carry out statistical computation tasks.
+	<section title="My recent output files" id="recent-output" special="recentfiles" category="rkoutput" />
 
-	If you have used neither R nor RKWard before, you may want to start by reading the following guide: <link href="rkward://page/rkward_for_new_users" />.
-
-	After that, or for users with some knowledge of R, but new to RKWard, here is a guide focused on introducing the IDE features of RKWard: <link href="rkward://page/rkward_for_r_users" />.
+	<section title="Import or enter data" id="import-create">
+		<ul>
+	<li>New data.frame()</li>
+	<li>Import data</li>
+		</ul>
 	</section>
 
-	<section title="Installing Add-Ons" id="add-ons">
-	Missing something? Many features are available as separate add-ons. Please refer to <link href="rkward://page/rkward_addons" /> for more information.
+	<section title="Useful settings" id="settings">
+		<ul>
+	<li><link href="rkward://settings/addons">RKWard Add-ons</link></li>
+	<li>R packages <link href="">TODO link me</link></li>
+	<li><link href="rkward://settings/general">Startup options</link> (including this page)</li>
+		</ul>
 	</section>
 
-	<section title="Trouble Shooting" id="Trouble Shooting">
-	If you encounter problems please take a look in <link href="rkward://page/rkward_trouble_shooting">Trouble Shooting / FAQ</link> first. The preferred way to report a bug is using "Report Bug" from the "Help"-menu.
-	</section>
-
-	<section title="General Information" id="further_info">
-	For more general information on RKWard, who writes it, how to help, further questions, etc. refer to <link href="http://rkward.kde.org/">the project homepage</link>.
+	<section title="Documentation starting points" id="documentation">
+		<ul>
+	<li><link href="rkward://page/rkward_for_new_users" /></li>
+	<li><link href="rkward://page/rkward_for_r_users" /></li>
+	<li><link href="rkward://page/rkward_addons" /></li>
+	<li><link href="rkward://page/rkward_trouble_shooting" /></li>
+	<li>External links: <link href="http://rkward.kde.org/">project homepage</link></li>
+		</ul>
 	</section>
 </document>

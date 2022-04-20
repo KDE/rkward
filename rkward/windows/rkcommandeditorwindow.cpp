@@ -50,6 +50,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../rbackend/rkrinterface.h"
 #include "../settings/rksettings.h"
 #include "../settings/rksettingsmodulecommandeditor.h"
+#include "../settings/rkrecenturls.h"
 #include "../rkconsole.h"
 #include "../rkward.h"
 #include "rkhelpsearchwindow.h"
@@ -251,8 +252,8 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl &_url,
 	connect (m_doc, &KTextEditor::Document::documentSavedOrUploaded, this, &RKCommandEditorWindow::documentSaved);
 	layout->addWidget(preview_splitter);
 
-	setGlobalContextProperty ("current_filename", m_doc->url ().url ());
-	connect (m_doc, &KTextEditor::Document::documentUrlChanged, this, [this]() { updateCaption(); setGlobalContextProperty ("current_filename", m_doc->url ().url ()); });
+	setGlobalContextProperty("current_filename", m_doc->url().url());
+	connect (m_doc, &KTextEditor::Document::documentUrlChanged, this, &RKCommandEditorWindow::urlChanged);
 	connect (m_doc, &KTextEditor::Document::modifiedChanged, this, &RKCommandEditorWindow::updateCaption);                // of course most of the time this causes a redundant call to updateCaption. Not if a modification is undone, however.
 #ifdef __GNUC__
 #warning remove this in favor of KTextEditor::Document::restore()
@@ -280,7 +281,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl &_url,
 	connect (&autosave_timer, &QTimer::timeout, this, &RKCommandEditorWindow::doAutoSave);
 	connect (&preview_timer, &QTimer::timeout, this, &RKCommandEditorWindow::doRenderPreview);
 
-	updateCaption ();	// initialize
+	urlChanged();	// initialize
 }
 
 RKCommandEditorWindow::~RKCommandEditorWindow () {
@@ -739,18 +740,22 @@ void RKCommandEditorWindow::highlightLine (int linenum) {
 	if (!old_rw) m_doc->setReadWrite (false);
 }
 
-void RKCommandEditorWindow::updateCaption () {
+void RKCommandEditorWindow::urlChanged() {
 	RK_TRACE (COMMANDEDITOR);
+	updateCaption();
+	setGlobalContextProperty("current_filename", url().url());
+	if (!url().isEmpty()) RKRecentUrls::addRecentUrl(RKRecentUrls::scriptsId(), url());
+	action_setwd_to_script->setEnabled (!url().isEmpty ());
+}
+
+
+void RKCommandEditorWindow::updateCaption () {
 	QString name = url ().fileName ();
 	if (name.isEmpty ()) name = url ().toDisplayString ();
 	if (name.isEmpty ()) name = i18n ("Unnamed");
 	if (isModified ()) name.append (i18n (" [modified]"));
 
 	setCaption (name);
-
-	// Well, these do not really belong, here, but need to happen on pretty much the same occasions:
-	action_setwd_to_script->setEnabled (!url ().isEmpty ());
-	RKWardMainWindow::getMain ()->addScriptUrl (url ());
 }
 
 void RKCommandEditorWindow::currentHelpContext (QString *symbol, QString *package) {

@@ -161,6 +161,7 @@ private slots:
 /** document was saved. Update preview, if appropriate */
 	void documentSaved ();
 private:
+	void urlChanged();
 	KTextEditor::Cursor saved_scroll_position;
 	KTextEditor::Document *m_doc;
 	KTextEditor::View *m_view;

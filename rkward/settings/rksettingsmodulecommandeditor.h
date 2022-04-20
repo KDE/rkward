@@ -113,7 +113,6 @@ public:
 	static int autosaveInterval () { return autosave_interval; };
 	static QString autosaveSuffix () { return ".rkward_autosave"; };
 
-	static int maxNumRecentFiles () { return num_recent_files; };
 	static QString scriptFileFilter () { return script_file_filter; };
 	static bool matchesScriptFileFilter (const QString &filename);
 
@@ -128,7 +127,6 @@ private:
 	QGroupBox* autosave_enabled_box;
 	QLineEdit* script_file_filter_box;
 
-	static RKConfigValue<int> num_recent_files;
 	static RKConfigValue<QString> script_file_filter;
 };
 

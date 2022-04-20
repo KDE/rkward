@@ -39,7 +39,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rkhelpsearchwindow.h"
 #include "../rkward.h"
 #include "../rkconsole.h"
-#include "../settings/rksettingsmodulegeneral.h"
+#include "../settings/rkrecenturls.h"
 #include "../settings/rksettingsmoduler.h"
 #include "../settings/rksettings.h"
 #include "../settings/rksettingsmoduleoutput.h"
@@ -313,7 +313,10 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 	                                                "rksetcolor('--regular-text-color', '%1');\n"
 	                                                "rksetcolor('--background-color', '%2');\n"
 	                                                "rksetcolor('--header-color', '%3');\n"
-	                                                "rksetcolor('--anchor-color', '%4');").arg(scheme->foreground().color().name(), scheme->background().color().name(), scheme->foreground(KColorScheme::VisitedText).color().name(), scheme->foreground(KColorScheme::LinkText).color().name());
+	                                                "rksetcolor('--anchor-color', '%4');\n"
+	                                                "rksetcolor('--shadow-color', '%5');").arg(scheme->foreground().color().name(), scheme->background().color().name(),
+	                                                scheme->foreground(KColorScheme::VisitedText).color().name(), scheme->foreground(KColorScheme::LinkText).color().name(),
+	                                                scheme->shade(KColorScheme::MidShade).name());
 #ifdef NO_QT_WEBENGINE
 	connect(page, &RKWebPage::loadFinished, [this, color_scheme_js](){
 		page->mainFrame()->evaluateJavaScript(color_scheme_js);
@@ -520,18 +523,22 @@ void RKHTMLWindow::slotBack () {
 	openLocationFromHistory (url_history[current_history_position]);
 }
 
+static bool isRKWardUrl(const QUrl &url) {
+	return url.scheme() == QStringLiteral("rkward");
+}
+
 void RKHTMLWindow::openRKHPage (const QUrl &url) {
 	RK_TRACE (APP);
 
-	RK_ASSERT (url.scheme () == "rkward");
-	changeURL (url);
+	RK_ASSERT(isRKWardUrl(url));
+	if (url != this->url()) changeURL(url);  // see ::refresh()
 	bool ok = false;
 	if ((url.host () == "component") || (url.host () == "page")) {
 		useMode (HTMLHelpWindow);
 
 		startNewCacheFile ();
 		RKHelpRenderer render (current_cache_file);
-		ok = render.renderRKHelp (url);
+		ok = render.renderRKHelp(url, this);
 		current_cache_file->close ();
 
 		QUrl cache_url = QUrl::fromLocalFile (current_cache_file->fileName ());
@@ -553,7 +560,7 @@ void RKHTMLWindow::openRKHPage (const QUrl &url) {
 bool RKHTMLWindow::handleRKWardURL (const QUrl &url, RKHTMLWindow *window) {
 	RK_TRACE (APP);
 
-	if (url.scheme () == "rkward") {
+	if (isRKWardUrl(url)) {
 		if (url.host () == "runplugin") {
 			QString path = url.path ();
 			if (path.startsWith ('/')) path = path.mid (1);
@@ -572,6 +579,23 @@ bool RKHTMLWindow::handleRKWardURL (const QUrl &url, RKHTMLWindow *window) {
 			QString path = url.path ();
 			if (path.startsWith ('/')) path = path.mid (1);
 			RKSettings::configureSettings(path);
+		} else if (url.host () == "open") {
+			QString path = url.path().mid(1); // skip initial '/'
+			int sep = path.indexOf('/');
+			QString category = path.left(sep);
+			path = path.mid(sep+1);
+			RK_DEBUG(APP, DL_DEBUG, "rkward://open: %s -> %s , %s", qPrintable(url.path()), qPrintable(category), qPrintable(path));
+			QUrl target;
+			if (!path.isEmpty()) target = QUrl::fromUserInput(path);
+			if (category == RKRecentUrls::scriptsId()) {
+				RKWardMainWindow::getMain()->slotOpenCommandEditor(target);
+			} else if (category == RKRecentUrls::workspaceId()) {
+				RKWardMainWindow::getMain()->askOpenWorkspace(target);
+			} else if (category == RKRecentUrls::outputId()) {
+				RKWardMainWindow::getMain()->slotOpenOutput(target);
+			} else {
+				RKWorkplace::mainWorkplace()->openAnyUrl(target);
+			}
 		} else {
 			if (window) window->openRKHPage (url);
 			else RKWorkplace::mainWorkplace ()->openHelpWindow (url);	// will recurse with window set, via openURL()
@@ -759,8 +783,14 @@ void RKHTMLWindow::updateCaption (const QUrl &url) {
 
 void RKHTMLWindow::refresh () {
 	RK_TRACE (APP);
+	RK_DEBUG(APP, DL_DEBUG, "reload %s", qPrintable(url().url()));
 
-	view->reload ();
+	if (isRKWardUrl(url())) {
+		// need to re-render the page
+		openRKHPage(url());
+	} else {
+		view->reload();
+	}
 }
 
 void RKHTMLWindow::scrollToBottom () {
@@ -924,7 +954,7 @@ void RKHTMLWindowPart::initActions () {
 	window->file_save_action = actionCollection()->addAction(KStandardAction::Save, window, SLOT(slotSave()));
 	window->file_save_action->setText(i18n("Save Output"));
 	window->file_save_as_action = actionCollection()->addAction(KStandardAction::SaveAs, window, SLOT(slotSaveAs()));
-	window->file_save_action->setText(i18n("Save Output As"));
+	window->file_save_as_action->setText(i18n("Save Output As"));
 
 	outputFlush = actionCollection ()->addAction ("output_flush", window, SLOT (flushOutput()));
 	outputFlush->setText (i18n ("&Clear Output"));
@@ -977,10 +1007,10 @@ void RKHTMLWindowPart::setHelpWindowSkin() {
 //////////////////////////////////////////
 //////////////////////////////////////////
 
-bool RKHelpRenderer::renderRKHelp (const QUrl &url) {
+bool RKHelpRenderer::renderRKHelp (const QUrl &url, RKHTMLWindow* container) {
 	RK_TRACE (APP);
 
-	if (url.scheme () != "rkward") {
+	if (!isRKWardUrl(url)) {
 		RK_ASSERT (false);
 		return (false);
 	}
@@ -1033,8 +1063,9 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url) {
 		element = help_xml_helper.getChildElement (help_doc_element, "title", DL_WARNING);
 		page_title = help_xml_helper.i18nElementText (element, false, DL_WARNING);
 	}
-	writeHTML ("<html><head><title>" + page_title + "</title><link rel=\"stylesheet\" type=\"text/css\" href=\"" + css_filename + "\">"
-	           "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"></head>\n<body><div id=\"main\">\n<h1>" + page_title + "</h1>\n");
+	writeHTML("<html><head><title>" + page_title + "</title><link rel=\"stylesheet\" type=\"text/css\" href=\"" + css_filename + "\">"
+	          "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"></head>\n"
+	          "<body id=\"" + help_xml_helper.getStringAttribute(help_doc_element, "pageid", "standard", DL_INFO) + "\"><div id=\"main\">\n<h1>" + page_title + "</h1>\n");
 
 	if (help_doc_element.isNull ()) {
 		RK_ASSERT (for_component);
@@ -1062,12 +1093,14 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url) {
 	if (!element.isNull ()) {
 		writeHTML (startSection ("summary", i18n ("Summary"), QString (), &anchors, &anchornames));
 		writeHTML (renderHelpFragment (element));
+		writeHTML(endSection());
 	}
 
 	element = help_xml_helper.getChildElement (help_doc_element, "usage", DL_INFO);
 	if (!element.isNull ()) {
 		writeHTML (startSection ("usage", i18n ("Usage"), QString (), &anchors, &anchornames));
 		writeHTML (renderHelpFragment (element));
+		writeHTML(endSection());
 	}
 
 	XMLChildList section_elements = help_xml_helper.getChildElements (help_doc_element, "section", DL_INFO);
@@ -1076,7 +1109,22 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url) {
 		QString shorttitle = help_xml_helper.i18nStringAttribute (*it, "shorttitle", QString (), DL_DEBUG);
 		QString id = help_xml_helper.getStringAttribute (*it, "id", QString (), DL_WARNING);
 		writeHTML (startSection (id, title, shorttitle, &anchors, &anchornames));
+		QString special = help_xml_helper.getStringAttribute(*it, "special", QString(), DL_DEBUG);
+		if (!special.isEmpty()) {
+			if (special == "recentfiles") {
+				writeHTML("<ul>\n");
+				QString category = help_xml_helper.getStringAttribute(*it, "category", QString(), DL_WARNING);
+				auto list = RKRecentUrls::allRecentUrls(category);
+				for (int i = 0; i < list.size(); ++i) {
+					writeHTML(QString("<li><a href=\"rkward://open/%1/%2\">%3</a></li>\n").arg(category, list[i].url(), RKCommonFunctions::escape(list[i].url(QUrl::PreferLocalFile))));
+				}
+				writeHTML(QString("<li>&lt;<a href=\"rkward://open/%1/\">%2</a>&gt;</li>\n").arg(category, i18n("Choose another file")));
+				writeHTML("</ul>\n");
+				if (container) QObject::connect(RKRecentUrls::notifier(), &RKRecentUrls::recentUrlsChanged, container, &RKHTMLWindow::refresh);
+			}
+		}
 		writeHTML (renderHelpFragment (*it));
+		writeHTML(endSection());
 	}
 
 	// the section "settings" is the most complicated, as the labels of the individual GUI items has to be fetched from the component description. Of course it is only meaningful for component help, and not rendered for top level help pages.
@@ -1101,6 +1149,7 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url) {
 					help_xml_helper.displayError (&(*it), "Tag not allowed, here", DL_WARNING);
 				}
 			}
+			writeHTML(endSection());
 		}
 	}
 
@@ -1109,6 +1158,7 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url) {
 	if (!element.isNull ()) {
 		writeHTML (startSection ("related", i18n ("Related functions and pages"), QString (), &anchors, &anchornames));
 		writeHTML (renderHelpFragment (element));
+		writeHTML(endSection());
 	}
 
 	// "technical" section
@@ -1116,6 +1166,7 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url) {
 	if (!element.isNull ()) {
 		writeHTML (startSection ("technical", i18n ("Technical details"), QString (), &anchors, &anchornames));
 		writeHTML (renderHelpFragment (element));
+		writeHTML(endSection());
 	}
 
 	if (for_component) {
@@ -1124,6 +1175,7 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url) {
 		if (!deps.isEmpty ()) {
 			writeHTML (startSection ("dependencies", i18n ("Dependencies"), QString (), &anchors, &anchornames));
 			writeHTML (RKComponentDependency::depsToHtml (deps));
+			writeHTML(endSection());
 		}
 	}
 
@@ -1137,6 +1189,7 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url) {
 	if (about.valid) {
 		writeHTML (startSection ("about", i18n ("About"), QString (), &anchors, &anchornames));
 		writeHTML (about.toHtml ());
+		writeHTML(endSection());
 	}
 
 	// create a navigation bar
@@ -1233,7 +1286,7 @@ QString RKHelpRenderer::prepareHelpLink (const QString &href, const QString &tex
 	} else {
 		QString ltext;
 		QUrl url (href);
-		if (url.scheme () == "rkward") {
+		if (isRKWardUrl(url)) {
 			if (url.host () == "component") {
 				RKComponentHandle *chandle = componentPathToHandle (url.path ());
 				if (chandle) ltext = chandle->getLabel ();
@@ -1277,12 +1330,16 @@ RKComponentHandle *RKHelpRenderer::componentPathToHandle (const QString &path) {
 }
 
 QString RKHelpRenderer::startSection (const QString &name, const QString &title, const QString &shorttitle, QStringList *anchors, QStringList *anchor_names) {
-	QString ret = "<a name=\"" + name + "\">";
+	QString ret = "<div id=\"" + name + "\"><a name=\"" + name + "\">";
 	ret.append ("<h2>" + title + "</h2>\n");
 	anchors->append (name);
 	if (!shorttitle.isNull ()) anchor_names->append (shorttitle);
 	else anchor_names->append (title);
 	return (ret);
+}
+
+QString RKHelpRenderer::endSection() {
+	return("</div>\n");
 }
 
 void RKHelpRenderer::writeHTML (const QString& string) {

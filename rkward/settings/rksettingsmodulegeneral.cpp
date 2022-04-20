@@ -50,7 +50,7 @@ RKConfigValue<QString> RKSettingsModuleGeneral::initial_dir_specification { "ini
 bool RKSettingsModuleGeneral::rkward_version_changed;
 bool RKSettingsModuleGeneral::installation_moved = false;
 QString RKSettingsModuleGeneral::previous_rkward_data_dir;
-QUrl RKSettingsModuleGeneral::generic_filedialog_start_url;
+RKConfigValue<int> RKSettingsModuleGeneral::num_recent_files { "Max number of recent files", 8 };
 
 QVariantMap RKSettingsModuleGeneral::startup_options;
 
@@ -75,6 +75,10 @@ RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *pare
 	main_vbox->addWidget(startup_action_choser);
 
 	main_vbox->addWidget(show_help_on_startup.makeCheckbox(i18n("Show RKWard Help on Startup"), this));
+	auto num_recent_files_box = num_recent_files.makeSpinBox(1, INT_MAX, this);
+	RKCommonFunctions::setTips (i18n ("<p>The number of recent files to remember (in the Open Recent R Script File menu).</p>") + RKCommonFunctions::noteSettingsTakesEffectAfterRestart (), num_recent_files_box, num_recent_files_box);
+	main_vbox->addWidget(new QLabel(i18n("Maximum number of files to remember per category (*)")));
+	main_vbox->addWidget(num_recent_files_box);
 
 	QGroupBox* group_box = new QGroupBox (i18n ("Initial working directory (*)"), this);
 	QHBoxLayout *hlayout = new QHBoxLayout (group_box);
@@ -143,28 +147,6 @@ QString RKSettingsModuleGeneral::initialWorkingDirectory () {
 	return initial_dir_specification;
 }
 
-QUrl RKSettingsModuleGeneral::lastUsedUrlFor (const QString& thing) {
-	RK_TRACE (SETTINGS);
-
-	if (thing.isEmpty ()) {
-		if (generic_filedialog_start_url.isEmpty ()) return QUrl::fromLocalFile (QDir::currentPath ());
-		return generic_filedialog_start_url;
-	}
-	KConfigGroup cg (KSharedConfig::openConfig (), "FileDialogUrls");
-	return (cg.readEntry (thing, QUrl ()));
-}
-
-void RKSettingsModuleGeneral::updateLastUsedUrl (const QString& thing, const QUrl& new_path) {
-	RK_TRACE (SETTINGS);
-
-	if (thing.isEmpty ()) {
-		generic_filedialog_start_url = new_path;
-	} else {
-		KConfigGroup cg (KSharedConfig::openConfig (), "FileDialogUrls");
-		cg.writeEntry (thing, new_path);
-	}
-}
-
 QString RKSettingsModuleGeneral::caption() const {
 	RK_TRACE(SETTINGS);
 	return(i18n("General"));
@@ -210,6 +192,7 @@ void RKSettingsModuleGeneral::syncConfig(KConfig *config, RKConfigBase::ConfigSy
 	}
 	startup_action.syncConfig(cg, a);
 	show_help_on_startup.syncConfig(cg, a);
+	num_recent_files.syncConfig(cg, a);
 	initial_dir.syncConfig(cg, a);
 	if ((a == RKConfigBase::SaveConfig) && (initial_dir == LastUsedDirectory)) {
 		cg.writeEntry(initial_dir_specification.key(), QDir::currentPath());
@@ -234,6 +217,10 @@ void RKSettingsModuleGeneral::syncConfig(KConfig *config, RKConfigBase::ConfigSy
 	} else {
 		cg.writeEntry("config file version", (int) RKWardConfig_Latest);
 		cg.writeEntry("previous runtime version", QString(RKWARD_VERSION));
+	}
+
+	if ((a == RKConfigBase::LoadConfig) && (stored_config_version < RKWardConfig_0_7_4)) {
+		show_help_on_startup = true;
 	}
 }
 

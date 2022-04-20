@@ -3,6 +3,7 @@
   --background-color: white;
   --header-color: darkgray;
   --anchor-color: #0022cc;
+  --shadow-color: #00000044;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -11,6 +12,7 @@
     --background-color: black;
     --header-color: darkgray;
     --anchor-color: #3366ff;
+    --shadow-color: #ffffff44;
   }
 }
 
@@ -21,6 +23,41 @@ body {
 
 a:link {
 	color: var(--anchor-color);
+}
+
+#rkward_welcome #main {
+	width: 95%;
+	margin: auto;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+}
+
+#rkward_welcome #main h1 {
+	width: 100%;
+}
+
+#rkward_welcome #navigation {
+	display: none;
+}
+
+#rkward_welcome div {
+	width: 45%;
+	margin: 1em;
+	padding: 0em 1em;
+}
+
+#rkward_welcome div div {
+	box-shadow: var(--shadow-color) .1em .5em .8em;
+}
+
+#rkward_welcome li {
+	width: 100%;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	text-align: left;
+	list-style-position: inside;
 }
 
 #main {
