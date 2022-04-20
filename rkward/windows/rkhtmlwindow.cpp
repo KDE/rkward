@@ -313,7 +313,10 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 	                                                "rksetcolor('--regular-text-color', '%1');\n"
 	                                                "rksetcolor('--background-color', '%2');\n"
 	                                                "rksetcolor('--header-color', '%3');\n"
-	                                                "rksetcolor('--anchor-color', '%4');").arg(scheme->foreground().color().name(), scheme->background().color().name(), scheme->foreground(KColorScheme::VisitedText).color().name(), scheme->foreground(KColorScheme::LinkText).color().name());
+	                                                "rksetcolor('--anchor-color', '%4');\n"
+	                                                "rksetcolor('--shadow-color', '%5');").arg(scheme->foreground().color().name(), scheme->background().color().name(),
+	                                                scheme->foreground(KColorScheme::VisitedText).color().name(), scheme->foreground(KColorScheme::LinkText).color().name(),
+	                                                scheme->shade(KColorScheme::MidShade).name());
 #ifdef NO_QT_WEBENGINE
 	connect(page, &RKWebPage::loadFinished, [this, color_scheme_js](){
 		page->mainFrame()->evaluateJavaScript(color_scheme_js);
