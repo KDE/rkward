@@ -1120,7 +1120,16 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url, RKHTMLWindow* container) {
 				}
 				writeHTML(QString("<li>&lt;<a href=\"rkward://open/%1/\">%2</a>&gt;</li>\n").arg(category, i18n("Choose another file")));
 				writeHTML("</ul>\n");
-				if (container) QObject::connect(RKRecentUrls::notifier(), &RKRecentUrls::recentUrlsChanged, container, &RKHTMLWindow::refresh);
+				if (container) {
+					auto connection = new QMetaObject::Connection;
+					*connection = QObject::connect(RKRecentUrls::notifier(), &RKRecentUrls::recentUrlsChanged, container, [connection, container](){
+						// connection must self-destruct, as it will be re-created from refresh()
+						QObject::disconnect(*connection);
+						delete connection;
+						// also, delay the actual refresh, in case, e.g. several script files are opened at once
+						QTimer::singleShot(0, container, &RKHTMLWindow::refresh);
+					});
+				}
 			}
 		}
 		writeHTML (renderHelpFragment (*it));
