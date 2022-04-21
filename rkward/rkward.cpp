@@ -938,7 +938,7 @@ void RKWardMainWindow::importData () {
 void RKWardMainWindow::slotNewCommandEditor () {
 	RK_TRACE (APP);
 
-	slotOpenCommandEditor (QUrl ());
+	RKWorkplace::mainWorkplace()->openScriptEditor();
 }
 
 void RKWardMainWindow::openAnyFile () {
