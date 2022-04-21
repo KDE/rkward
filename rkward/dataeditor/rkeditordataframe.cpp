@@ -106,14 +106,8 @@ void RKEditorDataFrame::rCommandDone (RCommand *command) {
 	RK_TRACE (EDITOR);
 
 	if (command->getFlags () == LOAD_COMPLETE_COMMAND) {
-<<<<<<< HEAD
 		RInterface::closeChain (open_chain);
 		open_chain = nullptr;
-=======
-		RKGlobals::rInterface ()->closeChain (open_chain);
-		open_chain = nullptr;
-
->>>>>>> releases/0.7.3
 		enableEditing (true);
 	}
 }
