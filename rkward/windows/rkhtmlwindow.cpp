@@ -1119,8 +1119,8 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url, RKHTMLWindow* container) {
 				for (int i = 0; i < list.size(); ++i) {
 					writeHTML(QString("<li><a href=\"rkward://open/%1/%2\" title=\"%2\">%3</a></li>\n").arg(category, list[i].url(), RKCommonFunctions::escape(list[i].url(QUrl::PreferLocalFile))));
 				}
-				writeHTML(QString("<li>&lt;<a href=\"rkward://open/%1/\">%3</a>&gt;</li>\n").arg(category, i18n("Choose another file")));
 				writeHTML("</ul>\n");
+				writeHTML(QString("<form action=\"rkward://open/%1/\"><button type=\"submit\">%3</button></form>\n").arg(category, i18n("Choose another file")));
 				if (container && !container_refresh_connected) {
 					container_refresh_connected = true;
 					auto connection = new QMetaObject::Connection;
