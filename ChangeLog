@@ -1,3 +1,7 @@
+- Allow separate analysis by grouping factors in Analysis->Descriptive Statistics
+- Rework help start page to serve as a dashboard for common tasks
+   - TODO: finish this
+   - TODO: remove startup dialog
 - Fix quirks around "Save as" for rkward output documents
 
 --- Version 0.7.3 - Apr-21-2022

@@ -4,10 +4,17 @@ var constMad;
 
 function calculate () {
 	var vars = getList ("x");
+	var groups = getList ("groups");
 	constMad = getValue ("constMad");
 	mad_type = getValue ("mad_type");
 
 	echo ('vars <- rk.list (' + vars.join (", ") + ')\n');
+	if (groups.length) {
+		comment("Split each input variable by grouping factor(s)");
+		echo('vars <- lapply (vars, function (x) split(x, list (' + groups.join(', ') + ')))\n');
+		comment("Convert nested list into flat list");
+		echo('vars <- unlist (vars, recursive=FALSE)\n');
+	}
 	echo ('results <- data.frame (' + i18n ("Object") + '=I(names (vars)))\n');
 	echo ('for (i in 1:length (vars)) {\n');
 	echo ('	var <- vars[[i]]\n');

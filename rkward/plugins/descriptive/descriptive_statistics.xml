@@ -12,6 +12,7 @@
 					</column>
 					<column>
 						<varslot multi="true" type="numeric" source="vars" id="x" num_dimensions="1" label="variable(s):" required="true" />
+						<varslot multi="true" source="vars" id="groups" num_dimensions="1" label="group by:" required="false" />
 					</column>
 				</row>
 					<checkbox value_unchecked="0" checked="flase" value="1" id="save_to_file" label="Save results to file" />
