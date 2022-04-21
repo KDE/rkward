@@ -120,6 +120,7 @@ public slots:
 protected:
 	void rCommandDone (RCommand *command) override;
 private:
+friend class RKLoadLibsDialog;
 	static QString libLocsCommand ();
 
 	MultiStringSelector *libloc_selector;
