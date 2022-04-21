@@ -1103,6 +1103,7 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url, RKHTMLWindow* container) {
 		writeHTML(endSection());
 	}
 
+	bool container_refresh_connected = false;
 	XMLChildList section_elements = help_xml_helper.getChildElements (help_doc_element, "section", DL_INFO);
 	for (XMLChildList::iterator it = section_elements.begin (); it != section_elements.end (); ++it) {
 		QString title = help_xml_helper.i18nStringAttribute (*it, "title", QString (), DL_WARNING);
@@ -1120,7 +1121,8 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url, RKHTMLWindow* container) {
 				}
 				writeHTML(QString("<li>&lt;<a href=\"rkward://open/%1/\">%2</a>&gt;</li>\n").arg(category, i18n("Choose another file")));
 				writeHTML("</ul>\n");
-				if (container) {
+				if (container && !container_refresh_connected) {
+					container_refresh_connected = true;
 					auto connection = new QMetaObject::Connection;
 					*connection = QObject::connect(RKRecentUrls::notifier(), &RKRecentUrls::recentUrlsChanged, container, [connection, container](){
 						// connection must self-destruct, as it will be re-created from refresh()
