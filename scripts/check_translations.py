@@ -53,7 +53,7 @@ def checkCompleteness(filename):
         sys.stderr.write("PURGE: %s has no translated messages.\n" % filename)
         return False
     percentage = (transcount / stringcount) * 100.0
-    if percentage < 80:
+    if percentage < 70:
         sys.stderr.write("WARNING: %s only has %.2f%% messages translated.\n" % (filename, percentage))
         if (strictmode):
             sys.stderr.write("PURGE: %s\n" % filename)

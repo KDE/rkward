@@ -7,7 +7,7 @@ VERSION=`${BASEDIR}/scripts/getversion.sh ${1}`
 
 # import the translations
 $BASEDIR/scripts/import_translations.py
-$BASEDIR/scripts/check_translations.py
+$BASEDIR/scripts/check_translations.py --strict
 
 mkdir $BASEDIR/disttemp
 DISTDIRREL=rkward-$VERSION
