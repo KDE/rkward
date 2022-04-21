@@ -1,7 +1,8 @@
 #!/bin/bash
 
 ## begin: These may need adjusting!
-TARGETS="jammy focal bionic"
+## sse http://www.releases.ubuntu.com/ for the up-to-date list
+TARGETS="jammy impish focal bionic"
 AUTHOR="Thomas Friedrichsmeier <tfry@users.sourceforge.net>"
 ## end: These may need adjusting!
 
