@@ -1117,9 +1117,9 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url, RKHTMLWindow* container) {
 				QString category = help_xml_helper.getStringAttribute(*it, "category", QString(), DL_WARNING);
 				auto list = RKRecentUrls::allRecentUrls(category);
 				for (int i = 0; i < list.size(); ++i) {
-					writeHTML(QString("<li><a href=\"rkward://open/%1/%2\">%3</a></li>\n").arg(category, list[i].url(), RKCommonFunctions::escape(list[i].url(QUrl::PreferLocalFile))));
+					writeHTML(QString("<li><a href=\"rkward://open/%1/%2\" title=\"%2\">%3</a></li>\n").arg(category, list[i].url(), RKCommonFunctions::escape(list[i].url(QUrl::PreferLocalFile))));
 				}
-				writeHTML(QString("<li>&lt;<a href=\"rkward://open/%1/\">%2</a>&gt;</li>\n").arg(category, i18n("Choose another file")));
+				writeHTML(QString("<li>&lt;<a href=\"rkward://open/%1/\">%3</a>&gt;</li>\n").arg(category, i18n("Choose another file")));
 				writeHTML("</ul>\n");
 				if (container && !container_refresh_connected) {
 					container_refresh_connected = true;
