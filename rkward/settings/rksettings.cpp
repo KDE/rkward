@@ -70,6 +70,10 @@ void RKSettings::configureSettings (const QString& page, QWidget *parent, RComma
 		RKSettings::configureSettings(RKSettings::PageGeneral, parent, chain);
 	} else if (page == QStringLiteral("addons")) {
 		RKSettings::configureSettings(RKSettings::SuperPageAddons, parent, chain);
+	} else if (page == QStringLiteral("plugins")) {
+		RKSettings::configureSettings(RKSettings::PagePlugins, parent, chain);
+	} else if (page == QStringLiteral("kateplugins")) {
+		RKSettings::configureSettings(RKSettings::PageKatePlugins, parent, chain);
 	} else {
 		RK_ASSERT(page.isEmpty());
 		RKSettings::configureSettings(RKSettings::NoPage, parent, chain);
