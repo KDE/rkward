@@ -819,7 +819,11 @@ void RKRBackend::setupCallbacks () {
 	RK_R_Params.home = getRUser ();
 	RK_R_Params.CharacterMode = RGui;
 	RK_R_Params.ShowMessage = RShowMessage;
+#if R_VERSION < R_Version(4, 2, 0)
 	RK_R_Params.ReadConsole = RReadConsoleWin;
+#else
+	RK_R_Params.ReadConsole = RReadConsole;
+#endif
 	RK_R_Params.WriteConsoleEx = RWriteConsoleEx;
 	RK_R_Params.WriteConsole = 0;
 	RK_R_Params.CallBack = RKREventLoop::winRKEventHandlerWrapper;
