@@ -10,7 +10,7 @@
 
 	<section title="Import or enter data" id="import-create">
 		<ul>
-	<li>New data.frame()</li>
+	<li><link href="rkward://actions/new_data_frame">Enter new data</link></li>
 	<li>Import data</li>
 		</ul>
 	</section>
@@ -18,7 +18,7 @@
 	<section title="Useful settings" id="settings">
 		<ul>
 	<li><link href="rkward://settings/addons">RKWard Add-ons</link></li>
-	<li>R packages <link href="">TODO link me</link></li>
+	<li><link href="rkward://actions/rpackage_install">Install R packages</link></li>
 	<li><link href="rkward://settings/general">Startup options</link> (including this page)</li>
 		</ul>
 	</section>

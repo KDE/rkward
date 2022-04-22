@@ -596,6 +596,16 @@ bool RKHTMLWindow::handleRKWardURL (const QUrl &url, RKHTMLWindow *window) {
 			} else {
 				RKWorkplace::mainWorkplace()->openAnyUrl(target);
 			}
+		} else if (url.host () == "actions") {  // anything else
+			QString action = url.path ();
+			if (action.startsWith ('/')) action = action.mid (1);
+			if (action == "new_data_frame") {
+				RKWardMainWindow::getMain()->slotNewDataFrame();
+			} else if (action == "rpackage_install") {
+				RKWardMainWindow::getMain()->slotFileLoadLibs();
+			} else {
+				RK_ASSERT(false);
+			}
 		} else {
 			if (window) window->openRKHPage (url);
 			else RKWorkplace::mainWorkplace ()->openHelpWindow (url);	// will recurse with window set, via openURL()
