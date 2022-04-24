@@ -67,6 +67,8 @@ RKMDIWindow::RKMDIWindow (QWidget *parent, int type, bool tool_window, const cha
 	ui_buddy = nullptr;
 	file_save_action = nullptr;
 	file_save_as_action = nullptr;
+	connect(&status_message_timer, &QTimer::timeout, this, &RKMDIWindow::showStatusMessageNow);
+	status_message_timer.setSingleShot(true);
 
 	if (!(type & KatePluginWindow)) setWindowIcon (RKStandardIcons::iconForWindow (this));
 }
@@ -321,15 +323,19 @@ void RKMDIWindow::enterEvent (QEvent *event) {
 	QFrame::enterEvent (event);
 }
 
-void RKMDIWindow::setStatusMessage (const QString& message, RCommand *command) {
+void RKMDIWindow::showStatusMessageNow() {
 	RK_TRACE (MISC);
 
 	if (!status_popup) {
-		// NOTE: Yes, this clearly goes against the explicit recommendation, but we do want the status message as an overlay to the main widget.
-		//       This is especially important for plots, where changing the plot area geometry will trigger redraws of the plot.
+		// NOTE: For plots, against the recommendation, we want the status message as an overlay to the main widget.
+		//       This is because changing the plot area geometry will trigger redraws of the plot.
 		//       Note that these messages are mostly used on previews, so far, where they will either be a) transient ("preview updating"),
 		//       or b) in case of errors, the place of interest will be outside the preview widget _and_ the preview will generally be invalid.
 		status_popup_container = new QWidget (this);
+		if (!isType(RKMDIWindow::X11Window)) {
+			auto blayout = qobject_cast<QVBoxLayout*> (layout());
+			if (blayout) blayout->insertWidget(0, status_popup_container);
+		}
 		QVBoxLayout *layout = new QVBoxLayout (status_popup_container);
 		layout->setContentsMargins (10, 10, 10, 10);
 		status_popup = new KMessageWidget (status_popup_container);
@@ -347,23 +353,22 @@ void RKMDIWindow::setStatusMessage (const QString& message, RCommand *command) {
 		connect (status_popup, &KMessageWidget::hideAnimationFinished, status_popup_container, &QWidget::hide);
 	}
 
-	if (command) connect (command->notifier (), &RCommandNotifier::commandFinished, this, &RKMDIWindow::clearStatusMessage);
-	if (!message.isEmpty ()) {
+	if (!status_message.isEmpty ()) {
 		status_popup_container->resize (size ());
 		status_popup_container->show ();
-		if (status_popup->text () == message) {
+		if (status_popup->text () == status_message) {
 			if (!status_popup->isVisible ()) status_popup->animatedShow ();  // it might have been closed by user. And no, simply show() is _not_ good enough. KF5 (5.15.0)
 		}
-		if (status_popup->text () != message) {
+		if (status_popup->text () != status_message) {
 			if (status_popup->isVisible ()) status_popup->hide (); // otherwise, the KMessageWidget does not update geometry (KF5, 5.15.0)
 #if KWIDGETSADDONS_VERSION < QT_VERSION_CHECK(6,0,0)
 			// silly workaround: KMessageWidget does not specify top-alignment for its buttons unless in wordwrap mode.
 			// we don't want actual word wrap, but we do want top alignment
-			QString dummy = message;
+			QString dummy = status_message;
 			if (!dummy.startsWith("<")) dummy = "<p>" + dummy + "</p>";
 			status_popup->setText (dummy.replace(" ", "&nbsp;"));
 #else
-			status_popup->setText (message);
+			status_popup->setText (status_message);
 #endif
 			status_popup->animatedShow ();
 		}
@@ -374,10 +379,19 @@ void RKMDIWindow::setStatusMessage (const QString& message, RCommand *command) {
 	}
 }
 
+void RKMDIWindow::setStatusMessage(const QString& message, RCommand *command) {
+	RK_TRACE (MISC);
+
+	if (command) connect(command->notifier(), &RCommandNotifier::commandFinished, this, &RKMDIWindow::clearStatusMessage);
+	status_message = message;
+	// delay the actual show a bit. Often it's just a very brief "preview updating", that will just look like an annoying flicker
+	status_message_timer.start(250);
+}
+
 void RKMDIWindow::clearStatusMessage () {
 	RK_TRACE (APP);
 
-	setStatusMessage (QString ());
+	setStatusMessage(QString());
 }
 
 void RKMDIWindow::resizeEvent (QResizeEvent*) {

@@ -1,6 +1,7 @@
 TODOs:
 	- More tolerant handshake on Windows? Simply a matter of allowing more time?
 
+- Better placement of messages in non-plot preview windows
 - Fixed some problems with cancelling running commands
 - Package installation uses inline widget to provide progress feedback, instead of separate dialogs
   - TODO: Remove "Ok" button from dialog, rename "Cancel" to "Close"
