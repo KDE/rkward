@@ -93,27 +93,29 @@ function calculate () {
 	}
 }
 
-function printout () {
-	header = new Header (i18n ("Univariate statistics")).addFromUI ("narm");
-	if (getBoolean("trim.state")) {
-		header.add (i18n ("Proportion of trimmed values for trimmed mean"), getString ("pourcent"));
-	}
-	if (getBoolean("mad.state")) {
-		header.add (i18n ("Constant for the MAD estimation"), getString ("constMad"));
-	}
-	if (getBoolean("huber.state")) {
-		header.add (i18n ("Winsorized values for Huber estimator"), getString ("winsor"));
-		header.add (i18n ("Tolerance in Huber estimator"), getString ("tol"));
-		if (getBoolean ("customMu.state")) {
-			header.add (i18n ("Mu for Huber estimator"), getString ("mu"));
+function printout (is_preview) {
+	if (!is_preview) {
+		header = new Header (i18n ("Univariate statistics")).addFromUI ("narm");
+		if (getBoolean("trim.state")) {
+			header.add (i18n ("Proportion of trimmed values for trimmed mean"), getString ("pourcent"));
 		}
-		if (getBoolean ("customS.state")) {
-			header.add (i18n ("S for Huber estimator"), getString ("s"));
+		if (getBoolean("mad.state")) {
+			header.add (i18n ("Constant for the MAD estimation"), getString ("constMad"));
 		}
-		header.add (i18n ("Initial value"), getString ("initmu"));
+		if (getBoolean("huber.state")) {
+			header.add (i18n ("Winsorized values for Huber estimator"), getString ("winsor"));
+			header.add (i18n ("Tolerance in Huber estimator"), getString ("tol"));
+			if (getBoolean ("customMu.state")) {
+				header.add (i18n ("Mu for Huber estimator"), getString ("mu"));
+			}
+			if (getBoolean ("customS.state")) {
+				header.add (i18n ("S for Huber estimator"), getString ("s"));
+			}
+			header.add (i18n ("Initial value"), getString ("initmu"));
+		}
+		header.print ();
+		echo ('\n');
 	}
-	header.print ();
-	echo ('\n');
 	echo ('rk.results (results)\n');
 	if (getValue ("save_to_file")) echo ('write.csv(file="' + getValue ("file") + '", results)\n');
 }

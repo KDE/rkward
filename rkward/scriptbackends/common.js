@@ -179,10 +179,15 @@ do_printout = function () {
 	return (flushOutput ());
 }
 
-do_preview = function () {
-	if (typeof (preview) == "undefined") return ("");
-	preview ();
-	return (flushOutput ());
+do_preview = function() {
+	if (typeof(preview) == "undefined") {
+		if (typeof(preprocess) != "undefined") preprocess(true);
+		if (typeof(calculate) != "undefined") calculate(true);
+		if (typeof(printout) != "undefined") printout(true);
+	} else {
+		preview();
+	}
+	return (flushOutput());
 }
 
 // for compatibility with the converted PHP code

@@ -68,10 +68,12 @@ function calculate () {
 	echo ('}\n');
 }
 
-function printout () {
-	new Header (i18n ("Descriptive statistics")).addFromUI ("trim").print ();
-	if (getValue ("mad")) {
-		new Header (i18n ("Median Absolute Deviation"), 3).addFromUI ("constMad").addFromUI ("mad_type").print ();
+function printout (is_preview) {
+	if (!is_preview) {
+		new Header (i18n ("Descriptive statistics")).addFromUI ("trim").print ();
+		if (getValue ("mad")) {
+			new Header (i18n ("Median Absolute Deviation"), 3).addFromUI ("constMad").addFromUI ("mad_type").print ();
+		}
 	}
 	echo ('rk.results (results)\n');
 	if (getValue ("save_to_file")) echo ('write.csv(file="' + getValue ("file") + '", results)\n');

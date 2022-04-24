@@ -15,8 +15,9 @@
 						<varslot multi="true" source="vars" id="groups" num_dimensions="1" label="group by:" required="false" />
 					</column>
 				</row>
-					<checkbox value_unchecked="0" checked="flase" value="1" id="save_to_file" label="Save results to file" />
-					<browser type="savefile" size="small" id="file" filter="*.csv" initial="data" label="Name of the file" />
+				<checkbox value_unchecked="0" checked="flase" value="1" id="save_to_file" label="Save results to file" />
+				<browser type="savefile" size="small" id="file" filter="*.csv" initial="data" label="Name of the file" />
+				<preview id="preview" mode="output"/>
 			</tab>
 			<tab label="Mean Standard Deviation" id="tab_mean_sd">
 				<column>
