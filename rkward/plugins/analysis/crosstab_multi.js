@@ -11,9 +11,16 @@ function calculate () {
 	echo (');\n');
 }
 
-function printout () {
-	new Header (i18n ("Crosstabs (n to n)")).add (i18n ("Variables"), noquote ('datadescription')).print ();
-	echo ('\n');
+function printout(is_preview) {
+	if (!is_preview) {
+		new Header (i18n ("Crosstabs (n to n)")).add (i18n ("Variables"), noquote ('datadescription')).print ();
+		echo ('\n');
+	}
 	echo ('rk.print (result)\n');
 }
 
+function preview() {
+	preprocess();
+	calculate();
+	printout(true);
+}
