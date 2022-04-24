@@ -57,7 +57,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "misc/rkdbusapi.h"
 #include "misc/rkdialogbuttonbox.h"
 #include "misc/rkstyle.h"
-#include "dialogs/startupdialog.h"
 #include "dialogs/rkloadlibsdialog.h"
 #include "dialogs/rkimportdialog.h"
 #include "dialogs/rkrecoverdialog.h"
@@ -255,16 +254,9 @@ void RKWardMainWindow::doPostInit () {
 
 		openUrlsFromCommandLineOrDBus (warn_external, open_urls);
 	} else {
-		StartupDialog::StartupDialogResult result = StartupDialog::getStartupAction (this, fileOpenRecentWorkspace);
-		if (!result.open_url.isEmpty ()) {
+		if (RKSettingsModuleGeneral::openRestoreFileOnLoad() && QFile::exists(".RData")) {
 			// setNoAskSave(true); was called earlier
-			askOpenWorkspace(result.open_url);
-		} else {
-			if (result.result == StartupDialog::ChoseFile) {
-				askOpenWorkspace (QUrl());
-			} else if (result.result == StartupDialog::EmptyTable) {
-				RKWorkplace::mainWorkplace ()->editNewDataFrame (i18n ("my.data"));
-			}
+			askOpenWorkspace(QUrl::fromLocalFile(QFileInfo(".RData").absoluteFilePath()));
 		}
 
 		if (RKSettingsModuleGeneral::workplaceSaveMode () == RKSettingsModuleGeneral::SaveWorkplaceWithSession) {

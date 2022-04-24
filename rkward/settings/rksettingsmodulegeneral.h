@@ -8,7 +8,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #define RKSETTINGSMODULEGENERALFILES_H
 
 #include "rksettingsmodule.h"
-#include "../dialogs/startupdialog.h"
 
 class GetFileNameWidget;
 class QComboBox;
@@ -53,9 +52,8 @@ public:
 
 /// returns the directory-name where the logfiles should reside
 	static QString &filesPath () { return files_path; };
-	static StartupDialog::Result startupAction () { return startup_action; };
 	static bool showHelpOnStartup () { return show_help_on_startup; };
-	static void setStartupAction (StartupDialog::Result action) { startup_action = action; };
+	static bool openRestoreFileOnLoad() { return autorestore_from_wd; };
 	static WorkplaceSaveMode workplaceSaveMode () { return workplace_save_mode; };
 /** retrieve the saved workplace description. Meaningful only is workplaceSaveMode () == SaveWorkplaceWithSession */
 	static QString getSavedWorkplace (KConfig *config);
@@ -103,7 +101,7 @@ private:
 	QButtonGroup *workplace_save_chooser;
 	GetFileNameWidget *initial_dir_custom_chooser;
 
-	static RKConfigValue<StartupDialog::Result, int> startup_action;
+	static RKConfigValue<bool> autorestore_from_wd;
 	static QString files_path;
 /** since changing the files_path can not easily be done while in an active session, the setting should only take effect on the next start. This string stores a changed setting, while keeping the old one intact as long as RKWard is running */
 	static RKConfigValue<QString> new_files_path;

@@ -1,7 +1,6 @@
 INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}    )
 
 SET(dialogs_STAT_SRCS
-   startupdialog.cpp
    rkloadlibsdialog.cpp
    rkreadlinedialog.cpp
    rkimportdialog.cpp

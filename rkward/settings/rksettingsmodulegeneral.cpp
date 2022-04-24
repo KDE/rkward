@@ -31,7 +31,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 // static members
 QString RKSettingsModuleGeneral::files_path;
 RKConfigValue<QString> RKSettingsModuleGeneral::new_files_path { "logfile dir", QString() }; // NOTE: default initialized at runtime!
-RKConfigValue<StartupDialog::Result, int> RKSettingsModuleGeneral::startup_action { "startup action", StartupDialog::NoSavedSetting };
+RKConfigValue<bool> RKSettingsModuleGeneral::autorestore_from_wd { "autorestore from wd", false };
 RKConfigValue<RKSettingsModuleGeneral::WorkplaceSaveMode, int> RKSettingsModuleGeneral::workplace_save_mode { "save mode", SaveWorkplaceWithWorkspace };
 RKConfigValue<bool> RKSettingsModuleGeneral::cd_to_workspace_dir_on_load {"cd to workspace on load", true};
 RKConfigValue<bool> RKSettingsModuleGeneral::show_help_on_startup {"show help on startup", true};
@@ -58,29 +58,18 @@ RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *pare
 	RK_TRACE (SETTINGS);
 
 	QVBoxLayout *main_vbox = new QVBoxLayout (this);
-	main_vbox->addWidget (RKCommonFunctions::wordWrappedLabel (i18n ("Settings marked with (*) do not take effect until you restart RKWard")));
-
-	main_vbox->addSpacing (2*RKStyle::spacingHint ());
-
-	files_choser = new GetFileNameWidget (this, GetFileNameWidget::ExistingDirectory, true, i18n ("Directory where rkward may store files (*)"), QString (), new_files_path);
+	files_choser = new GetFileNameWidget (this, GetFileNameWidget::ExistingDirectory, true, i18n ("Directory where rkward may store files (setting takes effect after restarting RKWard)"), QString (), new_files_path);
 	connect (files_choser, &GetFileNameWidget::locationChanged, this, &RKSettingsModuleGeneral::change);
 	main_vbox->addWidget (files_choser);
 
 	main_vbox->addSpacing (2*RKStyle::spacingHint ());
 
-	main_vbox->addWidget(new QLabel(i18n("Startup Action (*)")));
-	auto startup_action_choser = startup_action.makeDropDown(RKConfigBase::LabelList(
-		{{StartupDialog::EmptyWorkspace, i18n("Start with an empty workspace")}, {StartupDialog::RestoreFromWD, i18n("Load .RData-file from current directory, if available (R option '--restore')")}, {StartupDialog::EmptyTable, i18n("Start with an empty table")}, {StartupDialog::ChoseFile, i18n("Ask for a file to open")}, {StartupDialog::NoSavedSetting, i18n("Show selection dialog (default)")}}
-	), this);
-	main_vbox->addWidget(startup_action_choser);
+	auto group = new QGroupBox(i18n("Startup behavior"));
+	auto vbox = new QVBoxLayout(group);
+	vbox->addWidget(autorestore_from_wd.makeCheckbox(i18n("Load .RData-file from startup directory, if available (R option '--restore')"), this));
+	vbox->addWidget(show_help_on_startup.makeCheckbox(i18n("Show RKWard Help on Startup"), this));
 
-	main_vbox->addWidget(show_help_on_startup.makeCheckbox(i18n("Show RKWard Help on Startup"), this));
-	auto num_recent_files_box = num_recent_files.makeSpinBox(1, INT_MAX, this);
-	RKCommonFunctions::setTips (i18n ("<p>The number of recent files to remember (in the Open Recent R Script File menu).</p>") + RKCommonFunctions::noteSettingsTakesEffectAfterRestart (), num_recent_files_box, num_recent_files_box);
-	main_vbox->addWidget(new QLabel(i18n("Maximum number of files to remember per category (*)")));
-	main_vbox->addWidget(num_recent_files_box);
-
-	QGroupBox* group_box = new QGroupBox (i18n ("Initial working directory (*)"), this);
+	QGroupBox* group_box = new QGroupBox (i18n ("Initial working directory"), this);
 	QHBoxLayout *hlayout = new QHBoxLayout (group_box);
 	auto initial_dir_chooser = initial_dir.makeDropDown(RKConfigBase::LabelList(
 		{{CurrentDirectory, i18n("Do not change current directory on startup")}, {RKWardDirectory, i18n("RKWard files directory (as specified, above)")}, {UserHomeDirectory, i18n("User home directory")}, {LastUsedDirectory, i18n("Last used directory")}, {CustomDirectory, i18n("The following directory (please specify):")}}
@@ -92,7 +81,15 @@ RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *pare
 	connect(initial_dir_chooser, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [initial_dir_chooser, this]() { this->initial_dir_custom_chooser->setEnabled(initial_dir_chooser->currentData()==CustomDirectory); });
 	hlayout->addWidget (initial_dir_custom_chooser);
 	RKCommonFunctions::setTips (i18n ("<p>The initial working directory to use. Note that if you are loading a workspace on startup, and you have configured RKWard to change to the directory of loaded workspaces, that directory will take precedence.</p>"), group_box, initial_dir_chooser, initial_dir_custom_chooser);
-	main_vbox->addWidget (group_box);
+	vbox->addWidget (group_box);
+	main_vbox->addWidget(group);
+
+	main_vbox->addSpacing (2*RKStyle::spacingHint ());
+
+	auto num_recent_files_box = num_recent_files.makeSpinBox(1, INT_MAX, this);
+	RKCommonFunctions::setTips (i18n ("<p>The number of recent files to remember (in the Open Recent R Script File menu).</p>") + RKCommonFunctions::noteSettingsTakesEffectAfterRestart (), num_recent_files_box, num_recent_files_box);
+	vbox->addWidget(new QLabel(i18n("Maximum number of recently used files to remember per category")));
+	vbox->addWidget(num_recent_files_box);
 
 	main_vbox->addSpacing (2*RKStyle::spacingHint ());
 
@@ -190,7 +187,7 @@ void RKSettingsModuleGeneral::syncConfig(KConfig *config, RKConfigBase::ConfigSy
 	} else {
 		cg.writeEntry("last known data dir", RKCommonFunctions::getRKWardDataDir());
 	}
-	startup_action.syncConfig(cg, a);
+	autorestore_from_wd.syncConfig(cg, a);
 	show_help_on_startup.syncConfig(cg, a);
 	num_recent_files.syncConfig(cg, a);
 	initial_dir.syncConfig(cg, a);
