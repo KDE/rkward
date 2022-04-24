@@ -590,11 +590,13 @@ bool RKHTMLWindow::handleRKWardURL (const QUrl &url, RKHTMLWindow *window) {
 			if (category == RKRecentUrls::scriptsId()) {
 				RKWardMainWindow::getMain()->slotOpenCommandEditor(target);
 			} else if (category == RKRecentUrls::workspaceId()) {
-				RKWardMainWindow::getMain()->askOpenWorkspace(target);
+				// This window will be destroyed while closing the previous workspace. Thus wait for the next event cycle.
+				QTimer::singleShot(0, [target]() { RKWardMainWindow::getMain()->askOpenWorkspace(target); });
 			} else if (category == RKRecentUrls::outputId()) {
 				RKWardMainWindow::getMain()->slotOpenOutput(target);
 			} else {
-				RKWorkplace::mainWorkplace()->openAnyUrl(target);
+				// See opening workspace, above.
+				QTimer::singleShot(0, [target]() { RKWorkplace::mainWorkplace()->openAnyUrl(target); });
 			}
 		} else if (url.host () == "actions") {  // anything else
 			QString action = url.path ();
@@ -1126,6 +1128,11 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url, RKHTMLWindow* container) {
 				writeHTML("<ul>\n");
 				QString category = help_xml_helper.getStringAttribute(*it, "category", QString(), DL_WARNING);
 				auto list = RKRecentUrls::allRecentUrls(category);
+				if (category == RKRecentUrls::workspaceId()) {
+					if (QFile::exists(".RData")) {
+						list.prepend(QUrl::fromLocalFile(QFileInfo(".RData").absoluteFilePath()));
+					}
+				}
 				for (int i = 0; i < list.size(); ++i) {
 					writeHTML(QString("<li><a href=\"rkward://open/%1/%2\" title=\"%2\">%3</a></li>\n").arg(category, list[i].url(), RKCommonFunctions::escape(list[i].url(QUrl::PreferLocalFile))));
 				}
