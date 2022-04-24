@@ -1,0 +1,32 @@
+<!DOCTYPE rkhelp>
+<document>
+	<snippets>
+		<include file="convert_encoding.xml"/>
+	</snippets>
+	<summary>
+Import a variety of formats. This is a generic approach based on the "rio" R package, which in turn depends on a variety of further packages.
+If there is a dedicated plugin for the format you wish to import, using that will usually be preferrable, as it will provide more specific options, and with less packages to install.
+	</summary>
+
+	<usage>
+Select the data file to import. An R object containing the data will be created. This will usually be a data.frame, or a list.
+	</usage>
+
+	<settings>
+		<caption id="tab_general"/>
+		<setting id="file">The filename of the file to import</setting>
+		<setting id="saveto">The name of an R object to store the imported data in. If you choose an existing symbol name, you will be prompted, whether to overwrite this object.</setting>
+		<setting id="doedit">Whether the object should be opened for editing after it was imported. Currently, this is only possible, if the object is saved as a data.frame (see next option).</setting>
+		<setting id="import_list">Some data files may contain more than one set of data (e.g. several sheets inside one excel file). Check this option to import all datasets as a list.</setting>
+		<setting id="which">For datasets containing more than one set of data, specify which set to import (this will usually be a name or a number).</setting>
+		<setting id="preview">Preview imported data. Only the first 50 rows and columns are shown, for performance reasons (and only the first dataset in case of multiple sets in the file).</setting>
+		<insert snippet="encoding_doc"/>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/rio/import"/></li>
+			<li><link href="rkward://rhelp/rio/import_list"/></li>
+			<li><link href="rkward://rhelp/iconv"/></li>
+		</ul>
+	</related>
+</document>

@@ -1,3 +1,4 @@
+- Add "rio"-based generic import plugin
 - Fixed: Installation from dialog would fail for R packages requiring the rkward package
 - Allow separate analysis by grouping factors in Analysis->Descriptive Statistics
 - Rework help start page to serve as a dashboard for common tasks, replacing the old startup dialog

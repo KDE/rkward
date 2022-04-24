@@ -56,6 +56,13 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 			# WARNING: TODO: We don't use the value labels of the third
 			# variable, yet.
 		}, libraries=c("foreign"), files=c("../import_export_plugins_testfile.sav")),
+		new ("RKTest", id="import_generic_rio", call=function () {
+			rk.call.plugin ("rkward::import_generic_rio", do_locale_conversion.state="0", doedit.state="0", file.selection=file.path (getwd(), "import_export_plugins_testfile.sav"), saveto.objectname="my.rio.data", use_labels.state="1", submit.mode="submit")
+
+			# In order to check, whether the import was correct
+			rk.print (my.rio.data)
+			for (var in my.rio.data) rk.print (rk.get.description(var))
+		}, libraries=c("foreign"), files=c("../import_export_plugins_testfile.sav")),
 		new ("RKTest", id="import_stata", call=function () {
 			rk.call.plugin ("rkward::import_stata", convert_dates.state="1", convert_factors.state="1", convert_underscore.state="0", do_locale_conversion.state="1", doedit.state="0", encoding.string="ISO8859-1", file.selection=file.path (getwd(), "import_export_plugins_testfile.dta"), missing_type.state="0", saveto.objectname="my.stata.data", saveto.parent=".GlobalEnv", submit.mode="submit")
 
