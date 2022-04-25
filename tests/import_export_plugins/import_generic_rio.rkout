@@ -1,4 +1,4 @@
-<h1>Genneric data import</h1>
+<h1>Generic data import</h1>
 <h2>Parameters</h2>
 <ul><li>File name: PATH/import_export_plugins_testfile.sav</li>
 <li>Object to save to: my.rio.data</li>

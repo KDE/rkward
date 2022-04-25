@@ -37,6 +37,6 @@ function calculate(is_preview) {
 }
 
 function printout () {
-	new Header (i18n ("Genneric data import")).addFromUI ("file").addFromUI ("saveto").print ();
+	new Header (i18n ("Generic data import")).addFromUI ("file").addFromUI ("saveto").print ();
 }
 

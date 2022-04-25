@@ -5,7 +5,7 @@
 	</snippets>
 	<summary>
 Import a variety of formats. This is a generic approach based on the "rio" R package, which in turn depends on a variety of further packages.
-If there is a dedicated plugin for the format you wish to import, using that will usually be preferrable, as it will provide more specific options, and with less packages to install.
+If there is a dedicated plugin for the format you wish to import, using that will usually be preferable, as it will provide more specific options, and with less packages to install.
 	</summary>
 
 	<usage>
