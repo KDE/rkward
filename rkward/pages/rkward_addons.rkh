@@ -41,6 +41,6 @@ Not all RKWard plugins packaged this way will be visible in the R package instal
 	<section title="Creating your own RKWard Plugins" id="writing_plugins">
 Still missing something?
 
-Check out the <link href="help:/rkwardplugins/index.html">Introduction to Writing Plugins for RKWard</link> (<link href="http://api.kde.org/doc/rkwardplugins/">most recent version online</link>) to learn how easy it is to enhance RKWard with your custom dialogs. And if you like, how to share your work with the community of RKWard users. See the <link href="rkward://rhelp/rkward-package">rkward package overview</link> for RKWard specific function for development and scripting.
+Check out the <link href="help:/rkwardplugins/index.html">Introduction to Writing Plugins for RKWard</link> (<link href="https://rkward.kde.org/doc/rkwardplugins/">most recent version online</link>) to learn how easy it is to enhance RKWard with your custom dialogs. And if you like, how to share your work with the community of RKWard users. See the <link href="rkward://rhelp/rkward-package">rkward package overview</link> for RKWard specific function for development and scripting.
 	</section>
 </document>
