@@ -1,3 +1,7 @@
+TODOs:
+	- More tolerant handshake on Windows? Simply a matter of allowing more time?
+
+- "Paste special" action gains option to format as data.frame, optionally with labels
 - Add "rio"-based generic import plugin
 - Fixed: Installation from dialog would fail for R packages requiring the rkward package
 - Allow separate analysis by grouping factors in Analysis->Descriptive Statistics

@@ -43,7 +43,8 @@ public:
 	enum Dimensionality {
 		DimSingleString,
 		DimVector,
-		DimMatrix
+		DimMatrix,
+		DimDataFrame
 	};
 	enum Separator {
 		SepTab,
@@ -62,7 +63,7 @@ public:
 public slots:
 	void updateState ();
 private:
-	QString prepString (const QString& src) const;
+	QString prepString (const QString& src, const Quoting quot) const;
 
 	QButtonGroup* dimensionality_group;
 	QButtonGroup* separator_group;
@@ -72,6 +73,8 @@ private:
 	QCheckBox* reverse_h_box;
 	QCheckBox* reverse_v_box;
 	QCheckBox* insert_nas_box;
+	QCheckBox* names_box;
+	QCheckBox* rownames_box;
 };
 
 #endif

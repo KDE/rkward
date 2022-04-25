@@ -77,6 +77,9 @@ RKPasteSpecialDialog::RKPasteSpecialDialog (QWidget* parent) : QDialog (parent) 
 	group_layout->addWidget (rbutton);
 	rbutton = new QRadioButton (i18n ("Matrix"), box);
 	dimensionality_group->addButton (rbutton, DimMatrix);
+	group_layout->addWidget (rbutton);
+	rbutton = new QRadioButton (i18n ("data.frame"), box);
+	dimensionality_group->addButton (rbutton, DimDataFrame);
 	rbutton->setChecked (true);
 	group_layout->addWidget (rbutton);
 	connect (dimensionality_group, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &RKPasteSpecialDialog::updateState);
@@ -132,6 +135,15 @@ RKPasteSpecialDialog::RKPasteSpecialDialog (QWidget* parent) : QDialog (parent) 
 	connect (quoting_group, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &RKPasteSpecialDialog::updateState);
 	rowlayout->addWidget (box);
 
+	// Labels
+	box = new QGroupBox(i18n("Labels"), this);
+	group_layout = new QVBoxLayout (box);
+	names_box = new QCheckBox(i18n("First column contains labels"), box);
+	group_layout->addWidget(names_box);
+	rownames_box = new QCheckBox(i18n("First row contains labels"), box);
+	group_layout->addWidget(rownames_box);
+	rowlayout->addWidget(box);
+
 	// further controls
 	box = new QGroupBox (i18n ("Transformations"), this);
 	group_layout = new QVBoxLayout (box);
@@ -165,9 +177,11 @@ void RKPasteSpecialDialog::updateState () {
 	
 	static_cast<QWidget*> (separator_group->parent ())->setEnabled (dimensionality != DimSingleString);
 	reverse_h_box->setEnabled (dimensionality != DimSingleString);
-	reverse_v_box->setEnabled (dimensionality == DimMatrix);
+	reverse_v_box->setEnabled (dimensionality >= DimMatrix);
 	insert_nas_box->setEnabled (dimensionality != DimSingleString);
-	transpose_box->setEnabled (dimensionality == DimMatrix);
+	transpose_box->setEnabled(dimensionality >= DimMatrix);
+	names_box->setEnabled(dimensionality == DimDataFrame);
+	rownames_box->setEnabled(dimensionality == DimDataFrame);
 
 	separator_freefield->setEnabled ((dimensionality != DimSingleString) && (separator_group->checkedId () == SepCustom));
 }
@@ -178,8 +192,11 @@ QString RKPasteSpecialDialog::resultingText () {
 	const int sep = separator_group->checkedId ();		// for easier typing
 	const int dim = dimensionality_group->checkedId ();
 	const bool reverse_h = reverse_h_box->isChecked () && (dim != DimSingleString);
-	const bool reverse_v = reverse_v_box->isChecked () && (dim == DimMatrix);
-	const bool transpose = transpose_box->isChecked () && (dim == DimMatrix);
+	const bool reverse_v = reverse_v_box->isChecked () && (dim >= DimMatrix);
+	const bool transpose = transpose_box->isChecked () && (dim >= DimMatrix);
+	const bool names = names_box->isChecked() && (dim == DimDataFrame);
+	const bool rownames = rownames_box->isChecked() && (dim == DimDataFrame);
+	Quoting quot = (Quoting) quoting_group->checkedId();
 
 	QString clip;
 
@@ -192,7 +209,7 @@ QString RKPasteSpecialDialog::resultingText () {
 		clip = data->text ();
 	}
 
-	if (dim == DimSingleString) return prepString (clip);
+	if (dim == DimSingleString) return prepString(clip, quot);
 
 	QRegExp fieldsep;
 	if (sep == SepCustom) fieldsep.setPattern (separator_freefield->text ());
@@ -215,30 +232,47 @@ QString RKPasteSpecialDialog::resultingText () {
 	if (reverse_h || reverse_v || transpose) matrix = matrix.transformed (reverse_h, reverse_v, transpose);
 
 	QString ret;
-	if (dim == DimMatrix) ret.append ("cbind (\n");
-	else ret.append ("c (");	// DimVector
+	if (dim == DimDataFrame) ret.append("data.frame(");
+	if (dim >= DimMatrix) ret.append ("cbind(\n");
+	else ret.append ("c(");	// DimVector
 
-	for (int i = 0; i < matrix.numColumns (); ++i) {
-		if (dim == DimMatrix) {
-			if (i != 0) ret.append ("),\n");
-			ret.append ("c(");
+	int startcol = rownames ? 1 : 0;
+	int startrow = names ? 1 : 0;
+	for (int i = startcol; i < matrix.numColumns (); ++i) {
+		if (dim >= DimMatrix) {
+			if (i != startcol) ret.append ("),\n");
+			if (names) {
+				ret.append(prepString(matrix.getText(0, i), QuoteAll) + "=c(");
+			} else {
+				ret.append("c(");
+			}
 		} else if (i != 0) ret.append (",");
 
-		for (int j = 0; j < matrix.numRows (); ++j) {
-			if (j != 0) ret.append (",");
-			ret.append (prepString (matrix.getText (j, i)));
+		for (int j = startrow; j < matrix.numRows (); ++j) {
+			if (j != startrow) ret.append (",");
+			ret.append(prepString(matrix.getText(j, i), quot));
 		}
 	}
 	ret.append (")\n");
-	if (dim == DimMatrix) ret.append (")\n");
+	if (dim == DimDataFrame) {
+		ret.append(')');
+		if (rownames) {
+			ret.append(", rownames=c(\n");
+			for (int row = startrow; row < matrix.numRows(); ++row) {
+				if (row != startrow) ret.append (",");
+				ret.append(prepString(matrix.getText(row, 0), QuoteAll));
+			}
+			ret.append(")\n");
+		}
+	}
+	if (dim >= DimMatrix) ret.append (")\n");
 
 	return (ret);
 }
 
-QString RKPasteSpecialDialog::prepString (const QString& src) const {
+QString RKPasteSpecialDialog::prepString(const QString& src, const Quoting quot) const {
 //	RK_TRACE (MISC);
 
-	const int quot = quoting_group->checkedId ();
 	if (quot == QuoteAll) return (RObject::rQuote (src));
 	if (src.isEmpty() && insert_nas_box->isChecked ()) return ("NA");
 	if (quot == QuoteNone) return (src);

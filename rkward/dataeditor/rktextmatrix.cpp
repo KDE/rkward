@@ -13,17 +13,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-RKTextMatrix::RKTextMatrix () {
+RKTextMatrix::RKTextMatrix() : colcount(0) {
 	RK_TRACE (EDITOR);
-
-	clear ();
-}
-
-RKTextMatrix::RKTextMatrix (const RKTextMatrix& copy) {
-	RK_TRACE (EDITOR);
-
-	colcount = copy.colcount;
-	rows = copy.rows;
 }
 
 RKTextMatrix::~RKTextMatrix () {
