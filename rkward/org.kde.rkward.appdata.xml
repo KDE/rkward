@@ -88,6 +88,7 @@
       <caption xml:lang="en-GB">Main window, with data editor, object browser, interactive R console, and further tool windows.</caption>
       <caption xml:lang="es">Ventana principal, con el editor de datos, el navegador de objetos, la consola interactiva de R y otras ventanas con herramientas adicionales.</caption>
       <caption xml:lang="fr">Fenêtre principale avec l'éditeur de données, le navigateur d'objets, la console interactive de R et d'autres fenêtres d'outils.</caption>
+      <caption xml:lang="nl">Hoofdvenster, met gegevensbewerker, object browser, interactieve R-console, en vensters voor verdere hulpprogramma's.</caption>
       <caption xml:lang="sv">Huvudfönster, med dataeditor, objektbläddrare, interaktiv R-terminal och ytterligare verktygsfönster.</caption>
       <caption xml:lang="uk">Головне вікно з редактором даних, навігатором об'єктів, інтерактивною консоллю R та іншими панелями інструментів.</caption>
       <caption xml:lang="x-test">xxMain window, with data editor, object browser, interactive R console, and further tool windows.xx</caption>
