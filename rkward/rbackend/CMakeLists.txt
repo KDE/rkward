@@ -46,6 +46,16 @@ LINK_DIRECTORIES(${R_SHAREDLIBDIR})
 ADD_EXECUTABLE(rkward.rbackend ${rbackend_backend_SRCS} ${rbackend_shared_SRCS})
 ECM_MARK_NONGUI_EXECUTABLE(rkward.rbackend)
 TARGET_LINK_LIBRARIES(rkward.rbackend rkgraphicsdevice.backend ${R_USED_LIBS} ${CMAKE_THREAD_LIBS_INIT} Qt5::Network Qt5::Core KF5::I18n)
+IF(WIN32)
+# 64MB stack size is what R itself is build with on Windows, while by default the stack size would be 1MB
+# Not sure, if 64MB is actually needed, but 1MB does cause trouble e.g. with some shiny apps.
+    IF(MSVC)
+        SET_TARGET_PROPERTIES(rkward.rbackend PROPERTIES LINK_FLAGS /STACK:64000000)
+    ELSE(MSVC)
+        SET_TARGET_PROPERTIES(rkward.rbackend PROPERTIES LINK_FLAGS -Wl,--stack,64000000)
+    ENDIF(MSVC)
+ENDIF(WIN32)
+
 IF(APPLE)
     TARGET_LINK_LIBRARIES(rkward.rbackend "-framework CoreFoundation")
     ADD_CUSTOM_COMMAND(TARGET rkward.rbackend POST_BUILD
