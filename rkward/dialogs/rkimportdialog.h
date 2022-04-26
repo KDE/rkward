@@ -8,15 +8,16 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #ifndef RKIMPORTDIALOG_H
 #define RKIMPORTDIALOG_H
 
-#include <qstringlist.h>
-#include <QFileDialog>
+#include <QStringList>
+#include <KAssistantDialog>
 
-class QComboBox;
 class RKComponentGUIXML;
+class KPageWidgetitem;
+class QButtonGroup;
 
 /** This dialog is designed to allow the user to select a file, and file format. After that a suitable plugin
 is opened automatically to deal with this type of file . */
-class RKImportDialog : public QFileDialog {
+class RKImportDialog : public KAssistantDialog {
 	Q_OBJECT
 public:
 /** constructor
@@ -25,16 +26,16 @@ public:
 	RKImportDialog (const QString &context_id, QWidget *parent);
 /** dtor */
 	~RKImportDialog ();
-protected:
-/** reimplemented to a) invoke the relevant plugin, b) trigger self-destruction of the dialog */
-	void accept () override;
-/** reimplemented to trigger self-destruction of the dialog */
-	void reject () override;
 private:
-	int format_count;
 	QStringList filters;
 	QStringList component_ids;
 	RKComponentGUIXML *context;
+	KPageWidgetItem *select_format;
+	QButtonGroup *select_format_group;
+	KPageWidgetItem *do_format;
+	KPageWidgetItem *select_rio_or_clipboard;
+	KPageWidgetItem *do_rio;
+	KPageWidgetItem *do_clipboard;
 };
 
 #endif

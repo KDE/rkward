@@ -500,19 +500,10 @@ void RKWardMainWindow::initActions() {
 	connect(fileOpenRecent, &KRecentFilesAction::urlSelected, this, [this](const QUrl &url) { slotOpenCommandEditor(url); });
 	fileOpenRecent->setText(i18n("Open Recent R Script File"));
 
-#if 0
-	// TODO: Fix import dialog and re-enable it: https://mail.kde.org/pipermail/rkward-devel/2015-June/004156.html
-#ifdef Q_OS_WIN
-	// TODO: find the cause and fix it! http://sourceforge.net/p/rkward/bugs/54/
-#	ifdef __GNUC__
-#		warning TODO: import data dialog is disabled on windows due to bug in kdelibs
-#	endif
-#else
-	action = actionCollection ()->addAction ("import_data", this, SLOT (importData()));
-	action->setText (i18n ("Import Data"));
-	action->setWhatsThis(i18n ("Import data from a variety of file formats"));
-#endif
-#endif
+	action = actionCollection()->addAction("import_data");
+	connect(action, &QAction::triggered, this, &RKWardMainWindow::importData);
+	action->setText(i18n("Import Assistant"));
+	action->setWhatsThis(i18n("Assistant to find the best method to import data from a variety of formats"));
 
 	fileOpenWorkspace = actionCollection()->addAction(KStandardAction::Open, "file_openx");
 	connect(fileOpenWorkspace, &QAction::triggered, this, [this](){ askOpenWorkspace(); });
@@ -921,10 +912,11 @@ void RKWardMainWindow::setRStatus (int status) {
 	}
 }
 
-void RKWardMainWindow::importData () {
+void RKWardMainWindow::importData() {
 	RK_TRACE (APP);
 
-	new RKImportDialog ("import", this);
+	RKImportDialog d("import", this);
+	d.exec();
 }
 
 void RKWardMainWindow::slotNewCommandEditor () {

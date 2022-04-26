@@ -80,6 +80,8 @@
 			<entry component="import_spss"/>
 			<entry component="import_stata"/>
 			<entry component="import_csv"/>
+			<entry component="import_xls"/>
+			<entry component="import_xls_xlconnect"/>
 		</menu>
 	</context>
 </document>
