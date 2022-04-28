@@ -32,12 +32,14 @@ signals:
 class QButtonGroup;
 class QLineEdit;
 class QCheckBox;
+class RKSaveObjectChooser;
 
-/** Dialog used in RKPasteSpecialAction */
+/** Dialog used in RKPasteSpecialAction
+    TODO: move to separate file, now that it can be used standalone */
 class RKPasteSpecialDialog : public QDialog {
 	Q_OBJECT
 public:
-	explicit RKPasteSpecialDialog (QWidget* parent);
+	explicit RKPasteSpecialDialog(QWidget* parent, bool standalone=false);
 	~RKPasteSpecialDialog ();
 
 	enum Dimensionality {
@@ -60,6 +62,7 @@ public:
 	};
 	
 	QString resultingText ();
+	void accept() override;
 public slots:
 	void updateState ();
 private:
@@ -75,6 +78,8 @@ private:
 	QCheckBox* insert_nas_box;
 	QCheckBox* names_box;
 	QCheckBox* rownames_box;
+	RKSaveObjectChooser *objectname;
+	QPushButton *ok_button;
 };
 
 #endif

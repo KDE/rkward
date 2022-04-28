@@ -8,6 +8,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rkspecialactions.h"
 
 #include <KLocalizedString>
+#include <KMessageBox>
+
+#include "../rkward.h"
 
 #include "../debug.h"
 
@@ -50,13 +53,21 @@ void RKPasteSpecialAction::doSpecialPaste() {
 
 #include "../dataeditor/rktextmatrix.h"
 #include "../core/robject.h"
+#include "rksaveobjectchooser.h"
+#include "../rbackend/rkrinterface.h"
+#include "../misc/rkprogresscontrol.h"
 
-RKPasteSpecialDialog::RKPasteSpecialDialog (QWidget* parent) : QDialog (parent) {
+RKPasteSpecialDialog::RKPasteSpecialDialog(QWidget* parent, bool standalone) : QDialog(parent) {
 	RK_TRACE (MISC);
 
 	setWindowTitle (i18n ("Paste Special..."));
 
 	QVBoxLayout *pagelayout = new QVBoxLayout (this);
+	objectname = standalone ? new RKSaveObjectChooser(this, QStringLiteral("pasted.data")) : nullptr;
+	if (objectname) {
+		connect(objectname, &RKSaveObjectChooser::changed, this, &RKPasteSpecialDialog::updateState);
+		pagelayout->addWidget(objectname);
+	}
 	QHBoxLayout *rowlayout = new QHBoxLayout ();
 	pagelayout->addLayout (rowlayout);
 
@@ -138,9 +149,9 @@ RKPasteSpecialDialog::RKPasteSpecialDialog (QWidget* parent) : QDialog (parent) 
 	// Labels
 	box = new QGroupBox(i18n("Labels"), this);
 	group_layout = new QVBoxLayout (box);
-	names_box = new QCheckBox(i18n("First column contains labels"), box);
+	names_box = new QCheckBox(i18n("First row contains labels"), box);
 	group_layout->addWidget(names_box);
-	rownames_box = new QCheckBox(i18n("First row contains labels"), box);
+	rownames_box = new QCheckBox(i18n("First column contains labels"), box);
 	group_layout->addWidget(rownames_box);
 	rowlayout->addWidget(box);
 
@@ -159,8 +170,9 @@ RKPasteSpecialDialog::RKPasteSpecialDialog (QWidget* parent) : QDialog (parent) 
 	rowlayout->addWidget (box);
 
 	QDialogButtonBox *buttons = new QDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
-	connect (buttons->button (QDialogButtonBox::Ok), &QPushButton::clicked, this, &QDialog::accept);
-	connect (buttons->button (QDialogButtonBox::Cancel), &QPushButton::clicked, this, &QDialog::reject);
+	ok_button = buttons->button(QDialogButtonBox::Ok);
+	connect(ok_button, &QPushButton::clicked, this, &QDialog::accept);
+	connect(buttons->button (QDialogButtonBox::Cancel), &QPushButton::clicked, this, &QDialog::reject);
 	pagelayout->addWidget (buttons);
 
 	updateState ();		// initialize
@@ -184,6 +196,7 @@ void RKPasteSpecialDialog::updateState () {
 	rownames_box->setEnabled(dimensionality == DimDataFrame);
 
 	separator_freefield->setEnabled ((dimensionality != DimSingleString) && (separator_group->checkedId () == SepCustom));
+	ok_button->setEnabled((objectname == nullptr) || objectname->isOk());
 }
 
 QString RKPasteSpecialDialog::resultingText () {
@@ -284,3 +297,18 @@ QString RKPasteSpecialDialog::prepString(const QString& src, const Quoting quot)
 	return src;
 }
 
+void RKPasteSpecialDialog::accept() {
+	RK_TRACE(MISC);
+	if (objectname) {
+		RCommand *command = new RCommand(objectname->currentFullName() + " <- " + resultingText(), RCommand::App | RCommand::ObjectListUpdate);
+		connect(command->notifier(), &RCommandNotifier::commandFinished, [](RCommand *c) {
+			if (c->failed()) {
+				QString msg = c->fullOutput();
+				if (msg.isEmpty()) msg = i18n("Command failed to parse. Try using <i>Edit->Paste special...</i> in the R Console window for better diagnostics.");
+				KMessageBox::detailedError(RKWardMainWindow::getMain(), i18n("Pasting object from clipboard data failed."), msg, i18n("Paste failed"));
+			}
+		});
+		RInterface::issueCommand(command);
+	}
+	QDialog::accept();
+}

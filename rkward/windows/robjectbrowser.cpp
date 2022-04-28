@@ -1,17 +1,19 @@
 /*
 robjectbrowser - This file is part of RKWard (https://rkward.kde.org). Created: Thu Aug 19 2004
-SPDX-FileCopyrightText: 2004-2017 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2004-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "robjectbrowser.h"
 
-#include <qlayout.h>
-#include <qpushbutton.h>
+#include <QPushButton>
 #include <QFocusEvent>
 #include <QVBoxLayout>
 #include <QMenu>
 #include <QInputDialog>
+#include <QApplication>
+#include <QMimeData>
+#include <QClipboard>
 
 #include <KLocalizedString>
 #include <kmessagebox.h>
@@ -26,6 +28,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rkdummypart.h"
 #include "../misc/rkstandardicons.h"
 #include "../misc/rkstandardactions.h"
+#include "../misc/rkspecialactions.h"
 #include "rkworkplace.h"
 #include "../dataeditor/rkeditor.h"
 
@@ -121,6 +124,8 @@ RObjectBrowserInternal::RObjectBrowserInternal (QWidget *parent, RObjectBrowser 
 	connect (actions[CopyToGlobalEnv], &QAction::triggered, this, &RObjectBrowserInternal::popupCopyToGlobalEnv);
 	actions.insert (Delete, new QAction (i18n ("Delete"), this));
 	connect (actions[Delete], &QAction::triggered, this, &RObjectBrowserInternal::popupDelete);
+	actions.insert(NewFromClipboard, new QAction(QIcon::fromTheme("edit-paste"), i18n("New object from clipboard"), this));
+	connect (actions[NewFromClipboard], &QAction::triggered, this, []() { RKPasteSpecialDialog dia(RKWardMainWindow::getMain(), true); dia.exec(); });
 	actions.insert (Unload, new QAction (i18n ("Unload Package"), this));
 	connect (actions[Unload], &QAction::triggered, this, &RObjectBrowserInternal::popupUnload);
 	actions.insert (LoadUnloadPackages, new QAction (i18n ("Load / Unload Packages"), this));
@@ -253,6 +258,11 @@ void RObjectBrowserInternal::contextMenuCallback (RObject *, bool *) {
 	actions[Copy]->setVisible (object->canRead () && (!object->isType (RObject::ToplevelEnv)));
 	actions[CopyToGlobalEnv]->setVisible (object->canRead () && (!object->isInGlobalEnv()) && (!object->isType (RObject::ToplevelEnv)));
 	actions[Delete]->setVisible (object->canRemove ());
+	{
+		const QClipboard *clipboard = QApplication::clipboard();
+		const QMimeData *mime_data = clipboard->mimeData();
+		actions[NewFromClipboard]->setEnabled(mime_data->hasText());
+	}
 	actions[Unload]->setVisible (object->isType (RObject::PackageEnv));
 	actions[LoadUnloadPackages]->setVisible (object == RObjectList::getObjectList ());
 }

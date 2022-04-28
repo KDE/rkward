@@ -14,6 +14,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 class RKComponentGUIXML;
 class KPageWidgetitem;
 class QButtonGroup;
+class RKComponentHandle;
 
 /** This dialog is designed to allow the user to select a file, and file format. After that a suitable plugin
 is opened automatically to deal with this type of file . */
@@ -26,16 +27,22 @@ public:
 	RKImportDialog (const QString &context_id, QWidget *parent);
 /** dtor */
 	~RKImportDialog ();
+	void accept() override;
 private:
+	void updateState();
+
 	QStringList filters;
 	QStringList component_ids;
+	RKComponentHandle *rio_handle;
 	RKComponentGUIXML *context;
 	KPageWidgetItem *select_format;
 	QButtonGroup *select_format_group;
-	KPageWidgetItem *do_format;
-	KPageWidgetItem *select_rio_or_clipboard;
-	KPageWidgetItem *do_rio;
-	KPageWidgetItem *do_clipboard;
+	KPageWidgetItem *select_rio;
+	QButtonGroup *select_rio_group;
+	KPageWidgetItem *select_clipboard;
+	QButtonGroup *select_clipboard_group;
+	KPageWidgetItem *end_with_selection;
+	KPageWidgetItem *end_without_selection;
 };
 
 #endif

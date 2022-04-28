@@ -1,6 +1,8 @@
 TODOs:
 	- More tolerant handshake on Windows? Simply a matter of allowing more time?
 
+- (Re-)added improved "Import Assistant" to help getting started with importing data
+- "Paste special" can now also paste data.frames with labels, and is available in the Workspace Browser context menu
 - Fixed: Windows: Issues with some shiny apps due to a too small stack size
 - "Paste special" action gains option to format as data.frame, optionally with labels
 - Add "rio"-based generic import plugin

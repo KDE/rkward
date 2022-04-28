@@ -11,7 +11,7 @@
 	<section title="Import or enter data" id="import-create">
 		<ul>
 	<li><link href="rkward://actions/new_data_frame">Enter new data</link></li>
-	<li>Import data</li>
+	<li><link href="rkward://actions/import_assistant">Import data</link></li>
 		</ul>
 	</section>
 

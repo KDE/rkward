@@ -1,6 +1,6 @@
 /*
 robjectbrowser - This file is part of the RKWard project. Created: Thu Aug 19 2004
-SPDX-FileCopyrightText: 2004-2016 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2004-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -83,6 +83,7 @@ private:
 		Copy,
 		CopyToGlobalEnv,
 		Delete,
+		NewFromClipboard,
 		Unload,
 		LoadUnloadPackages,
 		ActionCount

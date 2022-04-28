@@ -605,6 +605,8 @@ bool RKHTMLWindow::handleRKWardURL (const QUrl &url, RKHTMLWindow *window) {
 				RKWardMainWindow::getMain()->slotNewDataFrame();
 			} else if (action == "rpackage_install") {
 				RKWardMainWindow::getMain()->slotFileLoadLibs();
+			} else if (action == "import_assistant") {
+				RKWardMainWindow::getMain()->importData();
 			} else {
 				RK_ASSERT(false);
 			}
