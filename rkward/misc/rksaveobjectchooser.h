@@ -1,6 +1,6 @@
 /*
 rksaveobjectchooser - This file is part of the RKWard project. Created: Mon Nov 27 2006
-SPDX-FileCopyrightText: 2006-2007 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2006-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -15,6 +15,7 @@ class QLineEdit;
 class QCheckBox;
 class QPushButton;
 class QLabel;
+class KMessageWidget;
 
 /** Simple helper widget to select an R symbol name to write something to. */
 class RKSaveObjectChooser : public QWidget, public RObjectListener {
@@ -47,6 +48,7 @@ private:
 	QPushButton *root_button;
 	QLineEdit *name_edit;
 	QCheckBox *overwrite_confirm;
+	KMessageWidget *overwrite_warn;
 
 	QString current_full_name;
 };

@@ -7,13 +7,14 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rkimportdialog.h"
 
-#include <KLocalizedString>
-
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QGroupBox>
 #include <QRadioButton>
 #include <QButtonGroup>
+
+#include <KLocalizedString>
+#include <KMessageWidget>
 
 #include "../plugin/rkcomponentmap.h"
 #include "../plugin/rkcomponentcontext.h"
@@ -52,7 +53,10 @@ RKImportDialog::RKImportDialog(const QString &context_id, QWidget *parent) : KAs
 	QVBoxLayout *layout = new QVBoxLayout(page);
 	layout->addWidget(RKCommonFunctions::wordWrappedLabel(i18n("For certain formats, RKWard provides specialized import dialogs, and those generally provide the most options. Is the file you wish to import in one of the following formats?")));
 	if (filters.isEmpty()) {
-		layout->addWidget(RKCommonFunctions::wordWrappedLabel(i18n("<b>Note:</b> RKWard comes with several import dialogs, but none seem to be loaded, at present. Check your settings.")));
+		auto w = new KMessageWidget(i18n("RKWard comes with several import dialogs, but none seem to be loaded, at present. Check your settings."));
+		w->setMessageType(KMessageWidget::Warning);
+		w->setWordWrap(true);
+		layout->addWidget(w);
 	}
 	QGroupBox *box = new QGroupBox();
 	layout->addWidget(box);
@@ -75,7 +79,10 @@ RKImportDialog::RKImportDialog(const QString &context_id, QWidget *parent) : KAs
 	layout = new QVBoxLayout(page);
 	layout->addWidget(RKCommonFunctions::wordWrappedLabel(i18n("The 'rio' package offers generic support for importing many different file formats, but requires a number of additional R pacakges to be installed (you will be prompted for missing packages). Do you want to give that a try?")));
 	if (!rio_handle) {
-		layout->addWidget(RKCommonFunctions::wordWrappedLabel(i18n("<b>Note:</b> The generic import plugin (shipped with RKWard) is not presently loaded. Check your settings.")));
+		auto w = new KMessageWidget(i18n("The generic import plugin (shipped with RKWard) is not presently loaded. Check your settings."));
+		w->setMessageType(KMessageWidget::Warning);
+		w->setWordWrap(true);
+		layout->addWidget(w);
 	}
 	box = new QGroupBox();
 	layout->addWidget(box);
