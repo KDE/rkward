@@ -341,6 +341,16 @@ public:
 		RK_TRACE (APP);
 	}
 
+	void showEvent(QShowEvent *e) override {
+		RKMDIWindow::showEvent(e);
+		emit toolVisibleChanged(true);
+	}
+
+	void hideEvent(QHideEvent *e) override {
+		RKMDIWindow::hideEvent(e);
+		emit toolVisibleChanged(false);
+	}
+
 /** This is a bit lame, but the plugin does not add itself to the parent widget's layout by itself. So we need this override
  *  to do that. Where did the good old KVBox go? */
 	void childEvent(QChildEvent *ev) override {
@@ -353,6 +363,8 @@ public:
 		}
 		RKMDIWindow::childEvent(ev);
 	}
+signals:
+	void toolVisibleChanged(bool);
 };
 
 QWidget* KatePluginIntegrationWindow::createToolView (KTextEditor::Plugin *plugin, const QString &identifier, KTextEditor::MainWindow::ToolViewPosition pos, const QIcon &icon, const QString &text) {
