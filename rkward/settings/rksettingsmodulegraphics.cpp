@@ -44,7 +44,7 @@ RKSettingsModuleGraphics::RKSettingsModuleGraphics (RKSettings *gui, QWidget *pa
 
 	QVBoxLayout *main_vbox = new QVBoxLayout (this);
 
-	QHBoxLayout *h_layout1 = new QHBoxLayout (this);
+	QHBoxLayout *h_layout1 = new QHBoxLayout();
 	main_vbox->addLayout (h_layout1);
 	QGroupBox *group = new QGroupBox (i18n ("Default graphics device"), this);
 	default_device_group = new QButtonGroup (this);
