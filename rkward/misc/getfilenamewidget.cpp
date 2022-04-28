@@ -56,7 +56,7 @@ GetFileNameWidget::GetFileNameWidget (QWidget *parent, FileType mode, bool only_
 		storage_key = initial.section ('>', 0, 0).mid (1);
 		append = initial.section ('>', 1);
 	}
-	QUrl initial_url = RKRecentUrls::mostRecentUrl(storage_key);  // storage_key == QString () in the default case is intended
+	QUrl initial_url = RKRecentUrls::mostRecentUrl(storage_key).adjusted(QUrl::RemoveFilename);  // storage_key == QString () in the default case is intended
 	if (!append.isEmpty ()) {
 		if (initial_url.isLocalFile ()) {
 			initial_url = QUrl::fromUserInput (append, initial_url.toLocalFile (), QUrl::AssumeLocalFile);
