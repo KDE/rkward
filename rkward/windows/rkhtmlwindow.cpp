@@ -58,6 +58,10 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../windows/rkworkplaceview.h"
 #include "../debug.h"
 
+QUrl restorableUrl(const QUrl &url) {
+	return QUrl(url.url().replace(RKSettingsModuleR::helpBaseUrl(), "rkward://RHELPBASE"));
+}
+
 #ifdef NO_QT_WEBENGINE
 #	include <QWebFrame>
 #	include <QNetworkRequest>
@@ -181,7 +185,7 @@ protected:
 		if (RKHTMLWindow::new_window) {
 			RK_ASSERT (RKHTMLWindow::new_window == this);
 			RK_ASSERT (!window);
-			RKWorkplace::mainWorkplace ()->openAnyUrl (navurl);
+			RKWorkplace::mainWorkplace()->openAnyUrl(restorableUrl(navurl));
 			RKHTMLWindow::new_window = nullptr;
 			if (!window) deleteLater ();  // this page was _not_ reused
 			return false;
@@ -385,8 +389,7 @@ RKHTMLWindow::~RKHTMLWindow () {
 
 QUrl RKHTMLWindow::restorableUrl () {
 	RK_TRACE (APP);
-
-	return QUrl ((current_url.url ().replace (RKSettingsModuleR::helpBaseUrl(), "rkward://RHELPBASE")));
+	return ::restorableUrl(current_url);
 }
 
 bool RKHTMLWindow::isModified () {

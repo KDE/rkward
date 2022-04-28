@@ -1,6 +1,7 @@
 TODOs:
 	- More tolerant handshake on Windows? Simply a matter of allowing more time?
 
+- Fixed: R help pages would refuse to open in new tab
 - (Re-)added improved "Import Assistant" to help getting started with importing data
 - "Paste special" can now also paste data.frames with labels, and is available in the Workspace Browser context menu
 - Fixed: Windows: Issues with some shiny apps due to a too small stack size
