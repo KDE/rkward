@@ -381,3 +381,103 @@ void RKProgressControlDialog::closeEvent (QCloseEvent *e) {
 	}
 }
 
+#include <KMessageWidget>
+#include <KStandardAction>
+
+RKInlineProgressControl::RKInlineProgressControl(QWidget *display_area, bool allow_cancel) : QObject(display_area),
+						autoclose(false),
+						allow_cancel(allow_cancel),
+						display_area(display_area),
+						prevent_close_message(nullptr),
+						close_action(nullptr) {
+	RK_TRACE(MISC);
+
+	display_area->window()->installEventFilter(this);
+
+	wrapper = new QWidget(display_area);
+	auto layout = new QVBoxLayout(wrapper);
+	message_widget = new KMessageWidget();
+	message_widget->setWordWrap(true);
+	message_widget->setCloseButtonVisible(false);  // we want a button, instead, for consistency with cancel
+	if (allow_cancel) {
+		setCloseAction(i18n("Cancel"));
+	}
+	output_display = new QTextEdit();
+	layout->addWidget(message_widget);
+	layout->addWidget(output_display);
+	wrapper->resize(display_area->size());
+}
+
+RKInlineProgressControl::~RKInlineProgressControl() {
+	RK_TRACE(MISC);
+
+	display_area->window()->removeEventFilter(this);
+	delete wrapper;
+	for (int i = 0; i < unfinished_commands.size(); ++i) {
+		RInterface::instance()->cancelCommand(unfinished_commands[i]);
+	}
+}
+
+void RKInlineProgressControl::setCloseAction(const QString &label) {
+	RK_TRACE(MISC);
+
+	if (!close_action) {
+		close_action = KStandardAction::create(KStandardAction::Close, this, &QObject::deleteLater, this);
+		message_widget->addAction(close_action);
+	}
+	close_action->setText(label);
+}
+
+void RKInlineProgressControl::addRCommand(RCommand *command) {
+	RK_TRACE(MISC);
+	unfinished_commands.append(command);
+	connect(command->notifier(), &RCommandNotifier::commandFinished, this, [this](RCommand *c) {
+		unfinished_commands.removeAll(c);
+		if (c->failed()) {
+			autoclose = false;
+			message_widget->setMessageType(KMessageWidget::Error);
+		}
+		if (unfinished_commands.isEmpty()) {
+			if (autoclose) {
+				deleteLater();
+			} else {
+				setCloseAction(i18n("Close"));
+			}
+		}
+	});
+	connect(command->notifier(), &RCommandNotifier:: commandOutput, this, [this](RCommand *, const ROutput *o) {
+		if (o->type == ROutput::Output) {
+			output_display->setTextColor(RKStyle::viewScheme()->foreground(KColorScheme::NormalText).color());
+		} else {
+			output_display->setTextColor(RKStyle::viewScheme()->foreground(KColorScheme::NegativeText).color());
+		}
+		output_display->insertPlainText(o->output);
+	});
+}
+
+void RKInlineProgressControl::show(int delay_ms) {
+	RK_TRACE(MISC);
+	if (delay_ms > 0) {
+		QTimer::singleShot(delay_ms, wrapper, &QWidget::show);
+	} else {
+		wrapper->show();
+	}
+}
+
+bool RKInlineProgressControl::eventFilter(QObject *, QEvent *e) {
+	RK_TRACE(MISC);
+	if (e->type() == QEvent::Resize) {
+		QTimer::singleShot(0, this, [this]() {
+			wrapper->resize(display_area->size());
+		});
+		return false;
+	}
+	if (!allow_cancel && e->type() == QEvent::Close) {
+		// TODO
+		prevent_close_message = new KMessageWidget(i18n("An operation is still running, please wait."));
+		return true;
+	}
+	return false;
+}
+
+

@@ -137,7 +137,7 @@ private:
 class RKRPackageInstallationStatus : public QAbstractItemModel {
 	Q_OBJECT
 public:
-	explicit RKRPackageInstallationStatus (QObject* parent);
+	explicit RKRPackageInstallationStatus (QObject* parent, QWidget* diplay_area);
 	~RKRPackageInstallationStatus ();
 
 	void initialize (RCommandChain *chain);
@@ -204,6 +204,7 @@ private:
 	bool _initialized;
 
 	QStringList current_repos;
+	QWidget *display_area;
 };
 
 class RKRPackageInstallationStatusSortFilterModel : public QSortFilterProxyModel {

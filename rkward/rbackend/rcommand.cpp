@@ -122,6 +122,7 @@ void RCommand::newOutput (ROutput *output) {
 		if (receivers[i] == 0) continue;
 		receivers[i]->newOutput (this, output);
 	}
+	if (_notifier) _notifier->emitOutput(this, output);
 }
 
 void RCommand::commandLineIn () {

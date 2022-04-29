@@ -99,4 +99,30 @@ protected:
 	void rCommandDone (RCommand *command) override;
 };
 
+class KMessageWidget;
+class QAction;
+
+class RKInlineProgressControl : public QObject {
+public:
+/** @param allow_cancel Whether the operation may be cancelled. If true, a cancel button will be added. If false, will also prevent the parent dialog from being closed. Default: true */
+	RKInlineProgressControl(QWidget *display_area, bool allow_cancel);
+	~RKInlineProgressControl();
+	void addRCommand(RCommand *command);
+	void setAutoCloseWhenCommandsDone(bool _autoclose) { autoclose = _autoclose; };
+	void show(int delay_ms=0);
+	KMessageWidget *messageWidget() { return message_widget; };
+private:
+	void setCloseAction(const QString &label);
+	bool eventFilter(QObject *, QEvent *e) override;
+	bool autoclose;
+	bool allow_cancel;
+	QWidget* wrapper;
+	QWidget* display_area;
+	KMessageWidget *message_widget;
+	KMessageWidget *prevent_close_message;
+	QTextEdit *output_display;
+	QList<RCommand*> unfinished_commands;
+	QAction* close_action;
+};
+
 #endif

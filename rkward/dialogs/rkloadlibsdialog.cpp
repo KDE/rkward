@@ -25,6 +25,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KLocalizedString>
 #include <kmessagebox.h>
 #include <kuser.h>
+#include <KMessageWidget>
 
 #include "../rbackend/rkrinterface.h"
 #include "../rbackend/rksessionvars.h"
@@ -655,8 +656,8 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidge
 	hbox->addLayout (vbox);
 	hbox->setStretchFactor (vbox, 2);
 
-	packages_status = new RKRPackageInstallationStatus (this);
 	packages_view = new QTreeView (this);
+	packages_status = new RKRPackageInstallationStatus(this, packages_view);
 	packages_view->setSortingEnabled (true);
 	model = new RKRPackageInstallationStatusSortFilterModel (this);
 	model->setSourceModel (packages_status);
@@ -669,7 +670,6 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidge
 	connect (packages_view, &QTreeView::clicked, this, &InstallPackagesWidget::rowClicked);
 	packages_view->setRootIsDecorated (false);
 	packages_view->setIndentation (0);
-	packages_view->setEnabled (false);
 	packages_view->setMinimumHeight (packages_view->sizeHintForRow (0) * 15);	// force a decent height
 	packages_view->setMinimumWidth (packages_view->fontMetrics ().width ("This is to force a sensible min width for the packages view (empty on construction)"));
 	vbox->addWidget (packages_view);
@@ -727,7 +727,6 @@ void InstallPackagesWidget::initialize () {
 	RK_TRACE (DIALOGS);
 
 	packages_status->initialize (parent->chain);
-	packages_view->setEnabled (true);
 	// Force a good width for the icon column, particularly for MacOS X.
 	packages_view->header ()->resizeSection (0, packages_view->sizeHintForIndex (model->index (0, 0, model->index (RKRPackageInstallationStatus::NewPackages, 0, QModelIndex ()))).width () + packages_view->indentation ());
 	for (int i = 1; i <= RKRPackageInstallationStatus::PackageName; ++i) {
@@ -878,7 +877,7 @@ void PackageInstallParamsWidget::liblocsChanged (const QStringList &newlist) {
 
 /////////// RKRPackageInstallationStatus /////////////////
 
-RKRPackageInstallationStatus::RKRPackageInstallationStatus (QObject* parent) : QAbstractItemModel (parent) {
+RKRPackageInstallationStatus::RKRPackageInstallationStatus (QObject* parent, QWidget* display_area) : QAbstractItemModel (parent), display_area(display_area) {
 	RK_TRACE (DIALOGS);
 	_initialized = false;
 }
@@ -932,11 +931,13 @@ void RKRPackageInstallationStatus::initialize (RCommandChain *chain) {
 	_initialized = true;	// will be re-set to false, should the command fail / be cancelled
 
 	RCommand *command = new RCommand (".rk.get.package.installation.state ()", RCommand::App | RCommand::GetStructuredData);
-	connect (command->notifier (), &RCommandNotifier::commandFinished, this, &RKRPackageInstallationStatus::statusCommandFinished);
-	RKProgressControl *control = new RKProgressControl (this, i18n ("<p>Please stand by while searching for installed and available packages.</p><p><strong>Note:</strong> This requires a working internet connection, and may take some time, esp. if one or more repositories are temporarily unavailable.</p>"), i18n ("Searching for packages"), RKProgressControl::CancellableProgress | RKProgressControl::AutoCancelCommands);
-	control->addRCommand (command, true);
-	RInterface::issueCommand (command, chain);
-	control->doModal (true);
+	connect(command->notifier(), &RCommandNotifier::commandFinished, this, &RKRPackageInstallationStatus::statusCommandFinished);
+	RKInlineProgressControl *control = new RKInlineProgressControl(display_area, true);
+	control->messageWidget()->setText(i18n("<p>Please stand by while searching for installed and available packages.</p><p><strong>Note:</strong> This requires a working internet connection, and may take some time, esp. if one or more repositories are temporarily unavailable.</p>"));
+	control->addRCommand(command);
+	//control->setAutoCloseWhenCommandsDone(true);
+	RInterface::issueCommand(command, chain);
+	control->show(100);
 }
 
 void RKRPackageInstallationStatus::statusCommandFinished (RCommand *command) {
