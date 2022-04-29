@@ -77,7 +77,7 @@ RKImportDialog::RKImportDialog(const QString &context_id, QWidget *parent) : KAs
 
 	page = new QWidget();
 	layout = new QVBoxLayout(page);
-	layout->addWidget(RKCommonFunctions::wordWrappedLabel(i18n("The 'rio' package offers generic support for importing many different file formats, but requires a number of additional R pacakges to be installed (you will be prompted for missing packages). Do you want to give that a try?")));
+	layout->addWidget(RKCommonFunctions::wordWrappedLabel(i18n("The 'rio' package offers generic support for importing many different file formats, but requires a number of additional R packages to be installed (you will be prompted for missing packages). Do you want to give that a try?")));
 	if (!rio_handle) {
 		auto w = new KMessageWidget(i18n("The generic import plugin (shipped with RKWard) is not presently loaded. Check your settings."));
 		w->setMessageType(KMessageWidget::Warning);
