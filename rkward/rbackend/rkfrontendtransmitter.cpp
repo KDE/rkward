@@ -132,7 +132,7 @@ void RKFrontendTransmitter::run () {
 	if (!backend->waitForStarted()) {
 		handleTransmissionError(i18n("The backend executable could not be started. Error message was: %1", backend->errorString()));
 	} else {
-		waitForCanReadLine(backend, 3000);
+		waitForCanReadLine(backend, 15000);
 		token = QString::fromLocal8Bit(backend->readLine()).trimmed();
 		backend->closeReadChannel(QProcess::StandardError);
 		backend->closeReadChannel(QProcess::StandardOutput);
