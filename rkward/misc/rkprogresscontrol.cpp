@@ -139,12 +139,6 @@ void RKProgressControl::newOutput (const QString &output) {
 	if (dialog) dialog->addOutput (&outputc);
 }
 
-void RKProgressControl::resetOutput () {
-	RK_TRACE (MISC);
-
-	output_log.clear ();
-}
-
 void RKProgressControl::addRCommand (RCommand *command, bool done_when_finished) {
 	RK_TRACE (MISC);
 	RK_ASSERT (command);
@@ -395,7 +389,9 @@ RKInlineProgressControl::RKInlineProgressControl(QWidget *display_area, bool all
 	display_area->window()->installEventFilter(this);
 
 	wrapper = new QWidget(display_area);
+	wrapper->setAutoFillBackground(true);
 	auto layout = new QVBoxLayout(wrapper);
+	layout->setContentsMargins(0,0,0,0);
 	message_widget = new KMessageWidget();
 	message_widget->setWordWrap(true);
 	message_widget->setCloseButtonVisible(false);  // we want a button, instead, for consistency with cancel
@@ -438,21 +434,31 @@ void RKInlineProgressControl::addRCommand(RCommand *command) {
 			message_widget->setMessageType(KMessageWidget::Error);
 		}
 		if (unfinished_commands.isEmpty()) {
-			if (autoclose) {
-				deleteLater();
-			} else {
-				setCloseAction(i18n("Close"));
-			}
+			done();
 		}
 	});
 	connect(command->notifier(), &RCommandNotifier:: commandOutput, this, [this](RCommand *, const ROutput *o) {
-		if (o->type == ROutput::Output) {
-			output_display->setTextColor(RKStyle::viewScheme()->foreground(KColorScheme::NormalText).color());
-		} else {
-			output_display->setTextColor(RKStyle::viewScheme()->foreground(KColorScheme::NegativeText).color());
-		}
-		output_display->insertPlainText(o->output);
+		addOutput(o->output, o->type != ROutput::Output);
 	});
+}
+
+void RKInlineProgressControl::addOutput(const QString& output, bool is_error_warning) {
+	RK_TRACE(MISC);
+	if (is_error_warning) {
+		output_display->setTextColor(RKStyle::viewScheme()->foreground(KColorScheme::NegativeText).color());
+	} else {
+		output_display->setTextColor(RKStyle::viewScheme()->foreground(KColorScheme::NormalText).color());
+	}
+	output_display->insertPlainText(output);
+}
+
+void RKInlineProgressControl::done() {
+	RK_TRACE(MISC);
+	if (autoclose) {
+		deleteLater();
+	} else {
+		setCloseAction(i18n("Close"));
+	}
 }
 
 void RKInlineProgressControl::show(int delay_ms) {

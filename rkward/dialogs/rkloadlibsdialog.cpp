@@ -306,84 +306,49 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, QString to_
 void RKLoadLibsDialog::runInstallationCommand (const QString& command, bool as_root, const QString& message, const QString& title) {
 	RK_TRACE (DIALOGS);
 
-	// TODO: won't work with some versions of GCC (which ones exactly)?
-//	QFile file (QDir (RKSettingsModuleGeneral::filesPath ()).filePath ("install_script.R"));
-// WORKAROUND:
-	QDir dir = RKSettingsModuleGeneral::filesPath ();
-	QFile file (dir.filePath ("install_script.R"));
-// WORKADOUND END
+	QFile file(QDir(RKSettingsModuleGeneral::filesPath()).filePath("install_script.R"));
 	if (file.open (QIODevice::WriteOnly)) {
 		QTextStream stream (&file);
 		stream << command;
-		stream << "q ()\n";
+		if (as_root) stream << "q()\n";
 		file.close();
 	} else {
 		RK_ASSERT (false);
 	}
 
-	QString call;
-	QStringList params;
-#ifdef Q_OS_WIN
-	RK_ASSERT (!as_root);
-	call = RKSessionVars::RBinary();
-#else
+	auto control = new RKInlineProgressControl(install_packages_widget, true);
+	control->messageWidget()->setText(QString("<b>%1</b><p>%2</p>").arg(title, message));
+	control->show();
+
+	RCommand *rcommand;
 	if (as_root) {
-		call = QStandardPaths::findExecutable ("kdesu");
-		if (call.isEmpty ()) call = QStandardPaths::findExecutable ("kdesudo");
-		params << "-t" << "--" << RKSessionVars::RBinary();
+		QStringList libexecpath(LIBEXECDIR "/kf5");
+		libexecpath << QString(LIBEXECDIR "/kf6");
+		QString call = QStandardPaths::findExecutable("kdesu");
+		if (call.isEmpty()) call = QStandardPaths::findExecutable("kdesu", libexecpath);
+		if (call.isEmpty ()) call = QStandardPaths::findExecutable("kdesudo");
+		if (call.isEmpty ()) call = QStandardPaths::findExecutable("kdesudo", libexecpath);
+		if (call.isEmpty()) {
+			KMessageBox::sorry(this, i18n("Neither kdesu nor kdesudo could be found. To install as root, please install one of these packages."), i18n("kdesu not found"));
+			file.remove();
+			return;
+		}
+		QStringList call_with_params(call);
+		call_with_params << "-t" << "--" << RKSessionVars::RBinary() << "--no-save" << "--no-restore" << "--file=" + file.fileName();
+		rcommand = new RCommand(QString("system(%1)").arg(RObject::rQuote(call_with_params.join(" "))), RCommand::App);
 	} else {
-		call = RKSessionVars::RBinary();
+		rcommand = new RCommand(QString("source(%1, local=new.env())").arg(RObject::rQuote(file.fileName())), RCommand::App);
 	}
-#endif
-	params << "--no-save" << "--no-restore" << "--file=" + file.fileName ();
-
-	installation_process = new QProcess ();
-	installation_process->setProcessChannelMode (QProcess::SeparateChannels);
-
-	connect (installation_process, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), this, &RKLoadLibsDialog::processExited);
-	connect (installation_process, &QProcess::readyReadStandardOutput, this, &RKLoadLibsDialog::installationProcessOutput);
-	connect (installation_process, &QProcess::readyReadStandardError, this, &RKLoadLibsDialog::installationProcessError);
-
-	RKProgressControl *installation_progress = new RKProgressControl (this, message, title, RKProgressControl::CancellableProgress);
-	connect (this, &RKLoadLibsDialog::installationComplete, installation_progress, &RKProgressControl::done);
-	connect (this, &RKLoadLibsDialog::installationOutput, installation_progress, static_cast<void (RKProgressControl::*)(const QString&)>(&RKProgressControl::newOutput));
-	connect (this, &RKLoadLibsDialog::installationError, installation_progress, &RKProgressControl::newError);
-
-	installation_process->start (call, params, QIODevice::ReadWrite | QIODevice::Unbuffered);
-
-	if (!installation_progress->doModal (true)) {
-		installation_process->kill ();
-		installation_process->waitForFinished (5000);
+	control->addRCommand(rcommand);
+	RInterface::issueCommand(rcommand, chain);
+	bool done = false;
+	connect(rcommand->notifier(), &RCommandNotifier::commandFinished, this, [&done]() { done = true; });
+	while (!done) {
+		QApplication::processEvents();
 	}
 
-	file.remove ();
-	delete installation_process;
-	installation_process = 0;
+	file.remove();
 	emit installedPackagesChanged();
-}
-
-void RKLoadLibsDialog::installationProcessOutput () {
-	RK_TRACE (DIALOGS);
-	RK_ASSERT (installation_process);
-
-	emit installationOutput(QString::fromLocal8Bit(installation_process->readAllStandardOutput()));
-}
-
-void RKLoadLibsDialog::installationProcessError () {
-	RK_TRACE (DIALOGS);
-	RK_ASSERT (installation_process);
-
-	emit installationError(QString::fromLocal8Bit(installation_process->readAllStandardError()));
-}
-
-void RKLoadLibsDialog::processExited (int exitCode, QProcess::ExitStatus exitStatus) {
-	RK_TRACE (DIALOGS);
-
-	if (exitCode || (exitStatus != QProcess::NormalExit)) {
-		emit installationError('\n' + i18n ("Installation process died with exit code %1", exitCode));
-	}
-
-	emit installationComplete();
 }
 
 ////////////////////// LoadUnloadWidget ////////////////////////////
@@ -935,7 +900,7 @@ void RKRPackageInstallationStatus::initialize (RCommandChain *chain) {
 	RKInlineProgressControl *control = new RKInlineProgressControl(display_area, true);
 	control->messageWidget()->setText(i18n("<p>Please stand by while searching for installed and available packages.</p><p><strong>Note:</strong> This requires a working internet connection, and may take some time, esp. if one or more repositories are temporarily unavailable.</p>"));
 	control->addRCommand(command);
-	//control->setAutoCloseWhenCommandsDone(true);
+	control->setAutoCloseWhenCommandsDone(true);
 	RInterface::issueCommand(command, chain);
 	control->show(100);
 }

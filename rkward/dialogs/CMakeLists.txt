@@ -11,5 +11,6 @@ SET(dialogs_STAT_SRCS
    rksetupwizard.cpp
    )
 
+ADD_DEFINITIONS(-DLIBEXECDIR="${CMAKE_INSTALL_FULL_LIBEXECDIR}")
 ADD_LIBRARY(dialogs STATIC ${dialogs_STAT_SRCS})
 TARGET_LINK_LIBRARIES(dialogs Qt5::Widgets KF5::Parts KF5::ConfigWidgets KF5::TextEditor)

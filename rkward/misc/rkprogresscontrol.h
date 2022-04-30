@@ -64,8 +64,6 @@ public:
 /** initialize the dialog non modal. The dialog is only shown if needed or set in the constructor flags */
 	void doNonModal (bool autodelete);
 
-/** you don't need this, unless you feed regular output to the dialog using newOutput. */
-	void resetOutput ();
 /** add a command to listen to. Warning: You will always first call addRCommand, then submit the command to RInterface, never the other way around. Else there could be a race condition!
 @param done_when_finished If set to true, the done () -slot is auto-called when the given command has completed */
 	void addRCommand (RCommand *command, bool done_when_finished=false);
@@ -111,6 +109,8 @@ public:
 	void setAutoCloseWhenCommandsDone(bool _autoclose) { autoclose = _autoclose; };
 	void show(int delay_ms=0);
 	KMessageWidget *messageWidget() { return message_widget; };
+	void addOutput(const QString &output, bool is_error_warning);
+	void done();
 private:
 	void setCloseAction(const QString &label);
 	bool eventFilter(QObject *, QEvent *e) override;

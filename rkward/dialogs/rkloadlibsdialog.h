@@ -59,19 +59,12 @@ public:
 	void accept () override;
 	void reject () override;
 signals:
-	void downloadComplete ();
-	void installationComplete ();
 	void libraryLocationsChanged (const QStringList &liblocs);
-	void installationOutput (const QString &output);
-	void installationError (const QString &error);
 	void installedPackagesChanged ();
 protected:
 	void closeEvent (QCloseEvent *e) override;
 protected slots:
 	void childDeleted ();
-	void processExited (int exitCode, QProcess::ExitStatus exitStatus);
-	void installationProcessOutput ();
-	void installationProcessError ();
 	void automatedInstall (const QStringList &packages);
 	void slotPageChanged ();
 private:

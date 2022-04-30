@@ -1,6 +1,10 @@
 TODOs:
 	- More tolerant handshake on Windows? Simply a matter of allowing more time?
 
+- Package installation no longer uses an external process, unless required for root permissions
+  - TODO: Trim down required commands, show what's left, inline
+  - TODO: swallow installation output in require()
+- Fixed: Package installation as root would fail to find kdesu/kdesudo on recent systems
 - Fixed: R help pages would refuse to open in new tab
 - (Re-)added improved "Import Assistant" to help getting started with importing data
 - "Paste special" can now also paste data.frames with labels, and is available in the Workspace Browser context menu
