@@ -3,11 +3,9 @@ TODOs:
 
 - Fixed some problems with cancelling running commands
 - Package installation uses inline widget to provide progress feedback, instead of separate dialogs
-  - TODO: Finding package from require() fails, because list is not yet loaded
   - TODO: Remove "Ok" button from dialog, rename "Cancel" to "Close"
   - TODO: Remove current repositories from .rk.get.package.installation.status() (no longer needed)
 - Package installation no longer uses an external process, unless required for root permissions
-  - TODO: swallow installation output in require()
 - Fixed: Package installation as root would fail to find kdesu/kdesudo on recent systems
 - Fixed: R help pages would refuse to open in new tab
 - (Re-)added improved "Import Assistant" to help getting started with importing data

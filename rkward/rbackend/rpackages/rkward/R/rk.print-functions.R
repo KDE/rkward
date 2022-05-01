@@ -275,6 +275,10 @@
 #'
 #' And arbitrary number of ouptut captures can be started and stopped, and these will form a push/pop stack.
 #'
+#' @param suppress.messages
+#' @param suppress.output output / message are not sent on, neither to surrounding captures, nor as regular output
+#' @param allow.nesting if false, output / message is not sent to surrounding captures, but is sent to regular output (unless suppressed)
+#'
 #' \code{rk.capture.output} Starts capturing output.
 #' 
 #' \code{rk.end.capture.output} Stops capturing output, and returns the recorded output in a string.
@@ -283,13 +287,13 @@
 #'
 #' @export
 #' @rdname rk.capture.output
-"rk.capture.output" <- function (capture.messages = TRUE, capture.output = TRUE, suppress.messages = FALSE, suppress.output = FALSE) {
-	.Call ("rk.capture.output", 1, isTRUE (capture.messages), isTRUE (capture.output), isTRUE (suppress.messages), isTRUE (suppress.output), PACKAGE="(embedding)");
+"rk.capture.output" <- function (capture.messages = TRUE, capture.output = TRUE, suppress.messages = FALSE, suppress.output = FALSE, allow.nesting = TRUE) {
+	.Call ("rk.capture.output", 1, isTRUE (capture.messages), isTRUE (capture.output), isTRUE (suppress.messages), isTRUE (suppress.output), isTRUE (allow.nesting), PACKAGE="(embedding)");
 	invisible (NULL)
 }
 
 #' @export
 #' @rdname rk.capture.output
 "rk.end.capture.output" <- function (highlight = FALSE) {
-	.Call ("rk.capture.output", if (isTRUE (highlight)) 2 else 3, FALSE, FALSE, FALSE, FALSE, PACKAGE="(embedding)");
+	.Call ("rk.capture.output", if (isTRUE (highlight)) 2 else 3, FALSE, FALSE, FALSE, FALSE, FALSE, PACKAGE="(embedding)");
 }

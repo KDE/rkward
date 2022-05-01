@@ -183,6 +183,7 @@ bool RKROutputBuffer::handleOutput (const QString &output, int buf_length, ROutp
 			if (cap.mode & RecordMessages) appendToOutputList (&(cap.recorded), output, output_type);
 			if (cap.mode & SuppressMessages) return previously_empty;
 		}
+		if (cap.mode & NoNesting) break;
 	}
 
 	appendToOutputList (&output_buffer, output, output_type);

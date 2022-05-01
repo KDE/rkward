@@ -142,7 +142,8 @@ public:
 		RecordMessages = 1,
 		RecordOutput = 2,
 		SuppressMessages = 4,
-		SuppressOutput = 8
+		SuppressOutput = 8,
+		NoNesting = 16
 	};
 	void pushOutputCapture (int capture_mode);
 	QString popOutputCapture (bool highlighted);

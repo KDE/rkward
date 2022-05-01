@@ -714,18 +714,22 @@ void InstallPackagesWidget::filterChanged () {
 void InstallPackagesWidget::trySelectPackages (const QStringList &package_names) {
 	RK_TRACE (DIALOGS);
 
-	QStringList failed_names;
-	for (int i = 0; i < package_names.size(); ++i) {
-		QModelIndex index = packages_status->markPackageForInstallation(package_names[i]);
-		if (!index.isValid()) {
-			failed_names.append(package_names[i]);
-		} else {
-			packages_view->scrollTo(model->mapFromSource(index));
+	RCommand *dummy = new RCommand(QString(), RCommand::EmptyCommand); // dummy command will finish, after initialization is complete
+	connect(dummy->notifier(), &RCommandNotifier::commandFinished, this, [this, package_names]() {
+		QStringList failed_names;
+		for (int i = 0; i < package_names.size(); ++i) {
+			QModelIndex index = packages_status->markPackageForInstallation(package_names[i]);
+			if (!index.isValid()) {
+				failed_names.append(package_names[i]);
+			} else {
+				packages_view->scrollTo(model->mapFromSource(index));
+			}
 		}
-	}
-	if (!failed_names.isEmpty()) {
-		KMessageBox::sorry (0, i18n ("The following package(s) requested by the backend have not been found in the package repositories: \"%1\". Maybe the package name was mis-spelled. Or maybe you need to add additional repositories via the \"Configure Repositories\" button.", failed_names.join("\", \"")), i18n ("Package not available"));
-	}
+		if (!failed_names.isEmpty()) {
+			KMessageBox::sorry (0, i18n ("The following package(s) requested by the backend have not been found in the package repositories: \"%1\". Maybe the package name was mis-spelled. Or maybe you need to add additional repositories via the \"Configure Repositories\" button.", failed_names.join("\", \"")), i18n ("Package not available"));
+		}
+	});
+	RInterface::issueCommand(dummy, parent->chain);
 }
 
 void InstallPackagesWidget::markAllUpdates () {
