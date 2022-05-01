@@ -50,7 +50,9 @@ RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool 
 	setFaceType (KPageDialog::Tabbed);
 	setModal (modal);
 	setWindowTitle (i18n ("Configure Packages"));
-	setStandardButtons (QDialogButtonBox::Ok | QDialogButtonBox::Apply | QDialogButtonBox::Cancel);
+	setStandardButtons (QDialogButtonBox::Apply);
+	auto button = buttonBox()->addButton(i18n("Close"), QDialogButtonBox::NoRole);  // Not using standard close button, as that will call reject
+	connect(button, &QPushButton::clicked, this, &RKLoadLibsDialog::close);
 
 	LoadUnloadWidget *luwidget = new LoadUnloadWidget (this);
 	addChild (luwidget, i18n ("Load / Unload R packages"));
@@ -85,7 +87,6 @@ KPageWidgetItem* RKLoadLibsDialog::addChild (QWidget *child_page, const QString 
 	RK_TRACE (DIALOGS);
 
 	// TODO: Can't convert these signal/slot connections to new syntax, without creating a common base class for the child pages
-	connect (this, SIGNAL (accepted()), child_page, SLOT (ok()));
 	connect (button (QDialogButtonBox::Apply), SIGNAL (clicked(bool)), child_page, SLOT (apply()));
 	connect (this, SIGNAL(rejected()), child_page, SLOT (cancel()));
 	connect (child_page, &QObject::destroyed, this, &RKLoadLibsDialog::childDeleted);

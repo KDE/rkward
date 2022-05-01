@@ -428,7 +428,6 @@ void RKInlineProgressControl::setCloseAction(const QString &label) {
 void RKInlineProgressControl::cancelAndClose() {
 	RK_TRACE(MISC);
 
-	display_area->window()->removeEventFilter(this);
 	for (int i = 0; i < unfinished_commands.size(); ++i) {
 		RInterface::instance()->cancelCommand(unfinished_commands[i]);
 	}

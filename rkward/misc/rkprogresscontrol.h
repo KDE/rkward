@@ -24,6 +24,7 @@ class RKProgressControlDialog;
 This class is a functional combination of the older RKCancelDialog and RKErrorDialog classes. Depending on the selected mode it can be used to allow the user to cancel running actions, to display errors / warning / regular output, only when errors occur or also during normal progress, etc. It provides facilities to get output from an RCommand directly, or you can manually submit output fragments via newOutput and newError.
 Note that this class is not a dialog in itself. Rather, a dialog is only created, if / when it is actually needed.
 TODO: This and RKwatch should use a common means of displaying the output to achieve a common look and feel.
+TODO: Remove in favor of RKInlineProgressControl ?
 
 @author Thomas Friedrichsmeier
 */
@@ -102,7 +103,12 @@ class QAction;
 
 class RKInlineProgressControl : public QObject {
 public:
-/** @param allow_cancel Whether the operation may be cancelled. If true, a cancel button will be added. If false, will also prevent the parent dialog from being closed. Default: true */
+/** A modernized and trimmed down version of RKProgressControl that can be shown as an overlay to an existing widget, instead of as a separate dialog.
+ *
+ *  The progress control self-destructs after it was closed (or after the last associated command has finished, if setAutoCloseWhenCommandsDone() ).
+ *  Thus, the basic usage rules are: Always create a new progress control for a new operation. Don't access after calling show(), and no need to delete.
+ *
+ *  @param allow_cancel Whether the operation may be cancelled. If true, a cancel button will be added. If false, will also prevent the parent dialog from being closed. */
 	RKInlineProgressControl(QWidget *display_area, bool allow_cancel);
 	~RKInlineProgressControl();
 	void addRCommand(RCommand *command);
