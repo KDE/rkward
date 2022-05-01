@@ -129,6 +129,7 @@ void RKRBackend::scheduleInterrupt () {
 
 void RKRBackend::interruptCommand (int command_id) {
 	RK_TRACE (RBACKEND);
+	RK_DEBUG(RBACKEND, DL_DEBUG, "Received interrupt request for command id %d", command_id);
 	QMutexLocker lock (&all_current_commands_mutex);
 
 	if (all_current_commands.isEmpty ()) return;
@@ -1043,7 +1044,7 @@ SEXP doCopyNoEval (SEXP fromname, SEXP fromenv, SEXP toname, SEXP toenv) {
 	return (R_NilValue);
 }
 
-SEXP doCaptureOutput (SEXP mode, SEXP capture_messages, SEXP capture_output, SEXP suppress_messages, SEXP suppress_output) {
+SEXP doCaptureOutput (SEXP mode, SEXP capture_messages, SEXP capture_output, SEXP suppress_messages, SEXP suppress_output, SEXP allow_nesting) {
 	RK_TRACE (RBACKEND);
 
 	if (RKRSupport::SEXPToInt (mode) == 1) {
@@ -1052,6 +1053,7 @@ SEXP doCaptureOutput (SEXP mode, SEXP capture_messages, SEXP capture_output, SEX
 		if (RKRSupport::SEXPToInt (capture_output)) cm |= RKROutputBuffer::RecordOutput;
 		if (RKRSupport::SEXPToInt (suppress_messages)) cm |= RKROutputBuffer::SuppressMessages;
 		if (RKRSupport::SEXPToInt (suppress_output)) cm |= RKROutputBuffer::SuppressOutput;
+		if (!RKRSupport::SEXPToInt (allow_nesting)) cm |= RKROutputBuffer::NoNesting;
 		RKRBackend::this_pointer->pushOutputCapture (cm);
 		return (R_NilValue);
 	} else {
@@ -1148,7 +1150,7 @@ bool RKRBackend::startR () {
 		{ "rk.show.files", (DL_FUNC) (void*) &doShowFiles, 5 },
 		{ "rk.dialog", (DL_FUNC) (void*) &doDialog, 7 },
 		{ "rk.update.locale", (DL_FUNC) (void*) &doUpdateLocale, 0 },
-		{ "rk.capture.output", (DL_FUNC) (void*) &doCaptureOutput, 5 },
+		{ "rk.capture.output", (DL_FUNC) (void*) &doCaptureOutput, 6 },
 		{ "rk.graphics.device", (DL_FUNC) (void*) &RKStartGraphicsDevice, 7},
 		{ "rk.graphics.device.resize", (DL_FUNC) (void*) &RKD_AdjustSize, 2},
 		{ 0, 0, 0 }

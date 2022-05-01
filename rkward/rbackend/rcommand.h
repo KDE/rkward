@@ -67,12 +67,15 @@ typedef QList<ROutput*> ROutputList;
 class RCommandNotifier : public QObject {
 	Q_OBJECT
 signals:
-	void commandFinished (RCommand *command);
+/** given command has finished (not necessarily successfully) */
+	void commandFinished(RCommand *command);
+	void commandOutput(RCommand *command, const ROutput* output);
 private:
 friend class RCommand;
-	RCommandNotifier ();
-	~RCommandNotifier ();
-	void emitFinished (RCommand *command) { emit commandFinished (command); };
+	RCommandNotifier();
+	~RCommandNotifier();
+	void emitFinished(RCommand *command) { emit commandFinished(command); };
+	void emitOutput(RCommand *command, const ROutput* output) { emit commandOutput(command, output); };
 };
 
 /** For introductory information on using RCommand, see \ref UsingTheInterfaceToR 

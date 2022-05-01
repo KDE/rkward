@@ -46,7 +46,7 @@ public:
 
 	~RKLoadLibsDialog ();
 
-	bool installPackages (const QStringList &packages, QString to_libloc, bool install_suggested_packages, const QStringList& repos);
+	bool installPackages (const QStringList &packages, QString to_libloc, bool install_suggested_packages);
 	bool removePackages (QStringList packages, QStringList from_liblocs);
 
 /** opens a modal RKLoadLibsDialog with the "Install new Packages" tab on front (To be used when a require () fails in the R backend
@@ -59,19 +59,12 @@ public:
 	void accept () override;
 	void reject () override;
 signals:
-	void downloadComplete ();
-	void installationComplete ();
 	void libraryLocationsChanged (const QStringList &liblocs);
-	void installationOutput (const QString &output);
-	void installationError (const QString &error);
 	void installedPackagesChanged ();
 protected:
 	void closeEvent (QCloseEvent *e) override;
 protected slots:
 	void childDeleted ();
-	void processExited (int exitCode, QProcess::ExitStatus exitStatus);
-	void installationProcessOutput ();
-	void installationProcessError ();
 	void automatedInstall (const QStringList &packages);
 	void slotPageChanged ();
 private:
@@ -137,7 +130,7 @@ private:
 class RKRPackageInstallationStatus : public QAbstractItemModel {
 	Q_OBJECT
 public:
-	explicit RKRPackageInstallationStatus (QObject* parent);
+	explicit RKRPackageInstallationStatus (QObject* parent, QWidget* diplay_area);
 	~RKRPackageInstallationStatus ();
 
 	void initialize (RCommandChain *chain);
@@ -186,7 +179,6 @@ public:
 	QModelIndex markAllUpdatesForInstallation ();
 /** reset all installation states to NoAction */
 	void clearStatus ();
-	QStringList currentRepositories () const { return current_repos; };
 	bool initialized () const { return _initialized; };
 private slots:
 	void statusCommandFinished (RCommand *command);
@@ -203,7 +195,7 @@ private:
 	QVector<bool> installed_has_update;
 	bool _initialized;
 
-	QStringList current_repos;
+	QWidget *display_area;
 };
 
 class RKRPackageInstallationStatusSortFilterModel : public QSortFilterProxyModel {
@@ -250,7 +242,7 @@ private:
 	RKDynamicSearchLine *filter_edit;
 	QCheckBox *rkward_packages_only;
 	PackageInstallParamsWidget *install_params;
-	
+
 	RKLoadLibsDialog *parent;
 };
 

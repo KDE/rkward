@@ -25,6 +25,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KLocalizedString>
 #include <kmessagebox.h>
 #include <kuser.h>
+#include <KMessageWidget>
 
 #include "../rbackend/rkrinterface.h"
 #include "../rbackend/rksessionvars.h"
@@ -235,15 +236,15 @@ bool RKLoadLibsDialog::removePackages (QStringList packages, QStringList from_li
 #ifdef Q_OS_WIN
 extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
-bool RKLoadLibsDialog::installPackages (const QStringList &packages, QString to_libloc, bool install_suggested_packages, const QStringList& repos) {
+bool RKLoadLibsDialog::installPackages (const QStringList &packages, QString to_libloc, bool install_suggested_packages) {
 	RK_TRACE (DIALOGS);
 
 	if (packages.isEmpty ()) return false;
 
 	bool as_root = false;
 	// It is ok, if the selected location does not yet exist. In order to know, whether we can write to it, we have to create it first.
-	QDir().mkpath (to_libloc);
-	QString altlibloc = RKSettingsModuleRPackages::addUserLibLocTo (library_locations).value (0);
+	QDir().mkpath(to_libloc);
+	QString altlibloc = RKSettingsModuleRPackages::addUserLibLocTo(library_locations).value(0);
 #ifdef Q_OS_WIN
 	extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 	qt_ntfs_permission_lookup++;
@@ -271,33 +272,18 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, QString to_
 		if (res == KMessageBox::Cancel) return false;
 	}
 
-	addLibraryLocation (to_libloc);
+	addLibraryLocation(to_libloc);
 
-	QString command_string = RKSettingsModuleRPackages::libLocsCommand();
-	command_string += "\ninstall.packages (c (\"" + packages.join ("\", \"") + "\")" + ", lib=" + RObject::rQuote (to_libloc);
+	QString command_string = "install.packages (c (\"" + packages.join("\", \"") + "\")" + ", lib=" + RObject::rQuote(to_libloc);
 	QString downloaddir = QDir (RKSettingsModuleGeneral::filesPath ()).filePath ("package_archive");
 	if (RKSettingsModuleRPackages::archivePackages ()) {
 		QDir (RKSettingsModuleGeneral::filesPath ()).mkdir ("package_archive");
 		command_string += ", destdir=" + RObject::rQuote (downloaddir);
 	}
 	if (install_suggested_packages) command_string += ", dependencies=TRUE";
-	command_string += ")\n";
+	command_string += ")";
 
-	QString repos_string = "options (repos= c(";
-	for (int i = 0; i < repos.count (); ++i) {
-		if (i) repos_string.append (", ");
-		repos_string.append (RObject::rQuote (repos[i]));
-	}
-	repos_string.append ("))\n");
-
-	repos_string.append (RKSettingsModuleRPackages::pkgTypeOption ());
-
-	if (as_root) {
-		KUser user;
-		command_string.append ("system (\"chown " + user.loginName() + ' ' + downloaddir + "/*\")\n");
-	}
-
-	runInstallationCommand (repos_string + command_string, as_root, i18n ("Please stand by while installing selected packages"), i18n ("Installing packages"));
+	runInstallationCommand (command_string, as_root, i18n ("Please stand by while installing selected packages"), i18n ("Installing packages"));
 
 	return true;
 }
@@ -305,84 +291,53 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, QString to_
 void RKLoadLibsDialog::runInstallationCommand (const QString& command, bool as_root, const QString& message, const QString& title) {
 	RK_TRACE (DIALOGS);
 
-	// TODO: won't work with some versions of GCC (which ones exactly)?
-//	QFile file (QDir (RKSettingsModuleGeneral::filesPath ()).filePath ("install_script.R"));
-// WORKAROUND:
-	QDir dir = RKSettingsModuleGeneral::filesPath ();
-	QFile file (dir.filePath ("install_script.R"));
-// WORKADOUND END
-	if (file.open (QIODevice::WriteOnly)) {
-		QTextStream stream (&file);
-		stream << command;
-		stream << "q ()\n";
-		file.close();
-	} else {
-		RK_ASSERT (false);
-	}
+	auto control = new RKInlineProgressControl(install_packages_widget, true);
+	control->setText(QString("<b>%1</b><br/>%2...").arg(title, message));
+	control->show();
 
-	QString call;
-	QStringList params;
-#ifdef Q_OS_WIN
-	RK_ASSERT (!as_root);
-	call = RKSessionVars::RBinary();
-#else
+	RCommand *rcommand;
 	if (as_root) {
-		call = QStandardPaths::findExecutable ("kdesu");
-		if (call.isEmpty ()) call = QStandardPaths::findExecutable ("kdesudo");
-		params << "-t" << "--" << RKSessionVars::RBinary();
+		QStringList libexecpath(LIBEXECDIR "/kf5");
+		libexecpath << QString(LIBEXECDIR "/kf6");
+		QString call = QStandardPaths::findExecutable("kdesu");
+		if (call.isEmpty()) call = QStandardPaths::findExecutable("kdesu", libexecpath);
+		if (call.isEmpty ()) call = QStandardPaths::findExecutable("kdesudo");
+		if (call.isEmpty ()) call = QStandardPaths::findExecutable("kdesudo", libexecpath);
+		if (call.isEmpty()) {
+			KMessageBox::sorry(this, i18n("Neither kdesu nor kdesudo could be found. To install as root, please install one of these packages."), i18n("kdesu not found"));
+			return;
+		}
+
+		QStringList call_with_params(call);
+		call_with_params << "-t" << "--" << RKSessionVars::RBinary() << "--no-save" << "--no-restore" << "--file=";
+		KUser user;
+		QString aux_command = QString("local({ "
+			"install_script <- tempfile(\".R\"); f <- file(install_script, \"w\")\n"
+			"repos <- options()$repos\n"
+			"pkgType <- options()$pkgType\n"
+			"libPaths <- .libPaths()\n"
+			"dump(c(\"repos\", \"pkgType\", \"libPaths\"), f)\n"
+			"cat(\"\\n\", file=f, append=TRUE)\n"
+			"cat(") + RObject::rQuote("options(\"repos\"=repos, \"pkgType\"=pkgType)\n") + QString(", file=f, append=TRUE)\n"
+			"cat(\".libPaths(libPaths)\\n\"") + QString(", file=f, append=TRUE)\n"
+			"cat(") + RObject::rQuote(command + "\n") + QString(", file=f, append=TRUE)\n"
+			"cat(") + RObject::rQuote("system(\"chown " + user.loginName() + ' ' + QDir(RKSettingsModuleGeneral::filesPath()).filePath("package_archive") + "/*\")") + QString(", file=f, append=TRUE)\n"
+			"cat(\"\\n\", file=f, append=TRUE)\n"
+			"close(f)\n"
+			"system(paste0(" + RObject::rQuote(call_with_params.join(' ')) + ", install_script))\n"
+			"unlink(install_script)\n"
+		"})");
+
+		rcommand = new RCommand(aux_command, RCommand::App);
 	} else {
-		call = RKSessionVars::RBinary();
-	}
-#endif
-	params << "--no-save" << "--no-restore" << "--file=" + file.fileName ();
-
-	installation_process = new QProcess ();
-	installation_process->setProcessChannelMode (QProcess::SeparateChannels);
-
-	connect (installation_process, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), this, &RKLoadLibsDialog::processExited);
-	connect (installation_process, &QProcess::readyReadStandardOutput, this, &RKLoadLibsDialog::installationProcessOutput);
-	connect (installation_process, &QProcess::readyReadStandardError, this, &RKLoadLibsDialog::installationProcessError);
-
-	RKProgressControl *installation_progress = new RKProgressControl (this, message, title, RKProgressControl::CancellableProgress);
-	connect (this, &RKLoadLibsDialog::installationComplete, installation_progress, &RKProgressControl::done);
-	connect (this, &RKLoadLibsDialog::installationOutput, installation_progress, static_cast<void (RKProgressControl::*)(const QString&)>(&RKProgressControl::newOutput));
-	connect (this, &RKLoadLibsDialog::installationError, installation_progress, &RKProgressControl::newError);
-
-	installation_process->start (call, params, QIODevice::ReadWrite | QIODevice::Unbuffered);
-
-	if (!installation_progress->doModal (true)) {
-		installation_process->kill ();
-		installation_process->waitForFinished (5000);
+		rcommand = new RCommand(command, RCommand::App);
 	}
 
-	file.remove ();
-	delete installation_process;
-	installation_process = 0;
-	emit installedPackagesChanged();
-}
-
-void RKLoadLibsDialog::installationProcessOutput () {
-	RK_TRACE (DIALOGS);
-	RK_ASSERT (installation_process);
-
-	emit installationOutput(QString::fromLocal8Bit(installation_process->readAllStandardOutput()));
-}
-
-void RKLoadLibsDialog::installationProcessError () {
-	RK_TRACE (DIALOGS);
-	RK_ASSERT (installation_process);
-
-	emit installationError(QString::fromLocal8Bit(installation_process->readAllStandardError()));
-}
-
-void RKLoadLibsDialog::processExited (int exitCode, QProcess::ExitStatus exitStatus) {
-	RK_TRACE (DIALOGS);
-
-	if (exitCode || (exitStatus != QProcess::NormalExit)) {
-		emit installationError('\n' + i18n ("Installation process died with exit code %1", exitCode));
-	}
-
-	emit installationComplete();
+	control->addRCommand(rcommand);
+	RInterface::issueCommand(rcommand, chain);
+	connect(rcommand->notifier(), &RCommandNotifier::commandFinished, this, [this]() {
+		emit installedPackagesChanged();
+	});
 }
 
 ////////////////////// LoadUnloadWidget ////////////////////////////
@@ -655,8 +610,8 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidge
 	hbox->addLayout (vbox);
 	hbox->setStretchFactor (vbox, 2);
 
-	packages_status = new RKRPackageInstallationStatus (this);
 	packages_view = new QTreeView (this);
+	packages_status = new RKRPackageInstallationStatus(this, packages_view);
 	packages_view->setSortingEnabled (true);
 	model = new RKRPackageInstallationStatusSortFilterModel (this);
 	model->setSourceModel (packages_status);
@@ -669,7 +624,6 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidge
 	connect (packages_view, &QTreeView::clicked, this, &InstallPackagesWidget::rowClicked);
 	packages_view->setRootIsDecorated (false);
 	packages_view->setIndentation (0);
-	packages_view->setEnabled (false);
 	packages_view->setMinimumHeight (packages_view->sizeHintForRow (0) * 15);	// force a decent height
 	packages_view->setMinimumWidth (packages_view->fontMetrics ().width ("This is to force a sensible min width for the packages view (empty on construction)"));
 	vbox->addWidget (packages_view);
@@ -727,7 +681,6 @@ void InstallPackagesWidget::initialize () {
 	RK_TRACE (DIALOGS);
 
 	packages_status->initialize (parent->chain);
-	packages_view->setEnabled (true);
 	// Force a good width for the icon column, particularly for MacOS X.
 	packages_view->header ()->resizeSection (0, packages_view->sizeHintForIndex (model->index (0, 0, model->index (RKRPackageInstallationStatus::NewPackages, 0, QModelIndex ()))).width () + packages_view->indentation ());
 	for (int i = 1; i <= RKRPackageInstallationStatus::PackageName; ++i) {
@@ -761,18 +714,22 @@ void InstallPackagesWidget::filterChanged () {
 void InstallPackagesWidget::trySelectPackages (const QStringList &package_names) {
 	RK_TRACE (DIALOGS);
 
-	QStringList failed_names;
-	for (int i = 0; i < package_names.size(); ++i) {
-		QModelIndex index = packages_status->markPackageForInstallation(package_names[i]);
-		if (!index.isValid()) {
-			failed_names.append(package_names[i]);
-		} else {
-			packages_view->scrollTo(model->mapFromSource(index));
+	RCommand *dummy = new RCommand(QString(), RCommand::EmptyCommand); // dummy command will finish, after initialization is complete
+	connect(dummy->notifier(), &RCommandNotifier::commandFinished, this, [this, package_names]() {
+		QStringList failed_names;
+		for (int i = 0; i < package_names.size(); ++i) {
+			QModelIndex index = packages_status->markPackageForInstallation(package_names[i]);
+			if (!index.isValid()) {
+				failed_names.append(package_names[i]);
+			} else {
+				packages_view->scrollTo(model->mapFromSource(index));
+			}
 		}
-	}
-	if (!failed_names.isEmpty()) {
-		KMessageBox::sorry (0, i18n ("The following package(s) requested by the backend have not been found in the package repositories: \"%1\". Maybe the package name was mis-spelled. Or maybe you need to add additional repositories via the \"Configure Repositories\" button.", failed_names.join("\", \"")), i18n ("Package not available"));
-	}
+		if (!failed_names.isEmpty()) {
+			KMessageBox::sorry (0, i18n ("The following package(s) requested by the backend have not been found in the package repositories: \"%1\". Maybe the package name was mis-spelled. Or maybe you need to add additional repositories via the \"Configure Repositories\" button.", failed_names.join("\", \"")), i18n ("Package not available"));
+		}
+	});
+	RInterface::issueCommand(dummy, parent->chain);
 }
 
 void InstallPackagesWidget::markAllUpdates () {
@@ -799,7 +756,7 @@ void InstallPackagesWidget::doInstall (bool refresh) {
 	if (!install.isEmpty ()) {
 		QString dest = install_params->installLocation ();
 		if (!dest.isEmpty ()) {
-			changed |= parent->installPackages (install, dest, install_params->installSuggestedPackages (), packages_status->currentRepositories ());
+			changed |= parent->installPackages (install, dest, install_params->installSuggestedPackages ());
 		}
 	}
 
@@ -878,7 +835,7 @@ void PackageInstallParamsWidget::liblocsChanged (const QStringList &newlist) {
 
 /////////// RKRPackageInstallationStatus /////////////////
 
-RKRPackageInstallationStatus::RKRPackageInstallationStatus (QObject* parent) : QAbstractItemModel (parent) {
+RKRPackageInstallationStatus::RKRPackageInstallationStatus (QObject* parent, QWidget* display_area) : QAbstractItemModel (parent), display_area(display_area) {
 	RK_TRACE (DIALOGS);
 	_initialized = false;
 }
@@ -932,11 +889,13 @@ void RKRPackageInstallationStatus::initialize (RCommandChain *chain) {
 	_initialized = true;	// will be re-set to false, should the command fail / be cancelled
 
 	RCommand *command = new RCommand (".rk.get.package.installation.state ()", RCommand::App | RCommand::GetStructuredData);
-	connect (command->notifier (), &RCommandNotifier::commandFinished, this, &RKRPackageInstallationStatus::statusCommandFinished);
-	RKProgressControl *control = new RKProgressControl (this, i18n ("<p>Please stand by while searching for installed and available packages.</p><p><strong>Note:</strong> This requires a working internet connection, and may take some time, esp. if one or more repositories are temporarily unavailable.</p>"), i18n ("Searching for packages"), RKProgressControl::CancellableProgress | RKProgressControl::AutoCancelCommands);
-	control->addRCommand (command, true);
-	RInterface::issueCommand (command, chain);
-	control->doModal (true);
+	connect(command->notifier(), &RCommandNotifier::commandFinished, this, &RKRPackageInstallationStatus::statusCommandFinished);
+	RKInlineProgressControl *control = new RKInlineProgressControl(display_area, true);
+	control->setText(i18n("<p>Please stand by while searching for installed and available packages.</p><p><strong>Note:</strong> This requires a working internet connection, and may take some time, esp. if one or more repositories are temporarily unavailable.</p>"));
+	control->addRCommand(command);
+	control->setAutoCloseWhenCommandsDone(true);
+	RInterface::issueCommand(command, chain);
+	control->show(100);
 }
 
 void RKRPackageInstallationStatus::statusCommandFinished (RCommand *command) {
@@ -974,8 +933,6 @@ void RKRPackageInstallationStatus::statusCommandFinished (RCommand *command) {
 	for (int i = updateable_packages_in_installed.count () - 1; i >= 0; --i) {
 		installed_has_update[updateable_packages_in_installed[i]] = true;
 	}
-
-	current_repos = top[4]->stringVector ();
 
 	clearStatus ();
 }
