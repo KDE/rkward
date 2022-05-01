@@ -84,7 +84,7 @@
     <screenshot type="default">
       <caption>Main window, with data editor, object browser, interactive R console, and further tool windows.</caption>
       <caption xml:lang="ca">Finestra principal, amb un editor de dades, un navegador d'objectes, una consola interactiva de l'R i altres finestres d'eines.</caption>
-      <caption xml:lang="ca-valencia">Finestra principal, amb un editor de dades, un navegador d'objectes, una consola interactiva d'R i altres finestres d'eines.</caption>
+      <caption xml:lang="ca-valencia">Finestra principal, amb un editor de dades, un navegador d'objectes, una consola interactiva d'R i atres finestres d'eines.</caption>
       <caption xml:lang="en-GB">Main window, with data editor, object browser, interactive R console, and further tool windows.</caption>
       <caption xml:lang="es">Ventana principal, con el editor de datos, el navegador de objetos, la consola interactiva de R y otras ventanas con herramientas adicionales.</caption>
       <caption xml:lang="fr">Fenêtre principale avec l'éditeur de données, le navigateur d'objets, la console interactive de R et d'autres fenêtres d'outils.</caption>
