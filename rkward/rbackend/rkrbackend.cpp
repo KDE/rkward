@@ -129,6 +129,7 @@ void RKRBackend::scheduleInterrupt () {
 
 void RKRBackend::interruptCommand (int command_id) {
 	RK_TRACE (RBACKEND);
+	RK_DEBUG(RBACKEND, DL_DEBUG, "Received interrupt request for command id %d", command_id);
 	QMutexLocker lock (&all_current_commands_mutex);
 
 	if (all_current_commands.isEmpty ()) return;

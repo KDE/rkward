@@ -109,13 +109,15 @@ public:
 	void setAutoCloseWhenCommandsDone(bool _autoclose) { autoclose = _autoclose; };
 	void show(int delay_ms=0);
 	KMessageWidget *messageWidget() { return message_widget; };
+private:
 	void addOutput(const QString &output, bool is_error_warning);
 	void done();
-private:
 	void setCloseAction(const QString &label);
 	bool eventFilter(QObject *, QEvent *e) override;
+	void cancelAndClose();
 	bool autoclose;
 	bool allow_cancel;
+	bool is_done;
 	QWidget* wrapper;
 	QWidget* display_area;
 	KMessageWidget *message_widget;

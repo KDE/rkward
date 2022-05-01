@@ -46,7 +46,7 @@ public:
 
 	~RKLoadLibsDialog ();
 
-	bool installPackages (const QStringList &packages, QString to_libloc, bool install_suggested_packages, const QStringList& repos);
+	bool installPackages (const QStringList &packages, QString to_libloc, bool install_suggested_packages);
 	bool removePackages (QStringList packages, QStringList from_liblocs);
 
 /** opens a modal RKLoadLibsDialog with the "Install new Packages" tab on front (To be used when a require () fails in the R backend
@@ -179,7 +179,6 @@ public:
 	QModelIndex markAllUpdatesForInstallation ();
 /** reset all installation states to NoAction */
 	void clearStatus ();
-	QStringList currentRepositories () const { return current_repos; };
 	bool initialized () const { return _initialized; };
 private slots:
 	void statusCommandFinished (RCommand *command);
@@ -196,7 +195,6 @@ private:
 	QVector<bool> installed_has_update;
 	bool _initialized;
 
-	QStringList current_repos;
 	QWidget *display_area;
 };
 

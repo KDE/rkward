@@ -376,11 +376,13 @@ void RKProgressControlDialog::closeEvent (QCloseEvent *e) {
 }
 
 #include <KMessageWidget>
+#include <KMessageBox>
 #include <KStandardAction>
 
 RKInlineProgressControl::RKInlineProgressControl(QWidget *display_area, bool allow_cancel) : QObject(display_area),
 						autoclose(false),
 						allow_cancel(allow_cancel),
+						is_done(false),
 						display_area(display_area),
 						prevent_close_message(nullptr),
 						close_action(nullptr) {
@@ -407,21 +409,27 @@ RKInlineProgressControl::RKInlineProgressControl(QWidget *display_area, bool all
 RKInlineProgressControl::~RKInlineProgressControl() {
 	RK_TRACE(MISC);
 
-	display_area->window()->removeEventFilter(this);
 	delete wrapper;
-	for (int i = 0; i < unfinished_commands.size(); ++i) {
-		RInterface::instance()->cancelCommand(unfinished_commands[i]);
-	}
 }
 
 void RKInlineProgressControl::setCloseAction(const QString &label) {
 	RK_TRACE(MISC);
 
 	if (!close_action) {
-		close_action = KStandardAction::create(KStandardAction::Close, this, &QObject::deleteLater, this);
+		close_action = KStandardAction::create(KStandardAction::Close, this, &RKInlineProgressControl::cancelAndClose, this);
 		message_widget->addAction(close_action);
 	}
 	close_action->setText(label);
+}
+
+void RKInlineProgressControl::cancelAndClose() {
+	RK_TRACE(MISC);
+
+	display_area->window()->removeEventFilter(this);
+	for (int i = 0; i < unfinished_commands.size(); ++i) {
+		RInterface::instance()->cancelCommand(unfinished_commands[i]);
+	}
+	deleteLater();
 }
 
 void RKInlineProgressControl::addRCommand(RCommand *command) {
@@ -459,6 +467,7 @@ void RKInlineProgressControl::done() {
 	} else {
 		setCloseAction(i18n("Close"));
 	}
+	is_done = true;
 }
 
 void RKInlineProgressControl::show(int delay_ms) {
@@ -478,9 +487,26 @@ bool RKInlineProgressControl::eventFilter(QObject *, QEvent *e) {
 		});
 		return false;
 	}
-	if (!allow_cancel && e->type() == QEvent::Close) {
+	if ((e->type() == QEvent::Close) && !is_done) {
+		if (allow_cancel) {
+			bool ignore = (KMessageBox::warningContinueCancel(display_area, i18n("Closing this window will cancel the current operation. Are you sure?"), i18n("Cancel operation"), KGuiItem(i18n("Keep waiting")), KGuiItem(i18n("Cancel && Close"))) == KMessageBox::Continue);
+			if (ignore) {
+				e->ignore();
+				return true;
+			}
+			cancelAndClose();
+			return false;
+		}
 		// TODO
-		prevent_close_message = new KMessageWidget(i18n("An operation is still running, please wait."));
+		if (!prevent_close_message) {
+			prevent_close_message = new KMessageWidget(i18n("An operation is still running, please wait."), display_area->window());
+		}
+		QSize s = prevent_close_message->sizeHint();
+		prevent_close_message->resize(display_area->window()->width(), s.height());
+		prevent_close_message->setMessageType(KMessageWidget::Error);
+		prevent_close_message->animatedShow();
+		QTimer::singleShot(5000, prevent_close_message, &KMessageWidget::animatedHide);
+		e->ignore();
 		return true;
 	}
 	return false;

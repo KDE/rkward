@@ -236,15 +236,15 @@ bool RKLoadLibsDialog::removePackages (QStringList packages, QStringList from_li
 #ifdef Q_OS_WIN
 extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
-bool RKLoadLibsDialog::installPackages (const QStringList &packages, QString to_libloc, bool install_suggested_packages, const QStringList& repos) {
+bool RKLoadLibsDialog::installPackages (const QStringList &packages, QString to_libloc, bool install_suggested_packages) {
 	RK_TRACE (DIALOGS);
 
 	if (packages.isEmpty ()) return false;
 
 	bool as_root = false;
 	// It is ok, if the selected location does not yet exist. In order to know, whether we can write to it, we have to create it first.
-	QDir().mkpath (to_libloc);
-	QString altlibloc = RKSettingsModuleRPackages::addUserLibLocTo (library_locations).value (0);
+	QDir().mkpath(to_libloc);
+	QString altlibloc = RKSettingsModuleRPackages::addUserLibLocTo(library_locations).value(0);
 #ifdef Q_OS_WIN
 	extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 	qt_ntfs_permission_lookup++;
@@ -272,49 +272,24 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, QString to_
 		if (res == KMessageBox::Cancel) return false;
 	}
 
-	addLibraryLocation (to_libloc);
+	addLibraryLocation(to_libloc);
 
-	QString command_string = RKSettingsModuleRPackages::libLocsCommand();
-	command_string += "\ninstall.packages (c (\"" + packages.join ("\", \"") + "\")" + ", lib=" + RObject::rQuote (to_libloc);
+	QString command_string = "install.packages (c (\"" + packages.join("\", \"") + "\")" + ", lib=" + RObject::rQuote(to_libloc);
 	QString downloaddir = QDir (RKSettingsModuleGeneral::filesPath ()).filePath ("package_archive");
 	if (RKSettingsModuleRPackages::archivePackages ()) {
 		QDir (RKSettingsModuleGeneral::filesPath ()).mkdir ("package_archive");
 		command_string += ", destdir=" + RObject::rQuote (downloaddir);
 	}
 	if (install_suggested_packages) command_string += ", dependencies=TRUE";
-	command_string += ")\n";
+	command_string += ")";
 
-	QString repos_string = "options (repos= c(";
-	for (int i = 0; i < repos.count (); ++i) {
-		if (i) repos_string.append (", ");
-		repos_string.append (RObject::rQuote (repos[i]));
-	}
-	repos_string.append ("))\n");
-
-	repos_string.append (RKSettingsModuleRPackages::pkgTypeOption ());
-
-	if (as_root) {
-		KUser user;
-		command_string.append ("system (\"chown " + user.loginName() + ' ' + downloaddir + "/*\")\n");
-	}
-
-	runInstallationCommand (repos_string + command_string, as_root, i18n ("Please stand by while installing selected packages"), i18n ("Installing packages"));
+	runInstallationCommand (command_string, as_root, i18n ("Please stand by while installing selected packages"), i18n ("Installing packages"));
 
 	return true;
 }
 
 void RKLoadLibsDialog::runInstallationCommand (const QString& command, bool as_root, const QString& message, const QString& title) {
 	RK_TRACE (DIALOGS);
-
-	QFile file(QDir(RKSettingsModuleGeneral::filesPath()).filePath("install_script.R"));
-	if (file.open (QIODevice::WriteOnly)) {
-		QTextStream stream (&file);
-		stream << command;
-		if (as_root) stream << "q()\n";
-		file.close();
-	} else {
-		RK_ASSERT (false);
-	}
 
 	auto control = new RKInlineProgressControl(install_packages_widget, true);
 	control->messageWidget()->setText(QString("<b>%1</b><p>%2</p>").arg(title, message));
@@ -330,25 +305,39 @@ void RKLoadLibsDialog::runInstallationCommand (const QString& command, bool as_r
 		if (call.isEmpty ()) call = QStandardPaths::findExecutable("kdesudo", libexecpath);
 		if (call.isEmpty()) {
 			KMessageBox::sorry(this, i18n("Neither kdesu nor kdesudo could be found. To install as root, please install one of these packages."), i18n("kdesu not found"));
-			file.remove();
 			return;
 		}
+
 		QStringList call_with_params(call);
-		call_with_params << "-t" << "--" << RKSessionVars::RBinary() << "--no-save" << "--no-restore" << "--file=" + file.fileName();
-		rcommand = new RCommand(QString("system(%1)").arg(RObject::rQuote(call_with_params.join(" "))), RCommand::App);
+		call_with_params << "-t" << "--" << RKSessionVars::RBinary() << "--no-save" << "--no-restore" << "--file=";
+		KUser user;
+		QString aux_command = QString("local({ "
+			"install_script <- tempfile(\".R\"); f <- file(install_script, \"w\")\n"
+			"repos <- options()$repos\n"
+			"pkgType <- options()$pkgType\n"
+			"libPaths <- .libPaths()\n"
+			"dump(c(\"repos\", \"pkgType\", \"libPaths\"), f)\n"
+			"cat(\"\\n\", file=f, append=TRUE)\n"
+			"cat(") + RObject::rQuote("options(\"repos\"=repos, \"pkgType\"=pkgType)\n") + QString(", file=f, append=TRUE)\n"
+			"cat(\".libPaths(libPaths)\\n\"") + QString(", file=f, append=TRUE)\n"
+			"cat(") + RObject::rQuote(command + "\n") + QString(", file=f, append=TRUE)\n"
+			"cat(") + RObject::rQuote("system(\"chown " + user.loginName() + ' ' + QDir(RKSettingsModuleGeneral::filesPath()).filePath("package_archive") + "/*\")") + QString(", file=f, append=TRUE)\n"
+			"cat(\"\\n\", file=f, append=TRUE)\n"
+			"close(f)\n"
+			"system(paste0(" + RObject::rQuote(call_with_params.join(' ')) + ", install_script))\n"
+			"unlink(install_script)\n"
+		"})");
+
+		rcommand = new RCommand(aux_command, RCommand::App);
 	} else {
-		rcommand = new RCommand(QString("source(%1, local=new.env())").arg(RObject::rQuote(file.fileName())), RCommand::App);
-	}
-	control->addRCommand(rcommand);
-	RInterface::issueCommand(rcommand, chain);
-	bool done = false;
-	connect(rcommand->notifier(), &RCommandNotifier::commandFinished, this, [&done]() { done = true; });
-	while (!done) {
-		QApplication::processEvents();
+		rcommand = new RCommand(command, RCommand::App);
 	}
 
-	file.remove();
-	emit installedPackagesChanged();
+	control->addRCommand(rcommand);
+	RInterface::issueCommand(rcommand, chain);
+	connect(rcommand->notifier(), &RCommandNotifier::commandFinished, this, [this]() {
+		emit installedPackagesChanged();
+	});
 }
 
 ////////////////////// LoadUnloadWidget ////////////////////////////
@@ -763,7 +752,7 @@ void InstallPackagesWidget::doInstall (bool refresh) {
 	if (!install.isEmpty ()) {
 		QString dest = install_params->installLocation ();
 		if (!dest.isEmpty ()) {
-			changed |= parent->installPackages (install, dest, install_params->installSuggestedPackages (), packages_status->currentRepositories ());
+			changed |= parent->installPackages (install, dest, install_params->installSuggestedPackages ());
 		}
 	}
 
@@ -940,8 +929,6 @@ void RKRPackageInstallationStatus::statusCommandFinished (RCommand *command) {
 	for (int i = updateable_packages_in_installed.count () - 1; i >= 0; --i) {
 		installed_has_update[updateable_packages_in_installed[i]] = true;
 	}
-
-	current_repos = top[4]->stringVector ();
 
 	clearStatus ();
 }
