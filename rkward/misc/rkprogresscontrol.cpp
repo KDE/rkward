@@ -379,10 +379,13 @@ void RKProgressControlDialog::closeEvent (QCloseEvent *e) {
 #include <KMessageBox>
 #include <KStandardAction>
 
+#include "rkstandardicons.h"
+
 RKInlineProgressControl::RKInlineProgressControl(QWidget *display_area, bool allow_cancel) : QObject(display_area),
 						autoclose(false),
 						allow_cancel(allow_cancel),
 						is_done(false),
+						any_failed(false),
 						display_area(display_area),
 						prevent_close_message(nullptr),
 						close_action(nullptr) {
@@ -438,8 +441,7 @@ void RKInlineProgressControl::addRCommand(RCommand *command) {
 	connect(command->notifier(), &RCommandNotifier::commandFinished, this, [this](RCommand *c) {
 		unfinished_commands.removeAll(c);
 		if (c->failed()) {
-			autoclose = false;
-			message_widget->setMessageType(KMessageWidget::Error);
+			any_failed = true;
 		}
 		if (unfinished_commands.isEmpty()) {
 			done();
@@ -462,12 +464,22 @@ void RKInlineProgressControl::addOutput(const QString& output, bool is_error_war
 
 void RKInlineProgressControl::done() {
 	RK_TRACE(MISC);
-	if (autoclose) {
+	if (autoclose && !any_failed) {
 		deleteLater();
 	} else {
+		message_widget->setMessageType(any_failed ? KMessageWidget::Error : KMessageWidget::Positive);
+		message_widget->setText(text + ' ' + (any_failed ? i18n("<b>An error occurred</b> (see below for details)") : i18n("<b>Done</b>")));
+		message_widget->setIcon(QIcon::fromTheme(any_failed ? "emblem-error" : "emblem-success"));
+		message_widget->animatedShow(); // to force an update of geometry
 		setCloseAction(i18n("Close"));
 	}
 	is_done = true;
+}
+
+void RKInlineProgressControl::setText(const QString& _text){
+	RK_TRACE(MISC);
+	text = _text;
+	message_widget->setText(text);
 }
 
 void RKInlineProgressControl::show(int delay_ms) {
@@ -477,6 +489,20 @@ void RKInlineProgressControl::show(int delay_ms) {
 	} else {
 		wrapper->show();
 	}
+	animation_step = 0;
+	message_widget->setIcon(RKStandardIcons::getIcon(RKStandardIcons::RKWardIcon));
+	auto t = new QTimer(this);
+	t->setInterval(750);
+	connect(t, &QTimer::timeout, this, [this]() {
+		if (is_done) return;
+		animation_step = (animation_step + 1) % 2;
+		if (animation_step) {
+			message_widget->setIcon(QIcon::fromTheme("computer-symbolic"));
+		} else {
+			message_widget->setIcon(RKStandardIcons::getIcon(RKStandardIcons::RKWardIcon));
+		}
+	});
+	t->start();
 }
 
 bool RKInlineProgressControl::eventFilter(QObject *, QEvent *e) {

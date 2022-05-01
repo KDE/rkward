@@ -242,7 +242,7 @@ private:
 	RKDynamicSearchLine *filter_edit;
 	QCheckBox *rkward_packages_only;
 	PackageInstallParamsWidget *install_params;
-	
+
 	RKLoadLibsDialog *parent;
 };
 

@@ -108,7 +108,7 @@ public:
 	void addRCommand(RCommand *command);
 	void setAutoCloseWhenCommandsDone(bool _autoclose) { autoclose = _autoclose; };
 	void show(int delay_ms=0);
-	KMessageWidget *messageWidget() { return message_widget; };
+	void setText(const QString &text);
 private:
 	void addOutput(const QString &output, bool is_error_warning);
 	void done();
@@ -118,6 +118,8 @@ private:
 	bool autoclose;
 	bool allow_cancel;
 	bool is_done;
+	bool any_failed;
+	int animation_step;
 	QWidget* wrapper;
 	QWidget* display_area;
 	KMessageWidget *message_widget;
@@ -125,6 +127,7 @@ private:
 	QTextEdit *output_display;
 	QList<RCommand*> unfinished_commands;
 	QAction* close_action;
+	QString text;
 };
 
 #endif

@@ -292,7 +292,7 @@ void RKLoadLibsDialog::runInstallationCommand (const QString& command, bool as_r
 	RK_TRACE (DIALOGS);
 
 	auto control = new RKInlineProgressControl(install_packages_widget, true);
-	control->messageWidget()->setText(QString("<b>%1</b><p>%2</p>").arg(title, message));
+	control->setText(QString("<b>%1</b><br/>%2...").arg(title, message));
 	control->show();
 
 	RCommand *rcommand;
@@ -887,7 +887,7 @@ void RKRPackageInstallationStatus::initialize (RCommandChain *chain) {
 	RCommand *command = new RCommand (".rk.get.package.installation.state ()", RCommand::App | RCommand::GetStructuredData);
 	connect(command->notifier(), &RCommandNotifier::commandFinished, this, &RKRPackageInstallationStatus::statusCommandFinished);
 	RKInlineProgressControl *control = new RKInlineProgressControl(display_area, true);
-	control->messageWidget()->setText(i18n("<p>Please stand by while searching for installed and available packages.</p><p><strong>Note:</strong> This requires a working internet connection, and may take some time, esp. if one or more repositories are temporarily unavailable.</p>"));
+	control->setText(i18n("<p>Please stand by while searching for installed and available packages.</p><p><strong>Note:</strong> This requires a working internet connection, and may take some time, esp. if one or more repositories are temporarily unavailable.</p>"));
 	control->addRCommand(command);
 	control->setAutoCloseWhenCommandsDone(true);
 	RInterface::issueCommand(command, chain);
