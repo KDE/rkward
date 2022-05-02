@@ -17,8 +17,8 @@
 
 	<section title="Useful settings" id="settings">
 		<ul>
-	<li><link href="rkward://settings/addons">RKWard Add-ons</link></li>
-	<li><link href="rkward://actions/rpackage_install">Install R packages</link></li>
+	<li><link href="rkward://actions/rpackage_install">Install R and RKWard packages</link></li>
+	<li><link href="rkward://settings/addons">Further add-on related settings</link></li>
 	<li><link href="rkward://settings/general">Startup options</link> (including this page)</li>
 		</ul>
 	</section>
