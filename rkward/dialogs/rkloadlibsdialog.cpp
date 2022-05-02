@@ -575,7 +575,7 @@ public:
 	}
 	void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override {
 		QStyledItemDelegate::paint(painter, option, index);
-		if ((!index.parent().isValid()) && (index.row() == RKRPackageInstallationStatus::UpdateablePackages)) {
+		if ((!index.parent().isValid()) && (index.data(Qt::UserRole) == RKRPackageInstallationStatus::UpdateablePackages)) {
 			QStyleOptionButton button;
 			QRect r = option.rect; // rect of the entire cell
 			r.setLeft(r.left() + r.width()/2); // for simplicity, use half the width for the button
@@ -586,7 +586,7 @@ public:
 		}
 	}
 	bool editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index) override {
-		if ((!index.parent().isValid()) && (index.row() == RKRPackageInstallationStatus::UpdateablePackages)) {
+		if ((!index.parent().isValid()) && (index.data(Qt::UserRole) == RKRPackageInstallationStatus::UpdateablePackages)) {
 			if ((event->type() == QEvent::MouseButtonRelease) || (event->type() == QEvent::MouseButtonPress)) {
 				QMouseEvent *e = (QMouseEvent *) event;
 				QRect r = option.rect; // rect of the entire cell
@@ -970,6 +970,7 @@ QVariant RKRPackageInstallationStatus::data (const QModelIndex &index, int role)
 		if (row == UpdateablePackages) {
 			if (role == Qt::DisplayRole) return QVariant (i18n ("Updateable Packages"));
 			if (role == Qt::ToolTipRole) return QVariant (i18n ("Packages for which an update is available. This may include packages which were merely built against a newer version of R."));
+			if (role == Qt::UserRole) return UpdateablePackages;
 		} else if (row == NewPackages) {
 			if (role == Qt::DisplayRole) return QVariant (i18n ("New Packages"));
 			if (role == Qt::ToolTipRole) return QVariant (i18n ("Packages which are available for installation, but which are not currently installed."));
