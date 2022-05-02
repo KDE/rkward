@@ -673,12 +673,30 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : RKLoad
 	connect(configure_repos_button, &QPushButton::clicked, this, &InstallPackagesWidget::configureRepositories);
 	settingsbox->addWidget(configure_repos_button);
 
+	status_label = new QLabel();
+	vbox->addWidget(status_label);
+	status_label->hide();
+
 	connect(parent, &RKLoadLibsDialog::installedPackagesChanged, this, &InstallPackagesWidget::initialize);
-	connect(packages_status, &RKRPackageInstallationStatus::changed, this, &InstallPackagesWidget::setChanged);
+	connect(packages_status, &RKRPackageInstallationStatus::changed, this, &InstallPackagesWidget::updateStatus);
 }
 
 InstallPackagesWidget::~InstallPackagesWidget () {
 	RK_TRACE (DIALOGS);
+}
+
+void InstallPackagesWidget::updateStatus() {
+	RK_TRACE (DIALOGS);
+	QStringList dummy1, dummy2, dummy3;
+	packages_status->packagesToRemove(&dummy1, &dummy2);
+	dummy3 = packages_status->packagesToInstall();
+	if (dummy3.isEmpty() && dummy1.isEmpty()) status_label->hide();
+	else {
+		// TODO: Obviously, it would be nice to spell out, how many dependencies will be installed
+		status_label->setText(i18n("<b>Install %1 packages (plus dependencies), remove %2 packages</b>", dummy3.size(), dummy1.size()));
+		status_label->show();
+		setChanged();
+	}
 }
 
 void InstallPackagesWidget::activated () {
@@ -710,6 +728,7 @@ void InstallPackagesWidget::initialize () {
 		}
 		window()->raise(); // needed on Mac, otherwise the dialog may go hiding behind the main app window, after the progress control window closes, for some reason
 		clearChanged();
+		updateStatus();
 	});
 	RInterface::issueCommand(dummy, parent->chain);
 }

@@ -27,9 +27,9 @@ class QWidget;
 class QCloseEvent;
 class RCommandChain;
 class QCheckBox;
-class PackageInstallParamsWidget;
 class InstallPackagesWidget;
 class RKDynamicSearchLine;
+class QLabel;
 
 class RKLoadLibsDialogPage : public QWidget {
 	Q_OBJECT
@@ -245,6 +245,7 @@ public slots:
 	void rowClicked (const QModelIndex& row);
 private:
 	void doInstall();
+	void updateStatus();
 	QTreeView *packages_view;
 	RKRPackageInstallationStatus *packages_status;
 	RKRPackageInstallationStatusSortFilterModel *model;
@@ -253,6 +254,7 @@ private:
 	QCheckBox *rkward_packages_only;
 	QComboBox *libloc_selector;
 	QCheckBox *suggested_packages;
+	QLabel *status_label;
 
 	RKLoadLibsDialog *parent;
 };
