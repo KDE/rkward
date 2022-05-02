@@ -73,6 +73,7 @@ public:
 		ActionUnlock,
 
 		ActionShowMenu,
+		ActionConfigure,
 
 		ObjectList,
 		ObjectFunction,

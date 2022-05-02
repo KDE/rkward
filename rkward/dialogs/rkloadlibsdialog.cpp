@@ -570,9 +570,11 @@ void LoadUnloadWidget::cancel () {
 /////////////////////// InstallPackagesWidget //////////////////////////
 #include <QHeaderView>
 #include <QStyledItemDelegate>
+#include <QComboBox>
 
 /** Responsible for drawing the "category" items */
 class InstallPackagesDelegate : public QStyledItemDelegate {
+	Q_OBJECT
 public:
 	InstallPackagesDelegate (QTreeView* parent) : QStyledItemDelegate (parent) {
 		table = parent;
@@ -594,22 +596,51 @@ public:
 			option->backgroundBrush = table->palette ().mid ();
 		}
 	}
+	void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override {
+		QStyledItemDelegate::paint(painter, option, index);
+		if ((!index.parent().isValid()) && (index.row() == RKRPackageInstallationStatus::UpdateablePackages)) {
+			QStyleOptionButton button;
+			QRect r = option.rect; // rect of the entire cell
+			r.setLeft(r.left() + r.width()/2); // for simplicity, use half the width for the button
+			button.text = i18n("Select all updates");
+			button.state = QStyle::State_Enabled;
+			button.rect = r;
+			QApplication::style()->drawControl(QStyle::CE_PushButton, &button, painter);
+		}
+	}
+	bool editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index) override {
+		if ((!index.parent().isValid()) && (index.row() == RKRPackageInstallationStatus::UpdateablePackages)) {
+			if ((event->type() == QEvent::MouseButtonRelease) || (event->type() == QEvent::MouseButtonPress)) {
+				QMouseEvent *e = (QMouseEvent *) event;
+				QRect r = option.rect; // rect of the entire cell
+				r.setLeft(r.left() + r.width()/2);
+				if (r.contains(e->pos())) {
+					if (event->type() == QEvent::MouseButtonRelease) {
+						emit selectAllUpdates();
+					}
+					event->accept();
+					return true;
+				}
+			}
+		}
+		return QStyledItemDelegate::editorEvent(event, model, option, index);
+	}
+
 	QTreeView* table;
 	QIcon expanded;
 	QIcon collapsed;
+signals:
+	void selectAllUpdates();
 };
 
 InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidget (0) {
 	RK_TRACE (DIALOGS);
 	InstallPackagesWidget::parent = dialog;
 	
-	QHBoxLayout *hbox = new QHBoxLayout (this);
-	hbox->setContentsMargins (0, 0, 0, 0);
-
-	QVBoxLayout *vbox = new QVBoxLayout ();
-	vbox->setContentsMargins (0, 0, 0, 0);
-	hbox->addLayout (vbox);
-	hbox->setStretchFactor (vbox, 2);
+	QVBoxLayout *vbox = new QVBoxLayout(this);
+	vbox->setContentsMargins(0, 0, 0, 0);
+	QHBoxLayout *filterbox = new QHBoxLayout();
+	vbox->addLayout(filterbox);
 
 	packages_view = new QTreeView (this);
 	packages_status = new RKRPackageInstallationStatus(this, packages_view);
@@ -618,22 +649,16 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidge
 	model->setSourceModel (packages_status);
 	model->setSortCaseSensitivity (Qt::CaseInsensitive);
 	packages_view->setModel (model);
-	packages_view->setItemDelegateForColumn (0, new InstallPackagesDelegate (packages_view));
+	auto delegate = new InstallPackagesDelegate(packages_view);
+	packages_view->setItemDelegateForColumn(0, delegate);
+	connect(delegate, &InstallPackagesDelegate::selectAllUpdates, this, &InstallPackagesWidget::markAllUpdates);
 	connect (packages_view, &QTreeView::clicked, this, &InstallPackagesWidget::rowClicked);
 	packages_view->setRootIsDecorated (false);
 	packages_view->setIndentation (0);
 	packages_view->setMinimumHeight (packages_view->sizeHintForRow (0) * 15);	// force a decent height
-	packages_view->setMinimumWidth (packages_view->fontMetrics ().width ("This is to force a sensible min width for the packages view (empty on construction)"));
+	packages_view->setMinimumWidth(packages_view->fontMetrics ().width("This is to force a sensible min width for the packages view (empty on construction)")*2);
 	vbox->addWidget (packages_view);
 
-	QPushButton *configure_repos_button = new QPushButton (i18n ("Configure Repositories"), this);
-	RKCommonFunctions::setTips (i18n ("Many packages are available on CRAN (Comprehensive R Archive Network), and other repositories.<br>Click this to add more sources."), configure_repos_button);
-	connect (configure_repos_button, &QPushButton::clicked, this, &InstallPackagesWidget::configureRepositories);
-	vbox->addWidget (configure_repos_button);
-
-	QVBoxLayout *buttonvbox = new QVBoxLayout ();
-	hbox->addLayout (buttonvbox);
-	buttonvbox->setContentsMargins (0, 0, 0, 0);
 	QLabel *label = new QLabel (i18n ("Show only packages matching:"), this);
 	filter_edit = new RKDynamicSearchLine (this);
 	RKCommonFunctions::setTips (i18n ("<p>You can limit the packages displayed in the list to with names or titles matching a filter string.</p>") + filter_edit->regexpTip (), label, filter_edit);
@@ -641,24 +666,35 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidge
 	// NOTE: Although the search line sets the filter in the model, automatically, we connect it, here, in order to expand new and updateable sections, when the filter changes.
 	connect (filter_edit, &RKDynamicSearchLine::searchChanged, this, &InstallPackagesWidget::filterChanged);
 	rkward_packages_only = new QCheckBox (i18n ("Show only packages providing RKWard dialogs"), this);
-	RKCommonFunctions::setTips (i18n ("<p>Some but not all R packages come with plugins for RKWard. That means they provide a graphical user-interface in addition to R functions. Check this box to show only such packages.</p><p></p>"), rkward_packages_only);
+	RKCommonFunctions::setTips(i18n("<p>Some but not all R packages come with plugins for RKWard. That means they provide a graphical user-interface in addition to R functions. Check this box to show only such packages.</p>"), rkward_packages_only);
 	connect (rkward_packages_only, &QCheckBox::stateChanged, this, &InstallPackagesWidget::filterChanged);
 	filterChanged ();
 
-	mark_all_updates_button = new QPushButton (i18n ("Select all updates"), this);
-	connect (mark_all_updates_button, &QPushButton::clicked, this, &InstallPackagesWidget::markAllUpdates);
+	filterbox->addWidget (label);
+	filterbox->addWidget (filter_edit);
+	filterbox->addWidget (rkward_packages_only);
 
-	install_params = new PackageInstallParamsWidget (this);
-	connect (parent, &RKLoadLibsDialog::libraryLocationsChanged, install_params, &PackageInstallParamsWidget::liblocsChanged);
+	auto settingsbox = new QHBoxLayout();
+	vbox->addLayout(settingsbox);
+	settingsbox->addWidget(new QLabel(i18n("Install packages to:")));
+	libloc_selector = new QComboBox();
+	settingsbox->addWidget(libloc_selector);
 
-	buttonvbox->addWidget (label);
-	buttonvbox->addWidget (filter_edit);
-	buttonvbox->addWidget (rkward_packages_only);
-	buttonvbox->addStretch (1);
-	buttonvbox->addWidget (mark_all_updates_button);
-	buttonvbox->addStretch (1);
-	buttonvbox->addWidget (install_params);
-	buttonvbox->addStretch (1);
+	suggested_packages = new QCheckBox(i18n("Install suggested packages"));
+	suggested_packages->setChecked(false);
+	RKCommonFunctions::setTips(QString("<p>%1</p>").arg(i18n("Some packages \"suggest\" additional packages, which are not strictly necessary for using that package, but which may provide additional related functionality. Check this option to include such additional suggested packages.")), suggested_packages);
+	connect(parent, &RKLoadLibsDialog::libraryLocationsChanged, this, [this](const QStringList &newlist) {
+		libloc_selector->clear();
+		libloc_selector->insertItems(0, RKSettingsModuleRPackages::addUserLibLocTo(newlist));
+	});
+	settingsbox->addWidget(suggested_packages);
+	settingsbox->addStretch();
+
+	QPushButton *configure_repos_button = new QPushButton(i18n("Configure Repositories"));
+	configure_repos_button->setIcon(RKStandardIcons::getIcon(RKStandardIcons::ActionConfigureGeneric));
+	RKCommonFunctions::setTips(i18n("Many packages are available on CRAN (Comprehensive R Archive Network), and other repositories.<br>Click this to add more sources."), configure_repos_button);
+	connect(configure_repos_button, &QPushButton::clicked, this, &InstallPackagesWidget::configureRepositories);
+	settingsbox->addWidget(configure_repos_button);
 
 	connect(parent, &RKLoadLibsDialog::installedPackagesChanged, this, &InstallPackagesWidget::initialize);
 }
@@ -741,9 +777,11 @@ void InstallPackagesWidget::trySelectPackages (const QStringList &package_names)
 void InstallPackagesWidget::markAllUpdates () {
 	RK_TRACE (DIALOGS);
 
-	QModelIndex index = packages_status->markAllUpdatesForInstallation ();
-	packages_view->setExpanded (model->mapFromSource (index), true);
-	packages_view->scrollTo (model->mapFromSource (index));
+	QModelIndex index = packages_status->markAllUpdatesForInstallation();
+	QTimer::singleShot(0, this, [this, index](){
+		packages_view->setExpanded(model->mapFromSource(index), true);
+		packages_view->scrollTo(model->mapFromSource(index));
+	});
 }
 
 void InstallPackagesWidget::doInstall() {
@@ -759,9 +797,9 @@ void InstallPackagesWidget::doInstall() {
 
 	QStringList install = packages_status->packagesToInstall ();
 	if (!install.isEmpty ()) {
-		QString dest = install_params->installLocation ();
-		if (!dest.isEmpty ()) {
-			parent->installPackages (install, dest, install_params->installSuggestedPackages ());
+		QString dest = libloc_selector->currentText();
+		if (!dest.isEmpty()) {
+			parent->installPackages(install, dest, suggested_packages->isChecked());
 		}
 	}
 }
@@ -787,50 +825,6 @@ void InstallPackagesWidget::cancel () {
 void InstallPackagesWidget::configureRepositories () {
 	RK_TRACE (DIALOGS);
 	RKSettings::configureSettings (RKSettings::PageRPackages, this, parent->chain);
-}
-
-/////////////////////// PackageInstallParamsWidget //////////////////////////
-
-#include <qcombobox.h>
-#include <qfileinfo.h>
-
-PackageInstallParamsWidget::PackageInstallParamsWidget (QWidget *parent) : QWidget (parent) {
-	RK_TRACE (DIALOGS);
-
-	QVBoxLayout *vbox = new QVBoxLayout (this);
-	vbox->setContentsMargins (0, 0, 0, 0);
-	vbox->addWidget (new QLabel (i18n ("Install packages to:"), this));
-	libloc_selector = new QComboBox (this);
-	vbox->addWidget (libloc_selector);
-
-	suggested_packages = new QCheckBox (i18n ("Install suggested packages"), this);
-	suggested_packages->setChecked (false);
-	RKCommonFunctions::setTips (QString ("<p>%1</p>").arg (i18n ("Some packages \"suggest\" additional packages, which are not strictly necessary for using that package, but which may provide additional related functionality. Check this option to include such additional suggested packages.")), suggested_packages);
-	vbox->addStretch ();
-	vbox->addWidget (suggested_packages);
-}
-
-PackageInstallParamsWidget::~PackageInstallParamsWidget () {
-	RK_TRACE (DIALOGS);
-}
-
-bool PackageInstallParamsWidget::installSuggestedPackages () {
-	RK_TRACE (DIALOGS);
-
-	return suggested_packages->isChecked ();
-}
-
-QString PackageInstallParamsWidget::installLocation () {
-	RK_TRACE (DIALOGS);
-
-	return libloc_selector->currentText ();
-}
-
-void PackageInstallParamsWidget::liblocsChanged (const QStringList &newlist) {
-	RK_TRACE (DIALOGS);
-
-	libloc_selector->clear ();
-	libloc_selector->insertItems (0, RKSettingsModuleRPackages::addUserLibLocTo (newlist));
 }
 
 /////////// RKRPackageInstallationStatus /////////////////
@@ -1171,7 +1165,7 @@ RKRPackageInstallationStatusSortFilterModel::~RKRPackageInstallationStatusSortFi
 
 bool RKRPackageInstallationStatusSortFilterModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
 	if (!left.parent ().isValid ()) {		// Disable sorting for the top level items
-		return (left.row () > right.row ());
+		return (left.row () < right.row ());
 	}
 	if (left.column () == RKRPackageInstallationStatus::EnhancesRKWard) {
 		return (!left.data (Qt::UserRole).toBool ());
@@ -1259,3 +1253,4 @@ void RKPluginMapSelectionWidget::ok () {
 	deleteLater ();
 }
 
+#include "rkloadlibsdialog.moc"

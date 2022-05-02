@@ -145,9 +145,9 @@ public:
 		COLUMN_COUNT
 	};
 	enum ToplevelItems {
-		UpdateablePackages,
-		NewPackages,
 		InstalledPackages,
+		NewPackages,
+		UpdateablePackages,
 		TOPLEVELITEM_COUNT
 	};
 	enum PackageStatusChange {
@@ -238,35 +238,13 @@ private:
 	RKRPackageInstallationStatus *packages_status;
 	RKRPackageInstallationStatusSortFilterModel *model;
 
-	QPushButton *mark_all_updates_button;
 	RKDynamicSearchLine *filter_edit;
 	QCheckBox *rkward_packages_only;
-	PackageInstallParamsWidget *install_params;
+	QComboBox *libloc_selector;
+	QCheckBox *suggested_packages;
 
 	RKLoadLibsDialog *parent;
 };
-
-/**
-Simple helper class for RKLoadLibsDialog to allow selection of installation parameters
-
-@author Thomas Friedrichsmeier
-*/
-class PackageInstallParamsWidget : public QWidget {
-Q_OBJECT
-public:
-	explicit PackageInstallParamsWidget (QWidget *parent);
-	
-	~PackageInstallParamsWidget ();
-
-	bool installSuggestedPackages ();
-	QString installLocation ();
-public slots:
-	void liblocsChanged (const QStringList &newlist);
-private:
-	QComboBox *libloc_selector;
-	QCheckBox *suggested_packages;
-};
-
 
 #include "../settings/rksettingsmoduleplugins.h"
 
