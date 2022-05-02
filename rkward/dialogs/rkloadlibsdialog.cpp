@@ -52,7 +52,9 @@ RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool 
 	setWindowTitle (i18n ("Configure Packages"));
 	setStandardButtons (QDialogButtonBox::Apply | QDialogButtonBox::Close);
 	disconnect(buttonBox(), &QDialogButtonBox::rejected, this, &RKLoadLibsDialog::reject);
-	connect(buttonBox()->button(QDialogButtonBox::Close), &QPushButton::clicked, this, &RKLoadLibsDialog::close);
+	connect(button(QDialogButtonBox::Close), &QPushButton::clicked, this, &RKLoadLibsDialog::queryClose);
+	button(QDialogButtonBox::Apply)->setEnabled(false);
+	connect(button(QDialogButtonBox::Apply), &QPushButton::clicked, this, [this]() { button(QDialogButtonBox::Apply)->setEnabled(false); });
 
 	LoadUnloadWidget *luwidget = new LoadUnloadWidget (this);
 	addChild (luwidget, i18n ("Load / Unload R packages"));
@@ -65,8 +67,6 @@ RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool 
 
 	connect (this, &KPageDialog::currentPageChanged, this, &RKLoadLibsDialog::slotPageChanged);
 	QTimer::singleShot (0, this, SLOT (slotPageChanged()));
-	num_child_widgets = 4;
-	was_accepted = false;
 
 	RCommand *command = new RCommand(".libPaths()", RCommand::App | RCommand::GetStringVector);
 	connect(command->notifier(), &RCommandNotifier::commandFinished, this, [this](RCommand *command) {
@@ -83,21 +83,35 @@ RKLoadLibsDialog::~RKLoadLibsDialog () {
 	RK_TRACE (DIALOGS);
 }
 
-KPageWidgetItem* RKLoadLibsDialog::addChild (QWidget *child_page, const QString &caption) {
+void RKLoadLibsDialog::queryClose() {
+	RK_TRACE (DIALOGS);
+
+	bool changes = false;
+	bool do_close = true;
+	for (int i = 0; i < pages.size(); ++i) {
+		changes |= pages[i]->isChanged();
+	}
+	if (changes) {
+		do_close = (KMessageBox::questionYesNo(this, i18n("Closing will discard pending changes. Are you sure?"), i18n("Discard changes?"), KGuiItem("Discard"), KGuiItem("Do no close")) == KMessageBox::Yes);
+	}
+	if (do_close) close();
+}
+
+KPageWidgetItem* RKLoadLibsDialog::addChild(RKLoadLibsDialogPage *child_page, const QString &caption) {
 	RK_TRACE (DIALOGS);
 
 	// TODO: Can't convert these signal/slot connections to new syntax, without creating a common base class for the child pages
-	connect (button (QDialogButtonBox::Apply), SIGNAL (clicked(bool)), child_page, SLOT (apply()));
-	connect (this, SIGNAL(rejected()), child_page, SLOT (cancel()));
-	connect (child_page, &QObject::destroyed, this, &RKLoadLibsDialog::childDeleted);
-	return addPage (child_page, caption);
+	connect(button(QDialogButtonBox::Apply), &QPushButton::clicked, child_page, &RKLoadLibsDialogPage::apply);
+	connect(child_page, &RKLoadLibsDialogPage::changed, this, [this]() { button(QDialogButtonBox::Apply)->setEnabled(true); });
+	pages.append(child_page);
+	return addPage(child_page, caption);
 }
 
 void RKLoadLibsDialog::slotPageChanged () {
 	RK_TRACE (DIALOGS);
 
-	if (!currentPage ()) return;
-	QTimer::singleShot (0, currentPage ()->widget (), SLOT (activated()));
+	if (!currentPage()) return;
+	QTimer::singleShot(0, dynamic_cast<RKLoadLibsDialogPage*>(currentPage()->widget()), &RKLoadLibsDialogPage::activated);
 }
 
 //static
@@ -127,40 +141,10 @@ void RKLoadLibsDialog::automatedInstall(const QStringList &packages) {
 	install_packages_widget->trySelectPackages(packages);
 }
 
-void RKLoadLibsDialog::tryDestruct () {
-	RK_TRACE (DIALOGS);
-
-	if (num_child_widgets <= 0) {
-		deleteLater ();
-	}
-}
-
-void RKLoadLibsDialog::childDeleted () {
-	RK_TRACE (DIALOGS);
-	--num_child_widgets;
-	tryDestruct ();
-}
-
-void RKLoadLibsDialog::closeEvent (QCloseEvent *e) {
-	RK_TRACE (DIALOGS);
-	e->accept ();
-
-	// do as if cancel button was clicked:
-	reject ();
-}
-
-void RKLoadLibsDialog::accept () {
-	was_accepted = true;
-	hide ();
-	// will self-destruct once all children are done
-	emit accepted();
-}
-
-void RKLoadLibsDialog::reject () {
-	was_accepted = false;
-	hide ();
-	// will self-destruct once all children are done
-	emit rejected();
+void RKLoadLibsDialog::closeEvent(QCloseEvent *e) {
+	RK_TRACE(DIALOGS);
+	e->accept();
+	deleteLater();
 }
 
 void RKLoadLibsDialog::addLibraryLocation (const QString& new_loc) {
@@ -343,7 +327,7 @@ void RKLoadLibsDialog::runInstallationCommand (const QString& command, bool as_r
 
 ////////////////////// LoadUnloadWidget ////////////////////////////
 
-LoadUnloadWidget::LoadUnloadWidget (RKLoadLibsDialog *dialog) : QWidget (0) {
+LoadUnloadWidget::LoadUnloadWidget (RKLoadLibsDialog *dialog) : RKLoadLibsDialogPage (0) {
 	RK_TRACE (DIALOGS);
 	LoadUnloadWidget::parent = dialog;
 	
@@ -473,6 +457,7 @@ void LoadUnloadWidget::loadButtonClicked () {
 			item->setSelected (true);
 		}
 	}
+	setChanged();
 }
 
 void LoadUnloadWidget::detachButtonClicked () {
@@ -492,6 +477,7 @@ void LoadUnloadWidget::detachButtonClicked () {
 			installed[0]->setSelected (true);
 		}
 	}
+	setChanged();
 }
 
 void LoadUnloadWidget::updateButtons () {
@@ -499,12 +485,6 @@ void LoadUnloadWidget::updateButtons () {
 
 	detach_button->setEnabled (!loaded_view->selectedItems ().isEmpty ());
 	load_button->setEnabled (!installed_view->selectedItems ().isEmpty ());
-}
-
-void LoadUnloadWidget::ok () {
-	RK_TRACE (DIALOGS);
-	doLoadUnload ();
-	deleteLater ();
 }
 
 void LoadUnloadWidget::updateCurrentList () {
@@ -519,8 +499,8 @@ void LoadUnloadWidget::updateCurrentList () {
 void LoadUnloadWidget::doLoadUnload () {
 	RK_TRACE (DIALOGS);
 
-	RKProgressControl *control = new RKProgressControl (this, i18n ("There has been an error while trying to load / unload packages. See transcript below for details"), i18n ("Error while handling packages"), RKProgressControl::DetailedError);
-	connect (this, &LoadUnloadWidget::loadUnloadDone, control, &RKProgressControl::done);
+	RKInlineProgressControl *control = new RKInlineProgressControl(this, false);
+	control->setText(i18n("There has been an error while trying to load / unload packages. See transcript below for details"));
 
 	// load packages previously not loaded
 	for (int i = 0; i < loaded_view->topLevelItemCount (); ++i) {
@@ -548,23 +528,20 @@ void LoadUnloadWidget::doLoadUnload () {
 	// find out, when we're done
 	RCommand *command = new RCommand(QString(), RCommand::EmptyCommand);
 	connect(command->notifier(), &RCommandNotifier::commandFinished, this, [this](RCommand *) {
-		emit loadUnloadDone();
+		clearChanged();
 	});
+	control->addRCommand(command);  // this is actually important, in case no commands had been generated, above
 	RInterface::issueCommand(command, parent->chain);
-
-	control->doNonModal(true);
+	control->setAutoCloseWhenCommandsDone(true);
+	control->show(100);
 }
 
 void LoadUnloadWidget::apply () {
 	RK_TRACE (DIALOGS);
 
+	if (!isChanged()) return;
 	doLoadUnload ();
 	updateCurrentList ();
-}
-
-void LoadUnloadWidget::cancel () {
-	RK_TRACE (DIALOGS);
-	deleteLater ();
 }
 
 /////////////////////// InstallPackagesWidget //////////////////////////
@@ -633,7 +610,7 @@ signals:
 	void selectAllUpdates();
 };
 
-InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidget (0) {
+InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : RKLoadLibsDialogPage (0) {
 	RK_TRACE (DIALOGS);
 	InstallPackagesWidget::parent = dialog;
 	
@@ -697,6 +674,7 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidge
 	settingsbox->addWidget(configure_repos_button);
 
 	connect(parent, &RKLoadLibsDialog::installedPackagesChanged, this, &InstallPackagesWidget::initialize);
+	connect(packages_status, &RKRPackageInstallationStatus::changed, this, &InstallPackagesWidget::setChanged);
 }
 
 InstallPackagesWidget::~InstallPackagesWidget () {
@@ -731,6 +709,7 @@ void InstallPackagesWidget::initialize () {
 			packages_view->setFirstColumnSpanned (i, QModelIndex (), true);
 		}
 		window()->raise(); // needed on Mac, otherwise the dialog may go hiding behind the main app window, after the progress control window closes, for some reason
+		clearChanged();
 	});
 	RInterface::issueCommand(dummy, parent->chain);
 }
@@ -807,19 +786,8 @@ void InstallPackagesWidget::doInstall() {
 void InstallPackagesWidget::apply () {
 	RK_TRACE (DIALOGS);
 
+	if (!isChanged()) return;
 	doInstall();
-}
-
-void InstallPackagesWidget::ok () {
-	RK_TRACE (DIALOGS);
-
-	doInstall();
-	deleteLater();
-}
-
-void InstallPackagesWidget::cancel () {
-	RK_TRACE (DIALOGS);
-	deleteLater ();
 }
 
 void InstallPackagesWidget::configureRepositories () {
@@ -1119,6 +1087,7 @@ bool RKRPackageInstallationStatus::setData (const QModelIndex &index, const QVar
 
 	emit dataChanged(index, index);
 	if (bindex.isValid ()) emit dataChanged(bindex, bindex);
+	emit changed();
 
 	return true;
 }
@@ -1197,10 +1166,9 @@ void RKRPackageInstallationStatusSortFilterModel::setRKWardOnly (bool only) {
 
 /////////////////////////
 #include "../misc/multistringselector.h"
-RKPluginMapSelectionWidget::RKPluginMapSelectionWidget (RKLoadLibsDialog* dialog) : QWidget (dialog) {
+RKPluginMapSelectionWidget::RKPluginMapSelectionWidget (RKLoadLibsDialog* dialog) : RKLoadLibsDialogPage(dialog) {
 	RK_TRACE (DIALOGS);
 	model = 0;
-	changes_pending = false;
 
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
@@ -1223,34 +1191,20 @@ void RKPluginMapSelectionWidget::activated () {
 		selector->setModel (model, 1);
 		connect (selector, &RKMultiStringSelectorV2::insertNewStrings, model, &RKSettingsModulePluginsModel::insertNewStrings);
 		connect (selector, &RKMultiStringSelectorV2::swapRows, model, &RKSettingsModulePluginsModel::swapRows);
-		connect (selector, &RKMultiStringSelectorV2::listChanged, this, &RKPluginMapSelectionWidget::changed);
+		connect (selector, &RKMultiStringSelectorV2::listChanged, this, &RKPluginMapSelectionWidget::setChanged);
 	}
 }
 
 void RKPluginMapSelectionWidget::apply () {
 	RK_TRACE (DIALOGS);
 
-	if (!changes_pending) return;
+	if (!isChanged()) return;
 	RK_ASSERT (model);
 	RKSettingsModulePlugins::PluginMapList new_list = RKSettingsModulePlugins::setPluginMaps (model->pluginMaps ());
 	selector->setModel (0); // we don't want any extra change notification for this
 	model->init (new_list);
 	selector->setModel (model, 1);
-	changes_pending = false;
-}
-
-void RKPluginMapSelectionWidget::cancel () {
-	RK_TRACE (DIALOGS);
-	deleteLater ();
-}
-
-void RKPluginMapSelectionWidget::ok () {
-	RK_TRACE (DIALOGS);
-
-	if (!changes_pending) return;
-	RK_ASSERT (model);
-	RKSettingsModulePlugins::setPluginMaps (model->pluginMaps ());
-	deleteLater ();
+	clearChanged();
 }
 
 #include "rkloadlibsdialog.moc"

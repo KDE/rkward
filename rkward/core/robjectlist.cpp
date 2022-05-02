@@ -63,7 +63,7 @@ QString RObjectList::getObjectDescription () const {
 	return i18n ("This section contains environments that are not part of <i>.GlobalEnv</i> / your \"workspace\". Most importantly, this includes loaded packages, but also objects added to R's <i>search()<i>-path using <i>attach()</i>.");
 }
 
-QStringList RObjectList::detachPackages (const QStringList &packages, RCommandChain *chain, RKProgressControl* control) {
+QStringList RObjectList::detachPackages (const QStringList &packages, RCommandChain *chain, RKInlineProgressControl* control) {
 	RK_TRACE (OBJECTS);
 
 	QStringList remove;

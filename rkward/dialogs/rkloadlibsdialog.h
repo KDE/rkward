@@ -31,6 +31,22 @@ class PackageInstallParamsWidget;
 class InstallPackagesWidget;
 class RKDynamicSearchLine;
 
+class RKLoadLibsDialogPage : public QWidget {
+	Q_OBJECT
+public:
+	RKLoadLibsDialogPage(QWidget* parent) : QWidget(parent), _changed(false) {};
+	virtual void apply() = 0;
+	virtual void activated() = 0;
+	bool isChanged() const { return _changed; };
+signals:
+	void changed();
+protected:
+	void setChanged() { _changed = true; emit changed(); };
+	void clearChanged() { _changed = false; };
+private:
+	bool _changed;
+};
+
 /**
 Dialog which excapsulates widgets to load/unload, update and install R packages
 
@@ -56,22 +72,20 @@ public:
 	static void showInstallPackagesModal (QWidget *parent, RCommandChain *chain, const QStringList &package_names);
 	static void showPluginmapConfig (QWidget *parent=0, RCommandChain *chain=0);
 	QStringList currentLibraryLocations ()  const { return library_locations; };
-	void accept () override;
-	void reject () override;
 signals:
 	void libraryLocationsChanged (const QStringList &liblocs);
 	void installedPackagesChanged ();
 protected:
 	void closeEvent (QCloseEvent *e) override;
 protected slots:
-	void childDeleted ();
 	void automatedInstall (const QStringList &packages);
 	void slotPageChanged ();
 private:
+	void queryClose();
 	void addLibraryLocation (const QString &new_loc);
 	void tryDestruct ();
 	void runInstallationCommand (const QString& command, bool as_root, const QString& message, const QString& title);
-	KPageWidgetItem* addChild (QWidget *child_page, const QString &caption);
+	KPageWidgetItem* addChild(RKLoadLibsDialogPage *child_page, const QString &caption);
 friend class LoadUnloadWidget;
 friend class InstallPackagesWidget;
 	RCommandChain *chain;
@@ -82,8 +96,7 @@ friend class InstallPackagesWidget;
 
 	QStringList library_locations;
 
-	int num_child_widgets;
-	bool was_accepted;
+	QList<RKLoadLibsDialogPage*> pages;
 
 	QProcess* installation_process;
 };
@@ -94,23 +107,21 @@ To be used in RKLoadLibsDialog
 
 @author Thomas Friedrichsmeier
 */
-class LoadUnloadWidget : public QWidget {
+class LoadUnloadWidget : public RKLoadLibsDialogPage {
 Q_OBJECT
 public:
 	explicit LoadUnloadWidget (RKLoadLibsDialog *dialog);
 	
 	~LoadUnloadWidget ();
+	void apply() override;
+	void activated() override;
 signals:
 	void loadUnloadDone ();
 public slots:
 	void loadButtonClicked ();
 	void detachButtonClicked ();
-	void ok ();
-	void apply ();
-	void cancel ();
 	void updateInstalledPackages ();
 	void updateButtons ();
-	void activated ();
 private:
 	void updateCurrentList ();
 	void doLoadUnload ();
@@ -180,6 +191,8 @@ public:
 /** reset all installation states to NoAction */
 	void clearStatus ();
 	bool initialized () const { return _initialized; };
+signals:
+	void changed();
 private slots:
 	void statusCommandFinished (RCommand *command);
 private:
@@ -215,7 +228,7 @@ To be used in RKLoadLibsDialog.
 
 @author Thomas Friedrichsmeier
 */
-class InstallPackagesWidget : public QWidget {
+class InstallPackagesWidget : public RKLoadLibsDialogPage {
 Q_OBJECT
 public:
 	explicit InstallPackagesWidget (RKLoadLibsDialog *dialog);
@@ -223,12 +236,10 @@ public:
 	~InstallPackagesWidget ();
 	void trySelectPackages (const QStringList &package_names);
 	void initialize ();
+	void apply() override;
+	void activated() override;
 public slots:
-	void ok ();
-	void apply ();
-	void cancel ();
 	void filterChanged ();
-	void activated ();
 	void markAllUpdates ();
 	void configureRepositories ();
 	void rowClicked (const QModelIndex& row);
@@ -248,21 +259,16 @@ private:
 
 #include "../settings/rksettingsmoduleplugins.h"
 
-class RKPluginMapSelectionWidget : public QWidget {
+class RKPluginMapSelectionWidget : public RKLoadLibsDialogPage {
 Q_OBJECT
 public:
 	explicit RKPluginMapSelectionWidget (RKLoadLibsDialog *dialog);
 	virtual ~RKPluginMapSelectionWidget ();
-public slots:
-	void ok ();
-	void apply ();
-	void cancel ();
-	void activated ();
-	void changed () { changes_pending = true; };
+	void apply() override;
+	void activated() override;
 private:
 	RKMultiStringSelectorV2* selector;
 	RKSettingsModulePluginsModel* model;
-	bool changes_pending;
 };
 
 #endif

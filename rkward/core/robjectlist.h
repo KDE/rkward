@@ -21,7 +21,7 @@ class RCommand;
 class RCommandChain;
 class RKEditor;
 class REnvironmentObject;
-class RKProgressControl;
+class RKInlineProgressControl;
 class RKOrphanNamespacesObject;
 
 /**
@@ -53,7 +53,7 @@ public:
 
 	/** detach the given list of packages (if the packages are loaded, and safe to remove)
 	@returns a list of error messages (usually empty) */
-	QStringList detachPackages (const QStringList &packages, RCommandChain *chain = 0, RKProgressControl *control = 0);
+	QStringList detachPackages (const QStringList &packages, RCommandChain *chain = 0, RKInlineProgressControl *control = 0);
 	/** A pseudo object containing as children all loaded namespaces which do not belong to a package on the search path */
 	RKOrphanNamespacesObject* orphanNamespacesObject () const { return orphan_namespaces; };
 	QString getObjectDescription () const override;
