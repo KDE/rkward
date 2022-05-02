@@ -428,6 +428,7 @@ void RKInlineProgressControl::setCloseAction(const QString &label) {
 void RKInlineProgressControl::cancelAndClose() {
 	RK_TRACE(MISC);
 
+	is_done = true;
 	for (int i = 0; i < unfinished_commands.size(); ++i) {
 		RInterface::instance()->cancelCommand(unfinished_commands[i]);
 	}
@@ -516,7 +517,7 @@ bool RKInlineProgressControl::eventFilter(QObject *, QEvent *e) {
 		if (allow_cancel) {
 			bool ignore = (KMessageBox::warningContinueCancel(display_area, i18n("Closing this window will cancel the current operation. Are you sure?"), i18n("Cancel operation"), KGuiItem(i18n("Keep waiting")), KGuiItem(i18n("Cancel && Close"))) == KMessageBox::Continue);
 			if (ignore) {
-				e->ignore();
+				e->accept();
 				return true;
 			}
 			cancelAndClose();

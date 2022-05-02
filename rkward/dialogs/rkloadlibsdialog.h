@@ -233,7 +233,7 @@ public slots:
 	void configureRepositories ();
 	void rowClicked (const QModelIndex& row);
 private:
-	void doInstall (bool refresh);
+	void doInstall();
 	QTreeView *packages_view;
 	RKRPackageInstallationStatus *packages_status;
 	RKRPackageInstallationStatusSortFilterModel *model;

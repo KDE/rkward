@@ -50,9 +50,9 @@ RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool 
 	setFaceType (KPageDialog::Tabbed);
 	setModal (modal);
 	setWindowTitle (i18n ("Configure Packages"));
-	setStandardButtons (QDialogButtonBox::Apply);
-	auto button = buttonBox()->addButton(i18n("Close"), QDialogButtonBox::NoRole);  // Not using standard close button, as that will call reject
-	connect(button, &QPushButton::clicked, this, &RKLoadLibsDialog::close);
+	setStandardButtons (QDialogButtonBox::Apply | QDialogButtonBox::Close);
+	disconnect(buttonBox(), &QDialogButtonBox::rejected, this, &RKLoadLibsDialog::reject);
+	connect(buttonBox()->button(QDialogButtonBox::Close), &QPushButton::clicked, this, &RKLoadLibsDialog::close);
 
 	LoadUnloadWidget *luwidget = new LoadUnloadWidget (this);
 	addChild (luwidget, i18n ("Load / Unload R packages"));
@@ -619,9 +619,6 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidge
 	model->setSortCaseSensitivity (Qt::CaseInsensitive);
 	packages_view->setModel (model);
 	packages_view->setItemDelegateForColumn (0, new InstallPackagesDelegate (packages_view));
-	for (int i = 0; i < model->rowCount (); ++i) {  // the root level captions
-		packages_view->setFirstColumnSpanned (i, QModelIndex (), true);
-	}
 	connect (packages_view, &QTreeView::clicked, this, &InstallPackagesWidget::rowClicked);
 	packages_view->setRootIsDecorated (false);
 	packages_view->setIndentation (0);
@@ -662,6 +659,8 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidge
 	buttonvbox->addStretch (1);
 	buttonvbox->addWidget (install_params);
 	buttonvbox->addStretch (1);
+
+	connect(parent, &RKLoadLibsDialog::installedPackagesChanged, this, &InstallPackagesWidget::initialize);
 }
 
 InstallPackagesWidget::~InstallPackagesWidget () {
@@ -681,17 +680,23 @@ void InstallPackagesWidget::activated () {
 void InstallPackagesWidget::initialize () {
 	RK_TRACE (DIALOGS);
 
+	packages_status->clearStatus();
 	packages_status->initialize (parent->chain);
-	// Force a good width for the icon column, particularly for MacOS X.
-	packages_view->header ()->resizeSection (0, packages_view->sizeHintForIndex (model->index (0, 0, model->index (RKRPackageInstallationStatus::NewPackages, 0, QModelIndex ()))).width () + packages_view->indentation ());
-	for (int i = 1; i <= RKRPackageInstallationStatus::PackageName; ++i) {
-		packages_view->resizeColumnToContents (i);
-	}
-	// For whatever reason, we have to re-set these, here.
-	for (int i = 0; i < model->rowCount (); ++i) {
-		packages_view->setFirstColumnSpanned (i, QModelIndex (), true);
-	}
-	window()->raise(); // needed on Mac, otherwise the dialog may go hiding behind the main app window, after the progress control window closes, for some reason
+
+	RCommand *dummy = new RCommand(QString(), RCommand::EmptyCommand); // dummy command will finish, after initialization is complete
+	connect(dummy->notifier(), &RCommandNotifier::commandFinished, this, [this]() {
+		// Force a good width for the icon column, particularly for MacOS X.
+		packages_view->header ()->resizeSection (0, packages_view->sizeHintForIndex (model->index (0, 0, model->index (RKRPackageInstallationStatus::NewPackages, 0, QModelIndex ()))).width () + packages_view->indentation ());
+		for (int i = 1; i <= RKRPackageInstallationStatus::PackageName; ++i) {
+			packages_view->resizeColumnToContents (i);
+		}
+		// For whatever reason, we have to re-set these, here.
+		for (int i = 0; i < model->rowCount (); ++i) {
+			packages_view->setFirstColumnSpanned (i, QModelIndex (), true);
+		}
+		window()->raise(); // needed on Mac, otherwise the dialog may go hiding behind the main app window, after the progress control window closes, for some reason
+	});
+	RInterface::issueCommand(dummy, parent->chain);
 }
 
 void InstallPackagesWidget::rowClicked (const QModelIndex& row) {
@@ -741,43 +746,37 @@ void InstallPackagesWidget::markAllUpdates () {
 	packages_view->scrollTo (model->mapFromSource (index));
 }
 
-void InstallPackagesWidget::doInstall (bool refresh) {
+void InstallPackagesWidget::doInstall() {
 	RK_TRACE (DIALOGS);
 
-	bool changed = false;
 	QStringList remove;
 	QStringList remove_locs;
 	packages_status->packagesToRemove (&remove, &remove_locs);
 	if (!remove.isEmpty ()) {
 		RK_ASSERT (remove.count () == remove_locs.count ());
-		changed |= parent->removePackages (remove, remove_locs);
+		parent->removePackages (remove, remove_locs);
 	}
 
 	QStringList install = packages_status->packagesToInstall ();
 	if (!install.isEmpty ()) {
 		QString dest = install_params->installLocation ();
 		if (!dest.isEmpty ()) {
-			changed |= parent->installPackages (install, dest, install_params->installSuggestedPackages ());
+			parent->installPackages (install, dest, install_params->installSuggestedPackages ());
 		}
-	}
-
-	if (changed && refresh) {
-		packages_status->clearStatus ();
-		initialize ();
 	}
 }
 
 void InstallPackagesWidget::apply () {
 	RK_TRACE (DIALOGS);
 
-	doInstall (true);
+	doInstall();
 }
 
 void InstallPackagesWidget::ok () {
 	RK_TRACE (DIALOGS);
 
-	doInstall (false);
-	deleteLater ();
+	doInstall();
+	deleteLater();
 }
 
 void InstallPackagesWidget::cancel () {
