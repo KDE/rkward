@@ -168,9 +168,9 @@
     <release version="0.7.3" date="2022-04-21">
       <artifacts>
         <artifact type="binary" platform="win64">
-          <location>https://download.kde.org/stable/rkward/0.7.3/src/rkward-0.7.3.tar.gz</location>
-          <checksum type="sha256">3d3e714dcda04f7e287b8195b89cbee9d6b04a8e061e604bc726bfcf73fceee2</checksum>
-          <size type="download">248478584</size>
+          <location>https://download.kde.org/stable/rkward/0.7.3/win32/rkward-0.7.3-R-4.2.0-KF5-5.93.0.exe</location>
+          <checksum type="sha256">58e829a15a8c2657d2375059b89049daa3245c13ab17023ce2489fd31d46ee3c</checksum>
+          <size type="download">239674208</size>
         </artifact>
       </artifacts>
     </release>
