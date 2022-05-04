@@ -4,8 +4,8 @@ var dist;
 var invar;
 var outvar;
 
-const continuous = 1;
-const discrete = 2;
+var continuous = 1;
+var discrete = 2;
 
 // NOTE: range 
 function initDistSpecifics (title, stem, params, range, type) {
@@ -49,9 +49,9 @@ function calculate () {
 	if (mode == "q") values = getList ("p.0");
 	else values = getList ("q.0");
 	if (values.length < 1) {
-		// NOTE: making this an even number is somewhat important. Otherwise, the middle number will be something very close to (but not quite) 0 in many cases,
-		//       resulting in very ugly number formatting
-		var max_auto_sequence_length = 20;
+		var max_auto_sequence_length;
+		if (mode != "q") max_auto_sequence_length = getValue("n_quantiles");
+		else max_auto_sequence_length = getValue("n_probabilities");
 
 		if (invar == 'q') {
 			if (!dist["cont"]) {
@@ -67,7 +67,6 @@ function calculate () {
 				values = 'seq (' + String (dist["min"]) + ', ' + String (dist["max"]) + ', length.out=' + String (max_auto_sequence_length) + ')';
 			}
 		} else {    // invar == 'p'
-			max_auto_sequence_length += 1;   // here, an uneven number is preferable for divisibility of steps by 2
 			if (logpd) {
 				values = '-' + String (max_auto_sequence_length) + ':0';
 			} else {
@@ -93,12 +92,14 @@ function getLabel (quantity) {
 	return i18n ('Probability');
 }
 
-function printout () {
-	header = dist["header"];
-	if (mode != "d") {
-		header.add (i18nc ("Tail of distribution function: lower / upper", 'Tail'), getBoolean ("lower.state") ? i18n ('Lower tail: P[X ≤ x]') : i18n ('Upper tail: P[X > x]'));
+function printout (is_preview) {
+	if (!is_preview) {
+		header = dist["header"];
+		if (mode != "d") {
+			header.add (i18nc ("Tail of distribution function: lower / upper", 'Tail'), getBoolean ("lower.state") ? i18n ('Lower tail: P[X ≤ x]') : i18n ('Upper tail: P[X > x]'));
+		}
+		header.print ();
 	}
-	header.print ();
 
 	echo ('rk.results (data.frame (' + getLabel (invar) + '=' + invar + ', ' + getLabel (outvar) + '=' + outvar + ', check.names=FALSE))\n');
 }

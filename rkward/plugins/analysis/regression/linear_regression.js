@@ -28,7 +28,9 @@ function calculate () {
 	}
 }
 
-function printout () {
-	echo ('rk.header (' + i18n ("Linear Regression") + ')\n');
+function printout (is_preview) {
+	if (!is_preview) {
+		echo ('rk.header (' + i18n ("Linear Regression") + ')\n');
+	}
 	echo ('rk.print(results)\n');
 }

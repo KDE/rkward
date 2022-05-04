@@ -18,6 +18,7 @@
             <varslot types="numeric" id="x" classes="rasch tpm ltm" source="vars" required="true" label="Choose fitted model to examine:"/>
             <text>Only objects of class ltm, rasch and tpm are valid!</text>
             <stretch />
+            <preview id="preview" mode="output"/>
           </column>
         </row>
       </tab>

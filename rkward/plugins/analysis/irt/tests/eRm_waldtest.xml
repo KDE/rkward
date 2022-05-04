@@ -20,6 +20,7 @@
             <varslot types="numeric" id="x" classes="Rm" source="vars" required="true" label="Choose fitted model to test:"/>
             <text>Only objects of class Rm are valid!</text>
             <stretch />
+            <preview id="preview" mode="output"/>
           </column>
         </row>
       </tab>

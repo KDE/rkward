@@ -118,9 +118,11 @@ function calculate () {
 	}
 }
 
-function printout () {
-	// TODO: Printing of method and use is a poor solution, esp. when translated. We should support getting the <radio>'s option labels, and print those, instead.
-	new Header (i18n ("Correlation Matrix")).addFromUI ("method").addFromUI ("use").print ();
+function printout (is_preview) {
+	if (!is_preview) {
+		// TODO: Printing of method and use is a poor solution, esp. when translated. We should support getting the <radio>'s option labels, and print those, instead.
+		new Header (i18n ("Correlation Matrix")).addFromUI ("method").addFromUI ("use").print ();
+	}
 	echo ('rk.results (data.frame (result, check.names=FALSE), titles=c (' + i18n ("Coefficient") + ', names (data)))\n');
 	if (do_p) {
 		if (polyCorr) {

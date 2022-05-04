@@ -31,6 +31,7 @@
             </radio>
             <varslot types="numeric" id="group_vec" source="vars" label="Use this group vector:"/>
             <saveobject id="save_name" checkable="true" checked="true" label="Save results in workspace" initial="estimates.lpcm"/>
+            <preview id="preview" mode="output"/>
           </column>
         </row>
       </tab>

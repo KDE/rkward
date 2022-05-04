@@ -28,6 +28,7 @@
               <checkbox id="chk_bsci" label="Compute Bootstrap confidence interval (CI)" value="bsci" />
               <spinbox id="spin_ci" label="Confidence interval:" type="real" initial=".95" min="0" max="1" size="small" />
             </frame>
+            <preview id="preview" mode="output"/>
           </column>
         </row>
       </tab>

@@ -14,6 +14,7 @@
 							<option label="short" value="TRUE"/>
 							<option label="long" value="FALSE"/>
 						</radio>
+						<preview id="preview" mode="output"/>
 					</column>
 				</row>
 			</tab>

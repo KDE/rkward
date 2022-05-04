@@ -11,8 +11,10 @@ function insertTestCall () {
 	}
 }
 
-function printout () {
-	new Header (i18n ("D'Agostino test of skewness")).addFromUI ("alternative").print ();
+function printout (is_preview) {
+	if (!is_preview) {
+		new Header (i18n ("D'Agostino test of skewness")).addFromUI ("alternative").print ();
+	}
 	echo ('rk.results (results)\n');
 }
 

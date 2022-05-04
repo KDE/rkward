@@ -65,60 +65,43 @@ function calculate () {
 	echo ('}\n');
 }
 
-function printout () {
-	doPrintout (true);
-}
+function printout (is_preview) {
+	if (!is_preview) {
+		new Header (i18n ("Crosstabs (n to 1)"), 1).print ();
+		echo ('for (i in 1:length (results)) {\n');
+	} else {
+		echo ('for (i in 1:1) {\n');
+	}
+	sectionHeader (i18n ("Crosstabs (n to 1)"), "");
+	if (any_table_additions) {
+		echo ('	rk.print (ftable (results[[i]], col.vars=2))\n');
+	} else {
+		echo ('	rk.results (results[[i]], titles=c(names (x)[1], names (yvars)[i]))\n');
+	}
+	if (getValue ("chisq") == "TRUE") {
+		echo ('\n');
+		sectionHeader (i18n ("Pearson\'s Chi Square Test for Crosstabs"), ', ' + i18n ("Method") + '=chisquares[[i]][["method"]]');
+		echo ('	rk.results (list (' + i18nc ("a statistic indicator", "Statistic") + '=chisquares[[i]][[\'statistic\']], \'df\'=chisquares[[i]][[\'parameter\']], \'p\'=chisquares[[i]][[\'p.value\']]))\n');
+	}
 
-function preview () {
-	preprocess ();
-	calculate ();
-	doPrintout (false);
+	if (getValue ("barplot") == "TRUE") {
+		echo ('\n');
+		sectionHeader (i18n ("Barplot for Crosstabs"), getValue ('barplot_embed.code.preprocess'));
+		echo ('	rk.graph.on ()\n');
+		echo ('	try ({\n');
+		if (any_table_additions) {
+			echo ('		counts <- results[[i]][, , "count"]\n');
+		} else {
+			echo ('		counts <- results[[i]]\n');
+		}
+		printIndented ("\t\t", getValue ('barplot_embed.code.printout'));
+		echo ('	})\n');
+		echo ('	rk.graph.off ()\n');
+	}
+	echo ('}\n');
 }
 
 function sectionHeader (title, additions) {
 	echo ('\trk.header (' + quote (title) + ', parameters=list (' + i18nc ("dependent variable", "Dependent") + '=names (x)[1], '
 	                      + i18nc ("independent variable", "Independent") + '=names (yvars)[i]' + additions + '), level=2)\n');
 }
-
-function doPrintout (full) {
-	if (full) {
-		new Header (i18n ("Crosstabs (n to 1)"), 1).print ();
-		echo ('for (i in 1:length (results)) {\n');
-		sectionHeader (i18n ("Crosstabs (n to 1)"), "");
-		if (any_table_additions) {
-			echo ('	rk.print (ftable (results[[i]], col.vars=2))\n');
-		} else {
-			echo ('	rk.results (results[[i]], titles=c(names (x)[1], names (yvars)[i]))\n');
-		}
-		if (getValue ("chisq") == "TRUE") {
-			echo ('\n');
-			sectionHeader (i18n ("Pearson\'s Chi Square Test for Crosstabs"), ', ' + i18n ("Method") + '=chisquares[[i]][["method"]]');
-			echo ('	rk.results (list (' + i18nc ("a statistic indicator", "Statistic") + '=chisquares[[i]][[\'statistic\']], \'df\'=chisquares[[i]][[\'parameter\']], \'p\'=chisquares[[i]][[\'p.value\']]))\n');
-		}
-
-		if (getValue ("barplot") == "TRUE") {
-			echo ('\n');
-			sectionHeader (i18n ("Barplot for Crosstabs"), getValue ('barplot_embed.code.preprocess'));
-			echo ('	rk.graph.on ()\n');
-			echo ('	try ({\n');
-			if (any_table_additions) {
-				echo ('		counts <- results[[i]][, , "count"]\n');
-			} else {
-				echo ('		counts <- results[[i]]\n');
-			}
-			printIndented ("\t\t", getValue ('barplot_embed.code.printout'));
-			echo ('	})\n');
-			echo ('	rk.graph.off ()\n');
-		}
-		echo ('}\n');
-	} else {
-		// produce a single barplot of the first result
-		if (any_table_additions) {
-			echo ('counts <- results[[1]][, , "count"]\n');
-		} else {
-			echo ('counts <- results[[1]]\n');
-		}
-		echo (getValue ('barplot_embed.code.printout'));
-	}
-}
-

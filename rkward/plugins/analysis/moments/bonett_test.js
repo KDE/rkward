@@ -10,7 +10,9 @@ function insertTestCall () {
 	}
 }
 
-function printout () {
-	new Header (i18n ("Bonett-Seier test of Geary's kurtosis")).addFromUI ("alternative").print ();
+function printout (is_preview) {
+	if (!is_preview) {
+		new Header (i18n ("Bonett-Seier test of Geary's kurtosis")).addFromUI ("alternative").print ();
+	}
 	echo ('rk.results (results)\n');
 }

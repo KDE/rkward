@@ -29,10 +29,12 @@ function calculate () {
 	echo (')\n');
 }
 
-function printout () {
+function printout (is_preview) {
   	var rad_pvalue      = getValue("rad_pvalue");
 
-	echo ('rk.header (' + i18n ("Item-fit statistics (%1)", getValue("x")) + ')\n');
+	if (!is_preview) {
+		echo ('rk.header (' + i18n ("Item-fit statistics (%1)", getValue("x")) + ')\n');
+	}
 	echo ('rk.print (' + i18n ("Call:") + ')\n');
 	echo ('rk.print.literal (deparse(itemfit.res$call, width.cutoff=500))\n');
 	echo ('rk.print (' + i18n ("Alternative: Items do not fit the model") + ')\n');

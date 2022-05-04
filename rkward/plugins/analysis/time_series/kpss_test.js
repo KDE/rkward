@@ -27,8 +27,10 @@ function calculate () {
 	echo ('}\n');
 }
 
-function printout () {
-	new Header (i18n ("KPSS Test for Level Stationarity")).addFromUI ("null").addFromUI ("lshort").print ();
+function printout (is_preview) {
+	if (!is_preview) {
+		new Header (i18n ("KPSS Test for Level Stationarity")).addFromUI ("null").addFromUI ("lshort").print ();
+	}
 	echo ('rk.results (results)\n');
 }
 

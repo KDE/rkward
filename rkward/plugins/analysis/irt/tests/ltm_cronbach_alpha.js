@@ -53,7 +53,7 @@ function calculate () {
 	echo (', chi.squared=FALSE, B=' + spin_samples + ')\n');
 }
 
-function printout () {
+function printout (is_preview) {
 	var chk_select      = getValue("chk_select");
 	var spin_samples    = getValue("spin_samples");
 	var chk_standard    = getValue("chk_standard");
@@ -65,10 +65,12 @@ function printout () {
 	if (inp_items)
 		inp_items   = inp_items.replace(/\n/g,', ').replace(/(\w*)\[\["|"\]\]/g, '');
 
-	header = new Header (i18n ("Cronbach\'s alpha")).add (i18n ("Dataset"), getValue ("x"));
-	if (chk_select && inp_items)
-		header.add (i18n ("Subset"), inp_items);
-	header.print ();
+	if (!is_preview) {
+		header = new Header (i18n ("Cronbach\'s alpha")).add (i18n ("Dataset"), getValue ("x"));
+		if (chk_select && inp_items)
+			header.add (i18n ("Subset"), inp_items);
+		header.print ();
+	}
 	echo ('rk.print(paste(' + i18n ("Items:") + ',cronalpha.res$p,' + i18n ("<br />Sample units:") + ',cronalpha.res$n,"<br /><strong>alpha:",round(cronalpha.res$alpha, digits=2),"</strong>');
 	if (chk_standard) echo(" (standardized)");
 	echo ('"))\n');

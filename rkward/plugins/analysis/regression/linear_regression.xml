@@ -13,6 +13,7 @@
 					<checkbox id="intercept" label="Include intercept" checked="true"/>
 					<checkbox id="beta" label="Show standardized coefficients" checked="false"/>
 					<stretch/>
+					<preview id="preview" mode="output"/>
 				</column>
 			</row>
 		</tab>

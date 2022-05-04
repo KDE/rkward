@@ -18,6 +18,7 @@
 					<varselector id="vars"/>
 					<varslot types="numeric" min_vars="2" multi="true" id="x" source="vars" required="true" label="variable(s):" num_dimensions="1"/>
 				</row>
+				<preview id="preview" mode="output"/>
 			</tab>
 			<tab label="Options" id="tab_Options">
 				<checkbox id="do_p" label="Calculate p values" value="1" checked="true" />

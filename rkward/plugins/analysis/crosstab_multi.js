@@ -18,9 +18,3 @@ function printout(is_preview) {
 	}
 	echo ('rk.print (result)\n');
 }
-
-function preview() {
-	preprocess();
-	calculate();
-	printout(true);
-}

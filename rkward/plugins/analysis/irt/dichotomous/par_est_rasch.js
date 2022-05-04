@@ -40,13 +40,15 @@ function calculate () {
 	echo (')\n');
 }
 
-function printout () {
+function printout (is_preview) {
 	// check whether parameter estimations should be kept in the global enviroment
 	var save      = getValue("save_name.active");
 	var save_name = getValue("save_name");
 	var irtparam  = getValue("irtparam");
 
-	echo ('rk.header (' + i18n ("Rasch parameter estimation") + ')\n');
+	if (!is_preview) {
+		echo ('rk.header (' + i18n ("Rasch parameter estimation") + ')\n');
+	}
 	echo ('rk.print (' + i18n ("Call:") + ')\n');
 	echo ('rk.print.literal (deparse(estimates.rasch$call, width.cutoff=500))\n');
 	echo ('rk.header (' + i18n ("Coefficients:") + ', level=4)\n');
