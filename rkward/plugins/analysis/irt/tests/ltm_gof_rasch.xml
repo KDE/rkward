@@ -18,6 +18,7 @@
             <frame label="Bootstrap options">
               <spinbox id="spin_samples" label="Number of samples" type="integer" initial="49" min="1" size="small" />
             </frame>
+            <preview id="preview" mode="output"/>
           </column>
         </row>
       </tab>

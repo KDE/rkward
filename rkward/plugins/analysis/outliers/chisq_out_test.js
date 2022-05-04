@@ -8,7 +8,9 @@ function makeTestCall () {
 	echo ('		results[i, ' + i18n ("Variance") + '] <- var (var)\n');
 }
 
-function printout () {
-	new Header (i18n ("Chi-squared test for outlier")).addFromUI ("opposite").print ();
+function printout (is_preview) {
+	if (!is_preview) {
+		new Header (i18n ("Chi-squared test for outlier")).addFromUI ("opposite").print ();
+	}
 	echo ('rk.results (results)\n');
 }

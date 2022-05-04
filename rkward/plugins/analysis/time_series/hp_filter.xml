@@ -48,6 +48,7 @@
 								<saveobject id="cycle_name" label="Save cycle" checkable="true" initial="hpcycle"/>
 							</frame>
 						</row>
+						<preview id="preview" mode="output"/>
 					</column>
 				</row>
 			</tab>

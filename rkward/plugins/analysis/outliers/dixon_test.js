@@ -7,8 +7,10 @@ function makeTestCall () {
 	echo ('		results[i, ' + i18n ("Alternative Hypothesis") + ']<- rk.describe.alternative (t)\n');
 }
 
-function printout () {
-	new Header (i18n ("Dixon test for outlier")).addFromUI ("type").addFromUI ("opposite").addFromUI ("two_sided").print ();
+function printout (is_preview) {
+	if (!is_preview) {
+		new Header (i18n ("Dixon test for outlier")).addFromUI ("type").addFromUI ("opposite").addFromUI ("two_sided").print ();
+	}
 	echo ('rk.results (results)\n');
 }
 

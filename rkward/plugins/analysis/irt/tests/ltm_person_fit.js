@@ -30,8 +30,10 @@ function calculate () {
 	echo (')\n');
 }
 
-function printout () {
-	echo ('rk.header (' + i18n ("Person-fit statistics (%1)", getValue("x")) + ')\n');
+function printout (is_preview) {
+	if (!is_preview) {
+		echo ('rk.header (' + i18n ("Person-fit statistics (%1)", getValue("x")) + ')\n');
+	}
 	echo ('rk.print (' + i18n ("Call:") + ')\n');
 	echo ('rk.print.literal (deparse(personfit.res$call, width.cutoff=500))\n');
 	echo ('rk.header (' + i18n ("Response patterns, person-fit statistics (L0, Lz) and probabilities for each response pattern (Pr):") + ', level=4)\n');

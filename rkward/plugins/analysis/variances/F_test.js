@@ -6,13 +6,15 @@ function calculate () {
 	echo ('\n');
 }
 
-function printout () {
+function printout (is_preview) {
 	echo ('names <- rk.get.description (' + getValue ("x") + ', ' + getValue ("y") + ')\n');
 	echo ('\n');
-	new Header (noquote ('result$method'))
-	    .addFromUI ("conflevel")
-	    .addFromUI ("ratio")
-	    .add (i18n ("Alternative Hypothesis"), noquote ('rk.describe.alternative(result)')).print ();
+	if (!is_preview) {
+		new Header (noquote ('result$method'))
+		    .addFromUI ("conflevel")
+		    .addFromUI ("ratio")
+		    .add (i18n ("Alternative Hypothesis"), noquote ('rk.describe.alternative(result)')).print ();
+	}
 	echo ('\n');
 	echo ('rk.results (list (\n');
 	echo ('	' + i18n ("Variables") + '=names,\n');

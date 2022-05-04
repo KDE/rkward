@@ -42,7 +42,7 @@ rk.results (data.frame ("Quantile"=q, "Density"=d, check.names=FALSE))
 })
 local({
 ## Compute
-p <- -21:0
+p <- -20:0
 q <- qbeta (p, shape1=1.0, shape2=2.0, ncp=0.0, log.p=TRUE)
 ## Print result
 rk.header ("Beta distribution", parameters=list("Shape 1"="1.0",
@@ -53,7 +53,7 @@ rk.results (data.frame ("log (Probability)"=p, "Quantile"=q, check.names=FALSE))
 })
 local({
 ## Compute
-p <- seq (0, 1, length.out=21)
+p <- seq (0, 1, length.out=20)
 q <- qbeta (p, shape1=1.0, shape2=2.0, ncp=0.0)
 ## Print result
 rk.header ("Beta distribution", parameters=list("Shape 1"="1.0",

@@ -14,6 +14,7 @@
 							Note: Objects must have at least 5 values
 						</text>
 						<stretch/>
+						<preview id="preview" mode="output"/>
 					</column>
 				</row>
 			</tab>

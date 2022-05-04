@@ -58,8 +58,10 @@ function calculate () {
 	}
 }
 
-function printout () {
-	new Header (i18n ("Hodrick-Prescott Filter")).add (i18n ("Lambda"), lambda).print ();
+function printout (is_preview) {
+	if (!is_preview) {
+		new Header (i18n ("Hodrick-Prescott Filter")).add (i18n ("Lambda"), lambda).print ();
+	}
 
 	echo ('rk.graph.on ()\n');
 	echo ('try({\n');

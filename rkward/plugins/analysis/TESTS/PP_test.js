@@ -22,9 +22,11 @@ function calculate () {
 	echo ('}\n');
 }
 
-function printout () {
-	new Header ("Phillips-Perron Test for Unit Roots").addFromUI ("lshort").print ();
-	echo ('\n');
+function printout (is_preview) {
+	if (!is_preview) {
+		new Header ("Phillips-Perron Test for Unit Roots").addFromUI ("lshort").print ();
+		echo ('\n');
+	}
 	echo ('rk.results (results)\n');
 }
 

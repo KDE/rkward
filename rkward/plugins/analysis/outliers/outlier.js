@@ -5,8 +5,10 @@ function makeTestCall () {
 	echo ('		results[i, \'Outlier\'] <- t\n');
 }
 
-function printout () {
-	new Header (i18n ("Find potential outlier")).addFromUI ("opposite").print ();
+function printout (is_preview) {
+	if (!is_preview) {
+		new Header (i18n ("Find potential outlier")).addFromUI ("opposite").print ();
+	}
 	echo ('rk.results (results)\n');
 }
 

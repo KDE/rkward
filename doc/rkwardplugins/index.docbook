@@ -44,7 +44,7 @@ as Authors, publish date, the abstract, and Keywords -->
 
 
 <copyright>
-<year>2006-2020</year>
+<year>2006-2022</year>
 <holder>Thomas Friedrichsmeier</holder>
 </copyright>
 <!-- Translators: put here the copyright notice of the translation -->
@@ -52,8 +52,8 @@ as Authors, publish date, the abstract, and Keywords -->
      and in the FDL itself on how to use it. -->
 <legalnotice>&FDLNotice;</legalnotice>
 
-<date>2020-09-26</date>
-<releaseinfo>0.7.2</releaseinfo>
+<date>2022-04-24</date>
+<releaseinfo>0.7.4</releaseinfo>
 
 <abstract>
 <para>
@@ -1354,7 +1354,10 @@ This chapter contains information on some topics that are useful only to certain
 			And that is it for the &GUI; definition.
 		</para>
 		<para>
-			Adjusting the JS template is a little more work. You will have to create a new function called <function>preview()</function> in addition to the <function>preprocess()</function>, <function>calculate()</function>, &etc; functions. This function should generate the code needed to produce the plot, and only that. Esp. no printing of headers, <function>rk.graphics.on()</function>, or similar calls. See the <link linkend="plot_plugin_example">example</link>, below for the typical pattern that you will use.
+			Adjusting the JS template is only a little more work, here you will have to make sure, only the plot itself is generated, and shown in an onscreen-device, rather than directed to the output. I.e. no printing of headers, <function>rk.graphics.on()</function>, or similar calls. To assist you in this, &rkward; will call the <function>preprocess()</function>, <function>calculate()</function>, and <function>printout()</function> functions with an additional parameter that is set to <parameter>true</parameter>, when generating code for a preview. (The parameter is omitted when generating the final code. In javascript this will evaluate to <parameter>false</parameter> when used inside an <function>if</function>-statement.)  See the <link linkend="plot_plugin_example">example</link>, below for the typical pattern that you will use.
+		</para>
+		<para>
+			Alternatively, should you need more control than this, you can instead add a new function called <function>preview()</function> to your JS template, and generate the code required for a preview, there (probably, at least in part, again by calling <function>calculate()</function>, etc.).
 		</para>
 	</sect2>
 	<sect2 id="plot_options">
@@ -1399,16 +1402,9 @@ This chapter contains information on some topics that are useful only to certain
     // the "somepackage" is needed to create the plot
     echo ("require (somepackage)\n");
   }
-
-  function preview () {
-    // we call all stages of the general code. Only the printout () function needs to be called slightly different for the plot preview
-    preprocess ();
-    // calculate (); // in this example, the plugin has no calculate () function.
-    printout (true); // in this case, 'true' means: Create the plot, but not any headers or other output.
-  }
   
   function printout (is_preview) {
-    // If "is_preview" is set to false, it generates the full code, including headers.
+    // If "is_preview" is set to false/undefined, it generates the full code, including headers.
     // If "is_preview" is set to true, only the essentials will be generated.
 
     if (!is_preview) {

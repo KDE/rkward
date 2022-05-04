@@ -40,16 +40,25 @@ function calculate () {
 	echo (options + ')\n');
 }
 
-function printout () {
-	var header = new Header (noquote ('result$method'));
-	header.add (i18n ('Comparing'), noquote ('names[1]'));
-	header.add (i18nc ("compare against", 'against'), (testForm != "const") ? noquote ('names[2]') : i18n ('constant value: %1', mu));
-	header.add ('H1', noquote ('rk.describe.alternative (result)'));
-	if (testForm == "indep") {
-		header.add (i18n ('Equal variances'), varequal ? i18n ('assumed') : i18n ('not assumed'));
+function preview() {
+	preprocess();
+	calculate();
+	printout(true);
+}
+
+function printout(is_preview) {
+	if (!is_preview) {
+		var header = new Header (noquote ('result$method'));
+		header.add (i18n ('Comparing'), noquote ('names[1]'));
+		header.add (i18nc ("compare against", 'against'), (testForm != "const") ? noquote ('names[2]') : i18n ('constant value: %1', mu));
+		header.add ('H1', noquote ('rk.describe.alternative (result)'));
+		if (testForm == "indep") {
+			header.add (i18n ('Equal variances'), varequal ? i18n ('assumed') : i18n ('not assumed'));
+		}
+		header.print ();
+		echo ('\n');
 	}
-	header.print ();
-	echo ('\n');
+
 	echo ('rk.results (list (\n');
 	echo ('	' + i18n ('Variable Name') + '=names,\n');
 	echo ('	' + i18n ('estimated mean') + '=result$estimate,\n');

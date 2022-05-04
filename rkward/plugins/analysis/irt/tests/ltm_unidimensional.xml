@@ -21,6 +21,7 @@
               <spinbox id="spin_samples" label="Number of samples:" type="integer" initial="100" min="1" size="small" />
             </frame>
             <saveobject id="save_name" checkable="true" checked="true" label="Save results in workspace" initial="unidim.res"/>
+            <preview id="preview" mode="output"/>
           </column>
         </row>
       </tab>

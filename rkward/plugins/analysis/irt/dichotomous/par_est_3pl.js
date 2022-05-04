@@ -51,12 +51,14 @@ function calculate () {
 	echo (')\n');
 }
 
-function printout () {
+function printout (is_preview) {
 	// check whether parameter estimations should be kept in the global enviroment
 	var save = getValue("save_name.active");
 	var save_name = getValue("save_name");
 
-	echo ('rk.header (' + i18n ("3PL parameter estimation") + ')\n');
+	if (!is_preview) {
+		echo ('rk.header (' + i18n ("3PL parameter estimation") + ')\n');
+	}
 	echo ('rk.print (' + i18n ("Call:") + ')\n');
 	echo ('rk.print.literal (deparse(estimates.3pl$call, width.cutoff=500))\n');
 	echo ('rk.header (' + i18n ("Coefficients:") + ', level=4)\n');

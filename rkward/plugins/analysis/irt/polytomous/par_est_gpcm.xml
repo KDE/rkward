@@ -27,6 +27,7 @@
             </frame>
             <stretch />
             <saveobject id="save_name" checkable="true" checked="true" label="Save results in workspace" initial="estimates.gpcm"/>
+            <preview id="preview" mode="output"/>
           </column>
         </row>
       </tab>

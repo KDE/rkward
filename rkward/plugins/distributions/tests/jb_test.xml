@@ -12,6 +12,7 @@
 					<column>
 						<varslot types="numeric" multi="true" id="x" source="vars" required="true" label="variable(s):"/>
 					</column>
+					<preview id="preview" mode="output"/>
 				</row>
 			</tab>
 			<tab label="Options">

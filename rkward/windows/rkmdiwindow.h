@@ -11,6 +11,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QFrame>
 #include <QMap>
 #include <QUrl>
+#include <QTimer>
 
 #include <kparts/part.h>
 
@@ -179,6 +180,9 @@ friend class RKToolWindowBar;
 	QUrl help_url;
 	RKSettings::SettingsPage settings_page;
 	KXMLGUIClient* ui_buddy;
+	void showStatusMessageNow();
+	QTimer status_message_timer;
+	QString status_message;
 };
 
 #endif

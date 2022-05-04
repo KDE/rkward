@@ -4,7 +4,9 @@ function testCall () {
 	return ("cvm.test (var)");
 }
 
-function printout () {
-	echo ('rk.header (' + i18n ("Cramer-von Mises Normality Test") + ')\n');
+function printout (is_preview) {
+	if (!is_preview) {
+		echo ('rk.header (' + i18n ("Cramer-von Mises Normality Test") + ')\n');
+	}
 	echo ('rk.results (results)\n');
 }

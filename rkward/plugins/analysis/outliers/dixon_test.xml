@@ -10,6 +10,7 @@
 					<varselector id="vars"/>
 					<column>
 						<varslot types="numeric" id="x" multi="true" source="vars" required="true" label="variable(s):"/>
+						<preview id="preview" mode="output"/>
 					</column>
 				</row>
 			</tab>

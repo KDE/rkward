@@ -13,11 +13,13 @@ function calculate () {
 	echo (')\n');
 }
 
-function printout () {
+function printout (is_preview) {
 	var save         = getValue("save_name.active");
 	var save_name    = getValue("save_name");
 
-	echo ('rk.header (' + i18n ("Unidimensionality check (%1)", getValue("x")) + ')\n');
+	if (!is_preview) {
+		echo ('rk.header (' + i18n ("Unidimensionality check (%1)", getValue("x")) + ')\n');
+	}
 	echo ('rk.print (' + i18n ("Call:") + ')\n');
 	echo ('rk.print.literal (deparse(unidim.res$call, width.cutoff=500))\n');
 	echo ('rk.header (' + i18n ("Matrix of tetrachoric correlations:") + ', level=4)\n');
