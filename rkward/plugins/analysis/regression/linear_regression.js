@@ -10,7 +10,8 @@ function calculate () {
 	var savemodel = getBoolean ("savemodel.active");
 	var savefitted = getBoolean ("savefitted.active");
 	var saveresiduals = getBoolean ("saveresiduals.active");
-	var simple_mode = !(savefitted || saveresiduals || savemodel);
+	var anova = getBoolean("anova");
+	var simple_mode = !(savefitted || saveresiduals || savemodel || anova);
 
 	model = 'lm (' + getValue ("y") + ' ~ ' + intercept + vars;
 	if (!simple_mode) model += ', na.action=na.exclude';	// default action of na.omit is a nuisance for fitted values
@@ -25,6 +26,7 @@ function calculate () {
 		if (savefitted) echo ('.GlobalEnv$' + getString ('savefitted') + ' <- fitted (model)\n');
 		if (saveresiduals) echo ('.GlobalEnv$' + getString ('saveresiduals') + ' <- residuals (model)\n');
 		echo ('results <- summary (model)\n');
+		if (anova) echo ('results_anova <- anova (model)\n');
 	}
 }
 
@@ -33,4 +35,5 @@ function printout (is_preview) {
 		echo ('rk.header (' + i18n ("Linear Regression") + ')\n');
 	}
 	echo ('rk.print(results)\n');
+	if (getBoolean("anova")) echo ('rk.print(results_anova)\n');
 }

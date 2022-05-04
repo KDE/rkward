@@ -12,6 +12,7 @@
 					<varslot types="numeric" id="x" source="vars" required="true" multi="true" label="independent variables"/>
 					<checkbox id="intercept" label="Include intercept" checked="true"/>
 					<checkbox id="beta" label="Show standardized coefficients" checked="false"/>
+					<checkbox id="anova" label="Show ANOVA table" checked="false"/>
 					<stretch/>
 					<preview id="preview" mode="output"/>
 				</column>
