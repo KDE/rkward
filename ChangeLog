@@ -1,6 +1,5 @@
 TODOs:
 	- More tolerant handshake on Windows? Simply a matter of allowing more time?
-	- Allow vector of names in require()
 
 - Add option to show ANOVA table for linear regression
 - Add default preview() function is available to plugins, reducing the code needed to add preview functionality
@@ -8,7 +7,6 @@ TODOs:
 - Better placement of messages in non-plot preview windows
 - Fixed some problems with cancelling running commands
 - Package installation uses inline widget to provide progress feedback, instead of separate dialogs
-  - TODO: Remove current repositories from .rk.get.package.installation.status() (no longer needed)
 - Package installation no longer uses an external process, unless required for root permissions
 - Fixed: Package installation as root would fail to find kdesu/kdesudo on recent systems
 - Fixed: R help pages would refuse to open in new tab

@@ -174,8 +174,7 @@
 	list ("available" = list (available$Package, available$Title, available$Version, available$Repository, grepl ("rkward", available$Enhances)),
 		"installed" = list (inst$Package, inst$Title, inst$Version, inst$LibPath, grepl ("rkward", inst$Enhances)),
 		"new" = as.integer (new - 1),
-		"old" = list (as.integer (oldinst - 1), as.integer (oldavail - 1)),
-		"repos" = as.character (options("repos")$repos))
+		"old" = list (as.integer (oldinst - 1), as.integer (oldavail - 1)))
 }
 
 # package information formats may - according to the help - be subject to change. Hence this function to cope with "missing" values
