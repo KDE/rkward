@@ -11,14 +11,14 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <kconfig.h>
 #include <kconfiggroup.h>
 
-#include <qlayout.h>
-#include <qcheckbox.h>
-#include <qlabel.h>
+#include <QLabel>
 #include <QVBoxLayout>
 #include <QInputDialog>
+#include <QTextEdit>
 
 #include "../misc/multistringselector.h"
 #include "../misc/rkstandardicons.h"
+#include "../misc/rkcommonfunctions.h"
 #include "rksettings.h"
 #include "rksettingsmodulegeneral.h"
 #include "../debug.h"
@@ -27,6 +27,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 RKConfigValue<bool> RKSettingsModuleObjectBrowser::workspace_settings[RKObjectListViewSettings::SettingsCount] {{"show hidden vars", false},{"show type field", true},{"show class field", true},{"show label field", true}};
 RKConfigValue<bool> RKSettingsModuleObjectBrowser::varselector_settings[RKObjectListViewSettings::SettingsCount] { RKSettingsModuleObjectBrowser::workspace_settings[0],RKSettingsModuleObjectBrowser::workspace_settings[1],RKSettingsModuleObjectBrowser::workspace_settings[2],RKSettingsModuleObjectBrowser::workspace_settings[3]};
 RKConfigValue<QStringList> RKSettingsModuleObjectBrowser::getstructure_blacklist {"package blacklist", QStringList("GO")};
+RKConfigValue<QStringList> RKSettingsModuleObjectBrowser::ignored_symbol_names {"ignored_symbol_names", QStringList(".Random.Seed")};
 
 RKSettingsModuleObjectBrowser::RKSettingsModuleObjectBrowser (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -42,6 +43,14 @@ RKSettingsModuleObjectBrowser::RKSettingsModuleObjectBrowser (RKSettings *gui, Q
 	connect (blacklist_choser, &MultiStringSelector::listChanged, this, &RKSettingsModuleObjectBrowser::listChanged);
 	connect (blacklist_choser, &MultiStringSelector::getNewStrings, this, &RKSettingsModuleObjectBrowser::addBlackList);
 	layout->addWidget (blacklist_choser);
+
+	layout->addWidget(RKCommonFunctions::wordWrappedLabel(i18n("Symbol names to ignore when checking for any modifications to the workspace (one per line)")));
+	ignored_symbol_names_input = new QTextEdit();
+	ignored_symbol_names_input->setWordWrapMode(QTextOption::NoWrap);
+	ignored_symbol_names_input->setAcceptRichText(false);
+	ignored_symbol_names_input->setPlainText(ignored_symbol_names.get().join('\n'));
+	connect(ignored_symbol_names_input, &QTextEdit::textChanged, this, &RKSettingsModuleObjectBrowser::change);
+	layout->addWidget(ignored_symbol_names_input);
 }
 
 RKSettingsModuleObjectBrowser::~RKSettingsModuleObjectBrowser () {
@@ -77,6 +86,7 @@ void RKSettingsModuleObjectBrowser::applyChanges () {
 	RK_TRACE (SETTINGS);
 
 	getstructure_blacklist = blacklist_choser->getValues();
+	ignored_symbol_names = ignored_symbol_names_input->toPlainText().split('\n');
 }
 
 QString RKSettingsModuleObjectBrowser::caption() const {
@@ -108,6 +118,7 @@ void RKSettingsModuleObjectBrowser::syncConfig(KConfig *config, RKConfigBase::Co
 
 	KConfigGroup cg = config->group("Object Browser");
 	getstructure_blacklist.syncConfig(cg, a);
+	ignored_symbol_names.syncConfig(cg, a);
 
 	syncSettings (cg.group("Tool window"), a, workspace_settings);
 	syncSettings (cg.group("Varselector"), a, varselector_settings);

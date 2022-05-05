@@ -85,7 +85,7 @@ void RKLoadAgent::rCommandDone (RCommand *command) {
 		RKWardMainWindow::getMain ()->setCaption (QString ());	// trigger update of caption
 	} else if (command->getFlags () == WORKSPACE_LOAD_COMPLETE_COMMAND) {
 		RKWardMainWindow::getMain ()->slotSetStatusReady ();
-		RKWardMainWindow::getMain ()->setWorkspaceMightBeModified (false);
+		RObjectList::getObjectList()->setWorkspaceModified(false);
 		RKOutputDirectory::getCurrentOutput();  // make sure some output file exists
 
 		delete this;

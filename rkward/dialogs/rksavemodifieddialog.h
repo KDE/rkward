@@ -16,6 +16,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../windows/rkmdiwindow.h"
 
 class QTreeWidgetItem;
+class RKOutputDirectory;
 
 class RKSaveModifiedDialog : public QDialog {
 	Q_OBJECT
@@ -26,7 +27,7 @@ public:
  *  @returns true, if the user chose to proceed (with or without saving modications), _and_ saving was successful; false, if the user cancelled the operation, or some saves failed. */
 	static bool askSaveModified (QWidget* parent, QList<RKMDIWindow*> windows, bool project);
 private:
-	RKSaveModifiedDialog (QWidget* parent, QList<RKMDIWindow*> modified_windows, bool project);
+	RKSaveModifiedDialog (QWidget* parent, QList<RKMDIWindow*> modified_windows, bool project, const QList<RKOutputDirectory*> &modified_outputs);
 	virtual ~RKSaveModifiedDialog ();
 	QMap<QTreeWidgetItem *, QPointer<RKMDIWindow>> window_checklist;
 	QTreeWidgetItem *save_project_check;

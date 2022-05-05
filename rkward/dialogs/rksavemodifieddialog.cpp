@@ -1,6 +1,6 @@
 /*
 rksavemodifieddialog - This file is part of RKWard (https://rkward.kde.org). Created: Wed Jul 12 2017
-SPDX-FileCopyrightText: 2017 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2017-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -21,6 +21,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../windows/rkhtmlwindow.h"
 #include "../misc/rkoutputdirectory.h"
 #include "../agents/rksaveagent.h"
+#include "../core/robjectlist.h"
 
 #include "../debug.h"
 
@@ -34,8 +35,15 @@ bool RKSaveModifiedDialog::askSaveModified (QWidget* parent, QList <RKMDIWindow*
 		}
 	}
 
+	QList<RKOutputDirectory*> modified_outputs;
+	if (project) {
+		modified_outputs = RKOutputDirectory::modifiedOutputDirectories();
+		project = project && ((!modified_outputs.isEmpty()) || RObjectList::getObjectList()->workspaceModified());
+	}
+
+	// TODO: wait for outstanding commands to finish!
 	if (project || !modified_wins.isEmpty ()) {
-		RKSaveModifiedDialog dialog (parent, modified_wins, project);
+		RKSaveModifiedDialog dialog (parent, modified_wins, project, modified_outputs);
 		dialog.exec ();
 		if (dialog.result () == QDialog::Rejected) return false;
 	}
@@ -58,7 +66,7 @@ QTreeWidgetItem* makeHeaderItem (const QString &label, QTreeWidget* tree) {
 	return header;
 }
 
-RKSaveModifiedDialog::RKSaveModifiedDialog (QWidget* parent, QList<RKMDIWindow*> modified_wins, bool project) : QDialog (parent) {
+RKSaveModifiedDialog::RKSaveModifiedDialog (QWidget* parent, QList<RKMDIWindow*> modified_wins, bool project, const QList<RKOutputDirectory*> &modified_outputs) : QDialog (parent) {
 	RK_TRACE (APP);
 
 	setWindowTitle (i18n ("Save modified"));
@@ -81,9 +89,12 @@ RKSaveModifiedDialog::RKSaveModifiedDialog (QWidget* parent, QList<RKMDIWindow*>
 		}
 		save_project_check = new QTreeWidgetItem(QStringList(url));
 		header->addChild(save_project_check);
-		save_project_check->setCheckState(0, Qt::Checked);
+		if (RObjectList::getObjectList()->workspaceModified()) {
+			save_project_check->setCheckState(0, Qt::Checked);
+		} else {
+			header->setHidden(true);
+		}
 
-		auto modified_outputs = RKOutputDirectory::modifiedOutputDirectories();
 		if (!modified_outputs.isEmpty()) {
 			QTreeWidgetItem *header = makeHeaderItem(i18n("Output files"), tree);
 			for (int i = 0; i < modified_outputs.size(); ++i) {

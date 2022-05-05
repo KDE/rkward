@@ -14,6 +14,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 class QCheckBox;
 class MultiStringSelector;
+class QTextEdit;
 
 /** Configuration module for instances of RObjectListView
 @see RKSettingsModule
@@ -42,6 +43,8 @@ public:
 	static void setDefaultForVarselector (RKObjectListViewSettings::PersistentSettings setting, bool state);
 
 	static bool isPackageBlacklisted (const QString &package_name);
+/** return true, if the given symbol name should be ignored, /wrt considering the workspace as modified */
+	static bool inWorkspaceModifiedIgnoreList(const QString &symbol) { return ignored_symbol_names.get().contains(symbol); };
 
 	QUrl helpURL () override { return QUrl ("rkward://page/rkward_workspace_browser#settings"); };
 public slots:
@@ -51,7 +54,9 @@ public slots:
 	void addBlackList (QStringList *string_list);
 private:
 	MultiStringSelector *blacklist_choser;
+	QTextEdit *ignored_symbol_names_input;
 	static RKConfigValue<QStringList> getstructure_blacklist;
+	static RKConfigValue<QStringList> ignored_symbol_names;
 
 	static RKConfigValue<bool> workspace_settings[RKObjectListViewSettings::SettingsCount];
 	static RKConfigValue<bool> varselector_settings[RKObjectListViewSettings::SettingsCount];

@@ -31,6 +31,7 @@ RObjectList *RObjectList::object_list = 0;
 RObjectList::RObjectList () : RContainerObject (0, QString ()) {
 	RK_TRACE (OBJECTS);
 	object_list = this;
+	workspace_modified = false;
 
 	update_timer = new QTimer (this);
 	update_timer->setSingleShot (true);

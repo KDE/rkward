@@ -113,7 +113,6 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 
 	gui_rebuild_locked = true;
 	no_ask_save = true;
-	workspace_modified = false;
 	merge_loads = false;
 	rkward_mainwin = this;
 	katepluginintegration = nullptr;

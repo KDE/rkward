@@ -57,6 +57,8 @@ public:
 	/** A pseudo object containing as children all loaded namespaces which do not belong to a package on the search path */
 	RKOrphanNamespacesObject* orphanNamespacesObject () const { return orphan_namespaces; };
 	QString getObjectDescription () const override;
+	void setWorkspaceModified(bool modified) { workspace_modified = modified; };
+	bool workspaceModified() const { return workspace_modified; };
 public slots:
 	void timeout ();
 signals:
@@ -90,6 +92,7 @@ private:
 
 	REnvironmentObject *globalenv;
 	static RObjectList *object_list;
+	bool workspace_modified;
 };
 
 /**

@@ -16,6 +16,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../settings/rksettingsmoduleoutput.h"
 #include "../settings/rksettingsmodulegraphics.h"
 #include "../settings/rksettingsmoduleplugins.h"
+#include "../settings/rksettingsmoduleobjectbrowser.h"
 #include "../core/robjectlist.h"
 #include "../core/renvironmentobject.h"
 #include "../core/rkmodificationtracker.h"
@@ -260,7 +261,6 @@ void RInterface::doNextCommand (RCommand *command) {
 	flushOutput (true);
 	RCommandProxy *proxy = 0;
 	if (command) {
-		RKWardMainWindow::getMain ()->setWorkspaceMightBeModified (true);
 		proxy = command->makeProxy ();
 
 		RK_DEBUG (RBACKEND, DL_DEBUG, "running command: %s", command->command ().toLatin1().data ());
@@ -699,6 +699,9 @@ void RInterface::processHistoricalSubstackRequest (const QStringList &calllist, 
 				obj->updateFromR (in_chain);
 			} else {
 				RK_DEBUG (RBACKEND, DL_WARNING, "lookup failed for changed symbol %s", object_name.toLatin1 ().data());
+			}
+			if (!RKSettingsModuleObjectBrowser::inWorkspaceModifiedIgnoreList(object_name)) {
+				RObjectList::getObjectList()->setWorkspaceModified(true);
 			}
 		}
 	} else if (call == "syncenvs") {

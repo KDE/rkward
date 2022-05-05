@@ -44,9 +44,6 @@ public:
 	void lockGUIRebuild (bool lock);
 /** Set whether not to ask for saving, although the workspace @em might be modified */
 	void setNoAskSave (bool no_ask) { no_ask_save = no_ask; };
-/** Set whether workspace is known to be unmodified, or could be modified.
-    TODO: Some less guessing would be nice... */
-	void setWorkspaceMightBeModified (bool modified) { workspace_modified = modified; };
 /** Merge files to be loaded, instead of closing windows / clearing workspace */
 	void setMergeLoads (bool merge) { merge_loads = merge; };
 
@@ -68,7 +65,6 @@ protected:
 signals:
 	void aboutToQuitRKWard ();
 public slots:
-	void setWorkspaceUnmodified () { setWorkspaceMightBeModified (false); };
 	/** open a workspace. If the current workspace is not empty, ask whether to save first.
     @see setNoAskSave ()
     @see setWorkspaceMightBeModified () */
@@ -181,7 +177,6 @@ private:
 	RKTopLevelWindowGUI *toplevel_actions;
 	bool gui_rebuild_locked;
 	bool no_ask_save;
-	bool workspace_modified;
 	bool merge_loads;
 
 	KatePluginIntegrationApp *katepluginintegration;
