@@ -18,7 +18,7 @@ about.info <- rk.XML.about(
       email="meik.michalke@hhu.de", role=c("aut","cre")),
     person(given="Thomas", family="Friedrichsmeier", email="thomas.friedrichsmeier@ruhr-uni-bochum.de", role=c("ctb"))),
   about=list(desc="RKWard GUI to perform power analysis and sample size estimation.",
-    version="0.03-1", url="http://rkward.kde.org")
+    version="0.03-1", url="https://rkward.kde.org")
   )
 dependencies.info <- rk.XML.dependencies(
   dependencies=list(rkward.min="0.6.3",

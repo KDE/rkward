@@ -7,7 +7,7 @@
 		shortinfo="Plugins for producing various plots. Part of the official RKWard distribution"
 		version="0.7.4"
 		license="GPL"
-		url="http://rkward.kde.org">
+		url="https://rkward.kde.org">
 		<insert snippet="author_rkward_team"/>
 	</about>
 	<insert snippet="rkward_version_guard"/>

@@ -302,7 +302,7 @@ RKConfigValue<bool> RKSettingsModuleRPackages::archive_packages {"archive packag
 #	define USE_SOURCE_PACKAGES true
 #endif
 RKConfigValue<bool> RKSettingsModuleRPackages::source_packages {"source_packages", USE_SOURCE_PACKAGES};
-#define RKWARD_REPO "http://files.kde.org/rkward/R/"
+#define RKWARD_REPO "https://files.kde.org/rkward/R/"
 RKConfigValue<QStringList> RKSettingsModuleRPackages::package_repositories {"Repositories", QStringList(RKWARD_REPO)};
 QString RKSettingsModuleRPackages::essential_packages = QString ("base\nmethods\nutils\ngrDevices\ngraphics\nrkward");
 RKConfigValue<QString> RKSettingsModuleRPackages::cran_mirror_url {"CRAN mirror url", "@CRAN@"};

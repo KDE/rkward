@@ -20,7 +20,7 @@ Depends: \tab R (>= 2.9.0),methods\cr
 Encoding: \tab UTF-8\cr
 License: \tab GPL (>= 2)\cr
 LazyLoad: \tab yes\cr
-URL: \tab http://rkward.kde.org\cr
+URL: \tab https://rkward.kde.org\cr
 }
 }
 \author{

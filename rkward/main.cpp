@@ -13,7 +13,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 **
 **	\section	website	Website
 **
-**	<A HREF="http://rkward.kde.org">RKWard's project page</A>
+**	<A HREF="https://rkward.kde.org">RKWard's project page</A>
 **
 **	\section	description Description
 **
@@ -253,7 +253,7 @@ int main (int argc, char *argv[]) {
 	KUrlAuthorized::allowUrlAction ("redirect", QUrl("rkward://"), QUrl ("help:"));
 
 	KLocalizedString::setApplicationDomain ("rkward");
-	KAboutData aboutData ("rkward", i18n ("RKWard"), RKWARD_VERSION, i18n ("Frontend to the R statistics language"), KAboutLicense::GPL, i18n ("(c) 2002, 2004 - 2020"), QString (), "http://rkward.kde.org");
+	KAboutData aboutData ("rkward", i18n ("RKWard"), RKWARD_VERSION, i18n ("Frontend to the R statistics language"), KAboutLicense::GPL, i18n ("(c) 2002, 2004 - 2020"), QString (), "https://rkward.kde.org");
 	aboutData.addAuthor (i18n ("Thomas Friedrichsmeier"), i18n ("Project leader / main developer"));
 	aboutData.addAuthor (i18n ("Pierre Ecochard"), i18n ("C++ developer between 2004 and 2007"));
 	aboutData.addAuthor (i18n ("Prasenjit Kapat"), i18n ("Many plugins, suggestions, plot history feature"));

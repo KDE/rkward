@@ -3,12 +3,12 @@ bibentry("Manual",
 		author="Thomas Friedrichsmeier and Meik Michalke",
 		year="2012",
 		note="(Version 0.5.7)",
-		url="http://rkward.kde.org",
+		url="https://rkward.kde.org",
 
 		textVersion =
 		paste("Friedrichsmeier, T. & Michalke, M. (2012). ",
 				"rkwardtests: RKWard Plugin Test Suite Framework (Version 0.5.7). ",
-				"Available from http://rkward.kde.org",
+				"Available from https://rkward.kde.org",
 				sep=""),
 
 		mheader = "To cite rkwardtests in publications use:")
