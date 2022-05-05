@@ -3,7 +3,7 @@
 		<caption title="Generic settings"/>
 		<setting id="mode">Specify the quantity to be calculated (probabilities, densities, or quantiles), and the quantity given (probabilities or quantiles)</setting>
 		<setting id="n_quantiles">When calculating densities or probabilities, specify the number of evenly spaces quantiles to show. Alternatively, use the setting above.</setting>
-		<setting id="q">When calculating densities or probabilities, specify one or more quantiles. Alternatively, leave this empty to use the setting above, instead..</setting>
+		<setting id="q">When calculating densities or probabilities, specify one or more quantiles. Alternatively, leave this empty to use the setting above, instead.</setting>
 		<setting id="n_probabilities">When calculating quantiles, specify the number of evenly spaced probabilities (optionally logarithmic) to show. Alternatively, use the setting below.</setting>
 		<setting id="p">When calculating quantiles, specify one or more probabilities, optionally logarithmic (see below). If this setting is left empty, the setting above is used, instead.</setting>
 		<setting id="logp">When calculating probabilities, return these as log (p). When specifying probabilities, these are supplied as log (p).</setting>
