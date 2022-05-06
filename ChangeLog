@@ -1,6 +1,7 @@
 TODOs:
 	- More tolerant handshake on Windows? Simply a matter of allowing more time?
 
+- Fixed: Disabling a <row> element in plugins would not make the sub-elements non-required
 - Add option to show ANOVA table for linear regression
 - Add default preview() function is available to plugins, reducing the code needed to add preview functionality
 - Add preview functionality to most existing plugins that did not have it, yet
