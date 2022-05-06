@@ -1,5 +1,6 @@
 TODOs:
 	- More tolerant handshake on Windows? Simply a matter of allowing more time?
+	- Fix RKWard-app icon on Windows
 
 - Added functionality to install add-on packages directly from git (formerly available as external plugin rk.gitInstall)
 - Fixed: Disabling a <row> element in plugins would not make the sub-elements non-required
