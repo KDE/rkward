@@ -107,6 +107,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		// this token is sent both via stdout and the local socket connection. The frontend simply compares both values.
 		QString token = QUuid::createUuid ().toString ();
 		std::cout << token.toLocal8Bit ().data () << "\n";
+		std::cout << token.toLocal8Bit ().data () << "\n";
 		std::cout.flush ();
 
 		RKRBackendTransmitter transmitter (servername, token);

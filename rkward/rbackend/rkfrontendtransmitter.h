@@ -31,7 +31,7 @@ public:
 	void requestReceived (RBackendRequest *request) override;
 	/** Simple convenience function similar to QIODevice::waitForReadyRead(), but waiting for a full line to be available.
 	    In particular on Windows, we often receive _less_ than a full line per chunk. */
-	static void waitForCanReadLine (QIODevice *con, int msecs);
+	static QString waitReadLine (QIODevice *con, int msecs);
 private slots:
 	void connectAndEnterLoop ();
 	void backendExit (int exitcode);

@@ -132,8 +132,7 @@ void RKFrontendTransmitter::run () {
 	if (!backend->waitForStarted()) {
 		handleTransmissionError(i18n("The backend executable could not be started. Error message was: %1", backend->errorString()));
 	} else {
-		waitForCanReadLine(backend, 15000);
-		token = QString::fromLocal8Bit(backend->readLine()).trimmed();
+		token = waitReadLine(backend, 5000).trimmed();
 		backend->closeReadChannel(QProcess::StandardError);
 		backend->closeReadChannel(QProcess::StandardOutput);
 	}
@@ -149,14 +148,20 @@ void RKFrontendTransmitter::run () {
 	}
 }
 
-void RKFrontendTransmitter::waitForCanReadLine (QIODevice* con, int msecs) {
+QString RKFrontendTransmitter::waitReadLine (QIODevice* con, int msecs) {
 	RK_TRACE (RBACKEND);
 
 	// NOTE: On Qt5+Windows, readyReady may actually come in char by char, so calling waitForReadyRead() does not guarantee we will
 	//       see the full line, at all. But also, of course, we want to put some cap on trying. Using a time threshold for this.
 	QElapsedTimer time;
 	time.start();
-	while ((!con->canReadLine()) && (time.elapsed() < msecs)) con->waitForReadyRead(500);
+	QByteArray ret;
+	do {
+		ret.append(con->readLine());
+		if (ret.contains('\n')) break;
+		con->waitForReadyRead(500);
+	} while(time.elapsed() < msecs);
+	return QString::fromLocal8Bit(ret);
 }
 
 void RKFrontendTransmitter::connectAndEnterLoop () {
@@ -167,11 +172,9 @@ void RKFrontendTransmitter::connectAndEnterLoop () {
 	server->close ();
 
 	// handshake
-	waitForCanReadLine (con, 1000);
-	QString token_c = QString::fromLocal8Bit (con->readLine ()). trimmed ();
+	QString token_c = waitReadLine(con, 1000).trimmed();
 	if (token_c != token) handleTransmissionError (i18n ("Error during handshake with backend process. Expected token '%1', received token '%2'", token, token_c));
-	waitForCanReadLine (con, 1000);
-	QString version_c = QString::fromLocal8Bit (con->readLine ().trimmed ());
+	QString version_c = waitReadLine(con, 1000).trimmed();
 	if (version_c != RKWARD_VERSION) handleTransmissionError (i18n ("Version mismatch during handshake with backend process. Frontend is version '%1' while backend is '%2'.\nPlease fix your installation.", QString (RKWARD_VERSION), version_c));
 
 	setConnection (con);
