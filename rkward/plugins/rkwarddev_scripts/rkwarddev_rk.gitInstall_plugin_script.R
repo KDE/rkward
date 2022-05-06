@@ -12,8 +12,6 @@ guess.getter <- TRUE
 rk.set.indent(by="  ")
 # should empty "else" clauses be kept in the JavaScript code?
 rk.set.empty.e(TRUE)
-# make your plugin translatable by setting this to TRUE
-update.translations <- TRUE
 
 aboutPlugin <- rk.XML.about(
   name="rk.gitInstall",
@@ -224,7 +222,7 @@ plugin.dir <- rk.plugin.skeleton(
     #related=,
     #technical=
   ),
-  create=c("pmap", "xml", "js", "desc", "rkh"),
+  create=c("xml", "js", "rkh"),
   overwrite=overwrite,
   #components=list(),, 
   #provides=c("logic", "dialog"), 
@@ -233,13 +231,6 @@ plugin.dir <- rk.plugin.skeleton(
   edit=FALSE, 
   load=TRUE, 
   show=TRUE,
-  gen.info="$SRC/inst/rkward/rkwarddev_rk.gitInstall_plugin_script.R",
   hints=FALSE
 )
-
-  # you can make your plugin translatable, see top of script
-  if(isTRUE(update.translations)){
-    rk.updatePluginMessages(file.path(output.dir,"rk.gitInstall","inst","rkward","rk.gitInstall.pluginmap"))
-  } else {}
-
 })
