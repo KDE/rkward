@@ -247,13 +247,13 @@ RKComponentBase::ComponentStatus RKComponentBase::recursiveStatus () {
 	if (isComponent () && static_cast<RKComponent*>(this)->isInactive ()) req = false;
 	if (!req) return Satisfied;
 	if (children_satisfied && isValid ()) return Satisfied;
- 	if (isComponent ()) RK_DEBUG (PLUGIN, DL_DEBUG, "component not satisfied: %s", qPrintable (static_cast<RKComponent*> (this)->getIdInParent ()));
+	if (isComponent ()) RK_DEBUG (PLUGIN, DL_DEBUG, "component not satisfied: %s (type %d)", qPrintable (static_cast<RKComponent*> (this)->getIdInParent ()), type());
 	return Unsatisfied;
 }
 
 //############### RKComponent ########################
 
-RKComponent::RKComponent (RKComponent *parent_component, QWidget *parent_widget) : QWidget (parent_widget) {
+RKComponent::RKComponent(RKComponent *parent_component, QWidget *parent_widget) : QWidget(parent_widget), RKComponentBase() {
 	RK_TRACE (PLUGIN);
 
 	createDefaultProperties ();
@@ -324,7 +324,7 @@ void RKComponent::updateEnablednessRecursive (bool parent_enabled) {
 
 bool RKComponent::isInactive () {
 	if (!isEnabled ()) return true;
-	if (parentWidget () && isHidden ()) return true;	// Note: Components embedded as button may be "hidden" without being unaccessible
+	if (parentWidget() && !isVisible()) return true;	// Note: Components embedded as button may be "hidden" without being unaccessible
 	if (!visibility_property->boolValue ()) return true;	// Note for those, this is the appropriate check
 	return false;
 }
