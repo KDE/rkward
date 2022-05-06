@@ -33,6 +33,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rkstandardicons.h"
 #include "../rbackend/rkrinterface.h"
 #include "../rbackend/rksessionvars.h"
+#include "../plugin/rkcomponentmap.h"
 #include "../misc/rkstyle.h"
 
 #include "../debug.h"
@@ -341,8 +342,17 @@ RKSettingsModuleRPackages::RKSettingsModuleRPackages (RKSettings *gui, QWidget *
 	source_packages_box->setChecked (true);
 	source_packages_box->setEnabled (false);
 #endif
-	RKCommonFunctions::setTips (QString ("<p>%1</p>").arg (i18n ("Installing packages from pre-compiled binaries (if available) is generally faster, and does not require an installation of development tools and libraries. On the other hand, building packages from source provides best compatibility. On Mac OS X and Linux, building packages from source is currently recommended.")), source_packages_box);
+	RKCommonFunctions::setTips (QString ("<p>%1</p>").arg (i18n ("Installing packages from pre-compiled binaries (if available) is generally faster, and does not require an installation of development tools and libraries. On the other hand, building packages from source provides best compatibility.")), source_packages_box);
 	main_vbox->addWidget (source_packages_box);
+
+	hbox = new QHBoxLayout();
+	main_vbox->addLayout(hbox);
+	auto button = new QPushButton(i18n("Install from git"));
+	auto label = RKCommonFunctions::wordWrappedLabel(i18n("Some add-on packages are not available in the CRAN repository, but can be installed from development repositories. Use the button \"%1\", to install such pacakges, comfortably.", button->text()));
+	hbox->addWidget(label);
+	hbox->setStretchFactor(label, 2);
+	connect(button, &QPushButton::clicked, this, []() { RKComponentMap::getMap()->invokeComponent("rkward::install_from_git", QStringList()); });
+	hbox->addWidget(button);
 
 	main_vbox->addStretch ();
 
@@ -351,7 +361,7 @@ RKSettingsModuleRPackages::RKSettingsModuleRPackages (RKSettings *gui, QWidget *
 	connect (libloc_selector, &MultiStringSelector::listChanged, this, &RKSettingsModuleRPackages::settingChanged);
 	connect (libloc_selector, &MultiStringSelector::getNewStrings, this, &RKSettingsModuleRPackages::addLibLoc);
 	main_vbox->addWidget (libloc_selector);
-	QLabel *label = new QLabel (i18n ("Note: The startup defaults will always be used in addition to the locations you specify in this list"), this);
+	label = new QLabel (i18n ("Note: The startup defaults will always be used in addition to the locations you specify in this list"), this);
 	main_vbox->addWidget (label);
 
 	main_vbox->addStretch ();
