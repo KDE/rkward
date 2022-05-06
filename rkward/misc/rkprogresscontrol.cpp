@@ -515,7 +515,12 @@ bool RKInlineProgressControl::eventFilter(QObject *, QEvent *e) {
 	}
 	if ((e->type() == QEvent::Close) && !is_done) {
 		if (allow_cancel) {
+			bool autoclose_save = autoclose;  // must prevent self-destruction while dialog below is active (the operation might complete, while it exec's)
+			autoclose = false;
+
 			bool ignore = (KMessageBox::warningContinueCancel(display_area, i18n("Closing this window will cancel the current operation. Are you sure?"), i18n("Cancel operation"), KGuiItem(i18n("Keep waiting")), KGuiItem(i18n("Cancel && Close"))) == KMessageBox::Continue);
+
+			autoclose = autoclose_save;
 			if (ignore) {
 				e->accept();
 				return true;
