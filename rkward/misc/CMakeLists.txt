@@ -29,6 +29,7 @@ SET(misc_STAT_SRCS
    rkdialogbuttonbox.cpp
    rkoutputdirectory.cpp
    rkstyle.cpp
+   rkparsedversion.cpp
    )
 
 ADD_LIBRARY(misc STATIC ${misc_STAT_SRCS})

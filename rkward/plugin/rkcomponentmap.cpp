@@ -1,6 +1,6 @@
 /*
 rkcomponentmap.cpp - This file is part of RKWard (https://rkward.kde.org). Created: Thu May 12 2005
-SPDX-FileCopyrightText: 2005-2015 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2005-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -26,6 +26,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../rkward.h"
 #include "../settings/rksettingsmoduleplugins.h"
 #include "../rbackend/rksessionvars.h"
+#include "../misc/rkparsedversion.h"
 #include "../dialogs/rkerrordialog.h"
 
 QString RKPluginMapFile::makeFileName (const QString &filename) const {
@@ -409,15 +410,12 @@ RKComponentHandle* RKComponentMap::getComponentHandleLocal (const QString &id) {
 
 	RK_DEBUG (PLUGIN, DL_INFO, "Looking for latest version of component %s, among %d candidates", qPrintable (id), candidates.size ());
 	RKComponentHandle* candidate = candidates.first ();
-	QString sufa;
-	quint32 vera = RKSessionVars::parseVersionString (candidate->getAboutData ().version, &sufa);
+	auto vera = RKParsedVersion(candidate->getAboutData().version);
 	for (int i = 1; i < candidates.size (); ++i) {
-		QString sufb;
-		quint32 verb = RKSessionVars::parseVersionString (candidates[i]->getAboutData ().version, &sufb);
-		if ((verb > vera) || ((verb == vera) && (sufb > sufa))) {
+		auto verb = RKParsedVersion(candidates[i]->getAboutData ().version);
+		if (verb > vera) {
 			candidate = candidates[i];
 			vera = verb;
-			sufa = sufb;
 		}
 	}
 	// purge inferior components to avoid future version lookups

@@ -11,6 +11,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QObject>
 #include <QStringList>
 
+#include "../misc/rkparsedversion.h"
+
 class RInterface;
 
 /** Singleton for storing information about the running R session, and - for some of the info - notifying about changes. */
@@ -31,7 +33,6 @@ public:
 /** Split "a.b.c.d.e-fghi" into up to four numeric portions (returned as four bytes in a single 32bit unsigned int).
 Anything else (everything after the fourth dot, or after the first character that is neither dot, nor digit)
 is returned as suffix (via the suffix pointer; if that is 0, an error is reported, instead). */
-	static quint32 parseVersionString (const QString &version, QString *suffix);
 	static QStringList frontendSessionInfo ();
 	static QString RBinary() { return r_binary; }
 signals:
@@ -44,9 +45,8 @@ private:
 	static RKSessionVars* _instance;
 
 	QStringList installed_packages;
-	static quint32 rkward_version;
-	static QString rkward_version_suffix;
-	static quint32 r_version;
+	static RKParsedVersion rkward_version;
+	static RKParsedVersion r_version;
 	static QString r_version_string;
 friend int main(int, char**);
 	static QString r_binary;

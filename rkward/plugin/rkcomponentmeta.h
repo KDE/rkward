@@ -11,9 +11,11 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QDomElement>
 #include <QList>
 
+#include "../misc/rkparsedversion.h"
+
 class XMLHelper;
 struct RKComponentDependency {
-	RKComponentDependency () : type (RBaseInstallation), min_version (0), max_version (0xFFFFFFFF) {};
+	RKComponentDependency () : type(RBaseInstallation), min_version(RKParsedVersion()), max_version(RKParsedVersion::maxVersion()) {};
 	QString toHtml () const;
 	static QString depsToHtml (const QList<RKComponentDependency> &deps);
 	enum DependencyType {
@@ -25,8 +27,8 @@ struct RKComponentDependency {
 	DependencyType type;
 	QString package;
 	QString source_info;
-	quint32 min_version;
-	quint32 max_version;
+	RKParsedVersion min_version;
+	RKParsedVersion max_version;
 
 	static QList<RKComponentDependency> parseDependencies (const QDomElement &e, XMLHelper &xml);
 	static bool isRKWardVersionCompatible (const QDomElement &e);
