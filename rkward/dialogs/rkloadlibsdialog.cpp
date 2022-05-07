@@ -1220,7 +1220,7 @@ void RKPluginMapSelectionWidget::apply () {
 
 	if (!isChanged()) return;
 	RK_ASSERT (model);
-	RKSettingsModulePlugins::PluginMapList new_list = RKSettingsModulePlugins::setPluginMaps (model->pluginMaps ());
+	auto new_list = RKSettingsModulePlugins::setPluginMaps(model->pluginMaps());
 	selector->setModel (0); // we don't want any extra change notification for this
 	model->init (new_list);
 	selector->setModel (model, 1);

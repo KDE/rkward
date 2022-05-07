@@ -41,7 +41,6 @@ public:
 
 	/** @returns a list of active plugin maps */
 	static QStringList pluginMaps ();
-	static int uniqueUsablePluginMapCount ();
 	static PluginPrefs getInterfacePreference () { return interface_pref; };
 	static bool showCodeByDefault () { return show_code; };
 	static void setShowCodeByDefault (bool shown) { show_code = shown; };
@@ -50,9 +49,9 @@ public:
 	static int defaultSidePreviewWidth () { return side_preview_width; };
 	static void setDefaultSidePreviewWidth (int new_width) { side_preview_width = new_width; }
 	enum AddMode {
-		ManualAddition,
-		AddIfDefault,
-		AddIfNewAndDefault
+		ForceActivate,
+		AutoActivate,
+		AutoActivateIfNew
 	};
 	/** register a list of available plugin-maps (which may or may not already be known). New maps are activated, automatically.
 	 * @param maps Plugin maps (filenames) to add
@@ -63,28 +62,32 @@ public:
 	static void registerPluginMaps (const QStringList &maps, AddMode add_mode, bool force_reload, bool suppress_reload=false);
 	/** Looks for the given id among known plugin maps */
 	static QString findPluginMapById (const QString &id);
-	/** marks given map as broken (in this version), and deactivates it. @Returns false is the map was already known to be broken, true otherwise. */
-	static bool markPluginMapAsBroken (const QString &map);
-	/** marks given map as quirky (in this version). @Returns false is the map was already known to be quirky, true otherwise. */
-	static bool markPluginMapAsQuirky (const QString &map);
-	/** Clears the broken or quirky flags. E.g. after the map was loaded, successfully */
-	static void markPluginMapAsWorking (const QString &map);
 
 	enum PluginMapPriority { PriorityHidden = 0, PriorityLow, PriorityMedium, PriorityHigh };
+	enum PluginMapState { Broken, Quirky, Working };
+	/** Marks given map as working, quirky, or broken. @returns true, if the state has changed. Broken maps are also disabled. */
+	static bool markPluginMapState(const QString &map, PluginMapState state);
+
 	/** Helper struct used by RKSettingsModulePlugins to keep track of plugin map files. */
 	struct PluginMapStoredInfo {
-		PluginMapStoredInfo (const QString &_filename) : filename (_filename), active (false), broken_in_this_version (false), quirky_in_this_version (false) {};
+		PluginMapStoredInfo (const QString &_filename) : filename (_filename), state(Working) {};
 		QString filename;
-		bool active;
-		bool broken_in_this_version;
-		bool quirky_in_this_version;
+		PluginMapState state;
 		int priority;
+		RKParsedVersion version;
 		QString id;
 		QDateTime last_modified;
 	};
 	typedef QList<PluginMapStoredInfo> PluginMapList;
-	static PluginMapList knownPluginmaps () { return known_plugin_maps; };
-	static void parsePluginMapBasics (const QString &filename, QString *id, int *priority);
+	struct UniquePluginMap {
+		UniquePluginMap(const QString &id, bool active) : id(id), active(active) {};
+		QString id;
+		bool active;
+		PluginMapList maps;
+		PluginMapStoredInfo bestMap() const;
+	};
+	typedef QList<UniquePluginMap> UniquePluginMapList;
+	static UniquePluginMapList knownPluginmaps () { return known_plugin_maps; };
 	/** Registers the plugin maps that are shipped with RKWard.
 	 * @param force_add All default maps are also activated, even if they were already known, and disabled by the user. */
 	static void registerDefaultPluginMaps (AddMode add_mode);
@@ -95,7 +98,11 @@ private:
 	QButtonGroup *button_group;
 
 	/** plugin maps which are not necessarily active, but have been encountered, before. @see plugin_maps */
-	static PluginMapList known_plugin_maps;
+	static UniquePluginMapList known_plugin_maps;
+friend class RKSettingsModulePluginsModel;
+	static PluginMapStoredInfo parsePluginMapBasics (const QString &filename);
+	/* @returns true, if map was new, false if already known */
+	static bool addPluginMapToList(const PluginMapStoredInfo &inf, bool active);
 
 	static RKConfigValue<PluginPrefs,int> interface_pref;
 	static RKConfigValue<bool> show_code;
@@ -107,7 +114,7 @@ private:
 	static void fixPluginMapLists ();
 friend class RKPluginMapSelectionWidget;
 /** Sets the new list of plugins. Potentially removes unreadable ones, and returns the effective list. */
-	static PluginMapList setPluginMaps (const PluginMapList &new_list);
+	static UniquePluginMapList setPluginMaps (const UniquePluginMapList &new_list);
 };
 
 class RKSettingsModulePluginsModel : public QAbstractTableModel {
@@ -116,13 +123,13 @@ public:
 	explicit RKSettingsModulePluginsModel (QObject* parent);
 	virtual ~RKSettingsModulePluginsModel ();
 /** (re-)initialize the model */
-	void init (const RKSettingsModulePlugins::PluginMapList &known_plugin_maps);
-	RKSettingsModulePlugins::PluginMapList pluginMaps () { return plugin_maps; };
+	void init (const RKSettingsModulePlugins::UniquePluginMapList &known_plugin_maps);
+	RKSettingsModulePlugins::UniquePluginMapList pluginMaps () { return plugin_maps; };
 public slots:
 	void swapRows (int rowa, int rowb);
 	void insertNewStrings (int above_row);
 private:
-	RKSettingsModulePlugins::PluginMapList plugin_maps;
+	RKSettingsModulePlugins::UniquePluginMapList plugin_maps;
 	struct PluginMapMetaInfo {
 		RKComponentAboutData *about;
 		QList<RKComponentDependency> dependencies;

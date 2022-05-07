@@ -48,6 +48,6 @@ QString RKParsedVersion::toString() const {
 		if (i > 0) ret.append('.');
 	}
 	if (ret.endsWith(QLatin1String(".0"))) ret.chop(2);	// HACK: Don't print more than three version parts, unless the fourth is non-zero
-	if (!version_suffix.isNull()) ret.append('.' + version_suffix);
+	ret.append(version_suffix);
 	return ret;
 }

@@ -324,16 +324,16 @@ void RKWardMainWindow::initPlugins (const QStringList &automatically_added) {
 		const QString &map = all_maps[i];
 		RKPluginMapParseResult result = RKComponentMap::getMap ()->addPluginMap (map);
 		if (!result.valid_plugins) {
-			RKSettingsModulePlugins::markPluginMapAsBroken (map);
+			RKSettingsModulePlugins::markPluginMapState(map, RKSettingsModulePlugins::Broken);
 			completely_broken_maps.append (map);
 			completely_broken_maps_details.append (result.detailed_problems);
 		} else if (!result.detailed_problems.isEmpty ()) {
-			if (RKSettingsModulePlugins::markPluginMapAsQuirky (map)) {
+			if (RKSettingsModulePlugins::markPluginMapState(map, RKSettingsModulePlugins::Quirky)) {
 				somewhat_broken_maps.append (map);
 				somewhat_broken_maps_details.append (result.detailed_problems);
 			}
 		} else {
-			RKSettingsModulePlugins::markPluginMapAsWorking (map);
+			RKSettingsModulePlugins::markPluginMapState(map, RKSettingsModulePlugins::Working);
 		}
 	}
 
