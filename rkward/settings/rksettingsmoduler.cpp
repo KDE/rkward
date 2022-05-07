@@ -348,7 +348,7 @@ RKSettingsModuleRPackages::RKSettingsModuleRPackages (RKSettings *gui, QWidget *
 	hbox = new QHBoxLayout();
 	main_vbox->addLayout(hbox);
 	auto button = new QPushButton(i18n("Install from git"));
-	auto label = RKCommonFunctions::wordWrappedLabel(i18n("Some add-on packages are not available in the CRAN repository, but can be installed from development repositories. Use the button \"%1\", to install such pacakges, comfortably.", button->text()));
+	auto label = RKCommonFunctions::wordWrappedLabel(i18n("Some add-on packages are not available in the CRAN repository, but can be installed from development repositories. Use the button \"%1\", to install such packages, comfortably.", button->text()));
 	hbox->addWidget(label);
 	hbox->setStretchFactor(label, 2);
 	connect(button, &QPushButton::clicked, this, []() { RKComponentMap::getMap()->invokeComponent("rkward::install_from_git", QStringList()); });
