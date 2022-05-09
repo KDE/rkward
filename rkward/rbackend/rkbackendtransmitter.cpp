@@ -11,6 +11,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <QLocalSocket>
 
+#include <iostream>
+
 #include "../version.h"
 #include "../debug.h"
 
@@ -45,8 +47,13 @@ void RKRBackendTransmitter::run () {
 	QLocalSocket* con = new QLocalSocket (this);
 	con->connectToServer (servername);
 	setConnection (con);
-	
-	if (!connection->waitForConnected ()) handleTransmissionError ("Could not connect: " + connection->errorString ());
+
+	int timeout = 0;
+	do {
+		std::cout << token.toLocal8Bit().data() << "\n";
+		std::cout.flush();
+	} while (!connection->waitForConnected(1000) && (++timeout < 20));
+	if (timeout >= 20) handleTransmissionError("Could not connect: " + connection->errorString());
 	// handshake
 	connection->write (token.toLocal8Bit ().data ());
 	connection->write ("\n");
