@@ -142,7 +142,7 @@ void RKSettingsModulePlugins::RKPluginMapList::saveToConfig(KConfigGroup& cg) {
 	// NOTE: The group list is always sorted alphabetically, which is why we need to save a separate list setting for saving info on order.
 	cg.writeEntry("Pluginmap id order", ordered_ids);
 	// I'd like to store this implicitly as cg.groupList(), alas that doesn't seem to work (KF5 5.68.0)
-	cg.readEntry("All known plugin maps", kplugin_maps);
+	cg.writeEntry("All known plugin maps", kplugin_maps);
 }
 
 void RKSettingsModulePlugins::RKPluginMapList::readFromConfig(KConfigGroup& cg) {
