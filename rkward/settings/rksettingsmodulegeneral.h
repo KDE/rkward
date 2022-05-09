@@ -70,10 +70,12 @@ public:
  *  TODO: similar, but not quite identical functionality in rkworkplace.cpp checkAdjustRestoredUrl(). Might be mergeable. */
 	static QString checkAdjustLoadedPath (const QString &localpath);
 
+	/** Enum for config version, one entry added for each incompatible change. "_Obsolete" members are no longer supported for
+	 *  config import (config is discarded for those). They are still kept in the enum for correct numbering. */
 	enum RKWardConfigVersion {
-		RKWardConfig_Pre0_5_7,
-		RKWardConfig_0_5_7,
-		RKWardConfig_0_6_1,
+		RKWardConfig_Pre0_5_7_Obsolete,
+		RKWardConfig_0_5_7_Obsolete,
+		RKWardConfig_0_6_1_Obsolete,
 		RKWardConfig_0_6_3,
 		RKWardConfig_0_6_4,
 		RKWardConfig_0_7_1,
@@ -86,8 +88,6 @@ public:
 	 * @return RKWardConfig_Pre0_5_7, if no config file could be read. See anyExistingConfig()
 	 * @note Not all versions of RKWard have a config file version of their own, not even necessarily when new entries were added. Only when not-quite-compatible changes are needed, new config versions will be added. */
 	static RKWardConfigVersion storedConfigVersion () { return stored_config_version; };
-	/** Did a config file already exist? */
-	static bool anyExistingConfig () { return config_exists; };
 	/** Returns true, if the runtime version of RKWard has changed since the previous session. */
 	static bool rkwardVersionChanged () { return rkward_version_changed; };
 	/** Returns true, if rkward seems to have started from a different path than on the previous run. */
@@ -115,7 +115,6 @@ private:
 	static QString previous_rkward_data_dir;
 	static RKWardConfigVersion stored_config_version;
 	static bool rkward_version_changed;
-	static bool config_exists;
 	static bool installation_moved;
 	static RKConfigValue<int> num_recent_files;
 

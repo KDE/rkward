@@ -38,7 +38,6 @@ RKConfigValue<bool> RKSettingsModuleGeneral::show_help_on_startup {"show help on
 RKConfigValue<int> RKSettingsModuleGeneral::warn_size_object_edit {"large object warning limit", 250000};
 RKConfigValue<RKSettingsModuleGeneral::RKMDIFocusPolicy, int> RKSettingsModuleGeneral::mdi_focus_policy {"focus policy", RKMDIClickFocus};
 RKSettingsModuleGeneral::RKWardConfigVersion RKSettingsModuleGeneral::stored_config_version;
-bool RKSettingsModuleGeneral::config_exists;
 RKConfigValue<RKSettingsModuleGeneral::InitialDirectory, int> RKSettingsModuleGeneral::initial_dir {"initial dir mode",
 #ifndef Q_OS_WIN
 	CurrentDirectory
@@ -164,11 +163,23 @@ void RKSettingsModuleGeneral::applyChanges () {
 void RKSettingsModuleGeneral::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {
 	RK_TRACE (SETTINGS);
 
+	KConfigGroup cg;
+	bool config_exists = config->hasGroup("General");	// one of the very oldest groups in the config
+	cg = config->group ("Internal");
 	if (a == RKConfigBase::LoadConfig) {
-		config_exists = config->hasGroup("General");	// one of the very oldest groups in the config
+		stored_config_version = (RKWardConfigVersion) cg.readEntry("config file version", (int) RKWardConfig_Pre0_5_7_Obsolete);
+		if (config_exists && stored_config_version < RKWardConfig_0_6_3) {
+			QStringList groups = config->groupList();
+			for (int i = 0; i < groups.size(); ++i) {
+				config->deleteGroup(groups[i]);
+			}
+		}
+		rkward_version_changed = (cg.readEntry("previous runtime version", QString()) != RKWARD_VERSION);
+	} else {
+		cg.writeEntry("config file version", (int) RKWardConfig_Latest);
+		cg.writeEntry("previous runtime version", QString(RKWARD_VERSION));
 	}
 
-	KConfigGroup cg;
 	cg = config->group("Logfiles");
 	if (a == RKConfigBase::LoadConfig) {
 		// default not yet set, first time loading config
@@ -206,15 +217,6 @@ void RKSettingsModuleGeneral::syncConfig(KConfig *config, RKConfigBase::ConfigSy
 
 	cg = config->group ("MDI");
 	mdi_focus_policy.syncConfig(cg, a);
-
-	cg = config->group ("Internal");
-	if (a == RKConfigBase::LoadConfig) {
-		stored_config_version = (RKWardConfigVersion) cg.readEntry("config file version", (int) RKWardConfig_Pre0_5_7);
-		rkward_version_changed = (cg.readEntry("previous runtime version", QString()) != RKWARD_VERSION);
-	} else {
-		cg.writeEntry("config file version", (int) RKWardConfig_Latest);
-		cg.writeEntry("previous runtime version", QString(RKWARD_VERSION));
-	}
 
 	if ((a == RKConfigBase::LoadConfig) && (stored_config_version < RKWardConfig_0_7_4)) {
 		show_help_on_startup = true;

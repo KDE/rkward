@@ -570,22 +570,11 @@ void RKSettingsModuleRPackages::syncConfig(KConfig *config, RKConfigBase::Config
 	package_repositories.syncConfig(cg, a);
 
 	if (a == RKConfigBase::LoadConfig) {
-		const QString rkward_repo (RKWARD_REPO);
-		if (RKSettingsModuleGeneral::storedConfigVersion () <= RKSettingsModuleGeneral::RKWardConfig_Pre0_5_7) {
-			auto v = package_repositories.get();
-			v.removeAll ("@CRAN@");	// COMPAT: Cran mirror was part of this list before 0.5.3
-			if (v.isEmpty ()) v.append(rkward_repo);
-			package_repositories = v;
-		} else if (RKSettingsModuleGeneral::storedConfigVersion () < RKSettingsModuleGeneral::RKWardConfig_0_6_3) {
+		if (RKSettingsModuleGeneral::storedConfigVersion () < RKSettingsModuleGeneral::RKWardConfig_0_6_3) {
 			auto v = package_repositories.get();
 			v.removeAll("http://rkward.sf.net/R");
-			v.append(rkward_repo);
+			v.append(RKWARD_REPO);
 			package_repositories = v;
-		}
-
-		if (USE_SOURCE_PACKAGES && (RKSettingsModuleGeneral::storedConfigVersion () < RKSettingsModuleGeneral::RKWardConfig_0_6_1)) {
-			// revert default on MacOSX, even if a previous stored setting exists
-			source_packages = true;
 		}
 	}
 }
