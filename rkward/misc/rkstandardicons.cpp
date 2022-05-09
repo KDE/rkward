@@ -7,6 +7,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rkstandardicons.h"
 
+#include <QFileInfo>
+
 #include "../core/robject.h"
 #include "../core/robjectlist.h"
 #include "../windows/rkmdiwindow.h"
@@ -120,7 +122,12 @@ void RKStandardIcons::doInitIcons () {
 
 	icons[DocumentPDF] = QIcon::fromTheme("application-pdf");
 
-	icons[RKWardIcon] = QIcon::fromTheme("rkward");  // this used to be accessible as QApplication::windowIcon(), but apparently no longer in Qt5
+	// this used to be accessible as QApplication::windowIcon(), but apparently no longer in Qt5
+	if (QFileInfo::exists(rkward_icon_base + "64-apps-rkward.png")) {
+		icons[RKWardIcon] = QIcon(rkward_icon_base + "64-apps-rkward.png");
+	} else {
+		icons[RKWardIcon] = QIcon::fromTheme("rkward"); // Does not work on Windows, thus only used as fallback
+	}
 
 	RK_DO ({
 		for (int i = ActionRunAll; i < Last; ++i) {

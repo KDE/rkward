@@ -1,6 +1,5 @@
 TODOs:
 	- More tolerant handshake on Windows? Simply a matter of allowing more time?
-	- Fix RKWard-app icon on Windows
 	- If stored config is older than 0.6.3, discard it, entirely
 
 - Plugin maps with the same id are grouped together, and the most recent version is used, automatically
