@@ -35,7 +35,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../debug.h"
 
 // static members
-RKSettingsModulePlugins::UniquePluginMapList RKSettingsModulePlugins::known_plugin_maps;
+RKSettingsModulePlugins::RKPluginMapList RKSettingsModulePlugins::known_plugin_maps;
 RKConfigValue<RKSettingsModulePlugins::PluginPrefs, int> RKSettingsModulePlugins::interface_pref {"Interface Preferences", RKSettingsModulePlugins::PreferRecommended};
 RKConfigValue<bool> RKSettingsModulePlugins::show_code {"Code display default", false};
 RKConfigValue<int> RKSettingsModulePlugins::code_size {"Code display size", 250};
@@ -104,12 +104,12 @@ void RKSettingsModulePlugins::applyChanges () {
 	interface_pref = static_cast<PluginPrefs> (button_group->checkedId ());
 }
 
-RKSettingsModulePlugins::UniquePluginMapList RKSettingsModulePlugins::setPluginMaps(const UniquePluginMapList &new_list) {
+RKSettingsModulePlugins::RKPluginMapList RKSettingsModulePlugins::setPluginMaps(const RKPluginMapList &new_list) {
 	RK_TRACE (SETTINGS);
 
 	known_plugin_maps = new_list;
-	fixPluginMapLists ();
-	RKWardMainWindow::getMain ()->initPlugins();
+	known_plugin_maps.removeObsoleteMaps();
+	RKWardMainWindow::getMain()->initPlugins();
 	return known_plugin_maps;
 }
 
@@ -119,28 +119,68 @@ void RKSettingsModulePlugins::configurePluginmaps () {
 	RKLoadLibsDialog::showPluginmapConfig (this, commandChain ());
 }
 
-void savePluginMaps(KConfigGroup &cg, const RKSettingsModulePlugins::UniquePluginMapList &known_plugin_maps) {
+void RKSettingsModulePlugins::RKPluginMapList::saveToConfig(KConfigGroup& cg) {
 	RK_TRACE(SETTINGS);
 
 	cg.deleteGroup("Known Plugin maps");	// always start from scratch to remove cruft from pluginmaps
 	KConfigGroup pmg = cg.group("Known Plugin maps");
-	QStringList all_known_maps;
-	for (int i = 0; i < known_plugin_maps.size(); ++i) {
-		auto &variants = known_plugin_maps[i].maps;
-		for (int j = 0; j < variants.size(); ++j) {
-			const RKSettingsModulePlugins::PluginMapStoredInfo &inf = variants[j];
+	QStringList kplugin_maps;
+	for (auto it = all_maps.constBegin(); it != all_maps.constEnd(); ++it) {
+		const auto &maps = it.value().list;
+		for (int j = 0; j < maps.size(); ++j) {
+			const RKSettingsModulePlugins::PluginMapStoredInfo &inf = maps[j];
 			KConfigGroup ppmg = pmg.group (inf.filename);
-			ppmg.writeEntry("Active", known_plugin_maps[i].active);
+			kplugin_maps.append(inf.filename);
+			ppmg.writeEntry("Active", it.value().active);
 			ppmg.writeEntry("State", (int) inf.state);
 			ppmg.writeEntry("timestamp", inf.last_modified);
 			ppmg.writeEntry("id", inf.id);
 			ppmg.writeEntry("version", inf.version.toString());
 			ppmg.writeEntry("priority", inf.priority);
-			all_known_maps.append(inf.filename);
 		}
 	}
-	// NOTE: The group list is always sorted alphabetically, which is why we need a separate list setting for saving info on order.
-	cg.writeEntry("All known plugin maps", all_known_maps);
+	// NOTE: The group list is always sorted alphabetically, which is why we need to save a separate list setting for saving info on order.
+	cg.writeEntry("Pluginmap id order", ordered_ids);
+	// I'd like to store this implicitly as cg.groupList(), alas that doesn't seem to work (KF5 5.68.0)
+	cg.readEntry("All known plugin maps", kplugin_maps);
+}
+
+void RKSettingsModulePlugins::RKPluginMapList::readFromConfig(KConfigGroup& cg) {
+	RK_TRACE(SETTINGS);
+	ordered_ids.clear();
+	all_maps.clear();
+
+	/* Known maps are stored at runtime as a nested list id -> variants, but stored in config as a plain list of variants. This is for historic reasons, but may be too much trouble to change. */
+	KConfigGroup pmg = cg.group ("Known Plugin maps");
+	QStringList kplugin_maps = cg.readEntry("All known plugin maps", QStringList());
+	for (int i = 0; i < kplugin_maps.size (); ++i) {
+		KConfigGroup ppmg = pmg.group (kplugin_maps[i]);	// unadjusted path on purpose!
+		PluginMapStoredInfo inf (RKSettingsModuleGeneral::checkAdjustLoadedPath (kplugin_maps[i]));
+		// Pluginmaps which are broken with one version of RKWard may be alright with other versions. So reset flags, if version has changed.
+		if (RKSettingsModuleGeneral::rkwardVersionChanged()) inf.state = Working;
+		else inf.state = (PluginMapState) ppmg.readEntry("State", (int) Working);
+		inf.last_modified = ppmg.readEntry ("timestamp", QDateTime ());
+		inf.id = ppmg.readEntry ("id");
+		inf.version = ppmg.readEntry ("version");
+		inf.priority = ppmg.readEntry ("priority", (int) PriorityMedium);
+		addMap(inf, ppmg.readEntry("Active", false) ? ForceActivate : DoNotActivate);
+	}
+	if (RKSettingsModuleGeneral::rkwardVersionChanged () || RKSettingsModuleGeneral::installationMoved ()) {
+		// if it is the first start this version or from a new path, scan the installation for new pluginmaps
+		// Note that in the case of installationMoved(), checkAdjustLoadedPath() has already kicked in, above, but rescanning is still useful
+		// e.g. if users have installed to a new location, because they had botched their previous installation
+		registerDefaultPluginMaps(AutoActivateIfNew);
+	}
+	removeObsoleteMaps();
+	QStringList nordered_ids = cg.readEntry("Pluginmap id order", ordered_ids);
+	// make sure order has all relevant ids, and only those, before applying
+	for (int i = nordered_ids.size() - 1; i >= 0; --i) {
+		if (!ordered_ids.contains(nordered_ids[i])) nordered_ids.removeAt(i);
+	}
+	for (int i = 0; i < ordered_ids.size(); ++i) {
+		if (!nordered_ids.contains(ordered_ids[i])) nordered_ids.append(ordered_ids[i]);
+	}
+	ordered_ids = nordered_ids;
 }
 
 void RKSettingsModulePlugins::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {
@@ -153,76 +193,133 @@ void RKSettingsModulePlugins::syncConfig(KConfig *config, RKConfigBase::ConfigSy
 	side_preview_width.syncConfig(cg, a);
 
 	if (a == RKConfigBase::SaveConfig) {
-		savePluginMaps(cg, known_plugin_maps);
+		known_plugin_maps.saveToConfig(cg);
 	} else {
-		/* Known maps are stored at runtime as a nested list id -> variants, but stored in config as a plain list of variants. This is for historic reasons, but may be too much trouble to change. */
-		KConfigGroup pmg = cg.group ("Known Plugin maps");
-		QStringList kplugin_maps = cg.readEntry ("All known plugin maps", QStringList ());
-		for (int i = 0; i < kplugin_maps.size (); ++i) {
-			KConfigGroup ppmg = pmg.group (kplugin_maps[i]);	// unadjusted path on purpose!
-			PluginMapStoredInfo inf (RKSettingsModuleGeneral::checkAdjustLoadedPath (kplugin_maps[i]));
-			// Pluginmaps which are broken with one version of RKWard may be alright with other versions. So reset flags, if version has changed.
-			if (RKSettingsModuleGeneral::rkwardVersionChanged()) inf.state = Working;
-			else inf.state = (PluginMapState) ppmg.readEntry("State", (int) Working);
-			inf.last_modified = ppmg.readEntry ("timestamp", QDateTime ());
-			inf.id = ppmg.readEntry ("id");
-			inf.version = ppmg.readEntry ("version");
-			inf.priority = ppmg.readEntry ("priority", (int) PriorityMedium);
-			addPluginMapToList(inf, ppmg.readEntry("Active", false));
-		}
-		if (RKSettingsModuleGeneral::rkwardVersionChanged () || RKSettingsModuleGeneral::installationMoved ()) {
-			// if it is the first start this version or from a new path, scan the installation for new pluginmaps
-			// Note that in the case of installationMoved(), checkAdjustLoadedPath() has already kicked in, above, but rescanning is still useful
-			// e.g. if users have installed to a new location, because they had botched their previous installation
-			registerDefaultPluginMaps(AutoActivateIfNew);
-		}
-		fixPluginMapLists ();	// removes any maps which don't exist any more
+		known_plugin_maps.readFromConfig(cg);
 	}
 }
 
-bool RKSettingsModulePlugins::addPluginMapToList(const RKSettingsModulePlugins::PluginMapStoredInfo& inf, bool active) {
-	RK_TRACE (SETTINGS);
+bool RKSettingsModulePlugins::PluginMapStoredInfo::betterThan(const RKSettingsModulePlugins::PluginMapStoredInfo& other) const {
+	if (version > other.version) return true;
+	if (version == other.version && last_modified > other.last_modified) return true;
+	return false;
+}
+
+bool RKSettingsModulePlugins::RKPluginMapList::addMap(const PluginMapStoredInfo &inf, AddMode add_mode) {
+	RK_TRACE(SETTINGS);
+
+	QFileInfo info(inf.filename);
+	if (!info.isReadable()) return false;
+	if (info.lastModified () != inf.last_modified || inf.version.isNull()) {
+		auto inf2 = parsePluginMapBasics(inf.filename);
+		inf2.last_modified = info.lastModified();
+		if (inf2.version.isNull()) inf2.version = RKParsedVersion("0.0.0.1");  // prevent infinite recursion
+		return addMap(inf2, add_mode);
+	}
+
+	bool activate = (add_mode == ForceActivate || (add_mode == AutoActivate && inf.priority >= PriorityMedium));
 	QString id = inf.id;
 	QString filename = inf.filename;
-	for (int i = 0; i < known_plugin_maps.size(); ++i) {
-		UniquePluginMap &unique = known_plugin_maps[i];
-		if (id == unique.id) {
-			PluginMapList &variants = unique.maps;
-			for (int j = 0; j < variants.size(); ++j) {
-				if (variants[j].filename == filename) {
-					variants[j] = inf;
-					return false;
-				}
-			}
-			variants.append(inf);
-			unique.active = unique.active || active;
-			return true;
+	bool known = false;
+	PluginMapInfoList &sub_list = all_maps[id].list;
+	activate |= all_maps[id].active;
+	for (int i = 0; i < sub_list.size(); ++i) {
+		if (sub_list[i].filename == filename) {
+			sub_list[i] = inf;
+			known = true;
+			break;
 		}
 	}
-	UniquePluginMap new_entry(id, active);
-	new_entry.maps.append(inf);
-	known_plugin_maps.append(new_entry);
-	return true;
+	if (!known) {
+		activate = activate || (add_mode == AutoActivateIfNew && inf.priority >= PriorityMedium);
+		if (sub_list.isEmpty()) ordered_ids.append(id);
+		sub_list.append(inf);
+		std::sort(sub_list.begin(), sub_list.end(), [](const PluginMapStoredInfo &a, const PluginMapStoredInfo &b) { return a.betterThan(b); });
+	}
+	if (activate) {
+		setIdActive(id, activate);
+	}
+
+	return !known;
 }
 
-RKSettingsModulePlugins::PluginMapStoredInfo RKSettingsModulePlugins::UniquePluginMap::bestMap() const {
+void RKSettingsModulePlugins::RKPluginMapList::removeObsoleteMaps() {
 	RK_TRACE(SETTINGS);
-	RK_ASSERT(!maps.isEmpty());
 
-	PluginMapStoredInfo candidate = maps.first();
-	for (int i = 1; i < maps.size(); ++i) {
-		const PluginMapStoredInfo &other = maps[i];
-		bool other_is_better = true;
-		if (candidate.version > other.version) {
-			other_is_better = false;
-		} else if (candidate.version == other.version && candidate.last_modified > other.last_modified) {
-			other_is_better = false;
+	QSet<QString> ids_to_remove;
+	for (auto it = all_maps.begin(); it != all_maps.end(); ++it) {
+		auto &sublist = it.value();
+		for (int i = 0; i < sublist.list.size(); ++i) {
+			QString filename = sublist.list[i].filename;
+			if (!QFile::exists(filename)) {
+				sublist.list.removeAt(i);
+				--i;
+				break;
+			}
 		}
-		if (!other_is_better) {
-			candidate = other;
+		if (sublist.list.isEmpty()) ids_to_remove.insert(it.key());
+	}
+	for (auto it = ids_to_remove.constBegin(); it != ids_to_remove.constEnd(); ++it) {
+		forgetId(*it);
+	}
+}
+
+bool RKSettingsModulePlugins::RKPluginMapList::setMapfileState(const QString &mapfile, PluginMapState state) {
+	RK_TRACE(SETTINGS);
+	for (auto it = all_maps.begin(); it != all_maps.end(); ++it) {
+		auto &sublist = it.value().list;
+		for (int i = 0; i < sublist.size(); ++i) {
+			if (mapfile == sublist[i].filename) {
+				bool ret = (sublist[i].state != state);
+				sublist[i].state = state;
+				if (state == Broken) it.value().active = false;
+				return ret;
+			}
 		}
 	}
-	return candidate;
+	return false;
+}
+
+void RKSettingsModulePlugins::RKPluginMapList::forgetId(const QString &id) {
+	RK_TRACE(SETTINGS);
+	all_maps.remove(id);
+	ordered_ids.removeAll(id);
+}
+
+void RKSettingsModulePlugins::RKPluginMapList::setIdActive(const QString &id, bool active) {
+	RK_TRACE(SETTINGS);
+	all_maps[id].active = active;
+	if (all_maps[id].list.isEmpty()) {
+		RK_ASSERT(false);
+		forgetId(id);
+	}
+}
+
+QString RKSettingsModulePlugins::RKPluginMapList::mapFileForId(const QString &id) const {
+	RK_TRACE(SETTINGS);
+	auto val = all_maps.value(id);
+	if (val.list.isEmpty()) return QString();
+	return val.list.first().filename;
+}
+
+QList<RKSettingsModulePlugins::PluginMapStoredInfo> RKSettingsModulePlugins::RKPluginMapList::allUniqueMaps() {
+	RK_TRACE(SETTINGS);
+	QList<RKSettingsModulePlugins::PluginMapStoredInfo> ret;
+	for (int i = 0; i < ordered_ids.size(); ++i) {
+		auto val = all_maps[ordered_ids[i]];
+		if (!val.list.isEmpty()) ret.append(val.list.first());
+	}
+	return ret;
+}
+
+QStringList RKSettingsModulePlugins::RKPluginMapList::activeMapFiles() {
+	RK_TRACE(SETTINGS);
+	QStringList ret;
+	for (int i = 0; i < ordered_ids.size(); ++i) {
+		auto val = all_maps[ordered_ids[i]];
+		if (val.active && !val.list.isEmpty()) ret.append(val.list.first().filename);
+	}
+	return ret;
 }
 
 void RKSettingsModulePlugins::registerDefaultPluginMaps(AddMode add_mode) {
@@ -240,22 +337,12 @@ void RKSettingsModulePlugins::registerDefaultPluginMaps(AddMode add_mode) {
 	registerPluginMaps (def_pluginmaps, add_mode, false, add_mode == AutoActivateIfNew);
 }
 
-int findKnownPluginMap (const QString& filename, const RKSettingsModulePlugins::PluginMapList& haystack) {
-	RK_TRACE (SETTINGS);
-
-	int i;
-	for (i = haystack.size () - 1; i >= 0; --i) {
-		if (haystack[i].filename == filename) return i;
-	}
-	return i;
-}
-
 QString RKSettingsModulePlugins::findPluginMapById (const QString &id) {
 	RK_TRACE (SETTINGS);
 
-	for (int i = 0; i < known_plugin_maps.size (); ++i) {
-		if (known_plugin_maps[i].id == id) return known_plugin_maps[i].bestMap().filename;
-	}
+	QString ret = known_plugin_maps.mapFileForId(id);
+	if (!ret.isNull()) return ret;
+
 	// for "rkward::" namespace, try a little harded:
 	if (id.startsWith (QLatin1String ("rkward::"))) {
 		QFileInfo info (RKCommonFunctions::getRKWardDataDir () + '/' + id.mid (8));
@@ -268,29 +355,13 @@ QString RKSettingsModulePlugins::findPluginMapById (const QString &id) {
 bool RKSettingsModulePlugins::markPluginMapState(const QString& map, PluginMapState state) {
 	RK_TRACE (SETTINGS);
 
-	for (int i = 0; i < known_plugin_maps.size(); ++i) {
-		auto &variants = known_plugin_maps[i].maps;
-		for (int j = 0; j < variants.size(); ++j) {
-			if (variants[j].filename == map) {
-				bool ret = variants[j].state != state;
-				variants[j].state = state;
-				if (state == Broken) known_plugin_maps[i].active = false;
-				return ret;
-			}
-		}
-	}
-	RK_ASSERT(false);
-	return false;
+	return known_plugin_maps.setMapfileState(map, state);
 }
 
 QStringList RKSettingsModulePlugins::pluginMaps () {
 	RK_TRACE (SETTINGS);
 
-	QStringList ret;
-	for (int i = 0; i < known_plugin_maps.size (); ++i) {
-		if (known_plugin_maps[i].active) ret.append (known_plugin_maps[i].bestMap().filename);
-	}
-	return ret;
+	return known_plugin_maps.activeMapFiles();
 }
 
 // static
@@ -300,64 +371,14 @@ void RKSettingsModulePlugins::registerPluginMaps (const QStringList &maps, AddMo
 	QStringList added;
 	foreach (const QString &map, maps) {
 		if (map.isEmpty ()) continue;
-		bool found = false;
-		for (int i = 0; i < known_plugin_maps.size(); ++i) {
-			const PluginMapList &variants = known_plugin_maps[i].maps;
-			for (int j = 0; j < variants.size(); ++j) {
-				const auto &inf = variants[j];
-				if (inf.filename == map) {
-					found = true;
-					if (!known_plugin_maps[i].active) {
-						if (add_mode == ForceActivate || (add_mode == AutoActivate && inf.priority >= PriorityMedium)) {
-							known_plugin_maps[i].active = true;
-							added.append(map);
-						}
-					}
-					break;
-				}
-			}
-			if (found) break;
-		}
-
-		if (!found) {
-			PluginMapStoredInfo inf = parsePluginMapBasics(map);
-			bool activate = (add_mode == ForceActivate) || (inf.priority >= PriorityMedium);
-			addPluginMapToList(map, activate);
-			if (activate) added.append(map);
+		if (known_plugin_maps.addMap(map, add_mode)) {
+			added.append(map);
 		}
 	}
 
 	if (suppress_reload) return;
 	if (force_reload || (!added.isEmpty ())) {
-		RKWardMainWindow::getMain ()->initPlugins(added);
-	}
-}
-
-void RKSettingsModulePlugins::fixPluginMapLists () {
-	RK_TRACE(SETTINGS);
-
-	for (int i = 0; i < known_plugin_maps.size(); ++i) {
-		PluginMapList &variants = known_plugin_maps[i].maps;
-		for (int j = 0; j < variants.size(); ++j) {
-			PluginMapStoredInfo &inf = variants[j];
-			QFileInfo info(inf.filename);
-			if (!info.isReadable()) {
-				variants.removeAt(j);
-				--j;
-				continue;
-			}
-
-			if (info.lastModified () != inf.last_modified || inf.version.isNull()) {
-				inf = parsePluginMapBasics(inf.filename);
-				inf.last_modified = info.lastModified();
-				// TOOD: Handle the case that it might have changed id? Should be remedied on the next config load, anyway, however.
-			}
-		}
-		if (variants.isEmpty()) {
-			known_plugin_maps.removeAt(i);
-			--i;
-			continue;
-		}
+		RKWardMainWindow::getMain ()->initPlugins(added); // NOTE: All maps get initialized, "added" is just for user notification of what got added
 	}
 }
 
@@ -401,7 +422,7 @@ RKSettingsModulePluginsModel::~RKSettingsModulePluginsModel() {
 	}
 }
 
-void RKSettingsModulePluginsModel::init (const RKSettingsModulePlugins::UniquePluginMapList& known_plugin_maps) {
+void RKSettingsModulePluginsModel::init (const RKSettingsModulePlugins::RKPluginMapList& known_plugin_maps) {
 	RK_TRACE (SETTINGS);
 	beginResetModel ();
 	plugin_maps = known_plugin_maps;
@@ -411,7 +432,7 @@ void RKSettingsModulePluginsModel::init (const RKSettingsModulePlugins::UniquePl
 int RKSettingsModulePluginsModel::rowCount (const QModelIndex& parent) const {
 	//RK_TRACE (SETTINGS);
 	if (parent.isValid ()) return 0;
-	return plugin_maps.size ();
+	return plugin_maps.ordered_ids.size();
 }
 
 #define COLUMN_CHECKED 0
@@ -431,8 +452,10 @@ QVariant RKSettingsModulePluginsModel::data (const QModelIndex& index, int role)
 	if (!index.isValid ()) return QVariant ();
 	int col = index.column ();
 
-	const auto &unique = plugin_maps[index.row()];
-	const auto &inf = unique.bestMap();  // TODO: efficiency
+	const auto id = plugin_maps.ordered_ids.value(index.row());
+	const auto &handle = plugin_maps.all_maps.value(id);
+	if (handle.list.isEmpty()) return QVariant();
+	const auto &inf = handle.list.first();
 
 	if (role == Qt::BackgroundRole) {
 		if (inf.state == RKSettingsModulePlugins::Broken) return QColor(Qt::red);
@@ -454,7 +477,7 @@ QVariant RKSettingsModulePluginsModel::data (const QModelIndex& index, int role)
 	if (col == COLUMN_CHECKED) {
 		if (role == Qt::CheckStateRole) {
 			if (inf.priority < RKSettingsModulePlugins::PriorityLow) return QVariant ();
-			return (unique.active ? Qt::Checked : Qt::Unchecked);
+			return (handle.active ? Qt::Checked : Qt::Unchecked);
 		}
 	} else if (col == COLUMN_ID) {
 		if (role == Qt::DisplayRole) {
@@ -485,7 +508,10 @@ Qt::ItemFlags RKSettingsModulePluginsModel::flags (const QModelIndex& index) con
 	// RK_TRACE (SETTINGS);
 	Qt::ItemFlags flags = QAbstractTableModel::flags (index);
 	if (index.isValid () && (index.column () == COLUMN_CHECKED)) {
-		if (plugin_maps[index.row()].bestMap().priority > RKSettingsModulePlugins::PriorityHidden) flags |= Qt::ItemIsUserCheckable | Qt::ItemIsEditable;
+		const auto id = plugin_maps.ordered_ids.value(index.row());
+		const auto &handle = plugin_maps.all_maps.value(id);
+		if (handle.list.isEmpty()) return flags;
+		if (handle.list.first().priority > RKSettingsModulePlugins::PriorityHidden) flags |= Qt::ItemIsUserCheckable | Qt::ItemIsEditable;
 	}
 	return flags;
 }
@@ -507,7 +533,10 @@ bool RKSettingsModulePluginsModel::setData (const QModelIndex& index, const QVar
 
 	if (role == Qt::CheckStateRole) {
 		if (index.isValid () && (index.column () == COLUMN_CHECKED)) {
-			plugin_maps[index.row ()].active = value.toBool ();
+			const auto id = plugin_maps.ordered_ids.value(index.row());
+			if (!plugin_maps.all_maps.contains(id)) return false;
+			auto &handle = plugin_maps.all_maps[id];
+			handle.active = value.toBool ();
 			emit dataChanged(index, index);
 			return true;
 		}
@@ -521,24 +550,16 @@ void RKSettingsModulePluginsModel::insertNewStrings (int above_row) {
 
 	QStringList files = QFileDialog::getOpenFileNames (static_cast<QWidget*> (QObject::parent ()), i18n ("Select .pluginmap-file"), RKCommonFunctions::getRKWardDataDir (), "RKWard pluginmap files [*.pluginmap](*.pluginmap)");
 
-	// already known files are activated, but not added
-	for (int i = files.size () -1; i >= 0; --i) {
-		int pos = findKnownPluginMap (files[i], plugin_maps);
-		if (pos >= 0) {
-			if (!plugin_maps[pos].active) {
-				plugin_maps[pos].active = true;
-				emit dataChanged(index(pos, 0), index(pos, COLUMN_COUNT - 1));
-			}
-			files.removeAt (i);
-		}
-	}
-
-	beginInsertRows (QModelIndex (), above_row, files.size ());
-	for (int i = files.size () - 1; i >= 0; --i) {
+	beginResetModel();
+	// not bothering with proper rowsInserted signals, this does not need to be efficient, anyway.
+	for (int i = files.size() -1; i >= 0; --i) {
 		auto inf = RKSettingsModulePlugins::parsePluginMapBasics(files[i]);
-		RKSettingsModulePlugins::UniquePluginMap unique(files[i], true);
-		unique.maps.append(inf);
-		plugin_maps.insert(above_row, unique);
+		plugin_maps.addMap(inf, RKSettingsModulePlugins::ForceActivate);
+		int index = plugin_maps.ordered_ids.indexOf(inf.id);
+		if (index < 0 || index > above_row) {
+			plugin_maps.ordered_ids.removeAll(inf.id);
+			plugin_maps.ordered_ids.insert(above_row, inf.id);
+		}
 	}
 	endInsertRows ();
 }
@@ -547,9 +568,9 @@ void RKSettingsModulePluginsModel::swapRows (int rowa, int rowb) {
 	RK_TRACE (SETTINGS);
 
 	RK_ASSERT ((rowa >= 0) && (rowa < rowCount ()) && (rowb >= 0) && (rowb < rowCount ()));
-	RKSettingsModulePlugins::PluginMapStoredInfo inf = plugin_maps[rowa];
-	plugin_maps[rowa] = plugin_maps[rowb];
-	plugin_maps[rowb] = inf;
+	QString id = plugin_maps.ordered_ids[rowa];
+	plugin_maps.ordered_ids[rowa] = plugin_maps.ordered_ids[rowb];
+	plugin_maps.ordered_ids[rowb] = id;
 }
 
 bool RKSettingsModulePluginsModel::removeRows (int row, int count, const QModelIndex& parent) {
@@ -558,7 +579,7 @@ bool RKSettingsModulePluginsModel::removeRows (int row, int count, const QModelI
 
 	if ((row < 0) || (count < 1) || (row + count > rowCount ())) return false;
 	for (int i = row + count - 1; i >= row; --i) {
-		plugin_maps.removeAt (i);
+		plugin_maps.forgetId(plugin_maps.ordered_ids.value(i));
 	}
 	return true;
 }

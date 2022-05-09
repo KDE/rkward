@@ -49,6 +49,7 @@ public:
 	static int defaultSidePreviewWidth () { return side_preview_width; };
 	static void setDefaultSidePreviewWidth (int new_width) { side_preview_width = new_width; }
 	enum AddMode {
+		DoNotActivate,
 		ForceActivate,
 		AutoActivate,
 		AutoActivateIfNew
@@ -77,17 +78,31 @@ public:
 		RKParsedVersion version;
 		QString id;
 		QDateTime last_modified;
+		bool betterThan(const PluginMapStoredInfo &other) const;
 	};
-	typedef QList<PluginMapStoredInfo> PluginMapList;
-	struct UniquePluginMap {
-		UniquePluginMap(const QString &id, bool active) : id(id), active(active) {};
-		QString id;
-		bool active;
-		PluginMapList maps;
-		PluginMapStoredInfo bestMap() const;
+	typedef QList<PluginMapStoredInfo> PluginMapInfoList;
+	class RKPluginMapList {
+	public:
+		/** @returns true if the _effective_ list changed (false, if file already known, or another file by the same id) */
+		bool addMap(const PluginMapStoredInfo &inf, AddMode add_mode);
+		void removeObsoleteMaps();
+		bool setMapfileState(const QString &mapfile, PluginMapState state);
+		void forgetId(const QString &id);
+		void setIdActive(const QString &id, bool active);
+		QString mapFileForId(const QString &id) const;
+		PluginMapInfoList allUniqueMaps();
+		QStringList activeMapFiles();
+		void saveToConfig(KConfigGroup &cg);
+		void readFromConfig(KConfigGroup &cg);
+	private:
+friend class RKSettingsModulePluginsModel;
+		struct DummyListStruct {
+			bool active;
+			PluginMapInfoList list;
+		};
+		QHash<QString, DummyListStruct> all_maps;
+		QStringList ordered_ids;
 	};
-	typedef QList<UniquePluginMap> UniquePluginMapList;
-	static UniquePluginMapList knownPluginmaps () { return known_plugin_maps; };
 	/** Registers the plugin maps that are shipped with RKWard.
 	 * @param force_add All default maps are also activated, even if they were already known, and disabled by the user. */
 	static void registerDefaultPluginMaps (AddMode add_mode);
@@ -98,11 +113,10 @@ private:
 	QButtonGroup *button_group;
 
 	/** plugin maps which are not necessarily active, but have been encountered, before. @see plugin_maps */
-	static UniquePluginMapList known_plugin_maps;
+	static RKPluginMapList known_plugin_maps;
 friend class RKSettingsModulePluginsModel;
-	static PluginMapStoredInfo parsePluginMapBasics (const QString &filename);
-	/* @returns true, if map was new, false if already known */
-	static bool addPluginMapToList(const PluginMapStoredInfo &inf, bool active);
+	static RKPluginMapList knownPluginmaps() { return known_plugin_maps; };
+	static PluginMapStoredInfo parsePluginMapBasics(const QString &filename);
 
 	static RKConfigValue<PluginPrefs,int> interface_pref;
 	static RKConfigValue<bool> show_code;
@@ -111,10 +125,9 @@ friend class RKSettingsModulePluginsModel;
 
 /* TODO: This one is currently unused (leftover of GHNS-based plugin installation), but might still be of interest */
 	static QStringList findPluginMapsRecursive (const QString &basedir);
-	static void fixPluginMapLists ();
 friend class RKPluginMapSelectionWidget;
 /** Sets the new list of plugins. Potentially removes unreadable ones, and returns the effective list. */
-	static UniquePluginMapList setPluginMaps (const UniquePluginMapList &new_list);
+	static RKPluginMapList setPluginMaps (const RKPluginMapList &new_list);
 };
 
 class RKSettingsModulePluginsModel : public QAbstractTableModel {
@@ -123,13 +136,13 @@ public:
 	explicit RKSettingsModulePluginsModel (QObject* parent);
 	virtual ~RKSettingsModulePluginsModel ();
 /** (re-)initialize the model */
-	void init (const RKSettingsModulePlugins::UniquePluginMapList &known_plugin_maps);
-	RKSettingsModulePlugins::UniquePluginMapList pluginMaps () { return plugin_maps; };
+	void init (const RKSettingsModulePlugins::RKPluginMapList &known_plugin_maps);
+	RKSettingsModulePlugins::RKPluginMapList pluginMaps () { return plugin_maps; };
 public slots:
 	void swapRows (int rowa, int rowb);
 	void insertNewStrings (int above_row);
 private:
-	RKSettingsModulePlugins::UniquePluginMapList plugin_maps;
+	RKSettingsModulePlugins::RKPluginMapList plugin_maps;
 	struct PluginMapMetaInfo {
 		RKComponentAboutData *about;
 		QList<RKComponentDependency> dependencies;

@@ -3,6 +3,7 @@ TODOs:
 	- Fix RKWard-app icon on Windows
 	- If stored config is older than 0.6.3, discard it, entirely
 
+- Plugin maps with the same id are grouped together, and the most recent version is used, automatically
 - Added functionality to install add-on packages directly from git (formerly available as external plugin rk.gitInstall)
    - TODO: add a plugintest
 - Fixed: Disabling a <row> element in plugins would not make the sub-elements non-required

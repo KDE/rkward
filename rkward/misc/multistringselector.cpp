@@ -138,11 +138,11 @@ void RKMultiStringSelectorV2::setModel (QAbstractItemModel* model, int main_colu
 	}
 	tree_view->setModel (model);
 	connect (tree_view->selectionModel (), &QItemSelectionModel::currentChanged, this, &RKMultiStringSelectorV2::updateButtons);
-	connect (model, &QStringListModel::dataChanged, this, &RKMultiStringSelectorV2::anyModelDataChange);
-	connect (model, &QStringListModel::layoutChanged, this, &RKMultiStringSelectorV2::anyModelDataChange);
-	connect (model, &QStringListModel::rowsInserted, this, &RKMultiStringSelectorV2::anyModelDataChange);
-	connect (model, &QStringListModel::rowsRemoved, this, &RKMultiStringSelectorV2::anyModelDataChange);
-	connect (model, &QStringListModel::modelReset, this, &RKMultiStringSelectorV2::anyModelDataChange);
+	connect (model, &QAbstractItemModel::dataChanged, this, &RKMultiStringSelectorV2::anyModelDataChange);
+	connect (model, &QAbstractItemModel::layoutChanged, this, &RKMultiStringSelectorV2::anyModelDataChange);
+	connect (model, &QAbstractItemModel::rowsInserted, this, &RKMultiStringSelectorV2::anyModelDataChange);
+	connect (model, &QAbstractItemModel::rowsRemoved, this, &RKMultiStringSelectorV2::anyModelDataChange);
+	connect (model, &QAbstractItemModel::modelReset, this, &RKMultiStringSelectorV2::anyModelDataChange);
 
 	if (main_column >= 0) tree_view->resizeColumnToContents (main_column);
 	
