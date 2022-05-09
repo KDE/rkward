@@ -1,0 +1,52 @@
+<!DOCTYPE rkhelp >
+<document>
+  <!-- this code was generated using the rkwarddev package.
+    perhaps don't make changes here, but in the rkwarddev script instead! -->
+  <summary>
+  </summary>
+  <usage>
+  </usage>
+  <!-- <section id="sct_EDITORDE" title="EDIT OR DELETE ME">
+        EDIT OR DELETE ME
+      </section> -->
+  <settings>
+    <setting id="packageSource">
+      Set the location where the package resides that you want to install.
+    </setting>
+    <caption id="repoFrame" />
+    <setting id="gitUser">
+      Specify the user name (GitHub, GitLab and Bitbucket only).
+    </setting>
+    <setting id="gitRepo">
+      Give the repository name (GitHub, GitLab and Bitbucket only).
+    </setting>
+    <setting id="fullURL">
+      Give the full URL to the repository (generic git and svn only).
+    </setting>
+    <setting id="inp_Cmmttgbr">
+      If you want a certain commit, tag or branch for installation, define that here.
+    </setting>
+    <setting id="inp_Sbdrctry">
+      If you want to install from a subdirectory of the repository, define that here.
+    </setting>
+    <caption id="frm_Prvtrpst" />
+    <setting id="inp_PrsnlPAT">
+      To install from a private repository, set your personal access token (PAT, GitHub and GitLab only).
+    </setting>
+    <setting id="inp_User">
+      To install from a private repository, set the user name (Bitbucket only).
+    </setting>
+    <setting id="inp_Password">
+      To install from a private repository, set the password (Bitbucket only).
+    </setting>
+  </settings>
+  <!-- <related>
+        <ul>
+          <li>
+            <link href="rkward://rhelp/..." />
+          </li>
+        </ul>
+      </related> -->
+  <technical>
+  </technical>
+</document>
