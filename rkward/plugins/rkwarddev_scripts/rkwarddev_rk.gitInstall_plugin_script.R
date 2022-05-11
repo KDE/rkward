@@ -75,7 +75,7 @@ fullURL <- rk.XML.input("URL to repository",
 repoFrame <- rk.XML.frame(
   gitUserRepo,
   fullURL,
-  label="Package reporitory",
+  label="Package repository",
   id.name="repoFrame"
 )
 

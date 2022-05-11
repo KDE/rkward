@@ -31,7 +31,7 @@
         <option label="Bitbucket" value="bitbucket" />
         <option label="subversion (generic)" value="svn" />
       </dropdown>
-      <frame label="Package reporitory" id="repoFrame">
+      <frame label="Package repository" id="repoFrame">
         <row id="row_inptlbGURR">
           <input label="Git user name" id="gitUser" required="true" />
           <input label="Repository" id="gitRepo" required="true" />
