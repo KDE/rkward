@@ -54,10 +54,18 @@ a:link {
 #rkward_welcome li {
 	width: 100%;
 	text-overflow: ellipsis;
+	direction: rtl;
 	overflow: hidden;
 	white-space: nowrap;
-	text-align: left;
-	list-style-position: inside;
+	clear: left;
+}
+
+/* Note: Text ellipsis on left-hand side does not allow for regular (left-aligned) bullets in <li>. These are added, separately, here. */
+#rkward_welcome li::before {
+	content: "\2022";
+	float: left;
+	direction: ltr;
+	width: 1em;
 }
 
 #main {
