@@ -62,7 +62,7 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 			# In order to check, whether the import was correct
 			rk.print (my.rio.data)
 			for (var in my.rio.data) rk.print (rk.get.description(var))
-		}, libraries=c("foreign"), files=c("../import_export_plugins_testfile.sav")),
+		}, libraries=c("rio"), files=c("../import_export_plugins_testfile.sav")),
 		new ("RKTest", id="import_stata", call=function () {
 			rk.call.plugin ("rkward::import_stata", convert_dates.state="1", convert_factors.state="1", convert_underscore.state="0", do_locale_conversion.state="1", doedit.state="0", encoding.string="ISO8859-1", file.selection=file.path (getwd(), "import_export_plugins_testfile.dta"), missing_type.state="0", saveto.objectname="my.stata.data", saveto.parent=".GlobalEnv", submit.mode="submit")
 
@@ -131,6 +131,11 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 			for (line in x) rk.print (line)
 			unlink(file)
 		}),
+		new ("RKTest", id="git_install", call=function () {
+			# Intentionally using a non-existent path, as we do not want to install a package. This test still allows to check that the generated code remains as expected
+			# (note: plugin linked from internal help pages!)
+			rk.call.plugin ("rkward::install_from_git", fullURL.text="https://github.com/does/not/exist/404.git", submit.mode="submit")
+		}, libraries=c("devtools", "usethis")),
 		new ("RKTest", id="package_skeleton", call=function () {
 			# create two functions to use
 			assign ("skel.func1", rkwardtests::rktest.getTempDir, envir=globalenv())

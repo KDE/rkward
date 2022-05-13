@@ -1,3 +1,0 @@
-Loading required package: rio
-The following rio suggested packages are not installed: 'arrow', 'feather', 'fst', 'hexView', 'pzfx', 'readODS', 'rmatio'
-Use 'install_formats()' to install them

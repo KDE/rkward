@@ -1,0 +1,9 @@
+Warning in system(full, intern = TRUE, ignore.stderr = quiet) :
+  running command ''/usr/bin/git' ls-remote https://github.com/does/not/exist/404.git  2>/dev/null' had status 128
+Warning in system(full, intern = TRUE, ignore.stderr = quiet) :
+  running command ''/usr/bin/git' ls-remote https://github.com/does/not/exist/404.git  2>/dev/null' had status 128
+Error: Failed to install 'unknown package' from Git:
+  Command failed (128)
+In addition: Warning message:
+In .rk.do.call("doPlugin", callstrings) :
+  Not all specified settings could be applied. Most likely this is because some R objects are no longer present in your current workspace.
