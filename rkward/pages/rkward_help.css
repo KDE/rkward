@@ -26,7 +26,7 @@ a:link {
 }
 
 #rkward_welcome #main {
-	width: 95%;
+	width: 100%;
 	margin: auto;
 	display: flex;
 	flex-flow: row wrap;
@@ -37,14 +37,23 @@ a:link {
 	width: 100%;
 }
 
+#rkward_welcome #main h2 {
+	margin: 0.5em 0;
+	padding: 0.2em;
+	display: inline;
+	border: 1px solid var(--shadow-color);
+	border-radius: .5em;
+}
+
 #rkward_welcome #navigation {
 	display: none;
 }
 
 #rkward_welcome div {
-	width: 45%;
-	margin: 1em;
+	width: 46%;
+	margin: 2%;
 	padding: 0em 1em;
+	box-sizing: border-box;
 }
 
 #rkward_welcome div div {
