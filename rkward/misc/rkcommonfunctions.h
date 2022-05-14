@@ -66,7 +66,7 @@ namespace RKCommonFunctions {
 	inline Qt::SplitBehaviorFlags KeepEmptyParts() { return Qt::KeepEmptyParts; };
 	inline Qt::SplitBehaviorFlags SkipEmptyParts() { return Qt::SkipEmptyParts; };
 #else
-	inline QString::SplitBehavior KeepEmptyParts() { return RKCommonFunctions::KeepEmptyParts(); };
+	inline QString::SplitBehavior KeepEmptyParts() { return QString::KeepEmptyParts; };
 	inline QString::SplitBehavior SkipEmptyParts() { return QString::SkipEmptyParts; };
 #endif
 };
