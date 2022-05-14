@@ -10,9 +10,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QApplication>
 #if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
 #	include <QDesktopWidget>
-#	include <QWidget>
 #else
 #	include <QScreen>
+#	include <QWidget>
 #endif
 
 namespace RKCompatibility {
