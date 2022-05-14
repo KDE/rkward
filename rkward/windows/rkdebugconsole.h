@@ -1,6 +1,6 @@
 /*
 rkdebugconsole - This file is part of the RKWard project. Created: Wed Oct 19 2011
-SPDX-FileCopyrightText: 2011 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2011-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -30,21 +30,15 @@ public slots:
 	void newDebugState ();
 private slots:
 	void sendReplySlot ();
-	void stepButtonClicked ();
-	void stepOutButtonClicked ();
-	void continueButtonClicked ();
-	void cancelButtonClicked ();
 private:
+	QPushButton* addButton(const QString &command, const QString &text, const QString &tip);
 	void sendReply (const QString &reply);
 
 	QTextEdit* context_view;
 	KHistoryComboBox* reply_edit;
 	QLabel* prompt_label;
 
-	QPushButton* step_button;
-	QPushButton* step_out_button;
-	QPushButton* continue_button;
-	QPushButton* cancel_button;
+	QList<QPushButton*> buttons;
 
 friend class RKWardMainWindow;
 	static RKDebugConsole *_instance;

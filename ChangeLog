@@ -1,6 +1,5 @@
-TODOs:
-	- More tolerant handshake on Windows? Simply a matter of allowing more time?
-
+--- Version 0.7.4 - May-30-2022
+- Support "step into" and "finish current" modes in the R debugger window
 - When directly upgrading from very old versions (pre 0.6.3, currently), discard existing config settings
 - Plugin maps with the same id are grouped together, and the most recent version is used, automatically
 - Added functionality to install add-on packages directly from git (formerly available as external plugin rk.gitInstall)
