@@ -712,7 +712,7 @@ void RKConsole::userLoadHistory (const QUrl &_url) {
 
 	QFile file (filename);
 	if (!file.open (QIODevice::Text | QIODevice::ReadOnly)) return;
-	setCommandHistory (QString (file.readAll ()).split ('\n', QString::SkipEmptyParts), false);
+	setCommandHistory (QString (file.readAll ()).split ('\n', RKCommonFunctions::SkipEmptyParts()), false);
 	file.close ();
 
 	delete (tmpfile);
@@ -896,7 +896,7 @@ void RKConsole::pipeCommandThroughConsoleLocal (const QString &command_string) {
 		}
 	}
 	if (RKSettingsModuleConsole::addPipedCommandsToHistory() != RKSettingsModuleConsole::DontAdd) {
-		QStringList lines = command_string.split ('\n', QString::SkipEmptyParts);
+		QStringList lines = command_string.split ('\n', RKCommonFunctions::SkipEmptyParts());
 		if ((RKSettingsModuleConsole::addPipedCommandsToHistory() == RKSettingsModuleConsole::AlwaysAdd) || (lines.count () == 1)) {
 			for (int i = 0; i < lines.count (); ++i) {
 				commands_history.append (lines[i]);

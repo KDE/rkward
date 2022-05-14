@@ -1004,13 +1004,13 @@ bool RKComponentPropertyRObjects::setValueList (const QStringList& values) {
 bool RKComponentPropertyRObjects::setValue (const QString &value) {
 	RK_TRACE (PLUGIN);
 
-	return setValueList (value.split (sep, QString::SkipEmptyParts));
+	return setValueList (value.split (sep, RKCommonFunctions::SkipEmptyParts()));
 }
 
 bool RKComponentPropertyRObjects::isStringValid (const QString &value) {
 	RK_TRACE (PLUGIN);
 
-	QStringList slist = value.split (sep, QString::SkipEmptyParts);
+	QStringList slist = value.split (sep, RKCommonFunctions::SkipEmptyParts());
 
 	for (QStringList::const_iterator it = slist.cbegin (); it != slist.cend (); ++it) {
 		RObject *obj = RObjectList::getObjectList ()->findObject (*it);

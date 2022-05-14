@@ -184,7 +184,7 @@ void RKMatrixInput::setColumnValue (int column, const QString& value) {
 	RK_TRACE (PLUGIN);
 
 	if (!expandStorageForColumn (column)) return;
-	columns[column].storage = value.split ('\t', QString::KeepEmptyParts);
+	columns[column].storage = value.split ('\t', RKCommonFunctions::KeepEmptyParts());
 	updateColumn (column);
 	emit model->dataChanged (model->index(0, column), model->index(row_count->intValue() + trailing_rows, column));
 }
@@ -333,7 +333,7 @@ void RKMatrixInput::tsvPropertyChanged () {
 	RK_TRACE (PLUGIN);
 
 	columns.clear ();
-	QStringList coldata = fetchStringValue (tsv_data).split ('\n', QString::KeepEmptyParts);
+	QStringList coldata = fetchStringValue (tsv_data).split ('\n', RKCommonFunctions::KeepEmptyParts());
 	for (int i = 0; i < coldata.size (); ++i) {
 		setColumnValue (i, coldata[i]);
 	}

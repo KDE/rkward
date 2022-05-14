@@ -890,7 +890,7 @@ ItemSpecification parseItemDescription (const QString &description) {
 			RK_ASSERT (false);
 			return ret;
 		}
-		ret.params = description.mid (typeend + 2, specstart - typeend - 2).split (':', QString::SkipEmptyParts);
+		ret.params = description.mid (typeend + 2, specstart - typeend - 2).split (':', RKCommonFunctions::SkipEmptyParts());
 		ret.specification = description.mid (specstart + 2);
 	} else {
 		ret.specification = description.mid (typeend + 1);

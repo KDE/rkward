@@ -92,8 +92,8 @@ QString RKComponentAboutData::toHtml () const {
 	}
 
 	if (!translator_names.isNull ()) {
-		QStringList tns = translator_names.split (QLatin1Char(','), QString::KeepEmptyParts);
-		QStringList tes = translator_emails.split (QLatin1Char(','), QString::KeepEmptyParts);
+		QStringList tns = translator_names.split (QLatin1Char(','), RKCommonFunctions::KeepEmptyParts());
+		QStringList tes = translator_emails.split (QLatin1Char(','), RKCommonFunctions::KeepEmptyParts());
 		ret.append ("\n<p><b>" + i18n ("Translators:") + "</b></p>\n<p><ul>");
 		for (int i = 0; i < tns.size (); ++i) {
 			QString tn = tns.value (i);

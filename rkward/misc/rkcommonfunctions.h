@@ -9,9 +9,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <QChar>
 #include <QRect>
+#include <QString>
 
 class QStringList;
-class QString;
 class QDomNode;
 class KXMLGUIClient;
 class QWidget;
@@ -57,8 +57,18 @@ namespace RKCommonFunctions {
 /** create a QLabel that has wordwarp enabled, *and* clickable links (opened inside RKWard), in a single line of code. */
 	QLabel* linkedWrappedLabel (const QString &text);
 
+//// NOTE: Functions / constants below are porting aids, to be removed, eventually. ////
 /** Small wrapper around QScreen::availableGeometry(), mostly to ease porting */
 	QRect availableGeometry(QWidget *for_widget);
+
+/** Porting aid: Qt::SplitBehaviorFlags was added in Qt 5.14, deprecating the previous flags in QString. Remove, once we depend on Qt >= 5.14 */
+#if QT_VERSION >= QT_VERSION_CHECK(5,14,0)
+	inline Qt::SplitBehaviorFlags KeepEmptyParts() { return Qt::KeepEmptyParts; };
+	inline Qt::SplitBehaviorFlags SkipEmptyParts() { return Qt::SkipEmptyParts; };
+#else
+	inline QString::SplitBehavior KeepEmptyParts() { return RKCommonFunctions::KeepEmptyParts(); };
+	inline QString::SplitBehavior SkipEmptyParts() { return QString::SkipEmptyParts; };
+#endif
 };
 
 #endif
