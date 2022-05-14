@@ -294,7 +294,7 @@ Qt::ItemFlags RCommandStackModel::flags (const QModelIndex& index) const {
 	RK_ASSERT (listeners);
 	RK_TRACE (RBACKEND);
 
-	if (!index.isValid ()) return 0;
+	if (!index.isValid ()) return Qt::NoItemFlags;
 	RK_ASSERT (index.model () == this);
 
 	RCommandChain* index_data = static_cast<RCommandChain*> (index.internalPointer ());

@@ -296,7 +296,7 @@ QWidget* RKObjectListViewSettings::filterWidget (QWidget *parent) {
 	boxvlayout->addWidget (depth_box);
 
 	depth_box->setCurrentIndex (1);
-	connect (depth_box, static_cast<void (QComboBox::*)(const QString &)>(&QComboBox::currentIndexChanged), this, &RKObjectListViewSettings::filterSettingsChanged);
+	connect (depth_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &RKObjectListViewSettings::filterSettingsChanged);
 
 	type_box = new QComboBox ();
 	type_box->addItem (i18n ("Show all objects"));
@@ -308,7 +308,7 @@ QWidget* RKObjectListViewSettings::filterWidget (QWidget *parent) {
 	if (hide_functions) type_box->setCurrentIndex (2);
 	else if (hide_non_functions) type_box->setCurrentIndex (1);
 	else type_box->setCurrentIndex (0);
-	connect (type_box, static_cast<void (QComboBox::*)(const QString &)>(&QComboBox::currentIndexChanged), this, &RKObjectListViewSettings::filterSettingsChanged);
+	connect (type_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &RKObjectListViewSettings::filterSettingsChanged);
 
 	QHBoxLayout *bottom_layout = new QHBoxLayout (filter_widget);
 	layout->addLayout (bottom_layout);

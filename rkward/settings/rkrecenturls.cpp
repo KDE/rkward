@@ -132,4 +132,3 @@ void RKRecentUrls::cleanup() {
 	actions.clear();
 }
 
-#include "rkrecenturls.moc"

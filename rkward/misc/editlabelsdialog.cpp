@@ -150,8 +150,8 @@ QVariant RKVarLevelsTableModel::data (const QModelIndex& index, int role) const 
 Qt::ItemFlags RKVarLevelsTableModel::flags (const QModelIndex& index) const {
 	RK_TRACE (EDITOR);
 
-	if (!index.isValid ()) return 0;
-	if (index.column () != 0) return 0;
+	if (!index.isValid ()) return Qt::NoItemFlags;
+	if (index.column () != 0) return Qt::NoItemFlags;
 	if (index.row () >= labels.count ()) return (Qt::ItemIsEditable | Qt::ItemIsEnabled);
 	return (Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
 }

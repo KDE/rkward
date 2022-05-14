@@ -1166,13 +1166,13 @@ bool RKRPackageInstallationStatusSortFilterModel::filterAcceptsRow (int source_r
 	if (!source_parent.isValid ()) return true;		// Never filter the top level item
 
 	if (rkward_only) {
-		bool enhance_rk = source_parent.child (source_row, RKRPackageInstallationStatus::EnhancesRKWard).data (Qt::UserRole).toBool ();
+		bool enhance_rk = sourceModel()->index(source_row, RKRPackageInstallationStatus::EnhancesRKWard, source_parent).data(Qt::UserRole).toBool();
 		if (!enhance_rk) return false;
 	}
 // filter on Name and Title
-	QString name = source_parent.child (source_row, RKRPackageInstallationStatus::PackageName).data ().toString ();
+	QString name = sourceModel()->index(source_row, RKRPackageInstallationStatus::PackageName, source_parent).data().toString();
 	if (name.contains (filterRegExp ())) return true;
-	QString title = source_parent.child (source_row, RKRPackageInstallationStatus::PackageTitle).data ().toString ();
+	QString title = sourceModel()->index(source_row, RKRPackageInstallationStatus::PackageTitle, source_parent).data().toString();
 	return (title.contains (filterRegExp ()));
 }
 
