@@ -20,6 +20,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../misc/rkspinbox.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkcompatibility.h"
 #include "../misc/rkstyle.h"
 
 #include "../debug.h"
@@ -65,7 +66,7 @@ RKSettingsModuleDebug::RKSettingsModuleDebug (RKSettings *gui, QWidget *parent) 
 		box_layout->addWidget (*it);
 		(*it)->setChecked (RK_Debug::RK_Debug_Flags & debug_flags_group->id (*it));
 	}
-	connect (debug_flags_group, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &RKSettingsModuleDebug::settingChanged);
+	connect (debug_flags_group, RKCompatibility::groupButtonClicked(), this, &RKSettingsModuleDebug::settingChanged);
 	main_vbox->addWidget (group);
 
 

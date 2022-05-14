@@ -56,6 +56,7 @@ void RKPasteSpecialAction::doSpecialPaste() {
 #include "rksaveobjectchooser.h"
 #include "../rbackend/rkrinterface.h"
 #include "../misc/rkprogresscontrol.h"
+#include "../misc/rkcompatibility.h"
 
 RKPasteSpecialDialog::RKPasteSpecialDialog(QWidget* parent, bool standalone) : QDialog(parent) {
 	RK_TRACE (MISC);
@@ -93,7 +94,7 @@ RKPasteSpecialDialog::RKPasteSpecialDialog(QWidget* parent, bool standalone) : Q
 	dimensionality_group->addButton (rbutton, DimDataFrame);
 	rbutton->setChecked (true);
 	group_layout->addWidget (rbutton);
-	connect (dimensionality_group, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &RKPasteSpecialDialog::updateState);
+	connect (dimensionality_group, RKCompatibility::groupButtonClicked(), this, &RKPasteSpecialDialog::updateState);
 	rowlayout->addWidget (box);
 
 	const QMimeData* clipdata = QApplication::clipboard ()->mimeData ();
@@ -123,7 +124,7 @@ RKPasteSpecialDialog::RKPasteSpecialDialog(QWidget* parent, bool standalone) : Q
 	separator_freefield = new QLineEdit (";", box);
 	h_layout->addWidget (separator_freefield);
 	group_layout->addLayout (h_layout);
-	connect (separator_group, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &RKPasteSpecialDialog::updateState);
+	connect (separator_group, RKCompatibility::groupButtonClicked(), this, &RKPasteSpecialDialog::updateState);
 	rowlayout->addWidget (box);
 
 	rowlayout = new QHBoxLayout;
@@ -143,7 +144,7 @@ RKPasteSpecialDialog::RKPasteSpecialDialog(QWidget* parent, bool standalone) : Q
 	rbutton = new QRadioButton (i18n ("Quote all values"), box);
 	quoting_group->addButton (rbutton, QuoteAll);
 	group_layout->addWidget (rbutton);
-	connect (quoting_group, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &RKPasteSpecialDialog::updateState);
+	connect (quoting_group, RKCompatibility::groupButtonClicked(), this, &RKPasteSpecialDialog::updateState);
 	rowlayout->addWidget (box);
 
 	// Labels

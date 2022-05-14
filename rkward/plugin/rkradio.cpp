@@ -17,6 +17,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KLocalizedString>
 
 #include "../misc/xmlhelper.h"
+#include "../misc/rkcompatibility.h"
 #include "../debug.h"
 
 RKRadio::RKRadio (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKAbstractOptionSelector (parent_component, parent_widget) {
@@ -37,7 +38,7 @@ RKRadio::RKRadio (const QDomElement &element, RKComponent *parent_component, QWi
 	addOptionsAndInit (element);
 
 	vbox->addWidget (group_box);
-	connect (group, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &RKRadio::itemSelected);
+	connect (group, RKCompatibility::groupButtonClicked(), this, &RKRadio::itemSelected);
 }
 
 RKRadio::~RKRadio(){

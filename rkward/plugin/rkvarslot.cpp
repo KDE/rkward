@@ -24,7 +24,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../debug.h"
 #include "../misc/xmlhelper.h"
 #include "../misc/rkstandardicons.h"
-#include "../misc/rkcommonfunctions.h"
+#include "../misc/rkcompatibility.h"
 
 RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
 	RK_TRACE (PLUGIN);
@@ -99,8 +99,8 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 
 	if (mode == Varslot) {
 		// initialize filters
-		static_cast<RKComponentPropertyRObjects*> (available)->setClassFilter (xml->getStringAttribute (element, "classes", QString (), DL_INFO).split (' ', RKCommonFunctions::SkipEmptyParts()));
-		static_cast<RKComponentPropertyRObjects*> (available)->setTypeFilter (xml->getStringAttribute (element, "types", QString (), DL_INFO).split (' ', RKCommonFunctions::SkipEmptyParts()));
+		static_cast<RKComponentPropertyRObjects*> (available)->setClassFilter (xml->getStringAttribute (element, "classes", QString (), DL_INFO).split (' ', RKCompatibility::SkipEmptyParts()));
+		static_cast<RKComponentPropertyRObjects*> (available)->setTypeFilter (xml->getStringAttribute (element, "types", QString (), DL_INFO).split (' ', RKCompatibility::SkipEmptyParts()));
 		static_cast<RKComponentPropertyRObjects*> (available)->setDimensionFilter (xml->getIntAttribute (element, "num_dimensions", 0, DL_INFO), xml->getIntAttribute (element, "min_length", 0, DL_INFO), xml->getIntAttribute (element, "max_length", INT_MAX, DL_INFO));
 		static_cast<RKComponentPropertyRObjects*> (available)->setObjectProblemsAreErrors (false);
 	}

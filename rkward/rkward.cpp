@@ -53,6 +53,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "core/renvironmentobject.h"
 #include "misc/rkstandardicons.h"
 #include "misc/rkcommonfunctions.h"
+#include "misc/rkcompatibility.h"
 #include "misc/rkxmlguisyncer.h"
 #include "misc/rkdbusapi.h"
 #include "misc/rkdialogbuttonbox.h"
@@ -770,7 +771,7 @@ void RKWardMainWindow::readOptions () {
 	KConfigGroup cg = config->group ("General Options");
 	QSize size = cg.readEntry ("Geometry", QSize ());
 	if (size.isEmpty ()) {
-		size = RKCommonFunctions::availableGeometry(this).size();
+		size = RKCompatibility::availableGeometry(this).size();
 	}
 	resize (size);
 

@@ -22,6 +22,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../core/rcontainerobject.h"
 #include "../misc/xmlhelper.h"
 #include "../misc/rkstandardicons.h"
+#include "../misc/rkcompatibility.h"
 
 #include "../debug.h"
 
@@ -65,7 +66,7 @@ RKFormula::RKFormula (const QDomElement &element, RKComponent *parent_component,
 	type_selector->addButton (button, (int) MainEffects);
 	vbox->addWidget (button = new QRadioButton (i18n ("Custom Model:"), this));
 	type_selector->addButton (button, (int) Custom);
-	connect (type_selector, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &RKFormula::typeChange);
+	connect (type_selector, RKCompatibility::groupButtonClicked(), this, &RKFormula::typeChange);
 
 	custom_model_widget = new QWidget (this);
 	QHBoxLayout *model_hbox = new QHBoxLayout (custom_model_widget);

@@ -9,7 +9,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../misc/xmlhelper.h"
 #include "../misc/rkmessagecatalog.h"
-#include "../misc/rkcommonfunctions.h"
+#include "../misc/rkcompatibility.h"
 #include "../rbackend/rksessionvars.h"
 
 #include <KLocalizedString>
@@ -93,8 +93,8 @@ QString RKComponentAboutData::toHtml () const {
 	}
 
 	if (!translator_names.isNull ()) {
-		QStringList tns = translator_names.split (QLatin1Char(','), RKCommonFunctions::KeepEmptyParts());
-		QStringList tes = translator_emails.split (QLatin1Char(','), RKCommonFunctions::KeepEmptyParts());
+		QStringList tns = translator_names.split (QLatin1Char(','), RKCompatibility::KeepEmptyParts());
+		QStringList tes = translator_emails.split (QLatin1Char(','), RKCompatibility::KeepEmptyParts());
 		ret.append ("\n<p><b>" + i18n ("Translators:") + "</b></p>\n<p><ul>");
 		for (int i = 0; i < tns.size (); ++i) {
 			QString tn = tns.value (i);

@@ -51,6 +51,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "settings/rksettingsmoduleconsole.h"
 #include "settings/rkrecenturls.h"
 #include "misc/rkcommonfunctions.h"
+#include "misc/rkcompatibility.h"
 #include "misc/rkstandardicons.h"
 #include "misc/rkstandardactions.h"
 #include "core/robjectlist.h"
@@ -712,7 +713,7 @@ void RKConsole::userLoadHistory (const QUrl &_url) {
 
 	QFile file (filename);
 	if (!file.open (QIODevice::Text | QIODevice::ReadOnly)) return;
-	setCommandHistory (QString (file.readAll ()).split ('\n', RKCommonFunctions::SkipEmptyParts()), false);
+	setCommandHistory (QString (file.readAll ()).split ('\n', RKCompatibility::SkipEmptyParts()), false);
 	file.close ();
 
 	delete (tmpfile);
@@ -896,7 +897,7 @@ void RKConsole::pipeCommandThroughConsoleLocal (const QString &command_string) {
 		}
 	}
 	if (RKSettingsModuleConsole::addPipedCommandsToHistory() != RKSettingsModuleConsole::DontAdd) {
-		QStringList lines = command_string.split ('\n', RKCommonFunctions::SkipEmptyParts());
+		QStringList lines = command_string.split ('\n', RKCompatibility::SkipEmptyParts());
 		if ((RKSettingsModuleConsole::addPipedCommandsToHistory() == RKSettingsModuleConsole::AlwaysAdd) || (lines.count () == 1)) {
 			for (int i = 0; i < lines.count (); ++i) {
 				commands_history.append (lines[i]);

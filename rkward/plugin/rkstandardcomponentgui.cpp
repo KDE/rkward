@@ -23,6 +23,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rkcomponentmap.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkcompatibility.h"
 #include "../misc/rkstandardicons.h"
 #include "../misc/rkxmlguipreviewarea.h"
 #include "../misc/rkstyle.h"
@@ -75,7 +76,7 @@ public:
 		setSizes (sizes);
 
 		if (QSplitter::window ()->isVisible ()) {
-			QRect boundary = RKCommonFunctions::availableGeometry(this);
+			QRect boundary = RKCompatibility::availableGeometry(this);
 			int new_width = window->width ();
 			int new_height = window->height ();
 			int new_x = window->x ();

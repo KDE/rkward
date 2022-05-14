@@ -20,6 +20,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../rbackend/rcommand.h"
 #include "../misc/rkdialogbuttonbox.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkcompatibility.h"
 
 #include "../debug.h"
 
@@ -35,7 +36,7 @@ RKReadLineDialog::RKReadLineDialog (QWidget *parent, const QString &caption, con
 
 	layout->addWidget (new QLabel (caption, this));
 
-	int screen_width = RKCommonFunctions::availableGeometry(this).width();
+	int screen_width = RKCompatibility::availableGeometry(this).width();
 
 	QString context = command->fullOutput ();
 	if (!context.isEmpty ()) {

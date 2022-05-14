@@ -11,12 +11,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <qregexp.h>
 #include <QDir>
 #include <QStandardPaths>
-#include <QApplication>
-#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
-#	include <QDesktopWidget>
-#else
-#	include <QScreen>
-#endif
+#include <QCoreApplication>
 #include <QLabel>
 
 #include <KLocalizedString>
@@ -276,15 +271,4 @@ namespace RKCommonFunctions {
 		QObject::connect (ret, &QLabel::linkActivated, RKWorkplace::mainWorkplace (), &RKWorkplace::openAnyUrlString);
 		return ret;
 	}
-
-	QRect availableGeometry(QWidget* for_widget) {
-#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
-		auto screen = for_widget->screen();
-		if (screen) return screen->availableGeometry();
-		return QApplication::primaryScreen()->availableGeometry();
-#else
-		return ::QApplication::desktop()->availableGeometry(for_widget);
-#endif
-	}
-
 }	// namespace

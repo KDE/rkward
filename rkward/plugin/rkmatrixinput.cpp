@@ -17,7 +17,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rktableview.h"
 #include "../dataeditor/rktextmatrix.h"
 #include "../misc/xmlhelper.h"
-#include "../misc/rkcommonfunctions.h"
+#include "../misc/rkcompatibility.h"
 
 #include "../debug.h"
 
@@ -185,7 +185,7 @@ void RKMatrixInput::setColumnValue (int column, const QString& value) {
 	RK_TRACE (PLUGIN);
 
 	if (!expandStorageForColumn (column)) return;
-	columns[column].storage = value.split ('\t', RKCommonFunctions::KeepEmptyParts());
+	columns[column].storage = value.split ('\t', RKCompatibility::KeepEmptyParts());
 	updateColumn (column);
 	emit model->dataChanged (model->index(0, column), model->index(row_count->intValue() + trailing_rows, column));
 }
@@ -334,7 +334,7 @@ void RKMatrixInput::tsvPropertyChanged () {
 	RK_TRACE (PLUGIN);
 
 	columns.clear ();
-	QStringList coldata = fetchStringValue (tsv_data).split ('\n', RKCommonFunctions::KeepEmptyParts());
+	QStringList coldata = fetchStringValue (tsv_data).split ('\n', RKCompatibility::KeepEmptyParts());
 	for (int i = 0; i < coldata.size (); ++i) {
 		setColumnValue (i, coldata[i]);
 	}
