@@ -75,6 +75,7 @@ void RKFrontendTransmitter::run () {
 	connect (server, &QLocalServer::newConnection, this, &RKFrontendTransmitter::connectAndEnterLoop, Qt::QueuedConnection);
 	// start backend
 	backend = new QProcess (this);
+	connect (backend, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), this, &RKFrontendTransmitter::backendExit);
 
 	// Try to synchronize language selection in frontend and backend
 	QStringList env = QProcess::systemEnvironment ();
@@ -84,13 +85,12 @@ void RKFrontendTransmitter::run () {
 	backend->setEnvironment (env);
 
 	QStringList args;
-	args.append ("--debug-level=" + QString::number (RK_Debug::RK_Debug_Level));
-	// NOTE: QProcess quotes its arguments, *but* properly passing all spaces and quotes through the R CMD wrapper, seems near(?) impossible on Windows. Instead, we use percent encoding, internally.
-	args.append ("--server-name=" + server->fullServerName ().toUtf8 ().toPercentEncoding ());
-	args.append ("--rkd-server-name=" + rkd_transmitter->serverName ().toUtf8 ().toPercentEncoding ());
-	args.append ("--data-dir=" + RKSettingsModuleGeneral::filesPath ().toUtf8 ().toPercentEncoding ());
-	args.append ("--locale-dir=" + localeDir ().toUtf8 ().toPercentEncoding ());
-	connect (backend, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), this, &RKFrontendTransmitter::backendExit);
+	args.append("CMD");
+	QString debugger = RKSettingsModuleGeneral::startupOption("backend-debugger").toString();
+	if (!debugger.isEmpty()) {
+		args += debugger.split(' ');
+	}
+
 	QString backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath ());
 #ifdef Q_OS_MACOS
 	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "../Resources"); // an appropriate location in a standalone app-bundle
@@ -107,11 +107,19 @@ void RKFrontendTransmitter::run () {
 		exec();   // To actually show the transmission error
 		return;
 	}
-	QString debugger = RKSettingsModuleGeneral::startupOption("backend-debugger").toString();
-	args.prepend (RKCommonFunctions::windowsShellScriptSafeCommand (backend_executable));
-	if (!debugger.isEmpty ()) {
-		args = debugger.split (' ') + args;
+	args.append(RKCommonFunctions::windowsShellScriptSafeCommand(backend_executable));
+
+	args.append ("--debug-level=" + QString::number (RK_Debug::RK_Debug_Level));
+	// NOTE: QProcess quotes its arguments, *but* properly passing all spaces and quotes through the R CMD wrapper, seems near(?) impossible on Windows. Instead, we use percent encoding, internally.
+	args.append ("--server-name=" + server->fullServerName ().toUtf8 ().toPercentEncoding ());
+	args.append ("--rkd-server-name=" + rkd_transmitter->serverName ().toUtf8 ().toPercentEncoding ());
+	args.append ("--data-dir=" + RKSettingsModuleGeneral::filesPath ().toUtf8 ().toPercentEncoding ());
+	args.append ("--locale-dir=" + localeDir ().toUtf8 ().toPercentEncoding ());
+	if (DL_DEBUG >= RK_Debug::RK_Debug_Level) {
+		qDebug("%s", qPrintable(RKSessionVars::RBinary()));
+		qDebug("%s", qPrintable(args.join("\n")));
 	}
+
 #ifdef Q_OS_MACOS
 	// Resolving libR.dylib and friends is a pain on MacOS, and running through R CMD does not always seem to be enough.
 	// (Apparently DYLIB_FALLBACK_LIBRARY_PATH is ignored on newer versions of MacOS). Safest best seems to be to start in the lib directory, itself.
@@ -121,21 +129,20 @@ void RKFrontendTransmitter::run () {
 	QString r_home = QString::fromLocal8Bit (dummy.readAllStandardOutput ());
 	RK_DEBUG(RBACKEND, DL_INFO, "Setting working directory to %s", qPrintable (r_home));
 	backend->setWorkingDirectory (r_home);
-#elif defined(Q_OS_WIN)
+#endif
+#if defined(Q_OS_WIN)
 	// added on a hunch, to be removed, should it have no effect, to be cleaned, otherwise:
 	// On some windows systems, the _first_ invocation of the backend seems to fail as somehow process output from the backend (the token) never arrives.
 	// Could it help to start a dummy process, before that? And, if doing so, will we be able to read its output?
 	QProcess dummy;
-	dummy.start(RKSessionVars::RBinary(), QStringList() << "--slave" << "--no-save" << "--no-init-file" << "-e" << "cat(R.home('lib'))");
+	QStringList dummyargs = args;
+	dummyargs.removeAt(3); // the --server-name. With this empty, the backend will exit
+	qDebug("%s", qPrintable(dummyargs.join("\n")));
+	dummy.start(RKSessionVars::RBinary(), dummyargs, QIODevice::ReadOnly);
 	dummy.waitForFinished();
 	QString r_home = QString::fromLocal8Bit(dummy.readAllStandardOutput());
 	RK_DEBUG(RBACKEND, DL_WARNING, "This debug message is not meant to stay. String: %s", qPrintable(r_home));
 #endif
-	args.prepend ("CMD");
-	if (DL_DEBUG >= RK_Debug::RK_Debug_Level) {
-		qDebug("%s", qPrintable(RKSessionVars::RBinary()));
-		qDebug("%s", qPrintable(args.join("\n")));
-	}
 	backend->start(RKSessionVars::RBinary(), args, QIODevice::ReadOnly);
 
 	if (!backend->waitForStarted()) {
