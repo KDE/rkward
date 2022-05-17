@@ -136,12 +136,10 @@ void RKFrontendTransmitter::run () {
 	// Could it help to start a dummy process, before that? And, if doing so, will we be able to read its output?
 	QProcess dummy;
 	QStringList dummyargs = args;
-	dummyargs.removeAt(3); // the --server-name. With this empty, the backend will exit
-	qDebug("%s", qPrintable(dummyargs.join("\n")));
+	dummyargs.removeAt(dummyargs.size()-4); // the --server-name. With this empty, the backend will exit
 	dummy.start(RKSessionVars::RBinary(), dummyargs, QIODevice::ReadOnly);
 	dummy.waitForFinished();
-	QString r_home = QString::fromLocal8Bit(dummy.readAllStandardOutput());
-	RK_DEBUG(RBACKEND, DL_WARNING, "This debug message is not meant to stay. String: %s", qPrintable(r_home));
+	dummy.readAllStandardOutput();
 #endif
 	backend->start(RKSessionVars::RBinary(), args, QIODevice::ReadOnly);
 
