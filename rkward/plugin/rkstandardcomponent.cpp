@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkstandardcomponent  -  description
-                             -------------------
-    begin                : Sun Feb 19 2006
-    copyright            : (C) 2006-2018 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkstandardcomponent - This file is part of RKWard (https://rkward.kde.org). Created: Sun Feb 19 2006
+SPDX-FileCopyrightText: 2006-2018 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkstandardcomponent.h"
 
@@ -57,8 +47,6 @@
 #include "rkoptionset.h"
 #include "rkvalueselector.h"
 
-#include "../rkglobals.h"
-
 #include "../debug.h"
 
 
@@ -81,9 +69,9 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	RKComponentPropertyRObjects *current_object_property = new RKComponentPropertyRObjects (this, false);
 	RKComponentPropertyRObjects *current_dataframe_property = new RKComponentPropertyRObjects (this, false);
 	RKComponentPropertyBase *current_filename_property = new RKComponentPropertyBase (this, false);
-	current_object_property->setInternal (true);
-	current_dataframe_property->setInternal (true);
-	current_filename_property->setInternal (false);
+	current_object_property->setInternal(true);
+	current_dataframe_property->setInternal(true);
+	current_filename_property->setInternal(true);
 	RKMDIWindow *w = RKWorkplace::mainWorkplace ()->activeWindow (RKMDIWindow::AnyWindowState);
 	if (w) {
 		current_object_property->setValue (w->globalContextProperty ("current_object"));
@@ -123,9 +111,9 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	if (!backend->initialize (code, parent_component == 0)) return;
 
 	// check for existence of help file
-	element = xml->getChildElement (doc_element, "help", DL_WARNING);
-	QString dummy = QFileInfo (filename).path() + '/' + xml->getStringAttribute (element, "file", "::nosuchfile::", DL_INFO);
-	have_help = QFileInfo (dummy).exists ();
+	element = xml->getChildElement(doc_element, "help", DL_WARNING);
+	QString dummy = QFileInfo(filename).path() + '/' + xml->getStringAttribute(element, "file", "::nosuchfile::", DL_INFO);
+	have_help = QFileInfo::exists(dummy);
 
 	update_pending = false;
 
@@ -169,6 +157,9 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 		}
 		buildAndInitialize (doc_element, gui_element, parent_widget, build_wizard);
 	}
+#ifdef JSBACKEND_PERFORMANCE_TEST
+	QtScriptBackend::_performanceTest();
+#endif
 }
 
 RKStandardComponent::~RKStandardComponent () {
@@ -362,7 +353,7 @@ void RKStandardComponent::buildAndInitialize (const QDomElement &doc_element, co
 		QTimer::singleShot (0, gui, SLOT (show()));
 	}
 	changed ();
-	standardInitializationComplete ();
+	emit standardInitializationComplete();
 }
 
 RKXMLGUIPreviewArea* RKStandardComponent::addDockedPreview (RKComponentPropertyBool* controller, const QString& label, const QString &id) {
@@ -537,7 +528,7 @@ RKComponentBuilder::~RKComponentBuilder () {
 	RK_TRACE (PLUGIN);
 }
 
-QDomElement RKComponentBuilder::doElementCopy (const QString id, XMLHelper &xml, const QDomElement &copy) {
+QDomElement RKComponentBuilder::doElementCopy (const QString &id, XMLHelper &xml, const QDomElement &copy) {
 	RK_TRACE (PLUGIN);
 
 	QDomElement res;
@@ -720,7 +711,7 @@ void RKComponentBuilder::parseLogic (const QDomElement &element, XMLHelper &xml,
 
 	if (element.isNull ()) return;
 
-	QMap<RKComponentPropertyBase*, QStringList> switch_convert_sources;
+	QHash<RKComponentPropertyBase*, QStringList> switch_convert_sources;
 
 	const XMLChildList children = xml.getChildElements (element, QString (), DL_ERROR);
 	for (int i = 0; i < children.size (); ++i) {
@@ -813,7 +804,7 @@ void RKComponentBuilder::parseLogic (const QDomElement &element, XMLHelper &xml,
 	}
 
 	// resolve source properties for switch and convert elements, *after* all properties have been created
-	for (QMap<RKComponentPropertyBase*, QStringList>::const_iterator it = switch_convert_sources.constBegin (); it != switch_convert_sources.constEnd (); ++it) {
+	for (auto it = switch_convert_sources.constBegin(); it != switch_convert_sources.constEnd(); ++it) {
 		if (it.key ()->type () == RKComponentBase::PropertyConvert) {
 			static_cast<RKComponentPropertyConvert*> (it.key ())->setSources (it.value ());
 		} else {

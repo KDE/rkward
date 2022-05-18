@@ -1,25 +1,15 @@
-/***************************************************************************
-                          rfunctionobject  -  description
-                             -------------------
-    begin                : Wed Apr 26 2006
-    copyright            : (C) 2006 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rfunctionobject - This file is part of RKWard (https://rkward.kde.org). Created: Wed Apr 26 2006
+SPDX-FileCopyrightText: 2006 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rfunctionobject.h"
 
 #include "../rbackend/rdata.h"
 #include "rkmodificationtracker.h"
-#include "../rkglobals.h"
+
 #include "../debug.h"
 
 RFunctionObject::RFunctionObject (RObject *parent, const QString &name) : RObject (parent, name) {
@@ -53,7 +43,7 @@ bool RFunctionObject::updateStructure (RData *new_data) {
 
 	if (!RObject::updateStructure (new_data)) return false;
 
-	if (updateArguments (new_data)) RKGlobals::tracker ()->objectMetaChanged (this);
+	if (updateArguments (new_data)) RKModificationTracker::instance()->objectMetaChanged (this);
 
 	return true;
 }

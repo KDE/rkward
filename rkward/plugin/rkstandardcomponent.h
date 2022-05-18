@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkstandardcomponent  -  description
-                             -------------------
-    begin                : Sun Feb 19 2006
-    copyright            : (C) 2006-2016 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkstandardcomponent - This file is part of the RKWard project. Created: Sun Feb 19 2006
+SPDX-FileCopyrightText: 2006-2016 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef RKSTANDARDCOMPONENT_H
 #define RKSTANDARDCOMPONENT_H
@@ -154,7 +144,7 @@ public:
 private:
 /** internal convenience function to schedule a property connection */
 	void addConnection (const QString &client_id, const QString &client_property, const QString &governor_id, const QString &governor_property, bool reconcile, const QDomElement &origin);
-	QDomElement doElementCopy (const QString id, XMLHelper &xml, const QDomElement &copy);
+	QDomElement doElementCopy (const QString &id, XMLHelper &xml, const QDomElement &copy);
 	QDomElement doc_elem;
 	RKComponent *parent;
 	struct RKComponentPropertyConnection {

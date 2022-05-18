@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rksettingsmodulewatch  -  description
-                             -------------------
-    begin                : Thu Aug 26 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rksettingsmodulewatch - This file is part of RKWard (https://rkward.kde.org). Created: Thu Aug 26 2004
+SPDX-FileCopyrightText: 2004 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 #include "rksettingsmodulewatch.h"
 
 #include <KLocalizedString>
@@ -28,17 +18,19 @@
 
 #include "../rbackend/rcommand.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkspinbox.h"
+#include "../misc/rkstandardicons.h"
 #include "rksettings.h"
-#include "../rkglobals.h"
+#include "../misc/rkstyle.h"
 
 #include "../debug.h"
 
 //static
-int RKSettingsModuleWatch::plugin_filter;
-int RKSettingsModuleWatch::app_filter;
-int RKSettingsModuleWatch::sync_filter;
-int RKSettingsModuleWatch::user_filter;
-uint RKSettingsModuleWatch::max_log_lines;
+RKConfigValue<int> RKSettingsModuleWatch::plugin_filter {"plugin command filter", ShowInput | ShowError};
+RKConfigValue<int> RKSettingsModuleWatch::app_filter {"app command filter", ShowInput | ShowError};
+RKConfigValue<int> RKSettingsModuleWatch::sync_filter {"sync command filter", ShowError};
+RKConfigValue<int> RKSettingsModuleWatch::user_filter {"user command filter", ShowInput | ShowOutput | ShowError | RaiseWindow};
+RKConfigValue<uint> RKSettingsModuleWatch::max_log_lines {"max log lines", 1000};
 
 //static
 bool RKSettingsModuleWatch::shouldShowInput (RCommand *command) {
@@ -142,17 +134,10 @@ RKSettingsModuleWatch::RKSettingsModuleWatch (RKSettings *gui, QWidget *parent) 
 	app_filter_boxes = addFilterSettings (this, grid, 3, i18n ("Application commands"), app_filter);
 	sync_filter_boxes = addFilterSettings (this, grid, 4, i18n ("Synchronization commands"), sync_filter);
 
-	vbox->addSpacing (2*RKGlobals::spacingHint ());
+	vbox->addSpacing (2*RKStyle::spacingHint ());
 
-	vbox->addWidget (new QLabel (i18n ("Maximum number of paragraphs/lines to display in the Command Log"), this));
-	max_log_lines_spinner = new QSpinBox(this);
-	max_log_lines_spinner->setMaximum(10000);
-	max_log_lines_spinner->setMinimum(0);
-	max_log_lines_spinner->setSingleStep(10);
-	max_log_lines_spinner->setValue(max_log_lines);
-	max_log_lines_spinner->setSpecialValueText (i18n ("Unlimited"));
-	connect (max_log_lines_spinner, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &RKSettingsModuleWatch::changedSetting);
-	vbox->addWidget (max_log_lines_spinner);
+	vbox->addWidget(new QLabel(i18n("Maximum number of paragraphs/lines to display in the Command Log (0 for no limit)")));
+	vbox->addWidget(max_log_lines.makeSpinBox(0, INT_MAX, this));
 
 	vbox->addStretch ();
 
@@ -227,29 +212,15 @@ void RKSettingsModuleWatch::validateGUI () {
 }
 
 //static
-void RKSettingsModuleWatch::saveSettings (KConfig *config) {
+void RKSettingsModuleWatch::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {
 	RK_TRACE (SETTINGS);
 
-	KConfigGroup cg = config->group ("RInterface Watch Settings");
-	cg.writeEntry ("user command filter", user_filter);
-	cg.writeEntry ("plugin command filter", plugin_filter);
-	cg.writeEntry ("app command filter", app_filter);
-	cg.writeEntry ("sync command filter", sync_filter);
-
-	cg.writeEntry ("max log lines", max_log_lines);
-}
-
-//static
-void RKSettingsModuleWatch::loadSettings (KConfig *config) {
-	RK_TRACE (SETTINGS);
-
-	KConfigGroup cg = config->group ("RInterface Watch Settings");
-	user_filter = cg.readEntry ("user command filter", static_cast<int> (ShowInput | ShowOutput | ShowError | RaiseWindow));
-	plugin_filter = cg.readEntry ("plugin command filter", static_cast<int> (ShowInput | ShowError));
-	app_filter = cg.readEntry ("app command filter", static_cast<int> (ShowInput | ShowError));
-	sync_filter = cg.readEntry ("sync command filter", static_cast<int> (ShowError));
-
-	max_log_lines = cg.readEntry ("max log lines", 1000);
+	KConfigGroup cg = config->group("RInterface Watch Settings");
+	user_filter.syncConfig(cg, a);
+	plugin_filter.syncConfig(cg, a);
+	app_filter.syncConfig(cg, a);
+	sync_filter.syncConfig(cg, a);
+	max_log_lines.syncConfig(cg, a);
 }
 
 void RKSettingsModuleWatch::applyChanges () {
@@ -259,19 +230,15 @@ void RKSettingsModuleWatch::applyChanges () {
 	plugin_filter = getFilterSettings (plugin_filter_boxes);
 	app_filter = getFilterSettings (app_filter_boxes);
 	sync_filter = getFilterSettings (sync_filter_boxes);
-
-	max_log_lines = max_log_lines_spinner->value ();
-}
-
-void RKSettingsModuleWatch::save (KConfig *config) {
-	RK_TRACE (SETTINGS);
-
-	saveSettings (config);
 }
 	
-QString RKSettingsModuleWatch::caption () {
-	RK_TRACE (SETTINGS);
+QString RKSettingsModuleWatch::caption() const {
+	RK_TRACE(SETTINGS);
+	return(i18n("Command log"));
+}
 
-	return (i18n ("Command log"));
+QIcon RKSettingsModuleWatch::icon() const {
+	RK_TRACE(SETTINGS);
+	return RKStandardIcons::getIcon(RKStandardIcons::WindowCommandLog);
 }
 

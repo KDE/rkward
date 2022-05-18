@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rktoplevelwindowgui  -  description
-                             -------------------
-    begin                : Tue Apr 24 2007
-    copyright            : (C) 2007-2020 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rktoplevelwindowgui - This file is part of RKWard (https://rkward.kde.org). Created: Tue Apr 24 2007
+SPDX-FileCopyrightText: 2007-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rktoplevelwindowgui.h"
 
@@ -24,10 +14,15 @@
 #include <kactioncollection.h>
 #include <kxmlguifactory.h>
 #include <kshortcutsdialog.h>
+#include <KHelpMenu>
+#include <KColorSchemeManager>
+#include <KActionMenu>
+#include <kconfigwidgets_version.h>
 
 #include <QWhatsThis>
 #include <QDomDocument>
 #include <QDomElement>
+#include <QMenu>
 
 #include "../rkconsole.h"
 #include "../windows/robjectbrowser.h"
@@ -42,15 +37,15 @@
 #include "../misc/rkstandardicons.h"
 #include "../misc/rkprogresscontrol.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkoutputdirectory.h"
 #include "../plugin/rkcomponentmap.h"
 #include "../dialogs/rkerrordialog.h"
 #include "../rbackend/rkrinterface.h"
-#include "../rkglobals.h"
 #include "../rkward.h"
 
 #include "../debug.h"
 
-RKTopLevelWindowGUI::RKTopLevelWindowGUI (KXmlGuiWindow *for_window) : QObject (for_window), KXMLGUIClient () {
+RKTopLevelWindowGUI::RKTopLevelWindowGUI(KXmlGuiWindow *for_window) : QObject(for_window), KXMLGUIClient(), help_menu_dummy(nullptr) {
 	RK_TRACE (APP);
 
 	RKTopLevelWindowGUI::for_window = for_window;
@@ -65,13 +60,14 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI (KXmlGuiWindow *for_window) : QObject (
 	QAction *show_rkward_help = actionCollection ()->addAction (KStandardAction::HelpContents, "rkward_help", this, SLOT (showRKWardHelp()));
 	show_rkward_help->setText (i18n ("Help on RKWard"));
 
-	actionCollection ()->addAction (KStandardAction::AboutApp, "about_app", this, SLOT (showAboutApplication()));
-	actionCollection ()->addAction (KStandardAction::WhatsThis, "whats_this", this, SLOT (startWhatsThis()));
-	actionCollection ()->addAction (KStandardAction::ReportBug, "report_bug", this, SLOT (reportRKWardBug()));
+	actionCollection()->addAction(KStandardAction::AboutApp, "about_app", this, SLOT(showAboutApplication()));
+	actionCollection()->addAction(KStandardAction::WhatsThis, "whats_this", this, SLOT(startWhatsThis()));
+	actionCollection()->addAction(KStandardAction::ReportBug, "report_bug", this, SLOT(reportRKWardBug()));
+	actionCollection()->addAction(KStandardAction::SwitchApplicationLanguage, "switch_application_language", this, SLOT(showSwitchApplicationLanguage()));
 
-	help_invoke_r_help->setStatusTip (i18n ("Shows the R help index"));
-	show_help_search->setStatusTip (i18n ("Shows/raises the R Help Search window"));
-	show_rkward_help->setStatusTip (i18n ("Show help on RKWard"));
+	help_invoke_r_help->setWhatsThis(i18n ("Shows the R help index"));
+	show_help_search->setWhatsThis(i18n ("Shows/raises the R Help Search window"));
+	show_rkward_help->setWhatsThis(i18n ("Show help on RKWard"));
 
 	// window menu
 	// NOTE: enabling / disabling the prev/next actions is not a good idea. It will cause the script windows to "accept" their shortcuts, when disabled
@@ -88,17 +84,33 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI (KXmlGuiWindow *for_window) : QObject (
 	action->setText (i18n ("Activate Document view"));
 	actionCollection ()->setDefaultShortcut (action, Qt::AltModifier + Qt::Key_0);
 
-	action = actionCollection ()->addAction ("output_show", this, SLOT (slotOutputShow()));
-	action->setText (i18n ("Show &Output"));
-	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowOutput));
+	action = actionCollection()->addAction("output_show");
+	action->setText(i18n("Show Output"));
+	action->setIcon(RKStandardIcons::getIcon(RKStandardIcons::WindowOutput));
+	action->setMenu(output_windows_menu = new QMenu());
+	connect(output_windows_menu, &QMenu::aboutToShow, this, &RKTopLevelWindowGUI::populateOutputWindowsMenu);
+	connect(output_windows_menu, &QMenu::triggered, this, &RKTopLevelWindowGUI::slotOutputShow);
 
 	// settings
 	KStandardAction::keyBindings (this, SLOT (configureShortcuts()), actionCollection ());
 	KStandardAction::configureToolbars (this, SLOT (configureToolbars()), actionCollection ());
+	// Color scheme action. NOTE: selection is non-permanent for KF5 <= 5.87.0, auto-saved afterwards. Apparently, auto-save cannot be implemented for earlier versions within a few lines of code
+	KColorSchemeManager *manager = new KColorSchemeManager(this);
+#if KCONFIGWIDGETS_VERSION < QT_VERSION_CHECK(5, 67, 0)
+	actionCollection()->addAction(QStringLiteral("colorscheme_menu"), manager->createSchemeSelectionMenu(i18n("Color Scheme"), QString(), this));
+#else
+	actionCollection()->addAction(QStringLiteral("colorscheme_menu"), manager->createSchemeSelectionMenu(this));
+#endif
+	// our "status bar" is inlined, and always visible. Action below would only hide and show a useless proxy
+	// KF6 TODO: Still needed at all?
+	QAction *a = for_window->action("options_show_statusbar");
+	if (a) a->setVisible(false);
 }
 
 RKTopLevelWindowGUI::~RKTopLevelWindowGUI () {
 	RK_TRACE (APP);
+	delete help_menu_dummy;
+	delete output_windows_menu;
 }
 
 void RKTopLevelWindowGUI::initToolWindowActions () {
@@ -153,7 +165,7 @@ void RKTopLevelWindowGUI::configureToolbars () {
 void RKTopLevelWindowGUI::invokeRHelp () {
 	RK_TRACE (APP);
 
-	RKGlobals::rInterface ()->issueCommand ("help.start ()", RCommand::App);
+	RInterface::issueCommand ("help.start ()", RCommand::App);
 	RKWardMainWindow::getMain ()->topLevelWidget ()->raise ();
 }
 
@@ -174,12 +186,20 @@ void RKTopLevelWindowGUI::showAboutApplication () {
 	about.exec ();
 }
 
+void RKTopLevelWindowGUI::showSwitchApplicationLanguage() {
+	RK_TRACE (APP);
+
+	// Uggh. No direct or static access to KSwitchLanguageDialog...
+	if (!help_menu_dummy) help_menu_dummy = new KHelpMenu(for_window, QString(), false);
+	help_menu_dummy->switchApplicationLanguage();
+}
+
 void RKTopLevelWindowGUI::toggleToolView (RKMDIWindow *tool_window) {
 	RK_TRACE (APP);
 	RK_ASSERT (tool_window);
 
 	if (tool_window->isActive ()) {
-		tool_window->close (false);
+		tool_window->close (RKMDIWindow::NoAskSaveModified);
 		activateDocumentView ();
 	} else {
 		tool_window->activate (true);
@@ -215,10 +235,30 @@ void RKTopLevelWindowGUI::activateDocumentView () {
 	if (window) window->activate ();
 }
 
-void RKTopLevelWindowGUI::slotOutputShow () {
-	RK_TRACE (APP);
+void RKTopLevelWindowGUI::slotOutputShow(QAction *action) {
+	RK_TRACE(APP);
 
-	RKWorkplace::mainWorkplace ()->openOutputWindow (QUrl ());
+	QString id = action->data().toString();
+	RKOutputDirectory *dir = RKOutputDirectory::findOutputById(id);
+	if (!dir) return; // Could happen in corner case, if dir got deleted, while menu is shown
+	dir->view(true);
+}
+
+void RKTopLevelWindowGUI::populateOutputWindowsMenu() {
+	RK_TRACE(APP);
+
+	output_windows_menu->clear();
+	auto outputs = RKOutputDirectory::allOutputs();
+	for (int i = 0; i < outputs.size(); ++i) {
+		auto dir = outputs[i];
+		QString title = dir->caption();
+		if (dir->isActive()) {
+			title.append(' ');
+			title.append(i18n("[Active]"));
+		}
+		QAction* action = output_windows_menu->addAction(title);
+		action->setData(dir->getId());
+	}
 }
 
 void RKTopLevelWindowGUI::nextWindow () {

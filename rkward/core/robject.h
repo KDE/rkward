@@ -1,19 +1,9 @@
-/***************************************************************************
-                          robject  -  description
-                             -------------------
-    begin                : Thu Aug 19 2004
-    copyright            : (C) 2004-2019 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+robject - This file is part of the RKWard project. Created: Thu Aug 19 2004
+SPDX-FileCopyrightText: 2004-2019 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 #ifndef ROBJECT_H
 #define ROBJECT_H
 
@@ -67,12 +57,12 @@ public:
 		Character=3 << 14,
 		Logical=4 << 14,
 		DataTypeMask=Numeric | Factor | Character | Logical,
-		PseudoObject = 1 << 26, /** < The object is an internal representation, only, and does not exist in R. Currently, this is the case only for the slots-pseudo object */
-		Updating=1 << 27, /** < The object is about to be updated from R */
-		Incomplete=1 << 28,	/** < The information on this object is not complete (typically, it's children have not been scanned, yet). */
-		NonVisibleObject=1 << 29,	/** < the object is not listed in the object list. Currently, this is only the case for row.names()-objects */
-		NeedDataUpdate=1 << 30,	/** < the object's data should be (re-) fetched from R. The main purpose of this flag is to make sure the data is synced *after* the structure has been synced */
-		Pending=1 << 31		/** < the object is pending, i.e. it has been created in the object list, but we have not seen it in R, yet. This is used by data editors to create the illusion that a new object was added immediately, while in fact it takes some time to create it in the backend. */
+		PseudoObject = 1 << 25, /** < The object is an internal representation, only, and does not exist in R. Currently, this is the case only for the slots-pseudo object */
+		Updating=1 << 26, /** < The object is about to be updated from R */
+		Incomplete=1 << 27,	/** < The information on this object is not complete (typically, it's children have not been scanned, yet). */
+		NonVisibleObject=1 << 28,	/** < the object is not listed in the object list. Currently, this is only the case for row.names()-objects */
+		NeedDataUpdate=1 << 29,	/** < the object's data should be (re-) fetched from R. The main purpose of this flag is to make sure the data is synced *after* the structure has been synced */
+		Pending=1 << 30		/** < the object is pending, i.e. it has been created in the object list, but we have not seen it in R, yet. This is used by data editors to create the illusion that a new object was added immediately, while in fact it takes some time to create it in the backend. */
 	};
 
 	enum RDataType {

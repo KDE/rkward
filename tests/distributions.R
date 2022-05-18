@@ -94,7 +94,7 @@ suite <- new ("RKTestSuite", id="distributions",
 		}),
 		new ("RKTest", id="gumbel_probabilities", call=function () {
 			rk.call.plugin ("rkward::gumbel_probabilities", location.real="0.0", logp.state="0", lower.state="1", mode.string="p", q.tsv="", scale.real="1.0", submit.mode="submit")
-		}),
+		}, libraries=c ("FAdist")),
 		new ("RKTest", id="logistic_probabilities", call=function () {
 			rk.call.plugin ("rkward::logistic_probabilities", location.real="0.0", logp.state="0", lower.state="1", mode.string="p", q.tsv="", scale.real="1.0", submit.mode="submit")
 		}),

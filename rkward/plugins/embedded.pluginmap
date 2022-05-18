@@ -5,9 +5,9 @@
 	<about
 		name="Embedded plugins"
 		shortinfo="Not for direct use: Utility plugins that can be included by other plugins. Part of the official RKWard distribution"
-		version="0.7.2"
+		version="0.7.4"
 		license="GPL"
-		url="http://rkward.kde.org">
+		url="https://rkward.kde.org">
 		<insert snippet="author_rkward_team"/>
 	</about>
 	<insert snippet="rkward_version_guard"/>
@@ -31,5 +31,8 @@
 		<!-- This plugin does not really belong, here, but nowhere else, either, since it's only for the purpose of testing some things in the
 				automated tests. It definitely should not be shown in the menu, of course. -->
 		<component type="standard" id="testing_run_code" file="testing/run_code.xml" label="Run Code"/>
+
+		<!-- This plugin does not really belong, here, either, but has no place in the menu, too. -->
+		<component type="standard" id="install_from_git" file="internal/Installfromgit.xml" label="Install from git"/>
 	</components>
 </document>

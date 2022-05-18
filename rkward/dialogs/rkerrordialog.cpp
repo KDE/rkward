@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkerrordialog  -  description
-                             -------------------
-    begin                : Thu Apr 25 2013
-    copyright            : (C) 2013-2020 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkerrordialog - This file is part of RKWard (https://rkward.kde.org). Created: Thu Apr 25 2013
+SPDX-FileCopyrightText: 2013-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkerrordialog.h"
 
@@ -36,7 +26,7 @@
 #include "../misc/rkprogresscontrol.h"
 #include "../misc/rkdialogbuttonbox.h"
 #include "../misc/rkcommonfunctions.h"
-#include "../rkglobals.h"
+
 #include "../rkward.h"
 #include "../version.h"
 
@@ -150,11 +140,11 @@ void RKErrorDialog::reportBug (QWidget* parent_widget, const QString& message_in
 
 	report_template.append ("\n---Session Info---\n");
 	bool ok = false;
-	if (!RKGlobals::rInterface ()->backendIsDead ()) {
+	if (!RInterface::instance()->backendIsDead ()) {
 		RCommand *command = new RCommand ("rk.sessionInfo()", RCommand::App);
 		RKProgressControl *control = new RKProgressControl (parent_widget, i18n ("Please stand by while gathering some information on your setup.\nIn case the backend has died or hung up, you may want to press 'Cancel' to skip this step."), i18n ("Gathering setup information"), RKProgressControl::CancellableNoProgress);
 		control->addRCommand (command, true);
-		RKGlobals::rInterface ()->issueCommand (command);
+		RInterface::issueCommand(command);
 		ok = control->doModal (false);
 		// NOTE: command is already deleted at this point
 		report_template.append (control->fullCommandOutput ());

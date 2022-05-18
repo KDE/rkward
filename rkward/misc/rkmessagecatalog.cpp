@@ -1,25 +1,13 @@
-/***************************************************************************
-                          rkmessagecatalog  -  description
-                             -------------------
-    begin                : Mon Jun 24 2013
-    copyright            : (C) 2013-2018 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkmessagecatalog - This file is part of RKWard (https://rkward.kde.org). Created: Mon Jun 24 2013
+SPDX-FileCopyrightText: 2013-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkmessagecatalog.h"
 
-#include <libintl.h>
 #include <QFile>
-#include <QLocale>
 #include <KLocalizedString>
 
 #include "../debug.h"
@@ -31,55 +19,42 @@ RKMessageCatalog::RKMessageCatalog (const QString &name, const QString& path) {
 	RK_TRACE (MISC);
 
 	catalog_name = QFile::encodeName (name);
-	char *res = bindtextdomain (catalog_name, QFile::encodeName (path));
-	RK_DEBUG (MISC, DL_DEBUG, "Opening catalog %s, expected at %s, found at %s", qPrintable (name), qPrintable (path), res);
-	bind_textdomain_codeset (catalog_name, "UTF-8");
+	if (!path.isEmpty ()) {
+		RK_DEBUG (MISC, DL_DEBUG, "Registering the path %s for catalog %s", qPrintable (path), qPrintable (name));
+		KLocalizedString::addDomainLocaleDir (catalog_name, path);
+	}
 }
 
 RKMessageCatalog::~RKMessageCatalog () {
 	RK_TRACE (MISC);
 }
 
-// Adopted from KDE's gettext.h
-/* The separator between msgctxt and msgid in a .mo file. */
-#define GETTEXT_CONTEXT_GLUE "\004"
-
-QString RKMessageCatalog::translate (const QString &msgctxt, const QString &msgid) const {
-	RK_TRACE (MISC);
-
-	QByteArray key = (msgctxt + GETTEXT_CONTEXT_GLUE + msgid).toUtf8 ();
-	const char *trans = dgettext (catalog_name, key);
-	if (trans == key) return msgid;
-	return QString::fromUtf8 (trans);
+QString RKMessageCatalog::translate(const QString &msgctxt, const QString &msgid, const QStringList &args) const {
+	RK_TRACE(MISC);
+	auto ret = ki18ndc(catalog_name, msgctxt.toUtf8(), msgid.toUtf8());
+	for(int i = 0; i < args.size(); ++i) ret = ret.subs(args[i]);
+	return ret.toString();
 }
 
-QString RKMessageCatalog::translate (const QString &msgctxt, const QString &msgid_singular, const QString &msgid_plural, unsigned long int count) const {
-	RK_TRACE (MISC);
-
-	QString ret;
-	QByteArray key = (msgctxt + GETTEXT_CONTEXT_GLUE + msgid_singular).toUtf8 ();
-	QByteArray pkey = msgid_plural.toUtf8 ();
-	const char *trans = dngettext (catalog_name, key, pkey, count);
-	if ((trans == key) || (trans == pkey)) {
-		if (count == 1) ret = msgid_singular;
-		else ret = msgid_plural;
-	} else {
-		ret = QString::fromUtf8 (trans);
-	}
-	return ret.replace (QLatin1String ("%1"), QString::number (count));	// NOTE: Not using .arg(count), as "%1" may not be given in both singular and plural form.
-																		// .arg() would go replacing "%2", then.
+QString RKMessageCatalog::translate(const QString &msgctxt, const QString &msgid_singular, const QString &msgid_plural, unsigned long int count, const QStringList &args) const {
+	RK_TRACE(MISC);
+	auto ret = ki18ndcp(catalog_name, msgctxt.toUtf8(), msgid_singular.toUtf8(), msgid_plural.toUtf8()).subs(count);
+	for(int i = 0; i < args.size(); ++i) ret = ret.subs(args[i]);
+	return ret.toString();
 }
 
-QString RKMessageCatalog::translate (const QString &msgid) const {
-	RK_TRACE (MISC);
-
-	return QString::fromUtf8 (dgettext (catalog_name, msgid.toUtf8 ()));
+QString RKMessageCatalog::translate(const QString &msgid, const QStringList &args) const {
+	RK_TRACE(MISC);
+	auto ret = ki18nd(catalog_name, msgid.toUtf8());
+	for(int i = 0; i < args.size(); ++i) ret = ret.subs(args[i]);
+	return ret.toString();
 }
 
-QString RKMessageCatalog::translate (const QString &msgid_singular, const QString &msgid_plural, unsigned long int count) const {
-	RK_TRACE (MISC);
-
-	return QString::fromUtf8 (dngettext (catalog_name, msgid_singular.toUtf8 (), msgid_plural.toUtf8 (), count)).replace (QLatin1String ("%1"), QString::number (count));
+QString RKMessageCatalog::translate(const QString &msgid_singular, const QString &msgid_plural, unsigned long int count, const QStringList &args) const {
+	RK_TRACE(MISC);
+	auto ret = ki18ndp(catalog_name, msgid_singular.toUtf8(), msgid_plural.toUtf8()).subs(count);
+	for(int i = 0; i < args.size(); ++i) ret = ret.subs(args[i]);
+	return ret.toString();
 }
 
 RKMessageCatalog* RKMessageCatalog::CatalogHash::getCatalog (const QString& name, const QString& pathhint) {
@@ -119,20 +94,9 @@ RKMessageCatalog* RKMessageCatalog::nullCatalog () {
 	return (getCatalog  ("rkward_dummy", QString ()));
 }
 
-#ifdef Q_OS_WIN
-	extern "C" int __declspec(dllimport) _nl_msg_cat_cntr;
-#endif
-
 // static
 void RKMessageCatalog::switchLanguage (const QString &new_language_code) {
 	RK_TRACE (MISC);
 
-	qputenv ("LANGUAGE", new_language_code.toLatin1 ().data ());
-	// KF5 TODO: correct?
-	QLocale::setDefault (QLocale (new_language_code));
-	// magic to make gettext discard cache
-#ifndef _MSC_VER
-	extern int _nl_msg_cat_cntr;
-#endif
-	++_nl_msg_cat_cntr;
+	KLocalizedString::setLanguages (QStringList () << new_language_code);
 }

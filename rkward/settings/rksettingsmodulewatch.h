@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rksettingsmodulewatch  -  description
-                             -------------------
-    begin                : Thu Aug 26 2004
-    copyright            : (C) 2004-2018 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rksettingsmodulewatch - This file is part of the RKWard project. Created: Thu Aug 26 2004
+SPDX-FileCopyrightText: 2004-2018 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 #ifndef RKSETTINGSMODULEWATCH_H
 #define RKSETTINGSMODULEWATCH_H
 
@@ -36,12 +26,11 @@ public:
 	RKSettingsModuleWatch (RKSettings *gui, QWidget *parent);
 	~RKSettingsModuleWatch ();
 
-	static void saveSettings (KConfig *config);
-	static void loadSettings (KConfig *config);
-	static void validateSettingsInteractive (QList<RKSettingsWizardPage*>*) {};
+	void save(KConfig *config) override { syncConfig(config, RKConfigBase::SaveConfig); };
+	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a);
+	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
 
 	void applyChanges () override;
-	void save (KConfig *config) override;
 	void validateGUI ();
 
 	static bool shouldShowInput (RCommand *command);
@@ -51,16 +40,17 @@ public:
 
 	static uint maxLogLines () { return max_log_lines; };
 
-	QString caption () override;
+	QString caption() const override;
+	QIcon icon() const override;
 public slots:
 	void changedSetting (int);
 private:
 	enum FilterType { ShowInput=1, ShowOutput=2, ShowError=4, RaiseWindow=8 };
 
-	static int plugin_filter;
-	static int app_filter;
-	static int sync_filter;
-	static int user_filter;
+	static RKConfigValue<int> plugin_filter;
+	static RKConfigValue<int> app_filter;
+	static RKConfigValue<int> sync_filter;
+	static RKConfigValue<int> user_filter;
 	
 	struct FilterBoxes {
 		QCheckBox *input;
@@ -77,9 +67,7 @@ private:
 	int getFilterSettings (FilterBoxes *boxes);
 	FilterBoxes *addFilterSettings (QWidget *parent, QGridLayout *layout, int row, const QString &label, int state);
 
-	static uint max_log_lines;
-
-	QSpinBox *max_log_lines_spinner;
+	static RKConfigValue<uint> max_log_lines;
 };
 
 #endif

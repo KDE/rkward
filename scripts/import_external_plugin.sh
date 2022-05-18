@@ -13,11 +13,13 @@
 # Example:
 # import_external_plugin.sh rk.power/inst/rkward/rkwarddev_power_plugin_script.R rkward/plugins/rkwarddev_scripts
 
-EXTERNAL_REPO=https://github.com/rkward-community/external-plugins.git
+EXTERNAL_REPO=https://github.com/rkward-community/rk.gitInstall.git
 SOURCE_PATH=$1
 TARGET_PATH=$2
 
-cd `dirname $0`/..
+cd `dirname $0`
+SCRIPTDIR=`pwd`
+cd ${SCRIPTDIR}/..
 BASEDIR=`pwd`
 cd ${BASEDIR}
 WORKDIR=${BASEDIR}/import_tmp
@@ -28,24 +30,14 @@ git pull --rebase
 # clone and filter external repo
 git clone ${EXTERNAL_REPO} import_tmp
 cd ${WORKDIR}
-git remote rm origin # safety measure
-# first split out the target into a single dir. For simplicity, we use ${TARGET_PATH}, here
-git filter-branch --prune-empty --tree-filter "
-if [ -e ${SOURCE_PATH} ]; then
-  mkdir -p ${TARGET_PATH}
-  mv ${SOURCE_PATH} ${TARGET_PATH}
-fi"
-# next filter that single dir
-git filter-branch -f --subdirectory-filter ${TARGET_PATH} -- --all
-mkdir -p ${TARGET_PATH}
-mv * ${TARGET_PATH}
-git add .
-git commit -m "Import ${SOURCE_PATH} from external_plugins repository"
+#git remote rm origin # safety measure
+git-filter-repo --path ${SOURCE_PATH} --path-rename 'inst/rkward/':${TARGET_PATH}
+git-filter-repo --mailmap ${SCRIPTDIR}/committer_map.txt
 
 # merge into main repo
 cd ${BASEDIR}
 git remote add external_repo_import ${WORKDIR}
-git pull --no-rebase external_repo_import master
+git pull --no-rebase external_repo_import master --allow-unrelated-histories
 git remote rm external_repo_import
 
 # Done

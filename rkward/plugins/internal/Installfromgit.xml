@@ -1,0 +1,52 @@
+<!DOCTYPE rkplugin >
+<document>
+  <!-- this code was generated using the rkwarddev package.
+    perhaps don't make changes here, but in the rkwarddev script instead! -->
+  <code file="Installfromgit.js" />
+  <help file="Installfromgit.rkh" />
+  <!-- <dependencies>
+      </dependencies> -->
+  <logic>
+    <convert id="lgcIsGit" sources="packageSource.string" mode="equals" standard="git" />
+    <convert id="lgcIsSVN" sources="packageSource.string" mode="equals" standard="svn" />
+    <convert id="lgcRequireURL" sources="lgcIsGit;lgcIsSVN" mode="or" />
+    <connect governor="lgcRequireURL.not" client="row_inptlbGURR.visible" />
+    <connect governor="lgcRequireURL" client="fullURL.visible" />
+    <convert id="lgcIsGithub" sources="packageSource.string" mode="equals" standard="github" />
+    <convert id="lgcIsGitlab" sources="packageSource.string" mode="equals" standard="gitlab" />
+    <convert id="lgcIsGithubOrGitlab" sources="lgcIsGithub;lgcIsGitlab" mode="or" />
+    <convert id="lgcIsBitbucket" sources="packageSource.string" mode="equals" standard="bitbucket" />
+    <convert id="lgcEnableAuthToken" sources="frm_Prvtrpst.checked;lgcIsGithubOrGitlab" mode="and" />
+    <connect governor="lgcEnableAuthToken" client="inp_PrsnlPAT.enabled" />
+    <connect governor="lgcIsBitbucket" client="inp_User.enabled" />
+    <connect governor="lgcIsBitbucket" client="inp_Password.enabled" />
+    <connect governor="lgcRequireURL.not" client="frm_Prvtrpst.enabled" />
+  </logic>
+  <dialog label="Install from git/svn">
+    <column id="clm_dSPGHGLBPF">
+      <dropdown id="packageSource" label="Package source">
+        <option label="git (generic)" value="git" checked="true" />
+        <option label="GitHub" value="github" />
+        <option label="GitLab" value="gitlab" />
+        <option label="Bitbucket" value="bitbucket" />
+        <option label="subversion (generic)" value="svn" />
+      </dropdown>
+      <frame label="Package repository" id="repoFrame">
+        <row id="row_inptlbGURR">
+          <input label="Git user name" id="gitUser" required="true" />
+          <input label="Repository" id="gitRepo" required="true" />
+        </row>
+        <input label="URL to repository" id="fullURL" initial="https://example.com/..." required="true" />
+      </frame>
+      <input label="Commit/tag/branch" id="inp_Cmmttgbr" />
+      <input label="Subdirectory" id="inp_Sbdrctry" />
+      <frame label="Private repository" checkable="true" checked="false" id="frm_Prvtrpst">
+        <input label="Personal access token (PAT)" id="inp_PrsnlPAT" required="true" />
+        <row id="row_inptlbUUPP">
+          <input label="User" id="inp_User" required="true" />
+          <input label="Password" id="inp_Password" required="true" />
+        </row>
+      </frame>
+    </column>
+  </dialog>
+</document>

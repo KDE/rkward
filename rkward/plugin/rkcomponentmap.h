@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkcomponentmap.h  -  description
-                             -------------------
-    begin                : Thu May 12 2005
-    copyright            : (C) 2005-2015 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkcomponentmap.h - This file is part of the RKWard project. Created: Thu May 12 2005
+SPDX-FileCopyrightText: 2005-2015 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef RKCOMPONENTMAP_H
 #define RKCOMPONENTMAP_H
@@ -174,7 +164,7 @@ friend class RKComponentMap;
 /** Clear component overrides (see addOverride()). */
 	static void clearOverrides ();
 private:
-	int addEntries (RKComponentGUIXML::Menu *menu, XMLHelper &xml, const QDomElement description, const QString& cnamespace);
+	int addEntries (RKComponentGUIXML::Menu *menu, XMLHelper &xml, const QDomElement &description, const QString& cnamespace);
 	void menuItemsToXml (const RKComponentGUIXML::Menu *menu, QDomElement &xml);
 	void resolveComponentLabelsAndSortMenu (Menu *menu, const QString &menu_path=QString ());
 	struct ComponentOverride {
@@ -196,7 +186,7 @@ public:
 		detailed_problems.append (other.detailed_problems);
 		valid_plugins += other.valid_plugins;
 	};
-	void addAndPrintError (int level, const QString message);
+	void addAndPrintError (int level, const QString &message);
 	QStringList detailed_problems;
 	int valid_plugins;
 };
@@ -225,6 +215,9 @@ public:
 
 /** clears out (and deletes) all components / plugins */
 	void clearAll ();
+
+/** returns true, if no plugin maps are loaded. */
+	bool isEmpty() const { return pluginmapfiles.isEmpty(); }
 
 /** returns the component identified by id, 0 if not found */
 	static RKComponentHandle* getComponentHandle (const QString &id);

@@ -22,6 +22,7 @@
 						<checkbox id="paired" label="Paired test" value="true" />
 						<stretch />
 						<saveobject label="Save results to workspace" checkable="true" initial="wcox.result" id="svb_Svrsltst" />
+						<preview id="preview" mode="output"/>
 					</column>
 				</row>
 			</tab>

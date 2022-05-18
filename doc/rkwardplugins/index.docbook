@@ -44,7 +44,7 @@ as Authors, publish date, the abstract, and Keywords -->
 
 
 <copyright>
-<year>2006-2020</year>
+<year>2006-2022</year>
 <holder>Thomas Friedrichsmeier</holder>
 </copyright>
 <!-- Translators: put here the copyright notice of the translation -->
@@ -52,8 +52,8 @@ as Authors, publish date, the abstract, and Keywords -->
      and in the FDL itself on how to use it. -->
 <legalnotice>&FDLNotice;</legalnotice>
 
-<date>2020-05-11</date>
-<releaseinfo>0.7.2</releaseinfo>
+<date>2022-04-24</date>
+<releaseinfo>0.7.4</releaseinfo>
 
 <abstract>
 <para>
@@ -73,15 +73,8 @@ This is a guide to writing plugins for &rkward;.
 <chapter id="introduction">
 <title>Introduction</title>
 
-	<note>
-		<para>
-			Documentation as of &rkward; release 0.6.4.
-		</para>
-	</note>
 	<para>
-		This document describes how to write your own plugins. Note, that at the time of this writing, some of the concepts are not yet set in stone. Therefore, this document should be regarded as an introduction to the current approach, and as a basis for discussion. All sorts of comments are welcome.
-		The documentation has grown quite large over time. Do not let that scare you. We recommend reading through the four basic steps (as
-		outlined, below), to get a basic idea of how things work. After that you may want to skim the table of contents to see which advanced
+		This document describes how to write your own plugins. The documentation has grown quite large over time. Do not let that scare you. We recommend reading through the four basic steps (as outlined, below), to get a basic idea of how things work. After that you may want to skim the table of contents to see which advanced
 		topics could be of relevance to you.
 	</para>
 	<para>
@@ -1361,7 +1354,10 @@ This chapter contains information on some topics that are useful only to certain
 			And that is it for the &GUI; definition.
 		</para>
 		<para>
-			Adjusting the JS template is a little more work. You will have to create a new function called <function>preview()</function> in addition to the <function>preprocess()</function>, <function>calculate()</function>, &etc; functions. This function should generate the code needed to produce the plot, and only that. Esp. no printing of headers, <function>rk.graphics.on()</function>, or similar calls. See the <link linkend="plot_plugin_example">example</link>, below for the typical pattern that you will use.
+			Adjusting the JS template is only a little more work, here you will have to make sure, only the plot itself is generated, and shown in an onscreen-device, rather than directed to the output. I.e. no printing of headers, <function>rk.graphics.on()</function>, or similar calls. To assist you in this, &rkward; will call the <function>preprocess()</function>, <function>calculate()</function>, and <function>printout()</function> functions with an additional parameter that is set to <parameter>true</parameter>, when generating code for a preview. (The parameter is omitted when generating the final code. In javascript this will evaluate to <parameter>false</parameter> when used inside an <function>if</function>-statement.)  See the <link linkend="plot_plugin_example">example</link>, below for the typical pattern that you will use.
+		</para>
+		<para>
+			Alternatively, should you need more control than this, you can instead add a new function called <function>preview()</function> to your JS template, and generate the code required for a preview, there (probably, at least in part, again by calling <function>calculate()</function>, etc.).
 		</para>
 	</sect2>
 	<sect2 id="plot_options">
@@ -1406,16 +1402,9 @@ This chapter contains information on some topics that are useful only to certain
     // the "somepackage" is needed to create the plot
     echo ("require (somepackage)\n");
   }
-
-  function preview () {
-    // we call all stages of the general code. Only the printout () function needs to be called slightly different for the plot preview
-    preprocess ();
-    // calculate (); // in this example, the plugin has no calculate () function.
-    printout (true); // in this case, 'true' means: Create the plot, but not any headers or other output.
-  }
   
   function printout (is_preview) {
-    // If "is_preview" is set to false, it generates the full code, including headers.
+    // If "is_preview" is set to false/undefined, it generates the full code, including headers.
     // If "is_preview" is set to true, only the essentials will be generated.
 
     if (!is_preview) {
@@ -1989,9 +1978,9 @@ x	&lt;/components ...&gt;
 		<para>
 			For &rkward;'s &XML; files, i18n will mostly just work. If you are writing your own <command>.pluginmap</command> (&eg; for an <link linkend="external_plugins">external plugin</link>),
 			you will have to specify a <replaceable>po_id</replaceable> next to the pluginmap's <replaceable>id</replaceable>. This defines the "message catalog" to use. In general this should
-			be set identical to the <replaceable>id</replaceable> of your <command>.pluginmap</command>, but if you provide several <command>.pluginmap</command>s and want to control, how
-			message catalogs are divided up, this allows you to do so. The <replaceable>po_id</replaceable> is inherited by any <command>.pluginmap</command> you include, unless that declares
-			a different <replaceable>po_id</replaceable>, and by all plugins declared in it.
+			be set identical to the <replaceable>id</replaceable> of your <command>.pluginmap</command>, but if you provide several related <command>.pluginmap</command>s in a single package, you will
+			probably want to specify a common <replaceable>po_id</replaceable> in your maps. The <replaceable>po_id</replaceable> of a <command>.pluginmap</command> file is inherited by all plugins
+			declared in it, unless that declares a different <replaceable>po_id</replaceable>.
 		</para>
 		<para>
 			For plugins and help pages, you do not need to tell &rkward; which strings are to be translated, because that is generally evident from their usage. However, as explained above,
@@ -2107,46 +2096,15 @@ user (selection from a list of values shown next to this element) --&gt;
 				E.g. if an unsuspecting translator translates a string meant as a variable name in two distinct words with a space in between.
 			</para>
 		</sect2>
-
-		<sect2 id="i18n_js_compatibility"><title>i18n and backwards compatibility</title>
-			<para>
-				One unfortunate aspect of the lack of <command>i18n()</command>-support in &rkward; versions up to 0.6.2 is that adding <command>i18n()</command> calls will make the plugin require
-				&rkward; version 0.6.3. If your plugin is developed outside &rkward;'s official release, this may be a problem. Here are some possible options on how to handle this:
-			</para>
-		<itemizedlist>
-			<listitem><para>Provide the plugin in two versions for &rkward; &gt;= 0.6.3 and &rkward; &lt; 0.6.3, as described in the chapter on 
-					<link linkend="sect_dependencies_rkward_version">handling dependencies</link></para></listitem>
-			<listitem><para>Simply do not translate the strings in the .js-file, yet. Obviously this is an easy, but rather inelegant solution.</para></listitem>
-			<listitem><para>Include some support code in your .js-file(s) like shown below:</para></listitem>
-		</itemizedlist>
-		<programlisting>
-			// js-function "comment" was not defined before 0.6.3
-			if (typeof (comment) == 'undefined) {
-				// define function i18n(), and any others you may need. Note that your implementation could actually be simpler than
-				// shown, here, &eg; if you do not make use of placeholders.
-				i18n = function (msgid) {
-					var ret = msgid;
-					for (var i = 1; i &lt; arguments.length; i++) {
-						ret = ret.replace(new RegExp("%" + i, 'g'), arguments[i]);
-					}
-					if (msgid.noquote) {
-						ret.noquote = msgid.noquote;
-						return (ret);
-					}
-					return (noquote (quote (ret)));
-				}
-			}
-		</programlisting>
-		</sect2>
 	</sect1>
 	<sect1 id="i18n_workflow"><title>Translation maintainance</title>
 		<para>
 			Now that you have made your plugin translatable, how do you actually get it translated? In general you only need to worry about this, when developing an <link linkend="external_plugins">
-			external plugin</link>. For plugins in &rkward;'s main repository, all the magic is done for you. Here is the basic workflow. Note that you need the "gettext" tools, installed:
+			external plugin</link>. For plugins in &rkward;'s main repository, all the magic is done for you. Here is the basic workflow for a external plugins. Note that you need the "gettext" tools, installed:
 		</para>
 		<itemizedlist>
 			<listitem><para>Mark up all strings, providing context and comments as needed</para></listitem>
-			<listitem><para>Run <command>python scripts/update_plugin_messages.py --extract-only /path/to/my.pluginmap</command>. scripts/update_plugin_messages.py is not currently part of the source
+			<listitem><para>Run <command>python3 scripts/update_plugin_messages.py --extract-only /path/to/my.pluginmap</command>. scripts/update_plugin_messages.py is not currently part of the source
 					releases, but can be found in a source repository checkout.</para></listitem>
 			<listitem><para>Distribute the resulting <command>rkward__<replaceable>POID</replaceable>.pot</command> file to your translators. For external plugins, it is recommended to place it
 					in a subfolder "po" in inst/rkward.</para></listitem>
@@ -2155,13 +2113,13 @@ user (selection from a list of values shown next to this element) --&gt;
 			<listitem><para>Translator saves the translation as <command>rkward__<replaceable>POID</replaceable>.<replaceable>xx</replaceable>.po</command> (where
 					<replaceable>xx</replaceable> is the language code), and sends it back to you.</para></listitem>
 			<listitem><para>Copy <command>rkward__<replaceable>POID</replaceable>.<replaceable>xx</replaceable>.po</command> to your sources, next to
-					<command>rkward__<replaceable>POID</replaceable>.pot</command>. Run <command>python scripts/update_plugin_messages.py /path/to/my.pluginmap</command> (Note: without
+					<command>rkward__<replaceable>POID</replaceable>.pot</command>. Run <command>python3 scripts/update_plugin_messages.py /path/to/my.pluginmap</command> (Note: without
 					<replaceable>--extract-only</replaceable>, this time). This will merge the translation with any interim string changes, compile the translation, and install it into
 					<command><replaceable>DIR_OF_PLUGINMAP</replaceable>/po/<replaceable>xx</replaceable>/LC_MESSAGES/rkward__<replaceable>POID</replaceable>.mo</command> (where
 					<replaceable>xx</replaceable> is the language code, again).</para></listitem>
 			<listitem><para>You should also include the non-compiled translation (&ie; <command>rkward__<replaceable>POID</replaceable>.<replaceable>xx</replaceable>.po</command>) in
 					your distribution, in the "po" subdirectory.</para></listitem>
-      <listitem><para>For any update of your plugin, run <command>python scripts/update_plugin_messages.py /path/to/my.pluginmap</command> to update the .pot file, but also the
+			<listitem><para>For any update of your plugin, run <command>python3 scripts/update_plugin_messages.py /path/to/my.pluginmap</command> to update the .pot file, but also the
 					existing .po-files, and the compiled message catalogs.</para></listitem>
 		</itemizedlist>
 	</sect1>
@@ -2178,9 +2136,6 @@ user (selection from a list of values shown next to this element) --&gt;
 					be to leave the term untranslated, or to include the English term in parentheses. Do not focus too much on the 100% mark of translated strings, focus on providing
 					a good translation, even if that means skipping some strings (or even skipping some message catalogs as a whole). Other users may be able to fill in any gaps in technical
 					terms.</para></listitem>
-			<listitem><para>At the time of this writing, &rkward;'s project hosting is about to change, and this also affect the translation workflow. Do read comments accompanying
-					the .pot-files, on how translations should be handled. If in doubt, it is never wrong to send your work the rkward-devel mailing list, or to ask for up-to-date instructions,
-					there.</para></listitem>
 		</itemizedlist>
 	</sect1>
 </chapter>

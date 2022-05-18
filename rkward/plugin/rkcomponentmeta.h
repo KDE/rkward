@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkcomponentmeta  -  description
-                             -------------------
-    begin                : Wed Jan 09 2013
-    copyright            : (C) 2013, 2014 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkcomponentmeta - This file is part of the RKWard project. Created: Wed Jan 09 2013
+SPDX-FileCopyrightText: 2013-2014 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef RKCOMPONENTMETA_H
 #define RKCOMPONENTMETA_H
@@ -21,9 +11,11 @@
 #include <QDomElement>
 #include <QList>
 
+#include "../misc/rkparsedversion.h"
+
 class XMLHelper;
 struct RKComponentDependency {
-	RKComponentDependency () : type (RBaseInstallation), min_version (0), max_version (0xFFFFFFFF) {};
+	RKComponentDependency () : type(RBaseInstallation), min_version(RKParsedVersion()), max_version(RKParsedVersion::maxVersion()) {};
 	QString toHtml () const;
 	static QString depsToHtml (const QList<RKComponentDependency> &deps);
 	enum DependencyType {
@@ -35,8 +27,8 @@ struct RKComponentDependency {
 	DependencyType type;
 	QString package;
 	QString source_info;
-	quint32 min_version;
-	quint32 max_version;
+	RKParsedVersion min_version;
+	RKParsedVersion max_version;
 
 	static QList<RKComponentDependency> parseDependencies (const QDomElement &e, XMLHelper &xml);
 	static bool isRKWardVersionCompatible (const QDomElement &e);

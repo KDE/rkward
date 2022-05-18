@@ -8,7 +8,9 @@
 		<connect client="logp.visible" governor="do_d.not"/>
 		<connect client="logd.visible" governor="do_d"/>
 		<connect client="q.visible" governor="do_q.not"/>
+		<connect client="n_quantiles.visible" governor="do_q.not"/>
 		<connect client="p.visible" governor="do_q"/>
+		<connect client="n_probabilities.visible" governor="do_q"/>
 
 		<convert id="have_ui_note" mode="notequals" sources="ui_note.text" standard=""/>
 		<connect client="ui_note.visible" governor="have_ui_note"/>
@@ -22,6 +24,9 @@
 			<row>
 				<frame>
 					<column>
+						<spinbox required="true" type="integer" min="1" id="n_quantiles" initial="20" label="Number of quantiles"/>
+						<spinbox required="true" type="integer" min="1" id="n_probabilities" initial="20" label="Number of probabilities"/>
+						<text>- or -</text>
 						<matrix columns="1" allow_user_resize_columns="false" required="true" mode="real" fixed_width="true" min="0" id="q" label="Specify Quantiles (optional)"/>
 						<matrix columns="1" allow_user_resize_columns="false" required="true" mode="real" fixed_width="true" id="p" label="Specify Probabilities (optional)"/>
 						<checkbox id="logp" label="Logarithmic probabilities" />
@@ -38,5 +43,6 @@
 				</frame>
 			</row>
 			<text id="ui_note"/>
+			<preview id="preview" mode="output"/>
 	</snippet>
 </document>

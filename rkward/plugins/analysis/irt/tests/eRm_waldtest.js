@@ -18,8 +18,10 @@ function calculate () {
 	if (optimizer != "nlm") echo('rm(fitctrl, envir=.GlobalEnv)\n');
 }
 
-function printout () {
-	echo ('rk.header (' + i18n ("Wald test (%1)", getValue ("x")) + ')\n');
+function printout (is_preview) {
+	if (!is_preview) {
+		echo ('rk.header (' + i18n ("Wald test (%1)", getValue ("x")) + ')\n');
+	}
 	echo ('rk.print (' + i18n ("Call:") + ')\n');
 	echo ('rk.print.literal (deparse(waldtest.res$call, width.cutoff=500))\n');
 	echo ('rk.header (' + i18n ("Wald test on item level (z-values):") + ', level=4)\n');

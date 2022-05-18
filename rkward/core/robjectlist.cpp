@@ -1,19 +1,9 @@
-/***************************************************************************
-                          robjectlist  -  description
-                             -------------------
-    begin                : Wed Aug 18 2004
-    copyright            : (C) 2004-2019 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+robjectlist - This file is part of RKWard (https://rkward.kde.org). Created: Wed Aug 18 2004
+SPDX-FileCopyrightText: 2004-2019 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 #include "robjectlist.h"
 
 #define UPDATE_DELAY_INTERVAL 500
@@ -32,8 +22,6 @@
 #include "../misc/rkprogresscontrol.h"
 #include "../settings/rksettingsmoduler.h"
 #include "rkpseudoobjects.h"
-
-#include "../rkglobals.h"
 
 #include "../debug.h"
 
@@ -60,9 +48,9 @@ RObjectList::RObjectList () : RContainerObject (0, QString ()) {
 
    // TODO: Do we really need tracker notification at this stage?
 	RKOrphanNamespacesObject *obj = new RKOrphanNamespacesObject (this);
-	RKGlobals::tracker ()->beginAddObject (obj, this, 0);      // first child after GlobalEnv
+	RKModificationTracker::instance()->beginAddObject (obj, this, 0);      // first child after GlobalEnv
 	orphan_namespaces = obj;
-	RKGlobals::tracker ()->endAddObject (obj, this, 0);
+	RKModificationTracker::instance()->endAddObject (obj, this, 0);
 }
 
 RObjectList::~RObjectList () {
@@ -75,7 +63,7 @@ QString RObjectList::getObjectDescription () const {
 	return i18n ("This section contains environments that are not part of <i>.GlobalEnv</i> / your \"workspace\". Most importantly, this includes loaded packages, but also objects added to R's <i>search()<i>-path using <i>attach()</i>.");
 }
 
-QStringList RObjectList::detachPackages (const QStringList &packages, RCommandChain *chain, RKProgressControl* control) {
+QStringList RObjectList::detachPackages (const QStringList &packages, RCommandChain *chain, RKInlineProgressControl* control) {
 	RK_TRACE (OBJECTS);
 
 	QStringList remove;
@@ -96,7 +84,7 @@ QStringList RObjectList::detachPackages (const QStringList &packages, RCommandCh
 		RCommand *command = new RCommand ("detach (" + rQuote (remove[i]) + ')', RCommand::App | RCommand::ObjectListUpdate);
 
 		if (control) control->addRCommand (command);
-		RKGlobals::rInterface()->issueCommand (command, chain);
+		RInterface::issueCommand (command, chain);
 	}
 
 	return reject;
@@ -112,11 +100,11 @@ void RObjectList::updateFromR (RCommandChain *chain) {
 		return;
 	}
 
-	emit (updateStarted ());
-	update_chain = RKGlobals::rInterface ()->startChain (chain);
+	emit updateStarted();
+	update_chain = RInterface::startChain (chain);
 
 	RCommand *command = new RCommand ("list (search (), loadedNamespaces ())", RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString (), this, ROBJECTLIST_UPDATE_ENVIRONMENTS_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command, update_chain);
+	RInterface::issueCommand (command, update_chain);
 }
 
 void RObjectList::updateFromR (RCommandChain *chain, const QStringList &current_searchpath, const QStringList &current_namespaces) {
@@ -130,13 +118,13 @@ void RObjectList::updateFromR (RCommandChain *chain, const QStringList &current_
 		return;
 	}
 
-	emit (updateStarted ());
-	update_chain = RKGlobals::rInterface ()->startChain (chain);
+	emit updateStarted();
+	update_chain = RInterface::startChain (chain);
 
 	updateEnvironments (current_searchpath, false);
 	updateNamespaces (current_namespaces);
 
-	RKGlobals::rInterface ()->issueCommand (QString (), RCommand::App | RCommand::Sync | RCommand::EmptyCommand, QString (), this, ROBJECTLIST_UPDATE_COMPLETE_COMMAND, update_chain);
+	RInterface::issueCommand (QString (), RCommand::App | RCommand::Sync | RCommand::EmptyCommand, QString (), this, ROBJECTLIST_UPDATE_COMPLETE_COMMAND, update_chain);
 }
 
 void RObjectList::rCommandDone (RCommand *command) {
@@ -153,14 +141,14 @@ void RObjectList::rCommandDone (RCommand *command) {
 		updateEnvironments (new_environments, true);
 		updateNamespaces (data[1]->stringVector ());
 
-		RKGlobals::rInterface ()->issueCommand (QString (), RCommand::App | RCommand::Sync | RCommand::EmptyCommand, QString (), this, ROBJECTLIST_UPDATE_COMPLETE_COMMAND, update_chain);
+		RInterface::issueCommand (QString (), RCommand::App | RCommand::Sync | RCommand::EmptyCommand, QString (), this, ROBJECTLIST_UPDATE_COMPLETE_COMMAND, update_chain);
 	} else if (command->getFlags () == ROBJECTLIST_UPDATE_COMPLETE_COMMAND) {
 		RK_ASSERT (update_chain);
-		RKGlobals::rInterface ()->closeChain (update_chain);
+		RInterface::closeChain (update_chain);
 		update_chain = 0;
 	
 		RK_DEBUG (OBJECTS, DL_DEBUG, "object list update complete");
-		emit (updateComplete ());
+		emit updateComplete();
 	} else {
 		RK_ASSERT (false);
 	}
@@ -192,9 +180,9 @@ void RObjectList::updateEnvironments (const QStringList &_env_names, bool force_
 		}
 		if (!obj) {
 			obj = createTopLevelEnvironment (name);
-			RKGlobals::tracker ()->beginAddObject (obj, this, i);
+			RKModificationTracker::instance()->beginAddObject (obj, this, i);
 			childmap.insert (i, obj);
-			RKGlobals::tracker ()->endAddObject (obj, this, i);
+			RKModificationTracker::instance()->endAddObject (obj, this, i);
 		}
 		newchildmap.insert (i, obj);
 	}
@@ -206,7 +194,7 @@ void RObjectList::updateEnvironments (const QStringList &_env_names, bool force_
 		
 		if (new_pos < 0) {	// environment is gone
 			RK_DEBUG (OBJECTS, DL_INFO, "removing toplevel environment %s from list", obj->getShortName ().toLatin1 ().data ());
-			if (RKGlobals::tracker ()->removeObject (obj, 0, true)) --i;
+			if (RKModificationTracker::instance()->removeObject (obj, 0, true)) --i;
 			else (newchildmap.insert (i, obj));
 		} else if (new_pos != i) {
 			// this call is rather expensive, all in all, but fortunately called very rarely
@@ -217,7 +205,7 @@ void RObjectList::updateEnvironments (const QStringList &_env_names, bool force_
 	RK_DO (RK_ASSERT (childmap == newchildmap), OBJECTS, DL_DEBUG);	// this is an expensive assert, hence wrapping it inside RK_DO
 }
 
-void RObjectList::updateNamespaces (const QStringList namespace_names) {
+void RObjectList::updateNamespaces (const QStringList &namespace_names) {
 	RK_TRACE (OBJECTS);
 
 	QStringList orphan_namespace_names;

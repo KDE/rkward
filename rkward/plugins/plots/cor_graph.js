@@ -1,7 +1,7 @@
 function preprocess () {
 	echo ('cor.graph <- function(x) {\n');
 	echo ('	panel.cor <- function(x, y, digits=' + getValue ("digits") + ', cex.cor, use="' + getValue ("use") + '", method="' + getValue ("method") + '", scale=' + getValue ("scale") + ') {\n');
-	echo ('		usr <- par("usr"); on.exit(par(usr))\n');
+	echo ('		usr <- par("usr"); on.exit(par(usr=usr))\n');
 	echo ('		par(usr = c(0, 1, 0, 1))\n');
 	echo ('		r <- abs(cor(x, y, use=use, method=method))\n');
 	echo ('		txt <- format(c(r, 0.123456789), digits=digits)[1]\n');

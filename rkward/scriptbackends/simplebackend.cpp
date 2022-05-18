@@ -1,19 +1,9 @@
-/***************************************************************************
-                          simplebackend  -  description
-                             -------------------
-    begin                : Thu May 10 2007
-    copyright            : (C) 2007, 2012 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+simplebackend - This file is part of RKWard (https://rkward.kde.org). Created: Thu May 10 2007
+SPDX-FileCopyrightText: 2007-2012 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "simplebackend.h"
 
@@ -77,19 +67,19 @@ void SimpleBackend::writeData (const QVariant &data) {
 void SimpleBackend::tryNextFunction () {
 	RK_TRACE (PHP);
 
-	if ((!busy) && (!command_stack.isEmpty ())) {
+	if ((!busy) && (!command_stack.empty())) {
 		// clean up previous command if applicable
-		if (command_stack.first ()->complete) {
-			delete command_stack.first ();
-			command_stack.pop_front ();
+		if (command_stack.front()->complete) {
+			delete command_stack.front();
+			command_stack.pop_front();
 
-			if (!command_stack.count ()) return;
+			if (command_stack.empty()) return;
 		}
 
 		busy = true;
-		command_stack.first ()->complete = true;
-		current_flags = command_stack.first ()->flags;
-		current_type = command_stack.first ()->type;
+		command_stack.front()->complete = true;
+		current_flags = command_stack.front()->flags;
+		current_type = command_stack.front()->type;
 
 		current_values.clear ();
 		template_pos = 0;
@@ -120,7 +110,7 @@ void SimpleBackend::processCall () {
 		RK_ASSERT (token_end >= 0);
 		QString token = current_template.mid (next_token + 3, token_end - (next_token + 3));
 		template_pos = token_end + 3;
-		emit (requestValue (token, RKStandardComponent::StringValue));
+		emit requestValue(token, RKStandardComponent::StringValue);
 		return;
 	}
 

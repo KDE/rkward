@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkvareditmodel  -  description
-                             -------------------
-    begin                : Mon Nov 05 2007
-    copyright            : (C) 2007, 2010, 2011, 2012, 2014 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkvareditmodel - This file is part of RKWard (https://rkward.kde.org). Created: Mon Nov 05 2007
+SPDX-FileCopyrightText: 2007-2014 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkvareditmodel.h"
 
@@ -27,7 +17,6 @@
 #include "../core/rkmodificationtracker.h"
 #include "../core/rkrownames.h"
 #include "../rbackend/rkrinterface.h"
-#include "../rkglobals.h"
 
 #include "../debug.h"
 
@@ -36,7 +25,6 @@ RKVarEditModel::RKVarEditModel (QObject *parent) : RKVarEditModelBase (parent), 
 
 	meta_model = 0;
 	trailing_rows = trailing_cols = 0;
-	var_col_offset = 0;
 	edit_blocks = 0;
 	rownames = 0;
 	header_locked = false;
@@ -97,7 +85,7 @@ void RKVarEditModel::objectRemoved (RObject* object) {
 	if (meta_model) meta_model->endRemoveDataObject ();
 	endRemoveColumns ();
 
-	if (objects.size () <= var_col_offset) emit (modelDepleted ());	// editor may or may want to auto-destruct
+	if (objects.size () <= var_col_offset) emit modelDepleted();	// editor may or may want to auto-destruct
 }
 
 void RKVarEditModel::checkDuplicates () {
@@ -126,7 +114,7 @@ void RKVarEditModel::checkDuplicatesNow () {
 		}
 	}
 
-	if (!dupes.isEmpty ()) emit (hasDuplicates (dupes));
+	if (!dupes.isEmpty ()) emit hasDuplicates(dupes);
 }
 
 void RKVarEditModel::objectMetaChanged (RObject* changed) {
@@ -160,7 +148,7 @@ void RKVarEditModel::objectDataChanged (RObject* object, const RObject::ChangeSe
 	RK_TRACE (EDITOR);
 
 	int cindex = objects.indexOf (static_cast<RKVariable*> (object));	// no check for isVariable needed. we only need to look up, if we have this object, and where.
-	if (cindex < 0) return;	// none of our buisiness
+	if (cindex < 0) return;	// none of our business
 
 	RK_ASSERT (changes);
 
@@ -168,7 +156,7 @@ void RKVarEditModel::objectDataChanged (RObject* object, const RObject::ChangeSe
 		scheduleReset ();
 		return;
 	}
-	emit (dataChanged (index (changes->from_index, cindex), index (changes->to_index, cindex)));
+	emit dataChanged(index(changes->from_index, cindex), index(changes->to_index, cindex));
 }
 
 void RKVarEditModel::doInsertColumns (int, int) {
@@ -316,7 +304,7 @@ QVariant RKVarEditModel::data (const QModelIndex& index, int role) const {
 Qt::ItemFlags RKVarEditModel::flags (const QModelIndex& index) const {
 	RK_TRACE (EDITOR);
 
-	Qt::ItemFlags flags = 0;
+	Qt::ItemFlags flags = Qt::NoItemFlags;
 
 	if (!index.isValid ()) return flags;
 	int row = index.row ();
@@ -514,8 +502,8 @@ void RKVarEditMetaModel::endRemoveDataObject () {
 void RKVarEditMetaModel::objectMetaChanged (int atcolumn) {
 	RK_TRACE (EDITOR);
 
-	emit (dataChanged (index (0, atcolumn), index (RowCount - 1, atcolumn)));
-	emit (headerDataChanged (Qt::Horizontal, atcolumn, atcolumn));
+	emit dataChanged(index(0, atcolumn), index(RowCount - 1, atcolumn));
+	emit headerDataChanged (Qt::Horizontal, atcolumn, atcolumn);
 }
 
 int RKVarEditMetaModel::rowCount (const QModelIndex& parent) const {
@@ -631,7 +619,7 @@ bool RKVarEditMetaModel::setData (const QModelIndex& index, const QVariant& valu
 		if (var->getShortName () != value.toString ()) {
 			if (!var->canRename ()) return false;
 			if (var->parentObject ()->isContainer ()) {
-				RKGlobals::tracker ()->renameObject (var, static_cast<RContainerObject*> (var->parentObject ())->validizeName (value.toString ()));
+				RKModificationTracker::instance()->renameObject (var, static_cast<RContainerObject*> (var->parentObject ())->validizeName (value.toString ()));
 			} else return false;
 		}
 	} else if (row == LabelRow) {
@@ -859,7 +847,7 @@ bool RKVarEditDataFrameModel::insertColumns (int column, int count, const QModel
 		RK_ASSERT (obj->isVariable ());
 //		addObject (col, obj);	// the object will be added via RKModificationTracker::addObject -> this::childAdded. That will also take care of calling beginInsertColumns()/endInsertColumns()
 	
-		RKGlobals::rInterface ()->issueCommand (new RCommand (".rk.data.frame.insert.column (" + dataframe->getFullName () + ", \"" + obj->getShortName () + "\", " + QString::number (col+1-var_col_offset) + ")", RCommand::App | RCommand::Sync));
+		RInterface::issueCommand (new RCommand (".rk.data.frame.insert.column (" + dataframe->getFullName () + ", \"" + obj->getShortName () + "\", " + QString::number (col+1-var_col_offset) + ")", RCommand::App | RCommand::Sync));
 	}
 
 	return true;
@@ -880,7 +868,7 @@ bool RKVarEditDataFrameModel::removeColumns (int column, int count, const QModel
 
 	while ((column + count) > objects.size ()) --count;
 	for (int i = column + count - 1; i >= column; --i) {	// we start at the end so that the index remains valid
-		RKGlobals::tracker ()->removeObject (objects[i]);
+		RKModificationTracker::instance()->removeObject (objects[i]);
 		// the comment in insertColumns, above: The object will be removed from our list in objectRemoved().
 	}
 	return true;
@@ -891,7 +879,7 @@ void RKVarEditDataFrameModel::doInsertRowsInBackend (int row, int count) {
 
 	// TODO: most of the time we're only adding one row at a time, still we should have a function to add multiple rows at once.
 	for (int i = row; i < row + count; ++i) {
-		RKGlobals::rInterface ()->issueCommand (new RCommand (".rk.data.frame.insert.row (" + dataframe->getFullName () + ", " + QString::number (i+1) + ')', RCommand::App | RCommand::Sync));
+		RInterface::issueCommand (new RCommand (".rk.data.frame.insert.row (" + dataframe->getFullName () + ", " + QString::number (i+1) + ')', RCommand::App | RCommand::Sync));
 	}
 }
 
@@ -899,7 +887,7 @@ void RKVarEditDataFrameModel::doRemoveRowsInBackend (int row, int count) {
 	RK_TRACE (EDITOR);
 
 	for (int i = row + count - 1; i >= row; --i) {
-		RKGlobals::rInterface ()->issueCommand (new RCommand (".rk.data.frame.delete.row (" + dataframe->getFullName () + ", " + QString::number (i+1) + ')', RCommand::App | RCommand::Sync));
+		RInterface::issueCommand (new RCommand (".rk.data.frame.delete.row (" + dataframe->getFullName () + ", " + QString::number (i+1) + ')', RCommand::App | RCommand::Sync));
 	}
 }
 
@@ -916,7 +904,7 @@ void RKVarEditDataFrameModel::objectRemoved (RObject* object) {
 
 	// if the dataframe is gone, the editor will most certainly want to auto-destruct.
 	// since the model will be taken down as well, this has to come last in the function.
-	if (!dataframe) emit (modelObjectDestroyed ());
+	if (!dataframe) emit modelObjectDestroyed();
 }
 
 void RKVarEditDataFrameModel::childAdded (int index, RObject* parent) {
@@ -974,7 +962,7 @@ void RKVarEditDataFrameModel::pushTable (RCommandChain *sync_chain) {
 	command.append (")");
 
 	// push all children
-	RKGlobals::rInterface ()->issueCommand (new RCommand (command, RCommand::Sync), sync_chain);
+	RInterface::issueCommand (new RCommand (command, RCommand::Sync), sync_chain);
 	for (int col=0; col < objects.size (); ++col) {
 		objects[col]->restore (sync_chain);
 	}
@@ -982,7 +970,7 @@ void RKVarEditDataFrameModel::pushTable (RCommandChain *sync_chain) {
 	// now store the meta-data
 	dataframe->writeMetaData (sync_chain);
 
-	RKGlobals::rInterface ()->issueCommand (new RCommand (QString (), RCommand::Sync | RCommand::EmptyCommand | RCommand::ObjectListUpdate), sync_chain);
+	RInterface::issueCommand (new RCommand (QString (), RCommand::Sync | RCommand::EmptyCommand | RCommand::ObjectListUpdate), sync_chain);
 }
 
 void RKVarEditDataFrameModel::restoreObject (RObject* object, RCommandChain* chain) {

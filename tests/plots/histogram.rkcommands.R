@@ -7,7 +7,7 @@ rk.header ("Histogram", list ("Variable"=rk.get.description (swiss[["Education"]
 rk.header ("Density curve", parameters=list("Bandwidth"="nrd",
 	"Adjust Bandwidth"="4.00",
 	"resolution"="512.00",
-	"Remove Missing Values"="yes"))
+	"Remove Missing Values"="yes"), level=3)
 
 rk.graph.on ()
 try ({

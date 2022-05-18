@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkcodecompletion  -  description
-                             -------------------
-    begin                : Thu Feb 21 2019
-    copyright            : (C) 2004-2020 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkcodecompletion - This file is part of RKWard (https://rkward.kde.org). Created: Thu Feb 21 2019
+SPDX-FileCopyrightText: 2004-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 #include "rkcodecompletion.h"
 
 #include <ktexteditor/document.h>
@@ -57,12 +47,28 @@ public:
 };
 
 //////////////////////// RKCompletionManager //////////////////////
+#include <KAboutData>
+#include <KMessageBox>
+bool checkSaneVersion() {
+	static enum { Unknown, Ok, Bad } version_check = Unknown;
+	if (version_check == Unknown) {
+		KAboutData d = KTextEditor::Editor::instance()->aboutData();
+		if (d.version() == "5.92.0") {
+			KMessageBox::information(nullptr, i18n("Due to a bug in version 5.92.0 of ktexteditor (the version in use, right now), the function call tip feature would"
+			                         " crash, and has been disabled in this session. To enable the call tip, install any other (earlier or later) version of (lib|kf5)ktexteditor."),
+			                         i18n("Incompatible version of ktexteditor"), "ktexteditor_v5.92.0");
+			version_check = Bad;
+		} else {
+			version_check = Ok;
+		}
+	}
+	return version_check == Ok;
+}
 
 RKCompletionManager::RKCompletionManager(KTextEditor::View* view, const RKCodeCompletionSettings *settings) : QObject(view), settings(settings) {
 	RK_TRACE (COMMANDEDITOR);
 
 	_view = view;
-	keep_active = false;
 	user_triggered = false;
 	ignore_next_trigger = false;
 	update_call = true;
@@ -75,7 +81,7 @@ RKCompletionManager::RKCompletionManager(KTextEditor::View* view, const RKCodeCo
 		file_completion_model = new RKFileCompletionModel (this);
 		callhint_model = new RKCallHintModel (this);
 		arghint_model = new RKArgumentHintModel (this);
-		cc_iface->registerCompletionModel (new RKCompletionNotifierModel (this));  // (at least) one model needs to be registerd, so we will know, when completion was triggered by the user (shortcut)
+		cc_iface->registerCompletionModel (new RKCompletionNotifierModel (this));  // (at least) one model needs to be registered, so we will know, when completion was triggered by the user (shortcut)
 		completion_timer = new QTimer (this);
 		completion_timer->setSingleShot (true);
 		connect (completion_timer, &QTimer::timeout, this, &RKCompletionManager::tryCompletion);
@@ -105,7 +111,7 @@ RKCompletionManager::~RKCompletionManager () {
 }
 
 void RKCompletionManager::tryCompletionProxy () {
-	if (cc_iface->isCompletionActive () || keep_active) {
+	if (cc_iface->isCompletionActive ()) {
 		// Handle this in the next event cycle, as more than one event may trigger
 		completion_timer->start (0);
 	} else if (settings->autoEnabled ()) {
@@ -305,7 +311,7 @@ void RKCompletionManager::updateVisibility () {
 		startModel (cc_iface, kate_keyword_completion_model, min_len, symbol_range, &active_models);
 	}
 // NOTE: Freaky bug in KF 5.44.0: Call hint will not show for the first time, if logically above the primary screen. TODO: provide patch for kateargumenthinttree.cpp:166pp
-	startModel (cc_iface, callhint_model, true && settings->isEnabled (RKCodeCompletionSettings::Calltip), currentCallRange (), &active_models);
+	startModel (cc_iface, callhint_model, checkSaneVersion() && settings->isEnabled (RKCodeCompletionSettings::Calltip), currentCallRange (), &active_models);
 	startModel (cc_iface, arghint_model, min_len && settings->isEnabled (RKCodeCompletionSettings::Arghint), argname_range, &active_models);
 
 	if (active_models.isEmpty ()) {
@@ -372,10 +378,10 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 
 		// If only the calltip is active, make sure the tab-key and enter behave as a regular keys. There is no completion in this case.
 		if (active_models.count () == 1 && active_models[0] == callhint_model) {
-			if (((k->key () == Qt::Key_Tab) || (k->key () == Qt::Key_Return) || (k->key () == Qt::Key_Enter)) || (k->key () == Qt::Key_Backtab)) {
-				keep_active = true;
-				cc_iface->abortCompletion (); // That's a bit lame, but the least hacky way to get the key into the document. keep_active=true, so
-				                              // the completion window should come back up, without delay
+			if (((k->key() == Qt::Key_Tab) || (k->key() == Qt::Key_Return) || (k->key() == Qt::Key_Enter)) || (k->key() == Qt::Key_Backtab) || (k->key() == Qt::Key_Up) || (k->key() == Qt::Key_Down)) {
+				completion_timer->start(0);
+				cc_iface->abortCompletion(); // That's a bit lame, but the least hacky way to get the key into the document. completion_timer was started, so
+				                             // the completion window should come back up, without delay
 				return false;
 			}
 		}
@@ -394,7 +400,7 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 		if (k->key () == Qt::Key_Tab && (!k->modifiers ())) {
 			// Try to do partial completion. Unfortunately, the base implementation in ktexteditor is totally broken (inserts the whole partial completion, without removing the start).
 			// TODO: It is not quite clear, what behavior is desirable, in case more than one completion model is active at a time.
-			//       For now, we use the simplest solution (implemenation-wise), and complete from the topmost-model, only
+			//       For now, we use the simplest solution (implementation-wise), and complete from the topmost-model, only
 			// TODO: Handle the ktexteditor builtin models, too.
 			bool exact = false;
 			QString comp;
@@ -434,7 +440,12 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 			// Make up / down-keys (without alt) navigate in the document (aborting the completion)
 			// Make alt+up / alt+down navigate in the completion list
 			if (navigate) {
-				if (k->type() != QKeyEvent::KeyPress) return true;  // eat the release event
+				if (k->type() == QKeyEvent::ShortcutOverride) {
+					k->accept();  // -> will be re-sent as a regular key event, then handled, below
+					return true;
+				} else {
+					if (k->type() != QKeyEvent::KeyPress) return true;  // eat the release event
+				}
 
 				// No, we cannot just send a fake key event, easily...
 				KActionCollection *kate_edit_actions = view ()->findChild<KActionCollection*> ("edit_actions");
@@ -462,6 +473,7 @@ RKCompletionModelBase::RKCompletionModelBase (RKCompletionManager *manager) : KT
 	RK_TRACE (COMMANDEDITOR);
 	n_completions = 0;
 	RKCompletionModelBase::manager = manager;
+	setHasGroups(true);
 }
 
 RKCompletionModelBase::~RKCompletionModelBase () {
@@ -500,8 +512,6 @@ void RKCompletionModelBase::executeCompletionItem (KTextEditor::View *view, cons
 
 RKCodeCompletionModel::RKCodeCompletionModel (RKCompletionManager *manager) : RKCompletionModelBase (manager) {
 	RK_TRACE (COMMANDEDITOR);
-
-	setHasGroups (true);
 }
 
 RKCodeCompletionModel::~RKCodeCompletionModel () {
@@ -569,7 +579,7 @@ QVariant RKCodeCompletionModel::data (const QModelIndex& index, int role) const 
 
 QString findCommonCompletion (const QStringList &list, const QString &lead, bool *exact_match) {
 	RK_TRACE (COMMANDEDITOR);
-	RK_DEBUG(COMMANDEDITOR, DL_DEBUG, "Looking for commong completion among set of %d, starting with %s", list.size (), qPrintable (lead));
+	RK_DEBUG(COMMANDEDITOR, DL_DEBUG, "Looking for common completion among set of %d, starting with %s", list.size (), qPrintable (lead));
 
 	*exact_match = true;
 	QString ret;
@@ -630,7 +640,6 @@ RKCallHintModel::RKCallHintModel (RKCompletionManager* manager) : RKCompletionMo
 	function = 0;
 }
 
-#include <QDesktopWidget>
 // TODO: There could be more than one function by a certain name, and we could support this!
 void RKCallHintModel::setFunction(RObject* _function) {
 	RK_TRACE (COMMANDEDITOR);
@@ -738,8 +747,10 @@ void RKArgumentHintModel::updateCompletionList (RObject* _function, const QStrin
 		}
 		fragment = argument;
 		matches.clear ();
-		for (int i = 0; i < args.size (); ++i) {
-			if (args[i].startsWith (fragment)) matches.append (i);
+		if (!fragment.isNull()) {  // meaning were not on an argument name for sure
+			for (int i = 0; i < args.size (); ++i) {
+				if (args[i].startsWith (fragment)) matches.append (i);
+			}
 		}
 	}
 
@@ -812,7 +823,7 @@ void RKFileCompletionModelWorker::run () {
 		exes = comp.allMatches ();
 	}
 
-	emit (completionsReady (string, exes, files));
+	emit completionsReady(string, exes, files);
 }
 
 RKFileCompletionModel::RKFileCompletionModel (RKCompletionManager* manager) : RKCompletionModelBase (manager) {

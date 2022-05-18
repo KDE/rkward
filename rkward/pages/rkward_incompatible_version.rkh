@@ -1,0 +1,16 @@
+<!DOCTYPE rkhelp>
+<document>
+	<title>Version incompatibilities</title>
+	<summary>
+While RKWard tries to support a large number of different R versions, some of the time, a new version of R will not be compatible with RKWard out of the box. In these cases you will have to install a new version of RKWard. Quite often, this does not actually have to be a <i>new</i> version, but simply one that was compiled against your new version of R.
+
+If you have installed RKWard using the package manager of your Linux distribution, but no updated package is available, please contact your distribution maintainer or file a bug report, there.
+
+For more information about available versions, and more troubleshooting information, see <link href="https://rkward.kde.org">the project homepage</link>.
+	</summary>
+
+	<section title="Graphics Engine Version Mismatch" id="ge_version_mismatch">
+This is the most common kind of version incompatibility. The same advice applies as above, i.e. please install an updated version of RKWard. However, if no update appears to be immediately available,
+and you are desparate to continue working, set <link href="rkward://settings/graphics">Settings-&gt;Onscreen Graphics</link>-&gt;"Integration of R standard device" to "No integration". Then you can use the vanille onscreen devices (X11() or Windows() or Quartz()), for plotting.
+	</section>
+</document>

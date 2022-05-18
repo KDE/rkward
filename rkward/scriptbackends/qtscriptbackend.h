@@ -1,19 +1,9 @@
-/***************************************************************************
-                          qtscriptbackend  -  description
-                             -------------------
-    begin                : Mon Sep 28 2009
-    copyright            : (C) 2009, 2012, 2014 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+qtscriptbackend - This file is part of the RKWard project. Created: Mon Sep 28 2009
+SPDX-FileCopyrightText: 2009-2014 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef QTSCRIPTBACKEND_H
 #define QTSCRIPTBACKEND_H
@@ -22,6 +12,8 @@
 
 class QtScriptBackendThread;
 class RKMessageCatalog;
+
+//#define JSBACKEND_PERFORMANCE_TEST
 
 /** This class allows to use QtScript as a scripting backend in RKWard.
 
@@ -43,6 +35,9 @@ public:
 	void printout (int flags) override { callFunction ("do_printout ();\n", flags, Printout); };
 	void preview (int flags) override { callFunction ("do_preview ();\n", flags, Preview); };
 	void writeData (const QVariant &data) override;
+#ifdef JSBACKEND_PERFORMANCE_TEST
+	static void _performanceTest();
+#endif
 public slots:
 	void threadError (const QString &message);
 	void commandDone (const QString &result);
@@ -59,7 +54,18 @@ private:
 
 #include <QThread>
 #include <QMutex>
-#include <QScriptEngine>
+#include <QtQml/QJSEngine>
+
+template<typename T> QJSValue rkJSMakeArray(QJSEngine *engine, QVector<T> list) {
+	auto ret = engine->newArray(list.size());
+	for(int i = 0; i < list.size(); ++i) ret.setProperty(i, list.at(i));
+	return ret;
+}
+template<typename T> QJSValue rkJSMakeArray(QJSEngine *engine, QList<T> list) {
+	auto ret = engine->newArray(list.size());
+	for(int i = 0; i < list.size(); ++i) ret.setProperty(i, list.at(i));
+	return ret;
+}
 
 class QtScriptBackendThread : public QThread {
 	Q_OBJECT
@@ -85,8 +91,8 @@ protected slots:
 protected:
 	void run () override;
 private:
-	/** for any script error in the last evaluation. If there was an error, a message is generated, and this function return true (and the thread should be made to exit!) */
-	bool scriptError ();
+	/** for any script error in the last evaluation. If there was an error, a message is generated, and this function returns true (and the thread should be made to exit!) */
+	bool scriptError(const QJSValue &val);
 	QVariant getValue (const QString &identifier, const int hint);
 
 	QString _command;
@@ -94,7 +100,7 @@ private:
 	QString _commonfile;
 	QString _scriptfile;
 
-	QScriptEngine engine;
+	QJSEngine engine;
 	const RKMessageCatalog *catalog;
 
 	bool killed;
@@ -103,12 +109,6 @@ private:
 
 	QMutex sleep_mutex;
 	bool sleeping;
-};
-
-#define USE_Q_SCRIPT_PROGRAM
-#include <QScriptProgram>
-namespace RKPrecompiledQtScripts {
-	bool loadCommonScript (QScriptEngine *engine, QString scriptfile);
 };
 
 #endif

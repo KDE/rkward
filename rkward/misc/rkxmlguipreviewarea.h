@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkxmlguipreviewarea  -  description
-                             -------------------
-    begin                : Wed Feb 03 2016
-    copyright            : (C) 2016-2018 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkxmlguipreviewarea - This file is part of the RKWard project. Created: Wed Feb 03 2016
+SPDX-FileCopyrightText: 2016-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef RKXMLGUIPREVIEWAREA_H
 #define RKXMLGUIPREVIEWAREA_H
@@ -26,6 +16,7 @@
 class QMenu;
 class QToolButton;
 class QLabel;
+class RKMDIWindow;
 
 class RKXMLGUIPreviewArea : public KXmlGuiWindow {
 	Q_OBJECT
@@ -36,10 +27,7 @@ public:
 	QWidget *wrapperWidget ();
 	QString label () const { return _label; };
 	void setLabel (const QString &label);
-protected:
-	/** build / destroy menu, when child is added removed. Note that we are in the fortunate situation that RKMDIWindow-children only ever get to the
-	 *  preview area via reparenting, i.e. contrary to usual QEvent::ChildAdded semnatics, they are always fully constructed, when added. */
-	void childEvent (QChildEvent *event) override;
+	void setWindow(RKMDIWindow* window);
 protected slots:
 	void prepareMenu ();
 signals:

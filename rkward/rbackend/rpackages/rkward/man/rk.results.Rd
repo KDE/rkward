@@ -94,7 +94,7 @@ x2 <- rnorm (100, 2)
 nm <- rk.get.description (x1,x2)
 
 result <- t.test (x1, x2, alternative="less")
-rk.print.code ("result <- t.test (x1, x2, alternative=\\"less\\")")
+rk.print.code ("result <- t.test (x1, x2, alternative=\"less\")")
 
 rk.header (result$method,
   parameters=list ("Comparing", paste (nm[1], "against", nm[2]),

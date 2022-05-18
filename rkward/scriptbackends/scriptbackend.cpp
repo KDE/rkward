@@ -1,19 +1,9 @@
-/***************************************************************************
-                          scriptbackend  -  description
-                             -------------------
-    begin                : Sun Aug 15 2004
-    copyright            : (C) 2004, 2006, 2009, 2011 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+scriptbackend - This file is part of RKWard (https://rkward.kde.org). Created: Sun Aug 15 2004
+SPDX-FileCopyrightText: 2004-2011 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 #include "scriptbackend.h"
 
 #include <KLocalizedString>
@@ -29,8 +19,9 @@ ScriptBackend::ScriptBackend () : QObject() {
 }
 
 ScriptBackend::~ScriptBackend () {
-	while (command_stack.count ()) {
-		delete command_stack.takeFirst ();
+	while (!command_stack.empty()) {
+		delete command_stack.front();
+		command_stack.pop_front();
 	}
 }
 
@@ -57,7 +48,7 @@ void ScriptBackend::callFunction (const QString &function, int flags, int type) 
 		invalidateCalls (type);
 	}
 
-	command_stack.append (command);
+	command_stack.push_back(command);
 	tryNextFunction ();
 }
 
@@ -68,8 +59,8 @@ void ScriptBackend::invalidateCalls (int type) {
 		current_type = Ignore;
 	}
 
-	QLinkedList<ScriptCommand *>::iterator it = command_stack.begin ();
-	while (it != command_stack.end ()) {
+	auto it = command_stack.begin();
+	while (it != command_stack.end()) {
 		if ((*it)->type == type) {
 			delete (*it);
 			it = command_stack.erase (it);		// it now points to next item
@@ -101,16 +92,16 @@ void ScriptBackend::commandFinished (const QString &output) {
 				// no heading for the preview code (not shown in the code box)
 				code_property->setPreview (_output);
 			} else {
-				emit (commandDone (current_flags));
+				emit commandDone(current_flags);
 			}
 		} else {
-			emit (commandDone (current_flags));
+			emit commandDone(current_flags);
 		}
 	}
 	busy = false;
 	tryNextFunction ();
 	if (!busy) {
-		emit (idle ());
+		emit idle();
 	}
 }
 

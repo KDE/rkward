@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rksettingsmodulekateplugins  -  description
-                             -------------------
-    begin                : Thu Mar 26 2010
-    copyright            : (C) 2020 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rksettingsmodulekateplugins - This file is part of the RKWard project. Created: Thu Mar 26 2010
+SPDX-FileCopyrightText: 2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 #ifndef RKSETTINGSMODULEKATEPLUGINS_H
 #define RKSETTINGSMODULEKATEPLUGINS_H
 
@@ -32,19 +22,18 @@ public:
 	~RKSettingsModuleKatePlugins();
 
 	void applyChanges() override;
-	void save(KConfig *config) override;
+	void save(KConfig *config) override { syncConfig(config, RKConfigBase::SaveConfig); };
+	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a);
+	static void validateSettingsInteractive(QList<RKSetupWizardItem*>*) {};
 
-	static void saveSettings(KConfig *config);
-	static void loadSettings(KConfig *config);
-	static void validateSettingsInteractive(QList<RKSettingsWizardPage*>*) {};
-
-	QString caption() override;
+	QString caption() const override;
+	QIcon icon() const override;
 
 	static QStringList pluginsToLoad() { return plugins_to_load; };
 private:
 	QTreeWidget *plugin_table;
 
-	static QStringList plugins_to_load;
+	static RKConfigValue<QStringList> plugins_to_load;
 };
 
 #endif

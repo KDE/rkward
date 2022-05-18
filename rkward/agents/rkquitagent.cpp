@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkquitagent  -  description
-                             -------------------
-    begin                : Thu Jan 18 2007
-    copyright            : (C) 2007 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkquitagent - This file is part of RKWard (https://rkward.kde.org). Created: Thu Jan 18 2007
+SPDX-FileCopyrightText: 2007 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkquitagent.h"
 
@@ -21,7 +11,6 @@
 
 #include <qtimer.h>
 
-#include "../rkglobals.h"
 #include "../rbackend/rkrinterface.h"
 #include "../rkward.h"
 #include "../misc/rkprogresscontrol.h"
@@ -42,17 +31,17 @@ RKQuitAgent::RKQuitAgent (QObject *parent) : QObject (parent) {
 	cancel_dialog->addRCommand (command, true);
 	connect (cancel_dialog, &RKProgressControl::cancelled, this, &RKQuitAgent::doQuitNow);
 
-	if (RKGlobals::rInterface ()->backendIsDead ()) {	// nothing to loose
+	if (RInterface::instance()->backendIsDead()) {	// nothing to loose
 		QTimer::singleShot (0, this, SLOT (doQuitNow()));
 		return;
-	} else if (RKGlobals::rInterface ()->backendIsIdle ()) {
+	} else if (RInterface::instance()->backendIsIdle()) {
 		// there should be no problem while quitting. If there is, show the dialog after 300 msec
 		QTimer::singleShot (300, this, SLOT (showWaitDialog()));
 	} else {
 		showWaitDialog ();
 	}
 
-	RKGlobals::rInterface ()->issueCommand (command);
+	RInterface::issueCommand (command);
 }
 
 RKQuitAgent::~RKQuitAgent () {

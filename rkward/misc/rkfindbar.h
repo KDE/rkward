@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkfindbar  -  description
-                             -------------------
-    begin                : Tue Feb 24 2015
-    copyright            : (C) 2015 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkfindbar - This file is part of the RKWard project. Created: Tue Feb 24 2015
+SPDX-FileCopyrightText: 2015 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef RKFINDBAR_H
 #define RKFINDBAR_H

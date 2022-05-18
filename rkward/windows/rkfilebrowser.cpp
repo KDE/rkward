@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkfilebrowser  -  description
-                             -------------------
-    begin                : Thu Apr 26 2007
-    copyright            : (C) 2007-2018 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkfilebrowser - This file is part of RKWard (https://rkward.kde.org). Created: Thu Apr 26 2007
+SPDX-FileCopyrightText: 2007-2018 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkfilebrowser.h"
 
@@ -39,7 +29,6 @@
 #include <QInputDialog>
 
 #include "rkworkplace.h"
-#include "../rkglobals.h"
 #include "../rbackend/rkrinterface.h"
 #include "../rkward.h"
 #include "../misc/rkdummypart.h"
@@ -142,7 +131,7 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : QWidget (parent) {
 	connect (urlbox, &KUrlComboBox::urlActivated, this, &RKFileBrowserWidget::urlChangedInCombo);
 
 	connect (dir, &KDirOperator::fileSelected, this, &RKFileBrowserWidget::fileActivated);
-	connect (RKGlobals::rInterface (), &RInterface::backendWorkdirChanged, this, &RKFileBrowserWidget::syncToWD);
+	connect (RInterface::instance(), &RInterface::backendWorkdirChanged, this, &RKFileBrowserWidget::syncToWD);
 
 	setURL (QUrl::fromLocalFile (QDir::currentPath ()));
 }

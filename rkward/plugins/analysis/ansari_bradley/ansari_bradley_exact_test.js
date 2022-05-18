@@ -23,17 +23,19 @@ function calculate () {
 	echo ('\n');
 }
 
-function printout () {
-	var header = new Header (noquote ('result$method'));
-	header.addFromUI ("x", noquote ('names[1]'));
-	header.addFromUI ("y", noquote ('names[2]'));
-	header.add (i18n ("H1"), noquote ('rk.describe.alternative(result)'));
-	header.addFromUI ("exact");
-	if (getBoolean ("confint.state")) {
-		header.addFromUI ("conflevel");
+function printout (is_preview) {
+	if (!is_preview) {
+		var header = new Header (noquote ('result$method'));
+		header.addFromUI ("x", noquote ('names[1]'));
+		header.addFromUI ("y", noquote ('names[2]'));
+		header.add (i18n ("H1"), noquote ('rk.describe.alternative(result)'));
+		header.addFromUI ("exact");
+		if (getBoolean ("confint.state")) {
+			header.addFromUI ("conflevel");
+		}
+		header.print ();
+		echo ('\n');
 	}
-	header.print ();
-	echo ('\n');
 	echo ('rk.results (list (\n');
 	echo ('	' + i18n ("Variable Names") + '=names,\n');
 	echo ('	' + i18n ("statistic") + '=result$statistic,\n');

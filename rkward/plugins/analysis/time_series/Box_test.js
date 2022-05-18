@@ -22,9 +22,11 @@ function calculate () {
 	echo ('}\n');
 }
 
-function printout () {
-	new Header (i18n ("Box-Pierce and Ljung-Box Tests"))
-	    .addFromUI ("lag").addFromUI ("type").print ();
+function printout (is_preview) {
+	if (!is_preview) {
+		new Header (i18n ("Box-Pierce and Ljung-Box Tests"))
+		    .addFromUI ("lag").addFromUI ("type").print ();
+	}
 	echo ('\n');
 	echo ('rk.results (results)\n');
 }

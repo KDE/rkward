@@ -1,25 +1,15 @@
-/***************************************************************************
-                          rkcomponentmap.cpp  -  description
-                             -------------------
-    begin                : Thu May 12 2005
-    copyright            : (C) 2005-2015 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkcomponentmap.cpp - This file is part of RKWard (https://rkward.kde.org). Created: Thu May 12 2005
+SPDX-FileCopyrightText: 2005-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkcomponentmap.h"
 
 #include <qfileinfo.h>
 #include <qdir.h>
-#include <QTime>
+#include <QElapsedTimer>
 #include <QObjectCleanupHandler>
 #include <QSet>
 #include <QGuiApplication>
@@ -33,10 +23,10 @@
 #include "../misc/xmlhelper.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../debug.h"
-#include "../rkglobals.h"
 #include "../rkward.h"
 #include "../settings/rksettingsmoduleplugins.h"
 #include "../rbackend/rksessionvars.h"
+#include "../misc/rkparsedversion.h"
 #include "../dialogs/rkerrordialog.h"
 
 QString RKPluginMapFile::makeFileName (const QString &filename) const {
@@ -173,7 +163,7 @@ void RKComponentGUIXML::Menu::clear () {
 	groups.clear ();
 }
 
-RKComponentGUIXML::Group *findOrCreateGroup (RKComponentGUIXML::Menu *parent, const QString group) {
+RKComponentGUIXML::Group *findOrCreateGroup (RKComponentGUIXML::Menu *parent, const QString &group) {
 	// try to find group
 	int bottom_index = -1;
 	QList<RKComponentGUIXML::Group*> &list = parent->groups;
@@ -204,7 +194,7 @@ RKComponentGUIXML::Group *findOrCreateGroup (RKComponentGUIXML::Menu *parent, co
 	return new_group;
 }
 
-void insertGroup (RKComponentGUIXML::Menu *parent, const QString &group_id, bool separated, const QString after_group) {
+void insertGroup (RKComponentGUIXML::Menu *parent, const QString &group_id, bool separated, const QString &after_group) {
 	RK_TRACE (PLUGIN);
 	RK_ASSERT (parent);
 
@@ -231,7 +221,7 @@ void insertGroup (RKComponentGUIXML::Menu *parent, const QString &group_id, bool
 	}
 }
 
-void insertEntry (RKComponentGUIXML::Menu *parent, RKComponentGUIXML::Entry *entry, const QString in_group) {
+void insertEntry (RKComponentGUIXML::Menu *parent, RKComponentGUIXML::Entry *entry, const QString &in_group) {
 	RK_TRACE (PLUGIN);
 	RK_ASSERT (parent);
 
@@ -242,7 +232,7 @@ void insertEntry (RKComponentGUIXML::Menu *parent, RKComponentGUIXML::Entry *ent
 	}
 }
 
-RKComponentGUIXML::Menu *findMenu (RKComponentGUIXML::Menu *parent, const QString id) {
+RKComponentGUIXML::Menu *findMenu (RKComponentGUIXML::Menu *parent, const QString &id) {
 	RK_TRACE (PLUGIN);
 
 	RK_ASSERT (parent);
@@ -257,7 +247,7 @@ RKComponentGUIXML::Menu *findMenu (RKComponentGUIXML::Menu *parent, const QStrin
 	return 0;
 }
 
-int RKComponentGUIXML::addEntries (RKComponentGUIXML::Menu *menu, XMLHelper &xml, const QDomElement description, const QString& cnamespace) {
+int RKComponentGUIXML::addEntries (RKComponentGUIXML::Menu *menu, XMLHelper &xml, const QDomElement &description, const QString& cnamespace) {
 	RK_TRACE (PLUGIN);
 
 	int leaves = 0;
@@ -420,15 +410,12 @@ RKComponentHandle* RKComponentMap::getComponentHandleLocal (const QString &id) {
 
 	RK_DEBUG (PLUGIN, DL_INFO, "Looking for latest version of component %s, among %d candidates", qPrintable (id), candidates.size ());
 	RKComponentHandle* candidate = candidates.first ();
-	QString sufa;
-	quint32 vera = RKSessionVars::parseVersionString (candidate->getAboutData ().version, &sufa);
+	auto vera = RKParsedVersion(candidate->getAboutData().version);
 	for (int i = 1; i < candidates.size (); ++i) {
-		QString sufb;
-		quint32 verb = RKSessionVars::parseVersionString (candidates[i]->getAboutData ().version, &sufb);
-		if ((verb > vera) || ((verb == vera) && (sufb > sufa))) {
+		auto verb = RKParsedVersion(candidates[i]->getAboutData ().version);
+		if (verb > vera) {
 			candidate = candidates[i];
 			vera = verb;
-			sufa = sufb;
 		}
 	}
 	// purge inferior components to avoid future version lookups
@@ -499,10 +486,10 @@ bool RKComponentMap::invokeComponent (const QString &component_id, const QString
 	// if the plugin takes longer than 5 seconds to settle, than that really is sort of buggy...
 	const int max_wait = 5000;
 
-	QTime t;
-	t.start ();
+	QElapsedTimer t;
+	t.start();
 	RKComponentBase::ComponentStatus status;
-	while ((!chandler.isEmpty ()) && ((status = component->recursiveStatus ()) == RKComponentBase::Processing) && (t.elapsed () < max_wait)) {
+	while ((!chandler.isEmpty()) && ((status = component->recursiveStatus()) == RKComponentBase::Processing) && (t.elapsed() < max_wait)) {
 		QCoreApplication::processEvents (QEventLoop::ExcludeUserInputEvents, (max_wait / 2));
 	}
 	if (chandler.isEmpty ()) status = RKComponentBase::Dead;
@@ -544,7 +531,7 @@ bool RKComponentMap::invokeComponent (const QString &component_id, const QString
 	return true;
 }
 
-void RKPluginMapParseResult::addAndPrintError (int level, const QString message) {
+void RKPluginMapParseResult::addAndPrintError (int level, const QString &message) {
 	detailed_problems.append (message);
 	RK_DEBUG (PLUGIN, level, qPrintable (message));
 }
@@ -641,7 +628,7 @@ RKPluginMapParseResult RKComponentMap::addPluginMap (const QString& plugin_map_f
 	QSet<QString> local_components;
 	QSet<QString> depfailed_local_components;
 
-	for (XMLChildList::const_iterator it=list.begin (); it != list.end (); ++it) {
+	for (XMLChildList::const_iterator it=list.cbegin (); it != list.cend (); ++it) {
 		QString id = cnamespace + xml.getStringAttribute((*it), "id", QString (), DL_WARNING);
 
 		// check dependencies, first
@@ -670,7 +657,7 @@ RKPluginMapParseResult RKComponentMap::addPluginMap (const QString& plugin_map_f
 			// create and initialize component handle
 			RKComponentHandle *handle = new RKComponentHandle (pluginmap_file_desc, filename, label);
 			XMLChildList attributes_list = xml.getChildElements (*it, "attribute", DL_DEBUG);
-			for (XMLChildList::const_iterator ait=attributes_list.begin (); ait != attributes_list.end (); ++ait) {
+			for (XMLChildList::const_iterator ait=attributes_list.cbegin (); ait != attributes_list.cend (); ++ait) {
 				handle->addAttribute (xml.getStringAttribute (*ait, "id", "noid", DL_WARNING), xml.getStringAttribute (*ait, "value", QString (), DL_ERROR), xml.i18nStringAttribute (*ait, "label", QString (), DL_ERROR));
 			}
 			if (!cdependencies.isNull ()) handle->addDependencies (RKComponentDependency::parseDependencies (cdependencies, xml));
@@ -800,7 +787,7 @@ RKStandardComponent *RKComponentHandle::invoke (RKComponent *parent_component, Q
 QString RKComponentHandle::getAttributeValue (const QString &attribute_id) {
 	RK_TRACE (PLUGIN);
 
-	QMap<QString, RKComponentMap::AttributeValueMap>::const_iterator it = RKComponentMap::getMap ()->component_attributes.find (attribute_id);
+	QMap<QString, RKComponentMap::AttributeValueMap>::const_iterator it = RKComponentMap::getMap ()->component_attributes.constFind (attribute_id);
 	if (it == RKComponentMap::getMap ()->component_attributes.constEnd ()) return QString ();
 	return (*it).valuemap.value (this);
 }
@@ -808,7 +795,7 @@ QString RKComponentHandle::getAttributeValue (const QString &attribute_id) {
 QString RKComponentHandle::getAttributeLabel (const QString &attribute_id) {
 	RK_TRACE (PLUGIN);
 
-	QMap<QString, RKComponentMap::AttributeValueMap>::const_iterator it = RKComponentMap::getMap ()->component_attributes.find (attribute_id);
+	QMap<QString, RKComponentMap::AttributeValueMap>::const_iterator it = RKComponentMap::getMap ()->component_attributes.constFind (attribute_id);
 	if (it == RKComponentMap::getMap ()->component_attributes.constEnd ()) return QString ();
 	return (*it).labelmap.value (this);
 }
@@ -832,7 +819,7 @@ QList <RKComponentDependency> RKComponentHandle::getDependencies () {
 	RK_TRACE (PLUGIN);
 
 	QList <RKComponentDependency> ret = plugin_map->getDependencies ();
-	QHash<RKComponentHandle*, QList<RKComponentDependency> >::const_iterator it = RKComponentMap::getMap ()->component_dependencies.find (this);
+	QHash<RKComponentHandle*, QList<RKComponentDependency> >::const_iterator it = RKComponentMap::getMap ()->component_dependencies.constFind (this);
 	if (it == RKComponentMap::getMap ()->component_dependencies.constEnd ()) return ret;
 	return (ret + (*it));
 }

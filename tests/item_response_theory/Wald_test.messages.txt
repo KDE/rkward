@@ -1,3 +1,7 @@
 Warning in Waldtest.Rm(estimates.rsm) :
   
-The following items were excluded due to inappropriate response patterns within subgroups: 
+The following items were excluded due to inappropriate response patterns within
+subgroups:
+I2 I3 I4 I5
+
+Subgroup models are estimated without these items!

@@ -1,25 +1,17 @@
-/***************************************************************************
-                          rksessionvars  -  description
-                             -------------------
-    begin                : Thu Sep 08 2011
-    copyright            : (C) 2011-2018 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rksessionvars - This file is part of the RKWard project. Created: Thu Sep 08 2011
+SPDX-FileCopyrightText: 2011-2018 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef RKSESSIONVARS_H
 #define RKSESSIONVARS_H
 
 #include <QObject>
 #include <QStringList>
+
+#include "../misc/rkparsedversion.h"
 
 class RInterface;
 
@@ -41,8 +33,8 @@ public:
 /** Split "a.b.c.d.e-fghi" into up to four numeric portions (returned as four bytes in a single 32bit unsigned int).
 Anything else (everything after the fourth dot, or after the first character that is neither dot, nor digit)
 is returned as suffix (via the suffix pointer; if that is 0, an error is reported, instead). */
-	static quint32 parseVersionString (const QString &version, QString *suffix);
 	static QStringList frontendSessionInfo ();
+	static QString RBinary() { return r_binary; }
 signals:
 	void installedPackagesChanged ();
 protected:
@@ -53,10 +45,11 @@ private:
 	static RKSessionVars* _instance;
 
 	QStringList installed_packages;
-	static quint32 rkward_version;
-	static QString rkward_version_suffix;
-	static quint32 r_version;
+	static RKParsedVersion rkward_version;
+	static RKParsedVersion r_version;
 	static QString r_version_string;
+friend int main(int, char**);
+	static QString r_binary;
 };
 
 #endif

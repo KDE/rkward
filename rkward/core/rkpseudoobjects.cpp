@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkpseudoobjects  -  description
-                             -------------------
-    begin                : Fri Mar 11 2011
-    copyright            : (C) 2011-2013 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkpseudoobjects - This file is part of RKWard (https://rkward.kde.org). Created: Fri Mar 11 2011
+SPDX-FileCopyrightText: 2011-2013 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkpseudoobjects.h"
 
@@ -49,7 +39,7 @@ QString RSlotsPseudoObject::makeChildName (const QString &short_child_name, bool
 	return (parent->getFullName (options) + '@' + safe_name);
 }
 
-RKNamespaceObject::RKNamespaceObject (REnvironmentObject* package, const QString name) : REnvironmentObject (package, name.isNull () ? "NAMESPACE" : name) {
+RKNamespaceObject::RKNamespaceObject (REnvironmentObject* package, const QString &name) : REnvironmentObject (package, name.isNull () ? "NAMESPACE" : name) {
 	RK_TRACE (OBJECTS);
 	type |= PseudoObject;
 	pseudo_object_types.insert (this, NamespaceObject);
@@ -76,7 +66,7 @@ QString RKNamespaceObject::makeChildName (const QString& short_child_name, bool,
 
 #include "robjectlist.h"
 #include "rkmodificationtracker.h"
-#include "../rkglobals.h"
+
 
 RKOrphanNamespacesObject::RKOrphanNamespacesObject (RObjectList* parent) : REnvironmentObject (parent, i18nc ("Note: 'namespace' is a technical term, should not be translated", "Orphan Namespaces")) {
 	RK_TRACE (OBJECTS);
@@ -113,7 +103,7 @@ void RKOrphanNamespacesObject::updateFromR (RCommandChain* chain, const QStringL
 	for (int i = childmap.size () - 1; i >= 0; --i) {
 		RObject *object = childmap[i];
 		if (!current_symbols.contains (object->getShortName ())) {
-			RKGlobals::tracker ()->removeObject (object, 0, true);
+			RKModificationTracker::instance()->removeObject (object, 0, true);
 		}
 	}
 
@@ -122,9 +112,9 @@ void RKOrphanNamespacesObject::updateFromR (RCommandChain* chain, const QStringL
 		if (!findOrphanNamespace (current_symbols[i])) {
 			RKNamespaceObject *nso = new RKNamespaceObject (this, current_symbols[i]);
 			nso->type |= Incomplete;
-			RKGlobals::tracker ()->beginAddObject (nso, this, i);
+			RKModificationTracker::instance()->beginAddObject (nso, this, i);
 			childmap.insert (i, nso);
-			RKGlobals::tracker ()->endAddObject (nso, this, i);
+			RKModificationTracker::instance()->endAddObject (nso, this, i);
 		}
 	}
 
@@ -147,7 +137,7 @@ RKNamespaceObject* RKOrphanNamespacesObject::findOrphanNamespace (const QString&
 QString RKOrphanNamespacesObject::getObjectDescription () const {
 	RK_TRACE (OBJECTS);
 
-	QString desc = RObject::getObjectDescription ();
+	QString desc = REnvironmentObject::getObjectDescription ();
 	desc.append (QString ("<p>%1</p>").arg (i18n ("This special object does not actually exist anywhere in R. It is used, here, to list namespaces which are loaded, but not attached to a package on the search path. These are typically 'imported' namespaces.")));
 	return desc;
 }

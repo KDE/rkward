@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkmdiwindow  -  description
-                             -------------------
-    begin                : Tue Sep 26 2006
-    copyright            : (C) 2006 - 2020 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkmdiwindow - This file is part of RKWard (https://rkward.kde.org). Created: Tue Sep 26 2006
+SPDX-FileCopyrightText: 2006-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkmdiwindow.h"
 
@@ -26,10 +16,12 @@
 #include <QVBoxLayout>
 
 #include <kparts/partactivateevent.h>
+#include <kparts/readwritepart.h>
 #include <kxmlguifactory.h>
 #include <kactioncollection.h>
 #include <KLocalizedString>
 #include <kmessagewidget.h>
+#include <kwidgetsaddons_version.h>
 
 #include "rkworkplace.h"
 #include "rkworkplaceview.h"
@@ -65,13 +57,18 @@ RKMDIWindow::RKMDIWindow (QWidget *parent, int type, bool tool_window, const cha
 	}
 	RKMDIWindow::type = type;
 	state = Attached;
-	tool_window_bar = 0;
-	part = 0;
+	tool_window_bar = nullptr;
+	part = nullptr;
 	active = false;
 	no_border_when_active = false;
-	standard_client = 0;
-	status_popup = 0;
-	status_popup_container = 0;
+	standard_client = nullptr;
+	status_popup = nullptr;
+	status_popup_container = nullptr;
+	ui_buddy = nullptr;
+	file_save_action = nullptr;
+	file_save_as_action = nullptr;
+	connect(&status_message_timer, &QTimer::timeout, this, &RKMDIWindow::showStatusMessageNow);
+	status_message_timer.setSingleShot(true);
 
 	if (!(type & KatePluginWindow)) setWindowIcon (RKStandardIcons::iconForWindow (this));
 }
@@ -105,10 +102,10 @@ QString RKMDIWindow::shortCaption () {
 	return windowTitle ();
 }
 
-void RKMDIWindow::setCaption (const QString &caption) {
-	RK_TRACE (APP);
-	QWidget::setWindowTitle (caption);
-	emit (captionChanged (this));
+void RKMDIWindow::setCaption(const QString &caption) {
+	RK_TRACE(APP);
+	QWidget::setWindowTitle(caption);
+	emit captionChanged(this);
 	if (tool_window_bar) tool_window_bar->captionChanged(this);
 }
 
@@ -144,7 +141,7 @@ void RKMDIWindow::activate (bool with_focus) {
 		}
 	}
 
-	emit (windowActivated (this));
+	emit windowActivated(this);
 	if (with_focus) {
 		if (old_focus) old_focus->clearFocus ();
 		topLevelWidget ()->activateWindow ();
@@ -157,7 +154,7 @@ void RKMDIWindow::activate (bool with_focus) {
 	}
 }
 
-bool RKMDIWindow::close (bool also_delete) {
+bool RKMDIWindow::close (CloseWindowMode ask_save) {
 	RK_TRACE (APP);
 
 	if (isToolWindow ()) {
@@ -174,27 +171,24 @@ bool RKMDIWindow::close (bool also_delete) {
 
 		if (tool_window_bar) tool_window_bar->hideWidget (this);
 		else hide ();
+
 		return true;
 	}
 
-	if (also_delete) {
-		bool closed = QWidget::close ();
-		if (closed) {
-			// WORKAROUND for https://bugs.kde.org/show_bug.cgi?id=170806
-			// NOTE: can't move this to the d'tor, since the part is already partially deleted, then
-			// TODO: use version check / remove once fixed in kdelibs
-			if (part && part->factory ()) {
-				part->factory ()->removeClient (part);
-			}
-			// WORKAROUND end
+	bool ok_to_close = (ask_save == NoAskSaveModified) || QWidget::close ();
+	if (!ok_to_close) return false;
 
-			delete this;	// Note: using deleteLater(), here does not work well while restoring workplaces (window is not fully removed from workplace before restoring)
-		}
-		return closed;
-	} else {
-		RK_ASSERT (!testAttribute (Qt::WA_DeleteOnClose));
-		return QWidget::close ();
+	// WORKAROUND for https://bugs.kde.org/show_bug.cgi?id=170806
+	// NOTE: can't move this to the d'tor, since the part is already partially deleted, then
+	// TODO: use version check / remove once fixed in kdelibs
+	if (part && part->factory ()) {
+		part->factory ()->removeClient (part);
 	}
+	// WORKAROUND end
+
+	delete this;	// Note: using deleteLater(), here does not work well while restoring workplaces (window is not fully removed from workplace before restoring)
+
+	return true;
 }
 
 void RKMDIWindow::prepareToBeAttached () {
@@ -216,12 +210,12 @@ bool RKMDIWindow::eventFilter (QObject *watched, QEvent *e) {
 
 	if (watched == getPart ()) {
 		if (KParts::PartActivateEvent::test (e)) {
-			RK_TRACE (APP);		// trace only the "interesting" calls to this function
+			RK_TRACE(APP);           // trace only the "interesting" calls to this function
 
-			KParts::PartActivateEvent *ev = static_cast<KParts::PartActivateEvent *> (e);
-			if (ev->activated ()) {
-				emit (windowActivated (this));
-				setFocus ();		// focus doesn't always work correctly for the kate part
+			KParts::PartActivateEvent *ev = static_cast<KParts::PartActivateEvent *>(e);
+			if (ev->activated()) {
+				emit windowActivated(this);
+				setFocus();      // focus doesn't always work correctly for the kate part
 				active = true;
 			} else {
 				active = false;
@@ -329,38 +323,53 @@ void RKMDIWindow::enterEvent (QEvent *event) {
 	QFrame::enterEvent (event);
 }
 
-void RKMDIWindow::setStatusMessage (const QString& message, RCommand *command) {
+void RKMDIWindow::showStatusMessageNow() {
 	RK_TRACE (MISC);
 
 	if (!status_popup) {
-		// NOTE: Yes, this clearly goes against the explicit recommendation, but we do want the status message as an overlay to the main widget.
-		//       This is especially important for plots, where changing the plot area geometry will trigger redraws of the plot.
+		// NOTE: For plots, against the recommendation, we want the status message as an overlay to the main widget.
+		//       This is because changing the plot area geometry will trigger redraws of the plot.
 		//       Note that these messages are mostly used on previews, so far, where they will either be a) transient ("preview updating"),
 		//       or b) in case of errors, the place of interest will be outside the preview widget _and_ the preview will generally be invalid.
 		status_popup_container = new QWidget (this);
+		if (!isType(RKMDIWindow::X11Window)) {
+			auto blayout = qobject_cast<QVBoxLayout*> (layout());
+			if (blayout) blayout->insertWidget(0, status_popup_container);
+		}
 		QVBoxLayout *layout = new QVBoxLayout (status_popup_container);
 		layout->setContentsMargins (10, 10, 10, 10);
 		status_popup = new KMessageWidget (status_popup_container);
 		status_popup->setCloseButtonVisible (true);
+#if KWIDGETSADDONS_VERSION < QT_VERSION_CHECK(6,0,0)
+		// see below
+		status_popup->setWordWrap(true);
+#endif
 		status_popup->setMessageType (KMessageWidget::Warning);
 		layout->addWidget (status_popup);
 		layout->addStretch ();
 
 		// when animation is finished, squeeze the popup-container, so as not to interfere with mouse events in the main window
-		connect (status_popup, &KMessageWidget::showAnimationFinished, [this]() { status_popup_container->resize (QSize(width(), status_popup->height () + 20)); });
+		connect (status_popup, &KMessageWidget::showAnimationFinished, this, [this]() { status_popup_container->resize (QSize(width(), status_popup->height () + 20)); });
 		connect (status_popup, &KMessageWidget::hideAnimationFinished, status_popup_container, &QWidget::hide);
 	}
 
-	if (command) connect (command->notifier (), &RCommandNotifier::commandFinished, this, &RKMDIWindow::clearStatusMessage);
-	if (!message.isEmpty ()) {
+	if (!status_message.isEmpty ()) {
 		status_popup_container->resize (size ());
 		status_popup_container->show ();
-		if (status_popup->text () == message) {
+		if (status_popup->text () == status_message) {
 			if (!status_popup->isVisible ()) status_popup->animatedShow ();  // it might have been closed by user. And no, simply show() is _not_ good enough. KF5 (5.15.0)
 		}
-		if (status_popup->text () != message) {
+		if (status_popup->text () != status_message) {
 			if (status_popup->isVisible ()) status_popup->hide (); // otherwise, the KMessageWidget does not update geometry (KF5, 5.15.0)
-			status_popup->setText (message);
+#if KWIDGETSADDONS_VERSION < QT_VERSION_CHECK(6,0,0)
+			// silly workaround: KMessageWidget does not specify top-alignment for its buttons unless in wordwrap mode.
+			// we don't want actual word wrap, but we do want top alignment
+			QString dummy = status_message;
+			if (!dummy.startsWith("<")) dummy = "<p>" + dummy + "</p>";
+			status_popup->setText (dummy.replace(" ", "&nbsp;"));
+#else
+			status_popup->setText (status_message);
+#endif
 			status_popup->animatedShow ();
 		}
 	} else {
@@ -370,10 +379,19 @@ void RKMDIWindow::setStatusMessage (const QString& message, RCommand *command) {
 	}
 }
 
+void RKMDIWindow::setStatusMessage(const QString& message, RCommand *command) {
+	RK_TRACE (MISC);
+
+	if (command) connect(command->notifier(), &RCommandNotifier::commandFinished, this, &RKMDIWindow::clearStatusMessage);
+	status_message = message;
+	// delay the actual show a bit. Often it's just a very brief "preview updating", that will just look like an annoying flicker
+	status_message_timer.start(250);
+}
+
 void RKMDIWindow::clearStatusMessage () {
 	RK_TRACE (APP);
 
-	setStatusMessage (QString ());
+	setStatusMessage(QString());
 }
 
 void RKMDIWindow::resizeEvent (QResizeEvent*) {
@@ -428,4 +446,9 @@ void RKMDIWindow::showWindowSettings () {
 	RKSettings::configureSettings (settings_page, this);
 }
 
+void RKMDIWindow::addUiBuddy(KXMLGUIClient* buddy) {
+	RK_TRACE(APP);
+	RK_ASSERT(!ui_buddy);
+	ui_buddy = buddy;
+}
 

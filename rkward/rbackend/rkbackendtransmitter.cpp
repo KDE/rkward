@@ -1,25 +1,17 @@
-/***************************************************************************
-                          rkbackendtransmitter  -  description
-                             -------------------
-    begin                : Thu Nov 18 2010
-    copyright            : (C) 2010, 2013 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkbackendtransmitter - This file is part of RKWard (https://rkward.kde.org). Created: Thu Nov 18 2010
+SPDX-FileCopyrightText: 2010-2013 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkbackendtransmitter.h"
 
 #include "rkrbackend.h"
 
 #include <QLocalSocket>
+
+#include <iostream>
 
 #include "../version.h"
 #include "../debug.h"
@@ -55,8 +47,13 @@ void RKRBackendTransmitter::run () {
 	QLocalSocket* con = new QLocalSocket (this);
 	con->connectToServer (servername);
 	setConnection (con);
-	
-	if (!connection->waitForConnected ()) handleTransmissionError ("Could not connect: " + connection->errorString ());
+
+	int timeout = 0;
+	do {
+		std::cout << token.toLocal8Bit().data() << "\n";
+		std::cout.flush();
+	} while (!connection->waitForConnected(1000) && (++timeout < 20));
+	if (timeout >= 20) handleTransmissionError("Could not connect: " + connection->errorString());
 	// handshake
 	connection->write (token.toLocal8Bit ().data ());
 	connection->write ("\n");
@@ -64,9 +61,21 @@ void RKRBackendTransmitter::run () {
 	connection->write ("\n");
 	connection->waitForBytesWritten ();
 
-	startTimer (200);	// calls flushOutput(false), periodically. See timerEvent()
+	flushtimerid = startTimer (200);	// calls flushOutput(false), periodically. See timerEvent()
 
 	exec ();
+}
+
+void RKRBackendTransmitter::doExit(){
+	RK_TRACE (RBACKEND);
+	auto con = connection;
+	killTimer(flushtimerid);
+	connection->waitForBytesWritten (1000);
+	connection = 0; // See handleTransmissionError
+	RK_DEBUG(RBACKEND, DL_DEBUG, "Aborting connection to frontend");
+	con->abort();  // TODO: This never seems to complete!
+	RK_DEBUG(RBACKEND, DL_DEBUG, "Done aborting connection to frontend");
+	exit(0);
 }
 
 void RKRBackendTransmitter::writeRequest (RBackendRequest *request) {
@@ -76,9 +85,13 @@ void RKRBackendTransmitter::writeRequest (RBackendRequest *request) {
 	transmitRequest (request);
 	connection->flush ();
 
+	if (request->subcommandrequest) {
+		current_sync_requests.append(request->subcommandrequest);
+		RK_DEBUG(RBACKEND, DL_DEBUG, "Expecting replies for %d requests (added subrequest %p)", current_sync_requests.size(), request);
+	}
 	if (request->synchronous) {
-		current_sync_requests.append (request);
-		RK_DEBUG (RBACKEND, DL_DEBUG, "Expecting replies for %d requests (added %p)", current_sync_requests.size (), request);
+		current_sync_requests.append(request);
+		RK_DEBUG(RBACKEND, DL_DEBUG, "Expecting replies for %d requests (added %p)", current_sync_requests.size(), request);
 	} else {
 		delete request;
 	}
@@ -121,7 +134,10 @@ void RKRBackendTransmitter::requestReceived (RBackendRequest* request) {
 }
 
 void RKRBackendTransmitter::flushOutput (bool force) {
-	if (!current_sync_requests.isEmpty ()) return;
+	for (int i = 0; i < current_sync_requests.size(); ++i) {
+		// Apparently, frontend isn't keeping up. Don't push the next piece of output, until it has processed the previous one!
+		if (current_sync_requests.at(i)->type == RBackendRequest::RCallbackType::Output) return;
+	}
 
 	RKRBackend::this_pointer->fetchStdoutStderr (force);
 	ROutputList out = RKRBackend::this_pointer->flushOutput (force);
@@ -137,6 +153,7 @@ void RKRBackendTransmitter::flushOutput (bool force) {
 void RKRBackendTransmitter::handleTransmissionError (const QString &message) {
 	RK_TRACE (RBACKEND);
 
+	if (!connection) return;  // regular exit, or we did not even get to the point of setting up the connection.
 	RK_DEBUG (RBACKEND, DL_ERROR, "%s", qPrintable ("Transmission error " + message));
 	RKRBackend::tryToDoEmergencySave ();
 }

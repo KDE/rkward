@@ -36,10 +36,7 @@ quote = function (text) {
 }
 
 i18n = function (msgid) {
-	var ret = _i18n.i18n (msgid);
-	for (var i = 1; i < arguments.length; i++) {
-		ret = ret.replace(new RegExp("%" + i, 'g'), arguments[i]);
-	}
+	var ret = _i18n.i18n (msgid, Array.prototype.slice.call(arguments, 1));
 	if (msgid.noquote) {
 		ret.noquote = msgid.noquote;
 		return (ret);
@@ -50,10 +47,7 @@ i18n = function (msgid) {
 }
 
 i18nc = function (msgctxt, msgid) {
-	var ret = _i18n.i18nc (msgctxt, msgid);
-	for (var i = 2; i < arguments.length; i++) {
-		ret = ret.replace(new RegExp("%" + (i - 1), 'g'), arguments[i]);
-	}
+	var ret = _i18n.i18nc (msgctxt, msgid, Array.prototype.slice.call(arguments, 2));
 	if (msgid.noquote) {
 		ret.noquote = msgid.noquote;
 		return (ret);
@@ -62,10 +56,7 @@ i18nc = function (msgctxt, msgid) {
 }
 
 i18np = function (msgid, msgid_plural, n) {
-	var ret = _i18n.i18np (msgid, msgid_plural, n);
-	for (var i = 3; i < arguments.length; i++) {
-		ret = ret.replace(new RegExp("%" + (i - 1), 'g'), arguments[i]);	// start replacing at %2. %1 already handled.
-	}
+	var ret = _i18n.i18np (msgid, msgid_plural, n, Array.prototype.slice.call(arguments, 3));
 	if (msgid.noquote) {
 		ret.noquote = msgid.noquote;
 		return (ret);
@@ -74,10 +65,7 @@ i18np = function (msgid, msgid_plural, n) {
 }
 
 i18ncp = function (msgctxt, msgid, msgid_plural, n) {
-	var ret = _i18n.i18ncp (msgctxt, msgid, msgid_plural, n);
-	for (var i = 4; i < arguments.length; i++) {
-		ret = ret.replace(new RegExp("%" + (i - 2), 'g'), arguments[i]);
-	}
+	var ret = _i18n.i18ncp (msgctxt, msgid, msgid_plural, n, Array.prototype.slice.call(arguments, 4));
 	if (msgid.noquote) {
 		ret.noquote = msgid.noquote;
 		return (ret);
@@ -191,10 +179,15 @@ do_printout = function () {
 	return (flushOutput ());
 }
 
-do_preview = function () {
-	if (typeof (preview) == "undefined") return ("");
-	preview ();
-	return (flushOutput ());
+do_preview = function() {
+	if (typeof(preview) == "undefined") {
+		if (typeof(preprocess) != "undefined") preprocess(true);
+		if (typeof(calculate) != "undefined") calculate(true);
+		if (typeof(printout) != "undefined") printout(true);
+	} else {
+		preview();
+	}
+	return (flushOutput());
 }
 
 // for compatibility with the converted PHP code

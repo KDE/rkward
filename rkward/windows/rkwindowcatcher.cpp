@@ -1,33 +1,22 @@
-/***************************************************************************
-                          rwindowcatcher.cpp  -  description
-                             -------------------
-    begin                : Wed May 4 2005
-    copyright            : (C) 2005 - 2013 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rwindowcatcher.cpp - This file is part of RKWard (https://rkward.kde.org). Created: Wed May 4 2005
+SPDX-FileCopyrightText: 2005-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkwindowcatcher.h"
 
 #ifndef DISABLE_RKWINDOWCATCHER
 
-#include <qlayout.h>
-#include <qapplication.h>
-#include <QDesktopWidget>
+#include <QLayout>
+#include <QApplication>
 #include <QPushButton>
 #include <QDialogButtonBox>
 #include <QDialog>
 #include <QWindow>
 
-#include <kmessagebox.h>
+#include <KMessageBox>
 #include <KLocalizedString>
 #include <KWindowSystem>
 #include <KWindowInfo>
@@ -36,6 +25,8 @@
 #include "../dialogs/rkerrordialog.h"
 #include "rkworkplace.h"
 #include "../misc/rkstandardicons.h"
+#include "../misc/rkcommonfunctions.h"
+#include "../misc/rkcompatibility.h"
 #include "../debug.h"
 
 RKWindowCatcher *RKWindowCatcher::_instance = 0;
@@ -130,7 +121,7 @@ void RKWindowCatcher::stop (int new_cur_device) {
 			RKWorkplace::mainWorkplace ()->newX11Window (window, new_cur_device);
 		} else {
 #if defined Q_OS_MACOS
-			KMessageBox::information (0, i18n ("You have tried to embed a new R graphics device window in RKWard. However, this is not currently supported in this build of RKWard on Mac OS X. See http://rkward.kde.org/mac for more information."), i18n ("Could not embed R X11 window"), "embed_x11_device_not_supported");
+			KMessageBox::information (0, i18n ("You have tried to embed a new R graphics device window in RKWard. However, this is not currently supported in this build of RKWard on Mac OS X. See https://rkward.kde.org/mac for more information."), i18n ("Could not embed R X11 window"), "embed_x11_device_not_supported");
 #else
 			RKErrorDialog::reportableErrorMessage (0, i18n ("You have tried to embed a new R graphics device window in RKWard. However, either no window was created, or RKWard failed to detect the new window. If you think RKWard should have done better, consider reporting this as a bug. Alternatively, you may want to adjust Settings->Configure RKWard->Onscreen Graphics."), QString (), i18n ("Could not embed R X11 window"), "failure_to_detect_x11_device");
 #endif
@@ -202,7 +193,7 @@ void RKWindowCatcher::killDevice (int device_number) {
 	RKCaughtX11Window* window = RKCaughtX11Window::getWindow (device_number);
 	if (window) {
 		window->setKilledInR ();
-		window->close (true);
+		window->close (RKMDIWindow::AutoAskSaveModified);
 		QApplication::sync ();
 	}
 }
@@ -222,7 +213,7 @@ void RKWindowCatcher::killDevice (int device_number) {
 #include <kselectaction.h>
 #include <kactioncollection.h>
 
-#include "../rkglobals.h"
+
 #include "../rbackend/rkrinterface.h"
 #include "../rbackend/rkwarddevice/rkgraphicsdevice.h"
 #include "../core/robject.h"
@@ -273,8 +264,6 @@ RKCaughtX11Window::RKCaughtX11Window (RKGraphicsDevice* rkward_device, int devic
 
 	commonInit (device_number);
 	rk_native_device = rkward_device;
-	xembed_container->setFixedSize (rk_native_device->viewPort ()->size ());
-	resize (xembed_container->size ());
 	rk_native_device->viewPort ()->setParent (xembed_container);
 	xembed_container->layout ()->addWidget (rk_native_device->viewPort ());
 	connect (rkward_device, &RKGraphicsDevice::captionChanged, this, &RKCaughtX11Window::setCaption);
@@ -282,6 +271,10 @@ RKCaughtX11Window::RKCaughtX11Window (RKGraphicsDevice* rkward_device, int devic
 	stop_interaction->setVisible (true);
 	stop_interaction->setEnabled (false);
 	setCaption (rkward_device->viewPort ()->windowTitle ());
+	rkward_device->viewPort()->setFixedSize(rkward_device->viewPort()->size()); // Prevent resizing *before* the window is shown. Will be re-enabled later
+	xembed_container->setFixedSize(rk_native_device->viewPort()->size());
+	xembed_container->show();
+	setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
 	QTimer::singleShot (0, this, SLOT (doEmbed()));
 }
@@ -289,7 +282,6 @@ RKCaughtX11Window::RKCaughtX11Window (RKGraphicsDevice* rkward_device, int devic
 void RKCaughtX11Window::commonInit (int device_number) {
 	RK_TRACE (MISC);
 
-	in_destructor = false;
 	capture = 0;
 	embedded = 0;
 	embedding_complete = false;
@@ -319,8 +311,11 @@ void RKCaughtX11Window::commonInit (int device_number) {
 	scroll_widget->setWidget (xembed_container);
 	xembed_container->hide (); // it seems to be important that the parent of a captured / embedded window is invisible prior to embedding.
 
-	dynamic_size = false;
 	dynamic_size_action->setChecked (false);
+}
+
+bool RKCaughtX11Window::dynamicSize() const {
+	return (xembed_container->parentWidget() == scroll_widget);
 }
 
 void RKCaughtX11Window::doEmbed () {
@@ -337,6 +332,11 @@ void RKCaughtX11Window::doEmbed () {
 		xembed_container->layout ()->addWidget (capture);
 		xembed_container->show ();
 	}
+	if (rk_native_device) {
+		rk_native_device->viewPort()->setMinimumSize(5,5);
+		rk_native_device->viewPort()->setMaximumSize(32768,32768);
+		setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+	}
 
 	if (!isAttached ()) {
 		// make xembed_container resizable, again, now that it actually has a content
@@ -346,7 +346,7 @@ void RKCaughtX11Window::doEmbed () {
 
 	// try to be helpful when the window is too large to fit on screen
 	QRect dims = window ()->frameGeometry ();
-	QRect avail = QApplication::desktop ()->availableGeometry (window ());
+	QRect avail = RKCompatibility::availableGeometry(window());
 	if ((dims.width () > avail.width ()) || (dims.height () > avail.height ())) {
 		KMessageBox::information (this, i18n ("The current window appears too large to fit on the screen. If this happens regularly, you may want to adjust the default graphics window size in Settings->Configure RKWard->Onscreen Graphics."), i18n ("Large window"), "dont_ask_again_large_x11_window");
 	}
@@ -357,10 +357,31 @@ RKCaughtX11Window::~RKCaughtX11Window () {
 	RK_ASSERT (device_windows.contains (device_number));
 	device_windows.remove (device_number);
 
-	in_destructor = true;
-	close (false);
+	commonClose(true);
+
 	if (embedded) RKWindowCatcher::instance ()->unregisterWatcher (embedded->winId ());
 	error_dialog->autoDeleteWhenDone ();
+}
+
+void RKCaughtX11Window::commonClose(bool in_destructor) {
+	RK_TRACE(MISC);
+
+	if (rk_native_device) rk_native_device->stopInteraction();
+
+	QString status = i18n("Closing device (saving history)");
+	if (!(close_attempted || killed_in_r)) {
+		RCommand* c = new RCommand("dev.off (" + QString::number(device_number) + ')', RCommand::App, i18n("Shutting down device number %1", device_number));
+		if (!in_destructor) setStatusMessage(status, c);
+		RInterface::issueCommand(c);
+		close_attempted = true;
+	} else {
+		if (in_destructor) return;
+		if (KMessageBox::questionYesNo(this, i18n("<p>The graphics device is being closed, saving the last plot to the plot history. This may take a while, if the R backend is still busy. You can close the graphics device immediately, in case it is stuck. However, the last plot may be missing from the plot history, if you do this.</p>")
+#if !defined Q_OS_WIN
+		+ i18n("<p>Note: On X11, the embedded window may be expurged, and you will have to close it manually in this case.</p>")
+#endif
+		, status, KGuiItem(i18n("Close immediately")), KGuiItem(i18n("Keep waiting"))) == KMessageBox::Yes) forceClose();
+	}
 }
 
 void RKCaughtX11Window::setWindowStyleHint (const QString& hint) {
@@ -374,40 +395,25 @@ void RKCaughtX11Window::setWindowStyleHint (const QString& hint) {
 	RKMDIWindow::setWindowStyleHint (hint);
 }
 
-void RKCaughtX11Window::forceClose () {
+void RKCaughtX11Window::forceClose() {
 	killed_in_r = true;
 	if (embedded) {
 		// HACK: Somehow (R 3.0.0alpha), the X11() window is surprisingly die-hard, if it is not closed "the regular way".
 		// So we expurge it, and leave the rest to the user.
-		embedded->setParent (0);
-		qApp->processEvents ();
+		embedded->setParent(0);
+		qApp->processEvents();
 	}
-	RKMDIWindow::close (true);
+	RKMDIWindow::close(NoAskSaveModified);
 }
 
-bool RKCaughtX11Window::close (bool also_delete) {
-	RK_TRACE (MISC);
+bool RKCaughtX11Window::close(CloseWindowMode ask_save) {
+	RK_TRACE(MISC);
 
-	if (killed_in_r || RKGlobals::rInterface ()->backendIsDead ()) {
-		return RKMDIWindow::close (also_delete);
+	if (killed_in_r || RInterface::instance()->backendIsDead()) {
+		return RKMDIWindow::close(ask_save);
 	}
 
-	if (rk_native_device) rk_native_device->stopInteraction ();
-
-	QString status = i18n ("Closing device (saving history)");
-	if (!close_attempted) {
-		RCommand* c = new RCommand ("dev.off (" + QString::number (device_number) + ')', RCommand::App, i18n ("Shutting down device number %1", device_number));
-		if (!in_destructor) setStatusMessage (status, c);
-		RKGlobals::rInterface ()->issueCommand (c);
-		close_attempted = true;
-	} else {
-		if (KMessageBox::questionYesNo (this, i18n ("<p>The graphics device is being closed, saving the last plot to the plot history. This may take a while, if the R backend is still busy. You can close the graphics device immediately, in case it is stuck. However, the last plot may be missing from the plot history, if you do this.</p>")
-#if !defined Q_OS_WIN
-		+ i18n ("<p>Note: On X11, the embedded window may be expurged, and you will have to close it manually in this case.</p>")
-#endif
-		, status, KGuiItem (i18n ("Close immediately")), KGuiItem (i18n ("Keep waiting"))) == KMessageBox::Yes) forceClose ();
-	}
-
+	commonClose(false);
 	return false;
 }
 
@@ -453,18 +459,16 @@ void RKCaughtX11Window::fixedSizeToggled () {
 	RK_TRACE (MISC);
 
 	if (embedded && !capture) return;  // while in the middle of embedding, don't mess with any of this, it seems to cause trouble
-	if (dynamic_size == dynamic_size_action->isChecked ()) return;
-	dynamic_size = dynamic_size_action->isChecked ();
+	if (dynamicSize() == dynamic_size_action->isChecked ()) return;
 
 	if (dynamic_size_action->isChecked ()) {
-		scroll_widget->takeWidget ();
+		if (scroll_widget->widget()) scroll_widget->takeWidget();
 		scroll_widget->hide ();
 		layout ()->addWidget (xembed_container);
 		xembed_container->show ();
 		xembed_container->setMinimumSize (5, 5);
 		xembed_container->setMaximumSize (32767, 32767);
 	} else {
-		xembed_container->setFixedSize (xembed_container->size ());
 		layout ()->removeWidget (xembed_container);
 		scroll_widget->setWidget (xembed_container);
 		scroll_widget->show ();
@@ -472,7 +476,7 @@ void RKCaughtX11Window::fixedSizeToggled () {
 
 	if (embedded && !embedding_complete) {
 		embedding_complete = true;
-		RKGlobals::rInterface ()->issueCommand ("assign ('devembedded', TRUE, rkward:::.rk.variables)", RCommand::App | RCommand::Sync | RCommand::PriorityCommand);
+		RInterface::issueCommand ("assign ('devembedded', TRUE, rkward:::.rk.variables)", RCommand::App | RCommand::Sync | RCommand::PriorityCommand);
 	}
 }
 
@@ -549,13 +553,13 @@ void RKCaughtX11Window::setFixedSizeManual () {
 void RKCaughtX11Window::activateDevice () {
 	RK_TRACE (MISC);
 
-	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ')', RCommand::App, i18n ("Activate graphics device number %1", device_number), error_dialog);
+	RInterface::issueCommand ("dev.set (" + QString::number (device_number) + ')', RCommand::App, i18n ("Activate graphics device number %1", device_number), error_dialog);
 }
 
 void RKCaughtX11Window::copyDeviceToOutput () {
 	RK_TRACE (MISC);
 
-	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\ndev.copy (device=rk.graph.on)\nrk.graph.off ()", RCommand::App | RCommand::CCOutput, i18n ("Copy contents of graphics device number %1 to output", device_number), error_dialog);
+	RInterface::issueCommand ("dev.set (" + QString::number (device_number) + ")\ndev.copy (device=rk.graph.on)\nrk.graph.off ()", RCommand::App | RCommand::CCOutput, i18n ("Copy contents of graphics device number %1 to output", device_number), error_dialog);
 }
 
 void RKCaughtX11Window::printDevice () {
@@ -563,7 +567,7 @@ void RKCaughtX11Window::printDevice () {
 
 	QString printer_device;
 	if (RKSettingsModuleGraphics::kdePrintingEnabled ()) printer_device = "rk.printer.device";
-	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\ndev.print (" + printer_device + ')', RCommand::App, i18n ("Print contents of graphics device number %1", device_number), error_dialog);
+	RInterface::issueCommand ("dev.set (" + QString::number (device_number) + ")\ndev.print (" + printer_device + ')', RCommand::App, i18n ("Print contents of graphics device number %1", device_number), error_dialog);
 }
 
 void RKCaughtX11Window::copyDeviceToRObject () {
@@ -595,7 +599,7 @@ void RKCaughtX11Window::copyDeviceToRObject () {
 
 		QString name = chooser->currentFullName ();
 
-		RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\n" + name + " <- recordPlot ()", RCommand::App | RCommand::ObjectListUpdate, i18n ("Save contents of graphics device number %1 to object '%2'", device_number, name), error_dialog);
+		RInterface::issueCommand ("dev.set (" + QString::number (device_number) + ")\n" + name + " <- recordPlot ()", RCommand::App | RCommand::ObjectListUpdate, i18n ("Save contents of graphics device number %1 to object '%2'", device_number, name), error_dialog);
 	}
 
 	delete dialog;
@@ -604,7 +608,7 @@ void RKCaughtX11Window::copyDeviceToRObject () {
 void RKCaughtX11Window::duplicateDevice () {
 	RK_TRACE (MISC);
 
-	RKGlobals::rInterface ()->issueCommand ("rk.duplicate.device (" + QString::number (device_number) + ')', RCommand::App, i18n ("Duplicate graphics device number %1", device_number), error_dialog);
+	RInterface::issueCommand ("rk.duplicate.device (" + QString::number (device_number) + ')', RCommand::App, i18n ("Duplicate graphics device number %1", device_number), error_dialog);
 }
 
 void RKCaughtX11Window::nextPlot () {
@@ -612,7 +616,7 @@ void RKCaughtX11Window::nextPlot () {
 
 	RCommand* c = new RCommand ("rk.next.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Load next plot in device number %1", device_number), error_dialog);
 	setStatusMessage (i18n ("Loading plot from history"), c);
-	RKGlobals::rInterface ()->issueCommand (c);
+	RInterface::issueCommand (c);
 }
 
 void RKCaughtX11Window::previousPlot () {
@@ -620,7 +624,7 @@ void RKCaughtX11Window::previousPlot () {
 
 	RCommand* c = new RCommand ("rk.previous.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Load previous plot in device number %1", device_number), error_dialog);
 	setStatusMessage (i18n ("Loading plot from history"), c);
-	RKGlobals::rInterface ()->issueCommand (c);
+	RInterface::issueCommand (c);
 }
 
 void RKCaughtX11Window::firstPlot () {
@@ -628,7 +632,7 @@ void RKCaughtX11Window::firstPlot () {
 
 	RCommand* c = new RCommand ("rk.first.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Load first plot in device number %1", device_number), error_dialog);
 	setStatusMessage (i18n ("Loading plot from history"), c);
-	RKGlobals::rInterface ()->issueCommand (c);
+	RInterface::issueCommand (c);
 }
 
 void RKCaughtX11Window::lastPlot () {
@@ -636,7 +640,7 @@ void RKCaughtX11Window::lastPlot () {
 
 	RCommand* c = new RCommand ("rk.last.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Load last plot in device number %1", device_number), error_dialog);
 	setStatusMessage (i18n ("Loading plot from history"), c);
-	RKGlobals::rInterface ()->issueCommand (c);
+	RInterface::issueCommand (c);
 }
 
 void RKCaughtX11Window::gotoPlot (int index) {
@@ -644,19 +648,19 @@ void RKCaughtX11Window::gotoPlot (int index) {
 
 	RCommand* c = new RCommand ("rk.goto.plot (" + QString::number (device_number) + ", " + QString::number (index+1) + ')', RCommand::App, i18n ("Load plot %1 in device number %2", index, device_number), error_dialog);
 	setStatusMessage (i18n ("Loading plot from history"), c);
-	RKGlobals::rInterface ()->issueCommand (c);
+	RInterface::issueCommand (c);
 }
 
 void RKCaughtX11Window::forceAppendCurrentPlot () {
 	RK_TRACE (MISC);
 
-	RKGlobals::rInterface ()->issueCommand ("rk.force.append.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Append this plot to history (device number %1)", device_number), error_dialog);
+	RInterface::issueCommand ("rk.force.append.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Append this plot to history (device number %1)", device_number), error_dialog);
 }
 
 void RKCaughtX11Window::removeCurrentPlot () {
 	RK_TRACE (MISC);
 
-	RKGlobals::rInterface ()->issueCommand ("rk.removethis.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Remove current plot from history (device number %1)", device_number), error_dialog);
+	RInterface::issueCommand ("rk.removethis.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Remove current plot from history (device number %1)", device_number), error_dialog);
 }
 
 void RKCaughtX11Window::clearHistory () {
@@ -664,13 +668,13 @@ void RKCaughtX11Window::clearHistory () {
 
 	if (KMessageBox::warningContinueCancel (this, i18n ("This will clear the plot history for all device windows, not just this one. If this is not your intent, press cancel, below.")) != KMessageBox::Continue) return;
 
-	RKGlobals::rInterface ()->issueCommand ("rk.clear.plot.history ()", RCommand::App, i18n ("Clear plot history"), error_dialog);
+	RInterface::issueCommand ("rk.clear.plot.history ()", RCommand::App, i18n ("Clear plot history"), error_dialog);
 }
 
 void RKCaughtX11Window::showPlotInfo () {
 	RK_TRACE (MISC);
 
-	RKGlobals::rInterface ()->issueCommand ("rk.show.plot.info (" + QString::number (device_number) + ')', RCommand::App, i18n ("Plot properties (device number %1)", device_number), error_dialog);
+	RInterface::issueCommand ("rk.show.plot.info (" + QString::number (device_number) + ')', RCommand::App, i18n ("Plot properties (device number %1)", device_number), error_dialog);
 }
 
 void RKCaughtX11Window::updateHistoryActions (int history_length, int position, const QStringList &labels) {
@@ -750,7 +754,7 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KPart
 	action->setText (i18n ("Last plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveLast));
 	window->plot_last_action = (QAction *) action;
-	action = window->plot_list_action = new KSelectAction (i18n ("Go to plot"), 0);
+	action = window->plot_list_action = new KSelectAction (i18n ("Go to plot"), window);
 	window->actions_not_for_preview.append (action);
 	window->plot_list_action->setToolBarMode (KSelectAction::MenuMode);
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionListPlots));

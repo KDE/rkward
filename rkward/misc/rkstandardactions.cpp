@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkstandardactions  -  description
-                             -------------------
-    begin                : Sun Nov 18 2007
-    copyright            : (C) 2007-2018 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkstandardactions - This file is part of RKWard (https://rkward.kde.org). Created: Sun Nov 18 2007
+SPDX-FileCopyrightText: 2007-2018 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkstandardactions.h"
 
@@ -54,7 +44,7 @@ QAction* RKStandardActions::runCurrent (RKMDIWindow *window, const QObject *rece
 	QAction* ret = window->standardActionCollection ()->addAction ("run_current", receiver, member);
 	if (current_or_line) {
 		ret->setText (i18n ("Run line / selection"));
-		ret->setStatusTip (i18n ("Runs the current selection (if any) or the current line (if there is no selection)"));
+		ret->setWhatsThis(i18n ("Runs the current selection (if any) or the current line (if there is no selection)"));
 		ret->setToolTip (ret->statusTip ());
 	} else {
 		ret->setText (i18n ("Run selection"));

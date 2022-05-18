@@ -1,39 +1,32 @@
-/***************************************************************************
-                          rkprintagent  -  description
-                             -------------------
-    begin                : Mon Aug 01 2011
-    copyright            : (C) 2011-2018 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkprintagent - This file is part of RKWard (https://rkward.kde.org). Created: Mon Aug 01 2011
+SPDX-FileCopyrightText: 2011-2018 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkprintagent.h"
 
 #include <QFile>
 #include <QTimer>
-#include <QDateTime>
+#include <QElapsedTimer>
+#include <QUrl>
 
 #include <krun.h>
 #include <kservice.h>
 #include <kmessagebox.h>
 #include <kio_version.h>
 #include <KLocalizedString>
-#include <QUrl>
+#include <KPluginFactory>
+#include <KPluginLoader>
 
 #include "../rkward.h"
 
 #include "../debug.h"
 
-RKPrintAgent::RKPrintAgent () : QObject () {
-	RK_TRACE (APP)
+RKPrintAgent::RKPrintAgent(const QString &file, KParts::ReadOnlyPart *provider, bool delete_file) : QObject(), file(file), provider(provider), delete_file(delete_file) {
+	RK_TRACE (APP);
+	//provider->widget()->show(); // not very helpful as a preview, unfortunately
 }
 
 RKPrintAgent::~RKPrintAgent () {
@@ -46,12 +39,17 @@ RKPrintAgent::~RKPrintAgent () {
 void RKPrintAgent::printPostscript (const QString &file, bool delete_file) {
 	RK_TRACE (APP)
 
-	KService::Ptr service = KService::serviceByDesktopPath ("okular_part.desktop");
-	if (!service) service = KService::serviceByDesktopPath ("kpdf_part.desktop");
-
-	KParts::ReadOnlyPart *provider = 0;
-	if (service) provider = service->createInstance<KParts::ReadOnlyPart> (0);
-	else RK_DEBUG (APP, DL_WARNING, "No KDE service found for postscript printing");
+	KParts::ReadOnlyPart *provider = nullptr;
+	KService::Ptr service = KService::serviceByDesktopPath("okular_part.desktop");
+	if (!service) service = KService::serviceByDesktopPath("kpdf_part.desktop");
+	if (service) {
+		auto factory = KPluginLoader(service->library()).factory();
+		if (factory) {
+			provider = factory->create<KParts::ReadOnlyPart>(nullptr);
+		}
+	} else {
+		RK_DEBUG (APP, DL_WARNING, "No KDE service found for postscript printing");
+	}
 
 	QAction *printaction = 0;
 	if (provider) {
@@ -70,7 +68,7 @@ void RKPrintAgent::printPostscript (const QString &file, bool delete_file) {
 	}
 
 	if (!provider) {
-		RK_DEBUG (APP, DL_WARNING, "No valid postscript postscript provider was found");
+		RK_DEBUG (APP, DL_WARNING, "No valid postscript provider was found");
 		KMessageBox::sorry (RKWardMainWindow::getMain (), i18n ("No service was found to provide a KDE print dialog for PostScript files. We will try to open a generic PostScript viewer (if any), instead.<br><br>Consider installing 'okular', or configure RKWard not to attempt to print using a KDE print dialog."), i18n ("Unable to open KDE print dialog"));
 		// fallback: If we can't find a proper part, try to invoke a standalone PS reader, instead
 #if KIO_VERSION < QT_VERSION_CHECK(5, 31, 0)
@@ -81,16 +79,13 @@ void RKPrintAgent::printPostscript (const QString &file, bool delete_file) {
 		return;
 	}
 
-	RKPrintAgent *agent = new RKPrintAgent ();
-	agent->file = file;
-	agent->delete_file = delete_file;
-	agent->provider = provider;
+	RKPrintAgent *agent = new RKPrintAgent(file, provider, delete_file);
 
 	// very hacky heuristic to try to find out, whether the print action is synchronous or asynchronous. If the latter, delete after half an hour. If the former delete after printing.
-	QTime ts;
-	ts.start ();
-	printaction->trigger ();
-	if (ts.elapsed () < 5000) {
+	QElapsedTimer ts;
+	ts.start();
+	printaction->trigger();
+	if (ts.elapsed() < 5000) {
 		QTimer::singleShot (1800000, agent, SLOT (deleteLater()));
 	} else {
 		agent->deleteLater ();

@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rcommand.h  -  description
-                             -------------------
-    begin                : Mon Nov 11 2002
-    copyright            : (C) 2002, 2006, 2007, 2009, 2010, 2013 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rcommand.h - This file is part of the RKWard project. Created: Mon Nov 11 2002
+SPDX-FileCopyrightText: 2002-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef RCOMMAND_H
 #define RCOMMAND_H
@@ -77,12 +67,15 @@ typedef QList<ROutput*> ROutputList;
 class RCommandNotifier : public QObject {
 	Q_OBJECT
 signals:
-	void commandFinished (RCommand *command);
+/** given command has finished (not necessarily successfully) */
+	void commandFinished(RCommand *command);
+	void commandOutput(RCommand *command, const ROutput* output);
 private:
 friend class RCommand;
-	RCommandNotifier ();
-	~RCommandNotifier ();
-	void emitFinished (RCommand *command) { emit commandFinished (command); };
+	RCommandNotifier();
+	~RCommandNotifier();
+	void emitFinished(RCommand *command) { emit commandFinished(command); };
+	void emitOutput(RCommand *command, const ROutput* output) { emit commandOutput(command, output); };
 };
 
 /** For introductory information on using RCommand, see \ref UsingTheInterfaceToR 
@@ -231,6 +224,35 @@ friend class RCommandStackModel;
 	RCommandReceiver *receivers[MAX_RECEIVERS_PER_RCOMMAND];
 
 	RCommandNotifier *_notifier;
+};
+
+#include <QVariant>
+/** Standard wrapper for the result of a "generic" API call, such that we need less special-casing in the backend. The conventions are simple:
+*  - If @param error is non-null, stop() will be called in the backend, with the given message.
+*  - If @param warning is non-null, the message will be shown (as a warning), but no error will be raised.
+*  - Unless an error was thrown, @param ret will be returned as a basic data type (possibly NULL). */
+struct GenericRRequestResult {
+	GenericRRequestResult(const QVariant& ret=QVariant(), const QString& warning=QString(), const QString& error=QString()) :
+		error(error), warning(warning), ret(ret) {};
+	static GenericRRequestResult makeError(const QString& error) {
+		return GenericRRequestResult(QVariant(), QString(), error);
+	}
+	GenericRRequestResult& addMessages(const GenericRRequestResult &other) {
+		if (!other.error.isEmpty()) {
+			if (!error.isEmpty()) error.append('\n');
+			error.append(other.error);
+		}
+		if (!other.warning.isEmpty()) {
+			if (!warning.isEmpty()) warning.append('\n');
+			warning.append(other.warning);
+		}
+		return *this;
+	}
+	QString error;
+	QString warning;
+	QVariant ret;
+	bool failed() { return !error.isEmpty(); }
+	bool toBool() { return ret.toBool(); }
 };
 
 #endif

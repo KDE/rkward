@@ -7,18 +7,15 @@
 rk.check.for.pandoc(stop_if_missing = FALSE, output_format = NA)
 }
 \arguments{
-\item{stop_if_missing}{Logical,
-      whether an error should be thrown if either pandoc can't be found at all
+\item{stop_if_missing}{Logical, whether an error should be thrown if either pandoc can't be found at all
 or a requested output format is not supported.}
 
-\item{output_format}{A character string,
-      name of a requested output format. If not \code{NA},
+\item{output_format}{A character string, name of a requested output format. If not \code{NA},
 the function will check if the format is supported and return a boolean value.}
 }
 \value{
 A named list with at least the boolean element \code{available}, and if
-   that is \code{TRUE}, also the character vectors \code{path}, \code{output_formats},
-      and \code{version}.
+   that is \code{TRUE}, also the character vectors \code{path}, \code{output_formats}, and \code{version}.
 }
 \description{
 This function looks for a pandoc installation and if found, gathers information

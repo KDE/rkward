@@ -162,13 +162,24 @@ rktest.runRKTest <- function (test, standard.path, suite.id) {
 	rktest.cleanTestFile (code_file)
 	rktest.cleanTestFile (message_file)
 
-	result@output_match = rktest.compare.against.standard (output_file, standard.path, test@fuzzy_output)
-	if (result@output_match == "MISMATCH") passed <- FALSE
-	result@message_match = rktest.compare.against.standard (message_file, standard.path)
-	if (result@message_match == "MISMATCH") passed <- FALSE
-	result@code_match = rktest.compare.against.standard (code_file, standard.path)
-	if (result@code_match == "MISMATCH") passed <- FALSE
-
+	if ("output" %in% test@ignore) {
+		result@output_match <- "ignored"
+	} else {
+		result@output_match = rktest.compare.against.standard (output_file, standard.path, test@fuzzy_output)
+		if (result@output_match == "MISMATCH") passed <- FALSE
+	}
+	if ("message" %in% test@ignore) {
+		result@message_match <- "ignored"
+	} else {
+		result@message_match = rktest.compare.against.standard (message_file, standard.path)
+		if (result@message_match == "MISMATCH") passed <- FALSE
+	}
+	if ("code" %in% test@ignore) {
+		result@code_match <- "ignored"
+	} else {
+		result@code_match = rktest.compare.against.standard (code_file, standard.path)
+		if (result@code_match == "MISMATCH") passed <- FALSE
+	}
 	result@passed <- passed
 
 	result
@@ -232,7 +243,11 @@ rktest.initializeEnvironment <- function () {
 	rktest.replace (".rk.make.hr", function (...) list (...))
 
 	# This should make the output of rk.graph.on() fixed
-	rktest.replace ("rk.get.tempfile.name", function (prefix="image", extension=".jpg") paste (prefix, extension, sep=""))
+	rktest.replace ("rk.get.tempfile.name", function (prefix="image", extension=".jpg", directory="") {
+		ret <- paste (prefix, extension, directory, sep="")
+		names(ret) <- ret
+		ret
+	})
 	options (rk.graphics.type="PNG", rk.graphics.width=480, rk.graphics.height=480)
 
 	# HACK: Override date, so we don't get a difference for each call of rk.header ()
@@ -257,7 +272,7 @@ rktest.initializeEnvironment <- function () {
 	rktest.replace ("rk.set.output.html.file", function (x) {
 		stopifnot(is.character(x))
 		assign(".rk.output.html.file", x, .rk.variables)
-		.rk.do.plain.call ("set.output.file", c (x, "SILENT"), synchronous=FALSE)
+		rkward:::.rk.do.plain.call ("set.output.file", c (x, "SILENT"), synchronous=FALSE)
 	})
 	assign("initialized", TRUE, envir=.rktest.tmp.storage)
 }

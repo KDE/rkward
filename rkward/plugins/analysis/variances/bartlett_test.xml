@@ -8,6 +8,7 @@
 			<varselector id="vars"/>
 			<column>
 				<varslot types="numeric" id="x" source="vars" required="true" label="samples" multi="true" min_vars="2"/>
+				<preview id="preview" mode="output"/>
 			</column>
 		</row>
 	</dialog>

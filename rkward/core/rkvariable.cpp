@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkvariable  -  description
-                             -------------------
-    begin                : Thu Aug 12 2004
-    copyright            : (C) 2004, 2007, 2008, 2010, 2011, 2012 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkvariable - This file is part of RKWard (https://rkward.kde.org). Created: Thu Aug 12 2004
+SPDX-FileCopyrightText: 2004-2012 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 #include "rkvariable.h"
 
 #include <qstringlist.h>
@@ -22,9 +12,9 @@
 
 #include "rcontainerobject.h"
 #include "robjectlist.h"
-
 #include "../rbackend/rkrinterface.h"
-#include "../rkglobals.h"
+#include "../misc/rkcompatibility.h"
+
 #include "rkmodificationtracker.h"
 
 #define GET_DATA_COMMAND 11
@@ -79,7 +69,7 @@ void RKVariable::setVarType (RObject::RDataType new_type, bool sync) {
 		setDataType (new_type);
 		allocateEditData ();
 
-		// re-set presistent aspects of the edit data
+		// re-set persistent aspects of the edit data
 		data->value_labels = value_labels;
 		data->formatting_options = formatting_options;
 		data->num_listeners = num_listeners;
@@ -95,7 +85,7 @@ void RKVariable::setVarType (RObject::RDataType new_type, bool sync) {
 			else if (new_type == RObject::DataLogical) command += "as.logical";
 			else if (new_type == RObject::DataFactor) command += "as.factor";
 			command += ')';
-			RKGlobals::rInterface ()->issueCommand (command, RCommand::App | RCommand::Sync, QString ());
+			RInterface::issueCommand (command, RCommand::App | RCommand::Sync, QString ());
 			if (new_type == RObject::DataFactor) updateValueLabels ();	// as.factor resets the "levels"-attribute!
 
 			syncDataToR ();
@@ -188,8 +178,8 @@ void RKVariable::rCommandDone (RCommand *command) {
 		data->formatting_options = parseFormattingOptionsString (getMetaProperty ("format"));
 
 		ChangeSet *set = new ChangeSet (0, getLength (), true);
-		RKGlobals::tracker ()->objectDataChanged (this, set);
-		RKGlobals::tracker ()->objectMetaChanged (this);
+		RKModificationTracker::instance()->objectDataChanged (this, set);
+		RKModificationTracker::instance()->objectMetaChanged (this);
 		type -= (type & NeedDataUpdate);
 		discardUnsyncedChanges ();
 		lockSyncing (false);
@@ -296,7 +286,7 @@ void RKVariable::updateDataFromR (RCommandChain *chain) {
 	RK_TRACE (OBJECTS);
 	if (!data) return;
 
-	RKGlobals::rInterface ()->issueCommand (".rk.get.vector.data (" + getFullName () + ')', RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString (), this, GET_DATA_COMMAND, chain);
+	RInterface::issueCommand (".rk.get.vector.data (" + getFullName () + ')', RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString (), this, GET_DATA_COMMAND, chain);
 }
 
 void RKVariable::lockSyncing (bool lock) {
@@ -374,11 +364,11 @@ void RKVariable::writeInvalidFields (QList<int> rows, RCommandChain *chain) {
 		if (!values.isEmpty ()) values.append (",");
 	}
 
-	RKGlobals::rInterface ()->issueCommand (".rk.set.invalid.fields (" + getFullName () + ", " + set + values + clear + ')', RCommand::App | RCommand::Sync, QString (), 0,0, chain);
+	RInterface::issueCommand (".rk.set.invalid.fields (" + getFullName () + ", " + set + values + clear + ')', RCommand::App | RCommand::Sync, QString (), 0,0, chain);
 
 	if (data->previously_valid != data->invalid_fields.isEmpty ()) {
 		data->previously_valid = data->invalid_fields.isEmpty ();
-		RKGlobals::tracker ()->objectMetaChanged (this);
+		RKModificationTracker::instance()->objectMetaChanged (this);
 	}
 }
 
@@ -390,7 +380,7 @@ void RKVariable::writeData (int from_row, int to_row, RCommandChain *chain) {
 
 	// TODO: try to sync in correct storage mode
 	if (from_row == to_row) {
-		RKGlobals::rInterface ()->issueCommand (getFullName () + '[' + QString::number (from_row+1) + "] <- " + getRText (from_row), RCommand::App | RCommand::Sync, QString (), 0,0, chain);
+		RInterface::issueCommand (getFullName () + '[' + QString::number (from_row+1) + "] <- " + getRText (from_row), RCommand::App | RCommand::Sync, QString (), 0,0, chain);
 		if (data->cell_states[from_row] & RKVarEditData::UnsyncedInvalidState) changed_invalids.append (from_row);
 	} else {
 		QString data_string = "c (";
@@ -403,13 +393,13 @@ void RKVariable::writeData (int from_row, int to_row, RCommandChain *chain) {
 			if (data->cell_states[row] & RKVarEditData::UnsyncedInvalidState) changed_invalids.append (row);
 		}
 		data_string.append (")");
-		RKGlobals::rInterface ()->issueCommand (getFullName () + '[' + QString::number (from_row + 1) + ':' + QString::number (to_row + 1) + "] <- " + data_string, RCommand::App | RCommand::Sync, QString (), 0,0, chain);
+		RInterface::issueCommand (getFullName () + '[' + QString::number (from_row + 1) + ':' + QString::number (to_row + 1) + "] <- " + data_string, RCommand::App | RCommand::Sync, QString (), 0,0, chain);
 	}
 
 	if (!changed_invalids.isEmpty ()) writeInvalidFields (changed_invalids, chain);
 
 	ChangeSet *set = new ChangeSet (from_row, to_row);
-	RKGlobals::tracker ()->objectDataChanged (this, set);
+	RKModificationTracker::instance()->objectDataChanged (this, set);
 }
 
 void RKVariable::cellsChanged (int from_row, int to_row) {
@@ -723,7 +713,7 @@ void RKVariable::updateValueLabels () {
 	RK_TRACE (OBJECTS);
 
 	writeValueLabels (0);
-	RKGlobals::tracker ()->objectMetaChanged (this);
+	RKModificationTracker::instance()->objectMetaChanged (this);
 
 	ValueLabels *labels = data->value_labels;
 
@@ -744,7 +734,7 @@ void RKVariable::updateValueLabels () {
 
 	// also update display of all values:
 	ChangeSet *set = new ChangeSet (0, getLength () - 1);
-	RKGlobals::tracker ()->objectDataChanged (this, set);
+	RKModificationTracker::instance()->objectDataChanged (this, set);
 
 	// TODO: find out whether the object is valid after the operation and update accordingly!
 }
@@ -768,7 +758,7 @@ void RKVariable::writeValueLabels (RCommandChain *chain) const {
 		level_string = "NULL";
 	}
 
-	RKGlobals::rInterface ()->issueCommand (".rk.set.levels (" + getFullName () + ", " + level_string + ')', RCommand::App | RCommand::Sync, QString (), 0, 0, chain);
+	RInterface::issueCommand (".rk.set.levels (" + getFullName () + ", " + level_string + ')', RCommand::App | RCommand::Sync, QString (), 0, 0, chain);
 }
 
 QString RKVariable::getValueLabelString () const {
@@ -824,7 +814,7 @@ void RKVariable::setFormattingOptions (const FormattingOptions new_options) {
 
 	// also update display of all values:
 	ChangeSet *set = new ChangeSet (0, getLength () -1);
-	RKGlobals::tracker ()->objectDataChanged (this, set);
+	RKModificationTracker::instance()->objectDataChanged (this, set);
 }
 
 QString RKVariable::getFormattingOptionsString () const {
@@ -872,7 +862,7 @@ RKVariable::FormattingOptions RKVariable::parseFormattingOptionsString (const QS
 	formatting_options.precision_mode = FormattingOptions::PrecisionDefault;
 	formatting_options.precision = 0;
 
-	QStringList list = string.split ('#', QString::SkipEmptyParts);
+	QStringList list = string.split ('#', RKCompatibility::SkipEmptyParts());
 	QString option, parameter;
 	for (QStringList::const_iterator it = list.constBegin (); it != list.constEnd (); ++it) {
 		option = (*it).section (':', 0, 0);

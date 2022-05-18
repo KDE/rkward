@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkpluginbrowser  -  description
-                             -------------------
-    begin                : Sat Mar 10 2005
-    copyright            : (C) 2018 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkpluginbrowser - This file is part of RKWard (https://rkward.kde.org). Created: Sat Mar 10 2005
+SPDX-FileCopyrightText: 2018 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkpluginbrowser.h"
 
@@ -26,7 +16,7 @@
 
 #include "../misc/xmlhelper.h"
 #include "../misc/getfilenamewidget.h"
-#include "../rkglobals.h"
+
 #include "../debug.h"
 
 RKPluginBrowser::RKPluginBrowser (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
@@ -184,14 +174,14 @@ void RKPluginBrowser::updateColor () {
 
 	if (isEnabled ()) {
 		if (status == RKComponentBase::Satisfied) {
-			selector->setBackgroundColor (QColor (255, 255, 255));
+			selector->setStyleSheet (QString (""));
 		} else if (status == RKComponentBase::Processing) {
-			selector->setBackgroundColor (QColor (255, 255, 0));
+			selector->setStyleSheet (QString ("background: yellow; color: black"));
 		} else {
-			selector->setBackgroundColor (QColor (255, 0, 0));
+			selector->setStyleSheet (QString ("background: red; color: black"));
 		}
 	} else {
-		selector->setBackgroundColor (QColor (200, 200, 200));
+		selector->setStyleSheet (QString ("background: rgb(200, 200, 200); color: black"));
 	}
 }
 

@@ -1,25 +1,14 @@
-/***************************************************************************
-                          rkeditobjectagent  -  description
-                             -------------------
-    begin                : Fri Feb 16 2007
-    copyright            : (C) 2007 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkeditobjectagent - This file is part of RKWard (https://rkward.kde.org). Created: Fri Feb 16 2007
+SPDX-FileCopyrightText: 2007 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 #include "rkeditobjectagent.h"
 
 #include <KLocalizedString>
 #include <kmessagebox.h>
 
-#include "../rkglobals.h"
 #include "../core/robjectlist.h"
 #include "../rbackend/rkrinterface.h"
 #include "../rkward.h"
@@ -33,12 +22,12 @@ RKEditObjectAgent::RKEditObjectAgent (const QStringList &object_names, RCommandC
 	RKEditObjectAgent::object_names = object_names;
 
 	// first issue an empty command to trigger an update of the object list
-	RKGlobals::rInterface ()->issueCommand (new RCommand (QString (), RCommand::EmptyCommand | RCommand::ObjectListUpdate, QString (), this), chain);
+	RInterface::issueCommand (new RCommand (QString (), RCommand::EmptyCommand | RCommand::ObjectListUpdate, QString (), this), chain);
 
 	// now add another empty command to find out, when the update is complete
 	RCommand *command = new RCommand (QString (), RCommand::EmptyCommand, QString (), this);
 	done_command_id = command->id ();
-	RKGlobals::rInterface ()->issueCommand (command, chain);
+	RInterface::issueCommand (command, chain);
 }
 
 RKEditObjectAgent::~RKEditObjectAgent () {

@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkradio.cpp  -  description
-                             -------------------
-    begin                : Thu Nov 7 2002
-    copyright            : (C) 2002, 2006, 2007, 2014 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkradio.cpp - This file is part of RKWard (https://rkward.kde.org). Created: Thu Nov 7 2002
+SPDX-FileCopyrightText: 2002-2014 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkradio.h"
 
@@ -26,8 +16,8 @@
 
 #include <KLocalizedString>
 
-#include "../rkglobals.h"
 #include "../misc/xmlhelper.h"
+#include "../misc/rkcompatibility.h"
 #include "../debug.h"
 
 RKRadio::RKRadio (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKAbstractOptionSelector (parent_component, parent_widget) {
@@ -48,7 +38,7 @@ RKRadio::RKRadio (const QDomElement &element, RKComponent *parent_component, QWi
 	addOptionsAndInit (element);
 
 	vbox->addWidget (group_box);
-	connect (group, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &RKRadio::itemSelected);
+	connect (group, RKCompatibility::groupButtonClicked(), this, &RKRadio::itemSelected);
 }
 
 RKRadio::~RKRadio(){

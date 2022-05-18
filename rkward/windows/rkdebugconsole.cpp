@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkdebugconsole  -  description
-                             -------------------
-    begin                : Wed Oct 19 2011
-    copyright            : (C) 2011 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkdebugconsole - This file is part of RKWard (https://rkward.kde.org). Created: Wed Oct 19 2011
+SPDX-FileCopyrightText: 2011-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkdebugconsole.h"
 
@@ -51,21 +41,17 @@ RKDebugConsole::RKDebugConsole (QWidget *parent, bool tool_window, const char *n
 
 	QVBoxLayout *button_layout = new QVBoxLayout ();
 	upper_layout->addLayout (button_layout);
-	step_button = new QPushButton (i18n ("Next"), this);
-	connect (step_button, &QPushButton::clicked, this, &RKDebugConsole::stepButtonClicked);
-	button_layout->addWidget (step_button);
-	step_out_button = new QPushButton (i18n ("Step out"), this);
-	connect (step_out_button, &QPushButton::clicked, this, &RKDebugConsole::stepOutButtonClicked);
-	RKCommonFunctions::setTips (i18n ("<p>Continue until the caller of this function is reached (unless another debug statement is hit, earlier)</p>"
-	                                  "<p><b>Note:</b> In some cases, the calling function will never be reached, because the call was the last step in the caller. "
-	                                  "In these cases, the behavior is identical to 'Continue'.</p>"), step_out_button);
-	button_layout->addWidget (step_out_button);
-	continue_button = new QPushButton (i18n ("Continue"), this);
-	connect (continue_button, &QPushButton::clicked, this, &RKDebugConsole::continueButtonClicked);
-	button_layout->addWidget (continue_button);
-	cancel_button = new QPushButton (i18n ("Cancel"), this);
-	connect (cancel_button, &QPushButton::clicked, this, &RKDebugConsole::cancelButtonClicked);
-	button_layout->addWidget (cancel_button);
+	button_layout->addWidget(addButton("n\n", i18n("Next (step over)"), i18n("Evaluate the next statement, stepping over function calls.")));
+	button_layout->addWidget(addButton("s\n", i18n("Next (step into)"), i18n("Evaluate the next statement, stepping into function calls.")));
+	button_layout->addWidget(addButton("browserSetDebug(1)\ncont\n", i18n("Step out"), i18n(
+	        "<p>Continue until the caller of this function is reached (unless another debug statement is hit, earlier)</p>"
+	        "<p><b>Note:</b> In some cases, the calling function will never be reached, because the call was the last step in the caller. "
+	        "In these cases, the behavior is identical to 'Continue'.</p>")
+	));
+	button_layout->addWidget(addButton("f\n", i18n("Finish current"), i18n("Finish current loop or function.")));
+	button_layout->addWidget(addButton("cont\n", i18n("Continue"), i18n("Continue evaluation.")));
+	button_layout->addStretch ();
+	button_layout->addWidget(addButton("Q\n", i18n("Cancel"), i18n("Exit debugger and return to top-level statement.")));
 	button_layout->addStretch ();
 
 	QHBoxLayout *lower_layout = new QHBoxLayout ();
@@ -90,6 +76,14 @@ RKDebugConsole::RKDebugConsole (QWidget *parent, bool tool_window, const char *n
 
 RKDebugConsole::~RKDebugConsole () {
 	RK_TRACE (APP);
+}
+
+QPushButton* RKDebugConsole::addButton(const QString& command, const QString& text, const QString& tip) {
+	QPushButton *button = new QPushButton(text);
+	connect(button, &QPushButton::clicked, this, [this, command]() { this->sendReply(command); } );
+	buttons.append(button);
+	RKCommonFunctions::setTips(tip, button);
+	return button;
 }
 
 void RKDebugConsole::newDebugState () {
@@ -117,11 +111,8 @@ void RKDebugConsole::newDebugState () {
 		activate (true);
 	}
 
-	setEnabled (true);
-	step_button->setEnabled (enable);
-	step_out_button->setEnabled (enable);
-	continue_button->setEnabled (enable);
-	cancel_button->setEnabled (enable);
+	setEnabled(true);
+	for (int i = 0; i < buttons.size(); ++i) buttons[i]->setEnabled(enable);
 }
 
 void RKDebugConsole::sendReplySlot () {
@@ -133,43 +124,19 @@ void RKDebugConsole::sendReplySlot () {
 	reply_edit->clear ();
 }
 
-void RKDebugConsole::stepOutButtonClicked () {
-	RK_TRACE (APP);
-
-	sendReply ("browserSetDebug(1)\ncont\n");
-}
-
-void RKDebugConsole::stepButtonClicked () {
-	RK_TRACE (APP);
-
-	sendReply ("n\n");
-}
-
-void RKDebugConsole::continueButtonClicked () {
-	RK_TRACE (APP);
-
-	sendReply ("cont\n");
-}
-
-void RKDebugConsole::cancelButtonClicked () {
-	RK_TRACE (APP);
-
-	RKDebugHandler::instance ()->sendCancel ();
-}
-
 void RKDebugConsole::sendReply (const QString &reply) {
 	RK_TRACE (APP);
 
 	RKDebugHandler::instance ()->submitDebugString (reply);
 }
 
-bool RKDebugConsole::close (bool also_delete) {
+bool RKDebugConsole::close (CloseWindowMode ask_save) {
 	RK_TRACE (APP);
 
 	if (RKDebugHandler::instance ()->state () != RKDebugHandler::NotInDebugger) {
 		KMessageBox::sorry (this, i18n ("This window cannot be closed, while a debugger is active. If you have no idea what this means, and you want to get out, press the 'Cancel' button on the right hand side of this window."));
 		return false;
 	}
-	return RKMDIWindow::close (also_delete);
+	return RKMDIWindow::close (ask_save);
 }
 

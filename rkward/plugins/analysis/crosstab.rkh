@@ -16,7 +16,7 @@ For complete crosstabulation of three or more variables against each other (into
 		<setting id="y">Select one or more vectors that can be interpreted as a factor. Each of these will be cross-tabulated against the "dependent" variable.</setting>
 		<setting id="chisq">Should a chisquare test be performed (for each pair)?</setting>
 		<setting id="barplot">Should a barplot be produced (for each pair)?</setting>
-		<setting id="preview">Allows to preview the barplot(s). Only the first of the barplots is shown in the preview, even if more than one table is produced.</setting>
+		<setting id="preview">Allows to preview the result. Only the first table (and plot) is shown in the preview, even if more than one table is produced.</setting>
 
 		<caption id="margins_tab"/>
 		<setting id="margins">Calculate and show sums / margins</setting>

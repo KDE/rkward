@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkgraphicsdevice_backendtransmitter  -  description
-                             -------------------
-    begin                : Mon Mar 18 20:06:08 CET 2013
-    copyright            : (C) 2013 by Thomas Friedrichsmeier 
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkgraphicsdevice_backendtransmitter - This file is part of the RKWard project. Created: Mon Mar 18 2013
+SPDX-FileCopyrightText: 2013 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef RKGRAPHICSDEVICE_BACKENDTRANSMITTER_H
 #define RKGRAPHICSDEVICE_BACKENDTRANSMITTER_H
@@ -22,8 +12,9 @@
 #include <QThread>
 #include <QMutex>
 
-#include "rkgraphicsdevice_protocol_shared.h"
 #include "../rkasyncdatastreamhelper.h"
+
+typedef quint32 RKGraphicsDeviceTransmittionLengthType;
 
 /** This simple class is responsible for handling the backend side of transmitting data / requests for the RKGraphicsDevice
  Also it provides the namespace for some statics.
@@ -35,7 +26,7 @@ public:
 	static void kill ();
 	static bool connectionAlive ();
 	static RKGraphicsDeviceBackendTransmitter* instance ();
-	static RKAsyncDataStreamHelper<RKGraphicsDeviceTransmittionLengthType> streamer;
+	static RKAsyncDataStreamHelper<quint32> streamer;
 	static QIODevice* connection;
 	static QMutex mutex;
 private:

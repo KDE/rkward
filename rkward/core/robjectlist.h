@@ -1,19 +1,9 @@
-/***************************************************************************
-                          robjectlist  -  description
-                             -------------------
-    begin                : Wed Aug 18 2004
-    copyright            : (C) 2004-2019 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+robjectlist - This file is part of the RKWard project. Created: Wed Aug 18 2004
+SPDX-FileCopyrightText: 2004-2019 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 #ifndef ROBJECTLIST_H
 #define ROBJECTLIST_H
 
@@ -31,7 +21,7 @@ class RCommand;
 class RCommandChain;
 class RKEditor;
 class REnvironmentObject;
-class RKProgressControl;
+class RKInlineProgressControl;
 class RKOrphanNamespacesObject;
 
 /**
@@ -63,7 +53,7 @@ public:
 
 	/** detach the given list of packages (if the packages are loaded, and safe to remove)
 	@returns a list of error messages (usually empty) */
-	QStringList detachPackages (const QStringList &packages, RCommandChain *chain = 0, RKProgressControl *control = 0);
+	QStringList detachPackages (const QStringList &packages, RCommandChain *chain = 0, RKInlineProgressControl *control = 0);
 	/** A pseudo object containing as children all loaded namespaces which do not belong to a package on the search path */
 	RKOrphanNamespacesObject* orphanNamespacesObject () const { return orphan_namespaces; };
 	QString getObjectDescription () const override;
@@ -87,7 +77,7 @@ protected:
 	bool updateStructure (RData *new_data) override;
 	void rCommandDone (RCommand *command) override;
 	void updateEnvironments (const QStringList &env_names, bool force_globalenv_update);
-	void updateNamespaces (const QStringList namespace_names);
+	void updateNamespaces (const QStringList &namespace_names);
 private:
 	friend class RKLoadAgent;
 	friend class RKSaveAgent;

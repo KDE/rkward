@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkconsole  -  description
-                             -------------------
-    begin                : Thu Aug 19 2004
-    copyright            : (C) 2004-2020 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkconsole - This file is part of RKWard (https://rkward.kde.org). Created: Thu Aug 19 2004
+SPDX-FileCopyrightText: 2004-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 #include "rkconsole.h"
 
 #include <qfont.h>
@@ -51,7 +41,7 @@
 #include <KJobWidgets>
 #include <KJobUiDelegate>
 
-#include "rkglobals.h"
+
 #include "rkward.h"
 #include "windows/rkhelpsearchwindow.h"
 #include "windows/rkcodecompletion.h"
@@ -59,8 +49,9 @@
 #include "rbackend/rcommand.h"
 #include "settings/rksettings.h"
 #include "settings/rksettingsmoduleconsole.h"
-#include "settings/rksettingsmodulegeneral.h"
+#include "settings/rkrecenturls.h"
 #include "misc/rkcommonfunctions.h"
+#include "misc/rkcompatibility.h"
 #include "misc/rkstandardicons.h"
 #include "misc/rkstandardactions.h"
 #include "core/robjectlist.h"
@@ -106,11 +97,6 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 	view = doc->createView (this);
 	layout->addWidget (view);
 	view->setStatusBarEnabled (false);
-
-	KTextEditor::ConfigInterface *confint = qobject_cast<KTextEditor::ConfigInterface*> (view);
-	RK_ASSERT (view);
-	confint->setConfigValue ("dynamic-word-wrap", false);
-
 	setFocusProxy (view);
 	setFocusPolicy (Qt::StrongFocus);
 	
@@ -149,6 +135,12 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 	setMetaInfo (shortCaption (), QUrl ("rkward://page/rkward_console"), RKSettings::PageConsole);
 	initializeActivationSignals ();
 	initializeActions (getPart ()->actionCollection ());
+	KTextEditor::ConfigInterface *confint = qobject_cast<KTextEditor::ConfigInterface*> (view);
+	RK_ASSERT(confint);
+	QAction* action = RKSettingsModuleConsole::showMinimap()->makeAction(this, i18n("Scrollbar minimap"), [confint](bool val) { confint->setConfigValue("scrollbar-minimap", val); });
+	getPart()->actionCollection()->addAction("view_show_minimap", action);
+	action = RKSettingsModuleConsole::wordWrap()->makeAction(this, i18n("Dynamic word wrap"), [confint](bool val) { confint->setConfigValue("dynamic-word-wrap", val); });
+	getPart()->actionCollection()->addAction("view_dynamic_word_wrap", action);
 
 	nprefix = "> ";
 	iprefix = "+ ";
@@ -173,6 +165,7 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 RKConsole::~RKConsole () {
 	RK_TRACE (APP);
 
+	if (this == main_console) main_console = nullptr;
 	RKSettingsModuleConsole::saveCommandHistory (commands_history.getHistory ());
 }
 
@@ -198,7 +191,7 @@ QAction* RKConsole::addProxyAction (const QString& actionName, const QString& la
 		ret->setIcon (found->icon ());
 		ret->setIconText (found->iconText ());
 		ret->setToolTip (found->toolTip ());
-		ret->setStatusTip (found->statusTip ());
+		ret->setWhatsThis(found->statusTip ());
 		ret->setCheckable (found->isCheckable ());
 		ret->setChecked (found->isChecked ());
 		// TODO: ideally, we'd also relay enabledness, checked state, etc. That would probably require a separate class,
@@ -213,7 +206,7 @@ QAction* RKConsole::addProxyAction (const QString& actionName, const QString& la
 	}
 }
 
-void RKConsole::triggerEditAction (QString name) {
+void RKConsole::triggerEditAction (const QString &name) {
 	RK_TRACE (APP);
 
 	if (!kate_edit_actions) return;
@@ -419,7 +412,7 @@ bool RKConsole::eventFilter (QObject *o, QEvent *e) {
 			return true;
 		} else {
 			if (e->type () == QEvent::DragMove) {
-				// Not sure why this is needed, here, but without this, the move will remain permanently inacceptable,
+				// Not sure why this is needed, here, but without this, the move will remain permanently unacceptable,
 				// once it has been ignored, above, once. KF5 5.9.0
 				e->accept ();
 				// But also _not_ filtering it.
@@ -476,11 +469,11 @@ void RKConsole::submitCommand () {
 			last_line_end = 0;
 			RK_ASSERT (false);
 		}
-		command.append (input_buffer.left (last_line_end));
-		if (last_line_end < (input_buffer.size () - 1)) {
-			input_buffer = input_buffer.mid (last_line_end + 1);
+		command.append(input_buffer.leftRef(last_line_end));
+		if (last_line_end < (input_buffer.size() - 1)) {
+			input_buffer = input_buffer.mid(last_line_end + 1);
 		} else {
-			input_buffer.clear ();
+			input_buffer.clear();
 		}
 	} else {
 		RK_ASSERT (!command.endsWith ('\n'));
@@ -495,7 +488,7 @@ void RKConsole::submitCommand () {
 	doc->insertLine (doc->lines (), QString ());
 	if (!command.isEmpty ()) {
 		current_command = new RCommand (command, RCommand::User | RCommand::Console, QString (), this);
-		RKGlobals::rInterface ()->issueCommand (current_command);
+		RInterface::issueCommand (current_command);
 		interrupt_command_action->setEnabled (true);
 	} else {
 		showPrompt ();
@@ -541,10 +534,17 @@ void RKConsole::rCommandDone (RCommand *command) {
 	tryNextInBuffer ();
 }
 
-void RKConsole::newOutput (RCommand *, ROutput *output) {
+void RKConsole::newOutput (RCommand *command, ROutput *output) {
 	RK_TRACE (APP);
 
-	int start_line = doc->lines () -1;
+	int first_line = doc->lines () -1;
+	QString popped_line;
+	if (!command) {
+		// spontanteous R output, to be inserted _above_ the current command
+		// as a shortcut, we pop the last line, and reinsert in, later
+		popped_line = doc->line(doc->lines() - 1);
+		doc->removeLine(doc->lines() - 1);
+	}
 
 	// split by and handle carriage returns
 	const QString outstr = output->output;
@@ -567,11 +567,11 @@ void RKConsole::newOutput (RCommand *, ROutput *output) {
 	if (start_pos <= end_pos) doc->insertText (doc->documentEnd (), outstr.mid (start_pos, end_pos - start_pos + 1));
 
 	int end_line = doc->lines () -1;
-	if (output->type != ROutput::Output) {
+	if (output->type != ROutput::Output || (!command)) {
 		KTextEditor::MarkInterface *markiface = qobject_cast<KTextEditor::MarkInterface*> (doc);
 		RK_ASSERT (markiface);
-		for (int line = start_line; line < end_line; ++line) {
-			markiface->addMark (line, KTextEditor::MarkInterface::BreakpointActive);
+		for (int line = first_line; line < end_line; ++line) {
+			markiface->addMark (line, command ? KTextEditor::MarkInterface::BreakpointActive : KTextEditor::MarkInterface::BreakpointDisabled);
 		}
 	}
 
@@ -585,6 +585,11 @@ void RKConsole::newOutput (RCommand *, ROutput *output) {
 			view->setUpdatesEnabled (true);
 		}
 	}
+
+	if (!command) {
+		doc->insertLine(doc->lines(), popped_line);
+	}
+
 	cursorAtTheEnd ();
 }
 
@@ -613,8 +618,8 @@ void RKConsole::submitBatch (const QString &batch) {
 		QString line = currentEditingLine ();
 		int pos = currentCursorPositionInCommand ();
 		if (pos >= 0) {
-			setCurrentEditingLine (line.left (pos));
-			input_buffer.append (line.mid (pos));
+			setCurrentEditingLine(line.left(pos));
+			input_buffer.append(line.midRef(pos));
 		}
 	}
 	if (!current_command) tryNextInBuffer ();
@@ -686,9 +691,8 @@ void RKConsole::userLoadHistory (const QUrl &_url) {
 
 	QUrl url = _url;
 	if (url.isEmpty ()) {
-		url = QFileDialog::getOpenFileUrl (this, i18n ("Select command history file to load"), RKSettingsModuleGeneral::lastUsedUrlFor ("rscripts"), i18n ("R history files [*.Rhistory](*.Rhistory);;All files [*](*)"));
+		url = QFileDialog::getOpenFileUrl (this, i18n ("Select command history file to load"), RKRecentUrls::mostRecentUrl(RKRecentUrls::scriptsId()).adjusted(QUrl::RemoveFilename), i18n ("R history files [*.Rhistory](*.Rhistory);;All files [*](*)"));
 		if (url.isEmpty ()) return;
-		RKSettingsModuleGeneral::updateLastUsedUrl ("rscripts", url.adjusted (QUrl::RemoveFilename));
 	}
 
 	QTemporaryFile *tmpfile = 0;
@@ -709,7 +713,7 @@ void RKConsole::userLoadHistory (const QUrl &_url) {
 
 	QFile file (filename);
 	if (!file.open (QIODevice::Text | QIODevice::ReadOnly)) return;
-	setCommandHistory (QString (file.readAll ()).split ('\n', QString::SkipEmptyParts), false);
+	setCommandHistory (QString (file.readAll ()).split ('\n', RKCompatibility::SkipEmptyParts()), false);
 	file.close ();
 
 	delete (tmpfile);
@@ -744,12 +748,12 @@ QString RKConsole::cleanSelection (const QString &origin) {
 	ret.reserve (origin.length ());
 	QStringList lines = origin.split ('\n');
 	foreach (const QString& line, lines) {
-		if (line.startsWith (nprefix)) {
-			ret.append (line.mid (nprefix.length ()));
-		} else if (line.startsWith (iprefix)) {
-			ret.append (line.mid (iprefix.length ()));
+		if (line.startsWith(nprefix)) {
+			ret.append(line.midRef(nprefix.length()));
+		} else if (line.startsWith(iprefix)) {
+			ret.append(line.midRef(iprefix.length()));
 		} else {
-			ret.append (line);
+			ret.append(line);
 		}
 		ret.append ('\n');
 	}
@@ -797,7 +801,7 @@ void RKConsole::resetConsole () {
 
 	input_buffer.clear ();
 	if (current_command) {
-		RKGlobals::rInterface ()->cancelCommand (current_command);
+		RInterface::instance()->cancelCommand(current_command);
 	} else {
 		prefix = nprefix;
 		incomplete_command.clear ();
@@ -860,7 +864,6 @@ void RKConsole::initializeActions (KActionCollection *ac) {
 
 	addProxyAction ("file_print", i18n ("Print Console"));
 	addProxyAction ("file_export_html");
-	addProxyAction ("view_dynamic_word_wrap");
 	addProxyAction ("view_inc_font_sizes");
 	addProxyAction ("view_dec_font_sizes");
 
@@ -877,7 +880,7 @@ void RKConsole::pipeUserCommand (const QString &command) {
 		RKConsole::mainConsole ()->pipeCommandThroughConsoleLocal (command);
 	} else {
 		RCommand *cmd = new RCommand (command, RCommand::User);
-		RKGlobals::rInterface ()->issueCommand (cmd);
+		RInterface::issueCommand (cmd);
 	}
 }
 
@@ -894,7 +897,7 @@ void RKConsole::pipeCommandThroughConsoleLocal (const QString &command_string) {
 		}
 	}
 	if (RKSettingsModuleConsole::addPipedCommandsToHistory() != RKSettingsModuleConsole::DontAdd) {
-		QStringList lines = command_string.split ('\n', QString::SkipEmptyParts);
+		QStringList lines = command_string.split ('\n', RKCompatibility::SkipEmptyParts());
 		if ((RKSettingsModuleConsole::addPipedCommandsToHistory() == RKSettingsModuleConsole::AlwaysAdd) || (lines.count () == 1)) {
 			for (int i = 0; i < lines.count (); ++i) {
 				commands_history.append (lines[i]);
@@ -904,6 +907,12 @@ void RKConsole::pipeCommandThroughConsoleLocal (const QString &command_string) {
 	cursorAtTheEnd ();
 	submitBatch (command_string + '\n');
 	previous_chunk_was_piped = true;
+}
+
+void RKConsole::insertSpontaneousROutput(ROutput* output) {
+	RK_TRACE (APP);
+	RK_ASSERT(!current_command);
+	newOutput(nullptr, output);
 }
 
 void RKConsole::contextMenuEvent (QContextMenuEvent * event) {

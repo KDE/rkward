@@ -1,46 +1,41 @@
-/***************************************************************************
-                          rkspecialactions  -  description
-                             -------------------
-    begin                : Mon Mar 15 2010
-    copyright            : (C) 2010 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkspecialactions - This file is part of RKWard (https://rkward.kde.org). Created: Mon Mar 15 2010
+SPDX-FileCopyrightText: 2010-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkspecialactions.h"
 
 #include <KLocalizedString>
+#include <KMessageBox>
+
+#include "../rkward.h"
 
 #include "../debug.h"
 
-RKPasteSpecialAction::RKPasteSpecialAction (QObject* parent) : KPasteTextAction (parent) {
-	RK_TRACE (MISC);
+RKPasteSpecialAction::RKPasteSpecialAction(QObject* parent) : QAction(parent) {
+	RK_TRACE(MISC);
 
-	setText (i18n ("Paste special..."));
-	connect (this, &QAction::triggered, this, &RKPasteSpecialAction::doSpecialPaste);
+	setText(i18n("Paste special..."));
+	connect(this, &QAction::triggered, this, &RKPasteSpecialAction::doSpecialPaste);
 }
 
-RKPasteSpecialAction::~RKPasteSpecialAction () {
-	RK_TRACE (MISC);
+RKPasteSpecialAction::~RKPasteSpecialAction() {
+	RK_TRACE(MISC);
 }
 
-void RKPasteSpecialAction::doSpecialPaste () {
-	RK_TRACE (MISC);
+void RKPasteSpecialAction::doSpecialPaste() {
+	RK_TRACE(MISC);
 
-	RKPasteSpecialDialog* dialog = new RKPasteSpecialDialog (associatedWidgets ().first ());
-	int res = dialog->exec ();
+	QWidget *pwin = nullptr;
+	if (!associatedWidgets().isEmpty()) pwin = associatedWidgets().at(0);
+	RKPasteSpecialDialog* dialog = new RKPasteSpecialDialog(pwin);
+	int res = dialog->exec();
 	if (res == QDialog::Accepted) {
-		emit (pasteText (dialog->resultingText()));
+		emit pasteText(dialog->resultingText());
 	}
-	dialog->deleteLater ();
+	dialog->deleteLater();
 }
 
 #include <QCheckBox>
@@ -58,13 +53,22 @@ void RKPasteSpecialAction::doSpecialPaste () {
 
 #include "../dataeditor/rktextmatrix.h"
 #include "../core/robject.h"
+#include "rksaveobjectchooser.h"
+#include "../rbackend/rkrinterface.h"
+#include "../misc/rkprogresscontrol.h"
+#include "../misc/rkcompatibility.h"
 
-RKPasteSpecialDialog::RKPasteSpecialDialog (QWidget* parent) : QDialog (parent) {
+RKPasteSpecialDialog::RKPasteSpecialDialog(QWidget* parent, bool standalone) : QDialog(parent) {
 	RK_TRACE (MISC);
 
 	setWindowTitle (i18n ("Paste Special..."));
 
 	QVBoxLayout *pagelayout = new QVBoxLayout (this);
+	objectname = standalone ? new RKSaveObjectChooser(this, QStringLiteral("pasted.data")) : nullptr;
+	if (objectname) {
+		connect(objectname, &RKSaveObjectChooser::changed, this, &RKPasteSpecialDialog::updateState);
+		pagelayout->addWidget(objectname);
+	}
 	QHBoxLayout *rowlayout = new QHBoxLayout ();
 	pagelayout->addLayout (rowlayout);
 
@@ -85,9 +89,12 @@ RKPasteSpecialDialog::RKPasteSpecialDialog (QWidget* parent) : QDialog (parent) 
 	group_layout->addWidget (rbutton);
 	rbutton = new QRadioButton (i18n ("Matrix"), box);
 	dimensionality_group->addButton (rbutton, DimMatrix);
+	group_layout->addWidget (rbutton);
+	rbutton = new QRadioButton (i18n ("data.frame"), box);
+	dimensionality_group->addButton (rbutton, DimDataFrame);
 	rbutton->setChecked (true);
 	group_layout->addWidget (rbutton);
-	connect (dimensionality_group, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &RKPasteSpecialDialog::updateState);
+	connect (dimensionality_group, RKCompatibility::groupButtonClicked(), this, &RKPasteSpecialDialog::updateState);
 	rowlayout->addWidget (box);
 
 	const QMimeData* clipdata = QApplication::clipboard ()->mimeData ();
@@ -117,7 +124,7 @@ RKPasteSpecialDialog::RKPasteSpecialDialog (QWidget* parent) : QDialog (parent) 
 	separator_freefield = new QLineEdit (";", box);
 	h_layout->addWidget (separator_freefield);
 	group_layout->addLayout (h_layout);
-	connect (separator_group, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &RKPasteSpecialDialog::updateState);
+	connect (separator_group, RKCompatibility::groupButtonClicked(), this, &RKPasteSpecialDialog::updateState);
 	rowlayout->addWidget (box);
 
 	rowlayout = new QHBoxLayout;
@@ -137,8 +144,17 @@ RKPasteSpecialDialog::RKPasteSpecialDialog (QWidget* parent) : QDialog (parent) 
 	rbutton = new QRadioButton (i18n ("Quote all values"), box);
 	quoting_group->addButton (rbutton, QuoteAll);
 	group_layout->addWidget (rbutton);
-	connect (quoting_group, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &RKPasteSpecialDialog::updateState);
+	connect (quoting_group, RKCompatibility::groupButtonClicked(), this, &RKPasteSpecialDialog::updateState);
 	rowlayout->addWidget (box);
+
+	// Labels
+	box = new QGroupBox(i18n("Labels"), this);
+	group_layout = new QVBoxLayout (box);
+	names_box = new QCheckBox(i18n("First row contains labels"), box);
+	group_layout->addWidget(names_box);
+	rownames_box = new QCheckBox(i18n("First column contains labels"), box);
+	group_layout->addWidget(rownames_box);
+	rowlayout->addWidget(box);
 
 	// further controls
 	box = new QGroupBox (i18n ("Transformations"), this);
@@ -155,8 +171,9 @@ RKPasteSpecialDialog::RKPasteSpecialDialog (QWidget* parent) : QDialog (parent) 
 	rowlayout->addWidget (box);
 
 	QDialogButtonBox *buttons = new QDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
-	connect (buttons->button (QDialogButtonBox::Ok), &QPushButton::clicked, this, &QDialog::accept);
-	connect (buttons->button (QDialogButtonBox::Cancel), &QPushButton::clicked, this, &QDialog::reject);
+	ok_button = buttons->button(QDialogButtonBox::Ok);
+	connect(ok_button, &QPushButton::clicked, this, &QDialog::accept);
+	connect(buttons->button (QDialogButtonBox::Cancel), &QPushButton::clicked, this, &QDialog::reject);
 	pagelayout->addWidget (buttons);
 
 	updateState ();		// initialize
@@ -173,11 +190,14 @@ void RKPasteSpecialDialog::updateState () {
 	
 	static_cast<QWidget*> (separator_group->parent ())->setEnabled (dimensionality != DimSingleString);
 	reverse_h_box->setEnabled (dimensionality != DimSingleString);
-	reverse_v_box->setEnabled (dimensionality == DimMatrix);
+	reverse_v_box->setEnabled (dimensionality >= DimMatrix);
 	insert_nas_box->setEnabled (dimensionality != DimSingleString);
-	transpose_box->setEnabled (dimensionality == DimMatrix);
+	transpose_box->setEnabled(dimensionality >= DimMatrix);
+	names_box->setEnabled(dimensionality == DimDataFrame);
+	rownames_box->setEnabled(dimensionality == DimDataFrame);
 
 	separator_freefield->setEnabled ((dimensionality != DimSingleString) && (separator_group->checkedId () == SepCustom));
+	ok_button->setEnabled((objectname == nullptr) || objectname->isOk());
 }
 
 QString RKPasteSpecialDialog::resultingText () {
@@ -186,8 +206,11 @@ QString RKPasteSpecialDialog::resultingText () {
 	const int sep = separator_group->checkedId ();		// for easier typing
 	const int dim = dimensionality_group->checkedId ();
 	const bool reverse_h = reverse_h_box->isChecked () && (dim != DimSingleString);
-	const bool reverse_v = reverse_v_box->isChecked () && (dim == DimMatrix);
-	const bool transpose = transpose_box->isChecked () && (dim == DimMatrix);
+	const bool reverse_v = reverse_v_box->isChecked () && (dim >= DimMatrix);
+	const bool transpose = transpose_box->isChecked () && (dim >= DimMatrix);
+	const bool names = names_box->isChecked() && (dim == DimDataFrame);
+	const bool rownames = rownames_box->isChecked() && (dim == DimDataFrame);
+	Quoting quot = (Quoting) quoting_group->checkedId();
 
 	QString clip;
 
@@ -200,7 +223,7 @@ QString RKPasteSpecialDialog::resultingText () {
 		clip = data->text ();
 	}
 
-	if (dim == DimSingleString) return prepString (clip);
+	if (dim == DimSingleString) return prepString(clip, quot);
 
 	QRegExp fieldsep;
 	if (sep == SepCustom) fieldsep.setPattern (separator_freefield->text ());
@@ -223,30 +246,47 @@ QString RKPasteSpecialDialog::resultingText () {
 	if (reverse_h || reverse_v || transpose) matrix = matrix.transformed (reverse_h, reverse_v, transpose);
 
 	QString ret;
-	if (dim == DimMatrix) ret.append ("cbind (\n");
-	else ret.append ("c (");	// DimVector
+	if (dim == DimDataFrame) ret.append("data.frame(");
+	if (dim >= DimMatrix) ret.append ("cbind(\n");
+	else ret.append ("c(");	// DimVector
 
-	for (int i = 0; i < matrix.numColumns (); ++i) {
-		if (dim == DimMatrix) {
-			if (i != 0) ret.append ("),\n");
-			ret.append ("c(");
+	int startcol = rownames ? 1 : 0;
+	int startrow = names ? 1 : 0;
+	for (int i = startcol; i < matrix.numColumns (); ++i) {
+		if (dim >= DimMatrix) {
+			if (i != startcol) ret.append ("),\n");
+			if (names) {
+				ret.append(prepString(matrix.getText(0, i), QuoteAll) + "=c(");
+			} else {
+				ret.append("c(");
+			}
 		} else if (i != 0) ret.append (",");
 
-		for (int j = 0; j < matrix.numRows (); ++j) {
-			if (j != 0) ret.append (",");
-			ret.append (prepString (matrix.getText (j, i)));
+		for (int j = startrow; j < matrix.numRows (); ++j) {
+			if (j != startrow) ret.append (",");
+			ret.append(prepString(matrix.getText(j, i), quot));
 		}
 	}
 	ret.append (")\n");
-	if (dim == DimMatrix) ret.append (")\n");
+	if (dim == DimDataFrame) {
+		ret.append(')');
+		if (rownames) {
+			ret.append(", rownames=c(\n");
+			for (int row = startrow; row < matrix.numRows(); ++row) {
+				if (row != startrow) ret.append (",");
+				ret.append(prepString(matrix.getText(row, 0), QuoteAll));
+			}
+			ret.append(")\n");
+		}
+	}
+	if (dim >= DimMatrix) ret.append (")\n");
 
 	return (ret);
 }
 
-QString RKPasteSpecialDialog::prepString (const QString& src) const {
+QString RKPasteSpecialDialog::prepString(const QString& src, const Quoting quot) const {
 //	RK_TRACE (MISC);
 
-	const int quot = quoting_group->checkedId ();
 	if (quot == QuoteAll) return (RObject::rQuote (src));
 	if (src.isEmpty() && insert_nas_box->isChecked ()) return ("NA");
 	if (quot == QuoteNone) return (src);
@@ -258,3 +298,18 @@ QString RKPasteSpecialDialog::prepString (const QString& src) const {
 	return src;
 }
 
+void RKPasteSpecialDialog::accept() {
+	RK_TRACE(MISC);
+	if (objectname) {
+		RCommand *command = new RCommand(objectname->currentFullName() + " <- " + resultingText(), RCommand::App | RCommand::ObjectListUpdate);
+		connect(command->notifier(), &RCommandNotifier::commandFinished, [](RCommand *c) {
+			if (c->failed()) {
+				QString msg = c->fullOutput();
+				if (msg.isEmpty()) msg = i18n("Command failed to parse. Try using <i>Edit->Paste special...</i> in the R Console window for better diagnostics.");
+				KMessageBox::detailedError(RKWardMainWindow::getMain(), i18n("Pasting object from clipboard data failed."), msg, i18n("Paste failed"));
+			}
+		});
+		RInterface::issueCommand(command);
+	}
+	QDialog::accept();
+}

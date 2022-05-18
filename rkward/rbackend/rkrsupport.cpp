@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkrsupport  -  description
-                             -------------------
-    begin                : Mon Oct 25 2010
-    copyright            : (C) 2010-2018 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkrsupport - This file is part of RKWard (https://rkward.kde.org). Created: Mon Oct 25 2010
+SPDX-FileCopyrightText: 2010-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkrsupport.h"
 
@@ -129,6 +119,37 @@ QStringList RKRSupport::SEXPToStringList (SEXP from_exp) {
 
 SEXP RKRSupport::StringListToSEXP (const QStringList& list) {
 	RK_TRACE (RBACKEND);
+
+	SEXP ret = Rf_allocVector (STRSXP, list.size ());
+	for (int i = 0; i < list.size (); ++i) {
+#if R_VERSION >= R_Version(2,13,0)
+		SET_STRING_ELT (ret, i, Rf_mkCharCE (list[i].toUtf8 (), CE_UTF8));
+#else
+		// TODO Rf_mkCharCE _might_ have been introduced earlier. Check if still an ongoing concern.
+		SET_STRING_ELT (ret, i, Rf_mkChar (RKRBackend::fromUtf8 (list[i]).data ()));
+#endif
+	}
+	return ret;
+}
+
+SEXP RKRSupport::QVariantToSEXP(const QVariant& var) {
+	RK_TRACE (RBACKEND);
+
+	if (var.isNull()) return R_NilValue;
+
+	QMetaType::Type t = (QMetaType::Type) var.type();
+	if (t == QMetaType::Bool) {
+		SEXP ret = Rf_allocVector(LGLSXP, 1);
+		LOGICAL(ret)[0] = var.toBool();
+		return ret;
+	} else if (t == QMetaType::Int) {
+		SEXP ret = Rf_allocVector(INTSXP, 1);
+		INTEGER(ret)[0] = var.toInt();
+		return ret;
+	} else if (t != QMetaType::QString && t != QMetaType::QStringList) {
+		Rf_warning("unsupported QVariant type in QVariantToSEXP");
+	}
+	QStringList list = var.toStringList();
 
 	SEXP ret = Rf_allocVector (STRSXP, list.size ());
 	for (int i = 0; i < list.size (); ++i) {

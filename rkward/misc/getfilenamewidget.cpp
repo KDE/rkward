@@ -1,19 +1,9 @@
-/***************************************************************************
-                          getfilenamewidget  -  description
-                             -------------------
-    begin                : Tue Aug 24 2004
-    copyright            : (C) 2004, 2007, 2009, 2010, 2012, 2015 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+getfilenamewidget - This file is part of RKWard (https://rkward.kde.org). Created: Tue Aug 24 2004
+SPDX-FileCopyrightText: 2004-2015 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 #include "getfilenamewidget.h"
 
 #include <qlabel.h>
@@ -24,7 +14,7 @@
 #include <kurlrequester.h>
 #include <KLineEdit>
 
-#include "../settings/rksettingsmodulegeneral.h"
+#include "../settings/rkrecenturls.h"
 
 #include "../debug.h"
 
@@ -66,7 +56,7 @@ GetFileNameWidget::GetFileNameWidget (QWidget *parent, FileType mode, bool only_
 		storage_key = initial.section ('>', 0, 0).mid (1);
 		append = initial.section ('>', 1);
 	}
-	QUrl initial_url = RKSettingsModuleGeneral::lastUsedUrlFor (storage_key);  // storage_key == QString () in the default case is intended
+	QUrl initial_url = RKRecentUrls::mostRecentUrl(storage_key).adjusted(QUrl::RemoveFilename);  // storage_key == QString () in the default case is intended
 	if (!append.isEmpty ()) {
 		if (initial_url.isLocalFile ()) {
 			initial_url = QUrl::fromUserInput (append, initial_url.toLocalFile (), QUrl::AssumeLocalFile);
@@ -102,8 +92,7 @@ void GetFileNameWidget::updateLastUsedUrl (const QUrl& url) {
 	RK_TRACE (MISC);
 
 	if (!url.isValid ()) return;
-	if (edit->mode () & KFile::Directory) RKSettingsModuleGeneral::updateLastUsedUrl (storage_key, url);
-	else RKSettingsModuleGeneral::updateLastUsedUrl (storage_key, url.adjusted (QUrl::RemoveFilename));
+	RKRecentUrls::addRecentUrl(storage_key, url);
 }
 
 void GetFileNameWidget::setLocation (const QString &new_location) {
@@ -129,7 +118,7 @@ void GetFileNameWidget::hackOverrideDirDialog () {
 
 void GetFileNameWidget::locationEditChanged (const QString &) {
 	RK_TRACE (MISC);
-	emit (locationChanged ());
+	emit locationChanged();
 }
 
 QString GetFileNameWidget::getLocation () {
@@ -137,11 +126,7 @@ QString GetFileNameWidget::getLocation () {
 	return (edit->url ().url ());
 }
 
-void GetFileNameWidget::setBackgroundColor (const QColor & color) {
+void GetFileNameWidget::setStyleSheet (const QString & style) {
 	RK_TRACE (MISC);
-
-	QPalette palette = edit->lineEdit ()->palette ();
-	palette.setColor (edit->lineEdit ()->backgroundRole (), color);
-	edit->lineEdit ()->setPalette (palette);
+	edit->setStyleSheet(style);
 }
-

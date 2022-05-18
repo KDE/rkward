@@ -1,7 +1,8 @@
 #!/bin/bash
 
 ## begin: These may need adjusting!
-TARGETS="xenial artful bionic"
+## sse http://www.releases.ubuntu.com/ for the up-to-date list
+TARGETS="jammy impish focal bionic"
 AUTHOR="Thomas Friedrichsmeier <tfry@users.sourceforge.net>"
 ## end: These may need adjusting!
 
@@ -10,16 +11,23 @@ BASEDIR=`pwd`
 PPATEMPDIR=$BASEDIR/ppatemp
 mkdir $PPATEMPDIR
 
+if [ ! -d "$BASEDIR/debian" ]; then
+	git clone https://invent.kde.org/tfry/rkward-ppa-support.git debian
+else
+	cd debian
+	git pull
+	cd ..
+fi
+
 if [ "${1}" == "--stable" ]; then
 	shift
 	PPAIDS="rkward-stable rkward-stable-cran rkward-stable-backports-cran"
-	PPAVERSIONSTRING=".1rkward.stable"
-	VERSION=`${BASEDIR}/scripts/getversion.sh ${2}`
+	PPAVERSIONSTRING=".2rkward.stable"
 else
 	PPAIDS="rkward-devel rkward-devel-cran"
 	PPAVERSIONSTRING=".0rkward.devel"
-	VERSION=`${BASEDIR}/scripts/getversion.sh ${1}`
 fi
+VERSION=`${BASEDIR}/scripts/getversion.sh ${1}`
 
 if [ ! -f "${BASEDIR}/rkward-$VERSION.tar.gz" ]; then
   echo "${BASEDIR}/rkward-$VERSION.tar.gz not found. Run makedist.sh, first."
@@ -54,7 +62,7 @@ function doSourceUpload {
 
 	# build source package
 	cd $PPASOURCEDIR
-	dpkg-buildpackage -S -sa
+	dpkg-buildpackage -S -sa -i -I
 
 	# upload
 	cd $PPATEMPDIR

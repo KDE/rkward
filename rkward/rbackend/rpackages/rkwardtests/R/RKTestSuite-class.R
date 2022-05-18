@@ -1,16 +1,13 @@
-## temporarily turned off most of the roxygen comments
-## class docs will remain static until roxygen2 supports "@slot"
-
 #' S4 Class RKTestSuite
 #'
+#' @description
 #' This class is used to create test suite objects that can be fed to \code{\link[rkwardtests:rktest.makeplugintests]{rktest.makeplugintests}}.
 #'
-#' @noRd
-# @slot id A unique character string to identify a test suite
-# @slot libraries A charcter vector naming libraries that the test suite depends on.
-# @slot initCalls A list of functions to be run before any tests, e.g. to load libraries or data objects.
-# @slot tests A list of the actual plugin tests.
-# @slot postCalls  A list of functions to be run after all tests, e.g. to clean up.
+#' @slot id A unique character string to identify a test suite
+#' @slot libraries A charcter vector naming libraries that the test suite depends on.
+#' @slot initCalls A list of functions to be run before any tests, e.g. to load libraries or data objects.
+#' @slot tests A list of the actual plugin tests.
+#' @slot postCalls  A list of functions to be run after all tests, e.g. to clean up.
 #' @name RKTestSuite
 #' @import methods
 #' @keywords classes

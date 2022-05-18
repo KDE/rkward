@@ -1,36 +1,35 @@
 <!DOCTYPE rkhelp>
-<document>
+<document pageid="rkward_welcome">
 	<title>Welcome to RKWard</title>
 
-	<summary>
-	This help page gives a rough overview of the most important parts of RKWard.
+	<section title="My recent script files" id="recent-scripts" special="recentfiles" category="rscripts" />
 
-	By default, this page is shown each time RKWard is started. You can disable or re-enable this behavior under Settings->Configure RKWard->General.
-	</summary>
+	<section title="My recent workspaces" id="recent-workspaces" special="recentfiles" category="workspaces" />
 
-	<section title="Introduction to RKWard" id="introduction">
-	RKWard is a GUI frontend and IDE to <link href="http://www.r-project.org">R</link>, a powerful scripting language for statistical computing. It aims to provide useful features both to experienced users of R, wishing to exploit R's scripting capabilities, as well as to users new to R, looking for an easy way to carry out statistical computation tasks.
+	<section title="My recent output files" id="recent-output" special="recentfiles" category="rkoutput" />
+
+	<section title="Import or enter data" id="import-create">
+		<ul>
+	<li><link href="rkward://actions/new_data_frame">Enter new data</link></li>
+	<li><link href="rkward://actions/import_assistant">Import data</link></li>
+		</ul>
 	</section>
 
-	<section title="Getting Started" id="getting_started">
-	Due to the large differences in prior knowledge of R, we provide two different guides for getting started with RKWard. The first is aimed at users with some knowledge of the R language, and focuses on introducing the IDE features of RKWard: <link href="rkward://page/rkward_for_r_users" />.
-
-	The second gives a more hands on introduction to getting started with RKWard, but does not go quite as deep. If you have never used R or RKWard before, you should start with this guide, then later read the above page link: <link href="rkward://page/rkward_for_new_users" />.
+	<section title="Useful settings" id="settings">
+		<ul>
+	<li><link href="rkward://actions/rpackage_install">Install R and RKWard packages</link></li>
+	<li><link href="rkward://settings/addons">Further add-on related settings</link></li>
+	<li>&lrm;<link href="rkward://settings/general">Startup options</link> (including this page)&lrm;</li>
+		</ul>
 	</section>
 
-	<section title="Trouble Shooting" id="Trouble Shooting">
-	If you encounter problems please feel free to search in <link href="rkward://page/rkward_trouble_shooting">Trouble Shooting</link> first.
-	</section>
-
-	<section title="Missing something?" id="missing_something">
-	Are you missing a particular GUI dialog in the current menu? A growing number of plugins is available for separate download as R packages. See what's available for installation at Settings-&gt;Manage R packages and plugins. In the R package installation section, you can select to show packages providing graphics dialogs for RKWard.
-	</section>
-
-	<section title="Still missing something?" id="writing_plugins">
-	Check out the <link href="help:/rkwardplugins/index.html">Introduction to Writing Plugins for RKWard</link> (<link href="http://api.kde.org/doc/rkwardplugins/">most recent version online</link>) to learn how easy it is to enhance RKWard with your custom dialogs. And if you like, how to share your work with the community of RKWard users. See the <link href="rkward://rhelp/rkward-package">rkward package overview</link> for RKWard specific function for development and scripting. As another way of contributing, consider supporting the development of RKWard with money. One easy way to give a small amount is <a href="http://flattr.com/thing/1092073/RKWard">donating via <i>Flattr</i></a>.
-	</section>
-
-	<section title="General Information" id="further_info">
-	For more general information on RKWard, who writes it, how to help, further questions, etc. refer to <link href="http://rkward.kde.org/">the project homepage</link>.
+	<section title="Documentation starting points" id="documentation">
+		<ul>
+	<li><link href="rkward://page/rkward_for_new_users" /></li>
+	<li><link href="rkward://page/rkward_for_r_users" /></li>
+	<li><link href="rkward://page/rkward_addons" /></li>
+	<li><link href="rkward://page/rkward_trouble_shooting" /></li>
+	<li>External links: <link href="https://rkward.kde.org/">project homepage</link></li>
+		</ul>
 	</section>
 </document>

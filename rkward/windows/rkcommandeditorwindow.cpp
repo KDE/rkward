@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkcommandeditorwindow  -  description
-                             -------------------
-    begin                : Mon Aug 30 2004
-    copyright            : (C) 2004-2020 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkcommandeditorwindow - This file is part of RKWard (https://rkward.kde.org). Created: Mon Aug 30 2004
+SPDX-FileCopyrightText: 2004-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 #include "rkcommandeditorwindow.h"
 
 #include <kxmlguifactory.h>
@@ -60,8 +50,8 @@
 #include "../rbackend/rkrinterface.h"
 #include "../settings/rksettings.h"
 #include "../settings/rksettingsmodulecommandeditor.h"
+#include "../settings/rkrecenturls.h"
 #include "../rkconsole.h"
-#include "../rkglobals.h"
 #include "../rkward.h"
 #include "rkhelpsearchwindow.h"
 #include "rkhtmlwindow.h"
@@ -101,7 +91,7 @@ KTextEditor::Document* createDocument(bool with_signals) {
 	return ret;
 }
 
-RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, const QString& encoding, int flags) : RKMDIWindow (parent, RKMDIWindow::CommandEditorWindow) {
+RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl &_url, const QString& encoding, int flags) : RKMDIWindow (parent, RKMDIWindow::CommandEditorWindow) {
 	RK_TRACE (COMMANDEDITOR);
 
 	QString id_header = QStringLiteral ("unnamedscript://");
@@ -113,6 +103,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 	m_doc = 0;
 	preview_dir = 0;
 	visible_to_kateplugins = flags & RKCommandEditorFlags::VisibleToKTextEditorPlugins;
+	if (visible_to_kateplugins) addUiBuddy(RKWardMainWindow::getMain()->katePluginIntegration()->mainWindow()->dynamicGuiClient());
 	bool use_r_highlighting = (flags & RKCommandEditorFlags::ForceRHighlighting) || (url.isEmpty() && (flags & RKCommandEditorFlags::DefaultToRHighlighting)) || RKSettingsModuleCommandEditor::matchesScriptFileFilter (url.fileName ());
 
 	// Lookup of existing text editor documents: First, if no url is given at all, create a new document, and register an id, in case this window will get split, later
@@ -200,7 +191,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 	}
 	preview = new RKXMLGUIPreviewArea (QString(), this);
 	preview_manager = new RKPreviewManager (this);
-	connect (preview_manager, &RKPreviewManager::statusChanged, [this]() { preview_timer.start (500); });
+	connect (preview_manager, &RKPreviewManager::statusChanged, this, [this]() { preview_timer.start (500); });
 	m_view = m_doc->createView (this);
 	RKWorkplace::mainWorkplace()->registerNamedWindow (preview_manager->previewId(), this, preview);
 	if (!url.isEmpty ()) {
@@ -224,20 +215,22 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 	QList<KActionCollection*> own_acs;
 	own_acs.append(part->actionCollection());
 	own_acs.append(standardActionCollection());
-	auto own_actions = part->actionCollection()->actions();
 	// How's this for a nested for loop...
 	for (const auto ac : own_acs) {
-		auto own_actions = ac->actions();
-		for (const auto a : own_actions) {
-			for (const auto k : ac->defaultShortcuts(a)) {
-				for (const auto kac : kate_acs) {
-					for (auto ka : kac->actions()) {
-						auto action_shortcuts = kac->defaultShortcuts(ka);
-						for (const auto kk : action_shortcuts) {
-							if (k.matches(kk) != QKeySequence::NoMatch || kk.matches(k) != QKeySequence::NoMatch) {
-								RK_DEBUG(EDITOR, DL_WARNING, "Removing conflicting shortcut %s in kate part (%s, conflicting with %s)", qPrintable(kk.toString()), qPrintable(ka->objectName()), qPrintable(a->objectName()));
-								action_shortcuts.removeAll(k);
-								kac->setDefaultShortcuts(ka, action_shortcuts);
+		const auto own_actions = ac->actions();
+		for (const auto own_action : own_actions) {
+			const auto own_scs = ac->defaultShortcuts(own_action);
+			for (const auto &own_sc : own_scs) {
+				for (const auto kate_ac : qAsConst(kate_acs)) {
+					const auto kate_actions = kate_ac->actions();
+					for (auto kate_action : kate_actions) {
+						auto action_shortcuts = kate_ac->defaultShortcuts(kate_action);
+						for (int pos = 0; pos < action_shortcuts.size(); ++pos) {
+							const auto &kate_sc = action_shortcuts[pos];
+							if (own_sc.matches(kate_sc) != QKeySequence::NoMatch || kate_sc.matches(own_sc) != QKeySequence::NoMatch) {
+								RK_DEBUG(EDITOR, DL_WARNING, "Removing conflicting shortcut %s in kate part (%s, conflicting with %s)", qPrintable(kate_sc.toString()), qPrintable(kate_action->objectName()), qPrintable(own_action->objectName()));
+								action_shortcuts.removeAt(pos);
+								kate_ac->setDefaultShortcuts(kate_action, action_shortcuts);
 								break;
 							}
 						}
@@ -259,8 +252,8 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 	connect (m_doc, &KTextEditor::Document::documentSavedOrUploaded, this, &RKCommandEditorWindow::documentSaved);
 	layout->addWidget(preview_splitter);
 
-	setGlobalContextProperty ("current_filename", m_doc->url ().url ());
-	connect (m_doc, &KTextEditor::Document::documentUrlChanged, [this]() { updateCaption(); setGlobalContextProperty ("current_filename", m_doc->url ().url ()); });
+	setGlobalContextProperty("current_filename", m_doc->url().url());
+	connect (m_doc, &KTextEditor::Document::documentUrlChanged, this, &RKCommandEditorWindow::urlChanged);
 	connect (m_doc, &KTextEditor::Document::modifiedChanged, this, &RKCommandEditorWindow::updateCaption);                // of course most of the time this causes a redundant call to updateCaption. Not if a modification is undone, however.
 #ifdef __GNUC__
 #warning remove this in favor of KTextEditor::Document::restore()
@@ -288,7 +281,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl _url, 
 	connect (&autosave_timer, &QTimer::timeout, this, &RKCommandEditorWindow::doAutoSave);
 	connect (&preview_timer, &QTimer::timeout, this, &RKCommandEditorWindow::doRenderPreview);
 
-	updateCaption ();	// initialize
+	urlChanged();	// initialize
 }
 
 RKCommandEditorWindow::~RKCommandEditorWindow () {
@@ -305,6 +298,7 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 
 	discardPreview ();
 	delete m_view;
+	m_doc->waitSaveComplete ();
 	QList<KTextEditor::View*> views = m_doc->views ();
 	if (views.isEmpty ()) {
 		if (visible_to_kateplugins) {
@@ -329,7 +323,7 @@ void RKCommandEditorWindow::fixupPartGUI () {
 	RK_TRACE (COMMANDEDITOR);
 
 	// strip down the katepart's GUI. remove some stuff we definitely don't need.
-	RKCommonFunctions::removeContainers (m_view, QString ("bookmarks,tools_spelling,tools_spelling_from_cursor,tools_spelling_selection,switch_to_cmd_line").split (','), true);
+	RKCommonFunctions::removeContainers (m_view, QString ("bookmarks,tools_spelling,tools_spelling_from_cursor,tools_spelling_selection,switch_to_cmd_line,set_confdlg").split (','), true);
 	RKCommonFunctions::moveContainer (m_view, "Menu", "tools", "edit", true);
 }
 
@@ -376,7 +370,7 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 
 	action_setwd_to_script = ac->addAction ("setwd_to_script", this, SLOT (setWDToScript()));
 	action_setwd_to_script->setText (i18n ("CD to script directory"));
-	action_setwd_to_script->setStatusTip (i18n ("Change the working directory to the directory of this script"));
+	action_setwd_to_script->setWhatsThis(i18n ("Change the working directory to the directory of this script"));
 	action_setwd_to_script->setToolTip (action_setwd_to_script->statusTip ());
 	action_setwd_to_script->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionCDToScript));
 
@@ -396,7 +390,7 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	preview_actions[OutputWindow]->setToolTip (i18n ("Preview any output to the RKWard Output Window. This preview will be empty, if there is no call to <i>rk.print()</i> or other RKWard output commands."));
 	for (int i = 0; i < preview_actions.size (); ++i) {
 		preview_actions[i]->setCheckable (true);
-		preview_actions[i]->setStatusTip (preview_actions[i]->toolTip ());
+		preview_actions[i]->setWhatsThis(preview_actions[i]->toolTip ());
 	}
 	action_no_preview->setChecked (true);
 	connect (preview, &RKXMLGUIPreviewArea::previewClosed, this, &RKCommandEditorWindow::discardPreview);
@@ -410,10 +404,10 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	actionmenu_preview->addAction (action_preview_as_you_type);
 	ac->addAction ("render_preview", actionmenu_preview);
 
-	file_save = findAction (m_view, "file_save");
-	if (file_save) file_save->setText (i18n ("Save Script..."));
-	file_save_as = findAction (m_view, "file_save_as");
-	if (file_save_as) file_save_as->setText (i18n ("Save Script As..."));
+	file_save_action = findAction (m_view, "file_save");
+	if (file_save_action) file_save_action->setText (i18n ("Save Script..."));
+	file_save_as_action = findAction (m_view, "file_save_as");
+	if (file_save_as_action) file_save_as_action->setText (i18n ("Save Script As..."));
 }
 
 void RKCommandEditorWindow::initBlocks () {
@@ -572,7 +566,7 @@ void RKCommandEditorWindow::discardPreview () {
 	if (preview_dir) {
 		preview->wrapperWidget ()->hide ();
 		preview_manager->setPreviewDisabled ();
-		RKGlobals::rInterface ()->issueCommand (QString (".rk.killPreviewDevice(%1)\nrk.discard.preview.data (%1)").arg (RObject::rQuote(preview_manager->previewId ())), RCommand::App | RCommand::Sync);
+		RInterface::issueCommand (QString (".rk.killPreviewDevice(%1)\nrk.discard.preview.data (%1)").arg (RObject::rQuote(preview_manager->previewId ())), RCommand::App | RCommand::Sync);
 		delete preview_dir;
 		preview_dir = 0;
 		delete preview_input_file;
@@ -689,7 +683,12 @@ QUrl RKCommandEditorWindow::url () const {
 
 bool RKCommandEditorWindow::isModified () {
 	RK_TRACE (COMMANDEDITOR);
-	return m_doc->isModified();
+	return m_doc->isModified ();
+}
+
+bool RKCommandEditorWindow::save () {
+	RK_TRACE (COMMANDEDITOR);
+	return m_doc->documentSave ();
 }
 
 void RKCommandEditorWindow::insertText (const QString &text) {
@@ -741,18 +740,22 @@ void RKCommandEditorWindow::highlightLine (int linenum) {
 	if (!old_rw) m_doc->setReadWrite (false);
 }
 
-void RKCommandEditorWindow::updateCaption () {
+void RKCommandEditorWindow::urlChanged() {
 	RK_TRACE (COMMANDEDITOR);
+	updateCaption();
+	setGlobalContextProperty("current_filename", url().url());
+	if (!url().isEmpty()) RKRecentUrls::addRecentUrl(RKRecentUrls::scriptsId(), url());
+	action_setwd_to_script->setEnabled (!url().isEmpty ());
+}
+
+
+void RKCommandEditorWindow::updateCaption () {
 	QString name = url ().fileName ();
 	if (name.isEmpty ()) name = url ().toDisplayString ();
 	if (name.isEmpty ()) name = i18n ("Unnamed");
 	if (isModified ()) name.append (i18n (" [modified]"));
 
 	setCaption (name);
-
-	// Well, these do not really belong, here, but need to happen on pretty much the same occasions:
-	action_setwd_to_script->setEnabled (!url ().isEmpty ());
-	RKWardMainWindow::getMain ()->addScriptUrl (url ());
 }
 
 void RKCommandEditorWindow::currentHelpContext (QString *symbol, QString *package) {
@@ -865,7 +868,7 @@ void RKCommandEditorWindow::doRenderPreview () {
 
 	if (mode != GraphPreview && !preview->findChild<RKMDIWindow*>()) {
 		// (lazily) initialize the preview window with _something_, as an RKMDIWindow is needed to display messages (important, if there is an error during the first preview)
-		RKGlobals::rInterface()->issueCommand (".rk.with.window.hints (rk.show.html(" + RObject::rQuote (output_file) + "), \"\", " + RObject::rQuote (preview_manager->previewId ()) + ", style=\"preview\")", RCommand::App | RCommand::Sync);
+		RInterface::issueCommand (".rk.with.window.hints (rk.show.html(" + RObject::rQuote (output_file) + "), \"\", " + RObject::rQuote (preview_manager->previewId ()) + ", style=\"preview\")", RCommand::App | RCommand::Sync);
 	}
 
 	RK_ASSERT (preview_input_file->open (QIODevice::WriteOnly));
@@ -928,7 +931,7 @@ void RKCommandEditorWindow::doRenderPreview () {
 		          "}\n"
 		          "rk.set.output.html.file(output, silent=TRUE)\n"
 		          "rk.show.html(%2)\n";
-		command = command.arg (RObject::rQuote (preview_input_file->fileName ())).arg (RObject::rQuote (output_file));
+		command = command.arg (RObject::rQuote (preview_input_file->fileName ()), RObject::rQuote (output_file));
 	} else {
 		RK_ASSERT (false);
 	}
@@ -1116,8 +1119,8 @@ QString exportText(const QString& text, const KTextEditor::Attribute::Ptr& attri
 
 	if ( writeForeground || writeBackground ) {
 		ret.append (QString("<span style='%1%2'>")
-					.arg(writeForeground ? QString(QLatin1String("color:") + attrib->foreground().color().name() + QLatin1Char(';')) : QString())
-					.arg(writeBackground ? QString(QLatin1String("background:") + attrib->background().color().name() + QLatin1Char(';')) : QString()));
+					.arg(writeForeground ? QString(QLatin1String("color:") + attrib->foreground().color().name() + QLatin1Char(';')) : QString(),
+					     writeBackground ? QString(QLatin1String("background:") + attrib->background().color().name() + QLatin1Char(';')) : QString()));
 	}
 
 	ret.append (text.toHtmlEscaped());
@@ -1135,7 +1138,7 @@ QString exportText(const QString& text, const KTextEditor::Attribute::Ptr& attri
 	return ret;
 }
 
-QString RKCommandHighlighter::commandToHTML (const QString r_command, HighlightingMode mode) {
+QString RKCommandHighlighter::commandToHTML (const QString &r_command, HighlightingMode mode) {
 	KTextEditor::Document* doc = getDoc ();
 	KTextEditor::View* view = getView ();
 	doc->setText (r_command);
@@ -1149,8 +1152,8 @@ QString RKCommandHighlighter::commandToHTML (const QString r_command, Highlighti
 		opening = "<pre class=\"%3\">";
 	} else {
 		opening = QString("<pre style='%1%2' class=\"%3\">")
-				.arg(m_defaultAttribute->fontBold() ? "font-weight:bold;" : "")
-				.arg(m_defaultAttribute->fontItalic() ? "text-style:italic;" : "");
+				.arg(m_defaultAttribute->fontBold() ? "font-weight:bold;" : "",
+				     m_defaultAttribute->fontItalic() ? "text-style:italic;" : "");
 				// Note: copying the default text/background colors is pointless in our case, and leads to subtle inconsistencies.
 	}
 
@@ -1251,7 +1254,7 @@ void RKCommandHighlighter::copyLinesToOutput (KTextEditor::View *view, Highlight
 	// highlight and submit
 	QString highlighted = commandToHTML (doc->text (sel), mode);
 	if (!highlighted.isEmpty ()) {
-		RKGlobals::rInterface ()->issueCommand (".rk.cat.output (" + RObject::rQuote (highlighted) + ")\n", RCommand::App | RCommand::Silent);
+		RInterface::issueCommand (".rk.cat.output (" + RObject::rQuote (highlighted) + ")\n", RCommand::App | RCommand::Silent);
 	}
 }
 

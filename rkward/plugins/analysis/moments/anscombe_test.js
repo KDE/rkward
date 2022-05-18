@@ -10,8 +10,10 @@ function insertTestCall () {
 	}
 }
 
-function printout () {
-	new Header (i18n ("Anscombe-Glynn test of kurtosis")).addFromUI ("alternative").print ();
+function printout (is_preview) {
+	if (!is_preview) {
+		new Header (i18n ("Anscombe-Glynn test of kurtosis")).addFromUI ("alternative").print ();
+	}
 	echo ('rk.results (results)\n');
 }
 

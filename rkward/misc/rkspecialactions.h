@@ -1,29 +1,19 @@
-/***************************************************************************
-                          rkspecialactions  -  description
-                             -------------------
-    begin                : Mon Mar 15 2010
-    copyright            : (C) 2010 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkspecialactions - This file is part of the RKWard project. Created: Mon Mar 15 2010
+SPDX-FileCopyrightText: 2010-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef RKSPECIALACTIONS_H
 #define RKSPECIALACTIONS_H
 
-#include <kpastetextaction.h>
+#include <QAction>
 
 /** This namespace provides functions to generate some standard actions, i.e. actions which are needed at more than one place.
 
 @author Thomas Friedrichsmeier */
-class RKPasteSpecialAction : public KPasteTextAction {
+class RKPasteSpecialAction : public QAction {
 	Q_OBJECT
 public:
 	explicit RKPasteSpecialAction (QObject* parent);
@@ -42,18 +32,21 @@ signals:
 class QButtonGroup;
 class QLineEdit;
 class QCheckBox;
+class RKSaveObjectChooser;
 
-/** Dialog used in RKPasteSpecialAction */
+/** Dialog used in RKPasteSpecialAction
+    TODO: move to separate file, now that it can be used standalone */
 class RKPasteSpecialDialog : public QDialog {
 	Q_OBJECT
 public:
-	explicit RKPasteSpecialDialog (QWidget* parent);
+	explicit RKPasteSpecialDialog(QWidget* parent, bool standalone=false);
 	~RKPasteSpecialDialog ();
 
 	enum Dimensionality {
 		DimSingleString,
 		DimVector,
-		DimMatrix
+		DimMatrix,
+		DimDataFrame
 	};
 	enum Separator {
 		SepTab,
@@ -69,10 +62,11 @@ public:
 	};
 	
 	QString resultingText ();
+	void accept() override;
 public slots:
 	void updateState ();
 private:
-	QString prepString (const QString& src) const;
+	QString prepString (const QString& src, const Quoting quot) const;
 
 	QButtonGroup* dimensionality_group;
 	QButtonGroup* separator_group;
@@ -82,6 +76,10 @@ private:
 	QCheckBox* reverse_h_box;
 	QCheckBox* reverse_v_box;
 	QCheckBox* insert_nas_box;
+	QCheckBox* names_box;
+	QCheckBox* rownames_box;
+	RKSaveObjectChooser *objectname;
+	QPushButton *ok_button;
 };
 
 #endif

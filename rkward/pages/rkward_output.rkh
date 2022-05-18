@@ -2,16 +2,25 @@
 <document>
 	<title>RKWard Output</title>
 	<summary>
-Describe the RKWard output window, and how to make use of the generated output.
+The RKWard output window, or, more generally, RKWard output files (.rko) are intended as an easy way to keep a log of the work on your data. By default, one output file is always available. Depending on your configuration (<link href="rkward://settings/output">Settings->Configure RKWard->Output</link>), this output file may or may not be shared across different workspaces.
 
-TODO: This page is incomplete.
+RKWard output can be saved and opened like regular files. To direct output to a specific output file, you will have to "activate" it. Closing an output window does not discard the
+modifications, but on closing RKWard you will be prompted to save (or discard) any pending changes.
 	</summary>
 
-	<section title="Using the output in an office suite" id="integration_in_office_suite">
-One of the many goals of RKWard is to have easy integration with an office-suite. Right now output is simply stored in HTML format (including images as png) of your results. HTML can be read and worked on with any modern office suite.
+	<section title="Producing RKWard output from R" id="rkward_output_r">
+To write to the active RKWard output file from custom R code, refer to <link href="rkward://rhelp/rk.print"/>, and the functions linked from there.
 
+To load / save / switch between output files, etc., refer to <link href="rkward://rhelp/rk.output"/>.
+	</section>
+
+	<section title="Using the output in an office suite" id="integration_in_office_suite">
 The easiest way to get output into your office suite, is to first select the relevant portions, copy them (Edit->Copy), then paste them. This works well, at least in OpenOffice. You can also drag and drop images from the output to an OpenOffice document.
 
-If you need access to the raw HTML and image files, these are stored in a hidden directory. By default this is a sub-folder called ".rkward" of your home directory (Settings->Configure RKWard->General). You'll want the files "rk_out.html" and the "graph*.png" files.
+Internally, RKWard output files are currently simply based on HTML. If you need access to the raw HTML and image files, a .rko-file is really just a zip'ed folder. You can unzip it using standard tools, or open it in RKWard, and retrieve the files from the ".rkward" of your home directory (location configurable in Settings->Configure RKWard->General).
+	</section>
+
+	<section title="RKWard output vs. R Markdown" id="rkward_output_vs_rmarkdown">
+RKWard also assists you in writing RMarkdown documents. In particular there is a powerful preview feature for .RMd scripts. While RMarkdown is great for writing interactive "reports", the RKWard Output is very easy to use for ad-hoc documentation while exploring your data.
 	</section>
 </document>

@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkdebughandler  -  description
-                             -------------------
-    begin                : Wed Oct 19 2011
-    copyright            : (C) 2011 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkdebughandler - This file is part of RKWard (https://rkward.kde.org). Created: Wed Oct 19 2011
+SPDX-FileCopyrightText: 2011 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkdebughandler.h"
 
@@ -54,7 +44,7 @@ void RKDebugHandler::debugCall (RBackendRequest *request, RCommand *command) {
 	for (int i = 0; i < dummy.size (); ++i) _rel_src_lines.append (dummy.at (i).toInt ());
 
 	_state = InDebugPrompt;
-	newDebugState ();
+	emit newDebugState();
 }
 
 void RKDebugHandler::sendCancel () {
@@ -78,7 +68,7 @@ void RKDebugHandler::submitDebugString (const QString &command) {
 
 	_command = 0;
 	_state = InDebugRun;
-	newDebugState ();
+	emit newDebugState();
 }
 
 void RKDebugHandler::endDebug () {
@@ -87,6 +77,6 @@ void RKDebugHandler::endDebug () {
 	_command = 0;
 	_request = 0;
 	_state = NotInDebugger;
-	newDebugState ();
+	emit newDebugState();
 }
 

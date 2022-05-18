@@ -1,0 +1,47 @@
+<!DOCTYPE rkhelp>
+<document>
+	<title>RKWard Add-Ons</title>
+	<summary>
+To offer you the best features, RKWard combines different technologies. Arguably this can make it a bit confusing on where to find the addon features you are looking for.
+
+In a nutshell:
+<ul>
+<li><strong>R packages</strong> offer a sheer incredible amount of data algorithms and tools. This functionality is (mostly) provided in the form of additional R functions that you can use
+in scripts, or in the interactive R console.</li>
+<li><strong>Kate add-ons</strong>: Kate is the engine behind RKWard's script editor. It comes with powerful add-on features, many of which should come pre-installed with RKWard. However, due to their sheer number, not all are activated by default. It can further be extended with custom scripts, or color-schemes.</li>
+<li><strong>RKWard plugins</strong>: If you are looking for a graphical dialog to help you import/convert/analyse/visualize your data, such dialogs are mostly implemented as plugin-ins in
+RKWard. Many such plugins are available for download, separately.</li>
+</ul>
+
+The following sections deal with these, in turn, showing you how to find / install, what you need.
+	</summary>
+
+	<section title="R packages" id="r_packages_in_rkward">
+In addition to the regular R command line tools for managing R packages (see <link href="rkward://rhelp/install.packages"/>), RKWard offers a graphical dialog to search, install and/or load
+packages (Settings->Manage R packages and plugins).
+
+Note that, by default, R packages are distributed as compiled binaries on Windows and MacOS, but not Linux. While for the latter, installation from source is fully automated, you may
+still have to install additional libraries or other software for the compilation.
+	</section>
+
+	<section title="Kate Add-ons" id="kate_addons_in_rkward">
+<link href="https://kate.kde.org">Kate</link> is a very powerful text editor using the same text editing component that is also used in RKWard. It also comes with a variety
+of add-ons, e.g. for creating code snippets, or for managing projects in a git repository. Some of these - like e.g. the C++ backtrace navigation tool  do not make much
+sense in the context of RKWard, but many do. To explore what is available, make sure you have kate installed, then visit <link href="rkward://settings/addons">Settings->Addons</link>.
+Addons shown in bold have been reported to be useful and work well in RKWard, but feel free to explore the others, too.
+	</section>
+
+	<section title="RKWard Plugins" id="rkward_plugins">
+RKWard plugins can be installed from a variety of sources, but the usual distribution of add-on packages is via R packages. To look for R packages that provide RKWard graphical dialogs,
+use the regular dialog (<link href="rkward://actions/rpackage_install">Settings->Manage R packages and plugins</link>), and check the option "Show only packages providing RKWard dialogs".
+
+Not all RKWard plugins packaged this way will be visible in the R package installation dialog, as they are not hosted (yet) in the default repositories, notably, at the time of this writing, the very extensive <link href="https://github.com/rkward-community/rk.Teaching">rk.Teaching</link> set of plugins. Many of these are hosted on platforms such as github.com, and knowing the repository url,
+can be installed with few clicks, using <link href="rkward://runplugin/rkward::install_from_git/fullURL.text=https://github.com/rkward-community/rk.Teaching.git">this dialog</link> (pre-initialized for installation of rk.Teaching).
+	</section>
+
+	<section title="Creating your own RKWard Plugins" id="writing_plugins">
+Still missing something?
+
+Check out the <link href="help:/rkwardplugins/index.html">Introduction to Writing Plugins for RKWard</link> (<link href="https://rkward.kde.org/doc/rkwardplugins/">most recent version online</link>) to learn how easy it is to enhance RKWard with your custom dialogs. And if you like, how to share your work with the community of RKWard users. See the <link href="rkward://rhelp/rkward-package">rkward package overview</link> for RKWard specific function for development and scripting.
+	</section>
+</document>

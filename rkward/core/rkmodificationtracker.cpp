@@ -1,25 +1,14 @@
-/***************************************************************************
-                          rkmodificationtracker  -  description
-                             -------------------
-    begin                : Tue Aug 31 2004
-    copyright            : (C) 2004-2017 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkmodificationtracker - This file is part of RKWard (https://rkward.kde.org). Created: Tue Aug 31 2004
+SPDX-FileCopyrightText: 2004-2017 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 #include "rkmodificationtracker.h"
 
 #include <kmessagebox.h>
 #include <KLocalizedString>
 
-#include "../rkglobals.h"
 #include "../dataeditor/rkeditor.h"
 #include "../dataeditor/rkvareditmodel.h"
 #include "rcontainerobject.h"
@@ -30,9 +19,12 @@
 
 #include "../debug.h"
 
+RKModificationTracker* RKModificationTracker::_instance = nullptr;
+
 RKModificationTracker::RKModificationTracker (QObject *parent) : RKObjectListModel (parent) {
 	RK_TRACE (OBJECTS);
-
+	RK_ASSERT(_instance == nullptr);  // singleton for now
+	_instance = this;
 	updates_locked = 0;
 }
 
@@ -149,7 +141,7 @@ void RKModificationTracker::renameObject (RObject *object, const QString &new_na
 		sendListenerNotification (RObjectListener::MetaChanged, object, 0, 0, 0);
 
 		QModelIndex object_index = indexFor (object);
-		emit (dataChanged (object_index, object_index));
+		emit dataChanged(object_index, object_index);
 	}
 }
 
@@ -179,7 +171,7 @@ void RKModificationTracker::objectMetaChanged (RObject *object) {
 		sendListenerNotification (RObjectListener::MetaChanged, object, 0, 0, 0);
 
 		QModelIndex object_index = indexFor (object);
-		emit (dataChanged (object_index, object_index));
+		emit dataChanged(object_index, object_index);
 	}
 }
 
@@ -191,7 +183,7 @@ void RKModificationTracker::objectDataChanged (RObject *object, RObject::ChangeS
 		delete changes;
 
 		QModelIndex object_index = indexFor (object);
-		emit (dataChanged (object_index, object_index));	// might have changed dimensions, for instance
+		emit dataChanged(object_index, object_index);	// might have changed dimensions, for instance
 	}
 }
 
@@ -456,13 +448,13 @@ void RObjectListener::objectDataChanged (RObject*, const RObject::ChangeSet *) {
 void RObjectListener::listenForObject (RObject* object) {
 	RK_TRACE (OBJECTS);
 
-	RKGlobals::tracker ()->addObjectListener (object, this);
+	RKModificationTracker::instance()->addObjectListener (object, this);
 	++num_watched_objects;
 }
 
 void RObjectListener::stopListenForObject (RObject* object) {
 	RK_TRACE (OBJECTS);
 
-	RKGlobals::tracker ()->removeObjectListener (object, this);
+	RKModificationTracker::instance()->removeObjectListener (object, this);
 	--num_watched_objects;
 }

@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rcontainerobject  -  description
-                             -------------------
-    begin                : Thu Aug 19 2004
-    copyright            : (C) 2004-2019 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rcontainerobject - This file is part of RKWard (https://rkward.kde.org). Created: Thu Aug 19 2004
+SPDX-FileCopyrightText: 2004-2019 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 #include "rcontainerobject.h"
 
 #include <qregexp.h>
@@ -25,8 +15,6 @@
 #include "rfunctionobject.h"
 #include "renvironmentobject.h"
 #include "rkrownames.h"
-
-#include "../rkglobals.h"
 #include "rkmodificationtracker.h"
 
 #include "../debug.h"
@@ -61,7 +49,7 @@ RObject *RContainerObject::updateChildStructure (RObject *child, RData *new_data
 		} else {
 			int child_index = childmap.indexOf (child);
 			RK_ASSERT (child_index >= 0);
-			if (RKGlobals::tracker ()->removeObject (child, 0, true)) {
+			if (RKModificationTracker::instance()->removeObject (child, 0, true)) {
 				RData *child_name_data = new_data->structureVector ().at (StoragePositionName);
 				RK_ASSERT (child_name_data->getDataType () == RData::StringVector);
 				RK_ASSERT (child_name_data->getDataLength () >= 1);
@@ -122,17 +110,17 @@ RObject *RContainerObject::createChildFromStructure (RData *child_data, const QS
 		return 0;
 	}
 	RK_ASSERT (child_object);
-	RKGlobals::tracker ()->lockUpdates (true);	// object not yet added. prevent updates
+	RKModificationTracker::instance()->lockUpdates (true);	// object not yet added. prevent updates
 	child_object = updateChildStructure (child_object, child_data, true);
-	RKGlobals::tracker ()->lockUpdates (false);
+	RKModificationTracker::instance()->lockUpdates (false);
 
 	if (!child_object) {
 		RK_ASSERT (false);
 		return 0;
 	}
-	RKGlobals::tracker ()->beginAddObject (child_object, this, position);
+	RKModificationTracker::instance()->beginAddObject (child_object, this, position);
 	childmap.insert (position, child_object);
-	RKGlobals::tracker ()->endAddObject (child_object, this, position);
+	RKModificationTracker::instance()->endAddObject (child_object, this, position);
 	return child_object;
 }
 
@@ -182,7 +170,7 @@ void RContainerObject::updateChildren (RData *new_children) {
 				new_childmap.insert (i, old_child);
 			} else {
 				RK_DEBUG (OBJECTS, DL_DEBUG, "child no longer present: %s.", old_child->getFullName ().toLatin1 ().data ());
-				if (RKGlobals::tracker ()->removeObject (old_child, 0, true)) --i;
+				if (RKModificationTracker::instance()->removeObject (old_child, 0, true)) --i;
 				else (new_childmap.insert (i, old_child));
 			}
 		} else {
@@ -206,7 +194,7 @@ void RContainerObject::moveChild (RObject* child, int from_index, int to_index) 
 	RK_ASSERT (childmap[from_index] == child);
 	RK_ASSERT (from_index < childmap.size ());
 	RK_ASSERT (to_index < childmap.size ());
-	RKGlobals::tracker ()->moveObject (this, child, from_index, to_index);
+	RKModificationTracker::instance()->moveObject (this, child, from_index, to_index);
 }
 
 int RContainerObject::numChildren () const {
@@ -311,9 +299,9 @@ RObject *RContainerObject::createPendingChild (const QString &name, int position
 
 	if ((position < 0) || (position > childmap.size ())) position = childmap.size ();
 
-	RKGlobals::tracker ()->beginAddObject (ret, this, position);
+	RKModificationTracker::instance()->beginAddObject (ret, this, position);
 	childmap.insert (position, ret);
-	RKGlobals::tracker ()->endAddObject (ret, this, position);
+	RKModificationTracker::instance()->endAddObject (ret, this, position);
 
 	return ret;
 }
@@ -328,7 +316,7 @@ void RContainerObject::renameChild (RObject *object, const QString &new_name) {
 	}
 
 	RCommand *command = new RCommand (renameChildCommand (object, new_name), RCommand::App | RCommand::Sync);
-	RKGlobals::rInterface ()->issueCommand (command, 0);
+	RInterface::issueCommand (command, 0);
 
 	object->name = new_name;
 }
@@ -360,7 +348,7 @@ void RContainerObject::removeChild (RObject *object, bool removed_in_workspace) 
 		}
 
 		RCommand *command = new RCommand (removeChildCommand (object), RCommand::App | RCommand::Sync | RCommand::ObjectListUpdate);
-		RKGlobals::rInterface ()->issueCommand (command, 0);
+		RInterface::issueCommand (command, 0);
 	}
 
 	removeChildNoDelete (object);

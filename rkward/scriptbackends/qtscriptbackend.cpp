@@ -1,19 +1,9 @@
-/***************************************************************************
-                          qtscriptbackend  -  description
-                             -------------------
-    begin                : Mon Sep 28 2009
-    copyright            : (C) 2009, 2010, 2012, 2014, 2015 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+qtscriptbackend - This file is part of RKWard (https://rkward.kde.org). Created: Mon Sep 28 2009
+SPDX-FileCopyrightText: 2009-2015 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 #include "qtscriptbackend.h"
 
 #include <QTimer>
@@ -43,6 +33,31 @@ QtScriptBackend::~QtScriptBackend () {
 	destroy ();
 	if (script_thread && script_thread->isRunning ()) script_thread->terminate ();
 }
+
+#ifdef JSBACKEND_PERFORMANCE_TEST
+#include <QElapsedTimer>
+#include <QApplication>
+#include <QObjectCleanupHandler>
+#include "../misc/rkmessagecatalog.h"
+void QtScriptBackend::_performanceTest() {
+	RK_DEBUG(PHP, DL_WARNING, "Starting QtScriptBackend performance test");
+	QElapsedTimer t;
+	QObjectCleanupHandler h;
+	t.start();
+	for (int i = 0; i < 1000; ++i) {
+		auto b = new QtScriptBackend(QString(), RKMessageCatalog::nullCatalog());
+		b->dead = true; // so it doesn't try to show an error message
+		h.add(b);
+		b->initialize(nullptr, false);
+		connect(b->script_thread, &QtScriptBackendThread::error, b, &QObject::deleteLater);  // thread will throw an error, when trying to include non-existent script file
+	}
+	while (!h.isEmpty()) {
+		qApp->processEvents();
+	}
+	RK_DEBUG(PHP, DL_WARNING, "Time to init 100 backends: %d", t.elapsed());
+	RK_DEBUG(PHP, DL_WARNING, "QtScriptBackend performance test end");
+}
+#endif
 
 bool QtScriptBackend::initialize (RKComponentPropertyCode *code_property, bool add_headings) {
 	RK_TRACE (PHP);
@@ -84,26 +99,27 @@ void QtScriptBackend::destroy () {
 void QtScriptBackend::tryNextFunction () {
 	RK_TRACE (PHP);
 
-	if (script_thread && (!busy) && (!command_stack.isEmpty ())) {
+	if (script_thread && (!busy) && (!command_stack.empty())) {
 	/// clean up previous command if applicable
-		if (command_stack.first ()->complete) {
-			delete command_stack.takeFirst ();
+		if (command_stack.front()->complete) {
+			delete command_stack.front();
+			command_stack.pop_front();
 			
-			if (command_stack.isEmpty ()) {
+			if (command_stack.empty ()) {
 				script_thread->goToSleep (true);
 				return;
 			}
 		}
 		
-		RK_DEBUG (PHP, DL_DEBUG, "submitting QtScript code: %s", command_stack.first ()->command.toLatin1 ().data ());
+		RK_DEBUG(PHP, DL_DEBUG, "submitting QtScript code: %s", qPrintable(command_stack.front()->command));
 		if (script_thread) script_thread->goToSleep (false);
-		script_thread->setCommand (command_stack.first ()->command);
+		script_thread->setCommand(command_stack.front()->command);
 		busy = true;
-		command_stack.first ()->complete = true;
-		current_flags = command_stack.first ()->flags;
-		current_type = command_stack.first ()->type;
+		command_stack.front()->complete = true;
+		current_flags = command_stack.front()->flags;
+		current_type = command_stack.front()->type;
 	} else {
-		if (script_thread && command_stack.isEmpty ()) script_thread->goToSleep (true);
+		if (script_thread && command_stack.empty()) script_thread->goToSleep (true);
 	}
 }
 
@@ -122,7 +138,7 @@ void QtScriptBackend::threadError (const QString &message) {
 
 	KMessageBox::error (0, i18n ("The QtScript-backend has reported an error:\n%1", message), i18n ("Scripting error"));
 
-	emit (haveError ());
+	emit haveError();
 	destroy ();
 }
 
@@ -135,7 +151,7 @@ void QtScriptBackend::commandDone (const QString &result) {
 void QtScriptBackend::needData (const QString &identifier, const int hint) {
 	RK_TRACE (PHP);
 
-	emit (requestValue (identifier, hint));
+	emit requestValue(identifier, hint);
 }
 
 
@@ -195,10 +211,9 @@ void QtScriptBackendThread::setData (const QVariant &data) {
 QVariant QtScriptBackendThread::getValue (const QString &identifier, const int hint) {
 	RK_TRACE (PHP);
 
-	emit (needData (identifier, hint));
-
+	emit needData(identifier, hint);
 	QVariant ret;
-	while (1) {
+	while (true) {
 		if (killed) return QVariant ();
 
 		mutex.lock ();
@@ -235,14 +250,13 @@ QVariant QtScriptBackendThread::getUiLabelPair (const QString &identifier) {
 	return getValue (identifier, RKStandardComponent::UiLabelPair);
 }
 
-bool QtScriptBackendThread::scriptError () {
+bool QtScriptBackendThread::scriptError(const QJSValue &val) {
 	RK_TRACE (PHP);
 
-	if (!engine.hasUncaughtException ()) return false;
+	if (!val.isError()) return false;
 
-	QString message = i18n ("Script Error: %1\nBacktrace:\n%2", engine.uncaughtException ().toString (), engine.uncaughtExceptionBacktrace ().join ("\n"));
-	engine.clearExceptions ();
-	emit (error (message));
+	QString message = i18n("Script Error in %1, line %2: %3\nBacktrace:\n%4", val.property("fileName").toString(), val.property("lineNumber").toInt(), val.toString(), val.property("stack").toString());  // TODO: correct?
+	emit error(message);
 
 	return true;
 }
@@ -256,17 +270,14 @@ bool QtScriptBackendThread::includeFile (const QString &filename) {
 		_filename = script_path.toLocalFile ();
 	}
 
-		QFile file (_filename);
-		if (!file.open (QIODevice::ReadOnly | QIODevice::Text)) {
-		emit (error (i18n ("The file \"%1\" (needed by \"%2\") could not be found. Please check your installation.", _filename, _scriptfile)));
+	QFile file(_filename);
+	if (!file.open (QIODevice::ReadOnly | QIODevice::Text)) {
+		emit error(i18n("The file \"%1\" (needed by \"%2\") could not be found. Please check your installation.", _filename, _scriptfile));
 		return false;
 	}
 
-	// evaluate in global context
-	engine.currentContext ()->setActivationObject (engine.globalObject ());
-	QScriptValue result = engine.evaluate (QString::fromUtf8 (file.readAll ()), _filename);
-
-	if (scriptError ()) return false;
+	QJSValue result = engine.evaluate (QString::fromUtf8 (file.readAll ()), _filename);
+	if (scriptError(result)) return false;
 
 	return true;
 }
@@ -274,29 +285,17 @@ bool QtScriptBackendThread::includeFile (const QString &filename) {
 void QtScriptBackendThread::run () {
 	RK_TRACE (PHP);
 
-	QScriptValue backend_object = engine.newQObject (this);
+	QJSValue backend_object = engine.newQObject (this);
 	engine.globalObject ().setProperty ("_RK_backend", backend_object);
 	RKMessageCatalogObject::addI18nToScriptEngine (&engine, catalog);
-	if (scriptError ()) return;
 
-#ifdef USE_Q_SCRIPT_PROGRAM
-	if (!RKPrecompiledQtScripts::loadCommonScript (&engine, _commonfile)) {
-		if (!engine.hasUncaughtException ()) {
-			emit error (i18n ("Could not open common script file \"%1\"", _commonfile));
-		} else {
-			scriptError ();
-		}
-		return;
-	}
-#else
-	if (!includeFile (_commonfile)) return;
-#endif
+	if (!includeFile (_commonfile)) return;  // TODO: import this as a module and re-use the engine in the next thread?
 	if (!includeFile (_scriptfile)) return;
 
-	emit (commandDone ("startup complete"));
+	emit commandDone("startup complete");
 
 	QString command;
-	while (1) {
+	while (true) {
 		if (killed) return;
 		if (sleeping) {
 			sleep_mutex.lock ();
@@ -316,48 +315,10 @@ void QtScriptBackendThread::run () {
 		}
 
 		// do it!
-		QScriptValue result = engine.evaluate (command);
-		if (scriptError ()) return;
-		emit (commandDone (result.toString ()));
+		QJSValue result = engine.evaluate (command);
+		if (scriptError(result)) return;
+		emit commandDone(result.toString());
 
 		command.clear ();
 	}
 }
-
-#ifdef USE_Q_SCRIPT_PROGRAM
-namespace RKPrecompiledQtScripts {
-	QMap<QString, QScriptProgram> compiled_includes;
-	QMutex compiled_includes_mutex;
-
-	bool loadCommonScript (QScriptEngine* engine, QString scriptfile) {
-		RK_TRACE (PHP);
-
-		// NOTE: QScriptProgram cannot be evaluated concurrently in several threads (see https://bugreports.qt-project.org/browse/QTBUG-29246).
-		// Neither would our QMap caching logic work in concurrent threads. Thus the mutex. This clearly has the drawback that QScript evaluation threads
-		// may be waiting for each other during initialization. However, we assume that
-		// - Typically only few such threads are running
-		// - Responsiveness (i.e. UI startup speed), not throughput is the main goal, here.
-		// - The important script engines are those running in the UI thread (and thus necessarily sequentially). As long as these are initialized before
-		//   the other threads, they will clearly profit from pre-compiling
-		QMutexLocker ml (&compiled_includes_mutex);
-		if (!compiled_includes.contains (scriptfile)) {
-			RK_DEBUG (PHP, DL_DEBUG, "Compiling common script file %s", qPrintable (scriptfile));
-			QFile file (scriptfile);
-			if (!file.open (QIODevice::ReadOnly | QIODevice::Text)) {
-				return false;
-			}
-			compiled_includes.insert (scriptfile, QScriptProgram (QString::fromUtf8 (file.readAll ()), scriptfile));
-			file.close ();
-		} else {
-			RK_DEBUG (PHP, DL_DEBUG, "Script file %s is already compiled", qPrintable (scriptfile));
-		}
-		engine->evaluate (compiled_includes[scriptfile]);
-		if (engine->hasUncaughtException ()) {
-			compiled_includes.remove (scriptfile);
-			return false;
-		}
-		return true;
-	}
-}
-#endif
-

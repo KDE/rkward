@@ -15,7 +15,9 @@ preprocess = function () {
 	echo ('require (tseries)\n');	// instead of nortest
 }
 
-function printout () {
-	new Header (i18n ("Jarque-Bera Normality Test")).addFromUI ("excludenas").print ();
+function printout (is_preview) {
+	if (!is_preview) {
+		new Header (i18n ("Jarque-Bera Normality Test")).addFromUI ("excludenas").print ();
+	}
 	echo ('rk.results (results)\n');
 }

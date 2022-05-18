@@ -1,26 +1,17 @@
-/***************************************************************************
-                          rkcommonfunctions  -  description
-                             -------------------
-    begin                : Mon Oct 17 2005
-    copyright            : (C) 2005-2020 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkcommonfunctions - This file is part of the RKWard project. Created: Mon Oct 17 2005
+SPDX-FileCopyrightText: 2005-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 #ifndef RKCOMMONFUNCTIONS_H
 #define RKCOMMONFUNCTIONS_H
 
 #include <QChar>
+#include <QRect>
+#include <QString>
 
 class QStringList;
-class QString;
 class QDomNode;
 class KXMLGUIClient;
 class QWidget;
@@ -41,8 +32,6 @@ namespace RKCommonFunctions {
 
 /** Get the base directory where RKWard data files are stored */
 	QString getRKWardDataDir ();
-/** Get a suitable file name in the RKWard data directory */
-	QString getUseableRKWardSavefileName (const QString &prefix, const QString &postfix);
 
 /** given a context line, find the end of a quote started by quote_char. @returns -1 if not end of quote was found. */
 	int quoteEndPosition (const QChar& quote_char, const QString& haystack, int from = 0);
@@ -58,7 +47,7 @@ namespace RKCommonFunctions {
 	QString unescape (const QString &in);
 
 /** simultaneously sets tool tips and what's this tips on up to three QWidgets */
-	void setTips (const QString tip, QWidget *first, QWidget *second=0, QWidget *third=0);
+	void setTips (const QString &tip, QWidget *first, QWidget *second=0, QWidget *third=0);
 	QString noteSettingsTakesEffectAfterRestart ();
 /** Passing commands as part of arguments to windows shell scripts will fail miserably for paths with spaces or special characters. Transform to short path names for safety. No-op on sane platforms.*/
 	QString windowsShellScriptSafeCommand (const QString &orig);
@@ -67,6 +56,15 @@ namespace RKCommonFunctions {
 	QLabel* wordWrappedLabel (const QString &text);
 /** create a QLabel that has wordwarp enabled, *and* clickable links (opened inside RKWard), in a single line of code. */
 	QLabel* linkedWrappedLabel (const QString &text);
+
+/** Porting aid: Qt::SplitBehaviorFlags was added in Qt 5.14, deprecating the previous flags in QString. Remove, once we depend on Qt >= 5.14 */
+#if QT_VERSION >= QT_VERSION_CHECK(5,14,0)
+	inline Qt::SplitBehaviorFlags KeepEmptyParts() { return Qt::KeepEmptyParts; };
+	inline Qt::SplitBehaviorFlags SkipEmptyParts() { return Qt::SkipEmptyParts; };
+#else
+	inline QString::SplitBehavior KeepEmptyParts() { return QString::KeepEmptyParts; };
+	inline QString::SplitBehavior SkipEmptyParts() { return QString::SkipEmptyParts; };
+#endif
 };
 
 #endif

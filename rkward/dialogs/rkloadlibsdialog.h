@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkloadlibsdialog  -  description
-                             -------------------
-    begin                : Mon Sep 6 2004
-    copyright            : (C) 2004 - 2015 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkloadlibsdialog - This file is part of the RKWard project. Created: Mon Sep 6 2004
+SPDX-FileCopyrightText: 2004-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 #ifndef RKLOADLIBSDIALOG_H
 #define RKLOADLIBSDIALOG_H
 
@@ -37,9 +27,25 @@ class QWidget;
 class QCloseEvent;
 class RCommandChain;
 class QCheckBox;
-class PackageInstallParamsWidget;
 class InstallPackagesWidget;
 class RKDynamicSearchLine;
+class QLabel;
+
+class RKLoadLibsDialogPage : public QWidget {
+	Q_OBJECT
+public:
+	RKLoadLibsDialogPage(QWidget* parent) : QWidget(parent), _changed(false) {};
+	virtual void apply() = 0;
+	virtual void activated() = 0;
+	bool isChanged() const { return _changed; };
+signals:
+	void changed();
+protected:
+	void setChanged() { _changed = true; emit changed(); };
+	void clearChanged() { _changed = false; };
+private:
+	bool _changed;
+};
 
 /**
 Dialog which excapsulates widgets to load/unload, update and install R packages
@@ -49,47 +55,37 @@ Dialog which excapsulates widgets to load/unload, update and install R packages
 
 // TODO: add a static member to create (single) instance of the dialog
 
-class RKLoadLibsDialog : public KPageDialog, public RCommandReceiver {
+class RKLoadLibsDialog : public KPageDialog {
 Q_OBJECT
 public:
 	RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool modal=false);
 
 	~RKLoadLibsDialog ();
 
-	bool installPackages (const QStringList &packages, QString to_libloc, bool install_suggested_packages, const QStringList& repos);
+	bool installPackages (const QStringList &packages, QString to_libloc, bool install_suggested_packages);
 	bool removePackages (QStringList packages, QStringList from_liblocs);
 
 /** opens a modal RKLoadLibsDialog with the "Install new Packages" tab on front (To be used when a require () fails in the R backend
 @param parent parent QWidget. The dialog will be centered there
 @param chain RCommandChain to run the necessary commands in
 @param package_name name of the required package */
-	static void showInstallPackagesModal (QWidget *parent, RCommandChain *chain, const QString &package_name);
+	static void showInstallPackagesModal (QWidget *parent, RCommandChain *chain, const QStringList &package_names);
 	static void showPluginmapConfig (QWidget *parent=0, RCommandChain *chain=0);
 	QStringList currentLibraryLocations ()  const { return library_locations; };
-	void accept () override;
-	void reject () override;
 signals:
-	void downloadComplete ();
-	void installationComplete ();
 	void libraryLocationsChanged (const QStringList &liblocs);
-	void installationOutput (const QString &output);
-	void installationError (const QString &error);
 	void installedPackagesChanged ();
 protected:
-	void rCommandDone (RCommand *command) override;
 	void closeEvent (QCloseEvent *e) override;
 protected slots:
-	void childDeleted ();
-	void processExited (int exitCode, QProcess::ExitStatus exitStatus);
-	void installationProcessOutput ();
-	void installationProcessError ();
-	void automatedInstall ();
+	void automatedInstall (const QStringList &packages);
 	void slotPageChanged ();
 private:
+	void queryClose();
 	void addLibraryLocation (const QString &new_loc);
 	void tryDestruct ();
 	void runInstallationCommand (const QString& command, bool as_root, const QString& message, const QString& title);
-	KPageWidgetItem* addChild (QWidget *child_page, const QString &caption);
+	KPageWidgetItem* addChild(RKLoadLibsDialogPage *child_page, const QString &caption);
 friend class LoadUnloadWidget;
 friend class InstallPackagesWidget;
 	RCommandChain *chain;
@@ -100,9 +96,7 @@ friend class InstallPackagesWidget;
 
 	QStringList library_locations;
 
-	QString auto_install_package;
-	int num_child_widgets;
-	bool was_accepted;
+	QList<RKLoadLibsDialogPage*> pages;
 
 	QProcess* installation_process;
 };
@@ -113,25 +107,21 @@ To be used in RKLoadLibsDialog
 
 @author Thomas Friedrichsmeier
 */
-class LoadUnloadWidget : public QWidget, public RCommandReceiver {
+class LoadUnloadWidget : public RKLoadLibsDialogPage {
 Q_OBJECT
 public:
 	explicit LoadUnloadWidget (RKLoadLibsDialog *dialog);
 	
 	~LoadUnloadWidget ();
+	void apply() override;
+	void activated() override;
 signals:
 	void loadUnloadDone ();
 public slots:
 	void loadButtonClicked ();
 	void detachButtonClicked ();
-	void ok ();
-	void apply ();
-	void cancel ();
 	void updateInstalledPackages ();
 	void updateButtons ();
-	void activated ();
-protected:
-	void rCommandDone (RCommand *command) override;
 private:
 	void updateCurrentList ();
 	void doLoadUnload ();
@@ -151,7 +141,7 @@ private:
 class RKRPackageInstallationStatus : public QAbstractItemModel {
 	Q_OBJECT
 public:
-	explicit RKRPackageInstallationStatus (QObject* parent);
+	explicit RKRPackageInstallationStatus (QObject* parent, QWidget* diplay_area);
 	~RKRPackageInstallationStatus ();
 
 	void initialize (RCommandChain *chain);
@@ -166,9 +156,9 @@ public:
 		COLUMN_COUNT
 	};
 	enum ToplevelItems {
-		UpdateablePackages,
-		NewPackages,
 		InstalledPackages,
+		NewPackages,
+		UpdateablePackages,
 		TOPLEVELITEM_COUNT
 	};
 	enum PackageStatusChange {
@@ -200,8 +190,9 @@ public:
 	QModelIndex markAllUpdatesForInstallation ();
 /** reset all installation states to NoAction */
 	void clearStatus ();
-	QStringList currentRepositories () const { return current_repos; };
 	bool initialized () const { return _initialized; };
+signals:
+	void changed();
 private slots:
 	void statusCommandFinished (RCommand *command);
 private:
@@ -217,7 +208,7 @@ private:
 	QVector<bool> installed_has_update;
 	bool _initialized;
 
-	QStringList current_repos;
+	QWidget *display_area;
 };
 
 class RKRPackageInstallationStatusSortFilterModel : public QSortFilterProxyModel {
@@ -237,76 +228,49 @@ To be used in RKLoadLibsDialog.
 
 @author Thomas Friedrichsmeier
 */
-class InstallPackagesWidget : public QWidget {
+class InstallPackagesWidget : public RKLoadLibsDialogPage {
 Q_OBJECT
 public:
 	explicit InstallPackagesWidget (RKLoadLibsDialog *dialog);
 	
 	~InstallPackagesWidget ();
-	void trySelectPackage (const QString &package_name);
+	void trySelectPackages (const QStringList &package_names);
 	void initialize ();
+	void apply() override;
+	void activated() override;
 public slots:
-	void ok ();
-	void apply ();
-	void cancel ();
 	void filterChanged ();
-	void activated ();
 	void markAllUpdates ();
 	void configureRepositories ();
 	void rowClicked (const QModelIndex& row);
 private:
-	void doInstall (bool refresh);
+	void doInstall();
+	void updateStatus();
 	QTreeView *packages_view;
 	RKRPackageInstallationStatus *packages_status;
 	RKRPackageInstallationStatusSortFilterModel *model;
 
-	QPushButton *mark_all_updates_button;
 	RKDynamicSearchLine *filter_edit;
 	QCheckBox *rkward_packages_only;
-	PackageInstallParamsWidget *install_params;
-	
+	QComboBox *libloc_selector;
+	QCheckBox *suggested_packages;
+	QLabel *status_label;
+
 	RKLoadLibsDialog *parent;
 };
 
-/**
-Simple helper class for RKLoadLibsDialog to allow selection of installation parameters
-
-@author Thomas Friedrichsmeier
-*/
-class PackageInstallParamsWidget : public QWidget {
-Q_OBJECT
-public:
-	explicit PackageInstallParamsWidget (QWidget *parent);
-	
-	~PackageInstallParamsWidget ();
-
-	bool installSuggestedPackages ();
-	QString installLocation ();
-public slots:
-	void liblocsChanged (const QStringList &newlist);
-private:
-	QComboBox *libloc_selector;
-	QCheckBox *suggested_packages;
-};
-
-
 #include "../settings/rksettingsmoduleplugins.h"
 
-class RKPluginMapSelectionWidget : public QWidget {
+class RKPluginMapSelectionWidget : public RKLoadLibsDialogPage {
 Q_OBJECT
 public:
 	explicit RKPluginMapSelectionWidget (RKLoadLibsDialog *dialog);
 	virtual ~RKPluginMapSelectionWidget ();
-public slots:
-	void ok ();
-	void apply ();
-	void cancel ();
-	void activated ();
-	void changed () { changes_pending = true; };
+	void apply() override;
+	void activated() override;
 private:
 	RKMultiStringSelectorV2* selector;
 	RKSettingsModulePluginsModel* model;
-	bool changes_pending;
 };
 
 #endif

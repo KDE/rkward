@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rwindowcatcher.h  -  description
-                             -------------------
-    begin                : Wed May 4 2005
-    copyright            : (C) 2005-2013 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rwindowcatcher.h - This file is part of the RKWard project. Created: Wed May 4 2005
+SPDX-FileCopyrightText: 2005-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef RKWINDOWCATCHER_H
 #define RKWINDOWCATCHER_H
@@ -168,7 +158,7 @@ public slots:
 	void showPlotInfo ();
 
 /** reimplemented to keep window alive while saving history */
-	bool close (bool also_delete) override;
+	bool close (RKMDIWindow::CloseWindowMode ask_save) override;
 	void setKilledInR () { killed_in_r = true; };
 	void setWindowStyleHint (const QString& hint) override;
 private slots:
@@ -176,11 +166,11 @@ private slots:
 private:
 	void forceClose ();
 	void commonInit (int device_number);
+	void commonClose(bool in_destructor);
 	friend class RKCaughtX11WindowPart;	// needs access to the actions
 	int device_number;
 	bool killed_in_r;
 	bool close_attempted;
-	bool in_destructor;
 	QWidget *xembed_container;
 	QScrollArea *scroll_widget;
 	RKProgressControl *error_dialog;
@@ -191,7 +181,7 @@ private:
 	QWidget *capture;  // The captured window (0, if using an rk native device)
 	RKGraphicsDevice *rk_native_device;
 
-	bool dynamic_size;
+	bool dynamicSize() const;
 	KToggleAction *dynamic_size_action;
 	QAction *plot_prev_action;
 	QAction *plot_next_action;

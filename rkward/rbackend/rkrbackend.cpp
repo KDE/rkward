@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkrbackend  -  description
-                             -------------------
-    begin                : Sun Jul 25 2004
-    copyright            : (C) 2004 - 2019 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkrbackend - This file is part of RKWard (https://rkward.kde.org). Created: Sun Jul 25 2004
+SPDX-FileCopyrightText: 2004-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkrbackend.h"
 
@@ -42,7 +32,6 @@ void* RKRBackend::default_global_context = 0;
 #include "../core/robject.h"
 #include "../version.h"
 #include "../debug.h"
-
 #include "rkrsupport.h"
 #include "rkstructuregetter.h"
 #include "rksignalsupport.h"
@@ -100,19 +89,14 @@ void* RKRBackend::default_global_context = 0;
 #endif
 
 ///// i18n
-#if (defined ENABLE_NLS)		// ENABLE_NLS is from Rconfig.h
-#	include <libintl.h>
-#	define RK_MSG_DOMAIN "rkward"
-	// define i18n to be compatible with the easiest usage in KDE
-#	define i18n(msgid) QString::fromUtf8(dgettext(RK_MSG_DOMAIN, msgid))
-	void RK_setupGettext (const char* locale_dir) {
-		bindtextdomain (RK_MSG_DOMAIN, locale_dir);
-		bind_textdomain_codeset (RK_MSG_DOMAIN, "UTF-8");
+#include <KLocalizedString>
+#define RK_MSG_DOMAIN "rkward"
+void RK_setupGettext (const QString &locale_dir) {
+	KLocalizedString::setApplicationDomain (RK_MSG_DOMAIN);
+	if (!locale_dir.isEmpty ()) {
+		KLocalizedString::addDomainLocaleDir (RK_MSG_DOMAIN, locale_dir);
 	}
-#else
-#	define i18n(msgid) QString(msgid)
-	void RK_setupGettext (const char*) {};
-#endif
+}
 
 
 ///// interrupting R
@@ -145,6 +129,7 @@ void RKRBackend::scheduleInterrupt () {
 
 void RKRBackend::interruptCommand (int command_id) {
 	RK_TRACE (RBACKEND);
+	RK_DEBUG(RBACKEND, DL_DEBUG, "Received interrupt request for command id %d", command_id);
 	QMutexLocker lock (&all_current_commands_mutex);
 
 	if (all_current_commands.isEmpty ()) return;
@@ -279,7 +264,7 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 	}
 	
 	if ((!RKRBackend::repl_status.browser_context) && (RKRBackend::repl_status.eval_depth == 0)) {
-		while (1) {
+		while (true) {
 			if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::NoUserCommand) {
 				RCommandProxy *command = RKRBackend::this_pointer->fetchNextCommand ();
 				if (!command) {
@@ -551,7 +536,7 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 
 	if (RKRBackend::this_pointer->killed == RKRBackend::AlreadyDead) return;	// Nothing to clean up
 	if (!RKRBackend::this_pointer->r_running) return;			// prevent recursion (if an error occurs, here, we get jumped to the console repl, again!)
-	R_CheckUserInterrupt ();	// if there are any user interrupts pendinging, we want them handled *NOW*
+	R_CheckUserInterrupt ();	// if there are any user interrupts pending, we want them handled *NOW*
 	RKRBackend::this_pointer->r_running = false;
 
 	// we could be in a signal handler, and the stack base may have changed.
@@ -582,7 +567,7 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 	if (saveact != SA_SUICIDE) {
 		if (!RKRBackend::this_pointer->isKilled ()) {
 			RBackendRequest request (true, RBackendRequest::BackendExit);
-			request.params["message"] = QVariant (i18n ("The R engine has shut down with status: %1").arg (status)); // krazy:exclude=i18ncheckarg
+			request.params["message"] = QVariant (i18n ("The R engine has shut down with status: %1", status));
 			RKRBackend::this_pointer->handleRequest (&request);
 		}
 
@@ -601,7 +586,7 @@ void RSuicide (const char* message) {
 
 	if (!RKRBackend::this_pointer->isKilled ()) {
 		RBackendRequest request (true, RBackendRequest::BackendExit);
-		request.params["message"] = QVariant (i18n ("The R engine has encountered a fatal error:\n%1").arg (message)); // krazy:exclude=i18ncheckarg
+		request.params["message"] = QVariant (i18n ("The R engine has encountered a fatal error:\n%1", message));
 		RKRBackend::this_pointer->handleRequest (&request);
 		RKRBackend::this_pointer->killed = RKRBackend::EmergencySaveThenExit;
 		RCleanUp (SA_SUICIDE, 1, 0);
@@ -622,6 +607,7 @@ void RKRBackend::tryToDoEmergencySave () {
 		// If we are in the wrong thread, things are a lot more tricky. We need to cause the R thread to exit, and wait for it to finish saving.
 		// Fortunately, if we are in the wrong thread, that probably means, the R thread did *not* crash, and will thus still be functional
 		this_pointer->killed = EmergencySaveThenExit;
+		return;
 		RK_scheduleIntr ();
 		for (int i = 0; i < 100; ++i) {		// give it up to ten seconds to interrupt and exit the loop
 			if (!this_pointer->r_running) break;
@@ -664,7 +650,7 @@ int RChooseFile (int isnew, char *buf, int len) {
 /* There are about one million possible entry points to editing / showing files. We try to cover them all, using the
 following bunch of functions (REditFilesHelper() and doShowEditFiles() are helpers, only) */
 
-void REditFilesHelper (QStringList files, QStringList titles, QString wtitle, RBackendRequest::RCallbackType edit, bool delete_files, bool prompt) {
+void REditFilesHelper (const QStringList &files, const QStringList &titles, const QString &wtitle, RBackendRequest::RCallbackType edit, bool delete_files, bool prompt) {
 	RK_TRACE (RBACKEND);
 
 	RK_ASSERT ((edit == RBackendRequest::ShowFiles) || (edit == RBackendRequest::EditFiles));
@@ -737,7 +723,7 @@ int RShowFiles (int nfile, const char **file, const char **headers, const char *
 
 /* FROM R_ext/RStartup.h: "Return value here is expected to be 1 for Yes, -1 for No and 0 for Cancel:
    symbolic constants in graphapp.h" */
-int doDialogHelper (QString caption, QString message, QString button_yes, QString button_no, QString button_cancel, QString default_button, bool wait) {
+int doDialogHelper (const QString &caption, const QString &message, const QString &button_yes, const QString &button_no, const QString &button_cancel, const QString &default_button, bool wait) {
 	RK_TRACE (RBACKEND);
 
 	RBackendRequest request (wait, RBackendRequest::ShowMessage);
@@ -834,7 +820,11 @@ void RKRBackend::setupCallbacks () {
 	RK_R_Params.home = getRUser ();
 	RK_R_Params.CharacterMode = RGui;
 	RK_R_Params.ShowMessage = RShowMessage;
+#if R_VERSION < R_Version(4, 2, 0)
 	RK_R_Params.ReadConsole = RReadConsoleWin;
+#else
+	RK_R_Params.ReadConsole = RReadConsole;
+#endif
 	RK_R_Params.WriteConsoleEx = RWriteConsoleEx;
 	RK_R_Params.WriteConsole = 0;
 	RK_R_Params.CallBack = RKREventLoop::winRKEventHandlerWrapper;
@@ -903,7 +893,7 @@ extern "C" int R_interrupts_pending;
 #else
 LibExtern int R_interrupts_pending;
 #endif
-SEXP doError (SEXP call) {
+void doError (const QString &callstring) {
 	RK_TRACE (RBACKEND);
 
 	if ((RKRBackend::repl_status.eval_depth == 0) && (!RKRBackend::repl_status.browser_context) && (!RKRBackend::this_pointer->isKilled ()) && (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::ReplIterationKilled) && (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::NoUserCommand)) {
@@ -921,11 +911,9 @@ SEXP doError (SEXP call) {
 			}
 		}
 	} else if (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::ReplIterationKilled) {
-		QString string = RKRSupport::SEXPToString (call);
-		RKRBackend::this_pointer->handleOutput (string, string.length (), ROutput::Error);
-		RK_DEBUG (RBACKEND, DL_DEBUG, "error '%s'", qPrintable (string));
+		RKRBackend::this_pointer->handleOutput (callstring, callstring.length (), ROutput::Error);
+		RK_DEBUG (RBACKEND, DL_DEBUG, "error '%s'", qPrintable (callstring));
 	}
-	return R_NilValue;
 }
 
 SEXP doSubstackCall (SEXP call) {
@@ -944,9 +932,11 @@ SEXP doSubstackCall (SEXP call) {
 	} */
 
 
-	RKRBackend::this_pointer->handleHistoricalSubstackRequest (list);
+	auto ret = RKRBackend::this_pointer->handleRequestWithSubcommands(list);
+	if (!ret.warning.isEmpty()) Rf_warning(RKRBackend::fromUtf8(ret.warning));  // print warnings, first, as errors will cause a stop
+	if (!ret.error.isEmpty()) Rf_error(RKRBackend::fromUtf8(ret.error));
 
-	return R_NilValue;
+	return RKRSupport::QVariantToSEXP(ret.ret);
 }
 
 SEXP doPlainGenericRequest (SEXP call, SEXP synchronous) {
@@ -954,8 +944,49 @@ SEXP doPlainGenericRequest (SEXP call, SEXP synchronous) {
 
 	R_CheckUserInterrupt ();
 
-	QStringList ret = RKRBackend::this_pointer->handlePlainGenericRequest (RKRSupport::SEXPToStringList (call), RKRSupport::SEXPToInt (synchronous));
-	return RKRSupport::StringListToSEXP (ret);
+	auto ret = RKRBackend::this_pointer->handlePlainGenericRequest(RKRSupport::SEXPToStringList(call), RKRSupport::SEXPToInt(synchronous));
+	if (!ret.warning.isEmpty()) Rf_warning(RKRBackend::fromUtf8(ret.warning));  // print warnings, first, as errors will cause a stop
+	if (!ret.error.isEmpty()) Rf_error(RKRBackend::fromUtf8(ret.error));
+
+	return RKRSupport::QVariantToSEXP(ret.ret);
+}
+
+// Function to handle several simple calls from R code, that do not need any special arguments, or interaction with the frontend process.
+SEXP doSimpleBackendCall (SEXP _call) {
+	RK_TRACE (RBACKEND);
+
+	QStringList list = RKRSupport::SEXPToStringList (_call);
+	QString call = list[0];
+
+	if (call == QStringLiteral ("unused.filename")) {
+		QString prefix = list.value (1);
+		QString extension = list.value (2);
+		QString dirs = list.value (3);
+		QDir  dir (dirs);
+		if (dirs.isEmpty ()) {
+			dir = QDir (RKRBackendProtocolBackend::dataDir ());
+		}
+
+		int i = 0;
+		while (true) {
+			QString candidate = prefix + QString::number (i) + extension;
+			if (!dir.exists (candidate)) {
+				return (RKRSupport::StringListToSEXP (QStringList (candidate) << dir.absoluteFilePath (candidate))); // return as c (relpath, abspath)
+			}
+			i++;
+		}
+	} else if (call == QStringLiteral ("error")) {  // capture error message
+		doError (list.value (1));
+		return R_NilValue;
+	} else if (call == QStringLiteral ("locale.name")) {
+		RK_ASSERT (QTextCodec::codecForLocale());
+		return (RKRSupport::StringListToSEXP (QStringList (QTextCodec::codecForLocale()->name ().data ())));
+	} else if (call == QStringLiteral ("tempdir")) {
+		return (RKRSupport::StringListToSEXP (QStringList (RKRBackendProtocolBackend::dataDir ())));
+	}
+
+	RK_ASSERT (false);  // Unhandled call.
+	return R_NilValue;
 }
 
 void R_CheckStackWrapper (void *) {
@@ -977,18 +1008,6 @@ SEXP doUpdateLocale () {
 	RK_DEBUG (RBACKEND, DL_WARNING, "New locale codec is %s", QTextCodec::codecForLocale ()->name ().data ());
 
 	return R_NilValue;
-}
-
-// returns the MIME-name of the current locale encoding (from Qt)
-SEXP doLocaleName () {
-	RK_TRACE (RBACKEND);
-
-	RK_ASSERT (QTextCodec::codecForLocale());
-	SEXP res = Rf_allocVector(STRSXP, 1);
-	PROTECT (res);
-	SET_STRING_ELT (res, 0, Rf_mkChar (QTextCodec::codecForLocale()->name ().data ()));
-	UNPROTECT (1);
-	return res;
 }
 
 SEXP doGetStructure (SEXP toplevel, SEXP name, SEXP envlevel, SEXP namespacename) {
@@ -1017,7 +1036,7 @@ SEXP doCopyNoEval (SEXP fromname, SEXP fromenv, SEXP toname, SEXP toenv) {
 	return (R_NilValue);
 }
 
-SEXP doCaptureOutput (SEXP mode, SEXP capture_messages, SEXP capture_output, SEXP suppress_messages, SEXP suppress_output) {
+SEXP doCaptureOutput (SEXP mode, SEXP capture_messages, SEXP capture_output, SEXP suppress_messages, SEXP suppress_output, SEXP allow_nesting) {
 	RK_TRACE (RBACKEND);
 
 	if (RKRSupport::SEXPToInt (mode) == 1) {
@@ -1026,6 +1045,7 @@ SEXP doCaptureOutput (SEXP mode, SEXP capture_messages, SEXP capture_output, SEX
 		if (RKRSupport::SEXPToInt (capture_output)) cm |= RKROutputBuffer::RecordOutput;
 		if (RKRSupport::SEXPToInt (suppress_messages)) cm |= RKROutputBuffer::SuppressMessages;
 		if (RKRSupport::SEXPToInt (suppress_output)) cm |= RKROutputBuffer::SuppressOutput;
+		if (!RKRSupport::SEXPToInt (allow_nesting)) cm |= RKROutputBuffer::NoNesting;
 		RKRBackend::this_pointer->pushOutputCapture (cm);
 		return (R_NilValue);
 	} else {
@@ -1034,7 +1054,7 @@ SEXP doCaptureOutput (SEXP mode, SEXP capture_messages, SEXP capture_output, SEX
 }
 
 SEXP RKStartGraphicsDevice (SEXP width, SEXP height, SEXP pointsize, SEXP family, SEXP bg, SEXP title, SEXP antialias);
-SEXP RKD_AdjustSize (SEXP devnum);
+SEXP RKD_AdjustSize (SEXP devnum, SEXP id);
 void doPendingPriorityCommands ();
 
 SEXP checkEnv(SEXP a) {
@@ -1115,7 +1135,7 @@ bool RKRBackend::startR () {
 	R_CallMethodDef callMethods [] = {
 		// NOTE: Intermediate cast to void* to avoid compiler warning
 		{ "rk.check.env", (DL_FUNC) (void*) &checkEnv, 1 },
-		{ "rk.do.error", (DL_FUNC) (void*) &doError, 1 },
+		{ "rk.simple", (DL_FUNC) (void*) &doSimpleBackendCall, 1},
 		{ "rk.do.command", (DL_FUNC) (void*) &doSubstackCall, 1 },
 		{ "rk.do.generic.request", (DL_FUNC) (void*) &doPlainGenericRequest, 2 },
 		{ "rk.get.structure", (DL_FUNC) (void*) &doGetStructure, 4 },
@@ -1125,10 +1145,9 @@ bool RKRBackend::startR () {
 		{ "rk.show.files", (DL_FUNC) (void*) &doShowFiles, 5 },
 		{ "rk.dialog", (DL_FUNC) (void*) &doDialog, 7 },
 		{ "rk.update.locale", (DL_FUNC) (void*) &doUpdateLocale, 0 },
-		{ "rk.locale.name", (DL_FUNC) (void*) &doLocaleName, 0 },
-		{ "rk.capture.output", (DL_FUNC) (void*) &doCaptureOutput, 5 },
+		{ "rk.capture.output", (DL_FUNC) (void*) &doCaptureOutput, 6 },
 		{ "rk.graphics.device", (DL_FUNC) (void*) &RKStartGraphicsDevice, 7},
-		{ "rk.graphics.device.resize", (DL_FUNC) (void*) &RKD_AdjustSize, 1},
+		{ "rk.graphics.device.resize", (DL_FUNC) (void*) &RKD_AdjustSize, 2},
 		{ 0, 0, 0 }
 	};
 	R_registerRoutines (R_getEmbeddingDllInfo(), NULL, callMethods, NULL, NULL);
@@ -1209,6 +1228,7 @@ void RKRBackend::enterEventLoop () {
 
 	run_Rmainloop ();
 	// NOTE: Do NOT run Rf_endEmbeddedR(). It does more that we want. We rely on RCleanup, instead.
+	RK_DEBUG(RBACKEND, DL_DEBUG, "R loop finished");
 }
 
 struct SafeParseWrap {
@@ -1465,7 +1485,7 @@ void RKRBackend::printCommand (const QString &command) {
 
 	QStringList params ("highlightRCode");
 	params.append (command);
-	QString highlighted = handlePlainGenericRequest (params, true).value (0);
+	QString highlighted = handlePlainGenericRequest(params, true).ret.toString();
 	catToOutputFile (highlighted);
 }
 
@@ -1490,9 +1510,9 @@ void RKRBackend::run (const QString &locale_dir) {
 	killed = NotKilled;
 	previous_command = 0;
 
-	initialize (QFile::encodeName (locale_dir));
+	initialize (locale_dir);
 
-	enterEventLoop ();
+	enterEventLoop();
 }
 
 void RKRBackend::commandFinished (bool check_object_updates_needed) {
@@ -1505,6 +1525,7 @@ void RKRBackend::commandFinished (bool check_object_updates_needed) {
 	}
 	clearPendingInterrupt ();	// Mutex must be unlocked for this!
 
+	fetchStdoutStderr(true);
 	if (current_command->type & RCommand::CCOutput) printAndClearCapturedMessages (current_command->type & RCommand::Plugin);
 	current_command->status -= (current_command->status & RCommand::Running);
 	current_command->status |= RCommand::WasTried;
@@ -1532,14 +1553,25 @@ void RKRBackend::commandFinished (bool check_object_updates_needed) {
 	}
 }
 
-RCommandProxy* RKRBackend::handleRequest (RBackendRequest *request, bool mayHandleSubstack) {
+RCommandProxy* RKRBackend::handleRequest(RBackendRequest *request, bool mayHandleSubstack) {
 	RK_TRACE (RBACKEND);
 	RK_ASSERT (request);
 
-	RKRBackendProtocolBackend::instance ()->sendRequest (request);
+	// Seed docs for RBackendRequest for hints to make sense of this mess (and eventually to fix it)
+
+	RKRBackendProtocolBackend::instance ()->sendRequest(request);
+	if (request->subcommandrequest) {
+		handleRequest2(request->subcommandrequest, true);
+	}
+	return handleRequest2(request, mayHandleSubstack);
+}
+
+RCommandProxy * RKRBackend::handleRequest2(RBackendRequest* request, bool mayHandleSubstack) {
+	RK_TRACE(RBACKEND);
 
 	if ((!request->synchronous) && (!isKilled ())) {
-		RK_ASSERT (mayHandleSubstack);	// i.e. not called from fetchNextCommand
+		RK_ASSERT(mayHandleSubstack);	// i.e. not called from fetchNextCommand
+		RK_ASSERT(!request->subcommandrequest);
 		return 0;
 	}
 
@@ -1598,16 +1630,23 @@ RCommandProxy* RKRBackend::fetchNextCommand () {
 	return (handleRequest (&req, false));
 }
 
-void RKRBackend::handleHistoricalSubstackRequest (const QStringList &list) {
+GenericRRequestResult RKRBackend::handleRequestWithSubcommands(const QStringList &list) {
 	RK_TRACE (RBACKEND);
 
-	RBackendRequest request (true, RBackendRequest::HistoricalSubstackRequest);
+	RBackendRequest request(true, RBackendRequest::GenericRequestWithSubcommands);
 	request.params["call"] = list;
 	request.command = current_command;
-	handleRequest (&request);
+	request.subcommandrequest = new RBackendRequest(true, RBackendRequest::OtherRequest);
+	handleRequest(&request);
+	delete request.subcommandrequest;
+	return request.getResult();
 }
 
-QStringList RKRBackend::handlePlainGenericRequest (const QStringList &parameters, bool synchronous) {
+QString getLibLoc() {
+	return RKRBackendProtocolBackend::dataDir () + "/.rkward_packages/" + QString::number (RKRBackend::this_pointer->r_version / 10);
+}
+
+GenericRRequestResult RKRBackend::handlePlainGenericRequest (const QStringList &parameters, bool synchronous) {
 	RK_TRACE (RBACKEND);
 
 	RBackendRequest request (synchronous, RBackendRequest::PlainGenericRequest);
@@ -1621,17 +1660,20 @@ QStringList RKRBackend::handlePlainGenericRequest (const QStringList &parameters
 		output_file = parameters.value (1);
 		if (parameters.length () > 2) {
 			RK_ASSERT (parameters.value (2) == "SILENT");
-			return QStringList ();		// For automated testing and previews. The frontend should not be notified, here
+			return GenericRRequestResult();  // For automated testing and previews. The frontend should not be notified, here
 		}
 		request.params["call"] = parameters;
+	} else if (parameters.value(0) == "home") {
+		if (parameters.value(1) == "home") return GenericRRequestResult(RKRBackendProtocolBackend::dataDir());
+		else if (parameters.value(1) == "lib") return GenericRRequestResult(getLibLoc());
 	} else {
 		request.params["call"] = parameters;
 	}
 	handleRequest (&request);
-	return request.params.value ("return").toStringList ();
+	return request.getResult();
 }
 
-void RKRBackend::initialize (const char *locale_dir) {
+void RKRBackend::initialize (const QString &locale_dir) {
 	RK_TRACE (RBACKEND);
 
 	// in RInterface::RInterface() we have created a fake RCommand to capture all the output/errors during startup. Fetch it
@@ -1644,7 +1686,7 @@ void RKRBackend::initialize (const char *locale_dir) {
 	bool sink_fail = false;
 	// Try to load rkward package. If that fails, or is the wrong version, try to install
 	// rkward package, then load again.
-	QString libloc = RKRBackendProtocolBackend::dataDir () + "/.rkward_packages/" + QString::number (r_version / 10);
+	QString libloc = getLibLoc();
 	QString versioncheck = QString ("stopifnot(.rk.app.version==\"%1\")\n").arg (RKWARD_VERSION);
 	QString command = "local({\n"
 	                  "  libloc <- " + RKRSharedFunctionality::quote (libloc) + "\n"
@@ -1656,6 +1698,7 @@ void RKRBackend::initialize (const char *locale_dir) {
 	                  "    install.packages(normalizePath(paste(libloc, \"..\", c (\"rkward.tgz\", \"rkwardtests.tgz\"), sep=\"/\")), lib=libloc, repos=NULL, type=\"source\")\n"
 	                  "    library (\"rkward\", lib.loc=libloc)\n"
 	                  "  }\n"
+	                  "  .libPaths(c(.libPaths(), libloc))\n" // Add to end search path: Will be avaiable for help serach, but hopefully, not get into the way, otherwise
 	                  "})\n";
 	if (!runDirectCommand (command)) lib_load_fail = true;
 	RK_setupGettext (locale_dir);	// must happen *after* package loading, since R will re-set it
@@ -1668,11 +1711,11 @@ void RKRBackend::initialize (const char *locale_dir) {
 	QString error_messages;
 	if (lib_load_fail) {
 		error_messages.append (i18n ("</p>\t- The 'rkward' R-library either could not be loaded at all, or not in the correct version. This may lead to all sorts of errors, from single missing features to complete failure to function. The most likely cause is that the last installation did not place all files in the correct place. However, in some cases, left-overs from a previous installation that was not cleanly removed may be the cause.</p>\
-		<p><b>You should quit RKWard, now, and fix your installation</b>. For help with that, see <a href=\"http://rkward.kde.org/compiling\">http://rkward.kde.org/compiling</a>.</p>\n"));
+		<p><b>You should quit RKWard, now, and fix your installation</b>. For help with that, see <a href=\"https://rkward.kde.org/compiling\">https://rkward.kde.org/compiling</a>.</p>\n"));
 	}
 	if (sink_fail) {
 		error_messages.append (i18n ("<p>\t-There was a problem setting up the communication with R. Most likely this indicates a broken installation.</p>\
-		<p><b>You should quit RKWard, now, and fix your installation</b>. For help with that, see <a href=\"http://rkward.kde.org/compiling\">http://rkward.kde.org/compiling</a>.</p></p>\n"));
+		<p><b>You should quit RKWard, now, and fix your installation</b>. For help with that, see <a href=\"https://rkward.kde.org/compiling\">https://rkward.kde.org/compiling</a>.</p></p>\n"));
 	}
 
 	RBackendRequest req (true, RBackendRequest::Started);
@@ -1728,12 +1771,12 @@ void RKRBackend::checkObjectUpdatesNeeded (bool check_list) {
 			dummy = runDirectCommand ("loadedNamespaces ()\n", RCommand::GetStringVector);
 			call.append (dummy->stringVector ());
 			delete dummy;
-			handleHistoricalSubstackRequest (call);
+			handleRequestWithSubcommands (call);
 		} 
 		if (globalenv_update_needed) {
 			QStringList call = global_env_toplevel_names;
 			call.prepend ("syncglobal");	// should be faster than the reverse
-			handleHistoricalSubstackRequest (call);
+			handleRequestWithSubcommands (call);
 		}
 	}
 
@@ -1745,7 +1788,7 @@ void RKRBackend::checkObjectUpdatesNeeded (bool check_list) {
 	if (!changed_symbol_names.isEmpty ()) {
 		QStringList call = changed_symbol_names;
 		call.prepend (QString ("sync"));	// should be faster than reverse
-		handleHistoricalSubstackRequest (call);
+		handleRequestWithSubcommands (call);
 		changed_symbol_names.clear ();
 	}
 }
@@ -1757,3 +1800,11 @@ bool RKRBackend::doMSleep (int msecs) {
 	return true;
 }
 
+bool RKRBackend::graphicsEngineMismatchMessage(int compiled_version, int runtime_version) {
+	static bool shown = false;
+	if (!shown) {
+		shown = true;
+		doDialogHelper(i18n("Graphics version mismatch"), i18n("R Graphics Engine version has changed (from %1 to %2).<br>This change requires a recompilation.<br><a href=\"rkward://page/rkward_incompatible_version\">Additional information</a>", compiled_version, runtime_version), i18n("Ok"), QString(), QString(), QString(), true);
+	}
+	return false;
+}

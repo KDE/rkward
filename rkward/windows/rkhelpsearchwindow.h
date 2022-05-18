@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkhelpsearchwindow  -  description
-                             -------------------
-    begin                : Fri Feb 25 2005
-    copyright            : (C) 2005, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkhelpsearchwindow - This file is part of the RKWard project. Created: Fri Feb 25 2005
+SPDX-FileCopyrightText: 2005-2011 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef RKHELPSEARCHWINDOW_H
 #define RKHELPSEARCHWINDOW_H

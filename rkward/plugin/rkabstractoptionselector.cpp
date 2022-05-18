@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkabstractoptionselector  -  description
-                             -------------------
-    begin                : Tue Mar 20 2007
-    copyright            : (C) 2007, 2009, 2012, 2014 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkabstractoptionselector - This file is part of RKWard (https://rkward.kde.org). Created: Tue Mar 20 2007
+SPDX-FileCopyrightText: 2007-2014 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkabstractoptionselector.h"
 
@@ -36,7 +26,7 @@ RKAbstractOptionSelector::RKAbstractOptionSelector (RKComponent *parent_componen
 RKAbstractOptionSelector::~RKAbstractOptionSelector(){
 	RK_TRACE (PLUGIN);
 
-	for (OptionsMap::const_iterator it = options.begin(); it != options.end(); ++it) {
+	for (OptionsMap::const_iterator it = options.cbegin(); it != options.cend(); ++it) {
 		delete (it.value ());
 	}
 }
@@ -51,7 +41,7 @@ void RKAbstractOptionSelector::addOptionsAndInit (const QDomElement &element) {
 	XMLChildList option_elements = xml->getChildElements (element, "option", DL_ERROR);	
 	int selected = 0;
 	int i = 0;
-	for (XMLChildList::const_iterator it = option_elements.begin (); it != option_elements.end (); ++it) {
+	for (XMLChildList::const_iterator it = option_elements.cbegin (); it != option_elements.cend (); ++it) {
 		QString label = xml->i18nStringAttribute (*it, "label", QString (), DL_ERROR);
 		QString value = xml->getStringAttribute (*it, "value", QString (), DL_WARNING);
 		QString name = xml->getStringAttribute (*it, "id", QString (), DL_INFO);
@@ -145,7 +135,7 @@ void RKAbstractOptionSelector::ItemPropertyChanged (RKComponentPropertyBase *pro
 
 	Option *opt = 0;
 	int id = -1;
-	for (OptionsMap::const_iterator it = options.begin(); it != options.end(); ++it) {
+	for (OptionsMap::const_iterator it = options.cbegin(); it != options.cend(); ++it) {
 		RK_ASSERT (it.value ());
 		if (it.value ()->enabledness_prop == property) {
 			opt = it.value ();
@@ -165,7 +155,7 @@ void RKAbstractOptionSelector::ItemPropertyChanged (RKComponentPropertyBase *pro
 	if (!enabled) {
 		if (id == number->intValue ()) {	// current item was disabled
 			int settable_opt = -1;
-			for (OptionsMap::const_iterator it = options.begin(); it != options.end(); ++it) {
+			for (OptionsMap::const_iterator it = options.cbegin(); it != options.cend(); ++it) {
 				RK_ASSERT (it.value ());
 
 				if ((!(it.value ()->enabledness_prop)) || (it.value ()->enabledness_prop->boolValue ())) {
@@ -195,7 +185,7 @@ void RKAbstractOptionSelector::itemSelected (int id) {
 int RKAbstractOptionSelector::findOption (const QString &option_string) {
 	RK_TRACE (PLUGIN);
 
-	for (OptionsMap::const_iterator it = options.begin(); it != options.end(); ++it) {
+	for (OptionsMap::const_iterator it = options.cbegin(); it != options.cend(); ++it) {
 		RK_ASSERT (it.value ());
 		if (it.value ()->value == option_string) return (it.key ());
 	}

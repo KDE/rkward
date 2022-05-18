@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkward.h  -  description
-                             -------------------
-    begin                : Tue Oct 29 20:06:08 CET 2002
-    copyright            : (C) 2002-2014 by Thomas Friedrichsmeier 
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkward.h - This file is part of the RKWard project. Created: Tue Oct 29 2002
+SPDX-FileCopyrightText: 2002-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef RKWARD_H
 #define RKWARD_H
@@ -25,8 +15,8 @@
 class QLabel;
 class QCloseEvent;
 class KActionMenu;
-class RKTopLevelWindowGUI;
 class KRecentFilesAction;
+class RKTopLevelWindowGUI;
 class KSqueezedTextLabel;
 class QAction;
 class KatePluginIntegrationApp;
@@ -82,11 +72,9 @@ public slots:
 	/** open a workspace. If the current workspace is not empty, ask whether to save first.
     @see setNoAskSave ()
     @see setWorkspaceMightBeModified () */
-	void askOpenWorkspace (const QUrl &url);
+	void askOpenWorkspace (const QUrl &url=QUrl());
 	/** creates a new (empty) data.frame */
 	void slotNewDataFrame ();
-	/** open a file and load it into the document*/
-	void slotFileOpenWorkspace();
 	/** save a document */
 	void slotFileSaveWorkspace();
 	/** save a document by a new filename*/
@@ -109,20 +97,18 @@ public slots:
 /** configures RKward-settings */
 	void slotConfigure ();
 
-/** Add the given url to the list of recent scripts */
-	void addScriptUrl (const QUrl &url);
-/** Add the given url to the list of recent workspaces */
-	void addWorkspaceUrl (const QUrl &url);
-
 	/** Init-procedures to be done after the exec-loop was started */
 	void doPostInit ();
 
 /** open a new command editor (blank file) */
 	void slotNewCommandEditor();
-/** open a new command editor (ask for file to open) */
-	void slotOpenCommandEditor ();
-/** open a new command editor (load given url) */
-	void slotOpenCommandEditor (const QUrl &url, const QString& encoding = QString ());
+/** open a new command editor (load given url, ask for url to load, if empty) */
+	void slotOpenCommandEditor (const QUrl &url = QUrl(), const QString& encoding = QString());
+
+/** create and show a new output window */
+	void slotNewOutput();
+/** load an output Window (ask for file to open) */
+	void slotOpenOutput(const QUrl &url=QUrl());
 
 /** close current window (Windows->Close). */
 	void slotCloseWindow ();
@@ -141,18 +127,16 @@ private slots:
 private:
 /** Prompt for a local file to open, providing a choice of how to open the file (as R script, text, workspace, auto) */
 	void openAnyFile ();
-/** Opens a new workspace, without asking or closing anything. */
-	void openWorkspace (const QUrl &url);
 
 	QLabel* statusbar_r_status;
 	KSqueezedTextLabel* statusbar_cwd;
-	QLabel* statusbar_ready;
 	KParts::PartManager *part_manager;
 
 	// QAction pointers to enable/disable actions
-	QAction* fileOpen;
+	QAction* fileOpenScript;
+	QAction* fileOpenOutput;
 	KRecentFilesAction* fileOpenRecent;
-	
+
 	QAction* fileOpenWorkspace;
 	KRecentFilesAction* fileOpenRecentWorkspace;
 	QAction* fileSaveWorkspace;
@@ -162,6 +146,7 @@ private:
 	QAction* close_all_editors;
 	QAction* new_data_frame;
 	QAction* new_command_editor;
+	QAction* new_output;
 
 	QAction* window_close_all;
 	QAction* window_detach;
@@ -188,14 +173,8 @@ private:
 
 	static RKWardMainWindow *rkward_mainwin;
 
-	friend class RInterface;
-	enum RStatus {
-		Busy,
-		Idle,
-		Starting
-	};
-/** set the R status message ("R engine idle/busy") to idle or busy */
-	void setRStatus (RStatus status);
+/** set the R status message ("R engine idle/busy") to idle or busy. Note: Status is actually RInterface::RStatus */
+	void setRStatus (int status);
 /** update the display for the current working directory */
 	void updateCWD ();
 
@@ -206,6 +185,7 @@ private:
 	bool merge_loads;
 
 	KatePluginIntegrationApp *katepluginintegration;
+	KXMLGUIClient *active_ui_buddy;
 };
 
 #endif // RKWARD_H

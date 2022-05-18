@@ -17,6 +17,7 @@ SET(settings_STAT_SRCS
    rksettingsmoduleconsole.cpp
    rksettingsmodulecommandeditor.cpp
    rksettingsmoduledebug.cpp
+   rkrecenturls.cpp
    )
 
 IF (WIN32 OR USE_BINARY_PACKAGES)

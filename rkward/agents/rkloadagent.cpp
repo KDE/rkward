@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkloadagent  -  description
-                             -------------------
-    begin                : Sun Sep 5 2004
-    copyright            : (C) 2004-2018 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkloadagent - This file is part of RKWard (https://rkward.kde.org). Created: Sun Sep 5 2004
+SPDX-FileCopyrightText: 2004-2018 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 #include "rkloadagent.h"
 
 #include <KLocalizedString>
@@ -25,8 +15,8 @@
 #include <qstring.h>
 #include <QTemporaryFile>
 
-#include "../rkglobals.h"
 #include "../core/robjectlist.h"
+#include "../misc/rkoutputdirectory.h"
 #include "../rbackend/rkrinterface.h"
 #include "../rkward.h"
 #include "../windows/rkworkplace.h"
@@ -62,13 +52,12 @@ RKLoadAgent::RKLoadAgent (const QUrl &url, bool merge) {
 	RCommand *command;
 	
 	if (!merge) {
-		RKWardMainWindow::getMain ()->slotCloseAllWindows ();
 		command = new RCommand ("remove (list=ls (all.names=TRUE))", RCommand::App | RCommand::ObjectListUpdate);
-		RKGlobals::rInterface ()->issueCommand (command);
+		RInterface::issueCommand (command);
 	}
 
 	command = new RCommand ("load (\"" + filename + "\")", RCommand::App | RCommand::ObjectListUpdate, QString (), this, WORKSPACE_LOAD_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command);
+	RInterface::issueCommand (command);
 
 	RKWorkplace::mainWorkplace ()->setWorkspaceURL (url);
 }
@@ -88,15 +77,16 @@ void RKLoadAgent::rCommandDone (RCommand *command) {
 			RKWorkplace::mainWorkplace ()->restoreWorkplace (0, _merge);
 			if (RKSettingsModuleGeneral::cdToWorkspaceOnLoad ()) {
 				if (RKWorkplace::mainWorkplace ()->workspaceURL ().isLocalFile ()) {
-					RKGlobals::rInterface ()->issueCommand ("setwd (" + RObject::rQuote (RKWorkplace::mainWorkplace ()->workspaceURL ().adjusted (QUrl::RemoveFilename).path ()) + ')', RCommand::App);
+					RInterface::issueCommand ("setwd (" + RObject::rQuote (RKWorkplace::mainWorkplace ()->workspaceURL ().adjusted (QUrl::RemoveFilename).path ()) + ')', RCommand::App);
 				}
 			}
-			RKGlobals::rInterface ()->issueCommand (QString (), RCommand::EmptyCommand | RCommand::App, QString (), this, WORKSPACE_LOAD_COMPLETE_COMMAND);
 		}
+		RInterface::issueCommand(QString(), RCommand::EmptyCommand | RCommand::App, QString(), this, WORKSPACE_LOAD_COMPLETE_COMMAND);
 		RKWardMainWindow::getMain ()->setCaption (QString ());	// trigger update of caption
 	} else if (command->getFlags () == WORKSPACE_LOAD_COMPLETE_COMMAND) {
 		RKWardMainWindow::getMain ()->slotSetStatusReady ();
 		RKWardMainWindow::getMain ()->setWorkspaceMightBeModified (false);
+		RKOutputDirectory::getCurrentOutput();  // make sure some output file exists
 
 		delete this;
 		return;

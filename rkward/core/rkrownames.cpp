@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkrownames  -  description
-                             -------------------
-    begin                : Tue Mar 21 2010
-    copyright            : (C) 2010, 2013 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkrownames - This file is part of RKWard (https://rkward.kde.org). Created: Tue Mar 21 2010
+SPDX-FileCopyrightText: 2010-2013 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkrownames.h"
 
@@ -22,7 +12,6 @@
 #include <KLocalizedString>
 
 #include "rcontainerobject.h"
-#include "../rkglobals.h"
 #include "../rbackend/rkrinterface.h"
 #include "rkmodificationtracker.h"
 
@@ -72,7 +61,7 @@ void RKRowNames::writeData (int from_row, int to_row, RCommandChain *chain) {
 	RK_TRACE (OBJECTS);
 
 	if (isSequential ()) {
-		RKGlobals::rInterface ()->issueCommand (getFullName (DefaultObjectNameOptions) + " <- NULL", RCommand::App | RCommand::Sync, QString (), 0,0, chain);
+		RInterface::issueCommand (getFullName (DefaultObjectNameOptions) + " <- NULL", RCommand::App | RCommand::Sync, QString (), 0,0, chain);
 	} else {
 		// unfortunately, we always need to write the whole data, as row.names<- does not support indexing.
 		QString data_string = "c (";
@@ -84,13 +73,13 @@ void RKRowNames::writeData (int from_row, int to_row, RCommandChain *chain) {
 			}
 		}
 		data_string.append (")");
-		RKGlobals::rInterface ()->issueCommand (getFullName (DefaultObjectNameOptions) + " <- " + data_string, RCommand::App | RCommand::Sync, QString (), 0, 0, chain);
+		RInterface::issueCommand (getFullName (DefaultObjectNameOptions) + " <- " + data_string, RCommand::App | RCommand::Sync, QString (), 0, 0, chain);
 	}
 
 	ChangeSet *set = new ChangeSet;
 	set->from_index = from_row;
 	set->to_index = to_row;
-	RKGlobals::tracker ()->objectDataChanged (this, set);
+	RKModificationTracker::instance()->objectDataChanged (this, set);
 }
 
 void RKRowNames::setText (int row, const QString &text) {
@@ -139,7 +128,7 @@ bool RKRowNames::makeUnique (QString *text, bool non_sequentials_only) {
 
 	if (!check_duplicates) return true;
 
-	bool from_index = 0;
+	int from_index = 0;
 	if (non_sequentials_only) from_index = is_sequential_up_to_row + 1;
 
 	QString dummy = *text;

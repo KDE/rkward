@@ -1,19 +1,9 @@
-/***************************************************************************
-                          main.cpp  -  description
-                             -------------------
-    begin                : Tue Oct 29 20:06:08 CET 2002
-    copyright            : (C) 2002-2020 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+main.cpp - This file is part of RKWard (https://rkward.kde.org). Created: Tue Oct 29 2002
+SPDX-FileCopyrightText: 2002-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 
 
@@ -23,7 +13,7 @@
 **
 **	\section	website	Website
 **
-**	<A HREF="http://rkward.kde.org">RKWard's project page</A>
+**	<A HREF="https://rkward.kde.org">RKWard's project page</A>
 **
 **	\section	description Description
 **
@@ -86,8 +76,9 @@
 #include <stdlib.h>
 
 #include "rkward.h"
-#include "rkglobals.h"
 #include "settings/rksettingsmoduledebug.h"
+#include "settings/rksettingsmodulegeneral.h"
+#include "rbackend/rksessionvars.h"
 #include "windows/rkdebugmessagewindow.h"
 #include "misc/rkdbusapi.h"
 #include "misc/rkcommonfunctions.h"
@@ -111,7 +102,7 @@
 #	define PATH_VAR_SEP ':'
 #endif
 
-QString findExeAtPath (const QString appname, const QString &path) {
+QString findExeAtPath (const QString &appname, const QString &path) {
 	QDir dir (path);
 	dir.makeAbsolute ();
 	if (QFileInfo (dir.filePath (appname)).isExecutable ()) return dir.filePath (appname);
@@ -171,7 +162,7 @@ void RKDebug (int flags, int level, const char *fmt, ...) {
 
 /** Check if the given path to R (or "auto") is executable, and fail with an appropriate message, otherwise. If "auto" is given as input, try to auto-locate an R installation at the standard
 installation path(s) for this platform. */
-QString resolveRSpecOrFail (QString input, QString message) {
+QString resolveRSpecOrFail (QString input, const QString &message) {
 	if (input == QLatin1String ("auto")) {
 		QString ret;
 #ifdef Q_OS_MACOS
@@ -239,8 +230,10 @@ QString resolveRSpecOrFail (QString input, QString message) {
 
 int main (int argc, char *argv[]) {
 	RK_Debug::RK_Debug_Level = DL_WARNING;
+	QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+	QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
 #ifndef NO_QT_WEBENGINE
-	// annoingly, QWebEngineUrlSchemes have to be registered before creating the app.
+	// annoyingly, QWebEngineUrlSchemes have to be registered before creating the app.
 	QWebEngineUrlScheme scheme("help");
 	scheme.setSyntax (QWebEngineUrlScheme::Syntax::Path);
 	scheme.setFlags (QWebEngineUrlScheme::LocalScheme|QWebEngineUrlScheme::LocalAccessAllowed);
@@ -250,13 +243,17 @@ int main (int argc, char *argv[]) {
 #ifdef WITH_KCRASH
 	KCrash::setDrKonqiEnabled (true);
 #endif
+#if defined(Q_OS_MACOS) || defined(Q_OS_WIN)
+	// Follow the example of kate, and use breeze theme on Windows and Mac, which appears to work best
+	QApplication::setStyle(QStringLiteral("breeze"));
+#endif
 	// Don't complain when linking rkward://-pages from Rd pages
 	KUrlAuthorized::allowUrlAction ("redirect", QUrl("http://"), QUrl ("rkward://"));
 	// Don't complain when trying to open help pages
 	KUrlAuthorized::allowUrlAction ("redirect", QUrl("rkward://"), QUrl ("help:"));
 
 	KLocalizedString::setApplicationDomain ("rkward");
-	KAboutData aboutData ("rkward", i18n ("RKWard"), RKWARD_VERSION, i18n ("Frontend to the R statistics language"), KAboutLicense::GPL, i18n ("(c) 2002, 2004 - 2020"), QString (), "http://rkward.kde.org");
+	KAboutData aboutData ("rkward", i18n ("RKWard"), RKWARD_VERSION, i18n ("Frontend to the R statistics language"), KAboutLicense::GPL, i18n ("(c) 2002 - 2022"), QString (), "https://rkward.kde.org");
 	aboutData.addAuthor (i18n ("Thomas Friedrichsmeier"), i18n ("Project leader / main developer"));
 	aboutData.addAuthor (i18n ("Pierre Ecochard"), i18n ("C++ developer between 2004 and 2007"));
 	aboutData.addAuthor (i18n ("Prasenjit Kapat"), i18n ("Many plugins, suggestions, plot history feature"));
@@ -264,7 +261,7 @@ int main (int argc, char *argv[]) {
 	aboutData.addAuthor (i18n ("Stefan Roediger"), i18n ("Many plugins, suggestions, marketing, translations"));
 	aboutData.addCredit (i18n ("Contributors in alphabetical order"));
 	aboutData.addCredit (i18n ("Björn Balazs"), i18n ("Extensive usability feedback"));
-	aboutData.addCredit (i18n ("Aaron Batty"), i18n ("Whealth of feedback, hardware donations"));
+	aboutData.addCredit (i18n ("Aaron Batty"), i18n ("Wealth of feedback, hardware donations"));
 	aboutData.addCredit (i18n ("Jan Dittrich"), i18n ("Extensive usability feedback"));
 	aboutData.addCredit (i18n ("Philippe Grosjean"), i18n ("Several helpful comments and discussions"));
 	aboutData.addCredit (i18n ("Adrien d'Hardemare"), i18n ("Plugins and patches"));
@@ -317,11 +314,11 @@ int main (int argc, char *argv[]) {
 		for (int i = 0; i < url_args.size (); ++i) {
 			url_args[i] = QUrl::fromUserInput (url_args[i], QDir::currentPath (), QUrl::AssumeLocalFile).toString ();
 		}
-		RKGlobals::startup_options["initial_urls"] = url_args;
-		RKGlobals::startup_options["warn_external"] = !parser.isSet ("nowarn-external");
+		RKSettingsModuleGeneral::setStartupOption("initial_urls", url_args);
+		RKSettingsModuleGeneral::setStartupOption("warn_external", !parser.isSet("nowarn-external"));
 	}
-	RKGlobals::startup_options["evaluate"] = parser.value ("evaluate");
-	RKGlobals::startup_options["backend-debugger"] = parser.value ("backend-debugger");
+	RKSettingsModuleGeneral::setStartupOption("evaluate", parser.value("evaluate"));
+	RKSettingsModuleGeneral::setStartupOption("backend-debugger", parser.value("backend-debugger"));
 
 	// MacOS may need some path adjustments, first
 #ifdef Q_OS_MACOS
@@ -387,8 +384,7 @@ int main (int argc, char *argv[]) {
 			RK_DEBUG (APP, DL_DEBUG, "Using R as configured at compile time");
 		}
 	}
-	// TODO: Store somewhere else
-	qputenv ("R_BINARY", r_exe.toLocal8Bit ());
+	RKSessionVars::r_binary = r_exe;
 
 	qsrand (QTime::currentTime ().msec ()); // Workaround for some versions of kcoreaddons (5.21.0 through at least 5.34.0). See https://phabricator.kde.org/D5966
 	if (app.isSessionRestored ()) {

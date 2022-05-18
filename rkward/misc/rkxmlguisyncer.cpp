@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkxmlguisyncer.cpp  -  description
-                             -------------------
-    begin                : Wed Aug 5 2009
-    copyright            : (C) 2009 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkxmlguisyncer.cpp - This file is part of RKWard (https://rkward.kde.org). Created: Wed Aug 5 2009
+SPDX-FileCopyrightText: 2009 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkxmlguisyncer.h"
 #include "rkxmlguisyncer_p.h"
@@ -85,7 +75,7 @@ void RKXMLGUISyncerPrivate::uiRcFileChanged (const QString &path)  {
 	RK_ASSERT (client_map.contains (path));
 
 	// find affected clients and reload them
-	QMultiHash<QString, KActionCollection*>::const_iterator i = client_map.find(path);
+	QMultiHash<QString, KActionCollection*>::const_iterator i = client_map.constFind(path);
 	while (i != client_map.constEnd() && i.key() == path) {
 		KXMLGUIClient *client = const_cast<KXMLGUIClient*> (i.value ()->parentGUIClient ());
 		if (!client) {
@@ -101,7 +91,7 @@ void RKXMLGUISyncerPrivate::uiRcFileChanged (const QString &path)  {
 		}
 
 		// find notifiers listening for this client
-		QMultiHash<KActionCollection*, RKXMLGUISyncerNotifier*>::const_iterator n = notifier_map.find(i.value ());
+		QMultiHash<KActionCollection*, RKXMLGUISyncerNotifier*>::const_iterator n = notifier_map.constFind(i.value ());
 		while (n != notifier_map.constEnd() && n.key() == i.value ()) {
 			n.value ()->emitChangeSignal (client);
 			++n;

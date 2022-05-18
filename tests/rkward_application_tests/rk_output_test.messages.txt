@@ -1,0 +1,6 @@
+Error in .rk.do.call("output", c("close", .checkId(), if (is.null(discard)) "ask" else if (isTRUE(discard)) "force" else "fail")) : 
+  Output has been modified. Not closing it.
+Error in .rk.do.call("output", c("revert", .checkId(), if (is.null(discard)) "ask" else if (isTRUE(discard)) "force" else "fail")) : 
+  User canceled.
+Error in .rk.do.call("output", c("clear", .checkId(), if (is.null(discard)) "ask" else if (isTRUE(discard)) "force" else "fail")) : 
+  Output is not empty. Not clearing it.

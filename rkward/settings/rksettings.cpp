@@ -1,22 +1,13 @@
-/***************************************************************************
-                          rksettings  -  description
-                             -------------------
-    begin                : Wed Jul 28 2004
-    copyright            : (C) 2004-2020 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rksettings - This file is part of RKWard (https://rkward.kde.org). Created: Wed Jul 28 2004
+SPDX-FileCopyrightText: 2004-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 #include "rksettings.h"
 
 #include <QPushButton>
+#include <QVBoxLayout>
 
 #include <KLocalizedString>
 #include <KSharedConfig>
@@ -61,21 +52,31 @@ void RKSettings::configureSettings (SettingsPage page, QWidget *parent, RCommand
 void RKSettings::configureSettings (const QString& page, QWidget *parent, RCommandChain *chain) {
 	RK_TRACE (SETTINGS);
 
-	if (page == QStringLiteral ("rbackend")) {
-		RKSettings::configureSettings (RKSettings::PageR, parent, chain);
-	} else if (page == QStringLiteral ("console")) {
-		RKSettings::configureSettings (RKSettings::PageConsole, parent, chain);
-	} else if (page == QStringLiteral ("editor")) {
-		RKSettings::configureSettings (RKSettings::PageCommandEditor, parent, chain);
-	} else if (page == QStringLiteral ("graphics")) {
-		RKSettings::configureSettings (RKSettings::PageX11, parent, chain);
-	} else if (page == QStringLiteral ("browser")) {
-		RKSettings::configureSettings (RKSettings::PageObjectBrowser, parent, chain);
-	} else if (page == QStringLiteral ("rpackages")) {
-		RKSettings::configureSettings (RKSettings::PageRPackages, parent, chain);
+	if (page == QStringLiteral("rbackend")) {
+		RKSettings::configureSettings(RKSettings::PageR, parent, chain);
+	} else if (page == QStringLiteral("console")) {
+		RKSettings::configureSettings(RKSettings::PageConsole, parent, chain);
+	} else if (page == QStringLiteral("editor")) {
+		RKSettings::configureSettings(RKSettings::PageCommandEditor, parent, chain);
+	} else if (page == QStringLiteral("graphics")) {
+		RKSettings::configureSettings(RKSettings::PageX11, parent, chain);
+	} else if (page == QStringLiteral("browser")) {
+		RKSettings::configureSettings(RKSettings::PageObjectBrowser, parent, chain);
+	} else if (page == QStringLiteral("rpackages")) {
+		RKSettings::configureSettings(RKSettings::PageRPackages, parent, chain);
+	} else if (page == QStringLiteral("output")) {
+		RKSettings::configureSettings(RKSettings::PageOutput, parent, chain);
+	} else if (page == QStringLiteral("general")) {
+		RKSettings::configureSettings(RKSettings::PageGeneral, parent, chain);
+	} else if (page == QStringLiteral("addons")) {
+		RKSettings::configureSettings(RKSettings::SuperPageAddons, parent, chain);
+	} else if (page == QStringLiteral("plugins")) {
+		RKSettings::configureSettings(RKSettings::PagePlugins, parent, chain);
+	} else if (page == QStringLiteral("kateplugins")) {
+		RKSettings::configureSettings(RKSettings::PageKatePlugins, parent, chain);
 	} else {
 		RK_ASSERT(page.isEmpty());
-		RKSettings::configureSettings (RKSettings::NoPage, parent, chain);
+		RKSettings::configureSettings(RKSettings::NoPage, parent, chain);
 	}
 }
 
@@ -91,7 +92,6 @@ RKSettings::RKSettings (QWidget *parent) : KPageDialog (parent) {
 	setFaceType (KPageDialog::Tree);
 	setWindowTitle (i18n ("Settings"));
 	buttonBox ()->setStandardButtons (QDialogButtonBox::Ok | QDialogButtonBox::Apply | QDialogButtonBox::Cancel | QDialogButtonBox::Help);
-	// KF5 TODO: connect buttons
 	button (QDialogButtonBox::Apply)->setEnabled (false);
 	connect (button(QDialogButtonBox::Apply), &QPushButton::clicked, this, &RKSettings::applyAll);
 	connect (button(QDialogButtonBox::Help), &QPushButton::clicked, this, &RKSettings::helpClicked);
@@ -101,7 +101,7 @@ RKSettings::RKSettings (QWidget *parent) : KPageDialog (parent) {
 	initModules ();
 
 	connect (this, &KPageDialog::currentPageChanged, this, &RKSettings::pageChange);
-	pageChange (currentPage (), currentPage ());	// init
+	setCurrentPage(pages[0]); // init -> see pageChange
 }
 
 RKSettings::~RKSettings() {
@@ -112,11 +112,11 @@ RKSettings::~RKSettings() {
 		delete *it;
 	}
 	modules.clear ();
-	
+
 	dialogClosed ();
 }
 
-void RKSettings::registerPageModule(RKSettings::SettingsPage super, RKSettings::SettingsPage child) {
+void RKSettings::registerPageModule(RKSettings::SettingsPage super, int child) {
 	RK_TRACE (SETTINGS);
 
 	RKSettingsModule *childm = modules[child];
@@ -125,6 +125,8 @@ void RKSettings::registerPageModule(RKSettings::SettingsPage super, RKSettings::
 	} else {
 		pages[child] = addSubPage(pages[super], childm, childm->caption());
 	}
+	pages[child]->setHeader(childm->longCaption());
+	pages[child]->setIcon(childm->icon());
 }
 
 #include <QLabel>
@@ -132,6 +134,8 @@ void RKSettings::registerPageModule(RKSettings::SettingsPage super, RKSettings::
 void RKSettings::initModules () {
 	RK_TRACE (SETTINGS);
 
+	auto ktexteditorpages = RKSettingsModuleCommandEditor::kateConfigPages(this, 0);
+	pages.resize(NumPages + ktexteditorpages.size());
 	modules.insert (PagePlugins, new RKSettingsModulePlugins (this, 0));
 	modules.insert (PageKatePlugins, new RKSettingsModuleKatePlugins (this, 0));
 	modules.insert (PageR, new RKSettingsModuleR (this, 0));
@@ -144,11 +148,18 @@ void RKSettings::initModules () {
 	modules.insert (PageCommandEditor, new RKSettingsModuleCommandEditor (this, 0));
 	modules.insert (PageObjectBrowser, new RKSettingsModuleObjectBrowser (this, 0));
 	modules.insert (PageDebug, new RKSettingsModuleDebug (this, 0));
+	for (int i = 0; i < ktexteditorpages.size(); ++i) {
+		modules.insert(NumPages+i, ktexteditorpages[i]);
+	}
 
+	QWidget *page = new QWidget();
+	auto layout = new QVBoxLayout(page);
 	QLabel *l = new QLabel(i18n("<h1>Add-ons</h1><p>RKWard add-ons come in a variety of forms, each with their own configuration options:</p><h2>R packages</h2><p><a href=\"rkward://settings/rpackages\">Add-ons to the R language itself</a>. These are usually downloaded from \"CRAN\". Some of these add-on packages may additionally contain RKWard plugins.</p><h2>RKWard plugins</h2><p><a href=\"rkward://settings/plugins\">Graphical dialogs to R functionality</a>. These plugins are usually pre-installed with RKWard, or with an R package. However, they can be activated/deactivated to help keep the menus manageable. Note that it is relatively easy to <a href=\"https://api.kde.org/doc/rkwardplugins/\">create your own custom dialogs as plugins</a>!</p><h2>Kate plugins</h2><p><a href=\"rkward://settings/kateplugins\">Plugins developed for Kate / KTextEditor</a>. These provide shared functionality that is useful in the context of text editing and IDE applications. These plugins are usually found pre-installed on your system. You can configure to load the plugins that are useful to your own workflow.</p>"));
 	l->setWordWrap(true);
-	connect(l, &QLabel::linkActivated, [=](const QString url) { RKWorkplace::mainWorkplace()->openAnyUrl(QUrl(url)); });
-	pages[SuperPageAddons] = addPage(l, i18n("Add-ons"));
+	connect(l, &QLabel::linkActivated, [=](const QString &url) { RKWorkplace::mainWorkplace()->openAnyUrl(QUrl(url)); });
+	layout->addWidget(l);
+	layout->addStretch();
+	pages[SuperPageAddons] = addPage(page, i18n("Add-ons"));
 	registerPageModule(SuperPageAddons, PageRPackages);
 	registerPageModule(SuperPageAddons, PagePlugins);
 	registerPageModule(SuperPageAddons, PageKatePlugins);
@@ -161,6 +172,9 @@ void RKSettings::initModules () {
 	registerPageModule(NoPage, PageCommandEditor);
 	registerPageModule(NoPage, PageObjectBrowser);
 	registerPageModule(NoPage, PageDebug);
+	for (int i = 0; i < ktexteditorpages.size(); ++i) {
+		registerPageModule(PageCommandEditor, NumPages+i);
+	}
 }
 
 void RKSettings::raisePage (SettingsPage page) {
@@ -204,19 +218,17 @@ void RKSettings::helpClicked () {
 	RKWorkplace::mainWorkplace ()->openHelpWindow (current_module->helpURL ());
 }
 
-void RKSettings::applyAll () {
+void RKSettings::applyAll() {
 	RK_TRACE (SETTINGS);
 
-	ModuleMap::const_iterator it;
-	for (it = modules.constBegin (); it != modules.constEnd (); ++it) {
-		if (it.value ()->hasChanges ()) {
-			it.value ()->applyChanges ();
-			it.value ()->changed = false;
-			it.value ()->save (KSharedConfig::openConfig ().data ());
-			tracker ()->signalSettingsChange (it.key ());
+	for (auto it = modules.constBegin(); it != modules.constEnd(); ++it) {
+		if (it.value()->hasChanges()) {
+			it.value()->doApply();
+			it.value()->save(KSharedConfig::openConfig().data());
+			tracker()->signalSettingsChange(RKSettings::SettingsPage(it.key()));
 		}
 	}
-	button (QDialogButtonBox::Apply)->setEnabled (false);
+	button(QDialogButtonBox::Apply)->setEnabled(false);
 }
 
 void RKSettings::enableApply () {
@@ -240,34 +252,22 @@ void RKSettings::enableApply () {
 void RKSettings::loadSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
-	FOREACH_SETTINGS_MODULE(loadSettings(config));
+	FOREACH_SETTINGS_MODULE(syncConfig(config, RKConfigBase::LoadConfig));
 }
 
 void RKSettings::saveSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
-	FOREACH_SETTINGS_MODULE(saveSettings(config));
+	FOREACH_SETTINGS_MODULE(syncConfig(config, RKConfigBase::SaveConfig));
 }
 
 #include <KAssistantDialog>
-void RKSettings::validateSettingsInteractive () {
+QList<RKSetupWizardItem*> RKSettings::validateSettingsInteractive () {
 	RK_TRACE (SETTINGS);
 
-	QList<RKSettingsWizardPage*> interaction_pages;
-	FOREACH_SETTINGS_MODULE(validateSettingsInteractive(&interaction_pages));
-	if (!interaction_pages.isEmpty ()) {
-		KAssistantDialog dialog ((QWidget*) 0);
-		for (int i = 0; i < interaction_pages.size (); ++i) {
-			dialog.addPage (interaction_pages[i], interaction_pages[i]->windowTitle ());
-		}
-		QPushButton *help_button = dialog.button (QDialogButtonBox::Help);
-		if (help_button) help_button->hide ();
-		if (dialog.exec () == QDialog::Accepted) {
-			for (int i = 0; i < interaction_pages.size (); ++i) {
-				interaction_pages[i]->apply ();
-			}
-		}
-	}
+	QList<RKSetupWizardItem*> interaction_items;
+	FOREACH_SETTINGS_MODULE(validateSettingsInteractive(&interaction_items));
+	return interaction_items;
 }
 
 //############ END RKSettings ##################
@@ -283,6 +283,6 @@ RKSettingsTracker::~RKSettingsTracker () {
 
 void RKSettingsTracker::signalSettingsChange (RKSettings::SettingsPage page) {
 	RK_TRACE (SETTINGS);
-	emit (settingsChanged (page));
+	emit settingsChanged(page);
 }
 

@@ -17,7 +17,7 @@ DATE<br />
 <h2>Parameters</h2>
 <ul><li>Comparing: test10y</li>
 <li>against: test10z</li>
-<li>H1: true difference in means is less than 0</li>
+<li>H1: true mean difference is less than 0</li>
 </ul>
 DATE<br />
 <table border="1">

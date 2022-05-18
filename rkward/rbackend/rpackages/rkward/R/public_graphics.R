@@ -50,7 +50,7 @@
 			paste ("file:///", filename, sep="")
 		} else if (substr (filename, 1, 1) == "/") {
 			paste ("file://", filename, sep="")
-		} else { # relative path: return unchanged. NOTE that this will currently happen during automated tesing, only. Usually rk.get.tempfile.name() always returns absolute paths.
+		} else { # The common case: a relative path. Return unchanged.
 			filename
 		}
 	}
@@ -65,7 +65,7 @@
 	if (device.type == "PNG") {
 		filename <- rk.get.tempfile.name(prefix = "graph", extension = ".png")
 		ret <- png(filename = file.path(filename), width = width, height = height, ...)
-		.rk.cat.output(paste("<img src=\"", make.url (filename), "\" width=\"", width,
+		.rk.cat.output(paste("<img src=\"", make.url (names (filename)), "\" width=\"", width,
 			"\" height=\"", height, "\"><br>", sep = ""))
 	} else if (device.type == "JPG") {
 		if (missing (quality)) {
@@ -74,7 +74,7 @@
 		}
 		filename <- rk.get.tempfile.name(prefix = "graph", extension = ".jpg")
 		ret <- jpeg(filename = file.path(filename), width = width, height = height, "quality"=quality, ...)
-		.rk.cat.output(paste("<img src=\"", make.url (filename), "\" width=\"", width,
+		.rk.cat.output(paste("<img src=\"", make.url (names (filename)), "\" width=\"", width,
 			"\" height=\"", height, "\"><br>", sep = ""))
 	} else if (device.type == "SVG") {
 		if (!capabilities ("cairo")) {	# cairo support is not always compiled in
@@ -83,9 +83,9 @@
 		}
 		filename <- rk.get.tempfile.name(prefix = "graph", extension = ".svg")
 		ret <- svg(filename = file.path(filename), ...)
-		.rk.cat.output(paste("<object data=\"", make.url (filename), "\" type=\"image/svg+xml\" width=\"", width,
+		.rk.cat.output(paste("<object data=\"", make.url (names (filename)), "\" type=\"image/svg+xml\" width=\"", width,
 			"\" height=\"", height, "\">\n", sep = ""))
-		.rk.cat.output(paste("<param name=\"src\" value=\"", make.url (filename), "\">\n", sep = ""))
+		.rk.cat.output(paste("<param name=\"src\" value=\"", make.url (names (filename)), "\">\n", sep = ""))
 		.rk.cat.output(paste("This browser appears incapable of displaying SVG object. The SVG source is at:", filename))
 		.rk.cat.output("</object>")
 	} else {
@@ -592,8 +592,8 @@
 		else if (!.unsavedPlot$is.os)
 			ret <- TRUE
 		else 
-			ret <- rk.show.question ("Large plot!\nDo you still want to store it in the history?", 
-				"WARNING!", button.cancel = "")
+			ret <- rk.askYesNo ("Large plot!\nDo you still want to store it in the history?",
+				prompts = c("Yes", "No", ""), caption="Save large plot?")
 		ret
 	}
 	.check.identical <- function (.st., pkg=NA_character_) {
@@ -626,8 +626,8 @@
 			n <- len.sP + 1
 		} else if (len.sP == ml) {
 			if (.pop.notify)
-				.pop.notify <<- rk.show.question ("History limit reached, removing the first plot. Limits can be changed at Settings > RKWard > Output.\n\nDo you want to be notified in future?", 
-					"WARNING!", button.cancel = "")
+				.pop.notify <<- rk.askYesNo ("History limit reached, removing the first plot. Limits can be changed at Settings > RKWard > Output.\n\nDo you want to be notified in future?",
+					prompts=c("Yes", "No", ""), caption="History limit reached")
 			remove (devId = NULL, pos = 1) # sP.length changes at this point
 			n <- len.sP
 		} else {
@@ -961,10 +961,9 @@
 		# this is called from settings/rksettingsmoduleoutput.cpp ~199
 		# Length restriction:
 		if (len.max < sP.length) {
-			ans <- rk.show.question (paste ("Current plot history has more plots than the specified limit.\nIf you continue then _",
+			ans <- rk.askYesNo (paste ("Current plot history has more plots than the specified limit.\nIf you continue then _",
 				sP.length - len.max, "_ of the foremost plots will be removed.\nInstead, if you ignore then the new limit will be effective only after restarting RKWard.", sep =""), 
-				"WARNING!",
-				button.yes = "Continue", button.no = "Ignore for this session", button.cancel = "")
+				prompts= c("Continue", "Ignore for this session", ""), caption="WARNING!")
 			if (ans) {
 				options ("rk.graphics.hist.max.length" = len.max)
 				remove (devId = NULL, pos = 1:(sP.length - len.max))

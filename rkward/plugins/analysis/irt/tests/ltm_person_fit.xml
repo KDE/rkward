@@ -26,6 +26,7 @@
               <option label="More consistent response pattern than the model predicts" value="greater" />
               <option label="Two sided (test both of the above)" value="two.sided" />
             </radio>
+            <preview id="preview" mode="output"/>
           </column>
         </row>
       </tab>

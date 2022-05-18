@@ -21,6 +21,7 @@
 							<option value="less" label="less"/>
 						</radio>
 						<stretch/>
+						<preview id="preview" mode="output"/>
 					</column>
 				</row>
 			</tab>

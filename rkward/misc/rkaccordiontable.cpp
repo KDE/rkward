@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkaccordiontable  -  description
-                             -------------------
-    begin                : Fri Oct 24 2015
-    copyright            : (C) 2015-2018 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkaccordiontable - This file is part of RKWard (https://rkward.kde.org). Created: Fri Oct 24 2015
+SPDX-FileCopyrightText: 2015-2018 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkaccordiontable.h"
 
@@ -78,7 +68,8 @@ public:
 			if (index.internalId () == trailing_item_id) return (Qt::ItemIsEnabled);
 			return (Qt::NoItemFlags);
 		}
-		return (QAbstractProxyModel::flags (index));
+		auto ret = QAbstractProxyModel::flags(index).setFlag(Qt::ItemNeverHasChildren, false);
+		return ret;
 	}
 
 	int rowCount (const QModelIndex& parent = QModelIndex ()) const override {
@@ -87,7 +78,7 @@ public:
 		return sourceModel ()->rowCount (mapToSource (parent)) + add_trailing_rows;
 	}
 
-    QVariant data (const QModelIndex& proxyIndex, int role = Qt::DisplayRole) const override {
+	QVariant data (const QModelIndex& proxyIndex, int role = Qt::DisplayRole) const override {
 		if (isFake (proxyIndex)) {
 			if (proxyIndex.internalId () == trailing_item_id) {
 				if (role == Qt::DisplayRole) {
@@ -181,13 +172,13 @@ public slots:
 		endRemoveRows ();
 	}
 	void r_dataChanged (const QModelIndex& from, const QModelIndex& to) {
-		emit (dataChanged (mapFromSource (from), mapFromSource (to)));
+		emit dataChanged(mapFromSource(from), mapFromSource(to));
 	}
 	void r_headerDataChanged(Qt::Orientation o,int from,int to) {
-		emit (headerDataChanged (o, from, to));
+		emit headerDataChanged(o, from, to);
 	}
 	void r_layoutChanged () {
-		emit (layoutChanged());
+		emit layoutChanged();
 	}
 };
 
@@ -292,7 +283,7 @@ RKAccordionTable::~RKAccordionTable () {
 
 void RKAccordionTable::drawRow (QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const {
 	if (index.parent ().isValid ()) {    // must be the editor widget
-		painter->fillRect (option.rect, palette ().background ());  // fill to paper over any padding around the widget (whereever it comes from)
+		painter->fillRect(option.rect, palette().window());  // fill to paper over any padding around the widget (wherever it comes from)
 		QTreeView::drawRow (painter, option, index);
 		painter->drawLine (option.rect.bottomLeft (), option.rect.bottomRight ());
 	} else {
@@ -391,7 +382,7 @@ void RKAccordionTable::rowClicked (QModelIndex row) {
 	}
 	if (!row.parent ().isValid ()) {
 		if (row.row () >= pmodel->rowCount () - pmodel->add_trailing_rows) {
-			emit (addRow (row.row ()));
+			emit addRow(row.row());
 		}
 	}
 }
@@ -403,7 +394,7 @@ void RKAccordionTable::currentChanged (const QModelIndex& current, const QModelI
 	if (handling_a_click) return;
 	if (!pmodel->isFake (current)) {
 		setExpanded (current, true);
-		emit (activated (current.row ()));
+		emit activated(current.row());
 	}
 }
 
@@ -492,7 +483,7 @@ void RKAccordionTable::removeClicked () {
 		RK_ASSERT (row >= 0);
 		return;
 	}
-	emit (removeRow (row));
+	emit removeRow(row);
 }
 
 void RKAccordionTable::setModel (QAbstractItemModel* model) {

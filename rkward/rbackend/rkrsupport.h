@@ -1,25 +1,16 @@
-/***************************************************************************
-                          rkrsupport  -  description
-                             -------------------
-    begin                : Mon Oct 25 2010
-    copyright            : (C) 2010 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkrsupport - This file is part of the RKWard project. Created: Mon Oct 25 2010
+SPDX-FileCopyrightText: 2010-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef RKRSUPPORT_H
 #define RKRSUPPORT_H
 
 #include <limits.h>
 
+#include <QVariant>
 #include <QStringList>
 
 #include "rdata.h"
@@ -36,6 +27,7 @@ namespace RKRSupport {
 
 	QStringList SEXPToStringList (SEXP from_exp);
 	SEXP StringListToSEXP (const QStringList &list);
+	SEXP QVariantToSEXP(const QVariant &val);
 	QString SEXPToString (SEXP from_exp);
 	RData::IntStorage SEXPToIntArray (SEXP from_exp);
 	int SEXPToInt (SEXP from_exp, int def_value = INT_MIN);

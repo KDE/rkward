@@ -5,7 +5,7 @@
 DATE<br />
 <table border="1">
 <tr><td>Variable Name</td><td>Kurtosis estimator (tau)</td><td>Transformation (z)</td><td>p-value</td><td>Alternative Hypothesis</td><td>Length</td><td>NAs</td></tr>
-<tr><td>breaks</td><td>4.499</td><td>2.0915</td><td>0.036484</td><td>kurtosis is not equal to 3</td><td>54</td><td>0</td></tr>
-<tr><td>test50z</td><td>1.799</td><td>-3.4368</td><td>0.00058869</td><td>kurtosis is not equal to 3</td><td>50</td><td>0</td></tr>
-<tr><td>test10y</td><td>1.7758</td><td>-0.98906</td><td>0.32263</td><td>kurtosis is not equal to 3</td><td>11</td><td>1</td></tr>
+<tr><td>breaks </td><td>4.4990</td><td> 2.09149</td><td>0.03648431</td><td>kurtosis is not equal to 3</td><td>54</td><td>0</td></tr>
+<tr><td>test50z</td><td>1.7990</td><td>-3.43677</td><td>0.00058869</td><td>kurtosis is not equal to 3</td><td>50</td><td>0</td></tr>
+<tr><td>test10y</td><td>1.7758</td><td>-0.98906</td><td>0.32263147</td><td>kurtosis is not equal to 3</td><td>11</td><td>1</td></tr>
 </table>

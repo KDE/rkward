@@ -11,8 +11,14 @@ rk.edit(x)
 
 rk.edit.files(name = NULL, file = "", title = NULL, prompt = TRUE)
 
-rk.show.files(file = file, header = file, title = NULL,
-  delete.file = FALSE, prompt = TRUE, delete = delete.file)
+rk.show.files(
+  file = file,
+  header = file,
+  title = NULL,
+  delete.file = FALSE,
+  prompt = TRUE,
+  delete = delete.file
+)
 
 rk.show.html(url)
 }

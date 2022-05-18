@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkrbackend  -  description
-                             -------------------
-    begin                : Sun Jul 25 2004
-    copyright            : (C) 2004 - 2013 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkrbackend - This file is part of the RKWard project. Created: Sun Jul 25 2004
+SPDX-FileCopyrightText: 2004-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef RKRBACKEND_H
 #define RKRBACKEND_H
@@ -85,7 +75,7 @@ public:
 
 /** initializes the R-backend. Emits an RCallbackType::Started-request (with any error messages) when done.
 Note that you should call initialize only once in a application */
-	void initialize (const char* locale_dir);
+	void initialize (const QString &locale_dir);
 
 	void enterEventLoop ();
 protected:
@@ -104,13 +94,13 @@ public:
 @returns a pointer to the RCommandProxy-instance that was created and used, internally. You can query this pointer for status and data. Be sure to delete it, when done. */
 	RCommandProxy *runDirectCommand (const QString &command, RCommand::CommandTypes datatype); 
 
-	void handleRequest (RBackendRequest *request) { handleRequest (request, true); };
+	void handleRequest(RBackendRequest *request) { handleRequest (request, true); };
 /** A relic of history. In contrast to handlePlainGenericRequest(), these requests support running sub-commands. However, the remaining requests which are currently handled this way
 should probably be converted to dedicated RKRBackendRequest's in the future. See also handlePlainGenericRequest(). */
-	void handleHistoricalSubstackRequest (const QStringList &list);
-/** Sends a request to the frontend and returns the result (an empty QStringList in case of asynchronous requests). Note that this function has considerable overlap with
+	GenericRRequestResult handleRequestWithSubcommands(const QStringList &list);
+/** Sends a request to the frontend and returns the result (empty in case of asynchronous requests). Note that this function has considerable overlap with
 handleHistoricalSubstackRequest(). Exactly which requests get handled by which function is somewhat arbitrary, ATM. However, request that do not need sub-commands to be run, should generally be converted to use handlePlainGenericRequest(). (And probably all historicalSubstackRequests should be replaced!) */
-	QStringList handlePlainGenericRequest (const QStringList &parameters, bool synchronous);
+	GenericRRequestResult handlePlainGenericRequest(const QStringList &parameters, bool synchronous);
 	RCommandProxy* fetchNextCommand ();
 
 /** The command currently being executed. */
@@ -135,7 +125,7 @@ handleHistoricalSubstackRequest(). Exactly which requests get handled by which f
 		EmergencySaveThenExit = 2,
 		AlreadyDead = 3
 	} killed;
-/** "Kills" the backend. Actually this just tells the thread that is is about to be terminated. Allows the thread to terminate gracefully */
+/** "Kills" the backend. Actually this just tells the thread that it is about to be terminated. Allows the thread to terminate gracefully */
 	void kill () { killed = ExitNow; };
 	bool isKilled () { return (killed != NotKilled); };
 
@@ -201,10 +191,14 @@ handleHistoricalSubstackRequest(). Exactly which requests get handled by which f
 	void setPriorityCommand (RCommandProxy *command);
 	RCommandProxy *pending_priority_command;
 	QMutex priority_command_mutex;
+	int r_version;
+
+	bool graphicsEngineMismatchMessage(int compiled_version, int runtime_version);
 private:
 	void clearPendingInterrupt ();
 protected:
-	RCommandProxy* handleRequest (RBackendRequest *request, bool mayHandleSubstack);
+	RCommandProxy* handleRequest(RBackendRequest *request, bool mayHandleSubstack);
+	RCommandProxy* handleRequest2(RBackendRequest *request, bool mayHandleSubstack);
 private:
 	int stdout_stderr_fd;
 /** set up R standard callbacks */
@@ -212,7 +206,6 @@ private:
 /** connect R standard callbacks */
 	void connectCallbacks ();
 
-	int r_version;
 	QString output_file;
 /** A copy of the names of the toplevel environments (as returned by "search ()"). */
 	QStringList toplevel_env_names;

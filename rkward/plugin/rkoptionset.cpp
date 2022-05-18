@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkoptionset  -  description
-                             -------------------
-    begin                : Mon Oct 31 2011
-    copyright            : (C) 2011, 2012, 2014 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkoptionset - This file is part of RKWard (https://rkward.kde.org). Created: Mon Oct 31 2011
+SPDX-FileCopyrightText: 2011-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkoptionset.h"
 
@@ -21,7 +11,6 @@
 #include <QTreeWidget>
 #include <QHeaderView>
 #include <QPushButton>
-#include <QStackedWidget>
 #include <QLabel>
 #include <QMimeData>
 
@@ -29,6 +18,7 @@
 
 #include "rkstandardcomponent.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkcompatibility.h"
 #include "../misc/rkaccordiontable.h"
 #include "../misc/rkstandardicons.h"
 #include "../misc/xmlhelper.h"
@@ -52,17 +42,15 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	// build UI framework
 	QVBoxLayout *layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
-	switcher = new QStackedWidget (this);
-	layout->addWidget (switcher);
 	accordion = new RKAccordionTable (this);
-	switcher->addWidget (accordion);
+	layout->addWidget (accordion);
 
 	connect (accordion, static_cast<void (RKAccordionTable::*)(int)>(&RKAccordionTable::activated), this, &RKOptionSet::currentRowChanged);
 	connect (accordion, &RKAccordionTable::addRow, this, &RKOptionSet::addRow);
 	connect (accordion, &RKAccordionTable::removeRow, this, &RKOptionSet::removeRow);
 
 	updating_notice = new QLabel (i18n ("Updating status, please wait"), this);
-	switcher->addWidget (updating_notice);
+	layout->addWidget (updating_notice);
 	update_timer.setInterval (0);
 	update_timer.setSingleShot (true);
 	connect (&update_timer, &QTimer::timeout, this, &RKOptionSet::slotUpdateUnfinishedRows);
@@ -175,6 +163,10 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	model->column_labels = visible_column_labels;
 	accordion->setShowAddRemoveButtons (!keycolumn);
 	accordion->setModel (model);
+	updating_notice->hide();
+	QSizePolicy pol(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+	pol.setVerticalStretch(1);  // For some reason, this apparently defaults to 0 - no stretch, unless absolutely necessary - for this widget, although I have no idea, why.
+	setSizePolicy(pol);
 }
 
 RKOptionSet::~RKOptionSet () {
@@ -199,7 +191,7 @@ QString serializeList (const QStringList &list) {
 }
 
 QStringList unserializeList  (const QString &serial) {
-	QStringList ret = serial.split ('\t', QString::KeepEmptyParts);
+	QStringList ret = serial.split ('\t', RKCompatibility::KeepEmptyParts());
 	for (int i = 0; i < ret.size (); ++i) {
 		ret[i] = RKCommonFunctions::unescape (ret[i]);
 	}
@@ -219,7 +211,7 @@ QString serializeMap (const RKComponent::PropertyValueMap &map) {
 
 RKComponent::PropertyValueMap unserializeMap (const QString &serial) {
 	RKComponent::PropertyValueMap ret;
-	QStringList l = serial.split ('\t', QString::KeepEmptyParts);
+	QStringList l = serial.split ('\t', RKCompatibility::KeepEmptyParts());
 	for (int i = 0; i < l.size (); ++i) {
 		QString &line = l[i];
 		int sep = line.indexOf ('=');
@@ -256,7 +248,7 @@ void RKOptionSet::fetchPropertyValuesRecursive (PropertyValueMap *list, bool inc
 void RKOptionSet::serializationPropertyChanged (RKComponentPropertyBase* property) {
 	if (updating) return;
 	updating = true;
-	if (model) model->layoutAboutToBeChanged ();
+	if (model) emit model->layoutAboutToBeChanged();
 
 	RK_TRACE (PLUGIN);
 	RK_ASSERT (property == serialization_of_set);
@@ -333,7 +325,7 @@ void RKOptionSet::serializationPropertyChanged (RKComponentPropertyBase* propert
 	active_row = -1;
 	current_row->setIntValue (qMin (0, row - 1));
 
-	if (model) model->layoutChanged ();
+	if (model) emit model->layoutChanged();
 	changed ();
 }
 
@@ -352,14 +344,16 @@ void RKOptionSet::updateUnfinishedRows () {
 	RK_TRACE (PLUGIN);
 
 	if (!n_unfinished_rows) {	// done
-		if (switcher->currentWidget () != updating_notice) return;
+		if (!updating_notice->isVisible()) return;
 		current_row->setIntValue (return_to_row);
-		switcher->setCurrentWidget (accordion);
+		accordion->show();
+		updating_notice->hide();
 		return;
 	}
 
-	if (switcher->currentWidget () != updating_notice) {
-		switcher->setCurrentWidget (updating_notice);
+	if (!updating_notice->isVisible()) {
+		updating_notice->show();
+		accordion->hide();
 		return_to_row = active_row;
 	}
 	for (int i = 0; i < rows.size (); ++i) {
@@ -494,7 +488,7 @@ void RKOptionSet::setRowState (int row, bool finished, bool valid) {
 		valid ? --n_invalid_rows : ++n_invalid_rows;
 		changed = true;
 	}
-	if (changed && model) model->dataChanged (model->index (row, 0), model->index (row, model->columnCount () - 1));
+	if (changed && model) emit model->dataChanged(model->index(row, 0), model->index(row, model->columnCount() - 1));
 }
 
 void RKOptionSet::changed () {
@@ -510,7 +504,7 @@ void RKOptionSet::changed () {
 	ComponentStatus s = recursiveStatus ();
 	if (s != last_known_status) {
 		last_known_status = s;
-		if (model) model->headerDataChanged (Qt::Horizontal, 0, model->columnCount () - 1);
+		if (model) emit model->headerDataChanged(Qt::Horizontal, 0, model->columnCount() - 1);
 	}
 
 	RKComponent::changed ();
@@ -533,7 +527,7 @@ void RKOptionSet::governingPropertyChanged (RKComponentPropertyBase *property) {
 		target->setValueAt (row, value);
 
 		if (model && (inf.display_index >= 0)) {
-			model->dataChanged (model->index (inf.display_index, row), model->index (inf.display_index, row));
+			emit model->dataChanged(model->index(inf.display_index, row), model->index(inf.display_index, row));
 		}
 	}
 
@@ -556,7 +550,7 @@ void RKOptionSet::columnPropertyChanged (RKComponentPropertyBase *property) {
 
 	if (target == keycolumn) handleKeycolumnUpdate ();
 	else {
-		if (model) model->dataChanged (model->index (ci.display_index, 0), model->index (ci.display_index, model->rowCount ()));
+		if (model) emit model->dataChanged(model->index(ci.display_index, 0), model->index(ci.display_index, model->rowCount()));
 		applyContentsFromExternalColumn (target, active_row);
 	}
 }
@@ -609,7 +603,7 @@ void RKOptionSet::handleKeycolumnUpdate () {
 
 		// adjust all positions that have changed
 		for (int pos = 0; pos < new_keys.size (); ++pos) {
-			QMap<int, int>::const_iterator pit = position_changes.find (pos);
+			QMap<int, int>::const_iterator pit = position_changes.constFind (pos);
 			if (pit != position_changes.constEnd ()) {	// some change
 				int old_pos = pit.value ();
 				if (old_pos < 0) {	// a new key
@@ -630,7 +624,7 @@ void RKOptionSet::handleKeycolumnUpdate () {
 	QList<RowInfo> new_row_info = rows;
 	for (int i = (new_keys.size () - new_row_info.size ()); i > 0; --i) new_row_info.append (RowInfo (default_row_state));
 	for (int pos = 0; pos < new_keys.size (); ++pos) {
-		QMap<int, int>::const_iterator pit = position_changes.find (pos);
+		QMap<int, int>::const_iterator pit = position_changes.constFind (pos);
 		if (pit != position_changes.constEnd ()) {	// some change
 			int old_pos = pit.value ();
 			if (old_pos < 0) {	// a new key (but it might have been known, formerly)
@@ -823,7 +817,7 @@ QVariant RKOptionSetDisplayModel::data (const QModelIndex& index, int role) cons
 
 void RKOptionSetDisplayModel::doResetNow () {
 	RK_TRACE (PLUGIN);
-	emit (layoutChanged ());
+	emit layoutChanged();
 	set->updateCurrentRowInDisplay ();
 }
 
@@ -842,7 +836,7 @@ QVariant RKOptionSetDisplayModel::headerData (int section, Qt::Orientation orien
 				if ((set->rowCount () > 0) && (set->rowCount () < set->min_rows_if_any)) probs.append (i18n ("At least %1 rows have to be defined (if any)", set->min_rows_if_any));
 				if (set->rowCount () < set->min_rows) probs.append (i18n ("At least %1 rows have to be defined", set->min_rows));
 				if (set->rowCount () > set->max_rows) probs.append (i18n ("At most %1 rows may be defined", set->max_rows));
-				return (QString ("<p>%1</p><ul><li>%2</li></ul>").arg (i18n ("This element is not valid for the following reason(s):")).arg (probs.join ("</li>\n<li>")));
+				return (QString ("<p>%1</p><ul><li>%2</li></ul>").arg(i18n("This element is not valid for the following reason(s):"), probs.join("</li>\n<li>")));
 			}
 		}
 	}
@@ -852,7 +846,7 @@ QVariant RKOptionSetDisplayModel::headerData (int section, Qt::Orientation orien
 void RKOptionSetDisplayModel::triggerReset() {
 	RK_TRACE (PLUGIN);
 	if (!reset_timer.isActive ()) {
-		emit (layoutAboutToBeChanged ());
+		emit layoutAboutToBeChanged();
 		reset_timer.start ();
 	}
 }
@@ -881,7 +875,7 @@ bool RKOptionSetDisplayModel::dropMimeData (const QMimeData* data, Qt::DropActio
 }
 
 Qt::ItemFlags RKOptionSetDisplayModel::flags (const QModelIndex& index) const {
-	return QAbstractItemModel::flags (index) | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
+	return QAbstractTableModel::flags (index) | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
 }
 
 Qt::DropActions RKOptionSetDisplayModel::supportedDropActions () const {

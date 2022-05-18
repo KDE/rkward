@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkmodificationtracker  -  description
-                             -------------------
-    begin                : Tue Aug 31 2004
-    copyright            : (C) 2004 - 2017 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkmodificationtracker - This file is part of the RKWard project. Created: Tue Aug 31 2004
+SPDX-FileCopyrightText: 2004-2017 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 #ifndef RKMODIFICATIONTRACKER_H
 #define RKMODIFICATIONTRACKER_H
 
@@ -123,6 +113,7 @@ class RKModificationTracker : public RKObjectListModel {
 public:
 	explicit RKModificationTracker (QObject *parent);
 	~RKModificationTracker ();
+	static RKModificationTracker* instance() { return _instance; };
 	
 /** the given object should be removed (either it was removed in the R-workspace, or the user requests removal of the object in an editor or the RObjectList). First, if the object is being edited somewhere, the user will get a chance to object to the removal. If the user does not object, the RKModificationTracker will remove the object and notify all interested listeners that the object really was removed. When calling from the RObjectList, you will likely set removed_in_workspace to true, to signal that the object-data is already gone in the workspace. */
 	bool removeObject (RObject *object, RKEditor *editor=0, bool removed_in_workspace=false);
@@ -156,6 +147,7 @@ friend class RObjectList;
 	void endAddObject (RObject *object, RObject* parent, int position);
 /** essentially like the above function(s). All objects listening for child position changed on the parent will be notified */
 	void moveObject (RContainerObject *parent, RObject* child, int old_index, int new_index);
+	static RKModificationTracker* _instance;
 };
 
 #endif

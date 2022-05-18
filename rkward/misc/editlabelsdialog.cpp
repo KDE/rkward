@@ -1,19 +1,9 @@
-/***************************************************************************
-                          editlabelsdialog  -  description
-                             -------------------
-    begin                : Tue Sep 21 2004
-    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+editlabelsdialog - This file is part of RKWard (https://rkward.kde.org). Created: Tue Sep 21 2004
+SPDX-FileCopyrightText: 2004-2007 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 #include "editlabelsdialog.h"
 
 #include <KLocalizedString>
@@ -160,8 +150,8 @@ QVariant RKVarLevelsTableModel::data (const QModelIndex& index, int role) const 
 Qt::ItemFlags RKVarLevelsTableModel::flags (const QModelIndex& index) const {
 	RK_TRACE (EDITOR);
 
-	if (!index.isValid ()) return 0;
-	if (index.column () != 0) return 0;
+	if (!index.isValid ()) return Qt::NoItemFlags;
+	if (index.column () != 0) return Qt::NoItemFlags;
 	if (index.row () >= labels.count ()) return (Qt::ItemIsEditable | Qt::ItemIsEnabled);
 	return (Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
 }
@@ -182,7 +172,7 @@ bool RKVarLevelsTableModel::setData (const QModelIndex& index, const QVariant& v
 		endInsertRows ();
 	} else {
 		labels.insert (QString::number (index.row () + 1), text);
-		emit (dataChanged (index, index));
+		emit dataChanged(index, index);
 	}
 
 	if (text.isEmpty ()) {	// remove trailing empty rows
@@ -263,9 +253,9 @@ void EditLabelsDialogProxy::dialogDone (int result) {
 
 	if (result == QDialog::Accepted) {
 		labels = dialog->table->lmodel->labels;
-		emit (done (this, RKItemDelegate::EditorExit));
+		emit done(this, RKItemDelegate::EditorExit);
 	} else {
-		emit (done (this, RKItemDelegate::EditorReject));
+		emit done(this, RKItemDelegate::EditorReject);
 	}
 	dialog->deleteLater ();
 	dialog = 0;

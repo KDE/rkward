@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rksettingsmodulekateplugins  -  description
-                             -------------------
-    begin                : Thu Mar 26 2010
-    copyright            : (C) 2020 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rksettingsmodulekateplugins - This file is part of RKWard (https://rkward.kde.org). Created: Thu Mar 26 2010
+SPDX-FileCopyrightText: 2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rksettingsmodulekateplugins.h"
 
@@ -25,6 +15,7 @@
 #include <KLocalizedString>
 #include <KConfigGroup>
 #include <KConfig>
+#include <QIcon>
 
 #include "../windows/katepluginintegration.h"
 #include "../misc/rkcommonfunctions.h"
@@ -32,7 +23,7 @@
 
 #include "../debug.h"
 
-QStringList RKSettingsModuleKatePlugins::plugins_to_load;
+RKConfigValue<QStringList> RKSettingsModuleKatePlugins::plugins_to_load {"Plugins to load", QStringList() << "katesearchplugin" << "kateprojectplugin" << "katesnippetsplugin"};
 
 RKSettingsModuleKatePlugins::RKSettingsModuleKatePlugins(RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
 	RK_TRACE(SETTINGS);
@@ -49,7 +40,8 @@ RKSettingsModuleKatePlugins::RKSettingsModuleKatePlugins(RKSettings *gui, QWidge
 	boldfont.setBold(true);
 	plugin_table->setHeaderLabels(QStringList() << QString() << i18n("Name") << i18n("Description"));
 	KatePluginIntegrationApp *pluginapp = RKWardMainWindow::getMain()->katePluginIntegration();
-	foreach (const QString &key, pluginapp->known_plugins.keys()) {
+	const auto keys = pluginapp->known_plugins.keys();
+	for (const QString &key : keys) {
 		QTreeWidgetItem *item = new QTreeWidgetItem();
 		KPluginMetaData plugindata = pluginapp->known_plugins.value(key).data;
 		item->setData(1, Qt::DisplayRole, plugindata.name());
@@ -58,7 +50,7 @@ RKSettingsModuleKatePlugins::RKSettingsModuleKatePlugins(RKSettings *gui, QWidge
 		item->setData(1, Qt::DecorationRole, QIcon::fromTheme(plugindata.iconName()));
 		item->setData(1, Qt::UserRole, key);
 		item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsUserCheckable);
-		item->setCheckState(0, plugins_to_load.contains(key) ? Qt::Checked : Qt::Unchecked);
+		item->setCheckState(0, plugins_to_load.get().contains(key) ? Qt::Checked : Qt::Unchecked);
 		plugin_table->addTopLevelItem(item);
 	}
 	plugin_table->resizeColumnToContents(0);
@@ -76,38 +68,35 @@ RKSettingsModuleKatePlugins::~RKSettingsModuleKatePlugins() {
 void RKSettingsModuleKatePlugins::applyChanges() {
 	RK_TRACE(SETTINGS);
 
-	plugins_to_load.clear();
+	QStringList p;
 	for (int i = plugin_table->topLevelItemCount() - 1; i >= 0; --i) {
 		QTreeWidgetItem *item = plugin_table->topLevelItem(i);
 		if (item->checkState(0) == Qt::Checked) {
-			plugins_to_load.append (item->data(1, Qt::UserRole).toString());
+			p.append (item->data(1, Qt::UserRole).toString());
 		}
 	}
+	plugins_to_load = p;
 	RKWardMainWindow::getMain()->katePluginIntegration()->loadPlugins(plugins_to_load);
 }
 
-void RKSettingsModuleKatePlugins::save(KConfig *config) {
+void RKSettingsModuleKatePlugins::syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a) {
 	RK_TRACE(SETTINGS);
 
-	saveSettings(config);
-}
-
-void RKSettingsModuleKatePlugins::saveSettings(KConfig *config) {
-	RK_TRACE(SETTINGS);
+	if (a == RKConfigBase::SaveConfig) {
+		// if no kate plugins are known (installation problem), don't save any config
+		if (!RKWardMainWindow::getMain()->katePluginIntegration()->knownPluginCount()) return;
+	}
 
 	KConfigGroup cg = config->group("Kate Plugins");
-	cg.writeEntry("Plugins to load", plugins_to_load);
+	plugins_to_load.syncConfig(cg, a);
 }
 
-void RKSettingsModuleKatePlugins::loadSettings(KConfig *config) {
+QString RKSettingsModuleKatePlugins::caption() const {
 	RK_TRACE(SETTINGS);
-
-	KConfigGroup cg = config->group("Kate Plugins");
-	plugins_to_load = cg.readEntry("Plugins to load", QStringList() << "katesearchplugin" << "kateprojectplugin" << "katesnippetsplugin");
-}
-
-QString RKSettingsModuleKatePlugins::caption() {
-	RK_TRACE(SETTINGS);
-
 	return i18n("Kate Plugins");
+}
+
+QIcon RKSettingsModuleKatePlugins::icon() const {
+	RK_TRACE(SETTINGS);
+	return QIcon::fromTheme("kate");
 }

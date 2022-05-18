@@ -14,6 +14,7 @@
 	<settings>
 		<caption id="tab_variables"/>
 		<setting id="x">Select one or more numeric vectors to analyse</setting>
+		<setting id="groups">Optionally select one or more grouping factors by which to split each input vector. The grouping factors have to be of the same length as the input vectors (and thus, all input vectors have to be of the same length, if using any grouping). If specifying more than one grouping factor, separate splits will be performed for each combination of values of the grouping factors.</setting>
 		<caption id="tab_mean_sd"/>
 		<setting id="mean">Should the mean value be computed?</setting>
 		<setting id="trim">Trim of the mean. See <link href="rkward://rhelp/mean"/></setting>

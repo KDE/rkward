@@ -9,7 +9,9 @@ dfCall = function () {
 	        'results[i, ' + i18n ("degrees of freedom") + '] <- test$df\n');
 }
 
-function printout () {
-	new Header (i18n ("Pearson chi-square Normality Test")).addFromUI ("adjust").print ();
+function printout (is_preview) {
+	if (!is_preview) {
+		new Header (i18n ("Pearson chi-square Normality Test")).addFromUI ("adjust").print ();
+	}
 	echo ('rk.results (results)\n');
 }

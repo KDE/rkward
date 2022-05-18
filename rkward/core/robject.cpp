@@ -1,19 +1,9 @@
-/***************************************************************************
-                          robject  -  description
-                             -------------------
-    begin                : Thu Aug 19 2004
-    copyright            : (C) 2004-2019 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+robject - This file is part of RKWard (https://rkward.kde.org). Created: Thu Aug 19 2004
+SPDX-FileCopyrightText: 2004-2019 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 
 #include "robject.h"
@@ -23,7 +13,6 @@
 
 #include "../rbackend/rkrinterface.h"
 #include "../rbackend/rkrbackendprotocol_shared.h"
-#include "../rkglobals.h"
 #include "robjectlist.h"
 #include "rcontainerobject.h"
 #include "rkpseudoobjects.h"
@@ -170,7 +159,7 @@ void RObject::setMetaProperty (const QString &id, const QString &value, bool syn
 	}
 
 	if (sync) writeMetaData (0);
-	RKGlobals::tracker ()->objectMetaChanged (this);
+	RKModificationTracker::instance()->objectMetaChanged (this);
 }
 
 QString RObject::makeClassString (const QString &sep) const {
@@ -202,7 +191,7 @@ void RObject::writeMetaData (RCommandChain *chain) {
 	if (meta_map->isEmpty ()) {
 		map_string.append ("NULL");
 
-		delete meta_map;	// now that is is synced, delete it
+		delete meta_map;	// now that it is synced, delete it
 		meta_map = 0;
 	} else {
 		for (MetaMap::const_iterator it = meta_map->constBegin (); it != meta_map->constEnd (); ++it) {
@@ -213,7 +202,7 @@ void RObject::writeMetaData (RCommandChain *chain) {
 	}
 
 	RCommand *command = new RCommand (".rk.set.meta (" + getFullName () + ", " + map_string + ')', RCommand::App | RCommand::Sync);
-	RKGlobals::rInterface ()->issueCommand (command, chain);
+	RInterface::issueCommand (command, chain);
 }
 
 void RObject::updateFromR (RCommandChain *chain) {
@@ -227,11 +216,10 @@ void RObject::updateFromR (RCommandChain *chain) {
 // We handle objects directly in .GlobalEnv differently. That's to avoid forcing promises, when addressing the object directly. In the long run, .rk.get.structure should be reworked to simply not need the value-argument in any case.
 		 command = new RCommand (".rk.get.structure.global (" + rQuote (getShortName ()) + ')', RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString (), this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
 	} else {
-		RK_ASSERT (false);	// non-catastrophic, but do we get here?
-
+// This is the less common branch, but we do call .rk.get.structure on sub-object, e.g. when fetching more levels in the Workspace Browser, or when calling rk.sync(), explicitly
 		command = new RCommand (".rk.get.structure (" + getFullName () + ", " + rQuote (getShortName ()) + ')', RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString (), this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
 	}
-	RKGlobals::rInterface ()->issueCommand (command, chain);
+	RInterface::issueCommand (command, chain);
 
 	type |= Updating;	// will be cleared, implicitly, when the new structure gets set
 }
@@ -262,7 +250,7 @@ void RObject::rCommandDone (RCommand *command) {
 		if (command->failed ()) {
 			RK_DEBUG (OBJECTS, DL_INFO, "command failed while trying to update object '%s'. No longer present?", getShortName ().toLatin1 ().data ());
 			// this may happen, if the object has been removed in the workspace in between
-			RKGlobals::tracker ()->removeObject (this, 0, true);
+			RKModificationTracker::instance()->removeObject (this, 0, true);
 			return;
 		}
 		if (parent && parent->isContainer ()) static_cast<RContainerObject*> (parent)->updateChildStructure (this, command);		// this may result in a delete, so nothing after this!
@@ -299,7 +287,7 @@ bool RObject::updateStructure (RData *new_data) {
 	properties_change = updateDimensions (new_data_data.at (StoragePositionDims));
 	properties_change = updateSlots (new_data_data.at (StoragePositionSlots));
 
-	if (properties_change) RKGlobals::tracker ()->objectMetaChanged (this);
+	if (properties_change) RKModificationTracker::instance()->objectMetaChanged (this);
 	if (type & NeedDataUpdate) updateDataFromR (0);
 
 	if (type & Incomplete) {
@@ -483,11 +471,11 @@ bool RObject::updateSlots (RData *new_data) {
 		if (!spo) {
 			spo = new RSlotsPseudoObject (this);
 			added = true;
-			RKGlobals::tracker ()->lockUpdates (true);
+			RKModificationTracker::instance()->lockUpdates (true);
 		}
 		bool ret = spo->updateStructure (new_data->structureVector ().at (0));
 		if (added) {
-			RKGlobals::tracker ()->lockUpdates (false);
+			RKModificationTracker::instance()->lockUpdates (false);
 			setSpecialChildObject (spo, SlotsObject);
 		}
 		return ret;
@@ -553,7 +541,7 @@ RObject *RObject::findChildByObjectModelIndex (int index) const {
 }
 
 QList <RKEditor*> RObject::editors () const {
-	return (RKGlobals::tracker ()->objectEditors (this));
+	return (RKModificationTracker::instance()->objectEditors (this));
 }
 
 void RObject::rename (const QString &new_short_name) {
@@ -574,7 +562,7 @@ void RObject::setSpecialChildObject (RObject* special, PseudoObjectType special_
 	if (special == old_special) return;
 
 	if (old_special) {
-		RKGlobals::tracker ()->removeObject (old_special, 0, true);
+		RKModificationTracker::instance()->removeObject (old_special, 0, true);
 		RK_ASSERT (!hasPseudoObject (special_type));	// should have been removed in the above statement via RObject::remove()
 	}
 
@@ -589,9 +577,9 @@ void RObject::setSpecialChildObject (RObject* special, PseudoObjectType special_
 		int index = getObjectModelIndexOf (special);
 		// HACK: Newly added object must not be included in the index before beginAddObject (but must be included above for getObjectModelIncexOf() to work)
 		contained_objects -= special_type;
-		RKGlobals::tracker ()->beginAddObject (special, this, index);
+		RKModificationTracker::instance()->beginAddObject (special, this, index);
 		contained_objects |= special_type;
-		RKGlobals::tracker ()->endAddObject (special, this, index);
+		RKModificationTracker::instance()->endAddObject (special, this, index);
 	}
 }
 

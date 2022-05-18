@@ -4,11 +4,11 @@
 			<author
 				name="RKWard Team"
 				email="rkward-devel@kde.org"
-				url="http://rkward.kde.org" />
+				url="https://rkward.kde.org" />
 		</snippet>
 		<snippet id="rkward_version_guard">
 			<!-- Guard against accidental inclusion of pluginmaps in a different installed version of RKWard -->
-			<dependencies rkward_min_version="0.7.1z" rkward_max_version="0.7.2y" />
+			<dependencies rkward_min_version="0.7.3z" rkward_max_version="0.7.4y" />
 		</snippet>
 	</snippets>
 </document>

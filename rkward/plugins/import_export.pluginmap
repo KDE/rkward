@@ -1,13 +1,13 @@
 <!DOCTYPE rkpluginmap>
 
-<document base_prefix="00saveload/" namespace="rkward" id="import_export" po_id="import_export">
+<document base_prefix="00saveload/" namespace="rkward" id="import_export" po_id="import_export" priority="medium">
 	<include file="pluginmap_meta.inc"/>
 	<about
 		name="Data Import and Export"
 		shortinfo="Plugins for reading and writing data in various formats. Part of the official RKWard distribution"
-		version="0.7.2"
+		version="0.7.4"
 		license="GPL"
-		url="http://rkward.kde.org">
+		url="https://rkward.kde.org">
 		<insert snippet="author_rkward_team"/>
 	</about>
 	<insert snippet="rkward_version_guard"/>
@@ -25,7 +25,7 @@
 		<component type="standard" id="save_skeleton" file="save/skeleton/description.xml" label="Create package skeleton" />
 		<component type="standard" id="save_variables" file="save/write.xml" label="Export vector or matrix data" />
 		<component type="standard" id="save_csv" file="save/write_csv.xml" label="Export Table / CSV files" />
-    <component type="standard" id="save_rmarkdown" file="save/ExportRMarkdown.xml" label="Export RMarkdown" />
+		<component type="standard" id="save_rmarkdown" file="save/ExportRMarkdown.xml" label="Export RMarkdown" />
 
 		<component type="standard" id="import_spss" file="import/import_spss.xml" label="Import SPSS">
 			<attribute id="format" value="*.sav *.por" label="SPSS data files"/>
@@ -43,6 +43,8 @@
 			<attribute id="format" value="*.xls *.xlsx" label="Microsoft Excel files (Java)"/>
 		</component>
 
+		<component type="standard" id="import_generic_rio" file="import/import_generic_rio.xml" label="Generic import (rio-based)" />
+
 		<component type="standard" id="setworkdir" file="setworkdir.xml" label="Set Working Directory" />
 	</components>
 
@@ -55,6 +57,7 @@
 					<entry component="import_csv"/>
 					<entry component="import_xls"/>
 					<entry component="import_xls_xlconnect"/>
+					<entry component="import_generic_rio"/>
 				</menu>
 				<entry component="load_r_object" />
 				<entry component="load_source" />
@@ -77,6 +80,8 @@
 			<entry component="import_spss"/>
 			<entry component="import_stata"/>
 			<entry component="import_csv"/>
+			<entry component="import_xls"/>
+			<entry component="import_xls_xlconnect"/>
 		</menu>
 	</context>
 </document>

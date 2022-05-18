@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkcomponent  -  description
-                             -------------------
-    begin                : Tue Dec 13 2005
-    copyright            : (C) 2005, 2006, 2009, 2010, 2011, 2012, 2013, 2014 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkcomponent - This file is part of RKWard (https://rkward.kde.org). Created: Tue Dec 13 2005
+SPDX-FileCopyrightText: 2005-2014 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkcomponent.h"
 
@@ -257,13 +247,13 @@ RKComponentBase::ComponentStatus RKComponentBase::recursiveStatus () {
 	if (isComponent () && static_cast<RKComponent*>(this)->isInactive ()) req = false;
 	if (!req) return Satisfied;
 	if (children_satisfied && isValid ()) return Satisfied;
- 	if (isComponent ()) RK_DEBUG (PLUGIN, DL_DEBUG, "component not satisfied: %s", qPrintable (static_cast<RKComponent*> (this)->getIdInParent ()));
+	if (isComponent ()) RK_DEBUG (PLUGIN, DL_DEBUG, "component not satisfied: %s (type %d)", qPrintable (static_cast<RKComponent*> (this)->getIdInParent ()), type());
 	return Unsatisfied;
 }
 
 //############### RKComponent ########################
 
-RKComponent::RKComponent (RKComponent *parent_component, QWidget *parent_widget) : QWidget (parent_widget) {
+RKComponent::RKComponent(RKComponent *parent_component, QWidget *parent_widget) : QWidget(parent_widget), RKComponentBase() {
 	RK_TRACE (PLUGIN);
 
 	createDefaultProperties ();
@@ -334,7 +324,7 @@ void RKComponent::updateEnablednessRecursive (bool parent_enabled) {
 
 bool RKComponent::isInactive () {
 	if (!isEnabled ()) return true;
-	if (parentWidget () && isHidden ()) return true;	// Note: Components embedded as button may be "hidden" without being inaccessible
+	if (parentWidget() && !isVisible()) return true;	// Note: Components embedded as button may be "hidden" without being unaccessible
 	if (!visibility_property->boolValue ()) return true;	// Note for those, this is the appropriate check
 	return false;
 }
@@ -382,7 +372,7 @@ void RKComponent::changed () {
 		parentComponent ()->changed ();
 	}
 
-	emit (componentChanged (this));
+	emit componentChanged(this);
 }
 
 RKStandardComponent *RKComponent::standardComponent (QString *id_adjust) const {

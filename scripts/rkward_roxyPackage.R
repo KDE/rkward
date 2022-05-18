@@ -89,7 +89,7 @@ local({
     R.libs=install.path,
     repo.root=local.repository,
     cleanup=TRUE,
-    URL="http://rkward.kde.org",
+    URL="https://rkward.kde.org",
     #readme.options=list(
     #  githubUser=""
     #),

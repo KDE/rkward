@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkformula  -  description
-                             -------------------
-    begin                : Thu Aug 12 2004
-    copyright            : (C) 2004, 2006, 2007, 2009, 2011, 2014 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkformula - This file is part of RKWard (https://rkward.kde.org). Created: Thu Aug 12 2004
+SPDX-FileCopyrightText: 2004-2014 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 #include "rkformula.h"
 
 #include <qpushbutton.h>
@@ -32,7 +22,7 @@
 #include "../core/rcontainerobject.h"
 #include "../misc/xmlhelper.h"
 #include "../misc/rkstandardicons.h"
-#include "../rkglobals.h"
+#include "../misc/rkcompatibility.h"
 
 #include "../debug.h"
 
@@ -76,7 +66,7 @@ RKFormula::RKFormula (const QDomElement &element, RKComponent *parent_component,
 	type_selector->addButton (button, (int) MainEffects);
 	vbox->addWidget (button = new QRadioButton (i18n ("Custom Model:"), this));
 	type_selector->addButton (button, (int) Custom);
-	connect (type_selector, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &RKFormula::typeChange);
+	connect (type_selector, RKCompatibility::groupButtonClicked(), this, &RKFormula::typeChange);
 
 	custom_model_widget = new QWidget (this);
 	QHBoxLayout *model_hbox = new QHBoxLayout (custom_model_widget);
@@ -173,7 +163,7 @@ void RKFormula::makeModelString () {
 	} else if (!vlist.empty ()) {
 		container = vlist.first ()->parentObject ();
 	}
-	for (RObject::ObjectList::const_iterator it = vlist.begin (); it != vlist.end (); ++it) {
+	for (RObject::ObjectList::const_iterator it = vlist.cbegin (); it != vlist.cend (); ++it) {
 		if ((*it)->parentObject () != container) {
 			multitable = true;
 			break;
@@ -182,7 +172,7 @@ void RKFormula::makeModelString () {
 	if (multitable) {
 		table_string = "data.frame (";
 		if (dep_var) table_string.append (mangleName (dep_var) + '=' + dep_var->getFullName ());
-		for (RObject::ObjectList::const_iterator it = vlist.begin (); it != vlist.end (); ++it) {
+		for (RObject::ObjectList::const_iterator it = vlist.cbegin (); it != vlist.cend (); ++it) {
 			table_string.append (", " + mangleName ((*it)) + '=' + (*it)->getFullName ());
 		}
 		table_string.append (")");
@@ -193,13 +183,13 @@ void RKFormula::makeModelString () {
 	// construct model string
 	model_string = mangleName (dep_var) + " ~ ";
 	if (model_type == FullModel) {
-		for (RObject::ObjectList::const_iterator it = vlist.begin (); it != vlist.end (); ++it) {
-			if (it != vlist.begin ()) model_string.append (" * ");
+		for (RObject::ObjectList::const_iterator it = vlist.cbegin (); it != vlist.cend (); ++it) {
+			if (it != vlist.cbegin ()) model_string.append (" * ");
 			model_string.append (mangleName (*it));
 		}
 	} else if (model_type == MainEffects) {
-		for (RObject::ObjectList::const_iterator it = vlist.begin (); it != vlist.end (); ++it) {
-			if (it != vlist.begin ()) model_string.append (" + ");
+		for (RObject::ObjectList::const_iterator it = vlist.cbegin (); it != vlist.cend (); ++it) {
+			if (it != vlist.cbegin ()) model_string.append (" + ");
 			model_string.append (mangleName (*it));
 		}
 	} else if (model_type == Custom) {	
@@ -220,8 +210,8 @@ void RKFormula::makeModelString () {
 	// labels
 	labels_string = "list (";
 	MangledNames::const_iterator it;
-	for (it = mangled_names.begin (); it != mangled_names.end (); ++it) {
-		if (it != mangled_names.begin ()) {
+	for (it = mangled_names.cbegin (); it != mangled_names.cend (); ++it) {
+		if (it != mangled_names.cbegin ()) {
 			labels_string.append (", ");
 		}
 		labels_string.append (it.key () + "=\"" + it.value ()->getDescription () + "\"");

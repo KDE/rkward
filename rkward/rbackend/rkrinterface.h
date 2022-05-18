@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkrinterface.h  -  description
-                             -------------------
-    begin                : Fri Nov 1 2002
-    copyright            : (C) 2002 - 2018 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkrinterface.h - This file is part of the RKWard project. Created: Fri Nov 1 2002
+SPDX-FileCopyrightText: 2002-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef RKRINTERFACE_H
 #define RKRINTERFACE_H
@@ -44,20 +34,21 @@ class RBackendRequest;
 class RInterface : public QObject, public RCommandReceiver {
 	Q_OBJECT
 public:
-/** constructor */
-	RInterface();
+	static void create();
 /** destructor */
 	~RInterface();
 
+	static RInterface* instance() { return _instance; };
+
 /** issues the given command in the given chain */
-	void issueCommand (RCommand *command, RCommandChain *chain=0);
-/** convenience function to create a new command and issue it. See documentation on RCommand::RCommand () and RInterface::issueCommand () */
-	void issueCommand (const QString &command, int type = 0, const QString &rk_equiv = QString (), RCommandReceiver *receiver=0, int flags=0, RCommandChain *chain=0);
+	static void issueCommand(RCommand *command, RCommandChain *chain=0);
+/** convenience function to create a new command and issue it. See documentation on RCommand::RCommand() and RInterface::issueCommand() */
+	static void issueCommand(const QString &command, int type = 0, const QString &rk_equiv = QString(), RCommandReceiver *receiver=0, int flags=0, RCommandChain *chain=0);
 
 /** opens a new command chain. Returns a pointer to the new chain. If you specify a parent, the new chain will be a sub-chain of that chain. */
-	RCommandChain *startChain (RCommandChain *parent=0);
+	static RCommandChain *startChain(RCommandChain *parent=0);
 /** closes the command chain. The chain (and even its parent, if it is already closed) may be deleted right afterwards! */
-	void closeChain (RCommandChain *chain);
+	static void closeChain(RCommandChain *chain);
 
 /** Ensures that the given command will not be executed, or, if it is already running, interrupts it. Note that commands marked RCommand::Sync can
 not be interrupted. */
@@ -73,7 +64,14 @@ not be interrupted. */
 /** returns the command currently running in the thread. Be careful when using the returned pointer! */
 	RCommand *runningCommand () const { return (all_current_commands.isEmpty () ? 0 : all_current_commands.last ()); };
 
-	bool backendIsDead () { return backend_dead; };
+	enum RStatus {
+		Busy,
+		Idle,
+		Starting,
+		Dead
+	};
+
+	bool backendIsDead () const { return backend_dead; };
 	bool backendIsIdle ();
 	static bool isNaReal (double value) { return na_real == value; };
 	static bool isNaInt (int value) { return na_int == value; };
@@ -92,8 +90,11 @@ private:
 		RecordingCommandsUnfiltered
 	} command_logfile_mode;
 
-	void processHistoricalSubstackRequest (const QStringList &calllist, RCommand *parent_command);
-	QStringList processPlainGenericRequest (const QStringList &calllist);
+/** helper function to handle backend requests that (may) involve running additional R-"sub"-commands. TODO; This should probably be merged with processRBackendRequest.*/
+	void processHistoricalSubstackRequest (const QStringList &calllist, RCommand *parent_command, RBackendRequest *request);
+/** helper function to handle the bulk backend of requests that do not involve running sub-commands */
+	GenericRRequestResult processPlainGenericRequest (const QStringList &calllist);
+/** helper function to handle backend requests that do not inolve running sub-commands. */
 	void processRBackendRequest (RBackendRequest *request);
 
 /** A list of all commands that have entered, and not yet left, the backend thread */
@@ -133,8 +134,14 @@ friend class RCommand;
 protected:
 	void handleRequest (RBackendRequest *request);
 	void rCommandDone (RCommand *command) override;
+	static RInterface *_instance;
+	void _issueCommand(RCommand *command, RCommandChain *chain=0);
+/** constructor */
+	RInterface();
 signals:
 	void backendWorkdirChanged();
+/** Note: status is actually RInterface::RStatus */
+	void backendStatusChanged(int new_status);
 };
 
 /**
@@ -154,10 +161,10 @@ happens (whether the command runs successfully, or what the output is). For this
 code:
 
 \code
-#include "rkglobals.h"
+
 #include "rbackend/rinterface.h"
 
-RKGlobals::rInterface ()->issueCommand ("print (\"hello world!\")", RCommand::User);
+RInterface::issueCommand ("print (\"hello world!\")", RCommand::User);
 \endcode
 
 You will note, that actually there are two RInterface::issueCommand functions, this one is obviously the one taking a QString and several further
@@ -179,7 +186,7 @@ want to handle the results of RCommands from RCommandReceiver. When finished, th
 The corresponding code would look something like this:
 
 \code
-#include "rkglobals.h"
+
 #include "rbackend/rinterface.h"
 #include "rbackend/rcommandreceiver.h"
 
@@ -197,7 +204,7 @@ private:
 
 
 void MyReceiver::someFunction () {
-	RKGlobals::rInterface ()->issueCommand ("print (1+1)", RCommand::App, QString (), this);
+	RInterface::issueCommand ("print (1+1)", RCommand::App, QString (), this);
 }
 
 void MyReceiver::rCommandDone (RCommand *command) {
@@ -230,7 +237,7 @@ To illustrate the option of using "FLAGS", here is a reduced example of how RKVa
 void RKVariable::updateFromR () {
 	//...
 	RCommand *command = new RCommand ("length (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, QString (), this, UPDATE_DIM_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
+	RInterface::issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
 }
 
 void RKVariable::rCommandDone (RCommand *command) {
@@ -238,7 +245,7 @@ void RKVariable::rCommandDone (RCommand *command) {
 	if (command->getFlags () == UPDATE_DIM_COMMAND) {
 		// ...
 		RCommand *ncommand = new RCommand ("class (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString (), this, UPDATE_CLASS_COMMAND);
-		RKGlobals::rInterface ()->issueCommand (ncommand, RKGlobals::rObjectList()->getUpdateCommandChain ());
+		RInterface::issueCommand (ncommand, RKGlobals::rObjectList()->getUpdateCommandChain ());
 	} else if (command->getFlags () == UPDATE_CLASS_COMMAND) {
 		//...
 	}
@@ -255,7 +262,7 @@ So far we've discussed RInterface:issueCommand () and RCommandReceiver::rCommand
 
 First the RCommand is placed in a first-in-first-out stack. This stack is needed, since - as discussed - the commands get executed in a separate thread, so several command may get stacked up, before the first one gets run.
 
-Then, in the backend thread (RThread) there is a loop running, which fetches those commands from the stack and executes them one by one. Whenver a command has been executed in this thread, it gets updated with information on any errors that occurred and of course also with the result of running the command. Next, a QCustomEvent is being posted. What this does is - rougly speaking -, transfer the pointer to the command back to the main thread in a safe way.
+Then, in the backend thread (RThread) there is a loop running, which fetches those commands from the stack and executes them one by one. Whenever a command has been executed in this thread, it gets updated with information on any errors that occurred and of course also with the result of running the command. Next, a QCustomEvent is being posted. What this does is - rougly speaking -, transfer the pointer to the command back to the main thread in a safe way.
 
 Whenever the main thread becomes active again, it will find that QCustomEvent and handle it in RInterface::customEvent.
 
@@ -304,17 +311,17 @@ To cope with this, it is sometimes desirable to keep closer control over the ord
 The way to do this is to use RCommandChain. Basically, when you want commands to be executed in a sequence being sure that no other commands intervene, you do this:
 
 \code
-	RCommandChain *chain = RKGlobals::rInterface ()->startChain ();
+	RCommandChain *chain = RInterface::startChain ();
 
 	// create first command
-	RKGlobals::rInterface ()->issueCommand (first_command, chain);
+	RInterface::issueCommand (first_command, chain);
 
 	// wait for command to return, potentially allows further calls to RInterface::issueCommand () from other places in the code
 
 	// create second command
-	RKGlobals::rInterface ()->issueCommand (second_command, chain);
+	RInterface::issueCommand (second_command, chain);
 
-	RKGlobals::rInterface ()->closeChain (chain);
+	RInterface::closeChain (chain);
 \endcode
 
 Now the point is that you place both of your commands in a dedicated "chain", telling RKWard that those two commands will have to be run in direct succession. If between the first and the second command, another section of the code issues a different command, this command will never be run until all commands in the chain have been run and the chain has been marked as closed.
@@ -322,12 +329,12 @@ Now the point is that you place both of your commands in a dedicated "chain", te
 To illustrate, consider this series of events:
 
 \code
-1) RCommandChain *chain = RKGlobals::rInterface ()->startChain ();
-2) RKGlobals::rInterface ()->issueCommand (first_command, chain);
-3) RKGlobals::rInterface ()->issueCommand (some_command);
-4) RKGlobals::rInterface ()->issueCommand (second_command, chain);
-5) RKGlobals::rInterface ()->issueCommand (some_command2);
-6) RKGlobals::rInterface ()->closeChain (chain);
+1) RCommandChain *chain = RInterface::startChain ();
+2) RInterface::issueCommand (first_command, chain);
+3) RInterface::issueCommand (some_command);
+4) RInterface::issueCommand (second_command, chain);
+5) RInterface::issueCommand (some_command2);
+6) RInterface::closeChain (chain);
 \endcode
 
 Now let's assume for a second, the R backend has been busy doing other stuff and has not executed any of the commands so far, then the execution stack will now look like this:
@@ -343,7 +350,7 @@ Now let's assume for a second, the R backend has been busy doing other stuff and
 So the order of execution will be guaranteed to be first_command, second_command, some_command, some_command2, although they were issued ina different order. You can also open sub chains, using
 
 \code
-RCommandChain *sub_chain = RKGlobals::rInterface ()->startChain (parent_chain);
+RCommandChain *sub_chain = RInterface::startChain (parent_chain);
 \endcode
 
 Remember to close chains when you placed all the commands you needed to. If you don't close the chain, RKWard will continue to wait for new commands in that chain, and never proceed with commands outside of the chain.
@@ -362,7 +369,7 @@ This is typically used in plugins: When you specify this modifier, the plain tex
 These are special modifiers helpful when transferring data from R to RKWard (used primarily in the editor classes and in conjunction with RCommand::Sync): They tell the backend to try to fetch the result as an array of int, char*, or double, respectively. For instance, if you know object "myobject" is an integer vector, you may get the data using
 
 \code
-RKGlobals::rInterface ()->issueCommand ("myobject", RCommand::Sync | RCommand::GetIntVector, QString (), this);
+RInterface::issueCommand ("myobject", RCommand::Sync | RCommand::GetIntVector, QString (), this);
 \endcode
 
 Assuming the data can in fact be converted to a vector of integers, you can then access the data using these members in RCommand:

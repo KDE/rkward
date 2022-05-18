@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+ <mime-type type="application/vnd.kde.rkward-output">
+  <comment>RKWard Output document</comment>
+  <sub-class-of type="application/x-gzip"/>
+  <glob pattern="*.rko"/>
+  <generic-icon name="rkward"/>
+ </mime-type>
+</mime-info>

@@ -1,19 +1,9 @@
-/***************************************************************************
-                          renvironmentobject  -  description
-                             -------------------
-    begin                : Wed Sep 27 2006
-    copyright            : (C) 2006-2019 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+renvironmentobject - This file is part of RKWard (https://rkward.kde.org). Created: Wed Sep 27 2006
+SPDX-FileCopyrightText: 2006-2019 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "renvironmentobject.h"
 
@@ -25,7 +15,6 @@
 #include "../rbackend/rkrinterface.h"
 #include "../settings/rksettingsmoduleobjectbrowser.h"
 #include "rkmodificationtracker.h"
-#include "../rkglobals.h"
 
 #include "../debug.h"
 
@@ -115,7 +104,7 @@ void REnvironmentObject::updateFromR (RCommandChain *chain) {
 	if (type & PackageEnv) options.append (", namespacename=" + rQuote (packageName ()));
 
 	RCommand *command = new RCommand (".rk.get.structure (" + getFullName (DefaultObjectNameOptions) + ", " + rQuote (getShortName ()) + options + ')', RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString (), this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
-	RKGlobals::rInterface ()->issueCommand (command, chain);
+	RInterface::issueCommand (command, chain);
 
 	type |= Updating;
 }
@@ -130,7 +119,7 @@ void REnvironmentObject::updateFromR (RCommandChain *chain, const QStringList &c
 	for (int i = childmap.size () - 1; i >= 0; --i) {
 		RObject *object = childmap[i];
 		if (!current_symbols.contains (object->getShortName ())) {
-			if (object->isPending () || (!(RKGlobals::tracker ()->removeObject (object, 0, true)))) debug_baseline++;
+			if (object->isPending () || (!(RKModificationTracker::instance()->removeObject (object, 0, true)))) debug_baseline++;
 		}
 	}
 
@@ -153,7 +142,7 @@ bool REnvironmentObject::updateStructure (RData *new_data) {
 	RK_ASSERT (new_data->getDataLength () >= StorageSizeBasicInfo);
 
 	if (!(type & ToplevelEnv)) {
-		if (!RObject::updateStructure (new_data)) return false;
+		if (!RContainerObject::updateStructure(new_data)) return false;
 	}
 
 	RData::RDataStorage new_data_data = new_data->structureVector ();
@@ -187,11 +176,11 @@ void REnvironmentObject::updateNamespace (RData* new_data) {
 	if (!namespace_envir) {
 		namespace_envir = new RKNamespaceObject (this);
 		added = true;
-		RKGlobals::tracker ()->lockUpdates (true);
+		RKModificationTracker::instance()->lockUpdates (true);
 	}
 	namespace_envir->updateStructure (new_data->structureVector ().at (0));
 	if (added) {
-		RKGlobals::tracker ()->lockUpdates (false);
+		RKModificationTracker::instance()->lockUpdates (false);
 		setSpecialChildObject (namespace_envir, NamespaceObject);
 	}
 }

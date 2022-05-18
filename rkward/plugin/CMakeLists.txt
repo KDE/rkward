@@ -32,4 +32,4 @@ SET(plugin_STAT_SRCS
    )
 
 ADD_LIBRARY(plugin STATIC ${plugin_STAT_SRCS})
-TARGET_LINK_LIBRARIES(plugin Qt5::Widgets Qt5::Script KF5::TextEditor KF5::WindowSystem)
+TARGET_LINK_LIBRARIES(plugin Qt5::Widgets KF5::TextEditor KF5::WindowSystem)

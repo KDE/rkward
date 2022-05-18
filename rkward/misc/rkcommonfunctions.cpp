@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkcommonfunctions  -  description
-                             -------------------
-    begin                : Mon Oct 17 2005
-    copyright            : (C) 2005-2020 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkcommonfunctions - This file is part of RKWard (https://rkward.kde.org). Created: Mon Oct 17 2005
+SPDX-FileCopyrightText: 2005-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 #include "rkcommonfunctions.h"
 
 #include <qstringlist.h>
@@ -177,6 +167,7 @@ namespace RKCommonFunctions {
 		if (rkward_data_dir.isNull ()) {
 			QString inside_build_tree = QCoreApplication::applicationDirPath() + "/rkwardinstall/";
 			if (QFileInfo(inside_build_tree).isReadable()) {
+				RK_DEBUG(APP, DL_INFO, "Running from inside build tree");
 				rkward_data_dir = inside_build_tree;
 				return rkward_data_dir;
 			}
@@ -197,19 +188,6 @@ namespace RKCommonFunctions {
 			RK_DEBUG(APP, DL_WARNING, "resource.ver not found. Data path(s): %s", qPrintable (QStandardPaths::standardLocations (QStandardPaths::AppDataLocation).join (':')));
 		}
 		return rkward_data_dir;
-	}
-
-	QString getUseableRKWardSavefileName (const QString &prefix, const QString &postfix) {
-		QDir dir (RKSettingsModuleGeneral::filesPath ());
-
-		int i=0;
-		while (true) {
-			QString candidate = prefix + QString::number (i) + postfix;
-			if (!dir.exists (candidate)) {
-				return dir.filePath (candidate);
-			}
-			i++;
-		}
 	}
 
 	QString escape (const QString &in) {
@@ -247,7 +225,7 @@ namespace RKCommonFunctions {
 		return out;
 	}
 
-	void setTips (const QString tip, QWidget *first, QWidget *second, QWidget *third) {
+	void setTips (const QString &tip, QWidget *first, QWidget *second, QWidget *third) {
 		for (int i=0; i < 3; ++i) {
 			QWidget *w = first;
 			if (i == 1) w = second;
@@ -293,5 +271,4 @@ namespace RKCommonFunctions {
 		QObject::connect (ret, &QLabel::linkActivated, RKWorkplace::mainWorkplace (), &RKWorkplace::openAnyUrlString);
 		return ret;
 	}
-
 }	// namespace

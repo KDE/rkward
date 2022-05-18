@@ -14,6 +14,7 @@
 							Note: Objects must have between 3 and 5000 values
 						</text>
 						<stretch/>
+						<preview id="preview" mode="output"/>
 					</column>
 				</row>
 			</tab>

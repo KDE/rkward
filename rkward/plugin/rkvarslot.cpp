@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkvarslot.cpp  -  description
-                             -------------------
-    begin                : Thu Nov 7 2002
-    copyright            : (C) 2002-2015 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkvarslot.cpp - This file is part of RKWard (https://rkward.kde.org). Created: Thu Nov 7 2002
+SPDX-FileCopyrightText: 2002-2015 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkvarslot.h"
 
@@ -31,10 +21,10 @@
 
 #include "rkvarselector.h"
 #include "../core/robject.h"
-#include "../rkglobals.h"
 #include "../debug.h"
 #include "../misc/xmlhelper.h"
 #include "../misc/rkstandardicons.h"
+#include "../misc/rkcompatibility.h"
 
 RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
 	RK_TRACE (PLUGIN);
@@ -109,8 +99,8 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 
 	if (mode == Varslot) {
 		// initialize filters
-		static_cast<RKComponentPropertyRObjects*> (available)->setClassFilter (xml->getStringAttribute (element, "classes", QString (), DL_INFO).split (' ', QString::SkipEmptyParts));
-		static_cast<RKComponentPropertyRObjects*> (available)->setTypeFilter (xml->getStringAttribute (element, "types", QString (), DL_INFO).split (' ', QString::SkipEmptyParts));
+		static_cast<RKComponentPropertyRObjects*> (available)->setClassFilter (xml->getStringAttribute (element, "classes", QString (), DL_INFO).split (' ', RKCompatibility::SkipEmptyParts()));
+		static_cast<RKComponentPropertyRObjects*> (available)->setTypeFilter (xml->getStringAttribute (element, "types", QString (), DL_INFO).split (' ', RKCompatibility::SkipEmptyParts()));
 		static_cast<RKComponentPropertyRObjects*> (available)->setDimensionFilter (xml->getIntAttribute (element, "num_dimensions", 0, DL_INFO), xml->getIntAttribute (element, "min_length", 0, DL_INFO), xml->getIntAttribute (element, "max_length", INT_MAX, DL_INFO));
 		static_cast<RKComponentPropertyRObjects*> (available)->setObjectProblemsAreErrors (false);
 	}
@@ -181,17 +171,15 @@ void RKVarSlot::availablePropertyChanged (RKComponentPropertyBase *) {
 void RKVarSlot::updateLook () {
 	RK_TRACE (PLUGIN);
 
-	QPalette palette = list->palette ();
 	if (!isSatisfied ()) {		// implies that it is enabled
-		palette.setColor (QPalette::Base, QColor (255, 0, 0));
+		list->setStyleSheet(QString("background: red; color: black"));
 	} else {
 		if (isEnabled ()) {
-			palette.setColor (QPalette::Base, QColor (255, 255, 255));
+			list->setStyleSheet(QString(""));
 		} else {
-			palette.setColor (QPalette::Base, QColor (200, 200, 200));
+			list->setStyleSheet(QString("background: rgb(200, 200, 200); color: black"));
 		}
 	}
-	list->setPalette(palette);
 }
 
 void RKVarSlot::changeEvent (QEvent* event) {

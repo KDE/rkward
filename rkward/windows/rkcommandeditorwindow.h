@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkcommandeditorwindow  -  description
-                             -------------------
-    begin                : Mon Aug 30 2004
-    copyright            : (C) 2004-2020 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkcommandeditorwindow - This file is part of the RKWard project. Created: Mon Aug 30 2004
+SPDX-FileCopyrightText: 2004-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 #ifndef RKCOMMANDEDITORWINDOW_H
 #define RKCOMMANDEDITORWINDOW_H
 
@@ -91,11 +81,13 @@ public:
 /** constructor
 @param encoding encoding to use. If QString (), the default encoding is used.
 @param flags @See Combination of RKCommandEditorFlags */
-	explicit RKCommandEditorWindow (QWidget *parent, const QUrl url, const QString& encoding=QString (), int flags=RKCommandEditorFlags::DefaultFlags);
+	explicit RKCommandEditorWindow (QWidget *parent, const QUrl &url, const QString& encoding=QString (), int flags=RKCommandEditorFlags::DefaultFlags);
 /** destructor */
 	~RKCommandEditorWindow ();
 /** returns, whether the document was modified since the last save */
 	bool isModified () override;
+/** saves the document, returns true on success */
+	bool save () override;
 /** insert the given text into the document at the current cursor position. Additionally, focuses the view */
 	void insertText (const QString &text);
 /** set the current text (clear all previous text, and sets new text) */
@@ -144,9 +136,6 @@ public slots:
 
 /** apply our customizations to the katepart GUI */
 	void fixupPartGUI ();
-
-	QAction* fileSaveAction () { return file_save; };
-	QAction* fileSaveAsAction () { return file_save_as; };
 protected:
 /** reimplemented from RKMDIWindow: give the editor window a chance to object to being closed (if unsaved) */
 	void closeEvent (QCloseEvent *e) override;
@@ -172,6 +161,7 @@ private slots:
 /** document was saved. Update preview, if appropriate */
 	void documentSaved ();
 private:
+	void urlChanged();
 	KTextEditor::Cursor saved_scroll_position;
 	KTextEditor::Document *m_doc;
 	KTextEditor::View *m_view;
@@ -191,8 +181,6 @@ private:
 	void initBlocks ();
 	void addBlock (int index, const KTextEditor::Range& range);
 	void removeBlock (int index, bool was_deleted=false);
-
-	QAction *file_save, *file_save_as;
 
 	KActionMenu* actionmenu_mark_block;
 	KActionMenu* actionmenu_unmark_block;
@@ -242,7 +230,7 @@ public:
 	};
 	static void copyLinesToOutput (KTextEditor::View *view, HighlightingMode mode);
 	static void setHighlighting (KTextEditor::Document *doc, HighlightingMode mode);
-	static QString commandToHTML (const QString r_command, HighlightingMode mode=RScript);
+	static QString commandToHTML (const QString &r_command, HighlightingMode mode=RScript);
 private:
 	static KTextEditor::Document* getDoc ();
 	static KTextEditor::Document* _doc;

@@ -1,29 +1,37 @@
-/***************************************************************************
-                          rkgraphicsdevice_stubs  -  description
-                             -------------------
-    begin                : Mon Mar 18 20:06:08 CET 2013
-    copyright            : (C) 2013-2014 by Thomas Friedrichsmeier 
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkgraphicsdevice_stubs - This file is part of RKWard (https://rkward.kde.org). Created: Mon Mar 18 2013
+SPDX-FileCopyrightText: 2013-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 /* NOTE: This file is essentially a split-out from rkgraphicsdevice_setup.cpp,
  * not a compilation unit of its own.
  * It is meant to be included, there. */
 
+#define RKD_BACKEND_CODE
+#define RKD_RGE_VERSION R_GE_version
 #include "rkgraphicsdevice_protocol_shared.h"
 #include "rkgraphicsdevice_backendtransmitter.h"
 #include "../rkrbackend.h"
 #include "../rkreventloop.h"
 #include "../../debug.h"
+
+#undef RK_TRACE
+#define RK_TRACE(flags)
+/*
+#define RK_TRACE(flags) RKFullTrace _rk_full_trace(__FILE__, __FUNCTION__, __LINE__);
+class RKFullTrace {
+public:
+	RKFullTrace(char *file, const char *function, int line) : _function(function){
+		qDebug("Trace enter: %s - function %s line %d", file, _function, line);
+	};
+	~RKFullTrace() {
+		qDebug("Trace leave: function %s", _function);
+	};
+	const char *_function;
+}; */
+
 
 #include <R_ext/GraphicsEngine.h>
 
@@ -144,15 +152,10 @@ public:
 #include <QRectF>
 #include <QSizeF>
 
-// This ought to be optimized away by the compiler:
-#define SAFE_LINE_END(lend) (quint8) (lend == GE_ROUND_CAP ? RoundLineCap : (lend == GE_BUTT_CAP ? ButtLineCap : SquareLineCap))
-// This ought to be optimized away by the compiler:
-#define SAFE_LINE_JOIN(ljoin) (quint8) (ljoin == GE_ROUND_JOIN ? RoundJoin : (ljoin == GE_BEVEL_JOIN ? BevelJoin : MitreJoin))
-
 // I'd love to convert to QColor, directly, but that's in QtGui, not QtCore. QRgb used different byte ordering
+// TODO: is the check against NA_INTEGER needed at all?
 #define WRITE_COLOR_BYTES(col) \
-	if (col == NA_INTEGER) RKD_OUT_STREAM << (quint8) 0xFF << (quint8) 0xFF << (quint8) 0xFF << (quint8) 0x00; \
-	else RKD_OUT_STREAM << (quint8) R_RED (col) << (quint8) R_GREEN (col) << (quint8) R_BLUE (col) << (quint8) R_ALPHA (col)
+	RKD_OUT_STREAM << (quint8) R_RED (col) << (quint8) R_GREEN (col) << (quint8) R_BLUE (col) << (quint8) R_ALPHA (col)
 #define WRITE_HEADER_NUM(x,devnum) \
 	RKD_OUT_STREAM << (qint8) x << (quint8) devnum
 #define WRITE_HEADER(x,dev) \
@@ -163,13 +166,22 @@ public:
 	WRITE_COL(); RKD_OUT_STREAM << (double) gc->lwd << (qint32) gc->lty
 // actually lmitre is only needed if linejoin is GE_MITRE_JOIN, so we could optimize a bit
 #define WRITE_LINE_ENDS() \
-	RKD_OUT_STREAM << SAFE_LINE_END (gc->lend) << SAFE_LINE_JOIN (gc->ljoin) << gc->lmitre
-#define WRITE_FILL() \
-	WRITE_COLOR_BYTES (gc->fill)
+	RKD_OUT_STREAM << (quint8) mapLineEndStyle(gc->lend) << (quint8) mapLineJoinStyle(gc->ljoin) << gc->lmitre
+#if R_VERSION >= R_Version(4, 1, 0)
+#  define WRITE_FILL() \
+	if (gc->patternFill != R_NilValue) RKD_OUT_STREAM << (qint8) PatternFill << (qint16) (INTEGER(gc->patternFill)[0]); \
+	else { \
+		RKD_OUT_STREAM << (qint8) ColorFill; WRITE_COLOR_BYTES (gc->fill); \
+	}
+#else
+#  define WRITE_FILL() \
+	RKD_OUT_STREAM << (qint8) ColorFill; WRITE_COLOR_BYTES (gc->fill);
+#endif
 #define WRITE_FONT(dev) \
 	RKD_OUT_STREAM << gc->cex << gc->ps << gc->lineheight << (quint8) gc->fontface << (gc->fontfamily[0] ? QString (gc->fontfamily) : (static_cast<RKGraphicsDeviceDesc*> (dev->deviceSpecific)->getFontFamily (gc->fontface == 5)))
 
 static void RKD_QueryResolution (int *dpix, int *dpiy) {
+	RK_TRACE(GRAPHICS_DEVICE);
 	{
 		RKGraphicsDataStreamWriteGuard wguard;
 		WRITE_HEADER_NUM (RKDQueryResolution, 0);
@@ -182,11 +194,12 @@ static void RKD_QueryResolution (int *dpix, int *dpiy) {
 	}
 }
 
-static void RKD_Create (double width, double height, pDevDesc dev, const char *title, bool antialias) {
+static void RKD_Create (double width, double height, pDevDesc dev, const char *title, bool antialias, quint32 id) {
+	RK_TRACE(GRAPHICS_DEVICE);
 	{
 		RKGraphicsDataStreamWriteGuard guard;
 		WRITE_HEADER (RKDCreate, dev);
-		RKD_OUT_STREAM << width << height << QString::fromUtf8 (title) << antialias;
+		RKD_OUT_STREAM << width << height << QString::fromUtf8 (title) << antialias << id;
 	}
 	{
 		// Reading a reply in order to force this to be synchronous. .rk.with.placement.hint() may run into race conditions, otherwise.
@@ -196,7 +209,8 @@ static void RKD_Create (double width, double height, pDevDesc dev, const char *t
 	}
 }
 
-static void RKD_Size (double *left, double *right, double *top, double *bottom, pDevDesc dev) {
+static void RKD_Size (double *left, double *right, double *bottom, double *top, pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
 // NOTE: This does *not* query the frontend for the current size. This is only done on request
 	*left = dev->left;
 	*top = dev->top;
@@ -205,36 +219,57 @@ static void RKD_Size (double *left, double *right, double *top, double *bottom, 
 }
 
 static void RKD_SetSize (pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
 	RKGraphicsDataStreamWriteGuard wguard;
 	WRITE_HEADER (RKDSetSize, dev);
 	RKD_OUT_STREAM << QSize (qAbs (dev->right - dev->left) + .2, qAbs (dev->bottom - dev->top) + .2);
 }
 
-SEXP RKD_AdjustSize (SEXP _devnum) {
-	int devnum = Rf_asInteger (_devnum);
-	pGEDevDesc gdev = GEgetDevice (devnum);
-	if (!gdev) Rf_error ("No such device %d", devnum);
+static void RKD_Activate (pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
+	RKGraphicsDataStreamWriteGuard guard;
+	WRITE_HEADER (RKDActivate, dev);
+}
+
+static void RKD_Deactivate (pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
+	RKGraphicsDataStreamWriteGuard guard;
+	WRITE_HEADER (RKDDeActivate, dev);
+}
+
+SEXP RKD_AdjustSize(SEXP _devnum, SEXP _id) {
+	RK_TRACE(GRAPHICS_DEVICE);
+	int devnum = Rf_asInteger(_devnum);
+	quint32 id = Rf_asInteger(_id);
+	pGEDevDesc gdev = GEgetDevice(devnum);
+	if (!gdev) Rf_error("No such device %d", devnum);
 	pDevDesc dev = gdev->dev;
+	// This is called from rkward:::RK.resize(), which in turn may be out of sync with R's device list. Before doing anything,
+	// double check that this is really the device we think it is.
+	if (dev->activate != RKD_Activate) Rf_error("Not an RKWard device", devnum);
+	if (static_cast<RKGraphicsDeviceDesc*>(dev->deviceSpecific)->id != id) Rf_error("Graphics device mismatch", devnum);
+
 	{
 		RKGraphicsDataStreamWriteGuard wguard;
-		WRITE_HEADER (RKDGetSize, dev);
+		WRITE_HEADER(RKDGetSize, dev);
 	}
 	QSizeF size;
 	{
 		RKGraphicsDataStreamReadGuard rguard;
 		RKD_IN_STREAM >> size;
 	}
-	if (size.isNull ()) Rf_error ("Could not determine current size of device %d. Not an RK device?", devnum);
+	if (size.isNull()) Rf_error("Could not determine current size of device %d. Device closed?", devnum);
 	dev->left = dev->top = 0;
-	dev->right = size.width ();
-	dev->bottom = size.height ();
+	dev->right = size.width();
+	dev->bottom = size.height();
 
-	RKD_SetSize (dev);    // This adjusts the rendering area in the frontend
-	GEplayDisplayList (gdev);
+	RKD_SetSize(dev);    // This adjusts the rendering area in the frontend
+	if(gdev->dirty) GEplayDisplayList(gdev);
 	return R_NilValue;
 }
 
 static void RKD_Circle (double x, double y, double r, R_GE_gcontext *gc, pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
 	RKGraphicsDataStreamWriteGuard guard;
 	WRITE_HEADER (RKDCircle, dev);
 	RKD_OUT_STREAM << x << y << r;
@@ -243,6 +278,7 @@ static void RKD_Circle (double x, double y, double r, R_GE_gcontext *gc, pDevDes
 }
 
 static void RKD_Line (double x1, double y1, double x2, double y2, R_GE_gcontext *gc, pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
 	RKGraphicsDataStreamWriteGuard guard;
 	WRITE_HEADER (RKDLine, dev);
 	RKD_OUT_STREAM << x1 << y1 << x2 << y2;
@@ -251,6 +287,7 @@ static void RKD_Line (double x1, double y1, double x2, double y2, R_GE_gcontext 
 }
 
 static void RKD_Polygon (int n, double *x, double *y, R_GE_gcontext *gc, pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
 	RKGraphicsDataStreamWriteGuard guard;
 	WRITE_HEADER (RKDPolygon, dev);
 	quint32 _n = qMin (n, 1 << 25);	// skip stuff exceeding reasonable limits to keep protocol simple
@@ -264,6 +301,7 @@ static void RKD_Polygon (int n, double *x, double *y, R_GE_gcontext *gc, pDevDes
 }
 
 static void RKD_Polyline (int n, double *x, double *y, R_GE_gcontext *gc, pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
 	RKGraphicsDataStreamWriteGuard guard;
 	WRITE_HEADER (RKDPolyline, dev);
 	quint32 _n = qMin (n, 1 << 25);	// skip stuff exceeding reasonable limits to keep protocol simple
@@ -276,6 +314,7 @@ static void RKD_Polyline (int n, double *x, double *y, R_GE_gcontext *gc, pDevDe
 }
 
 static void RKD_Path (double *x, double *y, int npoly, int *nper, Rboolean winding, R_GE_gcontext *gc, pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
 	RKGraphicsDataStreamWriteGuard guard;
 	WRITE_HEADER (RKDPath, dev);
 	quint32 total_points = 0;
@@ -296,6 +335,7 @@ static void RKD_Path (double *x, double *y, int npoly, int *nper, Rboolean windi
 }
 
 static void RKD_Rect (double x0, double y0, double x1, double y1, R_GE_gcontext *gc, pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
 	RKGraphicsDataStreamWriteGuard guard;
 	WRITE_HEADER (RKDRect, dev);
 	RKD_OUT_STREAM << QRectF (x0, y0, x1-x0, y1-y0);
@@ -305,6 +345,7 @@ static void RKD_Rect (double x0, double y0, double x1, double y1, R_GE_gcontext 
 }
 
 static void RKD_TextUTF8 (double x, double y, const char *str, double rot, double hadj, R_GE_gcontext *gc, pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
 	RKGraphicsDataStreamWriteGuard guard;
 	WRITE_HEADER (RKDTextUTF8, dev);
 	RKD_OUT_STREAM << x << y << QString::fromUtf8 (str) << rot << hadj;	// NOTE: yes, even Symbols are sent as UTF-8, here.
@@ -313,6 +354,7 @@ static void RKD_TextUTF8 (double x, double y, const char *str, double rot, doubl
 }
 
 static double RKD_StrWidthUTF8 (const char *str, R_GE_gcontext *gc, pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
 	{
 		RKGraphicsDataStreamWriteGuard guard;
 		WRITE_HEADER (RKDStrWidthUTF8, dev);
@@ -328,12 +370,14 @@ static double RKD_StrWidthUTF8 (const char *str, R_GE_gcontext *gc, pDevDesc dev
 }
 
 static void RKD_NewPage (R_GE_gcontext *gc, pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
 	RKGraphicsDataStreamWriteGuard guard;
 	WRITE_HEADER (RKDNewPage, dev);
 	WRITE_FILL ();
 }
 
 static void RKD_MetricInfo (int c, R_GE_gcontext *gc, double* ascent, double* descent, double* width, pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
 	{
 		RKGraphicsDataStreamWriteGuard wguard;
 		WRITE_HEADER (RKDMetricInfo, dev);
@@ -356,34 +400,21 @@ static void RKD_MetricInfo (int c, R_GE_gcontext *gc, double* ascent, double* de
 }
 
 static void RKD_Close (pDevDesc dev) {
-	RKGraphicsDataStreamWriteGuard guard;
-	WRITE_HEADER (RKDClose, dev);
-#ifdef _MSC_VER
-	// Ok, this is a terribly crude HACK, obviously, and it's just waiting to come back to bite us. However:
-	// We had to allocate the DevDesc in our own (MSVC-compiled) code (that's the way it is done), but if we allow R to delete
-	// it (also, as usual; in its MinGW-compiled code), we get a crash. Whatever the _exact_ reason. So what we do here is
-	// reset R's pointer, and do the free, ourselves. Fortunately, we can do this, and fortunately, the pointer is no longer
-	// needed at this point. At least not in R 3.2.3...
-	// If (or when) this breaks, we could try to just call some other device's init-routine, then hijack that device. Or out-source
-	// the RKGraphicsDevice backend init code into an R package...
-	// Or can we use R's Calloc/Malloc, instead? -> Manual caution not to use free() (only Free()), on that, though.
-	static_cast<RKGraphicsDeviceDesc*> (dev->deviceSpecific)->rgdevdesc->dev = NULL;
-	free (dev);
-#endif
-	delete static_cast<RKGraphicsDeviceDesc*> (dev->deviceSpecific);
-}
-
-static void RKD_Activate (pDevDesc dev) {
-	RKGraphicsDataStreamWriteGuard guard;
-	WRITE_HEADER (RKDActivate, dev);
-}
-
-static void RKD_Deactivate (pDevDesc dev) {
-	RKGraphicsDataStreamWriteGuard guard;
-	WRITE_HEADER (RKDDeActivate, dev);
+	RK_TRACE(GRAPHICS_DEVICE);
+	{
+		RKGraphicsDataStreamWriteGuard guard;
+		WRITE_HEADER (RKDClose, dev);
+		delete static_cast<RKGraphicsDeviceDesc*> (dev->deviceSpecific);
+	}
+	{
+		RKGraphicsDataStreamReadGuard rguard;
+		qint8 dummy;
+		RKD_IN_STREAM >> dummy;
+	}
 }
 
 static void RKD_Clip (double left, double right, double top, double bottom, pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
 	dev->clipLeft = left;
 	dev->clipRight = right;
 	dev->clipTop = top;
@@ -394,35 +425,37 @@ static void RKD_Clip (double left, double right, double top, double bottom, pDev
 }
 
 static void RKD_Mode (int mode, pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
 	Q_UNUSED (mode);
 	Q_UNUSED (dev);
 /* Left empty for now. 1 is start signal, 0 is stop signal. Might be useful for flushing, though.
 
 	RKGraphicsDataStreamWriteGuard guard;
 	RKD_OUT_STREAM << WRITE_HEADER (RKDMode, dev);
-	connectoin << (qint8) mode; */
+	connection << (qint8) mode; */
 }
 
 static void RKD_Raster (unsigned int *raster, int w, int h, double x, double y, double width, double height, double rot, Rboolean interpolate, const pGEcontext gc, pDevDesc dev) {
-	Q_UNUSED (gc);
+	RK_TRACE(GRAPHICS_DEVICE);
+	Q_UNUSED(gc); // No idea what this is supposed to be good for. R's own cairo device ignores it.
 
 	RKGraphicsDataStreamWriteGuard wguard;
 	WRITE_HEADER (RKDRaster, dev);
 
-	int *_raster = reinterpret_cast<int*> (raster);	// shut up warning in WRITE_COLOR_BYTES. It's just four separate bytes, anyway
 	quint32 _w = qMin (w, 1 << 15);	// skip stuff exceeding reasonable limits to keep protocol simple
 	RKD_OUT_STREAM << _w;
 	quint32 _h = qMin (h, 1 << 15);
 	RKD_OUT_STREAM << _h;
 	for (quint32 col = 0; col < _h; ++col) {
 		for (quint32 row = 0; row < _w; ++row) {
-			WRITE_COLOR_BYTES (_raster[(col*_w) + row]);
+			WRITE_COLOR_BYTES (raster[(col*_w) + row]);
 		}
 	}
 	RKD_OUT_STREAM << QRectF (x, y, width, height) << rot << (bool) interpolate;
 }
 
-static SEXP RKD_Capture (pDevDesc dev) {
+static SEXP RKD_Capture(pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
 	{
 		RKGraphicsDataStreamWriteGuard wguard;
 		WRITE_HEADER (RKDCapture, dev);
@@ -430,40 +463,38 @@ static SEXP RKD_Capture (pDevDesc dev) {
 
 	quint32 w, h;
 	quint32 size;
-	int *buffer;
+	QVector<int> buffer;
 	{
 		RKGraphicsDataStreamReadGuard rguard;
 		quint8 r, g, b, a;
 		RKD_IN_STREAM >> w >> h;
 		size = w*h;
- 		buffer = new int[size];// Although unlikely, allocVector below could fail. We don't want to be left with a locked mutex (from the rguard) in this case. (Being left with a dead pointer looks benign in comparison; Note that the vector may easily be too large for allocation on the stack)
-		quint32 i = 0;
-		for (quint32 col = 0; col < h; ++col) {
-			for (quint32 row = 0; row < w; ++row) {
+		buffer.reserve(size);// Although unlikely, allocVector below could fail. We don't want to be left with a locked mutex (from the rguard) in this case. (Being left with a dead pointer looks benign in comparison; Note that the vector may easily be too large for allocation on the stack)
+		for (quint32 row = 0; row < h; ++row) {
+			for (quint32 col = 0; col < w; ++col) {
 				RKD_IN_STREAM >> r >> g >> b >> a;
-				buffer[i++] = R_RGBA (r, g, b, a);
+				buffer.append(R_RGBA(r, g, b, a));
 			}
 		}
 	}
 	SEXP ret, dim;
-	PROTECT (ret = Rf_allocVector (INTSXP, size));
-	int* ret_vals = INTEGER (ret);
+	PROTECT(ret = Rf_allocVector(INTSXP, size));
 	for (quint32 i = 0; i < size; ++i) {
-		ret_vals[i] = buffer[i];
+		INTEGER(ret)[i] = buffer[i];
 	}
-	delete (buffer);
 
 	// Documentation does not mention it, but cap expects dim information to be returned
-	PROTECT(dim = Rf_allocVector (INTSXP, 2));
-	INTEGER (dim)[0] = w;
-	INTEGER (dim)[1] = h;
-	Rf_setAttrib (ret, R_DimSymbol, dim);
+	PROTECT(dim = Rf_allocVector(INTSXP, 2));
+	INTEGER(dim)[0] = w;
+	INTEGER(dim)[1] = h;
+	Rf_setAttrib(ret, R_DimSymbol, dim);
 
-	UNPROTECT (2);
+	UNPROTECT(2);
 	return ret;
 }
 
 static Rboolean RKD_Locator (double *x, double *y, pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
 	{
 		RKGraphicsDataStreamWriteGuard wguard;
 		WRITE_HEADER (RKDLocator, dev);
@@ -478,6 +509,7 @@ static Rboolean RKD_Locator (double *x, double *y, pDevDesc dev) {
 }
 
 static Rboolean RKD_NewFrameConfirm (pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
 	{
 		RKGraphicsDataStreamWriteGuard wguard;
 		WRITE_HEADER (RKDNewPageConfirm, dev);
@@ -492,8 +524,8 @@ static Rboolean RKD_NewFrameConfirm (pDevDesc dev) {
 	// Return value FALSE: Let R ask, instead
 }
 
-#if R_VERSION >= R_Version (2, 12, 0)
 void RKD_EventHelper (pDevDesc dev, int code) {
+	RK_TRACE(GRAPHICS_DEVICE);
 	{
 		RKGraphicsDataStreamWriteGuard wguard;
 		if (code == 1) {
@@ -538,8 +570,10 @@ void RKD_EventHelper (pDevDesc dev, int code) {
 		Rf_error ("Interrupted by user");
 		return;  // not reached
 	}
-	if (event_code == RKDNothing) return;
-	else if (event_code == RKDKeyPress) {
+	if (event_code == RKDNothing) {
+		if (Rf_doesIdle(dev)) Rf_doIdle(dev);
+		return;
+	} else if (event_code == RKDKeyPress) {
 		if (modifiers - (modifiers & Qt::ShiftModifier)) {  // any other modifier than Shift, alone. NOTE: devX11.c and devWindows.c handle Ctrl, only as of R 3.0.0
 			QString mod_text;
 			if (modifiers & Qt::ControlModifier) mod_text.append ("ctrl-");
@@ -569,6 +603,7 @@ void RKD_EventHelper (pDevDesc dev, int code) {
 }
 
 void RKD_onExit (pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
 	if (rkd_suppress_on_exit > 0) {
 		--rkd_suppress_on_exit;
 		return;
@@ -580,4 +615,324 @@ void RKD_onExit (pDevDesc dev) {
 	dev->gettingEvent = (Rboolean) false;
 }
 
+int RKD_HoldFlush (pDevDesc, int) {
+	RK_TRACE(GRAPHICS_DEVICE);
+	// deliberately left unimplemented: Drawing is in a separte thread, anyway, and only done after a timeout
+	return 0;
+}
+
+#if R_VERSION >= R_Version (4, 1, 0)
+qint8 getGradientExtend(int Rextent) {
+	if (Rextent == R_GE_patternExtendPad) return GradientExtendPad;
+	if (Rextent == R_GE_patternExtendReflect) return GradientExtendReflect;
+	if (Rextent == R_GE_patternExtendRepeat) return GradientExtendRepeat;
+	/* if (Rextent == R_GE_patternExtendNone) */ return GradientExtendNone;
+}
+
+SEXP makeInt(int val) {
+	SEXP ret;
+	PROTECT(ret = Rf_allocVector(INTSXP, 1));
+	INTEGER(ret)[0] = val;
+	UNPROTECT(1);
+	return ret;
+}
+
+SEXP RKD_SetPattern (SEXP pattern, pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
+	auto ptype = R_GE_patternType(pattern);
+	if ((ptype == R_GE_linearGradientPattern) || (ptype == R_GE_radialGradientPattern)) {
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDSetPattern, dev);
+		if (ptype == R_GE_linearGradientPattern) {
+			RKD_OUT_STREAM << (qint8) RKDPatternType::LinearPattern;
+			RKD_OUT_STREAM << (double) R_GE_linearGradientX1(pattern) << (double) R_GE_linearGradientX2(pattern) << (double) R_GE_linearGradientY1(pattern) << (double) R_GE_linearGradientY2(pattern);
+			qint16 nstops = R_GE_linearGradientNumStops(pattern);
+			RKD_OUT_STREAM << nstops;
+			for (int i = 0; i < nstops; ++i) {
+				WRITE_COLOR_BYTES(R_GE_linearGradientColour(pattern, i));
+				RKD_OUT_STREAM << (double) R_GE_linearGradientStop(pattern, i);
+			}
+			RKD_OUT_STREAM << getGradientExtend(R_GE_linearGradientExtend(pattern));
+		} else if (ptype == R_GE_radialGradientPattern) {
+			RKD_OUT_STREAM << (qint8) RKDPatternType::RadialPattern;
+			RKD_OUT_STREAM << (double) R_GE_radialGradientCX1(pattern) << (double) R_GE_radialGradientCY1(pattern) << (double) R_GE_radialGradientR1(pattern);
+			RKD_OUT_STREAM << (double) R_GE_radialGradientCX2(pattern) << (double) R_GE_radialGradientCY2(pattern) << (double) R_GE_radialGradientR2(pattern);
+			qint16 nstops = R_GE_radialGradientNumStops(pattern);
+			RKD_OUT_STREAM << nstops;
+			for (int i = 0; i < nstops; ++i) {
+				WRITE_COLOR_BYTES(R_GE_radialGradientColour(pattern, i));
+				RKD_OUT_STREAM << (double) R_GE_radialGradientStop(pattern, i);
+			}
+			RKD_OUT_STREAM << getGradientExtend(R_GE_radialGradientExtend(pattern));
+		}
+	} else if (ptype == R_GE_tilingPattern) {
+		{
+			RKGraphicsDataStreamWriteGuard wguard;
+			WRITE_HEADER(RKDStartRecordTilingPattern, dev);
+			RKD_OUT_STREAM << (double) R_GE_tilingPatternWidth(pattern) << (double) R_GE_tilingPatternHeight(pattern);
+			RKD_OUT_STREAM << (double) R_GE_tilingPatternX(pattern) << (double) R_GE_tilingPatternY(pattern);
+		}
+		// Play the pattern generator function. Contrary to cairo device, we use tryEval, here, to avoid getting into a
+		// bad device state in case of errors
+		int error;
+		SEXP pattern_func = PROTECT(Rf_lang1(R_GE_tilingPatternFunction(pattern)));
+		R_tryEval(pattern_func, R_GlobalEnv, &error);
+		UNPROTECT(1);
+		{
+			RKGraphicsDataStreamWriteGuard wguard;
+			WRITE_HEADER(RKDEndRecordTilingPattern, dev);
+			RKD_OUT_STREAM << getGradientExtend(R_GE_tilingPatternExtend(pattern));
+		}
+	} else {
+		Rf_warning("Pattern type not (yet) supported");
+		return makeInt(-1);
+	}
+
+	qint32 index;
+	{
+		RKGraphicsDataStreamReadGuard rguard;
+		RKD_IN_STREAM >> index;
+	}
+
+	// NOTE: we are free to chose a return value of our liking. It is used as an identifier for this pattern.
+	if (index < 0) Rf_warning("Pattern type not (yet) supported");
+	return makeInt(index);
+}
+
+void releaseCachedResource(RKDCachedResourceType type, SEXP ref, pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDReleaseCachedResource, dev);
+		RKD_OUT_STREAM << (quint8) type;
+		if (Rf_isNull(ref)) {
+			RKD_OUT_STREAM << (qint32) 1 << (qint32) -1; // means: destroy all objects of that type
+		} else {
+			qint32 len = LENGTH(ref);
+			RKD_OUT_STREAM << len;
+			for (int i = 0; i < len; ++i) {
+				RKD_OUT_STREAM << (qint32) INTEGER(ref)[i];
+			}
+		}
+	}
+}
+
+void RKD_ReleasePattern (SEXP ref, pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
+	releaseCachedResource(RKDPattern, ref, dev);
+}
+
+SEXP RKD_SetClipPath (SEXP path, SEXP ref, pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
+	qint32 index = -1;
+	if (!Rf_isNull(ref)) index = INTEGER(ref)[0];
+	// NOTE: just because we have a reference, doesn't mean, it's also valid, according to R sources
+	if (index >= 0) {
+		{
+			RKGraphicsDataStreamWriteGuard wguard;
+			WRITE_HEADER(RKDSetClipPath, dev);
+			RKD_OUT_STREAM << index;
+		}
+		{
+			RKGraphicsDataStreamReadGuard rguard;
+			qint8 ok;
+			RKD_IN_STREAM >> ok;
+			if (!ok) Rf_warning("Invalid reference to clipping path");
+			else return R_NilValue;
+		}
+	}
+
+	// No index, or not a valid index: create new path
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDStartRecordClipPath, dev);
+	}
+	// Play generator function
+	int error;
+	SEXP path_func = PROTECT(Rf_lang1(path));
+	R_tryEval(path_func, R_GlobalEnv, &error);
+	UNPROTECT(1);
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDEndRecordClipPath, dev);
+#if R_VERSION >= R_Version(4, 2, 0)
+		RKD_OUT_STREAM << (qint8) mapFillRule(R_GE_clipPathFillRule(path));
+#else
+		RKD_OUT_STREAM << (qint8) 0;  // NOTE: 0 == Qt::OddEvenFill
+#endif
+	}
+	{
+		RKGraphicsDataStreamReadGuard rguard;
+		RKD_IN_STREAM >> index;
+	}
+	return makeInt(index);
+}
+
+void RKD_ReleaseClipPath (SEXP ref, pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
+	releaseCachedResource(RKDClipPath, ref, dev);
+}
+
+SEXP RKD_SetMask (SEXP mask, SEXP ref, pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
+	// Same logic as RKD_SetClipPath
+
+	qint32 index = 0;
+	if (!Rf_isNull(ref)) index = INTEGER(ref)[0];  // ref==NULL means the mask is not yet registered, will be recorded, below
+	if (index > 0 || Rf_isNull(mask)) {  // mask==NULL means to unset the current mask. signalled to the frontend as index=0
+		{
+			RKGraphicsDataStreamWriteGuard wguard;
+			WRITE_HEADER(RKDSetMask, dev);
+			RKD_OUT_STREAM << index;
+		}
+		{
+			RKGraphicsDataStreamReadGuard rguard;
+			qint8 ok;
+			RKD_IN_STREAM >> ok;
+			if (!ok) Rf_warning("Invalid reference to mask");
+			else return R_NilValue;
+		}
+	}
+
+	// No index, or not a valid index: create new mask
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDStartRecordMask, dev);
+	}
+	// Play generator function
+	int error;
+	SEXP mask_func = PROTECT(Rf_lang1(mask));
+	R_tryEval(mask_func, R_GlobalEnv, &error);
+	UNPROTECT(1);
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDEndRecordMask, dev);
+#if R_VERSION >= R_Version(4,2,0)
+		RKD_OUT_STREAM << (qint8) (R_GE_maskType(mask) == R_GE_luminanceMask ? 1 : 0);
+#else
+		RKD_OUT_STREAM << (qint8) 0;
+#endif
+	}
+	{
+		RKGraphicsDataStreamReadGuard rguard;
+		RKD_IN_STREAM >> index;
+	}
+	return makeInt(index);
+}
+
+void RKD_ReleaseMask (SEXP ref, pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
+	releaseCachedResource(RKDMask, ref, dev);
+}
+
+#endif
+
+#if R_VERSION >= R_Version(4,2,0)
+SEXP RKD_DefineGroup(SEXP source, int op, SEXP destination, pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDDefineGroupBegin, dev);
+	}
+
+	// Play generator function for destination
+	int error;
+	if (destination != R_NilValue) {
+		SEXP dest_func = PROTECT(Rf_lang1(destination));
+		R_tryEval(dest_func, R_GlobalEnv, &error);
+		UNPROTECT(1);
+	}
+
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDDefineGroupStep2, dev);
+		RKD_OUT_STREAM << (qint8) mapCompositionModeEnum(op);
+	}
+
+	// Play generator function for source
+	SEXP src_func = PROTECT(Rf_lang1(source));
+	R_tryEval(src_func, R_GlobalEnv, &error);
+	UNPROTECT(1);
+
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDDefineGroupEnd, dev);
+	}
+	qint32 index = -1;
+	{
+		RKGraphicsDataStreamReadGuard rguard;
+		RKD_IN_STREAM >> index;
+	}
+	return makeInt(index);
+}
+
+void RKD_UseGroup(SEXP ref, SEXP trans, pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
+
+	// NOTE: chaching parameters before starting the write, in case they are ill-formed and produce errors
+	qint32 index = 0;
+	if (!Rf_isNull(ref)) index = INTEGER(ref)[0];
+	bool have_trans = (trans != R_NilValue);
+	double matrix[6];
+	if (have_trans) {
+		for (int i = 0; i < 6; ++i) matrix[i] = REAL(trans)[i];  // order in cairo terms: xx, xy, x0, yx, yy, y0
+	}
+
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDUseGroup, dev);
+		RKD_OUT_STREAM << index;
+		if (have_trans) {
+			RKD_OUT_STREAM << (qint8) 1;
+			for (int i = 0; i < 6; ++i) RKD_OUT_STREAM << matrix[i];
+		} else {
+			RKD_OUT_STREAM << (qint8) 0;
+		}
+	}
+}
+
+void RKD_ReleaseGroup(SEXP ref, pDevDesc dev) {
+	RK_TRACE(GRAPHICS_DEVICE);
+	releaseCachedResource(RKDGroup, ref, dev);
+}
+
+void doFillAndOrStroke(SEXP path, const pGEcontext gc, pDevDesc dev, bool fill, int rule, bool stroke) {
+	RK_TRACE(GRAPHICS_DEVICE);
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDFillStrokePathBegin, dev);
+	}
+
+	// record the actual path
+	int error;
+	SEXP path_func = PROTECT(Rf_lang1(path));
+	R_tryEval(path_func, R_GlobalEnv, &error);
+	UNPROTECT(1);
+
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER(RKDFillStrokePathEnd, dev);
+		RKD_OUT_STREAM << (quint8) fill;
+		if (fill) {
+			RKD_OUT_STREAM << (qint8) mapFillRule(rule);
+			WRITE_FILL();
+		}
+		RKD_OUT_STREAM << (quint8) stroke;
+		if (stroke) {
+			WRITE_PEN();
+		}
+	}
+}
+
+void RKD_Stroke(SEXP path, const pGEcontext gc, pDevDesc dev) {
+	doFillAndOrStroke(path, gc, dev, false, 0, true);
+}
+
+void RKD_Fill(SEXP path, int rule, const pGEcontext gc, pDevDesc dev) {
+	doFillAndOrStroke(path, gc, dev, true, rule, false);
+}
+
+void RKD_FillStroke(SEXP path, int rule, const pGEcontext gc, pDevDesc dev) {
+	doFillAndOrStroke(path, gc, dev, true, rule, true);
+}
 #endif

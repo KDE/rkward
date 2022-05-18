@@ -1,24 +1,15 @@
-/***************************************************************************
-                          rkcomponentmeta  -  description
-                             -------------------
-    begin                : Wed Jan 09 2013
-    copyright            : (C) 2013, 2014 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkcomponentmeta - This file is part of RKWard (https://rkward.kde.org). Created: Wed Jan 09 2013
+SPDX-FileCopyrightText: 2013-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkcomponentmeta.h"
 
 #include "../misc/xmlhelper.h"
 #include "../misc/rkmessagecatalog.h"
+#include "../misc/rkcompatibility.h"
 #include "../rbackend/rksessionvars.h"
 
 #include <KLocalizedString>
@@ -102,8 +93,8 @@ QString RKComponentAboutData::toHtml () const {
 	}
 
 	if (!translator_names.isNull ()) {
-		QStringList tns = translator_names.split (QLatin1Char(','), QString::KeepEmptyParts);
-		QStringList tes = translator_emails.split (QLatin1Char(','), QString::KeepEmptyParts);
+		QStringList tns = translator_names.split (QLatin1Char(','), RKCompatibility::KeepEmptyParts());
+		QStringList tes = translator_emails.split (QLatin1Char(','), RKCompatibility::KeepEmptyParts());
 		ret.append ("\n<p><b>" + i18n ("Translators:") + "</b></p>\n<p><ul>");
 		for (int i = 0; i < tns.size (); ++i) {
 			QString tn = tns.value (i);
@@ -153,9 +144,9 @@ QList <RKComponentDependency> RKComponentDependency::parseDependencies (const QD
 
 	// Check for R dependency, first.
 	dep.type = RKComponentDependency::RBaseInstallation;
-	if (e.hasAttribute (R_min_version_tag)) dep.min_version = RKSessionVars::parseVersionString (e.attribute (R_min_version_tag), 0);
-	if (e.hasAttribute (R_max_version_tag)) dep.max_version = RKSessionVars::parseVersionString (e.attribute (R_max_version_tag), 0);
-	if ((dep.min_version > 0) || (dep.max_version < 0xFFFFFFFF)) ret.append (dep);
+	if (e.hasAttribute(R_min_version_tag)) dep.min_version = RKParsedVersion(e.attribute(R_min_version_tag));
+	if (e.hasAttribute(R_max_version_tag)) dep.max_version = RKParsedVersion(e.attribute(R_max_version_tag));
+	if (!(dep.min_version.isNull() && dep.max_version.isNull())) ret.append(dep);
 
 	XMLChildList deps = xml.getChildElements (e, QString (), DL_INFO);
 	for (int i = 0; i < deps.size (); ++i) {
@@ -165,43 +156,26 @@ QList <RKComponentDependency> RKComponentDependency::parseDependencies (const QD
 			dep.source_info = xml.getStringAttribute (e, "repository", QString (), DL_INFO);
 		} else if (dep_e.tagName () == "pluginmap") {
 			dep.type = RKComponentDependency::RKWardPluginmap;
-			dep.source_info = xml.getStringAttribute (e, "url", QString ("http://rkward.kde.org"), DL_WARNING);
+			dep.source_info = xml.getStringAttribute (e, "url", QString ("https://rkward.kde.org"), DL_WARNING);
 		} else {
 			RK_DEBUG (PLUGIN, DL_ERROR, "Tag <%s> is not allowed, here.", qPrintable (dep_e.tagName ()));
 			continue;
 		}
 		dep.package = xml.getStringAttribute (dep_e, "name", QString (), DL_ERROR);
 
-		dep.min_version = 0;
-		dep.max_version = 0xFFFFFFFF;
-		if (e.hasAttribute (any_min_version_tag)) dep.min_version = RKSessionVars::parseVersionString (e.attribute (any_min_version_tag), 0);
-		if (e.hasAttribute (any_max_version_tag)) dep.max_version = RKSessionVars::parseVersionString (e.attribute (any_max_version_tag), 0);
+		if (e.hasAttribute(any_min_version_tag)) dep.min_version = RKParsedVersion(e.attribute(any_min_version_tag));
+		if (e.hasAttribute(any_max_version_tag)) dep.max_version = RKParsedVersion(e.attribute(any_max_version_tag));
 
 		ret.append (dep);
 	}
 
 	// Add RKWard dependency, last
 	dep.type = RKComponentDependency::RKWardVersion;
-	dep.min_version = 0;
-	dep.max_version = 0xFFFFFFFF;
 	dep.source_info.clear ();
-	// Although we ignore it, here, RKWard dependencies may come with a non-numeric suffix
-	QString suffix_dummy;
-	if (e.hasAttribute (rkward_min_version_tag)) dep.min_version = RKSessionVars::parseVersionString (e.attribute (rkward_min_version_tag), &suffix_dummy);
-	if (e.hasAttribute (rkward_max_version_tag)) dep.max_version = RKSessionVars::parseVersionString (e.attribute (rkward_max_version_tag), &suffix_dummy);
-	if ((dep.min_version > 0) || (dep.max_version < 0xFFFFFFFF)) ret.append (dep);
+	if (e.hasAttribute(rkward_min_version_tag)) dep.min_version = RKParsedVersion(e.attribute(rkward_min_version_tag));
+	if (e.hasAttribute(rkward_max_version_tag)) dep.max_version = RKParsedVersion(e.attribute(rkward_max_version_tag));
+	if (!(dep.min_version.isNull() && dep.max_version.isNull())) ret.append(dep);
 
-	return ret;
-}
-
-QString numericVersionToString (quint32 numeric) {
-	QString ret;
-	for (int i = 3; i >= 0; --i) {
-		int ver_part = (numeric >> (i * 8)) & 0x000000FF;
-		ret.append (QString::number (ver_part));
-		if (i > 0) ret.append ('.');
-	}
-	if (ret.endsWith (QLatin1String (".0"))) ret.chop (2);	// HACK: Don't print more than three version parts, unless the fourth is non-zero
 	return ret;
 }
 
@@ -225,8 +199,8 @@ QString RKComponentDependency::depsToHtml (const QList <RKComponentDependency>& 
 			ret.append (" \"" + dep.package + "\"");
 			if (!dep.source_info.isEmpty ()) ret.append (" (" + dep.source_info + ')');
 		}
-		if (dep.min_version > 0) ret.append (" &gt;= " + numericVersionToString (dep.min_version));
-		if (dep.max_version < 0xFFFFFFFF) ret.append (" &lt;= " + numericVersionToString (dep.max_version));
+		if (!dep.min_version.isNull()) ret.append(" &gt;= " + dep.min_version.toString());
+		if (!dep.max_version.isNull()) ret.append(" &lt;= " + dep.max_version.toString());
 		ret.append ("</li>");
 	}
 	ret.append ("</ul>");

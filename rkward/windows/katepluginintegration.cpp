@@ -1,19 +1,9 @@
-/***************************************************************************
-                          katepluginintegration  -  description
-                             -------------------
-    begin                : Mon Jun 12 2017
-    copyright            : (C) 2017-2020 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+katepluginintegration - This file is part of RKWard (https://rkward.kde.org). Created: Mon Jun 12 2017
+SPDX-FileCopyrightText: 2017-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "katepluginintegration.h"
 
@@ -57,7 +47,7 @@ KatePluginIntegrationApp::KatePluginIntegrationApp(QObject *parent) : QObject (p
 
 	// enumerate all available kate plugins
 	QVector<KPluginMetaData> plugins = KPluginLoader::findPlugins(QStringLiteral ("ktexteditor"), [](const KPluginMetaData &md) { return md.serviceTypes().contains(QLatin1String("KTextEditor/Plugin")); });
-    for (int i = plugins.size() -1; i >= 0; --i) {
+	for (int i = plugins.size() -1; i >= 0; --i) {
 		PluginInfo info;
 		info.plugin = 0;
 		info.data = plugins[i];
@@ -105,6 +95,11 @@ QObject* KatePluginIntegrationApp::loadPlugin (const QString& identifier) {
 
 	KPluginFactory *factory = KPluginLoader(known_plugins[identifier].data.fileName ()).factory ();
 	if (factory) {
+		if (identifier == "katekonsoleplugin") {
+			// Workaround until https://invent.kde.org/utilities/kate/-/commit/cf11bcbf1f36e2a82b1a1b14090a3f0a2b09ecf4 can be assumed to be present (should be removed in KF6)
+			if (qEnvironmentVariableIsEmpty("EDITOR")) qputenv("EDITOR", "vi");
+		}
+
 		KTextEditor::Plugin *plugin = factory->create<KTextEditor::Plugin>(this, QVariantList () << identifier);
 		if (plugin) {
 			known_plugins[identifier].plugin = plugin;
@@ -123,14 +118,15 @@ QObject* KatePluginIntegrationApp::loadPlugin (const QString& identifier) {
 		}
 	}
 
-    return 0;
+	return 0;
 }
 
 void KatePluginIntegrationApp::loadPlugins(const QStringList& plugins) {
 	RK_TRACE (APP);
 
 	bool changes = false;
-	foreach (const QString &key, known_plugins.keys()) {
+	const auto keys = known_plugins.keys();
+	for(const QString &key : keys) {
 		auto info = known_plugins.value(key);
 		if (plugins.contains(key)) {
 			if (!info.plugin) {
@@ -146,8 +142,18 @@ void KatePluginIntegrationApp::loadPlugins(const QStringList& plugins) {
 	}
 
 	if (!changes) return;
-	RKWardMainWindow::getMain()->factory()->removeClient(mainWindow());
-	RKWardMainWindow::getMain()->factory()->addClient(mainWindow());
+
+	auto w = mainWindow();
+	auto pf = w->persistentGuiClient()->factory();
+	if (pf) {
+		pf->removeClient(w->persistentGuiClient());
+		pf->addClient(w->persistentGuiClient());
+	}
+	auto df = w->dynamicGuiClient()->factory();
+	if (df) {
+		df->removeClient(w->dynamicGuiClient());
+		df->addClient(w->dynamicGuiClient());
+	}
 }
 
 void KatePluginIntegrationApp::unloadPlugin(const QString &identifier) {
@@ -176,7 +182,7 @@ void KatePluginIntegrationApp::saveConfigAndUnload() {
 	RK_TRACE (APP);
 
 	for (auto it = known_plugins.constBegin(); it != known_plugins.constEnd(); ++it) {
-		unloadPlugin (it.key());
+		unloadPlugin(it.key());
 	}
 	known_plugins.clear();
 }
@@ -300,17 +306,24 @@ KTextEditor::Plugin *KatePluginIntegrationApp::plugin(const QString &name) {
 ///  BEGIN  KTextEditor::MainWindow interface
 
 
-KatePluginIntegrationWindow::KatePluginIntegrationWindow (KatePluginIntegrationApp *parent) : QObject (parent), KXMLGUIClient () {
-	RK_TRACE (APP);
+KatePluginIntegrationWindow::KatePluginIntegrationWindow(KatePluginIntegrationApp *parent) : QObject(parent), KXMLGUIClient() {
+	RK_TRACE(APP);
 
 	// This one is passed to each created plugin
 	main = new KTextEditor::MainWindow(this);
 	// While this one may be accessed from plugins via KTextEditor::Editor::instance()->application()
 	app = parent;
-	active_plugin = 0;
+	active_plugin = nullptr;
+	dynamic_actions_client = new KXMLGUIClient();
 
 	connect(RKWorkplace::getHistory(), &RKMDIWindowHistory::activeWindowChanged, this, &KatePluginIntegrationWindow::activeWindowChanged);
 }
+
+KatePluginIntegrationWindow::~KatePluginIntegrationWindow() {
+	RK_TRACE(APP);
+	delete dynamic_actions_client;
+}
+
 
 class KatePluginToolWindow : public RKMDIWindow {
 	Q_OBJECT
@@ -328,16 +341,30 @@ public:
 		RK_TRACE (APP);
 	}
 
+	void showEvent(QShowEvent *e) override {
+		RKMDIWindow::showEvent(e);
+		emit toolVisibleChanged(true);
+	}
+
+	void hideEvent(QHideEvent *e) override {
+		RKMDIWindow::hideEvent(e);
+		emit toolVisibleChanged(false);
+	}
+
 /** This is a bit lame, but the plugin does not add itself to the parent widget's layout by itself. So we need this override
  *  to do that. Where did the good old KVBox go? */
 	void childEvent(QChildEvent *ev) override {
-		if ((ev->type() == QEvent::ChildAdded) && qobject_cast<QWidget *>(ev->child())) {
-			QWidget *widget = qobject_cast<QWidget *>(ev->child());
-			layout()->addWidget(widget);
-			setFocusProxy(widget);
+		if ((ev->type() == QEvent::ChildAdded) && ev->child()->isWidgetType()) {
+			QWidget *widget = qobject_cast<QWidget *>(ev->child()); // clazy:exclude=child-event-qobject-cast - Cast to QWidget is ok, we checked for widgetType(), above
+			if (widget) {
+				layout()->addWidget(widget);
+				setFocusProxy(widget);
+			}
 		}
-		QWidget::childEvent(ev);
+		RKMDIWindow::childEvent(ev);
 	}
+signals:
+	void toolVisibleChanged(bool);
 };
 
 QWidget* KatePluginIntegrationWindow::createToolView (KTextEditor::Plugin *plugin, const QString &identifier, KTextEditor::MainWindow::ToolViewPosition pos, const QIcon &icon, const QString &text) {
@@ -467,7 +494,7 @@ bool KatePluginIntegrationWindow::hideToolView(QWidget* widget) {
 	RK_TRACE (APP);
 
 	RKMDIWindow *w = qobject_cast<RKMDIWindow*>(widget);
-	if (w) w->close(false);
+	if (w) w->close(RKMDIWindow::NoAskSaveModified);
 	else {
 		RK_ASSERT(w);
 		widget->hide();
@@ -508,13 +535,12 @@ bool KatePluginIntegrationWindow::viewsInSameSplitView(KTextEditor::View* view1,
 void KatePluginIntegrationWindow::fixUpPluginUI(const QString &id, const PluginResources &resources) {
 	RK_TRACE (APP);
 
-	KXMLGUIClient* hacked_parent = this;
 	// KF6 TODO: In KF6, plugins will probably be limited to one UI client, in the first place.
 	for (int i = 0; i < resources.clients.size(); ++i) {
 		KXMLGUIClient* client = resources.clients[i];
 		RKMDIWindow* window = resources.windows.value(i);
 		if (window) {
-			hacked_parent = window->getPart();;
+			window->addUiBuddy(dynamic_actions_client);
 		}
 		factory()->removeClient(client);
 
@@ -534,10 +560,12 @@ void KatePluginIntegrationWindow::fixUpPluginUI(const QString &id, const PluginR
 			// TODO: Rename "Search more" to something sensible. These actions should still be accessible, globally.
 		} else if (i == 0 && id == QStringLiteral("kateprojectplugin")) {
 			RKCommonFunctions::moveContainer(client, "Menu", "projects", "view", true, false);
+		} else if (i == 0 && id == QStringLiteral("katectagsplugin")) {
+			RKCommonFunctions::moveContainer(client, "Menu", "CTags Menubar", "view", true, false);
 		}
 
 		RKCommonFunctions::moveContainer(client, "Menu", "tools", "edit", true, true);
-		hacked_parent->insertChildClient(client);
+		dynamic_actions_client->insertChildClient(client);
 	}
 
 /* TODO: Ok, I guess we need even more specialization.
@@ -566,7 +594,7 @@ QObject* KatePluginIntegrationWindow::createPluginView(KTextEditor::Plugin* plug
 	active_plugin = 0;
 	disconnect(factory(), &KXMLGUIFactory::clientAdded, this, &KatePluginIntegrationWindow::catchXMLGUIClientsHack);
 	fixUpPluginUI(app->idForPlugin(plugin), resources);
-	connect(plugin, &QObject::destroyed, [&]() { plugin_resources.remove(plugin); });
+	connect(plugin, &QObject::destroyed, this, [this, plugin]() { plugin_resources.remove(plugin); });
 	return resources.view;
 }
 

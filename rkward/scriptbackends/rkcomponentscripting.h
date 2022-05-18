@@ -1,26 +1,17 @@
-/***************************************************************************
-                          rkcomponentscripting  -  description
-                             -------------------
-    begin                : Thu Jun 17 2010
-    copyright            : (C) 2010, 2013 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkcomponentscripting - This file is part of the RKWard project. Created: Thu Jun 17 2010
+SPDX-FileCopyrightText: 2010-2013 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef RKCOMPONENTSCRIPTING_H
 #define RKCOMPONENTSCRIPTING_H
 
 #include <QObject>
 #include <QHash>
-#include <QScriptEngine>
+
+#include "qtscriptbackend.h"  // TODO: For RKJSEngine, only
 
 #include "../rbackend/rcommand.h"
 
@@ -67,7 +58,7 @@ private slots:
 	void scriptRCommandFinished (RCommand* command);
 private:
 	RKComponent* component;
-	QScriptEngine engine;
+	QJSEngine engine;
 	struct OutstandingCommand {
 		RCommand *command;
 		QString callback;
@@ -79,7 +70,7 @@ private:
 	void handleChange (RKComponentBase* changed);
 	QHash<RKComponentBase*, QString> component_commands;
 
-	void handleScriptError (const QString& current_file=QString ());
+	void handleScriptError (const QJSValue &val, const QString& current_file=QString ());
 };
 
 #endif

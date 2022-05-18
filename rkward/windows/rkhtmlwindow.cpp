@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkhtmlwindow  -  description
-                             -------------------
-    begin                : Wed Oct 12 2005
-    copyright            : (C) 2005-2020 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkhtmlwindow - This file is part of RKWard (https://rkward.kde.org). Created: Wed Oct 12 2005
+SPDX-FileCopyrightText: 2005-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 #include "rkhtmlwindow.h"
 
 #include <KLocalizedString>
@@ -24,6 +14,7 @@
 #include <kio/job.h>
 #include <kservice.h>
 #include <kcodecaction.h>
+#include <KColorScheme>
 
 #include <qfileinfo.h>
 #include <qwidget.h>
@@ -34,6 +25,7 @@
 #include <QHostInfo>
 #include <QPrintDialog>
 #include <QMenu>
+#include <QFileDialog>
 #include <QTextCodec>
 #include <QFontDatabase>
 #include <QTemporaryFile>
@@ -43,16 +35,16 @@
 #include <QCheckBox>
 #include <QFileDialog>
 
-#include "../rkglobals.h"
 #include "../rbackend/rkrinterface.h"
 #include "rkhelpsearchwindow.h"
 #include "../rkward.h"
 #include "../rkconsole.h"
-#include "../settings/rksettingsmodulegeneral.h"
+#include "../settings/rkrecenturls.h"
 #include "../settings/rksettingsmoduler.h"
 #include "../settings/rksettings.h"
 #include "../settings/rksettingsmoduleoutput.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkcompatibility.h"
 #include "../misc/rkstandardactions.h"
 #include "../misc/rkstandardicons.h"
 #include "../misc/xmlhelper.h"
@@ -60,10 +52,16 @@
 #include "../misc/rkprogresscontrol.h"
 #include "../misc/rkmessagecatalog.h"
 #include "../misc/rkfindbar.h"
+#include "../misc/rkoutputdirectory.h"
+#include "../misc/rkstyle.h"
 #include "../plugin/rkcomponentmap.h"
 #include "../windows/rkworkplace.h"
 #include "../windows/rkworkplaceview.h"
 #include "../debug.h"
+
+QUrl restorableUrl(const QUrl &url) {
+	return QUrl(url.url().replace(RKSettingsModuleR::helpBaseUrl(), "rkward://RHELPBASE"));
+}
 
 #ifdef NO_QT_WEBENGINE
 #	include <QWebFrame>
@@ -76,6 +74,8 @@ class RKWebPage : public KWebPage {
 #	include <QWebEngineView>
 #	include <QWebEngineSettings>
 #	include <QWebEngineProfile>
+#	include <QWebEngineScript>
+#	include <QWebEngineScriptCollection>
 class RKWebPage : public QWebEnginePage {
 #endif
 	Q_OBJECT
@@ -114,8 +114,9 @@ public:
 	QUrl url () {
 		return mainFrame ()->url ();
 	}
-	void setHtml (const QString &html) {
-		mainFrame ()->setHtml (html);
+	void setHtmlWrapper(const QString &html, const QUrl &baseurl) {
+		direct_load = true;
+		mainFrame()->setHtml(html, baseurl);
 	}
 	QPointF scrollPosition () const {
 		return mainFrame ()->scrollPosition ();
@@ -123,7 +124,19 @@ public:
 	void setScrollPosition (const QPoint &pos)  {
 		mainFrame ()->setScrollPosition (pos);
 	}
+	void setScrollPositionWhenDone(const QPoint &pos)  {
+		QMetaObject::Connection * const connection = new QMetaObject::Connection;
+		*connection = connect(this, &QWebPage::loadFinished, [this, pos, connection](){
+			QObject::disconnect(*connection);
+			delete connection;
+			setScrollPosition(pos);
+		});
+	}
 #else
+	void setHtmlWrapper(const QString &html, const QUrl &baseurl) {
+		direct_load = true;
+		setHtml(html, baseurl);
+	}
 	bool supportsContentType (const QString &name) {
 		if (name.startsWith("text")) return true;
 #ifdef __GNUC__
@@ -137,6 +150,14 @@ public:
 	void setScrollPosition (const QPoint &point) {
 		RK_DEBUG(APP, DL_DEBUG, "scrolling to %d, %d", point.x (), point.y ());
 		runJavaScript (QString ("window.scrollTo(%1, %2);").arg (point.x ()).arg(point.y ()));
+	}
+	void setScrollPositionWhenDone(const QPoint &pos)  {
+		QMetaObject::Connection * const connection = new QMetaObject::Connection;
+		*connection = connect(this, &QWebEnginePage::loadFinished, [this, pos, connection](){
+			QObject::disconnect(*connection);
+			delete connection;
+			setScrollPosition(pos);
+		});
 	}
 #endif
 
@@ -165,7 +186,7 @@ protected:
 		if (RKHTMLWindow::new_window) {
 			RK_ASSERT (RKHTMLWindow::new_window == this);
 			RK_ASSERT (!window);
-			RKWorkplace::mainWorkplace ()->openAnyUrl (navurl);
+			RKWorkplace::mainWorkplace()->openAnyUrl(restorableUrl(navurl));
 			RKHTMLWindow::new_window = nullptr;
 			if (!window) deleteLater ();  // this page was _not_ reused
 			return false;
@@ -178,7 +199,7 @@ protected:
 
 		if (cururl.matches (navurl, QUrl::NormalizePathSegments | QUrl::StripTrailingSlash)) {
 			RK_DEBUG (APP, DL_DEBUG, "Page internal navigation request from %s to %s", qPrintable (cururl.toString ()), qPrintable (navurl.toString ()));
-			emit (pageInternalNavigation (navurl));
+			emit pageInternalNavigation(navurl);
 			return true;
 		}
 
@@ -268,12 +289,10 @@ private:
 
 
 RKWebPage* RKHTMLWindow::new_window = nullptr;
-
 RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (parent, RKMDIWindow::HelpWindow) {
 	RK_TRACE (APP);
 
 	current_cache_file = 0;
-
 	QVBoxLayout* layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
 	view = new RKWebView (this);
@@ -296,6 +315,34 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 		QWebEngineProfile::defaultProfile ()->installUrlSchemeHandler ("help", new RKWebEngineKIOForwarder (RKWardMainWindow::getMain()));
 	}
 #endif
+	// Apply current color scheme to page. This needs support in the CSS of the page, so will only work for RKWard help and output pages.
+	// Note that the CSS in those pages also has "automatic" support for dark mode ("prefers-color-scheme: dark"; but see https://bugreports.qt.io/browse/QTBUG-89753), however, 
+	// for a seamless appearance, the only option is to set the theme colors dynamically, via javascript.
+	auto scheme = RKStyle::viewScheme();
+	QString color_scheme_js = QStringLiteral("function rksetcolor(name, value) { document.querySelector(':root').style.setProperty(name, value); }\n"
+	                                                "rksetcolor('--regular-text-color', '%1');\n"
+	                                                "rksetcolor('--background-color', '%2');\n"
+	                                                "rksetcolor('--header-color', '%3');\n"
+	                                                "rksetcolor('--anchor-color', '%4');\n"
+	                                                "rksetcolor('--shadow-color', '%5');").arg(scheme->foreground().color().name(), scheme->background().color().name(),
+	                                                scheme->foreground(KColorScheme::VisitedText).color().name(), scheme->foreground(KColorScheme::LinkText).color().name(),
+	                                                scheme->shade(KColorScheme::MidShade).name());
+#ifdef NO_QT_WEBENGINE
+	connect(page, &RKWebPage::loadFinished, [this, color_scheme_js](){
+		page->mainFrame()->evaluateJavaScript(color_scheme_js);
+	});
+#else
+	auto p = QWebEngineProfile::defaultProfile();
+	QWebEngineScript fix_color_scheme;
+	QString id = QStringLiteral("fix_color_scheme");
+	p->scripts()->remove(p->scripts()->findScript(id));  // remove any existing variant of the script. It might have been created for the wrong theme.
+	fix_color_scheme.setName(id);
+	fix_color_scheme.setInjectionPoint(QWebEngineScript::DocumentReady);
+	fix_color_scheme.setSourceCode(color_scheme_js);
+	p->scripts()->insert(fix_color_scheme);
+	//page->setBackgroundColor(scheme.background().color());  // avoids brief white blink while loading, but is too risky on pages that are not dark scheme aware.
+#endif
+
 	layout->addWidget (findbar);
 	findbar->hide ();
 	connect (findbar, &RKFindBar::findRequest, this, &RKHTMLWindow::findRequest);
@@ -314,7 +361,7 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 #ifdef NO_QT_WEBENGINE
 	connect (page, &QWebPage::downloadRequested, [this](const QNetworkRequest &request) { page->downloadUrl (request.url ()); });
 #else
-	connect (page->profile (), &QWebEngineProfile::downloadRequested, [this](QWebEngineDownloadItem* item) {
+	connect (page->profile (), &QWebEngineProfile::downloadRequested, this, [this](QWebEngineDownloadItem* item) {
 		QString path = QFileDialog::getSaveFileName (this, i18n ("Save as"), item->path ());
 		if (path.isEmpty ()) return;
 		item->setPath (path);
@@ -343,8 +390,7 @@ RKHTMLWindow::~RKHTMLWindow () {
 
 QUrl RKHTMLWindow::restorableUrl () {
 	RK_TRACE (APP);
-
-	return QUrl ((current_url.url ().replace (RKSettingsModuleR::helpBaseUrl(), "rkward://RHELPBASE")));
+	return ::restorableUrl(current_url);
 }
 
 bool RKHTMLWindow::isModified () {
@@ -416,10 +462,34 @@ void RKHTMLWindow::slotPrint () {
 	delete dlg;
 }
 
-void RKHTMLWindow::slotSave () {
-	RK_TRACE (APP);
+void RKHTMLWindow::slotExport() {
+	RK_TRACE(APP);
 
-	page->downloadUrl (page->url ());
+	page->downloadUrl(page->url());
+}
+
+void RKHTMLWindow::slotSave() {
+	RK_TRACE(APP);
+	RK_ASSERT(dir);
+	dir->save(dir->filename());
+}
+
+void RKHTMLWindow::slotSaveAs() {
+	RK_TRACE (APP);
+	RK_ASSERT(dir);
+	dir->save();
+}
+
+void RKHTMLWindow::slotRevert() {
+	RK_TRACE (APP);
+	RK_ASSERT(dir);
+	dir->revert();
+}
+
+void RKHTMLWindow::slotActivate() {
+	RK_TRACE (APP);
+	RK_ASSERT(dir);
+	dir->activate();
 }
 
 void RKHTMLWindow::openLocationFromHistory (VisitedLocation &loc) {
@@ -435,15 +505,7 @@ void RKHTMLWindow::openLocationFromHistory (VisitedLocation &loc) {
 	} else {
 		url_change_is_from_history = true;
 		openURL (loc.url);            // TODO: merge into restoreBrowserState()?
-#ifndef NO_QT_WEBENGINE
-		QMetaObject::Connection * const connection = new QMetaObject::Connection;
-		*connection = connect(view, &QWebEngineView::loadFinished, [this, scroll_pos, connection](){
-			QObject::disconnect(*connection);
-			delete connection;
-			page->setScrollPosition (scroll_pos);
-		});
-#endif
-		page->setScrollPosition (scroll_pos);
+		page->setScrollPositionWhenDone(scroll_pos);
 		url_change_is_from_history = false;
 	}
 
@@ -470,18 +532,22 @@ void RKHTMLWindow::slotBack () {
 	openLocationFromHistory (url_history[current_history_position]);
 }
 
+static bool isRKWardUrl(const QUrl &url) {
+	return url.scheme() == QStringLiteral("rkward");
+}
+
 void RKHTMLWindow::openRKHPage (const QUrl &url) {
 	RK_TRACE (APP);
 
-	RK_ASSERT (url.scheme () == "rkward");
-	changeURL (url);
+	RK_ASSERT(isRKWardUrl(url));
+	if (url != this->url()) changeURL(url);  // see ::refresh()
 	bool ok = false;
 	if ((url.host () == "component") || (url.host () == "page")) {
 		useMode (HTMLHelpWindow);
 
 		startNewCacheFile ();
 		RKHelpRenderer render (current_cache_file);
-		ok = render.renderRKHelp (url);
+		ok = render.renderRKHelp(url, this);
 		current_cache_file->close ();
 
 		QUrl cache_url = QUrl::fromLocalFile (current_cache_file->fileName ());
@@ -503,13 +569,13 @@ void RKHTMLWindow::openRKHPage (const QUrl &url) {
 bool RKHTMLWindow::handleRKWardURL (const QUrl &url, RKHTMLWindow *window) {
 	RK_TRACE (APP);
 
-	if (url.scheme () == "rkward") {
+	if (isRKWardUrl(url)) {
 		if (url.host () == "runplugin") {
 			QString path = url.path ();
 			if (path.startsWith ('/')) path = path.mid (1);
 			int sep = path.indexOf ('/');
 			// NOTE: These links may originate externally, even from untrusted sources. The submit mode *must* remain "ManualSubmit" for this reason!
-			RKComponentMap::invokeComponent (path.left (sep), path.mid (sep+1).split ('\n', QString::SkipEmptyParts), RKComponentMap::ManualSubmit);
+			RKComponentMap::invokeComponent (path.left (sep), path.mid (sep+1).split ('\n', RKCompatibility::SkipEmptyParts()), RKComponentMap::ManualSubmit);
 		} else if (url.host () == "rhelp") {
 			// TODO: find a nice solution to render this in the current window
 			QStringList spec = url.path ().mid (1).split ('/');
@@ -522,6 +588,37 @@ bool RKHTMLWindow::handleRKWardURL (const QUrl &url, RKHTMLWindow *window) {
 			QString path = url.path ();
 			if (path.startsWith ('/')) path = path.mid (1);
 			RKSettings::configureSettings(path);
+		} else if (url.host () == "open") {
+			QString path = url.path().mid(1); // skip initial '/'
+			int sep = path.indexOf('/');
+			QString category = path.left(sep);
+			path = path.mid(sep+1);
+			RK_DEBUG(APP, DL_DEBUG, "rkward://open: %s -> %s , %s", qPrintable(url.path()), qPrintable(category), qPrintable(path));
+			QUrl target;
+			if (!path.isEmpty()) target = QUrl::fromUserInput(path);
+			if (category == RKRecentUrls::scriptsId()) {
+				RKWardMainWindow::getMain()->slotOpenCommandEditor(target);
+			} else if (category == RKRecentUrls::workspaceId()) {
+				// This window will be destroyed while closing the previous workspace. Thus wait for the next event cycle.
+				QTimer::singleShot(0, [target]() { RKWardMainWindow::getMain()->askOpenWorkspace(target); });
+			} else if (category == RKRecentUrls::outputId()) {
+				RKWardMainWindow::getMain()->slotOpenOutput(target);
+			} else {
+				// See opening workspace, above.
+				QTimer::singleShot(0, [target]() { RKWorkplace::mainWorkplace()->openAnyUrl(target); });
+			}
+		} else if (url.host () == "actions") {  // anything else
+			QString action = url.path ();
+			if (action.startsWith ('/')) action = action.mid (1);
+			if (action == "new_data_frame") {
+				RKWardMainWindow::getMain()->slotNewDataFrame();
+			} else if (action == "rpackage_install") {
+				RKWardMainWindow::getMain()->slotFileLoadLibs();
+			} else if (action == "import_assistant") {
+				RKWardMainWindow::getMain()->importData();
+			} else {
+				RK_ASSERT(false);
+			}
 		} else {
 			if (window) window->openRKHPage (url);
 			else RKWorkplace::mainWorkplace ()->openHelpWindow (url);	// will recurse with window set, via openURL()
@@ -536,6 +633,9 @@ bool RKHTMLWindow::openURL (const QUrl &url) {
 
 	if (handleRKWardURL (url, this)) return true;
 
+	QPoint restore_position;
+	if (url == current_url) restore_position = page->scrollPosition().toPoint();
+
 	QMimeType mtype = QMimeDatabase ().mimeTypeForUrl (url);
 	if (window_mode == HTMLOutputWindow) {
 		if (url != current_url) {
@@ -547,6 +647,11 @@ bool RKHTMLWindow::openURL (const QUrl &url) {
 
 			current_url = url;	// needs to be set before registering
 			RKOutputWindowManager::self ()->registerWindow (this);
+			dir = RKOutputDirectory::findOutputByWorkPath(url.toLocalFile());
+			part->setOutputDirectoryActionsEnabled(dir != nullptr);
+			if (dir) {
+				connect(dir, &RKOutputDirectory::stateChange, this, &RKHTMLWindow::updateState);
+			}
 		}
 	}
 
@@ -559,11 +664,12 @@ bool RKHTMLWindow::openURL (const QUrl &url) {
 				RK_DEBUG (APP, DL_WARNING, "Applying workaround for https://bugs.kde.org/show_bug.cgi?id=405386");
 				QFile f (url.toLocalFile ());
 				f.open (QIODevice::ReadOnly);
-				page->setHtml (f.readAll());
+				page->setHtmlWrapper(f.readAll(), url.adjusted(QUrl::RemoveFilename));
 				f.close ();
 			} else {
 				page->load (url);
 			}
+			if (!restore_position.isNull()) page->setScrollPositionWhenDone(restore_position);
 		} else {
 			fileDoesNotExistMessage ();
 		}
@@ -590,10 +696,6 @@ bool RKHTMLWindow::openURL (const QUrl &url) {
 
 	RKWorkplace::mainWorkplace ()->openAnyUrl (url, QString (), page->supportsContentType (mtype.name ()));	// NOTE: text/html type urls, which we have not handled, above, are forced to be opened externally, to avoid recursion. E.g. help:// protocol urls.
 	return true;
-}
-
-QUrl RKHTMLWindow::url () {
-	return current_url;
 }
 
 void RKHTMLWindow::mimeTypeJobFail (KJob* job) {
@@ -674,17 +776,44 @@ void RKHTMLWindow::changeURL (const QUrl &url) {
 	}
 }
 
+void RKHTMLWindow::updateState(){
+	updateCaption(current_url);
+}
+
 void RKHTMLWindow::updateCaption (const QUrl &url) {
 	RK_TRACE (APP);
 
-	if (window_mode == HTMLOutputWindow) setCaption (i18n ("Output %1", url.fileName ()));
+	if (window_mode == HTMLOutputWindow) {
+		if (dir) {
+			QString name = dir->caption();
+			QString mods;
+			if (dir->isActive()) mods.append(i18n("[Active]"));
+			// TODO: use icon(s), instead
+			bool mod = dir->isModifiedFast();
+			if (mod) mods.append("(*)");
+			if (!mods.isEmpty()) {
+				name.append(' ');
+				name.append(mods);
+			}
+			setCaption(name);
+			part->revert->setEnabled(mod);
+		} else {
+			setCaption (i18n ("Output %1", url.fileName ()));
+		}
+	}
 	else setCaption (url.fileName ());
 }
 
 void RKHTMLWindow::refresh () {
 	RK_TRACE (APP);
+	RK_DEBUG(APP, DL_DEBUG, "reload %s", qPrintable(url().url()));
 
-	view->reload ();
+	if (isRKWardUrl(url())) {
+		// need to re-render the page
+		openRKHPage(url());
+	} else {
+		view->reload();
+	}
 }
 
 void RKHTMLWindow::scrollToBottom () {
@@ -767,6 +896,12 @@ void RKHTMLWindow::fileDoesNotExistMessage () {
 void RKHTMLWindow::flushOutput () {
 	RK_TRACE (APP);
 
+	if (dir) {
+		dir->clear();
+		return;
+	}
+
+	// TODO: remove legacy code below, eventually
 	int res = KMessageBox::questionYesNo (this, i18n ("Do you really want to clear the output? This will also remove all image files used in the output. It will not be possible to restore it."), i18n ("Flush output?"));
 	if (res==KMessageBox::Yes) {
 		QFile out_file (current_url.toLocalFile ());
@@ -775,7 +910,7 @@ void RKHTMLWindow::flushOutput () {
 		RKProgressControl *status = new RKProgressControl (this, i18n ("Flushing output"), i18n ("Flushing output"), RKProgressControl::CancellableNoProgress);
 		status->addRCommand (c, true);
 		status->doNonModal (true);
-		RKGlobals::rInterface ()->issueCommand (c);
+		RInterface::issueCommand (c);
 	}
 }
 
@@ -821,12 +956,13 @@ void RKHTMLWindowPart::initActions () {
 	actionCollection ()->addAction (KStandardAction::SelectAll, "select_all", window->view->pageAction (RKWebPage::SelectAll), SLOT (trigger()));
 	// unfortunately, this will only affect the default encoding, not necessarily the "real" encoding
 	KCodecAction *encoding = new KCodecAction (QIcon::fromTheme("character-set"), i18n ("Default &Encoding"), this, true);
-	encoding->setStatusTip (i18n ("Set the encoding to assume in case no explicit encoding has been set in the page or in the HTTP headers."));
+	encoding->setWhatsThis(i18n ("Set the encoding to assume in case no explicit encoding has been set in the page or in the HTTP headers."));
 	actionCollection ()->addAction ("view_encoding", encoding);
 	connect (encoding, static_cast<void (KCodecAction::*)(QTextCodec *)>(&KCodecAction::triggered), window, &RKHTMLWindow::setTextEncoding);
 
-	print = actionCollection ()->addAction (KStandardAction::Print, "print_html", window, SLOT (slotPrint()));
-	save_page = actionCollection ()->addAction (KStandardAction::Save, "save_html", window, SLOT (slotSave()));
+	print = actionCollection()->addAction(KStandardAction::Print, "print_html", window, SLOT (slotPrint()));
+	export_page = actionCollection()->addAction("save_html", new QAction(QIcon::fromTheme("file-save"), i18n("Export Page as HTML"), this));
+	connect(export_page, &QAction::triggered, window, &RKHTMLWindow::slotExport);
 
 	run_selection = RKStandardActions::runCurrent (window, window, SLOT (runSelection()));
 
@@ -838,11 +974,25 @@ void RKHTMLWindowPart::initActions () {
 	forward->setEnabled (false);
 
 	// output window actions
+	window->file_save_action = actionCollection()->addAction(KStandardAction::Save, window, SLOT(slotSave()));
+	window->file_save_action->setText(i18n("Save Output"));
+	window->file_save_as_action = actionCollection()->addAction(KStandardAction::SaveAs, window, SLOT(slotSaveAs()));
+	window->file_save_as_action->setText(i18n("Save Output As"));
+
 	outputFlush = actionCollection ()->addAction ("output_flush", window, SLOT (flushOutput()));
-	outputFlush->setText (i18n ("&Flush Output"));
+	outputFlush->setText (i18n ("&Clear Output"));
 	outputFlush->setIcon (QIcon::fromTheme("edit-delete"));
 
-	outputRefresh = actionCollection ()->addAction ("output_refresh", window->page->action (RKWebPage::Reload));
+	outputRefresh = actionCollection()->addAction("output_refresh", window->page->action(RKWebPage::Reload));
+
+	revert = actionCollection()->addAction("output_revert", window, SLOT(slotRevert()));
+	revert->setText(i18n("&Revert to last saved state"));
+	revert->setIcon(QIcon::fromTheme("edit-undo"));
+
+	activate = actionCollection()->addAction("output_activate", window, SLOT(slotActivate()));
+	activate->setText(i18n("Set Output as &Active"));
+	activate->setIcon(QIcon::fromTheme("emblem-favorite"));
+	activate->setWhatsThis(i18n("Set this output as the file to append output to."));
 
 	actionCollection ()->addAction (KStandardAction::Find, "find", window->findbar, SLOT (activate()));
 	QAction* findAhead = actionCollection ()->addAction ("find_ahead", new QAction (i18n ("Find as you type"), this));
@@ -852,31 +1002,38 @@ void RKHTMLWindowPart::initActions () {
 	actionCollection ()->addAction (KStandardAction::FindPrev, "find_previous", window->findbar, SLOT (backward()));
 }
 
-void RKHTMLWindowPart::setOutputWindowSkin () {
-	RK_TRACE (APP);
+void RKHTMLWindowPart::setOutputDirectoryActionsEnabled(bool enable) {
+	RK_TRACE(APP);
 
-	print->setText (i18n ("Print output"));
-	save_page->setText (i18n ("Save Output as HTML"));
-	setXMLFile ("rkoutputwindow.rc");
-	run_selection->setVisible (false);
+	window->file_save_action->setVisible(enable);
+	window->file_save_as_action->setVisible(enable);
+	revert->setVisible(enable);
+	activate->setVisible(enable);
 }
 
-void RKHTMLWindowPart::setHelpWindowSkin () {
-	RK_TRACE (APP);
+void RKHTMLWindowPart::setOutputWindowSkin() {
+	RK_TRACE(APP);
 
-	print->setText (i18n ("Print page"));
-	save_page->setText (i18n ("Export page as HTML"));
-	setXMLFile ("rkhelpwindow.rc");
-	run_selection->setVisible (true);
+	print->setText(i18n("Print output"));
+	setXMLFile("rkoutputwindow.rc");
+	run_selection->setVisible(false);
+}
+
+void RKHTMLWindowPart::setHelpWindowSkin() {
+	RK_TRACE(APP);
+
+	print->setText(i18n("Print page"));
+	setXMLFile("rkhelpwindow.rc");
+	run_selection->setVisible(true);
 }
 
 //////////////////////////////////////////
 //////////////////////////////////////////
 
-bool RKHelpRenderer::renderRKHelp (const QUrl &url) {
+bool RKHelpRenderer::renderRKHelp (const QUrl &url, RKHTMLWindow* container) {
 	RK_TRACE (APP);
 
-	if (url.scheme () != "rkward") {
+	if (!isRKWardUrl(url)) {
 		RK_ASSERT (false);
 		return (false);
 	}
@@ -929,8 +1086,9 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url) {
 		element = help_xml_helper.getChildElement (help_doc_element, "title", DL_WARNING);
 		page_title = help_xml_helper.i18nElementText (element, false, DL_WARNING);
 	}
-	writeHTML ("<html><head><title>" + page_title + "</title><link rel=\"stylesheet\" type=\"text/css\" href=\"" + css_filename + "\">"
-	           "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"></head>\n<body><div id=\"main\">\n<h1>" + page_title + "</h1>\n");
+	writeHTML("<html><head><title>" + page_title + "</title><link rel=\"stylesheet\" type=\"text/css\" href=\"" + css_filename + "\">"
+	          "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"></head>\n"
+	          "<body id=\"" + help_xml_helper.getStringAttribute(help_doc_element, "pageid", "standard", DL_INFO) + "\"><div id=\"main\">\n<h1>" + page_title + "</h1>\n");
 
 	if (help_doc_element.isNull ()) {
 		RK_ASSERT (for_component);
@@ -958,21 +1116,54 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url) {
 	if (!element.isNull ()) {
 		writeHTML (startSection ("summary", i18n ("Summary"), QString (), &anchors, &anchornames));
 		writeHTML (renderHelpFragment (element));
+		writeHTML(endSection());
 	}
 
 	element = help_xml_helper.getChildElement (help_doc_element, "usage", DL_INFO);
 	if (!element.isNull ()) {
 		writeHTML (startSection ("usage", i18n ("Usage"), QString (), &anchors, &anchornames));
 		writeHTML (renderHelpFragment (element));
+		writeHTML(endSection());
 	}
 
+	bool container_refresh_connected = false;
 	XMLChildList section_elements = help_xml_helper.getChildElements (help_doc_element, "section", DL_INFO);
 	for (XMLChildList::iterator it = section_elements.begin (); it != section_elements.end (); ++it) {
 		QString title = help_xml_helper.i18nStringAttribute (*it, "title", QString (), DL_WARNING);
 		QString shorttitle = help_xml_helper.i18nStringAttribute (*it, "shorttitle", QString (), DL_DEBUG);
 		QString id = help_xml_helper.getStringAttribute (*it, "id", QString (), DL_WARNING);
 		writeHTML (startSection (id, title, shorttitle, &anchors, &anchornames));
+		QString special = help_xml_helper.getStringAttribute(*it, "special", QString(), DL_DEBUG);
+		if (!special.isEmpty()) {
+			if (special == "recentfiles") {
+				writeHTML("<ul>\n");
+				QString category = help_xml_helper.getStringAttribute(*it, "category", QString(), DL_WARNING);
+				auto list = RKRecentUrls::allRecentUrls(category);
+				if (category == RKRecentUrls::workspaceId()) {
+					if (QFile::exists(".RData")) {
+						list.prepend(QUrl::fromLocalFile(QFileInfo(".RData").absoluteFilePath()));
+					}
+				}
+				for (int i = 0; i < list.size(); ++i) {
+					writeHTML(QString("<li>&lrm;<a href=\"rkward://open/%1/%2\" title=\"%2\">%3</a></li>\n").arg(category, list[i].url(), RKCommonFunctions::escape(list[i].url(QUrl::PreferLocalFile))));
+				}
+				writeHTML("</ul>\n");
+				writeHTML(QString("<form action=\"rkward://open/%1/\"><button type=\"submit\">%3</button></form>\n").arg(category, i18n("Choose another file")));
+				if (container && !container_refresh_connected) {
+					container_refresh_connected = true;
+					auto connection = new QMetaObject::Connection;
+					*connection = QObject::connect(RKRecentUrls::notifier(), &RKRecentUrls::recentUrlsChanged, container, [connection, container](){
+						// connection must self-destruct, as it will be re-created from refresh()
+						QObject::disconnect(*connection);
+						delete connection;
+						// also, delay the actual refresh, in case, e.g. several script files are opened at once
+						QTimer::singleShot(0, container, &RKHTMLWindow::refresh);
+					});
+				}
+			}
+		}
 		writeHTML (renderHelpFragment (*it));
+		writeHTML(endSection());
 	}
 
 	// the section "settings" is the most complicated, as the labels of the individual GUI items has to be fetched from the component description. Of course it is only meaningful for component help, and not rendered for top level help pages.
@@ -997,6 +1188,7 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url) {
 					help_xml_helper.displayError (&(*it), "Tag not allowed, here", DL_WARNING);
 				}
 			}
+			writeHTML(endSection());
 		}
 	}
 
@@ -1005,6 +1197,7 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url) {
 	if (!element.isNull ()) {
 		writeHTML (startSection ("related", i18n ("Related functions and pages"), QString (), &anchors, &anchornames));
 		writeHTML (renderHelpFragment (element));
+		writeHTML(endSection());
 	}
 
 	// "technical" section
@@ -1012,6 +1205,7 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url) {
 	if (!element.isNull ()) {
 		writeHTML (startSection ("technical", i18n ("Technical details"), QString (), &anchors, &anchornames));
 		writeHTML (renderHelpFragment (element));
+		writeHTML(endSection());
 	}
 
 	if (for_component) {
@@ -1020,6 +1214,7 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url) {
 		if (!deps.isEmpty ()) {
 			writeHTML (startSection ("dependencies", i18n ("Dependencies"), QString (), &anchors, &anchornames));
 			writeHTML (RKComponentDependency::depsToHtml (deps));
+			writeHTML(endSection());
 		}
 	}
 
@@ -1033,6 +1228,7 @@ bool RKHelpRenderer::renderRKHelp (const QUrl &url) {
 	if (about.valid) {
 		writeHTML (startSection ("about", i18n ("About"), QString (), &anchors, &anchornames));
 		writeHTML (about.toHtml ());
+		writeHTML(endSection());
 	}
 
 	// create a navigation bar
@@ -1074,7 +1270,7 @@ QString RKHelpRenderer::renderHelpFragment (QDomElement &fragment) {
 	int npos;
 	QString ret;
 	while ((npos = text.indexOf ("<link", pos)) >= 0) {
-		ret += text.mid (pos, npos - pos);
+		ret += text.midRef(pos, npos - pos);
 
 		QString href;
 		int href_start = text.indexOf (" href=\"", npos + 5);
@@ -1094,14 +1290,14 @@ QString RKHelpRenderer::renderHelpFragment (QDomElement &fragment) {
 		ret += prepareHelpLink (href, linktext);
 		pos = end;
 	}
-	ret += text.mid (pos);
+	ret += text.midRef(pos);
 
 	if (component_xml) {
 		text = ret;
 		ret.clear ();
 		pos = 0;
 		while ((npos = text.indexOf ("<label ", pos)) >= 0) {
-			ret += text.mid (pos, npos - pos);
+			ret += text.midRef(pos, npos - pos);
 
 			QString id;
 			int id_start = text.indexOf ("id=\"", npos + 6);
@@ -1113,7 +1309,7 @@ QString RKHelpRenderer::renderHelpFragment (QDomElement &fragment) {
 			}
 			ret += resolveLabel (id);
 		}
-		ret += text.mid (pos);
+		ret += text.midRef(pos);
 	}
 
 	RK_DEBUG (APP, DL_DEBUG, "%s", qPrintable (ret));
@@ -1129,7 +1325,7 @@ QString RKHelpRenderer::prepareHelpLink (const QString &href, const QString &tex
 	} else {
 		QString ltext;
 		QUrl url (href);
-		if (url.scheme () == "rkward") {
+		if (isRKWardUrl(url)) {
 			if (url.host () == "component") {
 				RKComponentHandle *chandle = componentPathToHandle (url.path ());
 				if (chandle) ltext = chandle->getLabel ();
@@ -1154,10 +1350,10 @@ QString RKHelpRenderer::prepareHelpLink (const QString &href, const QString &tex
 	return (ret + "</a>");
 }
 
-QString RKHelpRenderer::componentPathToId (QString path) {
+QString RKHelpRenderer::componentPathToId (const QString &path) {
 	RK_TRACE (APP);
 
-	QStringList path_segments = path.split ('/', QString::SkipEmptyParts);
+	QStringList path_segments = path.split ('/', RKCompatibility::SkipEmptyParts());
 	if (path_segments.count () > 2) return 0;
 	if (path_segments.count () < 1) return 0;
 	if (path_segments.count () == 1) path_segments.push_front ("rkward");
@@ -1166,19 +1362,23 @@ QString RKHelpRenderer::componentPathToId (QString path) {
 	return (path_segments.join ("::"));
 }
 
-RKComponentHandle *RKHelpRenderer::componentPathToHandle (QString path) {
+RKComponentHandle *RKHelpRenderer::componentPathToHandle (const QString &path) {
 	RK_TRACE (APP);
 
 	return (RKComponentMap::getComponentHandle (componentPathToId (path)));
 }
 
 QString RKHelpRenderer::startSection (const QString &name, const QString &title, const QString &shorttitle, QStringList *anchors, QStringList *anchor_names) {
-	QString ret = "<a name=\"" + name + "\">";
+	QString ret = "<div id=\"" + name + "\"><a name=\"" + name + "\">";
 	ret.append ("<h2>" + title + "</h2>\n");
 	anchors->append (name);
 	if (!shorttitle.isNull ()) anchor_names->append (shorttitle);
 	else anchor_names->append (title);
 	return (ret);
+}
+
+QString RKHelpRenderer::endSection() {
+	return("</div>\n");
 }
 
 void RKHelpRenderer::writeHTML (const QString& string) {
@@ -1190,6 +1390,10 @@ void RKHelpRenderer::writeHTML (const QString& string) {
 /////////////////////////////////////
 /////////////////////////////////////
 
+#include <QDir>
+#include <QFileInfo>
+#include <QCryptographicHash>
+#include <KIO/CopyJob>
 
 // static
 RKOutputWindowManager* RKOutputWindowManager::_self = 0;
@@ -1274,18 +1478,23 @@ void RKOutputWindowManager::setCurrentOutputPath (const QString &_path) {
 #endif
 	if (path == current_default_path) return;
 
-	if (!windows.contains (path)) {
-		RK_DEBUG (APP, DL_DEBUG, "starting to watch %s for changes, KDirWatch method %d", qPrintable (path), file_watcher->internalMethod ());
-		file_watcher->addFile (path);
+	auto old_win = windows.value(current_default_path);
+	auto new_win = windows.value(path);
+
+	if (!new_win) {
+		RK_DEBUG(APP, DL_DEBUG, "starting to watch %s for changes, KDirWatch method %d", qPrintable(path), file_watcher->internalMethod());
+		file_watcher->addFile(path);
 	}
-	if (!windows.contains (current_default_path)) {
-		if (!current_default_path.isEmpty ()) {
-			RK_DEBUG (APP, DL_DEBUG, "no longer watching %s for changes", qPrintable (current_default_path));
-			file_watcher->removeFile (current_default_path);
+	if (!old_win) {
+		if (!current_default_path.isEmpty()) {
+			RK_DEBUG(APP, DL_DEBUG, "no longer watching %s for changes", qPrintable(current_default_path));
+			file_watcher->removeFile(current_default_path);
 		}
 	}
 
 	current_default_path = path;
+	if (old_win) old_win->updateState();
+	if (new_win) new_win->updateState();
 }
 
 void RKOutputWindowManager::rewatchOutput () {
@@ -1295,20 +1504,10 @@ void RKOutputWindowManager::rewatchOutput () {
 	file_watcher->addFile (current_default_path);
 }
 
-QList<RKHTMLWindow*> RKOutputWindowManager::existingOutputWindows () const {
+QList<RKHTMLWindow*> RKOutputWindowManager::existingOutputWindows(const QString &path) const {
 	RK_TRACE (APP);
 
-	return (windows.values (current_default_path));
-}
-
-RKHTMLWindow* RKOutputWindowManager::newOutputWindow () {
-	RK_TRACE (APP);
-
-	RKHTMLWindow* current_output = new RKHTMLWindow (RKWorkplace::mainWorkplace ()->view (), RKHTMLWindow::HTMLOutputWindow);
-	current_output->openURL (QUrl::fromLocalFile (current_default_path));
-	RK_ASSERT (current_output->url ().toLocalFile () == current_default_path);
-
-	return current_output;
+	return (windows.values(path));
 }
 
 void RKOutputWindowManager::fileChanged (const QString &path) {
@@ -1324,25 +1523,33 @@ void RKOutputWindowManager::fileChanged (const QString &path) {
 
 	if (w) {
 		if (RKSettingsModuleOutput::autoRaise ()) w->activate ();
+		if (w->outputDirectory()) w->outputDirectory()->setKnownModified(true);
 	} else {
 		RK_ASSERT (path == current_default_path);
-		if (RKSettingsModuleOutput::autoShow ()) RKWorkplace::mainWorkplace ()->openOutputWindow (QUrl::fromUserInput (path, QString (), QUrl::AssumeLocalFile));
+		if (RKSettingsModuleOutput::autoShow ()) {
+			RKOutputDirectory* dir = RKOutputDirectory::findOutputByWorkPath(path);
+			if (dir) {
+				dir->view(true);
+			} else {
+				RKWorkplace::mainWorkplace()->openHTMLWindow(QUrl::fromUserInput(path, QString(), QUrl::AssumeLocalFile));
+			}
+		}
 	}
 }
 
-void RKOutputWindowManager::windowDestroyed (QObject *window) {
+void RKOutputWindowManager::windowDestroyed(QObject *window) {
 	RK_TRACE (APP);
 
 	// warning: Do not call any methods on the window. It is half-destroyed, already.
-	RKHTMLWindow *w = static_cast<RKHTMLWindow*> (window);
+	RKHTMLWindow *w = static_cast<RKHTMLWindow*>(window);
 
-	QString path = windows.key (w);
-	windows.remove (path, w);
+	QString path = windows.key(w);
+	windows.remove(path, w);
 
 	// if there are no further windows for this file, stop listening
-	if ((path != current_default_path) && (!windows.contains (path))) {
-		RK_DEBUG (APP, DL_DEBUG, "no longer watching %s for changes", qPrintable (path));
-		file_watcher->removeFile (path);
+	if ((path != current_default_path) && (!windows.contains(path))) {
+		RK_DEBUG(APP, DL_DEBUG, "no longer watching %s for changes", qPrintable(path));
+		file_watcher->removeFile(path);
 	}
 }
 

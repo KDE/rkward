@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkgraphicsdevice_setup  -  description
-                             -------------------
-    begin                : Mon Mar 18 20:06:08 CET 2013
-    copyright            : (C) 2013-2014 by Thomas Friedrichsmeier 
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkgraphicsdevice_setup - This file is part of RKWard (https://rkward.kde.org). Created: Mon Mar 18 2013
+SPDX-FileCopyrightText: 2013-2021 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 /******************************* ACKNOWLEDGEMENT ***************************
  * 
@@ -24,6 +14,7 @@
  ***************************************************************************/
 
 #include "../rkrsupport.h"
+#include "../rkrbackend.h"
 
 #ifdef TRUE
 #	undef TRUE
@@ -44,6 +35,7 @@
 struct RKGraphicsDeviceDesc {
 	bool init (pDevDesc dev, double pointsize, const QStringList &family, rcolor bg);
 	int devnum;
+	quint32 id;
 	double width, height;
 	int dpix, dpiy;
 	QString getFontFamily (bool symbolfont) const {
@@ -53,10 +45,6 @@ struct RKGraphicsDeviceDesc {
 	QString default_family;
 	QString default_symbol_family;
 	pDevDesc rdevdesc;
-#ifdef _MSC_VER
-	// See RKD_Close()
-	pGEDevDesc rgdevdesc;
-#endif
 };
 
 #include "rkgraphicsdevice_stubs.cpp"
@@ -66,6 +54,7 @@ struct RKGraphicsDeviceDesc {
 #define RKGD_DPI 72.0
 
 void RKStartGraphicsDevice (double width, double height, double pointsize, const QStringList &family, rcolor bg, const char* title, bool antialias) {
+	static quint32 id = 0;
 	if (width <= 0 || height <= 0) {
 		Rf_error ("Invalid width or height: (%g, %g)", width, height);
 	}
@@ -73,38 +62,35 @@ void RKStartGraphicsDevice (double width, double height, double pointsize, const
 	desc->width = width;
 	desc->height = height;
 
-	R_GE_checkVersionOrDie (R_GE_version);
+	if (R_GE_getVersion() != R_GE_version) {
+		RKRBackend::this_pointer->graphicsEngineMismatchMessage(R_GE_version, R_GE_getVersion());
+		Rf_error("Graphics version mismatch");
+	}
 	R_CheckDeviceAvailable ();
 	pDevDesc dev;
 	BEGIN_SUSPEND_INTERRUPTS {
 		/* Allocate and initialize the device driver data */
-#ifdef _MSC_VER
-		dev = (pDevDesc) malloc (sizeof (DevDesc));
-#else
-		dev = (pDevDesc) calloc (1, sizeof (DevDesc)); // don't really understand this, but R needs it this way (while MSVC hates it)
-#endif
+		dev = (pDevDesc) R_Calloc(1, DevDesc);
 		// NOTE: The call to RKGraphicsDeviceBackendTransmitter::instance(), here is important beyond error checking. It might *create* the instance and connection, if this is the first use.
 		if (!(dev && RKGraphicsDeviceBackendTransmitter::instance () && desc->init (dev, pointsize, family, bg))) {
-			free (dev);
+			R_Free (dev);
 			delete (desc);
 			desc = 0;
 		} else {
-			desc->devnum = 0;	// graphics engine will send an Activate-event, before we were even
-								// able to see our own devnum and call RKD_Create. Therefore, initialize
-								// devnum to 0, so as not to confuse the frontend
-			pGEDevDesc gdd = GEcreateDevDesc (dev);
+			desc->devnum = 0;  // graphics engine will send an Activate-event, before we were even
+			                   // able to see our own devnum and call RKD_Create. Therefore, initialize
+			                   // devnum to 0, so as not to confuse the frontend
+			desc->id = id++;   // extra identifier to make sure, R and the frontend are really talking about the same device
+			                   // in case of potentially out-of-sync operations (notably RKDAdjustSize)
+			pGEDevDesc gdd = GEcreateDevDesc(dev);
 			gdd->displayList = R_NilValue;
-			GEaddDevice2 (gdd, "RKGraphicsDevice");
-#ifdef _MSC_VER
-			// See RKD_Close()
-			desc->rgdevdesc = gdd;
-#endif
+			GEaddDevice2(gdd, "RKGraphicsDevice");
 		}
 	} END_SUSPEND_INTERRUPTS;
 
 	if (desc) {
 		desc->devnum = curDevice ();
-		RKD_Create (desc->width, desc->height, dev, title, antialias);
+		RKD_Create (desc->width, desc->height, dev, title, antialias, desc->id);
 	} else {
 		Rf_error("unable to start device");
 	}
@@ -166,15 +152,12 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 	dev->wantSymbolUTF8 = TRUE;
 	dev->useRotatedTextInContour = TRUE;
 
-#if R_VERSION >= R_Version (2, 14, 0)
 	dev->haveTransparency = 2;
 	dev->haveTransparentBg = 2; // FIXME. Do we really? Check.
 	dev->haveRaster = 2;
 	dev->haveCapture = 2;
 	dev->haveLocator = 2;
-#endif
 
-#if R_VERSION >= R_Version (2, 12, 0)
 	/*
 	* Mouse events
 	*/
@@ -182,12 +165,12 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 	dev->canGenMouseMove = TRUE;
 	dev->canGenMouseUp = TRUE; 
 	dev->canGenKeybd = TRUE;
+	dev->canGenIdle = TRUE;
 
 	// gettingEvent; This is set while getGraphicsEvent is actively
 	// looking for events
 	dev->eventHelper = RKD_EventHelper;
 	dev->onExit = RKD_onExit;
-#endif
 
 	/*
 	* Device functions
@@ -204,18 +187,39 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 	dev->newPage = RKD_NewPage;
 	dev->polygon = RKD_Polygon;
 	dev->polyline = RKD_Polyline;
-#if R_VERSION >= R_Version (2, 12, 0)
 	dev->path = RKD_Path;
-#endif
 	dev->rect = RKD_Rect;
 	dev->size = RKD_Size;
 	// dev->onexit = RKD_OnExit; Called on user interrupts. NULL is OK.
-#if R_VERSION >= R_Version (2, 11, 0)
 	dev->raster = RKD_Raster;
 	dev->cap = RKD_Capture;
-#endif
 	dev->newFrameConfirm = RKD_NewFrameConfirm;
+	dev->holdflush = RKD_HoldFlush;
 
+#if R_VERSION >= R_Version (4, 1, 0)
+	// patterns and gradients
+	dev->setPattern = RKD_SetPattern;
+	dev->releasePattern = RKD_ReleasePattern;
+	// clipping paths
+	dev->setClipPath = RKD_SetClipPath;
+	dev->releaseClipPath = RKD_ReleaseClipPath;
+	// masks
+	dev->setMask = RKD_SetMask;
+	dev->releaseMask = RKD_ReleaseMask;
+	dev->deviceVersion = qMin(15, R_GE_version);
+	dev->deviceClip = TRUE; // for now
+#endif
+
+#if R_VERSION >= R_Version (4, 2, 0)
+	// groups
+	dev->defineGroup = RKD_DefineGroup;
+	dev->useGroup = RKD_UseGroup;
+	dev->releaseGroup = RKD_ReleaseGroup;
+
+	// stroked / filled paths
+	dev->stroke = RKD_Stroke;
+	dev->fill = RKD_Fill;
+	dev->fillStroke = RKD_FillStroke;
+#endif
 	return true;
 }
- 

@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkprogresscontol  -  description
-                             -------------------
-    begin                : Sun Sep 10 2006
-    copyright            : (C) 2006, 2007, 2009, 2011, 2012 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkprogresscontol - This file is part of the RKWard project. Created: Sun Sep 10 2006
+SPDX-FileCopyrightText: 2006-2012 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 #ifndef RKPROGRESSCONTROL_H
 #define RKPROGRESSCONTROL_H
 
@@ -34,6 +24,7 @@ class RKProgressControlDialog;
 This class is a functional combination of the older RKCancelDialog and RKErrorDialog classes. Depending on the selected mode it can be used to allow the user to cancel running actions, to display errors / warning / regular output, only when errors occur or also during normal progress, etc. It provides facilities to get output from an RCommand directly, or you can manually submit output fragments via newOutput and newError.
 Note that this class is not a dialog in itself. Rather, a dialog is only created, if / when it is actually needed.
 TODO: This and RKwatch should use a common means of displaying the output to achieve a common look and feel.
+TODO: Remove in favor of RKInlineProgressControl ?
 
 @author Thomas Friedrichsmeier
 */
@@ -74,8 +65,6 @@ public:
 /** initialize the dialog non modal. The dialog is only shown if needed or set in the constructor flags */
 	void doNonModal (bool autodelete);
 
-/** you don't need this, unless you feed regular output to the dialog using newOutput. */
-	void resetOutput ();
 /** add a command to listen to. Warning: You will always first call addRCommand, then submit the command to RInterface, never the other way around. Else there could be a race condition!
 @param done_when_finished If set to true, the done () -slot is auto-called when the given command has completed */
 	void addRCommand (RCommand *command, bool done_when_finished=false);
@@ -107,6 +96,44 @@ private:
 protected:
 	void newOutput (RCommand *, ROutput *output) override;
 	void rCommandDone (RCommand *command) override;
+};
+
+class KMessageWidget;
+class QAction;
+
+class RKInlineProgressControl : public QObject {
+public:
+/** A modernized and trimmed down version of RKProgressControl that can be shown as an overlay to an existing widget, instead of as a separate dialog.
+ *
+ *  The progress control self-destructs after it was closed (or after the last associated command has finished, if setAutoCloseWhenCommandsDone() ).
+ *  Thus, the basic usage rules are: Always create a new progress control for a new operation. Don't access after calling show(), and no need to delete.
+ *
+ *  @param allow_cancel Whether the operation may be cancelled. If true, a cancel button will be added. If false, will also prevent the parent dialog from being closed. */
+	RKInlineProgressControl(QWidget *display_area, bool allow_cancel);
+	~RKInlineProgressControl();
+	void addRCommand(RCommand *command);
+	void setAutoCloseWhenCommandsDone(bool _autoclose) { autoclose = _autoclose; };
+	void show(int delay_ms=0);
+	void setText(const QString &text);
+private:
+	void addOutput(const QString &output, bool is_error_warning);
+	void done();
+	void setCloseAction(const QString &label);
+	bool eventFilter(QObject *, QEvent *e) override;
+	void cancelAndClose();
+	bool autoclose;
+	bool allow_cancel;
+	bool is_done;
+	bool any_failed;
+	int animation_step;
+	QWidget* wrapper;
+	QWidget* display_area;
+	KMessageWidget *message_widget;
+	KMessageWidget *prevent_close_message;
+	QTextEdit *output_display;
+	QList<RCommand*> unfinished_commands;
+	QAction* close_action;
+	QString text;
 };
 
 #endif

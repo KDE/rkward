@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkobjectlistview  -  description
-                             -------------------
-    begin                : Wed Sep 1 2004
-    copyright            : (C) 2004-2018 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkobjectlistview - This file is part of RKWard (https://rkward.kde.org). Created: Wed Sep 1 2004
+SPDX-FileCopyrightText: 2004-2018 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 #include "rkobjectlistview.h"
 
 #include <KLocalizedString>
@@ -29,7 +19,6 @@
 #include <QCheckBox>
 #include <QComboBox>
 
-#include "../rkglobals.h"
 #include "../core/robjectlist.h"
 #include "../core/renvironmentobject.h"
 #include "../core/rkmodificationtracker.h"
@@ -109,7 +98,7 @@ void RKObjectListView::setObjectCurrent (RObject *object, bool only_if_none_curr
 	if (!object) return;
 	if (only_if_none_current && currentIndex ().isValid ()) return;
 
-	QModelIndex index = settings->mapFromSource (RKGlobals::tracker ()->indexFor (object));
+	QModelIndex index = settings->mapFromSource (RKModificationTracker::instance()->indexFor (object));
 	if (index.isValid ()) {
 		scrollTo (index);
 		setCurrentIndex (index);
@@ -123,7 +112,7 @@ void RKObjectListView::setRootObject (RObject *root) {
 	RK_TRACE (APP);
 
 	root_object = root;
-	QModelIndex index = settings->mapFromSource (RKGlobals::tracker ()->indexFor (root));
+	QModelIndex index = settings->mapFromSource (RKModificationTracker::instance()->indexFor (root));
 	if (index != rootIndex ()) {
 		setRootIndex (index);
 		settingsChanged ();    // Updates column sizes. Note: Recurses into this function, but with index == rootIndex()
@@ -140,7 +129,7 @@ RObject* RKObjectListView::objectAtIndex (const QModelIndex& index) const {
 void RKObjectListView::selectionChanged (const QItemSelection&, const QItemSelection&) {
 	RK_TRACE (APP);
 
-	emit (selectionChanged ());
+	emit selectionChanged();
 }
 
 RObject::ObjectList RKObjectListView::selectedObjects () const {
@@ -162,7 +151,7 @@ void RKObjectListView::contextMenuEvent (QContextMenuEvent* event) {
 
 	menu_object = objectAtIndex (indexAt (event->pos ()));
 	bool suppress = false;
-	emit (aboutToShowContextMenu (menu_object, &suppress));
+	emit aboutToShowContextMenu(menu_object, &suppress);
 
 	if (!suppress) menu->popup (event->globalPos ());
 }
@@ -172,10 +161,10 @@ void RKObjectListView::initialize () {
 
 	setUniformRowHeights (true);
 
-	settings->setSourceModel (RKGlobals::tracker ());
+	settings->setSourceModel (RKModificationTracker::instance());
 	setModel (settings);
 
-	QModelIndex genv = settings->mapFromSource (RKGlobals::tracker ()->indexFor (RObjectList::getGlobalEnv ()));
+	QModelIndex genv = settings->mapFromSource (RKModificationTracker::instance()->indexFor (RObjectList::getGlobalEnv ()));
 	setExpanded (genv, true);
 	setMinimumHeight (rowHeight (genv) * 5);
 	settingsChanged ();
@@ -307,7 +296,7 @@ QWidget* RKObjectListViewSettings::filterWidget (QWidget *parent) {
 	boxvlayout->addWidget (depth_box);
 
 	depth_box->setCurrentIndex (1);
-	connect (depth_box, static_cast<void (QComboBox::*)(const QString &)>(&QComboBox::currentIndexChanged), this, &RKObjectListViewSettings::filterSettingsChanged);
+	connect (depth_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &RKObjectListViewSettings::filterSettingsChanged);
 
 	type_box = new QComboBox ();
 	type_box->addItem (i18n ("Show all objects"));
@@ -319,7 +308,7 @@ QWidget* RKObjectListViewSettings::filterWidget (QWidget *parent) {
 	if (hide_functions) type_box->setCurrentIndex (2);
 	else if (hide_non_functions) type_box->setCurrentIndex (1);
 	else type_box->setCurrentIndex (0);
-	connect (type_box, static_cast<void (QComboBox::*)(const QString &)>(&QComboBox::currentIndexChanged), this, &RKObjectListViewSettings::filterSettingsChanged);
+	connect (type_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &RKObjectListViewSettings::filterSettingsChanged);
 
 	QHBoxLayout *bottom_layout = new QHBoxLayout (filter_widget);
 	layout->addLayout (bottom_layout);
@@ -515,5 +504,5 @@ void RKObjectListViewSettings::updateSelfNow () {
 
 	invalidateFilter ();
 
-	emit (settingsChanged ());
+	emit settingsChanged();
 }

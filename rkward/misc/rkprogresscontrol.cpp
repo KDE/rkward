@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkprogresscontol  -  description
-                             -------------------
-    begin                : Sun Sep 10 2006
-    copyright            : (C) 2006, 2007, 2008, 2009, 2010, 2011 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkprogresscontol - This file is part of RKWard (https://rkward.kde.org). Created: Sun Sep 10 2006
+SPDX-FileCopyrightText: 2006-2011 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkprogresscontrol.h"
 
@@ -26,11 +16,12 @@
 #include <QDialogButtonBox>
 
 #include <KLocalizedString>
+#include <KColorScheme>
 
-#include "../rkglobals.h"
 #include "../rbackend/rkrinterface.h"
 #include "../settings/rksettingsmoduler.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkstyle.h"
 
 #include "../debug.h"
 
@@ -148,12 +139,6 @@ void RKProgressControl::newOutput (const QString &output) {
 	if (dialog) dialog->addOutput (&outputc);
 }
 
-void RKProgressControl::resetOutput () {
-	RK_TRACE (MISC);
-
-	output_log.clear ();
-}
-
 void RKProgressControl::addRCommand (RCommand *command, bool done_when_finished) {
 	RK_TRACE (MISC);
 	RK_ASSERT (command);
@@ -169,11 +154,11 @@ void RKProgressControl::dialogDestroyed () {
 	if ((!is_done) && (mode & AllowCancel)) {
 		is_done = true;
 		if (mode & AutoCancelCommands) {
-			for (RCommandList::const_iterator it = outstanding_commands.begin (); it != outstanding_commands.end (); ++it) {
-				RKGlobals::rInterface ()->cancelCommand (*it);
+			for (RCommandList::const_iterator it = outstanding_commands.cbegin (); it != outstanding_commands.cend (); ++it) {
+				RInterface::instance()->cancelCommand(*it);
 			}
 		}
-		emit (cancelled ());
+		emit cancelled();
 	}
 }
 
@@ -236,7 +221,7 @@ QString RKProgressControl::fullCommandOutput() {
 
 #include <kstandardguiitem.h>
 
-RKProgressControlDialog::RKProgressControlDialog (const QString &text, const QString &caption, int mode_flags, bool modal) : QDialog (0) {
+RKProgressControlDialog::RKProgressControlDialog(const QString &text, const QString &caption, int mode_flags, bool modal) : QDialog(nullptr) {
 	RK_TRACE (MISC);
 
 	setAttribute (Qt::WA_DeleteOnClose, true);
@@ -323,9 +308,9 @@ void RKProgressControlDialog::addOutput (const ROutput *output) {
 		output_text->insertPlainText ("\n");
 
 		if (output->type == ROutput::Output) {
-			output_text->setTextColor (Qt::black);
+			output_text->setTextColor(RKStyle::viewScheme()->foreground(KColorScheme::NormalText).color());
 		} else {
-			output_text->setTextColor (Qt::red);
+			output_text->setTextColor(RKStyle::viewScheme()->foreground(KColorScheme::NegativeText).color());
 			if (!detailsbox->isVisible ()) toggleDetails ();
 			error_indicator->show ();
 		}
@@ -389,4 +374,173 @@ void RKProgressControlDialog::closeEvent (QCloseEvent *e) {
 		QDialog::closeEvent (e);
 	}
 }
+
+#include <KMessageWidget>
+#include <KMessageBox>
+#include <KStandardAction>
+
+#include "rkstandardicons.h"
+
+RKInlineProgressControl::RKInlineProgressControl(QWidget *display_area, bool allow_cancel) : QObject(display_area),
+						autoclose(false),
+						allow_cancel(allow_cancel),
+						is_done(false),
+						any_failed(false),
+						display_area(display_area),
+						prevent_close_message(nullptr),
+						close_action(nullptr) {
+	RK_TRACE(MISC);
+
+	display_area->window()->installEventFilter(this);
+
+	wrapper = new QWidget(display_area);
+	wrapper->setAutoFillBackground(true);
+	auto layout = new QVBoxLayout(wrapper);
+	layout->setContentsMargins(0,0,0,0);
+	message_widget = new KMessageWidget();
+	message_widget->setWordWrap(true);
+	message_widget->setCloseButtonVisible(false);  // we want a button, instead, for consistency with cancel
+	if (allow_cancel) {
+		setCloseAction(i18n("Cancel"));
+	}
+	output_display = new QTextEdit();
+	layout->addWidget(message_widget);
+	layout->addWidget(output_display);
+	wrapper->resize(display_area->size());
+}
+
+RKInlineProgressControl::~RKInlineProgressControl() {
+	RK_TRACE(MISC);
+
+	delete wrapper;
+}
+
+void RKInlineProgressControl::setCloseAction(const QString &label) {
+	RK_TRACE(MISC);
+
+	if (!close_action) {
+		close_action = KStandardAction::create(KStandardAction::Close, this, &RKInlineProgressControl::cancelAndClose, this);
+		message_widget->addAction(close_action);
+	}
+	close_action->setText(label);
+}
+
+void RKInlineProgressControl::cancelAndClose() {
+	RK_TRACE(MISC);
+
+	is_done = true;
+	for (int i = 0; i < unfinished_commands.size(); ++i) {
+		RInterface::instance()->cancelCommand(unfinished_commands[i]);
+	}
+	deleteLater();
+}
+
+void RKInlineProgressControl::addRCommand(RCommand *command) {
+	RK_TRACE(MISC);
+	unfinished_commands.append(command);
+	connect(command->notifier(), &RCommandNotifier::commandFinished, this, [this](RCommand *c) {
+		unfinished_commands.removeAll(c);
+		if (c->failed()) {
+			any_failed = true;
+		}
+		if (unfinished_commands.isEmpty()) {
+			done();
+		}
+	});
+	connect(command->notifier(), &RCommandNotifier:: commandOutput, this, [this](RCommand *, const ROutput *o) {
+		addOutput(o->output, o->type != ROutput::Output);
+	});
+}
+
+void RKInlineProgressControl::addOutput(const QString& output, bool is_error_warning) {
+	RK_TRACE(MISC);
+	if (is_error_warning) {
+		output_display->setTextColor(RKStyle::viewScheme()->foreground(KColorScheme::NegativeText).color());
+	} else {
+		output_display->setTextColor(RKStyle::viewScheme()->foreground(KColorScheme::NormalText).color());
+	}
+	output_display->insertPlainText(output);
+}
+
+void RKInlineProgressControl::done() {
+	RK_TRACE(MISC);
+	if (autoclose && !any_failed) {
+		deleteLater();
+	} else {
+		message_widget->setMessageType(any_failed ? KMessageWidget::Error : KMessageWidget::Positive);
+		message_widget->setText(text + ' ' + (any_failed ? i18n("<b>An error occurred</b> (see below for details)") : i18n("<b>Done</b>")));
+		message_widget->setIcon(QIcon::fromTheme(any_failed ? "emblem-error" : "emblem-success"));
+		message_widget->animatedShow(); // to force an update of geometry
+		setCloseAction(i18n("Close"));
+	}
+	is_done = true;
+}
+
+void RKInlineProgressControl::setText(const QString& _text){
+	RK_TRACE(MISC);
+	text = _text;
+	message_widget->setText(text);
+}
+
+void RKInlineProgressControl::show(int delay_ms) {
+	RK_TRACE(MISC);
+	if (delay_ms > 0) {
+		QTimer::singleShot(delay_ms, wrapper, &QWidget::show);
+	} else {
+		wrapper->show();
+	}
+	animation_step = 0;
+	message_widget->setIcon(RKStandardIcons::getIcon(RKStandardIcons::RKWardIcon));
+	auto t = new QTimer(this);
+	t->setInterval(750);
+	connect(t, &QTimer::timeout, this, [this]() {
+		if (is_done) return;
+		animation_step = (animation_step + 1) % 2;
+		if (animation_step) {
+			message_widget->setIcon(QIcon::fromTheme("computer-symbolic"));
+		} else {
+			message_widget->setIcon(RKStandardIcons::getIcon(RKStandardIcons::RKWardIcon));
+		}
+	});
+	t->start();
+}
+
+bool RKInlineProgressControl::eventFilter(QObject *, QEvent *e) {
+	RK_TRACE(MISC);
+	if (e->type() == QEvent::Resize) {
+		QTimer::singleShot(0, this, [this]() {
+			wrapper->resize(display_area->size());
+		});
+		return false;
+	}
+	if ((e->type() == QEvent::Close) && !is_done) {
+		if (allow_cancel) {
+			bool autoclose_save = autoclose;  // must prevent self-destruction while dialog below is active (the operation might complete, while it exec's)
+			autoclose = false;
+
+			bool ignore = (KMessageBox::warningContinueCancel(display_area, i18n("Closing this window will cancel the current operation. Are you sure?"), i18n("Cancel operation"), KGuiItem(i18n("Keep waiting")), KGuiItem(i18n("Cancel && Close"))) == KMessageBox::Continue);
+
+			autoclose = autoclose_save;
+			if (ignore) {
+				e->accept();
+				return true;
+			}
+			cancelAndClose();
+			return false;
+		}
+		// TODO
+		if (!prevent_close_message) {
+			prevent_close_message = new KMessageWidget(i18n("An operation is still running, please wait."), display_area->window());
+		}
+		QSize s = prevent_close_message->sizeHint();
+		prevent_close_message->resize(display_area->window()->width(), s.height());
+		prevent_close_message->setMessageType(KMessageWidget::Error);
+		prevent_close_message->animatedShow();
+		QTimer::singleShot(5000, prevent_close_message, &KMessageWidget::animatedHide);
+		e->ignore();
+		return true;
+	}
+	return false;
+}
+
 

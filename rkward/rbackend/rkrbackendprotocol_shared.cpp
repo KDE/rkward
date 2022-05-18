@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkrbackendprotocol  -  description
-                             -------------------
-    begin                : Thu Nov 04 2010
-    copyright            : (C) 2010, 2011, 2013, 2017 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkrbackendprotocol - This file is part of RKWard (https://rkward.kde.org). Created: Thu Nov 04 2010
+SPDX-FileCopyrightText: 2010-2017 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkrbackendprotocol_shared.h"
 
@@ -43,8 +33,9 @@ RBackendRequest::RBackendRequest (bool synchronous, RCallbackType type) {
 	RBackendRequest::type = type;
 	id = ++_id;
 	done = false;
-	command = 0;
-	output = 0;
+	command = nullptr;
+	output = nullptr;
+	subcommandrequest = nullptr;
 }
 
 RBackendRequest::~RBackendRequest () {
@@ -79,6 +70,16 @@ RBackendRequest* RBackendRequest::duplicate () {
 	command = 0;
 	output = 0;
 	return ret;
+}
+
+void RBackendRequest::setResult(const GenericRRequestResult& res) {
+	if (!res.warning.isNull()) params[".w"] = res.warning;
+	if (!res.error.isNull()) params[".e"] = res.error;
+	else params[".r"] = res.ret;
+}
+
+GenericRRequestResult RBackendRequest::getResult() const {
+	return GenericRRequestResult(params.value(".r"), params.value(".w").toString(), params.value(".e").toString());
 }
 
 
@@ -182,6 +183,7 @@ bool RKROutputBuffer::handleOutput (const QString &output, int buf_length, ROutp
 			if (cap.mode & RecordMessages) appendToOutputList (&(cap.recorded), output, output_type);
 			if (cap.mode & SuppressMessages) return previously_empty;
 		}
+		if (cap.mode & NoNesting) break;
 	}
 
 	appendToOutputList (&output_buffer, output, output_type);

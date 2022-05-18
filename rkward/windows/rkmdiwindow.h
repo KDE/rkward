@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkmdiwindow  -  description
-                             -------------------
-    begin                : Tue Sep 26 2006
-    copyright            : (C) 2006 - 2020 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkmdiwindow - This file is part of the RKWard project. Created: Tue Sep 26 2006
+SPDX-FileCopyrightText: 2006-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef RKMDIWINDOW_H
 #define RKMDIWINDOW_H
@@ -21,6 +11,7 @@
 #include <QFrame>
 #include <QMap>
 #include <QUrl>
+#include <QTimer>
 
 #include <kparts/part.h>
 
@@ -83,6 +74,9 @@ public slots:
 public:
 /** @returns true, if the window's document was modified (and would need to be saved) */
 	virtual bool isModified () { return false; };
+/** Ask the window's document to save itself.
+@returns true on success, _or_ if the document cannot be saved at all (in which case isModified() should return false, too. False, if saving failed / was cancelled */
+	virtual bool save () { return true; };
 /** @returns A long / complete caption. Default implementation simply calls shortCaption () */
 	virtual QString fullCaption ();
 /** @returns A short caption (e.g. only the filename without the path). Default implementation simply calls QWidget::caption () */
@@ -103,8 +97,13 @@ public:
 	virtual void prepareToBeAttached ();
 /** If your mdi window should perform any adjustments before being detached, reimplement this function. Default implementation does nothing, but raises an assert, if this is a tool window */
 	virtual void prepareToBeDetached ();
-/** Tool windows will only hide themselves, and ignore the also_delete flag */
-	virtual bool close (bool also_delete);
+	enum CloseWindowMode {
+		AutoAskSaveModified,
+		NoAskSaveModified
+	};
+/** Closes the window. Most windows will be autodestruct (unless user choses to cancel closing while asked whether to save modifications), tool windows will only hide themselves (and never ask for saving).
+@returns true, if the window was closed, false otherwise. */
+	virtual bool close (CloseWindowMode ask_save);
 /** Set a status message to be shown in a popup inside the window. The message persists until the given R command has finished, or until this function is called with an empty string.
 This should be used, when the information shown is currently out-of-date (e.g. when refreshing a preview / loading a plot from history), _not_ when the window
 is simply busy (e.g. when saving the current plot to history). */
@@ -122,6 +121,15 @@ is simply busy (e.g. when saving the current plot to history). */
 	KActionCollection *standardActionCollection ();
 /** plugin-accessible properties of this object in the global context. Currently used only by RKEditorDataFrame to give information on the currently active data.frame. NOTE: ATM, you cannot set arbitrary properties. Only those supported in RKStandardComponent will have an effect. */
 	QString globalContextProperty (const QString& property) { return global_context_properties.value (property); };
+/** @returns the save action applicable for this window (if any). Will be plugged into the save dropdown */
+	QAction* fileSaveAction () { return file_save_action; };
+/** @returns the save as action applicable for this window (if any). Will be plugged into the save dropdown */
+	QAction* fileSaveAsAction () { return file_save_as_action; };
+
+/** Add an xml client that should be active, whenever this window is active. Noteably the KatePluginIntegrationWindow for kate related windows.
+ *  For the time being, only a single buddy is allowed, and it must outlive all mdi windows. */
+	void addUiBuddy(KXMLGUIClient* buddy);
+	KXMLGUIClient* uiBuddy() const { return ui_buddy; };
 signals:
 /** This signal is emitted, whenever the window caption was changed.
 @param RKMDIWindow* a pointer to this window */
@@ -138,6 +146,7 @@ protected:
 	void initializeActivationSignals ();
 	void paintEvent (QPaintEvent *e) override;
 	void changeEvent (QEvent *event) override;
+	void removeUiBuddy(QObject* buddy);
 
 /** reimplemented from QWidget to emulate focus-follows-mouse behavior */
 	void enterEvent (QEvent *event) override;
@@ -153,6 +162,9 @@ friend class RKWorkplace;
 	int type;
 private slots:
 	void slotActivateForFocusFollowsMouse ();
+protected:
+	QAction* file_save_as_action;
+	QAction* file_save_action;
 private:
 friend class RKToolWindowBar;
 /** state of this window (attached / detached). This is usually set from the RKWorkplace */
@@ -167,6 +179,10 @@ friend class RKToolWindowBar;
 	QString generic_window_name;
 	QUrl help_url;
 	RKSettings::SettingsPage settings_page;
+	KXMLGUIClient* ui_buddy;
+	void showStatusMessageNow();
+	QTimer status_message_timer;
+	QString status_message;
 };
 
 #endif

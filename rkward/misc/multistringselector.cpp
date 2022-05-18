@@ -1,19 +1,9 @@
-/***************************************************************************
-                          multistringselector  -  description
-                             -------------------
-    begin                : Fri Sep 10 2005
-    copyright            : (C) 2005, 2013 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+multistringselector - This file is part of RKWard (https://rkward.kde.org). Created: Fri Sep 10 2005
+SPDX-FileCopyrightText: 2005-2013 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "multistringselector.h"
 
@@ -71,10 +61,10 @@ void MultiStringSelector::insertNewStringsImpl (int above_row) {
 	RK_TRACE (MISC);
 
 	QStringList new_strings;
-	emit (getNewStrings (&new_strings));
+	emit getNewStrings(&new_strings);
 	model->insertRows (above_row, new_strings.size ());
 	for (int i = new_strings.size () - 1; i >= 0; --i) {
-		model->setData (model->index (above_row + i, 0), new_strings[i]);
+		model->setData(model->index (above_row + i, 0), new_strings[i]);
 	}
 }
 
@@ -148,11 +138,11 @@ void RKMultiStringSelectorV2::setModel (QAbstractItemModel* model, int main_colu
 	}
 	tree_view->setModel (model);
 	connect (tree_view->selectionModel (), &QItemSelectionModel::currentChanged, this, &RKMultiStringSelectorV2::updateButtons);
-	connect (model, &QStringListModel::dataChanged, this, &RKMultiStringSelectorV2::anyModelDataChange);
-	connect (model, &QStringListModel::layoutChanged, this, &RKMultiStringSelectorV2::anyModelDataChange);
-	connect (model, &QStringListModel::rowsInserted, this, &RKMultiStringSelectorV2::anyModelDataChange);
-	connect (model, &QStringListModel::rowsRemoved, this, &RKMultiStringSelectorV2::anyModelDataChange);
-	connect (model, &QStringListModel::modelReset, this, &RKMultiStringSelectorV2::anyModelDataChange);
+	connect (model, &QAbstractItemModel::dataChanged, this, &RKMultiStringSelectorV2::anyModelDataChange);
+	connect (model, &QAbstractItemModel::layoutChanged, this, &RKMultiStringSelectorV2::anyModelDataChange);
+	connect (model, &QAbstractItemModel::rowsInserted, this, &RKMultiStringSelectorV2::anyModelDataChange);
+	connect (model, &QAbstractItemModel::rowsRemoved, this, &RKMultiStringSelectorV2::anyModelDataChange);
+	connect (model, &QAbstractItemModel::modelReset, this, &RKMultiStringSelectorV2::anyModelDataChange);
 
 	if (main_column >= 0) tree_view->resizeColumnToContents (main_column);
 	
@@ -174,7 +164,7 @@ void RKMultiStringSelectorV2::buttonClicked () {
 
 	if (sender () == add_button) {
 		if (add_at_bottom || (row < 0)) row = tree_view->model ()->rowCount ();
-		emit (insertNewStrings (row));
+		emit insertNewStrings(row);
 		tree_view->setCurrentIndex (tree_view->model ()->index (row, 0));
 	} else if (row < 0) {	// all actions below need a valid row
 		RK_ASSERT (false);
@@ -190,7 +180,7 @@ void RKMultiStringSelectorV2::buttonClicked () {
 			RK_ASSERT (row < tree_view->model ()->rowCount ());
 			rowb = qMin (row + 1, tree_view->model ()->rowCount () - 1);
 		}
-		emit (swapRows (row, rowb));
+		emit swapRows(row, rowb);
 		tree_view->setCurrentIndex (tree_view->model ()->index (rowb, 0));
 	}
 	anyModelDataChange ();
@@ -213,6 +203,6 @@ void RKMultiStringSelectorV2::updateButtons () {
 
 void RKMultiStringSelectorV2::anyModelDataChange () {
 	RK_TRACE (MISC);
-	emit (listChanged ());
+	emit listChanged();
 }
 

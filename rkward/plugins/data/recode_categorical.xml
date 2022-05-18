@@ -42,7 +42,6 @@
 			<preview id="preview" label="Preview" mode="data"/>
 		</tab>
 		<tab label="Values" id="tab_values">
-			<row>
 				<column>
 					<optionset id="set" min_rows="1" label="Recodings">
 						<logic>
@@ -97,15 +96,13 @@
 							</frame>
 						</content>
 					</optionset>
-				</column>
-			</row>
 			<radio id="other" label="Any other values">	<!-- TODO Should this be including original NAs? -->
 				<option value="copy" label="Copy" id="copy_others"/>
 				<option value="na" label="NA"/>
 				<option value="custom" label="Custom value:"/>
 			</radio>
 			<embed id="other_custom" component="rkward::multi_input"/>
-			<stretch/>
+				</column>
 		</tab>
 	</tabbook></dialog>
 </document>

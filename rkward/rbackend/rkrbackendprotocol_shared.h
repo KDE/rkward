@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkrbackendprotocol  -  description
-                             -------------------
-    begin                : Thu Nov 04 2010
-    copyright            : (C) 2010-2018 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkrbackendprotocol - This file is part of the RKWard project. Created: Thu Nov 04 2010
+SPDX-FileCopyrightText: 2010-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef RKRBACKENDPROTOCOL_SHARED_H
 #define RKRBACKENDPROTOCOL_SHARED_H
@@ -24,6 +14,17 @@
 
 class RCommandProxy;
 
+/** Class to represent an "event" sent between backend and frontend. This encapuslates all communication sent between the two processes (actually the graphics device uses a separate channel, but that's not the point, here).
+ *
+ *  - Most, but not all requests originate in the backend.
+ *  - Some requests are "asynchronous" in the sense of fire and forget, i.e. the backend notifies the frontend of some condition, but does not wait for a reply.
+ *  - Many requests are synchronous, in that they will block what the backend is currently doing, until the frontend posted the event back (with or without some kind of return value)). Notably, however, while waiting for a synchronous request to
+ *  complete, the backend will still do event processing, which may include running further R commands (which may again involve sending requests to the frontend).
+ *  - Some requests contain a "subcommandrequest". This allows the frontend to (optionally) send commands that will be executed _before_ the original/main request is completed.
+ *  - All of this means that requests and their answers are not necessarily send/received in a sorted order.
+ *  - In an attempt to streamline communication, the next command to process is generally sent as part of the answer to a request. This should probably be reconsidered.
+ *  - The real mess, however, is that the whole mechanism has grown over time, and contains strange termms and ad-hoc additions. Parts of it should probably be re-designed from the ground up. Hopefully, these notes, help with that.
+ */
 class RBackendRequest {
 public:
 	enum RCallbackType {
@@ -33,11 +34,11 @@ public:
 		ChooseFile,
 		EditFiles,
 		ReadLine,      // 5
-		CommandOut,
+		CommandOut,                  /**< Request the next command, and notify about the result of the previus. TODO split. */
 		Started,
 		EvalRequest,
 		CallbackRequest,
-		HistoricalSubstackRequest,   // 10
+		GenericRequestWithSubcommands,   // 10
 		PlainGenericRequest,
 		SetParamsFromBackend,
 		Debugger,
@@ -64,6 +65,7 @@ public:
 		return ret;
 	}
 
+	RBackendRequest *subcommandrequest;
 /** Should this request be handled synchronously? False by default. */
 	bool synchronous;
 /** For synchronous requests, only: The frontend-thread will set this to true (using completed()), once the request has been "completed". Important: The backend thread MUST NOT touch a request after it has been sent, and before "done" has been set to true. */
@@ -75,6 +77,8 @@ public:
 	RCommandProxy *command;
 /** Any other parameters, esp. for RCallbackType::OtherRequest. Can be used in both directions. */
 	QVariantMap params;
+	void setResult(const GenericRRequestResult &res);
+	GenericRRequestResult getResult() const;
 /** NOTE: only used for separate process backend. See RCallbackType::Output */
 	ROutputList *output;
 /** NOTE: this does @em not copy merge the "done" flag. Do that manually, @em after merging (and don't touch the request from the transmitter thread, after that). */
@@ -100,7 +104,7 @@ public:
 		RKWardEvent = QEvent::User + 1
 	};
 	explicit RKRBackendEvent (RBackendRequest* data=0) : QEvent ((QEvent::Type) RKWardEvent) { _data = data; };
-	RKRBackendEvent ();
+	~RKRBackendEvent () {};
 
 	RBackendRequest* data () { return _data; };
 private:
@@ -115,9 +119,9 @@ friend class RKRBackend;
 friend class RKRBackendSerializer;
 friend class RBackendRequest;
 	RCommandProxy ();
-	~RCommandProxy ();
 	RCommandProxy (const QString &command, int type);
 public:		// all these are public for technical reasons, only.
+	~RCommandProxy ();
 	QString command;
 	int type;
 	int id;
@@ -138,7 +142,8 @@ public:
 		RecordMessages = 1,
 		RecordOutput = 2,
 		SuppressMessages = 4,
-		SuppressOutput = 8
+		SuppressOutput = 8,
+		NoNesting = 16
 	};
 	void pushOutputCapture (int capture_mode);
 	QString popOutputCapture (bool highlighted);

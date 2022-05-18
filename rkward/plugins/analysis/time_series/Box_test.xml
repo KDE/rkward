@@ -17,6 +17,7 @@
 								<option label="Ljung-Box" value="Ljung-Box"/>
 							</radio>
 						</frame>
+						<preview id="preview" mode="output"/>
 					</column>
 				</row>
 			</tab>

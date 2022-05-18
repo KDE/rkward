@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rksettings  -  description
-                             -------------------
-    begin                : Wed Jul 28 2004
-    copyright            : (C) 2004-2020 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rksettings - This file is part of the RKWard project. Created: Wed Jul 28 2004
+SPDX-FileCopyrightText: 2004-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 #ifndef RKSETTINGS_H
 #define RKSETTINGS_H
 
@@ -26,6 +16,7 @@ class KConfig;
 class RKWardMainWindow;
 class RKSettingsTracker;
 class RCommandChain;
+class RKSetupWizardItem;
 
 /**
 The main settings-dialog. Contains subsections (tabs) for different modules. Use configureSettings () to invoke or raise the settings dialog
@@ -59,7 +50,7 @@ public:
 	static void loadSettings (KConfig *config);
 	static void saveSettings (KConfig *config);
 	/** Perform any settings validation that may need user interaction (and should happen after a GUI is available, and R has started up) */
-	static void validateSettingsInteractive ();
+	static QList<RKSetupWizardItem*> validateSettingsInteractive ();
 
 	void enableApply ();
 	
@@ -79,15 +70,15 @@ private:
 	void raisePage (SettingsPage page);
 	static void dialogClosed ();
 
-	typedef QMap<SettingsPage, RKSettingsModule *> ModuleMap;
+	typedef QMap<int, RKSettingsModule *> ModuleMap;
 	ModuleMap modules;
-	KPageWidgetItem *pages[NumPages];
+	std::vector<KPageWidgetItem*> pages;
 
 	static RKSettings *settings_dialog;
 friend class RKWardMainWindow;
 	static RKSettingsTracker *settings_tracker;
 
-	void registerPageModule(SettingsPage super, SettingsPage child);
+	void registerPageModule(SettingsPage super, int child);
 };
 
 /** This class represents a very simple QObject. It's only purpose is to emit signals when certain settings have changed. Classes that need to

@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkgraphicsdevice_frontendtransmitter  -  description
-                             -------------------
-    begin                : Mon Mar 18 20:06:08 CET 2013
-    copyright            : (C) 2013-2014 by Thomas Friedrichsmeier 
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkgraphicsdevice_frontendtransmitter - This file is part of RKWard (https://rkward.kde.org). Created: Mon Mar 18 2013
+SPDX-FileCopyrightText: 2013-2014 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkgraphicsdevice_frontendtransmitter.h"
 
@@ -25,8 +15,8 @@
 #include <KLocalizedString>
 
 // for screen resolution
-#include <QApplication>
-#include <QDesktopWidget>
+#include <QGuiApplication>
+#include <QScreen>
 
 #include "../rkfrontendtransmitter.h"
 #include "../../windows/rkworkplace.h"
@@ -35,7 +25,7 @@
 
 #include "../../debug.h"
 
-double RKGraphicsDeviceFrontendTransmitter::lwdscale = 72/96;
+double RKGraphicsDeviceFrontendTransmitter::lwdscale = 72.0/96;
 RKGraphicsDeviceFrontendTransmitter::RKGraphicsDeviceFrontendTransmitter () : QObject () {
 	RK_TRACE (GRAPHICS_DEVICE);
 
@@ -56,7 +46,7 @@ void RKGraphicsDeviceFrontendTransmitter::setupServer () {
 	RK_TRACE (GRAPHICS_DEVICE);
 
 	RK_ASSERT (!local_server);
-	local_server = new QLocalServer ();
+	local_server = new QLocalServer(this);
 	RK_ASSERT (local_server->listen ("rkd" + KRandom::randomString (8)));
 	connect (local_server, &QLocalServer::newConnection, this, &RKGraphicsDeviceFrontendTransmitter::newConnection);
 	server_name = local_server->fullServerName ();
@@ -71,8 +61,7 @@ void RKGraphicsDeviceFrontendTransmitter::newConnection () {
 
 	// handshake
 	QString token = RKFrontendTransmitter::instance ()->connectionToken ();
-	RKFrontendTransmitter::waitForCanReadLine (con, 2000);
-	QString token_c = QString::fromLocal8Bit (con->readLine ()).trimmed ();
+	QString token_c = RKFrontendTransmitter::waitReadLine(con, 2000).trimmed ();
 	if (token_c != token) {
 		KMessageBox::detailedError (0, QString ("<p>%1</p>").arg (i18n ("There has been an error while trying to connect the on-screen graphics backend. This means, on-screen graphics using the RKWard device will not work in this session.")), i18n ("Expected connection token %1, but read connection token %2", token, token_c), i18n ("Error while connection graphics backend"));
 		con->close ();
@@ -94,8 +83,7 @@ static QRgb readRgb (QDataStream &instream) {
 static QColor readColor (QDataStream &instream) {
 	quint8 r, g, b, a;
 	instream >> r >> g >> b >> a;
-	if (a == 0x00) return QColor ();
-	return QColor (r, g, b, a);
+	return QColor(r, g, b, a);
 }
 
 static QPen readSimplePen (QDataStream &instream) {
@@ -103,7 +91,7 @@ static QPen readSimplePen (QDataStream &instream) {
 	double lwd;
 	qint32 lty;
 	instream >> lwd >> lty;
-	if (!col.isValid () || (lty == -1L)) return QPen (Qt::NoPen);
+	if ((col.alpha() == 0) || (lty == -1L)) return QPen(Qt::NoPen);
 
 	lwd = qMax (double(qreal(1.0)), lwd);	// minimum 1 px as in X11 device
 	QPen ret;
@@ -129,16 +117,76 @@ static QPen readPen (QDataStream &instream) {
 	quint8 lends, ljoin;
 	double lmitre;
 	instream >> lends >> ljoin >> lmitre;
-	ret.setCapStyle (lends == RoundLineCap ? Qt::RoundCap : (lends == ButtLineCap ? Qt::FlatCap : Qt::SquareCap));
-	ret.setJoinStyle (ljoin == RoundJoin ? Qt::RoundJoin : (ljoin == BevelJoin ? Qt::BevelJoin : Qt::MiterJoin));
-	ret.setMiterLimit (lmitre);
+	ret.setCapStyle((Qt::PenCapStyle) mapLineEndStyle(lends));
+	ret.setJoinStyle((Qt::PenJoinStyle) mapLineJoinStyle(ljoin));
+	ret.setMiterLimit(lmitre);
 	return ret;
 }
 
-static QBrush readBrush (QDataStream &instream) {
-	QColor col = readColor (instream);
-	if (!col.isValid ()) return QBrush ();
-	return QBrush (col);
+static QBrush readBrush(QDataStream &instream, RKGraphicsDevice *dev) {
+	qint8 filltype;
+	instream >> filltype;
+	if (filltype == ColorFill) {
+		QColor col = readColor(instream);
+		return QBrush(col);
+	} else {
+		qint16 pattern_num;
+		instream >> pattern_num;
+		return dev->getPattern(pattern_num);
+	}
+}
+
+static void readGradientStopsAndExtent(QDataStream &instream, QGradient* g, bool reverse) {
+	QGradientStops stops;
+	qint16 nstops;
+	instream >> nstops;
+	stops.reserve(nstops);
+	for (int i = 0; i < nstops; ++i) {
+		double pos;
+		QColor col = readColor(instream);
+		instream >> pos;
+		if (reverse) stops.prepend(QGradientStop(1.0-pos, col));  // lousy efficiency should be tolerable at this point
+		else stops.append(QGradientStop(pos, col));
+	}
+	qint8 extend;
+	instream >> extend;
+	if (extend == GradientExtendPad) g->setSpread(QGradient::PadSpread);
+	else if (extend == GradientExtendReflect) g->setSpread(QGradient::ReflectSpread);
+	else if (extend == GradientExtendRepeat) g->setSpread(QGradient::RepeatSpread);
+	else {
+		// Qt does not provide extend "none", so emulate by adding transparent before the first and after the last stop
+		stops.prepend(QGradientStop(0.0, Qt::transparent));
+		stops.append(QGradientStop(1.0, Qt::transparent));
+	}
+	g->setStops(stops);
+}
+
+static int readNewPattern(QDataStream &instream, RKGraphicsDevice *device) {
+	qint8 patterntype;
+	instream >> patterntype;
+
+	if (patterntype == LinearPattern) {
+		double x1, x2, y1, y2;
+		instream >> x1 >> x2 >> y1 >> y2;
+		QLinearGradient g(x1, y1, x2, y2);
+		readGradientStopsAndExtent(instream, &g, false);
+		return device->registerPattern(QBrush(g));
+	} else if (patterntype == RadialPattern) {
+		double cx1, cy1, r1, cx2, cy2, r2;
+		instream >> cx1 >> cy1 >> r1 >> cx2 >> cy2 >> r2;
+		QRadialGradient g;
+		// Apparently, Qt needs the focal radius to be smaller than the radius. Reverse, if needed.
+		if (r2 > r1) {
+			g = QRadialGradient(cx2, cy2, r2, cx1, cy1, r1);
+			readGradientStopsAndExtent(instream, &g, false);
+		} else {
+			g = QRadialGradient(cx1, cy1, r1, cx2, cy2, r2);
+			readGradientStopsAndExtent(instream, &g, true);
+		}
+		return device->registerPattern(QBrush(g));
+	} else {
+		return -1;
+	}
 }
 
 static QFont readFont (QDataStream &instream) {
@@ -184,8 +232,9 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			double width, height;
 			QString title;
 			bool antialias;
-			streamer.instream >> width >> height >> title >> antialias;
-			device = RKGraphicsDevice::newDevice (devnum, width, height, title, antialias);
+			quint32 id;
+			streamer.instream >> width >> height >> title >> antialias >> id;
+			device = RKGraphicsDevice::newDevice (devnum, width, height, title, antialias, id);
 			RKWorkplace::mainWorkplace ()->newRKWardGraphisWindow (device, devnum+1);
 			connect (device, &RKGraphicsDevice::locatorDone, this, &RKGraphicsDeviceFrontendTransmitter::locatorDone);
 			connect (device, &RKGraphicsDevice::newPageConfirmDone, this, &RKGraphicsDeviceFrontendTransmitter::newPageConfirmDone);
@@ -197,15 +246,15 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			if (devnum) device = RKGraphicsDevice::devices.value (devnum);
 			if (!device) {
 				if (opcode == RKDCancel) {
-					RK_DEBUG (GRAPHICS_DEVICE, DL_WARNING, "Graphics operation cancelled");
-					emit (stopInteraction());
+					RK_DEBUG (GRAPHICS_DEVICE, DL_WARNING, "Graphics operation canceled");
+					emit stopInteraction();
 				} else if (opcode == RKDQueryResolution) {
-					QDesktopWidget *desktop = QApplication::desktop ();
-					streamer.outstream << (qint32) desktop->physicalDpiX () << (qint32) desktop->physicalDpiY ();
-					RK_DEBUG (GRAPHICS_DEVICE, DL_INFO, "DPI for device %d: %d by %d", devnum+1, desktop->physicalDpiX (), desktop->physicalDpiY ());
+					auto screen = QGuiApplication::primaryScreen();
+					streamer.outstream << (qint32) screen->logicalDotsPerInchX() << (qint32) screen->logicalDotsPerInchY();
+					RK_DEBUG (GRAPHICS_DEVICE, DL_INFO, "DPI for device %d: %d by %d", devnum+1, screen->logicalDotsPerInchX(), screen->logicalDotsPerInchY());
 					streamer.writeOutBuffer ();
 					// Actually, this is only needed once, but where to put it...
-					RKGraphicsDeviceFrontendTransmitter::lwdscale = desktop->physicalDpiX () / 96;   // taken from devX11.c
+					RKGraphicsDeviceFrontendTransmitter::lwdscale = ((double) screen->logicalDotsPerInchX()) / 96;   // taken from devX11.c
 				} else {
 					if (devnum) RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Received transmission of type %d for unknown device number %d. Skipping.", opcode, devnum+1);
 					sendDummyReply (opcode);
@@ -219,7 +268,7 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			double x, y, r;
 			streamer.instream >> x >> y >> r;
 			QPen pen = readSimplePen (streamer.instream);
-			device->circle (x, y, r, pen, readBrush (streamer.instream));
+			device->circle(x, y, r, pen, readBrush(streamer.instream, device));
 		} else if (opcode == RKDLine) {
 			double x1, y1, x2, y2;
 			streamer.instream >> x1 >> y1 >> x2 >> y2;
@@ -227,7 +276,7 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 		} else if (opcode == RKDPolygon) {
 			QPolygonF pol (readPoints (streamer.instream));
 			QPen pen = readPen (streamer.instream);
-			device->polygon (pol, pen, readBrush (streamer.instream));
+			device->polygon(pol, pen, readBrush(streamer.instream, device));
 		} else if (opcode == RKDPolyline) {
 			QPolygonF pol (readPoints (streamer.instream));
 			device->polyline (pol, readPen (streamer.instream));
@@ -242,12 +291,12 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			bool winding;
 			streamer.instream >> winding;
 			QPen pen = readPen (streamer.instream);
-			device->polypath (polygons, winding, pen, readBrush (streamer.instream));
+			device->polypath(polygons, winding, pen, readBrush(streamer.instream, device));
 		} else if (opcode == RKDRect) {
 			QRectF rect;
 			streamer.instream >> rect;
 			QPen pen = readPen (streamer.instream);
-			device->rect (rect, pen, readBrush (streamer.instream));
+			device->rect(rect, pen, readBrush(streamer.instream, device));
 		} else if (opcode == RKDStrWidthUTF8) {
 			QString out;
 			streamer.instream >> out;
@@ -268,9 +317,10 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			QColor col = readColor (streamer.instream);
 			device->text (x, y, out, rot, hadj, col, readFont (streamer.instream));
 		} else if (opcode == RKDNewPage) {
-			device->clear (readColor (streamer.instream));
+			device->clear(readBrush(streamer.instream, device));
 		} else if (opcode == RKDClose) {
-			RKGraphicsDevice::closeDevice (devnum);
+			RKGraphicsDevice::closeDevice(devnum);
+			sendDummyReply(opcode);
 		} else if (opcode == RKDActivate) {
 			device->setActive (true);
 		} else if (opcode == RKDDeActivate) {
@@ -297,6 +347,107 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			bool interpolate;
 			streamer.instream >> target >> rotation >> interpolate;
 			device->image (image, target.normalized (), rotation, interpolate);
+		} else if (opcode == RKDSetPattern) {
+			streamer.outstream << (qint32) readNewPattern(streamer.instream, device);
+			streamer.writeOutBuffer();
+		} else if (opcode == RKDStartRecordTilingPattern) {
+			double width, height, x, y;
+			streamer.instream >> width >> height;
+			streamer.instream >> x >> y;
+			device->startRecordTilingPattern(width, height, x, y);
+		} else if (opcode == RKDEndRecordTilingPattern) {
+			qint8 extend;
+			streamer.instream >> extend;
+			streamer.outstream << (qint32) device->finalizeTilingPattern((RKDGradientExtend) extend);
+			streamer.writeOutBuffer();
+		} else if (opcode == RKDSetClipPath) {
+			qint32 index;
+			streamer.instream >> index;
+			qint8 ok = device->setClipToCachedPath(index) ? 1 : 0;
+			streamer.outstream << ok;
+			streamer.writeOutBuffer();
+		} else if (opcode == RKDReleaseCachedResource) {
+			quint8 type;
+			qint32 len;
+			streamer.instream >> type >> len;
+			for (int i = 0; i < len; ++i) {
+				qint32 index;
+				streamer.instream >> index;
+				if (type == RKDPattern) device->destroyPattern(index);
+				else if (type == RKDClipPath) device->destroyCachedPath(index);
+				else if (type == RKDMask) device->destroyMask(index);
+				else if (type == RKDGroup) device->destroyGroup(index);
+				else RK_ASSERT(false);
+			}
+		} else if (opcode == RKDStartRecordClipPath) {
+			device->startRecordPath();
+		} else if (opcode == RKDEndRecordClipPath) {
+			qint8 fillrule;
+			streamer.instream >> fillrule;
+			QPainterPath p = device->endRecordPath(mapFillRule(fillrule));
+			qint32 index = device->cachePath(p);
+			device->setClipToCachedPath(index);
+			streamer.outstream << (qint32) index;
+			streamer.writeOutBuffer();
+		} else if (opcode == RKDSetMask) {
+			qint32 index;
+			streamer.instream >> index;
+			qint8 ok = device->setMask(index) ? 1 : 0;
+			streamer.outstream << ok;
+			streamer.writeOutBuffer();
+		} else if (opcode == RKDStartRecordMask) {
+			device->startRecordMask();
+		} else if (opcode == RKDEndRecordMask) {
+			qint8 luminance_mask;
+			streamer.instream >> luminance_mask;
+			QImage m = device->endRecordMask((bool) luminance_mask);
+			qint32 index = device->registerMask(m);
+			device->setMask(index);
+			streamer.outstream << (qint32) index;
+			streamer.writeOutBuffer();
+		} else if (opcode == RKDFillStrokePathBegin) {
+			device->startRecordPath();
+		} else if (opcode == RKDFillStrokePathEnd) {
+			quint8 fill, stroke;
+			qint8 fillrule = Qt::OddEvenFill;
+			QBrush brush;
+			QPen pen(Qt::NoPen);
+			streamer.instream >> fill;
+			if (fill) {
+				streamer.instream >> fillrule;
+				fillrule = mapFillRule(fillrule);
+				brush = readBrush(streamer.instream, device);
+			}
+			streamer.instream >> stroke;
+			if (stroke) {
+				pen = readPen(streamer.instream);
+			}
+			QPainterPath p = device->endRecordPath(fillrule);
+			device->fillStrokePath(p, brush, pen);
+		} else if (opcode == RKDDefineGroupBegin) {
+			device->startRecordGroup();
+		} else if (opcode == RKDDefineGroupStep2) {
+			qint8 compositing_operator;
+			streamer.instream >> compositing_operator;
+			device->recordGroupStage2(compositing_operator);
+		} else if (opcode == RKDDefineGroupEnd) {
+			qint32 index = device->endRecordGroup();
+			streamer.outstream << index;
+			streamer.writeOutBuffer();
+		} else if (opcode == RKDUseGroup) {
+			qint32 index;
+			qint8 have_trans;
+			streamer.instream >> index;
+			streamer.instream >> have_trans;
+			QTransform matrix;
+			if (have_trans) {
+				double m[6];
+				for (int i = 0; i < 6; ++i) streamer.instream >> m[i];
+				// order in cairo terms: xx, xy, x0, yx, yy, y0
+				//                       11, 21, 31, 12, 22, 32
+				matrix = QTransform(m[0], m[3], m[1], m[4], m[2], m[5]);
+			}
+			device->useGroup(index, matrix);
 		} else if (opcode == RKDCapture) {
 			QImage image = device->capture ();
 			quint32 w = image.width ();
@@ -365,9 +516,19 @@ void RKGraphicsDeviceFrontendTransmitter::sendDummyReply (quint8 opcode) {
 	} else if (opcode == RKDStrWidthUTF8) {
 		double width = 1;
 		streamer.outstream << width;
+	} else if (opcode == RKDCapture) {
+		streamer.outstream << (quint32) 0 << (quint32) 0;
+//	} else if (opcode == RKDQueryResolution) {
+//		streamer.outstream << (qint32) 0;
 	} else if (opcode == RKDGetSize) {
 		streamer.outstream << QSizeF ();
+	} else if (opcode == RKDSetPattern || opcode == RKDEndRecordTilingPattern || opcode == RKDEndRecordClipPath) {
+		streamer.outstream << (qint32) -1;
+	} else if (opcode == RKDSetClipPath) {
+		streamer.outstream << (qint32) 0;
 	} else if (opcode == RKDFetchNextEvent) {
+		streamer.outstream << (qint8) RKDNothing;
+	} else if (opcode == RKDClose) {
 		streamer.outstream << (qint8) RKDNothing;
 	} else {
 		return;	// nothing to write

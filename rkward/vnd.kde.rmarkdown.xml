@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+ <mime-type type="text/vnd.kde.rmarkdown">
+  <comment>RMarkdown document</comment>
+  <comment xml:lang="de">RMarkdown-Dokument</comment>
+  <sub-class-of type="text/markdown"/>
+  <generic-icon name="text-markdown"/>
+  <glob pattern="*.rmd"/>
+  <glob pattern="*.rmkd"/>
+  <glob pattern="*.rmarkdown"/>
+ </mime-type>
+</mime-info>

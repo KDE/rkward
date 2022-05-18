@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkgraphicsdevice_backendtransmitter  -  description
-                             -------------------
-    begin                : Mon Mar 18 20:06:08 CET 2013
-    copyright            : (C) 2013-2014 by Thomas Friedrichsmeier 
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkgraphicsdevice_backendtransmitter - This file is part of the RKWard project. Created: Mon Mar 18 2013
+SPDX-FileCopyrightText: 2013-2014 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
  
 #ifndef RKGRAPHICSDEVICE_H
 #define RKGRAPHICSDEVICE_H
@@ -22,6 +12,7 @@
 #include <QPen>
 #include <QTimer>
 #include <QPainter>
+#include <QPainterPath>
 #include <QLabel>
 
 #ifndef Q_OS_WIN
@@ -51,7 +42,7 @@ protected:
 	RKGraphicsDevice (double width, double height, const QString &title, bool antialias);
 	~RKGraphicsDevice ();
 public:
-	static RKGraphicsDevice* newDevice (int devnum, double width, double height, const QString &title, bool antialias);
+	static RKGraphicsDevice* newDevice (int devnum, double width, double height, const QString &title, bool antialias, quint32 id);
 	static void closeDevice (int devnum);
 	static QHash<int, RKGraphicsDevice*> devices;
 
@@ -65,7 +56,7 @@ public:
 	void polygon (const QPolygonF& pol, const QPen& pen, const QBrush &brush);
 	void polyline (const QPolygonF& pol, const QPen& pen);
 	void polypath (const QVector<QPolygonF>& polygons, bool winding, const QPen& pen, const QBrush& brush);
-	void clear (const QColor& col=QColor());
+	void clear(const QBrush& col=QBrush());
 	void image (const QImage &image, const QRectF &target_rect, double rot, bool interpolate);
 	QImage capture () const;
 	void setActive (bool active);
@@ -89,8 +80,31 @@ public:
 	void stopGettingEvents ();
 
  	QWidget* viewPort () const { return view; };
-	QSizeF currentSize () const { return view->size (); }
+	QSizeF currentSize () const { return view ? view->size() : QSizeF(); }
 	void setAreaSize (const QSize &size);
+
+/** Patterns / gradients are registered per device in R */
+	int registerPattern(const QBrush &brush);
+	void destroyPattern(int id);
+	QBrush getPattern(int id) const { return patterns.value(id); };
+	void startRecordTilingPattern(double width, double height, double x, double y);
+	int finalizeTilingPattern(int extend);
+	void startRecordPath();
+	QPainterPath endRecordPath(int fillrule);
+	int cachePath(QPainterPath &path);
+	void destroyCachedPath(int index);
+	bool setClipToCachedPath(int index);
+	void startRecordMask();
+	QImage endRecordMask(bool luminance);
+	int registerMask(const QImage &mask);
+	void destroyMask(int index);
+	bool setMask(int index);
+	void fillStrokePath(const QPainterPath &path, const QBrush &brush, const QPen &pen);
+	void startRecordGroup();
+	void recordGroupStage2(int compositing_op);
+	int endRecordGroup();
+	void useGroup(int index, const QTransform &matrix);
+	void destroyGroup(int index);
 public slots:
 	void stopInteraction ();
 signals:
@@ -118,10 +132,34 @@ private:
 	QLabel *view;
 	QString base_title;
 	QDialog *dialog;
+	QHash<int, QBrush> patterns;
+	QHash<int, QPainterPath> cached_paths;
+	QHash<int, QImage> cached_masks;
+	QHash<int, QImage> cached_groups;
+	// NOTE on path recording: In principle, we could really do _all_ painting on QPainterPath, but in regular operation stroke and fill right away.
+	// However, that is noticably slower.
+	QPainterPath recorded_path;
+	QList<QPainterPath> stashed_paths;
+	bool recording_path;
+	int current_mask;
 
 	int interaction_opcode;	/**< Current interactive operation (from RKDOpcodes enum), or -1 is there is no current interactive operation */
+	quint32 id;
 
 	QList<StoredEvent> stored_events;
+
+	struct PaintContext {
+		QImage surface;
+		QTransform transform;
+		QRect capture_coords;
+	};
+	QList<PaintContext> contexts;
+	// make sure the painter is active on the current context
+	void beginPainter();
+	void pushContext(double width, double height, double x, double y);
+	PaintContext popContext();
+	void initMaskedDraw();
+	void commitMaskedDraw();
 };
 
 #endif

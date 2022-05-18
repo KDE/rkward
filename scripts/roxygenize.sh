@@ -7,9 +7,7 @@ PACKAGESDIR="${BASEDIR}/rkward/rbackend/rpackages"
 
 
 if [ "$#" = 0 ]; then
-	PACKAGES="'${PACKAGESDIR}/rkward/'"
-	# currently excluded due to missing support for slots in roxygen2:
-	# '${PACKAGESDIR}/rkward/tests/'
+	PACKAGES="'${PACKAGESDIR}/rkward/', '${PACKAGESDIR}/rkwardtests/'"
 else
 	PACKAGES="'$1'"
 	shift
@@ -27,10 +25,12 @@ done
 
 echo "
 	library (roxygen2)
+	library (devtools)
 	packages <- c ($PACKAGES)
 	for (package in packages) {
-		dummy <- roxygen2:::source_package (package) # See https://github.com/klutometis/roxygen/issues/167
-		roxygenize (package)
+		#dummy <- roxygen2:::source_package (package) # See https://github.com/klutometis/roxygen/issues/167
+		document (package)
+#		roxygenize (package, load_code=load_source)
 		possibly_empty_dirs <- paste (package, c ('inst/doc', 'inst'), sep='/')
 		for (dir in possibly_empty_dirs) {
 			if (file.exists (dir)) suppressWarnings (try (file.remove (dir)))

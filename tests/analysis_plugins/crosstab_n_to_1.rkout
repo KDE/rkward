@@ -80,160 +80,160 @@ DATE<br />
 <table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption>
 <tr><td>
 	<table border=0 class=dataframe>
-	<tbody> 
+	<tbody> <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>           </td>
 <td class=cellinside>           </td>
 <td class=cellinside>      A    </td>
 <td class=cellinside>      B    </td>
-<td class=cellinside>    Sum    </td></tr>
- 
+<td class=cellinside>    Sum    </td> </tr>
+ <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>statistic  </td>
 <td class=cellinside>           </td>
 <td class=cellinside>           </td>
 <td class=cellinside>           </td>
-<td class=cellinside>           </td></tr>
- 
+<td class=cellinside>           </td> </tr>
+ <tr> 
 <td class=cellinside>L          </td>
 <td class=cellinside>count      </td>
 <td class=cellinside>           </td>
 <td class=cellinside>  9.000    </td>
 <td class=cellinside>  9.000    </td>
-<td class=cellinside> 18.000    </td></tr>
- 
+<td class=cellinside> 18.000    </td> </tr>
+ <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>% of row   </td>
 <td class=cellinside>           </td>
 <td class=cellinside> 50.000    </td>
 <td class=cellinside> 50.000    </td>
-<td class=cellinside>     NA    </td></tr>
- 
+<td class=cellinside>     NA    </td> </tr>
+ <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>% of column</td>
 <td class=cellinside>           </td>
 <td class=cellinside> 33.333    </td>
 <td class=cellinside> 33.333    </td>
-<td class=cellinside>     NA    </td></tr>
- 
+<td class=cellinside>     NA    </td> </tr>
+ <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>% of total </td>
 <td class=cellinside>           </td>
 <td class=cellinside> 16.667    </td>
 <td class=cellinside> 16.667    </td>
-<td class=cellinside> 33.333    </td></tr>
- 
+<td class=cellinside> 33.333    </td> </tr>
+ <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>expected   </td>
 <td class=cellinside>           </td>
 <td class=cellinside>  9.000    </td>
 <td class=cellinside>  9.000    </td>
-<td class=cellinside>     NA    </td></tr>
- 
+<td class=cellinside>     NA    </td> </tr>
+ <tr> 
 <td class=cellinside>M          </td>
 <td class=cellinside>count      </td>
 <td class=cellinside>           </td>
 <td class=cellinside>  9.000    </td>
 <td class=cellinside>  9.000    </td>
-<td class=cellinside> 18.000    </td></tr>
- 
+<td class=cellinside> 18.000    </td> </tr>
+ <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>% of row   </td>
 <td class=cellinside>           </td>
 <td class=cellinside> 50.000    </td>
 <td class=cellinside> 50.000    </td>
-<td class=cellinside>     NA    </td></tr>
- 
+<td class=cellinside>     NA    </td> </tr>
+ <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>% of column</td>
 <td class=cellinside>           </td>
 <td class=cellinside> 33.333    </td>
 <td class=cellinside> 33.333    </td>
-<td class=cellinside>     NA    </td></tr>
- 
+<td class=cellinside>     NA    </td> </tr>
+ <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>% of total </td>
 <td class=cellinside>           </td>
 <td class=cellinside> 16.667    </td>
 <td class=cellinside> 16.667    </td>
-<td class=cellinside> 33.333    </td></tr>
- 
+<td class=cellinside> 33.333    </td> </tr>
+ <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>expected   </td>
 <td class=cellinside>           </td>
 <td class=cellinside>  9.000    </td>
 <td class=cellinside>  9.000    </td>
-<td class=cellinside>     NA    </td></tr>
- 
+<td class=cellinside>     NA    </td> </tr>
+ <tr> 
 <td class=cellinside>H          </td>
 <td class=cellinside>count      </td>
 <td class=cellinside>           </td>
 <td class=cellinside>  9.000    </td>
 <td class=cellinside>  9.000    </td>
-<td class=cellinside> 18.000    </td></tr>
- 
+<td class=cellinside> 18.000    </td> </tr>
+ <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>% of row   </td>
 <td class=cellinside>           </td>
 <td class=cellinside> 50.000    </td>
 <td class=cellinside> 50.000    </td>
-<td class=cellinside>     NA    </td></tr>
- 
+<td class=cellinside>     NA    </td> </tr>
+ <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>% of column</td>
 <td class=cellinside>           </td>
 <td class=cellinside> 33.333    </td>
 <td class=cellinside> 33.333    </td>
-<td class=cellinside>     NA    </td></tr>
- 
+<td class=cellinside>     NA    </td> </tr>
+ <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>% of total </td>
 <td class=cellinside>           </td>
 <td class=cellinside> 16.667    </td>
 <td class=cellinside> 16.667    </td>
-<td class=cellinside> 33.333    </td></tr>
- 
+<td class=cellinside> 33.333    </td> </tr>
+ <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>expected   </td>
 <td class=cellinside>           </td>
 <td class=cellinside>  9.000    </td>
 <td class=cellinside>  9.000    </td>
-<td class=cellinside>     NA    </td></tr>
- 
+<td class=cellinside>     NA    </td> </tr>
+ <tr> 
 <td class=cellinside>Sum        </td>
 <td class=cellinside>count      </td>
 <td class=cellinside>           </td>
 <td class=cellinside> 27.000    </td>
 <td class=cellinside> 27.000    </td>
-<td class=cellinside> 54.000    </td></tr>
- 
+<td class=cellinside> 54.000    </td> </tr>
+ <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>% of row   </td>
 <td class=cellinside>           </td>
 <td class=cellinside>     NA    </td>
 <td class=cellinside>     NA    </td>
-<td class=cellinside>     NA    </td></tr>
- 
+<td class=cellinside>     NA    </td> </tr>
+ <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>% of column</td>
 <td class=cellinside>           </td>
 <td class=cellinside>     NA    </td>
 <td class=cellinside>     NA    </td>
-<td class=cellinside>     NA    </td></tr>
- 
+<td class=cellinside>     NA    </td> </tr>
+ <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>% of total </td>
 <td class=cellinside>           </td>
 <td class=cellinside> 50.000    </td>
 <td class=cellinside> 50.000    </td>
-<td class=cellinside>100.000    </td></tr>
- 
+<td class=cellinside>100.000    </td> </tr>
+ <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>expected   </td>
 <td class=cellinside>           </td>
 <td class=cellinside>     NA    </td>
 <td class=cellinside>     NA    </td>
-<td class=cellinside>     NA    </td></tr>
+<td class=cellinside>     NA    </td> </tr>
  
 	</tbody>
 </table>
@@ -272,182 +272,182 @@ DATE<br />
 <table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption>
 <tr><td>
 	<table border=0 class=dataframe>
-	<tbody> 
+	<tbody> <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>           </td>
 <td class=cellinside>           </td>
 <td class=cellinside>      L    </td>
 <td class=cellinside>      M    </td>
 <td class=cellinside>      H    </td>
-<td class=cellinside>    Sum    </td></tr>
- 
+<td class=cellinside>    Sum    </td> </tr>
+ <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>statistic  </td>
 <td class=cellinside>           </td>
 <td class=cellinside>           </td>
 <td class=cellinside>           </td>
 <td class=cellinside>           </td>
-<td class=cellinside>           </td></tr>
- 
+<td class=cellinside>           </td> </tr>
+ <tr> 
 <td class=cellinside>L          </td>
 <td class=cellinside>count      </td>
 <td class=cellinside>           </td>
 <td class=cellinside> 18.000    </td>
 <td class=cellinside>  0.000    </td>
 <td class=cellinside>  0.000    </td>
-<td class=cellinside> 18.000    </td></tr>
- 
+<td class=cellinside> 18.000    </td> </tr>
+ <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>% of row   </td>
 <td class=cellinside>           </td>
 <td class=cellinside>100.000    </td>
 <td class=cellinside>  0.000    </td>
 <td class=cellinside>  0.000    </td>
-<td class=cellinside>     NA    </td></tr>
- 
+<td class=cellinside>     NA    </td> </tr>
+ <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>% of column</td>
 <td class=cellinside>           </td>
 <td class=cellinside>100.000    </td>
 <td class=cellinside>  0.000    </td>
 <td class=cellinside>  0.000    </td>
-<td class=cellinside>     NA    </td></tr>
- 
+<td class=cellinside>     NA    </td> </tr>
+ <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>% of total </td>
 <td class=cellinside>           </td>
 <td class=cellinside> 33.333    </td>
 <td class=cellinside>  0.000    </td>
 <td class=cellinside>  0.000    </td>
-<td class=cellinside> 33.333    </td></tr>
- 
+<td class=cellinside> 33.333    </td> </tr>
+ <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>expected   </td>
 <td class=cellinside>           </td>
 <td class=cellinside>  6.000    </td>
 <td class=cellinside>  6.000    </td>
 <td class=cellinside>  6.000    </td>
-<td class=cellinside>     NA    </td></tr>
- 
+<td class=cellinside>     NA    </td> </tr>
+ <tr> 
 <td class=cellinside>M          </td>
 <td class=cellinside>count      </td>
 <td class=cellinside>           </td>
 <td class=cellinside>  0.000    </td>
 <td class=cellinside> 18.000    </td>
 <td class=cellinside>  0.000    </td>
-<td class=cellinside> 18.000    </td></tr>
- 
+<td class=cellinside> 18.000    </td> </tr>
+ <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>% of row   </td>
 <td class=cellinside>           </td>
 <td class=cellinside>  0.000    </td>
 <td class=cellinside>100.000    </td>
 <td class=cellinside>  0.000    </td>
-<td class=cellinside>     NA    </td></tr>
- 
+<td class=cellinside>     NA    </td> </tr>
+ <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>% of column</td>
 <td class=cellinside>           </td>
 <td class=cellinside>  0.000    </td>
 <td class=cellinside>100.000    </td>
 <td class=cellinside>  0.000    </td>
-<td class=cellinside>     NA    </td></tr>
- 
+<td class=cellinside>     NA    </td> </tr>
+ <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>% of total </td>
 <td class=cellinside>           </td>
 <td class=cellinside>  0.000    </td>
 <td class=cellinside> 33.333    </td>
 <td class=cellinside>  0.000    </td>
-<td class=cellinside> 33.333    </td></tr>
- 
+<td class=cellinside> 33.333    </td> </tr>
+ <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>expected   </td>
 <td class=cellinside>           </td>
 <td class=cellinside>  6.000    </td>
 <td class=cellinside>  6.000    </td>
 <td class=cellinside>  6.000    </td>
-<td class=cellinside>     NA    </td></tr>
- 
+<td class=cellinside>     NA    </td> </tr>
+ <tr> 
 <td class=cellinside>H          </td>
 <td class=cellinside>count      </td>
 <td class=cellinside>           </td>
 <td class=cellinside>  0.000    </td>
 <td class=cellinside>  0.000    </td>
 <td class=cellinside> 18.000    </td>
-<td class=cellinside> 18.000    </td></tr>
- 
+<td class=cellinside> 18.000    </td> </tr>
+ <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>% of row   </td>
 <td class=cellinside>           </td>
 <td class=cellinside>  0.000    </td>
 <td class=cellinside>  0.000    </td>
 <td class=cellinside>100.000    </td>
-<td class=cellinside>     NA    </td></tr>
- 
+<td class=cellinside>     NA    </td> </tr>
+ <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>% of column</td>
 <td class=cellinside>           </td>
 <td class=cellinside>  0.000    </td>
 <td class=cellinside>  0.000    </td>
 <td class=cellinside>100.000    </td>
-<td class=cellinside>     NA    </td></tr>
- 
+<td class=cellinside>     NA    </td> </tr>
+ <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>% of total </td>
 <td class=cellinside>           </td>
 <td class=cellinside>  0.000    </td>
 <td class=cellinside>  0.000    </td>
 <td class=cellinside> 33.333    </td>
-<td class=cellinside> 33.333    </td></tr>
- 
+<td class=cellinside> 33.333    </td> </tr>
+ <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>expected   </td>
 <td class=cellinside>           </td>
 <td class=cellinside>  6.000    </td>
 <td class=cellinside>  6.000    </td>
 <td class=cellinside>  6.000    </td>
-<td class=cellinside>     NA    </td></tr>
- 
+<td class=cellinside>     NA    </td> </tr>
+ <tr> 
 <td class=cellinside>Sum        </td>
 <td class=cellinside>count      </td>
 <td class=cellinside>           </td>
 <td class=cellinside> 18.000    </td>
 <td class=cellinside> 18.000    </td>
 <td class=cellinside> 18.000    </td>
-<td class=cellinside> 54.000    </td></tr>
- 
+<td class=cellinside> 54.000    </td> </tr>
+ <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>% of row   </td>
 <td class=cellinside>           </td>
 <td class=cellinside>     NA    </td>
 <td class=cellinside>     NA    </td>
 <td class=cellinside>     NA    </td>
-<td class=cellinside>     NA    </td></tr>
- 
+<td class=cellinside>     NA    </td> </tr>
+ <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>% of column</td>
 <td class=cellinside>           </td>
 <td class=cellinside>     NA    </td>
 <td class=cellinside>     NA    </td>
 <td class=cellinside>     NA    </td>
-<td class=cellinside>     NA    </td></tr>
- 
+<td class=cellinside>     NA    </td> </tr>
+ <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>% of total </td>
 <td class=cellinside>           </td>
 <td class=cellinside> 33.333    </td>
 <td class=cellinside> 33.333    </td>
 <td class=cellinside> 33.333    </td>
-<td class=cellinside>100.000    </td></tr>
- 
+<td class=cellinside>100.000    </td> </tr>
+ <tr> 
 <td class=cellinside>           </td>
 <td class=cellinside>expected   </td>
 <td class=cellinside>           </td>
 <td class=cellinside>     NA    </td>
 <td class=cellinside>     NA    </td>
 <td class=cellinside>     NA    </td>
-<td class=cellinside>     NA    </td></tr>
+<td class=cellinside>     NA    </td> </tr>
  
 	</tbody>
 </table>

@@ -24,4 +24,3 @@ function calculate () {
 	}
 	echo ('}\n');
 }
-

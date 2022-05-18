@@ -32,7 +32,6 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} )
 SET(RKWard_Sources
 	rkward.cpp
 	main.cpp
-	rkglobals.cpp
 	robjectviewer.cpp
 	rkconsole.cpp
 )
@@ -43,19 +42,10 @@ GET_DIRECTORY_PROPERTY(R_EXECUTABLE DIRECTORY rbackend DEFINITION R_EXECUTABLE)
 GET_DIRECTORY_PROPERTY(R_SHAREDLIBDIR DIRECTORY rbackend LINK_DIRECTORIES)
 LINK_DIRECTORIES(${R_SHAREDLIBDIR})
 
-IF(APPLE)
-    # create the application icon from the available sources. This should work on MS Windows
-    # too but I don't want to start modifying things I cannot test.
-    FILE(GLOB ICON_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/icons/app-icon/*-apps-rkward.png") 
-    # recent ECM versions will prefer the scalable version: prepend it to the icon source list:
-    ECM_ADD_APP_ICON(RKWard_Sources ICONS ${CMAKE_CURRENT_SOURCE_DIR}/icons/app-icon/sc-apps-rkward.svgz ${ICON_SRCS})
-    ADD_EXECUTABLE(rkward ${RKWard_Sources})
-ELSE()
-    ADD_CUSTOM_COMMAND (OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/rkward.ico"
-			COMMAND cmake -E copy "${CMAKE_CURRENT_SOURCE_DIR}/icons/app-icon/rkward.ico"
-			"${CMAKE_CURRENT_BINARY_DIR}/rkward.ico")
-    ADD_EXECUTABLE(rkward ${RKWard_Sources} rkward_windows_icon.rc rkward.ico)
-ENDIF()
+FILE(GLOB ICON_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/icons/app-icon/*-apps-rkward.png")
+# recent ECM versions will prefer the scalable version: prepend it to the icon source list (older versions generate a warning on the SVG, but so what):
+ECM_ADD_APP_ICON(RKWard_Sources ICONS ${CMAKE_CURRENT_SOURCE_DIR}/icons/app-icon/sc-apps-rkward.svgz ${ICON_SRCS})
+ADD_EXECUTABLE(rkward ${RKWard_Sources})
 
 # NOTE: These definitions are needed for the startup procedure (main.cpp), only.
 # We should switch with to target_compile_definitions once we require CMAKE 2.6+
@@ -73,7 +63,7 @@ IF(APPLE)
 		@ONLY)
 ENDIF(APPLE)
 
-TARGET_LINK_LIBRARIES(rkward windows ${RKWARD_ADDLIBS} agents dialogs plugin settings dataeditor core scriptbackends rbackend misc KF5::WindowSystem Qt5::Widgets KF5::XmlGui ${LibIntl_LIBRARIES})
+TARGET_LINK_LIBRARIES(rkward windows ${RKWARD_ADDLIBS} agents dialogs plugin settings dataeditor core scriptbackends rbackend misc KF5::WindowSystem Qt5::Widgets KF5::XmlGui)
 IF(KF5Crash_FOUND)
 	TARGET_LINK_LIBRARIES(rkward KF5::Crash)
 	SET_SOURCE_FILES_PROPERTIES(main.cpp PROPERTIES COMPILE_DEFINITIONS WITH_KCRASH=1)
@@ -121,5 +111,13 @@ ENDIF()
 
 INSTALL(FILES org.kde.rkward.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
 INSTALL(FILES org.kde.rkward.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
-INSTALL(FILES vnd.rkward.r.xml DESTINATION ${XDG_MIME_INSTALL_DIR})
 INSTALL(FILES rkward.protocol DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(FILES vnd.rkward.r.xml DESTINATION ${XDG_MIME_INSTALL_DIR})
+INSTALL(FILES vnd.kde.rkward-output.xml DESTINATION ${XDG_MIME_INSTALL_DIR})
+INSTALL(FILES vnd.kde.rmarkdown.xml DESTINATION ${XDG_MIME_INSTALL_DIR})
+FIND_PACKAGE(SharedMimeInfo)
+IF(SharedMimeInfo_FOUND)
+	UPDATE_XDG_MIMETYPES(${XDG_MIME_INSTALL_DIR})
+ENDIF(SharedMimeInfo_FOUND)
+
+INSTALL(FILES RKWardRMd.xml DESTINATION ${DATA_INSTALL_DIR}/ktexteditor_snippets/data)

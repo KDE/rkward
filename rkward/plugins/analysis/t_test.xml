@@ -38,6 +38,7 @@
 						</radio>
 					</column>
 				</row>
+				<preview id="preview" mode="output"/>
 			</tab>
 			<tab label="Options" id="tab_options">
 				<frame label="Show Confidence Interval" id="confint" checkable="true" checked="true">

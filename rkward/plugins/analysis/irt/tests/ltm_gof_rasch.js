@@ -13,8 +13,10 @@ function calculate () {
 	echo (')\n');
 }
 
-function printout () {
-	echo ('rk.header (' + i18n ("Goodness of Fit for Rasch Models (%1)", getValue ("x")) + ')\n');
+function printout (is_preview) {
+	if (!is_preview) {
+		echo ('rk.header (' + i18n ("Goodness of Fit for Rasch Models (%1)", getValue ("x")) + ')\n');
+	}
 	echo ('rk.print ("Call:")\n');
 	echo ('rk.print.literal (deparse(GoFRasch.res$call, width.cutoff=500))\n');
 	echo ('rk.header ("Parametric Bootstrap test:", level=4)\n');

@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkstandardcomponentgui  -  description
-                             -------------------
-    begin                : Sun Mar 19 2006
-    copyright            : (C) 2006, 2007, 2009, 2012 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkstandardcomponentgui - This file is part of RKWard (https://rkward.kde.org). Created: Sun Mar 19 2006
+SPDX-FileCopyrightText: 2006-2012 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkstandardcomponentgui.h"
 
@@ -28,21 +18,21 @@
 #include <QSplitter>
 #include <QHBoxLayout>
 #include <QToolButton>
-#include <QDesktopWidget>
 #include <QAction>
 #include <QUrl>
-#include <QApplication>
 
 #include "rkcomponentmap.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkcompatibility.h"
 #include "../misc/rkstandardicons.h"
 #include "../misc/rkxmlguipreviewarea.h"
+#include "../misc/rkstyle.h"
 #include "../windows/rkworkplace.h"
 #include "../windows/rkcommandeditorwindow.h"
 #include "../rbackend/rkrinterface.h"
 #include "../rkward.h"
 #include "../settings/rksettingsmoduleplugins.h"
-#include "../rkglobals.h"
+
 #include "../debug.h"
 
 class RKExtensionSplitter : public QSplitter {
@@ -86,7 +76,7 @@ public:
 		setSizes (sizes);
 
 		if (QSplitter::window ()->isVisible ()) {
-			QRect boundary = QApplication::desktop ()->availableGeometry (this);
+			QRect boundary = RKCompatibility::availableGeometry(this);
 			int new_width = window->width ();
 			int new_height = window->height ();
 			int new_x = window->x ();
@@ -110,10 +100,10 @@ public:
 		}
 	};
 
-	void saveSize () {
-		if (extension->isVisible ()) {
-			if (orientation () == Qt::Horizontal) RKSettingsModulePlugins::setDefaultSidePreviewWidth (sizes ()[1]);
-			else RKSettingsModulePlugins::setDefaultCodeHeight (sizes ()[1]);
+	void saveSize() {
+		if (extension->isVisible()) {
+			if (orientation() == Qt::Horizontal) RKSettingsModulePlugins::setDefaultSidePreviewWidth(sizes().at(1));
+			else RKSettingsModulePlugins::setDefaultCodeHeight(sizes().at(1));
 		}
 	}
 
@@ -157,7 +147,7 @@ RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, 
 		code_display = new RKCommandEditorWindow (0, QUrl (), QString (), RKCommandEditorFlags::DefaultToRHighlighting);
 		code_display->setReadOnly (true);
 		code_display_visibility.setBoolValue (!enslaved && RKSettingsModulePlugins::showCodeByDefault ());
-		code_display->setParent (area);  // hm, mysterious breakage when adding via constructor. Whatever...
+		area->setWindow(code_display);
 
 		KActionCollection *action_collection = new KActionCollection (this);
 		action_collection->addAction (KStandardAction::Copy, this, SLOT (copyCode()));
@@ -190,7 +180,7 @@ void RKStandardComponentGUI::createDialog (bool switchable) {
 	QVBoxLayout* vbox = new QVBoxLayout ();
 	hbox->addLayout (vbox);
 	vbox->setContentsMargins (0, 0, 0, 0);
-	vbox->setSpacing (RKGlobals::spacingHint ());
+	vbox->setSpacing (RKStyle::spacingHint ());
 	ok_button = new QPushButton (i18n ("Submit"), central_widget);
 	connect (ok_button, &QPushButton::clicked, this, &RKStandardComponentGUI::ok);
 	vbox->addWidget (ok_button);
@@ -321,7 +311,7 @@ void RKStandardComponentGUI::ok () {
 	command.append (code_property->calculate ());
 	command.append (code_property->printout ());
 	command.append ("})\n");
-	RKGlobals::rInterface ()->issueCommand (new RCommand (command, RCommand::Plugin | RCommand::CCOutput | RCommand::ObjectListUpdate), component->commandChain ());
+	RInterface::issueCommand (new RCommand (command, RCommand::Plugin | RCommand::CCOutput | RCommand::ObjectListUpdate), component->commandChain ());
 
 	// re-run link
 	// This should be run in a separate command, in case the above command bails out with an error. Even in that case, the re-run link should be printed.
@@ -335,7 +325,7 @@ void RKStandardComponentGUI::ok () {
 	}
 	// separator line
 	command.append (".rk.make.hr()\n");
-	RKGlobals::rInterface ()->issueCommand (new RCommand (command, RCommand::Plugin | RCommand::ObjectListUpdate | RCommand::Silent), component->commandChain ());
+	RInterface::issueCommand (new RCommand (command, RCommand::Plugin | RCommand::ObjectListUpdate | RCommand::Silent), component->commandChain ());
 
 	if (auto_close_box->isChecked ()) cancel ();
 }
@@ -637,6 +627,7 @@ void RKStandardComponentWizard::enableSubmit (bool enable) {
 
 RKStandardComponentStack::RKStandardComponentStack (QWidget *parent) : QStackedWidget (parent) {
 	RK_TRACE (PLUGIN);
+	// We want minimumExpanding, intially, as it makes better use of available space when first showing the window ...
 	setSizePolicy (QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 }
 
@@ -664,6 +655,11 @@ void RKStandardComponentStack::movePage (bool next) {
 	int id;
 	if (next) {
 		id = nextVisiblePage ();
+		if (id < (count() - 1)) {
+			// ... but on the last (preview) page, minimumExpanding causes nasty layout fluctuation (https://bugs.kde.org/show_bug.cgi?id=425885)
+			// Not quite sure, where the bug is at, here, but this papers over the worst symptoms.
+			setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Preferred);
+		}
 	} else {
 		id = previousVisiblePage ();
 	}

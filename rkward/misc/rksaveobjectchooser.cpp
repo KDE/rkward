@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rksaveobjectchooser  -  description
-                             -------------------
-    begin                : Mon Nov 27 2006
-    copyright            : (C) 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rksaveobjectchooser - This file is part of RKWard (https://rkward.kde.org). Created: Mon Nov 27 2006
+SPDX-FileCopyrightText: 2006-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rksaveobjectchooser.h"
 
@@ -27,6 +17,7 @@
 #include <QDialogButtonBox>
 
 #include <KLocalizedString>
+#include <KMessageWidget>
 
 #include "../core/robjectlist.h"
 #include "../core/renvironmentobject.h"
@@ -60,9 +51,14 @@ RKSaveObjectChooser::RKSaveObjectChooser (QWidget *parent, const QString &initia
 	connect (name_edit, &QLineEdit::textChanged, this, &RKSaveObjectChooser::updateState);
 	layout->addWidget (name_edit);
 
-	overwrite_confirm = new QCheckBox (this);
-	connect (overwrite_confirm, &QCheckBox::stateChanged, this, &RKSaveObjectChooser::updateState);
-	layout->addWidget (overwrite_confirm);
+	overwrite_confirm = new QCheckBox(i18n("Overwrite"), this);
+	connect(overwrite_confirm, &QCheckBox::stateChanged, this, &RKSaveObjectChooser::updateState);
+	overwrite_warn = new KMessageWidget(i18n("The given object name already exists"));
+	overwrite_warn->setCloseButtonVisible(false);
+	hlayout = new QHBoxLayout();
+	hlayout->addWidget(overwrite_confirm);
+	hlayout->addWidget(overwrite_warn);
+	layout->addLayout(hlayout);
 
 	// initialize
 	setRootObject (0);
@@ -178,28 +174,27 @@ void RKSaveObjectChooser::updateState () {
 	new_name = root_object->makeChildName (new_name);	// make it the full name
 	if (current_object) {
 		object_exists = true;
-		overwrite_confirm->setText (i18n ("Overwrite? (The given object name already exists)"));
-		overwrite_confirm->setEnabled (true);
+		overwrite_confirm->setEnabled(true);
+		overwrite_warn->setMessageType(overwrite_confirm->isChecked() ? KMessageWidget::Information : KMessageWidget::Error);
+		overwrite_warn->animatedShow();
 		listenForObject (current_object);
 	} else {
 		object_exists = false;
-		overwrite_confirm->setText (i18n ("Overwrite?"));
-		overwrite_confirm->setEnabled (false);
-		overwrite_confirm->setChecked (false);
+		overwrite_confirm->setEnabled(false);
+		overwrite_confirm->setChecked(false);
+		overwrite_warn->hide();
 	}
 
 	if ((new_name != current_full_name) || (sender () == overwrite_confirm)) {
 		current_full_name = new_name;
-		emit (changed (isOk ()));
+		emit changed(isOk());
 	}
 }
 
-void RKSaveObjectChooser::setBackgroundColor (const QColor &color) {
+void RKSaveObjectChooser::setStyleSheet (const QString &style) {
 	RK_TRACE (MISC);
 
-	QPalette palette = name_edit->palette ();
-	palette.setColor (name_edit->backgroundRole (), color);
-	name_edit->setPalette (palette);
+	name_edit->setStyleSheet(style);
 }
 
 QString RKSaveObjectChooser::currentBaseName () const {

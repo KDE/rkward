@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rksaveobjectchooser  -  description
-                             -------------------
-    begin                : Mon Nov 27 2006
-    copyright            : (C) 2006, 2007 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rksaveobjectchooser - This file is part of the RKWard project. Created: Mon Nov 27 2006
+SPDX-FileCopyrightText: 2006-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef RKSAVEOBJECTCHOOSER_H
 #define RKSAVEOBJECTCHOOSER_H
@@ -25,6 +15,7 @@ class QLineEdit;
 class QCheckBox;
 class QPushButton;
 class QLabel;
+class KMessageWidget;
 
 /** Simple helper widget to select an R symbol name to write something to. */
 class RKSaveObjectChooser : public QWidget, public RObjectListener {
@@ -37,7 +28,7 @@ public:
 	QString currentBaseName () const;
 	bool isOk () const;
 	void setBaseName (const QString &name);
-	void setBackgroundColor (const QColor &color);
+	void setStyleSheet (const QString &style);
 	RObject* rootObject () const { return root_object; };
 	void setRootObject (RObject* new_root);
 private slots:
@@ -57,6 +48,7 @@ private:
 	QPushButton *root_button;
 	QLineEdit *name_edit;
 	QCheckBox *overwrite_confirm;
+	KMessageWidget *overwrite_warn;
 
 	QString current_full_name;
 };

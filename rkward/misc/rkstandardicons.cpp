@@ -1,21 +1,13 @@
-/***************************************************************************
-                          rkstandardicons  -  description
-                             -------------------
-    begin                : Wed Oct 24 2007
-    copyright            : (C) 2007-2018 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkstandardicons - This file is part of RKWard (https://rkward.kde.org). Created: Wed Oct 24 2007
+SPDX-FileCopyrightText: 2007-2018 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkstandardicons.h"
+
+#include <QFileInfo>
 
 #include "../core/robject.h"
 #include "../core/robjectlist.h"
@@ -130,7 +122,12 @@ void RKStandardIcons::doInitIcons () {
 
 	icons[DocumentPDF] = QIcon::fromTheme("application-pdf");
 
-	icons[RKWardIcon] = QIcon::fromTheme("rkward");  // this used to be accessible as QApplication::windowIcon(), but apparently no longer in Qt5
+	// this used to be accessible as QApplication::windowIcon(), but apparently no longer in Qt5
+	if (QFileInfo::exists(rkward_icon_base + "64-apps-rkward.png")) {
+		icons[RKWardIcon] = QIcon(rkward_icon_base + "64-apps-rkward.png");
+	} else {
+		icons[RKWardIcon] = QIcon::fromTheme("rkward"); // Does not work on Windows, thus only used as fallback
+	}
 
 	RK_DO ({
 		for (int i = ActionRunAll; i < Last; ++i) {
@@ -188,6 +185,7 @@ QIcon RKStandardIcons::iconForWindow (const RKMDIWindow* window) {
 	if (window->isType (RKMDIWindow::FileBrowserWindow)) return getIcon (WindowFileBrowser);
 	if (window->isType (RKMDIWindow::DebugConsoleWindow)) return getIcon (WindowDebugConsole);
 	if (window->isType (RKMDIWindow::CallstackViewerWindow)) return getIcon (WindowCallstackViewer);
+	if (window->isType (RKMDIWindow::DebugMessageWindow)) return QIcon();
 
 	RK_ASSERT (false);
 	return QIcon ();

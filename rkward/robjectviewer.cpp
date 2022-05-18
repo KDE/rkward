@@ -1,19 +1,9 @@
-/***************************************************************************
-                          robjectviewer  -  description
-                             -------------------
-    begin                : Tue Aug 24 2004
-    copyright            : (C) 2004, 2007, 2009 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+robjectviewer - This file is part of RKWard (https://rkward.kde.org). Created: Tue Aug 24 2004
+SPDX-FileCopyrightText: 2004-2009 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 #include "robjectviewer.h"
 
 #include <QLabel>
@@ -28,7 +18,7 @@
 #include <QFontDatabase>
 
 #include "rbackend/rkrinterface.h"
-#include "rkglobals.h"
+
 #include "core/robject.h"
 #include "misc/rkdummypart.h"
 #include "../misc/rkcommonfunctions.h"
@@ -277,7 +267,7 @@ void RObjectSummaryWidget::update () {
 	RObjectViewerWidget::update ();
 
 	RCommand *command = new RCommand ("print(summary(" + _object->getFullName () + "))", RCommand::App, QString (), this);
-	RKGlobals::rInterface ()->issueCommand (command, 0);
+	RInterface::issueCommand (command, 0);
 }
 
 ////////////////// print widget /////////////////
@@ -299,7 +289,7 @@ void RObjectPrintWidget::update () {
 	                                  "\ton.exit(options(width=rk.temp.width.save))\n"
 	                                  "\tprint(" + _object->getFullName () + ")\n"
 	                                  "})", RCommand::App, QString (), this);
-	RKGlobals::rInterface ()->issueCommand (command, 0);
+	RInterface::issueCommand (command, 0);
 }
 
 ////////////////// structure widget /////////////////
@@ -315,6 +305,6 @@ void RObjectStructureWidget::update () {
 	RObjectViewerWidget::update ();
 
 	RCommand *command = new RCommand ("str(" + _object->getFullName () + ')', RCommand::App, QString (), this);
-	RKGlobals::rInterface ()->issueCommand (command, 0);
+	RInterface::issueCommand (command, 0);
 }
 

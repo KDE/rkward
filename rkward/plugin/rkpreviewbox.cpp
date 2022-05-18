@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkpreviewbox  -  description
-                             -------------------
-    begin                : Wed Jan 24 2007
-    copyright            : (C) 2007-2016 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkpreviewbox - This file is part of RKWard (https://rkward.kde.org). Created: Wed Jan 24 2007
+SPDX-FileCopyrightText: 2007-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 #include "rkpreviewbox.h"
 
 #include <qlayout.h>
@@ -24,7 +14,6 @@
 
 #include <KLocalizedString>
 
-#include "../rkglobals.h"
 #include "../rbackend/rkrinterface.h"
 #include "../misc/xmlhelper.h"
 #include "../misc/rkxmlguipreviewarea.h"
@@ -54,7 +43,6 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	// create and add property
 	addChild ("state", state = new RKComponentPropertyBool (this, true, preview_active, "active", "inactive"));
 	state->setInternal (true);	// restoring this does not make sense.
-	connect (state, &RKComponentPropertyBase::valueChanged, this, &RKPreviewBox::changedState);
 
 	// create checkbox
 	QVBoxLayout *vbox = new QVBoxLayout (this);
@@ -81,7 +69,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 			uicomp->addDockedPreview (state, toggle_preview_box->text (), manager->previewId ());
 
 			if (preview_mode == OutputPreview) {
-				RKGlobals::rInterface ()->issueCommand ("local ({\n"
+				RInterface::issueCommand ("local ({\n"
 				    "outfile <- tempfile (fileext='.html')\n"
 				    "rk.assign.preview.data(" + idprop + ", list (filename=outfile, on.delete=function (id) {\n"
 				    "	rk.flush.output (outfile, ask=FALSE)\n"
@@ -92,16 +80,17 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 				    "})\n" + placement_command + "rk.show.html(rk.get.preview.data (" + idprop + ")$filename)" + placement_end, RCommand::Plugin | RCommand::Sync);
 			} else {
 				// For all others, create an empty data.frame as dummy. Even for custom docked previews it has the effect of initializing the preview area with _something_.
-				RKGlobals::rInterface ()->issueCommand ("local ({\nrk.assign.preview.data(" + idprop + ", data.frame ())\n})\n" + placement_command + "rk.edit(rkward::.rk.variables$.rk.preview.data[[" + idprop + "]])" + placement_end, RCommand::Plugin | RCommand::Sync);
+				RInterface::issueCommand ("local ({\nrk.assign.preview.data(" + idprop + ", data.frame ())\n})\n" + placement_command + "rk.edit(rkward::.rk.variables$.rk.preview.data[[" + idprop + "]])" + placement_end, RCommand::Plugin | RCommand::Sync);
 			}
 
 			// A bit of a hack: For now, in wizards, docked previews are always active, and control boxes are meaningless.
 			if (uicomp->isWizardish ()) {
 				hide ();
-				toggle_preview_box->setChecked (true);
+				state->setBoolValue(true);
 			}
 		}
 	}
+	connect (state, &RKComponentPropertyBase::valueChanged, this, &RKPreviewBox::changedState);  // AFTER state->setBoolValue(), above!
 
 	// find and connect to code property of the parent
 	QString dummy;
@@ -191,7 +180,7 @@ void RKPreviewBox::tryPreviewNow () {
 
 	RCommand *command;
 	if (preview_mode == PlotPreview) {
-		RKGlobals::rInterface ()->issueCommand (placement_command + ".rk.startPreviewDevice (" + idprop + ')' + placement_end, RCommand::Plugin | RCommand::Sync, QString ());
+		RInterface::issueCommand (placement_command + ".rk.startPreviewDevice (" + idprop + ')' + placement_end, RCommand::Plugin | RCommand::Sync, QString ());
 		// creating window generates warnings, sometimes. Don't make those part of the warnings shown for the preview -> separate command for the actual plot.
 		command = new RCommand ("local({\n" + code_property->preview () + "})\n", RCommand::Plugin | RCommand::Sync);
 	} else if (preview_mode == DataPreview) {
@@ -219,7 +208,7 @@ void RKPreviewBox::killPreview (bool cleanup) {
 		QString command;
 		if (preview_mode == PlotPreview) command = ".rk.killPreviewDevice (" + idprop + ")\n";
 		command += "rk.discard.preview.data (" + idprop + ')';
-		RKGlobals::rInterface ()->issueCommand (command, RCommand::Plugin | RCommand::Sync);
+		RInterface::issueCommand (command, RCommand::Plugin | RCommand::Sync);
 	}
 	if (placement != DockedPreview) {
 		RKMDIWindow *window =  RKWorkplace::mainWorkplace ()->getNamedWindow (manager->previewId ());

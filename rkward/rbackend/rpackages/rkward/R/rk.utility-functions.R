@@ -180,7 +180,7 @@
 
 #' Add one or more paths to the filesystem search path used in this session
 #'
-#' Add the given path to to the "PATH" environment variable of the running R session. This
+#' Add the given path to the "PATH" environment variable of the running R session. This
 #' can be useful to make sure external binaries are found by Sys.which. Paths are normalized
 #' before being added, and duplicates are stripped from the path.
 #'

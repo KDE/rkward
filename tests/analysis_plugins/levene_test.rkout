@@ -15,18 +15,18 @@ DATE<br />
 <tr><td>
 	<table border=0 class=dataframe>
 	<tbody> <tr class= firstline > <th></th><th>Df</th><th>F value</th><th>Pr(>F)</th><th></th> </tr>
- 
+ <tr> 
 <tr><td class=firstcolumn>group</td>
 <td class=cellinside> 2   </td>
 <td class=cellinside>2.82 </td>
 <td class=cellinside>0.069</td>
-<td class=cellinside>.    </td></tr>
- 
+<td class=cellinside>.    </td> </tr>
+ <tr> 
 <tr><td class=firstcolumn> </td>
 <td class=cellinside>51   </td>
 <td class=cellinside>     </td>
 <td class=cellinside>     </td>
-<td class=cellinside>     </td></tr>
+<td class=cellinside>     </td> </tr>
  
 	</tbody>
 </table>

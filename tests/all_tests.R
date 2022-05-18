@@ -8,6 +8,7 @@ testsuites <- c (
 	"analysis_plugins.R",
 	"distributions.R",
 	"plots.R",
-	"data_plugin_tests.R")
+	"data_plugin_tests.R"
+)
 
 rktest.makeplugintests (testsuites=testsuites, outfile="make_plugintests.txt")

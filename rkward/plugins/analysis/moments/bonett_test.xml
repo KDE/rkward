@@ -15,6 +15,7 @@
 							<option value="greater" label="greater"/>
 							<option value="less" label="less"/>
 						</radio>
+						<preview id="preview" mode="output"/>
 					</column>
 				</row>
 			</tab>

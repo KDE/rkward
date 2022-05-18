@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkworkplace  -  description
-                             -------------------
-    begin                : Thu Sep 21 2006
-    copyright            : (C) 2006-2020 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkworkplace - This file is part of the RKWard project. Created: Thu Sep 21 2006
+SPDX-FileCopyrightText: 2006-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef RKWORKPLACE_H
 #define RKWORKPLACE_H
@@ -41,6 +31,8 @@ class RKMDIWindowHistoryWidget;
 class RKGraphicsDevice;
 class KMessageWidget;
 class QWindow;
+class RKOutputDirectory;
+class QStatusBar;
 
 #define TOOL_WINDOW_BAR_COUNT 4
 
@@ -85,7 +77,7 @@ struct RKCommandEditorFlags {
 };
 
 /** This class (only one instance will probably be around) keeps track of which windows are opened in the workplace, which are detached, etc. Also it is responsible for creating and manipulating those windows.
-It also provides a QWidget (RKWorkplace::view ()), which actually manages the document windows (only those, so far. I.e. this is a half-replacement for KMdi, which will be gone in KDE 4). Currently layout of the document windows is always tabbed. */
+It also provides a QWidget (RKWorkplace::view ()), which actually manages the document and tool windows. */
 class RKWorkplace : public QWidget {
 	Q_OBJECT
 public:
@@ -107,10 +99,12 @@ public:
 
 /** Attach an already created window. */
 	void attachWindow (RKMDIWindow *window);
-/** Dettach a window (it is removed from the view (), and placed in a top-level DetachedWindowContainer instead. */
+/** Detouch a window (it is removed from the view (), and placed in a top-level DetachedWindowContainer instead. */
 	void detachWindow (RKMDIWindow *window, bool was_attached=true);
 /** @returns a pointer to the current window. state specifies, which windows should be considered. */
-	RKMDIWindow *activeWindow (RKMDIWindow::State state);
+	RKMDIWindow *activeWindow (RKMDIWindow::State state) const;
+/** @returns the RKMDIWindow holding the given part */
+	RKMDIWindow *windowForPart(KParts::Part *part) const;
 
 /** Opens the given url in the appropriate way. */
 	bool openAnyUrl (const QUrl &url, const QString &known_mimetype = QString (), bool force_external=false);
@@ -131,8 +125,14 @@ public:
 @param only_once if true, checks whether any help window already shows this URL. If so, raise it, but do not open a new window. Else show the new window */
 	RKMDIWindow* openHelpWindow (const QUrl &url=QUrl (), bool only_once=false);
 /** Opens a new output window, or raise / refresh the current output window.
-@param url currently ignored! */
-	RKMDIWindow* openOutputWindow (const QUrl &url=QUrl ());
+@param url Ouput file to load. If empty, the active output is opened/raised.
+@param create Create a new output, instead of showing an existing one. */
+	RKMDIWindow* openOutputWindow(const QUrl &url, bool create=false);
+/** Opens a new output window, for the given existing output directory. Generally, you should call RKOutputDirectory::view(), instead. */
+	RKMDIWindow* openNewOutputWindow(RKOutputDirectory* dir);
+/** Opens an HTML window / legacy output file
+@param url Ouput file to load. */
+	RKMDIWindow* openHTMLWindow(const QUrl &url);
 
 	void newX11Window (QWindow* window_to_embed, int device_number);
 	void newRKWardGraphisWindow (RKGraphicsDevice *dev, int device_number);
@@ -157,19 +157,24 @@ public:
 /** Close the given window, whether it is attached or detached.
 @param window window to close
 @returns true, if the window was actually closed (not cancelled) */
-	bool closeWindow (RKMDIWindow *window);
-/** Close the given windows, whether they are attached or detached. TODO: Be smart about asking what to save.
+	bool closeWindow(RKMDIWindow *window, RKMDIWindow::CloseWindowMode ask_save = RKMDIWindow::AutoAskSaveModified);
+/** Close the given windows, whether they are attached or detached.
 @param windows list windows to close
 @returns true, if _all_ windows were actually closed. */
-	bool closeWindows (QList<RKMDIWindow*> windows);
+	bool closeWindows(QList<RKMDIWindow*> windows, RKMDIWindow::CloseWindowMode ask_save = RKMDIWindow::AutoAskSaveModified);
+/** Close all windows and all outputs (aksing to save workspace)
+@returns true, if the workspace really was closed. */
+	bool closeWorkspace();
 /** Closes all windows of the given type(s). Default call (no arguments) closes all windows
 @param type: A bitwise OR of RKWorkplaceObjectType
-@param state: A bitwise OR of RKWorkplaceObjectState */
-	void closeAll (int type=RKMDIWindow::AnyType, int state=RKMDIWindow::AnyWindowState);
+@param state: A bitwise OR of RKWorkplaceObjectState
+@returns false if cancelled by user (user was prompted for saving, and chose cancel) */
+	bool closeAll(int type=RKMDIWindow::AnyType, int state=RKMDIWindow::AnyWindowState);
 
 /** Write a description of all current windows to the R backend. This can later be read by restoreWorkplace (). Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace
+@param url the url to use. Can be left null, in which case the current workspace url will be used.
 @param chain command chain to place the command in */
-	void saveWorkplace (RCommandChain *chain=0);
+	void saveWorkplace (const QUrl &for_url=QUrl(), RCommandChain *chain=0);
 /** Load a description of windows from the R backend (created by saveWorkplace ()), and (try to) restore all windows accordingly
 Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace
 @param chain command chain to place the command in */
@@ -204,6 +209,7 @@ Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsMod
 /** Inserts the given message widget above the central area. While technically, the workplace becomes the parent widget of the message widget, it is the caller's responsibility to
  *  delete the widget, when appropriate. */
 	void addMessageWidget (KMessageWidget *message);
+	QStatusBar* statusBar() { return status_bar; };
 
 /** For window splitting: Copy the given window (or, if that is not possible, create a placeholder window), and attach it to the main view. */
 	void splitAndAttachWindow (RKMDIWindow *source);
@@ -246,6 +252,7 @@ private:
 friend class RKToolWindowBar;
 friend class KatePluginIntegrationWindow;
 	void placeInToolWindowBar (RKMDIWindow *window, int position);
+	QStatusBar *status_bar;
 
 	/** Control placement of windows from R */
 	struct NamedWindow {

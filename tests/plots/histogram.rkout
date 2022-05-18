@@ -7,12 +7,12 @@
 <li>Scale: Density</li>
 </ul>
 DATE<br />
-<h1>Density curve</h1>
-<h2>Parameters</h2>
+<h3>Density curve</h3>
+<h4>Parameters</h4>
 <ul><li>Bandwidth: nrd</li>
 <li>Adjust Bandwidth: 4.00</li>
 <li>resolution: 512.00</li>
 <li>Remove Missing Values: yes</li>
 </ul>
-DATE<br />
+<br />
 <img src="graph.png" width="480" height="480"><br>

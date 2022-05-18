@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkxmlguipreviewarea  -  description
-                             -------------------
-    begin                : Wed Feb 03 2016
-    copyright            : (C) 2016 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkxmlguipreviewarea - This file is part of RKWard (https://rkward.kde.org). Created: Wed Feb 03 2016
+SPDX-FileCopyrightText: 2016-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkxmlguipreviewarea.h"
 
@@ -33,7 +23,6 @@
 #include "../windows/rkworkplace.h"
 #include "../rbackend/rcommand.h"
 #include "../rbackend/rkrinterface.h"
-#include "../rkglobals.h"
 #include "rkstandardicons.h"
 
 #include "../debug.h"
@@ -56,6 +45,7 @@ RKXMLGUIPreviewArea::~RKXMLGUIPreviewArea () {
 		removeChildClient (current);
 		current->setFactory (0);
 	}
+	if (wrapper_widget) wrapper_widget->deleteLater();  // technically, the wrapper widget is the parent of this, not the other way around
 }
 
 void RKXMLGUIPreviewArea::setLabel (const QString& label) {
@@ -88,13 +78,13 @@ QWidget* RKXMLGUIPreviewArea::wrapperWidget () {
 	QToolButton *tb = new QToolButton (wrapper_widget);
 	tb->setAutoRaise (true);
 	tb->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDelete));
-	connect (tb, &QAbstractButton::clicked, [this]() { wrapper_widget->hide (); emit (previewClosed(this)); });
+	connect (tb, &QAbstractButton::clicked, this, [this]() { wrapper_widget->hide(); emit previewClosed(this); });
 
-	QToolButton *menu_button = new QToolButton (this);
-	menu_button->setPopupMode (QToolButton::InstantPopup);
-	menu_button->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionShowMenu));
-	menu_button->setMenu (menu = new QMenu ());
-	connect (menu, &QMenu::aboutToShow, this, &RKXMLGUIPreviewArea::prepareMenu);
+	QToolButton *menu_button = new QToolButton(this);
+	menu_button->setPopupMode(QToolButton::InstantPopup);
+	menu_button->setIcon(RKStandardIcons::getIcon(RKStandardIcons::ActionShowMenu));
+	menu_button->setMenu(menu = new QMenu(wrapper_widget));
+	connect(menu, &QMenu::aboutToShow, this, &RKXMLGUIPreviewArea::prepareMenu);
 
 	hl->addWidget (menu_button);
 	hl->addStretch ();
@@ -108,31 +98,23 @@ QWidget* RKXMLGUIPreviewArea::wrapperWidget () {
 	return wrapper_widget;
 }
 
-void RKXMLGUIPreviewArea::childEvent (QChildEvent *event) {
-	RK_TRACE (PLUGIN);
-
-	if (event->type () == QEvent::ChildAdded) {
-		RKMDIWindow *child = qobject_cast<RKMDIWindow*> (event->child ());
-		if (child) {
-			if (current) {
-				removeChildClient (current);
-				factory ()->removeClient (current);  // _always_ remove before adding, or the previous child will be leaked in the factory
-			}
-			child->setWindowStyleHint ("preview");
-			current = child->getPart ();
-			insertChildClient (current);
-			setCentralWidget (child);
-			createGUI ("rkwrapper_widgetpart.rc");
-			menuBar ()->hide ();
-			QList<KToolBar*> tbars = toolBars ();
-			for (int i = 0; i < tbars.size (); ++i) tbars[i]->hide ();
-			// avoid shortcut conflicts
-			QList<QAction*> acts = actions ();
-			for (int i = 0; i < acts.size (); ++i) acts[i]->setShortcutContext(Qt::WidgetWithChildrenShortcut);
-			RKWorkplace::mainWorkplace()->setWindowNotManaged(child);
-		}
+void RKXMLGUIPreviewArea::setWindow(RKMDIWindow* window) {
+	if (current) {
+		removeChildClient(current);
+		factory()->removeClient(current);  // _always_ remove before adding, or the previous child will be leaked in the factory
 	}
-	QObject::childEvent (event);
+	window->setWindowStyleHint("preview");
+	current = window->getPart();
+	insertChildClient(current);
+	setCentralWidget(window);
+	createGUI();
+	menuBar()->hide();
+	QList<KToolBar*> tbars = toolBars();
+	for (int i = 0; i < tbars.size(); ++i) tbars[i]->hide();
+	// avoid shortcut conflicts
+	QList<QAction*> acts = actions();
+	for (int i = 0; i < acts.size (); ++i) acts[i]->setShortcutContext(Qt::WidgetWithChildrenShortcut);
+	RKWorkplace::mainWorkplace()->setWindowNotManaged(window);
 }
 
 void RKXMLGUIPreviewArea::prepareMenu () {
@@ -197,7 +179,7 @@ void RKPreviewManager::previewCommandDone (RCommand* command) {
 		setNoPreviewAvailable ();
 	} else {
 		QString warnings = command->warnings () + command->error ();
-		if (!warnings.isEmpty ()) warnings = QString ("<b>%1</b>\n<pre>%2</pre>").arg (i18n ("Warnings or Errors:")).arg (warnings.toHtmlEscaped ());
+		if (!warnings.isEmpty ()) warnings = QString("<b>%1</b>\n<pre>%2</pre>").arg(i18n("Warnings or Errors:"), warnings.toHtmlEscaped());
 		setStatusMessage (warnings);
 	}
 }
@@ -212,10 +194,10 @@ void RKPreviewManager::setCommand (RCommand* command) {
 
 	// Send an empty dummy command first. This is to sync up with any commands that should have been run _before_ the preview (e.g. to set up the preview area, so that status labels can be shown)
 	RCommand *dummy = new RCommand (QString (), RCommand::App | RCommand::Sync | RCommand::EmptyCommand);
-	connect (dummy->notifier(), &RCommandNotifier::commandFinished, [this]() { setStatusMessage (shortStatusLabel ()); });
-	RKGlobals::rInterface ()->issueCommand (dummy);
+	connect(dummy->notifier(), &RCommandNotifier::commandFinished, this, [this]() { setStatusMessage(shortStatusLabel()); });
+	RInterface::issueCommand (dummy);
 
-	RKGlobals::rInterface ()->issueCommand (command);
+	RInterface::issueCommand (command);
 	setStatusMessage (shortStatusLabel ());
 }
 
@@ -249,7 +231,7 @@ void RKPreviewManager::setStatusMessage (const QString& message) {
 	RKMDIWindow *window = RKWorkplace::mainWorkplace ()->getNamedWindow (id);
 	if (window) window->setStatusMessage (message);
 
-	emit (statusChanged());
+	emit statusChanged();
 }
 
 QString RKPreviewManager::shortStatusLabel() const {
@@ -266,4 +248,3 @@ QString RKPreviewManager::shortStatusLabel() const {
 	}
 }
 
-#include "rkxmlguipreviewarea.moc"

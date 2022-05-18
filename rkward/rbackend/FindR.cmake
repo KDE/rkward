@@ -5,7 +5,7 @@ IF(R_EXECUTABLE)
 	MESSAGE(STATUS "Specified by user")
 ENDIF(R_EXECUTABLE)
 SET(CMAKE_FIND_APPBUNDLE NEVER)  # Do not get fooled by R GUI on Mac
-FIND_PROGRAM(R_EXECUTABLE R)
+FIND_PROGRAM(R_EXECUTABLE R PATH_SUFFIXES lib/R/bin)
 
 IF(R_EXECUTABLE-NOTFOUND)
 	MESSAGE(FATAL_ERROR "Could NOT find R (TODO: name option)")
@@ -13,28 +13,30 @@ ELSE(R_EXECUTABLE-NOTFOUND)
 	MESSAGE(STATUS "Using R at ${R_EXECUTABLE}")
 ENDIF(R_EXECUTABLE-NOTFOUND)
 
-# find out about R architecture (needed for some paths)
-EXECUTE_PROCESS(
-	COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "--no-init-file" "-e" "cat(R.version$arch)"
-	OUTPUT_VARIABLE R_ARCH)
-	IF (${R_ARCH} STREQUAL "x86_64")
-		SET (R_ARCH "x64")
-	ENDIF (${R_ARCH} STREQUAL "x86_64")
-MESSAGE (STATUS "R architecture is ${R_ARCH}")
+IF(NOT NO_CHECK_R)
+    # find out about R architecture (needed for some paths)
+    EXECUTE_PROCESS(
+        COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "--no-init-file" "-e" "cat(R.version$arch)"
+        OUTPUT_VARIABLE R_ARCH)
+        IF (${R_ARCH} STREQUAL "x86_64")
+            SET (R_ARCH "x64")
+        ENDIF (${R_ARCH} STREQUAL "x86_64")
+    MESSAGE (STATUS "R architecture is ${R_ARCH}")
 
-# check R version.
-SET (R_MIN_VERSION "2.10.0")
-MESSAGE (STATUS "Checking R version")
-EXECUTE_PROCESS(
-	COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "--no-init-file" "-e" "cat (paste(R.version$major, R.version$minor, sep='.'))"
-	OUTPUT_VARIABLE R_VERSION)
-MESSAGE (STATUS "R version is ${R_VERSION}")
-EXECUTE_PROCESS(
-	COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "--no-init-file" "-e" "min_ver <- '${R_MIN_VERSION}'; if (compareVersion ('${R_VERSION}', min_ver) < 0) cat ('At least R version', min_ver, 'is required')"
-	OUTPUT_VARIABLE R_VERSION_STATUS)
-IF (R_VERSION_STATUS)
-	MESSAGE (FATAL_ERROR ${R_VERSION_STATUS})
-ENDIF (R_VERSION_STATUS)
+    # check R version.
+    SET (R_MIN_VERSION "2.10.0")
+    MESSAGE (STATUS "Checking R version")
+    EXECUTE_PROCESS(
+        COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "--no-init-file" "-e" "cat (paste(R.version$major, R.version$minor, sep='.'))"
+        OUTPUT_VARIABLE R_VERSION)
+    MESSAGE (STATUS "R version is ${R_VERSION}")
+    EXECUTE_PROCESS(
+        COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "--no-init-file" "-e" "min_ver <- '${R_MIN_VERSION}'; if (compareVersion ('${R_VERSION}', min_ver) < 0) cat ('At least R version', min_ver, 'is required')"
+        OUTPUT_VARIABLE R_VERSION_STATUS)
+    IF (R_VERSION_STATUS)
+        MESSAGE (FATAL_ERROR ${R_VERSION_STATUS})
+    ENDIF (R_VERSION_STATUS)
+ENDIF(NOT NO_CHECK_R)
 
 # find R_HOME
 
@@ -96,6 +98,14 @@ FIND_LIBRARY(LIBR_SO
 	PATHS ${R_HOME}/lib ${R_SHAREDLIBDIR} ${R_HOME}/bin ${R_HOME}/bin/${R_ARCH} ${R_HOME}/lib/${R_ARCH} ${PROJECT_BINARY_DIR}
 	NO_DEFAULT_PATH)
 IF(NOT LIBR_SO)
+# NOTE: Workaround for strange bug with cmake 3.17 failing to find existing R.dll, when MinGW is used.
+# Remove when cmake is working properly, again
+FIND_FILE(LIBR_SO
+	R.dll
+	PATHS ${R_HOME}/lib ${R_SHAREDLIBDIR} ${R_HOME}/bin ${R_HOME}/bin/${R_ARCH} ${R_HOME}/lib/${R_ARCH} ${PROJECT_BINARY_DIR}
+	NO_CMAKE_SYSTEM_PATH)
+ENDIF(NOT LIBR_SO)
+IF(NOT LIBR_SO)
 	MESSAGE(FATAL_ERROR "Not found. Make sure the location of R was detected correctly, above, and R was compiled with the --enable-R-shlib option")
 ELSE(NOT LIBR_SO)
 	MESSAGE(STATUS "Exists at ${LIBR_SO}")
@@ -110,23 +120,39 @@ ENDIF(NOT LIBR_SO)
 # as this is not available in some configurations of R
 
 MESSAGE(STATUS "Checking whether we should link against Rlapack library")
-FIND_LIBRARY(LIBR_LAPACK
-	Rlapack
-	PATHS ${R_SHAREDLIBDIR}
-	NO_DEFAULT_PATH)
-IF(NOT LIBR_LAPACK)
-	MESSAGE(STATUS "No, it does not exist in ${R_SHAREDLIBDIR}")
-ELSE(NOT LIBR_LAPACK)
-	MESSAGE(STATUS "Yes, ${LIBR_LAPACK} exists")
-	SET(R_USED_LIBS ${R_USED_LIBS} Rlapack)
-	IF(WIN32 OR APPLE)
-	ELSE(WIN32 OR APPLE)
-		# needed when linking to Rlapack on linux for some unknown reason.
-		# apparently not needed on windows (let's see, when it comes back to bite us, though)
+FIND_LIBRARY(R_LAPACK_LIBRARY Rlapack HINTS ${R_SHARED_LIB_DIR} )
+IF(NOT R_LAPACK_LIBRARY)
+	MESSAGE(STATUS "No, it does not exist in ${R_SHARED_LIB_DIR}")
+ELSE(NOT R_LAPACK_LIBRARY)
+	MESSAGE(STATUS "Yes, ${R_LAPACK_LIBRARY} exists")
+	SET(R_LIBRARIES ${R_LIBRARIES} ${R_LAPACK_LIBRARY})
+	IF(UNIX)
+		# libgfortran is needed when linking to Rlapack on linux for some unknown reason.
+		# apparently not needed on windows or Mac (let's see, when it comes back to bite us, though)
 		# and compiling on windows is hard enough even without requiring libgfortran, too.
-		SET(R_USED_LIBS ${R_USED_LIBS} gfortran)
-	ENDIF(WIN32 OR APPLE)
-ENDIF(NOT LIBR_LAPACK)
+		# Query gfortran to get the libgfortran.so path
+		FIND_PROGRAM(_GFORTRAN_EXECUTABLE NAMES gfortran)
+		IF(_GFORTRAN_EXECUTABLE)
+				EXECUTE_PROCESS(COMMAND ${_GFORTRAN_EXECUTABLE} -print-file-name=libgfortran.so
+				OUTPUT_VARIABLE _libgfortran_path
+				OUTPUT_STRIP_TRAILING_WHITESPACE
+				)
+		ENDIF()
+		IF(EXISTS ${_libgfortran_path})
+			SET(GFORTRAN_LIBRARY ${_libgfortran_path})
+		ELSE()
+			# if libgfortran wasn't found at this point, the installation is probably broken
+			# Let's try to find the library nonetheless.
+			FIND_LIBRARY(GFORTRAN_LIBRARY gfortran)
+		ENDIF()
+		IF (GFORTRAN_LIBRARY)
+			SET(R_LIBRARIES ${R_LIBRARIES} ${GFORTRAN_LIBRARY})
+		ELSE (GFORTRAN_LIBRARY)
+			MESSAGE(STATUS "gfortran is needed for Rlapack but it could not be found")
+			SET(ABORT_CONFIG TRUE)
+		ENDIF (GFORTRAN_LIBRARY)
+	ENDIF(UNIX)
+ENDIF(NOT R_LAPACK_LIBRARY)
 
 # for at least some versions of R, we seem to have to link against -lRlapack. Else loading some
 # R packages will fail due to unresolved symbols, or we can't link against -lR.

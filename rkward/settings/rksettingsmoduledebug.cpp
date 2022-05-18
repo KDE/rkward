@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rksettingsmoduledebug  description
-                             -------------------
-    begin                : Tue Oct 23 2007
-    copyright            : (C) 2007, 2009 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rksettingsmoduledebug - This file is part of RKWard (https://rkward.kde.org). Created: Tue Oct 23 2007
+SPDX-FileCopyrightText: 2007-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 #include "rksettingsmoduledebug.h"
 
 #include <KLocalizedString>
@@ -30,7 +20,9 @@
 
 #include "../misc/rkspinbox.h"
 #include "../misc/rkcommonfunctions.h"
-#include "../rkglobals.h"
+#include "../misc/rkcompatibility.h"
+#include "../misc/rkstyle.h"
+
 #include "../debug.h"
 
 RKSettingsModuleDebug::RKSettingsModuleDebug (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
@@ -40,7 +32,7 @@ RKSettingsModuleDebug::RKSettingsModuleDebug (RKSettings *gui, QWidget *parent) 
 
 	main_vbox->addWidget (RKCommonFunctions::wordWrappedLabel (i18n ("<b>These settings are for debugging purposes, only.</b> It is safe to leave them untouched. Also, these settings will only apply to the current session, and will not be saved.")));
 
-	main_vbox->addSpacing (2 * RKGlobals::spacingHint ());
+	main_vbox->addSpacing (2 * RKStyle::spacingHint ());
 
 	QLabel* label = new QLabel (i18n ("Debug level"), this);
 	debug_level_box = new RKSpinBox (this);
@@ -74,7 +66,7 @@ RKSettingsModuleDebug::RKSettingsModuleDebug (RKSettings *gui, QWidget *parent) 
 		box_layout->addWidget (*it);
 		(*it)->setChecked (RK_Debug::RK_Debug_Flags & debug_flags_group->id (*it));
 	}
-	connect (debug_flags_group, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &RKSettingsModuleDebug::settingChanged);
+	connect (debug_flags_group, RKCompatibility::groupButtonClicked(), this, &RKSettingsModuleDebug::settingChanged);
 	main_vbox->addWidget (group);
 
 
@@ -103,9 +95,9 @@ void RKSettingsModuleDebug::settingChanged (int) {
 	change ();
 }
 
-QString RKSettingsModuleDebug::caption () {
-	RK_TRACE (SETTINGS);
-	return (i18n ("Debug"));
+QString RKSettingsModuleDebug::caption() const {
+	RK_TRACE(SETTINGS);
+	return(i18n("Debug"));
 }
 
 void RKSettingsModuleDebug::applyChanges () {
@@ -121,20 +113,8 @@ void RKSettingsModuleDebug::applyChanges () {
 	RK_Debug::RK_Debug_Flags = flags;
 }
 
-void RKSettingsModuleDebug::save (KConfig *config) {
-	RK_TRACE (SETTINGS);
-	saveSettings (config);
-}
-
-void RKSettingsModuleDebug::saveSettings (KConfig *) {
-	RK_TRACE (SETTINGS);
-
-	// left empty on purpose
-}
-
-void RKSettingsModuleDebug::loadSettings (KConfig *) {
-	RK_TRACE (SETTINGS);
-
+void RKSettingsModuleDebug::syncConfig(KConfig*, RKConfigBase::ConfigSyncAction) {
+	RK_TRACE(SETTINGS);
 	// left empty on purpose
 }
 

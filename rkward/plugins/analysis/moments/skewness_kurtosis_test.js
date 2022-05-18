@@ -17,7 +17,9 @@ function insertTestCall () {
 	}
 }
 
-function printout () {
-	echo ('rk.header (' + i18n ("Skewness and Kurtosis") + ')\n');
+function printout (is_preview) {
+	if (!is_preview) {
+		echo ('rk.header (' + i18n ("Skewness and Kurtosis") + ')\n');
+	}
 	echo ('rk.results (results)\n');
 }

@@ -1,2 +1,0 @@
-Warning in kpss.test(var, null = "Trend", lshort = FALSE) :
-  p-value greater than printed p-value

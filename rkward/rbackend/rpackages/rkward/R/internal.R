@@ -117,23 +117,22 @@
 ".rk.do.error" <- function () {
 # comment in R sources says, it may not be good to query options during error handling. But what can we do, if R_ShowErrorMessages is not longer exported?
 	if (getOption ("show.error.messages")) {
-		.Call ("rk.do.error", c (geterrmessage ()), PACKAGE="(embedding)");
+		.rk.do.simple.call ("error", geterrmessage ())
 	}
 }
 
-#' @export
-".rk.set.reply" <- function (x) .rk.variables$.rk.rkreply <- x
-
-#' @export
 ".rk.do.call" <- function (x, args=NULL) {
-	.rk.set.reply (NULL)
-	.Call ("rk.do.command", c (x, args), PACKAGE="(embedding)");
-	return (.rk.variables$.rk.rkreply)
+	x <- .Call ("rk.do.command", c (x, args), PACKAGE="(embedding)");
+	if (is.null(x)) invisible(NULL)
+	else x
 }
 
-#' @export
 ".rk.do.plain.call" <- function (x, args=NULL, synchronous=TRUE) {
 	.Call ("rk.do.generic.request", c (x, args), isTRUE (synchronous), PACKAGE="(embedding)")
+}
+
+".rk.do.simple.call" <- function (x, args=NULL) {
+	.Call ("rk.simple", c (x, args), PACKAGE="(embedding)")
 }
 
 #' @export
@@ -175,8 +174,7 @@
 	list ("available" = list (available$Package, available$Title, available$Version, available$Repository, grepl ("rkward", available$Enhances)),
 		"installed" = list (inst$Package, inst$Title, inst$Version, inst$LibPath, grepl ("rkward", inst$Enhances)),
 		"new" = as.integer (new - 1),
-		"old" = list (as.integer (oldinst - 1), as.integer (oldavail - 1)),
-		"repos" = as.character (options("repos")$repos))
+		"old" = list (as.integer (oldinst - 1), as.integer (oldavail - 1)))
 }
 
 # package information formats may - according to the help - be subject to change. Hence this function to cope with "missing" values
@@ -270,30 +268,6 @@
 	slotnames <- methods::slotNames (class (x))
 	ret <- lapply (slotnames, function (slotname) slot (x, slotname))
 	names (ret) <- slotnames
-	ret
-}
-
-#' @export
-".rk.get.environment.children" <- function (x, envlevel=0, namespacename=NULL) {
-	ret <- list ()
-
-	if (envlevel < 2) {		# prevent infinite recursion
-		lst <- ls (x, all.names=TRUE)
-		if (is.null (namespacename)) {
-			for (childname in lst) {
-				ret[[childname]] <- .rk.get.structure (name=childname, envlevel=envlevel, envir=x)
-			}
-		} else {
-			# for R 2.4.0 or greater: operator "::" works if package has no namespace at all, or has a namespace with the symbol in it
-			ns <- tryCatch (asNamespace (namespacename), error = function(e) NULL)
-			for (childname in lst) {
-				misplaced <- FALSE
-				if ((!is.null (ns)) && (!exists (childname, envir=ns, inherits=FALSE))) misplaced <- TRUE
-				ret[[childname]] <- .rk.get.structure (name=childname, envlevel=envlevel, misplaced=misplaced, envir=x)
-			}
-		}
-	}
-
 	ret
 }
 

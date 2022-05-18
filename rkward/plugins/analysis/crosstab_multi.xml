@@ -11,6 +11,6 @@
 				<checkbox id="exclude_nas" label="Exclude missing values" checked="true"/>
 			</column>
 		</row>
+		<preview id="preview" mode="output"/>
 	</dialog>
-
 </document>

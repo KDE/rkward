@@ -72,17 +72,7 @@
 	}
 
 	# do call
-	res <- .rk.do.call ("doPlugin", callstrings)
-
-	# handle result
-	if (!is.null (res)) {
-		if (res$type == "warning") {
-			warning (res$message)
-		} else {
-			stop (res$message)
-		}
-	}
-
+	.rk.do.call ("doPlugin", callstrings)
 	invisible (TRUE)
 }
 
@@ -90,7 +80,7 @@
 #'
 #' @param pluginmap.files a character vector of file names to add. This may be left empty,
 #'                        if the only desired effect is to reload all active pluginmaps.
-#' @param force.add logical. Whether the pluginmap files should also be added, if they had
+#' @param force.add logical. Whether the pluginmap files should also be added, if# they had
 #'                  been previously de-selected in the settings menu, and regardless of their
 #'                  priority setting. In scripted usage, this should generally be set to FALSE.
 #' @param force.reload logical. By default the active pluginmaps are reloaded, only if any new ones
@@ -214,7 +204,7 @@ assign(".rk.preview.data", list (), envir=.rk.variables)
 #' ## NOT RUN
 #' pdata &lt;- rk.get.preview.data("SOMEID")
 #' if (is.null (pdata)) {
-#'   outfile &lt;- rk.get.tempfile.name(prefix="preview", extension=".txt")
+#'   outfile &lt;- rk.get.tempfile.name(prefix="preview", extension=".txt", directory=rk.tempdir ())
 #'   pdata &lt;- list(filename=outfile, on.delete=function (id) {
 #'     unlink(rk.get.preview.data(id)$filename)
 #'   })

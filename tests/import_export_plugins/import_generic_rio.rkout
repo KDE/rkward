@@ -1,0 +1,120 @@
+<h1>Generic data import</h1>
+<h2>Parameters</h2>
+<ul><li>File name: PATH/import_export_plugins_testfile.sav</li>
+<li>Object to save to: my.rio.data</li>
+</ul>
+DATE<br />
+
+
+<p align= center >
+<table cellspacing=0 border=1>
+<caption align=bottom class=captiondataframe></caption>
+<tr><td>
+	<table border=0 class=dataframe>
+	<tbody> 
+	<tr class= firstline > 
+		<th>&nbsp;  </th>
+		<th>A_long_variable_name  </th>
+		<th>äöüßéÈ  </th>
+		<th>Value_labels</th> 
+	</tr> 
+<tr> 
+<td class=firstcolumn>1
+</td>
+<td class=cellinside> 1
+</td>
+<td class=cellinside>1.1
+</td>
+<td class=cellinside> 1
+</td></tr>
+ 
+<tr> 
+<td class=firstcolumn>2
+</td>
+<td class=cellinside> 
+</td>
+<td class=cellinside>1.2
+</td>
+<td class=cellinside> 2
+</td></tr>
+ 
+<tr> 
+<td class=firstcolumn>3
+</td>
+<td class=cellinside> 3
+</td>
+<td class=cellinside>1.3
+</td>
+<td class=cellinside> 3
+</td></tr>
+ 
+<tr> 
+<td class=firstcolumn>4
+</td>
+<td class=cellinside> 
+</td>
+<td class=cellinside>1.4
+</td>
+<td class=cellinside> 4
+</td></tr>
+ 
+<tr> 
+<td class=firstcolumn>5
+</td>
+<td class=cellinside> 5
+</td>
+<td class=cellinside>1.5
+</td>
+<td class=cellinside> 5
+</td></tr>
+ 
+<tr> 
+<td class=firstcolumn>6
+</td>
+<td class=cellinside> 6
+</td>
+<td class=cellinside> NA
+</td>
+<td class=cellinside> 5
+</td></tr>
+ 
+<tr> 
+<td class=firstcolumn>7
+</td>
+<td class=cellinside> 7
+</td>
+<td class=cellinside>1.6
+</td>
+<td class=cellinside> 
+</td></tr>
+ 
+<tr> 
+<td class=firstcolumn>8
+</td>
+<td class=cellinside> 7
+</td>
+<td class=cellinside>1.7
+</td>
+<td class=cellinside> 5
+</td></tr>
+ 
+<tr> 
+<td class=firstcolumn>9
+</td>
+<td class=cellinside> 8
+</td>
+<td class=cellinside>1.8
+</td>
+<td class=cellinside> 0
+</td></tr>
+ 
+	</tbody>
+</table>
+ </td></table>
+ <br>
+
+<p class='character'>var</p>
+
+<p class='character'>var</p>
+
+<p class='character'>var</p>

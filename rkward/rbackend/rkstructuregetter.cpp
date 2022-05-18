@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkstructuregetter  -  description
-                             -------------------
-    begin                : Wed Apr 11 2007
-    copyright            : (C) 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkstructuregetter - This file is part of RKWard (https://rkward.kde.org). Created: Wed Apr 11 2007
+SPDX-FileCopyrightText: 2007-2011 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkstructuregetter.h"
 
@@ -137,6 +127,11 @@ void RKStructureGetter::getStructureWrapper (GetStructureWorkerArgs *data) {
 	data->getter->getStructureWorker (data->toplevel, data->name, data->add_type_flags, data->storage, data->nesting_depth);
 }
 
+/** Temporarily resolve a promise, usually without keeping its value (unless keep_evalled_promises is set, which it never is, at the time of this writing).
+ *  This is useful for peeking into large objects while building the object tree, without permanently using lots of RAM.
+ *
+ *  @note This is is not quite perfect, however. E.g. if we have two promises a and b, where b takes a slice out of a, then
+ *        evaluating b will force a, permanently. */
 SEXP RKStructureGetter::resolvePromise (SEXP from) {
 	RK_TRACE (RBACKEND);
 
@@ -147,9 +142,10 @@ SEXP RKStructureGetter::resolvePromise (SEXP from) {
 			RK_DEBUG (RBACKEND, DL_DEBUG, "temporarily resolving unbound promise");
 
 			PROTECT (from);
-			SET_PRSEEN(from, 1);
+			//SET_PRSEEN(from, 1);  // NOTE: SET_PRSEEN was removed from Rinternals.h in R 4.2.0. Its only use is to prevent recursion, however.
+			                        //       Not setting it from here, only means, any recursion will be detected one level later.
 			ret = Rf_eval(PRCODE(from), PRENV(from));
-			SET_PRSEEN(from, 0);
+			//SET_PRSEEN(from, 0);
 			if (keep_evalled_promises) {
 				SET_PRVALUE(from, ret);
 				SET_PRENV(from, R_NilValue);

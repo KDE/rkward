@@ -1,0 +1,33 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="import_generic_rio.js" />
+	<help file="import_generic_rio.rkh" />
+	<snippets>
+		<include file="convert_encoding.xml"/>
+	</snippets>
+	<logic>
+		<external id="filename"/>
+		<connect governor="filename" client="file.selection"/>
+		<connect governor="import_all.state.not" clinet="which.enabled"/>
+		<insert snippet="encoding_logic"/>
+	</logic>
+	<dialog label="Generic data import">
+		<tabbook>
+			<tab id="tab_general" label="General">
+				<browser type="file" id="file" label="File name" filter="*"/>
+				<stretch/>
+				<row>
+					<saveobject id="saveto" initial="imported.data" label="Object to save to"/>
+					<checkbox id="doedit" value="1" value_unchecked="0" label="Edit Object" checked="true" />
+				</row>
+				<stretch/>
+				<frame label="If the file contains more than one dataset">
+					<checkbox id="import_list" checked="false" label="Import a list of all datasets"/>
+					<input label="Import specific sub-set" id="which"/>
+				</frame>
+				<preview id="preview" active="true" mode="data" label="Preview"/>
+			</tab>
+			<insert snippet="encoding_tab"/>
+		</tabbook>
+	</dialog>
+</document>

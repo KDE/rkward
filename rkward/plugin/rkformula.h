@@ -1,26 +1,16 @@
-/***************************************************************************
-                          rkformula  -  description
-                             -------------------
-    begin                : Thu Aug 12 2004
-    copyright            : (C) 2004, 2006, 2007, 2012, 2014 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkformula - This file is part of the RKWard project. Created: Thu Aug 12 2004
+SPDX-FileCopyrightText: 2004-2014 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 #ifndef RKFORMULA_H
 #define RKFORMULA_H
 
 #include "rkcomponent.h"
 
 #include <qstring.h>
-#include <qmap.h>
+#include <QHash>
 #include "../core/robject.h"
 
 class QPushButton;
@@ -80,7 +70,7 @@ private:
 	void makeModelString ();
 	QString mangleName (RObject *var);
 	
-	typedef QMap<QTreeWidgetItem*, RObject*> ItemMap;
+	typedef QHash<QTreeWidgetItem*, RObject*> ItemMap;
 	ItemMap predictors_map;
 	
 	struct Interaction {
@@ -88,7 +78,7 @@ private:
 		RObject::ObjectList vars;
 	};
 	
-	typedef QMap<QTreeWidgetItem*, Interaction> InteractionMap;
+	typedef QHash<QTreeWidgetItem*, Interaction> InteractionMap;
 	InteractionMap interaction_map;
 	
 	/** recursively cross the given source variables on level level. Returns the resulting terms in an QList */

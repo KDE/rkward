@@ -1,19 +1,9 @@
-/***************************************************************************
-                          katepluginintegration  -  description
-                             -------------------
-    begin                : Mon Jun 12 2017
-    copyright            : (C) 2017-2020 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+katepluginintegration - This file is part of the RKWard project. Created: Mon Jun 12 2017
+SPDX-FileCopyrightText: 2017-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef KATEPLUGININTEGRATION_H
 #define KATEPLUGININTEGRATION_H
@@ -43,6 +33,7 @@ public:
 	void unloadPlugin(const QString& identifier);
 	void loadPlugins(const QStringList &plugins);
 	KatePluginIntegrationWindow *mainWindow() const { return window; };
+	int knownPluginCount() const { return known_plugins.size(); };
 private slots:
 friend class KatePluginIntegrationWindow;
 	void saveConfigAndUnload();
@@ -77,7 +68,10 @@ class KatePluginIntegrationWindow : public QObject, public KXMLGUIClient {
 	Q_OBJECT
 public:
 	KatePluginIntegrationWindow(KatePluginIntegrationApp *parent);
+	~KatePluginIntegrationWindow();
 	KTextEditor::MainWindow *mainWindow() const { return main; };
+	KXMLGUIClient* persistentGuiClient() { return this; }
+	KXMLGUIClient* dynamicGuiClient() const { return dynamic_actions_client; }
 private slots:
 	// These are the implementations of the KTextEditor::MainWindow interface.
 	// NOTE that they are not technically overrides, but get invoked via QMetaObject::invokeMethod()
@@ -113,9 +107,10 @@ friend class KatePluginIntegrationApp;
 		QList<KXMLGUIClient*> clients;
 		QList<RKMDIWindow*> windows;
 	};
-	QHash<KTextEditor::Plugin*, PluginResources> plugin_resources;
+	QHash<QObject*, PluginResources> plugin_resources;
 
 	KatePluginIntegrationApp *app;
+	KXMLGUIClient *dynamic_actions_client;
 private slots:
 	void catchXMLGUIClientsHack(KXMLGUIClient* client);
 	void activeWindowChanged(RKMDIWindow *window);

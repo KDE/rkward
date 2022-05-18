@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rksettingsmodule  -  description
-                             -------------------
-    begin                : Fri Apr 22 2005
-    copyright            : (C) 2005-2018 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rksettingsmodule - This file is part of the RKWard project. Created: Fri Apr 22 2005
+SPDX-FileCopyrightText: 2005-2018 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef RKSETTINGSMODULEOBJECTBROWSER_H
 #define RKSETTINGSMODULEOBJECTBROWSER_H
@@ -37,16 +27,14 @@ public:
 
 /** applies current settings in this RKSettingsModule. This will only be called, if hasChanges () is true */
 	void applyChanges () override;
-/** saves current changes to the given KConfig
-@param config probably always RKGlobals::rkApp ()->config. But passing this as an argument is both more flexible and saves #including files.*/
-	void save (KConfig *config) override;
 
 /** @returns the caption ("Workspace Browser") */
-	QString caption () override;
+	QString caption() const override;
+	QIcon icon() const override;
 
-	static void saveSettings (KConfig *config);
-	static void loadSettings (KConfig *config);
-	static void validateSettingsInteractive (QList<RKSettingsWizardPage*>*) {};
+	void save(KConfig *config) override { syncConfig(config, RKConfigBase::SaveConfig); };
+	static void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction a);
+	static void validateSettingsInteractive (QList<RKSetupWizardItem*>*) {};
 
 	static bool isDefaultForWorkspace (RKObjectListViewSettings::PersistentSettings setting) { return workspace_settings[setting]; };
 	static bool isDefaultForVarselector (RKObjectListViewSettings::PersistentSettings setting) { return varselector_settings[setting]; };
@@ -63,10 +51,10 @@ public slots:
 	void addBlackList (QStringList *string_list);
 private:
 	MultiStringSelector *blacklist_choser;
-	static QStringList getstructure_blacklist;
+	static RKConfigValue<QStringList> getstructure_blacklist;
 
-	static bool workspace_settings[RKObjectListViewSettings::SettingsCount];
-	static bool varselector_settings[RKObjectListViewSettings::SettingsCount];
+	static RKConfigValue<bool> workspace_settings[RKObjectListViewSettings::SettingsCount];
+	static RKConfigValue<bool> varselector_settings[RKObjectListViewSettings::SettingsCount];
 };
 
 #endif

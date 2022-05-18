@@ -64,22 +64,24 @@ function calculate(){
 	echo("\n\t)\n\n");
 }
 
-function printout(){
+function printout(is_preview){
 	// printout the results
 
 	var y = getValue("y");
 	var confintChecked = getValue("confint.checked");
 	var correct = getValue("correct");
 	var mu = getValue("mu");
-	var header = new Header (noquote ('wcox.result$method'));
-	header.add (i18n ("Comparing"), noquote ('names[1]'));
-	if (y) header.add (i18nc ("compare against", "against"), noquote ('names[2]'));
-	header.add ("H1", noquote ('rk.describe.alternative (wcox.result)'));
-	header.add (i18n ("Continuity correction in normal approximation for p-value"), correct ? "TRUE" : "FALSE");
-	header.addFromUI ("exact");
-	if (y) header.addFromUI ("paired");
-	header.addFromUI ("mu");
-	header.print ();
+	if (!is_preview) {
+		var header = new Header (noquote ('wcox.result$method'));
+		header.add (i18n ("Comparing"), noquote ('names[1]'));
+		if (y) header.add (i18nc ("compare against", "against"), noquote ('names[2]'));
+		header.add ("H1", noquote ('rk.describe.alternative (wcox.result)'));
+		header.add (i18n ("Continuity correction in normal approximation for p-value"), correct ? "TRUE" : "FALSE");
+		header.addFromUI ("exact");
+		if (y) header.addFromUI ("paired");
+		header.addFromUI ("mu");
+		header.print ();
+	}
 	echo("rk.results (list (\n\t" + i18n ("Variable Names") + "=names,\n\t" + i18nc ("a statistic indicator", "Statistic") + "=wcox.result$statistic,\n\t" + i18n ("Location Shift") + "=wcox.result$null.value,\n\t" + i18n ("Hypothesis") + "=wcox.result$alternative,\n" + "\tp=wcox.result$p.value");
 	if(confintChecked) {
 		echo(",\n\t" + i18n ("Confidence interval percent") + "=(100 * attr(wcox.result$conf.int, \"conf.level\")),\n\t" + i18n ("Confidence interval of difference") + "=wcox.result$conf.int,\n\t" + i18n ("Difference in Location") + "=wcox.result$estimate");

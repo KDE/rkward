@@ -1,34 +1,25 @@
-/***************************************************************************
-                          robjectbrowser  -  description
-                             -------------------
-    begin                : Thu Aug 19 2004
-    copyright            : (C) 2004 - 2017 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+robjectbrowser - This file is part of RKWard (https://rkward.kde.org). Created: Thu Aug 19 2004
+SPDX-FileCopyrightText: 2004-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 #include "robjectbrowser.h"
 
-#include <qlayout.h>
-#include <qpushbutton.h>
+#include <QPushButton>
 #include <QFocusEvent>
 #include <QVBoxLayout>
 #include <QMenu>
 #include <QInputDialog>
+#include <QApplication>
+#include <QMimeData>
+#include <QClipboard>
 
 #include <KLocalizedString>
 #include <kmessagebox.h>
 
 #include "../rkward.h"
 #include "rkhelpsearchwindow.h"
-#include "../rkglobals.h"
 #include "../core/robjectlist.h"
 #include "../core/renvironmentobject.h"
 #include "../core/rkmodificationtracker.h"
@@ -37,6 +28,7 @@
 #include "../misc/rkdummypart.h"
 #include "../misc/rkstandardicons.h"
 #include "../misc/rkstandardactions.h"
+#include "../misc/rkspecialactions.h"
 #include "rkworkplace.h"
 #include "../dataeditor/rkeditor.h"
 
@@ -132,6 +124,8 @@ RObjectBrowserInternal::RObjectBrowserInternal (QWidget *parent, RObjectBrowser 
 	connect (actions[CopyToGlobalEnv], &QAction::triggered, this, &RObjectBrowserInternal::popupCopyToGlobalEnv);
 	actions.insert (Delete, new QAction (i18n ("Delete"), this));
 	connect (actions[Delete], &QAction::triggered, this, &RObjectBrowserInternal::popupDelete);
+	actions.insert(NewFromClipboard, new QAction(QIcon::fromTheme("edit-paste"), i18n("New object from clipboard"), this));
+	connect (actions[NewFromClipboard], &QAction::triggered, this, []() { RKPasteSpecialDialog dia(RKWardMainWindow::getMain(), true); dia.exec(); });
 	actions.insert (Unload, new QAction (i18n ("Unload Package"), this));
 	connect (actions[Unload], &QAction::triggered, this, &RObjectBrowserInternal::popupUnload);
 	actions.insert (LoadUnloadPackages, new QAction (i18n ("Load / Unload Packages"), this));
@@ -193,7 +187,7 @@ void RObjectBrowserInternal::popupCopy () {
 	if (ok) {
 		QString valid = RObjectList::getGlobalEnv ()->validizeName (name);
 		if (valid != name) KMessageBox::sorry (this, i18n ("The name you specified was already in use or not valid. Renamed to %1", valid), i18n ("Invalid Name"));
-		RKGlobals::rInterface ()->issueCommand (RObject::rQuote (valid) + " <- " + object->getFullName (), RCommand::App | RCommand::ObjectListUpdate);
+		RInterface::issueCommand (RObject::rQuote (valid) + " <- " + object->getFullName (), RCommand::App | RCommand::ObjectListUpdate);
 	}
 }
 
@@ -205,7 +199,7 @@ void RObjectBrowserInternal::popupCopyToGlobalEnv () {
 
 	QString valid = RObjectList::getGlobalEnv ()->validizeName (name);
 	if (valid != name) KMessageBox::sorry (this, i18n ("An object named '%1' already exists in the GlobalEnv. Created the copy as '%2' instead.", name, valid), i18n ("Name already in use"));
-	RKGlobals::rInterface ()->issueCommand (RObject::rQuote (valid) + " <- " + object->getFullName (), RCommand::App | RCommand::ObjectListUpdate);
+	RInterface::issueCommand (RObject::rQuote (valid) + " <- " + object->getFullName (), RCommand::App | RCommand::ObjectListUpdate);
 }
 
 void RObjectBrowserInternal::popupView () {
@@ -216,7 +210,7 @@ void RObjectBrowserInternal::popupView () {
 
 void RObjectBrowserInternal::popupDelete () {
 	RK_TRACE (APP);
-	RKGlobals::tracker ()->removeObject (list_view->menuObject ());
+	RKModificationTracker::instance()->removeObject (list_view->menuObject ());
 }
 
 void RObjectBrowserInternal::popupUnload () {
@@ -239,7 +233,7 @@ void RObjectBrowserInternal::popupRename () {
 	if (ok) {
 		QString valid = static_cast<RContainerObject*> (list_view->menuObject ()->parentObject ())->validizeName (name);
 		if (valid != name) KMessageBox::sorry (this, i18n ("The name you specified was already in use or not valid. Renamed to %1", valid), i18n ("Invalid Name"));
-		RKGlobals::tracker ()->renameObject (list_view->menuObject (), valid);
+		RKModificationTracker::instance()->renameObject (list_view->menuObject (), valid);
 	}
 }
 
@@ -264,6 +258,11 @@ void RObjectBrowserInternal::contextMenuCallback (RObject *, bool *) {
 	actions[Copy]->setVisible (object->canRead () && (!object->isType (RObject::ToplevelEnv)));
 	actions[CopyToGlobalEnv]->setVisible (object->canRead () && (!object->isInGlobalEnv()) && (!object->isType (RObject::ToplevelEnv)));
 	actions[Delete]->setVisible (object->canRemove ());
+	{
+		const QClipboard *clipboard = QApplication::clipboard();
+		const QMimeData *mime_data = clipboard->mimeData();
+		actions[NewFromClipboard]->setEnabled(mime_data->hasText());
+	}
 	actions[Unload]->setVisible (object->isType (RObject::PackageEnv));
 	actions[LoadUnloadPackages]->setVisible (object == RObjectList::getObjectList ());
 }

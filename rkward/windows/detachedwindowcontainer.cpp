@@ -1,19 +1,9 @@
-/***************************************************************************
-                          detachedwindowcontainer  -  description
-                             -------------------
-    begin                : Wed Oct 21 2005
-    copyright            : (C) 2005-2016 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+detachedwindowcontainer - This file is part of RKWard (https://rkward.kde.org). Created: Wed Oct 21 2005
+SPDX-FileCopyrightText: 2005-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "detachedwindowcontainer.h"
 
@@ -33,7 +23,7 @@
 #include "../misc/rkstandardicons.h"
 #include "../misc/rkxmlguisyncer.h"
 #include "rkworkplace.h"
-#include "../rkglobals.h"
+
 #include "../debug.h"
 
 /* Warning! Do not pass a parent widget to the KParts::MainWindow. Otherwise there will be strange crahes while removing the KXMLGUIClients! (In this case: Open a help window, and detach it. Open another help window attached. Close the detached one, then close the attached one -> crash; KDE 3.5.5) */
@@ -76,8 +66,15 @@ DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture
 	widget_to_capture->setParent (this);
 	setCentralWidget (widget_to_capture);
 	widget_to_capture->show ();
-	createGUI (widget_to_capture->getPart ());
+	createGUI(widget_to_capture->getPart());
+//	if (widget_to_capture->uiBuddy()) factory()->addClient(widget_to_capture->uiBuddy());
 	captured = widget_to_capture;
+	// Special case for graph windows: We don't want to touch their default size before showing. So tell the toolbars to step back, if needed.
+	if (widget_to_capture->isType(RKMDIWindow::X11Window)) {
+		foreach (KToolBar *bar, toolBars()) {
+			bar->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
+		}
+	}
 
 	hideEmptyMenus ();
 	// hide empty menus now, and after any reloads
@@ -149,7 +146,7 @@ void DetachedWindowContainer::slotReattach () {
 void DetachedWindowContainer::closeEvent (QCloseEvent *e) {
 	RK_TRACE (APP);
 
-	if (captured->close (true)) {
+	if (captured->close (RKMDIWindow::AutoAskSaveModified)) {
 		e->accept ();
 	} else {
 		e->ignore ();

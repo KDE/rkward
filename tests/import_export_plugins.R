@@ -36,11 +36,14 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 			oldwd <- getwd ()
 			on.exit (setwd (oldwd))
 
-			rk.call.plugin ("rkward::setworkdir", dir.selection=file.path (getwd(), ".."), submit.mode="submit")
+			newwd = file.path (getwd(), "testdir")
+			dir.create(newwd)
+			rk.call.plugin ("rkward::setworkdir", dir.selection=newwd, submit.mode="submit")
 			stopifnot (oldwd != getwd ())
 
-			rk.call.plugin ("rkward::setworkdir", dir.selection=file.path (getwd(), "import_export_plugins"), submit.mode="submit")
+			rk.call.plugin ("rkward::setworkdir", dir.selection=oldwd, submit.mode="submit")
 			stopifnot (oldwd == getwd ())
+			unlink(newwd)
 		}),
 		new ("RKTest", id="import_spss", call=function () {
 # NOTE: read.spss currently failing when run in non iso8859-1 locale. See http://r.789695.n4.nabble.com/read-spss-locale-and-encodings-td881149.html
@@ -53,6 +56,13 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 			# WARNING: TODO: We don't use the value labels of the third
 			# variable, yet.
 		}, libraries=c("foreign"), files=c("../import_export_plugins_testfile.sav")),
+		new ("RKTest", id="import_generic_rio", call=function () {
+			rk.call.plugin ("rkward::import_generic_rio", do_locale_conversion.state="0", doedit.state="0", file.selection=file.path (getwd(), "import_export_plugins_testfile.sav"), saveto.objectname="my.rio.data", use_labels.state="1", submit.mode="submit")
+
+			# In order to check, whether the import was correct
+			rk.print (my.rio.data)
+			for (var in my.rio.data) rk.print (rk.get.description(var))
+		}, libraries=c("rio"), files=c("../import_export_plugins_testfile.sav")),
 		new ("RKTest", id="import_stata", call=function () {
 			rk.call.plugin ("rkward::import_stata", convert_dates.state="1", convert_factors.state="1", convert_underscore.state="0", do_locale_conversion.state="1", doedit.state="0", encoding.string="ISO8859-1", file.selection=file.path (getwd(), "import_export_plugins_testfile.dta"), missing_type.state="0", saveto.objectname="my.stata.data", saveto.parent=".GlobalEnv", submit.mode="submit")
 
@@ -102,21 +112,30 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 		new ("RKTest", id="write_vector_matrix", call=function () {
 			assign ("testx", c (1:10), globalenv())
 			rk.sync.global()
+			file <- file.path (getwd(), "data")
 
-			rk.call.plugin ("rkward::save_variables", append.state="FALSE", data.available="testx", file.selection=file.path (getwd(), "data"), ncolumns.real="2.", sep.string=",", submit.mode="submit")
+			rk.call.plugin ("rkward::save_variables", append.state="FALSE", data.available="testx", file.selection=file, ncolumns.real="2.", sep.string=",", submit.mode="submit")
 
 			x <- readLines ("data")
 			for (line in x) rk.print (line)
+			unlink(file)
 		}),
 		new ("RKTest", id="write_csv", call=function () {
 			assign ("women", datasets::women, globalenv())
 			rk.sync.global()
+			file <- file.path (getwd(), "data")
 
-			rk.call.plugin ("rkward::save_csv", dec.string=".", encoding.string="", eol.string="\\n", file.selection=file.path (getwd(), "data"), na.text="NA", qmethod.string="double", quick.string="csv", quote.state="1", rowname.string="TRUE", sep.string=",", x.available="women", submit.mode="submit")
+			rk.call.plugin ("rkward::save_csv", dec.string=".", encoding.string="", eol.string="\\n", file.selection=file, na.text="NA", qmethod.string="double", quick.string="csv", quote.state="1", rowname.string="TRUE", sep.string=",", x.available="women", submit.mode="submit")
 
 			x <- readLines ("data")
 			for (line in x) rk.print (line)
+			unlink(file)
 		}),
+		new ("RKTest", id="git_install", call=function () {
+			# Intentionally using a non-existent path, as we do not want to install a package. This test still allows to check that the generated code remains as expected
+			# (note: plugin linked from internal help pages!)
+			rk.call.plugin ("rkward::install_from_git", fullURL.text="https://github.com/does/not/exist/404.git", submit.mode="submit")
+		}, libraries=c("devtools", "usethis")),
 		new ("RKTest", id="package_skeleton", call=function () {
 			# create two functions to use
 			assign ("skel.func1", rkwardtests::rktest.getTempDir, envir=globalenv())

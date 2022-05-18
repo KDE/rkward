@@ -7,11 +7,13 @@ function calculate () {
 	echo ('result <- bartlett.test (list (' + vars + '))\n');
 }
 
-function printout () {
+function printout (is_preview) {
 	echo ('names <- rk.get.description (' + vars + ')\n');
 	echo ('\n');
-	echo ('rk.header (result$method)\n');
-	echo ('\n');
+	if (!is_preview) {
+		echo ('rk.header (result$method)\n');
+		echo ('\n');
+	}
 	echo ('rk.results (list (\n');
 	echo ('	' + i18n ("Variables") + '=names,\n');
 	echo ('	' + i18n ("Bartlett's K-squared") + '=result$statistic,\n');

@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkcomponent  -  description
-                             -------------------
-    begin                : Tue Dec 13 2005
-    copyright            : (C) 2005, 2006, 2007, 2009, 2010, 2011, 2012, 2014 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkcomponent - This file is part of the RKWard project. Created: Tue Dec 13 2005
+SPDX-FileCopyrightText: 2005-2014 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef RKCOMPONENT_H
 #define RKCOMPONENT_H
@@ -115,7 +105,7 @@ public:
 /** currently valid? default implementation always returns true. @see recursiveStatus()
   * reimplement this in subclasses, if components may become invalid.
   * 
-  * @note: A component will be "satisfied" even when invalid, if is is not required. Also, a required component is implicitly not satisfied, if any of its children are not satisfied.
+  * @note: A component will be "satisfied" even when invalid, if it is not required. Also, a required component is implicitly not satisfied, if any of its children are not satisfied.
   * In general, use isSatisfied() to query the status of components, not isValid(). */
 	virtual bool isValid () { return true; };
 /** set to required: will only be satisfied if it is valid (and all it's children). Else: always satisfied (but subclasses might override to always be dissatisfied on really bad values. By default RKComponentBase is required at construction */

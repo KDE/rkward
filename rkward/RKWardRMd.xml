@@ -1,0 +1,64 @@
+<snippets name="R Markdown (RKWard)" filetypes="R Markdown" authors="RKWard Team" namespace="SnippetsRmd" license="BSD">
+ <script>require("range.js")
+require("cursor.js")
+require("document.js")
+require("view.js")
+
+function fileName() { return document.fileName(); }
+function encoding() { return document.encoding(); }
+function year() { return new Date().getFullYear(); }
+function upper(x) { return x.toUpperCase(); }
+function lower(x) { return x.toLowerCase(); }
+function lineCommand(command) {
+    if (view.selectedText().length > 0) {
+        let prefix = view.selection().start.column > 0 ? "\n" : "";
+        let postfix = document.line(view.selection().end.line).length > view.selection().end.column ? "\n" : "";
+        return (prefix + command + " " + view.selectedText() + postfix);
+    }
+
+    let l = view.cursorPosition().line;
+    document.insertText(l, 0, command + " ");
+    return "";
+}
+
+function rangeCommand(command, def) {
+    if (view.selectedText().length > 0) {
+        return command.replace("%%1", view.selectedText());
+    } else {
+        return command.replace("%%1", def);
+    }
+}
+</script>
+ <item>
+  <match>Heading1</match>
+  <fillin>${lineCommand("#")}</fillin>
+ </item>
+ <item>
+  <match>Heading2</match>
+  <fillin>${lineCommand("##")}</fillin>
+ </item>
+ <item>
+  <match>Heading3</match>
+  <fillin>${lineCommand("###")}</fillin>
+ </item>
+ <item>
+  <match>Bold</match>
+  <fillin>${rangeCommand("**%%1**", "Bold")}</fillin>
+ </item>
+ <item>
+  <match>Italics</match>
+  <fillin>${rangeCommand("*%%1*", "Italics")}</fillin>
+ </item>
+ <item>
+  <match>Strikethrough</match>
+  <fillin>${rangeCommand("~~%%1~~", "Strikethrough")}</fillin>
+ </item>
+ <item>
+  <match>Link</match>
+  <fillin>${rangeCommand("(title)[%%1]", "URL")}</fillin>
+ </item>
+ <item>
+  <match>Code_Block</match>
+  <fillin>${rangeCommand("\n```%%1```\n", "\nx &lt;- 1\n")}</fillin>
+ </item>
+</snippets>

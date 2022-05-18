@@ -1,19 +1,9 @@
-/***************************************************************************
-                          rkhelpsearchwindow  -  description
-                             -------------------
-    begin                : Fri Feb 25 2005
-    copyright            : (C) 2005, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
-    email                : thomas.friedrichsmeier@kdemail.net
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+rkhelpsearchwindow - This file is part of RKWard (https://rkward.kde.org). Created: Fri Feb 25 2005
+SPDX-FileCopyrightText: 2005-2011 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "rkhelpsearchwindow.h"
 
@@ -37,7 +27,7 @@
 #include "../rbackend/rcommandreceiver.h"
 #include "../rbackend/rksessionvars.h"
 #include "../debug.h"
-#include "../rkglobals.h"
+
 #include "../rkward.h"
 #include "../core/robject.h"
 #include "../misc/rkcommonfunctions.h"
@@ -168,7 +158,7 @@ void RKHelpSearchWindow::getFunctionHelp (const QString &function_name, const QS
 	command.append (")");
 	if (type == "vignette") command.append (")");
 
-	RKGlobals::rInterface ()->issueCommand (command, RCommand::App | RCommand::GetStringVector, i18n ("Find HTML help for %1", function_name), this, GET_HELP);
+	RInterface::issueCommand (command, RCommand::App | RCommand::GetStringVector, i18n ("Find HTML help for %1", function_name), this, GET_HELP);
 }
 
 void RKHelpSearchWindow::slotFindButtonClicked () {
@@ -201,7 +191,7 @@ void RKHelpSearchWindow::slotFindButtonClicked () {
 
 	QString s = ".rk.get.search.results (" + RObject::rQuote (field->currentText ()) + ", agrep=" + agrep + ", ignore.case=" + ignoreCase + package + ", fields=" + fields + ')';
 	
-	RKGlobals::rInterface ()->issueCommand (s, RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString (), this, HELP_SEARCH, 0);
+	RInterface::issueCommand (s, RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString (), this, HELP_SEARCH, 0);
 	setEnabled (false);
 	field->addItem (field->currentText ());
 }

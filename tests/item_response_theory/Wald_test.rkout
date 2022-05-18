@@ -12,36 +12,32 @@ DATE<br />
 <tr><td>
 	<table border=0 class=dataframe>
 	<tbody> <tr class= firstline > <th></th><th>z-statistic</th><th>p-value</th> </tr>
- 
+ <tr> 
 <tr><td class=firstcolumn>beta I1.c1</td>
 <td class=cellinside> 0.39</td>
-<td class=cellinside> 0.70</td></tr>
- 
+<td class=cellinside> 0.70</td> </tr>
+ <tr> 
 <tr><td class=firstcolumn>beta I1.c2</td>
 <td class=cellinside> 0.15</td>
-<td class=cellinside> 0.88</td></tr>
- 
+<td class=cellinside> 0.88</td> </tr>
+ <tr> 
 <tr><td class=firstcolumn>beta I1.c3</td>
 <td class=cellinside> 0.16</td>
-<td class=cellinside> 0.88</td></tr>
- 
+<td class=cellinside> 0.88</td> </tr>
+ <tr> 
 <tr><td class=firstcolumn>beta I6.c1</td>
 <td class=cellinside>-0.39</td>
-<td class=cellinside> 0.70</td></tr>
- 
+<td class=cellinside> 0.70</td> </tr>
+ <tr> 
 <tr><td class=firstcolumn>beta I6.c2</td>
 <td class=cellinside> 0.14</td>
-<td class=cellinside> 0.89</td></tr>
- 
+<td class=cellinside> 0.89</td> </tr>
+ <tr> 
 <tr><td class=firstcolumn>beta I6.c3</td>
 <td class=cellinside> 0.15</td>
-<td class=cellinside> 0.88</td></tr>
+<td class=cellinside> 0.88</td> </tr>
  
 	</tbody>
 </table>
  </td></table>
  <br>
-<h2>Messages, warnings, or errors:</h2>
-<pre class="output_normal">I2 I3 I4 I5 
-Subgroup models are estimated without these items!
-</pre>
