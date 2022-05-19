@@ -97,7 +97,7 @@ public:
 	void handleRequest(RBackendRequest *request) { handleRequest (request, true); };
 /** A relic of history. In contrast to handlePlainGenericRequest(), these requests support running sub-commands. However, the remaining requests which are currently handled this way
 should probably be converted to dedicated RKRBackendRequest's in the future. See also handlePlainGenericRequest(). */
-	GenericRRequestResult handleRequestWithSubcommands(const QStringList &list);
+	GenericRRequestResult handleRequestWithSubcommands(const QString &call, const QVariant &args=QVariant());
 /** Sends a request to the frontend and returns the result (empty in case of asynchronous requests). Note that this function has considerable overlap with
 handleHistoricalSubstackRequest(). Exactly which requests get handled by which function is somewhat arbitrary, ATM. However, request that do not need sub-commands to be run, should generally be converted to use handlePlainGenericRequest(). (And probably all historicalSubstackRequests should be replaced!) */
 	GenericRRequestResult handlePlainGenericRequest(const QStringList &parameters, bool synchronous);
@@ -209,8 +209,6 @@ private:
 	QString output_file;
 /** A copy of the names of the toplevel environments (as returned by "search ()"). */
 	QStringList toplevel_env_names;
-/** A copy of the names of the toplevel symbols in the .GlobalEnv. */
-	QStringList global_env_toplevel_names;
 /** check whether the object list / global environment / individual symbols have changed, and updates them, if needed */
 	void checkObjectUpdatesNeeded (bool check_list);
 friend void doPendingPriorityCommands ();

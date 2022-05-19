@@ -298,47 +298,53 @@ RKRShadowEnvironment* RKRShadowEnvironment::environmentFor(SEXP baseenvir) {
 	return environments[baseenvir];
 }
 
-QStringList RKRShadowEnvironment::diffAndUpdate() {
-	QStringList diffs;
-	QStringList removed;
+static bool nameInList(SEXP needle, SEXP haystack) {
+	int count = Rf_length(haystack);
+	for (int i = 0; i < count; ++i) {
+		if (!strcmp(R_CHAR(needle), R_CHAR(STRING_ELT(haystack, i)))) return true;
+	}
+	return false;
+}
 
-	Rprintf("%p %p\n", baseenvir, shadowenvir);
-	// find the changed symbols, and copy them to the shadow environment
+RKRShadowEnvironment::Result RKRShadowEnvironment::diffAndUpdate() {
+	Result res;
+
 	SEXP symbols = R_lsInternal(baseenvir, TRUE);
 	PROTECT(symbols);
 	int count = Rf_length(symbols);
+	SEXP symbols2 = R_lsInternal(shadowenvir, TRUE);
+	PROTECT(symbols2);
+	int count2 = Rf_length (symbols2);
+
+	// find the changed symbols, and copy them to the shadow environment
 	for (int i = 0; i < count; ++i) {
 		SEXP name = Rf_installChar(STRING_ELT(symbols, i));
 		PROTECT(name);
 		SEXP main = Rf_findVar(name, baseenvir);
 		SEXP cached = Rf_findVar(name, shadowenvir);
 		if (main != cached) {
-			Rf_defineVar(name, Rf_findVar(name, baseenvir), shadowenvir);
-			diffs.append(RKRSupport::SEXPToString(name));
+			Rf_defineVar(name, main, shadowenvir);
+			if (/*Rf_isNull(cached) && */ !Rf_isNull(main) && !nameInList(STRING_ELT(symbols, i), symbols2)) {
+				res.added.append(RKRSupport::SEXPToString(name));
+			} else {
+				res.changed.append(RKRSupport::SEXPToString(name));
+			}
 		}
 		UNPROTECT(1);
 	}
 
 	// find the symbols only in the shadow environment (those that were removed)
-	SEXP symbols2 = R_lsInternal(shadowenvir, TRUE);
-	PROTECT(symbols2);
-	int count2 = Rf_length (symbols2);
 	for (int i = 0; i < count2; ++i) {
-		bool found = false;
-		for (int j = 0; j < count; ++j) {
-			if (STRING_ELT(symbols, j) == STRING_ELT(symbols2, i)) {
-				found = true;
-				break;
-			}
-		}
-		if (!found) {
-			removed.append(RKRSupport::SEXPToString(Rf_installChar(STRING_ELT(symbols2, i))));
+		if (!nameInList(STRING_ELT(symbols2, i), symbols)) {
+			res.removed.append(RKRSupport::SEXPToString(Rf_installChar(STRING_ELT(symbols2, i))));
+			R_removeVarFromFrame(Rf_installChar(STRING_ELT(symbols2, i)), shadowenvir);
 		}
 	}
 
-	UNPROTECT(2);
+	UNPROTECT(2); // symbols, symbols2
 
-	RK_DEBUG(RBACKEND, DL_DEBUG, "changed %s\n", qPrintable(diffs.join(", ")));
-	RK_DEBUG(RBACKEND, DL_DEBUG, "removed %s\n", qPrintable(removed.join(", ")));
-	return diffs + removed;
+	RK_DEBUG(RBACKEND, DL_DEBUG, "added %s\n", qPrintable(res.added.join(", ")));
+	RK_DEBUG(RBACKEND, DL_DEBUG, "changed %s\n", qPrintable(res.changed.join(", ")));
+	RK_DEBUG(RBACKEND, DL_DEBUG, "removed %s\n", qPrintable(res.removed.join(", ")));
+	return res;
 }

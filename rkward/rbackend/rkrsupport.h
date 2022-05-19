@@ -37,11 +37,18 @@ namespace RKRSupport {
 
 class RKRShadowEnvironment {
 public:
-	QStringList diffAndUpdate();
-	static RKRShadowEnvironment* environmentFor(SEXP baseenvir);
+	struct Result {
+		QStringList added;
+		QStringList removed;
+		QStringList changed;
+		bool isEmpty() const { return added.isEmpty() && removed.isEmpty() && changed.isEmpty(); };
+	};
+	Result diffAndUpdate();
+	static Result diffAndUpdate(SEXP envir) { return environmentFor(envir)->diffAndUpdate(); };
 private:
 	RKRShadowEnvironment(SEXP baseenvir, SEXP shadowenvir) : baseenvir(baseenvir), shadowenvir(shadowenvir) {};
 	~RKRShadowEnvironment();
+	static RKRShadowEnvironment* environmentFor(SEXP baseenvir);
 	SEXP baseenvir;
 	SEXP shadowenvir;
 	static QMap<SEXP, RKRShadowEnvironment*> environments;

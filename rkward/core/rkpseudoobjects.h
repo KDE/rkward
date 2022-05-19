@@ -70,10 +70,11 @@ public:
 
 	RKNamespaceObject *findOrphanNamespace (const QString &name) const;
 
+	using REnvironmentObject::updateFromR;
 	/** should not be called on this object. Reimplemented to raise an assert, and do nothing else. */
 	void updateFromR (RCommandChain *chain) override;
 	/** reimplemented from REnvironmentObject */
-	void updateFromR (RCommandChain *chain, const QStringList &current_symbols) override;
+	void updateNamespacesFromR (RCommandChain *chain, const QStringList &current_symbols);
 };
 
 #endif

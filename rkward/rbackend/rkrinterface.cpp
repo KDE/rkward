@@ -401,7 +401,7 @@ void RInterface::handleRequest (RBackendRequest* request) {
 		RK_ASSERT(request->subcommandrequest);
 		command_requests.append(request->subcommandrequest);
 		request->subcommandrequest = nullptr;  // it is now a separate request. Make sure we won't try to send it back as part of this one.
-		processHistoricalSubstackRequest(request->params["call"].toStringList(), parent, request);
+		processHistoricalSubstackRequest(request->params["call"].toString(), request->params.value("args"), parent, request);
 		RKRBackendProtocolFrontend::setRequestCompleted(request);
 	} else if (request->type == RBackendRequest::PlainGenericRequest) {
 		request->setResult(processPlainGenericRequest(request->params["call"].toStringList()));
@@ -672,7 +672,7 @@ GenericRRequestResult RInterface::processPlainGenericRequest(const QStringList &
 	return GenericRRequestResult();
 }
 
-void RInterface::processHistoricalSubstackRequest (const QStringList &calllist, RCommand *parent_command, RBackendRequest *request) {
+void RInterface::processHistoricalSubstackRequest (const QString &call, const QVariant &args, RCommand *parent_command, RBackendRequest *request) {
 	RK_TRACE (RBACKEND);
 
 	RCommandChain *in_chain;
@@ -686,62 +686,68 @@ void RInterface::processHistoricalSubstackRequest (const QStringList &calllist, 
 	in_chain = openSubcommandChain (parent_command);
 	RK_DEBUG (RBACKEND, DL_DEBUG, "started sub-command chain (%p) for command %s", in_chain, qPrintable (parent_command->command ()));
 
-	QString call = calllist.value (0);
 	if (call == "sync") {
-		RK_ASSERT (calllist.count () >= 2);
-
-		for (int i = 1; i < calllist.count (); ++i) {
-			QString object_name = calllist[i];
+		QVariantList al = args.toList();  // added, removed, changed
+		RObjectList::getGlobalEnv()->updateFromR(in_chain, al.value(0).toStringList(), al.value(1).toStringList());
+		QStringList changed = al.value(2).toStringList();
+		RK_DEBUG(RBACKEND, DL_DEBUG, "symbols added %s, removed %s, changed %s", qPrintable(al.value(0).toStringList().join(",")), qPrintable(al.value(1).toStringList().join(",")), qPrintable(al.value(2).toStringList().join(",")));
+		for (int i = 0; i < changed.count (); ++i) {
+			QString object_name = changed[i];
 			RObject *obj = RObjectList::getObjectList ()->findObject (object_name);
 			if (obj) {
-				RK_DEBUG (RBACKEND, DL_DEBUG, "triggering update for symbol %s", object_name.toLatin1 ().data());
+				RK_DEBUG(RBACKEND, DL_DEBUG, "triggering update for symbol %s", qPrintable(object_name));
 				obj->markDataDirty ();
 				obj->updateFromR (in_chain);
 			} else {
-				RK_DEBUG (RBACKEND, DL_WARNING, "lookup failed for changed symbol %s", object_name.toLatin1 ().data());
+				RK_DEBUG (RBACKEND, DL_WARNING, "lookup failed for changed symbol %s", qPrintable(object_name));
 			}
 		}
-	} else if (call == "syncenvs") {
+		closeChain(in_chain);
+		return;
+	}
+	if (call == "syncenvs") {
+		QVariantList al = args.toList();  // envs, namespaces
 		RK_DEBUG (RBACKEND, DL_DEBUG, "triggering update of object list");
-		int search_len = calllist.value (1).toInt ();
-		RObjectList::getObjectList ()->updateFromR (in_chain, calllist.mid (2, search_len), calllist.mid (2 + search_len));
-	} else if (call == "syncglobal") {
-		RK_DEBUG (RBACKEND, DL_DEBUG, "triggering update of globalenv");
-		RObjectList::getGlobalEnv ()->updateFromR (in_chain, calllist.mid (1));
+		RObjectList::getObjectList ()->updateFromR (in_chain, al.value(0).toStringList(), al.value(1).toStringList());
+		closeChain(in_chain);
+		return;
+	}
+
+	// NOTE: all requests below are wrapped from R commands, and pass all arguments as stringlist (although that may worth changing
+	QStringList arglist = args.toStringList();
+	if (false) {  // syntax dummy
 #ifndef DISABLE_RKWINDOWCATCHER
 	// NOTE: WARNING: When converting these to PlainGenericRequests, the occasional "error, figure margins too large" starts coming up, again. Not sure, why.
  	} else if (call == "startOpenX11") {
-		RK_ASSERT (calllist.count () == 2);
-		RKWindowCatcher::instance ()->start (calllist.value (1).toInt ());
+		RK_ASSERT(arglist.count() == 1);
+		RKWindowCatcher::instance()->start(arglist.value(0).toInt());
  	} else if (call == "endOpenX11") {
-		RK_ASSERT (calllist.count () == 2);
-		RKWindowCatcher::instance ()->stop (calllist.value (1).toInt ());
+		RK_ASSERT(arglist.count() == 1);
+		RKWindowCatcher::instance()->stop(arglist.value (0).toInt());
 	} else if (call == "updateDeviceHistory") {
-		if (calllist.count () >= 2) {
-			RKWindowCatcher::instance ()->updateHistory (calllist.mid (1));
+		if (!arglist.isEmpty()) {
+			RKWindowCatcher::instance()->updateHistory(arglist);
 		}
 	} else if (call == "killDevice") {
-		RK_ASSERT (calllist.count () == 2);
-		RKWindowCatcher::instance ()->killDevice (calllist.value (1).toInt ());
+		RK_ASSERT(arglist.count() == 1);
+		RKWindowCatcher::instance()->killDevice(arglist.value(0).toInt());
 #endif // DISABLE_RKWINDOWCATCHER
 	} else if (call == "edit") {
-		RK_ASSERT (calllist.count () >= 2);
-
-		QStringList object_list = calllist.mid (1);
-		new RKEditObjectAgent (object_list, in_chain);
+		RK_ASSERT(!arglist.isEmpty());
+		new RKEditObjectAgent (arglist, in_chain);
 	} else if (call == "require") {
-		RK_ASSERT (calllist.count () == 2);
-		QString lib_name = calllist.value (1);
+		RK_ASSERT (!arglist.isEmpty());
+		QString lib_name = arglist.value(0);
 		KMessageBox::information (0, i18n ("The R-backend has indicated that in order to carry out the current task it needs the package '%1', which is not currently installed. We will open the package-management tool, and there you can try to locate and install the needed package.", lib_name), i18n ("Require package '%1'", lib_name));
 		RKLoadLibsDialog::showInstallPackagesModal (0, in_chain, QStringList(lib_name));
 	} else if (call == "doPlugin") {
-		if (calllist.count () >= 3) {
+		if (arglist.count () >= 2) {
 			QString message;
 			bool ok;
 			RKComponentMap::ComponentInvocationMode mode = RKComponentMap::ManualSubmit;
-			if (calllist[2] == "auto") mode = RKComponentMap::AutoSubmit;
-			else if (calllist[2] == "submit") mode = RKComponentMap::AutoSubmitOrFail;
-			ok = RKComponentMap::invokeComponent (calllist[1], calllist.mid (3), mode, &message, in_chain);
+			if (arglist[1] == "auto") mode = RKComponentMap::AutoSubmit;
+			else if (arglist[1] == "submit") mode = RKComponentMap::AutoSubmitOrFail;
+			ok = RKComponentMap::invokeComponent(arglist[0], arglist.mid(2), mode, &message, in_chain);
 
 			if (!message.isEmpty ()) {
 				request->setResult(GenericRRequestResult(QVariant(), ok ? message : QString(), !ok ? message : QString()));
@@ -750,7 +756,7 @@ void RInterface::processHistoricalSubstackRequest (const QStringList &calllist, 
 			RK_ASSERT (false);
 		}
 	} else if (call == QStringLiteral ("output")) {
-		request->setResult(RKOutputDirectory::handleRCall(calllist.mid(1), in_chain));
+		request->setResult(RKOutputDirectory::handleRCall(arglist, in_chain));
 	} else {
 		request->setResult(GenericRRequestResult::makeError(i18n("Unrecognized call '%1'", call)));
 	}
