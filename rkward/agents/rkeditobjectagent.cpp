@@ -1,6 +1,6 @@
 /*
 rkeditobjectagent - This file is part of RKWard (https://rkward.kde.org). Created: Fri Feb 16 2007
-SPDX-FileCopyrightText: 2007 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2007-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -16,28 +16,16 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-RKEditObjectAgent::RKEditObjectAgent (const QStringList &object_names, RCommandChain *chain) {
+RKEditObjectAgent::RKEditObjectAgent (const QStringList &_object_names, RCommandChain *chain) {
 	RK_TRACE (APP);
 
-	RKEditObjectAgent::object_names = object_names;
+	RKEditObjectAgent::object_names = _object_names;
 
 	// first issue an empty command to trigger an update of the object list
 	RInterface::issueCommand (new RCommand (QString (), RCommand::EmptyCommand | RCommand::ObjectListUpdate, QString (), this), chain);
 
-	// now add another empty command to find out, when the update is complete
-	RCommand *command = new RCommand (QString (), RCommand::EmptyCommand, QString (), this);
-	done_command_id = command->id ();
-	RInterface::issueCommand (command, chain);
-}
-
-RKEditObjectAgent::~RKEditObjectAgent () {
-	RK_TRACE (APP);
-}
-
-void RKEditObjectAgent::rCommandDone (RCommand *command) {
-	RK_TRACE (APP);
-
-	if (command->id () == done_command_id) {	
+	// now add another empty command to find out, when the update has completed
+	RInterface::whenAllFinished(this, [this]() {
 		for (QStringList::const_iterator it = object_names.constBegin (); it != object_names.constEnd (); ++it) {
 			QString object_name = *it;
 			RObject *obj = RObjectList::getObjectList ()->findObject (object_name);
@@ -45,9 +33,12 @@ void RKEditObjectAgent::rCommandDone (RCommand *command) {
 				KMessageBox::information (0, i18n ("The object '%1', could not be opened for editing. Either it does not exist, or RKWard does not support editing this type of object, yet.", object_name), i18n ("Cannot edit '%1'", object_name));
 			}
 		}
-		
+
 		// we're done
 		deleteLater ();
-	}
+	}, chain);
 }
 
+RKEditObjectAgent::~RKEditObjectAgent () {
+	RK_TRACE (APP);
+}

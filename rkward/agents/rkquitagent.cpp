@@ -24,7 +24,7 @@ RKQuitAgent::RKQuitAgent (QObject *parent) : QObject (parent) {
 	RK_TRACE (APP);
 
 	quitting = true;
-	RCommand *command = new RCommand (QString (), RCommand::EmptyCommand | RCommand::QuitCommand, QString (), this);
+	RCommand *command = new RCommand (QString (), RCommand::EmptyCommand | RCommand::QuitCommand);
 
 	RKWardMainWindow::getMain ()->hide ();
 	cancel_dialog = new RKProgressControl (this, i18n ("Waiting for remaining R commands to finish. To quit immediately, press Cancel (WARNING: This may result in loss of data)"), i18n ("Waiting for R to finish"), RKProgressControl::AllowCancel | RKProgressControl::ShowAtOnce);
@@ -32,15 +32,19 @@ RKQuitAgent::RKQuitAgent (QObject *parent) : QObject (parent) {
 	connect (cancel_dialog, &RKProgressControl::cancelled, this, &RKQuitAgent::doQuitNow);
 
 	if (RInterface::instance()->backendIsDead()) {	// nothing to loose
-		QTimer::singleShot (0, this, SLOT (doQuitNow()));
+		QTimer::singleShot(0, this, &RKQuitAgent::doQuitNow);
 		return;
 	} else if (RInterface::instance()->backendIsIdle()) {
 		// there should be no problem while quitting. If there is, show the dialog after 300 msec
-		QTimer::singleShot (300, this, SLOT (showWaitDialog()));
+		QTimer::singleShot(300, this, &RKQuitAgent::showWaitDialog);
 	} else {
 		showWaitDialog ();
 	}
 
+	command->whenFinished(this, [this]() {
+		RK_TRACE(APP);
+		QTimer::singleShot(0, this, &RKQuitAgent::doQuitNow);
+	});
 	RInterface::issueCommand (command);
 }
 
@@ -58,12 +62,6 @@ void RKQuitAgent::doQuitNow () {
 	RK_TRACE (APP);
 
 	RKWardMainWindow::getMain ()->close ();		// this will kill the agent as well.
-}
-
-void RKQuitAgent::rCommandDone (RCommand *) {
-	RK_TRACE (APP);
-
-	QTimer::singleShot (0, this, SLOT (doQuitNow()));
 }
 
 
