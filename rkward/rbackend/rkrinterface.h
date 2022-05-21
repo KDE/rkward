@@ -45,6 +45,13 @@ public:
 /** convenience function to create a new command and issue it. See documentation on RCommand::RCommand() and RInterface::issueCommand() */
 	static void issueCommand(const QString &command, int type = 0, const QString &rk_equiv = QString(), RCommandReceiver *receiver=0, int flags=0, RCommandChain *chain=0);
 
+/** convenience function to call a function / lambda, once all commands issued in the given chain have finished (successfully or not). Internally, this works by queing an empty command. */
+	template<typename T> static void whenAllFinished(QObject *receiver, T func, RCommandChain *chain=nullptr) {
+		RCommand *c = new RCommand(QString(), RCommand::EmptyCommand | RCommand::Sync);
+		c->whenFinished(receiver, func);
+		issueCommand(c, chain);
+	};
+
 /** opens a new command chain. Returns a pointer to the new chain. If you specify a parent, the new chain will be a sub-chain of that chain. */
 	static RCommandChain *startChain(RCommandChain *parent=0);
 /** closes the command chain. The chain (and even its parent, if it is already closed) may be deleted right afterwards! */
@@ -180,21 +187,20 @@ the R-command log (currently class RKwatch), whether the command can be cancelle
 
 Most of the time you don't just want to run a command, but you also want to know the result. Now, this is a tad bit more difficult than one might expect at first glance. The reason for this is that the R backend runs in a separate thread. Hence, whenever you submit a command, it generally does not get executed right away - or at least you just don't know, when exactly it gets executed, and when the result is available. This is necessary, so (expensive) commands running in the backend do not block operations in the GUI/frontend.
 
-Ok, so how do you get informed, when your command was completed? Using RCommandReceiver. What you will want to do is inherit the class you
-want to handle the results of RCommands from RCommandReceiver. When finished, the RCommand will be submitted to the (pure virtual) RCommandReceiver::rCommandDone function, which of course you'll have to implement in a meaningful way in your derived class.
+Ok, so how do you get informed, when your command was completed? Using RCommand::notifier(), or in most cases, the convience function RCommand::whenFinished(). Here, you can simply specify a function or
+lambda expression that will be called. This function or expression @em may take an RCommand* as parameter. In some cases, all you want to know is when all commands that have been already queued up to now
+have been run. In this case, you can use RInterface::whenAllFinished().
 
-The corresponding code would look something like this:
+@Note that all this was much more complicated in the old days, and you will still find a lot of places, where classes are derived from RCommandReceiver, and the command is handled in an overridden
+rCommandDone() function.
+
+Example code:
 
 \code
 
 #include "rbackend/rinterface.h"
-#include "rbackend/rcommandreceiver.h"
 
-class MyReceiver : public RCommandReceiver {
-//...
-protected:
-/// receives finished RCommands and processes them
-	void rCommandDone (RCommand *command);
+class MyReceiver : public QObject {
 //...
 private:
 /// does something by submitting an RCommand
@@ -204,27 +210,28 @@ private:
 
 
 void MyReceiver::someFunction () {
-	RInterface::issueCommand ("print (1+1)", RCommand::App, QString (), this);
+	RCommand *c = new RCommand("print (1+1)", RCommand::App);
+	c->whenFinished(this, [this](RCommand *command) {
+		if (command->successful ()) {
+			qDebug ("Result was %s", command->output ()->utf8 ());
+		}
+	});
+	RInterface::issueCommand(c);
 }
 
-void MyReceiver::rCommandDone (RCommand *command) {
-	if (command->successful ()) {
-		qDebug ("Result was %s", command->output ()->utf8 ());
-	}
-}
 \endcode
 
-First thing to note is, that this time we're passing two additional parameters to RInterface::issueCommand. The first (or rather third) is really not used as of the time of this writing. What it's meant to become is a short descriptive string attached to the RCommand, that allows the user to make some sense of what this command is all about. The other (fourth) is a pointer to an RCommandReceiver that should be informed of the result. In this case, we'll handle the result in the same object that we issued the command from, so we use "this".
-
-So next the RCommand created with RInterface::issueCommand goes on its way to/through the backend (we'll discuss what happens there further down below). Then later, when it has completed its journey, rCommandDone will be called with a pointer to the command as parameter. Now we can use this pointer to retrieve the information we need to know. RCommand::successful and some further simple functions give information about whether the command had any errors and what kind of errors (see RCommand for details). RCommand::output contains the output of the command as a QString (provided the command was successful and had any output). In this case that should be "[1] 2".
+So what happens is that the RCommand created with RInterface::issueCommand goes on its way to/through the backend (we'll discuss what happens there further down below). Then later, when it has completed its journey, the lambda expression will be called with a pointer to the command as parameter. Now we can use this pointer to retrieve the information we need to know. RCommand::successful and some further simple functions give information about whether the command had any errors and what kind of errors (see RCommand for details). RCommand::output contains the output of the command as a QString (provided the command was successful and had any output). In this case that should be "[1] 2".
 
 \section UsingTheInterfaceToRMultipleCommands Dealing with several RCommands in the same object
+
+// TODO: Adjust this section to RCommandNotifier / RCommand::whenFinished().
 
 In many cases you don't just want to deal with a single RCommand in an RCommandReceiver, but rather you might submit a bunch of different commands (for instance to find out about several different properties of an object in R-space), and then use some special handling for each of those commands. So the problem is, how to find out, which of your commands you're currently dealing with in rCommandDone.
 
 There are several ways to deal with this:
 
-	- storing the RCommand::id () (each command is automatically assigned a unique id, TODO: do we need this functionality? Maybe remove it for redundancy)
+	- storing the RCommand::id () (each command is automatically assigned a unique id)
 	- passing appropriate flags to know how to handle the command
 	- keeping the pointer (CAUTION: don't use that pointer except to compare it with the pointer of an incoming command. Commands get deleted when they are finished, and maybe (in the future) if they become obsolete etc. Hence the pointers you keep may be invalid!)
 

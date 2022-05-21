@@ -274,9 +274,7 @@ GenericRRequestResult RKOutputDirectory::activate(RCommandChain* chain) {
 	RInterface::issueCommand(QStringLiteral("rk.set.output.html.file(\"") + RKCommonFunctions::escape(index_file) + QStringLiteral("\")\n"), RCommand::App, QString(), 0, 0, chain);
 	if (!initialized) {
 		// when an output directory is first initialized, we don't want that to count as a "modification". Therefore, update the "saved hash" _after_ initialization
-		RCommand *command = new RCommand(QString(), RCommand::App | RCommand::Sync | RCommand::EmptyCommand);
-		connect(command->notifier(), &RCommandNotifier::commandFinished, this, &RKOutputDirectory::updateSavedHash);
-		RInterface::issueCommand(command, chain);
+		RInterface::whenAllFinished(this, [this]() { updateSavedHash(); }, chain);
 		initialized = true;
 	}
 

@@ -57,7 +57,7 @@ RKLoadAgent::RKLoadAgent (const QUrl &url, bool merge) {
 	}
 
 	command = new RCommand ("load (\"" + filename + "\")", RCommand::App | RCommand::ObjectListUpdate);
-	command->whenFinished(this, [this](RCommand* command){
+	command->whenFinished(this, [this](RCommand* command) {
 		if (command->failed()) {
 			KMessageBox::error(0, i18n("There has been an error opening file '%1':\n%2", RKWorkplace::mainWorkplace()->workspaceURL().path(), command->warnings() + command->error()), i18n("Error loading workspace"));
 			RKWorkplace::mainWorkplace()->setWorkspaceURL(QUrl());
@@ -69,15 +69,14 @@ RKLoadAgent::RKLoadAgent (const QUrl &url, bool merge) {
 				}
 			}
 		}
-		RCommand *c = new RCommand(QString(), RCommand::EmptyCommand | RCommand::App);
-		c->whenFinished(this, [this]() {
+
+		RInterface::whenAllFinished(this, [this]() {
 			RKWardMainWindow::getMain()->slotSetStatusReady();
 			RKWardMainWindow::getMain()->setWorkspaceMightBeModified(false);
 			RKOutputDirectory::getCurrentOutput();  // make sure some output file exists
 
 			deleteLater();
 		});
-		RInterface::issueCommand(c);
 		RKWardMainWindow::getMain ()->setCaption (QString ());	// trigger update of caption
 	});
 	RInterface::issueCommand (command);
