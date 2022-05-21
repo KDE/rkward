@@ -310,7 +310,7 @@ RKConfigValue<QString> RKSettingsModuleRPackages::cran_mirror_url {"CRAN mirror 
 QStringList RKSettingsModuleRPackages::defaultliblocs;
 QString RKSettingsModuleRPackages::r_libs_user;
 
-RKSettingsModuleRPackages::RKSettingsModuleRPackages (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent), RCommandReceiver () {
+RKSettingsModuleRPackages::RKSettingsModuleRPackages (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
 	RK_TRACE (SETTINGS);
 
 	QVBoxLayout *main_vbox = new QVBoxLayout (this);
@@ -451,30 +451,22 @@ QIcon RKSettingsModuleRPackages::icon() const {
 	return RKStandardIcons::getIcon(RKStandardIcons::ObjectPackageEnvironment);
 }
 
-#define SELECT_CRAN_MIRROR_COMMAND 123
 void RKSettingsModuleRPackages::selectCRANMirror () {
 	RK_TRACE (SETTINGS);
 	QString title = i18n ("Select CRAN mirror");
 	
-	RCommand* command = new RCommand ("rk.select.CRAN.mirror()\n", RCommand::App | RCommand::GetStringVector, title, this, SELECT_CRAN_MIRROR_COMMAND);
+	RCommand* command = new RCommand ("rk.select.CRAN.mirror()\n", RCommand::App | RCommand::GetStringVector, title);
+	connect(command->notifier(), &RCommandNotifier::commandFinished, this, [this](RCommand *command) {
+		if (command->succeeded()) {
+			RK_ASSERT(command->getDataLength() >= 1);
+			cran_mirror_input->setText(command->stringVector().value(0));
+		}
+	});
 
 	RKProgressControl* control = new RKProgressControl (this, title, title, RKProgressControl::CancellableProgress);
 	control->addRCommand (command, true);
 	RInterface::issueCommand (command, commandChain ());
 	control->doModal (true);
-}
-
-void RKSettingsModuleRPackages::rCommandDone (RCommand *command) {
-	RK_TRACE (SETTINGS);
-
-	if (command->getFlags () == SELECT_CRAN_MIRROR_COMMAND) {
-		if (command->succeeded ()) {
-			RK_ASSERT (command->getDataLength () >= 1);
-			cran_mirror_input->setText (command->stringVector ().value (0));
-		}
-	} else {
-		RK_ASSERT (false);
-	}
 }
 
 QString RKSettingsModuleRPackages::libLocsCommand () {

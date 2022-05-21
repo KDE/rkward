@@ -1,6 +1,6 @@
 /*
 rkhelpsearchwindow - This file is part of the RKWard project. Created: Fri Feb 25 2005
-SPDX-FileCopyrightText: 2005-2011 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2005-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -11,7 +11,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <qwidget.h>
 #include <QAbstractTableModel>
 
-#include "../rbackend/rcommandreceiver.h"
 #include "rkmdiwindow.h"
 
 class QFocusEvent;
@@ -26,12 +25,11 @@ class RCommandChain;
 /** Provides a UI interface for help-search.
 
 @author Pierre Ecochard */
-class RKHelpSearchWindow : public RKMDIWindow, public RCommandReceiver {
+class RKHelpSearchWindow : public RKMDIWindow {
 	Q_OBJECT
 public:
 	RKHelpSearchWindow (QWidget *parent, bool tool_window, const char *name=0);
 	~RKHelpSearchWindow ();
-	void rCommandDone (RCommand *command) override;
 /** small convenience function to get context help for RKCommandEditorWindow and RKConsole.
 @param context_line The current line
 @param cursor_pos cursor position in the current line
