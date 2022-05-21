@@ -12,3 +12,5 @@ testsuites <- c (
 )
 
 rktest.makeplugintests (testsuites=testsuites, outfile="make_plugintests.txt")
+
+#rktest.makeplugintests (testsuites="analysis_plugins.R", outfile="make_plugintests.txt", test.id="crosstab_multi")
