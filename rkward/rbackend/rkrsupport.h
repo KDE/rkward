@@ -45,10 +45,12 @@ public:
 	};
 	Result diffAndUpdate();
 	static Result diffAndUpdate(SEXP envir) { return environmentFor(envir)->diffAndUpdate(); };
+	static void updateCacheForGlobalenvSymbol(const QString &name);
 private:
 	RKRShadowEnvironment(SEXP baseenvir, SEXP shadowenvir) : baseenvir(baseenvir), shadowenvir(shadowenvir) {};
 	~RKRShadowEnvironment();
 	static RKRShadowEnvironment* environmentFor(SEXP baseenvir);
+	void updateSymbolCache(const QString &name);
 	SEXP baseenvir;
 	SEXP shadowenvir;
 	static QMap<SEXP, RKRShadowEnvironment*> environments;

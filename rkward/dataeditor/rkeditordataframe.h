@@ -1,6 +1,6 @@
 /*
 rkeditordataframe - This file is part of the RKWard project. Created: Fri Aug 20 2004
-SPDX-FileCopyrightText: 2004-2006 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2004-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -9,7 +9,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rkeditor.h"
 #include "twintable.h"
-#include "../rbackend/rcommandreceiver.h"
 
 class TwinTable;
 class RCommand;
@@ -20,7 +19,7 @@ An RKEditor for data.frames.
 
 @author Thomas Friedrichsmeier
 */
-class RKEditorDataFrame : public TwinTable, public RCommandReceiver {
+class RKEditorDataFrame : public TwinTable {
 	Q_OBJECT
 public:
 /** constructor.
@@ -46,8 +45,6 @@ private:
 	void commonInit ();
 	RCommandChain *open_chain;
 	void waitForLoad ();
-protected:
-	void rCommandDone (RCommand *command) override;
 };
 
 #endif

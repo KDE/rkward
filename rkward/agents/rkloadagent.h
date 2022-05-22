@@ -8,7 +8,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #define RKLOADAGENT_H
 
 #include <qobject.h>
-#include "../rbackend/rcommandreceiver.h"
 
 #include <qstring.h>
 #include <QUrl>
@@ -19,14 +18,12 @@ class QTemporaryFile;
 agents, the RKLoadAgent self-destructs when done.
 @author Thomas Friedrichsmeier
 */
-class RKLoadAgent : public QObject, public RCommandReceiver {
+class RKLoadAgent : public QObject {
 	Q_OBJECT
 public:
 	explicit RKLoadAgent (const QUrl &url, bool merge=false);
 
 	~RKLoadAgent ();
-protected:
-	void rCommandDone (RCommand *command) override;
 private:
 /// needed if file to be loaded is remote
 	QTemporaryFile* tmpfile;

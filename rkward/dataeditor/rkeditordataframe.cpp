@@ -1,6 +1,6 @@
 /*
 rkeditordataframe - This file is part of RKWard (https://rkward.kde.org). Created: Fri Aug 20 2004
-SPDX-FileCopyrightText: 2004-2010 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2004-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -22,7 +22,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-#define LOAD_COMPLETE_COMMAND 1
 // warning! numbers above GET_DATA_OFFSET are used to determine, which row, the data should go to!
 #define GET_DATA_OFFSET 10
 
@@ -98,18 +97,11 @@ void RKEditorDataFrame::waitForLoad () {
 
 	enableEditing (false);
 
-	RCommand *command = new RCommand (QString (), RCommand::EmptyCommand | RCommand::Sync | RCommand::GetStringVector, QString (), this, LOAD_COMPLETE_COMMAND);
-	RInterface::issueCommand (command, open_chain);
-}
-
-void RKEditorDataFrame::rCommandDone (RCommand *command) {
-	RK_TRACE (EDITOR);
-
-	if (command->getFlags () == LOAD_COMPLETE_COMMAND) {
+	RInterface::whenAllFinished(this, [this]() {
 		RInterface::closeChain (open_chain);
 		open_chain = nullptr;
 		enableEditing (true);
-	}
+	}, open_chain);
 }
 
 void RKEditorDataFrame::restoreObject (RObject *object) {

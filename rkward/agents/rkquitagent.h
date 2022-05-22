@@ -15,7 +15,7 @@ class RKProgressControl;
 /** The purpose of RKQuitAgent is to delay the actual destruction of the app until all commands have finished in the backend. The quit agent can NOT handle queries for saving some more data, or similar things. Do not call before you really want to quit the application.
 @author Thomas Friedrichsmeier
 */
-class RKQuitAgent : public QObject, public RCommandReceiver {
+class RKQuitAgent : public QObject {
 	Q_OBJECT
 public:
 /** Constructor. As soon as you construct an object of this type, the RKWard application *will* quit (but maybe with a short delay)! */
@@ -26,8 +26,6 @@ public:
 public slots:
 	void doQuitNow ();
 	void showWaitDialog ();
-protected:
-	void rCommandDone (RCommand *command) override;
 private:
 	RKProgressControl *cancel_dialog;
 	static bool quitting;

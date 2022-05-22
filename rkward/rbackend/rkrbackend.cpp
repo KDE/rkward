@@ -1060,7 +1060,7 @@ void doPendingPriorityCommands ();
 
 SEXP checkEnv(SEXP a) {
 	auto res = RKRShadowEnvironment::diffAndUpdate(a);
-	return RKRSupport::StringListToSEXP(res.added + res.changed + res.removed);
+	return Rf_list3(RKRSupport::StringListToSEXP(res.added), RKRSupport::StringListToSEXP(res.removed), RKRSupport::StringListToSEXP(res.changed));
 }
 
 bool RKRBackend::startR () {
@@ -1541,6 +1541,10 @@ void RKRBackend::commandFinished (bool check_object_updates_needed) {
 		current_command->has_been_run_up_to = current_command->command.length () - remainder.length ();
 	}
 
+	if (!current_command->updates_object.isEmpty()) {
+		// Update cached value for objects that are known to have been modified, so as to not trigger an additional change notification.
+		RKRShadowEnvironment::updateCacheForGlobalenvSymbol(current_command->updates_object);
+	}
 	if (check_object_updates_needed || (current_command->type & RCommand::ObjectListUpdate)) {
 		checkObjectUpdatesNeeded (current_command->type & (RCommand::User | RCommand::ObjectListUpdate));
 	}

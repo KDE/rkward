@@ -56,23 +56,11 @@ RKLoadAgent::RKLoadAgent (const QUrl &url, bool merge) {
 		RInterface::issueCommand (command);
 	}
 
-	command = new RCommand ("load (\"" + filename + "\")", RCommand::App | RCommand::ObjectListUpdate, QString (), this, WORKSPACE_LOAD_COMMAND);
-	RInterface::issueCommand (command);
-
-	RKWorkplace::mainWorkplace ()->setWorkspaceURL (url);
-}
-
-RKLoadAgent::~RKLoadAgent () {
-	RK_TRACE (APP);
-}
-
-void RKLoadAgent::rCommandDone (RCommand *command) {
-	RK_TRACE (APP);
-	
-	if (command->getFlags () == WORKSPACE_LOAD_COMMAND) {
-		if (command->failed ()) {
-			KMessageBox::error (0, i18n ("There has been an error opening file '%1':\n%2", RKWorkplace::mainWorkplace ()->workspaceURL ().path (), command->error ()), i18n ("Error loading workspace"));
-			RKWorkplace::mainWorkplace ()->setWorkspaceURL (QUrl());
+	command = new RCommand ("load (\"" + filename + "\")", RCommand::App | RCommand::ObjectListUpdate);
+	command->whenFinished(this, [this](RCommand* command) {
+		if (command->failed()) {
+			KMessageBox::error(0, i18n("There has been an error opening file '%1':\n%2", RKWorkplace::mainWorkplace()->workspaceURL().path(), command->warnings() + command->error()), i18n("Error loading workspace"));
+			RKWorkplace::mainWorkplace()->setWorkspaceURL(QUrl());
 		} else {
 			RKWorkplace::mainWorkplace ()->restoreWorkplace (0, _merge);
 			if (RKSettingsModuleGeneral::cdToWorkspaceOnLoad ()) {
@@ -81,17 +69,21 @@ void RKLoadAgent::rCommandDone (RCommand *command) {
 				}
 			}
 		}
-		RInterface::issueCommand(QString(), RCommand::EmptyCommand | RCommand::App, QString(), this, WORKSPACE_LOAD_COMPLETE_COMMAND);
-		RKWardMainWindow::getMain ()->setCaption (QString ());	// trigger update of caption
-	} else if (command->getFlags () == WORKSPACE_LOAD_COMPLETE_COMMAND) {
-		RKWardMainWindow::getMain ()->slotSetStatusReady ();
-		RKWardMainWindow::getMain ()->setWorkspaceMightBeModified (false);
-		RKOutputDirectory::getCurrentOutput();  // make sure some output file exists
 
-		delete this;
-		return;
-	} else {
-		RK_ASSERT (false);
-	}
+		RInterface::whenAllFinished(this, [this]() {
+			RKWardMainWindow::getMain()->slotSetStatusReady();
+			RKWardMainWindow::getMain()->setWorkspaceMightBeModified(false);
+			RKOutputDirectory::getCurrentOutput();  // make sure some output file exists
+
+			deleteLater();
+		});
+		RKWardMainWindow::getMain ()->setCaption (QString ());	// trigger update of caption
+	});
+	RInterface::issueCommand (command);
+
+	RKWorkplace::mainWorkplace ()->setWorkspaceURL (url);
 }
 
+RKLoadAgent::~RKLoadAgent () {
+	RK_TRACE (APP);
+}

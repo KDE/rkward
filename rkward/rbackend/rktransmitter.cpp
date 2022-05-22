@@ -1,6 +1,6 @@
 /*
 rktransmitter - This file is part of RKWard (https://rkward.kde.org). Created: Thu Nov 18 2010
-SPDX-FileCopyrightText: 2010-2013 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2010-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -159,6 +159,7 @@ void RKRBackendSerializer::serializeProxy (const RCommandProxy &proxy, QDataStre
 	stream << (qint32) proxy.id;
 	stream << (qint32) proxy.status;
 	stream << (qint32) proxy.has_been_run_up_to;
+	stream << proxy.updates_object;
 
 	serializeData (proxy, stream);
 }
@@ -179,6 +180,7 @@ RCommandProxy* RKRBackendSerializer::unserializeProxy (QDataStream &stream) {
 	ret->status = dummy32;
 	stream >> dummy32;
 	ret->has_been_run_up_to = dummy32;
+	stream >> (ret->updates_object);
 
 	RData *data = unserializeData (stream);
 	ret->swallowData (*data);

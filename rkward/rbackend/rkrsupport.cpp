@@ -273,6 +273,7 @@ RData *RKRSupport::SEXPToRData (SEXP from_exp) {
 SEXP RKRShadowEnvironment::shadowenvbase = nullptr;
 QMap<SEXP, RKRShadowEnvironment*> RKRShadowEnvironment::environments;
 RKRShadowEnvironment* RKRShadowEnvironment::environmentFor(SEXP baseenvir) {
+	RK_TRACE(RBACKEND);
 	// TODO: probably R_GlobalEnv should be special-cased, as this is what we'll check most often (or exclusively?)
 	if (!environments.contains(baseenvir)) {
 		RK_DEBUG(RBACKEND, DL_DEBUG, "creating new shadow environment for %p\n", baseenvir);
@@ -306,7 +307,23 @@ static bool nameInList(SEXP needle, SEXP haystack) {
 	return false;
 }
 
+void RKRShadowEnvironment::updateCacheForGlobalenvSymbol(const QString& name) {
+	RK_DEBUG(RBACKEND, DL_DEBUG, "updating cached value for symbol %s", qPrintable(name));
+	environmentFor(R_GlobalEnv)->updateSymbolCache(name);
+}
+
+void RKRShadowEnvironment::updateSymbolCache(const QString& name) {
+	RK_TRACE(RBACKEND);
+	SEXP rname = Rf_installChar(Rf_mkCharCE(name.toUtf8(), CE_UTF8));
+	PROTECT(rname);
+	SEXP symbol_g = Rf_findVar(rname, R_GlobalEnv);
+	PROTECT(symbol_g);
+	Rf_defineVar(rname, symbol_g, shadowenvir);
+	UNPROTECT(2);
+}
+
 RKRShadowEnvironment::Result RKRShadowEnvironment::diffAndUpdate() {
+	RK_TRACE (RBACKEND);
 	Result res;
 
 	SEXP symbols = R_lsInternal(baseenvir, TRUE);

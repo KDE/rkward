@@ -78,14 +78,12 @@ private:
 	static QString help_base_url;
 };
 
-#include "../rbackend/rcommandreceiver.h"
-
 /**
 Configure packages and library paths
 
 @author Thomas Friedrichsmeier
 */
-class RKSettingsModuleRPackages : public RKSettingsModule, public RCommandReceiver {
+class RKSettingsModuleRPackages : public RKSettingsModule {
 	Q_OBJECT
 public:
 	RKSettingsModuleRPackages (RKSettings *gui, QWidget *parent);
@@ -117,8 +115,6 @@ public slots:
 	void addLibLoc (QStringList *string_list);
 	void addRepository (QStringList *string_list);
 	void selectCRANMirror ();
-protected:
-	void rCommandDone (RCommand *command) override;
 private:
 friend class RKLoadLibsDialog;
 	static QString libLocsCommand ();

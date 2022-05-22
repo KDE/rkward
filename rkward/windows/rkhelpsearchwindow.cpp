@@ -1,6 +1,6 @@
 /*
 rkhelpsearchwindow - This file is part of RKWard (https://rkward.kde.org). Created: Fri Feb 25 2005
-SPDX-FileCopyrightText: 2005-2011 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2005-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -24,7 +24,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QSortFilterProxyModel>
 
 #include "../rbackend/rkrinterface.h"
-#include "../rbackend/rcommandreceiver.h"
 #include "../rbackend/rksessionvars.h"
 #include "../debug.h"
 
@@ -33,9 +32,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkdummypart.h"
 #include "../misc/rkstandardicons.h"
-
-#define GET_HELP 1
-#define HELP_SEARCH 2
 
 // result columns
 #define COL_TYPE 0
@@ -158,7 +154,13 @@ void RKHelpSearchWindow::getFunctionHelp (const QString &function_name, const QS
 	command.append (")");
 	if (type == "vignette") command.append (")");
 
-	RInterface::issueCommand (command, RCommand::App | RCommand::GetStringVector, i18n ("Find HTML help for %1", function_name), this, GET_HELP);
+	auto c = new RCommand(command, RCommand::App | RCommand::GetStringVector, i18n("Find HTML help for %1", function_name));
+	c->whenFinished(this, [this](RCommand* command) {
+		if (command->failed ()) {
+			KMessageBox::sorry (this, i18n ("No help found on '%1'. Maybe the corresponding package is not installed/loaded, or maybe you mistyped the command. Try using Help->Search R Help for more options.", command->command ().section ('\"', 1, 1)), i18n ("No help found"));
+		}
+	});
+	RInterface::issueCommand(c);
 }
 
 void RKHelpSearchWindow::slotFindButtonClicked () {
@@ -190,10 +192,24 @@ void RKHelpSearchWindow::slotFindButtonClicked () {
 	QString fields = fieldsList->itemData (fieldsList->currentIndex ()).toString ();
 
 	QString s = ".rk.get.search.results (" + RObject::rQuote (field->currentText ()) + ", agrep=" + agrep + ", ignore.case=" + ignoreCase + package + ", fields=" + fields + ')';
-	
-	RInterface::issueCommand (s, RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString (), this, HELP_SEARCH, 0);
-	setEnabled (false);
-	field->addItem (field->currentText ());
+
+	auto c = new RCommand(s, RCommand::App | RCommand::Sync | RCommand::GetStringVector);
+	c->whenFinished(this, [this](RCommand *command) {
+		QStringList res;
+		if (command->failed ()) {
+			RK_ASSERT (false);
+		} else {
+			RK_ASSERT (command->getDataType () == RData::StringVector);
+			res = command->stringVector ();
+		}
+		results->setResults (res);
+
+		for (int i = 0; i < COL_COUNT; ++i) results_view->resizeColumnToContents (i);
+		setEnabled(true);
+	});
+	RInterface::issueCommand(c);
+	setEnabled(false);
+	field->addItem(field->currentText());
 }
 
 void RKHelpSearchWindow::resultDoubleClicked (const QModelIndex& index) {
@@ -225,29 +241,6 @@ void RKHelpSearchWindow::updateInstalledPackages () {
 	if (!old_value.isEmpty ()) index = packagesList->findText (old_value);
 	if (index < 0) index = 0;
 	packagesList->setCurrentIndex (index);
-}
-
-void RKHelpSearchWindow::rCommandDone (RCommand *command) {
-	RK_TRACE (APP);
-	if (command->getFlags () == HELP_SEARCH) {
-		QStringList res;
-		if (command->failed ()) {
-			RK_ASSERT (false);
-		} else {
-			RK_ASSERT (command->getDataType () == RData::StringVector);
-			res = command->stringVector ();
-		}
-		results->setResults (res);
-
-		for (int i = 0; i < COL_COUNT; ++i) results_view->resizeColumnToContents (i);
-		setEnabled(true);
-	} else if (command->getFlags () == GET_HELP) {
-		if (command->failed ()) {
-			KMessageBox::sorry (this, i18n ("No help found on '%1'. Maybe the corresponding package is not installed/loaded, or maybe you mistyped the command. Try using Help->Search R Help for more options.", command->command ().section ('\"', 1, 1)), i18n ("No help found"));
-		}
-	} else {
-		RK_ASSERT (false);
-	}
 }
 
 //////////////// RKHelpResultsModel ////////////////

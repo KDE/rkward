@@ -202,6 +202,7 @@ void RObject::writeMetaData (RCommandChain *chain) {
 	}
 
 	RCommand *command = new RCommand (".rk.set.meta (" + getFullName () + ", " + map_string + ')', RCommand::App | RCommand::Sync);
+	command->setUpdatesObject(this);
 	RInterface::issueCommand (command, chain);
 }
 
@@ -778,6 +779,17 @@ REnvironmentObject* RObject::toplevelEnvironment () const {
 		return RObjectList::getGlobalEnv ();
 	}
 	return static_cast<REnvironmentObject*> (o);
+}
+
+RObject *RObject::globalEnvSymbol() const {
+	RK_TRACE (OBJECTS);
+	RObject *o = const_cast<RObject*>(this);	// it's ok, all we need to do is find the toplevel parent
+	while (o->parent) {
+		if (o->parent == RObjectList::getGlobalEnv()) return o;
+		o = o->parent;
+	}
+	RK_ASSERT(false);
+	return nullptr;
 }
 
 bool RObject::isInGlobalEnv () const {

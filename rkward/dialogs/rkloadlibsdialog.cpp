@@ -715,8 +715,7 @@ void InstallPackagesWidget::initialize () {
 	packages_status->clearStatus();
 	packages_status->initialize (parent->chain);
 
-	RCommand *dummy = new RCommand(QString(), RCommand::EmptyCommand); // dummy command will finish, after initialization is complete
-	connect(dummy->notifier(), &RCommandNotifier::commandFinished, this, [this]() {
+	RInterface::whenAllFinished(this, [this]() {
 		// Force a good width for the icon column, particularly for MacOS X.
 		packages_view->header ()->resizeSection (0, packages_view->sizeHintForIndex (model->index (0, 0, model->index (RKRPackageInstallationStatus::NewPackages, 0, QModelIndex ()))).width () + packages_view->indentation ());
 		for (int i = 1; i <= RKRPackageInstallationStatus::PackageName; ++i) {
@@ -729,8 +728,7 @@ void InstallPackagesWidget::initialize () {
 		window()->raise(); // needed on Mac, otherwise the dialog may go hiding behind the main app window, after the progress control window closes, for some reason
 		clearChanged();
 		updateStatus();
-	});
-	RInterface::issueCommand(dummy, parent->chain);
+	}, parent->chain);
 }
 
 void InstallPackagesWidget::rowClicked (const QModelIndex& row) {
@@ -754,8 +752,7 @@ void InstallPackagesWidget::filterChanged () {
 void InstallPackagesWidget::trySelectPackages (const QStringList &package_names) {
 	RK_TRACE (DIALOGS);
 
-	RCommand *dummy = new RCommand(QString(), RCommand::EmptyCommand); // dummy command will finish, after initialization is complete
-	connect(dummy->notifier(), &RCommandNotifier::commandFinished, this, [this, package_names]() {
+	RInterface::whenAllFinished(this, [this, package_names]() {
 		QStringList failed_names;
 		for (int i = 0; i < package_names.size(); ++i) {
 			QModelIndex index = packages_status->markPackageForInstallation(package_names[i]);
@@ -768,8 +765,7 @@ void InstallPackagesWidget::trySelectPackages (const QStringList &package_names)
 		if (!failed_names.isEmpty()) {
 			KMessageBox::sorry (0, i18n ("The following package(s) requested by the backend have not been found in the package repositories: \"%1\". Maybe the package name was mis-spelled. Or maybe you need to add additional repositories via the \"Configure Repositories\" button.", failed_names.join("\", \"")), i18n ("Package not available"));
 		}
-	});
-	RInterface::issueCommand(dummy, parent->chain);
+	}, parent->chain);
 }
 
 void InstallPackagesWidget::markAllUpdates () {

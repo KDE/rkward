@@ -123,6 +123,7 @@ friend class RBackendRequest;
 public:		// all these are public for technical reasons, only.
 	~RCommandProxy ();
 	QString command;
+	QString updates_object;
 	int type;
 	int id;
 	int status;

@@ -152,6 +152,8 @@ public:
 	bool isInGlobalEnv () const;
 /** returns the toplevel environment that this object is in. May the same as the object. */
 	REnvironmentObject *toplevelEnvironment () const;
+/** returns the R symbol this object belongs to. E.g. for mylist$sublist$vector returns mylist. May be the same as the object. Behavior should be assumed undefined for object outside of globalenv() */
+	RObject *globalEnvSymbol() const;
 
 	void rename (const QString &new_short_name);
 	void remove (bool removed_in_workspace);
