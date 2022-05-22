@@ -440,6 +440,11 @@ void RKVarEditModel::setTextMatrix (const QModelIndex& offset, const RKTextMatri
 // TODO: some models might not support column addition.
 	if (right >= trueCols ()) doInsertColumns (objects.size (), right - trueCols () + 1);
 	RK_ASSERT (right < trueCols ());
+
+	for (int i = left; i < right; ++i) {
+		objects[i]->lockSyncing(true);
+	}
+
 	int current_rows = objects[0]->getLength ();
 	if (bottom >= current_rows) insertRows (current_rows, bottom - current_rows + 1);
 
@@ -452,6 +457,10 @@ void RKVarEditModel::setTextMatrix (const QModelIndex& offset, const RKTextMatri
 			++trow;
 		}
 		++tcol;
+	}
+
+	for (int i = left; i < right; ++i) {
+		objects[i]->lockSyncing(false);
 	}
 }
 
