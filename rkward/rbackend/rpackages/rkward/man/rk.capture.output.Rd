@@ -9,12 +9,21 @@ rk.capture.output(
   capture.messages = TRUE,
   capture.output = TRUE,
   suppress.messages = FALSE,
-  suppress.output = FALSE
+  suppress.output = FALSE,
+  allow.nesting = TRUE
 )
 
 rk.end.capture.output(highlight = FALSE)
 }
 \arguments{
+\item{suppress.output}{output / message are not sent on, neither to surrounding captures, nor as regular output}
+
+\item{allow.nesting}{if false, output / message is not sent to surrounding captures, but is sent to regular output (unless suppressed)
+
+\code{rk.capture.output} Starts capturing output.
+
+\code{rk.end.capture.output} Stops capturing output, and returns the recorded output in a string.}
+
 \item{LANG}{language code to use. "C" for no translation, i.e. generally English}
 }
 \description{
@@ -26,8 +35,4 @@ with the default being to print it.
 }
 \details{
 And arbitrary number of ouptut captures can be started and stopped, and these will form a push/pop stack.
-
-\code{rk.capture.output} Starts capturing output.
-
-\code{rk.end.capture.output} Stops capturing output, and returns the recorded output in a string.
 }
