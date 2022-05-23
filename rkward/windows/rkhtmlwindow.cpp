@@ -364,7 +364,7 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 	connect (page->profile (), &QWebEngineProfile::downloadRequested, this, [this](QWebEngineDownloadItem* item) {
 		QString defpath;
 #if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
-		QString defpath = QDir(item->downloadDirectory()).absoluteFilePath(downloadFileName());
+		defpath = QDir(item->downloadDirectory()).absoluteFilePath(item->downloadFileName());
 #else
 		defpath = item->path();
 #endif
@@ -372,8 +372,8 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 		if (path.isEmpty()) return;
 #if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
 		QFileInfo fi(path);
-		item->setDownloadDirectory(fi.absoluteDir());
-		item->setDownloadFileName(fi.filename());
+		item->setDownloadDirectory(fi.absolutePath());
+		item->setDownloadFileName(fi.fileName());
 #else
 		item->setPath(path);
 #endif
