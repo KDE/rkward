@@ -88,9 +88,8 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 		list->header ()->hide ();
 		QTreeWidgetItem dummy (list);
 		dummy.setText (0, "Tg");
-		int top, left, bottom, right;
-		list->getContentsMargins (&left, &top, &right, &bottom);
-		list->setFixedHeight (list->visualItemRect (&dummy).height () + 2*list->visualItemRect (&dummy).top () + top + bottom);
+		QMargins margins = list->contentsMargins();
+		list->setFixedHeight(list->visualItemRect(&dummy).height() + 2*list->visualItemRect(&dummy).top() + margins.top() + margins.bottom());
 		list->header ()->setStretchLastSection (true);
 		list->setHorizontalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
 		list->setVerticalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
@@ -209,7 +208,7 @@ void RKVarSlot::addOrRemove (bool add) {
 		for (int i = 0; i < removed.size (); ++i) {
 			removed_rows.append (removed[i].row ());
 		}
-		qSort (removed_rows);
+		std::sort(removed_rows.begin(), removed_rows.end());
 		if (!multi && removed_rows.isEmpty ()) removed_rows.append (0);
 		for (int i = removed_rows.size () - 1; i >= 0; --i) {
 			available->removeAt (removed_rows[i]);

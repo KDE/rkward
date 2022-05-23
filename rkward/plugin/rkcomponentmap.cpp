@@ -98,7 +98,7 @@ void RKComponentGUIXML::resolveComponentLabelsAndSortMenu (Menu *menu, const QSt
 				resolveComponentLabelsAndSortMenu (static_cast<Menu*> (entry), menu_path.isEmpty () ? entry->label : menu_path + '\t' + entry->label);
 			}
 		}
-		qSort (group->entries.begin (), group->entries.end (), compareMenuEntries);
+		std::sort(group->entries.begin(), group->entries.end(), compareMenuEntries);
 	}
 }
 

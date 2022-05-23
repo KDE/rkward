@@ -164,7 +164,7 @@ RKPreviewManager::RKPreviewManager(QObject* parent) : QObject (parent) {
 
 	update_pending = NoUpdatePending;
 	updating = false;
-	id = QString ().sprintf ("%p", this).remove ('%');
+	id = "0x" + QString::number((quint64) (quintptr) this, 16);
 }
 
 RKPreviewManager::~RKPreviewManager () {

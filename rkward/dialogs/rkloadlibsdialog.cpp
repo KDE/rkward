@@ -633,7 +633,12 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : RKLoad
 	packages_view->setRootIsDecorated (false);
 	packages_view->setIndentation (0);
 	packages_view->setMinimumHeight (packages_view->sizeHintForRow (0) * 15);	// force a decent height
-	packages_view->setMinimumWidth(packages_view->fontMetrics ().width("This is to force a sensible min width for the packages view (empty on construction)")*2);
+	QString dummy("This is to force a sensible min width for the packages view (empty on construction)");
+#if QT_VERSION >= QT_VERSION_CHECK(5,11,0)
+	packages_view->setMinimumWidth(packages_view->fontMetrics().horizontalAdvance(dummy)*2);
+#else
+	packages_view->setMinimumWidth(packages_view->fontMetrics().width(dummy)*2);
+#endif
 	vbox->addWidget (packages_view);
 
 	QLabel *label = new QLabel (i18n ("Show only packages matching:"), this);

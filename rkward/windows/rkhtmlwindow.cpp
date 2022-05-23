@@ -362,10 +362,22 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 	connect (page, &QWebPage::downloadRequested, [this](const QNetworkRequest &request) { page->downloadUrl (request.url ()); });
 #else
 	connect (page->profile (), &QWebEngineProfile::downloadRequested, this, [this](QWebEngineDownloadItem* item) {
-		QString path = QFileDialog::getSaveFileName (this, i18n ("Save as"), item->path ());
-		if (path.isEmpty ()) return;
-		item->setPath (path);
-		item->accept ();
+		QString defpath;
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+		QString defpath = QDir(item->downloadDirectory()).absoluteFilePath(downloadFileName());
+#else
+		defpath = item->path();
+#endif
+		QString path = QFileDialog::getSaveFileName(this, i18n("Save as"), defpath);
+		if (path.isEmpty()) return;
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+		QFileInfo fi(path);
+		item->setDownloadDirectory(fi.absoluteDir());
+		item->setDownloadFileName(fi.filename());
+#else
+		item->setPath(path);
+#endif
+		item->accept();
 	});
 #endif
 	connect (page, &RKWebPage::printRequested, this, &RKHTMLWindow::slotPrint);
