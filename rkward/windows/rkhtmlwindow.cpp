@@ -1454,7 +1454,7 @@ void RKOutputWindowManager::registerWindow (RKHTMLWindow *window) {
 			}
 		}
 	
-		windows.insertMulti (file, window);
+		windows.insert(file, window);
 		connect (window, &QObject::destroyed, this, &RKOutputWindowManager::windowDestroyed);
 	} else {
 		RK_ASSERT (false);

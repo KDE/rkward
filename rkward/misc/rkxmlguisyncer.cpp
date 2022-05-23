@@ -44,7 +44,7 @@ void RKXMLGUISyncer::watchXMLGUIClientUIrc (KXMLGUIClient *client, bool recursiv
 				d->file_watcher->addFile (local_xml_file);
 			}
 
-			d->client_map.insertMulti (local_xml_file, ac);
+			d->client_map.insert(local_xml_file, ac);
 			d->connect (ac, &KActionCollection::destroyed, d, &RKXMLGUISyncerPrivate::actionCollectionDestroyed);
 		} // we simply ignore attempts to watch the same client twice
 	}
@@ -64,7 +64,7 @@ void RKXMLGUISyncer::registerChangeListener (KXMLGUIClient *watched_client, QObj
 	RKXMLGUISyncerNotifier *notifier = new RKXMLGUISyncerNotifier (0);
 	d->connect (notifier, SIGNAL (changed(KXMLGUIClient*)), receiver, method);
 
-	d->notifier_map.insertMulti (ac, notifier);
+	d->notifier_map.insert(ac, notifier);
 }
 
 

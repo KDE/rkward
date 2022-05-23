@@ -8,7 +8,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #ifndef RKCOMPONENT_H
 #define RKCOMPONENT_H
 
-#include <QHash>
+#include <QMultiHash>
 #include <qmap.h>
 #include <qwidget.h>
 
@@ -128,7 +128,7 @@ public:
 	bool isInternal () const { return is_internal; };
 protected:
 friend class RKOptionSet;
-	QHash<QString, RKComponentBase*> child_map;
+	QMultiHash<QString, RKComponentBase*> child_map;
 	bool required;
 /** recursively fetch the current values of all properties present as direct or indirect children of this component. Used to transfer values e.g. when switching interfaces (or to store settings per plugin in the future). Values are placed in the dictionary provided (be sure to create one first!). Internal properties are ignored (@see RKComponentPropertyBase::isInternal ());
 @param list the list to store the object values in

@@ -51,7 +51,7 @@ RKComponentPropertyBase* RKComponentBase::lookupProperty (const QString &identif
 void RKComponentBase::addChild (const QString &id, RKComponentBase *child) {
 	RK_TRACE (PLUGIN);
 
-	child_map.insertMulti (id, child);		// no overwriting even on duplicate ("#noid#") ids
+	child_map.insert(id, child);		// no overwriting even on duplicate ("#noid#") ids
 }
 
 void RKComponentBase::fetchPropertyValuesRecursive (PropertyValueMap *list, bool include_top_level, const QString &prefix, bool include_inactive_elements) const {
@@ -411,11 +411,8 @@ void RKComponent::removeFromParent () {
 
 	if (!parentComponent ()) return;
 
-	// unfortunately, several items might hvae the same key, and there seems to be no way to selectively remove the current item only.
-	// however, this function should only ever be called in cases of emergency and to prevent crashes. So we make extra sure to remove the child,
-	// even if we remove a little more than necessary along the way.
 	QString key = getIdInParent ();
-	while (parentComponent ()->child_map.remove (key)) {;}
+	child_map.remove(key, this);
 	_parent = 0;
 }
 

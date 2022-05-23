@@ -152,7 +152,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 						continue;
 					}
 				}
-				columns_to_update.insertMulti (gov_prop, it.key ());
+				columns_to_update.insert(gov_prop, it.key());
 				connect (gov_prop, &RKComponentPropertyBase::valueChanged, this, &RKOptionSet::governingPropertyChanged);
 			} else {
 				RK_DEBUG (PLUGIN, DL_ERROR, "did not find governing property %s for column %s of optionset", qPrintable (ci.governor), qPrintable (ci.column_name));
