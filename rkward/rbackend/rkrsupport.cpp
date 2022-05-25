@@ -326,14 +326,10 @@ RKRShadowEnvironment::Result RKRShadowEnvironment::diffAndUpdate() {
 	RK_TRACE (RBACKEND);
 	Result res;
 
-	SEXP symbols = R_lsInternal(baseenvir, TRUE);
+	// find the changed symbols, and copy them to the shadow environment
+	SEXP symbols = R_lsInternal3(baseenvir, TRUE, FALSE);  // envir, all.names, sorted
 	PROTECT(symbols);
 	int count = Rf_length(symbols);
-	SEXP symbols2 = R_lsInternal(shadowenvir, TRUE);
-	PROTECT(symbols2);
-	int count2 = Rf_length (symbols2);
-
-	// find the changed symbols, and copy them to the shadow environment
 	for (int i = 0; i < count; ++i) {
 		SEXP name = Rf_installChar(STRING_ELT(symbols, i));
 		PROTECT(name);
@@ -341,7 +337,7 @@ RKRShadowEnvironment::Result RKRShadowEnvironment::diffAndUpdate() {
 		SEXP cached = Rf_findVar(name, shadowenvir);
 		if (main != cached) {
 			Rf_defineVar(name, main, shadowenvir);
-			if (/*Rf_isNull(cached) && */ !Rf_isNull(main) && !nameInList(STRING_ELT(symbols, i), symbols2)) {
+			if (cached == R_UnboundValue) {
 				res.added.append(RKRSupport::SEXPToString(name));
 			} else {
 				res.changed.append(RKRSupport::SEXPToString(name));
@@ -349,16 +345,28 @@ RKRShadowEnvironment::Result RKRShadowEnvironment::diffAndUpdate() {
 		}
 		UNPROTECT(1);
 	}
+	UNPROTECT(1); // symbols
 
-	// find the symbols only in the shadow environment (those that were removed)
-	for (int i = 0; i < count2; ++i) {
-		if (!nameInList(STRING_ELT(symbols2, i), symbols)) {
-			res.removed.append(RKRSupport::SEXPToString(Rf_installChar(STRING_ELT(symbols2, i))));
-			R_removeVarFromFrame(Rf_installChar(STRING_ELT(symbols2, i)), shadowenvir);
+	// find the symbols only in the shadow environment (those that were removed in the base)
+	SEXP symbols2 = R_lsInternal3(shadowenvir, TRUE, FALSE);
+	PROTECT(symbols2);
+	int count2 = Rf_length(symbols2);
+	if (count != count2) {  // most of the time, no symbols have been removed, so we can skip the expensive check
+		for (int i = 0; i < count2; ++i) {
+			SEXP name = Rf_installChar(STRING_ELT(symbols2, i));
+			PROTECT(name);
+			// NOTE: R_findVar(), here, is enormously faster than searching the result of ls() for the name, at least when there is a large number of symbols.
+			// Importantly, environments provided hash-based lookup, by default.
+			SEXP main = Rf_findVar(name, baseenvir);
+			if (main == R_UnboundValue) {
+				res.removed.append(RKRSupport::SEXPToString(name));
+				R_removeVarFromFrame(name, shadowenvir);
+				if (++count >= count2) break;
+			}
+			UNPROTECT(1);
 		}
 	}
-
-	UNPROTECT(2); // symbols, symbols2
+	UNPROTECT(1);  // symbols2
 
 	RK_DEBUG(RBACKEND, DL_DEBUG, "added %s\n", qPrintable(res.added.join(", ")));
 	RK_DEBUG(RBACKEND, DL_DEBUG, "changed %s\n", qPrintable(res.changed.join(", ")));

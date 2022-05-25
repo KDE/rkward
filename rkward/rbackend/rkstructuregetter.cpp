@@ -346,7 +346,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 		// fetch list of child names
 		SEXP childnames_s;
 		if (do_env) {
-			childnames_s = R_lsInternal (value, (Rboolean) 1);
+			childnames_s = R_lsInternal3(value, TRUE, FALSE);
 		} else if (do_cont) {
 			childnames_s = RKRSupport::callSimpleFun (names_fun, value, baseenv);
 		} else {
