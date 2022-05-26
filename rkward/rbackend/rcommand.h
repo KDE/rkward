@@ -19,6 +19,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 class RCommandReceiver;
 class RCommand;
 class RCommandProxy;
+class RObject;
 
 /** R Commands can be arranged in a simple chain to make sure they are not interrupted by other commands.
  *  Also, command may need to run sub-commands.
@@ -193,6 +194,7 @@ public:
 	ROutputList &getOutput () { return output_list; };
 /** modify the command string. DO NOT CALL THIS after the command has been submitted! */
 	void setCommand (const QString &command) { _command = command; };
+	void setUpdatesObject(const RObject *object);
 
 /** creates a proxy for this RCommand */
 	RCommandProxy* makeProxy () const;
@@ -223,6 +225,7 @@ friend class RCommandStackModel;
 	int status;
 	int has_been_run_up_to;
 	QString _rk_equiv;
+	QString _updated_object;
 	int _id;
 	static int next_id;
 	RCommandReceiver *receivers[MAX_RECEIVERS_PER_RCOMMAND];

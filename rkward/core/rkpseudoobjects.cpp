@@ -95,7 +95,7 @@ void RKOrphanNamespacesObject::updateFromR (RCommandChain* chain) {
 	RK_ASSERT (false);
 }
 
-void RKOrphanNamespacesObject::updateFromR (RCommandChain* chain, const QStringList& current_symbols) {
+void RKOrphanNamespacesObject::updateNamespacesFromR (RCommandChain* chain, const QStringList& current_symbols) {
 	RK_TRACE (OBJECTS);
 	Q_UNUSED (chain);	// because the namespace objects themselves are not updated, only added as incomplete objects
 

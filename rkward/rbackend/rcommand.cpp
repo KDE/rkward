@@ -181,6 +181,12 @@ QString RCommand::fullOutput () const {
 	return ret;
 }
 
+void RCommand::setUpdatesObject(const RObject *object) {
+	RK_TRACE(RBACKEND);
+	RK_ASSERT(_updated_object.isNull());
+	_updated_object = object->globalEnvSymbol()->getShortName();
+}
+
 QString RCommand::remainingCommand () const {
 	RK_TRACE (RBACKEND);
 	RK_ASSERT (_type & User);	// not a grave problem, if it's not, but not useful, either
@@ -208,6 +214,7 @@ RCommandProxy* RCommand::makeProxy () const {
 	RK_ASSERT (getDataType () == RData::NoData);
 
 	RCommandProxy *ret = new RCommandProxy (_command, _type);
+	ret->updates_object = _updated_object;
 	ret->id = _id,
 	ret->status = status;
 	ret->has_been_run_up_to = has_been_run_up_to;

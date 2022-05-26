@@ -1,6 +1,6 @@
 /*
 rkvariable - This file is part of RKWard (https://rkward.kde.org). Created: Thu Aug 12 2004
-SPDX-FileCopyrightText: 2004-2012 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2004-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -85,7 +85,9 @@ void RKVariable::setVarType (RObject::RDataType new_type, bool sync) {
 			else if (new_type == RObject::DataLogical) command += "as.logical";
 			else if (new_type == RObject::DataFactor) command += "as.factor";
 			command += ')';
-			RInterface::issueCommand (command, RCommand::App | RCommand::Sync, QString ());
+			RCommand *rcommand = new RCommand(command, RCommand::App | RCommand::Sync);
+			rcommand->setUpdatesObject(this);
+			RInterface::issueCommand(rcommand);
 			if (new_type == RObject::DataFactor) updateValueLabels ();	// as.factor resets the "levels"-attribute!
 
 			syncDataToR ();
@@ -364,7 +366,9 @@ void RKVariable::writeInvalidFields (QList<int> rows, RCommandChain *chain) {
 		if (!values.isEmpty ()) values.append (",");
 	}
 
-	RInterface::issueCommand (".rk.set.invalid.fields (" + getFullName () + ", " + set + values + clear + ')', RCommand::App | RCommand::Sync, QString (), 0,0, chain);
+	RCommand *command = new RCommand(".rk.set.invalid.fields (" + getFullName () + ", " + set + values + clear + ')', RCommand::App | RCommand::Sync);
+	command->setUpdatesObject(this);
+	RInterface::issueCommand(command, chain);
 
 	if (data->previously_valid != data->invalid_fields.isEmpty ()) {
 		data->previously_valid = data->invalid_fields.isEmpty ();
@@ -380,7 +384,9 @@ void RKVariable::writeData (int from_row, int to_row, RCommandChain *chain) {
 
 	// TODO: try to sync in correct storage mode
 	if (from_row == to_row) {
-		RInterface::issueCommand (getFullName () + '[' + QString::number (from_row+1) + "] <- " + getRText (from_row), RCommand::App | RCommand::Sync, QString (), 0,0, chain);
+		RCommand *command = new RCommand(getFullName() + '[' + QString::number(from_row+1) + "] <- " + getRText(from_row), RCommand::App | RCommand::Sync);
+		command->setUpdatesObject(this);
+		RInterface::issueCommand(command, chain);
 		if (data->cell_states[from_row] & RKVarEditData::UnsyncedInvalidState) changed_invalids.append (from_row);
 	} else {
 		QString data_string = "c (";
@@ -393,7 +399,9 @@ void RKVariable::writeData (int from_row, int to_row, RCommandChain *chain) {
 			if (data->cell_states[row] & RKVarEditData::UnsyncedInvalidState) changed_invalids.append (row);
 		}
 		data_string.append (")");
-		RInterface::issueCommand (getFullName () + '[' + QString::number (from_row + 1) + ':' + QString::number (to_row + 1) + "] <- " + data_string, RCommand::App | RCommand::Sync, QString (), 0,0, chain);
+		RCommand* command = new RCommand(getFullName() + '[' + QString::number(from_row + 1) + ':' + QString::number(to_row + 1) + "] <- " + data_string, RCommand::App | RCommand::Sync);
+		command->setUpdatesObject(this);
+		RInterface::issueCommand(command, chain);
 	}
 
 	if (!changed_invalids.isEmpty ()) writeInvalidFields (changed_invalids, chain);
@@ -758,7 +766,9 @@ void RKVariable::writeValueLabels (RCommandChain *chain) const {
 		level_string = "NULL";
 	}
 
-	RInterface::issueCommand (".rk.set.levels (" + getFullName () + ", " + level_string + ')', RCommand::App | RCommand::Sync, QString (), 0, 0, chain);
+	RCommand* command = new RCommand(".rk.set.levels(" + getFullName() + ", " + level_string + ')', RCommand::App | RCommand::Sync);
+	command->setUpdatesObject(this);
+	RInterface::issueCommand(command, chain);
 }
 
 QString RKVariable::getValueLabelString () const {

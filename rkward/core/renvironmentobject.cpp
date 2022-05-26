@@ -109,31 +109,23 @@ void REnvironmentObject::updateFromR (RCommandChain *chain) {
 	type |= Updating;
 }
 
-void REnvironmentObject::updateFromR (RCommandChain *chain, const QStringList &current_symbols) {
+void REnvironmentObject::updateFromR(RCommandChain *chain, const QStringList &added_symbols, const QStringList &removed_symbols) {
 	RK_TRACE (OBJECTS);
 
-	// only needed for the assert at the end
-	int debug_baseline = 0;
-
-	// which children are missing?
-	for (int i = childmap.size () - 1; i >= 0; --i) {
-		RObject *object = childmap[i];
-		if (!current_symbols.contains (object->getShortName ())) {
-			if (object->isPending () || (!(RKModificationTracker::instance()->removeObject (object, 0, true)))) debug_baseline++;
-		}
+	for (int i = removed_symbols.size() -1; i >= 0; --i) {
+		RObject *removed_object = findChildByName(removed_symbols[i]);
+		RK_ASSERT(removed_object);
+		if (removed_object) RKModificationTracker::instance()->removeObject(removed_object, 0, true);
 	}
 
-	// which ones are new in the list?
-	for (int i = current_symbols.count () - 1; i >= 0; --i) {
-		RObject *child = findChildByName (current_symbols[i]);
-		if (!child) child = createPendingChild (current_symbols[i], i, false, false);
-		if (child->isPending ()) {
-			child->type -= RObject::Pending;	// HACK: Child is not actually pending: We've seen it!
-			child->updateFromR (chain);
+	for (int i = added_symbols.size() -1; i >= 0; --i) {
+		RObject *child = findChildByName(added_symbols[i]);
+		if (!child) child = createPendingChild(added_symbols[i], i, false, false);
+		if (child->isPending()) {
+			child->type -= RObject::Pending;  // HACK: Child is not actually pending: We've just seen it!
+			child->updateFromR(chain);
 		}
 	}
-
-	RK_ASSERT ((debug_baseline + current_symbols.count ()) == childmap.size ());
 }
 
 bool REnvironmentObject::updateStructure (RData *new_data) {

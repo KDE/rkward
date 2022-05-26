@@ -24,7 +24,7 @@ public:
 
 	void updateFromR (RCommandChain *chain) override;
 /** like updateFromR, but only update new / removed symbols from R. Theoretically this could be defined in RContainerObject, but the only use case is for environments. */
-	virtual void updateFromR (RCommandChain *chain, const QStringList &current_symbols);
+	virtual void updateFromR (RCommandChain *chain, const QStringList &added_symbols, const QStringList &removed_symbols);
 
 	QString getFullName (int) const override;
 	QString makeChildName (const QString &short_child_name, bool misplaced, int options) const override;

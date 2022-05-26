@@ -212,7 +212,7 @@ void RObjectList::updateNamespaces (const QStringList &namespace_names) {
 	for (int i = 0; i < namespace_names.size (); ++i) {
 		if (!findPackage (namespace_names[i])) orphan_namespace_names.append (namespace_names[i]);
 	}
-	orphan_namespaces->updateFromR (update_chain, orphan_namespace_names);
+	orphan_namespaces->updateNamespacesFromR (update_chain, orphan_namespace_names);
 }
 
 REnvironmentObject *RObjectList::createTopLevelEnvironment (const QString &name) {

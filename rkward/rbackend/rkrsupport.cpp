@@ -1,6 +1,6 @@
 /*
 rkrsupport - This file is part of RKWard (https://rkward.kde.org). Created: Mon Oct 25 2010
-SPDX-FileCopyrightText: 2010-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2010-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -163,6 +163,19 @@ SEXP RKRSupport::QVariantToSEXP(const QVariant& var) {
 	return ret;
 }
 
+QVariant RKRSupport::SEXPToNestedStrings(SEXP from_exp) {
+	RK_TRACE (RBACKEND);
+	if (Rf_isList(from_exp)) {
+		QVariantList ret;
+		for(SEXP cons = from_exp; cons != R_NilValue; cons = CDR(cons)) {
+			SEXP el = CAR(cons);
+			ret.append(SEXPToNestedStrings(el));
+		}
+		return ret;
+	}
+	return QVariant(SEXPToStringList(from_exp));
+}
+
 RData::IntStorage RKRSupport::SEXPToIntArray (SEXP from_exp) {
 	RK_TRACE (RBACKEND);
 
@@ -268,4 +281,108 @@ RData *RKRSupport::SEXPToRData (SEXP from_exp) {
 	}
 
 	return data;
+}
+
+SEXP RKRShadowEnvironment::shadowenvbase = nullptr;
+QMap<SEXP, RKRShadowEnvironment*> RKRShadowEnvironment::environments;
+RKRShadowEnvironment* RKRShadowEnvironment::environmentFor(SEXP baseenvir) {
+	RK_TRACE(RBACKEND);
+	// TODO: probably R_GlobalEnv should be special-cased, as this is what we'll check most often (or exclusively?)
+	if (!environments.contains(baseenvir)) {
+		RK_DEBUG(RBACKEND, DL_DEBUG, "creating new shadow environment for %p\n", baseenvir);
+		if (!shadowenvbase) {
+			SEXP rkn = Rf_allocVector(STRSXP, 1);
+			SET_STRING_ELT(rkn, 0, Rf_mkChar("package:rkward"));
+			SEXP rkwardenv = RKRSupport::callSimpleFun(Rf_install("as.environment"), rkn, R_GlobalEnv);
+			RK_ASSERT(Rf_isEnvironment(rkwardenv));
+			SEXP rkwardvars = Rf_eval(Rf_findVar(Rf_install(".rk.variables"), rkwardenv), R_BaseEnv);  // NOTE: Rf_eval to resolve promise
+			RK_ASSERT(Rf_isEnvironment(rkwardvars));
+			shadowenvbase = Rf_findVar(Rf_install(".rk.shadow.envs"), rkwardvars);
+			RK_ASSERT(Rf_isEnvironment(shadowenvbase));
+		}
+
+		char name[sizeof(void*)*2+3];
+		sprintf(name, "%p", baseenvir);
+		SEXP tr = Rf_allocVector(LGLSXP, 1);
+		LOGICAL(tr)[0] = true;
+		Rf_defineVar(Rf_install(name), RKRSupport::callSimpleFun2(Rf_install("new.env"), tr, R_EmptyEnv, R_GlobalEnv), shadowenvbase);
+		SEXP shadowenvir = Rf_findVar(Rf_install(name), shadowenvbase);
+		environments.insert(baseenvir, new RKRShadowEnvironment(baseenvir, shadowenvir));
+	}
+	return environments[baseenvir];
+}
+
+static bool nameInList(SEXP needle, SEXP haystack) {
+	int count = Rf_length(haystack);
+	for (int i = 0; i < count; ++i) {
+		if (!strcmp(R_CHAR(needle), R_CHAR(STRING_ELT(haystack, i)))) return true;
+	}
+	return false;
+}
+
+void RKRShadowEnvironment::updateCacheForGlobalenvSymbol(const QString& name) {
+	RK_DEBUG(RBACKEND, DL_DEBUG, "updating cached value for symbol %s", qPrintable(name));
+	environmentFor(R_GlobalEnv)->updateSymbolCache(name);
+}
+
+void RKRShadowEnvironment::updateSymbolCache(const QString& name) {
+	RK_TRACE(RBACKEND);
+	SEXP rname = Rf_installChar(Rf_mkCharCE(name.toUtf8(), CE_UTF8));
+	PROTECT(rname);
+	SEXP symbol_g = Rf_findVar(rname, R_GlobalEnv);
+	PROTECT(symbol_g);
+	Rf_defineVar(rname, symbol_g, shadowenvir);
+	UNPROTECT(2);
+}
+
+RKRShadowEnvironment::Result RKRShadowEnvironment::diffAndUpdate() {
+	RK_TRACE (RBACKEND);
+	Result res;
+
+	// find the changed symbols, and copy them to the shadow environment
+	SEXP symbols = R_lsInternal3(baseenvir, TRUE, FALSE);  // envir, all.names, sorted
+	PROTECT(symbols);
+	int count = Rf_length(symbols);
+	for (int i = 0; i < count; ++i) {
+		SEXP name = Rf_installChar(STRING_ELT(symbols, i));
+		PROTECT(name);
+		SEXP main = Rf_findVar(name, baseenvir);
+		SEXP cached = Rf_findVar(name, shadowenvir);
+		if (main != cached) {
+			Rf_defineVar(name, main, shadowenvir);
+			if (cached == R_UnboundValue) {
+				res.added.append(RKRSupport::SEXPToString(name));
+			} else {
+				res.changed.append(RKRSupport::SEXPToString(name));
+			}
+		}
+		UNPROTECT(1);
+	}
+	UNPROTECT(1); // symbols
+
+	// find the symbols only in the shadow environment (those that were removed in the base)
+	SEXP symbols2 = R_lsInternal3(shadowenvir, TRUE, FALSE);
+	PROTECT(symbols2);
+	int count2 = Rf_length(symbols2);
+	if (count != count2) {  // most of the time, no symbols have been removed, so we can skip the expensive check
+		for (int i = 0; i < count2; ++i) {
+			SEXP name = Rf_installChar(STRING_ELT(symbols2, i));
+			PROTECT(name);
+			// NOTE: R_findVar(), here, is enormously faster than searching the result of ls() for the name, at least when there is a large number of symbols.
+			// Importantly, environments provided hash-based lookup, by default.
+			SEXP main = Rf_findVar(name, baseenvir);
+			if (main == R_UnboundValue) {
+				res.removed.append(RKRSupport::SEXPToString(name));
+				R_removeVarFromFrame(name, shadowenvir);
+				if (++count >= count2) i = count2;  // end loop
+			}
+			UNPROTECT(1);
+		}
+	}
+	UNPROTECT(1);  // symbols2
+
+	RK_DEBUG(RBACKEND, DL_DEBUG, "added %s\n", qPrintable(res.added.join(", ")));
+	RK_DEBUG(RBACKEND, DL_DEBUG, "changed %s\n", qPrintable(res.changed.join(", ")));
+	RK_DEBUG(RBACKEND, DL_DEBUG, "removed %s\n", qPrintable(res.removed.join(", ")));
+	return res;
 }

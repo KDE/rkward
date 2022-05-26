@@ -440,6 +440,11 @@ void RKVarEditModel::setTextMatrix (const QModelIndex& offset, const RKTextMatri
 // TODO: some models might not support column addition.
 	if (right >= trueCols ()) doInsertColumns (objects.size (), right - trueCols () + 1);
 	RK_ASSERT (right < trueCols ());
+
+	for (int i = left; i < right; ++i) {
+		objects[i]->lockSyncing(true);
+	}
+
 	int current_rows = objects[0]->getLength ();
 	if (bottom >= current_rows) insertRows (current_rows, bottom - current_rows + 1);
 
@@ -452,6 +457,10 @@ void RKVarEditModel::setTextMatrix (const QModelIndex& offset, const RKTextMatri
 			++trow;
 		}
 		++tcol;
+	}
+
+	for (int i = left; i < right; ++i) {
+		objects[i]->lockSyncing(false);
 	}
 }
 
@@ -847,7 +856,9 @@ bool RKVarEditDataFrameModel::insertColumns (int column, int count, const QModel
 		RK_ASSERT (obj->isVariable ());
 //		addObject (col, obj);	// the object will be added via RKModificationTracker::addObject -> this::childAdded. That will also take care of calling beginInsertColumns()/endInsertColumns()
 	
-		RInterface::issueCommand (new RCommand (".rk.data.frame.insert.column (" + dataframe->getFullName () + ", \"" + obj->getShortName () + "\", " + QString::number (col+1-var_col_offset) + ")", RCommand::App | RCommand::Sync));
+		RCommand* command = new RCommand(".rk.data.frame.insert.column (" + dataframe->getFullName() + ", \"" + obj->getShortName() + "\", " + QString::number(col+1-var_col_offset) + ")", RCommand::App | RCommand::Sync);
+		command->setUpdatesObject(dataframe);
+		RInterface::issueCommand(command);
 	}
 
 	return true;
@@ -879,7 +890,9 @@ void RKVarEditDataFrameModel::doInsertRowsInBackend (int row, int count) {
 
 	// TODO: most of the time we're only adding one row at a time, still we should have a function to add multiple rows at once.
 	for (int i = row; i < row + count; ++i) {
-		RInterface::issueCommand (new RCommand (".rk.data.frame.insert.row (" + dataframe->getFullName () + ", " + QString::number (i+1) + ')', RCommand::App | RCommand::Sync));
+		RCommand* command = new RCommand(".rk.data.frame.insert.row(" + dataframe->getFullName() + ", " + QString::number(i+1) + ')', RCommand::App | RCommand::Sync);
+		command->setUpdatesObject(dataframe);
+		RInterface::issueCommand(command);
 	}
 }
 
@@ -887,7 +900,9 @@ void RKVarEditDataFrameModel::doRemoveRowsInBackend (int row, int count) {
 	RK_TRACE (EDITOR);
 
 	for (int i = row + count - 1; i >= row; --i) {
-		RInterface::issueCommand (new RCommand (".rk.data.frame.delete.row (" + dataframe->getFullName () + ", " + QString::number (i+1) + ')', RCommand::App | RCommand::Sync));
+		RCommand* command = new RCommand(".rk.data.frame.delete.row(" + dataframe->getFullName() + ", " + QString::number(i+1) + ')', RCommand::App | RCommand::Sync);
+		command->setUpdatesObject(dataframe);
+		RInterface::issueCommand(command);
 	}
 }
 
@@ -962,7 +977,10 @@ void RKVarEditDataFrameModel::pushTable (RCommandChain *sync_chain) {
 	command.append (")");
 
 	// push all children
-	RInterface::issueCommand (new RCommand (command, RCommand::Sync), sync_chain);
+	RCommand* rcommand = new RCommand(command, RCommand::Sync);
+	rcommand->setUpdatesObject(dataframe);
+	RInterface::issueCommand(rcommand, sync_chain);
+
 	for (int col=0; col < objects.size (); ++col) {
 		objects[col]->restore (sync_chain);
 	}

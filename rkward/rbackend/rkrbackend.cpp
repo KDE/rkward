@@ -916,21 +916,12 @@ void doError (const QString &callstring) {
 	}
 }
 
-SEXP doWs (SEXP name) {
-	if ((!RKRBackend::this_pointer->current_command) || (RKRBackend::this_pointer->current_command->type & RCommand::ObjectListUpdate) || (!(RKRBackend::this_pointer->current_command->type & RCommand::Sync))) {		// ignore Sync commands that are not flagged as ObjectListUpdate
-		QString sym = RKRSupport::SEXPToString(name);
-		if (!RKRBackend::this_pointer->changed_symbol_names.contains (sym)) RKRBackend::this_pointer->changed_symbol_names.append (sym);  // schedule symbol update for later
-	}
-	return R_NilValue;
-}
-
-SEXP doSubstackCall (SEXP call) {
+SEXP doSubstackCall (SEXP _call, SEXP _args) {
 	RK_TRACE (RBACKEND);
 
 	R_CheckUserInterrupt ();
 
-	QStringList list = RKRSupport::SEXPToStringList (call);
-
+	QString call = RKRSupport::SEXPToStringList(_call).value(0);
 /*	// this is a useful place to sneak in test code for profiling
 	if (list.value (0) == "testit") {
 		for (int i = 10000; i >= 1; --i) {
@@ -939,8 +930,8 @@ SEXP doSubstackCall (SEXP call) {
 		return R_NilValue;
 	} */
 
-
-	auto ret = RKRBackend::this_pointer->handleRequestWithSubcommands(list);
+	// For now, for simplicity, assume args are always strings, although possibly nested in lists
+	auto ret = RKRBackend::this_pointer->handleRequestWithSubcommands(call, RKRSupport::SEXPToNestedStrings(_args));
 	if (!ret.warning.isEmpty()) Rf_warning(RKRBackend::fromUtf8(ret.warning));  // print warnings, first, as errors will cause a stop
 	if (!ret.error.isEmpty()) Rf_error(RKRBackend::fromUtf8(ret.error));
 
@@ -1063,8 +1054,12 @@ SEXP doCaptureOutput (SEXP mode, SEXP capture_messages, SEXP capture_output, SEX
 
 SEXP RKStartGraphicsDevice (SEXP width, SEXP height, SEXP pointsize, SEXP family, SEXP bg, SEXP title, SEXP antialias);
 SEXP RKD_AdjustSize (SEXP devnum, SEXP id);
-SEXP doWs (SEXP name);
 void doPendingPriorityCommands ();
+
+SEXP checkEnv(SEXP a) {
+	auto res = RKRShadowEnvironment::diffAndUpdate(a);
+	return Rf_list3(RKRSupport::StringListToSEXP(res.added), RKRSupport::StringListToSEXP(res.removed), RKRSupport::StringListToSEXP(res.changed));
+}
 
 bool RKRBackend::startR () {
 	RK_TRACE (RBACKEND);
@@ -1139,9 +1134,9 @@ bool RKRBackend::startR () {
 // register our functions
 	R_CallMethodDef callMethods [] = {
 		// NOTE: Intermediate cast to void* to avoid compiler warning
-		{ "ws", (DL_FUNC) (void*) &doWs, 1 },
+		{ "rk.check.env", (DL_FUNC) (void*) &checkEnv, 1 },
 		{ "rk.simple", (DL_FUNC) (void*) &doSimpleBackendCall, 1},
-		{ "rk.do.command", (DL_FUNC) (void*) &doSubstackCall, 1 },
+		{ "rk.do.command", (DL_FUNC) (void*) &doSubstackCall, 2 },
 		{ "rk.do.generic.request", (DL_FUNC) (void*) &doPlainGenericRequest, 2 },
 		{ "rk.get.structure", (DL_FUNC) (void*) &doGetStructure, 4 },
 		{ "rk.get.structure.global", (DL_FUNC) (void*) &doGetGlobalEnvStructure, 3 },
@@ -1544,6 +1539,10 @@ void RKRBackend::commandFinished (bool check_object_updates_needed) {
 		current_command->has_been_run_up_to = current_command->command.length () - remainder.length ();
 	}
 
+	if (!current_command->updates_object.isEmpty()) {
+		// Update cached value for objects that are known to have been modified, so as to not trigger an additional change notification.
+		RKRShadowEnvironment::updateCacheForGlobalenvSymbol(current_command->updates_object);
+	}
 	if (check_object_updates_needed || (current_command->type & RCommand::ObjectListUpdate)) {
 		checkObjectUpdatesNeeded (current_command->type & (RCommand::User | RCommand::ObjectListUpdate));
 	}
@@ -1635,11 +1634,12 @@ RCommandProxy* RKRBackend::fetchNextCommand () {
 	return (handleRequest (&req, false));
 }
 
-GenericRRequestResult RKRBackend::handleRequestWithSubcommands(const QStringList &list) {
+GenericRRequestResult RKRBackend::handleRequestWithSubcommands(const QString &call, const QVariant &params) {
 	RK_TRACE (RBACKEND);
 
 	RBackendRequest request(true, RBackendRequest::GenericRequestWithSubcommands);
-	request.params["call"] = list;
+	request.params["call"] = call;
+	if (!params.isNull()) request.params["args"] = params;
 	request.command = current_command;
 	request.subcommandrequest = new RBackendRequest(true, RBackendRequest::OtherRequest);
 	handleRequest(&request);
@@ -1737,11 +1737,7 @@ void RKRBackend::checkObjectUpdatesNeeded (bool check_list) {
 	RK_TRACE (RBACKEND);
 	if (killed) return;
 
-	/* NOTE: We're keeping separate lists of the items on the search path, and the toplevel symbols in .GlobalEnv here.
-	This info is also present in RObjectList (and it's children). However: a) in a less convenient form, b) in the other thread. To avoid locking, and other complexity, keeping separate lists seems an ok solution. Keep in mind that only the names of only the toplevel objects are kept, here, so the memory overhead should be minimal */
-
 	bool search_update_needed = false;
-	bool globalenv_update_needed = false;
 
 	if (check_list) {	
 	// TODO: avoid parsing this over and over again
@@ -1751,50 +1747,23 @@ void RKRBackend::checkObjectUpdatesNeeded (bool check_list) {
 		if (search_update_needed) toplevel_env_names = dummy->stringVector ();
 		delete dummy;
 	
-	// TODO: avoid parsing this over and over again
-		RK_DEBUG (RBACKEND, DL_TRACE, "checkObjectUpdatesNeeded: getting globalenv symbols");
-		dummy = runDirectCommand ("ls (globalenv (), all.names=TRUE)\n", RCommand::GetStringVector);
-		QStringList new_globalenv_toplevel_names = dummy->stringVector ();
-		if (new_globalenv_toplevel_names.count () != global_env_toplevel_names.count ()) {
-			globalenv_update_needed = true;
-		} else {
-			for (int i = 0; i < new_globalenv_toplevel_names.count (); ++i) {
-				// order is not important in the symbol list
-				if (!global_env_toplevel_names.contains (new_globalenv_toplevel_names[i])) {
-					globalenv_update_needed = true;
-					break;
-				}
-			}
-		}
-		if (globalenv_update_needed) global_env_toplevel_names = new_globalenv_toplevel_names;
-		delete dummy;
-	
 		if (search_update_needed) {	// this includes an update of the globalenv, even if not needed
-			QStringList call ("syncenvs");
-			call.append (QString::number (toplevel_env_names.size ()));
-			call.append (toplevel_env_names);
 			dummy = runDirectCommand ("loadedNamespaces ()\n", RCommand::GetStringVector);
-			call.append (dummy->stringVector ());
 			delete dummy;
-			handleRequestWithSubcommands (call);
+			QVariantList args;
+			args.append(QVariant(toplevel_env_names));
+			args.append(QVariant(dummy->stringVector()));
+			handleRequestWithSubcommands("syncenvs", args);
 		} 
-		if (globalenv_update_needed) {
-			QStringList call = global_env_toplevel_names;
-			call.prepend ("syncglobal");	// should be faster than the reverse
-			handleRequestWithSubcommands (call);
-		}
 	}
 
-	if (search_update_needed || globalenv_update_needed) {
-		RK_DEBUG (RBACKEND, DL_TRACE, "checkObjectUpdatesNeeded: updating watches");
-		runDirectCommand (".rk.watch.globalenv ()\n");
-	}
-
-	if (!changed_symbol_names.isEmpty ()) {
-		QStringList call = changed_symbol_names;
-		call.prepend (QString ("sync"));	// should be faster than reverse
-		handleRequestWithSubcommands (call);
-		changed_symbol_names.clear ();
+	auto changes = RKRShadowEnvironment::diffAndUpdate(R_GlobalEnv);
+	if (!changes.isEmpty()) {
+		QVariantList args;
+		args.append(changes.added);
+		args.append(changes.removed);
+		args.append(changes.changed);
+		handleRequestWithSubcommands("sync", args);
 	}
 }
 
