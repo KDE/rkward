@@ -324,8 +324,13 @@ void RKComponent::updateEnablednessRecursive (bool parent_enabled) {
 
 bool RKComponent::isInactive () {
 	if (!isEnabled ()) return true;
-	if (parentWidget() && !isVisible()) return true;	// Note: Components embedded as button may be "hidden" without being unaccessible
-	if (!visibility_property->boolValue ()) return true;	// Note for those, this is the appropriate check
+	if (parentWidget() && isHidden()) return true; // Note: Components embedded as button may be "hidden" without being unaccessible
+	if (!visibility_property->boolValue ()) return true; // Note for those, this is the appropriate check
+	// NOTE: What an eye-sore, and TODO: should be fixed. Needed to detect, if this is e.g. the child of a hidden row (which is the parentWidget, but not the logical parentComponent)
+	if (parentWidget()) {
+		auto p = qobject_cast<RKComponent*>(parentWidget());
+		if (p && !p->visibility_property->boolValue()) return true;
+	}
 	return false;
 }
 
