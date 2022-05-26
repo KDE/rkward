@@ -122,7 +122,7 @@
 }
 
 ".rk.do.call" <- function (x, args=NULL) {
-	x <- .Call ("rk.do.command", c (x, args), PACKAGE="(embedding)");
+	x <- .Call ("rk.do.command", x, args, PACKAGE="(embedding)");
 	if (is.null(x)) invisible(NULL)
 	else x
 }
@@ -350,4 +350,12 @@ assign(".rk.shadow.envs", new.env(parent=emptyenv()), envir=.rk.variables)
 
 	# call separate assignments functions:
 	if (exists (".rk.fix.assignments.graphics")) eval (body (.rk.fix.assignments.graphics)) # internal_graphics.R
+}
+
+# Checks which objects have been added, removed, or changed since the last time, this function was called on the given environment.
+# This is mostly provided for testing purposes (and not currently exported), but speak up, if you think it is useful beyond internal use.
+"rk.check.env.changes" <- function(env) {
+	ret <- .Call("rk.check.env", env, PACKAGE="(embedding)")
+	names(ret) <- c("added", "removed", "changed")
+	ret
 }

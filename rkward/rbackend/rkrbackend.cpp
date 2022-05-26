@@ -916,13 +916,12 @@ void doError (const QString &callstring) {
 	}
 }
 
-SEXP doSubstackCall (SEXP call) {
+SEXP doSubstackCall (SEXP _call, SEXP _args) {
 	RK_TRACE (RBACKEND);
 
 	R_CheckUserInterrupt ();
 
-	QStringList list = RKRSupport::SEXPToStringList (call);
-
+	QString call = RKRSupport::SEXPToStringList(_call).value(0);
 /*	// this is a useful place to sneak in test code for profiling
 	if (list.value (0) == "testit") {
 		for (int i = 10000; i >= 1; --i) {
@@ -931,9 +930,8 @@ SEXP doSubstackCall (SEXP call) {
 		return R_NilValue;
 	} */
 
-	QStringList args;
-	if (list.size() > 1) args = list.mid(1);
-	auto ret = RKRBackend::this_pointer->handleRequestWithSubcommands(list.value(0), args);
+	// For now, for simplicity, assume args are always strings, although possibly nested in lists
+	auto ret = RKRBackend::this_pointer->handleRequestWithSubcommands(call, RKRSupport::SEXPToNestedStrings(_args));
 	if (!ret.warning.isEmpty()) Rf_warning(RKRBackend::fromUtf8(ret.warning));  // print warnings, first, as errors will cause a stop
 	if (!ret.error.isEmpty()) Rf_error(RKRBackend::fromUtf8(ret.error));
 
@@ -1138,7 +1136,7 @@ bool RKRBackend::startR () {
 		// NOTE: Intermediate cast to void* to avoid compiler warning
 		{ "rk.check.env", (DL_FUNC) (void*) &checkEnv, 1 },
 		{ "rk.simple", (DL_FUNC) (void*) &doSimpleBackendCall, 1},
-		{ "rk.do.command", (DL_FUNC) (void*) &doSubstackCall, 1 },
+		{ "rk.do.command", (DL_FUNC) (void*) &doSubstackCall, 2 },
 		{ "rk.do.generic.request", (DL_FUNC) (void*) &doPlainGenericRequest, 2 },
 		{ "rk.get.structure", (DL_FUNC) (void*) &doGetStructure, 4 },
 		{ "rk.get.structure.global", (DL_FUNC) (void*) &doGetGlobalEnvStructure, 3 },

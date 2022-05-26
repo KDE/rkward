@@ -1,6 +1,6 @@
 /*
 rkrsupport - This file is part of RKWard (https://rkward.kde.org). Created: Mon Oct 25 2010
-SPDX-FileCopyrightText: 2010-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2010-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -161,6 +161,19 @@ SEXP RKRSupport::QVariantToSEXP(const QVariant& var) {
 #endif
 	}
 	return ret;
+}
+
+QVariant RKRSupport::SEXPToNestedStrings(SEXP from_exp) {
+	RK_TRACE (RBACKEND);
+	if (Rf_isList(from_exp)) {
+		QVariantList ret;
+		for(SEXP cons = from_exp; cons != R_NilValue; cons = CDR(cons)) {
+			SEXP el = CAR(cons);
+			ret.append(SEXPToNestedStrings(el));
+		}
+		return ret;
+	}
+	return QVariant(SEXPToStringList(from_exp));
 }
 
 RData::IntStorage RKRSupport::SEXPToIntArray (SEXP from_exp) {
@@ -361,7 +374,7 @@ RKRShadowEnvironment::Result RKRShadowEnvironment::diffAndUpdate() {
 			if (main == R_UnboundValue) {
 				res.removed.append(RKRSupport::SEXPToString(name));
 				R_removeVarFromFrame(name, shadowenvir);
-				if (++count >= count2) break;
+				if (++count >= count2) i = count2;  // end loop
 			}
 			UNPROTECT(1);
 		}

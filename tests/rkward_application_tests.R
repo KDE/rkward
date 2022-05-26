@@ -21,9 +21,29 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			.GlobalEnv$active.binding.value <- 123
 			stopifnot (.GlobalEnv$active.binding == 123)
 
-			stopifnot (isTRUE(rkward:::.rk.watched.symbols$active.binding))
-
 			# NOTE: the message "active.binding" should be displayed in the message output
+		}),
+		new ("RKTest", id="object_modifications", call=function () {
+			env <- new.env()
+			for (a in letters) {
+				for (b in letters) {
+					for (c in letters) {
+						assign(paste0(a, b, c), 1, pos=env);
+					}
+				}
+			}
+			assign(paste0("lll", 0), 1, pos=env);
+			rkward:::rk.check.env.changes(env)
+			res <- system.time({
+				for (i in 1:5) {
+					env$lll <- env$lll + 1
+					assign(paste0("lll", i), 1, pos=env);
+					rm(list=paste0("lll", i-1), pos=env);
+					rk.print(rkward:::rk.check.env.changes(env))
+				}
+			})
+			# this is really crude, and might give false positives, but the idea is trying to catch potential performance regressions
+			stopifnot(res[1] < 0.5)
 		}),
 		new ("RKTest", id="promise_in_globalenv", call=function () {
 			.GlobalEnv$promised.value <- 1

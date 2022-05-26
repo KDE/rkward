@@ -29,12 +29,12 @@
 #' @export
 "rk.sync" <- function (x) {
 	object <- deparse (substitute (x))
-	.rk.do.call ("sync", object)
+	.rk.do.call("sync", list(NULL, NULL, object))
 }
 
 # should this really be public?
 #' @export
 #' @rdname rk.sync
 "rk.sync.global" <- function () {
-	.rk.do.call("syncglobal", ls (envir=globalenv (), all.names=TRUE))
+	.rk.do.call("sync", rk.check.env.changes(globalenv()))
 }

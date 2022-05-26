@@ -1,6 +1,6 @@
 /*
 rkrsupport - This file is part of the RKWard project. Created: Mon Oct 25 2010
-SPDX-FileCopyrightText: 2010-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2010-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -28,6 +28,7 @@ namespace RKRSupport {
 	QStringList SEXPToStringList (SEXP from_exp);
 	SEXP StringListToSEXP (const QStringList &list);
 	SEXP QVariantToSEXP(const QVariant &val);
+	QVariant SEXPToNestedStrings(SEXP from_exp);
 	QString SEXPToString (SEXP from_exp);
 	RData::IntStorage SEXPToIntArray (SEXP from_exp);
 	int SEXPToInt (SEXP from_exp, int def_value = INT_MIN);
