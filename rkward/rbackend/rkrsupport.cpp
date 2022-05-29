@@ -335,6 +335,22 @@ void RKRShadowEnvironment::updateSymbolCache(const QString& name) {
 	UNPROTECT(2);
 }
 
+static void unbindSymbolWrapper(SEXP name, SEXP env) {
+#if R_VERSION >= R_Version(4, 0, 0)
+	R_removeVarFromFrame(name, env);
+#else
+	SEXP call = PROTECT(Rf_allocVector(LANGSXP, 3));
+	SETCAR(call, Rf_install("rm"));
+	SEXP s = CDR(call);
+	SETCAR(s, name);
+	s = CDR(s);
+	SETCAR(s, env);
+	SET_TAG(s, Rf_install("pos"));
+	Rf_eval(call, R_BaseEnv);
+	UNPROTECT(1);
+#endif
+}
+
 RKRShadowEnvironment::Result RKRShadowEnvironment::diffAndUpdate() {
 	RK_TRACE (RBACKEND);
 	Result res;
@@ -373,7 +389,7 @@ RKRShadowEnvironment::Result RKRShadowEnvironment::diffAndUpdate() {
 			SEXP main = Rf_findVar(name, baseenvir);
 			if (main == R_UnboundValue) {
 				res.removed.append(RKRSupport::SEXPToString(name));
-				R_removeVarFromFrame(name, shadowenvir);
+				unbindSymbolWrapper(name, shadowenvir);
 				if (++count >= count2) i = count2;  // end loop
 			}
 			UNPROTECT(1);
