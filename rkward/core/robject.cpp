@@ -59,12 +59,21 @@ bool RObject::irregularShortName (const QString &name) {
 	const int len = name.length();
 	for (int i = 0; i < len; ++i) {
 		const QChar c = name.at(i);
-		// letters, dot, and underscore are allowed anywhere in the name
-		// digits are allowed, too, but not as the first char
+		// letters are allowed anywhere in the name
+		// underscore is allowed, but not as the first character
+		// dot, and digits are allowed, too unless they make the name start with a number (or with ...)
 		if(c.isLetter()) continue;
-		if(c == '.') continue;
-		if(c == '_') continue;
-		if(i && c.isDigit()) continue;
+		if(!i) {
+			if(c.isDigit()) return true;
+			if(c == '.') {
+				if(len > 1 && name[1].isDigit()) return true;
+				if(name == QStringLiteral("...")) return true;
+			}
+		} else {
+			if(c.isDigit()) continue;
+			if(c == '.') continue;
+			if(c == '_') continue;
+		}
 		return true;
 	}
 	return(false);
