@@ -868,6 +868,11 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 			message += i18n ("\nThe R backend will be shut down immediately. This means, you can not use any more functions that rely on it. I.e. you can do hardly anything at all, not even save the workspace (but if you're lucky, R already did that). What you can do, however, is save any open command-files, the output, or copy data out of open data editors. Quit RKWard after that. Sorry!");
 			RKErrorDialog::reportableErrorMessage (0, message, QString (), i18n ("R engine has died"), "r_engine_has_died");
 			emit backendStatusChanged(Dead);
+			while (!all_current_commands.isEmpty()) {
+				auto c = all_current_commands.takeLast();
+				c->status |= RCommand::Failed;
+				handleCommandOut(c);
+			}
 		}
 	} else {
 		RK_ASSERT (false);

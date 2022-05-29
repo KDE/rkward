@@ -38,6 +38,8 @@ RKSessionVars::RKSessionVars (RInterface *parent) : QObject (parent) {
 
 RKSessionVars::~RKSessionVars () {
 	RK_TRACE (RBACKEND);
+	RK_ASSERT(_instance == this);
+	_instance = nullptr;
 }
 
 void RKSessionVars::setInstalledPackages (const QStringList &new_list) {

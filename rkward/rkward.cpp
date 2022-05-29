@@ -611,6 +611,12 @@ void RKWardMainWindow::initActions() {
 // TODO: A way to add R-script-save actions, dynamically, would be nice
 	save_actions_plug_point = save_any_action->addSeparator ();
 	//save_any_action->addAction (proxy_export); -> later
+
+	auto restart_r = actionCollection()->addAction("restart_r");
+	restart_r->setText(i18n("Restart R Backend"));
+	connect(restart_r, &QAction::triggered, this, [this]() {
+		if (RInterface::instance()->backendIsDead()) startR();
+	});
 }
 
 /*
