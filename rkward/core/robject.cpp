@@ -56,8 +56,18 @@ RObject::~RObject () {
 
 bool RObject::irregularShortName (const QString &name) {
 	// no trace
-	static const QRegExp invalidChars ("[^a-zA-z0-9\\._]");
-	return (name.contains (invalidChars));
+	const int len = name.length();
+	for (int i = 0; i < len; ++i) {
+		const QChar c = name.at(i);
+		// letters, dot, and underscore are allowed anywhere in the name
+		// digits are allowed, too, but not as the first char
+		if(c.isLetter()) continue;
+		if(c == '.') continue;
+		if(c == '_') continue;
+		if(i && c.isDigit()) continue;
+		return true;
+	}
+	return(false);
 }
 
 QString RObject::getFullName (int options) const {
