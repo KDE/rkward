@@ -19,6 +19,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QHBoxLayout>
 #include <QIcon>
 #include <QComboBox>
+#include <QDesktopServices>
 
 // include files for KDE
 #include <kmessagebox.h>
@@ -128,6 +129,7 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 	initActions();
 
 	new RKWorkplace (this);
+	QDesktopServices::setUrlHandler("rkward", RKWorkplace::mainWorkplace(), "openRKWardUrl");
 	RKWorkplace::mainWorkplace ()->initActions (actionCollection ());
 	setCentralWidget (RKWorkplace::mainWorkplace ());
 	connect (RKWorkplace::mainWorkplace ()->view (), &RKWorkplaceView::captionChanged, this, static_cast<void (RKWardMainWindow::*)(const QString&)>(&RKWardMainWindow::setCaption));

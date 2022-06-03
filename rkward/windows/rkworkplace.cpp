@@ -408,6 +408,12 @@ void RKWorkplace::namedWindowOwnerDestroyed (QObject* owner) {
 	}
 }
 
+void RKWorkplace::openRKWardUrl(const QUrl &url) {
+	RK_TRACE(APP);
+	RK_ASSERT(url.scheme() == "rkward");
+	RKHTMLWindow::handleRKWardURL(url);
+}
+
 bool RKWorkplace::openAnyUrl (const QUrl &url, const QString &known_mimetype, bool force_external) {
 	RK_TRACE (APP);
 
