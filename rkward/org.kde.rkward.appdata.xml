@@ -3,7 +3,7 @@
   <id>org.kde.rkward</id>
   <metadata_license>FSFAP</metadata_license>
   <project_license>GPL-2.0+</project_license>
-  <name>RKward</name>
+  <name>RKWard</name>
   <name xml:lang="ca">RKward</name>
   <name xml:lang="ca-valencia">RKward</name>
   <name xml:lang="cs">RKward</name>
@@ -120,7 +120,7 @@
       <image>https://cdn.kde.org/screenshots/rkward/script_preview.png</image>
     </screenshot>
     <screenshot type="default">
-      <caption>Working with data in RKward</caption>
+      <caption>Working with data in RKWard</caption>
       <caption xml:lang="ca">Treballant amb dades al RKward</caption>
       <caption xml:lang="ca-valencia">Treballant amb dades a RKward</caption>
       <caption xml:lang="de">Arbeiten mit Daten in RKward</caption>
@@ -168,12 +168,22 @@
   </provides>
   <project_group>KDE</project_group>
   <releases>
-    <release version="0.7.3" date="2022-04-21">
+    <release version="0.7.4" date="2022-05-30">
       <artifacts>
         <artifact type="binary" platform="win64">
-          <location>https://download.kde.org/stable/rkward/0.7.3/win32/rkward-0.7.3-R-4.2.0-KF5-5.93.0.exe</location>
-          <checksum type="sha256">58e829a15a8c2657d2375059b89049daa3245c13ab17023ce2489fd31d46ee3c</checksum>
-          <size type="download">239674208</size>
+          <location>https://download.kde.org/stable/rkward/0.7.4/rkward-0.7.4-R-4.2.0-KF5-5.94.0.exe</location>
+          <checksum type="sha256">c22675405a2688bf2119b05ea6d120d2df649b9fb9b172025653f940e784bf9f</checksum>
+          <size type="download">249976264</size>
+        </artifact>
+        <artifact type="binary" platform="macOS">
+          <location>https://download.kde.org/stable/rkward/0.7.4/rkward-0.7.4-OSX-10.15-KF5-5.94.0_needs-R-4.2.dmg</location>
+          <checksum type="sha256">3e0afeb1d4c5c860a0549eeb549289e3d4e3fed6d3b7fa11ad96339cc5174c5f</checksum>
+          <size type="download">145660306</size>
+        </artifact>
+        <artifact type="source">
+          <location>https://download.kde.org/stable/rkward/0.7.4/rkward-0.7.4.tar.gz</location>
+          <checksum type="sha256">7633f3b269f6cf2c067b3b09cbe3da3e0ffdcd9dc3ecb9a9fa63b4f865e8161e</checksum>
+          <size type="download">5677112</size>
         </artifact>
       </artifacts>
     </release>
