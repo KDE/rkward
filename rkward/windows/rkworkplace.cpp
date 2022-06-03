@@ -24,6 +24,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QStatusBar>
+#include <QDesktopServices>
 
 #include "detachedwindowcontainer.h"
 #include "rkcommandeditorwindow.h"
@@ -60,6 +61,7 @@ RKWorkplace::RKWorkplace (QWidget *parent) : QWidget (parent) {
 	RK_ASSERT (main_workplace == 0);
 
 	main_workplace = this;
+	QDesktopServices::setUrlHandler("rkward", RKWorkplace::mainWorkplace(), "openRKWardUrl");
 	_workspace_config = 0;
 	window_placement_override = RKMDIWindow::AnyWindowState;
 

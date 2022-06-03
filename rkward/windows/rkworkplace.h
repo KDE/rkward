@@ -224,7 +224,7 @@ public slots:
 /** When windows are attached to the workplace, their QObject::destroyed () signal is connected to this slot. Thereby deleted objects are removed from the workplace automatically */
 	void removeWindow (QObject *window);
 	void saveSettings ();
-/** Proxy for QDesktopServices::setUrlHandler(), set from RKWardMainWindow(). Simply calls RKHTMLWindow::handleRKWardUrl(). */
+/** Proxy for QDesktopServices::setUrlHandler(), set in c'tor. Simply calls RKHTMLWindow::handleRKWardUrl(). */
 	void openRKWardUrl(const QUrl& url);
 private slots:
 	void namedWindowDestroyed (QObject *);
