@@ -30,7 +30,7 @@
 		<setting id="range">Compute the range, i.e. lowest and highest value</setting>
 		<setting id="sum">Compute the sum of all values</setting>
 		<setting id="prod">Compute the product of all values</setting>
-		<setting id="length">Count the total length of values, and the number of missing values (NAs)</setting>
+		<setting id="length">Count the total number of values, and the number of missing values (NAs)</setting>
 	</settings>
 	<related>
 		<ul>

@@ -22,7 +22,7 @@ fi
 if [ "${1}" == "--stable" ]; then
 	shift
 	PPAIDS="rkward-stable rkward-stable-cran rkward-stable-backports-cran"
-	PPAVERSIONSTRING=".2rkward.stable"
+	PPAVERSIONSTRING=".3rkward.stable"
 else
 	PPAIDS="rkward-devel rkward-devel-cran"
 	PPAVERSIONSTRING=".0rkward.devel"

@@ -61,7 +61,7 @@ RKWorkplace::RKWorkplace (QWidget *parent) : QWidget (parent) {
 	RK_ASSERT (main_workplace == 0);
 
 	main_workplace = this;
-	QDesktopServices::setUrlHandler("rkward", RKWorkplace::mainWorkplace(), "openRKWardUrl");
+	QDesktopServices::setUrlHandler("rkward", this, "openRKWardUrl");
 	_workspace_config = 0;
 	window_placement_override = RKMDIWindow::AnyWindowState;
 

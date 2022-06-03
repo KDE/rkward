@@ -62,7 +62,7 @@ function calculate () {
 		echo (', na.rm=TRUE))\n');
 	}
 	if (getValue ("length")) {
-		echo ('	results[i, ' + i18n ("length of sample") + '] <- length (var)\n');
+		echo ('	results[i, ' + i18n ("total length (N)") + '] <- length (var)\n');
 		echo ('	results[i, ' + i18n ("number of NAs") + '] <- sum (is.na(var))\n');
 	}
 	echo ('}\n');
