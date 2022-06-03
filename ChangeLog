@@ -1,3 +1,4 @@
+- Allow to select search provider, when searching for a term online
 - Fix object name completion for (irregular) names starting with numbers or underscores
 - Crosstabs N to N: Simplify labels, add option to control table layout
 - Change mechanism for detection of object changes

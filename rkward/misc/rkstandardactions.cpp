@@ -95,9 +95,7 @@ QAction* RKStandardActions::functionHelp (RKMDIWindow *window, RKScriptContextPr
 	return ret;
 }
 
-// KF5 TODO: The following should work with KIO >= 5.16, but I have _not_ tested this, yet. change #ifdef, when ready.
-#if 0
-#include <kurifiltersearchprovideractions.h>
+#include <KIO/KUriFilterSearchProviderActions>
 #include <QMenu>
 
 class RKSearchOnlineHelpAction : public QObject {
@@ -107,13 +105,14 @@ public:
 		RK_TRACE (MISC);
 		provider = context_provider;
 		menu = new QMenu ();
-		connect (this, &QMenu::aboutToShow, this, &RKSearchOnlineHelpAction::init);
-		actions = new KUriFilterSearchProviderActions (this);
-		actions->addWebShortcutsToMenu (menu);
+		container = nullptr;
+		connect (menu, &QMenu::aboutToShow, this, &RKSearchOnlineHelpAction::init);
+		actions = new KIO::KUriFilterSearchProviderActions (this);
 	};
 	~RKSearchOnlineHelpAction () {
 		RK_TRACE (MISC);
-		menu->deleteLater ();
+		menu->deleteLater();
+		container->deleteLater();
 	}
 	QAction *action () {
 		return menu->menuAction ();
@@ -124,56 +123,37 @@ public slots:
 		QString symbol, package;
 		provider->currentHelpContext (&symbol, &package);
 		actions->setSelectedText (symbol + " " + package + " R");
+		menu->clear();
+
+		// Coerce WebshortcutsMenu to single level
+		if (container) container->deleteLater();
+		container = new QMenu;
+		actions->addWebShortcutsToMenu(container);
+		QList<QAction*> actions;
+		if (container->actions().count() == 1) {
+			QMenu *internal = container->actions().first()->menu();
+			if (internal) actions = internal->actions();
+		}
+		if (actions.isEmpty()) actions = container->actions();
+		for (int i = 0; i < actions.count(); ++i) {
+			menu->addAction(actions[i]);
+		}
 	};
 private:
 	QMenu *menu;
-	KUriFilterSearchProviderActions *actions;
+	QMenu *container;
+	KIO::KUriFilterSearchProviderActions *actions;
 	RKScriptContextProvider *provider;
 };
 
 QAction* RKStandardActions::onlineHelp (RKMDIWindow *window, RKScriptContextProvider *context_provider) {
 	RK_TRACE (MISC);
 
-	QAction* ret = new RKSearchOnlineHelpAction (window, context_provider)->action ();
+	auto *a = new RKSearchOnlineHelpAction (window, context_provider);
+	QAction* ret = a->action ();
+	ret->setText(i18n("Search online"));
 	window->standardActionCollection ()->addAction ("search_online", ret);
 	return ret;
 }
-#else
-#include <kurifilter.h>
-#include <ktoolinvocation.h>
-
-class RKSearchOnlineHelpAction : public QAction {
-	Q_OBJECT
-public:
-	RKSearchOnlineHelpAction (QObject *parent, RKScriptContextProvider *context_provider) : QAction (parent) {
-		RK_TRACE (MISC);
-		provider = context_provider;
-		setText (i18n ("Search Online"));
-		connect (this, SIGNAL (triggered(bool)), this, SLOT (doSearch()));
-	};
-public slots:
-	void doSearch () {
-		RK_TRACE (MISC);
-		QString symbol, package;
-		provider->currentHelpContext (&symbol, &package);
-		KUriFilterData data (symbol + " " + package + " R");
-		// I had hope to avoid hard-coding any search provider, but it seems (with KF5) we cannot rely on a default provider to be defined.
-		data.setAlternateDefaultSearchProvider ("google");
-		bool ok = KUriFilter::self ()->filterSearchUri (data, KUriFilter::NormalTextFilter);
-		RK_DEBUG (MISC, DL_DEBUG, "Searching for %s in %s online -> %d: %s", qPrintable (symbol), qPrintable (package), ok, qPrintable (data.uri ().url ()));
-		QDesktopServices::openUrl (data.uri ());
-	};
-private:
-	RKScriptContextProvider *provider;
-};
-
-QAction* RKStandardActions::onlineHelp (RKMDIWindow *window, RKScriptContextProvider *context_provider) {
-	RK_TRACE (MISC);
-
-	QAction* ret = new RKSearchOnlineHelpAction (window, context_provider);
-	window->standardActionCollection ()->addAction ("search_online", ret);
-	return ret;
-}
-#endif
 
 #include "rkstandardactions.moc"
