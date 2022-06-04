@@ -1,5 +1,6 @@
 - Fix problem handling rkward:// links from dialogs on some sytems
 - Allow to select search provider, when searching for a term online
+- Experimental feature targetted at package developers: Add option to restart R backend
 - Fix object name completion for (irregular) names starting with numbers or underscores
 - Crosstabs N to N: Simplify labels, add option to control table layout
 - Change mechanism for detection of object changes

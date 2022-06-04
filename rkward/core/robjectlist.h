@@ -1,6 +1,6 @@
 /*
 robjectlist - This file is part of the RKWard project. Created: Wed Aug 18 2004
-SPDX-FileCopyrightText: 2004-2019 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2004-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -50,6 +50,7 @@ public:
 
 	static RObjectList *getObjectList () { return object_list; };
 	static REnvironmentObject *getGlobalEnv () { return object_list->globalenv; };
+	static void init();
 
 	/** detach the given list of packages (if the packages are loaded, and safe to remove)
 	@returns a list of error messages (usually empty) */
@@ -57,8 +58,6 @@ public:
 	/** A pseudo object containing as children all loaded namespaces which do not belong to a package on the search path */
 	RKOrphanNamespacesObject* orphanNamespacesObject () const { return orphan_namespaces; };
 	QString getObjectDescription () const override;
-public slots:
-	void timeout ();
 signals:
 /// emitted when the list of objects is about to be updated	// TODO: remove me
 	void updateStarted ();

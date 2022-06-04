@@ -1,6 +1,6 @@
 /*
 rkdebughandler - This file is part of RKWard (https://rkward.kde.org). Created: Wed Oct 19 2011
-SPDX-FileCopyrightText: 2011 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2011-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -11,7 +11,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-RKDebugHandler* RKDebugHandler::_instance = 0;
+RKDebugHandler* RKDebugHandler::_instance = nullptr;
 
 RKDebugHandler::RKDebugHandler (QObject *parent) : QObject (parent) {
 	RK_TRACE (APP);
@@ -24,6 +24,8 @@ RKDebugHandler::RKDebugHandler (QObject *parent) : QObject (parent) {
 
 RKDebugHandler::~RKDebugHandler () {
 	RK_TRACE (APP);
+	RK_ASSERT(_instance == this);
+	_instance = nullptr;
 }
 
 void RKDebugHandler::debugCall (RBackendRequest *request, RCommand *command) {
