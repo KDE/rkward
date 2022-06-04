@@ -247,13 +247,25 @@ public:
 		page ()->print (printer, [](bool){});
 	};
 protected:
-	void wheelEvent (QWheelEvent *event) override {
-		if (event->modifiers () & Qt::ControlModifier) {
-			setZoomFactor (zoomFactor () + event->angleDelta ().y () / 1200.0);
-			event->accept ();
+	bool eventFilter(QObject *, QEvent *event) override {
+		if (event->type() == QEvent::Wheel) {
+			QWheelEvent *we = static_cast<QWheelEvent*>(event);
+			if (we->modifiers()  & Qt::ControlModifier) {
+				setZoomFactor(zoomFactor() + we->angleDelta ().y() / 1200.0);
+				return true;
+			}
 		}
-		else QWebEngineView::wheelEvent (event);
+		return false;
 	}
+	void childEvent(QChildEvent * event) override {
+		if (event->type() == QChildEvent::ChildAdded) {
+			event->child()->installEventFilter(this);
+		}
+	}
+	// NOTE: Code below won't work, due to https://bugreports.qt.io/browse/QTBUG-43602
+/*	void wheelEvent (QWheelEvent *event) override {
+		[handle zooming]
+	} */
 #endif
 };
 

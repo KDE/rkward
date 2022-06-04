@@ -1,3 +1,4 @@
+- Fix zooming help/output pages with Ctrl+scroll wheel, when compiled with QWebEngine
 - Fix problem handling rkward:// links from dialogs on some sytems
 - Allow to select search provider, when searching for a term online
 - Experimental feature targetted at package developers: Add option to restart R backend
