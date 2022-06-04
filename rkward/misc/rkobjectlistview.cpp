@@ -193,12 +193,10 @@ void RKObjectListView::settingsChanged () {
 	RK_TRACE (APP);
 
 	setRootObject (root_object);
-	if (!root_object) {
-		setFirstColumnSpanned (0, QModelIndex (), true);
-		setItemDelegateForRow (0, rkdelegate);
-		setFirstColumnSpanned (1, QModelIndex (), true);
-		setItemDelegateForRow (1, rkdelegate);
-	}
+	setFirstColumnSpanned (0, QModelIndex (), true);
+	setItemDelegateForRow (0, rkdelegate);
+	setFirstColumnSpanned (1, QModelIndex (), true);
+	setItemDelegateForRow (1, rkdelegate);
 	resizeColumnToContents (0);
 }
 

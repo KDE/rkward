@@ -1,6 +1,6 @@
 /*
 robjectlist - This file is part of RKWard (https://rkward.kde.org). Created: Wed Aug 18 2004
-SPDX-FileCopyrightText: 2004-2019 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2004-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -26,25 +26,23 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../debug.h"
 
 // static
-RObjectList *RObjectList::object_list = 0;
+RObjectList *RObjectList::object_list = nullptr;
 
 RObjectList::RObjectList () : RContainerObject (0, QString ()) {
 	RK_TRACE (OBJECTS);
+	RK_ASSERT(!object_list);
 	object_list = this;
 
 	update_timer = new QTimer (this);
 	update_timer->setSingleShot (true);
-	connect (update_timer, &QTimer::timeout, this, &RObjectList::timeout);
-	
-	//update_timer->start (AUTO_UPDATE_INTERVAL, true);
-	
-	type = RObject::Workspace;
-	name = "search()";
-	
+	connect(update_timer, &QTimer::timeout, this, [this]() { updateFromR(0); });
 	update_chain = 0;
 
+	type = RObject::Workspace;
+	name = "search()";
+
 	globalenv = new REnvironmentObject (0, ".GlobalEnv");
-	globalenv->updateFromR (update_chain);
+	globalenv->updateFromR(nullptr);
 
    // TODO: Do we really need tracker notification at this stage?
 	RKOrphanNamespacesObject *obj = new RKOrphanNamespacesObject (this);
@@ -57,6 +55,24 @@ RObjectList::~RObjectList () {
 	RK_TRACE (OBJECTS);
 	delete orphan_namespaces;
 	delete globalenv;
+}
+
+// static
+void RObjectList::init() {
+	RK_TRACE(OBJECTS);
+	if (!object_list) {
+		 new RObjectList();
+	} else {
+		auto *globalenv = object_list->globalenv; // easier typing
+		for (int i = globalenv->numChildren() - 1; i >= 0; --i) {
+			globalenv->removeChild(globalenv->findChildByIndex(i), true);
+		}
+		object_list->updateEnvironments(QStringList() << ".GlobalEnv", false);
+		object_list->updateNamespaces(QStringList());
+		// TODO: For unkonwn reasons, a ghost object remains inside globalenv in the QSortFilterProxyModel (qt 5.12.8). Get rid of it with a model reset
+		RKModificationTracker::instance()->beginResetModel();
+		RKModificationTracker::instance()->endResetModel();
+	}
 }
 
 QString RObjectList::getObjectDescription () const {
@@ -297,12 +313,6 @@ bool RObjectList::updateStructure (RData *) {
 	RK_ASSERT (false);
 
 	return true;
-}
-
-void RObjectList::timeout () {
-	RK_TRACE (OBJECTS);
-
-	updateFromR (0);
 }
 
 QString RObjectList::renameChildCommand (RObject *object, const QString &new_name) const {

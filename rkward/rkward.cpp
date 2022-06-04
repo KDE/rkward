@@ -386,7 +386,7 @@ void RKWardMainWindow::startR () {
 
 	RInterface::create();
 	connect(RInterface::instance(), &RInterface::backendStatusChanged, this, &RKWardMainWindow::setRStatus);
-	new RObjectList ();
+	RObjectList::init();
 
 	RObjectBrowser::mainBrowser ()->unlock ();
 }
@@ -615,7 +615,10 @@ void RKWardMainWindow::initActions() {
 	auto restart_r = actionCollection()->addAction("restart_r");
 	restart_r->setText(i18n("Restart R Backend"));
 	connect(restart_r, &QAction::triggered, this, [this]() {
-		if (RInterface::instance()->backendIsDead()) startR();
+		if (RInterface::instance()->backendIsDead()) {
+			delete RInterface::instance();
+			startR();
+		}
 	});
 }
 
