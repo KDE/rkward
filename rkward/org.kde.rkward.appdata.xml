@@ -4,29 +4,6 @@
   <metadata_license>FSFAP</metadata_license>
   <project_license>GPL-2.0+</project_license>
   <name>RKWard</name>
-  <name xml:lang="ca">RKward</name>
-  <name xml:lang="ca-valencia">RKward</name>
-  <name xml:lang="cs">RKward</name>
-  <name xml:lang="de">RKward</name>
-  <name xml:lang="en-GB">RKward</name>
-  <name xml:lang="es">RKward</name>
-  <name xml:lang="et">RKward</name>
-  <name xml:lang="fi">RKward</name>
-  <name xml:lang="fr">RKward</name>
-  <name xml:lang="gl">RKWard</name>
-  <name xml:lang="id">RKward</name>
-  <name xml:lang="it">RKWard</name>
-  <name xml:lang="ko">RKward</name>
-  <name xml:lang="nl">RKward</name>
-  <name xml:lang="pl">RKward</name>
-  <name xml:lang="pt">RKward</name>
-  <name xml:lang="pt-BR">RKward</name>
-  <name xml:lang="ru">RKward</name>
-  <name xml:lang="sk">RKward</name>
-  <name xml:lang="sl">RKward</name>
-  <name xml:lang="sv">RKward</name>
-  <name xml:lang="uk">RKward</name>
-  <name xml:lang="x-test">xxRKwardxx</name>
   <summary>KDE frontend to the R statistics language</summary>
   <summary xml:lang="ca">Frontal del KDE per al llenguatge estadístic R</summary>
   <summary xml:lang="ca-valencia">Frontal de KDE per al llenguatge estadístic R</summary>
@@ -121,26 +98,6 @@
     </screenshot>
     <screenshot type="default">
       <caption>Working with data in RKWard</caption>
-      <caption xml:lang="ca">Treballant amb dades al RKward</caption>
-      <caption xml:lang="ca-valencia">Treballant amb dades a RKward</caption>
-      <caption xml:lang="de">Arbeiten mit Daten in RKward</caption>
-      <caption xml:lang="en-GB">Working with data in RKward</caption>
-      <caption xml:lang="es">Trabajando con datos en RKward</caption>
-      <caption xml:lang="et">Andmete töötlemine RKwardis</caption>
-      <caption xml:lang="fi">Datatyöskentelyä RKWardissa</caption>
-      <caption xml:lang="fr">Travailler avec des données dans RKward</caption>
-      <caption xml:lang="gl">Traballando con datos en RKWard</caption>
-      <caption xml:lang="id">Bekerja dengan data di RKward</caption>
-      <caption xml:lang="it">Lavorare coi dati in RKward</caption>
-      <caption xml:lang="ko">RKward에서 데이터 작업</caption>
-      <caption xml:lang="nl">Met gegevens werken in RKward</caption>
-      <caption xml:lang="pl">Praca z danymi w RKward</caption>
-      <caption xml:lang="pt">Lidar com dados no RKward</caption>
-      <caption xml:lang="sk">Práca s dátami v RKward</caption>
-      <caption xml:lang="sl">Delo s podatki v RKward</caption>
-      <caption xml:lang="sv">Arbeta med data i RKward</caption>
-      <caption xml:lang="uk">Робота з даними у RKward</caption>
-      <caption xml:lang="x-test">xxWorking with data in RKwardxx</caption>
       <image>https://rkward.kde.org/assets/img/EditorDataFrame.png</image>
     </screenshot>
     <screenshot type="default">
