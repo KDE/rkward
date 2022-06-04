@@ -65,13 +65,12 @@ void RObjectList::init() {
 	} else {
 		auto *globalenv = object_list->globalenv; // easier typing
 		for (int i = globalenv->numChildren() - 1; i >= 0; --i) {
-			globalenv->removeChild(globalenv->findChildByIndex(i), true);
+			auto obj = globalenv->findChildByIndex(i);
+			RK_ASSERT(obj->editors().isEmpty());
+			RKModificationTracker::instance()->removeObject(obj, nullptr, true);
 		}
 		object_list->updateEnvironments(QStringList() << ".GlobalEnv", false);
 		object_list->updateNamespaces(QStringList());
-		// TODO: For unkonwn reasons, a ghost object remains inside globalenv in the QSortFilterProxyModel (qt 5.12.8). Get rid of it with a model reset
-		RKModificationTracker::instance()->beginResetModel();
-		RKModificationTracker::instance()->endResetModel();
 	}
 }
 
