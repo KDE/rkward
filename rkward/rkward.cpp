@@ -616,7 +616,7 @@ void RKWardMainWindow::initActions() {
 	restart_r->setText(i18n("Restart R Backend"));
 	connect(restart_r, &QAction::triggered, this, [this]() {
 		bool pending = !RInterface::instance()->backendIsDead() && !RInterface::instance()->backendIsIdle();
-		QString add = pending ? i18n("<p>One or more operations are pending, and will be canceled. If you have recently chosen to save your workspace, and you see this messsage, <b>your data may not be saved, yet!</b></p>") : QString();
+		QString add = pending ? i18n("<p>One or more operations are pending, and will be canceled. If you have recently chosen to save your workspace, and you see this message, <b>your data may not be saved, yet!</b></p>") : QString();
 		QString message = i18n("<p>This feature is primarily targetted at package developers, who know what they are doing. Please proceed with caution.</p><p><b>All unsaved data in this workspace will be lost!</b> All data editors, and graphics windows will be closed.</p>%1<p>Are you sure you want to proceed?</p>", add);
 		if (KMessageBox::warningContinueCancel(this, message, i18n("Restart R backend"), KGuiItem("Restart R backend now"), KGuiItem("Cancel")) == KMessageBox::Continue) {
 			RKWorkplace::mainWorkplace()->closeAll(RKMDIWindow::X11Window);
