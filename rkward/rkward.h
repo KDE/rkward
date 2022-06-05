@@ -152,6 +152,7 @@ private:
 	QAction* window_detach;
 	
 	QAction* configure;
+	QAction* restart_r;
 
 	/** used so that if the menu is empty, there is a note in it, explaining that fact */
 	QAction* edit_menu_dummy;

@@ -694,7 +694,7 @@ QVariant RKCallHintModel::data (const QModelIndex& index, int role) const {
 	if (role == Qt::DisplayRole) {
 		if (col == KTextEditor::CodeCompletionModel::Prefix) return (name);
 		if (col == KTextEditor::CodeCompletionModel::Arguments) return (formals);
-		if (col == KTextEditor::CodeCompletionModel::Postfix) return ("        "); // Size is of a bit for KF5 5.44.0. Provide some padding to work around cut-off parts.
+		if (col == KTextEditor::CodeCompletionModel::Postfix) return ("        "); // Size is off a bit for KF5 5.44.0. Provide some padding to work around cut-off parts.
 	} else if (role == KTextEditor::CodeCompletionModel::ArgumentHintDepth) {
 		return 1;
 	} else if (role == KTextEditor::CodeCompletionModel::CompletionRole) {

@@ -612,10 +612,11 @@ void RKWardMainWindow::initActions() {
 	save_actions_plug_point = save_any_action->addSeparator ();
 	//save_any_action->addAction (proxy_export); -> later
 
-	auto restart_r = actionCollection()->addAction("restart_r");
+	restart_r = actionCollection()->addAction("restart_r");
+	restart_r->setIcon(QIcon::fromTheme("view-refresh"));
 	restart_r->setText(i18n("Restart R Backend"));
 	connect(restart_r, &QAction::triggered, this, [this]() {
-		QString message = i18n("<p>This feature is primarily targetted at package developers, who know what they are doing. Please proceed with caution.</p><p><b>All unsaved data in this workspace will be lost!</b> All data editors, and graphics windows will be closed.</p><p>Are you sure you want to proceed?</p>");
+		QString message = i18n("<p>This feature is primarily targetted at advanced users working on scripts or packages. Please proceed with caution.</p><p><b>All unsaved data in this workspace will be lost!</b> All data editors, and graphics windows will be closed.</p><p>Are you sure you want to proceed?</p>");
 		if (KMessageBox::warningContinueCancel(this, message, i18n("Restart R backend"), KGuiItem(i18n("Restart R backend"))) == KMessageBox::Continue) {
 			bool forced = RInterface::instance()->backendIsDead();
 			while (!RInterface::instance()->backendIsDead() && !RInterface::instance()->backendIsIdle()) {
@@ -769,9 +770,16 @@ void RKWardMainWindow::initStatusBar () {
 	boxl->addWidget(statusbar_r_status);
 
 	QToolButton* dummy = new QToolButton();
-	dummy->setDefaultAction(interrupt_all_commands);
+	dummy->setPopupMode(QToolButton::InstantPopup);
+	dummy->setIcon(RKStandardIcons::getIcon(RKStandardIcons::ActionShowMenu));
+	dummy->setMenu(new QMenu(dummy));
+	dummy->menu()->addAction(interrupt_all_commands);
+	dummy->menu()->addAction(restart_r);
+	dummy->menu()->addSeparator();
+	QAction *a = new QAction(i18n("Configure R backend"));
+	connect(a, &QAction::triggered, this, []() { RKSettings::configureSettings(RKSettings::PageR); });
+	dummy->menu()->addAction(a);
 	dummy->setFixedHeight(statusbar_r_status->height());
-	dummy->setAutoRaise(true);
 	boxl->addWidget(dummy);
 
 	realbar->addPermanentWidget(box, 0);
