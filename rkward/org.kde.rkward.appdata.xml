@@ -4,6 +4,11 @@
   <metadata_license>FSFAP</metadata_license>
   <project_license>GPL-2.0+</project_license>
   <name>RKWard</name>
+  <name xml:lang="ca">RKWard</name>
+  <name xml:lang="nl">RKWard</name>
+  <name xml:lang="pt">RKWard</name>
+  <name xml:lang="uk">RKWard</name>
+  <name xml:lang="x-test">xxRKWardxx</name>
   <summary>KDE frontend to the R statistics language</summary>
   <summary xml:lang="ca">Frontal del KDE per al llenguatge estadístic R</summary>
   <summary xml:lang="ca-valencia">Frontal de KDE per al llenguatge estadístic R</summary>
@@ -98,6 +103,11 @@
     </screenshot>
     <screenshot type="default">
       <caption>Working with data in RKWard</caption>
+      <caption xml:lang="ca">Treballant amb dades en el RKward</caption>
+      <caption xml:lang="nl">Met gegevens werken in RKWard</caption>
+      <caption xml:lang="pt">Lidar com dados no RKward</caption>
+      <caption xml:lang="uk">Робота з даними у RKWard</caption>
+      <caption xml:lang="x-test">xxWorking with data in RKWardxx</caption>
       <image>https://rkward.kde.org/assets/img/EditorDataFrame.png</image>
     </screenshot>
     <screenshot type="default">
