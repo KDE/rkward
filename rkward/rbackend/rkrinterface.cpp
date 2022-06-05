@@ -113,7 +113,9 @@ RInterface::~RInterface(){
 
 	// Don't wait for QObject d'tor to destroy the backend transmitter. It might still try to call functions in the RInterface
 	// (noteably, it does call qApp->processEvents().
+	RK_ASSERT(_instance == this);
 	delete RKRBackendProtocolFrontend::instance ();
+	_instance = nullptr;
 	RKWindowCatcher::discardInstance ();
 }
 

@@ -1,6 +1,6 @@
 /*
 rkrbackendprotocol - This file is part of RKWard (https://rkward.kde.org). Created: Thu Nov 04 2010
-SPDX-FileCopyrightText: 2010-2011 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2010-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -28,12 +28,14 @@ RKRBackendProtocolFrontend::RKRBackendProtocolFrontend (RInterface* parent) : QO
 RKRBackendProtocolFrontend::~RKRBackendProtocolFrontend () {
 	RK_TRACE (RBACKEND);
 
+	RK_ASSERT(_instance == this);
 	terminateBackend ();
 	RKFrontendTransmitter::instance ()->wait(1000);  // Wait for thread to catch the backend's exit request, and exit()
 	RKFrontendTransmitter::instance ()->quit();      // Tell it to quit, otherwise
 	RKFrontendTransmitter::instance ()->wait(3000);  // Wait for thread to quit and clean up.
 	qApp->processEvents(QEventLoop::AllEvents, 500); // Not strictly needed, but avoids some mem leaks on exit by handling all posted BackendExit events
 	delete RKFrontendTransmitter::instance ();
+	_instance = nullptr;
 }
 
 void RKRBackendProtocolFrontend::setupBackend () {

@@ -192,19 +192,21 @@ RCommandProxy* RKRBackendSerializer::unserializeProxy (QDataStream &stream) {
 
 #include <QTimer>
 #include <QLocalSocket>
-RKAbstractTransmitter* RKAbstractTransmitter::_instance = 0;
-RKAbstractTransmitter::RKAbstractTransmitter () : QThread () {
+RKAbstractTransmitter* RKAbstractTransmitter::_instance = nullptr;
+RKAbstractTransmitter::RKAbstractTransmitter() : QThread() {
 	RK_TRACE (RBACKEND);
 
-	RK_ASSERT (_instance == 0);	// NOTE: Although there are two instances of an abstract transmitter in an RKWard session, these live in different processes.
+	RK_ASSERT(_instance == nullptr);  // NOTE: Although there are two instances of an abstract transmitter in an RKWard session, these live in different processes.
 	_instance = this;
-	connection = 0;
+	connection = nullptr;
 
-	moveToThread (this);
+	moveToThread(this);
 }
 
-RKAbstractTransmitter::~RKAbstractTransmitter () {
-	RK_TRACE (RBACKEND);
+RKAbstractTransmitter::~RKAbstractTransmitter() {
+	RK_TRACE(RBACKEND);
+	RK_ASSERT(_instance == this);
+	_instance = nullptr;
 }
 
 void RKAbstractTransmitter::transmitRequest (RBackendRequest *request) {

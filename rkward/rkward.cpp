@@ -615,15 +615,38 @@ void RKWardMainWindow::initActions() {
 	auto restart_r = actionCollection()->addAction("restart_r");
 	restart_r->setText(i18n("Restart R Backend"));
 	connect(restart_r, &QAction::triggered, this, [this]() {
-		bool pending = !RInterface::instance()->backendIsDead() && !RInterface::instance()->backendIsIdle();
-		QString add = pending ? i18n("<p>One or more operations are pending, and will be canceled. If you have recently chosen to save your workspace, and you see this message, <b>your data may not be saved, yet!</b></p>") : QString();
-		QString message = i18n("<p>This feature is primarily targetted at package developers, who know what they are doing. Please proceed with caution.</p><p><b>All unsaved data in this workspace will be lost!</b> All data editors, and graphics windows will be closed.</p>%1<p>Are you sure you want to proceed?</p>", add);
-		if (KMessageBox::warningContinueCancel(this, message, i18n("Restart R backend"), KGuiItem("Restart R backend now"), KGuiItem("Cancel")) == KMessageBox::Continue) {
+		QString message = i18n("<p>This feature is primarily targetted at package developers, who know what they are doing. Please proceed with caution.</p><p><b>All unsaved data in this workspace will be lost!</b> All data editors, and graphics windows will be closed.</p><p>Are you sure you want to proceed?</p>");
+		if (KMessageBox::warningContinueCancel(this, message, i18n("Restart R backend"), KGuiItem(i18n("Restart R backend"))) == KMessageBox::Continue) {
+			bool forced = RInterface::instance()->backendIsDead();
+			while (!RInterface::instance()->backendIsDead() && !RInterface::instance()->backendIsIdle()) {
+				message = i18n("<p>One or more operations are pending.</p><p>If you have recently chosen to save your workspace, and you see this message, <b>your data may not be saved, yet!</b></p><p>How do you want to proceed?</p>");
+				auto res = KMessageBox::warningYesNoCancel(this, message, i18n("R commands still pending"), KGuiItem(i18n("Force restart now")), KGuiItem(i18n("Check again")), KGuiItem(i18n("Cancel restarting")));
+				if (res == KMessageBox::Yes) {
+					forced = true;
+					break;
+				} else if (res == KMessageBox::Cancel) {
+					return;
+				}
+				// KMessageBox::No means to loop: Commands may have finished, meanwhile. This is not really pretty, a proper progress control would be nicer,
+				// but then, this is a corner case to a feature that is not really targetted at a mainstream audience, anyway.
+			}
+
 			RKWorkplace::mainWorkplace()->closeAll(RKMDIWindow::X11Window);
 			slotCloseAllEditors();
-			delete RInterface::instance();
-			RKWorkplace::mainWorkplace()->setWorkspaceURL(QUrl());
-			startR();
+			auto restart_now = [this]() {
+				delete RInterface::instance();  // NOTE: Do not use deleteLater(), here. It is important to fully tear down the old backend, before creating the new one,
+				                                //       as code is written around the assumption that RInterface and friends are singletons. (RInterface::instance(), etc.)
+				RKWorkplace::mainWorkplace()->setWorkspaceURL(QUrl());
+				startR();
+			};
+			if (forced) {
+				RKConsole::mainConsole()->resetConsole();
+				restart_now();
+			} else {
+				RCommand *c = new RCommand(QString(), RCommand::QuitCommand);
+				c->whenFinished(this, [restart_now]() { QTimer::singleShot(0, restart_now); });
+				RInterface::issueCommand(c);
+			}
 		}
 	});
 }
