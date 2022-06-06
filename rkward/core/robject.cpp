@@ -68,6 +68,7 @@ bool RObject::irregularShortName (const QString &name) {
 			if(c == '.') {
 				if(len > 1 && name[1].isDigit()) return true;
 				if(name == QStringLiteral("...")) return true;
+				continue;
 			}
 		} else {
 			if(c.isDigit()) continue;
