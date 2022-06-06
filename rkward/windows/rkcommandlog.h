@@ -13,10 +13,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rkmdiwindow.h"
 #include "../settings/rksettings.h"
-#include "../rbackend/rcommandreceiver.h"
+#include "../rbackend/rcommand.h"
 
-class RCommand;
-struct ROutput;
 class RKCommandLogView;
 class RKCommandLogPart;
 
@@ -25,20 +23,21 @@ class RKCommandLogPart;
 @author Thomas Friedrichsmeier
 */
 
-class RKCommandLog : public RKMDIWindow, public RCommandReceiver {
+class RKCommandLog : public RKMDIWindow {
 	Q_OBJECT
 public: 
 /** Adds input to the log_view-window (i.e. commands issued) */
 	void addInput (RCommand *command);
 /** Adds output to the log_view-window (i.e. replies received) */
-	void newOutput (RCommand *command, ROutput *output_fragment) override;
+	void newOutput (RCommand *command, ROutput *output_fragment);
 
 	static RKCommandLog *getLog () { return rkcommand_log; };
 
 	RKCommandLogView *getView () { return log_view; };
 protected:
+friend class RCommand;
 /** Command has finished. If the command has failed, it may be necessary to print some more information */
-	void rCommandDone (RCommand *command) override;
+	void rCommandDone (RCommand *command);
 	RKCommandLog (QWidget *parent, bool tool_window, const char *name=0);
 	~RKCommandLog ();
 public slots:

@@ -43,13 +43,3 @@ void RCommandReceiver::delCommand (RCommand *command) {
 
 	if (delete_when_done && outstanding_commands.isEmpty ()) delete this;
 }
-
-void RCommandReceiver::autoDeleteWhenDone () {
-	RK_TRACE (RBACKEND);
-
-	if (outstanding_commands.isEmpty ()) {
-		delete this;
-		return;
-	}
-	delete_when_done = true;
-}

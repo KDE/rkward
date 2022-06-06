@@ -67,13 +67,18 @@ RKProgressControl::RKProgressControl (QObject *parent, const QString &text, cons
 	is_done = false;
 	modal = false;
 	autodelete = false;
-	done_command = 0;
 }
 
 RKProgressControl::~RKProgressControl () {
 	RK_TRACE (MISC);
 
 	if (!is_done) done ();
+}
+
+void RKProgressControl::autoDeleteWhenDone(){
+	RK_TRACE (MISC);
+	autodelete = true;
+	if (outstanding_commands.isEmpty()) deleteLater();
 }
 
 bool RKProgressControl::doModal (bool autodelete) {
@@ -143,8 +148,14 @@ void RKProgressControl::addRCommand (RCommand *command, bool done_when_finished)
 	RK_TRACE (MISC);
 	RK_ASSERT (command);
 
-	command->addReceiver (this);
-	if (done_when_finished) done_command = command;
+	outstanding_commands.append(command);
+	connect(command->notifier(), &RCommandNotifier::commandOutput, this, QOverload<RCommand*, const ROutput*>::of(&RKProgressControl::newOutput));
+	if (done_when_finished) {
+		command->whenFinished(this, [this, done_when_finished](RCommand* command) {
+			outstanding_commands.removeAll(command);
+			if (done_when_finished) done();
+		});
+	}
 }
 
 void RKProgressControl::dialogDestroyed () {
@@ -154,7 +165,7 @@ void RKProgressControl::dialogDestroyed () {
 	if ((!is_done) && (mode & AllowCancel)) {
 		is_done = true;
 		if (mode & AutoCancelCommands) {
-			for (RCommandList::const_iterator it = outstanding_commands.cbegin (); it != outstanding_commands.cend (); ++it) {
+			for (auto it = outstanding_commands.cbegin (); it != outstanding_commands.cend (); ++it) {
 				RInterface::instance()->cancelCommand(*it);
 			}
 		}
@@ -187,7 +198,7 @@ void RKProgressControl::createDialog () {
 	}
 }
 
-void RKProgressControl::newOutput (RCommand *, ROutput *output) {
+void RKProgressControl::newOutput (RCommand *, const ROutput *output) {
 	RK_TRACE (MISC);
 	RK_ASSERT (output);
 
@@ -196,12 +207,6 @@ void RKProgressControl::newOutput (RCommand *, ROutput *output) {
 	} else {
 		newError (output->output);
 	}
-}
-
-void RKProgressControl::rCommandDone (RCommand * command) {
-	RK_TRACE (MISC);
-
-	if (command == done_command) done ();
 }
 
 QString RKProgressControl::fullCommandOutput() {

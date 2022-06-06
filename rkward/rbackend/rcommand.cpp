@@ -49,7 +49,6 @@ RCommand::RCommand(const QString &command, int type, const QString &rk_equiv, RC
 	for (int i = 0; i < MAX_RECEIVERS_PER_RCOMMAND; ++i) receivers[i] = 0;
 	if (!(type & Internal)) {
 		addReceiver (receiver);
-		addReceiver (RKCommandLog::getLog ());
 	}
 }
 
@@ -112,6 +111,7 @@ void RCommand::finished () {
 		receivers[i]->delCommand (this);
 		receivers[i]->rCommandDone (this);
 	}
+	RKCommandLog::getLog()->rCommandDone(this);
 	if (_notifier) _notifier->emitFinished (this);
 }
 
@@ -122,6 +122,7 @@ void RCommand::newOutput (ROutput *output) {
 		if (receivers[i] == 0) continue;
 		receivers[i]->newOutput (this, output);
 	}
+	RKCommandLog::getLog()->newOutput(this, output);
 	if (_notifier) _notifier->emitOutput(this, output);
 }
 

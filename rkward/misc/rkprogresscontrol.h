@@ -11,7 +11,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QList>
 #include <qstring.h>
 
-#include "../rbackend/rcommandreceiver.h"
+#include "../rbackend/rcommand.h"
 
 class QCloseEvent;
 class QDialog;
@@ -28,7 +28,7 @@ TODO: Remove in favor of RKInlineProgressControl ?
 
 @author Thomas Friedrichsmeier
 */
-class RKProgressControl : public QObject, public RCommandReceiver {
+class RKProgressControl : public QObject {
 	Q_OBJECT
 public:
 /** create an RKProgressContol dialog
@@ -68,6 +68,8 @@ public:
 /** add a command to listen to. Warning: You will always first call addRCommand, then submit the command to RInterface, never the other way around. Else there could be a race condition!
 @param done_when_finished If set to true, the done () -slot is auto-called when the given command has completed */
 	void addRCommand (RCommand *command, bool done_when_finished=false);
+/** Causes the dialog to delete itself, once all outstanding commands have finished. Usually set from doModel()/doNonModal(), instead. */
+	void autoDeleteWhenDone ();
 	QString fullCommandOutput ();
 signals:
 	void cancelled ();
@@ -84,8 +86,7 @@ private:
 
 	RKProgressControlDialog *dialog;
 	QList<ROutput> output_log;
-
-	RCommand *done_command;
+	QList<RCommand*> outstanding_commands;
 
 	bool autodelete;
 	bool modal;
@@ -94,8 +95,7 @@ private:
 	QString text;
 	QString caption;
 protected:
-	void newOutput (RCommand *, ROutput *output) override;
-	void rCommandDone (RCommand *command) override;
+	void newOutput (RCommand *, const ROutput *output);
 };
 
 class KMessageWidget;

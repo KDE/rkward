@@ -34,8 +34,6 @@ public:
 	RCommandReceiver ();
 /** destructor */
 	virtual ~RCommandReceiver ();
-/** Causes the receiver to wait until all outstanding_commands (if any) are finished, then deletes itself */
-	void autoDeleteWhenDone ();
 protected:
 	friend class RCommand;
 	friend class RInterface;
