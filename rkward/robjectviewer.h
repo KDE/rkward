@@ -1,6 +1,6 @@
 /*
 robjectviewer - This file is part of the RKWard project. Created: Tue Aug 24 2004
-SPDX-FileCopyrightText: 2004-2007 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2004-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -10,10 +10,10 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <qwidget.h>
 #include <qstring.h>
 
-#include "rbackend/rcommandreceiver.h"
 #include "core/rkmodificationtracker.h"
 #include "windows/rkmdiwindow.h"
 
+class RCommand;
 class RObject;
 class QTextEdit;
 class QTabWidget;
@@ -26,7 +26,7 @@ A simple object viewer. You pass it an object in the constructor. It will extrac
 
 @author Thomas Friedrichsmeier
 */
-class RObjectViewer : public RKMDIWindow, public RCommandReceiver, public RObjectListener {
+class RObjectViewer : public RKMDIWindow, public RObjectListener {
 Q_OBJECT
 public:
 	~RObjectViewer ();
@@ -63,7 +63,7 @@ private:
 /** Since the two widgets in the RObjectViewer are largely similar, this is the common base for them. The base class itself is *not* useful.
 
 @author Thomas Friedrichsmeier */
-class RObjectViewerWidget : public QWidget, public RCommandReceiver {
+class RObjectViewerWidget : public QWidget {
 Q_OBJECT
 protected:
 	RObjectViewerWidget (QWidget* parent, RObject* object);
@@ -75,16 +75,13 @@ public:
 	void initialize ();
 	void setText (const QString& text);
 public slots:
-	void cancel ();
 	virtual void update ();
 protected:
-	void rCommandDone (RCommand *command) override;
-	void ready ();
+	virtual RCommand* makeCommand() = 0;
 
 	QLabel* status_label;
 
 	QPushButton *update_button;
-	QPushButton *cancel_button;
 	QTextEdit *area;
 
 	bool initialized;
@@ -99,7 +96,7 @@ public:
 	~RObjectSummaryWidget () {};
 
 	/** reimplemented from RObjectViewerWidget to call "summary" */
-	void update () override;
+	RCommand* makeCommand() override;
 };
 
 /** Represents the "print" area in an RObjectViewer */
@@ -109,7 +106,7 @@ public:
 	~RObjectPrintWidget () {};
 
 	/** reimplemented from RObjectViewerWidget to call "print" */
-	void update () override;
+	RCommand* makeCommand() override;
 };
 
 /** Represents the "str" area in an RObjectViewer */
@@ -119,7 +116,7 @@ public:
 	~RObjectStructureWidget () {};
 
 	/** reimplemented from RObjectViewerWidget to call "str" */
-	void update () override;
+	RCommand* makeCommand() override;
 };
 
 #endif

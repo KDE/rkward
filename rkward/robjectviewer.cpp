@@ -1,6 +1,6 @@
 /*
 robjectviewer - This file is part of RKWard (https://rkward.kde.org). Created: Tue Aug 24 2004
-SPDX-FileCopyrightText: 2004-2009 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2004-2022 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -22,6 +22,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "core/robject.h"
 #include "misc/rkdummypart.h"
 #include "../misc/rkcommonfunctions.h"
+#include "misc/rkprogresscontrol.h"
 
 #include "debug.h"
 
@@ -145,32 +146,28 @@ void RObjectViewer::currentTabChanged (int new_current) {
 
 ///////////////// RObjectViewerWidget /////////////////////
 
-RObjectViewerWidget::RObjectViewerWidget (QWidget* parent, RObject* object) : QWidget (parent), RCommandReceiver () {
+RObjectViewerWidget::RObjectViewerWidget(QWidget* parent, RObject* object) : QWidget(parent) {
 	RK_TRACE (APP);
 
 	_object = object;
-	QVBoxLayout* main_layout = new QVBoxLayout (this);
-	main_layout->setContentsMargins (0, 0, 0, 0);
-	QHBoxLayout* status_layout = new QHBoxLayout ();
-	main_layout->addLayout (status_layout);
+	QVBoxLayout* main_layout = new QVBoxLayout(this);
+	main_layout->setContentsMargins(0, 0, 0, 0);
+	QHBoxLayout* status_layout = new QHBoxLayout();
+	main_layout->addLayout(status_layout);
 
-	status_label = new QLabel (this);
-	status_layout->addWidget (status_label);
+	status_label = new QLabel();
+	status_layout->addWidget(status_label);
 
 	status_layout->addStretch ();
 
-	update_button = new QPushButton (i18n ("Update"), this);
-	connect (update_button, &QPushButton::clicked, this, &RObjectViewerWidget::update);
-	status_layout->addWidget (update_button);
+	update_button = new QPushButton(i18n("Update"));
+	connect(update_button, &QPushButton::clicked, this, &RObjectViewerWidget::update);
+	status_layout->addWidget(update_button);
 
-	cancel_button = new QPushButton (i18n ("Cancel"), this);
-	connect (cancel_button, &QPushButton::clicked, this, &RObjectViewerWidget::cancel);
-	status_layout->addWidget (cancel_button);
-
-	area = new QTextEdit (this);
-	area->setReadOnly (true);
-	area->setLineWrapMode (QTextEdit::NoWrap);
-	main_layout->addWidget (area);
+	area = new QTextEdit(this);
+	area->setReadOnly(true);
+	area->setLineWrapMode(QTextEdit::NoWrap);
+	main_layout->addWidget(area);
 
 	initialized = false;
 }
@@ -182,15 +179,12 @@ RObjectViewerWidget::~RObjectViewerWidget () {
 void RObjectViewerWidget::invalidate (const QString& reason) {
 	RK_TRACE (APP);
 
-	if (outstanding_commands.isEmpty ()) {
-		QPalette palette = status_label->palette ();
-		palette.setColor (status_label->foregroundRole (), Qt::red);
-		status_label->setPalette (palette);
+	QPalette palette = status_label->palette ();
+	palette.setColor (status_label->foregroundRole (), Qt::red);
+	status_label->setPalette (palette);
 
-		status_label->setText (reason);
-		update_button->setEnabled (_object != 0);
-		cancel_button->setEnabled (false);
-	}
+	status_label->setText (reason);
+	update_button->setEnabled (_object != 0);
 }
 
 void RObjectViewerWidget::initialize () {
@@ -201,25 +195,26 @@ void RObjectViewerWidget::initialize () {
 	initialized = true;
 }
 
-void RObjectViewerWidget::update () {
-	RK_TRACE (APP);
+void RObjectViewerWidget::update() {
+	RK_TRACE(APP);
 
-	RK_ASSERT (outstanding_commands.isEmpty ());
-	RK_ASSERT (_object);
+	if (!_object) {
+		RK_ASSERT(_object);
+		return;
+	}
+	update_button->setEnabled(false);
 
-	setText (i18n ("Fetching information. Please wait."));
-
-	update_button->setEnabled (false);
-	cancel_button->setEnabled (true);
-}
-
-void RObjectViewerWidget::cancel () {
-	RK_TRACE (APP);
-
-	cancelOutstandingCommands ();
-	setText (i18n ("Click \"Update\" to fetch information"));
-	cancel_button->setEnabled (false);
-	update_button->setEnabled (_object != 0);
+	auto command = makeCommand();
+	auto control = new RKInlineProgressControl(this, true);
+	control->addRCommand(command);
+	control->setAutoCloseWhenCommandsDone(true);
+	control->setText(i18n("Fetching information"));
+	control->show(100);
+	command->whenFinished(this, [this](RCommand *command) {
+		setText(command->fullOutput());
+		update_button->setEnabled (_object != 0);
+	});
+	RInterface::issueCommand(command);
 }
 
 void RObjectViewerWidget::setText (const QString& text) {
@@ -232,79 +227,31 @@ void RObjectViewerWidget::setText (const QString& text) {
 	area->insertPlainText (text);
 }
 
-void RObjectViewerWidget::ready () {
-	RK_TRACE (APP);
-
-	QPalette palette = status_label->palette ();
-	palette.setColor (status_label->foregroundRole (), Qt::black);
-	status_label->setPalette (palette);
-	status_label->setText (i18n ("Ready"));
-	cancel_button->setEnabled (false);
-	update_button->setEnabled (_object != 0);
-}
-
-void RObjectViewerWidget::rCommandDone (RCommand* command) {
-	RK_TRACE (APP);
-
-	if (command->wasCanceled ()) {
-		cancel ();
-	} else {
-		setText (command->fullOutput ());
-		ready ();
-	}
-}
-
 ////////////////// summary widget /////////////////
 
-void RObjectSummaryWidget::update () {
-	RK_TRACE (APP);
-
-	if (!_object) {
-		RK_ASSERT (false);
-		return;
-	}
-
-	RObjectViewerWidget::update ();
-
-	RCommand *command = new RCommand ("print(summary(" + _object->getFullName () + "))", RCommand::App, QString (), this);
-	RInterface::issueCommand (command, 0);
+RCommand* RObjectSummaryWidget::makeCommand() {
+	RK_TRACE(APP);
+	return new RCommand("print(summary(" + _object->getFullName() + "))", RCommand::App);
 }
 
 ////////////////// print widget /////////////////
 
-void RObjectPrintWidget::update () {
-	RK_TRACE (APP);
-
-	if (!_object) {
-		RK_ASSERT (false);
-		return;
-	}
-
-	RObjectViewerWidget::update ();
+RCommand* RObjectPrintWidget::makeCommand() {
+	RK_TRACE(APP);
 
 	// make sure to print as wide as possible
-	RCommand* command = new RCommand ("local({\n"
+	return new RCommand("local({\n"
 	                                  "\trk.temp.width.save <- getOption(\"width\")\n"
 	                                  "\toptions(width=10000)\n"
 	                                  "\ton.exit(options(width=rk.temp.width.save))\n"
-	                                  "\tprint(" + _object->getFullName () + ")\n"
-	                                  "})", RCommand::App, QString (), this);
-	RInterface::issueCommand (command, 0);
+	                                  "\tprint(" + _object->getFullName() + ")\n"
+	                                  "})", RCommand::App);
 }
 
 ////////////////// structure widget /////////////////
 
-void RObjectStructureWidget::update () {
-	RK_TRACE (APP);
-
-	if (!_object) {
-		RK_ASSERT (false);
-		return;
-	}
-
-	RObjectViewerWidget::update ();
-
-	RCommand *command = new RCommand ("str(" + _object->getFullName () + ')', RCommand::App, QString (), this);
-	RInterface::issueCommand (command, 0);
+RCommand* RObjectStructureWidget::makeCommand() {
+	RK_TRACE(APP);
+	return new RCommand("str(" + _object->getFullName() + ')', RCommand::App);
 }
 

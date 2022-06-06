@@ -384,6 +384,7 @@ void RKProgressControlDialog::closeEvent (QCloseEvent *e) {
 #include <KMessageBox>
 #include <KStandardAction>
 
+#include "../windows/rkmdiwindow.h"
 #include "rkstandardicons.h"
 
 RKInlineProgressControl::RKInlineProgressControl(QWidget *display_area, bool allow_cancel) : QObject(display_area),
@@ -396,7 +397,12 @@ RKInlineProgressControl::RKInlineProgressControl(QWidget *display_area, bool all
 						close_action(nullptr) {
 	RK_TRACE(MISC);
 
-	display_area->window()->installEventFilter(this);
+	QWidget* logical_parent = display_area;
+	while(logical_parent->parentWidget() && !(logical_parent->isWindow() || qobject_cast<RKMDIWindow*>(logical_parent))) {
+		logical_parent = logical_parent->parentWidget();
+	}
+	logical_parent->installEventFilter(this);
+	//display_area->installEventFilter(this);
 
 	wrapper = new QWidget(display_area);
 	wrapper->setAutoFillBackground(true);
@@ -510,9 +516,9 @@ void RKInlineProgressControl::show(int delay_ms) {
 	t->start();
 }
 
-bool RKInlineProgressControl::eventFilter(QObject *, QEvent *e) {
+bool RKInlineProgressControl::eventFilter(QObject *w, QEvent *e) {
 	RK_TRACE(MISC);
-	if (e->type() == QEvent::Resize) {
+	if (e->type() == QEvent::Resize || e->type() == QEvent::Show) {
 		QTimer::singleShot(0, this, [this]() {
 			wrapper->resize(display_area->size());
 		});
@@ -527,7 +533,7 @@ bool RKInlineProgressControl::eventFilter(QObject *, QEvent *e) {
 
 			autoclose = autoclose_save;
 			if (ignore) {
-				e->accept();
+				e->ignore();
 				return true;
 			}
 			cancelAndClose();
