@@ -74,7 +74,6 @@ protected:
 /// reimplemented from RContainerObject to emit a change signal
 	void objectsChanged ();
 	bool updateStructure (RData *new_data) override;
-	void rCommandDone (RCommand *command) override;
 	void updateEnvironments (const QStringList &env_names, bool force_globalenv_update);
 	void updateNamespaces (const QStringList &namespace_names);
 private:
@@ -86,6 +85,7 @@ private:
 	RKOrphanNamespacesObject *orphan_namespaces;
 
 	REnvironmentObject *createTopLevelEnvironment (const QString &name);
+	void makeUpdateCompleteCallback();
 
 	REnvironmentObject *globalenv;
 	static RObjectList *object_list;

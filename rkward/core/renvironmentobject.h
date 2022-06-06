@@ -22,7 +22,7 @@ public:
 	REnvironmentObject (RContainerObject *parent, const QString &name);
 	~REnvironmentObject ();
 
-	void updateFromR (RCommandChain *chain) override;
+	using RObject::updateFromR;
 /** like updateFromR, but only update new / removed symbols from R. Theoretically this could be defined in RContainerObject, but the only use case is for environments. */
 	virtual void updateFromR (RCommandChain *chain, const QStringList &added_symbols, const QStringList &removed_symbols);
 

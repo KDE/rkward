@@ -8,8 +8,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "robject.h"
 
-#include <qregexp.h>
 #include <KLocalizedString>
+#include <KMessageBox>
 
 #include "../rbackend/rkrinterface.h"
 #include "../rbackend/rkrbackendprotocol_shared.h"
@@ -21,11 +21,46 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rfunctionobject.h"
 #include "rkmodificationtracker.h"
 #include "rkrownames.h"
+#include "../settings/rksettingsmoduleobjectbrowser.h"
 
 #include "../debug.h"
 
 namespace RObjectPrivate {
 	QVector<qint32> dim_null (1, 0);
+}
+
+/** Proxy to guard against the unlikely - but possible - case that an RObject is deleted while it still has RCommands outstanding.
+ *  This is needed, because RObject is not QObject dereived. */
+class RObjectLifeTimeGuard {
+public:
+	RObjectLifeTimeGuard(RObject *object) : command_count(0), object(object) {
+		object->guard = this;
+	};
+	~RObjectLifeTimeGuard() {
+		if (object) {
+			object->guard = nullptr;
+		}
+	}
+	void addCommandFinishedCallback(RCommand *command, std::function<void(RCommand*)> callback) {
+		++command_count;
+		QObject::connect(command->notifier(), &RCommandNotifier::commandFinished, [this, callback](RCommand* command) {
+			if (object) {
+				callback(command);
+			}
+			if (--command_count <= 0) delete this;
+		});
+	}
+private:
+	int command_count;
+friend class RObject;
+	RObject *object;
+};
+
+void RObject::whenCommandFinished(RCommand* command, std::function<void (RCommand *)> callback) {
+	if (!guard) {
+		guard = new RObjectLifeTimeGuard(this);
+	}
+	guard->addCommandFinishedCallback(command, callback);
 }
 
 // static
@@ -43,12 +78,16 @@ RObject::RObject (RObject *parent, const QString &name) {
 	meta_map = 0;
 	contained_objects = 0;
 	dimensions = RObjectPrivate::dim_null;	// safe initialization
+	guard = nullptr;
 }
 
 RObject::~RObject () {
 	RK_TRACE (OBJECTS);
 
-	cancelOutstandingCommands ();
+	if (guard) {
+		RK_DEBUG(OBJECTS, DL_INFO, "object deleted while still waiting for command results");
+		guard->object = nullptr;
+	}
 	if (hasPseudoObject (SlotsObject)) delete slots_objects.take (this);
 	if (hasPseudoObject (NamespaceObject)) delete namespace_objects.take (this);
 	if (hasPseudoObject (RowNamesObject)) delete rownames_objects.take (this);
@@ -229,18 +268,39 @@ void RObject::writeMetaData (RCommandChain *chain) {
 void RObject::updateFromR (RCommandChain *chain) {
 	RK_TRACE (OBJECTS);
 
-	RCommand *command;
+	QString commandstring;
 	if (parentObject () == RObjectList::getGlobalEnv ()) {
-#ifdef __GNUC__
-#	warning TODO: find a generic solution
-#endif
 // We handle objects directly in .GlobalEnv differently. That's to avoid forcing promises, when addressing the object directly. In the long run, .rk.get.structure should be reworked to simply not need the value-argument in any case.
-		 command = new RCommand (".rk.get.structure.global (" + rQuote (getShortName ()) + ')', RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString (), this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
+		commandstring = ".rk.get.structure.global (" + rQuote (getShortName ()) + ')';
+	} else if (isType(Environment)) {
+		REnvironmentObject *env = static_cast<REnvironmentObject*>(this);
+		if (isType(PackageEnv) && RKSettingsModuleObjectBrowser::isPackageBlacklisted(env->packageName())) {
+			KMessageBox::information (0, i18n ("The package '%1' (probably you just loaded it) is currently blacklisted for retrieving structure information. Practically this means, the objects in this package will not appear in the object browser, and there will be no object name completion or function argument hinting for objects in this package.\nPackages will typically be blacklisted, if they contain huge amount of data, that would take too long to load. To unlist the package, visit Settings->Configure RKWard->Workspace.", env->packageName()), i18n("Package blacklisted"), "packageblacklist" + env->packageName());
+			return;
+		}
+		commandstring = ".rk.get.structure (" + getFullName(DefaultObjectNameOptions) + ", " + rQuote(getShortName());
+		if (isType(GlobalEnv)) commandstring += ", envlevel=-1";  // in the .GlobalEnv recurse one more level
+		if (isType(PackageEnv)) commandstring += ", namespacename=" + rQuote(env->packageName());
+		commandstring += ')';
 	} else {
 // This is the less common branch, but we do call .rk.get.structure on sub-object, e.g. when fetching more levels in the Workspace Browser, or when calling rk.sync(), explicitly
-		command = new RCommand (".rk.get.structure (" + getFullName () + ", " + rQuote (getShortName ()) + ')', RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString (), this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
+		commandstring = ".rk.get.structure (" + getFullName () + ", " + rQuote (getShortName ()) + ')';
 	}
-	RInterface::issueCommand (command, chain);
+	RCommand *command = new RCommand(commandstring, RCommand::App | RCommand::Sync | RCommand::GetStructuredData);
+	whenCommandFinished(command, [this](RCommand* command) {
+		if (command->failed ()) {
+			RK_DEBUG (OBJECTS, DL_INFO, "command failed while trying to update object '%s'. No longer present?", getShortName ().toLatin1 ().data ());
+			// this may happen, if the object has been removed in the workspace in between
+			RKModificationTracker::instance()->removeObject (this, 0, true);
+			return;
+		}
+		if (parent && parent->isContainer()) {
+			static_cast<RContainerObject*>(parent)->updateChildStructure(this, command);		// this may result in a delete, so nothing after this!
+		} else {
+			updateStructure(command);		// no (container) parent can happen for RObjectList and pseudo objects
+		}
+	});
+	RInterface::issueCommand(command, chain);
 
 	type |= Updating;	// will be cleared, implicitly, when the new structure gets set
 }
@@ -264,24 +324,6 @@ void RObject::fetchMoreIfNeeded (int levels) {
 	}
 }
 
-void RObject::rCommandDone (RCommand *command) {
-	RK_TRACE (OBJECTS);
-
-	if (command->getFlags () == ROBJECT_UDPATE_STRUCTURE_COMMAND) {
-		if (command->failed ()) {
-			RK_DEBUG (OBJECTS, DL_INFO, "command failed while trying to update object '%s'. No longer present?", getShortName ().toLatin1 ().data ());
-			// this may happen, if the object has been removed in the workspace in between
-			RKModificationTracker::instance()->removeObject (this, 0, true);
-			return;
-		}
-		if (parent && parent->isContainer ()) static_cast<RContainerObject*> (parent)->updateChildStructure (this, command);		// this may result in a delete, so nothing after this!
-		else updateStructure (command);		// no (container) parent can happen for RObjectList and pseudo objects
-		return;
-	} else {
-		RK_ASSERT (false);
-	}
-}
-
 bool RObject::updateStructure (RData *new_data) {
 	RK_TRACE (OBJECTS);
 	if (new_data->getDataLength () == 0) { // can happen, if the object no longer exists
@@ -293,10 +335,7 @@ bool RObject::updateStructure (RData *new_data) {
 
 	if (!canAccommodateStructure (new_data)) return false;
 
-	if (isPending ()) {
-		type -= Pending;
-		return true;	// Do not update any info for pending objects
-	}
+	if (isPending ()) type -= Pending;
 
 	bool properties_change = false;
 

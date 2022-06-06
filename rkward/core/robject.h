@@ -12,8 +12,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <qstring.h>
 #include <qmap.h>
 #include <QHash>
-
-#include "../rbackend/rcommandreceiver.h"
+#include <QVector>
 
 class RSlotsPseudoObject;
 class REnvironmentObject;
@@ -22,8 +21,8 @@ class RKRowNames;
 class RCommandChain;
 class RKEditor;
 class RData;
-
-#define ROBJECT_UDPATE_STRUCTURE_COMMAND 1
+class RObjectLifeTimeGuard;
+class RCommand;
 
 /**
 Base class for representations of objects in the R-workspace. RObject is never used directly (contains pure virtual functions).
@@ -31,7 +30,7 @@ Base class for representations of objects in the R-workspace. RObject is never u
 @author Thomas Friedrichsmeier
 */
 
-class RObject : public RCommandReceiver {
+class RObject {
 public:
 	RObject (RObject *parent, const QString &name);
 	virtual ~RObject ();
@@ -297,7 +296,8 @@ friend class RKModificationTracker;
 /** Notify the object that a model no longer needs its data. If there have been as many endEdit() as beginEdit() calls, the object should discard its data storage. The default implementation does nothing (raises an assert). */
 	virtual void endEdit ();
 
-	void rCommandDone (RCommand *command) override;
+/** wrapper around RCommand::whenFinishe(), needed because RObject is not a Qbject subclass */
+	void whenCommandFinished(RCommand *command, std::function<void(RCommand*)> callback);
 
 /* Storage hashes for special objects which are held by some but not all objects, and thus should not have a pointer
  * in the class declaration. Some apply only to specific RObject types, but moving storage to the relevant classes, would make it more
@@ -305,6 +305,8 @@ friend class RKModificationTracker;
 	static QHash<const RObject*, RSlotsPseudoObject*> slots_objects;
 	static QHash<const RObject*, REnvironmentObject*> namespace_objects;
 	static QHash<const RObject*, RKRowNames*> rownames_objects;
+friend class RObjectLifeTimeGuard;
+	RObjectLifeTimeGuard *guard;
 
 friend class RSlotsPseudoObject;
 friend class RKPackageNamespaceObject;

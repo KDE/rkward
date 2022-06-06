@@ -7,13 +7,11 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "renvironmentobject.h"
 
-#include <kmessagebox.h>
 #include <KLocalizedString>
 
 #include "robjectlist.h"
 #include "rkpseudoobjects.h"
 #include "../rbackend/rkrinterface.h"
-#include "../settings/rksettingsmoduleobjectbrowser.h"
 #include "rkmodificationtracker.h"
 
 #include "../debug.h"
@@ -88,25 +86,6 @@ void REnvironmentObject::writeMetaData (RCommandChain *chain) {
 
 	if (type & ToplevelEnv) return;
 	RContainerObject::writeMetaData (chain);
-}
-
-void REnvironmentObject::updateFromR (RCommandChain *chain) {
-	RK_TRACE (OBJECTS);
-	if (type & PackageEnv) {
-		if (RKSettingsModuleObjectBrowser::isPackageBlacklisted (packageName ())) {
-			KMessageBox::information (0, i18n ("The package '%1' (probably you just loaded it) is currently blacklisted for retrieving structure information. Practically this means, the objects in this package will not appear in the object browser, and there will be no object name completion or function argument hinting for objects in this package.\nPackages will typically be blacklisted, if they contain huge amount of data, that would take too long to load. To unlist the package, visit Settings->Configure RKWard->Workspace.", packageName ()), i18n("Package blacklisted"), "packageblacklist" + packageName ());
-			return;
-		}
-	}
-
-	QString options;
-	if (type & GlobalEnv) options = ", envlevel=-1";	// in the .GlobalEnv recurse one more level
-	if (type & PackageEnv) options.append (", namespacename=" + rQuote (packageName ()));
-
-	RCommand *command = new RCommand (".rk.get.structure (" + getFullName (DefaultObjectNameOptions) + ", " + rQuote (getShortName ()) + options + ')', RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString (), this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
-	RInterface::issueCommand (command, chain);
-
-	type |= Updating;
 }
 
 void REnvironmentObject::updateFromR(RCommandChain *chain, const QStringList &added_symbols, const QStringList &removed_symbols) {

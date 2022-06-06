@@ -35,8 +35,6 @@ public:
 
 /** reimplemented from RObject to also store value labels/factor levels (and in the future probably further info) */
 	void writeMetaData (RCommandChain *chain) override;
-friend class RContainerObject;
-	void rCommandDone (RCommand *command) override;
 public:
 ////////////// BEGIN: data handling ////////////////////////
 /** the Status enum is used for both keeping track of the entire row and individual cells. For single cells the meaning should be obvious. The entire row

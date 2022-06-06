@@ -8,9 +8,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #define UPDATE_DELAY_INTERVAL 500
 
-#define ROBJECTLIST_UPDATE_ENVIRONMENTS_COMMAND 1
-#define ROBJECTLIST_UPDATE_COMPLETE_COMMAND 2
-
 #include <qtimer.h>
 #include <qstringlist.h>
 
@@ -118,7 +115,20 @@ void RObjectList::updateFromR (RCommandChain *chain) {
 	emit updateStarted();
 	update_chain = RInterface::startChain (chain);
 
-	RCommand *command = new RCommand ("list (search (), loadedNamespaces ())", RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString (), this, ROBJECTLIST_UPDATE_ENVIRONMENTS_COMMAND);
+	RCommand *command = new RCommand("list (search (), loadedNamespaces ())", RCommand::App | RCommand::Sync | RCommand::GetStructuredData);
+	whenCommandFinished(command, [this](RCommand* command) {
+		RK_ASSERT (command->getDataType () == RData::StructureVector);
+		const RData::RDataStorage & data = command->structureVector ();
+		RK_ASSERT (data.size () == 2);
+
+		QStringList new_environments = data[0]->stringVector ();
+		RK_ASSERT (new_environments.size () >= 2);
+
+		updateEnvironments (new_environments, true);
+		updateNamespaces (data[1]->stringVector ());
+
+		makeUpdateCompleteCallback();
+	});
 	RInterface::issueCommand (command, update_chain);
 }
 
@@ -139,34 +149,21 @@ void RObjectList::updateFromR (RCommandChain *chain, const QStringList &current_
 	updateEnvironments (current_searchpath, false);
 	updateNamespaces (current_namespaces);
 
-	RInterface::issueCommand (QString (), RCommand::App | RCommand::Sync | RCommand::EmptyCommand, QString (), this, ROBJECTLIST_UPDATE_COMPLETE_COMMAND, update_chain);
+	makeUpdateCompleteCallback();
 }
 
-void RObjectList::rCommandDone (RCommand *command) {
-	RK_TRACE (OBJECTS);
-
-	if (command->getFlags () == ROBJECTLIST_UPDATE_ENVIRONMENTS_COMMAND) {
-		RK_ASSERT (command->getDataType () == RData::StructureVector);
-		const RData::RDataStorage & data = command->structureVector ();
-		RK_ASSERT (data.size () == 2);
-		
-		QStringList new_environments = data[0]->stringVector ();
-		RK_ASSERT (new_environments.size () >= 2);
-
-		updateEnvironments (new_environments, true);
-		updateNamespaces (data[1]->stringVector ());
-
-		RInterface::issueCommand (QString (), RCommand::App | RCommand::Sync | RCommand::EmptyCommand, QString (), this, ROBJECTLIST_UPDATE_COMPLETE_COMMAND, update_chain);
-	} else if (command->getFlags () == ROBJECTLIST_UPDATE_COMPLETE_COMMAND) {
+void RObjectList::makeUpdateCompleteCallback() {
+	RK_TRACE(OBJECTS);
+	RCommand* command = new RCommand(QString(), RCommand::App | RCommand::Sync | RCommand::EmptyCommand);
+	whenCommandFinished(command, [this](RCommand*) {
 		RK_ASSERT (update_chain);
 		RInterface::closeChain (update_chain);
 		update_chain = 0;
-	
+
 		RK_DEBUG (OBJECTS, DL_DEBUG, "object list update complete");
 		emit updateComplete();
-	} else {
-		RK_ASSERT (false);
-	}
+	});
+	RInterface::issueCommand(command, update_chain);
 }
 
 void RObjectList::updateEnvironments (const QStringList &_env_names, bool force_globalenv_update) {

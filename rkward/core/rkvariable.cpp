@@ -17,8 +17,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rkmodificationtracker.h"
 
-#define GET_DATA_COMMAND 11
-
 #define MAX_PRECISION DBL_DIG
 
 #include "../debug.h"
@@ -104,92 +102,6 @@ void RKVariable::writeMetaData (RCommandChain *chain) {
 	writeValueLabels (chain);
 	RObject::writeMetaData (chain);
 }
-
-void RKVariable::rCommandDone (RCommand *command) {
-	RK_TRACE (OBJECTS);
-	
-	if (command->getFlags () == ROBJECT_UDPATE_STRUCTURE_COMMAND) {
-		RObject::rCommandDone (command);
-	} else if (command->getFlags () == GET_DATA_COMMAND) {
-		if (!data) return;	// this can happen, if the editor is closed while a data update is still queued.
-
-		// prevent resyncing of data
-		lockSyncing (true);
-
-		RK_ASSERT (command->getDataType () == RData::StructureVector);
-		RK_ASSERT (command->getDataLength () == 3);
-
-		RData::RDataStorage top = command->structureVector ();
-		RData *cdata = top.at (0);
-		RData *levels = top.at (1);
-		RData *invalids = top.at (2);
-
-		// set factor levels first
-		RK_ASSERT (levels->getDataType () == RData::StringVector);
-		QStringList new_levels = levels->stringVector ();
-		int levels_len = new_levels.size ();
-		RK_ASSERT (levels_len >= 1);
-		delete data->value_labels;
-		data->value_labels = new RObject::ValueLabels;
-		if ((levels_len == 1) && new_levels.at (0).isEmpty ()) {
-			// no levels
-		} else {
-			for (int i=0; i < levels_len; ++i) {
-				data->value_labels->insert (QString::number (i+1), new_levels.at (i));
-			}
-		}
-
-		// now set the data
-		RK_ASSERT (cdata->getDataLength () == (unsigned int) getLength ()); // not really a problem due to the line below, I'd still like to know if / when this happens.
-		extendToLength (cdata->getDataLength ());
-		if (cdata->getDataType () == RData::StringVector) {
-			setCharacterFromR (0, getLength () - 1, cdata->stringVector ());
-		} else if (cdata->getDataType () == RData::RealVector) {
-			setNumericFromR (0, getLength () - 1, cdata->realVector ());
-		} else if (cdata->getDataType () == RData::IntVector) {
-			RData::IntStorage int_data = cdata->intVector ();
-			unsigned int len = getLength ();
-			QVector<double> dd;
-			dd.reserve (len);
-			for (unsigned int i = 0; i < len; ++i) {
-				if (RInterface::isNaInt (int_data.at (i))) dd.append (NAN);
-				else dd.append ((double) int_data.at (i));
-			}
-			setNumericFromR (0, getLength () - 1, dd);
-		}
-
-		// now set the invalid fields (only if they are still NAs in the R data)
-		data->invalid_fields.clear ();
-		if (invalids->getDataLength () <= 1) {
-			// no invalids
-		} else {
-			RK_ASSERT (invalids->getDataType () == RData::StringVector);
-			QStringList invalids_list = invalids->stringVector ();
-			int invalids_length = invalids_list.size ();
-			RK_ASSERT ((invalids_length % 2) == 0);
-			int invalids_count = invalids_length / 2;
-			for (int i=0; i < invalids_count; ++i) {
-				int row = invalids_list.at (i).toInt () - 1;
-				if (data->cell_states[row] & RKVarEditData::NA) {	// NOTE: Do *not* use setText(), here. It tries too hard to set a valid value.
-					data->invalid_fields.insert (row, invalids_list.at (invalids_count + i));
-					data->cell_states[row] = RKVarEditData::Invalid;
-				}
-			}
-		}
-		data->previously_valid = data->invalid_fields.isEmpty ();
-		data->formatting_options = parseFormattingOptionsString (getMetaProperty ("format"));
-
-		ChangeSet *set = new ChangeSet (0, getLength (), true);
-		RKModificationTracker::instance()->objectDataChanged (this, set);
-		RKModificationTracker::instance()->objectMetaChanged (this);
-		type -= (type & NeedDataUpdate);
-		discardUnsyncedChanges ();
-		lockSyncing (false);
-	} else {
-		RK_ASSERT (false);
-	}
-}
-
 
 ////////////////////// BEGIN: data-handling //////////////////////////////
 #define ALLOC_STEP 2
@@ -288,7 +200,84 @@ void RKVariable::updateDataFromR (RCommandChain *chain) {
 	RK_TRACE (OBJECTS);
 	if (!data) return;
 
-	RInterface::issueCommand (".rk.get.vector.data (" + getFullName () + ')', RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString (), this, GET_DATA_COMMAND, chain);
+	RCommand *c = new RCommand(".rk.get.vector.data (" + getFullName () + ')', RCommand::App | RCommand::Sync | RCommand::GetStructuredData);
+	whenCommandFinished(c, [this](RCommand* command) {
+		if (!data) return;	// this can happen, if the editor is closed while a data update is still queued.
+
+		// prevent resyncing of data
+		lockSyncing (true);
+
+		RK_ASSERT (command->getDataType () == RData::StructureVector);
+		RK_ASSERT (command->getDataLength () == 3);
+
+		RData::RDataStorage top = command->structureVector ();
+		RData *cdata = top.at (0);
+		RData *levels = top.at (1);
+		RData *invalids = top.at (2);
+
+		// set factor levels first
+		RK_ASSERT (levels->getDataType () == RData::StringVector);
+		QStringList new_levels = levels->stringVector ();
+		int levels_len = new_levels.size ();
+		RK_ASSERT (levels_len >= 1);
+		delete data->value_labels;
+		data->value_labels = new RObject::ValueLabels;
+		if ((levels_len == 1) && new_levels.at (0).isEmpty ()) {
+			// no levels
+		} else {
+			for (int i=0; i < levels_len; ++i) {
+				data->value_labels->insert (QString::number (i+1), new_levels.at (i));
+			}
+		}
+
+		// now set the data
+		RK_ASSERT (cdata->getDataLength () == (unsigned int) getLength ()); // not really a problem due to the line below, I'd still like to know if / when this happens.
+		extendToLength (cdata->getDataLength ());
+		if (cdata->getDataType () == RData::StringVector) {
+			setCharacterFromR (0, getLength () - 1, cdata->stringVector ());
+		} else if (cdata->getDataType () == RData::RealVector) {
+			setNumericFromR (0, getLength () - 1, cdata->realVector ());
+		} else if (cdata->getDataType () == RData::IntVector) {
+			RData::IntStorage int_data = cdata->intVector ();
+			unsigned int len = getLength ();
+			QVector<double> dd;
+			dd.reserve (len);
+			for (unsigned int i = 0; i < len; ++i) {
+				if (RInterface::isNaInt (int_data.at (i))) dd.append (NAN);
+				else dd.append ((double) int_data.at (i));
+			}
+			setNumericFromR (0, getLength () - 1, dd);
+		}
+
+		// now set the invalid fields (only if they are still NAs in the R data)
+		data->invalid_fields.clear ();
+		if (invalids->getDataLength () <= 1) {
+			// no invalids
+		} else {
+			RK_ASSERT (invalids->getDataType () == RData::StringVector);
+			QStringList invalids_list = invalids->stringVector ();
+			int invalids_length = invalids_list.size ();
+			RK_ASSERT ((invalids_length % 2) == 0);
+			int invalids_count = invalids_length / 2;
+			for (int i=0; i < invalids_count; ++i) {
+				int row = invalids_list.at (i).toInt () - 1;
+				if (data->cell_states[row] & RKVarEditData::NA) {	// NOTE: Do *not* use setText(), here. It tries too hard to set a valid value.
+					data->invalid_fields.insert (row, invalids_list.at (invalids_count + i));
+					data->cell_states[row] = RKVarEditData::Invalid;
+				}
+			}
+		}
+		data->previously_valid = data->invalid_fields.isEmpty ();
+		data->formatting_options = parseFormattingOptionsString (getMetaProperty ("format"));
+
+		ChangeSet *set = new ChangeSet (0, getLength (), true);
+		RKModificationTracker::instance()->objectDataChanged (this, set);
+		RKModificationTracker::instance()->objectMetaChanged (this);
+		type -= (type & NeedDataUpdate);
+		discardUnsyncedChanges ();
+		lockSyncing (false);
+	});
+	RInterface::issueCommand(c, chain);
 }
 
 void RKVariable::lockSyncing (bool lock) {
