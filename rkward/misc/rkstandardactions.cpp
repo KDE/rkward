@@ -130,11 +130,12 @@ public slots:
 		container = new QMenu;
 		actions->addWebShortcutsToMenu(container);
 		QList<QAction*> actions;
-		if (container->actions().count() == 1) {
-			QMenu *internal = container->actions().first()->menu();
+		auto cactions = container->actions();
+		if (cactions.count() == 1) {
+			QMenu *internal = cactions.first()->menu();
 			if (internal) actions = internal->actions();
 		}
-		if (actions.isEmpty()) actions = container->actions();
+		if (actions.isEmpty()) actions = cactions;
 		for (int i = 0; i < actions.count(); ++i) {
 			menu->addAction(actions[i]);
 		}

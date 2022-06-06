@@ -54,7 +54,7 @@ private:
 	void updateSymbolCache(const QString &name);
 	SEXP baseenvir;
 	SEXP shadowenvir;
-	static QMap<SEXP, RKRShadowEnvironment*> environments;
+	static QHash<SEXP, RKRShadowEnvironment*> environments;
 	static SEXP shadowenvbase;
 };
 

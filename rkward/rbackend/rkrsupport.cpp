@@ -284,7 +284,7 @@ RData *RKRSupport::SEXPToRData (SEXP from_exp) {
 }
 
 SEXP RKRShadowEnvironment::shadowenvbase = nullptr;
-QMap<SEXP, RKRShadowEnvironment*> RKRShadowEnvironment::environments;
+QHash<SEXP, RKRShadowEnvironment*> RKRShadowEnvironment::environments;
 RKRShadowEnvironment* RKRShadowEnvironment::environmentFor(SEXP baseenvir) {
 	RK_TRACE(RBACKEND);
 	// TODO: probably R_GlobalEnv should be special-cased, as this is what we'll check most often (or exclusively?)

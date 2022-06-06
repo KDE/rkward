@@ -43,7 +43,7 @@ public:
 	}
 	void addCommandFinishedCallback(RCommand *command, std::function<void(RCommand*)> callback) {
 		++command_count;
-		QObject::connect(command->notifier(), &RCommandNotifier::commandFinished, [this, callback](RCommand* command) {
+		QObject::connect(command->notifier(), &RCommandNotifier::commandFinished, [this, callback](RCommand* command) { // clazy:exclude=connect-3arg-lambda
 			if (object) {
 				callback(command);
 			}

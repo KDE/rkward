@@ -624,12 +624,12 @@ bool RKHTMLWindow::handleRKWardURL (const QUrl &url, RKHTMLWindow *window) {
 				RKWardMainWindow::getMain()->slotOpenCommandEditor(target);
 			} else if (category == RKRecentUrls::workspaceId()) {
 				// This window will be destroyed while closing the previous workspace. Thus wait for the next event cycle.
-				QTimer::singleShot(0, [target]() { RKWardMainWindow::getMain()->askOpenWorkspace(target); });
+				QTimer::singleShot(0, RKWardMainWindow::getMain(), [target]() { RKWardMainWindow::getMain()->askOpenWorkspace(target); });
 			} else if (category == RKRecentUrls::outputId()) {
 				RKWardMainWindow::getMain()->slotOpenOutput(target);
 			} else {
 				// See opening workspace, above.
-				QTimer::singleShot(0, [target]() { RKWorkplace::mainWorkplace()->openAnyUrl(target); });
+				QTimer::singleShot(0, RKWardMainWindow::getMain(), [target]() { RKWorkplace::mainWorkplace()->openAnyUrl(target); });
 			}
 		} else if (url.host () == "actions") {  // anything else
 			QString action = url.path ();

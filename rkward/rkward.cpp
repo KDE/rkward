@@ -131,7 +131,7 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 	RKWorkplace::mainWorkplace ()->initActions (actionCollection ());
 	setCentralWidget (RKWorkplace::mainWorkplace ());
 	connect (RKWorkplace::mainWorkplace ()->view (), &RKWorkplaceView::captionChanged, this, static_cast<void (RKWardMainWindow::*)(const QString&)>(&RKWardMainWindow::setCaption));
-	connect (RKWorkplace::mainWorkplace (), &RKWorkplace::workspaceUrlChanged, [this](const QUrl &url) { RKRecentUrls::addRecentUrl(RKRecentUrls::workspaceId(), url); setCaption(QString()); });
+	connect (RKWorkplace::mainWorkplace (), &RKWorkplace::workspaceUrlChanged, this, [this](const QUrl &url) { RKRecentUrls::addRecentUrl(RKRecentUrls::workspaceId(), url); setCaption(QString()); });
 	initStatusBar();
 
 	part_manager = new KParts::PartManager (this);
@@ -645,7 +645,7 @@ void RKWardMainWindow::initActions() {
 				restart_now();
 			} else {
 				RCommand *c = new RCommand(QString(), RCommand::QuitCommand);
-				c->whenFinished(this, [restart_now]() { QTimer::singleShot(0, restart_now); });
+				c->whenFinished(this, [this, restart_now]() { QTimer::singleShot(0, this, restart_now); });
 				RInterface::issueCommand(c);
 			}
 		}

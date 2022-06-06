@@ -19,11 +19,11 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-static QString _scripts_id("rscripts");
+static QString _scripts_id("rscripts");  // clazy:exclude=non-pod-global-static
 QString RKRecentUrls::scriptsId() { return _scripts_id; }
-static QString _workspace_id("workspaces");
+static QString _workspace_id("workspaces");  // clazy:exclude=non-pod-global-static
 QString RKRecentUrls::workspaceId() { return _workspace_id; }
-static QString _output_id("rkoutput");
+static QString _output_id("rkoutput");  // clazy:exclude=non-pod-global-static
 QString RKRecentUrls::outputId() { return _output_id; }
 
 QHash<QString, KRecentFilesAction*> RKRecentUrls::actions;
