@@ -12,7 +12,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QFile>
 
 #include "rcommand.h"
-#include "rcommandreceiver.h"
 
 class RCommand;
 class RKWardMainWindow;
@@ -31,7 +30,7 @@ class RBackendRequest;
 	*@author Thomas Friedrichsmeier
 */
 
-class RInterface : public QObject, public RCommandReceiver {
+class RInterface : public QObject {
 	Q_OBJECT
 public:
 	static void create();
@@ -131,6 +130,7 @@ private:
 
 	QString startup_errors;
 	bool startup_phase2_error;
+	void runStartupCommand(RCommand *command, RCommandChain* chain, std::function<void(RCommand*)> callback);
 	RCommand *dummy_command_on_stack;
 friend class RKRBackendProtocolFrontend;
 	bool backend_dead;
@@ -140,7 +140,6 @@ friend class RKWardMainWindow;
 friend class RCommand;
 protected:
 	void handleRequest (RBackendRequest *request);
-	void rCommandDone (RCommand *command) override;
 	static RInterface *_instance;
 	void _issueCommand(RCommand *command, RCommandChain *chain=0);
 /** constructor */

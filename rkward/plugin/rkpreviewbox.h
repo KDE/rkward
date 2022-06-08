@@ -12,8 +12,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rkcomponentproperties.h"
 
-#include "../rbackend/rcommandreceiver.h"
-
 class QCheckBox;
 class QDomElement;
 class QLabel;

@@ -14,7 +14,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QSortFilterProxyModel>
 
 #include "../settings/rksettingsmoduler.h"
-#include "../rbackend/rcommandreceiver.h"
+#include "../rbackend/rcommand.h"
 
 class QLineEdit;
 class QTreeView;

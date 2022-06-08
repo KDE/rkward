@@ -17,7 +17,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 @author Thomas Friedrichsmeier
 */
-class RKEditObjectAgent : public QObject, public RCommandReceiver {
+class RKEditObjectAgent : public QObject {
 	Q_OBJECT
 public:
 	RKEditObjectAgent (const QStringList &object_names, RCommandChain *chain);

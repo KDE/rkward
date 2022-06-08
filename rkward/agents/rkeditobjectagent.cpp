@@ -22,7 +22,7 @@ RKEditObjectAgent::RKEditObjectAgent (const QStringList &_object_names, RCommand
 	RKEditObjectAgent::object_names = _object_names;
 
 	// first issue an empty command to trigger an update of the object list
-	RInterface::issueCommand (new RCommand (QString (), RCommand::EmptyCommand | RCommand::ObjectListUpdate, QString (), this), chain);
+	RInterface::issueCommand (new RCommand (QString (), RCommand::EmptyCommand | RCommand::ObjectListUpdate), chain);
 
 	// now add another empty command to find out, when the update has completed
 	RInterface::whenAllFinished(this, [this]() {

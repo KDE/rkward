@@ -7,8 +7,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #ifndef RKSAVEAGENT_H
 #define RKSAVEAGENT_H
 
-#include "../rbackend/rcommandreceiver.h"
-
 #include <QUrl>
 
 class RCommandChain;

@@ -56,11 +56,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 // flush new pieces of output after this period of time:
 #define FLUSH_INTERVAL 100
 
-#define GET_LIB_PATHS 1
-#define GET_HELP_BASE 2
-#define SET_RUNTIME_OPTS 3
 #define STARTUP_PHASE2_COMPLETE 4
-#define GET_R_VERSION 5
 #define RSTARTUP_COMPLETE 6
 
 // statics
@@ -71,12 +67,13 @@ RInterface *RInterface::_instance = nullptr;
 void RInterface::create() {
 	RK_TRACE (RBACKEND);
 	RK_ASSERT(_instance == nullptr);
-	_instance = new RInterface();
+	new RInterface();
 }
 
 RInterface::RInterface () {
 	RK_TRACE (RBACKEND);
 
+	_instance = this;
 	new RCommandStackModel (this);
 	RCommandStack::regular_stack = new RCommandStack ();
 	startup_phase2_error = false;
@@ -88,8 +85,24 @@ RInterface::RInterface () {
 	dummy_command_on_stack = 0;
 
 	// create a fake init command
-	RCommand *fake = new RCommand (i18n ("R Startup"), RCommand::App | RCommand::Sync | RCommand::ObjectListUpdate, i18n ("R Startup"), this, STARTUP_PHASE2_COMPLETE);
-	_issueCommand(fake);
+	runStartupCommand(new RCommand(i18n("R Startup"), RCommand::App | RCommand::Sync | RCommand::ObjectListUpdate, i18n("R Startup")), nullptr, 
+	[this](RCommand *command) {
+		QString message = startup_errors;
+		if (startup_phase2_error) message.append (i18n ("<p>\t-An unspecified error occurred that is not yet handled by RKWard. Likely RKWard will not function properly. Please check your setup.</p>\n"));
+		if (!message.isEmpty ()) {
+			message.prepend (i18n ("<p>There was a problem starting the R backend. The following error(s) occurred:</p>\n"));
+
+			QString details = command->fullOutput().replace('<', "&lt;").replace('\n', "<br>");
+			if (!details.isEmpty ()) {
+				// WORKAROUND for stupid KMessageBox behavior. (kdelibs 4.2.3)
+				// If length of details <= 512, it tries to show the details as a QLabel.
+				details = details.leftJustified (513);
+			}
+			KMessageBox::detailedError (0, message, details, i18n ("Error starting R"), KMessageBox::Notify | KMessageBox::AllowLink);
+		}
+
+		startup_errors.clear ();
+	});
 
 	new RKSessionVars (this);
 	new RKDebugHandler (this);
@@ -100,7 +113,7 @@ RInterface::RInterface () {
 	// NOTE: will receive the list as a call plain generic request from the backend ("updateInstalledPackagesList")
 	_issueCommand(new RCommand(".rk.get.installed.packages()", RCommand::App | RCommand::Sync));
 
-	_issueCommand(new RCommand(QString(), RCommand::App | RCommand::Sync | RCommand::EmptyCommand, QString(), this, RSTARTUP_COMPLETE));
+	whenAllFinished(this, []() { RKSettings::validateSettingsInteractive (); });
 }
 
 void RInterface::issueCommand (const QString &command, int type, const QString &rk_equiv, RCommandReceiver *receiver, int flags, RCommandChain *chain) {
@@ -293,70 +306,16 @@ void RInterface::doNextCommand (RCommand *command) {
 	}
 }
 
-void RInterface::rCommandDone (RCommand *command) {
-	RK_TRACE (RBACKEND);
-
-	if (command->failed ()) {
-		startup_phase2_error = true;
-		return;
-	}
-
-	if (command->getFlags () == GET_LIB_PATHS) {
-		RK_ASSERT (command->getDataType () == RData::StringVector);
-		RKSettingsModuleRPackages::r_libs_user = command->stringVector ().value (0);
-		RKSettingsModuleRPackages::defaultliblocs += command->stringVector ().mid (1);
-
-		RCommandChain *chain = command->parent;
-		RK_ASSERT (chain);
-		RK_ASSERT (!chain->isClosed ());
-
-		// apply user configurable run time options
-		QStringList commands = RKSettingsModuleR::makeRRunTimeOptionCommands () + RKSettingsModuleRPackages::makeRRunTimeOptionCommands () + RKSettingsModuleOutput::makeRRunTimeOptionCommands () + RKSettingsModuleGraphics::makeRRunTimeOptionCommands ();
-		for (QStringList::const_iterator it = commands.cbegin (); it != commands.cend (); ++it) {
-			issueCommand (*it, RCommand::App | RCommand::Sync, QString (), this, SET_RUNTIME_OPTS, chain);
+void RInterface::runStartupCommand(RCommand* command, RCommandChain *chain, std::function<void (RCommand *)> callback) {
+	command->whenFinished(this, [this, callback](RCommand* command) {
+		RK_TRACE(RBACKEND);
+		if (command->failed()) {
+			startup_phase2_error = true;
+		} else {
+			callback(command);
 		}
-		// initialize output file
-		RKOutputDirectory::getCurrentOutput(chain);
-
-#ifdef Q_OS_MACOS
-		// On MacOS, the backend is started from inside R home to allow resolution of dynamic libs. Re-set to frontend wd, here.
-		issueCommand ("setwd (" + RKRSharedFunctionality::quote (QDir::currentPath ()) + ")\n", RCommand::App | RCommand::Sync, QString (), this, SET_RUNTIME_OPTS, chain);
-#endif
-		// Workaround for https://bugs.kde.org/show_bug.cgi?id=421958
-		if (RKSessionVars::compareRVersion("4.0.0") < 1 && RKSessionVars::compareRVersion("4.0.1") > 0) {
-			issueCommand ("if(compiler::enableJIT(-1) > 2) compiler::enableJIT(2)\n", RCommand::App | RCommand::Sync, QString (), this, SET_RUNTIME_OPTS, chain);
-		}
-
-		closeChain (chain);
-	} else if (command->getFlags () == GET_R_VERSION) {
-		RK_ASSERT (command->getDataType () == RData::StringVector);
-		RK_ASSERT (command->getDataLength () == 1);
-		RKSessionVars::setRVersion (command->stringVector ().value (0));
-	} else if (command->getFlags () == GET_HELP_BASE) {
-		RK_ASSERT (command->getDataType () == RData::StringVector);
-		RK_ASSERT (command->getDataLength () == 1);
-		RKSettingsModuleR::help_base_url = command->stringVector ().value (0);
-	} else if (command->getFlags () == SET_RUNTIME_OPTS) {
-		// no special handling. In case of failures, staturt_fail was set to true, above.
-	} else if (command->getFlags () == STARTUP_PHASE2_COMPLETE) {
-		QString message = startup_errors;
-		if (startup_phase2_error) message.append (i18n ("<p>\t-An unspecified error occurred that is not yet handled by RKWard. Likely RKWard will not function properly. Please check your setup.</p>\n"));
-		if (!message.isEmpty ()) {
-			message.prepend (i18n ("<p>There was a problem starting the R backend. The following error(s) occurred:</p>\n"));
-
-			QString details = command->fullOutput().replace('<', "&lt;").replace('\n', "<br>");
-			if (!details.isEmpty ()) {
-				// WORKAROUND for stupid KMessageBox behavior. (kdelibs 4.2.3)
-				// If length of details <= 512, it tries to show the details as a QLabel.
-				details = details.leftJustified (513);
-			}
-			KMessageBox::detailedError (0, message, details, i18n ("Error starting R"), KMessageBox::Notify | KMessageBox::AllowLink);
-		}
-
-		startup_errors.clear ();
-	} else if (command->getFlags () == RSTARTUP_COMPLETE) {
-		RKSettings::validateSettingsInteractive ();
-	}
+	});
+	_issueCommand(command, chain);
 }
 
 void RInterface::handleRequest (RBackendRequest* request) {
@@ -415,11 +374,51 @@ void RInterface::handleRequest (RBackendRequest* request) {
 		command_requests.append (request);
 		RCommandChain *chain = openSubcommandChain (runningCommand ());
 
-		issueCommand ("paste (R.version[c (\"major\", \"minor\")], collapse=\".\")\n", RCommand::GetStringVector | RCommand::App | RCommand::Sync, QString (), this, GET_R_VERSION, chain);
+		runStartupCommand(new RCommand("paste (R.version[c (\"major\", \"minor\")], collapse=\".\")\n", RCommand::GetStringVector | RCommand::App | RCommand::Sync), chain, 
+		[](RCommand *command) {
+			RK_ASSERT (command->getDataType () == RData::StringVector);
+			RK_ASSERT (command->getDataLength () == 1);
+			RKSessionVars::setRVersion (command->stringVector ().value (0));
+		});
 		// find out about standard library locations
-		issueCommand ("c(path.expand(Sys.getenv(\"R_LIBS_USER\")), .libPaths())\n", RCommand::GetStringVector | RCommand::App | RCommand::Sync, QString (), this, GET_LIB_PATHS, chain);
+		runStartupCommand(new RCommand("c(path.expand(Sys.getenv(\"R_LIBS_USER\")), .libPaths())\n", RCommand::GetStringVector | RCommand::App | RCommand::Sync), chain,
+		[this](RCommand *command) {
+			RK_ASSERT (command->getDataType () == RData::StringVector);
+			RKSettingsModuleRPackages::r_libs_user = command->stringVector ().value (0);
+			RKSettingsModuleRPackages::defaultliblocs += command->stringVector ().mid (1);
+
+			RCommandChain *chain = command->parent;
+			RK_ASSERT (chain);
+			RK_ASSERT (!chain->isClosed ());
+
+			// apply user configurable run time options
+			auto runtimeopt_callback = [](RCommand *) {}; // No special handling. Any failure will be recorded with runStartupCommand().
+			QStringList commands = RKSettingsModuleR::makeRRunTimeOptionCommands () + RKSettingsModuleRPackages::makeRRunTimeOptionCommands () + RKSettingsModuleOutput::makeRRunTimeOptionCommands () + RKSettingsModuleGraphics::makeRRunTimeOptionCommands ();
+			for (QStringList::const_iterator it = commands.cbegin (); it != commands.cend (); ++it) {
+				runStartupCommand(new RCommand(*it, RCommand::App | RCommand::Sync), chain, runtimeopt_callback);
+			}
+			// initialize output file
+			RKOutputDirectory::getCurrentOutput(chain);
+
+#ifdef Q_OS_MACOS
+			// On MacOS, the backend is started from inside R home to allow resolution of dynamic libs. Re-set to frontend wd, here.
+			runStartupCommand(new RCommand("setwd (" + RKRSharedFunctionality::quote(QDir::currentPath()) + ")\n", RCommand::App | RCommand::Sync), chain, runtimeopt_callback);
+#endif
+			// Workaround for https://bugs.kde.org/show_bug.cgi?id=421958
+			if (RKSessionVars::compareRVersion("4.0.0") < 1 && RKSessionVars::compareRVersion("4.0.1") > 0) {
+				runStartupCommand(new RCommand("if(compiler::enableJIT(-1) > 2) compiler::enableJIT(2)\n", RCommand::App | RCommand::Sync), chain, runtimeopt_callback);
+			}
+
+			closeChain (chain);
+		});
+
 		// start help server / determined help base url
-		issueCommand (".rk.getHelpBaseUrl ()\n", RCommand::GetStringVector | RCommand::App | RCommand::Sync, QString (), this, GET_HELP_BASE, chain);
+		runStartupCommand(new RCommand(".rk.getHelpBaseUrl ()\n", RCommand::GetStringVector | RCommand::App | RCommand::Sync), chain,
+		[](RCommand *command) {
+			RK_ASSERT (command->getDataType () == RData::StringVector);
+			RK_ASSERT (command->getDataLength () == 1);
+			RKSettingsModuleR::help_base_url = command->stringVector ().value (0);
+		});
 
 		// NOTE: more initialization commands get run *after* we have determined the standard library locations (see rCommandDone())
 	} else {

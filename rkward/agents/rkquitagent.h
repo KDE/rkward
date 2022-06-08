@@ -8,7 +8,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #define RKQUITAGENT_H
 
 #include <qobject.h>
-#include "../rbackend/rcommandreceiver.h"
 
 class RKProgressControl;
 
