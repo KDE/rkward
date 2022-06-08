@@ -46,7 +46,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "windows/rkhelpsearchwindow.h"
 #include "windows/rkcodecompletion.h"
 #include "rbackend/rkrinterface.h"
-#include "rbackend/rcommand.h"
 #include "settings/rksettings.h"
 #include "settings/rksettingsmoduleconsole.h"
 #include "settings/rkrecenturls.h"
@@ -487,7 +486,28 @@ void RKConsole::submitCommand () {
 
 	doc->insertLine (doc->lines (), QString ());
 	if (!command.isEmpty ()) {
-		current_command = new RCommand (command, RCommand::User | RCommand::Console, QString (), this);
+		current_command = new RCommand (command, RCommand::User | RCommand::Console);
+		connect(current_command->notifier(), &RCommandNotifier::commandOutput, this, &RKConsole::newOutput);
+		connect(current_command->notifier(), &RCommandNotifier::commandLineIn, this, &RKConsole::userCommandLineIn);
+		current_command->whenFinished(this, [this](RCommand *command) {
+			RK_TRACE(APP);
+			current_command = nullptr;
+
+			if (command->errorSyntax() && command->error().isEmpty()) {
+				doc->insertLine(doc->lines() - 1, i18n("Syntax error\n"));
+			}
+			if (command->errorIncomplete()) {
+				prefix = iprefix;
+				incomplete_command = command->remainingCommand();
+			} else {
+				prefix = nprefix;
+				incomplete_command.clear();
+			}
+
+			commands_history.goToEnd();
+			showPrompt();
+			tryNextInBuffer();
+		});
 		RInterface::issueCommand (current_command);
 		interrupt_command_action->setEnabled (true);
 	} else {
@@ -512,29 +532,7 @@ void RKConsole::commandsListDown (bool context_sensitive) {
 	else qApp->beep ();
 }
 
-void RKConsole::rCommandDone (RCommand *command) {
-	RK_TRACE (APP);
-
-	current_command = 0;
-
-	if (command->errorSyntax () && command->error ().isEmpty ()) {
-		doc->insertLine (doc->lines () - 1, i18n ("Syntax error\n"));
-	}
-
-	if (command->errorIncomplete ()) {
-		prefix = iprefix;
-		incomplete_command = command->remainingCommand ();
-	} else {
-		prefix = nprefix;
-		incomplete_command.clear ();
-	}
-
-	commands_history.goToEnd ();
-	showPrompt ();
-	tryNextInBuffer ();
-}
-
-void RKConsole::newOutput (RCommand *command, ROutput *output) {
+void RKConsole::newOutput (RCommand *command, const ROutput *output) {
 	RK_TRACE (APP);
 
 	int first_line = doc->lines () -1;

@@ -134,6 +134,7 @@ void RCommand::commandLineIn () {
 		if (receivers[i] == 0) continue;
 		receivers[i]->userCommandLineIn (this);
 	}
+	if (_notifier) _notifier->emitLineIn(this);
 }
 
 QString RCommand::error () const {

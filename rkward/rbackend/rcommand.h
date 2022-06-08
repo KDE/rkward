@@ -71,12 +71,14 @@ signals:
 /** given command has finished (not necessarily successfully) */
 	void commandFinished(RCommand *command);
 	void commandOutput(RCommand *command, const ROutput* output);
+	void commandLineIn(RCommand *command);
 private:
 friend class RCommand;
 	RCommandNotifier();
 	~RCommandNotifier();
 	void emitFinished(RCommand *command) { emit commandFinished(command); };
 	void emitOutput(RCommand *command, const ROutput* output) { emit commandOutput(command, output); };
+	void emitLineIn(RCommand *command) { emit commandLineIn(command); };
 };
 
 /** For introductory information on using RCommand, see \ref UsingTheInterfaceToR 

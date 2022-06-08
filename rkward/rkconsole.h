@@ -13,7 +13,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <ktexteditor/document.h>
 #include <ktexteditor/view.h>
 
-#include "rbackend/rcommandreceiver.h"
+#include "rbackend/rcommand.h"
 #include "windows/rkcommandeditorwindow.h"
 #include "windows/rkmdiwindow.h"
 #include "misc/rkcommandhistory.h"
@@ -22,7 +22,6 @@ class QEvent;
 class QKeyEvent;
 class QStringList;
 class QAction;
-class RCommand;
 class KActionCollection;
 class RKConsolePart;
 
@@ -38,7 +37,7 @@ Do not construct directly. Construct an RKConsolePart instead.
 @author Pierre Ecochard
 **/
 
-class RKConsole : public RKMDIWindow, public RCommandReceiver, public RKScriptContextProvider {
+class RKConsole : public RKMDIWindow, public RKScriptContextProvider {
 Q_OBJECT
 public:
 /** Constructor. */
@@ -70,9 +69,10 @@ protected:
 /** Handle keystrokes before they reach the kate-part. Return TRUE if we want the kate-part to ignore it
 \param e the QKeyEvent */
 	bool handleKeyPress (QKeyEvent * e);
-	void rCommandDone (RCommand *command) override;
-/** reimplemented from RCommandReceiver::newOutput () to handle output of console commands */
-	void newOutput (RCommand *command, ROutput *output) override;
+/** handle output of console commands */
+	void newOutput(RCommand *command, const ROutput *output);
+/** display the next line of the command for multi-line commands */
+	void userCommandLineIn(RCommand* command);
 /** reimplemented from QWidget to show the context menu */
 	void contextMenuEvent (QContextMenuEvent * event) override;
 private:
@@ -169,9 +169,6 @@ private:
 	int current_command_displayed_up_to;
 	int skip_command_display_lines;
 	bool previous_chunk_was_piped;
-	
-/** Reimplemented from RCommandReceiver to display the next line of the command */
-	void userCommandLineIn (RCommand* command) override;
 };
 
 /** A part interface to RKConsole. Provides the context-help functionality
