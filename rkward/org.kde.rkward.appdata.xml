@@ -6,6 +6,7 @@
   <name>RKWard</name>
   <name xml:lang="ca">RKWard</name>
   <name xml:lang="ca-valencia">RKWard</name>
+  <name xml:lang="fr">RKWard</name>
   <name xml:lang="nl">RKWard</name>
   <name xml:lang="pt">RKWard</name>
   <name xml:lang="sl">RKWard</name>
@@ -108,6 +109,7 @@
       <caption>Working with data in RKWard</caption>
       <caption xml:lang="ca">Treballant amb dades en el RKward</caption>
       <caption xml:lang="ca-valencia">Treballant amb dades en RKward</caption>
+      <caption xml:lang="fr">Travailler avec des données dans RKward</caption>
       <caption xml:lang="nl">Met gegevens werken in RKWard</caption>
       <caption xml:lang="pt">Lidar com dados no RKward</caption>
       <caption xml:lang="sl">Delo s podatki v RKward-u</caption>
