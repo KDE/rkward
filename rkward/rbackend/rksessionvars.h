@@ -49,6 +49,7 @@ private:
 	static RKParsedVersion r_version;
 	static QString r_version_string;
 friend int main(int, char**);
+friend class RKWardCoreTest;
 	static QString r_binary;
 };
 

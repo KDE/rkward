@@ -112,6 +112,8 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 	RK_TRACE (APP);
 	RK_ASSERT (rkward_mainwin == 0);
 
+	Q_INIT_RESOURCE(resources);
+	testmode_suppress_dialogs = false;
 	gui_rebuild_locked = true;
 	no_ask_save = true;
 	workspace_modified = false;
@@ -226,7 +228,7 @@ void RKWardMainWindow::doPostInit () {
 	gui_rebuild_locked = false;
 
 	show ();
-	RKSetupWizard::doAutoCheck();
+	if (!testmode_suppress_dialogs) RKSetupWizard::doAutoCheck();
 	KMessageBox::enableMessage ("external_link_warning");  // can only be disabled per session
 
 	QUrl recover_url = RKRecoverDialog::checkRecoverCrashedWorkspace ();

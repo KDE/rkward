@@ -187,6 +187,8 @@ private:
 
 	KatePluginIntegrationApp *katepluginintegration;
 	KXMLGUIClient *active_ui_buddy;
+friend class RKWardCoreTest;
+	bool testmode_suppress_dialogs;
 };
 
 #endif // RKWARD_H
