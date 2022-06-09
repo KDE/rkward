@@ -197,7 +197,7 @@ void RKSettingsModuleR::applyChanges () {
 // apply run time options in R
 	QStringList commands = makeRRunTimeOptionCommands ();
 	for (QStringList::const_iterator it = commands.cbegin (); it != commands.cend (); ++it) {
-		RInterface::issueCommand (*it, RCommand::App, QString (), 0, commandChain ());
+		RInterface::issueCommand(new RCommand(*it, RCommand::App), commandChain ());
 	}
 }
 
@@ -377,7 +377,7 @@ void RKSettingsModuleRPackages::addLibraryLocation (const QString& new_loc, RCom
 	if (!libraryLocations ().contains (new_loc)) liblocs.get().prepend (new_loc);
 
 	// update the backend in any case. User might have changed liblocs, there.
-	RInterface::issueCommand (".libPaths (unique (c (" + RObject::rQuote (new_loc) + ", .libPaths ())))", RCommand::App | RCommand::Sync, QString (), 0, chain);
+	RInterface::issueCommand(new RCommand(".libPaths (unique (c (" + RObject::rQuote (new_loc) + ", .libPaths ())))", RCommand::App | RCommand::Sync), chain);
 }
 
 QStringList expandLibLocs (const QStringList &in) {
@@ -547,7 +547,7 @@ void RKSettingsModuleRPackages::applyChanges () {
 // apply options in R
 	QStringList commands = makeRRunTimeOptionCommands ();
 	for (QStringList::const_iterator it = commands.cbegin (); it != commands.cend (); ++it) {
-		RInterface::issueCommand (*it, RCommand::App, QString (), 0, commandChain ());
+		RInterface::issueCommand(new RCommand(*it, RCommand::App), commandChain());
 	}
 }
 

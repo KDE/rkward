@@ -171,7 +171,7 @@ void RKSettingsModuleGraphics::applyChanges () {
 
 	QStringList commands = makeRRunTimeOptionCommands ();
 	for (QStringList::const_iterator it = commands.cbegin (); it != commands.cend (); ++it) {
-		RInterface::issueCommand (*it, RCommand::App, QString (), 0, commandChain ());
+		RInterface::issueCommand(new RCommand(*it, RCommand::App), commandChain ());
 	}
 }
 

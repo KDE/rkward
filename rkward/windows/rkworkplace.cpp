@@ -974,7 +974,7 @@ void RKWorkplace::saveWorkplace(const QUrl& for_url, RCommandChain *chain) {
 
 	QString file_param;
 	if (!for_url.isEmpty()) file_param = QString("file=") + RObject::rQuote(for_url.toLocalFile() + QStringLiteral(".rkworkplace")) + QStringLiteral(", ");
-	RInterface::issueCommand("rk.save.workplace(" + file_param + "description=" + RObject::rQuote (makeWorkplaceDescription().join ("\n")) + ')', RCommand::App, i18n ("Save Workplace layout"), 0, chain);
+	RInterface::issueCommand(new RCommand("rk.save.workplace(" + file_param + "description=" + RObject::rQuote(makeWorkplaceDescription().join("\n")) + ')', RCommand::App, i18n("Save Workplace layout")), chain);
 }
 
 void RKWorkplace::restoreWorkplace (RCommandChain *chain, bool merge) {
@@ -983,7 +983,7 @@ void RKWorkplace::restoreWorkplace (RCommandChain *chain, bool merge) {
 
 	QString no_close_windows;
 	if (merge) no_close_windows = "close.windows = FALSE";
-	RInterface::issueCommand ("rk.restore.workplace(" + no_close_windows + ')', RCommand::App, i18n ("Restore Workplace layout"), 0, chain);
+	RInterface::issueCommand(new RCommand("rk.restore.workplace(" + no_close_windows + ')', RCommand::App, i18n ("Restore Workplace layout")), chain);
 }
 
 void RKWorkplace::restoreWorkplace (const QStringList &description) {

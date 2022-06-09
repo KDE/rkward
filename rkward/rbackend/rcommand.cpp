@@ -29,7 +29,7 @@ RCommandNotifier::~RCommandNotifier () {
 
 int RCommand::next_id = 0;
 
-RCommand::RCommand(const QString &command, int type, const QString &rk_equiv, int flags) : RData (), RCommandChain (false) {
+RCommand::RCommand(const QString &command, int type, const QString &rk_equiv) : RData (), RCommandChain (false) {
 	RK_TRACE (RBACKEND);
 	_id = next_id++;
 // if we ever submit enough commands to get a buffer overflow, use only positive numbers.
@@ -37,7 +37,6 @@ RCommand::RCommand(const QString &command, int type, const QString &rk_equiv, in
 		next_id = 0;
 	}
 	_type = type;
-	_flags = flags;
 	if (type & Plugin) _command = command.trimmed ();
 	else _command = command;
 	if (_command.isEmpty ()) _type |= EmptyCommand;

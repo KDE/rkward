@@ -101,9 +101,8 @@ public:
 @param command The command (string) to be run in the backend. This may include newlines and ";". The command should be a complete statement. If it is an incomplete statement, the backend will not wait for the rest of the command to come in, but rather the command will fail with RCommand::errorIncomplete.
 @param type An integer being the result of a bit-wise OR combination of the values in RCommand::CommandTypes. The type-parameter is used to indicate the type of command, and also how the command should retrieve information (as a usual string, or as a data vector). See \ref RCommand::CommandTypes
 @param rk_equiv Not yet used: a short descriptive string attached to the RCommand, that allows the user to make some sense of what this command is all about.
-@param flags A freely assignable integer, that you can use to identify what the command was all about. Only the RCommandReceiver handling the results will have to know what exactly the flags mean.
 */
-	explicit RCommand (const QString &command, int type, const QString &rk_equiv = QString (), int flags=0);
+	explicit RCommand (const QString &command, int type, const QString &rk_equiv = QString ());
 /** destructor. Note: you should not delete RCommands manually. This is done in RInterface. TODO: make protected */
 	~RCommand();
 /** @returns the type as specified in RCommand::RCommand */
@@ -180,8 +179,6 @@ public:
 	bool errorIncomplete () const { return (status & ErrorIncomplete); };
 /** backend rejected command as having a syntax error */
 	bool errorSyntax () const { return (status & ErrorSyntax); };
-/** return the flags associated with the command. Those are the same that you specified in the constructor, RKWard does not touch them. @see RCommand::RCommand */
-	int getFlags () const { return (_flags); };
 	void addTypeFlag (int flag) { _type |= flag; };
 	ROutputList &getOutput () { return output_list; };
 /** modify the command string. DO NOT CALL THIS after the command has been submitted! */
@@ -213,7 +210,6 @@ friend class RCommandStackModel;
 	ROutputList output_list;
 	QString _command;
 	int _type;
-	int _flags;
 	int status;
 	int has_been_run_up_to;
 	QString _rk_equiv;

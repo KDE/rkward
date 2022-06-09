@@ -40,9 +40,9 @@ public:
 	static RInterface* instance() { return _instance; };
 
 /** issues the given command in the given chain */
-	static void issueCommand(RCommand *command, RCommandChain *chain=0);
+	static void issueCommand(RCommand *command, RCommandChain *chain=nullptr);
 /** convenience function to create a new command and issue it. See documentation on RCommand::RCommand() and RInterface::issueCommand() */
-	static void issueCommand(const QString &command, int type = 0, const QString &rk_equiv = QString(), int flags=0, RCommandChain *chain=0);
+	static void issueCommand(const QString &command, int type = 0, const QString &rk_equiv = QString(), RCommandChain *chain=nullptr);
 
 /** convenience function to call a function / lambda, once all commands issued in the given chain have finished (successfully or not). Internally, this works by queing an empty command. */
 	template<typename T> static void whenAllFinished(QObject *receiver, T func, RCommandChain *chain=nullptr) {
@@ -228,7 +228,6 @@ In some cases you don't just want to deal with a single RCommand in a callback, 
 There are several ways to deal with this:
 
 	- storing the RCommand::id () (each command is automatically assigned a unique id)
-	- passing appropriate flags to know how to handle the command (Note that you can freely assign whatever flags you like. Only your own class will need to know how to interpret the flags.)
 	- keeping the pointer (CAUTION: don't use that pointer except to compare it with the pointer of an incoming command. Commands get deleted when they are finished, and maybe (in the future) if they become obsolete etc. Hence the pointers you keep may be invalid!)
 
 
@@ -341,13 +340,15 @@ There are a few special type-modifiers you can specify when creating an RCommand
 This one tells the backend, that the command does not really need to be executed, and does not contain anything. You'll rarely need this flag, but sometimes it is useful to submit an empty command simply to find out when it is finished. @note: RInterface::whenAllFinished() is a more readable alternative to this.
 
 - RCommand::DirectToOutput
-This is typically used in plugins: When you specify this modifier, the plain text result of this command (i.e. whatever R prints out when evaluating the command) will be added to the HTML output file. Remember to call RKWardMainWindow::newOutput in order to refresh the output-window once the command has finished.
+This is typically used in plugins: When you specify this modifier, the plain text result of this command (i.e. whatever R prints out when evaluating the command) will be added to the HTML output file.
 
 - RCommand::GetIntVector, RCommand::GetStringVector, RCommand::GetRealVector
 These are special modifiers helpful when transferring data from R to RKWard (used primarily in the editor classes and in conjunction with RCommand::Sync): They tell the backend to try to fetch the result as an array of int, char*, or double, respectively. For instance, if you know object "myobject" is an integer vector, you may get the data using
 
 \code
-RInterface::issueCommand ("myobject", RCommand::Sync | RCommand::GetIntVector, QString (), this);
+auto command = new RCommand("myobject", RCommand::Sync | RCommand::GetIntVector);
+command->whenFinished(this, [this](RCommand *command) { this->syncDataFromR(command->getIntVector(); });
+RInterface::issueCommand(command);
 \endcode
 
 Assuming the data can in fact be converted to a vector of integers, you can then access the data using these members in RCommand:
