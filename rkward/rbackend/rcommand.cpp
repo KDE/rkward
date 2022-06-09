@@ -6,7 +6,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 #include "rcommand.h"
-#include "rcommandreceiver.h"
 #include "rkrinterface.h"
 #include "../windows/rkcommandlog.h"
 #include "rkrbackendprotocol_shared.h"
@@ -30,7 +29,7 @@ RCommandNotifier::~RCommandNotifier () {
 
 int RCommand::next_id = 0;
 
-RCommand::RCommand(const QString &command, int type, const QString &rk_equiv, RCommandReceiver *receiver, int flags) : RData (), RCommandChain (false) {
+RCommand::RCommand(const QString &command, int type, const QString &rk_equiv, int flags) : RData (), RCommandChain (false) {
 	RK_TRACE (RBACKEND);
 	_id = next_id++;
 // if we ever submit enough commands to get a buffer overflow, use only positive numbers.
@@ -46,10 +45,6 @@ RCommand::RCommand(const QString &command, int type, const QString &rk_equiv, RC
 	has_been_run_up_to = 0;
 	_rk_equiv = rk_equiv;
 	_notifier = 0;
-	for (int i = 0; i < MAX_RECEIVERS_PER_RCOMMAND; ++i) receivers[i] = 0;
-	if (!(type & Internal)) {
-		addReceiver (receiver);
-	}
 }
 
 RCommand::~RCommand(){
@@ -72,45 +67,9 @@ RCommandNotifier* RCommand::notifier () {
 	return _notifier;
 }
 
-void RCommand::addReceiver (RCommandReceiver *receiver) {
-	RK_TRACE (RBACKEND);
-
-	if (!receiver) return;
-
-	for (int i = 0; i < MAX_RECEIVERS_PER_RCOMMAND; ++i) {
-		if (receivers[i] == 0) {
-			receivers[i] = receiver;
-			receiver->addCommand (this);
-			return;
-		}
-	}
-
-	RK_DEBUG (RBACKEND, DL_ERROR, "Too many receivers for command");
-}
-
-void RCommand::removeReceiver (RCommandReceiver *receiver) {
-	RK_TRACE (RBACKEND);
-
-	if (!receiver) return;
-
-	for (int i = 0; i < MAX_RECEIVERS_PER_RCOMMAND; ++i) {
-		if (receivers[i] == receiver) {
-			receivers[i] = 0;
-			return;
-		}
-	}
-
-	RK_DEBUG (RBACKEND, DL_WARNING, "Was not a receiver in RCommand::removeReceiver: %p", receiver);
-}
-
 void RCommand::finished () {
 	RK_TRACE (RBACKEND);
 
-	for (int i=0; i < MAX_RECEIVERS_PER_RCOMMAND; ++i) {
-		if (receivers[i] == 0) continue;
-		receivers[i]->delCommand (this);
-		receivers[i]->rCommandDone (this);
-	}
 	RKCommandLog::getLog()->rCommandDone(this);
 	if (_notifier) _notifier->emitFinished (this);
 }
@@ -118,10 +77,6 @@ void RCommand::finished () {
 void RCommand::newOutput (ROutput *output) {
 	RK_TRACE (RBACKEND);
 
-	for (int i=0; i < MAX_RECEIVERS_PER_RCOMMAND; ++i) {
-		if (receivers[i] == 0) continue;
-		receivers[i]->newOutput (this, output);
-	}
 	RKCommandLog::getLog()->newOutput(this, output);
 	if (_notifier) _notifier->emitOutput(this, output);
 }
@@ -129,11 +84,6 @@ void RCommand::newOutput (ROutput *output) {
 void RCommand::commandLineIn () {
 	RK_TRACE (RBACKEND);
 	RK_ASSERT (_type & User);
-
-	for (int i=0; i < MAX_RECEIVERS_PER_RCOMMAND; ++i) {
-		if (receivers[i] == 0) continue;
-		receivers[i]->userCommandLineIn (this);
-	}
 	if (_notifier) _notifier->emitLineIn(this);
 }
 

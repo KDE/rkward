@@ -116,9 +116,9 @@ RInterface::RInterface () {
 	whenAllFinished(this, []() { RKSettings::validateSettingsInteractive (); });
 }
 
-void RInterface::issueCommand (const QString &command, int type, const QString &rk_equiv, RCommandReceiver *receiver, int flags, RCommandChain *chain) {
+void RInterface::issueCommand (const QString &command, int type, const QString &rk_equiv, int flags, RCommandChain *chain) {
 	RK_TRACE (RBACKEND);
-	issueCommand (new RCommand (command, type, rk_equiv, receiver, flags), chain);
+	issueCommand (new RCommand (command, type, rk_equiv, flags), chain);
 }
 
 RInterface::~RInterface(){

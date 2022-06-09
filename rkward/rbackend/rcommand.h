@@ -14,9 +14,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rdata.h"
 
-#define MAX_RECEIVERS_PER_RCOMMAND 3
-
-class RCommandReceiver;
 class RCommand;
 class RCommandProxy;
 class RObject;
@@ -61,16 +58,16 @@ typedef QList<ROutput*> ROutputList;
 
 /** Supplies signals for RCommands.
  * Obtain an instance of this using RCommand::notifier ();
- * Currently, only a single signal is available: When the command has finished. Further signals may be added, in the future.
- *
- * @Note You can also use this in connection with RCommandReceiver-based classes, if interested in RCommandReceiver::cancelOutstandingCommands().
+ * Provides signals for new output, command completion (with or without error), and, as a special case for the R console, a signal, when a new line of a command has started runnning.
  */
 class RCommandNotifier : public QObject {
 	Q_OBJECT
 signals:
 /** given command has finished (not necessarily successfully) */
 	void commandFinished(RCommand *command);
+/** new output for the given command */
 	void commandOutput(RCommand *command, const ROutput* output);
+/** a new line of the command has started being evaluate. Only emitted to RCommand::User-type commands */
 	void commandLineIn(RCommand *command);
 private:
 friend class RCommand;
@@ -86,16 +83,14 @@ friend class RCommand;
 	This class is used to encapsulate an R-command, so it can be easily identified
 	in a chain of commands. It is needed, since communication with R is asynchronous
 	and it is therefore not possible to get the result of an R-call right away.
-	Instead, create an object of this class, specifying the RCommandReceiver that should
-	be called when the command has finished. You can then retrieve all information
-	on the command (including the reply) from the object that is passed to your handler.
-	
-	There are several ways to identify a command when it's finished (needed, if a single RCommandReceiver needs to handle the results of
-	several different commands):
-		- storing the id () (each command is automatically assigned a unique id, TODO: do we need this functionality? Maybe remove it for redundancy)
-		- passing appropriate flags to know how to handle the command
-		- keeping the pointer (CAUTION: don't use that pointer except to compare it with the pointer of an incoming command. Commands get deleted when they are finished, and maybe (in the future) if they become obsolete etc. Hence the pointers you keep may be invalid!)
-		(- checking the command-string)
+
+	To track the status of a command, and work with the results, connect to the notifier() signals.
+	Usually, RCommand::whenFinished() is the most convenient way to connect a callback (typically a lambda function).
+
+	I case several commands a connected to a single function, the command id() can be stored to identify, which command
+	to deal with. Keeping a pointer is another options, but beware: don't use that pointer except to compare it with the pointer of an incoming command.
+	Commands get deleted when they are finished, and maybe (in the future) if they become obsolete etc. Hence the pointers you keep may be invalid!
+
 	Note that an RCommand carries a whole lot of information around. However, RCommands generally don't get
 	kept around very long, so they should not be a memory issue.
   *@author Thomas Friedrichsmeier
@@ -106,10 +101,9 @@ public:
 @param command The command (string) to be run in the backend. This may include newlines and ";". The command should be a complete statement. If it is an incomplete statement, the backend will not wait for the rest of the command to come in, but rather the command will fail with RCommand::errorIncomplete.
 @param type An integer being the result of a bit-wise OR combination of the values in RCommand::CommandTypes. The type-parameter is used to indicate the type of command, and also how the command should retrieve information (as a usual string, or as a data vector). See \ref RCommand::CommandTypes
 @param rk_equiv Not yet used: a short descriptive string attached to the RCommand, that allows the user to make some sense of what this command is all about.
-@param receiver The RCommandReceiver this command should be passed on to, when finished. @Note: consider connecting to the notifier(), instead!
 @param flags A freely assignable integer, that you can use to identify what the command was all about. Only the RCommandReceiver handling the results will have to know what exactly the flags mean.
 */
-	explicit RCommand (const QString &command, int type, const QString &rk_equiv = QString (), RCommandReceiver *receiver=0, int flags=0);
+	explicit RCommand (const QString &command, int type, const QString &rk_equiv = QString (), int flags=0);
 /** destructor. Note: you should not delete RCommands manually. This is done in RInterface. TODO: make protected */
 	~RCommand();
 /** @returns the type as specified in RCommand::RCommand */
@@ -188,10 +182,6 @@ public:
 	bool errorSyntax () const { return (status & ErrorSyntax); };
 /** return the flags associated with the command. Those are the same that you specified in the constructor, RKWard does not touch them. @see RCommand::RCommand */
 	int getFlags () const { return (_flags); };
-/** Add an additional listener to the command */
-	void addReceiver (RCommandReceiver *receiver);
-/** Remove a receiver from the list. This may be needed when a listener wants to self-destruct, to make sure we don't try to send any further info there */
-	void removeReceiver (RCommandReceiver *receiver);
 	void addTypeFlag (int flag) { _type |= flag; };
 	ROutputList &getOutput () { return output_list; };
 /** modify the command string. DO NOT CALL THIS after the command has been submitted! */
@@ -230,7 +220,6 @@ friend class RCommandStackModel;
 	QString _updated_object;
 	int _id;
 	static int next_id;
-	RCommandReceiver *receivers[MAX_RECEIVERS_PER_RCOMMAND];
 
 	RCommandNotifier *_notifier;
 };

@@ -42,7 +42,7 @@ public:
 /** issues the given command in the given chain */
 	static void issueCommand(RCommand *command, RCommandChain *chain=0);
 /** convenience function to create a new command and issue it. See documentation on RCommand::RCommand() and RInterface::issueCommand() */
-	static void issueCommand(const QString &command, int type = 0, const QString &rk_equiv = QString(), RCommandReceiver *receiver=0, int flags=0, RCommandChain *chain=0);
+	static void issueCommand(const QString &command, int type = 0, const QString &rk_equiv = QString(), int flags=0, RCommandChain *chain=0);
 
 /** convenience function to call a function / lambda, once all commands issued in the given chain have finished (successfully or not). Internally, this works by queing an empty command. */
 	template<typename T> static void whenAllFinished(QObject *receiver, T func, RCommandChain *chain=nullptr) {
@@ -190,9 +190,6 @@ Ok, so how do you get informed, when your command was completed? Using RCommand:
 lambda expression that will be called. This function or expression @em may take an RCommand* as parameter. In some cases, all you want to know is when all commands that have been already queued up to now
 have been run. In this case, you can use RInterface::whenAllFinished().
 
-@Note that all this was much more complicated in the old days, and you will still find a lot of places, where classes are derived from RCommandReceiver, and the command is handled in an overridden
-rCommandDone() function.
-
 Example code:
 
 \code
@@ -226,45 +223,20 @@ So what happens is that the RCommand created with RInterface::issueCommand goes 
 
 // TODO: Adjust this section to RCommandNotifier / RCommand::whenFinished().
 
-In many cases you don't just want to deal with a single RCommand in an RCommandReceiver, but rather you might submit a bunch of different commands (for instance to find out about several different properties of an object in R-space), and then use some special handling for each of those commands. So the problem is, how to find out, which of your commands you're currently dealing with in rCommandDone.
+In some cases you don't just want to deal with a single RCommand in a callback, and then use some special handling for each of those commands. So the problem is, how to find out, which of your commands you're currently dealing with ,in the callback.
 
 There are several ways to deal with this:
 
 	- storing the RCommand::id () (each command is automatically assigned a unique id)
-	- passing appropriate flags to know how to handle the command
+	- passing appropriate flags to know how to handle the command (Note that you can freely assign whatever flags you like. Only your own class will need to know how to interpret the flags.)
 	- keeping the pointer (CAUTION: don't use that pointer except to compare it with the pointer of an incoming command. Commands get deleted when they are finished, and maybe (in the future) if they become obsolete etc. Hence the pointers you keep may be invalid!)
 
-To illustrate the option of using "FLAGS", here is a reduced example of how RKVariable updates information about the dimensions and class of the corresponding object in R-space using two different RCommand s:
-
-\code
-#define UPDATE_DIM_COMMAND 1
-#define UPDATE_CLASS_COMMAND 2
-
-void RKVariable::updateFromR () {
-	//...
-	RCommand *command = new RCommand ("length (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetIntVector, QString (), this, UPDATE_DIM_COMMAND);
-	RInterface::issueCommand (command, RKGlobals::rObjectList()->getUpdateCommandChain ());
-}
-
-void RKVariable::rCommandDone (RCommand *command) {
-	//...
-	if (command->getFlags () == UPDATE_DIM_COMMAND) {
-		// ...
-		RCommand *ncommand = new RCommand ("class (" + getFullName () + ")", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString (), this, UPDATE_CLASS_COMMAND);
-		RInterface::issueCommand (ncommand, RKGlobals::rObjectList()->getUpdateCommandChain ());
-	} else if (command->getFlags () == UPDATE_CLASS_COMMAND) {
-		//...
-	}
-}
-\endcode
-
-Note that you can freely assign whatever flags you like. Only your own class will need to know how to interpret the flags.
 
 Now what about that RKGlobals::rObjectList()->getUpdateCommandChain ()? We'll talk about RCommandChain and what you need it for further down below. But first we'll have a look at how an RCommand is handled internally.
 
 \section UsingTheInterfaceToRInternalHandling What happens with an RCommand internally?
 
-So far we've discussed RInterface:issueCommand () and RCommandReceiver::rCommandDone (). But what happens in between?
+So far we've discussed RInterface:issueCommand () and the callback when it has finished. But what happens in between?
 
 First the RCommand is placed in a first-in-first-out stack. This stack is needed, since - as discussed - the commands get executed in a separate thread, so several command may get stacked up, before the first one gets run.
 
@@ -272,7 +244,7 @@ Then, in the backend thread (RThread) there is a loop running, which fetches tho
 
 Whenever the main thread becomes active again, it will find that QCustomEvent and handle it in RInterface::customEvent.
 
-The most important thing happening there, is a call to RCommand::finished (RCommand::finished basically just calls the responsible RCommandReceiver::rCommandDone), and right after that the RCommand gets deleted.
+The most important thing happening there, is a call to RCommand::finished (which cause the commandFinished()-signal to be emitted), and right after that the RCommand gets deleted.
 
 \section UsingTheInterfaceToRThreadingIssues Threading issues
 
@@ -366,7 +338,7 @@ Remember to close chains when you placed all the commands you needed to. If you 
 There are a few special type-modifiers you can specify when creating an RCommand (as part of the second parameter to RCommand::RCommand or RInterface::issueCommand), that determine what will be done with the result:
 
 - RCommand::EmptyCommand
-This one tells the backend, that the command does not really need to be executed, and does not contain anything. You'll rarely need this flag, but sometimes it is useful to submit an empty command simply to find out when it is finished.
+This one tells the backend, that the command does not really need to be executed, and does not contain anything. You'll rarely need this flag, but sometimes it is useful to submit an empty command simply to find out when it is finished. @note: RInterface::whenAllFinished() is a more readable alternative to this.
 
 - RCommand::DirectToOutput
 This is typically used in plugins: When you specify this modifier, the plain text result of this command (i.e. whatever R prints out when evaluating the command) will be added to the HTML output file. Remember to call RKWardMainWindow::newOutput in order to refresh the output-window once the command has finished.
@@ -392,7 +364,7 @@ The following classes contain (or should contain) further important documentatio
 
 - \ref RInterface
 - \ref RCommand
-- \ref RCommandReceiver
+- \ref RCommandNotifier
 - \ref RCommandStack
 
 Even lower level API:

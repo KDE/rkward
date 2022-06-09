@@ -31,7 +31,6 @@ SET (
 	rbackend_frontend_SRCS
 	rkrinterface.cpp
 	rcommand.cpp
-	rcommandreceiver.cpp
 	rcommandstack.cpp
 	rkrbackendprotocol_frontend.cpp
 	rksessionvars.cpp

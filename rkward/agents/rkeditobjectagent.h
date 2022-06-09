@@ -8,10 +8,11 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #define RKEDITOBJECTAGENT_H
 
 #include <qobject.h>
-#include "../rbackend/rcommandreceiver.h"
 
 #include <qstring.h>
 #include <qstringlist.h>
+
+class RCommandChain;
 
 /** This agent gets called, when an rk.edit() command was run in the backend. The purpose is to first update the structure information for the object(s), and then try to open it/them.
 
