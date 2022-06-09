@@ -15,23 +15,18 @@ Minor layout stuff to fix in plugins:
 - Barplot: "Display values" should be checkable frame
 - Sort data: optionset should simply use vertical stacking, or fix the horizontal alignment
 
-Upcoming porting efforts: Port from QtScript to QJSEngine:
-- Unforunately, QJSEngine lacks support for pre-compiled JS (QScriptProgram), ATM (Qt 5.5). We'll need some other optimization.
+QJSEngine optimization:
 - Idea: Use _one_ engine for each plugin, _including_ any embedded plugins. Wrap existing JS code into a closure, exporting only the "primary" functions as properties of an object.
   - Then, the scriptbackend will call plugin_a.preprocess(), etc.
   - The scriptbackend knows which of the plugins it is currently dealing with, and thus can trivially relay all getValue()-calls as appropriate.
 - Same approach for UI scripting.
 
-Port from QtWebKit to QtWebEngine
-- Should be mostly unproblematic
-  - Gah, QWebEngine does not compile with MinGW! Need some entirely custom solution, instead? https://github.com/GreatTux/CefMinGWQt
-- Somewhat unfortunate that QWebElement will be gone. We might be using this to amend the context menu, e.g. for copying one section to clipboard / deleting one section, etc.
+HTML window
+- Keep on the lookout for more portable replacements to QWebEngine (MinGW, but also more stable Mac support)
+  - https://github.com/GreatTux/CefMinGWQt
+  - https://servo.org/
+- Would be great to amend the context menu, e.g. for copying one section to clipboard / deleting one section, etc.
   - Could perhaps be done by catching contextmenu event in JS, instead, then send to frontend, somehow.
-
-New features in R 3.1.0 to make use of / support:
-
-- A new browser command s has been added, to “step into” function calls.
-- A new browser command f has been added, to “finish” the current loop or function.
 
 Simple stuff to do soon:
 	- RKConsole: Show a notice (with "don't show again"-box, of course) when first using Ctrl+C shortcut
@@ -53,18 +48,8 @@ i18n-Thoughts:
 MacOS:
   - Avoiding mis-placment of certain menu-entries: QAction::menuRole()
 
-Bugs outside RKWard:
-	- KDE 4
-		- why is the icon style only honored for mainToolBar (in KXMLGUIBuilder)? It looks like this is done on purpose, but why???
-			- http://lists.kde.org/?l=kde-core-devel&m=103307809508725&w=2
-
 Bugs:
-	- XMLGUI:
-		- The edit menu is broken in the main window, but not detached windows (for script editor, console)
-			- Ok in KDE 4.3.4 / Linux
-			- Broken in KDE 4.4.1 / Windows
-			- Apparently it is the *switching* of parts that is the problem. For the very first part, the GUI is ok, after that all DefineGroups seem to be forgotten
-	- There is definitely a memory leak in handling output!
+	- There is definitely a memory leak in handling output! Still true?
 		- Produce lots and lots of output -> watch mem usage grow
 		- Probably the RKConsole is to blame (run outside console -> no significant increase)
 			- Maybe the kate-part needs to be reset (syntax parse tree) every once in a while?
@@ -79,10 +64,8 @@ Bugs:
 			- 2. before the edit has been synced to the backend, a different command touches the data
 			- The editor should keep track of which / how many synchronisation commands are still outstanding.
 			- If an edited object was touched while sync commands are still outstanding, complain and let the user handle the situation
-	- options ("pager") is currently broken in RKWard. May not be a problem, but we offer a GUI to configure it in Settings->Configure RKWard...
 
 Compilation / technical
-	- Incorporate FreeBSD patches http://www.freshports.org/math/rkward/files.php?message_id=200609172111.k8HLBiob081349@repoman.freebsd.org
 	- eventually the whole RData-structure should be made to use QList-types
 
 R backend:
@@ -90,9 +73,6 @@ R backend:
 
 UI-stuff
 	- find/create a set of menu icons (https://sourceforge.net/mailarchive/message.php?msg_id=37891606)
-	- "First-run wizard"
-		- pre-install R packages
-		- notify if r-base-html package is not installed
 	- Snippets library
 		- pre-defined snippets to base scripts on
 		- custom snippets
@@ -121,14 +101,10 @@ UI-stuff
 	- RObjectListView
 		- double click action should be configurable: View, Edit, insert name into current script, insert name into console, nothing
 	- RKConsole:
-		- is tab completion for file names still crashy?
-			- currently, problem seems to be inside KUrlCompletion
 		- Fix pasting at other positions than line end
 		- Prevent cursor from venturing into lines other than the last line
 		- Allow multi-line command editing?
 	- Script editor:
-		- code completion
-			- probably we can trim down the completion widget by providing custom headerData()? (Low priority)
 		- placement of menu options?
 		- new action "Source file"
 		- deal better with overlapping blocks in the script editor (brush merging?)
@@ -154,15 +130,12 @@ UI-stuff
 	- Working directory
 		- show current wd in <browser>, somewhere
 	- Settings UI:
-		- see https://mail.kde.org/pipermail/rkward-devel/2007-March/001139.html
 		- R-Backend-Settings:
 			- the options should gain a "use default" checkbox to cope with changing R option defaults
 			- tooltips for the options on "R-Backend" tab about the internal R-function call
 	- project/session handling: files, workspace, current working directory.
 	- file system browser tab
 		- a way to inline pdf/ps/jpg/png files like in KDevelop?
-	- Quitting:
-		- instead of closing windows one by one, and asking to save changes if necessary, first list all windows that might need to be saved, let the user chose to save them, then close all windows without further questions.
 	- Vignettes:
 		- any means of fetching a description of the package before installing?
 		- Add a vignettes browser to the help menu
@@ -179,18 +152,8 @@ Internal stuff:
 	RKVariable:
 		- True Support for Logicals
 		- In the current design, RKVariable would not handle storage mode changes from outside well at all
-	RCommandReceiver:
-		- add virtual rCommandStarted () function, so receivers can find out, when their command becomes active
 	REmbedInternal:
 		- probably we do not need na_double at all (just any NaN) => less confusion
-	Detecting object modifications inside R:
-		- left TODO:
-			- detection hole:
-				x is 1
-				user does
-				rm (x); x <- function () {}
-				(object list remains the same, watch was not active, but symbol changed)
-				- will need to put an extra notification inside .rk.watch.globalenv ()? Will that get run?
 	- RExpressionObject as an abstraction for R-Expressions (i.e. manually edited expressions).
 		- It will be possible to "store" these in the RObjectList and select them just like any other object
 		- RKVarslot will allow editing the selected value by hand (or just typing the name in)
@@ -201,9 +164,6 @@ Internal stuff:
 	- Object editing / modification tracking:
 		- functions to set double/int/string-vectors directly. Use in paste-operations
 	- error-handling/raising in .rk.do.call
-	- I've changed the simple RInterface::issueCommand (QString, ...) command to return a pointer to the RCommand created. This will allow for lots of small cleanups. Do them.
-		- well, on second thought, it might be better to rely more on RCommand::id () instead of pointers. Why? The id is unique (until integer overflow). The pointer may be reused after a delete -> potential problem when trying to cancel command which is actually already deleted (and potentially other cases)
-		- let's set this back for a while
 	- .rk.get.available.packages ()
 		- use external (file) storage for cache to save mem
 	- Always save workplace layout to a file, never to config. Even for the "global" option.
@@ -212,9 +172,6 @@ Internal stuff:
 
 General code:
 	- get rid of all the superflous dependencies: http://lists.debian.org/debian-devel/2005/12/msg00439.html
-	- remove classes/files:
-		- RKGlobals
-			- static members should be moved to the respective classes. Much cleaner!
 	- remove all the passing around of KGlobal::config() as a parameter
 	- grep sources for "KDE4"
 
@@ -227,8 +184,6 @@ R plugins:
 	- import plugins:
 		- standardized? checkbox to open imported object for editing
 			- would be nice, if this box could be affected (default) by a global setting
-	- Generalized preview:
-		- E.g. for data import plugins
 	- Ability to pre-select some default values with a single option
 	- Spinbox:
 		- find a solution for "pending changes". Currently, if the user enters a value, manually, then presses submit, the old value will be used (the new value is only set, when the focus changes to another widget). Probably the RKSpinbox should emit signals for "pending" and "ready". The plugin spinbox should listen to those and not be satisfied as long as a change is pending. Maybe mark the spinbox in yellow, while a change is pending.
@@ -253,6 +208,5 @@ Configuration:
 		- color highlighting for warnings/errors
 	- additional R engine options:
 		- stack size (commandline arg --map-ppsize)
-		- disable html help
 	- new dataeditor options:
 		- see comments on RKEditorDataFrame

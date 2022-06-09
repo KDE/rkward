@@ -22,7 +22,7 @@ class RBackendRequest;
 
 	Note that since communication with R is asynchronous, there is no way to get
 	R-output within the same function, the request is submitted. You have to
-	provide an RCommandReceiver object, if you're interested in the output.
+	provide a callback (possibly a lambda function), if you're interested in the output.
 	
 	For a detailed explanation see \ref UsingTheInterfaceToR .
 
