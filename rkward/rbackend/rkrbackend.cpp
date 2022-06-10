@@ -1749,10 +1749,10 @@ void RKRBackend::checkObjectUpdatesNeeded (bool check_list) {
 	
 		if (search_update_needed) {	// this includes an update of the globalenv, even if not needed
 			dummy = runDirectCommand ("loadedNamespaces ()\n", RCommand::GetStringVector);
-			delete dummy;
 			QVariantList args;
 			args.append(QVariant(toplevel_env_names));
 			args.append(QVariant(dummy->stringVector()));
+			delete dummy;
 			handleRequestWithSubcommands("syncenvs", args);
 		} 
 	}
