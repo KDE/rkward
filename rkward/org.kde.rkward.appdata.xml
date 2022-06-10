@@ -142,15 +142,16 @@
     <binary>rkward</binary>
   </provides>
   <project_group>KDE</project_group>
+  <content_rating type="oars-1.1"/>
   <releases>
     <release version="0.7.4" date="2022-05-30">
       <artifacts>
-        <artifact type="binary" platform="win64">
+        <artifact type="binary" platform="x86_64-windows-msvc">
           <location>https://download.kde.org/stable/rkward/0.7.4/rkward-0.7.4-R-4.2.0-KF5-5.94.0.exe</location>
           <checksum type="sha256">c22675405a2688bf2119b05ea6d120d2df649b9fb9b172025653f940e784bf9f</checksum>
           <size type="download">249976264</size>
         </artifact>
-        <artifact type="binary" platform="macOS">
+        <artifact type="binary" platform="x86_64-macos-any">
           <location>https://download.kde.org/stable/rkward/0.7.4/rkward-0.7.4-OSX-10.15-KF5-5.94.0_needs-R-4.2.dmg</location>
           <checksum type="sha256">3e0afeb1d4c5c860a0549eeb549289e3d4e3fed6d3b7fa11ad96339cc5174c5f</checksum>
           <size type="download">145660306</size>
