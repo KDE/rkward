@@ -189,6 +189,8 @@ private:
 	KXMLGUIClient *active_ui_buddy;
 friend class RKWardCoreTest;
 	bool testmode_suppress_dialogs;
+public:
+	static bool suppressModalDialogsForTesting() { return rkward_mainwin->testmode_suppress_dialogs; };
 };
 
 #endif // RKWARD_H

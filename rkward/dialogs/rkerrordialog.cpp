@@ -90,6 +90,7 @@ private:
 
 void RKErrorDialog::reportableErrorMessage (QWidget* parent_widget, const QString& user_message, const QString &details, const QString& caption, const QString& message_code) {
 	RK_TRACE (APP);
+	if (RKWardMainWindow::suppressModalDialogsForTesting()) return;
 
 	if (!parent_widget) parent_widget = RKWardMainWindow::getMain ();
 	// adjusted from KMessageBox::detailedError
