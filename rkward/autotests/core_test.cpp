@@ -54,7 +54,7 @@ private slots:
 		t.start();
 		while (!(RInterface::instance()->backendIsDead() || RInterface::instance()->backendIsIdle())) {
 			if (t.elapsed() > 20000) break;
-			qApp->processEvents(QEventLoop::AllEvents);
+			qApp->sendPostedEvents();
 		}
 		if (RInterface::instance()->backendIsIdle()) {
 			qDebug("Startup completed");
