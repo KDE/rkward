@@ -3,6 +3,7 @@
 #include <QApplication>
 #include <QFile>
 #include <QDir>
+#include <QLoggingCategory>
 
 #include <KAboutData>
 
@@ -12,8 +13,12 @@
 #include "../rbackend/rksessionvars.h"
 #include "../rbackend/rkrinterface.h"
 
-void RKDebug (int, int, const char*, ...) {
-	// disabled for now
+void RKDebug (int, int, const char* fmt, ...) {
+	va_list ap;
+	va_start(ap, fmt);
+	vprintf(fmt, ap);
+	va_end(ap);
+	printf("\n");
 }
 
 class RKWardCoreTest: public QObject {
@@ -43,6 +48,7 @@ private slots:
 	void initTestCase()
 	{
 		qputenv("QTWEBENGINE_CHROMIUM_FLAGS", "--no-sandbox"); // Allow test to be run as root, which, for some reason is being done on the SuSE CI.
+		QLoggingCategory::setFilterRules("qt*=false");
 		KAboutData::setApplicationData(KAboutData("rkward")); // needed for .rc files to load
 		RK_Debug::RK_Debug_Level = DL_DEBUG;
 		qDebug(R_EXECUTABLE);
