@@ -40,7 +40,8 @@ private slots:
 	}
 	void initTestCase()
 	{
-		KAboutData::setApplicationData(KAboutData("rkward")); // needed for .rc files to load
+		qputenv("QTWEBENGINE_CHROMIUM_FLAGS", "--no-sandbox"); // Allow test to be run as root, which, for some reason is being done on the SuSE CI.
+		KAboutData::setApplicationData(KAboutData("rkward")); // needed for .rc files to load0
 		RK_Debug::RK_Debug_Level = DL_WARNING;
 		qDebug(R_EXECUTABLE);
 		RKSessionVars::r_binary = R_EXECUTABLE;
