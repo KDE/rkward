@@ -45,6 +45,7 @@ public:
 	bool isEnabled(CompletionCategories cat) const { return completion_type_enabled[cat]; };
 	bool cursorNavigatesCompletions() const { return cursor_navigates_completions; };
 	bool tabKeyInvokesCompletion() const { return tabkey_invokes_completion; };
+	bool completionForAllFileTypes() const { return completion_all_filetypes; };
 private:
 friend class RKCodeCompletionSettingsWidget;
 friend class RKSettingsModuleConsole;
@@ -57,7 +58,8 @@ friend class RKSettingsModuleConsole;
 	RKConfigValue<bool> cursor_navigates_completions {"Cursor navigate completions", false};
 	RKConfigValue<int> completion_options {"Completion option flags", (int) RObject::IncludeEnvirIfMasked};
 	RKConfigGroup dummyoptions = RKConfigGroup(0, N_COMPLETION_CATEGORIES, completion_type_enabled);
-	RKConfigGroup group {"Completion", { &dummyoptions, &auto_completion_enabled, &auto_completion_min_chars, &auto_completion_timeout, &auto_completion_cursor_activated, &tabkey_invokes_completion, &cursor_navigates_completions, &completion_options }};
+	RKConfigValue<bool> completion_all_filetypes {"Completion all filetypes", true};
+	RKConfigGroup group {"Completion", { &dummyoptions, &auto_completion_enabled, &auto_completion_min_chars, &auto_completion_timeout, &auto_completion_cursor_activated, &tabkey_invokes_completion, &cursor_navigates_completions, &completion_options, &completion_all_filetypes }};
 };
 
 class RKCodeCompletionSettingsWidget : public RKSettingsModuleWidget {

@@ -266,12 +266,14 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl &_url,
 
 	if (use_r_highlighting) {
 		RKCommandHighlighter::setHighlighting (m_doc, RKCommandHighlighter::RScript);
+	} else {
+		RKCommandHighlighter::setHighlighting (m_doc, RKCommandHighlighter::Automatic);
+	}
+	if (use_r_highlighting || RKSettingsModuleCommandEditor::completionSettings()->completionForAllFileTypes()) {
 		if (flags & RKCommandEditorFlags::UseCodeHinting) {
 			new RKCompletionManager (m_view, RKSettingsModuleCommandEditor::completionSettings());
 			//hinter = new RKFunctionArgHinter (this, m_view);
 		}
-	} else {
-		RKCommandHighlighter::setHighlighting (m_doc, RKCommandHighlighter::Automatic);
 	}
 
 	smart_iface = qobject_cast<KTextEditor::MovingInterface*> (m_doc);

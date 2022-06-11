@@ -91,6 +91,9 @@ RKCodeCompletionSettingsWidget::RKCodeCompletionSettingsWidget(QWidget *parent, 
 			{{RObject::IncludeEnvirIfMasked, i18n("For masked objects, only")}, {RObject::IncludeEnvirIfNotGlobalEnv, i18n("For objects outside of <i>.GlobalEnv</i>, only")}, {RObject::IncludeEnvirIfNotGlobalEnv | RObject::IncludeEnvirForGlobalEnv, i18n("Always")}}
 		), this, RObject::IncludeEnvirIfNotGlobalEnv | RObject::IncludeEnvirForGlobalEnv | RObject::IncludeEnvirIfMasked);
 		form_layout->addRow (i18n ("Include environment for objects on the search path:"), completion_object_qualification_box);
+
+		auto completion_all_filetypes = settings->tabkey_invokes_completion.makeCheckbox(QString(), this);
+		form_layout->addRow(i18n("Offer completions in all file types (not just R scripts)"), completion_all_filetypes);
 	} else {
 		box_layout->addWidget(RKCommonFunctions::linkedWrappedLabel(i18n("<b>Note: </b>Additional (common) completion options are available at the <a href=\"rkward://settings/editor\">script editor settings</a>")));
 	}
