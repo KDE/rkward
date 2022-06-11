@@ -312,14 +312,6 @@ RKRShadowEnvironment* RKRShadowEnvironment::environmentFor(SEXP baseenvir) {
 	return environments[baseenvir];
 }
 
-static bool nameInList(SEXP needle, SEXP haystack) {
-	int count = Rf_length(haystack);
-	for (int i = 0; i < count; ++i) {
-		if (!strcmp(R_CHAR(needle), R_CHAR(STRING_ELT(haystack, i)))) return true;
-	}
-	return false;
-}
-
 void RKRShadowEnvironment::updateCacheForGlobalenvSymbol(const QString& name) {
 	RK_DEBUG(RBACKEND, DL_DEBUG, "updating cached value for symbol %s", qPrintable(name));
 	environmentFor(R_GlobalEnv)->updateSymbolCache(name);
@@ -362,8 +354,8 @@ RKRShadowEnvironment::Result RKRShadowEnvironment::diffAndUpdate() {
 	for (int i = 0; i < count; ++i) {
 		SEXP name = Rf_installChar(STRING_ELT(symbols, i));
 		PROTECT(name);
-		SEXP main = Rf_findVar(name, baseenvir);
-		SEXP cached = Rf_findVar(name, shadowenvir);
+		SEXP main = Rf_findVarInFrame(baseenvir, name);
+		SEXP cached = Rf_findVarInFrame(shadowenvir, name);
 		if (main != cached) {
 			Rf_defineVar(name, main, shadowenvir);
 			if (cached == R_UnboundValue) {
@@ -386,7 +378,7 @@ RKRShadowEnvironment::Result RKRShadowEnvironment::diffAndUpdate() {
 			PROTECT(name);
 			// NOTE: R_findVar(), here, is enormously faster than searching the result of ls() for the name, at least when there is a large number of symbols.
 			// Importantly, environments provided hash-based lookup, by default.
-			SEXP main = Rf_findVar(name, baseenvir);
+			SEXP main = Rf_findVarInFrame(baseenvir, name);
 			if (main == R_UnboundValue) {
 				res.removed.append(RKRSupport::SEXPToString(name));
 				unbindSymbolWrapper(name, shadowenvir);

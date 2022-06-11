@@ -93,7 +93,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "version.h"
 
 #ifndef R_EXECUTABLE
-#	define R_EXECUTABLE ""
+#error config problem
 #endif
 
 #ifdef Q_OS_WIN

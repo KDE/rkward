@@ -26,12 +26,14 @@ ADD_SUBDIRECTORY( core )
 ADD_SUBDIRECTORY( icons )
 ADD_SUBDIRECTORY( windows )
 ADD_SUBDIRECTORY( syntax )
+IF(BUILD_TESTING)
+	ADD_SUBDIRECTORY(autotests)
+ENDIF(BUILD_TESTING)
 
 INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} )
 
 SET(RKWard_Sources
 	rkward.cpp
-	main.cpp
 	robjectviewer.cpp
 	rkconsole.cpp
 )
@@ -45,11 +47,12 @@ LINK_DIRECTORIES(${R_SHAREDLIBDIR})
 FILE(GLOB ICON_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/icons/app-icon/*-apps-rkward.png")
 # recent ECM versions will prefer the scalable version: prepend it to the icon source list (older versions generate a warning on the SVG, but so what):
 ECM_ADD_APP_ICON(RKWard_Sources ICONS ${CMAKE_CURRENT_SOURCE_DIR}/icons/app-icon/sc-apps-rkward.svgz ${ICON_SRCS})
-ADD_EXECUTABLE(rkward ${RKWard_Sources})
+ADD_LIBRARY(rkward_lib STATIC ${RKWard_Sources}) # For auto-tests: pack everything except main in a dummy library
+TARGET_COMPILE_DEFINITIONS(rkward_lib PUBLIC -DR_EXECUTABLE="${R_EXECUTABLE}")
+ADD_EXECUTABLE(rkward main.cpp)
 
 # NOTE: These definitions are needed for the startup procedure (main.cpp), only.
 # We should switch with to target_compile_definitions once we require CMAKE 2.6+
-ADD_DEFINITIONS(-DR_EXECUTABLE="${R_EXECUTABLE}")
 ADD_DEFINITIONS(-DINSTALL_PATH="${CMAKE_INSTALL_PREFIX}")
 SET_TARGET_PROPERTIES(rkward PROPERTIES
         MACOSX_BUNDLE_BUNDLE_NAME "RKWard")
@@ -63,7 +66,8 @@ IF(APPLE)
 		@ONLY)
 ENDIF(APPLE)
 
-TARGET_LINK_LIBRARIES(rkward windows ${RKWARD_ADDLIBS} agents dialogs plugin settings dataeditor core scriptbackends rbackend misc KF5::WindowSystem Qt5::Widgets KF5::XmlGui)
+TARGET_LINK_LIBRARIES(rkward_lib windows ${RKWARD_ADDLIBS} agents dialogs plugin settings dataeditor core scriptbackends rbackend misc KF5::WindowSystem Qt5::Widgets KF5::XmlGui)
+TARGET_LINK_LIBRARIES(rkward rkward_lib)
 IF(KF5Crash_FOUND)
 	TARGET_LINK_LIBRARIES(rkward KF5::Crash)
 	SET_SOURCE_FILES_PROPERTIES(main.cpp PROPERTIES COMPILE_DEFINITIONS WITH_KCRASH=1)
