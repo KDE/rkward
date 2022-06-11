@@ -12,6 +12,9 @@
 #include "../agents/rkquitagent.h"
 #include "../rbackend/rksessionvars.h"
 #include "../rbackend/rkrinterface.h"
+#include "../core/robject.h"
+#include "../core/robjectlist.h"
+#include "../core/renvironmentobject.h"
 
 void RKDebug (int, int, const char* fmt, ...) {
 	va_list ap;
@@ -24,31 +27,42 @@ void RKDebug (int, int, const char* fmt, ...) {
 class RKWardCoreTest: public QObject {
     Q_OBJECT
 
-    void runCommandWithTimeout(RCommand *command, RCommandChain* chain, std::function<void(RCommand*)> callback, int timeoutms = 1000) {
-	    QString ccopy = command->command();
-	    QElapsedTimer t;
-	    t.start();
-	    bool done = false;
-	    bool *_done = &done;
-	    connect(command->notifier(), &RCommandNotifier::commandFinished, this, [_done, callback](RCommand *command) { *_done = true; callback(command); });
-	    RInterface::issueCommand(command, chain);
-	    while (!done && t.elapsed() < timeoutms) {
-		    qApp->processEvents();
-	    }
-	    if (!done) {
-		    qDebug("Command timed out: %s", qPrintable(ccopy));
-		    QFAIL("Command timed out");
-	    }
-    }
+	void runCommandWithTimeout(RCommand *command, RCommandChain* chain, std::function<void(RCommand*)> callback, int timeoutms = 1000) {
+		QString ccopy = command->command();
+		QElapsedTimer t;
+		t.start();
+		bool done = false;
+		bool *_done = &done;
+		connect(command->notifier(), &RCommandNotifier::commandFinished, this, [_done, callback](RCommand *command) { *_done = true; callback(command); });
+		RInterface::issueCommand(command, chain);
+		while (!done && t.elapsed() < timeoutms) {
+			qApp->processEvents();
+		}
+		if (!done) {
+			qDebug("Command timed out: %s", qPrintable(ccopy));
+			QFAIL("Command timed out");
+		}
+	}
+
+	void waitForAllFinished(int timeoutms = 1000) {
+		runCommandWithTimeout(new RCommand(QString(), RCommand::App | RCommand::EmptyCommand), nullptr, [](RCommand* command){}, timeoutms);
+	}
+
+	void cleanGlobalenv() {
+		RInterface::issueCommand(new RCommand("rm(list=ls(all.names=TRUE))", RCommand::User));
+	}
     
     QPointer<RKWardMainWindow> main_win;
 private slots:
 	void init() {
 	}
+	void cleanup() {
+		waitForAllFinished();
+	}
 	void initTestCase()
 	{
 		qputenv("QTWEBENGINE_CHROMIUM_FLAGS", "--no-sandbox"); // Allow test to be run as root, which, for some reason is being done on the SuSE CI.
-		QLoggingCategory::setFilterRules("qt*=false");
+		QLoggingCategory::setFilterRules("qt.text.layout=false");  // Filter out some noise
 		KAboutData::setApplicationData(KAboutData("rkward")); // needed for .rc files to load
 		RK_Debug::RK_Debug_Level = DL_DEBUG;
 		qDebug(R_EXECUTABLE);
@@ -80,6 +94,66 @@ private slots:
 			QCOMPARE(command->getDataLength(), 3);
 			QCOMPARE(command->intVector().value(1), 2);
 		});
+	}
+
+	void irregularShortNameTest() {
+		QVERIFY(RObject::irregularShortName("0x"));
+		QVERIFY(RObject::irregularShortName(".1x"));
+		QVERIFY(RObject::irregularShortName("_bla"));
+		QVERIFY(RObject::irregularShortName("..."));
+		QVERIFY(RObject::irregularShortName("b(la"));
+		QVERIFY(!RObject::irregularShortName(".x"));
+		QVERIFY(!RObject::irregularShortName("..1x"));
+		QVERIFY(!RObject::irregularShortName("x2"));
+		QVERIFY(!RObject::irregularShortName("x_y"));
+	}
+
+	void objectListTest() {
+		// check that resprentation a objects in backend is sane
+		RInterface::issueCommand("a <- list(x1=c(1, 2, 3), x2=letters, x3=datasets::women); b <- a", RCommand::User);
+		RInterface::whenAllFinished(this, []() {
+			auto a = RObjectList::getGlobalEnv()->findObject("a");
+			QVERIFY(a != nullptr);
+			QVERIFY(a->isContainer());
+			auto ac = static_cast<RContainerObject*>(a);
+			QCOMPARE(ac->numChildren(), 3);
+			QCOMPARE(ac->findChildByIndex(0)->getDataType(), RObject::DataNumeric);
+			QCOMPARE(ac->findChildByIndex(1)->getDataType(), RObject::DataCharacter);
+			QVERIFY(ac->findChildByIndex(2)->isDataFrame());
+		}, nullptr);
+		// check that changes are detected, and reflected, properly
+		RInterface::issueCommand("rm(a); b <- 1; c <- letters; .d <- c", RCommand::User);
+		RInterface::whenAllFinished(this, []() {
+			QVERIFY(RObjectList::getGlobalEnv()->findObject("a") == nullptr);
+			QCOMPARE(RObjectList::getGlobalEnv()->findObject("b")->getDataType(), RObject::DataNumeric);
+			QCOMPARE(RObjectList::getGlobalEnv()->findObject("c")->getDataType(), RObject::DataCharacter);
+			QCOMPARE(RObjectList::getGlobalEnv()->findObject(".d")->getDimensions(), RObjectList::getGlobalEnv()->findObject("c")->getDimensions());
+		}, nullptr);
+		cleanGlobalenv();
+		RInterface::whenAllFinished(this, [](RCommand*) {
+			QCOMPARE(RObjectList::getGlobalEnv()->numChildren(), 0);
+		});
+	}
+
+	void parseErrorTest() {
+		runCommandWithTimeout(new RCommand("x <- ", RCommand::User), nullptr, [](RCommand *command) {
+			QVERIFY(command->failed());
+			QVERIFY(command->errorIncomplete());
+		});
+		runCommandWithTimeout(new RCommand("(}", RCommand::App), nullptr, [](RCommand *command) {
+			QVERIFY(command->failed());
+			QVERIFY(command->errorSyntax());
+		});
+		runCommandWithTimeout(new RCommand("(}", RCommand::User), nullptr, [](RCommand *command) {
+			QVERIFY(command->failed());
+			QEXPECT_FAIL("", "Syntax error detection for User commands known to be broken, but doesn't really matter", Continue);
+			QVERIFY(command->errorSyntax());
+		});
+		runCommandWithTimeout(new RCommand("stop(\"123test\")", RCommand::User), nullptr, [](RCommand *command) {
+			QVERIFY(command->failed());
+			QVERIFY(command->error().contains("123test"));
+		});
+		cleanGlobalenv();
 	}
 
 	void cleanupTestCase()
