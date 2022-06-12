@@ -17,6 +17,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 #include "../rkward.h"
+#include "../version.h"
 #include "../agents/rkquitagent.h"
 #include "../rbackend/rksessionvars.h"
 #include "../rbackend/rkrinterface.h"
@@ -80,7 +81,7 @@ private slots:
 	{
 		qputenv("QTWEBENGINE_CHROMIUM_FLAGS", "--no-sandbox"); // Allow test to be run as root, which, for some reason is being done on the SuSE CI.
 		QLoggingCategory::setFilterRules("qt.text.layout=false");  // Filter out some noise
-		KAboutData::setApplicationData(KAboutData("rkward")); // needed for .rc files to load
+		KAboutData::setApplicationData(KAboutData("rkward", "RKWard", RKWARD_VERSION, "Frontend to the R statistics language", KAboutLicense::GPL)); // component name needed for .rc files to load
 		RK_Debug::RK_Debug_Level = DL_DEBUG;
 		qDebug(R_EXECUTABLE);
 		RKSessionVars::r_binary = R_EXECUTABLE;
