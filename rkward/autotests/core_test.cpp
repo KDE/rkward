@@ -11,6 +11,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QFile>
 #include <QDir>
 #include <QLoggingCategory>
+#include <QRegularExpression>
 
 #include <KAboutData>
 
@@ -31,8 +32,12 @@ void RKDebug (int, int, const char* fmt, ...) {
 	printf("\n");
 }
 
+/** This test suite sets up a mostly complete application. That's a bit heavy, but arguably, a) modularity isn't ideal in RKWard, and b) many of the more interesting
+ *  test involve passing commands to the R backend, and then verifying the expected state in the frontend. That alone requires a fairly extensive setup in the first place.
+ *
+ *  Since starting can still take several seconds, the plan, for now, is to run most tests most individual tests inside this single test suite. */
 class RKWardCoreTest: public QObject {
-    Q_OBJECT
+	Q_OBJECT
 
 	void runCommandWithTimeout(RCommand *command, RCommandChain* chain, std::function<void(RCommand*)> callback, int timeoutms = 1000) {
 		QString ccopy = command->command();
@@ -51,8 +56,13 @@ class RKWardCoreTest: public QObject {
 		}
 	}
 
+	void runCommandAsync(RCommand *command, RCommandChain* chain, std::function<void(RCommand*)> callback) {
+		command->whenFinished(this, callback);
+		RInterface::issueCommand(command, chain);
+	}
+
 	void waitForAllFinished(int timeoutms = 1000) {
-		runCommandWithTimeout(new RCommand(QString(), RCommand::App | RCommand::EmptyCommand), nullptr, [](RCommand* command){}, timeoutms);
+		runCommandWithTimeout(new RCommand(QString(), RCommand::App | RCommand::EmptyCommand), nullptr, [](RCommand*){}, timeoutms);
 	}
 
 	void cleanGlobalenv() {
@@ -163,10 +173,55 @@ private slots:
 		cleanGlobalenv();
 	}
 
+	void commandOrderAndOutputTest() {
+		// commands shall run in the order 1, 3, 2, 5, 4, but also, of course, all different types of output shall be captured
+		QStringList output;
+		QRegularExpression extractnumber("\\d\\d\\d");
+		auto callback = [&output, extractnumber](RCommand *command) {
+			auto res = extractnumber.match(command->fullOutput());
+			QVERIFY(res.hasMatch());
+			output.append(res.captured());
+		};
+
+		runCommandAsync(new RCommand("cat(\"111\\n\")", RCommand::User), nullptr, callback);
+		auto chain = RInterface::startChain();
+		auto chain2 = RInterface::startChain(chain);
+		runCommandAsync(new RCommand("message(\"222\\n\")", RCommand::App), chain, callback);
+		runCommandAsync(new RCommand("stop(\"333\\n\")", RCommand::App), chain2, callback);
+		runCommandAsync(new RCommand("warning(\"444\\n\")", RCommand::User), nullptr, callback);
+		runCommandAsync(new RCommand("system(\"echo 555\")", RCommand::App), chain, callback);
+		RInterface::closeChain(chain);
+		RInterface::closeChain(chain2);
+		waitForAllFinished();
+
+		QCOMPARE(output.size(), 5);
+		QCOMPARE(output.value(0), "111");
+		QCOMPARE(output.value(1), "333");
+		QCOMPARE(output.value(2), "222");
+		QCOMPARE(output.value(3), "555");
+		QCOMPARE(output.value(4), "444");
+	}
+
+	void priorityCommandTest() {
+		bool priority_command_done = false;
+		runCommandAsync(new RCommand("Sys.sleep(5)", RCommand::User), nullptr, [&priority_command_done](RCommand *command) {
+			QVERIFY(priority_command_done);
+			QVERIFY(command->failed());
+			QVERIFY(command->wasCanceled());
+		});
+		auto priority_command = new RCommand("cat(\"something\\n\")", RCommand::PriorityCommand | RCommand::App);
+		runCommandAsync(priority_command, nullptr, [&priority_command_done](RCommand *) {
+			priority_command_done = true;
+			RInterface::instance()->cancelAll();
+		});
+		waitForAllFinished();  // priority_command_done must remain in scope until done
+	}
+
 	void cleanupTestCase()
 	{
 		// at least the backend should exit properly, to avoid creating emergency save files
 		RInterface::issueCommand(new RCommand(QString(), RCommand::QuitCommand));
+		RKWardMainWindow::getMain()->slotCloseAllWindows();
 		while (!(RInterface::instance()->backendIsDead())) {
 			qApp->processEvents();
 		}
