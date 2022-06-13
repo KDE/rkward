@@ -764,10 +764,13 @@ void RKCommandEditorWindow::currentHelpContext (QString *symbol, QString *packag
 	RK_TRACE (COMMANDEDITOR);
 	Q_UNUSED (package);
 
-	KTextEditor::Cursor c = m_view->cursorPosition();
-	QString line = m_doc->line(c.line ()) + ' ';
-
-	*symbol = RKCommonFunctions::getCurrentSymbol (line, c.column ());
+	if (m_view->selection()) {
+		*symbol = m_view->selectionText();
+	} else {
+		KTextEditor::Cursor c = m_view->cursorPosition();
+		QString line = m_doc->line(c.line()) + ' ';
+		*symbol = RKCommonFunctions::getCurrentSymbol(line, c.column());
+	}
 }
 
 QString RKCommandEditorWindow::provideContext (int line_rev) {

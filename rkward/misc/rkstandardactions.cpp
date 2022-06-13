@@ -121,12 +121,18 @@ public slots:
 	void init () {
 		RK_TRACE (MISC);
 		QString symbol, package;
+		bool enabled = true;
 		provider->currentHelpContext (&symbol, &package);
-		menu->menuAction()->setEnabled(!symbol.isEmpty());
-		if (symbol.isEmpty()) return;
-
-		actions->setSelectedText(symbol + " " + package + " R");
+		QString searchtext = symbol + " " + package + " R";
+		actions->setSelectedText(searchtext);
 		menu->clear();
+
+		if (symbol.isEmpty()) {
+			menu->addSection(i18n("[No keyword detected]"));
+			enabled = false;
+		} else {
+			menu->addSection(searchtext);
+		}
 
 		// Coerce WebshortcutsMenu to single level
 		if (container) container->deleteLater();
@@ -141,6 +147,7 @@ public slots:
 		if (actions.isEmpty()) actions = cactions;
 		for (int i = 0; i < actions.count(); ++i) {
 			menu->addAction(actions[i]);
+			actions[i]->setEnabled(enabled || (i == actions.count() - 1));
 		}
 	};
 private:

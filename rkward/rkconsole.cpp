@@ -825,7 +825,11 @@ void RKConsole::currentHelpContext (QString* symbol, QString* package) {
 	RK_TRACE (APP);
 	Q_UNUSED (package);
 
-	*symbol = RKCommonFunctions::getCurrentSymbol (currentEditingLine (), currentCursorPositionInCommand ());
+	if (view->selection()) {
+		*symbol = view->selectionText();
+	} else {
+		*symbol = RKCommonFunctions::getCurrentSymbol (currentEditingLine (), currentCursorPositionInCommand ());
+	}
 }
 
 void RKConsole::initializeActions (KActionCollection *ac) {
