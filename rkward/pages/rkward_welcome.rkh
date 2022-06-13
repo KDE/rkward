@@ -32,4 +32,11 @@
 	<li>External links: <link href="https://rkward.kde.org/">project homepage</link></li>
 		</ul>
 	</section>
+
+	<section title="Citation of RKWard" id="ciation">
+		<ul>
+		<li>External links: <link href="http://dev1.jstatsoft.org/article/view/v049i09">Peer-reviewed article in the Journal of Statistical Software</link></li>
+		<li>citation("rkward")</li>
+		</ul>
+	</section>
 </document>
