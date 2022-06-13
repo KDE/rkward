@@ -619,7 +619,7 @@ void RKWardMainWindow::initActions() {
 	restart_r->setText(i18n("Restart R Backend"));
 	connect(restart_r, &QAction::triggered, this, [this]() {
 		QString message = i18n("<p>This feature is primarily targetted at advanced users working on scripts or packages. Please proceed with caution.</p><p><b>All unsaved data in this workspace will be lost!</b> All data editors, and graphics windows will be closed.</p><p>Are you sure you want to proceed?</p>");
-		if (KMessageBox::warningContinueCancel(this, message, i18n("Restart R backend"), KGuiItem(i18n("Restart R backend"))) == KMessageBox::Continue) {
+		if (suppressModalDialogsForTesting() || (KMessageBox::warningContinueCancel(this, message, i18n("Restart R backend"), KGuiItem(i18n("Restart R backend"))) == KMessageBox::Continue)) {
 			bool forced = RInterface::instance()->backendIsDead();
 			while (!RInterface::instance()->backendIsDead() && !RInterface::instance()->backendIsIdle()) {
 				message = i18n("<p>One or more operations are pending.</p><p>If you have recently chosen to save your workspace, and you see this message, <b>your data may not be saved, yet!</b></p><p>How do you want to proceed?</p>");

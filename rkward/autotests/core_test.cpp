@@ -14,6 +14,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QRegularExpression>
 
 #include <KAboutData>
+#include <KActionCollection>
 
 #include "../debug.h"
 #include "../rkward.h"
@@ -34,9 +35,9 @@ void RKDebug (int, int, const char* fmt, ...) {
 }
 
 /** This test suite sets up a mostly complete application. That's a bit heavy, but arguably, a) modularity isn't ideal in RKWard, and b) many of the more interesting
- *  test involve passing commands to the R backend, and then verifying the expected state in the frontend. That alone requires a fairly extensive setup in the first place.
+ *  tests involve passing commands to the R backend, and then verifying the expected state in the frontend. That alone requires a fairly extensive setup, anyway.
  *
- *  Since starting can still take several seconds, the plan, for now, is to run most tests most individual tests inside this single test suite. */
+ *  Since starting can still take several seconds, the plan, for now, is to run most individual tests inside this single test suite. */
 class RKWardCoreTest: public QObject {
 	Q_OBJECT
 
@@ -69,8 +70,26 @@ class RKWardCoreTest: public QObject {
 	void cleanGlobalenv() {
 		RInterface::issueCommand(new RCommand("rm(list=ls(all.names=TRUE))", RCommand::User));
 	}
+
+	void waitForBackendStarted() {
+		QElapsedTimer t;
+		t.start();
+		while (!(RInterface::instance()->backendIsDead() || RInterface::instance()->backendIsIdle())) {
+			if (t.elapsed() > 20000) break;
+			qApp->sendPostedEvents();
+		}
+		if (RInterface::instance()->backendIsIdle()) {
+			qDebug("Backend startup completed");
+		} else {
+			qDebug("Backend startup failed. Listing contents of /tmp/rkward.rbackend");
+			QFile f(QDir::tempPath() + "/rkward.rbackend");
+			f.open(QIODevice::ReadOnly);
+			auto output = f.readAll();
+			qDebug("%s", output.data());
+		}
+	}
     
-    QPointer<RKWardMainWindow> main_win;
+	QPointer<RKWardMainWindow> main_win;
 private slots:
 	void init() {
 	}
@@ -87,22 +106,7 @@ private slots:
 		RKSessionVars::r_binary = R_EXECUTABLE;
 		main_win = new RKWardMainWindow();
 		main_win->testmode_suppress_dialogs = true;
-
-		QElapsedTimer t;
-		t.start();
-		while (!(RInterface::instance()->backendIsDead() || RInterface::instance()->backendIsIdle())) {
-			if (t.elapsed() > 20000) break;
-			qApp->sendPostedEvents();
-		}
-		if (RInterface::instance()->backendIsIdle()) {
-			qDebug("Startup completed");
-		} else {
-			qDebug("Startup failed. Listing contents of /tmp/rkward.rbackend");
-			QFile f(QDir::tempPath() + "/rkward.rbackend");
-			f.open(QIODevice::ReadOnly);
-			auto output = f.readAll();
-			qDebug("%s", output.data());
-		}
+		waitForBackendStarted();
 	}
 
 	void getIntVector() {
@@ -216,6 +220,28 @@ private slots:
 			RInterface::instance()->cancelAll();
 		});
 		waitForAllFinished();  // priority_command_done must remain in scope until done
+	}
+
+	void restartRBackend() {
+		auto restart_action = RKWardMainWindow::getMain()->actionCollection()->action("restart_r");
+		QVERIFY(restart_action != nullptr);
+		RInterface::issueCommand(new RCommand("x <- 1", RCommand::User));
+		waitForAllFinished();
+		QVERIFY(RObjectList::getGlobalEnv()->findObject("x"));
+
+		auto oldiface = RInterface::instance();
+		restart_action->trigger();
+		while (RInterface::instance() == oldiface) {  // action may be delayed until next event processing
+			qApp->processEvents();
+		}
+		waitForBackendStarted();
+
+		// backend should be clean after restart
+		QVERIFY(!RObjectList::getGlobalEnv()->findObject("x"));
+		// but of course it should also be functional...
+		RInterface::issueCommand(new RCommand("x <- 1", RCommand::User));
+		waitForAllFinished();
+		QVERIFY(RObjectList::getGlobalEnv()->findObject("x"));
 	}
 
 	void cleanupTestCase()
