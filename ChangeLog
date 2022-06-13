@@ -3,6 +3,7 @@
 - Fix problem handling rkward:// links from dialogs on some sytems
 - Allow to select search provider, when searching for a term online
 - Allow to restart R backend (e.g. for testing that scripts or packages will work in a fresh session)
+	- New KHamburgerMenu to restart the R backend, interrupt all commands and configure the R backend
 - Fix object name completion for (irregular) names starting with numbers or underscores
 - Crosstabs N to N: Simplify labels, add option to control table layout
 - Change mechanism for detection of object changes
