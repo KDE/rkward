@@ -122,7 +122,10 @@ public slots:
 		RK_TRACE (MISC);
 		QString symbol, package;
 		provider->currentHelpContext (&symbol, &package);
-		actions->setSelectedText (symbol + " " + package + " R");
+		menu->menuAction()->setEnabled(!symbol.isEmpty());
+		if (symbol.isEmpty()) return;
+
+		actions->setSelectedText(symbol + " " + package + " R");
 		menu->clear();
 
 		// Coerce WebshortcutsMenu to single level
