@@ -1,11 +1,11 @@
 Package: rkward
 Type: Package
-Title: Provides functions related to the RKWard GUI
+Title: RKWard GUI support package
 Description: This package contains functions which are useful in
         combination with the RKWard GUI. Many of these functions only
         needed for the internal communication between RKWard and R, but
         some are also useful in user scripts.
-Author: Thomas Friedrichsmeier and the RKWard Team
+Author: Thomas Friedrichsmeier, RKWard Team
 Maintainer: RKWard-devel mailing list <rkward-devel@kde.org>
 Depends: R (>= 2.9.0),methods
 URL: https://rkward.kde.org
@@ -14,9 +14,9 @@ License: GPL (>= 2)
 Encoding: UTF-8
 LazyLoad: yes
 Authors@R: c(person(given="Thomas", family="Friedrichsmeier",
-        email="thomas.friedrichsmeier@ruhr-uni-bochum.de",
-        role=c("aut")), person(given="the RKWard team",
-        email="rkward-devel@kde.org", role=c("cre","ctb")))
+        email="thomas.friedrichsmeier@kdemail.net",
+        role=c("aut")), person(family="the RKWard team",
+        email="rkward-devel@kde.org", role=c("cre","aut")))
 Version: 0.7.5
 Date: 2022-05-26
 RoxygenNote: 7.1.2
