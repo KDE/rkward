@@ -78,7 +78,7 @@ local({
     Encoding="UTF-8",
     LazyLoad="yes",
     URL="https://rkward.kde.org",
-    BugReports="https://rkward.kde.org/Bugs"
+    BugReports="https://rkward.kde.org/Bugs.html"
   )
 
   ## here we go
