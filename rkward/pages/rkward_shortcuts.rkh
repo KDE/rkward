@@ -4,6 +4,8 @@
 	<summary>
 	You can control RKWard in many situations without using a mouse device, using only the keyboard. The easiest way to find out about shortcuts of interest is to browse the menu. Shortcuts are listed next to their action in the menu.
 
+	Another possibility is to use the heads-up display (HUD). The HUD menu is a search field that allows fuzzy searching in the menus. The HUD was introduced in current KDE applications and is therefore not yet available in older RKWard versions. The HUD can be called up using Ctrl+Alt+i. This is particularly useful if you are looking for a function, the shortcut of a function or something in the menus, but do not want to go through each menu individually to find it.
+
 	Most shortcuts are configurable, using Settings->Configure Shortcuts. For technical reasons, only the shortcuts of those components will be listed that are active at that time. Hence, for example, if you want to edit the shortcuts for the data editor, first open a data editor, then select Settings->Configure Shortcuts.
 	Most shortcuts for the script editor are managed separately using Settings->Configure Editor->Shortcuts.
 
