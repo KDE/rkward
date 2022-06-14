@@ -31,7 +31,7 @@
 	The object browser provides function to select which types of object are shown (on the top). Hovering the mouse over an item will show some additional information on the symbol. Right-clicking on an item will show available actions. See <link href="rkward://page/rkward_workspace_browser"/> for details.
 	</section>
 	<section title="R Help" id="rhelp">
-	By default R help pages are shown as HTML, inside RKWard. You can invoke the help in the usual way by running e.g. "?print" or "help (print)" or "help.start ()" in the console. Additionally, there is a tool window to search your installed R help pages. This is accessible using a button located at the bottom of the window (next to the console button). To view a help page found using this tool, double click on it.
+	By default R help pages are shown as HTML, inside RKWard. You can invoke the help in the usual way by running e.g. "?print" or "help (print)" or "help.start ()" in the console. Additionally, there is a tool window to search your installed R help pages. This is accessible using a button located at the bottom of the window (next to the console button). To view a help page found using this tool, double-click on it.
 	</section>
 	<section title="Managing installed and loaded Libraries" id="library_management">
 	RKWard provides an advanced dialog to have installation, updating, and loading of packages. This is available from Settings->Manage R Packages.
@@ -44,7 +44,7 @@
 	Tool windows (e.g. the R Console) can be detached and re-attached using the arrow-icon in their window border.
 	</section>
 	<section title="Editing data" id="editing_data">
-	RKWard provides a built-in editor for data.frames. In fact, you can edit many data.frames at the same time, and even while running lengthy calculations. Still the data is stored as a regular data.frame in R. To explore the data editor, either choose File->New->Dataset, or right click a data.frame in the Workspace browser, and choose Edit from the menu.
+	RKWard provides a built-in editor for data.frames. In fact, you can edit many data.frames at the same time, and even while running lengthy calculations. Still the data is stored as a regular data.frame in R. To explore the data editor, either choose File->New->Dataset, or right-click a data.frame in the Workspace browser, and choose Edit from the menu.
 
 	Support for adding other types of data, esp. single vectors is planned, but not currently supported.
 	</section>
