@@ -17,10 +17,10 @@ To load / save / switch between output files, etc., refer to <link href="rkward:
 	<section title="Using the output in an office suite" id="integration_in_office_suite">
 The easiest way to get output into your office suite, is to first select the relevant portions, copy them (Edit->Copy), then paste them. This works well, at least in OpenOffice or LibreOffice. You can also drag and drop images from the output to an OpenOffice or LibreOffice document.
 
-Internally, RKWard output files are currently simply based on HTML. If you need access to the raw HTML and image files, a .rko-file is really just a zip'ed folder. You can unzip it using standard tools, or open it in RKWard, and retrieve the files from the ".rkward" of your home directory (location configurable in Settings->Configure RKWard->General).
+Internally, RKWard output files are currently simply based on HTML. If you need access to the raw HTML and image files, a .rko-file is just a zip'ed folder. You can unzip it using standard tools, or open it in RKWard, and retrieve the files from the ".rkward" of your home directory (location configurable in Settings->Configure RKWard->General).
 	</section>
 
 	<section title="RKWard output vs. R Markdown" id="rkward_output_vs_rmarkdown">
-RKWard also assists you in writing RMarkdown documents. In particular there is a powerful preview feature for .RMd scripts. While RMarkdown is great for writing interactive "reports", the RKWard Output is very easy to use for ad-hoc documentation while exploring your data.
+RKWard also assists you in writing RMarkdown (Rmd) documents. In particular there is a powerful preview feature for .Rmd scripts. While RMarkdown is great for writing interactive "reports", the RKWard Output is very easy to use for ad-hoc documentation while exploring your data.
 	</section>
 </document>
