@@ -7,7 +7,10 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <QObject>
 #include <QTest>
-#include <QWebEngineView>
+
+#include <KTextEditor/View>
+#include <KTextEditor/Editor>
+#include <KTextEditor/Document>
 
 #include "../windows/rkhtmlwindow.h"
 #include "../rkward.h"
@@ -29,8 +32,11 @@ private slots:
 
 	void dummyTest() {
 		//new RKWardMainWindow();
-		new QWebEngineView();
 		//new RKHTMLWindow(nullptr, RKHTMLWindow::HTMLHelpWindow);
+		auto editor = KTextEditor::Editor::instance();
+		auto doc = editor->createDocument(this);
+		auto view = doc->createView(nullptr);
+
 	}
 
 	void cleanupTestCase() {
