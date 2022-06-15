@@ -16,14 +16,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../windows/rkhtmlwindow.h"
 #include "../rkward.h" */
 
-void RKDebug (int, int, const char* fmt, ...) {
-	va_list ap;
-	va_start(ap, fmt);
-	vprintf(fmt, ap);
-	va_end(ap);
-	printf("\n");
-}
-
 class LinkTest: public QObject {
 	Q_OBJECT
 private slots:
