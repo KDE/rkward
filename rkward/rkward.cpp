@@ -112,7 +112,7 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 	RK_TRACE (APP);
 	RK_ASSERT (rkward_mainwin == 0);
 
-	Q_INIT_RESOURCE(resources);
+	//Q_INIT_RESOURCE(resources);
 	testmode_suppress_dialogs = false;
 	gui_rebuild_locked = true;
 	no_ask_save = true;
