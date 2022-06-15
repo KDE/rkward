@@ -7,6 +7,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <QObject>
 #include <QTest>
+#include <QWebEngineView>
 
 #include "../windows/rkhtmlwindow.h"
 #include "../rkward.h"
@@ -28,7 +29,8 @@ private slots:
 
 	void dummyTest() {
 		//new RKWardMainWindow();
-		new RKHTMLWindow(nullptr, RKHTMLWindow::HTMLHelpWindow);
+		new QWebEngineView();
+		//new RKHTMLWindow(nullptr, RKHTMLWindow::HTMLHelpWindow);
 	}
 
 	void cleanupTestCase() {
