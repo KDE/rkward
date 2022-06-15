@@ -18,7 +18,7 @@ rkward_executable_tests(
 )
 
 add_executable(linktest1 linktest.cpp)
-target_link_libraries(linktest1 PRIVATE rkward_lib Qt5::Test Qt5::WebEngineWidgets)
+target_link_libraries(linktest1 PUBLIC rkward_lib Qt5::Test Qt5::WebEngineWidgets)
 add_test(NAME rkward-linktest1 COMMAND linktest1)
 ecm_mark_as_test(linktest1)
 add_executable(linktest2 linktest.cpp)

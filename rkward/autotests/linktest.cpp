@@ -28,7 +28,7 @@ private slots:
 
 	void dummyTest() {
 		new RKWardMainWindow();
-		new RKHTMLWindow(nullptr, RKHTMLWindow::HTMLHelpWindow);
+		//new RKHTMLWindow(nullptr, RKHTMLWindow::HTMLHelpWindow);
 	}
 
 	void cleanupTestCase() {

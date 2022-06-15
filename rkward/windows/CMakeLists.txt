@@ -27,7 +27,7 @@ SET(windows_STAT_SRCS
 
 ADD_LIBRARY(windows STATIC ${windows_STAT_SRCS})
 IF(NO_QT_WEBENGINE)
-TARGET_LINK_LIBRARIES(windows Qt5::Widgets Qt5::Xml Qt5::PrintSupport Qt5::WebKitWidgets KF5::WebKit KF5::TextEditor KF5::Notifications KF5::WindowSystem KF5::KIOFileWidgets)
+TARGET_LINK_LIBRARIES(windows Qt5::Widgets Qt5::Xml Qt5::PrintSupport Qt5::WebKitWidgets KF5::WebKit KF5::TextEditor KF5::Notifications KF5::WindowSystem KF5::KIOFileWidgets rkward_lib)
 ELSE(NO_QT_WEBENGINE)
-TARGET_LINK_LIBRARIES(windows Qt5::Widgets Qt5::Xml Qt5::PrintSupport Qt5::WebEngineWidgets KF5::TextEditor KF5::Notifications KF5::WindowSystem KF5::KIOFileWidgets)
+TARGET_LINK_LIBRARIES(windows Qt5::Widgets Qt5::Xml Qt5::PrintSupport Qt5::WebEngineWidgets KF5::TextEditor KF5::Notifications KF5::WindowSystem KF5::KIOFileWidgets rkward_lib)
 ENDIF(NO_QT_WEBENGINE)
