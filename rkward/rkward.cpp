@@ -265,7 +265,7 @@ void RKWardMainWindow::doPostInit () {
 		if (RKSettingsModuleGeneral::workplaceSaveMode () == RKSettingsModuleGeneral::SaveWorkplaceWithSession) {
 			RKWorkplace::mainWorkplace ()->restoreWorkplace (RKSettingsModuleGeneral::getSavedWorkplace (KSharedConfig::openConfig ().data ()).split ('\n'));
 		}
-		if (RKSettingsModuleGeneral::showHelpOnStartup ()) toplevel_actions->showRKWardHelp ();
+		if (RKSettingsModuleGeneral::showHelpOnStartup() && !testmode_suppress_dialogs) toplevel_actions->showRKWardHelp ();
 	}
 	setNoAskSave (false);
 
