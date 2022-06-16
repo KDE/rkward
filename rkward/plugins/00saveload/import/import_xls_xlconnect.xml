@@ -13,7 +13,7 @@
 	<dialog label="Import Microsoft EXCEL sheet">
 		<tabbook>
 			<tab id="tab_general" label="General">
-				<browser type="file" id="file" filter="*.xls *.xlsx" label="File name" />
+				<browser type="file" id="file" filter="*.xls *.xlsx" label="File name" allow_urls="false" />
 				<input label="Index or &quot;name&quot; of sheet" id="sheet" initial="1" size="small" />
 				<frame>
 					<checkbox id="header" checked="true" label="Use first row as column names"/>

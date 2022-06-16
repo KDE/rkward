@@ -1,3 +1,4 @@
+- Fixed: Excel import plugin failed to accept file name
 - Add option to offer code completion/hinting in all file types not just R scripts (e.g. in .Rmd files)
 - Fix zooming help/output pages with Ctrl+scroll wheel, when compiled with QWebEngine
 - Fix problem handling rkward:// links from dialogs on some sytems
