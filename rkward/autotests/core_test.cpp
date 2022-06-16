@@ -195,7 +195,7 @@ private slots:
 		runCommandAsync(new RCommand("message(\"222\\n\")", RCommand::App), chain, callback);
 		runCommandAsync(new RCommand("stop(\"333\\n\")", RCommand::App), chain2, callback);
 		runCommandAsync(new RCommand("warning(\"444\\n\")", RCommand::User), nullptr, callback);
-		runCommandAsync(new RCommand("system(\"echo 555\")", RCommand::App), chain, callback);
+		runCommandAsync(new RCommand("if (.Platform$OS.type == \"unix\") system(\"echo 555\") else invisible(system(\"cmd /c echo 555\"))", RCommand::App), chain, callback);
 		RInterface::closeChain(chain);
 		RInterface::closeChain(chain2);
 		waitForAllFinished();

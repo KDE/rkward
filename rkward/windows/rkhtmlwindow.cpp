@@ -219,7 +219,7 @@ protected:
 #ifndef NO_QT_WEBENGINE
 		// sigh: acceptNavigationRequest() does  not get called on the new page...
 		QMetaObject::Connection * const connection = new QMetaObject::Connection;
-		*connection = connect (ret, &RKWebPage::loadStarted, [ret, connection]() {
+		*connection = connect (ret, &RKWebPage::loadStarted, [ret, connection, this]() {  // capturing "this" makes MSVC happy
 			QObject::disconnect(*connection);
 			delete connection;
 			ret->acceptNavigationRequest (ret->url (), QWebEnginePage::NavigationTypeLinkClicked, true);
