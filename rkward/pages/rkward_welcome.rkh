@@ -34,7 +34,10 @@ SPDX-License-Identifier: GPL-2.0-or-later
 	<li><link href="rkward://page/rkward_for_r_users" /></li>
 	<li><link href="rkward://page/rkward_addons" /></li>
 	<li><link href="rkward://page/rkward_trouble_shooting" /></li>
+	<li><link href="rkward://page/rkward_shortcuts"/></li>
 	<li>External links: <link href="https://rkward.kde.org/">project homepage</link></li>
+	<li><link href="rkward://page/rkward_Rmarkdown_cheatsheet">Rmarkdown cheat sheet</link></li>
+	<li><link href="rkward://page/rkward_VI_cheatsheet">VI cheat sheet</link></li>
 		</ul>
 	</section>
 </document>

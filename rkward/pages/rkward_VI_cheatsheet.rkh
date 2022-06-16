@@ -1,0 +1,695 @@
+<!DOCTYPE rkhelp>
+<document>
+	<title>VI mode::Cheat Sheet</title>
+	<summary>
+	RWard supports VI mode using <link href="https://kate-editor.org/kate-vi-mode/">Kate editor technology</link>. This allows Vim-like edits to be performed in RKWard script windows.
+	</summary>
+
+	<section id="VIcommands" title="Supported normal/visual mode commands">
+	<table>
+		<thead>
+		<tr>
+			<th>Key</th>
+			<th>Description</th>
+			<th></th>
+			<th>Key</th>
+			<th>Description</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<td>a</td>
+			<td>Enter Insert Mode and append</td>
+			<td></td>
+			<td>&lt;</td>
+			<td>Unindent lines</td>
+		</tr>
+		<tr>
+			<td>A</td>
+			<td>Enter Insert Mode and append to EOL</td>
+			<td></td>
+			<td>&lt;c-f&gt;</td>
+			<td>Scroll page down</td>
+		</tr>
+		<tr>
+			<td>i</td>
+			<td>Enter Insert Mode</td>
+			<td></td>
+			<td>&lt;pagedown&gt;</td>
+			<td>Scroll page down</td>
+		</tr>
+		<tr>
+			<td>I</td>
+			<td>Insert before first non-blank char in line</td>
+			<td></td>
+			<td>&lt;c-b&gt;</td>
+			<td>Scroll page up</td>
+		</tr>
+		<tr>
+			<td>v</td>
+			<td>Enter Visual Mode</td>
+			<td></td>
+			<td>&lt;pageup&gt;</td>
+			<td>Scroll page up</td>
+		</tr>
+		<tr>
+			<td>V</td>
+			<td>Enter Visual Line Mode</td>
+			<td></td>
+			<td>&lt;c-u&gt;</td>
+			<td>Scroll half page up</td>
+		</tr>
+		<tr>
+			<td>&lt;c-v&gt;</td>
+			<td>Enter Visual Block Mode</td>
+			<td></td>
+			<td>&lt;c-d&gt;</td>
+			<td>Scroll half page down</td>
+		</tr>
+		<tr>
+			<td>gv</td>
+			<td>Re-select Visual</td>
+			<td></td>
+			<td>zz</td>
+			<td>Centre view on cursor</td>
+		</tr>
+		<tr>
+			<td>o</td>
+			<td>Open new line under</td>
+			<td></td>
+			<td>ga</td>
+			<td>Print character code</td>
+		</tr>
+		<tr>
+			<td>O</td>
+			<td>Open new line over</td>
+			<td></td>
+			<td>.</td>
+			<td>Repeat last change</td>
+		</tr>
+		<tr>
+			<td>J</td>
+			<td>Join lines</td>
+			<td></td>
+			<td>==</td>
+			<td>Align line</td>
+		</tr>
+		<tr>
+			<td>c</td>
+			<td>Change</td>
+			<td></td>
+			<td>=</td>
+			<td>Align lines</td>
+		</tr>
+		<tr>
+			<td>C</td>
+			<td>Change to EOL</td>
+			<td></td>
+			<td>~</td>
+			<td>Change case</td>
+		</tr>
+		<tr>
+			<td>cc</td>
+			<td>Change line</td>
+			<td></td>
+			<td>&lt;c-a&gt;</td>
+			<td>Add to number</td>
+		</tr>
+		<tr>
+			<td>s</td>
+			<td>Substitute char</td>
+			<td></td>
+			<td>&lt;c-x&gt;</td>
+			<td>Subtract from number</td>
+		</tr>
+		<tr>
+			<td>S</td>
+			<td>Substitute line</td>
+			<td></td>
+			<td>&lt;c-o&gt;</td>
+			<td>Go to prev jump</td>
+		</tr>
+		<tr>
+			<td>dd</td>
+			<td>Delete line</td>
+			<td></td>
+			<td>&lt;c-i&gt;</td>
+			<td>Go to next jump</td>
+		</tr>
+		<tr>
+			<td>d</td>
+			<td>Delete</td>
+			<td></td>
+			<td>&lt;c-w&gt;h</td>
+			<td>Switch to left view</td>
+		</tr>
+		<tr>
+			<td>D</td>
+			<td>Delete to EOL</td>
+			<td></td>
+			<td>&lt;c-w&gt;&lt;c-h&gt;</td>
+			<td>Switch to left view</td>
+		</tr>
+		<tr>
+			<td>x</td>
+			<td>Delete char</td>
+			<td></td>
+			<td>&lt;c-w&gt;&lt;left&gt;</td>
+			<td>Switch to left view</td>
+		</tr>
+		<tr>
+			<td>X</td>
+			<td>Delete char backward</td>
+			<td></td>
+			<td>&lt;c-w&gt;j</td>
+			<td>Switch to down view</td>
+		</tr>
+		<tr>
+			<td>gu</td>
+			<td>Make lowercase</td>
+			<td></td>
+			<td>&lt;c-w&gt;&lt;c-j&gt;</td>
+			<td>Switch to down view</td>
+		</tr>
+		<tr>
+			<td>guu</td>
+			<td>Make lowercase line</td>
+			<td></td>
+			<td>&lt;c-w&gt;&lt;down&gt;</td>
+			<td>Switch to down view</td>
+		</tr>
+		<tr>
+			<td>gU</td>
+			<td>Make uppercase</td>
+			<td></td>
+			<td>&lt;c-w&gt;k</td>
+			<td>Switch to up view</td>
+		</tr>
+		<tr>
+			<td>gUU</td>
+			<td>Make uppercase line</td>
+			<td></td>
+			<td>&lt;c-w&gt;&lt;c-k&gt;</td>
+			<td>Switch to up view</td>
+		</tr>
+		<tr>
+			<td>y</td>
+			<td>Yank</td>
+			<td></td>
+			<td>&lt;c-w&gt;&lt;up&gt;</td>
+			<td>Switch to up view</td>
+		</tr>
+		<tr>
+			<td>yy</td>
+			<td>Yank line</td>
+			<td></td>
+			<td>&lt;c-w&gt;l</td>
+			<td>Switch to right view</td>
+		</tr>
+		<tr>
+			<td>Y</td>
+			<td>Yank to EOL</td>
+			<td></td>
+			<td>&lt;c-w&gt;&lt;c-l&gt;</td>
+			<td>Switch to right view</td>
+		</tr>
+		<tr>
+			<td>p</td>
+			<td>Paste</td>
+			<td></td>
+			<td>&lt;c-w&gt;&lt;right&gt;</td>
+			<td>Switch to right view</td>
+		</tr>
+		<tr>
+			<td>P</td>
+			<td>Paste before</td>
+			<td></td>
+			<td>&lt;c-w&gt;w</td>
+			<td>Switch to next view</td>
+		</tr>
+		<tr>
+			<td>r.</td>
+			<td>Replace character</td>
+			<td></td>
+			<td>&lt;c-w&gt;&lt;c-w&gt;</td>
+			<td>Switch to next view</td>
+		</tr>
+		<tr>
+			<td>R</td>
+			<td>Enter replace mode</td>
+			<td></td>
+			<td>&lt;c-w&gt;s</td>
+			<td>Split horizontally</td>
+		</tr>
+		<tr>
+			<td>:</td>
+			<td>Switch to command line</td>
+			<td></td>
+			<td>&lt;c-w&gt;S</td>
+			<td>Split horizontally</td>
+		</tr>
+		<tr>
+			<td>/</td>
+			<td>Search</td>
+			<td></td>
+			<td>&lt;c-w&gt;&lt;c-s&gt;</td>
+			<td>Split horizontally</td>
+		</tr>
+		<tr>
+			<td>u</td>
+			<td>Undo</td>
+			<td></td>
+			<td>&lt;c-w&gt;v</td>
+			<td>Split vertically</td>
+		</tr>
+		<tr>
+			<td>&lt;c-r&gt;</td>
+			<td>Redo</td>
+			<td></td>
+			<td>&lt;c-w&gt;&lt;c-v&gt;</td>
+			<td>Split vertically</td>
+		</tr>
+		<tr>
+			<td>U</td>
+			<td>Redo</td>
+			<td></td>
+			<td>gt</td>
+			<td>Switch to next tab</td>
+		</tr>
+		<tr>
+			<td>m.</td>
+			<td>Set mark</td>
+			<td></td>
+			<td>gT</td>
+			<td>Switch to prev tab</td>
+		</tr>
+		<tr>
+			<td>»</td>
+			<td>Indent line</td>
+			<td></td>
+			<td>gqq</td>
+			<td>Format line</td>
+		</tr>
+		<tr>
+			<td>«</td>
+			<td>Unindent line</td>
+			<td></td>
+			<td>gq</td>
+			<td>Format lines</td>
+		</tr>
+		<tr>
+			<td>&gt;</td>
+			<td>Indent lines</td>
+			<td></td>
+			<td>q. / q</td>
+			<td>Begin/ finish recording macro using the named macro register.</td>
+		</tr>
+		</tbody>
+		</table>
+	</section>
+
+	<section id="motions" title="Supported motions">
+	<table>
+	<thead>
+	<tr>
+		<th>Key</th>
+		<th>Description</th>
+		<th></th>
+		<th>Key</th>
+		<th>Description</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>h</td>
+		<td>Left</td>
+		<td></td>
+		<td>gg</td>
+		<td>To first line</td>
+	</tr>
+	<tr>
+		<td>&lt;left&gt;</td>
+		<td>Left</td>
+		<td></td>
+		<td>G</td>
+		<td>To last line</td>
+	</tr>
+	<tr>
+		<td>&lt;backspace&gt;</td>
+		<td>Left</td>
+		<td></td>
+		<td>w</td>
+		<td>Word forward</td>
+	</tr>
+	<tr>
+		<td>j</td>
+		<td>Down</td>
+		<td></td>
+		<td>W</td>
+		<td>WORD forward</td>
+	</tr>
+	<tr>
+		<td>&lt;down&gt;</td>
+		<td>Down</td>
+		<td></td>
+		<td>b</td>
+		<td>Word backward</td>
+	</tr>
+	<tr>
+		<td>&lt;enter&gt;</td>
+		<td>Down to first non blank</td>
+		<td></td>
+		<td>B</td>
+		<td>WORD backward</td>
+	</tr>
+	<tr>
+		<td>k</td>
+		<td>Up</td>
+		<td></td>
+		<td>e</td>
+		<td>To end of word</td>
+	</tr>
+	<tr>
+		<td>&lt;up&gt;</td>
+		<td>Up</td>
+		<td></td>
+		<td>E</td>
+		<td>To end of WORD</td>
+	</tr>
+	<tr>
+		<td>–</td>
+		<td>Up to first non blank</td>
+		<td></td>
+		<td>ge</td>
+		<td>To end of prev word</td>
+	</tr>
+	<tr>
+		<td>l</td>
+		<td>Right</td>
+		<td></td>
+		<td>gE</td>
+		<td>To end of prev WORD</td>
+	</tr>
+	<tr>
+		<td>&lt;right&gt;</td>
+		<td>Right</td>
+		<td></td>
+		<td>%</td>
+		<td>To matching item</td>
+	</tr>
+	<tr>
+		<td>&lt;space&gt;</td>
+		<td>Right</td>
+		<td></td>
+		<td>`[a-zA-Z&gt;&lt;]</td>
+		<td>To mark</td>
+	</tr>
+	<tr>
+		<td>$</td>
+		<td>To EOL</td>
+		<td></td>
+		<td>‘[a-zA-Z&gt;&lt;]</td>
+		<td>To mark line</td>
+	</tr>
+	<tr>
+		<td>&lt;end&gt;</td>
+		<td>To EOL</td>
+		<td></td>
+		<td>[[</td>
+		<td>To previous brace block start</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>To 0 column</td>
+		<td></td>
+		<td>]]</td>
+		<td>To next brace block start</td>
+	</tr>
+	<tr>
+		<td>&lt;home&gt;</td>
+		<td>To 0 column</td>
+		<td></td>
+		<td>[]</td>
+		<td>To previous brace block end</td>
+	</tr>
+	<tr>
+		<td>^</td>
+		<td>To first character of line</td>
+		<td></td>
+		<td>][</td>
+		<td>To next brace block end</td>
+	</tr>
+	<tr>
+		<td>f.</td>
+		<td>Find char</td>
+		<td></td>
+		<td>*</td>
+		<td>To next occurrence of word under cursor</td>
+	</tr>
+	<tr>
+		<td>F.</td>
+		<td>Find char backward</td>
+		<td></td>
+		<td>#</td>
+		<td>To prev occurrence of word under cursor</td>
+	</tr>
+	<tr>
+		<td>t.</td>
+		<td>To char</td>
+		<td></td>
+		<td>H</td>
+		<td>To first line of window</td>
+	</tr>
+	<tr>
+		<td>T.</td>
+		<td>To char backward</td>
+		<td></td>
+		<td>M</td>
+		<td>To middle line of window</td>
+	</tr>
+	<tr>
+		<td>;</td>
+		<td>Repeat last t. or f. command</td>
+		<td></td>
+		<td>L</td>
+		<td>To last line of window</td>
+	</tr>
+	<tr>
+		<td>,</td>
+		<td>Repeat last t. or f. command</td>
+		<td></td>
+		<td>gj</td>
+		<td>To next visual line</td>
+	</tr>
+	<tr>
+		<td>n</td>
+		<td>Find next</td>
+		<td></td>
+		<td>gk</td>
+		<td>To prev visual line</td>
+	</tr>
+	<tr>
+		<td>N</td>
+		<td>Find prev</td>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
+	</tbody>
+	</table>
+	</section>
+
+	<section id="textobjects" title="Supported text objects">
+	<table>
+		<thead>
+		<tr>
+			<th>Key</th>
+			<th>Description</th>
+			<th></th>
+			<th>Key</th>
+			<th>Description</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<td>iw</td>
+			<td>Inner word</td>
+			<td></td>
+			<td>i{</td>
+			<td>Inner curly bracket</td>
+		</tr>
+		<tr>
+			<td>aw</td>
+			<td>A word</td>
+			<td></td>
+			<td>a)</td>
+			<td>A paren</td>
+		</tr>
+		<tr>
+			<td>iW</td>
+			<td>Inner WORD</td>
+			<td></td>
+			<td>a(</td>
+			<td>A paren</td>
+		</tr>
+		<tr>
+			<td>aW</td>
+			<td>A WORD</td>
+			<td></td>
+			<td>aB</td>
+			<td>A curly bracket</td>
+		</tr>
+		<tr>
+			<td>i"</td>
+			<td>Inner double quote</td>
+			<td></td>
+			<td>a}</td>
+			<td>A curly bracket</td>
+		</tr>
+		<tr>
+			<td>a"</td>
+			<td>A double quote</td>
+			<td></td>
+			<td>a{</td>
+			<td>A curly bracket</td>
+		</tr>
+		<tr>
+			<td>i’</td>
+			<td>Inner single quote</td>
+			<td></td>
+			<td>i&lt;</td>
+			<td>Inner inequality sign</td>
+		</tr>
+		<tr>
+			<td>a’</td>
+			<td>A single quote</td>
+			<td></td>
+			<td>i&gt;</td>
+			<td>Inner inequality sign</td>
+		</tr>
+		<tr>
+			<td>i`</td>
+			<td>Inner back quote</td>
+			<td></td>
+			<td>a&lt;</td>
+			<td>A inequality sign</td>
+		</tr>
+		<tr>
+			<td>a`</td>
+			<td>A back quote</td>
+			<td></td>
+			<td>a&gt;</td>
+			<td>A inequality sign</td>
+		</tr>
+		<tr>
+			<td>ib</td>
+			<td>Inner paren</td>
+			<td></td>
+			<td>i[</td>
+			<td>Inner bracket</td>
+		</tr>
+		<tr>
+			<td>i)</td>
+			<td>Inner paren</td>
+			<td></td>
+			<td>I]</td>
+			<td>Inner bracket</td>
+		</tr>
+		<tr>
+			<td>i(</td>
+			<td>Inner paren</td>
+			<td></td>
+			<td>a[</td>
+			<td>A bracket</td>
+		</tr>
+		<tr>
+			<td>ab</td>
+			<td>A paren</td>
+			<td></td>
+			<td>a]</td>
+			<td>A bracket</td>
+		</tr>
+		<tr>
+			<td>iB</td>
+			<td>Inner curly bracket</td>
+			<td></td>
+			<td>i,</td>
+			<td>Inner comma</td>
+		</tr>
+		<tr>
+			<td>o}</td>
+			<td>Inner curly bracket</td>
+			<td></td>
+			<td>a,</td>
+			<td>A comma</td>
+		</tr>
+		</tbody>
+		</table>
+	</section>
+
+	<section id="insertmodecommands" title="Supported insert mode commands">
+	<table>
+		<thead>
+		<tr>
+			<th>Key</th>
+			<th>Description</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<td>&lt;c-d&gt;</td>
+			<td>Unindent</td>
+		</tr>
+		<tr>
+			<td>&lt;c-t&gt;</td>
+			<td>Indent</td>
+		</tr>
+		<tr>
+			<td>&lt;c-e&gt;</td>
+			<td>Insert from below</td>
+		</tr>
+		<tr>
+			<td>&lt;c-y&gt;</td>
+			<td>Insert from above</td>
+		</tr>
+		<tr>
+			<td>&lt;c-w&gt;</td>
+			<td>Delete word</td>
+		</tr>
+		<tr>
+			<td>&lt;c-r&gt;.</td>
+			<td>Insert content of register</td>
+		</tr>
+		<tr>
+			<td>&lt;c-o&gt;</td>
+			<td>Switch to normal mode for one command</td>
+		</tr>
+		<tr>
+			<td>&lt;c-a&gt;</td>
+			<td>Increase number under cursor</td>
+		</tr>
+		<tr>
+			<td>&lt;c-x&gt;</td>
+			<td>Decrease number under cursor</td>
+		</tr>
+		</tbody>
+		</table>
+	</section>
+
+	<section id="insertmodecommands" title="The Comma Text Object">
+
+	This is something that I have been missing in Vim. The comma text object makes it easy to modify parameter lists in C-like languages and other comma separated lists. It is basically the area between two commas or between a comma and a bracket. In the line shown in the illustration to the right, the three ranges this text object can span are highlighted in grey.
+
+	int f(<span style="background-color: #D3D3D3">int arg1,</span><span style="background-color: #D3D3D3"> double arg2</span>, <span style="background-color: #D3D3D3">char arg3</span>);
+
+	comma to Comma text object ranges. If the cursor is over, say, “arg2”, pressing c i , (“change inner comma”) would delete “double arg2” and place the cursor between the two commas in insert mode. A very convenient way to change a function’s parameters.
+
+	</section>
+
+	<related>
+		<ul>
+			<li><link href="rkward://page/rkward_for_r_users"/></li>
+			<li><link href="rkward://page/rkward_shortcuts"/></li>
+		</ul>
+	</related>
+</document>
