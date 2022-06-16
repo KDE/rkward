@@ -623,13 +623,16 @@ RKEditor *RKWorkplace::editObject (RObject *object) {
 		}
 	}
 
+	bool activate = window_style_override != "preview";
 	RKEditor *ed = 0;
 	QList<RKEditor*> existing_editors = object->editors ();
+	RKMDIWindow *nw = getNamedWindow(window_name_override);
 	for (int i = 0; i < existing_editors.size (); ++i) {
 		RObject *eobj = existing_editors[i]->getObject ();
 		if (eobj == iobj) {
-			if (view ()->windowInActivePane (existing_editors[i])) {
-				ed = existing_editors[i];
+			auto candidate = existing_editors[i];
+			if (view()->windowInActivePane(candidate) || (nw == candidate)) {
+				ed = candidate;
 				break;
 			}
 		}
@@ -650,7 +653,7 @@ RKEditor *RKWorkplace::editObject (RObject *object) {
 		addWindow (ed);
 	}
 
-	ed->activate ();
+	if (activate) ed->activate ();
 	return ed;
 }
 
