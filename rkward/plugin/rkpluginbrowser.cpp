@@ -92,7 +92,7 @@ void RKPluginBrowser::textChanged (RKComponentPropertyBase *) {
 	QUrl url = QUrl::fromUserInput (selection->value ().toString (), QDir::currentPath (), QUrl::AssumeLocalFile);
 	if (!url.isValid ()) url = QUrl (selector->getLocation ());
 	QString urlstring = only_local ? url.url (QUrl::PreferLocalFile) : url.url ();
-	if (url.url () != selection->value ().toString ()) {
+	if (urlstring != selection->value ().toString ()) {
 		// NOTE: We refuse to accept relative urls
 		selection->setValue (urlstring);
 	}
