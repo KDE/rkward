@@ -568,7 +568,7 @@ GenericRRequestResult RInterface::processPlainGenericRequest(const QStringList &
 		QDir::setCurrent (calllist.value (1));
 		emit backendWorkdirChanged();
 	} else if (call == "highlightRCode") {
-		return GenericRRequestResult(RKCommandHighlighter::commandToHTML(calllist.value(1)));
+		return GenericRRequestResult(RKCommandHighlighter::commandToHTML(calllist.mid(1).join('\n')));
 	} else if (call == "quit") {
 		RKWardMainWindow::getMain ()->close ();
 		// if we're still alive, quitting was canceled

@@ -1,3 +1,4 @@
+- Fixed: Expresssions spanning several lines would not be shown, correctly, in "R Console"-mode script preview
 - Fix focus problems, and better efficiency for data previews (as used in data import dialogs)
 - Fixed: Excel import plugin failed to accept file name
 - Add option to offer code completion/hinting in all file types not just R scripts (e.g. in .Rmd files)
