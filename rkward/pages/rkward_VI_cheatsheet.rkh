@@ -3,6 +3,8 @@
 	<title>VI mode::Cheat Sheet</title>
 	<summary>
 	RWard supports VI mode using <link href="https://kate-editor.org/kate-vi-mode/">Kate editor technology</link>. This allows Vim-like edits to be performed in RKWard script windows.
+
+	To enter the VI mode press Ctrl + Alt + V.
 	</summary>
 
 	<section id="VIcommands" title="Supported normal/visual mode commands">
