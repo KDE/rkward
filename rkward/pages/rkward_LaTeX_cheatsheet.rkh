@@ -1,0 +1,22 @@
+<!DOCTYPE rkhelp>
+<document>
+	<title>LaTeX::Cheat Sheet</title>
+	<summary>
+	LaTeX Style Cheat Sheet
+	</summary>
+
+	<section id="StatisticalSymbols" title="Statistical Symbols">
+
+	</section>
+
+	<section id="Distributions" title="Statistical Distributions">
+
+	</section>
+
+	<related>
+		<ul>
+			<li><link href="rkward://page/rkward_for_r_users"/></li>
+			<li><link href="rkward://page/rkward_shortcuts"/></li>
+		</ul>
+	</related>
+</document>

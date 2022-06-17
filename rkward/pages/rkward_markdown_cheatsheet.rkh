@@ -1,0 +1,147 @@
+<!DOCTYPE rkhelp>
+<document>
+	<title>markdown::Cheat Sheet</title>
+	<summary>
+	Markdown Cheat Sheet
+	</summary>
+
+	<section id="BasicMarkdownSyntax" title="Basic Syntax">
+            <table>
+        <thead>
+          <tr>
+            <th>Element</th>
+            <th>Markdown Syntax</th>
+            <th>Alternative  Expression</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Heading</td>
+            <td># H1<br>## H2<br>### H3</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Bold</td>
+            <td>**bold text**</td>
+            <td>__bold text__</td>
+          </tr>
+          <tr>
+            <td>Italic</td>
+            <td>*italicized text*</td>
+            <td>_italicized text_</td>
+          </tr>
+          <tr>
+            <td>Blockquote</td>
+            <td>&gt; blockquote</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Ordered List</td>
+            <td>1. First item<br>2. Second item<br>3. Third item<br>       </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Unordered List</td>
+            <td> - First item<br> - Second item<br> - Third item<br>                </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Code</td>
+            <td>`code`</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Horizontal Rule</td>
+            <td>---</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Link</td>
+            <td>[title](https://www.example.com)</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Image</td>
+            <td>![alt text](image.jpg)</td>
+            <td></td>
+          </tr>
+        </tbody>
+        </table>
+	</section>
+
+	<section id="Distributions" title="Statistical Distributions">
+	<table>
+<thead>
+  <tr>
+    <th>Distribution</th>
+    <th>LaTeX</th>
+    <th>Result</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>Bernoulli&nbsp;&nbsp;</td>
+    <td>\Bernoulli&nbsp;&nbsp;</td>
+    <td>Bern </td>
+  </tr>
+  <tr>
+    <td>Binomial&nbsp;&nbsp;</td>
+    <td>\Binomial&nbsp;&nbsp;</td>
+    <td>Bin </td>
+  </tr>
+  <tr>
+    <td>Geometric&nbsp;&nbsp;</td>
+    <td>\Geometric&nbsp;&nbsp;</td>
+    <td>Geom </td>
+  </tr>
+  <tr>
+    <td>Hypergeometric&nbsp;&nbsp;</td>
+    <td>\Hypergeometric </td>
+    <td> H </td>
+  </tr>
+  <tr>
+    <td>Negative Binomial&nbsp;&nbsp;</td>
+    <td>\NegBin&nbsp;&nbsp;</td>
+    <td>N egBin </td>
+  </tr>
+  <tr>
+    <td>Poisson&nbsp;&nbsp;</td>
+    <td>\Poisson&nbsp;&nbsp;</td>
+    <td>P </td>
+  </tr>
+  <tr>
+    <td>Uniform </td>
+    <td>\Uniform </td>
+    <td>U </td>
+  </tr>
+  <tr>
+    <td>Exponential </td>
+    <td>\Exponential </td>
+    <td>Exp </td>
+  </tr>
+  <tr>
+    <td>Gamma </td>
+    <td>\GAMMA </td>
+    <td>GAM </td>
+  </tr>
+  <tr>
+    <td>Chi-square </td>
+    <td>\chi∧2 </td>
+    <td>χ2 </td>
+  </tr>
+  <tr>
+    <td>Normal </td>
+    <td>\Normal </td>
+    <td>N </td>
+  </tr>
+</tbody>
+</table>
+	</section>
+
+	<related>
+		<ul>
+			<li><link href="rkward://page/rkward_for_r_users"/></li>
+			<li><link href="rkward://page/rkward_shortcuts"/></li>
+		</ul>
+	</related>
+</document>
