@@ -902,7 +902,11 @@ void doError (const QString &callstring) {
 	if (RKRBackend::repl_status.interrupted) {
 		// it is unlikely, but possible, that an interrupt signal was received, but the current command failed for some other reason, before processing was actually interrupted. In this case, R_interrupts_pending if not yet cleared.
 		// NOTE: if R_interrupts_pending stops being exported one day, we might be able to use R_CheckUserInterrupt() inside an R_ToplevelExec() to find out, whether an interrupt was still pending.
+#ifdef Q_OS_WIN
+		if (!UserBreak) {
+#else
 		if (!R_interrupts_pending) {
+#endif
 			RKRBackend::repl_status.interrupted = false;
 			if (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::ReplIterationKilled) {	// was interrupted only to step out of the repl iteration
 				QMutexLocker lock (&(RKRBackend::this_pointer->all_current_commands_mutex));
