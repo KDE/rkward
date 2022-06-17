@@ -59,6 +59,6 @@ function rangeCommand(command, def) {
  </item>
  <item>
   <match>Code_Block</match>
-  <fillin>${rangeCommand("\n```{r}%%1```\n", "\nx &lt;- 1\n")}</fillin>
+  <fillin>${rangeCommand("\n```r%%1```\n", "\nx &lt;- 1\n")}</fillin>
  </item>
 </snippets>
