@@ -862,10 +862,10 @@ void RKCommandEditorWindow::doRenderPreview () {
 		} else {
 			// If the file is already saved, save the preview input as a temp file in the same folder.
 			// esp. .Rmd files might try to include other files by relative path.
-			QString tempfiletemplate = m_doc->url ().toLocalFile ();
-			tempfiletemplate.append ("_XXXXXX.rkward_preview.R");
-			if (mode == RMarkdownPreview) tempfiletemplate.append ("md");
-			preview_input_file = new QTemporaryFile (tempfiletemplate);
+			QString tempfiletemplate = m_doc->url().adjusted(QUrl::RemoveFilename).toLocalFile();
+			tempfiletemplate.append(".tmp_XXXXXX.rkward_preview.R");
+			if (mode == RMarkdownPreview) tempfiletemplate.append("md");
+			preview_input_file = new QTemporaryFile(tempfiletemplate);
 		}
 	}
 
