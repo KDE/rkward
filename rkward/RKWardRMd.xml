@@ -69,20 +69,24 @@ function rangeCommand(command, def) {
   <fillin>${rangeCommand("\n$H~2~O$\n")}</fillin>
  </item>
  <item>
-  <match>Endasch</match>
-  <fillin>${rangeCommand("\n--\n")}</fillin>
+  <match>En dash</match>
+  <fillin>--</fillin>
  </item>
  <item>
-  <match>Emdasch</match>
-  <fillin>${rangeCommand("\n---\n")}</fillin>
+  <match>Em dash</match>
+  <fillin>---</fillin>
  </item>
  <item>
-  <match>Equantion</match>
-  <fillin>${rangeCommand("\n$e^" + braces("i\\pi")+ " + 1$\n")}</fillin>
+  <match>Equation (inline)</match>
+  <fillin>
+$e^${braces("i\\pi")} + 1$
+</fillin>
  </item>
  <item>
-  <match>Equantion Block</match>
-  <fillin>${rangeCommand("\n$$e^ " + braces("i\\pi")+ " + 1$$\n")}</fillin>
+  <match>Equation (block)</match>
+  <fillin>
+$$e^${braces("i\\pi")} + 1$$
+</fillin>
  </item>
  <item>
   <match>Strikethrough</match>
@@ -94,18 +98,14 @@ function rangeCommand(command, def) {
  </item>
  <item>
   <match>rmarkdown::render()</match>
-  <fillin>${rangeCommand("rmarkdown::render()")}</fillin>
+  <fillin>rmarkdown::render()</fillin>
  </item>
  <item>
-  <match>Inline Code</match>
+  <match>Code (inline)</match>
   <fillin>${rangeCommand("`r %%1`", "paste(\"The sum of 1 to 1000 is\", sum(1L:1000))")}</fillin>
  </item>
- <item>
-  <match>Code_Block</match>
-  <fillin>${rangeCommand("\n```%%1```\n", "\nx &lt;- 1\n")}</fillin>
- </item>
   <item>
-  <match>Chunck (Simple)</match>
+  <match>Code (simple chunk)</match>
   <fillin>${rangeCommand("\n```"+ braces("r") +" %%1```\n", "\nx &lt;- 1\n\n")}</fillin>
  </item>
   <item>
@@ -113,7 +113,7 @@ function rangeCommand(command, def) {
   <fillin>${rangeCommand("> %%1", "Text")}</fillin>
  </item>
  <item>
-  <match>Chunck (defaults)</match>
+  <match>Code (chunk with defaults)</match>
   <fillin>${rangeCommand("\n```"+ braces("r, echo = FALSE, eval = FALSE, fig.show = \"hide\", include = FALSE, message = FALSE, results = \"hide\", warning = FALSE") +" %%1```\n", "\nx &lt;- 1\n\n")}</fillin>
  </item>
 </snippets>
