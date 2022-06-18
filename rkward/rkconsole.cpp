@@ -41,10 +41,10 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KJobWidgets>
 #include <KJobUiDelegate>
 
-
 #include "rkward.h"
 #include "windows/rkhelpsearchwindow.h"
 #include "windows/rkcodecompletion.h"
+#include "windows/rktexthints.h"
 #include "rbackend/rkrinterface.h"
 #include "settings/rksettings.h"
 #include "settings/rksettingsmoduleconsole.h"
@@ -125,6 +125,7 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 	view->installEventFilter(this);
 	auto manager = new RKCompletionManager (view, RKSettingsModuleConsole::completionSettings());  // Must be instantiated _after_ our event filter, so that it will apply its filter first
 	manager->setLinePrefixes(nprefix, iprefix);
+	new RKTextHints(view);
 
 	doc->setModified (false);
 

@@ -23,6 +23,7 @@ SET(windows_STAT_SRCS
 	rkdebugmessagewindow.cpp
 	katepluginintegration.cpp
 	rkcodecompletion.cpp
+	rktexthints.cpp
 )
 
 ADD_LIBRARY(windows STATIC ${windows_STAT_SRCS})

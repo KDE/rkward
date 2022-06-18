@@ -58,6 +58,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rkworkplace.h"
 #include "katepluginintegration.h"
 #include "rkcodecompletion.h"
+#include "rktexthints.h"
 
 #include "../debug.h"
 
@@ -272,6 +273,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl &_url,
 	if (use_r_highlighting || RKSettingsModuleCommandEditor::completionSettings()->completionForAllFileTypes()) {
 		if (flags & RKCommandEditorFlags::UseCodeHinting) {
 			new RKCompletionManager (m_view, RKSettingsModuleCommandEditor::completionSettings());
+			new RKTextHints(m_view);
 			//hinter = new RKFunctionArgHinter (this, m_view);
 		}
 	}
