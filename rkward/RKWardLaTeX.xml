@@ -9,17 +9,15 @@ function encoding() { return document.encoding(); }
 function year() { return new Date().getFullYear(); }
 function upper(x) { return x.toUpperCase(); }
 function lower(x) { return x.toLowerCase(); }
-function braces(text) { return "{" + text + "}"}
-function lineCommand(command) {
-    if (view.selectedText().length > 0) {
-        let prefix = view.selection().start.column > 0 ? "\n" : "";
-        let postfix = document.line(view.selection().end.line).length > view.selection().end.column ? "\n" : "";
-        return (prefix + command + " " + view.selectedText() + postfix);
-    }
-
-    let l = view.cursorPosition().line;
-    document.insertText(l, 0, command + " ");
-    return "";
+function braces(text) { return "{" + text + "}"; }
+function lineCommand(command, replaces="", label_if_empty="Heading") {
+    let c = view.cursorPosition();
+    // NOTE: snippet scripts work by 1. inserting the raw snippet as a raw "template" 2. evaluating any commands inside the template 3. replacing the template with the evaluated template. As a result, when this function gets called, it contains the call to itself...
+    let line = document.line(c.line).replace(/\$\{lineCommand\s*\([^\}]*\}/g, "");
+    line = line.replace(new RegExp(replaces), "");
+    if (line == "") line = label_if_empty;
+    else document.removeLine(c.line);
+    return command + " " + line + "\n";
 }
 
 function rangeCommand(command, def) {
@@ -77,6 +75,10 @@ function rangeCommand(command, def) {
  <item>
   <match>Or</match>
   <fillin>$A \cup B$</fillin>
+ </item>
+ <item>
+  <match>And</match>
+  <fillin>$A \cap B$</fillin>
  </item>
  <item>
   <match>And</match>
