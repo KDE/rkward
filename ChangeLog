@@ -1,4 +1,5 @@
 - Provide tooltips on symbols in scripts and R console
+  - TODO: make configurable
 - Fixed: Expresssions spanning several lines would not be shown, correctly, in "R Console"-mode script preview
 - Fix focus problems, and better efficiency for data previews (as used in data import dialogs)
 - Fixed: Excel import plugin failed to accept file name

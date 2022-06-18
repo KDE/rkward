@@ -334,7 +334,8 @@ QVariant RKObjectListModel::data (const QModelIndex& index, int role) const {
 	} else if (role == Qt::DecorationRole) {
 		if (col == NameColumn) return RKStandardIcons::iconForObject (object);
 	} else if (role == Qt::ToolTipRole) {
-		return object->getObjectDescription ();
+		QString ret = QString("<i>") + object->getShortName().replace('<', "&lt;") + "</i><br>" + object->getObjectDescription();
+		return ret;
 	}
 
 	RK_ASSERT (col < columnCount ());

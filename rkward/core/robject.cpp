@@ -158,9 +158,7 @@ QString RObject::getObjectDescription () const {
 
 #define ESCS replace ('<', "&lt;")
 
-	QString ret;
-	ret.append ("<i>" + getShortName ().ESCS + "</i>");
-	ret.append ("<br><b>" + i18n ("Full location:") + " </b>" + getFullName ().ESCS);
+	QString ret = "<b>" + i18n("Full location:") + " </b>" + getFullName().ESCS;
 	QString lab = getLabel ();
 	if (!lab.isEmpty ()) ret.append ("<br><b>" + i18n ("Label:") + " </b>" + lab.ESCS);
 	ret.append ("<br><b>" + i18n ("Type:") + " </b>");
@@ -177,8 +175,7 @@ QString RObject::getObjectDescription () const {
 	} else if (isType (List)) {
 		ret.append (i18n ("List"));
 	} else if (isType (Variable)) {
-		ret.append (i18n ("Variable"));
-		ret.append ("<br><b>" + i18n ("Data Type:") + " </b>" + typeToText (getDataType ()));
+		ret.append(i18nc("Noun; in brackets, data type of the var is stated", "Variable (%1)", typeToText(getDataType())));
 	} else if (isType (Environment)) {
 		ret.append (i18n ("Environment"));
 	}
@@ -195,7 +192,7 @@ QString RObject::getObjectDescription () const {
 		}
 	}
 
-	ret.append ("<br><b>" + i18n ("Class(es):") + " </b>" + makeClassString (",").ESCS);
+	if (!isType(Function)) ret.append("<br><b>" + i18n("Class(es):") + " </b>" + makeClassString(",").ESCS);
 
 	return ret;
 }

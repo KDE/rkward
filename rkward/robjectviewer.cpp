@@ -121,7 +121,7 @@ void RObjectViewer::initDescription (bool notify) {
 
 	setCaption (i18n("Object Viewer: %1", _object->getShortName ()));
 	// make the description use less height. Trying to specify <nobr>s, here, is no good idea (see http://sourceforge.net/p/rkward/bugs/55/)
-	description_label->setText (_object->getObjectDescription ().replace ("<br>", "&nbsp; &nbsp; "));
+	description_label->setText("<i>" + _object->getShortName().replace('<', "&lt;") + "</i> &nbsp; " + _object->getObjectDescription ().replace ("<br>", "&nbsp; &nbsp; "));
 	if (notify) {
 		QString reason = i18n ("The object was changed. You may want to click \"Update\"");
 		summary_widget->invalidate (reason);

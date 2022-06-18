@@ -30,10 +30,10 @@ RKTextHints::~RKTextHints() {
 QString RKTextHints::textHint(KTextEditor::View *view, const KTextEditor::Cursor &position) {
 	RK_TRACE(COMMANDEDITOR);
 	QString line = view->document()->line(position.line()) + ' ';
-	QString symbol = RKCommonFunctions::getCurrentSymbol(line, position.column());
+	QString symbol = RKCommonFunctions::getCurrentSymbol(line, position.column(), false);
 	auto obj = RObjectList::getObjectList()->findObject(symbol);
 	if (obj) {
-		return i18n("Symbol <i>%1</i> might refer to: ", symbol) + obj->getObjectDescription();
+		return i18n("The name <i>%1</i> might refer to:<br>", symbol) + obj->getObjectDescription();
 	}
 	return QString();
 }
