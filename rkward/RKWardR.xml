@@ -1,5 +1,5 @@
-<snippets name="R (RKWard)" filetypes="R" authors="RKWard Team" namespace="SnippetsR" license="BSD">
-  <script>require("range.js")
+<snippets name="LaTeX (RKWard)" filetypes="tex" authors="RKWard Team" namespace="SnippetsLaTeX" license="BSD">
+ <script>require("range.js")
 require("cursor.js")
 require("document.js")
 require("view.js")
@@ -29,57 +29,59 @@ function rangeCommand(command, def) {
 }
 </script>
  <item>
-  <match>Figure as PDF</match>
-  <fillin>
-pdf(fi­len­ame­="my­plo­t.p­df", width=5, height=5)
-plot(rnorm(100))
-dev.off()
-  </fillin>
+  <match>Newline</match>
+  <fillin>\newline</fillin>
  </item>
  <item>
-  <match>Plotting area (3x3 array)</match>
-  <fillin>
-# Plotting area (3x3 array) with 3 rows and 3 columns
-par(mf­row­=c(­3,3))
-  </fillin>
+  <match>x=y</match>
+  <fillin>$x = y$</fillin>
  </item>
  <item>
-  <match>Matrix multip­lic­ation</match>
-  <fillin>
-%*%
-  </fillin>
+  <match>α Α</match>
+  <fillin>$\alpha A$</fillin>
  </item>
  <item>
-  <match>Concat­enate vectors after converting to character</match>
-  <fillin>
-paste(…, sep = " ", collapse = NULL)
-  </fillin>
+  <match>|A|</match>
+  <fillin>$|A|$</fillin>
  </item>
  <item>
-  <match>for loop</match>
-  <fillin>
-# Print for 10 capital LETTERS
-for(i in 1:10){
-    print(LETTERS[i])
-}
-  </fillin>
+  <match>x∈A</match>
+  <fillin>$x \in A$</fillin>
  </item>
  <item>
-  <match>while loop</match>
-  <fillin>
-while(condi­tion){
-    Do something
-}
-  </fillin>
+  <match>P(A∣B)</match>
+  <fillin>$P(A \mid B)$</fillin>
  </item>
  <item>
-  <match>ifelse statement</match>
-  <fillin>
-if (condi­tion){
-    Do something
-    } else {
-    Do something different
-    }
-  </fillin>
+  <match>Overlined</match>
+  <fillin>$\overline{x}$</fillin>
  </item>
- </snippets>
+ <item>
+  <match>Hat</match>
+  <fillin>$\hat{x}$</fillin>
+ </item>
+ <item>
+  <match>Tile</match>
+  <fillin>$\tilde{x}$</fillin>
+ </item>
+ <item>
+  <match>Subset</match>
+  <fillin>$x \subset B$</fillin>
+ </item>
+ <item>
+  <match>Subset equal</match>
+  <fillin>$x \subseteq B$</fillin>
+ </item>
+ <item>
+  <match>Or</match>
+  <fillin>$A \cup B$</fillin>
+ </item>
+ <item>
+  <match>And</match>
+  <fillin>$A \cap B$</fillin>
+ </item>
+ <item>
+  <match>And</match>
+  <fillin>$A \cap B$</fillin>
+ </item>
+</snippets>
