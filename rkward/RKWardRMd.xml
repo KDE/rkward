@@ -100,7 +100,7 @@ function rangeCommand(command, def) {
  </item>
  <item>
   <match>Inline Code</match>
-  <fillin>${rangeCommand("`r paste(\"The sum of 1 to 1000 is\", sum(1L:1000))`")}</fillin>
+  <fillin>${rangeCommand("`r %%1`", "paste(\"The sum of 1 to 1000 is\", sum(1L:1000))")}</fillin>
  </item>
  <item>
   <match>Code_Block</match>
@@ -109,6 +109,10 @@ function rangeCommand(command, def) {
   <item>
   <match>Chunck (Simple)</match>
   <fillin>${rangeCommand("\n```"+ braces("r") +" %%1```\n", "\nx &lt;- 1\n\n")}</fillin>
+ </item>
+  <item>
+  <match>Quote</match>
+  <fillin>${rangeCommand("> %%1", "Text")}</fillin>
  </item>
  <item>
   <match>Chunck (defaults)</match>
