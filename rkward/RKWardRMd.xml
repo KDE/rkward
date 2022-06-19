@@ -98,7 +98,7 @@ $$e^${braces("i\\pi")} + 1$$
  </item>
  <item>
   <match>rmarkdown::render()</match>
-  <fillin>rmarkdown::render()</fillin>
+  <fillin>rmarkdown::render(${cursor})</fillin>
  </item>
  <item>
   <match>Code (inline)</match>
@@ -164,9 +164,10 @@ output:
 ```{r, echo=TRUE}
 # Defaults to suppress warnings and messages
 # Figure height and width are set to 7 inches
+# See more options by running str(knitr::opts_chunk$get())
 knitr::opts_chunk$set(
-  echo = FALSE, warnings = FALSE, message = FALSE,
-  fig.width = 7, fig.height = 7
+  echo = FALSE, error = FALSE, warnings = FALSE, message = FALSE,
+  collapse = FALSE, fig.width = 7, fig.height = 7
 )
 ```
     </fillin>
