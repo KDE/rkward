@@ -1,3 +1,5 @@
+- Many new basic and advanced R, R Markdown and LaTeX snippets
+	- Complex R Markdown template part of the snippets
 - Provide tooltips on symbols in scripts and R console
   - TODO: make configurable
 - Fixed: Expresssions spanning several lines would not be shown, correctly, in "R Console"-mode script preview
