@@ -32,8 +32,8 @@ function rangeCommand(command, def) {
   <match>YAML header</match>
     <fillin>
 ---
-title: "YAML header for Rmarkdown"
-author: "John Doe"
+title: "Document title"
+author: "Author Name"
 date: "`r Sys.Date()`"
 output:
     html_document:
@@ -42,6 +42,12 @@ output:
       number_sections: yes
       toc: yes
 ---
+    </fillin>
+ </item>
+ <item>
+  <match>YAML header</match>
+    <fillin>
+
     </fillin>
  </item>
 </snippets>
