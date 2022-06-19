@@ -1,10 +1,11 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward_toplevel" version="722">
+<kpartgui name="rkward_toplevel" version="741">
 	<MenuBar>
 		<Merge/>
 		<Menu name="window"><text>&amp;Window</text>
 			<Merge/>
 			<Action name="output_show"/>
+			<Action name="rkward_help"/>
 			<Separator/>
 			<Menu name="window_activate"><text>&amp;Activate</text>
 				<Action name="prev_window"/>

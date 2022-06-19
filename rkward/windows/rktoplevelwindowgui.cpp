@@ -58,7 +58,7 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI(KXmlGuiWindow *for_window) : QObject(fo
 	QAction *show_help_search = actionCollection ()->addAction ("show_help_search", this, SLOT(showHelpSearch()));
 	show_help_search->setText (i18n ("Search R Help"));
 	QAction *show_rkward_help = actionCollection ()->addAction (KStandardAction::HelpContents, "rkward_help", this, SLOT (showRKWardHelp()));
-	show_rkward_help->setText (i18n ("Help on RKWard"));
+	show_rkward_help->setText(i18n("RKWard Dashboard and Help"));
 
 	actionCollection()->addAction(KStandardAction::AboutApp, "about_app", this, SLOT(showAboutApplication()));
 	actionCollection()->addAction(KStandardAction::WhatsThis, "whats_this", this, SLOT(startWhatsThis()));
@@ -67,7 +67,7 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI(KXmlGuiWindow *for_window) : QObject(fo
 
 	help_invoke_r_help->setWhatsThis(i18n ("Shows the R help index"));
 	show_help_search->setWhatsThis(i18n ("Shows/raises the R Help Search window"));
-	show_rkward_help->setWhatsThis(i18n ("Show help on RKWard"));
+	show_rkward_help->setWhatsThis(i18n("Show the RKWard dashboard with links to important settings and documentation"));
 
 	// window menu
 	// NOTE: enabling / disabling the prev/next actions is not a good idea. It will cause the script windows to "accept" their shortcuts, when disabled
