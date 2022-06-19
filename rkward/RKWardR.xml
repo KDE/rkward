@@ -50,36 +50,45 @@ par(mf­row­=c(­3,3))
   </fillin>
  </item>
  <item>
-  <match>Concat­enate vectors after converting to character</match>
+  <match>Concat­enate character vectors</match>
   <fillin>
-paste(…, sep = " ", collapse = NULL)
+paste({cursor}, sep = " ", collapse = NULL)
   </fillin>
  </item>
  <item>
-  <match>for loop</match>
+  <match>for loop (indexed)</match>
   <fillin>
 # Print for 10 capital LETTERS
-for(i in 1:10){
+for(i in 1:10) {
     print(LETTERS[i])
+}
+  </fillin>
+ </item>
+ <item>
+  <match>for loop (vector based)</match>
+  <fillin>
+# Print for 10 capital LETTERS
+for(l in LETTERS[1:10]) {
+    print(l)
 }
   </fillin>
  </item>
  <item>
   <match>while loop</match>
   <fillin>
-while(condi­tion){
+while (condi­tion) {
     Do something
 }
   </fillin>
  </item>
  <item>
-  <match>ifelse statement</match>
+  <match>if/else statement</match>
   <fillin>
-if (condi­tion){
+if (condi­tion) {
     Do something
-    } else {
+} else {
     Do something different
-    }
+}
   </fillin>
  </item>
  </snippets>
