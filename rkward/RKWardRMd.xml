@@ -94,7 +94,7 @@ $$e^${braces("i\\pi")} + 1$$
  </item>
  <item>
   <match>Link</match>
-  <fillin>${rangeCommand([title]"(%%1)", "URL")}</fillin>
+  <fillin>${rangeCommand("[title](%%1)", "URL")}</fillin>
  </item>
  <item>
   <match>rmarkdown::render()</match>

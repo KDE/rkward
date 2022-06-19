@@ -34,7 +34,8 @@ function rangeCommand(command, def) {
 pdf(fi­len­ame­="my­plo­t.p­df", width=5, height=5)
 plot(rnorm(100))
 dev.off()
-  </fillin>
+
+</fillin>
  </item>
  <item>
   <match>Plotting area (3x3 array)</match>
