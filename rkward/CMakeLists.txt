@@ -125,3 +125,5 @@ IF(SharedMimeInfo_FOUND)
 ENDIF(SharedMimeInfo_FOUND)
 
 INSTALL(FILES RKWardRMd.xml DESTINATION ${DATA_INSTALL_DIR}/ktexteditor_snippets/data)
+INSTALL(FILES RKWardLaTeX.xml DESTINATION ${DATA_INSTALL_DIR}/ktexteditor_snippets/data)
+INSTALL(FILES RKWardR.xml DESTINATION ${DATA_INSTALL_DIR}/ktexteditor_snippets/data)
