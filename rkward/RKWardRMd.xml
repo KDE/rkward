@@ -53,12 +53,35 @@ function rangeCommand(command, def) {
   <fillin>${rangeCommand("\n- A\n  - a\n- B\n  - b\n- C\n  - c\n\n")}</fillin>
  </item>
  <item>
+  <match>Check List</match>
+<fillin>
+- [x] A
+- [ ] B
+  - [x] b
+- [ ] C
+  - [x] c
+    - [x] cc
+</fillin>
+ </item>
+ <item>
   <match>Bold</match>
   <fillin>${rangeCommand("**%%1**", "Bold")}</fillin>
  </item>
  <item>
   <match>Text comment (HTML)</match>
   <fillin>${rangeCommand("&lt;--!*%%1*--&gt;", "Text")}</fillin>
+ </item>
+ <item>
+  <match>Image</match>
+  <fillin>${rangeCommand("![title](%%1)", "\"/path/to/image.png\"")}</fillin>
+ </item>
+ <item>
+  <match>Image (knitr)</match>
+  <fillin>${rangeCommand("knitr::include_graphics(%%1)", "\"/path/to/image.png\"")}</fillin>
+ </item>
+ <item>
+  <match>Image (knitr and here)</match>
+  <fillin>knitr::include_graphics(here::here("path", "to", "image.png")</fillin>
  </item>
  <item>
   <match>Italics</match>
@@ -102,7 +125,7 @@ $$e^${braces("i\\pi")} + 1$$
  </item>
  <item>
   <match>rmarkdown::render()</match>
-  <fillin>rmarkdown::render(${cursor})</fillin>
+  <fillin>rmarkdown::render("/path/to/your_rmarkdown_file.Rmd"${cursor})</fillin>
  </item>
  <item>
   <match>Code (inline)</match>
@@ -165,6 +188,7 @@ output:
       toc: yes
 ---
 
+
 ```{r, echo=TRUE}
 # Defaults to suppress warnings and messages
 # Figure height and width are set to 7 inches
@@ -181,11 +205,11 @@ knitr::opts_chunk$set(
   <fillin>^[${cursor}This is a footnote.]</fillin>
  </item>
  <item>
-   <match>RMarkdown template</match>
+   <match>R Markdown HTML template</match>
    <fillin>---
 title: "Document title"
 author: "The RKWard Team"
-date: "`r Sys.Date()`"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
     html_document:
       fig_caption: yes
@@ -200,6 +224,8 @@ number_sections: true
 &lt;!--
 This is an example how to create an R Markdown document in RKWard.
 
+Please save this file as "your_rmarkdown_file.Rmd" (select an appropriate name).
+
 The structure of such documents is always the same.
 1. The YAML header between the  ---
 2. An optional Global Settings chunck
@@ -207,6 +233,8 @@ The structure of such documents is always the same.
 
 In this template we show main concept of markdown like
 - heading
+- emphasis (*italic*, **bold**, ~~Strikethrough~~)
+- checklist
 - footnotes
 - links
 - equations
@@ -214,6 +242,8 @@ In this template we show main concept of markdown like
 - plots and
 - tables
 Please feel free to adjust it to your needs.
+
+The HTML file is rendered via rmarkdown::render("/path/to/your_rmarkdown_file.Rmd").
 --&gt;
 
 ```{r, echo=TRUE}
@@ -230,6 +260,8 @@ knitr::opts_chunk$set(
 # The RKWard IDE and GUI
 
 RKWard is an *easy to use* and **easily extensible** IDE/GUI^[IDE: Integrated Development Environment. GUI: Graphical User Interface] for [R](https://www.r-project.org/). It aims to combine the power of the R-language with the ease of use of commercial statistics tools.
+
+RKWard is ~~not~~ free of charge.
 
 ## Features of RKWard
 
@@ -281,26 +313,210 @@ Let us take a simple code to make four plots of random data in a single row, for
 
 
 ```
+# Set graphical parameter
 par(mfrow = c(2,2))
 
+# for loop to make four plots
+
 for (i in 1:4) {
- plot(rnorm(10))
+ plot(rnorm(10), col = i, pch = 19, main = paste("Scatter plot", LETTERS[i]))
 }
 ```
 
-If we put the code in the following R Markdown chunk (note the 'r' in the curly braces) the plot looks as follows:
+If we put the code in the following R Markdown chunk (note the 'r' in the curly braces) the scatter plots look as follows (note the syntax highlighting):
 
-```{r}
-par(mfrow = c(1,2))
+```{r, echo = TRUE, fig.cap = "Four plots of random data."}
+# Set graphical parameter
+par(mfrow = c(2,2))
+
+# for loop to make four plots
 
 for (i in 1:4) {
- plot(rnorm(10))
+ plot(rnorm(10), col = i, pch = 19, main = paste("Scatter plot", LETTERS[i]))
 }
 ```
 
 # Conclusion
 
 RKWard is a useful tool. This RKWard version is used with the R version `r  getRversion()`.
+
+In the template following R Markdown elements were shown
+
+- [x] Headings
+- [x] emphasis of text
+  - [x] bold
+  - [x] italic
+  - [x] strikethrough
+  - [ ] underlined
+- [x] Links
+- [x] Equations
+- [x] Code
+- [ ] Citations via bibtex
+- [x] Checklist
+
+and many more.
+
+If you like RKWard consider to donate. Some small amount for a cup of coffee or a cup of H~2~O is totally fine.
+</fillin>
+ </item>
+ <item>
+   <match>R Markdown PDF template</match>
+   <fillin>---
+title: "Document title"
+author: "The RKWard Team"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+    pdf_document:
+      fig_caption: yes
+      highlight: kate
+      number_sections: yes
+      toc: yes
+number_sections: true
+---
+
+&lt;!--
+This is an example how to create an R Markdown document in RKWard.
+
+Please save this file as "your_rmarkdown_file.Rmd" (select an appropriate name).
+
+The output format is a file in Portable Document Format (PDF).
+
+To create a PDF is a LaTeX distribution mandatory. The command tinytex::install_tinytex()
+downloads and installs TinyTeX, a custom LaTeX distribution based on TeX Live.
+
+The structure of such documents is always the same.
+1. The YAML header between the  ---
+2. An optional Global Settings chunck
+3. The main text containing markdown, LaTeX, R (even other languages like python), HTML and other elements
+
+In this template we show main concept of markdown like
+- heading
+- emphasis (*italic*, **bold**, ~~Strikethrough~~)
+- checklist
+- footnotes
+- links
+- equations
+- lists (ordered, unordered, nested)
+- plots and
+- tables
+
+The pdf file is rendered via rmarkdown::render("/path/to/your_rmarkdown_file.Rmd").
+
+Please feel free to adjust it to your needs.
+--&gt;
+
+\pagebreak
+
+```{r, echo=TRUE}
+# Defaults to suppress warnings and messages
+# Figure height and width are set to 7 inches
+# See more options by running str(knitr::opts_chunk$get())
+
+knitr::opts_chunk$set(
+  echo = FALSE, error = FALSE, warnings = FALSE, message = FALSE,
+  collapse = FALSE, fig.width = 4, fig.height = 4
+)
+```
+
+
+# The RKWard IDE and GUI
+
+RKWard is an *easy to use* and **easily extensible** IDE/GUI^[IDE: Integrated Development Environment. GUI: Graphical User Interface] for [R](https://www.r-project.org/). It aims to combine the power of the R-language with the ease of use of commercial statistics tools.
+
+RKWard is ~~not~~ free of charge.
+
+## Features of RKWard
+
+RKWard’s features include:
+
+- Spreadsheet-like data editor
+- Syntax highlighting, code folding and code completion
+- Data import (e.g. SPSS, Stata and CSV)
+- Plot preview and browsable history
+- R package management
+- Workspace browser
+- GUI dialogs for all kinds of statistics and plots
+- Developer tools integration via kateparts
+  - git
+  - terminal tool view (Linux only)
+  - Text filter
+
+and many more features.
+
+## Data handling
+
+RKWard can handle all kinds of data from simple to complex. Here is an example where a part of the iris data is shown as table.
+
+```{r}
+data &lt;- iris[1:4, ]
+knitr::kable(data, caption = "Table caption text.")
+```
+
+It is also possible to make tables by hand as shown next.
+
+
+| Right  | Left  | Default   | Center    |
+|-------:|:------|-----------|:---------:|
+| 12     | 12    | 12        | 12        |
+| 123    | 123   | 123       | 123       |
+| 1      | 1     | 1         | 1         |
+:Example for a handmade table (pure `markdown`)
+
+
+### Plotting in RKWard
+
+There many ways to to plots in RKWard. These are for example:
+
+1. via the GUI menus (e.g., barplot, boxplot, ...)
+2. via the R script and the preview or
+3. in a R Markdown document as shown next.
+
+Let us take a simple code to make four plots of random data in a single row, for example:
+
+
+```
+# Set graphical parameter
+par(mfrow = c(2,2))
+
+# for loop to make four plots
+
+for (i in 1:4) {
+ plot(rnorm(10), col = i, pch = 19, main = paste("Scatter plot", LETTERS[i]))
+}
+```
+
+If we put the code in the following R Markdown chunk (note the 'r' in the curly braces) the scatter plots (Figure 1) look as follows (note the syntax highlighting):
+
+```{r, echo = TRUE, fig.cap = "Four plots of random data."}
+# Set graphical parameter
+par(mfrow = c(2,2))
+
+# for loop to make four plots
+
+for (i in 1:4) {
+ plot(rnorm(10), col = i, pch = 19, main = paste("Scatter plot", LETTERS[i]))
+}
+```
+
+# Conclusion
+
+RKWard is ~~not~~ a useful tool. This RKWard version is used with the R version `r  getRversion()`.
+
+In the template following R Markdown elements were shown
+
+- [x] Headings
+- [x] emphasis of text
+  - [x] bold
+  - [x] italic
+  - [x] strikethrough
+  - [ ] underlined
+- [x] Links
+- [x] Equations
+- [x] Code
+- [ ] Citations via bibtex
+- [x] Checklist
+
+and many more.
 
 If you like RKWard consider to donate. Some small amount for a cup of coffee or a cup of H~2~O is totally fine.
 </fillin>

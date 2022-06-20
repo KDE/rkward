@@ -30,7 +30,17 @@ function rangeCommand(command, def) {
 </script>
  <item>
   <match>Newline</match>
-  <fillin>\newline</fillin>
+<fillin>
+\newline
+
+</fillin>
+ </item>
+ <item>
+  <match>New page</match>
+  <fillin>
+\pagebreak
+
+</fillin>
  </item>
  <item>
   <match>x=y</match>
