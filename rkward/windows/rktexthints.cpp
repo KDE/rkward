@@ -10,10 +10,11 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../misc/rkcommonfunctions.h"
 #include "../core/robjectlist.h"
+#include "../settings/rksettingsmodulecommandeditor.h"
 
 #include "../debug.h"
 
-RKTextHints::RKTextHints(KTextEditor::View *view) : QObject(view), KTextEditor::TextHintProvider() {
+RKTextHints::RKTextHints(KTextEditor::View *view, const RKCodeCompletionSettings *settings) : QObject(view), KTextEditor::TextHintProvider(), settings(settings) {
 	RK_TRACE(COMMANDEDITOR);
 	auto iface = qobject_cast<KTextEditor::TextHintInterface*>(view);
 	if (iface) {
@@ -28,6 +29,7 @@ RKTextHints::~RKTextHints() {
 }
 
 QString RKTextHints::textHint(KTextEditor::View *view, const KTextEditor::Cursor &position) {
+	if (!settings->isEnabled(RKCodeCompletionSettings::MouseOver)) return QString();
 	RK_TRACE(COMMANDEDITOR);
 	QString line = view->document()->line(position.line()) + ' ';
 	QString symbol = RKCommonFunctions::getCurrentSymbol(line, position.column(), false);

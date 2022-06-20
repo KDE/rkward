@@ -273,7 +273,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl &_url,
 	if (use_r_highlighting || RKSettingsModuleCommandEditor::completionSettings()->completionForAllFileTypes()) {
 		if (flags & RKCommandEditorFlags::UseCodeHinting) {
 			new RKCompletionManager (m_view, RKSettingsModuleCommandEditor::completionSettings());
-			new RKTextHints(m_view);
+			new RKTextHints(m_view, RKSettingsModuleCommandEditor::completionSettings());
 			//hinter = new RKFunctionArgHinter (this, m_view);
 		}
 	}

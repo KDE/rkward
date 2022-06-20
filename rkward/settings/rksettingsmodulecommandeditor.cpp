@@ -46,7 +46,7 @@ RKCodeCompletionSettingsWidget::RKCodeCompletionSettingsWidget(QWidget *parent, 
 
 	QGridLayout *g_layout = new QGridLayout ();
 	box_layout->addLayout (g_layout);
-	makeCompletionTypeBoxes (QStringList () << i18n ("Function call tip") << i18n ("Function argument completion") << i18n ("Object name completion") << i18n ("Filename completion") << i18n ("Auto word completion"), g_layout);
+	makeCompletionTypeBoxes (QStringList () << i18n ("Function call tip") << i18n ("Function argument completion") << i18n ("Object name completion") << i18n ("Filename completion") << i18n ("Auto word completion") << i18n("Mouseover object info"), g_layout);
 
 	auto_completion_enabled_box = new QGroupBox (i18n ("Start code completions/hints, automatically"), group);
 	auto_completion_enabled_box->setCheckable (true);
