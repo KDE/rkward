@@ -29,6 +29,10 @@ function rangeCommand(command, def) {
 }
 </script>
  <item>
+  <match>author</match>
+  <fillin>${rangeCommand("\\emph"+ braces("%%1") +" ", "italic")}</fillin>
+ </item>
+ <item>
   <match>Italic</match>
   <fillin>${rangeCommand("\\emph"+ braces("%%1") +" ", "italic")}</fillin>
  </item>
@@ -164,6 +168,10 @@ ${rangeCommand("cat(tabular(%%1))", "mtcars[1:5, 1:5]")}
   <fillin>${rangeCommand("#' @concepts %%1 Description text", "value")}</fillin>
  </item>
  <item>
+  <match>author</match>
+  <fillin>${rangeCommand("#' @author %%1 ", "The author")}</fillin>
+ </item>
+ <item>
   <match>describeIn</match>
   <fillin>${rangeCommand("#' @describeIn %%1 Description text", "value")}</fillin>
  </item>
@@ -253,7 +261,9 @@ ${rangeCommand("cat(tabular(%%1))", "mtcars[1:5, 1:5]")}
 #'
 #' Description
 #'
+#' @author Jane Doe <jane.doe@@johndoehub.com>
 #' @param x The input data
+#' @keyword return
 #' @return A dummy function that does nothing with \code{x} to show basic roxygen2 principles.
 #' @seealso [base::return()] which this function wraps.
 #' @param method one of: \cr
@@ -261,6 +271,7 @@ ${rangeCommand("cat(tabular(%%1))", "mtcars[1:5, 1:5]")}
 #' "method2" - very long text here \cr
 #' @examples
 #' myfun("Hello World")
+#' \dontrun{myfun(1:1e99) }
 myfun &lt;- function (x, method){
   print(x)
   return(NULL)
