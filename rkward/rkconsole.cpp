@@ -125,7 +125,7 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 	view->installEventFilter(this);
 	auto manager = new RKCompletionManager (view, RKSettingsModuleConsole::completionSettings());  // Must be instantiated _after_ our event filter, so that it will apply its filter first
 	manager->setLinePrefixes(nprefix, iprefix);
-	new RKTextHints(view);
+	new RKTextHints(view, RKSettingsModuleConsole::completionSettings());
 
 	doc->setModified (false);
 

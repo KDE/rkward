@@ -10,14 +10,17 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <ktexteditor/view.h>
 #include <ktexteditor/texthintinterface.h>
 
+class RKCodeCompletionSettings;
+
 /** Provides text hints for a KTextEditor::View */
 class RKTextHints : public QObject, public KTextEditor::TextHintProvider {
 	Q_OBJECT
 public:
-	RKTextHints(KTextEditor::View *view);
+	RKTextHints(KTextEditor::View *view, const RKCodeCompletionSettings *settings);
 	QString textHint(KTextEditor::View *view, const KTextEditor::Cursor &position) override;
 private:
 	~RKTextHints();
+	const RKCodeCompletionSettings *settings;
 };
 
 #endif

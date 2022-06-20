@@ -32,6 +32,7 @@ public:
 		Object,
 		Filename,
 		AutoWord,
+		MouseOver,
 		N_COMPLETION_CATEGORIES
 	};
 
@@ -54,7 +55,7 @@ friend class RKSettingsModuleConsole;
 	RKConfigValue<int> auto_completion_timeout {"Completion timeout", 250};
 	RKConfigValue<bool> auto_completion_cursor_activated {"Auto completion on cursor navigation", false};
 	RKConfigValue<bool> tabkey_invokes_completion {"Tabkey invokes completion", false};
-	RKConfigValue<bool> completion_type_enabled[N_COMPLETION_CATEGORIES] {{"Calltips", true}, {"Argument completion", true}, {"Object completion", true}, {"Filename completion", true}, {"Auto word completion", true}};
+	RKConfigValue<bool> completion_type_enabled[N_COMPLETION_CATEGORIES] {{"Calltips", true}, {"Argument completion", true}, {"Object completion", true}, {"Filename completion", true}, {"Auto word completion", true}, {"mouseover", true}};
 	RKConfigValue<bool> cursor_navigates_completions {"Cursor navigate completions", false};
 	RKConfigValue<int> completion_options {"Completion option flags", (int) RObject::IncludeEnvirIfMasked};
 	RKConfigGroup dummyoptions = RKConfigGroup(0, N_COMPLETION_CATEGORIES, completion_type_enabled);
