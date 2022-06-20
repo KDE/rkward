@@ -169,7 +169,7 @@ ${rangeCommand("cat(tabular(%%1))", "mtcars[1:5, 1:5]")}
  </item>
  <item>
   <match>examples</match>
-  <fillin>${rangeCommand("#' @examples %%1 Description text", "value")}</fillin>
+  <fillin>${rangeCommand("#' @examples\n#' %%1\n#' ", "example_code")}</fillin>
  </item>
  <item>
   <match>family</match>
