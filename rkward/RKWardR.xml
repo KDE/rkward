@@ -51,6 +51,32 @@ par(mf­row­=c(­3,3))
   </fillin>
  </item>
  <item>
+  <match>Function</match>
+  <fillin>
+f &lt;- function(x) sqrt(x%*%x)
+# To test the function run
+# f(1:4)
+  </fillin>
+ </item>
+ <item>
+  <match>Determines an object's base type</match>
+  <fillin>
+  <fillin>${rangeCommand("typeof(%%1)", "Object")}</fillin>
+  </fillin>
+ </item>
+ <item>
+  <match>pipe (native)</match>
+  <fillin>
+    <fillin> |> </fillin>
+  </fillin>
+ </item>
+ <item>
+  <match>pipe (pseudo)</match>
+  <fillin>
+    <fillin> ->.; </fillin>
+  </fillin>
+ </item>
+ <item>
   <match>Concat­enate character vectors</match>
   <fillin>
 paste(${cursor}, sep = " ", collapse = NULL)

@@ -57,6 +57,10 @@ function rangeCommand(command, def) {
   <fillin>${rangeCommand("**%%1**", "Bold")}</fillin>
  </item>
  <item>
+  <match>Text comment (HTML)</match>
+  <fillin>${rangeCommand("&lt;--!*%%1*--&gt;", "Text")}</fillin>
+ </item>
+ <item>
   <match>Italics</match>
   <fillin>${rangeCommand("*%%1*", "Italics")}</fillin>
  </item>
@@ -178,8 +182,7 @@ knitr::opts_chunk$set(
  </item>
  <item>
    <match>RMarkdown template</match>
-   <fillin>
----
+   <fillin>---
 title: "Document title"
 author: "The RKWard Team"
 date: "`r Sys.Date()`"
@@ -300,6 +303,6 @@ for (i in 1:4) {
 RKWard is a useful tool. This RKWard version is used with the R version `r  getRversion()`.
 
 If you like RKWard consider to donate. Some small amount for a cup of coffee or a cup of H~2~O is totally fine.
-   </fillin>
+</fillin>
  </item>
 </snippets>
