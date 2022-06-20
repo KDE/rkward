@@ -29,10 +29,6 @@ function rangeCommand(command, def) {
 }
 </script>
  <item>
-  <match>author</match>
-  <fillin>${rangeCommand("\\emph"+ braces("%%1") +" ", "italic")}</fillin>
- </item>
- <item>
   <match>Italic</match>
   <fillin>${rangeCommand("\\emph"+ braces("%%1") +" ", "italic")}</fillin>
  </item>
@@ -261,7 +257,7 @@ ${rangeCommand("cat(tabular(%%1))", "mtcars[1:5, 1:5]")}
 #'
 #' Description
 #'
-#' @author Jane Doe <jane.doe@@johndoehub.com>
+#' @author Jane Doe
 #' @param x The input data
 #' @keyword return
 #' @return A dummy function that does nothing with \code{x} to show basic roxygen2 principles.
