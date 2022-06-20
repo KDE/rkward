@@ -244,11 +244,27 @@ ${rangeCommand("cat(tabular(%%1))", "mtcars[1:5, 1:5]")}
 </fillin>
  </item>
  <item>
-  <match>create vignette</match>
-  <fillin>devtools::use_vignette()</fillin>
+  <match>Line break</match>
+  <fillin>${rangeCommand("#' %%1 - Description text \\cr", "method")}</fillin>
  </item>
  <item>
-  <match>Document your package</match>
-  <fillin>devtools::document()</fillin>
+  <match>Template</match>
+  <fillin>#' myfun - Description of a dummy function
+#'
+#' Description
+#'
+#' @param x The input data
+#' @return A dummy function that does nothing with \code{x} to show basic roxygen2 principles.
+#' @seealso [base::return()] which this function wraps.
+#' @param method one of: \cr
+#' "method1" - very long text here \cr
+#' "method2" - very long text here \cr
+#' @examples
+#' myfun("Hello World")
+myfun &lt;- function (x, method){
+  print(x)
+  return(NULL)
+}
+</fillin>
  </item>
 </snippets>
