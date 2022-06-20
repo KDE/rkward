@@ -91,7 +91,16 @@ function rangeCommand(command, def) {
   <fillin>$A \cap B$</fillin>
  </item>
  <item>
-  <match>And</match>
-  <fillin>$A \cap B$</fillin>
+  <match>List</match>
+  <fillin>
+\begin{itemize}
+    \item[\S] First item
+    \item Second item
+\end{itemize}
+</fillin>
+ </item>
+ <item>
+  <match>Fraction (inline)</match>
+<fillin>$\frac{A}{x + \frac{1}{x}}$</fillin>
  </item>
 </snippets>
