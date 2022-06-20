@@ -1,0 +1,254 @@
+<snippets name="roxygen2 (RKWard)" filetypes="R" authors="RKWard Team" namespace="SnippetsRmd" license="BSD">
+  <script>require("range.js")
+require("cursor.js")
+require("document.js")
+require("view.js")
+
+function fileName() { return document.fileName(); }
+function encoding() { return document.encoding(); }
+function year() { return new Date().getFullYear(); }
+function upper(x) { return x.toUpperCase(); }
+function lower(x) { return x.toLowerCase(); }
+function braces(text) { return "{" + text + "}"; }
+function lineCommand(command, replaces="", label_if_empty="Heading") {
+    let c = view.cursorPosition();
+    // NOTE: snippet scripts work by 1. inserting the raw snippet as a raw "template" 2. evaluating any commands inside the template 3. replacing the template with the evaluated template. As a result, when this function gets called, it contains the call to itself...
+    let line = document.line(c.line).replace(/\$\{lineCommand\s*\([^\}]*\}/g, "");
+    line = line.replace(new RegExp(replaces), "");
+    if (line == "") line = label_if_empty;
+    else document.removeLine(c.line);
+    return command + " " + line + "\n";
+}
+
+function rangeCommand(command, def) {
+    if (view.selectedText().length > 0) {
+        return command.replace("%%1", view.selectedText());
+    } else {
+        return command.replace("%%1", def);
+    }
+}
+</script>
+ <item>
+  <match>Italic</match>
+  <fillin>${rangeCommand("\\emph"+ braces("%%1") +" ", "italic")}</fillin>
+ </item>
+ <item>
+  <match>Strong</match>
+  <fillin>${rangeCommand("\\strong"+ braces("%%1") +" ", "strong")}</fillin>
+ </item>
+ <item>
+  <match>Package name</match>
+  <fillin>${rangeCommand("\\pkg"+ braces("%%1") +" ", "package_name")}</fillin>
+ </item>
+ <item>
+  <match>Code (R function call)</match>
+  <fillin>${rangeCommand("\\code"+ braces("%%1(with = \"arguments\")") +" ", "r_function_call")}</fillin>
+ </item>
+ <item>
+  <match>Code</match>
+  <fillin>${rangeCommand("\\code"+ braces("%%1") +" ", "NULL")}</fillin>
+ </item>
+ <item>
+  <match>Link (function in this package)</match>
+  <fillin>${rangeCommand("\\code"+ braces("\\link" + braces("%%1") + "") +" ", "function")} </fillin>
+ </item>
+ <item>
+  <match>Link (function in another package)</match>
+  <fillin>${rangeCommand("\\code"+ braces("\\link[package_name]" + braces("%%1") + "") +" ", "function")} </fillin>
+ </item>
+ <item>
+  <match>Link (to dest, but show name)</match>
+  <fillin>${rangeCommand("\\link[=dest]"+ braces("%%1") +" ", "name")} </fillin>
+ </item>
+ <item>
+   <match>Link (to function in another package, but show name)</match>
+  <fillin>${rangeCommand("\\code"+ braces("\\link[package_namefunction]" + braces("%%1") + "") +" ", "name")} </fillin>
+ </item>
+ <item>
+  <match>Link (to an S4 class)</match>
+  <fillin>${rangeCommand("\\linkS4class"+ braces("%%1") +" ", "class")}</fillin>
+ </item>
+ <item>
+  <match>Link (to URL)</match>
+  <fillin>${rangeCommand("\\url"+ braces("%%1") +" ", "URL")}</fillin>
+ </item>
+ <item>
+  <match>Link (to URL with name)</match>
+  <fillin>${rangeCommand("\\url"+ braces("%%1") +"" + braces("Name") + "", "URL")}</fillin>
+ </item>
+ <item>
+  <match>Link (email, note @@)</match>
+  <fillin>${rangeCommand("\\email"+ braces("%%1") +"", "jane.doe@@johndoehub.com")}</fillin>
+ </item>
+ <item>
+  <match>Lists (ordered and numbered)</match>
+  <fillin>
+#' \enumerate{
+#'   \item First item
+#'   \item Second item
+#' }
+</fillin>
+ </item>
+ <item>
+  <match>Lists (unordered and numbered)</match>
+  <fillin>
+#' \itemize{
+#'   \item First item
+#'   \item Second item
+#' }
+</fillin>
+ </item>
+ <item>
+  <match>Lists (unordered and numbered)</match>
+  <fillin>
+#' \describe{
+#'   \item{One}{First item}
+#'   \item{Two}{Second item}
+#' }
+</fillin>
+ </item>
+ <item>
+  <match>Equation (inline)</match>
+  <fillin>${rangeCommand("\\eqn"+ braces("%%1") +" ", "a + b")}</fillin>
+ </item>
+ <item>
+  <match>Equation (block)</match>
+  <fillin>${rangeCommand("\\deqn"+ braces("%%1") +" ", "a + b")}</fillin>
+ </item>
+ <item>
+  <match>Tables</match>
+  <fillin>
+# source: https://roxygen2.r-lib.org/articles/formatting.html#tables
+# Tables are created with \tabular{}. It has two arguments:
+# Run the following code to create the function tabular
+tabular &lt;- function(df, ...) {
+  stopifnot(is.data.frame(df))
+
+  align &lt;- function(x) if (is.numeric(x)) "r" else "l"
+  col_align &lt;- vapply(df, align, character(1))
+
+  cols &lt;- lapply(df, format, ...)
+  contents &lt;- do.call("paste",
+    c(cols, list(sep = " \\tab ", collapse = "\\cr\n#'   ")))
+
+  paste("#' \\tabular{", paste(col_align, collapse = ""), "}{\n#'   ",
+    paste0("\\strong{", names(df), "}", sep = "", collapse = " \\tab "), " \\cr\n#'   ",
+    contents, "\n#' }\n", sep = "")
+}
+
+# Column alignment, specified by letter for each
+# column (l = left, r = right, c = centre.)
+# Table contents, with columns separated by
+# \tab and rows by \cr.
+${rangeCommand("cat(tabular(%%1))", "mtcars[1:5, 1:5]")}
+  </fillin>
+ </item>
+ <item>
+  <match>dontrun</match>
+  <fillin>${rangeCommand("\\dontrun"+ braces("\n%%1\n") +" ", "code")}</fillin>
+ </item>
+ <item>
+  <match>dontshow</match>
+  <fillin>${rangeCommand("\\dontshow"+ braces("\n%%1\n") +" ", "code")}</fillin>
+ </item>
+ <item>
+  <match>donttest</match>
+  <fillin>${rangeCommand("\\donttest"+ braces("\n%%1\n") +" ", "code")}</fillin>
+ </item>
+ <item>
+  <match>aliases</match>
+  <fillin>${rangeCommand("#' @aliases %%1 Description text", "value")}</fillin>
+ </item>
+ <item>
+  <match>concepts</match>
+  <fillin>${rangeCommand("#' @concepts %%1 Description text", "value")}</fillin>
+ </item>
+ <item>
+  <match>describeIn</match>
+  <fillin>${rangeCommand("#' @describeIn %%1 Description text", "value")}</fillin>
+ </item>
+ <item>
+  <match>examples</match>
+  <fillin>${rangeCommand("#' @examples %%1 Description text", "value")}</fillin>
+ </item>
+ <item>
+  <match>family</match>
+  <fillin>${rangeCommand("#' @family %%1 Description text", "value")}</fillin>
+ </item>
+ <item>
+  <match>inheritParams</match>
+  <fillin>${rangeCommand("#' @inheritParams %%1 Description text", "value")}</fillin>
+ </item>
+ <item>
+  <match>keywords</match>
+  <fillin>${rangeCommand("#' @keywords %%1 Description text", "value")}</fillin>
+ </item>
+ <item>
+  <match>param</match>
+  <fillin>${rangeCommand("#' @param %%1 Description text", "value")}</fillin>
+ </item>
+ <item>
+  <match>rdname</match>
+  <fillin>${rangeCommand("#' @rdname %%1 Description text", "value")}</fillin>
+ </item>
+ <item>
+  <match>return</match>
+  <fillin>${rangeCommand("#' @return %%1 Description text", "value")}</fillin>
+ </item>
+ <item>
+  <match>section</match>
+  <fillin>${rangeCommand("#' @section %%1 Description text", "value")}</fillin>
+ </item>
+ <item>
+  <match>seealso</match>
+  <fillin>${rangeCommand("#' @seealso %%1 Description text", "value")}</fillin>
+ </item>
+ <item>
+  <match>format</match>
+  <fillin>${rangeCommand("#' @format %%1 Description text", "value")}</fillin>
+ </item>
+ <item>
+  <match>source (data)</match>
+  <fillin>${rangeCommand("#' @source %%1 Description text", "value")}</fillin>
+ </item>
+ <item>
+  <match>include</match>
+  <fillin>${rangeCommand("#' @include %%1 Description text", "value")}</fillin>
+ </item>
+ <item>
+  <match>slot (S4)</match>
+  <fillin>${rangeCommand("#' @slot %%1 Description text", "value")}</fillin>
+ </item>
+ <item>
+  <match>field (RC)</match>
+  <fillin>${rangeCommand("#' @field %%1 Description text", "value")}</fillin>
+ </item>
+ <item>
+  <match>import</match>
+  <fillin>${rangeCommand("#' @import %%1 Description text", "value")}</fillin>
+ </item>
+ <item>
+  <match>importFrom</match>
+  <fillin>${rangeCommand("#' @importFrom %%1 Description text", "value")}</fillin>
+ </item>
+ <item>
+  <match>importClassesFrom</match>
+  <fillin>${rangeCommand("#' @importClassesFrom %%1 Description text", "value")}</fillin>
+ </item>
+ <item>
+  <match>\tabular</match>
+<fillin>\tabular{lcr}{
+  left \tab centered \tab right \cr
+  cell \tab cell \tab cell \cr
+}
+</fillin>
+ </item>
+ <item>
+  <match>create vignette</match>
+  <fillin>devtools::use_vignette()</fillin>
+ </item>
+ <item>
+  <match>Document your package</match>
+  <fillin>devtools::document()</fillin>
+ </item>
+</snippets>
