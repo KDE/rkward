@@ -181,7 +181,7 @@ A &amp; B \\
  </item>
  <item>
   <match>Code (chunk with defaults)</match>
-  <fillin>${rangeCommand("\n```"+ braces("r, chunk-label, echo = FALSE, eval = TRUE, fig.show = \"asis\", include = FALSE, message = FALSE, results = \"asis\", warning = FALSE") +" %%1```\n", "\nx &lt;- 1\n\n")}</fillin>
+  <fillin>${rangeCommand("\n```"+ braces("r, chunk-label, echo = FALSE, eval = TRUE, fig.show = \"asis\", include = TRUE, message = FALSE, results = \"asis\", warning = FALSE") +" %%1```\n", "\nx &lt;- 1\n\n")}</fillin>
  </item>
  <item>
   <match>Table</match>
