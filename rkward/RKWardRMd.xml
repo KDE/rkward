@@ -181,7 +181,7 @@ A &amp; B \\
  </item>
  <item>
   <match>Code (chunk with defaults)</match>
-  <fillin>${rangeCommand("\n```"+ braces("r, chunk-label, echo = FALSE, eval = TRUE, fig.show = \"asis\", include = TRUE, message = FALSE, results = \"asis\", warning = FALSE") +" %%1```\n", "\nx &lt;- 1\n\n")}</fillin>
+  <fillin>${rangeCommand("```"+ braces("r, chunk-label, echo = FALSE, eval = TRUE, fig.show = \"asis\", include = TRUE, message = FALSE, results = \"asis\", warning = FALSE") +" %%1```\n", "\nx &lt;- 1\n\n")}</fillin>
  </item>
  <item>
   <match>Table</match>
@@ -205,13 +205,13 @@ A &amp; B \\
   </fillin>
  </item>
  <item>
-  <match>Table (kable)</match>
-  <fillin>
-```{r}
-data &lt;- iris[1:4, ]
-knitr::kable(data, caption = "Table caption text.")
-```
+  <match>Table (knitr)</match>
+  <fillin>${rangeCommand("```"+ braces("r, chunk-label, echo = FALSE, eval = TRUE, include = TRUE, message = FALSE, results = \"asis\", warning = FALSE") +"\nknitr::kable(%%1, caption = \"Table caption text.\")\n```", "data")}
   </fillin>
+ </item>
+ <item>
+  <match>Table (xtable)</match>
+  <fillin>${rangeCommand("```"+ braces("r, chunk-label, echo = FALSE, eval = TRUE, include = TRUE, message = FALSE, results = \"asis\", warning = FALSE") +"\nprint(xtable::xtable(%%1), comment = FALSE)\n```", "data")}</fillin>
  </item>
  <item>
   <match>YAML header</match>
@@ -445,7 +445,7 @@ Please feel free to adjust it to your needs.
 
 \pagebreak
 
-```{r, chunk-label, echo=FALSE, include=FALSE}
+```{r, echo=FALSE, include=FALSE}
 # Defaults to suppress warnings and messages
 # Figure height and width are set to 7 inches
 # See more options by running str(knitr::opts_chunk$get())
