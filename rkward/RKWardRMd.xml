@@ -181,7 +181,7 @@ A &amp; B \\
  </item>
  <item>
   <match>Code (chunk with defaults)</match>
-  <fillin>${rangeCommand("\n```"+ braces("r, chunk-label, echo = FALSE, eval = FALSE, fig.show = \"hide\", include = FALSE, message = FALSE, results = \"hide\", warning = FALSE") +" %%1```\n", "\nx &lt;- 1\n\n")}</fillin>
+  <fillin>${rangeCommand("\n```"+ braces("r, chunk-label, echo = FALSE, eval = TRUE, fig.show = \"asis\", include = FALSE, message = FALSE, results = \"asis\", warning = FALSE") +" %%1```\n", "\nx &lt;- 1\n\n")}</fillin>
  </item>
  <item>
   <match>Table</match>
@@ -215,8 +215,7 @@ knitr::kable(data, caption = "Table caption text.")
  </item>
  <item>
   <match>YAML header</match>
-    <fillin>
----
+    <fillin>---
 title: "Example R Markdown in RKWard with R version `r getRversion()`"
 author: "Author Name"
 date: "`r Sys.Date()`"
@@ -228,7 +227,6 @@ output:
       toc: yes
 ---
 
-
 ```{r, echo=TRUE}
 # Defaults to suppress warnings and messages
 # Figure height and width are set to 7 inches
@@ -238,7 +236,7 @@ knitr::opts_chunk$set(
   collapse = FALSE, fig.width = 7, fig.height = 7
 )
 ```
-    </fillin>
+</fillin>
  </item>
  <item>
   <match>Footnote</match>
