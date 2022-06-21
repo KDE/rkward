@@ -69,7 +69,7 @@ function rangeCommand(command, def) {
  </item>
  <item>
   <match>Text comment (HTML)</match>
-  <fillin>${rangeCommand("&lt;--!*%%1*--&gt;", "Text")}</fillin>
+  <fillin>${rangeCommand("&lt;!-- %%1 --&gt;", "Text")}</fillin>
  </item>
  <item>
   <match>Image</match>
@@ -140,16 +140,48 @@ $$e^${braces("i\\pi")} + 1$$
   <fillin>${rangeCommand("> %%1", "Text")}</fillin>
  </item>
  <item>
+  <match>Generate Rmd source</match>
+  <fillin>
+knitr::knit_expand(
+  text = "This is RKWard using `R` version {{R_version}} with the `rkward` package {{rkward_version}}.",
+  R_version = getRversion(),
+  rkward_version = packageVersion("rkward"))
+</fillin>
+ </item>
+ <item>
   <match>Separator \-</match>
   <fillin> &amp;shy; </fillin>
+ </item>
+ <item>
+  <match>Heading (Omit heading in table of contents)</match>
+  <fillin># Heading {.unlisted .unnumbered}</fillin>
  </item>
  <item>
   <match>Halfspace \,</match>
   <fillin> &amp;#8239; </fillin>
  </item>
  <item>
+  <match>Read external scripts into a chunk</match>
+  <fillin>
+```{r, file=c(${cursor}'one.R', 'two.R'), echo = FALSE, eval = TRUE, include = FALSE, message = FALSE, warning = FALSE"}
+# One or more external scripts can be read via the file option of a chunk
+```
+</fillin>
+ </item>
+ <item>
+  <match>Write raw LaTeX code</match>
+<fillin>
+```{=latex}
+\begin{tabular}{ll}
+A &amp; B \\
+A &amp; B \\
+\end{tabular}
+```
+</fillin>
+ </item>
+ <item>
   <match>Code (chunk with defaults)</match>
-  <fillin>${rangeCommand("\n```"+ braces("r, echo = FALSE, eval = FALSE, fig.show = \"hide\", include = FALSE, message = FALSE, results = \"hide\", warning = FALSE") +" %%1```\n", "\nx &lt;- 1\n\n")}</fillin>
+  <fillin>${rangeCommand("\n```"+ braces("r, chunk-label, echo = FALSE, eval = FALSE, fig.show = \"hide\", include = FALSE, message = FALSE, results = \"hide\", warning = FALSE") +" %%1```\n", "\nx &lt;- 1\n\n")}</fillin>
  </item>
  <item>
   <match>Table</match>
@@ -185,7 +217,7 @@ knitr::kable(data, caption = "Table caption text.")
   <match>YAML header</match>
     <fillin>
 ---
-title: "Document title"
+title: "Example R Markdown in RKWard with R version `r getRversion()`"
 author: "Author Name"
 date: "`r Sys.Date()`"
 output:
@@ -215,7 +247,7 @@ knitr::opts_chunk$set(
  <item>
    <match>R Markdown HTML template</match>
    <fillin>---
-title: "Document title"
+title: "Example R Markdown in RKWard with R version `r getRversion()`"
 author: "The RKWard Team"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
@@ -254,7 +286,7 @@ Please feel free to adjust it to your needs.
 The HTML file is rendered via rmarkdown::render("/path/to/your_rmarkdown_file.Rmd").
 --&gt;
 
-```{r, echo=TRUE}
+```{r, echo=FALSE, include=FALSE}
 # Defaults to suppress warnings and messages
 # Figure height and width are set to 7 inches
 # See more options by running str(knitr::opts_chunk$get())
@@ -370,7 +402,7 @@ If you like RKWard consider to donate. Some small amount for a cup of coffee or 
  <item>
    <match>R Markdown PDF template</match>
    <fillin>---
-title: "Document title"
+title: "Example R Markdown in RKWard with R version `r getRversion()`"
 author: "The RKWard Team"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
@@ -415,7 +447,7 @@ Please feel free to adjust it to your needs.
 
 \pagebreak
 
-```{r, echo=TRUE}
+```{r, chunk-label, echo=FALSE, include=FALSE}
 # Defaults to suppress warnings and messages
 # Figure height and width are set to 7 inches
 # See more options by running str(knitr::opts_chunk$get())
