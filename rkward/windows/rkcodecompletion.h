@@ -151,9 +151,12 @@ public:
 private:
 	RObject *function;
 	QStringList args;
+	int n_formals_args;
 	QStringList defs;
 	QString fragment;
 	QList<int> matches;
+	void fetchRCompletions();
+	RObject *r_completions_function;
 };
 
 #include <QThread>
@@ -186,5 +189,15 @@ private:
 	QString current_fragment;
 	RKFileCompletionModelWorker *worker;
 };
+
+/*
+class RKRDynamicCompletionModel : public KTextEditor::CodeCompletionModel, public KTextEditor::CodeCompletionModelControllerInterface {
+	Q_OBJECT
+public:
+	RKRDynamicCompletionModel(RKCompletionManager *manager);
+	void setFunction(RObject *function);
+private:
+	bool waiting_for_reply;
+}; */
 
 #endif

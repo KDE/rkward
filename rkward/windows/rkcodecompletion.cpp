@@ -22,6 +22,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../core/rfunctionobject.h"
 #include "../core/robjectlist.h"
 #include "../settings/rksettingsmodulecommandeditor.h"
+#include "../rbackend/rcommand.h"
+#include "../rbackend/rkrinterface.h"
 
 #include "../debug.h"
 
@@ -718,7 +720,8 @@ KTextEditor::Range RKCallHintModel::completionRange (KTextEditor::View *, const 
 RKArgumentHintModel::RKArgumentHintModel (RKCompletionManager* manager) : RKCompletionModelBase (manager) {
 	RK_TRACE (COMMANDEDITOR);
 
-	function = 0;
+	function = nullptr;
+	r_completions_function = nullptr;
 }
 
 void RKArgumentHintModel::updateCompletionList (RObject* _function, const QString &argument) {
@@ -733,10 +736,13 @@ void RKArgumentHintModel::updateCompletionList (RObject* _function, const QStrin
 			// initialize hint
 			RFunctionObject *fo = static_cast<RFunctionObject*> (function);
 			args = fo->argumentNames ();
+			n_formals_args = args.size();
 			defs = fo->argumentDefaults ();
+			fetchRCompletions();
 		} else {
 			args.clear ();
 			defs.clear ();
+			n_formals_args = 0;
 		}
 	}
 
@@ -760,6 +766,51 @@ void RKArgumentHintModel::updateCompletionList (RObject* _function, const QStrin
 	}
 }
 
+void RKArgumentHintModel::fetchRCompletions() {
+	RK_TRACE(COMMANDEDITOR);
+	r_completions_function = function;
+	RCommand *command = new RCommand("local({\n"
+	                                 "	f <- function(fname) {\n"
+	                                 "		oldrcs <- utils::rc.settings()\n"
+	                                 "		oldrcopts <- utils::rc.options()\n"
+	                                 "		on.exit({do.call(utils::rc.settings, as.list(oldrcs)); utils::rc.options(oldrcopts)})\n"
+	                                 "		utils::rc.settings(ops=FALSE, ns=FALSE, args=TRUE, dots=FALSE, func=FALSE, ipck=FALSE, S3=TRUE, data=FALSE, help=FALSE, argdb=TRUE, fuzzy=FALSE, quotes=FALSE, files=FALSE)\n"
+	                                 "		utils::rc.options(funarg.suffix=\"\")\n"
+	                                 "		utils:::.assignLinebuffer(paste0(fname, \"(\"))\n"
+	                                 "		utils:::.assignToken(\"\")\n"
+	                                 "		utils:::.assignStart(nchar(fname)+1)\n"
+	                                 "		utils:::.assignEnd(nchar(fname)+1)\n"
+	                                 "		utils:::.completeToken()\n"
+	                                 "		utils:::.retrieveCompletions()\n"
+	                                 "	}\n"
+	                                 "	f(\"plot\")\n"
+	                                 "})\n", RCommand::Sync | RCommand::PriorityCommand | RCommand::GetStringVector);
+	command->whenFinished(this, [this](RCommand *command) {
+		if (r_completions_function != function) {
+			QTimer::singleShot(0, this, &RKArgumentHintModel::fetchRCompletions);
+			return;
+		}
+		if (command->getDataType() == RCommand::StringVector) {
+			QStringList nargs;
+			auto rargs = command->stringVector();
+			for (int i = 0; i < rargs.size(); ++i) {
+				if (!args.contains(rargs.at(i))) {
+					nargs.append(rargs.at(i));
+				}
+			}
+			if (!nargs.isEmpty()) {
+				beginInsertRows(index(0, 0, QModelIndex()), args.size(), args.size()+nargs.size());
+				args.append(nargs);
+				endInsertRows();
+			}
+		} else {
+			RK_ASSERT(false);
+		}
+		r_completions_function = nullptr;
+	});
+	RInterface::issueCommand(command);
+}
+
 QVariant RKArgumentHintModel::data (const QModelIndex& index, int role) const {
 	if (isHeaderItem (index)) {
 		if (role == Qt::DisplayRole) return i18n ("Function arguments");
@@ -781,6 +832,7 @@ QVariant RKArgumentHintModel::data (const QModelIndex& index, int role) const {
 	} else if (role == KTextEditor::CodeCompletionModel::CompletionRole) {
 		return KTextEditor::CodeCompletionModel::Function;
 	} else if (role == KTextEditor::CodeCompletionModel::MatchQuality) {
+		if (matches.value(row) >= n_formals_args) return (0);  // Argument names returned from R completion. This could be _lot_ (S3), so lower priority
 		return (20);
 	}
 
