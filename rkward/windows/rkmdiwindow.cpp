@@ -356,6 +356,7 @@ void RKMDIWindow::showStatusMessageNow() {
 	if (!status_message.isEmpty ()) {
 		status_popup_container->resize (size ());
 		status_popup_container->setMaximumWidth(width()); // also in resizeEvent(). Without this, extra long messages could force the whole preview window to resize, taking up all horziontal space.
+		status_popup_container->setMinimumWidth(width()/2);
 		status_popup_container->show ();
 		if (status_popup->text () == status_message) {
 			if (!status_popup->isVisible ()) status_popup->animatedShow ();  // it might have been closed by user. And no, simply show() is _not_ good enough. KF5 (5.15.0)
@@ -398,6 +399,7 @@ void RKMDIWindow::clearStatusMessage () {
 void RKMDIWindow::resizeEvent (QResizeEvent*) {
 	if (status_popup_container && status_popup_container->isVisible ()) {
 		status_popup_container->setMaximumWidth(width());
+		status_popup_container->setMinimumWidth(width()/2);
 		status_popup_container->resize(QSize(width(), status_popup->height () + 20));
 	}
 }
