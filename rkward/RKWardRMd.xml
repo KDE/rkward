@@ -225,6 +225,8 @@ output:
       highlight: kate
       number_sections: yes
       toc: yes
+urlcolor: blue
+linkcolor: red
 ---
 
 ```{r, echo=TRUE}
@@ -257,6 +259,8 @@ output:
       toc_float: true
       toc_collapsed: true
 number_sections: true
+urlcolor: blue
+linkcolor: red
 ---
 
 &lt;!--
@@ -410,6 +414,8 @@ output:
       number_sections: yes
       toc: yes
 number_sections: true
+urlcolor: blue
+linkcolor: red
 ---
 
 &lt;!--
