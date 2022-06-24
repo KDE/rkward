@@ -914,7 +914,7 @@ void RKCommandEditorWindow::doRenderPreview () {
 		preview->setLabel (i18n ("Preview of generated plot"));
 		command = "olddev <- dev.cur()\n"
 		          ".rk.startPreviewDevice(%2)\n"
-		          "try(source(%1, local=TRUE))\n"
+		          "try(source(%1, local=TRUE, print.eval=TRUE))\n"
 		          "if (olddev != 1) dev.set(olddev)\n";
 		command = command.arg (RObject::rQuote (preview_input_file->fileName ()), RObject::rQuote (preview_manager->previewId ()));
 	} else if (mode == ConsolePreview) {
