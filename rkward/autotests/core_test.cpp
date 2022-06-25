@@ -25,6 +25,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../core/robject.h"
 #include "../core/robjectlist.h"
 #include "../core/renvironmentobject.h"
+#include "../misc/rkcommonfunctions.h"
 
 void RKDebug (int, int, const char* fmt, ...) {
 	va_list ap;
@@ -96,8 +97,7 @@ private slots:
 	void cleanup() {
 		waitForAllFinished();
 	}
-	void initTestCase()
-	{
+	void initTestCase() {
 		qDebug("Initializing test case"); // Remove me. For diagnostics of test exception on Windows CI
 		qputenv("QTWEBENGINE_CHROMIUM_FLAGS", "--no-sandbox"); // Allow test to be run as root, which, for some reason is being done on the SuSE CI.
 		QLoggingCategory::setFilterRules("qt.text.layout=false");  // Filter out some noise
@@ -108,6 +108,11 @@ private slots:
 		main_win = new RKWardMainWindow();
 		main_win->testmode_suppress_dialogs = true;
 		waitForBackendStarted();
+	}
+
+	void basicCheck() {
+		// detect basic installation problems that are likely to cause (almost) everything else to fail
+		QVERIFY(!RKCommonFunctions::getRKWardDataDir().isEmpty());
 	}
 
 	void getIntVector() {
