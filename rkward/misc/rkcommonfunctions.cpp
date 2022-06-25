@@ -162,14 +162,21 @@ namespace RKCommonFunctions {
 		}
 	}
 
+	static QString findPathFromAppDir(const QStringList &candidates) {
+		for (int i = 0;  i < candidates.size(); ++i) {
+			QString candidate = QCoreApplication::applicationDirPath() + '/' + candidates[i] + '/';
+			if (QFile::exists(candidate)) return candidate;
+		}
+		return QString();
+	}
+
 	QString getRKWardDataDir () {
 		static QString rkward_data_dir;
 		if (rkward_data_dir.isNull ()) {
-			QString inside_build_tree = QCoreApplication::applicationDirPath() + "/rkwardinstall/";
-			QString inside_build_tree2 = QCoreApplication::applicationDirPath() + "/../rkwardinstall/";
-			if (QFile::exists(inside_build_tree) || QFile::exists(inside_build_tree2)) {
+			QString inside_build_tree = findPathFromAppDir(QStringList() << "rkwardinstall" << "../rkwardinstall" << "../rkward/rkwardinstall");
+			if (!inside_build_tree.isEmpty()) {
 				RK_DEBUG(APP, DL_INFO, "Running from inside build tree");
-				rkward_data_dir = QFile::exists(inside_build_tree) ? inside_build_tree : inside_build_tree2;
+				rkward_data_dir = inside_build_tree;
 				return rkward_data_dir;
 			}
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 4, 0))
@@ -186,7 +193,7 @@ namespace RKCommonFunctions {
 				}
 			}
 			rkward_data_dir = "";   // prevents checking again
-			RK_DEBUG(APP, DL_WARNING, "resource.ver not found. Data path(s): %s", qPrintable (QStandardPaths::standardLocations (QStandardPaths::AppDataLocation).join (':')));
+			RK_DEBUG(APP, DL_ERROR, "resource.ver not found. Data path(s): %s", qPrintable (QStandardPaths::standardLocations (QStandardPaths::AppDataLocation).join (':')));
 		}
 		return rkward_data_dir;
 	}

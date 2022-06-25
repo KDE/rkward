@@ -378,7 +378,7 @@ void RKWardMainWindow::startR () {
 		QString package = QDir (packages_path).absoluteFilePath (packages[i]);
 		if (RKSettingsModuleGeneral::rkwardVersionChanged ()) {
 			RK_DEBUG(APP, DL_INFO, "RKWard version changed. Discarding cached package at %s", qPrintable (package));
-			RK_ASSERT(QFile::remove(package));
+			if(QFileInfo::exists(package)) RK_ASSERT(QFile::remove(package));
 		}
 		if (!QFileInfo::exists(package)) {
 			QString source = RKCommonFunctions::getRKWardDataDir() + "/rpackages/" + packages[i];
