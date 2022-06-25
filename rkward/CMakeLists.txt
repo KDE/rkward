@@ -129,3 +129,4 @@ INSTALL(FILES RKWardLaTeX.xml DESTINATION ${DATA_INSTALL_DIR}/ktexteditor_snippe
 INSTALL(FILES RKWardR.xml DESTINATION ${DATA_INSTALL_DIR}/ktexteditor_snippets/data)
 INSTALL(FILES RKWardroxygen2.xml DESTINATION ${DATA_INSTALL_DIR}/ktexteditor_snippets/data)
 INSTALL(FILES RKWardutils.xml DESTINATION ${DATA_INSTALL_DIR}/ktexteditor_snippets/data)
+INSTALL(FILES RKWardpapaja.xml DESTINATION ${DATA_INSTALL_DIR}/ktexteditor_snippets/data)
