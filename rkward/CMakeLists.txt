@@ -77,17 +77,14 @@ ENDIF(KF5Crash_FOUND)
 
 INSTALL(DIRECTORY plugins/ pages DESTINATION ${DATA_INSTALL_DIR}/rkward)
 INSTALL(FILES resource.ver DESTINATION ${DATA_INSTALL_DIR}/rkward)
-IF(NOT WIN32)
-	# This is for running directly from the build tree. Not on windows for now (until cmake supports symlinks, there)
-	ADD_CUSTOM_TARGET(local_install ALL
-		COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/rkwardinstall
-		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_CURRENT_SOURCE_DIR}/pages ${CMAKE_CURRENT_BINARY_DIR}/rkwardinstall/pages
-		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_CURRENT_SOURCE_DIR}/plugins ${CMAKE_CURRENT_BINARY_DIR}/rkwardinstall/plugins
-		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_CURRENT_SOURCE_DIR}/resource.ver ${CMAKE_CURRENT_BINARY_DIR}/rkwardinstall/resource.ver
-		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_CURRENT_SOURCE_DIR}/scriptbackends ${CMAKE_CURRENT_BINARY_DIR}/rkwardinstall/phpfiles
-		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_CURRENT_BINARY_DIR}/rbackend/rpackages ${CMAKE_CURRENT_BINARY_DIR}/rkwardinstall/rpackages
-	)
-ENDIF(NOT WIN32)
+# This is for running directly from the build tree.
+ADD_CUSTOM_TARGET(local_install ALL
+	COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/rkwardinstall
+	COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_CURRENT_SOURCE_DIR}/pages ${CMAKE_CURRENT_BINARY_DIR}/rkwardinstall/pages
+	COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_CURRENT_SOURCE_DIR}/plugins ${CMAKE_CURRENT_BINARY_DIR}/rkwardinstall/plugins
+	COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_CURRENT_SOURCE_DIR}/resource.ver ${CMAKE_CURRENT_BINARY_DIR}/rkwardinstall/resource.ver
+	COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_CURRENT_SOURCE_DIR}/scriptbackends ${CMAKE_CURRENT_BINARY_DIR}/rkwardinstall/phpfiles
+	COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_CURRENT_BINARY_DIR}/rbackend/rpackages ${CMAKE_CURRENT_BINARY_DIR}/rkwardinstall/rpackages)
 
 
 IF(APPLE)
