@@ -61,6 +61,6 @@ rkward_executable_tests(
 # ecm_mark_as_test(linktest0)
 
 add_executable(linktest linktest.cpp)
-target_link_libraries(linktest PRIVATE Qt5::Test Qt5::WebEngineWidgets)
+target_link_libraries(linktest PRIVATE Qt5::Test)
 add_test(NAME rkward-linktest COMMAND linktest)
 ecm_mark_as_test(linktest)
