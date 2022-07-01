@@ -17,6 +17,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QDomElement>
 
 #include <kxmlguifactory.h>
+#include <kxmlgui_version.h>
 #include <ktoolbar.h>
 #include <KLocalizedString>
 
@@ -59,7 +60,11 @@ RKXMLGUIPreviewArea::RKXMLGUIPreviewArea (const QString &label, QWidget* parent)
 	wrapper_widget = nullptr;
 	current = nullptr;
 	internal_layout = new QVBoxLayout(this);
+#if KXMLGUI_VERSION < QT_VERSION_CHECK(5, 80, 0)  // guestimate, earlier cutoff may be more correct
 	factory = new KXMLGUIFactory(new RKXMLGUIPreviewBuilder(this, new QMenuBar(this)), this);
+#else
+	factory = new KXMLGUIFactory(new KXMLGUIBuilder(this), this);
+#endif
 }
 
 RKXMLGUIPreviewArea::~RKXMLGUIPreviewArea () {
