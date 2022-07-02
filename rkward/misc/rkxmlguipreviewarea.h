@@ -27,18 +27,14 @@ class RKXMLGUIPreviewArea : public QWidget {
 public:
 	RKXMLGUIPreviewArea (const QString &label, QWidget* parent);
 	~RKXMLGUIPreviewArea ();
-	/** Returns a wrapper widget (created on first call of this function) that contains this widget along with a caption (see setLabel()), menu button, and close button. */
-	QWidget *wrapperWidget ();
-	QString label () const { return _label; };
-	void setLabel (const QString &label);
+	QString label() const;
+	void setLabel(const QString &label);
 	void setWindow(RKMDIWindow* window);
 protected slots:
 	void prepareMenu ();
 signals:
 	void previewClosed (RKXMLGUIPreviewArea *preview);
 private:
-	QWidget *wrapper_widget;
-	QString _label;
 	QLabel *lab;
 	QMenu *menu;
 	QMenuBar *menubar;

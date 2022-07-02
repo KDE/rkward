@@ -247,9 +247,8 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl &_url,
 	layout->setContentsMargins (0, 0, 0, 0);
 	QSplitter* preview_splitter = new QSplitter (this);
 	preview_splitter->addWidget (m_view);
-	QWidget *preview_widget = preview->wrapperWidget ();
-	preview_splitter->addWidget (preview_widget);
-	preview_widget->hide ();
+	preview_splitter->addWidget(preview);
+	preview->hide();
 	connect (m_doc, &KTextEditor::Document::documentSavedOrUploaded, this, &RKCommandEditorWindow::documentSaved);
 	layout->addWidget(preview_splitter);
 
@@ -568,7 +567,7 @@ void RKCommandEditorWindow::discardPreview () {
 	RK_TRACE (COMMANDEDITOR);
 
 	if (preview_dir) {
-		preview->wrapperWidget ()->hide ();
+		preview->hide ();
 		preview_manager->setPreviewDisabled ();
 		RInterface::issueCommand (QString (".rk.killPreviewDevice(%1)\nrk.discard.preview.data (%1)").arg (RObject::rQuote(preview_manager->previewId ())), RCommand::App | RCommand::Sync);
 		delete preview_dir;
@@ -943,7 +942,7 @@ void RKCommandEditorWindow::doRenderPreview () {
 		RK_ASSERT (false);
 	}
 
-	preview->wrapperWidget ()->show ();
+	preview->show ();
 
 	RCommand *rcommand = new RCommand (".rk.with.window.hints (local ({\n" + command + QStringLiteral ("}), \"\", ") + RObject::rQuote (preview_manager->previewId ()) + ", style=\"preview\")", RCommand::App);
 	preview_manager->setCommand (rcommand);

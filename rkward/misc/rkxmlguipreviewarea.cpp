@@ -59,10 +59,42 @@ private:
 RKXMLGUIPreviewArea::RKXMLGUIPreviewArea (const QString &label, QWidget* parent) : QWidget (parent) {
 	RK_TRACE (PLUGIN);
 
-	_label = label;
-	wrapper_widget = nullptr;
 	current = nullptr;
+	menubar = nullptr;
+	builder = nullptr;
+	factory = nullptr;
+
+	QVBoxLayout *vl = new QVBoxLayout(this);
+	vl->setContentsMargins(0, 0, 0, 0);
+	QFrame *line = new QFrame();
+	line->setFrameShape(QFrame::HLine);
+	vl->addWidget(line);
+	QHBoxLayout *hl = new QHBoxLayout();
+	vl->addLayout(hl);
+	lab = new QLabel(label);
+	QFont fnt(lab->font());
+	fnt.setBold(true);
+	lab->setFont(fnt);
+	lab->setAlignment(Qt::AlignCenter);
+	QToolButton *tb = new QToolButton();
+	tb->setAutoRaise(true);
+	tb->setIcon(RKStandardIcons::getIcon(RKStandardIcons::ActionDelete));
+	connect(tb, &QAbstractButton::clicked, this, [this]() { hide(); emit previewClosed(this); });
+
+	QToolButton *menu_button = new QToolButton(this);
+	menu_button->setPopupMode(QToolButton::InstantPopup);
+	menu_button->setIcon(RKStandardIcons::getIcon(RKStandardIcons::ActionShowMenu));
+	menu_button->setMenu(menu = new QMenu(this));
+	connect(menu, &QMenu::aboutToShow, this, &RKXMLGUIPreviewArea::prepareMenu);
+
+	hl->addWidget(menu_button);
+	hl->addStretch();
+	hl->addWidget(lab);
+	hl->addWidget(tb);
+	hl->addStretch();
 	internal_layout = new QVBoxLayout(this);
+	vl->addLayout(internal_layout);
+
 	menubar = new QMenuBar(nullptr); // it is important that the menubar never is a child of the main window, not even indirectly! https://bugs.kde.org/show_bug.cgi?id=416911
 	builder = new RKXMLGUIPreviewBuilder(this, menubar);
 	factory = new KXMLGUIFactory(builder, this);
@@ -71,75 +103,36 @@ RKXMLGUIPreviewArea::RKXMLGUIPreviewArea (const QString &label, QWidget* parent)
 RKXMLGUIPreviewArea::~RKXMLGUIPreviewArea () {
 	RK_TRACE (PLUGIN);
 
-	if (current) {
+	if (current && factory) {
 		factory->removeClient(current);
 		current->setFactory (0);
 	}
-	if (wrapper_widget) wrapper_widget->deleteLater();
 	delete menubar;
 	delete builder;
 	delete factory;
 }
 
 void RKXMLGUIPreviewArea::setLabel (const QString& label) {
-	RK_TRACE (PLUGIN);
-
-	if (label == _label) return;
-	_label = label;
-	if (wrapper_widget) {
-		lab->setText (label);
-	}
+	RK_TRACE(PLUGIN);
+	lab->setText(label);
 }
 
-QWidget* RKXMLGUIPreviewArea::wrapperWidget () {
-	if (wrapper_widget) return wrapper_widget;
-
-	wrapper_widget = new QWidget ();
-
-	QVBoxLayout *vl = new QVBoxLayout (wrapper_widget);
-	vl->setContentsMargins (0, 0, 0, 0);
-	QFrame *line = new QFrame (wrapper_widget);
-	line->setFrameShape (QFrame::HLine);
-	vl->addWidget (line);
-	QHBoxLayout *hl = new QHBoxLayout ();
-	vl->addLayout (hl);
-	lab = new QLabel (_label, wrapper_widget);
-	QFont fnt (lab->font ());
-	fnt.setBold (true);
-	lab->setFont (fnt);
-	lab->setAlignment (Qt::AlignCenter);
-	QToolButton *tb = new QToolButton (wrapper_widget);
-	tb->setAutoRaise (true);
-	tb->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDelete));
-	connect (tb, &QAbstractButton::clicked, this, [this]() { wrapper_widget->hide(); emit previewClosed(this); });
-
-	QToolButton *menu_button = new QToolButton(this);
-	menu_button->setPopupMode(QToolButton::InstantPopup);
-	menu_button->setIcon(RKStandardIcons::getIcon(RKStandardIcons::ActionShowMenu));
-	menu_button->setMenu(menu = new QMenu(wrapper_widget));
-	connect(menu, &QMenu::aboutToShow, this, &RKXMLGUIPreviewArea::prepareMenu);
-
-	hl->addWidget (menu_button);
-	hl->addStretch ();
-	hl->addWidget (lab);
-	hl->addWidget (tb);
-	hl->addStretch ();
-
-	vl->addWidget(this);
-	show ();
-
-	return wrapper_widget;
+QString RKXMLGUIPreviewArea::label() const {
+	RK_TRACE(PLUGIN);
+	return lab->text();
 }
 
 void RKXMLGUIPreviewArea::setWindow(RKMDIWindow* window) {
+	RK_TRACE(PLUGIN);
+
 	if (current) {
 		factory->removeClient(current);  // _always_ remove before adding, or the previous child will be leaked in the factory
 	}
 	window->setWindowStyleHint("preview");
 	current = window->getPart();
-	factory->addClient(current);
 	internal_layout->addWidget(window);
-	QList<QAction*> acts = wrapper_widget->actions();
+	factory->addClient(current);
+	QList<QAction*> acts = actions();
 	for (int i = 0; i < acts.size (); ++i) acts[i]->setShortcutContext(Qt::WidgetWithChildrenShortcut);
 	RKWorkplace::mainWorkplace()->setWindowNotManaged(window);
 }
