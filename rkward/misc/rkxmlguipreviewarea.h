@@ -8,17 +8,21 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #ifndef RKXMLGUIPREVIEWAREA_H
 #define RKXMLGUIPREVIEWAREA_H
 
-#include <kxmlguiwindow.h>
 #include <kparts/part.h>
 
+#include <QWidget>
+#include <QMenuBar>
 #include <QPointer>
+#include <QVBoxLayout>
 
 class QMenu;
 class QToolButton;
 class QLabel;
 class RKMDIWindow;
+class KXMLGUIBuilder;
+class KXMLGUIFactory;
 
-class RKXMLGUIPreviewArea : public KXmlGuiWindow {
+class RKXMLGUIPreviewArea : public QWidget {
 	Q_OBJECT
 public:
 	RKXMLGUIPreviewArea (const QString &label, QWidget* parent);
@@ -37,7 +41,11 @@ private:
 	QString _label;
 	QLabel *lab;
 	QMenu *menu;
+	QMenuBar *menubar;
 	QPointer<KParts::Part> current;
+	KXMLGUIFactory *factory;
+	KXMLGUIBuilder *builder;
+	QVBoxLayout *internal_layout;
 };
 
 class RCommand;

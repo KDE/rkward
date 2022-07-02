@@ -14,9 +14,11 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QWidgetAction>
 #include <QLabel>
 #include <QVBoxLayout>
+#include <QDomElement>
 
-#include <kxmlguifactory.h>
-#include <ktoolbar.h>
+#include <KXMLGUIFactory>
+#include <KXMLGUIBuilder>
+#include <KToolBar>
 #include <KLocalizedString>
 
 #include "../windows/rkmdiwindow.h"
@@ -27,25 +29,56 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-RKXMLGUIPreviewArea::RKXMLGUIPreviewArea (const QString &label, QWidget* parent) : KXmlGuiWindow (parent) {
+class RKXMLGUIPreviewBuilder : public KXMLGUIBuilder {
+public:
+	RKXMLGUIPreviewBuilder(QWidget* parent, QMenuBar* menubar) : KXMLGUIBuilder(parent), menubar(menubar) {};
+	QStringList containerTags() const override {
+		QStringList ret;
+		ret << QStringLiteral("menubar") << QStringLiteral("menu");
+		return ret;
+	}
+	QWidget* createContainer(QWidget *parent, int index, const QDomElement &element, QAction *&containerAction) override {
+		QString tagname = element.tagName().toLower();
+		if (tagname == QStringLiteral("menubar")) {
+			return menubar;
+		}
+		// only menus will actually be built, as we effectively disabled toolbars via containerTags(), above
+		return KXMLGUIBuilder::createContainer(parent, index, element, containerAction);
+	}
+	void removeContainer(QWidget *container, QWidget *parent, QDomElement &element, QAction *containerAction) override {
+		if (container == menubar) {
+			menubar->clear();
+			return; // do not delete it
+		}
+		KXMLGUIBuilder::removeContainer(container, parent, element, containerAction);
+	}
+private:
+	QMenuBar *menubar;
+};
+
+RKXMLGUIPreviewArea::RKXMLGUIPreviewArea (const QString &label, QWidget* parent) : QWidget (parent) {
 	RK_TRACE (PLUGIN);
 
 	_label = label;
-	wrapper_widget = 0;
-	current = 0;
-	setWindowFlags (Qt::Widget);
-	setMenuBar (new QMenuBar (this));
-	setHelpMenuEnabled (false);
+	wrapper_widget = nullptr;
+	current = nullptr;
+	internal_layout = new QVBoxLayout(this);
+	menubar = new QMenuBar(nullptr); // it is important that the menubar never is a child of the main window, not even indirectly! https://bugs.kde.org/show_bug.cgi?id=416911
+	builder = new RKXMLGUIPreviewBuilder(this, menubar);
+	factory = new KXMLGUIFactory(builder, this);
 }
 
 RKXMLGUIPreviewArea::~RKXMLGUIPreviewArea () {
 	RK_TRACE (PLUGIN);
 
 	if (current) {
-		removeChildClient (current);
+		factory->removeClient(current);
 		current->setFactory (0);
 	}
-	if (wrapper_widget) wrapper_widget->deleteLater();  // technically, the wrapper widget is the parent of this, not the other way around
+	if (wrapper_widget) wrapper_widget->deleteLater();
+	delete menubar;
+	delete builder;
+	delete factory;
 }
 
 void RKXMLGUIPreviewArea::setLabel (const QString& label) {
@@ -92,7 +125,7 @@ QWidget* RKXMLGUIPreviewArea::wrapperWidget () {
 	hl->addWidget (tb);
 	hl->addStretch ();
 
-	vl->addWidget (this);
+	vl->addWidget(this);
 	show ();
 
 	return wrapper_widget;
@@ -100,19 +133,13 @@ QWidget* RKXMLGUIPreviewArea::wrapperWidget () {
 
 void RKXMLGUIPreviewArea::setWindow(RKMDIWindow* window) {
 	if (current) {
-		removeChildClient(current);
-		factory()->removeClient(current);  // _always_ remove before adding, or the previous child will be leaked in the factory
+		factory->removeClient(current);  // _always_ remove before adding, or the previous child will be leaked in the factory
 	}
 	window->setWindowStyleHint("preview");
 	current = window->getPart();
-	insertChildClient(current);
-	setCentralWidget(window);
-	createGUI();
-	menuBar()->hide();
-	QList<KToolBar*> tbars = toolBars();
-	for (int i = 0; i < tbars.size(); ++i) tbars[i]->hide();
-	// avoid shortcut conflicts
-	QList<QAction*> acts = actions();
+	factory->addClient(current);
+	internal_layout->addWidget(window);
+	QList<QAction*> acts = wrapper_widget->actions();
 	for (int i = 0; i < acts.size (); ++i) acts[i]->setShortcutContext(Qt::WidgetWithChildrenShortcut);
 	RKWorkplace::mainWorkplace()->setWindowNotManaged(window);
 }
@@ -122,7 +149,7 @@ void RKXMLGUIPreviewArea::prepareMenu () {
 
 	// flatten menu, and try to purge irrelevant actions
 	menu->clear ();
-	QList<QAction*> entries = menuBar ()->actions ();
+	QList<QAction*> entries = menubar->actions ();
 	for (int i = 0; i < entries.size (); ++i) {
 		QMenu *smenu = entries[i]->menu ();
 		if (!smenu) continue;    // Don't think it can happen...
@@ -245,4 +272,3 @@ QString RKPreviewManager::shortStatusLabel() const {
 		return (i18n ("Preview up to date"));
 	}
 }
-
