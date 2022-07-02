@@ -16,9 +16,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QVBoxLayout>
 #include <QDomElement>
 
-#include <kxmlguifactory.h>
-#include <kxmlgui_version.h>
-#include <ktoolbar.h>
+#include <KXMLGUIFactory>
+#include <KXMLGUIBuilder>
+#include <KToolBar>
 #include <KLocalizedString>
 
 #include "../windows/rkmdiwindow.h"
@@ -46,7 +46,10 @@ public:
 		return KXMLGUIBuilder::createContainer(parent, index, element, containerAction);
 	}
 	void removeContainer(QWidget *container, QWidget *parent, QDomElement &element, QAction *containerAction) override {
-		if (container == menubar) return; // do not delete this
+		if (container == menubar) {
+			menubar->clear();
+			return; // do not delete it
+		}
 		KXMLGUIBuilder::removeContainer(container, parent, element, containerAction);
 	}
 private:
@@ -60,11 +63,9 @@ RKXMLGUIPreviewArea::RKXMLGUIPreviewArea (const QString &label, QWidget* parent)
 	wrapper_widget = nullptr;
 	current = nullptr;
 	internal_layout = new QVBoxLayout(this);
-#if KXMLGUI_VERSION < QT_VERSION_CHECK(5, 80, 0)  // guestimate, earlier cutoff may be more correct
-	factory = new KXMLGUIFactory(new RKXMLGUIPreviewBuilder(this, new QMenuBar(this)), this);
-#else
-	factory = new KXMLGUIFactory(new KXMLGUIBuilder(this), this);
-#endif
+	menubar = new QMenuBar(nullptr); // it is important that the menubar never is a child of the main window, not even indirectly! https://bugs.kde.org/show_bug.cgi?id=416911
+	builder = new RKXMLGUIPreviewBuilder(this, menubar);
+	factory = new KXMLGUIFactory(builder, this);
 }
 
 RKXMLGUIPreviewArea::~RKXMLGUIPreviewArea () {
@@ -75,6 +76,9 @@ RKXMLGUIPreviewArea::~RKXMLGUIPreviewArea () {
 		current->setFactory (0);
 	}
 	if (wrapper_widget) wrapper_widget->deleteLater();
+	delete menubar;
+	delete builder;
+	delete factory;
 }
 
 void RKXMLGUIPreviewArea::setLabel (const QString& label) {
@@ -143,7 +147,6 @@ void RKXMLGUIPreviewArea::setWindow(RKMDIWindow* window) {
 void RKXMLGUIPreviewArea::prepareMenu () {
 	RK_TRACE (PLUGIN);
 
-	QMenuBar *menubar = findChild<QMenuBar*>(QString(), Qt::FindDirectChildrenOnly);
 	// flatten menu, and try to purge irrelevant actions
 	menu->clear ();
 	QList<QAction*> entries = menubar->actions ();

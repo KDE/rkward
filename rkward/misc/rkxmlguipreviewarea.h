@@ -8,7 +8,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #ifndef RKXMLGUIPREVIEWAREA_H
 #define RKXMLGUIPREVIEWAREA_H
 
-#include <kxmlguibuilder.h>
 #include <kparts/part.h>
 
 #include <QWidget>
@@ -20,6 +19,8 @@ class QMenu;
 class QToolButton;
 class QLabel;
 class RKMDIWindow;
+class KXMLGUIBuilder;
+class KXMLGUIFactory;
 
 class RKXMLGUIPreviewArea : public QWidget {
 	Q_OBJECT
@@ -43,6 +44,7 @@ private:
 	QMenuBar *menubar;
 	QPointer<KParts::Part> current;
 	KXMLGUIFactory *factory;
+	KXMLGUIBuilder *builder;
 	QVBoxLayout *internal_layout;
 };
 
