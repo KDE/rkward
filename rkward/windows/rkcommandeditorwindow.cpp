@@ -39,6 +39,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <kio/job.h>
 #include <kconfiggroup.h>
 #include <krandom.h>
+#include <kwidgetsaddons_version.h>
 
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkstandardicons.h"
@@ -361,7 +362,11 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	RKStandardActions::onlineHelp (this, this);
 
 	actionmenu_run_block = new KActionMenu (i18n ("Run block"), this);
-	actionmenu_run_block->setDelayed (false);	// KDE4: TODO does not work correctly in the tool bar.
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 77, 0)
+	actionmenu_run_block->setPopupMode(QToolButton::InstantPopup);
+#else
+	actionmenu_run_block->setDelayed(false);
+#endif
 	ac->addAction ("run_block", actionmenu_run_block);
 	connect (actionmenu_run_block->menu(), &QMenu::aboutToShow, this, &RKCommandEditorWindow::clearUnusedBlocks);
 	actionmenu_mark_block = new KActionMenu (i18n ("Mark selection as block"), this);
@@ -378,7 +383,11 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	action_setwd_to_script->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionCDToScript));
 
 	KActionMenu* actionmenu_preview = new KActionMenu (QIcon::fromTheme ("view-preview"), i18n ("Preview"), this);
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 77, 0)
+	actionmenu_preview->setPopupMode(QToolButton::InstantPopup);
+#else
 	actionmenu_preview->setDelayed (false);
+#endif
 	preview_modes = new QActionGroup (this);
 	actionmenu_preview->addAction (action_no_preview = new QAction (RKStandardIcons::getIcon (RKStandardIcons::ActionDelete), i18n ("No preview"), preview_modes));
 	actionmenu_preview->addAction (new QAction (QIcon::fromTheme ("preview_math"), i18n ("R Markdown"), preview_modes));
