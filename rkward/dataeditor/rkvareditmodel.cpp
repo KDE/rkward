@@ -577,7 +577,7 @@ QVariant RKVarEditMetaModel::data (const QModelIndex& index, int role) const {
 Qt::ItemFlags RKVarEditMetaModel::flags (const QModelIndex& index) const {
 	RK_TRACE (EDITOR);
 
-	Qt::ItemFlags flags = 0;
+	Qt::ItemFlags flags(Qt::NoItemFlags);
 
 	if (!index.isValid ()) return flags;
 	int row = index.row ();

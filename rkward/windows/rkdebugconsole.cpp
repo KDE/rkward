@@ -61,7 +61,7 @@ RKDebugConsole::RKDebugConsole (QWidget *parent, bool tool_window, const char *n
 	lower_layout->addWidget (prompt_label);
 	reply_edit = new KHistoryComboBox (this);
 	reply_edit->setSizePolicy (QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
-	connect (reply_edit, static_cast<void (KHistoryComboBox::*)()>(&KHistoryComboBox::returnPressed), this, &RKDebugConsole::sendReplySlot);
+	connect (reply_edit, static_cast<void (KHistoryComboBox::*)(const QString&)>(&KHistoryComboBox::returnPressed), this, &RKDebugConsole::sendReplySlot);
 	lower_layout->addWidget (reply_edit);
 	setFocusProxy (reply_edit);
 

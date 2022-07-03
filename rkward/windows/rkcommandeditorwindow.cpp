@@ -40,6 +40,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <kconfiggroup.h>
 #include <krandom.h>
 #include <kwidgetsaddons_version.h>
+#include <ktexteditor_version.h>
 
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkstandardicons.h"
@@ -83,12 +84,16 @@ QMap<QString, KTextEditor::Document*> RKCommandEditorWindow::unnamed_documents;
 
 KTextEditor::Document* createDocument(bool with_signals) {
 	if (with_signals) {
+#if KTEXTEDITOR_VERSION < QT_VERSION_CHECK(5,80,0)
 		emit KTextEditor::Editor::instance()->application()->aboutToCreateDocuments();
+#endif
 	}
 	KTextEditor::Document* ret = KTextEditor::Editor::instance()->createDocument (RKWardMainWindow::getMain ());
 	if (with_signals) {
 		emit KTextEditor::Editor::instance()->application()->documentCreated(ret);
+#if KTEXTEDITOR_VERSION < QT_VERSION_CHECK(5,80,0)
 		emit KTextEditor::Editor::instance()->application()->documentsCreated(QList<KTextEditor::Document*>() << ret);
+#endif
 	}
 	return ret;
 }
@@ -307,12 +312,16 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 	if (views.isEmpty ()) {
 		if (visible_to_kateplugins) {
 			emit KTextEditor::Editor::instance()->application()->documentWillBeDeleted(m_doc);
+#if KTEXTEDITOR_VERSION < QT_VERSION_CHECK(5,80,0)
 			emit KTextEditor::Editor::instance()->application()->aboutToDeleteDocuments(QList<KTextEditor::Document*>() << m_doc);
+#endif
 		}
 		delete m_doc;
 		if (visible_to_kateplugins) {
 			emit KTextEditor::Editor::instance()->application()->documentDeleted(m_doc);
+#if KTEXTEDITOR_VERSION < QT_VERSION_CHECK(5,80,0)
 			emit KTextEditor::Editor::instance()->application()->documentsDeleted(QList<KTextEditor::Document*>() << m_doc);
+#endif
 		}
 		if (!delete_on_close.isEmpty ()) KIO::del (delete_on_close)->start ();
 		unnamed_documents.remove (_id);
