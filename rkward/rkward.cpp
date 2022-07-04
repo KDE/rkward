@@ -37,6 +37,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KSharedConfig>
 #include <KConfigGroup>
 #include <KColorScheme>
+#include <kwidgetsaddons_version.h>
 
 // application specific includes
 #include "core/rkmodificationtracker.h"
@@ -583,7 +584,6 @@ void RKWardMainWindow::initActions() {
 
 	// collections for the toolbar:
 	open_any_action = new KActionMenu (QIcon::fromTheme("document-open-folder"), i18n ("Open..."), this);
-	open_any_action->setDelayed (false);
 	actionCollection ()->addAction ("open_any", open_any_action);
 
 	open_any_action->addAction (fileOpenWorkspace);
@@ -598,7 +598,6 @@ void RKWardMainWindow::initActions() {
 	//open_any_action->addAction (proxy_import); -> later
 
 	KActionMenu* new_any_action = new KActionMenu (QIcon::fromTheme("document-new"), i18n ("Create..."), this);
-	new_any_action->setDelayed (false);
 	actionCollection ()->addAction ("new_any", new_any_action);
 
 	new_any_action->addAction (new_data_frame);
@@ -606,8 +605,17 @@ void RKWardMainWindow::initActions() {
 	new_any_action->addAction (new_output);
 
 	save_any_action = new KActionMenu (QIcon::fromTheme("document-save"), i18n ("Save..."), this);
-	save_any_action->setDelayed (false);
 	actionCollection ()->addAction ("save_any", save_any_action);
+
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 77, 0)
+	open_any_action->setPopupMode(QToolButton::InstantPopup);
+	new_any_action->setPopupMode(QToolButton::InstantPopup);
+	save_any_action->setPopupMode(QToolButton::InstantPopup);
+#else
+	open_any_action->setDelayed(false);
+	new_any_action->setDelayed(false);
+	save_any_action->setDelayed(false);
+#endif
 
 	save_any_action->addAction (fileSaveWorkspace);
 	save_any_action->addAction (fileSaveWorkspaceAs);

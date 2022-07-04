@@ -24,6 +24,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KConfigGroup>
 #include <KXMLGUIFactory>
 #include <KLocalizedString>
+#include <kcoreaddons_version.h>
 
 #include "../rkward.h"
 #include "rkworkplace.h"
@@ -46,7 +47,11 @@ KatePluginIntegrationApp::KatePluginIntegrationApp(QObject *parent) : QObject (p
 	KTextEditor::Editor::instance()->setApplication(app);
 
 	// enumerate all available kate plugins
-	QVector<KPluginMetaData> plugins = KPluginLoader::findPlugins(QStringLiteral ("ktexteditor"), [](const KPluginMetaData &md) { return md.serviceTypes().contains(QLatin1String("KTextEditor/Plugin")); });
+#if KCOREADDONS_VERSION >= QT_VERSION_CHECK(5,89,0)
+	QVector<KPluginMetaData> plugins = KPluginMetaData::findPlugins(QStringLiteral("ktexteditor"), [](const KPluginMetaData &md) { return md.serviceTypes().contains(QLatin1String("KTextEditor/Plugin")); });
+#else
+	QVector<KPluginMetaData> plugins = KPluginLoader::findPlugins(QStringLiteral("ktexteditor"), [](const KPluginMetaData &md) { return md.serviceTypes().contains(QLatin1String("KTextEditor/Plugin")); });
+#endif
 	for (int i = plugins.size() -1; i >= 0; --i) {
 		PluginInfo info;
 		info.plugin = 0;
@@ -529,6 +534,8 @@ bool KatePluginIntegrationWindow::viewsInSameSplitView(KTextEditor::View* view1,
 	RK_TRACE (APP);
 	// TODO not sure what the semantics of this really are. The two views are in the same view area (not visible, simultaneously), or in two areas split side-by-side?
 	// However, this is essentially unused in kate.
+	Q_UNUSED(view1);
+	Q_UNUSED(view2);
 	return false;
 }
 

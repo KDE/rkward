@@ -1,3 +1,4 @@
+- Fixed: Menubar would disapper after opening script editor, in some configurations
 - Fixed: Very long error messages during R markdown preview could cause the preview window to become too wide
 - Many new basic and advanced R, R Markdown and LaTeX snippets
 	- Complex R Markdown template part of the snippets

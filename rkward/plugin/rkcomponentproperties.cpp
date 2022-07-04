@@ -881,7 +881,11 @@ bool RKComponentPropertyRObjects::setObjectValueSilent (RObject* object) {
 	RK_TRACE (PLUGIN);
 
 	problems.clear ();
+#if QT_VERSION >= QT_VERSION_CHECK(5,14,0)
+	QSet<RObject*> unique(object_list.constBegin(), object_list.constEnd());
+#else
 	QSet<RObject*> unique = object_list.toSet ();
+#endif
 	foreach (RObject *obj, unique) {
 		stopListenForObject (obj);
 	}
