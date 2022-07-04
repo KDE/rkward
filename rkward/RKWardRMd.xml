@@ -356,7 +356,7 @@ Let us take a simple code to make four plots of random data in a single row, for
 
 ```
 # Set graphical parameter
-par(mfrow = c(2,2))
+par(mfrow = c(2, 2))
 
 # for loop to make four plots
 
@@ -369,12 +369,12 @@ If we put the code in the following R Markdown chunk (note the 'r' in the curly 
 
 ```{r, echo = TRUE, fig.cap = "Four plots of random data."}
 # Set graphical parameter
-par(mfrow = c(2,2))
+par(mfrow = c(2, 2))
 
 # for loop to make four plots
 
 for (i in 1:4) {
- plot(rnorm(10), col = i, pch = 19, main = paste("Scatter plot", LETTERS[i]))
+  plot(rnorm(10), col = i, pch = 19, main = paste("Scatter plot", LETTERS[i]))
 }
 ```
 
@@ -525,7 +525,7 @@ par(mfrow = c(2,2))
 # for loop to make four plots
 
 for (i in 1:4) {
- plot(rnorm(10), col = i, pch = 19, main = paste("Scatter plot", LETTERS[i]))
+  plot(rnorm(10), col = i, pch = 19, main = paste("Scatter plot", LETTERS[i]))
 }
 ```
 
@@ -538,7 +538,7 @@ par(mfrow = c(2,2))
 # for loop to make four plots
 
 for (i in 1:4) {
- plot(rnorm(10), col = i, pch = 19, main = paste("Scatter plot", LETTERS[i]))
+  plot(rnorm(10), col = i, pch = 19, main = paste("Scatter plot", LETTERS[i]))
 }
 ```
 

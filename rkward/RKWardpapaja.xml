@@ -29,7 +29,15 @@ function rangeCommand(command, def) {
 }
 </script>
  <item>
-  <match>apa_print (papaja)</match>
+  <match>Typeset Statistical Results</match>
   <fillin>${rangeCommand("papaja::apa_print(%%1)", "\"A model object\"")}</fillin>
+ </item>
+ <item>
+  <match>Sanitize Term Names</match>
+  <fillin>${rangeCommand("papaja::sanitize_terms(%%1, standardized = FALSE)", "c(\"(Intercept)\", \"Factor A\")")}</fillin>
+ </item>
+ <item>
+  <match>Create a Reference File for R and R Packages</match>
+  <fillin>${rangeCommand("papaja::r_refs(file = \"literature.bib\", %%1)", "")}</fillin>
  </item>
 </snippets>
