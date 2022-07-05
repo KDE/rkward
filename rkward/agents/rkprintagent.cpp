@@ -17,7 +17,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <kio_version.h>
 #if KIO_VERSION >= QT_VERSION_CHECK(5, 77, 0)
 #	include <KIO/OpenUrlJob>
-#	include <<KIO/JobUiDelegate>
+#	include <KIO/JobUiDelegate>
 #else
 #	include <KRun>
 #endif
