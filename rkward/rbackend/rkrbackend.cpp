@@ -793,7 +793,12 @@ void RBusy (int busy) {
 
 SEXP doUpdateLocale ();
 // NOTE: stdout_stderr_mutex is recursive to support fork()s, better
-RKRBackend::RKRBackend () : stdout_stderr_mutex (QMutex::Recursive) {
+#if QT_VERSION >= QT_VERSION_CHECK(5,14,0)
+#	define DUMMY_MUTEX_FLAGS
+#else
+#	define DUMMY_MUTEX_FLAGS QMutex::Recursive
+#endif
+RKRBackend::RKRBackend() : stdout_stderr_mutex(DUMMY_MUTEX_FLAGS) {
 	RK_TRACE (RBACKEND);
 
 	RK_ASSERT (this_pointer == 0);

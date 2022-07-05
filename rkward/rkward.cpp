@@ -109,7 +109,7 @@ void bogusCalls () {
 //static
 RKWardMainWindow *RKWardMainWindow::rkward_mainwin = 0;
 
-RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::WindowFlags) KDE_DEFAULT_WINDOWFLAGS) {
+RKWardMainWindow::RKWardMainWindow() : KParts::MainWindow() {
 	RK_TRACE (APP);
 	RK_ASSERT (rkward_mainwin == 0);
 

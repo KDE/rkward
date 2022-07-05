@@ -580,8 +580,11 @@ void RKComponentPropertyInt::governorValueChanged (RKComponentPropertyBase *prop
 
 	QVariant value = property->value (governor_modifier);
 	double val = value.toDouble (&is_valid);	// QVariant's toInt() does not document rounding behavior. So we rather use a defined behavior, here.
-	if (isValid ()) internalSetValue ((int) val);
-	else internalSetValue (value.toString ());
+	if (isValid()) {
+		internalSetValue((int) val);
+	} else {
+		internalSetValue(value.toString());
+	}
 
 	emit valueChanged(this);
 }
@@ -735,8 +738,11 @@ void RKComponentPropertyDouble::governorValueChanged (RKComponentPropertyBase *p
 
 	QVariant value = property->value (governor_modifier);
 	double val = value.toDouble (&is_valid);
-	if (is_valid) internalSetValue (val);
-	else internalSetValue (value.toString ());
+	if (is_valid) {
+		internalSetValue (val);
+	} else {
+		internalSetValue (value.toString ());
+	}
 
 	emit valueChanged(this);
 }

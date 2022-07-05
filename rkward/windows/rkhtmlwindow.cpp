@@ -139,9 +139,6 @@ public:
 	}
 	bool supportsContentType (const QString &name) {
 		if (name.startsWith("text")) return true;
-#ifdef __GNUC__
-#warning TODO
-#endif
 		return false;
 	}
 	void downloadUrl (const QUrl& url) {

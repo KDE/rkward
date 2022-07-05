@@ -12,10 +12,15 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QElapsedTimer>
 #include <QUrl>
 
-#include <krun.h>
 #include <kservice.h>
 #include <kmessagebox.h>
 #include <kio_version.h>
+#if KIO_VERSION >= QT_VERSION_CHECK(5, 77, 0)
+#	include <KIO/OpenUrlJob>
+#	include <<KIO/JobUiDelegate>
+#else
+#	include <KRun>
+#endif
 #include <KLocalizedString>
 #include <KPluginFactory>
 #include <KPluginLoader>
@@ -71,10 +76,13 @@ void RKPrintAgent::printPostscript (const QString &file, bool delete_file) {
 		RK_DEBUG (APP, DL_WARNING, "No valid postscript provider was found");
 		KMessageBox::sorry (RKWardMainWindow::getMain (), i18n ("No service was found to provide a KDE print dialog for PostScript files. We will try to open a generic PostScript viewer (if any), instead.<br><br>Consider installing 'okular', or configure RKWard not to attempt to print using a KDE print dialog."), i18n ("Unable to open KDE print dialog"));
 		// fallback: If we can't find a proper part, try to invoke a standalone PS reader, instead
-#if KIO_VERSION < QT_VERSION_CHECK(5, 31, 0)
-		KRun::runUrl (QUrl::fromLocalFile (file), "application/postscript", RKWardMainWindow::getMain ());
+#if KIO_VERSION < QT_VERSION_CHECK(5, 77, 0)
+		KRun::runUrl (QUrl::fromLocalFile(file), "application/postscript", RKWardMainWindow::getMain(), KRun::RunFlags());
 #else
-		KRun::runUrl (QUrl::fromLocalFile (file), "application/postscript", RKWardMainWindow::getMain (), KRun::RunFlags());
+		auto *job = new KIO::OpenUrlJob(QUrl::fromLocalFile(file), "application/postscript");
+		job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, RKWardMainWindow::getMain()));
+		job->setDeleteTemporaryFile(delete_file);
+		job->start();
 #endif
 		return;
 	}
