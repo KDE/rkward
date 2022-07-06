@@ -720,7 +720,7 @@ bool RKHTMLWindow::openURL (const QUrl &url) {
 #if KIO_VERSION < QT_VERSION_CHECK(5,78,0)
 			connect (job, static_cast<void (KIO::TransferJob::*)(KIO::Job*, const QString&)>(&KIO::TransferJob::mimetype), this, &RKHTMLWindow::mimeTypeDetermined);
 #else
-			connect (job, &KIO::TransferJob::mimetypeFound, this, &RKHTMLWindow::mimeTypeDetermined);
+			connect (job, &KIO::TransferJob::mimeTypeFound, this, &RKHTMLWindow::mimeTypeDetermined);
 #endif
 			// WORKAROUND. See slot.
 			connect (job, &KIO::TransferJob::result, this, &RKHTMLWindow::mimeTypeJobFail);
@@ -746,7 +746,7 @@ void RKHTMLWindow::mimeTypeJobFail (KJob* job) {
 #if KIO_VERSION < QT_VERSION_CHECK(5,78,0)
 		connect (secondchance, static_cast<void (KIO::TransferJob::*)(KIO::Job*, const QString&)>(&KIO::TransferJob::mimetype), this, &RKHTMLWindow::mimeTypeDetermined);
 #else
-		connect (secondchance, &KIO::TransferJob::mimetypeFound, this, &RKHTMLWindow::mimeTypeDetermined);
+		connect (secondchance, &KIO::TransferJob::mimeTypeFound, this, &RKHTMLWindow::mimeTypeDetermined);
 #endif
 		connect (secondchance, &KIO::TransferJob::result, this, &RKHTMLWindow::mimeTypeJobFail2);
 	}
