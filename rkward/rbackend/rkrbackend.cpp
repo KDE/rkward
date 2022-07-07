@@ -1709,7 +1709,7 @@ void RKRBackend::initialize (const QString &locale_dir) {
 	                  "  suppressWarnings (try ({library (\"rkward\", lib.loc=libloc); " + versioncheck + "; ok <- TRUE}))\n"
 	                  "  if (!ok) {\n"
 	                  "    suppressWarnings (try (detach(\"package:rkward\", unload=TRUE)))\n"
-	                  "    install.packages(normalizePath(paste(libloc, \"..\", c (\"rkward.tgz\", \"rkwardtests.tgz\"), sep=\"/\")), lib=libloc, repos=NULL, type=\"source\")\n"
+	                  "    install.packages(normalizePath(paste(libloc, \"..\", c (\"rkward.tgz\", \"rkwardtests.tgz\"), sep=\"/\")), lib=libloc, repos=NULL, type=\"source\", INSTALL_opts=\"--no-multiarch\")\n"
 	                  "    library (\"rkward\", lib.loc=libloc)\n"
 	                  "  }\n"
 	                  "  .libPaths(c(.libPaths(), libloc))\n" // Add to end search path: Will be avaiable for help serach, but hopefully, not get into the way, otherwise
