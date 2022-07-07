@@ -103,4 +103,16 @@ function rangeCommand(command, def) {
   <match>Fraction (inline)</match>
 <fillin>$\frac{A}{x + \frac{1}{x}}$</fillin>
  </item>
+ <item>
+  <match>Image</match>
+<fillin>
+Figure \ref{fig:my_image} shows an example of a referenced image.
+
+\begin{figure}[ht]
+  \includegraphics{figure/image.png}
+  \caption{This is a figure with references.}
+  \label{fig:my_image}
+\end{figure}
+</fillin>
+ </item>
 </snippets>
