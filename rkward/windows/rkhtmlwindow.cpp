@@ -15,6 +15,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <kservice.h>
 #include <kcodecaction.h>
 #include <KColorScheme>
+#include <kparts_version.h>
+#include <kio_version.h>
+#include <kconfigwidgets_version.h>
 
 #include <qfileinfo.h>
 #include <qwidget.h>
@@ -216,7 +219,11 @@ protected:
 #ifndef NO_QT_WEBENGINE
 		// sigh: acceptNavigationRequest() does  not get called on the new page...
 		QMetaObject::Connection * const connection = new QMetaObject::Connection;
-		*connection = connect (ret, &RKWebPage::loadStarted, [ret, connection, this]() {  // capturing "this" makes MSVC happy
+		*connection = connect (ret, &RKWebPage::loadStarted, [ret, connection
+#ifdef _MSC_VER
+		                                                                     , this // capturing "this" makes MSVC happy
+#endif
+		                                                                      ]() {
 			QObject::disconnect(*connection);
 			delete connection;
 			ret->acceptNavigationRequest (ret->url (), QWebEnginePage::NavigationTypeLinkClicked, true);
@@ -361,7 +368,9 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 	setPart (part);
 	part->initActions ();
 	initializeActivationSignals ();
+#if KPARTS_VERSION < QT_VERSION_CHECK(5, 72, 0)
 	part->setSelectable (true);
+#endif
 	setFocusPolicy (Qt::StrongFocus);
 	setFocusProxy (view);
 
@@ -708,7 +717,11 @@ bool RKHTMLWindow::openURL (const QUrl &url) {
 		QString host = url.host ();
 		if ((host == "127.0.0.1") || (host == "localhost") || host == QHostInfo::localHostName ()) {
 			KIO::TransferJob *job = KIO::get (url, KIO::Reload);
+#if KIO_VERSION < QT_VERSION_CHECK(5,78,0)
 			connect (job, static_cast<void (KIO::TransferJob::*)(KIO::Job*, const QString&)>(&KIO::TransferJob::mimetype), this, &RKHTMLWindow::mimeTypeDetermined);
+#else
+			connect (job, &KIO::TransferJob::mimeTypeFound, this, &RKHTMLWindow::mimeTypeDetermined);
+#endif
 			// WORKAROUND. See slot.
 			connect (job, &KIO::TransferJob::result, this, &RKHTMLWindow::mimeTypeJobFail);
 			return true;
@@ -730,7 +743,11 @@ void RKHTMLWindow::mimeTypeJobFail (KJob* job) {
 		QUrl url = tj->url ();
 		if (!tj->redirectUrl ().isEmpty ()) url = tj->redirectUrl ();
 		KIO::TransferJob *secondchance = KIO::get (url, KIO::Reload);
+#if KIO_VERSION < QT_VERSION_CHECK(5,78,0)
 		connect (secondchance, static_cast<void (KIO::TransferJob::*)(KIO::Job*, const QString&)>(&KIO::TransferJob::mimetype), this, &RKHTMLWindow::mimeTypeDetermined);
+#else
+		connect (secondchance, &KIO::TransferJob::mimeTypeFound, this, &RKHTMLWindow::mimeTypeDetermined);
+#endif
 		connect (secondchance, &KIO::TransferJob::result, this, &RKHTMLWindow::mimeTypeJobFail2);
 	}
 }
@@ -979,7 +996,11 @@ void RKHTMLWindowPart::initActions () {
 	KCodecAction *encoding = new KCodecAction (QIcon::fromTheme("character-set"), i18n ("Default &Encoding"), this, true);
 	encoding->setWhatsThis(i18n ("Set the encoding to assume in case no explicit encoding has been set in the page or in the HTTP headers."));
 	actionCollection ()->addAction ("view_encoding", encoding);
+#if KCONFIGWIDGETS_VERSION < QT_VERSION_CHECK(5,78,0)
 	connect (encoding, static_cast<void (KCodecAction::*)(QTextCodec *)>(&KCodecAction::triggered), window, &RKHTMLWindow::setTextEncoding);
+#else
+	connect (encoding, &KCodecAction::codecTriggered, window, &RKHTMLWindow::setTextEncoding);
+#endif
 
 	print = actionCollection()->addAction(KStandardAction::Print, "print_html", window, SLOT (slotPrint()));
 	export_page = actionCollection()->addAction("save_html", new QAction(QIcon::fromTheme("file-save"), i18n("Export Page as HTML"), this));
