@@ -184,25 +184,13 @@ A &amp; B \\
   <fillin>${rangeCommand("```"+ braces("r, chunk-label, echo = FALSE, eval = TRUE, fig.show = \"asis\", include = TRUE, message = FALSE, results = \"asis\", warning = FALSE") +" %%1```\n", "\nx &lt;- 1\n\n")}</fillin>
  </item>
  <item>
-  <match>Table</match>
-  <fillin>
-| Right  | Left  | Default   | Center    |
+  <match>Table (Markdown with caption)</match>
+<fillin>| Right  | Left  | Default   | Center    |
 |-------:|:------|-----------|:---------:|
 | 12     | 12    | 12        | 12        |
 | 123    | 123   | 123       | 123       |
 | 1      | 1     | 1         | 1         |
-  </fillin>
- </item>
- <item>
-  <match>Table with caption</match>
-  <fillin>
-| Right  | Left  | Default   | Center    |
-|-------:|:------|-----------|:---------:|
-| 12     | 12    | 12        | 12        |
-| 123    | 123   | 123       | 123       |
-| 1      | 1     | 1         | 1         |
-:Caption text
-  </fillin>
+:Caption text</fillin>
  </item>
  <item>
   <match>Table (knitr)</match>
@@ -563,6 +551,44 @@ In the template following R Markdown elements were shown
 and many more.
 
 If you like RKWard consider to donate. Some small amount for a cup of coffee or a cup of H~2~O is totally fine.
+</fillin>
+ </item>
+ <item>
+  <match>Bibliographies and citations</match>
+    <fillin>---
+output: html_document
+bibliography: references.bib
+csl: biomed-central.csl
+---
+
+&lt;!--
+The BibTeX database (e.g. references.bib) is a plain-text file with the *.bib extension that consists of
+bibliography entries like this:
+
+@Manual{R-base,
+title = {R: A Language and Environment for Statistical Computing},
+author = {{R Core Team}},
+organization = {R Foundation for Statistical Computing},
+address = {Vienna, Austria},
+year = {2022},
+url = {https://www.R-project.org},
+}
+
+Pandoc will use a Chicago author-date format for citations and references. To use
+another style (see https://www.zotero.org/styles), you will need to specify a CSL (e.g., biomed-central.csl).
+--&gt;
+</fillin>
+ </item>
+ <item>
+  <match>R package citations</match>
+  <fillin>${rangeCommand("toBibtex(citation(\"%%1\"))", "rkward")}</fillin>
+ </item>
+ <item>
+  <match>Multiple authors in a document</match>
+    <fillin>---
+ - John Doe^[Institution One, john@example.org]
+ - Jane Doe^[Institution Two, jane@example.org]
+---
 </fillin>
  </item>
 </snippets>
