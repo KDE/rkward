@@ -127,4 +127,19 @@ if (condi­tion) {
   <match>Combine Values into a Vector or List</match>
   <fillin>${rangeCommand("c(%%1, recursive = FALSE, use.names = TRUE)", "Objects to be concatenated")}</fillin>
  </item>
+ <item>
+  <match>Two plots (in row)</match>
+  <fillin># Two plots in a row
+# style of axis labels changed
+par(mfrow=c(1,2), las = 1)
+
+# First plot (stripchart)
+stripchart(rnorm(10), method = "jitter", main = "Stripchart")
+mtext("A", cex = 1.2, side = 3, adj = 0, font = 2)
+
+# Second plot (Histogram)
+hist(rnorm(10), main = "Histogram")
+mtext("B", cex = 1.2, side = 3, adj = 0, font = 2)
+</fillin>
+ </item>
  </snippets>
