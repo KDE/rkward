@@ -48,7 +48,7 @@ KatePluginIntegrationApp::KatePluginIntegrationApp(QObject *parent) : QObject (p
 
 	// enumerate all available kate plugins
 #if KCOREADDONS_VERSION >= QT_VERSION_CHECK(5,89,0)
-	QVector<KPluginMetaData> plugins = KPluginMetaData::findPlugins(QStringLiteral("ktexteditor"), [](const KPluginMetaData &md) { return md.serviceTypes().contains(QLatin1String("KTextEditor/Plugin")); });
+	QVector<KPluginMetaData> plugins = KPluginMetaData::findPlugins(QStringLiteral("ktexteditor"));
 #else
 	QVector<KPluginMetaData> plugins = KPluginLoader::findPlugins(QStringLiteral("ktexteditor"), [](const KPluginMetaData &md) { return md.serviceTypes().contains(QLatin1String("KTextEditor/Plugin")); });
 #endif
@@ -98,14 +98,20 @@ QObject* KatePluginIntegrationApp::loadPlugin (const QString& identifier) {
 		return 0;
 	}
 
+#if KCOREADDONS_VERSION < QT_VERSION_CHECK(5,86,0)
 	KPluginFactory *factory = KPluginLoader(known_plugins[identifier].data.fileName ()).factory ();
 	if (factory) {
+#endif
 		if (identifier == "katekonsoleplugin") {
 			// Workaround until https://invent.kde.org/utilities/kate/-/commit/cf11bcbf1f36e2a82b1a1b14090a3f0a2b09ecf4 can be assumed to be present (should be removed in KF6)
 			if (qEnvironmentVariableIsEmpty("EDITOR")) qputenv("EDITOR", "vi");
 		}
 
+#if KCOREADDONS_VERSION < QT_VERSION_CHECK(5,86,0)
 		KTextEditor::Plugin *plugin = factory->create<KTextEditor::Plugin>(this, QVariantList () << identifier);
+#else
+		KTextEditor::Plugin *plugin = KPluginFactory::instantiatePlugin<KTextEditor::Plugin>(known_plugins[identifier].data, this, QVariantList() << identifier).plugin;
+#endif
 		if (plugin) {
 			known_plugins[identifier].plugin = plugin;
 			emit KTextEditor::Editor::instance()->application()->pluginCreated(identifier, plugin);
@@ -121,7 +127,9 @@ QObject* KatePluginIntegrationApp::loadPlugin (const QString& identifier) {
 			}
 			return plugin;
 		}
+#if KCOREADDONS_VERSION < QT_VERSION_CHECK(5,86,0)
 	}
+#endif
 
 	return 0;
 }
