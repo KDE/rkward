@@ -24,6 +24,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KLocalizedString>
 #include <KPluginFactory>
 #include <KPluginLoader>
+#include <kcoreaddons_version.h>
 
 #include "../rkward.h"
 
@@ -48,10 +49,14 @@ void RKPrintAgent::printPostscript (const QString &file, bool delete_file) {
 	KService::Ptr service = KService::serviceByDesktopPath("okular_part.desktop");
 	if (!service) service = KService::serviceByDesktopPath("kpdf_part.desktop");
 	if (service) {
+#if KCOREADDONS_VERSION < QT_VERSION_CHECK(5,86,0)
 		auto factory = KPluginLoader(service->library()).factory();
 		if (factory) {
 			provider = factory->create<KParts::ReadOnlyPart>(nullptr);
 		}
+#else
+		provider = KPluginFactory::instantiatePlugin<KParts::ReadOnlyPart>(KPluginMetaData(QPluginLoader(service->library())), nullptr).plugin;
+#endif
 	} else {
 		RK_DEBUG (APP, DL_WARNING, "No KDE service found for postscript printing");
 	}
@@ -99,4 +104,3 @@ void RKPrintAgent::printPostscript (const QString &file, bool delete_file) {
 		agent->deleteLater ();
 	}
 }
-
