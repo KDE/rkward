@@ -1,3 +1,4 @@
+- Fixed: Crash when using the "Git blame" kate plugin
 - Fixed: Problem installing R support package in some configurations
 - Fixed: Menubar would disapper after opening script editor, in some configurations
 - Fixed: Very long error messages during R markdown preview could cause the preview window to become too wide

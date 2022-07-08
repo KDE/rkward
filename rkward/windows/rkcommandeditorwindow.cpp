@@ -199,7 +199,6 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl &_url,
 	preview = new RKXMLGUIPreviewArea (QString(), this);
 	preview_manager = new RKPreviewManager (this);
 	connect (preview_manager, &RKPreviewManager::statusChanged, this, [this]() { preview_timer.start (500); });
-	m_view = m_doc->createView (this);
 	RKWorkplace::mainWorkplace()->registerNamedWindow (preview_manager->previewId(), this, preview);
 	if (!url.isEmpty ()) {
 		KConfigGroup viewconf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptViewSettings %1").arg (RKWorkplace::mainWorkplace ()->portableUrl (url)));
@@ -306,8 +305,8 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 	}
 
 	discardPreview ();
-	delete m_view;
 	m_doc->waitSaveComplete ();
+	delete m_view;
 	QList<KTextEditor::View*> views = m_doc->views ();
 	if (views.isEmpty ()) {
 		if (visible_to_kateplugins) {

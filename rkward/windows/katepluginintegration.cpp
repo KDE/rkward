@@ -65,13 +65,14 @@ KatePluginIntegrationApp::KatePluginIntegrationApp(QObject *parent) : QObject (p
 
 KatePluginIntegrationApp::~KatePluginIntegrationApp() {
 	RK_TRACE (APP);
+	delete dummy_view; // deletion of view may call into mainwindow, so having this deleted a regular qobject child is too late
 }
 
 KTextEditor::View *KatePluginIntegrationApp::dummyView() {
 	if (!dummy_view) {
 		RK_TRACE (APP);
 		KTextEditor::Document *doc = KTextEditor::Editor::instance()->createDocument (this);
-		dummy_view = doc->createView(0);
+		dummy_view = doc->createView(nullptr, mainWindow()->mainWindow());
 		dummy_view->hide();
 		// Make sure it does not accumulate cruft.
 		connect(doc, &KTextEditor::Document::textChanged, doc, &KTextEditor::Document::clear);
