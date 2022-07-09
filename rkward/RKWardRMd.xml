@@ -133,7 +133,7 @@ $$e^${braces("i\\pi")} + 1$$
  </item>
   <item>
   <match>Code (simple chunk)</match>
-  <fillin>${rangeCommand("\n```"+ braces("r") +" %%1```\n", "\nx &lt;- 1\n\n")}</fillin>
+  <fillin>${rangeCommand("\n```"+ braces("r") +"\n%%1\n```\n", "x &lt;- 1 # Mark the code to be put in a Chunk\n")}</fillin>
  </item>
  <item>
   <match>Quote</match>
@@ -181,7 +181,7 @@ A &amp; B \\
  </item>
  <item>
   <match>Code (chunk with defaults)</match>
-  <fillin>${rangeCommand("```"+ braces("r, chunk-label, echo = FALSE, eval = TRUE, fig.show = \"asis\", include = TRUE, message = FALSE, results = \"asis\", warning = FALSE") +" %%1```\n", "\nx &lt;- 1\n\n")}</fillin>
+  <fillin>${rangeCommand("```"+ braces("r, chunk-label, echo = FALSE, eval = TRUE, fig.show = \"asis\", include = TRUE, message = FALSE, results = \"asis\", warning = FALSE") +"\n%%1 \n```\n", "x &lt;- 1 # Mark the code to be put in a Chunkn\n")}</fillin>
  </item>
  <item>
   <match>Table (Markdown with caption)</match>
