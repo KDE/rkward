@@ -131,7 +131,7 @@ if (condi­tion) {
   <match>Two plots (in row)</match>
   <fillin># Two plots in a row
 # style of axis labels changed
-par(mfrow=c(1,2), las = 1)
+par(mfrow = c(1, 2), las = 1)
 
 # First plot (stripchart)
 stripchart(rnorm(10), method = "jitter", main = "Stripchart")
@@ -140,6 +140,21 @@ mtext("A", cex = 1.2, side = 3, adj = 0, font = 2)
 # Second plot (Histogram)
 hist(rnorm(10), main = "Histogram")
 mtext("B", cex = 1.2, side = 3, adj = 0, font = 2)
+</fillin>
+ </item>
+ <item>
+  <match>Plots (multiple in matrix layout)</match>
+  <fillin># Layout of three plots (1, 2, 3) in two rows and 3 columns
+layout(matrix(c(1, 2, 2, 3, 3, 3), nrow = 2, ncol = 3, byrow = TRUE))
+# Dummy histogram
+hist(rnorm(100))
+mtext("A", cex = 1.2, side = 3, adj = 0, font = 2)
+# Dummy stripchart
+stripchart(rlnorm(100), method = "jitter", xlab = "data")
+mtext("B", cex = 1.2, side = 3, adj = 0, font = 2)
+# Dummy barplot
+barplot(table(rpois(100, 10)), xlab = "data", ylab = "Frequency")
+mtext("C", cex = 1.2, side = 3, adj = 0, font = 2)
 </fillin>
  </item>
  </snippets>
