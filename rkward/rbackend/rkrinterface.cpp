@@ -383,7 +383,7 @@ void RInterface::handleRequest (RBackendRequest* request) {
 
 		if (!qgetenv("APPDIR").isEmpty()) {
 			// Running inside an AppImage. As soon as R has started, it should behave as if running in the main (system) environment (esp. when calling helper binaries such as wget or gcc).
-			// Unset any paths starting with APPDIR, _except_ those inside R_HOME. 
+			// Unset any paths starting with APPDIR, _except_ those inside R_HOME.
 			runStartupCommand(new RCommand("local({\n"
 			"	appdir <- Sys.getenv(\"APPDIR\")\n"
 			"	fix <- function(key) {\n"

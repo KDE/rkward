@@ -197,7 +197,8 @@ static QFont readFont (QDataStream &instream) {
 #ifdef __GNUC__
 #	warning TODO deal with line-height
 #endif
-	QFont ret (fontfamily);
+	QFont ret;
+	if (!fontfamily.isEmpty()) ret.setFamily(fontfamily);
 	if (fontface == 2 || fontface == 4) ret.setWeight (QFont::Bold);
 	if (fontface == 3 || fontface == 4) ret.setItalic (true);
 	ret.setPointSizeF (cex*ps);
