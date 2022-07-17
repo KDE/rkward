@@ -380,6 +380,24 @@ void RInterface::handleRequest (RBackendRequest* request) {
 			RK_ASSERT (command->getDataLength () == 1);
 			RKSessionVars::setRVersion (command->stringVector ().value (0));
 		});
+
+		if (!qgetenv("APPDIR").isEmpty()) {
+			// Running inside an AppImage. As soon as R has started, it should behave as if running in the main (system) environment (esp. when calling helper binaries such as wget or gcc).
+			// Unset any paths starting with APPDIR, _except_ those inside R_HOME. 
+			runStartupCommand(new RCommand("local({\n"
+			"	appdir <- Sys.getenv(\"APPDIR\")\n"
+			"	fix <- function(key) {\n"
+			"		paths <- strsplit(Sys.getenv(key), \":\", fixed=TRUE)[[1]]\n"
+			"		paths <- paths[!(startsWith(paths, appdir) & !startsWith(paths, R.home()))]\n"
+			"		patharg <- list(paste(paths, collapse=\":\"))\n"
+			"		names(patharg) <- key\n"
+			"		do.call(Sys.setenv, patharg)\n"
+			"	}\n"
+			"	fix(\"LD_LIBRARY_PATH\")\n"
+			"	fix(\"PATH\")\n"
+			"})\n", RCommand::App | RCommand::Sync), chain, [](RCommand*) {});
+		}
+
 		// find out about standard library locations
 		runStartupCommand(new RCommand("c(path.expand(Sys.getenv(\"R_LIBS_USER\")), .libPaths())\n", RCommand::GetStringVector | RCommand::App | RCommand::Sync), chain,
 		[this](RCommand *command) {
