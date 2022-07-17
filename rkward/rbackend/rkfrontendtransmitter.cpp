@@ -120,31 +120,9 @@ void RKFrontendTransmitter::run () {
 		qDebug("%s", qPrintable(args.join("\n")));
 	}
 
-	// Special handling for running inside an AppImage. In this case, we want the backend process to prefer system libraries.
-	// (R may even call system binaries)
-	QString appdir = QString::fromLocal8Bit(qgetenv("APPDIR"));
-	if (!appdir.isEmpty()) {
-		QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-		QStringList keys_to_fix = QStringList() << "LD_LIBRARY_PATH" << "PATH";
-		for (const QString &key : keys_to_fix) {
-			QStringList parts = env.value(key).split(':');
-			QStringList append;
-			int i = 0;
-			while (i < parts.size()) {
-				if (parts.at(i).startsWith(appdir)) {
-					append.append(parts.takeAt(i));
-					continue;
-				}
-				++i;
-			}
-			env.insert(key, (parts + append).join(':'));
-		}
-		backend->setProcessEnvironment(env);
-	}
-
 #ifdef Q_OS_MACOS
 	// Resolving libR.dylib and friends is a pain on MacOS, and running through R CMD does not always seem to be enough.
-	// (Apparently DYLIB_FALLBACK_LIBRARY_PATH is ignored on newer versions of MacOS). Safest bet seems to be to start in the lib directory, itself.
+	// (Apparently DYLIB_FALLBACK_LIBRARY_PATH is ignored on newer versions of MacOS). Safest best seems to be to start in the lib directory, itself.
 	QProcess dummy;
 	dummy.start(RKSessionVars::RBinary(), QStringList() << "--slave" << "--no-save" << "--no-init-file" << "-e" << "cat(R.home('lib'))");
 	dummy.waitForFinished ();
@@ -153,7 +131,7 @@ void RKFrontendTransmitter::run () {
 	backend->setWorkingDirectory (r_home);
 #endif
 #if defined(Q_OS_WIN)
-	// Quite a HACK, but it really works:
+	// added on a hunch, to be removed, should it have no effect, to be cleaned, otherwise:
 	// On some windows systems, the _first_ invocation of the backend seems to fail as somehow process output from the backend (the token) never arrives.
 	// Could it help to start a dummy process, before that? And, if doing so, will we be able to read its output?
 	QProcess dummy;
