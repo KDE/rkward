@@ -53,15 +53,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QPushButton>
 #include <QElapsedTimer>
 
-// TODO: remove these:
-#include <QLibraryInfo>
-#include <QStandardPaths>
-
 // flush new pieces of output after this period of time:
 #define FLUSH_INTERVAL 100
-
-#define STARTUP_PHASE2_COMPLETE 4
-#define RSTARTUP_COMPLETE 6
 
 // statics
 double RInterface::na_real;
@@ -400,23 +393,6 @@ void RInterface::handleRequest (RBackendRequest* request) {
 			"	fix(\"LD_LIBRARY_PATH\")\n"
 			"	fix(\"PATH\")\n"
 			"})\n", RCommand::App | RCommand::Sync), chain, [](RCommand*) {});
-
-			// TODO: Remove these. Temporary diagnostics regarding kioslave failure
-			RK_DEBUG(RBACKEND, DL_INFO, "ldp: %s", qgetenv("LD_LIBRARY_PATH").data());
-			RK_DEBUG(RBACKEND, DL_INFO, "p: %s", qgetenv("PATH").data());
-			RK_DEBUG(RBACKEND, DL_INFO, "conf Prefix: %s", qPrintable(QLibraryInfo::location(QLibraryInfo::PrefixPath)));
-			RK_DEBUG(RBACKEND, DL_INFO, "conf Lib: %s", qPrintable(QLibraryInfo::location(QLibraryInfo::LibrariesPath)));
-			RK_DEBUG(RBACKEND, DL_INFO, "conf LibExec: %s", qPrintable(QLibraryInfo::location(QLibraryInfo::LibraryExecutablesPath)));
-			RK_DEBUG(RBACKEND, DL_INFO, "conf Plugins: %s", qPrintable(QLibraryInfo::location(QLibraryInfo::PluginsPath)));
-			const QString qlibexec = QLibraryInfo::location(QLibraryInfo::LibraryExecutablesPath);
-			// on !win32 we use a kf5 suffix
-			const QString qlibexecKF5 = QDir(qlibexec).filePath(QStringLiteral("kf5"));
-			// search paths
-			const QStringList searchPaths = QStringList() << QCoreApplication::applicationDirPath() // then look where our application binary is located
-                                                  << qlibexec << qlibexecKF5;
-			RK_DEBUG(RBACKEND, DL_INFO, "search: %s", qPrintable(searchPaths.join("_:")));
-			QString kioslaveExecutable = QStandardPaths::findExecutable(QStringLiteral("kioslave5"), searchPaths);
-			RK_DEBUG(RBACKEND, DL_INFO, "kioslave: %s", qPrintable(kioslaveExecutable));
 		}
 
 		// find out about standard library locations
