@@ -768,23 +768,14 @@ void RKArgumentHintModel::updateCompletionList (RObject* _function, const QStrin
 
 void RKArgumentHintModel::fetchRCompletions() {
 	RK_TRACE(COMMANDEDITOR);
+
+	if (r_completions_function != nullptr) {
+		// an old (now obsolete) query is still running. Wait for it to complete, first, avoiding to stack up (pontentially costly) calls
+		return;
+	}
+
 	r_completions_function = function;
-	RCommand *command = new RCommand("local({\n"
-	                                 "	f <- function(fname) {\n"
-	                                 "		oldrcs <- utils::rc.settings()\n"
-	                                 "		oldrcopts <- utils::rc.options()\n"
-	                                 "		on.exit({do.call(utils::rc.settings, as.list(oldrcs)); utils::rc.options(oldrcopts)})\n"
-	                                 "		utils::rc.settings(ops=FALSE, ns=FALSE, args=TRUE, dots=FALSE, func=FALSE, ipck=FALSE, S3=TRUE, data=FALSE, help=FALSE, argdb=TRUE, fuzzy=FALSE, quotes=FALSE, files=FALSE)\n"
-	                                 "		utils::rc.options(funarg.suffix=\"\")\n"
-	                                 "		utils:::.assignLinebuffer(paste0(fname, \"(\"))\n"
-	                                 "		utils:::.assignToken(\"\")\n"
-	                                 "		utils:::.assignStart(nchar(fname)+1)\n"
-	                                 "		utils:::.assignEnd(nchar(fname)+1)\n"
-	                                 "		utils:::.completeToken()\n"
-	                                 "		utils:::.retrieveCompletions()\n"
-	                                 "	}\n"
-	                                 "	f(\"plot\")\n"
-	                                 "})\n", RCommand::Sync | RCommand::PriorityCommand | RCommand::GetStringVector);
+	RCommand *command = new RCommand(QString("rkward:::.rk.completions(%1, \"funargs\")").arg(function->getShortName()), RCommand::Sync | RCommand::PriorityCommand | RCommand::GetStringVector);
 	command->whenFinished(this, [this](RCommand *command) {
 		if (r_completions_function != function) {
 			QTimer::singleShot(0, this, &RKArgumentHintModel::fetchRCompletions);
