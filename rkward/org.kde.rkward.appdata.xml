@@ -7,6 +7,7 @@
   <name xml:lang="ca">RKWard</name>
   <name xml:lang="ca-valencia">RKWard</name>
   <name xml:lang="cs">RKWard</name>
+  <name xml:lang="en-GB">RKWard</name>
   <name xml:lang="es">RKWard</name>
   <name xml:lang="fr">RKWard</name>
   <name xml:lang="it">RKWard</name>
@@ -112,6 +113,7 @@
       <caption>Working with data in RKWard</caption>
       <caption xml:lang="ca">Treballant amb dades en el RKward</caption>
       <caption xml:lang="ca-valencia">Treballant amb dades en RKward</caption>
+      <caption xml:lang="en-GB">Working with data in RKWard</caption>
       <caption xml:lang="es">Trabajando con datos en RKWard</caption>
       <caption xml:lang="fr">Travailler avec des données dans RKward</caption>
       <caption xml:lang="it">Lavorare coi dati in RKWard</caption>
