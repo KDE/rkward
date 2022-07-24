@@ -246,6 +246,10 @@ int main (int argc, char *argv[]) {
 #if defined(Q_OS_MACOS) || defined(Q_OS_WIN)
 	// Follow the example of kate, and use breeze theme on Windows and Mac, which appears to work best
 	QApplication::setStyle(QStringLiteral("breeze"));
+#else
+	if (!qgetenv("APPDIR").isEmpty()) { // see above for AppImage
+		QApplication::setStyle(QStringLiteral("breeze"));
+	}
 #endif
 	// Don't complain when linking rkward://-pages from Rd pages
 	KUrlAuthorized::allowUrlAction ("redirect", QUrl("http://"), QUrl ("rkward://"));
