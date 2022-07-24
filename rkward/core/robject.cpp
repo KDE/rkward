@@ -338,11 +338,11 @@ bool RObject::updateStructure (RData *new_data) {
 
 	RData::RDataStorage new_data_data = new_data->structureVector ();
 	properties_change = updateName (new_data_data.at (StoragePositionName));
-	properties_change = updateType (new_data_data.at (StoragePositionType));
-	properties_change = updateClasses (new_data_data.at (StoragePositionClass));
-	properties_change = updateMeta (new_data_data.at (StoragePositionMeta));
-	properties_change = updateDimensions (new_data_data.at (StoragePositionDims));
-	properties_change = updateSlots (new_data_data.at (StoragePositionSlots));
+	properties_change |= updateType (new_data_data.at (StoragePositionType));
+	properties_change |= updateClasses (new_data_data.at (StoragePositionClass));
+	properties_change |= updateMeta (new_data_data.at (StoragePositionMeta));
+	properties_change |= updateDimensions (new_data_data.at (StoragePositionDims));
+	properties_change |= updateSlots (new_data_data.at (StoragePositionSlots));
 
 	if (properties_change) RKModificationTracker::instance()->objectMetaChanged (this);
 	if (type & NeedDataUpdate) updateDataFromR (0);
