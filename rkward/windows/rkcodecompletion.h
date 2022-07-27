@@ -105,6 +105,7 @@ private:
 	};
 };
 
+class RKDynamicCompletionsAddition;
 class RKCodeCompletionModel : public RKCompletionModelBase {
 	Q_OBJECT
 public:
@@ -113,13 +114,18 @@ public:
 
 	KTextEditor::Range completionRange (KTextEditor::View *view, const KTextEditor::Cursor &position) override;
 
-	void updateCompletionList (const QString& symbol);
+	void updateCompletionList(const QString& symbol, bool is_help);
 	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const override;
 	QString partialCompletion (bool* exact_match);
 private:
 	QList<QIcon> icons;
 	QStringList names;
 	QString current_symbol;
+	void fetchRCompletions();
+	QString r_base_symbol;
+	bool is_help;
+	RKDynamicCompletionsAddition *rcompletions;
+	void addRCompletions();
 };
 
 class RObject;
@@ -190,14 +196,31 @@ private:
 	RKFileCompletionModelWorker *worker;
 };
 
-/*
-class RKRDynamicCompletionModel : public KTextEditor::CodeCompletionModel, public KTextEditor::CodeCompletionModelControllerInterface {
+class RKDynamicCompletionsAddition : public QObject {
 	Q_OBJECT
 public:
-	RKRDynamicCompletionModel(RKCompletionManager *manager);
-	void setFunction(RObject *function);
+	RKDynamicCompletionsAddition(RKCodeCompletionModel *parent);
+	~RKDynamicCompletionsAddition();
+	void update(const QString &mode, const QString &fragment, const QString &filterprefix, const QStringList &filterlist);
+	const QStringList results() const { return filtered_results; };
+	const QString fragment() const { return current_fragment; };
+	const QString mode() const { return current_mode; };
+signals:
+	void resultsComplete();
 private:
-	bool waiting_for_reply;
-}; */
+	void doUpdateFromR();
+	void filterResults();
+	QString current_mode;
+	QString current_fragment;
+	QString current_filterprefix;
+	QStringList current_filterlist;
+	QStringList current_raw_resultlist;
+	QStringList filtered_results;
+	enum {
+		Ready,
+		Updating,
+		PendingUpdate
+	} status;
+};
 
 #endif

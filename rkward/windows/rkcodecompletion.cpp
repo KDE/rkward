@@ -159,6 +159,7 @@ void RKCompletionManager::tryCompletion () {
 	int end;
 	RKCommonFunctions::getCurrentSymbolOffset (current_line, cursor_pos-1, false, &start, &end);
 	symbol_range = KTextEditor::Range (para, start, para, end);
+	bool is_help = (start >= 1) && (current_line.at(start-1) == '?');
 	if (!user_triggered) {
 		if (end > cursor_pos) {
 			symbol_range = KTextEditor::Range ();   // Only hint when at the end of a word/symbol: https://mail.kde.org/pipermail/rkward-devel/2015-April/004122.html
@@ -177,11 +178,11 @@ void RKCompletionManager::tryCompletion () {
 			word.clear ();
 		}
 
-		completion_model->updateCompletionList (word);
-		file_completion_model->updateCompletionList (filename);
+		completion_model->updateCompletionList(word, is_help);
+		file_completion_model->updateCompletionList(filename);
 	} else {
-		completion_model->updateCompletionList (QString ());
-		file_completion_model->updateCompletionList (QString ());
+		completion_model->updateCompletionList(QString(), false);
+		file_completion_model->updateCompletionList(QString());
 	}
 	RK_DEBUG(EDITOR, DL_DEBUG, "completion symbol range %d, %d -> %d, %d", symbol_range.start().line(), symbol_range.start().column(), symbol_range.end().line(), symbol_range.end().column());
 
@@ -514,13 +515,15 @@ void RKCompletionModelBase::executeCompletionItem (KTextEditor::View *view, cons
 
 RKCodeCompletionModel::RKCodeCompletionModel (RKCompletionManager *manager) : RKCompletionModelBase (manager) {
 	RK_TRACE (COMMANDEDITOR);
+	rcompletions = new RKDynamicCompletionsAddition(this);
+	connect(rcompletions, &RKDynamicCompletionsAddition::resultsComplete, this, &RKCodeCompletionModel::addRCompletions);
 }
 
 RKCodeCompletionModel::~RKCodeCompletionModel () {
 	RK_TRACE (COMMANDEDITOR);
 }
 
-void RKCodeCompletionModel::updateCompletionList (const QString& symbol) {
+void RKCodeCompletionModel::updateCompletionList(const QString& symbol, bool is_help) {
 	RK_TRACE (COMMANDEDITOR);
 
 	if (current_symbol == symbol) return;	// already up to date
@@ -542,9 +545,31 @@ void RKCodeCompletionModel::updateCompletionList (const QString& symbol) {
 		icons.append (RKStandardIcons::iconForObject (matches[i]));
 	}
 
+	if ((objectpath.size() == 2 || objectpath.size() == 3) && objectpath.at(1) == ":::") {
+		QStringList shortnames;
+		for (int i = 0; i < matches.count(); ++i) {
+			shortnames.append(matches[i]->getShortName());
+		}
+		rcompletions->update(":::", objectpath.at(0), objectpath.value(2), shortnames);
+	}
+
 	current_symbol = symbol;
 
 	endResetModel ();
+}
+
+void RKCodeCompletionModel::addRCompletions() {
+	RK_TRACE (COMMANDEDITOR);
+
+	QStringList addlist = rcompletions->results();
+	if (addlist.isEmpty()) return;
+	beginInsertRows(index(0, 0), n_completions, n_completions + addlist.size());
+	n_completions += addlist.size();
+	for (int i = 0; i < addlist.size(); ++i) {
+		names.append(rcompletions->fragment() + rcompletions->mode() + addlist.at(i));
+		icons.append(RKStandardIcons::getIcon(RKStandardIcons::WindowConsole));
+	}
+	endInsertRows();
 }
 
 KTextEditor::Range RKCodeCompletionModel::completionRange (KTextEditor::View *, const KTextEditor::Cursor&) {
@@ -770,7 +795,7 @@ void RKArgumentHintModel::fetchRCompletions() {
 	RK_TRACE(COMMANDEDITOR);
 
 	if (r_completions_function != nullptr) {
-		// an old (now obsolete) query is still running. Wait for it to complete, first, avoiding to stack up (pontentially costly) calls
+		// an old (now obsolete) query is still running. Wait for it to complete, first, avoiding to stack up (potentially costly) calls
 		return;
 	}
 
@@ -945,4 +970,71 @@ QString RKFileCompletionModel::partialCompletion (bool* exact) {
 	RK_TRACE (COMMANDEDITOR);
 
 	return (findCommonCompletion (names, current_fragment, exact));
+}
+
+
+
+RKDynamicCompletionsAddition::RKDynamicCompletionsAddition(RKCodeCompletionModel *parent) : QObject(parent) {
+	RK_TRACE(COMMANDEDITOR);
+	status = Ready;
+}
+
+RKDynamicCompletionsAddition::~RKDynamicCompletionsAddition() {
+	RK_TRACE(COMMANDEDITOR);
+}
+
+void RKDynamicCompletionsAddition::update(const QString &mode, const QString &fragment, const QString &filterprefix, const QStringList &filterlist) {
+	RK_TRACE(COMMANDEDITOR);
+
+	if ((mode != current_mode) || (fragment != current_fragment)) {
+		current_mode = mode;
+		current_fragment = fragment;
+		doUpdateFromR();
+	}
+	if (filterprefix != current_filterprefix || filterlist != current_filterlist) {
+		current_filterprefix = filterprefix;
+		current_filterlist = filterlist;
+		if (status == Ready) filterResults(); // no update was triggered, above, need to update filter, manually
+	}
+	if (status == Ready) emit resultsComplete();
+}
+
+void RKDynamicCompletionsAddition::doUpdateFromR() {
+	RK_TRACE(COMMANDEDITOR);
+	if (status != Ready) {
+		status = PendingUpdate;
+		return;
+	}
+
+	status = Updating;
+	RCommand *command = new RCommand(QString("rkward:::.rk.completions(%1, \"%2\")").arg(RObject::rQuote(current_fragment), current_mode), RCommand::Sync | RCommand::PriorityCommand | RCommand::GetStringVector);
+	command->whenFinished(this, [this](RCommand *command) {
+		if (status == PendingUpdate) {
+			QTimer::singleShot(0, this, &RKDynamicCompletionsAddition::doUpdateFromR);
+			return;
+		}
+		if (command->getDataType() == RCommand::StringVector) {
+			QStringList nargs;
+			current_raw_resultlist = command->stringVector();
+		} else {
+			RK_ASSERT(false);
+		}
+		filterResults();
+		status = Ready;
+		emit resultsComplete();
+	});
+	RInterface::issueCommand(command);
+}
+
+void RKDynamicCompletionsAddition::filterResults() {
+	RK_TRACE(COMMANDEDITOR);
+
+	QStringList res;
+	for (int i = 0; i < current_raw_resultlist.size(); ++i) {
+		const auto item = current_raw_resultlist.at(i);
+		if (!item.startsWith(current_filterprefix)) continue;
+		if (current_filterlist.contains(item)) continue;
+		res.append(item);
+	}
+	filtered_results = res;
 }

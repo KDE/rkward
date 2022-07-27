@@ -81,6 +81,7 @@ IF(NOT WIN32)
 	# This is for running directly from the build tree. Not on windows for now (until cmake supports symlinks, there)
 	ADD_CUSTOM_TARGET(local_install ALL
 		COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/rkwardinstall
+		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_CURRENT_SOURCE_DIR}/icons ${CMAKE_CURRENT_BINARY_DIR}/rkwardinstall/icons
 		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_CURRENT_SOURCE_DIR}/pages ${CMAKE_CURRENT_BINARY_DIR}/rkwardinstall/pages
 		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_CURRENT_SOURCE_DIR}/plugins ${CMAKE_CURRENT_BINARY_DIR}/rkwardinstall/plugins
 		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_CURRENT_SOURCE_DIR}/resource.ver ${CMAKE_CURRENT_BINARY_DIR}/rkwardinstall/resource.ver
