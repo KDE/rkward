@@ -112,7 +112,7 @@ public:
 	~RKSearchOnlineHelpAction () {
 		RK_TRACE (MISC);
 		menu->deleteLater();
-		container->deleteLater();
+		if (container) container->deleteLater();
 	}
 	QAction *action () {
 		return menu->menuAction ();
