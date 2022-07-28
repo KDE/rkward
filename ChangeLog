@@ -5,23 +5,23 @@
 - Fixed: Problem installing R support package in some configurations
 - Fixed: Menubar would disapper after opening script editor, in some configurations
 - Fixed: Very long error messages during R markdown preview could cause the preview window to become too wide
-- Many new basic and advanced R, R Markdown and LaTeX snippets
-	- Complex R Markdown template part of the snippets
-- Provide tooltips on symbols in scripts and R console
 - Fixed: Expresssions spanning several lines would not be shown, correctly, in "R Console"-mode script preview
-- Fix focus problems, and better efficiency for data previews (as used in data import dialogs)
+- Fixed: Fix focus problems, and better efficiency for data previews (as used in data import dialogs)
 - Fixed: Excel import plugin failed to accept file name
-- Add option to offer code completion/hinting in all file types not just R scripts (e.g. in .Rmd files)
-- Fix zooming help/output pages with Ctrl+scroll wheel, when compiled with QWebEngine
-- Fix problem handling rkward:// links from dialogs on some sytems
-- Allow to select search provider, when searching for a term online
-- Allow to restart R backend (e.g. for testing that scripts or packages will work in a fresh session)
-	- New KHamburgerMenu to restart the R backend, interrupt all commands and configure the R backend
-- Fix object name completion for (irregular) names starting with numbers or underscores
-- Crosstabs N to N: Simplify labels, add option to control table layout
-- Change mechanism for detection of object changes
-  - TODO:
-    - warn, if users keep more than ~ 20.000 toplevel symbols in globalenv()?  
+- Fixed: Fix zooming help/output pages with Ctrl+scroll wheel, when compiled with QWebEngine
+- Fixed: Fix problem handling rkward:// links from dialogs on some sytems
+- Fixed: Fix object name completion for (irregular) names starting with numbers or underscores
+- Added: Provide tooltips on symbols in scripts and R console
+- Added: Many new basic and advanced R, R Markdown and LaTeX snippets
+			- Complex R Markdown template part of the snippets
+- Added: Add option to offer code completion/hinting in all file types not just R scripts (e.g. in .Rmd files)
+- Added: Allow to select search provider, when searching for a term online
+- Added: Allow to restart R backend (e.g. for testing that scripts or packages will work in a fresh session)
+			- New KHamburgerMenu to restart the R backend, interrupt all commands and configure the R backend
+- Added: Crosstabs N to N: Simplify labels, add option to control table layout
+- Added: Change mechanism for detection of object changes
+		- TODO:
+			- warn, if users keep more than ~ 20.000 toplevel symbols in globalenv()?
 
 --- Version 0.7.4 - May-30-2022
 - Support "step into" and "finish current" modes in the R debugger window
