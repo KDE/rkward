@@ -306,9 +306,10 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 
 	discardPreview ();
 	m_doc->waitSaveComplete ();
-	delete m_view;
-	QList<KTextEditor::View*> views = m_doc->views ();
-	if (views.isEmpty ()) {
+	QList<KTextEditor::View*> views = m_doc->views();
+	if (views.size() == 1) {
+		// if this is the only view, destroy the document. Note that doc has to be destroyed before view. konsole plugin (and possibly others) assumes it.
+		RK_ASSERT(views.at(0) == m_view);
 		if (visible_to_kateplugins) {
 			emit KTextEditor::Editor::instance()->application()->documentWillBeDeleted(m_doc);
 #if KTEXTEDITOR_VERSION < QT_VERSION_CHECK(5,80,0)
@@ -324,6 +325,9 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 		}
 		if (!delete_on_close.isEmpty ()) KIO::del (delete_on_close)->start ();
 		unnamed_documents.remove (_id);
+	} else {
+		RK_ASSERT(!views.isEmpty()); // should contain at least m_view at this point
+		delete m_view;
 	}
 	// NOTE, under rather unlikely circumstances, the above may leave stale ids->stale pointers in the map: Create unnamed window, split it, save to a url, split again, close the first two windows, close the last. This situation should be caught by the following, however:
 	if (have_url && !_id.isEmpty ()) {
