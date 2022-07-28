@@ -1,3 +1,5 @@
+- Fixed: IRT Cronbach's Alpha did not work for subsets, if the data.frame name contains dots
+- Fixed: Action to remove several rows in data editor, simultaneously, always remained disabled
 - Fixed: Workspace browser would not always show change, immediately, when object type changes
 - Fixed: Crash when using the "Git blame" kate plugin
 - Fixed: Problem installing R support package in some configurations
