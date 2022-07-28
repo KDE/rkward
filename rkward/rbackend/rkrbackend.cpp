@@ -1692,7 +1692,8 @@ void RKRBackend::initialize (const QString &locale_dir) {
 
 	// in RInterface::RInterface() we have created a fake RCommand to capture all the output/errors during startup. Fetch it
 	repl_status.eval_depth++;
-	fetchNextCommand ();
+	fetchNextCommand();
+	RK_ASSERT(current_command);
 
 	startR ();
 
@@ -1738,6 +1739,7 @@ void RKRBackend::initialize (const QString &locale_dir) {
 	// in fact, a number of sub-commands are run while handling this request!
 	handleRequest (&req);
 
+	RK_ASSERT(current_command);
 	commandFinished ();		// the fake startup command
 	repl_status.eval_depth--;
 }
