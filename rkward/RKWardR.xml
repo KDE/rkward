@@ -31,7 +31,7 @@ function rangeCommand(command, def) {
  <item>
   <match>Figure as PDF</match>
   <fillin>
-pdf(fi­len­ame­="my­plo­t.p­df", width=5, height=5)
+pdf(fi­le­="my­plo­t.p­df", width=5, height=5)
 plot(rnorm(100))
 dev.off()
 
@@ -39,8 +39,7 @@ dev.off()
  </item>
  <item>
   <match>Plotting area (3x3 array)</match>
-  <fillin>
-# Plotting area (3x3 array) with 3 rows and 3 columns
+  <fillin># Plotting area (3x3 array) with 3 rows and 3 columns
 par(mf­row­=c(­3,3))
   </fillin>
  </item>
