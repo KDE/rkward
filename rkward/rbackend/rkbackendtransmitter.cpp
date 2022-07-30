@@ -62,8 +62,9 @@ void RKRBackendTransmitter::run () {
 	connection->write ("\n");
 	connection->write (RKWARD_VERSION);
 	connection->write ("\n");
-	connection->waitForBytesWritten ();
-	RK_DEBUG(RBACKEND, DL_DEBUG, "Sending handshake complete");
+	bool ok = connection->waitForBytesWritten ();
+	RK_DEBUG(RBACKEND, DL_DEBUG, "Sending handshake complete, status: %s", ok ? "ok" : "fail");
+	if (!ok) handleTransmissionError("Could not write connection handshake: " + connection->errorString());
 
 	flushtimerid = startTimer (200);	// calls flushOutput(false), periodically. See timerEvent()
 
