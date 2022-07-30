@@ -50,16 +50,20 @@ void RKRBackendTransmitter::run () {
 
 	int timeout = 0;
 	do {
+		RK_DEBUG(RBACKEND, DL_DEBUG, "Connecting to local socket %s", qPrintable(servername));
 		std::cout << token.toLocal8Bit().data() << "\n";
 		std::cout.flush();
 	} while (!connection->waitForConnected(1000) && (++timeout < 20));
 	if (timeout >= 20) handleTransmissionError("Could not connect: " + connection->errorString());
+
 	// handshake
+	RK_DEBUG(RBACKEND, DL_DEBUG, "Sending handshake");
 	connection->write (token.toLocal8Bit ().data ());
 	connection->write ("\n");
 	connection->write (RKWARD_VERSION);
 	connection->write ("\n");
 	connection->waitForBytesWritten ();
+	RK_DEBUG(RBACKEND, DL_DEBUG, "Sending handshake complete");
 
 	flushtimerid = startTimer (200);	// calls flushOutput(false), periodically. See timerEvent()
 
