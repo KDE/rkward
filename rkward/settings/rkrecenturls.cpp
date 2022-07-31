@@ -115,7 +115,7 @@ KRecentFilesAction * RKRecentUrls::action(const QString& id) {
 	RK_TRACE(SETTINGS);
 	if (!actions.contains(id)) {
 		auto cg = config();
-		auto act = new KRecentFilesAction(nullptr);
+		auto act = new KRecentFilesAction(RKWardMainWindow::getMain());
 		if (!id.isEmpty()) act->loadEntries(cg.group(id));
 		act->setMaxItems(RKSettingsModuleGeneral::maxNumRecentFiles());  // TODO: Move setting somewhere else
 		QObject::connect(act, &QObject::destroyed, [id]() { RKRecentUrls::actions.remove(id); });
@@ -123,12 +123,5 @@ KRecentFilesAction * RKRecentUrls::action(const QString& id) {
 		actions.insert(id, act);
 	}
 	return actions[id];
-}
-
-void RKRecentUrls::cleanup() {
-	for (auto it = actions.constBegin(); it != actions.constEnd(); ++it) {
-		(*it)->deleteLater();
-	}
-	actions.clear();
 }
 
