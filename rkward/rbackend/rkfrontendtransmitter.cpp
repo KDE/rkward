@@ -141,6 +141,7 @@ void RKFrontendTransmitter::run () {
 	dummy.waitForFinished();
 	dummy.readAllStandardOutput();
 #endif
+	RK_DEBUG(RBACKEND, DL_DEBUG, "Starting backend. Timestamp %d", QDateTime::currentMSecsSinceEpoch(), token.length());
 	backend->start(RKSessionVars::RBinary(), args, QIODevice::ReadOnly);
 
 	if (!backend->waitForStarted()) {
@@ -150,6 +151,7 @@ void RKFrontendTransmitter::run () {
 		backend->closeReadChannel(QProcess::StandardError);
 		backend->closeReadChannel(QProcess::StandardOutput);
 	}
+	RK_DEBUG(RBACKEND, DL_DEBUG, "Startup done at %d. Received token length was %d", QDateTime::currentMSecsSinceEpoch(), token.length());
 
 	exec ();
 

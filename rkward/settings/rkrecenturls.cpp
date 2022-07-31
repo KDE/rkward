@@ -106,9 +106,7 @@ void RKRecentUrls::saveConfig() {
 
 KRecentFilesAction* RKRecentUrls::claimAction(const QString& id) {
 	RK_TRACE(SETTINGS);
-	auto ret = action(id);
-	RK_ASSERT(!ret->parent());
-	return ret;
+	return action(id);
 }
 
 KRecentFilesAction * RKRecentUrls::action(const QString& id) {
