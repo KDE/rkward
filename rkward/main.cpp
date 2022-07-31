@@ -312,6 +312,9 @@ int main (int argc, char *argv[]) {
 		RK_DEBUG (APP, DL_INFO, "Failed to open debug file %s", qPrintable (RK_Debug::debug_file->fileName ()));
 	}
 	qInstallMessageHandler (RKDebugMessageOutput);
+	RK_DO({
+		RK_DEBUG(APP, DL_DEBUG, "Basic runtime info (expected to be incomplete at this stage):\n%s", qPrintable(RKSessionVars::frontendSessionInfo().join("\n")));
+	}, APP, DL_DEBUG);
 
 	// handle positional (file) arguments, first
 	QStringList url_args = parser.positionalArguments ();

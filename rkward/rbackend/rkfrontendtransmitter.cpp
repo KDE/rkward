@@ -115,10 +115,10 @@ void RKFrontendTransmitter::run () {
 	args.append ("--rkd-server-name=" + rkd_transmitter->serverName ().toUtf8 ().toPercentEncoding ());
 	args.append ("--data-dir=" + RKSettingsModuleGeneral::filesPath ().toUtf8 ().toPercentEncoding ());
 	args.append ("--locale-dir=" + localeDir ().toUtf8 ().toPercentEncoding ());
-	if (DL_DEBUG >= RK_Debug::RK_Debug_Level) {
-		qDebug("%s", qPrintable(RKSessionVars::RBinary()));
-		qDebug("%s", qPrintable(args.join("\n")));
-	}
+	RK_DO({
+		RK_DEBUG(RBACKEND, DL_DEBUG, "R binary: %s", qPrintable(RKSessionVars::RBinary()));
+		RK_DEBUG(RBACKEND, DL_DEBUG, "%s", qPrintable(args.join("\n")));
+	}, RBACKEND, DL_DEBUG);
 
 #ifdef Q_OS_MACOS
 	// Resolving libR.dylib and friends is a pain on MacOS, and running through R CMD does not always seem to be enough.

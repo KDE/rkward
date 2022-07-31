@@ -57,7 +57,7 @@ void RKRBackendTransmitter::run () {
 	if (timeout >= 20) handleTransmissionError("Could not connect: " + connection->errorString());
 
 	// handshake
-	RK_DEBUG(RBACKEND, DL_DEBUG, "Sending handshake");
+	RK_DEBUG(RBACKEND, DL_DEBUG, "Connection state: %d. Now Sending handshake", con->state());
 	connection->write (token.toLocal8Bit ().data ());
 	connection->write ("\n");
 	connection->write (RKWARD_VERSION);

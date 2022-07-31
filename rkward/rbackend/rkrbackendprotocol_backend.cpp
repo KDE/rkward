@@ -102,6 +102,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 			printf ("no server to connect to\n");
 			return 1;
 		}
+		RK_DEBUG(RBACKEND, DL_DEBUG, "Qt version (runtime): %s", qVersion());
+		RK_DEBUG(RBACKEND, DL_DEBUG, "Qt version (compile time): %s", QT_VERSION_STR);
 
 		// a simple security token to send to the frontend to make sure that it is really talking to the backend process that it started in the local socket connection.
 		// this token is sent both via stdout and the local socket connection. The frontend simply compares both values.
