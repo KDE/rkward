@@ -130,17 +130,16 @@ void RKFrontendTransmitter::run () {
 	RK_DEBUG(RBACKEND, DL_INFO, "Setting working directory to %s", qPrintable (r_home));
 	backend->setWorkingDirectory (r_home);
 #endif
-#if defined(Q_OS_WIN)
-	// added on a hunch, to be removed, should it have no effect, to be cleaned, otherwise:
+//#if defined(Q_OS_WIN)
 	// On some windows systems, the _first_ invocation of the backend seems to fail as somehow process output from the backend (the token) never arrives.
-	// Could it help to start a dummy process, before that? And, if doing so, will we be able to read its output?
+	// What appears to function as a workaround is start a dummy process, before that.
 	QProcess dummy;
 	QStringList dummyargs = args;
 	dummyargs.removeAt(dummyargs.size()-4); // the --server-name. With this empty, the backend will exit
 	dummy.start(RKSessionVars::RBinary(), dummyargs, QIODevice::ReadOnly);
 	dummy.waitForFinished();
 	dummy.readAllStandardOutput();
-#endif
+//#endif
 	RK_DEBUG(RBACKEND, DL_DEBUG, "Starting backend. Timestamp %d", QDateTime::currentMSecsSinceEpoch(), token.length());
 	backend->start(RKSessionVars::RBinary(), args, QIODevice::ReadOnly);
 
