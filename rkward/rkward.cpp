@@ -788,7 +788,7 @@ void RKWardMainWindow::initStatusBar () {
 	dummy->menu()->addAction(interrupt_all_commands);
 	dummy->menu()->addAction(restart_r);
 	dummy->menu()->addSeparator();
-	QAction *a = new QAction(i18n("Configure R backend"));
+	QAction *a = new QAction(i18n("Configure R backend"), this);
 	connect(a, &QAction::triggered, this, []() { RKSettings::configureSettings(RKSettings::PageR); });
 	dummy->menu()->addAction(a);
 	dummy->setFixedHeight(statusbar_r_status->height());
