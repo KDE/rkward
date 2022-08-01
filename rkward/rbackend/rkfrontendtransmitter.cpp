@@ -195,8 +195,8 @@ QString RKFrontendTransmitter::waitReadLine (QIODevice* con, int msecs) {
 
 void RKFrontendTransmitter::connectAndEnterLoop () {
 	RK_TRACE(RBACKEND);
-	RK_ASSERT(server->hasPendingConnections());
-	if (token.isEmpty()) return;  // See comment in c'tor
+	if (!server->hasPendingConnections()) return;  // May happen due to race condition
+	if (token.isEmpty()) return;  // See comment in run()
 
 	QLocalSocket *con = server->nextPendingConnection ();
 	server->close ();
