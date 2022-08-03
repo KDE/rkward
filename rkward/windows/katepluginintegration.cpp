@@ -50,7 +50,7 @@ KatePluginIntegrationApp::KatePluginIntegrationApp(QObject *parent) : QObject (p
 #if KCOREADDONS_VERSION >= QT_VERSION_CHECK(5,89,0)
 	QVector<KPluginMetaData> plugins = KPluginMetaData::findPlugins(QStringLiteral("ktexteditor"));
 #else
-	QVector<KPluginMetaData> plugins = KPluginLoader::findPlugins(QStringLiteral("ktexteditor"), [](const KPluginMetaData &md) { return md.serviceTypes().contains(QLatin1String("KTextEditor/Plugin")); });
+	QVector<KPluginMetaData> plugins = KPluginLoader::findPlugins(QStringLiteral("ktexteditor"), [](const KPluginMetaData &) { return true; });
 #endif
 	for (int i = plugins.size() -1; i >= 0; --i) {
 		PluginInfo info;
