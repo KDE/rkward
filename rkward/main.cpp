@@ -295,6 +295,7 @@ int main (int argc, char *argv[]) {
 	parser.addOption (QCommandLineOption ("reuse", i18n ("Reuse a running RKWard instance (if available). If a running instance is reused, only the file arguments will be interpreted, all other options will be ignored.")));
 	parser.addOption (QCommandLineOption ("autoreuse", i18n ("Behaves like --reuse, if any file arguments are also given, starts a new instance, otherwise. Intended for use in the .desktop file.")));
 	parser.addOption (QCommandLineOption ("nowarn-external", i18n ("When used in conjunction with rkward://runplugin/-URLs specified on the command line, suppresses the warning about application-external (untrusted) links.")));
+	parser.addOption(QCommandLineOption("quirkmode", i18n("Disable some startup validation code. Experimental option, not intended for regular use.")));
 	parser.addPositionalArgument ("files", i18n ("File or files to open, typically a workspace, or an R script file. When loading several things, you should specify the workspace, first."), "[Files...]");
 
 	aboutData.setupCommandLine (&parser);
@@ -327,6 +328,7 @@ int main (int argc, char *argv[]) {
 	}
 	RKSettingsModuleGeneral::setStartupOption("evaluate", parser.value("evaluate"));
 	RKSettingsModuleGeneral::setStartupOption("backend-debugger", parser.value("backend-debugger"));
+	RKSettingsModuleGeneral::setStartupOption("quirkmode", parser.isSet("quirkmode"));
 
 	// MacOS may need some path adjustments, first
 #ifdef Q_OS_MACOS

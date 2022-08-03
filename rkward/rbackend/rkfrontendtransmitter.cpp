@@ -45,6 +45,7 @@ RKFrontendTransmitter::RKFrontendTransmitter () : RKAbstractTransmitter () {
 	RK_TRACE (RBACKEND);
 
 	rkd_transmitter = new RKGraphicsDeviceFrontendTransmitter ();
+	quirkmode = false;
 	start ();
 }
 
@@ -66,12 +67,15 @@ QString localeDir () {
 void RKFrontendTransmitter::run () {
 	RK_TRACE (RBACKEND);
 
+	quirkmode = RKSettingsModuleGeneral::startupOption("quirkmode").toBool();
+
 	// start server
 	server = new QLocalServer (this);
 	// we add a bit of randomness to the servername, as in general the servername must be unique
 	// there could be conflicts with concurrent or with previous crashed rkward sessions.
 	if (!server->listen ("rkward" + KRandom::randomString (8))) handleTransmissionError ("Failure to start frontend server: " + server->errorString ());
 	connect (server, &QLocalServer::newConnection, this, &RKFrontendTransmitter::connectAndEnterLoop, Qt::QueuedConnection);
+	if (quirkmode) server->setSocketOptions(QLocalServer::UserAccessOption);
 	// start backend
 	backend = new QProcess (this);
 	connect (backend, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), this, &RKFrontendTransmitter::backendExit);
@@ -130,7 +134,7 @@ void RKFrontendTransmitter::run () {
 	RK_DEBUG(RBACKEND, DL_INFO, "Setting working directory to %s", qPrintable (r_home));
 	backend->setWorkingDirectory (r_home);
 #endif
-//#if defined(Q_OS_WIN)
+#if defined(Q_OS_WIN)
 	// On some windows systems, the _first_ invocation of the backend seems to fail as somehow process output from the backend (the token) never arrives.
 	// What appears to function as a workaround is start a dummy process, before that.
 	QProcess dummy;
@@ -139,14 +143,17 @@ void RKFrontendTransmitter::run () {
 	dummy.start(RKSessionVars::RBinary(), dummyargs, QIODevice::ReadOnly);
 	dummy.waitForFinished();
 	dummy.readAllStandardOutput();
-//#endif
+#endif
 	RK_DEBUG(RBACKEND, DL_DEBUG, "Starting backend. Timestamp %d", QDateTime::currentMSecsSinceEpoch(), token.length());
 	backend->start(RKSessionVars::RBinary(), args, QIODevice::ReadOnly);
 
 	if (!backend->waitForStarted()) {
 		handleTransmissionError(i18n("The backend executable could not be started. Error message was: %1", backend->errorString()));
 	} else {
-		token = waitReadLine(backend, 5000).trimmed();
+		if (!quirkmode) {
+			token = waitReadLine(backend, 5000).trimmed();
+		}
+		RK_DEBUG(RBACKEND, DL_DEBUG, "Now closing stdio channels");
 		backend->closeReadChannel(QProcess::StandardError);
 		backend->closeReadChannel(QProcess::StandardOutput);
 	}
@@ -191,7 +198,11 @@ void RKFrontendTransmitter::connectAndEnterLoop () {
 
 	// handshake
 	QString token_c = waitReadLine(con, 1000).trimmed();
-	if (token_c != token) handleTransmissionError (i18n ("Error during handshake with backend process. Expected token '%1', received token '%2'", token, token_c));
+	if (quirkmode) {
+		token = token_c;
+	} else {
+		if (token_c != token) handleTransmissionError (i18n ("Error during handshake with backend process. Expected token '%1', received token '%2'", token, token_c));
+	}
 	QString version_c = waitReadLine(con, 1000).trimmed();
 	if (version_c != RKWARD_VERSION) handleTransmissionError (i18n ("Version mismatch during handshake with backend process. Frontend is version '%1' while backend is '%2'.\nPlease fix your installation.", QString (RKWARD_VERSION), version_c));
 
