@@ -130,7 +130,7 @@ void RKFrontendTransmitter::run () {
 	RK_DEBUG(RBACKEND, DL_INFO, "Setting working directory to %s", qPrintable (r_home));
 	backend->setWorkingDirectory (r_home);
 #endif
-#if defined(Q_OS_WIN)
+//#if defined(Q_OS_WIN)
 	// On some windows systems, the _first_ invocation of the backend seems to fail as somehow process output from the backend (the token) never arrives.
 	// What appears to function as a workaround is start a dummy process, before that.
 	QProcess dummy;
@@ -139,7 +139,7 @@ void RKFrontendTransmitter::run () {
 	dummy.start(RKSessionVars::RBinary(), dummyargs, QIODevice::ReadOnly);
 	dummy.waitForFinished();
 	dummy.readAllStandardOutput();
-#endif
+//#endif
 	RK_DEBUG(RBACKEND, DL_DEBUG, "Starting backend. Timestamp %d", QDateTime::currentMSecsSinceEpoch(), token.length());
 	backend->start(RKSessionVars::RBinary(), args, QIODevice::ReadOnly);
 
@@ -151,13 +151,6 @@ void RKFrontendTransmitter::run () {
 		backend->closeReadChannel(QProcess::StandardOutput);
 	}
 	RK_DEBUG(RBACKEND, DL_DEBUG, "Startup done at %d. Received token length was %d", QDateTime::currentMSecsSinceEpoch(), token.length());
-
-	// Due to the need to call processEvents() inside waitReadLine() (see comment, there), the can be a race condition, where
-	// connectAndEnterLoop() was already called, but returned without doing anything. In that case, call it again, now.
-	if (server->hasPendingConnections()) {
-		if (token.isEmpty()) token = i18n("[No token received]");
-		connectAndEnterLoop();
-	}
 
 	exec ();
 
@@ -178,33 +171,28 @@ QString RKFrontendTransmitter::waitReadLine (QIODevice* con, int msecs) {
 	QElapsedTimer time;
 	time.start();
 	QByteArray ret;
-	QEventLoop loop;
 	do {
 		RK_DEBUG(RBACKEND, DL_DEBUG, "Time %d, buffer %d, available %d", QDateTime::currentMSecsSinceEpoch(), ret.length(), con->bytesAvailable());
 		ret.append(con->readLine());
 		RK_DEBUG(RBACKEND, DL_DEBUG, "Time2 %d, buffer %d, available %d", QDateTime::currentMSecsSinceEpoch(), ret.length(), con->bytesAvailable());
 		if (ret.contains('\n')) break;
 		RK_DEBUG(RBACKEND, DL_DEBUG, "Time3 %d", QDateTime::currentMSecsSinceEpoch());
-		//con->waitForReadyRead(500); -> See https://mail.kde.org/pipermail/rkward-devel/2022-August/005861.html : Never returns on RHEL 8.6
-		// as a workaround, sleep, then process events
-		msleep(100);
-		loop.processEvents();
+		con->waitForReadyRead(500);
 	} while(time.elapsed() < msecs);
 	return QString::fromLocal8Bit(ret);
 }
 
 void RKFrontendTransmitter::connectAndEnterLoop () {
-	RK_TRACE(RBACKEND);
-	if (!server->hasPendingConnections()) return;  // May happen due to race condition
-	if (token.isEmpty()) return;  // See comment in run()
+	RK_TRACE (RBACKEND);
+	RK_ASSERT (server->hasPendingConnections ());
 
 	QLocalSocket *con = server->nextPendingConnection ();
 	server->close ();
 
 	// handshake
-	QString token_c = waitReadLine(con, 2000).trimmed();
+	QString token_c = waitReadLine(con, 1000).trimmed();
 	if (token_c != token) handleTransmissionError (i18n ("Error during handshake with backend process. Expected token '%1', received token '%2'", token, token_c));
-	QString version_c = waitReadLine(con, 2000).trimmed();
+	QString version_c = waitReadLine(con, 1000).trimmed();
 	if (version_c != RKWARD_VERSION) handleTransmissionError (i18n ("Version mismatch during handshake with backend process. Frontend is version '%1' while backend is '%2'.\nPlease fix your installation.", QString (RKWARD_VERSION), version_c));
 
 	setConnection (con);
