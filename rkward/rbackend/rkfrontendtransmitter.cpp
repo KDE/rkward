@@ -145,24 +145,34 @@ void RKFrontendTransmitter::run () {
 	dummy.readAllStandardOutput();
 #endif
 	RK_DEBUG(RBACKEND, DL_DEBUG, "Starting backend. Timestamp %d", QDateTime::currentMSecsSinceEpoch(), token.length());
-	backend->start(RKSessionVars::RBinary(), args, QIODevice::ReadOnly);
-
-	if (!backend->waitForStarted()) {
-		handleTransmissionError(i18n("The backend executable could not be started. Error message was: %1", backend->errorString()));
+	if (quirkmode) {
+#if QT_VERSION >= QT_VERSION_CHECK(5,10,0)
+		backend->setProgram(RKSessionVars::RBinary());
+		backend->setArguments(args);
+		backend->startDetached();
+#else
+		QProcess::startDetached(RKSessionVars::RBinary(), args);
+#endif
 	} else {
-		if (!quirkmode) {
+		backend->start(RKSessionVars::RBinary(), args, QIODevice::ReadOnly);
+
+		if (!backend->waitForStarted()) {
+			handleTransmissionError(i18n("The backend executable could not be started. Error message was: %1", backend->errorString()));
+		} else {
 			token = waitReadLine(backend, 5000).trimmed();
+			RK_DEBUG(RBACKEND, DL_DEBUG, "Now closing stdio channels");
+			backend->closeReadChannel(QProcess::StandardError);
+			backend->closeReadChannel(QProcess::StandardOutput);
 		}
-		RK_DEBUG(RBACKEND, DL_DEBUG, "Now closing stdio channels");
-		backend->closeReadChannel(QProcess::StandardError);
-		backend->closeReadChannel(QProcess::StandardOutput);
 	}
 	RK_DEBUG(RBACKEND, DL_DEBUG, "Startup done at %d. Received token length was %d", QDateTime::currentMSecsSinceEpoch(), token.length());
 
 	exec ();
 
-	// It's ok to only give backend a short time to finish. We only get here, after QuitCommand has been handled by the backend
-	backend->waitForFinished(1000);
+	if (!quirkmode) {
+		// It's ok to only give backend a short time to finish. We only get here, after QuitCommand has been handled by the backend
+		backend->waitForFinished(1000);
+	}
 
 	if (!connection) {
 		RK_ASSERT (false);
