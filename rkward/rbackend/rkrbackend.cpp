@@ -265,9 +265,10 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 	
 	if ((!RKRBackend::repl_status.browser_context) && (RKRBackend::repl_status.eval_depth == 0)) {
 		while (true) {
-			if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::NoUserCommand) {
+			if (RKRBackend::this_pointer->isKilled() || (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::NoUserCommand)) {
 				RCommandProxy *command = RKRBackend::this_pointer->fetchNextCommand ();
 				if (!command) {
+					RK_DEBUG(RBACKEND, DL_DEBUG, "returning from REPL");
 #ifdef Q_OS_WIN
 					// Can't easily override R_CleanUp on Windows, so we're calling it manually, here, then force exit
 					if (RKRBackend::this_pointer->killed == RKRBackend::ExitNow) RCleanUp (SA_NOSAVE, 0, 0);
@@ -559,9 +560,9 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 			filename = dir.absoluteFilePath (filename);
 
 			R_SaveGlobalEnvToFile (filename.toLocal8Bit ().data ());
-			qDebug ("Created emergency save file in %s", qPrintable (filename));
+			RK_DEBUG(RBACKEND, DL_WARNING, "Created emergency save file in %s", qPrintable(filename));
 		} else {
-			qDebug ("Image not dirty while crashing. No emergency save created.");
+			RK_DEBUG(RBACKEND, DL_WARNING, "Image not dirty while crashing. No emergency save created.");
 		}
 	}
 
@@ -571,7 +572,7 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 			request.params["message"] = QVariant (i18n ("The R engine has shut down with status: %1", status));
 			RKRBackend::this_pointer->handleRequest (&request);
 		}
-
+		RK_DEBUG(RBACKEND, DL_DEBUG, "Cleaning up");
 		R_RunExitFinalizers ();
 		Rf_KillAllDevices ();
 		R_CleanTempDir ();
@@ -580,6 +581,8 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 	RKRBackend::this_pointer->killed = RKRBackend::AlreadyDead;	// just in case
 
 	R_CStackLimit = old_lim;	// well, it should not matter any longer, but...
+	RK_DEBUG(RBACKEND, DL_DEBUG, "Cleanup finished");
+	RKRBackendProtocolBackend::doExit();
 }
 
 void RSuicide (const char* message) {
@@ -1238,6 +1241,7 @@ void RKRBackend::enterEventLoop () {
 
 	run_Rmainloop ();
 	// NOTE: Do NOT run Rf_endEmbeddedR(). It does more that we want. We rely on RCleanup, instead.
+	// NOTE: never reached with R since ?? at least 4.3: RCleanUp is expected to exit the process
 	RK_DEBUG(RBACKEND, DL_DEBUG, "R loop finished");
 }
 

@@ -110,20 +110,28 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		QString token = QUuid::createUuid ().toString ();
 
 		RKRBackendTransmitter transmitter (servername, token);
+		RKRBackendProtocolBackend::p_transmitter = &transmitter;
 		RKRBackendProtocolBackend backend (data_dir, rkd_server_name);
 		transmitter.start ();
 		RKRBackend::this_pointer->run (locale_dir);
+		// NOTE:: Since some unknown version of R (4.3.0 at the latest, but probabably much earlier), run_Rmainloop() does not return, it will
+		//        eventually exit, instead.
+		RKRBackendProtocolBackend::doExit();
+	}
+
+	void RKRBackendProtocolBackend::doExit() {
 		RK_DEBUG(RBACKEND, DL_DEBUG, "Main loop finished");
 
-		QMetaObject::invokeMethod(&transmitter, "doExit", Qt::QueuedConnection);
-		transmitter.wait (5000);
+		QMetaObject::invokeMethod(p_transmitter, "doExit", Qt::QueuedConnection);
+		p_transmitter->wait (5000);
 
 		if (!RKRBackend::this_pointer->isKilled ()) RKRBackend::tryToDoEmergencySave ();
-		QMetaObject::invokeMethod(&app, "quit", Qt::QueuedConnection);
+		QMetaObject::invokeMethod(qApp, "quit", Qt::QueuedConnection);
 		exit(0);
 	}
 
-RKRBackendProtocolBackend* RKRBackendProtocolBackend::_instance = 0;
+RKRBackendProtocolBackend* RKRBackendProtocolBackend::_instance = nullptr;
+RKRBackendTransmitter* RKRBackendProtocolBackend::p_transmitter = nullptr;
 RKRBackendProtocolBackend::RKRBackendProtocolBackend (const QString &storage_dir, const QString &_rkd_server_name) {
 	RK_TRACE (RBACKEND);
 
