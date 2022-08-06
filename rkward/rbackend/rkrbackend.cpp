@@ -418,6 +418,7 @@ int RReadConsoleWin (const char* prompt, char* buf, int buflen, int hist) {
 
 bool RKRBackend::fetchStdoutStderr (bool forcibly) {
 #ifndef Q_OS_WIN
+	if (killed) return false;
 	if (!forcibly) {
 		if (!stdout_stderr_mutex.tryLock ()) return false;
 	} else {

@@ -159,6 +159,7 @@ void RKRBackendTransmitter::handleTransmissionError (const QString &message) {
 	RK_TRACE (RBACKEND);
 
 	if (!connection) return;  // regular exit, or we did not even get to the point of setting up the connection.
+	if (RKRBackend::this_pointer->isKilled()) return;
 	RK_DEBUG (RBACKEND, DL_ERROR, "%s", qPrintable ("Transmission error " + message));
 	RKRBackend::tryToDoEmergencySave ();
 }
