@@ -203,7 +203,7 @@ A &amp; B \\
  </item>
  <item>
   <match>YAML header</match>
-    <fillin>---
+<fillin>---
 title: "Example R Markdown in RKWard with R version `r getRversion()`"
 author: "Author Name"
 date: "`r Sys.Date()`"
@@ -391,7 +391,7 @@ If you like RKWard consider to donate. Some small amount for a cup of coffee or 
  </item>
  <item>
    <match>R Markdown PDF template</match>
-   <fillin>---
+<fillin>---
 title: "Example R Markdown in RKWard with R version `r getRversion()`"
 author: "The RKWard Team"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
@@ -399,9 +399,8 @@ output:
     pdf_document:
       fig_caption: yes
       highlight: kate
-      number_sections: yes
+      number_sections: true
       toc: yes
-number_sections: true
 urlcolor: blue
 linkcolor: red
 ---
