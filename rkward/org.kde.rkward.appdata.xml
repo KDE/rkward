@@ -12,6 +12,7 @@
   <name xml:lang="fr">RKWard</name>
   <name xml:lang="it">RKWard</name>
   <name xml:lang="nl">RKWard</name>
+  <name xml:lang="pl">RKWard</name>
   <name xml:lang="pt">RKWard</name>
   <name xml:lang="sl">RKWard</name>
   <name xml:lang="sv">RKward</name>
@@ -81,6 +82,7 @@
       <caption xml:lang="it">Finestra principale, con editor di dati, navigatore di oggetti, console R interattiva e ulteriori finestre degli strumenti.</caption>
       <caption xml:lang="ko">데이터 편집기, 객체 탐색기, 인터랙티브 R 콘솔, 기타 도구 창이 표시된 주 창.</caption>
       <caption xml:lang="nl">Hoofdvenster, met gegevensbewerker, object browser, interactieve R-console, en vensters voor verdere hulpprogramma's.</caption>
+      <caption xml:lang="pl">Główne okno z edytorem danych, przeglądarką obiektów, interaktywną konsolą R i innymi oknami narzędzi.</caption>
       <caption xml:lang="pt">A janela principal, com o editor de dados, o navegador de objectos, a consola interactiva de R e mais algumas janelas de ferramentas.</caption>
       <caption xml:lang="sl">Glavno okno z urejevalnikom podatkov, brskalnik po predmetih, interaktivna konzola R in druga okenska orodja.</caption>
       <caption xml:lang="sv">Huvudfönster, med dataeditor, objektbläddrare, interaktiv R-terminal och ytterligare verktygsfönster.</caption>
@@ -118,6 +120,7 @@
       <caption xml:lang="fr">Travailler avec des données dans RKward</caption>
       <caption xml:lang="it">Lavorare coi dati in RKWard</caption>
       <caption xml:lang="nl">Met gegevens werken in RKWard</caption>
+      <caption xml:lang="pl">Praca z danymi w RKWard</caption>
       <caption xml:lang="pt">Lidar com dados no RKward</caption>
       <caption xml:lang="sl">Delo s podatki v RKward-u</caption>
       <caption xml:lang="sv">Arbeta med data i RKward</caption>
