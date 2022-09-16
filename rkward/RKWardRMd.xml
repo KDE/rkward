@@ -590,4 +590,35 @@ another style (see https://www.zotero.org/styles), you will need to specify a CS
 ---
 </fillin>
  </item>
+ <item>
+  <match>R Markdown with two columns</match>
+    <fillin>---
+title: "Example R Markdown with two columns in RKWard with R version `r getRversion()`"
+author: "The RKWard Team"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: html_document
+---
+
+::: columns
+::: column
+This is the first column.
+
+```{r}
+plot(rnorm(199))
+```
+
+:::
+
+::: column
+
+This is the second column.
+
+```{r}
+hist(rnorm(199))
+```
+
+:::
+:::
+</fillin>
+ </item>
 </snippets>
