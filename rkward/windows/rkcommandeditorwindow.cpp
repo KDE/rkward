@@ -316,7 +316,7 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 			emit KTextEditor::Editor::instance()->application()->aboutToDeleteDocuments(QList<KTextEditor::Document*>() << m_doc);
 #endif
 		}
-		delete m_doc;
+		m_doc->deleteLater();
 		if (visible_to_kateplugins) {
 			emit KTextEditor::Editor::instance()->application()->documentDeleted(m_doc);
 #if KTEXTEDITOR_VERSION < QT_VERSION_CHECK(5,80,0)
