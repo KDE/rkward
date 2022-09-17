@@ -65,7 +65,7 @@ class RKWardCoreTest: public QObject {
 	}
 
 	void waitForAllFinished(int timeoutms = 1000) {
-		runCommandWithTimeout(new RCommand(QString(), RCommand::App | RCommand::EmptyCommand), nullptr, [](RCommand*){}, timeoutms);
+		runCommandWithTimeout(new RCommand(QString(), RCommand::App | RCommand::EmptyCommand | RCommand::Sync), nullptr, [](RCommand*){}, timeoutms);
 	}
 
 	void cleanGlobalenv() {
