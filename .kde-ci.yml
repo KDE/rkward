@@ -20,3 +20,5 @@ Dependencies:
 
 Options:
   require-passing-tests-on: [ 'Linux', 'FreeBSD', 'Windows' ]
+  tests-load-sensitve: True
+  per-test-timeout: 120
