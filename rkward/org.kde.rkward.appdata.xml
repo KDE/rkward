@@ -11,6 +11,7 @@
   <name xml:lang="es">RKWard</name>
   <name xml:lang="fr">RKWard</name>
   <name xml:lang="it">RKWard</name>
+  <name xml:lang="ka">RKWard</name>
   <name xml:lang="nl">RKWard</name>
   <name xml:lang="pl">RKWard</name>
   <name xml:lang="pt">RKWard</name>
@@ -30,6 +31,7 @@
   <summary xml:lang="gl">Interface de KDE para a linguaxe de estatística R</summary>
   <summary xml:lang="id">Frontend KDE untuk bahasa statistik R</summary>
   <summary xml:lang="it">Interfaccia di KDE per il linguaggio statistico R</summary>
+  <summary xml:lang="ka">KDE-ის წინაბოლო სტატისტიკის ენა R-ისთვის</summary>
   <summary xml:lang="ko">R 통계 언어의 KDE 프론트엔드</summary>
   <summary xml:lang="nl">KDE frontend naar de statistische taal R</summary>
   <summary xml:lang="pl">Nakładka KDE na język statystyczny R</summary>
@@ -80,6 +82,7 @@
       <caption xml:lang="es">Ventana principal, con el editor de datos, el navegador de objetos, la consola interactiva de R y otras ventanas con herramientas adicionales.</caption>
       <caption xml:lang="fr">Fenêtre principale avec l'éditeur de données, le navigateur d'objets, la console interactive de R et d'autres fenêtres d'outils.</caption>
       <caption xml:lang="it">Finestra principale, con editor di dati, navigatore di oggetti, console R interattiva e ulteriori finestre degli strumenti.</caption>
+      <caption xml:lang="ka">მთავარი ფანჯარა, მონაცემების რედაქტორით, R-ის ინტერაქტიულ კონსოლი და სხვა ხელსაწყოს ფანჯრები.</caption>
       <caption xml:lang="ko">데이터 편집기, 객체 탐색기, 인터랙티브 R 콘솔, 기타 도구 창이 표시된 주 창.</caption>
       <caption xml:lang="nl">Hoofdvenster, met gegevensbewerker, object browser, interactieve R-console, en vensters voor verdere hulpprogramma's.</caption>
       <caption xml:lang="pl">Główne okno z edytorem danych, przeglądarką obiektów, interaktywną konsolą R i innymi oknami narzędzi.</caption>
@@ -101,6 +104,7 @@
       <caption xml:lang="fr">Éditeur de scripts avec aperçu actif.</caption>
       <caption xml:lang="id">Pengedit skrip dengan pratinjau yang aktif</caption>
       <caption xml:lang="it">Editor di script con anteprima attiva</caption>
+      <caption xml:lang="ka">სკრიპტის რედაქტორი აქტიური გადახედვით</caption>
       <caption xml:lang="ko">스크립트를 미리 보여 주는 편집기</caption>
       <caption xml:lang="nl">Scripteditor met actieve preview.</caption>
       <caption xml:lang="pl">Edytor skryptów z podglądem na żywo</caption>
@@ -119,6 +123,7 @@
       <caption xml:lang="es">Trabajando con datos en RKWard</caption>
       <caption xml:lang="fr">Travailler avec des données dans RKward</caption>
       <caption xml:lang="it">Lavorare coi dati in RKWard</caption>
+      <caption xml:lang="ka">მონაცემებთან მუშაობა RKWard-ში</caption>
       <caption xml:lang="nl">Met gegevens werken in RKWard</caption>
       <caption xml:lang="pl">Praca z danymi w RKWard</caption>
       <caption xml:lang="pt">Lidar com dados no RKward</caption>
