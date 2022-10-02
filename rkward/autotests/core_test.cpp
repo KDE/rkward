@@ -27,7 +27,10 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../core/renvironmentobject.h"
 #include "../misc/rkcommonfunctions.h"
 
+QElapsedTimer _test_timer;
+
 void RKDebug (int, int, const char* fmt, ...) {
+	printf("%d: ", (int) _test_timer.elapsed());
 	va_list ap;
 	va_start(ap, fmt);
 	vprintf(fmt, ap);
@@ -98,6 +101,7 @@ private slots:
 		waitForAllFinished();
 	}
 	void initTestCase() {
+		_test_timer.start();
 		qputenv("QTWEBENGINE_CHROMIUM_FLAGS", "--no-sandbox"); // Allow test to be run as root, which, for some reason is being done on the SuSE CI.
 		QLoggingCategory::setFilterRules("qt.text.layout=false");  // Filter out some noise
 		KAboutData::setApplicationData(KAboutData("rkward", "RKWard", RKWARD_VERSION, "Frontend to the R statistics language", KAboutLicense::GPL)); // component name needed for .rc files to load
