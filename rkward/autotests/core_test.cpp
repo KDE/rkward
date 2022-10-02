@@ -209,6 +209,21 @@ private slots:
 		cleanGlobalenv();
 	}
 
+	void priorityCommandTest() {
+		bool priority_command_done = false;
+		runCommandAsync(new RCommand("Sys.sleep(5)", RCommand::User), nullptr, [&priority_command_done](RCommand *command) {
+			QVERIFY(priority_command_done);
+			QVERIFY(command->failed());
+			QVERIFY(command->wasCanceled());
+		});
+		auto priority_command = new RCommand("cat(\"something\\n\")", RCommand::PriorityCommand | RCommand::App);
+		runCommandAsync(priority_command, nullptr, [&priority_command_done](RCommand *) {
+			priority_command_done = true;
+			RInterface::instance()->cancelAll();
+		});
+		waitForAllFinished();  // priority_command_done must remain in scope until done
+	}
+
 	void commandOrderAndOutputTest() {
 		// commands shall run in the order 1, 3, 2, 5, 4, but also, of course, all different types of output shall be captured
 		QStringList output;
@@ -264,21 +279,6 @@ private slots:
 		QVERIFY(cancelled_commands >= 25);
 		QVERIFY(cancelled_commands <= 75);
 		testLog("%d out of %d commands were actually cancelled", cancelled_commands, commands_out);
-	}
-
-	void priorityCommandTest() {
-		bool priority_command_done = false;
-		runCommandAsync(new RCommand("Sys.sleep(5)", RCommand::User), nullptr, [&priority_command_done](RCommand *command) {
-			QVERIFY(priority_command_done);
-			QVERIFY(command->failed());
-			QVERIFY(command->wasCanceled());
-		});
-		auto priority_command = new RCommand("cat(\"something\\n\")", RCommand::PriorityCommand | RCommand::App);
-		runCommandAsync(priority_command, nullptr, [&priority_command_done](RCommand *) {
-			priority_command_done = true;
-			RInterface::instance()->cancelAll();
-		});
-		waitForAllFinished();  // priority_command_done must remain in scope until done
 	}
 
 	void restartRBackend() {
