@@ -19,6 +19,6 @@ Dependencies:
     'frameworks/kcrash': '@stable'
 
 Options:
-  require-passing-tests-on: [ 'Linux', 'FreeBSD', 'Windows' ]
+  require-passing-tests-on: [ 'Linux', 'FreeBSD' ]
   tests-load-sensitve: True
   per-test-timeout: 120
