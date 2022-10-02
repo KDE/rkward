@@ -29,13 +29,24 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 QElapsedTimer _test_timer;
 
-void RKDebug (int, int, const char* fmt, ...) {
-	printf("%d: ", (int) _test_timer.elapsed());
+void testLog(const char* fmt, va_list args) {
+	printf("%lld: ", _test_timer.elapsed());
+	vprintf(fmt, args);
+	printf("\n");
+}
+
+void testLog(const char* fmt, ...) {
 	va_list ap;
 	va_start(ap, fmt);
-	vprintf(fmt, ap);
+	testLog(fmt, ap);
 	va_end(ap);
-	printf("\n");
+}
+
+void RKDebug (int, int, const char* fmt, ...) {
+	va_list ap;
+	va_start(ap, fmt);
+	testLog(fmt, ap);
+	va_end(ap);
 }
 
 /** This test suite sets up a mostly complete application. That's a bit heavy, but arguably, a) modularity isn't ideal in RKWard, and b) many of the more interesting
@@ -57,7 +68,7 @@ class RKWardCoreTest: public QObject {
 			qApp->processEvents();
 		}
 		if (!done) {
-			qDebug("Command timed out: %s", qPrintable(ccopy));
+			testLog("Command timed out: %s", qPrintable(ccopy));
 			QFAIL("Command timed out");
 		}
 	}
@@ -83,19 +94,20 @@ class RKWardCoreTest: public QObject {
 			qApp->sendPostedEvents();
 		}
 		if (RInterface::instance()->backendIsIdle()) {
-			qDebug("Backend startup completed");
+			testLog("Backend startup completed");
 		} else {
-			qDebug("Backend startup failed. Listing contents of /tmp/rkward.rbackend");
+			testLog("Backend startup failed. Listing contents of /tmp/rkward.rbackend");
 			QFile f(QDir::tempPath() + "/rkward.rbackend");
 			f.open(QIODevice::ReadOnly);
 			auto output = f.readAll();
-			qDebug("%s", output.data());
+			testLog("%s", output.data());
 		}
 	}
     
 	QPointer<RKWardMainWindow> main_win;
 private slots:
 	void init() {
+		testLog("Starting next test");
 	}
 	void cleanup() {
 		waitForAllFinished();
@@ -220,7 +232,7 @@ private slots:
 		int cancelled_commands = 0;
 		int commands_out = 0;
 		for (int i = 0; i < 100; ++i) {
-			runCommandAsync(new RCommand("Sys.sleep(.005)", RCommand::User), nullptr, [&cancelled_commands, &commands_out](RCommand *command) {
+			runCommandAsync(new RCommand("Sys.sleep(.005)", RCommand::User | RCommand::PriorityCommand), nullptr, [&cancelled_commands, &commands_out](RCommand *command) {
 				if (command->wasCanceled()) cancelled_commands++;
 				commands_out++;
 			});
@@ -241,7 +253,7 @@ private slots:
 		// There needs to be some wiggle room, however, as this is inherently prone to race-conditions. (Commands finish running before getting cancelled, or they don't).
 		QVERIFY(cancelled_commands >= 25);
 		QVERIFY(cancelled_commands <= 75);
-		printf("%d out of %d commands were actually cancelled", cancelled_commands, commands_out);
+		testLog("%d out of %d commands were actually cancelled", cancelled_commands, commands_out);
 	}
 
 	void priorityCommandTest() {

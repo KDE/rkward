@@ -277,7 +277,7 @@ void RInterface::doNextCommand (RCommand *command) {
 		RKWardMainWindow::getMain ()->setWorkspaceMightBeModified (true);
 		proxy = command->makeProxy ();
 
-		RK_DEBUG (RBACKEND, DL_DEBUG, "running command: %s", command->command ().toLatin1().data ());
+		RK_DEBUG (RBACKEND, DL_DEBUG, "running command %d: %s", command->id(), qPrintable(command->command()));
 		command->status |= RCommand::Running;
 		RCommandStackModel::getModel ()->itemChange (command);
 
