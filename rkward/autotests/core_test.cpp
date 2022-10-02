@@ -103,6 +103,12 @@ class RKWardCoreTest: public QObject {
 			testLog("%s", output.data());
 		}
 	}
+
+	QString backendStatus() {
+		if (RInterface::instance()->backendIsDead()) return "dead";
+		if (RInterface::instance()->backendIsIdle()) return "idle";
+		return "dead";
+	}
     
 	QPointer<RKWardMainWindow> main_win;
 private slots:
@@ -111,9 +117,9 @@ private slots:
 	}
 
 	void cleanup() {
-		testLog("Cleanup. Backend status: %s", RInterface::instance()->backendIsDead() ? "dead" : (RInterface::instance()->backendIsIdle() ? "idle" : "busy"));
+		testLog("Cleanup. Backend status: %s", qPrintable(backendStatus()));
 		waitForAllFinished();
-		testLog("Cleanup done. Backend status: %s", RInterface::instance()->backendIsDead() ? "dead" : (RInterface::instance()->backendIsIdle() ? "idle" : "busy"));
+		testLog("Cleanup done. Backend status: %s", qPrintable(backendStatus()));
 	}
 
 	void initTestCase() {
