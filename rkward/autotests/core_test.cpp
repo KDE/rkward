@@ -237,7 +237,7 @@ private slots:
 		// There needs to be some wiggle room, however, as this is inherently prone to race-conditions. (Commands finish running before getting cancelled, or they don't).
 		QVERIFY(cancelled_commands >= 25);
 		QVERIFY(cancelled_commands <= 75);
-		qDebug("%d out of %d commands were actually cancelled", cancelled_commands, commands_out);
+		printf("%d out of %d commands were actually cancelled", cancelled_commands, commands_out);
 	}
 
 	void priorityCommandTest() {
