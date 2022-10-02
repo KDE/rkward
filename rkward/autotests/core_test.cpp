@@ -107,7 +107,7 @@ class RKWardCoreTest: public QObject {
 	QString backendStatus() {
 		if (RInterface::instance()->backendIsDead()) return "dead";
 		if (RInterface::instance()->backendIsIdle()) return "idle";
-		return "dead";
+		return "busy";
 	}
     
 	QPointer<RKWardMainWindow> main_win;
@@ -125,7 +125,7 @@ private slots:
 	void initTestCase() {
 		_test_timer.start();
 		qputenv("QTWEBENGINE_CHROMIUM_FLAGS", "--no-sandbox"); // Allow test to be run as root, which, for some reason is being done on the SuSE CI.
-		QLoggingCategory::setFilterRules("qt.text.layout=false");  // Filter out some noise
+		qputenv("QT_LOGGING_RULES", "qt.qpa.windows.debug=true");  // Deliberately overwriting the rules set in the CI, as we are producing too much output, otherwise
 		KAboutData::setApplicationData(KAboutData("rkward", "RKWard", RKWARD_VERSION, "Frontend to the R statistics language", KAboutLicense::GPL)); // component name needed for .rc files to load
 		RK_Debug::RK_Debug_Level = DL_DEBUG;
 		testLog(R_EXECUTABLE);
