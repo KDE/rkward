@@ -31,7 +31,7 @@ RKRBackendProtocolFrontend::~RKRBackendProtocolFrontend () {
 	RK_ASSERT(_instance == this);
 	terminateBackend ();
 	RKFrontendTransmitter::instance ()->wait(1000);  // Wait for thread to catch the backend's exit request, and exit()
-	RKFrontendTransmitter::instance ()->quit();      // Tell it to quit, otherwise
+	QMetaObject::invokeMethod(RKFrontendTransmitter::instance(), &RKFrontendTransmitter::quit, Qt::QueuedConnection);  // tell it to quit, otherwise
 	RKFrontendTransmitter::instance ()->wait(3000);  // Wait for thread to quit and clean up.
 	qApp->processEvents(QEventLoop::AllEvents, 500); // Not strictly needed, but avoids some mem leaks on exit by handling all posted BackendExit events
 	delete RKFrontendTransmitter::instance ();

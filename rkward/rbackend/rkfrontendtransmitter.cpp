@@ -53,7 +53,6 @@ RKFrontendTransmitter::~RKFrontendTransmitter () {
 	RK_TRACE (RBACKEND);
 
 	delete rkd_transmitter;
-	RK_ASSERT (!server->isListening ());
 }
 
 QString localeDir () {
@@ -171,13 +170,15 @@ void RKFrontendTransmitter::run () {
 
 	if (!quirkmode) {
 		// It's ok to only give backend a short time to finish. We only get here, after QuitCommand has been handled by the backend
-		backend->waitForFinished(1000);
+		if (!backend->waitForFinished(1000)) backend->close();
 	}
 
 	if (!connection) {
 		RK_ASSERT (false);
-		return;
 	}
+	RK_ASSERT(!server->isListening ());
+	delete server;
+	delete backend;
 }
 
 QString RKFrontendTransmitter::waitReadLine (QIODevice* con, int msecs) {

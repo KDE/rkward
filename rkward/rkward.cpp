@@ -632,6 +632,7 @@ void RKWardMainWindow::initActions() {
 		if (suppressModalDialogsForTesting() || (KMessageBox::warningContinueCancel(this, message, i18n("Restart R backend"), KGuiItem(i18n("Restart R backend"))) == KMessageBox::Continue)) {
 			bool forced = RInterface::instance()->backendIsDead();
 			while (!RInterface::instance()->backendIsDead() && !RInterface::instance()->backendIsIdle()) {
+				RK_DEBUG(APP, DL_DEBUG, "Backend not idle while restart requested.");
 				message = i18n("<p>One or more operations are pending.</p><p>If you have recently chosen to save your workspace, and you see this message, <b>your data may not be saved, yet!</b></p><p>How do you want to proceed?</p>");
 				auto res = KMessageBox::warningYesNoCancel(this, message, i18n("R commands still pending"), KGuiItem(i18n("Force restart now")), KGuiItem(i18n("Check again")), KGuiItem(i18n("Cancel restarting")));
 				if (res == KMessageBox::Yes) {
@@ -647,6 +648,7 @@ void RKWardMainWindow::initActions() {
 			RKWorkplace::mainWorkplace()->closeAll(RKMDIWindow::X11Window);
 			slotCloseAllEditors();
 			auto restart_now = [this]() {
+				RK_DEBUG(APP, DL_DEBUG, "Backend restart now");
 				delete RInterface::instance();  // NOTE: Do not use deleteLater(), here. It is important to fully tear down the old backend, before creating the new one,
 				                                //       as code is written around the assumption that RInterface and friends are singletons. (RInterface::instance(), etc.)
 				RKWorkplace::mainWorkplace()->setWorkspaceURL(QUrl());
