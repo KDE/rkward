@@ -209,6 +209,28 @@ private slots:
 		cleanGlobalenv();
 	}
 
+	void restartRBackend() {
+		auto restart_action = RKWardMainWindow::getMain()->actionCollection()->action("restart_r");
+		QVERIFY(restart_action != nullptr);
+		RInterface::issueCommand(new RCommand("x <- 1", RCommand::User));
+		waitForAllFinished();
+		QVERIFY(RObjectList::getGlobalEnv()->findObject("x"));
+
+		auto oldiface = RInterface::instance();
+		restart_action->trigger();
+		while (RInterface::instance() == oldiface) {  // action may be delayed until next event processing
+			qApp->processEvents();
+		}
+		waitForBackendStarted();
+
+		// backend should be clean after restart
+		QVERIFY(!RObjectList::getGlobalEnv()->findObject("x"));
+		// but of course it should also be functional...
+		RInterface::issueCommand(new RCommand("x <- 1", RCommand::User));
+		waitForAllFinished();
+		QVERIFY(RObjectList::getGlobalEnv()->findObject("x"));
+	}
+
 	void priorityCommandTest() {
 		bool priority_command_done = false;
 		runCommandAsync(new RCommand("Sys.sleep(5)", RCommand::User), nullptr, [&priority_command_done](RCommand *command) {
@@ -279,28 +301,6 @@ private slots:
 		QVERIFY(cancelled_commands >= 25);
 		QVERIFY(cancelled_commands <= 75);
 		testLog("%d out of %d commands were actually cancelled", cancelled_commands, commands_out);
-	}
-
-	void restartRBackend() {
-		auto restart_action = RKWardMainWindow::getMain()->actionCollection()->action("restart_r");
-		QVERIFY(restart_action != nullptr);
-		RInterface::issueCommand(new RCommand("x <- 1", RCommand::User));
-		waitForAllFinished();
-		QVERIFY(RObjectList::getGlobalEnv()->findObject("x"));
-
-		auto oldiface = RInterface::instance();
-		restart_action->trigger();
-		while (RInterface::instance() == oldiface) {  // action may be delayed until next event processing
-			qApp->processEvents();
-		}
-		waitForBackendStarted();
-
-		// backend should be clean after restart
-		QVERIFY(!RObjectList::getGlobalEnv()->findObject("x"));
-		// but of course it should also be functional...
-		RInterface::issueCommand(new RCommand("x <- 1", RCommand::User));
-		waitForAllFinished();
-		QVERIFY(RObjectList::getGlobalEnv()->findObject("x"));
 	}
 
 	void cleanupTestCase()

@@ -92,7 +92,7 @@ if and only if there are unsaved changes pending."
 		close=function(discard=NULL) {
 "Forget about this output file, also closing any open views. Note: Trying to call any further methods on this object will fail."
 			.rk.do.call("output", c ("close", .checkId(), if(is.null(discard)) "ask" else if(isTRUE(discard)) "force" else "fail"))
-			id<-NULL
+			id<<-character(0)
 		},
 		view=function(raise=TRUE) {
 "Open this output for viewing in the frontend."
