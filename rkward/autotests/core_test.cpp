@@ -125,7 +125,7 @@ private slots:
 	void initTestCase() {
 		_test_timer.start();
 		qputenv("QTWEBENGINE_CHROMIUM_FLAGS", "--no-sandbox"); // Allow test to be run as root, which, for some reason is being done on the SuSE CI.
-		qputenv("QT_LOGGING_RULES", "qt.qpa.windows.debug=true");  // Deliberately overwriting the rules set in the CI, as we are producing too much output, otherwise
+		// qputenv("QT_LOGGING_RULES", "qt.qpa.windows.debug=true");  // Deliberately overwriting the rules set in the CI, as we are producing too much output, otherwise  -- TODO: does not appear to have any effect
 		KAboutData::setApplicationData(KAboutData("rkward", "RKWard", RKWARD_VERSION, "Frontend to the R statistics language", KAboutLicense::GPL)); // component name needed for .rc files to load
 		RK_Debug::RK_Debug_Level = DL_DEBUG;
 		testLog(R_EXECUTABLE);
@@ -216,9 +216,9 @@ private slots:
 		waitForAllFinished();
 		QVERIFY(RObjectList::getGlobalEnv()->findObject("x"));
 
-		auto oldiface = RInterface::instance();
+		QPointer<RInterface> oldiface = RInterface::instance();
 		restart_action->trigger();
-		while (RInterface::instance() == oldiface) {  // action may be delayed until next event processing
+		while (oldiface) {  // action may be delayed until next event processing
 			qApp->processEvents();
 		}
 		waitForBackendStarted();
