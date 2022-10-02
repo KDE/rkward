@@ -50,7 +50,7 @@ class RKWardCoreTest: public QObject {
 		bool *_done = &done;
 		connect(command->notifier(), &RCommandNotifier::commandFinished, this, [_done, callback](RCommand *command) { *_done = true; callback(command); });
 		RInterface::issueCommand(command, chain);
-		while (!done && t.elapsed() < timeoutms) {
+		while (!done && (t.elapsed() < timeoutms)) {
 			qApp->processEvents();
 		}
 		if (!done) {
@@ -98,7 +98,6 @@ private slots:
 		waitForAllFinished();
 	}
 	void initTestCase() {
-		qDebug("Initializing test case"); // Remove me. For diagnostics of test exception on Windows CI
 		qputenv("QTWEBENGINE_CHROMIUM_FLAGS", "--no-sandbox"); // Allow test to be run as root, which, for some reason is being done on the SuSE CI.
 		QLoggingCategory::setFilterRules("qt.text.layout=false");  // Filter out some noise
 		KAboutData::setApplicationData(KAboutData("rkward", "RKWard", RKWARD_VERSION, "Frontend to the R statistics language", KAboutLicense::GPL)); // component name needed for .rc files to load
@@ -211,6 +210,33 @@ private slots:
 		QCOMPARE(output.value(2), "222");
 		QCOMPARE(output.value(3), "555");
 		QCOMPARE(output.value(4), "444");
+	}
+
+	void cancelCommandStressTest() {
+		int cancelled_commands = 0;
+		int commands_out = 0;
+		for (int i = 0; i < 100; ++i) {
+			runCommandAsync(new RCommand("Sys.sleep(.005)", RCommand::User), nullptr, [&cancelled_commands, &commands_out](RCommand *command) {
+				if (command->wasCanceled()) cancelled_commands++;
+				commands_out++;
+			});
+			// We want to cover various cases, here, including cancelling commands before and after they have been sent to the backend, but also at least some commands that finish
+			// without being effictively cancelled.
+			if (i % 4 == 0) {
+				RInterface::instance()->cancelAll();
+			} else if (i % 4 == 1) {
+				while (commands_out < i) {
+					qApp->processEvents();
+				}
+			} else if (i % 4 == 2) {
+				qApp->processEvents();
+			}
+		}
+		waitForAllFinished();
+		// The point of this test case is to make sure, we do not get into a deadlock, however, the QVERIFYs below are to make sure the test itself behaves as expected.
+		// There needs to be some wiggle room, however, as this is inherently prone to race-conditions. (Commands finish running before getting cancelled, or they don't).
+		QVERIFY(cancelled_commands >= 25);
+		QVERIFY(cancelled_commands <= 75);
 	}
 
 	void priorityCommandTest() {

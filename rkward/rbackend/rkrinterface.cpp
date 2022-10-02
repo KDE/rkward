@@ -199,9 +199,11 @@ void RInterface::tryNextCommand () {
 				command->status |= RCommand::Failed;
 
 				// notify ourselves...
-				RCommand* dummy = popPreviousCommand (command->id ());
-				RK_ASSERT (dummy == command);
-				handleCommandOut (command);
+				RCommand* dummy = popPreviousCommand(command->id ());
+				RK_ASSERT(dummy == command);
+				RK_DEBUG(RBACKEND, DL_DEBUG, "Not sending already cancelled command to backend");
+				handleCommandOut(command);
+				tryNextCommand();
 				return;
 			}
 
@@ -562,6 +564,7 @@ void RInterface::cancelCommand (RCommand *command) {
 	} else {
 		RK_ASSERT (false);
 	}
+	tryNextCommand();
 }
 
 void RInterface::pauseProcessing (bool pause) {
