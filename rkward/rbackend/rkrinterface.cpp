@@ -240,8 +240,8 @@ void RInterface::handleCommandOut (RCommand *command) {
 			} else {
 				RK_DEBUG (RBACKEND, dl, "Command failed (other)");
 			}
-			RK_DEBUG (RBACKEND, dl, "failed command was: '%s'", qPrintable (command->command ()));
-			RK_DEBUG (RBACKEND, dl, "- error message was: '%s'", qPrintable (command->error ()));
+			RK_DEBUG(RBACKEND, dl, "failed command was %d: '%s'", command->id(), qPrintable(command->command()));
+			RK_DEBUG(RBACKEND, dl, "- error message was: '%s'", qPrintable(command->error()));
 		}
 	#endif
 

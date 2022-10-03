@@ -219,7 +219,7 @@ void RKAbstractTransmitter::transmitRequest (RBackendRequest *request) {
 	}
 
 	RKRBackendSerializer::serialize (*request, streamer.outstream);
-	RK_DEBUG (RBACKEND, DL_DEBUG, "Transmitting request of length %d", streamer.outSize ());
+	RK_DEBUG (RBACKEND, DL_DEBUG, "Transmitting request type %d of length %d", (int) request->type, streamer.outSize ());
 	streamer.writeOutBuffer ();
 }
 
