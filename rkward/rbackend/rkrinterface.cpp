@@ -417,8 +417,8 @@ void RInterface::handleRequest (RBackendRequest* request) {
 			// initialize output file
 			RKOutputDirectory::getCurrentOutput(chain);
 
-#ifdef Q_OS_MACOS
-			// On MacOS, the backend is started from inside R home to allow resolution of dynamic libs. Re-set to frontend wd, here.
+#if defined(Q_OS_MACOS) || defined(Q_OS_WIN)
+			// On MacOS and Windows, the backend is started with different working directories set, for hackish reasons (see rkfrontendtransmitter.cpp). Fix that, here.
 			runStartupCommand(new RCommand("setwd (" + RKRSharedFunctionality::quote(QDir::currentPath()) + ")\n", RCommand::App | RCommand::Sync), chain, runtimeopt_callback);
 #endif
 			// Workaround for https://bugs.kde.org/show_bug.cgi?id=421958

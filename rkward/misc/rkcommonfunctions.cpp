@@ -249,25 +249,6 @@ namespace RKCommonFunctions {
 		return (i18n ("<p><em>Note:</em> This setting does not take effect until you restart RKWard.</p>"));
 	}
 
-#ifdef Q_OS_WIN
-#	include <windows.h>
-#	include <QTemporaryFile>
-#endif
-	QString windowsShellScriptSafeCommand (const QString &orig) {
-#ifdef Q_OS_WIN
-		// credits to http://erasmusjam.wordpress.com/2012/10/01/get-8-3-windows-short-path-names-in-a-qt-application/
-		QByteArray input (sizeof (wchar_t) * (orig.size()+1), '\0');
-		// wchar_t input[orig.size()+1]; -- No: MSVC (2013) does not support variable length arrays. Oh dear...
-		orig.toWCharArray ((wchar_t*) input.data ());
-		long length = GetShortPathName ((wchar_t*) input.data (), NULL, 0);
-		QByteArray output (sizeof (wchar_t) * (length), '\0');
-		GetShortPathName ((wchar_t*) input.data (), (wchar_t*) output.data (), length);
-		return QString::fromWCharArray ((wchar_t*) output.data (), length-1);
-#else
-		return orig;
-#endif
-	}
-
 	QLabel* wordWrappedLabel (const QString& text) {
 		QLabel* ret = new QLabel (text);
 		ret->setWordWrap (true);

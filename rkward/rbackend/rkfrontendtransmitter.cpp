@@ -110,7 +110,16 @@ void RKFrontendTransmitter::run () {
 		exec();   // To actually show the transmission error
 		return;
 	}
-	args.append(RKCommonFunctions::windowsShellScriptSafeCommand(backend_executable));
+
+#ifdef Q_OS_WIN
+	// Needed for paths with spaces. R CMD is too simple to deal with those, even if we provide proper quoting.
+	// So rather we need to work from a relative path with all spaces eliminated
+	QFileInfo bfi(backend_executable);
+	backend->setWorkingDirectory(bfi.absolutePath());
+	args.append(bfi.fileName());
+#else
+	args.append(backend_executable);
+#endif
 
 	args.append ("--debug-level=" + QString::number (RK_Debug::RK_Debug_Level));
 	// NOTE: QProcess quotes its arguments, *but* properly passing all spaces and quotes through the R CMD wrapper, seems near(?) impossible on Windows. Instead, we use percent encoding, internally.
@@ -138,6 +147,7 @@ void RKFrontendTransmitter::run () {
 	// What appears to function as a workaround is start a dummy process, before that.
 	QProcess dummy;
 	QStringList dummyargs = args;
+	dummy.setWorkingDirectory(backend->workingDirectory());
 	dummyargs.removeAt(dummyargs.size()-4); // the --server-name. With this empty, the backend will exit
 	dummy.start(RKSessionVars::RBinary(), dummyargs, QIODevice::ReadOnly);
 	dummy.waitForFinished();

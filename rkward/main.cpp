@@ -344,10 +344,10 @@ int main (int argc, char *argv[]) {
 	}
 #endif
 	// This is _not_ the same path adjustment as above: Make sure to add the current dir to the path, before launching R and backend.
-	QStringList syspaths = QString (qgetenv ("PATH")).split (PATH_VAR_SEP);
-	if (!syspaths.contains (app.applicationDirPath ())) {
-		syspaths.prepend (RKCommonFunctions::windowsShellScriptSafeCommand (app.applicationDirPath ()));
-		qputenv ("PATH", syspaths.join (PATH_VAR_SEP).toLocal8Bit ());
+	QStringList syspaths = QString(qgetenv("PATH")).split(PATH_VAR_SEP);
+	if (!syspaths.contains(app.applicationDirPath())) {
+		syspaths.prepend(app.applicationDirPath());
+		qputenv("PATH", syspaths.join(PATH_VAR_SEP).toLocal8Bit());
 	}
 
 	// Handle --reuse option, by placing a dbus-call to existing RKWard process (if any) and exiting
