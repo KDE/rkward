@@ -38,6 +38,7 @@ private slots:
 private:
 	void handleTransmissionError (const QString &message) override;
 
+	bool quirkmode;
 	QProcess* backend;
 	QLocalServer* server;
 	RKGraphicsDeviceFrontendTransmitter* rkd_transmitter;

@@ -12,6 +12,7 @@
     <comment xml:lang="fi">R-lähdetiedosto</comment>
     <comment xml:lang="fr">Fichier source « R »</comment>
     <comment xml:lang="it">File sorgente di R</comment>
+    <comment xml:lang="ka">R-ის წყაროს ფაილი</comment>
     <comment xml:lang="ko">R 소스 파일</comment>
     <comment xml:lang="lt">R šaltinio failas</comment>
     <comment xml:lang="nl">Bronbestand R</comment>
@@ -41,6 +42,7 @@
     <comment xml:lang="fi">R-data/työtilatiedosto</comment>
     <comment xml:lang="fr">Fichier de données ou d'espace de travail « R »</comment>
     <comment xml:lang="it">File di dati/spazio di lavoro di R</comment>
+    <comment xml:lang="ka">R-ის მონაცემების/სამუშა სივრცის ფაილი</comment>
     <comment xml:lang="ko">R 데이터/작업 공간 파일</comment>
     <comment xml:lang="lt">R duomenų/darbo aplinkos failas</comment>
     <comment xml:lang="nl">Gegevens/werkruimtebestand R</comment>

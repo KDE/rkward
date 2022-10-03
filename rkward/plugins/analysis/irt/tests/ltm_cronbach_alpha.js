@@ -7,15 +7,12 @@ function calculate () {
 	// let's read all values into php variables for the sake of readable code
 	var data            = getValue("x");
 	var chk_select      = getValue("chk_select");
-	var inp_items       = getValue("inp_items");
+	var inp_items       = getList("inp_items.shortname").map(quote).join(', ');
 	var spin_samples    = getValue("spin_samples");
 	var chk_standard    = getValue("chk_standard");
 	var chk_na          = getValue("chk_na");
 	var chk_bsci        = getValue("chk_bsci");
 	var spin_ci         = getValue("spin_ci");
-	// reformat inp_items
-	if (inp_items)
-		inp_items   = inp_items.replace(/\n/g,', ').replace(/(\w*)\[\[|\]\]/g, '');
 
 	///////////////////////////////////
 	// check for selected options
@@ -60,10 +57,7 @@ function printout (is_preview) {
 	var chk_na          = getValue("chk_na");
 	var chk_bsci        = getValue("chk_bsci");
 	var spin_ci         = getValue("spin_ci");
-	var inp_items       = getValue("inp_items");
-	// reformat inp_items
-	if (inp_items)
-		inp_items   = inp_items.replace(/\n/g,', ').replace(/(\w*)\[\["|"\]\]/g, '');
+	var inp_items       = getList("inp_items.shortname").map(quote).join(', ');
 
 	if (!is_preview) {
 		header = new Header (i18n ("Cronbach\'s alpha")).add (i18n ("Dataset"), getValue ("x"));

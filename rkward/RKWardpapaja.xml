@@ -1,0 +1,43 @@
+<snippets name="papaja (RKWard)" filetypes="R Markdown" authors="RKWard Team" namespace="Snippetspapaja" license="BSD">
+  <script>require("range.js")
+require("cursor.js")
+require("document.js")
+require("view.js")
+
+function fileName() { return document.fileName(); }
+function encoding() { return document.encoding(); }
+function year() { return new Date().getFullYear(); }
+function upper(x) { return x.toUpperCase(); }
+function lower(x) { return x.toLowerCase(); }
+function braces(text) { return "{" + text + "}"; }
+function lineCommand(command, replaces="", label_if_empty="Heading") {
+    let c = view.cursorPosition();
+    // NOTE: snippet scripts work by 1. inserting the raw snippet as a raw "template" 2. evaluating any commands inside the template 3. replacing the template with the evaluated template. As a result, when this function gets called, it contains the call to itself...
+    let line = document.line(c.line).replace(/\$\{lineCommand\s*\([^\}]*\}/g, "");
+    line = line.replace(new RegExp(replaces), "");
+    if (line == "") line = label_if_empty;
+    else document.removeLine(c.line);
+    return command + " " + line + "\n";
+}
+
+function rangeCommand(command, def) {
+    if (view.selectedText().length > 0) {
+        return command.replace("%%1", view.selectedText());
+    } else {
+        return command.replace("%%1", def);
+    }
+}
+</script>
+ <item>
+  <match>Typeset Statistical Results</match>
+  <fillin>${rangeCommand("papaja::apa_print(%%1)", "\"A model object\"")}</fillin>
+ </item>
+ <item>
+  <match>Sanitize Term Names</match>
+  <fillin>${rangeCommand("papaja::sanitize_terms(%%1, standardized = FALSE)", "c(\"(Intercept)\", \"Factor A\")")}</fillin>
+ </item>
+ <item>
+  <match>Create a Reference File for R and R Packages</match>
+  <fillin>${rangeCommand("papaja::r_refs(file = \"literature.bib\", %%1)", "")}</fillin>
+ </item>
+</snippets>

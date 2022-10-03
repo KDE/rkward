@@ -11,6 +11,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rkrbackendprotocol_shared.h"
 
 class QThread;
+class RKRBackendTransmitter;
 
 class RKRBackendProtocolBackend {
 public:
@@ -18,6 +19,7 @@ public:
 	static QString dataDir () { return _instance->data_dir; };
 	static QString rkdServerName () { return _instance->rkd_server_name; };
 	static QString backendDebugFile ();
+	static void doExit();
 
 	RKRBackendProtocolBackend (const QString &data_dir, const QString &rkd_server_name);
 	~RKRBackendProtocolBackend ();
@@ -26,6 +28,7 @@ friend class RKRBackendProtocolFrontend;
 friend class RKRBackend;
 friend class RKRBackendThread;
 friend class RKRBackendTransmitter;
+friend int main(int, char**);
 	void sendRequest (RBackendRequest *request);
 	static void msleep (int delay);
 	static RKRBackendProtocolBackend* instance () { return _instance; };
@@ -33,6 +36,7 @@ friend class RKRBackendTransmitter;
 private:
 	QString rkd_server_name;
 	static RKRBackendProtocolBackend* _instance;
+	static RKRBackendTransmitter* p_transmitter;
 	QThread *r_thread;
 #ifndef Q_OS_WIN
 	friend void completeForkChild ();

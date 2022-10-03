@@ -265,9 +265,10 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 	
 	if ((!RKRBackend::repl_status.browser_context) && (RKRBackend::repl_status.eval_depth == 0)) {
 		while (true) {
-			if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::NoUserCommand) {
+			if (RKRBackend::this_pointer->isKilled() || (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::NoUserCommand)) {
 				RCommandProxy *command = RKRBackend::this_pointer->fetchNextCommand ();
 				if (!command) {
+					RK_DEBUG(RBACKEND, DL_DEBUG, "returning from REPL");
 #ifdef Q_OS_WIN
 					// Can't easily override R_CleanUp on Windows, so we're calling it manually, here, then force exit
 					if (RKRBackend::this_pointer->killed == RKRBackend::ExitNow) RCleanUp (SA_NOSAVE, 0, 0);
@@ -418,6 +419,7 @@ int RReadConsoleWin (const char* prompt, char* buf, int buflen, int hist) {
 
 bool RKRBackend::fetchStdoutStderr (bool forcibly) {
 #ifndef Q_OS_WIN
+	if (killed) return false;
 	if (!forcibly) {
 		if (!stdout_stderr_mutex.tryLock ()) return false;
 	} else {
@@ -558,9 +560,9 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 			filename = dir.absoluteFilePath (filename);
 
 			R_SaveGlobalEnvToFile (filename.toLocal8Bit ().data ());
-			qDebug ("Created emergency save file in %s", qPrintable (filename));
+			RK_DEBUG(RBACKEND, DL_WARNING, "Created emergency save file in %s", qPrintable(filename));
 		} else {
-			qDebug ("Image not dirty while crashing. No emergency save created.");
+			RK_DEBUG(RBACKEND, DL_WARNING, "Image not dirty while crashing. No emergency save created.");
 		}
 	}
 
@@ -570,7 +572,7 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 			request.params["message"] = QVariant (i18n ("The R engine has shut down with status: %1", status));
 			RKRBackend::this_pointer->handleRequest (&request);
 		}
-
+		RK_DEBUG(RBACKEND, DL_DEBUG, "Cleaning up");
 		R_RunExitFinalizers ();
 		Rf_KillAllDevices ();
 		R_CleanTempDir ();
@@ -579,6 +581,8 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 	RKRBackend::this_pointer->killed = RKRBackend::AlreadyDead;	// just in case
 
 	R_CStackLimit = old_lim;	// well, it should not matter any longer, but...
+	RK_DEBUG(RBACKEND, DL_DEBUG, "Cleanup finished");
+	RKRBackendProtocolBackend::doExit();
 }
 
 void RSuicide (const char* message) {
@@ -793,7 +797,12 @@ void RBusy (int busy) {
 
 SEXP doUpdateLocale ();
 // NOTE: stdout_stderr_mutex is recursive to support fork()s, better
-RKRBackend::RKRBackend () : stdout_stderr_mutex (QMutex::Recursive) {
+#if QT_VERSION >= QT_VERSION_CHECK(5,14,0)
+#	define DUMMY_MUTEX_FLAGS
+#else
+#	define DUMMY_MUTEX_FLAGS QMutex::Recursive
+#endif
+RKRBackend::RKRBackend() : stdout_stderr_mutex(DUMMY_MUTEX_FLAGS) {
 	RK_TRACE (RBACKEND);
 
 	RK_ASSERT (this_pointer == 0);
@@ -1232,6 +1241,7 @@ void RKRBackend::enterEventLoop () {
 
 	run_Rmainloop ();
 	// NOTE: Do NOT run Rf_endEmbeddedR(). It does more that we want. We rely on RCleanup, instead.
+	// NOTE: never reached with R since ?? at least 4.3: RCleanUp is expected to exit the process
 	RK_DEBUG(RBACKEND, DL_DEBUG, "R loop finished");
 }
 
@@ -1687,7 +1697,8 @@ void RKRBackend::initialize (const QString &locale_dir) {
 
 	// in RInterface::RInterface() we have created a fake RCommand to capture all the output/errors during startup. Fetch it
 	repl_status.eval_depth++;
-	fetchNextCommand ();
+	fetchNextCommand();
+	RK_ASSERT(current_command);
 
 	startR ();
 
@@ -1704,7 +1715,7 @@ void RKRBackend::initialize (const QString &locale_dir) {
 	                  "  suppressWarnings (try ({library (\"rkward\", lib.loc=libloc); " + versioncheck + "; ok <- TRUE}))\n"
 	                  "  if (!ok) {\n"
 	                  "    suppressWarnings (try (detach(\"package:rkward\", unload=TRUE)))\n"
-	                  "    install.packages(normalizePath(paste(libloc, \"..\", c (\"rkward.tgz\", \"rkwardtests.tgz\"), sep=\"/\")), lib=libloc, repos=NULL, type=\"source\")\n"
+	                  "    install.packages(normalizePath(paste(libloc, \"..\", c (\"rkward.tgz\", \"rkwardtests.tgz\"), sep=\"/\")), lib=libloc, repos=NULL, type=\"source\", INSTALL_opts=\"--no-multiarch\")\n"
 	                  "    library (\"rkward\", lib.loc=libloc)\n"
 	                  "  }\n"
 	                  "  .libPaths(c(.libPaths(), libloc))\n" // Add to end search path: Will be avaiable for help serach, but hopefully, not get into the way, otherwise
@@ -1733,6 +1744,7 @@ void RKRBackend::initialize (const QString &locale_dir) {
 	// in fact, a number of sub-commands are run while handling this request!
 	handleRequest (&req);
 
+	RK_ASSERT(current_command);
 	commandFinished ();		// the fake startup command
 	repl_status.eval_depth--;
 }

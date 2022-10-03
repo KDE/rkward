@@ -19,6 +19,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <kfileitemlistproperties.h>
 #include <KLocalizedString>
 #include <kio/copyjob.h>
+#include <kio_version.h>
 
 #include <qdir.h>
 #include <qlayout.h>
@@ -178,8 +179,13 @@ void RKFileBrowserWidget::contextMenuHook(const KFileItem& item, QMenu* menu) {
 	menu_actions = menu->actions ();
 
 	menu->insertAction (first_sep, rename_action);
+#if KIO_VERSION >= QT_VERSION_CHECK(5,82,0)
+	fi_actions->insertOpenWithActionsTo(nullptr, menu, QStringList());
+	fi_actions->addActionsTo(menu);
+#else
 	fi_actions->addOpenWithActionsTo (menu, QString ());
 	fi_actions->addServiceActionsTo (menu);
+#endif
 
 	QList<QAction*> menu_actions_after = menu->actions ();
 	foreach (QAction* act, menu_actions_after) if (!menu_actions.contains (act)) added_service_actions.append (act);

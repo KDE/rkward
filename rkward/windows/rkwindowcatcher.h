@@ -76,7 +76,7 @@ public:
 	/** remove a watch created with registerNameWatcher */
 	void unregisterWatcher (WId watched);
 	static RKWindowCatcher *instance ();
-	static void discardInstance () { delete _instance; };
+	static void discardInstance () { delete _instance; _instance = nullptr; };
 private:
 	void pollWatchedWindowStates ();
 	QTimer poll_timer;

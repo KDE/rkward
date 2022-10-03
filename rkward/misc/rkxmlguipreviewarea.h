@@ -8,36 +8,40 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #ifndef RKXMLGUIPREVIEWAREA_H
 #define RKXMLGUIPREVIEWAREA_H
 
-#include <kxmlguiwindow.h>
 #include <kparts/part.h>
 
+#include <QWidget>
+#include <QMenuBar>
 #include <QPointer>
+#include <QVBoxLayout>
 
 class QMenu;
 class QToolButton;
 class QLabel;
 class RKMDIWindow;
+class KXMLGUIBuilder;
+class KXMLGUIFactory;
 
-class RKXMLGUIPreviewArea : public KXmlGuiWindow {
+class RKXMLGUIPreviewArea : public QWidget {
 	Q_OBJECT
 public:
 	RKXMLGUIPreviewArea (const QString &label, QWidget* parent);
 	~RKXMLGUIPreviewArea ();
-	/** Returns a wrapper widget (created on first call of this function) that contains this widget along with a caption (see setLabel()), menu button, and close button. */
-	QWidget *wrapperWidget ();
-	QString label () const { return _label; };
-	void setLabel (const QString &label);
+	QString label() const;
+	void setLabel(const QString &label);
 	void setWindow(RKMDIWindow* window);
 protected slots:
 	void prepareMenu ();
 signals:
 	void previewClosed (RKXMLGUIPreviewArea *preview);
 private:
-	QWidget *wrapper_widget;
-	QString _label;
 	QLabel *lab;
 	QMenu *menu;
+	QMenuBar *menubar;
 	QPointer<KParts::Part> current;
+	KXMLGUIFactory *factory;
+	KXMLGUIBuilder *builder;
+	QVBoxLayout *internal_layout;
 };
 
 class RCommand;

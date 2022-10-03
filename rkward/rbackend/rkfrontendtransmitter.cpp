@@ -45,6 +45,7 @@ RKFrontendTransmitter::RKFrontendTransmitter () : RKAbstractTransmitter () {
 	RK_TRACE (RBACKEND);
 
 	rkd_transmitter = new RKGraphicsDeviceFrontendTransmitter ();
+	quirkmode = false;
 	start ();
 }
 
@@ -52,7 +53,6 @@ RKFrontendTransmitter::~RKFrontendTransmitter () {
 	RK_TRACE (RBACKEND);
 
 	delete rkd_transmitter;
-	RK_ASSERT (!server->isListening ());
 }
 
 QString localeDir () {
@@ -66,12 +66,15 @@ QString localeDir () {
 void RKFrontendTransmitter::run () {
 	RK_TRACE (RBACKEND);
 
+	quirkmode = RKSettingsModuleGeneral::startupOption("quirkmode").toBool();
+
 	// start server
 	server = new QLocalServer (this);
 	// we add a bit of randomness to the servername, as in general the servername must be unique
 	// there could be conflicts with concurrent or with previous crashed rkward sessions.
 	if (!server->listen ("rkward" + KRandom::randomString (8))) handleTransmissionError ("Failure to start frontend server: " + server->errorString ());
 	connect (server, &QLocalServer::newConnection, this, &RKFrontendTransmitter::connectAndEnterLoop, Qt::QueuedConnection);
+	if (quirkmode) server->setSocketOptions(QLocalServer::UserAccessOption);
 	// start backend
 	backend = new QProcess (this);
 	connect (backend, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), this, &RKFrontendTransmitter::backendExit);
@@ -107,7 +110,16 @@ void RKFrontendTransmitter::run () {
 		exec();   // To actually show the transmission error
 		return;
 	}
-	args.append(RKCommonFunctions::windowsShellScriptSafeCommand(backend_executable));
+
+#ifdef Q_OS_WIN
+	// Needed for paths with spaces. R CMD is too simple to deal with those, even if we provide proper quoting.
+	// So rather we need to work from a relative path with all spaces eliminated
+	QFileInfo bfi(backend_executable);
+	backend->setWorkingDirectory(bfi.absolutePath());
+	args.append(bfi.fileName());
+#else
+	args.append(backend_executable);
+#endif
 
 	args.append ("--debug-level=" + QString::number (RK_Debug::RK_Debug_Level));
 	// NOTE: QProcess quotes its arguments, *but* properly passing all spaces and quotes through the R CMD wrapper, seems near(?) impossible on Windows. Instead, we use percent encoding, internally.
@@ -115,10 +127,10 @@ void RKFrontendTransmitter::run () {
 	args.append ("--rkd-server-name=" + rkd_transmitter->serverName ().toUtf8 ().toPercentEncoding ());
 	args.append ("--data-dir=" + RKSettingsModuleGeneral::filesPath ().toUtf8 ().toPercentEncoding ());
 	args.append ("--locale-dir=" + localeDir ().toUtf8 ().toPercentEncoding ());
-	if (DL_DEBUG >= RK_Debug::RK_Debug_Level) {
-		qDebug("%s", qPrintable(RKSessionVars::RBinary()));
-		qDebug("%s", qPrintable(args.join("\n")));
-	}
+	RK_DO({
+		RK_DEBUG(RBACKEND, DL_DEBUG, "R binary: %s", qPrintable(RKSessionVars::RBinary()));
+		RK_DEBUG(RBACKEND, DL_DEBUG, "%s", qPrintable(args.join("\n")));
+	}, RBACKEND, DL_DEBUG);
 
 #ifdef Q_OS_MACOS
 	// Resolving libR.dylib and friends is a pain on MacOS, and running through R CMD does not always seem to be enough.
@@ -131,35 +143,52 @@ void RKFrontendTransmitter::run () {
 	backend->setWorkingDirectory (r_home);
 #endif
 #if defined(Q_OS_WIN)
-	// added on a hunch, to be removed, should it have no effect, to be cleaned, otherwise:
 	// On some windows systems, the _first_ invocation of the backend seems to fail as somehow process output from the backend (the token) never arrives.
-	// Could it help to start a dummy process, before that? And, if doing so, will we be able to read its output?
+	// What appears to function as a workaround is start a dummy process, before that.
 	QProcess dummy;
 	QStringList dummyargs = args;
+	dummy.setWorkingDirectory(backend->workingDirectory());
 	dummyargs.removeAt(dummyargs.size()-4); // the --server-name. With this empty, the backend will exit
 	dummy.start(RKSessionVars::RBinary(), dummyargs, QIODevice::ReadOnly);
 	dummy.waitForFinished();
 	dummy.readAllStandardOutput();
 #endif
-	backend->start(RKSessionVars::RBinary(), args, QIODevice::ReadOnly);
-
-	if (!backend->waitForStarted()) {
-		handleTransmissionError(i18n("The backend executable could not be started. Error message was: %1", backend->errorString()));
+	RK_DEBUG(RBACKEND, DL_DEBUG, "Starting backend. Timestamp %d", QDateTime::currentMSecsSinceEpoch(), token.length());
+	if (quirkmode) {
+#if QT_VERSION >= QT_VERSION_CHECK(5,10,0)
+		backend->setProgram(RKSessionVars::RBinary());
+		backend->setArguments(args);
+		backend->startDetached();
+#else
+		QProcess::startDetached(RKSessionVars::RBinary(), args);
+#endif
 	} else {
-		token = waitReadLine(backend, 5000).trimmed();
-		backend->closeReadChannel(QProcess::StandardError);
-		backend->closeReadChannel(QProcess::StandardOutput);
+		backend->start(RKSessionVars::RBinary(), args, QIODevice::ReadOnly);
+
+		if (!backend->waitForStarted()) {
+			handleTransmissionError(i18n("The backend executable could not be started. Error message was: %1", backend->errorString()));
+		} else {
+			token = waitReadLine(backend, 5000).trimmed();
+			RK_DEBUG(RBACKEND, DL_DEBUG, "Now closing stdio channels");
+			backend->closeReadChannel(QProcess::StandardError);
+			backend->closeReadChannel(QProcess::StandardOutput);
+		}
 	}
+	RK_DEBUG(RBACKEND, DL_DEBUG, "Startup done at %d. Received token length was %d", QDateTime::currentMSecsSinceEpoch(), token.length());
 
 	exec ();
 
-	// It's ok to only give backend a short time to finish. We only get here, after QuitCommand has been handled by the backend
-	backend->waitForFinished(1000);
+	if (!quirkmode) {
+		// It's ok to only give backend a short time to finish. We only get here, after QuitCommand has been handled by the backend
+		if (!backend->waitForFinished(1000)) backend->close();
+	}
 
 	if (!connection) {
 		RK_ASSERT (false);
-		return;
 	}
+	RK_ASSERT(!server->isListening ());
+	delete server;
+	delete backend;
 }
 
 QString RKFrontendTransmitter::waitReadLine (QIODevice* con, int msecs) {
@@ -171,8 +200,11 @@ QString RKFrontendTransmitter::waitReadLine (QIODevice* con, int msecs) {
 	time.start();
 	QByteArray ret;
 	do {
+		RK_DEBUG(RBACKEND, DL_DEBUG, "Time %d, buffer %d, available %d", QDateTime::currentMSecsSinceEpoch(), ret.length(), con->bytesAvailable());
 		ret.append(con->readLine());
+		RK_DEBUG(RBACKEND, DL_DEBUG, "Time2 %d, buffer %d, available %d", QDateTime::currentMSecsSinceEpoch(), ret.length(), con->bytesAvailable());
 		if (ret.contains('\n')) break;
+		RK_DEBUG(RBACKEND, DL_DEBUG, "Time3 %d", QDateTime::currentMSecsSinceEpoch());
 		con->waitForReadyRead(500);
 	} while(time.elapsed() < msecs);
 	return QString::fromLocal8Bit(ret);
@@ -187,7 +219,11 @@ void RKFrontendTransmitter::connectAndEnterLoop () {
 
 	// handshake
 	QString token_c = waitReadLine(con, 1000).trimmed();
-	if (token_c != token) handleTransmissionError (i18n ("Error during handshake with backend process. Expected token '%1', received token '%2'", token, token_c));
+	if (quirkmode) {
+		token = token_c;
+	} else {
+		if (token_c != token) handleTransmissionError (i18n ("Error during handshake with backend process. Expected token '%1', received token '%2'", token, token_c));
+	}
 	QString version_c = waitReadLine(con, 1000).trimmed();
 	if (version_c != RKWARD_VERSION) handleTransmissionError (i18n ("Version mismatch during handshake with backend process. Frontend is version '%1' while backend is '%2'.\nPlease fix your installation.", QString (RKWARD_VERSION), version_c));
 

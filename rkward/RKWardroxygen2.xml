@@ -1,4 +1,4 @@
-<snippets name="roxygen2 (RKWard)" filetypes="R" authors="RKWard Team" namespace="SnippetsRmd" license="BSD">
+<snippets name="roxygen2 (RKWard)" filetypes="R" authors="RKWard Team" namespace="Snippetsroxzgen2" license="BSD">
   <script>require("range.js")
 require("cursor.js")
 require("document.js")

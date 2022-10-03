@@ -37,6 +37,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KSharedConfig>
 #include <KConfigGroup>
 #include <KColorScheme>
+#include <kwidgetsaddons_version.h>
 
 // application specific includes
 #include "core/rkmodificationtracker.h"
@@ -108,7 +109,7 @@ void bogusCalls () {
 //static
 RKWardMainWindow *RKWardMainWindow::rkward_mainwin = 0;
 
-RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::WindowFlags) KDE_DEFAULT_WINDOWFLAGS) {
+RKWardMainWindow::RKWardMainWindow() : KParts::MainWindow() {
 	RK_TRACE (APP);
 	RK_ASSERT (rkward_mainwin == 0);
 
@@ -378,11 +379,13 @@ void RKWardMainWindow::startR () {
 		QString package = QDir (packages_path).absoluteFilePath (packages[i]);
 		if (RKSettingsModuleGeneral::rkwardVersionChanged ()) {
 			RK_DEBUG(APP, DL_INFO, "RKWard version changed. Discarding cached package at %s", qPrintable (package));
-			QFile::remove (package);
+			if(QFileInfo::exists(package)) RK_ASSERT(QFile::remove(package));
 		}
 		if (!QFileInfo::exists(package)) {
-			RK_DEBUG(APP, DL_INFO, "Copying rkward R source package to %s", qPrintable (package));
-			RK_ASSERT(QFile::copy (RKCommonFunctions::getRKWardDataDir () + "/rpackages/" + packages[i], package));
+			QString source = RKCommonFunctions::getRKWardDataDir() + "/rpackages/" + packages[i];
+			RK_ASSERT(QFileInfo::exists(source));
+			RK_DEBUG(APP, DL_INFO, "Copying rkward R source package %s to %s", qPrintable(source), qPrintable(package));
+			RK_ASSERT(QFile::copy(source, package));
 		}
 	}
 
@@ -581,7 +584,6 @@ void RKWardMainWindow::initActions() {
 
 	// collections for the toolbar:
 	open_any_action = new KActionMenu (QIcon::fromTheme("document-open-folder"), i18n ("Open..."), this);
-	open_any_action->setDelayed (false);
 	actionCollection ()->addAction ("open_any", open_any_action);
 
 	open_any_action->addAction (fileOpenWorkspace);
@@ -596,7 +598,6 @@ void RKWardMainWindow::initActions() {
 	//open_any_action->addAction (proxy_import); -> later
 
 	KActionMenu* new_any_action = new KActionMenu (QIcon::fromTheme("document-new"), i18n ("Create..."), this);
-	new_any_action->setDelayed (false);
 	actionCollection ()->addAction ("new_any", new_any_action);
 
 	new_any_action->addAction (new_data_frame);
@@ -604,8 +605,17 @@ void RKWardMainWindow::initActions() {
 	new_any_action->addAction (new_output);
 
 	save_any_action = new KActionMenu (QIcon::fromTheme("document-save"), i18n ("Save..."), this);
-	save_any_action->setDelayed (false);
 	actionCollection ()->addAction ("save_any", save_any_action);
+
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 77, 0)
+	open_any_action->setPopupMode(QToolButton::InstantPopup);
+	new_any_action->setPopupMode(QToolButton::InstantPopup);
+	save_any_action->setPopupMode(QToolButton::InstantPopup);
+#else
+	open_any_action->setDelayed(false);
+	new_any_action->setDelayed(false);
+	save_any_action->setDelayed(false);
+#endif
 
 	save_any_action->addAction (fileSaveWorkspace);
 	save_any_action->addAction (fileSaveWorkspaceAs);
@@ -622,6 +632,7 @@ void RKWardMainWindow::initActions() {
 		if (suppressModalDialogsForTesting() || (KMessageBox::warningContinueCancel(this, message, i18n("Restart R backend"), KGuiItem(i18n("Restart R backend"))) == KMessageBox::Continue)) {
 			bool forced = RInterface::instance()->backendIsDead();
 			while (!RInterface::instance()->backendIsDead() && !RInterface::instance()->backendIsIdle()) {
+				RK_DEBUG(APP, DL_DEBUG, "Backend not idle while restart requested.");
 				message = i18n("<p>One or more operations are pending.</p><p>If you have recently chosen to save your workspace, and you see this message, <b>your data may not be saved, yet!</b></p><p>How do you want to proceed?</p>");
 				auto res = KMessageBox::warningYesNoCancel(this, message, i18n("R commands still pending"), KGuiItem(i18n("Force restart now")), KGuiItem(i18n("Check again")), KGuiItem(i18n("Cancel restarting")));
 				if (res == KMessageBox::Yes) {
@@ -637,6 +648,7 @@ void RKWardMainWindow::initActions() {
 			RKWorkplace::mainWorkplace()->closeAll(RKMDIWindow::X11Window);
 			slotCloseAllEditors();
 			auto restart_now = [this]() {
+				RK_DEBUG(APP, DL_DEBUG, "Backend restart now");
 				delete RInterface::instance();  // NOTE: Do not use deleteLater(), here. It is important to fully tear down the old backend, before creating the new one,
 				                                //       as code is written around the assumption that RInterface and friends are singletons. (RInterface::instance(), etc.)
 				RKWorkplace::mainWorkplace()->setWorkspaceURL(QUrl());
@@ -778,7 +790,7 @@ void RKWardMainWindow::initStatusBar () {
 	dummy->menu()->addAction(interrupt_all_commands);
 	dummy->menu()->addAction(restart_r);
 	dummy->menu()->addSeparator();
-	QAction *a = new QAction(i18n("Configure R backend"));
+	QAction *a = new QAction(i18n("Configure R backend"), this);
 	connect(a, &QAction::triggered, this, []() { RKSettings::configureSettings(RKSettings::PageR); });
 	dummy->menu()->addAction(a);
 	dummy->setFixedHeight(statusbar_r_status->height());

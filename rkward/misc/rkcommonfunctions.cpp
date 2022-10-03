@@ -162,14 +162,21 @@ namespace RKCommonFunctions {
 		}
 	}
 
+	static QString findPathFromAppDir(const QStringList &candidates) {
+		for (int i = 0;  i < candidates.size(); ++i) {
+			QString candidate = QCoreApplication::applicationDirPath() + '/' + candidates[i] + '/';
+			if (QFile::exists(candidate)) return candidate;
+		}
+		return QString();
+	}
+
 	QString getRKWardDataDir () {
 		static QString rkward_data_dir;
 		if (rkward_data_dir.isNull ()) {
-			QString inside_build_tree = QCoreApplication::applicationDirPath() + "/rkwardinstall/";
-			QString inside_build_tree2 = QCoreApplication::applicationDirPath() + "/../rkwardinstall/";
-			if (QFile::exists(inside_build_tree) || QFile::exists(inside_build_tree2)) {
+			QString inside_build_tree = findPathFromAppDir(QStringList() << "rkwardinstall" << "../rkwardinstall" << "../rkward/rkwardinstall");
+			if (!inside_build_tree.isEmpty()) {
 				RK_DEBUG(APP, DL_INFO, "Running from inside build tree");
-				rkward_data_dir = QFile::exists(inside_build_tree) ? inside_build_tree : inside_build_tree2;
+				rkward_data_dir = inside_build_tree;
 				return rkward_data_dir;
 			}
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 4, 0))
@@ -186,7 +193,7 @@ namespace RKCommonFunctions {
 				}
 			}
 			rkward_data_dir = "";   // prevents checking again
-			RK_DEBUG(APP, DL_WARNING, "resource.ver not found. Data path(s): %s", qPrintable (QStandardPaths::standardLocations (QStandardPaths::AppDataLocation).join (':')));
+			RK_DEBUG(APP, DL_ERROR, "resource.ver not found. Data path(s): %s", qPrintable (QStandardPaths::standardLocations (QStandardPaths::AppDataLocation).join (':')));
 		}
 		return rkward_data_dir;
 	}
@@ -240,25 +247,6 @@ namespace RKCommonFunctions {
 
 	QString noteSettingsTakesEffectAfterRestart () {
 		return (i18n ("<p><em>Note:</em> This setting does not take effect until you restart RKWard.</p>"));
-	}
-
-#ifdef Q_OS_WIN
-#	include <windows.h>
-#	include <QTemporaryFile>
-#endif
-	QString windowsShellScriptSafeCommand (const QString &orig) {
-#ifdef Q_OS_WIN
-		// credits to http://erasmusjam.wordpress.com/2012/10/01/get-8-3-windows-short-path-names-in-a-qt-application/
-		QByteArray input (sizeof (wchar_t) * (orig.size()+1), '\0');
-		// wchar_t input[orig.size()+1]; -- No: MSVC (2013) does not support variable length arrays. Oh dear...
-		orig.toWCharArray ((wchar_t*) input.data ());
-		long length = GetShortPathName ((wchar_t*) input.data (), NULL, 0);
-		QByteArray output (sizeof (wchar_t) * (length), '\0');
-		GetShortPathName ((wchar_t*) input.data (), (wchar_t*) output.data (), length);
-		return QString::fromWCharArray ((wchar_t*) output.data (), length-1);
-#else
-		return orig;
-#endif
 	}
 
 	QLabel* wordWrappedLabel (const QString& text) {

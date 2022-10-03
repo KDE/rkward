@@ -17,3 +17,8 @@ Dependencies:
     'frameworks/kwindowsystem': '@stable'
     'frameworks/karchive': '@stable'
     'frameworks/kcrash': '@stable'
+
+Options:
+  require-passing-tests-on: [ 'Linux', 'FreeBSD', 'Windows' ]
+  tests-load-sensitve: True
+  per-test-timeout: 60

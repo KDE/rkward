@@ -31,7 +31,7 @@ function rangeCommand(command, def) {
  <item>
   <match>Figure as PDF</match>
   <fillin>
-pdf(fi­len­ame­="my­plo­t.p­df", width=5, height=5)
+pdf(fi­le­="my­plo­t.p­df", width=5, height=5)
 plot(rnorm(100))
 dev.off()
 
@@ -39,8 +39,7 @@ dev.off()
  </item>
  <item>
   <match>Plotting area (3x3 array)</match>
-  <fillin>
-# Plotting area (3x3 array) with 3 rows and 3 columns
+  <fillin># Plotting area (3x3 array) with 3 rows and 3 columns
 par(mf­row­=c(­3,3))
   </fillin>
  </item>
@@ -126,5 +125,35 @@ if (condi­tion) {
  <item>
   <match>Combine Values into a Vector or List</match>
   <fillin>${rangeCommand("c(%%1, recursive = FALSE, use.names = TRUE)", "Objects to be concatenated")}</fillin>
+ </item>
+ <item>
+  <match>Two plots (in row)</match>
+  <fillin># Two plots in a row
+# style of axis labels changed
+par(mfrow = c(1, 2), las = 1)
+
+# First plot (stripchart)
+stripchart(rnorm(10), method = "jitter", main = "Stripchart")
+mtext("A", cex = 1.2, side = 3, adj = 0, font = 2)
+
+# Second plot (Histogram)
+hist(rnorm(10), main = "Histogram")
+mtext("B", cex = 1.2, side = 3, adj = 0, font = 2)
+</fillin>
+ </item>
+ <item>
+  <match>Plots (multiple in matrix layout)</match>
+  <fillin># Layout of three plots (1, 2, 3) in two rows and 3 columns
+layout(matrix(c(1, 2, 2, 3, 3, 3), nrow = 2, ncol = 3, byrow = TRUE))
+# Dummy histogram
+hist(rnorm(100))
+mtext("A", cex = 1.2, side = 3, adj = 0, font = 2)
+# Dummy stripchart
+stripchart(rlnorm(100), method = "jitter", xlab = "data")
+mtext("B", cex = 1.2, side = 3, adj = 0, font = 2)
+# Dummy barplot
+barplot(table(rpois(100, 10)), xlab = "data", ylab = "Frequency")
+mtext("C", cex = 1.2, side = 3, adj = 0, font = 2)
+</fillin>
  </item>
  </snippets>

@@ -39,6 +39,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <kio/job.h>
 #include <kconfiggroup.h>
 #include <krandom.h>
+#include <kwidgetsaddons_version.h>
+#include <ktexteditor_version.h>
 
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkstandardicons.h"
@@ -82,12 +84,16 @@ QMap<QString, KTextEditor::Document*> RKCommandEditorWindow::unnamed_documents;
 
 KTextEditor::Document* createDocument(bool with_signals) {
 	if (with_signals) {
+#if KTEXTEDITOR_VERSION < QT_VERSION_CHECK(5,80,0)
 		emit KTextEditor::Editor::instance()->application()->aboutToCreateDocuments();
+#endif
 	}
 	KTextEditor::Document* ret = KTextEditor::Editor::instance()->createDocument (RKWardMainWindow::getMain ());
 	if (with_signals) {
 		emit KTextEditor::Editor::instance()->application()->documentCreated(ret);
+#if KTEXTEDITOR_VERSION < QT_VERSION_CHECK(5,80,0)
 		emit KTextEditor::Editor::instance()->application()->documentsCreated(QList<KTextEditor::Document*>() << ret);
+#endif
 	}
 	return ret;
 }
@@ -193,7 +199,6 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl &_url,
 	preview = new RKXMLGUIPreviewArea (QString(), this);
 	preview_manager = new RKPreviewManager (this);
 	connect (preview_manager, &RKPreviewManager::statusChanged, this, [this]() { preview_timer.start (500); });
-	m_view = m_doc->createView (this);
 	RKWorkplace::mainWorkplace()->registerNamedWindow (preview_manager->previewId(), this, preview);
 	if (!url.isEmpty ()) {
 		KConfigGroup viewconf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptViewSettings %1").arg (RKWorkplace::mainWorkplace ()->portableUrl (url)));
@@ -247,9 +252,8 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, const QUrl &_url,
 	layout->setContentsMargins (0, 0, 0, 0);
 	QSplitter* preview_splitter = new QSplitter (this);
 	preview_splitter->addWidget (m_view);
-	QWidget *preview_widget = preview->wrapperWidget ();
-	preview_splitter->addWidget (preview_widget);
-	preview_widget->hide ();
+	preview_splitter->addWidget(preview);
+	preview->hide();
 	connect (m_doc, &KTextEditor::Document::documentSavedOrUploaded, this, &RKCommandEditorWindow::documentSaved);
 	layout->addWidget(preview_splitter);
 
@@ -301,21 +305,29 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 	}
 
 	discardPreview ();
-	delete m_view;
 	m_doc->waitSaveComplete ();
-	QList<KTextEditor::View*> views = m_doc->views ();
-	if (views.isEmpty ()) {
+	QList<KTextEditor::View*> views = m_doc->views();
+	if (views.size() == 1) {
+		// if this is the only view, destroy the document. Note that doc has to be destroyed before view. konsole plugin (and possibly others) assumes it.
+		RK_ASSERT(views.at(0) == m_view);
 		if (visible_to_kateplugins) {
 			emit KTextEditor::Editor::instance()->application()->documentWillBeDeleted(m_doc);
+#if KTEXTEDITOR_VERSION < QT_VERSION_CHECK(5,80,0)
 			emit KTextEditor::Editor::instance()->application()->aboutToDeleteDocuments(QList<KTextEditor::Document*>() << m_doc);
+#endif
 		}
-		delete m_doc;
+		m_doc->deleteLater();
 		if (visible_to_kateplugins) {
 			emit KTextEditor::Editor::instance()->application()->documentDeleted(m_doc);
+#if KTEXTEDITOR_VERSION < QT_VERSION_CHECK(5,80,0)
 			emit KTextEditor::Editor::instance()->application()->documentsDeleted(QList<KTextEditor::Document*>() << m_doc);
+#endif
 		}
 		if (!delete_on_close.isEmpty ()) KIO::del (delete_on_close)->start ();
 		unnamed_documents.remove (_id);
+	} else {
+		RK_ASSERT(!views.isEmpty()); // should contain at least m_view at this point
+		delete m_view;
 	}
 	// NOTE, under rather unlikely circumstances, the above may leave stale ids->stale pointers in the map: Create unnamed window, split it, save to a url, split again, close the first two windows, close the last. This situation should be caught by the following, however:
 	if (have_url && !_id.isEmpty ()) {
@@ -362,7 +374,11 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	RKStandardActions::onlineHelp (this, this);
 
 	actionmenu_run_block = new KActionMenu (i18n ("Run block"), this);
-	actionmenu_run_block->setDelayed (false);	// KDE4: TODO does not work correctly in the tool bar.
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 77, 0)
+	actionmenu_run_block->setPopupMode(QToolButton::InstantPopup);
+#else
+	actionmenu_run_block->setDelayed(false);
+#endif
 	ac->addAction ("run_block", actionmenu_run_block);
 	connect (actionmenu_run_block->menu(), &QMenu::aboutToShow, this, &RKCommandEditorWindow::clearUnusedBlocks);
 	actionmenu_mark_block = new KActionMenu (i18n ("Mark selection as block"), this);
@@ -379,7 +395,11 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	action_setwd_to_script->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionCDToScript));
 
 	KActionMenu* actionmenu_preview = new KActionMenu (QIcon::fromTheme ("view-preview"), i18n ("Preview"), this);
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 77, 0)
+	actionmenu_preview->setPopupMode(QToolButton::InstantPopup);
+#else
 	actionmenu_preview->setDelayed (false);
+#endif
 	preview_modes = new QActionGroup (this);
 	actionmenu_preview->addAction (action_no_preview = new QAction (RKStandardIcons::getIcon (RKStandardIcons::ActionDelete), i18n ("No preview"), preview_modes));
 	actionmenu_preview->addAction (new QAction (QIcon::fromTheme ("preview_math"), i18n ("R Markdown"), preview_modes));
@@ -568,7 +588,7 @@ void RKCommandEditorWindow::discardPreview () {
 	RK_TRACE (COMMANDEDITOR);
 
 	if (preview_dir) {
-		preview->wrapperWidget ()->hide ();
+		preview->hide ();
 		preview_manager->setPreviewDisabled ();
 		RInterface::issueCommand (QString (".rk.killPreviewDevice(%1)\nrk.discard.preview.data (%1)").arg (RObject::rQuote(preview_manager->previewId ())), RCommand::App | RCommand::Sync);
 		delete preview_dir;
@@ -914,7 +934,7 @@ void RKCommandEditorWindow::doRenderPreview () {
 		preview->setLabel (i18n ("Preview of generated plot"));
 		command = "olddev <- dev.cur()\n"
 		          ".rk.startPreviewDevice(%2)\n"
-		          "try(source(%1, local=TRUE))\n"
+		          "try(source(%1, local=TRUE, print.eval=TRUE))\n"
 		          "if (olddev != 1) dev.set(olddev)\n";
 		command = command.arg (RObject::rQuote (preview_input_file->fileName ()), RObject::rQuote (preview_manager->previewId ()));
 	} else if (mode == ConsolePreview) {
@@ -943,7 +963,7 @@ void RKCommandEditorWindow::doRenderPreview () {
 		RK_ASSERT (false);
 	}
 
-	preview->wrapperWidget ()->show ();
+	preview->show ();
 
 	RCommand *rcommand = new RCommand (".rk.with.window.hints (local ({\n" + command + QStringLiteral ("}), \"\", ") + RObject::rQuote (preview_manager->previewId ()) + ", style=\"preview\")", RCommand::App);
 	preview_manager->setCommand (rcommand);

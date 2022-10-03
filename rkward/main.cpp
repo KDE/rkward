@@ -246,6 +246,10 @@ int main (int argc, char *argv[]) {
 #if defined(Q_OS_MACOS) || defined(Q_OS_WIN)
 	// Follow the example of kate, and use breeze theme on Windows and Mac, which appears to work best
 	QApplication::setStyle(QStringLiteral("breeze"));
+#else
+	if (!qgetenv("APPDIR").isEmpty()) { // see above for AppImage
+		QApplication::setStyle(QStringLiteral("breeze"));
+	}
 #endif
 	// Don't complain when linking rkward://-pages from Rd pages
 	KUrlAuthorized::allowUrlAction ("redirect", QUrl("http://"), QUrl ("rkward://"));
@@ -291,6 +295,7 @@ int main (int argc, char *argv[]) {
 	parser.addOption (QCommandLineOption ("reuse", i18n ("Reuse a running RKWard instance (if available). If a running instance is reused, only the file arguments will be interpreted, all other options will be ignored.")));
 	parser.addOption (QCommandLineOption ("autoreuse", i18n ("Behaves like --reuse, if any file arguments are also given, starts a new instance, otherwise. Intended for use in the .desktop file.")));
 	parser.addOption (QCommandLineOption ("nowarn-external", i18n ("When used in conjunction with rkward://runplugin/-URLs specified on the command line, suppresses the warning about application-external (untrusted) links.")));
+	parser.addOption(QCommandLineOption("quirkmode", i18n("Disable some startup validation code. Experimental option, not intended for regular use.")));
 	parser.addPositionalArgument ("files", i18n ("File or files to open, typically a workspace, or an R script file. When loading several things, you should specify the workspace, first."), "[Files...]");
 
 	aboutData.setupCommandLine (&parser);
@@ -308,6 +313,9 @@ int main (int argc, char *argv[]) {
 		RK_DEBUG (APP, DL_INFO, "Failed to open debug file %s", qPrintable (RK_Debug::debug_file->fileName ()));
 	}
 	qInstallMessageHandler (RKDebugMessageOutput);
+	RK_DO({
+		RK_DEBUG(APP, DL_DEBUG, "Basic runtime info (expected to be incomplete at this stage):\n%s", qPrintable(RKSessionVars::frontendSessionInfo().join("\n")));
+	}, APP, DL_DEBUG);
 
 	// handle positional (file) arguments, first
 	QStringList url_args = parser.positionalArguments ();
@@ -320,6 +328,7 @@ int main (int argc, char *argv[]) {
 	}
 	RKSettingsModuleGeneral::setStartupOption("evaluate", parser.value("evaluate"));
 	RKSettingsModuleGeneral::setStartupOption("backend-debugger", parser.value("backend-debugger"));
+	RKSettingsModuleGeneral::setStartupOption("quirkmode", parser.isSet("quirkmode"));
 
 	// MacOS may need some path adjustments, first
 #ifdef Q_OS_MACOS
@@ -335,10 +344,10 @@ int main (int argc, char *argv[]) {
 	}
 #endif
 	// This is _not_ the same path adjustment as above: Make sure to add the current dir to the path, before launching R and backend.
-	QStringList syspaths = QString (qgetenv ("PATH")).split (PATH_VAR_SEP);
-	if (!syspaths.contains (app.applicationDirPath ())) {
-		syspaths.prepend (RKCommonFunctions::windowsShellScriptSafeCommand (app.applicationDirPath ()));
-		qputenv ("PATH", syspaths.join (PATH_VAR_SEP).toLocal8Bit ());
+	QStringList syspaths = QString(qgetenv("PATH")).split(PATH_VAR_SEP);
+	if (!syspaths.contains(app.applicationDirPath())) {
+		syspaths.prepend(app.applicationDirPath());
+		qputenv("PATH", syspaths.join(PATH_VAR_SEP).toLocal8Bit());
 	}
 
 	// Handle --reuse option, by placing a dbus-call to existing RKWard process (if any) and exiting

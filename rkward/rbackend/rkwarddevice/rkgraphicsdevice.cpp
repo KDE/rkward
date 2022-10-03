@@ -586,10 +586,13 @@ void RKGraphicsDevice::setActive (bool active) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
 	if (!view) return;
-	if (active) view->setWindowTitle (i18nc ("Window title", "%1 (Active)", base_title));
-	else view->setWindowTitle (i18nc ("Window title", "%1 (Inactive)", base_title));
+	if (active) {
+		view->setWindowTitle(i18nc("Window title", "%1 (Active)", base_title));
+	} else {
+		view->setWindowTitle(i18nc("Window title", "%1 (Inactive)", base_title));
+	}
 	emit activeChanged(active);
-	emit captionChanged(view->windowTitle ());
+	emit captionChanged(view->windowTitle());
 }
 
 void RKGraphicsDevice::goInteractive (const QString& prompt) {

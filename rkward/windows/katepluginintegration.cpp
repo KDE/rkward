@@ -24,6 +24,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KConfigGroup>
 #include <KXMLGUIFactory>
 #include <KLocalizedString>
+#include <kcoreaddons_version.h>
 
 #include "../rkward.h"
 #include "rkworkplace.h"
@@ -46,7 +47,11 @@ KatePluginIntegrationApp::KatePluginIntegrationApp(QObject *parent) : QObject (p
 	KTextEditor::Editor::instance()->setApplication(app);
 
 	// enumerate all available kate plugins
-	QVector<KPluginMetaData> plugins = KPluginLoader::findPlugins(QStringLiteral ("ktexteditor"), [](const KPluginMetaData &md) { return md.serviceTypes().contains(QLatin1String("KTextEditor/Plugin")); });
+#if KCOREADDONS_VERSION >= QT_VERSION_CHECK(5,89,0)
+	QVector<KPluginMetaData> plugins = KPluginMetaData::findPlugins(QStringLiteral("ktexteditor"));
+#else
+	QVector<KPluginMetaData> plugins = KPluginLoader::findPlugins(QStringLiteral("ktexteditor"), [](const KPluginMetaData &) { return true; });
+#endif
 	for (int i = plugins.size() -1; i >= 0; --i) {
 		PluginInfo info;
 		info.plugin = 0;
@@ -60,13 +65,14 @@ KatePluginIntegrationApp::KatePluginIntegrationApp(QObject *parent) : QObject (p
 
 KatePluginIntegrationApp::~KatePluginIntegrationApp() {
 	RK_TRACE (APP);
+	delete dummy_view; // deletion of view may call into mainwindow, so having this deleted a regular qobject child is too late
 }
 
 KTextEditor::View *KatePluginIntegrationApp::dummyView() {
 	if (!dummy_view) {
 		RK_TRACE (APP);
 		KTextEditor::Document *doc = KTextEditor::Editor::instance()->createDocument (this);
-		dummy_view = doc->createView(0);
+		dummy_view = doc->createView(nullptr, mainWindow()->mainWindow());
 		dummy_view->hide();
 		// Make sure it does not accumulate cruft.
 		connect(doc, &KTextEditor::Document::textChanged, doc, &KTextEditor::Document::clear);
@@ -93,14 +99,20 @@ QObject* KatePluginIntegrationApp::loadPlugin (const QString& identifier) {
 		return 0;
 	}
 
+#if KCOREADDONS_VERSION < QT_VERSION_CHECK(5,86,0)
 	KPluginFactory *factory = KPluginLoader(known_plugins[identifier].data.fileName ()).factory ();
 	if (factory) {
+#endif
 		if (identifier == "katekonsoleplugin") {
 			// Workaround until https://invent.kde.org/utilities/kate/-/commit/cf11bcbf1f36e2a82b1a1b14090a3f0a2b09ecf4 can be assumed to be present (should be removed in KF6)
 			if (qEnvironmentVariableIsEmpty("EDITOR")) qputenv("EDITOR", "vi");
 		}
 
+#if KCOREADDONS_VERSION < QT_VERSION_CHECK(5,86,0)
 		KTextEditor::Plugin *plugin = factory->create<KTextEditor::Plugin>(this, QVariantList () << identifier);
+#else
+		KTextEditor::Plugin *plugin = KPluginFactory::instantiatePlugin<KTextEditor::Plugin>(known_plugins[identifier].data, this, QVariantList() << identifier).plugin;
+#endif
 		if (plugin) {
 			known_plugins[identifier].plugin = plugin;
 			emit KTextEditor::Editor::instance()->application()->pluginCreated(identifier, plugin);
@@ -116,7 +128,9 @@ QObject* KatePluginIntegrationApp::loadPlugin (const QString& identifier) {
 			}
 			return plugin;
 		}
+#if KCOREADDONS_VERSION < QT_VERSION_CHECK(5,86,0)
 	}
+#endif
 
 	return 0;
 }
@@ -529,6 +543,8 @@ bool KatePluginIntegrationWindow::viewsInSameSplitView(KTextEditor::View* view1,
 	RK_TRACE (APP);
 	// TODO not sure what the semantics of this really are. The two views are in the same view area (not visible, simultaneously), or in two areas split side-by-side?
 	// However, this is essentially unused in kate.
+	Q_UNUSED(view1);
+	Q_UNUSED(view2);
 	return false;
 }
 

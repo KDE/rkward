@@ -1,0 +1,35 @@
+<snippets name="R and R Markdown Utils (RKWard)" filetypes="R Markdown" authors="RKWard Team" namespace="SnippetsRmd" license="BSD">
+  <script>require("range.js")
+require("cursor.js")
+require("document.js")
+require("view.js")
+
+function fileName() { return document.fileName(); }
+function encoding() { return document.encoding(); }
+function year() { return new Date().getFullYear(); }
+function upper(x) { return x.toUpperCase(); }
+function lower(x) { return x.toLowerCase(); }
+function braces(text) { return "{" + text + "}"; }
+function lineCommand(command, replaces="", label_if_empty="Heading") {
+    let c = view.cursorPosition();
+    // NOTE: snippet scripts work by 1. inserting the raw snippet as a raw "template" 2. evaluating any commands inside the template 3. replacing the template with the evaluated template. As a result, when this function gets called, it contains the call to itself...
+    let line = document.line(c.line).replace(/\$\{lineCommand\s*\([^\}]*\}/g, "");
+    line = line.replace(new RegExp(replaces), "");
+    if (line == "") line = label_if_empty;
+    else document.removeLine(c.line);
+    return command + " " + line + "\n";
+}
+
+function rangeCommand(command, def) {
+    if (view.selectedText().length > 0) {
+        return command.replace("%%1", view.selectedText());
+    } else {
+        return command.replace("%%1", def);
+    }
+}
+</script>
+ <item>
+  <match>Style text (styler)</match>
+  <fillin>${rangeCommand("styler::style_text(\"%%1\")", "R or Rmd code")}</fillin>
+ </item>
+</snippets>

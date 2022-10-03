@@ -56,9 +56,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 // flush new pieces of output after this period of time:
 #define FLUSH_INTERVAL 100
 
-#define STARTUP_PHASE2_COMPLETE 4
-#define RSTARTUP_COMPLETE 6
-
 // statics
 double RInterface::na_real;
 int RInterface::na_int;
@@ -202,9 +199,11 @@ void RInterface::tryNextCommand () {
 				command->status |= RCommand::Failed;
 
 				// notify ourselves...
-				RCommand* dummy = popPreviousCommand (command->id ());
-				RK_ASSERT (dummy == command);
-				handleCommandOut (command);
+				RCommand* dummy = popPreviousCommand(command->id ());
+				RK_ASSERT(dummy == command);
+				RK_DEBUG(RBACKEND, DL_DEBUG, "Not sending already cancelled command to backend");
+				handleCommandOut(command);
+				tryNextCommand();
 				return;
 			}
 
@@ -241,8 +240,8 @@ void RInterface::handleCommandOut (RCommand *command) {
 			} else {
 				RK_DEBUG (RBACKEND, dl, "Command failed (other)");
 			}
-			RK_DEBUG (RBACKEND, dl, "failed command was: '%s'", qPrintable (command->command ()));
-			RK_DEBUG (RBACKEND, dl, "- error message was: '%s'", qPrintable (command->error ()));
+			RK_DEBUG(RBACKEND, dl, "failed command was %d: '%s'", command->id(), qPrintable(command->command()));
+			RK_DEBUG(RBACKEND, dl, "- error message was: '%s'", qPrintable(command->error()));
 		}
 	#endif
 
@@ -278,7 +277,7 @@ void RInterface::doNextCommand (RCommand *command) {
 		RKWardMainWindow::getMain ()->setWorkspaceMightBeModified (true);
 		proxy = command->makeProxy ();
 
-		RK_DEBUG (RBACKEND, DL_DEBUG, "running command: %s", command->command ().toLatin1().data ());
+		RK_DEBUG (RBACKEND, DL_DEBUG, "running command %d: %s", command->id(), qPrintable(command->command()));
 		command->status |= RCommand::Running;
 		RCommandStackModel::getModel ()->itemChange (command);
 
@@ -380,6 +379,24 @@ void RInterface::handleRequest (RBackendRequest* request) {
 			RK_ASSERT (command->getDataLength () == 1);
 			RKSessionVars::setRVersion (command->stringVector ().value (0));
 		});
+
+		if (!qgetenv("APPDIR").isEmpty()) {
+			// Running inside an AppImage. As soon as R has started, it should behave as if running in the main (system) environment (esp. when calling helper binaries such as wget or gcc).
+			// Unset any paths starting with APPDIR, _except_ those inside R_HOME.
+			runStartupCommand(new RCommand("local({\n"
+			"	appdir <- Sys.getenv(\"APPDIR\")\n"
+			"	fix <- function(key) {\n"
+			"		paths <- strsplit(Sys.getenv(key), \":\", fixed=TRUE)[[1]]\n"
+			"		paths <- paths[!(startsWith(paths, appdir) & !startsWith(paths, R.home()))]\n"
+			"		patharg <- list(paste(paths, collapse=\":\"))\n"
+			"		names(patharg) <- key\n"
+			"		do.call(Sys.setenv, patharg)\n"
+			"	}\n"
+			"	fix(\"LD_LIBRARY_PATH\")\n"
+			"	fix(\"PATH\")\n"
+			"})\n", RCommand::App | RCommand::Sync), chain, [](RCommand*) {});
+		}
+
 		// find out about standard library locations
 		runStartupCommand(new RCommand("c(path.expand(Sys.getenv(\"R_LIBS_USER\")), .libPaths())\n", RCommand::GetStringVector | RCommand::App | RCommand::Sync), chain,
 		[this](RCommand *command) {
@@ -400,8 +417,8 @@ void RInterface::handleRequest (RBackendRequest* request) {
 			// initialize output file
 			RKOutputDirectory::getCurrentOutput(chain);
 
-#ifdef Q_OS_MACOS
-			// On MacOS, the backend is started from inside R home to allow resolution of dynamic libs. Re-set to frontend wd, here.
+#if defined(Q_OS_MACOS) || defined(Q_OS_WIN)
+			// On MacOS and Windows, the backend is started with different working directories set, for hackish reasons (see rkfrontendtransmitter.cpp). Fix that, here.
 			runStartupCommand(new RCommand("setwd (" + RKRSharedFunctionality::quote(QDir::currentPath()) + ")\n", RCommand::App | RCommand::Sync), chain, runtimeopt_callback);
 #endif
 			// Workaround for https://bugs.kde.org/show_bug.cgi?id=421958
@@ -547,6 +564,7 @@ void RInterface::cancelCommand (RCommand *command) {
 	} else {
 		RK_ASSERT (false);
 	}
+	tryNextCommand();
 }
 
 void RInterface::pauseProcessing (bool pause) {

@@ -27,7 +27,6 @@ public:
 	static QList<QUrl> allRecentUrls(const QString &id);
 	static KRecentFilesAction* claimAction(const QString &id);
 	static void saveConfig();
-	static void cleanup();
 	static QString scriptsId();
 	static QString workspaceId();
 	static QString outputId();

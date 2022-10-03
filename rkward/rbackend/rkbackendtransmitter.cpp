@@ -50,16 +50,21 @@ void RKRBackendTransmitter::run () {
 
 	int timeout = 0;
 	do {
+		RK_DEBUG(RBACKEND, DL_DEBUG, "Connecting to local socket %s", qPrintable(servername));
 		std::cout << token.toLocal8Bit().data() << "\n";
 		std::cout.flush();
 	} while (!connection->waitForConnected(1000) && (++timeout < 20));
 	if (timeout >= 20) handleTransmissionError("Could not connect: " + connection->errorString());
+
 	// handshake
+	RK_DEBUG(RBACKEND, DL_DEBUG, "Connection state: %d. Now Sending handshake", con->state());
 	connection->write (token.toLocal8Bit ().data ());
 	connection->write ("\n");
 	connection->write (RKWARD_VERSION);
 	connection->write ("\n");
-	connection->waitForBytesWritten ();
+	bool ok = connection->waitForBytesWritten ();
+	RK_DEBUG(RBACKEND, DL_DEBUG, "Sending handshake complete, status: %s", ok ? "ok" : "fail");
+	if (!ok) handleTransmissionError("Could not write connection handshake: " + connection->errorString());
 
 	flushtimerid = startTimer (200);	// calls flushOutput(false), periodically. See timerEvent()
 
@@ -154,6 +159,7 @@ void RKRBackendTransmitter::handleTransmissionError (const QString &message) {
 	RK_TRACE (RBACKEND);
 
 	if (!connection) return;  // regular exit, or we did not even get to the point of setting up the connection.
+	if (RKRBackend::this_pointer->isKilled()) return;
 	RK_DEBUG (RBACKEND, DL_ERROR, "%s", qPrintable ("Transmission error " + message));
 	RKRBackend::tryToDoEmergencySave ();
 }

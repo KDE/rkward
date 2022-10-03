@@ -25,13 +25,29 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../core/robject.h"
 #include "../core/robjectlist.h"
 #include "../core/renvironmentobject.h"
+#include "../misc/rkcommonfunctions.h"
+
+QElapsedTimer _test_timer;
+
+void testLog(const char* fmt, va_list args) {
+	printf("%lld: ", _test_timer.elapsed());
+	vprintf(fmt, args);
+	printf("\n");
+	fflush(stdout);
+}
+
+void testLog(const char* fmt, ...) {
+	va_list ap;
+	va_start(ap, fmt);
+	testLog(fmt, ap);
+	va_end(ap);
+}
 
 void RKDebug (int, int, const char* fmt, ...) {
 	va_list ap;
 	va_start(ap, fmt);
-	vprintf(fmt, ap);
+	testLog(fmt, ap);
 	va_end(ap);
-	printf("\n");
 }
 
 /** This test suite sets up a mostly complete application. That's a bit heavy, but arguably, a) modularity isn't ideal in RKWard, and b) many of the more interesting
@@ -49,11 +65,11 @@ class RKWardCoreTest: public QObject {
 		bool *_done = &done;
 		connect(command->notifier(), &RCommandNotifier::commandFinished, this, [_done, callback](RCommand *command) { *_done = true; callback(command); });
 		RInterface::issueCommand(command, chain);
-		while (!done && t.elapsed() < timeoutms) {
+		while (!done && (t.elapsed() < timeoutms)) {
 			qApp->processEvents();
 		}
 		if (!done) {
-			qDebug("Command timed out: %s", qPrintable(ccopy));
+			testLog("Command timed out: %s", qPrintable(ccopy));
 			QFAIL("Command timed out");
 		}
 	}
@@ -64,7 +80,7 @@ class RKWardCoreTest: public QObject {
 	}
 
 	void waitForAllFinished(int timeoutms = 1000) {
-		runCommandWithTimeout(new RCommand(QString(), RCommand::App | RCommand::EmptyCommand), nullptr, [](RCommand*){}, timeoutms);
+		runCommandWithTimeout(new RCommand(QString(), RCommand::App | RCommand::EmptyCommand | RCommand::Sync), nullptr, [](RCommand*){}, timeoutms);
 	}
 
 	void cleanGlobalenv() {
@@ -79,35 +95,50 @@ class RKWardCoreTest: public QObject {
 			qApp->sendPostedEvents();
 		}
 		if (RInterface::instance()->backendIsIdle()) {
-			qDebug("Backend startup completed");
+			testLog("Backend startup completed");
 		} else {
-			qDebug("Backend startup failed. Listing contents of /tmp/rkward.rbackend");
+			testLog("Backend startup failed. Listing contents of /tmp/rkward.rbackend");
 			QFile f(QDir::tempPath() + "/rkward.rbackend");
 			f.open(QIODevice::ReadOnly);
 			auto output = f.readAll();
-			qDebug("%s", output.data());
+			testLog("%s", output.data());
 		}
+	}
+
+	QString backendStatus() {
+		if (RInterface::instance()->backendIsDead()) return "dead";
+		if (RInterface::instance()->backendIsIdle()) return "idle";
+		return "busy";
 	}
     
 	QPointer<RKWardMainWindow> main_win;
 private slots:
 	void init() {
+		testLog("Starting next test");
 	}
+
 	void cleanup() {
+		testLog("Cleanup. Backend status: %s", qPrintable(backendStatus()));
 		waitForAllFinished();
+		testLog("Cleanup done. Backend status: %s", qPrintable(backendStatus()));
 	}
-	void initTestCase()
-	{
-		qDebug("Initializing test case"); // Remove me. For diagnostics of test exception on Windows CI
+
+	void initTestCase() {
+		_test_timer.start();
 		qputenv("QTWEBENGINE_CHROMIUM_FLAGS", "--no-sandbox"); // Allow test to be run as root, which, for some reason is being done on the SuSE CI.
-		QLoggingCategory::setFilterRules("qt.text.layout=false");  // Filter out some noise
+		// qputenv("QT_LOGGING_RULES", "qt.qpa.windows.debug=true");  // Deliberately overwriting the rules set in the CI, as we are producing too much output, otherwise  -- TODO: does not appear to have any effect
 		KAboutData::setApplicationData(KAboutData("rkward", "RKWard", RKWARD_VERSION, "Frontend to the R statistics language", KAboutLicense::GPL)); // component name needed for .rc files to load
 		RK_Debug::RK_Debug_Level = DL_DEBUG;
-		qDebug(R_EXECUTABLE);
+		testLog(R_EXECUTABLE);
 		RKSessionVars::r_binary = R_EXECUTABLE;
 		main_win = new RKWardMainWindow();
 		main_win->testmode_suppress_dialogs = true;
 		waitForBackendStarted();
+	}
+
+	void basicCheck() {
+		// detect basic installation problems that are likely to cause (almost) everything else to fail
+		QVERIFY(!RKCommonFunctions::getRKWardDataDir().isEmpty());
 	}
 
 	void getIntVector() {
@@ -208,6 +239,34 @@ private slots:
 		QCOMPARE(output.value(4), "444");
 	}
 
+	void cancelCommandStressTest() {
+		int cancelled_commands = 0;
+		int commands_out = 0;
+		for (int i = 0; i < 100; ++i) {
+			runCommandAsync(new RCommand("Sys.sleep(.005)", RCommand::User | RCommand::PriorityCommand), nullptr, [&cancelled_commands, &commands_out](RCommand *command) {
+				if (command->wasCanceled()) cancelled_commands++;
+				commands_out++;
+			});
+			// We want to cover various cases, here, including cancelling commands before and after they have been sent to the backend, but also at least some commands that finish
+			// without being effictively cancelled.
+			if (i % 4 == 0) {
+				RInterface::instance()->cancelAll();
+			} else if (i % 4 == 1) {
+				while (commands_out <= i) {
+					qApp->processEvents();
+				}
+			} else if (i % 4 == 2) {
+				qApp->processEvents();
+			}
+		}
+		waitForAllFinished();
+		// The point of this test case is to make sure, we do not get into a deadlock, however, the QVERIFYs below are to make sure the test itself behaves as expected.
+		// There needs to be some wiggle room, however, as this is inherently prone to race-conditions. (Commands finish running before getting cancelled, or they don't).
+		QVERIFY(cancelled_commands >= 25);
+		QVERIFY(cancelled_commands <= 75);
+		testLog("%d out of %d commands were actually cancelled", cancelled_commands, commands_out);
+	}
+
 	void priorityCommandTest() {
 		bool priority_command_done = false;
 		runCommandAsync(new RCommand("Sys.sleep(5)", RCommand::User), nullptr, [&priority_command_done](RCommand *command) {
@@ -230,9 +289,9 @@ private slots:
 		waitForAllFinished();
 		QVERIFY(RObjectList::getGlobalEnv()->findObject("x"));
 
-		auto oldiface = RInterface::instance();
+		QPointer<RInterface> oldiface = RInterface::instance();
 		restart_action->trigger();
-		while (RInterface::instance() == oldiface) {  // action may be delayed until next event processing
+		while (oldiface) {  // action may be delayed until next event processing
 			qApp->processEvents();
 		}
 		waitForBackendStarted();

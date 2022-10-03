@@ -133,7 +133,7 @@ $$e^${braces("i\\pi")} + 1$$
  </item>
   <item>
   <match>Code (simple chunk)</match>
-  <fillin>${rangeCommand("\n```"+ braces("r") +" %%1```\n", "\nx &lt;- 1\n\n")}</fillin>
+  <fillin>${rangeCommand("\n```"+ braces("r") +"\n%%1\n```\n", "x &lt;- 1 # Mark the code to be put in a Chunk\n")}</fillin>
  </item>
  <item>
   <match>Quote</match>
@@ -181,41 +181,29 @@ A &amp; B \\
  </item>
  <item>
   <match>Code (chunk with defaults)</match>
-  <fillin>${rangeCommand("\n```"+ braces("r, chunk-label, echo = FALSE, eval = TRUE, fig.show = \"asis\", include = TRUE, message = FALSE, results = \"asis\", warning = FALSE") +" %%1```\n", "\nx &lt;- 1\n\n")}</fillin>
+  <fillin>${rangeCommand("```"+ braces("r, chunk-label, echo = FALSE, eval = TRUE, fig.show = \"asis\", include = TRUE, message = FALSE, results = \"asis\", warning = FALSE") +"\n%%1 \n```\n", "x &lt;- 1 # Mark the code to be put in a Chunkn\n")}</fillin>
  </item>
  <item>
-  <match>Table</match>
-  <fillin>
-| Right  | Left  | Default   | Center    |
+  <match>Table (Markdown with caption)</match>
+<fillin>| Right  | Left  | Default   | Center    |
 |-------:|:------|-----------|:---------:|
 | 12     | 12    | 12        | 12        |
 | 123    | 123   | 123       | 123       |
 | 1      | 1     | 1         | 1         |
+:Caption text</fillin>
+ </item>
+ <item>
+  <match>Table (knitr)</match>
+  <fillin>${rangeCommand("```"+ braces("r, chunk-label, echo = FALSE, eval = TRUE, include = TRUE, message = FALSE, results = \"asis\", warning = FALSE") +"\nknitr::kable(%%1, caption = \"Table caption text.\")\n```", "data")}
   </fillin>
  </item>
  <item>
-  <match>Table with caption</match>
-  <fillin>
-| Right  | Left  | Default   | Center    |
-|-------:|:------|-----------|:---------:|
-| 12     | 12    | 12        | 12        |
-| 123    | 123   | 123       | 123       |
-| 1      | 1     | 1         | 1         |
-:Caption text
-  </fillin>
- </item>
- <item>
-  <match>Table (kable)</match>
-  <fillin>
-```{r}
-data &lt;- iris[1:4, ]
-knitr::kable(data, caption = "Table caption text.")
-```
-  </fillin>
+  <match>Table (xtable)</match>
+  <fillin>${rangeCommand("```"+ braces("r, chunk-label, echo = FALSE, eval = TRUE, include = TRUE, message = FALSE, results = \"asis\", warning = FALSE") +"\nprint(xtable::xtable(%%1), comment = FALSE)\n```", "data")}</fillin>
  </item>
  <item>
   <match>YAML header</match>
-    <fillin>---
+<fillin>---
 title: "Example R Markdown in RKWard with R version `r getRversion()`"
 author: "Author Name"
 date: "`r Sys.Date()`"
@@ -225,6 +213,8 @@ output:
       highlight: kate
       number_sections: yes
       toc: yes
+urlcolor: blue
+linkcolor: red
 ---
 
 ```{r, echo=TRUE}
@@ -257,6 +247,8 @@ output:
       toc_float: true
       toc_collapsed: true
 number_sections: true
+urlcolor: blue
+linkcolor: red
 ---
 
 &lt;!--
@@ -352,7 +344,7 @@ Let us take a simple code to make four plots of random data in a single row, for
 
 ```
 # Set graphical parameter
-par(mfrow = c(2,2))
+par(mfrow = c(2, 2))
 
 # for loop to make four plots
 
@@ -365,12 +357,12 @@ If we put the code in the following R Markdown chunk (note the 'r' in the curly 
 
 ```{r, echo = TRUE, fig.cap = "Four plots of random data."}
 # Set graphical parameter
-par(mfrow = c(2,2))
+par(mfrow = c(2, 2))
 
 # for loop to make four plots
 
 for (i in 1:4) {
- plot(rnorm(10), col = i, pch = 19, main = paste("Scatter plot", LETTERS[i]))
+  plot(rnorm(10), col = i, pch = 19, main = paste("Scatter plot", LETTERS[i]))
 }
 ```
 
@@ -399,7 +391,7 @@ If you like RKWard consider to donate. Some small amount for a cup of coffee or 
  </item>
  <item>
    <match>R Markdown PDF template</match>
-   <fillin>---
+<fillin>---
 title: "Example R Markdown in RKWard with R version `r getRversion()`"
 author: "The RKWard Team"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
@@ -407,9 +399,10 @@ output:
     pdf_document:
       fig_caption: yes
       highlight: kate
-      number_sections: yes
+      number_sections: true
       toc: yes
-number_sections: true
+urlcolor: blue
+linkcolor: red
 ---
 
 &lt;!--
@@ -445,7 +438,7 @@ Please feel free to adjust it to your needs.
 
 \pagebreak
 
-```{r, chunk-label, echo=FALSE, include=FALSE}
+```{r, echo=FALSE, include=FALSE}
 # Defaults to suppress warnings and messages
 # Figure height and width are set to 7 inches
 # See more options by running str(knitr::opts_chunk$get())
@@ -519,7 +512,7 @@ par(mfrow = c(2,2))
 # for loop to make four plots
 
 for (i in 1:4) {
- plot(rnorm(10), col = i, pch = 19, main = paste("Scatter plot", LETTERS[i]))
+  plot(rnorm(10), col = i, pch = 19, main = paste("Scatter plot", LETTERS[i]))
 }
 ```
 
@@ -532,7 +525,7 @@ par(mfrow = c(2,2))
 # for loop to make four plots
 
 for (i in 1:4) {
- plot(rnorm(10), col = i, pch = 19, main = paste("Scatter plot", LETTERS[i]))
+  plot(rnorm(10), col = i, pch = 19, main = paste("Scatter plot", LETTERS[i]))
 }
 ```
 
@@ -557,6 +550,75 @@ In the template following R Markdown elements were shown
 and many more.
 
 If you like RKWard consider to donate. Some small amount for a cup of coffee or a cup of H~2~O is totally fine.
+</fillin>
+ </item>
+ <item>
+  <match>Bibliographies and citations</match>
+    <fillin>---
+output: html_document
+bibliography: references.bib
+csl: biomed-central.csl
+---
+
+&lt;!--
+The BibTeX database (e.g. references.bib) is a plain-text file with the *.bib extension that consists of
+bibliography entries like this:
+
+@Manual{R-base,
+title = {R: A Language and Environment for Statistical Computing},
+author = {{R Core Team}},
+organization = {R Foundation for Statistical Computing},
+address = {Vienna, Austria},
+year = {2022},
+url = {https://www.R-project.org},
+}
+
+Pandoc will use a Chicago author-date format for citations and references. To use
+another style (see https://www.zotero.org/styles), you will need to specify a CSL (e.g., biomed-central.csl).
+--&gt;
+</fillin>
+ </item>
+ <item>
+  <match>R package citations</match>
+  <fillin>${rangeCommand("toBibtex(citation(\"%%1\"))", "rkward")}</fillin>
+ </item>
+ <item>
+  <match>Multiple authors in a document</match>
+    <fillin>---
+ - John Doe^[Institution One, john@example.org]
+ - Jane Doe^[Institution Two, jane@example.org]
+---
+</fillin>
+ </item>
+ <item>
+  <match>R Markdown with two columns</match>
+    <fillin>---
+title: "Example R Markdown with two columns in RKWard with R version `r getRversion()`"
+author: "The RKWard Team"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: html_document
+---
+
+::: columns
+::: column
+This is the first column.
+
+```{r}
+plot(rnorm(199))
+```
+
+:::
+
+::: column
+
+This is the second column.
+
+```{r}
+hist(rnorm(199))
+```
+
+:::
+:::
 </fillin>
  </item>
 </snippets>

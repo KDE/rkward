@@ -81,7 +81,7 @@ public:
 	QComboBox* makeDropDown(const LabelList &entries, RKSettingsModuleWidget* _module, int bit_flag_mask = 0) {
 		static_assert(std::is_same<STORAGE_T, int>::value || std::is_same<STORAGE_T, bool>::value, "makeDropDown can only be used for int or bool");
 		if (bit_flag_mask) {
-			return makeDropDownHelper(entries, _module, value & bit_flag_mask, [this, bit_flag_mask](int val){this->value = (T) ((this->value & ~bit_flag_mask) + val);});
+			return makeDropDownHelper(entries, _module, ((int) value) & bit_flag_mask, [this, bit_flag_mask](int val){this->value = (T) ((((int) this->value) & ~bit_flag_mask) + val);});
 		} else {
 			return makeDropDownHelper(entries, _module, (std::is_same<STORAGE_T, bool>::value && value) ? 1 : (int) value, [this](int val){this->value = (T) val;});
 		}

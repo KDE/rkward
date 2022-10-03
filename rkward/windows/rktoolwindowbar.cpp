@@ -305,7 +305,11 @@ bool RKToolWindowBar::eventFilter (QObject *obj, QEvent *ev) {
 				sel->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveUp), i18n ("Top Sidebar"));
 				sel->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveDown), i18n ("Bottom Sidebar"));
 				sel->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionDelete), i18n ("Not shown in sidebar"));
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5,78,0)
+				connect(sel, &KSelectAction::indexTriggered, this, &RKToolWindowBar::moveToolWindow);
+#else
 				connect (sel, static_cast<void (KSelectAction::*)(int)>(&KSelectAction::triggered), this, &RKToolWindowBar::moveToolWindow);
+#endif
 				menu.addAction (sel);
 	
 				menu.exec (e->globalPos());

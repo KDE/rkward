@@ -241,7 +241,7 @@ void RKStandardComponentGUI::finalize () {
 	bool any_vpreview_visible = RKSettingsModulePlugins::showCodeByDefault ();
 	for (int i = 0; i < previews.size (); ++i) {
 		// Add preview to splitter. Also add a title bar to each preview.
-		previews[i].widget = previews[i].preview_area->wrapperWidget ();
+		previews[i].widget = previews[i].preview_area;
 		connect (previews[i].preview_area, &RKXMLGUIPreviewArea::previewClosed, this, &RKStandardComponentGUI::previewCloseButtonClicked);
 		connect (previews[i].controller, &RKComponentPropertyBase::valueChanged, this, &RKStandardComponentGUI::previewVisibilityChanged);
 		if (!(previews[i].controller->boolValue ())) previews[i].widget->hide ();

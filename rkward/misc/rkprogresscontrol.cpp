@@ -518,6 +518,7 @@ void RKInlineProgressControl::show(int delay_ms) {
 
 bool RKInlineProgressControl::eventFilter(QObject *w, QEvent *e) {
 	RK_TRACE(MISC);
+	Q_UNUSED(w); // we only installed filter on one object (logical_parent)
 	if (e->type() == QEvent::Resize || e->type() == QEvent::Show) {
 		QTimer::singleShot(0, this, [this]() {
 			wrapper->resize(display_area->size());
