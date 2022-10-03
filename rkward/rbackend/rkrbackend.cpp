@@ -1753,22 +1753,19 @@ void RKRBackend::checkObjectUpdatesNeeded (bool check_list) {
 	RK_TRACE (RBACKEND);
 	if (killed) return;
 
-	bool search_update_needed = false;
-
 	if (check_list) {	
 	// TODO: avoid parsing this over and over again
 		RK_DEBUG (RBACKEND, DL_TRACE, "checkObjectUpdatesNeeded: getting search list");
-		RCommandProxy *dummy = runDirectCommand ("search ()\n", RCommand::GetStringVector);
-		if (dummy->stringVector () != toplevel_env_names) search_update_needed = true;
-		if (search_update_needed) toplevel_env_names = dummy->stringVector ();
+		RCommandProxy *dummy = runDirectCommand ("list(search(), loadedNamespaces())\n", RCommand::GetStructuredData);
+		QStringList n_toplevel_env_names = dummy->structureVector().value(0)->stringVector();
+		QStringList n_loaded_namespaces = dummy->structureVector().value(1)->stringVector();
 		delete dummy;
-	
-		if (search_update_needed) {	// this includes an update of the globalenv, even if not needed
-			dummy = runDirectCommand ("loadedNamespaces ()\n", RCommand::GetStringVector);
+		if (n_toplevel_env_names != toplevel_env_names || n_loaded_namespaces != loaded_namespaces) {	// this includes an update of the globalenv, even if not needed
+			toplevel_env_names = n_toplevel_env_names;
+			loaded_namespaces = n_loaded_namespaces;
 			QVariantList args;
 			args.append(QVariant(toplevel_env_names));
-			args.append(QVariant(dummy->stringVector()));
-			delete dummy;
+			args.append(QVariant(loaded_namespaces));
 			handleRequestWithSubcommands("syncenvs", args);
 		} 
 	}
