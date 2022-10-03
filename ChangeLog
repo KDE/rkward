@@ -1,3 +1,4 @@
+- Changed default behavior (new installations, only): Up/down without alt navigate completion items if visible in console/editor
 - Fixed: Backend failed to start when installed in a path with spaces on Windows volumes without 8.3 support
 - Fixed: Trying to restart backend could cause a hang, on Windows
 - Fixed: In corner cases, cancelling commands could lead to a lockup
