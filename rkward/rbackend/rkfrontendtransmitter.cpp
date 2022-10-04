@@ -200,11 +200,8 @@ QString RKFrontendTransmitter::waitReadLine (QIODevice* con, int msecs) {
 	time.start();
 	QByteArray ret;
 	do {
-		RK_DEBUG(RBACKEND, DL_DEBUG, "Time %d, buffer %d, available %d", QDateTime::currentMSecsSinceEpoch(), ret.length(), con->bytesAvailable());
 		ret.append(con->readLine());
-		RK_DEBUG(RBACKEND, DL_DEBUG, "Time2 %d, buffer %d, available %d", QDateTime::currentMSecsSinceEpoch(), ret.length(), con->bytesAvailable());
 		if (ret.contains('\n')) break;
-		RK_DEBUG(RBACKEND, DL_DEBUG, "Time3 %d", QDateTime::currentMSecsSinceEpoch());
 		con->waitForReadyRead(500);
 	} while(time.elapsed() < msecs);
 	return QString::fromLocal8Bit(ret);

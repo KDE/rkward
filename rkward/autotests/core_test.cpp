@@ -243,7 +243,7 @@ private slots:
 		int cancelled_commands = 0;
 		int commands_out = 0;
 		for (int i = 0; i < 100; ++i) {
-			runCommandAsync(new RCommand("Sys.sleep(.005)", RCommand::User | RCommand::PriorityCommand), nullptr, [&cancelled_commands, &commands_out](RCommand *command) {
+			runCommandAsync(new RCommand("Sys.sleep(.005)", RCommand::User), nullptr, [&cancelled_commands, &commands_out](RCommand *command) {
 				if (command->wasCanceled()) cancelled_commands++;
 				commands_out++;
 			});
