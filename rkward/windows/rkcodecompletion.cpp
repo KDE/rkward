@@ -582,7 +582,7 @@ void RKCodeCompletionModel::updateCompletionList(const QString& symbol, bool is_
 		rcompletions->update("?", symbol, symbol, shortnames);
 	} else if (objectpath.size() > 1) {
 		QString op = objectpath.at(objectpath.size() - 1 - objectpath.size() % 2);
-		QString start = objectpath.at(objectpath.size() - 2 - objectpath.size() % 2);
+		QString start = objectpath.mid(0, objectpath.size() - 1 - objectpath.size() % 2).join("");
 		if (op == "$" || op == "@") {
 			rcompletions->update(op, start, objectpath.size() % 2 ? objectpath.last() : QString(), shortnames);
 		}
@@ -1035,8 +1035,17 @@ void RKDynamicCompletionsAddition::doUpdateFromR() {
 			return;
 		}
 		if (command->getDataType() == RCommand::StringVector) {
-			QStringList nargs;
-			current_raw_resultlist = command->stringVector();
+			QStringList res = command->stringVector();
+			current_raw_resultlist.clear();
+			// we used to do the subsitution below in R, but that proved challenging, as fragments would often contain symbols with a special meaning in regexps (importantly "$").
+			QString input;
+			if (mode() == "?") input = mode();
+			else if (mode() != "funargs") input = fragment() + mode();
+			for (int i = 0; i < res.size(); ++i) {
+				auto it = res[i];
+				if (it.startsWith(input)) current_raw_resultlist.append(it.right(it.length() - input.length()));
+				else RK_DEBUG(COMMANDEDITOR, DL_INFO, "got malformed completion %s", qPrintable(it));
+			}
 		} else {
 			RK_ASSERT(false);
 		}

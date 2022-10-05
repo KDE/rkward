@@ -26,7 +26,7 @@
 		utils:::.assignStart(1)
 		utils:::.assignEnd(nchar(fragment) + nchar(type))
 		utils:::.completeToken()
-		sub(paste0("^", fragment, ifelse(type == "$", "\\$", type)),"", utils:::.retrieveCompletions())
+		utils:::.retrieveCompletions()
 	} else if (type == "::" || type == ":::") {
 		utils::rc.settings(ops = FALSE, ns=TRUE, args = FALSE, dots = FALSE, func = FALSE, ipck = FALSE, S3 = FALSE, data = FALSE, help = FALSE, argdb = FALSE, fuzzy = FALSE, quotes = FALSE, files = FALSE)
 		utils:::.assignLinebuffer(paste0(fragment, type))
@@ -34,7 +34,7 @@
 		utils:::.assignStart(1)
 		utils:::.assignEnd(nchar(fragment) + nchar(type))
 		utils:::.completeToken()
-		sub(paste0("^", fragment, type),"", utils:::.retrieveCompletions())
+		utils:::.retrieveCompletions()
 	} else if (type == "?") {
 		utils::rc.settings(ops = FALSE, ns=FALSE, args = FALSE, dots = FALSE, func = FALSE, ipck = FALSE, S3 = FALSE, data = FALSE, help = TRUE, argdb = FALSE, fuzzy = FALSE, quotes = FALSE, files = FALSE)
 		utils:::.assignLinebuffer(paste0(type, fragment))
@@ -42,6 +42,6 @@
 		utils:::.assignStart(1)
 		utils:::.assignEnd(nchar(fragment) + nchar(type))
 		utils:::.completeToken()
-		sub("^\\?","", utils:::.retrieveCompletions())
+		utils:::.retrieveCompletions()
 	}
 }
