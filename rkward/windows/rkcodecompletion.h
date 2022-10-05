@@ -18,6 +18,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <ktexteditor/codecompletionmodelcontrollerinterface.h>
 
 class QEvent;
+class RKCompletionModelBase;
 class RKCodeCompletionSettings;
 class RKCodeCompletionModel;
 class RKFileCompletionModel;
@@ -37,6 +38,7 @@ public:
 	KTextEditor::Range currentCallRange () const;
 	KTextEditor::View* view () const { return (_view); };
 	void setLinePrefixes(const QString &_prefix, const QString &_continuation_prefix) { prefix = _prefix; continuation_prefix = _continuation_prefix; };
+	void emptyModelGainedLateData(RKCompletionModelBase *model);
 public slots:
 	void userTriggeredCompletion ();
 private slots:
@@ -48,10 +50,11 @@ private slots:
 /** show a code completion box if appropriate. Use tryCompletionProxy () instead, which will call this function after a timeout */
 	void tryCompletion ();
 private:
+	void startModel(KTextEditor::CodeCompletionModel* model, bool start, const KTextEditor::Range &range);
+	void updateVisibility();
 	bool eventFilter (QObject *watched, QEvent *event) override;
 /** called whenever it might be appropriate to show a code completion box. The box is not shown immediately, but only after a timeout (if at all) */
 	void tryCompletionProxy ();
-	void updateVisibility ();
 	void updateCallHint ();
 	KTextEditor::CodeCompletionInterface *cc_iface;
 	RKCodeCompletionModel *completion_model;
@@ -75,7 +78,8 @@ private:
 	QString prefix;
 	QString continuation_prefix;
 
-	QList<KTextEditor::CodeCompletionModel*> active_models;
+	QList<KTextEditor::CodeCompletionModel*> started_models;
+	QHash<KTextEditor::CodeCompletionModel*, QString> model_filters;
 };
 
 /** Base class for the completion models employed in script editor. Essentially it takes care of the bureaucratic overhead involved in providing a group header */
@@ -116,7 +120,7 @@ public:
 
 	void updateCompletionList(const QString& symbol, bool is_help);
 	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const override;
-	QString partialCompletion (bool* exact_match);
+	bool partialCompletion(QString *comp, bool* exact_match);
 private:
 	QList<QIcon> icons;
 	QStringList names;
@@ -153,7 +157,7 @@ public:
 
 	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const override;
 	KTextEditor::Range completionRange (KTextEditor::View *view, const KTextEditor::Cursor &position) override;
-	QString partialCompletion (bool *exact);
+	bool partialCompletion(QString *comp, bool *exact);
 private:
 	RObject *function;
 	QStringList args;
@@ -186,7 +190,7 @@ public:
 	KTextEditor::Range completionRange (KTextEditor::View *view, const KTextEditor::Cursor &position) override;
 	void updateCompletionList (const QString& fragment);
 	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const override;
-	QString partialCompletion (bool *exact);
+	bool partialCompletion(QString *comp, bool *exact);
 private slots:
 	void completionsReady (const QString &string, const QStringList &exes, const QStringList &files);
 private:
