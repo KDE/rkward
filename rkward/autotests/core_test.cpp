@@ -91,7 +91,7 @@ class RKWardCoreTest: public QObject {
 		QElapsedTimer t;
 		t.start();
 		while (!(RInterface::instance()->backendIsDead() || RInterface::instance()->backendIsIdle())) {
-			if (t.elapsed() > 20000) break;
+			if (t.elapsed() > 40000) break;
 			qApp->sendPostedEvents();
 		}
 		if (RInterface::instance()->backendIsIdle()) {
