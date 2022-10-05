@@ -38,7 +38,7 @@ public:
 	KTextEditor::Range currentCallRange () const;
 	KTextEditor::View* view () const { return (_view); };
 	void setLinePrefixes(const QString &_prefix, const QString &_continuation_prefix) { prefix = _prefix; continuation_prefix = _continuation_prefix; };
-	void emptyModelGainedLateData(RKCompletionModelBase *model);
+	void modelGainedLateData(RKCompletionModelBase *model);
 public slots:
 	void userTriggeredCompletion ();
 private slots:
@@ -165,8 +165,8 @@ private:
 	QStringList defs;
 	QString fragment;
 	QList<int> matches;
-	void fetchRCompletions();
-	RObject *r_completions_function;
+	RKDynamicCompletionsAddition *rcompletions;
+	void addRCompletions();
 };
 
 #include <QThread>
@@ -203,7 +203,7 @@ private:
 class RKDynamicCompletionsAddition : public QObject {
 	Q_OBJECT
 public:
-	RKDynamicCompletionsAddition(RKCodeCompletionModel *parent);
+	RKDynamicCompletionsAddition(RKCompletionModelBase *parent);
 	~RKDynamicCompletionsAddition();
 	void update(const QString &mode, const QString &fragment, const QString &filterprefix, const QStringList &filterlist);
 	const QStringList results() const { return filtered_results; };

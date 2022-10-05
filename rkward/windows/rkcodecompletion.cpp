@@ -316,12 +316,10 @@ void RKCompletionManager::updateVisibility () {
 	}
 // NOTE: Freaky bug in KF 5.44.0: Call hint will not show for the first time, if logically above the primary screen. TODO: provide patch for kateargumenthinttree.cpp:166pp
 	startModel(callhint_model, checkSaneVersion() && settings->isEnabled(RKCodeCompletionSettings::Calltip), currentCallRange());
-	startModel(arghint_model, min_len && settings->isEnabled(RKCodeCompletionSettings::Arghint), argname_range);
+	startModel(arghint_model, settings->isEnabled(RKCodeCompletionSettings::Arghint), argname_range);
 }
 
-// NOTE: We call this only for models that have been previously empty. Otherwise, completion widget is already shown (unless user aborted completion),
-//       and the new items would show, automatically.
-void RKCompletionManager::emptyModelGainedLateData(RKCompletionModelBase* model) {
+void RKCompletionManager::modelGainedLateData(RKCompletionModelBase* model) {
 	RK_TRACE (COMMANDEDITOR);
 
 	RK_ASSERT(started_models.removeAll(model)); // should have been started before, thus be in the list
@@ -591,7 +589,6 @@ void RKCodeCompletionModel::updateCompletionList(const QString& symbol, bool is_
 void RKCodeCompletionModel::addRCompletions() {
 	RK_TRACE (COMMANDEDITOR);
 
-	bool was_empty = (n_completions == 0);
 	QStringList addlist = rcompletions->results();
 	if (addlist.isEmpty()) return;
 	beginInsertRows(index(0, 0), n_completions, n_completions + addlist.size());
@@ -601,7 +598,7 @@ void RKCodeCompletionModel::addRCompletions() {
 		icons.append(RKStandardIcons::getIcon(RKStandardIcons::WindowConsole));
 	}
 	endInsertRows();
-	if (was_empty) manager->emptyModelGainedLateData(this);
+	manager->modelGainedLateData(this);
 }
 
 KTextEditor::Range RKCodeCompletionModel::completionRange (KTextEditor::View *, const KTextEditor::Cursor&) {
@@ -779,7 +776,8 @@ RKArgumentHintModel::RKArgumentHintModel (RKCompletionManager* manager) : RKComp
 	RK_TRACE (COMMANDEDITOR);
 
 	function = nullptr;
-	r_completions_function = nullptr;
+	rcompletions = new RKDynamicCompletionsAddition(this);
+	connect(rcompletions, &RKDynamicCompletionsAddition::resultsComplete, this, &RKArgumentHintModel::addRCompletions);
 }
 
 void RKArgumentHintModel::updateCompletionList (RObject* _function, const QString &argument) {
@@ -796,7 +794,7 @@ void RKArgumentHintModel::updateCompletionList (RObject* _function, const QStrin
 			args = fo->argumentNames ();
 			n_formals_args = args.size();
 			defs = fo->argumentDefaults ();
-			fetchRCompletions();
+			rcompletions->update("funargs", function->getShortName(), QString(), args);
 		} else {
 			args.clear ();
 			defs.clear ();
@@ -824,40 +822,21 @@ void RKArgumentHintModel::updateCompletionList (RObject* _function, const QStrin
 	}
 }
 
-void RKArgumentHintModel::fetchRCompletions() {
-	RK_TRACE(COMMANDEDITOR);
 
-	if (r_completions_function != nullptr) {
-		// an old (now obsolete) query is still running. Wait for it to complete, first, avoiding to stack up (potentially costly) calls
-		return;
+void RKArgumentHintModel::addRCompletions() {
+	RK_TRACE (COMMANDEDITOR);
+
+	QStringList addlist = rcompletions->results();
+	args += addlist;
+	for (int i = 0; i < addlist.size (); ++i) {
+		if (addlist[i].startsWith(fragment)) matches.append(n_completions + i);
 	}
-
-	r_completions_function = function;
-	RCommand *command = new RCommand(QString("rkward:::.rk.completions(%1, \"funargs\")").arg(function->getShortName()), RCommand::Sync | RCommand::PriorityCommand | RCommand::GetStringVector);
-	command->whenFinished(this, [this](RCommand *command) {
-		if (r_completions_function != function) {
-			QTimer::singleShot(0, this, &RKArgumentHintModel::fetchRCompletions);
-			return;
-		}
-		if (command->getDataType() == RCommand::StringVector) {
-			QStringList nargs;
-			auto rargs = command->stringVector();
-			for (int i = 0; i < rargs.size(); ++i) {
-				if (!args.contains(rargs.at(i))) {
-					nargs.append(rargs.at(i));
-				}
-			}
-			if (!nargs.isEmpty()) {
-				beginInsertRows(index(0, 0, QModelIndex()), args.size(), args.size()+nargs.size());
-				args.append(nargs);
-				endInsertRows();
-			}
-		} else {
-			RK_ASSERT(false);
-		}
-		r_completions_function = nullptr;
-	});
-	RInterface::issueCommand(command);
+	if (n_completions != matches.size()) {
+		beginInsertRows(index(0, 0), n_completions, matches.size());
+		n_completions = matches.size();
+		endInsertRows();
+		manager->modelGainedLateData(this);
+	}
 }
 
 QVariant RKArgumentHintModel::data (const QModelIndex& index, int role) const {
@@ -1007,7 +986,7 @@ bool RKFileCompletionModel::partialCompletion(QString *comp, bool* exact) {
 
 
 
-RKDynamicCompletionsAddition::RKDynamicCompletionsAddition(RKCodeCompletionModel *parent) : QObject(parent) {
+RKDynamicCompletionsAddition::RKDynamicCompletionsAddition(RKCompletionModelBase *parent) : QObject(parent) {
 	RK_TRACE(COMMANDEDITOR);
 	status = Ready;
 }
