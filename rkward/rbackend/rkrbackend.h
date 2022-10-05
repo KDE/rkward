@@ -215,8 +215,10 @@ private:
 	void connectCallbacks ();
 
 	QString output_file;
-/** A copy of the names of the toplevel environments (as returned by "search ()"). */
+/** A copy of the names of the toplevel environments (as returned by "search()"). */
 	QStringList toplevel_env_names;
+/** A copy of the names of "loadedNamespaces()"). */
+	QStringList loaded_namespaces;
 /** check whether the object list / global environment / individual symbols have changed, and updates them, if needed */
 	void checkObjectUpdatesNeeded (bool check_list);
 friend void doPendingPriorityCommands ();

@@ -1,3 +1,4 @@
+- Changed default behavior (new installations, only): Up/down without alt navigate completion items if visible in console/editor
 - Fixed: Backend failed to start when installed in a path with spaces on Windows volumes without 8.3 support
 - Fixed: Trying to restart backend could cause a hang, on Windows
 - Fixed: In corner cases, cancelling commands could lead to a lockup
@@ -14,6 +15,7 @@
 - Fixed: Fix zooming help/output pages with Ctrl+scroll wheel, when compiled with QWebEngine
 - Fixed: Fix problem handling rkward:// links from dialogs on some sytems
 - Fixed: Fix object name completion for (irregular) names starting with numbers or underscores
+- Added: R's dynamic completions (importantly for ":::", "?", and "@") are merged into the already provided completions
 - Added: Provide tooltips on symbols in scripts and R console
 - Added: Many new basic and advanced R, R Markdown and LaTeX snippets
 			- Complex R Markdown template part of the snippets

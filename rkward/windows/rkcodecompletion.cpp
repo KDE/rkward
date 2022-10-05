@@ -22,6 +22,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../core/rfunctionobject.h"
 #include "../core/robjectlist.h"
 #include "../settings/rksettingsmodulecommandeditor.h"
+#include "../rbackend/rcommand.h"
+#include "../rbackend/rkrinterface.h"
 
 #include "../debug.h"
 
@@ -157,6 +159,7 @@ void RKCompletionManager::tryCompletion () {
 	int end;
 	RKCommonFunctions::getCurrentSymbolOffset (current_line, cursor_pos-1, false, &start, &end);
 	symbol_range = KTextEditor::Range (para, start, para, end);
+	bool is_help = (start >= 1) && (current_line.at(start-1) == '?');
 	if (!user_triggered) {
 		if (end > cursor_pos) {
 			symbol_range = KTextEditor::Range ();   // Only hint when at the end of a word/symbol: https://mail.kde.org/pipermail/rkward-devel/2015-April/004122.html
@@ -175,11 +178,11 @@ void RKCompletionManager::tryCompletion () {
 			word.clear ();
 		}
 
-		completion_model->updateCompletionList (word);
-		file_completion_model->updateCompletionList (filename);
+		completion_model->updateCompletionList(word, is_help);
+		file_completion_model->updateCompletionList(filename);
 	} else {
-		completion_model->updateCompletionList (QString ());
-		file_completion_model->updateCompletionList (QString ());
+		completion_model->updateCompletionList(QString(), false);
+		file_completion_model->updateCompletionList(QString());
 	}
 	RK_DEBUG(EDITOR, DL_DEBUG, "completion symbol range %d, %d -> %d, %d", symbol_range.start().line(), symbol_range.start().column(), symbol_range.end().line(), symbol_range.end().column());
 
@@ -280,43 +283,47 @@ void RKCompletionManager::updateCallHint () {
 	callhint_model->setFunction (object);
 }
 
-void startModel (KTextEditor::CodeCompletionInterface* iface, KTextEditor::CodeCompletionModel *model, bool start, const KTextEditor::Range &range, QList<KTextEditor::CodeCompletionModel*> *active_models) {
+void RKCompletionManager::startModel( KTextEditor::CodeCompletionModel *model, bool start, const KTextEditor::Range &range) {
 	if (start) {
-		if (model->rowCount () == 0) start = false;
-		if (!range.isValid ()) start = false;
+		if (!range.isValid()) start = false;
 	}
 	if (start) {
-		if (!active_models->contains (model)) {
-			iface->startCompletion (range, model);
-			active_models->append (model);
+		if (!started_models.contains (model)) {
+			cc_iface->startCompletion (range, model);
+			started_models.append (model);
+			auto ci = dynamic_cast<KTextEditor::CodeCompletionModelControllerInterface*>(model);
+			model_filters.insert(model, ci ? ci->filterString(view(), range, view()->cursorPosition()) : QString());
 		}
 	} else {
-		active_models->removeAll (model);
+		started_models.removeAll (model);
 	}
 }
 
 void RKCompletionManager::updateVisibility () {
 	RK_TRACE (COMMANDEDITOR);
 
-	if (user_triggered || !cc_iface->isCompletionActive ()) {
-		active_models.clear ();
+	if (user_triggered || !cc_iface->isCompletionActive()) {
+		started_models.clear ();
 	}
 
-	bool min_len = (currentCompletionWord ().length () >= settings->autoMinChars ()) || user_triggered;
-	startModel (cc_iface, completion_model, min_len && settings->isEnabled (RKCodeCompletionSettings::Object), symbol_range, &active_models);
-	startModel (cc_iface, file_completion_model, min_len && settings->isEnabled (RKCodeCompletionSettings::Filename), symbol_range, &active_models);
-	if (kate_keyword_completion_model && settings->isEnabled (RKCodeCompletionSettings::AutoWord)) {
+	bool min_len = (currentCompletionWord().length() >= settings->autoMinChars()) || user_triggered;
+	startModel(completion_model, min_len && settings->isEnabled(RKCodeCompletionSettings::Object), symbol_range);
+	startModel(file_completion_model, min_len && settings->isEnabled(RKCodeCompletionSettings::Filename), symbol_range);
+	if (kate_keyword_completion_model && settings->isEnabled(RKCodeCompletionSettings::AutoWord)) {
 		// Model needs to update, first, as we have not handled it in tryCompletion:
-		if (min_len) kate_keyword_completion_model->completionInvoked (view (), symbol_range, KTextEditor::CodeCompletionModel::ManualInvocation);
-		startModel (cc_iface, kate_keyword_completion_model, min_len, symbol_range, &active_models);
+		if (min_len) kate_keyword_completion_model->completionInvoked(view(), symbol_range, KTextEditor::CodeCompletionModel::ManualInvocation);
+		startModel(kate_keyword_completion_model, min_len, symbol_range);
 	}
 // NOTE: Freaky bug in KF 5.44.0: Call hint will not show for the first time, if logically above the primary screen. TODO: provide patch for kateargumenthinttree.cpp:166pp
-	startModel (cc_iface, callhint_model, checkSaneVersion() && settings->isEnabled (RKCodeCompletionSettings::Calltip), currentCallRange (), &active_models);
-	startModel (cc_iface, arghint_model, min_len && settings->isEnabled (RKCodeCompletionSettings::Arghint), argname_range, &active_models);
+	startModel(callhint_model, checkSaneVersion() && settings->isEnabled(RKCodeCompletionSettings::Calltip), currentCallRange());
+	startModel(arghint_model, settings->isEnabled(RKCodeCompletionSettings::Arghint), argname_range);
+}
 
-	if (active_models.isEmpty ()) {
-		cc_iface->abortCompletion ();
-	}
+void RKCompletionManager::modelGainedLateData(RKCompletionModelBase* model) {
+	RK_TRACE (COMMANDEDITOR);
+
+	RK_ASSERT(started_models.removeAll(model)); // should have been started before, thus be in the list
+	startModel(model, true, model->completionRange(view(), view()->cursorPosition()));
 }
 
 void RKCompletionManager::textInserted (KTextEditor::Document*, const KTextEditor::Cursor& position, const QString& text) {
@@ -362,6 +369,22 @@ KTextEditor::Range RKCompletionManager::currentCallRange () const {
 	return KTextEditor::Range (call_opening, _view->cursorPosition ());
 }
 
+bool isModelEmpty(KTextEditor::CodeCompletionModel* model, const QString &filter) {
+	int rootcount = model->rowCount();
+	for (int i = 0; i < rootcount; ++i) {
+		auto pindex = model->index(i, 0, QModelIndex());
+		if (model->hasGroups()) {
+			int groupcount = model->rowCount(pindex);
+			for (int j = 0; j < groupcount; ++j) {
+				if (model->index(j, KTextEditor::CodeCompletionModel::Name, pindex).data().toString().startsWith(filter)) return false;
+			}
+		} else {
+			if (model->index(i, KTextEditor::CodeCompletionModel::Name, QModelIndex()).data().toString().startsWith(filter)) return false;
+		}
+	}
+	return true;
+}
+
 bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 	if (event->type () == QEvent::KeyPress || event->type () == QEvent::ShortcutOverride) {
 		RK_TRACE (COMMANDEDITOR);	// avoid loads of empty traces, putting this here
@@ -377,12 +400,21 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 		}
 
 		// If only the calltip is active, make sure the tab-key and enter behave as a regular keys. There is no completion in this case.
-		if (active_models.count () == 1 && active_models[0] == callhint_model) {
-			if (((k->key() == Qt::Key_Tab) || (k->key() == Qt::Key_Return) || (k->key() == Qt::Key_Enter)) || (k->key() == Qt::Key_Backtab) || (k->key() == Qt::Key_Up) || (k->key() == Qt::Key_Down)) {
-				completion_timer->start(0);
-				cc_iface->abortCompletion(); // That's a bit lame, but the least hacky way to get the key into the document. completion_timer was started, so
-				                             // the completion window should come back up, without delay
-				return false;
+		if (started_models.value(0) == callhint_model) {
+			if ((k->key() == Qt::Key_Tab) || (k->key() == Qt::Key_Return) || (k->key() == Qt::Key_Enter) || (k->key() == Qt::Key_Backtab) || (k->key() == Qt::Key_Up) || (k->key() == Qt::Key_Down)) {
+				bool allempty = true;
+				for (int i = 1; i < started_models.size(); ++i) {
+					if (!isModelEmpty(started_models[i], model_filters[started_models[i]])) {
+						allempty = false;
+						break;
+					}
+				}
+				if (allempty) {
+					completion_timer->start(0);
+					cc_iface->abortCompletion(); // That's a bit lame, but the least hacky way to get the key into the document. completion_timer was started, so
+								// the completion window should come back up, without delay
+					return false;
+				}
 			}
 		}
 
@@ -392,8 +424,9 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 				return true;
 			}
 			cc_iface->forceCompletion();
-// TODO: If nothing was actually modified, should return press should be sent? Configurable?
+// TODO: If nothing was actually modified, should return press be sent? Configurable?
 			if (settings->autoEnabled ()) ignore_next_trigger = true;
+// TODO: not good: Also hides the calltip. Instead, perhaps, if all a model contains is a single exact match, it should auto-hide
 			return true;
 		}
 
@@ -405,27 +438,25 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 			bool exact = false;
 			QString comp;
 			bool handled = false;
-			if (active_models.contains (arghint_model)) {
-				comp = arghint_model->partialCompletion (&exact);
+			if (started_models.contains(arghint_model) && arghint_model->partialCompletion(&comp, &exact)) {
 				handled = true;
-			} else if (active_models.contains (completion_model)) {
-				comp = completion_model->partialCompletion (&exact);
+			} else if (started_models.contains(completion_model) && completion_model->partialCompletion(&comp, &exact)) {
 				handled = true;
-			} else if (active_models.contains (file_completion_model)) {
-				comp = file_completion_model->partialCompletion (&exact);
+			} else if (started_models.contains(file_completion_model) && file_completion_model->partialCompletion(&comp, &exact)) {
 				handled = true;
 			}
 
 			if (handled) {
-				RK_DEBUG(COMMANDEDITOR, DL_DEBUG, "Tab completion: %s", qPrintable (comp));
+				RK_DEBUG(COMMANDEDITOR, DL_WARNING, "Tab completion: %s, %d", qPrintable (comp), k->type());
 				if (k->type () == QEvent::ShortcutOverride) {
 					// Too bad for all the duplicate work, but the event will re-trigger as a keypress event, and we need to intercept that one, too.
 					return true;
 				}
 				view ()->document ()->insertText (view ()->cursorPosition (), comp);
 				if (exact) {
+// TODO: Not good. a) it also kills the callhint, b) Match may have been exact, but an further (longer) match could still exist
 					// Ouch, how messy. We want to make sure completion stops, and is not re-triggered by the insertion, itself
-					active_models.clear ();
+					started_models.clear ();
 					cc_iface->abortCompletion ();
 					if (settings->autoEnabled ()) ignore_next_trigger = true;
 				}
@@ -512,13 +543,15 @@ void RKCompletionModelBase::executeCompletionItem (KTextEditor::View *view, cons
 
 RKCodeCompletionModel::RKCodeCompletionModel (RKCompletionManager *manager) : RKCompletionModelBase (manager) {
 	RK_TRACE (COMMANDEDITOR);
+	rcompletions = new RKDynamicCompletionsAddition(this);
+	connect(rcompletions, &RKDynamicCompletionsAddition::resultsComplete, this, &RKCodeCompletionModel::addRCompletions);
 }
 
 RKCodeCompletionModel::~RKCodeCompletionModel () {
 	RK_TRACE (COMMANDEDITOR);
 }
 
-void RKCodeCompletionModel::updateCompletionList (const QString& symbol) {
+void RKCodeCompletionModel::updateCompletionList(const QString& symbol, bool is_help) {
 	RK_TRACE (COMMANDEDITOR);
 
 	if (current_symbol == symbol) return;	// already up to date
@@ -532,17 +565,55 @@ void RKCodeCompletionModel::updateCompletionList (const QString& symbol) {
 
 	// copy the map to two lists. For one thing, we need an int indexable storage, for another, caching this information is safer
 	// in case objects are removed while the completion mode is active.
-	n_completions = matches.size ();
-	icons.clear ();
-	icons.reserve (n_completions);
+	n_completions = matches.size();
+	icons.clear();
+	icons.reserve(n_completions);
+	shortnames.clear();
+	shortnames.reserve(n_completions);
 	names = RObject::getFullNames (matches, RKSettingsModuleCommandEditor::completionSettings()->options());  // NOTE: Intentionally using the script editor completion settings object, here. the completion options are shared with the console!
 	for (int i = 0; i < n_completions; ++i) {
 		icons.append (RKStandardIcons::iconForObject (matches[i]));
+		shortnames.append(matches[i]->getShortName());
+	}
+
+	if ((objectpath.size() == 2 || objectpath.size() == 3) && objectpath.at(1).startsWith("::")) {
+		rcompletions->update(objectpath.at(1), objectpath.at(0), objectpath.value(2), shortnames);
+	} else if (is_help) {
+		rcompletions->update("?", symbol, symbol, shortnames);
+	} else if (objectpath.size() > 1) {
+		QString op = objectpath.at(objectpath.size() - 1 - objectpath.size() % 2);
+		QString start = objectpath.at(objectpath.size() - 2 - objectpath.size() % 2);
+		if (op == "$" || op == "@") {
+			rcompletions->update(op, start, objectpath.size() % 2 ? objectpath.last() : QString(), shortnames);
+		}
 	}
 
 	current_symbol = symbol;
 
 	endResetModel ();
+}
+
+void RKCodeCompletionModel::addRCompletions() {
+	RK_TRACE (COMMANDEDITOR);
+
+	QStringList addlist = rcompletions->results();
+	if (addlist.isEmpty()) return;
+	bool help_mode = (rcompletions->mode() == "?");
+	beginInsertRows(index(0, 0), n_completions, n_completions + addlist.size());
+	n_completions += addlist.size();
+	for (int i = 0; i < addlist.size(); ++i) {
+		if (help_mode) {
+			names.append(addlist.at(i));
+			shortnames.append(addlist.at(i));
+			icons.append(RKStandardIcons::getIcon(RKStandardIcons::WindowHelp));
+		} else {
+			names.append(rcompletions->fragment() + rcompletions->mode() + addlist.at(i));
+			shortnames.append(addlist.at(i));
+			icons.append(RKStandardIcons::getIcon(RKStandardIcons::WindowConsole));
+		}
+	}
+	endInsertRows();
+	manager->modelGainedLateData(this);
 }
 
 KTextEditor::Range RKCodeCompletionModel::completionRange (KTextEditor::View *, const KTextEditor::Cursor&) {
@@ -577,7 +648,7 @@ QVariant RKCodeCompletionModel::data (const QModelIndex& index, int role) const 
 	return QVariant ();
 }
 
-QString findCommonCompletion (const QStringList &list, const QString &lead, bool *exact_match) {
+bool findCommonCompletion (QString *comp, const QStringList &list, const QString &lead, bool *exact_match) {
 	RK_TRACE (COMMANDEDITOR);
 	RK_DEBUG(COMMANDEDITOR, DL_DEBUG, "Looking for common completion among set of %d, starting with %s", list.size (), qPrintable (lead));
 
@@ -601,7 +672,7 @@ QString findCommonCompletion (const QStringList &list, const QString &lead, bool
 			for (int c = 0; c < ret.length(); ++c) {
 				if (ret[c] != candidate[c]) {
 					*exact_match = false;
-					if (!c) return QString ();
+					if (!c) return true; // it was still a match, even if we cannot complete anything
 
 					ret = ret.left (c);
 					break;
@@ -610,27 +681,22 @@ QString findCommonCompletion (const QStringList &list, const QString &lead, bool
 		}
 	}
 
-	return ret;
+	*comp = ret;
+	return !first;  // at least one matching candidate was found
 }
 
-QString RKCodeCompletionModel::partialCompletion (bool* exact_match) {
+bool RKCodeCompletionModel::partialCompletion(QString *comp, bool* exact_match) {
 	RK_TRACE (COMMANDEDITOR);
 
 	// Here, we need to do completion on the *last* portion of the object-path, only, so we will be able to complete "obj" to "object", even if "object" is present as
 	// both packageA::object and packageB::object.
 	// Thus as a first step, we look up the short names. We do this, lazily, as this function is only called on demand.
 	QStringList objectpath = RObject::parseObjectPath (current_symbol);
-	if (objectpath.isEmpty () || objectpath[0].isEmpty ()) return (QString ());
-	RObject::ObjectList matches = RObjectList::getObjectList ()->findObjectsMatching (current_symbol);
+	if (objectpath.isEmpty() || objectpath[0].isEmpty()) return (false);
+	QString lead = objectpath.last();
+	if (!shortnames.value(0).startsWith(lead)) lead.clear ();  // This could happen if the current path ends with '$', for instance
 
-	QStringList shortnames;
-	for (int i = 0; i < matches.count (); ++i) {
-		shortnames.append (matches[i]->getShortName ());
-	}
-	QString lead = objectpath.last ();
-	if (!shortnames.value (0).startsWith (lead)) lead.clear ();  // This could happen if the current path ends with '$', for instance
-
-	return (findCommonCompletion (shortnames, lead, exact_match));
+	return findCommonCompletion(comp, shortnames, lead, exact_match);
 }
 
 
@@ -718,7 +784,9 @@ KTextEditor::Range RKCallHintModel::completionRange (KTextEditor::View *, const 
 RKArgumentHintModel::RKArgumentHintModel (RKCompletionManager* manager) : RKCompletionModelBase (manager) {
 	RK_TRACE (COMMANDEDITOR);
 
-	function = 0;
+	function = nullptr;
+	rcompletions = new RKDynamicCompletionsAddition(this);
+	connect(rcompletions, &RKDynamicCompletionsAddition::resultsComplete, this, &RKArgumentHintModel::addRCompletions);
 }
 
 void RKArgumentHintModel::updateCompletionList (RObject* _function, const QString &argument) {
@@ -733,10 +801,13 @@ void RKArgumentHintModel::updateCompletionList (RObject* _function, const QStrin
 			// initialize hint
 			RFunctionObject *fo = static_cast<RFunctionObject*> (function);
 			args = fo->argumentNames ();
+			n_formals_args = args.size();
 			defs = fo->argumentDefaults ();
+			rcompletions->update("funargs", function->getShortName(), QString(), args);
 		} else {
 			args.clear ();
 			defs.clear ();
+			n_formals_args = 0;
 		}
 	}
 
@@ -757,6 +828,23 @@ void RKArgumentHintModel::updateCompletionList (RObject* _function, const QStrin
 	if (changed) {
 		n_completions = matches.size ();
 		endResetModel ();
+	}
+}
+
+
+void RKArgumentHintModel::addRCompletions() {
+	RK_TRACE (COMMANDEDITOR);
+
+	QStringList addlist = rcompletions->results();
+	args += addlist;
+	for (int i = 0; i < addlist.size (); ++i) {
+		if (addlist[i].startsWith(fragment)) matches.append(n_completions + i);
+	}
+	if (n_completions != matches.size()) {
+		beginInsertRows(index(0, 0), n_completions, matches.size());
+		n_completions = matches.size();
+		endInsertRows();
+		manager->modelGainedLateData(this);
 	}
 }
 
@@ -781,6 +869,7 @@ QVariant RKArgumentHintModel::data (const QModelIndex& index, int role) const {
 	} else if (role == KTextEditor::CodeCompletionModel::CompletionRole) {
 		return KTextEditor::CodeCompletionModel::Function;
 	} else if (role == KTextEditor::CodeCompletionModel::MatchQuality) {
+		if (matches.value(row) >= n_formals_args) return (0);  // Argument names returned from R completion. This could be _lot_ (S3), so lower priority
 		return (20);
 	}
 
@@ -791,10 +880,10 @@ KTextEditor::Range RKArgumentHintModel::completionRange (KTextEditor::View*, con
 	return manager->currentArgnameRange ();
 }
 
-QString RKArgumentHintModel::partialCompletion (bool* exact) {
+bool RKArgumentHintModel::partialCompletion(QString *comp, bool* exact) {
 	RK_TRACE (COMMANDEDITOR);
 
-	return (findCommonCompletion (args, fragment, exact));
+	return findCommonCompletion(comp, args, fragment, exact);
 }
 
 //////////////////////// RKFileCompletionModel ////////////////////
@@ -898,8 +987,75 @@ QVariant RKFileCompletionModel::data (const QModelIndex& index, int role) const 
 	return QVariant ();
 }
 
-QString RKFileCompletionModel::partialCompletion (bool* exact) {
+bool RKFileCompletionModel::partialCompletion(QString *comp, bool* exact) {
 	RK_TRACE (COMMANDEDITOR);
 
-	return (findCommonCompletion (names, current_fragment, exact));
+	return findCommonCompletion(comp, names, current_fragment, exact);
+}
+
+
+
+RKDynamicCompletionsAddition::RKDynamicCompletionsAddition(RKCompletionModelBase *parent) : QObject(parent) {
+	RK_TRACE(COMMANDEDITOR);
+	status = Ready;
+}
+
+RKDynamicCompletionsAddition::~RKDynamicCompletionsAddition() {
+	RK_TRACE(COMMANDEDITOR);
+}
+
+void RKDynamicCompletionsAddition::update(const QString &mode, const QString &fragment, const QString &filterprefix, const QStringList &filterlist) {
+	RK_TRACE(COMMANDEDITOR);
+
+	if ((mode != current_mode) || (fragment != current_fragment)) {
+		current_mode = mode;
+		current_fragment = fragment;
+		doUpdateFromR();
+	}
+	if (filterprefix != current_filterprefix || filterlist != current_filterlist) {
+		current_filterprefix = filterprefix;
+		current_filterlist = filterlist;
+		if (status == Ready) filterResults(); // no update was triggered, above, need to update filter, manually
+	}
+	if (status == Ready) emit resultsComplete();
+}
+
+void RKDynamicCompletionsAddition::doUpdateFromR() {
+	RK_TRACE(COMMANDEDITOR);
+	if (status != Ready) {
+		status = PendingUpdate;
+		return;
+	}
+
+	status = Updating;
+	RCommand *command = new RCommand(QString("rkward:::.rk.completions(%1, \"%2\")").arg(RObject::rQuote(current_fragment), current_mode), RCommand::Sync | RCommand::PriorityCommand | RCommand::GetStringVector);
+	command->whenFinished(this, [this](RCommand *command) {
+		if (status == PendingUpdate) {
+			QTimer::singleShot(0, this, &RKDynamicCompletionsAddition::doUpdateFromR);
+			return;
+		}
+		if (command->getDataType() == RCommand::StringVector) {
+			QStringList nargs;
+			current_raw_resultlist = command->stringVector();
+		} else {
+			RK_ASSERT(false);
+		}
+		filterResults();
+		status = Ready;
+		emit resultsComplete();
+	});
+	RInterface::issueCommand(command);
+}
+
+void RKDynamicCompletionsAddition::filterResults() {
+	RK_TRACE(COMMANDEDITOR);
+
+	QStringList res;
+	for (int i = 0; i < current_raw_resultlist.size(); ++i) {
+		const auto item = current_raw_resultlist.at(i);
+		if (!item.startsWith(current_filterprefix)) continue;
+		if (current_filterlist.contains(item)) continue;
+		res.append(item);
+	}
+	filtered_results = res;
 }
