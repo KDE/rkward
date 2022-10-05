@@ -565,20 +565,27 @@ void RKCodeCompletionModel::updateCompletionList(const QString& symbol, bool is_
 
 	// copy the map to two lists. For one thing, we need an int indexable storage, for another, caching this information is safer
 	// in case objects are removed while the completion mode is active.
-	n_completions = matches.size ();
-	icons.clear ();
-	icons.reserve (n_completions);
+	n_completions = matches.size();
+	icons.clear();
+	icons.reserve(n_completions);
+	shortnames.clear();
+	shortnames.reserve(n_completions);
 	names = RObject::getFullNames (matches, RKSettingsModuleCommandEditor::completionSettings()->options());  // NOTE: Intentionally using the script editor completion settings object, here. the completion options are shared with the console!
 	for (int i = 0; i < n_completions; ++i) {
 		icons.append (RKStandardIcons::iconForObject (matches[i]));
+		shortnames.append(matches[i]->getShortName());
 	}
 
-	if ((objectpath.size() == 2 || objectpath.size() == 3) && objectpath.at(1) == ":::") {
-		QStringList shortnames;
-		for (int i = 0; i < matches.count(); ++i) {
-			shortnames.append(matches[i]->getShortName());
+	if ((objectpath.size() == 2 || objectpath.size() == 3) && objectpath.at(1).startsWith("::")) {
+		rcompletions->update(objectpath.at(1), objectpath.at(0), objectpath.value(2), shortnames);
+	} else if (is_help) {
+		rcompletions->update("?", symbol, symbol, shortnames);
+	} else if (objectpath.size() > 1) {
+		QString op = objectpath.at(objectpath.size() - 1 - objectpath.size() % 2);
+		QString start = objectpath.at(objectpath.size() - 2 - objectpath.size() % 2);
+		if (op == "$" || op == "@") {
+			rcompletions->update(op, start, objectpath.size() % 2 ? objectpath.last() : QString(), shortnames);
 		}
-		rcompletions->update(":::", objectpath.at(0), objectpath.value(2), shortnames);
 	}
 
 	current_symbol = symbol;
@@ -591,11 +598,19 @@ void RKCodeCompletionModel::addRCompletions() {
 
 	QStringList addlist = rcompletions->results();
 	if (addlist.isEmpty()) return;
+	bool help_mode = (rcompletions->mode() == "?");
 	beginInsertRows(index(0, 0), n_completions, n_completions + addlist.size());
 	n_completions += addlist.size();
 	for (int i = 0; i < addlist.size(); ++i) {
-		names.append(rcompletions->fragment() + rcompletions->mode() + addlist.at(i));
-		icons.append(RKStandardIcons::getIcon(RKStandardIcons::WindowConsole));
+		if (help_mode) {
+			names.append(addlist.at(i));
+			shortnames.append(addlist.at(i));
+			icons.append(RKStandardIcons::getIcon(RKStandardIcons::WindowHelp));
+		} else {
+			names.append(rcompletions->fragment() + rcompletions->mode() + addlist.at(i));
+			shortnames.append(addlist.at(i));
+			icons.append(RKStandardIcons::getIcon(RKStandardIcons::WindowConsole));
+		}
 	}
 	endInsertRows();
 	manager->modelGainedLateData(this);
@@ -677,15 +692,9 @@ bool RKCodeCompletionModel::partialCompletion(QString *comp, bool* exact_match) 
 	// both packageA::object and packageB::object.
 	// Thus as a first step, we look up the short names. We do this, lazily, as this function is only called on demand.
 	QStringList objectpath = RObject::parseObjectPath (current_symbol);
-	if (objectpath.isEmpty () || objectpath[0].isEmpty()) return (false);
-	RObject::ObjectList matches = RObjectList::getObjectList ()->findObjectsMatching (current_symbol);
-
-	QStringList shortnames;
-	for (int i = 0; i < matches.count (); ++i) {
-		shortnames.append (matches[i]->getShortName ());
-	}
-	QString lead = objectpath.last ();
-	if (!shortnames.value (0).startsWith (lead)) lead.clear ();  // This could happen if the current path ends with '$', for instance
+	if (objectpath.isEmpty() || objectpath[0].isEmpty()) return (false);
+	QString lead = objectpath.last();
+	if (!shortnames.value(0).startsWith(lead)) lead.clear ();  // This could happen if the current path ends with '$', for instance
 
 	return findCommonCompletion(comp, shortnames, lead, exact_match);
 }

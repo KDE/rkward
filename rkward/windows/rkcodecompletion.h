@@ -124,6 +124,7 @@ public:
 private:
 	QList<QIcon> icons;
 	QStringList names;
+	QStringList shortnames;
 	QString current_symbol;
 	void fetchRCompletions();
 	QString r_base_symbol;
