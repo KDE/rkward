@@ -107,19 +107,34 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : QWidget (parent) {
 	connect (RKWardMainWindow::getMain (), &RKWardMainWindow::aboutToQuitRKWard, this, &RKFileBrowserWidget::saveConfig);
 	layout->addWidget (dir);
 
+#if KIO_VERSION < QT_VERSION_CHECK(5, 100, 0)
 	toolbar->addAction (dir->actionCollection ()->action ("up"));
 	toolbar->addAction (dir->actionCollection ()->action ("back"));
 	toolbar->addAction (dir->actionCollection ()->action ("forward"));
 	toolbar->addAction (dir->actionCollection ()->action ("home"));
+#else
+	toolbar->addAction (dir->action (KDirOperator::Up));
+	toolbar->addAction (dir->action (KDirOperator::Back));
+	toolbar->addAction (dir->action (KDirOperator::Forward));
+	toolbar->addAction (dir->action (KDirOperator::Home));
+#endif
+
 	QAction* action = new QAction (QIcon::fromTheme ("folder-sync"), i18n ("Working directory"), this);
 	action->setToolTip (action->text ());
 	connect(action, &QAction::triggered, this, [=] () { follow_working_directory = true; syncToWD(); });
 	toolbar->addAction (action);
 	toolbar->addSeparator ();
+#if KIO_VERSION < QT_VERSION_CHECK(5, 100, 0)
 	toolbar->addAction (dir->actionCollection ()->action ("short view"));
 	toolbar->addAction (dir->actionCollection ()->action ("tree view"));
 	toolbar->addAction (dir->actionCollection ()->action ("detailed view"));
 //	toolbar->addAction (dir->actionCollection ()->action ("detailed tree view"));	// should we have this as well? Trying to avoid crowding in the toolbar
+#else
+	toolbar->addAction (dir->action (KDirOperator::ShortView));
+	toolbar->addAction (dir->action (KDirOperator::TreeView));
+	toolbar->addAction (dir->action (KDirOperator::DetailedView));
+//	toolbar->addAction (dir->action (KDirOperator::DetailedTreeView));	// should we have this as well? Trying to avoid crowding in the toolbar
+#endif
 
 	fi_actions = new KFileItemActions (this);
 	rename_action = new QAction (i18n ("Rename"), this);  // Oh my, why isn't there a standard action for this?
