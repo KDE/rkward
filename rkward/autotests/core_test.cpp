@@ -87,6 +87,14 @@ class RKWardCoreTest: public QObject {
 		RInterface::issueCommand(new RCommand("rm(list=ls(all.names=TRUE))", RCommand::User));
 	}
 
+	void listBackendLog() {
+		testLog("Listing contents of /tmp/rkward.rbackend");
+		QFile f(QDir::tempPath() + "/rkward.rbackend");
+		f.open(QIODevice::ReadOnly);
+		auto output = f.readAll();
+		testLog("%s", output.data());
+	}
+
 	void waitForBackendStarted() {
 		QElapsedTimer t;
 		t.start();
@@ -97,11 +105,8 @@ class RKWardCoreTest: public QObject {
 		if (RInterface::instance()->backendIsIdle()) {
 			testLog("Backend startup completed");
 		} else {
-			testLog("Backend startup failed. Listing contents of /tmp/rkward.rbackend");
-			QFile f(QDir::tempPath() + "/rkward.rbackend");
-			f.open(QIODevice::ReadOnly);
-			auto output = f.readAll();
-			testLog("%s", output.data());
+			testLog("Backend startup failed");
+			listBackendLog();
 		}
 	}
 
@@ -252,8 +257,16 @@ private slots:
 			if (i % 4 == 0) {
 				RInterface::instance()->cancelAll();
 			} else if (i % 4 == 1) {
+				QElapsedTimer t;
+				t.start();
 				while (commands_out <= i) {
 					qApp->processEvents();
+					if (t.elapsed() > 10000) {
+						testLog("Timeout waiting for backend");
+						listBackendLog();
+						QFAIL("Timeout waiting for backend");
+						break;
+					}
 				}
 			} else if (i % 4 == 2) {
 				qApp->processEvents();
