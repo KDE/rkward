@@ -79,7 +79,7 @@ class RKWardCoreTest: public QObject {
 		RInterface::issueCommand(command, chain);
 	}
 
-	void waitForAllFinished(int timeoutms = 1000) {
+	void waitForAllFinished(int timeoutms = 2000) {
 		runCommandWithTimeout(new RCommand(QString(), RCommand::App | RCommand::EmptyCommand | RCommand::Sync), nullptr, [](RCommand*){}, timeoutms);
 	}
 
