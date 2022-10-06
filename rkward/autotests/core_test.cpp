@@ -307,6 +307,7 @@ private slots:
 		while (oldiface) {  // action may be delayed until next event processing
 			qApp->processEvents();
 		}
+		testLog("Backend is restarting");
 		waitForBackendStarted();
 
 		// backend should be clean after restart
