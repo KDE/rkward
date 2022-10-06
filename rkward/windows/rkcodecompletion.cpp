@@ -385,6 +385,17 @@ bool isModelEmpty(KTextEditor::CodeCompletionModel* model, const QString &filter
 	return true;
 }
 
+bool RKCompletionManager::onlyCallHintShown() const {
+	for (int i = 0; i < started_models.size(); ++i) {
+		auto model = started_models[i];
+		if (model == callhint_model) continue;
+		if (!isModelEmpty(model, model_filters[model])) {
+			return false;
+		}
+	}
+	return true;
+}
+
 bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 	if (event->type () == QEvent::KeyPress || event->type () == QEvent::ShortcutOverride) {
 		RK_TRACE (COMMANDEDITOR);	// avoid loads of empty traces, putting this here
@@ -400,21 +411,12 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 		}
 
 		// If only the calltip is active, make sure the tab-key and enter behave as a regular keys. There is no completion in this case.
-		if (started_models.value(0) == callhint_model) {
-			if ((k->key() == Qt::Key_Tab) || (k->key() == Qt::Key_Return) || (k->key() == Qt::Key_Enter) || (k->key() == Qt::Key_Backtab) || (k->key() == Qt::Key_Up) || (k->key() == Qt::Key_Down)) {
-				bool allempty = true;
-				for (int i = 1; i < started_models.size(); ++i) {
-					if (!isModelEmpty(started_models[i], model_filters[started_models[i]])) {
-						allempty = false;
-						break;
-					}
-				}
-				if (allempty) {
-					completion_timer->start(0);
-					cc_iface->abortCompletion(); // That's a bit lame, but the least hacky way to get the key into the document. completion_timer was started, so
-								// the completion window should come back up, without delay
-					return false;
-				}
+		if ((k->key() == Qt::Key_Tab) || (k->key() == Qt::Key_Return) || (k->key() == Qt::Key_Enter) || (k->key() == Qt::Key_Backtab) || (k->key() == Qt::Key_Up) || (k->key() == Qt::Key_Down)) {
+			if (onlyCallHintShown()) {
+				completion_timer->start(0);
+				cc_iface->abortCompletion(); // That's a bit lame, but the least hacky way to get the key into the document. completion_timer was started, so
+							// the completion window should come back up, without delay
+				return false;
 			}
 		}
 
@@ -423,10 +425,12 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 				// Too bad for all the duplicate work, but the event will re-trigger as a keypress event, and we need to intercept that one, too.
 				return true;
 			}
+			bool callhint_active = started_models.contains(callhint_model);
 			cc_iface->forceCompletion();
+			started_models.clear();  // forceCompletion(), also aborts. Keep track of that.
 // TODO: If nothing was actually modified, should return press be sent? Configurable?
-			if (settings->autoEnabled ()) ignore_next_trigger = true;
-// TODO: not good: Also hides the calltip. Instead, perhaps, if all a model contains is a single exact match, it should auto-hide
+			completion_timer->stop();  // do not bring up completion right again, but do restore the call-hint, if applicable
+			if (callhint_active) startModel(callhint_model, true, currentCallRange());
 			return true;
 		}
 
@@ -454,11 +458,13 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 				}
 				view ()->document ()->insertText (view ()->cursorPosition (), comp);
 				if (exact) {
-// TODO: Not good. a) it also kills the callhint, b) Match may have been exact, but an further (longer) match could still exist
-					// Ouch, how messy. We want to make sure completion stops, and is not re-triggered by the insertion, itself
-					started_models.clear ();
+					// TODO: Not entirely good: Match may have been exact, but a further (longer) match could still exist
+					// Ouch, how messy. We want to make sure completion stops (except for any call hints), and is not re-triggered by the insertion, itself
+					bool callhint_active = started_models.contains(callhint_model);
 					cc_iface->abortCompletion ();
-					if (settings->autoEnabled ()) ignore_next_trigger = true;
+					started_models.clear ();
+					completion_timer->stop();
+					if (callhint_active) startModel(callhint_model, true, currentCallRange());
 				}
 				else if (comp.isEmpty ()) {
 					QApplication::beep (); // TODO: unfortunately, we catch *two* tab events, so this is not good, yet

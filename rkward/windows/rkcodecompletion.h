@@ -52,6 +52,7 @@ private slots:
 private:
 	void startModel(KTextEditor::CodeCompletionModel* model, bool start, const KTextEditor::Range &range);
 	void updateVisibility();
+	bool onlyCallHintShown() const;
 	bool eventFilter (QObject *watched, QEvent *event) override;
 /** called whenever it might be appropriate to show a code completion box. The box is not shown immediately, but only after a timeout (if at all) */
 	void tryCompletionProxy ();
