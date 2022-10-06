@@ -134,7 +134,7 @@ bool RKDebugConsole::close (CloseWindowMode ask_save) {
 	RK_TRACE (APP);
 
 	if (RKDebugHandler::instance ()->state () != RKDebugHandler::NotInDebugger) {
-		KMessageBox::sorry (this, i18n ("This window cannot be closed, while a debugger is active. If you have no idea what this means, and you want to get out, press the 'Cancel' button on the right hand side of this window."));
+		KMessageBox::error(this, i18n("This window cannot be closed, while a debugger is active. If you have no idea what this means, and you want to get out, press the 'Cancel' button on the right hand side of this window."));
 		return false;
 	}
 	return RKMDIWindow::close (ask_save);

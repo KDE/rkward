@@ -289,7 +289,7 @@ void RKLoadLibsDialog::runInstallationCommand (const QString& command, bool as_r
 		if (call.isEmpty ()) call = QStandardPaths::findExecutable("kdesudo");
 		if (call.isEmpty ()) call = QStandardPaths::findExecutable("kdesudo", libexecpath);
 		if (call.isEmpty()) {
-			KMessageBox::sorry(this, i18n("Neither kdesu nor kdesudo could be found. To install as root, please install one of these packages."), i18n("kdesu not found"));
+			KMessageBox::error(this, i18n("Neither kdesu nor kdesudo could be found. To install as root, please install one of these packages."), i18n("kdesu not found"));
 			return;
 		}
 
@@ -522,7 +522,7 @@ void LoadUnloadWidget::doLoadUnload () {
 	}
 	if (!packages_to_remove.isEmpty ()) {
 		QStringList messages = RObjectList::getObjectList ()->detachPackages (packages_to_remove, parent->chain, control);
-		if (!messages.isEmpty ()) KMessageBox::sorry (this, messages.join ("\n"));
+		if (!messages.isEmpty ()) KMessageBox::error(this, messages.join("\n"));
 	}
 
 	// find out, when we're done
@@ -768,7 +768,7 @@ void InstallPackagesWidget::trySelectPackages (const QStringList &package_names)
 			}
 		}
 		if (!failed_names.isEmpty()) {
-			KMessageBox::sorry (0, i18n ("The following package(s) requested by the backend have not been found in the package repositories: \"%1\". Maybe the package name was mis-spelled. Or maybe you need to add additional repositories via the \"Configure Repositories\" button.", failed_names.join("\", \"")), i18n ("Package not available"));
+			KMessageBox::error(0, i18n("The following package(s) requested by the backend have not been found in the package repositories: \"%1\". Maybe the package name was mis-spelled. Or maybe you need to add additional repositories via the \"Configure Repositories\" button.", failed_names.join("\", \"")), i18n("Package not available"));
 		}
 	}, parent->chain);
 }

@@ -48,7 +48,7 @@ RKEditorDataFrame::RKEditorDataFrame (const QString& new_object_name, QWidget* p
 	commonInit ();
 
 	QString valid = RObjectList::getGlobalEnv ()->validizeName (new_object_name);
-	if (valid != new_object_name) KMessageBox::sorry (this, i18n ("The name you specified was already in use or not valid. Renamed to %1", valid), i18n ("Invalid Name"));
+	if (valid != new_object_name) KMessageBox::error(this, i18n("The name you specified was already in use or not valid. Renamed to %1", valid), i18n("Invalid Name"));
 
 	RKVarEditDataFrameModel* model = new RKVarEditDataFrameModel (valid, RObjectList::getGlobalEnv (), open_chain, 5, this);
 

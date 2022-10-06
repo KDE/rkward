@@ -462,7 +462,7 @@ bool RKComponentMap::invokeComponent (const QString &component_id, const QString
 	if (!handle) {
 		_message = i18n ("You tried to invoke a plugin called '%1', but that plugin is currently unknown. Probably you need to load the corresponding PluginMap (Settings->Configure RKWard->Plugins), or perhaps the plugin was renamed.", component_id);
 		if (message) *message = _message;
-		else KMessageBox::sorry (RKWardMainWindow::getMain (), _message, i18n ("No such plugin"));
+		else KMessageBox::error(RKWardMainWindow::getMain(), _message, i18n("No such plugin"));
 		return false;
 	}
 
@@ -523,7 +523,7 @@ bool RKComponentMap::invokeComponent (const QString &component_id, const QString
 
 		_message.append (i18n ("\nThe plugin could not be auto-submitted with these settings."));
 		if (message) *message = _message;
-		else KMessageBox::sorry (RKWardMainWindow::getMain (), _message, i18n ("Could not submit"));
+		else KMessageBox::error(RKWardMainWindow::getMain(), _message, i18n("Could not submit"));
 
 		return (submit_mode != AutoSubmitOrFail);
 	}

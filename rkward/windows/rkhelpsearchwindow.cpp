@@ -157,7 +157,7 @@ void RKHelpSearchWindow::getFunctionHelp (const QString &function_name, const QS
 	auto c = new RCommand(command, RCommand::App | RCommand::GetStringVector, i18n("Find HTML help for %1", function_name));
 	c->whenFinished(this, [this](RCommand* command) {
 		if (command->failed ()) {
-			KMessageBox::sorry (this, i18n ("No help found on '%1'. Maybe the corresponding package is not installed/loaded, or maybe you mistyped the command. Try using Help->Search R Help for more options.", command->command ().section ('\"', 1, 1)), i18n ("No help found"));
+			KMessageBox::error(this, i18n("No help found on '%1'. Maybe the corresponding package is not installed/loaded, or maybe you mistyped the command. Try using Help->Search R Help for more options.", command->command().section('\"', 1, 1)), i18n("No help found"));
 		}
 	});
 	RInterface::issueCommand(c);

@@ -536,7 +536,7 @@ RKMDIWindow* RKWorkplace::openOutputWindow(const QUrl &url, bool create) {
 
 	RKOutputDirectoryCallResult res = RKOutputDirectory::get(url.toLocalFile(), create);
 	if (res.failed()) {
-		KMessageBox::sorry(this, i18n("Failed to open output file. Error message was '%1'", res.error));
+		KMessageBox::error(this, i18n("Failed to open output file. Error message was '%1'", res.error));
 		return nullptr;
 	}
 	RK_ASSERT(res.dir());
