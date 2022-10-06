@@ -121,7 +121,7 @@ public:
 
 	void updateCompletionList(const QString& symbol, bool is_help);
 	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const override;
-	bool partialCompletion(QString *comp, bool* exact_match);
+	QStringList rawPartialCompletions() const;
 private:
 	QList<QIcon> icons;
 	QStringList names;
@@ -159,7 +159,7 @@ public:
 
 	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const override;
 	KTextEditor::Range completionRange (KTextEditor::View *view, const KTextEditor::Cursor &position) override;
-	bool partialCompletion(QString *comp, bool *exact);
+	QStringList rawPartialCompletions() const;
 private:
 	RObject *function;
 	QStringList args;
@@ -192,7 +192,7 @@ public:
 	KTextEditor::Range completionRange (KTextEditor::View *view, const KTextEditor::Cursor &position) override;
 	void updateCompletionList (const QString& fragment);
 	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const override;
-	bool partialCompletion(QString *comp, bool *exact);
+	QStringList rawPartialCompletions() const;
 private slots:
 	void completionsReady (const QString &string, const QStringList &exes, const QStringList &files);
 private:

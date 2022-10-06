@@ -291,9 +291,9 @@ void RKCompletionManager::startModel( KTextEditor::CodeCompletionModel *model, b
 		if (!started_models.contains (model)) {
 			cc_iface->startCompletion (range, model);
 			started_models.append (model);
-			auto ci = dynamic_cast<KTextEditor::CodeCompletionModelControllerInterface*>(model);
-			model_filters.insert(model, ci ? ci->filterString(view(), range, view()->cursorPosition()) : QString());
 		}
+		auto ci = dynamic_cast<KTextEditor::CodeCompletionModelControllerInterface*>(model);
+		model_filters.insert(model, ci ? ci->filterString(view(), range, view()->cursorPosition()) : QString());
 	} else {
 		started_models.removeAll (model);
 	}
@@ -369,11 +369,79 @@ KTextEditor::Range RKCompletionManager::currentCallRange () const {
 	return KTextEditor::Range (call_opening, _view->cursorPosition ());
 }
 
+bool modelHasGroups(KTextEditor::CodeCompletionModel *model) {
+	return (model->hasGroups() || (model->rowCount() && model->rowCount(model->index(0,0)))); // kate_keyword_completion_model claims to have no groups, but is still grouped
+}
+
+QStringList genPartialCompletions(KTextEditor::CodeCompletionModel *model, const QString &lead, const QModelIndex &root) {
+	QStringList candidates;
+	for (int i = 0; i < model->rowCount(root); ++i) {
+		QString candidate = model->index(i, KTextEditor::CodeCompletionModel::Name, root).data().toString();
+		if (candidate.startsWith(lead)) candidates.append(candidate.mid(lead.size()));
+	}
+	return candidates;
+}
+
+QStringList genPartialCompletions(KTextEditor::CodeCompletionModel *model, const QString &lead) {
+	QStringList candidates;
+	if (modelHasGroups(model)) {
+		for (int i = 0; i < model->rowCount(); ++i) {
+			candidates += genPartialCompletions(model, lead, model->index(i, 0));
+		}
+	} else {
+		candidates = genPartialCompletions(model, lead, QModelIndex());
+	}
+	return candidates;
+}
+
+QStringList genPartialCompletions(const QStringList &matches, const QString &lead) {
+	QStringList ret;
+	ret.reserve(matches.size());
+	for (int i = 0; i < matches.size(); ++i) {
+		const QString &m = matches[i];
+		if (!m.startsWith(lead)) continue;
+		ret.append(m.mid(lead.length()));
+	}
+	return ret;
+}
+
+QString findCommonCompletion (const QStringList &candidates) {
+	RK_TRACE (COMMANDEDITOR);
+	RK_DEBUG(COMMANDEDITOR, DL_DEBUG, "Looking for common completion among set of %d", candidates.size ());
+
+	QString ret;
+	bool first = true;
+	for (int i = candidates.size() - 1; i >= 0; --i) {
+		const QString &candidate = candidates.at(i);
+
+		if (first) {
+			ret = candidate;
+			first = false;
+		} else {
+			if (ret.length() > candidate.length()) {
+				ret = ret.left(candidate.length());
+			}
+
+			for (int c = 0; c < ret.length(); ++c) {
+				if (ret[c] != candidate[c]) {
+					if (!c) return QString();
+
+					ret = ret.left (c);
+					break;
+				}
+			}
+		}
+	}
+
+	return ret;
+}
+
 bool isModelEmpty(KTextEditor::CodeCompletionModel* model, const QString &filter) {
 	int rootcount = model->rowCount();
+	bool groups = modelHasGroups(model);
 	for (int i = 0; i < rootcount; ++i) {
 		auto pindex = model->index(i, 0, QModelIndex());
-		if (model->hasGroups()) {
+		if (groups) {
 			int groupcount = model->rowCount(pindex);
 			for (int j = 0; j < groupcount; ++j) {
 				if (model->index(j, KTextEditor::CodeCompletionModel::Name, pindex).data().toString().startsWith(filter)) return false;
@@ -436,29 +504,26 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 
 		if (k->key () == Qt::Key_Tab && (!k->modifiers ())) {
 			// Try to do partial completion. Unfortunately, the base implementation in ktexteditor is totally broken (inserts the whole partial completion, without removing the start).
-			// TODO: It is not quite clear, what behavior is desirable, in case more than one completion model is active at a time.
-			//       For now, we use the simplest solution (implementation-wise), and complete from the topmost-model, only
-			// TODO: Handle the ktexteditor builtin models, too.
-			bool exact = false;
-			QString comp;
-			bool handled = false;
-			if (started_models.contains(arghint_model) && arghint_model->partialCompletion(&comp, &exact)) {
-				handled = true;
-			} else if (started_models.contains(completion_model) && completion_model->partialCompletion(&comp, &exact)) {
-				handled = true;
-			} else if (started_models.contains(file_completion_model) && file_completion_model->partialCompletion(&comp, &exact)) {
-				handled = true;
+			// This is terribly inefficient, but fortunately, it only needs to be called, when Tab is actually pressed.
+			QStringList candidate_completions;
+			for (int i = 0; i < started_models.size(); ++i) {
+				auto model = started_models[i];
+				if (model == callhint_model) continue;
+				if (model == arghint_model) candidate_completions += arghint_model->rawPartialCompletions();
+				else if (model == completion_model) candidate_completions += completion_model->rawPartialCompletions();
+				else if (model == file_completion_model) candidate_completions += file_completion_model->rawPartialCompletions();
+				else candidate_completions += genPartialCompletions(model, model_filters[model]);
 			}
+			QString comp = findCommonCompletion(candidate_completions);
 
-			if (handled) {
-				RK_DEBUG(COMMANDEDITOR, DL_WARNING, "Tab completion: %s, %d", qPrintable (comp), k->type());
+			if (!comp.isEmpty()) {
+				RK_DEBUG(COMMANDEDITOR, DL_WARNING, "Tab completion: %s", qPrintable(comp));
 				if (k->type () == QEvent::ShortcutOverride) {
 					// Too bad for all the duplicate work, but the event will re-trigger as a keypress event, and we need to intercept that one, too.
 					return true;
 				}
 				view ()->document ()->insertText (view ()->cursorPosition (), comp);
-				if (exact) {
-					// TODO: Not entirely good: Match may have been exact, but a further (longer) match could still exist
+				if (candidate_completions.size() == 1) {
 					// Ouch, how messy. We want to make sure completion stops (except for any call hints), and is not re-triggered by the insertion, itself
 					bool callhint_active = started_models.contains(callhint_model);
 					cc_iface->abortCompletion ();
@@ -466,11 +531,10 @@ bool RKCompletionManager::eventFilter (QObject*, QEvent* event) {
 					completion_timer->stop();
 					if (callhint_active) startModel(callhint_model, true, currentCallRange());
 				}
-				else if (comp.isEmpty ()) {
-					QApplication::beep (); // TODO: unfortunately, we catch *two* tab events, so this is not good, yet
-				}
-				return true;
+			} else {
+				QApplication::beep ();
 			}
+			return true;
 		} else if ((k->key () == Qt::Key_Up || k->key () == Qt::Key_Down) && cc_iface->isCompletionActive ()) {
 			bool navigate = (settings->cursorNavigatesCompletions() && k->modifiers() == Qt::NoModifier) || (!settings->cursorNavigatesCompletions() && k->modifiers() == Qt::AltModifier);
 
@@ -654,55 +718,18 @@ QVariant RKCodeCompletionModel::data (const QModelIndex& index, int role) const 
 	return QVariant ();
 }
 
-bool findCommonCompletion (QString *comp, const QStringList &list, const QString &lead, bool *exact_match) {
-	RK_TRACE (COMMANDEDITOR);
-	RK_DEBUG(COMMANDEDITOR, DL_DEBUG, "Looking for common completion among set of %d, starting with %s", list.size (), qPrintable (lead));
-
-	*exact_match = true;
-	QString ret;
-	bool first = true;
-	int lead_size = lead.count ();
-	for (int i = list.size () - 1; i >= 0; --i) {
-		if (!list[i].startsWith (lead)) continue;
-
-		QString candidate = list[i].mid (lead_size);
-		if (first) {
-			ret = candidate;
-			first = false;
-		} else {
-			if (ret.length () > candidate.length ()) {
-				ret = ret.left (candidate.length ());
-				*exact_match = false;
-			}
-
-			for (int c = 0; c < ret.length(); ++c) {
-				if (ret[c] != candidate[c]) {
-					*exact_match = false;
-					if (!c) return true; // it was still a match, even if we cannot complete anything
-
-					ret = ret.left (c);
-					break;
-				}
-			}
-		}
-	}
-
-	*comp = ret;
-	return !first;  // at least one matching candidate was found
-}
-
-bool RKCodeCompletionModel::partialCompletion(QString *comp, bool* exact_match) {
+QStringList RKCodeCompletionModel::rawPartialCompletions() const {
 	RK_TRACE (COMMANDEDITOR);
 
 	// Here, we need to do completion on the *last* portion of the object-path, only, so we will be able to complete "obj" to "object", even if "object" is present as
 	// both packageA::object and packageB::object.
 	// Thus as a first step, we look up the short names. We do this, lazily, as this function is only called on demand.
 	QStringList objectpath = RObject::parseObjectPath (current_symbol);
-	if (objectpath.isEmpty() || objectpath[0].isEmpty()) return (false);
+	if (objectpath.isEmpty() || objectpath[0].isEmpty()) return (QStringList());
 	QString lead = objectpath.last();
 	if (!shortnames.value(0).startsWith(lead)) lead.clear ();  // This could happen if the current path ends with '$', for instance
 
-	return findCommonCompletion(comp, shortnames, lead, exact_match);
+	return genPartialCompletions(shortnames, lead);
 }
 
 
@@ -886,10 +913,10 @@ KTextEditor::Range RKArgumentHintModel::completionRange (KTextEditor::View*, con
 	return manager->currentArgnameRange ();
 }
 
-bool RKArgumentHintModel::partialCompletion(QString *comp, bool* exact) {
+QStringList RKArgumentHintModel::rawPartialCompletions() const {
 	RK_TRACE (COMMANDEDITOR);
 
-	return findCommonCompletion(comp, args, fragment, exact);
+	return genPartialCompletions(args, fragment);
 }
 
 //////////////////////// RKFileCompletionModel ////////////////////
@@ -993,10 +1020,10 @@ QVariant RKFileCompletionModel::data (const QModelIndex& index, int role) const 
 	return QVariant ();
 }
 
-bool RKFileCompletionModel::partialCompletion(QString *comp, bool* exact) {
+QStringList RKFileCompletionModel::rawPartialCompletions() const {
 	RK_TRACE (COMMANDEDITOR);
 
-	return findCommonCompletion(comp, names, current_fragment, exact);
+	return genPartialCompletions(names, current_fragment);
 }
 
 
