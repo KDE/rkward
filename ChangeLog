@@ -26,8 +26,6 @@
 			- New KHamburgerMenu to restart the R backend, interrupt all commands and configure the R backend
 - Added: Crosstabs N to N: Simplify labels, add option to control table layout
 - Added: Change mechanism for detection of object changes
-		- TODO:
-			- warn, if users keep more than ~ 20.000 toplevel symbols in globalenv()?
 
 --- Version 0.7.4 - May-30-2022
 - Support "step into" and "finish current" modes in the R debugger window

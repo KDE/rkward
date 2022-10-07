@@ -8,11 +8,13 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "renvironmentobject.h"
 
 #include <KLocalizedString>
+#include <KMessageBox>
 
 #include "robjectlist.h"
 #include "rkpseudoobjects.h"
 #include "../rbackend/rkrinterface.h"
 #include "rkmodificationtracker.h"
+#include "../rkward.h"
 
 #include "../debug.h"
 
@@ -103,6 +105,13 @@ void REnvironmentObject::updateFromR(RCommandChain *chain, const QStringList &ad
 		if (child->isPending()) {
 			child->type -= RObject::Pending;  // HACK: Child is not actually pending: We've just seen it!
 			child->updateFromR(chain);
+		}
+	}
+	if (this == RObjectList::getGlobalEnv() && numChildren() >= 10000) {
+		static bool excess_object_warned = false; // show this at most once per session
+		if (!excess_object_warned) {
+			KMessageBox::information(RKWardMainWindow::getMain(), i18n("Your workspace contains more than 10.000 top level objects. RKWard is not optimized for this situation, and you may experience lag between R commands. Should this situation constitute a regular use case for your work, please let us know at rkward-devel@kde.org, so we can consider possible solutions."), i18n("Many objects in workspace"), "excess objects");
+			excess_object_warned = true;
 		}
 	}
 }
