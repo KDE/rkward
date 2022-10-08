@@ -10,6 +10,7 @@
   <name xml:lang="en-GB">RKWard</name>
   <name xml:lang="es">RKWard</name>
   <name xml:lang="fr">RKWard</name>
+  <name xml:lang="id">RKWard</name>
   <name xml:lang="it">RKWard</name>
   <name xml:lang="ka">RKWard</name>
   <name xml:lang="nl">RKWard</name>
@@ -81,6 +82,7 @@
       <caption xml:lang="en-GB">Main window, with data editor, object browser, interactive R console, and further tool windows.</caption>
       <caption xml:lang="es">Ventana principal, con el editor de datos, el navegador de objetos, la consola interactiva de R y otras ventanas con herramientas adicionales.</caption>
       <caption xml:lang="fr">Fenêtre principale avec l'éditeur de données, le navigateur d'objets, la console interactive de R et d'autres fenêtres d'outils.</caption>
+      <caption xml:lang="id">Jendela utama, dengan editor data, browser objek, konsol R interaktif, dan jendela alat lebih lanjut.</caption>
       <caption xml:lang="it">Finestra principale, con editor di dati, navigatore di oggetti, console R interattiva e ulteriori finestre degli strumenti.</caption>
       <caption xml:lang="ka">მთავარი ფანჯარა, მონაცემების რედაქტორით, R-ის ინტერაქტიულ კონსოლი და სხვა ხელსაწყოს ფანჯრები.</caption>
       <caption xml:lang="ko">데이터 편집기, 객체 탐색기, 인터랙티브 R 콘솔, 기타 도구 창이 표시된 주 창.</caption>
@@ -122,6 +124,7 @@
       <caption xml:lang="en-GB">Working with data in RKWard</caption>
       <caption xml:lang="es">Trabajando con datos en RKWard</caption>
       <caption xml:lang="fr">Travailler avec des données dans RKward</caption>
+      <caption xml:lang="id">Bekerja dengan data di RKWard</caption>
       <caption xml:lang="it">Lavorare coi dati in RKWard</caption>
       <caption xml:lang="ka">მონაცემებთან მუშაობა RKWard-ში</caption>
       <caption xml:lang="nl">Met gegevens werken in RKWard</caption>
