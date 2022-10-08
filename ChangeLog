@@ -1,4 +1,4 @@
-- Changed default behavior (new installations, only): Up/down without alt navigate completion items if visible in console/editor
+--- Version 0.7.5 - Oct-24-2022
 - Fixed: Backend failed to start when installed in a path with spaces on Windows volumes without 8.3 support
 - Fixed: Trying to restart backend could cause a hang, on Windows
 - Fixed: In corner cases, cancelling commands could lead to a lockup
@@ -17,13 +17,13 @@
 - Fixed: Fix object name completion for (irregular) names starting with numbers or underscores
 - Added: Partial completions (Tab-key) consider completion candidates from all visible completion groups
 - Added: R's dynamic completions (importantly for ":::", "?", and "@") are merged into the already provided completions
-- Added: Provide tooltips on symbols in scripts and R console
-- Added: Many new basic and advanced R, R Markdown and LaTeX snippets
-			- Complex R Markdown template part of the snippets
 - Added: Add option to offer code completion/hinting in all file types not just R scripts (e.g. in .Rmd files)
+- Changed default behavior (new installations, only): Up/down without alt navigate completion items if visible in console/editor
+- Added: Provide tooltips on symbols in scripts and R console
+- Added: Many new basic and advanced R, R Markdown and LaTeX snippets, including complete R Markdown templates
 - Added: Allow to select search provider, when searching for a term online
 - Added: Allow to restart R backend (e.g. for testing that scripts or packages will work in a fresh session)
-			- New KHamburgerMenu to restart the R backend, interrupt all commands and configure the R backend
+- Changed: Actions to restart the R backend, interrupt all commands and configure the R backend arranged in a hmburger menu
 - Added: Crosstabs N to N: Simplify labels, add option to control table layout
 - Added: Change mechanism for detection of object changes
 
