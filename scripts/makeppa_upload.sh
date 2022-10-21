@@ -2,7 +2,7 @@
 
 ## begin: These may need adjusting!
 ## sse http://www.releases.ubuntu.com/ for the up-to-date list
-TARGETS="jammy impish focal bionic"
+TARGETS="jammy focal bionic"
 AUTHOR="Thomas Friedrichsmeier <tfry@users.sourceforge.net>"
 ## end: These may need adjusting!
 
@@ -22,7 +22,7 @@ fi
 if [ "${1}" == "--stable" ]; then
 	shift
 	PPAIDS="rkward-stable rkward-stable-cran rkward-stable-backports-cran"
-	PPAVERSIONSTRING=".3rkward.stable"
+	PPAVERSIONSTRING=".1rkward.stable"
 else
 	PPAIDS="rkward-devel rkward-devel-cran"
 	PPAVERSIONSTRING=".0rkward.devel"
