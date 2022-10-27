@@ -840,6 +840,7 @@ REnvironmentObject* RObject::toplevelEnvironment () const {
 RObject *RObject::globalEnvSymbol() const {
 	RK_TRACE (OBJECTS);
 	RObject *o = const_cast<RObject*>(this);	// it's ok, all we need to do is find the toplevel parent
+	if (o == RObjectList::getGlobalEnv()) return o;
 	while (o->parent) {
 		if (o->parent == RObjectList::getGlobalEnv()) return o;
 		o = o->parent;

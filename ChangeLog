@@ -1,3 +1,5 @@
+-- Fixed: Crash when renaming top level object from context menu
+
 --- Version 0.7.5 - Oct-24-2022
 - Fixed: Backend failed to start when installed in a path with spaces on Windows volumes without 8.3 support
 - Fixed: Trying to restart backend could cause a hang, on Windows
