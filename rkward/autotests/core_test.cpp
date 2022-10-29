@@ -194,7 +194,7 @@ private slots:
 		});
 
 		bool lock = true;
-		runCommandAsync(new RCommand("dx <- data.frame(a=1:2, b=3:4)", RCommand::User), nullptr, [this, &lock](RCommand *command) {
+		runCommandAsync(new RCommand("dx <- data.frame(a=1:2, b=3:4)", RCommand::User), nullptr, [this, &lock](RCommand *) {
 			auto dx = RObjectList::getGlobalEnv()->findObject("dx");
 			QVERIFY(dx != nullptr);
 			QVERIFY(dx->isContainer());
@@ -207,7 +207,7 @@ private slots:
 			    dx->rename("dy");
 			}
 			auto c = new RCommand("dy$c", RCommand::GetIntVector);
-			runCommandWithTimeout(c, nullptr, [](RCommand *command) {
+			runCommandAsync(c, nullptr, [](RCommand *command) {
 			    QCOMPARE(command->getDataType(), RData::IntVector);
 			    QCOMPARE(command->getDataLength(), 2);
 			    QCOMPARE(command->intVector().value(1), 2);
