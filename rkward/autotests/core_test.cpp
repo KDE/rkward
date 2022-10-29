@@ -192,6 +192,29 @@ private slots:
 		RInterface::whenAllFinished(this, [](RCommand*) {
 			QCOMPARE(RObjectList::getGlobalEnv()->numChildren(), 0);
 		});
+
+		bool lock = true;
+		runCommandWithTimeout(new RCommand("dx <- data.frame(a=1:2, b=3:4)", RCommand::User), nullptr, [this, &lock](RCommand *command) {
+			auto dx = RObjectList::getGlobalEnv()->findObject("dx");
+			QVERIFY(dx != nullptr);
+			QVERIFY(dx->isContainer());
+			if (dx && dx->isContainer()) {
+			    auto dx_a = static_cast<RContainerObject*>(dx)->findChildByName("a");
+			    QVERIFY(dx_a != nullptr);
+			    if (dx_a) {
+				dx_a->rename("c");
+			    }
+			    dx->rename("dy");
+			}
+			auto c = new RCommand("dy$c", RCommand::GetIntVector);
+			runCommandWithTimeout(c, nullptr, [](RCommand *command) {
+			    QCOMPARE(command->getDataType(), RData::IntVector);
+			    QCOMPARE(command->getDataLength(), 2);
+			    QCOMPARE(command->intVector().value(1), 2);
+			});
+			lock = false;
+		});
+		while(lock) qApp->processEvents();
 	}
 
 	void parseErrorTest() {
