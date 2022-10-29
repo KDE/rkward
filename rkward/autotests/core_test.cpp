@@ -194,7 +194,7 @@ private slots:
 		});
 
 		bool lock = true;
-		runCommandWithTimeout(new RCommand("dx <- data.frame(a=1:2, b=3:4)", RCommand::User), nullptr, [this, &lock](RCommand *command) {
+		runCommandAsync(new RCommand("dx <- data.frame(a=1:2, b=3:4)", RCommand::User), nullptr, [this, &lock](RCommand *command) {
 			auto dx = RObjectList::getGlobalEnv()->findObject("dx");
 			QVERIFY(dx != nullptr);
 			QVERIFY(dx->isContainer());
