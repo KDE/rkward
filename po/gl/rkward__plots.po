@@ -1,0 +1,2490 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Adrián Chaves Fernández <adriyetichaves@gmail.com>, 2015, 2016, 2017.
+# Adrián Chaves (Gallaecio) <adrian@chaves.io>, 2017, 2018, 2019, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-04-11 00:40+0000\n"
+"PO-Revision-Date: 2020-01-05 19:08+0100\n"
+"Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
+"Language-Team: Galician <kde-i18n-doc@kde.org>\n"
+"Language: gl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 19.08.3\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Adrián Chaves Fernández"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "adrian@chaves.io"
+
+#. i18n: ectx: <about name="...">
+#. i18n: ectx: <hierarchy> <menu label="...">
+#: rkward/plugins/plots.pluginmap:5 rkward/plugins/plots.pluginmap:35
+#, kde-format
+msgid "Plots"
+msgstr "Gráficas"
+
+#. i18n: ectx: <about shortinfo="...">
+#: rkward/plugins/plots.pluginmap:5
+#, kde-format
+msgid ""
+"Plugins for producing various plots. Part of the official RKWard distribution"
+msgstr ""
+"Complementos para producir varias gráficas. Parte da distribución oficial de "
+"RKWard."
+
+#. i18n: ectx: <components> <component label="...">
+#. i18n: ectx: (Loaded from Barplot)
+#. i18n: ectx: (Barplot) <dialog label="...">
+#: rkward/plugins/plots.pluginmap:19 rkward/plugins/plots/barplot.js:46
+#: rkward/plugins/plots/barplot.xml:31
+#, kde-format
+msgid "Barplot"
+msgstr "Barplot"
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/plots.pluginmap:20
+#, kde-format
+msgid "Box Plot"
+msgstr "Gráfica de caixas"
+
+#. i18n: ectx: <components> <component label="...">
+#. i18n: ectx: (Loaded from Density Plot)
+#. i18n: ectx: (Density Plot) <dialog label="...">
+#: rkward/plugins/plots.pluginmap:21 rkward/plugins/plots/density_plot.js:39
+#: rkward/plugins/plots/density_plot.xml:28
+#, kde-format
+msgid "Density Plot"
+msgstr "Gráfica de densidade"
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/plots.pluginmap:22
+#, kde-format
+msgid "Dotchart"
+msgstr "Gráfica de puntos"
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/plots.pluginmap:23
+#, kde-format
+msgid "ECDF Plot"
+msgstr "Gráfica ECDF"
+
+#. i18n: ectx: <components> <component label="...">
+#. i18n: ectx: (Loaded from Generic Plot)
+#. i18n: ectx: (Generic Plot) <dialog label="...">
+#: rkward/plugins/plots.pluginmap:24 rkward/plugins/plots/plot.js:17
+#: rkward/plugins/plots/plot.xml:10
+#, kde-format
+msgid "Generic Plot"
+msgstr "Gráfica xenérica"
+
+#. i18n: ectx: <components> <component label="...">
+#. i18n: ectx: (Loaded from Histogram)
+#. i18n: ectx: (Histogram) <dialog label="...">
+#. i18n: ectx: (Scatterplot Matrix) <dialog label="Scatterplot Matrix"> <tab label="Options"> <radio label="Diagonal panels"> <option label="...">
+#: rkward/plugins/plots.pluginmap:25 rkward/plugins/plots/histogram.js:19
+#: rkward/plugins/plots/histogram.xml:27
+#: rkward/plugins/plots/scatterplot_matrix.xml:21
+#, kde-format
+msgid "Histogram"
+msgstr "Histograma"
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/plots.pluginmap:26
+#, kde-format
+msgid "Pareto Chart"
+msgstr "Diagrama de Pareto"
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/plots.pluginmap:27
+#, kde-format
+msgid "Piechart"
+msgstr "Gráfica de sectores"
+
+#. i18n: ectx: <components> <component label="...">
+#. i18n: ectx: (Loaded from Scatterplot)
+#. i18n: ectx: (Scatterplot) <dialog label="...">
+#. i18n: ectx: (Scatterplot) <wizard label="...">
+#: rkward/plugins/plots.pluginmap:28 rkward/plugins/plots/scatterplot.js:46
+#: rkward/plugins/plots/scatterplot.xml:17
+#: rkward/plugins/plots/scatterplot.xml:102
+#, kde-format
+msgid "Scatterplot"
+msgstr "Gráfica distribuída"
+
+#. i18n: ectx: <components> <component label="...">
+#. i18n: ectx: (Loaded from Scatterplot Matrix)
+#. i18n: ectx: (Scatterplot Matrix) <dialog label="...">
+#: rkward/plugins/plots.pluginmap:29
+#: rkward/plugins/plots/scatterplot_matrix.js:21
+#: rkward/plugins/plots/scatterplot_matrix.xml:6
+#, kde-format
+msgid "Scatterplot Matrix"
+msgstr "Matriz de gráficas distribuídas"
+
+#. i18n: ectx: <components> <component label="...">
+#. i18n: ectx: (Loaded from Stem-and-Leaf Plots)
+#: rkward/plugins/plots.pluginmap:30 rkward/plugins/plots/stem.js:7
+#, kde-format
+msgid "Stem-and-Leaf Plot"
+msgstr "Diagrama de talo e follas"
+
+#. i18n: ectx: <components> <component label="...">
+#. i18n: ectx: (Loaded from Stripchart)
+#. i18n: ectx: (Stripchart) <dialog label="...">
+#: rkward/plugins/plots.pluginmap:31 rkward/plugins/plots/stripchart_plot.js:22
+#: rkward/plugins/plots/stripchart_plot.xml:17
+#, kde-format
+msgid "Stripchart"
+msgstr "Gráfica de barras horizontais"
+
+#. i18n: ectx: (Loaded from Barplot)
+#. i18n: ectx: (Loaded from Density Plot)
+#. i18n: ectx: (Loaded from Dot chart)
+#. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="Variables"> <varslot label="...">
+#. i18n: ectx: (Loaded from Empirical Distribution Function)
+#. i18n: ectx: (Loaded from Histogram)
+#. i18n: ectx: (Loaded from Pareto chart)
+#. i18n: ectx: (Loaded from Pie chart)
+#. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Variables"> <varslot label="...">
+#. i18n: ectx: (Loaded from Stem-and-Leaf Plots)
+#. i18n: ectx: (Loaded from Stripchart)
+#: rkward/plugins/plots/barplot.js:14 rkward/plugins/plots/density_plot.js:44
+#: rkward/plugins/plots/dotchart.js:14 rkward/plugins/plots/dotchart.xml:40
+#: rkward/plugins/plots/ecdf_plot.js:25 rkward/plugins/plots/histogram.js:19
+#: rkward/plugins/plots/pareto.js:37 rkward/plugins/plots/piechart.js:13
+#: rkward/plugins/plots/piechart.xml:45 rkward/plugins/plots/stem.js:8
+#: rkward/plugins/plots/stripchart_plot.js:23
+#, kde-format
+msgid "Variable"
+msgstr "Variábel"
+
+#. i18n: ectx: (Loaded from Barplot)
+#: rkward/plugins/plots/barplot.js:29
+#, fuzzy, kde-format
+#| msgctxt "R code comment"
+#| msgid ""
+#| "barplot is a bit picky about attributes, so we need to convert to vector "
+#| "explicitly"
+msgctxt "R code comment"
+msgid ""
+"barplot is a bit picky about attributes, so we need to convert to vector or "
+"matrix explicitly"
+msgstr ""
+"Barplot é un pouco esixente no que respecta aos atributos, así que hai que "
+"converter a vector de maneira explícita."
+
+#. i18n: ectx: (Loaded from Barplot) <summary>
+#: rkward/plugins/plots/barplot.rkh:3
+#, kde-format
+msgid "Creates a bar plot with vertical bars."
+msgstr "Crea unha gráfica de barras verticais."
+
+#. i18n: ectx: (Loaded from Barplot) <usage>
+#. i18n: ectx: (Loaded from Dot chart) <usage>
+#: rkward/plugins/plots/barplot.rkh:7 rkward/plugins/plots/dotchart.rkh:7
+#, kde-format
+msgid ""
+"Choose a matrix, vector or a factor to be plotted. Further options are "
+"available on the second tab."
+msgstr ""
+"Escolla unha matriz, un vector ou un factor para representar. Hai opcións "
+"adicionais dispoñíbeis no segundo separador."
+
+#. i18n: ectx: (Loaded from Barplot) <settings> <setting> (refers to element labelled "Tabulate data before plotting")
+#. i18n: ectx: (Loaded from Dot chart) <settings> <setting> (refers to element labelled "Tabulate data before plotting")
+#. i18n: ectx: (Loaded from Pareto chart) <settings> <setting> (refers to element labelled "Tabulate data before plotting")
+#. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "Tabulate data before plotting")
+#: rkward/plugins/plots/barplot.rkh:13 rkward/plugins/plots/dotchart.rkh:14
+#: rkward/plugins/plots/pareto.rkh:13 rkward/plugins/plots/piechart.rkh:13
+#, kde-format
+msgid ""
+"If your data needs to be tabulated / aggregated before plotting, check this "
+"option. Refer to <link href=\"rkward://component/one_var_tabulation\"/> for "
+"details on the dependent options."
+msgstr ""
+"Se os seus datos teñen que tabularse ou agruparse antes de representarse, "
+"marque esta opción. Consulte <link href=\"rkward://component/"
+"one_var_tabulation\"/> para máis información sobre as opcións "
+"correspondentes."
+
+#. i18n: ectx: (Loaded from Barplot) <settings> <setting> (refers to element labelled "Matrix, Vector or Factor")
+#. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "Variable")
+#: rkward/plugins/plots/barplot.rkh:14 rkward/plugins/plots/piechart.rkh:14
+#, kde-format
+msgid ""
+"If your data is already suitable for plotting, directly, specify it here. "
+"Otherwise, leave this empty, and check the \"Tabulate\" option, above."
+msgstr ""
+"Se os seus datos xa son axeitados para representarse, directamente, indíqueo "
+"aquí. En caso contrario, deixe este campo baleiro, e marque a opción "
+"«Tabular» de enriba."
+
+#. i18n: ectx: (Loaded from Barplot) <settings> <setting> (refers to element labelled "Limit number of groups")
+#. i18n: ectx: (Loaded from Dot chart) <settings> <setting> (refers to element labelled "Limit number of groups")
+#. i18n: ectx: (Loaded from Pareto chart) <settings> <setting> (refers to element labelled "Limit number of groups")
+#. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "Limit number of groups")
+#: rkward/plugins/plots/barplot.rkh:17 rkward/plugins/plots/dotchart.rkh:17
+#: rkward/plugins/plots/pareto.rkh:17 rkward/plugins/plots/piechart.rkh:17
+#, kde-format
+msgid ""
+"If there are very many categories in your data, it may make sense to limit "
+"the amount of categories that will be displayed. Check this, if you want to "
+"set a limit. See Refer to <link href=\"rkward://component/limit_vector_length"
+"\"/> for details on the dependent options."
+msgstr ""
+"Se existen moitas categorías nos seus datos, pode que teña sentido limitar o "
+"número de categorías para mostrar. Marque esta opción se quere definir un "
+"límite. Consulte <link href=\"rkward://component/limit_vector_length\"/> "
+"para máis información sobre as opcións correspondentes."
+
+#. i18n: ectx: (Loaded from Barplot) <settings> <setting> (refers to element labelled "Bar labels")
+#. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Labeling")
+#. i18n: ectx: (Loaded from Dot chart) <settings> <setting> (refers to element labelled "Labels")
+#. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "Labels")
+#: rkward/plugins/plots/barplot.rkh:20 rkward/plugins/plots/box_plot.rkh:18
+#: rkward/plugins/plots/dotchart.rkh:20 rkward/plugins/plots/piechart.rkh:20
+#: rkward/plugins/plots/piechart.rkh:24
+#, kde-format
+msgid ""
+"Method for assigning labels to the plot. \"default\" means, the labels are "
+"chosen automatically. If no labels are available, this will generally print "
+"the values. The other options allow you to specify the labels as literal "
+"string, or as an R statement (e.g. if the names are stored in a different "
+"variable in the workspace)."
+msgstr ""
+"Método para asignar etiquetas á gráfica. Co método «predeterminado» as "
+"etiquetas escóllense automaticamente. Se non hai etiquetas dispoñíbeis, isto "
+"imprimirá normalmente os datos. As outras opcións permítenlle indicar as "
+"etiquetas, xa sexa directamente o seu texto ou mediante unha instrución de R "
+"(por exemplo, se os nomes están almacenados nunha variábel distinta do "
+"espazo de traballo)."
+
+#. i18n: ectx: (Loaded from Barplot) <settings> <setting> (refers to element labelled "Barplot Options")
+#: rkward/plugins/plots/barplot.rkh:23
+#, kde-format
+msgid ""
+"Since these settings are reused in further plugins, they are documented on a "
+"page of their own: See <link href=\"rkward://component/barplot_embed\"/>."
+msgstr ""
+"Dado que estas opcións se usan de novo noutros complementos, están "
+"documentadas nunha páxina de seu: <link href=\"rkward://component/"
+"barplot_embed\"/>."
+
+#. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="...">
+#. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="...">
+#. i18n: ectx: (Generic Plot) <dialog label="Generic Plot"> <tab label="...">
+#. i18n: ectx: (Pareto chart) <dialog label="Pareto chart"> <tab label="...">
+#. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="...">
+#. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="...">
+#. i18n: ectx: (Scatterplot Matrix) <dialog label="Scatterplot Matrix"> <tab label="...">
+#: rkward/plugins/plots/barplot.xml:33 rkward/plugins/plots/dotchart.xml:36
+#: rkward/plugins/plots/pareto.xml:28 rkward/plugins/plots/piechart.xml:41
+#: rkward/plugins/plots/plot.xml:12 rkward/plugins/plots/scatterplot.xml:19
+#: rkward/plugins/plots/scatterplot_matrix.xml:8
+#, kde-format
+msgid "Variables"
+msgstr "Variábeis"
+
+#. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="Variables"> <varslot label="...">
+#: rkward/plugins/plots/barplot.xml:37
+#, kde-format
+msgid "Matrix, Vector or Factor"
+msgstr "Matriz, vector ou factor"
+
+#. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="Variables"> <text>
+#. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="Variables"> <text>
+#. i18n: ectx: (Pareto chart) <dialog label="Pareto chart"> <tab label="Variables"> <text>
+#. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Variables"> <text>
+#: rkward/plugins/plots/barplot.xml:39 rkward/plugins/plots/dotchart.xml:42
+#: rkward/plugins/plots/pareto.xml:34 rkward/plugins/plots/piechart.xml:46
+#, kde-format
+msgid "- or -"
+msgstr "- ou -"
+
+#. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="Variables"> <frame label="...">
+#. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="Variables"> <frame label="...">
+#. i18n: ectx: (Pareto chart) <dialog label="Pareto chart"> <tab label="Variables"> <frame label="...">
+#. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Variables"> <frame label="...">
+#: rkward/plugins/plots/barplot.xml:41 rkward/plugins/plots/dotchart.xml:44
+#: rkward/plugins/plots/pareto.xml:36 rkward/plugins/plots/piechart.xml:47
+#, kde-format
+msgid "Tabulate data before plotting"
+msgstr "Tabular os datos antes de representalos"
+
+#. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="Variables"> <frame label="Tabulate data before plotting"> <embed label="...">
+#. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="Variables"> <frame label="Tabulate data before plotting"> <embed label="...">
+#. i18n: ectx: (Pareto chart) <dialog label="Pareto chart"> <tab label="Variables"> <frame label="Tabulate data before plotting"> <embed label="...">
+#. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Variables"> <frame label="Tabulate data before plotting"> <embed label="...">
+#: rkward/plugins/plots/barplot.xml:42 rkward/plugins/plots/dotchart.xml:45
+#: rkward/plugins/plots/pareto.xml:37 rkward/plugins/plots/piechart.xml:48
+#, kde-format
+msgid "Tabulation Options"
+msgstr "Opcións de tabulación"
+
+#. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="...">
+#. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="...">
+#. i18n: ectx: (Pareto chart) <dialog label="Pareto chart"> <tab label="...">
+#. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="...">
+#: rkward/plugins/plots/barplot.xml:50 rkward/plugins/plots/dotchart.xml:52
+#: rkward/plugins/plots/pareto.xml:46 rkward/plugins/plots/piechart.xml:55
+#, kde-format
+msgid "Limit"
+msgstr "Límite"
+
+#. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="Limit"> <frame label="...">
+#. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="Limit"> <frame label="...">
+#. i18n: ectx: (Pareto chart) <dialog label="Pareto chart"> <tab label="Limit"> <frame label="...">
+#. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Limit"> <frame label="...">
+#: rkward/plugins/plots/barplot.xml:51 rkward/plugins/plots/dotchart.xml:53
+#: rkward/plugins/plots/pareto.xml:47 rkward/plugins/plots/piechart.xml:56
+#, kde-format
+msgid "Limit number of groups"
+msgstr "Limitar o número de grupos"
+
+#. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="Limit"> <frame label="Limit number of groups"> <embed label="...">
+#. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="Limit"> <frame label="Limit number of groups"> <embed label="...">
+#. i18n: ectx: (Pareto chart) <dialog label="Pareto chart"> <tab label="Limit"> <frame label="Limit number of groups"> <embed label="...">
+#. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Limit"> <frame label="Limit number of groups"> <embed label="...">
+#: rkward/plugins/plots/barplot.xml:52 rkward/plugins/plots/dotchart.xml:54
+#: rkward/plugins/plots/pareto.xml:48 rkward/plugins/plots/piechart.xml:57
+#, kde-format
+msgid "Limit Categories"
+msgstr "Limitar as categorías"
+
+#. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="...">
+#. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="Bar labels"> <radio label="...">
+#: rkward/plugins/plots/barplot.xml:56 rkward/plugins/plots/barplot.xml:57
+#, kde-format
+msgid "Bar labels"
+msgstr "Etiquetas das barras"
+
+#. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="Bar labels"> <radio label="Bar labels"> <option label="...">
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> [...] <radio label="Labeling"> <option label="...">
+#. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="Labels"> <radio label="Labels"> <option label="...">
+#. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Labels"> <radio label="Labels"> <option label="...">
+#: rkward/plugins/plots/barplot.xml:58 rkward/plugins/plots/box_plot.xml:53
+#: rkward/plugins/plots/dotchart.xml:60 rkward/plugins/plots/piechart.xml:63
+#, kde-format
+msgid "Default labels"
+msgstr "Etiquetas predeterminadas"
+
+#. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="Bar labels"> <radio label="Bar labels"> <option label="...">
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> [...] <radio label="Labeling"> <option label="...">
+#. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="Labels"> <radio label="Labels"> <option label="...">
+#. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Labels"> <radio label="Labels"> <option label="...">
+#: rkward/plugins/plots/barplot.xml:59 rkward/plugins/plots/box_plot.xml:54
+#: rkward/plugins/plots/dotchart.xml:61 rkward/plugins/plots/piechart.xml:64
+#, kde-format
+msgid "Custom labels"
+msgstr "Etiquetas personalizadas"
+
+#. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="Bar labels"> <radio label="Bar labels"> <option label="...">
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> [...] <radio label="Labeling"> <option label="...">
+#. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="Labels"> <radio label="Labels"> <option label="...">
+#. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Labels"> <radio label="Labels"> <option label="...">
+#: rkward/plugins/plots/barplot.xml:60 rkward/plugins/plots/box_plot.xml:55
+#: rkward/plugins/plots/dotchart.xml:62 rkward/plugins/plots/piechart.xml:65
+#, kde-format
+msgid "From R expression"
+msgstr "Expresión de R"
+
+#. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="Bar labels"> <input label="...">
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Variable(s)"> <frame label="Labels"> <input label="...">
+#. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="Labels"> <input label="...">
+#. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Labels"> <input label="...">
+#: rkward/plugins/plots/barplot.xml:62 rkward/plugins/plots/box_plot.xml:57
+#: rkward/plugins/plots/dotchart.xml:64 rkward/plugins/plots/piechart.xml:67
+#, kde-format
+msgid "Expression to use for labels"
+msgstr "Expresión para usar para as etiquetas"
+
+#. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="Bar labels"> <input label="...">
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Variable(s)"> <frame label="Labels"> <input label="...">
+#. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="Labels"> <input label="...">
+#. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Labels"> <input label="...">
+#: rkward/plugins/plots/barplot.xml:63 rkward/plugins/plots/box_plot.xml:58
+#: rkward/plugins/plots/dotchart.xml:65 rkward/plugins/plots/piechart.xml:68
+#, kde-format
+msgid "Labels (separated by ';')"
+msgstr "Etiquetas (separadas por «;»)"
+
+#. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="...">
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="...">
+#. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="...">
+#. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="...">
+#. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="...">
+#. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="...">
+#. i18n: ectx: (Scatterplot Matrix) <dialog label="Scatterplot Matrix"> <tab label="...">
+#. i18n: ectx: (Stem-and-Leaf Plots) <dialog label="Stem-and-Leaf Plots"> <tab label="...">
+#. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="...">
+#: rkward/plugins/plots/barplot.xml:65 rkward/plugins/plots/box_plot.xml:66
+#: rkward/plugins/plots/density_plot.xml:40
+#: rkward/plugins/plots/dotchart.xml:68 rkward/plugins/plots/piechart.xml:71
+#: rkward/plugins/plots/scatterplot.xml:31
+#: rkward/plugins/plots/scatterplot_matrix.xml:17
+#: rkward/plugins/plots/stem.xml:17 rkward/plugins/plots/stripchart_plot.xml:30
+#, kde-format
+msgid "Options"
+msgstr "Opcións"
+
+#. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="Options"> <embed label="...">
+#: rkward/plugins/plots/barplot.xml:66
+#, kde-format
+msgid "Barplot Options"
+msgstr "Opcións de Barplot"
+
+#. i18n: ectx: (Loaded from Boxplot)
+#: rkward/plugins/plots/box_plot.js:30
+#, kde-format
+msgctxt "R code comment"
+msgid "split sample by grouping variables"
+msgstr "Dividir a mostra agrupando as variábeis."
+
+#. i18n: ectx: (Loaded from Boxplot)
+#: rkward/plugins/plots/box_plot.js:32
+#, kde-format
+msgctxt "R code comment"
+msgid "adjust width and position of boxes to achieve dodging"
+msgstr "Axustar a anchura e a posición das caixas para omitir caixas."
+
+#. i18n: ectx: (Loaded from Boxplot)
+#: rkward/plugins/plots/box_plot.js:40
+#, kde-format
+msgctxt "R code comment"
+msgid "convert single sample variables to list"
+msgstr "Converter as variábeis cunha única mostra en listas."
+
+#. i18n: ectx: (Loaded from Boxplot)
+#. i18n: ectx: (Boxplot) <dialog label="...">
+#. i18n: ectx: (Scatterplot Matrix) <dialog label="Scatterplot Matrix"> <tab label="Options"> <radio label="Diagonal panels"> <option label="...">
+#: rkward/plugins/plots/box_plot.js:50 rkward/plugins/plots/box_plot.js:52
+#: rkward/plugins/plots/box_plot.xml:31
+#: rkward/plugins/plots/scatterplot_matrix.xml:20
+#, kde-format
+msgid "Boxplot"
+msgstr "Boxplot"
+
+#. i18n: ectx: (Loaded from Boxplot)
+#: rkward/plugins/plots/box_plot.js:50
+#, kde-format
+msgid "Outcome variable"
+msgstr "Variábel resultante"
+
+#. i18n: ectx: (Loaded from Boxplot)
+#: rkward/plugins/plots/box_plot.js:50
+#, kde-format
+msgid "Grouping variable(s)"
+msgstr "Agrupamento de variábeis"
+
+#. i18n: ectx: (Loaded from Boxplot)
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="...">
+#. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="...">
+#. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="...">
+#. i18n: ectx: (Histogram) <dialog label="Histogram"> <tab label="...">
+#. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="...">
+#: rkward/plugins/plots/box_plot.js:52 rkward/plugins/plots/box_plot.xml:33
+#: rkward/plugins/plots/density_plot.xml:30
+#: rkward/plugins/plots/ecdf_plot.xml:25 rkward/plugins/plots/histogram.xml:29
+#: rkward/plugins/plots/stripchart_plot.xml:19
+#, kde-format
+msgid "Variable(s)"
+msgstr "Variábeis"
+
+#. i18n: ectx: (Loaded from Boxplot)
+#: rkward/plugins/plots/box_plot.js:60
+#, kde-format
+msgctxt "R code comment"
+msgid "actual boxplot function"
+msgstr "Función real de Boxplot."
+
+#. i18n: ectx: (Loaded from Boxplot)
+#: rkward/plugins/plots/box_plot.js:64
+#, kde-format
+msgctxt "R code comment"
+msgid "Calculate geometric mean"
+msgstr "Calcular a media xeométrica"
+
+#. i18n: ectx: (Loaded from Boxplot)
+#: rkward/plugins/plots/box_plot.js:67
+#, kde-format
+msgctxt "R code comment"
+msgid "Calculate harmonic mean"
+msgstr "Calcular a media harmónica"
+
+#. i18n: ectx: (Loaded from Boxplot)
+#: rkward/plugins/plots/box_plot.js:70
+#, kde-format
+msgctxt "R code comment"
+msgid "Calculate the interquartile mean"
+msgstr "Calcular a media intercuartílica"
+
+#. i18n: ectx: (Loaded from Boxplot)
+#: rkward/plugins/plots/box_plot.js:78 rkward/plugins/plots/box_plot.js:80
+#, kde-format
+msgctxt "R code comment"
+msgid ""
+"calculates the mean for all data and adds a point at the corresponding "
+"position"
+msgstr ""
+"Calcula a media de todos os datos e engade un punto na posición "
+"correspondente."
+
+#. i18n: ectx: (Loaded from Boxplot) <summary>
+#: rkward/plugins/plots/box_plot.rkh:3
+#, kde-format
+msgid "Creates a box plot of one or more variables."
+msgstr "Crea unha gráfica de caixas para unha ou varias variábeis."
+
+#. i18n: ectx: (Loaded from Boxplot) <usage>
+#: rkward/plugins/plots/box_plot.rkh:7
+#, kde-format
+msgid ""
+"Choose numerical data to be plotted. Data can be organized in separate "
+"vectors, or in a single outcome variable and one or more grouping variables."
+msgstr ""
+"Escolla os datos numéricos para representar. Os datos poden organizarse en "
+"vectores separados, ou nunha única variábel resultante e unha ou varias "
+"variábeis de agrupamento."
+
+#. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Data format")
+#: rkward/plugins/plots/box_plot.rkh:13
+#, kde-format
+msgid ""
+"Select the format of your data. This can either be separate numerical "
+"vectors, or a single outcome variable split by one or more grouping "
+"variables."
+msgstr ""
+"Seleccione o formato dos datos, xa sexa vectores numéricos separados, ou "
+"unha única variábel resultante dividida nunha ou máis variábeis de "
+"agrupamento."
+
+#. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Variable(s):")
+#: rkward/plugins/plots/box_plot.rkh:14
+#, kde-format
+msgid "For separate variables mode: Select one or more numerical vectors."
+msgstr ""
+"Para o modo de variábeis separadas: Seleccione un ou máis vectores numéricos."
+
+#. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Outcome variable:")
+#: rkward/plugins/plots/box_plot.rkh:15
+#, kde-format
+msgid ""
+"For single(grouped) variable mode: Select one numerical vector as the "
+"outcome variable."
+msgstr ""
+"Para o modo de variábel única (agrupada): Seleccione un vector numérico como "
+"a variábel resultante."
+
+#. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Group variable(s):")
+#: rkward/plugins/plots/box_plot.rkh:16
+#, kde-format
+msgid ""
+"For single(grouped) variable mode: Select one or more vectors by which to "
+"group the outcome variable. Group variables should have the same length as "
+"the outcome variable."
+msgstr ""
+"Para o modo de variábel única (agrupada): Seleccione un ou máis vectores "
+"polos que agrupar a variábel resultante. As variábeis de agrupamento "
+"deberían ter a mesma lonxitude que a variábel resultante."
+
+#. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Dodged groups")
+#: rkward/plugins/plots/box_plot.rkh:17
+#, kde-format
+msgid ""
+"For single(grouped) variable mode: Dodging boxes within one or more groups "
+"can be a nice option when the outcome is split by several group variables. "
+"This allows you to select, across how many group variables, boxes should be "
+"dodged (\"0\" for no dodging, \"1\" to dodge only the first group variable)."
+msgstr ""
+"Para o modo de variábel única (agrupada): Omitir caixas dentro dun ou máis "
+"grupos pode ser unha boa opción cando o resultado está dividido en varias "
+"variábeis de grupo. Isto permítelle seleccionar o número de caixas que se "
+"deberían omitir e en cantas variábeis de grupo («0» para non omitir, «1» "
+"para omitir só a primeira variábel do grupo)."
+
+#. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Box width")
+#: rkward/plugins/plots/box_plot.rkh:19
+#, kde-format
+msgid "Allows to change the width of the boxes, relative to the entire plot."
+msgstr "Permite cambiar a anchura das caixas en relación á gráfica."
+
+#. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "orientation")
+#: rkward/plugins/plots/box_plot.rkh:21
+#, kde-format
+msgid "Orientation of the plot: horizontal or vertical."
+msgstr "Orientación da gráfica: horizontal ou vertical."
+
+#. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Draw Notches")
+#: rkward/plugins/plots/box_plot.rkh:22
+#, kde-format
+msgid "Whether to draw notches"
+msgstr "Determina se debuxar as marcas"
+
+#. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Draw Outliers")
+#: rkward/plugins/plots/box_plot.rkh:23
+#, kde-format
+msgid ""
+"Whether to draw outliers (if any). Outliers are draw as dots, if this option "
+"is checked."
+msgstr ""
+"Determina se debuxar os valores atípicos. Se marca esta opción, os valores "
+"atípicos debúxanse como puntos."
+
+#. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Show mean")
+#: rkward/plugins/plots/box_plot.rkh:24
+#, kde-format
+msgid "Whether to draw a mark indicating the mean."
+msgstr "Determina se debuxar unha marca indicando a media."
+
+#. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Trim of arithmetic mean")
+#: rkward/plugins/plots/box_plot.rkh:25
+#, kde-format
+msgid ""
+"Trim applies only to the arithmetic mean. By default trim is set to zero. It "
+"defines the fraction of observations to be trimmed from each end of a "
+"variable before the arithmetic mean is computed."
+msgstr ""
+"O recorte só ten efecto sobre a media aritmética. O recorte predeterminado é "
+"cero. Define a fracción das observacións para recortar de cada extremo dunha "
+"variábel antes de calcular a media aritmética."
+
+#. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "mean symbol")
+#: rkward/plugins/plots/box_plot.rkh:26
+#, kde-format
+msgid "If the mean is to be indicated: Symbol to use as mark."
+msgstr "Se debe indicarse a media: Símbolo para usar como marca."
+
+#. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Type of mean")
+#: rkward/plugins/plots/box_plot.rkh:27
+#, kde-format
+msgid ""
+"Use this option to select a specific type of mean. The arithmetic mean is "
+"the default. Others include the geometric mean, the harmonic mean and "
+"interquartile mean (IQM)."
+msgstr ""
+"Use esta opción para seleccionar un tipo concreto de media. A media "
+"aritmética é o tipo predeterminado, pero pode seleccionar outro como a media "
+"xeométrica, a media harmónica ou a media intercuartílica (IQM)."
+
+#. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "show standard deviation")
+#: rkward/plugins/plots/box_plot.rkh:28
+#, kde-format
+msgid "Whether to draw a mark indicating the standard deviation."
+msgstr "Determina se debuxar unha marca indicando a desviación estándar."
+
+#. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "standard deviation symbol (upper)")
+#: rkward/plugins/plots/box_plot.rkh:29
+#, kde-format
+msgid ""
+"If the standard deviation is to be indicated: Symbol to use as mark for the "
+"upper sd."
+msgstr ""
+"Se debe indicarse a desviación estándar: Símbolo para usar como marca para a "
+"desviación estándar superior."
+
+#. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "standard deviation symbol (lower)")
+#: rkward/plugins/plots/box_plot.rkh:30
+#, kde-format
+msgid ""
+"If the standard deviation is to be indicated: Symbol to use as mark for the "
+"lower sd."
+msgstr ""
+"Se debe indicarse a desviación estándar: Símbolo para usar como marca para a "
+"desviación estándar inferior."
+
+#. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "size")
+#: rkward/plugins/plots/box_plot.rkh:31
+#, kde-format
+msgid ""
+"Size of mean / sd indicators. This option is only available, if at least one "
+"of mean or sd are to be drawn."
+msgstr ""
+"Tamaño dos indicadores de media e de desviación estándar. Esta opción só "
+"está dispoñíbel se polo menos un dos dous valores debe debuxarse."
+
+#. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Color")
+#: rkward/plugins/plots/box_plot.rkh:32
+#, kde-format
+msgid ""
+"Color of mean / sd indicators. This option is only available, if at least "
+"one of mean or sd are to be drawn."
+msgstr ""
+"Cor dos indicadores de media e de desviación estándar. Esta opción só está "
+"dispoñíbel se polo menos un dos dous valores debe debuxarse."
+
+#. i18n: ectx: (Loaded from Boxplot) <settings> <setting title="..."> (refers to element labelled "Plot Options")
+#: rkward/plugins/plots/box_plot.rkh:33
+#, kde-format
+msgid "General plot Options"
+msgstr "Opcións xerais de representación"
+
+#. i18n: ectx: (Loaded from Boxplot) <settings> <setting title="General plot Options"> (refers to element labelled "Plot Options")
+#: rkward/plugins/plots/box_plot.rkh:33
+#, kde-format
+msgid ""
+"Since these settings are reused in further plugins, they are documented on a "
+"page of their own: See <link href=\"rkward://component/plot_options\"/>."
+msgstr ""
+"Dado que estas opcións se usan de novo noutros complementos, están "
+"documentadas nunha páxina de seu: <link href=\"rkward://component/"
+"plot_options\"/>."
+
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Variable(s)"> <radio label="...">
+#: rkward/plugins/plots/box_plot.xml:36
+#, kde-format
+msgid "Data format"
+msgstr "Formato dos datos"
+
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Variable(s)"> <radio label="Data format"> <option label="...">
+#: rkward/plugins/plots/box_plot.xml:37
+#, kde-format
+msgid "Separate variables"
+msgstr "Variábeis separadas"
+
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Variable(s)"> <radio label="Data format"> <option label="...">
+#: rkward/plugins/plots/box_plot.xml:38
+#, kde-format
+msgid "Single (grouped) variable"
+msgstr "Variábel única (agrupada)"
+
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Variable(s)"> <varslot label="...">
+#: rkward/plugins/plots/box_plot.xml:43
+#, kde-format
+msgid "Variable(s):"
+msgstr "Variábeis:"
+
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Variable(s)"> <varslot label="...">
+#: rkward/plugins/plots/box_plot.xml:44
+#, kde-format
+msgid "Outcome variable:"
+msgstr "Variábel resultante:"
+
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Variable(s)"> <varslot label="...">
+#: rkward/plugins/plots/box_plot.xml:45
+#, kde-format
+msgid "Group variable(s):"
+msgstr "Variábeis de agrupamento:"
+
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Variable(s)"> <spinbox label="...">
+#: rkward/plugins/plots/box_plot.xml:46
+#, kde-format
+msgid "Dodged groups"
+msgstr "Grupos con omisións"
+
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Variable(s)"> <frame label="...">
+#. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="...">
+#. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="Labels"> <radio label="...">
+#. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="...">
+#. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Labels"> <radio label="...">
+#: rkward/plugins/plots/box_plot.xml:51 rkward/plugins/plots/dotchart.xml:58
+#: rkward/plugins/plots/dotchart.xml:59 rkward/plugins/plots/piechart.xml:61
+#: rkward/plugins/plots/piechart.xml:62
+#, kde-format
+msgid "Labels"
+msgstr "Etiquetas"
+
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Variable(s)"> <frame label="Labels"> <radio label="...">
+#: rkward/plugins/plots/box_plot.xml:52
+#, kde-format
+msgid "Labeling"
+msgstr "Lendas"
+
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Variable(s)"> <spinbox label="...">
+#: rkward/plugins/plots/box_plot.xml:60
+#, kde-format
+msgid "Box width"
+msgstr "Anchura das caixas:"
+
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <radio label="...">
+#: rkward/plugins/plots/box_plot.xml:69
+#, kde-format
+msgid "orientation"
+msgstr "orientación"
+
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <radio label="orientation"> <option label="...">
+#: rkward/plugins/plots/box_plot.xml:70
+#, kde-format
+msgid "horizontal"
+msgstr "horizontal"
+
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <radio label="orientation"> <option label="...">
+#: rkward/plugins/plots/box_plot.xml:71
+#, kde-format
+msgid "vertical"
+msgstr "vertical"
+
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <checkbox label="...">
+#: rkward/plugins/plots/box_plot.xml:73
+#, kde-format
+msgid "Draw Notches"
+msgstr "Debuxar as marcas"
+
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <checkbox label="...">
+#: rkward/plugins/plots/box_plot.xml:74
+#, kde-format
+msgid "Draw Outliers"
+msgstr "Debuxar os valores atípicos."
+
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <frame label="...">
+#: rkward/plugins/plots/box_plot.xml:76
+#, kde-format
+msgid "Size and color of marks"
+msgstr "Tamaño e cor das marcas"
+
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <frame label="Size and color of marks"> <spinbox label="...">
+#: rkward/plugins/plots/box_plot.xml:77
+#, kde-format
+msgid "size"
+msgstr "tamaño"
+
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <frame label="Size and color of marks"> <embed label="...">
+#. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <frame label="Rug"> <embed label="...">
+#. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="Further options"> <frame label="Theoretical Normal Distribution"> <embed label="...">
+#. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="Further options"> <frame label="Rug"> <embed label="...">
+#. i18n: ectx: (Histogram) <dialog label="Histogram"> <tab label="Density"> <frame label="General options"> <embed label="...">
+#. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <radio label="...">
+#: rkward/plugins/plots/box_plot.xml:78
+#: rkward/plugins/plots/density_plot.xml:87
+#: rkward/plugins/plots/ecdf_plot.xml:43 rkward/plugins/plots/ecdf_plot.xml:55
+#: rkward/plugins/plots/histogram.xml:48
+#: rkward/plugins/plots/scatterplot.xml:55
+#, kde-format
+msgid "Color"
+msgstr "Cor"
+
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <frame label="...">
+#: rkward/plugins/plots/box_plot.xml:82
+#, kde-format
+msgid "Show mean"
+msgstr "Mostrar a media"
+
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <frame label="Show mean"> <spinbox label="...">
+#: rkward/plugins/plots/box_plot.xml:83
+#, kde-format
+msgid "mean symbol"
+msgstr "Símbolo da media"
+
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <frame label="Show mean"> <radio label="...">
+#: rkward/plugins/plots/box_plot.xml:85
+#, kde-format
+msgid "Type of mean"
+msgstr "Tipo de media"
+
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> [...] <radio label="Type of mean"> <option label="...">
+#: rkward/plugins/plots/box_plot.xml:86
+#, kde-format
+msgid "Arithmetic mean"
+msgstr "Media aritmética"
+
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> [...] <radio label="Type of mean"> <option label="...">
+#: rkward/plugins/plots/box_plot.xml:87
+#, kde-format
+msgid "Geometric mean"
+msgstr "Media xeométrica"
+
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> [...] <radio label="Type of mean"> <option label="...">
+#: rkward/plugins/plots/box_plot.xml:88
+#, kde-format
+msgid "Harmonic mean"
+msgstr "Media harmónica"
+
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> [...] <radio label="Type of mean"> <option label="...">
+#: rkward/plugins/plots/box_plot.xml:89
+#, kde-format
+msgid "Interquartile mean (IQM)"
+msgstr "Media intercuartílica (IQM)"
+
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <frame label="Show mean"> <spinbox label="...">
+#: rkward/plugins/plots/box_plot.xml:91
+#, kde-format
+msgid "Trim of arithmetic mean"
+msgstr "Recorte da media aritmética"
+
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <frame label="...">
+#: rkward/plugins/plots/box_plot.xml:94
+#, kde-format
+msgid "show standard deviation"
+msgstr "Mostrar a desviación estándar"
+
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <frame label="show standard deviation"> <spinbox label="...">
+#: rkward/plugins/plots/box_plot.xml:95
+#, kde-format
+msgid "standard deviation symbol (upper)"
+msgstr "Símbolo da desviación estándar (superior)"
+
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <frame label="show standard deviation"> <spinbox label="...">
+#: rkward/plugins/plots/box_plot.xml:96
+#, kde-format
+msgid "standard deviation symbol (lower)"
+msgstr "Símbolo da desviación estándar (inferior)"
+
+#. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <embed label="...">
+#. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Axis/Title"> <embed label="...">
+#. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="Options"> <embed label="...">
+#. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="Title/Axis"> <embed label="...">
+#. i18n: ectx: (Generic Plot) <dialog label="Generic Plot"> <tab label="Variables"> <embed label="...">
+#. i18n: ectx: (Pareto chart) <dialog label="Pareto chart"> <tab label="...">
+#. i18n: ectx: (Pareto chart) <dialog label="Pareto chart"> <tab label="Plot Options"> <embed label="...">
+#. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <embed label="...">
+#. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="...">
+#. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Plot Options"> <embed label="...">
+#: rkward/plugins/plots/box_plot.xml:98
+#: rkward/plugins/plots/density_plot.xml:95
+#: rkward/plugins/plots/dotchart.xml:69 rkward/plugins/plots/ecdf_plot.xml:63
+#: rkward/plugins/plots/pareto.xml:52 rkward/plugins/plots/pareto.xml:54
+#: rkward/plugins/plots/piechart.xml:92 rkward/plugins/plots/plot.xml:18
+#: rkward/plugins/plots/stripchart_plot.xml:51
+#: rkward/plugins/plots/stripchart_plot.xml:53
+#, kde-format
+msgid "Plot Options"
+msgstr "Opcións da gráfica"
+
+#. i18n: ectx: (Loaded from Density Plot)
+#: rkward/plugins/plots/density_plot.js:40
+#, kde-format
+msgid "Highest density regions"
+msgstr "Rexións de maior densidade"
+
+#. i18n: ectx: (Loaded from Density Plot)
+#: rkward/plugins/plots/density_plot.js:45
+#, kde-format
+msgid "Length"
+msgstr "Lonxitude"
+
+#. i18n: ectx: (Loaded from Density Plot) <summary>
+#: rkward/plugins/plots/density_plot.rkh:3
+#, kde-format
+msgid ""
+"Plot an estimated density curve. Highest density regions can be marked up."
+msgstr ""
+"Representar unha curva de densidade estimada. Poden marcarse as rexións de "
+"maior densidade."
+
+#. i18n: ectx: (Loaded from Density Plot) <usage>
+#: rkward/plugins/plots/density_plot.rkh:7
+#, kde-format
+msgid ""
+"Select a numeric vector to estimate density for. For further options, see "
+"below."
+msgstr ""
+"Seleccionar un vector numérico para estimar a súa densidade. Ten máis "
+"opcións enbaixo."
+
+#. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "variable(s):")
+#: rkward/plugins/plots/density_plot.rkh:13
+#, kde-format
+msgid "A numeric vector to estimate density for."
+msgstr "Un vector numérico para estimar a súa densidade."
+
+#. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "type of plot")
+#: rkward/plugins/plots/density_plot.rkh:16
+#, kde-format
+msgid ""
+"Type of plot: Plain density curve, or density curve with highest density "
+"regions marked up. For the second option, only the gaussian smoothing kernel "
+"is available (see below)."
+msgstr ""
+"Tipo de gráfica: curva de densidade simple ou curva coas rexións de maior "
+"densidade marcadas. Para a segunda opción, só está dispoñíbel o núcleo de "
+"suavizado de Gauss (máis información enbaixo)."
+
+#. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Smoothing Kernel")
+#: rkward/plugins/plots/density_plot.rkh:19
+#, kde-format
+msgid ""
+"Smoothing kernel to use. See <link href=\"rkward://rhelp/density\"/> for "
+"details on the available kernels."
+msgstr ""
+"Núcleo de suavizado para usar. Consulte en <link href=\"rkward://rhelp/"
+"density\"/> os núcleos dispoñíbeis."
+
+#. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Bandwidth")
+#: rkward/plugins/plots/density_plot.rkh:20
+#, kde-format
+msgid ""
+"Mode of choosing bandwidth. This is only applicable for gaussian smoothing "
+"kernels. This is the <i>bw</i> option of <link href=\"rkward://rhelp/density"
+"\">density()</link>."
+msgstr ""
+"Modo de escolla da largura de banda. Isto só ten efecto nos núcleos de "
+"suavizado de Gauss. Correspóndese coa opción <i>bw</i> de <link href="
+"\"rkward://rhelp/density\">density()</link>."
+
+#. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Adjust Bandwidth")
+#. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "Adjust Bandwidth")
+#: rkward/plugins/plots/density_plot.rkh:21
+#: rkward/plugins/plots/histogram.rkh:18
+#, kde-format
+msgid "Factor to adjust the bandwidth by."
+msgstr "Factor co que axustar a largura de banda."
+
+#. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Remove Missing Values")
+#: rkward/plugins/plots/density_plot.rkh:22
+#, kde-format
+msgid ""
+"Whether missing values should be removed. Otherwise missing values lead to "
+"an error during density estimation."
+msgstr ""
+"Determina se deben retirarse os valores que falten. En caso contrario, se "
+"faltan valores producirase un erro durante a estimación da densidade."
+
+#. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Resolution")
+#: rkward/plugins/plots/density_plot.rkh:23
+#, kde-format
+msgid ""
+"Resolution of the density estimation, i.e. the number of (equally spaced) "
+"points at which the density is estimated."
+msgstr ""
+"Resolución da estimación da densidade, é dicir, o número de puntos "
+"equidistantes nos que se estima a densidade."
+
+#. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Add rug")
+#. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "Add rug to plot")
+#: rkward/plugins/plots/density_plot.rkh:26
+#: rkward/plugins/plots/ecdf_plot.rkh:18
+#, kde-format
+msgid "Should a rug be added to the plot?"
+msgstr "Debería engadirse unha subgráfica unidimensional á gráfica?"
+
+#. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Ticksize")
+#: rkward/plugins/plots/density_plot.rkh:27
+#, kde-format
+msgid ""
+"Height of the rug ticks, where 1 corresponds to the height of the entire "
+"plot."
+msgstr ""
+"Altura das marcas da subgráfica unidimensional, onde 1 equivale á altura da "
+"gráfica."
+
+#. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Line width of ticks")
+#: rkward/plugins/plots/density_plot.rkh:28
+#, kde-format
+msgid "Line width of the rug."
+msgstr "Anchura de liña da subgráfica unidimiensional."
+
+#. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Side of Rug")
+#: rkward/plugins/plots/density_plot.rkh:29
+#, kde-format
+msgid "Should the rug be shown at the top or at the bottom of the plot?"
+msgstr ""
+"Debería mostrarse a subgráfica unidimiensional na parte superior da gráfica, "
+"ou na parte inferior?"
+
+#. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Color")
+#: rkward/plugins/plots/density_plot.rkh:30
+#, kde-format
+msgid "Color to use for drawing the rug."
+msgstr "Cor para debuxar a subgráfica unidimiensional."
+
+#. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Plot Options")
+#: rkward/plugins/plots/density_plot.rkh:33
+#, kde-format
+msgid ""
+"Further options regarding the look of the plot. See <link href=\"rkward://"
+"component/plot_options\"/> for details."
+msgstr ""
+"Opcións adicionais que afectan á aparencia da gráfica. Consulte <link href="
+"\"rkward://component/plot_options\"/> para máis información."
+
+#. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Variable(s)"> <varslot label="...">
+#. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="Variable(s)"> <varslot label="...">
+#. i18n: ectx: (Histogram) <dialog label="Histogram"> <tab label="Variable(s)"> <varslot label="...">
+#. i18n: ectx: (Scatterplot Matrix) <dialog label="Scatterplot Matrix"> <tab label="Variables"> <varslot label="...">
+#: rkward/plugins/plots/density_plot.xml:34
+#: rkward/plugins/plots/ecdf_plot.xml:29 rkward/plugins/plots/histogram.xml:33
+#: rkward/plugins/plots/scatterplot_matrix.xml:12
+#, kde-format
+msgid "variable(s):"
+msgstr "variábeis:"
+
+#. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <radio label="...">
+#: rkward/plugins/plots/density_plot.xml:43
+#, kde-format
+msgid "type of plot"
+msgstr "tipo de gráfica"
+
+#. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <radio label="type of plot"> <option label="...">
+#: rkward/plugins/plots/density_plot.xml:44
+#, kde-format
+msgid "plot normal density"
+msgstr "representar a densidade normal"
+
+#. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <radio label="type of plot"> <option label="...">
+#: rkward/plugins/plots/density_plot.xml:45
+#, kde-format
+msgid "plot highest density regions"
+msgstr "representar as rexións de maior densidade"
+
+#. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <frame label="...">
+#: rkward/plugins/plots/density_plot.xml:47
+#, kde-format
+msgid "density estimation options"
+msgstr "opcións de estimación da densidade"
+
+#. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <frame label="density estimation options"> <dropdown label="...">
+#: rkward/plugins/plots/density_plot.xml:50
+#, kde-format
+msgid "Smoothing Kernel"
+msgstr "Núcleo de suavizado"
+
+#. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Smoothing Kernel"> <option label="...">
+#: rkward/plugins/plots/density_plot.xml:51
+#, kde-format
+msgid "gaussian (default)"
+msgstr "de Gauss (predeterminado)"
+
+#. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Smoothing Kernel"> <option label="...">
+#: rkward/plugins/plots/density_plot.xml:52
+#, kde-format
+msgid "rectangular"
+msgstr "rectangular"
+
+#. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Smoothing Kernel"> <option label="...">
+#: rkward/plugins/plots/density_plot.xml:53
+#, kde-format
+msgid "triangular"
+msgstr "triangular"
+
+#. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Smoothing Kernel"> <option label="...">
+#: rkward/plugins/plots/density_plot.xml:54
+#, kde-format
+msgid "epanechnikov"
+msgstr "epanechnikov"
+
+#. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Smoothing Kernel"> <option label="...">
+#: rkward/plugins/plots/density_plot.xml:55
+#, kde-format
+msgid "biweight"
+msgstr "bipeso"
+
+#. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Smoothing Kernel"> <option label="...">
+#: rkward/plugins/plots/density_plot.xml:56
+#, kde-format
+msgid "cosine"
+msgstr "coseno"
+
+#. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Smoothing Kernel"> <option label="...">
+#: rkward/plugins/plots/density_plot.xml:57
+#, kde-format
+msgid "optcosine"
+msgstr "optcoseno"
+
+#. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <frame label="density estimation options"> <dropdown label="...">
+#. i18n: ectx: (Histogram) <dialog label="Histogram"> <tab label="Density"> <frame label="Bandwidth options"> <dropdown label="...">
+#: rkward/plugins/plots/density_plot.xml:59
+#: rkward/plugins/plots/histogram.xml:52
+#, kde-format
+msgid "Bandwidth"
+msgstr "Largura de banda"
+
+#. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Bandwidth"> <option label="...">
+#. i18n: ectx: (Histogram) <dialog label="Histogram"> [...] <dropdown label="Bandwidth"> <option label="...">
+#: rkward/plugins/plots/density_plot.xml:60
+#: rkward/plugins/plots/histogram.xml:53
+#, kde-format
+msgid "nrd0"
+msgstr "nrd0"
+
+#. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Bandwidth"> <option label="...">
+#. i18n: ectx: (Histogram) <dialog label="Histogram"> [...] <dropdown label="Bandwidth"> <option label="...">
+#: rkward/plugins/plots/density_plot.xml:61
+#: rkward/plugins/plots/histogram.xml:54
+#, kde-format
+msgid "nrd"
+msgstr "nrd"
+
+#. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Bandwidth"> <option label="...">
+#. i18n: ectx: (Histogram) <dialog label="Histogram"> [...] <dropdown label="Bandwidth"> <option label="...">
+#: rkward/plugins/plots/density_plot.xml:62
+#: rkward/plugins/plots/histogram.xml:55
+#, kde-format
+msgid "ucv"
+msgstr "ucv"
+
+#. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Bandwidth"> <option label="...">
+#. i18n: ectx: (Histogram) <dialog label="Histogram"> [...] <dropdown label="Bandwidth"> <option label="...">
+#: rkward/plugins/plots/density_plot.xml:63
+#: rkward/plugins/plots/histogram.xml:56
+#, kde-format
+msgid "bcv"
+msgstr "bcv"
+
+#. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Bandwidth"> <option label="...">
+#. i18n: ectx: (Histogram) <dialog label="Histogram"> [...] <dropdown label="Bandwidth"> <option label="...">
+#: rkward/plugins/plots/density_plot.xml:64
+#: rkward/plugins/plots/histogram.xml:57
+#, kde-format
+msgid "SJ-ste"
+msgstr "SJ-ste"
+
+#. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Bandwidth"> <option label="...">
+#. i18n: ectx: (Histogram) <dialog label="Histogram"> [...] <dropdown label="Bandwidth"> <option label="...">
+#: rkward/plugins/plots/density_plot.xml:65
+#: rkward/plugins/plots/histogram.xml:58
+#, kde-format
+msgid "SJ-dpi"
+msgstr "SJ-dpi"
+
+#. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <frame label="density estimation options"> <spinbox label="...">
+#. i18n: ectx: (Histogram) <dialog label="Histogram"> <tab label="Density"> <frame label="Bandwidth options"> <spinbox label="...">
+#: rkward/plugins/plots/density_plot.xml:67
+#: rkward/plugins/plots/histogram.xml:60
+#, kde-format
+msgid "Adjust Bandwidth"
+msgstr "Axustar a largura de banda"
+
+#. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <frame label="density estimation options"> <checkbox label="...">
+#. i18n: ectx: (Histogram) <dialog label="Histogram"> <tab label="Density"> <frame label="General options"> <checkbox label="...">
+#: rkward/plugins/plots/density_plot.xml:71
+#: rkward/plugins/plots/histogram.xml:47
+#, kde-format
+msgid "Remove Missing Values"
+msgstr "Retirar os valores que falten"
+
+#. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <frame label="density estimation options"> <spinbox label="...">
+#: rkward/plugins/plots/density_plot.xml:72
+#, kde-format
+msgid "Resolution"
+msgstr "Resolución"
+
+#. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <frame label="...">
+#. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="Further options"> <frame label="...">
+#: rkward/plugins/plots/density_plot.xml:79
+#: rkward/plugins/plots/ecdf_plot.xml:45
+#, kde-format
+msgid "Rug"
+msgstr "Subgráfica unidimensional"
+
+#. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <frame label="Rug"> <checkbox label="...">
+#: rkward/plugins/plots/density_plot.xml:80
+#, kde-format
+msgid "Add rug"
+msgstr "Engadir unha subgráfica unidimensional"
+
+# skip-rule: noPT-2011-dual_check3
+#. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <frame label="Rug"> <spinbox label="...">
+#. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="Further options"> <frame label="Rug"> <spinbox label="...">
+#: rkward/plugins/plots/density_plot.xml:81
+#: rkward/plugins/plots/ecdf_plot.xml:53
+#, kde-format
+msgid "Ticksize"
+msgstr "Tamaño das marcas"
+
+#. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <frame label="Rug"> <spinbox label="...">
+#. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="Further options"> <frame label="Rug"> <spinbox label="...">
+#: rkward/plugins/plots/density_plot.xml:82
+#: rkward/plugins/plots/ecdf_plot.xml:54
+#, kde-format
+msgid "Line width of ticks"
+msgstr "Anchura de liña das marcas"
+
+#. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <frame label="Rug"> <radio label="...">
+#. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="Further options"> <frame label="Rug"> <radio label="...">
+#: rkward/plugins/plots/density_plot.xml:83
+#: rkward/plugins/plots/ecdf_plot.xml:48
+#, kde-format
+msgid "Side of Rug"
+msgstr "Lado da subgráfica unidimensional"
+
+#. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <radio label="Side of Rug"> <option label="...">
+#: rkward/plugins/plots/density_plot.xml:84
+#, kde-format
+msgid "Rug on Bottom"
+msgstr "Subgráfica unidimensional na parte inferior"
+
+#. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <radio label="Side of Rug"> <option label="...">
+#: rkward/plugins/plots/density_plot.xml:85
+#, kde-format
+msgid "Rug on Top"
+msgstr "Subgráfica unidimensional na parte superior"
+
+#. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="...">
+#: rkward/plugins/plots/density_plot.xml:93
+#, kde-format
+msgid "Axis/Title"
+msgstr "Eixo ou título"
+
+#. i18n: ectx: (Loaded from Dot chart)
+#: rkward/plugins/plots/dotchart.js:25
+#, kde-format
+msgctxt "R code comment"
+msgid "dotchart() is somewhat picky about data type"
+msgstr "dotchart() é algo esixente sobre o tipo de datos"
+
+#. i18n: ectx: (Loaded from Dot chart)
+#. i18n: ectx: (Loaded from Pareto chart)
+#. i18n: ectx: (Loaded from Pie chart)
+#: rkward/plugins/plots/dotchart.js:29 rkward/plugins/plots/pareto.js:10
+#: rkward/plugins/plots/piechart.js:52
+#, kde-format
+msgid ""
+"Data is not numeric, but proceeding as requested.\\nDid you forget to check "
+"the tabulate option?"
+msgstr ""
+"O dato non é numérico, pero continuarase tal e como se solicitou.\\nEsqueceu "
+"marcar a opción de tabular?"
+
+#. i18n: ectx: (Loaded from Dot chart)
+#. i18n: ectx: (Dot chart) <dialog label="...">
+#: rkward/plugins/plots/dotchart.js:39 rkward/plugins/plots/dotchart.xml:34
+#, kde-format
+msgid "Dot chart"
+msgstr "Gráfica de puntos"
+
+#. i18n: ectx: (Loaded from Dot chart) <summary>
+#: rkward/plugins/plots/dotchart.rkh:3
+#, kde-format
+msgid "Draw a dot chart"
+msgstr "Debuxar unha gráfica de puntos"
+
+#. i18n: ectx: (Loaded from Dot chart) <settings> <setting> (refers to element labelled "Variable")
+#: rkward/plugins/plots/dotchart.rkh:13
+#, kde-format
+msgid ""
+"If your data is already suitable for plotting, directly, specify it here. "
+"Otherwise, leave this empty, and check the <i><label id=\"tabulate\"/></i> "
+"option, below."
+msgstr ""
+"Se os seus datos xa son axeitados para representarse, directamente, indíqueo "
+"aquí. En caso contrario, deixe este campo baleiro, e marque a opción "
+"<i><label id=\"tabulate\"/></i> de enbaixo."
+
+#. i18n: ectx: (Loaded from Dot chart) <settings> <setting> (refers to element labelled "Plot Options")
+#. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "Plot Options")
+#: rkward/plugins/plots/dotchart.rkh:22 rkward/plugins/plots/piechart.rkh:31
+#, kde-format
+msgid ""
+"Generic plot options. See <link href=\"rkward://component/plot_options\"/>."
+msgstr ""
+"Opcións xenéricas de gráfica. Consulte <link href=\"rkward://component/"
+"plot_options\"/>."
+
+#. i18n: ectx: (Loaded from Empirical Distribution Function)
+#: rkward/plugins/plots/ecdf_plot.js:24
+#, kde-format
+msgid "Empirical Cumulative Distribution Function"
+msgstr "Función de distribución acumulativa empírica (ECDF)"
+
+#. i18n: ectx: (Loaded from Empirical Distribution Function)
+#: rkward/plugins/plots/ecdf_plot.js:26
+#, kde-format
+msgid "Minimum"
+msgstr "Mínimo"
+
+#. i18n: ectx: (Loaded from Empirical Distribution Function)
+#: rkward/plugins/plots/ecdf_plot.js:27
+#, kde-format
+msgid "Maximum"
+msgstr "Máximo"
+
+#. i18n: ectx: (Loaded from Empirical Distribution Function) <summary>
+#: rkward/plugins/plots/ecdf_plot.rkh:3
+#, kde-format
+msgid "Plot an empirical cumulative distribution function."
+msgstr "Representar unha función de distribución acumulativa empírica (ECDF)."
+
+#. i18n: ectx: (Loaded from Empirical Distribution Function) <usage>
+#: rkward/plugins/plots/ecdf_plot.rkh:6
+#, kde-format
+msgid ""
+"Select a variable to plot an ECDF for. The theoretical normal distribution "
+"and a rug can be added to the plot."
+msgstr ""
+"Seleccionar unha variábel para representar a súa función de distribución "
+"acumulativa empírica (ECDF). Poden engadirse á gráfica a distribución normal "
+"teórica e unha subgráfica unidimensional."
+
+#. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "variable(s):")
+#: rkward/plugins/plots/ecdf_plot.rkh:11
+#, kde-format
+msgid "The variable to plot the ECDF"
+msgstr "A variábel para representar a ECDF"
+
+#. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "Step function plot options")
+#: rkward/plugins/plots/ecdf_plot.rkh:13
+#, kde-format
+msgid ""
+"Options to change the look of the ECDF plot itself. Refer to <link href="
+"\"rkward://component/plot_stepfun_options\"/> for details."
+msgstr ""
+"Opcións para cambiar a aparencia da gráfica da función de distribución "
+"acumulativa empírica (ECDF). Consulte <link href=\"rkward://component/"
+"plot_stepfun_options\"/> para máis información."
+
+#. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "Draw Theoretical Normal Distribution")
+#: rkward/plugins/plots/ecdf_plot.rkh:15
+#, kde-format
+msgid "Should a theoretical normal distribution curve be added to the plot?"
+msgstr "Debería engadirse á gráfica unha curva de distribución normal teórica?"
+
+#. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "Adjust to mean and sd of data")
+#: rkward/plugins/plots/ecdf_plot.rkh:16
+#, kde-format
+msgid ""
+"Should the normal distribution curve be adjusted to match the mean and "
+"standard deviation of the plotted data? If this is not set a normal curve "
+"with mean 0 and sd 1 is drawn."
+msgstr ""
+"Debería axustarse a curva da distribución normal para que se corresponda coa "
+"media e a desviación estándar dos datos representados? Se isto non se define "
+"debúxase unha curva normal con 0 de media e 1 de desviación estándar."
+
+#. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "Color")
+#: rkward/plugins/plots/ecdf_plot.rkh:17
+#, kde-format
+msgid "Color of the theoretical normal distribution curve."
+msgstr "Cor da curva de distribución normal teórica."
+
+#. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "Side of Rug")
+#: rkward/plugins/plots/ecdf_plot.rkh:19
+#, kde-format
+msgid "Should the rug be added above or below the plot?"
+msgstr ""
+"Debería engadirse a subgráfica unidimensional á parte superior da gráfica ou "
+"á parte inferior?"
+
+#. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "Ticksize")
+#: rkward/plugins/plots/ecdf_plot.rkh:20
+#, kde-format
+msgid "Height of the rug ticks"
+msgstr "Altura das marcas da subgráfica unidimensional"
+
+#. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "Line width of ticks")
+#: rkward/plugins/plots/ecdf_plot.rkh:21
+#, kde-format
+msgid "Line width of the rug ticks"
+msgstr "Anchura de liña das marcas da subgráfica unidimiensional"
+
+#. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "Color")
+#: rkward/plugins/plots/ecdf_plot.rkh:22
+#, kde-format
+msgid "Color of the rug"
+msgstr "Cor da subgráfica unidimensional"
+
+#. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "Plot Options")
+#: rkward/plugins/plots/ecdf_plot.rkh:24
+#, kde-format
+msgid ""
+"Further generic plot options. Refer to <link href=\"rkward://component/"
+"plot_options\"/> for details."
+msgstr ""
+"Opcións xenéricas adicionais de gráfica. Consulte <link href=\"rkward://"
+"component/plot_options\"/> para máis información."
+
+#. i18n: ectx: (Empirical Distribution Function) <dialog label="...">
+#: rkward/plugins/plots/ecdf_plot.xml:23
+#, kde-format
+msgid "Empirical Distribution Function"
+msgstr "Función de distribución empírica"
+
+#. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="...">
+#: rkward/plugins/plots/ecdf_plot.xml:35
+#, kde-format
+msgid "Step function options"
+msgstr "Opcións da función de paso"
+
+#. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="Step function options"> <embed label="...">
+#: rkward/plugins/plots/ecdf_plot.xml:36
+#, kde-format
+msgid "Step function plot options"
+msgstr "Opcións da gráfica da función de paso"
+
+#. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="...">
+#. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="...">
+#: rkward/plugins/plots/ecdf_plot.xml:39
+#: rkward/plugins/plots/scatterplot.xml:70
+#, kde-format
+msgid "Further options"
+msgstr "Opcións adicionais"
+
+#. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="Further options"> <frame label="...">
+#: rkward/plugins/plots/ecdf_plot.xml:40
+#, kde-format
+msgid "Theoretical Normal Distribution"
+msgstr "Distribución normal teórica"
+
+#. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="Further options"> <frame label="Theoretical Normal Distribution"> <checkbox label="...">
+#: rkward/plugins/plots/ecdf_plot.xml:41
+#, kde-format
+msgid "Draw Theoretical Normal Distribution"
+msgstr "Debuxar a distribución normal teórica"
+
+#. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="Further options"> <frame label="Theoretical Normal Distribution"> <checkbox label="...">
+#: rkward/plugins/plots/ecdf_plot.xml:42
+#, kde-format
+msgid "Adjust to mean and sd of data"
+msgstr "Axustar á media e á desviación estándar dos datos"
+
+#. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="Further options"> <frame label="Rug"> <checkbox label="...">
+#: rkward/plugins/plots/ecdf_plot.xml:46
+#, kde-format
+msgid "Add rug to plot"
+msgstr "Engadir unha subgráfica unidimensional á gráfica"
+
+#. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> [...] <radio label="Side of Rug"> <option label="...">
+#: rkward/plugins/plots/ecdf_plot.xml:49
+#, kde-format
+msgid "Rug on bottom"
+msgstr "Subgráfica unidimensional na parte inferior"
+
+#. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> [...] <radio label="Side of Rug"> <option label="...">
+#: rkward/plugins/plots/ecdf_plot.xml:50
+#, kde-format
+msgid "Rug on top"
+msgstr "Subgráfica unidimensional na parte superior"
+
+#. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="...">
+#: rkward/plugins/plots/ecdf_plot.xml:61
+#, kde-format
+msgid "Title/Axis"
+msgstr "Título ou eixo"
+
+#. i18n: ectx: (Loaded from Histogram)
+#: rkward/plugins/plots/histogram.js:21
+#, kde-format
+msgid "Density curve"
+msgstr "Curva de densidade"
+
+#. i18n: ectx: (Loaded from Histogram) <summary>
+#: rkward/plugins/plots/histogram.rkh:3
+#, kde-format
+msgid "Plot a histogram."
+msgstr "Representar un histograma."
+
+#. i18n: ectx: (Loaded from Histogram) <usage>
+#: rkward/plugins/plots/histogram.rkh:6
+#, kde-format
+msgid ""
+"Select a variable to plot a histogram. For available options, see below."
+msgstr ""
+"Seleccionar unha variábel para representar un histograma. Consulte as "
+"opcións dispoñíbeis enbaixo."
+
+#. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "variable(s):")
+#: rkward/plugins/plots/histogram.rkh:11
+#, kde-format
+msgid "The variable to plot the histogram for"
+msgstr "A variábel para representar o seu histograma"
+
+#. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "Histogram Options")
+#: rkward/plugins/plots/histogram.rkh:13
+#, kde-format
+msgid ""
+"Options concerning the calculation and look of the histogram. Refer to <link "
+"href=\"rkward://component/histogram_options\"/> for details."
+msgstr ""
+"Opcións sobre o cálculo e aparencia do histograma. Consulte <link href="
+"\"rkward://component/histogram_options\"/> para máis información."
+
+#. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "Plot Density curve")
+#: rkward/plugins/plots/histogram.rkh:15
+#, kde-format
+msgid ""
+"Should a density curve be plotted over the histogram? This option is only "
+"available, if the histogram is density scaled."
+msgstr ""
+"Debería representarse a curva de densidade sobre o histograma? Esta opción "
+"só está dispoñíbel se as dimensións do histograma están axustadas á "
+"densidade."
+
+#. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "Color")
+#: rkward/plugins/plots/histogram.rkh:16
+#, kde-format
+msgid "Which color should the density line be drawn in?"
+msgstr "Que cor debería usarse para debuxar a liña da densidade?"
+
+#. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "Bandwidth")
+#: rkward/plugins/plots/histogram.rkh:17
+#, kde-format
+msgid ""
+"The smoothing bandwidth used to calculate the density estimate. See <link "
+"href=\"rkward://rhelp/density\"/> for details."
+msgstr ""
+"A largura de banda de suavizado que se usa para calcular a estimación de "
+"densidade. Consulte <link href=\"rkward://rhelp/density\"/> para máis "
+"información."
+
+#. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "Remove Missing Values")
+#: rkward/plugins/plots/histogram.rkh:19
+#, kde-format
+msgid ""
+"Remove missing values? If not checked, missing values will cause an error."
+msgstr ""
+"Retirar os valores que faltan? Se non marca esta opción, a falta de valores "
+"provocará un erro."
+
+#. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "resolution")
+#: rkward/plugins/plots/histogram.rkh:20
+#, kde-format
+msgid "Number of equally spaced points to estimate the density at."
+msgstr "Número de puntos equidistantes nos que estimar a densidade."
+
+#. i18n: ectx: (Histogram) <dialog label="Histogram"> <tab label="Variable(s)"> <embed label="...">
+#: rkward/plugins/plots/histogram.xml:36
+#, kde-format
+msgid "Generic Plot Options"
+msgstr "Opcións xenéricas de gráfica"
+
+#. i18n: ectx: (Histogram) <dialog label="Histogram"> <tab label="...">
+#. i18n: ectx: (Histogram) <dialog label="Histogram"> <tab label="Histogram Options"> <embed label="...">
+#: rkward/plugins/plots/histogram.xml:40 rkward/plugins/plots/histogram.xml:41
+#, kde-format
+msgid "Histogram Options"
+msgstr "Opcións do histograma"
+
+#. i18n: ectx: (Histogram) <dialog label="Histogram"> <tab label="...">
+#: rkward/plugins/plots/histogram.xml:43
+#, kde-format
+msgid "Density"
+msgstr "Densidade"
+
+#. i18n: ectx: (Histogram) <dialog label="Histogram"> <tab label="Density"> <checkbox label="...">
+#: rkward/plugins/plots/histogram.xml:44
+#, kde-format
+msgid "Plot Density curve"
+msgstr "Representar a curva de densidade"
+
+#. i18n: ectx: (Histogram) <dialog label="Histogram"> <tab label="Density"> <frame label="...">
+#: rkward/plugins/plots/histogram.xml:46
+#, kde-format
+msgid "General options"
+msgstr "Opcións xerais"
+
+#. i18n: ectx: (Histogram) <dialog label="Histogram"> <tab label="Density"> <frame label="General options"> <spinbox label="...">
+#: rkward/plugins/plots/histogram.xml:49
+#, kde-format
+msgid "resolution"
+msgstr "resolución"
+
+#. i18n: ectx: (Histogram) <dialog label="Histogram"> <tab label="Density"> <frame label="...">
+#: rkward/plugins/plots/histogram.xml:51
+#, kde-format
+msgid "Bandwidth options"
+msgstr "Opcións da largura de banda"
+
+#. i18n: ectx: (Loaded from Pareto chart)
+#. i18n: ectx: (Pareto chart) <dialog label="...">
+#: rkward/plugins/plots/pareto.js:35 rkward/plugins/plots/pareto.xml:26
+#, kde-format
+msgid "Pareto chart"
+msgstr "Diagrama de Pareto"
+
+#. i18n: ectx: (Loaded from Pareto chart) <summary>
+#: rkward/plugins/plots/pareto.rkh:3
+#, kde-format
+msgid "Creates a pareto chart, and (optionally) prints the values."
+msgstr "Crea un diagrama de Pareto, e (opcionalmente) imprime os valores."
+
+#. i18n: ectx: (Loaded from Pareto chart) <usage>
+#: rkward/plugins/plots/pareto.rkh:7
+#, kde-format
+msgid ""
+"Choose a vector or a factor to be plotted. The frequency, cumulative "
+"frequency, percentage and cumulative percentage will be printed under the "
+"plot."
+msgstr ""
+"Escoller un vector ou factor para representar. A frecuencia, a frecuencia "
+"acumulativa, a porcentaxe e a porcentaxe acumulativa mostraranse baixo a "
+"gráfica."
+
+#. i18n: ectx: (Loaded from Pareto chart) <settings> <setting> (refers to element labelled "Raw vector to plot")
+#: rkward/plugins/plots/pareto.rkh:14
+#, kde-format
+msgid ""
+"If your data is already contains defect counts or defect costs, or other "
+"data suitable for direct display in a pareto chart, specify it here. "
+"Otherwise, leave this empty, and check the \"Tabulate\" option, above."
+msgstr ""
+"Se os seus datos xa conteñen números de defectos ou custos de defectos, ou "
+"outros datos axeitados para mostrar directamente no diagrama de Pareto, "
+"indíqueo aquí. En caso contrario, deixe este campo baleiro e marque a opción "
+"de «Tabular» enriba."
+
+#. i18n: ectx: (Loaded from Pareto chart) <settings> <setting> (refers to element labelled "Print descriptives")
+#: rkward/plugins/plots/pareto.rkh:15
+#, kde-format
+msgid ""
+"Whether to print the frequency, cumulative frequency, percentage and "
+"cumulative percentage below the plot in the output window."
+msgstr ""
+"Se imprimir a frecuencua, a frecuencia acumulativa, a porcentaxe e a "
+"porcentaxe acumulativa baixo a gráfica na xanela de saída."
+
+#. i18n: ectx: (Loaded from Pareto chart) <settings> <setting> (refers to element labelled "Plot Options")
+#: rkward/plugins/plots/pareto.rkh:19
+#, kde-format
+msgid ""
+"Further options for the plot. Refer to <link href=\"rkward://component/"
+"plot_options\"/> for details."
+msgstr ""
+"Opcións adicionais para a gráfica. Consulte <link href=\"rkward://component/"
+"plot_options\"/> para máis información."
+
+#. i18n: ectx: (Pareto chart) <dialog label="Pareto chart"> <tab label="Variables"> <varslot label="...">
+#: rkward/plugins/plots/pareto.xml:32
+#, kde-format
+msgid "Raw vector to plot"
+msgstr "Vector a gráfica"
+
+#. i18n: ectx: (Pareto chart) <dialog label="Pareto chart"> <tab label="Variables"> <checkbox label="...">
+#: rkward/plugins/plots/pareto.xml:40
+#, kde-format
+msgid "Print descriptives"
+msgstr "Imprimir as descricións"
+
+#. i18n: ectx: (Loaded from Pie chart)
+#. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Options"> <radio label="...">
+#: rkward/plugins/plots/piechart.js:27
+#: rkward/plugins/plots/stripchart_plot.xml:43
+#, kde-format
+msgid "Orientation"
+msgstr "Orientación"
+
+#. i18n: ectx: (Loaded from Pie chart)
+#: rkward/plugins/plots/piechart.js:29
+#, kde-format
+msgid "Clockwise"
+msgstr "Sentido horario"
+
+#. i18n: ectx: (Loaded from Pie chart)
+#: rkward/plugins/plots/piechart.js:31
+#, kde-format
+msgid "Counter clockwise"
+msgstr "Antihoraria"
+
+#. i18n: ectx: (Loaded from Pie chart)
+#. i18n: ectx: (Pie chart) <dialog label="...">
+#: rkward/plugins/plots/piechart.js:62 rkward/plugins/plots/piechart.xml:39
+#, kde-format
+msgid "Pie chart"
+msgstr "Gráfica de sectores"
+
+#. i18n: ectx: (Loaded from Pie chart) <summary>
+#: rkward/plugins/plots/piechart.rkh:3
+#, kde-format
+msgid "Draw a pie chart"
+msgstr "Debuxar unha gráfica de sectores"
+
+#. i18n: ectx: (Loaded from Pie chart) <usage>
+#: rkward/plugins/plots/piechart.rkh:7
+#, kde-format
+msgid ""
+"Draws a pie chart from numerical data, or from tabulated data. Further "
+"options are available on the second tab."
+msgstr ""
+"Debuxa unha gráfica de sectores a partir de datos numéricos ou de datos "
+"tabulados. Hai opcións adicionais dispoñíbeis no segundo separador."
+
+#. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "Colors")
+#: rkward/plugins/plots/piechart.rkh:23
+#, kde-format
+msgid "Type of colors to use."
+msgstr "Tipo de cores para usar."
+
+#. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "clockwise")
+#: rkward/plugins/plots/piechart.rkh:25
+#, kde-format
+msgid "Define if slices should be drawn clockwise or counter clockwise."
+msgstr "Define se debuxar os sectores en sentido horario ou antihorario."
+
+#. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "Radius")
+#: rkward/plugins/plots/piechart.rkh:26
+#, kde-format
+msgid ""
+"Radius of the pie. For long labels it may be necessary to make the pie "
+"smaller than the default."
+msgstr ""
+"Raio do círculo. Para etiquetas largas quizais sexa necesario facer o "
+"círculo máis pequeno que o predeterminado."
+
+#. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "density")
+#: rkward/plugins/plots/piechart.rkh:27
+#, kde-format
+msgid ""
+"Density of shading lines (lines per inch). The default value of -1 means no "
+"shading lines are drawn."
+msgstr ""
+"Densidades das liñas de sombra (en liñas por polgada). O valor "
+"predeterminado, -1, desactiva as liñas de sombra."
+
+#. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "increment in density")
+#: rkward/plugins/plots/piechart.rkh:28
+#, kde-format
+msgid ""
+"The density of shading lines can be varied per pie slice. Set this to values "
+"other than 0 to get different densities of shading lines for each slice."
+msgstr ""
+"A densidade das liñas de sombra pode variar dun sector a outro. Configure "
+"este campo cun valor distinto de 0 para conseguir distintas densidades de "
+"liñas de sombra para cada sector."
+
+#. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "angle")
+#: rkward/plugins/plots/piechart.rkh:29
+#, kde-format
+msgid ""
+"Slope of shading lines, given as an angle in degrees (counter-clockwise). "
+"This option is only available, if shading lines are drawn, as controlled by "
+"the density options above."
+msgstr ""
+"Pendente das liñas de sombra, indicada como un ángulo en graos "
+"(antihorario). Esta opción está dispoñíbel só se se debuxan liñas de sombra, "
+"que poden activarse mediante as opcións de densidade de enriba."
+
+#. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "increment in angle")
+#: rkward/plugins/plots/piechart.rkh:30
+#, kde-format
+msgid ""
+"The slope of shading lines can be varied per pie slice. Set this to values "
+"other than 0 to get different slopes of shading lines for each slice. This "
+"option is only available, if shading lines are drawn, as controlled by the "
+"density options above."
+msgstr ""
+"A pendente das liñas de sombra pode ser distinta dun sector a outro. Use "
+"aquí valores distintos de 0 para conseguir distintas pendentes de liñas de "
+"sombra para cada sector. Esta opción está dispoñíbel só se se debuxan liñas "
+"de sombra, que poden activarse mediante as opcións de densidade de enriba."
+
+#. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <radio label="...">
+#: rkward/plugins/plots/piechart.xml:73
+#, kde-format
+msgid "Colors"
+msgstr "Cores"
+
+#. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <radio label="Colors"> <option label="...">
+#: rkward/plugins/plots/piechart.xml:74
+#, kde-format
+msgid "Default (pastel)"
+msgstr "Predeterminado (pastel)"
+
+#. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <radio label="Colors"> <option label="...">
+#: rkward/plugins/plots/piechart.xml:75
+#, kde-format
+msgid "Grayscale"
+msgstr "Escala de grises"
+
+#. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <radio label="Colors"> <option label="...">
+#: rkward/plugins/plots/piechart.xml:76
+#, kde-format
+msgid "Rainbow colors"
+msgstr "Cores aleatorias"
+
+#. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <checkbox label="...">
+#: rkward/plugins/plots/piechart.xml:80
+#, kde-format
+msgid "clockwise"
+msgstr "horaria"
+
+#. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <spinbox label="...">
+#: rkward/plugins/plots/piechart.xml:81
+#, kde-format
+msgid "Radius"
+msgstr "Raio"
+
+#. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <frame label="...">
+#: rkward/plugins/plots/piechart.xml:82
+#, kde-format
+msgid "Shading"
+msgstr "Sombreado"
+
+#. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <frame label="Shading"> <spinbox label="...">
+#: rkward/plugins/plots/piechart.xml:84
+#, kde-format
+msgid "density"
+msgstr "densidade"
+
+#. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <frame label="Shading"> <spinbox label="...">
+#: rkward/plugins/plots/piechart.xml:85
+#, kde-format
+msgid "increment in density"
+msgstr "aumentar en densidade"
+
+#. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <frame label="Shading"> <spinbox label="...">
+#: rkward/plugins/plots/piechart.xml:88
+#, kde-format
+msgid "angle"
+msgstr "ángulo"
+
+#. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <frame label="Shading"> <spinbox label="...">
+#: rkward/plugins/plots/piechart.xml:89
+#, kde-format
+msgid "increment in angle"
+msgstr "aumentar en ángulo"
+
+#. i18n: ectx: (Loaded from Generic Plot) <summary>
+#: rkward/plugins/plots/plot.rkh:3
+#, kde-format
+msgid ""
+"This is an implementation of the standard (traditional S) graphics function "
+"<b>plot</b>."
+msgstr ""
+"Esta é unha realización da función de gráficos estándar (S tradicional) "
+"<b>plot</b>."
+
+#. i18n: ectx: (Loaded from Generic Plot) <usage>
+#: rkward/plugins/plots/plot.rkh:6
+#, kde-format
+msgid ""
+"Choose the X and Y variables and customize the options to draw the plot."
+msgstr ""
+"Escolla as variábeis X e Y e personalice as opcións para debuxar a gráfica."
+
+#. i18n: ectx: (Loaded from Generic Plot) <usage>
+#: rkward/plugins/plots/plot.rkh:6
+#, kde-format
+msgid ""
+"Note: <b>plot</b> is a generic function. The type of plot you will actually "
+"get depends on the type of the input variables. For instance, for numeric "
+"vectors a scatterplot is produced (see below), while for data.frames as "
+"scatterplot matrix is plotted, etc. This is often useful to provide a "
+"meaningful visualization of the data, but does not allow for fine grained "
+"control."
+msgstr ""
+"Nota: <b>plot</b> é unha función xenérica. O tipo de gráfica que obterá "
+"depende do tipo de variábeis de entrada. Por exemplo, para vectores "
+"numéricos prodúcese unha gráfica distribuída (observe embaixo), mentres que "
+"para data.frames se representa unha matriz de gráficas distribuídas, etc. "
+"Isto adoita ser útil para fornecer unha visualización significativa dos "
+"datos, pero non permite un gran control."
+
+#. i18n: ectx: (Loaded from Generic Plot) <settings> <setting> (refers to element labelled "X variable")
+#: rkward/plugins/plots/plot.rkh:13
+#, kde-format
+msgid ""
+"This is the <i>x</i> argument. And it is required to draw any plot. In the "
+"simplest case of plotting variables of class type integer/numeric, when \"Y "
+"Variable\" is not provided, this is actually the y-coordinate and the "
+"indices of the plotting variable is taken as the x-coordinate. See R "
+"reference on 'plot' for more details."
+msgstr ""
+"Este é o argumento <i>x</i>, necesario para debuxar calquera gráfica. No "
+"caso máis simple de representar variábeis de tipo numérico, cando non se "
+"fornece a «variábel Y», este argumento é en realidade a coordenada y, e os "
+"índices da variábel para representar úsanse para a coordenada x. Consulte a "
+"axuda de R sobre «plot» para máis información."
+
+#. i18n: ectx: (Loaded from Generic Plot) <settings> <setting> (refers to element labelled "Y variable")
+#: rkward/plugins/plots/plot.rkh:14
+#, kde-format
+msgid ""
+"This is the <i>y</i> argument. Note that this is not always needed, and does "
+"not have an effect for some types of x variables."
+msgstr ""
+"Este é o argumento <i>y</i>. Teña en conta que este argumento non sempre é "
+"necesario, e para algunhas variábeis x non ten efecto ningún."
+
+#. i18n: ectx: (Loaded from Generic Plot) <settings> <setting> (refers to element labelled "Plot Options")
+#: rkward/plugins/plots/plot.rkh:16
+#, kde-format
+msgid ""
+"Further generic plot options. Refer to <link href=\"rkward://component/"
+"plot_options\"/> for details. Note that some of these settings may not have "
+"an effect, depending on the type of plot actually produced."
+msgstr ""
+"Opcións xenéricas adicionais de gráfica. Consulte <link href=\"rkward://"
+"component/plot_options\"/> para máis información. Teña en conta que algunhas "
+"destas opcións poderían non ter efecto ningún, segundo o tipo de gráfica que "
+"se produza."
+
+#. i18n: ectx: (Generic Plot) <dialog label="Generic Plot"> <tab label="Variables"> <varslot label="...">
+#: rkward/plugins/plots/plot.xml:16
+#, kde-format
+msgid "X variable"
+msgstr "Variábel X"
+
+#. i18n: ectx: (Generic Plot) <dialog label="Generic Plot"> <tab label="Variables"> <varslot label="...">
+#: rkward/plugins/plots/plot.xml:17
+#, kde-format
+msgid "Y variable"
+msgstr "Variábel Y"
+
+#. i18n: ectx: (Loaded from Scatterplot)
+#: rkward/plugins/plots/scatterplot.js:22
+#, kde-format
+msgid "Unequal number of X and Y variables given"
+msgstr "Forneceuse un número de variábeis X e Y desigual"
+
+#. i18n: ectx: (Loaded from Scatterplot)
+#: rkward/plugins/plots/scatterplot.js:25
+#, kde-format
+msgctxt "R code comment"
+msgid "find range of X/Y values needed"
+msgstr "Atopar o intervalo de valores de X e Y necesario."
+
+#. i18n: ectx: (Loaded from Scatterplot)
+#: rkward/plugins/plots/scatterplot.js:47
+#, kde-format
+msgid "X variables"
+msgstr "Variábeis X"
+
+#. i18n: ectx: (Loaded from Scatterplot)
+#: rkward/plugins/plots/scatterplot.js:48
+#, kde-format
+msgid "Y variables"
+msgstr "Variábeis Y"
+
+#. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Variables"> <varslot label="...">
+#: rkward/plugins/plots/scatterplot.xml:24
+#, kde-format
+msgid "'X' variables"
+msgstr "Variábeis «X»"
+
+#. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Variables"> <varslot label="...">
+#: rkward/plugins/plots/scatterplot.xml:25
+#, kde-format
+msgid "'Y' variables"
+msgstr "Variábeis «Y»"
+
+#. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <embed label="...">
+#: rkward/plugins/plots/scatterplot.xml:32
+#, kde-format
+msgid "General plot options"
+msgstr "Opcións xerais de representación"
+
+#. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <radio label="...">
+#: rkward/plugins/plots/scatterplot.xml:35
+#, kde-format
+msgid "Points / lines"
+msgstr "Puntos ou liñas"
+
+#. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <radio label="Points / lines"> <option label="...">
+#: rkward/plugins/plots/scatterplot.xml:36
+#, kde-format
+msgid "Same type for all variables"
+msgstr "Mesmo tipo para todas as variábeis."
+
+#. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <radio label="Points / lines"> <option label="...">
+#. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <radio label="Color"> <option label="...">
+#. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <radio label="Size"> <option label="...">
+#. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <radio label="Symbol"> <option label="...">
+#: rkward/plugins/plots/scatterplot.xml:37
+#: rkward/plugins/plots/scatterplot.xml:57
+#: rkward/plugins/plots/scatterplot.xml:75
+#: rkward/plugins/plots/scatterplot.xml:89
+#, kde-format
+msgid "Different for each variable"
+msgstr "Distinta para cada variábel."
+
+#. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <dropdown label="...">
+#: rkward/plugins/plots/scatterplot.xml:40
+#, kde-format
+msgid "Type of all points/lines"
+msgstr "Tipo de todos os puntos ou liñas"
+
+#. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <dropdown label="Type of all points/lines"> <option label="...">
+#: rkward/plugins/plots/scatterplot.xml:41
+#, kde-format
+msgid "Plot individual points "
+msgstr "Puntos individuais"
+
+#. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <dropdown label="Type of all points/lines"> <option label="...">
+#: rkward/plugins/plots/scatterplot.xml:42
+#, kde-format
+msgid "Plot lines "
+msgstr "Liñas"
+
+#. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <dropdown label="Type of all points/lines"> <option label="...">
+#: rkward/plugins/plots/scatterplot.xml:43
+#, kde-format
+msgid "Plot points connected by lines (both)"
+msgstr "Puntos conectados por liñas (ambos)"
+
+#. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <dropdown label="Type of all points/lines"> <option label="...">
+#: rkward/plugins/plots/scatterplot.xml:44
+#, kde-format
+msgid "Plot points overlaid by lines "
+msgstr "Puntos cubertos por liñas"
+
+#. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <dropdown label="Type of all points/lines"> <option label="...">
+#: rkward/plugins/plots/scatterplot.xml:45
+#, kde-format
+msgid "Plot vertical lines from points to the zero axis (high-density)"
+msgstr "Liñas verticais que van dos puntos ao eixo cero (alta densidade)"
+
+#. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <dropdown label="Type of all points/lines"> <option label="...">
+#: rkward/plugins/plots/scatterplot.xml:46
+#, kde-format
+msgid "Step-function plots: the left edge defines the point"
+msgstr "Gráfica de función de paso: a marxe esquerda define o punto"
+
+#. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <dropdown label="Type of all points/lines"> <option label="...">
+#: rkward/plugins/plots/scatterplot.xml:47
+#, kde-format
+msgid "Step-function plots: the right edge defines the point"
+msgstr "Gráfica de función de paso: a marxe dereita define o punto"
+
+#. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <input label="...">
+#: rkward/plugins/plots/scatterplot.xml:49
+#, kde-format
+msgid "Vector of type specifiers"
+msgstr "Vector dos indicadores de tipo"
+
+#. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <radio label="Color"> <option label="...">
+#: rkward/plugins/plots/scatterplot.xml:56
+#, kde-format
+msgid "Same color for all variables"
+msgstr "Mesma cor para todas as variábeis."
+
+# skip-rule: PT-2012-dual_colour
+#. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <text>
+#: rkward/plugins/plots/scatterplot.xml:60
+#, kde-format
+msgid ""
+"Enter value - for diff.col. enter a vector -<br/> eg: c(1,2) or "
+"c('red','green')"
+msgstr ""
+"Insira un valor. Para cores distintas, use un vector.<br /> Por exemplo: "
+"c(1,2) ou c('red', 'green')."
+
+#. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <input label="...">
+#: rkward/plugins/plots/scatterplot.xml:64
+#, kde-format
+msgid " "
+msgstr " "
+
+#. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <radio label="...">
+#: rkward/plugins/plots/scatterplot.xml:73
+#, kde-format
+msgid "Size"
+msgstr "Tamaño"
+
+#. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <radio label="Size"> <option label="...">
+#. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <radio label="Symbol"> <option label="...">
+#: rkward/plugins/plots/scatterplot.xml:74
+#: rkward/plugins/plots/scatterplot.xml:88
+#, kde-format
+msgid "Same for all variables"
+msgstr "Igual para todas as variábeis."
+
+#. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <text>
+#: rkward/plugins/plots/scatterplot.xml:78
+#, kde-format
+msgid ""
+"A numerical value giving the amount by which plotting text and symbols "
+"should be scaled relative to the default."
+msgstr ""
+"Un valor numérico para usar como factor de ampliación para o texto e os "
+"símbolos da gráfica, en relación ao seu tamaño predeterminado."
+
+#. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <input label="...">
+#: rkward/plugins/plots/scatterplot.xml:81
+#, kde-format
+msgid "Enter value - for diff.size. enter a vector -"
+msgstr "Insira un valor. Para tamaños distintos, use un vector."
+
+#. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <radio label="...">
+#: rkward/plugins/plots/scatterplot.xml:87
+#, kde-format
+msgid "Symbol"
+msgstr "Símbolo"
+
+#. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <text>
+#: rkward/plugins/plots/scatterplot.xml:92
+#, kde-format
+msgid ""
+"Either an integer specifying a symbol or a single character to be used as "
+"the default in plotting points."
+msgstr ""
+"Ou un enteiro indicando un símbolo ou un carácter para usar como "
+"predeterminado nos puntos da gráfica."
+
+#. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <input label="...">
+#: rkward/plugins/plots/scatterplot.xml:95
+#, kde-format
+msgid "Enter value - for diff.symbol. enter a vector -"
+msgstr "Insira un valor Para símbolos distintos, use un vector."
+
+#. i18n: ectx: (Loaded from Scatterplot Matrix) <summary>
+#: rkward/plugins/plots/scatterplot_matrix.rkh:3
+#, kde-format
+msgid ""
+"Scatterplot matrix plot produces scatterplot matrices with univariate "
+"displays down the diagonal."
+msgstr ""
+"A gráfica de matrices de gráficas distribuídas produce matrices de gráficas "
+"distribuídas con pantallas univariadas a través da diagonal."
+
+#. i18n: ectx: (Loaded from Scatterplot Matrix) <usage>
+#: rkward/plugins/plots/scatterplot_matrix.rkh:7
+#, kde-format
+msgid ""
+"Choose one or more objects to be plotted. Choose the diagonal plot and how "
+"the scatterplots should be plotted from the options tab."
+msgstr ""
+"Escolla os obxectos para representar. Configure no separador de opcións a "
+"gráfica diagonal e a forma en que deberían representarse as gráficas "
+"distribuídas."
+
+#. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "variable(s):")
+#: rkward/plugins/plots/scatterplot_matrix.rkh:13
+#, kde-format
+msgid ""
+"Select a data matrix or a numeric data frame or more than one variables from "
+"a data matrix"
+msgstr ""
+"Seleccione unha matriz de datos ou un data frame numérico ou varias "
+"variábeis dunha matriz de datos."
+
+#. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "Diagonal panels")
+#: rkward/plugins/plots/scatterplot_matrix.rkh:15
+#, kde-format
+msgid "Select which plot should be plotted in the diagonal among"
+msgstr "Seleccione a gráfica para representar na diagonal de entre"
+
+#. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "Diagonal panels")
+#: rkward/plugins/plots/scatterplot_matrix.rkh:15
+#, kde-format
+msgid "Density plot. See <link href=\"rkward://rhelp/density\"/>"
+msgstr ""
+"Gráfica de densidade. Consulte <link href=\"rkward://rhelp/density\"/>."
+
+#. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "Diagonal panels")
+#: rkward/plugins/plots/scatterplot_matrix.rkh:15
+#, kde-format
+msgid "Boxplot. See <link href=\"rkward://rhelp/boxplot\"/>"
+msgstr "Boxplot. Consulte <link href=\"rkward://rhelp/boxplot\"/>."
+
+#. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "Diagonal panels")
+#: rkward/plugins/plots/scatterplot_matrix.rkh:15
+#, kde-format
+msgid "Histogram. See <link href=\"rkward://rhelp/histogram\"/>"
+msgstr "Histograma. Consulte <link href=\"rkward://rhelp/histogram\"/>."
+
+#. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "Diagonal panels")
+#: rkward/plugins/plots/scatterplot_matrix.rkh:15
+#, kde-format
+msgid "QQplot. See <link href=\"rkward://rhelp/qqplot\"/>"
+msgstr "QQplot. Consulte <link href=\"rkward://rhelp/qqplot\"/>."
+
+#. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "Diagonal panels")
+#: rkward/plugins/plots/scatterplot_matrix.rkh:15
+#, kde-format
+msgid "No plot. Do not plot anything in the diagonal"
+msgstr "Ningunha gráfica. Non representar nada na diagonal."
+
+#. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "Plot points")
+#: rkward/plugins/plots/scatterplot_matrix.rkh:22
+#, kde-format
+msgid "Select it if you want points to be plotted in scatterplots."
+msgstr ""
+"Escolla se quere que os puntos se representen en gráficas distribuídas."
+
+#. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "Plot smooth")
+#: rkward/plugins/plots/scatterplot_matrix.rkh:23
+#, kde-format
+msgid "Select it if you want a lowess smooth to be plotted in scatterplots."
+msgstr ""
+"Escolla se quere usar suavizado de gráfica distribuída ponderado localmente "
+"(LOWESS)."
+
+#. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "Plot data concentration ellipses")
+#: rkward/plugins/plots/scatterplot_matrix.rkh:24
+#, kde-format
+msgid ""
+"Select it if you want data-concentration ellipses to be plotted in "
+"scatterplots. The ellipses are plotted at levels 0.5 and 0.9."
+msgstr ""
+"Escolla se quere representar elipses de concentración de datos nas gráficas "
+"distribuídas. As elipses represéntanse nos niveis 0,5 e o,9."
+
+#. i18n: ectx: (Scatterplot Matrix) <dialog label="Scatterplot Matrix"> <tab label="Options"> <radio label="...">
+#: rkward/plugins/plots/scatterplot_matrix.xml:18
+#, kde-format
+msgid "Diagonal panels"
+msgstr "Paneis diagonais"
+
+#. i18n: ectx: (Scatterplot Matrix) <dialog label="Scatterplot Matrix"> <tab label="Options"> <radio label="Diagonal panels"> <option label="...">
+#: rkward/plugins/plots/scatterplot_matrix.xml:19
+#, kde-format
+msgid "Density plot"
+msgstr "Gráfica de densidade"
+
+#. i18n: ectx: (Scatterplot Matrix) <dialog label="Scatterplot Matrix"> <tab label="Options"> <radio label="Diagonal panels"> <option label="...">
+#: rkward/plugins/plots/scatterplot_matrix.xml:22
+#, kde-format
+msgid "QQplot"
+msgstr "QQplot"
+
+#. i18n: ectx: (Scatterplot Matrix) <dialog label="Scatterplot Matrix"> <tab label="Options"> <radio label="Diagonal panels"> <option label="...">
+#: rkward/plugins/plots/scatterplot_matrix.xml:23
+#, kde-format
+msgid "No plot"
+msgstr "Sen gráfica"
+
+#. i18n: ectx: (Scatterplot Matrix) <dialog label="Scatterplot Matrix"> <tab label="Options"> <checkbox label="...">
+#: rkward/plugins/plots/scatterplot_matrix.xml:25
+#, kde-format
+msgid "Plot points"
+msgstr "Representar puntos."
+
+#. i18n: ectx: (Scatterplot Matrix) <dialog label="Scatterplot Matrix"> <tab label="Options"> <checkbox label="...">
+#: rkward/plugins/plots/scatterplot_matrix.xml:26
+#, kde-format
+msgid "Plot smooth"
+msgstr "Representar con suavizado."
+
+#. i18n: ectx: (Scatterplot Matrix) <dialog label="Scatterplot Matrix"> <tab label="Options"> <checkbox label="...">
+#: rkward/plugins/plots/scatterplot_matrix.xml:27
+#, kde-format
+msgid "Plot data concentration ellipses"
+msgstr "Representar elipses de concentración de datos."
+
+#. i18n: ectx: (Loaded from Stem-and-Leaf Plots) <summary>
+#: rkward/plugins/plots/stem.rkh:3
+#, kde-format
+msgid "This produces a stem-and-leaf plot."
+msgstr "Isto produce unha gráfica de tallos e follas."
+
+#. i18n: ectx: (Loaded from Stem-and-Leaf Plots) <usage>
+#: rkward/plugins/plots/stem.rkh:7
+#, kde-format
+msgid ""
+"Choose the data to produce the stem-and-leaf plot. See <link href=\"rkward://"
+"rhelp/stem\"/>. For a more sophisticated stem-and-leaf plot refer to the "
+"<link href=\"http://cran.r-project.org/src/contrib/Descriptions/Rcmdr.html"
+"\">Rcmdr package</link>."
+msgstr ""
+"Escolla os datos para producir unha gráfica de tallos e follas. Consulte "
+"<link href=\"rkward://rhelp/stem\"/>. Para gráficas de tallos e follas máis "
+"sofisticadas, consulte o <link href=\"http://cran.r-project.org/src/contrib/"
+"Descriptions/Rcmdr.html\">paquete Rcmdr</link>."
+
+#. i18n: ectx: (Loaded from Stem-and-Leaf Plots) <settings> <setting> (refers to element labelled "variable:")
+#: rkward/plugins/plots/stem.rkh:13
+#, kde-format
+msgid "Select the data to be computed. The vectors need to be numeric."
+msgstr "Escolla o último dos dous vectores supostamente iguais."
+
+#. i18n: ectx: (Loaded from Stem-and-Leaf Plots) <settings> <setting> (refers to element labelled "Plot length (scale)")
+#: rkward/plugins/plots/stem.rkh:15
+#, kde-format
+msgid ""
+"This controls the length of the plot. A scale of 2 will make the plot "
+"roughly twice as long as the default."
+msgstr ""
+"Isto controla a lonxitude da gráfica. Unha escala de 2 fará que a gráfica "
+"sexa aproximadamente o dobre de longa do que sería de maneira predeterminada."
+
+#. i18n: ectx: (Loaded from Stem-and-Leaf Plots) <settings> <setting> (refers to element labelled "Plot width")
+#: rkward/plugins/plots/stem.rkh:16
+#, kde-format
+msgid "This controls the width of the plot."
+msgstr "Isto controla a anchura da gráfica."
+
+#. i18n: ectx: (Loaded from Stem-and-Leaf Plots) <settings> <setting> (refers to element labelled "Tolerance")
+#: rkward/plugins/plots/stem.rkh:17
+#, kde-format
+msgid "This defines the tolerance."
+msgstr "Isto define a tolerancia."
+
+#. i18n: ectx: (Stem-and-Leaf Plots) <dialog label="...">
+#: rkward/plugins/plots/stem.xml:7
+#, kde-format
+msgid "Stem-and-Leaf Plots"
+msgstr "Gráficas de tallos e follas"
+
+#. i18n: ectx: (Stem-and-Leaf Plots) <dialog label="Stem-and-Leaf Plots"> <tab label="...">
+#: rkward/plugins/plots/stem.xml:9
+#, kde-format
+msgid "Basic settings"
+msgstr "Configuración básica"
+
+#. i18n: ectx: (Stem-and-Leaf Plots) <dialog label="Stem-and-Leaf Plots"> <tab label="Basic settings"> <varslot label="...">
+#: rkward/plugins/plots/stem.xml:13
+#, kde-format
+msgid "variable:"
+msgstr "variábel:"
+
+#. i18n: ectx: (Stem-and-Leaf Plots) <dialog label="Stem-and-Leaf Plots"> <tab label="Options"> <spinbox label="...">
+#: rkward/plugins/plots/stem.xml:18
+#, kde-format
+msgid "Plot length (scale)"
+msgstr "Lonxitude da gráfica (escala)"
+
+#. i18n: ectx: (Stem-and-Leaf Plots) <dialog label="Stem-and-Leaf Plots"> <tab label="Options"> <spinbox label="...">
+#: rkward/plugins/plots/stem.xml:19
+#, kde-format
+msgid "Plot width"
+msgstr "Anchura da gráfica"
+
+#. i18n: ectx: (Stem-and-Leaf Plots) <dialog label="Stem-and-Leaf Plots"> <tab label="Options"> <spinbox label="...">
+#: rkward/plugins/plots/stem.xml:20
+#, kde-format
+msgid "Tolerance"
+msgstr "Tolerancia"
+
+#. i18n: ectx: (Loaded from Stripchart)
+#. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Variable(s)"> <varslot label="...">
+#: rkward/plugins/plots/stripchart_plot.js:24
+#: rkward/plugins/plots/stripchart_plot.xml:24
+#, kde-format
+msgid "Group"
+msgstr "Grupo"
+
+#. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Variable(s)"> <varslot label="...">
+#: rkward/plugins/plots/stripchart_plot.xml:23
+#, kde-format
+msgid "variable"
+msgstr "variábel"
+
+#. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Options"> <radio label="...">
+#: rkward/plugins/plots/stripchart_plot.xml:33
+#, kde-format
+msgid "Treatment of identical values"
+msgstr "Tratamento de valores idénticos"
+
+#. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Options"> <radio label="Treatment of identical values"> <option label="...">
+#: rkward/plugins/plots/stripchart_plot.xml:34
+#, kde-format
+msgid "Overplot"
+msgstr "Gráfica xeral"
+
+#. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Options"> <radio label="Treatment of identical values"> <option label="...">
+#. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Options"> <spinbox label="...">
+#: rkward/plugins/plots/stripchart_plot.xml:35
+#: rkward/plugins/plots/stripchart_plot.xml:38
+#, kde-format
+msgid "Jitter"
+msgstr "Jitter"
+
+#. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Options"> <radio label="Treatment of identical values"> <option label="...">
+#: rkward/plugins/plots/stripchart_plot.xml:36
+#, kde-format
+msgid "Stack"
+msgstr "Montón"
+
+#. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Options"> <spinbox label="...">
+#: rkward/plugins/plots/stripchart_plot.xml:39
+#, kde-format
+msgid "Offset"
+msgstr "Desprazamento"
+
+#. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Options"> <radio label="Orientation"> <option label="...">
+#: rkward/plugins/plots/stripchart_plot.xml:44
+#, kde-format
+msgid "Horizontal"
+msgstr "Horizontal"
+
+#. i18n: ectx: (Stripchart) <dialog label="Stripchart"> <tab label="Options"> <radio label="Orientation"> <option label="...">
+#: rkward/plugins/plots/stripchart_plot.xml:45
+#, kde-format
+msgid "Vertical"
+msgstr "Vertical"
+
+#. i18n: ectx: <snippets> <snippet> <author name="...">
+#: rkward/plugins/pluginmap_meta.inc:4
+#, kde-format
+msgctxt "Author name"
+msgid "RKWard Team"
+msgstr "Equipo de RKWard"

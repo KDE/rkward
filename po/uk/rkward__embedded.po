@@ -1,0 +1,3519 @@
+# Translation of rkward__embedded.po to Ukrainian
+# Copyright (C) 2015 This_file_is_part_of_KDE
+# This file is distributed under the license LGPL version 2.1 or
+# version 3 or later versions approved by the membership of KDE e.V.
+#
+# Yuri Chornoivan <yurchor@ukr.net>, 2015, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: rkward__embedded\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-05-11 00:41+0000\n"
+"PO-Revision-Date: 2022-05-11 08:56+0300\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Lokalize 20.12.0\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Юрій Чорноіван"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "yurchor@ukr.net"
+
+#. i18n: ectx: (Level selector) <dialog label="...">
+#: rkward/plugins/distributions/../data/level_select.xml:60
+#: rkward/plugins/distributions/../data/multi_input.xml:94
+#, kde-format
+msgid "Level selector"
+msgstr "Вибір рівня"
+
+#. i18n: ectx: (Level selector) <dialog label="Level selector"> <text>
+#: rkward/plugins/distributions/../data/level_select.xml:62
+#, kde-format
+msgid "Note: Some values were cut off."
+msgstr "Зауваження: деякі зі значень може бути обрізано."
+
+#. i18n: ectx: (Loaded from Limit Vector Length) <summary>
+#: rkward/plugins/distributions/../data/limit_vector_length.rkh:3
+#, kde-format
+msgid ""
+"Generic plugin to limit a single numeric vector to the n largest / smallest "
+"values. This plugin is designed to be embedded into other plugins."
+msgstr ""
+"Додаток загального призначення для обмеження одного числового вектора n "
+"найбільшими або найменшими значеннями. Цей додаток розроблено для "
+"вбудовування до інших додатків."
+
+#. i18n: ectx: (Loaded from Limit Vector Length) <usage>
+#: rkward/plugins/distributions/../data/limit_vector_length.rkh:7
+#, kde-format
+msgid ""
+"Specify the desired length cutoff and sorting. Note that the result is "
+"always sorted, with the sum of remainder values appended at the end."
+msgstr ""
+"Вкажіть бажану довжину для обрізання та порядок. Зауважте, що результат "
+"завжди буде упорядковано, а суму лишків буде дописано наприкінці."
+
+#. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Limit")
+#: rkward/plugins/distributions/../data/limit_vector_length.rkh:12
+#, kde-format
+msgid ""
+"Maximum number of regular groups to display. One additional group \"others\" "
+"will be displayed, if appropriate."
+msgstr ""
+"Максимальна кількість регулярних груп для показу. Для відповідних вибірок "
+"буде показано додаткову групу, «Інші»."
+
+#. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Sorting")
+#: rkward/plugins/distributions/../data/limit_vector_length.rkh:13
+#, kde-format
+msgid ""
+"Should the largest or the lowest values be kept? For most purposes, you will "
+"want to keep the largest values."
+msgstr ""
+"Визначити, чи слід зберігати найбільші або найменші значення. У більшості "
+"випадків зберігаються найбільші значення."
+
+#. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Add remainder category")
+#: rkward/plugins/distributions/../data/limit_vector_length.rkh:14
+#, kde-format
+msgid ""
+"Should a category be added for the remaining value (those which have been "
+"cut off)? Note: This will always be appended to the end of the vector."
+msgstr ""
+"Визначити, чи слід додавати категорію для значення лишків (тих значень, які "
+"було обрізано). Зауваження, лишки завжди дописуватимуться наприкінці вектора."
+
+#. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Statistic")
+#: rkward/plugins/distributions/../data/limit_vector_length.rkh:15
+#, kde-format
+msgid "Statistic to use for summarizing the cut off values."
+msgstr ""
+"Статистика, якою слід скористатися для підсумовування обрізаних значень."
+
+#. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Custom statistic (as function of x)")
+#: rkward/plugins/distributions/../data/limit_vector_length.rkh:16
+#, kde-format
+msgid ""
+"If you chose to use a custom statistic for summarizing the cut off values, "
+"specify it, here, as a function of <em>x</em>."
+msgstr ""
+"Якщо вами було визначено використання нетипової статистики для "
+"підсумовування обрізаних значень, вкажіть її у цьому полі як функцію <em>x</"
+"em>."
+
+#. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Remainder category label")
+#: rkward/plugins/distributions/../data/limit_vector_length.rkh:17
+#, kde-format
+msgid ""
+"Label to use for the \"others\" category. Note: If your data is not labeled, "
+"emptying this field will sometimes be preferable."
+msgstr ""
+"Мітка, якою слід скористатися для категорії «Інші». Зауваження: якщо ваші "
+"дані не мають міток, іноді бажаним є порожнє значення цього поля."
+
+#. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
+#. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Default plot options) <technical>
+#. i18n: ectx: (Loaded from Step function plot options) <technical>
+#. i18n: ectx: (Loaded from Default histogram options) <technical>
+#. i18n: ectx: (Loaded from Tabulate) <technical>
+#. i18n: ectx: (Loaded from Limit Vector Length) <technical>
+#: rkward/plugins/distributions/../data/limit_vector_length.rkh:20
+#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:27
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:38
+#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:26
+#, kde-format
+msgid ""
+"General users may skip this section of help, this is primarily for "
+"developers."
+msgstr ""
+"Типові користувачі можуть пропустити цей розділ довідки. Його, в основному, "
+"призначено для розробників."
+
+#. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
+#. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Tabulate) <technical>
+#. i18n: ectx: (Loaded from Limit Vector Length) <technical>
+#: rkward/plugins/distributions/../data/limit_vector_length.rkh:20
+#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:27
+#, kde-format
+msgid "The generated code is available from <i>code.calculate</i>."
+msgstr ""
+"Доступ до створеного коду можна отримати за допомогою функції <i>code."
+"calculate</i>."
+
+#. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Limit Vector Length) <technical>
+#: rkward/plugins/distributions/../data/limit_vector_length.rkh:20
+#, kde-format
+msgid ""
+"The following external properties are provided for use in the embedding "
+"plugin."
+msgstr ""
+"Для вбудовування додатка передбачено вказані нижче зовнішні властивості."
+
+#. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Limit Vector Length) <technical>
+#: rkward/plugins/distributions/../data/limit_vector_length.rkh:20
+#, kde-format
+msgid ""
+"<i>invar</i>: Symbol name of the input variable to be limited. Defaults to "
+"'x'."
+msgstr ""
+"<i>invar</i>: назва символу змінної вхідних даних, яку буде обмежено. "
+"Типовою назвою є «x»."
+
+#. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Limit Vector Length) <technical>
+#: rkward/plugins/distributions/../data/limit_vector_length.rkh:20
+#, kde-format
+msgid ""
+"<i>outvar</i>: Symbol name to use for the output variable (the limited "
+"vector). May be identical to <i>invar</i>. Defaults to 'x'."
+msgstr ""
+"<i>outvar</i>: назва символу змінної, до якої буде виведено результати "
+"(обмежений вектор). Може збігатися із <i>invar</i>. Типовою назвою є «x»."
+
+#. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Limit Vector Length) <technical>
+#: rkward/plugins/distributions/../data/limit_vector_length.rkh:20
+#, kde-format
+msgid ""
+"<i>parameters</i>: This property will be set to a string describing the "
+"limitation options, suitable for pasting into the <i>parameters</i> argument "
+"of <b>rk.header()</b>."
+msgstr ""
+"<i>parameters</i>: цю властивість буде встановлено у значення рядка, що "
+"описує параметри обмеження, придатні до передавання як аргумент "
+"<i>parameters</i> функції <b>rk.header()</b>."
+
+#. i18n: ectx: <components> <component label="...">
+#. i18n: ectx: (Limit Vector Length) <dialog label="...">
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:22
+#: rkward/plugins/distributions/../embedded.pluginmap:24
+#, kde-format
+msgid "Limit Vector Length"
+msgstr "Обмежити довжину вектора"
+
+#. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <spinbox label="...">
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:24
+#, kde-format
+msgid "Limit"
+msgstr "Обмеження"
+
+#. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <radio label="...">
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:25
+#, kde-format
+msgid "Sorting"
+msgstr "Упорядкування"
+
+#. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <radio label="Sorting"> <option label="...">
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:26
+#, kde-format
+msgid "Keep smallest values"
+msgstr "Зберігати найменші значення"
+
+#. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <radio label="Sorting"> <option label="...">
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:27
+#, kde-format
+msgid "Keep largest values"
+msgstr "Зберігати найбільші значення"
+
+#. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="...">
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:30
+#, kde-format
+msgid "Add remainder category"
+msgstr "Додати категорію лишків"
+
+#. i18n: ectx: (Tabulate) <dialog label="Tabulate"> <radio label="...">
+#. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="Add remainder category"> <radio label="...">
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:31
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:50
+#, kde-format
+msgid "Statistic"
+msgstr "Статистика"
+
+#. i18n: ectx: (Tabulate) <dialog label="Tabulate"> <radio label="Statistic"> <option label="...">
+#. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="Add remainder category"> <radio label="Statistic"> <option label="...">
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:32
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:52
+#, kde-format
+msgid "Sum"
+msgstr "Сума"
+
+#. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="Add remainder category"> <radio label="Statistic"> <option label="...">
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:33
+#, kde-format
+msgid "Mean"
+msgstr "Середнє"
+
+#. i18n: ectx: (Tabulate) <dialog label="Tabulate"> <radio label="Statistic"> <option label="...">
+#. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="Add remainder category"> <radio label="Statistic"> <option label="...">
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:34
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:53
+#, kde-format
+msgid "Other:"
+msgstr "Інша:"
+
+#. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="Add remainder category"> <input label="...">
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:36
+#, kde-format
+msgid "Custom statistic (as function of x)"
+msgstr "Нетипова статистика (як функція x)"
+
+#. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="Add remainder category"> <input label="...">
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:38
+#, kde-format
+msgid "Remainder category label"
+msgstr "Мітка категорії лишків"
+
+#. i18n: ectx: (Level selector) <dialog label="Level selector"> <radio label=""> <option label="...">
+#: rkward/plugins/distributions/../data/multi_input.xml:96
+#, kde-format
+msgid "FALSE"
+msgstr "НІ"
+
+#. i18n: ectx: (Level selector) <dialog label="Level selector"> <radio label=""> <option label="...">
+#: rkward/plugins/distributions/../data/multi_input.xml:97
+#, kde-format
+msgid "TRUE"
+msgstr "ТАК"
+
+#. i18n: ectx: (Loaded from Tabulate) <summary>
+#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:3
+#, kde-format
+msgid ""
+"Generic tabulation plugin (single outcome vector). This plugin is designed "
+"to be embedded into other plugins."
+msgstr ""
+"Додаток табуляції загального призначення (єдиний вектор-результат). Цей "
+"додаток призначено для вбудовування до інших додатків."
+
+#. i18n: ectx: (Loaded from Tabulate) <usage>
+#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:7
+#, kde-format
+msgid ""
+"Allows to tabulate frequencies, or aggregate a single variable, by the "
+"levels of one or more grouping variables."
+msgstr ""
+"Надає змогу табулювати частоти або збирати одну змінну за рівнями однієї або "
+"декількох змінних групування."
+
+#. i18n: ectx: (Loaded from Tabulate) <settings> <setting> (refers to element labelled "Grouping factors")
+#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:12
+#, kde-format
+msgid ""
+"Select the grouping variables. Often, these will be factors. The levels of "
+"each grouping variable will be crossed."
+msgstr ""
+"Виберіть змінні групування. Часто такими змінними є фактори. Табуляція "
+"здійснюватиметься за рівнями кожної зі змінних групування."
+
+#. i18n: ectx: (Loaded from Tabulate) <settings> <setting> (refers to element labelled "Statistic")
+#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:13
+#, kde-format
+msgid ""
+"Type of tabulation / statistic to compute. This can be frequency of "
+"occurrence, or a function of a separate vector."
+msgstr ""
+"Тип табуляції або статистики для обчислення. Цим типом може бути частота "
+"появи або функція окремого вектора."
+
+#. i18n: ectx: (Loaded from Tabulate) <settings> <setting> (refers to element labelled "Values")
+#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:14
+#, kde-format
+msgid ""
+"When computing a statistic other than frequency, specify the vector "
+"containing the underlying data, here."
+msgstr ""
+"Якщо обчислюється статистика, відмінна від частоти, у цьому полі можна "
+"вказати вектор основних даних."
+
+#. i18n: ectx: (Loaded from Tabulate) <settings> <setting> (refers to element labelled "Custom statistic")
+#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:15
+#, kde-format
+msgid ""
+"When the statistic is set to \"Other:\", this allows you to specify an "
+"arbitrary function to compute the statistic. The function may take a vector "
+"(a sub-group of the variable selected above) as parameter \"x\", and must "
+"return a single numeric value. Typical examples are \"mean(x)\" or \"sd(x)\"."
+msgstr ""
+"Якщо для статистики вказано варіант «Інша:», за допомогою цього пункту можна "
+"вказати довільну функцію для обчислення статистики. Функція може обробляти "
+"вектор (підгрупу змінної, вибраної вище) як параметр «x» і має повертати "
+"одне числове значення. Типовими прикладами є «mean(x)» та «sd(x)»."
+
+#. i18n: ectx: (Loaded from Tabulate) <related>
+#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:18
+#, kde-format
+msgid "<link href=\"rkward://component/crosstab\"/> and"
+msgstr "<link href=\"rkward://component/crosstab\"/> та"
+
+#. i18n: ectx: (Loaded from Tabulate) <related>
+#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:18
+#, kde-format
+msgid ""
+"<link href=\"rkward://component/crosstab_multi\"/> for tabulation of "
+"frequencies across many variables."
+msgstr ""
+"<link href=\"rkward://component/crosstab_multi\"/> для табуляції частот для "
+"багатьох змінних."
+
+#. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Tabulate) <technical>
+#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:27
+#, kde-format
+msgid ""
+"The following external properties are provided for use in the embedding "
+"plugin:"
+msgstr ""
+"Для вбудовування додатка передбачено вказані нижче зовнішні властивості:"
+
+#. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Tabulate) <technical>
+#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:27
+#, kde-format
+msgid ""
+"<i>varsource</i>: The tabulation plugin does not show its own varselector by "
+"default. Connect your own to this one (<i>client=\"embedded_id.varsource."
+"selected\" governor=\"myvarselector_id.selected\"</i>)."
+msgstr ""
+"<i>varsource</i>: типово додаток табуляції не показує власного засобу вибору "
+"змінних (varselector). Ваш додаток можна пов’язати з цим так: (client="
+"\"embedded_id.varsource.selected\", governor=\"myvarselector_id.selected\")."
+
+#. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Tabulate) <technical>
+#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:27
+#, kde-format
+msgid ""
+"<i>outvar</i>: By default, the plugin produces a table in a variable called "
+"\"x\". You can set it to use a different name, here."
+msgstr ""
+"<i>outvar</i>: типово додаток створює таблицю у змінній із назвою «x». За "
+"допомогою цієї властивості ви можете вказати іншу змінну."
+
+#. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Tabulate) <technical>
+#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:27
+#, kde-format
+msgid ""
+"<i>titlevar</i>: If you want the plugin to save a description of the "
+"grouping variables in an R variable, set this to an object name to use. Else "
+"set this to \"\" to disable. Defaults to \"title\""
+msgstr ""
+"<i>titlevar</i>: якщо вам потрібно зберегти опис змінних групування у "
+"змінній R, встановіть для цієї властивості назву об’єкта. Встановіть "
+"значення \"\", щоб вимкнути. Типовим є \"title\"."
+
+#. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Tabulate) <technical>
+#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:27
+#, kde-format
+msgid ""
+"<i>fun_label</i>: This property will be set to a description of the "
+"statistic."
+msgstr ""
+"<i>fun_label</i>: для цієї властивості буде встановлено опис статистики."
+
+#. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Tabulate) <technical>
+#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:27
+#, kde-format
+msgid ""
+"<i>parameters</i>: This property will be set to a string describing the "
+"tabulation options, suitable for pasting into the <i>parameters</i> argument "
+"of <b>rk.header()</b>."
+msgstr ""
+"<i>parameters</i>: для цієї властивості буде встановлено рядок, що описує "
+"параметри табуляції, сумісний із вставленням до аргументу \"parameters\" "
+"функції rk.header()."
+
+#. i18n: ectx: (Loaded from Default histogram options)
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <checkbox label="...">
+#. i18n: ectx: (Tabulate)
+#. i18n: ectx: (Tabulate) <dialog label="Tabulate"> <radio label="Statistic"> <option label="...">
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:26
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:51
+#: rkward/plugins/distributions/../plots/histogram_options.js:37
+#: rkward/plugins/distributions/../plots/histogram_options.xml:52
+#, kde-format
+msgid "Frequency"
+msgstr "Частота"
+
+#. i18n: ectx: (Tabulate)
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:30
+#, no-c-format, kde-format
+msgid "Sum of %1"
+msgstr "Сума %1"
+
+#. i18n: ectx: (Tabulate)
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:32
+#, no-c-format, kde-format
+msgctxt "(function name) of (object name)"
+msgid "%1 of %2"
+msgstr "%1 %2"
+
+#. i18n: ectx: (Tabulate)
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:41
+#, kde-format
+msgid "Tabulation groups"
+msgstr "Групи табуляції"
+
+#. i18n: ectx: (Tabulate)
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:41
+#, kde-format
+msgctxt "Tabulate X by Y [by Z [...]]"
+msgid " by "
+msgstr " за "
+
+#. i18n: ectx: (Tabulate)
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:41
+#, kde-format
+msgid "Tabulation statistic"
+msgstr "Статистика табуляції"
+
+#. i18n: ectx: <components> <component label="...">
+#. i18n: ectx: (Tabulate) <dialog label="...">
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:46
+#: rkward/plugins/distributions/../embedded.pluginmap:23
+#, kde-format
+msgid "Tabulate"
+msgstr "Табулювати"
+
+#. i18n: ectx: (Tabulate) <dialog label="Tabulate"> <varslot label="...">
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:48
+#, kde-format
+msgid "Grouping factors"
+msgstr "Фактори групування"
+
+#. i18n: ectx: (Tabulate) <dialog label="Tabulate"> <varslot label="...">
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:56
+#, kde-format
+msgid "Values"
+msgstr "Значення"
+
+#. i18n: ectx: (Tabulate) <dialog label="Tabulate"> <input label="...">
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:57
+#, kde-format
+msgid "Custom statistic"
+msgstr "Нетипова статистика"
+
+#. i18n: ectx: <about name="...">
+#: rkward/plugins/distributions/../embedded.pluginmap:5
+#, kde-format
+msgid "Embedded plugins"
+msgstr "Вбудовані додатки"
+
+#. i18n: ectx: <about shortinfo="...">
+#: rkward/plugins/distributions/../embedded.pluginmap:5
+#, kde-format
+msgid ""
+"Not for direct use: Utility plugins that can be included by other plugins. "
+"Part of the official RKWard distribution"
+msgstr ""
+"Не для безпосереднього використання: допоміжні додатки може бути включено "
+"іншими додатками. Частина офіційного дистрибутива RKWard."
+
+#. i18n: ectx: <components> <component label="...">
+#. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <embed label="...">
+#: rkward/plugins/distributions/../embedded.pluginmap:17
+#: rkward/plugins/distributions/../plots/barplot_embed.xml:34
+#, kde-format
+msgid "Plot Options"
+msgstr "Параметри креслення"
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/distributions/../embedded.pluginmap:18
+#, kde-format
+msgid "Color Chooser"
+msgstr "Вибір кольорів"
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/distributions/../embedded.pluginmap:19
+#, kde-format
+msgid "Step Function plot options"
+msgstr "Параметри креслення сходинкової функції"
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/distributions/../embedded.pluginmap:20
+#, kde-format
+msgid "Histogram Options"
+msgstr "Параметри діаграми"
+
+#. i18n: ectx: <components> <component label="...">
+#. i18n: ectx: (Barplot Options) <dialog label="...">
+#: rkward/plugins/distributions/../embedded.pluginmap:21
+#: rkward/plugins/distributions/../plots/barplot_embed.xml:16
+#, kde-format
+msgid "Barplot Options"
+msgstr "Параметри стовпчикової діаграми"
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/distributions/../embedded.pluginmap:26
+#, kde-format
+msgid "Draw Grid"
+msgstr "Малювати сітку"
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/distributions/../embedded.pluginmap:28
+#, kde-format
+msgid "Select by value"
+msgstr "Вибрати за значенням"
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/distributions/../embedded.pluginmap:29
+#, kde-format
+msgid "Multi Input"
+msgstr "Декілька джерел даних"
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/distributions/../embedded.pluginmap:33
+#, kde-format
+msgid "Run Code"
+msgstr "Виконати код"
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/distributions/../embedded.pluginmap:36
+#, kde-format
+msgid "Install from git"
+msgstr "Встановити з git"
+
+#. i18n: ectx: (Loaded from Install from git/svn)
+#: rkward/plugins/distributions/../internal/Installfromgit.js:65
+#, kde-format
+msgid "Install from git results"
+msgstr "Встановити з результатів git"
+
+#. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Package source")
+#: rkward/plugins/distributions/../internal/Installfromgit.rkh:13
+#, kde-format
+msgid "Set the location where the package resides that you want to install."
+msgstr "Встановіть місце, де зберігається пакунок, який ви хочете встановити."
+
+#. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Git user name")
+#: rkward/plugins/distributions/../internal/Installfromgit.rkh:17
+#, kde-format
+msgid "Specify the user name (GitHub, GitLab and Bitbucket only)."
+msgstr "Вкажіть ім'я користувача (лише GitHub, GitLab і Bitbucket)."
+
+#. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Repository")
+#: rkward/plugins/distributions/../internal/Installfromgit.rkh:20
+#, kde-format
+msgid "Give the repository name (GitHub, GitLab and Bitbucket only)."
+msgstr "Задайте назву сховища (лише GitHub, GitLab і Bitbucket)."
+
+#. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "URL to repository")
+#: rkward/plugins/distributions/../internal/Installfromgit.rkh:23
+#, kde-format
+msgid "Give the full URL to the repository (generic git and svn only)."
+msgstr "Задайте повну адресу сховища (лише типові git і svn)."
+
+#. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Commit/tag/branch")
+#: rkward/plugins/distributions/../internal/Installfromgit.rkh:26
+#, kde-format
+msgid ""
+"If you want a certain commit, tag or branch for installation, define that "
+"here."
+msgstr ""
+"Якщо ви хочете встановити пакунок станом на певний внесок, мітку чи гілку, "
+"вкажіть їх тут."
+
+#. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Subdirectory")
+#: rkward/plugins/distributions/../internal/Installfromgit.rkh:29
+#, kde-format
+msgid ""
+"If you want to install from a subdirectory of the repository, define that "
+"here."
+msgstr ""
+"Якщо ви хочете встановити дані з якогось із підкаталогів сховища, вкажіть "
+"його тут."
+
+#. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Personal access token (PAT)")
+#: rkward/plugins/distributions/../internal/Installfromgit.rkh:33
+#, kde-format
+msgid ""
+"To install from a private repository, set your personal access token (PAT, "
+"GitHub and GitLab only)."
+msgstr ""
+"Щоб встановити пакунок з приватного сховища, вкажіть ваш особистий жетон "
+"доступу (PAT, лише GitHub і GitLab)."
+
+#. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "User")
+#: rkward/plugins/distributions/../internal/Installfromgit.rkh:36
+#, kde-format
+msgid ""
+"To install from a private repository, set the user name (Bitbucket only)."
+msgstr ""
+"Щоб встановити пакунок з приватного сховища, вкажіть ім'я користувача (лише "
+"Bitbucket)."
+
+#. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Password")
+#: rkward/plugins/distributions/../internal/Installfromgit.rkh:39
+#, kde-format
+msgid ""
+"To install from a private repository, set the password (Bitbucket only)."
+msgstr ""
+"Щоб встановити пакунок з приватного сховища, вкажіть пароль (лише Bitbucket)."
+
+#. i18n: ectx: (Install from git/svn) <dialog label="...">
+#: rkward/plugins/distributions/../internal/Installfromgit.xml:25
+#, kde-format
+msgid "Install from git/svn"
+msgstr "Встановити з git/svn"
+
+#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="...">
+#: rkward/plugins/distributions/../internal/Installfromgit.xml:27
+#, kde-format
+msgid "Package source"
+msgstr "Джерело пакунка"
+
+#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
+#: rkward/plugins/distributions/../internal/Installfromgit.xml:28
+#, kde-format
+msgid "git (generic)"
+msgstr "git (типовий)"
+
+#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
+#: rkward/plugins/distributions/../internal/Installfromgit.xml:29
+#, kde-format
+msgid "GitHub"
+msgstr "GitHub"
+
+#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
+#: rkward/plugins/distributions/../internal/Installfromgit.xml:30
+#, kde-format
+msgid "GitLab"
+msgstr "GitLab"
+
+#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
+#: rkward/plugins/distributions/../internal/Installfromgit.xml:31
+#, kde-format
+msgid "Bitbucket"
+msgstr "Bitbucket"
+
+#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
+#: rkward/plugins/distributions/../internal/Installfromgit.xml:32
+#, kde-format
+msgid "subversion (generic)"
+msgstr "subversion (типовий)"
+
+#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="...">
+#: rkward/plugins/distributions/../internal/Installfromgit.xml:34
+#, kde-format
+msgid "Package repository"
+msgstr "Сховище пакунків"
+
+#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Package repository"> <input label="...">
+#: rkward/plugins/distributions/../internal/Installfromgit.xml:36
+#, kde-format
+msgid "Git user name"
+msgstr "Ім'я користувача git"
+
+#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Package repository"> <input label="...">
+#: rkward/plugins/distributions/../internal/Installfromgit.xml:37
+#, kde-format
+msgid "Repository"
+msgstr "Сховище"
+
+#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Package repository"> <input label="...">
+#: rkward/plugins/distributions/../internal/Installfromgit.xml:39
+#, kde-format
+msgid "URL to repository"
+msgstr "Адреса сховища"
+
+#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <input label="...">
+#: rkward/plugins/distributions/../internal/Installfromgit.xml:41
+#, kde-format
+msgid "Commit/tag/branch"
+msgstr "Внесок/Мітка/Гілка"
+
+#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <input label="...">
+#: rkward/plugins/distributions/../internal/Installfromgit.xml:42
+#, kde-format
+msgid "Subdirectory"
+msgstr "Підкаталог"
+
+#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="...">
+#: rkward/plugins/distributions/../internal/Installfromgit.xml:43
+#, kde-format
+msgid "Private repository"
+msgstr "Приватне сховище"
+
+#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Private repository"> <input label="...">
+#: rkward/plugins/distributions/../internal/Installfromgit.xml:44
+#, kde-format
+msgid "Personal access token (PAT)"
+msgstr "Особистий жетон доступу (PAT)"
+
+#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Private repository"> <input label="...">
+#: rkward/plugins/distributions/../internal/Installfromgit.xml:46
+#, kde-format
+msgid "User"
+msgstr "Користувач"
+
+#. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Private repository"> <input label="...">
+#: rkward/plugins/distributions/../internal/Installfromgit.xml:47
+#, kde-format
+msgid "Password"
+msgstr "Пароль"
+
+#. i18n: ectx: <about name="...">
+#: rkward/plugins/distributions/../menu.pluginmap:5
+#, kde-format
+msgid "Menu structure definition"
+msgstr "Визначення структури меню"
+
+#. i18n: ectx: <about shortinfo="...">
+#: rkward/plugins/distributions/../menu.pluginmap:5
+#, kde-format
+msgid ""
+"Not for direct use: Defines the names and order of top level menus. Part of "
+"the official RKWard distribution"
+msgstr ""
+"Не для безпосереднього використання: визначає назви і порядок меню верхнього "
+"рівня. Частина офіційного дистрибутива RKWard."
+
+#. i18n: ectx: <hierarchy> <menu label="...">
+#: rkward/plugins/distributions/../menu.pluginmap:19
+#, kde-format
+msgid "Data"
+msgstr "Дані"
+
+#. i18n: ectx: <hierarchy> <menu label="...">
+#: rkward/plugins/distributions/../menu.pluginmap:22
+#, kde-format
+msgid "Analysis"
+msgstr "Аналіз"
+
+#. i18n: ectx: <hierarchy> <menu label="...">
+#: rkward/plugins/distributions/../menu.pluginmap:25
+#, kde-format
+msgid "Plots"
+msgstr "Креслення"
+
+#. i18n: ectx: <hierarchy> <menu label="...">
+#: rkward/plugins/distributions/../menu.pluginmap:28
+#, kde-format
+msgid "Distributions"
+msgstr "Розподіли"
+
+#. i18n: ectx: <hierarchy> <menu label="...">
+#: rkward/plugins/distributions/../menu.pluginmap:30
+#, kde-format
+msgid "empty"
+msgstr "порожньо"
+
+#. i18n: ectx: (Loaded from Barplot Options)
+#: rkward/plugins/distributions/../plots/barplot_embed.js:52
+#, kde-format
+msgctxt "R code comment"
+msgid "adjust the range so that the labels will fit"
+msgstr "скоригувати діапазон, щоб мітки було видно"
+
+#. i18n: ectx: (Loaded from Barplot Options) <summary>
+#: rkward/plugins/distributions/../plots/barplot_embed.rkh:3
+#, kde-format
+msgid "Options applicable to bar plots"
+msgstr "Параметри, що стосуються стовпчикових діаграм"
+
+#. i18n: ectx: (Loaded from Barplot Options) <usage>
+#: rkward/plugins/distributions/../plots/barplot_embed.rkh:7
+#, kde-format
+msgid ""
+"Choose if you want stacked bars, legend, and rainbow colors. Also you can "
+"choose if you want to display or not bar values (labels) and in what place."
+msgstr ""
+"Виберіть, чи слід малювати стоси стовпчиків, панель умовних позначень та "
+"використовувати кольори веселки. Ви також можете визначити, чи слід "
+"показувати значення для стовпчиків (мітки) і де їх слід показувати."
+
+#. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Draw Legend")
+#: rkward/plugins/distributions/../plots/barplot_embed.rkh:12
+#, kde-format
+msgid ""
+"Should a legend be added to the barplot? The row names of the data will be "
+"used to construct the legend, so this option has no effect, if the rows are "
+"not named."
+msgstr ""
+"Чи слід додавати на стовпчикову діаграму панель умовних позначень? Для "
+"побудови списку умовних позначень буде використано назви рядків даних, отже "
+"цей пункт ні на що не вплине, якщо рядки не мають назв."
+
+#. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Colors")
+#: rkward/plugins/distributions/../plots/barplot_embed.rkh:13
+#, kde-format
+msgid "Select between grey and rainbow colors."
+msgstr "Вибір між відтінками сірого і кольорами веселки."
+
+#. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Type")
+#: rkward/plugins/distributions/../plots/barplot_embed.rkh:14
+#, kde-format
+msgid ""
+"Select a type between juxtaposed bars and stacked bars. This setting is only "
+"meaningful for two-dimensional data. If you choose stacked bars you can not "
+"display bar values, below."
+msgstr ""
+"Виберіть тип стовпчиків: розташовані поруч чи розташовані стосами. Цей пункт "
+"стосується лише двовимірних даних. Якщо буде вибрано стоси стовпчиків, ви не "
+"зможете наказати програмі показувати значення нижче."
+
+#. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Display values")
+#: rkward/plugins/distributions/../plots/barplot_embed.rkh:15
+#, kde-format
+msgid "Select if you want to display bar values (labels)."
+msgstr "Позначте, якщо слід показувати значення стовпчиків (мітки)."
+
+#. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Placement")
+#: rkward/plugins/distributions/../plots/barplot_embed.rkh:16
+#, kde-format
+msgid ""
+"If you have selected to display bar values (labels) you can select where "
+"should they be displayed:"
+msgstr ""
+"Якщо ви наказали програмі показувати значення стовпчиків (мітки), ви можете "
+"вибрати місце, де їх має бути показано:"
+
+#. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Placement")
+#: rkward/plugins/distributions/../plots/barplot_embed.rkh:16
+#, kde-format
+msgid "Above the bars"
+msgstr "над стовпчиками"
+
+#. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Placement")
+#: rkward/plugins/distributions/../plots/barplot_embed.rkh:16
+#, kde-format
+msgid "Beside the bars"
+msgstr "поряд зі стовпчиками"
+
+#. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Placement")
+#: rkward/plugins/distributions/../plots/barplot_embed.rkh:16
+#, kde-format
+msgid "Inside the bars"
+msgstr "всередині стовпчиків"
+
+#. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Plot Options")
+#: rkward/plugins/distributions/../plots/barplot_embed.rkh:21
+#, kde-format
+msgid ""
+"Generic plot options. See <link href=\"rkward://component/plot_options\"/>."
+msgstr ""
+"Загальні параметри креслення. Див. <link href=\"rkward://component/"
+"plot_options\"/>."
+
+#. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Barplot Options) <technical>
+#: rkward/plugins/distributions/../plots/barplot_embed.rkh:31
+#, kde-format
+msgid ""
+"This plugin is meant to be embedded in other plugins. It does not by itself "
+"provide a means to select input data. When embedding this plugin, you will "
+"be interested in the following properties:"
+msgstr ""
+"Цей додаток призначено для вбудовування до інших додатків. У ньому не "
+"передбачено засобів вибору вхідних даних. Вбудувати цей додаток можна за "
+"допомогою таких властивостей:"
+
+#. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Barplot Options) <technical>
+#: rkward/plugins/distributions/../plots/barplot_embed.rkh:31
+#, kde-format
+msgid ""
+"<i>xvar</i>: The name of the data variable. You can connect this to a "
+"varslot, or set it to a fixed string such as \"x\". This is required."
+msgstr ""
+"<i>xvar</i>: назва змінної даних. Ви можете з’єднати її із слотом змінної "
+"(varslot) або встановити фіксований рядок, наприклад \"x\". Ця властивість є "
+"обов’язковою."
+
+#. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Barplot Options) <technical>
+#: rkward/plugins/distributions/../plots/barplot_embed.rkh:31
+#, kde-format
+msgid ""
+"<i>code.preprocess</i>: Provides a summary of parameters to be used in a "
+"call to <b>rk.header()</b>, if you have a use for it."
+msgstr ""
+"<i>code.preprocess</i>: надає резюме параметрів, які слід використовувати у "
+"виклику rk.header(), якщо ви її використовуєте."
+
+#. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Barplot Options) <technical>
+#: rkward/plugins/distributions/../plots/barplot_embed.rkh:31
+#, kde-format
+msgid ""
+"<i>code.printout</i>: The actual commands needed to construct the barplot."
+msgstr ""
+"<i>code.printout</i>: команди, потрібні для побудови стовпчикової діаграми."
+
+#. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <checkbox label="...">
+#: rkward/plugins/distributions/../plots/barplot_embed.xml:17
+#, kde-format
+msgid "Draw Legend"
+msgstr "Показати умовні позначення"
+
+#. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="...">
+#: rkward/plugins/distributions/../plots/barplot_embed.xml:18
+#, kde-format
+msgid "Colors"
+msgstr "Кольори"
+
+#. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="Colors"> <option label="...">
+#: rkward/plugins/distributions/../plots/barplot_embed.xml:19
+#, kde-format
+msgid "Default (grayscale)"
+msgstr "Типові (відтінки сірого)"
+
+#. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="Colors"> <option label="...">
+#: rkward/plugins/distributions/../plots/barplot_embed.xml:20
+#, kde-format
+msgid "Rainbow colors"
+msgstr "Кольори веселки"
+
+#. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="...">
+#: rkward/plugins/distributions/../plots/barplot_embed.xml:22
+#, kde-format
+msgid "Type"
+msgstr "Тип"
+
+#. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="Type"> <option label="...">
+#: rkward/plugins/distributions/../plots/barplot_embed.xml:23
+#, kde-format
+msgid "Juxtaposed"
+msgstr "Розташовані поряд"
+
+#. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="Type"> <option label="...">
+#: rkward/plugins/distributions/../plots/barplot_embed.xml:24
+#, kde-format
+msgid "Stacked"
+msgstr "Стосами"
+
+#. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <checkbox label="...">
+#: rkward/plugins/distributions/../plots/barplot_embed.xml:27
+#, kde-format
+msgid "Display values"
+msgstr "Показувати значення"
+
+#. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="...">
+#: rkward/plugins/distributions/../plots/barplot_embed.xml:28
+#, kde-format
+msgid "Placement"
+msgstr "Розташування"
+
+#. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="Placement"> <option label="...">
+#: rkward/plugins/distributions/../plots/barplot_embed.xml:29
+#, kde-format
+msgid "Above Bars"
+msgstr "Над стовпчиками"
+
+#. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="Placement"> <option label="...">
+#: rkward/plugins/distributions/../plots/barplot_embed.xml:30
+#, kde-format
+msgid "Beside Bars"
+msgstr "Поряд зі стовпчиками"
+
+#. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="Placement"> <option label="...">
+#: rkward/plugins/distributions/../plots/barplot_embed.xml:31
+#, kde-format
+msgid "Inside Bars"
+msgstr "Всередині стовпчиків"
+
+#. i18n: ectx: (Loaded from Choose color) <summary>
+#: rkward/plugins/distributions/../plots/color_chooser.rkh:3
+#, kde-format
+msgid "Simple color picker."
+msgstr "Проста піпетка вибору кольору."
+
+#. i18n: ectx: (Loaded from Choose color) <usage>
+#: rkward/plugins/distributions/../plots/color_chooser.rkh:7
+#, kde-format
+msgid "Pick a color."
+msgstr "Вибрати колір."
+
+#. i18n: ectx: (Loaded from Choose color) <usage>
+#: rkward/plugins/distributions/../plots/color_chooser.rkh:7
+#, kde-format
+msgid ""
+"This plugin is meant to be used embedded, and you should not really ever see "
+"this help page."
+msgstr ""
+"Цей додаток призначено для вбудовування, отже, ймовірно, ви ніколи не "
+"побачите цієї сторінки довідки."
+
+#. i18n: ectx: (Loaded from Choose color) <settings> <setting> (refers to element labelled "Color")
+#: rkward/plugins/distributions/../plots/color_chooser.rkh:14
+#, kde-format
+msgid "The color to use."
+msgstr "Колір, яким слід скористатися."
+
+#. i18n: ectx: (Choose color) <dialog label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:17
+#, kde-format
+msgid "Choose color"
+msgstr "Виберіть колір"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <embed label="...">
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="...">
+#. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Points"> <embed label="...">
+#. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Horizontal Lines"> <embed label="...">
+#. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Vertical lines"> <embed label="...">
+#. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="For y = 0 line"> <embed label="...">
+#. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="For y = 1 line"> <embed label="...">
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Border options"> <embed label="...">
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Fill options"> <embed label="...">
+#. i18n: ectx: (Grid options) <dialog label="Grid options"> <embed label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:18
+#: rkward/plugins/distributions/../plots/histogram_options.xml:91
+#: rkward/plugins/distributions/../plots/histogram_options.xml:95
+#: rkward/plugins/distributions/../plots/plot_options.xml:155
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:44
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:49
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:53
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:58
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:61
+#: rkward/plugins/distributions/../x11device/grid.xml:53
+#, kde-format
+msgid "Color"
+msgstr "Колір"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> [...] <dropdown label="Tick label orientation"> <option label="...">
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="Type of points/lines"> <option label="...">
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:19
+#: rkward/plugins/distributions/../plots/plot_options.xml:129
+#: rkward/plugins/distributions/../plots/plot_options.xml:146
+#, kde-format
+msgid "default"
+msgstr "типовий"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:20
+#, kde-format
+msgid "Azure"
+msgstr "лазуровий"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:21
+#, kde-format
+msgid "Black"
+msgstr "чорний"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:22
+#, kde-format
+msgid "Blue"
+msgstr "синій"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:23
+#, kde-format
+msgid "Blue1"
+msgstr "синій1"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:24
+#, kde-format
+msgid "Blue2"
+msgstr "синій2"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:25
+#, kde-format
+msgid "Blue3"
+msgstr "синій3"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:26
+#, kde-format
+msgid "Blue4"
+msgstr "синій4"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:27
+#, kde-format
+msgid "Brown"
+msgstr "брунатний"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:28
+#, kde-format
+msgid "Cyan"
+msgstr "блакитний"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:29
+#, kde-format
+msgid "Darkviolet"
+msgstr "темно-фіалковий"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:30
+#, kde-format
+msgid "Gold"
+msgstr "золотий"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:31
+#, kde-format
+msgid "Gray"
+msgstr "сірий"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:32
+#, kde-format
+msgid "Gray1"
+msgstr "сірий1"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:33
+#, kde-format
+msgid "Gray2"
+msgstr "сірий2"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:34
+#, kde-format
+msgid "Gray3"
+msgstr "сірий3"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:35
+#, kde-format
+msgid "Gray4"
+msgstr "сірий4"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:36
+#, kde-format
+msgid "Green"
+msgstr "зелений"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:37
+#, kde-format
+msgid "Green1"
+msgstr "зелений1"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:38
+#, kde-format
+msgid "Green2"
+msgstr "зелений2"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:39
+#, kde-format
+msgid "Green3"
+msgstr "зелений3"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:40
+#, kde-format
+msgid "Green4"
+msgstr "зелений4"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:41
+#, kde-format
+msgid "Grey"
+msgstr "сірий"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:42
+#, kde-format
+msgid "Grey1"
+msgstr "сірий1"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:43
+#, kde-format
+msgid "Grey2"
+msgstr "сірий2"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:44
+#, kde-format
+msgid "Grey3"
+msgstr "сірий3"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:45
+#, kde-format
+msgid "Grey4"
+msgstr "сірий4"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:46
+#, kde-format
+msgid "Lawngreen"
+msgstr "трав’яний"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:47
+#, kde-format
+msgid "Limegreen"
+msgstr "лаймово-зелений"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:48
+#, kde-format
+msgid "Linen"
+msgstr "льняний"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:49
+#, kde-format
+msgid "Magenta"
+msgstr "бузковий"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:50
+#, kde-format
+msgid "Magenta1"
+msgstr "бузковий1"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:51
+#, kde-format
+msgid "Magenta2"
+msgstr "бузковий2"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:52
+#, kde-format
+msgid "Magenta3"
+msgstr "бузковий3"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:53
+#, kde-format
+msgid "Magenta4"
+msgstr "бузковий4"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:54
+#, kde-format
+msgid "Mintcream"
+msgstr "м'ятно-кремовий"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:55
+#, kde-format
+msgid "Mistyrose"
+msgstr "тьмяно-рожевий"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:56
+#, kde-format
+msgid "Navajowhite"
+msgstr "білий навахо"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:57
+#, kde-format
+msgid "Orange"
+msgstr "помаранчевий"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:58
+#, kde-format
+msgid "Orchid"
+msgstr "орхідея"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:59
+#, kde-format
+msgid "Palegreen"
+msgstr "тьмяно-зелений"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:60
+#, kde-format
+msgid "Papayawhip"
+msgstr "папая"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:61
+#, kde-format
+msgid "Peachpuff"
+msgstr "персиковий"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:62
+#, kde-format
+msgid "Pink"
+msgstr "рожевий"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:63
+#, kde-format
+msgid "Red"
+msgstr "червоний"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:64
+#, kde-format
+msgid "Red1"
+msgstr "червоний1"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:65
+#, kde-format
+msgid "Red2"
+msgstr "червоний2"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:66
+#, kde-format
+msgid "Red3"
+msgstr "червоний3"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:67
+#, kde-format
+msgid "Red4"
+msgstr "червоний4"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:68
+#, kde-format
+msgid "Royalblue"
+msgstr "густий синій"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:69
+#, kde-format
+msgid "Salmon"
+msgstr "оранжево-рожевий"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:70
+#, kde-format
+msgid "Sandybrown"
+msgstr "пісочно-брунатний"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:71
+#, kde-format
+msgid "Seagreen"
+msgstr "морський зелений"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:72
+#, kde-format
+msgid "Sienna"
+msgstr "вохра"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:73
+#, kde-format
+msgid "Skyblue"
+msgstr "небесно-синій"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:74
+#, kde-format
+msgid "Slategrey"
+msgstr "сланцево-сірий"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:75
+#, kde-format
+msgid "Snow"
+msgstr "сніговий"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:76
+#, kde-format
+msgid "Springgreen"
+msgstr "зелена весна"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:77
+#, kde-format
+msgid "Steelblue"
+msgstr "сталево-синій"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:78
+#, kde-format
+msgid "Tan"
+msgstr "корковий"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:79
+#, kde-format
+msgid "Thistle"
+msgstr "чортополох"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:80
+#, kde-format
+msgid "Tomato"
+msgstr "томат"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:81
+#, kde-format
+msgid "Violet"
+msgstr "фіалковий"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:82
+#, kde-format
+msgid "Violetred1"
+msgstr "фіалково-червоний1"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:83
+#, kde-format
+msgid "Violetred2"
+msgstr "фіалково-червоний2"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:84
+#, kde-format
+msgid "Violetred3"
+msgstr "фіалково-червоний3"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:85
+#, kde-format
+msgid "Violetred4"
+msgstr "фіалково-червоний4"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:86
+#, kde-format
+msgid "Wheat"
+msgstr "пшеничний"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:87
+#, kde-format
+msgid "White"
+msgstr "білий"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:88
+#, kde-format
+msgid "Yellow"
+msgstr "жовтий"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:89
+#, kde-format
+msgid "Yellow1"
+msgstr "жовтий1"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:90
+#, kde-format
+msgid "Yellow2"
+msgstr "жовтий2"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:91
+#, kde-format
+msgid "Yellow3"
+msgstr "жовтий3"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:92
+#, kde-format
+msgid "Yellow4"
+msgstr "жовтий4"
+
+#. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
+#: rkward/plugins/distributions/../plots/color_chooser.xml:93
+#, kde-format
+msgid "Yellowgreen"
+msgstr "жовто-зелений"
+
+#. i18n: ectx: (Loaded from Default histogram options)
+#: rkward/plugins/distributions/../plots/histogram_options.js:13
+#, kde-format
+msgid "Break points"
+msgstr "Точки поділу"
+
+#. i18n: ectx: (Loaded from Default histogram options)
+#: rkward/plugins/distributions/../plots/histogram_options.js:16
+#, no-c-format, kde-format
+msgid "Approximately %1 cells"
+msgstr "Приблизно %1 комірок"
+
+#. i18n: ectx: (Loaded from Default histogram options)
+#: rkward/plugins/distributions/../plots/histogram_options.js:19
+#, kde-format
+msgid "Integers"
+msgstr "Цілі числа"
+
+#. i18n: ectx: (Loaded from Default histogram options)
+#: rkward/plugins/distributions/../plots/histogram_options.js:22
+#, no-c-format, kde-format
+msgid "Equally spaced vector of length %1"
+msgstr "Рівномірно розподілений вектор довжини %1"
+
+#. i18n: ectx: (Loaded from Default histogram options)
+#: rkward/plugins/distributions/../plots/histogram_options.js:35
+#: rkward/plugins/distributions/../plots/histogram_options.js:37
+#, kde-format
+msgid "Scale"
+msgstr "Шкала"
+
+#. i18n: ectx: (Loaded from Default histogram options)
+#: rkward/plugins/distributions/../plots/histogram_options.js:35
+#, kde-format
+msgid "Density"
+msgstr "Щільність"
+
+#. i18n: ectx: (Loaded from Default histogram options) <summary>
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:3
+#, kde-format
+msgid ""
+"This plugin provides various options for <b>hist</b> or <b>plot.histogram</"
+"b>."
+msgstr ""
+"Цей додаток надає змогу змінювати параметри роботи функцій <b>hist</b> та "
+"<b>plot.histogram</b>."
+
+#. i18n: ectx: (Loaded from Default histogram options) <usage>
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:6
+#, kde-format
+msgid ""
+"This plugin is mostly used as an embedded plugin. All the GUI elements here "
+"set various parameters to either hist or plot.histogram functions. For "
+"parameter specific help see the respective R references. Few parameter "
+"combinations might not produce any sensible plot, so read the R references "
+"to make a judicious choice of parameters."
+msgstr ""
+"Здебільшого, цей додаток використовується для вбудовування. Усі елементи "
+"графічного інтерфейсу додатка встановлюють різноманітні параметри функції "
+"hist або plot.histogram. Специфічну для параметрів довідку можна знайти у "
+"довідкових матеріалах R. Деякі сполучення параметрів можуть призвести до "
+"псування креслення, отже, ознайомтеся із довідковими матеріалами R, щоб "
+"вибрати параметри належним чином."
+
+#. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Add bars to current plot")
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:10
+#, kde-format
+msgid ""
+"Check this box if the histogram is to be added to the current plot. This is "
+"the <i>add</i> parameter."
+msgstr ""
+"Позначте цей пункт, якщо гістограму слід додати на поточне креслення. Цей "
+"параметр <i>add</i>."
+
+#. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Frequency")
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:11
+#, kde-format
+msgid "This is the <i>freq</i> parameter."
+msgstr "Параметр <i>freq</i>."
+
+#. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Bar labels")
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:12
+#, kde-format
+msgid "This is the <i>label</i> parameter."
+msgstr "Параметр <i>label</i>."
+
+#. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Right closed")
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:13
+#, kde-format
+msgid "This is the <i>right</i> parameter."
+msgstr "Параметр <i>right</i>."
+
+#. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Include in lowest cell")
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:14
+#, kde-format
+msgid "This is the <i>include.lowest</i> parameter."
+msgstr "Параметр <i>include.lowest</i>."
+
+#. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Method")
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:16
+#, kde-format
+msgid ""
+"This is the <i>breaks</i> parameter to <b>hist</b>, unless either 'Integer "
+"numbers' or 'Vector of break points' is chosen. The 'Integer numbers' option "
+"sets the break points as the integers between the minimum and the maximum of "
+"the variable. The 'Vector of break points' option sets equally spaced break "
+"points in the range of the variable. The number of break points in this case "
+"is provided by 'Vector length' (see below)."
+msgstr ""
+"Це параметр <i>breaks</i> функції <b>hist</b>, якщо не вибрано пункт «Цілі "
+"числа» або «Вектор точок поділу». Варіант «Цілі числа» встановлює точки "
+"поділу на цілих числах між мінімальним і максимальним значенням змінної. "
+"Варіант «Вектор точок поділу» встановлює рівномірно розподілені точки поділу "
+"у діапазоні значень змінної. Кількість точок поділу у цьому випадку "
+"визначається параметром «Довжина вектора» (див. нижче)."
+
+#. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Suggested cells")
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:17
+#, kde-format
+msgid ""
+"If 'A single number' is chosen in the above field, then this provides a "
+"suggestion to the number of cells. This is the <i>breaks</i> parameter with "
+"a single number argument."
+msgstr ""
+"Якщо у розташованому вище полі вибрано варіант «Певне число», цей пункт "
+"надає пропозицію щодо кількості комірок. Це параметр <i>breaks</i> з певним "
+"числовим аргументом."
+
+#. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Vector length")
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:18
+#, no-c-format, kde-format
+msgid ""
+"If 'Vector of break points' is chosen in the above field, then this provides "
+"the length of the vector of equally spaced break points in the range of the "
+"variable. This is the <i>breaks</i> parameter with a vector argument. The "
+"actual sequence is calculated by an inline function call (see the generated "
+"code). The range of the variable is extended by 10% before obtaining the "
+"sequence, so that both the minimum and maximum points are included."
+msgstr ""
+"Якщо у розташованому вище полі вибрано варіант «Вектор точок поділу», цей "
+"пункт надає змогу вказати довжину вектора рівномірно розподілених у "
+"діапазоні значень змінної точок поділу. Це параметр <i>breaks</i> і "
+"векторним аргументом. Послідовність точок визначається викликом вбудованої "
+"функції (див. породжений код). Перед визначенням послідовності діапазон "
+"значень змінної розширюється на 10%, щоб можна було включити точки "
+"мінімального і максимального значення."
+
+#. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Draw border")
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:20
+#, kde-format
+msgid ""
+"Whether border to the histogram bars are to be drawn. If unchecked then, "
+"<i>border=FALSE</i> is added to the code. Otherwise a color is provided as "
+"the argument to <i>border</i>."
+msgstr ""
+"Визначає, чи слід малювати рамку стовпчиків діаграм. Якщо пункт не "
+"позначено, до коду буде додано інструкцію <i>border=FALSE</i>. Якщо пункт "
+"буде позначено, колір передається як аргумент <i>border</i>."
+
+#. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Color")
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:21
+#, kde-format
+msgid ""
+"This is the <i>border</i> argument which provides the color of the border. "
+"Check the above box to use this option."
+msgstr ""
+"Це аргумент <i>border</i>, який визначає колір рамки. Щоб скористатися цим "
+"пунктом позначте розташований вище пункт."
+
+#. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Line type for histogram")
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:23
+#, kde-format
+msgid ""
+"This is the <i>lty</i> parameter. Choosing 'Blank' will not draw any lines, "
+"select a fill color to make a sensible plot. See R reference for further "
+"details."
+msgstr ""
+"Це параметр <i>lty</i>. Якщо буде вибрано «Порожньо», ліній намальовано не "
+"буде. Виберіть колір заповнення, щоб на кресленні було хоч щось видно. Див. "
+"довідкові матеріали з R, щоб дізнатися більше."
+
+#. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Density of shading lines")
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:24
+#, kde-format
+msgid ""
+"This is the <i>density</i> parameter. See the R reference on 'rect' for more "
+"details."
+msgstr ""
+"Це параметр <i>density</i>. Див. довідкові матеріали з R щодо «rect», щоб "
+"дізнатися більше."
+
+#. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Angle of shading lines")
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:25
+#, kde-format
+msgid "This is the <i>angle</i> parameter."
+msgstr "Параметр <i>angle</i>."
+
+#. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Use Fill color")
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:27
+#, kde-format
+msgid "Check this box to use a fill color for the histogram bars."
+msgstr ""
+"Позначте цей пункт, щоб програма використовувала колір заповнення для "
+"стовпчиків гістограми."
+
+#. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Color")
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:28
+#, kde-format
+msgid ""
+"This is the <i>col</i> parameter. The embedding plugin might set a default "
+"color. If it is empty, then <i>col</i> is not used in the code, otherwise "
+"the chosen color is used to fill the bars."
+msgstr ""
+"Це параметр <i>col</i>. У додатку, до якого виконується вбудовування, має "
+"бути встановлено типовий колір. Якщо встановлено порожнє значення, у коді не "
+"використовуватиметься <i>col</i>. Якщо ж значення виявиться непорожнім, для "
+"заповнення стовпчиків буде використано вказаний колір."
+
+#. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Default plot options) <technical>
+#. i18n: ectx: (Loaded from Step function plot options) <technical>
+#. i18n: ectx: (Loaded from Default histogram options) <technical>
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:38
+#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:26
+#, kde-format
+msgid ""
+"The following external tags are provided for use in the embedding plugin."
+msgstr ""
+"У додатку, до якого виконується вбудовування можна скористатися вказаними "
+"нижче зовнішніми теґами."
+
+#. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Default plot options) <technical>
+#. i18n: ectx: (Loaded from Default histogram options) <technical>
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:38
+#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#, kde-format
+msgid ""
+"<i>code.printout</i>: This contains all the other options determining the "
+"look of the plot."
+msgstr ""
+"<i>code.printout</i>: містить усі інші параметри, що визначають вигляд "
+"креслення."
+
+#. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Step function plot options) <technical>
+#. i18n: ectx: (Loaded from Default histogram options) <technical>
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:38
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:26
+#, kde-format
+msgid ""
+"<i>allow_addtoplot</i>: Setting this to \"true\" (\"false\") enables "
+"(disables) the display of the '<label id=\"addtoplot\"/>' check box."
+msgstr ""
+"<i>allow_addtoplot</i>: встановленням значення \"true\" (\"false\") можна "
+"увімкнути (вимкнути) показ пункту <label id=\"addtoplot\"/>."
+
+#. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Default histogram options) <technical>
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:38
+#, kde-format
+msgid ""
+"<i>varname</i>: For linking to the variable name for which histogram is "
+"being plotted. This is used in the 'Integer numbers' option for breaks."
+msgstr ""
+"<i>varname</i>: для пов’язування із назвою змінної, для якої виконується "
+"креслення гістограми. Використовується, якщо для поділу вибрано варіант "
+"«Цілі числа»."
+
+#. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Default histogram options) <technical>
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:38
+#, kde-format
+msgid ""
+"<i>allow_freq</i>: Setting this to \"true\" (\"false\") enables (disables) "
+"the display of the '<label id=\"freq\"/>' check box."
+msgstr ""
+"<i>allow_freq</i>: встановлення значення \"true\" (\"false\") вмикає "
+"(вимикає) показ пункту «Частота»."
+
+#. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Default histogram options) <technical>
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:38
+#, kde-format
+msgid ""
+"<i>allow_barlabels</i>: Setting this to \"true\" (\"false\") enables "
+"(disables) the display of the '<label id=\"barlabels\"/>' check box."
+msgstr ""
+"<i>allow_barlabels</i>: встановлення значення \"true\" (\"false\") вмикає "
+"(вимикає) показ пункту «Мітки стовпчиків»."
+
+#. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Default histogram options) <technical>
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:38
+#, kde-format
+msgid ""
+"In order to allow flexible use, the generated options are separated into "
+"three different sections:"
+msgstr ""
+"З метою забезпечення гнучкості у користуванні породжені параметри поділено "
+"на три різних розділи:"
+
+#. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Default histogram options) <technical>
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:38
+#, kde-format
+msgid ""
+"<i>code.preprocess</i>: Options suitable for use in a call to <b>rk."
+"header()</b>. These are safe to ignore, if you do not need them."
+msgstr ""
+"<i>code.preprocess</i>: параметри, придатні до використання у виклику <b>rk."
+"header()</b>. Ці параметри безпечно можна проігнорувати, якщо вони вам не "
+"потрібні."
+
+#. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Default histogram options) <technical>
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:38
+#, kde-format
+msgid "<i>code.calculate</i>: This contains only the <i>breaks</i>-option."
+msgstr "<i>code.calculate</i>: містить лише параметр <i>breaks</i>."
+
+#. i18n: ectx: (Default histogram options) <dialog label="...">
+#: rkward/plugins/distributions/../plots/histogram_options.xml:48
+#, kde-format
+msgid "Default histogram options"
+msgstr "Типові параметри гістограми"
+
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <checkbox label="...">
+#: rkward/plugins/distributions/../plots/histogram_options.xml:51
+#, kde-format
+msgid "Add bars to current plot"
+msgstr "Додати стовпчики до поточного креслення"
+
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <checkbox label="...">
+#: rkward/plugins/distributions/../plots/histogram_options.xml:53
+#, kde-format
+msgid "Bar labels"
+msgstr "Мітки стовпчиків"
+
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="...">
+#: rkward/plugins/distributions/../plots/histogram_options.xml:55
+#, kde-format
+msgid "Histogram Breakpoints"
+msgstr "Точки поділу гістограми"
+
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <radio label="...">
+#: rkward/plugins/distributions/../plots/histogram_options.xml:56
+#, kde-format
+msgid "Method"
+msgstr "Метод"
+
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <radio label="Method"> <option label="...">
+#: rkward/plugins/distributions/../plots/histogram_options.xml:57
+#, kde-format
+msgid "Sturges"
+msgstr "Стерджеса"
+
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <radio label="Method"> <option label="...">
+#: rkward/plugins/distributions/../plots/histogram_options.xml:58
+#, kde-format
+msgid "Scott"
+msgstr "Скотта"
+
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <radio label="Method"> <option label="...">
+#: rkward/plugins/distributions/../plots/histogram_options.xml:59
+#, kde-format
+msgid "Friedman-Diaconis"
+msgstr "Фрідмена-Діаконіса"
+
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <radio label="Method"> <option label="...">
+#: rkward/plugins/distributions/../plots/histogram_options.xml:60
+#, kde-format
+msgid "A single number"
+msgstr "Певне число"
+
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <radio label="Method"> <option label="...">
+#: rkward/plugins/distributions/../plots/histogram_options.xml:61
+#, kde-format
+msgid "Integer numbers"
+msgstr "Цілі числа"
+
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <radio label="Method"> <option label="...">
+#: rkward/plugins/distributions/../plots/histogram_options.xml:62
+#, kde-format
+msgid "Vector of break points"
+msgstr "Вектор точок поділу"
+
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <spinbox label="...">
+#: rkward/plugins/distributions/../plots/histogram_options.xml:65
+#, kde-format
+msgid "Suggested cells"
+msgstr "Запропоновані комірки"
+
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <spinbox label="...">
+#: rkward/plugins/distributions/../plots/histogram_options.xml:66
+#, kde-format
+msgid "Vector length"
+msgstr "Довжина вектора"
+
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <checkbox label="...">
+#: rkward/plugins/distributions/../plots/histogram_options.xml:68
+#, kde-format
+msgid "Right closed"
+msgstr "Замкнено праворуч"
+
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <checkbox label="...">
+#: rkward/plugins/distributions/../plots/histogram_options.xml:70
+#, kde-format
+msgid "Include in lowest cell"
+msgstr "Включати найменшу комірку"
+
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <text>
+#: rkward/plugins/distributions/../plots/histogram_options.xml:71
+#, kde-format
+msgid "(For vector valued breaks)"
+msgstr "(Для поділу за вектором значень)"
+
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="...">
+#: rkward/plugins/distributions/../plots/histogram_options.xml:76
+#, kde-format
+msgid "Histogram Line options"
+msgstr "Параметри лінії гістограми"
+
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <dropdown label="...">
+#: rkward/plugins/distributions/../plots/histogram_options.xml:77
+#, kde-format
+msgid "Line type for histogram"
+msgstr "Тип лінії гістограми"
+
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <dropdown label="Line type for histogram"> <option label="...">
+#: rkward/plugins/distributions/../plots/histogram_options.xml:78
+#, kde-format
+msgid "Blank (No lines)"
+msgstr "Порожня (без ліній)"
+
+#. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="Line type for all lines"> <option label="...">
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <dropdown label="Line type for histogram"> <option label="...">
+#. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="Line type"> <option label="...">
+#: rkward/plugins/distributions/../plots/histogram_options.xml:79
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:34
+#: rkward/plugins/distributions/../x11device/grid.xml:46
+#, kde-format
+msgid "Solid"
+msgstr "Суцільна"
+
+#. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="Line type for all lines"> <option label="...">
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <dropdown label="Line type for histogram"> <option label="...">
+#. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="Line type"> <option label="...">
+#: rkward/plugins/distributions/../plots/histogram_options.xml:80
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:35
+#: rkward/plugins/distributions/../x11device/grid.xml:47
+#, kde-format
+msgid "Dashed"
+msgstr "Штрихова"
+
+#. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="Line type for all lines"> <option label="...">
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <dropdown label="Line type for histogram"> <option label="...">
+#. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="Line type"> <option label="...">
+#: rkward/plugins/distributions/../plots/histogram_options.xml:81
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:36
+#: rkward/plugins/distributions/../x11device/grid.xml:48
+#, kde-format
+msgid "Dotted"
+msgstr "Пунктирна"
+
+#. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="Line type for all lines"> <option label="...">
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <dropdown label="Line type for histogram"> <option label="...">
+#. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="Line type"> <option label="...">
+#: rkward/plugins/distributions/../plots/histogram_options.xml:82
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:37
+#: rkward/plugins/distributions/../x11device/grid.xml:49
+#, kde-format
+msgid "Dot-Dash"
+msgstr "Штрих-пунктирна"
+
+#. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="Line type for all lines"> <option label="...">
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <dropdown label="Line type for histogram"> <option label="...">
+#. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="Line type"> <option label="...">
+#: rkward/plugins/distributions/../plots/histogram_options.xml:83
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:38
+#: rkward/plugins/distributions/../x11device/grid.xml:50
+#, kde-format
+msgid "Long-dash"
+msgstr "Довгі штрихи"
+
+#. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="Line type for all lines"> <option label="...">
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <dropdown label="Line type for histogram"> <option label="...">
+#. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="Line type"> <option label="...">
+#: rkward/plugins/distributions/../plots/histogram_options.xml:84
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:39
+#: rkward/plugins/distributions/../x11device/grid.xml:51
+#, kde-format
+msgid "Two-dash"
+msgstr "Подвійні штрихи"
+
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <spinbox label="...">
+#: rkward/plugins/distributions/../plots/histogram_options.xml:86
+#, kde-format
+msgid "Density of shading lines"
+msgstr "Щільність штрихувальних ліній"
+
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <spinbox label="...">
+#: rkward/plugins/distributions/../plots/histogram_options.xml:87
+#, kde-format
+msgid "Angle of shading lines"
+msgstr "Кут штрихувальних ліній"
+
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="...">
+#: rkward/plugins/distributions/../plots/histogram_options.xml:89
+#, kde-format
+msgid "Histogram Border options"
+msgstr "Параметри рамки гістограми"
+
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Border options"> <checkbox label="...">
+#: rkward/plugins/distributions/../plots/histogram_options.xml:90
+#, kde-format
+msgid "Draw border"
+msgstr "Намалювати рамку"
+
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="...">
+#: rkward/plugins/distributions/../plots/histogram_options.xml:93
+#, kde-format
+msgid "Histogram Fill options"
+msgstr "Параметри заповнення гістограми"
+
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Fill options"> <checkbox label="...">
+#: rkward/plugins/distributions/../plots/histogram_options.xml:94
+#, kde-format
+msgid "Use Fill color"
+msgstr "Використовувати колір заповнення"
+
+#. i18n: ectx: (Loaded from Default plot options) <summary>
+#: rkward/plugins/distributions/../plots/plot_options.rkh:3
+#, kde-format
+msgid ""
+"Generic plot options plugin. More often than not, this plugin is embedded "
+"into other plugins. As a result, not all the features explained here are "
+"available in a specific embedded situation. When a particular feature is "
+"available, it is explained as below."
+msgstr ""
+"Додаток загальних параметрів креслення. Цей додаток найчастіше просто "
+"вбудовується до інших додатків. Отже, не усі описані на цій сторінці довідки "
+"можливості доступні у певній ситуації вбудовування. Якщо певна можливість є "
+"доступною, її описано нижче."
+
+#. i18n: ectx: (Loaded from Default plot options) <usage>
+#: rkward/plugins/distributions/../plots/plot_options.rkh:7
+#, kde-format
+msgid "Set or change the various graphical parameters to the plot function."
+msgstr "Встановити або змінити різноманітні графічні параметри функції plot."
+
+#. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Main title (on top). Leave empty for default title")
+#: rkward/plugins/distributions/../plots/plot_options.rkh:13
+#, kde-format
+msgid ""
+"This is the <i>main</i> argument to plot.default. See R reference on <b>plot."
+"default</b>. To achieve a line-break (in a quoted string), enter '\\n'."
+msgstr ""
+"Це аргумент <i>main</i> функції plot.default. Див. довідку з R щодо <b>plot."
+"default</b>. Щоб отримати перехід на новий рядок (у рядку у лапках), введіть "
+"«\\n»."
+
+#. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Interpret this label as literal (quoted) string")
+#: rkward/plugins/distributions/../plots/plot_options.rkh:14
+#, kde-format
+msgid ""
+"If this box is checked, the <i>main</i> title will be used literally "
+"(quoted). Otherwise is will be interpreted as an R statement"
+msgstr ""
+"Якщо цей пункт позначено, заголовок <i>main</i> буде використано буквально "
+"(як у лапках). Якщо пункт не позначено, заголовок вважатиметься інструкцією "
+"R."
+
+#. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Sub-title (at bottom). Leave empty for default title")
+#: rkward/plugins/distributions/../plots/plot_options.rkh:15
+#, kde-format
+msgid ""
+"This is the <i>sub</i> argument to plot.default. See R reference on <b>plot."
+"default</b>. To achieve a line-break (in a quoted string), enter '\\n'."
+msgstr ""
+"Це аргумент <i>sub</i> функції plot.default. Див. довідку з R щодо <b>plot."
+"default</b>. Щоб отримати перехід на новий рядок (у рядку у лапках), введіть "
+"«\\n»."
+
+#. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Interpret this label as literal (quoted) string")
+#: rkward/plugins/distributions/../plots/plot_options.rkh:16
+#, kde-format
+msgid ""
+"If this box is checked, the <i>sub</i> title will be used literally "
+"(quoted). Otherwise is will be interpreted as an R statement"
+msgstr ""
+"Якщо цей пункт позначено, заголовок <i>sub</i> буде використано буквально "
+"(як у лапках). Якщо пункт не позначено, заголовок вважатиметься інструкцією "
+"R."
+
+#. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Custom margins")
+#: rkward/plugins/distributions/../plots/plot_options.rkh:17
+#, kde-format
+msgid "Enable this option, if you want to customize the margins."
+msgstr "Позначте цей пункт, якщо хочете змінити поля."
+
+#. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Top")
+#: rkward/plugins/distributions/../plots/plot_options.rkh:18
+#, kde-format
+msgid "Size of top margin. Size is specified in (approximate) line heights."
+msgstr ""
+"Розмір верхнього поля. Розмір визначається (приблизно) у товщинах лінії."
+
+#. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Bottom")
+#: rkward/plugins/distributions/../plots/plot_options.rkh:19
+#, kde-format
+msgid "Size of bottom margin. Size is specified in (approximate) line heights."
+msgstr ""
+"Розмір нижнього поля. Розмір визначається (приблизно) у товщинах лінії."
+
+#. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Left")
+#: rkward/plugins/distributions/../plots/plot_options.rkh:20
+#, kde-format
+msgid "Size of left margin. Size is specified in (approximate) line heights."
+msgstr "Розмір лівого поля. Розмір визначається (приблизно) у товщинах лінії."
+
+#. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Right")
+#: rkward/plugins/distributions/../plots/plot_options.rkh:21
+#, kde-format
+msgid "Size of right margin. Size is specified in (approximate) line heights."
+msgstr "Розмір правого поля. Розмір визначається (приблизно) у товщинах лінії."
+
+#. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Draw X axis")
+#: rkward/plugins/distributions/../plots/plot_options.rkh:24
+#, kde-format
+msgid ""
+"Uncheck this box to avoid drawing the X axis. This is the <i>xaxt</i> "
+"argument to par. See R reference on <b>par</b>."
+msgstr ""
+"Зніміть позначку з цього пункту, щоб програма не малювала вісі X. Це "
+"аргумент <i>xaxt</i> par. Див. довідку R щодо <b>par</b>."
+
+#. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Draw Y axis")
+#: rkward/plugins/distributions/../plots/plot_options.rkh:25
+#, kde-format
+msgid ""
+"Uncheck this box to avoid drawing the Y axis. This is the <i>yaxt</i> "
+"argument to par. See R reference on <b>par</b>."
+msgstr ""
+"Зніміть позначку з цього пункту, щоб програма не малювала вісі Y. Це "
+"аргумент <i>yaxt</i> par. Див. довідку R щодо <b>par</b>."
+
+#. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "X axis logarithmic")
+#: rkward/plugins/distributions/../plots/plot_options.rkh:26
+#, kde-format
+msgid ""
+"This specifies the <i>log</i> argument to plot.default. Check this box to "
+"set <i>log=\"x\"</i>. See R reference on <b>plot.default</b>."
+msgstr ""
+"Визначає аргумент <i>log</i> функції plot.default. Позначте цей пункт, щоб "
+"встановити значення <i>log=\"x\"</i>. Див. довідку з R щодо <b>plot.default</"
+"b>."
+
+#. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Y axis logarithmic")
+#: rkward/plugins/distributions/../plots/plot_options.rkh:27
+#, kde-format
+msgid ""
+"This specifies the <i>log</i> argument to plot.default. Check this box to "
+"set <i>log=\"y\"</i>. Check both the boxes to set <i>log=\"xy\"</i>. See R "
+"reference on <b>plot.default</b>."
+msgstr ""
+"Визначає аргумент <i>log</i> функції plot.default. Позначте цей пункт, щоб "
+"встановити значення <i>log=\"y\"</i>. Позначте обидва пункти, щоб встановити "
+"значення <i>log=\"xy\"</i>. Див. довідку з R щодо <b>plot.default</b>."
+
+#. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Labels (leave empty for default)")
+#: rkward/plugins/distributions/../plots/plot_options.rkh:29
+#, kde-format
+msgid ""
+"The X and Y axis labels. These are the <i>xlab</i> and <i>ylab</i> arguments "
+"to <b>plot.default</b>, respectively. The checkboxes enable or disable the "
+"labels being evaluated as literal (quoted) strings. To achieve a line-break "
+"(in a quoted string), enter '\\n'."
+msgstr ""
+"Мітки осей X та Y. Це аргументи <i>xlab</i> і <i>ylab</i> функції <b>plot."
+"default</b>, відповідно. Пункти вмикають або вимикають буквальну обробку "
+"рядків міток. Щоб додати розрив рядка у буквальний рядок, скористайтеся "
+"послідовністю символів «\\n»."
+
+#. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Scale (Minimum/Maximum values for X/Y). Leave blank for automatic")
+#: rkward/plugins/distributions/../plots/plot_options.rkh:30
+#, kde-format
+msgid ""
+"The X and Y axis limits. These are the <i>xlim</i> and <i>ylim</i> arguments "
+"to <b>plot.default</b> respectively. For automatic evaluation of the limits, "
+"leave these blank."
+msgstr ""
+"Межі для осей X і Y. Це аргументи <i>xlim</i> і <i>ylim</i> функції <b>plot."
+"default</b>, відповідно. Якщо межі слід визначити автоматично, не заповнюйте "
+"ці поля."
+
+#. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Type of points/lines")
+#: rkward/plugins/distributions/../plots/plot_options.rkh:33
+#, kde-format
+msgid ""
+"Choose one of the listed point/line types for the plot. To let the calling "
+"function use its default plotting type, choose the 'default' option. This is "
+"the <i>type</i> argument to <b>plot.default</b>."
+msgstr ""
+"Виберіть один із перелічених типів точок або ліній креслення. Щоб надати "
+"функції, яка викликає додаток, можливість використати типовий тип, виберіть "
+"варіант «Типовий». Це аргумент <i>type</i> функції <b>plot.default</b>."
+
+#. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Color")
+#: rkward/plugins/distributions/../plots/plot_options.rkh:35
+#, kde-format
+msgid ""
+"Choose one of the listed point/line colors for the plot. To let the calling "
+"function use its default plotting color, choose the 'default' option. This "
+"is the <i>col</i> argument to <b>plot.default</b>."
+msgstr ""
+"Виберіть один із перелічених кольорів точок або ліній креслення. Щоб надати "
+"функції, яка викликає додаток, можливість використати типовий колір, "
+"виберіть варіант «Типовий». Це аргумент <i>col</i> функції <b>plot.default</"
+"b>."
+
+#. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Aspect ratio")
+#: rkward/plugins/distributions/../plots/plot_options.rkh:38
+#, kde-format
+msgid "This is the <i>asp</i> argument to <b>plot.default</b>."
+msgstr "Це аргумент <i>asp</i> функції <b>plot.default</b>."
+
+#. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Add Grid to the plot")
+#: rkward/plugins/distributions/../plots/plot_options.rkh:41
+#, kde-format
+msgid ""
+"Check this box to add a grid to the current plot. For various grid options "
+"see <link href=\"rkward://component/x11grid\"/>. Note that these options are "
+"not for <b>plot.default</b> but rather for the function <b>grid</b>. For "
+"this to be functional the embedding plugin should implement it internally."
+msgstr ""
+"Позначте цей пункт, щоб додати на поточне креслення ґратку. Щоб ознайомитися "
+"зі різноманітними параметрами ґратки, вивчіть сторінку довідки <link href="
+"\"rkward://component/x11grid\"/>. Зауважте, що ці параметри призначено не "
+"для <b>plot.default</b>, а для функції <b>grid</b>. Щоб цим можна було "
+"скористатися, додаток, до якого вбудовується цей додаток, цю функцію має "
+"бути реалізовувати."
+
+#. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Default plot options) <technical>
+#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#, kde-format
+msgid "<i>xvar</i>: The variable to be used for the x-coordinates."
+msgstr "<i>xvar</i>: змінна, яку слід використовувати для координати x."
+
+#. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Default plot options) <technical>
+#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#, kde-format
+msgid "<i>yvar</i>: The variable to be used for the y-coordinates."
+msgstr "<i>yvar</i>: змінна, яку слід використовувати для координати y."
+
+#. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Default plot options) <technical>
+#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#, kde-format
+msgid ""
+"<i>default_pointtype</i>: A string that provides the default point type when "
+"the user chooses 'Default' for '<label id=\"pointtype\"/>'. The "
+"possibilities are p,l,b,o,h,s and S; the options for the <i>type</i> "
+"argument."
+msgstr ""
+"<i>default_pointtype</i>: рядок, який визначає типовий тип точки, який буде "
+"використано, якщо буде вибрано варіант «Типовий» для «Типу точок/ліній». "
+"Можливі варіанти: p,l,b,o,h,s та S; параметри аргументу <i>type</i>."
+
+#. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Default plot options) <technical>
+#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#, kde-format
+msgid ""
+"<i>default_pointcolor</i>: A string that provides the default point color "
+"when the user chooses 'Default' for '<label id=\"pointcolor\"/>'. For "
+"various possibilities see the code color_chooser.xml; the options for the "
+"<i>col</i> argument."
+msgstr ""
+"<i>default_pointcolor</i>: рядок, який визначає типовий колір точки, якщо "
+"користувач вибирає варіант «Типовий» для пункту «Колір». Зі списком можливих "
+"варіантів можна ознайомитися за допомогою коду у color_chooser.xml; "
+"параметри для аргументу <i>col</i>."
+
+#. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Default plot options) <technical>
+#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#, kde-format
+msgid ""
+"<i>default_main</i>: A string specifying the <i>main</i> argument to <b>plot."
+"default</b>. By default this is \"\" which means that the main title "
+"generated by the plotting function is used. Note: The default is always used "
+"unquoted. If you want to specify a literal string add quotes, explicitly, as "
+"\"&<i>quote;</i>\"."
+msgstr ""
+"<i>default_main</i>: рядок, що визначає аргумент <i>main</i> функції <b>plot."
+"default</b>. Типовим значенням є \"\", що означає, що основний заголовок "
+"буде створено функцією креслення. Зауваження: типове значення завжди "
+"використовується без лапок. Якщо ви хочете вказати рядок, який "
+"використовуватиметься буквально, додайте лапки, ось так: \"&<i>quote;</i>\"."
+
+#. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Default plot options) <technical>
+#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#, kde-format
+msgid ""
+"<i>default_sub</i>: Similar to <i>main</i> above but for the subtitle "
+"argument <i>sub</i>."
+msgstr ""
+"<i>default_sub</i>: подібне до <i>main</i>, описаного вище, але для "
+"аргументу підзаголовка, <i>sub</i>."
+
+#. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Default plot options) <technical>
+#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#, kde-format
+msgid ""
+"<i>default_xlab</i>: Similar to <i>main</i> above but for the X-label "
+"argument <i>xlab</i>."
+msgstr ""
+"<i>default_xlab</i>: подібне до <i>main</i>, описаного вище, але для "
+"аргументу мітки вісі X, <i>xlab</i>."
+
+#. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Default plot options) <technical>
+#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#, kde-format
+msgid ""
+"<i>default_ylab</i>: Similar to <i>main</i> above but for the Y-label "
+"argument <i>ylab</i>."
+msgstr ""
+"<i>default_ylab</i>: подібне до <i>main</i>, описаного вище, але для "
+"аргументу мітки вісі Y, <i>ylab</i>."
+
+#. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Default plot options) <technical>
+#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#, kde-format
+msgid ""
+"<i>allow_log</i>: Setting this to \"true\" (\"false\") enables (disables) "
+"the display of '<label id=\"xlog\"/>' and '<label id=\"ylog\"/>' check boxes."
+msgstr ""
+"<i>allow_log</i>: встановленням значення \"true\" (\"false\") можна "
+"увімкнути (вимкнути) показ пунктів «<label id=\"xlog\"/>» та «<label id="
+"\"ylog\"/>»."
+
+#. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Default plot options) <technical>
+#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#, kde-format
+msgid ""
+"<i>allow_xlim</i>: Setting this to \"true\" (\"false\") enables (disables) "
+"the display of '<label id=\"xminvalue\"/>' and '<label id=\"xmaxvalue\"/>' "
+"input boxes."
+msgstr ""
+"<i>allow_xlim</i>: встановленням значення \"true\" (\"false\") можна "
+"увімкнути (вимкнути) показ полів для введення «<label id=\"xminvalue\"/>» та "
+"«<label id=\"xmaxvalue\"/>»."
+
+#. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Default plot options) <technical>
+#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#, kde-format
+msgid ""
+"<i>allow_ylim</i>: Setting this to \"true\" (\"false\") enables (disables) "
+"the display of '<label id=\"yminvalue\"/>' and '<label id=\"ymaxvalue\"/>' "
+"input boxes."
+msgstr ""
+"<i>allow_ylim</i>: встановленням значення \"true\" (\"false\") можна "
+"увімкнути (вимкнути) показ полів для введення «<label id=\"yminvalue\"/>» і "
+"«<label id=\"ymaxvalue\"/>»."
+
+#. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Default plot options) <technical>
+#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#, kde-format
+msgid ""
+"<i>allow_type</i>: Setting this to \"true\" (\"false\") enables (disables) "
+"the display of the '<label id=\"pointtypepage\"/>' tab."
+msgstr ""
+"<i>allow_type</i>: встановленням значення \"true\" (\"false\") можна "
+"увімкнути (вимкнути) показ вкладки «<label id=\"pointtypepage\"/>»."
+
+#. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Default plot options) <technical>
+#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#, kde-format
+msgid ""
+"<i>allow_aspect</i>: Setting this to \"true\" (\"false\") enables (disables) "
+"the display of the '<label id=\"aspectratio\"/>' tab."
+msgstr ""
+"<i>allow_aspect</i>: встановленням значення \"true\" (\"false\") можна "
+"увімкнути (вимкнути) показ вкладки «<label id=\"aspectratio\"/>»."
+
+#. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Default plot options) <technical>
+#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#, kde-format
+msgid ""
+"<i>allow_grid</i>: Setting this to \"true\" (\"false\") enables (disables) "
+"the display of the '<label id=\"tab_grid\"/>' tab. If \"true\", the actual "
+"code for grid options can be extracted from code.calculate (see below) which "
+"in turn extracts it from grid_options.code.printout. Specifically, if the "
+"plot options plugin is embedded using an <i>id=\"plot_options\"</i> then the "
+"following call:<br> printIndented (\"\\t\", getRK_val (\"plot_options.code."
+"calculate\"));</br><br> after the plotting function should do the job.</br>"
+msgstr ""
+"<i>allow_grid</i>: встановленням значення \"true\" (\"false\") можна "
+"увімкнути (вимкнути) показ вкладки «<label id=\"tab_grid\"/>». Якщо "
+"визначення значення \"true\", код для параметрів ґратки можна видобути з "
+"функції code.calculate (див. нижче), яка сама видобуває його з grid_options."
+"code.printout. Зокрема, якщо додаток параметрів креслення вбудовано за "
+"допомогою <i>id=\"plot_options\"</i>, виклик:<br> printIndented (\"\\t\", "
+"getRK_val (\"plot_options.code.calculate\"));</br><br> після креслення "
+"функції має виконати роботу.</br>"
+
+#. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Default plot options) <technical>
+#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#, kde-format
+msgid ""
+"In order to allow flexible use, the generated options are separated into "
+"different sections:"
+msgstr ""
+"З метою забезпечення гнучкості у користуванні породжені параметри поділено "
+"на різні розділи:"
+
+#. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Default plot options) <technical>
+#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#, kde-format
+msgid ""
+"<i>code.preprocess</i>: Nothing yet, but will hopefully include some <b>par</"
+"b> options."
+msgstr ""
+"<i>code.preprocess</i>: нічого не містить, але міститиме деякі параметри "
+"<b>par</b>."
+
+#. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Default plot options) <technical>
+#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#, kde-format
+msgid ""
+"<i>code.calculate</i>: Currently this contains only the <b>grid</b>-options."
+msgstr ""
+"<i>code.calculate</i>: у поточній версії містить лише параметри <b>grid</b>."
+
+#. i18n: ectx: (Default plot options) <dialog label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:73
+#, kde-format
+msgid "Default plot options"
+msgstr "Типові параметри креслення"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:75
+#, kde-format
+msgid "Title and margins"
+msgstr "Заголовок і поля"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:77
+#, kde-format
+msgid "Main title"
+msgstr "Основний заголовок"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Main title"> <input label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:78
+#, kde-format
+msgid "Main title (on top). Leave empty for default title"
+msgstr ""
+"Основний заголовок (вгорі). Не заповнюйте, якщо потрібен типовий заголовок."
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Main title"> <checkbox label="...">
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Subtitle"> <checkbox label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:79
+#: rkward/plugins/distributions/../plots/plot_options.xml:83
+#, kde-format
+msgid "Interpret this label as literal (quoted) string"
+msgstr "Вважати цю мітку буквальним рядком (рядком у лапках)"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:81
+#, kde-format
+msgid "Subtitle"
+msgstr "Підзаголовок"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Subtitle"> <input label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:82
+#, kde-format
+msgid "Sub-title (at bottom). Leave empty for default title"
+msgstr ""
+"Підзаголовок (знизу). Не заповнюйте, якщо потрібен типовий підзаголовок."
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:85
+#, kde-format
+msgid "Custom margins"
+msgstr "Нетипові поля"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Custom margins"> <spinbox label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:86
+#, kde-format
+msgid "Top"
+msgstr "Вгорі"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Custom margins"> <spinbox label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:87
+#, kde-format
+msgid "Bottom"
+msgstr "Внизу"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Custom margins"> <spinbox label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:88
+#, kde-format
+msgid "Left"
+msgstr "Ліворуч"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Custom margins"> <spinbox label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:89
+#, kde-format
+msgid "Right"
+msgstr "Праворуч"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:94
+#, kde-format
+msgid "Axes"
+msgstr "Вісі"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:96
+#, kde-format
+msgid "Axis types"
+msgstr "Типи осей"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Axis types"> <checkbox label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:98
+#, kde-format
+msgid "Draw X axis"
+msgstr "Показувати вісь X"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Axis types"> <checkbox label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:99
+#, kde-format
+msgid "Draw Y axis"
+msgstr "Показувати вісь Y"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Axis types"> <checkbox label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:102
+#, kde-format
+msgid "X axis logarithmic"
+msgstr "Логарифмічна вісь X"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Axis types"> <checkbox label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:103
+#, kde-format
+msgid "Y axis logarithmic"
+msgstr "Логарифмічна вісь Y"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:106
+#, kde-format
+msgid "Labels (leave empty for default)"
+msgstr "Мітки (не заповнюйте, якщо типові)"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Labels (leave empty for default)"> <input label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:108
+#, kde-format
+msgid "X axis label"
+msgstr "Мітка вісі X"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Labels (leave empty for default)"> <input label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:109
+#, kde-format
+msgid "Y axis label"
+msgstr "Мітка вісі Y"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Labels (leave empty for default)"> <text>
+#: rkward/plugins/distributions/../plots/plot_options.xml:111
+#, kde-format
+msgid "Interpret these labels as literal (quoted) strings?"
+msgstr "Вважати ці мітки буквальними (необроблюваними) рядками?"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Labels (leave empty for default)"> <checkbox label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:113
+#: rkward/plugins/distributions/../plots/plot_options.xml:114
+#, kde-format
+msgid "interpret as string"
+msgstr "вважати рядком"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:117
+#, kde-format
+msgid "Scale (Minimum/Maximum values for X/Y). Leave blank for automatic"
+msgstr ""
+"Шкала (мінімальне і максимальне значення X/Y). Не заповнюйте, якщо межі слід "
+"визначити автоматично."
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Scale (Minimum/Maximum values for X/Y). Leave blank for automatic"> <input label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:119
+#, kde-format
+msgid "Min X value"
+msgstr "Мін. значення X"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Scale (Minimum/Maximum values for X/Y). Leave blank for automatic"> <input label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:120
+#, kde-format
+msgid "Min Y value"
+msgstr "Мін. значення Y"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Scale (Minimum/Maximum values for X/Y). Leave blank for automatic"> <input label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:123
+#, kde-format
+msgid "Max X value"
+msgstr "Макс. значення X"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Scale (Minimum/Maximum values for X/Y). Leave blank for automatic"> <input label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:124
+#, kde-format
+msgid "Max Y value"
+msgstr "Макс. значення Y"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:127
+#, kde-format
+msgid "Axis Annotations"
+msgstr "Анотації осей"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Axis Annotations"> <dropdown label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:128
+#, kde-format
+msgid "Tick label orientation"
+msgstr "Орієнтація міток шкали"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> [...] <dropdown label="Tick label orientation"> <option label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:130
+#, kde-format
+msgid "Always parallel to the axis "
+msgstr "Завжди паралельна до вісі "
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> [...] <dropdown label="Tick label orientation"> <option label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:131
+#, kde-format
+msgid "Always horizontal "
+msgstr "Завжди горизонтальна "
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> [...] <dropdown label="Tick label orientation"> <option label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:132
+#, kde-format
+msgid "Always perpendicular to the axis "
+msgstr "Завжди перпендикулярна до вісі "
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> [...] <dropdown label="Tick label orientation"> <option label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:133
+#, kde-format
+msgid "Always vertical "
+msgstr "Завжди вертикальна "
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Axis Annotations"> <input label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:136
+#, kde-format
+msgid "Tick label scale (relative to cex)"
+msgstr "Шкала позначок міток (відносно cex)"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:143
+#, kde-format
+msgid "Points / Lines"
+msgstr "Точки/Лінії"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:145
+#, kde-format
+msgid "Type of points/lines"
+msgstr "Тип точок/ліній"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="Type of points/lines"> <option label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:147
+#, kde-format
+msgid "Plot individual points "
+msgstr "Малювати окремі точки "
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="Type of points/lines"> <option label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:148
+#, kde-format
+msgid "Plot lines "
+msgstr "Малювати лінії "
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="Type of points/lines"> <option label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:149
+#, kde-format
+msgid "Plot points connected by lines (both)"
+msgstr "Малювати точки, з’єднані лініями (все)"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="Type of points/lines"> <option label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:150
+#, kde-format
+msgid "Plot points overlaid by lines "
+msgstr "Малювати лінії поверх точок "
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="Type of points/lines"> <option label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:151
+#, kde-format
+msgid "Plot vertical lines from points to the zero axis (high-density)"
+msgstr ""
+"Малювати вертикальні лінії від точок до нульової вісі (висока щільність)"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="Type of points/lines"> <option label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:152
+#, kde-format
+msgid "Step-function plots: the left edge defines the point"
+msgstr "Креслення східчастих функцій: лівий край визначає точку"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="Type of points/lines"> <option label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:153
+#, kde-format
+msgid "Step-function plots: the right edge defines the point"
+msgstr "Креслення східчастих функцій: правий край визначає точку"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:159
+#, kde-format
+msgid "Aspect ratio y/x"
+msgstr "Пропорції y/x"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Aspect ratio y/x"> <spinbox label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:161
+#, kde-format
+msgid "Aspect ratio"
+msgstr "Пропорції"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Aspect ratio y/x"> <text>
+#: rkward/plugins/distributions/../plots/plot_options.xml:162
+#, kde-format
+msgid ""
+"Note that if Aspect is a finite positive value then the window is set up so "
+"that one data unit in the x direction is equal in length to asp * one data "
+"unit in the y direction."
+msgstr ""
+"Зауважте, що якщо пропорція є скінченним додатним значенням, розміри вікна "
+"встановлюються так, що одиниця даних у напрямку x дорівнюватиме довжині "
+"«пропорція * одиниця даних у напрямку y»."
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Aspect ratio y/x"> <text>
+#: rkward/plugins/distributions/../plots/plot_options.xml:163
+#, kde-format
+msgid ""
+"The special case Aspect == 1 produces plots where distances between points "
+"are represented accurately on screen. Values with Aspect > 1 can be used to "
+"produce more accurate maps when using latitude and longitude."
+msgstr ""
+"У особливому випадку, коли пропорція == 1, буде створено креслення де "
+"відстані між точками на екрані відтворюватимуться точно. Значеннями "
+"пропорція > 1 можна скористатися для створення точніших карт із "
+"використанням широти і довготи."
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:167
+#, kde-format
+msgid "Grid"
+msgstr "Ґратка"
+
+#. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Grid"> <checkbox label="...">
+#: rkward/plugins/distributions/../plots/plot_options.xml:168
+#, kde-format
+msgid "Add Grid to the plot"
+msgstr "Додати на креслення ґратку"
+
+#. i18n: ectx: (Loaded from Step function plot options) <summary>
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:3
+#, kde-format
+msgid ""
+"Various graphical parameters for <b>plot.stepfun</b>. For detailed "
+"description of the individual parameters see the R reference on 'plot."
+"stepfun'."
+msgstr ""
+"Різноманітні параметри функції <b>plot.stepfun</b>. Докладний опис окремих "
+"параметрів можна знайти у довіднику з R щодо функції «plot.stepfun»."
+
+#. i18n: ectx: (Loaded from Step function plot options) <usage>
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:6
+#, kde-format
+msgid ""
+"This is supposed to be used as an embedded plugin. All the elements are "
+"arguments to the plot.stepfun function. This plugin is useful in "
+"constructing <b>ecdf</b> plots."
+msgstr ""
+"Цей додаток призначено для вбудовування. Усі його елементи визначають "
+"аргументи функції plot.stepfun. Цим додатком можна скористатися для побудови "
+"креслень <b>ecdf</b>."
+
+#. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Add to current plot")
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:10
+#, kde-format
+msgid ""
+"This is the <i>add</i> argument. This option might be disabled by the "
+"embedding plugin."
+msgstr ""
+"Аргумент <i>add</i>. Цей пункт можна вимкнути у додатку, до якого "
+"виконується вбудовування."
+
+#. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Line type for all lines")
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:11
+#, kde-format
+msgid "This is the <i>lty</i> argument."
+msgstr "Аргумент <i>lty</i>."
+
+#. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Draw points")
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:12
+#, kde-format
+msgid ""
+"This is the <i>do.points</i> argument. Uncheck this option if points are NOT "
+"to be drawn."
+msgstr ""
+"Аргумент <i>do.points</i>. Зніміть позначку із цього пункту, якщо точки НЕ "
+"слід малювати."
+
+#. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Color")
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:13
+#, kde-format
+msgid ""
+"This is the <i>col.points</i> argument. Leave this as 'default' for using "
+"the standard color settings from par()."
+msgstr ""
+"Це аргумент <i>col.points</i>. Не змінюйте значення «типовий», щоб було "
+"використано стандартні параметри кольорів з par()."
+
+#. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Horizontal Lines")
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:14
+#, kde-format
+msgid "This is the <i>col.hor</i> argument."
+msgstr "Аргумент <i>col.hor</i>."
+
+#. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Draw vertical lines")
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:15
+#, kde-format
+msgid ""
+"This is the <i>verticals</i> arguments. Uncheck this option if vertical "
+"lines are NOT to be drawn."
+msgstr ""
+"Це аргументи <i>verticals</i>. Зніміть позначку з цього пункту, якщо НЕ слід "
+"малювати вертикальні лінії."
+
+#. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Color")
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:16
+#, kde-format
+msgid "This is the <i>col.vert</i> argument."
+msgstr "Аргумент <i>col.vert</i>."
+
+#. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "For y = 1 line")
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:18
+#, kde-format
+msgid ""
+"The above two options are not for <b>plot.stepfun</b>, but rather for "
+"<b>ecdf</b>. These are visible only in the context of 'ecdf'. They are used "
+"to set the color for the horizontal lines at y = 0 and y = 1 respectively. "
+"Specifically, this is the <i>col.01line</i> argument to <b>ecdf</b>. If only "
+"one is provided (i.e the other is set as 'Default') then both the line are "
+"of the same (specified) color. Otherwise (i.e., when both the colors are "
+"provided) both the colors are provided as a character vector of length two."
+msgstr ""
+"Описані вище два пункти призначено не для <b>plot.stepfun</b>, а для "
+"<b>ecdf</b>. Вони видимі лише у контексті «ecdf». Вони використовуються для "
+"встановлення кольору горизонтальних ліній у точках y = 0 та y = 1, "
+"відповідно. Зокрема, це аргумент <i>col.01line</i> функції <b>ecdf</b>. Якщо "
+"надано лише один (тобто для іншого визначено значення «Типовий»), обидві "
+"лінії матимуть однаковий (вказаний) колір. Якщо це не так (тобто надано "
+"обидва кольори), значення кольорів визначаються як символьний вектор довжини "
+"два."
+
+#. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Step function plot options) <technical>
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:26
+#, kde-format
+msgid ""
+"<i>default_dopoints</i>: Setting this to \"true\" (\"false\") toggles the "
+"state of the '<label id=\"do_points\"/>' check box."
+msgstr ""
+"<i>default_dopoints</i>: встановленням значення \"true\" (\"false\") можна "
+"перемкнути стан пункту «<label id=\"do_points\"/>»."
+
+#. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Step function plot options) <technical>
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:26
+#, kde-format
+msgid ""
+"<i>default_verticals</i>: Setting this to \"true\" (\"false\") toggles the "
+"state of the '<label id=\"verticals\"/>' check box."
+msgstr ""
+"<i>default_verticals</i>: встановленням значення \"true\" (\"false\") можна "
+"перемкнути стан пункту «<label id=\"verticals\"/>»."
+
+#. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
+#. i18n: ectx: (Loaded from Step function plot options) <technical>
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:26
+#, kde-format
+msgid ""
+"<i>allow_col01line</i>: Setting this to \"true\" (\"false\") enables "
+"(disables) the display of the two frames ('<label id=\"frame_col_y0\"/>' and "
+"'<label id=\"frame_col_y0\"/>') for <i>col.01line</i> option to <b>ecdf</b>."
+msgstr ""
+"<i>allow_col01line</i>: встановленням значення \"true\" (\"false\") вмикає "
+"(вимикає) показ двох панелей («<label id=\"frame_col_y0\"/>» і «<label id="
+"\"frame_col_y0\"/>») для параметра <i>col.01line</i> функції <b>ecdf</b>."
+
+#. i18n: ectx: (Step function plot options) <dialog label="...">
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:28
+#, kde-format
+msgid "Step function plot options"
+msgstr "Параметри креслення сходинкової функції"
+
+#. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="...">
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:30
+#, kde-format
+msgid "Options"
+msgstr "Параметри"
+
+#. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <checkbox label="...">
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:31
+#, kde-format
+msgid "Add to current plot"
+msgstr "Додати до поточного креслення"
+
+#. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="...">
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:32
+#, kde-format
+msgid "Line type for all lines"
+msgstr "Тип лінії для усіх ліній"
+
+#. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="Line type for all lines"> <option label="...">
+#. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="Line type"> <option label="...">
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:33
+#: rkward/plugins/distributions/../x11device/grid.xml:45
+#, kde-format
+msgid "Default"
+msgstr "Типове"
+
+#. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="...">
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:42
+#, kde-format
+msgid "Points"
+msgstr "Точки"
+
+#. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Points"> <checkbox label="...">
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:43
+#, kde-format
+msgid "Draw points"
+msgstr "Малювати точки"
+
+#. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="...">
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:48
+#, kde-format
+msgid "Horizontal Lines"
+msgstr "Горизонтальні лінії"
+
+#. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="...">
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:51
+#, kde-format
+msgid "Vertical lines"
+msgstr "Вертикальні лінії"
+
+#. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Vertical lines"> <checkbox label="...">
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:52
+#, kde-format
+msgid "Draw vertical lines"
+msgstr "Малювати вертикальні лінії"
+
+#. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="...">
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:57
+#, kde-format
+msgid "For y = 0 line"
+msgstr "Для лінії y = 0"
+
+#. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="...">
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:60
+#, kde-format
+msgid "For y = 1 line"
+msgstr "Для лінії y = 1"
+
+#. i18n: ectx: <snippets> <snippet> <author name="...">
+#: rkward/plugins/distributions/../pluginmap_meta.inc:4
+#, kde-format
+msgctxt "Author name"
+msgid "RKWard Team"
+msgstr "Команда RKWard"
+
+#. i18n: ectx: (Internal plugin for automated testing) <dialog label="...">
+#: rkward/plugins/distributions/../testing/run_code.xml:5
+#, kde-format
+msgid "Internal plugin for automated testing"
+msgstr "Додаток внутрішнього використання для автоматичного тестування"
+
+#. i18n: ectx: (Loaded from Grid options) <summary>
+#: rkward/plugins/distributions/../x11device/grid.rkh:3
+#, kde-format
+msgid ""
+"Various parameters for the <b>grid</b>. For detailed description of the "
+"individual parameters see the R reference on 'grid'. Note that this works "
+"only when standard (traditional S) graphics functions (see library(help="
+"\"graphics\")) are used to construct the plot. This does not work for "
+"trellis graphics devices (see <link href=\"rkward://rhelp/Lattice\"/> for "
+"some information)."
+msgstr ""
+"Різноманітні параметри функції <b>grid</b>. Докладний опис окремих "
+"параметрів можна знайти у довідці з R щодо «grid». Зауважте, що це працює "
+"лише, якщо для побудови креслення використовуються стандартні (традиційні "
+"для S) графічні функції (див. library(help=\"graphics\")). Це не працює для "
+"графічних пристроїв trellis (див. <link href=\"rkward://rhelp/Lattice\"/>, "
+"щоб дізнатися більше)."
+
+#. i18n: ectx: (Loaded from Grid options) <usage>
+#: rkward/plugins/distributions/../x11device/grid.rkh:6
+#, kde-format
+msgid ""
+"This may or may not be used as an embedded plugin. When used on a trellis "
+"device the produced error message is displayed."
+msgstr ""
+"Цей додаток можна використовувати, а можна і не використовувати для "
+"вбудовування. Якщо додаток буде використано для пристрою trellis, буде "
+"створено повідомлення щодо помилки."
+
+#. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Number of X cells")
+#: rkward/plugins/distributions/../x11device/grid.rkh:10
+#, kde-format
+msgid ""
+"This is the <i>nx</i> argument. The default is NULL, in which case, the "
+"vertical lines are drawn at the xaxis ticks. Select None to not draw the "
+"vertical lines. Select 'Specify below' to provide a specified (to be "
+"specified below) number of vertical lines in the grid."
+msgstr ""
+"Це аргумент <i>nx</i>. Типовим значенням є NULL. За типового значення, "
+"вертикальні лінії буде намальовано для позначок на вісі x. Виберіть варіант "
+"«Немає», щоб вертикальні лінії не було намальовано. Виберіть варіант «Вкажу "
+"нижче», щоб вказати визначену нижче кількість вертикальних ліній ґратки."
+
+#. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "X Cells")
+#: rkward/plugins/distributions/../x11device/grid.rkh:11
+#, kde-format
+msgid ""
+"This is the <i>nx</i> argument, when 'Specify below' is selected in the "
+"above option list."
+msgstr ""
+"Це аргумент <i>nx</i>, якщо у списку вище вибрано варіант «Вкажу нижче»."
+
+#. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Number of Y cells")
+#: rkward/plugins/distributions/../x11device/grid.rkh:12
+#, kde-format
+msgid ""
+"This is the <i>ny</i> argument. Similar to <i>nx</i>. See the explanation on "
+"number of x cells above."
+msgstr ""
+"Це аргумент <i>ny</i>. Подібний до <i>nx</i>. Див. пояснення щодо кількості "
+"комірок x, наведене вище."
+
+#. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Y Cells")
+#: rkward/plugins/distributions/../x11device/grid.rkh:13
+#, kde-format
+msgid ""
+"This is the <i>ny</i> argument when a specified (by the user) number of y "
+"cells are to be used. Similar to x cells."
+msgstr ""
+"Це аргумент <i>ny</i>, якщо слід використовувати вказану користувачем "
+"кількість комірок за y. Подібний до аргументу кількості комірок за x."
+
+#. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Custom Line width")
+#: rkward/plugins/distributions/../x11device/grid.rkh:14
+#, kde-format
+msgid ""
+"Check this option to use a custom line width. In which case, provide the "
+"width below."
+msgstr ""
+"Позначте цей пункт, щоб скористатися нетиповою товщиною лінії. Значення "
+"товщини можна вказати нижче."
+
+#. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Line width")
+#: rkward/plugins/distributions/../x11device/grid.rkh:15
+#, kde-format
+msgid "This is the <i>lwd</i> argument. Check the above option to use this."
+msgstr ""
+"Це аргумент <i>lwd</i>. Позначте пункт, показаний вище, щоб скористатися цим "
+"пунктом."
+
+#. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Line type")
+#: rkward/plugins/distributions/../x11device/grid.rkh:16
+#, kde-format
+msgid ""
+"This is the <i>lty</i> argument. Choosing Default will not add any arguments "
+"to the grid function call, hence the default line type will be used."
+msgstr ""
+"Це аргумент <i>lty</i>. Якщо буде вибрано варіант «Типовий», до виклику "
+"функції побудови ґратки не буде додано жодного аргументу, отже буде "
+"використано типовий тип лінії."
+
+#. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Color")
+#: rkward/plugins/distributions/../x11device/grid.rkh:17
+#, kde-format
+msgid ""
+"This is the <i>col</i> argument. The Default option is similar to that of "
+"Line type (see above)."
+msgstr ""
+"Це аргумент <i>col</i>. Вибір варіанта «Типовий» подібний до того самого "
+"варіанта для типу лінії (див. вище)."
+
+#. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Equilogs")
+#: rkward/plugins/distributions/../x11device/grid.rkh:18
+#, kde-format
+msgid ""
+"This is the <i>equilogs</i> argument. Uncheck this option to set "
+"<i>equilogs=FALSE</i>."
+msgstr ""
+"Це аргумент <i>equilogs</i>. Зніміть позначку із цього пункту, щоб "
+"встановити <i>equilogs=FALSE</i>."
+
+#. i18n: ectx: (Grid options) <dialog label="...">
+#: rkward/plugins/distributions/../x11device/grid.xml:19
+#, kde-format
+msgid "Grid options"
+msgstr "Параметри ґратки"
+
+#. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="...">
+#: rkward/plugins/distributions/../x11device/grid.xml:22
+#, kde-format
+msgid "Number of X cells"
+msgstr "Кількість X-комірок"
+
+#. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of X cells"> <option label="...">
+#. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of Y cells"> <option label="...">
+#: rkward/plugins/distributions/../x11device/grid.xml:23
+#: rkward/plugins/distributions/../x11device/grid.xml:31
+#, kde-format
+msgid "At the ticks"
+msgstr "На позначках"
+
+#. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of X cells"> <option label="...">
+#. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of Y cells"> <option label="...">
+#: rkward/plugins/distributions/../x11device/grid.xml:24
+#: rkward/plugins/distributions/../x11device/grid.xml:32
+#, kde-format
+msgid "None"
+msgstr "Немає"
+
+#. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of X cells"> <option label="...">
+#. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of Y cells"> <option label="...">
+#: rkward/plugins/distributions/../x11device/grid.xml:25
+#: rkward/plugins/distributions/../x11device/grid.xml:33
+#, kde-format
+msgid "Specify below"
+msgstr "Вкажу нижче"
+
+#. i18n: ectx: (Grid options) <dialog label="Grid options"> <spinbox label="...">
+#: rkward/plugins/distributions/../x11device/grid.xml:27
+#, kde-format
+msgid "X Cells"
+msgstr "X-комірки"
+
+#. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="...">
+#: rkward/plugins/distributions/../x11device/grid.xml:30
+#, kde-format
+msgid "Number of Y cells"
+msgstr "Кількість Y-комірок"
+
+#. i18n: ectx: (Grid options) <dialog label="Grid options"> <spinbox label="...">
+#: rkward/plugins/distributions/../x11device/grid.xml:35
+#, kde-format
+msgid "Y Cells"
+msgstr "Y-комірки"
+
+#. i18n: ectx: (Grid options) <dialog label="Grid options"> <checkbox label="...">
+#: rkward/plugins/distributions/../x11device/grid.xml:39
+#, kde-format
+msgid "Custom Line width"
+msgstr "Нетипова товщина ліній"
+
+#. i18n: ectx: (Grid options) <dialog label="Grid options"> <checkbox label="...">
+#: rkward/plugins/distributions/../x11device/grid.xml:40
+#, kde-format
+msgid "Equilogs"
+msgstr "Еквілогарифмічні"
+
+#. i18n: ectx: (Grid options) <dialog label="Grid options"> <spinbox label="...">
+#: rkward/plugins/distributions/../x11device/grid.xml:43
+#, kde-format
+msgid "Line width"
+msgstr "Товщина лінії"
+
+#. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="...">
+#: rkward/plugins/distributions/../x11device/grid.xml:44
+#, kde-format
+msgid "Line type"
+msgstr "Тип лінії"
+
+#. i18n: ectx: (Grid options) <dialog label="Grid options"> <text>
+#: rkward/plugins/distributions/../x11device/grid.xml:57
+#, kde-format
+msgid "Note: Not applicable for Trellis type devices!"
+msgstr "Зауваження: не застосовне до пристроїв типу Trellis!"
+
+#~ msgid ""
+#~ "The following external properties are provided for use in the embedding "
+#~ "plugin. <ul> <li><i>invar</i>: Symbol name of the input variable to be "
+#~ "limited. Defaults to 'x'.</li> <li><i>outvar</i>: Symbol name to use for "
+#~ "the output variable (the limited vector). May be identical to <i>invar</"
+#~ "i>. Defaults to 'x'.</li> <li><i>parameters</i>: This property will be "
+#~ "set to a string describing the limitation options, suitable for pasting "
+#~ "into the \"parameters\" argument of rk.header().</li> </ul> The generated "
+#~ "code is available from <i>code.calculate</i>."
+#~ msgstr ""
+#~ "Для вбудовування додатка передбачено вказані нижче зовнішні властивості. "
+#~ "<ul> <li><i>invar</i>: назва символу змінної вхідних даних, яку буде "
+#~ "обмежено. Типовою назвою є «x».</li> <li><i>outvar</i>: назва символу "
+#~ "змінної, до якої буде виведено результати (обмежений вектор). Може "
+#~ "збігатися із <i>invar</i>. Типовою назвою є «x».</li> <li><i>parameters</"
+#~ "i>: цю властивість буде встановлено у значення рядка, що описує параметри "
+#~ "обмеження, придатні до передавання як аргумент «parameters» функції rk."
+#~ "header().</li> </ul> Доступ до створеного коду можна отримати за "
+#~ "допомогою функції <i>code.calculate</i>."
+
+#~ msgid ""
+#~ "<ul> <li><link href=\"rkward://component/crosstab\"/> and</li> <li><link "
+#~ "href=\"rkward://component/crosstab_multi\"/> for tabulation of "
+#~ "frequencies across many variables.</li> <li><link href=\"rkward://rhelp/"
+#~ "table\"/></li> <li><link href=\"rkward://rhelp/by\"/></li> </ul>"
+#~ msgstr ""
+#~ "<ul> <li><link href=\"rkward://component/crosstab\"/> і</li> <li><link "
+#~ "href=\"rkward://component/crosstab_multi\"/> для табуляції частот для "
+#~ "багатьох змінних.</li> <li><link href=\"rkward://rhelp/table\"/></li> "
+#~ "<li><link href=\"rkward://rhelp/by\"/></li> </ul>"
+
+#~ msgid ""
+#~ "The following external properties are provided for use in the embedding "
+#~ "plugin. <ul> <li><i>varsource</i>: The tabulation plugin does not show "
+#~ "its own varselector by default. Connect your own to this one (client="
+#~ "\"embedded_id.varsource.selected\", governor=\"myvarselector_id.selected"
+#~ "\").</li> <li><i>outvar</i>: By default, the plugin produces a table in a "
+#~ "variable called \"x\". You can set it to use a different name, here.</li> "
+#~ "<li><i>titlevar</i>: If you want the plugin to save a description of the "
+#~ "grouping variables in an R variable, set this to an object name to use. "
+#~ "Else set this to \"\" to disable. Defaults to \"title\"</li> "
+#~ "<li><i>fun_label</i>: This property will be set to a description of the "
+#~ "statistic.</li> <li><i>parameters</i>: This property will be set to a "
+#~ "string describing the tabulation options, suitable for pasting into the "
+#~ "\"parameters\" argument of rk.header().</li> </ul> The generated code is "
+#~ "available from <i>code.calculate</i>."
+#~ msgstr ""
+#~ "Вбудованим додатком надаються вказані нижче зовнішні властивості. <ul> "
+#~ "<li><i>varsource</i>: типово додаток табуляції не показує власного засобу "
+#~ "вибору змінних (varselector). Ваш додаток можна пов’язати з цим так: "
+#~ "(client=\"embedded_id.varsource.selected\", governor=\"myvarselector_id."
+#~ "selected\"). </li> <li><i>outvar</i>: типово додаток створює таблицю у "
+#~ "змінній із назвою «x». За допомогою цієї властивості ви можете вказати "
+#~ "іншу змінну.</li> <li><i>titlevar</i>: якщо вам потрібно зберегти опис "
+#~ "змінних групування у змінній R, встановіть для цієї властивості назву "
+#~ "об’єкта. Встановіть значення \"\", щоб вимкнути. Типовим є \"title\"</li> "
+#~ "<li><i>fun_label</i>: для цієї властивості буде встановлено опис "
+#~ "статистики.</li> <li><i>parameters</i>: для цієї властивості буде "
+#~ "встановлено рядок, що описує параметри табуляції, сумісний із вставленням "
+#~ "до аргументу \"parameters\" функції rk.header().</li> </ul> Доступ до "
+#~ "створеного коду можна отримати за допомогою функції <i>code.calculate</i>."
+
+#~ msgid ""
+#~ "<ul> <li><link href=\"rkward://component/barplot\"/></li> <li><link href="
+#~ "\"rkward://component/plot_options\"/></li> <li><link href=\"rkward://"
+#~ "rhelp/barplot\"/></li> <li><link href=\"rkward://rhelp/table\"/></li> </"
+#~ "ul>"
+#~ msgstr ""
+#~ "<ul> <li><link href=\"rkward://component/barplot\"/></li> <li><link href="
+#~ "\"rkward://component/plot_options\"/></li> <li><link href=\"rkward://"
+#~ "rhelp/barplot\"/></li> <li><link href=\"rkward://rhelp/table\"/></li> </"
+#~ "ul>"
+
+#~ msgid ""
+#~ "This plugin is meant to be embedded in other plugins. It does not by "
+#~ "itself provide a means to select input data. When embedding this plugin, "
+#~ "you will be interested in the following properties: <ul> <li><i>xvar</i>: "
+#~ "The name of the data variable. You can connect this to a varslot, or set "
+#~ "it to a fixed string such as \"x\". This is required.</li> <li><i>code."
+#~ "preprocess</i>: Provides a summary of parameters to be used in a call to "
+#~ "rk.header(), if you have a use for it.</li> <li><i>code.printout</i>: The "
+#~ "actual commands needed to construct the barplot.</li> </ul>"
+#~ msgstr ""
+#~ "Цей додаток призначено для вбудовування до інших додатків. У ньому не "
+#~ "передбачено засобів вибору вхідних даних. Вбудувати цей додаток можна за "
+#~ "допомогою таких властивостей: <ul> <li><i>xvar</i>: назва змінної даних. "
+#~ "Ви можете з’єднати її із слотом змінної (varslot) або встановити "
+#~ "фіксований рядок, наприклад \"x\". Ця властивість є обов’язковою.</li> "
+#~ "<li><i>code.preprocess</i>: надає резюме параметрів, які слід "
+#~ "використовувати у виклику rk.header(), якщо ви її використовуєте.</li> "
+#~ "<li><i>code.printout</i>: команди, потрібні для побудови стовпчикової "
+#~ "діаграми.</li> </ul>"
+
+#~ msgid "<ul> <li><link href=\"rkward://rhelp/colors\"/></li> </ul>"
+#~ msgstr "<ul> <li><link href=\"rkward://rhelp/colors\"/></li> </ul>"
+
+#~ msgid ""
+#~ "<ul> <li><link href=\"rkward://rhelp/hist\"/></li> <li><link href="
+#~ "\"rkward://rhelp/plot.histogram\"/></li> <li><link href=\"rkward://rhelp/"
+#~ "rect\"/></li> <li><link href=\"rkward://rhelp/extendrange\"/></li> </ul>"
+#~ msgstr ""
+#~ "<ul> <li><link href=\"rkward://rhelp/hist\"/></li> <li><link href="
+#~ "\"rkward://rhelp/plot.histogram\"/></li> <li><link href=\"rkward://rhelp/"
+#~ "rect\"/></li> <li><link href=\"rkward://rhelp/extendrange\"/></li> </ul>"
+
+#~ msgid ""
+#~ "The following external tags are provided for use in the embedding plugin. "
+#~ "<ul> <li><i>varname</i>: For linking to the variable name for which "
+#~ "histogram is being plotted. This is used in the 'Integer numbers' option "
+#~ "for breaks.</li> <li><i>allow_freq</i>: Setting this to \"true\" (\"false"
+#~ "\") enables (disables) the display of the 'Frequency' checkbox.</li> "
+#~ "<li><i>allow_barlabels</i>: Setting this to \"true\" (\"false\") enables "
+#~ "(disables) the display of the 'Bar labels' checkbox.</li> "
+#~ "<li><i>allow_addtoplot</i>: Setting this to \"true\" (\"false\") enables "
+#~ "(disables) the display of the 'Add bars to current plot' checkbox.</li> </"
+#~ "ul> In order to allow flexible use, the generated options are separated "
+#~ "into three different sections: <ul> <li><i>code.preprocess</i>: Options "
+#~ "suitable for use in a call to rk.header(). These are safe to ignore, if "
+#~ "you do not need them.</li> <li><i>code.calculate</i>: This contains only "
+#~ "the <i>breaks</i>-option.</li> <li><i>code.printout</i>: This contains "
+#~ "all the other options determining the look of the plot.</li> </ul>"
+#~ msgstr ""
+#~ "У додатку, до якого виконується вбудовування можна скористатися вказаними "
+#~ "нижче зовнішніми теґами. <ul> <li><i>varname</i>: для пов’язування із "
+#~ "назвою змінної, для якої виконується креслення гістограми. "
+#~ "Використовується, якщо для поділу вибрано варіант «Цілі числа».</li> "
+#~ "<li><i>allow_freq</i>: встановлення значення \"true\" (\"false\") вмикає "
+#~ "(вимикає) показ пункту «Частота».</li> <li><i>allow_barlabels</i>: "
+#~ "встановлення значення \"true\" (\"false\") вмикає (вимикає) показ пункту "
+#~ "«Мітки стовпчиків».</li> <li><i>allow_addtoplot</i>: встановлення "
+#~ "значення \"true\" (\"false\") вмикає (вимикає) показ пункту «Додати "
+#~ "стовпчики до поточного креслення».</li> </ul> З метою забезпечення "
+#~ "гнучкості у користуванні породжені параметри поділено на три різних "
+#~ "розділи: <ul> <li><i>code.preprocess</i>: параметри, придатні до "
+#~ "використання у виклику rk.header(). Ці параметри безпечно можна "
+#~ "проігнорувати, якщо вони вам не потрібні.</li> <li><i>code.calculate</i>: "
+#~ "містить лише параметр <i>breaks</i>.</li> <li><i>code.printout</i>: "
+#~ "містить усі інші параметри, що визначають вигляд креслення.</li> </ul>"
+
+#~ msgid ""
+#~ "<ul> <li><link href=\"rkward://rhelp/plot\"/></li> <li><link href="
+#~ "\"rkward://rhelp/plot.default\"/></li> <li><link href=\"rkward://rhelp/par"
+#~ "\"/></li> <li><link href=\"rkward://component/x11grid\"/></li> </ul>"
+#~ msgstr ""
+#~ "<ul> <li><link href=\"rkward://rhelp/plot\"/></li> <li><link href="
+#~ "\"rkward://rhelp/plot.default\"/></li> <li><link href=\"rkward://rhelp/par"
+#~ "\"/></li> <li><link href=\"rkward://component/x11grid\"/></li> </ul>"
+
+#~ msgid ""
+#~ "The following external tags are provided for use in the embedding plugin. "
+#~ "<ul> <li><i>xvar</i>: The variable to be used for the x-coordinates.</li> "
+#~ "<li><i>yvar</i>: The variable to be used for the y-coordinates.</li> "
+#~ "<li><i>default_pointtype</i>: A string that provides the default point "
+#~ "type when the user chooses 'Default' for 'Type of points/lines'. The "
+#~ "possibilities are p,l,b,o,h,s and S; the options for the <i>type</i> "
+#~ "argument.</li> <li><i>default_pointcolor</i>: A string that provides the "
+#~ "default point color when the user chooses 'Default' for 'Color'. For "
+#~ "various possibilities see the code color_chooser.xml; the options for the "
+#~ "<i>col</i> argument.</li> <li><i>default_main</i>: A string specifying "
+#~ "the <i>main</i> argument to <b>plot.default</b>. By default this is \"\" "
+#~ "which means that the main title generated by the plotting function is "
+#~ "used. Note: The default is always used unquoted. If you want to specify a "
+#~ "literal string add quotes, explicitly, as \"&quote;\".</li> "
+#~ "<li><i>default_sub</i>: Similar to <i>main</i> above but for the subtitle "
+#~ "argument <i>sub</i>.</li> <li><i>default_xlab</i>: Similar to <i>main</i> "
+#~ "above but for the X-label argument <i>xlab</i>.</li> <li><i>default_ylab</"
+#~ "i>: Similar to <i>main</i> above but for the Y-label argument <i>ylab</i>."
+#~ "</li> <li><i>allow_log</i>: Setting this to \"true\" (\"false\") enables "
+#~ "(disables) the display of 'X axis logarithmic' and 'Y axis logarithmic' "
+#~ "checkboxes.</li> <li><i>allow_xlim</i>: Setting this to \"true\" (\"false"
+#~ "\") enables (disables) the display of 'Min X value' and 'Max X value' "
+#~ "input boxes.</li> <li><i>allow_ylim</i>: Setting this to \"true\" (\"false"
+#~ "\") enables (disables) the display of 'Min Y value' and 'Max Y value' "
+#~ "input boxes.</li> <li><i>allow_type</i>: Setting this to \"true\" (\"false"
+#~ "\") enables (disables) the display of the 'Points / Lines' tab.</li> "
+#~ "<li><i>allow_aspect</i>: Setting this to \"true\" (\"false\") enables "
+#~ "(disables) the display of the 'Aspect ratio' tab.</li> <li><i>allow_grid</"
+#~ "i>: Setting this to \"true\" (\"false\") enables (disables) the display "
+#~ "of the 'Grid' tab. If \"true\", the actual code for grid options can be "
+#~ "extracted from code.calculate (see below) which in turn extracts it from "
+#~ "grid_options.code.printout. Specifically, if the plot options plugin is "
+#~ "embedded using an id=\"plot_options\" then the following call:<br> "
+#~ "printIndented (\"\\t\", getRK_val (\"plot_options.code.calculate\"));</"
+#~ "br><br> after the plotting function should do the job.</br></li> </ul> In "
+#~ "order to allow flexible use, the generated options are separated into "
+#~ "different sections: <ul> <li><i>code.preprocess</i>: Nothing yet, but "
+#~ "will hopefully include some <b>par</b> options.</li> <li><i>code."
+#~ "calculate</i>: Currently this contains only the <b>grid</b>-options.</li> "
+#~ "<li><i>code.printout</i>: This contains all the other options determining "
+#~ "the look of the plot.</li> </ul>"
+#~ msgstr ""
+#~ "Для вбудовування цього додатка передбачено описані нижче зовнішні теґи. "
+#~ "<ul> <li><i>xvar</i>: змінна, яку слід використовувати для координати x.</"
+#~ "li> <li><i>yvar</i>: змінна, яку слід використовувати для координати y.</"
+#~ "li> <li><i>default_pointtype</i>: рядок, який визначає типовий тип точки, "
+#~ "який буде використано, якщо буде вибрано варіант «Типовий» для «Типу "
+#~ "точок/ліній». Можливі варіанти: p,l,b,o,h,s та S; параметри аргументу "
+#~ "<i>type</i>.</li> <li><i>default_pointcolor</i>: рядок, який визначає "
+#~ "типовий колір точки, якщо користувач вибирає варіант «Типовий» для пункту "
+#~ "«Колір». Зі списком можливих варіантів можна ознайомитися за допомогою "
+#~ "коду у color_chooser.xml; параметри для аргументу <i>col</i>.</li> "
+#~ "<li><i>default_main</i>: рядок, що визначає аргумент <i>main</i> функції "
+#~ "<b>plot.default</b>. Типовим значенням є \"\", що означає, що основний "
+#~ "заголовок буде створено функцією креслення. Зауваження: типове значення "
+#~ "завжди використовується без лапок. Якщо ви хочете вказати рядок, який "
+#~ "використовуватиметься буквально, додайте лапки, ось так: \"&quote;\".</"
+#~ "li> <li><i>default_sub</i>: подібне до <i>main</i>, описаного вище, але "
+#~ "для аргументу підзаголовка, <i>sub</i>.</li> <li><i>default_xlab</i>: "
+#~ "подібне до <i>main</i>, описаного вище, але для аргументу мітки вісі X, "
+#~ "<i>xlab</i>.</li> <li><i>default_ylab</i>: подібне до <i>main</i>, "
+#~ "описаного вище, але для аргументу мітки вісі Y, <i>ylab</i>.</li> "
+#~ "<li><i>allow_log</i>: встановленням значення \"true\" (\"false\") можна "
+#~ "увімкнути (вимкнути) показ пунктів «Логарифмічна вісь X» та «Логарифмічна "
+#~ "вісь Y».</li> <li><i>allow_xlim</i>: встановленням значення \"true"
+#~ "\" (\"false\") можна увімкнути (вимкнути) показ полів для введення «Мін. "
+#~ "значення X» та «Макс. значення X».</li> <li><i>allow_ylim</i>: "
+#~ "встановленням значення \"true\" (\"false\") можна увімкнути (вимкнути) "
+#~ "показ полів для введення «Мін. значення X» і «Макс. значення Y».</li> "
+#~ "<li><i>allow_type</i>: встановленням значення \"true\" (\"false\") можна "
+#~ "увімкнути (вимкнути) показ вкладки «Точки/Лінії».</li> "
+#~ "<li><i>allow_aspect</i>: встановленням значення \"true\" (\"false\") "
+#~ "можна увімкнути (вимкнути) показ вкладки «Пропорції».</li> "
+#~ "<li><i>allow_grid</i>: встановленням значення \"true\" (\"false\") можна "
+#~ "увімкнути (вимкнути) показ вкладки «Ґратка». Якщо визначення значення "
+#~ "\"true\", код для параметрів ґратки можна видобути з функції code."
+#~ "calculate (див. нижче), яка сама видобуває його з grid_options.code."
+#~ "printout. Зокрема, якщо додаток параметрів креслення вбудовано за "
+#~ "допомогою id=\"plot_options\", виклик:<br> printIndented (\"\\t\", "
+#~ "getRK_val (\"plot_options.code.calculate\"));</br><br> після креслення "
+#~ "функції має виконати роботу.</br></li> </ul> З метою забезпечення "
+#~ "гнучкості користування породжені параметри поділено на різні розділи: "
+#~ "<ul> <li><i>code.preprocess</i>: нічого не містить, але міститиме деякі "
+#~ "параметри <b>par</b>.</li> <li><i>code.calculate</i>: у поточній версії "
+#~ "містить лише параметри <b>grid</b>.</li> <li><i>code.printout</i>: "
+#~ "містить усі інші параметри, які визначають вигляд креслення.</li> </ul>"
+
+#~ msgid ""
+#~ "<ul> <li><link href=\"rkward://rhelp/plot.stepfun\"/></li> <li><link href="
+#~ "\"rkward://rhelp/ecdf\"/></li> </ul>"
+#~ msgstr ""
+#~ "<ul> <li><link href=\"rkward://rhelp/plot.stepfun\"/></li> <li><link href="
+#~ "\"rkward://rhelp/ecdf\"/></li> </ul>"
+
+#~ msgid ""
+#~ "The following external tags are provided for use in the embedding plugin. "
+#~ "<ul> <li><i>allow_addtoplot</i>: Setting this to \"true\" (\"false\") "
+#~ "enables (disables) the display of the 'Add to current plot' checkbox.</"
+#~ "li> <li><i>default_dopoints</i>: Setting this to \"true\" (\"false\") "
+#~ "toggles the state of the 'Draw points' checkbox.</li> "
+#~ "<li><i>default_verticals</i>: Setting this to \"true\" (\"false\") "
+#~ "toggles the state of the 'Draw vertical lines' checkbox.</li> "
+#~ "<li><i>allow_col01line</i>: Setting this to \"true\" (\"false\") enables "
+#~ "(disables) the display of the two frames ('For y = 0 line' and 'For y = 1 "
+#~ "line') for <i>col.01line</i> option to ecdf.</li> </ul>"
+#~ msgstr ""
+#~ "Для вбудовування цього додатка передбачено вказані нижче зовнішні теґи. "
+#~ "<ul> <li><i>allow_addtoplot</i>: встановленням значення \"true\" (\"false"
+#~ "\") можна увімкнути (вимкнути) показ пункту «Додати до поточного "
+#~ "креслення».</li> <li><i>default_dopoints</i>: встановленням значення "
+#~ "\"true\" (\"false\") можна перемкнути стан пункту «Малювати точки».</li> "
+#~ "<li><i>default_verticals</i>: встановленням значення \"true\" (\"false\") "
+#~ "можна перемкнути стан пункту «Малювати вертикальні лінії».</li> "
+#~ "<li><i>allow_col01line</i>: встановленням значення \"true\" (\"false\") "
+#~ "вмикає (вимикає) показ двох панелей («Для лінії y = 0» і «Для лінії y = "
+#~ "1») для параметра <i>col.01line</i> функції ecdf.</li> </ul>"
+
+#~ msgid "<ul> <li><link href=\"rkward://rhelp/grid\"/></li> </ul>"
+#~ msgstr "<ul> <li><link href=\"rkward://rhelp/grid\"/></li> </ul>"

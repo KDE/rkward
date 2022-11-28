@@ -1,0 +1,200 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY rkward '<application
+>RKWard</application
+>'>
+  <!ENTITY R '<application
+>R</application
+>'>
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Dutch "INCLUDE"
+><!-- change language only here -->
+  
+  
+  <!-- Do not define any other entities; instead, use the entities
+       from kde-genent.entities and $LANG/user.entities. -->
+]>
+<!-- kdoctemplate v0.8 October 1 1999 
+     Minor update to "Credits and Licenses" section on August 24, 2000
+     Removed "Revision history" section on 22 January 2001   -->
+
+<!--
+This template was designed by: David Rugge davidrugge@mindspring.com
+with lots of help from: Eric Bischoff ebisch@cybercable.tm.fr
+and Frederik Fouvry fouvry@sfs.nphil.uni-tuebingen.de
+of the KDE DocBook team.
+
+You may freely use this template for writing any sort of KDE documentation.
+If you have any changes or improvements, please let us know.
+
+In the future, we may want to change from SGML-based DocBook to XML-based
+DocBook. To make this change easier, please be careful :
+- in XML, the case of the <tags
+> and attributes is relevant ;
+- also, quote all attributes.
+
+Please don't forget to remove all these comments in your final documentation,
+thanks ;-).
+-->
+
+<!-- ................................................................ -->
+
+<!-- The language must NOT be changed here. -->
+
+<book lang="&language;">
+
+<bookinfo>
+<title
+>Het handboek van RKWard</title>
+
+<authorgroup>
+<!-- New authors, add yourselves here! -->
+<author
+><firstname
+>Thomas</firstname
+> <surname
+>Friedrichsmeier</surname
+> <affiliation
+> <address
+><email
+>rkward-devel@kde.org</email
+></address>
+</affiliation>
+</author>
+</authorgroup>
+
+&Freek.de.Kruijf; 
+
+<copyright>
+<year
+>2006</year>
+<year
+>2007</year>
+<holder
+>Thomas Friedrichsmeier &amp; het team van RKWard</holder>
+</copyright>
+<!-- Translators: put here the copyright notice of the translation -->
+<!-- Put here the FDL notice.  Read the explanation in fdl-notice.docbook 
+     and in the FDL itself on how to use it. -->
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<!-- Date of the documentation
+Change date/releaseinfo only if
+   docbook is updated and verified to be valid for the current app version
+   or
+   docbook is proofread and verified to be valid for the current app version
+Don't forget to include this last date.
+Please respect the format of the date (YYYY-MM-DD),it is used by scripts.
+-->
+<date
+>2007-02-04</date>
+
+<!--version information of Frameworks/Plasma/Applications this documentation is valid for.
+Example:
+Frameworks xx.yy for docbooks in frameworks
+Plasma xx.yy for docbooks in plasma workspace
+Applications xx.yy for docbooks released as Applications
+xx.yy (Applications xx.yy) for docbooks with own version released as Applications
+$applicationname xx.yy for applications with independent release schedule (extragear/playground)
+-->
+<releaseinfo
+>0.4.6</releaseinfo>
+
+<!-- Abstract about this handbook -->
+
+<abstract>
+<para
+>&rkward; is een grafisch frontend voor de krachtige taal &R;, voor statistische berekeningen. </para>
+</abstract>
+
+<!-- This is a set of Keywords for indexing by search engines.
+Please at least include KDE, the KDE package it is in, the name
+ of your application, and a few relevant keywords. -->
+
+<keywordset>
+<keyword
+>KDE</keyword>
+<keyword
+>R</keyword>
+<keyword
+>rkward</keyword>
+<keyword
+>wetenschap</keyword>
+</keywordset>
+
+</bookinfo>
+
+<chapter id="introduction">
+<title
+>Inleiding</title>
+<para
+>&rkward; moet een gemakkelijk te gebruiken grafische frontend zijn (worden) voor de krachtige taal &R;, voor statistische berekeningen. Omdat &R; een complete programmeertaal is, kan &rkward; nooit een complete &GUI; zijn voor alle mogelijkheden in &R;. Maar met &rkward; wordt geprobeerd om een algemene taak eenvoudig te maken, het begin voor nieuwe gebruikers te vereenvoudigen, en tegelijkertijd voor gevorderde gebruikers het mogelijk te maken alle mogelijkheden van &R; te gebruiken. </para>
+</chapter>
+
+<chapter id="using-kapp">
+<title
+>&rkward; gebruiken</title>
+
+<para
+>De meeste informatie is te vinden in &rkward; zelf, in menu  <menuchoice
+><guimenu
+>Help</guimenu
+><guimenuitem
+>Help</guimenuitem
+></menuchoice
+> in &rkward;, <emphasis
+>niet</emphasis
+> in dit document. </para>
+<para
+>Een bruikbare gids om te beginnen met &rkward; is <ulink url="https://rkward.kde.org/User_Documentation"
+>User Documentation Section in the &rkward; wiki</ulink
+>. </para>
+<para
+>Zoek daar a.u.b. de introductie voor &rkward;, en neem contact op met ons als u mee wilt doen de documentatie voor de gebruiker te schrijven. </para>
+
+</chapter>
+
+<chapter id="developers">
+<title
+>Gids voor ontwikkelaars van &rkward;</title>
+
+<para
+>&rkward; kan worden uitgebreid zonder hercompilatie, met behulp van plugins. Uitvoerige hulp hierbij zou beschikbaar moeten worden gemaakt in &rkward;, in docbook-formaat, en is beschikbaar als &HTML; op  <ulink url="https://api.kde.org/doc/rkwardplugins"
+>here</ulink
+>. (TODO: hoe dit moet worden gedaan moet nog worden uitgedokterd). </para>
+
+<!-- Use refentries to describe APIs.  Refentries are fairly complicated and you
+should consult the docbook reference for further details. The example below was
+taken from that reference and shortened a bit for readability. -->
+
+</chapter>
+
+
+<chapter id="credits">
+
+<!-- Include credits for the programmers, documentation writers, and
+contributors here. The license for your software should then be included below
+the credits with a reference to the appropriate license file included in the KDE
+distribution. -->
+
+<title
+>Licentie</title>
+
+<para
+>Documentatie: </para>
+
+&meld.fouten;&vertaling.freek; &underFDL; &underGPL; </chapter>
+
+
+&documentation.index;
+</book>
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+-->

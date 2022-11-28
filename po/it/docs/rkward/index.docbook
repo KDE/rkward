@@ -1,0 +1,218 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY rkward '<application
+>RKWard</application
+>'>
+  <!ENTITY R '<application
+>R</application
+>'>
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Italian "INCLUDE"
+><!-- change language only here -->
+  
+  
+  <!-- Do not define any other entities; instead, use the entities
+       from kde-genent.entities and $LANG/user.entities. -->
+]>
+<!-- kdoctemplate v0.8 October 1 1999 
+     Minor update to "Credits and Licenses" section on August 24, 2000
+     Removed "Revision history" section on 22 January 2001   -->
+
+<!--
+This template was designed by: David Rugge davidrugge@mindspring.com
+with lots of help from: Eric Bischoff ebisch@cybercable.tm.fr
+and Frederik Fouvry fouvry@sfs.nphil.uni-tuebingen.de
+of the KDE DocBook team.
+
+You may freely use this template for writing any sort of KDE documentation.
+If you have any changes or improvements, please let us know.
+
+In the future, we may want to change from SGML-based DocBook to XML-based
+DocBook. To make this change easier, please be careful :
+- in XML, the case of the <tags
+> and attributes is relevant ;
+- also, quote all attributes.
+
+Please don't forget to remove all these comments in your final documentation,
+thanks ;-).
+-->
+
+<!-- ................................................................ -->
+
+<!-- The language must NOT be changed here. -->
+
+<book lang="&language;">
+
+<bookinfo>
+<title
+>Manuale di RKWard</title>
+
+<authorgroup>
+<!-- New authors, add yourselves here! -->
+<author
+><firstname
+>Thomas</firstname
+> <surname
+>Friedrichsmeier</surname
+> <affiliation
+> <address
+><email
+>rkward-devel@kde.org</email
+></address>
+</affiliation>
+</author>
+</authorgroup>
+
+<othercredit role="translator"
+><firstname
+>Vincenzo</firstname
+><surname
+>Reale</surname
+><affiliation
+><address
+><email
+>smart2128vr@gmail.com</email
+></address
+></affiliation
+><contrib
+>Traduzione italiana</contrib
+></othercredit
+> 
+
+<copyright>
+<year
+>2006</year>
+<year
+>2007</year>
+<holder
+>Thomas Friedrichsmeier &amp; the RKWard Team</holder>
+</copyright>
+<!-- Translators: put here the copyright notice of the translation -->
+<!-- Put here the FDL notice.  Read the explanation in fdl-notice.docbook 
+     and in the FDL itself on how to use it. -->
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<!-- Date of the documentation
+Change date/releaseinfo only if
+   docbook is updated and verified to be valid for the current app version
+   or
+   docbook is proofread and verified to be valid for the current app version
+Don't forget to include this last date.
+Please respect the format of the date (YYYY-MM-DD),it is used by scripts.
+-->
+<date
+>4/2/2007</date>
+
+<!--version information of Frameworks/Plasma/Applications this documentation is valid for.
+Example:
+Frameworks xx.yy for docbooks in frameworks
+Plasma xx.yy for docbooks in plasma workspace
+Applications xx.yy for docbooks released as Applications
+xx.yy (Applications xx.yy) for docbooks with own version released as Applications
+$applicationname xx.yy for applications with independent release schedule (extragear/playground)
+-->
+<releaseinfo
+>0.4.6</releaseinfo>
+
+<!-- Abstract about this handbook -->
+
+<abstract>
+<para
+>&rkward; è un'interfaccia grafica per il potente linguaggio &R; utilizzato per il calcolo statistico. </para>
+</abstract>
+
+<!-- This is a set of Keywords for indexing by search engines.
+Please at least include KDE, the KDE package it is in, the name
+ of your application, and a few relevant keywords. -->
+
+<keywordset>
+<keyword
+>KDE</keyword>
+<keyword
+>R</keyword>
+<keyword
+>rkward</keyword>
+<keyword
+>scienza</keyword>
+</keywordset>
+
+</bookinfo>
+
+<chapter id="introduction">
+<title
+>Introduzione</title>
+<para
+>&rkward; è pensato per essere e diventare una semplice interfaccia grafica per il potente linguaggio &R; utilizzato per il calcolo statistico. Dal momento che &R; è un linguaggio di programmazione completo, &rkward; non sarà mai in grado di offrire un'interfaccia completa per tutto in &R;. Tuttavia, &rkward; si impegna a semplificare il compito comune, fornire un punto di ingresso facile per i nuovi arrivati, e, allo stesso tempo, un accesso trasparente alla piena potenza del linguaggio &R; sottostante è fornito per utenti esperti. </para>
+</chapter>
+
+<chapter id="using-kapp">
+<title
+>Uso di &rkward;</title>
+
+<para
+>La maggior parte della documentazione è disponibile all'interno di &rkward; stesso selezionando <menuchoice
+><guimenu
+>Aiuto</guimenu
+><guimenuitem
+>Aiuto</guimenuitem
+></menuchoice
+> in &rkward; dal menu, <emphasis
+>non</emphasis
+> in questo documento. </para>
+<para
+>Una guida utile per iniziare con &rkward; è la <ulink url="https://rkward.kde.org/User_Documentation"
+>sezione della documentazione dell'utente nel wiki di &rkward;</ulink
+>. </para>
+<para
+>Portarsi lì per un'introduzione a &rkward; e contattarci, se si vuole aiutare a creare la documentazione per l'utente. </para>
+
+</chapter>
+
+<chapter id="developers">
+<title
+>Guida degli sviluppatori di &rkward;</title>
+
+<para
+>&rkward; può essere esteso senza la necessità di ricompilare utilizzando le estensioni. Una vasta documentazione a riguardo dovrebbe essere inclusa in &rkward; in formato DocBook ed è disponibile in formato &HTML; <ulink url="https://api.kde.org/doc/rkwardplugins"
+>qui</ulink
+>. (DA FARE: capire come includerla nella documentazione). </para>
+
+<!-- Use refentries to describe APIs.  Refentries are fairly complicated and you
+should consult the docbook reference for further details. The example below was
+taken from that reference and shortened a bit for readability. -->
+
+</chapter>
+
+
+<chapter id="credits">
+
+<!-- Include credits for the programmers, documentation writers, and
+contributors here. The license for your software should then be included below
+the credits with a reference to the appropriate license file included in the KDE
+distribution. -->
+
+<title
+>Licenza</title>
+
+<para
+>Documentazione: </para>
+
+<para
+>Traduzione: Vincenzo Reale <email
+>smart2128vr@gmail.com</email
+></para
+> &underFDL; &underGPL; </chapter>
+
+
+&documentation.index;
+</book>
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+-->

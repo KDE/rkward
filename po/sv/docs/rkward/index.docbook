@@ -1,0 +1,218 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY rkward '<application
+>RKWard</application
+>'>
+  <!ENTITY R '<application
+>R</application
+>'>
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Swedish "INCLUDE"
+><!-- change language only here -->
+  
+  
+  <!-- Do not define any other entities; instead, use the entities
+       from kde-genent.entities and $LANG/user.entities. -->
+]>
+<!-- kdoctemplate v0.8 October 1 1999 
+     Minor update to "Credits and Licenses" section on August 24, 2000
+     Removed "Revision history" section on 22 January 2001   -->
+
+<!--
+This template was designed by: David Rugge davidrugge@mindspring.com
+with lots of help from: Eric Bischoff ebisch@cybercable.tm.fr
+and Frederik Fouvry fouvry@sfs.nphil.uni-tuebingen.de
+of the KDE DocBook team.
+
+You may freely use this template for writing any sort of KDE documentation.
+If you have any changes or improvements, please let us know.
+
+In the future, we may want to change from SGML-based DocBook to XML-based
+DocBook. To make this change easier, please be careful :
+- in XML, the case of the <tags
+> and attributes is relevant ;
+- also, quote all attributes.
+
+Please don't forget to remove all these comments in your final documentation,
+thanks ;-).
+-->
+
+<!-- ................................................................ -->
+
+<!-- The language must NOT be changed here. -->
+
+<book lang="&language;">
+
+<bookinfo>
+<title
+>Handbok RKWard</title>
+
+<authorgroup>
+<!-- New authors, add yourselves here! -->
+<author
+><firstname
+>Thomas</firstname
+> <surname
+>Friedrichsmeier</surname
+> <affiliation
+> <address
+><email
+>rkward-devel@kde.org</email
+></address>
+</affiliation>
+</author>
+</authorgroup>
+
+<othercredit role="translator"
+> <firstname
+>Stefan</firstname
+> <surname
+>Asserhäll</surname
+> <affiliation
+><address
+><email
+>stefan.asserhall@bredband.net</email
+></address
+></affiliation
+> <contrib
+>Översättare</contrib
+></othercredit
+> 
+
+<copyright>
+<year
+>2006</year>
+<year
+>2007</year>
+<holder
+>Thomas Friedrichsmeier och RKWard-gruppen</holder>
+</copyright>
+<!-- Translators: put here the copyright notice of the translation -->
+<!-- Put here the FDL notice.  Read the explanation in fdl-notice.docbook 
+     and in the FDL itself on how to use it. -->
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<!-- Date of the documentation
+Change date/releaseinfo only if
+   docbook is updated and verified to be valid for the current app version
+   or
+   docbook is proofread and verified to be valid for the current app version
+Don't forget to include this last date.
+Please respect the format of the date (YYYY-MM-DD),it is used by scripts.
+-->
+<date
+>2007-02-04</date>
+
+<!--version information of Frameworks/Plasma/Applications this documentation is valid for.
+Example:
+Frameworks xx.yy for docbooks in frameworks
+Plasma xx.yy for docbooks in plasma workspace
+Applications xx.yy for docbooks released as Applications
+xx.yy (Applications xx.yy) for docbooks with own version released as Applications
+$applicationname xx.yy for applications with independent release schedule (extragear/playground)
+-->
+<releaseinfo
+>0.4.6</releaseinfo>
+
+<!-- Abstract about this handbook -->
+
+<abstract>
+<para
+>&rkward; är ett grafiskt användargränssnitt för det kraftfulla statistiska databehandlingsspråket &R;. </para>
+</abstract>
+
+<!-- This is a set of Keywords for indexing by search engines.
+Please at least include KDE, the KDE package it is in, the name
+ of your application, and a few relevant keywords. -->
+
+<keywordset>
+<keyword
+>KDE</keyword>
+<keyword
+>R</keyword>
+<keyword
+>rkward</keyword>
+<keyword
+>vetenskap</keyword>
+</keywordset>
+
+</bookinfo>
+
+<chapter id="introduction">
+<title
+>Inledning</title>
+<para
+>&rkward; är avsett att vara/bli ett lättanvänt grafiskt gränssnitt för det kraftfulla statistiska databehandlingsspråket &R;. Eftersom &R; är ett fullständigt programspråk, kommer &rkward; aldrig att kunna erbjuda ett komplett grafiskt användargränssnitt för allting i &R;. Dock försöker &rkward; att göra vanliga uppgifter enkla, samt tillhandahålla en enkel plats att starta för nykomlingar, medan avancerade användare samtidigt erbjuds transparent åtkomst till den fulla kraften i det underliggande språket &R;. </para>
+</chapter>
+
+<chapter id="using-kapp">
+<title
+>Använda &rkward;</title>
+
+<para
+>Den mesta dokumentationen är tillgänglig inne i själva &rkward; genom att välja <menuchoice
+><guimenu
+>Hjälp</guimenu
+> <guimenuitem
+>Hjälp</guimenuitem
+></menuchoice
+> i &rkward; från menyn, <emphasis
+>inte</emphasis
+> i det här dokumentet. </para>
+<para
+>En användbar handledning för att komma igång med &rkward; är <ulink url="https://rkward.kde.org/User_Documentation"
+>avsnittet med användardokumentation på &rkward;s wiki</ulink
+>. </para>
+<para
+>Gå dit för en introduktion av &rkward;, och kontakta oss om du kan hjälpa till att skapa användardokumentation. </para>
+
+</chapter>
+
+<chapter id="developers">
+<title
+>Utvecklingsguide för &rkward;</title>
+
+<para
+>&rkward; kan utökas utan att behöva kompilera om genom att använda insticksprogram. Omfattande dokumentation om det ska vara inkluderad med &rkward; på DocBook-format, och är tillgänglig på &HTML;-format <ulink url="https://api.kde.org/doc/rkwardplugins"
+>här</ulink
+>. (ATT GÖRA: ta reda på hur det kan inkluderas i dokumentationen). </para>
+
+<!-- Use refentries to describe APIs.  Refentries are fairly complicated and you
+should consult the docbook reference for further details. The example below was
+taken from that reference and shortened a bit for readability. -->
+
+</chapter>
+
+
+<chapter id="credits">
+
+<!-- Include credits for the programmers, documentation writers, and
+contributors here. The license for your software should then be included below
+the credits with a reference to the appropriate license file included in the KDE
+distribution. -->
+
+<title
+>Licens</title>
+
+<para
+>Dokumentation: </para>
+
+<para
+>Översättning Stefan Asserhäll <email
+>stefan.asserhall@bredband.net</email
+></para
+> &underFDL; &underGPL; </chapter>
+
+
+&documentation.index;
+</book>
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+-->

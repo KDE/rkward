@@ -1,0 +1,988 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Adrián Chaves Fernández <adriyetichaves@gmail.com>, 2015, 2016.
+# Adrián Chaves (Gallaecio) <adrian@chaves.io>, 2017, 2018, 2019, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-04-08 00:41+0000\n"
+"PO-Revision-Date: 2020-01-05 19:10+0100\n"
+"Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
+"Language-Team: Galician <kde-i18n-doc@kde.org>\n"
+"Language: gl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 19.08.3\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Adrián Chaves Fernández"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "adrian@chaves.io"
+
+#. i18n: ectx: <about name="...">
+#: rkward/plugins/data.pluginmap:5
+#, kde-format
+msgid "Data transformation and conversion"
+msgstr "Transformación e conversión de datos"
+
+#. i18n: ectx: <about shortinfo="...">
+#: rkward/plugins/data.pluginmap:5
+#, kde-format
+msgid ""
+"Plugins for transforming, subsetting, recoding, etc. of data. Part of the "
+"official RKWard distribution"
+msgstr ""
+"Complementos para transformar datos, dividilos en subgrupos, cambiarlles a "
+"codificación, etc. Parte da distribución oficial de RKWard."
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/data.pluginmap:19
+#, kde-format
+msgid "Generate random data"
+msgstr "Xerar datos aleatorios."
+
+#. i18n: ectx: <components> <component label="...">
+#. i18n: ectx: (Sort data) <dialog label="...">
+#: rkward/plugins/data.pluginmap:20 rkward/plugins/data/sort.xml:40
+#, kde-format
+msgid "Sort data"
+msgstr "Ordenar os datos"
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/data.pluginmap:21
+#, kde-format
+msgid "Subset data.frame"
+msgstr "Subgrupo data.frame"
+
+#. i18n: ectx: <components> <component label="...">
+#. i18n: ectx: (Loaded from Recode categorical data)
+#. i18n: ectx: (Recode categorical data) <title>
+#. i18n: ectx: (Recode categorical data) <dialog label="...">
+#: rkward/plugins/data.pluginmap:22
+#: rkward/plugins/data/recode_categorical.js:88
+#: rkward/plugins/data/recode_categorical.rkh:3
+#: rkward/plugins/data/recode_categorical.xml:24
+#, kde-format
+msgid "Recode categorical data"
+msgstr "Cambiar a codificación de datos de categorías"
+
+#. i18n: ectx: <hierarchy> <menu label="...">
+#: rkward/plugins/data.pluginmap:26
+#, kde-format
+msgid "Data"
+msgstr "Datos"
+
+#. i18n: ectx: (Generate random data (normal distribution)) <dialog label="...">
+#: rkward/plugins/data/generate_random.xml:17
+#, kde-format
+msgid "Generate random data (normal distribution)"
+msgstr "Xerar datos aleatorios (distribución normal)"
+
+#. i18n: ectx: (Generate random data (normal distribution)) <dialog label="Generate random data (normal distribution)"> <spinbox label="...">
+#: rkward/plugins/data/generate_random.xml:19
+#, kde-format
+msgid "mu (mean)"
+msgstr "mu (media)"
+
+#. i18n: ectx: (Generate random data (normal distribution)) <dialog label="Generate random data (normal distribution)"> <spinbox label="...">
+#: rkward/plugins/data/generate_random.xml:20
+#, kde-format
+msgid "sigma (standard deviation)"
+msgstr "sigma (desviación estándar)"
+
+#. i18n: ectx: (Generate random data (normal distribution)) <dialog label="Generate random data (normal distribution)"> <spinbox label="...">
+#: rkward/plugins/data/generate_random.xml:22
+#, kde-format
+msgid "Length of generated sequence"
+msgstr "Lonxitude da secuencia xerada"
+
+#. i18n: ectx: (Generate random data (normal distribution)) <dialog label="Generate random data (normal distribution)"> <saveobject label="...">
+#: rkward/plugins/data/generate_random.xml:23
+#, kde-format
+msgid "Save as"
+msgstr "Gardar como"
+
+#. i18n: ectx: (Loaded from Recode categorical data)
+#: rkward/plugins/data/recode_categorical.js:20
+#, kde-format
+msgctxt "R code comment"
+msgid ""
+"Use as.character() as intermediate data format, to support adding and "
+"dropping levels"
+msgstr ""
+"Usar as.character() como formato de datos intermedio, para permitir engadir "
+"e eliminar niveis."
+
+#. i18n: ectx: (Loaded from Recode categorical data)
+#: rkward/plugins/data/recode_categorical.js:73
+#, kde-format
+msgid "Some input values were specified more than once: "
+msgstr "Algúns valores de entrada indicáronse máis dunha vez: "
+
+#. i18n: ectx: (Loaded from Recode categorical data)
+#: rkward/plugins/data/recode_categorical.js:89
+#, kde-format
+msgid "Input variable"
+msgstr "Variábel de entrada"
+
+#. i18n: ectx: (Loaded from Recode categorical data)
+#: rkward/plugins/data/recode_categorical.js:90
+#, kde-format
+msgid "Output variable"
+msgstr "Variábel de saída"
+
+#. i18n: ectx: (Loaded from Recode categorical data)
+#: rkward/plugins/data/recode_categorical.js:91
+#, kde-format
+msgid "Number of differences after recoding"
+msgstr "Número de diferenzas tras cambiar a codificación"
+
+#. i18n: ectx: (Recode categorical data) <summary>
+#: rkward/plugins/data/recode_categorical.rkh:6
+#, kde-format
+msgid ""
+"Allows you to recode a vector with categorical data. This plugin also allows "
+"to recode vectors that are coded numerically, but this only makes sense for "
+"numeric vectors with only a limited number of unique values."
+msgstr ""
+"Permítelle cambiar a codificación dun vector con datos de categorías. Este "
+"complemento tamén permite cambiar a codificación de vectores que están "
+"codificados numericamente, pero iso só ten sentido para vectores numéricos "
+"que só teñen un número limitado de valores únicos."
+
+#. i18n: ectx: (Recode categorical data) <usage>
+#: rkward/plugins/data/recode_categorical.rkh:10
+#, kde-format
+msgid ""
+"Select the vector to recode, and where to store the recoded data. Select the "
+"storage mode of the resulting data. Then, on the second tab, specify the "
+"recodings to make."
+msgstr ""
+"Seleccionar o vector para cambiar de codificación, e o lugar onde almacenar "
+"os datos coa nova codificación. Seleccione o método de almacenamento para os "
+"datos resultantes. A continuación, no segundo separador, indique os cambios "
+"de codificación para realizar."
+
+#. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "Select variable to recode")
+#: rkward/plugins/data/recode_categorical.rkh:16
+#, kde-format
+msgid "Select the vector to recode"
+msgstr "Seleccione o vector para cambiar de codificación"
+
+#. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "Save to")
+#: rkward/plugins/data/recode_categorical.rkh:19
+#, kde-format
+msgid ""
+"Select whether to overwrite/replace the input vector with the recoded data, "
+"or save to a different vector."
+msgstr ""
+"Seleccione se quere substituír o vector de entrada polos datos na nova "
+"codificación, ou se quere gardalo como un vector distinto."
+
+#. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "Object to save to")
+#: rkward/plugins/data/recode_categorical.rkh:22
+#, kde-format
+msgid "Pick a name (and optionally a container) for the recoded data."
+msgstr ""
+"Escolla un nome (eopcionalmente un contedor) para os datos coa nova "
+"codificación."
+
+#. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "Data type after recoding")
+#: rkward/plugins/data/recode_categorical.rkh:25
+#, kde-format
+msgid "Storage mode of the recoded data."
+msgstr "Modo de almacenamento para os datos coa nova codificación."
+
+#. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "Preview")
+#: rkward/plugins/data/recode_categorical.rkh:28
+#, kde-format
+msgid ""
+"Show a preview of the recoding, as a table with two columns for old and new "
+"values. The preview is limited to the first 500 rows of data, for "
+"performance reasons."
+msgstr ""
+"Mostrar unha vista previa da gravación, a modo de táboa con dúas columnas, "
+"unha para os valores vellos e outra para os novos. A vista previa está "
+"limitada ás primeiras 500 filas de datos, por cuestións de rendemento."
+
+#. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "Recodings")
+#: rkward/plugins/data/recode_categorical.rkh:32
+#, kde-format
+msgid ""
+"The upper half of this tab allows you to specify recodings for individual "
+"input values. To add more recodings, click the \"add/+\"-button. To remove "
+"recodings, click the \"remove/x\"-button. For each recoding, select the "
+"following:"
+msgstr ""
+"A metade superior deste separador permítelle indicar os cambios de "
+"codificación para valores de entrada individuais. Para engadir máis cambios "
+"de codificación, prema o botón «Engadir» ou «+». Para retirar cambios de "
+"codificación, prema o botón «Retirar» ou «x». Seleccione o seguinte para "
+"cada cambio de codificación:"
+
+#. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "Old values")
+#: rkward/plugins/data/recode_categorical.rkh:36
+#, kde-format
+msgid ""
+"For each recoding to perform, first select the old value(s) to recode. This "
+"can be either NA/missing, or select non-NA value(s) on the left hand side, "
+"and add them to the values to be recoded by clicking the arrow-button. If "
+"several input values are to be replaced with one output value, you can "
+"select them all at once."
+msgstr ""
+"Por cada cambio de codificación para aplicar, primeiro seleccione o valor "
+"anterior que hai que cambia de codificación. Dito valor non pode ser «NA» ou "
+"«non definido», ou pode seleccionar valores definidos na parte esquerda, e "
+"premer o botón de frecha para engadir os valores para cambiarlles a "
+"codificación. Para substituír varios valores de entrada por un único valor "
+"de saída, pode seleccionalos todos á vez."
+
+#. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "New value")
+#: rkward/plugins/data/recode_categorical.rkh:41
+#, kde-format
+msgid ""
+"Enter the new value (or set it to be NA). For factors and character vectors, "
+"values will be quoted, automatically."
+msgstr ""
+"Insira o novo valor (ou defínao como NA). Para factores e vectores de "
+"caracteres, os valores escribiranse entre comiñas automaticamente."
+
+#. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "Any other values")
+#: rkward/plugins/data/recode_categorical.rkh:44
+#, kde-format
+msgid ""
+"Any input values (including NAs) for which no recoding was specified, above, "
+"can either be left unchanged (\"Copy\"), or can be replaced with a specific "
+"value or NA."
+msgstr ""
+"Calquera valor de entrada (incluíndo os NA) para o que non se indicou un "
+"cambio de codificación, enriba, pode ou ben deixarse como está («Copiar») ou "
+"ben substituído por un valor concreto ou por NA."
+
+#. i18n: ectx: (Recode categorical data) <related>
+#: rkward/plugins/data/recode_categorical.rkh:49
+#, kde-format
+msgid "<link href=\"rkward://rhelp/recode\"/>"
+msgstr "<link href=\"rkward://rhelp/recode\"/>"
+
+#. i18n: ectx: (Recode categorical data) <technical>
+#: rkward/plugins/data/recode_categorical.rkh:56
+#, kde-format
+msgid ""
+"This plugin utilizes the <link href=\"rkward://component/rkward/level_select"
+"\"/> and <link href=\"rkward://component/rkward/multi_input\"/> embeddable "
+"plugins."
+msgstr ""
+"Este complemento usa os complementos incluíbeis <link href=\"rkward://"
+"component/rkward/level_select\"/> e <link href=\"rkward://component/rkward/"
+"multi_input\"/>."
+
+#. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="...">
+#: rkward/plugins/data/recode_categorical.xml:25
+#, kde-format
+msgid "Input and output variables"
+msgstr "Variábeis de entrada e saída"
+
+#. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <varslot label="...">
+#: rkward/plugins/data/recode_categorical.xml:27
+#, kde-format
+msgid "Select variable to recode"
+msgstr "Seleccione a variábel para cambiar de codificación"
+
+#. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Basic settings"> <radio label="...">
+#. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <radio label="...">
+#: rkward/plugins/data/recode_categorical.xml:29
+#: rkward/plugins/data/sort.xml:53
+#, kde-format
+msgid "Save to"
+msgstr "Gardar en"
+
+#. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Basic settings"> <radio label="Save to"> <option label="...">
+#. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <radio label="Save to"> <option label="...">
+#: rkward/plugins/data/recode_categorical.xml:30
+#: rkward/plugins/data/sort.xml:54
+#, kde-format
+msgid "Same object"
+msgstr "O mesmo obxecto"
+
+#. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <radio label="Save to"> <option label="...">
+#: rkward/plugins/data/recode_categorical.xml:31
+#, kde-format
+msgid "Other:"
+msgstr "Outro:"
+
+#. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Basic settings"> <saveobject label="...">
+#. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <saveobject label="...">
+#: rkward/plugins/data/recode_categorical.xml:33
+#: rkward/plugins/data/sort.xml:57
+#, kde-format
+msgid "Object to save to"
+msgstr "Obxecto no que gardar"
+
+#. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <dropdown label="...">
+#: rkward/plugins/data/recode_categorical.xml:35
+#, kde-format
+msgid "Data type after recoding"
+msgstr "Tipo de datos tras o cambio de codificación"
+
+#. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <dropdown label="Data type after recoding"> <option label="...">
+#: rkward/plugins/data/recode_categorical.xml:36
+#, kde-format
+msgid "Character"
+msgstr "Carácter"
+
+#. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <dropdown label="Data type after recoding"> <option label="...">
+#: rkward/plugins/data/recode_categorical.xml:37
+#, kde-format
+msgid "Factor"
+msgstr "Factor"
+
+#. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <dropdown label="Data type after recoding"> <option label="...">
+#: rkward/plugins/data/recode_categorical.xml:38
+#, kde-format
+msgid "Numeric"
+msgstr "Numérico"
+
+#. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <dropdown label="Data type after recoding"> <option label="...">
+#: rkward/plugins/data/recode_categorical.xml:39
+#, kde-format
+msgid "Logical"
+msgstr "Lóxico"
+
+#. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Basic settings"> <preview label="...">
+#. i18n: ectx: (Subset of data) <dialog label="Subset of data"> <preview label="...">
+#. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <preview label="...">
+#: rkward/plugins/data/recode_categorical.xml:42
+#: rkward/plugins/data/sort.xml:60 rkward/plugins/data/subset_dataframe.xml:129
+#, kde-format
+msgid "Preview"
+msgstr "Vista previa"
+
+#. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="...">
+#: rkward/plugins/data/recode_categorical.xml:44
+#, kde-format
+msgid "Values"
+msgstr "Valores"
+
+#. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Values"> <optionset label="...">
+#: rkward/plugins/data/recode_categorical.xml:46
+#, kde-format
+msgid "Recodings"
+msgstr "Cambios de codificación"
+
+#. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Values"> <optionset label="Recodings"> <optioncolumn label="...">
+#: rkward/plugins/data/recode_categorical.xml:65
+#, kde-format
+msgid "Old value(s)"
+msgstr "Valores anteriores"
+
+#. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Values"> <optionset label="Recodings"> <optioncolumn label="...">
+#: rkward/plugins/data/recode_categorical.xml:69
+#, kde-format
+msgid "New value(s)"
+msgstr "Valores novos"
+
+#. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Values"> <optionset label="Recodings"> <radio label="...">
+#: rkward/plugins/data/recode_categorical.xml:77
+#, kde-format
+msgid "Old values"
+msgstr "Valores anteriores"
+
+#. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> [...] <radio label="Old values"> <option label="...">
+#. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> [...] <radio label="New value"> <option label="...">
+#. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Values"> <radio label="Any other values"> <option label="...">
+#: rkward/plugins/data/recode_categorical.xml:78
+#: rkward/plugins/data/recode_categorical.xml:88
+#: rkward/plugins/data/recode_categorical.xml:101
+#, kde-format
+msgid "NA"
+msgstr "NA"
+
+#. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> [...] <radio label="Old values"> <option label="...">
+#: rkward/plugins/data/recode_categorical.xml:79
+#, kde-format
+msgid "Select value(s):"
+msgstr "Seleccione os valores:"
+
+#. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Values"> <optionset label="Recodings"> <radio label="...">
+#: rkward/plugins/data/recode_categorical.xml:87
+#, kde-format
+msgid "New value"
+msgstr "Valor novo"
+
+#. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> [...] <radio label="New value"> <option label="...">
+#: rkward/plugins/data/recode_categorical.xml:89
+#, kde-format
+msgid "Value:"
+msgstr "Valor:"
+
+#. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Values"> <optionset label="Recodings"> <text>
+#: rkward/plugins/data/recode_categorical.xml:92
+#, kde-format
+msgid "(Value will be quoted, automatically)"
+msgstr "(o valor porase entre comiñas automaticamente)"
+
+#. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Values"> <radio label="...">
+#: rkward/plugins/data/recode_categorical.xml:99
+#, kde-format
+msgid "Any other values"
+msgstr "Calquera outro valor"
+
+#. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Values"> <radio label="Any other values"> <option label="...">
+#: rkward/plugins/data/recode_categorical.xml:100
+#, kde-format
+msgid "Copy"
+msgstr "Copiar"
+
+#. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Values"> <radio label="Any other values"> <option label="...">
+#: rkward/plugins/data/recode_categorical.xml:102
+#, kde-format
+msgid "Custom value:"
+msgstr "Valor personalizado:"
+
+#. i18n: ectx: (Loaded from Sort data) <summary>
+#: rkward/plugins/data/sort.rkh:3
+#, kde-format
+msgid "Sort data. Currently data.frames, or individual vectors can be sorted."
+msgstr ""
+"Ordenar os datos. Actualmente pode ordenar data.frames ou vectores "
+"individuais."
+
+#. i18n: ectx: (Loaded from Sort data) <usage>
+#: rkward/plugins/data/sort.rkh:6
+#, kde-format
+msgid ""
+"Select the object to be sorted. For data.frames, also specify the column to "
+"sort by. By default the object to be sorted is replaced with the sorted "
+"variant, but you can also specify to save to a separate object."
+msgstr ""
+"Seleccione o obxecto para ordenar. Para data.frames, indique a columna que "
+"determina a orde. O comportamento predeterminado consiste en substituír o "
+"obxecto para ordenar pola variante ordenada, pero tamén pode gardar a "
+"variante ordenada como un obxecto distinto."
+
+#. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Object to be sorted")
+#: rkward/plugins/data/sort.rkh:12
+#, kde-format
+msgid ""
+"The object to sort. If a data.frame editor window is currently active, the "
+"corresponding object name will be filled in as a default."
+msgstr ""
+"O obxecto para ordenar. Se hai unha xanela de editor de data.frame activa, o "
+"nome do obxecto correspondente usarase como predeterminado."
+
+#. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Sort by")
+#: rkward/plugins/data/sort.rkh:13
+#, kde-format
+msgid "Only for data.frame objects. Select the column(s) to sort by."
+msgstr ""
+"Só para obxectos data.frame. Seleccione as columnas que determinan a orde."
+
+#. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Save to")
+#: rkward/plugins/data/sort.rkh:14
+#, kde-format
+msgid ""
+"Choose \"Same object\" (the default) to replace the object to be sorted with "
+"the sorted variant. If, instead, you want to keep the unsorted object, "
+"choose \"Another object\" to save the sorted object, separately."
+msgstr ""
+"Escolla «O mesmo obxecto» (predeterminado) para substituír o obxecto para "
+"ordenar pola variante ordenada. Se prefire conservar o obxecto sen ordenar, "
+"escolla «Outro obxecto» para gardar o obxecto ordenado como un obxecto "
+"distinto."
+
+#. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Object to save to")
+#: rkward/plugins/data/sort.rkh:15
+#, kde-format
+msgid ""
+"Only, if you selected \"Another object\", above: Specify the object to save "
+"to."
+msgstr ""
+"Só se seleccionou «Outro obxecto» enriba: Indique o obxecto no que gardalo."
+
+#. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Preview")
+#: rkward/plugins/data/sort.rkh:16
+#, kde-format
+msgid ""
+"Show a preview of the sorted data. The preview is limited to 200 rows and 50 "
+"columns of data, for performance reasons."
+msgstr ""
+"Mostrar unha vista previa dos datos ordenados. A vista previa está limitada "
+"a 200 filas e 50 columnas de datos, por cuestións de rendemento."
+
+#. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Sort order")
+#: rkward/plugins/data/sort.rkh:19
+#, kde-format
+msgid "Sort in ascending or descending order."
+msgstr "Ordenar de maneira ascendente ou descendente."
+
+#. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Sort mode")
+#: rkward/plugins/data/sort.rkh:20
+#, kde-format
+msgid ""
+"Allows to apply conversions, which may affect sort order (when sorting data."
+"frames, this option is available for each column to sort by)."
+msgstr ""
+"Permite aplicar conversións, que poderían afectar á orde (ao ordenar data."
+"frames, esta opción está dispoñíbel para cada unha das columnas que "
+"determinan a orde)."
+
+#. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Order")
+#: rkward/plugins/data/sort.rkh:21
+#, kde-format
+msgid ""
+"When sorting data.frames, this option allows to reverse the global sort "
+"order for individual columns."
+msgstr ""
+"Ao ordenar data.frames, esta opción permite inverter a orde global para "
+"columnas individuais."
+
+#. i18n: ectx: (Loaded from Sort data) <related>
+#: rkward/plugins/data/sort.rkh:23
+#, kde-format
+msgid "<link href=\"rkward://rhelp/order\"/>"
+msgstr "<link href=\"rkward://rhelp/order\"/>"
+
+#. i18n: ectx: (Sort data)
+#: rkward/plugins/data/sort.xml:34
+#, kde-format
+msgid "Sorting this type of object is not supported in this plugin"
+msgstr "Este complemento non permite ordenar este tipo de obxecto."
+
+#. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="...">
+#: rkward/plugins/data/sort.xml:42
+#, kde-format
+msgid "Basic settings"
+msgstr "Configuración básica"
+
+#. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Basic settings"> <varslot label="...">
+#: rkward/plugins/data/sort.xml:46
+#, kde-format
+msgid "Object to be sorted"
+msgstr "Obxecto para ordenar"
+
+#. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Basic settings"> <varslot label="...">
+#: rkward/plugins/data/sort.xml:49
+#, kde-format
+msgid "Sort by"
+msgstr "Ordenar por"
+
+#. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Basic settings"> <radio label="Save to"> <option label="...">
+#: rkward/plugins/data/sort.xml:55
+#, kde-format
+msgid "Another object"
+msgstr "Outro obxecto"
+
+#. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="...">
+#. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <radio label="...">
+#: rkward/plugins/data/sort.xml:62 rkward/plugins/data/sort.xml:63
+#, kde-format
+msgid "Sort order"
+msgstr "Orde de clasificación"
+
+#. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <radio label="Sort order"> <option label="...">
+#: rkward/plugins/data/sort.xml:64
+#, kde-format
+msgid "Ascending"
+msgstr "Ascendente"
+
+#. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <radio label="Sort order"> <option label="...">
+#: rkward/plugins/data/sort.xml:65
+#, kde-format
+msgid "Descending"
+msgstr "Descendente"
+
+#. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <dropdown label="...">
+#. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <optionset> <optioncolumn label="...">
+#: rkward/plugins/data/sort.xml:68 rkward/plugins/data/sort.xml:95
+#, kde-format
+msgid "Sort mode"
+msgstr "Tipo de orde"
+
+#. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <dropdown label="Sort mode"> <option label="...">
+#: rkward/plugins/data/sort.xml:69
+#, kde-format
+msgid "Sort as is"
+msgstr "Ordenar tal cual"
+
+#. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <dropdown label="Sort mode"> <option label="...">
+#: rkward/plugins/data/sort.xml:70
+#, kde-format
+msgid "Sort as character"
+msgstr "Ordenar como carácter"
+
+#. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <dropdown label="Sort mode"> <option label="...">
+#: rkward/plugins/data/sort.xml:71
+#, kde-format
+msgid "Sort as number"
+msgstr "Ordenar como número"
+
+#. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <dropdown label="Sort mode"> <option label="...">
+#: rkward/plugins/data/sort.xml:72
+#, kde-format
+msgid "Sort by custom function:"
+msgstr "Ordenar usando unha función personalizada:"
+
+#. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <input label="...">
+#: rkward/plugins/data/sort.xml:74
+#, kde-format
+msgid "Function(_X_) to use for sorting"
+msgstr "Funcion(_X_) para usar para ordenar"
+
+#. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <optionset> <checkbox label="...">
+#: rkward/plugins/data/sort.xml:88
+#, kde-format
+msgid "Reverse sort order"
+msgstr "Inverter a orde"
+
+#. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <optionset> <optioncolumn label="...">
+#: rkward/plugins/data/sort.xml:92
+#, kde-format
+msgid "Object"
+msgstr "Obxecto"
+
+#. i18n: ectx: (Sort data) <dialog label="Sort data"> <tab label="Sort order"> <optionset> <optioncolumn label="...">
+#: rkward/plugins/data/sort.xml:93
+#, kde-format
+msgid "Order"
+msgstr "Orde"
+
+#. i18n: ectx: (subset_dataframe) <title>
+#: rkward/plugins/data/subset_dataframe.rkh:5
+#, kde-format
+msgid "subset_dataframe"
+msgstr "dataframe_subgrupo"
+
+#. i18n: ectx: (subset_dataframe) <summary>
+#: rkward/plugins/data/subset_dataframe.rkh:8
+#, kde-format
+msgid "Select a subset of rows and / or columns of a data.frame"
+msgstr "Seleccionar un subgrupo de filas e columnas dun data.frame."
+
+#. i18n: ectx: (subset_dataframe) <usage>
+#: rkward/plugins/data/subset_dataframe.rkh:11
+#, kde-format
+msgid ""
+"Select the data.frame to subset. Then specify rules to filter by rows / "
+"cases, and / or columns. A data.frame containing only the specified subset "
+"is saved to your workspace."
+msgstr ""
+"Seleccione o data.frame a partir do cal xerar un subgrupo. A continuación, "
+"indique as regras para filtrar por filas, casos e columnas. No espazo de "
+"traballo gárdase un data.frame que contén só o subgrupo indicado."
+
+#. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Data (data.frame)")
+#: rkward/plugins/data/subset_dataframe.rkh:18
+#, kde-format
+msgid "Select the data.frame to subset."
+msgstr "Seleccionar o data.frame a partir do cal xerar un subgrupo."
+
+#. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Preview")
+#: rkward/plugins/data/subset_dataframe.rkh:21
+#, kde-format
+msgid ""
+"Preview the resulting subset. Note that the preview is limited to the first "
+"500 rows and 100 columns, for performance reasons."
+msgstr ""
+"Obter unha vista previa do subgrupo resultante. Teña en conta que a vista "
+"previa está limitada ás primeiras 500 filas e 100 columnas, por cuestións de "
+"rendemento."
+
+#. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Filter by variable")
+#: rkward/plugins/data/subset_dataframe.rkh:25
+#, kde-format
+msgid ""
+"Select a column of the data.frame specifying the condition to filter cases "
+"on. Leave empty, if you do not want to filter on a column."
+msgstr ""
+"Seleccione unha columna do data.frame indicando as condicións polas que "
+"fitrar os casos. Deixe o campo baleiro se non quere filtrar polo valor dunha "
+"columna."
+
+#. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Keep cases matching rule")
+#: rkward/plugins/data/subset_dataframe.rkh:28
+#, kde-format
+msgid ""
+"Select the type of condition. Note that depending on the type of the filter "
+"variable, different options are available"
+msgstr ""
+"Seleccione o tipo de condición. Teña en conta que, segundo o tipo da "
+"variábel de filtro, as opcións dispoñíbeis variarán."
+
+#. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Value (pasted as-is, use proper quoting!)")
+#: rkward/plugins/data/subset_dataframe.rkh:31
+#, kde-format
+msgid ""
+"The value to compare against (for condition types equal / not equal, and one "
+"of / not one of). Note that this will be pasted as R code, verbatim. This "
+"means, you can specify any valid R expression, including the name of another "
+"column of the data.frame. However, if you want to compare to fixed strings, "
+"you will have to make sure to quote these. E.g. 'c (\"City A\", \"City B\")'."
+msgstr ""
+"O valor co que comparar (para tipos de condición «igual» ou «distinto», e "
+"«un de» ou «ningún de»). Teña en conta que isto pegarase como código R, sen "
+"alteracións. É dicir, pode indicar calquera expresión de R que sexa "
+"correcta, incluíndo o nome doutra columna do data.frame. Porén, se quere "
+"comparar con cadeas fixas, terá que asegurarse de usar comiñas; por exemplo: "
+"'c (\"Cidade A\", \"Cidade B\")'."
+
+#. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Minimum (or empty)")
+#: rkward/plugins/data/subset_dataframe.rkh:34
+#, kde-format
+msgid ""
+"For comparing against ranges (condition types in between / not in between), "
+"minimum and / or maximum values can be specified. If either is omitted, only "
+"the other is checked (i.e. greater / smaller than). Note that this will be "
+"pasted as R code, verbatim. This means, you can specify any valid R "
+"expression, including the name of another column of the data.frame."
+msgstr ""
+"Para comparar con intervalos (tipos de condición «entre» e «non entre»), "
+"poden indicarse valores máximos e mínimos. En caso de omitir un dos dous, só "
+"se comproba o outro (é dicir, «maior que» ou «menor que»). Teña en conta que "
+"isto pegarase como código R, sen alteracións. É dicir, pode usar calquera "
+"expresión de R que sexa correcta, incluíndo o nome doutra columna do data."
+"frame."
+
+#. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Included (>=)")
+#: rkward/plugins/data/subset_dataframe.rkh:37
+#, kde-format
+msgid ""
+"Whether the minimum value is contained in the range to check against (i.e. "
+"compare 'larger or equal (>=)')."
+msgstr ""
+"Se o valor mínimo está presente no intervalo co que se comproba (é dicir, "
+"comparar «maior ou igual (≥)»)."
+
+#. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Maximum (or empty)")
+#: rkward/plugins/data/subset_dataframe.rkh:40
+#, kde-format
+msgid "See above. Maximum value."
+msgstr "Ver enriba. Valor máximo."
+
+#. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Included (<=)")
+#: rkward/plugins/data/subset_dataframe.rkh:43
+#, kde-format
+msgid ""
+"Whether the maximum value is contained in the range to check against (i.e. "
+"compare 'smaller or equal (<=)')."
+msgstr ""
+"Se o valor máximo está presente no intervalo co que se comproba (é dicir, "
+"comparar «menor ou igual (≤)»)."
+
+#. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Expression (or empty)")
+#: rkward/plugins/data/subset_dataframe.rkh:47
+#, kde-format
+msgid ""
+"You can also filter rows / cases by a custom R expression. If using this in "
+"combination with filtering by a column (see above), both conditions are "
+"combined by logical 'and' (&). Leave empty, if you do not want to filter on "
+"a custom expression."
+msgstr ""
+"Tamén pode filtrar filas ou casos usando una expresión de R personalizada. "
+"Se usa isto e ademais filtra por columna (vexa enriba), as dúas condicións "
+"combínanse cun «e» lóxico (&). Deixe o campo baleiro se non quere usar unha "
+"expresión personalizada para filtrar."
+
+#. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Only use a subset of variables")
+#: rkward/plugins/data/subset_dataframe.rkh:51
+#, kde-format
+msgid ""
+"Check this, if you want to remove some columns from the resulting data."
+"frame. Otherwise, all columns will be included."
+msgstr ""
+"Marque esta opción se quere retirar do data.frame resultante algunhas das "
+"columnas. Se non marca esta opción, incluiranse todas as columnas."
+
+#. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Selected variables")
+#: rkward/plugins/data/subset_dataframe.rkh:54
+#, kde-format
+msgid "Variables to include in the resulting data.frame"
+msgstr "Variábeis para incluír no data.frame resultante."
+
+#. i18n: ectx: (subset_dataframe) <related>
+#: rkward/plugins/data/subset_dataframe.rkh:58
+#, kde-format
+msgid "<link href=\"rkward://rhelp/subset\"/>"
+msgstr "<link href=\"rkward://rhelp/subset\"/>"
+
+#. i18n: ectx: (Subset of data) <dialog label="...">
+#: rkward/plugins/data/subset_dataframe.xml:68
+#, kde-format
+msgid "Subset of data"
+msgstr "Subgrupo de datos"
+
+#. i18n: ectx: (Subset of data) <dialog label="Subset of data"> <varselector label="...">
+#: rkward/plugins/data/subset_dataframe.xml:70
+#, kde-format
+msgid "Select data"
+msgstr "Seleccionar datos"
+
+#. i18n: ectx: (Subset of data) <dialog label="Subset of data"> <varslot label="...">
+#: rkward/plugins/data/subset_dataframe.xml:72
+#, kde-format
+msgid "Data (data.frame)"
+msgstr "Datos (data.frame)"
+
+#. i18n: ectx: (Subset of data) <dialog label="Subset of data"> <tab label="...">
+#: rkward/plugins/data/subset_dataframe.xml:74
+#, kde-format
+msgid "Filter cases"
+msgstr "Filtrar os casos"
+
+#. i18n: ectx: (Subset of data) <dialog label="Subset of data"> <tab label="Filter cases"> <frame label="...">
+#: rkward/plugins/data/subset_dataframe.xml:76
+#, kde-format
+msgid "Filter rows by variable"
+msgstr "Filtrar as filas en base a unha variábel"
+
+#. i18n: ectx: (Subset of data) <dialog label="Subset of data"> <tab label="Filter cases"> <frame label="Filter rows by variable"> <varslot label="...">
+#: rkward/plugins/data/subset_dataframe.xml:77
+#, kde-format
+msgid "Filter by variable"
+msgstr "Filtrar por variábel"
+
+#. i18n: ectx: (Subset of data) <dialog label="Subset of data"> <tab label="Filter cases"> <frame label="Filter rows by variable"> <dropdown label="...">
+#: rkward/plugins/data/subset_dataframe.xml:78
+#: rkward/plugins/data/subset_dataframe.xml:86
+#: rkward/plugins/data/subset_dataframe.xml:91
+#: rkward/plugins/data/subset_dataframe.xml:95
+#, kde-format
+msgid "Keep cases matching rule"
+msgstr "Manter os casos que cumprar a regra"
+
+#. i18n: ectx: (Subset of data) <dialog label="Subset of data"> [...] <dropdown label="Keep cases matching rule"> <option label="...">
+#: rkward/plugins/data/subset_dataframe.xml:79
+#: rkward/plugins/data/subset_dataframe.xml:87
+#, no-c-format, kde-format
+msgid "is one of (%in%)"
+msgstr "é un de (%in%)"
+
+#. i18n: ectx: (Subset of data) <dialog label="Subset of data"> [...] <dropdown label="Keep cases matching rule"> <option label="...">
+#: rkward/plugins/data/subset_dataframe.xml:80
+#: rkward/plugins/data/subset_dataframe.xml:88
+#, no-c-format, kde-format
+msgid "is not one of (!%in%)"
+msgstr "non é un de (!%in%)"
+
+#. i18n: ectx: (Subset of data) <dialog label="Subset of data"> [...] <dropdown label="Keep cases matching rule"> <option label="...">
+#: rkward/plugins/data/subset_dataframe.xml:81
+#: rkward/plugins/data/subset_dataframe.xml:89
+#: rkward/plugins/data/subset_dataframe.xml:96
+#, kde-format
+msgid "is equal (==)"
+msgstr "é igual (==)"
+
+#. i18n: ectx: (Subset of data) <dialog label="Subset of data"> [...] <dropdown label="Keep cases matching rule"> <option label="...">
+#: rkward/plugins/data/subset_dataframe.xml:82
+#: rkward/plugins/data/subset_dataframe.xml:97
+#, kde-format
+msgid "is not equal (!=)"
+msgstr "non é igual (!=)"
+
+#. i18n: ectx: (Subset of data) <dialog label="Subset of data"> [...] <dropdown label="Keep cases matching rule"> <option label="...">
+#: rkward/plugins/data/subset_dataframe.xml:83
+#: rkward/plugins/data/subset_dataframe.xml:98
+#, kde-format
+msgid "is in between"
+msgstr "está entre"
+
+#. i18n: ectx: (Subset of data) <dialog label="Subset of data"> [...] <dropdown label="Keep cases matching rule"> <option label="...">
+#: rkward/plugins/data/subset_dataframe.xml:84
+#: rkward/plugins/data/subset_dataframe.xml:99
+#, kde-format
+msgid "is not between"
+msgstr "non está entre"
+
+#. i18n: ectx: (Subset of data) <dialog label="Subset of data"> [...] <dropdown label="Keep cases matching rule"> <option label="...">
+#: rkward/plugins/data/subset_dataframe.xml:92
+#, kde-format
+msgid "is TRUE"
+msgstr "é VERDADEIRO"
+
+#. i18n: ectx: (Subset of data) <dialog label="Subset of data"> [...] <dropdown label="Keep cases matching rule"> <option label="...">
+#: rkward/plugins/data/subset_dataframe.xml:93
+#, kde-format
+msgid "is FALSE"
+msgstr "é FALSO"
+
+#. i18n: ectx: (Subset of data) <dialog label="Subset of data"> <tab label="Filter cases"> <frame label="Filter rows by variable"> <input label="...">
+#: rkward/plugins/data/subset_dataframe.xml:101
+#, kde-format
+msgid "Value (pasted as-is, use proper quoting!)"
+msgstr "Valor (pegado tal cal, use comiñas se as necesita!)"
+
+#. i18n: ectx: (Subset of data) <dialog label="Subset of data"> <tab label="Filter cases"> <frame label="Filter rows by variable"> <input label="...">
+#: rkward/plugins/data/subset_dataframe.xml:104
+#, kde-format
+msgid "Minimum (or empty)"
+msgstr "Mínimo (ou baleiro)"
+
+#. i18n: ectx: (Subset of data) <dialog label="Subset of data"> <tab label="Filter cases"> <frame label="Filter rows by variable"> <checkbox label="...">
+#: rkward/plugins/data/subset_dataframe.xml:105
+#, kde-format
+msgid "Included (>=)"
+msgstr "Incluído (>=)"
+
+#. i18n: ectx: (Subset of data) <dialog label="Subset of data"> <tab label="Filter cases"> <frame label="Filter rows by variable"> <input label="...">
+#: rkward/plugins/data/subset_dataframe.xml:108
+#, kde-format
+msgid "Maximum (or empty)"
+msgstr "Máximo (ou baleiro)"
+
+#. i18n: ectx: (Subset of data) <dialog label="Subset of data"> <tab label="Filter cases"> <frame label="Filter rows by variable"> <checkbox label="...">
+#: rkward/plugins/data/subset_dataframe.xml:109
+#, kde-format
+msgid "Included (<=)"
+msgstr "Incluído (<=)"
+
+#. i18n: ectx: (Subset of data) <dialog label="Subset of data"> <tab label="Filter cases"> <frame label="...">
+#: rkward/plugins/data/subset_dataframe.xml:113
+#, kde-format
+msgid "Filter rows by expression"
+msgstr "Filtrar as filas en base a unha expresión"
+
+#. i18n: ectx: (Subset of data) <dialog label="Subset of data"> <tab label="Filter cases"> <frame label="Filter rows by expression"> <input label="...">
+#: rkward/plugins/data/subset_dataframe.xml:114
+#, kde-format
+msgid "Expression (or empty)"
+msgstr "Expresión (ou baleiro)"
+
+#. i18n: ectx: (Subset of data) <dialog label="Subset of data"> <tab label="...">
+#: rkward/plugins/data/subset_dataframe.xml:119
+#, kde-format
+msgid "Filter columns"
+msgstr "Filtrar as columnas"
+
+#. i18n: ectx: (Subset of data) <dialog label="Subset of data"> <tab label="Filter columns"> <frame label="...">
+#: rkward/plugins/data/subset_dataframe.xml:121
+#, kde-format
+msgid "Only use a subset of variables"
+msgstr "Usar só un subgrupo de variábeis"
+
+#. i18n: ectx: (Subset of data) <dialog label="Subset of data"> <tab label="Filter columns"> <frame label="Only use a subset of variables"> <varslot label="...">
+#: rkward/plugins/data/subset_dataframe.xml:122
+#, kde-format
+msgid "Selected variables"
+msgstr "Variábeis seleccionadas"
+
+#. i18n: ectx: (Subset of data) <dialog label="Subset of data"> <saveobject label="...">
+#: rkward/plugins/data/subset_dataframe.xml:128
+#, kde-format
+msgid "Save results to workspace"
+msgstr "Gardar os resultados no espazo de traballo"
+
+#. i18n: ectx: <snippets> <snippet> <author name="...">
+#: rkward/plugins/pluginmap_meta.inc:4
+#, kde-format
+msgctxt "Author name"
+msgid "RKWard Team"
+msgstr "Equipo de RKWard"

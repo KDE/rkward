@@ -1,0 +1,311 @@
+<?xml version="1.0" ?>
+<!DOCTYPE refentry PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+<!ENTITY % Italian "INCLUDE">
+<!ENTITY rkward '<application
+>RKWard</application
+>'>
+<!ENTITY R '<application
+>R</application
+>'>
+]>
+
+<refentry lang="&language;">
+<refentryinfo>
+<title
+>Manuale utente di KDE</title>
+<author
+><firstname
+>Thomas</firstname
+> <surname
+>Friedrichsmeier</surname
+> <contrib
+>Pagina di manuale di RKWard.</contrib>
+<affiliation>
+<address
+><email
+>rkward-devel@kde.org</email
+></address>
+</affiliation>
+</author>
+<date
+>20/5/2017</date>
+<productname
+>K Desktop Environment</productname>
+</refentryinfo>
+
+<refmeta>
+<refentrytitle
+><command
+>rkward</command
+></refentrytitle>
+<manvolnum
+>1</manvolnum>
+</refmeta>
+
+<refnamediv>
+<refname
+><command
+>rkward</command
+></refname>
+<refpurpose
+>Un'interfaccia di &kde; a R</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv>
+<cmdsynopsis
+><command
+>rkward</command
+> <group choice="opt"
+><option
+>--evaluate</option
+> <replaceable
+> Rcode</replaceable
+></group
+> <group choice="opt"
+><option
+>--debug-level</option
+> <replaceable
+> livello</replaceable
+></group
+> <group choice="opt"
+><option
+>--debug-flags</option
+> <replaceable
+> flag</replaceable
+></group
+> <group choice="opt"
+><option
+>--debug-output</option
+> <replaceable
+> dove</replaceable
+></group
+> <group choice="opt"
+><option
+>--backend-debugger</option
+> <replaceable
+> comando_debugger</replaceable
+></group
+> <group choice="opt"
+><option
+>--r-executable</option
+> <replaceable
+> percorso_a_eseguibile</replaceable
+></group
+> <group choice="opt"
+><option
+>--reuse</option
+></group
+> <group choice="opt"
+><option
+>--autoreuse</option
+></group
+> <group choice="opt"
+><option
+>--nowarn-external</option
+></group
+> <arg choice="opt"
+>Opzioni generiche di KDE</arg
+> <arg choice="opt"
+>Opzioni generiche di Qt</arg
+> <arg choice="opt"
+><replaceable
+>file_da_aprire</replaceable
+></arg
+> </cmdsynopsis>
+</refsynopsisdiv>
+
+<refsect1>
+<title
+>Descrizione</title>
+<para
+>&rkward; è una &GUI; basata su &kde; e un <acronym
+>IDE</acronym
+> per il linguaggio di script &R; per il calcolo statistico.</para>
+<para
+>Per ulteriori informazioni, fare riferimento alla documentazione di <ulink url="https://rkward.kde.org/"
+>the &rkward; website</ulink
+>, e alla documentazione fornita all'interno di &rkward;.</para>
+</refsect1>
+
+<refsect1>
+<title
+>Opzioni</title>
+
+<variablelist>
+<varlistentry>
+<term
+><option
+>--evaluate</option
+> <replaceable
+>Rcode</replaceable
+></term>
+<listitem
+><para
+>Il codice &R; specificato è valutato dopo l'avvio di &rkward;, e successivamente al caricamento di qualsiasi area di lavoro. Utile principalmente per i test automatizzati.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--debug-level</option
+> <replaceable
+>livello</replaceable
+></term>
+<listitem
+><para
+>Verbosità del risultato del debug. 0-5, dove 0 significa nessun risultato, 5 è tutto il risultato incluse le informazioni di traccia delle funzioni. L'impostazione predefinita è 2.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--debug-output</option
+> <replaceable
+>dove</replaceable
+></term>
+<listitem
+><para
+>Dove inviare il risultato del debug. L'impostazione predefinita è archiviarlo in un file nella cartella temporanea. Specificando «terminal» si scriverà invece il risultato del debug su stderr (utile per il debug di problemi di avvio). Si noti che il risultato del debug dal processo di backend è sempre archiviato in un file.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--debug-flags</option
+> <replaceable
+>flag</replaceable
+></term>
+<listitem
+><para
+>Configurare su quali sezioni di codice eseguire il debug. I flag sono indicati come un numero binario. Fare riferimento ai file sorgenti per la documentazione, poiché questa è un'opzione interna.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--backend-debugger</option
+> <replaceable
+>comando</replaceable
+></term>
+<listitem
+><para
+>Eseguire il motore di &rkward; tramite il comando del debugger specificato. Per aggiungere le opzioni della riga di comando al comando del debugger, racchiuderle tra singoli apici ('') insieme al comando. <emphasis
+>NOTA:</emphasis
+> Gli argomenti del debugger saranno divisi per spazi. Se ciò non è appropriato, si dovrà scrivere il proprio script per invocare il debugger. Inoltre, assicurarsi di reindirizzare tutto il risultato e/o l'ingresso del debugger in modo appropriato. Vedere gli esempi.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--r-executable</option
+> <replaceable
+>comando</replaceable
+></term>
+<listitem
+><para
+>Nel caso di più installazioni di R, specificare l'installazione da utilizzare, &eg; <filename
+>/usr/bin/R</filename
+>. È possibile anche utilizzare la stringa <replaceable
+>"auto"</replaceable
+>, nel qual caso RKWard proverà a trovare R in uno dei percorsi di installazione standard noti. <emphasis
+>NOTA</emphasis
+> che sebbene RKWard funzionerà <emphasis
+>spesso</emphasis
+> con le versioni più recenti di R, <emphasis
+>a volte</emphasis
+> dovrà essere ricompilato per quella versione, oppure potrebbe essere essere del tutto incompatibile.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--reuse</option
+></term>
+<listitem
+><para
+>Se un'istanza di &rkward; è già in esecuzione, portarla in primo piano e aprire <replaceable
+>file_da_aprire</replaceable
+>. Si noti che tutte le altre opzioni della riga di comando saranno ignorate nel caso in cui un'istanza venga riutilizzata.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--autoreuse</option
+></term>
+<listitem
+><para
+>Si comporta come <option
+>--reuse</option
+>, se vengono dati anche argomenti del file, altrimenti inizia una nuova istanza. Destinato all'uso nel file .desktop.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--nowarn-external</option
+></term>
+<listitem
+><para
+>Di solito, quando si invocano le estensioni di &rkward; dalla riga di comando (&ie; quando <replaceable
+>file_da_aprire</replaceable
+> contiene &URL; della modulo <replaceable
+>rkward://runplugin/...</replaceable
+>), &rkward; mostrerà un avviso che tale &URL; <emphasis
+>potrebbe</emphasis
+> essere usato per innescare azioni dannose sul tuo sistema. Questo avviso si applica specificamente ai collegamenti presenti su siti web non attendibili o altre fonti esterne non attendibili. Se si desidera creare script di &rkward; localmente, è possibile evitare questo avviso aggiungendo --nowarn-external alla riga di comando.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><replaceable
+>file_da_aprire</replaceable
+></term>
+<listitem
+><para
+>È possibile specificare un numero qualsiasi di nomi di file o &URL; da aprire con &rkward;. Di solito si tratta di file dell'area di lavoro, file di lavoro, file di script R o &URL; rkward:// (&eg; per iniziare con la finestra di un'estensione). Se si specifica più di un file dell'area di lavoro, le aree di lavoro saranno unite insieme, e non è consigliabile.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</refsect1>
+
+<refsect1>
+<title
+>Vedere anche</title>
+<para
+><citerefentry
+><refentrytitle
+>R</refentrytitle>
+<manvolnum
+>1</manvolnum
+></citerefentry
+></para>
+</refsect1>
+
+<refsect1>
+<title
+>Esempi</title>
+<para
+><programlisting
+># Avvio con la finestra del test t
+rkward --nowarn-external rkward://runplugin/rkward::t_test/
+# Apertura di due file di script in un'istanza in esecuzione di RKWard (o in una nuova istanza, se RKWard non è in esecuzione)
+rkward --reuse file_a.R file_b.R
+
+# Esecuzione del motore di rkward attraverso valgrind
+rkward --backend-debugger 'valgrind --log-file=valgrind.log'
+</programlisting
+></para>
+</refsect1>
+
+<refsect1>
+<title
+>Autori</title>
+<para
+>&rkward; è stato scritto da Thomas Friedrichsmeier e dalla squadra di &rkward;. Vedere <ulink url="https://rkward.kde.org/"
+>il sito web di &rkward;</ulink
+>.</para>
+</refsect1>
+
+</refentry>

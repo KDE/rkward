@@ -1,0 +1,3056 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the rkward package.
+#
+# Alexander Potashev <aspotashev@gmail.com>, 2018.
+msgid ""
+msgstr ""
+"Project-Id-Version: rkward\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-07-29 00:42+0000\n"
+"PO-Revision-Date: 2018-10-10 15:42+0300\n"
+"Last-Translator: Alexander Potashev <aspotashev@gmail.com>\n"
+"Language-Team: Russian <kde-russian@lists.kde.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Lokalize 2.0\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr ""
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model)
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.js:54
+#, kde-format
+msgid "2PL parameter estimation"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rating scale model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Partial credit model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear rating scale model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear partial credit model)
+#. i18n: ectx: (Loaded from Unidimensionality check (Rasch, LTM, 3PM))
+#. i18n: ectx: (Loaded from Item-fit statistics for Rasch, LTM and 3PM)
+#. i18n: ectx: (Loaded from Person-fit statistics for Rasch, LTM and 3PM)
+#. i18n: ectx: (Loaded from Wald test)
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.js:56
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.js:62
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.js:37
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.js:52
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.js:71
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.js:56
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.js:37
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.js:37
+#: rkward/plugins/analysis/irt/polytomous/par_est_pcm.js:32
+#: rkward/plugins/analysis/irt/polytomous/par_est_rsm.js:32
+#: rkward/plugins/analysis/irt/tests/eRm_waldtest.js:25
+#: rkward/plugins/analysis/irt/tests/ltm_item_fit.js:38
+#: rkward/plugins/analysis/irt/tests/ltm_person_fit.js:37
+#: rkward/plugins/analysis/irt/tests/ltm_unidimensional.js:23
+#, kde-format
+msgid "Call:"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rating scale model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Partial credit model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear rating scale model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear partial credit model)
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.js:58
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.js:64
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.js:39
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.js:54
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.js:73
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.js:58
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.js:39
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.js:39
+#: rkward/plugins/analysis/irt/polytomous/par_est_pcm.js:34
+#: rkward/plugins/analysis/irt/polytomous/par_est_rsm.js:34
+#, kde-format
+msgid "Coefficients:"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model)
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.js:60
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.js:66
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.js:56
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.js:75
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.js:60
+#, kde-format
+msgid "Log-likelihood value at convergence:"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rating scale model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Partial credit model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear rating scale model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear partial credit model)
+#. i18n: ectx: (Loaded from Unidimensionality check (Rasch, LTM, 3PM))
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.js:63
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.js:69
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.js:45
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.js:59
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.js:78
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.js:63
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.js:45
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.js:45
+#: rkward/plugins/analysis/irt/polytomous/par_est_pcm.js:40
+#: rkward/plugins/analysis/irt/polytomous/par_est_rsm.js:40
+#: rkward/plugins/analysis/irt/tests/ltm_unidimensional.js:35
+#, kde-format
+msgctxt "R code comment"
+msgid "keep results in current workspace"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <summary>
+#. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <summary>
+#. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <summary>
+#. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <summary>
+#. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <summary>
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.rkh:3
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:3
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.rkh:3
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.rkh:3
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:3
+#, kde-format
+msgid ""
+"This plugin estimates parameters under Item Response Theory approach, using "
+"the <link href=\"rkward://rhelp/ltm-package\">ltm</link> package."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <usage>
+#. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <usage>
+#. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <usage>
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model) <usage>
+#. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <usage>
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rating scale model) <usage>
+#. i18n: ectx: (Loaded from IRT parameter estimation: Partial credit model) <usage>
+#. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <usage>
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear rating scale model) <usage>
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear partial credit model) <usage>
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.rkh:7
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:7
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.rkh:7
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.rkh:7
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.rkh:7
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:7
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.rkh:7
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.rkh:7
+#: rkward/plugins/analysis/irt/polytomous/par_est_pcm.rkh:7
+#: rkward/plugins/analysis/irt/polytomous/par_est_rsm.rkh:7
+#, kde-format
+msgid ""
+"The complete results can be stored as a new object in the current workspace "
+"for further use (e.g. plotting item characteristic curves)."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <usage>
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.rkh:7
+#, kde-format
+msgid ""
+"To fit the two parameter logistic model with default settings, just the "
+"matrix of manifest variables (dichotomous item responses) must be selected. "
+"Further options are described in the sections below."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <settings> <setting title="..."> (refers to element labelled "Matrix of manifest variables:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <settings> <setting title="..."> (refers to element labelled "Matrix of manifest variables:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <settings> <setting title="..."> (refers to element labelled "Matrix of manifest variables:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model) <settings> <setting title="..."> (refers to element labelled "Matrix of manifest variables:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <settings> <setting title="..."> (refers to element labelled "Matrix of manifest variables:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rating scale model) <settings> <setting title="..."> (refers to element labelled "Matrix of manifest variables:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Partial credit model) <settings> <setting title="..."> (refers to element labelled "Matrix of manifest variables:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <settings> <setting title="..."> (refers to element labelled "Matrix of manifest variables:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear rating scale model) <settings> <setting title="..."> (refers to element labelled "Matrix of manifest variables:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear partial credit model) <settings> <setting title="..."> (refers to element labelled "Matrix of manifest variables:")
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.rkh:15
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:15
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.rkh:15
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.rkh:15
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.rkh:15
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:15
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.rkh:15
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.rkh:15
+#: rkward/plugins/analysis/irt/polytomous/par_est_pcm.rkh:15
+#: rkward/plugins/analysis/irt/polytomous/par_est_rsm.rkh:15
+#, kde-format
+msgid "Matrix of manifest variables"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <settings> <setting title="Matrix of manifest variables"> (refers to element labelled "Matrix of manifest variables:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <settings> <setting title="Matrix of manifest variables"> (refers to element labelled "Matrix of manifest variables:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <settings> <setting title="Matrix of manifest variables"> (refers to element labelled "Matrix of manifest variables:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model) <settings> <setting title="Matrix of manifest variables"> (refers to element labelled "Matrix of manifest variables:")
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.rkh:15
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:15
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.rkh:15
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.rkh:15
+#, kde-format
+msgid ""
+"Select the matrix of dichotomous item responses from the objects shown on "
+"the left."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <settings> <setting> (refers to element labelled "Should parameters be fixed (constraints)?")
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.rkh:20
+#, kde-format
+msgid ""
+"If you want to fix parameters, you have to prepare a matrix of fixed-value "
+"constraints first and then select it here. For detailed information on the "
+"specific layout of that matrix please refer to the manual for the <link href="
+"\"rkward://rhelp/ltm\">ltm()</link> function."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <settings> <setting> (refers to element labelled "Start values")
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.rkh:23
+#, kde-format
+msgid ""
+"By default start values for the parameters are computed automatically. "
+"Alternatively, you can force the use of random start values, or give a "
+"matrix of values to be used. For detailed information on the specific layout "
+"of that matrix please refer to the manual for the <link href=\"rkward://"
+"rhelp/ltm\">ltm()</link> function."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <settings> <setting> (refers to element labelled "Use only complete cases")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <settings> <setting> (refers to element labelled "Use only complete cases")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <settings> <setting> (refers to element labelled "Use only complete cases")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <settings> <setting> (refers to element labelled "Use only complete cases")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <settings> <setting> (refers to element labelled "Use only complete cases")
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.rkh:26
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:32
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.rkh:26
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.rkh:29
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:29
+#, kde-format
+msgid ""
+"Specifies how missing values are to be treated. By default all available "
+"cases are used. If checked, only complete cases will be considered."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <settings> <setting> (refers to element labelled "Usual IRT parameterization")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <settings> <setting> (refers to element labelled "Usual IRT parameterization")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <settings> <setting> (refers to element labelled "Usual IRT parameterization")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <settings> <setting> (refers to element labelled "Usual IRT parameterization")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <settings> <setting> (refers to element labelled "Usual IRT parameterization")
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.rkh:29
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:35
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.rkh:29
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.rkh:32
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:32
+#, kde-format
+msgid ""
+"If checked, the coefficients' estimates are reported under the usual Item "
+"Response Theory parameterization (which is the default)."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <settings> <setting title="..."> (refers to element labelled "Number of EM iterations:")
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.rkh:34
+#, kde-format
+msgid "Number of EM iterations"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <settings> <setting title="Number of EM iterations"> (refers to element labelled "Number of EM iterations:")
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.rkh:34
+#, kde-format
+msgid "Defaults to 40."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <settings> <setting title="..."> (refers to element labelled "Number of quasi-Newton iterations:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <settings> <setting title="..."> (refers to element labelled "Number of quasi-Newton iterations:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <settings> <setting title="..."> (refers to element labelled "Number of quasi-Newton iterations:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <settings> <setting title="..."> (refers to element labelled "Number of quasi-Newton iterations:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <settings> <setting title="..."> (refers to element labelled "Number of quasi-Newton iterations:")
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.rkh:37
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:40
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.rkh:34
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.rkh:37
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:37
+#, kde-format
+msgid "Number of quasi-Newton iterations"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <settings> <setting title="Number of quasi-Newton iterations"> (refers to element labelled "Number of quasi-Newton iterations:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <settings> <setting title="Number of quasi-Newton iterations"> (refers to element labelled "Number of quasi-Newton iterations:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <settings> <setting title="Number of quasi-Newton iterations"> (refers to element labelled "Number of quasi-Newton iterations:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <settings> <setting title="Number of quasi-Newton iterations"> (refers to element labelled "Number of quasi-Newton iterations:")
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.rkh:37
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.rkh:34
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.rkh:37
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:37
+#, kde-format
+msgid "Defaults to 150."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <settings> <setting title="..."> (refers to element labelled "Number of Gauss-Hermite quadrature points:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <settings> <setting title="..."> (refers to element labelled "Number of Gauss-Hermite quadrature points:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <settings> <setting title="..."> (refers to element labelled "Number of Gauss-Hermite quadrature points:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <settings> <setting title="..."> (refers to element labelled "Number of Gauss-Hermite quadrature points:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <settings> <setting title="..."> (refers to element labelled "Number of Gauss-Hermite quadrature points:")
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.rkh:40
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:43
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.rkh:37
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.rkh:40
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:40
+#, kde-format
+msgid "Number of Gauss-Hermite quadrature points"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <settings> <setting title="Number of Gauss-Hermite quadrature points"> (refers to element labelled "Number of Gauss-Hermite quadrature points:")
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.rkh:40
+#, kde-format
+msgid "Defaults to 15."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <settings> <setting title="..."> (refers to element labelled "Optimization method:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <settings> <setting title="..."> (refers to element labelled "Optimization method:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <settings> <setting title="..."> (refers to element labelled "Optimization method:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <settings> <setting title="..."> (refers to element labelled "Optimization method:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <settings> <setting title="..."> (refers to element labelled "Optimization method:")
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.rkh:43
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:49
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.rkh:40
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.rkh:46
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:43
+#, kde-format
+msgid "Optimization method"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <settings> <setting title="Optimization method"> (refers to element labelled "Optimization method:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <settings> <setting title="Optimization method"> (refers to element labelled "Optimization method:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <settings> <setting title="Optimization method"> (refers to element labelled "Optimization method:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <settings> <setting title="Optimization method"> (refers to element labelled "Optimization method:")
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.rkh:43
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.rkh:40
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.rkh:46
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:43
+#, kde-format
+msgid ""
+"The default optimization method is BFGS. It can be set to Nelder-Mead, CG, L-"
+"BFGS-B, or SANN instead. Please refer to the <link href=\"rkward://rhelp/"
+"optim\">optim()</link> manual for details."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <settings> <setting> (refers to element labelled "Print verbose info about optimization")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <settings> <setting> (refers to element labelled "Print verbose info about optimization")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <settings> <setting> (refers to element labelled "Print verbose info about optimization")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <settings> <setting> (refers to element labelled "Print verbose info about optimization")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <settings> <setting> (refers to element labelled "Print verbose info about optimization")
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.rkh:46
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:55
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.rkh:43
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.rkh:55
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:49
+#, kde-format
+msgid "Pretty much speaks for itself ;-)"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <related>
+#. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <related>
+#. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <related>
+#. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <related>
+#. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <related>
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.rkh:51
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:60
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.rkh:48
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.rkh:60
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:54
+#, kde-format
+msgid ""
+"Please refer to the <code>ltm</code> manuals for further information and "
+"detailed command line options:"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <technical>
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.rkh:59
+#, kde-format
+msgid ""
+"The two factor solution of the <code>ltm()</code> function is not yet fully "
+"implemented (quadratic term is missing)."
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Two parameter logistic model) <dialog label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.xml:13
+#, kde-format
+msgid "IRT parameter estimation: Two parameter logistic model"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Rasch model) <dialog label="IRT parameter estimation: Rasch model"> <tab label="...">
+#. i18n: ectx: (IRT parameter estimation: Two parameter logistic model) <dialog label="IRT parameter estimation: Two parameter logistic model"> <tab label="...">
+#. i18n: ectx: (IRT parameter estimation: Birnbaum three parameter model) <dialog label="IRT parameter estimation: Birnbaum three parameter model"> <tab label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear logistic test model) <dialog label="IRT parameter estimation: Linear logistic test model"> <tab label="...">
+#. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="IRT parameter estimation: Graded response model"> <tab label="...">
+#. i18n: ectx: (IRT parameter estimation: Rating scale model) <dialog label="IRT parameter estimation: Rating scale model"> <tab label="...">
+#. i18n: ectx: (IRT parameter estimation: Partial credit model) <dialog label="IRT parameter estimation: Partial credit model"> <tab label="...">
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear rating scale model) <dialog label="IRT parameter estimation: Linear rating scale model"> <tab label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear partial credit model) <dialog label="IRT parameter estimation: Linear partial credit model"> <tab label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.xml:15
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.xml:17
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.xml:21
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.xml:15
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:19
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:15
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.xml:21
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.xml:24
+#: rkward/plugins/analysis/irt/polytomous/par_est_pcm.xml:21
+#: rkward/plugins/analysis/irt/polytomous/par_est_rsm.xml:21
+#, kde-format
+msgid "Manifest variables"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Rasch model) <dialog label="IRT parameter estimation: Rasch model"> <tab label="Manifest variables"> <varslot label="...">
+#. i18n: ectx: (IRT parameter estimation: Two parameter logistic model) <dialog label="IRT parameter estimation: Two parameter logistic model"> <tab label="Manifest variables"> <varslot label="...">
+#. i18n: ectx: (IRT parameter estimation: Birnbaum three parameter model) <dialog label="IRT parameter estimation: Birnbaum three parameter model"> <tab label="Manifest variables"> <varslot label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear logistic test model) <dialog label="IRT parameter estimation: Linear logistic test model"> <tab label="Manifest variables"> <varslot label="...">
+#. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="IRT parameter estimation: Graded response model"> <tab label="Manifest variables"> <varslot label="...">
+#. i18n: ectx: (IRT parameter estimation: Rating scale model) <dialog label="IRT parameter estimation: Rating scale model"> <tab label="Manifest variables"> <varslot label="...">
+#. i18n: ectx: (IRT parameter estimation: Partial credit model) <dialog label="IRT parameter estimation: Partial credit model"> <tab label="Manifest variables"> <varslot label="...">
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Manifest variables"> <varslot label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear rating scale model) <dialog label="IRT parameter estimation: Linear rating scale model"> <tab label="Manifest variables"> <varslot label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear partial credit model) <dialog label="IRT parameter estimation: Linear partial credit model"> <tab label="Manifest variables"> <varslot label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.xml:19
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.xml:21
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.xml:25
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.xml:19
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:23
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:19
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.xml:25
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.xml:28
+#: rkward/plugins/analysis/irt/polytomous/par_est_pcm.xml:25
+#: rkward/plugins/analysis/irt/polytomous/par_est_rsm.xml:25
+#, kde-format
+msgid "Matrix of manifest variables:"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Rasch model) <dialog label="IRT parameter estimation: Rasch model"> <tab label="Manifest variables"> <saveobject label="...">
+#. i18n: ectx: (IRT parameter estimation: Two parameter logistic model) <dialog label="IRT parameter estimation: Two parameter logistic model"> <tab label="Manifest variables"> <saveobject label="...">
+#. i18n: ectx: (IRT parameter estimation: Birnbaum three parameter model) <dialog label="IRT parameter estimation: Birnbaum three parameter model"> <tab label="Manifest variables"> <saveobject label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear logistic test model) <dialog label="IRT parameter estimation: Linear logistic test model"> <tab label="Manifest variables"> <saveobject label="...">
+#. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="IRT parameter estimation: Graded response model"> <tab label="Manifest variables"> <saveobject label="...">
+#. i18n: ectx: (IRT parameter estimation: Rating scale model) <dialog label="IRT parameter estimation: Rating scale model"> <tab label="Manifest variables"> <saveobject label="...">
+#. i18n: ectx: (IRT parameter estimation: Partial credit model) <dialog label="IRT parameter estimation: Partial credit model"> <tab label="Manifest variables"> <saveobject label="...">
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Manifest variables"> <saveobject label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear rating scale model) <dialog label="IRT parameter estimation: Linear rating scale model"> <tab label="Manifest variables"> <saveobject label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear partial credit model) <dialog label="IRT parameter estimation: Linear partial credit model"> <tab label="Manifest variables"> <saveobject label="...">
+#. i18n: ectx: (Unidimensionality check (Rasch, LTM, 3PM)) <dialog label="Unidimensionality check (Rasch, LTM, 3PM)"> <tab label="Data"> <saveobject label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.xml:21
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.xml:23
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.xml:33
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.xml:21
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:29
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:21
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.xml:33
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.xml:36
+#: rkward/plugins/analysis/irt/polytomous/par_est_pcm.xml:27
+#: rkward/plugins/analysis/irt/polytomous/par_est_rsm.xml:27
+#: rkward/plugins/analysis/irt/tests/ltm_unidimensional.xml:23
+#, kde-format
+msgid "Save results in workspace"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Rasch model) <dialog label="IRT parameter estimation: Rasch model"> <tab label="...">
+#. i18n: ectx: (IRT parameter estimation: Two parameter logistic model) <dialog label="IRT parameter estimation: Two parameter logistic model"> <tab label="...">
+#. i18n: ectx: (IRT parameter estimation: Birnbaum three parameter model) <dialog label="IRT parameter estimation: Birnbaum three parameter model"> <tab label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear logistic test model) <dialog label="IRT parameter estimation: Linear logistic test model"> <tab label="...">
+#. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="IRT parameter estimation: Graded response model"> <tab label="...">
+#. i18n: ectx: (IRT parameter estimation: Rating scale model) <dialog label="IRT parameter estimation: Rating scale model"> <tab label="...">
+#. i18n: ectx: (IRT parameter estimation: Partial credit model) <dialog label="IRT parameter estimation: Partial credit model"> <tab label="...">
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear rating scale model) <dialog label="IRT parameter estimation: Linear rating scale model"> <tab label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear partial credit model) <dialog label="IRT parameter estimation: Linear partial credit model"> <tab label="...">
+#. i18n: ectx: (Cronbach's alpha) <dialog label="Cronbach's alpha"> <tab label="Data"> <frame label="...">
+#. i18n: ectx: (Item-fit statistics for Rasch, LTM and 3PM) <dialog label="Item-fit statistics for Rasch, LTM and 3PM"> <tab label="...">
+#. i18n: ectx: (Person-fit statistics for Rasch, LTM and 3PM) <dialog label="Person-fit statistics for Rasch, LTM and 3PM"> <tab label="...">
+#. i18n: ectx: (Wald test) <dialog label="Wald test"> <tab label="...">
+#. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="...">
+#. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="...">
+#. i18n: ectx: (Plotting fitted 3PL model) <dialog label="Plotting fitted 3PL model"> <tab label="...">
+#. i18n: ectx: (Plotting fitted graded response model) <dialog label="Plotting fitted graded response model"> <tab label="...">
+#. i18n: ectx: (Plotting fitted rating scale model) <dialog label="Plotting fitted rating scale model"> <tab label="...">
+#. i18n: ectx: (Plotting fitted partial credit model) <dialog label="Plotting fitted partial credit model"> <tab label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.xml:26
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.xml:28
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.xml:38
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.xml:26
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:34
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:26
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.xml:38
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.xml:41
+#: rkward/plugins/analysis/irt/polytomous/par_est_pcm.xml:32
+#: rkward/plugins/analysis/irt/polytomous/par_est_rsm.xml:32
+#: rkward/plugins/analysis/irt/tests/eRm_waldtest.xml:27
+#: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.xml:24
+#: rkward/plugins/analysis/irt/tests/ltm_item_fit.xml:25
+#: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:33
+#: rkward/plugins/plots/irt/dichotomous/plot_ltm.xml:45
+#: rkward/plugins/plots/irt/dichotomous/plot_rasch.xml:43
+#: rkward/plugins/plots/irt/dichotomous/plot_tpm.xml:43
+#: rkward/plugins/plots/irt/polytomous/plot_grm.xml:46
+#: rkward/plugins/plots/irt/polytomous/plot_pcm.xml:19
+#: rkward/plugins/plots/irt/polytomous/plot_rsm.xml:19
+#, kde-format
+msgid "Options"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Rasch model) <dialog label="IRT parameter estimation: Rasch model"> <tab label="Options"> <frame label="...">
+#. i18n: ectx: (IRT parameter estimation: Two parameter logistic model) <dialog label="IRT parameter estimation: Two parameter logistic model"> <tab label="Options"> <frame label="...">
+#. i18n: ectx: (IRT parameter estimation: Birnbaum three parameter model) <dialog label="IRT parameter estimation: Birnbaum three parameter model"> <tab label="Options"> <frame label="...">
+#. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="IRT parameter estimation: Graded response model"> <tab label="Options"> <frame label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.xml:30
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.xml:32
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.xml:30
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:30
+#, kde-format
+msgid "Should parameters be fixed (constraints)?"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Rasch model) <dialog label="IRT parameter estimation: Rasch model"> <tab label="Options"> <frame label="Should parameters be fixed (constraints)?"> <varslot label="...">
+#. i18n: ectx: (IRT parameter estimation: Two parameter logistic model) <dialog label="IRT parameter estimation: Two parameter logistic model"> <tab label="Options"> <frame label="Should parameters be fixed (constraints)?"> <varslot label="...">
+#. i18n: ectx: (IRT parameter estimation: Birnbaum three parameter model) <dialog label="IRT parameter estimation: Birnbaum three parameter model"> <tab label="Options"> <frame label="Should parameters be fixed (constraints)?"> <varslot label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.xml:31
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.xml:33
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.xml:31
+#, kde-format
+msgid "Constraint matrix:"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Rasch model) <dialog label="IRT parameter estimation: Rasch model"> <tab label="Options"> <radio label="...">
+#. i18n: ectx: (IRT parameter estimation: Two parameter logistic model) <dialog label="IRT parameter estimation: Two parameter logistic model"> <tab label="Options"> <radio label="...">
+#. i18n: ectx: (IRT parameter estimation: Birnbaum three parameter model) <dialog label="IRT parameter estimation: Birnbaum three parameter model"> <tab label="Options"> <radio label="...">
+#. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="IRT parameter estimation: Graded response model"> <tab label="Options"> <radio label="...">
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Options"> <radio label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.xml:34
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.xml:37
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.xml:34
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:44
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:34
+#, kde-format
+msgid "Start values"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Rasch model) <dialog label="IRT parameter estimation: Rasch model"> <tab label="Options"> <radio label="Start values"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Two parameter logistic model) <dialog label="IRT parameter estimation: Two parameter logistic model"> <tab label="Options"> <radio label="Start values"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Birnbaum three parameter model) <dialog label="IRT parameter estimation: Birnbaum three parameter model"> <tab label="Options"> <radio label="Start values"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear logistic test model) <dialog label="IRT parameter estimation: Linear logistic test model"> <tab label="Options"> <radio label="Design matrix"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="IRT parameter estimation: Graded response model"> <tab label="Options"> <radio label="Start values"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Rating scale model) <dialog label="IRT parameter estimation: Rating scale model"> <tab label="Options"> <radio label="Design matrix"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Partial credit model) <dialog label="IRT parameter estimation: Partial credit model"> <tab label="Options"> <radio label="Design matrix"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Options"> <radio label="Start values"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear rating scale model) <dialog label="IRT parameter estimation: Linear rating scale model"> <tab label="Options"> <radio label="Design matrix"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear partial credit model) <dialog label="IRT parameter estimation: Linear partial credit model"> <tab label="Options"> <radio label="Design matrix"> <option label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.xml:35
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.xml:38
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.xml:43
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.xml:35
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:45
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:35
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.xml:43
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.xml:46
+#: rkward/plugins/analysis/irt/polytomous/par_est_pcm.xml:37
+#: rkward/plugins/analysis/irt/polytomous/par_est_rsm.xml:37
+#, kde-format
+msgid "Compute automatically"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Rasch model) <dialog label="IRT parameter estimation: Rasch model"> <tab label="Options"> <radio label="Start values"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Two parameter logistic model) <dialog label="IRT parameter estimation: Two parameter logistic model"> <tab label="Options"> <radio label="Start values"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Birnbaum three parameter model) <dialog label="IRT parameter estimation: Birnbaum three parameter model"> <tab label="Options"> <radio label="Start values"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="IRT parameter estimation: Graded response model"> <tab label="Options"> <radio label="Start values"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Options"> <radio label="Start values"> <option label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.xml:36
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.xml:39
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.xml:36
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:46
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:36
+#, kde-format
+msgid "Use random start values"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Rasch model) <dialog label="IRT parameter estimation: Rasch model"> <tab label="Options"> <radio label="Start values"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Two parameter logistic model) <dialog label="IRT parameter estimation: Two parameter logistic model"> <tab label="Options"> <radio label="Start values"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Birnbaum three parameter model) <dialog label="IRT parameter estimation: Birnbaum three parameter model"> <tab label="Options"> <radio label="Start values"> <option label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.xml:37
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.xml:40
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.xml:37
+#, kde-format
+msgid "Use own matrix of start values"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Rasch model) <dialog label="IRT parameter estimation: Rasch model"> <tab label="Options"> <varslot label="...">
+#. i18n: ectx: (IRT parameter estimation: Two parameter logistic model) <dialog label="IRT parameter estimation: Two parameter logistic model"> <tab label="Options"> <varslot label="...">
+#. i18n: ectx: (IRT parameter estimation: Birnbaum three parameter model) <dialog label="IRT parameter estimation: Birnbaum three parameter model"> <tab label="Options"> <varslot label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.xml:39
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.xml:42
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.xml:39
+#, kde-format
+msgid "Matrix of start values:"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Rasch model) <dialog label="IRT parameter estimation: Rasch model"> <tab label="Options"> <frame label="...">
+#. i18n: ectx: (IRT parameter estimation: Two parameter logistic model) <dialog label="IRT parameter estimation: Two parameter logistic model"> <tab label="Options"> <frame label="...">
+#. i18n: ectx: (IRT parameter estimation: Birnbaum three parameter model) <dialog label="IRT parameter estimation: Birnbaum three parameter model"> <tab label="Options"> <frame label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear logistic test model) <dialog label="IRT parameter estimation: Linear logistic test model"> <tab label="Options"> <frame label="...">
+#. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="IRT parameter estimation: Graded response model"> <tab label="Options"> <frame label="...">
+#. i18n: ectx: (IRT parameter estimation: Rating scale model) <dialog label="IRT parameter estimation: Rating scale model"> <tab label="Options"> <frame label="...">
+#. i18n: ectx: (IRT parameter estimation: Partial credit model) <dialog label="IRT parameter estimation: Partial credit model"> <tab label="Options"> <frame label="...">
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Options"> <frame label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear rating scale model) <dialog label="IRT parameter estimation: Linear rating scale model"> <tab label="Options"> <frame label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear partial credit model) <dialog label="IRT parameter estimation: Linear partial credit model"> <tab label="Options"> <frame label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.xml:40
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.xml:43
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.xml:53
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.xml:40
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:50
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:40
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.xml:53
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.xml:56
+#: rkward/plugins/analysis/irt/polytomous/par_est_pcm.xml:47
+#: rkward/plugins/analysis/irt/polytomous/par_est_rsm.xml:47
+#, kde-format
+msgid "Misc options"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Rasch model) <dialog label="IRT parameter estimation: Rasch model"> <tab label="Options"> <frame label="Misc options"> <checkbox label="...">
+#. i18n: ectx: (IRT parameter estimation: Two parameter logistic model) <dialog label="IRT parameter estimation: Two parameter logistic model"> <tab label="Options"> <frame label="Misc options"> <checkbox label="...">
+#. i18n: ectx: (IRT parameter estimation: Birnbaum three parameter model) <dialog label="IRT parameter estimation: Birnbaum three parameter model"> <tab label="Options"> <frame label="Misc options"> <checkbox label="...">
+#. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="IRT parameter estimation: Graded response model"> <tab label="Options"> <frame label="Misc options"> <checkbox label="...">
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Options"> <frame label="Misc options"> <checkbox label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.xml:41
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.xml:45
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.xml:41
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:51
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:42
+#, kde-format
+msgid "Use only complete cases"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Rasch model) <dialog label="IRT parameter estimation: Rasch model"> <tab label="Options"> <frame label="Misc options"> <checkbox label="...">
+#. i18n: ectx: (IRT parameter estimation: Two parameter logistic model) <dialog label="IRT parameter estimation: Two parameter logistic model"> <tab label="Options"> <frame label="Misc options"> <checkbox label="...">
+#. i18n: ectx: (IRT parameter estimation: Birnbaum three parameter model) <dialog label="IRT parameter estimation: Birnbaum three parameter model"> <tab label="Options"> <frame label="Misc options"> <checkbox label="...">
+#. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="IRT parameter estimation: Graded response model"> <tab label="Options"> <frame label="Misc options"> <checkbox label="...">
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Options"> <frame label="Misc options"> <checkbox label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.xml:42
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.xml:46
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.xml:42
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:52
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:43
+#, kde-format
+msgid "Usual IRT parameterization"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Two parameter logistic model) <dialog label="IRT parameter estimation: Two parameter logistic model"> <tab label="Options"> <frame label="Misc options"> <checkbox label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.xml:43
+#, kde-format
+msgid "Assume two-factor model with interaction term"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Rasch model) <dialog label="IRT parameter estimation: Rasch model"> <tab label="...">
+#. i18n: ectx: (IRT parameter estimation: Two parameter logistic model) <dialog label="IRT parameter estimation: Two parameter logistic model"> <tab label="...">
+#. i18n: ectx: (IRT parameter estimation: Birnbaum three parameter model) <dialog label="IRT parameter estimation: Birnbaum three parameter model"> <tab label="...">
+#. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="IRT parameter estimation: Graded response model"> <tab label="...">
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.xml:48
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.xml:51
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.xml:47
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:57
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:48
+#, kde-format
+msgid "Advanced control"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Two parameter logistic model) <dialog label="IRT parameter estimation: Two parameter logistic model"> <tab label="Advanced control"> <spinbox label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.xml:51
+#, kde-format
+msgid "Number of EM iterations:"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Rasch model) <dialog label="IRT parameter estimation: Rasch model"> <tab label="Advanced control"> <spinbox label="...">
+#. i18n: ectx: (IRT parameter estimation: Two parameter logistic model) <dialog label="IRT parameter estimation: Two parameter logistic model"> <tab label="Advanced control"> <spinbox label="...">
+#. i18n: ectx: (IRT parameter estimation: Birnbaum three parameter model) <dialog label="IRT parameter estimation: Birnbaum three parameter model"> <tab label="Advanced control"> <spinbox label="...">
+#. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="IRT parameter estimation: Graded response model"> <tab label="Advanced control"> <spinbox label="...">
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Advanced control"> <spinbox label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.xml:52
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.xml:54
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.xml:50
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:60
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:51
+#, kde-format
+msgid "Number of quasi-Newton iterations:"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Rasch model) <dialog label="IRT parameter estimation: Rasch model"> <tab label="Advanced control"> <spinbox label="...">
+#. i18n: ectx: (IRT parameter estimation: Two parameter logistic model) <dialog label="IRT parameter estimation: Two parameter logistic model"> <tab label="Advanced control"> <spinbox label="...">
+#. i18n: ectx: (IRT parameter estimation: Birnbaum three parameter model) <dialog label="IRT parameter estimation: Birnbaum three parameter model"> <tab label="Advanced control"> <spinbox label="...">
+#. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="IRT parameter estimation: Graded response model"> <tab label="Advanced control"> <spinbox label="...">
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Advanced control"> <spinbox label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.xml:53
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.xml:55
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.xml:51
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:61
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:52
+#, kde-format
+msgid "Number of Gauss-Hermite quadrature points:"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Rasch model) <dialog label="IRT parameter estimation: Rasch model"> <tab label="Advanced control"> <dropdown label="...">
+#. i18n: ectx: (IRT parameter estimation: Two parameter logistic model) <dialog label="IRT parameter estimation: Two parameter logistic model"> <tab label="Advanced control"> <dropdown label="...">
+#. i18n: ectx: (IRT parameter estimation: Birnbaum three parameter model) <dialog label="IRT parameter estimation: Birnbaum three parameter model"> <tab label="Advanced control"> <dropdown label="...">
+#. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="IRT parameter estimation: Graded response model"> <tab label="Advanced control"> <dropdown label="...">
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Advanced control"> <dropdown label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.xml:54
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.xml:60
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.xml:52
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:66
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:53
+#, kde-format
+msgid "Optimization method:"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Rasch model) <dialog label="IRT parameter estimation: Rasch model"> <tab label="Advanced control"> <dropdown label="Optimization method:"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Two parameter logistic model) <dialog label="IRT parameter estimation: Two parameter logistic model"> <tab label="Advanced control"> <dropdown label="Optimization method:"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Birnbaum three parameter model) <dialog label="IRT parameter estimation: Birnbaum three parameter model"> <tab label="Advanced control"> <dropdown label="Optimization method:"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="IRT parameter estimation: Graded response model"> <tab label="Advanced control"> <dropdown label="Optimization method:"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Advanced control"> <dropdown label="Optimization method:"> <option label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.xml:55
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.xml:61
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.xml:53
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:67
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:54
+#, kde-format
+msgid "BFGS"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Rasch model) <dialog label="IRT parameter estimation: Rasch model"> <tab label="Advanced control"> <dropdown label="Optimization method:"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Two parameter logistic model) <dialog label="IRT parameter estimation: Two parameter logistic model"> <tab label="Advanced control"> <dropdown label="Optimization method:"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Birnbaum three parameter model) <dialog label="IRT parameter estimation: Birnbaum three parameter model"> <tab label="Advanced control"> <dropdown label="Optimization method:"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="IRT parameter estimation: Graded response model"> <tab label="Advanced control"> <dropdown label="Optimization method:"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Advanced control"> <dropdown label="Optimization method:"> <option label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.xml:56
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.xml:62
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.xml:54
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:68
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:55
+#, kde-format
+msgid "Nelder-Mead"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Rasch model) <dialog label="IRT parameter estimation: Rasch model"> <tab label="Advanced control"> <dropdown label="Optimization method:"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Two parameter logistic model) <dialog label="IRT parameter estimation: Two parameter logistic model"> <tab label="Advanced control"> <dropdown label="Optimization method:"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Birnbaum three parameter model) <dialog label="IRT parameter estimation: Birnbaum three parameter model"> <tab label="Advanced control"> <dropdown label="Optimization method:"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="IRT parameter estimation: Graded response model"> <tab label="Advanced control"> <dropdown label="Optimization method:"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Advanced control"> <dropdown label="Optimization method:"> <option label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.xml:57
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.xml:63
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.xml:55
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:69
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:56
+#, kde-format
+msgid "CG"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Rasch model) <dialog label="IRT parameter estimation: Rasch model"> <tab label="Advanced control"> <dropdown label="Optimization method:"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Two parameter logistic model) <dialog label="IRT parameter estimation: Two parameter logistic model"> <tab label="Advanced control"> <dropdown label="Optimization method:"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Birnbaum three parameter model) <dialog label="IRT parameter estimation: Birnbaum three parameter model"> <tab label="Advanced control"> <dropdown label="Optimization method:"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="IRT parameter estimation: Graded response model"> <tab label="Advanced control"> <dropdown label="Optimization method:"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Advanced control"> <dropdown label="Optimization method:"> <option label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.xml:58
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.xml:64
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.xml:56
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:70
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:57
+#, kde-format
+msgid "L-BFGS-B"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Rasch model) <dialog label="IRT parameter estimation: Rasch model"> <tab label="Advanced control"> <dropdown label="Optimization method:"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Two parameter logistic model) <dialog label="IRT parameter estimation: Two parameter logistic model"> <tab label="Advanced control"> <dropdown label="Optimization method:"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Birnbaum three parameter model) <dialog label="IRT parameter estimation: Birnbaum three parameter model"> <tab label="Advanced control"> <dropdown label="Optimization method:"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="IRT parameter estimation: Graded response model"> <tab label="Advanced control"> <dropdown label="Optimization method:"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Advanced control"> <dropdown label="Optimization method:"> <option label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.xml:59
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.xml:65
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.xml:57
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:71
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:58
+#, kde-format
+msgid "SANN"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Rasch model) <dialog label="IRT parameter estimation: Rasch model"> <tab label="Advanced control"> <checkbox label="...">
+#. i18n: ectx: (IRT parameter estimation: Two parameter logistic model) <dialog label="IRT parameter estimation: Two parameter logistic model"> <tab label="Advanced control"> <checkbox label="...">
+#. i18n: ectx: (IRT parameter estimation: Birnbaum three parameter model) <dialog label="IRT parameter estimation: Birnbaum three parameter model"> <tab label="Advanced control"> <checkbox label="...">
+#. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="IRT parameter estimation: Graded response model"> <tab label="Advanced control"> <checkbox label="...">
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Advanced control"> <checkbox label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.xml:62
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.xml:70
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.xml:60
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:80
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:62
+#, kde-format
+msgid "Print verbose info about optimization"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model)
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.js:60
+#, kde-format
+msgid "3PL parameter estimation"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <usage>
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:7
+#, kde-format
+msgid ""
+"To fit the Birnbaum three parameter model with default settings, just the "
+"matrix of manifest variables (dichotomous item responses) must be selected. "
+"Further options are described in the sections below."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <settings> <setting> (refers to element labelled "Should parameters be fixed (constraints)?")
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:20
+#, kde-format
+msgid ""
+"If you want to fix parameters, you have to prepare a matrix of fixed-value "
+"constraints first and then select it here. For detailed information on the "
+"specific layout of that matrix please refer to the manual for the <link href="
+"\"rkward://rhelp/tpm\">tpm()</link> function."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <settings> <setting> (refers to element labelled "Upper bound for guessing parameter")
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:23
+#, kde-format
+msgid ""
+"Limits the estimated guessing parameter (accepts values between 0 and 1)."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <settings> <setting> (refers to element labelled "Start values")
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:26
+#, kde-format
+msgid ""
+"By default start values for the parameters are computed automatically. "
+"Alternatively, you can force the use of random start values, or give a "
+"matrix of values to be used. For detailed information on the specific layout "
+"of that matrix please refer to the manual for the <link href=\"rkward://"
+"rhelp/tpm\">tpm()</link> function."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <settings> <setting> (refers to element labelled "Assume equal discrimination parameters")
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:29
+#, kde-format
+msgid ""
+"If checked it is assumed that discrimination parameters are equal for all "
+"items, as in the 1PL Rasch model. That leaves difficulty and guessing "
+"parameters to be estimated."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <settings> <setting title="Number of quasi-Newton iterations"> (refers to element labelled "Number of quasi-Newton iterations:")
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:40
+#, kde-format
+msgid "Defaults to 1000."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <settings> <setting title="Number of Gauss-Hermite quadrature points"> (refers to element labelled "Number of Gauss-Hermite quadrature points:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <settings> <setting title="Number of Gauss-Hermite quadrature points"> (refers to element labelled "Number of Gauss-Hermite quadrature points:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <settings> <setting title="Number of Gauss-Hermite quadrature points"> (refers to element labelled "Number of Gauss-Hermite quadrature points:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <settings> <setting title="Number of Gauss-Hermite quadrature points"> (refers to element labelled "Number of Gauss-Hermite quadrature points:")
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:43
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.rkh:37
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.rkh:40
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:40
+#, kde-format
+msgid "Defaults to 21."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <settings> <setting title="..."> (refers to element labelled "Used optimizer:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <settings> <setting title="..."> (refers to element labelled "Used optimizer:")
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:46
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.rkh:43
+#, kde-format
+msgid "Used optimizer"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <settings> <setting title="Used optimizer"> (refers to element labelled "Used optimizer:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <settings> <setting title="Used optimizer"> (refers to element labelled "Used optimizer:")
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:46
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.rkh:43
+#, kde-format
+msgid ""
+"By default <link href=\"rkward://rhelp/optim\">optim()</link> is being used "
+"for optimization. Alternatively, <link href=\"rkward://rhelp/nlminb"
+"\">nlminb()</link> can be called."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <settings> <setting title="Optimization method"> (refers to element labelled "Optimization method:")
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:49
+#, kde-format
+msgid ""
+"<i>Only if <code>optim()</code> is used:</i> The default optimization method "
+"is BFGS. It can be set to Nelder-Mead, CG, L-BFGS-B, or SANN instead. Please "
+"refer to the <link href=\"rkward://rhelp/optim\">optim()</link> manual for "
+"details."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <settings> <setting> (refers to element labelled "Step-length for approximation")
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:52
+#, kde-format
+msgid ""
+"Used in the central difference approximation that approximates the hessian. "
+"Defaults to 1e-03."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <technical>
+#. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <technical>
+#. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <technical>
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:68
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.rkh:68
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:62
+#, kde-format
+msgid "Todo:"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <technical>
+#. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <technical>
+#. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <technical>
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:68
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.rkh:68
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:62
+#, kde-format
+msgid "The <code>parscale</code> control element is not yet implemented."
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Birnbaum three parameter model) <dialog label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.xml:15
+#, kde-format
+msgid "IRT parameter estimation: Birnbaum three parameter model"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Birnbaum three parameter model) <dialog label="IRT parameter estimation: Birnbaum three parameter model"> <tab label="Options"> <spinbox label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.xml:35
+#, kde-format
+msgid "Upper bound for guessing parameter"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Birnbaum three parameter model) <dialog label="IRT parameter estimation: Birnbaum three parameter model"> <tab label="Options"> <frame label="Misc options"> <checkbox label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.xml:44
+#, kde-format
+msgid "Assume equal discrimination parameters"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Birnbaum three parameter model) <dialog label="IRT parameter estimation: Birnbaum three parameter model"> <tab label="Advanced control"> <dropdown label="...">
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Advanced control"> <dropdown label="...">
+#. i18n: ectx: (Wald test) <dialog label="Wald test"> <tab label="Options"> <frame label="Optimizer"> <dropdown label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.xml:56
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:62
+#: rkward/plugins/analysis/irt/tests/eRm_waldtest.xml:38
+#, kde-format
+msgid "Used optimizer:"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Birnbaum three parameter model) <dialog label="IRT parameter estimation: Birnbaum three parameter model"> <tab label="Advanced control"> <dropdown label="Used optimizer:"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Advanced control"> <dropdown label="Used optimizer:"> <option label="...">
+#. i18n: ectx: (Wald test) <dialog label="Wald test"> [...] <dropdown label="Used optimizer:"> <option label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.xml:57
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:63
+#: rkward/plugins/analysis/irt/tests/eRm_waldtest.xml:40
+#, kde-format
+msgid "optim()"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Birnbaum three parameter model) <dialog label="IRT parameter estimation: Birnbaum three parameter model"> <tab label="Advanced control"> <dropdown label="Used optimizer:"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Advanced control"> <dropdown label="Used optimizer:"> <option label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.xml:58
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:64
+#, kde-format
+msgid "nlminb()"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Birnbaum three parameter model) <dialog label="IRT parameter estimation: Birnbaum three parameter model"> <tab label="Advanced control"> <spinbox label="...">
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Advanced control"> <spinbox label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.xml:67
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:77
+#, kde-format
+msgid "Step-length for approximation"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model)
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.js:35
+#, kde-format
+msgid "LLTM  parameter estimation"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rating scale model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Partial credit model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear rating scale model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear partial credit model)
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.js:41
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.js:41
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.js:41
+#: rkward/plugins/analysis/irt/polytomous/par_est_pcm.js:36
+#: rkward/plugins/analysis/irt/polytomous/par_est_rsm.js:36
+#, kde-format
+msgid "Conditional log-likelihood:"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rating scale model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Partial credit model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear rating scale model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear partial credit model)
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.js:42
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.js:42
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.js:42
+#: rkward/plugins/analysis/irt/polytomous/par_est_pcm.js:37
+#: rkward/plugins/analysis/irt/polytomous/par_est_rsm.js:37
+#, kde-format
+msgid "<br />Number of iterations:"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rating scale model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Partial credit model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear rating scale model)
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear partial credit model)
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.js:42
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.js:42
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.js:42
+#: rkward/plugins/analysis/irt/polytomous/par_est_pcm.js:37
+#: rkward/plugins/analysis/irt/polytomous/par_est_rsm.js:37
+#, kde-format
+msgid "<br />Number of parameters:"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model) <summary>
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rating scale model) <summary>
+#. i18n: ectx: (Loaded from IRT parameter estimation: Partial credit model) <summary>
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear rating scale model) <summary>
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear partial credit model) <summary>
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.rkh:3
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.rkh:3
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.rkh:3
+#: rkward/plugins/analysis/irt/polytomous/par_est_pcm.rkh:3
+#: rkward/plugins/analysis/irt/polytomous/par_est_rsm.rkh:3
+#, kde-format
+msgid ""
+"This plugin estimates parameters under Item Response Theory approach, using "
+"the <link href=\"rkward://rhelp/eRm-package\">eRm</link> package."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model) <usage>
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.rkh:7
+#, kde-format
+msgid ""
+"To fit the linear logistic test model with default settings, just the matrix "
+"of manifest variables (dichotomous item responses) must be selected. Further "
+"options are described in the sections below. For detailed information on the "
+"expected layout of matrices and vectors please refer to the manual for the "
+"<link href=\"rkward://rhelp/LLTM\">LLTM()</link> function."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model) <settings> <setting> (refers to element labelled "Number of measurement points")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear rating scale model) <settings> <setting> (refers to element labelled "Number of measurement points")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear partial credit model) <settings> <setting> (refers to element labelled "Number of measurement points")
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.rkh:18
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.rkh:18
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.rkh:18
+#, kde-format
+msgid ""
+"If repeated measurement applies, specify how many are represented in the "
+"data matrix (defaults to 1). This will divide the columns in the matrix into "
+"equally sized subsets of data."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model) <settings> <setting> (refers to element labelled "Group contrasts")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear rating scale model) <settings> <setting> (refers to element labelled "Group contrasts")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear partial credit model) <settings> <setting> (refers to element labelled "Group contrasts")
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.rkh:21
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.rkh:21
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.rkh:21
+#, kde-format
+msgid ""
+"If you want to compute group contrasts, a vector determining the group "
+"membership of each subject must be given. By default no group contrasts are "
+"imposed."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model) <settings> <setting> (refers to element labelled "Design matrix")
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.rkh:26
+#, kde-format
+msgid ""
+"By default the design matrix for the LLTM will be computed automatically. "
+"Alternatively, you may specify your own design matrix here."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model) <settings> <setting> (refers to element labelled "Eta start values")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rating scale model) <settings> <setting> (refers to element labelled "Eta start values")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Partial credit model) <settings> <setting> (refers to element labelled "Eta start values")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear rating scale model) <settings> <setting> (refers to element labelled "Eta start values")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear partial credit model) <settings> <setting> (refers to element labelled "Eta start values")
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.rkh:29
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.rkh:29
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.rkh:29
+#: rkward/plugins/analysis/irt/polytomous/par_est_pcm.rkh:23
+#: rkward/plugins/analysis/irt/polytomous/par_est_rsm.rkh:23
+#, kde-format
+msgid ""
+"By default eta values start with the 0-vector. To change this, a vector of "
+"starting values can be specified."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model) <settings> <setting> (refers to element labelled "Compute standard error")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rating scale model) <settings> <setting> (refers to element labelled "Compute standard error")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Partial credit model) <settings> <setting> (refers to element labelled "Compute standard error")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear rating scale model) <settings> <setting> (refers to element labelled "Compute standard error")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear partial credit model) <settings> <setting> (refers to element labelled "Compute standard error")
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.rkh:32
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.rkh:32
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.rkh:32
+#: rkward/plugins/analysis/irt/polytomous/par_est_pcm.rkh:26
+#: rkward/plugins/analysis/irt/polytomous/par_est_rsm.rkh:26
+#, kde-format
+msgid "If checked, standard errors are computed (which is the default)."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model) <settings> <setting> (refers to element labelled "Normalize parameters to sum-0")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rating scale model) <settings> <setting> (refers to element labelled "Normalize parameters to sum-0")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Partial credit model) <settings> <setting> (refers to element labelled "Normalize parameters to sum-0")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear rating scale model) <settings> <setting> (refers to element labelled "Normalize parameters to sum-0")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear partial credit model) <settings> <setting> (refers to element labelled "Normalize parameters to sum-0")
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.rkh:35
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.rkh:35
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.rkh:35
+#: rkward/plugins/analysis/irt/polytomous/par_est_pcm.rkh:29
+#: rkward/plugins/analysis/irt/polytomous/par_est_rsm.rkh:29
+#, kde-format
+msgid ""
+"By default parameters are normalized to sum-0 by specifying an appropriate "
+"design matrix. Uncheck this box to restrict the first parameter to 0."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model) <related>
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rating scale model) <related>
+#. i18n: ectx: (Loaded from IRT parameter estimation: Partial credit model) <related>
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear rating scale model) <related>
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear partial credit model) <related>
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.rkh:41
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.rkh:41
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.rkh:41
+#: rkward/plugins/analysis/irt/polytomous/par_est_pcm.rkh:35
+#: rkward/plugins/analysis/irt/polytomous/par_est_rsm.rkh:35
+#, kde-format
+msgid ""
+"Please refer to the <code>eRm</code> manuals for further information and "
+"detailed command line options:"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Linear logistic test model) <dialog label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.xml:19
+#, kde-format
+msgid "IRT parameter estimation: Linear logistic test model"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Linear logistic test model) <dialog label="IRT parameter estimation: Linear logistic test model"> <tab label="Manifest variables"> <spinbox label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear rating scale model) <dialog label="IRT parameter estimation: Linear rating scale model"> <tab label="Manifest variables"> <spinbox label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear partial credit model) <dialog label="IRT parameter estimation: Linear partial credit model"> <tab label="Manifest variables"> <spinbox label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.xml:26
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.xml:26
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.xml:29
+#, kde-format
+msgid "Number of measurement points"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Linear logistic test model) <dialog label="IRT parameter estimation: Linear logistic test model"> <tab label="Manifest variables"> <radio label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear rating scale model) <dialog label="IRT parameter estimation: Linear rating scale model"> <tab label="Manifest variables"> <radio label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear partial credit model) <dialog label="IRT parameter estimation: Linear partial credit model"> <tab label="Manifest variables"> <radio label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.xml:28
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.xml:28
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.xml:31
+#, kde-format
+msgid "Group contrasts"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Linear logistic test model) <dialog label="IRT parameter estimation: Linear logistic test model"> <tab label="Manifest variables"> <radio label="Group contrasts"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear rating scale model) <dialog label="IRT parameter estimation: Linear rating scale model"> <tab label="Manifest variables"> <radio label="Group contrasts"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear partial credit model) <dialog label="IRT parameter estimation: Linear partial credit model"> <tab label="Manifest variables"> <radio label="Group contrasts"> <option label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.xml:29
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.xml:29
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.xml:32
+#, kde-format
+msgid "All subjects belong to one group"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Linear logistic test model) <dialog label="IRT parameter estimation: Linear logistic test model"> <tab label="Manifest variables"> <radio label="Group contrasts"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear rating scale model) <dialog label="IRT parameter estimation: Linear rating scale model"> <tab label="Manifest variables"> <radio label="Group contrasts"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear partial credit model) <dialog label="IRT parameter estimation: Linear partial credit model"> <tab label="Manifest variables"> <radio label="Group contrasts"> <option label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.xml:30
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.xml:30
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.xml:33
+#, kde-format
+msgid "Compute group contrasts"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Linear logistic test model) <dialog label="IRT parameter estimation: Linear logistic test model"> <tab label="Manifest variables"> <varslot label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear rating scale model) <dialog label="IRT parameter estimation: Linear rating scale model"> <tab label="Manifest variables"> <varslot label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear partial credit model) <dialog label="IRT parameter estimation: Linear partial credit model"> <tab label="Manifest variables"> <varslot label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.xml:32
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.xml:32
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.xml:35
+#, kde-format
+msgid "Use this group vector:"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Linear logistic test model) <dialog label="IRT parameter estimation: Linear logistic test model"> <tab label="Options"> <radio label="...">
+#. i18n: ectx: (IRT parameter estimation: Rating scale model) <dialog label="IRT parameter estimation: Rating scale model"> <tab label="Options"> <radio label="...">
+#. i18n: ectx: (IRT parameter estimation: Partial credit model) <dialog label="IRT parameter estimation: Partial credit model"> <tab label="Options"> <radio label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear rating scale model) <dialog label="IRT parameter estimation: Linear rating scale model"> <tab label="Options"> <radio label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear partial credit model) <dialog label="IRT parameter estimation: Linear partial credit model"> <tab label="Options"> <radio label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.xml:42
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.xml:42
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.xml:45
+#: rkward/plugins/analysis/irt/polytomous/par_est_pcm.xml:36
+#: rkward/plugins/analysis/irt/polytomous/par_est_rsm.xml:36
+#, kde-format
+msgid "Design matrix"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Linear logistic test model) <dialog label="IRT parameter estimation: Linear logistic test model"> <tab label="Options"> <radio label="Design matrix"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Rating scale model) <dialog label="IRT parameter estimation: Rating scale model"> <tab label="Options"> <radio label="Design matrix"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Partial credit model) <dialog label="IRT parameter estimation: Partial credit model"> <tab label="Options"> <radio label="Design matrix"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear rating scale model) <dialog label="IRT parameter estimation: Linear rating scale model"> <tab label="Options"> <radio label="Design matrix"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear partial credit model) <dialog label="IRT parameter estimation: Linear partial credit model"> <tab label="Options"> <radio label="Design matrix"> <option label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.xml:44
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.xml:44
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.xml:47
+#: rkward/plugins/analysis/irt/polytomous/par_est_pcm.xml:38
+#: rkward/plugins/analysis/irt/polytomous/par_est_rsm.xml:38
+#, kde-format
+msgid "Use own design matrix"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Linear logistic test model) <dialog label="IRT parameter estimation: Linear logistic test model"> <tab label="Options"> <varslot label="...">
+#. i18n: ectx: (IRT parameter estimation: Rating scale model) <dialog label="IRT parameter estimation: Rating scale model"> <tab label="Options"> <varslot label="...">
+#. i18n: ectx: (IRT parameter estimation: Partial credit model) <dialog label="IRT parameter estimation: Partial credit model"> <tab label="Options"> <varslot label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear rating scale model) <dialog label="IRT parameter estimation: Linear rating scale model"> <tab label="Options"> <varslot label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear partial credit model) <dialog label="IRT parameter estimation: Linear partial credit model"> <tab label="Options"> <varslot label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.xml:46
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.xml:46
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.xml:49
+#: rkward/plugins/analysis/irt/polytomous/par_est_pcm.xml:40
+#: rkward/plugins/analysis/irt/polytomous/par_est_rsm.xml:40
+#, kde-format
+msgid "Design matrix:"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Linear logistic test model) <dialog label="IRT parameter estimation: Linear logistic test model"> <tab label="Options"> <radio label="...">
+#. i18n: ectx: (IRT parameter estimation: Rating scale model) <dialog label="IRT parameter estimation: Rating scale model"> <tab label="Options"> <radio label="...">
+#. i18n: ectx: (IRT parameter estimation: Partial credit model) <dialog label="IRT parameter estimation: Partial credit model"> <tab label="Options"> <radio label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear rating scale model) <dialog label="IRT parameter estimation: Linear rating scale model"> <tab label="Options"> <radio label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear partial credit model) <dialog label="IRT parameter estimation: Linear partial credit model"> <tab label="Options"> <radio label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.xml:48
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.xml:48
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.xml:51
+#: rkward/plugins/analysis/irt/polytomous/par_est_pcm.xml:42
+#: rkward/plugins/analysis/irt/polytomous/par_est_rsm.xml:42
+#, kde-format
+msgid "Eta start values"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Linear logistic test model) <dialog label="IRT parameter estimation: Linear logistic test model"> <tab label="Options"> <radio label="Eta start values"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Rating scale model) <dialog label="IRT parameter estimation: Rating scale model"> <tab label="Options"> <radio label="Eta start values"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Partial credit model) <dialog label="IRT parameter estimation: Partial credit model"> <tab label="Options"> <radio label="Eta start values"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear rating scale model) <dialog label="IRT parameter estimation: Linear rating scale model"> <tab label="Options"> <radio label="Eta start values"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear partial credit model) <dialog label="IRT parameter estimation: Linear partial credit model"> <tab label="Options"> <radio label="Eta start values"> <option label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.xml:49
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.xml:49
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.xml:52
+#: rkward/plugins/analysis/irt/polytomous/par_est_pcm.xml:43
+#: rkward/plugins/analysis/irt/polytomous/par_est_rsm.xml:43
+#, kde-format
+msgid "Use 0-vector"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Linear logistic test model) <dialog label="IRT parameter estimation: Linear logistic test model"> <tab label="Options"> <radio label="Eta start values"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Rating scale model) <dialog label="IRT parameter estimation: Rating scale model"> <tab label="Options"> <radio label="Eta start values"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Partial credit model) <dialog label="IRT parameter estimation: Partial credit model"> <tab label="Options"> <radio label="Eta start values"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear rating scale model) <dialog label="IRT parameter estimation: Linear rating scale model"> <tab label="Options"> <radio label="Eta start values"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear partial credit model) <dialog label="IRT parameter estimation: Linear partial credit model"> <tab label="Options"> <radio label="Eta start values"> <option label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.xml:50
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.xml:50
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.xml:53
+#: rkward/plugins/analysis/irt/polytomous/par_est_pcm.xml:44
+#: rkward/plugins/analysis/irt/polytomous/par_est_rsm.xml:44
+#, kde-format
+msgid "Use own vector of eta start values"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Linear logistic test model) <dialog label="IRT parameter estimation: Linear logistic test model"> <tab label="Options"> <varslot label="...">
+#. i18n: ectx: (IRT parameter estimation: Rating scale model) <dialog label="IRT parameter estimation: Rating scale model"> <tab label="Options"> <varslot label="...">
+#. i18n: ectx: (IRT parameter estimation: Partial credit model) <dialog label="IRT parameter estimation: Partial credit model"> <tab label="Options"> <varslot label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear rating scale model) <dialog label="IRT parameter estimation: Linear rating scale model"> <tab label="Options"> <varslot label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear partial credit model) <dialog label="IRT parameter estimation: Linear partial credit model"> <tab label="Options"> <varslot label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.xml:52
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.xml:52
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.xml:55
+#: rkward/plugins/analysis/irt/polytomous/par_est_pcm.xml:46
+#: rkward/plugins/analysis/irt/polytomous/par_est_rsm.xml:46
+#, kde-format
+msgid "Vector of start values:"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Linear logistic test model) <dialog label="IRT parameter estimation: Linear logistic test model"> <tab label="Options"> <frame label="Misc options"> <checkbox label="...">
+#. i18n: ectx: (IRT parameter estimation: Rating scale model) <dialog label="IRT parameter estimation: Rating scale model"> <tab label="Options"> <frame label="Misc options"> <checkbox label="...">
+#. i18n: ectx: (IRT parameter estimation: Partial credit model) <dialog label="IRT parameter estimation: Partial credit model"> <tab label="Options"> <frame label="Misc options"> <checkbox label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear rating scale model) <dialog label="IRT parameter estimation: Linear rating scale model"> <tab label="Options"> <frame label="Misc options"> <checkbox label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear partial credit model) <dialog label="IRT parameter estimation: Linear partial credit model"> <tab label="Options"> <frame label="Misc options"> <checkbox label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.xml:54
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.xml:54
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.xml:57
+#: rkward/plugins/analysis/irt/polytomous/par_est_pcm.xml:48
+#: rkward/plugins/analysis/irt/polytomous/par_est_rsm.xml:48
+#, kde-format
+msgid "Compute standard error"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Linear logistic test model) <dialog label="IRT parameter estimation: Linear logistic test model"> <tab label="Options"> <frame label="Misc options"> <checkbox label="...">
+#. i18n: ectx: (IRT parameter estimation: Rating scale model) <dialog label="IRT parameter estimation: Rating scale model"> <tab label="Options"> <frame label="Misc options"> <checkbox label="...">
+#. i18n: ectx: (IRT parameter estimation: Partial credit model) <dialog label="IRT parameter estimation: Partial credit model"> <tab label="Options"> <frame label="Misc options"> <checkbox label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear rating scale model) <dialog label="IRT parameter estimation: Linear rating scale model"> <tab label="Options"> <frame label="Misc options"> <checkbox label="...">
+#. i18n: ectx: (IRT parameter estimation: Linear partial credit model) <dialog label="IRT parameter estimation: Linear partial credit model"> <tab label="Options"> <frame label="Misc options"> <checkbox label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.xml:55
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.xml:55
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.xml:58
+#: rkward/plugins/analysis/irt/polytomous/par_est_pcm.xml:49
+#: rkward/plugins/analysis/irt/polytomous/par_est_rsm.xml:49
+#, kde-format
+msgid "Normalize parameters to sum-0"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model)
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.js:50
+#, kde-format
+msgid "Rasch parameter estimation"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <usage>
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.rkh:7
+#, kde-format
+msgid ""
+"To fit the Rasch model with default settings, just the matrix of manifest "
+"variables (dichotomous item responses) must be selected. Further options are "
+"described in the sections below."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <settings> <setting> (refers to element labelled "Should parameters be fixed (constraints)?")
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.rkh:20
+#, kde-format
+msgid ""
+"If you want to fix parameters, you have to prepare a matrix of fixed-value "
+"constraints first and then select it here. For detailed information on the "
+"specific layout of that matrix please refer to the manual for the <link href="
+"\"rkward://rhelp/rasch\">rasch()</link> function."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <settings> <setting> (refers to element labelled "Start values")
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.rkh:23
+#, kde-format
+msgid ""
+"By default start values for the parameters are computed automatically. "
+"Alternatively, you can force the use of random start values, or give a "
+"matrix of values to be used. For detailed information on the specific layout "
+"of that matrix please refer to the manual for the <link href=\"rkward://"
+"rhelp/rasch\">rasch()</link> function."
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Rasch model) <dialog label="...">
+#: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.xml:13
+#, kde-format
+msgid "IRT parameter estimation: Rasch model"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model)
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.js:69
+#, kde-format
+msgid "GPCM parameter estimation"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <usage>
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.rkh:7
+#, kde-format
+msgid ""
+"To fit the generalized partial credit model with default settings, just the "
+"matrix of manifest variables (polytomous item responses) must be selected. "
+"Further options are described in the sections below."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <settings> <setting title="Matrix of manifest variables"> (refers to element labelled "Matrix of manifest variables:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <settings> <setting title="Matrix of manifest variables"> (refers to element labelled "Matrix of manifest variables:")
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.rkh:15
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:15
+#, kde-format
+msgid ""
+"Select the matrix of polytomous item responses from the objects shown on the "
+"left."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <settings> <setting> (refers to element labelled "Item selection")
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.rkh:18
+#, kde-format
+msgid ""
+"If you only want to use a subset of items from selected object, you can "
+"specify these here."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <settings> <setting> (refers to element labelled "Should parameters be fixed (constrained)?")
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.rkh:23
+#, kde-format
+msgid ""
+"Choose if discrimination parameters should be computed for each item "
+"individually. Alternatively, you can estimate one discrimination parameter "
+"that is equal for all items, or fix it at 1 for all items."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <settings> <setting> (refers to element labelled "Start values")
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.rkh:26
+#, kde-format
+msgid ""
+"By default start values for the parameters are computed automatically. "
+"Alternatively, you can force the use of random start values, or give a list "
+"of values to be used. For detailed information on the specific layout of "
+"that list please refer to the manual for the <link href=\"rkward://rhelp/gpcm"
+"\">gpcm()</link> function."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <settings> <setting> (refers to element labelled "Numerical derivative algorithm to approximate Hessian matrix:")
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.rkh:49
+#, kde-format
+msgid ""
+"Options are forward difference approximation (the default) and central "
+"difference approximation."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <settings> <setting> (refers to element labelled "Step-length for approximation")
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.rkh:52
+#, kde-format
+msgid ""
+"Step size to be used in the numerical derivative. Default is 1e-06. If you "
+"use central difference approximation, change this to a larger value, e.g., "
+"1e-03 or 1e-04."
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="...">
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:17
+#, kde-format
+msgid "IRT parameter estimation: Generalized partial credit model"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Manifest variables"> <frame label="...">
+#. i18n: ectx: (Cronbach's alpha) <dialog label="Cronbach's alpha"> <tab label="Data"> <frame label="...">
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:24
+#: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.xml:19
+#, kde-format
+msgid "Item selection"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Manifest variables"> <frame label="Item selection"> <checkbox label="...">
+#. i18n: ectx: (Cronbach's alpha) <dialog label="Cronbach's alpha"> <tab label="Data"> <frame label="Item selection"> <checkbox label="...">
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:25
+#: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.xml:20
+#, kde-format
+msgid "Select a subset of items"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Manifest variables"> <frame label="Item selection"> <varslot label="...">
+#. i18n: ectx: (Cronbach's alpha) <dialog label="Cronbach's alpha"> <tab label="Data"> <frame label="Item selection"> <varslot label="...">
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:26
+#: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.xml:21
+#, kde-format
+msgid "List of items:"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Options"> <radio label="...">
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:38
+#, kde-format
+msgid "Should parameters be fixed (constrained)?"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Options"> <radio label="Should parameters be fixed (constrained)?"> <option label="...">
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:39
+#, kde-format
+msgid "Each item has its one discrimination parameter"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Options"> <radio label="Should parameters be fixed (constrained)?"> <option label="...">
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:40
+#, kde-format
+msgid "Equal discrimination parameter across items"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Options"> <radio label="Should parameters be fixed (constrained)?"> <option label="...">
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:41
+#, kde-format
+msgid "Discrimination parameter fixed at 1 across items"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="IRT parameter estimation: Graded response model"> <tab label="Options"> <radio label="Start values"> <option label="...">
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Options"> <radio label="Start values"> <option label="...">
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:47
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:37
+#, kde-format
+msgid "Use own list of start values"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="IRT parameter estimation: Graded response model"> <tab label="Options"> <varslot label="...">
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Options"> <varslot label="...">
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:49
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:39
+#, kde-format
+msgid "List of start values:"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Advanced control"> <dropdown label="...">
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:73
+#, kde-format
+msgid "Numerical derivative algorithm to approximate Hessian matrix:"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Advanced control"> <dropdown label="Numerical derivative algorithm to approximate Hessian matrix:"> <option label="...">
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:74
+#, kde-format
+msgid "Forward difference approximation"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Advanced control"> <dropdown label="Numerical derivative algorithm to approximate Hessian matrix:"> <option label="...">
+#: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:75
+#, kde-format
+msgid "Central difference approximation"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model)
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.js:54
+#, kde-format
+msgid "GRM parameter estimation"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <usage>
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:7
+#, kde-format
+msgid ""
+"To fit the graded response model with default settings, just the matrix of "
+"manifest variables (polytomous item responses) must be selected. Further "
+"options are described in the sections below."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <settings> <setting> (refers to element labelled "Should parameters be fixed (constraints)?")
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:20
+#, kde-format
+msgid ""
+"If checked it is assumed that discrimination parameters are equal for all "
+"items."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <settings> <setting> (refers to element labelled "Start values")
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:23
+#, kde-format
+msgid ""
+"By default start values for the parameters are computed automatically. "
+"Alternatively, you can force the use of random start values, or give a list "
+"of values to be used. For detailed information on the specific layout of "
+"that list please refer to the manual for the <link href=\"rkward://rhelp/grm"
+"\">grm()</link> function."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <settings> <setting> (refers to element labelled "Compute Hessian matrix")
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:26
+#, kde-format
+msgid "If checked the Hessian matrix is computed."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <settings> <setting title="..."> (refers to element labelled "Number of digits to abbreviate item names:")
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:46
+#, kde-format
+msgid "Number of digits to abbreviate item names"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <settings> <setting title="Number of digits to abbreviate item names"> (refers to element labelled "Number of digits to abbreviate item names:")
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:46
+#, kde-format
+msgid ""
+"Specifies how many digits are used in abbreviating item names. Defaults to 6."
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="...">
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:13
+#, kde-format
+msgid "IRT parameter estimation: Graded response model"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="IRT parameter estimation: Graded response model"> <tab label="Options"> <frame label="Should parameters be fixed (constraints)?"> <checkbox label="...">
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:31
+#, kde-format
+msgid "Assume equal discrimination parameters across items"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="IRT parameter estimation: Graded response model"> <tab label="Options"> <frame label="Misc options"> <checkbox label="...">
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:41
+#, kde-format
+msgid "Compute Hessian matrix"
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="IRT parameter estimation: Graded response model"> <tab label="Advanced control"> <spinbox label="...">
+#: rkward/plugins/analysis/irt/polytomous/par_est_grm.xml:60
+#, kde-format
+msgid "Number of digits to abbreviate item names:"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear partial credit model)
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.js:35
+#, kde-format
+msgid "LPCM  parameter estimation"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear partial credit model) <usage>
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.rkh:7
+#, kde-format
+msgid ""
+"To fit the linear partial credit model with default settings, just the "
+"matrix of manifest variables (item responses) must be selected. Further "
+"options are described in the sections below. For detailed information on the "
+"expected layout of matrices and vectors please refer to the manual for the "
+"<link href=\"rkward://rhelp/LPCM\">LPCM()</link> function."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rating scale model) <settings> <setting title="Matrix of manifest variables"> (refers to element labelled "Matrix of manifest variables:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Partial credit model) <settings> <setting title="Matrix of manifest variables"> (refers to element labelled "Matrix of manifest variables:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear rating scale model) <settings> <setting title="Matrix of manifest variables"> (refers to element labelled "Matrix of manifest variables:")
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear partial credit model) <settings> <setting title="Matrix of manifest variables"> (refers to element labelled "Matrix of manifest variables:")
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.rkh:15
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.rkh:15
+#: rkward/plugins/analysis/irt/polytomous/par_est_pcm.rkh:15
+#: rkward/plugins/analysis/irt/polytomous/par_est_rsm.rkh:15
+#, kde-format
+msgid "Select the matrix of item responses from the objects shown on the left."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear partial credit model) <settings> <setting> (refers to element labelled "Design matrix")
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.rkh:26
+#, kde-format
+msgid ""
+"By default the design matrix for the LPCM will be computed automatically. "
+"Alternatively, you may specify your own design matrix here."
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Linear partial credit model) <dialog label="...">
+#: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.xml:19
+#, kde-format
+msgid "IRT parameter estimation: Linear partial credit model"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear rating scale model)
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.js:35
+#, kde-format
+msgid "LRSM  parameter estimation"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear rating scale model) <usage>
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.rkh:7
+#, kde-format
+msgid ""
+"To fit the linear rating scale model with default settings, just the matrix "
+"of manifest variables (item responses) must be selected. Further options are "
+"described in the sections below. For detailed information on the expected "
+"layout of matrices and vectors please refer to the manual for the <link href="
+"\"rkward://rhelp/LRSM\">LRSM()</link> function."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Linear rating scale model) <settings> <setting> (refers to element labelled "Design matrix")
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.rkh:26
+#, kde-format
+msgid ""
+"By default the design matrix for the LRSM will be computed automatically. "
+"Alternatively, you may specify your own design matrix here."
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Linear rating scale model) <dialog label="...">
+#: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.xml:22
+#, kde-format
+msgid "IRT parameter estimation: Linear rating scale model"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Partial credit model)
+#: rkward/plugins/analysis/irt/polytomous/par_est_pcm.js:30
+#, kde-format
+msgid "PCM  parameter estimation"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Partial credit model) <usage>
+#: rkward/plugins/analysis/irt/polytomous/par_est_pcm.rkh:7
+#, kde-format
+msgid ""
+"To fit the partial credit model with default settings, just the matrix of "
+"manifest variables (item responses) must be selected. Further options are "
+"described in the sections below. For detailed information on the expected "
+"layout of matrices and vectors please refer to the manual for the <link href="
+"\"rkward://rhelp/PCM\">PCM()</link> function."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Partial credit model) <settings> <setting> (refers to element labelled "Design matrix")
+#: rkward/plugins/analysis/irt/polytomous/par_est_pcm.rkh:20
+#, kde-format
+msgid ""
+"By default the design matrix for the PCM will be computed automatically. "
+"Alternatively, you may specify your own design matrix here."
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Partial credit model) <dialog label="...">
+#: rkward/plugins/analysis/irt/polytomous/par_est_pcm.xml:19
+#, kde-format
+msgid "IRT parameter estimation: Partial credit model"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rating scale model)
+#: rkward/plugins/analysis/irt/polytomous/par_est_rsm.js:30
+#, kde-format
+msgid "RSM  parameter estimation"
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rating scale model) <usage>
+#: rkward/plugins/analysis/irt/polytomous/par_est_rsm.rkh:7
+#, kde-format
+msgid ""
+"To fit the rating scale model with default settings, just the matrix of "
+"manifest variables (item responses) must be selected. Further options are "
+"described in the sections below. For detailed information on the expected "
+"layout of matrices and vectors please refer to the manual for the <link href="
+"\"rkward://rhelp/RSM\">RSM()</link> function."
+msgstr ""
+
+#. i18n: ectx: (Loaded from IRT parameter estimation: Rating scale model) <settings> <setting> (refers to element labelled "Design matrix")
+#: rkward/plugins/analysis/irt/polytomous/par_est_rsm.rkh:20
+#, kde-format
+msgid ""
+"By default the design matrix for the RSM will be computed automatically. "
+"Alternatively, you may specify your own design matrix here."
+msgstr ""
+
+#. i18n: ectx: (IRT parameter estimation: Rating scale model) <dialog label="...">
+#: rkward/plugins/analysis/irt/polytomous/par_est_rsm.xml:19
+#, kde-format
+msgid "IRT parameter estimation: Rating scale model"
+msgstr ""
+
+#. i18n: ectx: (Loaded from Wald test)
+#: rkward/plugins/analysis/irt/tests/eRm_waldtest.js:23
+#, no-c-format, kde-format
+msgid "Wald test (%1)"
+msgstr ""
+
+#. i18n: ectx: (Loaded from Wald test)
+#: rkward/plugins/analysis/irt/tests/eRm_waldtest.js:27
+#, kde-format
+msgid "Wald test on item level (z-values):"
+msgstr ""
+
+#. i18n: ectx: (Wald test) <dialog label="...">
+#: rkward/plugins/analysis/irt/tests/eRm_waldtest.xml:14
+#, kde-format
+msgid "Wald test"
+msgstr ""
+
+#. i18n: ectx: (Cronbach's alpha) <dialog label="Cronbach's alpha"> <tab label="...">
+#. i18n: ectx: (Goodness of Fit (Rasch model)) <dialog label="Goodness of Fit (Rasch model)"> <tab label="...">
+#. i18n: ectx: (Unidimensionality check (Rasch, LTM, 3PM)) <dialog label="Unidimensionality check (Rasch, LTM, 3PM)"> <tab label="...">
+#. i18n: ectx: (Item-fit statistics for Rasch, LTM and 3PM) <dialog label="Item-fit statistics for Rasch, LTM and 3PM"> <tab label="...">
+#. i18n: ectx: (Person-fit statistics for Rasch, LTM and 3PM) <dialog label="Person-fit statistics for Rasch, LTM and 3PM"> <tab label="...">
+#. i18n: ectx: (Wald test) <dialog label="Wald test"> <tab label="...">
+#: rkward/plugins/analysis/irt/tests/eRm_waldtest.xml:16
+#: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.xml:13
+#: rkward/plugins/analysis/irt/tests/ltm_gof_rasch.xml:11
+#: rkward/plugins/analysis/irt/tests/ltm_item_fit.xml:14
+#: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:17
+#: rkward/plugins/analysis/irt/tests/ltm_unidimensional.xml:13
+#, kde-format
+msgid "Data"
+msgstr ""
+
+#. i18n: ectx: (Wald test) <dialog label="Wald test"> <tab label="Data"> <varslot label="...">
+#: rkward/plugins/analysis/irt/tests/eRm_waldtest.xml:20
+#, kde-format
+msgid "Choose fitted model to test:"
+msgstr ""
+
+#. i18n: ectx: (Wald test) <dialog label="Wald test"> <tab label="Data"> <text>
+#. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Model"> <text>
+#. i18n: ectx: (Plotting fitted rating scale model) <dialog label="Plotting fitted rating scale model"> <tab label="Model"> <text>
+#. i18n: ectx: (Plotting fitted partial credit model) <dialog label="Plotting fitted partial credit model"> <tab label="Model"> <text>
+#: rkward/plugins/analysis/irt/tests/eRm_waldtest.xml:21
+#: rkward/plugins/plots/irt/polytomous/plot_pcm.xml:13
+#: rkward/plugins/plots/irt/polytomous/plot_rsm.xml:13
+#: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:25
+#, kde-format
+msgid "Only objects of class Rm are valid!"
+msgstr ""
+
+#. i18n: ectx: (Wald test) <dialog label="Wald test"> <tab label="Options"> <radio label="...">
+#. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Model"> <radio label="...">
+#: rkward/plugins/analysis/irt/tests/eRm_waldtest.xml:31
+#: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:27
+#, kde-format
+msgid "Split criterion for subject raw scores"
+msgstr ""
+
+#. i18n: ectx: (Wald test) <dialog label="Wald test"> <tab label="Options"> <radio label="Split criterion for subject raw scores"> <option label="...">
+#. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Model"> <radio label="Split criterion for subject raw scores"> <option label="...">
+#: rkward/plugins/analysis/irt/tests/eRm_waldtest.xml:32
+#: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:28
+#, kde-format
+msgid "Median"
+msgstr ""
+
+#. i18n: ectx: (Wald test) <dialog label="Wald test"> <tab label="Options"> <radio label="Split criterion for subject raw scores"> <option label="...">
+#. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Model"> <radio label="Split criterion for subject raw scores"> <option label="...">
+#: rkward/plugins/analysis/irt/tests/eRm_waldtest.xml:33
+#: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:29
+#, kde-format
+msgid "Mean"
+msgstr ""
+
+#. i18n: ectx: (Wald test) <dialog label="Wald test"> <tab label="Options"> <radio label="Split criterion for subject raw scores"> <option label="...">
+#: rkward/plugins/analysis/irt/tests/eRm_waldtest.xml:34
+#, kde-format
+msgid "Use dichotomous vector to define groups"
+msgstr ""
+
+#. i18n: ectx: (Wald test) <dialog label="Wald test"> <tab label="Options"> <varslot label="...">
+#. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Model"> <varslot label="...">
+#: rkward/plugins/analysis/irt/tests/eRm_waldtest.xml:36
+#: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:33
+#, kde-format
+msgid "Select grouping vector:"
+msgstr ""
+
+#. i18n: ectx: (Wald test) <dialog label="Wald test"> <tab label="Options"> <frame label="...">
+#: rkward/plugins/analysis/irt/tests/eRm_waldtest.xml:37
+#, kde-format
+msgid "Optimizer"
+msgstr ""
+
+#. i18n: ectx: (Wald test) <dialog label="Wald test"> [...] <dropdown label="Used optimizer:"> <option label="...">
+#: rkward/plugins/analysis/irt/tests/eRm_waldtest.xml:39
+#, kde-format
+msgid "nlm()"
+msgstr ""
+
+#. i18n: ectx: <components> <component label="...">
+#. i18n: ectx: (Loaded from Cronbach's alpha)
+#. i18n: ectx: (Cronbach's alpha) <dialog label="...">
+#: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.js:63
+#: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.xml:11
+#: rkward/plugins/irt.pluginmap:31
+#, kde-format
+msgid "Cronbach's alpha"
+msgstr ""
+
+#. i18n: ectx: (Loaded from Cronbach's alpha)
+#: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.js:63
+#, kde-format
+msgid "Dataset"
+msgstr ""
+
+#. i18n: ectx: (Loaded from Cronbach's alpha)
+#: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.js:65
+#, kde-format
+msgid "Subset"
+msgstr ""
+
+#. i18n: ectx: (Loaded from Cronbach's alpha)
+#: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.js:68
+#, kde-format
+msgid "Items:"
+msgstr ""
+
+#. i18n: ectx: (Loaded from Cronbach's alpha)
+#: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.js:68
+#, kde-format
+msgid "<br />Sample units:"
+msgstr ""
+
+#. i18n: ectx: (Loaded from Cronbach's alpha)
+#: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.js:71
+#, kde-format
+msgid "Effects on alpha if items are removed:"
+msgstr ""
+
+#. i18n: ectx: (Loaded from Cronbach's alpha)
+#: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.js:74
+#, no-c-format, kde-format
+msgid "%1% Confidence interval:"
+msgstr ""
+
+#. i18n: ectx: (Cronbach's alpha) <dialog label="Cronbach's alpha"> <tab label="Data"> <varslot label="...">
+#: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.xml:17
+#, kde-format
+msgid "Item responses:"
+msgstr ""
+
+#. i18n: ectx: (Cronbach's alpha) <dialog label="Cronbach's alpha"> <tab label="Data"> <text>
+#: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.xml:18
+#, kde-format
+msgid "Must be a matrix or data.frame, including the items as columns."
+msgstr ""
+
+#. i18n: ectx: (Cronbach's alpha) <dialog label="Cronbach's alpha"> <tab label="Data"> <frame label="Options"> <spinbox label="...">
+#: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.xml:25
+#, kde-format
+msgid "Number of Bootstrap samples:"
+msgstr ""
+
+#. i18n: ectx: (Cronbach's alpha) <dialog label="Cronbach's alpha"> <tab label="Data"> <frame label="Options"> <checkbox label="...">
+#: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.xml:26
+#, kde-format
+msgid "Compute standardized Cronbach's alpha"
+msgstr ""
+
+#. i18n: ectx: (Cronbach's alpha) <dialog label="Cronbach's alpha"> <tab label="Data"> <frame label="Options"> <checkbox label="...">
+#: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.xml:27
+#, kde-format
+msgid "Ignore missing values"
+msgstr ""
+
+#. i18n: ectx: (Cronbach's alpha) <dialog label="Cronbach's alpha"> <tab label="Data"> <frame label="Options"> <checkbox label="...">
+#: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.xml:28
+#, kde-format
+msgid "Compute Bootstrap confidence interval (CI)"
+msgstr ""
+
+#. i18n: ectx: (Cronbach's alpha) <dialog label="Cronbach's alpha"> <tab label="Data"> <frame label="Options"> <spinbox label="...">
+#: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.xml:29
+#, kde-format
+msgid "Confidence interval:"
+msgstr ""
+
+#. i18n: ectx: (Loaded from Goodness of Fit (Rasch model))
+#: rkward/plugins/analysis/irt/tests/ltm_gof_rasch.js:18
+#, no-c-format, kde-format
+msgid "Goodness of Fit for Rasch Models (%1)"
+msgstr ""
+
+#. i18n: ectx: (Goodness of Fit (Rasch model)) <dialog label="...">
+#: rkward/plugins/analysis/irt/tests/ltm_gof_rasch.xml:9
+#, kde-format
+msgid "Goodness of Fit (Rasch model)"
+msgstr ""
+
+#. i18n: ectx: (Goodness of Fit (Rasch model)) <dialog label="Goodness of Fit (Rasch model)"> <tab label="Data"> <varslot label="...">
+#. i18n: ectx: (Item-fit statistics for Rasch, LTM and 3PM) <dialog label="Item-fit statistics for Rasch, LTM and 3PM"> <tab label="Data"> <varslot label="...">
+#. i18n: ectx: (Person-fit statistics for Rasch, LTM and 3PM) <dialog label="Person-fit statistics for Rasch, LTM and 3PM"> <tab label="Data"> <varslot label="...">
+#: rkward/plugins/analysis/irt/tests/ltm_gof_rasch.xml:15
+#: rkward/plugins/analysis/irt/tests/ltm_item_fit.xml:18
+#: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:21
+#, kde-format
+msgid "Choose fitted model to examine:"
+msgstr ""
+
+#. i18n: ectx: (Goodness of Fit (Rasch model)) <dialog label="Goodness of Fit (Rasch model)"> <tab label="Data"> <text>
+#. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Model"> <text>
+#: rkward/plugins/analysis/irt/tests/ltm_gof_rasch.xml:16
+#: rkward/plugins/plots/irt/dichotomous/plot_rasch.xml:21
+#, kde-format
+msgid "Only objects of class rasch are valid!"
+msgstr ""
+
+#. i18n: ectx: (Goodness of Fit (Rasch model)) <dialog label="Goodness of Fit (Rasch model)"> <tab label="Data"> <frame label="...">
+#: rkward/plugins/analysis/irt/tests/ltm_gof_rasch.xml:18
+#, kde-format
+msgid "Bootstrap options"
+msgstr ""
+
+#. i18n: ectx: (Goodness of Fit (Rasch model)) <dialog label="Goodness of Fit (Rasch model)"> <tab label="Data"> <frame label="Bootstrap options"> <spinbox label="...">
+#: rkward/plugins/analysis/irt/tests/ltm_gof_rasch.xml:19
+#, kde-format
+msgid "Number of samples"
+msgstr ""
+
+#. i18n: ectx: (Loaded from Item-fit statistics for Rasch, LTM and 3PM)
+#: rkward/plugins/analysis/irt/tests/ltm_item_fit.js:36
+#, no-c-format, kde-format
+msgid "Item-fit statistics (%1)"
+msgstr ""
+
+#. i18n: ectx: (Loaded from Item-fit statistics for Rasch, LTM and 3PM)
+#: rkward/plugins/analysis/irt/tests/ltm_item_fit.js:40
+#, kde-format
+msgid "Alternative: Items do not fit the model"
+msgstr ""
+
+#. i18n: ectx: (Loaded from Item-fit statistics for Rasch, LTM and 3PM)
+#: rkward/plugins/analysis/irt/tests/ltm_item_fit.js:41
+#, kde-format
+msgid "Ability Categories:"
+msgstr ""
+
+#. i18n: ectx: (Loaded from Unidimensionality check (Rasch, LTM, 3PM))
+#. i18n: ectx: (Loaded from Item-fit statistics for Rasch, LTM and 3PM)
+#: rkward/plugins/analysis/irt/tests/ltm_item_fit.js:43
+#: rkward/plugins/analysis/irt/tests/ltm_unidimensional.js:31
+#, kde-format
+msgid "Monte Carlo samples:"
+msgstr ""
+
+#. i18n: ectx: (Loaded from Item-fit statistics for Rasch, LTM and 3PM)
+#: rkward/plugins/analysis/irt/tests/ltm_item_fit.js:44
+#, kde-format
+msgid "Item-Fit Statistics and P-values:"
+msgstr ""
+
+#. i18n: ectx: (Item-fit statistics for Rasch, LTM and 3PM) <dialog label="...">
+#: rkward/plugins/analysis/irt/tests/ltm_item_fit.xml:12
+#, kde-format
+msgid "Item-fit statistics for Rasch, LTM and 3PM"
+msgstr ""
+
+#. i18n: ectx: (Item-fit statistics for Rasch, LTM and 3PM) <dialog label="Item-fit statistics for Rasch, LTM and 3PM"> <tab label="Data"> <text>
+#. i18n: ectx: (Person-fit statistics for Rasch, LTM and 3PM) <dialog label="Person-fit statistics for Rasch, LTM and 3PM"> <tab label="Data"> <text>
+#: rkward/plugins/analysis/irt/tests/ltm_item_fit.xml:19
+#: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:22
+#, kde-format
+msgid "Only objects of class ltm, rasch and tpm are valid!"
+msgstr ""
+
+#. i18n: ectx: (Item-fit statistics for Rasch, LTM and 3PM) <dialog label="Item-fit statistics for Rasch, LTM and 3PM"> <tab label="Options"> <frame label="...">
+#: rkward/plugins/analysis/irt/tests/ltm_item_fit.xml:27
+#, kde-format
+msgid "Grouping of sample units"
+msgstr ""
+
+#. i18n: ectx: (Item-fit statistics for Rasch, LTM and 3PM) <dialog label="Item-fit statistics for Rasch, LTM and 3PM"> <tab label="Options"> <frame label="Grouping of sample units"> <spinbox label="...">
+#: rkward/plugins/analysis/irt/tests/ltm_item_fit.xml:28
+#, kde-format
+msgid "Number of categories"
+msgstr ""
+
+#. i18n: ectx: (Item-fit statistics for Rasch, LTM and 3PM) <dialog label="Item-fit statistics for Rasch, LTM and 3PM"> <tab label="Options"> <frame label="Grouping of sample units"> <dropdown label="...">
+#: rkward/plugins/analysis/irt/tests/ltm_item_fit.xml:29
+#, kde-format
+msgid "Summarize the ability estimates by"
+msgstr ""
+
+#. i18n: ectx: (Item-fit statistics for Rasch, LTM and 3PM) <dialog label="Item-fit statistics for Rasch, LTM and 3PM"> [...] <dropdown label="Summarize the ability estimates by"> <option label="...">
+#: rkward/plugins/analysis/irt/tests/ltm_item_fit.xml:30
+#, kde-format
+msgid "Median of each group"
+msgstr ""
+
+#. i18n: ectx: (Item-fit statistics for Rasch, LTM and 3PM) <dialog label="Item-fit statistics for Rasch, LTM and 3PM"> [...] <dropdown label="Summarize the ability estimates by"> <option label="...">
+#: rkward/plugins/analysis/irt/tests/ltm_item_fit.xml:31
+#, kde-format
+msgid "Mean of each group"
+msgstr ""
+
+#. i18n: ectx: (Item-fit statistics for Rasch, LTM and 3PM) <dialog label="Item-fit statistics for Rasch, LTM and 3PM"> <tab label="Options"> <radio label="...">
+#. i18n: ectx: (Person-fit statistics for Rasch, LTM and 3PM) <dialog label="Person-fit statistics for Rasch, LTM and 3PM"> <tab label="Options"> <radio label="...">
+#: rkward/plugins/analysis/irt/tests/ltm_item_fit.xml:34
+#: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:42
+#, kde-format
+msgid "p value assumptions"
+msgstr ""
+
+#. i18n: ectx: (Item-fit statistics for Rasch, LTM and 3PM) <dialog label="Item-fit statistics for Rasch, LTM and 3PM"> <tab label="Options"> <radio label="p value assumptions"> <option label="...">
+#: rkward/plugins/analysis/irt/tests/ltm_item_fit.xml:35
+#, kde-format
+msgid "Assume chi-squared distribution"
+msgstr ""
+
+#. i18n: ectx: (Item-fit statistics for Rasch, LTM and 3PM) <dialog label="Item-fit statistics for Rasch, LTM and 3PM"> <tab label="Options"> <radio label="p value assumptions"> <option label="...">
+#. i18n: ectx: (Person-fit statistics for Rasch, LTM and 3PM) <dialog label="Person-fit statistics for Rasch, LTM and 3PM"> <tab label="Options"> <radio label="p value assumptions"> <option label="...">
+#: rkward/plugins/analysis/irt/tests/ltm_item_fit.xml:36
+#: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:44
+#, kde-format
+msgid "Use Monte Carlo procedure to approximate distribution"
+msgstr ""
+
+#. i18n: ectx: (Item-fit statistics for Rasch, LTM and 3PM) <dialog label="Item-fit statistics for Rasch, LTM and 3PM"> <tab label="Options"> <spinbox label="...">
+#. i18n: ectx: (Person-fit statistics for Rasch, LTM and 3PM) <dialog label="Person-fit statistics for Rasch, LTM and 3PM"> <tab label="Options"> <spinbox label="...">
+#: rkward/plugins/analysis/irt/tests/ltm_item_fit.xml:38
+#: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:46
+#, kde-format
+msgid "Number of replications"
+msgstr ""
+
+#. i18n: ectx: (Loaded from Person-fit statistics for Rasch, LTM and 3PM)
+#: rkward/plugins/analysis/irt/tests/ltm_person_fit.js:35
+#, no-c-format, kde-format
+msgid "Person-fit statistics (%1)"
+msgstr ""
+
+#. i18n: ectx: (Loaded from Person-fit statistics for Rasch, LTM and 3PM)
+#: rkward/plugins/analysis/irt/tests/ltm_person_fit.js:39
+#, kde-format
+msgid ""
+"Response patterns, person-fit statistics (L0, Lz) and probabilities for each "
+"response pattern (Pr):"
+msgstr ""
+
+#. i18n: ectx: (Person-fit statistics for Rasch, LTM and 3PM) <dialog label="...">
+#: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:15
+#, kde-format
+msgid "Person-fit statistics for Rasch, LTM and 3PM"
+msgstr ""
+
+#. i18n: ectx: (Person-fit statistics for Rasch, LTM and 3PM) <dialog label="Person-fit statistics for Rasch, LTM and 3PM"> <tab label="Data"> <radio label="...">
+#: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:24
+#, kde-format
+msgid "Alternative hypothesis to test"
+msgstr ""
+
+#. i18n: ectx: (Person-fit statistics for Rasch, LTM and 3PM) <dialog label="Person-fit statistics for Rasch, LTM and 3PM"> <tab label="Data"> <radio label="Alternative hypothesis to test"> <option label="...">
+#: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:25
+#, kde-format
+msgid "Inconsistent response pattern under the estimated model"
+msgstr ""
+
+#. i18n: ectx: (Person-fit statistics for Rasch, LTM and 3PM) <dialog label="Person-fit statistics for Rasch, LTM and 3PM"> <tab label="Data"> <radio label="Alternative hypothesis to test"> <option label="...">
+#: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:26
+#, kde-format
+msgid "More consistent response pattern than the model predicts"
+msgstr ""
+
+#. i18n: ectx: (Person-fit statistics for Rasch, LTM and 3PM) <dialog label="Person-fit statistics for Rasch, LTM and 3PM"> <tab label="Data"> <radio label="Alternative hypothesis to test"> <option label="...">
+#: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:27
+#, kde-format
+msgid "Two sided (test both of the above)"
+msgstr ""
+
+#. i18n: ectx: (Person-fit statistics for Rasch, LTM and 3PM) <dialog label="Person-fit statistics for Rasch, LTM and 3PM"> <tab label="Options"> <radio label="...">
+#: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:37
+#, kde-format
+msgid "Response pattern"
+msgstr ""
+
+#. i18n: ectx: (Person-fit statistics for Rasch, LTM and 3PM) <dialog label="Person-fit statistics for Rasch, LTM and 3PM"> <tab label="Options"> <radio label="Response pattern"> <option label="...">
+#: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:38
+#, kde-format
+msgid "Compute for observed response pattern"
+msgstr ""
+
+#. i18n: ectx: (Person-fit statistics for Rasch, LTM and 3PM) <dialog label="Person-fit statistics for Rasch, LTM and 3PM"> <tab label="Options"> <radio label="Response pattern"> <option label="...">
+#: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:39
+#, kde-format
+msgid "Compute for given response pattern"
+msgstr ""
+
+#. i18n: ectx: (Person-fit statistics for Rasch, LTM and 3PM) <dialog label="Person-fit statistics for Rasch, LTM and 3PM"> <tab label="Options"> <varslot label="...">
+#: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:41
+#, kde-format
+msgid "Select matrix or data.frame with pattern to use:"
+msgstr ""
+
+#. i18n: ectx: (Person-fit statistics for Rasch, LTM and 3PM) <dialog label="Person-fit statistics for Rasch, LTM and 3PM"> <tab label="Options"> <radio label="p value assumptions"> <option label="...">
+#: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:43
+#, kde-format
+msgid "Assume standard normal distribution"
+msgstr ""
+
+#. i18n: ectx: (Loaded from Unidimensionality check (Rasch, LTM, 3PM))
+#: rkward/plugins/analysis/irt/tests/ltm_unidimensional.js:21
+#, no-c-format, kde-format
+msgid "Unidimensionality check (%1)"
+msgstr ""
+
+#. i18n: ectx: (Loaded from Unidimensionality check (Rasch, LTM, 3PM))
+#: rkward/plugins/analysis/irt/tests/ltm_unidimensional.js:25
+#, kde-format
+msgid "Matrix of tetrachoric correlations:"
+msgstr ""
+
+#. i18n: ectx: (Loaded from Unidimensionality check (Rasch, LTM, 3PM))
+#: rkward/plugins/analysis/irt/tests/ltm_unidimensional.js:27
+#, kde-format
+msgid "Unidimensionality Check using Modified Parallel Analysis:"
+msgstr ""
+
+#. i18n: ectx: (Loaded from Unidimensionality check (Rasch, LTM, 3PM))
+#: rkward/plugins/analysis/irt/tests/ltm_unidimensional.js:28
+#, kde-format
+msgid ""
+"Alternative hypothesis: <em>The second eigenvalue of the observed data is "
+"substantially larger than the second eigenvalue of data under the assumed "
+"IRT model</em>"
+msgstr ""
+
+#. i18n: ectx: (Loaded from Unidimensionality check (Rasch, LTM, 3PM))
+#: rkward/plugins/analysis/irt/tests/ltm_unidimensional.js:29
+#, kde-format
+msgid "Second eigenvalue in the observed data:"
+msgstr ""
+
+#. i18n: ectx: (Loaded from Unidimensionality check (Rasch, LTM, 3PM))
+#: rkward/plugins/analysis/irt/tests/ltm_unidimensional.js:30
+#, kde-format
+msgid "Average of second eigenvalues in Monte Carlo samples:"
+msgstr ""
+
+#. i18n: ectx: (Loaded from Unidimensionality check (Rasch, LTM, 3PM))
+#: rkward/plugins/analysis/irt/tests/ltm_unidimensional.js:32
+#, kde-format
+msgid "p-value:"
+msgstr ""
+
+#. i18n: ectx: <components> <component label="...">
+#. i18n: ectx: (Unidimensionality check (Rasch, LTM, 3PM)) <dialog label="...">
+#: rkward/plugins/analysis/irt/tests/ltm_unidimensional.xml:11
+#: rkward/plugins/irt.pluginmap:34
+#, kde-format
+msgid "Unidimensionality check (Rasch, LTM, 3PM)"
+msgstr ""
+
+#. i18n: ectx: (Unidimensionality check (Rasch, LTM, 3PM)) <dialog label="Unidimensionality check (Rasch, LTM, 3PM)"> <tab label="Data"> <varslot label="...">
+#: rkward/plugins/analysis/irt/tests/ltm_unidimensional.xml:17
+#, kde-format
+msgid "Choose fitted model to check:"
+msgstr ""
+
+#. i18n: ectx: (Unidimensionality check (Rasch, LTM, 3PM)) <dialog label="Unidimensionality check (Rasch, LTM, 3PM)"> <tab label="Data"> <text>
+#: rkward/plugins/analysis/irt/tests/ltm_unidimensional.xml:18
+#, kde-format
+msgid "Only objects of class rasch, ltm or tpm are valid!"
+msgstr ""
+
+#. i18n: ectx: (Unidimensionality check (Rasch, LTM, 3PM)) <dialog label="Unidimensionality check (Rasch, LTM, 3PM)"> <tab label="Data"> <frame label="...">
+#: rkward/plugins/analysis/irt/tests/ltm_unidimensional.xml:20
+#, kde-format
+msgid "Monte Carlo options"
+msgstr ""
+
+#. i18n: ectx: (Unidimensionality check (Rasch, LTM, 3PM)) <dialog label="Unidimensionality check (Rasch, LTM, 3PM)"> <tab label="Data"> <frame label="Monte Carlo options"> <spinbox label="...">
+#: rkward/plugins/analysis/irt/tests/ltm_unidimensional.xml:21
+#, kde-format
+msgid "Number of samples:"
+msgstr ""
+
+#. i18n: ectx: <about name="...">
+#. i18n: ectx: <hierarchy> <menu label="Analysis"> <menu label="...">
+#. i18n: ectx: <hierarchy> <menu label="Plots"> <menu label="...">
+#: rkward/plugins/irt.pluginmap:5 rkward/plugins/irt.pluginmap:51
+#: rkward/plugins/irt.pluginmap:78
+#, kde-format
+msgid "Item Response Theory"
+msgstr ""
+
+#. i18n: ectx: <about shortinfo="...">
+#: rkward/plugins/irt.pluginmap:5
+#, kde-format
+msgid "Item Response Theory Plugins. Part of the official RKWard distribution"
+msgstr ""
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/irt.pluginmap:19
+#, kde-format
+msgid "Rasch model fit"
+msgstr ""
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/irt.pluginmap:20
+#, kde-format
+msgid "Two parameter logistic model fit"
+msgstr ""
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/irt.pluginmap:21
+#, kde-format
+msgid "Birnbaum three parameter model fit"
+msgstr ""
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/irt.pluginmap:22
+#, kde-format
+msgid "Linear logistic test model fit"
+msgstr ""
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/irt.pluginmap:24
+#, kde-format
+msgid "Graded response model fit"
+msgstr ""
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/irt.pluginmap:25
+#, kde-format
+msgid "Rating scale model fit"
+msgstr ""
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/irt.pluginmap:26
+#, kde-format
+msgid "Partial credit model fit"
+msgstr ""
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/irt.pluginmap:27
+#, kde-format
+msgid "Generalized partial credit model fit"
+msgstr ""
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/irt.pluginmap:28
+#, kde-format
+msgid "Linear rating scale model fit"
+msgstr ""
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/irt.pluginmap:29
+#, kde-format
+msgid "Linear partial credit model fit"
+msgstr ""
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/irt.pluginmap:33
+#, kde-format
+msgid "Goodness of Fit (Rasch)"
+msgstr ""
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/irt.pluginmap:35
+#, kde-format
+msgid "Item-fit statistics (Rasch, LTM, 3PM)"
+msgstr ""
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/irt.pluginmap:36
+#, kde-format
+msgid "Person-fit statistics (Rasch, LTM, 3PM)"
+msgstr ""
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/irt.pluginmap:37
+#, kde-format
+msgid "Wald test (RSM, PCM)"
+msgstr ""
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/irt.pluginmap:38
+#, kde-format
+msgid "Andersen LR Plot (RSM, PCM)"
+msgstr ""
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/irt.pluginmap:40
+#, kde-format
+msgid "Plot fitted Rasch model"
+msgstr ""
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/irt.pluginmap:41
+#, kde-format
+msgid "Plot fitted two parameter logistic model"
+msgstr ""
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/irt.pluginmap:42
+#, kde-format
+msgid "Plot fitted Birnbaum three parameter model"
+msgstr ""
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/irt.pluginmap:44
+#, kde-format
+msgid "Plot fitted graded response model"
+msgstr ""
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/irt.pluginmap:45
+#, kde-format
+msgid "Plot fitted rating scale model"
+msgstr ""
+
+#. i18n: ectx: <components> <component label="...">
+#: rkward/plugins/irt.pluginmap:46
+#, kde-format
+msgid "Plot fitted partial credit model"
+msgstr ""
+
+#. i18n: ectx: <hierarchy> <menu label="...">
+#: rkward/plugins/irt.pluginmap:50
+#, kde-format
+msgid "Analysis"
+msgstr ""
+
+#. i18n: ectx: <hierarchy> <menu label="Analysis"> <menu label="Item Response Theory"> <menu label="...">
+#. i18n: ectx: <hierarchy> <menu label="Plots"> <menu label="Item Response Theory"> <menu label="...">
+#: rkward/plugins/irt.pluginmap:52 rkward/plugins/irt.pluginmap:79
+#, kde-format
+msgid "Dichotomous data"
+msgstr ""
+
+#. i18n: ectx: <hierarchy> <menu label="Analysis"> <menu label="Item Response Theory"> <menu label="...">
+#. i18n: ectx: <hierarchy> <menu label="Plots"> <menu label="Item Response Theory"> <menu label="...">
+#: rkward/plugins/irt.pluginmap:58 rkward/plugins/irt.pluginmap:84
+#, kde-format
+msgid "Polytomous data"
+msgstr ""
+
+#. i18n: ectx: <hierarchy> <menu label="Analysis"> <menu label="Item Response Theory"> <menu label="...">
+#: rkward/plugins/irt.pluginmap:66
+#, kde-format
+msgid "Tests"
+msgstr ""
+
+#. i18n: ectx: <hierarchy> <menu label="...">
+#: rkward/plugins/irt.pluginmap:77
+#, kde-format
+msgid "Plots"
+msgstr ""
+
+#. i18n: ectx: (Loaded from Plotting fitted 2PL model)
+#: rkward/plugins/plots/irt/dichotomous/plot_ltm.js:77
+#, kde-format
+msgid "Two parameter logistic model plot"
+msgstr ""
+
+#. i18n: ectx: (Loaded from Plotting fitted Rasch model)
+#. i18n: ectx: (Loaded from Plotting fitted 2PL model)
+#. i18n: ectx: (Loaded from Plotting fitted 3PL model)
+#. i18n: ectx: (Loaded from Plotting fitted graded response model)
+#: rkward/plugins/plots/irt/dichotomous/plot_ltm.js:88
+#: rkward/plugins/plots/irt/dichotomous/plot_rasch.js:85
+#: rkward/plugins/plots/irt/dichotomous/plot_tpm.js:85
+#: rkward/plugins/plots/irt/polytomous/plot_grm.js:93
+#, kde-format
+msgctxt "R code comment"
+msgid "two steps are needed to plot standard error curves"
+msgstr ""
+
+#. i18n: ectx: (Loaded from Plotting fitted Rasch model)
+#. i18n: ectx: (Loaded from Plotting fitted 2PL model)
+#. i18n: ectx: (Loaded from Plotting fitted 3PL model)
+#. i18n: ectx: (Loaded from Plotting fitted graded response model)
+#: rkward/plugins/plots/irt/dichotomous/plot_ltm.js:89
+#: rkward/plugins/plots/irt/dichotomous/plot_rasch.js:86
+#: rkward/plugins/plots/irt/dichotomous/plot_tpm.js:86
+#: rkward/plugins/plots/irt/polytomous/plot_grm.js:94
+#, kde-format
+msgctxt "R code comment"
+msgid "first some values are generated..."
+msgstr ""
+
+#. i18n: ectx: (Loaded from Plotting fitted Rasch model)
+#. i18n: ectx: (Loaded from Plotting fitted 2PL model)
+#. i18n: ectx: (Loaded from Plotting fitted 3PL model)
+#. i18n: ectx: (Loaded from Plotting fitted graded response model)
+#: rkward/plugins/plots/irt/dichotomous/plot_ltm.js:94
+#: rkward/plugins/plots/irt/dichotomous/plot_rasch.js:91
+#: rkward/plugins/plots/irt/dichotomous/plot_tpm.js:91
+#: rkward/plugins/plots/irt/polytomous/plot_grm.js:99
+#, kde-format
+msgctxt "R code comment"
+msgid "... and then they're used to plot the curves:"
+msgstr ""
+
+#. i18n: ectx: (Loaded from Plotting fitted Rasch model)
+#. i18n: ectx: (Loaded from Plotting fitted 2PL model)
+#. i18n: ectx: (Loaded from Plotting fitted 3PL model)
+#. i18n: ectx: (Loaded from Plotting fitted graded response model)
+#: rkward/plugins/plots/irt/dichotomous/plot_ltm.js:98
+#: rkward/plugins/plots/irt/dichotomous/plot_rasch.js:95
+#: rkward/plugins/plots/irt/dichotomous/plot_tpm.js:95
+#: rkward/plugins/plots/irt/polytomous/plot_grm.js:103
+#, kde-format
+msgctxt "Item response theory"
+msgid "Ability"
+msgstr ""
+
+#. i18n: ectx: (Loaded from Plotting fitted Rasch model)
+#. i18n: ectx: (Loaded from Plotting fitted 2PL model)
+#. i18n: ectx: (Loaded from Plotting fitted 3PL model)
+#. i18n: ectx: (Loaded from Plotting fitted graded response model)
+#: rkward/plugins/plots/irt/dichotomous/plot_ltm.js:99
+#: rkward/plugins/plots/irt/dichotomous/plot_rasch.js:96
+#: rkward/plugins/plots/irt/dichotomous/plot_tpm.js:96
+#: rkward/plugins/plots/irt/polytomous/plot_grm.js:104
+#, kde-format
+msgid "Standard Error"
+msgstr ""
+
+#. i18n: ectx: (Loaded from Plotting fitted Rasch model)
+#. i18n: ectx: (Loaded from Plotting fitted 2PL model)
+#. i18n: ectx: (Loaded from Plotting fitted 3PL model)
+#. i18n: ectx: (Loaded from Plotting fitted graded response model)
+#: rkward/plugins/plots/irt/dichotomous/plot_ltm.js:100
+#: rkward/plugins/plots/irt/dichotomous/plot_rasch.js:97
+#: rkward/plugins/plots/irt/dichotomous/plot_tpm.js:97
+#: rkward/plugins/plots/irt/polytomous/plot_grm.js:105
+#, kde-format
+msgid "Standard Error of Measurement"
+msgstr ""
+
+#. i18n: ectx: (Plotting fitted 2PL model) <dialog label="...">
+#: rkward/plugins/plots/irt/dichotomous/plot_ltm.xml:15
+#, kde-format
+msgid "Plotting fitted 2PL model"
+msgstr ""
+
+#. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="...">
+#. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="...">
+#. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="...">
+#. i18n: ectx: (Plotting fitted 3PL model) <dialog label="Plotting fitted 3PL model"> <tab label="...">
+#. i18n: ectx: (Plotting fitted graded response model) <dialog label="Plotting fitted graded response model"> <tab label="...">
+#. i18n: ectx: (Plotting fitted rating scale model) <dialog label="Plotting fitted rating scale model"> <tab label="...">
+#. i18n: ectx: (Plotting fitted partial credit model) <dialog label="Plotting fitted partial credit model"> <tab label="...">
+#: rkward/plugins/plots/irt/dichotomous/plot_ltm.xml:17
+#: rkward/plugins/plots/irt/dichotomous/plot_rasch.xml:16
+#: rkward/plugins/plots/irt/dichotomous/plot_tpm.xml:16
+#: rkward/plugins/plots/irt/polytomous/plot_grm.xml:16
+#: rkward/plugins/plots/irt/polytomous/plot_pcm.xml:8
+#: rkward/plugins/plots/irt/polytomous/plot_rsm.xml:8
+#: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:20
+#, kde-format
+msgid "Model"
+msgstr ""
+
+#. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Model"> <varslot label="...">
+#. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="Model"> <varslot label="...">
+#. i18n: ectx: (Plotting fitted 3PL model) <dialog label="Plotting fitted 3PL model"> <tab label="Model"> <varslot label="...">
+#. i18n: ectx: (Plotting fitted graded response model) <dialog label="Plotting fitted graded response model"> <tab label="Model"> <varslot label="...">
+#. i18n: ectx: (Plotting fitted rating scale model) <dialog label="Plotting fitted rating scale model"> <tab label="Model"> <varslot label="...">
+#. i18n: ectx: (Plotting fitted partial credit model) <dialog label="Plotting fitted partial credit model"> <tab label="Model"> <varslot label="...">
+#: rkward/plugins/plots/irt/dichotomous/plot_ltm.xml:21
+#: rkward/plugins/plots/irt/dichotomous/plot_rasch.xml:20
+#: rkward/plugins/plots/irt/dichotomous/plot_tpm.xml:20
+#: rkward/plugins/plots/irt/polytomous/plot_grm.xml:20
+#: rkward/plugins/plots/irt/polytomous/plot_pcm.xml:12
+#: rkward/plugins/plots/irt/polytomous/plot_rsm.xml:12
+#, kde-format
+msgid "Choose fitted model to plot:"
+msgstr ""
+
+#. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="Model"> <text>
+#: rkward/plugins/plots/irt/dichotomous/plot_ltm.xml:22
+#, kde-format
+msgid "Only objects of class ltm are valid!"
+msgstr ""
+
+#. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="...">
+#. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="...">
+#. i18n: ectx: (Plotting fitted 3PL model) <dialog label="Plotting fitted 3PL model"> <tab label="...">
+#. i18n: ectx: (Plotting fitted graded response model) <dialog label="Plotting fitted graded response model"> <tab label="...">
+#: rkward/plugins/plots/irt/dichotomous/plot_ltm.xml:28
+#: rkward/plugins/plots/irt/dichotomous/plot_rasch.xml:27
+#: rkward/plugins/plots/irt/dichotomous/plot_tpm.xml:27
+#: rkward/plugins/plots/irt/polytomous/plot_grm.xml:27
+#, kde-format
+msgid "Plot type"
+msgstr ""
+
+#. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Plot type"> <radio label="...">
+#. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="Plot type"> <radio label="...">
+#. i18n: ectx: (Plotting fitted 3PL model) <dialog label="Plotting fitted 3PL model"> <tab label="Plot type"> <radio label="...">
+#. i18n: ectx: (Plotting fitted graded response model) <dialog label="Plotting fitted graded response model"> <tab label="Plot type"> <radio label="...">
+#: rkward/plugins/plots/irt/dichotomous/plot_ltm.xml:30
+#: rkward/plugins/plots/irt/dichotomous/plot_rasch.xml:29
+#: rkward/plugins/plots/irt/dichotomous/plot_tpm.xml:29
+#: rkward/plugins/plots/irt/polytomous/plot_grm.xml:29
+#, kde-format
+msgid "Type of plot"
+msgstr ""
+
+#. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Plot type"> <radio label="Type of plot"> <option label="...">
+#. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="Plot type"> <radio label="Type of plot"> <option label="...">
+#. i18n: ectx: (Plotting fitted 3PL model) <dialog label="Plotting fitted 3PL model"> <tab label="Plot type"> <radio label="Type of plot"> <option label="...">
+#. i18n: ectx: (Plotting fitted graded response model) <dialog label="Plotting fitted graded response model"> <tab label="Plot type"> <radio label="Type of plot"> <option label="...">
+#: rkward/plugins/plots/irt/dichotomous/plot_ltm.xml:31
+#: rkward/plugins/plots/irt/dichotomous/plot_rasch.xml:30
+#: rkward/plugins/plots/irt/dichotomous/plot_tpm.xml:30
+#: rkward/plugins/plots/irt/polytomous/plot_grm.xml:30
+#, kde-format
+msgid "Plot item(s)"
+msgstr ""
+
+#. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Plot type"> <radio label="Type of plot"> <option label="...">
+#. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="Plot type"> <radio label="Type of plot"> <option label="...">
+#. i18n: ectx: (Plotting fitted 3PL model) <dialog label="Plotting fitted 3PL model"> <tab label="Plot type"> <radio label="Type of plot"> <option label="...">
+#. i18n: ectx: (Plotting fitted graded response model) <dialog label="Plotting fitted graded response model"> <tab label="Plot type"> <radio label="Type of plot"> <option label="...">
+#: rkward/plugins/plots/irt/dichotomous/plot_ltm.xml:32
+#: rkward/plugins/plots/irt/dichotomous/plot_rasch.xml:31
+#: rkward/plugins/plots/irt/dichotomous/plot_tpm.xml:31
+#: rkward/plugins/plots/irt/polytomous/plot_grm.xml:31
+#, kde-format
+msgid "Plot test information"
+msgstr ""
+
+#. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Plot type"> <radio label="Type of plot"> <option label="...">
+#. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="Plot type"> <radio label="Type of plot"> <option label="...">
+#. i18n: ectx: (Plotting fitted 3PL model) <dialog label="Plotting fitted 3PL model"> <tab label="Plot type"> <radio label="Type of plot"> <option label="...">
+#. i18n: ectx: (Plotting fitted graded response model) <dialog label="Plotting fitted graded response model"> <tab label="Plot type"> <radio label="Type of plot"> <option label="...">
+#: rkward/plugins/plots/irt/dichotomous/plot_ltm.xml:33
+#: rkward/plugins/plots/irt/dichotomous/plot_rasch.xml:32
+#: rkward/plugins/plots/irt/dichotomous/plot_tpm.xml:32
+#: rkward/plugins/plots/irt/polytomous/plot_grm.xml:32
+#, kde-format
+msgid "Plot standard error"
+msgstr ""
+
+#. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="Plot type"> <radio label="Type of plot"> <option label="...">
+#: rkward/plugins/plots/irt/dichotomous/plot_ltm.xml:34
+#, kde-format
+msgid "Scatterplot of standardized loadings (2-factor model)"
+msgstr ""
+
+#. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Plot type"> <radio label="...">
+#. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="Plot type"> <radio label="...">
+#. i18n: ectx: (Plotting fitted 3PL model) <dialog label="Plotting fitted 3PL model"> <tab label="Plot type"> <radio label="...">
+#. i18n: ectx: (Plotting fitted graded response model) <dialog label="Plotting fitted graded response model"> <tab label="Plot type"> <radio label="...">
+#: rkward/plugins/plots/irt/dichotomous/plot_ltm.xml:36
+#: rkward/plugins/plots/irt/dichotomous/plot_rasch.xml:34
+#: rkward/plugins/plots/irt/dichotomous/plot_tpm.xml:34
+#: rkward/plugins/plots/irt/polytomous/plot_grm.xml:34
+#, kde-format
+msgid "Type of item plot"
+msgstr ""
+
+#. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Plot type"> <radio label="Type of item plot"> <option label="...">
+#. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="Plot type"> <radio label="Type of item plot"> <option label="...">
+#. i18n: ectx: (Plotting fitted 3PL model) <dialog label="Plotting fitted 3PL model"> <tab label="Plot type"> <radio label="Type of item plot"> <option label="...">
+#. i18n: ectx: (Plotting fitted graded response model) <dialog label="Plotting fitted graded response model"> <tab label="Plot type"> <radio label="Type of item plot"> <option label="...">
+#: rkward/plugins/plots/irt/dichotomous/plot_ltm.xml:37
+#: rkward/plugins/plots/irt/dichotomous/plot_rasch.xml:35
+#: rkward/plugins/plots/irt/dichotomous/plot_tpm.xml:35
+#: rkward/plugins/plots/irt/polytomous/plot_grm.xml:35
+#, kde-format
+msgid "Item characteristic curve"
+msgstr ""
+
+#. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Plot type"> <radio label="Type of item plot"> <option label="...">
+#. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="Plot type"> <radio label="Type of item plot"> <option label="...">
+#. i18n: ectx: (Plotting fitted 3PL model) <dialog label="Plotting fitted 3PL model"> <tab label="Plot type"> <radio label="Type of item plot"> <option label="...">
+#. i18n: ectx: (Plotting fitted graded response model) <dialog label="Plotting fitted graded response model"> <tab label="Plot type"> <radio label="Type of item plot"> <option label="...">
+#: rkward/plugins/plots/irt/dichotomous/plot_ltm.xml:38
+#: rkward/plugins/plots/irt/dichotomous/plot_rasch.xml:36
+#: rkward/plugins/plots/irt/dichotomous/plot_tpm.xml:36
+#: rkward/plugins/plots/irt/polytomous/plot_grm.xml:36
+#, kde-format
+msgid "Item information curve"
+msgstr ""
+
+#. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Plot options"> <frame label="...">
+#. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Plot type"> <frame label="...">
+#. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="Plot type"> <frame label="...">
+#. i18n: ectx: (Plotting fitted 3PL model) <dialog label="Plotting fitted 3PL model"> <tab label="Plot type"> <frame label="...">
+#. i18n: ectx: (Plotting fitted graded response model) <dialog label="Plotting fitted graded response model"> <tab label="Plot type"> <frame label="...">
+#. i18n: ectx: (Plotting fitted rating scale model) <dialog label="Plotting fitted rating scale model"> <tab label="Options"> <frame label="...">
+#. i18n: ectx: (Plotting fitted partial credit model) <dialog label="Plotting fitted partial credit model"> <tab label="Options"> <frame label="...">
+#: rkward/plugins/plots/irt/dichotomous/plot_ltm.xml:40
+#: rkward/plugins/plots/irt/dichotomous/plot_rasch.xml:38
+#: rkward/plugins/plots/irt/dichotomous/plot_tpm.xml:38
+#: rkward/plugins/plots/irt/polytomous/plot_grm.xml:40
+#: rkward/plugins/plots/irt/polytomous/plot_pcm.xml:21
+#: rkward/plugins/plots/irt/polytomous/plot_rsm.xml:21
+#: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:41
+#, kde-format
+msgid "Optional item selection"
+msgstr ""
+
+#. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Plot options"> <frame label="Optional item selection"> <input label="...">
+#. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Plot type"> <frame label="Optional item selection"> <input label="...">
+#. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="Plot type"> <frame label="Optional item selection"> <input label="...">
+#. i18n: ectx: (Plotting fitted 3PL model) <dialog label="Plotting fitted 3PL model"> <tab label="Plot type"> <frame label="Optional item selection"> <input label="...">
+#. i18n: ectx: (Plotting fitted graded response model) <dialog label="Plotting fitted graded response model"> <tab label="Plot type"> <frame label="Optional item selection"> <input label="...">
+#. i18n: ectx: (Plotting fitted rating scale model) <dialog label="Plotting fitted rating scale model"> <tab label="Options"> <frame label="Optional item selection"> <input label="...">
+#. i18n: ectx: (Plotting fitted partial credit model) <dialog label="Plotting fitted partial credit model"> <tab label="Options"> <frame label="Optional item selection"> <input label="...">
+#: rkward/plugins/plots/irt/dichotomous/plot_ltm.xml:41
+#: rkward/plugins/plots/irt/dichotomous/plot_rasch.xml:39
+#: rkward/plugins/plots/irt/dichotomous/plot_tpm.xml:39
+#: rkward/plugins/plots/irt/polytomous/plot_grm.xml:41
+#: rkward/plugins/plots/irt/polytomous/plot_pcm.xml:22
+#: rkward/plugins/plots/irt/polytomous/plot_rsm.xml:22
+#: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:42
+#, kde-format
+msgid "List of items (plot all if empty)"
+msgstr ""
+
+#. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Options"> <frame label="...">
+#. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="Options"> <frame label="...">
+#. i18n: ectx: (Plotting fitted 3PL model) <dialog label="Plotting fitted 3PL model"> <tab label="Options"> <frame label="...">
+#. i18n: ectx: (Plotting fitted graded response model) <dialog label="Plotting fitted graded response model"> <tab label="Options"> <frame label="...">
+#: rkward/plugins/plots/irt/dichotomous/plot_ltm.xml:47
+#: rkward/plugins/plots/irt/dichotomous/plot_rasch.xml:45
+#: rkward/plugins/plots/irt/dichotomous/plot_tpm.xml:45
+#: rkward/plugins/plots/irt/polytomous/plot_grm.xml:48
+#, kde-format
+msgid "Range of latent variable values"
+msgstr ""
+
+#. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Plot options"> <frame label="Range of person parameters"> <spinbox label="...">
+#. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Options"> <frame label="Range of latent variable values"> <spinbox label="...">
+#. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="Options"> <frame label="Range of latent variable values"> <spinbox label="...">
+#. i18n: ectx: (Plotting fitted 3PL model) <dialog label="Plotting fitted 3PL model"> <tab label="Options"> <frame label="Range of latent variable values"> <spinbox label="...">
+#. i18n: ectx: (Plotting fitted graded response model) <dialog label="Plotting fitted graded response model"> <tab label="Options"> <frame label="Range of latent variable values"> <spinbox label="...">
+#. i18n: ectx: (Plotting fitted rating scale model) <dialog label="Plotting fitted rating scale model"> <tab label="Options"> <frame label="Range of person parameters"> <spinbox label="...">
+#. i18n: ectx: (Plotting fitted rating scale model) <dialog label="Plotting fitted rating scale model"> <tab label="Options"> <frame label="Range of probability to solve"> <spinbox label="...">
+#. i18n: ectx: (Plotting fitted partial credit model) <dialog label="Plotting fitted partial credit model"> <tab label="Options"> <frame label="Range of person parameters"> <spinbox label="...">
+#. i18n: ectx: (Plotting fitted partial credit model) <dialog label="Plotting fitted partial credit model"> <tab label="Options"> <frame label="Range of probability to solve"> <spinbox label="...">
+#: rkward/plugins/plots/irt/dichotomous/plot_ltm.xml:49
+#: rkward/plugins/plots/irt/dichotomous/plot_rasch.xml:47
+#: rkward/plugins/plots/irt/dichotomous/plot_tpm.xml:47
+#: rkward/plugins/plots/irt/polytomous/plot_grm.xml:50
+#: rkward/plugins/plots/irt/polytomous/plot_pcm.xml:28
+#: rkward/plugins/plots/irt/polytomous/plot_pcm.xml:34
+#: rkward/plugins/plots/irt/polytomous/plot_rsm.xml:28
+#: rkward/plugins/plots/irt/polytomous/plot_rsm.xml:34
+#: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:57
+#, kde-format
+msgid "From:"
+msgstr ""
+
+#. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Plot options"> <frame label="Range of person parameters"> <spinbox label="...">
+#. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Options"> <frame label="Range of latent variable values"> <spinbox label="...">
+#. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="Options"> <frame label="Range of latent variable values"> <spinbox label="...">
+#. i18n: ectx: (Plotting fitted 3PL model) <dialog label="Plotting fitted 3PL model"> <tab label="Options"> <frame label="Range of latent variable values"> <spinbox label="...">
+#. i18n: ectx: (Plotting fitted graded response model) <dialog label="Plotting fitted graded response model"> <tab label="Options"> <frame label="Range of latent variable values"> <spinbox label="...">
+#. i18n: ectx: (Plotting fitted rating scale model) <dialog label="Plotting fitted rating scale model"> <tab label="Options"> <frame label="Range of person parameters"> <spinbox label="...">
+#. i18n: ectx: (Plotting fitted rating scale model) <dialog label="Plotting fitted rating scale model"> <tab label="Options"> <frame label="Range of probability to solve"> <spinbox label="...">
+#. i18n: ectx: (Plotting fitted partial credit model) <dialog label="Plotting fitted partial credit model"> <tab label="Options"> <frame label="Range of person parameters"> <spinbox label="...">
+#. i18n: ectx: (Plotting fitted partial credit model) <dialog label="Plotting fitted partial credit model"> <tab label="Options"> <frame label="Range of probability to solve"> <spinbox label="...">
+#: rkward/plugins/plots/irt/dichotomous/plot_ltm.xml:50
+#: rkward/plugins/plots/irt/dichotomous/plot_rasch.xml:48
+#: rkward/plugins/plots/irt/dichotomous/plot_tpm.xml:48
+#: rkward/plugins/plots/irt/polytomous/plot_grm.xml:51
+#: rkward/plugins/plots/irt/polytomous/plot_pcm.xml:29
+#: rkward/plugins/plots/irt/polytomous/plot_pcm.xml:35
+#: rkward/plugins/plots/irt/polytomous/plot_rsm.xml:29
+#: rkward/plugins/plots/irt/polytomous/plot_rsm.xml:35
+#: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:58
+#, kde-format
+msgid "To:"
+msgstr ""
+
+#. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Plot options"> <radio label="...">
+#. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Options"> <radio label="...">
+#. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="Options"> <radio label="...">
+#. i18n: ectx: (Plotting fitted 3PL model) <dialog label="Plotting fitted 3PL model"> <tab label="Options"> <radio label="...">
+#. i18n: ectx: (Plotting fitted graded response model) <dialog label="Plotting fitted graded response model"> <tab label="Options"> <radio label="...">
+#. i18n: ectx: (Plotting fitted rating scale model) <dialog label="Plotting fitted rating scale model"> <tab label="Options"> <radio label="...">
+#. i18n: ectx: (Plotting fitted partial credit model) <dialog label="Plotting fitted partial credit model"> <tab label="Options"> <radio label="...">
+#: rkward/plugins/plots/irt/dichotomous/plot_ltm.xml:54
+#: rkward/plugins/plots/irt/dichotomous/plot_rasch.xml:52
+#: rkward/plugins/plots/irt/dichotomous/plot_tpm.xml:52
+#: rkward/plugins/plots/irt/polytomous/plot_grm.xml:55
+#: rkward/plugins/plots/irt/polytomous/plot_pcm.xml:38
+#: rkward/plugins/plots/irt/polytomous/plot_rsm.xml:38
+#: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:62
+#, kde-format
+msgid "Annotation"
+msgstr ""
+
+#. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Options"> <radio label="Annotation"> <option label="...">
+#. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="Options"> <radio label="Annotation"> <option label="...">
+#. i18n: ectx: (Plotting fitted 3PL model) <dialog label="Plotting fitted 3PL model"> <tab label="Options"> <radio label="Annotation"> <option label="...">
+#. i18n: ectx: (Plotting fitted graded response model) <dialog label="Plotting fitted graded response model"> <tab label="Options"> <radio label="Annotation"> <option label="...">
+#: rkward/plugins/plots/irt/dichotomous/plot_ltm.xml:55
+#: rkward/plugins/plots/irt/dichotomous/plot_rasch.xml:53
+#: rkward/plugins/plots/irt/dichotomous/plot_tpm.xml:53
+#: rkward/plugins/plots/irt/polytomous/plot_grm.xml:56
+#, kde-format
+msgid "Annotate plotted lines"
+msgstr ""
+
+#. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Options"> <radio label="Annotation"> <option label="...">
+#. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="Options"> <radio label="Annotation"> <option label="...">
+#. i18n: ectx: (Plotting fitted 3PL model) <dialog label="Plotting fitted 3PL model"> <tab label="Options"> <radio label="Annotation"> <option label="...">
+#. i18n: ectx: (Plotting fitted graded response model) <dialog label="Plotting fitted graded response model"> <tab label="Options"> <radio label="Annotation"> <option label="...">
+#. i18n: ectx: (Plotting fitted rating scale model) <dialog label="Plotting fitted rating scale model"> <tab label="Options"> <radio label="Annotation"> <option label="...">
+#. i18n: ectx: (Plotting fitted partial credit model) <dialog label="Plotting fitted partial credit model"> <tab label="Options"> <radio label="Annotation"> <option label="...">
+#: rkward/plugins/plots/irt/dichotomous/plot_ltm.xml:56
+#: rkward/plugins/plots/irt/dichotomous/plot_rasch.xml:54
+#: rkward/plugins/plots/irt/dichotomous/plot_tpm.xml:54
+#: rkward/plugins/plots/irt/polytomous/plot_grm.xml:57
+#: rkward/plugins/plots/irt/polytomous/plot_pcm.xml:39
+#: rkward/plugins/plots/irt/polytomous/plot_rsm.xml:39
+#, kde-format
+msgid "Show legend"
+msgstr ""
+
+#. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Options"> <radio label="Annotation"> <option label="...">
+#. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="Options"> <radio label="Annotation"> <option label="...">
+#. i18n: ectx: (Plotting fitted 3PL model) <dialog label="Plotting fitted 3PL model"> <tab label="Options"> <radio label="Annotation"> <option label="...">
+#. i18n: ectx: (Plotting fitted graded response model) <dialog label="Plotting fitted graded response model"> <tab label="Options"> <radio label="Annotation"> <option label="...">
+#. i18n: ectx: (Plotting fitted rating scale model) <dialog label="Plotting fitted rating scale model"> <tab label="Options"> <radio label="Annotation"> <option label="...">
+#. i18n: ectx: (Plotting fitted partial credit model) <dialog label="Plotting fitted partial credit model"> <tab label="Options"> <radio label="Annotation"> <option label="...">
+#: rkward/plugins/plots/irt/dichotomous/plot_ltm.xml:57
+#: rkward/plugins/plots/irt/dichotomous/plot_rasch.xml:55
+#: rkward/plugins/plots/irt/dichotomous/plot_tpm.xml:55
+#: rkward/plugins/plots/irt/polytomous/plot_grm.xml:58
+#: rkward/plugins/plots/irt/polytomous/plot_pcm.xml:40
+#: rkward/plugins/plots/irt/polytomous/plot_rsm.xml:40
+#, kde-format
+msgid "Plain lines, no annotation"
+msgstr ""
+
+#. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Plot options"> <embed label="...">
+#. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Options"> <embed label="...">
+#. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="Options"> <embed label="...">
+#. i18n: ectx: (Plotting fitted 3PL model) <dialog label="Plotting fitted 3PL model"> <tab label="Options"> <embed label="...">
+#. i18n: ectx: (Plotting fitted graded response model) <dialog label="Plotting fitted graded response model"> <tab label="Options"> <embed label="...">
+#. i18n: ectx: (Plotting fitted rating scale model) <dialog label="Plotting fitted rating scale model"> <tab label="Options"> <embed label="...">
+#. i18n: ectx: (Plotting fitted partial credit model) <dialog label="Plotting fitted partial credit model"> <tab label="Options"> <embed label="...">
+#: rkward/plugins/plots/irt/dichotomous/plot_ltm.xml:60
+#: rkward/plugins/plots/irt/dichotomous/plot_rasch.xml:58
+#: rkward/plugins/plots/irt/dichotomous/plot_tpm.xml:58
+#: rkward/plugins/plots/irt/polytomous/plot_grm.xml:61
+#: rkward/plugins/plots/irt/polytomous/plot_pcm.xml:43
+#: rkward/plugins/plots/irt/polytomous/plot_rsm.xml:43
+#: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:69
+#, kde-format
+msgid "Generic plot options"
+msgstr ""
+
+#. i18n: ectx: (Loaded from Plotting fitted Rasch model)
+#: rkward/plugins/plots/irt/dichotomous/plot_rasch.js:74
+#, kde-format
+msgid "Rasch model plot"
+msgstr ""
+
+#. i18n: ectx: (Plotting fitted Rasch model) <dialog label="...">
+#: rkward/plugins/plots/irt/dichotomous/plot_rasch.xml:14
+#, kde-format
+msgid "Plotting fitted Rasch model"
+msgstr ""
+
+#. i18n: ectx: (Loaded from Plotting fitted 3PL model)
+#: rkward/plugins/plots/irt/dichotomous/plot_tpm.js:74
+#, kde-format
+msgid "Birnbaum three parameter model plot"
+msgstr ""
+
+#. i18n: ectx: (Plotting fitted 3PL model) <dialog label="...">
+#: rkward/plugins/plots/irt/dichotomous/plot_tpm.xml:14
+#, kde-format
+msgid "Plotting fitted 3PL model"
+msgstr ""
+
+#. i18n: ectx: (Plotting fitted 3PL model) <dialog label="Plotting fitted 3PL model"> <tab label="Model"> <text>
+#: rkward/plugins/plots/irt/dichotomous/plot_tpm.xml:21
+#, kde-format
+msgid "Only objects of class tpm are valid!"
+msgstr ""
+
+#. i18n: ectx: (Loaded from Plotting fitted graded response model)
+#: rkward/plugins/plots/irt/polytomous/plot_grm.js:82
+#, kde-format
+msgid "Graded response model plot"
+msgstr ""
+
+#. i18n: ectx: (Plotting fitted graded response model) <dialog label="...">
+#: rkward/plugins/plots/irt/polytomous/plot_grm.xml:14
+#, kde-format
+msgid "Plotting fitted graded response model"
+msgstr ""
+
+#. i18n: ectx: (Plotting fitted graded response model) <dialog label="Plotting fitted graded response model"> <tab label="Model"> <text>
+#: rkward/plugins/plots/irt/polytomous/plot_grm.xml:21
+#, kde-format
+msgid "Only objects of class grm are valid!"
+msgstr ""
+
+#. i18n: ectx: (Plotting fitted graded response model) <dialog label="Plotting fitted graded response model"> <tab label="Plot type"> <radio label="Type of item plot"> <option label="...">
+#: rkward/plugins/plots/irt/polytomous/plot_grm.xml:37
+#, kde-format
+msgid "Item operation characteristic curve"
+msgstr ""
+
+#. i18n: ectx: (Plotting fitted graded response model) <dialog label="Plotting fitted graded response model"> <tab label="Plot type"> <radio label="Type of item plot"> <option label="...">
+#: rkward/plugins/plots/irt/polytomous/plot_grm.xml:38
+#, kde-format
+msgid "Item operation characteristic curve (inverse)"
+msgstr ""
+
+#. i18n: ectx: (Plotting fitted graded response model) <dialog label="Plotting fitted graded response model"> <tab label="Plot type"> <frame label="Optional item selection"> <spinbox label="...">
+#: rkward/plugins/plots/irt/polytomous/plot_grm.xml:42
+#, kde-format
+msgid "Category (plot all if set to 0)"
+msgstr ""
+
+#. i18n: ectx: (Loaded from Plotting fitted partial credit model)
+#: rkward/plugins/plots/irt/polytomous/plot_pcm.js:68
+#, kde-format
+msgid "Partial credit model plot"
+msgstr ""
+
+#. i18n: ectx: (Plotting fitted partial credit model) <dialog label="...">
+#: rkward/plugins/plots/irt/polytomous/plot_pcm.xml:6
+#, kde-format
+msgid "Plotting fitted partial credit model"
+msgstr ""
+
+#. i18n: ectx: (Plotting fitted rating scale model) <dialog label="Plotting fitted rating scale model"> <tab label="Options"> <frame label="Optional item selection"> <checkbox label="...">
+#. i18n: ectx: (Plotting fitted partial credit model) <dialog label="Plotting fitted partial credit model"> <tab label="Options"> <frame label="Optional item selection"> <checkbox label="...">
+#: rkward/plugins/plots/irt/polytomous/plot_pcm.xml:23
+#: rkward/plugins/plots/irt/polytomous/plot_rsm.xml:23
+#, kde-format
+msgid "Plot up to 4 items in one figure"
+msgstr ""
+
+#. i18n: ectx: (Plotting fitted rating scale model) <dialog label="Plotting fitted rating scale model"> <tab label="Options"> <frame label="Optional item selection"> <checkbox label="...">
+#. i18n: ectx: (Plotting fitted partial credit model) <dialog label="Plotting fitted partial credit model"> <tab label="Options"> <frame label="Optional item selection"> <checkbox label="...">
+#: rkward/plugins/plots/irt/polytomous/plot_pcm.xml:24
+#: rkward/plugins/plots/irt/polytomous/plot_rsm.xml:24
+#, kde-format
+msgid "Ask before next figure is drawn"
+msgstr ""
+
+#. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Plot options"> <frame label="...">
+#. i18n: ectx: (Plotting fitted rating scale model) <dialog label="Plotting fitted rating scale model"> <tab label="Options"> <frame label="...">
+#. i18n: ectx: (Plotting fitted partial credit model) <dialog label="Plotting fitted partial credit model"> <tab label="Options"> <frame label="...">
+#: rkward/plugins/plots/irt/polytomous/plot_pcm.xml:26
+#: rkward/plugins/plots/irt/polytomous/plot_rsm.xml:26
+#: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:55
+#, kde-format
+msgid "Range of person parameters"
+msgstr ""
+
+#. i18n: ectx: (Plotting fitted rating scale model) <dialog label="Plotting fitted rating scale model"> <tab label="Options"> <frame label="...">
+#. i18n: ectx: (Plotting fitted partial credit model) <dialog label="Plotting fitted partial credit model"> <tab label="Options"> <frame label="...">
+#: rkward/plugins/plots/irt/polytomous/plot_pcm.xml:32
+#: rkward/plugins/plots/irt/polytomous/plot_rsm.xml:32
+#, kde-format
+msgid "Range of probability to solve"
+msgstr ""
+
+#. i18n: ectx: (Loaded from Plotting fitted rating scale model)
+#: rkward/plugins/plots/irt/polytomous/plot_rsm.js:68
+#, kde-format
+msgid "Rating scale model plot"
+msgstr ""
+
+#. i18n: ectx: (Plotting fitted rating scale model) <dialog label="...">
+#: rkward/plugins/plots/irt/polytomous/plot_rsm.xml:6
+#, kde-format
+msgid "Plotting fitted rating scale model"
+msgstr ""
+
+#. i18n: ectx: (Loaded from Andersen LR-Test)
+#: rkward/plugins/plots/irt/tests/eRm_plotLR.js:85
+#, kde-format
+msgid "Andersen's LR test"
+msgstr ""
+
+#. i18n: ectx: (Andersen LR-Test) <dialog label="...">
+#: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:18
+#, kde-format
+msgid "Andersen LR-Test"
+msgstr ""
+
+#. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Model"> <varslot label="...">
+#: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:24
+#, kde-format
+msgid "Choose fitted model to test (plot):"
+msgstr ""
+
+#. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Model"> <radio label="Split criterion for subject raw scores"> <option label="...">
+#: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:30
+#, kde-format
+msgid "Full raw score split"
+msgstr ""
+
+#. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Model"> <radio label="Split criterion for subject raw scores"> <option label="...">
+#: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:31
+#, kde-format
+msgid "Use vector to define groups"
+msgstr ""
+
+#. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Model"> <text>
+#: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:34
+#, kde-format
+msgid "Can be numeric, character or a factor"
+msgstr ""
+
+#. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="...">
+#: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:39
+#, kde-format
+msgid "Plot options"
+msgstr ""
+
+#. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Plot options"> <frame label="...">
+#. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Plot options"> <frame label="Confidence intervals"> <checkbox label="...">
+#: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:44
+#: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:47
+#, kde-format
+msgid "Confidence intervals"
+msgstr ""
+
+#. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Plot options"> <frame label="Confidence intervals"> <checkbox label="...">
+#: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:45
+#, kde-format
+msgid "Compute standard errors"
+msgstr ""
+
+#. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Plot options"> <frame label="Confidence intervals"> <spinbox label="...">
+#: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:48
+#: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:52
+#, kde-format
+msgid "Confidence level:"
+msgstr ""
+
+#. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Plot options"> <frame label="Confidence intervals"> <checkbox label="...">
+#: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:51
+#, kde-format
+msgid "Confidence bands"
+msgstr ""
+
+#. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Plot options"> <radio label="Annotation"> <option label="...">
+#: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:63
+#, kde-format
+msgid "Annotate items (item names)"
+msgstr ""
+
+#. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Plot options"> <radio label="Annotation"> <option label="...">
+#: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:64
+#, kde-format
+msgid "Annotate items (rank number of betas)"
+msgstr ""
+
+#. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Plot options"> <radio label="Annotation"> <option label="...">
+#: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:65
+#, kde-format
+msgid "Plain dots, no annotation"
+msgstr ""
+
+#. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Plot options"> <radio label="Annotation"> <option label="...">
+#: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:66
+#, kde-format
+msgid "Interactive labeling"
+msgstr ""
+
+#. i18n: ectx: <snippets> <snippet> <author name="...">
+#: rkward/plugins/pluginmap_meta.inc:4
+#, kde-format
+msgctxt "Author name"
+msgid "RKWard Team"
+msgstr "Команда RKWard"

@@ -1,0 +1,2776 @@
+# Translation of rkward__pages.po to Catalan
+# Copyright (C) 2014-2022 This_file_is_part_of_KDE
+# This file is distributed under the license LGPL version 2.1 or
+# version 3 or later versions approved by the membership of KDE e.V.
+#
+# Antoni Bella Pérez <antonibella5@yahoo.com>, 2014, 2016, 2018, 2020, 2022.
+# Josep M. Ferrer <txemaq@gmail.com>, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: rkward\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-07-18 00:41+0000\n"
+"PO-Revision-Date: 2022-08-27 13:09+0200\n"
+"Last-Translator: Antoni Bella Pérez <antonibella5@yahoo.com>\n"
+"Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Accelerator-Marker: &\n"
+"X-Generator: Lokalize 22.08.0\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Josep M. Ferrer"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "txemaq@gmail.com"
+
+#. i18n: ectx: (RKWard Add-Ons) <title>
+#: rkward/pages/rkward_addons.rkh:3
+#, kde-format
+msgid "RKWard Add-Ons"
+msgstr "Complements del RKWard"
+
+#. i18n: ectx: (RKWard Add-Ons) <summary>
+#: rkward/pages/rkward_addons.rkh:4
+#, kde-format
+msgid ""
+"To offer you the best features, RKWard combines different technologies. "
+"Arguably this can make it a bit confusing on where to find the addon "
+"features you are looking for."
+msgstr ""
+"Per oferir-vos les millors característiques, el RKWard combina tecnologies "
+"diferents. Es pot dir que això pot fer que sigui una mica confús trobar les "
+"característiques del complement que esteu buscant."
+
+#. i18n: ectx: (RKWard Add-Ons) <summary>
+#: rkward/pages/rkward_addons.rkh:4
+#, kde-format
+msgid "In a nutshell:"
+msgstr "En resum:"
+
+#. i18n: ectx: (RKWard Add-Ons) <summary>
+#: rkward/pages/rkward_addons.rkh:4
+#, kde-format
+msgid ""
+"<strong>R packages</strong> offer a sheer incredible amount of data "
+"algorithms and tools. This functionality is (mostly) provided in the form of "
+"additional R functions that you can use in scripts, or in the interactive R "
+"console."
+msgstr ""
+"Els <strong>paquets de l'R</strong> ofereixen una quantitat increïblement "
+"gran d'algorismes de dades i eines. Aquesta funcionalitat es proporciona "
+"(majoritàriament) en forma de funcions R addicionals que es poden utilitzar "
+"en scripts, o en la consola R interactiva."
+
+#. i18n: ectx: (RKWard Add-Ons) <summary>
+#: rkward/pages/rkward_addons.rkh:4
+#, kde-format
+msgid ""
+"<strong>Kate add-ons</strong>: Kate is the engine behind RKWard's script "
+"editor. It comes with powerful add-on features, many of which should come "
+"pre-installed with RKWard. However, due to their sheer number, not all are "
+"activated by default. It can further be extended with custom scripts, or "
+"color-schemes."
+msgstr ""
+"Els <strong>complements del Kate</strong>: El Kate és el motor darrere de "
+"l'editor de scripts del RKWard. Té moltes característiques potents de "
+"complements, molts d'aquests han de venir preinstal·lats amb el RKWard. Però "
+"a causa del gran nombre, no tots estan activats de manera predeterminada. A "
+"més, es poden ampliar amb scripts personalitzats o esquemes de color."
+
+#. i18n: ectx: (RKWard Add-Ons) <summary>
+#: rkward/pages/rkward_addons.rkh:4
+#, kde-format
+msgid ""
+"<strong>RKWard plugins</strong>: If you are looking for a graphical dialog "
+"to help you import/convert/analyse/visualize your data, such dialogs are "
+"mostly implemented as plugin-ins in RKWard. Many such plugins are available "
+"for download, separately."
+msgstr ""
+"Els <strong>connectors del RKWard</strong>: Si esteu buscant un diàleg "
+"gràfic per ajudar-vos a importar/convertir/analitzar/visualitzar les dades, "
+"aquests diàlegs s'implementen principalment com a connectors en el RKWard. "
+"Molts d'aquests connectors estan disponibles per descarregar, per separat."
+
+#. i18n: ectx: (RKWard Add-Ons) <summary>
+#: rkward/pages/rkward_addons.rkh:4
+#, kde-format
+msgid ""
+"The following sections deal with these, in turn, showing you how to find / "
+"install, what you need."
+msgstr ""
+"Les seccions següents tracten amb aquestes, mostrant-vos com trobar / "
+"instal·lar el que necessiteu."
+
+#. i18n: ectx: (RKWard Add-Ons) <section title="...">
+#: rkward/pages/rkward_addons.rkh:19
+#, kde-format
+msgid "R packages"
+msgstr "Paquets de l'R"
+
+#. i18n: ectx: (RKWard Add-Ons) <section title="R packages">
+#: rkward/pages/rkward_addons.rkh:19
+#, kde-format
+msgid ""
+"In addition to the regular R command line tools for managing R packages (see "
+"<link href=\"rkward://rhelp/install.packages\"/>), RKWard offers a graphical "
+"dialog to search, install and/or load packages (Settings->Manage R packages "
+"and plugins)."
+msgstr ""
+"A més de les eines normals de la línia d'ordres de l'R per a la gestió dels "
+"paquets de l'R (veure <link href=\"rkward://rhelp/install.packages\"/>), el "
+"RKWard ofereix un diàleg gràfic per cercar, instal·lar i/o carregar paquets "
+"(Arranjament->Gestiona els paquets i els connectors de l'R)."
+
+#. i18n: ectx: (RKWard Add-Ons) <section title="R packages">
+#: rkward/pages/rkward_addons.rkh:19
+#, kde-format
+msgid ""
+"Note that, by default, R packages are distributed as compiled binaries on "
+"Windows and MacOS, but not Linux. While for the latter, installation from "
+"source is fully automated, you may still have to install additional "
+"libraries or other software for the compilation."
+msgstr ""
+"Tingueu en compte que, de manera predeterminada, els paquets de l'R es "
+"distribueixen com a binaris compilats al Windows i MacOS, però no al Linux. "
+"Mentre per a l'últim, la instal·lació des del codi font està totalment "
+"automatitzada, encara és possible que hàgiu d'instal·lar biblioteques "
+"addicionals o un altre programari per a la compilació."
+
+#. i18n: ectx: (RKWard Add-Ons) <section title="...">
+#: rkward/pages/rkward_addons.rkh:27
+#, kde-format
+msgid "Kate Add-ons"
+msgstr "Complements del Kate"
+
+#. i18n: ectx: (RKWard Add-Ons) <section title="Kate Add-ons">
+#: rkward/pages/rkward_addons.rkh:27
+#, kde-format
+msgid ""
+"<link href=\"https://kate.kde.org\">Kate</link> is a very powerful text "
+"editor using the same text editing component that is also used in RKWard. It "
+"also comes with a variety of add-ons, e.g. for creating code snippets, or "
+"for managing projects in a git repository. Some of these - like e.g. the C++ "
+"backtrace navigation tool do not make much sense in the context of RKWard, "
+"but many do. To explore what is available, make sure you have kate "
+"installed, then visit <link href=\"rkward://settings/addons\">Settings-"
+">Addons</link>. Addons shown in bold have been reported to be useful and "
+"work well in RKWard, but feel free to explore the others, too."
+msgstr ""
+"El <link href=\"https://kate.kde.org\">Kate</link> és un editor de text molt "
+"potent que utilitza el mateix component d'edició de text que també "
+"s'utilitza en el RKWard. També té una gran varietat de complements, p. ex. "
+"per a crear retalls de codi, o per a gestionar projectes en un repositori "
+"del git. Algunes d'aquests, com p. ex. l'eina de navegació de traça inversa "
+"de C++ no tenen molt sentit en el context del RKWard, però molts sí. Per "
+"explorar el que hi ha disponible, assegureu-vos que teniu el Kate "
+"instal·lat, i després visiteu <link href=\"rkward://settings/addons"
+"\">Arranjament->Complements</link>. S'ha informat que els complements "
+"mostrats en negreta són útils i funcionen bé en el RKWard, però també sentiu-"
+"vos lliure d'explorar els altres."
+
+#. i18n: ectx: (RKWard Add-Ons) <section title="...">
+#: rkward/pages/rkward_addons.rkh:34
+#, kde-format
+msgid "RKWard Plugins"
+msgstr "Connectors del RKWard"
+
+#. i18n: ectx: (RKWard Add-Ons) <section title="RKWard Plugins">
+#: rkward/pages/rkward_addons.rkh:34
+#, kde-format
+msgid ""
+"RKWard plugins can be installed from a variety of sources, but the usual "
+"distribution of add-on packages is via R packages. To look for R packages "
+"that provide RKWard graphical dialogs, use the regular dialog (<link href="
+"\"rkward://actions/rpackage_install\">Settings->Manage R packages and "
+"plugins</link>), and check the option \"Show only packages providing RKWard "
+"dialogs\"."
+msgstr ""
+"Els connectors del RKWard es poden instal·lar des de diverses fonts, però la "
+"distribució habitual dels paquets de complements és a través de paquets de "
+"l'R. Per cercar paquets de l'R que proporciona diàlegs gràfics del RKWard, "
+"utilitza el diàleg normal (<link href=\"rkward://actions/rpackage_install"
+"\">Arranjament->Gestiona els paquets i els connectors de l'R</link>), i "
+"activeu l'opció «Mostra només els paquets que proporcionin diàlegs del "
+"RKWard»."
+
+#. i18n: ectx: (RKWard Add-Ons) <section title="RKWard Plugins">
+#: rkward/pages/rkward_addons.rkh:34
+#, kde-format
+msgid ""
+"Not all RKWard plugins packaged this way will be visible in the R package "
+"installation dialog, as they are not hosted (yet) in the default "
+"repositories, notably, at the time of this writing, the very extensive <link "
+"href=\"https://github.com/rkward-community/rk.Teaching\">rk.Teaching</link> "
+"set of plugins. Many of these are hosted on platforms such as github.com, "
+"and knowing the repository url, can be installed with few clicks, using "
+"<link href=\"rkward://runplugin/rkward::install_from_git/fullURL."
+"text=https://github.com/rkward-community/rk.Teaching.git\">this dialog</"
+"link> (pre-initialized for installation of rk.Teaching)."
+msgstr ""
+"No tots els connectors del RKWard empaquetats d'aquesta manera es veuran en "
+"el diàleg d'instal·lació de paquets de l'R, ja que no s'allotgen (encara) en "
+"els repositoris predeterminats, en particular, en el moment d'escriure això, "
+"el molt extens conjunt de connectors de <link href=\"https://github.com/"
+"rkward-community/rk.Teaching\">rk.Teaching</link>. Molts d'aquests "
+"s'allotgen en plataformes com github.com, i coneixent l'URL del repositori, "
+"es pot instal·lar amb pocs clics, fent servir <link href=\"rkward://"
+"runplugin/rkward::install_from_git/fullURL.text=https://github.com/rkward-"
+"community/rk.Teaching.git\">aquest diàleg</link> (pre-inicialitzat per a la "
+"instal·lació del «rk.Teaching»)."
+
+#. i18n: ectx: (RKWard Add-Ons) <section title="...">
+#: rkward/pages/rkward_addons.rkh:42
+#, kde-format
+msgid "Creating your own RKWard Plugins"
+msgstr "Crear els vostres propis connectors del RKWard"
+
+#. i18n: ectx: (RKWard Add-Ons) <section title="Creating your own RKWard Plugins">
+#: rkward/pages/rkward_addons.rkh:42
+#, kde-format
+msgid "Still missing something?"
+msgstr "Encara manca quelcom?"
+
+#. i18n: ectx: (RKWard Add-Ons) <section title="Creating your own RKWard Plugins">
+#: rkward/pages/rkward_addons.rkh:42
+#, kde-format
+msgid ""
+"Check out the <link href=\"help:/rkwardplugins/index.html\">Introduction to "
+"Writing Plugins for RKWard</link> (<link href=\"https://rkward.kde.org/doc/"
+"rkwardplugins/\">most recent version online</link>) to learn how easy it is "
+"to enhance RKWard with your custom dialogs. And if you like, how to share "
+"your work with the community of RKWard users. See the <link href=\"rkward://"
+"rhelp/rkward-package\">rkward package overview</link> for RKWard specific "
+"function for development and scripting."
+msgstr ""
+"Doneu una ullada a la <link href=\"help:/rkwardplugins/index.html"
+"\">Introducció a escriure connectors per al RKWard</link> (<link href="
+"\"https://rkward.kde.org/doc/rkwardplugins/\">versió més recent en línia</"
+"link>) per a aprendre com és de fàcil ampliar el RKWard amb els vostres "
+"diàlegs personalitzats. I si voleu, com compartir el vostre treball amb la "
+"comunitat d'usuaris del RKWard. Vegeu el <link href=\"rkward://rhelp/rkward-"
+"package\">resum del paquet «rkward»</link> per a les funcions específiques "
+"del RKWard per al desenvolupament i creació de scripts."
+
+#. i18n: ectx: (Using the RKWard R Console) <title>
+#: rkward/pages/rkward_console.rkh:3
+#, kde-format
+msgid "Using the RKWard R Console"
+msgstr "Ús de la consola R del RKWard"
+
+#. i18n: ectx: (Using the RKWard R Console) <summary>
+#: rkward/pages/rkward_console.rkh:4
+#, kde-format
+msgid "Describe features and settings regarding the RKWard R Console."
+msgstr ""
+"Descriu les funcionalitats i els paràmetres referits a la consola R del "
+"RKWard."
+
+#. i18n: ectx: (Using the RKWard R Console) <summary>
+#: rkward/pages/rkward_console.rkh:4
+#, kde-format
+msgid ""
+"The console can - by default - be found at the bottom of the application "
+"window. Press the tool button labelled \"R Console\" to invoke it."
+msgstr ""
+"La consola es troba -per defecte- a la part inferior de la finestra de "
+"l'aplicació. Premeu el botó d'eina etiquetat «Consola de l'R» per a invocar-"
+"la."
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="...">
+#: rkward/pages/rkward_console.rkh:10
+#, kde-format
+msgid "What is the console?"
+msgstr "Què és la consola?"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="What is the console?">
+#: rkward/pages/rkward_console.rkh:10
+#, kde-format
+msgid ""
+"RKWard is based on the R language for statistical computing. The console "
+"allows you to enter R commands directly. Obviously, to use this, you need to "
+"know some basics of the R language. Select Help->Help on R for some "
+"introductory information."
+msgstr ""
+"El RKWard està basat en el llenguatge R per al càlcul estadístic. La consola "
+"permet introduir directament ordres de l'R. Òbviament, per a usar això, cal "
+"conèixer les bases del llenguatge R. Seleccioneu «Ajuda -> Ajuda quant a "
+"l'R» per a diversa informació d'introducció."
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="What is the console?">
+#: rkward/pages/rkward_console.rkh:10
+#, kde-format
+msgid ""
+"The console is meant for interactive use and small commands. For editing "
+"complex commands / scripts, using the Script File Editor (File->New->Script "
+"File) is much more comfortable."
+msgstr ""
+"La consola està pensada per a un ús interactiu i per a ordres senzilles. Per "
+"a editar ordres / scripts complexos és molt més confortable usar l'editor de "
+"fitxers de script (Fitxer -> Nou -> Fitxer de script)."
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="What is the console?">
+#: rkward/pages/rkward_console.rkh:10
+#, kde-format
+msgid ""
+"Many console features are available from the context menu. To invoke the "
+"context menu, click the right mouse button inside the console window."
+msgstr ""
+"Moltes funcionalitats de la consola estan disponibles des del menú "
+"contextual. Per a invocar el menú contextual, cliqueu el botó dret del "
+"ratolí dins de la finestra de la consola."
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="...">
+#: rkward/pages/rkward_console.rkh:18
+#, kde-format
+msgid "Interrupting commands"
+msgstr "Ordres d'interrupció"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Interrupting commands">
+#: rkward/pages/rkward_console.rkh:18
+#, kde-format
+msgid ""
+"To interrupt a running command, press Ctrl+C, or choose \"Interrupt running "
+"command\" from the context menu. Note that the command will not necessarily "
+"end immediately. If there are several other commands running at the same "
+"time (e.g. some action you invoked from the Analysis menu), the console will "
+"only become available again, when the R backend becomes idle."
+msgstr ""
+"Per a interrompre una ordre en execució, premeu Ctrl+C, o seleccioneu "
+"«Interromp l'execució de l'ordre» des del menú contextual. Cal tenir en "
+"compte que l'ordre no necessàriament acabarà immediatament. Si hi ha altres "
+"ordres executant-se en el mateix moment (p. ex. alguna acció que s'hagi "
+"invocat des del menú Anàlisi), la consola només tornarà a estar disponible "
+"quan el dorsal de l'R esdevingui desocupat."
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="...">
+#: rkward/pages/rkward_console.rkh:22
+#, kde-format
+msgid "Re-running selected commands"
+msgstr "Tornar a executar les ordres seleccionades"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Re-running selected commands">
+#: rkward/pages/rkward_console.rkh:22
+#, kde-format
+msgid ""
+"To re-run (a sequence of) selected commands, select them using the mouse. "
+"Then choose \"Run selection\" from the context menu (default shortcut is Ctrl"
+"+Return). Leading \"> \" and \"+ \" on the selected lines will be removed "
+"automatically."
+msgstr ""
+"Per a tornar a executar (una seqüència de) les ordres seleccionades, "
+"seleccioneu-les usant el ratolí. Després seleccioneu «Executa la selecció» "
+"des del menú contextual (per defecte la drecera és Ctrl+Retorn). Els «> » i "
+"«+ » inicials de les línies seleccionades s'eliminaran automàticament."
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="...">
+#: rkward/pages/rkward_console.rkh:26
+#, kde-format
+msgid "Copying commands / output"
+msgstr "Copiar ordres / sortida"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Copying commands / output">
+#: rkward/pages/rkward_console.rkh:26
+#, kde-format
+msgid ""
+"There are two copy modes available from the context menu (or the Edit menu). "
+"One allows you to copy the selection literally, i.e. including the prompts "
+"\"> \" and \"+ \". In contrast, \"Copy commands, only\" will remove the "
+"prompts from the text copied into the clipboard."
+msgstr ""
+"Hi ha dos modes de còpia disponibles des del menú contextual (o el menú "
+"Edita). Un permet copiar la selecció literalment, és a dir, incloent-hi els "
+"indicadors «> » i «+ ». Per contra, «Copia les ordres, només», eliminarà els "
+"indicadors del text copiat en el porta-retalls."
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Copying commands / output">
+#: rkward/pages/rkward_console.rkh:26
+#, kde-format
+msgid ""
+"Note that the customary shortcut for copying text - Ctrl+C - does NOT work "
+"in the console, as Ctrl+C already means interrupting the current command."
+msgstr ""
+"Cal tenir en compte que la drecera habitual per a copiar text (Ctrl+C) NO "
+"funciona a la consola, ja que Ctrl+C significa la interrupció de l'ordre "
+"actual."
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="...">
+#: rkward/pages/rkward_console.rkh:32
+#, kde-format
+msgid "Function reference"
+msgstr "Referència de funció"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Function reference">
+#: rkward/pages/rkward_console.rkh:32
+#, kde-format
+msgid ""
+"Pressing F2 (or selecting \"Function reference\" from the context menu) will "
+"try to look up the R help page for whichever keyword the cursor is currently "
+"on."
+msgstr ""
+"Prement F2 (o seleccionant «Referència de funció» des del menú contextual) "
+"s'intentarà cercar la pàgina d'ajuda de l'R per a la paraula clau sobre la "
+"qual està el cursor actualment."
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="...">
+#: rkward/pages/rkward_console.rkh:36
+#, kde-format
+msgid "Navigating the command history"
+msgstr "Explorant l'historial d'ordres"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
+#: rkward/pages/rkward_console.rkh:36
+#, kde-format
+msgid ""
+"The console provides a mechanism to recall recent commands, similar to the "
+"readline functionality offered in R or most shells."
+msgstr ""
+"La consola proporciona un mecanisme per a recuperar les ordres recents, "
+"similar a la funcionalitat «readline» oferida a l'R o a la majoria "
+"d'intèrprets d'ordres."
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
+#: rkward/pages/rkward_console.rkh:36
+#, kde-format
+msgid ""
+"To recall the previous command, simply press the up arrow. Press the up "
+"arrow repeatedly to recall the command before that, and so on. Similarly, "
+"pressing the down arrow goes downwards in the command history. Of course, "
+"you can also edit a recalled command line."
+msgstr ""
+"Per a recuperar l'ordre anterior, simplement premeu la fletxa amunt. Premeu "
+"la fletxa amunt repetidament per a recuperar les ordres anteriors. De manera "
+"similar, prement la fletxa avall es recorre l'historial d'ordres en sentit "
+"invers. Evidentment, també podeu editar una línia d'ordres recuperada."
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
+#: rkward/pages/rkward_console.rkh:36
+#, kde-format
+msgid ""
+"It is also possible to search the command history for lines starting with a "
+"specified string. To use this, enter - for example - \"print\" in the "
+"console. Now use Shift+Up / Shift+Down. You will note, that only those "
+"recent command lines that started with \"print\" will be shown."
+msgstr ""
+"També es pot cercar a l'historial d'ordres les línies que comencen per una "
+"cadena especificada. Per a usar això, introduïu -per exemple- «print» a la "
+"consola. Ara useu Maj+Re Pàg / Maj+Av Pàg. Veureu que es mostraran només les "
+"línies d'ordres recents que comencen per «print»."
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
+#: rkward/pages/rkward_console.rkh:36
+#, kde-format
+msgid ""
+"It is possible to make the second mode of searching the command history the "
+"default. In this case, pressing Shift+Up/Down will navigate all commands, "
+"while pressing Up/Down without the Shift key will show only matching lines. "
+"(see <link href=\"#settings\">Section settings</link>)."
+msgstr ""
+"És possible fer predeterminat el segon mode de cerca a l'historial d'ordres. "
+"En aquest cas, prement Maj+Re Pàg/Av Pàg navegarà per totes les ordres, "
+"mentre que prement Re Pàg/Av Pàg sense la tecla Maj mostrarà només les "
+"línies coincidents (vegeu <link href=\"#settings\">Secció de configuració</"
+"link>)."
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
+#: rkward/pages/rkward_console.rkh:36
+#, kde-format
+msgid ""
+"You can also save / load a command history at any time during your session, "
+"using <i>File->Import / Export command history</i> or the R commands "
+"<i>savehistory()</i> and <i>loadhistory()</i>."
+msgstr ""
+"També podeu desar / carregar un historial d'ordres en qualsevol moment "
+"durant la sessió, usant «<i>Fitxer -> Importa / Exporta l'historial "
+"d'ordres</i>» o les ordres <i>savehistory()</i> i <i>loadhistory()</i> de "
+"l'R."
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="...">
+#: rkward/pages/rkward_console.rkh:48
+#, kde-format
+msgid "Filename and Object name completion"
+msgstr "Compleció de nom de fitxers i de nom d'objectes"
+
+# skip-rule: kct-tab
+#. i18n: ectx: (Using the RKWard R Console) <section title="Filename and Object name completion">
+#: rkward/pages/rkward_console.rkh:48
+#, kde-format
+msgid ""
+"Pressing the Tab key while typing the name of an R object will try to "
+"complete the name of that R object. If several objects start with the typed "
+"characters, a list of all those objects will be shown."
+msgstr ""
+"Prement la tecla Tab mentre es tecleja el nom d'un objecte R, s'intentarà "
+"completar el nom d'aquest objecte R. Si hi ha diversos objectes que comencen "
+"amb els caràcters teclejats, es mostrarà una llista de tots aquests objectes."
+
+# skip-rule: kct-tab
+#. i18n: ectx: (Using the RKWard R Console) <section title="Filename and Object name completion">
+#: rkward/pages/rkward_console.rkh:48
+#, kde-format
+msgid ""
+"For an example, enter \"base::pa\" in the console, then press Tab. This will "
+"list all objects from package base starting with \"pa\". Now append an \"s"
+"\", and press Tab again. The word will be changed to \"paste\", as that is "
+"the only matching object name."
+msgstr ""
+"Com a exemple, introduïu «base::pa» a la consola, després premeu Tab. Això "
+"llistarà tots els objectes del paquet base que comencin per «pa». Ara afegiu "
+"una «s», i torneu a prémer Tab. La paraula canviarà a «paste», ja que és "
+"l'únic nom d'objecte coincident."
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Filename and Object name completion">
+#: rkward/pages/rkward_console.rkh:48
+#, kde-format
+msgid ""
+"Based on some simple heuristics, RKWard will try to complete file names "
+"instead of object names, where appropriate. This is done, when the cursor "
+"seems to be inside a quoted string that does not seem to be part of an "
+"object name."
+msgstr ""
+"Basant-se en una heurística senzilla, el RKWard intentarà completar els noms "
+"de fitxer en lloc dels noms d'objectes, quan sigui adequat. Això es fa quan "
+"el cursor estigui dins una cadena entre cometes que no sembli formar part "
+"d'un nom d'objecte."
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="...">
+#. i18n: ectx: (Screen device history) <section title="...">
+#. i18n: ectx: (Workspace Browser) <section title="...">
+#: rkward/pages/rkward_console.rkh:56 rkward/pages/rkward_plot_history.rkh:24
+#: rkward/pages/rkward_workspace_browser.rkh:42
+#, kde-format
+msgid "Configurable Settings"
+msgstr "Paràmetres configurables"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
+#: rkward/pages/rkward_console.rkh:56
+#, kde-format
+msgid ""
+"To configure the behavior of the console, select <a href=\"rkward://settings/"
+"console\">Settings->Configure RKWard->R Console</a> or \"Configure\" from "
+"the context menu. The following options are configurable:"
+msgstr ""
+"Per a configurar el comportament de la consola, seleccioneu <a href="
+"\"rkward://settings/console\">Arranjament -> Configura el RKWard -> Consola "
+"de l'R</a> o «Configura» des del menú contextual. Es poden configurar les "
+"opcions següents:"
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
+#: rkward/pages/rkward_console.rkh:56
+#, kde-format
+msgid ""
+"<b>Load/save command history</b>: Whether the <link href=\"#command_history"
+"\">command history</link> is saved when closing RKWard, and reloaded when "
+"next starting RKWard again. If this is not checked, each session of RKWard "
+"will start out with an empty command history."
+msgstr ""
+"<b>Carrega/desa l'historial d'ordres</b>: Si l'<link href=\"#command_history"
+"\">historial d'ordres</link> es desa en tancar el RKWard, i es torna a "
+"carregar en el següent inici del RKWard. Si això no està activat, cada "
+"sessió del RKWard s'iniciarà amb un historial d'ordres buit."
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
+#: rkward/pages/rkward_console.rkh:56
+#, kde-format
+msgid ""
+"<b>Maximum length of command history</b>: Only this many lines are kept in "
+"the <link href=\"#command_history\">command history</link>."
+msgstr ""
+"<b>Longitud màxima l'historial d'ordres</b>: Només es desarà aquest nombre "
+"de línies en l'<link href=\"#command_history\">historial d'ordres</link>."
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
+#: rkward/pages/rkward_console.rkh:56
+#, kde-format
+msgid ""
+"<b>Maximum number of paragraphs/lines to display in the console</b>: No more "
+"than this many total lines (commands and output) will be shown in the "
+"console. When this number of lines is exceeded, lines will be removed at the "
+"top of the console window. To clear the console entirely, choose \"Clear\" "
+"from the context menu or the Edit menu."
+msgstr ""
+"<b>Nombre màxim de paràgrafs/línies per a mostrar a la consola</b>: No es "
+"mostraran més que aquest nombre total de línies (ordres i sortida) a la "
+"consola. Quan s'excedeix aquest nombre de línies, aquestes s'eliminen de la "
+"part superior de la finestra de la consola. Per a netejar completament la "
+"consola, Trieu «Neteja» des del menú contextual o des del menú Edita."
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
+#: rkward/pages/rkward_console.rkh:56
+#, kde-format
+msgid ""
+"<b>Run commands from script editor through the console</b>: Commands coming "
+"from script editors may be sent through the console, i.e. the commands and "
+"their results will be shown in the console. If this option is not checked, "
+"the commands will only be visible in the Command log, but not in the console."
+msgstr ""
+"<b>Executa ordres de l'editor de scripts a través de la consola</b>: Les "
+"ordres que arriben dels editors de scripts es poden enviar a través de la "
+"consola, és a dir, les ordres i els seus resultats es mostraran a la "
+"consola. Si aquesta opció no està activada, les ordres només seran visibles "
+"al registre de les ordres, però no a la consola."
+
+#. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
+#: rkward/pages/rkward_console.rkh:56
+#, kde-format
+msgid ""
+"<b>Also add those commands to console history</b>: If the above option is "
+"checked, this affects, whether such commands are also added to the console "
+"history. Turning off this option may help to keep the console history \"clean"
+"\"."
+msgstr ""
+"<b>Afegeix també aquestes ordres a l'historial de la consola</b>: Si l'opció "
+"de dalt està activada, això afecta si aquestes ordres també s'afegiran a "
+"l'historial de la consola. Desactivant aquesta opció pot ajudar a mantenir "
+"«net» l'historial de la consola."
+
+# skip-rule: apps-edu_bind
+#. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
+#: rkward/pages/rkward_console.rkh:56
+#, kde-format
+msgid ""
+"<b>Command history is context-sensitive by default</b>: If this is checked, "
+"the context-sensitive mode of navigating the <link href=\"#command_history"
+"\">command history</link> is the default, i.e. available with Up/Down "
+"without Shift. Else the key binding for this is Shift+Up/Down."
+msgstr ""
+"<b>L'historial d'ordres és sensible al context de manera predeterminada</b>: "
+"Si això està activat, el mode de navegació sensible al context de <link href="
+"\"#command_history\">l'historial d'ordres</link> és el predeterminat, és a "
+"dir, disponible amb Amunt/Avall sense Majúscules. En cas contrari, el lligam "
+"de tecla per a això és Majúscules+Amunt/Avall."
+
+#. i18n: ectx: (RKWard for new Users) <title>
+#: rkward/pages/rkward_for_new_users.rkh:3
+#, kde-format
+msgid "RKWard for new Users"
+msgstr "El RKWard per a usuaris nous"
+
+#. i18n: ectx: (RKWard for new Users) <summary>
+#: rkward/pages/rkward_for_new_users.rkh:4
+#, kde-format
+msgid ""
+"Provide some starting points for users new to R and RKWard. For a more in "
+"depth guide see <link href=\"rkward://page/rkward_for_r_users\"/>."
+msgstr ""
+"Proporciona diversos punts d'entrada per als usuaris nous de l'R i del "
+"RKWard. Per a una guia amb més profunditat vegeu <link href=\"rkward://page/"
+"rkward_for_r_users\"/>."
+
+#. i18n: ectx: (RKWard for new Users) <section title="...">
+#: rkward/pages/rkward_for_new_users.rkh:9
+#, kde-format
+msgid "Where's my data?"
+msgstr "A on són les dades?"
+
+#. i18n: ectx: (RKWard for new Users) <section title="Where's my data?">
+#: rkward/pages/rkward_for_new_users.rkh:9
+#, kde-format
+msgid ""
+"If you have previously used different statistics tools, you may be "
+"accustomed to the idea, that all your data is basically stored in one single "
+"spreadsheet, and that spreadsheet is visible all of the time. While, of "
+"course, R can deal with this sort of data (technically called a \"data.frame"
+"\"), it is much more flexible, and may be slightly confusing at first."
+msgstr ""
+"Si prèviament heu usat eines estadístiques diferents, podreu estar acostumat "
+"a la idea que totes les vostres dades s'emmagatzemen bàsicament en un únic "
+"full de càlcul, que és visible en tot moment. Naturalment, l'R pot tractar "
+"aquesta mena de dades (anomenada tècnicament un «data.frame»), però és molt "
+"més flexible, i pot ser lleugerament confús al principi."
+
+#. i18n: ectx: (RKWard for new Users) <section title="Where's my data?">
+#: rkward/pages/rkward_for_new_users.rkh:9
+#, kde-format
+msgid ""
+"R - and hence RKWard - can deal with a large number of different types of "
+"data: The well known spreadsheets, but also single vectors of data (like a "
+"column in a spreadsheet), so called \"list\"s of different vectors or other "
+"objects that may have different lengths, single data points, etc. Even most "
+"of the language itself, the functions, are stored just like data and can "
+"also be edited."
+msgstr ""
+"L'R - i per tant, el RKWard - pot tractar un gran nombre de tipus diferents "
+"de dades: els fulls de càlcul molt coneguts, però també vectors únics de "
+"dades (com una columna d'un full de càlcul), els anomenats «llistes» de "
+"vectors diferents o altres objectes que poden tenir longituds diferents, "
+"punts de dades simples, etc. Fins i tot la major part del llenguatge mateix, "
+"les funcions, s'emmagatzemen com a dades i també es poden editar."
+
+#. i18n: ectx: (RKWard for new Users) <section title="Where's my data?">
+#: rkward/pages/rkward_for_new_users.rkh:9
+#, kde-format
+msgid ""
+"At the same time, R is not confined to working with just one piece of data "
+"at a time, but rather you have a \"Workspace\", where all your different "
+"variables, tables, etc. are accessible. You can have many data.frames at "
+"once, and additional data of other types. At the left side of the "
+"application window, there should be an icon labelled \"Workspace\". You can "
+"click on this to see all the objects present in your workspace. All the "
+"objects you create or modify will be visible inside the \".GlobalEnv\". Most "
+"other objects are predefined in libraries, such as \"package:base\". See "
+"<link href=\"rkward://page/rkward_workspace_browser\"/> for details."
+msgstr ""
+"Al mateix temps, l'R no està limitat a treballar amb només una peça de dades "
+"a la vegada, sinó que podeu tenir un «espai de treball», a on són "
+"accessibles totes les variables diferents, les taules, etc. Podeu tenir "
+"molts «data.frames» a la vegada, i dades addicionals d'altres tipus. A la "
+"banda esquerra de la finestra de l'aplicació, hi hauria d'haver una icona "
+"etiquetada «Espai de treball». Podeu clicar-hi per a veure tots els objectes "
+"presents al vostre espai de treball. Tots els objectes que heu creat o "
+"modificat seran visibles dins el «.GlobalEnv». La majoria d'altres objectes "
+"estan predefinits a biblioteques, com a «package:base». Vegeu <link href="
+"\"rkward://page/rkward_workspace_browser\"/> per als detalls."
+
+#. i18n: ectx: (RKWard for new Users) <section title="Where's my data?">
+#: rkward/pages/rkward_for_new_users.rkh:9
+#, kde-format
+msgid ""
+"You do not need to worry about all these details. To create a new "
+"spreadsheet (data.frame), choose File->New->Dataset from the menu. All you "
+"need to do is to assign a name to this table, then you can start editing. To "
+"work with pre-existing data, pick the appropriate option from the File-"
+">Import menu."
+msgstr ""
+"No cal preocupar-se per tots aquests detalls. Per a crear un full de càlcul "
+"nou (data.frame), trieu «Fitxer -> Nou -> Conjunt de dades» des del menú. "
+"Tot el que cal fer és assignar un nom a aquesta taula, després podeu "
+"començar l'edició. Per a treballar amb dades preexistents, seleccioneu "
+"l'opció adequada des del menú «Fitxer -> Importa»."
+
+#. i18n: ectx: (RKWard for new Users) <section title="...">
+#: rkward/pages/rkward_for_new_users.rkh:18
+#, kde-format
+msgid "How can I make use of my results in an external application?"
+msgstr "Com puc fer és dels resultats a una aplicació externa?"
+
+#. i18n: ectx: (RKWard for new Users) <section title="How can I make use of my results in an external application?">
+#: rkward/pages/rkward_for_new_users.rkh:18
+#, kde-format
+msgid ""
+"In this section you will learn about some basic methods how to make use of "
+"your results in external applications."
+msgstr ""
+"En aquesta secció aprendreu diversos mètodes bàsics quant a fer ús dels "
+"resultats en aplicacions externes."
+
+#. i18n: ectx: (RKWard for new Users) <section title="How can I make use of my results in an external application?">
+#: rkward/pages/rkward_for_new_users.rkh:18
+#, kde-format
+msgid ""
+"Suppose you produced a textual output from tests you performed. Such will be "
+"presented in the \"output window\" of RKWard. It's easy to keep track on "
+"your work since a standard of RKWard is to show everything in chronological "
+"order together with the date of creation."
+msgstr ""
+"Suposem que heu produït una sortida de text de les proves que heu portat a "
+"terme. Aquesta es mostrarà a la «finestra de sortida» del RKWard. És fàcil "
+"mantenir un registre de la vostra feina, ja que l'estàndard del RKWard és "
+"mostrar-ho tot en ordre cronològic conjuntament amb la data de la creació."
+
+#. i18n: ectx: (RKWard for new Users) <section title="How can I make use of my results in an external application?">
+#: rkward/pages/rkward_for_new_users.rkh:18
+#, kde-format
+msgid ""
+"See <link href=\"rkward://page/rkward_output\"/> for details on working with "
+"the output. The easiest method of reusing the output is to select the "
+"relevant portion, and copy and paste them to an office suite."
+msgstr ""
+"Vegeu <link href=\"rkward://page/rkward_output\"/> per als detalls quant a "
+"treballar amb la sortida. El mètode més fàcil de reusar la sortida és "
+"seleccionar la porció important, i copiar i enganxar-la a un paquet ofimàtic."
+
+#. i18n: ectx: (RKWard for new Users) <section title="...">
+#: rkward/pages/rkward_for_new_users.rkh:25
+#, kde-format
+msgid "Basic Analyses"
+msgstr "Anàlisis bàsiques"
+
+#. i18n: ectx: (RKWard for new Users) <section title="Basic Analyses">
+#: rkward/pages/rkward_for_new_users.rkh:25
+#, kde-format
+msgid ""
+"In order to familiarize yourself with RKWard (or with your data), one of the "
+"first things to do might be to choose Analysis->Descriptive Statistics from "
+"the Menu. You will be presented with a dialog that allows you to select one "
+"or more variables to analyse. This looks similar to the workspace browser "
+"introduced above. On the additional tabs you can choose which types of "
+"descriptive statistics should be calculated."
+msgstr ""
+"Per tal de familiaritzar-vos amb el RKWard (o amb les dades), una de les "
+"primeres coses a fer, podria ser triar «Anàlisi -> Estadístiques "
+"descriptives» des del menú. Es mostrarà un diàleg que permet seleccionar una "
+"o més variables a analitzar. Això sembla similar al navegador de l'espai de "
+"treball que s'ha presentat més amunt. A les pestanyes addicionals podreu "
+"triar els tipus d'estadístiques descriptives que caldria calcular."
+
+#. i18n: ectx: (RKWard for new Users) <section title="Basic Analyses">
+#: rkward/pages/rkward_for_new_users.rkh:25
+#, kde-format
+msgid ""
+"At the lower right of the dialog, there is a button labelled \"Code\". Using "
+"this, you can show/hide a text area. If you look at the contents of this "
+"text area (you may have to resize the window to view it more comfortably), "
+"you can see the text changing according to the settings you choose in the "
+"dialog. This text is actually R syntax. It is the code that is needed to "
+"perform these calculations in R. Most of RKWard is based on generating this "
+"code for you, and then running it inside R. Later, when you feel more "
+"comfortable, have specific needs not covered by RKWard, or you want to "
+"automate repetitive tasks, you can use this syntax to literally program your "
+"analyses. Note that the code is divided into up to three sections: "
+"\"Preprocess\" for loading required libraries or defining helper functions, "
+"\"Calculate\" to perform the actual calculations, and \"Printout\" to "
+"generate output in RKWard's output window."
+msgstr ""
+"A la part inferior de la dreta del diàleg, hi ha un botó etiquetat «Codi». "
+"Usant-lo, podeu mostrar/ocultar una àrea de text. Si mireu el contingut "
+"d'aquesta àrea de text (potser caldrà redimensionar la finestra per a veure-"
+"la amb més comoditat), podreu veure els canvis del text d'acord amb els "
+"paràmetres que trieu al diàleg. Aquest text realment és sintaxi de l'R. És "
+"el codi necessari per a portar a terme aquests càlculs a l'R. La principal "
+"base del RKWard és generar aquest codi, i després executar-lo dins l'R. Més "
+"endavant, quan us sentiu més confortable, teniu necessitats específiques no "
+"cobertes pel RKWard, o vulgueu automatitzar tasques repetitives, podreu usar "
+"aquesta sintaxi per a programar literalment les anàlisis. Cal tenir en "
+"compte que el codi està dividit en fins a tres seccions: «Preprocess» per a "
+"carregar les biblioteques requerides o definir les funcions auxiliars, "
+"«Calculate» per a portar a terme els càlculs reals, i «Printout» per a "
+"generar la sortida a la finestra de sortida del RKWard."
+
+#. i18n: ectx: (RKWard for new Users) <section title="Basic Analyses">
+#: rkward/pages/rkward_for_new_users.rkh:25
+#, kde-format
+msgid ""
+"For now, just click submit, once you've made your choices, and watch the "
+"results show up in a new window."
+msgstr ""
+"Per ara, només feu clic a envia, un cop hàgiu fet la selecció, i vigileu els "
+"resultats que es mostraran en una finestra nova."
+
+#. i18n: ectx: (RKWard for new Users) <section title="...">
+#: rkward/pages/rkward_for_new_users.rkh:33
+#, kde-format
+msgid "So much more"
+msgstr "Molt més"
+
+#. i18n: ectx: (RKWard for new Users) <section title="So much more">
+#: rkward/pages/rkward_for_new_users.rkh:33
+#, kde-format
+msgid ""
+"The purpose of RKWard is to make the power of the R language easily "
+"accessible to the user, without having to learn a full programming language, "
+"first. However, for advanced needs, you may want to make use of the full "
+"flexibility of the R language. RKWard offers a lot of tools to make this "
+"easier, both for users new to R, and R experts. Read on in <link href="
+"\"rkward://page/rkward_for_r_users\"/> for more on this."
+msgstr ""
+"La finalitat del RKWard és fer fàcilment accessible a l'usuari tota la "
+"potència del llenguatge R, sense haver d'aprendre completament un llenguatge "
+"de programació abans. Tanmateix, per a necessitats avançades, potser voldreu "
+"fer ús de la completa flexibilitat del llenguatge R. El RKWard ofereix "
+"moltes eines per a fer-ho més fàcil, tant per als usuaris nous de l'R, com "
+"els experts amb l'R. Llegiu més quant això a <link href=\"rkward://page/"
+"rkward_for_r_users\"/>."
+
+#. i18n: ectx: (RKWard for new Users) <section title="So much more">
+#: rkward/pages/rkward_for_new_users.rkh:33
+#, kde-format
+msgid ""
+"Also, you may want to select Help->Help on R from the menu for some starting "
+"points in learning R."
+msgstr ""
+"També, podríeu seleccionar «Ajuda -> Ajuda quant a l'R» des del menú per a "
+"altres punts inicials per a aprendre R."
+
+#. i18n: ectx: (RKWard for R Users) <title>
+#: rkward/pages/rkward_for_r_users.rkh:3
+#, kde-format
+msgid "RKWard for R Users"
+msgstr "El RKWard per a usuaris de l'R"
+
+#. i18n: ectx: (RKWard for R Users) <summary>
+#: rkward/pages/rkward_for_r_users.rkh:4
+#, kde-format
+msgid ""
+"Briefly explains the main components of RKWard, assuming the user is already "
+"familiar with basic concepts of R."
+msgstr ""
+"Explica breument els components principals del RKWard, assumint que l'usuari "
+"ja està familiaritzat amb els conceptes bàsics de l'R."
+
+#. i18n: ectx: (RKWard for R Users) <section title="...">
+#: rkward/pages/rkward_for_r_users.rkh:7
+#, kde-format
+msgid "The Console"
+msgstr "La consola"
+
+#. i18n: ectx: (RKWard for R Users) <section title="The Console">
+#: rkward/pages/rkward_for_r_users.rkh:7
+#, kde-format
+msgid ""
+"First things first: An emulation of the standard R console can be found at "
+"the bottom on the screen. There you will notice several buttons, one of "
+"which is labelled \"R Console\" and has a console icon."
+msgstr ""
+"El primer és el primer: Es pot trobar una emulació de la consola estàndard "
+"de l'R a la part inferior de la pantalla. Allí hi ha diversos botons, un "
+"dels quals està etiquetat «Consola de l'R» i té la icona d'una consola."
+
+#. i18n: ectx: (RKWard for R Users) <section title="The Console">
+#: rkward/pages/rkward_for_r_users.rkh:7
+#, kde-format
+msgid ""
+"This console works almost exactly like the regular R text console, so you "
+"can start working right away. Differences include:"
+msgstr ""
+"Aquesta consola funciona quasi exactament igual que la consola normal de "
+"text de l'R, així que podeu començar a treballar directament. Les "
+"diferències inclouen:"
+
+#. i18n: ectx: (RKWard for R Users) <section title="The Console">
+#: rkward/pages/rkward_for_r_users.rkh:7
+#, kde-format
+msgid "Syntax highlighting"
+msgstr "Ressaltat de la sintaxi"
+
+#. i18n: ectx: (RKWard for R Users) <section title="The Console">
+#: rkward/pages/rkward_for_r_users.rkh:7
+#, kde-format
+msgid ""
+"While typing function calls, a list of arguments to that function is shown "
+"in a box (argument hinting)"
+msgstr ""
+"En teclejar les crides a una funció, es mostra una llista d'arguments a "
+"aquesta funció en un quadre (consells d'arguments)"
+
+#. i18n: ectx: (RKWard for R Users) <section title="The Console">
+#: rkward/pages/rkward_for_r_users.rkh:7
+#, kde-format
+msgid ""
+"While the cursor is on an R symbol or function, pressing F2 will search the "
+"R help for that symbol. Also available from the Help menu, or the right "
+"mouse button menu"
+msgstr ""
+"Mentre el cursor és sobre un símbol de l'R o una funció, prement F2 se "
+"cercarà l'ajuda de l'R per a aquest símbol. També està disponible des del "
+"menú Ajuda, o el menú del botó dret del ratolí"
+
+#. i18n: ectx: (RKWard for R Users) <section title="The Console">
+#: rkward/pages/rkward_for_r_users.rkh:7
+#, kde-format
+msgid ""
+"You can easily create a transcript of the commands you run in the console "
+"using Run->CC commands to output..."
+msgstr ""
+"Es pot crear fàcilment una transcripció de les ordres que executeu a la "
+"consola usant «Executa -> Copia les ordres a la sortida...»"
+
+#. i18n: ectx: (RKWard for R Users) <section title="The Console">
+#: rkward/pages/rkward_for_r_users.rkh:7
+#, kde-format
+msgid "See <link href=\"rkward://page/rkward_console\"/> for more details."
+msgstr "Vegeu <link href=\"rkward://page/rkward_console\"/> per a més detalls."
+
+#. i18n: ectx: (RKWard for R Users) <section title="...">
+#: rkward/pages/rkward_for_r_users.rkh:21
+#, kde-format
+msgid "Script Editors"
+msgstr "Editors de scripts"
+
+#. i18n: ectx: (RKWard for R Users) <section title="Script Editors">
+#: rkward/pages/rkward_for_r_users.rkh:21
+#, kde-format
+msgid ""
+"Often it is more convenient to write scripts in a separate file, instead of "
+"typing them directly in the console. To open a new script editor (with "
+"syntax highlighting, and many more features), choose File->New->Script File, "
+"or open an already existing Script file using File->Open R Script File."
+msgstr ""
+"Sovint és més pràctic escriure scripts en un fitxer separat, en lloc de "
+"teclejar-los directament a la consola. Per a obrir un editor nou de scripts "
+"(amb ressaltat de sintaxi, i moltes altres funcionalitats), trieu «Fitxer -> "
+"Nou -> Fitxer de script», o obriu un fitxer de script ja existent usant "
+"«Fitxer -> Obre un fitxer de script en R»."
+
+#. i18n: ectx: (RKWard for R Users) <section title="Script Editors">
+#: rkward/pages/rkward_for_r_users.rkh:21
+#, kde-format
+msgid ""
+"You will note that the editor opens in a new window in the main workplace "
+"(the area of the window, that you are most likely reading this text, in). "
+"You can open any number of script editor windows at the same time."
+msgstr ""
+"Veureu que l'editor s'obre a una finestra nova a l'espai de treball "
+"principal (l'àrea de la finestra en què segurament esteu llegint aquest "
+"text). Podeu obrir qualsevol nombre de finestres d'editor de scripts al "
+"mateix temps."
+
+#. i18n: ectx: (RKWard for R Users) <section title="Script Editors">
+#: rkward/pages/rkward_for_r_users.rkh:21
+#, kde-format
+msgid ""
+"To run the code in a script editor window, either copy and paste it to the "
+"console, or choose one of the actions in the Run menu, such as Run All or "
+"Run Selection. Note: The contents of the menus may change according to the "
+"type of active window. Hence, if you look at the Run menu while reading "
+"this, there will be no entries."
+msgstr ""
+"Per a executar el codi de la finestra de l'editor de scripts, podeu copiar-"
+"lo i enganxar-lo a la consola, o triar una de les accions del menú Executa, "
+"com Executa-ho tot o Executa la selecció. Nota: El contingut dels menús pot "
+"canviar segons el tipus de la finestra activa. Així, si aneu al menú Executa "
+"mentre llegiu això, no hi haurà cap entrada."
+
+#. i18n: ectx: (RKWard for R Users) <section title="...">
+#: rkward/pages/rkward_for_r_users.rkh:28
+#, kde-format
+msgid "Workspace View"
+msgstr "Vista de l'espai de treball"
+
+#. i18n: ectx: (RKWard for R Users) <section title="Workspace View">
+#: rkward/pages/rkward_for_r_users.rkh:28
+#, kde-format
+msgid ""
+"RKWard comes with a \"workspace view\" or \"object browser\". By default "
+"this is available by clicking on \"Workspace\" on the left side of the "
+"application window. This allows you to examine and manipulate all objects in "
+"the R workspace. By default, only the \".GlobalEnv\" environment is shown "
+"(where you'll typically do your work; see <link href=\"rkward://rhelp/."
+"GlobalEnv\"/>). But, checking \"Show All Environments\", you can easily "
+"explore data and functions in loaded R libraries (and even in package "
+"namespaces)."
+msgstr ""
+"El RKWard té una «vista d'espai de treball» o un «explorador d'objectes». De "
+"manera predeterminada, això està disponible fent clic a «Espai de treball» a "
+"la banda esquerra de la finestra de l'aplicació. Això permet examinar i "
+"manipular tots els objectes de l'espai de treball de l'R. Per defecte, només "
+"es mostra l'entorn «.GlobalEnv» (a on normalment feu la feina; vegeu <link "
+"href=\"rkward://rhelp/.GlobalEnv\"/>). Però, activant «Mostra tots els "
+"entorns», podreu explorar fàcilment les dades i funcions a les biblioteques "
+"R carregades (i també als espais de noms dels paquets)."
+
+#. i18n: ectx: (RKWard for R Users) <section title="Workspace View">
+#: rkward/pages/rkward_for_r_users.rkh:28
+#, kde-format
+msgid ""
+"The object browser provides function to select which types of object are "
+"shown (on the top). Hovering the mouse over an item will show some "
+"additional information on the symbol. Right-clicking on an item will show "
+"available actions. See <link href=\"rkward://page/rkward_workspace_browser\"/"
+"> for details."
+msgstr ""
+"L'explorador d'objectes proporciona la funció per a seleccionar quins tipus "
+"d'objectes es mostraran (a la part superior). En passar el ratolí per sobre "
+"un element es mostrarà informació addicional del símbol. Fent un clic dret "
+"en un element es mostraran les accions disponibles. Vegeu <link href="
+"\"rkward://page/rkward_workspace_browser\"/> per als detalls."
+
+#. i18n: ectx: (RKWard for R Users) <section title="...">
+#: rkward/pages/rkward_for_r_users.rkh:33
+#, kde-format
+msgid "R Help"
+msgstr "Ajuda de l'R"
+
+# skip-rule: t-sp_in
+#. i18n: ectx: (RKWard for R Users) <section title="R Help">
+#: rkward/pages/rkward_for_r_users.rkh:33
+#, kde-format
+msgid ""
+"By default R help pages are shown as HTML, inside RKWard. You can invoke the "
+"help in the usual way by running e.g. \"?print\" or \"help (print)\" or "
+"\"help.start ()\" in the console. Additionally, there is a tool window to "
+"search your installed R help pages. This is accessible using a button "
+"located at the bottom of the window (next to the console button). To view a "
+"help page found using this tool, double-click on it."
+msgstr ""
+"De manera predeterminada, les pàgines d'ajuda de l'R es mostren com a HTML, "
+"dins el RKWard. Podeu invocar l'ajuda de la manera normal executant, p. ex. "
+"«?print» o «help (print)» o «help.start ()» a la consola. Addicionalment, hi "
+"ha una finestra d'eines per a cercar les pàgines instal·lades d'ajuda de "
+"l'R. Això és accessible usant un botó situat a la part inferior de la "
+"finestra (proper al botó de la consola). Per a veure una pàgina d'ajuda "
+"trobada usant aquesta eina, feu-hi doble clic."
+
+#. i18n: ectx: (RKWard for R Users) <section title="...">
+#: rkward/pages/rkward_for_r_users.rkh:36
+#, kde-format
+msgid "Managing installed and loaded Libraries"
+msgstr "Gestió de les biblioteques instal·lades i carregades"
+
+#. i18n: ectx: (RKWard for R Users) <section title="Managing installed and loaded Libraries">
+#: rkward/pages/rkward_for_r_users.rkh:36
+#, kde-format
+msgid ""
+"RKWard provides an advanced dialog to have installation, updating, and "
+"loading of packages. This is available from Settings->Manage R Packages."
+msgstr ""
+"El RKWard proporciona un diàleg avançat per a instal·lar, actualitzar, i "
+"carregar paquets. Això està disponible des d'«Arranjament -> Gestiona els "
+"paquets de l'R»."
+
+#. i18n: ectx: (RKWard for R Users) <section title="...">
+#: rkward/pages/rkward_for_r_users.rkh:39
+#, kde-format
+msgid "Window management"
+msgstr "Gestió de les finestres"
+
+#. i18n: ectx: (RKWard for R Users) <section title="Window management">
+#: rkward/pages/rkward_for_r_users.rkh:39
+#, kde-format
+msgid ""
+"All windows shown in the main view area can be detached to a separate top "
+"level window using Windows->Detach. Similarly, detached windows can be "
+"attached to the main workplace using Window->Attach to main window."
+msgstr ""
+"Totes les finestres que es mostren a l'àrea de visualització principal es "
+"poden separar a una finestra separada de nivell superior usant «Finestres -> "
+"Separa». De manera similar, les finestres separades es poden adjuntar a "
+"l'espai de treball principal usant «Finestra -> Adjunta amb la finestra "
+"principal»."
+
+# skip-rule: kct-tab
+#. i18n: ectx: (RKWard for R Users) <section title="Window management">
+#: rkward/pages/rkward_for_r_users.rkh:39
+#, kde-format
+msgid ""
+"Windows can be closed using Windows->Close (Ctrl+W by default). Ctrl+Tab and "
+"Ctrl+Shift+Tab cycle through all active document / tool windows in your "
+"session."
+msgstr ""
+"Les finestres es poden tancar usant «Finestres -> Tanca» (Ctrl+W per "
+"defecte). Ctrl+Tab i Ctrl+Maj+Tab circula entre totes les finestres actives "
+"de documents / eines de la sessió."
+
+#. i18n: ectx: (RKWard for R Users) <section title="Window management">
+#: rkward/pages/rkward_for_r_users.rkh:39
+#, kde-format
+msgid ""
+"Tool windows (e.g. the R Console) can be detached and re-attached using the "
+"arrow-icon in their window border."
+msgstr ""
+"Les finestres d'eines (p. ex. la consola de l'R) es poden separar i adjuntar "
+"usant la icona de fletxa a la seva vora de la finestra."
+
+#. i18n: ectx: (RKWard for R Users) <section title="...">
+#: rkward/pages/rkward_for_r_users.rkh:46
+#, kde-format
+msgid "Editing data"
+msgstr "Edició de dades"
+
+#. i18n: ectx: (RKWard for R Users) <section title="Editing data">
+#: rkward/pages/rkward_for_r_users.rkh:46
+#, kde-format
+msgid ""
+"RKWard provides a built-in editor for data.frames. In fact, you can edit "
+"many data.frames at the same time, and even while running lengthy "
+"calculations. Still the data is stored as a regular data.frame in R. To "
+"explore the data editor, either choose File->New->Dataset, or right-click a "
+"data.frame in the Workspace browser, and choose Edit from the menu."
+msgstr ""
+"El RKWard proporciona un editor integrat per als «data.frames». De fet, "
+"podeu editar molts «data.frames» a la vegada, i inclús mentre executeu "
+"càlculs llargs. també, les dades s'emmagatzemen com un «data.frame» a l'R. "
+"Per a explorar l'editor de dades, trieu «Fitxer -> Nou -> Conjunt de dades», "
+"o feu clic dret a «data.frame» al navegador de l'espai de treball, i trieu "
+"Edita des del menú."
+
+#. i18n: ectx: (RKWard for R Users) <section title="Editing data">
+#: rkward/pages/rkward_for_r_users.rkh:46
+#, kde-format
+msgid ""
+"Support for adding other types of data, esp. single vectors is planned, but "
+"not currently supported."
+msgstr ""
+"Està planificat el suport per a afegir altres tipus de dades, especialment "
+"vectors simples, però actualment no s'admeten."
+
+#. i18n: ectx: (RKWard for R Users) <section title="...">
+#: rkward/pages/rkward_for_r_users.rkh:51
+#, kde-format
+msgid "Graphics"
+msgstr "Gràfics"
+
+#. i18n: ectx: (RKWard for R Users) <section title="Graphics">
+#: rkward/pages/rkward_for_r_users.rkh:51
+#, kde-format
+msgid ""
+"R has a few immensely powerful graphics systems (although not interactive) "
+"provided by various packages such as <b>graphics</b> and <b>lattice</b>. "
+"RKWard wraps around the standard platform-dependent screen device to provide "
+"a uniform experience. In additional to the standard functionality of these "
+"packages, RKWard provides a screen device history mechanism to store and "
+"browse your plots. See <link href=\"rkward://page/rkward_plot_history\"/> "
+"for details."
+msgstr ""
+"L'R té sistemes gràfics molt potents (tot i que no són interactius) "
+"proporcionats per diversos paquets com el <b>graphics</b> i el <b>lattice</"
+"b>. El RKWard embolcalla el dispositiu de pantalla estàndard depenent de la "
+"plataforma per a proporcionar una experiència uniforme. Addicionalment a la "
+"funcionalitat estàndard d'aquests paquets, el RKWard proporciona un "
+"mecanisme d'historial del dispositiu de pantalla per a emmagatzemar i veure "
+"els vostres diagrames. Vegeu <link href=\"rkward://page/rkward_plot_history"
+"\"/> per als detalls."
+
+#. i18n: ectx: (RKWard for R Users) <section title="...">
+#: rkward/pages/rkward_for_r_users.rkh:54
+#, kde-format
+msgid "Utility functions"
+msgstr "Funcions d'utilitat"
+
+#. i18n: ectx: (RKWard for R Users) <section title="Utility functions">
+#: rkward/pages/rkward_for_r_users.rkh:54
+#, kde-format
+msgid ""
+"RKWard provides various utility functions which are listed in the index of "
+"the <link href=\"rkward://rhelp/rkward-package\">rkward package overview</"
+"link>."
+msgstr ""
+"El RKWard proporciona diverses funcions d'utilitat que es llisten a l'índex "
+"del <link href=\"rkward://rhelp/rkward-package\">resum del paquet «rkward»</"
+"link>."
+
+#. i18n: ectx: (RKWard for R Users) <section title="...">
+#: rkward/pages/rkward_for_r_users.rkh:57
+#, kde-format
+msgid "Everything else"
+msgstr "Tota la resta"
+
+# skip-rule: common-esteu
+#. i18n: ectx: (RKWard for R Users) <section title="Everything else">
+#: rkward/pages/rkward_for_r_users.rkh:57
+#, kde-format
+msgid ""
+"You will notice that RKWard provides a lot of further menu options. These "
+"provide access to functionality in R. In fact, they do so by generating R "
+"syntax from settings made in a graphical dialog. For instance, select "
+"Analysis->Descriptive Statistics. You will notice a small window at the "
+"bottom (can be toggled on or off using the \"Code\" button) that contains "
+"the R code needed to generate these statistics. This way, even if you prefer "
+"to script your code by hand, you can use dialogs to gain usage examples or "
+"snippets of code for functions you are less familiar with in R."
+msgstr ""
+"Us haureu adonat que el RKWard proporciona moltes opcions de menú "
+"addicionals. Aquestes donen accés a funcionalitat de l'R. De fet, això ho "
+"fan generant sintaxi en R des de la configuració feta en un diàleg gràfic. "
+"Per exemple, seleccioneu «Anàlisi -> Estadístiques descriptives». Veureu una "
+"finestra petita a la part inferior (es pot veure o ocultar usant el botó "
+"«Codi») que conté el codi R necessari per a generar aquestes estadístiques. "
+"D'aquesta manera, encara que preferiu escriure el codi a mà, podeu usar els "
+"diàlegs per a obtenir exemples d'ús o retalls de codi per a funcions amb les "
+"quals esteu menys familiaritzat amb l'R."
+
+#. i18n: ectx: (RKWard for R Users) <section title="Everything else">
+#: rkward/pages/rkward_for_r_users.rkh:57
+#, kde-format
+msgid ""
+"Also, all commands that are executed get shown in the Command Log, available "
+"as a tool window next to the R Console."
+msgstr ""
+"També, totes les ordres que s'han executat es mostren al Fitxer de registre "
+"de les ordres, disponible com a finestra d'eina al costat de la consola de "
+"l'R."
+
+#. i18n: ectx: (RKWard for R Users) <related>
+#: rkward/pages/rkward_for_r_users.rkh:63
+#, kde-format
+msgid ""
+"<link href=\"rkward://page/rkward_for_new_users\"/> For an introduction to "
+"some more basic concepts"
+msgstr ""
+"<link href=\"rkward://page/rkward_for_new_users\"/> Per a una introducció a "
+"diversos conceptes més bàsics"
+
+#. i18n: ectx: (Version incompatibilities) <title>
+#: rkward/pages/rkward_incompatible_version.rkh:3
+#, kde-format
+msgid "Version incompatibilities"
+msgstr "Incompatibilitats de les versions"
+
+#. i18n: ectx: (Version incompatibilities) <summary>
+#: rkward/pages/rkward_incompatible_version.rkh:4
+#, kde-format
+msgid ""
+"While RKWard tries to support a large number of different R versions, some "
+"of the time, a new version of R will not be compatible with RKWard out of "
+"the box. In these cases you will have to install a new version of RKWard. "
+"Quite often, this does not actually have to be a <i>new</i> version, but "
+"simply one that was compiled against your new version of R."
+msgstr ""
+"Mentre que el RKWard intenta donar suport a un gran nombre de versions "
+"diferents de l'R, algunes de les vegades, una versió nova de l'R no serà "
+"compatible amb el RKWard al principi. En aquests casos haureu d'instal·lar "
+"una versió nova del RKWard. Molt sovint, això no ha de ser una versió "
+"<i>nova</i>, sinó simplement una que es va compilar contra la versió nova de "
+"l'R."
+
+#. i18n: ectx: (Version incompatibilities) <summary>
+#: rkward/pages/rkward_incompatible_version.rkh:4
+#, kde-format
+msgid ""
+"If you have installed RKWard using the package manager of your Linux "
+"distribution, but no updated package is available, please contact your "
+"distribution maintainer or file a bug report, there."
+msgstr ""
+"Si heu instal·lat el RKWard utilitzant el gestor de paquets de la vostra "
+"distribució de Linux, però no hi ha cap paquet actualitzat disponible, "
+"contacteu amb el mantenidor de la distribució o ompliu un informe d'error, "
+"aquí."
+
+#. i18n: ectx: (Version incompatibilities) <summary>
+#: rkward/pages/rkward_incompatible_version.rkh:4
+#, kde-format
+msgid ""
+"For more information about available versions, and more troubleshooting "
+"information, see <link href=\"https://rkward.kde.org\">the project homepage</"
+"link>."
+msgstr ""
+"Per a més informació sobre les versions disponibles i més informació de "
+"resolució de problemes, vegeu la <link href=\"http://rkward.kde.org/"
+"\">pàgina del projecte</link>."
+
+#. i18n: ectx: (Version incompatibilities) <section title="...">
+#: rkward/pages/rkward_incompatible_version.rkh:12
+#, kde-format
+msgid "Graphics Engine Version Mismatch"
+msgstr "La versió del motor gràfic no coincideix"
+
+# skip-rule: t-sc-plot
+#. i18n: ectx: (Version incompatibilities) <section title="Graphics Engine Version Mismatch">
+#: rkward/pages/rkward_incompatible_version.rkh:12
+#, kde-format
+msgid ""
+"This is the most common kind of version incompatibility. The same advice "
+"applies as above, i.e. please install an updated version of RKWard. However, "
+"if no update appears to be immediately available, and you are desparate to "
+"continue working, set <link href=\"rkward://settings/graphics\">Settings-"
+">Onscreen Graphics</link>->\"Integration of R standard device\" to \"No "
+"integration\". Then you can use the vanille onscreen devices (X11() or "
+"Windows() or Quartz()), for plotting."
+msgstr ""
+"Aquesta és la classe més habitual d'incompatibilitat de versions. El mateix "
+"consell s'aplica com a dalt, és a dir, instal·leu una versió actualitzada "
+"del RKWard. No obstant això, si no hi ha cap actualització disponible "
+"immediatament, i esteu desesperat per continuar treballant, establiu <link "
+"href=\"rkward://settings/graphics\">Arranjament->Gràfics en pantalla</link>-"
+">«Integració dels dispositius estàndards de l'R» a «Sense integració». "
+"Llavors podreu utilitzar els dispositius en pantalla estàndard (X11() o "
+"Windows() o Quartz()), per a dibuixar."
+
+#. i18n: ectx: (RKWard Output) <title>
+#: rkward/pages/rkward_output.rkh:3
+#, kde-format
+msgid "RKWard Output"
+msgstr "Sortida del RKWard"
+
+#. i18n: ectx: (RKWard Output) <summary>
+#: rkward/pages/rkward_output.rkh:4
+#, kde-format
+msgid ""
+"The RKWard output window, or, more generally, RKWard output files (.rko) are "
+"intended as an easy way to keep a log of the work on your data. By default, "
+"one output file is always available. Depending on your configuration (<link "
+"href=\"rkward://settings/output\">Settings->Configure RKWard->Output</"
+"link>), this output file may or may not be shared across different "
+"workspaces."
+msgstr ""
+"La finestra de sortida del RKWard, o, més generalment, els fitxers de "
+"sortida del RKWard (.rko) estan pensats com una manera fàcil de mantenir un "
+"registre del treball en les vostres dades. De manera predeterminada sempre "
+"hi ha disponible un fitxer de sortida. Depenent de la vostra configuració "
+"(<link href=\"rkward://settings/output\">Arranjament -> Configura el RKWard -"
+"> Sortida</link>), aquest fitxer de sortida pot o no ser compartit entre "
+"espais de treball diferents."
+
+#. i18n: ectx: (RKWard Output) <summary>
+#: rkward/pages/rkward_output.rkh:4
+#, kde-format
+msgid ""
+"RKWard output can be saved and opened like regular files. To direct output "
+"to a specific output file, you will have to \"activate\" it. Closing an "
+"output window does not discard the modifications, but on closing RKWard you "
+"will be prompted to save (or discard) any pending changes."
+msgstr ""
+"La sortida del RKWard es pot desar i obrir com a fitxers normals. Per "
+"dirigir la sortida a un fitxer de sortida específic, cal «activar-ho». "
+"Tancar una finestra de sortida no descarta les modificacions, però en tancar "
+"el RKWard se us demanarà que deseu (o descarteu) els canvis pendents."
+
+#. i18n: ectx: (RKWard Output) <section title="...">
+#: rkward/pages/rkward_output.rkh:11
+#, kde-format
+msgid "Producing RKWard output from R"
+msgstr "Generació de la sortida del RKWard a partir de l'R"
+
+#. i18n: ectx: (RKWard Output) <section title="Producing RKWard output from R">
+#: rkward/pages/rkward_output.rkh:11
+#, kde-format
+msgid ""
+"To write to the active RKWard output file from custom R code, refer to <link "
+"href=\"rkward://rhelp/rk.print\"/>, and the functions linked from there."
+msgstr ""
+"Per escriure al fitxer de sortida del RKWard actiu a partir del codi R "
+"personalitzat, vegeu <link href=\"rkward://rhelp/rk.print\"/>, i les "
+"funcions enllaçades des d'allà."
+
+#. i18n: ectx: (RKWard Output) <section title="Producing RKWard output from R">
+#: rkward/pages/rkward_output.rkh:11
+#, kde-format
+msgid ""
+"To load / save / switch between output files, etc., refer to <link href="
+"\"rkward://rhelp/rk.output\"/>."
+msgstr ""
+"Per carregar / desar / canviar entre fitxers de sortida, etc., vegeu <link "
+"href=\"rkward://rhelp/rk.output\"/>."
+
+#. i18n: ectx: (RKWard Output) <section title="...">
+#: rkward/pages/rkward_output.rkh:17
+#, kde-format
+msgid "Using the output in an office suite"
+msgstr "Usant la sortida en un paquet ofimàtic"
+
+#. i18n: ectx: (RKWard Output) <section title="Using the output in an office suite">
+#: rkward/pages/rkward_output.rkh:17
+#, kde-format
+msgid ""
+"The easiest way to get output into your office suite, is to first select the "
+"relevant portions, copy them (Edit->Copy), then paste them. This works well, "
+"at least in OpenOffice or LibreOffice. You can also drag and drop images "
+"from the output to an OpenOffice or LibreOffice document."
+msgstr ""
+"La manera més senzilla d'obtenir la sortida al paquet ofimàtic, és primer "
+"seleccionar les porcions importants, copiar-les (Edita -> Copia), i després "
+"enganxar-les. Això funciona bé, com a mínim a l'OpenOffice o el LibreOffice. "
+"També podeu arrossegar i deixar anar imatges des de la sortida a un document "
+"de l'OpenOffice o el LibreOffice."
+
+#. i18n: ectx: (RKWard Output) <section title="Using the output in an office suite">
+#: rkward/pages/rkward_output.rkh:17
+#, kde-format
+msgid ""
+"Internally, RKWard output files are currently simply based on HTML. If you "
+"need access to the raw HTML and image files, a .rko-file is just a zip'ed "
+"folder. You can unzip it using standard tools, or open it in RKWard, and "
+"retrieve the files from the \".rkward\" of your home directory (location "
+"configurable in Settings->Configure RKWard->General)."
+msgstr ""
+"Internament, els fitxers de sortida del RKWard actualment es basen "
+"simplement en HTML. Si necessiteu accedir als fitxers HTML i d'imatge en "
+"brut, un fitxer «.rko» és una carpeta comprimida amb ZIP. Podeu descomprimir-"
+"la utilitzant eines estàndard, o obrir-la al RKWard, i recuperar els fitxers "
+"del «.rkward» del vostre directori d'inici (ubicació configurable a "
+"Arranjament -> Configura el RKWard -> General)."
+
+#. i18n: ectx: (RKWard Output) <section title="...">
+#: rkward/pages/rkward_output.rkh:23
+#, kde-format
+msgid "RKWard output vs. R Markdown"
+msgstr "Sortida del RKWard contra Markdown de l'R"
+
+#. i18n: ectx: (RKWard Output) <section title="RKWard output vs. R Markdown">
+#: rkward/pages/rkward_output.rkh:23
+#, kde-format
+msgid ""
+"RKWard also assists you in writing RMarkdown (Rmd) documents. In particular "
+"there is a powerful preview feature for .Rmd scripts. While RMarkdown is "
+"great for writing interactive \"reports\", the RKWard Output is very easy to "
+"use for ad-hoc documentation while exploring your data."
+msgstr ""
+"El RKWard també us ajuda a escriure documents RMarkdown (Rmd). En particular "
+"hi ha una característica de previsualització potent per a scripts «.Rmd». "
+"Mentre que el RMarkdown és genial per escriure «informes» interactius, la "
+"sortida del RKWard és molt fàcil d'utilitzar per a la documentació ad-hoc "
+"mentre exploreu les vostres dades."
+
+#. i18n: ectx: (Screen device history) <title>
+#: rkward/pages/rkward_plot_history.rkh:3
+#, kde-format
+msgid "Screen device history"
+msgstr "Històric del dispositiu de pantalla"
+
+#. i18n: ectx: (Screen device history) <summary>
+#: rkward/pages/rkward_plot_history.rkh:5
+#, kde-format
+msgid ""
+"The screen device history provides an interface to flip through your plots, "
+"similar a web browser. The current implementation understands most function "
+"calls from the graphics and lattice packages. Adding other graphical engines "
+"is planned for future. See the Technical Details section below for more "
+"information."
+msgstr ""
+"L'historial del dispositiu de pantalla proporciona una interfície a passar "
+"pels diagrames, semblant a un navegador web. La implementació actual entén "
+"la majoria de les crides de funció des dels paquets «graphics» i «lattice». "
+"En un futur, està planificat afegir altres motors gràfics. Vegeu la secció "
+"de Detalls tècnics per a més informació."
+
+#. i18n: ectx: (Screen device history) <summary>
+#: rkward/pages/rkward_plot_history.rkh:5
+#, kde-format
+msgid ""
+"The screen device history is only accessible from an open screen device, "
+"under the <i>History</i> menu. It is available on most screen device "
+"windows. Such devices are called \"managed\" devices for the purpose of this "
+"help page. File devices, such as png, pdf, etc. are not, obviously, affected "
+"by this screen history implementation, and hence they are not managed. In "
+"addition, \"preview\" devices, which are available on some of the plugins "
+"are not managed either."
+msgstr ""
+"L'historial del dispositiu de pantalla només és accessible des d'un "
+"dispositiu de pantalla obert, sota el menú <i>Historial</i>. Està disponible "
+"a la majoria de les finestres de dispositius de pantalla. Aquests "
+"dispositius s'anomenen dispositius «gestionats» com a finalitat d'aquesta "
+"pàgina d'ajuda. Els dispositius de fitxer, com els png, pdf, etc. no estan, "
+"òbviament, afectats per aquesta implementació de l'historial de pantalla, i "
+"per tant, són no gestionats. Addicionalment, els dispositius de «vista "
+"prèvia», els quals estan disponibles en alguns dels connectors, també són no "
+"gestionats."
+
+#. i18n: ectx: (Screen device history) <section title="...">
+#. i18n: ectx: (Workspace Browser) <section title="...">
+#: rkward/pages/rkward_plot_history.rkh:11
+#: rkward/pages/rkward_workspace_browser.rkh:25
+#, kde-format
+msgid "Available actions"
+msgstr "Accions disponibles"
+
+#. i18n: ectx: (Screen device history) <section title="Available actions">
+#: rkward/pages/rkward_plot_history.rkh:11
+#, kde-format
+msgid ""
+"Several actions are available either from the <i>History</i> menu or from "
+"the toolbar icons on a managed device. The displayed icons on the toolbar "
+"can be configured from the device window's Settings->Configure Toolbars menu "
+"item."
+msgstr ""
+"Hi ha diverses accions disponibles des del menú <i>Historial</i> o des de "
+"les icones de la barra d'eines d'un dispositiu gestionat. Les icones "
+"mostrades a la barra d'eines es poden configurar des de l'element de menú de "
+"la finestra del dispositiu «Arranjament -> Configura les barres d'eines»."
+
+#. i18n: ectx: (Screen device history) <section title="Available actions">
+#: rkward/pages/rkward_plot_history.rkh:11
+#, kde-format
+msgid ""
+"<b>Go to plot</b>: This provides a drop-down list of _all_ the plots stored "
+"in the history; giving an easily accessible \"jumping\" action. RKWard tries "
+"hard to identify the appropriate plot calls, but this is not always "
+"feasible. In such cases a further attempt is made to identify the <i>X "
+"label</i>, <i>Y label</i> and the <i>Main</i> titles of the plot and the "
+"displayed string looks like \"<b>X:</b> <i>xlab</i>; <b>Y:</b> <i>ylab</i>; "
+"<i>main</i>\". Sometimes even that is not possible (indicated by "
+"<b><Unknown></b>). Plots which are pending to be saved are indicated by "
+"<b><Unsaved plot></b>. The displayed strings are prepended with their "
+"corresponding position in the history. For the usual \"linear browsing\" see "
+"first / previous / next / last actions below."
+msgstr ""
+"<b>Ves al diagrama</b>: Això proporciona una llista desplegable de _tots_ "
+"els diagrames emmagatzemats a l'historial; donant una acció de «salt» "
+"fàcilment accessible. El RKWard intenta identificar al màxim les crides "
+"adequades als diagrames, però això no sempre és possible. En aquests casos "
+"es fa un intent més per a identificar les <i>X label</i>, <i>Y label</i> i "
+"els títols <i>Main</i> del diagrama i les cadenes mostrades que semblin com "
+"«<b>X:</b> <i>xlab</i>; <b>Y:</b> <i>ylab</i>; <i>main</i>». A vegades, no "
+"és possible ni això (indicat per un <b><Desconegut></b>). Els diagrames que "
+"estan pendents de desar s'indiquen amb <b><Diagrama sense desar></b>. Les "
+"cadenes visualitzades es precedeixen amb la seva posició corresponent a "
+"l'historial. Per a la «navegació lineal» habitual vegeu les accions primer / "
+"previ / següent / darrer a sota."
+
+#. i18n: ectx: (Screen device history) <section title="Available actions">
+#: rkward/pages/rkward_plot_history.rkh:11
+#, kde-format
+msgid ""
+"<b>First, Previous, Next, and Last plot</b>: Obvious browsing (or replaying) "
+"actions. These will try to save any unsaved/pending plot before displaying/"
+"replaying the intended (first / previous / next / last) plot. This should be "
+"very helpful for browsing to an already stored in the history and update it. "
+"For example, a base graphics plot modified by, say, <code>abline(h=0, v=0)</"
+"code> will automatically get stored \"in-place\" in the history."
+msgstr ""
+"<b>Primer, Previ, Següent, i Darrer diagrama</b>: Accions òbvies de "
+"navegació (o repetició). Intentaran desar qualsevol diagrama sense desar/"
+"pendent abans de mostrar/repetir el diagrama sol·licitat (primer / previ / "
+"següent / darrer). Això pot ser molt útil per a navegar per un ja "
+"emmagatzemat a l'historial i actualitzar-lo. Per exemple, un diagrama gràfic "
+"de base modificat per, diguem, <code>abline(h=0, v=0)</code> s'emmagatzemarà "
+"automàticament «en el lloc» a l'historial."
+
+# skip-rule: t-sp_pu
+#. i18n: ectx: (Screen device history) <section title="Available actions">
+#: rkward/pages/rkward_plot_history.rkh:11
+#, kde-format
+msgid ""
+"<b>Append this plot</b>: This action is provided to forcefully append the "
+"displayed plot to the end of the history, irrespective of its status "
+"(saved / unsaved) and type (graphics / lattice / ...). In cases when a plot "
+"does not automatically get stored in the history, this action should come in "
+"handy. But this flexibility comes at the cost of not being able to identify "
+"the plot call."
+msgstr ""
+"<b>Afegeix aquest diagrama</b>: Aquesta acció es proporciona per a afegir de "
+"manera forçada el diagrama mostrat al final de l'historial, independentment "
+"del seu estat (desat / sense desar) i el tipus (graphics / lattice / ...). "
+"En els casos en què un diagrama no s'emmagatzema automàticament a "
+"l'historial, aquesta acció hauria de ser útil. Però aquesta flexibilitat té "
+"l'inconvenient que no és capaç d'identificar la crida del diagrama."
+
+#. i18n: ectx: (Screen device history) <section title="Available actions">
+#: rkward/pages/rkward_plot_history.rkh:11
+#, kde-format
+msgid ""
+"<b>Remove this plot</b>: This will remove the currently displayed from the "
+"history (if it is stored) and replay the next \"available\" plot. When "
+"multiple devices are displaying the same plot (to be precise, same position "
+"in the history), then removing a plot from one device will not remove it "
+"from other devices; instead it will set the status of this plot on the other "
+"devices as new / pending. Thus, if you happen to remove one by mistake, and "
+"if it happens to be displayed on a second device, then you can re-add it to "
+"the history from the second device."
+msgstr ""
+"<b>Elimina aquest diagrama</b>: Això eliminarà el mostrat actualment de "
+"l'historial (si està emmagatzemat) i repetirà el següent diagrama "
+"«disponible». Quan diversos dispositius mostrin el mateix diagrama (per a "
+"ser precís, la mateixa posició de l'historial), llavors en eliminar un "
+"diagrama d'un dispositiu no l'eliminarà dels altres dispositius; en el seu "
+"lloc, s'establirà l'estat d'aquest diagrama als altres dispositius com a "
+"nou / pendent. Per tant, si n'elimineu un per error, i s'està mostrant en un "
+"segon dispositiu, llavors el podeu tornar a afegir a l'historial des del "
+"segon dispositiu."
+
+# skip-rule: apps-edu_plot,t-sc-plot
+#. i18n: ectx: (Screen device history) <section title="Available actions">
+#: rkward/pages/rkward_plot_history.rkh:11
+#, kde-format
+msgid ""
+"<b>Clear history</b>: As the name suggests, this action will clear the "
+"plotting history. But the plots currently displayed on the devices, upon "
+"further action, will get added back to the history. To completely reset the "
+"screen device history close all open devices and call <code>rk.clear.plot."
+"history()</code>"
+msgstr ""
+"<b>Neteja l'historial</b>: Com suggereix el nom, aquesta acció netejarà "
+"l'historial dels diagrames dibuixats. Però els diagrames actualment mostrats "
+"als dispositius, després de més accions, s'afegiran a l'historial. Per a "
+"reiniciar completament l'historial del dispositiu de pantalla tanqueu totes "
+"els dispositius oberts i feu la crida <code>rk.clear.plot.history()</code>"
+
+#. i18n: ectx: (Screen device history) <section title="Available actions">
+#: rkward/pages/rkward_plot_history.rkh:11
+#, kde-format
+msgid ""
+"<b>Plot properties</b>: This shows some additional information such as the "
+"size of the displayed plot as stored in the memory, the position of the "
+"current plot in the history, and, whenever possible the complete plot call."
+msgstr ""
+"<b>Propietats del diagrama</b>: Això mostra diversa informació addicional "
+"com la mida del diagrama mostrat quan s'emmagatzema a la memòria, la posició "
+"del diagrama actual a l'historial, i sempre que sigui possible, la crida "
+"completa al diagrama."
+
+#. i18n: ectx: (Screen device history) <section title="Configurable Settings">
+#: rkward/pages/rkward_plot_history.rkh:24
+#, kde-format
+msgid ""
+"Some default settings for the Screen device history can be configured from "
+"<a href=\"rkward://settings/graphics\">Settings->Configure RKWard->Onscreen "
+"Graphics</a>:"
+msgstr ""
+"Es poden configurar alguns paràmetres predeterminats de l'historial del "
+"dispositiu de pantalla a <a href=\"rkward://settings/graphics\">Arranjament -"
+"> Configura el RKWard -> Gràfics en pantalla</a>:"
+
+#. i18n: ectx: (Screen device history) <section title="Configurable Settings">
+#: rkward/pages/rkward_plot_history.rkh:24
+#, kde-format
+msgid ""
+"<b>Screen device history</b>: Enables / disables the recording of plots "
+"globally. You can toggle this from within a running RKWard session, which "
+"will affect all currently open and future screen devices. When unchecked, "
+"RKWard will not store any further plots in the history; although, the ones "
+"already stored are not lost! You can access the stored plots by re-enabling "
+"this. When toggling this, RKWard tries to save any unsaved plots, but be "
+"careful especially when the maximum history length is small (see below). You "
+"may want to disable this when the implemented history behavior seems non-"
+"intuitive or when dealing with large plots."
+msgstr ""
+"<b>Historial del dispositiu de pantalla</b>: Activa / desactiva globalment "
+"l'enregistrament de diagrames. Podeu commutar-ho des d'una sessió en "
+"execució del RKWard que afectarà tots els dispositius de pantalla actualment "
+"oberts i els futurs. Quan està desactivat, el RKWard no emmagatzemarà cap "
+"diagrama més a l'historial; tanmateix, els que ja estan emmagatzemats no es "
+"perden! Podeu accedir als diagrames emmagatzemats tornant a activar això. En "
+"activar-ho, el RKWard intenta desar qualsevol diagrama sense desar, però "
+"aneu especialment amb compte quan la longitud màxima de l'historial és "
+"petita (vegeu a sota). Potser voldreu desactivar això quan el comportament "
+"implementat de l'historial sembli no intuïtiu o en tractar diagrames grans."
+
+#. i18n: ectx: (Screen device history) <section title="Configurable Settings">
+#: rkward/pages/rkward_plot_history.rkh:24
+#, kde-format
+msgid ""
+"<b>Maximum number of recorded plots</b>: Controls the maximum number of "
+"plots that can be stored in the history. When this limit is reached, plots "
+"from the beginning of the history will get removed one by one, much like a "
+"push-pop stack. A warning dialog is shown when this happens. Be careful when "
+"setting this below the number of already stored plots. In that case an "
+"appropriate number of plots from the beginning of the history stack will get "
+"removed, which may not be desirable."
+msgstr ""
+"<b>Nombre màxim de diagrames enregistrats</b>: Controla el nombre màxim de "
+"diagrames que es poden emmagatzemar a l'historial. Quan s'arriba a aquest "
+"límit, els diagrames del principi de l'historial s'eliminen un a un, com una "
+"cua. Es mostra un diàleg d'avís quan passa això. Aneu amb compte quan "
+"definiu això per sota del nombre de diagrames ja emmagatzemats. En aquest "
+"cas, s'eliminarà el nombre apropiat de diagrames del principi de la cua de "
+"l'historial, el qual podria ser no desitjable."
+
+#. i18n: ectx: (Screen device history) <section title="Configurable Settings">
+#: rkward/pages/rkward_plot_history.rkh:24
+#, kde-format
+msgid ""
+"<b>Maximum size of a single recorded plot</b>: Controls the maximum allowed "
+"size (in KB) of a single plot that can be stored in the history. For a plot "
+"larger than this specified size, a dialog box, to save or to ignore the "
+"plot, will be presented. Unlike the above length restriction, this setting "
+"will affect only the future plots (that is, will not remove any already "
+"stored, yet large, plots)."
+msgstr ""
+"<b>Mida màxima d'un únic diagrama enregistrat</b>: Controla la mida màxima "
+"permesa (en kB) d'un únic diagrama que es pot emmagatzemar a l'historial. "
+"Per als diagrames més grans que aquesta mida especificada, es mostrarà un "
+"quadre de diàleg, per a desar o ignorar el diagrama. A diferència de les "
+"restriccions de longituds de més amunt, aquesta opció només afectarà els "
+"diagrames futurs (és a dir, no eliminarà cap diagrama ja emmagatzemat, "
+"encara que sigui més gran)."
+
+#. i18n: ectx: (Screen device history) <section title="...">
+#: rkward/pages/rkward_plot_history.rkh:34
+#, kde-format
+msgid "Technical Details"
+msgstr "Detalls tècnics"
+
+#. i18n: ectx: (Screen device history) <section title="Technical Details">
+#: rkward/pages/rkward_plot_history.rkh:34
+#, kde-format
+msgid "Some assorted technical details:"
+msgstr "Diversos detalls tècnics:"
+
+# skip-rule: apps-edu_plot
+#. i18n: ectx: (Screen device history) <section title="Technical Details">
+#: rkward/pages/rkward_plot_history.rkh:34
+#, kde-format
+msgid ""
+"<code>rk.plot.history.summary(which,type)</code>: this helper function "
+"provides some summaries about the screen device history. Here, <code>which</"
+"code> is a \"device id\" (default is <i>NULL</i>: summaries about all "
+"managed devices) and <code>type</code> is either <i>devices</i> (returns "
+"device specific information) or <i>history</i> (returns information on all "
+"the saved plots in the history)."
+msgstr ""
+"<code>rk.plot.history.summary(which,type)</code>: aquesta funció auxiliar "
+"proporciona diversos resums quant a l'historial del dispositiu de pantalla. "
+"Aquí, <code>which</code> és un «ID de dispositiu» (el predeterminat és "
+"<i>NULL</i>: resumeix tots els dispositius gestionats) i <code>type</code> "
+"és, o bé <i>devices</i> (retorna informació específica dels dispositius), o "
+"<i>history</i> (retorna informació quant a tots els diagrames desats a "
+"l'historial)."
+
+# skip-rule: apps-edu_plot,apps-edu_trellis
+#. i18n: ectx: (Screen device history) <section title="Technical Details">
+#: rkward/pages/rkward_plot_history.rkh:34
+#, kde-format
+msgid ""
+"Technically speaking, function calls that pass through either "
+"<code>graphics::plot.new()</code> or <code>graphics::persp()</code> or "
+"<code>lattice::print.trellis()</code> are captured."
+msgstr ""
+"Parlant tècnicament, es capturen les crides a funció que passen a través de "
+"<code>graphics::plot.new()</code> o <code>graphics::persp()</code> o "
+"<code>lattice::print.trellis()</code>."
+
+#. i18n: ectx: (Screen device history) <section title="Technical Details">
+#: rkward/pages/rkward_plot_history.rkh:34
+#, kde-format
+msgid ""
+"The base graphics plots are recorded and replayed using <code>recordPlot()</"
+"code> and <code>replayPlot()</code>."
+msgstr ""
+"Els diagrames gràfics de base s'enregistren i es repeteixen usant "
+"<code>recordPlot()</code> i <code>replayPlot()</code>."
+
+# skip-rule: apps-edu_plot,apps-edu_trellis
+#. i18n: ectx: (Screen device history) <section title="Technical Details">
+#: rkward/pages/rkward_plot_history.rkh:34
+#, kde-format
+msgid ""
+"The lattice plots are added to the history using a custom <code>print."
+"trellis()</code> function set by <code>lattice.options(\"print.function\")</"
+"code>. So, you are warned against resetting or modifying this from a running "
+"RKWard session. Similarly, you are very strongly advised against using the "
+"<code>plot</code> method on a trellis object since it will not pass through "
+"<code>print.trellis()</code> and hence not be stored in the history. This "
+"may seem innocuous, but it will have irreparable consequences when trying to "
+"use <code>trellis.last.object()</code>, thereafter. You have been warned!"
+msgstr ""
+"Els diagrames «lattice» s'afegeixen a l'historial usant una funció "
+"personalitzada <code>print.trellis()</code> definida per <code>lattice."
+"options(\"print.function\")</code>. Per tant, us advertim de no reiniciar o "
+"modificar això des d'una sessió en execució del RKWard. De manera similar, "
+"també us advertim fermament de no usar el mètode <code>plot</code> en un "
+"objecte «trellis», ja que no passarà a través de <code>print.trellis()</"
+"code>, i per tant, no s'emmagatzemarà a l'historial. Això pot semblar "
+"innocu, però tindrà conseqüències irreparables en intentar usar "
+"<code>trellis.last.object()</code>, després d'això. Esteu avisat!"
+
+#. i18n: ectx: (Screen device history) <related>
+#: rkward/pages/rkward_plot_history.rkh:44
+#, kde-format
+msgid "<link href=\"rkward://rhelp/lattice.options\"/> (needs lattice)"
+msgstr "<link href=\"rkward://rhelp/lattice.options\"/> (cal el «lattice»)"
+
+# skip-rule: apps-edu_trellis
+#. i18n: ectx: (Screen device history) <related>
+#: rkward/pages/rkward_plot_history.rkh:44
+#, kde-format
+msgid "<link href=\"rkward://rhelp/trellis.last.object\"/> (needs lattice)"
+msgstr "<link href=\"rkward://rhelp/trellis.last.object\"/> (cal el «lattice»)"
+
+#. i18n: ectx: (RKWard Shortcut keys) <title>
+#: rkward/pages/rkward_shortcuts.rkh:3
+#, kde-format
+msgid "RKWard Shortcut keys"
+msgstr "Dreceres de teclat del RKWard"
+
+#. i18n: ectx: (RKWard Shortcut keys) <summary>
+#: rkward/pages/rkward_shortcuts.rkh:4
+#, kde-format
+msgid ""
+"You can control RKWard in many situations without using a mouse device, "
+"using only the keyboard. The easiest way to find out about shortcuts of "
+"interest is to browse the menu. Shortcuts are listed next to their action in "
+"the menu."
+msgstr ""
+"Podeu controlar el RKWard en moltes situacions sense usar cap dispositiu de "
+"ratolí, usant només el teclat. La manera més fàcil de cercar quant a les "
+"dreceres d'interès és navegar pel menú. Les dreceres es llisten al costat de "
+"la seva acció als menús."
+
+#. i18n: ectx: (RKWard Shortcut keys) <summary>
+#: rkward/pages/rkward_shortcuts.rkh:4
+#, kde-format
+msgid ""
+"Another possibility is to use the heads-up display (HUD). The HUD menu is a "
+"search field that allows fuzzy searching in the menus. The HUD was "
+"introduced in current KDE applications and is therefore not yet available in "
+"older RKWard versions. The HUD can be called up using Ctrl+Alt+i. This is "
+"particularly useful if you are looking for a function, the shortcut of a "
+"function or something in the menus, but do not want to go through each menu "
+"individually to find it."
+msgstr ""
+"Una altra possibilitat és utilitzar una visualització d'informació (HUD). El "
+"menú HUD és un camp de cerca que permet la cerca difusa en els menús. El HUD "
+"es va introduir en les aplicacions actuals del KDE i, per tant, encara no "
+"està disponible en versions anteriors del RKWard. El HUD es pot invocar "
+"utilitzant Ctrl+Alt+i. Això és especialment útil si es busca una funció, la "
+"drecera d'una funció o alguna cosa en els menús, però no es vol passar per "
+"cada menú individualment per trobar-la."
+
+#. i18n: ectx: (RKWard Shortcut keys) <summary>
+#: rkward/pages/rkward_shortcuts.rkh:4
+#, kde-format
+msgid ""
+"Most shortcuts are configurable, using Settings->Configure Shortcuts. For "
+"technical reasons, only the shortcuts of those components will be listed "
+"that are active at that time. Hence, for example, if you want to edit the "
+"shortcuts for the data editor, first open a data editor, then select "
+"Settings->Configure Shortcuts. Most shortcuts for the script editor are "
+"managed separately using Settings->Configure Editor->Shortcuts."
+msgstr ""
+"La majoria de dreceres es poden configurar usant «Arranjament -> Configura "
+"les dreceres». Per motius tècnics, només es llistaran les dreceres dels "
+"components que estiguin actius en aquell moment. Així, per exemple, si voleu "
+"editar les dreceres de l'editor de dades, primer obriu un editor de dades, "
+"llavors seleccioneu «Arranjament -> Configura les dreceres». La majoria de "
+"dreceres per a l'editor de scripts es gestionen separadament usant "
+"«Arranjament -> Configura l'editor -> Dreceres»."
+
+#. i18n: ectx: (RKWard Shortcut keys) <summary>
+#: rkward/pages/rkward_shortcuts.rkh:4
+#, kde-format
+msgid ""
+"On most systems, you can also configure shortcuts by right-clicking on the "
+"respective menu item."
+msgstr ""
+"A la majoria de sistemes, també podeu configurar les dreceres fent clic dret "
+"al respectiu element del menú."
+
+#. i18n: ectx: (RKWard Shortcut keys) <section title="...">
+#: rkward/pages/rkward_shortcuts.rkh:14
+#, kde-format
+msgid "RKWard Default Shortcut keys"
+msgstr "Dreceres predeterminades de teclat del RKWard"
+
+#. i18n: ectx: (RKWard Shortcut keys) <section title="RKWard Default Shortcut keys">
+#: rkward/pages/rkward_shortcuts.rkh:14
+#, kde-format
+msgid "To point out some of the less discoverable or more important shortcuts:"
+msgstr "Per a mostrar algunes de les dreceres més importants o menys evidents:"
+
+# skip-rule: kct-tab
+#. i18n: ectx: (RKWard Shortcut keys) <section title="RKWard Default Shortcut keys">
+#: rkward/pages/rkward_shortcuts.rkh:14
+#, kde-format
+msgid ""
+"To cycle between document / tool windows inside RKWard, use Ctrl+Tab and Ctrl"
+"+Shift+Tab"
+msgstr ""
+"Per a circular entre les finestres de document / eina dins el RKWard, useu "
+"Ctrl+Tab i Ctrl+Maj+Tab"
+
+#. i18n: ectx: (RKWard Shortcut keys) <section title="RKWard Default Shortcut keys">
+#: rkward/pages/rkward_shortcuts.rkh:14
+#, kde-format
+msgid ""
+"To run code from scripts / help pages / the console, select it, and use Ctrl"
+"+Enter"
+msgstr ""
+"Per a executar codi des dels scripts / pàgines d'ajuda / la consola, "
+"seleccioneu-lo i useu Ctrl+Retorn"
+
+#. i18n: ectx: (RKWard Shortcut keys) <section title="RKWard Default Shortcut keys">
+#: rkward/pages/rkward_shortcuts.rkh:14
+#, kde-format
+msgid ""
+"F2 to search the R help for the symbol under the cursor in scripts and the "
+"console"
+msgstr ""
+"F2 per a cercar a l'ajuda de l'R per al símbol sota el cursor als scripts i "
+"a la consola"
+
+#. i18n: ectx: (Split views) <title>
+#: rkward/pages/rkward_split_views.rkh:3
+#, kde-format
+msgid "Split views"
+msgstr "Vistes dividides"
+
+#. i18n: ectx: (Split views) <summary>
+#: rkward/pages/rkward_split_views.rkh:5
+#, kde-format
+msgid ""
+"Split views can be used to partition the main window into several view areas."
+msgstr ""
+"Vistes dividides es pot usar per a partir la finestra principal en diverses "
+"àrees de visualització."
+
+#. i18n: ectx: (Split views) <summary>
+#: rkward/pages/rkward_split_views.rkh:5
+#, kde-format
+msgid ""
+"They can be used to make better use of screen space, but also to view far-"
+"apart portions of a single file, simultaneously."
+msgstr ""
+"Es poden usar per a fer un millor ús de l'espai de la pantalla, però també "
+"per a veure separadament porcions d'un únic fitxer, simultàniament."
+
+#. i18n: ectx: (Split views) <section title="...">
+#: rkward/pages/rkward_split_views.rkh:11
+#, kde-format
+msgid "Splitting views"
+msgstr "Divisió de les vistes"
+
+#. i18n: ectx: (Split views) <section title="Splitting views">
+#: rkward/pages/rkward_split_views.rkh:11
+#, kde-format
+msgid ""
+"Splitting views is currently supported for the main window, only. Use Window-"
+">Split Vertical or Window->Split Horizontal to split the current view area "
+"vertically, or horizontally. For windows that support it (e.g. scripts, help "
+"pages), the newly created view area will contain a copy of the current "
+"window. When splitting other windows (such as onscreen graphics devices), "
+"the new view area will be initialized to show this help page."
+msgstr ""
+"La divisió de les vistes actualment només s'admet per a la finestra "
+"principal. Useu «Finestres -> Divideix en vertical» o «Finestres -> Divideix "
+"en horitzontal» per a dividir l'àrea de visió actual verticalment, o "
+"horitzontalment. Per a les finestres que ho permetin (p. ex. scripts, "
+"pàgines d'ajuda), la nova àrea de visualització creada contindrà una còpia "
+"de la finestra actual. En dividir altres finestres (com dispositius gràfics "
+"en pantalla), la nova àrea de visualització s'inicialitzarà per a mostrar "
+"aquesta pàgina d'ajuda."
+
+#. i18n: ectx: (Split views) <section title="Splitting views">
+#: rkward/pages/rkward_split_views.rkh:11
+#, kde-format
+msgid ""
+"To add further files to a view area, simply open them the normal way (from "
+"\"File Browser\" window, the menu, or from the \"R Console\" window). Simply "
+"make sure that the view area where you want them new window to open has "
+"focus / is active."
+msgstr ""
+"Per a afegir més fitxers a l'àrea de visualització, simplement obriu-los de "
+"la manera normal (des de la finestra «Navegador de fitxers», el menú, o des "
+"de la finestra «Consola de l'R»). Assegureu-vos només que l'àrea de "
+"visualització a on voleu que s'obri la finestra nova tingui el focus / "
+"estigui activa."
+
+#. i18n: ectx: (Split views) <section title="...">
+#: rkward/pages/rkward_split_views.rkh:17
+#, kde-format
+msgid "Closing split views"
+msgstr "Tancament de la divisió de les vistes"
+
+#. i18n: ectx: (Split views) <section title="Closing split views">
+#: rkward/pages/rkward_split_views.rkh:17
+#, kde-format
+msgid "To remove a view area, simply close all windows inside it."
+msgstr ""
+"Per a eliminar una àrea de visualització, senzillament tanqueu totes les "
+"finestres dins seu."
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <title>
+#: rkward/pages/rkward_trouble_shooting.rkh:3
+#, kde-format
+msgid "Trouble Shooting / FAQ"
+msgstr "Resolució de problemes / PMF"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <summary>
+#: rkward/pages/rkward_trouble_shooting.rkh:4
+#, kde-format
+msgid ""
+"RKWard is far from complete and certainly there are many issues that need to "
+"be fixed. However, some of the things you notice are not due to the nature "
+"of RKWard but R or something else. This section will try to cover some "
+"common issues. See also <link href=\"https://rkward.kde.org/faq\">the online "
+"FAQ</link>."
+msgstr ""
+"El RKWard està lluny d'estar acabat i certament hi ha molts problemes que "
+"necessiten solucionar-se. Tanmateix, alguna de les coses que noteu no són "
+"degudes al mateix RKWard sinó de l'R o quelcom altre. Aquesta secció "
+"intentarà tractar diversos problemes freqüents. Vegeu també <link href="
+"\"https://rkward.kde.org/faq\">les PMF en línia</link>."
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:7
+#, kde-format
+msgid "The \"Analysis\" menu is missing, or shows up as \"(no label)\""
+msgstr "Manca el menú «Anàlisi», o es mostra com a «(sense etiqueta)»"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:7
+#, kde-format
+msgid "Missing menu items"
+msgstr "Manquen elements de menú"
+
+# skip-rule: apps-edu_plugin_map
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="The \"Analysis\" menu is missing, or shows up as \"(no label)\"">
+#: rkward/pages/rkward_trouble_shooting.rkh:7
+#, kde-format
+msgid ""
+"This problem will often occur, when moving an RKWard installation to a "
+"different path, esp. on Windows and Mac. You may have to visit Settings-"
+">Configure RKWard->Plugins and re-add the relevant \".pluginmap\"-files. "
+"Starting with version 0.6.3, RKWard should detect a changed installation "
+"path, and adjust paths, automatically."
+msgstr ""
+"Aquest problema sovint passa en moure una instal·lació del RKWard a un camí "
+"diferent, especialment al Windows o el Mac. Potser caldrà visitar "
+"«Arranjament -> Configura el RKWard -> Connectors» i tornar a afegir els "
+"fitxers «.pluginmap» importants. A partir de la versió 0.6.3, el RKWard "
+"hauria de detectar els camins d'instal·lació canviats, i ajustar "
+"automàticament els camins."
+
+# skip-rule: apps-edu_means
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:12
+#, kde-format
+msgid "People tend to ask me what RKWard means. What should I answer?"
+msgstr ""
+"La gent tendeix a preguntar-me què vol dir RKWard. Què hauria de contestar?"
+
+# skip-rule: apps-edu_average
+#. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:12
+#, kde-format
+msgid "What does \"RKWard\" mean?"
+msgstr "Què vol dir «RKWard»?"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="People tend to ask me what RKWard means. What should I answer?">
+#: rkward/pages/rkward_trouble_shooting.rkh:12
+#, kde-format
+msgid ""
+"Yes, it's a very odd name. ;) However, R comes obviously from the <link href="
+"\"http://www.r-project.org/\">R-language</link>, which is the statistical "
+"basis of RKWard. K is derived from <link href=\"http://kde.org/\">KDE</"
+"link>, which delivered the basic GUI technologies for RKWard. And <link href="
+"\"http://en.wikipedia.org/wiki/Ward\">Ward</link>? That's another story."
+msgstr ""
+"Sí, és un nom molt estrany. ;) Tanmateix, R ve òbviament del <link href="
+"\"http://www.r-project.org/\">llenguatge R</link> que és la base estadística "
+"del RKWard. La K es deriva del <link href=\"http://kde.org/\">KDE</link> que "
+"aporta les tecnologies d'IGU bàsiques per al RKWard. I <link href=\"http://"
+"en.wikipedia.org/wiki/Ward\">Ward</link>? Això és una altra història."
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:15
+#, kde-format
+msgid ""
+"Sometimes I enter a command short after the start of RKWard but it is not "
+"processed. What's wrong?"
+msgstr ""
+"A vegades introdueixo una ordre immediatament després de l'inici del RKWard, "
+"però no es processa. Què va malament?"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:15
+#, kde-format
+msgid "Commands not processing"
+msgstr "Ordres que no es processen"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="Sometimes I enter a command short after the start of RKWard but it is not processed. What's wrong?">
+#: rkward/pages/rkward_trouble_shooting.rkh:15
+#, kde-format
+msgid ""
+"This happens because RKWard starts first and subsequent R is started in the "
+"background. Depending on the speed of your machine it can take some time to "
+"start R. In any case you can check the state of R within RKWard. Just look "
+"at the little box on the right bottom corner of RKWard. If it is green you "
+"can go ahead."
+msgstr ""
+"Això passa perquè primer s'inicia el RKWard, i posteriorment s'inicia l'R en "
+"segon pla. Depenent de la velocitat de la màquina, pot trigar cert temps a "
+"iniciar l'R. En qualsevol cas, podeu verificar l'estat de l'R dins el "
+"RKWard. Només cal observar el quadre petit de la cantonada inferior dreta "
+"del RKWard. Si és verd, podeu continuar."
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="Sometimes I enter a command short after the start of RKWard but it is not processed. What's wrong?">
+#: rkward/pages/rkward_trouble_shooting.rkh:15
+#, kde-format
+msgid ""
+"You can start submitting commands while the backend has not yet started, or "
+"while another lengthy calculation is still taking place. In this case your "
+"commands will be placed into a queue, first, and executed as soon as the "
+"backend becomes available, again."
+msgstr ""
+"Podeu començar a enviar ordres mentre el dorsal encara no s'ha iniciat, o "
+"mentre un càlcul llarg encara està fent-se. En aquest cas, les ordres se "
+"situaran primer en una cua, i s'executaran tan aviat com el dorsal torni a "
+"estar disponible."
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:20
+#, kde-format
+msgid ""
+"RKWard says it needs a package. Was the installation of RKWard not complete?"
+msgstr ""
+"El RKWard diu que necessita un paquet. No s'havia completat la instal·lació "
+"del RKWard?"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:20
+#, kde-format
+msgid "Missing packages"
+msgstr "Paquets que manquen"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard says it needs a package. Was the installation of RKWard not complete?">
+#: rkward/pages/rkward_trouble_shooting.rkh:20
+#, kde-format
+msgid ""
+"RKWard has basically all the functionality, which comes with the standard "
+"packages of R. But RKWard is at the same time rather extensible. Many "
+"developers made use of this and thus some of the procedures in RKWard depend "
+"on \"external\" packages (obtained from <link href=\"http://cran.r-project."
+"org/\">The Comprehensive R Archive Network (CRAN)</link>) to perform a task."
+msgstr ""
+"El RKWard té bàsicament totes les funcionalitats que venen amb els paquets "
+"estàndards de l'R. Però el RKWard és al mateix temps, bastant ampliable. "
+"Molts desenvolupadors fan ús d'això i, per tant, alguns dels procediments "
+"del RKWard depenen de paquets «externs» (obtinguts de <link href=\"http://"
+"cran.r-project.org/\">The Comprehensive R Archive Network (CRAN)</link>) per "
+"a portar a terme la tasca."
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard says it needs a package. Was the installation of RKWard not complete?">
+#: rkward/pages/rkward_trouble_shooting.rkh:20
+#, kde-format
+msgid ""
+"Here is an example. All tests related to <link href=\"rkward://rhelp/moments"
+"\">skewness</link> and <link href=\"rkward://rhelp/moments\">kurtosis</link> "
+"(which you would certainly expect to be shipped as a base package of R) are "
+"performed from an external package. If you read this the first time or "
+"restarted RKWard after you installed it and try to follow the link you will "
+"be out of luck. First you need to run a test from Analysis->Moment to "
+"achieve this."
+msgstr ""
+"Aquí hi ha un exemple. Totes les proves relacionades amb l'<link href="
+"\"rkward://rhelp/moments\">asimetria</link> i la <link href=\"rkward://rhelp/"
+"moments\">curtosi</link> (les quals esperaríeu que es distribuïssin com a "
+"paquet base de l'R) es porten a terme des d'un paquet extern. Si llegiu això "
+"per primer cop o reinicieu el RKWard després d'instal·lar-lo i intenteu "
+"seguir l'enllaç no tindreu sort. Primer cal executar una prova des "
+"d'«Anàlisi -> Moment» per solucionar això."
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard says it needs a package. Was the installation of RKWard not complete?">
+#: rkward/pages/rkward_trouble_shooting.rkh:20
+#, kde-format
+msgid ""
+"Typically, you would call them from R via <link href=\"rkward://rhelp/update."
+"packages\">update.packages</link> and <link href=\"rkward://rhelp/library"
+"\">library</link> to achieve this. But RKWard simplifies this for you. "
+"You'll be guided through the install procedure for the required package. "
+"Please note you need root privileges in certain situations."
+msgstr ""
+"Per a portar-ho a terme, normalment es cridaran des de l'R via <link href="
+"\"rkward://rhelp/update.packages\">update.packages</link> i <link href="
+"\"rkward://rhelp/library\">library</link>. Però el RKWard ho simplifica. Us "
+"guiarà a través del procediment d'instal·lació per al paquet requerit. Cal "
+"tenir en compte que caldran privilegis d'administrador en determinades "
+"situacions."
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:27
+#, kde-format
+msgid ""
+"RKWard claims to take care of seamless integration with an office-suite. Why "
+"is there no native option to save it as an office file?"
+msgstr ""
+"El RKWard afirma que afavoreix una integració sense costures amb els paquets "
+"ofimàtics. Per què no hi ha cap opció nativa per a desar-lo com un fitxer "
+"ofimàtic?"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:27
+#, kde-format
+msgid "RKWard integration with an office-suite"
+msgstr "Integració del RKWard amb un paquet ofimàtic"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard claims to take care of seamless integration with an office-suite. Why is there no native option to save it as an office file?">
+#: rkward/pages/rkward_trouble_shooting.rkh:27
+#, kde-format
+msgid ""
+"We agree that RKWard is still very lacking when it comes to office "
+"integration, and \"seamless\" integration is still far away. Refer to <link "
+"href=\"rkward://page/rkward_output\"/> for information on how to accomplish "
+"the most important things right now. In the meantime, it is possible to "
+"carry out analyses in RMarkdown documents. These can be saved as PDF, TeX "
+"document or Office document, among others. Current RKWard versions support "
+"this in principle in the export menu."
+msgstr ""
+"Estem d'acord que el RKWard encara li manca bastant per a la integració amb "
+"l'ofimàtica, i la integració «sense costures» encara és lluny. Vegeu <link "
+"href=\"rkward://page/rkward_output\"/> per a informació quant a com acomplir "
+"les coses més importants ara. Entretant, és possible realitzar anàlisis en "
+"documents RMarkdown. Aquests es poden desar com a documents PDF, TeX o "
+"Office, entre d'altres. Les versions actuals del RKWard en principi permeten "
+"això en el menú d'exportació."
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:30
+#, kde-format
+msgid "RKWard is running since ages. Has it hung up?"
+msgstr "El RKWard s'està executant des de fa segles. S'ha penjat?"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:30
+#, kde-format
+msgid "RKWard seems to hang"
+msgstr "El RKWard sembla penjat"
+
+# skip-rule: apps-edu_means
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard is running since ages. Has it hung up?">
+#: rkward/pages/rkward_trouble_shooting.rkh:30
+#, kde-format
+msgid ""
+"This depends. Some test and plots just need some time if you have huge "
+"amounts of data or sophisticated calculations. Therefore patience is "
+"sometimes needed. In any case you can check the state of R within RKWard. "
+"Just look at the little box on the right bottom corner of RKWard. Red means "
+"there is still something to calculate or plot. If it turns green, R is done "
+"calculating."
+msgstr ""
+"Això depèn. Diverses proves i diagrames necessiten força temps si hi ha "
+"grans quantitats de dades o càlculs sofisticats. Llavors cal tenir "
+"paciència. En qualsevol cas podeu comprovar l'estat de l'R en el RKWard. "
+"Només cal observar el quadre petit de la cantonada inferior dreta del "
+"RKWard. Vermell vol dir que encara hi ha quelcom calculant-se o fent el "
+"diagrama. Si es torna verd, l'R ha fet els càlculs."
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard is running since ages. Has it hung up?">
+#: rkward/pages/rkward_trouble_shooting.rkh:30
+#, kde-format
+msgid ""
+"But some statistical test are rather memory and stack hungry and can make "
+"the entire system unresponsive, if there is a lot of swapping. This is not a "
+"bug in RKWard or R, just the calculation taking your system to its limits. "
+"An example of very memory hungry tests are the <link href=\"rkward://rhelp/"
+"wilcox.test\">Wilcoxon Rank Sum and Signed Rank Tests</link>."
+msgstr ""
+"Però algunes proves estadístiques consumeixen força memòria i pila, i poden "
+"fer que tot el sistema quedi sense resposta, si hi ha molt ús de la memòria "
+"d'intercanvi. Això no és un error del RKWard ni l'R, només que els càlculs "
+"han portat el sistema als seus límits. Un exemple de proves que consumeixen "
+"molta memòria són les <link href=\"rkward://rhelp/wilcox.test\">suma "
+"d'amplituds de Wilcoxon i d'amplitud signada</link>."
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard is running since ages. Has it hung up?">
+#: rkward/pages/rkward_trouble_shooting.rkh:30
+#, kde-format
+msgid ""
+"Therefore, it is important you know the test. Moreover, it's very important "
+"to save the workspace and other sections you worked on before you do such "
+"operations. There is currently no recovery functionality within RKWard in "
+"case of a crash! You can find build-in tests from R to address this memory "
+"issue (see: <link href=\"rkward://rhelp/mem.limits\"/>, and <link href="
+"\"rkward://rhelp/memory.limit\"/>)."
+msgstr ""
+"Per tant, és important conèixer la prova. Encara més, és importantíssim "
+"desar l'espai de treball i altres seccions que heu treballat abans de fer "
+"aquestes operacions. Actualment no hi ha cap funcionalitat de recuperació al "
+"RKWard en cas de fallada! Trobareu proves integrades en construir des de l'R "
+"per a corregir aquest problema de memòria (vegeu: <link href=\"rkward://"
+"rhelp/mem.limits\"/>, i <link href=\"rkward://rhelp/memory.limit\"/>)."
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:37
+#, kde-format
+msgid "I think I did something wrong? Where is 'Undo' and 'Redo'?"
+msgstr ""
+"Penso que he fet quelcom incorrecte? A on està el «Desfer» i el «Refer»?"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
+#: rkward/pages/rkward_trouble_shooting.rkh:37
+#, kde-format
+msgid "Undo/Redo"
+msgstr "Desfer/refer"
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="I think I did something wrong? Where is 'Undo' and 'Redo'?">
+#: rkward/pages/rkward_trouble_shooting.rkh:37
+#, kde-format
+msgid ""
+"Right now RKWard doesn't have \"undo\" or \"redo\" functionality in all "
+"places. For example there is such functionality for the script editor, but "
+"there is no undo or redo for finished plots or tests. Therefore it's "
+"important that you know what you do before you start. It's recommended to "
+"use copies of original data and to give everything a meaningful name."
+msgstr ""
+"Ara mateix el RKWard no té les funcionalitats «desfer» o «refer» a tots els "
+"llocs. Per exemple, aquesta funcionalitat està a l'editor de scripts, però "
+"no hi ha «desfer» o «refer» per als diagrames o proves finalitzades. Per "
+"tant, és important saber què podeu fer abans de començar. Es recomana usar "
+"còpies de les dades originals i donar a tot un nom significatiu."
+
+#. i18n: ectx: (Trouble Shooting / FAQ) <section title="I think I did something wrong? Where is 'Undo' and 'Redo'?">
+#: rkward/pages/rkward_trouble_shooting.rkh:37
+#, kde-format
+msgid ""
+"However, RKWard tries to give you as much information as possible about "
+"things you have done. For tests and plots that you run from the menu, the "
+"<link href=\"rkward://page/rkward_output\"/> will contain a \"run again\" "
+"link below the output. You can use this to re-do this action with identical "
+"or slightly modified settings. Also, tests and plots try to show the most "
+"relevant settings in combination with the creation date. Moreover you can "
+"check and copy any code generated for your documentation purposes."
+msgstr ""
+"De totes maneres, el RKWard intenta donar tanta informació com sigui "
+"possible quant a les coses que esteu fent. Per a les proves i els diagrames "
+"que executeu des del menú, la <link href=\"rkward://page/rkward_output\"/> "
+"contindrà un enllaç «torna a executar» sota la sortida. Podeu usar-ho per a "
+"tornar a fer aquesta acció amb paràmetres idèntics o lleugerament "
+"modificats. També, les proves i els diagrames intenten mostrar els "
+"paràmetres més importants amb combinació de la data de creació. Encara més, "
+"podeu comprovar i copiar qualsevol codi generat a efectes de la vostra "
+"documentació."
+
+#. i18n: ectx: (Welcome to RKWard) <title>
+#: rkward/pages/rkward_welcome.rkh:3
+#, kde-format
+msgid "Welcome to RKWard"
+msgstr "Us donem la benvinguda al RKWard"
+
+#. i18n: ectx: (Welcome to RKWard) <section title="...">
+#: rkward/pages/rkward_welcome.rkh:5
+#, kde-format
+msgid "My recent script files"
+msgstr "Els meus fitxers de script recents"
+
+#. i18n: ectx: (Welcome to RKWard) <section title="...">
+#: rkward/pages/rkward_welcome.rkh:7
+#, kde-format
+msgid "My recent workspaces"
+msgstr "Els meus espais de treball recents"
+
+#. i18n: ectx: (Welcome to RKWard) <section title="...">
+#: rkward/pages/rkward_welcome.rkh:9
+#, kde-format
+msgid "My recent output files"
+msgstr "Els meus fitxers de sortida recents"
+
+#. i18n: ectx: (Welcome to RKWard) <section title="...">
+#: rkward/pages/rkward_welcome.rkh:11
+#, kde-format
+msgid "Import or enter data"
+msgstr "Importeu o introduïu dades"
+
+#. i18n: ectx: (Welcome to RKWard) <section title="Import or enter data">
+#: rkward/pages/rkward_welcome.rkh:11
+#, kde-format
+msgid "<link href=\"rkward://actions/new_data_frame\">Enter new data</link>"
+msgstr ""
+"<link href=\"rkward://actions/new_data_frame\">Introducció de dades noves</"
+"link>"
+
+#. i18n: ectx: (Welcome to RKWard) <section title="Import or enter data">
+#: rkward/pages/rkward_welcome.rkh:11
+#, kde-format
+msgid "<link href=\"rkward://actions/import_assistant\">Import data</link>"
+msgstr "<link href=\"rkward://actions/import_assistant\">Importa dades</link>"
+
+#. i18n: ectx: (Welcome to RKWard) <section title="...">
+#: rkward/pages/rkward_welcome.rkh:18
+#, kde-format
+msgid "Useful settings"
+msgstr "Paràmetres útils"
+
+#. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
+#: rkward/pages/rkward_welcome.rkh:18
+#, kde-format
+msgid ""
+"<link href=\"rkward://actions/rpackage_install\">Install R and RKWard "
+"packages</link>"
+msgstr ""
+"<link href=\"rkward://actions/rpackage_install\">Instal·lació de paquets de "
+"l'R i del RKWard</link>"
+
+#. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
+#: rkward/pages/rkward_welcome.rkh:18
+#, kde-format
+msgid ""
+"‎<link href=\"rkward://settings/addons\">Further add-on related settings (e."
+"g., git/project integration)‎</link>"
+msgstr ""
+"<link href=\"rkward://settings/addons\">Configuració relacionada amb "
+"complements (p. ex., git/integració projecte)</link>"
+
+#. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
+#: rkward/pages/rkward_welcome.rkh:18
+#, kde-format
+msgid ""
+"‎<link href=\"rkward://settings/general\">Startup options</link> (including "
+"this page)‎"
+msgstr ""
+"‎<link href=\"rkward://settings/general\">Opcions d'inici</link> (inclosa "
+"aquesta pàgina)‎"
+
+#. i18n: ectx: (Welcome to RKWard) <section title="...">
+#: rkward/pages/rkward_welcome.rkh:26
+#, kde-format
+msgid "Documentation starting points"
+msgstr "Punts d'inici de la documentació"
+
+#. i18n: ectx: (Welcome to RKWard) <section title="Documentation starting points">
+#: rkward/pages/rkward_welcome.rkh:26
+#, kde-format
+msgid ""
+"External links: <link href=\"https://rkward.kde.org/\">project homepage</"
+"link>"
+msgstr ""
+"Enllaços externs: <link href=\"https://rkward.kde.org/\">pàgina del "
+"projecte</link>"
+
+#. i18n: ectx: (Workspace Browser) <title>
+#: rkward/pages/rkward_workspace_browser.rkh:3
+#, kde-format
+msgid "Workspace Browser"
+msgstr "Navegador de l'espai de treball"
+
+#. i18n: ectx: (Workspace Browser) <summary>
+#: rkward/pages/rkward_workspace_browser.rkh:5
+#, kde-format
+msgid ""
+"The workspace browser allows to view and manipulate R objects. This includes "
+"both your own objects (data, functions), and so-called \"package environments"
+"\". As a rough analogy, this is similar to a regular file-system browser, "
+"except you browse R objects in your workspace, instead of files on your "
+"computer."
+msgstr ""
+"El navegador de l'espai de treball permet veure i manipular objectes R. Això "
+"inclou tant els objectes propis (dades, funcions), com els anomenats "
+"«entorns de paquets». Com a analogia general, això és semblant a un "
+"navegador del sistema de fitxers normal, excepte que es mostren objectes R a "
+"l'espai de treball, en lloc de fitxers de l'ordinador."
+
+#. i18n: ectx: (Workspace Browser) <summary>
+#: rkward/pages/rkward_workspace_browser.rkh:5
+#, kde-format
+msgid ""
+"The workspace browser can be invoked using Windows->Activate->Show / Hide "
+"Workspace Browser (default shortcut is Alt+1), or by clicking on the "
+"\"Workspace\" icon, which is located on the top of the left window border, "
+"by default."
+msgstr ""
+"El navegador de l'espai de treball es pot invocar usant «Finestres -> Activa "
+"-> Mostra / Oculta Espai de treball» (la drecera predeterminada és Alt+1), o "
+"fent clic a la icona de «l'espai de treball», la qual està ubicada a la part "
+"superior de la vora esquerra de la finestra, de manera predeterminada."
+
+#. i18n: ectx: (Workspace Browser) <section title="...">
+#: rkward/pages/rkward_workspace_browser.rkh:11
+#, kde-format
+msgid "What is shown"
+msgstr "Què es mostra"
+
+#. i18n: ectx: (Workspace Browser) <section title="What is shown">
+#: rkward/pages/rkward_workspace_browser.rkh:11
+#, kde-format
+msgid ""
+"Literally hundreds or even thousands of objects are present in a typical R "
+"session. This can be overwhelming at first, therefore the workspace browser "
+"offers to show only a certain subset of objects. The options here are \"Show "
+"Hidden Objects\", \"All vs. Non-Functions vs. Functions\", and \"Show All "
+"Environments\" (available at the top of the browser window, or choosing "
+"\"Show Objects\" from the context menu)."
+msgstr ""
+"Literalment, es presenten centenars o inclús milers d'objectes en una sessió "
+"normal de l'R. Al principi això pot ser aclaparador, però el navegador de "
+"l'espai de treball ofereix mostrar només un subconjunt concret d'objectes. "
+"Aquí, les opcions són «Mostra els objectes ocults», «Tot / No funcions / "
+"Funcions», i «Mostra tots els entorns» (disponible a la part superior de la "
+"finestra del navegador, o triant «Mostra els objectes» des del menú "
+"contextual)."
+
+#. i18n: ectx: (Workspace Browser) <section title="What is shown">
+#: rkward/pages/rkward_workspace_browser.rkh:11
+#, kde-format
+msgid ""
+"The first should be obvious. It controls whether objects whose name start "
+"with a dot ('.') are shown or not. Those are often used for internal "
+"objects, which are not meant for direct use, so it's generally safe to hide "
+"them from view."
+msgstr ""
+"El primer hauria de ser obvi. Controla si els objectes que el seu nom "
+"comença per un punt («.») es mostren o no. Aquests sovint s'usen com a "
+"objectes interns, els quals no estan destinats per a un ús directe, així que "
+"generalment és segur ocultar-los de la vista."
+
+#. i18n: ectx: (Workspace Browser) <section title="What is shown">
+#: rkward/pages/rkward_workspace_browser.rkh:11
+#, kde-format
+msgid ""
+"The second allows to select by the type of object. \"All\" does not filter, "
+"while \"Functions\" shows only functions, and \"Non-Functions\" shows all "
+"other objects (typically data)."
+msgstr ""
+"El segon permet seleccionar pel tipus d'objecte. «Tot» no filtra, mentre que "
+"«Funcions» mostra només les funcions, i «No funcions» mostra tots els altres "
+"objectes (normalment dades)."
+
+#. i18n: ectx: (Workspace Browser) <section title="What is shown">
+#: rkward/pages/rkward_workspace_browser.rkh:11
+#, kde-format
+msgid ""
+"The \"Show All Environments\" option controls, whether package environments "
+"and their objects are shown. Roughly speaking, if you turn off this option, "
+"only your \"own\" objects are shown, while with the option turned on, all "
+"pre-defined objects are also shown. More technically speaking, when the "
+"option is turned off, only the .GlobalEnv (see <link href=\"rkward://rhelp/"
+"globalenv\"/>) is shown, which is the environment, in which you create and "
+"edit your data."
+msgstr ""
+"L'opció «Mostra tots els entorns» controla si es mostren els entorns de "
+"paquets i els seus objectes. Parlant en general, si desactiveu aquesta "
+"opció, només es mostraran els vostres «propis» objectes, mentre que amb "
+"l'opció activada, es mostraran tots els objectes predefinits. Parlant més "
+"tècnicament, quan l'opció es desactiva, només es mostra el «."
+"GlobalEnv» (vegeu <link href=\"rkward://rhelp/globalenv\"/>), que és "
+"l'entorn en el qual creeu i editeu les vostres dades."
+
+#. i18n: ectx: (Workspace Browser) <section title="What is shown">
+#: rkward/pages/rkward_workspace_browser.rkh:11
+#, kde-format
+msgid ""
+"Note that objects are organized in a hierarchy, i.e. some types of objects "
+"contain further \"child\" objects. This is indicated by a \"+\" symbol to "
+"the left of the object name. Clicking on this will expand the view to show "
+"all the children of the object."
+msgstr ""
+"Cal tenir en compte que els objectes estan organitzats jeràrquicament, és a "
+"dir, diversos tipus d'objectes contenen altres objectes «fills». Això "
+"s'indica amb un símbol «+» a l'esquerra del nom de l'objecte. Fent-hi clic, "
+"la vista s'expandirà per a mostrar tots els fills de l'objecte."
+
+#. i18n: ectx: (Workspace Browser) <section title="What is shown">
+#: rkward/pages/rkward_workspace_browser.rkh:11
+#, kde-format
+msgid ""
+"Hovering the mouse pointer over an object will show a short summary of the "
+"objects' basic properties."
+msgstr ""
+"En passar l'apuntador del ratolí per sobre un objecte es mostrarà un resum "
+"curt de les propietats bàsiques de l'objecte."
+
+#. i18n: ectx: (Workspace Browser) <section title="Available actions">
+#: rkward/pages/rkward_workspace_browser.rkh:25
+#, kde-format
+msgid ""
+"Several actions are available from the context menu (by right-clicking on "
+"one of the objects), however some of these actions are only available for "
+"some types of objects. The most important actions for objects in package "
+"environments:"
+msgstr ""
+"Hi ha diverses accions disponibles des del menú contextual (fent un clic amb "
+"el botó dret en un dels objectes), tanmateix vàries d'aquestes accions només "
+"estan disponibles per a tipus d'objectes concrets. Les accions més "
+"importants als entorns de paquets són:"
+
+#. i18n: ectx: (Workspace Browser) <section title="Available actions">
+#: rkward/pages/rkward_workspace_browser.rkh:25
+#, kde-format
+msgid ""
+"<b>Search Help</b>: This will try to locate and show a relevant R help page "
+"on the object."
+msgstr ""
+"<b>Cerca d'ajuda</b>: Intentarà trobar i mostrar una pàgina rellevant "
+"d'ajuda de l'R quant a l'objecte."
+
+#. i18n: ectx: (Workspace Browser) <section title="Available actions">
+#: rkward/pages/rkward_workspace_browser.rkh:25
+#, kde-format
+msgid ""
+"<b>View</b>: Open a window with detailed information about the object. This "
+"will, among others, use the R commands <link href=\"rkward://rhelp/print"
+"\">print</link> and <link href=\"rkward://rhelp/summary\">summary</link> to "
+"show more information."
+msgstr ""
+"<b>Vista</b>: Obra una finestra amb informació detallada quant a l'objecte. "
+"Entre altres coses, això permetrà usar ordres de l'R <link href=\"rkward://"
+"rhelp/print\">print</link> i <link href=\"rkward://rhelp/summary\">summary</"
+"link> per a mostrar més informació."
+
+#. i18n: ectx: (Workspace Browser) <section title="Available actions">
+#: rkward/pages/rkward_workspace_browser.rkh:25
+#, kde-format
+msgid ""
+"<b>Copy to new symbol / Copy to .GlobalEnv</b>: In order to manipulate "
+"objects, you need to copy them to the .GlobalEnv. For instance, you could "
+"copy an object from the environment \"package:datasets\" into the ."
+"GlobalEnv, and in a second step, edit it."
+msgstr ""
+"<b>Copia al símbol nou / Copia a «.GlobalEnv»</b>: Per tal de manipular els "
+"objectes, cal copiar-los al «.GlobalEnv». Per exemple, podríeu copiar un "
+"objecte des de l'entorn «package:datasets» al «.GlobalEnv», i en un segon "
+"pas, editar-lo."
+
+#. i18n: ectx: (Workspace Browser) <section title="Available actions">
+#: rkward/pages/rkward_workspace_browser.rkh:25
+#, kde-format
+msgid "Further actions available for objects in the .GlobalEnv:"
+msgstr "Accions addicionals disponibles per a objectes al «.GlobalEnv»:"
+
+#. i18n: ectx: (Workspace Browser) <section title="Available actions">
+#: rkward/pages/rkward_workspace_browser.rkh:25
+#, kde-format
+msgid ""
+"<b>Edit</b>: Open the object in a data editor. Currently editing is only "
+"supported for data.frames."
+msgstr ""
+"<b>Edita</b>: Obre l'object a l'editor de dades. Actualment, l'edició només "
+"s'admet per a «data.frames»."
+
+#. i18n: ectx: (Workspace Browser) <section title="Available actions">
+#: rkward/pages/rkward_workspace_browser.rkh:25
+#, kde-format
+msgid "<b>Rename / Delete</b>: These should be obvious."
+msgstr "<b>Reanomena / Suprimeix</b>: Aquestes haurien de ser òbvies."
+
+#. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
+#: rkward/pages/rkward_workspace_browser.rkh:42
+#, kde-format
+msgid ""
+"Some default settings for the Workspace Browser can be configured using the "
+"context menu:"
+msgstr ""
+"Es poden configurar diversos paràmetres predeterminats per al navegador de "
+"l'espai de treball usant el menú contextual:"
+
+#. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
+#: rkward/pages/rkward_workspace_browser.rkh:42
+#, kde-format
+msgid ""
+"<b>Show hidden objects / show all environments</b>: See <link href="
+"\"#introduction\">above</link>. In contrast to the settings made directly in "
+"the workspace browser, these configure the <i>default</i> settings in the "
+"workspace browser (i.e. those that are effectively after restarting RKWard)."
+msgstr ""
+"<b>Mostra els objectes ocults / mostra tots els entorns</b>: Vegeu <link "
+"href=\"#introduction\">més amunt</link>. Per contra, a la configuració "
+"efectuada directament al navegador de l'espai de treball, aquestes "
+"configuren els paràmetres <i>predeterminats</i> al navegador de l'espai de "
+"treball (és a dir, els que són efectius després de reiniciar el RKWard)."
+
+#. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
+#: rkward/pages/rkward_workspace_browser.rkh:42
+#, kde-format
+msgid ""
+"<b>Show objects with children</b>: Controls whether objects with children "
+"(such as environments, lists) are shown, even if they do not correspond to "
+"the current filter."
+msgstr ""
+"<b>Mostra objectes amb fills</b>: Controla si es mostren els objectes amb "
+"fills (com els entorns, llistes), encara que no corresponguin al filtre "
+"actual."
+
+#. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
+#: rkward/pages/rkward_workspace_browser.rkh:42
+#, kde-format
+msgid ""
+"<b>Show variables / functions</b>: Equivalent to the \"All vs. Non-Function "
+"vs. Functions\" control described <link href=\"#introduction\">above</link>."
+msgstr ""
+"<b>Mostra variables / funcions</b>: Equivalent al control «Tot / No "
+"funcions / Funcions» descrit <link href=\"#introduction\">més amunt</link>."
+
+#. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
+#: rkward/pages/rkward_workspace_browser.rkh:42
+#, kde-format
+msgid ""
+"<b>Label field / Type field / Class field</b>: Which columns are shown for "
+"each object?"
+msgstr ""
+"<b>Camp d'etiqueta / Camp de tipus / Camp de classe</b>: Quines columnes es "
+"mostren per a cada objecte?"
+
+#. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
+#: rkward/pages/rkward_workspace_browser.rkh:42
+#, kde-format
+msgid ""
+"One additional setting is available from <a href=\"rkward://settings/browser"
+"\">Settings->Configure RKWard->Workspace</a>:"
+msgstr ""
+"Hi ha disponible una opció addicional des d'<a href=\"rkward://settings/"
+"browser\">Arranjament -> Configura el RKWard -> Espai de treball</a>:"
+
+#. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
+#: rkward/pages/rkward_workspace_browser.rkh:42
+#, kde-format
+msgid ""
+"<b>Never fetch the structure of these packages</b>: Some (few) R packages "
+"contain <b>very</b> many small objects (tens of thousands). In the worst "
+"case, trying to fetch structure information on those (i.e. fetching the "
+"information to be shown in the workspace browser) can consume a lot of "
+"resources and make RKWard unresponsive. Package \"GO\" is one such package, "
+"and is \"blacklisted\" by default. If you note that loading a package takes "
+"exceedingly long, you may consider adding it to this list."
+msgstr ""
+"<b>Mai recupera l'estructura d'aquests paquets</b>: Diversos (pocs) paquets "
+"R contenen <b>molts</b> objectes petits (desenes de milers). En el pitjor "
+"cas, en intentar recuperar l'estructura d'informació d'aquests (és a dir, "
+"recuperar la informació a mostrar en el navegador de l'espai de treball) pot "
+"consumir molts recursos i fer que el RKWard no respongui. El paquet «GO» és "
+"un d'aquests paquets, i està a la «llista negra» de manera predeterminada. "
+"Si noteu que la càrrega d'un paquet triga moltíssim, podeu considerar afegir-"
+"lo a aquesta llista."

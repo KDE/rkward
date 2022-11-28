@@ -1,0 +1,309 @@
+<?xml version="1.0" ?>
+<!DOCTYPE refentry PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+<!ENTITY % Dutch "INCLUDE">
+<!ENTITY rkward '<application
+>RKWard</application
+>'>
+<!ENTITY R '<application
+>R</application
+>'>
+]>
+
+<refentry lang="&language;">
+<refentryinfo>
+<title
+>KDE gebruikershandleiding</title>
+<author
+><firstname
+>Thomas</firstname
+> <surname
+>Friedrichsmeier</surname
+> <contrib
+>Man-pagina van RKWard.</contrib>
+<affiliation>
+<address
+><email
+>rkward-devel@kde.org</email
+></address>
+</affiliation>
+</author>
+<date
+>2017-05-20</date>
+<productname
+>K Desktop Environment</productname>
+</refentryinfo>
+
+<refmeta>
+<refentrytitle
+><command
+>rkward</command
+></refentrytitle>
+<manvolnum
+>1</manvolnum>
+</refmeta>
+
+<refnamediv>
+<refname
+><command
+>rkward</command
+></refname>
+<refpurpose
+>Een &kde; frontend voor R</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv>
+<cmdsynopsis
+><command
+>rkward</command
+> <group choice="opt"
+><option
+>--evaluate</option
+> <replaceable
+> Rcode</replaceable
+></group
+> <group choice="opt"
+><option
+>--debug-level</option
+> <replaceable
+> level</replaceable
+></group
+> <group choice="opt"
+><option
+>--debug-flags</option
+> <replaceable
+> vlaggen</replaceable
+></group
+> <group choice="opt"
+><option
+>--debug-output</option
+> <replaceable
+> waarin</replaceable
+></group
+> <group choice="opt"
+><option
+>--backend-debugger</option
+> <replaceable
+> debugger_opdracht</replaceable
+></group
+> <group choice="opt"
+><option
+>--r-executable</option
+> <replaceable
+> pad_naar_executable</replaceable
+></group
+> <group choice="opt"
+><option
+>--reuse</option
+></group
+> <group choice="opt"
+><option
+>--autoreuse</option
+></group
+> <group choice="opt"
+><option
+>----nowarn-external</option
+></group
+> <arg choice="opt"
+>KDE Generieke opties</arg
+> <arg choice="opt"
+>Qt Generieke Opties</arg
+> <arg choice="opt"
+><replaceable
+>te_openen-bestanden</replaceable
+></arg
+> </cmdsynopsis>
+</refsynopsisdiv>
+
+<refsect1>
+<title
+>Beschrijving</title>
+<para
+>&rkward; is een &GUI; en <acronym
+>IDE</acronym
+> op basis van &kde; voor de scripttaal &R;, voor  statische berekeningen.</para>
+<para
+>Verdere informatie kunt u vinden op de <ulink url="https://rkward.kde.org/"
+>website van &rkward;</ulink
+>, en de documentatie in &rkward;.</para>
+</refsect1>
+
+<refsect1>
+<title
+>Opties</title>
+
+<variablelist>
+<varlistentry>
+<term
+><option
+>--evaluate</option
+> <replaceable
+>Rcode</replaceable
+></term>
+<listitem
+><para
+>De gegeven &R;-programmacode wordt berekend na het starten van &rkward;, en nadat er een opgegeven werkruimte is ingelezen. Meestal gebruikt voor automatisch testen.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--debug-level</option
+> <replaceable
+>level</replaceable
+></term>
+<listitem
+><para
+>Uitgebreidheid van de debug-uitvoer, 0-5, met 0 is geen uitvoer, 5 is alle uitvoer, met inbegrip van functie-trace informatie. Standaard is 2.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--debug-uitvoer</option
+> <replaceable
+>waarin</replaceable
+></term>
+<listitem
+><para
+>Waar debug-uitvoer naar toe moet. Standaard is opslaan in een bestand in de tijdelijke map. Maar opgeven van "terminal" schrijft de debug-uitvoer naar stderr (nuttig voor debuggen van problemen bij starten). Let op dat debug-uitvoer van het backendproces altijd in een bestand wordt opgeslagen.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--debug-flags</option
+> <replaceable
+>vlaggen</replaceable
+></term>
+<listitem
+><para
+>Instellen welke programmaregels moeten worden gedebugd. Flags (vlaggen) worden opgegeven als een binair getal. Bekijk de bronbestanden voor de documentatie, dit is echt een interne optie.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--backend-debugger</option
+> <replaceable
+>command</replaceable
+></term>
+<listitem
+><para
+>Laat de backend van &rkward; werken met de opgegeven debugger-opdracht. U kunt hieraan opties voor de opdrachtregel toevoegen binnen  enkele aanhalingstekens  (''). <emphasis
+>LET OP:</emphasis
+> Argumenten voor de debugger worden gescheiden door spaties. Indien dit niet wordt gewenst, moet u uw eigen script schrijven om de debugger te starten. U moet er ook op letten dat alle in/uitvoer van de debugger op de juiste manier wordt doorgestuurd (redirect). Zie de voorbeelden.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--r-executable</option
+> <replaceable
+>command</replaceable
+></term>
+<listitem
+><para
+>Indien er meerdere installaties zijn van R,  moet u de te gebruiken installatie opgeven, &eg; <filename
+>/usr/bin/R</filename
+>. U kunt ook de tekenreeks (string) <replaceable
+>"auto"</replaceable
+>, gebruiken, waarna RKWard probeert R te zoeken in een van de standaard locaties. <emphasis
+>LET OP</emphasis
+> dat hoewel RKWard  <emphasis
+>vaak</emphasis
+> goed werkt met nieuwe versies van R, het <emphasis
+>soms</emphasis
+> voor die versie opnieuw moet worden gecompileerd, of er helemaal niet compatibel mee is.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--reuse</option
+></term>
+<listitem
+><para
+>Als een instantie van &rkward; al actief is, deze naar voren halen, en de <replaceable
+> te_openen_bestanden</replaceable
+> openen. Let er op dat alle andere opties op de opdrachtregel worden genegeerd wanneer een instantie opnieuw wordt gebruikt.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--autoreuse</option
+></term>
+<listitem
+><para
+>Doet hetzelfde als --reuse, maar indien ook enige bestandsargumenten zijn gegeven, wordt een nieuwe instantie gestart. Bedoeld voor gebruik in het .desktop-bestand.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--nowarn-external</option
+></term>
+<listitem
+><para
+>Gewoonlijk, zullen plugins van &rkward;, die vanaf de opdrachtregel worden gestart (bijv. als <replaceable
+>te_openen_bestanden</replaceable
+> &URL;s bevatten in de vorm <replaceable
+>rkward://runplugin/...</replaceable
+>),  waarschuwen dat  &URL;s <emphasis
+>mogelijk kunnen</emphasis
+> worden gebruikt voor het starten van kwaadaardige code op uw systeem. Deze waarschuwing is vooral van toepassing voor links gevonden op niet vertrouwde websites, of andere niet vertrouwde externe bronnen. Indien u &rkward; lokaal wilt scripten kunt u deze waarschuwing uitzetten door de toevoeging  --nowarn-external aan de opdrachtregel.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><replaceable
+>te_openen_bestanden</replaceable
+></term>
+<listitem
+><para
+>U kunt elk aantal door &rkward; te openen bestandsnamen of &URL;s opgeven. Gewoonlijk zijn dit bestanden voor werkruimten, werkplaatsen, R-scripts, of rkward://&URL;s (&eg;. voor het starten van een plugin-dialoog). Wanneer u meer dan een werkplaatsbestand opgeeft, worden die samengevoegd, dit wordt niet aanbevolen.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</refsect1>
+
+<refsect1>
+<title
+>Zie ook</title>
+<para
+><citerefentry
+><refentrytitle
+>R</refentrytitle>
+<manvolnum
+>1</manvolnum
+></citerefentry
+></para>
+</refsect1>
+
+<refsect1>
+<title
+>Voorbeelden</title>
+<para
+><programlisting
+># Starten met de dialoog van t-test
+rkward --nowarn-external rkward://runplugin/rkward::t_test/
+# Twee scriptbestanden openen in een actieve instantie van RKWard (of in een nieuwe instantie, als RKWard niet actief is)
+rkward --reuse file_a.R file_b.R
+
+#Laat backend RKWard werken met valgrind
+rkward --backend-debugger 'valgrind --log-file=valgrind.log'.
+</programlisting
+></para>
+</refsect1>
+
+<refsect1>
+<title
+>Auteurs</title>
+<para
+>&rkward; werd geschreven door Thomas Friedrichsmeier en het team van &rkward;. Zie <ulink url="https://rkward.kde.org/"
+>de website van &rkward;</ulink
+>.</para>
+</refsect1>
+
+</refentry>

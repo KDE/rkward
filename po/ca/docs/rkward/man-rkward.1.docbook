@@ -1,0 +1,303 @@
+<?xml version="1.0" ?>
+<!DOCTYPE refentry PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+<!ENTITY % Catalan  "INCLUDE">
+<!ENTITY rkward '<application
+>RKWard</application
+>'>
+<!ENTITY R '<application
+>R</application
+>'>
+]>
+
+<refentry lang="&language;">
+<refentryinfo>
+<title
+>Manual d'usuari del KDE</title>
+<author
+><firstname
+>Thomas</firstname
+> <surname
+>Friedrichsmeier</surname
+> <contrib
+>Pàgina «man» del &rkward;.</contrib>
+<affiliation>
+<address
+><email
+>rkward-devel@kde.org</email
+></address>
+</affiliation>
+</author>
+<date
+>20 de maig de 2017</date>
+<productname
+>Entorn d'escriptori K</productname>
+</refentryinfo>
+
+<refmeta>
+<refentrytitle
+><command
+>rkward</command
+></refentrytitle>
+<manvolnum
+>1</manvolnum>
+</refmeta>
+
+<refnamediv>
+<refname
+><command
+>rkward</command
+></refname>
+<refpurpose
+>Un frontal del &kde; pel &R;</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv>
+<cmdsynopsis
+><command
+>rkward</command
+> <group choice="opt"
+><option
+>--evaluate</option
+> <replaceable
+> codiR</replaceable
+></group
+> <group choice="opt"
+><option
+>--debug-level</option
+> <replaceable
+> nivell</replaceable
+></group
+> <group choice="opt"
+><option
+>--debug-flags</option
+> <replaceable
+> etiquetes</replaceable
+></group
+> <group choice="opt"
+><option
+>--debug-output</option
+> <replaceable
+> on</replaceable
+></group
+> <group choice="opt"
+><option
+>--backend-debugger</option
+> <replaceable
+> ordre_de_depuració</replaceable
+></group
+> <group choice="opt"
+><option
+>--r-executable</option
+> <replaceable
+> camí_a_executable</replaceable
+></group
+> <group choice="opt"
+><option
+>--reuse</option
+></group
+> <group choice="opt"
+><option
+>--autoreuse</option
+></group
+> <group choice="opt"
+><option
+>--nowarn-external</option
+></group
+> <arg choice="opt"
+>Opcions genèriques del KDE</arg
+> <arg choice="opt"
+>Opcions genèriques de les Qt</arg
+> <arg choice="opt"
+><replaceable
+>fitxers_a_obrir</replaceable
+></arg
+> </cmdsynopsis>
+</refsynopsisdiv>
+
+<refsect1>
+<title
+>Descripció</title>
+<para
+>El &rkward; és una &IGU; basada en el &kde; i una <acronym
+>IDE</acronym
+> per al llenguatge de creació de scripts en &R; per al càlcul estadístic.</para>
+<para
+>Per obtenir més informació, consulteu al <ulink url="https://rkward.kde.org/"
+>lloc web del &rkward;</ulink
+> i a la documentació inclosa amb el &rkward;.</para>
+</refsect1>
+
+<refsect1>
+<title
+>Opcions</title>
+
+<variablelist>
+<varlistentry>
+<term
+><option
+>--evaluate</option
+> <replaceable
+>codiR</replaceable
+></term>
+<listitem
+><para
+>El codi &R; indicat s'avaluarà una vegada s'hagi iniciat el &rkward;, i després de carregar qualsevol espai de treball especificat. Molt útil per a proves automatitzades.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--debug-level</option
+> <replaceable
+>nivell</replaceable
+></term>
+<listitem
+><para
+>El detall de la sortida de depuració. 0-5, on 0 és sense sortida, 5 és tota la sortida, inclosa la informació de seguiment de la funció. El valor per omissió és 2.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--debug-output</option
+> <replaceable
+>on</replaceable
+></term>
+<listitem
+><para
+>On enviar la sortida de depuració. El valor predeterminat és desar-la en un fitxer del directori temporal. Si especifiqueu «terminal», s'escriurà a stderr (sortida d'error estàndard), útil per a depurar problemes durant l'inici. Tingueu en compte que la sortida de depuració d'un procés des del dorsal sempre s'emmagatzemarà en un fitxer.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--debug-flags</option
+> <replaceable
+>etiquetes</replaceable
+></term>
+<listitem
+><para
+>Configura quines seccions de codi es depuraran. Les etiquetes es donen com a nombre binari. Consulteu els fitxers font per a la documentació, ja que en realitat, aquesta és una opció interna.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--backend-debugger</option
+> <replaceable
+>ordre</replaceable
+></term>
+<listitem
+><para
+>Executa el dorsal del &rkward; a través de l'ordre de depuració especificada. Per afegir opcions de la línia d'ordres a l'ordre del depurador, incloeu-les entre cometes simples ('') juntament amb l'ordre. <emphasis
+>NOTA:</emphasis
+> Els arguments del depurador estaran separats per espais. Si això no és apropiat, haureu d'escriure el vostre propi script d'embolcall per a cridar el depurador. A més, assegureu-vos de redirigir tota la sortida del depurador i/o l'entrada, segons correspongui. Vegeu els exemples.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--r-executable</option
+> <replaceable
+>ordre</replaceable
+></term>
+<listitem
+><para
+>En el cas de diverses instal·lacions de l'&R;, especifiqueu la instal·lació que voleu utilitzar, &pex;, <filename
+>/usr/bin/R</filename
+>. També podeu utilitzar la cadena <replaceable
+>«auto»</replaceable
+>, en aquest cas el &rkward; intentarà trobar l'&R; en un dels camins d'instal·lació estàndard coneguts. TINGUEU EN COMPTE QUE, si bé el &rkward; sovint funcionarà amb les versions més noves de l'&R;, de vegades haureu de tornar a compilar per a aquesta versió, o podria ser totalment incompatible.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--reuse</option
+></term>
+<listitem
+><para
+>Si ja s'està executant una instància del &rkward;, porteu-la al capdavant i obriu els <replaceable
+>fitxers_a_obrir</replaceable
+>. Tingueu en compte que totes les altres opcions de la línia d'ordres seran ignorades en cas que es reutilitzi una instància.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--autoreuse</option
+></term>
+<listitem
+><para
+>Es comporta com <option
+>--reuse</option
+>, si s'indica cap argument de fitxer, en cas contrari s'inicia una instància nova. Destinada a utilitzar-se en el fitxer «.desktop».</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--nowarn-external</option
+></term>
+<listitem
+><para
+>Normalment, quan s'invoquen els connectors del &rkward; des de la línia d'ordres (&ead;, quan <replaceable
+>fitxers_a_obrir</replaceable
+> conté els &URL; del formulari <replaceable
+>rkward://connector_a_executar/...</replaceable
+>), el &rkward; mostrarà un avís que aquests &URL; es podrien utilitzar per a desencadenar accions malicioses al vostre sistema. Aquest avís s'aplica específicament als enllaços que es troben en llocs web no confiables o d'altres fonts externes que no siguin de confiança. Si voleu executar localment un script del &rkward;, podeu fer cas omís a aquest avís afegint --nowarn-extern a la línia d'ordres.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><replaceable
+>fitxers_a_obrir</replaceable
+></term>
+<listitem
+><para
+>Podeu especificar qualsevol nombre de fitxers o &URL; per obrir-los al &rkward;. Normalment, aquests seran fitxers de l'espai de treball, fitxers del lloc de treball, fitxers de script de l'&R; o &URL; com rkward:// (&pex;, per a començar amb un diàleg de connector). Si especifiqueu més d'un fitxer de l'espai de treball, els espais de treball es fusionaran i no es recomana.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</refsect1>
+
+<refsect1>
+<title
+>Vegeu també</title>
+<para
+><citerefentry
+><refentrytitle
+>R</refentrytitle>
+<manvolnum
+>1</manvolnum
+></citerefentry
+></para>
+</refsect1>
+
+<refsect1>
+<title
+>Exemples</title>
+<para
+><programlisting
+># S'inicia amb el diàleg de la prova t
+rkward --nowarn-external rkward://runplugin/rkward::t_test/
+# Obre dos fitxers de script en una instància en execució del RKWard (o en una instància nova, si el RKWard no s'està executant)
+rkward --reuse file_a.R file_b.R
+
+# Executa el dorsal del RKWard a través de «valgrind»
+rkward --backend-debugger 'valgrind --log-file=valgrind.log'
+</programlisting
+></para>
+</refsect1>
+
+<refsect1>
+<title
+>Autors</title>
+<para
+>El &rkward; ha estat escrit per en Thomas Friedrichsmeier i l'equip del &rkward;. Vegeu <ulink url="https://rkward.kde.org/"
+>el lloc web del &rkward;</ulink
+>.</para>
+</refsect1>
+
+</refentry>
