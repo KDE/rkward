@@ -4987,10 +4987,10 @@ msgstr ""
 "Diagrama de la matriu de correlació. En la part superior es presenta el "
 "valor (absolut) de la correlació més el resultat de «cor.test» com a "
 "estreles. En la part inferior, es dibuixaran amb una línia ajustada els "
-"diagrames de dispersió bivariant. El gràfic i el codi es poden trobar a "
-"<link href=\"http://addictedtor.free.fr/graphiques/RGraphGallery.php?"
-"graph=137\">R Graph Gallery (137) Correlation Matrix</link>, des d'on va ser "
-"adaptat i donat format per a RKWard."
+"diagrames de dispersió bivariant. El gràfic i el codi es troben a <link href="
+"\"http://addictedtor.free.fr/graphiques/RGraphGallery.php?graph=137\">R "
+"Graph Gallery (137) Correlation Matrix</link>, des d'on va ser adaptat i "
+"donat format per a RKWard."
 
 # skip-rule: t-sc-plot
 #. i18n: ectx: (Loaded from Correlation Matrix Plot) <usage>

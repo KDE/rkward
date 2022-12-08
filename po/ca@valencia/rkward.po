@@ -4174,7 +4174,7 @@ msgid ""
 msgstr ""
 "Heu configurat RKWard perquè les ordres de l'editor de scripts es canalitzen "
 "a través de la consola d'R. Tanmateix, actualment hi ha una altra ordre "
-"activa a la consola. Voleu afegir-la a l'ordre de la consola, o abans voleu "
+"activa en la consola. Voleu afegir-la a l'ordre de la consola, o abans voleu "
 "reiniciar la consola? Premeu cancel·la si ara no voleu executar l'ordre nova."
 
 #: rkward/rkconsole.cpp:895
@@ -4406,7 +4406,7 @@ msgstr "Assistent d'importació"
 msgid ""
 "Assistant to find the best method to import data from a variety of formats"
 msgstr ""
-"Assistent per trobar el mètode millor per a importar dades des d'una "
+"Assistent per a trobar el mètode millor per a importar dades des d'una "
 "varietat de formats"
 
 #: rkward/rkward.cpp:516
@@ -5064,7 +5064,7 @@ msgid ""
 "<b>Note: </b>Additional (common) completion options are available at the <a "
 "href=\"rkward://settings/editor\">script editor settings</a>"
 msgstr ""
-"<b>Nota: </b>Hi ha opcions de compleció addicionals (comunes) disponibles a "
+"<b>Nota: </b>Hi ha opcions de compleció addicionals (comunes) disponibles en "
 "la <a href=\"rkward://settings/editor\">configuració de l'editor de scripts</"
 "a>"
 
@@ -5543,7 +5543,7 @@ msgstr "Copia les ordres a l'eixida"
 #: rkward/settings/rksettingsmoduleoutput.cpp:47
 #, kde-format
 msgid "Commands entered in the console"
-msgstr "Ordres entrades a la consola"
+msgstr "Ordres entrades en la consola"
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:48
 #, kde-format
@@ -5605,7 +5605,7 @@ msgid ""
 "only."
 msgstr ""
 "Seleccioneu un fitxer CSS per al format personalitzat de la finestra "
-"d'eixida. Deixeu-ho buit per a utilitzar el fitxer CSS per defecte "
+"d'eixida. Deixeu-ho buit per a utilitzar el fitxer CSS predeterminat "
 "distribuït amb RKWard. Cal tindre en compte que esta opció només té efecte "
 "en restablir un fitxer d'eixida (p. ex. després de netejar l'eixida)."
 
@@ -6233,7 +6233,7 @@ msgid ""
 msgstr ""
 "A causa d'un error en la versió 5.92.0 de KTextEditor (la versió en ús, en "
 "este moment), la crida a la funció de característica de consell podria "
-"fallar, i s'ha desactivat en esta sessió. Per activar la punta de tocada, "
+"fallar, i s'ha desactivat en esta sessió. Per a activar la punta de tocada, "
 "instal·leu qualsevol altra versió (anterior o posterior) de «(lib|"
 "kf5)ktexteditor»."
 

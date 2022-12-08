@@ -1282,7 +1282,7 @@ msgstr ""
 "«rio» d'R, que al seu torn depén de diversos paquets addicionals. Si hi ha "
 "un connector dedicat per al format que voleu importar, l'ús d'este serà "
 "normalment preferible, ja que proporcionarà opcions més específiques i amb "
-"menys paquets per instal·lar."
+"menys paquets per a instal·lar."
 
 #. i18n: ectx: (Loaded from Generic data import) <usage>
 #: rkward/plugins/00saveload/import/import_generic_rio.rkh:11
