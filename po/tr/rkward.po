@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: yenitr\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-09 00:42+0000\n"
-"PO-Revision-Date: 2022-12-04 14:39+0300\n"
+"PO-Revision-Date: 2022-12-10 18:30+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -2716,7 +2716,7 @@ msgstr ""
 #, kde-format
 msgid ""
 "<b>There have been errors and / or warnings. See below for a transcript</b>"
-msgstr "<b>Hatalar ve / veya uyarılar var. Döküm için aşağıya gözatın</b>"
+msgstr "<b>Hatalar ve/veya uyarılar var. Döküm için aşağı bakın</b>"
 
 #: rkward/misc/rkprogresscontrol.cpp:258
 #: rkward/settings/rksettingsmoduleoutput.cpp:185
@@ -3771,13 +3771,7 @@ msgstr ""
 "rkward.kde.org/compiling</a> adresine göz atın.</p>\n"
 
 #: rkward/rbackend/rkrbackend.cpp:1737
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>\t-There was a problem setting up the communication with R. Most "
-#| "likely this indicates a broken installation.</p>\t\t<p><b>You should quit "
-#| "RKWard, now, and fix your installation</b>. For help with that, see <a "
-#| "href=\"http://rkward.kde.org/compiling\">http://rkward.kde.org/compiling</"
-#| "a>.</p></p>\n"
+#, kde-format
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
 "this indicates a broken installation.</p>\t\t<p><b>You should quit RKWard, "
@@ -3786,10 +3780,10 @@ msgid ""
 "p></p>\n"
 msgstr ""
 "<p>\t-R ile iletişim kurulurken bir sorun oluştu. Büyük olasılıkla bu, "
-"kurulumun bozuk olduğunu gösterir.</p>\t\t<p><b>Şimdi, RKWard'dan çıkıp, "
-"kurulumunu düzeltmelisiniz</b>. Bununla ilgili yardım için <a href=\"http://"
-"rkward.kde.org/compiling\">http://rkward.kde.org/compiling</a> adresine "
-"gözatın.</p></p>\n"
+"kurulumun bozuk olduğunu gösterir.</p>\t\t<p><b>Şimdi RKWard'dan çıkmalı ve "
+"kurulumunuzu düzeltmelisiniz. </b>. Bununla ilgili yardım için <a href="
+"\"https://rkward.kde.org/compiling\">https://rkward.kde.org/compiling</a>'e "
+"bakın.</p></p>\n"
 
 #: rkward/rbackend/rkrbackend.cpp:1794
 #, kde-format
@@ -6967,19 +6961,15 @@ msgstr ""
 "penceresi açmanız ve etkinleştirmeniz gerekir. "
 
 #: rkward/windows/rkwindowcatcher.cpp:124
-#, fuzzy, kde-format
-#| msgid ""
-#| "You have tried to embed a new R graphics device window in RKWard. "
-#| "However, this is not currently supported in this build of RKWard on Mac "
-#| "OS X. See http://rkward.kde.org/mac for more information."
+#, kde-format
 msgid ""
 "You have tried to embed a new R graphics device window in RKWard. However, "
 "this is not currently supported in this build of RKWard on Mac OS X. See "
 "https://rkward.kde.org/mac for more information."
 msgstr ""
-"RKWard üzerinde yeni bir R grafik aygıt penceresi yerleştirmeye çalıştınız. "
-"Bununla birlikte, şu anda Mac OS X'deki RKWard yapısında desteklenmiyor. "
-"Daha fazla bilgi için http://rkward.kde.org/mac adresine gözatın."
+"RKWard'a yeni bir R grafik aygıtı penceresi yerleştirmeyi denediniz. Ancak "
+"bu, macOS'teki bu RKWard yapısında şu anda desteklenmemektedir. Daha fazla "
+"bilgi için https://rkward.kde.org/mac adresine bakın."
 
 #: rkward/windows/rkwindowcatcher.cpp:124
 #: rkward/windows/rkwindowcatcher.cpp:126
