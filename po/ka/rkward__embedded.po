@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-05-11 00:41+0000\n"
-"PO-Revision-Date: 2022-09-22 07:30+0200\n"
+"PO-Revision-Date: 2022-12-14 18:08+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Gerogian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -229,7 +229,7 @@ msgstr "ჯამი"
 #: rkward/plugins/distributions/../data/limit_vector_length.xml:33
 #, kde-format
 msgid "Mean"
-msgstr ""
+msgstr "მნიშვნელობა"
 
 #. i18n: ectx: (Tabulate) <dialog label="Tabulate"> <radio label="Statistic"> <option label="...">
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="Add remainder category"> <radio label="Statistic"> <option label="...">
@@ -732,7 +732,7 @@ msgstr "ანალიზი"
 #: rkward/plugins/distributions/../menu.pluginmap:25
 #, kde-format
 msgid "Plots"
-msgstr ""
+msgstr "გრაფიკები"
 
 #. i18n: ectx: <hierarchy> <menu label="...">
 #: rkward/plugins/distributions/../menu.pluginmap:28
@@ -894,7 +894,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:22
 #, kde-format
 msgid "Type"
-msgstr ""
+msgstr "ტიპი"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="Type"> <option label="...">
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:23
@@ -1368,7 +1368,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/color_chooser.xml:80
 #, kde-format
 msgid "Tomato"
-msgstr ""
+msgstr "პომიდორი"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:81
@@ -1404,7 +1404,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/color_chooser.xml:86
 #, kde-format
 msgid "Wheat"
-msgstr ""
+msgstr "ხორბალი"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:87
@@ -2266,7 +2266,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/plot_options.xml:77
 #, kde-format
 msgid "Main title"
-msgstr ""
+msgstr "მთავარი სათაური"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Main title"> <input label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:78
@@ -2316,7 +2316,7 @@ msgstr "ქვედა"
 #: rkward/plugins/distributions/../plots/plot_options.xml:88
 #, kde-format
 msgid "Left"
-msgstr ""
+msgstr "მარცხენა"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Custom margins"> <spinbox label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:89
@@ -2698,7 +2698,7 @@ msgstr ""
 #: rkward/plugins/distributions/../x11device/grid.xml:45
 #, kde-format
 msgid "Default"
-msgstr ""
+msgstr "სტანდარტული"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:42

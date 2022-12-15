@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-04-08 00:41+0000\n"
-"PO-Revision-Date: 2022-09-22 07:31+0200\n"
+"PO-Revision-Date: 2022-12-14 18:07+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -306,7 +306,7 @@ msgstr "სიმბოლო"
 #: rkward/plugins/data/recode_categorical.xml:37
 #, kde-format
 msgid "Factor"
-msgstr ""
+msgstr "ფაქტორი"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Input and output variables"> <dropdown label="Data type after recoding"> <option label="...">
 #: rkward/plugins/data/recode_categorical.xml:38
@@ -732,7 +732,7 @@ msgstr ""
 #: rkward/plugins/data/subset_dataframe.xml:70
 #, kde-format
 msgid "Select data"
-msgstr ""
+msgstr "აირჩიეთ მონაცემები"
 
 #. i18n: ectx: (Subset of data) <dialog label="Subset of data"> <varslot label="...">
 #: rkward/plugins/data/subset_dataframe.xml:72

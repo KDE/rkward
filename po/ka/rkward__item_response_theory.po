@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-07-29 00:42+0000\n"
-"PO-Revision-Date: 2022-09-22 07:15+0200\n"
+"PO-Revision-Date: 2022-12-14 18:10+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -64,7 +64,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/tests/ltm_unidimensional.js:23
 #, kde-format
 msgid "Call:"
-msgstr ""
+msgstr "ზარი:"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model)
 #. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model)
@@ -1841,7 +1841,7 @@ msgstr "საშუალო"
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:29
 #, kde-format
 msgid "Mean"
-msgstr ""
+msgstr "მნიშვნელობა"
 
 #. i18n: ectx: (Wald test) <dialog label="Wald test"> <tab label="Options"> <radio label="Split criterion for subject raw scores"> <option label="...">
 #: rkward/plugins/analysis/irt/tests/eRm_waldtest.xml:34
@@ -2427,7 +2427,7 @@ msgstr "ტესტი"
 #: rkward/plugins/irt.pluginmap:77
 #, kde-format
 msgid "Plots"
-msgstr ""
+msgstr "გრაფიკები"
 
 #. i18n: ectx: (Loaded from Plotting fitted 2PL model)
 #: rkward/plugins/plots/irt/dichotomous/plot_ltm.js:77
@@ -2795,7 +2795,7 @@ msgstr ""
 #: rkward/plugins/plots/irt/polytomous/plot_rsm.xml:39
 #, kde-format
 msgid "Show legend"
-msgstr ""
+msgstr "ახსნის ჩვენება"
 
 #. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Options"> <radio label="Annotation"> <option label="...">
 #. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="Options"> <radio label="Annotation"> <option label="...">

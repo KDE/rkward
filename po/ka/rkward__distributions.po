@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-05-06 00:41+0000\n"
-"PO-Revision-Date: 2022-09-22 07:30+0200\n"
+"PO-Revision-Date: 2022-12-14 18:07+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -519,7 +519,7 @@ msgstr ""
 #: rkward/plugins/distributions.pluginmap:136
 #, kde-format
 msgid "Exponential"
-msgstr ""
+msgstr "ექსპოტენციალური"
 
 #. i18n: ectx: <hierarchy> <menu label="Distributions"> <menu label="Univariate continuous distributions"> <menu label="...">
 #: rkward/plugins/distributions.pluginmap:141
@@ -573,7 +573,7 @@ msgstr "t"
 #: rkward/plugins/distributions.pluginmap:178
 #, kde-format
 msgid "Uniform"
-msgstr ""
+msgstr "ერთგვაროვანი"
 
 #. i18n: ectx: <hierarchy> <menu label="Distributions"> <menu label="Univariate continuous distributions"> <menu label="...">
 #: rkward/plugins/distributions.pluginmap:183
@@ -591,31 +591,31 @@ msgstr ""
 #: rkward/plugins/distributions.pluginmap:191
 #, kde-format
 msgid "Binomial"
-msgstr ""
+msgstr "ბინომური"
 
 #. i18n: ectx: <hierarchy> <menu label="Distributions"> <menu label="Univariate discrete distributions"> <menu label="...">
 #: rkward/plugins/distributions.pluginmap:196
 #, kde-format
 msgid "Geometric"
-msgstr ""
+msgstr "გეომეტრიული"
 
 #. i18n: ectx: <hierarchy> <menu label="Distributions"> <menu label="Univariate discrete distributions"> <menu label="...">
 #: rkward/plugins/distributions.pluginmap:201
 #, kde-format
 msgid "Hypergeometric"
-msgstr ""
+msgstr "ჰიპერგეომეტრიული"
 
 #. i18n: ectx: <hierarchy> <menu label="Distributions"> <menu label="Univariate discrete distributions"> <menu label="...">
 #: rkward/plugins/distributions.pluginmap:206
 #, kde-format
 msgid "Negative Binomial"
-msgstr ""
+msgstr "უარყოფითი ბინომური"
 
 #. i18n: ectx: <hierarchy> <menu label="Distributions"> <menu label="Univariate discrete distributions"> <menu label="...">
 #: rkward/plugins/distributions.pluginmap:211
 #, kde-format
 msgid "Poisson"
-msgstr ""
+msgstr "პუასონი"
 
 #. i18n: ectx: <hierarchy> <menu label="Distributions"> <menu label="Univariate discrete distributions"> <menu label="...">
 #: rkward/plugins/distributions.pluginmap:216
@@ -742,7 +742,7 @@ msgstr ""
 #: rkward/plugins/distributions/binomial.xml:14
 #, kde-format
 msgid "Probability of success"
-msgstr ""
+msgstr "წარმატების ალბათობა"
 
 #. i18n: ectx: (Binomial probabilities, quantiles, densities) <dialog label="...">
 #: rkward/plugins/distributions/binomial.xml:18
@@ -844,7 +844,7 @@ msgstr ""
 #: rkward/plugins/distributions/plot_t_distribution.xml:18
 #, kde-format
 msgid "Degrees of freedom"
-msgstr ""
+msgstr "თავისუფლების ხარისხი"
 
 #. i18n: ectx: (Chi-squared distribution calculator) <snippets> <snippet> <spinbox label="...">
 #. i18n: ectx: (t distribution calculator) <snippets> <snippet> <spinbox label="...">
@@ -947,7 +947,7 @@ msgstr ""
 #, kde-format
 msgctxt "Distribution name"
 msgid "Binomial"
-msgstr ""
+msgstr "ბინომური"
 
 #. i18n: ectx: (Central Limit Theorem: Binomial to Normal) <dialog label="...">
 #: rkward/plugins/distributions/clt/plot_binomial_clt.xml:19
@@ -974,7 +974,7 @@ msgstr ""
 #, kde-format
 msgctxt "Distribution name"
 msgid "Chi-Squared"
-msgstr ""
+msgstr "ხი-კვადრატი"
 
 #. i18n: ectx: (Central Limit Theorem: Chi squared to Normal) <dialog label="...">
 #: rkward/plugins/distributions/clt/plot_chi_squared_clt.xml:19
@@ -2082,7 +2082,7 @@ msgstr "სიხშირე"
 #, kde-format
 msgctxt "Distribution name"
 msgid "Exponential"
-msgstr ""
+msgstr "ექსპოტენციალური"
 
 #. i18n: ectx: (Central Limit Theorem: Exponential to Normal) <dialog label="...">
 #: rkward/plugins/distributions/clt/plot_exponential_clt.xml:18
@@ -2208,7 +2208,7 @@ msgstr ""
 #, kde-format
 msgctxt "Distribution name"
 msgid "Geometric"
-msgstr ""
+msgstr "გეომეტრიული"
 
 #. i18n: ectx: (Central Limit Theorem: Geometric to Normal) <dialog label="...">
 #: rkward/plugins/distributions/clt/plot_geometric_clt.xml:18
@@ -2259,7 +2259,7 @@ msgstr ""
 #, kde-format
 msgctxt "Distribution name"
 msgid "Hypergeometric"
-msgstr ""
+msgstr "ჰიპერგეომეტრიული"
 
 #. i18n: ectx: (Central Limit Theorem: Hypergeometric to Normal) <dialog label="...">
 #: rkward/plugins/distributions/clt/plot_hypergeometric_clt.xml:20
@@ -2322,7 +2322,7 @@ msgstr ""
 #: rkward/plugins/distributions/plot_poisson_distribution.xml:18
 #, kde-format
 msgid "Mean"
-msgstr ""
+msgstr "მნიშვნელობა"
 
 #. i18n: ectx: (Plot Lognormal probabilities) <snippets> <snippet> <frame label="Parameters (on log scale)"> <spinbox label="...">
 #. i18n: ectx: (Plot Normal probabilities) <snippets> <snippet> <frame label="Parameters"> <spinbox label="...">
@@ -2412,7 +2412,7 @@ msgstr ""
 #, kde-format
 msgctxt "Distribution name"
 msgid "Negative Binomial"
-msgstr ""
+msgstr "უარყოფითი ბინომური"
 
 #. i18n: ectx: (Central Limit Theorem: Negative Binomial to Normal) <dialog label="...">
 #: rkward/plugins/distributions/clt/plot_negbinomial_clt.xml:38
@@ -2466,7 +2466,7 @@ msgstr ""
 #, kde-format
 msgctxt "Distribution name"
 msgid "Poisson"
-msgstr ""
+msgstr "პუასონი"
 
 #. i18n: ectx: (Central Limit Theorem: Poisson to Normal) <dialog label="...">
 #: rkward/plugins/distributions/clt/plot_poisson_clt.xml:18
@@ -2537,7 +2537,7 @@ msgstr "მაქსიმუმი"
 #, kde-format
 msgctxt "Distribution name"
 msgid "Uniform"
-msgstr ""
+msgstr "ერთგვაროვანი"
 
 #. i18n: ectx: (Central Limit Theorem: Uniform to Normal) <dialog label="...">
 #: rkward/plugins/distributions/clt/plot_uniform_clt.xml:19
@@ -3791,7 +3791,7 @@ msgstr ""
 #, kde-format
 msgctxt "Binomial distribution"
 msgid "Binomial"
-msgstr ""
+msgstr "ბინომური"
 
 #. i18n: ectx: (Loaded from Plot binomial probabilities) <summary>
 #: rkward/plugins/distributions/plot_binomial_distribution.rkh:7
@@ -4569,7 +4569,7 @@ msgstr ""
 #, kde-format
 msgctxt "Exponential distribution"
 msgid "Exponential"
-msgstr ""
+msgstr "ექსპოტენციალური"
 
 #. i18n: ectx: (Loaded from Plot Exponential probabilities) <summary>
 #: rkward/plugins/distributions/plot_exponential_distribution.rkh:7
@@ -4651,7 +4651,7 @@ msgstr ""
 #, kde-format
 msgctxt "Geometric distribution"
 msgid "Geometric"
-msgstr ""
+msgstr "გეომეტრიული"
 
 #. i18n: ectx: (Loaded from Plot geometric probabilities) <summary>
 #: rkward/plugins/distributions/plot_geometric_distribution.rkh:7
@@ -4676,7 +4676,7 @@ msgstr ""
 #, kde-format
 msgctxt "Hypergeometric distribution"
 msgid "Hypergeometric"
-msgstr ""
+msgstr "ჰიპერგეომეტრიული"
 
 #. i18n: ectx: (Loaded from Plot hypergeometric probabilities) <summary>
 #: rkward/plugins/distributions/plot_hypergeometric_distribution.rkh:7
@@ -4772,7 +4772,7 @@ msgstr ""
 #, kde-format
 msgctxt "Negative Binomial distribution"
 msgid "Negative Binomial"
-msgstr ""
+msgstr "უარყოფითი ბინომური"
 
 #. i18n: ectx: (Loaded from Plot negative binomial probabilities) <summary>
 #: rkward/plugins/distributions/plot_negbinomial_distribution.rkh:7
@@ -4866,7 +4866,7 @@ msgstr ""
 #, kde-format
 msgctxt "Poisson distribution"
 msgid "Poisson"
-msgstr ""
+msgstr "პუასონი"
 
 #. i18n: ectx: (Loaded from Plot Poisson probabilities) <summary>
 #: rkward/plugins/distributions/plot_poisson_distribution.rkh:7
@@ -4981,7 +4981,7 @@ msgstr ""
 #, kde-format
 msgctxt "Uniform distribution"
 msgid "Uniform"
-msgstr ""
+msgstr "ერთგვაროვანი"
 
 #. i18n: ectx: (Loaded from Plot Uniform probabilities) <summary>
 #: rkward/plugins/distributions/plot_uniform_distribution.rkh:7

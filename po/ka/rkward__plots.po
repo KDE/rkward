@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-04-11 00:40+0000\n"
-"PO-Revision-Date: 2022-09-22 07:13+0200\n"
+"PO-Revision-Date: 2022-12-14 18:10+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -33,7 +33,7 @@ msgstr "Temuri.doghonadze@gmail.com"
 #: rkward/plugins/plots.pluginmap:5 rkward/plugins/plots.pluginmap:35
 #, kde-format
 msgid "Plots"
-msgstr ""
+msgstr "გრაფიკები"
 
 #. i18n: ectx: <about shortinfo="...">
 #: rkward/plugins/plots.pluginmap:5
@@ -818,13 +818,13 @@ msgstr ""
 #: rkward/plugins/plots/box_plot.xml:86
 #, kde-format
 msgid "Arithmetic mean"
-msgstr ""
+msgstr "საშუალო არითმეტიკული"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> [...] <radio label="Type of mean"> <option label="...">
 #: rkward/plugins/plots/box_plot.xml:87
 #, kde-format
 msgid "Geometric mean"
-msgstr ""
+msgstr "საშუალო გეომეტრიული"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> [...] <radio label="Type of mean"> <option label="...">
 #: rkward/plugins/plots/box_plot.xml:88
@@ -1083,7 +1083,7 @@ msgstr ""
 #: rkward/plugins/plots/density_plot.xml:56
 #, kde-format
 msgid "cosine"
-msgstr ""
+msgstr "კოსინუსი"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Smoothing Kernel"> <option label="...">
 #: rkward/plugins/plots/density_plot.xml:57
@@ -1543,7 +1543,7 @@ msgstr "საერთო პარამეტრები"
 #: rkward/plugins/plots/histogram.xml:49
 #, kde-format
 msgid "resolution"
-msgstr ""
+msgstr "გარჩევადობა"
 
 #. i18n: ectx: (Histogram) <dialog label="Histogram"> <tab label="Density"> <frame label="...">
 #: rkward/plugins/plots/histogram.xml:51
@@ -2291,4 +2291,4 @@ msgstr "ვერტიკალური"
 #, kde-format
 msgctxt "Author name"
 msgid "RKWard Team"
-msgstr ""
+msgstr "RKWard -ის გუნდი"

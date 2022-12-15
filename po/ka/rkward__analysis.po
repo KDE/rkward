@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-06-04 00:41+0000\n"
-"PO-Revision-Date: 2022-09-22 07:32+0200\n"
+"PO-Revision-Date: 2022-12-14 18:07+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -592,7 +592,7 @@ msgstr "ორმხრივი"
 #: rkward/plugins/analysis/variances/F_test.xml:16
 #, kde-format
 msgid "greater"
-msgstr ""
+msgstr "მეტი"
 
 #. i18n: ectx: (Bonett-Seier test of Geary's kurtosis) <dialog label="Bonett-Seier test of Geary's kurtosis"> <tab label="Basic settings"> <radio label="Test hypothesis (H1)"> <option label="...">
 #. i18n: ectx: (D'Agostino test of skewness) <dialog label="D'Agostino test of skewness"> <tab label="Basic settings"> <radio label="Test hypothesis (H1)"> <option label="...">
@@ -610,7 +610,7 @@ msgstr ""
 #: rkward/plugins/analysis/variances/F_test.xml:17
 #, kde-format
 msgid "less"
-msgstr ""
+msgstr "ნაკლები"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="...">
 #. i18n: ectx: (Correlation matrix) <dialog label="Correlation matrix"> <tab label="...">
@@ -1177,7 +1177,7 @@ msgstr ""
 #, kde-format
 msgctxt "dependent variable"
 msgid "Dependent"
-msgstr ""
+msgstr "დამოკიდებული"
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation)
 #: rkward/plugins/analysis/crosstab.js:106
@@ -1312,7 +1312,7 @@ msgstr ""
 #: rkward/plugins/analysis/crosstab.xml:19
 #, kde-format
 msgid "Dependent"
-msgstr ""
+msgstr "დამოკიდებული"
 
 #. i18n: ectx: (N to 1 Crosstabulation) <dialog label="N to 1 Crosstabulation"> <tab label="Variables"> <varslot label="...">
 #: rkward/plugins/analysis/crosstab.xml:20
@@ -1764,7 +1764,7 @@ msgstr ""
 #: rkward/plugins/analysis/moments/skewness_kurtosis_test.xml:24
 #, kde-format
 msgid "Skewness"
-msgstr ""
+msgstr "სიმრუდე"
 
 #. i18n: ectx: (Loaded from Skewness and Kurtosis)
 #. i18n: ectx: (Skewness and Kurtosis) <dialog label="Skewness and Kurtosis"> <tab label="Options"> <frame label="...">
@@ -1774,7 +1774,7 @@ msgstr ""
 #: rkward/plugins/analysis/moments/skewness_kurtosis_test.xml:27
 #, kde-format
 msgid "Kurtosis"
-msgstr ""
+msgstr "ექსცესი"
 
 #. i18n: ectx: (Loaded from Skewness and Kurtosis)
 #: rkward/plugins/analysis/moments/skewness_kurtosis_test.js:13
@@ -1892,7 +1892,7 @@ msgstr ""
 #: rkward/plugins/uni1.2/code.js:31 rkward/plugins/uni1.2/description.xml:48
 #, kde-format
 msgid "Variance"
-msgstr ""
+msgstr "ცვალებადობა"
 
 #. i18n: ectx: (Loaded from Chi-squared test for outlier)
 #. i18n: ectx: (Chi-squared test for outlier) <dialog label="...">
@@ -2476,7 +2476,7 @@ msgstr "Michalke"
 #, kde-format
 msgctxt "Author name"
 msgid "Thomas"
-msgstr ""
+msgstr "თომასი"
 
 #. i18n: ectx: (Power analysis) <about> <author family="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:11
@@ -2718,7 +2718,7 @@ msgstr "კვება"
 #: rkward/plugins/analysis/power/Poweranalysis.xml:162
 #, kde-format
 msgid "Degrees of freedom"
-msgstr ""
+msgstr "თავისუფლების ხარისხი"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <spinbox label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:163
@@ -3588,7 +3588,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/hp_filter.xml:90
 #, kde-format
 msgid "default"
-msgstr ""
+msgstr "ნაგულისხმევი"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <dropdown label="Line type"> <option label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:63
@@ -4182,7 +4182,7 @@ msgstr ""
 #: rkward/plugins/descriptive/descriptive_statistics.js:25
 #, kde-format
 msgid "mean"
-msgstr ""
+msgstr "მიშვნელობა"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #. i18n: ectx: (Loaded from Descriptive Statistics)
@@ -4224,7 +4224,7 @@ msgstr "წთ"
 #: rkward/plugins/descriptive/descriptive_statistics.js:46
 #, kde-format
 msgid "max"
-msgstr ""
+msgstr "მაქსიმუმი"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:50
@@ -4237,7 +4237,7 @@ msgstr ""
 #, kde-format
 msgctxt "noun"
 msgid "sum"
-msgstr ""
+msgstr "ჯამი"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:56
@@ -4436,7 +4436,7 @@ msgstr ""
 #: rkward/plugins/uni1.2/description.xml:111
 #, kde-format
 msgid "Mean"
-msgstr ""
+msgstr "მნიშვნელობა"
 
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Mean Standard Deviation"> <spinbox label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:26
@@ -4450,7 +4450,7 @@ msgstr ""
 #: rkward/plugins/uni1.2/description.xml:43
 #, kde-format
 msgid "Geometric mean"
-msgstr ""
+msgstr "საშუალო გეომეტრიული"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="Moments"> <checkbox label="...">
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Mean Standard Deviation"> <checkbox label="...">
@@ -4553,7 +4553,7 @@ msgstr "დიაპაზონი"
 #: rkward/plugins/descriptive/descriptive_statistics.xml:59
 #, kde-format
 msgid "sum"
-msgstr ""
+msgstr "ჯამი"
 
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Range, Sum, Product and Length"> <checkbox label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:60
@@ -4899,7 +4899,7 @@ msgstr ""
 #: rkward/plugins/uni1.2/description.xml:64
 #, kde-format
 msgid "Quantile"
-msgstr ""
+msgstr "კვანტილი"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="Quantile"> <checkbox label="...">
 #: rkward/plugins/uni1.2/description.xml:67
