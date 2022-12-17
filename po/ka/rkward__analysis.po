@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-06-04 00:41+0000\n"
-"PO-Revision-Date: 2022-12-14 18:07+0100\n"
+"PO-Revision-Date: 2022-12-16 06:43+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -281,7 +281,7 @@ msgstr ""
 #, kde-format
 msgctxt "Statistics"
 msgid "Moments"
-msgstr ""
+msgstr "მომენტები"
 
 #. i18n: ectx: <hierarchy> <menu label="Analysis"> <menu label="...">
 #: rkward/plugins/analysis.pluginmap:92
@@ -329,7 +329,7 @@ msgstr ""
 #: rkward/plugins/analysis/ansari_bradley/ansari_bradley_exact_test.js:31
 #, kde-format
 msgid "H1"
-msgstr ""
+msgstr "H1"
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test)
 #. i18n: ectx: (Loaded from Ansari-Bradley two-sample test)
@@ -339,7 +339,7 @@ msgstr ""
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.js:85
 #, kde-format
 msgid "Variable Names"
-msgstr ""
+msgstr "ცვლადის სახელები"
 
 #. i18n: ectx: (Loaded from Ansari-Bradley two-sample test)
 #. i18n: ectx: (Loaded from Ansari-Bradley two-sample exact test)
@@ -837,7 +837,7 @@ msgstr ""
 #: rkward/plugins/analysis/corr_matrix.js:126
 #, kde-format
 msgid "Coefficient"
-msgstr ""
+msgstr "კოეფიციენტი"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis/corr_matrix.js:129
@@ -1318,7 +1318,7 @@ msgstr "დამოკიდებული"
 #: rkward/plugins/analysis/crosstab.xml:20
 #, kde-format
 msgid "Independent"
-msgstr ""
+msgstr "დამოუკიდებელი"
 
 #. i18n: ectx: (N to 1 Crosstabulation) <dialog label="N to 1 Crosstabulation"> <tab label="Variables"> <checkbox label="...">
 #: rkward/plugins/analysis/crosstab.xml:21
@@ -1378,7 +1378,7 @@ msgstr ""
 #: rkward/plugins/analysis/crosstab.xml:37
 #, kde-format
 msgid "Asymptotic"
-msgstr ""
+msgstr "ასიმპტოტური"
 
 #. i18n: ectx: (N to 1 Crosstabulation) <dialog label="N to 1 Crosstabulation"> <tab label="Chisquare Options"> <radio label="Method of computing p-value"> <option label="...">
 #: rkward/plugins/analysis/crosstab.xml:38
@@ -1664,7 +1664,7 @@ msgstr ""
 #, kde-format
 msgctxt "Statistical moment"
 msgid "Moment"
-msgstr ""
+msgstr "მომენტი"
 
 #. i18n: ectx: (Loaded from sample moment)
 #: rkward/plugins/analysis/moments/moment.js:9
@@ -1835,7 +1835,7 @@ msgstr ""
 #: rkward/plugins/analysis/moments/skewness_kurtosis_test.xml:7
 #, kde-format
 msgid "Select Variables"
-msgstr ""
+msgstr "აირჩიეთ ცვლადები"
 
 #. i18n: ectx: (Skewness and Kurtosis) <dialog label="Skewness and Kurtosis"> <tab label="Options"> <frame label="...">
 #. i18n: ectx: (Skewness and Kurtosis) <dialog label="Skewness and Kurtosis"> <tab label="Options"> <frame label="Geary's kurtosis"> <checkbox label="...">
