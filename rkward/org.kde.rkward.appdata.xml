@@ -60,6 +60,7 @@
     <p xml:lang="gl">RKWard pretende converterse nunha interface para R fácil de usar e transparente, un potente sistema de computación estatística e gráficas. Ademais de fornecer unha interface gráfica cómoda para as funcións estatísticas máis importantes, versión futuras fornecerán integración transparente cunha suite de ofimática.</p>
     <p xml:lang="id">RKWard ditujukan untuk menjadi yang mudah digunakan, frontend transparan untuk R, sebuah sistem yang unggul untuk grafik dan komputasi statistik. Selain GUI yang nyaman untuk beberapa fungsi statistik yang penting, versi masa depan juga akan menyediakan integrasi yang sama dengan office suite.</p>
     <p xml:lang="it">RKWard mira a diventare un'interfaccia trasparente per R, facile da usare, un potente sistema per il calcolo statistico e la grafica. Oltre a una comoda interfaccia per le funzioni statistiche più importanti, le versioni future forniranno anche una perfetta integrazione con una suite per ufficio.</p>
+    <p xml:lang="ka">RKWard -ი მიზნად ისახავს გახდეს მარტივი, გამჭვირვალე წინაბოლო R-ისთვის, მძლავრი ხელსაწყოსთვის სტატისტიკური გამოთვლებისა და გრაფიკებისთვის. გარდა მოსახერხებელი GUI-ისა, მომავალ ვერსიებს საოფისე პროგრამებთან პირდაპირი ინტეგრაციაც ექნება.</p>
     <p xml:lang="ko">RKWard는 강력한 통계 계산 및 그래픽 시스템인 R의 사용하기 쉽고 투명한 프론트엔드입니다. 가장 중요한 편리한 통계 기능 GUI 외에도 이후 버전은 사무용 도구와 완벽하게 통합됩니다.</p>
     <p xml:lang="nl">Het doel van RKWard is een gemakkelijk te gebruiken, transparante frontend naar R, een krachtig systeem voor statistische berekeningen en grafieken te worden. En ernaast een gemakkelijke GUI voor de meest belangrijke statistische functies, toekomstige versies zullen ook naadloze integratie bieden met een kantoor-suite.</p>
     <p xml:lang="pl">RKWard dąży do tego, aby stać się łatwą w użyciu i przejrzystą nakładką na R, zaawansowany system do obliczeń statystycznych i obrazowania. Poza wygodnym interfejsem użytkownika dla większości z ważnych funkcji, przyszłe wydania dostarczą także integrację z pakietem biurowym.</p>
@@ -145,6 +146,7 @@
       <caption xml:lang="fr">Recherche d'objets par nom, de pages d'aide ou recherche dans l'afficheur d'aide intégré.</caption>
       <caption xml:lang="id">Pencarian objek berdasarkan nama, pencarian untuk halaman bantuan, dan penampil bantuan dalam-apl</caption>
       <caption xml:lang="it">Ricerca di oggetti in base al nome, ricerca di pagine di aiuto e visualizzatore di aiuto all'interno dell'applicazione</caption>
+      <caption xml:lang="ka">ობექტის სახელით ძებნა. ვეძებ დახმარების გვერდებს და აპში დახმარების მნახველს</caption>
       <caption xml:lang="ko">이름으로 객체 검색, 도움말 페이지 검색 및 프로그램 내장 도움말 뷰어</caption>
       <caption xml:lang="nl">Objecten zoeken op naam, zoeken naar helppagina's, en in-app helpviewer.</caption>
       <caption xml:lang="pl">Wyszukiwanie obiektów po nazwie, wyszukiwanie na stronach pomocy i wbudowana przeglądarka pomocy w aplikacji</caption>
