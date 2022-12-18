@@ -770,7 +770,7 @@ msgid ""
 "order together with the date of creation."
 msgstr ""
 "Suposem que heu produït una eixida de text de les proves que heu portat a "
-"terme. Esta es mostrarà a la «finestra d'eixida» de RKWard. És fàcil "
+"terme. Esta es mostrarà en la «finestra d'eixida» de RKWard. És fàcil "
 "mantindre un registre de la vostra faena, ja que l'estàndard de RKWard és "
 "mostrar-ho tot en ordre cronològic conjuntament amb la data de la creació."
 

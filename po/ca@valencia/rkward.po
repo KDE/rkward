@@ -5642,7 +5642,7 @@ msgstr "JPG"
 #: rkward/settings/rksettingsmoduleoutput.cpp:151
 #, kde-format
 msgid "JPG quality"
-msgstr "Qualitat del JPG"
+msgstr "Qualitat de JPG"
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:158
 #, kde-format
@@ -6365,7 +6365,7 @@ msgid ""
 "Preview any output to the RKWard Output Window. This preview will be empty, "
 "if there is no call to <i>rk.print()</i> or other RKWard output commands."
 msgstr ""
-"Previsualitza qualsevol eixida en la finestra d'eixida de RKWard. Esta vista "
+"Previsualitza qualsevol eixida a la finestra d'eixida de RKWard. Esta vista "
 "prèvia estarà buida, si no hi ha cap crida a la <i>rk.print()</i> o altres "
 "ordres d'eixida de RKWard."
 
@@ -7026,7 +7026,7 @@ msgstr "Mostra / alça la finestra de busca d'ajuda d'R"
 msgid ""
 "Show the RKWard dashboard with links to important settings and documentation"
 msgstr ""
-"Mostra el tauler de RKWard amb enllaços a opcions importants i a la "
+"Mostra el tauler de RKWard amb enllaços cap a opcions importants i cap a la "
 "documentació"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:75

@@ -1106,7 +1106,7 @@ msgstr "Color"
 #: rkward/plugins/distributions/../plots/plot_options.xml:146
 #, kde-format
 msgid "default"
-msgstr "per defecte"
+msgstr "predeterminat"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:20
@@ -2572,7 +2572,7 @@ msgstr "Subtítol"
 #, kde-format
 msgid "Sub-title (at bottom). Leave empty for default title"
 msgstr ""
-"Subtítol (a la part inferior). Deixeu-ho en blanc per al títol predeterminat"
+"Subtítol (en la part inferior). Deixeu-ho en blanc per al títol predeterminat"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:85
@@ -2871,7 +2871,7 @@ msgid ""
 "constructing <b>ecdf</b> plots."
 msgstr ""
 "Se suposa que s'ha d'utilitzar com a un connector incrustat. Tots els "
-"elements són arguments a la funció plot.stepfun. Este connector és útil per "
+"elements són arguments en la funció plot.stepfun. Este connector és útil per "
 "a construir diagrames <b>ecdf</b>."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Add to current plot")

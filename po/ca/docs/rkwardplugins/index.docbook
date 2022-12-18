@@ -1033,7 +1033,7 @@ as Authors, publish date, the abstract, and Keywords -->
 >getString()</function
 >, <function
 >getBoolean()</function
->i <function
+> i <function
 >getList()</function
 > és la pràctica recomanada des de la versió 0.6.1. </para>
 		</note>
@@ -1332,7 +1332,7 @@ Descripció de l'element de la IGU identificat per "id_of_elementc"
         &lt;/settings&gt;
 
         &lt;related&gt;
-La secció relacionats normalment conté diversos enllaços, cop ara:
+La secció de relacions normalment conté diversos enllaços, com ara:
 
 &lt;ul&gt;
         &lt;li&gt;&lt;link href="rkward://rhelp/mean"/&gt;&lt;/li&gt;
@@ -1346,7 +1346,8 @@ La secció tècnica (opcional, sempre l'última) pot contenir alguns detalls tè
 que només són d'interès per als desenvolupadors del RKWard. Això és particularment rellevant
 per als connectors que estan dissenyats per ser incrustats en molts altres connectors,
 i podria detallar quines opcions estan disponibles per personalitzar el connector incrustat,
-i quines seccions de codi contenen quin codi R.        &lt;/technical&gt;
+i quines seccions de codi contenen quin codi R.
+        &lt;/technical&gt;
 &lt;/document&gt;
         </programlisting>
 </chapter>
@@ -1384,7 +1385,7 @@ i quines seccions de codi contenen quin codi R.        &lt;/technical&gt;
 &lt;/document&gt;
         </programlisting>
 	<para
->Fins ara està bé, però hi ha una sèrie de problemes amb aquesta &IGU;. En primer lloc, sempre es mostren tant el «varslot» com el «spinbox», mentre que realment només s'utilitza un dels dos. Pitjor encara, el «varslot» sempre requereix una selecció vàlida, fins i tot si es compara amb una constant. Òbviament, si creem una &IGU; multiusos com aquesta, volem més flexibilitat. Introduïu: la secció <command
+>Fins ara està bé, però hi ha una sèrie de problemes amb aquesta &IGU;. En primer lloc, sempre es mostren tant el «varslot» com el «spinbox», mentre que realment només s'utilitza un dels dos. Pitjor encara, el «varslot» sempre requereix una selecció vàlida, fins i tot si es compara amb una constant. Òbviament, si creem una &IGU; multiús com aquesta, volem més flexibilitat. Introduïu: la secció <command
 >&lt;logic&gt;</command
 > (inserida al mateix nivell que <command
 >&lt;code&gt;</command
@@ -1450,7 +1451,7 @@ i quines seccions de codi contenen quin codi R.        &lt;/technical&gt;
 >standard=</parameter
 ><replaceable
 >"variable"</replaceable
->, es comprova si la propietat<replaceable
+>, es comprova si la propietat <replaceable
 >"mode.string"</replaceable
 > és igual que la cadena <replaceable
 >"variable"</replaceable
@@ -1794,7 +1795,7 @@ i quines seccions de codi contenen quin codi R.        &lt;/technical&gt;
 </sect1>
 <sect1 id="include_js">
 <title
->Ús de la sentencia «include» del JS</title>
+>Ús de la sentència «include» del JS</title>
 	<para
 >Podeu incloure fàcilment un fitxer de script en un altre en els connectors del &rkward;. El valor d'això esdevé immediatament obvi si algunes seccions del codi JS són similars entre els connectors. Podeu definir aquestes seccions en un fitxer <literal role="extension"
 >.js</literal
@@ -1933,7 +1934,7 @@ function getSpecifics () {
 >&lt;insert&gt;</command
 > en qualsevol lloc/s que desitgeu. </para>
 	<para
->Si bé aquest exemple no és massa útil en si mateix, penseu en combinar-lo amb un fitxer <command
+>Si bé aquest exemple no és massa útil en si mateix, penseu a combinar-lo amb un fitxer <command
 >&lt;include&gt;</command
 > <literal role="extension"
 >.xml</literal
@@ -2465,7 +2466,7 @@ function getSpecifics () {
                 </programlisting>
 		<para
 >A la <link linkend="logic"
->secció lògica del xml del connector</link
+>secció lògica de l'XML del connector</link
 >, ara podeu declarar dues propietats <command
 >&lt;external&gt;</command
 >: <parameter
@@ -2730,9 +2731,9 @@ function getSpecifics () {
 >getList("set.firstname")</function
 >, <function
 >getList("set.lastnames")</function
->pels cognoms, i <function
+> pels cognoms, i <function
 >getList("set.gender")</function
->per a una matriu de cadenes "m"/"f". </para>
+> per a una matriu de cadenes "m"/"f". </para>
 	<para
 >Tingueu en compte que no hi ha restriccions sobre el que podeu col·locar dins d'un <command
 >&lt;optionset&gt;</command
@@ -2769,7 +2770,7 @@ function getSpecifics () {
 >&lt;optionset&gt;</command
 >. En aquest cas, els <parameter
 >id</parameter
-> s'adreçaran en relació a la regió de continguts, &pex;, "firstname.XYZ". Només l'element <command
+> s'adreçaran en relació amb la regió de continguts, &pex;, "firstname.XYZ". Només l'element <command
 >&lt;script&gt;</command
 > no està permès a la secció lògica d'un «optionset». Si voleu utilitzar la creació de scripts, haureu d'utilitzar la secció principal <command
 >&lt;logic&gt;</command
@@ -2894,7 +2895,7 @@ function getSpecifics () {
 >Gestió de dependències i problemes de compatibilitat</title>
 <sect1 id="sect_dependencies_rkward_version"
 ><title
->Compatibilitat de la versió de l'&rkward;</title>
+>Compatibilitat de la versió del &rkward;</title>
 	<para
 >Fem tot el possible per assegurar-nos que els connectors desenvolupats per a una versió antiga del &rkward; romandran funcionals en versions posteriors del &rkward;. No obstant això, el contrari no sempre és cert, ja que s'han afegit característiques noves. Com que no tots els usuaris estan executant l'última versió del &rkward;, això vol dir que el vostre connector podria no funcionar per a tothom.</para>
 	<para
@@ -3208,7 +3209,7 @@ user (selection from a list of values shown next to this element) --&gt;
 >.xml</literal
 >, fer que els fitxers <literal role="extension"
 >.js</literal
-> d'un connector siguin traduïbles requereix més feina personalitzada. La diferència clau, aquí, és que no hi ha cap manera decent automàtica de saber, si una cadena està pensada per a ser mostrada com una cadena llegible per humans, o un tros de codi. Així que hau de marcar-ho vós mateix. Ja hem donat exemples d'això, tot el temps. Aquí hi ha una descripció més completa de les funcions i18n disponibles en el codi js, i alguns consells per a casos més complexos: </para>
+> d'un connector siguin traduïbles requereix més feina personalitzada. La diferència clau, aquí, és que no hi ha cap manera decent automàtica de saber, si una cadena està pensada per a ser mostrada com una cadena llegible per humans, o un tros de codi. Així que heu de marcar-ho vós mateix. Ja hem donat exemples d'això, tot el temps. Aquí hi ha una descripció més completa de les funcions i18n disponibles en el codi js, i alguns consells per a casos més complexos: </para>
 <variablelist>
 <varlistentry>
 	<term
@@ -3346,7 +3347,7 @@ user (selection from a list of values shown next to this element) --&gt;
 ><para
 >El traductor obre el fitxer en una eina de traducció com el <command
 >lokalize</command
->. En realitat, encara que no aneu a preparar cap traducció, cal provar aquest pas per vós mateix. Navegueu per les cadenes extretes buscant problemes/ambigüitats.</para
+>. En realitat, encara que no prepareu cap traducció, cal provar aquest pas per vós mateix. Navegueu per les cadenes extretes buscant problemes/ambigüitats.</para
 ></listitem>
 			<listitem
 ><para
@@ -3384,9 +3385,9 @@ user (selection from a list of values shown next to this element) --&gt;
 >/LC_MESSAGES/rkward__<replaceable
 >POID</replaceable
 >.mo</command
-> (on<replaceable
+> (on <replaceable
 >xx</replaceable
->és el codi de llengua, de nou).</para
+> és el codi de llengua, de nou).</para
 ></listitem>
 			<listitem
 ><para
@@ -3420,7 +3421,7 @@ user (selection from a list of values shown next to this element) --&gt;
 ><para
 >Molts connectors del &rkward; es refereixen a termes altament especialitzats,des de la gestió de dades i estadístiques, però també d'altres camps de la ciència. En molts casos, una bona traducció requerirà almenys un coneixement bàsic d'aquests camps. En alguns casos, no <emphasis
 >hi ha</emphasis
-> una traducció bona per a un terme tècnic, i la millor opció pot ser deixar el terme sense traduir, o incloure el terme anglès entre parèntesis. No us centreu massa en arribar al 100% de les cadenes traduïdes, centreu-vos a proporcionar una bona traducció, fins i tot si això significa ometre algunes cadenes (o fins i tot ometre alguns catàlegs de missatges en el seu conjunt). Altres usuaris poden omplir qualsevol buit en els termes tècnics.</para
+> una traducció bona per a un terme tècnic, i la millor opció pot ser deixar el terme sense traduir, o incloure el terme anglès entre parèntesis. No us centreu massa a arribar al 100% de les cadenes traduïdes, centreu-vos a proporcionar una bona traducció, fins i tot si això significa ometre algunes cadenes (o fins i tot ometre alguns catàlegs de missatges en el seu conjunt). Altres usuaris poden omplir qualsevol buit en els termes tècnics.</para
 ></listitem>
 		</itemizedlist>
 	</sect1>
@@ -3519,7 +3520,7 @@ user (selection from a list of values shown next to this element) --&gt;
 >&lt;insert&gt;</command
 > per repetir informació a través de diversos fitxers <literal role="extension"
 >.xml</literal
-> (&pex;, informació sobre un autor que estava implicat amb diversos connectors). <link linkend="sect_similar_plugins"
+> (&pex;, informació sobre un autor que estava implicat en diversos connectors). <link linkend="sect_similar_plugins"
 >Més informació</link
 >.</para
 ></note>
@@ -3562,9 +3563,9 @@ user (selection from a list of values shown next to this element) --&gt;
 </sect1>
 <sect1 id="why_external_plugins">
 <title
->Perquè connectors externs?</title>
+>Per què connectors externs?</title>
 	<para
->El nombre de paquets per estendre la funcionalitat de l'&R; ja és immens, i està pujant. D'una banda, volem animar-vos a escriure connectors fins i tot per a les tasques més especialitzades que necessiteu resoldre. D'altra banda, l'usuari mitjà no hauria de perdre's en grans arbres de menús plens de termes estadístics desconeguts. Per tant, també semblava raonable mantenir la gestió dels connectors en el &rkward; bastant modular. L'equip del &rkward; manté el seu propi repositori de paquets públics a <ulink url="https://files.kde.org/rkward/R/"
+>El nombre de paquets per estendre la funcionalitat de l'&R; ja és immens, i està pujant. D'una banda, volem animar-vos a escriure connectors fins i tot per a les tasques més especialitzades que necessiteu resoldre. D'altra banda, l'usuari mitjà no hauria de perdre's en grans arbres de menús plens de termes estadístics desconeguts. Per tant, també semblava raonable mantenir la gestió dels connectors en el &rkward; bastant modular. L'equip del &rkward; manté el seu repositori propi de paquets públics a <ulink url="https://files.kde.org/rkward/R/"
 >https://files.kde.org/rkward/R/</ulink
 >, designat per allotjar els vostres connectors externs. </para>
 	<para
@@ -3621,7 +3622,7 @@ user (selection from a list of values shown next to this element) --&gt;
 >testsuite_name</token
 > i <token
 >sometest_name</token
-> s'han de substituir per els seus noms correctes, d'acord amb això. A més, <token
+> s'han de substituir pels seus noms correctes, d'acord amb això. A més, <token
 >ll</token
 > és un marcador de posició per a una abreviatura de l'idioma (&pex;, <quote
 >de</quote
@@ -3762,7 +3763,7 @@ user (selection from a list of values shown next to this element) --&gt;
 		<title
 >Construcció del paquet del connector</title>
 		<para
->Com s'ha explicat anteriorment, els connectors externs del &rkward; són, en efecte, paquets &R;, i per tant el procés d'empaquetatge és idèntic. En contrast amb els paquets &R; «reals», un paquet de connector pur no porta cap codi &R; addicional (tot i que per descomptat podeu afegir connectors del &rkward; als paquets &R; habituals, utilitzant els mateixos mètodes que s'expliquen aquí). Això hauria de fer encara més fàcil crear un paquet operatiu, sempre que tingueu un fitxer <filename
+>Com s'ha explicat anteriorment, els connectors externs del &rkward; són, en efecte, paquets &R;, i per tant, el procés d'empaquetatge és idèntic. En contrast amb els paquets &R; «reals», un paquet de connector pur no porta cap codi &R; addicional (tot i que per descomptat podeu afegir connectors del &rkward; als paquets &R; habituals, utilitzant els mateixos mètodes que s'expliquen aquí). Això hauria de fer encara més fàcil crear un paquet operatiu, sempre que tingueu un fitxer <filename
 >DESCRIPTION</filename
 > vàlid i s'adhereixi a la jerarquia de fitxers explicada en les <link linkend="structure_of_a_plugin_package"
 >seccions anteriors</link
@@ -3824,7 +3825,7 @@ user (selection from a list of values shown next to this element) --&gt;
 > crea l'arbre de directoris esperat i tots els fitxers necessaris on se suposa que són.</para>
 		<para
 >Aquest paquet no està instal·lat de manera predeterminada, però s'ha d'instal·lar manualment des del <ulink url="https://files.kde.org/rkward/R/"
->propi repositori del &rkward;</ulink
+>repositori propi del &rkward;</ulink
 >. Podeu fer-ho utilitzant la interfície de la &IGU; (<menuchoice
 ><guimenu
 >Arranjament</guimenu
@@ -4065,7 +4066,7 @@ conf.frame &lt;- rk.XML.frame(conf.level, check.conf, rk.XML.stretch(), label="C
 			<para
 >El paquet té algunes funcions per a construccions de codi JS que s'utilitzen habitualment en connectors del &rkward;, com la funció <function
 >echo()</function
-> o les condicions<function
+> o les condicions <function
 >if() {...} else {...}</function
 >. Hi ha algunes diferències entre el JS i l'&R;, &pex;, per a <function
 >paste()</function
@@ -4118,7 +4119,7 @@ JS.print &lt;- rk.paste.JS(echo("rk.print (res)\n"), level=2)
     <para
 >La funció <function
 >js()</function
-> és un embolcall que permet utilitzar els condicions <command
+> és un embolcall que permet utilitzar les condicions <command
 >if(){...} else {...}</command
 > de l'&R; com les que esteu acostumat a fer. Es traduiran directament al codi JS. També conserva alguns operadors com <command
 >&lt;</command
@@ -4184,7 +4185,7 @@ JS.print &lt;- rk.paste.JS(echo("rk.print (res)\n"), level=2)
 			<para
 >Aquesta secció també és molt curta: <function
 >rk.plugin.skeleton()</function
-> no pot escriure una pàgina d'ajuda completa a partir de la informació que té. Però també pot explorar el document &XML; cercant elements que probablement mereixen una entrada de pàgina d'ajuda, i crear automàticament una plantilla de pàgina d'ajuda per al nostre connector. Tot el que hem de fer després és escriure algunes línies per a cada secció llistada.</para>
+> no pot escriure una pàgina d'ajuda completa a partir de la informació que té. Però també pot explorar el document &XML; cercant elements que probablement mereixen una entrada de pàgina d'ajuda, i crear automàticament una plantilla de pàgines d'ajuda per al nostre connector. Tot el que hem de fer després és escriure algunes línies per a cada secció llistada.</para>
 			<tip
 ><para
 >La funció <function
@@ -4221,7 +4222,7 @@ JS.print &lt;- rk.paste.JS(echo("rk.print (res)\n"), level=2)
 >load=</parameter
 ><replaceable
 >TRUE</replaceable
-> afegirà automàticament el connector nou a la configuració del &rkward; (ja que està en un directori temporal i per tant deixarà d'existir quan es tanqui el &rkward;, s'eliminarà automàticament de nou pel &rkward; durant l'inici següent), <parameter
+> afegirà automàticament el connector nou a la configuració del &rkward; (ja que està en un directori temporal, i per tant, deixarà d'existir quan es tanqui el &rkward;, s'eliminarà automàticament de nou pel &rkward; durant l'inici següent), <parameter
 >edit=</parameter
 ><replaceable
 >TRUE</replaceable
@@ -6641,7 +6642,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 >elements de disposició</link
 >, i tots els <link linkend="activeelements"
 >elements actius</link
->tenen les propietats següents, accessibles a través de "id_of_element.name_of_property": </para>
+> tenen les propietats següents, accessibles a través de "id_of_element.name_of_property": </para>
 <variablelist>
 <varlistentry>
 <term
@@ -6897,7 +6898,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 >&lt;frame&gt;</term>
 <listitem
 ><para
->La propietat predeterminada és "checked", si (i només si) el marc és pot marcar. Per als marcs que no es poden marcar, no hi ha cap propietat per defecte. <variablelist
+>La propietat predeterminada és "checked", si (i només si) el marc es pot marcar. Per als marcs que no es poden marcar, no hi ha cap propietat per defecte. <variablelist
 > <varlistentry>
 	<term
 >checked</term>

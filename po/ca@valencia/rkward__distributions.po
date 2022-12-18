@@ -4449,7 +4449,7 @@ msgid ""
 msgstr ""
 "Seleccioneu els valors apropiats per als diferents paràmetres de la "
 "distribució i seleccioneu el tipus de la funció. El botó «Envia» exportarà "
-"el diagrama en la finestra d'eixida. Per a visualitzar dinàmicament el "
+"el diagrama a la finestra d'eixida. Per a visualitzar dinàmicament el "
 "diagrama, marqueu la casella «Vista prèvia»."
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Choose type of function plot")

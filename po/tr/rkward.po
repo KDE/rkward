@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: yenitr\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-09 00:42+0000\n"
-"PO-Revision-Date: 2022-12-10 18:30+0300\n"
+"PO-Revision-Date: 2022-12-17 19:04+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.08.3\n"
+"X-Generator: Lokalize 22.12.0\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:56+0000\n"
 
 #, kde-format
@@ -2404,10 +2404,10 @@ msgid ""
 "search term, insert '.*'.</p>"
 msgstr ""
 "<p><b>Not:</b>Bu arama satırı, normal ifadeler olarak adlandırılan ifadeleri "
-"kabul eder. Aramayı dizgenin başındaki eşlemelerle sınırlandırmak için "
-"filtreyi '^' ile başlatın, örn. ('^rk.'). Aramaları dizenin sonuna kadar "
-"sınırlandırmak için filtrenin sonuna '$' ekleyin. Arama teriminin "
-"ortasındaki rastgele metni eşleştirmek için '.*.' kullanın.</p>"
+"kabul eder. Aramayı dizinin başındaki eşlemelerle sınırlandırmak için "
+"süzgeci '^' ile başlatın, örn. ('^rk.'). Aramaları dizinin sonuna kadar "
+"sınırlandırmak için süzgecin sonuna '$' ekleyin. Arama teriminin ortasındaki "
+"rastgele metni eşleştirmek için '.*.' kullanın.</p>"
 
 #: rkward/misc/rkfindbar.cpp:58
 #, kde-format
@@ -2836,7 +2836,7 @@ msgstr "Yapıştırma Kipi"
 #: rkward/misc/rkspecialactions.cpp:84
 #, kde-format
 msgid "Single string"
-msgstr "Tek dizge"
+msgstr "Tek dizi"
 
 #: rkward/misc/rkspecialactions.cpp:87
 #, kde-format
