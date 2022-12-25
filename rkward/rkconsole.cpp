@@ -595,6 +595,7 @@ void RKConsole::newOutput (RCommand *command, const ROutput *output) {
 // KDE4: does the setUpdatesEnabled (false) still affect performance?
 			view->setUpdatesEnabled (false);		// major performance boost while removing lines!
 			doc->removeText (KTextEditor::Range (0, 0, c - RKSettingsModuleConsole::maxConsoleLines (), 0));
+			output_cursor.setLine(output_cursor.line() - c + RKSettingsModuleConsole::maxConsoleLines());
 			view->setUpdatesEnabled (true);
 		}
 	}
