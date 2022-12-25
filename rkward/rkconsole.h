@@ -169,6 +169,8 @@ private:
 	int current_command_displayed_up_to;
 	int skip_command_display_lines;
 	bool previous_chunk_was_piped;
+	KTextEditor::Cursor output_cursor;
+	void rawWriteLine(const QString &line, QChar line_end);
 };
 
 /** A part interface to RKConsole. Provides the context-help functionality
