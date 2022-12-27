@@ -34,7 +34,7 @@ for arg in sys.argv[1:]:
     else:
         paths.append(arg)
 if (len(paths) < 1):
-    paths = [os.path.join(BASEDIR, "po"), os.path.join(BASEDIR, "i18n", "po")]
+    paths = [os.path.join(BASEDIR, "po")]
 
 def checkCompleteness(filename):
     po = polib.pofile(filename)
