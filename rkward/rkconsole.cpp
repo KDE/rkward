@@ -621,6 +621,7 @@ void RKConsole::userCommandLineIn (RCommand* cmd) {
 	prefix = iprefix;
 	showPrompt ();
 	setCurrentEditingLine (line);
+	output_cursor = doc->documentEnd();
 }
 
 void RKConsole::submitBatch (const QString &batch) {
