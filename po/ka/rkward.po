@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-26 00:49+0000\n"
-"PO-Revision-Date: 2022-12-16 06:42+0100\n"
+"POT-Creation-Date: 2022-12-28 00:45+0000\n"
+"PO-Revision-Date: 2022-12-27 07:23+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -503,7 +503,7 @@ msgstr ""
 #: rkward/dataeditor/twintable.cpp:112
 #, kde-format
 msgid "Paste inside selection"
-msgstr ""
+msgstr "მონიშნულში ჩასმა"
 
 #: rkward/dataeditor/twintable.cpp:114
 #, kde-format
@@ -515,7 +515,7 @@ msgstr ""
 #: rkward/dataeditor/twintable.cpp:131
 #, kde-format
 msgid "Show / Edit row names"
-msgstr ""
+msgstr "წკრივების სახელების ჩვენება/ჩასწორება"
 
 #: rkward/dataeditor/twintable.cpp:134 rkward/dataeditor/twintable.cpp:147
 #, kde-format
@@ -556,7 +556,7 @@ msgstr ""
 #: rkward/dataeditor/twintable.cpp:217
 #, kde-format
 msgid "%1 [read-only]"
-msgstr ""
+msgstr "%1 [მხოლოდ-წაკითხვადი]"
 
 #: rkward/dataeditor/twintable.cpp:262
 #, kde-format
@@ -3324,7 +3324,7 @@ msgstr "ბრძანება"
 #: rkward/settings/rksettingsmodulekateplugins.cpp:41
 #, kde-format
 msgid "Description"
-msgstr ""
+msgstr "აღწერა"
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:109
 #, kde-format
@@ -3454,12 +3454,12 @@ msgstr ""
 #: rkward/rbackend/rkrinterface.cpp:98
 #, kde-format
 msgid "Error starting R"
-msgstr ""
+msgstr "R-ის გაშვების შეცდომა"
 
 #: rkward/rbackend/rkrinterface.cpp:593
 #, kde-format
 msgid "Quitting was canceled"
-msgstr ""
+msgstr "გასვლა გაუქმდა"
 
 #: rkward/rbackend/rkrinterface.cpp:595
 #, kde-format
@@ -3478,7 +3478,7 @@ msgstr ""
 #: rkward/rbackend/rkrinterface.cpp:595
 #, kde-format
 msgid "Locale change"
-msgstr ""
+msgstr "ენის ცვლილება"
 
 #: rkward/rbackend/rkrinterface.cpp:596
 #, kde-format
@@ -3624,57 +3624,57 @@ msgstr ""
 msgid "Syntax error\n"
 msgstr ""
 
-#: rkward/rkconsole.cpp:708
+#: rkward/rkconsole.cpp:709
 #, kde-format
 msgid "Select command history file to load"
 msgstr ""
 
-#: rkward/rkconsole.cpp:708
+#: rkward/rkconsole.cpp:709
 #, kde-format
 msgid "R history files [*.Rhistory](*.Rhistory);;All files [*](*)"
 msgstr ""
 
-#: rkward/rkconsole.cpp:741
+#: rkward/rkconsole.cpp:742
 #, kde-format
 msgid "Select filename to save command history"
 msgstr ""
 
-#: rkward/rkconsole.cpp:741
+#: rkward/rkconsole.cpp:742
 #, kde-format
 msgid "R history files [*.Rhistory] (*.Rhistory);;All files [*] (*)"
 msgstr ""
 
-#: rkward/rkconsole.cpp:866
+#: rkward/rkconsole.cpp:867
 #, kde-format
 msgid "Interrupt running command"
 msgstr ""
 
-#: rkward/rkconsole.cpp:873
+#: rkward/rkconsole.cpp:874
 #, kde-format
 msgid "Copy selection literally"
 msgstr ""
 
-#: rkward/rkconsole.cpp:876
+#: rkward/rkconsole.cpp:877
 #, kde-format
 msgid "Copy commands, only"
 msgstr ""
 
-#: rkward/rkconsole.cpp:883
+#: rkward/rkconsole.cpp:884
 #, kde-format
 msgid "Print Console"
 msgstr ""
 
-#: rkward/rkconsole.cpp:889
+#: rkward/rkconsole.cpp:890
 #, kde-format
 msgid "Import command history..."
 msgstr ""
 
-#: rkward/rkconsole.cpp:891
+#: rkward/rkconsole.cpp:892
 #, kde-format
 msgid "Export command history..."
 msgstr ""
 
-#: rkward/rkconsole.cpp:910
+#: rkward/rkconsole.cpp:911
 #, kde-format
 msgid ""
 "You have configured RKWard to pipe script editor commands through the R "
@@ -3683,17 +3683,17 @@ msgid ""
 "console, first? Press cancel if you do not wish to run the new command, now."
 msgstr ""
 
-#: rkward/rkconsole.cpp:910
+#: rkward/rkconsole.cpp:911
 #, kde-format
 msgid "R Console is busy"
 msgstr ""
 
-#: rkward/rkconsole.cpp:910
+#: rkward/rkconsole.cpp:911
 #, kde-format
 msgid "Append"
 msgstr "მიმატება"
 
-#: rkward/rkconsole.cpp:910
+#: rkward/rkconsole.cpp:911
 #, kde-format
 msgid "Reset, then submit"
 msgstr ""
@@ -5357,7 +5357,7 @@ msgstr ""
 #, kde-format
 msgctxt "verb"
 msgid "Remove"
-msgstr ""
+msgstr "ამო_ღება"
 
 #: rkward/settings/rksettingsmoduler.cpp:596
 #, kde-format
@@ -5761,7 +5761,7 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:1057
 #, kde-format
 msgid "%1 (Active)"
-msgstr ""
+msgstr "%1 (აქტიური)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:1077
 #, kde-format

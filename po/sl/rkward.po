@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-26 00:49+0000\n"
+"POT-Creation-Date: 2022-12-28 00:45+0000\n"
 "PO-Revision-Date: 2022-10-09 08:47+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -4048,57 +4048,57 @@ msgstr "Dinamično zavijanje besed"
 msgid "Syntax error\n"
 msgstr "Skladenjska napaka\n"
 
-#: rkward/rkconsole.cpp:708
+#: rkward/rkconsole.cpp:709
 #, kde-format
 msgid "Select command history file to load"
 msgstr "Izberite datoteko zgodovine ukazov, ki jo želite naložiti"
 
-#: rkward/rkconsole.cpp:708
+#: rkward/rkconsole.cpp:709
 #, kde-format
 msgid "R history files [*.Rhistory](*.Rhistory);;All files [*](*)"
 msgstr "Datoteke zgodovine R [*.Rhistory](*.Rhistory);;Vse datoteke [*](*)"
 
-#: rkward/rkconsole.cpp:741
+#: rkward/rkconsole.cpp:742
 #, kde-format
 msgid "Select filename to save command history"
 msgstr "Izberite ime datoteke za shranjevanje zgodovine ukazov"
 
-#: rkward/rkconsole.cpp:741
+#: rkward/rkconsole.cpp:742
 #, kde-format
 msgid "R history files [*.Rhistory] (*.Rhistory);;All files [*] (*)"
 msgstr "Datoteke zgodovine R [*.Rhistory] (*.Rhistory);;Vse datoteke [*] (*)"
 
-#: rkward/rkconsole.cpp:866
+#: rkward/rkconsole.cpp:867
 #, kde-format
 msgid "Interrupt running command"
 msgstr "Prekini izvajanje ukaza"
 
-#: rkward/rkconsole.cpp:873
+#: rkward/rkconsole.cpp:874
 #, kde-format
 msgid "Copy selection literally"
 msgstr "Kopiraj izbor dobesedno"
 
-#: rkward/rkconsole.cpp:876
+#: rkward/rkconsole.cpp:877
 #, kde-format
 msgid "Copy commands, only"
 msgstr "Kopiraj samo ukaze"
 
-#: rkward/rkconsole.cpp:883
+#: rkward/rkconsole.cpp:884
 #, kde-format
 msgid "Print Console"
 msgstr "Natisni konzolo"
 
-#: rkward/rkconsole.cpp:889
+#: rkward/rkconsole.cpp:890
 #, kde-format
 msgid "Import command history..."
 msgstr "Uvozi zgodovino ukazov ..."
 
-#: rkward/rkconsole.cpp:891
+#: rkward/rkconsole.cpp:892
 #, kde-format
 msgid "Export command history..."
 msgstr "Izvozi zgodovino ukazov ..."
 
-#: rkward/rkconsole.cpp:910
+#: rkward/rkconsole.cpp:911
 #, kde-format
 msgid ""
 "You have configured RKWard to pipe script editor commands through the R "
@@ -4111,17 +4111,17 @@ msgstr ""
 "ukazu v konzoli ali želite najprej ponastaviti konzolo? Pritisnite prekliči, "
 "če ne želite zagnati novega ukaza."
 
-#: rkward/rkconsole.cpp:910
+#: rkward/rkconsole.cpp:911
 #, kde-format
 msgid "R Console is busy"
 msgstr "Konzola R je zasedena"
 
-#: rkward/rkconsole.cpp:910
+#: rkward/rkconsole.cpp:911
 #, kde-format
 msgid "Append"
 msgstr "Dopolni"
 
-#: rkward/rkconsole.cpp:910
+#: rkward/rkconsole.cpp:911
 #, kde-format
 msgid "Reset, then submit"
 msgstr "Ponastavi, nato pa oddaj"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-26 00:49+0000\n"
+"POT-Creation-Date: 2022-12-28 00:45+0000\n"
 "PO-Revision-Date: 2022-09-24 15:14+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -4032,57 +4032,57 @@ msgstr "Dynamisk radbrytning"
 msgid "Syntax error\n"
 msgstr "Syntaxfel\n"
 
-#: rkward/rkconsole.cpp:708
+#: rkward/rkconsole.cpp:709
 #, kde-format
 msgid "Select command history file to load"
 msgstr "Välj fil med kommandohistorik att läsa in"
 
-#: rkward/rkconsole.cpp:708
+#: rkward/rkconsole.cpp:709
 #, kde-format
 msgid "R history files [*.Rhistory](*.Rhistory);;All files [*](*)"
 msgstr "R-historikfiler [*.Rhistory](*.Rhistory);;*|Alla filer [*](*)"
 
-#: rkward/rkconsole.cpp:741
+#: rkward/rkconsole.cpp:742
 #, kde-format
 msgid "Select filename to save command history"
 msgstr "Välj filnamn för att spara kommandohistorik"
 
-#: rkward/rkconsole.cpp:741
+#: rkward/rkconsole.cpp:742
 #, kde-format
 msgid "R history files [*.Rhistory] (*.Rhistory);;All files [*] (*)"
 msgstr "R-historikfiler [*.Rhistory] (*.Rhistory);;Alla filer [*] (*)"
 
-#: rkward/rkconsole.cpp:866
+#: rkward/rkconsole.cpp:867
 #, kde-format
 msgid "Interrupt running command"
 msgstr "Avbryt pågående kommando"
 
-#: rkward/rkconsole.cpp:873
+#: rkward/rkconsole.cpp:874
 #, kde-format
 msgid "Copy selection literally"
 msgstr "Kopiera markering oförändrad"
 
-#: rkward/rkconsole.cpp:876
+#: rkward/rkconsole.cpp:877
 #, kde-format
 msgid "Copy commands, only"
 msgstr "Kopiera bara kommandon"
 
-#: rkward/rkconsole.cpp:883
+#: rkward/rkconsole.cpp:884
 #, kde-format
 msgid "Print Console"
 msgstr "Skriv ut terminal"
 
-#: rkward/rkconsole.cpp:889
+#: rkward/rkconsole.cpp:890
 #, kde-format
 msgid "Import command history..."
 msgstr "Importera kommandohistorik..."
 
-#: rkward/rkconsole.cpp:891
+#: rkward/rkconsole.cpp:892
 #, kde-format
 msgid "Export command history..."
 msgstr "Exportera kommandohistorik..."
 
-#: rkward/rkconsole.cpp:910
+#: rkward/rkconsole.cpp:911
 #, kde-format
 msgid ""
 "You have configured RKWard to pipe script editor commands through the R "
@@ -4095,17 +4095,17 @@ msgstr ""
 "Vill du lägga till det till kommandot i terminalen eller vill du först "
 "nollställa terminalen? Klicka på Avbryt om du inte vill köra kommandot nu."
 
-#: rkward/rkconsole.cpp:910
+#: rkward/rkconsole.cpp:911
 #, kde-format
 msgid "R Console is busy"
 msgstr "R-terminalen är upptagen"
 
-#: rkward/rkconsole.cpp:910
+#: rkward/rkconsole.cpp:911
 #, kde-format
 msgid "Append"
 msgstr "Lägg till sist"
 
-#: rkward/rkconsole.cpp:910
+#: rkward/rkconsole.cpp:911
 #, kde-format
 msgid "Reset, then submit"
 msgstr "Återställ, skicka därefter"
