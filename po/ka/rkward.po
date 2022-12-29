@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-28 00:45+0000\n"
-"PO-Revision-Date: 2022-12-27 07:23+0100\n"
+"PO-Revision-Date: 2022-12-28 09:44+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -2712,7 +2712,7 @@ msgstr ""
 #: rkward/misc/rkxmlguipreviewarea.cpp:261
 #, kde-format
 msgid "Preview disabled"
-msgstr ""
+msgstr "მინიატურა გათიშულია"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:263
 #, kde-format
@@ -6702,12 +6702,12 @@ msgstr ""
 #: rkward/windows/robjectbrowser.cpp:115 rkward/windows/robjectbrowser.cpp:254
 #, kde-format
 msgid "Edit"
-msgstr ""
+msgstr "ჩასწორება"
 
 #: rkward/windows/robjectbrowser.cpp:117
 #, kde-format
 msgid "View"
-msgstr ""
+msgstr "ხედი"
 
 #: rkward/windows/robjectbrowser.cpp:121
 #, kde-format
@@ -6737,7 +6737,7 @@ msgstr ""
 #: rkward/windows/robjectbrowser.cpp:185
 #, kde-format
 msgid "Copy object"
-msgstr ""
+msgstr "ობიექტის კოპირება"
 
 #: rkward/windows/robjectbrowser.cpp:185
 #, kde-format
