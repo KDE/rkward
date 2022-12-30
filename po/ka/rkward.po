@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-28 00:45+0000\n"
-"PO-Revision-Date: 2022-12-29 10:21+0100\n"
+"PO-Revision-Date: 2022-12-30 07:47+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -81,7 +81,7 @@ msgstr ""
 #: rkward/agents/rkquitagent.cpp:30
 #, kde-format
 msgid "Waiting for R to finish"
-msgstr ""
+msgstr "R-ის დასრულების მოლოდინი"
 
 #: rkward/agents/rksaveagent.cpp:49
 #, kde-format
@@ -3622,7 +3622,7 @@ msgstr ""
 #: rkward/rkconsole.cpp:499
 #, kde-format
 msgid "Syntax error\n"
-msgstr ""
+msgstr "სინტაქსური შეცდომა\n"
 
 #: rkward/rkconsole.cpp:709
 #, kde-format
@@ -3652,27 +3652,27 @@ msgstr ""
 #: rkward/rkconsole.cpp:874
 #, kde-format
 msgid "Copy selection literally"
-msgstr ""
+msgstr "სრული მონიშნულის კოპირება"
 
 #: rkward/rkconsole.cpp:877
 #, kde-format
 msgid "Copy commands, only"
-msgstr ""
+msgstr "მხოლოდ ბრძანებების კოპირება"
 
 #: rkward/rkconsole.cpp:884
 #, kde-format
 msgid "Print Console"
-msgstr ""
+msgstr "ბეჭდვის კონსოლი"
 
 #: rkward/rkconsole.cpp:890
 #, kde-format
 msgid "Import command history..."
-msgstr ""
+msgstr "ბრძანებების ისტორიის შემოტანა..."
 
 #: rkward/rkconsole.cpp:892
 #, kde-format
 msgid "Export command history..."
-msgstr ""
+msgstr "ბრძანებების ისტორიის გატანა..."
 
 #: rkward/rkconsole.cpp:911
 #, kde-format
@@ -3686,7 +3686,7 @@ msgstr ""
 #: rkward/rkconsole.cpp:911
 #, kde-format
 msgid "R Console is busy"
-msgstr ""
+msgstr "R -ის კონსოლი დაკავებულია"
 
 #: rkward/rkconsole.cpp:911
 #, kde-format
@@ -3750,7 +3750,7 @@ msgstr ""
 #: rkward/rkward.cpp:316
 #, kde-format
 msgid "Setting up plugins..."
-msgstr ""
+msgstr "დამატებების მორგება..."
 
 #: rkward/rkward.cpp:350
 #, kde-format
@@ -3763,7 +3763,7 @@ msgstr ""
 #: rkward/rkward.cpp:350
 #, kde-format
 msgid "New plugins found"
-msgstr ""
+msgstr "ნაპოვნია ახალი დამატება"
 
 #: rkward/rkward.cpp:354
 #, kde-format
@@ -3814,7 +3814,7 @@ msgstr "ფაილები"
 #: rkward/rkward.cpp:445
 #, kde-format
 msgid "Pending Jobs"
-msgstr ""
+msgstr "დარჩენილი დავალებები"
 
 #: rkward/rkward.cpp:457
 #, kde-format
@@ -3849,7 +3849,7 @@ msgstr "სკრიპტის ფაილი"
 #: rkward/rkward.cpp:487
 #, kde-format
 msgid "Output document"
-msgstr ""
+msgstr "გამოტანილი დოკუმენტი"
 
 #: rkward/rkward.cpp:489
 #, kde-format
@@ -3859,7 +3859,7 @@ msgstr ""
 #: rkward/rkward.cpp:494
 #, kde-format
 msgid "Open R Script File..."
-msgstr ""
+msgstr "R სკრიპტის ფაილის გახსნა..."
 
 #: rkward/rkward.cpp:498
 #, kde-format
@@ -3869,7 +3869,7 @@ msgstr ""
 #: rkward/rkward.cpp:502
 #, kde-format
 msgid "Open any File..."
-msgstr ""
+msgstr "ნებისმიერი ფაილის გახსნა...."
 
 #: rkward/rkward.cpp:507
 #, kde-format
@@ -3879,7 +3879,7 @@ msgstr ""
 #: rkward/rkward.cpp:511
 #, kde-format
 msgid "Import Assistant"
-msgstr ""
+msgstr "შემოტანის დამხმარე"
 
 #: rkward/rkward.cpp:512
 #, kde-format
@@ -4204,17 +4204,17 @@ msgstr "&დახმარება"
 #: rkward/robjectviewer.cpp:49
 #, kde-format
 msgid "summary (x)"
-msgstr ""
+msgstr "summary (x)"
 
 #: rkward/robjectviewer.cpp:50
 #, kde-format
 msgid "print (x)"
-msgstr ""
+msgstr "print (x)"
 
 #: rkward/robjectviewer.cpp:51
 #, kde-format
 msgid "str (x)"
-msgstr ""
+msgstr "str (x)"
 
 #: rkward/robjectviewer.cpp:79
 #, kde-format
@@ -4251,7 +4251,7 @@ msgstr ""
 #: rkward/scriptbackends/qtscriptbackend.cpp:139
 #, kde-format
 msgid "Scripting error"
-msgstr ""
+msgstr "სკრიპტის შეცდომა"
 
 #: rkward/scriptbackends/qtscriptbackend.cpp:258
 #, kde-format
@@ -4354,17 +4354,17 @@ msgstr ""
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:49
 #, kde-format
 msgid "Object name completion"
-msgstr ""
+msgstr "ობიექტის ფაილის დასრულება"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:49
 #, kde-format
 msgid "Filename completion"
-msgstr ""
+msgstr "ფაილის სახელის დასრულება"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:49
 #, kde-format
 msgid "Auto word completion"
-msgstr ""
+msgstr "სიტყვების ავტომატური დასრულება"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:49
 #, kde-format
