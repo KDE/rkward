@@ -1778,7 +1778,8 @@ msgid "Exists"
 msgstr ""
 
 #: rkward/dialogs/rksetupwizard.cpp:182
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Import"
 msgid "Import"
 msgstr "Importar"
 

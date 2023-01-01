@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: yenitr\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-28 00:45+0000\n"
-"PO-Revision-Date: 2022-12-17 19:04+0300\n"
+"PO-Revision-Date: 2022-12-31 18:45+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -1054,7 +1054,7 @@ msgid ""
 msgstr ""
 "Geçerli kullanıcı izinleriniz aşağıdaki paketlerin kaldırılmasına izin "
 "vermiyor. Bu paketleri atlamak istiyor musunuz yoksa yönetici "
-"ayrıcalıklarıyla devam mı edeceksiniz (parola sorulacaktır)?"
+"ayrıcalıklarıyla sürdüreceksiniz (parola sorulacaktır)?"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:213
 #, kde-format
