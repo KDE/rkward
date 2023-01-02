@@ -1,7 +1,5 @@
-IF(${KF5_VERSION} VERSION_GREATER "5.27.9")
-    SET(SYNTAX_DEST ${DATA_INSTALL_DIR}/org.kde.syntax-highlighting/syntax/)
-ELSE(${KF5_VERSION} VERSION_GREATER "5.27.9")
-    SET(SYNTAX_DEST ${DATA_INSTALL_DIR}/katepart5/syntax/)
-ENDIF(${KF5_VERSION} VERSION_GREATER "5.27.9")
+# rkward.xml is also installed as a qresource via the parent CMakeLists.txt, but will not be found, there, before KF5 5.86.0
+IF(${KF5_VERSION} VERSION_LESS "5.86.0")
+    INSTALL(FILES rkward.xml DESTINATION ${DATA_INSTALL_DIR}/org.kde.syntax-highlighting/syntax/)
+ENDIF()
 
-INSTALL(FILES rkward.xml DESTINATION ${SYNTAX_DEST})
