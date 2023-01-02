@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-28 00:45+0000\n"
-"PO-Revision-Date: 2022-12-30 07:47+0100\n"
+"PO-Revision-Date: 2023-01-01 08:11+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -69,7 +69,7 @@ msgstr ""
 #: rkward/agents/rkprintagent.cpp:82
 #, kde-format
 msgid "Unable to open KDE print dialog"
-msgstr ""
+msgstr "KDE-ის ბეჭდვის ფანჯრის გახსნის შეცდომა"
 
 #: rkward/agents/rkquitagent.cpp:30
 #, kde-format
@@ -383,7 +383,7 @@ msgstr ""
 #: rkward/core/robjectlist.cpp:90
 #, kde-format
 msgid "Package %1 appears not to have been loaded"
-msgstr ""
+msgstr "პაკეტი %1 ჩატვირთული არაა"
 
 #: rkward/dataeditor/rkeditordataframe.cpp:51
 #: rkward/windows/robjectbrowser.cpp:189 rkward/windows/robjectbrowser.cpp:235
@@ -2581,7 +2581,7 @@ msgid "Other:"
 msgstr "სხვა:"
 
 #: rkward/misc/rkspecialactions.cpp:134
-#, fuzzy, kde-format
+#, kde-format
 msgid "Quoting"
 msgstr "ციტირება"
 

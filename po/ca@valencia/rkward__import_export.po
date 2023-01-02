@@ -751,8 +751,8 @@ msgid ""
 "If you enter a single character, here, everything after that character in a "
 "line will be ignored. Leave blank to disable detection of comments."
 msgstr ""
-"Si ací introduïu un caràcter individual, tot s'ignorarà després d'este "
-"caràcter en la línia. Deixeu-ho en blanc per a desactivar la detecció dels "
+"Si introduïu ací un caràcter individual, tot s'ignorarà després d'este "
+"caràcter en una línia. Deixeu-ho en blanc per a desactivar la detecció dels "
 "comentaris."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Skip blank lines")

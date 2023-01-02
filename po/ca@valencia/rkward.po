@@ -419,9 +419,9 @@ msgstr ""
 "pràctica, açò vol dir que els seus objectes no apareixen en el navegador "
 "d'objectes, i no es realitzarà la compleció de cap nom d'objecte o argument "
 "de funció per als objectes en este paquet.\n"
-"Habitualment un paquet es fica a la llista negra, si té una enorme quantitat "
-"de dades i es tardaria molt a carregar-lo. Per a traure'l de la llista, anar "
-"a «Configuració -> Configura RKWard -> Espai de treball»."
+"Habitualment un paquet es fica en la llista negra, si té una enorme "
+"quantitat de dades i es tardaria molt a carregar-lo. Per a traure'l de la "
+"llista, anar a «Configuració -> Configura RKWard -> Espai de treball»."
 
 #: rkward/core/robject.cpp:275
 #, kde-format
@@ -1164,13 +1164,13 @@ msgid ""
 "Neither kdesu nor kdesudo could be found. To install as root, please install "
 "one of these packages."
 msgstr ""
-"No s'han pogut trobat ni el «kdesu» ni el «kdesudo». Per a instal·lar com a "
+"No s'han pogut trobat ni «kdesu» ni «kdesudo». Per a instal·lar com a "
 "administrador, instal·leu un d'estos paquets."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:292
 #, kde-format
 msgid "kdesu not found"
-msgstr "No s'ha trobat el «kdesu»"
+msgstr "No s'ha trobat «kdesu»"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:350
 #, kde-format
@@ -1238,7 +1238,7 @@ msgid ""
 "<p>You can limit the packages displayed in the list to with names or titles "
 "matching a filter string.</p>"
 msgstr ""
-"<p>Podeu limitar els paquets mostrats a la llista als que el nom o el títol "
+"<p>Podeu limitar els paquets mostrats en la llista als que el nom o el títol "
 "coincidisca amb una cadena de filtratge.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:650
@@ -2311,7 +2311,7 @@ msgid ""
 "The R executable specified on the command line (%1) does not exist or is not "
 "executable."
 msgstr ""
-"L'executable R especificat a la línia d'ordres (%1) no existix o no és un "
+"L'executable R especificat en la línia d'ordres (%1) no existix o no és un "
 "executable."
 
 #: rkward/main.cpp:388
@@ -3091,7 +3091,7 @@ msgid ""
 "Expect further errors to be reported below"
 msgstr ""
 "Hi ha un error en analitzar el fitxer XML. El missatge d'error ha sigut: "
-"«%1» a la línia «%2», columna «%3». Espereu que s'informen d'altres errors "
+"«%1» en la línia «%2», columna «%3». Espereu que s'informen d'altres errors "
 "ací davall"
 
 #: rkward/misc/xmlhelper.cpp:160
@@ -3951,7 +3951,7 @@ msgstr "L'usuari ha cancel·lat el canvi de la configuració regional"
 #, kde-format
 msgid "Attempt to start recording, while already recording commands. Ignoring."
 msgstr ""
-"Intenta començar la gravació, mentre que ja està enregistrant les ordres. "
+"Intenta començar la gravació, mentre que ja està gravant les ordres. "
 "S'ignora."
 
 #: rkward/rbackend/rkrinterface.cpp:676
@@ -4815,7 +4815,7 @@ msgstr "S'ha produït un error en obrir el fitxer de script %1"
 #: rkward/scriptbackends/rkcomponentscripting.cpp:71
 #, kde-format
 msgid "inlined code"
-msgstr "Codi a la línia"
+msgstr "Codi en la línia"
 
 #: rkward/scriptbackends/rkcomponentscripting.cpp:71
 #, kde-format
