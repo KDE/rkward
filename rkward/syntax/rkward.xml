@@ -72,6 +72,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		<context name="OutputRules" attribute="Output" >
 			<!-- Strings = no highlights -->
 			<DetectChar attribute="Output String" context="outputstring" char="&quot;"/>
+			<!-- Floats are hard to catch in R Output -->
+			<RegExpr attribute="Output Float" context="#stay" String="(?&lt;=&lt;|&gt;|\(|\[| |^)-?([1-9][0-9]*|0)(\.[0-9]*)?i?(e[-+]?[ ]{0,3}[0-9]+)?(?![0-9a-zA-Z/_\~\-\]]|[.,;:][^ \t])"/>
 		</context>
 		<!-- This context is not really used, but meant to be included. It checks whether a new line is a continuation of a command. If so, it eats the "+ " at the line start. Else it tries to pop back to the top level. (NOTE: An output line starting with "+" will be considered a command line!) -->
 		<context attribute="Output" name="OutputContinuationCheck" lineEndContext="#stay">
@@ -191,6 +193,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		<itemData name="Output" defStyleNum="dsOthers"/>
 		<itemData name="Output String" defStyleNum="dsOthers"/>
 		<itemData name="Output String Char" defStyleNum="dsOthers"/>
+		<itemData name="Output Float" defStyleNum="dsChar"/>
 		<itemData name="Prompt" defStyleNum="dsNormal"/>
 		<itemData name="Normal Text" defStyleNum="dsNormal"/>
 		<itemData name="Symbol" defStyleNum="dsNormal"/>
