@@ -99,8 +99,16 @@ SPDX-License-Identifier: GPL-2.0-or-later
 			<DetectChar attribute="Output Information" context="Output Information" char="ℹ" column="0" firstNonSpace="true"/>
 			<StringDetect attribute="Output Information" context="Output Information" String="# ℹ" column="0"/>
 			<DetectChar attribute="Output Comment" context="Output Comment" char="#" column="0"/>
+			
+			<!-- Other specials highlights -->
+			<RegExpr attribute="Output Data Type" context="#stay" String="&lt;(lgl|int|dbl|chr|cpl|raw|list|named list|fct|ord|date|dttm|drtn|time|int64|blob|df\[\,1\]|tibble\[\,1\]|I|\?\?\?|list&lt;.+&gt;|vctrs_vc|prtl_fctr|prtl|fn|sym|expression|quos)&gt;"/>
+			<RegExpr attribute="Output Index" context="#stay" String="([ ]{0,2}|[ ]*\[)[0-9]+,?[0-9]*\]?\:?(?![.0-9]|.*[:,.;]$)" column="0"/>
+			<RegExpr attribute="Output Index" context="#stay" String="([ ]+\[,[1-9]+[0-9]*\])+$" column="0"/>
 			<!-- Floats are hard to catch in R Output -->
 			<RegExpr attribute="Output Float" context="#stay" String="(?&lt;=&lt;|&gt;|\(|\[| |^)-?([1-9][0-9]*|0)(\.[0-9]*)?i?(e[-+]?[ ]{0,3}[0-9]+)?(?![0-9a-zA-Z/_\~\-\]]|[.,;:][^ \t])"/>
+			<WordDetect attribute="Output NA" context="#stay" String="NA"/>
+			<WordDetect attribute="Output True" context="#stay" String="TRUE"/>
+			<WordDetect attribute="Output False" context="#stay" String="FALSE"/>
 		</context>
 		
 		<!-- This context is not really used, but meant to be included. It checks whether a new line is a continuation of a command. If so, it eats the "+ " at the line start. Else it tries to pop back to the top level. (NOTE: An output line starting with "+" will be considered a command line!) -->
@@ -220,6 +228,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		<itemData name="Output" defStyleNum="dsOthers"/>
 		<itemData name="Output String" defStyleNum="dsOthers"/>
 		<itemData name="Output String Char" defStyleNum="dsOthers"/>
+		<itemData name="Output Data Type"  defStyleNum="dsComment"/>
+		<itemData name="Output Index"  defStyleNum="dsComment"/>
 		<itemData name="Output Headline" defStyleNum="dsDocumentation" bold="1" italic="0"/>
 		<itemData name="Output Comment" defStyleNum="dsComment"/>
 		<itemData name="Output Float" defStyleNum="dsChar"/>
@@ -228,6 +238,11 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		<itemData name="Output Failure" defStyleNum="dsWarning"/>
 		<itemData name="Output Warning" defStyleNum="dsInformation"/>
 		<itemData name="Output Information" defStyleNum="dsSpecialChar"/>
+		<itemData name="Output NA" defStyleNum="dsSpecialString" />
+		<itemData name="Output True" defStyleNum="dsSpecialString" color="#74bf77" selColor="#74bf77" bold="1"/>
+		<itemData name="Output False" defStyleNum="dsSpecialString" color="#bf7374" selColor="#bf7374" bold="1"/>
+		<itemData name="Output StrView Index" defStyleNum="dsComment"/>
+		<itemData name="Output StrView Highlight" defStyleNum="dsSpecialChar"/>
 		
 		<itemData name="Prompt" defStyleNum="dsNormal"/>
 		<itemData name="Normal Text" defStyleNum="dsNormal"/>
