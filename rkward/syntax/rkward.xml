@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE language SYSTEM "language.dtd">
+<!--- This file is part of the RKWard project (https://rkward.kde.org).
+SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: by P.Ecochard <rkward-devel@kde.org>
+SPDX-FileCopyrightText: by Arne Hennigsen
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+-->
 <!-- Kate 2.0 (KDE 3.0) highlighting module for RKWard
 	version 2.0: (c) 2006 P. Ecochard
 	lincense: GPL v2
@@ -9,14 +16,7 @@
 	R      : http://www.r-project.org/
 	RKWard : https://rkward.kde.org/
 	-->
-<!--- This file is part of the RKWard project (https://rkward.kde.org).
-SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
-SPDX-FileCopyrightText: by P.Ecochard <rkward-devel@kde.org>
-SPDX-FileCopyrightText: by Arne Hennigsen
-SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
-SPDX-License-Identifier: GPL-2.0-or-later
--->
-<language version="9" kateversion="2.5" name="R interactive session" section="Scripts" extensions="" mimetype="" author="P. Ecochard" license="GPL">
+<language version="10" kateversion="2.5" name="R interactive session" section="Scripts" extensions="" mimetype="" author="P. Ecochard" license="GPL">
 <highlighting>
 
 	<list name="controls">
