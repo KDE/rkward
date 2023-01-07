@@ -61,6 +61,22 @@ SPDX-License-Identifier: GPL-2.0-or-later
 			<IncludeRules context="OutputRules"/>
 		</context>
 		
+		<!-- Output full-line contexts like "headline" and "comments"... -->
+		<context attribute="Output Headline" lineEndContext="#pop" name="Output Headline">
+		</context>
+		<context attribute="Output Comment" lineEndContext="#pop" name="Output Comment">
+		</context>
+		<context attribute="Output Success" lineEndContext="#pop" name="Output Success">
+		</context>
+		<context attribute="Output Failure" lineEndContext="#pop" name="Output Failure">
+		</context>
+		<context attribute="Output Warning" lineEndContext="#pop" name="Output Warning">
+		</context>
+		<context attribute="Output Information" lineEndContext="#pop" name="Output Information">
+		</context>
+		<context attribute="Output Error" lineEndContext="#pop" name="Output Error">
+		</context>
+		
 		<!-- String context is not highlighted in itself, but used to suppress other highlights (e.g. "1") -->
 		<context attribute="Output String" name="outputstring">
 			<IncludeRules context="OutputContinuationCheck"/>
@@ -72,9 +88,21 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		<context name="OutputRules" attribute="Output" >
 			<!-- Strings = no highlights -->
 			<DetectChar attribute="Output String" context="outputstring" char="&quot;"/>
+			
+			<!-- Full-line highlights (see above) -->
+			<Detect2Chars attribute="Output Headline" context="Output Headline" char="#" char1="#" column="0"/>
+			<Detect2Chars attribute="Output Headline" context="Output Headline" char="─" char1="─" column="0"/>
+			<DetectChar attribute="Output Success" context="Output Success" char="✔" column="0" firstNonSpace="true"/>
+			<DetectChar attribute="Output Failure" context="Output Failure" char="✖" column="0" firstNonSpace="true"/>
+			<StringDetect attribute="Output Error" context="Output Error" String="Error" column="0" firstNonSpace="true"/>
+			<DetectChar attribute="Output Warning" context="Output Warning" char="!" column="0" firstNonSpace="true"/>
+			<DetectChar attribute="Output Information" context="Output Information" char="ℹ" column="0" firstNonSpace="true"/>
+			<StringDetect attribute="Output Information" context="Output Information" String="# ℹ" column="0"/>
+			<DetectChar attribute="Output Comment" context="Output Comment" char="#" column="0"/>
 			<!-- Floats are hard to catch in R Output -->
 			<RegExpr attribute="Output Float" context="#stay" String="(?&lt;=&lt;|&gt;|\(|\[| |^)-?([1-9][0-9]*|0)(\.[0-9]*)?i?(e[-+]?[ ]{0,3}[0-9]+)?(?![0-9a-zA-Z/_\~\-\]]|[.,;:][^ \t])"/>
 		</context>
+		
 		<!-- This context is not really used, but meant to be included. It checks whether a new line is a continuation of a command. If so, it eats the "+ " at the line start. Else it tries to pop back to the top level. (NOTE: An output line starting with "+" will be considered a command line!) -->
 		<context attribute="Output" name="OutputContinuationCheck" lineEndContext="#stay">
 			<!-- Since this rule is included in every (relevant) context, this will unwind the entire context stack back to ctxbase. -->
@@ -107,7 +135,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 			<DetectChar attribute="Symbol" context="#pop" char=")"/>
 			
 			<RegExpr attribute="Identifier" context="#stay" String="[a-zA-Z_\.][0-9a-zA-Z_\.]*[\s]*=(?=([^=]|$))"/>
-			
 			<IncludeRules context="CommonRules"/>
 			<DetectChar attribute="Error" context="#stay" char="}" />
 		</context>
@@ -193,7 +220,15 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		<itemData name="Output" defStyleNum="dsOthers"/>
 		<itemData name="Output String" defStyleNum="dsOthers"/>
 		<itemData name="Output String Char" defStyleNum="dsOthers"/>
+		<itemData name="Output Headline" defStyleNum="dsDocumentation" bold="1" italic="0"/>
+		<itemData name="Output Comment" defStyleNum="dsComment"/>
 		<itemData name="Output Float" defStyleNum="dsChar"/>
+		<itemData name="Output Success"  defStyleNum="dsOthers" color="#00AA00" selColor="#00AA00"/>
+		<itemData name="Output Error" defStyleNum="dsAlert"/>
+		<itemData name="Output Failure" defStyleNum="dsWarning"/>
+		<itemData name="Output Warning" defStyleNum="dsInformation"/>
+		<itemData name="Output Information" defStyleNum="dsSpecialChar"/>
+		
 		<itemData name="Prompt" defStyleNum="dsNormal"/>
 		<itemData name="Normal Text" defStyleNum="dsNormal"/>
 		<itemData name="Symbol" defStyleNum="dsNormal"/>
