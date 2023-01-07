@@ -50,12 +50,39 @@ SPDX-License-Identifier: GPL-2.0-or-later
 			<Detect2Chars attribute="Prompt" context="command0" char="&gt;" char1=" " column="0" beginRegion="commandRegion"/>
 			<RegExpr attribute="Normal Text" context="output" String="^([^&gt;\+]|$)" lookAhead="true"/>
 		</context>
+		
+		<!-- ################ OUTPUT ######################### --> 
 
-		<!-- The output context does no highlighting. If a "> " is encountered at line start, pop back to ctxbase (and to command0 from there) --> 
+		<!-- Default is output context: if a "> " is encountered at line start, pop back to ctxbase (and to command0 from there) --> 
 		<context attribute="Output" lineEndContext="#stay" name="output">
 			<Detect2Chars attribute="Prompt" context="#pop" char="&gt;" char1=" " column="0" lookAhead="true" endRegion="commandRegion"/>
 			<Detect2Chars attribute="Prompt" context="#pop" char="+" char1=" " column="0" lookAhead="true"/>
+			<IncludeRules context="OutputContinuationCheck"/>
+			<IncludeRules context="OutputRules"/>
 		</context>
+		
+		<!-- String context is not highlighted in itself, but used to suppress other highlights (e.g. "1") -->
+		<context attribute="Output String" name="outputstring">
+			<IncludeRules context="OutputContinuationCheck"/>
+			<DetectChar attribute="Output String" context="#pop" char="&quot;"/>
+			<HlCStringChar attribute="Output String Char" context="#stay"/>
+		</context>
+		
+		<!-- Some special rules for highlights -->
+		<context name="OutputRules" attribute="Output" >
+			<!-- Strings = no highlights -->
+			<DetectChar attribute="Output String" context="outputstring" char="&quot;"/>
+		</context>
+		<!-- This context is not really used, but meant to be included. It checks whether a new line is a continuation of a command. If so, it eats the "+ " at the line start. Else it tries to pop back to the top level. (NOTE: An output line starting with "+" will be considered a command line!) -->
+		<context attribute="Output" name="OutputContinuationCheck" lineEndContext="#stay">
+			<!-- Since this rule is included in every (relevant) context, this will unwind the entire context stack back to ctxbase. -->
+			<Detect2Chars attribute="Prompt" context="#pop" char="&gt;" char1=" " column="0" lookAhead="true" endRegion="commandRegion"/>
+			<!-- See above -->
+			<Detect2Chars attribute="Prompt" context="#stay" char="&gt;" char1=" " column="0" lookAhead="true"/>
+			<Detect2Chars attribute="Prompt" context="#stay" char="+" char1=" " column="0"/>
+		</context>
+		
+		<!-- ################ COMMAND ######################### --> 
 
 		<!-- The base level context in command mode. Does not allow closing '}' -->
 		<context attribute="Normal Text" lineEndContext="#stay" name="command0">
@@ -162,6 +189,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 	<itemDatas>
 		<!-- KDE default colors: http://accessibility.kde.org/oxygen.php?color=white -->
 		<itemData name="Output" defStyleNum="dsOthers"/>
+		<itemData name="Output String" defStyleNum="dsOthers"/>
+		<itemData name="Output String Char" defStyleNum="dsOthers"/>
 		<itemData name="Prompt" defStyleNum="dsNormal"/>
 		<itemData name="Normal Text" defStyleNum="dsNormal"/>
 		<itemData name="Symbol" defStyleNum="dsNormal"/>
