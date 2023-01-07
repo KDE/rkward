@@ -77,6 +77,13 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		<context attribute="Output Error" lineEndContext="#pop" name="Output Error">
 		</context>
 		
+		<!-- Special context for str_view() -->
+		<context attribute="Output StrView" lineEndContext="#pop" name="outputstrview">
+			<IncludeRules context="OutputContinuationCheck"/>
+			<RegExpr attribute="Output Index" context="#stay" String="\[[0-9]+\]" firstNonSpace="true"/>
+			<RegExpr attribute="Output StrView Highlight" context="#stay" String="[&lt;].+[&gt;]"/>
+		</context>
+		
 		<!-- String context is not highlighted in itself, but used to suppress other highlights (e.g. "1") -->
 		<context attribute="Output String" name="outputstring">
 			<IncludeRules context="OutputContinuationCheck"/>
@@ -88,6 +95,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		<context name="OutputRules" attribute="Output" >
 			<!-- Strings = no highlights -->
 			<DetectChar attribute="Output String" context="outputstring" char="&quot;"/>
+			<RegExpr attribute="Output StrView Index" context="outputstrview" String="([ ]*\[[0-9]+\] )?│" firstNonSpace="true"/>
 			
 			<!-- Full-line highlights (see above) -->
 			<Detect2Chars attribute="Output Headline" context="Output Headline" char="#" char1="#" column="0"/>
