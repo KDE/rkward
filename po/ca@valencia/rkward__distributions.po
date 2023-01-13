@@ -3050,8 +3050,8 @@ msgid ""
 msgstr ""
 "Seleccioneu el mode desitjat d'operació, després especifiqueu els valors "
 "d'interés. Els valors d'entrada (quantils o probabilitats) es poden deixar "
-"buits, en este cas s'omplirà automàticament una xicoteta seqüència de valors "
-"equidistants."
+"buits, en este cas s'emplenarà automàticament una xicoteta seqüència de "
+"valors equidistants."
 
 #. i18n: ectx: (Loaded from Beta distribution calculator) <snippet> <dropdown label="...">
 #. i18n: ectx: (Loaded from Binomial probabilities, quantiles, densities) <snippet> <dropdown label="...">

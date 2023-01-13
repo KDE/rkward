@@ -479,7 +479,7 @@ msgid ""
 "corresponding object name will be filled in as a default."
 msgstr ""
 "L'objecte que s'ordenarà. Si actualment hi ha una finestra activa d'edició "
-"de «data.frame», el nom de l'objecte corresponent s'omplirà com a "
+"de «data.frame», el nom de l'objecte corresponent s'emplenarà com a "
 "predeterminat."
 
 #. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Sort by")

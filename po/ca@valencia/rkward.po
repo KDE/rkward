@@ -708,9 +708,9 @@ msgid ""
 msgstr ""
 "<p><b>Quina informació he de proporcionar i com?</b></p>Fent clic en "
 "«Informa d'un problema» anireu al sistema de seguiment d'errors de KDE. "
-"Després d'iniciar la sessió, hi haurà certa informació que estarà omplida al "
-"formulari d'informe. Assegureu-vos que ompliu les dades que falten - en "
-"anglés - a on s'indiquen, especialment en el camp de «Comentari».</p>"
+"Després d'iniciar la sessió, hi haurà certa informació que estarà emplenada "
+"en el formulari d'informe. Assegureu-vos que empleneu els dades que falten - "
+"en anglés - a on s'indiquen, especialment en el camp de «Comentari».</p>"
 
 #: rkward/dialogs/rkerrordialog.cpp:58
 #, kde-format

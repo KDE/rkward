@@ -1319,7 +1319,7 @@ msgid ""
 msgstr ""
 "Si heu instal·lat RKWard utilitzant el gestor de paquets de la vostra "
 "distribució de Linux, però no hi ha cap paquet actualitzat disponible, "
-"contacteu amb el mantenidor de la distribució o ompliu un informe d'error, "
+"contacteu amb el mantenidor de la distribució o empleneu un informe d'error, "
 "ací."
 
 #. i18n: ectx: (Version incompatibilities) <summary>
