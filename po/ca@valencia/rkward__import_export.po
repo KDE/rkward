@@ -1124,7 +1124,7 @@ msgstr "Opcions addicionals"
 #: rkward/plugins/00saveload/import/import_csv.xml:181
 #, kde-format
 msgid "String handling"
-msgstr "Gestió de les cadenes"
+msgstr "Gestioneu les cadenes"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Further Options"> <frame label="String handling"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:182
@@ -1782,7 +1782,7 @@ msgstr "Caràcter per als valors que falten"
 #: rkward/plugins/00saveload/import/import_xls.xml:40
 #, kde-format
 msgid "Error handling"
-msgstr "Gestió d'errors"
+msgstr "Gestioneu els errors"
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Further Options"> <frame label="Error handling"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_xls.xml:41
@@ -2549,8 +2549,8 @@ msgid ""
 ">Save Workspace</i> for saving the complete workspace."
 msgstr ""
 "Guarda un o més objectes R seleccionats a un fitxer. <b>Nota:</b> Utilitzeu "
-"«<i>Espai de treball -> Guarda l'espai de treball</i>» per a guardar l'espai "
-"de treball complet."
+"«<i>Espai de treball -> Guarda l'espai de treball</i>» per que es guardarà "
+"l'espai de treball complet."
 
 #. i18n: ectx: (Loaded from Save R objects) <usage>
 #: rkward/plugins/00saveload/save/save.rkh:7
@@ -2559,7 +2559,7 @@ msgid ""
 "Select the objects to save, and a filename to save to. Created data files "
 "can be loaded using <link href=\"rkward://component/load_r_object\"/>."
 msgstr ""
-"Seleccioneu els objectes que es guardaran, i els noms de fitxer a on s'ha de "
+"Seleccioneu els objectes que es guardarà, i els noms de fitxer a on s'ha de "
 "guardar. Els fitxers de dades creats es poden carregar utilitzant <link href="
 "\"rkward://component/load_r_object\"/>."
 
@@ -2567,7 +2567,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/save.rkh:11
 #, kde-format
 msgid "One or more objects to save."
-msgstr "Un o més objectes que s'han de guardar."
+msgstr "Un o més objectes que es guardarà."
 
 #. i18n: ectx: (Loaded from Save R objects) <settings> <setting> (refers to element labelled "File name")
 #: rkward/plugins/00saveload/save/save.rkh:12
@@ -3089,7 +3089,7 @@ msgstr "Cometes a totes les cadenes"
 #: rkward/plugins/00saveload/save/write_csv.xml:157
 #, kde-format
 msgid "Handling double quote characters"
-msgstr "Gestió dels caràcters de cometes dobles"
+msgstr "Gestioneu els caràcters de cometes dobles"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <radio label="Handling double quote characters"> <option label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:158

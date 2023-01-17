@@ -4125,7 +4125,7 @@ msgstr ""
 #: rkward/rkconsole.cpp:742
 #, kde-format
 msgid "Select filename to save command history"
-msgstr "Seleccioneu el nom de fitxer per a guardar l'historial d'ordres"
+msgstr "Seleccioneu el nom de fitxer per que es guardarà l'historial d'ordres"
 
 #: rkward/rkconsole.cpp:742
 #, kde-format
@@ -6909,7 +6909,7 @@ msgstr "Seleccioneu un altre fitxer"
 #: rkward/windows/rkhtmlwindow.cpp:1215
 #, kde-format
 msgid "GUI settings"
-msgstr "Configuració de la IGU"
+msgstr "Configureu la IGU"
 
 #: rkward/windows/rkhtmlwindow.cpp:1240
 #, kde-format

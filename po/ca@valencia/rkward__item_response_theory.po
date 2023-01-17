@@ -1603,7 +1603,7 @@ msgstr "Estimació del paràmetre IRT: Model de crèdit parcial generalitzat"
 #: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.xml:19
 #, kde-format
 msgid "Item selection"
-msgstr "Selecció d'element"
+msgstr "Seleccioneu un element"
 
 #. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Manifest variables"> <frame label="Item selection"> <checkbox label="...">
 #. i18n: ectx: (Cronbach's alpha) <dialog label="Cronbach's alpha"> <tab label="Data"> <frame label="Item selection"> <checkbox label="...">
@@ -2870,7 +2870,7 @@ msgstr "Corba d'informació d'element"
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:41
 #, kde-format
 msgid "Optional item selection"
-msgstr "Selecció d'element opcional"
+msgstr "Seleccioneu un element opcional"
 
 # skip-rule: apps-edu_plot,t-sc-plot
 #. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Plot options"> <frame label="Optional item selection"> <input label="...">
