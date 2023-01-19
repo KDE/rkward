@@ -9,13 +9,13 @@
 # Serdar Soytetir <tulliana@gmail.com>, 2007.
 # ertugrulerata <ertugrulerata@gmail.com>, 2007.
 # Volkan Gezer <volkangezer@gmail.com>, 2015.
-# Emir SARI <emir_sari@icloud.com>, 2022.
+# Emir SARI <emir_sari@icloud.com>, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: yenitr\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-28 00:45+0000\n"
-"PO-Revision-Date: 2022-12-31 18:45+0300\n"
+"PO-Revision-Date: 2023-01-18 22:34+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.0\n"
+"X-Generator: Lokalize 22.12.1\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:56+0000\n"
 
 #, kde-format
@@ -546,7 +546,7 @@ msgstr "Veri görnümünü düzenlemek için bu alanlara çift tıklayın."
 #: rkward/dataeditor/rkvareditmodel.cpp:690
 #, kde-format
 msgid "Double click on these fields to edit factor levels."
-msgstr "Faktör seviyelerini düzenlemek için bu alanlara çift tıklayın."
+msgstr "Faktör düzeylerini düzenlemek için bu alanlara çift tıklayın."
 
 #: rkward/dataeditor/twintable.cpp:99
 #, kde-format
@@ -1213,7 +1213,7 @@ msgstr "Tüm güncellemeri seç"
 #: rkward/dialogs/rkloadlibsdialog.cpp:644
 #, kde-format
 msgid "Show only packages matching:"
-msgstr "Sadece eşleşen paketleri göster:"
+msgstr "Yalnızca eşleşen paketleri göster:"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:646
 #, kde-format
@@ -1242,7 +1242,7 @@ msgid ""
 msgstr ""
 "<p>Bazı R paketleri RKWard için eklentilerle birlikte gelir. R işlevlerine "
 "ek olarak bir grafik kullanıcı arabirimi sağladığı anlamına da gelmektedir. "
-"Sadece bu tür paketleri göstermek için bu kutuyu işaretleyin.</p><p></p>"
+"Yalnızca bu tür paketleri göstermek için bu kutuyu işaretleyin.</p><p></p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:661
 #, kde-format
@@ -2347,7 +2347,7 @@ msgid ""
 "index column is read only). To remove levels at the end of the list, just "
 "set them to empty."
 msgstr ""
-"Düzeyler, sadece 1'le başlayan (indeks sütunu salt okunur) ardışık tam "
+"Düzeyler, yalnızca 1'le başlayan (indeks sütunu salt okunur) ardışık tam "
 "sayılara atanabilir. Listenin sonundaki düzeyleri silmek için onları "
 "boşaltın."
 
@@ -2463,7 +2463,7 @@ msgstr "Aranacak alanlar"
 #: rkward/misc/rkobjectlistview.cpp:289
 #, kde-format
 msgid "Top level objects, only"
-msgstr "Sadece, üst seviye nesneler"
+msgstr "Yalnızca, üst seviye nesneler"
 
 #: rkward/misc/rkobjectlistview.cpp:290
 #, kde-format
@@ -2493,7 +2493,7 @@ msgstr "Tüm nesneleri göster"
 #: rkward/misc/rkobjectlistview.cpp:301
 #, kde-format
 msgid "Show functions, only"
-msgstr "Sadece, fonksiyonları göster"
+msgstr "Yalnızca, fonksiyonları göster"
 
 #: rkward/misc/rkobjectlistview.cpp:302
 #, kde-format
@@ -3061,23 +3061,24 @@ msgstr "'%1'-özellik verilmemiş. '%2' farzediliyor"
 #: rkward/misc/xmlhelper.cpp:260
 #, kde-format
 msgid "Illegal attribute value. Allowed values are one of '%1', only."
-msgstr "Geçersiz nitelik değeri. İzin verilen değerler sadece '%1' in biridir."
+msgstr ""
+"Geçersiz nitelik değeri. İzin verilen değerler yalnızca '%1' in biridir."
 
 #: rkward/misc/xmlhelper.cpp:274
 #, kde-format
 msgid "Illegal attribute value. Only integer numbers are allowed."
-msgstr "Geçersiz nitelik değeri. Sadece tam sayılara izin verilir."
+msgstr "Geçersiz nitelik değeri. Yalnızca tam sayılara izin verilir."
 
 #: rkward/misc/xmlhelper.cpp:290
 #, kde-format
 msgid "Illegal attribute value. Only real numbers are allowed."
-msgstr "Geçersiz nitelik değeri. Sadece gerçek sayılara izin verilir."
+msgstr "Geçersiz nitelik değeri. Yalnızca gerçek sayılara izin verilir."
 
 #: rkward/misc/xmlhelper.cpp:308
 #, kde-format
 msgid "Illegal attribute value. Allowed values are '%1' or '%2', only."
 msgstr ""
-"Geçersiz nitelik değeri. İzin verilen değerler sadece '%1' ya da '%2' "
+"Geçersiz nitelik değeri. İzin verilen değerler yalnızca '%1' ya da '%2' "
 "değerleridir."
 
 #: rkward/misc/xmlhelper.cpp:340
@@ -3318,7 +3319,7 @@ msgstr "Tüm Model"
 #: rkward/plugin/rkformula.cpp:65
 #, kde-format
 msgid "Main Effects only"
-msgstr "Sadece ana etkiler"
+msgstr "Yalnızca ana etkiler"
 
 #: rkward/plugin/rkformula.cpp:67
 #, kde-format
@@ -4073,7 +4074,7 @@ msgstr "Tam olarak seçimi kopyala"
 #: rkward/rkconsole.cpp:877
 #, kde-format
 msgid "Copy commands, only"
-msgstr "Komutları kopyala, sadece"
+msgstr "Komutları kopyala, yalnızca"
 
 #: rkward/rkconsole.cpp:884
 #, kde-format
@@ -4957,7 +4958,7 @@ msgstr ""
 #, fuzzy, kde-format
 #| msgid "Top level objects, only"
 msgid "For masked objects, only"
-msgstr "Sadece, üst seviye nesneler"
+msgstr "Yalnızca, üst seviye nesneler"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:91
 #, kde-format
@@ -5067,7 +5068,7 @@ msgstr "Ekleme"
 #: rkward/settings/rksettingsmoduleconsole.cpp:62
 #, kde-format
 msgid "Add only if single line"
-msgstr "Sadece tek satırsa ekle"
+msgstr "Yalnızca tek satırsa ekle"
 
 #: rkward/settings/rksettingsmoduleconsole.cpp:62
 #, kde-format
@@ -5098,7 +5099,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduledebug.cpp:37
 #, kde-format
 msgid "Debug level"
-msgstr "Hata ayıklama seviyesi"
+msgstr "Hata ayıklama düzeyi"
 
 #: rkward/settings/rksettingsmoduledebug.cpp:47
 #, kde-format
@@ -5660,7 +5661,7 @@ msgstr "Uyarıları hatalara çevir"
 #: rkward/settings/rksettingsmoduler.cpp:82
 #, kde-format
 msgid "Decimal character (only for printing)"
-msgstr "Ondalık karakter (sadece yazdırma için)"
+msgstr "Ondalık karakter (yalnızca yazdırma için)"
 
 #: rkward/settings/rksettingsmoduler.cpp:89
 #, kde-format
@@ -5953,7 +5954,7 @@ msgid ""
 "For now, settings only apply to new commands. All previous commands remain "
 "visible/invisible."
 msgstr ""
-"Şimdiki ayarlar sadece yeni komutlara uygulanır.  Geri kalan tüm geçmiş "
+"Şimdiki ayarlar yalnızca yeni komutlara uygulanır.  Geri kalan tüm geçmiş "
 "komutları göster/gizle."
 
 #: rkward/settings/rksettingsmodulewatch.cpp:123
@@ -7155,7 +7156,7 @@ msgid ""
 "This will clear the plot history for all device windows, not just this one. "
 "If this is not your intent, press cancel, below."
 msgstr ""
-"Sadece bunun için değil, tüm aygıt pencereleri için çizim geçmişini "
+"Yalnızca bunun için değil, tüm aygıt pencereleri için çizim geçmişini "
 "temizler. İstediğiniz bu değilse, aşağıdan iptal düğmesine basın."
 
 #: rkward/windows/rkwindowcatcher.cpp:676
