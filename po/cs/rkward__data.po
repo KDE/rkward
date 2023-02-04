@@ -1,21 +1,21 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
-# Vít Pelčák <vit@pelcak.org>, 2015.
+# Vít Pelčák <vit@pelcak.org>, 2015, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-04-08 00:41+0000\n"
-"PO-Revision-Date: 2015-01-08 16:17CET\n"
-"Last-Translator: Vít Pelčák <vit@pelcak.org>\n"
+"PO-Revision-Date: 2023-02-02 14:20+0100\n"
+"Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 2.0\n"
+"X-Generator: Lokalize 22.12.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -31,7 +31,7 @@ msgstr "vit@pelcak.org"
 #: rkward/plugins/data.pluginmap:5
 #, kde-format
 msgid "Data transformation and conversion"
-msgstr ""
+msgstr "Transformace a převod dat"
 
 #. i18n: ectx: <about shortinfo="...">
 #: rkward/plugins/data.pluginmap:5
@@ -45,7 +45,7 @@ msgstr ""
 #: rkward/plugins/data.pluginmap:19
 #, kde-format
 msgid "Generate random data"
-msgstr ""
+msgstr "Generovat náhodná data"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Sort data) <dialog label="...">
@@ -70,7 +70,7 @@ msgstr ""
 #: rkward/plugins/data/recode_categorical.xml:24
 #, kde-format
 msgid "Recode categorical data"
-msgstr ""
+msgstr "Překódovat data kategorií"
 
 #. i18n: ectx: <hierarchy> <menu label="...">
 #: rkward/plugins/data.pluginmap:26
@@ -82,7 +82,7 @@ msgstr "Data"
 #: rkward/plugins/data/generate_random.xml:17
 #, kde-format
 msgid "Generate random data (normal distribution)"
-msgstr ""
+msgstr "Generovat náhodná data (normální rozložení)"
 
 #. i18n: ectx: (Generate random data (normal distribution)) <dialog label="Generate random data (normal distribution)"> <spinbox label="...">
 #: rkward/plugins/data/generate_random.xml:19
@@ -236,7 +236,7 @@ msgstr ""
 #: rkward/plugins/data/recode_categorical.rkh:49
 #, kde-format
 msgid "<link href=\"rkward://rhelp/recode\"/>"
-msgstr ""
+msgstr "<link href=\"rkward://rhelp/recode\"/>"
 
 #. i18n: ectx: (Recode categorical data) <technical>
 #: rkward/plugins/data/recode_categorical.rkh:56
@@ -490,7 +490,7 @@ msgstr ""
 #: rkward/plugins/data/sort.rkh:23
 #, kde-format
 msgid "<link href=\"rkward://rhelp/order\"/>"
-msgstr ""
+msgstr "<link href=\"rkward://rhelp/order\"/>"
 
 #. i18n: ectx: (Sort data)
 #: rkward/plugins/data/sort.xml:34
@@ -719,7 +719,7 @@ msgstr ""
 #: rkward/plugins/data/subset_dataframe.rkh:58
 #, kde-format
 msgid "<link href=\"rkward://rhelp/subset\"/>"
-msgstr ""
+msgstr "<link href=\"rkward://rhelp/subset\"/>"
 
 #. i18n: ectx: (Subset of data) <dialog label="...">
 #: rkward/plugins/data/subset_dataframe.xml:68

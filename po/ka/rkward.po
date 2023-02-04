@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-28 00:45+0000\n"
-"PO-Revision-Date: 2023-01-01 08:11+0100\n"
+"PO-Revision-Date: 2023-02-03 17:04+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -476,17 +476,17 @@ msgstr ""
 #: rkward/dataeditor/twintable.cpp:99
 #, kde-format
 msgid "Cuts the selected section and puts it to the clipboard"
-msgstr ""
+msgstr "მონიშნული სექციის ამოჭრა და ბაფერში მოთავსება"
 
 #: rkward/dataeditor/twintable.cpp:101
 #, kde-format
 msgid "Copies the selected section to the clipboard"
-msgstr ""
+msgstr "მონიშნული სექციის ბაფერში კოპირება"
 
 #: rkward/dataeditor/twintable.cpp:104
 #, kde-format
 msgid "Pastes the clipboard contents to current position"
-msgstr ""
+msgstr "ბაფერის შემცველობის მიმდინარე მდებარეობაზე ჩასმა"
 
 #: rkward/dataeditor/twintable.cpp:107
 #, kde-format
@@ -586,7 +586,7 @@ msgstr "ამ მწკრივის წაშლა (%1)"
 #: rkward/dataeditor/twintable.cpp:413
 #, kde-format
 msgid "Inserting clipboard contents..."
-msgstr ""
+msgstr "ბაფერის შემცველობის ჩასმა..."
 
 #: rkward/dialogs/rkerrordialog.cpp:43
 #, kde-format
@@ -736,7 +736,7 @@ msgstr ""
 #: rkward/dialogs/rkerrordialog.cpp:146
 #, kde-format
 msgid "Gathering setup information"
-msgstr ""
+msgstr "მორგების ინფორმაციის მოგროვება"
 
 #: rkward/dialogs/rkimportdialog.cpp:29
 #, kde-format
@@ -791,7 +791,7 @@ msgstr ""
 #: rkward/dialogs/rkimportdialog.cpp:95 rkward/dialogs/rkimportdialog.cpp:113
 #, kde-format
 msgid "Try another method"
-msgstr ""
+msgstr "სხვა მეთოდი სცადეთ"
 
 #: rkward/dialogs/rkimportdialog.cpp:101
 #, kde-format
@@ -1081,7 +1081,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:665
 #, kde-format
 msgid "Install suggested packages"
-msgstr ""
+msgstr "მინიშნებული პაკეტების დაყენება"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:667
 #, kde-format
@@ -2060,7 +2060,7 @@ msgstr ""
 #: rkward/misc/editformatdialog.cpp:49
 #, kde-format
 msgid "Default setting"
-msgstr ""
+msgstr "ნაგულისხმები პარამეტრი"
 
 #: rkward/misc/editformatdialog.cpp:51
 #, kde-format
@@ -3715,7 +3715,7 @@ msgstr "&ფაილი"
 #: rkward/windows/rkhelpwindow.rc:17 rkward/windows/rkoutputwindow.rc:23
 #, kde-format
 msgid "&View"
-msgstr "_ხედი"
+msgstr "&ხედი"
 
 #. i18n: ectx: Menu (run)
 #: rkward/rkconsolepart.rc:36 rkward/rkwardui.rc:58
@@ -3905,7 +3905,7 @@ msgstr ""
 #: rkward/rkward.cpp:524
 #, kde-format
 msgid "Opens a recently used file"
-msgstr ""
+msgstr "ამჟამად გამოყენებული ფაილის გახსნა"
 
 #: rkward/rkward.cpp:527
 #, kde-format
@@ -4988,7 +4988,7 @@ msgstr "SVG"
 #: rkward/settings/rksettingsmoduleoutput.cpp:146
 #, kde-format
 msgid "JPG"
-msgstr ""
+msgstr "JPG"
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:151
 #, kde-format
@@ -5357,7 +5357,7 @@ msgstr ""
 #, kde-format
 msgctxt "verb"
 msgid "Remove"
-msgstr "ამო_ღება"
+msgstr "წაშლა"
 
 #: rkward/settings/rksettingsmoduler.cpp:596
 #, kde-format
@@ -5792,7 +5792,7 @@ msgstr ""
 #: rkward/windows/rkcommandlog.cpp:278
 #, kde-format
 msgid "Configure"
-msgstr ""
+msgstr "კონფიგურირება"
 
 #: rkward/windows/rkdebugconsole.cpp:44
 #, kde-format
@@ -6047,7 +6047,7 @@ msgstr ""
 #: rkward/windows/rkhtmlwindow.cpp:992
 #, kde-format
 msgid "Zoom Out"
-msgstr "და_პატარავება"
+msgstr "დაპატარავება"
 
 #: rkward/windows/rkhtmlwindow.cpp:996
 #, kde-format
@@ -6759,7 +6759,7 @@ msgstr ""
 #: rkward/windows/robjectbrowser.cpp:231
 #, kde-format
 msgid "Rename object"
-msgstr ""
+msgstr "ობიექტის სახელის გადარქმევა"
 
 #: rkward/windows/robjectbrowser.cpp:231
 #, kde-format

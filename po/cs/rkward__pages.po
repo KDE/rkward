@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
-# Vít Pelčák <vit@pelcak.org>, 2014, 2015, 2018.
+# Vít Pelčák <vit@pelcak.org>, 2014, 2015, 2018, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-07-18 00:41+0000\n"
-"PO-Revision-Date: 2018-04-27 09:44+0100\n"
+"PO-Revision-Date: 2023-02-02 14:20+0100\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 2.0\n"
+"X-Generator: Lokalize 22.12.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -31,7 +31,7 @@ msgstr "vit@pelcak.org"
 #: rkward/pages/rkward_addons.rkh:3
 #, kde-format
 msgid "RKWard Add-Ons"
-msgstr ""
+msgstr "Doplňky pro RKWard"
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:4
@@ -91,7 +91,7 @@ msgstr ""
 #: rkward/pages/rkward_addons.rkh:19
 #, kde-format
 msgid "R packages"
-msgstr ""
+msgstr "Balíčky R"
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="R packages">
 #: rkward/pages/rkward_addons.rkh:19
@@ -117,7 +117,7 @@ msgstr ""
 #: rkward/pages/rkward_addons.rkh:27
 #, kde-format
 msgid "Kate Add-ons"
-msgstr ""
+msgstr "Doplňky Kate"
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="Kate Add-ons">
 #: rkward/pages/rkward_addons.rkh:27
@@ -138,7 +138,7 @@ msgstr ""
 #: rkward/pages/rkward_addons.rkh:34
 #, kde-format
 msgid "RKWard Plugins"
-msgstr ""
+msgstr "Moduly pro RKWard"
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="RKWard Plugins">
 #: rkward/pages/rkward_addons.rkh:34
@@ -171,7 +171,7 @@ msgstr ""
 #: rkward/pages/rkward_addons.rkh:42
 #, kde-format
 msgid "Creating your own RKWard Plugins"
-msgstr ""
+msgstr "Vytváření vlastních modulů pro RKWard"
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="Creating your own RKWard Plugins">
 #: rkward/pages/rkward_addons.rkh:42
@@ -486,7 +486,7 @@ msgstr ""
 #: rkward/pages/rkward_for_new_users.rkh:3
 #, kde-format
 msgid "RKWard for new Users"
-msgstr ""
+msgstr "RKWard pro nové uživatele"
 
 #. i18n: ectx: (RKWard for new Users) <summary>
 #: rkward/pages/rkward_for_new_users.rkh:4
@@ -659,7 +659,7 @@ msgstr ""
 #: rkward/pages/rkward_for_r_users.rkh:3
 #, kde-format
 msgid "RKWard for R Users"
-msgstr ""
+msgstr "RKWard pro uživatele R"
 
 #. i18n: ectx: (RKWard for R Users) <summary>
 #: rkward/pages/rkward_for_r_users.rkh:4
@@ -959,7 +959,7 @@ msgstr ""
 #: rkward/pages/rkward_incompatible_version.rkh:3
 #, kde-format
 msgid "Version incompatibilities"
-msgstr ""
+msgstr "Nekompatibilita verzí"
 
 #. i18n: ectx: (Version incompatibilities) <summary>
 #: rkward/pages/rkward_incompatible_version.rkh:4
@@ -1041,7 +1041,7 @@ msgstr ""
 #: rkward/pages/rkward_output.rkh:11
 #, kde-format
 msgid "Producing RKWard output from R"
-msgstr ""
+msgstr "Vytvářím výstup RKWard z R"
 
 #. i18n: ectx: (RKWard Output) <section title="Producing RKWard output from R">
 #: rkward/pages/rkward_output.rkh:11
@@ -1491,7 +1491,7 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:3
 #, kde-format
 msgid "Trouble Shooting / FAQ"
-msgstr ""
+msgstr "Řešení problémů / FAQ"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <summary>
 #: rkward/pages/rkward_trouble_shooting.rkh:4
@@ -1747,49 +1747,51 @@ msgstr ""
 #: rkward/pages/rkward_welcome.rkh:3
 #, kde-format
 msgid "Welcome to RKWard"
-msgstr ""
+msgstr "Vítejte v aplikaci RWKard"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:5
 #, kde-format
 msgid "My recent script files"
-msgstr ""
+msgstr "Moje nedávné skripty"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:7
 #, kde-format
 msgid "My recent workspaces"
-msgstr ""
+msgstr "Moje nedávné pracovní plochy"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:9
 #, kde-format
 msgid "My recent output files"
-msgstr ""
+msgstr "Moje nedávné výstupní soubory"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:11
 #, kde-format
 msgid "Import or enter data"
-msgstr ""
+msgstr "Importujte nebo zadejte data"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Import or enter data">
 #: rkward/pages/rkward_welcome.rkh:11
 #, kde-format
 msgid "<link href=\"rkward://actions/new_data_frame\">Enter new data</link>"
 msgstr ""
+"<link href=\"rkward://actions/new_data_frame\">Zadejte nová data</link>"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Import or enter data">
 #: rkward/pages/rkward_welcome.rkh:11
 #, kde-format
 msgid "<link href=\"rkward://actions/import_assistant\">Import data</link>"
 msgstr ""
+"<link href=\"rkward://actions/import_assistant\">Importujte data</link>"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:18
 #, kde-format
 msgid "Useful settings"
-msgstr ""
+msgstr "Užitečné nastavení"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
 #: rkward/pages/rkward_welcome.rkh:18
@@ -1798,6 +1800,8 @@ msgid ""
 "<link href=\"rkward://actions/rpackage_install\">Install R and RKWard "
 "packages</link>"
 msgstr ""
+"<link href=\"rkward://actions/rpackage_install\">Nainstalujte R a balíčky "
+"RKWard</link>"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
 #: rkward/pages/rkward_welcome.rkh:18
@@ -1806,6 +1810,8 @@ msgid ""
 "‎<link href=\"rkward://settings/addons\">Further add-on related settings (e."
 "g., git/project integration)‎</link>"
 msgstr ""
+"‎<link href=\"rkward://settings/addons\">Další nastavení doplňků (např. "
+"integrace git/projektů)‎</link>"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
 #: rkward/pages/rkward_welcome.rkh:18
@@ -1814,12 +1820,14 @@ msgid ""
 "‎<link href=\"rkward://settings/general\">Startup options</link> (including "
 "this page)‎"
 msgstr ""
+"‎<link href=\"rkward://settings/general\">Volby při spuštění</link> (včetně "
+"této stránky)‎"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:26
 #, kde-format
 msgid "Documentation starting points"
-msgstr ""
+msgstr "Dokumentace a výchozí body"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Documentation starting points">
 #: rkward/pages/rkward_welcome.rkh:26
@@ -1828,6 +1836,8 @@ msgid ""
 "External links: <link href=\"https://rkward.kde.org/\">project homepage</"
 "link>"
 msgstr ""
+"Externí odkazy: <link href=\"https://rkward.kde.org/\">domovská stránka "
+"projektu</link>"
 
 #. i18n: ectx: (Workspace Browser) <title>
 #: rkward/pages/rkward_workspace_browser.rkh:3
