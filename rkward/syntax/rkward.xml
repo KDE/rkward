@@ -113,7 +113,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 			<RegExpr attribute="Output Index" context="#stay" String="([ ]{0,2}|[ ]*\[)[0-9]+,?[0-9]*\]?\:?(?![.0-9]|.*[:,.;]$)" column="0"/>
 			<RegExpr attribute="Output Index" context="#stay" String="([ ]+\[,[1-9]+[0-9]*\])+$" column="0"/>
 			<!-- Floats are hard to catch in R Output -->
-			<RegExpr attribute="Output Float" context="#stay" String="(?&lt;=&lt;|&gt;|\(|\[| |^)-?([1-9][0-9]*|0)(\.[0-9]*)?i?(e[-+]?[ ]{0,3}[0-9]+)?(?![0-9a-zA-Z/_\~\-\]]|[.,;:][^ \t])"/>
+			<RegExpr attribute="Output Float" context="#stay" String="(?&lt;=&lt;|&gt;|\(|\[| |^)-?([1-9][0-9]*|0)(\.[0-9]*)?i?(e[-+]?[ ]{0,3}[0-9]+)?(?![0-9a-zA-Z/_\~\-\]+]|[.,;:][^ \t])"/>
 			<WordDetect attribute="Output NA" context="#stay" String="NA"/>
 			<WordDetect attribute="Output True" context="#stay" String="TRUE"/>
 			<WordDetect attribute="Output False" context="#stay" String="FALSE"/>
