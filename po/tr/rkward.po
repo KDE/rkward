@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: yenitr\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-28 00:45+0000\n"
-"PO-Revision-Date: 2023-01-18 22:34+0300\n"
+"PO-Revision-Date: 2023-02-08 20:19+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.1\n"
+"X-Generator: Lokalize 22.12.2\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:56+0000\n"
 
 #, kde-format
@@ -670,7 +670,7 @@ msgstr "Bu hücreyi (%1) sil"
 #: rkward/dataeditor/twintable.cpp:413
 #, kde-format
 msgid "Inserting clipboard contents..."
-msgstr "Pano içerikleri ilave ediliyor..."
+msgstr "Pano içeriği ekleniyor..."
 
 #: rkward/dialogs/rkerrordialog.cpp:43
 #, kde-format
@@ -708,11 +708,11 @@ msgid ""
 "sure to fill in the missing bits - in English - where indicated, especially "
 "in the \"Comment\" field.</p>"
 msgstr ""
-"<p><b>Hangi bilgileri sağlamalıyım ve ne yapmalıyım?</b></p>\"Sorun bildir\" "
-"e tıklamak sizi KDE hata izleme sistemine götürür. Giriş yaptıktan sonra, "
-"bazı bilgiler önceden rapor formuna doldurulacaktır. Lütfen, eksik olan "
-"bitleri - İngilizce olarak - özellikle \"Yorum\" alanına girdiğinizden emin "
-"olun.</p>"
+"<p><b>Hangi bilgileri nasıl sağlamalıyım?</b></p>\"Hata Bildir\"i "
+"tıkladığınızda KDE hata izleme sistemine yönlendirilirsiniz. Oturum açtıktan "
+"sonra, bazı bilgiler rapor formuna önceden doldurulmuş olacaktır. Lütfen "
+"belirtilen yerlerde, özellikle \"Comment\" alanında eksik olan bölümleri "
+"İngilizce olarak doldurduğunuzdan emin olun.</p>"
 
 #: rkward/dialogs/rkerrordialog.cpp:58
 #, kde-format
