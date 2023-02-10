@@ -39,7 +39,6 @@ void RKDBusAPI::openAnyUrl (const QStringList& urls, bool warn_external) {
 	main->activateWindow();
 	main->raise();
 	KWindowSystem::forceActiveWindow (main->winId ());
-	KWindowSystem::raiseWindow (main->winId ());
 	KWindowSystem::demandAttention (main->winId ());
 	// end
 
