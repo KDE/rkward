@@ -38,6 +38,7 @@ msgstr ""
 "X-POFile-SpellExtra: Kate KTextEditor Tab rmarkdown rmd Markdown kbibtex\n"
 "X-POFile-SpellExtra: kdesu kdesudo Journal of Statistical ktexteditor lib\n"
 "X-POFile-SpellExtra: kf\n"
+"X-POFile-IgnoreConsistency: Broken\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
