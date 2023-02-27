@@ -1,17 +1,17 @@
 # Translation of rkward__import_export.po to Catalan
-# Copyright (C) 2015-2022 This_file_is_part_of_KDE
+# Copyright (C) 2015-2023 This_file_is_part_of_KDE
 # This file is distributed under the license LGPL version 2.1 or
 # version 3 or later versions approved by the membership of KDE e.V.
 #
-# Josep M. Ferrer <txemaq@gmail.com>, 2015, 2017, 2018, 2020, 2021, 2022.
+# Josep M. Ferrer <txemaq@gmail.com>, 2015, 2017, 2018, 2020, 2021, 2022, 2023.
 # Antoni Bella Pérez <antonibella5@yahoo.com>, 2018, 2020, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-04-26 00:41+0000\n"
-"PO-Revision-Date: 2022-10-14 13:14+0200\n"
-"Last-Translator: Antoni Bella Pérez <antonibella5@yahoo.com>\n"
+"PO-Revision-Date: 2023-02-26 17:07+0100\n"
+"Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
@@ -1391,6 +1391,7 @@ msgstr "Importa dades SPSS"
 msgid "Import SPSS data files."
 msgstr "Importa fitxers de dades SPSS."
 
+# skip-rule: rst-asterisk1
 #. i18n: ectx: (Loaded from Import SPSS file) <usage>
 #: rkward/plugins/00saveload/import/import_spss.rkh:10
 #, kde-format
@@ -1532,6 +1533,7 @@ msgstr "Importa un fitxer Stata"
 msgid "Import STATA data files."
 msgstr "Importa fitxers de dades STATA."
 
+# skip-rule: rst-asterisk1
 #. i18n: ectx: (Loaded from Import STATA file) <usage>
 #: rkward/plugins/00saveload/import/import_stata.rkh:10
 #, kde-format
