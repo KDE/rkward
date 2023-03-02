@@ -13,6 +13,7 @@
   <name xml:lang="id">RKWard</name>
   <name xml:lang="it">RKWard</name>
   <name xml:lang="ka">RKWard</name>
+  <name xml:lang="ko">RKWard</name>
   <name xml:lang="nl">RKWard</name>
   <name xml:lang="pl">RKWard</name>
   <name xml:lang="pt">RKWard</name>
@@ -129,6 +130,7 @@
       <caption xml:lang="id">Bekerja dengan data di RKWard</caption>
       <caption xml:lang="it">Lavorare coi dati in RKWard</caption>
       <caption xml:lang="ka">მონაცემებთან მუშაობა RKWard-ში</caption>
+      <caption xml:lang="ko">RKward에서 데이터 작업</caption>
       <caption xml:lang="nl">Met gegevens werken in RKWard</caption>
       <caption xml:lang="pl">Praca z danymi w RKWard</caption>
       <caption xml:lang="pt">Lidar com dados no RKward</caption>
