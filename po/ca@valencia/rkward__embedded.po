@@ -1971,7 +1971,7 @@ msgstr "Tancat per la dreta"
 #: rkward/plugins/distributions/../plots/histogram_options.xml:70
 #, kde-format
 msgid "Include in lowest cell"
-msgstr "Incloure en la cel·la inferior"
+msgstr "Inclou en la cel·la inferior"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <text>
 #: rkward/plugins/distributions/../plots/histogram_options.xml:71

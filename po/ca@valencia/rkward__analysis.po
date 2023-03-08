@@ -3172,7 +3172,7 @@ msgstr "variables independents"
 #: rkward/plugins/analysis/regression/linear_regression.xml:13
 #, kde-format
 msgid "Include intercept"
-msgstr "Incloure la intercepció"
+msgstr "Inclou la intercepció"
 
 #. i18n: ectx: (Fitting Linear Models) <dialog label="Fitting Linear Models"> <tab label="Model"> <checkbox label="...">
 #: rkward/plugins/analysis/regression/linear_regression.xml:14
