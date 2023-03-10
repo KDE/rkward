@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: yenitr\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-28 00:45+0000\n"
-"PO-Revision-Date: 2023-02-08 20:19+0300\n"
+"PO-Revision-Date: 2023-03-09 13:33+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.2\n"
+"X-Generator: Lokalize 22.12.3\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:56+0000\n"
 
 #, kde-format
@@ -693,7 +693,7 @@ msgstr ""
 "iyileştirilmesine yardım için zaman ayırdığınız için teşekkür ederiz. "
 "Talebinizi verimli şekilde işleme koymamıza yardımcı olmak için lütfen hata "
 "raporlarınızı veya dileklerinizi <a href=\"%1\">KDE hata izleme sistemine</"
-"a> bildiriniz.. Bunun için bir kullanıcı hesabına ihtiyacınız olduğunu ve "
+"a> bildiriniz.. Bunun için bir kullanıcı hesabına gereksiniminiz olduğunu ve "
 "böylece takip soruları için sizinle iletişim kurabileceğimizi unutmayın. "
 "<b>Hesabınız yoksa, lütfen <a href=\"%2\">bir tane</a>, oluşturun.</b></"
 "p><p>Bunun herhangi bir nedenle mümkün olmadığı durumlarda, hataları "
@@ -3894,9 +3894,9 @@ msgid ""
 "package-management tool, and there you can try to locate and install the "
 "needed package."
 msgstr ""
-"R backend, en son görevi tamamlamak için, ihtiyaç duyduğu şu anda kurulmamış "
-"olan paketi '%1' gösterdi. Paket-yönetim aracı ihtiyaç duyulan paketi "
-"bulmanız ve kurmanız için açılacak."
+"R backend, en son görevi tamamlamak için, gereksinim duyduğu şu anda "
+"kurulmamış olan paketi '%1' gösterdi. Paket-yönetim aracı gereksinim duyulan "
+"paketi bulmanız ve kurmanız için açılacak."
 
 #: rkward/rbackend/rkrinterface.cpp:760
 #, kde-format
@@ -3911,7 +3911,7 @@ msgstr ""
 #: rkward/rbackend/rkrinterface.cpp:860
 #, kde-format
 msgid "R backend requests information"
-msgstr "R backend bilgiye ihtiyaç duyar"
+msgstr "R backend bilgiye gereksinim duyar"
 
 #: rkward/rbackend/rkrinterface.cpp:887
 #, kde-format

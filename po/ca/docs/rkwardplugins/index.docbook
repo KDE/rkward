@@ -3291,7 +3291,7 @@ user (selection from a list of values shown next to this element) --&gt;
 ><para
 >Executeu <command
 >python3 scripts/update_plugin_messages.py --extract-only /path/to/my.pluginmap</command
->. scripts/update_plugin_messages.py actualment no forma part de les versions de codi font, però es pot trobar en un repositori de codi font.</para
+>. scripts/update_plugin_messages.py actualment no forma part de les versions de codi font, però es pot trobar en una extracció  del repositori de codi font.</para
 ></listitem>
 			<listitem
 ><para
