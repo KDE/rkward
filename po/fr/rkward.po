@@ -5520,12 +5520,11 @@ msgstr ""
 "utilisés, mais intégrés dans des fenêtres RKWard. Cette option n'est pas "
 "disponible sur MacOS X.</li><li>Les périphériques spécifiques à la plate-"
 "forme d'origine peuvent être utilisés sans modification, sans l'ajout de "
-"fonctionnalités spécifiques à RKWard.</li></ul></p> <p>Sans tenir compte de "
-"cette configuration, les périphériques d'origine sont toujours accessibles "
-"comme suit. <i>grDevices::X11()</i>, etc.</p><p>L'utilisation d'un "
-"périphérique sur une plate-forme où il n'est pas défini (par exemple "
-"<i>Windows()</i> sur Mac OS X) se rabattra toujours sur le périphérique "
-"<i>RK()</i>.</p>"
+"fonctionnalités spécifiques à RKWard.</li></ul><p>Sans tenir compte de cette "
+"configuration, les périphériques d'origine sont toujours accessibles comme "
+"suit. <i>grDevices::X11()</i>, etc.</p><p>L'utilisation d'un périphérique "
+"sur une plate-forme où il n'est pas défini (par exemple <i>Windows()</i> sur "
+"Mac OS X) se rabattra toujours sur le périphérique <i>RK()</i>.</p>"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:105
 #, kde-format
