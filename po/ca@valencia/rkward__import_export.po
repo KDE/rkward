@@ -665,7 +665,7 @@ msgid ""
 "If checked, and the rows have differing length, they will be padded with "
 "empty values in the imported data."
 msgstr ""
-"Si està activada i les files tenen longituds diferents, es farciran amb "
+"Si està activada i les files tenen llargàries diferents, es farciran amb "
 "valors buits a les dades importades."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Allow escaped characters")
@@ -1424,7 +1424,7 @@ msgid ""
 "list (useful, if the columns in your SPSS data have different lengths)"
 msgstr ""
 "Si cal guardar les dades com un «data.frame». L'alternativa és guardar-les "
-"com una llista (és útil si les columnes de les dades SPSS tenen longituds "
+"com una llista (és útil si les columnes de les dades SPSS tenen llargàries "
 "diferents)"
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Convert Variable labels to RKWard format")
