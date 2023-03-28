@@ -2242,7 +2242,7 @@ msgstr "Comment faire une citation :"
 #: rkward/main.cpp:283
 #, kde-format
 msgid "Peer-reviewed article in the Journal of Statistical Software"
-msgstr "Article relu par les pairs du journal des logiciels de  statistiques"
+msgstr "Article relu par les pairs du journal des logiciels de statistiques"
 
 #: rkward/main.cpp:289
 #, kde-format
