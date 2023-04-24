@@ -2,7 +2,7 @@
 # Copyright (C) 2005 THE it'S COPYRIGHT HOLDER.
 # This file is distributed under the same license as the it package.
 # Daniele Medri <daniele@medri.org>, 2004-2005.
-# Paolo Zamponi <zapaolo@email.it>, 2018, 2019.
+# Paolo Zamponi <feus73@gmail.com>, 2018, 2019.
 # Vincenzo Reale <smart2128vr@gmail.com>, 2020, 2021, 2022.
 #
 #
