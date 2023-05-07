@@ -1,6 +1,6 @@
 /*
 katepluginintegration - This file is part of RKWard (https://rkward.kde.org). Created: Mon Jun 12 2017
-SPDX-FileCopyrightText: 2017-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2017-2023 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -12,6 +12,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QVBoxLayout>
 #include <QChildEvent>
 #include <QComboBox>
+#include <QStatusBar>
 
 #include <KPluginFactory>
 #include <KPluginLoader>
@@ -339,10 +340,10 @@ KatePluginIntegrationWindow::~KatePluginIntegrationWindow() {
 }
 
 
-class KatePluginToolWindow : public RKMDIWindow {
+class KatePluginWindow : public RKMDIWindow {
 	Q_OBJECT
 public:
-	KatePluginToolWindow(QWidget *parent) : RKMDIWindow(parent, RKMDIWindow::KatePluginWindow, true) {
+	KatePluginWindow(QWidget *parent, bool tool_window=true) : RKMDIWindow(parent, RKMDIWindow::KatePluginWindow, tool_window) {
 		RK_TRACE (APP);
 
 		QVBoxLayout *layout = new QVBoxLayout(this);
@@ -351,7 +352,7 @@ public:
 		initializeActivationSignals();
 		setFocusPolicy(Qt::ClickFocus);
 	}
-	~KatePluginToolWindow() {
+	~KatePluginWindow() {
 		RK_TRACE (APP);
 	}
 
@@ -386,7 +387,7 @@ QWidget* KatePluginIntegrationWindow::createToolView (KTextEditor::Plugin *plugi
 
 	RK_DEBUG(APP, DL_DEBUG, "createToolView for %p, %s, position %d, %s", plugin, qPrintable(identifier), pos, qPrintable(text));
 	// TODO: Set proper RKMDIWindow:type
-	KatePluginToolWindow *window = new KatePluginToolWindow(RKWorkplace::mainWorkplace()->view());
+	KatePluginWindow *window = new KatePluginWindow(RKWorkplace::mainWorkplace()->view(), true);
 	window->setCaption(text);
 	window->setWindowIcon(icon);
 	RKToolWindowList::registerToolWindow(window, identifier, (RKToolWindowList::Placement) pos, 0);
@@ -406,6 +407,39 @@ bool KatePluginIntegrationWindow::showToolView (QWidget *widget) {
 		widget->show();
 	}
 	return true;
+}
+
+QWidget *KatePluginIntegrationWindow::toolviewForName(const QString &toolviewName) {
+	RK_TRACE(APP);
+	return RKToolWindowList::findToolWindowById(toolviewName);
+}
+
+void KatePluginIntegrationWindow::addWidget(QWidget *widget) {
+	RK_TRACE(APP);
+
+	RK_DEBUG(APP, DL_DEBUG, "addWidget %p: %s", widget, qPrintable(widget->windowTitle()));
+	// TODO: Set proper RKMDIWindow:type
+	KatePluginWindow *window = new KatePluginWindow(RKWorkplace::mainWorkplace()->view(), false);
+	widget->setParent(window);
+	window->setCaption(widget->windowTitle());
+	widget->show();
+	RKWorkplace::mainWorkplace()->addWindow(window);
+}
+
+#include "../rbackend/rcommand.h"
+#include "rkcommandlog.h"
+void KatePluginIntegrationWindow::showMessage(const QVariantMap &map) {
+	RK_TRACE(APP);
+
+	ROutput::ROutputType severity = ROutput::Output;
+	auto type = map["type"].toString();
+	if (type == QStringLiteral("Error")) severity = ROutput::Error;
+	else if (type == QStringLiteral("Warning")) severity = ROutput::Warning;
+	RKCommandLog::getLog()->addOtherMessage(map["text"].toString(), map["categoryicon"].value<QIcon>(), severity);
+}
+
+void KatePluginIntegrationWindow::insertWidgetInStatusbar(QWidget *widget) {
+	RKWorkplace::mainWorkplace()->statusBar()->insertWidget(0, widget);
 }
 
 KXMLGUIFactory *KatePluginIntegrationWindow::guiFactory () {

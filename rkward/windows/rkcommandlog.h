@@ -1,6 +1,6 @@
 /*
 rkcommandlog - This file is part of the RKWard project. Created: Sun Nov 3 2002
-SPDX-FileCopyrightText: 2002-2010 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2002-2023 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -30,6 +30,8 @@ public:
 	void addInput (RCommand *command);
 /** Adds output to the log_view-window (i.e. replies received) */
 	void newOutput (RCommand *command, ROutput *output_fragment);
+/** Adds output no originating from R. Note: Currently used from kate plugins, only, see katepluginintegration.cpp */
+	void addOtherMessage(const QString &message, const QIcon &icon, ROutput::ROutputType severity);
 
 	static RKCommandLog *getLog () { return rkcommand_log; };
 

@@ -1,6 +1,6 @@
 /*
 katepluginintegration - This file is part of the RKWard project. Created: Mon Jun 12 2017
-SPDX-FileCopyrightText: 2017-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2017-2023 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -97,6 +97,12 @@ private slots:
 	void showViewBar(KTextEditor::View *view);
 	void hideViewBar(KTextEditor::View *view);
 	void addWidgetToViewBar(KTextEditor::View *view, QWidget *bar); */
+
+// New in Kate 2023-07, not yet formalized in KTextEditor
+	QWidget *toolviewForName(const QString &toolviewName);
+	void showMessage(const QVariantMap &map);
+	void addWidget(QWidget *widget);
+	void insertWidgetInStatusbar(QWidget *widget);
 private:
 friend class KatePluginIntegrationApp;
 	KTextEditor::MainWindow *main;

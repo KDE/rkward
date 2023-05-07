@@ -1,6 +1,6 @@
 /*
 rkcommandlog - This file is part of RKWard (https://rkward.kde.org). Created: Sun Nov 3 2002
-SPDX-FileCopyrightText: 2002-2010 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2002-2023 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -71,6 +71,30 @@ void RKCommandLog::addInput (RCommand *command) {
 	if (command->type () & RCommand::Console) return;
 
 	addInputNoCheck (command);
+}
+
+void RKCommandLog::addOtherMessage(const QString &message, const QIcon &icon, ROutput::ROutputType severity) {
+	RK_TRACE(APP);
+
+	if (!icon.isNull()) {
+		auto doc = log_view->document();
+		QUrl uri = QUrl(QString("internalicon://%1.png").arg(icon.name()));
+		doc->addResource(QTextDocument::ImageResource, uri, QVariant(icon.pixmap(16,16)));
+		QTextImageFormat f;
+		f.setWidth(16);
+		f.setHeight(16);
+		f.setName(uri.toString());;
+		log_view->textCursor().insertImage(f);
+	}
+
+	if (severity != ROutput::Output) {
+		QTextBlockFormat f;
+		f.setBackground(QBrush(QColor(255, 255, 255)));
+		log_view->textCursor().mergeBlockFormat(f);
+	}
+	log_view->insertPlainText(message + '\n');
+	log_view->setFontWeight(QFont::Normal);
+	log_view->setTextColor(Qt::black);
 }
 
 void RKCommandLog::addInputNoCheck (RCommand *command) {
