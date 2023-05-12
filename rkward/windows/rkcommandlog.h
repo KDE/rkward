@@ -30,7 +30,7 @@ public:
 	void addInput (RCommand *command);
 /** Adds output to the log_view-window (i.e. replies received) */
 	void newOutput (RCommand *command, ROutput *output_fragment);
-/** Adds output no originating from R. Note: Currently used from kate plugins, only, see katepluginintegration.cpp */
+/** Adds output not originating from R. Note: Currently used from kate plugins, only, see katepluginintegration.cpp */
 	void addOtherMessage(const QString &message, const QIcon &icon, ROutput::ROutputType severity);
 
 	static RKCommandLog *getLog () { return rkcommand_log; };

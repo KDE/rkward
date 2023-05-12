@@ -100,8 +100,8 @@ private slots:
 
 // New in Kate 2023-07, not yet formalized in KTextEditor
 	QWidget *toolviewForName(const QString &toolviewName);
-	void showMessage(const QVariantMap &map);
-	void addWidget(QWidget *widget);
+	bool showMessage(const QVariantMap &map);
+	bool addWidget(QWidget *widget);
 	void insertWidgetInStatusbar(QWidget *widget);
 private:
 friend class KatePluginIntegrationApp;

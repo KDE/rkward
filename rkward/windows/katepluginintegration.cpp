@@ -414,7 +414,7 @@ QWidget *KatePluginIntegrationWindow::toolviewForName(const QString &toolviewNam
 	return RKToolWindowList::findToolWindowById(toolviewName);
 }
 
-void KatePluginIntegrationWindow::addWidget(QWidget *widget) {
+bool KatePluginIntegrationWindow::addWidget(QWidget *widget) {
 	RK_TRACE(APP);
 
 	RK_DEBUG(APP, DL_DEBUG, "addWidget %p: %s", widget, qPrintable(widget->windowTitle()));
@@ -424,11 +424,12 @@ void KatePluginIntegrationWindow::addWidget(QWidget *widget) {
 	window->setCaption(widget->windowTitle());
 	widget->show();
 	RKWorkplace::mainWorkplace()->addWindow(window);
+	return true;
 }
 
 #include "../rbackend/rcommand.h"
 #include "rkcommandlog.h"
-void KatePluginIntegrationWindow::showMessage(const QVariantMap &map) {
+bool KatePluginIntegrationWindow::showMessage(const QVariantMap &map) {
 	RK_TRACE(APP);
 
 	ROutput::ROutputType severity = ROutput::Output;
@@ -436,6 +437,7 @@ void KatePluginIntegrationWindow::showMessage(const QVariantMap &map) {
 	if (type == QStringLiteral("Error")) severity = ROutput::Error;
 	else if (type == QStringLiteral("Warning")) severity = ROutput::Warning;
 	RKCommandLog::getLog()->addOtherMessage(map["text"].toString(), map["categoryicon"].value<QIcon>(), severity);
+	return true;
 }
 
 void KatePluginIntegrationWindow::insertWidgetInStatusbar(QWidget *widget) {
