@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yenitr\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-28 00:45+0000\n"
+"POT-Creation-Date: 2023-05-13 00:42+0000\n"
 "PO-Revision-Date: 2023-03-09 13:33+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -6038,13 +6038,13 @@ msgstr "&Geçmiş"
 msgid "&Window"
 msgstr "&Pencere"
 
-#: rkward/windows/katepluginintegration.cpp:571
+#: rkward/windows/katepluginintegration.cpp:607
 #, kde-format
 msgctxt "where to search"
 msgid "in Current Script"
 msgstr ""
 
-#: rkward/windows/katepluginintegration.cpp:572
+#: rkward/windows/katepluginintegration.cpp:608
 #, fuzzy, kde-format
 #| msgid "Open script file(s)"
 msgctxt "where to search"
@@ -6363,22 +6363,22 @@ msgstr "%1 (Kullanılmıyor)"
 msgid "&Tools Move"
 msgstr "&Araçları Kaydır"
 
-#: rkward/windows/rkcommandlog.cpp:174
+#: rkward/windows/rkcommandlog.cpp:198
 #, kde-format
 msgid "Incomplete statement.\n"
 msgstr "Tamamlanmamış ifade.\n"
 
-#: rkward/windows/rkcommandlog.cpp:176
+#: rkward/windows/rkcommandlog.cpp:200
 #, kde-format
 msgid "Syntax error.\n"
 msgstr "Sözdizimi hatası.\n"
 
-#: rkward/windows/rkcommandlog.cpp:178
+#: rkward/windows/rkcommandlog.cpp:202
 #, kde-format
 msgid "An unspecified error occurred while running the command.\n"
 msgstr "Komut çalışırken belirlenemeyen bir hata oluştu.\n"
 
-#: rkward/windows/rkcommandlog.cpp:278
+#: rkward/windows/rkcommandlog.cpp:302
 #, kde-format
 msgid "Configure"
 msgstr "Yapılandır"

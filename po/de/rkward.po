@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-28 00:45+0000\n"
+"POT-Creation-Date: 2023-05-13 00:42+0000\n"
 "PO-Revision-Date: 2022-07-24 15:13+0200\n"
 "Last-Translator: Frederik Schwarzer <schwarzer@kde.org>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -5996,13 +5996,13 @@ msgstr "&Verlauf"
 msgid "&Window"
 msgstr "&Fenster"
 
-#: rkward/windows/katepluginintegration.cpp:571
+#: rkward/windows/katepluginintegration.cpp:607
 #, kde-format
 msgctxt "where to search"
 msgid "in Current Script"
 msgstr "im aktuellen Skript"
 
-#: rkward/windows/katepluginintegration.cpp:572
+#: rkward/windows/katepluginintegration.cpp:608
 #, kde-format
 msgctxt "where to search"
 msgid "in Open Scripts"
@@ -6313,24 +6313,24 @@ msgstr "%1 (Unbenutzt)"
 msgid "&Tools Move"
 msgstr "&Werkzeuge verschieben"
 
-#: rkward/windows/rkcommandlog.cpp:174
+#: rkward/windows/rkcommandlog.cpp:198
 #, kde-format
 msgid "Incomplete statement.\n"
 msgstr "Unvollständige Aussage.\n"
 
-#: rkward/windows/rkcommandlog.cpp:176
+#: rkward/windows/rkcommandlog.cpp:200
 #, kde-format
 msgid "Syntax error.\n"
 msgstr "Syntax-Fehler.\n"
 
-#: rkward/windows/rkcommandlog.cpp:178
+#: rkward/windows/rkcommandlog.cpp:202
 #, kde-format
 msgid "An unspecified error occurred while running the command.\n"
 msgstr ""
 "Ein nicht spezifizierter Fehler trat auf während der Ausführung des "
 "Befehls.\n"
 
-#: rkward/windows/rkcommandlog.cpp:278
+#: rkward/windows/rkcommandlog.cpp:302
 #, kde-format
 msgid "Configure"
 msgstr "Einrichten"
