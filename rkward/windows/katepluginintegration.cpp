@@ -75,8 +75,13 @@ public:
 		}
 		RKMDIWindow::childEvent(ev);
 	}
+	QWidget* internalWidget() const {
+		return internal_widget;
+	}
 Q_SIGNALS:
 	void toolVisibleChanged(bool);
+private:
+	QWidget* internal_widget;
 };
 
 ///  END  Helper class for tool windows
@@ -426,6 +431,39 @@ bool KatePluginIntegrationWindow::addWidget(QWidget *widget) {
 	widget->show();
 	RKWorkplace::mainWorkplace()->addWindow(window);
 	return true;
+}
+
+void KatePluginIntegrationWindow::activateWidget(QWidget *widget) {
+	RK_TRACE(APP);
+
+	QWidget *w = widget;
+	while (w) {
+		RKMDIWindow *rkw = qobject_cast<RKMDIWindow*>(w);
+		if (rkw) {
+			rkw->activate();
+			return;
+		}
+		w = w->parentWidget();
+	}
+	RK_DEBUG(APP, DL_WARNING, "no such widget found in activateWidget %p: %s", widget, widget ? qPrintable(widget->windowTitle()) : "[null]");
+}
+
+QWidgetList KatePluginIntegrationWindow::widgets() {
+	RK_TRACE(APP);
+
+	QWidgetList ret;
+	auto list = RKWorkplace::mainWorkplace()->getObjectList();
+	for (const auto win : list) {
+		if (win->isType(RKMDIWindow::KatePluginWindow) && win->isType(RKMDIWindow::DocumentWindow)) {
+			auto w = qobject_cast<KatePluginWindow*>(win)->internalWidget();
+			if (w) {
+				ret.append(w);
+			} else {
+				RK_DEBUG(APP, DL_WARNING, "found empty kate plugin mdi wrapper");
+			}
+		}
+	}
+	return ret;
 }
 
 #include "../rbackend/rcommand.h"

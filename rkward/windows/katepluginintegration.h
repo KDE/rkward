@@ -14,6 +14,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KXMLGUIClient>
 
 #include <QMap>
+#include <QWidget>
 
 class KatePluginIntegrationWindow;
 class RKMDIWindow;
@@ -108,6 +109,8 @@ private Q_SLOTS:
 	QWidget *toolviewForName(const QString &toolviewName);
 	bool showMessage(const QVariantMap &map);
 	bool addWidget(QWidget *widget);
+	void activateWidget(QWidget *widget);
+	QWidgetList widgets();
 	void insertWidgetInStatusbar(QWidget *widget);
 private:
 friend class KatePluginIntegrationApp;
