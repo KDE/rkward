@@ -10,7 +10,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
 
@@ -1248,7 +1248,6 @@ msgid_plural ""
 "<p>%1 workspace recovery files exist, the most recent one of which dates "
 "from <i>%2</i>.</p>"
 msgstr[0] ""
-msgstr[1] ""
 
 #: rkward/dialogs/rkrecoverdialog.cpp:40
 #, kde-format
@@ -1296,7 +1295,6 @@ msgid_plural ""
 "You are about to delete %1 recovery files (the most recent one is %2). There "
 "will be no way to bring them back. Really delete them?"
 msgstr[0] ""
-msgstr[1] ""
 
 #: rkward/dialogs/rkrecoverdialog.cpp:61
 #, kde-format
@@ -1538,7 +1536,6 @@ msgstr ""
 msgid "Found %1 plugin."
 msgid_plural "Found %1 plugins."
 msgstr[0] ""
-msgstr[1] ""
 
 #: rkward/dialogs/rksetupwizard.cpp:177
 #, kde-format
