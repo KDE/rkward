@@ -56,7 +56,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		<!-- Default is output context: if a "> " is encountered at line start, pop back to ctxbase (and to command0 from there) --> 
 		<context attribute="Output" lineEndContext="#stay" name="output">
 			<Detect2Chars attribute="Prompt" context="#pop" char="&gt;" char1=" " column="0" lookAhead="true" endRegion="commandRegion"/>
-			<Detect2Chars attribute="Prompt" context="#pop" char="+" char1=" " column="0" lookAhead="true"/>
+			<Detect2Chars attribute="Prompt" context="#pop" char="+" char1=" " column="0" lookAhead="true" endRegion="commandRegion"/>
 			<IncludeRules context="OutputContinuationCheck"/>
 			<IncludeRules context="OutputRules"/>
 		</context>
@@ -81,6 +81,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		<context attribute="Output Tibble" lineEndContext="#stay" name="outputtibble">
 			<!-- If a "> " is encountered at line start, pop back to ctxbase (and to command0 from there) -->
 			<Detect2Chars attribute="Prompt" context="#pop" char="&gt;" char1=" " column="0" lookAhead="true" endRegion="commandRegion"/>
+			<Detect2Chars attribute="Prompt" context="#pop" char="+" char1=" " column="0" lookAhead="true" endRegion="commandRegion"/>
 			
 			<!-- If a "# " is encountered at line start, pop back to output context -->
 			<StringDetect attribute="Prompt" context="#pop" String="# …" column="0" lookAhead="true" endRegion="commandRegion"/>
@@ -100,7 +101,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		<context attribute="Output StrView" lineEndContext="#pop" name="outputstrview">
 			<IncludeRules context="OutputContinuationCheck"/>
 			<RegExpr attribute="Output Index" context="#stay" String="\[[0-9]+\]" firstNonSpace="true"/>
-			<RegExpr attribute="Output StrView Highlight" context="#stay" String="[&lt;].+[&gt;]"/>
+			<RegExpr attribute="Output StrView Highlight" context="#stay" String="[&lt;][^&gt;]+[&gt;]"/>
 		</context>
 		
 		<!-- String context is not highlighted in itself, but used to suppress other highlights (e.g. "1") -->
