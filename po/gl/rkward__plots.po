@@ -1,27 +1,27 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 # Adrián Chaves Fernández <adriyetichaves@gmail.com>, 2015, 2016, 2017.
-# Adrián Chaves (Gallaecio) <adrian@chaves.io>, 2017, 2018, 2019, 2020.
+# Adrián Chaves (Gallaecio) <adrian@chaves.io>, 2017, 2018, 2019, 2020, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-04-11 00:40+0000\n"
-"PO-Revision-Date: 2020-01-05 19:08+0100\n"
+"PO-Revision-Date: 2023-06-18 21:31+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
-"Language-Team: Galician <kde-i18n-doc@kde.org>\n"
+"Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 19.08.3\n"
+"X-Generator: Lokalize 23.04.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Adrián Chaves Fernández"
+msgstr "Adrian Chaves (Gallaecio)"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
@@ -172,18 +172,14 @@ msgstr "Variábel"
 
 #. i18n: ectx: (Loaded from Barplot)
 #: rkward/plugins/plots/barplot.js:29
-#, fuzzy, kde-format
-#| msgctxt "R code comment"
-#| msgid ""
-#| "barplot is a bit picky about attributes, so we need to convert to vector "
-#| "explicitly"
+#, kde-format
 msgctxt "R code comment"
 msgid ""
 "barplot is a bit picky about attributes, so we need to convert to vector or "
 "matrix explicitly"
 msgstr ""
 "Barplot é un pouco esixente no que respecta aos atributos, así que hai que "
-"converter a vector de maneira explícita."
+"converter a vector ou a matriz de maneira explícita."
 
 #. i18n: ectx: (Loaded from Barplot) <summary>
 #: rkward/plugins/plots/barplot.rkh:3
@@ -245,7 +241,7 @@ msgid ""
 "\"/> for details on the dependent options."
 msgstr ""
 "Se existen moitas categorías nos seus datos, pode que teña sentido limitar o "
-"número de categorías para mostrar. Marque esta opción se quere definir un "
+"número de categorías para amosar. Marque esta opción se quere definir un "
 "límite. Consulte <link href=\"rkward://component/limit_vector_length\"/> "
 "para máis información sobre as opcións correspondentes."
 
@@ -514,21 +510,21 @@ msgstr "Función real de Boxplot."
 #, kde-format
 msgctxt "R code comment"
 msgid "Calculate geometric mean"
-msgstr "Calcular a media xeométrica"
+msgstr "Calcular a media xeométrica."
 
 #. i18n: ectx: (Loaded from Boxplot)
 #: rkward/plugins/plots/box_plot.js:67
 #, kde-format
 msgctxt "R code comment"
 msgid "Calculate harmonic mean"
-msgstr "Calcular a media harmónica"
+msgstr "Calcular a media harmónica."
 
 #. i18n: ectx: (Loaded from Boxplot)
 #: rkward/plugins/plots/box_plot.js:70
 #, kde-format
 msgctxt "R code comment"
 msgid "Calculate the interquartile mean"
-msgstr "Calcular a media intercuartílica"
+msgstr "Calcular a media intercuartil."
 
 #. i18n: ectx: (Loaded from Boxplot)
 #: rkward/plugins/plots/box_plot.js:78 rkward/plugins/plots/box_plot.js:80
@@ -676,7 +672,7 @@ msgid ""
 msgstr ""
 "Use esta opción para seleccionar un tipo concreto de media. A media "
 "aritmética é o tipo predeterminado, pero pode seleccionar outro como a media "
-"xeométrica, a media harmónica ou a media intercuartílica (IQM)."
+"xeométrica, a media harmónica ou a media intercuartil (IQM)."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "show standard deviation")
 #: rkward/plugins/plots/box_plot.rkh:28
@@ -805,7 +801,7 @@ msgstr "Lendas"
 #: rkward/plugins/plots/box_plot.xml:60
 #, kde-format
 msgid "Box width"
-msgstr "Anchura das caixas:"
+msgstr "Anchura das caixas"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <radio label="...">
 #: rkward/plugins/plots/box_plot.xml:69
@@ -868,7 +864,7 @@ msgstr "Cor"
 #: rkward/plugins/plots/box_plot.xml:82
 #, kde-format
 msgid "Show mean"
-msgstr "Mostrar a media"
+msgstr "Amosar a media"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <frame label="Show mean"> <spinbox label="...">
 #: rkward/plugins/plots/box_plot.xml:83
@@ -904,7 +900,7 @@ msgstr "Media harmónica"
 #: rkward/plugins/plots/box_plot.xml:89
 #, kde-format
 msgid "Interquartile mean (IQM)"
-msgstr "Media intercuartílica (IQM)"
+msgstr "Media intercuartil (IQM)"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <frame label="Show mean"> <spinbox label="...">
 #: rkward/plugins/plots/box_plot.xml:91
@@ -916,7 +912,7 @@ msgstr "Recorte da media aritmética"
 #: rkward/plugins/plots/box_plot.xml:94
 #, kde-format
 msgid "show standard deviation"
-msgstr "Mostrar a desviación estándar"
+msgstr "Amosar a desviación estándar"
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Options"> <frame label="show standard deviation"> <spinbox label="...">
 #: rkward/plugins/plots/box_plot.xml:95
@@ -980,7 +976,7 @@ msgid ""
 "below."
 msgstr ""
 "Seleccionar un vector numérico para estimar a súa densidade. Ten máis "
-"opcións enbaixo."
+"opcións embaixo."
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/plots/density_plot.rkh:13
@@ -998,7 +994,7 @@ msgid ""
 msgstr ""
 "Tipo de gráfica: curva de densidade simple ou curva coas rexións de maior "
 "densidade marcadas. Para a segunda opción, só está dispoñíbel o núcleo de "
-"suavizado de Gauss (máis información enbaixo)."
+"suavizado de Gauss (máis información embaixo)."
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Smoothing Kernel")
 #: rkward/plugins/plots/density_plot.rkh:19
@@ -1072,21 +1068,21 @@ msgstr ""
 #: rkward/plugins/plots/density_plot.rkh:28
 #, kde-format
 msgid "Line width of the rug."
-msgstr "Anchura de liña da subgráfica unidimiensional."
+msgstr "Anchura de liña da subgráfica unidimensional."
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Side of Rug")
 #: rkward/plugins/plots/density_plot.rkh:29
 #, kde-format
 msgid "Should the rug be shown at the top or at the bottom of the plot?"
 msgstr ""
-"Debería mostrarse a subgráfica unidimiensional na parte superior da gráfica, "
+"Debería amosarse a subgráfica unidimensional na parte superior da gráfica, "
 "ou na parte inferior?"
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/plots/density_plot.rkh:30
 #, kde-format
 msgid "Color to use for drawing the rug."
-msgstr "Cor para debuxar a subgráfica unidimiensional."
+msgstr "Cor para debuxar a subgráfica unidimensional."
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Plot Options")
 #: rkward/plugins/plots/density_plot.rkh:33
@@ -1163,6 +1159,7 @@ msgstr "triangular"
 msgid "epanechnikov"
 msgstr "epanechnikov"
 
+# well-spelled: bipeso
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Smoothing Kernel"> <option label="...">
 #: rkward/plugins/plots/density_plot.xml:55
 #, kde-format
@@ -1175,6 +1172,7 @@ msgstr "bipeso"
 msgid "cosine"
 msgstr "coseno"
 
+# well-spelled: optcoseno
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Smoothing Kernel"> <option label="...">
 #: rkward/plugins/plots/density_plot.xml:57
 #, kde-format
@@ -1321,7 +1319,7 @@ msgstr "Eixo ou título"
 #, kde-format
 msgctxt "R code comment"
 msgid "dotchart() is somewhat picky about data type"
-msgstr "dotchart() é algo esixente sobre o tipo de datos"
+msgstr "dotchart() é algo esixente sobre o tipo de datos."
 
 #. i18n: ectx: (Loaded from Dot chart)
 #. i18n: ectx: (Loaded from Pareto chart)
@@ -1359,7 +1357,7 @@ msgid ""
 msgstr ""
 "Se os seus datos xa son axeitados para representarse, directamente, indíqueo "
 "aquí. En caso contrario, deixe este campo baleiro, e marque a opción "
-"<i><label id=\"tabulate\"/></i> de enbaixo."
+"<i><label id=\"tabulate\"/></i> de embaixo."
 
 #. i18n: ectx: (Loaded from Dot chart) <settings> <setting> (refers to element labelled "Plot Options")
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "Plot Options")
@@ -1465,7 +1463,7 @@ msgstr "Altura das marcas da subgráfica unidimensional"
 #: rkward/plugins/plots/ecdf_plot.rkh:21
 #, kde-format
 msgid "Line width of the rug ticks"
-msgstr "Anchura de liña das marcas da subgráfica unidimiensional"
+msgstr "Anchura de liña das marcas da subgráfica unidimensional"
 
 #. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/plots/ecdf_plot.rkh:22
@@ -1570,7 +1568,7 @@ msgid ""
 "Select a variable to plot a histogram. For available options, see below."
 msgstr ""
 "Seleccionar unha variábel para representar un histograma. Consulte as "
-"opcións dispoñíbeis enbaixo."
+"opcións dispoñíbeis embaixo."
 
 #. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/plots/histogram.rkh:11
@@ -1696,7 +1694,7 @@ msgid ""
 "plot."
 msgstr ""
 "Escoller un vector ou factor para representar. A frecuencia, a frecuencia "
-"acumulativa, a porcentaxe e a porcentaxe acumulativa mostraranse baixo a "
+"acumulativa, a porcentaxe e a porcentaxe acumulativa amosaranse baixo a "
 "gráfica."
 
 #. i18n: ectx: (Loaded from Pareto chart) <settings> <setting> (refers to element labelled "Raw vector to plot")
@@ -1708,7 +1706,7 @@ msgid ""
 "Otherwise, leave this empty, and check the \"Tabulate\" option, above."
 msgstr ""
 "Se os seus datos xa conteñen números de defectos ou custos de defectos, ou "
-"outros datos axeitados para mostrar directamente no diagrama de Pareto, "
+"outros datos axeitados para amosar directamente no diagrama de Pareto, "
 "indíqueo aquí. En caso contrario, deixe este campo baleiro e marque a opción "
 "de «Tabular» enriba."
 
@@ -1719,7 +1717,7 @@ msgid ""
 "Whether to print the frequency, cumulative frequency, percentage and "
 "cumulative percentage below the plot in the output window."
 msgstr ""
-"Se imprimir a frecuencua, a frecuencia acumulativa, a porcentaxe e a "
+"Se imprimir a frecuencia, a frecuencia acumulativa, a porcentaxe e a "
 "porcentaxe acumulativa baixo a gráfica na xanela de saída."
 
 #. i18n: ectx: (Loaded from Pareto chart) <settings> <setting> (refers to element labelled "Plot Options")
@@ -1816,8 +1814,8 @@ msgid ""
 "Density of shading lines (lines per inch). The default value of -1 means no "
 "shading lines are drawn."
 msgstr ""
-"Densidades das liñas de sombra (en liñas por polgada). O valor "
-"predeterminado, -1, desactiva as liñas de sombra."
+"Densidades das liñas de sombra (en liñas por polgada). Co valor "
+"predeterminado, -1, non se debuxan liñas de sombra."
 
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "increment in density")
 #: rkward/plugins/plots/piechart.rkh:28
@@ -2213,7 +2211,7 @@ msgid ""
 "displays down the diagonal."
 msgstr ""
 "A gráfica de matrices de gráficas distribuídas produce matrices de gráficas "
-"distribuídas con pantallas univariadas a través da diagonal."
+"distribuídas con pantallas dunha variábel a través da diagonal."
 
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <usage>
 #: rkward/plugins/plots/scatterplot_matrix.rkh:7
@@ -2364,7 +2362,7 @@ msgstr ""
 #: rkward/plugins/plots/stem.rkh:13
 #, kde-format
 msgid "Select the data to be computed. The vectors need to be numeric."
-msgstr "Escolla o último dos dous vectores supostamente iguais."
+msgstr "Seleccione os datos para computar. Os vectores deben ser numéricos."
 
 #. i18n: ectx: (Loaded from Stem-and-Leaf Plots) <settings> <setting> (refers to element labelled "Plot length (scale)")
 #: rkward/plugins/plots/stem.rkh:15
