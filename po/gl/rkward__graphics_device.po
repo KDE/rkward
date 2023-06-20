@@ -394,7 +394,7 @@ msgid ""
 msgstr ""
 "Seleccione «Outro» na opción de enriba para usar esta opción. Indique o "
 "identificador de dispositivo que usa ghostscript. Execute «ghostscript --"
-"help» (ou «gs --help») nun terminal para mostrar unha lista de dispositivos "
+"help» (ou «gs --help») nun terminal para amosar unha lista de dispositivos "
 "dispoñíbeis."
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="...">

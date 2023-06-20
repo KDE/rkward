@@ -178,7 +178,7 @@ msgstr ""
 #: rkward/agents/showedittextfileagent.cpp:82
 #, kde-format
 msgid "Showing file(s)"
-msgstr "Mostrando os ficheiros"
+msgstr "Amosando os ficheiros"
 
 #: rkward/agents/showedittextfileagent.cpp:86
 #, kde-format
@@ -524,7 +524,7 @@ msgstr "Tipo de dato."
 msgid "Double click on these fields to customize data display."
 msgstr ""
 "Prema dúas veces seguidas sobre estes campos para personalizar como se "
-"mostran os datos."
+"amosan os datos."
 
 #: rkward/dataeditor/rkvareditmodel.cpp:690
 #, kde-format
@@ -579,7 +579,7 @@ msgstr ""
 #: rkward/dataeditor/twintable.cpp:131
 #, kde-format
 msgid "Show / Edit row names"
-msgstr "Mostrar ou editar os nomes das filas"
+msgstr "Amosar ou editar os nomes das filas"
 
 #: rkward/dataeditor/twintable.cpp:134 rkward/dataeditor/twintable.cpp:147
 #, kde-format
@@ -614,7 +614,7 @@ msgstr ""
 "O editor «%1» contén as seguintes columnas duplicadas. Editar esta táboa "
 "podería non ser seguro, e desactivouse. Pode activar de novo a edición se "
 "sabe o que está a facer, pero recoméndaselle encarecidamente que primeiro "
-"arranxe a táboa ou faga unha copia de seguranza dos seus datos."
+"arranxe a táboa ou faga unha copia de seguridade dos seus datos."
 
 #: rkward/dataeditor/twintable.cpp:208
 #, kde-format
@@ -727,7 +727,7 @@ msgstr "Proseguir"
 #: rkward/dialogs/rkerrordialog.cpp:103
 #, kde-format
 msgid "Show Details"
-msgstr "Mostrar os detalles"
+msgstr "Amosar os detalles"
 
 #: rkward/dialogs/rkerrordialog.cpp:105
 #, kde-format
@@ -1200,7 +1200,7 @@ msgstr "Seleccionar todas as actualizacións"
 #: rkward/dialogs/rkloadlibsdialog.cpp:644
 #, kde-format
 msgid "Show only packages matching:"
-msgstr "Mostrar só os paquetes que coincidan con:"
+msgstr "Amosar só os paquetes que coincidan con:"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:646
 #, kde-format
@@ -1208,13 +1208,13 @@ msgid ""
 "<p>You can limit the packages displayed in the list to with names or titles "
 "matching a filter string.</p>"
 msgstr ""
-"<p>Pode liminar os paquetes que se mostran na lista aos nomes ou títulos que "
+"<p>Pode liminar os paquetes que se amosan na lista aos nomes ou títulos que "
 "coincidan cunha cadea de filtro.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:650
 #, kde-format
 msgid "Show only packages providing RKWard dialogs"
-msgstr "Mostrar só os paquetes que fornecen diálogos de RKWard"
+msgstr "Amosar só os paquetes que fornecen diálogos de RKWard"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:651
 #, fuzzy, kde-format
@@ -2457,7 +2457,7 @@ msgstr "Espazo de traballo persoal (ningún obxecto coincide co filtro)"
 #: rkward/misc/rkobjectlistview.cpp:217 rkward/misc/rkobjectlistview.cpp:313
 #, kde-format
 msgid "Show Hidden Objects"
-msgstr "Mostrar os obxectos agochados"
+msgstr "Amosar os obxectos agochados"
 
 #: rkward/misc/rkobjectlistview.cpp:268
 #, kde-format
@@ -2487,24 +2487,24 @@ msgstr ""
 "A profundidade da busca na árbore de obxectos. <ul> <li><i>%1</i> significa "
 "buscar coincidencias só en obxectos que están na ruta de busca (en <i>."
 "GlobalEnv</i> ou nun paquete cargado).</li> <li><i>%2</i> inclúe obxectos "
-"que son fillos directos. Neste caso, a lista mostrará os obxectos da ruta de "
+"que son fillos directos. Neste caso, a lista amosará os obxectos da ruta de "
 "busca que coincidan <i>e</i> os obxectos da ruta de busca que conteñan "
 "obxectos fillo que coincidan.</li>"
 
 #: rkward/misc/rkobjectlistview.cpp:300
 #, kde-format
 msgid "Show all objects"
-msgstr "Mostrar todos os obxectos"
+msgstr "Amosar todos os obxectos"
 
 #: rkward/misc/rkobjectlistview.cpp:301
 #, kde-format
 msgid "Show functions, only"
-msgstr "Mostrar só as funcións"
+msgstr "Amosar só as funcións"
 
 #: rkward/misc/rkobjectlistview.cpp:302
 #, kde-format
 msgid "Show objects excluding functions"
-msgstr "Mostrar os obxectos que non sexan funcións"
+msgstr "Amosar os obxectos que non sexan funcións"
 
 #: rkward/misc/rkobjectlistview.cpp:303
 #, kde-format
@@ -2535,7 +2535,7 @@ msgstr "Descartar os filtros actuais de busca de obxectos"
 #: rkward/misc/rkobjectlistview.cpp:485
 #, kde-format
 msgid "Show Fields"
-msgstr "Mostrar os campos"
+msgstr "Amosar os campos"
 
 #: rkward/misc/rkoutputdirectory.cpp:135
 #, kde-format
@@ -3600,7 +3600,7 @@ msgstr "Seleccionar variábeis"
 #: rkward/plugin/rkvarselector.cpp:62
 #, kde-format
 msgid "Show all environments"
-msgstr "Mostrar todos os ambientes"
+msgstr "Amosar todos os ambientes"
 
 #: rkward/plugin/rkvarselector.cpp:64
 #, kde-format
@@ -3609,20 +3609,20 @@ msgid ""
 "just those in <i>.GlobalEnv</i>. Check this, if you want to select objects "
 "from a loaded package."
 msgstr ""
-"Mostrar os obxectos de todos os ambientes na ruta de <i>search()</i>, en vez "
-"de mostrar só os de <i>.GlobalEnv</i>. Marque esta opción para seleccionar "
+"Amosar os obxectos de todos os ambientes na ruta de <i>search()</i>, en vez "
+"de amosar só os de <i>.GlobalEnv</i>. Marque esta opción para seleccionar "
 "obxectos dun paquete cargado."
 
 #: rkward/plugin/rkvarselector.cpp:71
 #, kde-format
 msgid "Show filter options"
-msgstr "Mostrar as opcións de filtro"
+msgstr "Amosar as opcións de filtro"
 
 #: rkward/plugin/rkvarselector.cpp:127
 #, kde-format
 msgid "Expand all root level objects (show columns of data.frames)"
 msgstr ""
-"Expandir todos os obxectos de nivel raíz (mostrar as columnas de data.frames)"
+"Expandir todos os obxectos de nivel raíz (amosar as columnas de data.frames)"
 
 #: rkward/plugin/rkvarselector.cpp:131
 #, kde-format
@@ -4006,7 +4006,7 @@ msgstr ""
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:632
 #, kde-format
 msgid "Ok to show next plot?"
-msgstr "Quere mostrar a seguinte gráfica?"
+msgstr "Quere amosar a seguinte gráfica?"
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice_frontendtransmitter.cpp:66
 #, kde-format
@@ -4015,9 +4015,9 @@ msgid ""
 "backend. This means, on-screen graphics using the RKWard device will not "
 "work in this session."
 msgstr ""
-"Produciuse un erro ao intentar conectar a infraestrutura para mostrar "
+"Produciuse un erro ao intentar conectar a infraestrutura para amosar "
 "gráficos na pantalla. Isto significa que, durante esta sesión, non poderá "
-"mostrar gráficos na pantalla usando o dispositivo de RKWard."
+"amosar gráficos na pantalla usando o dispositivo de RKWard."
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice_frontendtransmitter.cpp:66
 #, kde-format
@@ -5168,7 +5168,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulegeneral.cpp:70
 #, kde-format
 msgid "Show RKWard Help on Startup"
-msgstr "Mostrar a axuda de RKWard no inicio"
+msgstr "Amosar a axuda de RKWard no inicio"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:72
 #: rkward/settings/rksettingsmodulegeneral.cpp:78
@@ -5498,7 +5498,7 @@ msgstr "Opcións da xanela da saída"
 #: rkward/settings/rksettingsmoduleoutput.cpp:121
 #, kde-format
 msgid "show window on new output"
-msgstr "Mostrar a xanela cando haxa saída nova"
+msgstr "Amosar a xanela cando haxa saída nova"
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:123
 #, kde-format
@@ -5668,7 +5668,7 @@ msgstr ""
 #: rkward/settings/rksettingsmoduler.cpp:75
 #, kde-format
 msgid "Display warnings"
-msgstr "Mostrar os avisos"
+msgstr "Amosar os avisos"
 
 #: rkward/settings/rksettingsmoduler.cpp:77
 #, kde-format
@@ -5703,7 +5703,7 @@ msgstr "Anchura da saída (en número de caracteres)"
 #: rkward/settings/rksettingsmoduler.cpp:93
 #, kde-format
 msgid "Maximum number of elements shown in print"
-msgstr "Número máximo de elementos que se mostran na impresión"
+msgstr "Número máximo de elementos que se amosan na impresión"
 
 #: rkward/settings/rksettingsmoduler.cpp:97
 #, kde-format
@@ -6032,22 +6032,22 @@ msgstr ""
 #: rkward/settings/rksettingsmodulewatch.cpp:123
 #, kde-format
 msgid "always show command"
-msgstr "mostrar sempre a orde"
+msgstr "amosar sempre a orde"
 
 #: rkward/settings/rksettingsmodulewatch.cpp:125
 #, kde-format
 msgid "always show result"
-msgstr "mostrar sempre o resultado"
+msgstr "amosar sempre o resultado"
 
 #: rkward/settings/rksettingsmodulewatch.cpp:127
 #, kde-format
 msgid "show errors"
-msgstr "mostrar os erros"
+msgstr "amosar os erros"
 
 #: rkward/settings/rksettingsmodulewatch.cpp:129
 #, kde-format
 msgid "show/raise window"
-msgstr "mostrar ou elevar a xanela"
+msgstr "amosar ou elevar a xanela"
 
 #: rkward/settings/rksettingsmodulewatch.cpp:132
 #, kde-format
@@ -6563,7 +6563,7 @@ msgid ""
 "cleared every time you close the window.</p><p>Type and severity level of "
 "messages can be controlled from Settings->Configure RKWard->Debug</p>"
 msgstr ""
-"<p>Esta xanela úsase para mostrar mensaxes de depuración relacionadas con "
+"<p>Esta xanela úsase para amosar mensaxes de depuración relacionadas con "
 "RKWard. Está pensada principalmente para desenvolvedores (de complementos). "
 "<b>Non</b> fornece ningunha funcionalidade para depurar código de R.</p> "
 "<p>Teña en conta que a lista de mensaxes baléirase cada vez que pecha a "
@@ -7008,7 +7008,7 @@ msgstr ""
 #: rkward/windows/rktoplevelwindowgui.cpp:133
 #, kde-format
 msgid "Show/Hide %1"
-msgstr "Mostrar ou agochar %1"
+msgstr "Amosar ou agochar %1"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:147
 #, kde-format

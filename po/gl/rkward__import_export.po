@@ -389,9 +389,9 @@ msgid ""
 "probably uses a different locale than your R session. In this case, check "
 "this option, and specify the correct character encoding below."
 msgstr ""
-"Se os caracteres especiais (p. ex. eñes) non se mostran correctamente, o "
-"máis probábel é que o ficheiro de datos use unha configuración rexional "
-"distinta da da súa sesión de R. Nese caso, marque esta opción e indique a "
+"Se os caracteres especiais (p. ex. eñes) non se amosan correctamente, o máis "
+"probábel é que o ficheiro de datos use unha configuración rexional distinta "
+"da da súa sesión de R. Nese caso, marque esta opción e indique a "
 "codificación de caracteres correcta a continuación."
 
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <setting> (refers to element labelled "Convert from:")
@@ -555,7 +555,7 @@ msgid ""
 "Show a preview of the imported data. At most the first 50 rows and columns "
 "will be shown."
 msgstr ""
-"Mostrar unha vista previa dos datos importados. Móstranse como moito as "
+"Amosar unha vista previa dos datos importados. Amósanse como moito as "
 "primeiras 50 filas e columnas."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Row names")
@@ -1365,7 +1365,7 @@ msgstr ""
 #, kde-format
 msgctxt "R code comment"
 msgid "set variable labels for use in RKWard"
-msgstr "estabelecer etiquetas de variábeis para usar en RKWard"
+msgstr "definir etiquetas de variábeis para usar en RKWard"
 
 #. i18n: ectx: (Loaded from Import SPSS file)
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet)
@@ -1425,7 +1425,7 @@ msgid ""
 "as an attribute \"variable.labels\" (see <link href=\"rkward://rhelp/read."
 "spss\"/>)"
 msgstr ""
-"RKWard pode mostrar etiquetas de variábeis como as de SPSS. Marque esta "
+"RKWard pode amosar etiquetas de variábeis como as de SPSS. Marque esta "
 "opción para converter as etiquetas de variábeis de SPSS ao formato de "
 "RKWard. Se non marca esta opción, as etiquetas de variábeis de SPSS seguirán "
 "dispoñíbeis como o atributo «variable.labels» (consulte <link href="
@@ -1465,7 +1465,7 @@ msgid ""
 "performance reasons. Internally, the preview uses a data.frame, even if "
 "<label id=\"data_frame\"/> is not checked."
 msgstr ""
-"Obter unha vista previa dos datos importados. Só se mostran as primeiras 50 "
+"Obter unha vista previa dos datos importados. Só se amosan as primeiras 50 "
 "filas e columnas, por motivos de rendemento. Internamente, a vista previa "
 "usa un data.frame, mesmo se non se marcou <label id=\"data_frame\"/>."
 
@@ -1604,7 +1604,7 @@ msgid ""
 "Preview imported data. Only the first 50 rows and columns are shown, for "
 "performance reasons."
 msgstr ""
-"Obter unha vista previa dos datos importados. Só se mostran as primeiras 50 "
+"Obter unha vista previa dos datos importados. Só se amosan as primeiras 50 "
 "filas e columnas, por motivos de rendemento."
 
 #. i18n: ectx: (Import STATA file) <dialog label="...">
@@ -2299,10 +2299,10 @@ msgid ""
 "defined via output_format will be used, see the documentation on rmarkdown::"
 "render()."
 msgstr ""
-"Estabelecer o formado de destino dos ficheiros exportados. Se escolle ou "
-"«Todos os formatos definidos no documento» ou «O primeiro formato definido "
-"no documento», usaranse os formatos definidos mediante output_format, "
-"consulte a documentación sobre rmarkdown::render()."
+"Definir o formado de destino dos ficheiros exportados. Se escolle ou «Todos "
+"os formatos definidos no documento» ou «O primeiro formato definido no "
+"documento», usaranse os formatos definidos mediante output_format, consulte "
+"a documentación sobre rmarkdown::render()."
 
 #. i18n: ectx: (Loaded from Export RMarkdown) <settings> <setting> (refers to element labelled "Save as")
 #: rkward/plugins/00saveload/save/ExportRMarkdown.rkh:22
@@ -2330,9 +2330,9 @@ msgid ""
 "between various output formats. But be aware that some formats may require "
 "special configuration or templates to produce proper results."
 msgstr ""
-"Estabelecer a versión de Markdown para usar. Os documentos vellos da versión "
-"1 só se renderizan en formato HTML, usando o paquete de Markdown. Se non o "
-"ten claro, déixeo na nova versión, a 2; eses documentos renderízanse usando "
+"Definir a versión de Markdown para usar. Os documentos vellos da versión 1 "
+"só se renderizan en formato HTML, usando o paquete de Markdown. Se non o ten "
+"claro, déixeo na nova versión, a 2; eses documentos renderízanse usando "
 "pandoc, que permite escoller entre varios formatos de saída. Pero teña en "
 "conta que algúns formatos poden requirir unha configuración especial ou "
 "modelos para producir resultados axeitados."
@@ -2938,7 +2938,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.rkh:76
 #, kde-format
 msgid "Set the character to indicate missing data."
-msgstr "Estabeleza o carácter para indicar datos que faltan."
+msgstr "Defina o carácter para indicar datos que faltan."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Newline character")
 #: rkward/plugins/00saveload/save/write_csv.rkh:79
@@ -2948,9 +2948,9 @@ msgid ""
 "operating systems, changing this option might help in case you run into "
 "problems when exchanging files with other people."
 msgstr ""
-"Estabeleza o carácter que se usa para indicar un salto de liña (EOL). Isto "
-"varía dun sistema operativo a outro, cambiar esta opción podería axudar se "
-"ten problemas ao intercambiar ficheiros con outras persoas."
+"Defina o carácter que se usa para indicar un salto de liña (EOL). Isto varía "
+"dun sistema operativo a outro, cambiar esta opción podería axudar se ten "
+"problemas ao intercambiar ficheiros con outras persoas."
 
 #. i18n: ectx: (Export Table / CSV files) <related>
 #: rkward/plugins/00saveload/save/write_csv.rkh:83
@@ -3130,7 +3130,7 @@ msgstr "\\n\\r (LF+CR: RISC OS)"
 #: rkward/plugins/00saveload/setworkdir.rkh:3
 #, kde-format
 msgid "Set or change the current working directory."
-msgstr "Estabelecer ou cambiar o directorio de traballo actual."
+msgstr "Definir ou cambiar o directorio de traballo actual."
 
 #. i18n: ectx: (Loaded from Set the working directory) <usage>
 #: rkward/plugins/00saveload/setworkdir.rkh:6
@@ -3139,14 +3139,14 @@ msgid ""
 "Choose a directory to set/change the working directory for R. The R function "
 "<b>setwd</b> is used to do the job."
 msgstr ""
-"Escoller un directorio para estabelecer ou cambiar o directorio de traballo "
-"de R. Úsase a función <b>setwd</b> de R."
+"Escoller un directorio para definir ou cambiar o directorio de traballo de "
+"R. Úsase a función <b>setwd</b> de R."
 
 #. i18n: ectx: (Set the working directory) <dialog label="...">
 #: rkward/plugins/00saveload/setworkdir.xml:5
 #, kde-format
 msgid "Set the working directory"
-msgstr "Estabelecer o directorio de traballo"
+msgstr "Definir o directorio de traballo"
 
 #. i18n: ectx: (Set the working directory) <dialog label="Set the working directory"> <browser label="...">
 #: rkward/plugins/00saveload/setworkdir.xml:6
@@ -3252,7 +3252,7 @@ msgstr ""
 #: rkward/plugins/import_export.pluginmap:48
 #, kde-format
 msgid "Set Working Directory"
-msgstr "Estabelecer o directorio de traballo"
+msgstr "Definir o directorio de traballo"
 
 #. i18n: ectx: <hierarchy> <menu label="File"> <menu label="...">
 #. i18n: ectx: <context> <menu label="...">

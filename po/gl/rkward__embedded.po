@@ -69,7 +69,7 @@ msgid ""
 "Maximum number of regular groups to display. One additional group \"others\" "
 "will be displayed, if appropriate."
 msgstr ""
-"Número máximo de grupos normais para mostrar. Mostrarase un grupo adicional, "
+"Número máximo de grupos normais para amosar. Amosarase un grupo adicional, "
 "«Outros», se é axeitado."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Sorting")
@@ -833,7 +833,7 @@ msgid ""
 "choose if you want to display or not bar values (labels) and in what place."
 msgstr ""
 "Escolla se quere barras amoreadas, lenda, e cores do arco da vella. Pode "
-"escoller se quere mostrar ou non os valores das barras (etiquetas) e o lugar "
+"escoller se quere amosar ou non os valores das barras (etiquetas) e o lugar "
 "onde deben aparecer."
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Draw Legend")
@@ -864,13 +864,13 @@ msgid ""
 msgstr ""
 "Seleccione un tipo entre barras xustapostas e barras amoreadas. Esta opción "
 "só é relevante para datos de dúas dimensións. Se escolle barras amoreadas, "
-"non pode mostrar os valores das barras, embaixo."
+"non pode amosar os valores das barras, embaixo."
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Display values")
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:15
 #, kde-format
 msgid "Select if you want to display bar values (labels)."
-msgstr "Escolla se quere mostrar os valores das barras (etiquetas)."
+msgstr "Escolla se quere amosar os valores das barras (etiquetas)."
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Placement")
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:16
@@ -1000,7 +1000,7 @@ msgstr "Amoreadas"
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:27
 #, kde-format
 msgid "Display values"
-msgstr "Mostrar os valores"
+msgstr "Amosar os valores"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="...">
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:28
@@ -1795,8 +1795,8 @@ msgid ""
 "(disables) the display of the '<label id=\"addtoplot\"/>' check box."
 msgstr ""
 "<i>allow_addtoplot</i>: Usar un valor verdadeiro («true») aquí activa a "
-"funcionalidade de mostrar a caixa para marcar «<label id=\"addtoplot\"/>». "
-"Un valor falso («false») desactívaa."
+"funcionalidade de amosar a caixa para marcar «<label id=\"addtoplot\"/>». Un "
+"valor falso («false») desactívaa."
 
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default histogram options) <technical>
@@ -1818,7 +1818,7 @@ msgid ""
 "the display of the '<label id=\"freq\"/>' check box."
 msgstr ""
 "<i>allow_freq: Usar un valor verdadeiro («true») aquí activa a "
-"funcionalidade de mostrar a caixa para marcar «<label id=\"freq\"/>». Un "
+"funcionalidade de amosar a caixa para marcar «<label id=\"freq\"/>». Un "
 "valor falso («false») desactívaa."
 
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
@@ -1830,8 +1830,8 @@ msgid ""
 "(disables) the display of the '<label id=\"barlabels\"/>' check box."
 msgstr ""
 "<i>allow_barlabels: Usar un valor verdadeiro («true») aquí activa a "
-"funcionalidade de mostrar a caixa para marcar «<label id=\"barlabels\"/>». "
-"Un valor falso («false») desactívaa."
+"funcionalidade de amosar a caixa para marcar «<label id=\"barlabels\"/>». Un "
+"valor falso («false») desactívaa."
 
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default histogram options) <technical>
@@ -2910,8 +2910,8 @@ msgid ""
 "provided) both the colors are provided as a character vector of length two."
 msgstr ""
 "As dúas opcións anteriores non son para <b>plot.stepfun</b> senón para "
-"<b>ecdf</b>. Só son visíbeis no contexto de «ecdf». Úsanse para estabelecer "
-"a cor das liñas horizontais en y = 0 e y = 1 respectivamente. Concretamente, "
+"<b>ecdf</b>. Só son visíbeis no contexto de «ecdf». Úsanse para definir a "
+"cor das liñas horizontais en y = 0 e y = 1 respectivamente. Concretamente, "
 "este é o argumento <i>col.01line</i> para <b>ecdf</b>. Se só se fornece un "
 "(é dicir, se o outro se define como «Predeterminado») ambas as dúas liñas "
 "terán a cor indicada. En caso contrario (é dicir, se se fornecen as dúas "
@@ -3066,7 +3066,7 @@ msgid ""
 "device the produced error message is displayed."
 msgstr ""
 "Isto pode usarse ou pode non usarse como un complemento incrustado. Cando se "
-"usa nun dispositivo de Trellis móstrase a mensaxe do erro producido."
+"usa nun dispositivo de Trellis amósase a mensaxe do erro producido."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Number of X cells")
 #: rkward/plugins/distributions/../x11device/grid.rkh:10
@@ -3157,7 +3157,7 @@ msgid ""
 "This is the <i>equilogs</i> argument. Uncheck this option to set "
 "<i>equilogs=FALSE</i>."
 msgstr ""
-"Este é o argumento <i>equilogs</i>. Desmarque esta opción para estabelecer "
+"Este é o argumento <i>equilogs</i>. Desmarque esta opción para definir "
 "<i>equilogs=FALSE</i>."
 
 #. i18n: ectx: (Grid options) <dialog label="...">

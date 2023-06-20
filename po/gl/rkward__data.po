@@ -210,7 +210,7 @@ msgid ""
 "values. The preview is limited to the first 500 rows of data, for "
 "performance reasons."
 msgstr ""
-"Mostrar unha vista previa da gravación, a modo de táboa con dúas columnas, "
+"Amosar unha vista previa da gravación, a modo de táboa con dúas columnas, "
 "unha para os valores vellos e outra para os novos. A vista previa está "
 "limitada ás primeiras 500 filas de datos, por cuestións de rendemento."
 
@@ -516,8 +516,8 @@ msgid ""
 "Show a preview of the sorted data. The preview is limited to 200 rows and 50 "
 "columns of data, for performance reasons."
 msgstr ""
-"Mostrar unha vista previa dos datos ordenados. A vista previa está limitada "
-"a 200 filas e 50 columnas de datos, por cuestións de rendemento."
+"Amosar unha vista previa dos datos ordenados. A vista previa está limitada a "
+"200 filas e 50 columnas de datos, por cuestións de rendemento."
 
 #. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Sort order")
 #: rkward/plugins/data/sort.rkh:19
