@@ -2335,8 +2335,7 @@ msgstr "Atopar a atipicidade potencial"
 msgid ""
 "Shows the value with largest difference from sample mean (potential outlier)."
 msgstr ""
-"Mostra o valor coa maior diferenza da media da mostra (atipicidade "
-"potencial)."
+"Amosa o valor coa maior diferenza da media da mostra (atipicidade potencial)."
 
 #. i18n: ectx: (Loaded from Find value with largest difference from the mean) <usage>
 #: rkward/plugins/analysis/outliers/outlier.rkh:7

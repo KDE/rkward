@@ -564,10 +564,10 @@ msgid ""
 "their results will be shown in the console. If this option is not checked, "
 "the commands will only be visible in the Command log, but not in the console."
 msgstr ""
-"<b>Executar as ordes do editor de scripts a través da consola</b>: as ordes "
-"do editor de scripts poden enviarse a través da consola, é dicir, as ordes e "
-"o seu resultado mostraranse na consola. Se non marca esta opción, as ordes "
-"só poderán verse no rexistro de ordes, pero non na consola."
+"<b>Executar as ordes do editor de guións a través da consola</b>: as ordes "
+"do editor de guións poden enviarse a través da consola, é dicir, as ordes e "
+"o seu resultado amosaranse na consola. Se non marca esta opción, as ordes só "
+"poderán verse no rexistro de ordes, pero non na consola."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:56
@@ -940,7 +940,7 @@ msgstr ""
 #: rkward/pages/rkward_for_r_users.rkh:21
 #, kde-format
 msgid "Script Editors"
-msgstr "Editores de scripts"
+msgstr "Editores de guións"
 
 #. i18n: ectx: (RKWard for R Users) <section title="Script Editors">
 #: rkward/pages/rkward_for_r_users.rkh:21
@@ -952,7 +952,7 @@ msgid ""
 "or open an already existing Script file using File->Open R Script File."
 msgstr ""
 "Escribir scripts nun ficheiro adoita ser máis cómodo que escribilos "
-"directamente na consola. Para abrir un novo editor de scripts (con realce de "
+"directamente na consola. Para abrir un novo editor de guións (con realce de "
 "sintaxe e moitas outras funcionalidades), seleccione «Ficheiro → Novo → "
 "Ficheiro de scripting», ou abra un ficheiro de scripting existente mediante "
 "«Ficheiro → Abrir un ficheiro de scripting de R»."
@@ -967,7 +967,7 @@ msgid ""
 msgstr ""
 "Poderá ver que o editor se abre nunha nova xanela no espazo de traballo "
 "principal (a zona da xanela na que probabelmente estea a ler isto). Pode "
-"abrir cantas xanelas de editor de scripts queira ao mesmo tempo."
+"abrir cantas xanelas de editor de guións queira ao mesmo tempo."
 
 #. i18n: ectx: (RKWard for R Users) <section title="Script Editors">
 #: rkward/pages/rkward_for_r_users.rkh:21
@@ -979,7 +979,7 @@ msgid ""
 "type of active window. Hence, if you look at the Run menu while reading "
 "this, there will be no entries."
 msgstr ""
-"Para executar o código dunha xanela de editor de scripts, pode ou ben copiar "
+"Para executar o código dunha xanela de editor de guións, pode ou ben copiar "
 "e pegar o seu contido na consola, ou ben escoller unha das accións do menú "
 "«Executar», como «Executalo todo» ou «Executar a selección». Nota: o contido "
 "dos menús pode cambiar segundo o tipo de xanela que teña activa; polo tanto, "
@@ -1830,7 +1830,7 @@ msgstr ""
 "compoñentes que estean activos no momento. Iso implica, por exemplo, que se "
 "quere editar os atallos do editor de datos, primeiro debe abrir o editor de "
 "datos, e a continuación selecciónar «Configuración → Configurar os atallos». "
-"A meirande parte dos atallos para o editor de scripts xestiónanse por "
+"A meirande parte dos atallos para o editor de guións xestiónanse por "
 "separado, en «Configuración → Configurar o editor → Atallos»."
 
 #. i18n: ectx: (RKWard Shortcut keys) <summary>
@@ -2337,9 +2337,9 @@ msgid ""
 msgstr ""
 "Actualmente RKWard non fornece a funcionalidade de desfacer e refacer en "
 "todos os contextos. Por exemplo, a funcionalidade está dispoñíbel no editor "
-"de scripts, pero non está dispoñíbel para gráficas ou probas terminadas. "
-"Polo tanto é importante que saiba o que fai antes de comezar. Recoméndase "
-"usar copias dos datos orixinais e usar nomes descritivos para todo."
+"de guións, pero non está dispoñíbel para gráficas ou probas terminadas. Polo "
+"tanto é importante que saiba o que fai antes de comezar. Recoméndase usar "
+"copias dos datos orixinais e usar nomes descritivos para todo."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="I think I did something wrong? Where is 'Undo' and 'Redo'?">
 #: rkward/pages/rkward_trouble_shooting.rkh:37
@@ -2558,7 +2558,7 @@ msgid ""
 msgstr ""
 "A opción de «Amosar todos os ambientes» controla se se amosan os ambientes "
 "de paquetes e os seus obxectos. Se desactiva esta opción só se amosarán os "
-"seus obxectos, mentres que se a activa mostraranse tamén todos os obxectos "
+"seus obxectos, mentres que se a activa amosaranse tamén todos os obxectos "
 "predefinidos. Sendo máis técnicos, ao desactivar a opción só se mostra o ."
 "GlobalEnv (consulte <link href=\"rkward://rhelp/globalenv\"/>) , que é o "
 "ambiente no que vostede crear e edita os seus datos."

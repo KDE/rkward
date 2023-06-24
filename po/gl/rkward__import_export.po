@@ -2128,7 +2128,7 @@ msgid ""
 "of R statements, which are then evaluated (see <link href=\"rkward://rhelp/"
 "source\"/>)."
 msgstr ""
-"Seleccione o ficheiro para cargar. Cargarase e interpretarase como un script "
+"Seleccione o ficheiro para cargar. Cargarase e interpretarase como un guión "
 "de instrucións de R, que se avaliarán (consulte <link href=\"rkward://rhelp/"
 "source\"/>)."
 
