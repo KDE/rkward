@@ -10,6 +10,7 @@
   <name xml:lang="en-GB">RKWard</name>
   <name xml:lang="es">RKWard</name>
   <name xml:lang="fr">RKWard</name>
+  <name xml:lang="gl">RKWard</name>
   <name xml:lang="id">RKWard</name>
   <name xml:lang="it">RKWard</name>
   <name xml:lang="ka">RKWard</name>
@@ -30,7 +31,7 @@
   <summary xml:lang="et">KDE R statistikakeele kasutajaliides</summary>
   <summary xml:lang="fi">R-tilastolaskentakielen KDE-käyttöliittymä</summary>
   <summary xml:lang="fr">Interface utilisateur pour le langage de statistiques « R »</summary>
-  <summary xml:lang="gl">Interface de KDE para a linguaxe de estatística R</summary>
+  <summary xml:lang="gl">Interface de KDE para a linguaxe de estatística R.</summary>
   <summary xml:lang="id">Frontend KDE untuk bahasa statistik R</summary>
   <summary xml:lang="it">Interfaccia di KDE per il linguaggio statistico R</summary>
   <summary xml:lang="ka">KDE-ის წინაბოლო სტატისტიკის ენა R-ისთვის</summary>
@@ -84,6 +85,7 @@
       <caption xml:lang="en-GB">Main window, with data editor, object browser, interactive R console, and further tool windows.</caption>
       <caption xml:lang="es">Ventana principal, con el editor de datos, el navegador de objetos, la consola interactiva de R y otras ventanas con herramientas adicionales.</caption>
       <caption xml:lang="fr">Fenêtre principale avec l'éditeur de données, le navigateur d'objets, la console interactive de R et d'autres fenêtres d'outils.</caption>
+      <caption xml:lang="gl">Xanela principal, co editor de datos, o navegador de obxectos, a consola interactiva de R, e outras xanelas de ferramentas.</caption>
       <caption xml:lang="id">Jendela utama, dengan editor data, browser objek, konsol R interaktif, dan jendela alat lebih lanjut.</caption>
       <caption xml:lang="it">Finestra principale, con editor di dati, navigatore di oggetti, console R interattiva e ulteriori finestre degli strumenti.</caption>
       <caption xml:lang="ka">მთავარი ფანჯარა, მონაცემების რედაქტორით, R-ის ინტერაქტიულ კონსოლი და სხვა ხელსაწყოს ფანჯრები.</caption>
@@ -106,6 +108,7 @@
       <caption xml:lang="en-GB">Script editor with active preview</caption>
       <caption xml:lang="es">Editor de scripts con vista previa activa</caption>
       <caption xml:lang="fr">Éditeur de scripts avec aperçu actif.</caption>
+      <caption xml:lang="gl">Editor de guións con vista previa activa.</caption>
       <caption xml:lang="id">Pengedit skrip dengan pratinjau yang aktif</caption>
       <caption xml:lang="it">Editor di script con anteprima attiva</caption>
       <caption xml:lang="ka">სკრიპტის რედაქტორი აქტიური გადახედვით</caption>
@@ -127,6 +130,7 @@
       <caption xml:lang="en-GB">Working with data in RKWard</caption>
       <caption xml:lang="es">Trabajando con datos en RKWard</caption>
       <caption xml:lang="fr">Travailler avec des données dans RKward</caption>
+      <caption xml:lang="gl">Traballando con datos en RKWard.</caption>
       <caption xml:lang="id">Bekerja dengan data di RKWard</caption>
       <caption xml:lang="it">Lavorare coi dati in RKWard</caption>
       <caption xml:lang="ka">მონაცემებთან მუშაობა RKWard-ში</caption>
@@ -147,6 +151,7 @@
       <caption xml:lang="en-GB">Searching objects by name, searching for help pages, and in-app help viewer</caption>
       <caption xml:lang="es">Búsqueda de objetos por nombre, búsqueda de páginas de ayuda y visor de ayuda integrado en la aplicación</caption>
       <caption xml:lang="fr">Recherche d'objets par nom, de pages d'aide ou recherche dans l'afficheur d'aide intégré.</caption>
+      <caption xml:lang="gl">Buscar obxectos por nome, buscar páxinas de axuda, e visor de axuda dentro da aplicación.</caption>
       <caption xml:lang="id">Pencarian objek berdasarkan nama, pencarian untuk halaman bantuan, dan penampil bantuan dalam-apl</caption>
       <caption xml:lang="it">Ricerca di oggetti in base al nome, ricerca di pagine di aiuto e visualizzatore di aiuto all'interno dell'applicazione</caption>
       <caption xml:lang="ka">ობექტის სახელით ძებნა. ვეძებ დახმარების გვერდებს და აპში დახმარების მნახველს</caption>
