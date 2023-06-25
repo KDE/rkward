@@ -4526,7 +4526,7 @@ msgstr ""
 #: rkward/rkward.cpp:775
 #, kde-format
 msgid "Current working directory"
-msgstr "Directorio de traballo actual"
+msgstr "Cartafol de traballo actual"
 
 #: rkward/rkward.cpp:793 rkward/windows/rcontrolwindow.cpp:40
 #, kde-format
@@ -5174,7 +5174,7 @@ msgstr "Amosar a axuda de RKWard no inicio"
 #: rkward/settings/rksettingsmodulegeneral.cpp:78
 #, kde-format
 msgid "Initial working directory"
-msgstr "Directorio de traballo inicial"
+msgstr "Cartafol de traballo inicial"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:75
 #, kde-format
@@ -5208,7 +5208,7 @@ msgid ""
 "workspace on startup, and you have configured RKWard to change to the "
 "directory of loaded workspaces, that directory will take precedence.</p>"
 msgstr ""
-"<p>O directorio de traballo inicial para usar. Teña en conta que se está a "
+"<p>O cartafol de traballo inicial para usar. Teña en conta que se está a "
 "cargar un espazo de traballo no inicio, e configurou RKWard para cambiar o "
 "directorio dos espazos de traballo cargados, dito directorio terá "
 "precedencia.</p>"
@@ -6250,7 +6250,7 @@ msgstr "Entrar no directorio do ficheiro de scripting"
 #, kde-format
 msgid "Change the working directory to the directory of this script"
 msgstr ""
-"Cambiar o directorio de traballo ao directorio deste ficheiro de scripting"
+"Cambiar o cartafol de traballo ao directorio deste ficheiro de scripting"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:404
 #, kde-format
@@ -6578,7 +6578,7 @@ msgstr "Sobre esta xanela"
 #: rkward/windows/rkfilebrowser.cpp:122
 #, kde-format
 msgid "Working directory"
-msgstr "Directorio de traballo"
+msgstr "Cartafol de traballo"
 
 #: rkward/windows/rkfilebrowser.cpp:140 rkward/windows/robjectbrowser.cpp:119
 #, kde-format

@@ -2146,9 +2146,9 @@ msgid ""
 "source file. This may be needed, if the source file refers to further files "
 "using relative paths."
 msgstr ""
-"Se se marca, o directorio de traballo cambiarase ao directorio do ficheiro "
-"de código. Isto podería ser necesario, se o ficheiro de código fai "
-"referencia a outros ficheiros mediante rutas relativas."
+"Se se marca, o cartafol de traballo cambiarase ao directorio do ficheiro de "
+"código. Isto podería ser necesario, se o ficheiro de código fai referencia a "
+"outros ficheiros mediante rutas relativas."
 
 #. i18n: ectx: (Loaded from Source an R file) <settings> <setting> (refers to element labelled "Run in a local environment")
 #: rkward/plugins/00saveload/import/source.rkh:15
@@ -2225,7 +2225,7 @@ msgstr "Opcións principais"
 #: rkward/plugins/00saveload/import/source.xml:17
 #, kde-format
 msgid "Use directory of source file as working directory"
-msgstr "Usar o directorio do ficheiro de código como directorio de traballo"
+msgstr "Usar o directorio do ficheiro de código como cartafol de traballo"
 
 #. i18n: ectx: (Source an R file) <dialog label="Source an R file"> <tab label="Main options"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/source.xml:18
@@ -3130,7 +3130,7 @@ msgstr "\\n\\r (LF+CR: RISC OS)"
 #: rkward/plugins/00saveload/setworkdir.rkh:3
 #, kde-format
 msgid "Set or change the current working directory."
-msgstr "Definir ou cambiar o directorio de traballo actual."
+msgstr "Definir ou cambiar o cartafol de traballo actual."
 
 #. i18n: ectx: (Loaded from Set the working directory) <usage>
 #: rkward/plugins/00saveload/setworkdir.rkh:6
@@ -3139,20 +3139,20 @@ msgid ""
 "Choose a directory to set/change the working directory for R. The R function "
 "<b>setwd</b> is used to do the job."
 msgstr ""
-"Escoller un directorio para definir ou cambiar o directorio de traballo de "
-"R. Úsase a función <b>setwd</b> de R."
+"Escoller un directorio para definir ou cambiar o cartafol de traballo de R. "
+"Úsase a función <b>setwd</b> de R."
 
 #. i18n: ectx: (Set the working directory) <dialog label="...">
 #: rkward/plugins/00saveload/setworkdir.xml:5
 #, kde-format
 msgid "Set the working directory"
-msgstr "Definir o directorio de traballo"
+msgstr "Definir o cartafol de traballo"
 
 #. i18n: ectx: (Set the working directory) <dialog label="Set the working directory"> <browser label="...">
 #: rkward/plugins/00saveload/setworkdir.xml:6
 #, kde-format
 msgid "Choose the Working Directory"
-msgstr "Escoller o directorio de traballo"
+msgstr "Escoller o cartafol de traballo"
 
 #. i18n: ectx: <about name="...">
 #: rkward/plugins/import_export.pluginmap:5
@@ -3252,7 +3252,7 @@ msgstr ""
 #: rkward/plugins/import_export.pluginmap:48
 #, kde-format
 msgid "Set Working Directory"
-msgstr "Definir o directorio de traballo"
+msgstr "Definir o cartafol de traballo"
 
 #. i18n: ectx: <hierarchy> <menu label="File"> <menu label="...">
 #. i18n: ectx: <context> <menu label="...">
