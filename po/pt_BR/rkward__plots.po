@@ -2,22 +2,22 @@
 # Copyright (C) 2015-2016 This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Luiz Fernando Ranghetti <elchevive@opensuse.org>, 2015.
+# Luiz Fernando Ranghetti <elchevive@opensuse.org>, 2015, 2023.
 # André Marcelo Alvarenga <alvarenga@kde.org>, 2015, 2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward__plots\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-04-11 00:40+0000\n"
-"PO-Revision-Date: 2016-01-17 00:33-0200\n"
-"Last-Translator: André Marcelo Alvarenga <alvarenga@kde.org>\n"
-"Language-Team: Brazilian Portuguese <kde-i18n-pt_br@kde.org>\n"
+"PO-Revision-Date: 2023-07-05 18:07-0300\n"
+"Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
+"Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -173,18 +173,14 @@ msgstr "Variável"
 
 #. i18n: ectx: (Loaded from Barplot)
 #: rkward/plugins/plots/barplot.js:29
-#, fuzzy, kde-format
-#| msgctxt "R code comment"
-#| msgid ""
-#| "barplot is a bit picky about attributes, so we need to convert to vector "
-#| "explicitly"
+#, kde-format
 msgctxt "R code comment"
 msgid ""
 "barplot is a bit picky about attributes, so we need to convert to vector or "
 "matrix explicitly"
 msgstr ""
 "O gráfico de barras é um pouco exigente em relação aos atributos e deve ser "
-"convertido de forma explícita para um vetor"
+"convertido de forma explícita para um vetor ou matriz"
 
 #. i18n: ectx: (Loaded from Barplot) <summary>
 #: rkward/plugins/plots/barplot.rkh:3
