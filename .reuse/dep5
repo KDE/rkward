@@ -1,0 +1,26 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: RKWard
+Upstream-Contact: The RKWard Team <rkward-devel@kde.org>
+Source: https://invent.kde.org/education/rkward
+
+Files:
+  tests/analysis_plugins/*
+  tests/data_plugin_tests/*
+  tests/distributions/*
+  tests/import_export_plugins/*
+  tests/item_response_theory/*
+  tests/plots/*
+  tests/rkward_application_tests/*
+Comment: These are generated files used in the context of automated testing
+Copyright: The RKWard Team <rkward-devel@kde.org>
+License: CC0-1.0
+
+Files:
+  rkward/rbackend/rpackages/rkward/NAMESPACE
+  rkward/rbackend/rpackages/rkward/man/*.Rd
+  rkward/rbackend/rpackages/rkwardtests/NAMESPACE
+  rkward/rbackend/rpackages/rkwardtests/man/*.Rd
+Comment: The content of these is extracted from the corresponding R source files using roxygen
+Copyright: Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+Contributor: The RKWard Team <rkward-devel@kde.org>
+License: GPL-2.0-or-later
