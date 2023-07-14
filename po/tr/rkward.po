@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: yenitr\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-13 00:42+0000\n"
-"PO-Revision-Date: 2023-06-17 21:38+0300\n"
+"PO-Revision-Date: 2023-07-14 00:34+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -4689,7 +4689,7 @@ msgstr "<b>Nesne silindi</b>"
 #: rkward/robjectviewer.cpp:122
 #, kde-format
 msgid "Object Viewer: %1"
-msgstr "Nesne Görüntüleyici: %1"
+msgstr "Nesne Görüntüleyicisi: %1"
 
 #: rkward/robjectviewer.cpp:126
 #, kde-format
