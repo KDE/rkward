@@ -11,6 +11,12 @@
   <!-- Do not define any other entities; instead, use the entities
        from kde-genent.entities and $LANG/user.entities. -->
 ]>
+<!--- This file is part of the RKWard project (https://rkward.kde.org).
+SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: by Meik Michalke <meik.michalke@hhu.de>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GFDL-1.2-no-invariants-or-later OR GPL-2.0-or-later
+-->
 
 <book lang="&language;">
 

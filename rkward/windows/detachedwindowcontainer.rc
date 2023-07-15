@@ -1,4 +1,9 @@
 <!DOCTYPE kpartgui>
+<!--- This file is part of the RKWard project (https://rkward.kde.org).
+SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+-->
 <!-- This contains *mostly* a duplicate of rkwardui.rc. Perhaps the two can be merged one day, but that's not as trivial as it may sound.. -->
 <kpartgui name="rkward_detachedwindow" version="54">
 	<MenuBar>

@@ -1,3 +1,7 @@
+# - This file is part of the RKWard project (https://rkward.kde.org).
+# SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+# SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+# SPDX-License-Identifier: GPL-2.0-or-later
 #' Opens an R demo script for editing
 #' 
 #' \code{rk.demo} behaves similar to \code{\link{demo}}, but opens the demo

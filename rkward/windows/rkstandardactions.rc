@@ -1,4 +1,9 @@
 <!DOCTYPE kpartgui>
+<!--- This file is part of the RKWard project (https://rkward.kde.org).
+SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+-->
 <kpartgui name="rkward_standardactions" version="650">
 <!-- What is this for, wouldn't it be easier to just inline these actions in the parts where they
      end up? Yes, but then they would be separate actions, internally, and each could be assigned

@@ -1,3 +1,7 @@
+# - This file is part of the RKWard project (https://rkward.kde.org).
+# SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+# SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+# SPDX-License-Identifier: GPL-2.0-or-later
 ## definition of the test suite
 suite <- new ("RKTestSuite", id="data_plugin_tests",
 	# place here libraries that are required for *all* tests in this suite, or highly likely to be installed

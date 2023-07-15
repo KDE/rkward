@@ -24,3 +24,47 @@ Comment: The content of these is extracted from the corresponding R source files
 Copyright: Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 Contributor: The RKWard Team <rkward-devel@kde.org>
 License: GPL-2.0-or-later
+
+Files:
+  rkward/icons/*.png
+  rkward/icons/*.svg
+Copyright: Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+Contributor: The RKWard Team <rkward-devel@kde.org>
+License: LGPL-2.1-or-later
+
+Files:
+  rkward/icons/app-icon/*.png
+  rkward/icons/app-icon/*.svgz
+  rkward/icons/app-icon/*.ico
+  rkward/icons/app-icon/*.icns
+Comment: RKWard application icon (source svg, and generated files)
+Copyright: Marco Martin <mart@notmart.org>
+License: LGPL-2.1-or-later
+
+Files:
+  logo.png
+Comment: Splash screen logo
+Copyright: Daniele Medri <rkward-devel@kde.org>
+License: LGPL-2.1-or-later
+
+Files:
+  rkward/doc/*.png
+  rkward/techdocs/*
+  AUTHORS
+  ChangeLog
+  INSTALL
+  README
+  TODO
+  TODO.platform
+  CommitPolicy.txt
+  rkward/autotests/README.txt
+Comment: Assorted documentation related files
+Copyright: Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+Contributor: The RKWard Team <rkward-devel@kde.org>
+License: GFDL-1.2-no-invariants-or-later or GPL-2.0-or-later
+
+Files:
+  macports/*
+Comment: Macports port file. Not part of "official" source distribution, not needed for running rkward, but _may_ be used for building using Macports.
+Copyright: Meik Michalke <meik.michalke@hhu.de>
+License: BSD-3-Clause

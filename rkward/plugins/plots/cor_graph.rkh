@@ -1,4 +1,9 @@
 <!DOCTYPE rkhelp>
+<!--- This file is part of the RKWard project (https://rkward.kde.org).
+SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+-->
 <document>
 	<summary>
 Correlation Matrix Plot. On top the (absolute) value of the correlation is presented plus the result of the cor.test as stars. On bottom, the bivariate scatterplots are plotted with a fitted line. The graph and the code can be found at <link href="http://addictedtor.free.fr/graphiques/RGraphGallery.php?graph=137">R Graph Gallery  (137) Correlation Matrix</link>, from where was adapted and formatted for RKWard.

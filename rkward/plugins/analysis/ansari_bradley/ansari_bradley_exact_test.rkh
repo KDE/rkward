@@ -1,4 +1,9 @@
 <!DOCTYPE rkhelp>
+<!--- This file is part of the RKWard project (https://rkward.kde.org).
+SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+-->
 <document>
 	<summary>
 		This test performs the Ansari-Bradley two-sample exact test to test for a difference in scale parameters. This test differs from <link href="rkward://component/ansari_bradley_test"/> in that exact p-values can also be computed in the presence of ties.

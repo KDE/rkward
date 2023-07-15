@@ -1,4 +1,9 @@
 <!DOCTYPE rkhelp>
+<!--- This file is part of the RKWard project (https://rkward.kde.org).
+SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+-->
 <document>
 	<summary>
 		Various parameters for the <b>grid</b>. For detailed description of the individual parameters see the R reference on 'grid'. Note that this works only when standard (traditional S) graphics functions (see library(help="graphics")) are used to construct the plot. This does not work for trellis graphics devices (see <link href="rkward://rhelp/Lattice"/> for some information).
