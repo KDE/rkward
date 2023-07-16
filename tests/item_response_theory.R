@@ -1,3 +1,8 @@
+# - This file is part of the RKWard project (https://rkward.kde.org).
+# SPDX-FileCopyrightText: by Meik Michalke <meik.michalke@hhu.de>
+# SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+# SPDX-License-Identifier: GPL-2.0-or-later
+
 ## definition of the test suite
 suite <- new ("RKTestSuite", id="item_response_theory",
 	libraries = c ("ltm", "eRm"),

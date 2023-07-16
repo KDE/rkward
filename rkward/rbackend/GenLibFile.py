@@ -1,11 +1,16 @@
-import subprocess
-import os
-import sys
-
+# This file is part of the RKWard project (https://rkward.kde.org).
+# SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+# SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+# SPDX-License-Identifier: LGPL-2.1-or-later
+#
 # Generate a .lib file for a given .dll
 # This assumed dumpbin and lib to be in the path, which they should be, when compiling with MSVC (and that's what this is needed for)
 #
 # Usage: python3 GenLibFile.py XYZ.dll output_directory architecture
+
+import subprocess
+import os
+import sys
 
 dllfile = sys.argv[1]
 workdir = sys.argv[2]

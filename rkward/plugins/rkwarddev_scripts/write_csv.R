@@ -1,4 +1,8 @@
-local({
+# - This file is part of the RKWard project.
+# SPDX-FileCopyrightText: by Meik Michalke <meik.michalke@hhu.de>
+# SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+# SPDX-License-Identifier: GPL-2.0-or-later
+# local({
 ## Vorbereiten
 require(rkwarddev)
 rkwarddev.required("0.06-5")

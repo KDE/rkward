@@ -1,4 +1,9 @@
 <!DOCTYPE rkplugin>
+<!--- This file is part of the RKWard project (https://rkward.kde.org).
+SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+-->
 <!-- TODO: This plugin should really be split up. It is overly complex. -->
 <document>
 	<code file="code.js"/>
