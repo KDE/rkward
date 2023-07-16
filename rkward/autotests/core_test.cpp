@@ -243,7 +243,7 @@ private slots:
 		QStringList output;
 		QRegularExpression extractnumber("\\d\\d\\d");
 		auto callback = [&output, extractnumber](RCommand *command) {
-			auto res = extractnumber.match(command->fullOutput());
+			auto res = extractnumber.match(command->fullOutput()); // clazy:exclude=use-static-qregularexpression - TODO: apparently false positive in clazy?
 			QVERIFY(res.hasMatch());
 			output.append(res.captured());
 		};
