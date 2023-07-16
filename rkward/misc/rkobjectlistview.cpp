@@ -126,12 +126,6 @@ RObject* RKObjectListView::objectAtIndex (const QModelIndex& index) const {
 	return static_cast<RObject*> (settings->mapToSource (index).internalPointer ());
 }
 
-void RKObjectListView::selectionChanged (const QItemSelection&, const QItemSelection&) {
-	RK_TRACE (APP);
-
-	emit selectionChanged();
-}
-
 RObject::ObjectList RKObjectListView::selectedObjects () const {
 	RK_TRACE (APP);
 
@@ -171,7 +165,6 @@ void RKObjectListView::initialize () {
 
 	connect (RObjectList::getObjectList (), &RObjectList::updateComplete, this, &RKObjectListView::updateComplete);
 	connect (RObjectList::getObjectList (), &RObjectList::updateStarted, this, &RKObjectListView::updateStarted);
-	connect (selectionModel (), &QItemSelectionModel::selectionChanged, this, static_cast<void (RKObjectListView::*)(const QItemSelection&, const QItemSelection&)>(&RKObjectListView::selectionChanged));
 	connect (settings, &RKObjectListViewSettings::settingsChanged, this, &RKObjectListView::settingsChanged);
 
 	updateComplete ();

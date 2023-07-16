@@ -53,14 +53,12 @@ from your custom menu items, to figure out, which object you should operate on. 
 /** Takes care initializing the RKObjectListView */
 	void initialize ();
 signals:
-	void selectionChanged ();
 /** This signal is emitted just before the context-menu is shown. If you connect to this signal, you can make some adjustments to the context-menu.
 If you set *suppress to true, showing the context menu will be suppressed. */
 	void aboutToShowContextMenu (RObject *object, bool *suppress);
 public slots:
 	void updateComplete ();
 	void updateStarted ();
-	void selectionChanged (const QItemSelection & selected, const QItemSelection & deselected) override;
 	void settingsChanged ();
 	void itemClicked (const QModelIndex& index);
 protected:
