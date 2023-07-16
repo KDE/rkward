@@ -7,6 +7,8 @@
 # crude helper script to add one of the more common REUSE copyright headers, to files where it is still missing
 # please check results, manually
 
+# REUSE-IgnoreStart
+
 import os
 import sys
 
@@ -38,7 +40,7 @@ def rewrite (filename):
         text += "SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>\n"
         text += "SPDX-License-Identifier: GPL-2.0-or-later"
 
-        if (content.startswith("<!DOCTYPE")):
+        if (content.startswith("<!DOCTYPE") or filename.endswith(".xml")):
             with open(filename, 'wt') as dst:
                 index = content.find("\n") + 1
                 dst.write(content[:index])
@@ -71,6 +73,7 @@ for folder, subs, files in os.walk(rootdir):
     for filename in files:
         if filename.startswith("po"):
             continue
-        if (True or filename.endswith("CMakeLists.txt")):
+        if (True or filename.endswith(".xml")):
             rewrite(os.path.join(folder, filename))
 
+# REUSE-IgnoreEnd

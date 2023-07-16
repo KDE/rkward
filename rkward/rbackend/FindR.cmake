@@ -1,3 +1,8 @@
+# This file is part of the RKWard project (https://rkward.kde.org).
+# SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+# SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+# SPDX-License-Identifier: LGPL-2.1-or-later
+
 # find the R binary
 
 MESSAGE(STATUS "Looking for R executable")

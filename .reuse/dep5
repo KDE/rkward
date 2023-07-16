@@ -26,8 +26,25 @@ Contributor: The RKWard Team <rkward-devel@kde.org>
 License: GPL-2.0-or-later
 
 Files:
+  VERSION.cmake
+  rkward/ver.R.in
+  rkward/version.h.in
+  rkward/resource.ver.in
+  tests/import_export_plugins_testfile.*
+  tests/rkward_application_tests_strange_object.RData
+  rkward/rbackend/rpackages/*/DESCRIPTION
+  rkward/rkward_windows_icon.rc
+  rkward/rkward.protocol
+  rkward/rbackend/rkward.rbackend.entitlements
+Comment: Assorted source files that cannot (easily) contain SPDX licence headers
+Copyright: Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+Contributor: The RKWard Team <rkward-devel@kde.org>
+License: GPL-2.0-or-later
+
+Files:
   rkward/icons/*.png
   rkward/icons/*.svg
+  rkward/syntax/r-syntax-test.R
 Copyright: Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 Contributor: The RKWard Team <rkward-devel@kde.org>
 License: LGPL-2.1-or-later
@@ -37,19 +54,20 @@ Files:
   rkward/icons/app-icon/*.svgz
   rkward/icons/app-icon/*.ico
   rkward/icons/app-icon/*.icns
+  logo.png
 Comment: RKWard application icon (source svg, and generated files)
 Copyright: Marco Martin <mart@notmart.org>
 License: LGPL-2.1-or-later
 
 Files:
-  logo.png
+  rkward/icons/rkward_logo.png
 Comment: Splash screen logo
 Copyright: Daniele Medri <rkward-devel@kde.org>
 License: LGPL-2.1-or-later
 
 Files:
-  rkward/doc/*.png
-  rkward/techdocs/*
+  doc/*.png
+  techdocs/*
   AUTHORS
   ChangeLog
   INSTALL
@@ -58,6 +76,7 @@ Files:
   TODO.platform
   CommitPolicy.txt
   rkward/autotests/README.txt
+  rkward/plugins/rkwarddev_scripts/*.md
 Comment: Assorted documentation related files
 Copyright: Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 Contributor: The RKWard Team <rkward-devel@kde.org>

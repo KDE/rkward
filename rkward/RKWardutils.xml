@@ -1,3 +1,8 @@
+<!--- This file is part of the RKWard project (https://rkward.kde.org).
+SPDX-FileCopyrightText: by Stefan Rödiger <stefan_roediger@gmx.de>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GPL-2.0-or-later
+-->
 <snippets name="R and R Markdown Utils (RKWard)" filetypes="R Markdown" authors="RKWard Team" namespace="SnippetsRmd" license="BSD">
   <script>require("range.js")
 require("cursor.js")
