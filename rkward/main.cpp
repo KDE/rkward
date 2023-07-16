@@ -247,7 +247,7 @@ int main (int argc, char *argv[]) {
 	// Follow the example of kate, and use breeze theme on Windows and Mac, which appears to work best
 	QApplication::setStyle(QStringLiteral("breeze"));
 #else
-	if (!qgetenv("APPDIR").isEmpty()) { // see above for AppImage
+	if (qEnvironmentVariableIsSet("APPDIR")) { // see above for AppImage
 		QApplication::setStyle(QStringLiteral("breeze"));
 	}
 #endif

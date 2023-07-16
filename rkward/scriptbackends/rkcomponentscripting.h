@@ -1,6 +1,6 @@
 /*
 rkcomponentscripting - This file is part of the RKWard project. Created: Thu Jun 17 2010
-SPDX-FileCopyrightText: 2010-2013 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2010-2023 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -36,22 +36,23 @@ public slots:
 	void componentChanged (RKComponent* changed);
 	void propertyChanged (RKComponentPropertyBase* changed);
 
+public:
 // these are meant to be called from the script
-	void include (const QString& filename);
-	void addChangeCommand (const QString& changed_id, const QString& command);
+	Q_INVOKABLE void include (const QString& filename);
+	Q_INVOKABLE void addChangeCommand (const QString& changed_id, const QString& command);
 /** @returns id of the command issued. */
-	QVariant doRCommand (const QString& command, const QString& callback);
+	Q_INVOKABLE QVariant doRCommand (const QString& command, const QString& callback);
 
-	QVariant getValue (const QString &id) const;
-	QVariant getString (const QString &id) const;
-	QVariant getBoolean (const QString &id) const;
-	QVariant getList (const QString &id) const;
-	void setValue (const QString &value, const QString &id);
-	void setListValue (const QStringList &value, const QString &id);
+	Q_INVOKABLE QVariant getValue (const QString &id) const;
+	Q_INVOKABLE QVariant getString (const QString &id) const;
+	Q_INVOKABLE QVariant getBoolean (const QString &id) const;
+	Q_INVOKABLE QVariant getList (const QString &id) const;
+	Q_INVOKABLE void setValue (const QString &value, const QString &id);
+	Q_INVOKABLE void setListValue (const QStringList &value, const QString &id);
 
-	QVariantList getObjectInfo (const QString &name);
-	QString getObjectParent (const QString &name);
-	QString getObjectChild (const QString &name);
+	Q_INVOKABLE QVariantList getObjectInfo (const QString &name);
+	Q_INVOKABLE QString getObjectParent (const QString &name);
+	Q_INVOKABLE QString getObjectChild (const QString &name);
 signals:
 	void haveError ();
 private slots:

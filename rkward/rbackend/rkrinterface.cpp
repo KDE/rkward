@@ -380,7 +380,7 @@ void RInterface::handleRequest (RBackendRequest* request) {
 			RKSessionVars::setRVersion (command->stringVector ().value (0));
 		});
 
-		if (!qgetenv("APPDIR").isEmpty()) {
+		if (qEnvironmentVariableIsSet("APPDIR")) {
 			// Running inside an AppImage. As soon as R has started, it should behave as if running in the main (system) environment (esp. when calling helper binaries such as wget or gcc).
 			// Unset any paths starting with APPDIR, _except_ those inside R_HOME.
 			runStartupCommand(new RCommand("local({\n"
