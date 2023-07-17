@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-05-11 00:41+0000\n"
+"POT-Creation-Date: 2023-07-17 00:44+0000\n"
 "PO-Revision-Date: 2022-05-13 10:17+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -31,20 +31,20 @@ msgid "Your emails"
 msgstr "miles@filmsi.net"
 
 #. i18n: ectx: (Level selector) <dialog label="...">
-#: rkward/plugins/distributions/../data/level_select.xml:60
-#: rkward/plugins/distributions/../data/multi_input.xml:94
+#: rkward/plugins/distributions/../data/level_select.xml:65
+#: rkward/plugins/distributions/../data/multi_input.xml:99
 #, kde-format
 msgid "Level selector"
 msgstr "Izbirnik ravni"
 
 #. i18n: ectx: (Level selector) <dialog label="Level selector"> <text>
-#: rkward/plugins/distributions/../data/level_select.xml:62
+#: rkward/plugins/distributions/../data/level_select.xml:67
 #, kde-format
 msgid "Note: Some values were cut off."
 msgstr "Opomba: Nekatere vrednosti so bile odrezane."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <summary>
-#: rkward/plugins/distributions/../data/limit_vector_length.rkh:3
+#: rkward/plugins/distributions/../data/limit_vector_length.rkh:8
 #, kde-format
 msgid ""
 "Generic plugin to limit a single numeric vector to the n largest / smallest "
@@ -54,7 +54,7 @@ msgstr ""
 "najmanjših vrednosti. Ta vtičnik je načrtovan za uporabo v drugih vtičnikih."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <usage>
-#: rkward/plugins/distributions/../data/limit_vector_length.rkh:7
+#: rkward/plugins/distributions/../data/limit_vector_length.rkh:12
 #, kde-format
 msgid ""
 "Specify the desired length cutoff and sorting. Note that the result is "
@@ -64,7 +64,7 @@ msgstr ""
 "vedno razvrščen s priloženo vsoto preostalih vrednosti na koncu."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Limit")
-#: rkward/plugins/distributions/../data/limit_vector_length.rkh:12
+#: rkward/plugins/distributions/../data/limit_vector_length.rkh:17
 #, kde-format
 msgid ""
 "Maximum number of regular groups to display. One additional group \"others\" "
@@ -74,7 +74,7 @@ msgstr ""
 "še ena dodatna skupina »drugo«."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Sorting")
-#: rkward/plugins/distributions/../data/limit_vector_length.rkh:13
+#: rkward/plugins/distributions/../data/limit_vector_length.rkh:18
 #, kde-format
 msgid ""
 "Should the largest or the lowest values be kept? For most purposes, you will "
@@ -84,7 +84,7 @@ msgstr ""
 "boste želeli ohraniti največje vrednosti."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Add remainder category")
-#: rkward/plugins/distributions/../data/limit_vector_length.rkh:14
+#: rkward/plugins/distributions/../data/limit_vector_length.rkh:19
 #, kde-format
 msgid ""
 "Should a category be added for the remaining value (those which have been "
@@ -94,13 +94,13 @@ msgstr ""
 "odrezane)? Opomba: To bo vedno priloženo do konca vektorja."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Statistic")
-#: rkward/plugins/distributions/../data/limit_vector_length.rkh:15
+#: rkward/plugins/distributions/../data/limit_vector_length.rkh:20
 #, kde-format
 msgid "Statistic to use for summarizing the cut off values."
 msgstr "Statistični podatki za povzemanje odrezanih vrednosti."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Custom statistic (as function of x)")
-#: rkward/plugins/distributions/../data/limit_vector_length.rkh:16
+#: rkward/plugins/distributions/../data/limit_vector_length.rkh:21
 #, kde-format
 msgid ""
 "If you chose to use a custom statistic for summarizing the cut off values, "
@@ -110,7 +110,7 @@ msgstr ""
 "vrednosti, jo tukaj navedite kot funkcijo <em>x</em>."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Remainder category label")
-#: rkward/plugins/distributions/../data/limit_vector_length.rkh:17
+#: rkward/plugins/distributions/../data/limit_vector_length.rkh:22
 #, kde-format
 msgid ""
 "Label to use for the \"others\" category. Note: If your data is not labeled, "
@@ -129,11 +129,11 @@ msgstr ""
 #. i18n: ectx: (Loaded from Default histogram options) <technical>
 #. i18n: ectx: (Loaded from Tabulate) <technical>
 #. i18n: ectx: (Loaded from Limit Vector Length) <technical>
-#: rkward/plugins/distributions/../data/limit_vector_length.rkh:20
-#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:27
-#: rkward/plugins/distributions/../plots/histogram_options.rkh:38
-#: rkward/plugins/distributions/../plots/plot_options.rkh:53
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:26
+#: rkward/plugins/distributions/../data/limit_vector_length.rkh:25
+#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:32
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:43
+#: rkward/plugins/distributions/../plots/plot_options.rkh:58
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:31
 #, kde-format
 msgid ""
 "General users may skip this section of help, this is primarily for "
@@ -146,15 +146,15 @@ msgstr ""
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Tabulate) <technical>
 #. i18n: ectx: (Loaded from Limit Vector Length) <technical>
-#: rkward/plugins/distributions/../data/limit_vector_length.rkh:20
-#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:27
+#: rkward/plugins/distributions/../data/limit_vector_length.rkh:25
+#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:32
 #, kde-format
 msgid "The generated code is available from <i>code.calculate</i>."
 msgstr "Ustvarjena koda je na voljo iz <i>code.calculate</i>."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Limit Vector Length) <technical>
-#: rkward/plugins/distributions/../data/limit_vector_length.rkh:20
+#: rkward/plugins/distributions/../data/limit_vector_length.rkh:25
 #, kde-format
 msgid ""
 "The following external properties are provided for use in the embedding "
@@ -164,7 +164,7 @@ msgstr ""
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Limit Vector Length) <technical>
-#: rkward/plugins/distributions/../data/limit_vector_length.rkh:20
+#: rkward/plugins/distributions/../data/limit_vector_length.rkh:25
 #, kde-format
 msgid ""
 "<i>invar</i>: Symbol name of the input variable to be limited. Defaults to "
@@ -175,7 +175,7 @@ msgstr ""
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Limit Vector Length) <technical>
-#: rkward/plugins/distributions/../data/limit_vector_length.rkh:20
+#: rkward/plugins/distributions/../data/limit_vector_length.rkh:25
 #, kde-format
 msgid ""
 "<i>outvar</i>: Symbol name to use for the output variable (the limited "
@@ -186,7 +186,7 @@ msgstr ""
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Limit Vector Length) <technical>
-#: rkward/plugins/distributions/../data/limit_vector_length.rkh:20
+#: rkward/plugins/distributions/../data/limit_vector_length.rkh:25
 #, kde-format
 msgid ""
 "<i>parameters</i>: This property will be set to a string describing the "
@@ -199,98 +199,98 @@ msgstr ""
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Limit Vector Length) <dialog label="...">
-#: rkward/plugins/distributions/../data/limit_vector_length.xml:22
-#: rkward/plugins/distributions/../embedded.pluginmap:24
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:27
+#: rkward/plugins/distributions/../embedded.pluginmap:29
 #, kde-format
 msgid "Limit Vector Length"
 msgstr "Omejite dolžino vektorja"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <spinbox label="...">
-#: rkward/plugins/distributions/../data/limit_vector_length.xml:24
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:29
 #, kde-format
 msgid "Limit"
 msgstr "Meja"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <radio label="...">
-#: rkward/plugins/distributions/../data/limit_vector_length.xml:25
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:30
 #, kde-format
 msgid "Sorting"
 msgstr "Razvrščanje"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <radio label="Sorting"> <option label="...">
-#: rkward/plugins/distributions/../data/limit_vector_length.xml:26
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:31
 #, kde-format
 msgid "Keep smallest values"
 msgstr "Ohrani najmanjše vrednosti"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <radio label="Sorting"> <option label="...">
-#: rkward/plugins/distributions/../data/limit_vector_length.xml:27
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:32
 #, kde-format
 msgid "Keep largest values"
 msgstr "Ohrani največje vrednosti"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="...">
-#: rkward/plugins/distributions/../data/limit_vector_length.xml:30
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:35
 #, kde-format
 msgid "Add remainder category"
 msgstr "Dodaj preostalo kategorijo"
 
 #. i18n: ectx: (Tabulate) <dialog label="Tabulate"> <radio label="...">
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="Add remainder category"> <radio label="...">
-#: rkward/plugins/distributions/../data/limit_vector_length.xml:31
-#: rkward/plugins/distributions/../data/one_var_tabulation.xml:50
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:36
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:55
 #, kde-format
 msgid "Statistic"
 msgstr "Statistika"
 
 #. i18n: ectx: (Tabulate) <dialog label="Tabulate"> <radio label="Statistic"> <option label="...">
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="Add remainder category"> <radio label="Statistic"> <option label="...">
-#: rkward/plugins/distributions/../data/limit_vector_length.xml:32
-#: rkward/plugins/distributions/../data/one_var_tabulation.xml:52
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:37
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:57
 #, kde-format
 msgid "Sum"
 msgstr "Vsota"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="Add remainder category"> <radio label="Statistic"> <option label="...">
-#: rkward/plugins/distributions/../data/limit_vector_length.xml:33
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:38
 #, kde-format
 msgid "Mean"
 msgstr "Srednja vrednost"
 
 #. i18n: ectx: (Tabulate) <dialog label="Tabulate"> <radio label="Statistic"> <option label="...">
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="Add remainder category"> <radio label="Statistic"> <option label="...">
-#: rkward/plugins/distributions/../data/limit_vector_length.xml:34
-#: rkward/plugins/distributions/../data/one_var_tabulation.xml:53
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:39
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:58
 #, kde-format
 msgid "Other:"
 msgstr "Drugo:"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="Add remainder category"> <input label="...">
-#: rkward/plugins/distributions/../data/limit_vector_length.xml:36
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:41
 #, kde-format
 msgid "Custom statistic (as function of x)"
 msgstr "Statistika po meri (kot funkcija x)"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="Add remainder category"> <input label="...">
-#: rkward/plugins/distributions/../data/limit_vector_length.xml:38
+#: rkward/plugins/distributions/../data/limit_vector_length.xml:43
 #, kde-format
 msgid "Remainder category label"
 msgstr "Oznaka kategorije »Preostalo«"
 
 #. i18n: ectx: (Level selector) <dialog label="Level selector"> <radio label=""> <option label="...">
-#: rkward/plugins/distributions/../data/multi_input.xml:96
+#: rkward/plugins/distributions/../data/multi_input.xml:101
 #, kde-format
 msgid "FALSE"
 msgstr "FALSE"
 
 #. i18n: ectx: (Level selector) <dialog label="Level selector"> <radio label=""> <option label="...">
-#: rkward/plugins/distributions/../data/multi_input.xml:97
+#: rkward/plugins/distributions/../data/multi_input.xml:102
 #, kde-format
 msgid "TRUE"
 msgstr "TRUE"
 
 #. i18n: ectx: (Loaded from Tabulate) <summary>
-#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:3
+#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:8
 #, kde-format
 msgid ""
 "Generic tabulation plugin (single outcome vector). This plugin is designed "
@@ -300,7 +300,7 @@ msgstr ""
 "načrtovan za vdelano v druge vtičnike."
 
 #. i18n: ectx: (Loaded from Tabulate) <usage>
-#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:7
+#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:12
 #, kde-format
 msgid ""
 "Allows to tabulate frequencies, or aggregate a single variable, by the "
@@ -310,7 +310,7 @@ msgstr ""
 "ali več spremenljivk grupiranja."
 
 #. i18n: ectx: (Loaded from Tabulate) <settings> <setting> (refers to element labelled "Grouping factors")
-#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:12
+#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:17
 #, kde-format
 msgid ""
 "Select the grouping variables. Often, these will be factors. The levels of "
@@ -320,7 +320,7 @@ msgstr ""
 "spremenljivke združevanja bodo križane."
 
 #. i18n: ectx: (Loaded from Tabulate) <settings> <setting> (refers to element labelled "Statistic")
-#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:13
+#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:18
 #, kde-format
 msgid ""
 "Type of tabulation / statistic to compute. This can be frequency of "
@@ -330,7 +330,7 @@ msgstr ""
 "pojavljanja ali funkcija ločenega vektorja."
 
 #. i18n: ectx: (Loaded from Tabulate) <settings> <setting> (refers to element labelled "Values")
-#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:14
+#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:19
 #, kde-format
 msgid ""
 "When computing a statistic other than frequency, specify the vector "
@@ -340,7 +340,7 @@ msgstr ""
 "podatke, ki se nanašajo nanje."
 
 #. i18n: ectx: (Loaded from Tabulate) <settings> <setting> (refers to element labelled "Custom statistic")
-#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:15
+#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:20
 #, kde-format
 msgid ""
 "When the statistic is set to \"Other:\", this allows you to specify an "
@@ -354,13 +354,13 @@ msgstr ""
 "eno samo številčno vrednost. Tipični primeri so \"mean(x)\" ali \"sd(x)\"."
 
 #. i18n: ectx: (Loaded from Tabulate) <related>
-#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:18
+#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:23
 #, kde-format
 msgid "<link href=\"rkward://component/crosstab\"/> and"
 msgstr "<link href=\"rkward://component/crosstab\"/> in"
 
 #. i18n: ectx: (Loaded from Tabulate) <related>
-#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:18
+#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:23
 #, kde-format
 msgid ""
 "<link href=\"rkward://component/crosstab_multi\"/> for tabulation of "
@@ -371,7 +371,7 @@ msgstr ""
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Tabulate) <technical>
-#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:27
+#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:32
 #, kde-format
 msgid ""
 "The following external properties are provided for use in the embedding "
@@ -381,7 +381,7 @@ msgstr ""
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Tabulate) <technical>
-#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:27
+#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:32
 #, kde-format
 msgid ""
 "<i>varsource</i>: The tabulation plugin does not show its own varselector by "
@@ -394,7 +394,7 @@ msgstr ""
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Tabulate) <technical>
-#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:27
+#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:32
 #, kde-format
 msgid ""
 "<i>outvar</i>: By default, the plugin produces a table in a variable called "
@@ -405,7 +405,7 @@ msgstr ""
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Tabulate) <technical>
-#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:27
+#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:32
 #, kde-format
 msgid ""
 "<i>titlevar</i>: If you want the plugin to save a description of the "
@@ -418,7 +418,7 @@ msgstr ""
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Tabulate) <technical>
-#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:27
+#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:32
 #, kde-format
 msgid ""
 "<i>fun_label</i>: This property will be set to a description of the "
@@ -427,7 +427,7 @@ msgstr "<i>fun_label</i>: Ta lastnost bo nastavljena za opis statistike."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Tabulate) <technical>
-#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:27
+#: rkward/plugins/distributions/../data/one_var_tabulation.rkh:32
 #, kde-format
 msgid ""
 "<i>parameters</i>: This property will be set to a string describing the "
@@ -442,80 +442,80 @@ msgstr ""
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <checkbox label="...">
 #. i18n: ectx: (Tabulate)
 #. i18n: ectx: (Tabulate) <dialog label="Tabulate"> <radio label="Statistic"> <option label="...">
-#: rkward/plugins/distributions/../data/one_var_tabulation.xml:26
-#: rkward/plugins/distributions/../data/one_var_tabulation.xml:51
-#: rkward/plugins/distributions/../plots/histogram_options.js:37
-#: rkward/plugins/distributions/../plots/histogram_options.xml:52
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:31
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:56
+#: rkward/plugins/distributions/../plots/histogram_options.js:42
+#: rkward/plugins/distributions/../plots/histogram_options.xml:57
 #, kde-format
 msgid "Frequency"
 msgstr "Frekvenca"
 
 #. i18n: ectx: (Tabulate)
-#: rkward/plugins/distributions/../data/one_var_tabulation.xml:30
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:35
 #, no-c-format, kde-format
 msgid "Sum of %1"
 msgstr "Vsota %1"
 
 #. i18n: ectx: (Tabulate)
-#: rkward/plugins/distributions/../data/one_var_tabulation.xml:32
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:37
 #, no-c-format, kde-format
 msgctxt "(function name) of (object name)"
 msgid "%1 of %2"
 msgstr "%1 od %2"
 
 #. i18n: ectx: (Tabulate)
-#: rkward/plugins/distributions/../data/one_var_tabulation.xml:41
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:46
 #, kde-format
 msgid "Tabulation groups"
 msgstr "Grupe tabulacij"
 
 #. i18n: ectx: (Tabulate)
-#: rkward/plugins/distributions/../data/one_var_tabulation.xml:41
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:46
 #, kde-format
 msgctxt "Tabulate X by Y [by Z [...]]"
 msgid " by "
 msgstr " po "
 
 #. i18n: ectx: (Tabulate)
-#: rkward/plugins/distributions/../data/one_var_tabulation.xml:41
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:46
 #, kde-format
 msgid "Tabulation statistic"
 msgstr "Statistika tabulacije"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Tabulate) <dialog label="...">
-#: rkward/plugins/distributions/../data/one_var_tabulation.xml:46
-#: rkward/plugins/distributions/../embedded.pluginmap:23
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:51
+#: rkward/plugins/distributions/../embedded.pluginmap:28
 #, kde-format
 msgid "Tabulate"
 msgstr "Tabulate"
 
 #. i18n: ectx: (Tabulate) <dialog label="Tabulate"> <varslot label="...">
-#: rkward/plugins/distributions/../data/one_var_tabulation.xml:48
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:53
 #, kde-format
 msgid "Grouping factors"
 msgstr "Faktorji združevanja"
 
 #. i18n: ectx: (Tabulate) <dialog label="Tabulate"> <varslot label="...">
-#: rkward/plugins/distributions/../data/one_var_tabulation.xml:56
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:61
 #, kde-format
 msgid "Values"
 msgstr "Vrednosti"
 
 #. i18n: ectx: (Tabulate) <dialog label="Tabulate"> <input label="...">
-#: rkward/plugins/distributions/../data/one_var_tabulation.xml:57
+#: rkward/plugins/distributions/../data/one_var_tabulation.xml:62
 #, kde-format
 msgid "Custom statistic"
 msgstr "Statistika po meri"
 
 #. i18n: ectx: <about name="...">
-#: rkward/plugins/distributions/../embedded.pluginmap:5
+#: rkward/plugins/distributions/../embedded.pluginmap:10
 #, kde-format
 msgid "Embedded plugins"
 msgstr "Vdelani vtičniki"
 
 #. i18n: ectx: <about shortinfo="...">
-#: rkward/plugins/distributions/../embedded.pluginmap:5
+#: rkward/plugins/distributions/../embedded.pluginmap:10
 #, kde-format
 msgid ""
 "Not for direct use: Utility plugins that can be included by other plugins. "
@@ -526,100 +526,100 @@ msgstr ""
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <embed label="...">
-#: rkward/plugins/distributions/../embedded.pluginmap:17
-#: rkward/plugins/distributions/../plots/barplot_embed.xml:34
+#: rkward/plugins/distributions/../embedded.pluginmap:22
+#: rkward/plugins/distributions/../plots/barplot_embed.xml:39
 #, kde-format
 msgid "Plot Options"
 msgstr "Možnosti risanja"
 
 #. i18n: ectx: <components> <component label="...">
-#: rkward/plugins/distributions/../embedded.pluginmap:18
+#: rkward/plugins/distributions/../embedded.pluginmap:23
 #, kde-format
 msgid "Color Chooser"
 msgstr "Izbirnik barv"
 
 #. i18n: ectx: <components> <component label="...">
-#: rkward/plugins/distributions/../embedded.pluginmap:19
+#: rkward/plugins/distributions/../embedded.pluginmap:24
 #, kde-format
 msgid "Step Function plot options"
 msgstr "Možnosti izrisa stopničaste funkcije"
 
 #. i18n: ectx: <components> <component label="...">
-#: rkward/plugins/distributions/../embedded.pluginmap:20
+#: rkward/plugins/distributions/../embedded.pluginmap:25
 #, kde-format
 msgid "Histogram Options"
 msgstr "Možnosti histograma"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Barplot Options) <dialog label="...">
-#: rkward/plugins/distributions/../embedded.pluginmap:21
-#: rkward/plugins/distributions/../plots/barplot_embed.xml:16
+#: rkward/plugins/distributions/../embedded.pluginmap:26
+#: rkward/plugins/distributions/../plots/barplot_embed.xml:21
 #, kde-format
 msgid "Barplot Options"
 msgstr "Možnosti stolpičnega grafa"
 
 #. i18n: ectx: <components> <component label="...">
-#: rkward/plugins/distributions/../embedded.pluginmap:26
+#: rkward/plugins/distributions/../embedded.pluginmap:31
 #, kde-format
 msgid "Draw Grid"
 msgstr "Nariši mrežo"
 
 #. i18n: ectx: <components> <component label="...">
-#: rkward/plugins/distributions/../embedded.pluginmap:28
+#: rkward/plugins/distributions/../embedded.pluginmap:33
 #, kde-format
 msgid "Select by value"
 msgstr "Izberite po vrednosti"
 
 #. i18n: ectx: <components> <component label="...">
-#: rkward/plugins/distributions/../embedded.pluginmap:29
+#: rkward/plugins/distributions/../embedded.pluginmap:34
 #, kde-format
 msgid "Multi Input"
 msgstr "Več vhodov"
 
 #. i18n: ectx: <components> <component label="...">
-#: rkward/plugins/distributions/../embedded.pluginmap:33
+#: rkward/plugins/distributions/../embedded.pluginmap:38
 #, kde-format
 msgid "Run Code"
 msgstr "Zaženi kodo"
 
 #. i18n: ectx: <components> <component label="...">
-#: rkward/plugins/distributions/../embedded.pluginmap:36
+#: rkward/plugins/distributions/../embedded.pluginmap:41
 #, kde-format
 msgid "Install from git"
 msgstr "Namesti iz git-a"
 
 #. i18n: ectx: (Loaded from Install from git/svn)
-#: rkward/plugins/distributions/../internal/Installfromgit.js:65
+#: rkward/plugins/distributions/../internal/Installfromgit.js:70
 #, kde-format
 msgid "Install from git results"
 msgstr "Namesti iz »git results«"
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Package source")
-#: rkward/plugins/distributions/../internal/Installfromgit.rkh:13
+#: rkward/plugins/distributions/../internal/Installfromgit.rkh:18
 #, kde-format
 msgid "Set the location where the package resides that you want to install."
 msgstr "Nastavite mesto, kjer se nahaja paket, ki ga želite namestiti."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Git user name")
-#: rkward/plugins/distributions/../internal/Installfromgit.rkh:17
+#: rkward/plugins/distributions/../internal/Installfromgit.rkh:22
 #, kde-format
 msgid "Specify the user name (GitHub, GitLab and Bitbucket only)."
 msgstr "Navedite uporabniško ime (samo za GitHub, GitLab in Bitbucket)."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Repository")
-#: rkward/plugins/distributions/../internal/Installfromgit.rkh:20
+#: rkward/plugins/distributions/../internal/Installfromgit.rkh:25
 #, kde-format
 msgid "Give the repository name (GitHub, GitLab and Bitbucket only)."
 msgstr "Podajte ime skladišča (samo za GitHub, GitLab in Bitbucket)."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "URL to repository")
-#: rkward/plugins/distributions/../internal/Installfromgit.rkh:23
+#: rkward/plugins/distributions/../internal/Installfromgit.rkh:28
 #, kde-format
 msgid "Give the full URL to the repository (generic git and svn only)."
 msgstr "Podajte celoten URL skladišča (samo za generični git in svn)."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Commit/tag/branch")
-#: rkward/plugins/distributions/../internal/Installfromgit.rkh:26
+#: rkward/plugins/distributions/../internal/Installfromgit.rkh:31
 #, kde-format
 msgid ""
 "If you want a certain commit, tag or branch for installation, define that "
@@ -629,7 +629,7 @@ msgstr ""
 "tukaj."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Subdirectory")
-#: rkward/plugins/distributions/../internal/Installfromgit.rkh:29
+#: rkward/plugins/distributions/../internal/Installfromgit.rkh:34
 #, kde-format
 msgid ""
 "If you want to install from a subdirectory of the repository, define that "
@@ -637,7 +637,7 @@ msgid ""
 msgstr "Če želite namestiti iz podimenika skladišča, to določite tukaj."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Personal access token (PAT)")
-#: rkward/plugins/distributions/../internal/Installfromgit.rkh:33
+#: rkward/plugins/distributions/../internal/Installfromgit.rkh:38
 #, kde-format
 msgid ""
 "To install from a private repository, set your personal access token (PAT, "
@@ -647,7 +647,7 @@ msgstr ""
 "(samo za PAT, GitHub in GitLab)."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "User")
-#: rkward/plugins/distributions/../internal/Installfromgit.rkh:36
+#: rkward/plugins/distributions/../internal/Installfromgit.rkh:41
 #, kde-format
 msgid ""
 "To install from a private repository, set the user name (Bitbucket only)."
@@ -656,7 +656,7 @@ msgstr ""
 "za Bitbucket)."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Password")
-#: rkward/plugins/distributions/../internal/Installfromgit.rkh:39
+#: rkward/plugins/distributions/../internal/Installfromgit.rkh:44
 #, kde-format
 msgid ""
 "To install from a private repository, set the password (Bitbucket only)."
@@ -665,115 +665,115 @@ msgstr ""
 "Bitbucket)."
 
 #. i18n: ectx: (Install from git/svn) <dialog label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:25
+#: rkward/plugins/distributions/../internal/Installfromgit.xml:30
 #, kde-format
 msgid "Install from git/svn"
 msgstr "Namesti iz git/svn"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:27
+#: rkward/plugins/distributions/../internal/Installfromgit.xml:32
 #, kde-format
 msgid "Package source"
 msgstr "Vir paketa"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:28
+#: rkward/plugins/distributions/../internal/Installfromgit.xml:33
 #, kde-format
 msgid "git (generic)"
 msgstr "git (generično)"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:29
+#: rkward/plugins/distributions/../internal/Installfromgit.xml:34
 #, kde-format
 msgid "GitHub"
 msgstr "GitHub"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:30
+#: rkward/plugins/distributions/../internal/Installfromgit.xml:35
 #, kde-format
 msgid "GitLab"
 msgstr "GitLab"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:31
+#: rkward/plugins/distributions/../internal/Installfromgit.xml:36
 #, kde-format
 msgid "Bitbucket"
 msgstr "Bitbucket"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:32
+#: rkward/plugins/distributions/../internal/Installfromgit.xml:37
 #, kde-format
 msgid "subversion (generic)"
 msgstr "subversion (generični)"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:34
+#: rkward/plugins/distributions/../internal/Installfromgit.xml:39
 #, kde-format
 msgid "Package repository"
 msgstr "Skladišče paketov"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Package repository"> <input label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:36
+#: rkward/plugins/distributions/../internal/Installfromgit.xml:41
 #, kde-format
 msgid "Git user name"
 msgstr "Uporabniško ime git"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Package repository"> <input label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:37
+#: rkward/plugins/distributions/../internal/Installfromgit.xml:42
 #, kde-format
 msgid "Repository"
 msgstr "Skladišče"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Package repository"> <input label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:39
+#: rkward/plugins/distributions/../internal/Installfromgit.xml:44
 #, kde-format
 msgid "URL to repository"
 msgstr "URL skladišča"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <input label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:41
+#: rkward/plugins/distributions/../internal/Installfromgit.xml:46
 #, kde-format
 msgid "Commit/tag/branch"
 msgstr "Uveljavitev/oznaka/veja"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <input label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:42
+#: rkward/plugins/distributions/../internal/Installfromgit.xml:47
 #, kde-format
 msgid "Subdirectory"
 msgstr "Podimenik"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:43
+#: rkward/plugins/distributions/../internal/Installfromgit.xml:48
 #, kde-format
 msgid "Private repository"
 msgstr "Zasebno skladišče"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Private repository"> <input label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:44
+#: rkward/plugins/distributions/../internal/Installfromgit.xml:49
 #, kde-format
 msgid "Personal access token (PAT)"
 msgstr "Žeton za osebni dostop (PAT)"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Private repository"> <input label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:46
+#: rkward/plugins/distributions/../internal/Installfromgit.xml:51
 #, kde-format
 msgid "User"
 msgstr "Uporabnik"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Private repository"> <input label="...">
-#: rkward/plugins/distributions/../internal/Installfromgit.xml:47
+#: rkward/plugins/distributions/../internal/Installfromgit.xml:52
 #, kde-format
 msgid "Password"
 msgstr "Geslo"
 
 #. i18n: ectx: <about name="...">
-#: rkward/plugins/distributions/../menu.pluginmap:5
+#: rkward/plugins/distributions/../menu.pluginmap:10
 #, kde-format
 msgid "Menu structure definition"
 msgstr "Definicija strukture menija"
 
 #. i18n: ectx: <about shortinfo="...">
-#: rkward/plugins/distributions/../menu.pluginmap:5
+#: rkward/plugins/distributions/../menu.pluginmap:10
 #, kde-format
 msgid ""
 "Not for direct use: Defines the names and order of top level menus. Part of "
@@ -783,50 +783,50 @@ msgstr ""
 "Del uradne distribucije RKWard"
 
 #. i18n: ectx: <hierarchy> <menu label="...">
-#: rkward/plugins/distributions/../menu.pluginmap:19
+#: rkward/plugins/distributions/../menu.pluginmap:24
 #, kde-format
 msgid "Data"
 msgstr "Podatki"
 
 #. i18n: ectx: <hierarchy> <menu label="...">
-#: rkward/plugins/distributions/../menu.pluginmap:22
+#: rkward/plugins/distributions/../menu.pluginmap:27
 #, kde-format
 msgid "Analysis"
 msgstr "Analiza"
 
 #. i18n: ectx: <hierarchy> <menu label="...">
-#: rkward/plugins/distributions/../menu.pluginmap:25
+#: rkward/plugins/distributions/../menu.pluginmap:30
 #, kde-format
 msgid "Plots"
 msgstr "Grafi"
 
 #. i18n: ectx: <hierarchy> <menu label="...">
-#: rkward/plugins/distributions/../menu.pluginmap:28
+#: rkward/plugins/distributions/../menu.pluginmap:33
 #, kde-format
 msgid "Distributions"
 msgstr "Porazdelitve"
 
 #. i18n: ectx: <hierarchy> <menu label="...">
-#: rkward/plugins/distributions/../menu.pluginmap:30
+#: rkward/plugins/distributions/../menu.pluginmap:35
 #, kde-format
 msgid "empty"
 msgstr "prazno"
 
 #. i18n: ectx: (Loaded from Barplot Options)
-#: rkward/plugins/distributions/../plots/barplot_embed.js:52
+#: rkward/plugins/distributions/../plots/barplot_embed.js:57
 #, kde-format
 msgctxt "R code comment"
 msgid "adjust the range so that the labels will fit"
 msgstr "prilagodite obseg, tako da bodo oznake ustrezale"
 
 #. i18n: ectx: (Loaded from Barplot Options) <summary>
-#: rkward/plugins/distributions/../plots/barplot_embed.rkh:3
+#: rkward/plugins/distributions/../plots/barplot_embed.rkh:8
 #, kde-format
 msgid "Options applicable to bar plots"
 msgstr "Možnosti, ki so na voljo za stolpčne grafe"
 
 #. i18n: ectx: (Loaded from Barplot Options) <usage>
-#: rkward/plugins/distributions/../plots/barplot_embed.rkh:7
+#: rkward/plugins/distributions/../plots/barplot_embed.rkh:12
 #, kde-format
 msgid ""
 "Choose if you want stacked bars, legend, and rainbow colors. Also you can "
@@ -837,7 +837,7 @@ msgstr ""
 "katerem mestu."
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Draw Legend")
-#: rkward/plugins/distributions/../plots/barplot_embed.rkh:12
+#: rkward/plugins/distributions/../plots/barplot_embed.rkh:17
 #, kde-format
 msgid ""
 "Should a legend be added to the barplot? The row names of the data will be "
@@ -849,13 +849,13 @@ msgstr ""
 "učinka, če vrstice niso imenovane."
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Colors")
-#: rkward/plugins/distributions/../plots/barplot_embed.rkh:13
+#: rkward/plugins/distributions/../plots/barplot_embed.rkh:18
 #, kde-format
 msgid "Select between grey and rainbow colors."
 msgstr "Izberite med sivinskimi in mavričnimi barvami."
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Type")
-#: rkward/plugins/distributions/../plots/barplot_embed.rkh:14
+#: rkward/plugins/distributions/../plots/barplot_embed.rkh:19
 #, kde-format
 msgid ""
 "Select a type between juxtaposed bars and stacked bars. This setting is only "
@@ -867,13 +867,13 @@ msgstr ""
 "spodaj ne morete prikazati vrednosti stolpcev."
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Display values")
-#: rkward/plugins/distributions/../plots/barplot_embed.rkh:15
+#: rkward/plugins/distributions/../plots/barplot_embed.rkh:20
 #, kde-format
 msgid "Select if you want to display bar values (labels)."
 msgstr "Izberite, če želite prikazati vrednosti stolpca (oznake)."
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Placement")
-#: rkward/plugins/distributions/../plots/barplot_embed.rkh:16
+#: rkward/plugins/distributions/../plots/barplot_embed.rkh:21
 #, kde-format
 msgid ""
 "If you have selected to display bar values (labels) you can select where "
@@ -883,25 +883,25 @@ msgstr ""
 "naj bodo prikazane:"
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Placement")
-#: rkward/plugins/distributions/../plots/barplot_embed.rkh:16
+#: rkward/plugins/distributions/../plots/barplot_embed.rkh:21
 #, kde-format
 msgid "Above the bars"
 msgstr "Nad stolpci"
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Placement")
-#: rkward/plugins/distributions/../plots/barplot_embed.rkh:16
+#: rkward/plugins/distributions/../plots/barplot_embed.rkh:21
 #, kde-format
 msgid "Beside the bars"
 msgstr "Ob stolpcih"
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Placement")
-#: rkward/plugins/distributions/../plots/barplot_embed.rkh:16
+#: rkward/plugins/distributions/../plots/barplot_embed.rkh:21
 #, kde-format
 msgid "Inside the bars"
 msgstr "V stolpcih"
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Plot Options")
-#: rkward/plugins/distributions/../plots/barplot_embed.rkh:21
+#: rkward/plugins/distributions/../plots/barplot_embed.rkh:26
 #, kde-format
 msgid ""
 "Generic plot options. See <link href=\"rkward://component/plot_options\"/>."
@@ -911,7 +911,7 @@ msgstr ""
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Barplot Options) <technical>
-#: rkward/plugins/distributions/../plots/barplot_embed.rkh:31
+#: rkward/plugins/distributions/../plots/barplot_embed.rkh:36
 #, kde-format
 msgid ""
 "This plugin is meant to be embedded in other plugins. It does not by itself "
@@ -924,7 +924,7 @@ msgstr ""
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Barplot Options) <technical>
-#: rkward/plugins/distributions/../plots/barplot_embed.rkh:31
+#: rkward/plugins/distributions/../plots/barplot_embed.rkh:36
 #, kde-format
 msgid ""
 "<i>xvar</i>: The name of the data variable. You can connect this to a "
@@ -935,7 +935,7 @@ msgstr ""
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Barplot Options) <technical>
-#: rkward/plugins/distributions/../plots/barplot_embed.rkh:31
+#: rkward/plugins/distributions/../plots/barplot_embed.rkh:36
 #, kde-format
 msgid ""
 "<i>code.preprocess</i>: Provides a summary of parameters to be used in a "
@@ -946,7 +946,7 @@ msgstr ""
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Barplot Options) <technical>
-#: rkward/plugins/distributions/../plots/barplot_embed.rkh:31
+#: rkward/plugins/distributions/../plots/barplot_embed.rkh:36
 #, kde-format
 msgid ""
 "<i>code.printout</i>: The actual commands needed to construct the barplot."
@@ -955,91 +955,91 @@ msgstr ""
 "grafikona."
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <checkbox label="...">
-#: rkward/plugins/distributions/../plots/barplot_embed.xml:17
+#: rkward/plugins/distributions/../plots/barplot_embed.xml:22
 #, kde-format
 msgid "Draw Legend"
 msgstr "Nariši legendo"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="...">
-#: rkward/plugins/distributions/../plots/barplot_embed.xml:18
+#: rkward/plugins/distributions/../plots/barplot_embed.xml:23
 #, kde-format
 msgid "Colors"
 msgstr "Barve"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="Colors"> <option label="...">
-#: rkward/plugins/distributions/../plots/barplot_embed.xml:19
+#: rkward/plugins/distributions/../plots/barplot_embed.xml:24
 #, kde-format
 msgid "Default (grayscale)"
 msgstr "Privzeto (sivinsko)"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="Colors"> <option label="...">
-#: rkward/plugins/distributions/../plots/barplot_embed.xml:20
+#: rkward/plugins/distributions/../plots/barplot_embed.xml:25
 #, kde-format
 msgid "Rainbow colors"
 msgstr "Mavrične barve"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="...">
-#: rkward/plugins/distributions/../plots/barplot_embed.xml:22
+#: rkward/plugins/distributions/../plots/barplot_embed.xml:27
 #, kde-format
 msgid "Type"
 msgstr "Vrsta"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="Type"> <option label="...">
-#: rkward/plugins/distributions/../plots/barplot_embed.xml:23
+#: rkward/plugins/distributions/../plots/barplot_embed.xml:28
 #, kde-format
 msgid "Juxtaposed"
 msgstr "Soležno"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="Type"> <option label="...">
-#: rkward/plugins/distributions/../plots/barplot_embed.xml:24
+#: rkward/plugins/distributions/../plots/barplot_embed.xml:29
 #, kde-format
 msgid "Stacked"
 msgstr "Naloženo"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <checkbox label="...">
-#: rkward/plugins/distributions/../plots/barplot_embed.xml:27
+#: rkward/plugins/distributions/../plots/barplot_embed.xml:32
 #, kde-format
 msgid "Display values"
 msgstr "Prikaži vrednosti"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="...">
-#: rkward/plugins/distributions/../plots/barplot_embed.xml:28
+#: rkward/plugins/distributions/../plots/barplot_embed.xml:33
 #, kde-format
 msgid "Placement"
 msgstr "Postavitev"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="Placement"> <option label="...">
-#: rkward/plugins/distributions/../plots/barplot_embed.xml:29
+#: rkward/plugins/distributions/../plots/barplot_embed.xml:34
 #, kde-format
 msgid "Above Bars"
 msgstr "Nad stolpci"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="Placement"> <option label="...">
-#: rkward/plugins/distributions/../plots/barplot_embed.xml:30
+#: rkward/plugins/distributions/../plots/barplot_embed.xml:35
 #, kde-format
 msgid "Beside Bars"
 msgstr "Ob stolpcih"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="Placement"> <option label="...">
-#: rkward/plugins/distributions/../plots/barplot_embed.xml:31
+#: rkward/plugins/distributions/../plots/barplot_embed.xml:36
 #, kde-format
 msgid "Inside Bars"
 msgstr "V stolpcih"
 
 #. i18n: ectx: (Loaded from Choose color) <summary>
-#: rkward/plugins/distributions/../plots/color_chooser.rkh:3
+#: rkward/plugins/distributions/../plots/color_chooser.rkh:8
 #, kde-format
 msgid "Simple color picker."
 msgstr "Preprosta pipeta."
 
 #. i18n: ectx: (Loaded from Choose color) <usage>
-#: rkward/plugins/distributions/../plots/color_chooser.rkh:7
+#: rkward/plugins/distributions/../plots/color_chooser.rkh:12
 #, kde-format
 msgid "Pick a color."
 msgstr "Izberite barvo."
 
 #. i18n: ectx: (Loaded from Choose color) <usage>
-#: rkward/plugins/distributions/../plots/color_chooser.rkh:7
+#: rkward/plugins/distributions/../plots/color_chooser.rkh:12
 #, kde-format
 msgid ""
 "This plugin is meant to be used embedded, and you should not really ever see "
@@ -1048,13 +1048,13 @@ msgstr ""
 "Ta vtičnik je namenjen vdelavi in te strani pomoči ne bi smeli nikoli videti."
 
 #. i18n: ectx: (Loaded from Choose color) <settings> <setting> (refers to element labelled "Color")
-#: rkward/plugins/distributions/../plots/color_chooser.rkh:14
+#: rkward/plugins/distributions/../plots/color_chooser.rkh:19
 #, kde-format
 msgid "The color to use."
 msgstr "Barva, ki jo želite uporabiti."
 
 #. i18n: ectx: (Choose color) <dialog label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:17
+#: rkward/plugins/distributions/../plots/color_chooser.xml:22
 #, kde-format
 msgid "Choose color"
 msgstr "Izberite barvo"
@@ -1069,16 +1069,16 @@ msgstr "Izberite barvo"
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Border options"> <embed label="...">
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Fill options"> <embed label="...">
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <embed label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:18
-#: rkward/plugins/distributions/../plots/histogram_options.xml:91
-#: rkward/plugins/distributions/../plots/histogram_options.xml:95
-#: rkward/plugins/distributions/../plots/plot_options.xml:155
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:44
+#: rkward/plugins/distributions/../plots/color_chooser.xml:23
+#: rkward/plugins/distributions/../plots/histogram_options.xml:96
+#: rkward/plugins/distributions/../plots/histogram_options.xml:100
+#: rkward/plugins/distributions/../plots/plot_options.xml:160
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:49
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:53
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:54
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:58
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:61
-#: rkward/plugins/distributions/../x11device/grid.xml:53
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:63
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:66
+#: rkward/plugins/distributions/../x11device/grid.xml:58
 #, kde-format
 msgid "Color"
 msgstr "Barva"
@@ -1086,496 +1086,496 @@ msgstr "Barva"
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> [...] <dropdown label="Tick label orientation"> <option label="...">
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="Type of points/lines"> <option label="...">
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:19
-#: rkward/plugins/distributions/../plots/plot_options.xml:129
-#: rkward/plugins/distributions/../plots/plot_options.xml:146
+#: rkward/plugins/distributions/../plots/color_chooser.xml:24
+#: rkward/plugins/distributions/../plots/plot_options.xml:134
+#: rkward/plugins/distributions/../plots/plot_options.xml:151
 #, kde-format
 msgid "default"
 msgstr "privzeta"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:20
+#: rkward/plugins/distributions/../plots/color_chooser.xml:25
 #, kde-format
 msgid "Azure"
 msgstr "Azurna"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:21
+#: rkward/plugins/distributions/../plots/color_chooser.xml:26
 #, kde-format
 msgid "Black"
 msgstr "Črna"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:22
+#: rkward/plugins/distributions/../plots/color_chooser.xml:27
 #, kde-format
 msgid "Blue"
 msgstr "Modra"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:23
+#: rkward/plugins/distributions/../plots/color_chooser.xml:28
 #, kde-format
 msgid "Blue1"
 msgstr "Modra1"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:24
+#: rkward/plugins/distributions/../plots/color_chooser.xml:29
 #, kde-format
 msgid "Blue2"
 msgstr "Modra2"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:25
+#: rkward/plugins/distributions/../plots/color_chooser.xml:30
 #, kde-format
 msgid "Blue3"
 msgstr "Modra3"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:26
+#: rkward/plugins/distributions/../plots/color_chooser.xml:31
 #, kde-format
 msgid "Blue4"
 msgstr "Modra4"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:27
+#: rkward/plugins/distributions/../plots/color_chooser.xml:32
 #, kde-format
 msgid "Brown"
 msgstr "Rjava"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:28
+#: rkward/plugins/distributions/../plots/color_chooser.xml:33
 #, kde-format
 msgid "Cyan"
 msgstr "Cijan"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:29
+#: rkward/plugins/distributions/../plots/color_chooser.xml:34
 #, kde-format
 msgid "Darkviolet"
 msgstr "Temnovijolična"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:30
+#: rkward/plugins/distributions/../plots/color_chooser.xml:35
 #, kde-format
 msgid "Gold"
 msgstr "Zlata"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:31
+#: rkward/plugins/distributions/../plots/color_chooser.xml:36
 #, kde-format
 msgid "Gray"
 msgstr "Siva"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:32
+#: rkward/plugins/distributions/../plots/color_chooser.xml:37
 #, kde-format
 msgid "Gray1"
 msgstr "Siva1"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:33
+#: rkward/plugins/distributions/../plots/color_chooser.xml:38
 #, kde-format
 msgid "Gray2"
 msgstr "Siva 2"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:34
+#: rkward/plugins/distributions/../plots/color_chooser.xml:39
 #, kde-format
 msgid "Gray3"
 msgstr "Siva3"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:35
+#: rkward/plugins/distributions/../plots/color_chooser.xml:40
 #, kde-format
 msgid "Gray4"
 msgstr "Siva 4"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:36
+#: rkward/plugins/distributions/../plots/color_chooser.xml:41
 #, kde-format
 msgid "Green"
 msgstr "Zelena"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:37
+#: rkward/plugins/distributions/../plots/color_chooser.xml:42
 #, kde-format
 msgid "Green1"
 msgstr "Zelena1"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:38
+#: rkward/plugins/distributions/../plots/color_chooser.xml:43
 #, kde-format
 msgid "Green2"
 msgstr "Zelena2"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:39
+#: rkward/plugins/distributions/../plots/color_chooser.xml:44
 #, kde-format
 msgid "Green3"
 msgstr "Zelena3"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:40
+#: rkward/plugins/distributions/../plots/color_chooser.xml:45
 #, kde-format
 msgid "Green4"
 msgstr "Zelena4"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:41
+#: rkward/plugins/distributions/../plots/color_chooser.xml:46
 #, kde-format
 msgid "Grey"
 msgstr "Siva"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:42
+#: rkward/plugins/distributions/../plots/color_chooser.xml:47
 #, kde-format
 msgid "Grey1"
 msgstr "Siva1"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:43
+#: rkward/plugins/distributions/../plots/color_chooser.xml:48
 #, kde-format
 msgid "Grey2"
 msgstr "Siva2"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:44
+#: rkward/plugins/distributions/../plots/color_chooser.xml:49
 #, kde-format
 msgid "Grey3"
 msgstr "Siva3"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:45
+#: rkward/plugins/distributions/../plots/color_chooser.xml:50
 #, kde-format
 msgid "Grey4"
 msgstr "Siva4"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:46
+#: rkward/plugins/distributions/../plots/color_chooser.xml:51
 #, kde-format
 msgid "Lawngreen"
 msgstr "Travnata zelena"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:47
+#: rkward/plugins/distributions/../plots/color_chooser.xml:52
 #, kde-format
 msgid "Limegreen"
 msgstr "Limetina zelena"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:48
+#: rkward/plugins/distributions/../plots/color_chooser.xml:53
 #, kde-format
 msgid "Linen"
 msgstr "Lan"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:49
+#: rkward/plugins/distributions/../plots/color_chooser.xml:54
 #, kde-format
 msgid "Magenta"
 msgstr "Magenta"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:50
+#: rkward/plugins/distributions/../plots/color_chooser.xml:55
 #, kde-format
 msgid "Magenta1"
 msgstr "Magenta1"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:51
+#: rkward/plugins/distributions/../plots/color_chooser.xml:56
 #, kde-format
 msgid "Magenta2"
 msgstr "Magenta2"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:52
+#: rkward/plugins/distributions/../plots/color_chooser.xml:57
 #, kde-format
 msgid "Magenta3"
 msgstr "Magenta3"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:53
+#: rkward/plugins/distributions/../plots/color_chooser.xml:58
 #, kde-format
 msgid "Magenta4"
 msgstr "Magenta4"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:54
+#: rkward/plugins/distributions/../plots/color_chooser.xml:59
 #, kde-format
 msgid "Mintcream"
 msgstr "Mentolovakrema"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:55
+#: rkward/plugins/distributions/../plots/color_chooser.xml:60
 #, kde-format
 msgid "Mistyrose"
 msgstr "Mistyrose"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:56
+#: rkward/plugins/distributions/../plots/color_chooser.xml:61
 #, kde-format
 msgid "Navajowhite"
 msgstr "Navajobela"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:57
+#: rkward/plugins/distributions/../plots/color_chooser.xml:62
 #, kde-format
 msgid "Orange"
 msgstr "Oranžna"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:58
+#: rkward/plugins/distributions/../plots/color_chooser.xml:63
 #, kde-format
 msgid "Orchid"
 msgstr "Orhidejna"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:59
+#: rkward/plugins/distributions/../plots/color_chooser.xml:64
 #, kde-format
 msgid "Palegreen"
 msgstr "Bledozelena"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:60
+#: rkward/plugins/distributions/../plots/color_chooser.xml:65
 #, kde-format
 msgid "Papayawhip"
 msgstr "Papajastokremna"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:61
+#: rkward/plugins/distributions/../plots/color_chooser.xml:66
 #, kde-format
 msgid "Peachpuff"
 msgstr "Breskova"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:62
+#: rkward/plugins/distributions/../plots/color_chooser.xml:67
 #, kde-format
 msgid "Pink"
 msgstr "Roza"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:63
+#: rkward/plugins/distributions/../plots/color_chooser.xml:68
 #, kde-format
 msgid "Red"
 msgstr "Rdeča"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:64
+#: rkward/plugins/distributions/../plots/color_chooser.xml:69
 #, kde-format
 msgid "Red1"
 msgstr "Rdeča1"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:65
+#: rkward/plugins/distributions/../plots/color_chooser.xml:70
 #, kde-format
 msgid "Red2"
 msgstr "Rdeča2"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:66
+#: rkward/plugins/distributions/../plots/color_chooser.xml:71
 #, kde-format
 msgid "Red3"
 msgstr "Rdeča3"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:67
+#: rkward/plugins/distributions/../plots/color_chooser.xml:72
 #, kde-format
 msgid "Red4"
 msgstr "Rdeča4"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:68
+#: rkward/plugins/distributions/../plots/color_chooser.xml:73
 #, kde-format
 msgid "Royalblue"
 msgstr "Kraljevskomodra"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:69
+#: rkward/plugins/distributions/../plots/color_chooser.xml:74
 #, kde-format
 msgid "Salmon"
 msgstr "Lososova"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:70
+#: rkward/plugins/distributions/../plots/color_chooser.xml:75
 #, kde-format
 msgid "Sandybrown"
 msgstr "Peščenorjava"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:71
+#: rkward/plugins/distributions/../plots/color_chooser.xml:76
 #, kde-format
 msgid "Seagreen"
 msgstr "Morskozelena"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:72
+#: rkward/plugins/distributions/../plots/color_chooser.xml:77
 #, kde-format
 msgid "Sienna"
 msgstr "Glinenordečerjava"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:73
+#: rkward/plugins/distributions/../plots/color_chooser.xml:78
 #, kde-format
 msgid "Skyblue"
 msgstr "Nebesnomodra"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:74
+#: rkward/plugins/distributions/../plots/color_chooser.xml:79
 #, kde-format
 msgid "Slategrey"
 msgstr "Slategrey"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:75
+#: rkward/plugins/distributions/../plots/color_chooser.xml:80
 #, kde-format
 msgid "Snow"
 msgstr "Sneg"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:76
+#: rkward/plugins/distributions/../plots/color_chooser.xml:81
 #, kde-format
 msgid "Springgreen"
 msgstr "Pomladanskozelena"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:77
+#: rkward/plugins/distributions/../plots/color_chooser.xml:82
 #, kde-format
 msgid "Steelblue"
 msgstr "Jeklenomodra"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:78
+#: rkward/plugins/distributions/../plots/color_chooser.xml:83
 #, kde-format
 msgid "Tan"
 msgstr "Kožna"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:79
+#: rkward/plugins/distributions/../plots/color_chooser.xml:84
 #, kde-format
 msgid "Thistle"
 msgstr "Osatova"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:80
+#: rkward/plugins/distributions/../plots/color_chooser.xml:85
 #, kde-format
 msgid "Tomato"
 msgstr "Paradižnikova"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:81
+#: rkward/plugins/distributions/../plots/color_chooser.xml:86
 #, kde-format
 msgid "Violet"
 msgstr "Vijolična"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:82
+#: rkward/plugins/distributions/../plots/color_chooser.xml:87
 #, kde-format
 msgid "Violetred1"
 msgstr "Vijoličnordeča1"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:83
+#: rkward/plugins/distributions/../plots/color_chooser.xml:88
 #, kde-format
 msgid "Violetred2"
 msgstr "Vijoličnordeča2"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:84
+#: rkward/plugins/distributions/../plots/color_chooser.xml:89
 #, kde-format
 msgid "Violetred3"
 msgstr "Vijoličnordeča3"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:85
+#: rkward/plugins/distributions/../plots/color_chooser.xml:90
 #, kde-format
 msgid "Violetred4"
 msgstr "Vijoličnordeča4"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:86
+#: rkward/plugins/distributions/../plots/color_chooser.xml:91
 #, kde-format
 msgid "Wheat"
 msgstr "Pšenična"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:87
+#: rkward/plugins/distributions/../plots/color_chooser.xml:92
 #, kde-format
 msgid "White"
 msgstr "Bela"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:88
+#: rkward/plugins/distributions/../plots/color_chooser.xml:93
 #, kde-format
 msgid "Yellow"
 msgstr "Rumena"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:89
+#: rkward/plugins/distributions/../plots/color_chooser.xml:94
 #, kde-format
 msgid "Yellow1"
 msgstr "Rumena1"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:90
+#: rkward/plugins/distributions/../plots/color_chooser.xml:95
 #, kde-format
 msgid "Yellow2"
 msgstr "Rumena2"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:91
+#: rkward/plugins/distributions/../plots/color_chooser.xml:96
 #, kde-format
 msgid "Yellow3"
 msgstr "Rumena3"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:92
+#: rkward/plugins/distributions/../plots/color_chooser.xml:97
 #, kde-format
 msgid "Yellow4"
 msgstr "Rumena4"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
-#: rkward/plugins/distributions/../plots/color_chooser.xml:93
+#: rkward/plugins/distributions/../plots/color_chooser.xml:98
 #, kde-format
 msgid "Yellowgreen"
 msgstr "Rumenozelena"
 
 #. i18n: ectx: (Loaded from Default histogram options)
-#: rkward/plugins/distributions/../plots/histogram_options.js:13
+#: rkward/plugins/distributions/../plots/histogram_options.js:18
 #, kde-format
 msgid "Break points"
 msgstr "Točke preloma"
 
 #. i18n: ectx: (Loaded from Default histogram options)
-#: rkward/plugins/distributions/../plots/histogram_options.js:16
+#: rkward/plugins/distributions/../plots/histogram_options.js:21
 #, no-c-format, kde-format
 msgid "Approximately %1 cells"
 msgstr "Približno %1 celic"
 
 #. i18n: ectx: (Loaded from Default histogram options)
-#: rkward/plugins/distributions/../plots/histogram_options.js:19
+#: rkward/plugins/distributions/../plots/histogram_options.js:24
 #, kde-format
 msgid "Integers"
 msgstr "Cela števila"
 
 #. i18n: ectx: (Loaded from Default histogram options)
-#: rkward/plugins/distributions/../plots/histogram_options.js:22
+#: rkward/plugins/distributions/../plots/histogram_options.js:27
 #, no-c-format, kde-format
 msgid "Equally spaced vector of length %1"
 msgstr "Enakomerno razmaknjen vektor dolžine %1"
 
 #. i18n: ectx: (Loaded from Default histogram options)
-#: rkward/plugins/distributions/../plots/histogram_options.js:35
-#: rkward/plugins/distributions/../plots/histogram_options.js:37
+#: rkward/plugins/distributions/../plots/histogram_options.js:40
+#: rkward/plugins/distributions/../plots/histogram_options.js:42
 #, kde-format
 msgid "Scale"
 msgstr "Umeri"
 
 #. i18n: ectx: (Loaded from Default histogram options)
-#: rkward/plugins/distributions/../plots/histogram_options.js:35
+#: rkward/plugins/distributions/../plots/histogram_options.js:40
 #, kde-format
 msgid "Density"
 msgstr "Gostota"
 
 #. i18n: ectx: (Loaded from Default histogram options) <summary>
-#: rkward/plugins/distributions/../plots/histogram_options.rkh:3
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:8
 #, kde-format
 msgid ""
 "This plugin provides various options for <b>hist</b> or <b>plot.histogram</"
@@ -1584,7 +1584,7 @@ msgstr ""
 "Ta vtičnik ponuja različne možnosti za <b>hist</b> ali <b>plot.histogram</b>."
 
 #. i18n: ectx: (Loaded from Default histogram options) <usage>
-#: rkward/plugins/distributions/../plots/histogram_options.rkh:6
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:11
 #, kde-format
 msgid ""
 "This plugin is mostly used as an embedded plugin. All the GUI elements here "
@@ -1600,7 +1600,7 @@ msgstr ""
 "zato preberite sklice R, da bi izbrali prave parametre."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Add bars to current plot")
-#: rkward/plugins/distributions/../plots/histogram_options.rkh:10
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:15
 #, kde-format
 msgid ""
 "Check this box if the histogram is to be added to the current plot. This is "
@@ -1610,31 +1610,31 @@ msgstr ""
 "parameter <i>add</i>."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Frequency")
-#: rkward/plugins/distributions/../plots/histogram_options.rkh:11
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:16
 #, kde-format
 msgid "This is the <i>freq</i> parameter."
 msgstr "To je parameter <i>freq </i>."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Bar labels")
-#: rkward/plugins/distributions/../plots/histogram_options.rkh:12
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:17
 #, kde-format
 msgid "This is the <i>label</i> parameter."
 msgstr "To je parameter <i>label</i>."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Right closed")
-#: rkward/plugins/distributions/../plots/histogram_options.rkh:13
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:18
 #, kde-format
 msgid "This is the <i>right</i> parameter."
 msgstr "To je parameter <i>right</i>."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Include in lowest cell")
-#: rkward/plugins/distributions/../plots/histogram_options.rkh:14
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:19
 #, kde-format
 msgid "This is the <i>include.lowest</i> parameter."
 msgstr "To je parameter <i>include.lowest</i>."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Method")
-#: rkward/plugins/distributions/../plots/histogram_options.rkh:16
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:21
 #, kde-format
 msgid ""
 "This is the <i>breaks</i> parameter to <b>hist</b>, unless either 'Integer "
@@ -1652,7 +1652,7 @@ msgstr ""
 "določeno z \"Dolžina vektorja\" (glejte spodaj)."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Suggested cells")
-#: rkward/plugins/distributions/../plots/histogram_options.rkh:17
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:22
 #, kde-format
 msgid ""
 "If 'A single number' is chosen in the above field, then this provides a "
@@ -1663,7 +1663,7 @@ msgstr ""
 "celic. To je parameter <i>breaks</i> z enim številskim argumentom."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Vector length")
-#: rkward/plugins/distributions/../plots/histogram_options.rkh:18
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:23
 #, no-c-format, kde-format
 msgid ""
 "If 'Vector of break points' is chosen in the above field, then this provides "
@@ -1681,7 +1681,7 @@ msgstr ""
 "da so vključene tako najmanjše kot največje točke."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Draw border")
-#: rkward/plugins/distributions/../plots/histogram_options.rkh:20
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:25
 #, kde-format
 msgid ""
 "Whether border to the histogram bars are to be drawn. If unchecked then, "
@@ -1693,7 +1693,7 @@ msgstr ""
 "<i>border</i>."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Color")
-#: rkward/plugins/distributions/../plots/histogram_options.rkh:21
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:26
 #, kde-format
 msgid ""
 "This is the <i>border</i> argument which provides the color of the border. "
@@ -1703,7 +1703,7 @@ msgstr ""
 "uporabiti to možnost, potrdite zgornje polje."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Line type for histogram")
-#: rkward/plugins/distributions/../plots/histogram_options.rkh:23
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:28
 #, kde-format
 msgid ""
 "This is the <i>lty</i> parameter. Choosing 'Blank' will not draw any lines, "
@@ -1715,7 +1715,7 @@ msgstr ""
 "več podrobnosti glejte sklic R."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Density of shading lines")
-#: rkward/plugins/distributions/../plots/histogram_options.rkh:24
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:29
 #, kde-format
 msgid ""
 "This is the <i>density</i> parameter. See the R reference on 'rect' for more "
@@ -1725,20 +1725,20 @@ msgstr ""
 "'rect'."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Angle of shading lines")
-#: rkward/plugins/distributions/../plots/histogram_options.rkh:25
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:30
 #, kde-format
 msgid "This is the <i>angle</i> parameter."
 msgstr "To je parameter kota <i>angle</i>."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Use Fill color")
-#: rkward/plugins/distributions/../plots/histogram_options.rkh:27
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:32
 #, kde-format
 msgid "Check this box to use a fill color for the histogram bars."
 msgstr ""
 "Potrdite to polje, če želite uporabiti barvo polnila za stolpce histograma."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Color")
-#: rkward/plugins/distributions/../plots/histogram_options.rkh:28
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:33
 #, kde-format
 msgid ""
 "This is the <i>col</i> parameter. The embedding plugin might set a default "
@@ -1755,9 +1755,9 @@ msgstr ""
 #. i18n: ectx: (Loaded from Default plot options) <technical>
 #. i18n: ectx: (Loaded from Step function plot options) <technical>
 #. i18n: ectx: (Loaded from Default histogram options) <technical>
-#: rkward/plugins/distributions/../plots/histogram_options.rkh:38
-#: rkward/plugins/distributions/../plots/plot_options.rkh:53
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:26
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:43
+#: rkward/plugins/distributions/../plots/plot_options.rkh:58
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:31
 #, kde-format
 msgid ""
 "The following external tags are provided for use in the embedding plugin."
@@ -1768,8 +1768,8 @@ msgstr ""
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
 #. i18n: ectx: (Loaded from Default histogram options) <technical>
-#: rkward/plugins/distributions/../plots/histogram_options.rkh:38
-#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:43
+#: rkward/plugins/distributions/../plots/plot_options.rkh:58
 #, kde-format
 msgid ""
 "<i>code.printout</i>: This contains all the other options determining the "
@@ -1782,8 +1782,8 @@ msgstr ""
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Step function plot options) <technical>
 #. i18n: ectx: (Loaded from Default histogram options) <technical>
-#: rkward/plugins/distributions/../plots/histogram_options.rkh:38
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:26
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:43
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:31
 #, kde-format
 msgid ""
 "<i>allow_addtoplot</i>: Setting this to \"true\" (\"false\") enables "
@@ -1794,7 +1794,7 @@ msgstr ""
 
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default histogram options) <technical>
-#: rkward/plugins/distributions/../plots/histogram_options.rkh:38
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:43
 #, kde-format
 msgid ""
 "<i>varname</i>: For linking to the variable name for which histogram is "
@@ -1805,7 +1805,7 @@ msgstr ""
 
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default histogram options) <technical>
-#: rkward/plugins/distributions/../plots/histogram_options.rkh:38
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:43
 #, kde-format
 msgid ""
 "<i>allow_freq</i>: Setting this to \"true\" (\"false\") enables (disables) "
@@ -1816,7 +1816,7 @@ msgstr ""
 
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default histogram options) <technical>
-#: rkward/plugins/distributions/../plots/histogram_options.rkh:38
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:43
 #, kde-format
 msgid ""
 "<i>allow_barlabels</i>: Setting this to \"true\" (\"false\") enables "
@@ -1827,7 +1827,7 @@ msgstr ""
 
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default histogram options) <technical>
-#: rkward/plugins/distributions/../plots/histogram_options.rkh:38
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:43
 #, kde-format
 msgid ""
 "In order to allow flexible use, the generated options are separated into "
@@ -1838,7 +1838,7 @@ msgstr ""
 
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default histogram options) <technical>
-#: rkward/plugins/distributions/../plots/histogram_options.rkh:38
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:43
 #, kde-format
 msgid ""
 "<i>code.preprocess</i>: Options suitable for use in a call to <b>rk."
@@ -1849,174 +1849,124 @@ msgstr ""
 
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default histogram options) <technical>
-#: rkward/plugins/distributions/../plots/histogram_options.rkh:38
+#: rkward/plugins/distributions/../plots/histogram_options.rkh:43
 #, kde-format
 msgid "<i>code.calculate</i>: This contains only the <i>breaks</i>-option."
 msgstr "<i>code.calculate</i>: To vsebuje le možnost <i>breaks</i>."
 
 #. i18n: ectx: (Default histogram options) <dialog label="...">
-#: rkward/plugins/distributions/../plots/histogram_options.xml:48
+#: rkward/plugins/distributions/../plots/histogram_options.xml:53
 #, kde-format
 msgid "Default histogram options"
 msgstr "Privzete možnosti histograma"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <checkbox label="...">
-#: rkward/plugins/distributions/../plots/histogram_options.xml:51
+#: rkward/plugins/distributions/../plots/histogram_options.xml:56
 #, kde-format
 msgid "Add bars to current plot"
 msgstr "Dodaj stolpce trenutnemu grafu"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <checkbox label="...">
-#: rkward/plugins/distributions/../plots/histogram_options.xml:53
+#: rkward/plugins/distributions/../plots/histogram_options.xml:58
 #, kde-format
 msgid "Bar labels"
 msgstr "Oznake stolpcev"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="...">
-#: rkward/plugins/distributions/../plots/histogram_options.xml:55
+#: rkward/plugins/distributions/../plots/histogram_options.xml:60
 #, kde-format
 msgid "Histogram Breakpoints"
 msgstr "Prelomne točke histograma"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <radio label="...">
-#: rkward/plugins/distributions/../plots/histogram_options.xml:56
+#: rkward/plugins/distributions/../plots/histogram_options.xml:61
 #, kde-format
 msgid "Method"
 msgstr "Metoda"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <radio label="Method"> <option label="...">
-#: rkward/plugins/distributions/../plots/histogram_options.xml:57
+#: rkward/plugins/distributions/../plots/histogram_options.xml:62
 #, kde-format
 msgid "Sturges"
 msgstr "Sturges"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <radio label="Method"> <option label="...">
-#: rkward/plugins/distributions/../plots/histogram_options.xml:58
+#: rkward/plugins/distributions/../plots/histogram_options.xml:63
 #, kde-format
 msgid "Scott"
 msgstr "Scott"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <radio label="Method"> <option label="...">
-#: rkward/plugins/distributions/../plots/histogram_options.xml:59
+#: rkward/plugins/distributions/../plots/histogram_options.xml:64
 #, kde-format
 msgid "Friedman-Diaconis"
 msgstr "Friedman-Diaconis"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <radio label="Method"> <option label="...">
-#: rkward/plugins/distributions/../plots/histogram_options.xml:60
+#: rkward/plugins/distributions/../plots/histogram_options.xml:65
 #, kde-format
 msgid "A single number"
 msgstr "Eno samo število"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <radio label="Method"> <option label="...">
-#: rkward/plugins/distributions/../plots/histogram_options.xml:61
+#: rkward/plugins/distributions/../plots/histogram_options.xml:66
 #, kde-format
 msgid "Integer numbers"
 msgstr "Cela števila"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <radio label="Method"> <option label="...">
-#: rkward/plugins/distributions/../plots/histogram_options.xml:62
+#: rkward/plugins/distributions/../plots/histogram_options.xml:67
 #, kde-format
 msgid "Vector of break points"
 msgstr "Vektor prelomnih točk"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <spinbox label="...">
-#: rkward/plugins/distributions/../plots/histogram_options.xml:65
+#: rkward/plugins/distributions/../plots/histogram_options.xml:70
 #, kde-format
 msgid "Suggested cells"
 msgstr "Predlagane celice"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <spinbox label="...">
-#: rkward/plugins/distributions/../plots/histogram_options.xml:66
+#: rkward/plugins/distributions/../plots/histogram_options.xml:71
 #, kde-format
 msgid "Vector length"
 msgstr "Dolžina vektorja"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <checkbox label="...">
-#: rkward/plugins/distributions/../plots/histogram_options.xml:68
+#: rkward/plugins/distributions/../plots/histogram_options.xml:73
 #, kde-format
 msgid "Right closed"
 msgstr "Desno zaprto"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <checkbox label="...">
-#: rkward/plugins/distributions/../plots/histogram_options.xml:70
+#: rkward/plugins/distributions/../plots/histogram_options.xml:75
 #, kde-format
 msgid "Include in lowest cell"
 msgstr "Vključi v najnižjo celico"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <text>
-#: rkward/plugins/distributions/../plots/histogram_options.xml:71
+#: rkward/plugins/distributions/../plots/histogram_options.xml:76
 #, kde-format
 msgid "(For vector valued breaks)"
 msgstr "(Za vektorske vrednosti prelomov)"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="...">
-#: rkward/plugins/distributions/../plots/histogram_options.xml:76
+#: rkward/plugins/distributions/../plots/histogram_options.xml:81
 #, kde-format
 msgid "Histogram Line options"
 msgstr "Možnosti črte za histogram"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <dropdown label="...">
-#: rkward/plugins/distributions/../plots/histogram_options.xml:77
+#: rkward/plugins/distributions/../plots/histogram_options.xml:82
 #, kde-format
 msgid "Line type for histogram"
 msgstr "Vrsta črte za histogram"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <dropdown label="Line type for histogram"> <option label="...">
-#: rkward/plugins/distributions/../plots/histogram_options.xml:78
+#: rkward/plugins/distributions/../plots/histogram_options.xml:83
 #, kde-format
 msgid "Blank (No lines)"
 msgstr "Prazno (brez črt)"
-
-#. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="Line type for all lines"> <option label="...">
-#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <dropdown label="Line type for histogram"> <option label="...">
-#. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="Line type"> <option label="...">
-#: rkward/plugins/distributions/../plots/histogram_options.xml:79
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:34
-#: rkward/plugins/distributions/../x11device/grid.xml:46
-#, kde-format
-msgid "Solid"
-msgstr "Polno"
-
-#. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="Line type for all lines"> <option label="...">
-#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <dropdown label="Line type for histogram"> <option label="...">
-#. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="Line type"> <option label="...">
-#: rkward/plugins/distributions/../plots/histogram_options.xml:80
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:35
-#: rkward/plugins/distributions/../x11device/grid.xml:47
-#, kde-format
-msgid "Dashed"
-msgstr "Črtkano"
-
-#. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="Line type for all lines"> <option label="...">
-#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <dropdown label="Line type for histogram"> <option label="...">
-#. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="Line type"> <option label="...">
-#: rkward/plugins/distributions/../plots/histogram_options.xml:81
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:36
-#: rkward/plugins/distributions/../x11device/grid.xml:48
-#, kde-format
-msgid "Dotted"
-msgstr "Pikčasto"
-
-#. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="Line type for all lines"> <option label="...">
-#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <dropdown label="Line type for histogram"> <option label="...">
-#. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="Line type"> <option label="...">
-#: rkward/plugins/distributions/../plots/histogram_options.xml:82
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:37
-#: rkward/plugins/distributions/../x11device/grid.xml:49
-#, kde-format
-msgid "Dot-Dash"
-msgstr "Pika-črtica"
-
-#. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="Line type for all lines"> <option label="...">
-#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <dropdown label="Line type for histogram"> <option label="...">
-#. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="Line type"> <option label="...">
-#: rkward/plugins/distributions/../plots/histogram_options.xml:83
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:38
-#: rkward/plugins/distributions/../x11device/grid.xml:50
-#, kde-format
-msgid "Long-dash"
-msgstr "Dolge-črtice"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="Line type for all lines"> <option label="...">
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <dropdown label="Line type for histogram"> <option label="...">
@@ -2025,47 +1975,97 @@ msgstr "Dolge-črtice"
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:39
 #: rkward/plugins/distributions/../x11device/grid.xml:51
 #, kde-format
+msgid "Solid"
+msgstr "Polno"
+
+#. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="Line type for all lines"> <option label="...">
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <dropdown label="Line type for histogram"> <option label="...">
+#. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="Line type"> <option label="...">
+#: rkward/plugins/distributions/../plots/histogram_options.xml:85
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:40
+#: rkward/plugins/distributions/../x11device/grid.xml:52
+#, kde-format
+msgid "Dashed"
+msgstr "Črtkano"
+
+#. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="Line type for all lines"> <option label="...">
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <dropdown label="Line type for histogram"> <option label="...">
+#. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="Line type"> <option label="...">
+#: rkward/plugins/distributions/../plots/histogram_options.xml:86
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:41
+#: rkward/plugins/distributions/../x11device/grid.xml:53
+#, kde-format
+msgid "Dotted"
+msgstr "Pikčasto"
+
+#. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="Line type for all lines"> <option label="...">
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <dropdown label="Line type for histogram"> <option label="...">
+#. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="Line type"> <option label="...">
+#: rkward/plugins/distributions/../plots/histogram_options.xml:87
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:42
+#: rkward/plugins/distributions/../x11device/grid.xml:54
+#, kde-format
+msgid "Dot-Dash"
+msgstr "Pika-črtica"
+
+#. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="Line type for all lines"> <option label="...">
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <dropdown label="Line type for histogram"> <option label="...">
+#. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="Line type"> <option label="...">
+#: rkward/plugins/distributions/../plots/histogram_options.xml:88
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:43
+#: rkward/plugins/distributions/../x11device/grid.xml:55
+#, kde-format
+msgid "Long-dash"
+msgstr "Dolge-črtice"
+
+#. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="Line type for all lines"> <option label="...">
+#. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <dropdown label="Line type for histogram"> <option label="...">
+#. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="Line type"> <option label="...">
+#: rkward/plugins/distributions/../plots/histogram_options.xml:89
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:44
+#: rkward/plugins/distributions/../x11device/grid.xml:56
+#, kde-format
 msgid "Two-dash"
 msgstr "Dve-črtici"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <spinbox label="...">
-#: rkward/plugins/distributions/../plots/histogram_options.xml:86
+#: rkward/plugins/distributions/../plots/histogram_options.xml:91
 #, kde-format
 msgid "Density of shading lines"
 msgstr "Gostota senčenja črt"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <spinbox label="...">
-#: rkward/plugins/distributions/../plots/histogram_options.xml:87
+#: rkward/plugins/distributions/../plots/histogram_options.xml:92
 #, kde-format
 msgid "Angle of shading lines"
 msgstr "Kot senčenja črt"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="...">
-#: rkward/plugins/distributions/../plots/histogram_options.xml:89
+#: rkward/plugins/distributions/../plots/histogram_options.xml:94
 #, kde-format
 msgid "Histogram Border options"
 msgstr "Možnosti obrobe histograma"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Border options"> <checkbox label="...">
-#: rkward/plugins/distributions/../plots/histogram_options.xml:90
+#: rkward/plugins/distributions/../plots/histogram_options.xml:95
 #, kde-format
 msgid "Draw border"
 msgstr "Nariši rob"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="...">
-#: rkward/plugins/distributions/../plots/histogram_options.xml:93
+#: rkward/plugins/distributions/../plots/histogram_options.xml:98
 #, kde-format
 msgid "Histogram Fill options"
 msgstr "Možnosti polnila histograma"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Fill options"> <checkbox label="...">
-#: rkward/plugins/distributions/../plots/histogram_options.xml:94
+#: rkward/plugins/distributions/../plots/histogram_options.xml:99
 #, kde-format
 msgid "Use Fill color"
 msgstr "Uporabi barvo polnila"
 
 #. i18n: ectx: (Loaded from Default plot options) <summary>
-#: rkward/plugins/distributions/../plots/plot_options.rkh:3
+#: rkward/plugins/distributions/../plots/plot_options.rkh:8
 #, kde-format
 msgid ""
 "Generic plot options plugin. More often than not, this plugin is embedded "
@@ -2079,14 +2079,14 @@ msgstr ""
 "spodaj."
 
 #. i18n: ectx: (Loaded from Default plot options) <usage>
-#: rkward/plugins/distributions/../plots/plot_options.rkh:7
+#: rkward/plugins/distributions/../plots/plot_options.rkh:12
 #, kde-format
 msgid "Set or change the various graphical parameters to the plot function."
 msgstr ""
 "Nastavite ali spremenite različne grafične parametre v funkciji prikaza."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Main title (on top). Leave empty for default title")
-#: rkward/plugins/distributions/../plots/plot_options.rkh:13
+#: rkward/plugins/distributions/../plots/plot_options.rkh:18
 #, kde-format
 msgid ""
 "This is the <i>main</i> argument to plot.default. See R reference on <b>plot."
@@ -2096,7 +2096,7 @@ msgstr ""
 "default</b>. Če želite prelom vrstice (v citiranem nizu), vnesite '\\n'."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Interpret this label as literal (quoted) string")
-#: rkward/plugins/distributions/../plots/plot_options.rkh:14
+#: rkward/plugins/distributions/../plots/plot_options.rkh:19
 #, kde-format
 msgid ""
 "If this box is checked, the <i>main</i> title will be used literally "
@@ -2106,7 +2106,7 @@ msgstr ""
 "(citirano).  V nasprotnem primeru bo tolmačen kot ukaz za R"
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Sub-title (at bottom). Leave empty for default title")
-#: rkward/plugins/distributions/../plots/plot_options.rkh:15
+#: rkward/plugins/distributions/../plots/plot_options.rkh:20
 #, kde-format
 msgid ""
 "This is the <i>sub</i> argument to plot.default. See R reference on <b>plot."
@@ -2117,7 +2117,7 @@ msgstr ""
 "'\\n'."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Interpret this label as literal (quoted) string")
-#: rkward/plugins/distributions/../plots/plot_options.rkh:16
+#: rkward/plugins/distributions/../plots/plot_options.rkh:21
 #, kde-format
 msgid ""
 "If this box is checked, the <i>sub</i> title will be used literally "
@@ -2127,40 +2127,40 @@ msgstr ""
 "(citirano). V nasprotnem primeru se tolmači kot ukaz za R"
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Custom margins")
-#: rkward/plugins/distributions/../plots/plot_options.rkh:17
+#: rkward/plugins/distributions/../plots/plot_options.rkh:22
 #, kde-format
 msgid "Enable this option, if you want to customize the margins."
 msgstr "Omogočite to možnost, če želite prilagoditi robove."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Top")
-#: rkward/plugins/distributions/../plots/plot_options.rkh:18
+#: rkward/plugins/distributions/../plots/plot_options.rkh:23
 #, kde-format
 msgid "Size of top margin. Size is specified in (approximate) line heights."
 msgstr ""
 "Velikost vrhnjega roba. Velikost je določena v (približnih) višinah črt."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Bottom")
-#: rkward/plugins/distributions/../plots/plot_options.rkh:19
+#: rkward/plugins/distributions/../plots/plot_options.rkh:24
 #, kde-format
 msgid "Size of bottom margin. Size is specified in (approximate) line heights."
 msgstr ""
 "Velikost spodnjega roba. Velikost je določena v (približnih) višinah črt."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Left")
-#: rkward/plugins/distributions/../plots/plot_options.rkh:20
+#: rkward/plugins/distributions/../plots/plot_options.rkh:25
 #, kde-format
 msgid "Size of left margin. Size is specified in (approximate) line heights."
 msgstr "Velikost levega roba. Velikost je določena v (približnih) višinah črt."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Right")
-#: rkward/plugins/distributions/../plots/plot_options.rkh:21
+#: rkward/plugins/distributions/../plots/plot_options.rkh:26
 #, kde-format
 msgid "Size of right margin. Size is specified in (approximate) line heights."
 msgstr ""
 "Velikost desnega roba. Velikost je določena v (približnih) višinah črt."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Draw X axis")
-#: rkward/plugins/distributions/../plots/plot_options.rkh:24
+#: rkward/plugins/distributions/../plots/plot_options.rkh:29
 #, kde-format
 msgid ""
 "Uncheck this box to avoid drawing the X axis. This is the <i>xaxt</i> "
@@ -2170,7 +2170,7 @@ msgstr ""
 "<i>xaxt</i> za ukaz par. Glejte pomoč R za <b>par</b>."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Draw Y axis")
-#: rkward/plugins/distributions/../plots/plot_options.rkh:25
+#: rkward/plugins/distributions/../plots/plot_options.rkh:30
 #, kde-format
 msgid ""
 "Uncheck this box to avoid drawing the Y axis. This is the <i>yaxt</i> "
@@ -2180,7 +2180,7 @@ msgstr ""
 "<i>yaxt</i> za ukaz par. Glejte pomoč za R za <b>par</b>."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "X axis logarithmic")
-#: rkward/plugins/distributions/../plots/plot_options.rkh:26
+#: rkward/plugins/distributions/../plots/plot_options.rkh:31
 #, kde-format
 msgid ""
 "This specifies the <i>log</i> argument to plot.default. Check this box to "
@@ -2190,7 +2190,7 @@ msgstr ""
 "nastaviti <i>log=\"x\"</i>. Glejte sklic R za <b>plot.default</b>."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Y axis logarithmic")
-#: rkward/plugins/distributions/../plots/plot_options.rkh:27
+#: rkward/plugins/distributions/../plots/plot_options.rkh:32
 #, kde-format
 msgid ""
 "This specifies the <i>log</i> argument to plot.default. Check this box to "
@@ -2202,7 +2202,7 @@ msgstr ""
 "oba polja. Glejte sklic R na <b>plot.default</b>."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Labels (leave empty for default)")
-#: rkward/plugins/distributions/../plots/plot_options.rkh:29
+#: rkward/plugins/distributions/../plots/plot_options.rkh:34
 #, kde-format
 msgid ""
 "The X and Y axis labels. These are the <i>xlab</i> and <i>ylab</i> arguments "
@@ -2216,7 +2216,7 @@ msgstr ""
 "nizu), vnesite '\\n'."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Scale (Minimum/Maximum values for X/Y). Leave blank for automatic")
-#: rkward/plugins/distributions/../plots/plot_options.rkh:30
+#: rkward/plugins/distributions/../plots/plot_options.rkh:35
 #, kde-format
 msgid ""
 "The X and Y axis limits. These are the <i>xlim</i> and <i>ylim</i> arguments "
@@ -2227,7 +2227,7 @@ msgstr ""
 "default</b>. Za samodejno ovrednotenje omejitev jih pustite prazne."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Type of points/lines")
-#: rkward/plugins/distributions/../plots/plot_options.rkh:33
+#: rkward/plugins/distributions/../plots/plot_options.rkh:38
 #, kde-format
 msgid ""
 "Choose one of the listed point/line types for the plot. To let the calling "
@@ -2239,7 +2239,7 @@ msgstr ""
 "možnost. To je argument vrste <i>type</i> za <b>plot.default</b>."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Color")
-#: rkward/plugins/distributions/../plots/plot_options.rkh:35
+#: rkward/plugins/distributions/../plots/plot_options.rkh:40
 #, kde-format
 msgid ""
 "Choose one of the listed point/line colors for the plot. To let the calling "
@@ -2251,13 +2251,13 @@ msgstr ""
 "možnost. To je argument <i>col</i> za <b>plot.default</b>."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Aspect ratio")
-#: rkward/plugins/distributions/../plots/plot_options.rkh:38
+#: rkward/plugins/distributions/../plots/plot_options.rkh:43
 #, kde-format
 msgid "This is the <i>asp</i> argument to <b>plot.default</b>."
 msgstr "To je argument <i>asp</i> za <b>plot.default</b>."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Add Grid to the plot")
-#: rkward/plugins/distributions/../plots/plot_options.rkh:41
+#: rkward/plugins/distributions/../plots/plot_options.rkh:46
 #, kde-format
 msgid ""
 "Check this box to add a grid to the current plot. For various grid options "
@@ -2272,21 +2272,21 @@ msgstr ""
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
-#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#: rkward/plugins/distributions/../plots/plot_options.rkh:58
 #, kde-format
 msgid "<i>xvar</i>: The variable to be used for the x-coordinates."
 msgstr "<i>xvar</i>: Spremenljivka, ki se uporablja za koordinate x."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
-#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#: rkward/plugins/distributions/../plots/plot_options.rkh:58
 #, kde-format
 msgid "<i>yvar</i>: The variable to be used for the y-coordinates."
 msgstr "<i>yvar</i>: Spremenljivka, ki se uporablja za koordinate y."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
-#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#: rkward/plugins/distributions/../plots/plot_options.rkh:58
 #, kde-format
 msgid ""
 "<i>default_pointtype</i>: A string that provides the default point type when "
@@ -2300,7 +2300,7 @@ msgstr ""
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
-#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#: rkward/plugins/distributions/../plots/plot_options.rkh:58
 #, kde-format
 msgid ""
 "<i>default_pointcolor</i>: A string that provides the default point color "
@@ -2314,7 +2314,7 @@ msgstr ""
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
-#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#: rkward/plugins/distributions/../plots/plot_options.rkh:58
 #, kde-format
 msgid ""
 "<i>default_main</i>: A string specifying the <i>main</i> argument to <b>plot."
@@ -2330,7 +2330,7 @@ msgstr ""
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
-#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#: rkward/plugins/distributions/../plots/plot_options.rkh:58
 #, kde-format
 msgid ""
 "<i>default_sub</i>: Similar to <i>main</i> above but for the subtitle "
@@ -2341,7 +2341,7 @@ msgstr ""
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
-#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#: rkward/plugins/distributions/../plots/plot_options.rkh:58
 #, kde-format
 msgid ""
 "<i>default_xlab</i>: Similar to <i>main</i> above but for the X-label "
@@ -2352,7 +2352,7 @@ msgstr ""
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
-#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#: rkward/plugins/distributions/../plots/plot_options.rkh:58
 #, kde-format
 msgid ""
 "<i>default_ylab</i>: Similar to <i>main</i> above but for the Y-label "
@@ -2363,7 +2363,7 @@ msgstr ""
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
-#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#: rkward/plugins/distributions/../plots/plot_options.rkh:58
 #, kde-format
 msgid ""
 "<i>allow_log</i>: Setting this to \"true\" (\"false\") enables (disables) "
@@ -2375,7 +2375,7 @@ msgstr ""
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
-#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#: rkward/plugins/distributions/../plots/plot_options.rkh:58
 #, kde-format
 msgid ""
 "<i>allow_xlim</i>: Setting this to \"true\" (\"false\") enables (disables) "
@@ -2388,7 +2388,7 @@ msgstr ""
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
-#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#: rkward/plugins/distributions/../plots/plot_options.rkh:58
 #, kde-format
 msgid ""
 "<i>allow_ylim</i>: Setting this to \"true\" (\"false\") enables (disables) "
@@ -2401,7 +2401,7 @@ msgstr ""
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
-#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#: rkward/plugins/distributions/../plots/plot_options.rkh:58
 #, kde-format
 msgid ""
 "<i>allow_type</i>: Setting this to \"true\" (\"false\") enables (disables) "
@@ -2412,7 +2412,7 @@ msgstr ""
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
-#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#: rkward/plugins/distributions/../plots/plot_options.rkh:58
 #, kde-format
 msgid ""
 "<i>allow_aspect</i>: Setting this to \"true\" (\"false\") enables (disables) "
@@ -2423,7 +2423,7 @@ msgstr ""
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
-#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#: rkward/plugins/distributions/../plots/plot_options.rkh:58
 #, kde-format
 msgid ""
 "<i>allow_grid</i>: Setting this to \"true\" (\"false\") enables (disables) "
@@ -2445,7 +2445,7 @@ msgstr ""
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
-#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#: rkward/plugins/distributions/../plots/plot_options.rkh:58
 #, kde-format
 msgid ""
 "In order to allow flexible use, the generated options are separated into "
@@ -2456,7 +2456,7 @@ msgstr ""
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
-#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#: rkward/plugins/distributions/../plots/plot_options.rkh:58
 #, kde-format
 msgid ""
 "<i>code.preprocess</i>: Nothing yet, but will hopefully include some <b>par</"
@@ -2467,7 +2467,7 @@ msgstr ""
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
-#: rkward/plugins/distributions/../plots/plot_options.rkh:53
+#: rkward/plugins/distributions/../plots/plot_options.rkh:58
 #, kde-format
 msgid ""
 "<i>code.calculate</i>: Currently this contains only the <b>grid</b>-options."
@@ -2475,287 +2475,287 @@ msgstr ""
 "<i>code.calculate</i>: Trenutno to vsebuje samo možnosti za <b>grid</b>."
 
 #. i18n: ectx: (Default plot options) <dialog label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:73
+#: rkward/plugins/distributions/../plots/plot_options.xml:78
 #, kde-format
 msgid "Default plot options"
 msgstr "Privzete možnosti izrisa"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:75
+#: rkward/plugins/distributions/../plots/plot_options.xml:80
 #, kde-format
 msgid "Title and margins"
 msgstr "Naslov in robovi"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:77
+#: rkward/plugins/distributions/../plots/plot_options.xml:82
 #, kde-format
 msgid "Main title"
 msgstr "Glavni naslov"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Main title"> <input label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:78
+#: rkward/plugins/distributions/../plots/plot_options.xml:83
 #, kde-format
 msgid "Main title (on top). Leave empty for default title"
 msgstr "Glavni naslov (na vrhu). Pustite prazno za privzeti naslov"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Main title"> <checkbox label="...">
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Subtitle"> <checkbox label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:79
-#: rkward/plugins/distributions/../plots/plot_options.xml:83
+#: rkward/plugins/distributions/../plots/plot_options.xml:84
+#: rkward/plugins/distributions/../plots/plot_options.xml:88
 #, kde-format
 msgid "Interpret this label as literal (quoted) string"
 msgstr "Tolmači to oznako kot dobesedni niz (v navednicah)"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:81
+#: rkward/plugins/distributions/../plots/plot_options.xml:86
 #, kde-format
 msgid "Subtitle"
 msgstr "Podnaslov"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Subtitle"> <input label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:82
+#: rkward/plugins/distributions/../plots/plot_options.xml:87
 #, kde-format
 msgid "Sub-title (at bottom). Leave empty for default title"
 msgstr "Podnaslov (na dnu). Pustite prazno za privzeti naslov"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:85
+#: rkward/plugins/distributions/../plots/plot_options.xml:90
 #, kde-format
 msgid "Custom margins"
 msgstr "Robovi po meri"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Custom margins"> <spinbox label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:86
+#: rkward/plugins/distributions/../plots/plot_options.xml:91
 #, kde-format
 msgid "Top"
 msgstr "Na vrh"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Custom margins"> <spinbox label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:87
+#: rkward/plugins/distributions/../plots/plot_options.xml:92
 #, kde-format
 msgid "Bottom"
 msgstr "Na dno"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Custom margins"> <spinbox label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:88
+#: rkward/plugins/distributions/../plots/plot_options.xml:93
 #, kde-format
 msgid "Left"
 msgstr "Levo"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Custom margins"> <spinbox label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:89
+#: rkward/plugins/distributions/../plots/plot_options.xml:94
 #, kde-format
 msgid "Right"
 msgstr "Desno"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:94
+#: rkward/plugins/distributions/../plots/plot_options.xml:99
 #, kde-format
 msgid "Axes"
 msgstr "Osi"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:96
+#: rkward/plugins/distributions/../plots/plot_options.xml:101
 #, kde-format
 msgid "Axis types"
 msgstr "Vrste osi"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Axis types"> <checkbox label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:98
+#: rkward/plugins/distributions/../plots/plot_options.xml:103
 #, kde-format
 msgid "Draw X axis"
 msgstr "Nariši os X"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Axis types"> <checkbox label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:99
+#: rkward/plugins/distributions/../plots/plot_options.xml:104
 #, kde-format
 msgid "Draw Y axis"
 msgstr "Nariši os Y"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Axis types"> <checkbox label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:102
+#: rkward/plugins/distributions/../plots/plot_options.xml:107
 #, kde-format
 msgid "X axis logarithmic"
 msgstr "Os X, logaritemsko merilo"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Axis types"> <checkbox label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:103
+#: rkward/plugins/distributions/../plots/plot_options.xml:108
 #, kde-format
 msgid "Y axis logarithmic"
 msgstr "Os Y, logaritemsko merilo"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:106
+#: rkward/plugins/distributions/../plots/plot_options.xml:111
 #, kde-format
 msgid "Labels (leave empty for default)"
 msgstr "Oznake (za privzeto pustite prazne)"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Labels (leave empty for default)"> <input label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:108
+#: rkward/plugins/distributions/../plots/plot_options.xml:113
 #, kde-format
 msgid "X axis label"
 msgstr "Oznaka osi X"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Labels (leave empty for default)"> <input label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:109
+#: rkward/plugins/distributions/../plots/plot_options.xml:114
 #, kde-format
 msgid "Y axis label"
 msgstr "Oznaka osi Y"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Labels (leave empty for default)"> <text>
-#: rkward/plugins/distributions/../plots/plot_options.xml:111
+#: rkward/plugins/distributions/../plots/plot_options.xml:116
 #, kde-format
 msgid "Interpret these labels as literal (quoted) strings?"
 msgstr "Ali želite tolmačiti te oznake kot dobesedne nize (v navednicah)?"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Labels (leave empty for default)"> <checkbox label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:113
-#: rkward/plugins/distributions/../plots/plot_options.xml:114
+#: rkward/plugins/distributions/../plots/plot_options.xml:118
+#: rkward/plugins/distributions/../plots/plot_options.xml:119
 #, kde-format
 msgid "interpret as string"
 msgstr "tolmači kot niz"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:117
+#: rkward/plugins/distributions/../plots/plot_options.xml:122
 #, kde-format
 msgid "Scale (Minimum/Maximum values for X/Y). Leave blank for automatic"
 msgstr ""
 "Lestvica (najmanjše/največje vrednosti za X/Y). Pustite prazno za samodejno"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Scale (Minimum/Maximum values for X/Y). Leave blank for automatic"> <input label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:119
+#: rkward/plugins/distributions/../plots/plot_options.xml:124
 #, kde-format
 msgid "Min X value"
 msgstr "Najmanjša vrednost X"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Scale (Minimum/Maximum values for X/Y). Leave blank for automatic"> <input label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:120
+#: rkward/plugins/distributions/../plots/plot_options.xml:125
 #, kde-format
 msgid "Min Y value"
 msgstr "Najmanjša vrednost Y"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Scale (Minimum/Maximum values for X/Y). Leave blank for automatic"> <input label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:123
+#: rkward/plugins/distributions/../plots/plot_options.xml:128
 #, kde-format
 msgid "Max X value"
 msgstr "Največja vrednost X"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Scale (Minimum/Maximum values for X/Y). Leave blank for automatic"> <input label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:124
+#: rkward/plugins/distributions/../plots/plot_options.xml:129
 #, kde-format
 msgid "Max Y value"
 msgstr "Največja vrednost Y"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:127
+#: rkward/plugins/distributions/../plots/plot_options.xml:132
 #, kde-format
 msgid "Axis Annotations"
 msgstr "Opombe osi"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Axis Annotations"> <dropdown label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:128
+#: rkward/plugins/distributions/../plots/plot_options.xml:133
 #, kde-format
 msgid "Tick label orientation"
 msgstr "Usmerjenost oznak osi"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> [...] <dropdown label="Tick label orientation"> <option label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:130
+#: rkward/plugins/distributions/../plots/plot_options.xml:135
 #, kde-format
 msgid "Always parallel to the axis "
 msgstr "Vedno vzporedno z osjo "
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> [...] <dropdown label="Tick label orientation"> <option label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:131
+#: rkward/plugins/distributions/../plots/plot_options.xml:136
 #, kde-format
 msgid "Always horizontal "
 msgstr "Vedno vodoravno "
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> [...] <dropdown label="Tick label orientation"> <option label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:132
+#: rkward/plugins/distributions/../plots/plot_options.xml:137
 #, kde-format
 msgid "Always perpendicular to the axis "
 msgstr "Vedno pravokotno na os "
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> [...] <dropdown label="Tick label orientation"> <option label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:133
+#: rkward/plugins/distributions/../plots/plot_options.xml:138
 #, kde-format
 msgid "Always vertical "
 msgstr "Vedno navpično "
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Axis Annotations"> <input label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:136
+#: rkward/plugins/distributions/../plots/plot_options.xml:141
 #, kde-format
 msgid "Tick label scale (relative to cex)"
 msgstr "Merilo oznak na osi (glede na cex)"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:143
+#: rkward/plugins/distributions/../plots/plot_options.xml:148
 #, kde-format
 msgid "Points / Lines"
 msgstr "Točke / Črte"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:145
+#: rkward/plugins/distributions/../plots/plot_options.xml:150
 #, kde-format
 msgid "Type of points/lines"
 msgstr "Vrsta točk/črt"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="Type of points/lines"> <option label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:147
+#: rkward/plugins/distributions/../plots/plot_options.xml:152
 #, kde-format
 msgid "Plot individual points "
 msgstr "Nariši posamezne točke "
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="Type of points/lines"> <option label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:148
+#: rkward/plugins/distributions/../plots/plot_options.xml:153
 #, kde-format
 msgid "Plot lines "
 msgstr "Nariši črte "
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="Type of points/lines"> <option label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:149
+#: rkward/plugins/distributions/../plots/plot_options.xml:154
 #, kde-format
 msgid "Plot points connected by lines (both)"
 msgstr "Nariši točke, povezane s črtami (oboje)"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="Type of points/lines"> <option label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:150
+#: rkward/plugins/distributions/../plots/plot_options.xml:155
 #, kde-format
 msgid "Plot points overlaid by lines "
 msgstr "Nariši točke, prekrite s črtami "
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="Type of points/lines"> <option label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:151
+#: rkward/plugins/distributions/../plots/plot_options.xml:156
 #, kde-format
 msgid "Plot vertical lines from points to the zero axis (high-density)"
 msgstr "Nariši navpične črte iz točk do ničelne osi (visoka gostota)"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="Type of points/lines"> <option label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:152
+#: rkward/plugins/distributions/../plots/plot_options.xml:157
 #, kde-format
 msgid "Step-function plots: the left edge defines the point"
 msgstr "Grafi stopničaste funkcije: levi rob določa točko"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="Type of points/lines"> <option label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:153
+#: rkward/plugins/distributions/../plots/plot_options.xml:158
 #, kde-format
 msgid "Step-function plots: the right edge defines the point"
 msgstr "Grafi stopničaste funkcije: desni rob določa točko"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:159
+#: rkward/plugins/distributions/../plots/plot_options.xml:164
 #, kde-format
 msgid "Aspect ratio y/x"
 msgstr "Razmerje stranic y/x"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Aspect ratio y/x"> <spinbox label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:161
+#: rkward/plugins/distributions/../plots/plot_options.xml:166
 #, kde-format
 msgid "Aspect ratio"
 msgstr "Razmerje stranic"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Aspect ratio y/x"> <text>
-#: rkward/plugins/distributions/../plots/plot_options.xml:162
+#: rkward/plugins/distributions/../plots/plot_options.xml:167
 #, kde-format
 msgid ""
 "Note that if Aspect is a finite positive value then the window is set up so "
@@ -2767,7 +2767,7 @@ msgstr ""
 "podatkovne enote do asp * v smeri y."
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Aspect ratio y/x"> <text>
-#: rkward/plugins/distributions/../plots/plot_options.xml:163
+#: rkward/plugins/distributions/../plots/plot_options.xml:168
 #, kde-format
 msgid ""
 "The special case Aspect == 1 produces plots where distances between points "
@@ -2780,19 +2780,19 @@ msgstr ""
 "širine in zemljepisne dolžine."
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:167
+#: rkward/plugins/distributions/../plots/plot_options.xml:172
 #, kde-format
 msgid "Grid"
 msgstr "Mreža"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Grid"> <checkbox label="...">
-#: rkward/plugins/distributions/../plots/plot_options.xml:168
+#: rkward/plugins/distributions/../plots/plot_options.xml:173
 #, kde-format
 msgid "Add Grid to the plot"
 msgstr "Grafu dodaj mrežo"
 
 #. i18n: ectx: (Loaded from Step function plot options) <summary>
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:3
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:8
 #, kde-format
 msgid ""
 "Various graphical parameters for <b>plot.stepfun</b>. For detailed "
@@ -2803,7 +2803,7 @@ msgstr ""
 "posameznih parametrov glejte sklic R za 'plot.stepfun'."
 
 #. i18n: ectx: (Loaded from Step function plot options) <usage>
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:6
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:11
 #, kde-format
 msgid ""
 "This is supposed to be used as an embedded plugin. All the elements are "
@@ -2815,7 +2815,7 @@ msgstr ""
 "<b>ecdf</b>."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Add to current plot")
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:10
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:15
 #, kde-format
 msgid ""
 "This is the <i>add</i> argument. This option might be disabled by the "
@@ -2825,13 +2825,13 @@ msgstr ""
 "vtičnikom."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Line type for all lines")
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:11
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:16
 #, kde-format
 msgid "This is the <i>lty</i> argument."
 msgstr "To je argument <i>lty</i>."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Draw points")
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:12
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:17
 #, kde-format
 msgid ""
 "This is the <i>do.points</i> argument. Uncheck this option if points are NOT "
@@ -2841,7 +2841,7 @@ msgstr ""
 "točk."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Color")
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:13
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:18
 #, kde-format
 msgid ""
 "This is the <i>col.points</i> argument. Leave this as 'default' for using "
@@ -2851,13 +2851,13 @@ msgstr ""
 "standardnih nastavitev barve iz par()."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Horizontal Lines")
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:14
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:19
 #, kde-format
 msgid "This is the <i>col.hor</i> argument."
 msgstr "To je argument <i>col.hor</i>."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Draw vertical lines")
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:15
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:20
 #, kde-format
 msgid ""
 "This is the <i>verticals</i> arguments. Uncheck this option if vertical "
@@ -2867,13 +2867,13 @@ msgstr ""
 "navpičnih črt.."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Color")
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:16
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:21
 #, kde-format
 msgid "This is the <i>col.vert</i> argument."
 msgstr "To je argument <i>col.vert.</i>."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "For y = 1 line")
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:18
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:23
 #, kde-format
 msgid ""
 "The above two options are not for <b>plot.stepfun</b>, but rather for "
@@ -2894,7 +2894,7 @@ msgstr ""
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Step function plot options) <technical>
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:26
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:31
 #, kde-format
 msgid ""
 "<i>default_dopoints</i>: Setting this to \"true\" (\"false\") toggles the "
@@ -2905,7 +2905,7 @@ msgstr ""
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Step function plot options) <technical>
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:26
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:31
 #, kde-format
 msgid ""
 "<i>default_verticals</i>: Setting this to \"true\" (\"false\") toggles the "
@@ -2916,7 +2916,7 @@ msgstr ""
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Step function plot options) <technical>
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:26
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:31
 #, kde-format
 msgid ""
 "<i>allow_col01line</i>: Setting this to \"true\" (\"false\") enables "
@@ -2928,94 +2928,94 @@ msgstr ""
 "id=\"frame_col_y0\"/>') kot možnost <i>col.01line</i> za <b>ecdf</b>."
 
 #. i18n: ectx: (Step function plot options) <dialog label="...">
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:28
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:33
 #, kde-format
 msgid "Step function plot options"
 msgstr "Možnosti grafikona za stopničasto funkcijo"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="...">
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:30
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:35
 #, kde-format
 msgid "Options"
 msgstr "Možnosti"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <checkbox label="...">
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:31
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:36
 #, kde-format
 msgid "Add to current plot"
 msgstr "Dodaj trenutnemu grafu"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="...">
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:32
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:37
 #, kde-format
 msgid "Line type for all lines"
 msgstr "Vrsta črte za vse črte"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="Line type for all lines"> <option label="...">
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="Line type"> <option label="...">
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:33
-#: rkward/plugins/distributions/../x11device/grid.xml:45
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:38
+#: rkward/plugins/distributions/../x11device/grid.xml:50
 #, kde-format
 msgid "Default"
 msgstr "Privzeto"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="...">
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:42
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:47
 #, kde-format
 msgid "Points"
 msgstr "Točke"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Points"> <checkbox label="...">
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:43
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:48
 #, kde-format
 msgid "Draw points"
 msgstr "Nariši točke"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="...">
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:48
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:53
 #, kde-format
 msgid "Horizontal Lines"
 msgstr "Vodoravne črte"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="...">
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:51
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:56
 #, kde-format
 msgid "Vertical lines"
 msgstr "Navpične črte"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Vertical lines"> <checkbox label="...">
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:52
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:57
 #, kde-format
 msgid "Draw vertical lines"
 msgstr "Nariši navpične črte"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="...">
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:57
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:62
 #, kde-format
 msgid "For y = 0 line"
 msgstr "Črta za y = 0"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="...">
-#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:60
+#: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:65
 #, kde-format
 msgid "For y = 1 line"
 msgstr "Črta za y = 1"
 
 #. i18n: ectx: <snippets> <snippet> <author name="...">
-#: rkward/plugins/distributions/../pluginmap_meta.inc:4
+#: rkward/plugins/distributions/../pluginmap_meta.inc:9
 #, kde-format
 msgctxt "Author name"
 msgid "RKWard Team"
 msgstr "Ekipa RKWard"
 
 #. i18n: ectx: (Internal plugin for automated testing) <dialog label="...">
-#: rkward/plugins/distributions/../testing/run_code.xml:5
+#: rkward/plugins/distributions/../testing/run_code.xml:10
 #, kde-format
 msgid "Internal plugin for automated testing"
 msgstr "Notranji vtičnik za samodejno preizkušanje"
 
 #. i18n: ectx: (Loaded from Grid options) <summary>
-#: rkward/plugins/distributions/../x11device/grid.rkh:3
+#: rkward/plugins/distributions/../x11device/grid.rkh:8
 #, kde-format
 msgid ""
 "Various parameters for the <b>grid</b>. For detailed description of the "
@@ -3032,7 +3032,7 @@ msgstr ""
 "Trellis <link href=\"rkward://rhelp/Lattice\"/> (za nekatere informacije)."
 
 #. i18n: ectx: (Loaded from Grid options) <usage>
-#: rkward/plugins/distributions/../x11device/grid.rkh:6
+#: rkward/plugins/distributions/../x11device/grid.rkh:11
 #, kde-format
 msgid ""
 "This may or may not be used as an embedded plugin. When used on a trellis "
@@ -3042,7 +3042,7 @@ msgstr ""
 "trellis napravi, se prikaže sporočilo o napaki."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Number of X cells")
-#: rkward/plugins/distributions/../x11device/grid.rkh:10
+#: rkward/plugins/distributions/../x11device/grid.rkh:15
 #, kde-format
 msgid ""
 "This is the <i>nx</i> argument. The default is NULL, in which case, the "
@@ -3056,7 +3056,7 @@ msgstr ""
 "število navpičnih črt v mreži."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "X Cells")
-#: rkward/plugins/distributions/../x11device/grid.rkh:11
+#: rkward/plugins/distributions/../x11device/grid.rkh:16
 #, kde-format
 msgid ""
 "This is the <i>nx</i> argument, when 'Specify below' is selected in the "
@@ -3066,7 +3066,7 @@ msgstr ""
 "\"Navedi spodaj\"."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Number of Y cells")
-#: rkward/plugins/distributions/../x11device/grid.rkh:12
+#: rkward/plugins/distributions/../x11device/grid.rkh:17
 #, kde-format
 msgid ""
 "This is the <i>ny</i> argument. Similar to <i>nx</i>. See the explanation on "
@@ -3076,7 +3076,7 @@ msgstr ""
 "številu x zgornjih celic."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Y Cells")
-#: rkward/plugins/distributions/../x11device/grid.rkh:13
+#: rkward/plugins/distributions/../x11device/grid.rkh:18
 #, kde-format
 msgid ""
 "This is the <i>ny</i> argument when a specified (by the user) number of y "
@@ -3086,7 +3086,7 @@ msgstr ""
 "uporabnika) število y celic. Podobno kot x celice."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Custom Line width")
-#: rkward/plugins/distributions/../x11device/grid.rkh:14
+#: rkward/plugins/distributions/../x11device/grid.rkh:19
 #, kde-format
 msgid ""
 "Check this option to use a custom line width. In which case, provide the "
@@ -3096,7 +3096,7 @@ msgstr ""
 "primeru navedite širino spodaj."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Line width")
-#: rkward/plugins/distributions/../x11device/grid.rkh:15
+#: rkward/plugins/distributions/../x11device/grid.rkh:20
 #, kde-format
 msgid "This is the <i>lwd</i> argument. Check the above option to use this."
 msgstr ""
@@ -3104,7 +3104,7 @@ msgstr ""
 "zgoraj."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Line type")
-#: rkward/plugins/distributions/../x11device/grid.rkh:16
+#: rkward/plugins/distributions/../x11device/grid.rkh:21
 #, kde-format
 msgid ""
 "This is the <i>lty</i> argument. Choosing Default will not add any arguments "
@@ -3114,7 +3114,7 @@ msgstr ""
 "argumentov klicu mrežne funkcije, zato bo uporabljena privzeta vrsta črte."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Color")
-#: rkward/plugins/distributions/../x11device/grid.rkh:17
+#: rkward/plugins/distributions/../x11device/grid.rkh:22
 #, kde-format
 msgid ""
 "This is the <i>col</i> argument. The Default option is similar to that of "
@@ -3124,7 +3124,7 @@ msgstr ""
 "zgoraj)."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Equilogs")
-#: rkward/plugins/distributions/../x11device/grid.rkh:18
+#: rkward/plugins/distributions/../x11device/grid.rkh:23
 #, kde-format
 msgid ""
 "This is the <i>equilogs</i> argument. Uncheck this option to set "
@@ -3134,85 +3134,85 @@ msgstr ""
 "<i>equilogs=FALSE</i>."
 
 #. i18n: ectx: (Grid options) <dialog label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:19
+#: rkward/plugins/distributions/../x11device/grid.xml:24
 #, kde-format
 msgid "Grid options"
 msgstr "Možnosti mreže"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:22
+#: rkward/plugins/distributions/../x11device/grid.xml:27
 #, kde-format
 msgid "Number of X cells"
 msgstr "Število celic X"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of X cells"> <option label="...">
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of Y cells"> <option label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:23
-#: rkward/plugins/distributions/../x11device/grid.xml:31
+#: rkward/plugins/distributions/../x11device/grid.xml:28
+#: rkward/plugins/distributions/../x11device/grid.xml:36
 #, kde-format
 msgid "At the ticks"
 msgstr "Na označbah osi"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of X cells"> <option label="...">
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of Y cells"> <option label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:24
-#: rkward/plugins/distributions/../x11device/grid.xml:32
+#: rkward/plugins/distributions/../x11device/grid.xml:29
+#: rkward/plugins/distributions/../x11device/grid.xml:37
 #, kde-format
 msgid "None"
 msgstr "Brez"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of X cells"> <option label="...">
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of Y cells"> <option label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:25
-#: rkward/plugins/distributions/../x11device/grid.xml:33
+#: rkward/plugins/distributions/../x11device/grid.xml:30
+#: rkward/plugins/distributions/../x11device/grid.xml:38
 #, kde-format
 msgid "Specify below"
 msgstr "Navedite spodaj"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <spinbox label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:27
+#: rkward/plugins/distributions/../x11device/grid.xml:32
 #, kde-format
 msgid "X Cells"
 msgstr "X-celice"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:30
+#: rkward/plugins/distributions/../x11device/grid.xml:35
 #, kde-format
 msgid "Number of Y cells"
 msgstr "Število celic Y"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <spinbox label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:35
+#: rkward/plugins/distributions/../x11device/grid.xml:40
 #, kde-format
 msgid "Y Cells"
 msgstr "Y-celice"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <checkbox label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:39
+#: rkward/plugins/distributions/../x11device/grid.xml:44
 #, kde-format
 msgid "Custom Line width"
 msgstr "Širina črte po meri"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <checkbox label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:40
+#: rkward/plugins/distributions/../x11device/grid.xml:45
 #, kde-format
 msgid "Equilogs"
 msgstr "Equilogs"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <spinbox label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:43
+#: rkward/plugins/distributions/../x11device/grid.xml:48
 #, kde-format
 msgid "Line width"
 msgstr "Širina črte"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="...">
-#: rkward/plugins/distributions/../x11device/grid.xml:44
+#: rkward/plugins/distributions/../x11device/grid.xml:49
 #, kde-format
 msgid "Line type"
 msgstr "Vrsta črte"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <text>
-#: rkward/plugins/distributions/../x11device/grid.xml:57
+#: rkward/plugins/distributions/../x11device/grid.xml:62
 #, kde-format
 msgid "Note: Not applicable for Trellis type devices!"
 msgstr "Opomba: Ne uporablja se za naprave vrste Trellis!"

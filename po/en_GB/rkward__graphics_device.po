@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2019-05-20 03:19+0200\n"
+"POT-Creation-Date: 2023-07-17 00:44+0000\n"
 "PO-Revision-Date: 2019-03-30 10:55+0000\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
 "Language-Team: British English <kde-l10n-en_gb@kde.org>\n"
@@ -28,20 +28,20 @@ msgid "Your emails"
 msgstr "steve.allewell@gmail.com"
 
 #. i18n: ectx: <snippets> <snippet> <author name="...">
-#: rkward/plugins/pluginmap_meta.inc:4
+#: rkward/plugins/pluginmap_meta.inc:9
 #, kde-format
 msgctxt "Author name"
 msgid "RKWard Team"
 msgstr "RKWard Team"
 
 #. i18n: ectx: <about name="...">
-#: rkward/plugins/x11device.pluginmap:5
+#: rkward/plugins/x11device.pluginmap:10
 #, kde-format
 msgid "Graphics Device add-ons"
 msgstr "Graphics Device add-ons"
 
 #. i18n: ectx: <about shortinfo="...">
-#: rkward/plugins/x11device.pluginmap:5
+#: rkward/plugins/x11device.pluginmap:10
 #, kde-format
 msgid ""
 "Plugins for use in graphics device (e.g. X11()) windows. Part of the "
@@ -51,25 +51,25 @@ msgstr ""
 "official RKWard distribution"
 
 #. i18n: ectx: <components> <component label="...">
-#: rkward/plugins/x11device.pluginmap:18
+#: rkward/plugins/x11device.pluginmap:23
 #, kde-format
 msgid "Export..."
 msgstr "Export..."
 
 #. i18n: ectx: <context> <menu label="...">
-#: rkward/plugins/x11device.pluginmap:22
+#: rkward/plugins/x11device.pluginmap:27
 #, kde-format
 msgid "Device"
 msgstr "Device"
 
 #. i18n: ectx: <context> <menu label="...">
-#: rkward/plugins/x11device.pluginmap:25
+#: rkward/plugins/x11device.pluginmap:30
 #, kde-format
 msgid "Edit"
 msgstr "Edit"
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats)
-#: rkward/plugins/x11device/export.js:4
+#: rkward/plugins/x11device/export.js:9
 #, kde-format
 msgctxt "R code comment"
 msgid ""
@@ -80,7 +80,7 @@ msgstr ""
 "on some systems."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <summary>
-#: rkward/plugins/x11device/export.rkh:3
+#: rkward/plugins/x11device/export.rkh:8
 #, kde-format
 msgid ""
 "Export the current contents of a graphics device to a postscript/pdf/png/"
@@ -90,7 +90,7 @@ msgstr ""
 "jpeg file either using the native functions or using ghostscript."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <usage>
-#: rkward/plugins/x11device/export.rkh:6
+#: rkward/plugins/x11device/export.rkh:11
 #, kde-format
 msgid ""
 "Choose an exporting function and a filename to save to. Additional options "
@@ -120,13 +120,13 @@ msgstr ""
 "also valid parameters to dev2bitmap."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <usage>
-#: rkward/plugins/x11device/export.rkh:6
+#: rkward/plugins/x11device/export.rkh:11
 #, kde-format
 msgid "This plugin is only available in the context of a graphics device."
 msgstr "This plugin is only available in the context of a graphics device."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "File name")
-#: rkward/plugins/x11device/export.rkh:14
+#: rkward/plugins/x11device/export.rkh:19
 #, kde-format
 msgid ""
 "The filename to save to. By default the file will be saved in the directory "
@@ -142,7 +142,7 @@ msgstr ""
 "suitable extension."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Automatic File extension")
-#: rkward/plugins/x11device/export.rkh:15
+#: rkward/plugins/x11device/export.rkh:20
 #, kde-format
 msgid ""
 "Check this box to let RKWard detect the file extension automatically. If the "
@@ -158,7 +158,7 @@ msgstr ""
 "filename. This option is disabled for exporting via ghostscript."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Output format")
-#: rkward/plugins/x11device/export.rkh:16
+#: rkward/plugins/x11device/export.rkh:21
 #, kde-format
 msgid ""
 "Choose whether to use postscript, pdf, svg, png or jpeg for exporting the "
@@ -172,7 +172,7 @@ msgstr ""
 "provided (see below under 'Ghostscript specific options')."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "EPS compatible")
-#: rkward/plugins/x11device/export.rkh:17
+#: rkward/plugins/x11device/export.rkh:22
 #, kde-format
 msgid ""
 "When exporting in postscript format, this allows you to select, whether an "
@@ -188,7 +188,7 @@ msgstr ""
 "postscript to FALSE."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Automatic Width")
-#: rkward/plugins/x11device/export.rkh:20
+#: rkward/plugins/x11device/export.rkh:25
 #, kde-format
 msgid ""
 "Check this box to let the export function determine the width automatically."
@@ -196,13 +196,13 @@ msgstr ""
 "Tick this box to let the export function determine the width automatically."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Automatic Height")
-#: rkward/plugins/x11device/export.rkh:21
+#: rkward/plugins/x11device/export.rkh:26
 #, kde-format
 msgid "This is similar to 'Automatic Width', but for height."
 msgstr "This is similar to 'Automatic Width', but for height."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Width in inches")
-#: rkward/plugins/x11device/export.rkh:22
+#: rkward/plugins/x11device/export.rkh:27
 #, kde-format
 msgid ""
 "This is the <i>width</i> parameter to the exporting function. This is "
@@ -226,7 +226,7 @@ msgstr ""
 "Postscript/PDF where the width parameter is provided in inches."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Width in inches")
-#: rkward/plugins/x11device/export.rkh:22
+#: rkward/plugins/x11device/export.rkh:27
 #, kde-format
 msgid ""
 "<b>jpeg</b> or <b>png</b> functions need at least one of width/height to be "
@@ -242,7 +242,7 @@ msgstr ""
 "for exporting to Postscript/PDF."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Height in inches")
-#: rkward/plugins/x11device/export.rkh:25
+#: rkward/plugins/x11device/export.rkh:30
 #, kde-format
 msgid ""
 "This is the <i>height</i> parameter to the exporting function. Similar to "
@@ -252,13 +252,13 @@ msgstr ""
 "'Width'."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Point size")
-#: rkward/plugins/x11device/export.rkh:28
+#: rkward/plugins/x11device/export.rkh:33
 #, kde-format
 msgid "This is the <i>pointsize</i> parameter to dev.print."
 msgstr "This is the <i>pointsize</i> parameter to dev.print."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Resolution (dpi)")
-#: rkward/plugins/x11device/export.rkh:29
+#: rkward/plugins/x11device/export.rkh:34
 #, kde-format
 msgid ""
 "Available only for PNG/JPEG/Ghostscript, this is the <i>res</i> parameter to "
@@ -274,7 +274,7 @@ msgstr ""
 "and it is 72 for Ghostscript exports."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "JPEG Quality")
-#: rkward/plugins/x11device/export.rkh:30
+#: rkward/plugins/x11device/export.rkh:35
 #, kde-format
 msgid ""
 "Available only for JPEG, this is the <i>quality</i> parameter to <b>jpeg</"
@@ -284,7 +284,7 @@ msgstr ""
 "b>. Sets the quality for JPEG exporting. The default quality is 75."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Paper Size")
-#: rkward/plugins/x11device/export.rkh:33
+#: rkward/plugins/x11device/export.rkh:38
 #, kde-format
 msgid ""
 "Use this to set the papersize for export. Choose 'Default' to not specify "
@@ -298,7 +298,7 @@ msgstr ""
 "is the <i>paper</i> option to the exporting function."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Pagecentre")
-#: rkward/plugins/x11device/export.rkh:34
+#: rkward/plugins/x11device/export.rkh:39
 #, kde-format
 msgid ""
 "Uncheck this for NOT centering the image on the page. This is the "
@@ -308,7 +308,7 @@ msgstr ""
 "<i>pagecentre</i> parameter."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Horizontal (ps/gs)")
-#: rkward/plugins/x11device/export.rkh:35
+#: rkward/plugins/x11device/export.rkh:40
 #, kde-format
 msgid ""
 "Available only for Postscript/Ghostscript exporting, this is the "
@@ -318,7 +318,7 @@ msgstr ""
 "<i>horizontal</i> parameter."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Font family")
-#: rkward/plugins/x11device/export.rkh:36
+#: rkward/plugins/x11device/export.rkh:41
 #, kde-format
 msgid ""
 "This is the <i>family</i> parameter to <b>postscript</b>. Be sure to choose "
@@ -334,7 +334,7 @@ msgstr ""
 "details."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Font Encoding")
-#: rkward/plugins/x11device/export.rkh:37
+#: rkward/plugins/x11device/export.rkh:42
 #, kde-format
 msgid ""
 "This is the <i>encoding</i> parameter to <b>postscript</b>. Be sure to "
@@ -348,7 +348,7 @@ msgstr ""
 "the R reference on postscript for more details."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Default Title")
-#: rkward/plugins/x11device/export.rkh:38
+#: rkward/plugins/x11device/export.rkh:43
 #, kde-format
 msgid ""
 "Uncheck this box, to specify a custom title to the graphics file. Note that "
@@ -360,7 +360,7 @@ msgstr ""
 "graphics file. This is the <i>title</i> parameter to <b>postscript</b>."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "GS Output device")
-#: rkward/plugins/x11device/export.rkh:41
+#: rkward/plugins/x11device/export.rkh:46
 #, kde-format
 msgid ""
 "File format to use. Only the most common ones are listed, but many more are "
@@ -372,7 +372,7 @@ msgstr ""
 "these formats."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Other Ghostscript device")
-#: rkward/plugins/x11device/export.rkh:42
+#: rkward/plugins/x11device/export.rkh:47
 #, kde-format
 msgid ""
 "Select \"Other\" in the option above to use this setting. Specify the device "
@@ -384,173 +384,173 @@ msgstr ""
 "help\") in a terminal should give a list of available devices."
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="...">
-#: rkward/plugins/x11device/export.xml:58
+#: rkward/plugins/x11device/export.xml:63
 #, kde-format
 msgid "Export contents of graphics device to various formats"
 msgstr "Export contents of graphics device to various formats"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="...">
-#: rkward/plugins/x11device/export.xml:60
+#: rkward/plugins/x11device/export.xml:65
 #, kde-format
 msgid "Filename and Generic options"
 msgstr "Filename and Generic options"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <browser label="...">
-#: rkward/plugins/x11device/export.xml:63
+#: rkward/plugins/x11device/export.xml:68
 #, kde-format
 msgid "File name"
 msgstr "File name"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <checkbox label="...">
-#: rkward/plugins/x11device/export.xml:64
+#: rkward/plugins/x11device/export.xml:69
 #, kde-format
 msgid "Automatic File extension"
 msgstr "Automatic File extension"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <frame label="...">
-#: rkward/plugins/x11device/export.xml:65
+#: rkward/plugins/x11device/export.xml:70
 #, kde-format
 msgid "Dimensions"
 msgstr "Dimensions"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <frame label="Dimensions"> <checkbox label="...">
-#: rkward/plugins/x11device/export.xml:68
+#: rkward/plugins/x11device/export.xml:73
 #, kde-format
 msgid "Automatic Width"
 msgstr "Automatic Width"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <frame label="Dimensions"> <spinbox label="...">
-#: rkward/plugins/x11device/export.xml:69
+#: rkward/plugins/x11device/export.xml:74
 #, kde-format
 msgid "Width in inches"
 msgstr "Width in inches"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <frame label="Dimensions"> <checkbox label="...">
-#: rkward/plugins/x11device/export.xml:72
+#: rkward/plugins/x11device/export.xml:77
 #, kde-format
 msgid "Automatic Height"
 msgstr "Automatic Height"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <frame label="Dimensions"> <spinbox label="...">
-#: rkward/plugins/x11device/export.xml:73
+#: rkward/plugins/x11device/export.xml:78
 #, kde-format
 msgid "Height in inches"
 msgstr "Height in inches"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <radio label="...">
-#: rkward/plugins/x11device/export.xml:79
+#: rkward/plugins/x11device/export.xml:84
 #, kde-format
 msgid "Output format"
 msgstr "Output format"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <radio label="Output format"> <option label="...">
-#: rkward/plugins/x11device/export.xml:80
+#: rkward/plugins/x11device/export.xml:85
 #, kde-format
 msgid "Postscript"
 msgstr "Postscript"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <radio label="Output format"> <option label="...">
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="GS Output device"> <option label="...">
-#: rkward/plugins/x11device/export.xml:81
-#: rkward/plugins/x11device/export.xml:178
+#: rkward/plugins/x11device/export.xml:86
+#: rkward/plugins/x11device/export.xml:183
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <radio label="Output format"> <option label="...">
-#: rkward/plugins/x11device/export.xml:82
+#: rkward/plugins/x11device/export.xml:87
 #, kde-format
 msgid "SVG"
 msgstr "SVG"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <radio label="Output format"> <option label="...">
-#: rkward/plugins/x11device/export.xml:83
+#: rkward/plugins/x11device/export.xml:88
 #, kde-format
 msgid "PNG"
 msgstr "PNG"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <radio label="Output format"> <option label="...">
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="GS Output device"> <option label="...">
-#: rkward/plugins/x11device/export.xml:84
-#: rkward/plugins/x11device/export.xml:184
+#: rkward/plugins/x11device/export.xml:89
+#: rkward/plugins/x11device/export.xml:189
 #, kde-format
 msgid "JPEG"
 msgstr "JPEG"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <radio label="Output format"> <option label="...">
-#: rkward/plugins/x11device/export.xml:85
+#: rkward/plugins/x11device/export.xml:90
 #, kde-format
 msgid "via Ghostscript"
 msgstr "via Ghostscript"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <radio label="Output format"> <option label="...">
-#: rkward/plugins/x11device/export.xml:86
+#: rkward/plugins/x11device/export.xml:91
 #, kde-format
 msgid "LaTeX/TikZ"
 msgstr "LaTeX/TikZ"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <checkbox label="...">
-#: rkward/plugins/x11device/export.xml:88
+#: rkward/plugins/x11device/export.xml:93
 #, kde-format
 msgid "EPS compatible"
 msgstr "EPS compatible"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <frame label="...">
-#: rkward/plugins/x11device/export.xml:92
+#: rkward/plugins/x11device/export.xml:97
 #, kde-format
 msgid "Generic Export Options"
 msgstr "Generic Export Options"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <frame label="Generic Export Options"> <checkbox label="...">
-#: rkward/plugins/x11device/export.xml:95
+#: rkward/plugins/x11device/export.xml:100
 #, kde-format
 msgid "Default pointsize"
 msgstr "Default pointsize"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <frame label="Generic Export Options"> <spinbox label="...">
-#: rkward/plugins/x11device/export.xml:96
+#: rkward/plugins/x11device/export.xml:101
 #, kde-format
 msgid "Point size"
 msgstr "Point size"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <frame label="Generic Export Options"> <checkbox label="...">
-#: rkward/plugins/x11device/export.xml:99
+#: rkward/plugins/x11device/export.xml:104
 #, kde-format
 msgid "Default Resolution"
 msgstr "Default Resolution"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <frame label="Generic Export Options"> <spinbox label="...">
-#: rkward/plugins/x11device/export.xml:100
+#: rkward/plugins/x11device/export.xml:105
 #, kde-format
 msgid "Resolution (dpi)"
 msgstr "Resolution (dpi)"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <frame label="Generic Export Options"> <checkbox label="...">
-#: rkward/plugins/x11device/export.xml:103
+#: rkward/plugins/x11device/export.xml:108
 #, kde-format
 msgid "Default Quality"
 msgstr "Default Quality"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <frame label="Generic Export Options"> <spinbox label="...">
-#: rkward/plugins/x11device/export.xml:104
+#: rkward/plugins/x11device/export.xml:109
 #, kde-format
 msgid "JPEG Quality"
 msgstr "JPEG Quality"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="...">
-#: rkward/plugins/x11device/export.xml:111
+#: rkward/plugins/x11device/export.xml:116
 #, kde-format
 msgid "Postscript/PDF/Ghostscript Options"
 msgstr "Postscript/PDF/Ghostscript Options"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Postscript/PDF/Ghostscript Options"> <frame label="...">
-#: rkward/plugins/x11device/export.xml:112
+#: rkward/plugins/x11device/export.xml:117
 #, kde-format
 msgid "Paper properties"
 msgstr "Paper properties"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Postscript/PDF/Ghostscript Options"> <frame label="Paper properties"> <dropdown label="...">
-#: rkward/plugins/x11device/export.xml:114
+#: rkward/plugins/x11device/export.xml:119
 #, kde-format
 msgid "Paper Size"
 msgstr "Paper Size"
@@ -558,297 +558,297 @@ msgstr "Paper Size"
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Paper Size"> <option label="...">
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font Encoding"> <option label="...">
-#: rkward/plugins/x11device/export.xml:115
-#: rkward/plugins/x11device/export.xml:131
-#: rkward/plugins/x11device/export.xml:154
+#: rkward/plugins/x11device/export.xml:120
+#: rkward/plugins/x11device/export.xml:136
+#: rkward/plugins/x11device/export.xml:159
 #, kde-format
 msgid "Default"
 msgstr "Default"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Paper Size"> <option label="...">
-#: rkward/plugins/x11device/export.xml:116
+#: rkward/plugins/x11device/export.xml:121
 #, kde-format
 msgid "A4"
 msgstr "A4"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Paper Size"> <option label="...">
-#: rkward/plugins/x11device/export.xml:117
+#: rkward/plugins/x11device/export.xml:122
 #, kde-format
 msgid "Letter"
 msgstr "Letter"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Paper Size"> <option label="...">
-#: rkward/plugins/x11device/export.xml:118
+#: rkward/plugins/x11device/export.xml:123
 #, kde-format
 msgid "Legal"
 msgstr "Legal"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Paper Size"> <option label="...">
-#: rkward/plugins/x11device/export.xml:119
+#: rkward/plugins/x11device/export.xml:124
 #, kde-format
 msgid "Executive"
 msgstr "Executive"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Paper Size"> <option label="...">
-#: rkward/plugins/x11device/export.xml:120
+#: rkward/plugins/x11device/export.xml:125
 #, kde-format
 msgid "Special"
 msgstr "Special"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Postscript/PDF/Ghostscript Options"> <frame label="Paper properties"> <checkbox label="...">
-#: rkward/plugins/x11device/export.xml:123
+#: rkward/plugins/x11device/export.xml:128
 #, kde-format
 msgid "Pagecentre"
 msgstr "Pagecentre"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Postscript/PDF/Ghostscript Options"> <frame label="Paper properties"> <checkbox label="...">
-#: rkward/plugins/x11device/export.xml:124
+#: rkward/plugins/x11device/export.xml:129
 #, kde-format
 msgid "Horizontal (ps/gs)"
 msgstr "Horizontal (ps/gs)"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Postscript/PDF/Ghostscript Options"> <frame label="...">
-#: rkward/plugins/x11device/export.xml:128
+#: rkward/plugins/x11device/export.xml:133
 #, kde-format
 msgid "Font properties"
 msgstr "Font properties"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Postscript/PDF/Ghostscript Options"> <frame label="Font properties"> <dropdown label="...">
-#: rkward/plugins/x11device/export.xml:130
+#: rkward/plugins/x11device/export.xml:135
 #, kde-format
 msgid "Font family"
 msgstr "Font family"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
-#: rkward/plugins/x11device/export.xml:132
+#: rkward/plugins/x11device/export.xml:137
 #, kde-format
 msgid "AvantGarde"
 msgstr "AvantGarde"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
-#: rkward/plugins/x11device/export.xml:133
+#: rkward/plugins/x11device/export.xml:138
 #, kde-format
 msgid "Bookman"
 msgstr "Bookman"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
-#: rkward/plugins/x11device/export.xml:134
+#: rkward/plugins/x11device/export.xml:139
 #, kde-format
 msgid "Courier"
 msgstr "Courier"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
-#: rkward/plugins/x11device/export.xml:135
+#: rkward/plugins/x11device/export.xml:140
 #, kde-format
 msgid "Helvetica"
 msgstr "Helvetica"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
-#: rkward/plugins/x11device/export.xml:136
+#: rkward/plugins/x11device/export.xml:141
 #, kde-format
 msgid "Helvetica Narrow"
 msgstr "Helvetica Narrow"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
-#: rkward/plugins/x11device/export.xml:137
+#: rkward/plugins/x11device/export.xml:142
 #, kde-format
 msgid "Mono"
 msgstr "Mono"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
-#: rkward/plugins/x11device/export.xml:138
+#: rkward/plugins/x11device/export.xml:143
 #, kde-format
 msgid "New Century Schoolbook"
 msgstr "New Century Schoolbook"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
-#: rkward/plugins/x11device/export.xml:139
+#: rkward/plugins/x11device/export.xml:144
 #, kde-format
 msgid "Palatino"
 msgstr "Palatino"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
-#: rkward/plugins/x11device/export.xml:140
+#: rkward/plugins/x11device/export.xml:145
 #, kde-format
 msgid "Sans"
 msgstr "Sans"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
-#: rkward/plugins/x11device/export.xml:141
+#: rkward/plugins/x11device/export.xml:146
 #, kde-format
 msgid "Serif"
 msgstr "Serif"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
-#: rkward/plugins/x11device/export.xml:142
+#: rkward/plugins/x11device/export.xml:147
 #, kde-format
 msgid "Symbol"
 msgstr "Symbol"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
-#: rkward/plugins/x11device/export.xml:143
+#: rkward/plugins/x11device/export.xml:148
 #, kde-format
 msgid "Times"
 msgstr "Times"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
-#: rkward/plugins/x11device/export.xml:144
+#: rkward/plugins/x11device/export.xml:149
 #, kde-format
 msgid "CenturySch (URW)"
 msgstr "CenturySch (URW)"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
-#: rkward/plugins/x11device/export.xml:145
+#: rkward/plugins/x11device/export.xml:150
 #, kde-format
 msgid "NimbusMon (URW)"
 msgstr "NimbusMon (URW)"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
-#: rkward/plugins/x11device/export.xml:146
+#: rkward/plugins/x11device/export.xml:151
 #, kde-format
 msgid "NimbusSanCond (URW)"
 msgstr "NimbusSanCond (URW)"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
-#: rkward/plugins/x11device/export.xml:147
+#: rkward/plugins/x11device/export.xml:152
 #, kde-format
 msgid "URWBookman"
 msgstr "URWBookman"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
-#: rkward/plugins/x11device/export.xml:148
+#: rkward/plugins/x11device/export.xml:153
 #, kde-format
 msgid "URWHelvetica"
 msgstr "URWHelvetica"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
-#: rkward/plugins/x11device/export.xml:149
+#: rkward/plugins/x11device/export.xml:154
 #, kde-format
 msgid "URWGothic"
 msgstr "URWGothic"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
-#: rkward/plugins/x11device/export.xml:150
+#: rkward/plugins/x11device/export.xml:155
 #, kde-format
 msgid "URWPalladio"
 msgstr "URWPalladio"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
-#: rkward/plugins/x11device/export.xml:151
+#: rkward/plugins/x11device/export.xml:156
 #, kde-format
 msgid "URWTimes"
 msgstr "URWTimes"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Postscript/PDF/Ghostscript Options"> <frame label="Font properties"> <dropdown label="...">
-#: rkward/plugins/x11device/export.xml:153
+#: rkward/plugins/x11device/export.xml:158
 #, kde-format
 msgid "Font Encoding"
 msgstr "Font Encoding"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font Encoding"> <option label="...">
-#: rkward/plugins/x11device/export.xml:155
+#: rkward/plugins/x11device/export.xml:160
 #, kde-format
 msgid "ISOLatin1"
 msgstr "ISOLatin1"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font Encoding"> <option label="...">
-#: rkward/plugins/x11device/export.xml:156
+#: rkward/plugins/x11device/export.xml:161
 #, kde-format
 msgid "ISOLatin2"
 msgstr "ISOLatin2"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font Encoding"> <option label="...">
-#: rkward/plugins/x11device/export.xml:157
+#: rkward/plugins/x11device/export.xml:162
 #, kde-format
 msgid "CP1250"
 msgstr "CP1250"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font Encoding"> <option label="...">
-#: rkward/plugins/x11device/export.xml:158
+#: rkward/plugins/x11device/export.xml:163
 #, kde-format
 msgid "ISOLatin7"
 msgstr "ISOLatin7"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font Encoding"> <option label="...">
-#: rkward/plugins/x11device/export.xml:159
+#: rkward/plugins/x11device/export.xml:164
 #, kde-format
 msgid "CP1257"
 msgstr "CP1257"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font Encoding"> <option label="...">
-#: rkward/plugins/x11device/export.xml:160
+#: rkward/plugins/x11device/export.xml:165
 #, kde-format
 msgid "ISOLatin9"
 msgstr "ISOLatin9"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font Encoding"> <option label="...">
-#: rkward/plugins/x11device/export.xml:161
+#: rkward/plugins/x11device/export.xml:166
 #, kde-format
 msgid "PDFDoc"
 msgstr "PDFDoc"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Postscript/PDF/Ghostscript Options"> <frame label="...">
-#: rkward/plugins/x11device/export.xml:165
+#: rkward/plugins/x11device/export.xml:170
 #, kde-format
 msgid "Title embedded in file"
 msgstr "Title embedded in file"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Postscript/PDF/Ghostscript Options"> <frame label="Title embedded in file"> <checkbox label="...">
-#: rkward/plugins/x11device/export.xml:168
+#: rkward/plugins/x11device/export.xml:173
 #, kde-format
 msgid "Default Title"
 msgstr "Default Title"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Postscript/PDF/Ghostscript Options"> <frame label="...">
-#: rkward/plugins/x11device/export.xml:175
+#: rkward/plugins/x11device/export.xml:180
 #, kde-format
 msgid "Ghostscript specific options"
 msgstr "Ghostscript specific options"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Postscript/PDF/Ghostscript Options"> <frame label="Ghostscript specific options"> <dropdown label="...">
-#: rkward/plugins/x11device/export.xml:177
+#: rkward/plugins/x11device/export.xml:182
 #, kde-format
 msgid "GS Output device"
 msgstr "GS Output device"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="GS Output device"> <option label="...">
-#: rkward/plugins/x11device/export.xml:179
+#: rkward/plugins/x11device/export.xml:184
 #, kde-format
 msgid "PostScript"
 msgstr "PostScript"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="GS Output device"> <option label="...">
-#: rkward/plugins/x11device/export.xml:180
+#: rkward/plugins/x11device/export.xml:185
 #, kde-format
 msgid "PNG (b/w)"
 msgstr "PNG (b/w)"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="GS Output device"> <option label="...">
-#: rkward/plugins/x11device/export.xml:181
+#: rkward/plugins/x11device/export.xml:186
 #, kde-format
 msgid "PNG (grayscale)"
 msgstr "PNG (greyscale)"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="GS Output device"> <option label="...">
-#: rkward/plugins/x11device/export.xml:182
+#: rkward/plugins/x11device/export.xml:187
 #, kde-format
 msgid "PNG (256 colors)"
 msgstr "PNG (256 colours)"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="GS Output device"> <option label="...">
-#: rkward/plugins/x11device/export.xml:183
+#: rkward/plugins/x11device/export.xml:188
 #, kde-format
 msgid "PNG (16M colors)"
 msgstr "PNG (16M colours)"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="GS Output device"> <option label="...">
-#: rkward/plugins/x11device/export.xml:185
+#: rkward/plugins/x11device/export.xml:190
 #, kde-format
 msgid "Other (specify here):"
 msgstr "Other (specify here):"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Postscript/PDF/Ghostscript Options"> <frame label="Ghostscript specific options"> <input label="...">
-#: rkward/plugins/x11device/export.xml:187
+#: rkward/plugins/x11device/export.xml:192
 #, kde-format
 msgid "Other Ghostscript device"
 msgstr "Other Ghostscript device"

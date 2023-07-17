@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-13 00:42+0000\n"
+"POT-Creation-Date: 2023-07-17 00:44+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Chinese <kde-i18n-doc@kde.org>\n"
@@ -227,7 +227,7 @@ msgstr ""
 #: rkward/dataeditor/rkvareditmodel.cpp:679
 #: rkward/dialogs/rkloadlibsdialog.cpp:352
 #: rkward/dialogs/rkloadlibsdialog.cpp:368
-#: rkward/dialogs/rkloadlibsdialog.cpp:938 rkward/misc/rkobjectlistview.cpp:274
+#: rkward/dialogs/rkloadlibsdialog.cpp:938 rkward/misc/rkobjectlistview.cpp:267
 #: rkward/plugin/rkformula.cpp:74 rkward/plugin/rkvarslot.cpp:59
 #: rkward/settings/rksettingsmodulekateplugins.cpp:41
 #, kde-format
@@ -236,22 +236,22 @@ msgstr ""
 
 #: rkward/core/rkmodificationtracker.cpp:352
 #: rkward/dataeditor/rkvareditmodel.cpp:680
-#: rkward/misc/editlabelsdialog.cpp:196 rkward/misc/rkobjectlistview.cpp:219
-#: rkward/misc/rkobjectlistview.cpp:276
+#: rkward/misc/editlabelsdialog.cpp:196 rkward/misc/rkobjectlistview.cpp:212
+#: rkward/misc/rkobjectlistview.cpp:269
 #, kde-format
 msgid "Label"
 msgstr ""
 
 #: rkward/core/rkmodificationtracker.cpp:353
 #: rkward/dataeditor/rkvareditmodel.cpp:681
-#: rkward/misc/rkobjectlistview.cpp:218 rkward/rbackend/rcommandstack.cpp:313
+#: rkward/misc/rkobjectlistview.cpp:211 rkward/rbackend/rcommandstack.cpp:313
 #: rkward/windows/rkhelpsearchwindow.cpp:327
 #, kde-format
 msgid "Type"
 msgstr ""
 
 #: rkward/core/rkmodificationtracker.cpp:354
-#: rkward/misc/rkobjectlistview.cpp:220 rkward/misc/rkobjectlistview.cpp:278
+#: rkward/misc/rkobjectlistview.cpp:213 rkward/misc/rkobjectlistview.cpp:271
 #, kde-format
 msgid "Class"
 msgstr ""
@@ -397,11 +397,11 @@ msgid "Invalid Name"
 msgstr ""
 
 #. i18n: ectx: Menu (edit)
-#: rkward/dataeditor/rkeditordataframepart.rc:4 rkward/rkconsolepart.rc:12
-#: rkward/rkwardui.rc:41 rkward/windows/detachedwindowcontainer.rc:11
-#: rkward/windows/rkcommandeditorwindowpart.rc:5
-#: rkward/windows/rkcommandlogpart.rc:4 rkward/windows/rkhelpwindow.rc:8
-#: rkward/windows/rkoutputwindow.rc:10 rkward/windows/rkstandardactions.rc:10
+#: rkward/dataeditor/rkeditordataframepart.rc:9 rkward/rkconsolepart.rc:17
+#: rkward/rkwardui.rc:46 rkward/windows/detachedwindowcontainer.rc:16
+#: rkward/windows/rkcommandeditorwindowpart.rc:10
+#: rkward/windows/rkcommandlogpart.rc:9 rkward/windows/rkhelpwindow.rc:13
+#: rkward/windows/rkoutputwindow.rc:15 rkward/windows/rkstandardactions.rc:15
 #, kde-format
 msgid "&Edit"
 msgstr ""
@@ -2180,28 +2180,28 @@ msgstr ""
 msgid "My Workspace (no objects matching filter)"
 msgstr ""
 
-#: rkward/misc/rkobjectlistview.cpp:217 rkward/misc/rkobjectlistview.cpp:313
+#: rkward/misc/rkobjectlistview.cpp:210 rkward/misc/rkobjectlistview.cpp:306
 #, kde-format
 msgid "Show Hidden Objects"
 msgstr ""
 
-#: rkward/misc/rkobjectlistview.cpp:268
+#: rkward/misc/rkobjectlistview.cpp:261
 #, kde-format
 msgctxt "Fields==columns in tree view"
 msgid "Fields to search in"
 msgstr ""
 
-#: rkward/misc/rkobjectlistview.cpp:289
+#: rkward/misc/rkobjectlistview.cpp:282
 #, kde-format
 msgid "Top level objects, only"
 msgstr ""
 
-#: rkward/misc/rkobjectlistview.cpp:290
+#: rkward/misc/rkobjectlistview.cpp:283
 #, kde-format
 msgid "Top level objects, and direct children"
 msgstr ""
 
-#: rkward/misc/rkobjectlistview.cpp:291
+#: rkward/misc/rkobjectlistview.cpp:284
 #, kde-format
 msgid ""
 "Depth of search in the object tree.<ul><li><i>%1</i> means looking for "
@@ -2211,22 +2211,22 @@ msgid ""
 "i> objects on the search path that hold matching child objects.</li>"
 msgstr ""
 
-#: rkward/misc/rkobjectlistview.cpp:300
+#: rkward/misc/rkobjectlistview.cpp:293
 #, kde-format
 msgid "Show all objects"
 msgstr ""
 
-#: rkward/misc/rkobjectlistview.cpp:301
+#: rkward/misc/rkobjectlistview.cpp:294
 #, kde-format
 msgid "Show functions, only"
 msgstr ""
 
-#: rkward/misc/rkobjectlistview.cpp:302
+#: rkward/misc/rkobjectlistview.cpp:295
 #, kde-format
 msgid "Show objects excluding functions"
 msgstr ""
 
-#: rkward/misc/rkobjectlistview.cpp:303
+#: rkward/misc/rkobjectlistview.cpp:296
 #, kde-format
 msgid ""
 "When looking for a particular function, you may want to exclude 'data' "
@@ -2235,7 +2235,7 @@ msgid ""
 "contain) functions."
 msgstr ""
 
-#: rkward/misc/rkobjectlistview.cpp:321
+#: rkward/misc/rkobjectlistview.cpp:314
 #, kde-format
 msgctxt ""
 "Width is limited, please opt for something that is not much longer than the "
@@ -2244,12 +2244,12 @@ msgctxt ""
 msgid "Reset filters"
 msgstr ""
 
-#: rkward/misc/rkobjectlistview.cpp:323
+#: rkward/misc/rkobjectlistview.cpp:316
 #, kde-format
 msgid "Discards the current object search filters"
 msgstr ""
 
-#: rkward/misc/rkobjectlistview.cpp:485
+#: rkward/misc/rkobjectlistview.cpp:478
 #, kde-format
 msgid "Show Fields"
 msgstr ""
@@ -3697,30 +3697,30 @@ msgid "Reset, then submit"
 msgstr ""
 
 #. i18n: ectx: Menu (file)
-#: rkward/rkconsolepart.rc:4 rkward/rkwardui.rc:7
-#: rkward/windows/detachedwindowcontainer.rc:5
-#: rkward/windows/rkcommandeditorwindowpart.rc:4
-#: rkward/windows/rkhelpwindow.rc:4 rkward/windows/rkoutputwindow.rc:4
-#: rkward/windows/rkstandardactions.rc:7
+#: rkward/rkconsolepart.rc:9 rkward/rkwardui.rc:12
+#: rkward/windows/detachedwindowcontainer.rc:10
+#: rkward/windows/rkcommandeditorwindowpart.rc:9
+#: rkward/windows/rkhelpwindow.rc:9 rkward/windows/rkoutputwindow.rc:9
+#: rkward/windows/rkstandardactions.rc:12
 #, kde-format
 msgid "&File"
 msgstr ""
 
 #. i18n: ectx: Menu (view)
-#: rkward/rkconsolepart.rc:30 rkward/rkconsolepart.rc:55 rkward/rkwardui.rc:55
-#: rkward/windows/detachedwindowcontainer.rc:24
-#: rkward/windows/rkcatchedx11windowpart.rc:29
-#: rkward/windows/rkhelpwindow.rc:17 rkward/windows/rkoutputwindow.rc:23
+#: rkward/rkconsolepart.rc:35 rkward/rkconsolepart.rc:60 rkward/rkwardui.rc:60
+#: rkward/windows/detachedwindowcontainer.rc:29
+#: rkward/windows/rkcatchedx11windowpart.rc:34
+#: rkward/windows/rkhelpwindow.rc:22 rkward/windows/rkoutputwindow.rc:28
 #, kde-format
 msgid "&View"
 msgstr ""
 
 #. i18n: ectx: Menu (run)
-#: rkward/rkconsolepart.rc:36 rkward/rkwardui.rc:58
-#: rkward/windows/detachedwindowcontainer.rc:30
-#: rkward/windows/rkcommandeditorwindowpart.rc:12
-#: rkward/windows/rkcommandeditorwindowpart.rc:33
-#: rkward/windows/rkstandardactions.rc:13
+#: rkward/rkconsolepart.rc:41 rkward/rkwardui.rc:63
+#: rkward/windows/detachedwindowcontainer.rc:35
+#: rkward/windows/rkcommandeditorwindowpart.rc:17
+#: rkward/windows/rkcommandeditorwindowpart.rc:38
+#: rkward/windows/rkstandardactions.rc:18
 #, kde-format
 msgid "&Run"
 msgstr ""
@@ -4139,62 +4139,62 @@ msgid "[Unnamed Workspace]"
 msgstr ""
 
 #. i18n: ectx: Menu (new_data)
-#: rkward/rkwardui.rc:8
+#: rkward/rkwardui.rc:13
 #, kde-format
 msgid "&New"
 msgstr ""
 
 #. i18n: ectx: Menu (open_specific)
-#: rkward/rkwardui.rc:14
+#: rkward/rkwardui.rc:19
 #, kde-format
 msgid "&Open by Type"
 msgstr ""
 
 #. i18n: ectx: Menu (import)
-#: rkward/rkwardui.rc:20
+#: rkward/rkwardui.rc:25
 #, kde-format
 msgid "&Import"
 msgstr ""
 
 #. i18n: ectx: Menu (export)
-#: rkward/rkwardui.rc:25
+#: rkward/rkwardui.rc:30
 #, kde-format
 msgid "&Export"
 msgstr ""
 
 #. i18n: ectx: Menu (workspace)
-#: rkward/rkwardui.rc:31
+#: rkward/rkwardui.rc:36
 #, kde-format
 msgid "&Workspace"
 msgstr ""
 
 #. i18n: ectx: Menu (window)
-#: rkward/rkwardui.rc:70
+#: rkward/rkwardui.rc:75
 #, kde-format
 msgid "&Windows"
 msgstr ""
 
 #. i18n: ectx: Menu (window_activate)
-#: rkward/rkwardui.rc:79 rkward/windows/detachedwindowcontainer.rc:42
-#: rkward/windows/katepluginintegration.rc:5
-#: rkward/windows/rktoplevelwindowgui.rc:10
+#: rkward/rkwardui.rc:84 rkward/windows/detachedwindowcontainer.rc:47
+#: rkward/windows/katepluginintegration.rc:10
+#: rkward/windows/rktoplevelwindowgui.rc:15
 #, kde-format
 msgid "&Activate"
 msgstr ""
 
 #. i18n: ectx: Menu (settings)
-#: rkward/rkwardui.rc:89 rkward/windows/detachedwindowcontainer.rc:46
-#: rkward/windows/rkcommandeditorwindowpart.rc:18
-#: rkward/windows/rkcommandlogpart.rc:9 rkward/windows/rkstandardactions.rc:23
-#: rkward/windows/rktoplevelwindowgui.rc:21
+#: rkward/rkwardui.rc:94 rkward/windows/detachedwindowcontainer.rc:51
+#: rkward/windows/rkcommandeditorwindowpart.rc:23
+#: rkward/windows/rkcommandlogpart.rc:14 rkward/windows/rkstandardactions.rc:28
+#: rkward/windows/rktoplevelwindowgui.rc:26
 #, kde-format
 msgid "&Settings"
 msgstr ""
 
 #. i18n: ectx: Menu (help)
-#: rkward/rkwardui.rc:97 rkward/windows/detachedwindowcontainer.rc:49
-#: rkward/windows/rkstandardactions.rc:19
-#: rkward/windows/rktoplevelwindowgui.rc:28
+#: rkward/rkwardui.rc:102 rkward/windows/detachedwindowcontainer.rc:54
+#: rkward/windows/rkstandardactions.rc:24
+#: rkward/windows/rktoplevelwindowgui.rc:33
 #, kde-format
 msgid "&Help"
 msgstr ""
@@ -5441,23 +5441,23 @@ msgid "Attach to main window"
 msgstr ""
 
 #. i18n: ectx: Menu (device)
-#: rkward/windows/detachedwindowcontainer.rc:8
-#: rkward/windows/rkcatchedx11windowpart.rc:4
+#: rkward/windows/detachedwindowcontainer.rc:13
+#: rkward/windows/rkcatchedx11windowpart.rc:9
 #, kde-format
 msgid "&Device"
 msgstr ""
 
 #. i18n: ectx: Menu (history)
-#: rkward/windows/detachedwindowcontainer.rc:27
-#: rkward/windows/rkcatchedx11windowpart.rc:14
+#: rkward/windows/detachedwindowcontainer.rc:32
+#: rkward/windows/rkcatchedx11windowpart.rc:19
 #, kde-format
 msgid "&History"
 msgstr ""
 
 #. i18n: ectx: Menu (window)
-#: rkward/windows/detachedwindowcontainer.rc:38
-#: rkward/windows/katepluginintegration.rc:4
-#: rkward/windows/rktoplevelwindowgui.rc:5
+#: rkward/windows/detachedwindowcontainer.rc:43
+#: rkward/windows/katepluginintegration.rc:9
+#: rkward/windows/rktoplevelwindowgui.rc:10
 #, kde-format
 msgid "&Window"
 msgstr ""
@@ -5767,7 +5767,7 @@ msgid "%1 (Unused)"
 msgstr ""
 
 #. i18n: ectx: Menu (tools)
-#: rkward/windows/rkcommandeditorwindowpart.rc:6
+#: rkward/windows/rkcommandeditorwindowpart.rc:11
 #, kde-format
 msgid "&Tools Move"
 msgstr ""
