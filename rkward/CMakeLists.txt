@@ -57,7 +57,10 @@ ADD_EXECUTABLE(rkward main.cpp)
 
 # NOTE: These definitions are needed for the startup procedure (main.cpp), only.
 # We should switch with to target_compile_definitions once we require CMAKE 2.6+
-ADD_DEFINITIONS(-DINSTALL_PATH="${CMAKE_INSTALL_PREFIX}")
+TARGET_COMPILE_DEFINITIONS(rkward PUBLIC -DINSTALL_PATH="${CMAKE_INSTALL_PREFIX}")
+FILE(RELATIVE_PATH RelPathToData /${BIN_INSTALL_DIR} /${DATA_INSTALL_DIR})
+TARGET_COMPILE_DEFINITIONS(rkward PUBLIC -DREL_PATH_TO_DATA="${RelPathToData}")
+
 SET_TARGET_PROPERTIES(rkward PROPERTIES
         MACOSX_BUNDLE_BUNDLE_NAME "RKWard")
 

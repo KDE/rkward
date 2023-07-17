@@ -1,6 +1,6 @@
 /*
 main.cpp - This file is part of RKWard (https://rkward.kde.org). Created: Tue Oct 29 2002
-SPDX-FileCopyrightText: 2002-2020 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileCopyrightText: 2002-2023 by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -331,7 +331,7 @@ int main (int argc, char *argv[]) {
 	RKSettingsModuleGeneral::setStartupOption("quirkmode", parser.isSet("quirkmode"));
 
 	// MacOS may need some path adjustments, first
-#ifdef Q_OS_MACOS
+#if defined(Q_OS_MACOS)
 	QString oldpath = qgetenv ("PATH");
 	if (!oldpath.contains (INSTALL_PATH)) {
 		//ensure that PATH is set to include what we deliver with the bundle
@@ -341,6 +341,14 @@ int main (int argc, char *argv[]) {
 	if (!qEnvironmentVariableIsSet ("DBUS_LAUNCHD_SESSION_BUS_SOCKET")) {
 		// try to ensure that DBus is running before trying to connect
 		QProcess::execute ("launchctl", QStringList () << "load" << "/Library/LaunchAgents/org.freedesktop.dbus-session.plist");
+	}
+#elif defined(Q_OS_UNIX)
+	QStringList data_dirs = QString(qgetenv("XDG_DATA_DIRS")).split(PATH_VAR_SEP);;
+	QString reldatadir = QDir::cleanPath(QDir(app.applicationDirPath()).absoluteFilePath(REL_PATH_TO_DATA));
+	if (!data_dirs.contains(reldatadir)) {
+		RK_DEBUG(APP, DL_WARNING, "Running from non-standard path? Adding %s to XDG_DATA_DIRS", qPrintable(reldatadir));
+		data_dirs.prepend(reldatadir);
+		qputenv("XDG_DATA_DIRS", data_dirs.join(PATH_VAR_SEP).toLocal8Bit());
 	}
 #endif
 	// This is _not_ the same path adjustment as above: Make sure to add the current dir to the path, before launching R and backend.

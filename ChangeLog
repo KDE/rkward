@@ -1,3 +1,5 @@
+- Fixed: Better support for running from non-standard paths on Linux (e.g. user-local installation in home dir)
+- Fixed: Added REUSE license information where missing
 - Fixed: Handling of carriage returns in R Console window (used in progress bars, importantly)
 - Fixed: Crash when renaming top level object from context menu
 
