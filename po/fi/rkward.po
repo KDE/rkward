@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-07-17 00:44+0000\n"
+"POT-Creation-Date: 2023-07-18 00:45+0000\n"
 "PO-Revision-Date: 2018-12-04 13:52+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -2225,21 +2225,21 @@ msgstr ""
 "Avattava(t) tiedosto(t), tyypillisesti työtila tai R-skripti. Useampia "
 "kohteita ladattaessa työtila tulisi antaa ensin."
 
-#: rkward/main.cpp:376
+#: rkward/main.cpp:384
 #, kde-format
 msgid ""
 "The R executable specified on the command line (%1) does not exist or is not "
 "executable."
 msgstr ""
 
-#: rkward/main.cpp:388
+#: rkward/main.cpp:396
 #, kde-format
 msgid ""
 "The R executable (%1) specified in the rkward.ini file (%2) does not exist "
 "or is not executable."
 msgstr ""
 
-#: rkward/main.cpp:393
+#: rkward/main.cpp:401
 #, kde-format
 msgid ""
 "The R executable specified at compile time (%1) does not exist or is not "

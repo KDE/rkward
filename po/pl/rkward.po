@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pl\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-07-17 00:44+0000\n"
+"POT-Creation-Date: 2023-07-18 00:45+0000\n"
 "PO-Revision-Date: 2022-10-09 10:16+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -2291,7 +2291,7 @@ msgstr ""
 "Przy wczytywaniu kilku rzeczy, najpierw powinno określać się przestrzeń "
 "roboczą."
 
-#: rkward/main.cpp:376
+#: rkward/main.cpp:384
 #, kde-format
 msgid ""
 "The R executable specified on the command line (%1) does not exist or is not "
@@ -2300,7 +2300,7 @@ msgstr ""
 "Plik wykonywalny R w wierszu poleceń (%1) nie istnieje lub jest "
 "niewykonywalny."
 
-#: rkward/main.cpp:388
+#: rkward/main.cpp:396
 #, kde-format
 msgid ""
 "The R executable (%1) specified in the rkward.ini file (%2) does not exist "
@@ -2309,7 +2309,7 @@ msgstr ""
 "Plik wykonywalny R (%1) określony w pliku rkward.ini (%2) nie istnieje lub "
 "jest niewykonywalny."
 
-#: rkward/main.cpp:393
+#: rkward/main.cpp:401
 #, kde-format
 msgid ""
 "The R executable specified at compile time (%1) does not exist or is not "

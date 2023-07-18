@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-07-17 00:44+0000\n"
+"POT-Creation-Date: 2023-07-18 00:45+0000\n"
 "PO-Revision-Date: 2022-10-09 08:47+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -2287,7 +2287,7 @@ msgstr ""
 "datoteke skripta R. Pri nalaganju več stvari najprej določite delovni "
 "prostor."
 
-#: rkward/main.cpp:376
+#: rkward/main.cpp:384
 #, kde-format
 msgid ""
 "The R executable specified on the command line (%1) does not exist or is not "
@@ -2296,7 +2296,7 @@ msgstr ""
 "R izvajalna datoteka, določena v ukazni vrstici (%1), ne obstaja ali ni "
 "izvajalna."
 
-#: rkward/main.cpp:388
+#: rkward/main.cpp:396
 #, kde-format
 msgid ""
 "The R executable (%1) specified in the rkward.ini file (%2) does not exist "
@@ -2305,7 +2305,7 @@ msgstr ""
 "R izvajalna datoteka (%1), navedena v datoteki rkward.ini (%2), ne obstaja "
 "ali ni izvajalna."
 
-#: rkward/main.cpp:393
+#: rkward/main.cpp:401
 #, kde-format
 msgid ""
 "The R executable specified at compile time (%1) does not exist or is not "

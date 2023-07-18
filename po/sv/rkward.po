@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-07-17 00:44+0000\n"
+"POT-Creation-Date: 2023-07-18 00:45+0000\n"
 "PO-Revision-Date: 2022-09-24 15:14+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -2271,7 +2271,7 @@ msgstr ""
 "En eller flera filer är öppna, typiskt en arbetsyta, eller en R-skriptfil. "
 "När flera saker läses in, ska arbetsytan anges först."
 
-#: rkward/main.cpp:376
+#: rkward/main.cpp:384
 #, kde-format
 msgid ""
 "The R executable specified on the command line (%1) does not exist or is not "
@@ -2280,7 +2280,7 @@ msgstr ""
 "Körbart R-program angivet på kommandoraden (%1) finns inte eller är inte "
 "körbart."
 
-#: rkward/main.cpp:388
+#: rkward/main.cpp:396
 #, kde-format
 msgid ""
 "The R executable (%1) specified in the rkward.ini file (%2) does not exist "
@@ -2289,7 +2289,7 @@ msgstr ""
 "Körbart R-program (%1) angivet i filen rkward.ini (%2) finns inte eller är "
 "inte körbart."
 
-#: rkward/main.cpp:393
+#: rkward/main.cpp:401
 #, kde-format
 msgid ""
 "The R executable specified at compile time (%1) does not exist or is not "

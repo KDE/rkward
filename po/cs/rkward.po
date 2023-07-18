@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-07-17 00:44+0000\n"
+"POT-Creation-Date: 2023-07-18 00:45+0000\n"
 "PO-Revision-Date: 2023-06-22 13:11+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -2189,7 +2189,7 @@ msgstr ""
 "skriptem R. Při načtení několika věcí byste měl nejprve stanovit pracovní "
 "prostředí."
 
-#: rkward/main.cpp:376
+#: rkward/main.cpp:384
 #, kde-format
 msgid ""
 "The R executable specified on the command line (%1) does not exist or is not "
@@ -2198,7 +2198,7 @@ msgstr ""
 "Spustitelný soubor R zadaný na příkazové řádce (%1) neexistuje nebo není "
 "spustitelný."
 
-#: rkward/main.cpp:388
+#: rkward/main.cpp:396
 #, kde-format
 msgid ""
 "The R executable (%1) specified in the rkward.ini file (%2) does not exist "
@@ -2207,7 +2207,7 @@ msgstr ""
 "Spustitelný soubor R (%1) zadaný v souboru rkward.ini (%2) neexistuje nebo "
 "není spustitelný."
 
-#: rkward/main.cpp:393
+#: rkward/main.cpp:401
 #, kde-format
 msgid ""
 "The R executable specified at compile time (%1) does not exist or is not "

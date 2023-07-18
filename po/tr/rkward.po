@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yenitr\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-07-17 00:44+0000\n"
-"PO-Revision-Date: 2023-07-14 00:34+0300\n"
+"POT-Creation-Date: 2023-07-18 00:45+0000\n"
+"PO-Revision-Date: 2023-07-17 15:29+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -2258,7 +2258,7 @@ msgstr ""
 "Açılacak dosya veya dosyalar, genellikle bir çalışma alanı veya bir R komut "
 "dosyasıdır. Birkaç şey yüklerken önce çalışma alanınızı belirtmelisiniz."
 
-#: rkward/main.cpp:376
+#: rkward/main.cpp:384
 #, kde-format
 msgid ""
 "The R executable specified on the command line (%1) does not exist or is not "
@@ -2267,7 +2267,7 @@ msgstr ""
 "Komut satırında (%1) belirtilen R yürütülebiliri yok veya yürütülebilir "
 "değil."
 
-#: rkward/main.cpp:388
+#: rkward/main.cpp:396
 #, kde-format
 msgid ""
 "The R executable (%1) specified in the rkward.ini file (%2) does not exist "
@@ -2276,7 +2276,7 @@ msgstr ""
 "rkward.ini (%2) dosyasında belirtilen R yürütülebiliri (%1) yok veya "
 "yürütülebilir değil."
 
-#: rkward/main.cpp:393
+#: rkward/main.cpp:401
 #, kde-format
 msgid ""
 "The R executable specified at compile time (%1) does not exist or is not "
@@ -4346,7 +4346,7 @@ msgstr "Çalışma Alanını Aç..."
 #: rkward/rkward.cpp:518
 #, kde-format
 msgid "Opens an existing document"
-msgstr "Varolan dosyayı açar"
+msgstr "Var olan bir dosyayı açar"
 
 #: rkward/rkward.cpp:523
 #, kde-format

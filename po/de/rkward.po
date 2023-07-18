@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-07-17 00:44+0000\n"
+"POT-Creation-Date: 2023-07-18 00:45+0000\n"
 "PO-Revision-Date: 2022-07-24 15:13+0200\n"
 "Last-Translator: Frederik Schwarzer <schwarzer@kde.org>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -2227,7 +2227,7 @@ msgstr ""
 "Skriptdatei. Wenn Sie mehrere Dateien laden, sollten Sie zuerst den "
 "Arbeitsbereich angeben"
 
-#: rkward/main.cpp:376
+#: rkward/main.cpp:384
 #, kde-format
 msgid ""
 "The R executable specified on the command line (%1) does not exist or is not "
@@ -2236,7 +2236,7 @@ msgstr ""
 "Die auf der Befehlszeile angegebene R-Programmdatei (%1) existiert nicht "
 "oder ist nicht ausführbar."
 
-#: rkward/main.cpp:388
+#: rkward/main.cpp:396
 #, kde-format
 msgid ""
 "The R executable (%1) specified in the rkward.ini file (%2) does not exist "
@@ -2245,7 +2245,7 @@ msgstr ""
 "Die in der Datei rkward.ini (%2) angegebene R-Programmdatei (%1) existiert "
 "nicht oder ist nicht ausführbar."
 
-#: rkward/main.cpp:393
+#: rkward/main.cpp:401
 #, kde-format
 msgid ""
 "The R executable specified at compile time (%1) does not exist or is not "
