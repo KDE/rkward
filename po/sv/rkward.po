@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Stefan Asserhäll <stefan.asserhall@bredband.net>, 2015, 2016, 2018, 2019, 2020, 2021, 2022.
+# Stefan Asserhäll <stefan.asserhall@bredband.net>, 2015, 2016, 2018, 2019, 2020, 2021, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-07-18 00:45+0000\n"
-"PO-Revision-Date: 2022-09-24 15:14+0200\n"
+"PO-Revision-Date: 2023-07-31 11:13+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -215,12 +215,16 @@ msgid ""
 "Should this situation constitute a regular use case for your work, please "
 "let us know at rkward-devel@kde.org, so we can consider possible solutions."
 msgstr ""
+"Arbetsytan innehåller fler än 10 000 toppnivåobjekt. RKWard är inte "
+"optimerad för situationen, och du kan uppleva fördröjning mellan R-"
+"kommandon. Skulle situationen utgöra ett vanligt användarfall i ditt arbete, "
+"tala gärna om det för oss på rkward-devel@kde.org, så att vi kan överväga "
+"möjliga lösningar."
 
 #: rkward/core/renvironmentobject.cpp:113
-#, fuzzy, kde-format
-#| msgid "Load an existing workspace:"
+#, kde-format
 msgid "Many objects in workspace"
-msgstr "Läs in befintlig arbetsyta:"
+msgstr "Många objekt på arbetsytan"
 
 #: rkward/core/rkmodificationtracker.cpp:59
 #, kde-format
