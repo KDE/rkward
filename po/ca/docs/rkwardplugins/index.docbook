@@ -2628,7 +2628,7 @@ function getSpecifics () {
 >current_dataframe</parameter
 > en el seu lloc. Alternativament, podeu forçar els requisits de tipus utilitzant restriccions apropiades a <command
 >&lt;varslot&gt;</command
->s, o utilitzant la <link linkend="logic_scripted"
+>, o utilitzant la <link linkend="logic_scripted"
 >creació de scripts lògics d'&IGU;</link
 >. </para>
 </sect1>
@@ -4077,7 +4077,7 @@ JS.print &lt;- rk.paste.JS(echo("rk.print (res)\n"), level=2)
 >&lt;</command
 >, <command
 >&gt;=</command
->o <command
+> o <command
 >||</command
 >, de manera que podeu comparar lògicament els objectes &R; sense la necessitat de posar cometes la major part del temps. Mirem l'objecte <quote
 >JS.calc</quote
@@ -6821,7 +6821,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 >value</parameter
 >, i <parameter
 >value_unchecked</parameter
->s, <emphasis
+>, <emphasis
 >no</emphasis
 > l'etiqueta mostrada de la casella de selecció. <variablelist
 > <varlistentry>
