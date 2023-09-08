@@ -636,19 +636,18 @@ QStringList charPArrayToQStringList (const char** chars, int count) {
 	return ret;
 }
 
-int RChooseFile (int isnew, char *buf, int len) {
+int RChooseFile(int isnew, char *buf, int len) {
 	RK_TRACE (RBACKEND);
 
-	RBackendRequest request (true, RBackendRequest::ChooseFile);
-	request.params["new"] = QVariant ((bool) isnew);
+	QStringList params;
+	params << "choosefile" << QString() /* caption */ << QString() /* initial */ << "*" /* filter */ << (isnew ? "newfile" : "file");
+	auto res = RKRBackend::this_pointer->handlePlainGenericRequest(params, true);
 
-	RKRBackend::this_pointer->handleRequest (&request);
+	QByteArray localres = RKRBackend::fromUtf8(res.ret.toString());
+	qstrncpy ((char *) buf, localres.data(), len);
 
-	QByteArray localres = RKRBackend::fromUtf8 (request.params["result"].toString ());
-	qstrncpy ((char *) buf, localres.data (), len);
-
-// return length of filename (strlen (buf))
-	return (qMin (len - 1, localres.size ()));
+// return length of filename (strlen(buf))
+	return (qMin(len - 1, localres.size()));
 }
 
 /* There are about one million possible entry points to editing / showing files. We try to cover them all, using the

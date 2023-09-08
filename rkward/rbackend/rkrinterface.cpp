@@ -16,6 +16,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../settings/rksettingsmoduleoutput.h"
 #include "../settings/rksettingsmodulegraphics.h"
 #include "../settings/rksettingsmoduleplugins.h"
+#include "../settings/rkrecenturls.h"
 #include "../core/robjectlist.h"
 #include "../core/renvironmentobject.h"
 #include "../core/rkmodificationtracker.h"
@@ -624,6 +625,37 @@ GenericRRequestResult RInterface::processPlainGenericRequest(const QStringList &
 		QStringList results = RKSelectListDialog::doSelect (QApplication::activeWindow(), title, choices, preselects, multiple);
 		if (results.isEmpty ()) results.append ("");	// R wants to have it that way
 		return GenericRRequestResult(results);
+	} else if (call == "choosefile") {
+		QFileDialog d(nullptr, calllist.value(1));  // caption
+		QString initial = calllist.value(2);
+		QString cat;
+		if (initial.startsWith('#')) {
+			cat = initial.mid(1);
+			initial = QFileInfo(RKRecentUrls::mostRecentUrl(cat).toLocalFile()).absolutePath();
+		}
+
+		d.setDirectory(initial);
+		QString filter = calllist.value(3);
+		if (!filter.isEmpty()) {
+			if (!filter.contains('(')) filter += '(' + filter + ')';
+			d.setNameFilter(filter);
+		}
+		QString mode = calllist.value(4);
+		if (mode == "file") d.setFileMode(QFileDialog::ExistingFile);
+		else if (mode == "files") d.setFileMode(QFileDialog::ExistingFiles);
+		else if (mode == "dir") d.setFileMode(QFileDialog::Directory);
+		else if (mode == "newfile") {
+			d.setFileMode(QFileDialog::AnyFile);
+			d.setAcceptMode(QFileDialog::AcceptSave);
+		} else RK_ASSERT(false);
+
+		d.exec();
+		auto res = d.selectedFiles();
+		if (!res.isEmpty() && !cat.isEmpty()) {
+			RKRecentUrls::addRecentUrl(cat, QUrl::fromLocalFile(res.value(0)));
+		}
+
+		return GenericRRequestResult(res);
 	} else if (call == "commandHistory") {
 		if (calllist.value (1) == "get") {
 			return GenericRRequestResult(RKConsole::mainConsole()->commandHistory());
@@ -868,14 +900,6 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 	} else if ((type == RBackendRequest::ShowFiles) || (type == RBackendRequest::EditFiles)) {
 		ShowEditTextFileAgent::showEditFiles (request);
 		return;		// we are not done, yet!
-	} else if (type == RBackendRequest::ChooseFile) {
-		QString filename;
-		if (request->params["new"].toBool ()) {
-			filename = QFileDialog::getSaveFileName ();
-		} else {
-			filename = QFileDialog::getOpenFileName ();
-		}
-		request->params["result"] = QVariant (filename);
 	} else if (type == RBackendRequest::SetParamsFromBackend) {
 			na_real = request->params["na_real"].toDouble ();
 			na_int = request->params["na_int"].toInt ();

@@ -185,3 +185,13 @@
 
 	.rk.do.plain.call ("select.list", params)
 }
+
+# file dialog
+# NOTE: initial specifies initial directory to start at (or file to select).
+#       If this starts with a "#", the last file selected in a dialog with the same initial parameter
+#       will be used, instead. E.g. initial="#images".
+#' @export
+#' @rdname rk.show.messages
+"rk.select.file" <- function(caption = NULL, initial = NULL, filter = '*', mode=c("file", "files", "dir", "newfile")) {
+	.rk.do.plain.call ("choosefile", list(caption, initial, filter, mode[1]))
+}

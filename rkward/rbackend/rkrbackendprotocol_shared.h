@@ -31,14 +31,13 @@ public:
 		BackendExit,
 		ShowMessage,
 		ShowFiles,
-		ChooseFile,
 		EditFiles,
-		ReadLine,      // 5
+		ReadLine,      // 4
 		CommandOut,                  /**< Request the next command, and notify about the result of the previus. TODO split. */
 		Started,
 		EvalRequest,
 		CallbackRequest,
-		GenericRequestWithSubcommands,   // 10
+		GenericRequestWithSubcommands,   // 9
 		PlainGenericRequest,
 		SetParamsFromBackend,
 		Debugger,
