@@ -3,20 +3,26 @@
 # SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 # SPDX-License-Identifier: GPL-2.0-or-later
 #' Message boxes and selection list using native KDE GUI
-#' 
-#' Multi-purpose pop-up message boxes and selection list using native KDE GUI
-#' elements. The message boxes can be used either to show some information or
+#'
+#' Multi-purpose pop-up message boxes, selection list and file selectors using native
+#' KDE GUI elements. The message boxes can be used either to show some information or
 #' ask some question. The selection list can be used to get a vector of
-#' selected items.
-#' 
+#' selected items. The file selector opens a file system browser to chose one or
+#' multiple files, a directory, or a path for a new file.
+#'
 #' For \code{rk.show.question}, the R interpreter always waits for the user's
 #' choice.
-#' 
-#' \code{rk.select.list} replaces \code{utils::select.list} for the running
-#' session acting as a drop-in replacement for \code{tk_select.list}. Use
-#' \code{.rk.backups$select.list} for the original \code{utils::select.list}
+#'
+#' \code{rk.select.list} replaces \code{\link[utils:select.list]{utils::select.list}}
+#' for the running session acting as a drop-in replacement for \code{tk_select.list}.
+#' Use \code{.rk.backups$select.list} for the original \code{utils::select.list}
 #' function (see Examples).
-#' 
+#'
+#' \code{rk.select.file} combines the functionality of \code{\link[base:file.choose]{file.choose}}
+#' and \code{utils::choose.dir}. The latter is only available in R for Windows, but
+#' \code{rk.select.file} can be used on all systems where RKWard is available. \code{rk.choose.dir}
+#' simply is a wrapper for \code{rk.select.file(mode="dir")}.
+#'
 #' @aliases rk.show.message rk.show.question rk.select.list
 #' @param message a string for the content of the message box.
 #' @param msg like \code{message}, only the argument was renamed to mimic the formals of
@@ -61,8 +67,11 @@
 #'   it returns \code{NA} for \bold{Cancel} actions.
 #' 
 #' \code{rk.select.list} returns the value of \code{\link{select.list}}.
+#'
+#' \code{rk.select.file} and \code{rk.choose.dir} return the path to the selected target.
 #' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
-#' @seealso \code{\link{system}}, \code{\link{select.list}}
+#' @seealso \code{\link{system}}, \code{\link{select.list}},
+#'    \code{\link[base:file.choose]{file.choose}}
 #' @keywords utilities
 #' @rdname rk.show.messages
 #' @examples
@@ -187,11 +196,22 @@
 }
 
 # file dialog
-# NOTE: initial specifies initial directory to start at (or file to select).
-#       If this starts with a "#", the last file selected in a dialog with the same initial parameter
-#       will be used, instead. E.g. initial="#images".
+#' @param initial character string, specifies initial directory to start at (or file to select).
+#'    If this starts with a \code{"#"}, the last file selected in a dialog with the same initial parameter
+#'    will be used, instead. E.g. \code{initial="#images"}.
+#' @param filter regular expression to filter for valid file or directory names.
+#' @param mode one of \code{"file"} (select one file), \code{"files"} (select one or more files),
+#'    \code{"dir"} (select a directory), or \code{"newfile"} (set path for a new file).
 #' @export
 #' @rdname rk.show.messages
 "rk.select.file" <- function(caption = NULL, initial = NULL, filter = '*', mode=c("file", "files", "dir", "newfile")) {
+    mode <- match.arg(mode)
 	.rk.do.plain.call ("choosefile", list(caption, initial, filter, mode[1]))
+}
+
+# wrapper for dirs only
+#' @export
+#' @rdname rk.show.messages
+"rk.choose.dir" <- function(caption = NULL, initial = NULL, filter = '*'){
+    rk.select.file(caption = caption, initial = initial, filter = filter, mode="dir")
 }
