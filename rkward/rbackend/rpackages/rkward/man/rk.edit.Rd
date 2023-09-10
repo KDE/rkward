@@ -9,12 +9,12 @@
 \usage{
 rk.edit(x)
 
-rk.edit.files(name = NULL, file = "", title = NULL, prompt = TRUE)
+rk.edit.files(name, file = "", title, prompt = TRUE)
 
 rk.show.files(
   file = file,
   header = file,
-  title = NULL,
+  title,
   delete.file = FALSE,
   prompt = TRUE,
   delete = delete.file
@@ -24,6 +24,8 @@ rk.show.html(url)
 }
 \arguments{
 \item{x}{an object to edit.}
+
+\item{name}{name of the environment to use (optional).}
 
 \item{file}{character vector, filenames to show or edit.}
 

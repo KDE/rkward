@@ -279,8 +279,8 @@
 #'
 #' And arbitrary number of ouptut captures can be started and stopped, and these will form a push/pop stack.
 #'
-#' @param suppress.messages
-#' @param suppress.output output / message are not sent on, neither to surrounding captures, nor as regular output
+#' @param suppress.messages message are not sent on, neither to surrounding captures, nor as regular output.
+#' @param suppress.output like \code{suppress.messages}, but for output.
 #' @param allow.nesting if false, output / message is not sent to surrounding captures, but is sent to regular output (unless suppressed)
 #'
 #' \code{rk.capture.output} Starts capturing output.

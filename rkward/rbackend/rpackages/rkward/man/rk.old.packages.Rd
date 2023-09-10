@@ -10,7 +10,7 @@ rk.old.packages(
   contriburl = contrib.url(repos, type),
   instPkgs = installed.packages(lib.loc = lib.loc),
   method,
-  available = NULL,
+  available,
   checkBuilt = FALSE,
   type = getOption("pkgType")
 )

@@ -21,7 +21,7 @@ rk.get.short.name(x)
 
 .rk.make.short.name(x)
 
-rk.get.description(..., paste.sep = NULL, is.substitute = FALSE)
+rk.get.description(..., paste.sep, is.substitute = FALSE)
 
 rk.list(...)
 
@@ -36,7 +36,7 @@ rk.list.names(..., deparse.level = 2)
 
 \item{fill}{a logical or character. See Details.}
 
-\item{paste.sep}{a string, used as the \code{collapse} argument for paste}
+\item{paste.sep}{a string, used as the \code{collapse} argument for paste.}
 
 \item{is.substitute}{a logical (not NA). See Details.}
 }
@@ -62,7 +62,7 @@ a character vector of default labels to use as the \code{fill} parameter.
 
 \code{rk.get.description} creates descriptive string(s) for each of the
 arguments in "\code{\dots{}}"; collapsing into a single string using
-\code{paste.sep} (if not NULL). If \code{is.substitute=TRUE}, the arguments
+\code{paste.sep} (if not missing). If \code{is.substitute=TRUE}, the arguments
 will be deparsed, first, which can be useful when using
 \code{rk.get.description} inside a function.
 

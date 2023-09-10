@@ -111,7 +111,8 @@
 #' ## END NOT RUN
 #' @export
 #' @rdname rk.load.pluginmaps
-"rk.load.pluginmaps" <- function (pluginmap.files=NULL, force.add = TRUE, force.reload = TRUE) {
+"rk.load.pluginmaps" <- function (pluginmap.files, force.add = TRUE, force.reload = TRUE) {
+	if (missing (pluginmap.files)) pluginmap.files <- character(0)
 	.rk.do.plain.call ("loadPluginMaps", c (ifelse (isTRUE (force.add), "force", "noforce"), ifelse (isTRUE (force.reload), "reload", "noreload"), as.character (pluginmap.files)), synchronous=FALSE)
 }
 

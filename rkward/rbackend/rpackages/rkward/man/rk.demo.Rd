@@ -4,15 +4,15 @@
 \alias{rk.demo}
 \title{Opens an R demo script for editing}
 \usage{
-rk.demo(topic, package = NULL, lib.loc = NULL)
+rk.demo(topic, package, lib.loc = NULL)
 }
 \arguments{
 \item{topic}{topic of the example}
 
-\item{package}{package(s) to search for the demo. If NULL (the default), all
+\item{package}{package(s) to search for the demo. If missing (the default), all
 currently loaded packages are searched.}
 
-\item{lib.loc}{Library locations.}
+\item{lib.loc}{Library locations, passed on to \code{\link[base:system.file]{system.file}}.}
 }
 \value{
 Return \code{NULL}, unconditionally.

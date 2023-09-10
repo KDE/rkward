@@ -19,6 +19,7 @@
 #' 
 #' @aliases rk.edit rk.edit.files rk.show.files rk.show.html
 #' @param x an object to edit.
+#' @param name name of the environment to use (optional).
 #' @param file character vector, filenames to show or edit.
 #' @param title character vector, of the same length as \code{file}; This can
 #'   be used to give descriptive titles to each file, which will be displayed
@@ -50,9 +51,11 @@
 
 #' @export
 #' @rdname rk.edit
-"rk.edit.files" <- function (name=NULL, file="", title=NULL, prompt = TRUE) {
-	if (!is.null(name)) {
-		if (is.null (title)) title = deparse (substitute (name))
+"rk.edit.files" <- function (name, file="", title, prompt = TRUE) {
+	if (missing (name)) {
+		name <- character(0)
+	} else {
+		if (missing (title)) title = deparse (substitute (name))
 		if (file == "") file = tempfile()
 		env = environment(name)
 		dput (name, file = file, control = c("useSource", "keepNA", "keepInteger", "showAttributes"))
@@ -66,10 +69,11 @@
 
 #' @export
 #' @rdname rk.edit
-"rk.show.files" <- function (file = file, header = file, title = NULL, delete.file=FALSE, prompt = TRUE,
+"rk.show.files" <- function (file = file, header = file, title, delete.file=FALSE, prompt = TRUE,
 	delete = delete.file  # For compatibility with earlier versions of R
 )
 {
+	if(missing (title)) title <- character(0)
 	invisible (.Call ("rk.show.files", as.character (file), as.character (header), as.character (title), delete, isTRUE (prompt), PACKAGE="(embedding)"))
 }
 

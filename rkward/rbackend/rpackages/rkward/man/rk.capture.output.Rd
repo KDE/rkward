@@ -16,7 +16,9 @@ rk.capture.output(
 rk.end.capture.output(highlight = FALSE)
 }
 \arguments{
-\item{suppress.output}{output / message are not sent on, neither to surrounding captures, nor as regular output}
+\item{suppress.messages}{message are not sent on, neither to surrounding captures, nor as regular output.}
+
+\item{suppress.output}{like \code{suppress.messages}, but for output.}
 
 \item{allow.nesting}{if false, output / message is not sent to surrounding captures, but is sent to regular output (unless suppressed)
 

@@ -121,9 +121,9 @@
 #' 
 #' @export
 "rk.old.packages" <- function (lib.loc = NULL, repos = getOption("repos"), contriburl = contrib.url(repos, type), instPkgs = installed.packages(lib.loc = lib.loc),
-                             method, available = NULL, checkBuilt = FALSE, type = getOption("pkgType")) {
+                             method, available, checkBuilt = FALSE, type = getOption("pkgType")) {
 	if (is.null (lib.loc)) lib.loc <- .libPaths ()
-	if (is.null (available)) available <- available.packages (contriburl=contriburl, method=method)
+	if (missing (available)) available <- available.packages (contriburl=contriburl, method=method)
 
 	seen.packages <- character (0)
 	old <- NULL

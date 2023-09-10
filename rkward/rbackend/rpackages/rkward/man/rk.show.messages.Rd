@@ -29,21 +29,21 @@ rk.askYesNo(
   ...
 )
 
-rk.select.list(list, preselect = NULL, multiple = FALSE, title = NULL)
+rk.select.list(list, preselect, multiple = FALSE, title)
 
 rk.select.file(
-  caption = NULL,
-  initial = NULL,
+  caption,
+  initial,
   filter = "*",
   mode = c("file", "files", "dir", "newfile")
 )
 
-rk.choose.dir(caption = NULL, initial = NULL, filter = "*")
+rk.choose.dir(caption, initial, filter = "*")
 }
 \arguments{
 \item{message}{a string for the content of the message box.}
 
-\item{caption}{a string for title of the message box.}
+\item{caption}{a string for title of the message box. Optional for \code{rk.select.file} and \code{rk.choose.dir}.}
 
 \item{wait}{a logical (not NA) indicating whether the R interpreter should
 wait for the user's action, or run it asynchronously.}

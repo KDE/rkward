@@ -27,7 +27,7 @@
 #' @param message a string for the content of the message box.
 #' @param msg like \code{message}, only the argument was renamed to mimic the formals of
 #'   \code{askYesNo}.
-#' @param caption a string for title of the message box.
+#' @param caption a string for title of the message box. Optional for \code{rk.select.file} and \code{rk.choose.dir}.
 #' @param button.yes a string for the text label of the \bold{Yes} button. Can
 #'   be an empty string (\code{""}), in which case the button is not displayed
 #'   at all. Note that the default value of "yes" (lower case) means to use a default
@@ -169,15 +169,19 @@
 # drop-in-replacement for tk_select.list()
 #' @export
 #' @rdname rk.show.messages
-"rk.select.list" <- function (list, preselect = NULL, multiple = FALSE, title = NULL) {
-	preselect <- as.character (preselect)
+"rk.select.list" <- function (list, preselect, multiple = FALSE, title) {
+    if (missing (preselect)) {
+        preselect <- character(0)
+    } else {
+        preselect <- as.character (preselect)
+    }
 	preselect.len = length (preselect)
 	list <- as.character (list)
 	list.len <- length (list)
 	params <- list ()
 
 	# serialize all parameters
-	params[1] <- if(is.null(title)) "" else as.character (title)
+	params[1] <- if(missing (title)) "" else as.character (title)
 	if (multiple) params[2] <- "multi"
 	else params[2] <- "single"
 	params[3] <- as.character (preselect.len)
@@ -204,14 +208,22 @@
 #'    \code{"dir"} (select a directory), or \code{"newfile"} (set path for a new file).
 #' @export
 #' @rdname rk.show.messages
-"rk.select.file" <- function(caption = NULL, initial = NULL, filter = '*', mode=c("file", "files", "dir", "newfile")) {
+"rk.select.file" <- function(caption, initial, filter = '*', mode=c("file", "files", "dir", "newfile")) {
     mode <- match.arg(mode)
-	.rk.do.plain.call ("choosefile", list(caption, initial, filter, mode[1]))
+	.rk.do.plain.call (
+        "choosefile",
+        list(
+            if (missing (caption)) "" else caption,
+            if (missing (initial)) "" else initial,
+            filter,
+            mode[1]
+        )
+    )
 }
 
 # wrapper for dirs only
 #' @export
 #' @rdname rk.show.messages
-"rk.choose.dir" <- function(caption = NULL, initial = NULL, filter = '*'){
+"rk.choose.dir" <- function(caption, initial, filter = '*'){
     rk.select.file(caption = caption, initial = initial, filter = filter, mode="dir")
 }

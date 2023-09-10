@@ -9,9 +9,9 @@
 #' the specification of a topic is mandatory.
 #' 
 #' @param topic topic of the example
-#' @param package package(s) to search for the demo. If NULL (the default), all
+#' @param package package(s) to search for the demo. If missing (the default), all
 #'   currently loaded packages are searched.
-#' @param lib.loc Library locations.
+#' @param lib.loc Library locations, passed on to \code{\link[base:system.file]{system.file}}.
 #' @return Return \code{NULL}, unconditionally.
 #' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
 #' @seealso \code{\link{rk.edit.files}}, \code{\link{rk.show.files}},
@@ -24,8 +24,8 @@
 #' ## Not run
 #' rk.demo("graphics")
 
-"rk.demo" <- function (topic, package=NULL, lib.loc=NULL) {
-	if (is.null (package)) {
+"rk.demo" <- function (topic, package, lib.loc=NULL) {
+	if (missing (package)) {
 		package <- .packages (lib.loc=lib.loc)
 	}
 

@@ -20,7 +20,7 @@
 #' 
 #' \code{rk.get.description} creates descriptive string(s) for each of the
 #' arguments in "\code{\dots{}}"; collapsing into a single string using
-#' \code{paste.sep} (if not NULL). If \code{is.substitute=TRUE}, the arguments
+#' \code{paste.sep} (if not missing). If \code{is.substitute=TRUE}, the arguments
 #' will be deparsed, first, which can be useful when using
 #' \code{rk.get.description} inside a function.
 #' 
@@ -38,7 +38,7 @@
 #' @param label a string, to set the label attribute of an object
 #' @param envir an environment, where the attribute is evaluated
 #' @param fill a logical or character. See Details.
-#' @param paste.sep a string, used as the \code{collapse} argument for paste
+#' @param paste.sep a string, used as the \code{collapse} argument for paste.
 #' @param is.substitute a logical (not NA). See Details.
 #' @return \code{rk.set.label} returns the result of the evaluation of "setting
 #'   the label" while the others return a character vector.
@@ -123,7 +123,7 @@
 # get descriptive strings for each of the arguments in ...
 #' @rdname rk.label
 #' @export
-"rk.get.description" <- function (..., paste.sep=NULL, is.substitute=FALSE) {
+"rk.get.description" <- function (..., paste.sep, is.substitute=FALSE) {
 	args <- list(...)
 	if (is.substitute) {
 		argnames <- list ()
@@ -149,7 +149,7 @@
 		else descript[i] <- paste (shortname, " (", lbl, ")", sep="")
 	}
 
-	if (is.null (paste.sep)) {
+	if (missing (paste.sep)) {
 		descript
 	} else {
 		paste (descript, collapse=paste.sep)

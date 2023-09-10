@@ -446,13 +446,13 @@
 	}
 	
 	## Recording functions
-	record <- function(devId = dev.cur (), isManaged = NULL, action = "", callUHA = TRUE, nextplot.pkg = "", nextplot.call = NA_character_)
+	record <- function(devId = dev.cur (), isManaged, action = "", callUHA = TRUE, nextplot.pkg = "", nextplot.call = NA_character_)
 	{
 		# callUHA is not really utilized, but there to provide a flixibility to not call 
 		# .rk.update.hist.action () when not needed
 		devId <- as.character (devId)
 		
-		if (is.null (isManaged)) isManaged <- .is.device.managed (devId)
+		if (missing (isManaged)) isManaged <- .is.device.managed (devId)
 		if (!isManaged) return (invisible ())
 		
 		if (histPositions[[devId]]$is.this.dev.new) {
@@ -806,11 +806,11 @@
 	}
 	
 	## Utility / print functions:
-	getDevSummary <- function (devId = NULL)
+	getDevSummary <- function (devId)
 	{
 		message ("History length   : ", sP.length)
 		message ("History size (KB): ", round (object.size (savedPlots) / 1024, 2))
-		if (is.null (devId)) {
+		if (missing (devId)) {
 			.tmp.df <- data.frame (
 				pNew = sapply (histPositions, "[[", "is.this.plot.new"),
 				dNew = sapply (histPositions, "[[", "is.this.dev.new"),
