@@ -107,9 +107,11 @@ preselected.}
 \code{rk.askYesNo} has the same return values as \code{rk.show.question}, except
   it returns \code{NA} for \bold{Cancel} actions.
 
-\code{rk.select.list} returns the value of \code{\link{select.list}}.
+\code{rk.select.list} returns the value of \code{\link{select.list}}, or an empty string
+   \code{""} if cancelled.
 
-\code{rk.select.file} and \code{rk.choose.dir} return the path to the selected target.
+\code{rk.select.file} and \code{rk.choose.dir} return the path to the selected target,
+   or \code{character(0)} if cancelled.
 }
 \description{
 Multi-purpose pop-up message boxes, selection list and file selectors using native
@@ -130,7 +132,10 @@ function (see Examples).
 \code{rk.select.file} combines the functionality of \code{\link[base:file.choose]{file.choose}}
 and \code{utils::choose.dir}. The latter is only available in R for Windows, but
 \code{rk.select.file} can be used on all systems where RKWard is available. \code{rk.choose.dir}
-simply is a wrapper for \code{rk.select.file(mode="dir")}.
+simply is a wrapper for \code{rk.select.file(mode="dir")}. Please note that if users have configured
+KDE to change directories with just one click, they may find the \code{OK} button not to work as
+they expect. In those cases, the name of the target directory must be entered into the name
+input field of the dialog manually.
 }
 \examples{
 
