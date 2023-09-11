@@ -32,12 +32,12 @@
 #' @keywords utilities
 #' @rdname rk.workplace
 #' @examples
-#' 
-#' ## Not run
+#' \dontrun{
 #' rk.save.workplace ()
 #' rk.restore.workplace ()
-#' ## End not run
+#' }
 #' 
+#' @importFrom utils URLdecode
 #' @export
 "rk.save.workplace" <- function (file, description) {
 	if (missing (file)) {
@@ -52,6 +52,7 @@
 }
 
 #' @rdname rk.workplace
+#' @importFrom utils URLdecode
 #' @export
 "rk.restore.workplace" <- function (file, close.windows=TRUE) {
 	if (missing (file)) {

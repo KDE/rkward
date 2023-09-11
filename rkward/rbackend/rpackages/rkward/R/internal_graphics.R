@@ -11,6 +11,7 @@
 #'
 #' @seealso \link{dev.new}, \link{RK}, \link{rk.embed.device}
 #'
+#' @importFrom grDevices dev.new
 #' @export
 "rk.screen.device" <- function (...) {
 	warning ("rk.screen.device() is obsolete.\nUse one of dev.new(), RK(), or rk.embed.device(), instead.")
@@ -28,6 +29,8 @@
 #' @include internal.R
 assign(".rk.preview.devices", list (), envir=.rk.variables)
 
+#' @importFrom grDevices dev.cur dev.new dev.set
+#' @importFrom graphics par
 #' @export
 ".rk.startPreviewDevice" <- function (x) {
 	# NOTE: I considered rewriting this to use .rk.create.preview.data(), but it did not seem right
@@ -50,6 +53,7 @@ assign(".rk.preview.devices", list (), envir=.rk.variables)
 	as.integer (dev.cur ())
 }
 
+#' @importFrom grDevices dev.list dev.off
 #' @export
 ".rk.killPreviewDevice" <- function (x) {
 	a <- .rk.variables$.rk.preview.devices[[x]]
@@ -78,6 +82,8 @@ assign(".rk.preview.devices", list (), envir=.rk.variables)
 .rk.variables$.rk.printer.devices <- list ()
 
 # see .rk.fix.assignmetns () in internal.R
+#' @importFrom grDevices dev.cur dev.new
+#' @importFrom utils compareVersion
 #' @export
 ".rk.fix.assignments.graphics" <- function ()
 {
@@ -93,17 +99,17 @@ assign(".rk.preview.devices", list (), envir=.rk.variables)
 				rk.record.plot$onDelDevice (devId = which)
 			
 			# see http://thread.gmane.org/gmane.comp.statistics.rkward.devel/802
-			rkward:::.rk.do.call ("killDevice", as.character (which))
+			.rk.do.call ("killDevice", as.character (which))
 			
 			ret <- eval (body (.rk.backups$dev.off))
 
 			printfile <- .rk.variables$.rk.printer.devices[[as.character (which)]]
 			if (!is.null (printfile)) {
-				rkward:::.rk.do.plain.call ("printPreview", printfile, FALSE)
+				.rk.do.plain.call ("printPreview", printfile, FALSE)
 				.rk.variables$.rk.printer.devices[[as.character (which)]] <- NULL
 			}
 
-			rkward:::.rk.discard.preview.device.num(which)
+			.rk.discard.preview.device.num(which)
 
 			return (ret)
 		})
@@ -119,23 +125,25 @@ assign(".rk.preview.devices", list (), envir=.rk.variables)
 		})
 
 	## set a hook defining "print.function" for lattice:
-	setHook (packageEvent ("lattice", "onLoad"),
-		function (...)
-			lattice::lattice.options (print.function = function (x, ...)
-			{
-				if (dev.cur() == 1) dev.new ()
-				## TODO: use "trellis" instead of "lattice" to accomodate ggplot2 plots?
-				plot_hist_enabled <- getOption ("rk.enable.graphics.history")
-				if (plot_hist_enabled) {
-					rk.record.plot$record (nextplot.pkg = "lattice")
-				}
-				rk.without.plot.history (plot (x, ...))
-				if (plot_hist_enabled) {
-					rk.record.plot$.save.tlo.in.hP ()
-				}
-				invisible ()
-			})
-	)
+	if (requireNamespace("lattice", quietly = TRUE)) {
+		setHook (packageEvent ("lattice", "onLoad"),
+			function (...)
+				lattice::lattice.options (print.function = function (x, ...)
+				{
+					if (dev.cur() == 1) dev.new ()
+					## TODO: use "trellis" instead of "lattice" to accomodate ggplot2 plots?
+					plot_hist_enabled <- getOption ("rk.enable.graphics.history")
+					if (plot_hist_enabled) {
+						rk.record.plot$record (nextplot.pkg = "lattice")
+					}
+					rk.without.plot.history (plot (x, ...))
+					if (plot_hist_enabled) {
+						rk.record.plot$.save.tlo.in.hP ()
+					}
+					invisible ()
+				})
+		)
+	}
 
 	if (compareVersion (as.character (getRversion ()), "2.14.0") < 0) {
 		setHook (packageEvent ("grid", "attach"),

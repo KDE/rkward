@@ -98,7 +98,7 @@
 #'              Any currently opened plugins are not affected by this function. 
 #'
 #' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
-#' @seealso \code{\link{rk.call.plugin}}, @seealso \code{\link{rkwarddev::rk.plugin.skeleton}}
+#' @seealso \code{\link{rk.call.plugin}}, \code{\link[rkwarddev:rk.plugin.skeleton]{rk.plugin.skeleton}}
 #' @keywords utilities
 #'
 #' @examples

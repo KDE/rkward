@@ -40,11 +40,10 @@ device windows will not be restored (but WILL be closed by
 \code{rk.restore.workplace()}, if \code{close.windows} is TRUE).
 }
 \examples{
-
-## Not run
+\dontrun{
 rk.save.workplace ()
 rk.restore.workplace ()
-## End not run
+}
 
 }
 \seealso{

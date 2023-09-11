@@ -53,7 +53,7 @@
 		}
 		i = i+1;
 	}
-	error ("Could not find column with given name")
+	stop ("Could not find column with given name")
 }
 
 #' @export
@@ -80,6 +80,7 @@
 }
 
 # a wrapper around chooseCRANmirror() without changing options ("repos"), permanently
+#' @importFrom utils getCRANmirrors menu
 #' @export
 #' @rdname rk.misc
 "rk.select.CRAN.mirror" <- function () {
@@ -115,10 +116,10 @@
 #' @keywords attribute misc utilities
 #' @rdname rk.old.packages
 #' @examples
-#' 
-#' ## NOT RUN
+#' \dontrun{
 #' rk.old.packages()
-#' 
+#' }
+#' @importFrom utils contrib.url installed.packages old.packages
 #' @export
 "rk.old.packages" <- function (lib.loc = NULL, repos = getOption("repos"), contriburl = contrib.url(repos, type), instPkgs = installed.packages(lib.loc = lib.loc),
                              method, available, checkBuilt = FALSE, type = getOption("pkgType")) {

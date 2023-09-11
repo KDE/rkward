@@ -23,11 +23,9 @@
 #' 
 #' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
 #' 
-#' @seealso \link{rk.results} \link{rk.print} \link{rk.get.output.html.file} \link{dev.off} \link{svg} \link{png} \link{jpg}
+#' @seealso \code{\link{rk.results}}, \code{\link{rk.print}}, \code{\link{rk.get.output.html.file}}, \code{\link[grDevices:dev.off]{dev.off}}, \code{\link[grDevices:svg]{svg}}, \code{\link[grDevices:png]{png}}, \code{\link[grDevices:jpeg]{jpeg}}
 #'
 #' @examples
-#' require (rkward)
-#' 
 #' ## Plot directly to the output (html) file, by-passing screen device:
 #' rk.graph.on ("JPG", 480, 480, 75)
 #' plot (rnorm (100))
@@ -44,6 +42,7 @@
 #'
 #' @keywords devices
 #'
+#' @importFrom grDevices dev.cur png jpeg
 #' @export
 #' @aliases rk.graph.on rk.graph.off
 #' @rdname rk.graph.on
@@ -82,7 +81,7 @@
 			"\" height=\"", height, "\"><br>", sep = ""))
 	} else if (device.type == "SVG") {
 		if (!capabilities ("cairo")) {	# cairo support is not always compiled in
-			require (cairoDevice)
+			requireNamespace ("cairoDevice")
 			svg <- Cairo_svg
 		}
 		filename <- rk.get.tempfile.name(prefix = "graph", extension = ".svg")
@@ -101,6 +100,7 @@
 
 #' \code{rk.graph.off()} closes the device that was opened by \code{rk.graph.on}. 
 #'
+#' @importFrom grDevices dev.off dev.list dev.set
 #' @rdname rk.graph.on
 #' @export
 "rk.graph.off" <- function(){
@@ -131,6 +131,7 @@
 #'
 #' @keywords devices
 #'
+#' @importFrom grDevices dev.cur
 #' @export
 #' @aliases RK
 #' @rdname RKdevice
@@ -163,6 +164,7 @@
 #' rk.embed.device (grDevices::X11(title="X11 device window"))
 #' plot (rnorm (10))
 #'
+#' @importFrom grDevices dev.cur
 #' @export
 "rk.embed.device" <- function (expr) {
 	oldd <- dev.cur ()
@@ -184,7 +186,10 @@
 }
 
 # Internal function to create wrapper around an R device function (used for X11(), windows(), and quartz()).
+#' @importFrom utils getFromNamespace
 ".rk.make.device.wrapper" <- function (devicename) {
+	# dummy objects to satisfy R CMD check
+	bg <- title <- antialias <- NULL
 	ret <- eval (substitute (
 		function (width=getOption("rk.screendevice.width"), height=getOption("rk.screendevice.height"), pointsize=12) {
 			rk.mode <- getOption ("rk.override.platform.devices")
@@ -205,14 +210,16 @@
 				if (!is.numeric (width)) width <- 7
 				if (missing (height)) height <- getOption ("rk.screendevice.height")
 				if (!is.numeric (height)) height <- 7
-				rk.embed.device (eval (body (grDevices::devicename)))
+				# rk.embed.device (eval (body (grDevices::devicename)))
+				rk.embed.device (eval (body (getFromNamespace (devicename, ns="grDevices"))))
 			} else {
-				eval (body (grDevices::devicename))
+				# eval (body (grDevices::devicename))
+				eval (body (getFromNamespace (devicename, ns="grDevices")))
 			}
 		}
 	))
 	if (exists (devicename, envir=asNamespace ("grDevices"), inherits=FALSE)) {
-		devfun <- get (devicename, asNamespace ("grDevices"))
+		devfun <- getFromNamespace (devicename, ns="grDevices")
 		formals (ret) <- formals (devfun)
 		environment (ret) <- environment (devfun)
 	}
@@ -262,6 +269,7 @@
 #' @keywords utilities device
 #' @rdname rk.printer.device
 #' @export
+#' @importFrom grDevices dev.cur postscript
 #' @examples
 #' 
 #' ## Not run:
@@ -277,6 +285,7 @@
 	.rk.variables$.rk.printer.devices[[as.character (dev.cur ())]] <- tf
 }
 
+#' @importFrom grDevices dev.cur dev.set dev.copy dev.new
 #' @export
 "rk.duplicate.device" <- function (devId = dev.cur ())
 {
@@ -1000,42 +1009,49 @@ rk.record.plot <- rk.record.plot ()
 	options ("rk.enable.graphics.history" = x)
 	invisible ()
 }
+#' @importFrom grDevices dev.cur
 #' @export
 "rk.first.plot" <- function (devId = dev.cur ())
 {
 	if (!getOption ("rk.enable.graphics.history")) return (invisible ())
 	rk.record.plot$showFirst (devId)
 }
+#' @importFrom grDevices dev.cur
 #' @export
 "rk.previous.plot" <- function (devId = dev.cur ())
 {
 	if (!getOption ("rk.enable.graphics.history")) return (invisible ())
 	rk.record.plot$showPrevious (devId)
 }
+#' @importFrom grDevices dev.cur
 #' @export
 "rk.next.plot" <- function (devId = dev.cur ())
 {
 	if (!getOption ("rk.enable.graphics.history")) return (invisible ())
 	rk.record.plot$showNext (devId)
 }
+#' @importFrom grDevices dev.cur
 #' @export
 "rk.last.plot" <- function (devId = dev.cur ())
 {
 	if (!getOption ("rk.enable.graphics.history")) return (invisible ())
 	rk.record.plot$showLast (devId)
 }
+#' @importFrom grDevices dev.cur
 #' @export
 "rk.goto.plot" <- function (devId = dev.cur (), index=1)
 {
 	if (!getOption ("rk.enable.graphics.history")) return (invisible ())
 	rk.record.plot$showPlot (devId, index)
 }
+#' @importFrom grDevices dev.cur
 #' @export
 "rk.force.append.plot" <- function (devId = dev.cur ())
 {
 	if (!getOption ("rk.enable.graphics.history")) return (invisible ())
 	rk.record.plot$forceAppend (devId)
 }
+#' @importFrom grDevices dev.cur
 #' @export
 "rk.removethis.plot" <- function (devId = dev.cur ())
 {
@@ -1048,6 +1064,7 @@ rk.record.plot <- rk.record.plot ()
 	if (!getOption ("rk.enable.graphics.history")) return (invisible ())
 	rk.record.plot$clearHistory ()
 }
+#' @importFrom grDevices dev.cur
 #' @export
 "rk.show.plot.info" <- function (devId = dev.cur ())
 {

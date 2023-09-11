@@ -27,10 +27,9 @@ old.packages() will report package X at B as old. In contrast rk.old.packages() 
 that the current version is higher up in the path, and not report package X as old.
 }
 \examples{
-
-## NOT RUN
+\dontrun{
 rk.old.packages()
-
+}
 }
 \author{
 Thomas Friedrichsmeier \email{rkward-devel@kde.org}

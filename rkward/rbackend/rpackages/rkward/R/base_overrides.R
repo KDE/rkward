@@ -2,21 +2,23 @@
 # SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
 # SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
 # SPDX-License-Identifier: GPL-2.0-or-later
-# override makeActiveBinding: If active bindings are created in globalenv (), watch them properly
-# Ideally this would not be needed, but there seems to be no user-accessible way to copy unevaluated active bindings.
-.rk.makeActiveBinding.default <- base::makeActiveBinding
-#' @export
-"makeActiveBinding" <- function (sym, fun, env, ...) {
-	if (identical (env, globalenv ())) {
-		f <- .rk.make.watch.f (sym)
-		.rk.makeActiveBinding.default ("x", fun, environment(f), ...)
-		ret <- .rk.makeActiveBinding.default (sym, f, globalenv ())
-		.rk.watched.symbols[[sym]] <- TRUE
-		invisible(ret)
-	} else {
-		.rk.makeActiveBinding.default (sym, fun, env, ...)
-	}
-}
+
+### this is currently unused and therefore commented out
+## override makeActiveBinding: If active bindings are created in globalenv (), watch them properly
+## Ideally this would not be needed, but there seems to be no user-accessible way to copy unevaluated active bindings.
+#.rk.makeActiveBinding.default <- base::makeActiveBinding
+## @export
+#"makeActiveBinding" <- function (sym, fun, env, ...) {
+#	if (identical (env, globalenv ())) {
+#		f <- .rk.make.watch.f (sym)
+#		.rk.makeActiveBinding.default ("x", fun, environment(f), ...)
+#		ret <- .rk.makeActiveBinding.default (sym, f, globalenv ())
+#		.rk.watched.symbols[[sym]] <- TRUE
+#		invisible(ret)
+#	} else {
+#		.rk.makeActiveBinding.default (sym, fun, env, ...)
+#	}
+#}
 
 
 #' @export
@@ -44,7 +46,7 @@
 	if (isTRUE(.rk.inside.rkward.session())){
 		.rk.do.plain.call ("quit")
 	} else {
-		base:::q(save = save, status = status, runLast = runLast)
+		base::q(save = save, status = status, runLast = runLast)
 	}
 }
 

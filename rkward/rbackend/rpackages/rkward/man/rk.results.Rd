@@ -59,9 +59,9 @@ Output. Basically, these functions along with the ones described in
 }
 \details{
 \code{rk.print} prints/exports the given object to the output (html) file
-using the \code{\link{HTML}} function. This requires the \code{R2HTML}
+using the \code{\link[R2HTML:HTML]{HTML}} function. This requires the \code{R2HTML}
 package. Additional arguments in \code{...} are passed on to
-\code{\link{HTML}}. For some types of objects (e.g. "htmlwidgets" from
+\code{\link[R2HTML:HTML]{HTML}}. For some types of objects (e.g. "htmlwidgets" from
 the "htmlwidgets" package) additional packages may be required.
 
 \code{rk.print.literal} prints/exports the given object using a
@@ -83,41 +83,41 @@ sense only when \code{x$alternatives} exists.
 }
 \examples{
 
-require (rkward)
-require (R2HTML)
+# code is only run when the R2HTML package can be loaded
+if(require("R2HTML", quietly = TRUE)){
 
-## see the output: Windows->Show Output
-## stolen from the two-sample t-test plugin ;)
-local({
-x1 <- rnorm (100)
-x2 <- rnorm (100, 2)
-nm <- rk.get.description (x1,x2)
+  ## see the output: Windows->Show Output
+  ## stolen from the two-sample t-test plugin ;)
+  local({
+  x1 <- rnorm (100)
+  x2 <- rnorm (100, 2)
+  nm <- rk.get.description (x1,x2)
 
-result <- t.test (x1, x2, alternative="less")
-rk.print.code ("result <- t.test (x1, x2, alternative=\"less\")")
+  result <- t.test (x1, x2, alternative="less")
+  rk.print.code ("result <- t.test (x1, x2, alternative=\"less\")")
 
-rk.header (result$method,
-  parameters=list ("Comparing", paste (nm[1], "against", nm[2]),
-  "H1", rk.describe.alternative (result),
-  "Equal variances", "not assumed"))
+  rk.header (result$method,
+    parameters=list ("Comparing", paste (nm[1], "against", nm[2]),
+    "H1", rk.describe.alternative (result),
+    "Equal variances", "not assumed"))
 
-rk.print.literal ("Raw data (first few rows):")
-rk.print (head (cbind (x1,x2)), align = "left")
+  rk.print.literal ("Raw data (first few rows):")
+  rk.print (head (cbind (x1,x2)), align = "left")
 
-rk.print.literal ("Test results:")
-rk.results (list (
-  'Variable Name'=nm,
-  'estimated mean'=result$estimate,
-  'degrees of freedom'=result$parameter,
-  t=result$statistic,
-  p=result$p.value,
-  'confidence interval percent'=(100 * attr(result$conf.int, "conf.level")),
-  'confidence interval of difference'=result$conf.int ))
-})
-
+  rk.print.literal ("Test results:")
+  rk.results (list (
+    'Variable Name'=nm,
+    'estimated mean'=result$estimate,
+    'degrees of freedom'=result$parameter,
+    t=result$statistic,
+    p=result$p.value,
+    'confidence interval percent'=(100 * attr(result$conf.int, "conf.level")),
+    'confidence interval of difference'=result$conf.int ))
+  })
+} else {}
 }
 \seealso{
-\code{\link{HTML}}, \code{\link{rk.get.output.html.file}},
+\code{\link[R2HTML:HTML]{HTML}}, \code{\link{rk.get.output.html.file}},
   \code{\link{rk.get.description}}, \code{\link{rk.call.plugin}},
   \url{rkward://page/rkward_output}
 }

@@ -50,7 +50,7 @@
 #'   if the user simply presses enter.
 #' @param wait a logical (not NA) indicating whether the R interpreter should
 #'   wait for the user's action, or run it asynchronously.
-#' @param list a vector, coerced into a character vector.
+#' @param choices a vector, coerced into a character vector.
 #' @param preselct a vector, coerced into a character vector, items to be
 #'   preselected.
 #' @param multiple a logical (not NA), when \code{TRUE} multiple selection
@@ -80,9 +80,6 @@
 #' @keywords utilities
 #' @rdname rk.show.messages
 #' @examples
-#' 
-#' require (rkward)
-#' 
 #' ## Message boxes
 #' if (rk.show.question ("Question:\nDo you want to know about RKWard?", 
 #'     button.yes = "Yes, I do!", button.no = "No, I don't care!", button.cancel = "")) {
@@ -174,15 +171,15 @@
 # drop-in-replacement for tk_select.list()
 #' @export
 #' @rdname rk.show.messages
-"rk.select.list" <- function (list, preselect, multiple = FALSE, title) {
+"rk.select.list" <- function (choices, preselect, multiple = FALSE, title) {
     if (missing (preselect)) {
         preselect <- character(0)
     } else {
         preselect <- as.character (preselect)
     }
 	preselect.len = length (preselect)
-	list <- as.character (list)
-	list.len <- length (list)
+	choices <- as.character (choices)
+	choices.len <- length (choices)
 	params <- list ()
 
 	# serialize all parameters
@@ -195,9 +192,9 @@
 			params[3+i] <- preselect[i]
 		}
 	}
-	if (list.len) {	# we should hope, the list is not empty...
-		for (i in 1:list.len) {
-			params[3+preselect.len+i] <- list[i]
+	if (choices.len) {	# we should hope, the list is not empty...
+		for (i in 1:choices.len) {
+			params[3+preselect.len+i] <- choices[i]
 		}
 	}
 

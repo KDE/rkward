@@ -36,8 +36,6 @@ The default is to use the quality configured in Settings -> Configure RKWard -> 
 The default settings for \code{device.type}, \code{width}, \code{height}, and \code{quality} can be modified from Settings -> Configure RKWard -> Output.
 }
 \examples{
-require (rkward)
-
 ## Plot directly to the output (html) file, by-passing screen device:
 rk.graph.on ("JPG", 480, 480, 75)
 plot (rnorm (100))
@@ -54,7 +52,7 @@ rk.graph.off ()
 
 }
 \seealso{
-\link{rk.results} \link{rk.print} \link{rk.get.output.html.file} \link{dev.off} \link{svg} \link{png} \link{jpg}
+\code{\link{rk.results}}, \code{\link{rk.print}}, \code{\link{rk.get.output.html.file}}, \code{\link[grDevices:dev.off]{dev.off}}, \code{\link[grDevices:svg]{svg}}, \code{\link[grDevices:png]{png}}, \code{\link[grDevices:jpeg]{jpeg}}
 }
 \author{
 Thomas Friedrichsmeier \email{rkward-devel@kde.org}

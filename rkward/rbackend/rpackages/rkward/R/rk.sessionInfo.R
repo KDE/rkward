@@ -16,6 +16,7 @@
 #' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
 #' @seealso \code{\link{sessionInfo}}
 #' @keywords utilities misc
+#' @importFrom utils sessionInfo
 #' @export
 #' @rdname rk.sessionInfo
 #' @examples

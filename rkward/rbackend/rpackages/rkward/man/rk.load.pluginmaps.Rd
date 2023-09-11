@@ -37,7 +37,7 @@ rk.load.pluginmaps()
 ## END NOT RUN
 }
 \seealso{
-\code{\link{rk.call.plugin}}, @seealso \code{\link{rkwarddev::rk.plugin.skeleton}}
+\code{\link{rk.call.plugin}}, \code{\link[rkwarddev:rk.plugin.skeleton]{rk.plugin.skeleton}}
 }
 \author{
 Thomas Friedrichsmeier \email{rkward-devel@kde.org}

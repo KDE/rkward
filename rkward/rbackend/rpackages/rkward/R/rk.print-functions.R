@@ -11,9 +11,9 @@
 #' \code{\link{rk.graph.on}} can be used to create a HTML report.
 #' 
 #' \code{rk.print} prints/exports the given object to the output (html) file
-#' using the \code{\link{HTML}} function. This requires the \code{R2HTML}
+#' using the \code{\link[R2HTML:HTML]{HTML}} function. This requires the \code{R2HTML}
 #' package. Additional arguments in \code{...} are passed on to
-#' \code{\link{HTML}}. For some types of objects (e.g. "htmlwidgets" from
+#' \code{\link[R2HTML:HTML]{HTML}}. For some types of objects (e.g. "htmlwidgets" from
 #' the "htmlwidgets" package) additional packages may be required.
 #' 
 #' \code{rk.print.literal} prints/exports the given object using a
@@ -54,61 +54,62 @@
 #' @return \code{rk.describe.alternatives} returns a string while all other
 #'   functions return \code{NULL}, invisibly.
 #' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
-#' @seealso \code{\link{HTML}}, \code{\link{rk.get.output.html.file}},
+#' @seealso \code{\link[R2HTML:HTML]{HTML}}, \code{\link{rk.get.output.html.file}},
 #'   \code{\link{rk.get.description}}, \code{\link{rk.call.plugin}},
 #'   \url{rkward://page/rkward_output}
 #' @keywords utilities
 #' @rdname rk.results
 #' @examples
 #' 
-#' require (rkward)
-#' require (R2HTML)
+#' # code is only run when the R2HTML package can be loaded
+#' if(require("R2HTML", quietly = TRUE)){
 #' 
-#' ## see the output: Windows->Show Output
-#' ## stolen from the two-sample t-test plugin ;)
-#' local({
-#' x1 <- rnorm (100)
-#' x2 <- rnorm (100, 2)
-#' nm <- rk.get.description (x1,x2)
+#'   ## see the output: Windows->Show Output
+#'   ## stolen from the two-sample t-test plugin ;)
+#'   local({
+#'   x1 <- rnorm (100)
+#'   x2 <- rnorm (100, 2)
+#'   nm <- rk.get.description (x1,x2)
 #' 
-#' result <- t.test (x1, x2, alternative="less")
-#' rk.print.code ("result <- t.test (x1, x2, alternative=\"less\")")
+#'   result <- t.test (x1, x2, alternative="less")
+#'   rk.print.code ("result <- t.test (x1, x2, alternative=\"less\")")
 #' 
-#' rk.header (result$method,
-#'   parameters=list ("Comparing", paste (nm[1], "against", nm[2]),
-#'   "H1", rk.describe.alternative (result),
-#'   "Equal variances", "not assumed"))
+#'   rk.header (result$method,
+#'     parameters=list ("Comparing", paste (nm[1], "against", nm[2]),
+#'     "H1", rk.describe.alternative (result),
+#'     "Equal variances", "not assumed"))
 #' 
-#' rk.print.literal ("Raw data (first few rows):")
-#' rk.print (head (cbind (x1,x2)), align = "left")
+#'   rk.print.literal ("Raw data (first few rows):")
+#'   rk.print (head (cbind (x1,x2)), align = "left")
 #' 
-#' rk.print.literal ("Test results:")
-#' rk.results (list (
-#'   'Variable Name'=nm,
-#'   'estimated mean'=result$estimate,
-#'   'degrees of freedom'=result$parameter,
-#'   t=result$statistic,
-#'   p=result$p.value,
-#'   'confidence interval percent'=(100 * attr(result$conf.int, "conf.level")),
-#'   'confidence interval of difference'=result$conf.int ))
-#' })
-#' 
+#'   rk.print.literal ("Test results:")
+#'   rk.results (list (
+#'     'Variable Name'=nm,
+#'     'estimated mean'=result$estimate,
+#'     'degrees of freedom'=result$parameter,
+#'     t=result$statistic,
+#'     p=result$p.value,
+#'     'confidence interval percent'=(100 * attr(result$conf.int, "conf.level")),
+#'     'confidence interval of difference'=result$conf.int ))
+#'   })
+#' } else {}
+#' @importFrom grDevices dev.cur
 #' @export
 "rk.print" <- function(x,...) {
 	if (inherits (x, "htmlwidget")) {
-		require ("htmlwidgets")
+		requireNamespace ("htmlwidgets", quietly = TRUE)
 		name <- deparse (substitute (x))
 		filename <- rk.get.tempfile.name (name, ".html")
 		dir <- rk.get.tempfile.name (name, "_data")
-		saveWidget (x, filename, selfcontained=FALSE, libdir=dir)
+		htmlwidget::saveWidget (x, filename, selfcontained=FALSE, libdir=dir)
 		.rk.cat.output (paste0 ("<object width=\"100%\" height=\"100%\" data=\"file://", filename, "\" onload=\"this.style.height = this.contentWindow.document.body.scrollHeight + 'px';\"></object>"))
 	} else if (inherits (x, "gvis")) {
-		require ("googleVis")
+		requireNamespace ("googleVis", quietly = TRUE)
 		print (x, file=rk.get.output.html.file(), append=TRUE)
 	} else {
 		htmlfile <- rk.get.output.html.file()
-		if(require("R2HTML")==TRUE) {
-			HTML(x, file=htmlfile,...)
+		if(requireNamespace ("R2HTML", quietly = TRUE)) {
+			R2HTML::HTML(x, file=htmlfile,...)
 		}
 	}
 }

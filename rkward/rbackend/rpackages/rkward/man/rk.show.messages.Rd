@@ -29,7 +29,7 @@ rk.askYesNo(
   ...
 )
 
-rk.select.list(list, preselect, multiple = FALSE, title)
+rk.select.list(choices, preselect, multiple = FALSE, title)
 
 rk.select.file(
   caption,
@@ -78,7 +78,7 @@ separated by \code{/} characters.}
 via \code{options("askYesNo"=rk.askYesNo)} because otherwise we'd either need more
 complicated function code there, fail with an error or end up in an infinite loop.}
 
-\item{list}{a vector, coerced into a character vector.}
+\item{choices}{a vector, coerced into a character vector.}
 
 \item{multiple}{a logical (not NA), when \code{TRUE} multiple selection
 selection is allowed.}
@@ -138,9 +138,6 @@ they expect. In those cases, the name of the target directory must be entered in
 input field of the dialog manually.
 }
 \examples{
-
-require (rkward)
-
 ## Message boxes
 if (rk.show.question ("Question:\nDo you want to know about RKWard?", 
     button.yes = "Yes, I do!", button.no = "No, I don't care!", button.cancel = "")) {

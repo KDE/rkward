@@ -157,6 +157,7 @@
 
 # Gather status information on installed and available packages.
 # Return value is used in class RKRPackageInstallationStatus of the frontend
+#' @importFrom utils installed.packages new.packages
 #' @export
 ".rk.get.package.installation.state" <- function () {
 	# fetch all status information
@@ -183,6 +184,7 @@
 
 # package information formats may - according to the help - be subject to change. Hence this function to cope with "missing" values
 # also it concatenates everything to a single vector, so we can easily get the whole structure with a single call
+#' @importFrom utils installed.packages
 #' @export
 ".rk.get.installed.packages" <- function () {
 	x <- as.data.frame(installed.packages(fields="Title"))
@@ -200,6 +202,7 @@
 }
 
 # This function works like available.packages (with no arguments), but does simple caching of the result, and of course uses a cache if available. Cache is only used, if it is less than 1 hour old, and options("repos") is unchanged.
+#' @importFrom utils available.packages
 #' @export
 ".rk.cached.available.packages" <- function () {
 	x <- NULL
@@ -281,6 +284,7 @@
 	cat (x, file = rk.get.output.html.file(), append = TRUE)
 }
 
+#' @importFrom utils URLencode
 #' @export
 ".rk.rerun.plugin.link" <- function (plugin, settings, label) {
 	.rk.cat.output (paste ("<a href=\"rkward://runplugin/", plugin, "/", URLencode (settings), "\">", label, "</a>", sep=""))
@@ -307,6 +311,9 @@ assign(".rk.shadow.envs", new.env(parent=emptyenv()), envir=.rk.variables)
 # so we have a separate function for that.
 #' @export
 ".rk.fix.assignments" <- function () {
+	# define dummy objects to satisfy R CMD check
+	choices <- preselect <- multiple <- title <- graphics <- NULL
+
 	## History manipulation function (overloads for functions by the same name in package utils)
 	rk.replace.function ("loadhistory",  as.environment ("package:utils"),
 		function (file = ".Rhistory") {
@@ -329,12 +336,8 @@ assign(".rk.shadow.envs", new.env(parent=emptyenv()), envir=.rk.variables)
 	## Interactive menus
 	rk.replace.function ("select.list", as.environment ("package:utils"), 
 		function () {
-			# the "list" parameter was renamed to "choices" in R 2.11.0
-			if (!exists ("list", inherits=FALSE)) list <- choices
-			# the "graphics" parameter was introduced in R 2.11.0, so we cannot rely on its existance
-			if (!exists ("graphics", inherits=FALSE)) graphics <- TRUE
 			if (graphics) {
-				return (rk.select.list (list, preselect, multiple, title))
+				return (rk.select.list (choices, preselect, multiple, title))
 			}
 
 			# for text list, use the default implementation
