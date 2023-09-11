@@ -40,11 +40,24 @@
 #' @importFrom utils URLdecode
 #' @export
 "rk.save.workplace" <- function (file, description) {
+	# for the time being, translate NULL into missingness and throw a warning
+	if(!missing(file)){
+		if (is.null (file)) {
+			warning("Deprecated: file = NULL, leave missing if unused!")
+			file <- substitute()
+		}
+	}
 	if (missing (file)) {
 		file <- rk.get.workspace.url ()
 		if (is.null(file)) file <- rk.get.tempfile.name (prefix="unsaved", extension=".RData", directory=rk.tempdir ())
 		else file <- URLdecode(file)
 		file <- paste (file, "rkworkplace", sep=".")
+	}
+	if(!missing(description)){
+		if (is.null (description)) {
+			warning("Deprecated: description = NULL, leave missing if unused!")
+			description <- substitute()
+		}
 	}
 	if (missing (description)) lines <- .rk.do.plain.call ("workplace.layout", "get")
 	else lines <- description
@@ -55,6 +68,13 @@
 #' @importFrom utils URLdecode
 #' @export
 "rk.restore.workplace" <- function (file, close.windows=TRUE) {
+	# for the time being, translate NULL into missingness and throw a warning
+	if(!missing(file)){
+		if (is.null (file)) {
+			warning("Deprecated: file = NULL, leave missing if unused!")
+			file <- substitute()
+		}
+	}
 	if (missing (file)) {
 		if (exists (".rk.workplace.save", envir=globalenv (), inherits=FALSE)) {
 			# For backwards compatibility with workspaces saved by RKWard 0.5.4 and earlier.

@@ -172,33 +172,46 @@
 #' @export
 #' @rdname rk.show.messages
 "rk.select.list" <- function (choices, preselect, multiple = FALSE, title) {
-    if (missing (preselect)) {
-        preselect <- character(0)
-    } else {
-        preselect <- as.character (preselect)
+  # for the time being, translate NULL into missingness and throw a warning
+  if(!missing(preselect)){
+    if (is.null (preselect)) {
+      warning("Deprecated: preselect = NULL, leave missing if unused!")
+      preselect <- substitute()
     }
-	preselect.len = length (preselect)
-	choices <- as.character (choices)
-	choices.len <- length (choices)
-	params <- list ()
+  }
+  if (missing (preselect)) {
+      preselect <- character(0)
+  } else {
+      preselect <- as.character (preselect)
+  }
+  preselect.len = length (preselect)
+  choices <- as.character (choices)
+  choices.len <- length (choices)
+  params <- list ()
 
-	# serialize all parameters
-	params[1] <- if(missing (title)) "" else as.character (title)
-	if (multiple) params[2] <- "multi"
-	else params[2] <- "single"
-	params[3] <- as.character (preselect.len)
-	if (preselect.len) {
-		for (i in 1:preselect.len) {
-			params[3+i] <- preselect[i]
-		}
-	}
-	if (choices.len) {	# we should hope, the list is not empty...
-		for (i in 1:choices.len) {
-			params[3+preselect.len+i] <- choices[i]
-		}
-	}
+  # serialize all parameters
+  if(!missing(title)){
+    if (is.null (title)) {
+      warning("Deprecated: title = NULL, leave missing if unused!")
+      title <- substitute()
+    }
+  }
+  params[1] <- if(missing (title)) "" else as.character (title)
+  if (multiple) params[2] <- "multi"
+  else params[2] <- "single"
+  params[3] <- as.character (preselect.len)
+  if (preselect.len) {
+    for (i in 1:preselect.len) {
+      params[3+i] <- preselect[i]
+    }
+  }
+  if (choices.len) {	# we should hope, the list is not empty...
+    for (i in 1:choices.len) {
+      params[3+preselect.len+i] <- choices[i]
+    }
+  }
 
-	.rk.do.plain.call ("select.list", params)
+  .rk.do.plain.call ("select.list", params)
 }
 
 # file dialog

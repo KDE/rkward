@@ -460,7 +460,14 @@
 		# callUHA is not really utilized, but there to provide a flixibility to not call 
 		# .rk.update.hist.action () when not needed
 		devId <- as.character (devId)
-		
+
+		# for the time being, translate NULL into missingness and throw a warning
+		if(!missing(isManaged)){
+			if (is.null (isManaged)) {
+				warning("Deprecated: isManaged = NULL, leave missing if unused!")
+				isManaged <- substitute()
+			}
+		}
 		if (missing (isManaged)) isManaged <- .is.device.managed (devId)
 		if (!isManaged) return (invisible ())
 		
@@ -819,6 +826,13 @@
 	{
 		message ("History length   : ", sP.length)
 		message ("History size (KB): ", round (object.size (savedPlots) / 1024, 2))
+		# for the time being, translate NULL into missingness and throw a warning
+		if(!missing(devId)){
+			if (is.null (devId)) {
+				warning("Deprecated: devId = NULL, leave missing if unused!")
+				devId <- substitute()
+			}
+		}
 		if (missing (devId)) {
 			.tmp.df <- data.frame (
 				pNew = sapply (histPositions, "[[", "is.this.plot.new"),

@@ -124,6 +124,13 @@
 "rk.old.packages" <- function (lib.loc = NULL, repos = getOption("repos"), contriburl = contrib.url(repos, type), instPkgs = installed.packages(lib.loc = lib.loc),
                              method, available, checkBuilt = FALSE, type = getOption("pkgType")) {
 	if (is.null (lib.loc)) lib.loc <- .libPaths ()
+	# for the time being, translate NULL into missingness and throw a warning
+	if(!missing(available)){
+		if (is.null (available)) {
+			warning("Deprecated: available = NULL, leave missing if unused!")
+			available <- substitute()
+		}
+	}
 	if (missing (available)) available <- available.packages (contriburl=contriburl, method=method)
 
 	seen.packages <- character (0)

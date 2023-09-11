@@ -25,6 +25,13 @@
 #' rk.demo("graphics")
 
 "rk.demo" <- function (topic, package, lib.loc=NULL) {
+	# for the time being, translate NULL into missingness and throw a warning
+	if(!missing(package)){
+		if (is.null (package)) {
+			warning("Deprecated: package = NULL, leave missing if unused!")
+			package <- substitute()
+		}
+	}
 	if (missing (package)) {
 		package <- .packages (lib.loc=lib.loc)
 	}

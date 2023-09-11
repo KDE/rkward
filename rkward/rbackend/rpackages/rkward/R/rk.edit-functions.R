@@ -52,6 +52,13 @@
 #' @export
 #' @rdname rk.edit
 "rk.edit.files" <- function (name, file="", title, prompt = TRUE) {
+	# for the time being, translate NULL into missingness and throw a warning
+	if(!missing(name)){
+		if (is.null (name)) {
+			warning("Deprecated: name = NULL, leave missing if unused!")
+			name <- substitute()
+		}
+	}
 	if (missing (name)) {
 		name <- character(0)
 	} else {
@@ -73,6 +80,13 @@
 	delete = delete.file  # For compatibility with earlier versions of R
 )
 {
+	# for the time being, translate NULL into missingness and throw a warning
+	if(!missing(title)){
+		if (is.null (title)) {
+			warning("Deprecated: title = NULL, leave missing if unused!")
+			title <- substitute()
+		}
+	}
 	if(missing (title)) title <- character(0)
 	invisible (.Call ("rk.show.files", as.character (file), as.character (header), as.character (title), delete, isTRUE (prompt), PACKAGE="(embedding)"))
 }

@@ -112,6 +112,13 @@
 #' @export
 #' @rdname rk.load.pluginmaps
 "rk.load.pluginmaps" <- function (pluginmap.files, force.add = TRUE, force.reload = TRUE) {
+	# for the time being, translate NULL into missingness and throw a warning
+	if(!missing(pluginmap.files)){
+		if (is.null (pluginmap.files)) {
+			warning("Deprecated: pluginmap.files = NULL, leave missing if unused!")
+			pluginmap.files <- substitute()
+		}
+	}
 	if (missing (pluginmap.files)) pluginmap.files <- character(0)
 	.rk.do.plain.call ("loadPluginMaps", c (ifelse (isTRUE (force.add), "force", "noforce"), ifelse (isTRUE (force.reload), "reload", "noreload"), as.character (pluginmap.files)), synchronous=FALSE)
 }

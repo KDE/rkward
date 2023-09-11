@@ -149,6 +149,13 @@
 		else descript[i] <- paste (shortname, " (", lbl, ")", sep="")
 	}
 
+	# for the time being, translate NULL into missingness and throw a warning
+	if(!missing(paste.sep)){
+		if (is.null (paste.sep)) {
+			warning("Deprecated: paste.sep = NULL, leave missing if unused!")
+			paste.sep <- substitute()
+		}
+	}
 	if (missing (paste.sep)) {
 		descript
 	} else {
