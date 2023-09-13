@@ -180,7 +180,7 @@ msgid ""
 "for further use (e.g. plotting item characteristic curves)."
 msgstr ""
 "Els resultats complets es poden emmagatzemar com un objecte nou en l'espai "
-"de treball actual per a utilitzar-lo més avant (p. ex. dibuixar cobres "
+"de treball actual per a utilitzar-lo més avant (p. ex., dibuixar cobres "
 "característiques de l'element)."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <usage>

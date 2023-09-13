@@ -393,7 +393,7 @@ msgid ""
 "probably uses a different locale than your R session. In this case, check "
 "this option, and specify the correct character encoding below."
 msgstr ""
-"Si els caràcters especials (p. ex. dièresi) no es mostren correctament, "
+"Si els caràcters especials (p. ex., dièresi) no es mostren correctament, "
 "probablement el fitxer de dades utilitza una configuració regional diferent "
 "de la sessió d'R. En este cas, activeu esta opció i especifiqueu davall la "
 "codificació correcta dels caràcters."
@@ -596,7 +596,7 @@ msgid ""
 "\"), but you can also specify the name of an R object containing the names "
 "to use)"
 msgstr ""
-"Vegeu més amunt. Un vector de noms de files (p. ex. c (\"fila1\", "
+"Vegeu més amunt. Un vector de noms de files (p. ex., c (\"fila1\", "
 "\"fila2\", ..., \"filan\"), però també es pot especificar el nom d'un "
 "objecte R que continga els noms que s'utilitzaran)"
 
@@ -619,7 +619,7 @@ msgid ""
 "containing the names to use)"
 msgstr ""
 "Vegeu més amunt. Especifica un vector de caràcters de noms de columnes (p. "
-"ex. c (\"col1\", \"col2\", ..., \"coln\"), però també es pot especificar el "
+"ex., c (\"col1\", \"col2\", ..., \"coln\"), però també es pot especificar el "
 "nom d'un objecte R que continga els noms que s'utilitzaran)"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Check syntax of column names")
@@ -724,8 +724,8 @@ msgid ""
 msgstr ""
 "Si s'ha seleccionat «altres» més amunt, ací podeu especificar el caràcter de "
 "citació que s'utilitzarà. Senzillament introduïu tots els caràcters que "
-"s'utilitzaran (sense espai o comes, p. ex. \"'@ per a que s'utilitzen \", ', "
-"i @ com a delimitadors de cadenes)."
+"s'utilitzaran (sense espai o comes, p. ex., \"'@ per a que s'utilitzen \", "
+"', i @ com a delimitadors de cadenes)."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Skip x lines at the start of the file")
 #: rkward/plugins/00saveload/import/import_csv.rkh:50
@@ -1315,7 +1315,7 @@ msgid ""
 "Some data files may contain more than one set of data (e.g. several sheets "
 "inside one excel file). Check this option to import all datasets as a list."
 msgstr ""
-"Alguns fitxers de dades poden contindre més d'un conjunt de dades (p. ex. "
+"Alguns fitxers de dades poden contindre més d'un conjunt de dades (p. ex., "
 "diversos fulls dins d'un fitxer de full de càlcul). Marqueu esta opció per "
 "importar tots els conjunts de dades com a llista."
 
@@ -1903,7 +1903,7 @@ msgid ""
 "\"A10:B20\")."
 msgstr ""
 "Especifiqueu l'interval que s'importarà del full en notació de full de "
-"càlcul (p. ex. «A10:B20»)."
+"càlcul (p. ex., «A10:B20»)."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Skip empty leading or trailing rows")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:40
@@ -1994,7 +1994,7 @@ msgstr "Fila/columna final («0» per a automàtic)"
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:46
 #, kde-format
 msgid "- <b>or</b> Excel Range (e.g. \"A10:B20\") -"
-msgstr "- <b>o</b> interval de l'Excel (p. ex. «A10:B20») -"
+msgstr "- <b>o</b> interval d'Excel (p. ex., «A10:B20») -"
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Rows and columns"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:50
@@ -2024,7 +2024,7 @@ msgstr "Carrega dades"
 #: rkward/plugins/00saveload/import/load_data.js:25
 #, kde-format
 msgid "Import to environment"
-msgstr "Importa a l'entorn"
+msgstr "Importa cap a l'entorn"
 
 #. i18n: ectx: (Loaded from Load an R data file) <summary>
 #: rkward/plugins/00saveload/import/load_data.rkh:8
@@ -2045,7 +2045,7 @@ msgid ""
 "instead of this plugin."
 msgstr ""
 "Seleccioneu el fitxer R que s'haja d'importar. Açò pot ser un fitxer creat "
-"p. ex. guardant l'espai de treball des de RKWard, utilitzant l'ordre d'R "
+"p. ex., guardant l'espai de treball des de RKWard, utilitzant l'ordre d'R "
 "<link href=\"rkward://rhelp/save\">save()</link>, o el connector <link href="
 "\"rkward://component/save_r\"/>. La diferència principal en carregar un "
 "espai de treball via «Espai de treball -> Obri un espai de treball», és que "

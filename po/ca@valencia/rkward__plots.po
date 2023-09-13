@@ -271,7 +271,7 @@ msgstr ""
 "les etiquetes es trien automàticament. Si no hi ha cap etiqueta disponible, "
 "generalment açò imprimirà els valors. Les altres opcions permeten "
 "especificar les etiquetes com una cadena literal, o com una sentència R (p. "
-"ex. si els noms s'emmagatzemen en una variable diferent en l'espai de "
+"ex., si els noms s'emmagatzemen en una variable diferent en l'espai de "
 "treball)."
 
 #. i18n: ectx: (Loaded from Barplot) <settings> <setting> (refers to element labelled "Barplot Options")

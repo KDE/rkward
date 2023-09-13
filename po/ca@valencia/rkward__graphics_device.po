@@ -51,7 +51,7 @@ msgid ""
 "Plugins for use in graphics device (e.g. X11()) windows. Part of the "
 "official RKWard distribution"
 msgstr ""
-"Connectors per a utilitzar en finestres de dispositius gràfics (p. ex. "
+"Connectors per a utilitzar en finestres de dispositius gràfics (p. ex., "
 "X11()). És part de la distribució oficial de RKWard"
 
 #. i18n: ectx: <components> <component label="...">

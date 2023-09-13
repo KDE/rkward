@@ -736,8 +736,8 @@ msgstr ""
 "que, i un de/no un de). Cal tindre en compte que açò s'apegarà com a codi R, "
 "literalment. Açò vol dir que podeu especificar qualsevol expressió R vàlida, "
 "inclús el nom d'una altra columna de «data.frame». Tanmateix, si voleu "
-"comparar cadenes fixes, caldrà assegurar que es posen les cometes. P. ex. «c "
-"(\"City A\", \"City B\")»."
+"comparar cadenes fixes, caldrà assegurar que es posen les cometes. P. ex., "
+"«c (\"City A\", \"City B\")»."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Minimum (or empty)")
 #: rkward/plugins/data/subset_dataframe.rkh:39
