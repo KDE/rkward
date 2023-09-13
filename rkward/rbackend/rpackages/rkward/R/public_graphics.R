@@ -81,11 +81,15 @@
 			"\" height=\"", height, "\"><br>", sep = ""))
 	} else if (device.type == "SVG") {
 		if (!capabilities ("cairo")) {	# cairo support is not always compiled in
-			requireNamespace ("cairoDevice")
-			svg <- Cairo_svg
+			# requireNamespace ("cairoDevice")
+			# svg <- Cairo_svg
+			requireNamespace ("Cairo")
+			svg <- Cairo::CairoSVG
 		}
 		filename <- rk.get.tempfile.name(prefix = "graph", extension = ".svg")
-		ret <- svg(filename = file.path(filename), ...)
+		# ret <- svg(filename = file.path(filename), ...)
+		# CairoSVG() uses "file" as first argument, grDevices uses "filename" in svg()
+		ret <- svg(file.path(filename), ...)
 		.rk.cat.output(paste("<object data=\"", make.url (names (filename)), "\" type=\"image/svg+xml\" width=\"", width,
 			"\" height=\"", height, "\">\n", sep = ""))
 		.rk.cat.output(paste("<param name=\"src\" value=\"", make.url (names (filename)), "\">\n", sep = ""))
@@ -211,15 +215,15 @@
 				if (missing (height)) height <- getOption ("rk.screendevice.height")
 				if (!is.numeric (height)) height <- 7
 				# rk.embed.device (eval (body (grDevices::devicename)))
-				rk.embed.device (eval (body (getFromNamespace (devicename, ns="grDevices"))))
+				rkward::rk.embed.device (eval (body (utils::getFromNamespace (devicename, ns="grDevices"))))
 			} else {
 				# eval (body (grDevices::devicename))
-				eval (body (getFromNamespace (devicename, ns="grDevices")))
+				eval (body (utils::getFromNamespace (devicename, ns="grDevices")))
 			}
 		}
 	))
 	if (exists (devicename, envir=asNamespace ("grDevices"), inherits=FALSE)) {
-		devfun <- getFromNamespace (devicename, ns="grDevices")
+		devfun <- utils::getFromNamespace (devicename, ns="grDevices")
 		formals (ret) <- formals (devfun)
 		environment (ret) <- environment (devfun)
 	}

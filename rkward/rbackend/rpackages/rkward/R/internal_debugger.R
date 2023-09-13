@@ -28,6 +28,7 @@
 
 # get relative source location
 # NOTE: this requires R >= 2.13.0
+#' @importFrom utils getSrcref getSrcFilename getSrcLocation
 #' @export
 rk.relative.src.line <- function (inner, outer) {
 	if (!inherits (inner, "srcref")) inner <- getSrcref (inner)

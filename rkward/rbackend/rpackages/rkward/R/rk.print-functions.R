@@ -101,7 +101,7 @@
 		name <- deparse (substitute (x))
 		filename <- rk.get.tempfile.name (name, ".html")
 		dir <- rk.get.tempfile.name (name, "_data")
-		htmlwidget::saveWidget (x, filename, selfcontained=FALSE, libdir=dir)
+		htmlwidgets::saveWidget (x, filename, selfcontained=FALSE, libdir=dir)
 		.rk.cat.output (paste0 ("<object width=\"100%\" height=\"100%\" data=\"file://", filename, "\" onload=\"this.style.height = this.contentWindow.document.body.scrollHeight + 'px';\"></object>"))
 	} else if (inherits (x, "gvis")) {
 		requireNamespace ("googleVis", quietly = TRUE)

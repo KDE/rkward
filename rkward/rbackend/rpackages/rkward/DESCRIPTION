@@ -8,7 +8,7 @@ Description: This package contains functions which are useful in
 Author: Thomas Friedrichsmeier, RKWard Team
 Maintainer: RKWard-devel mailing list <rkward-devel@kde.org>
 Depends: R (>= 2.9.0),methods
-Suggests: googleVis,htmlwidgets,lattice,R2HTML
+Suggests: Cairo,googleVis,htmlwidgets,lattice,R2HTML
 URL: https://rkward.kde.org
 BugReports: https://rkward.kde.org/Bugs.html
 License: GPL (>= 2)
