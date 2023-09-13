@@ -39,7 +39,7 @@
         {
             "name": "kate",
             "buildsystem": "cmake-ninja",
-            "sources": [ { "type": "git", "url": "https://invent.kde.org/utilities/kate.git" } ]
+            "sources": [ { "type": "git", "url": "https://invent.kde.org/utilities/kate.git", "branch": "release/23.08" } ]
         },
         {
             "buildsystem": "cmake",
