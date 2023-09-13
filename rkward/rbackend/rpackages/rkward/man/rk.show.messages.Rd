@@ -138,6 +138,7 @@ they expect. In those cases, the name of the target directory must be entered in
 input field of the dialog manually.
 }
 \examples{
+\dontrun{
 ## Message boxes
 if (rk.show.question ("Question:\nDo you want to know about RKWard?", 
     button.yes = "Yes, I do!", button.no = "No, I don't care!", button.cancel = "")) {
@@ -151,6 +152,7 @@ rk.select.list (LETTERS, preselect = c("A", "E", "I", "O", "U"),
   multiple = TRUE, title = "vowels")
 .rk.backups$select.list (LETTERS, preselect = c("A", "E", "I", "O", "U"), 
   multiple = TRUE, title = "vowels")
+}
 }
 \seealso{
 \code{\link{system}}, \code{\link{select.list}},

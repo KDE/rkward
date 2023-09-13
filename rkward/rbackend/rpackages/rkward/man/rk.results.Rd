@@ -82,7 +82,7 @@ a \code{htest}. This is similar to \code{stats:::print.htext} and makes
 sense only when \code{x$alternatives} exists.
 }
 \examples{
-
+\dontrun{
 # code is only run when the R2HTML package can be loaded
 if(require("R2HTML", quietly = TRUE)){
 
@@ -115,6 +115,7 @@ if(require("R2HTML", quietly = TRUE)){
     'confidence interval of difference'=result$conf.int ))
   })
 } else {}
+}
 }
 \seealso{
 \code{\link[R2HTML:HTML]{HTML}}, \code{\link{rk.get.output.html.file}},

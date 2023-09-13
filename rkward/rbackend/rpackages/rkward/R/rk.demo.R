@@ -20,10 +20,9 @@
 #' @rdname rk.demo
 #' @export
 #' @examples
-#' 
-#' ## Not run
+#' \dontrun{
 #' rk.demo("graphics")
-
+#' }
 "rk.demo" <- function (topic, package, lib.loc=NULL) {
 	# for the time being, translate NULL into missingness and throw a warning
 	if(!missing(package)){

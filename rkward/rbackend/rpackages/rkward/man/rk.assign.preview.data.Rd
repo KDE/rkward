@@ -14,9 +14,9 @@ rk.get.preview.data(id)
 rk.discard.preview.data(id)
 }
 \arguments{
-\item{id}{(character). Id associated with the data. Usually this will be the 'id' value of the <preview>-box.}
+\item{id}{character, ID associated with the data. Usually this will be the 'id' value of the <preview>-box.}
 
-\item{value.}{The value to assign. If this is a list, and contains a function named "on.delete", this function
+\item{value}{the value to assign. If this is a list, and contains a function named "on.delete", this function
 will be run by rk.discard.preview.data (with the \code{id} as argument. This is useful for running custom clearnup
 code, such as removing temporary files, etc.}
 }
@@ -38,8 +38,7 @@ code, such as removing temporary files, etc.}
 }
 \examples{
 ## To be generated in the preview() code section of a plugin
-
-## NOT RUN
+\dontrun{
 pdata &lt;- rk.get.preview.data("SOMEID")
 if (is.null (pdata)) {
   outfile &lt;- rk.get.tempfile.name(prefix="preview", extension=".txt", directory=rk.tempdir ())
@@ -52,8 +51,7 @@ try ({
   cat ("This is a test", pdata$filename)
   rk.edit.files(file=pdata$filename)
 })
-## END NOT RUN
-
+}
 }
 \author{
 Thomas Friedrichsmeier \email{rkward-devel@kde.org}

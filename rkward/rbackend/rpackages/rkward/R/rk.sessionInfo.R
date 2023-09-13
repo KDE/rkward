@@ -20,9 +20,9 @@
 #' @export
 #' @rdname rk.sessionInfo
 #' @examples
-#' 
+#' \dontrun{
 #' rk.sessionInfo()
-
+#' }
 "rk.sessionInfo" <- function () {
 	cat (.rk.do.plain.call ("getSessionInfo"), sep="\n")
 	cat ("R runtime session info:\n")

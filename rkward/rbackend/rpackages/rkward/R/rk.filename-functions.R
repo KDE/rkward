@@ -66,8 +66,9 @@
 #'   \link{rk.print}
 #' @keywords utilities IO
 #' @rdname rk.get.tempfile.name
+#' @export
 #' @examples
-#' 
+#' \dontrun{
 #' testfile.name <- rk.get.tempfile.name(prefix="test", extension=".txt")
 #' testfile <- file(testfile.name)
 #' cat("This is a test\n", file=testfile)
@@ -76,14 +77,12 @@
 #' 
 #' outfile <- rk.get.output.html.file()
 #' 
-#' ## Not run
 #' rk.set.output.html.file("~/.rkward/another_file.html")
 #' rk.header("Output on a different output file")
 #' rk.show.html(rk.get.output.html.file())
 #' rk.flush.output()
 #' rk.set.output.html.file(outfile)
-#' 
-#' @export
+#' }
 "rk.get.tempfile.name" <- function (prefix="image", extension=".jpg", directory=dirname (rk.get.output.html.file ())) {
 	x <- .rk.do.simple.call ("unused.filename", c (prefix, extension, directory))
 	ret <- x[2]

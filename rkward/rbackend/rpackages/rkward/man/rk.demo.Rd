@@ -23,9 +23,9 @@ script for editing, instead of sourcing it. Contrary to \code{\link{demo}},
 the specification of a topic is mandatory.
 }
 \examples{
-
-## Not run
+\dontrun{
 rk.demo("graphics")
+}
 }
 \seealso{
 \code{\link{rk.edit.files}}, \code{\link{rk.show.files}},

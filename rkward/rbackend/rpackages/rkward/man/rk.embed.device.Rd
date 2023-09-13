@@ -23,11 +23,10 @@ Theoretically, \code{expr} can be any valid R expression. However typically this
       window already "owned" by RKWard (importantly, \code{RK()} device windows) may lead to unexpected results, including crashes.
 }
 \examples{
-
-## Not run:
+\dontrun{
 rk.embed.device (grDevices::X11(title="X11 device window"))
 plot (rnorm (10))
-
+}
 }
 \seealso{
 \link{RK}

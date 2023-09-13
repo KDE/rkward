@@ -25,12 +25,12 @@
 #' @seealso \url{rkward://page/rkward_workspace_browser}
 #' @keywords utilities misc
 #' @rdname rk.sync
-#' @examples
-#' 
-#' rk.sync (rkward::rk.record.plot)
-#' 
 # should this really be public?
 #' @export
+#' @examples
+#' \dontrun{
+#' rk.sync (rkward::rk.record.plot)
+#' }
 "rk.sync" <- function (x) {
 	object <- deparse (substitute (x))
 	.rk.do.call("sync", list(NULL, NULL, object))

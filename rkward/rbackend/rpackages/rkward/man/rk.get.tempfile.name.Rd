@@ -110,7 +110,7 @@ via the RKWard GUI.
 \link{R.home}.
 }
 \examples{
-
+\dontrun{
 testfile.name <- rk.get.tempfile.name(prefix="test", extension=".txt")
 testfile <- file(testfile.name)
 cat("This is a test\n", file=testfile)
@@ -119,13 +119,12 @@ unlink(testfile.name)
 
 outfile <- rk.get.output.html.file()
 
-## Not run
 rk.set.output.html.file("~/.rkward/another_file.html")
 rk.header("Output on a different output file")
 rk.show.html(rk.get.output.html.file())
 rk.flush.output()
 rk.set.output.html.file(outfile)
-
+}
 }
 \seealso{
 \url{rkward://page/rkward_output}, \link{tempfile}, \link{file},

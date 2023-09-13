@@ -97,9 +97,7 @@ rk.duplicate.device(devId = dev.cur())
 }
 
 \examples{
-## Example for this?
-require (rkward)
-
+\dontrun{
 .L. <- getOption ("rk.graphics.hist.max.length")
 
 local ({
@@ -116,10 +114,9 @@ local ({
 rk.first.plot ()
 for (i in 1:(rk.record.plot$sP.length-1)) rk.next.plot ()
 
-## Not run
 rk.clear.plot.history ()
 options ("rk.graphics.hist.max.length" = .L.)
-
+}
 }
 \keyword{device}
 \keyword{dynamic}

@@ -36,11 +36,14 @@ to the user.}
 \item{prompt}{logical of length 1. If TRUE (the default) a prompt is dialog
 is shown along with the files to show / edit.}
 
-\item{delete}{a logical (not NA), when \code{TRUE} the shown file(s) are
+\item{header}{character, header to show.}
+
+\item{delete.file}{a logical (not NA), when \code{TRUE} the shown file(s) are
 deleted after closing.}
 
-\item{wtitle}{character vector, of length 1. This will be used as the window
-title.}
+\item{delete}{logical, for compatibility with earlier versions of R.}
+
+\item{url}{a URL to show.}
 }
 \value{
 All functions described on this page return \code{NULL},
@@ -62,10 +65,10 @@ by default, when run inside an RKWard session. (via \code{getOption("editor")},
 and \code{getOption("browser")}.
 }
 \examples{
-
-## Not run
+\dontrun{
 x <- data.frame (a=c(1:3), b=c(2:4))
 rk.edit(x)
+}
 }
 \seealso{
 \code{\link{edit}}, \code{\link{file.edit}},

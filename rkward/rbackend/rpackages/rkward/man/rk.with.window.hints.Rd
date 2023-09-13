@@ -36,14 +36,12 @@ NOTE: This function is still somewhat experimental, and it is not guaranteed tha
 it will remain in place, with compatible parameters.
 }
 \examples{
-
-## Not run
+\dontrun{
 .rk.with.window.hints ({
    RK ()
    plot (1, 1)
 }, "attached")
-## End not run
-
+}
 }
 \author{
 Thomas Friedrichsmeier \email{rkward-devel@kde.org}

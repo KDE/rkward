@@ -32,9 +32,9 @@ of objects. rk.sync() can be used, here, to inspect the objects inside
 environments (see examples).
 }
 \examples{
-
+\dontrun{
 rk.sync (rkward::rk.record.plot)
-
+}
 }
 \seealso{
 \url{rkward://page/rkward_workspace_browser}

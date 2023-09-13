@@ -24,8 +24,15 @@
 #' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
 #' 
 #' @seealso \code{\link{rk.results}}, \code{\link{rk.print}}, \code{\link{rk.get.output.html.file}}, \code{\link[grDevices:dev.off]{dev.off}}, \code{\link[grDevices:svg]{svg}}, \code{\link[grDevices:png]{png}}, \code{\link[grDevices:jpeg]{jpeg}}
+#' @keywords devices
+#'
+#' @importFrom grDevices dev.cur png jpeg
+#' @export
+#' @aliases rk.graph.on rk.graph.off
+#' @rdname rk.graph.on
 #'
 #' @examples
+#' \dontrun{
 #' ## Plot directly to the output (html) file, by-passing screen device:
 #' rk.graph.on ("JPG", 480, 480, 75)
 #' plot (rnorm (100))
@@ -39,13 +46,7 @@
 #' ## WRONG USAGE: not run:
 #' #plot (rnorm (100))
 #' #dev.print (device = rk.graph.on)
-#'
-#' @keywords devices
-#'
-#' @importFrom grDevices dev.cur png jpeg
-#' @export
-#' @aliases rk.graph.on rk.graph.off
-#' @rdname rk.graph.on
+#' }
 "rk.graph.on" <- function (device.type=getOption ("rk.graphics.type"), width=getOption ("rk.graphics.width"), height=getOption ("rk.graphics.height"), quality, ...) 
 {
 	make.url <- function (filename) {
@@ -162,14 +163,14 @@
 #'       window already "owned" by RKWard (importantly, \code{RK()} device windows) may lead to unexpected results, including crashes.
 #'
 #' @seealso \link{RK}
-#' @examples
-#' 
-#' ## Not run:
-#' rk.embed.device (grDevices::X11(title="X11 device window"))
-#' plot (rnorm (10))
-#'
 #' @importFrom grDevices dev.cur
 #' @export
+#'
+#' @examples
+#' \dontrun{
+#' rk.embed.device (grDevices::X11(title="X11 device window"))
+#' plot (rnorm (10))
+#' }
 "rk.embed.device" <- function (expr) {
 	oldd <- dev.cur ()
 	.rk.do.call ("startOpenX11", as.character (oldd));
@@ -275,11 +276,10 @@
 #' @export
 #' @importFrom grDevices dev.cur postscript
 #' @examples
-#' 
-#' ## Not run:
+#' \dontrun{
 #' plot (rnorm (10))
 #' dev.print (rk.printer.device)
-#' 
+#' }
 # Produces a temporary postscript file and opens a print dialog for it
 # Parameters are passed to postscript(), but typically this is simply used as
 #   dev.print(rk.print.preview)

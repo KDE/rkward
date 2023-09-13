@@ -53,16 +53,16 @@ not available to the plugin.
 
 ## "t_test_two_vars" plugin:
 ## see the output: Windows->Show Output
+\dontrun{
 local({
 x1 <- rnorm (100)
 x2 <- rnorm (100, 2)
-
-rk.call.plugin ("rkward::t_test_two_vars", 
+rk.call.plugin ("rkward::t_test_two_vars",
   confint.state="1", conflevel.real="0.95", hypothesis.string="greater", paired.state="0", varequal.state="0", 
   x.available="x1", y.available="x2", 
   submit.mode="submit")
 })
-
+}
 }
 \seealso{
 \code{\link{rk.results}}, \url{rkward://page/rkward_output}

@@ -59,8 +59,10 @@
 #'   \url{rkward://page/rkward_output}
 #' @keywords utilities
 #' @rdname rk.results
+#' @importFrom grDevices dev.cur
+#' @export
 #' @examples
-#' 
+#' \dontrun{
 #' # code is only run when the R2HTML package can be loaded
 #' if(require("R2HTML", quietly = TRUE)){
 #' 
@@ -93,8 +95,7 @@
 #'     'confidence interval of difference'=result$conf.int ))
 #'   })
 #' } else {}
-#' @importFrom grDevices dev.cur
-#' @export
+#' }
 "rk.print" <- function(x,...) {
 	if (inherits (x, "htmlwidget")) {
 		requireNamespace ("htmlwidgets", quietly = TRUE)
@@ -280,15 +281,15 @@
 #'
 #' And arbitrary number of ouptut captures can be started and stopped, and these will form a push/pop stack.
 #'
-#' @param suppress.messages message are not sent on, neither to surrounding captures, nor as regular output.
+#' @param capture.messages logical, whether messages should be captured.
+#' @param capture.output logical, whether output should be captured.
+#' @param suppress.messages logical, if \code{FALSE} message are not sent on, neither to surrounding captures, nor as regular output.
 #' @param suppress.output like \code{suppress.messages}, but for output.
 #' @param allow.nesting if false, output / message is not sent to surrounding captures, but is sent to regular output (unless suppressed)
 #'
 #' \code{rk.capture.output} Starts capturing output.
 #' 
 #' \code{rk.end.capture.output} Stops capturing output, and returns the recorded output in a string.
-#'
-#' @param LANG language code to use. "C" for no translation, i.e. generally English
 #'
 #' @export
 #' @rdname rk.capture.output

@@ -33,15 +33,13 @@
 #' @export
 #' @rdname rk.replace.function
 #' @examples
-#' 
-#' ## Not run
+#' \dontrun{
 #' rk.replace.function ("history", as.environment ("package:utils"),
 #'   function () {
 #'     cat ("This is what you typed:\n")
 #'     eval (body (.rk.backups$history))
 #'   })
-#' ## End not run
-#' 
+#' }
 
 # Tries to replace a function inside its environemnt/namespace.
 # Function formals are copied from the original.

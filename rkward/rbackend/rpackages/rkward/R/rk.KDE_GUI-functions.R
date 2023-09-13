@@ -79,7 +79,9 @@
 #'    \code{\link[base:file.choose]{file.choose}}
 #' @keywords utilities
 #' @rdname rk.show.messages
+#' @export
 #' @examples
+#' \dontrun{
 #' ## Message boxes
 #' if (rk.show.question ("Question:\nDo you want to know about RKWard?", 
 #'     button.yes = "Yes, I do!", button.no = "No, I don't care!", button.cancel = "")) {
@@ -93,8 +95,7 @@
 #'   multiple = TRUE, title = "vowels")
 #' .rk.backups$select.list (LETTERS, preselect = c("A", "E", "I", "O", "U"), 
 #'   multiple = TRUE, title = "vowels")
-
-#' @export
+#' }
 "rk.show.message" <- function (message, caption = gettext("Information"), wait=TRUE) {
 	.Call ("rk.dialog", caption, message, "ok", "", "", "ok", isTRUE (wait), PACKAGE="(embedding)")
 	invisible (TRUE)

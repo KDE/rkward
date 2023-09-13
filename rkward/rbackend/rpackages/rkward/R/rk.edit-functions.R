@@ -17,19 +17,8 @@
 #' by default, when run inside an RKWard session. (via \code{getOption("editor")},
 #' and \code{getOption("browser")}.
 #' 
-#' @aliases rk.edit rk.edit.files rk.show.files rk.show.html
 #' @param x an object to edit.
-#' @param name name of the environment to use (optional).
-#' @param file character vector, filenames to show or edit.
-#' @param title character vector, of the same length as \code{file}; This can
-#'   be used to give descriptive titles to each file, which will be displayed
-#'   to the user.
-#' @param wtitle character vector, of length 1. This will be used as the window
-#'   title.
-#' @param prompt logical of length 1. If TRUE (the default) a prompt is dialog
-#'   is shown along with the files to show / edit.
-#' @param delete a logical (not NA), when \code{TRUE} the shown file(s) are
-#'   deleted after closing.
+#' @aliases rk.edit rk.edit.files rk.show.files rk.show.html
 #' @return All functions described on this page return \code{NULL},
 #'   unconditionally.
 #' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
@@ -37,18 +26,24 @@
 #'   \code{\link{file.show}}, \code{\link{browseURL}}
 #' @keywords utilities IO
 #' @rdname rk.edit
+#' @export
 #' @examples
-#' 
-#' ## Not run
+#' \dontrun{
 #' x <- data.frame (a=c(1:3), b=c(2:4))
 #' rk.edit(x)
-
-#' @export
+#' }
 "rk.edit" <- function (x) {
 	object <- deparse (substitute (x))
 	.rk.do.call ("edit", object)
 }
 
+#' @param name name of the environment to use (optional).
+#' @param file character vector, filenames to show or edit.
+#' @param title character vector, of the same length as \code{file}; This can
+#'   be used to give descriptive titles to each file, which will be displayed
+#'   to the user.
+#' @param prompt logical of length 1. If TRUE (the default) a prompt is dialog
+#'   is shown along with the files to show / edit.
 #' @export
 #' @rdname rk.edit
 "rk.edit.files" <- function (name, file="", title, prompt = TRUE) {
@@ -74,6 +69,10 @@
 	invisible (.Call ("rk.edit.files", as.character (file), as.character (title), as.character (name), isTRUE (prompt), PACKAGE="(embedding)"))
 }
 
+#' @param header character, header to show.
+#' @param delete.file a logical (not NA), when \code{TRUE} the shown file(s) are
+#'   deleted after closing.
+#' @param delete logical, for compatibility with earlier versions of R.
 #' @export
 #' @rdname rk.edit
 "rk.show.files" <- function (file = file, header = file, title, delete.file=FALSE, prompt = TRUE,
@@ -91,6 +90,7 @@
 	invisible (.Call ("rk.show.files", as.character (file), as.character (header), as.character (title), delete, isTRUE (prompt), PACKAGE="(embedding)"))
 }
 
+#' @param url a URL to show.
 #' @export
 #' @rdname rk.edit
 "rk.show.html" <- function (url) {

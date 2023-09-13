@@ -20,8 +20,9 @@ Typically, when reporting a bug, you should use \code{Help->Report Bug...}
 from the menu. Internally, this will call \code{rk.sessionInfo()}.
 }
 \examples{
-
+\dontrun{
 rk.sessionInfo()
+}
 }
 \seealso{
 \code{\link{sessionInfo}}

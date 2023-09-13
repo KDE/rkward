@@ -44,7 +44,6 @@ device windows will not be restored (but WILL be closed by
 rk.save.workplace ()
 rk.restore.workplace ()
 }
-
 }
 \seealso{
 \url{rkward://page/rkward_for_r_users}, \link{rk.get.workspace.url}

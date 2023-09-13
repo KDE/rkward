@@ -16,7 +16,11 @@ rk.capture.output(
 rk.end.capture.output(highlight = FALSE)
 }
 \arguments{
-\item{suppress.messages}{message are not sent on, neither to surrounding captures, nor as regular output.}
+\item{capture.messages}{logical, whether messages should be captured.}
+
+\item{capture.output}{logical, whether output should be captured.}
+
+\item{suppress.messages}{logical, if \code{FALSE} message are not sent on, neither to surrounding captures, nor as regular output.}
 
 \item{suppress.output}{like \code{suppress.messages}, but for output.}
 
@@ -25,8 +29,6 @@ rk.end.capture.output(highlight = FALSE)
 \code{rk.capture.output} Starts capturing output.
 
 \code{rk.end.capture.output} Stops capturing output, and returns the recorded output in a string.}
-
-\item{LANG}{language code to use. "C" for no translation, i.e. generally English}
 }
 \description{
 This feature records and / or redirects output similar to the \code{\link{sink}} and \code{\link{capture.output}}

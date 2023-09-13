@@ -41,14 +41,13 @@ registered plugins (in loaded pluginmaps).
    only visibility can be controlled.
 }
 \examples{
+\dontrun{
 ## list all current plugins
 rk.list.plugins ()
 
-## NOT RUN
 ## hide t.test plugin
 rk.set.plugin.status ("rkward::t_test", visible=FALSE)
-## END NOT RUN
-
+}
 }
 \seealso{
 \code{\link{rk.call.plugin}} for invoking a plugin, programatically

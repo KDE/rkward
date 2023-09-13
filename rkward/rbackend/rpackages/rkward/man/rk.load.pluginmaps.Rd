@@ -28,13 +28,10 @@ priority setting. In scripted usage, this should generally be set to FALSE.}
 (Re-)load the given pluginmap files into the RKWard GUI
 }
 \examples{
-
-## NOT RUN
-
+\dontrun{
 ## reload all active pluginmaps
 rk.load.pluginmaps()
-
-## END NOT RUN
+}
 }
 \seealso{
 \code{\link{rk.call.plugin}}, \code{\link[rkwarddev:rk.plugin.skeleton]{rk.plugin.skeleton}}

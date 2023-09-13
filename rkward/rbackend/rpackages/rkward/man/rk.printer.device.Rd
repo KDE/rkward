@@ -22,11 +22,10 @@ Typically this device is used with \code{\link{dev.print}}, as shown in the
 example, below.
 }
 \examples{
-
-## Not run:
+\dontrun{
 plot (rnorm (10))
 dev.print (rk.printer.device)
-
+}
 }
 \seealso{
 \code{\link{postscript}}, \code{\link{dev.print}},

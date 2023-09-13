@@ -31,14 +31,13 @@
 #' @seealso \url{rkward://page/rkward_for_r_users}, \link{rk.get.workspace.url}
 #' @keywords utilities
 #' @rdname rk.workplace
+#' @importFrom utils URLdecode
+#' @export
 #' @examples
 #' \dontrun{
 #' rk.save.workplace ()
 #' rk.restore.workplace ()
 #' }
-#' 
-#' @importFrom utils URLdecode
-#' @export
 "rk.save.workplace" <- function (file, description) {
 	# for the time being, translate NULL into missingness and throw a warning
 	if(!missing(file)){
@@ -120,16 +119,14 @@
 #' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
 #' @keywords utilities
 #' @rdname rk.with.window.hints
+#' @export
 #' @examples
-#' 
-#' ## Not run
+#' \dontrun{
 #' .rk.with.window.hints ({
 #'    RK ()
 #'    plot (1, 1)
 #' }, "attached")
-#' ## End not run
-#' 
-#' @export
+#' }
 ".rk.with.window.hints" <- function (expr, placement="", name="", style="") {
 	.rk.do.plain.call ("set.window.placement.hint", as.character (c (placement, name, style)), FALSE)
 	on.exit (.rk.do.plain.call ("set.window.placement.hint", c ("", "", ""), FALSE))

@@ -44,15 +44,13 @@ functions in arbitrary ways. You better know what you are doing.
 \bold{WARNING}: Does not work well on generics!
 }
 \examples{
-
-## Not run
+\dontrun{
 rk.replace.function ("history", as.environment ("package:utils"),
   function () {
     cat ("This is what you typed:\n")
     eval (body (.rk.backups$history))
   })
-## End not run
-
+}
 }
 \seealso{
 \code{\link{assignInNamespace}}, \code{\link{debug}}

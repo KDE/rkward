@@ -46,19 +46,18 @@
 #'
 #' @returns NULL
 #' @field id An internal identifier. NULL for a closed output. This should be treated as read-only, but you can use this to test whether two output handles are the same.
+#' @import methods
+#' @exportClass RK.Output
 #'
 #' @examples
-#'
-#' ## Not run
+#' \dontrun{
 #' x <- rk.output(create=TRUE)
 #' x$activate()
 #' rk.print("Hello World!")
 #' x$view()
 #' x$save() # Will prompt for filename
 #' x$close()
-#'
-#' @import methods
-#' @exportClass RK.Output
+#' }
 RK.Output <- setRefClass(Class="RK.Output", fields=list(id="character"),
 	methods=list(
 	# The implementation of most of these is not terribly complex, but we need an implementation in the frontend, anyway, so we use that.

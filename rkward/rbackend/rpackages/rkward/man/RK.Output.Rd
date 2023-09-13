@@ -90,13 +90,12 @@ Do not write anything to the target filename, directly! This is purely for infor
 }}
 
 \examples{
-
-## Not run
+\dontrun{
 x <- rk.output(create=TRUE)
 x$activate()
 rk.print("Hello World!")
 x$view()
 x$save() # Will prompt for filename
 x$close()
-
+}
 }

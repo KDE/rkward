@@ -43,22 +43,23 @@
 #' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
 #' @seealso \code{\link{rk.results}}, \url{rkward://page/rkward_output}
 #' @keywords utilities
+#' @export
+#' @rdname rk.call.plugin
+#'
 #' @examples
-#' 
+#'
 #' ## "t_test_two_vars" plugin:
 #' ## see the output: Windows->Show Output
+#' \dontrun{
 #' local({
 #' x1 <- rnorm (100)
 #' x2 <- rnorm (100, 2)
-#' 
-#' rk.call.plugin ("rkward::t_test_two_vars", 
+#' rk.call.plugin ("rkward::t_test_two_vars",
 #'   confint.state="1", conflevel.real="0.95", hypothesis.string="greater", paired.state="0", varequal.state="0", 
 #'   x.available="x1", y.available="x2", 
 #'   submit.mode="submit")
 #' })
-#'
-#' @export
-#' @rdname rk.call.plugin
+#' }
 "rk.call.plugin" <- function (plugin, ..., submit.mode = c ("manual", "auto", "submit")) {
 	# prepare arguments
 	settings <- list (...)
@@ -100,17 +101,14 @@
 #' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
 #' @seealso \code{\link{rk.call.plugin}}, \code{\link[rkwarddev:rk.plugin.skeleton]{rk.plugin.skeleton}}
 #' @keywords utilities
+#' @rdname rk.load.pluginmaps
+#' @export
 #'
 #' @examples
-#' 
-#' ## NOT RUN
-#'
+#' \dontrun{
 #' ## reload all active pluginmaps
 #' rk.load.pluginmaps()
-#'
-#' ## END NOT RUN
-#' @export
-#' @rdname rk.load.pluginmaps
+#' }
 "rk.load.pluginmaps" <- function (pluginmap.files, force.add = TRUE, force.reload = TRUE) {
 	# for the time being, translate NULL into missingness and throw a warning
 	if(!missing(pluginmap.files)){
@@ -153,21 +151,19 @@
 #'
 #' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
 #' @keywords utilities
-#'
 #' @seealso \code{\link{rk.call.plugin}} for invoking a plugin, programatically
+#' @rdname rk.list.plugins
+#' @aliases rk.list.plugins rk.set.plugin.status
+#' @export
 #'
 #' @examples
+#' \dontrun{
 #' ## list all current plugins
 #' rk.list.plugins ()
 #'
-#' ## NOT RUN
 #' ## hide t.test plugin
 #' rk.set.plugin.status ("rkward::t_test", visible=FALSE)
-#' ## END NOT RUN
-#'
-#' @export
-#' @rdname rk.list.plugins
-#' @aliases rk.list.plugins rk.set.plugin.status
+#' }
 "rk.list.plugins" <- function () {
 	plugs <- .rk.do.plain.call("listPlugins")
 	columns = c ("ID", "Context", "Menupath", "Label")
@@ -195,8 +191,8 @@ assign(".rk.preview.data", list (), envir=.rk.variables)
 #'    This gets called by the <preview>-box of the plugin, automtically, when the plugin dialog is closed.
 #'    You do not generally have to call it manually. See the notes for running custom clearnup code, below.
 #'
-#' @param id (character). Id associated with the data. Usually this will be the 'id' value of the <preview>-box.
-#' @param value. The value to assign. If this is a list, and contains a function named "on.delete", this function
+#' @param id character, ID associated with the data. Usually this will be the 'id' value of the <preview>-box.
+#' @param value the value to assign. If this is a list, and contains a function named "on.delete", this function
 #'    will be run by rk.discard.preview.data (with the \code{id} as argument. This is useful for running custom clearnup
 #'    code, such as removing temporary files, etc.
 #'
@@ -209,11 +205,13 @@ assign(".rk.preview.data", list (), envir=.rk.variables)
 #'
 #' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
 #' @keywords utilities
+#' @rdname rk.assign.preview.data
+#' @aliases rk.get.preview.data .rk.discard.preview.data
+#' @export
 #'
 #' @examples
 #' ## To be generated in the preview() code section of a plugin
-#'
-#' ## NOT RUN
+#' \dontrun{
 #' pdata &lt;- rk.get.preview.data("SOMEID")
 #' if (is.null (pdata)) {
 #'   outfile &lt;- rk.get.tempfile.name(prefix="preview", extension=".txt", directory=rk.tempdir ())
@@ -226,11 +224,7 @@ assign(".rk.preview.data", list (), envir=.rk.variables)
 #'   cat ("This is a test", pdata$filename)
 #'   rk.edit.files(file=pdata$filename)
 #' })
-#' ## END NOT RUN
-#'
-#' @export
-#' @rdname rk.assign.preview.data
-#' @aliases rk.get.preview.data .rk.discard.preview.data
+#' }
 "rk.assign.preview.data" <- function (id, value=list ()) {
 	pdata <- .rk.variables$.rk.preview.data
 	pdata[[id]] <- value
