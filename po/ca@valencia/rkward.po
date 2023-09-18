@@ -4047,8 +4047,8 @@ msgstr ""
 #, kde-format
 msgid "<p>Press Enter to see next plot, or click 'Cancel' to abort.</p>"
 msgstr ""
-"<p>Premeu Retorn per a veure el diagrama següent, o feu clic en «Cancel·la» "
-"per a interrompre.</p>"
+"<p>Premeu «Retorn» per a veure el diagrama següent, o feu clic en "
+"«Cancel·la» per a interrompre.</p>"
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:632
 #, kde-format
