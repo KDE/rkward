@@ -6,6 +6,11 @@
 \usage{
 .rk.completions(fragment, type)
 }
+\arguments{
+\item{fragment}{string fragment to complete.}
+
+\item{type}{one of \code{"funargs"}, \code{"$"}, \code{"@"}, \code{"::"}, \code{":::"}, or \code{"?"}.}
+}
 \description{
 These are currently not exported, as they are not intended to be use in user code
 The API may or may not be stable.

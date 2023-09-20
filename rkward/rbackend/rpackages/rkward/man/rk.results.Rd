@@ -25,6 +25,8 @@ rk.describe.alternative(x)
 \item{x}{any R object to be printed/exported. A suitable list in case of
 \code{rk.describe.alternative}.}
 
+\item{...}{Additional arguments to be passed on to \code{\link[R2HTML:HTML]{HTML}}.}
+
 \item{code}{a character vector (single string) of R code}
 
 \item{title}{a string, used as a header for the html output}

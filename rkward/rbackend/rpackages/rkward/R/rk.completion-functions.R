@@ -7,6 +7,8 @@
 #' These are currently not exported, as they are not intended to be use in user code
 #' The API may or may not be stable.
 #'
+#' @param fragment string fragment to complete.
+#' @param type one of \code{"funargs"}, \code{"$"}, \code{"@"}, \code{"::"}, \code{":::"}, or \code{"?"}.
 #' @rdname rk.get.completions
 #'
 ".rk.completions" <- function(fragment, type) {

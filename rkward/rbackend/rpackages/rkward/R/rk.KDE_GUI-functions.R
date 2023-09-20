@@ -51,7 +51,7 @@
 #' @param wait a logical (not NA) indicating whether the R interpreter should
 #'   wait for the user's action, or run it asynchronously.
 #' @param choices a vector, coerced into a character vector.
-#' @param preselct a vector, coerced into a character vector, items to be
+#' @param preselect a vector, coerced into a character vector, items to be
 #'   preselected.
 #' @param multiple a logical (not NA), when \code{TRUE} multiple selection
 #'   selection is allowed.
@@ -115,6 +115,7 @@
 	else return (NULL)	# cancelled
 }
 
+#' @param ... currently unused.
 #' @export
 #' @rdname rk.show.messages
 "rk.askYesNo" <- function (msg, default = TRUE, prompts = c("yes", "no", "cancel"), caption = gettext("Question"), is.rk.askYesNo=TRUE, ...) {

@@ -78,7 +78,12 @@ separated by \code{/} characters.}
 via \code{options("askYesNo"=rk.askYesNo)} because otherwise we'd either need more
 complicated function code there, fail with an error or end up in an infinite loop.}
 
+\item{...}{currently unused.}
+
 \item{choices}{a vector, coerced into a character vector.}
+
+\item{preselect}{a vector, coerced into a character vector, items to be
+preselected.}
 
 \item{multiple}{a logical (not NA), when \code{TRUE} multiple selection
 selection is allowed.}
@@ -93,9 +98,6 @@ will be used, instead. E.g. \code{initial="#images"}.}
 
 \item{mode}{one of \code{"file"} (select one file), \code{"files"} (select one or more files),
 \code{"dir"} (select a directory), or \code{"newfile"} (set path for a new file).}
-
-\item{preselct}{a vector, coerced into a character vector, items to be
-preselected.}
 }
 \value{
 \code{rk.show.message} always returns \code{TRUE}, invisibly.

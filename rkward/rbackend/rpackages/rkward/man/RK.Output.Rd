@@ -26,6 +26,10 @@ return the currently active output in this case (creating and/or activating an o
 
 \item{all}{If \code{TRUE}, return a list of all currently loaded output directories.}
 
+\item{import}{logical, whether to import file \code{filename}.}
+
+\item{delete}{logical, whether to delete file \code{filename} and all its images on exit.}
+
 \item{overwrite}{If \code{TRUE}, RKWard will overwrite any existing output when saving, or discard any existing modifications when closing or reverting an output. If \code{FALSE}, trying
 to overwrite/discard existing files/modifications will result in an error. If \code{NULL} (the default), the frontend will ask what to do in this case.}
 

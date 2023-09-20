@@ -29,6 +29,8 @@ rk.end.capture.output(highlight = FALSE)
 \code{rk.capture.output} Starts capturing output.
 
 \code{rk.end.capture.output} Stops capturing output, and returns the recorded output in a string.}
+
+\item{highlight}{logical.}
 }
 \description{
 This feature records and / or redirects output similar to the \code{\link{sink}} and \code{\link{capture.output}}

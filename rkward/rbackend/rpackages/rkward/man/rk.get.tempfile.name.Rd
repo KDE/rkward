@@ -67,11 +67,11 @@ placed next to x, with file name extension ".css". Only effective when initializ
 
 \item{silent}{Set to true to avoid the output window being raised in the frontend.}
 
+\item{flush.images}{If true, any images used in the output file will be deleted as well.}
+
 \item{ask}{Logical: Whether to ask before flushing the output file.}
 
 \item{...}{Further parameters passed to rk.set.output.html.file()}
-
-\item{flush.images.}{If true, any images used in the output file will be deleted as well.}
 }
 \value{
 \code{rk.get.tempfile.name}, \code{rk.get.output.html.file}, \code{rk.get.workspace.url}, and

@@ -121,6 +121,7 @@
 }
 
 # get descriptive strings for each of the arguments in ...
+#' @param ... arguments to get descriptive strings for.
 #' @rdname rk.label
 #' @export
 "rk.get.description" <- function (..., paste.sep, is.substitute=FALSE) {
@@ -173,6 +174,7 @@
 }
 
 # this is basically copied from R-base table (). Returns the arguments passed to ... as a character vector
+#' @param deparse.level integer.
 #' @rdname rk.label
 #' @export
 "rk.list.names" <- function(..., deparse.level=2) {

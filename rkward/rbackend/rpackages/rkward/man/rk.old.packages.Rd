@@ -15,11 +15,53 @@ rk.old.packages(
   type = getOption("pkgType")
 )
 }
+\arguments{
+\item{lib.loc}{character vector describing the location of R
+    library trees to search through (and update packages therein), or
+    \code{NULL} for all known trees (see \code{\link{.libPaths}}).}
+
+\item{repos}{
+    character vector, the base URL(s) of the repositories
+    to use, e.g., the URL of a CRAN mirror such as
+    \code{"https://cloud.r-project.org"}.
+  }
+
+\item{contriburl}{URL(s) of the contrib sections of the
+    repositories.  Use this argument if your repository is
+    incomplete.  Overrides argument \code{repos}.
+    Incompatible with \code{type = "both"}.
+  }
+
+\item{instPkgs}{
+    by default all installed packages,
+    \code{\link[utils]{installed.packages}(lib.loc = lib.loc)}.  A subset can be
+    specified; currently this must be in the same (character matrix)
+    format as returned by \code{installed.packages()}.
+  }
+
+\item{method}{Download method, see \code{\link[utils]{download.file}}.
+    Unused if a non-\code{NULL} \code{available} is supplied.}
+
+\item{available}{
+    an object as returned by \code{\link[utils]{available.packages}}
+    listing packages available at the repositories, or \code{NULL} which
+    makes an internal call to \code{available.packages}.
+    Incompatible with \code{type = "both"}.
+  }
+
+\item{checkBuilt}{If \code{TRUE}, a package built under an earlier
+    major.minor version of \R (e.g., \code{3.4}) is considered to be
+    \sQuote{old}.}
+
+\item{type}{character, indicating the type of package to download and
+    install.  See \code{\link[utils]{install.packages}}.
+  }
+}
 \value{
 a character vector of packages which are really old
 }
 \description{
-For most purposes, this function is identical to old.packages(). However, if the same
+For most purposes, this function is identical to \code{\link[utils:old.packages]{old.packages()}}. However, if the same
 package is installed to different locations, in different versions, old.packages() will
 treat each of these installations separately. Thus, e.g. if lib.loc == c("A", "B") and
 package X is installed in B at an outdated version 0.1, but in A at the most recent version 0.2,

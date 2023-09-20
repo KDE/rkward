@@ -36,9 +36,13 @@ rk.list.names(..., deparse.level = 2)
 
 \item{fill}{a logical or character. See Details.}
 
+\item{...}{arguments to get descriptive strings for.}
+
 \item{paste.sep}{a string, used as the \code{collapse} argument for paste.}
 
 \item{is.substitute}{a logical (not NA). See Details.}
+
+\item{deparse.level}{integer.}
 }
 \value{
 \code{rk.set.label} returns the result of the evaluation of "setting

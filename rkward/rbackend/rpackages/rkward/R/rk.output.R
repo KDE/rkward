@@ -47,7 +47,7 @@
 #' @returns NULL
 #' @field id An internal identifier. NULL for a closed output. This should be treated as read-only, but you can use this to test whether two output handles are the same.
 #' @import methods
-#' @exportClass RK.Output
+#' @export RK.Output
 #'
 #' @examples
 #' \dontrun{
@@ -128,6 +128,8 @@ Do not write anything to the target filename, directly! This is purely for infor
 	else ret[[1]]
 }
 
+#' @param import logical, whether to import file \code{filename}.
+#' @param delete logical, whether to delete file \code{filename} and all its images on exit.
 #' @export
 #' @rdname RK.Output
 "rk.import.legacy.output" <- function(filename=file.path(rk.home(), "rk_out.html"), import=TRUE, delete=FALSE) {

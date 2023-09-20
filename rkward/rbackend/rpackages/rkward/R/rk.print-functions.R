@@ -51,6 +51,7 @@
 #' @param print.rownames controls printing of rownames. TRUE to force printing,
 #'   FALSE to suppress printing, omitted (default) to print rownames, unless
 #'   they are plain row numbers.
+#' @param ... Additional arguments to be passed on to \code{\link[R2HTML:HTML]{HTML}}.
 #' @return \code{rk.describe.alternatives} returns a string while all other
 #'   functions return \code{NULL}, invisibly.
 #' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
@@ -96,7 +97,7 @@
 #'   })
 #' } else {}
 #' }
-"rk.print" <- function(x,...) {
+"rk.print" <- function(x, ...) {
 	if (inherits (x, "htmlwidget")) {
 		requireNamespace ("htmlwidgets", quietly = TRUE)
 		name <- deparse (substitute (x))
@@ -110,7 +111,7 @@
 	} else {
 		htmlfile <- rk.get.output.html.file()
 		if(requireNamespace ("R2HTML", quietly = TRUE)) {
-			R2HTML::HTML(x, file=htmlfile,...)
+			R2HTML::HTML(x, file=htmlfile, ...)
 		}
 	}
 }
@@ -298,6 +299,8 @@
 	invisible (NULL)
 }
 
+# what exactly does 'highlight' do?
+#' @param highlight logical.
 #' @export
 #' @rdname rk.capture.output
 "rk.end.capture.output" <- function (highlight = FALSE) {

@@ -11,6 +11,7 @@
 #'
 #' @seealso \link{dev.new}, \link{RK}, \link{rk.embed.device}
 #'
+#' @param ... arguments to be passed on to \code{dev.new()}.
 #' @importFrom grDevices dev.new
 #' @export
 "rk.screen.device" <- function (...) {

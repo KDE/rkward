@@ -6,6 +6,9 @@
 \usage{
 rk.screen.device(...)
 }
+\arguments{
+\item{...}{arguments to be passed on to \code{dev.new()}.}
+}
 \description{
 Depending on your use case, you should use \code{dev.new()}, \code{RK()} or \code{rk.embed.device()}, instead.
 }

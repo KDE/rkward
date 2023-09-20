@@ -55,7 +55,7 @@
 #'            placed next to x, with file name extension ".css". Only effective when initializing a
 #'            (non-existing) output file.
 #' @param silent Set to true to avoid the output window being raised in the frontend.
-#' @param flush.images. If true, any images used in the output file will be deleted as well.
+#' @param flush.images If true, any images used in the output file will be deleted as well.
 #' @param ask Logical: Whether to ask before flushing the output file.
 #' @param ... Further parameters passed to rk.set.output.html.file()
 #' @return \code{rk.get.tempfile.name}, \code{rk.get.output.html.file}, \code{rk.get.workspace.url}, and

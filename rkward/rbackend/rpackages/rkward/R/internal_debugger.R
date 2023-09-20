@@ -26,10 +26,18 @@
 	list ("calls"=calls, "functions"=funs, "environments"=envs, "locals"=locals, "relsrclines"=relsrclines)
 }
 
-# get relative source location
-# NOTE: this requires R >= 2.13.0
+#' Get relative source location
+#'
+#' @param inner either an object containing source references, or an object of class
+#'   \code{\link[base:srcref]{srcref}}.
+#' @param outer see \code{inner}.
+#' @return An integer or \code{NA}.
+#' @seealso \code{\link[utils:getSrcref]{getSrcref}},
+#'   \code{\link[utils:getSrcFilename]{getSrcFilename}},
+#'   \code{\link[utils:getSrcLocation]{getSrcLocation}}
 #' @importFrom utils getSrcref getSrcFilename getSrcLocation
 #' @export
+# NOTE: this requires R >= 2.13.0
 rk.relative.src.line <- function (inner, outer) {
 	if (!inherits (inner, "srcref")) inner <- getSrcref (inner)
 	if (!inherits (outer, "srcref")) outer <- getSrcref (outer)

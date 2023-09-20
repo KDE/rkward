@@ -232,28 +232,44 @@
 }
 
 ## NOTE: Adding an Rd-page for these makes "?X11" fail (R 3.0.0).
-# Overrides for platform specific R plotting devices
-#
-# These functions override the platform specific on-screen plotting devices by the same names.
-# The exact behavior depends on configuration settings, and can be one of: The original R device,
-# the original R device embedded using \code{rk.embed.device()}, or the call can be re-directed
-# to the \code{RK()} device. In the last case not all function arguments may be honored.
-#
-# @note If you want to use the \link{RK} device, you should call that, explicitly. These
-#       overrides are provided to make it easy to use scripts that refer to the platform specific
-#       plotting devices provided by R.
-#
-# @seealso \link{RK} \link{rk.embed.device} \link[grDevices]{X11} \link[grDevices]{Windows}
-#
-# @rdname DeviceOverrides
+#' Overrides for platform specific R plotting devices
+#'
+#' These functions override the platform specific on-screen plotting devices by the same names.
+#' The exact behavior depends on configuration settings, and can be one of: The original R device,
+#' the original R device embedded using \code{rk.embed.device()}, or the call can be re-directed
+#' to the \code{RK()} device. In the last case not all function arguments may be honored.
+#'
+#' @note If you want to use the \link{RK} device, you should call that, explicitly. These
+#'       overrides are provided to make it easy to use scripts that refer to the platform specific
+#'       plotting devices provided by R.
+#'
+#' @inheritParams grDevices::X11
+#' @inheritParams grDevices::windows
+#' @inheritParams grDevices::quartz
+#' @seealso \code{\link[rkward:RK]{RK}},
+#'   \code{\link[rkward:rk.embed.device]{rk.embed.device}},
+#'   \code{\link[grDevices:X11]{X11}},
+#'   \code{\link[grDevices:windows]{windows}},
+#'   \code{\link[grDevices:win.graph]{win.graph}},
+#'   \code{\link[grDevices:quartz]{quartz}}
+#' @rdname DeviceOverrides
+#' @aliases X11
 #' @export
 "X11" <- .rk.make.device.wrapper ("X11")
+#' @rdname DeviceOverrides
+#' @aliases x11
 #' @export
 "x11" <- X11
+#' @rdname DeviceOverrides
+#' @aliases windows
 #' @export
 "windows" <- .rk.make.device.wrapper ("windows")
+#' @rdname DeviceOverrides
+#' @aliases win.graph
 #' @export
 "win.graph" <- .rk.make.device.wrapper ("win.graph")  # NOTE: Has different formals() than windows()
+#' @rdname DeviceOverrides
+#' @aliases quartz
 #' @export
 "quartz" <- .rk.make.device.wrapper ("quartz")
 
@@ -289,18 +305,47 @@
 	.rk.variables$.rk.printer.devices[[as.character (dev.cur ())]] <- tf
 }
 
-#' @importFrom grDevices dev.cur dev.set dev.copy dev.new
+#' Record screen device history and duplicate a screen device
+#'
+#' \code{rk.record.plot} is an environment to store the screen device history.
+#' You should not use the functions/variables in this environment directly, instead use
+#' the many wrapper functions as described below.
+#'
+#' @return
+#'   \code{rk.plot.history.summary} returns a data.frame with messages.
+#'   \code{rk.duplicate.device} returns the value of a \code{\link[grDevices:dev.copy]{dev.copy}} call.
+#'   All other functions return \code{NULL} invisibly.
+#' @author Prasenjit Kapat \email{rkward-devel@kde.org}
+#' @seealso \code{\link[grDevices:recordPlot]{recordPlot}},
+#'   \code{\link[grDevices:replayPlot]{replayPlot}},
+#'   \code{\link[lattice:print.trellis]{print.trellis}},
+#'   \code{\link[lattice:trellis.last.object]{trellis.last.object}},
+#'   \url{rkward://page/rkward_plot_history}
+#' @rdname rk.record.plot
+#' @keywords device dynamic environment
 #' @export
-"rk.duplicate.device" <- function (devId = dev.cur ())
-{
-	rk.record.plot$duplicating.from.device <- devId
-	on.exit (rk.record.plot$duplicating.from.device <- 1)	# NULL device
-	dev.set (devId)
-	dev.copy (device = dev.new)
-}
-
+#' @examples
+#' \dontrun{
+#' .L. <- getOption ("rk.graphics.hist.max.length")
+#'
+#' local ({
+#'  options ("rk.graphics.hist.max.length" = 150)
+#'  x <- seq(-2*pi,2*pi,length=400)
+#'  xlim <- range(x); ylim <- c(-1,1)
+#'  n <- 100;
+#'  for (i in seq_len (n)) {
+#'    plot(x, sin(x-(i-1)*4*pi/n), type='l', xlim=xlim, ylim=ylim,
+#'         bty='n', xlab='', ylab='', xaxt='n', yaxt='n')
+#'  }
+#' })
+#'
+#' rk.first.plot ()
+#' for (i in 1:(rk.record.plot$sP.length-1)) rk.next.plot ()
+#'
+#' rk.clear.plot.history ()
+#' options ("rk.graphics.hist.max.length" = .L.)
+#' }
 # A global history of various graphics calls;
-#' @export
 "rk.record.plot" <- function ()
 {
 	env <- environment()
@@ -1014,9 +1059,19 @@
 }
 rk.record.plot <- rk.record.plot ()
 
+#' @details
+#' \code{rk.toggle.plot.history} enables or disables the screen device history.
+#' You should \emph{not} use this function directly. Instead, use the checkbox in
+#' Settings->Configure RKWard->Onscreen Graphics->Screen device history.
+#' After the needed initialization / clean up, it sets the option variable
+#' \code{"rk.enable.graphics.history"} to \code{x}.
+#'
+#' @param x a logical (not \code{NA}), whether to enable the screen device history.
+#' @rdname rk.record.plot
+#' @aliases rk.toggle.plot.history
+#' @export
 # Users should use only these wrappers:
 # 1 is always the null device
-#' @export
 "rk.toggle.plot.history" <- function (x = TRUE)
 {
 	if (x) {
@@ -1027,7 +1082,16 @@ rk.record.plot <- rk.record.plot ()
 	options ("rk.enable.graphics.history" = x)
 	invisible ()
 }
+
+#' @details
+#' The functions \code{rk.first.plot}, \code{rk.previous.plot}, \code{rk.next.plot}, and
+#' \code{rk.last.plot} provide browing actions to respective plots saved in the history
+#' on the specified device (\code{devId}).
+#'
+#' @param devId integer, the screen device on which an action is to be performed.
 #' @importFrom grDevices dev.cur
+#' @rdname rk.record.plot
+#' @aliases rk.first.plot
 #' @export
 "rk.first.plot" <- function (devId = dev.cur ())
 {
@@ -1035,6 +1099,8 @@ rk.record.plot <- rk.record.plot ()
 	rk.record.plot$showFirst (devId)
 }
 #' @importFrom grDevices dev.cur
+#' @rdname rk.record.plot
+#' @aliases rk.previous.plot
 #' @export
 "rk.previous.plot" <- function (devId = dev.cur ())
 {
@@ -1042,6 +1108,8 @@ rk.record.plot <- rk.record.plot ()
 	rk.record.plot$showPrevious (devId)
 }
 #' @importFrom grDevices dev.cur
+#' @rdname rk.record.plot
+#' @aliases rk.next.plot
 #' @export
 "rk.next.plot" <- function (devId = dev.cur ())
 {
@@ -1049,52 +1117,100 @@ rk.record.plot <- rk.record.plot ()
 	rk.record.plot$showNext (devId)
 }
 #' @importFrom grDevices dev.cur
+#' @rdname rk.record.plot
+#' @aliases rk.last.plot
 #' @export
 "rk.last.plot" <- function (devId = dev.cur ())
 {
 	if (!getOption ("rk.enable.graphics.history")) return (invisible ())
 	rk.record.plot$showLast (devId)
 }
+#' @details
+#' \code{rk.goto.plot} provides a one step jump action to the plot specified
+#' by \code{index} on the specified device (\code{devId}).
+#'
+#' @param index integer, which plot to jump to.
 #' @importFrom grDevices dev.cur
+#' @rdname rk.record.plot
+#' @aliases rk.goto.plot
 #' @export
 "rk.goto.plot" <- function (devId = dev.cur (), index=1)
 {
 	if (!getOption ("rk.enable.graphics.history")) return (invisible ())
 	rk.record.plot$showPlot (devId, index)
 }
+#' @details
+#' \code{rk.force.append.plot} forcefully append the currently displayed plot to the history.
+#' This function ignores the type of plot (graphics/lattice) and by-passes the general
+#' recording mechanism, as a result the plot call can not be identified.
+#'
 #' @importFrom grDevices dev.cur
+#' @rdname rk.record.plot
+#' @aliases rk.force.append.plot
 #' @export
 "rk.force.append.plot" <- function (devId = dev.cur ())
 {
 	if (!getOption ("rk.enable.graphics.history")) return (invisible ())
 	rk.record.plot$forceAppend (devId)
 }
+#' @details
+#' \code{rk.removethis.plot} removes the plot displayed on the specified device from history.
+#' If there are more than one device showing the same plot then removing from one device does
+#' not wipe it from the other devices. They can be re-added to the history from the other
+#' devices.
+#'
 #' @importFrom grDevices dev.cur
+#' @rdname rk.record.plot
+#' @aliases rk.removethis.plot
 #' @export
 "rk.removethis.plot" <- function (devId = dev.cur ())
 {
 	if (!getOption ("rk.enable.graphics.history")) return (invisible ())
 	rk.record.plot$removePlot (devId)
 }
+#' @details
+#' \code{rk.clear.plot.history} clears the screen device history.
+#'
+#' @rdname rk.record.plot
+#' @aliases rk.clear.plot.history
 #' @export
 "rk.clear.plot.history" <- function ()
 {
 	if (!getOption ("rk.enable.graphics.history")) return (invisible ())
 	rk.record.plot$clearHistory ()
 }
+#' @details
+#' \code{rk.show.plot.info} shows some extra information regarding the
+#' displayed plot on the specified device, when available.
+#'
 #' @importFrom grDevices dev.cur
+#' @rdname rk.record.plot
+#' @aliases rk.show.plot.info
 #' @export
 "rk.show.plot.info" <- function (devId = dev.cur ())
 {
 	if (!getOption ("rk.enable.graphics.history")) return (invisible ())
 	rk.record.plot$showPlotInfo (devId)
 }
+#' @param lmax integer, the desired history limit.
+#' @rdname rk.record.plot
+#' @aliases rk.verify.plot.hist.limits
 #' @export
 "rk.verify.plot.hist.limits" <- function (lmax)
 {
 	if (!getOption ("rk.enable.graphics.history")) return (invisible ())
 	rk.record.plot$.verify.hist.limits (as.integer (lmax))
 }
+#' @details
+#' \code{rk.plot.history.summary} provides some summaries of the screen device history.
+#'
+#' @param which integer identifying the device. If \code{NULL} defaults to all devices.
+#' @param type one of \code{"devices"} or \code{"history"}, the type of summary to be
+#'   printed. \code{type = "devices"} provides summary of all or one device(s),
+#'   depending on the value of \code{which}.
+#'   \code{type = "history"} provides summary of the entire stored history.
+#' @rdname rk.record.plot
+#' @aliases rk.plot.history.summary
 #' @export
 "rk.plot.history.summary" <- function (which = NULL, type = c ("devices", "history"))
 {
@@ -1106,9 +1222,29 @@ rk.record.plot <- rk.record.plot ()
 			NULL)
 	ret
 }
-#' Run a (plotting) action, without recording anything in the plot history.
-#' Internally, the plot history option is turned off for the duration of the action.
-#' 
+#' @details
+#' \code{rk.duplicate.device} duplicates the specified screen device.
+#' The plot on the new device behaves independently of the one it was duplicated from.
+#'
+#' @importFrom grDevices dev.cur dev.set dev.copy dev.new
+#' @rdname rk.record.plot
+#' @aliases rk.duplicate.device
+#' @export
+"rk.duplicate.device" <- function (devId = dev.cur ())
+{
+	rk.record.plot$duplicating.from.device <- devId
+	on.exit (rk.record.plot$duplicating.from.device <- 1)	# NULL device
+	dev.set (devId)
+	dev.copy (device = dev.new)
+}
+#' @details
+#' \code{rk.without.plot.history} runs a (plotting) action, without recording anything in the
+#' plot history. Internally, the plot history option is turned off for the duration of the
+#' action.
+#'
+#' @param expr the plot call to evaluate.
+#' @rdname rk.record.plot
+#' @aliases rk.without.plot.history
 #' @export
 "rk.without.plot.history" <- function (expr)
 {

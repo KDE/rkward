@@ -103,13 +103,14 @@
 
 #' Slightly smarter variant of old.packages()
 #'
-#' For most purposes, this function is identical to old.packages(). However, if the same
+#' For most purposes, this function is identical to \code{\link[utils:old.packages]{old.packages()}}. However, if the same
 #' package is installed to different locations, in different versions, old.packages() will
 #' treat each of these installations separately. Thus, e.g. if lib.loc == c("A", "B") and
 #' package X is installed in B at an outdated version 0.1, but in A at the most recent version 0.2,
 #' old.packages() will report package X at B as old. In contrast rk.old.packages() will recognize
 #' that the current version is higher up in the path, and not report package X as old.
 #'
+#' @inheritParams utils::old.packages
 #' @return a character vector of packages which are really old
 #'
 #' @author Thomas Friedrichsmeier \email{rkward-devel@@kde.org}
