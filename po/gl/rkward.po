@@ -34,13 +34,13 @@ msgid ""
 "The object '%1', could not be opened for editing. Either it does not exist, "
 "or RKWard does not support editing this type of object, yet."
 msgstr ""
-"Non se puido abrir o obxecto «%1» para editalo. Ou non existe, ou RKWard "
+"Non foi posíbel abrir o obxecto «%1» para editalo. Ou non existe, ou RKWard "
 "aínda non permite editar obxectos do seu tipo."
 
 #: rkward/agents/rkeditobjectagent.cpp:33
 #, kde-format
 msgid "Cannot edit '%1'"
-msgstr "Non se pode editar «%1»."
+msgstr "Non é posíbel editar «%1»."
 
 #: rkward/agents/rkloadagent.cpp:32
 #, kde-format
@@ -77,7 +77,7 @@ msgstr ""
 #: rkward/agents/rkprintagent.cpp:82
 #, kde-format
 msgid "Unable to open KDE print dialog"
-msgstr "Non se pode abrir un diálogo de impresión de KDE"
+msgstr "Non é posíbel abrir un diálogo de impresión de KDE"
 
 #: rkward/agents/rkquitagent.cpp:30
 #, kde-format
@@ -614,7 +614,7 @@ msgstr ""
 "O editor «%1» contén as seguintes columnas duplicadas. Editar esta táboa "
 "podería non ser seguro, e desactivouse. Pode activar de novo a edición se "
 "sabe o que está a facer, pero recoméndaselle encarecidamente que primeiro "
-"arranxe a táboa ou faga unha copia de seguridade dos seus datos."
+"arranxe a táboa ou faga unha salvagarda dos seus datos."
 
 #: rkward/dataeditor/twintable.cpp:208
 #, kde-format
@@ -1907,7 +1907,7 @@ msgstr ""
 #: rkward/main.cpp:208
 #, kde-format
 msgid "Unable to detect R installation"
-msgstr "Non se pode detectar a instalación de R"
+msgstr "Non é posíbel detectar a instalación de R"
 
 #: rkward/main.cpp:208
 #, kde-format
@@ -3035,7 +3035,7 @@ msgstr "A vista previa está ao día"
 #: rkward/misc/xmlhelper.cpp:41
 #, kde-format
 msgid "Could not open file %1 for reading"
-msgstr "Non se puido abrir o ficheiro %1 para lectura."
+msgstr "Non foi posíbel abrir o ficheiro %1 para lectura."
 
 #: rkward/misc/xmlhelper.cpp:43
 #, kde-format
@@ -3176,15 +3176,15 @@ msgstr ""
 #: rkward/plugin/rkcomponentmap.cpp:526
 #, kde-format
 msgid "Could not submit"
-msgstr "Non se puido enviar"
+msgstr "Non foi posíbel enviar"
 
 #: rkward/plugin/rkcomponentmap.cpp:567
 #, kde-format
 msgid ""
 "Could not open plugin map file %1. (Is not readable, or failed to parse)"
 msgstr ""
-"Non se puido abrir o ficheiro de grupo de complementos %1. Ou non dispón de "
-"permisos de lectura, ou non se puido analizar o seu contido."
+"Non foi posíbel abrir o ficheiro de grupo de complementos %1. Ou non dispón "
+"de permisos de lectura, ou non se puido analizar o seu contido."
 
 #: rkward/plugin/rkcomponentmap.cpp:582
 #, kde-format
@@ -3207,8 +3207,8 @@ msgid ""
 "Could not resolve specified required pluginmap '%1'. You may have to install "
 "additional packages."
 msgstr ""
-"Non se puido determinar o grupo de complementos «%1» indicado. Pode que teña "
-"que instalar paquetes adicionais."
+"Non foi posíbel determinar o grupo de complementos «%1» indicado. Pode que "
+"teña que instalar paquetes adicionais."
 
 #: rkward/plugin/rkcomponentmap.cpp:649
 #, kde-format
@@ -3513,7 +3513,7 @@ msgstr ""
 #: rkward/plugin/rkstandardcomponent.cpp:89
 #, kde-format
 msgid "Could not create plugin"
-msgstr "Non se puido crear o complemento"
+msgstr "Non foi posíbel crear o complemento"
 
 #: rkward/plugin/rkstandardcomponent.cpp:675
 #, kde-format
@@ -3692,15 +3692,15 @@ msgid ""
 "The backend executable could not be found. This is likely to be a problem "
 "with your installation."
 msgstr ""
-"Non se puido atopar o executábel da infraestrutura. O máis probábel é que se "
-"trate dun problema da instalación."
+"Non foi posíbel atopar o executábel da infraestrutura. O máis probábel é que "
+"se trate dun problema da instalación."
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:169
 #, kde-format
 msgid "The backend executable could not be started. Error message was: %1"
 msgstr ""
-"Non se puido iniciar o executábel da infraestrutura. A mensaxe de erro foi a "
-"seguinte: %1"
+"Non foi posíbel iniciar o executábel da infraestrutura. A mensaxe de erro "
+"foi a seguinte: %1"
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:222
 #, kde-format
@@ -3728,7 +3728,7 @@ msgstr ""
 msgid ""
 "The backend process could not be started. Please check your installation."
 msgstr ""
-"Non se puido iniciar o proceso da infraestrutura. Revise a instalación."
+"Non foi posíbel iniciar o proceso da infraestrutura. Revise a instalación."
 
 #: rkward/rbackend/rkfrontendtransmitter.cpp:260
 #, fuzzy, kde-format
@@ -4037,13 +4037,13 @@ msgid ""
 "The 'katepart' component could not be loaded. RKWard cannot run without "
 "katepart, and will exit, now. Please install katepart, and try again."
 msgstr ""
-"Non se puido cargar o compoñente «katepart». RKWard non pode executarse sen "
-"katepart, e sairá. Instale katepart e inténteo de novo."
+"Non foi posíbel cargar o compoñente «katepart». RKWard non pode executarse "
+"sen katepart, e sairá. Instale katepart e inténteo de novo."
 
 #: rkward/rkconsole.cpp:91
 #, kde-format
 msgid "'katepart' component could not be found"
-msgstr "Non se puido atopar o compoñente «katepart»"
+msgstr "Non foi posíbel atopar o compoñente «katepart»"
 
 #: rkward/rkconsole.cpp:132 rkward/windows/rkcommandeditorwindow.cpp:408
 #, kde-format
@@ -4235,7 +4235,7 @@ msgid ""
 "version of RKWard, or not meant for direct loading (see the 'Details' for "
 "more information). They have been disabled."
 msgstr ""
-"Non se puideron cargar os seguintes ficheiros de grupo de complementos de "
+"Non foi posíbel cargar os seguintes ficheiros de grupo de complementos de "
 "RKWard, así que se desactivaron. Pode que sexa porque están estragados, ou "
 "porque non son compatíbeis con esta versión de RKWard, ou porque non están "
 "deseñados para cargalos directamente (consulte «Detalles» para máis "
@@ -4244,7 +4244,7 @@ msgstr ""
 #: rkward/rkward.cpp:354 rkward/rkward.cpp:358
 #, kde-format
 msgid "Failed to load some plugin maps"
-msgstr "Non se puideron cargar algúns grupos de complementos"
+msgstr "Non foi posíbel cargar algúns grupos de complementos"
 
 #: rkward/rkward.cpp:358
 #, kde-format
@@ -4385,7 +4385,7 @@ msgstr "Abrir un espazo de traballo recente"
 #: rkward/rkward.cpp:524
 #, kde-format
 msgid "Opens a recently used file"
-msgstr "Abre un ficheiro utilizado recentemente."
+msgstr "Abre un ficheiro usado recentemente."
 
 #: rkward/rkward.cpp:527
 #, kde-format
@@ -4768,7 +4768,8 @@ msgid ""
 "The file \"%1\" (needed by \"%2\") could not be found. Please check your "
 "installation."
 msgstr ""
-"Non se puido atopar o ficheiro «%1» («%2» necesítao). Revise a instalación."
+"Non foi posíbel atopar o ficheiro «%1» («%2» necesítao). Revise a "
+"instalación."
 
 #: rkward/scriptbackends/rkcomponentscripting.cpp:54
 #: rkward/scriptbackends/rkcomponentscripting.cpp:56
@@ -6210,12 +6211,12 @@ msgstr "Nomes de ficheiro locais"
 #: rkward/windows/rkcommandeditorwindow.cpp:173
 #, kde-format
 msgid "Unable to open \"%1\""
-msgstr "Non se pode abrir «%1»"
+msgstr "Non é posíbel abrir «%1»"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:173
 #, kde-format
 msgid "Could not open command file"
-msgstr "Non se puido abrir o ficheiro de ordes"
+msgstr "Non foi posíbel abrir o ficheiro de ordes"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:215
 #, kde-format
@@ -7071,7 +7072,7 @@ msgstr ""
 #: rkward/windows/rkwindowcatcher.cpp:126
 #, kde-format
 msgid "Could not embed R X11 window"
-msgstr "Non se puido incrustar a xanela de X11 de R"
+msgstr "Non foi posíbel incrustar a xanela de X11 de R"
 
 #: rkward/windows/rkwindowcatcher.cpp:126
 #, kde-format

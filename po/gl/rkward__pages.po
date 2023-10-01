@@ -1178,9 +1178,9 @@ msgid ""
 msgstr ""
 "R ten algúns sistemas gráficos moi potentes (aínda que non son interactivos) "
 "que están dispoñíbeis en varios paquetes, como <b>graphics</b> e <b>lattice</"
-"b>. RKWard utiliza o dispositivo de pantalla estándar do sistema para "
-"fornecer unha experiencia uniforme. Ademais da funcionalidade estándar "
-"destes paquetes, RKWard fornece un mecanismo de historial de dispositivos de "
+"b>. RKWard usa o dispositivo de pantalla estándar do sistema para fornecer "
+"unha experiencia uniforme. Ademais da funcionalidade estándar destes "
+"paquetes, RKWard fornece un mecanismo de historial de dispositivos de "
 "pantalla para almacenar e navegar polas gráficas. Consulte <link href="
 "\"rkward://page/rkward_plot_history\"/> para máis información."
 
@@ -2529,8 +2529,8 @@ msgid ""
 msgstr ""
 "A primeira opción debería resultar obvia. Controla se os obxectos cuxo nome "
 "comeza por un punto («.») se amosan ou non. Esa forma de nomear obxectos "
-"adoita utilizarse para obxectos internos, que non están pensados para usarse "
-"de maneira directa, polo que resulta seguro agochalos na vista."
+"adoita usarse para obxectos internos, que non están pensados para usarse de "
+"maneira directa, polo que resulta seguro agochalos na vista."
 
 #. i18n: ectx: (Workspace Browser) <section title="What is shown">
 #: rkward/pages/rkward_workspace_browser.rkh:16
