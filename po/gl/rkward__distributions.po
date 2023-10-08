@@ -1,27 +1,27 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 # Adrián Chaves Fernández <adriyetichaves@gmail.com>, 2015, 2016.
-# Adrian Chaves <adrian@chaves.io>, 2018, 2020.
+# SPDX-FileCopyrightText: 2018, 2020, 2023 Adrian Chaves <adrian@chaves.io>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-07-17 00:44+0000\n"
-"PO-Revision-Date: 2020-01-05 19:09+0100\n"
+"PO-Revision-Date: 2023-10-07 21:11+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
-"Language-Team: Galician <kde-i18n-doc@kde.org>\n"
+"Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 19.08.3\n"
+"X-Generator: Lokalize 23.08.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Adrián Chaves Fernández"
+msgstr "Adrian Chaves (Gallaecio)"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
@@ -335,13 +335,13 @@ msgstr "Representar a distribución t"
 #: rkward/plugins/distributions/tukey.xml:21
 #, kde-format
 msgid "Studentized Range (Tukey) distribution calculator"
-msgstr "Calculadora da distribución de intervalo estudentizado (Tukey)"
+msgstr "Calculadora da distribución de intervalo estudantizado (Tukey)"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions.pluginmap:82
 #, kde-format
 msgid "Plot Studentized Range (Tukey) distribution"
-msgstr "Representar a distribución de intervalo estudentizado (Tukey)"
+msgstr "Representar a distribución de intervalo estudantizado (Tukey)"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Uniform distribution calculator) <dialog label="...">
@@ -1066,7 +1066,7 @@ msgid ""
 msgstr ""
 "Escolla os parámetros de <label id=\"dist_name\"/>, o tamaño das mostras "
 "necesarias para CLT e unha escolla de función. As opcións específicas da "
-"función fornécense en separadores distintos."
+"función fornécense en lapelas distintas."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <settings> <setting> (refers to element labelled "Samples for Average")
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <settings> <setting> (refers to element labelled "Samples for Average")
@@ -2780,18 +2780,13 @@ msgstr ""
 #. i18n: ectx: (Loaded from Loaded from Weibull distribution calculator) <snippet> <setting> (refers to element labelled "Number of quantiles")
 #. i18n: ectx: (Loaded from Loaded from Wilcoxon Rank Sum distribution calculator) <snippet> <setting> (refers to element labelled "Number of quantiles")
 #: rkward/plugins/distributions/dist_help_snippets.xml:10
-#, fuzzy, kde-format
-#| msgid ""
-#| "When calculating densities or probabilities, specify one or more "
-#| "quantiles. If this setting is left empty, a sequence of evenly spaced "
-#| "quantiles will be used, instead."
+#, kde-format
 msgid ""
 "When calculating densities or probabilities, specify the number of evenly "
 "spaces quantiles to show. Alternatively, use the setting above."
 msgstr ""
-"Ao calcular densidades ou probabilidades, indique un ou máis cuantís. Se "
-"deixa esta opción baleira, no seu lugar usarase unha secuencia de cuantís "
-"equidistantes."
+"Ao calcular densidades ou probabilidades, indique o número de cuantís "
+"equidistantes que amosar. De maneira alternativa pode usar a opción anterior."
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting> (refers to element labelled "Specify Quantiles (optional)")
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <setting> (refers to element labelled "Specify Quantiles (optional)")
@@ -2814,18 +2809,14 @@ msgstr ""
 #. i18n: ectx: (Loaded from Loaded from Weibull distribution calculator) <snippet> <setting> (refers to element labelled "Specify Quantiles (optional)")
 #. i18n: ectx: (Loaded from Loaded from Wilcoxon Rank Sum distribution calculator) <snippet> <setting> (refers to element labelled "Specify Quantiles (optional)")
 #: rkward/plugins/distributions/dist_help_snippets.xml:11
-#, fuzzy, kde-format
-#| msgid ""
-#| "When calculating densities or probabilities, specify one or more "
-#| "quantiles. If this setting is left empty, a sequence of evenly spaced "
-#| "quantiles will be used, instead."
+#, kde-format
 msgid ""
 "When calculating densities or probabilities, specify one or more quantiles. "
 "Alternatively, leave this empty to use the setting above, instead."
 msgstr ""
-"Ao calcular densidades ou probabilidades, indique un ou máis cuantís. Se "
-"deixa esta opción baleira, no seu lugar usarase unha secuencia de cuantís "
-"equidistantes."
+"Ao calcular densidades ou probabilidades, indique un ou máis cuantís. De "
+"maneira alternativa, deixe isto baleiro para usar a opción anterior no seu "
+"lugar."
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting> (refers to element labelled "Number of probabilities")
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <setting> (refers to element labelled "Number of probabilities")
@@ -2848,19 +2839,15 @@ msgstr ""
 #. i18n: ectx: (Loaded from Loaded from Weibull distribution calculator) <snippet> <setting> (refers to element labelled "Number of probabilities")
 #. i18n: ectx: (Loaded from Loaded from Wilcoxon Rank Sum distribution calculator) <snippet> <setting> (refers to element labelled "Number of probabilities")
 #: rkward/plugins/distributions/dist_help_snippets.xml:12
-#, fuzzy, kde-format
-#| msgid ""
-#| "When calculating quantiles, specify one or more probabilities, optionally "
-#| "logarithmic (see below). If this setting is left empty, a sequence of "
-#| "evenly spaced (log) probabilities will be used, instead."
+#, kde-format
 msgid ""
 "When calculating quantiles, specify the number of evenly spaced "
 "probabilities (optionally logarithmic) to show. Alternatively, use the "
 "setting below."
 msgstr ""
-"Ao calcular cuantís, indique unha ou máis probabilidades, opcionalmente "
-"logarítmicas (ver embaixo). Se deixa esta opción baleira, no seu lugar "
-"usarase unha secuencia de probabilidades (logarítmicas) equidistantes."
+"Ao calcular cuantís, indique o número de probabilidades equidistantes "
+"(opcionalmente logarítmicas) que amosar. De maneira alternativa, use a "
+"seguinte opción."
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting> (refers to element labelled "Specify Probabilities (optional)")
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <setting> (refers to element labelled "Specify Probabilities (optional)")
@@ -2883,19 +2870,15 @@ msgstr ""
 #. i18n: ectx: (Loaded from Loaded from Weibull distribution calculator) <snippet> <setting> (refers to element labelled "Specify Probabilities (optional)")
 #. i18n: ectx: (Loaded from Loaded from Wilcoxon Rank Sum distribution calculator) <snippet> <setting> (refers to element labelled "Specify Probabilities (optional)")
 #: rkward/plugins/distributions/dist_help_snippets.xml:13
-#, fuzzy, kde-format
-#| msgid ""
-#| "When calculating quantiles, specify one or more probabilities, optionally "
-#| "logarithmic (see below). If this setting is left empty, a sequence of "
-#| "evenly spaced (log) probabilities will be used, instead."
+#, kde-format
 msgid ""
 "When calculating quantiles, specify one or more probabilities, optionally "
 "logarithmic (see below). If this setting is left empty, the setting above is "
 "used, instead."
 msgstr ""
 "Ao calcular cuantís, indique unha ou máis probabilidades, opcionalmente "
-"logarítmicas (ver embaixo). Se deixa esta opción baleira, no seu lugar "
-"usarase unha secuencia de probabilidades (logarítmicas) equidistantes."
+"logarítmicas (ver embaixo). Se deixa esta opción baleira, a opción anterior "
+"usarase no seu lugar."
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting> (refers to element labelled "Logarithmic probabilities")
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <setting> (refers to element labelled "Logarithmic probabilities")
@@ -3003,7 +2986,7 @@ msgstr ""
 #: rkward/plugins/distributions/dist_help_snippets.xml:17
 #, kde-format
 msgid "Show a preview of the result."
-msgstr ""
+msgstr "Amosar unha vista previa do resultado."
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <caption title="...">
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <caption title="...">
@@ -3184,10 +3167,9 @@ msgstr "Calcular os cuantís das probabilidades indicadas"
 #. i18n: ectx: (Loaded from Weibull distribution calculator) <snippet> <spinbox label="...">
 #. i18n: ectx: (Loaded from Wilcoxon Rank Sum distribution calculator) <snippet> <spinbox label="...">
 #: rkward/plugins/distributions/dist_snippets.xml:32
-#, fuzzy, kde-format
-#| msgid "Number of trials"
+#, kde-format
 msgid "Number of quantiles"
-msgstr "Número de intentos"
+msgstr "Número de cuantís"
 
 #. i18n: ectx: (Loaded from Beta distribution calculator) <snippet> <spinbox label="...">
 #. i18n: ectx: (Loaded from Binomial probabilities, quantiles, densities) <snippet> <spinbox label="...">
@@ -3210,10 +3192,9 @@ msgstr "Número de intentos"
 #. i18n: ectx: (Loaded from Weibull distribution calculator) <snippet> <spinbox label="...">
 #. i18n: ectx: (Loaded from Wilcoxon Rank Sum distribution calculator) <snippet> <spinbox label="...">
 #: rkward/plugins/distributions/dist_snippets.xml:33
-#, fuzzy, kde-format
-#| msgid "Number of trials"
+#, kde-format
 msgid "Number of probabilities"
-msgstr "Número de intentos"
+msgstr "Número de probabilidades"
 
 #. i18n: ectx: (Loaded from Beta distribution calculator) <snippet> <text>
 #. i18n: ectx: (Loaded from Binomial probabilities, quantiles, densities) <snippet> <text>
@@ -3238,7 +3219,7 @@ msgstr "Número de intentos"
 #: rkward/plugins/distributions/dist_snippets.xml:34
 #, kde-format
 msgid "- or -"
-msgstr ""
+msgstr "— ou —"
 
 #. i18n: ectx: (Loaded from Beta distribution calculator) <snippet> <matrix label="...">
 #. i18n: ectx: (Loaded from Binomial probabilities, quantiles, densities) <snippet> <matrix label="...">
@@ -4349,13 +4330,13 @@ msgid ""
 "try again. If it still persists, use only the \"Submit\" button to view the "
 "exported plot in the Output window."
 msgstr ""
-"Marque esta caixa para fornecer unha vista previa da gráfica da función. "
+"Marque esta caixa para obter unha vista previa da gráfica da función. "
 "Aparecerá unha nova xanela de gráficos e actualizarase automaticamente en "
 "base aos parámetros escollidos. A xanela podería tardar un anaco en "
 "aparecer. Ás veces pode que só se amose un dispositivo de gráficos baleiro; "
 "se ocorre, peche o dispositivo (dev.off() ou mesmo pode que graphics.off()), "
 "desmarque a caixa, agarde un anaco e probe de novo. Se persiste, use "
-"unicamente o botón de «Enviar» para ver a gráfica exportada na xanela de "
+"unicamente o botón de «Entregar» para ver a gráfica exportada na xanela de "
 "saída."
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Plot Options")
@@ -4452,7 +4433,7 @@ msgid ""
 "\" box."
 msgstr ""
 "Escolla os valores axeitados para os distintos parámetros da distribución e "
-"seleccione o tipo de función. O botón de «Enviar» exportará a gráfica na "
+"seleccione o tipo de función. O botón de «Entregar» exportará a gráfica na "
 "xanela de «Saída». Para visualizar dinamicamente a gráfica marque a caixa de "
 "«Vista previa»."
 
@@ -5165,7 +5146,7 @@ msgstr "Representar as probabilidades de t de estudante"
 #, kde-format
 msgctxt "Tukey distribution"
 msgid "Studentized Range (Tukey)"
-msgstr "Intervalo estudentizado (Tukey)"
+msgstr "Intervalo estudantizado (Tukey)"
 
 #. i18n: ectx: (Loaded from Plot Studentized Range (Tukey) probabilities) <summary>
 #: rkward/plugins/distributions/plot_tukey_distribution.rkh:12
@@ -5174,7 +5155,7 @@ msgid ""
 "Distribution function plot for the Studentized Range (Tukey) distribution."
 msgstr ""
 "Gráfica de función de distribución para a distribución de intervalo "
-"estudentizado (Tukey)."
+"estudantizado (Tukey)."
 
 #. i18n: ectx: (Loaded from Plot Studentized Range (Tukey) probabilities) <settings> <setting> (refers to element labelled "Choose type of function plot")
 #. i18n: ectx: (Plot Studentized Range (Tukey) probabilities) <dialog label="Plot Studentized Range (Tukey) probabilities"> <text>
@@ -5227,7 +5208,7 @@ msgstr "Graos de liberdade para a estimación da derivación estándar"
 #: rkward/plugins/distributions/plot_tukey_distribution.xml:32
 #, kde-format
 msgid "Plot Studentized Range (Tukey) probabilities"
-msgstr "Representar as probabilidades de intervalo estudentizado (Tukey)"
+msgstr "Representar as probabilidades de intervalo estudantizado (Tukey)"
 
 #. i18n: ectx: (Loaded from Plot Uniform probabilities)
 #: rkward/plugins/distributions/plot_uniform_distribution.js:15
@@ -5509,8 +5490,7 @@ msgid ""
 "succeeding."
 msgstr ""
 "Asegurarse de que os datos non conteñen n/a ou, se os conteñen, que se marca "
-"a opción «Excluír os n/a», xa que se non o fai o máis probábel é que a proba "
-"falle."
+"a opción «Excluír os n/a», xa que se non o fai é probábel que a proba falle."
 
 #. i18n: ectx: (Loaded from Jarque-Bera Normality Test) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/distributions/tests/jb_test.rkh:21
@@ -5539,7 +5519,7 @@ msgid ""
 "Select if your data has missing values. The NAs are then omitted when "
 "performing the test. (Default: YES)"
 msgstr ""
-"Seleccionar se aos datos lles faltan valors. Os n/a omitiranse nese caso ao "
+"Seleccionar se aos datos lles faltan valores. Os n/a omitiranse nese caso ao "
 "realizar a proba. (predeterminado: SI)"
 
 #. i18n: ectx: (Jarque-Bera Normality Test) <dialog label="Jarque-Bera Normality Test"> <tab label="Options"> <checkbox label="...">
@@ -5606,7 +5586,7 @@ msgstr "Nota: os obxectos deben ter entre 3 e 5000 valores"
 #: rkward/plugins/distributions/tukey.js:9
 #, kde-format
 msgid "Studentized Range (Tukey) distribution"
-msgstr "Distribución de intervalo estudentizado (Tukey)"
+msgstr "Distribución de intervalo estudantizado (Tukey)"
 
 #. i18n: ectx: (Loaded from Studentized Range (Tukey) distribution calculator) <summary>
 #: rkward/plugins/distributions/tukey.rkh:11
