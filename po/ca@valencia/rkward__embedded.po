@@ -1072,7 +1072,7 @@ msgstr "El color que s'utilitzarà."
 #: rkward/plugins/distributions/../plots/color_chooser.xml:22
 #, kde-format
 msgid "Choose color"
-msgstr "Seleccioneu el color"
+msgstr "Seleccioneu un color"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <embed label="...">
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="...">

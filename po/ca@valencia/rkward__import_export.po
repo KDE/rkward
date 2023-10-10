@@ -2617,7 +2617,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write.xml:20
 #, kde-format
 msgid "Select variables"
-msgstr "Seleccioneu el variables"
+msgstr "Seleccioneu les variables"
 
 #. i18n: ectx: (Save R objects) <dialog label="Save R objects"> <tab label="Select variables"> <varslot label="...">
 #: rkward/plugins/00saveload/save/save.xml:39

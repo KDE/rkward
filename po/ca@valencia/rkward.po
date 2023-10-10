@@ -3092,9 +3092,9 @@ msgid ""
 "Error parsing XML-file. Error-message was: '%1' in line '%2', column '%3'. "
 "Expect further errors to be reported below"
 msgstr ""
-"Hi ha un error en analitzar el fitxer XML. El missatge d'error ha sigut: "
-"«%1» en la línia «%2», columna «%3». Espereu que s'informen d'altres errors "
-"ací davall"
+"S'ha produït un error en l'anàlisi sintàctica del fitxer en XML. El missatge "
+"d'error ha sigut: «%1» en la línia «%2», columna «%3». Espereu que "
+"s'informen d'altres errors ací davall"
 
 #: rkward/misc/xmlhelper.cpp:160
 #, kde-format
@@ -3562,8 +3562,8 @@ msgid ""
 "There has been an error while trying to parse the description of this plugin "
 "('%1'). Please refer to stdout for details."
 msgstr ""
-"S'ha produït un error en analitzar la descripció d'este connector («%1»). "
-"Per a més detalls, reviseu l'eixida estàndard."
+"S'ha produït un error en l'anàlisi sintàctica de la descripció d'este "
+"connector («%1»). Per a més detalls, reviseu l'eixida estàndard."
 
 #: rkward/plugin/rkstandardcomponent.cpp:89
 #, kde-format

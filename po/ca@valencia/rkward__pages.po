@@ -415,7 +415,7 @@ msgid ""
 "try to look up the R help page for whichever keyword the cursor is currently "
 "on."
 msgstr ""
-"Prement F2 (o seleccionant «Referència de funció» des del menú contextual) "
+"Prement «F2» (o seleccionant «Referència de funció» des del menú contextual) "
 "s'intentarà buscar la pàgina d'ajuda d'R per a la paraula clau sobre la qual "
 "està el cursor actualment."
 
@@ -958,9 +958,9 @@ msgid ""
 "R help for that symbol. Also available from the Help menu, or the right "
 "mouse button menu"
 msgstr ""
-"Mentre el cursor és sobre un símbol d'R o una funció, prement F2 es buscarà "
-"l'ajuda d'R per a este símbol. També està disponible des del menú Ajuda, o "
-"el menú del botó dret del ratolí"
+"Mentre el cursor es troba sobre un símbol d'R o una funció, prement «F2» es "
+"buscarà l'ajuda d'R per a este símbol. També està disponible des del menú "
+"Ajuda, o el menú del botó dret del ratolí"
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -1950,8 +1950,8 @@ msgid ""
 "F2 to search the R help for the symbol under the cursor in scripts and the "
 "console"
 msgstr ""
-"F2 per a buscar en l'ajuda d'R per al símbol baix el cursor en els scripts i "
-"en la consola"
+"«F2» per a buscar en l'ajuda d'R per al símbol baix el cursor en els scripts "
+"i en la consola"
 
 #. i18n: ectx: (Split views) <title>
 #: rkward/pages/rkward_split_views.rkh:8
@@ -2512,10 +2512,10 @@ msgid ""
 "by default."
 msgstr ""
 "El navegador de l'espai de treball es pot invocar utilitzant «Finestres -> "
-"Activa -> Mostra / Oculta Espai de treball» (la drecera predeterminada és Alt"
-"+1), o fent clic damunt de la icona de «l'espai de treball», la qual està "
-"ubicada en la part superior de la vora esquerra de la finestra, de manera "
-"predeterminada."
+"Activa -> Mostra / Oculta Espai de treball» (la drecera predeterminada és "
+"«Alt+1»), o fent clic damunt de la icona de «l'espai de treball», la qual "
+"està ubicada en la part superior de la vora esquerra de la finestra, de "
+"manera predeterminada."
 
 #. i18n: ectx: (Workspace Browser) <section title="...">
 #: rkward/pages/rkward_workspace_browser.rkh:16
@@ -2584,9 +2584,9 @@ msgstr ""
 "paquets i els seus objectes. Parlant en general, si desactiveu esta opció, "
 "només es mostraran els vostres «propis» objectes, mentre que amb l'opció "
 "activada, es mostraran tots els objectes predefinits. Parlant més "
-"tècnicament, quan l'opció es desactiva, només es mostra «.GlobalEnv» (vegeu "
-"<link href=\"rkward://rhelp/globalenv\"/>), que és l'entorn en el qual creeu "
-"i editeu les vostres dades."
+"tècnicament, quan l'opció està desactivada, només es mostra «."
+"GlobalEnv» (vegeu <link href=\"rkward://rhelp/globalenv\"/>), que és "
+"l'entorn en el qual creeu i editeu les vostres dades."
 
 #. i18n: ectx: (Workspace Browser) <section title="What is shown">
 #: rkward/pages/rkward_workspace_browser.rkh:16
