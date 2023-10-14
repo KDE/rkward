@@ -1008,7 +1008,7 @@ msgstr ""
 "A forma predeterminada de acceder a el é premer «Espazo de traballo» na "
 "parte esquerda da xanela da aplicación. Isto permítelle examinar e manipular "
 "todos os obxectos do espazo de traballo de R. De maneira predeterminada só "
-"se mostra o ambiente «.GlobalEnv» (que é no que normalmente realizará o seu "
+"se amosa o ambiente «.GlobalEnv» (que é no que normalmente realizará o seu "
 "traballo; consulte <link href=\"rkward://rhelp/.GlobalEnv\"/>). Pero pode "
 "marcar a opción «Amosar todos os ambientes» para explorar facilmente datos e "
 "funcións das bibliotecas de R cargadas (e mesmo en espazos de nomes de "
@@ -1604,7 +1604,7 @@ msgid ""
 "current plot in the history, and, whenever possible the complete plot call."
 msgstr ""
 "<b>Propiedades da gráfica</b>: Isto mostra información adicional, como o "
-"tamaño que a gráfica que se mostra ocupa en memoria, a posición da gráfica "
+"tamaño que a gráfica que se amosa ocupa en memoria, a posición da gráfica "
 "actual no historial e, de ser posíbel, a chamada da gráfica."
 
 #. i18n: ectx: (Screen device history) <section title="Configurable Settings">
@@ -2498,7 +2498,7 @@ msgstr ""
 #: rkward/pages/rkward_workspace_browser.rkh:16
 #, kde-format
 msgid "What is shown"
-msgstr "O que se mostra"
+msgstr "O que se amosa"
 
 #. i18n: ectx: (Workspace Browser) <section title="What is shown">
 #: rkward/pages/rkward_workspace_browser.rkh:16
@@ -2559,7 +2559,7 @@ msgstr ""
 "A opción de «Amosar todos os ambientes» controla se se amosan os ambientes "
 "de paquetes e os seus obxectos. Se desactiva esta opción só se amosarán os "
 "seus obxectos, mentres que se a activa amosaranse tamén todos os obxectos "
-"predefinidos. Sendo máis técnicos, ao desactivar a opción só se mostra o ."
+"predefinidos. Sendo máis técnicos, ao desactivar a opción só se amosa o ."
 "GlobalEnv (consulte <link href=\"rkward://rhelp/globalenv\"/>) , que é o "
 "ambiente no que vostede crear e edita os seus datos."
 

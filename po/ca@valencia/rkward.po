@@ -1642,8 +1642,8 @@ msgid ""
 "dialog)"
 msgstr ""
 "Marqueu %1 per a instal·lar (la instal·lació pròpiament dita encara no està "
-"admesa, però se us demanarà un enllaç a una pàgina de descàrrega en l'última "
-"pàgina d'este diàleg)"
+"admesa, però se us demanarà un enllaç cap a una pàgina de descàrrega en "
+"l'última pàgina d'este diàleg)"
 
 #: rkward/dialogs/rksetupwizard.cpp:101
 #, kde-format
@@ -6849,7 +6849,7 @@ msgstr "&Neteja l'eixida"
 #: rkward/windows/rkhtmlwindow.cpp:1031
 #, kde-format
 msgid "&Revert to last saved state"
-msgstr "&Retorna al últim estat guardat"
+msgstr "&Retorna a l'últim estat guardat"
 
 #: rkward/windows/rkhtmlwindow.cpp:1035
 #, kde-format
@@ -7364,7 +7364,7 @@ msgstr "Diagrama últim"
 #: rkward/windows/rkwindowcatcher.cpp:762
 #, kde-format
 msgid "Go to plot"
-msgstr "Ves al diagrama"
+msgstr "Ves fins al diagrama"
 
 #: rkward/windows/rkwindowcatcher.cpp:771
 #, kde-format

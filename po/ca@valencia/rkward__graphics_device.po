@@ -233,9 +233,9 @@ msgstr ""
 "«punts per polzada»). Així, amplària_píxels = amplària_polzades * "
 "resolució_ppp. Si la resolució està establida com «Resolució "
 "predeterminada», llavors s'utilitza un valor de 96 com a resolució "
-"predeterminada per a exportar a JPEG o PNG i s'utilitza un valor de 72 per a "
-"exportar via ghostscript. Altrament, s'utilitza el valor de resolució "
-"proporcionat. Res d'açò s'aplica per a exportar a Postscript/PDF a on el "
+"predeterminada per a exportar cap a JPEG o PNG i s'utilitza un valor de 72 "
+"per a exportar via ghostscript. Altrament, s'utilitza el valor de resolució "
+"proporcionat. Res d'açò s'aplica per a exportar cap a Postscript/PDF a on el "
 "paràmetre d'amplària es proporciona en polzades."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Width in inches")
@@ -252,7 +252,7 @@ msgstr ""
 "l'alçària o l'amplària. Esta restricció se superposa llegint l'amplària (en "
 "polzades) des de <b>par(\"din\")[1]</b> i després establint «par(\"din\")[1] "
 "* resolution» com a valor del paràmetre amplària (en píxels). Una altra "
-"vegada, res d'açò es requerix per a exportar a Postscript/PDF."
+"vegada, res d'açò es requerix per a exportar cap a Postscript/PDF."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Height in inches")
 #: rkward/plugins/x11device/export.rkh:30
