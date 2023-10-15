@@ -84,6 +84,15 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		<context attribute="Output Error" lineEndContext="#pop" name="Output Error">
 		</context>
 		
+		<!-- Common type highlight -->
+		<context attribute="Output Common Type" name="outputcommontype">
+			<!-- Floats are hard to catch in R Output -->
+			<RegExpr attribute="Output Float" context="#stay" String="(?&lt;=&lt;|&gt;|\(|\[| |^)-?([1-9][0-9]*|0)(\.[0-9]*)?i?(e[-+]?[ ]{0,3}[0-9]+)?(?![0-9a-zA-Z/_\~\-\]+]|[.,;:][^ \t])"/>
+			<WordDetect attribute="Output NA" context="#stay" String="NA"/>
+			<WordDetect attribute="Output True" context="#stay" String="TRUE"/>
+			<WordDetect attribute="Output False" context="#stay" String="FALSE"/>
+		</context>
+		
 		<!-- Special context for tibble output -->
 		<context attribute="Output Tibble" lineEndContext="#stay" name="outputtibble">
 			<!-- If a "> " is encountered at line start, pop back to ctxbase (and to command0 from there) -->
@@ -98,10 +107,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 			<RegExpr attribute="Output Data Type" context="#stay" String="&lt;(lgl|int|dbl|chr|cpl|raw|list|named list|fct|ord|date|dttm|drtn|time|int64|blob|df\[\,1\]|tibble\[\,1\]|I|\?\?\?|list&lt;.+&gt;|vctrs_vc|prtl_fctr|prtl|fn|sym|expression|quos)&gt;"/>
 			<RegExpr attribute="Output Index" context="#stay" String="[ ]{0,2}[0-9]+" column="0"/>
 			<!-- Common highlights -->
-			<RegExpr attribute="Output Float" context="#stay" String="(?&lt;=&lt;|&gt;|\(|\[| |^)-?([1-9][0-9]*|0)(\.[0-9]*)?i?(e[-+]?[ ]{0,3}[0-9]+)?(?![0-9a-zA-Z/_\~\-\]+]|[.,;:][^ \t])"/>
-			<WordDetect attribute="Output NA" context="#stay" String="NA"/>
-			<WordDetect attribute="Output True" context="#stay" String="TRUE"/>
-			<WordDetect attribute="Output False" context="#stay" String="FALSE"/>
+			<IncludeRules context="outputcommontype"/>
 		</context>
 		
 		<!-- Special context for str_view() -->
@@ -141,11 +147,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 			<!-- Other specials highlights -->
 			<RegExpr attribute="Output Index" context="#stay" String="([ ]{0,2}|[ ]*\[)[0-9]+,?[0-9]*(\]|\: )(?![.0-9]|.*[:,.;]$)" column="0"/>
 			<RegExpr attribute="Output Index" context="#stay" String="([ ]+\[,[1-9]+[0-9]*\])+$" column="0"/>
-			<!-- Floats are hard to catch in R Output -->
-			<RegExpr attribute="Output Float" context="#stay" String="(?&lt;=&lt;|&gt;|\(|\[| |^)-?([1-9][0-9]*|0)(\.[0-9]*)?i?(e[-+]?[ ]{0,3}[0-9]+)?(?![0-9a-zA-Z/_\~\-\]+]|[.,;:][^ \t])"/>
-			<WordDetect attribute="Output NA" context="#stay" String="NA"/>
-			<WordDetect attribute="Output True" context="#stay" String="TRUE"/>
-			<WordDetect attribute="Output False" context="#stay" String="FALSE"/>
+			<!-- Common highlights -->
+			<IncludeRules context="outputcommontype"/>
 		</context>
 		
 		<!-- This context is not really used, but meant to be included. It checks whether a new line is a continuation of a command. If so, it eats the "+ " at the line start. Else it tries to pop back to the top level. (NOTE: An output line starting with "+" will be considered a command line!) -->
