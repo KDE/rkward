@@ -1498,15 +1498,15 @@ msgid_plural ""
 "will be no way to bring them back. Really delete them?"
 msgstr[0] ""
 "Está a piques de eliminar o ficheiro de recuperación %2. Non será posíbel "
-"recuperalo. Está seguro de que quere continuar?"
+"recuperalo. Seguro que quere continuar?"
 msgstr[1] ""
 "Está a piques de eliminar %1 ficheiros de recuperación (o máis recente é "
-"%2). Non será posíbel recuperalos. Está seguro de que quere continuar?"
+"%2). Non será posíbel recuperalos. Seguro que quere continuar?"
 
 #: rkward/dialogs/rkrecoverdialog.cpp:61
 #, kde-format
 msgid "Really delete recovery file(s)?"
-msgstr "Está seguro de que quere eliminar os ficheiros de recuperación?"
+msgstr "Seguro que quere eliminar os ficheiros de recuperación?"
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:64
 #, fuzzy, kde-format
@@ -7415,7 +7415,7 @@ msgstr ""
 "suficientemente sinxelos (os datos numéricos son máis fáciles de manexar que "
 "os factoriais), pode que editalos non sexa un problema. Pode configurar este "
 "aviso (ou desactivalo) en «Configuración → Configurar RKWard → Xeral».\n"
-"Está seguro de que quere editar o obxecto?"
+"Seguro que quere editar o obxecto?"
 
 #: rkward/windows/rkworkplace.cpp:647
 #, kde-format
