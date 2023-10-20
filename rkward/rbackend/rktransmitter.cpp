@@ -269,6 +269,7 @@ void RKAbstractTransmitter::setConnection (QLocalSocket *_connection) {
 void RKAbstractTransmitter::disconnected () {
 	RK_TRACE (RBACKEND);
 
+	if (!connection) return;  // -> May happen in RKRBackendTransmitter::doExit()
 	handleTransmissionError ("Connection closed unexpectedly. Last error was: " + connection->errorString ());
 }
 
