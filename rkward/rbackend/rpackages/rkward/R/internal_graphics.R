@@ -91,7 +91,7 @@ assign(".rk.preview.devices", list (), envir=.rk.variables)
 	rk.replace.function ("plot.new", as.environment ("package:graphics"),
 		function () {
 			rk.record.plot$.plot.new.hook ()
-			eval (body (.rk.backups$plot.new))
+			eval(body(rkward:::.rk.backups$plot.new))
 		})
 
 	rk.replace.function ("dev.off", as.environment ("package:grDevices"),
@@ -100,17 +100,17 @@ assign(".rk.preview.devices", list (), envir=.rk.variables)
 				rk.record.plot$onDelDevice (devId = which)
 			
 			# see http://thread.gmane.org/gmane.comp.statistics.rkward.devel/802
-			.rk.do.call ("killDevice", as.character (which))
+			rkward:::.rk.do.call("killDevice", as.character(which))
 			
-			ret <- eval (body (.rk.backups$dev.off))
+			ret <- eval(body(rkward:::.rk.backups$dev.off))
 
 			printfile <- .rk.variables$.rk.printer.devices[[as.character (which)]]
 			if (!is.null (printfile)) {
-				.rk.do.plain.call ("printPreview", printfile, FALSE)
-				.rk.variables$.rk.printer.devices[[as.character (which)]] <- NULL
+				rkward:::.rk.do.plain.call ("printPreview", printfile, FALSE)
+				rkward:::.rk.variables$.rk.printer.devices[[as.character (which)]] <- NULL
 			}
 
-			.rk.discard.preview.device.num(which)
+			rkward:::.rk.discard.preview.device.num(which)
 
 			return (ret)
 		})
