@@ -2294,7 +2294,7 @@ msgstr "Imprimix una avaluació"
 #: rkward/plugins/00saveload/save/ExportRMarkdown.js:123
 #, kde-format
 msgid "Export RMarkdown file"
-msgstr "Exporta un fitxer RMarkdown"
+msgstr "Exporta un fitxer en RMarkdown"
 
 #. i18n: ectx: (Loaded from Export RMarkdown) <settings> <setting> (refers to element labelled "RMarkdown file")
 #: rkward/plugins/00saveload/save/ExportRMarkdown.rkh:21
@@ -2365,7 +2365,8 @@ msgstr "Exporta un RMarkdown"
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:16
 #, kde-format
 msgid "RKWard GUI to export RMarkdown documents in various formats"
-msgstr "IGU de RKWard per a exportar documents RMarkdown a diversos formats"
+msgstr ""
+"IGU de RKWard per a exportar documents en RMarkdown en diversos formats"
 
 #. i18n: ectx: (Export RMarkdown) <about> <author given="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:17
@@ -2391,7 +2392,7 @@ msgstr "Origen i destinació"
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:71
 #, kde-format
 msgid "RMarkdown file"
-msgstr "Fitxer RMarkdown"
+msgstr "Fitxer en RMarkdown"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> <tabbook label="Export RMarkdown"> <tab label="Source and target"> <dropdown label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:72

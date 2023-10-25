@@ -421,7 +421,8 @@ msgstr ""
 "de funció per als objectes en este paquet.\n"
 "Habitualment un paquet es fica en la llista negra, si té una enorme "
 "quantitat de dades i es tardaria molt a carregar-lo. Per a traure'l de la "
-"llista, anar a «Configuració -> Configura RKWard -> Espai de treball»."
+"llista, anar fins a «Configuració -> Configura RKWard... -> Espai de "
+"treball»."
 
 #: rkward/core/robject.cpp:275
 #, kde-format
@@ -691,9 +692,9 @@ msgstr ""
 "dedicar temps a ajudar a millorar RKWard. Per a ajudar-nos a gestionar "
 "eficientment la vostra sol·licitud, envieu els informes d'error o desitjos "
 "al <a href=\"%1\">sistema de seguiment d'errors de KDE</a>. Cal tindre en "
-"compte que cal un compte d'usuari per açò, de manera que podem contactar amb "
-"vós per a qüestions relacionades. <b>Si no teniu cap compte, Primer <a href="
-"\"%2\">creeu-ne un</a>.</b></p><p>En cas que açò no siga possible per "
+"compte que cal un compte d'usuari per a açò, de manera que podem contactar "
+"amb vós per a qüestions relacionades. <b>Si no teniu cap compte, Primer <a "
+"href=\"%2\">creeu-ne un</a>.</b></p><p>En cas que açò no siga possible per "
 "qualsevol motiu, consulteu a <a href=\"%3\">%3</a> les maneres alternatives "
 "d'informar de problemes.</p>"
 
@@ -707,7 +708,7 @@ msgid ""
 "in the \"Comment\" field.</p>"
 msgstr ""
 "<p><b>Quina informació he de proporcionar i com?</b></p>Fent clic en "
-"«Informa d'un problema» anireu al sistema de seguiment d'errors de KDE. "
+"«Informa d'un problema» anireu fins al sistema de seguiment d'errors de KDE. "
 "Després d'iniciar la sessió, hi haurà certa informació que estarà emplenada "
 "en el formulari d'informe. Assegureu-vos que empleneu els dades que falten - "
 "en anglés - a on s'indiquen, especialment en el camp de «Comentari».</p>"
@@ -2646,7 +2647,7 @@ msgstr "No s'ha pogut eliminar el fitxer existent %1. Falten permisos?"
 #: rkward/misc/rkoutputdirectory.cpp:188
 #, kde-format
 msgid "Failure while copying output archive to %1"
-msgstr "No s'ha pogut copiar el fitxer d'eixida a %1"
+msgstr "No s'ha pogut copiar l'arxiu d'eixida a %1"
 
 #: rkward/misc/rkoutputdirectory.cpp:200
 #, kde-format
@@ -3169,8 +3170,8 @@ msgid ""
 msgstr ""
 "Heu intentat executar el connector «%1», però este connector és desconegut. "
 "Probablement necessiteu carregar el fitxer corresponent PluginMap "
-"(Configuració -> Configura RKWard -> Connectors), o potser el connector ha "
-"sigut canviat el nom."
+"(Configuració -> Configura RKWard... -> Connectors), o potser el connector "
+"ha sigut canviat el nom."
 
 #: rkward/plugin/rkcomponentmap.cpp:465
 #, kde-format
@@ -4269,7 +4270,7 @@ msgid ""
 msgstr ""
 "S'han trobat paquets nous (llistats davall) de connectors de RKWard, i s'han "
 "activat automàticament. Per a desactivar els paquets de connectors "
-"seleccionats, utilitzeu «Configuració -> Configura RKWard -> Connectors»."
+"seleccionats, utilitzeu «Configuració -> Configura RKWard... -> Connectors»."
 
 #: rkward/rkward.cpp:350
 #, kde-format
@@ -4316,7 +4317,7 @@ msgid ""
 msgstr ""
 "Nota: No tornarà a aparéixer l'avís quant a estos fitxers del mapa de "
 "connectors, fins que actualitzeu RKWard, o els elimineu i els torneu a "
-"afegir a «Configuració -> Configura RKWard -> Connectors»."
+"afegir a «Configuració -> Configura RKWard... -> Connectors»."
 
 #: rkward/rkward.cpp:414
 #, kde-format
@@ -6367,9 +6368,9 @@ msgid ""
 "Preview any output to the RKWard Output Window. This preview will be empty, "
 "if there is no call to <i>rk.print()</i> or other RKWard output commands."
 msgstr ""
-"Previsualitza qualsevol eixida a la finestra d'eixida de RKWard. Esta vista "
-"prèvia estarà buida, si no hi ha cap crida a la <i>rk.print()</i> o altres "
-"ordres d'eixida de RKWard."
+"Previsualitza qualsevol eixida cap a la finestra d'eixida de RKWard. Esta "
+"vista prèvia estarà buida, si no hi ha cap crida a la <i>rk.print()</i> o "
+"altres ordres d'eixida de RKWard."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:424
 #, kde-format
@@ -6570,10 +6571,11 @@ msgid ""
 "calling function will never be reached, because the call was the last step "
 "in the caller. In these cases, the behavior is identical to 'Continue'.</p>"
 msgstr ""
-"<p>Continua fins que s'arriba a l'invocador d'esta funció (excepte si abans "
-"s'arriba a una altra sentència de depuració)</p><p><b>Nota:</b> En algun "
-"cas, mai s'arribarà a la funció invocant perquè la crida era l'últim pas a "
-"l'invocador. En estos casos, el comportament és idèntic a «Continua».</p>"
+"<p>Continua fins que s'arriba fins a l'invocador d'esta funció (excepte si "
+"abans s'arriba fins a una altra sentència de depuració)</p><p><b>Nota:</b> "
+"En algun cas, mai s'arribarà fins a la funció invocant perquè la crida era "
+"l'últim pas a l'invocador. En estos casos, el comportament és idèntic a "
+"«Continua».</p>"
 
 #: rkward/windows/rkdebugconsole.cpp:51
 #, kde-format
@@ -6625,7 +6627,7 @@ msgstr ""
 "<b>No</b> oferix cap característica per a depurar el codi d'R.</p><p>Cal "
 "tindre en compte que la llista de missatges es neteja cada vegada que es "
 "tanca la finestra.</p><p>Es pot controlar el tipus i el nivell de gravetat "
-"dels missatges a «Configuració -> Configura RKWard -> Depuració»</p>"
+"dels missatges a «Configuració -> Configura RKWard... -> Depuració»</p>"
 
 #: rkward/windows/rkdebugmessagewindow.cpp:71
 #, kde-format
@@ -7130,7 +7132,7 @@ msgstr ""
 "RKWard. Tanmateix, no s'ha creat cap finestra, o RKWard ha fallat en "
 "detectar la finestra nova. Si creieu que RKWard ho podria haver fet millor, "
 "considereu informar-ho com un error. De manera alternativa, podríeu voler "
-"ajustar «Configuració -> Configura RKWard -> Gràfics en pantalla»."
+"ajustar «Configuració -> Configura RKWard... -> Gràfics en pantalla»."
 
 #: rkward/windows/rkwindowcatcher.cpp:294
 #, kde-format
@@ -7151,7 +7153,7 @@ msgid ""
 msgstr ""
 "La finestra actual pareix massa gran per a ajustar-se a la pantalla. Si açò "
 "passa sovint, podríeu voler ajustar la mida predeterminada de la finestra "
-"gràfica a «Configuració -> Configura RKWard -> Gràfics en pantalla»."
+"gràfica a «Configuració -> Configura RKWard... -> Gràfics en pantalla»."
 
 #: rkward/windows/rkwindowcatcher.cpp:351
 #, kde-format
@@ -7455,7 +7457,8 @@ msgstr ""
 "petits abans d'editar-los. D'altra banda, si teniu memòria suficient, o les "
 "dades són prou simples (les dades numèriques són més fàcils de gestionar que "
 "els factors), es podran editar sense problemes. Podeu configurar este avís "
-"(o desactivar-lo del tot) a «Configuració -> Configura RKWard -> General».\n"
+"(o desactivar-lo del tot) a «Configuració -> Configura RKWard... -> "
+"General».\n"
 "Edite l'objecte?"
 
 #: rkward/windows/rkworkplace.cpp:647
