@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-09 00:42+0000\n"
-"PO-Revision-Date: 2023-10-25 14:06+0200\n"
+"PO-Revision-Date: 2023-10-30 14:41+0100\n"
 "Last-Translator: Xavier BESNARD <xavier.besnard@neuf.fr>\n"
 "Language-Team: fr\n"
 "Language: fr\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.08.1\n"
+"X-Generator: Lokalize 23.08.2\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
@@ -1078,7 +1078,7 @@ msgid ""
 "administrator privileges (you will be prompted for the password)?"
 msgstr ""
 "Vos permissions actuelles d'utilisateur ne vous permettent pas de supprimer "
-"les paquets suivants. Voulez-vous vraiment ignorer ces paquets our voulez-"
+"les paquets suivants. Voulez-vous vraiment ignorer ces paquets ou voulez-"
 "vous continuer avec des privilèges de superutilisateur (vous allez être "
 "invité à fournir le mot de passe) ?"
 
@@ -2135,7 +2135,7 @@ msgstr "Nouveau site Internet"
 #: rkward/main.cpp:273
 #, kde-format
 msgid "Germán Márquez Mejía"
-msgstr "Germán Márquez Mejía"
+msgstr "German Marquez Mejia"
 
 #: rkward/main.cpp:273
 #, kde-format
@@ -2374,7 +2374,7 @@ msgstr ""
 #: rkward/misc/celleditor.cpp:49
 #, kde-format
 msgid "[Omitted %1 more factor levels]"
-msgstr "[Omitted %1 more factor levels]"
+msgstr "[Omis %1 niveaux de facteurs supplémentaires]"
 
 #: rkward/misc/editformatdialog.cpp:32
 #, kde-format
@@ -4603,7 +4603,7 @@ msgid ""
 "save your workspace, and you see this message, <b>your data may not be "
 "saved, yet!</b></p><p>How do you want to proceed?</p>"
 msgstr ""
-"<p>Une ou plusieurs operations sont en attente.</p><p>Si vous avez récemment "
+"<p>Une ou plusieurs opérations sont en attente.</p><p>Si vous avez récemment "
 "choisi d'enregistrer votre espace de travail et que vous voyez ce message, "
 "<b>vos données pourraient ne pas avoir été encore enregistrées !</b></"
 "p><p>Voulez-vous vraiment continuer ?</p>"
@@ -5089,7 +5089,7 @@ msgstr "« @ »-opérateur (objet@membre)"
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:86
 #, kde-format
 msgid "'slot()'-function (slot(object, member))"
-msgstr "« slot() » - fonction (slot(object, member))"
+msgstr "« slot() » - fonction (slot(objet, membre))"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:88
 #, kde-format
@@ -5097,7 +5097,7 @@ msgctxt ""
 "Note: S4-slot() is a programming term in R, and should not be translated, "
 "here"
 msgid "Operator for access to S4-slot()s"
-msgstr "Opérateur pour access to S4-slot()s"
+msgstr "Opérateur pour accès à S4-slot()s"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:91
 #, kde-format
@@ -5992,7 +5992,7 @@ msgid ""
 "libraries. On the other hand, building packages from source provides best "
 "compatibility."
 msgstr ""
-"L'installation de paquets à partir de binaires précompilés (lorsque "
+"L'installation de paquets à partir de binaires pré-compilés (lorsque "
 "disponible) est en général plus rapide et ne nécessite aucune installation "
 "d'outils de développement ou de bibliothèques. D'un autre côté, la "
 "compilation des paquets à partir des sources offre une meilleure "
@@ -6307,11 +6307,11 @@ msgid ""
 "this session. To enable the call tip, install any other (earlier or later) "
 "version of (lib|kf5)ktexteditor."
 msgstr ""
-"En raison d'un bogue dans la version 5.92.0 de ktexteditor (la version en "
-"cours d'utilisation, en ce moment), la fonctionnalité « conseil d'appel de "
-"fonction » planterait et a été désactivé dans cette session. Pour activer "
-"l'appel, installez toute autre version (antérieure ou ultérieure) de (lib|"
-"kf5) ktexteditor."
+"En raison d'un bogue dans la version 5.92.0 du logiciel « ktexteditor » (la "
+"version en cours d'utilisation, en ce moment), la fonctionnalité « conseil "
+"d'appel de fonction » planterait et a été désactivé dans cette session. Pour "
+"activer l'appel, veuillez installer toute autre version (antérieure ou "
+"ultérieure) de (lib|kf5) ktexteditor."
 
 #: rkward/windows/rkcodecompletion.cpp:61
 #, kde-format
@@ -7027,7 +7027,7 @@ msgstr "Référence R vers « %1 »"
 #: rkward/windows/rkhtmlwindow.cpp:1386
 #, kde-format
 msgid "BROKEN REFERENCE"
-msgstr "REFERENCE CASSÉE"
+msgstr "RÉFÉRENCE CASSÉE"
 
 #: rkward/windows/rkmdiwindow.cpp:433
 #, kde-format
