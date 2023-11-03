@@ -1,18 +1,18 @@
-# Xavier Besnard <xavier.besnard@neuf.fr>, 2021, 2022.
+# SPDX-FileCopyrightText: 2021, 2022, 2023 Xavier Besnard <xavier.besnard@neuf.fr>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward__analysis\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-07-17 00:44+0000\n"
-"PO-Revision-Date: 2022-06-07 13:09+0200\n"
-"Last-Translator: Xavier Besnard <xavier.besnard@neuf.fr>\n"
-"Language-Team: French <kde-francophone@kde.org>\n"
+"PO-Revision-Date: 2023-11-01 22:01+0100\n"
+"Last-Translator: Xavier BESNARD <xavier.besnard@neuf.fr>\n"
+"Language-Team: fr\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.04.1\n"
+"X-Generator: Lokalize 23.08.2\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
@@ -411,8 +411,8 @@ msgid ""
 "Select two data sets for the Ansari-Bradley two-sample test. For this test "
 "the samples need to be numeric vectors (see below for details)."
 msgstr ""
-"Sélectionnez deux ensembles de données pour le test à deux échantillons "
-"d'Ansari-Bradley. Pour ce test, les échantillons doivent être des vecteurs "
+"Sélectionnez deux ensembles de données pour le test à deux échantillons de "
+"Ansari-Bradley. Pour ce test, les échantillons doivent être des vecteurs "
 "numériques (voir ci-dessous pour plus de détails)."
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test) <settings> <setting> (refers to element labelled "compare")
@@ -758,8 +758,8 @@ msgid ""
 "This test performs the Ansari-Bradley two-sample test to test for a "
 "difference in scale parameters."
 msgstr ""
-"Ce test réalise le test à deux échantillons d'Ansari-Bradley pour tester une "
-"différence dans les paramètres d'échelle."
+"Ce test réalise le test à deux échantillons de Ansari-Bradley pour tester "
+"une différence dans les paramètres d'échelle."
 
 #. i18n: ectx: (Loaded from Ansari-Bradley two-sample test) <settings> <setting> (refers to element labelled "compute exact p-value")
 #: rkward/plugins/analysis/ansari_bradley/ansari_bradley_test.rkh:22
@@ -861,7 +861,7 @@ msgstr ""
 #, kde-format
 msgctxt "R code comment"
 msgid "polyserial expects x to be numeric"
-msgstr "polyserial s'attend à ce que x soit numérique."
+msgstr "La fonction « polyserial » s'attend à ce que x soit numérique."
 
 #. i18n: ectx: (Loaded from Correlation matrix)
 #: rkward/plugins/analysis/corr_matrix.js:131
@@ -1739,7 +1739,7 @@ msgstr "Test de l'aplatissement de Anscombe-Glynn"
 msgid ""
 "This test performs the Anscombe-Glynn test of kurtosis for normal samples."
 msgstr ""
-"Ce test réalise le test d'Anscombe-Glynn de l'aplatissement pour les "
+"Ce test réalise le test de Anscombe-Glynn de l'aplatissement pour les "
 "échantillons normaux."
 
 #. i18n: ectx: (Loaded from Anscombe-Glynn test of kurtosis) <usage>
@@ -1750,7 +1750,7 @@ msgid ""
 "samples. You can choose multiple data. See <link href=\"rkward://rhelp/"
 "anscombe.test\"/>."
 msgstr ""
-"Sélectionnez les données pour réaliser le test d'Anscombe-Glynn de "
+"Sélectionnez les données pour réaliser le test de Anscombe-Glynn de "
 "l'aplatissement pour les échantillons normaux. Vous pouvez choisir plusieurs "
 "données. Veuillez consulter la page <link href=\"rkward://rhelp/anscombe.test"
 "\"/>."
@@ -4607,7 +4607,7 @@ msgstr "Moyenne géométrique"
 #: rkward/plugins/uni1.2/code.js:29
 #, kde-format
 msgid "interquantile mean"
-msgstr "Moyenne interquantile"
+msgstr "Moyenne interquartile"
 
 #. i18n: ectx: (Loaded from Basic statistics)
 #. i18n: ectx: (Loaded from Descriptive Statistics)
