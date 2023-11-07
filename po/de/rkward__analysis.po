@@ -3,20 +3,21 @@
 # Burkhard Lück <lueck@hube-lueck.de>, 2014, 2015, 2016, 2021.
 # Frederik Schwarzer <schwarzer@kde.org>, 2022.
 #
+# SPDX-FileCopyrightText: 2023 Andre Heinecke <aheinecke@gnupg.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2022-02-26 03:26+0100\n"
-"Last-Translator: Frederik Schwarzer <schwarzer@kde.org>\n"
+"PO-Revision-Date: 2023-11-06 14:39+0100\n"
+"Last-Translator: Andre Heinecke <aheinecke@gnupg.com>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 21.08.0\n"
+"X-Generator: Lokalize 23.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -250,7 +251,7 @@ msgstr "Lineare Regression"
 #, kde-format
 msgctxt "Power of tests"
 msgid "Power Analysis"
-msgstr "Mächtigkeitsanalyse"
+msgstr "Poweranalyse"
 
 #. i18n: ectx: <hierarchy> <menu label="Analysis"> <menu label="...">
 #: rkward/plugins/analysis.pluginmap:77
@@ -2324,7 +2325,7 @@ msgstr "Groß"
 #: rkward/plugins/analysis/power/Poweranalysis.xml:14
 #, kde-format
 msgid "Power analysis"
-msgstr "Mächtigkeitsanalyse"
+msgstr "Poweranalyse"
 
 #. i18n: ectx: (Power analysis) <summary>
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:13
@@ -2498,7 +2499,7 @@ msgstr "Friedrichsmeier"
 msgctxt ""
 "Here 'power' is a common statistical term and should not be translated"
 msgid "Power analysis"
-msgstr "Mächtigkeitsanalyse"
+msgstr "Poweranalyse"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:106
