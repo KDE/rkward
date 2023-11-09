@@ -4,14 +4,14 @@
 # version 3 or later versions approved by the membership of KDE e.V.
 #
 # Josep M. Ferrer <txemaq@gmail.com>, 2015, 2018, 2019, 2020, 2021, 2022, 2023.
-# Antoni Bella Pérez <antonibella5@yahoo.com>, 2018, 2020, 2022.
+# SPDX-FileCopyrightText: 2018, 2020, 2022, 2023 Antoni Bella Pérez <antonibella5@yahoo.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2023-08-07 17:32+0200\n"
-"Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
+"PO-Revision-Date: 2023-11-07 20:19+0100\n"
+"Last-Translator: Antoni Bella Pérez <antonibella5@yahoo.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
-"X-Generator: Lokalize 23.04.3\n"
+"X-Generator: Lokalize 23.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1624,8 +1624,8 @@ msgid ""
 "Check this box if the histogram is to be added to the current plot. This is "
 "the <i>add</i> parameter."
 msgstr ""
-"Marqueu esta casella si cal afegir l'histograma al diagrama actual. Este és "
-"el paràmetre «<i>add</i>»."
+"Seleccioneu esta casella si cal afegir l'histograma al diagrama actual. Este "
+"és el paràmetre «<i>add</i>»."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Frequency")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:16
@@ -1708,9 +1708,9 @@ msgid ""
 "<i>border=FALSE</i> is added to the code. Otherwise a color is provided as "
 "the argument to <i>border</i>."
 msgstr ""
-"Si es dibuixa una vora en les barres de l'histograma. Si no es marca esta "
-"opció, llavors s'afegirà «<i>border=FALSE</i>» al codi. En cas contrari, es "
-"proporcionarà un color com a argument a «<i>border</i>»."
+"Si es dibuixa una vora en les barres de l'histograma. Si no se selecciona "
+"esta opció, llavors s'afegirà «<i>border=FALSE</i>» al codi. En cas "
+"contrari, es proporcionarà un color com a argument a «<i>border</i>»."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:26
@@ -1720,7 +1720,7 @@ msgid ""
 "Check the above box to use this option."
 msgstr ""
 "Este és l'argument «<i>border</i>», el qual proporciona el color de la vora. "
-"Marqueu la casella anterior per a utilitzar esta opció."
+"Seleccioneu la casella anterior per a utilitzar esta opció."
 
 # skip-rule: t-sc-plot
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Line type for histogram")
@@ -1756,8 +1756,8 @@ msgstr "Este és el paràmetre «<i>angle</i>»."
 #, kde-format
 msgid "Check this box to use a fill color for the histogram bars."
 msgstr ""
-"Marqueu esta casella per a utilitzar un color de farciment per a les barres "
-"de l'histograma."
+"Seleccioneu esta casella per a utilitzar un color de farciment per a les "
+"barres de l'histograma."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:33
@@ -2133,9 +2133,8 @@ msgid ""
 "If this box is checked, the <i>main</i> title will be used literally "
 "(quoted). Otherwise is will be interpreted as an R statement"
 msgstr ""
-"Si esta casella està marcada, el títol «<i>main</i>» s'utilitzarà "
-"literalment (entre cometes). En cas contrari, s'interpretarà com una "
-"declaració d'R"
+"Si se selecciona, el títol «<i>main</i>» s'utilitzarà literalment (entre "
+"cometes). En cas contrari, s'interpretarà com una declaració d'R"
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Sub-title (at bottom). Leave empty for default title")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:20
@@ -2155,14 +2154,14 @@ msgid ""
 "If this box is checked, the <i>sub</i> title will be used literally "
 "(quoted). Otherwise is will be interpreted as an R statement"
 msgstr ""
-"Si esta casella està marcada, el títol «<i>sub</i>» s'utilitzarà literalment "
-"(entre cometes). En cas contrari, s'interpretarà com una declaració d'R"
+"Si se selecciona, el títol «<i>sub</i>» s'utilitzarà literalment (entre "
+"cometes). En cas contrari, s'interpretarà com una declaració d'R"
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Custom margins")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:22
 #, kde-format
 msgid "Enable this option, if you want to customize the margins."
-msgstr "Habiliteu esta opció, si voleu personalitzar els marges."
+msgstr "Seleccioneu esta opció, si voleu personalitzar els marges."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Top")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:23
@@ -2223,8 +2222,8 @@ msgid ""
 "This specifies the <i>log</i> argument to plot.default. Check this box to "
 "set <i>log=\"x\"</i>. See R reference on <b>plot.default</b>."
 msgstr ""
-"Especifica l'argument «<i>log</i>» a plot.default. Marqueu esta casella per "
-"a establir «<i>log=\"x\"</i>». Vegeu la referència d'R sobre <b>plot."
+"Especifica l'argument «<i>log</i>» a plot.default. Seleccioneu esta casella "
+"per a establir «<i>log=\"x\"</i>». Vegeu la referència d'R sobre <b>plot."
 "default</b>."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Y axis logarithmic")
@@ -2235,9 +2234,10 @@ msgid ""
 "set <i>log=\"y\"</i>. Check both the boxes to set <i>log=\"xy\"</i>. See R "
 "reference on <b>plot.default</b>."
 msgstr ""
-"Especifica l'argument «<i>log</i>» a plot.default. Marqueu esta casella per "
-"a establir «<i>log=\"yy\"</i>». Marqueu les dues caselles per a establir "
-"«<i>log=\"xy\"</i>». Vegeu la referència d'R sobre <b>plot.default</b>."
+"Especifica l'argument «<i>log</i>» a plot.default. Seleccioneu esta casella "
+"per a establir «<i>log=\"yy\"</i>». Seleccioneu les dues caselles per a "
+"establir «<i>log=\"xy\"</i>». Vegeu la referència d'R sobre <b>plot.default</"
+"b>."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Labels (leave empty for default)")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:34
@@ -2250,7 +2250,7 @@ msgid ""
 msgstr ""
 "Les etiquetes de l'eix X i Y. Estos són els arguments «<i>xlab</i>» i "
 "«<i>ylab</i>» a <b>plot.default</b>, respectivament. Les caselles de "
-"selecció habilita o inhabiliten les etiquetes que s'estan avaluant com a "
+"selecció habiliten o inhabiliten les etiquetes que s'estan avaluant com a "
 "cadenes literals (entre cometes). Per a aconseguir un salt de línia (en una "
 "cadena entre cometes), introduïu «\\n»."
 
@@ -2309,11 +2309,11 @@ msgid ""
 "not for <b>plot.default</b> but rather for the function <b>grid</b>. For "
 "this to be functional the embedding plugin should implement it internally."
 msgstr ""
-"Marqueu esta casella per a afegir una quadrícula al diagrama actual. Per a "
-"les diverses opcions de la quadrícula, vegeu <link href=\"rkward://component/"
-"x11grid\"/>. Cal tindre en compte que estes opcions no són per a <b>plot."
-"default</b>, sinó per a la funció <b>grid</b>. Perquè açò siga funcional, el "
-"connector incrustat hauria d'implementar-ho internament."
+"Seleccioneu esta casella per a afegir una quadrícula al diagrama actual. Per "
+"a les diverses opcions de la quadrícula, vegeu <link href=\"rkward://"
+"component/x11grid\"/>. Cal tindre en compte que estes opcions no són per a "
+"<b>plot.default</b>, sinó per a la funció <b>grid</b>. Perquè açò siga "
+"funcional, el connector incrustat hauria d'implementar-ho internament."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -3162,15 +3162,16 @@ msgid ""
 "Check this option to use a custom line width. In which case, provide the "
 "width below."
 msgstr ""
-"Marqueu esta opció per a utilitzar una amplària de línia personalitzada. En "
-"este cas, proporcioneu l'amplària davall."
+"Seleccioneu esta opció per a utilitzar una amplària de línia personalitzada. "
+"En este cas, proporcioneu l'amplària davall."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Line width")
 #: rkward/plugins/distributions/../x11device/grid.rkh:20
 #, kde-format
 msgid "This is the <i>lwd</i> argument. Check the above option to use this."
 msgstr ""
-"Este és l'argument «<i>lwd</i>». Marqueu l'opció anterior per a utilitzar-lo."
+"Este és l'argument «<i>lwd</i>». Seleccioneu l'opció anterior per a "
+"utilitzar-lo."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Line type")
 #: rkward/plugins/distributions/../x11device/grid.rkh:21
