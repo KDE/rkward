@@ -395,8 +395,8 @@ msgid ""
 msgstr ""
 "Si els caràcters especials (p. ex., dièresi) no es mostren correctament, "
 "probablement el fitxer de dades utilitza una configuració regional diferent "
-"de la sessió d'R. En este cas, activeu esta opció i especifiqueu davall la "
-"codificació correcta dels caràcters."
+"de la sessió d'R. En este cas, seleccioneu esta opció i especifiqueu davall "
+"la codificació correcta dels caràcters."
 
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <setting> (refers to element labelled "Convert from:")
 #. i18n: ectx: (Loaded from Import SPSS file) <snippet> <setting> (refers to element labelled "Convert from:")
@@ -413,7 +413,7 @@ msgid ""
 "checked, for this to be enabled."
 msgstr ""
 "Seleccioneu la codificació de caràcters des de la qual convertir. Cal "
-"activar l'opció de més amunt per a habilitar esta."
+"seleccionar l'opció de més amunt per a habilitar esta."
 
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <setting> (refers to element labelled "Other encoding")
 #. i18n: ectx: (Loaded from Import SPSS file) <snippet> <setting> (refers to element labelled "Other encoding")
@@ -665,8 +665,8 @@ msgid ""
 "If checked, and the rows have differing length, they will be padded with "
 "empty values in the imported data."
 msgstr ""
-"Si està activada i les files tenen llargàries diferents, es farciran amb "
-"valors buits a les dades importades."
+"Si se selecciona i les files tenen llargàries diferents, es farciran amb "
+"valors buits en les dades importades."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Allow escaped characters")
 #: rkward/plugins/00saveload/import/import_csv.rkh:43
@@ -1316,8 +1316,8 @@ msgid ""
 "inside one excel file). Check this option to import all datasets as a list."
 msgstr ""
 "Alguns fitxers de dades poden contindre més d'un conjunt de dades (p. ex., "
-"diversos fulls dins d'un fitxer de full de càlcul). Marqueu esta opció per "
-"importar tots els conjunts de dades com a llista."
+"diversos fulls dins d'un fitxer de full de càlcul). Seleccioneu esta opció "
+"per a importar tots els conjunts de dades com a llista."
 
 #. i18n: ectx: (Loaded from Generic data import) <settings> <setting> (refers to element labelled "Import specific sub-set")
 #: rkward/plugins/00saveload/import/import_generic_rio.rkh:26
@@ -1437,9 +1437,9 @@ msgid ""
 "as an attribute \"variable.labels\" (see <link href=\"rkward://rhelp/read."
 "spss\"/>)"
 msgstr ""
-"RKWard pot mostrar els SPSS com a etiquetes de variables. Activeu esta opció "
-"si voleu convertir les etiquetes de variables SPSS al format RKWard. Si "
-"deixeu esta opció sense marcar, les etiquetes de variables SPSS també "
+"RKWard pot mostrar els SPSS com a etiquetes de variables. Seleccioneu esta "
+"opció si voleu convertir les etiquetes de variables SPSS al format RKWard. "
+"Si deixeu esta opció sense marcar, les etiquetes de variables SPSS també "
 "estaran disponibles com un atribut «variable.labels» (vegeu <link href="
 "\"rkward://rhelp/read.spss\"/>)"
 
@@ -1479,8 +1479,8 @@ msgid ""
 msgstr ""
 "Vista prèvia de les dades importades. Només es mostraran les 50 primeres "
 "files i columnes, per motius de rendiment. Internament, la vista prèvia "
-"utilitza un «data.frame», encara que no s'haja activat <label id=\"data_frame"
-"\"/>."
+"utilitza un «data.frame», encara que no s'haja seleccionat <label id="
+"\"data_frame\"/>."
 
 #. i18n: ectx: (Import SPSS file) <dialog label="...">
 #: rkward/plugins/00saveload/import/import_spss.xml:24
@@ -1912,7 +1912,7 @@ msgid ""
 "If checked, empty leading and trailing rows will be omitted from the "
 "imported data."
 msgstr ""
-"Si està activada, les files buides inicials i finals s'ometran de les dades "
+"Si se selecciona, les files buides inicials i finals s'ometran de les dades "
 "importades."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Skip empty leading or trailing columns")
@@ -1922,7 +1922,7 @@ msgid ""
 "If checked, empty leading and trailing columns will be omitted from the "
 "imported data."
 msgstr ""
-"Si està activada, les columnes buides inicials i finals s'ometran de les "
+"Si se selecciona, les columnes buides inicials i finals s'ometran de les "
 "dades importades."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Column classes (empty for automatic)")
@@ -2080,10 +2080,10 @@ msgid ""
 "not yet exist, it will be created. If it already exists, it will be "
 "overwritten completely, i.e. deleting all objects inside it!"
 msgstr ""
-"Activeu esta opció (i especifiqueu un entorn), per tal de carregar les dades "
-"en un entorn diferent de «.GlobalEnv». Si l'entorn especificat encara no "
-"existix, es crearà. Si ja existix, se sobreescriurà completament, eliminant "
-"tots els objectes que continga!"
+"Seleccioneu esta opció (i especifiqueu un entorn), per tal de carregar les "
+"dades en un entorn diferent de «.GlobalEnv». Si l'entorn especificat encara "
+"no existix, es crearà. Si ja existix, se sobreescriurà completament, "
+"eliminant tots els objectes que continga!"
 
 #. i18n: ectx: (Load an R data file) <dialog label="...">
 #: rkward/plugins/00saveload/import/load_data.xml:14
@@ -2160,7 +2160,7 @@ msgid ""
 "source file. This may be needed, if the source file refers to further files "
 "using relative paths."
 msgstr ""
-"Si està activada, el directori de treball es canviarà al directori del "
+"Si se selecciona, el directori de treball es canviarà al directori del "
 "fitxer del codi font. Açò serà necessari si el fitxer del codi font es "
 "referix a altres fitxers utilitzant camins relatius."
 
@@ -2174,11 +2174,11 @@ msgid ""
 "create new objects (in contrast to just producing printed output), it will "
 "have to be run in the global environment."
 msgstr ""
-"Si està activada, el fitxer de codi font s'interpreta en un entorn local, en "
-"lloc de l'entorn global. Açò és molt més segur, ja que no se sobreescriuran "
-"objectes existents. D'altra banda, si la finalitat del fitxer de codi font "
-"és crear objectes nous (en lloc de només produir una eixida impresa), caldrà "
-"que s'execute en l'entorn global."
+"Si se selecciona, el fitxer de codi font s'interpretarà en un entorn local, "
+"en lloc de l'entorn global. Açò és molt més segur, ja que no se "
+"sobreescriuran objectes existents. D'altra banda, si la finalitat del fitxer "
+"de codi font és crear objectes nous (en lloc de només produir una eixida "
+"impresa), caldrà que s'execute en l'entorn global."
 
 #. i18n: ectx: (Loaded from Source an R file) <settings> <setting> (refers to element labelled "Echo source statements")
 #: rkward/plugins/00saveload/import/source.rkh:22
@@ -2817,7 +2817,7 @@ msgid ""
 "option is checked."
 msgstr ""
 "El fitxer a on s'ha de guardar. Els fitxers existents se sobreescriuran, a "
-"menys que s'active l'opció d'annexar."
+"menys que se seleccione l'opció d'annexar."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Append to file (if it exists)")
 #: rkward/plugins/00saveload/save/write_csv.rkh:32
@@ -2826,8 +2826,8 @@ msgid ""
 "Should existing files be overwritten or the data appended? If this is greyed "
 "out, the selected preset sets this for you."
 msgstr ""
-"Cal sobreescriure els fitxers existents o cal annexar les dades? Si açò està "
-"en gris, el valor predefinit seleccionat ho ha establit per vós."
+"Cal sobreescriure els fitxers existents o cal annexar les dades? Si està en "
+"gris, el valor predefinit seleccionat ho ha establit per tu."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "File format")
 #: rkward/plugins/00saveload/save/write_csv.rkh:35
@@ -2849,8 +2849,8 @@ msgid ""
 "Specify the desired decimal point character. If this is greyed out, the "
 "selected preset sets this for you."
 msgstr ""
-"Especifiqueu el caràcter desitjat de coma decimal. Si açò està en gris, el "
-"valor predefinit seleccionat ho ha establit per vós."
+"Especifiqueu el caràcter desitjat de coma decimal. Si està en gris, el valor "
+"predefinit seleccionat ho ha establit per tu."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "")
 #: rkward/plugins/00saveload/save/write_csv.rkh:42
@@ -2865,8 +2865,8 @@ msgid ""
 "Specify the desired field separator character. If this is greyed out, the "
 "selected preset sets this for you."
 msgstr ""
-"Especifiqueu el caràcter desitjat de separació de camp. Si açò està en gris, "
-"el valor predefinit seleccionat ho ha establit per vós."
+"Especifiqueu el caràcter desitjat de separació de camp. Si està en gris, el "
+"valor predefinit seleccionat ho ha establit per tu."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "")
 #: rkward/plugins/00saveload/save/write_csv.rkh:48
@@ -2895,8 +2895,8 @@ msgid ""
 "Decide how to deal with column names. If this is greyed out, the selected "
 "preset sets this for you."
 msgstr ""
-"Decidiu com tractar els noms de les columnes. Si açò està en gris, el valor "
-"predefinit seleccionat ho ha establit per vós."
+"Decidiu com tractar els noms de les columnes. Si està en gris, el valor "
+"predefinit seleccionat ho ha establit per tu."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Column names (character vector)")
 #: rkward/plugins/00saveload/save/write_csv.rkh:63
@@ -2930,7 +2930,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.rkh:75
 #, kde-format
 msgid "Check this to have all string values quoted."
-msgstr "Activeu-la per a tindre tots els valors de cadenes entre cometes."
+msgstr "Seleccioneu-la per a tindre tots els valors de cadenes entre cometes."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Handling double quote characters")
 #: rkward/plugins/00saveload/save/write_csv.rkh:78
@@ -2941,8 +2941,8 @@ msgid ""
 "this for you."
 msgstr ""
 "Controla com es gestionen les cometes existents en els valors - es poden "
-"escapar o fer-les dobles. Si açò està en gris, el valor predefinit "
-"seleccionat ho ha establit per vós."
+"escapar o fer-les dobles. Si està en gris, el valor predefinit seleccionat "
+"ho ha establit per tu."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Character for missing values")
 #: rkward/plugins/00saveload/save/write_csv.rkh:81

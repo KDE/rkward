@@ -692,11 +692,11 @@ msgstr ""
 "dedicar temps a ajudar a millorar RKWard. Per a ajudar-nos a gestionar "
 "eficientment la vostra sol·licitud, envieu els informes d'error o desitjos "
 "al <a href=\"%1\">sistema de seguiment d'errors de KDE</a>. Cal tindre en "
-"compte que cal un compte d'usuari per a açò, de manera que podem contactar "
-"amb vós per a qüestions relacionades. <b>Si no teniu cap compte, Primer <a "
-"href=\"%2\">creeu-ne un</a>.</b></p><p>En cas que açò no siga possible per "
-"qualsevol motiu, consulteu a <a href=\"%3\">%3</a> les maneres alternatives "
-"d'informar de problemes.</p>"
+"compte que cal un compte d'usuari per a fer açò, de manera que podem "
+"contactar amb vós per a qüestions relacionades. <b>Si no teniu cap compte, "
+"primer <a href=\"%2\">creeu-ne un</a>.</b></p><p>En cas que açò no siga "
+"possible per qualsevol motiu, consulteu a <a href=\"%3\">%3</a> les maneres "
+"alternatives d'informar de problemes.</p>"
 
 #: rkward/dialogs/rkerrordialog.cpp:51
 #, kde-format
@@ -914,7 +914,7 @@ msgid ""
 "formats, but requires a number of additional R packages to be installed (you "
 "will be prompted for missing packages). Do you want to give that a try?"
 msgstr ""
-"El paquet «rio» oferix suport genèric per importar molts formats d'arxiu "
+"El paquet «rio» oferix suport genèric per a importar molts formats d'arxiu "
 "diferents, però requerix que s'instal·len una sèrie de paquets R addicionals "
 "(se us demanarà pels paquets que falten). Voleu provar-ho?"
 
@@ -1124,7 +1124,7 @@ msgid ""
 msgstr ""
 "<p>De manera alternativa, si teniu accés a un compte d'administrador en este "
 "ordinador, el podeu utilitzar ja siga per a instal·lar els paquets en "
-"qüestió, o per a modificar els permisos de «%1». Malauradament, el canvi "
+"qüestió, o per a modificar els permisos de «%1». Desgraciadament, el canvi "
 "automàtic a administrador encara no funciona en RKWard per a Windows.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:249
@@ -1256,7 +1256,8 @@ msgid ""
 msgstr ""
 "<p>Alguns (però no tots) paquets d'R tenen connectors per a RKWard. Açò vol "
 "dir que proporcionen una interfície gràfica d'usuari de manera addicional a "
-"les funcions d'R. Marqueu esta casella per a només mostrar estos paquets.</p>"
+"les funcions d'R. Seleccioneu esta casella per a mostrar només estos paquets."
+"</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:661
 #, kde-format
@@ -1278,8 +1279,8 @@ msgid ""
 msgstr ""
 "Alguns paquets «suggerixen» paquets addicionals, que no són estrictament "
 "necessaris per a utilitzar este paquet, però que poden proporcionar "
-"funcionalitats relacionades addicionals. Activeu esta opció per a incloure "
-"estos paquets suggerits addicionals."
+"funcionalitats relacionades addicionals. Seleccioneu esta opció per a "
+"incloure estos paquets suggerits addicionals."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:675
 #, kde-format
@@ -1353,8 +1354,9 @@ msgid ""
 "<p>You can select packages for installation / removal by checking / "
 "unchecking the corresponding boxes in this column.</p>"
 msgstr ""
-"<p>Podeu seleccionar els paquets que voleu instal·lar o eliminar activant o "
-"desactivant les caselles corresponents en esta columna.</p>"
+"<p>Podeu seleccionar els paquets que voleu instal·lar o eliminar, "
+"seleccionant o desseleccionant les caselles corresponents en esta columna.</"
+"p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:946
 #, kde-format
@@ -1642,8 +1644,8 @@ msgid ""
 "will be prompted with a link to a download page at the last page of this "
 "dialog)"
 msgstr ""
-"Marqueu %1 per a instal·lar (la instal·lació pròpiament dita encara no està "
-"admesa, però se us demanarà un enllaç cap a una pàgina de descàrrega en "
+"Seleccioneu %1 per a instal·lar (la instal·lació pròpiament dita encara no "
+"està admesa, però se us demanarà un enllaç cap a una pàgina de descàrrega en "
 "l'última pàgina d'este diàleg)"
 
 #: rkward/dialogs/rksetupwizard.cpp:101
@@ -3669,8 +3671,8 @@ msgid ""
 "from a loaded package."
 msgstr ""
 "Mostra els objectes a tots els entorns del camí <i>search()</i>, en lloc de "
-"només els de <i>.GlobalEnv</i>. Activeu-la si voleu seleccionar objectes des "
-"d'un paquet carregat."
+"només els de <i>.GlobalEnv</i>. Seleccioneu-la si voleu seleccionar objectes "
+"des d'un paquet carregat."
 
 #: rkward/plugin/rkvarselector.cpp:71
 #, kde-format
@@ -3933,8 +3935,8 @@ msgstr ""
 "Una ordre en el dorsal d'R està intentant canviar la codificació de "
 "caràcters. Encara que RKWard ho permet, i intentarà ajustar-se a la "
 "configuració regional nova, esta operació pot provocar errors subtils, si la "
-"finestra de dades està oberta actualment. A més, esta característica no està "
-"ben provada, i s'aconsella guardar l'espai de treball abans de continuar.\n"
+"finestra de dades està oberta. A més, esta característica no està ben "
+"provada, i s'aconsella guardar l'espai de treball abans de continuar.\n"
 "Si teniu qualsevol editor de dades obert, o en cas de dubte, primer es "
 "recomana tancar-los (probablement açò es detectarà automàticament en "
 "versions posteriors de RKWard). En este cas, ara seleccioneu «Cancel·la», i "
@@ -4027,7 +4029,7 @@ msgstr "Dispositiu gràfic número %1"
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Active)"
-msgstr "%1 (Activa)"
+msgstr "%1 (activa)"
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:592
 #, kde-format
@@ -4247,8 +4249,8 @@ msgstr ""
 "«Cancel·la» tot seguit.</p><p>En cas que cliqueu en «Continua», no "
 "s'executarà cap codi R, fins que no cliqueu «Envia» en la finestra de "
 "diàleg, i us animem a revisar el codi R generat abans de fer-ho.</"
-"p><p><i>Nota</i>: Activant «No ho tornes a preguntar», només suprimirà este "
-"missatge per a la resta d'esta sessió."
+"p><p><i>Nota</i>: Seleccionant «No ho tornes a preguntar», només suprimirà "
+"este missatge per a la resta d'esta sessió."
 
 #: rkward/rkward.cpp:304
 #, kde-format
@@ -4882,7 +4884,7 @@ msgstr ""
 "p><h2>Connectors de RKWard</h2><p><a href=\"rkward://settings/plugins"
 "\">Diàlegs gràfics per a les funcionalitats d'R</a>. Normalment estos "
 "connectors estan preinstal·lats amb RKWard, o amb un paquet d'R. Tanmateix, "
-"es poden activar/desactivar per a ajudar a mantindre manejables els menús. "
+"es poden activar o desactivar per a ajudar a mantindre manejables els menús. "
 "Cal tindre en compte que és relativament senzill <a href=\"https://api.kde."
 "org/doc/rkwardplugins/\">crear els vostres propis diàlegs personalitzats com "
 "a connectors</a>!</p><h2>Connectors de Kate</h2><p><a href=\"rkward://"
@@ -6385,9 +6387,9 @@ msgid ""
 "every time you modify the script. When this option is disabled, the preview "
 "will be updated whenever you save the script, only."
 msgstr ""
-"Quan esta opció està habilitada, s'activarà una actualització de la vista "
-"prèvia cada vegada que modifiqueu l'script. Quan esta opció està "
-"inhabilitada, la vista prèvia s'actualitzarà només quan guardeu l'script."
+"Quan se selecciona esta opció, s'activarà una actualització de la vista "
+"prèvia cada vegada que modifiqueu l'script. Quan no se selecciona, la vista "
+"prèvia s'actualitzarà només quan guardeu l'script."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:432
 #, kde-format
@@ -6504,7 +6506,7 @@ msgstr "Vista prèvia de l'script executant-se en una consola R interactiva"
 #: rkward/windows/rkcommandeditorwindow.cpp:1057
 #, kde-format
 msgid "%1 (Active)"
-msgstr "%1 (Activa)"
+msgstr "%1 (activa)"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:1077
 #, kde-format

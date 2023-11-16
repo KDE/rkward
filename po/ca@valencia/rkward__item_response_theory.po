@@ -282,7 +282,7 @@ msgid ""
 "cases are used. If checked, only complete cases will be considered."
 msgstr ""
 "Especifica com es tractaran els valors que falten. De manera predeterminada "
-"s'utilitzen tots els casos disponibles. Si està activada, només es "
+"s'utilitzen tots els casos disponibles. Si se selecciona, només es "
 "consideraran els casos complets."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <settings> <setting> (refers to element labelled "Usual IRT parameterization")
@@ -300,7 +300,7 @@ msgid ""
 "If checked, the coefficients' estimates are reported under the usual Item "
 "Response Theory parameterization (which is the default)."
 msgstr ""
-"Si està activada, l'estimació dels coeficients s'informa davall l'habitual "
+"Si se selecciona, l'estimació dels coeficients s'informarà davall l'habitual "
 "Teoria de Resposta d'element (el qual és el predeterminat)."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <settings> <setting title="..."> (refers to element labelled "Number of EM iterations:")
@@ -922,7 +922,7 @@ msgid ""
 "items, as in the 1PL Rasch model. That leaves difficulty and guessing "
 "parameters to be estimated."
 msgstr ""
-"Si està activada, s'assumix que els paràmetres de discriminació són iguals "
+"Si se selecciona, s'assumirà que els paràmetres de discriminació són iguals "
 "per a tots els elements, com al model Rasch 1PL. Açò deixa que s'estimen els "
 "paràmetres de dificultat i conjectura."
 
@@ -1222,7 +1222,7 @@ msgstr ""
 #, kde-format
 msgid "If checked, standard errors are computed (which is the default)."
 msgstr ""
-"Si està activada, els errors estàndard es calculen (el qual és el "
+"Si se selecciona, es calcularan els errors estàndard (el qual és el "
 "predeterminat)."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model) <settings> <setting> (refers to element labelled "Normalize parameters to sum-0")
@@ -1241,8 +1241,8 @@ msgid ""
 "design matrix. Uncheck this box to restrict the first parameter to 0."
 msgstr ""
 "Els paràmetres es normalitzen a suma-0 de manera predeterminada especificant "
-"una matriu de disseny apropiada. Desactiveu esta casella per a restringir el "
-"primer paràmetre a 0."
+"una matriu de disseny apropiada. Desseleccioneu esta casella per a "
+"restringir el primer paràmetre a 0."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model) <related>
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rating scale model) <related>
@@ -1706,7 +1706,7 @@ msgid ""
 "If checked it is assumed that discrimination parameters are equal for all "
 "items."
 msgstr ""
-"Si està activada, s'assumix que els paràmetres de discriminació són iguals "
+"Si se selecciona, s'assumirà que els paràmetres de discriminació són iguals "
 "per a tots els elements."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <settings> <setting> (refers to element labelled "Start values")
@@ -1729,7 +1729,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:31
 #, kde-format
 msgid "If checked the Hessian matrix is computed."
-msgstr "Si està activada, es calcularà la matriu Hessiana."
+msgstr "Si se selecciona, es calcularà la matriu Hessiana."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <settings> <setting title="..."> (refers to element labelled "Number of digits to abbreviate item names:")
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:51

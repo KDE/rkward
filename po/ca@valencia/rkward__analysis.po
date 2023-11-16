@@ -463,7 +463,7 @@ msgstr "Definix si s'ha de calcular un valor p exacte."
 #: rkward/plugins/analysis/ansari_bradley/ansari_bradley_test.rkh:23
 #, kde-format
 msgid "Check this if you want the confidence interval to be computed."
-msgstr "Marqueu-la si voleu calcular l'interval de confiança."
+msgstr "Seleccioneu-la si voleu calcular l'interval de confiança."
 
 #. i18n: ectx: (Loaded from Ansari-Bradley two-sample test) <settings> <setting> (refers to element labelled "confidence level")
 #. i18n: ectx: (Loaded from Ansari-Bradley two-sample exact test) <settings> <setting> (refers to element labelled "confidence level")
@@ -953,7 +953,7 @@ msgid ""
 "tests of bivariate normality are conducted, and also the standard errors are "
 "reported."
 msgstr ""
-"Si està marcada, es calcularà i imprimirà una taula addicional amb els "
+"Si se selecciona, es calcularà i imprimirà una taula addicional amb els "
 "valors de significació (dos costats). Per a les correlacions poliserials/"
 "policòriques, es realitzen proves de khi quadrat de normalitat bivariant, i "
 "també s'informa dels errors estàndard."
@@ -1546,9 +1546,9 @@ msgid ""
 "Should NA (and NaN) values be excluded (default)? If this option is not "
 "checked, missing values are listed in the table just like regular values."
 msgstr ""
-"S'han d'excloure els valors SD (i NaN) (predeterminat)? Si esta opció no "
-"està marcada, els valors que falten es mostraran igualment a la taula com "
-"els valors normals."
+"S'han d'excloure els valors SD (i NaN) (predeterminat)? Si no se selecciona, "
+"els valors que falten es mostraran igualment en la taula com els valors "
+"normals."
 
 #. i18n: ectx: (Loaded from N to N Crosstabulation) <settings> <setting> (refers to element labelled "Row variables")
 #: rkward/plugins/analysis/crosstab_multi.rkh:21
@@ -1670,7 +1670,7 @@ msgid ""
 "If checked, a verbose description of the alternative hypothesis will be "
 "shown along with the results"
 msgstr ""
-"Si està marcada, es mostrarà una descripció detallada de la hipòtesi "
+"Si se selecciona, es mostrarà una descripció detallada de la hipòtesi "
 "alternativa juntament amb els resultats"
 
 #. i18n: ectx: (Bonett-Seier test of Geary's kurtosis) <dialog label="Bonett-Seier test of Geary's kurtosis"> <tab label="Basic settings"> <radio label="...">
@@ -1809,13 +1809,13 @@ msgstr ""
 #: rkward/plugins/analysis/moments/moment.rkh:20
 #, kde-format
 msgid "If checked, central moments are computed."
-msgstr "Si està marcada, es calcularan els moments centrals."
+msgstr "Si se selecciona, es calcularan els moments centrals."
 
 #. i18n: ectx: (Loaded from sample moment) <settings> <setting> (refers to element labelled "compute absolute moments")
 #: rkward/plugins/analysis/moments/moment.rkh:21
 #, kde-format
 msgid "If checked, absolute moments are computed."
-msgstr "Si està marcada, es calcularan els moments absoluts."
+msgstr "Si se selecciona, es calcularan els moments absoluts."
 
 #. i18n: ectx: (Loaded from sample moment) <settings> <setting> (refers to element labelled "remove missing values")
 #: rkward/plugins/analysis/moments/moment.rkh:22
@@ -1824,7 +1824,7 @@ msgid ""
 "If checked, missing values will be excluded from calculation (default "
 "setting in RKWard)."
 msgstr ""
-"Si està marcada, els valors que falten s'exclouran del càlcul (opció "
+"Si se selecciona, els valors que falten s'exclouran del càlcul (opció "
 "predeterminada en RKWard)."
 
 #. i18n: ectx: (sample moment) <dialog label="...">
@@ -1935,19 +1935,19 @@ msgstr ""
 #: rkward/plugins/analysis/moments/skewness_kurtosis_test.rkh:20
 #, kde-format
 msgid "If this option is chosen, Skewness will be computed."
-msgstr "Si està marcada, es calcularà l'asimetria."
+msgstr "Si se selecciona, es calcularà l'asimetria."
 
 #. i18n: ectx: (Loaded from Skewness and Kurtosis) <settings> <setting> (refers to element labelled "Kurtosis")
 #: rkward/plugins/analysis/moments/skewness_kurtosis_test.rkh:21
 #, kde-format
 msgid "If this option is chosen, Pearson's kurtosis will be computed."
-msgstr "Si està marcada, es calcularà la curtosi de Pearson."
+msgstr "Si se selecciona, es calcularà la curtosi de Pearson."
 
 #. i18n: ectx: (Loaded from Skewness and Kurtosis) <settings> <setting> (refers to element labelled "Geary's kurtosis")
 #: rkward/plugins/analysis/moments/skewness_kurtosis_test.rkh:22
 #, kde-format
 msgid "If this option is chosen, Geary's kurtosis will be computed."
-msgstr "Si està marcada, es calcularà la curtosi d'en Geary."
+msgstr "Si se selecciona, es calcularà la curtosi d'en Geary."
 
 #. i18n: ectx: (Loaded from Skewness and Kurtosis) <settings> <setting> (refers to element labelled "Exclude missing values")
 #: rkward/plugins/analysis/moments/skewness_kurtosis_test.rkh:23
@@ -1956,8 +1956,8 @@ msgid ""
 "If checked, missing values will be excluded from calculation of skewness and "
 "kurtosis."
 msgstr ""
-"Si està marcada, els valors que falten s'exclouran del càlcul de l'asimetria "
-"i la curtosi."
+"Si se selecciona, els valors que falten s'exclouran del càlcul de "
+"l'asimetria i la curtosi."
 
 #. i18n: ectx: (Skewness and Kurtosis) <dialog label="Skewness and Kurtosis"> <tab label="...">
 #: rkward/plugins/analysis/moments/skewness_kurtosis_test.xml:12
@@ -2072,8 +2072,9 @@ msgid ""
 "Check if you want not the value with largest difference from the mean, but "
 "opposite (lowest, if most suspicious is highest etc.)."
 msgstr ""
-"Marqueu-la si no voleu el valor amb la diferència més gran de la mitjana, "
-"sinó l'oposat (més xicoteta, si la més sospitosa és la més alta, etc.)."
+"Seleccioneu-la si no voleu el valor amb la diferència més gran de la "
+"mitjana, sinó l'oposat (més xicoteta, si la més sospitosa és la més alta, "
+"etc.)."
 
 # skip-rule: t-pu_desp
 #. i18n: ectx: (Loaded from Chi-squared test for outlier) <settings> <setting> (refers to element labelled "Show additional descriptives")
@@ -4417,7 +4418,7 @@ msgstr ""
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.rkh:24
 #, kde-format
 msgid "Check this if you want the confidence interval to be computed/printed."
-msgstr "Marqueu-la si voleu calcular/imprimir l'interval de confiança."
+msgstr "Seleccioneu-la si voleu calcular o imprimir l'interval de confiança."
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test) <settings> <setting> (refers to element labelled "Confidence level")
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.rkh:25
@@ -4449,8 +4450,8 @@ msgstr ""
 msgid ""
 "Check this option to compute an exact p-value even in the presence of ties."
 msgstr ""
-"Marqueu esta opció per a calcular un valor p exacte fins i tot en presència "
-"de relacions."
+"Seleccioneu esta opció per a calcular un valor p exacte fins i tot en "
+"presència de relacions."
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test) <settings> <setting> (refers to element labelled "Apply continuity correction")
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.rkh:29
@@ -4459,7 +4460,7 @@ msgid ""
 "If checked a continuity correction in the normal approximation for the p-"
 "value is applied."
 msgstr ""
-"Si està marcada, s'aplicarà una correcció de continuïtat en l'aproximació "
+"Si se selecciona, s'aplicarà una correcció de continuïtat en l'aproximació "
 "normal per al valor p."
 
 #. i18n: ectx: (Wilcoxon/Mann-Whitney Test) <dialog label="...">
