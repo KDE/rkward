@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: yenitr\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2023-08-22 23:11+0300\n"
+"PO-Revision-Date: 2023-11-26 01:30+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -7182,17 +7182,17 @@ msgstr "Çizim alanı pencerenin büyüklüğü kadardır"
 #: rkward/windows/rkwindowcatcher.cpp:730
 #, kde-format
 msgid "Set fixed size 500x500"
-msgstr "Büyüklüğü 500x500 olarak ayarla"
+msgstr "Büyüklüğü 500 × 500 olarak ayarla"
 
 #: rkward/windows/rkwindowcatcher.cpp:733
 #, kde-format
 msgid "Set fixed size 1000x1000"
-msgstr "Büyüklüğü 1000x1000 olarak ayarla"
+msgstr "Büyüklüğü 1000 × 1000 olarak ayarla"
 
 #: rkward/windows/rkwindowcatcher.cpp:736
 #, kde-format
 msgid "Set fixed size 2000x2000"
-msgstr "Büyüklüğü 2000x2000 olarak ayarla"
+msgstr "Büyüklüğü 2000 × 2000 olarak ayarla"
 
 #: rkward/windows/rkwindowcatcher.cpp:739
 #, kde-format
