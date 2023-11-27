@@ -1649,7 +1649,7 @@ msgstr "Convertix les dates Stata a la classe «Date»"
 #: rkward/plugins/00saveload/import/import_stata.xml:30
 #, kde-format
 msgid "Use Stata value labels to create factors?"
-msgstr "Utilitze les etiquetes de valors Stata per a crear factors?"
+msgstr "Voleu utilitzar les etiquetes de valors Stata per a crear factors?"
 
 #. i18n: ectx: (Import STATA file) <dialog label="Import STATA file"> <tab label="General"> <frame label="Options"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_stata.xml:31
