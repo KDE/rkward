@@ -8,11 +8,16 @@
 >R</application
 >'>
 ]>
+<!--- This file is part of the RKWard project (https://rkward.kde.org).
+SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GFDL-1.2-no-invariants-or-later OR GPL-2.0-or-later
+-->
 
 <refentry lang="&language;">
 <refentryinfo>
 <title
->Інструкція користувача KDE</title>
+>Інструкція користувача RKWard</title>
 <author
 ><firstname
 >Thomas</firstname
@@ -28,9 +33,11 @@
 </affiliation>
 </author>
 <date
->20 травня 2017 року</date>
+>30 листопада 2023 року</date>
+<releaseinfo
+>RKWard 0.7.5</releaseinfo>
 <productname
->Стільничне середовище KDE</productname>
+>Програми KDE</productname>
 </refentryinfo>
 
 <refmeta>
@@ -252,6 +259,16 @@
 >), RKWard покаже попередження про те, що такі адреси <emphasis
 >може</emphasis
 > буде використано для виконання зловмисних дій у вашій системі. Це попередження стосується посилань, які могло бути використано на ненадійних сайтах у інтернеті, або інших зовнішніх джерел коду. Якщо ви хочете керувати RKWard за допомогою скрипту локально, ви можете придушити це попередження за допомогою параметра командного рядка --nowarn-external.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--quirkmode</option
+></term>
+<listitem
+><para
+>Вимкнути частину коду із початкових перевірок. Експериментальний параметр, не призначено для щоденного використання.</para
 ></listitem>
 </varlistentry>
 <varlistentry>

@@ -3,13 +3,13 @@
 # This file is distributed under the license LGPL version 2.1 or
 # version 3 or later versions approved by the membership of KDE e.V.
 #
-# Yuri Chornoivan <yurchor@ukr.net>, 2015, 2016.
+# Yuri Chornoivan <yurchor@ukr.net>, 2015, 2016, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward__data\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2016-01-30 09:50+0200\n"
+"PO-Revision-Date: 2023-12-01 22:58+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Lokalize 20.12.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -93,7 +93,7 @@ msgstr "Створити випадкові дані (нормальний ро�
 #: rkward/plugins/data/generate_random.xml:24
 #, kde-format
 msgid "mu (mean)"
-msgstr "μ (математичне очікування)"
+msgstr "μ (математичне сподівання)"
 
 #. i18n: ectx: (Generate random data (normal distribution)) <dialog label="Generate random data (normal distribution)"> <spinbox label="...">
 #: rkward/plugins/data/generate_random.xml:25

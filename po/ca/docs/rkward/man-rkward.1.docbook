@@ -17,7 +17,7 @@ SPDX-License-Identifier: GFDL-1.2-no-invariants-or-later OR GPL-2.0-or-later
 <refentry lang="&language;">
 <refentryinfo>
 <title
->Manual d'usuari del KDE</title>
+>Manual d'usuari del RKWard</title>
 <author
 ><firstname
 >Thomas</firstname
@@ -33,9 +33,11 @@ SPDX-License-Identifier: GFDL-1.2-no-invariants-or-later OR GPL-2.0-or-later
 </affiliation>
 </author>
 <date
->20 de maig de 2017</date>
+>30 de novembre de 2023</date>
+<releaseinfo
+>RKWard 0.7.5</releaseinfo>
 <productname
->Entorn d'escriptori K</productname>
+>Aplicacions de KDE</productname>
 </refentryinfo>
 
 <refmeta>
@@ -251,6 +253,16 @@ SPDX-License-Identifier: GFDL-1.2-no-invariants-or-later OR GPL-2.0-or-later
 > conté els &URL; del formulari <replaceable
 >rkward://connector_a_executar/...</replaceable
 >), el &rkward; mostrarà un avís que aquests &URL; es podrien utilitzar per a desencadenar accions malicioses al vostre sistema. Aquest avís s'aplica específicament als enllaços que es troben en llocs web no confiables o d'altres fonts externes que no siguin de confiança. Si voleu executar localment un script del &rkward;, podeu fer cas omís a aquest avís afegint --nowarn-extern a la línia d'ordres.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--quirkmode</option
+></term>
+<listitem
+><para
+>Desactiva algun codi de validació a l'inici. Opció experimental, no està destinada a un ús normal.</para
 ></listitem>
 </varlistentry>
 <varlistentry>
