@@ -708,15 +708,16 @@ msgid ""
 "in the \"Comment\" field.</p>"
 msgstr ""
 "<p><b>Quina informació he de proporcionar i com?</b></p>Fent clic en "
-"«Informa d'un problema» anireu fins al sistema de seguiment d'errors de KDE. "
-"Després d'iniciar la sessió, hi haurà certa informació que estarà emplenada "
-"en el formulari d'informe. Assegureu-vos que empleneu els dades que falten - "
-"en anglés - a on s'indiquen, especialment en el camp de «Comentari».</p>"
+"«Informeu d'un problema» anireu fins al sistema de seguiment d'errors de "
+"KDE. Després d'iniciar la sessió, hi haurà certa informació que estarà "
+"emplenada en el formulari d'informe. Assegureu-vos que empleneu els dades "
+"que falten - en anglés - a on s'indiquen, especialment en el camp de "
+"«Comentari».</p>"
 
 #: rkward/dialogs/rkerrordialog.cpp:58
 #, kde-format
 msgid "Report issue"
-msgstr "Informa d'un problema"
+msgstr "Informeu d'un problema"
 
 #: rkward/dialogs/rkerrordialog.cpp:73
 #, kde-format
