@@ -25,6 +25,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
   <name xml:lang="pl">RKWard</name>
   <name xml:lang="pt">RKWard</name>
   <name xml:lang="pt-BR">RKWard</name>
+  <name xml:lang="sk">RKWard</name>
   <name xml:lang="sl">RKWard</name>
   <name xml:lang="sv">RKward</name>
   <name xml:lang="tr">RKWard</name>
@@ -155,6 +156,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
       <caption xml:lang="nl">Met gegevens werken in RKWard</caption>
       <caption xml:lang="pl">Praca z danymi w RKWard</caption>
       <caption xml:lang="pt">Lidar com dados no RKward</caption>
+      <caption xml:lang="sk">Práca s dátami v RKward</caption>
       <caption xml:lang="sl">Delo s podatki v RKward-u</caption>
       <caption xml:lang="sv">Arbeta med data i RKward</caption>
       <caption xml:lang="tr">RKWard'da veri ile çalışma</caption>
