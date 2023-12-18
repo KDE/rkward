@@ -1,18 +1,18 @@
 # translation of rkward.po to Slovak
-# Roman Paholik <wizzardsk@gmail.com>, 2014, 2016.
+# SPDX-FileCopyrightText: 2014, 2016, 2023 Roman Paholik <wizzardsk@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2016-11-18 11:09+0100\n"
+"PO-Revision-Date: 2023-12-17 14:57+0100\n"
 "Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-sk@linux.sk>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 2.0\n"
+"X-Generator: Lokalize 23.08.3\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #, kde-format
@@ -82,10 +82,11 @@ msgid "Waiting for R to finish"
 msgstr ""
 
 #: rkward/agents/rksaveagent.cpp:49
-#, kde-format
+#, fuzzy, kde-format
 msgid ""
 "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
 msgstr ""
+"Súbor s názvom \"%1\" už existuje. Ste si istý, že si ho prajete prepísať?"
 
 #: rkward/agents/rksaveagent.cpp:51
 #, kde-format
@@ -102,10 +103,9 @@ msgid ""
 msgstr ""
 
 #: rkward/agents/rksaveagent.cpp:56
-#, fuzzy, kde-format
-#| msgid "Overwrite?"
+#, kde-format
 msgid "Overwrite File?"
-msgstr "Prepísať?"
+msgstr "Prepísať súbor?"
 
 #: rkward/agents/rksaveagent.cpp:63 rkward/rkward.cpp:880
 #, kde-format
@@ -327,7 +327,7 @@ msgstr "Zoznam"
 #| msgid "Variable"
 msgctxt "Noun; in brackets, data type of the var is stated"
 msgid "Variable (%1)"
-msgstr "Premenná"
+msgstr "Premenná:"
 
 #: rkward/core/robject.cpp:180
 #, kde-format
@@ -619,9 +619,9 @@ msgid ""
 msgstr ""
 
 #: rkward/dialogs/rkerrordialog.cpp:58
-#, kde-format
+#, fuzzy, kde-format
 msgid "Report issue"
-msgstr ""
+msgstr "Nahlásiť &problém"
 
 #: rkward/dialogs/rkerrordialog.cpp:73
 #, kde-format
@@ -644,7 +644,7 @@ msgstr "Vykonať"
 #: rkward/dialogs/rkerrordialog.cpp:103
 #, fuzzy, kde-format
 msgid "Show Details"
-msgstr "Ukázať premenné"
+msgstr "Zobraziť detaily"
 
 #: rkward/dialogs/rkerrordialog.cpp:105
 #, kde-format
@@ -770,7 +770,7 @@ msgstr ""
 #, fuzzy, kde-format
 #| msgid "File format"
 msgid "Select format"
-msgstr "Formát súboru"
+msgstr "Vybrať formát..."
 
 #: rkward/dialogs/rkimportdialog.cpp:80
 #, kde-format
@@ -813,7 +813,7 @@ msgstr ""
 #: rkward/dialogs/rkimportdialog.cpp:110 rkward/dialogs/rkimportdialog.cpp:119
 #, kde-format
 msgid "Import from clipboard"
-msgstr ""
+msgstr "Importovať zo schránky"
 
 #: rkward/dialogs/rkimportdialog.cpp:123
 #, kde-format
@@ -871,7 +871,7 @@ msgstr ""
 #: rkward/dialogs/rkloadlibsdialog.cpp:95
 #, kde-format
 msgid "Discard changes?"
-msgstr ""
+msgstr "Zahodiť zmeny?"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:169
 #: rkward/dialogs/rkloadlibsdialog.cpp:176
@@ -1337,37 +1337,36 @@ msgstr ""
 #, fuzzy, kde-format
 #| msgid "Install"
 msgid "[Not saved]"
-msgstr "Inštalovať"
+msgstr "Neuložené"
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:88
 #, fuzzy, kde-format
 #| msgid "Output %1"
 msgid "Output files"
-msgstr "Výstup %1"
+msgstr "Výstupný súbor(y)"
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:100
-#, fuzzy, kde-format
-#| msgid "Script File"
+#, kde-format
 msgid "Scripts"
-msgstr "Súbor so skriptom"
+msgstr "Skripty"
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:115
 #, fuzzy, kde-format
 #| msgid "Run selection"
 msgctxt "Save the selected items"
 msgid "Save selected"
-msgstr "Zvýrazniť výber"
+msgstr "Uložiť zvolený"
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:116
-#, kde-format
+#, fuzzy, kde-format
 msgid "Discard all"
-msgstr ""
+msgstr "Zahodiť všetko"
 
 #: rkward/dialogs/rksavemodifieddialog.cpp:117
 #, fuzzy, kde-format
 #| msgid "Do not add"
 msgid "Do not close"
-msgstr "Nepridať"
+msgstr "Nezatvárať"
 
 #: rkward/dialogs/rkselectlistdialog.cpp:39
 #, kde-format
@@ -1388,13 +1387,12 @@ msgstr ""
 #, fuzzy, kde-format
 #| msgid "Install"
 msgid "Not installed"
-msgstr "Inštalovať"
+msgstr "Nenainštalované"
 
 #: rkward/dialogs/rksetupwizard.cpp:89 rkward/dialogs/rksetupwizard.cpp:100
-#, fuzzy, kde-format
-#| msgid "Install"
+#, kde-format
 msgid "Install %1"
-msgstr "Inštalovať"
+msgstr "Inštalovať %1"
 
 #: rkward/dialogs/rksetupwizard.cpp:89
 #, kde-format
@@ -1405,10 +1403,9 @@ msgstr ""
 
 #: rkward/dialogs/rksetupwizard.cpp:90 rkward/dialogs/rksetupwizard.cpp:101
 #: rkward/dialogs/rksetupwizard.cpp:157
-#, fuzzy, kde-format
-#| msgid "Change"
+#, kde-format
 msgid "No change"
-msgstr "Zmeniť"
+msgstr "Bez zmeny"
 
 #: rkward/dialogs/rksetupwizard.cpp:90
 #, kde-format
@@ -1421,7 +1418,7 @@ msgstr ""
 #, fuzzy, kde-format
 #| msgid "Install"
 msgid "Installed"
-msgstr "Inštalovať"
+msgstr "Nainštalované"
 
 #: rkward/dialogs/rksetupwizard.cpp:100
 #, kde-format
@@ -1439,7 +1436,7 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:109
 #, kde-format
 msgid "Not found"
-msgstr ""
+msgstr "Nenájdené"
 
 #: rkward/dialogs/rksetupwizard.cpp:123
 #, kde-format
@@ -1480,14 +1477,14 @@ msgid "RKWard Setup Assistant"
 msgstr ""
 
 #: rkward/dialogs/rksetupwizard.cpp:141
-#, kde-format
+#, fuzzy, kde-format
 msgid "Installation directory"
-msgstr ""
+msgstr "Inštalačný adresár:"
 
 #: rkward/dialogs/rksetupwizard.cpp:143
-#, kde-format
+#, fuzzy, kde-format
 msgid "Not found."
-msgstr ""
+msgstr "Nenájdené"
 
 #: rkward/dialogs/rksetupwizard.cpp:145
 #, kde-format
@@ -1503,9 +1500,9 @@ msgstr ""
 
 #: rkward/dialogs/rksetupwizard.cpp:148 rkward/dialogs/rksetupwizard.cpp:161
 #: rkward/dialogs/rksetupwizard.cpp:185
-#, kde-format
+#, fuzzy, kde-format
 msgid "Found."
-msgstr ""
+msgstr "Nájdené:"
 
 #: rkward/dialogs/rksetupwizard.cpp:152
 #, fuzzy, kde-format
@@ -1522,12 +1519,12 @@ msgstr ""
 #, fuzzy, kde-format
 #| msgid "Run selection"
 msgid "None selected"
-msgstr "Zvýrazniť výber"
+msgstr "Žiadne vybraté"
 
 #: rkward/dialogs/rksetupwizard.cpp:156
-#, kde-format
+#, fuzzy, kde-format
 msgid "Restore defaults"
-msgstr ""
+msgstr "Obnoviť predvolené nastavenia"
 
 #: rkward/dialogs/rksetupwizard.cpp:156
 #, kde-format
@@ -1554,9 +1551,9 @@ msgid ""
 msgstr ""
 
 #: rkward/dialogs/rksetupwizard.cpp:169
-#, kde-format
+#, fuzzy, kde-format
 msgid "None found"
-msgstr ""
+msgstr "(žiadne nájdené)"
 
 #: rkward/dialogs/rksetupwizard.cpp:172
 #, kde-format
@@ -1574,7 +1571,7 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:180
 #, kde-format
 msgid "Exists"
-msgstr ""
+msgstr "Existuje"
 
 #: rkward/dialogs/rksetupwizard.cpp:182
 #, kde-format
@@ -1587,10 +1584,9 @@ msgid "Import to the session, so you can save in the new output format."
 msgstr ""
 
 #: rkward/dialogs/rksetupwizard.cpp:183
-#, fuzzy, kde-format
-#| msgid "Location"
+#, kde-format
 msgid "No action"
-msgstr "Umiestnenie"
+msgstr "Žiadna akcia"
 
 #: rkward/dialogs/rksetupwizard.cpp:183
 #, kde-format
@@ -1734,7 +1730,7 @@ msgstr ""
 #, fuzzy, kde-format
 #| msgid "(c) 2002, 2004 - 2016"
 msgid "(c) 2002 - 2022"
-msgstr "(c) 2002, 2004 - 2016"
+msgstr "C"
 
 #: rkward/main.cpp:261
 #, kde-format
@@ -1869,7 +1865,7 @@ msgstr ""
 #: rkward/main.cpp:275
 #, kde-format
 msgid "Daniele Medri"
-msgstr ""
+msgstr "Daniele Medri"
 
 #: rkward/main.cpp:275
 #, kde-format
@@ -2185,7 +2181,7 @@ msgstr "Rozlišovať veľkosť"
 #: rkward/misc/rkfindbar.cpp:96 rkward/windows/rkhtmlwindow.cpp:1040
 #, kde-format
 msgid "Find as you type"
-msgstr ""
+msgstr "Nájsť pri písaní"
 
 #: rkward/misc/rkfindbar.cpp:99
 #, kde-format
@@ -2266,13 +2262,13 @@ msgid ""
 msgstr ""
 
 #: rkward/misc/rkobjectlistview.cpp:314
-#, kde-format
+#, fuzzy, kde-format
 msgctxt ""
 "Width is limited, please opt for something that is not much longer than the "
 "English string. Simply 'Clear'/'Reset' should be good enough to understand "
 "the function."
 msgid "Reset filters"
-msgstr ""
+msgstr "Obnoviť filtre"
 
 #: rkward/misc/rkobjectlistview.cpp:316
 #, kde-format
@@ -2316,10 +2312,9 @@ msgid "Overwrite?"
 msgstr "Prepísať?"
 
 #: rkward/misc/rkoutputdirectory.cpp:154 rkward/misc/rkoutputdirectory.cpp:340
-#, fuzzy, kde-format
-#| msgid "User commands"
+#, kde-format
 msgid "User canceled"
-msgstr "Užívateľské príkazy"
+msgstr "Používateľ zrušil"
 
 #: rkward/misc/rkoutputdirectory.cpp:156
 #, kde-format
@@ -2379,7 +2374,7 @@ msgstr ""
 #, fuzzy, kde-format
 #| msgid "User commands"
 msgid "User canceled."
-msgstr "Užívateľské príkazy"
+msgstr "Používateľ zrušil"
 
 #: rkward/misc/rkoutputdirectory.cpp:289
 #, kde-format
@@ -2439,7 +2434,7 @@ msgstr ""
 #: rkward/misc/rkoutputdirectory.cpp:524
 #, kde-format
 msgid "File '%1' does not exist."
-msgstr ""
+msgstr "Súbor '%1' neexistuje."
 
 #: rkward/misc/rkoutputdirectory.cpp:564
 #, kde-format
@@ -2491,9 +2486,9 @@ msgid "<b>An error occurred</b> (see below for details)"
 msgstr ""
 
 #: rkward/misc/rkprogresscontrol.cpp:482
-#, kde-format
+#, fuzzy, kde-format
 msgid "<b>Done</b>"
-msgstr ""
+msgstr "Hotovo"
 
 #: rkward/misc/rkprogresscontrol.cpp:485
 #: rkward/plugin/rkstandardcomponentgui.cpp:189
@@ -2513,9 +2508,9 @@ msgid "Closing this window will cancel the current operation. Are you sure?"
 msgstr ""
 
 #: rkward/misc/rkprogresscontrol.cpp:533
-#, kde-format
+#, fuzzy, kde-format
 msgid "Cancel operation"
-msgstr ""
+msgstr "Zrušiť operáciu"
 
 #: rkward/misc/rkprogresscontrol.cpp:533
 #, fuzzy, kde-format
@@ -2534,10 +2529,9 @@ msgid "Change"
 msgstr "Zmeniť"
 
 #: rkward/misc/rksaveobjectchooser.cpp:54
-#, fuzzy, kde-format
-#| msgid "Overwrite?"
+#, kde-format
 msgid "Overwrite"
-msgstr "Prepísať?"
+msgstr "Prepísať"
 
 #: rkward/misc/rksaveobjectchooser.cpp:56
 #, kde-format
@@ -2638,7 +2632,7 @@ msgstr ""
 #, fuzzy, kde-format
 #| msgid "Label"
 msgid "Labels"
-msgstr "Štítok"
+msgstr "Štítky"
 
 #: rkward/misc/rkspecialactions.cpp:153
 #, kde-format
@@ -2688,10 +2682,9 @@ msgid "Pasting object from clipboard data failed."
 msgstr ""
 
 #: rkward/misc/rkspecialactions.cpp:309
-#, fuzzy, kde-format
-#| msgid "Save failed"
+#, kde-format
 msgid "Paste failed"
-msgstr "Uloženie zlyhalo"
+msgstr "Vloženie sa nepodarilo"
 
 #: rkward/misc/rkstandardactions.cpp:27
 #, kde-format
@@ -2718,7 +2711,7 @@ msgstr "Zvýrazniť výber"
 #: rkward/misc/rkstandardactions.cpp:62
 #, kde-format
 msgid "Run all"
-msgstr ""
+msgstr "Spustiť všetko"
 
 #: rkward/misc/rkstandardactions.cpp:75
 #, kde-format
@@ -2831,7 +2824,7 @@ msgstr "nie"
 #: rkward/plugin/rkcomponentmap.cpp:266 rkward/plugin/rkcomponentmap.cpp:646
 #, fuzzy, kde-format
 msgid "(no label)"
-msgstr "Bez popisu"
+msgstr "Žiadny štítok"
 
 #: rkward/plugin/rkcomponentmap.cpp:463
 #, kde-format
@@ -3031,7 +3024,7 @@ msgstr ""
 #: rkward/plugin/rkformula.cpp:93
 #, kde-format
 msgid "Main effects"
-msgstr ""
+msgstr "Hlavné efekty"
 
 #: rkward/plugin/rkformula.cpp:98
 #, kde-format
@@ -3124,9 +3117,9 @@ msgid "Select"
 msgstr "Vybrať"
 
 #: rkward/plugin/rkpluginbrowser.cpp:123
-#, kde-format
+#, fuzzy, kde-format
 msgid "The file or directory does not exist."
-msgstr ""
+msgstr "Súbor alebo adresár <filename>%1</filename> neexistuje."
 
 #: rkward/plugin/rkpluginbrowser.cpp:126
 #, kde-format
@@ -3469,7 +3462,7 @@ msgstr ""
 #: rkward/rbackend/rkrbackend.cpp:1793
 #, kde-format
 msgid "Ok"
-msgstr ""
+msgstr "Ok"
 
 #: rkward/rbackend/rkrinterface.cpp:86
 #, kde-format
@@ -3586,8 +3579,7 @@ msgid "Graphics Device Number %1"
 msgstr ""
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:590
-#, fuzzy, kde-format
-#| msgid "%1 (Active)"
+#, kde-format
 msgctxt "Window title"
 msgid "%1 (Active)"
 msgstr "%1 (Aktívne)"
@@ -3597,7 +3589,7 @@ msgstr "%1 (Aktívne)"
 #| msgid "%1 (Inactive)"
 msgctxt "Window title"
 msgid "%1 (Inactive)"
-msgstr "%1 (Neaktívne)"
+msgstr "Neaktívne"
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:618
 #, kde-format
@@ -3657,9 +3649,9 @@ msgid "Scrollbar minimap"
 msgstr ""
 
 #: rkward/rkconsole.cpp:142
-#, kde-format
+#, fuzzy, kde-format
 msgid "Dynamic word wrap"
-msgstr ""
+msgstr "&Dynamické zalamovanie slov"
 
 #: rkward/rkconsole.cpp:499
 #, kde-format
@@ -4078,7 +4070,7 @@ msgstr ""
 #: rkward/rkward.cpp:637
 #, kde-format
 msgid "Check again"
-msgstr ""
+msgstr "Znovu skontrolovať"
 
 #: rkward/rkward.cpp:637
 #, kde-format
@@ -4141,10 +4133,9 @@ msgid "The <b>R</b> engine is unavailable."
 msgstr ""
 
 #: rkward/rkward.cpp:997
-#, fuzzy, kde-format
-#| msgid "Open..."
+#, kde-format
 msgid "Open"
-msgstr "Otvoriť..."
+msgstr "Otvoriť"
 
 #: rkward/rkward.cpp:1001
 #, kde-format
@@ -4416,7 +4407,7 @@ msgstr "Dokončovanie kódu"
 #, fuzzy, kde-format
 #| msgid "Code Completion"
 msgid "Auto word completion"
-msgstr "Dokončovanie kódu"
+msgstr "Automatické ukončovanie slov"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:49
 #, fuzzy, kde-format
@@ -4531,7 +4522,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:91
 #, kde-format
 msgid "Always"
-msgstr ""
+msgstr "Vždy"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:93
 #, kde-format
@@ -4682,9 +4673,9 @@ msgid ""
 msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:67
-#, kde-format
+#, fuzzy, kde-format
 msgid "Startup behavior"
-msgstr ""
+msgstr "Správanie pri spustení"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:69
 #, kde-format
@@ -4793,7 +4784,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulegeneral.cpp:129
 #, kde-format
 msgid "Click to focus"
-msgstr ""
+msgstr "Kliknúť na zameranie"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:129
 #, kde-format
@@ -5230,9 +5221,9 @@ msgid "Check vector bounds (warn)"
 msgstr ""
 
 #: rkward/settings/rksettingsmoduler.cpp:123
-#, kde-format
+#, fuzzy, kde-format
 msgid "Editor command"
-msgstr ""
+msgstr "Príkaz editora:"
 
 #: rkward/settings/rksettingsmoduler.cpp:134
 #, kde-format
@@ -5267,8 +5258,7 @@ msgid ""
 msgstr ""
 
 #: rkward/settings/rksettingsmoduler.cpp:217
-#, fuzzy, kde-format
-#| msgid "Add"
+#, kde-format
 msgctxt "Add directory to list"
 msgid "Add"
 msgstr "Pridať"
@@ -5354,8 +5344,7 @@ msgid ""
 msgstr ""
 
 #: rkward/settings/rksettingsmoduler.cpp:427
-#, fuzzy, kde-format
-#| msgid "Add"
+#, kde-format
 msgctxt "Add file to list"
 msgid "Add"
 msgstr "Pridať"
@@ -5398,8 +5387,7 @@ msgid ""
 msgstr ""
 
 #: rkward/settings/rksettingsmoduler.cpp:588
-#, fuzzy, kde-format
-#| msgid "Rename"
+#, kde-format
 msgctxt "verb"
 msgid "Rename"
 msgstr "Premenovať"
@@ -5413,8 +5401,7 @@ msgid ""
 msgstr ""
 
 #: rkward/settings/rksettingsmoduler.cpp:596
-#, fuzzy, kde-format
-#| msgid "Remove"
+#, kde-format
 msgctxt "verb"
 msgid "Remove"
 msgstr "Odstrániť"
@@ -5427,10 +5414,10 @@ msgid ""
 msgstr ""
 
 #: rkward/settings/rksettingsmoduler.cpp:601
-#, kde-format
+#, fuzzy, kde-format
 msgctxt "verb"
 msgid "Keep"
-msgstr ""
+msgstr "Ponechať"
 
 #: rkward/settings/rksettingsmoduler.cpp:601
 #, kde-format
@@ -5610,7 +5597,7 @@ msgstr "Funkcie"
 #, fuzzy, kde-format
 #| msgid "Functions"
 msgid "Function arguments"
-msgstr "Funkcie"
+msgstr "Argumenty funkcie"
 
 #: rkward/windows/rkcodecompletion.cpp:1003
 #, fuzzy, kde-format
@@ -5667,12 +5654,12 @@ msgstr ""
 #, fuzzy, kde-format
 #| msgid "Preview"
 msgid "No preview"
-msgstr "Náhľad"
+msgstr "Žiadny náhľad"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:405
 #, kde-format
 msgid "R Markdown"
-msgstr ""
+msgstr "Zrážka R"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:406
 #, fuzzy, kde-format
@@ -5683,7 +5670,7 @@ msgstr "RKWard"
 #: rkward/windows/rkcommandeditorwindow.cpp:407
 #, kde-format
 msgid "Plot"
-msgstr ""
+msgstr "Kresliť"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:410
 #, fuzzy, kde-format
@@ -5943,9 +5930,9 @@ msgid "About this window"
 msgstr ""
 
 #: rkward/windows/rkfilebrowser.cpp:122
-#, kde-format
+#, fuzzy, kde-format
 msgid "Working directory"
-msgstr ""
+msgstr "Pracovný adresár:"
 
 #: rkward/windows/rkfilebrowser.cpp:140 rkward/windows/robjectbrowser.cpp:119
 #, kde-format
@@ -5953,15 +5940,14 @@ msgid "Rename"
 msgstr "Premenovať"
 
 #: rkward/windows/rkfilebrowser.cpp:169
-#, fuzzy, kde-format
-#| msgid "Rename"
+#, kde-format
 msgid "Rename..."
-msgstr "Premenovať"
+msgstr "Premenovať..."
 
 #: rkward/windows/rkfilebrowser.cpp:169
 #, kde-format
 msgid "New name for '%1':"
-msgstr ""
+msgstr "Nový názov pre '%1':"
 
 #: rkward/windows/rkhelpsearchwindow.cpp:59
 #, kde-format
@@ -6052,10 +6038,9 @@ msgid "Package"
 msgstr "Balík"
 
 #: rkward/windows/rkhtmlwindow.cpp:389
-#, fuzzy, kde-format
-#| msgid "Save failed"
+#, kde-format
 msgid "Save as"
-msgstr "Uloženie zlyhalo"
+msgstr "Uložiť ako"
 
 #: rkward/windows/rkhtmlwindow.cpp:828
 #: rkward/windows/rktoplevelwindowgui.cpp:257
@@ -6145,13 +6130,13 @@ msgstr "Výstup"
 #, fuzzy, kde-format
 #| msgid "Save Script As..."
 msgid "Save Output As"
-msgstr "Uložiť skript ako..."
+msgstr "Uložiť výstup &ako..."
 
 #: rkward/windows/rkhtmlwindow.cpp:1025
 #, fuzzy, kde-format
 #| msgid "RKWard"
 msgid "&Clear Output"
-msgstr "RKWard"
+msgstr "Vyčistiť výstup."
 
 #: rkward/windows/rkhtmlwindow.cpp:1031
 #, kde-format
@@ -6181,7 +6166,7 @@ msgstr ""
 #: rkward/windows/rkhtmlwindow.cpp:1124
 #, kde-format
 msgid "No Title"
-msgstr ""
+msgstr "Žiadny názov"
 
 #: rkward/windows/rkhtmlwindow.cpp:1137
 #, kde-format
@@ -6356,7 +6341,7 @@ msgstr "Zobraziť výstup"
 #: rkward/windows/rktoplevelwindowgui.cpp:100
 #, kde-format
 msgid "Color Scheme"
-msgstr ""
+msgstr "Farebná schéma"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:133
 #, kde-format
@@ -6746,7 +6731,7 @@ msgstr ""
 #: rkward/windows/rkworkplaceview.cpp:248
 #, kde-format
 msgid "Split Ve&rtical"
-msgstr ""
+msgstr "Rozdeliť ve&rtikálne"
 
 #: rkward/windows/rkworkplaceview.cpp:251
 #, kde-format
@@ -6756,7 +6741,7 @@ msgstr ""
 #: rkward/windows/rkworkplaceview.cpp:255
 #, kde-format
 msgid "Split &Horizontal"
-msgstr ""
+msgstr "Rozdeliť &horizontálne"
 
 #: rkward/windows/rkworkplaceview.cpp:258
 #, kde-format

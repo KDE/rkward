@@ -1,18 +1,18 @@
 # translation of rkward__plots.po to Slovak
-# Roman Paholik <wizzardsk@gmail.com>, 2015, 2016.
+# SPDX-FileCopyrightText: 2015, 2016, 2023 Roman Paholik <wizzardsk@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward__plots\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2016-09-01 20:37+0100\n"
+"PO-Revision-Date: 2023-12-17 15:00+0100\n"
 "Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-sk@linux.sk>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 2.0\n"
+"X-Generator: Lokalize 23.08.3\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #, kde-format
@@ -1094,7 +1094,7 @@ msgstr ""
 #: rkward/plugins/plots/histogram.xml:57
 #, fuzzy, kde-format
 msgid "Bandwidth"
-msgstr "Šírka pásma:"
+msgstr "šírka pásma"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Bandwidth"> <option label="...">
 #. i18n: ectx: (Histogram) <dialog label="Histogram"> [...] <dropdown label="Bandwidth"> <option label="...">
@@ -1170,9 +1170,9 @@ msgstr "Rozlíšenie"
 #. i18n: ectx: (Empirical Distribution Function) <dialog label="Empirical Distribution Function"> <tab label="Further options"> <frame label="...">
 #: rkward/plugins/plots/density_plot.xml:84
 #: rkward/plugins/plots/ecdf_plot.xml:50
-#, kde-format
+#, fuzzy, kde-format
 msgid "Rug"
-msgstr ""
+msgstr "koberček"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> <tab label="Options"> <frame label="Rug"> <checkbox label="...">
 #: rkward/plugins/plots/density_plot.xml:85
